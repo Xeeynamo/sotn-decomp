@@ -1533,8 +1533,8 @@ void func_8010189C(void) {
     u16* new_var;
 
     D_8013B5E8 = 0;
-    D_80137998 = 0;
-    D_8013796C = g_Status.hp;
+    g_HealingMailTimer[0] = 0;
+    g_DisplayHP[0] = g_Status.hp;
 
     if ((g_StageId == STAGE_ST0) ||
         (g_CurrentPlayableCharacter != PLAYER_ALUCARD)) {
@@ -1576,7 +1576,264 @@ void func_8010189C(void) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/5D6C4", func_80101A80);
+void DrawHudAlucard() {
+    SubweaponDef subwpn;
+    RECT rect;
+    Primitive* prim;
+
+    s32 statXPos;
+    s32 hpdiff;
+    s32 mpFillSteps;
+    s32 leading_zeros;
+    s32 digitSpacing;
+    u16 clut;
+
+    if (g_StageId == STAGE_ST0 || g_CurrentPlayableCharacter != 0) {
+        func_80100B50();
+        return;
+    }
+    func_800EB4F8(D_800C52F8[g_Status.subWeapon], 0, 0x3C0, 0x120);
+    prim = &g_PrimBuf[D_80137970];
+    if (g_Status.subWeapon != 0) {
+        // This is 0x2031. Since blendMode is probably bits, write it this way.
+        prim->blendMode = 0x2000 | 0x0020 | 0x0010 | 0x0001;
+        prim = prim->next;
+        prim->p2--;
+        if (prim->p2 == 0) {
+            prim->p1 += 1;
+            if (prim->p1 == 0xF) {
+                prim->p1 = 0;
+                prim->p2 = rand() + 8;
+                prim->p3--;
+                if (prim->p3 != 0) {
+                    prim->p1 = 1;
+                    prim->p2 = 1;
+                } else {
+                    prim->p3 = (rand() & 7) + 1;
+                }
+            } else {
+                prim->p2 = 1;
+                prim->clut = D_800A2F7E[prim->p1];
+                prim->u0 = D_800A2F9B[prim->p1];
+                prim->v0 = D_800A2F9B[prim->p1 + 16];
+                prim->u1 = D_800A2F9B[prim->p1] + 16;
+                prim->v1 = D_800A2F9B[prim->p1 + 16];
+                prim->u2 = D_800A2F9B[prim->p1];
+                prim->v2 = D_800A2F9B[prim->p1 + 16] + 16;
+                prim->u3 = D_800A2F9B[prim->p1] + 16;
+                prim->v3 = D_800A2F9B[prim->p1 + 16] + 16;
+            }
+        }
+        if (prim->p1 != 0) {
+            prim->blendMode = 0x2000;
+        } else {
+            prim->blendMode = BLEND_VISIBLE;
+        }
+        prim = prim->next;
+        prim->blendMode = 0x2000;
+    } else {
+        prim->blendMode = BLEND_VISIBLE;
+        prim = prim->next;
+        prim->blendMode = BLEND_VISIBLE;
+        prim = prim->next;
+        prim->blendMode = BLEND_VISIBLE;
+    }
+
+    // Want to use prim = prim->next->next->next but that uses wrong register
+    prim = prim->next;
+    prim = prim->next;
+    prim = prim->next;
+    rect.x = 988;
+    rect.y = 256;
+    rect.w = 2;
+    rect.h = 56;
+
+    ClearImage(&rect, 0, 0, 0);
+    if (!(g_Status.D_80097BF8 & 1)) {
+        if (!(D_8003C8C4 & 0x3F)) {
+            g_Status.mp++;
+        }
+        if ((CheckEquipmentItemCount(ITEM_MYSTIC_PENDANT, ACCESSORY_TYPE) !=
+             0) &&
+            ((D_8003C8C4 & 0x3F) == 0x1F)) {
+            g_Status.mp++;
+        }
+        if (g_Status.mp > g_Status.mpMax) {
+            g_Status.mp = g_Status.mpMax;
+        }
+    }
+
+    if ((CheckEquipmentItemCount(ITEM_HEALING_MAIL, ARMOR_TYPE)) &&
+        ((g_Player.unk0C & 0x04000007) == 0x04000000)) {
+        g_HealingMailTimer[0]++;
+        if (g_HealingMailTimer[0] >= 128) {
+            g_Player.unk56 = 2;
+            g_Player.unk58 = 1;
+            g_HealingMailTimer[0] = 0;
+        }
+    } else {
+        g_HealingMailTimer[0] = 0;
+    }
+
+    func_800FEE6C();
+    // Represents MP fill level in fraction of 50 (2% each)
+    mpFillSteps = (g_Status.mp * 50) / g_Status.mpMax;
+    LoadTPage(D_800C52F8[10] + 1, 0, 0, 0x3DC, 0x100, 8, mpFillSteps);
+    // Use one clut if MP is full, otherwise a different one
+    prim->clut = mpFillSteps == 50 ? 0x162 : 0x174;
+
+    if (D_8013B5E8 == 0) {
+        hpdiff = g_Status.hp - g_DisplayHP[0];
+        if (hpdiff > 0) {
+            if (hpdiff >= 11) {
+                g_DisplayHP[0] += (hpdiff) / 10;
+            } else {
+                g_DisplayHP[0]++;
+            }
+        }
+        if (hpdiff < 0) {
+            if (hpdiff < -10) {
+                g_DisplayHP[0] += (hpdiff) / 10;
+            } else {
+                g_DisplayHP[0]--;
+            }
+        }
+    } else {
+        D_8013B5E8--;
+    }
+    if (g_DisplayHP[0] == g_Status.hpMax) {
+        func_800EA5E4(2); // Likely related to HP showing bold when full
+    } else if (g_DisplayHP[0] <= g_Status.hpMax >> 2) {
+        func_800EA5E4(3); // Show yellow if under 1/4 health
+    } else {
+        func_800EA5E4(1); // Normal health display
+    }
+
+    if (g_DisplayHP[0] >= 1000) {
+        leading_zeros = 0;
+        digitSpacing = 6;
+        statXPos = 3;
+    } else if (g_DisplayHP[0] >= 100) {
+        leading_zeros = 1;
+        digitSpacing = 6;
+        statXPos = 0;
+    } else {
+        digitSpacing = 7;
+        statXPos = -6;
+        if (g_DisplayHP[0] >= 10) {
+            leading_zeros = 2;
+        } else {
+            leading_zeros = 3;
+        }
+    }
+    // Thousands digit of HP
+    prim = prim->next;
+    prim->u2 = prim->u0 = ((g_DisplayHP[0] / 1000) * 8) + 0x20;
+    prim->u3 = prim->u1 = prim->u0 + 8;
+    prim->x0 = prim->x2 = statXPos;
+    prim->x1 = prim->x3 = statXPos + 8;
+    prim->blendMode = 0x2000;
+
+    if (leading_zeros != 0) {
+        leading_zeros--;
+        prim->blendMode = BLEND_VISIBLE;
+    }
+    // Hundreds digit of HP
+    prim = prim->next;
+    prim->u2 = prim->u0 = (((g_DisplayHP[0] / 100) % 10) * 8) + 0x20;
+    prim->u3 = prim->u1 = prim->u0 + 8;
+    prim->x0 = prim->x2 = statXPos + digitSpacing;
+    prim->x1 = prim->x3 = statXPos + digitSpacing + 8;
+    prim->blendMode = 0x2000;
+    if (leading_zeros != 0) {
+        leading_zeros--;
+        prim->blendMode = BLEND_VISIBLE;
+    }
+    // Tens digit of HP
+    prim = prim->next;
+    prim->u2 = prim->u0 = (((g_DisplayHP[0] / 10) % 10) * 8) + 0x20;
+    prim->u3 = prim->u1 = prim->u0 + 8;
+    prim->x0 = prim->x2 = statXPos + (digitSpacing * 2);
+    prim->x1 = prim->x3 = statXPos + (digitSpacing * 2) + 8;
+    prim->blendMode = 0x2000;
+
+    if (leading_zeros != 0) {
+        prim->blendMode = BLEND_VISIBLE;
+    }
+    // Ones digit of HP
+    prim = prim->next;
+    prim->u2 = prim->u0 = ((g_DisplayHP[0] % 10) * 8) + 0x20;
+    prim->u3 = prim->u1 = prim->u0 + 8;
+    prim->x0 = prim->x2 = statXPos + (digitSpacing * 3);
+    prim->x1 = prim->x3 = statXPos + (digitSpacing * 3) + 8;
+
+    if (g_Status.hearts >= 1000) {
+        leading_zeros = 0;
+        statXPos = 0x3B;
+    } else if (g_Status.hearts >= 100) {
+        leading_zeros = 1;
+        statXPos = 0x37;
+    } else {
+        statXPos = 0x33;
+        if (g_Status.hearts >= 10) {
+            leading_zeros = 2;
+        } else {
+            leading_zeros = 3;
+        }
+    }
+
+    // Seems like this should be a simple || but that doesn't work here.
+    if (func_800FE3C4(&subwpn, 0, false) == 0) {
+        clut = 0x196;
+    } else if (g_blinkTimer & 2) {
+        clut = 0x196;
+    } else {
+        clut = 0x193;
+    }
+
+    // Thousands digit of hearts
+    prim = prim->next;
+    prim->u2 = prim->u0 = ((g_Status.hearts / 1000) * 8) + 0x20;
+    prim->u3 = prim->u1 = prim->u0 + 8;
+    prim->x0 = prim->x2 = statXPos;
+    prim->x1 = prim->x3 = statXPos + 8;
+    prim->blendMode = 0x2000;
+    prim->clut = clut;
+    if (leading_zeros != 0) {
+        leading_zeros--;
+        prim->blendMode = BLEND_VISIBLE;
+    }
+    // Hundreds digit of hearts
+    prim = prim->next;
+    prim->u2 = prim->u0 = (((g_Status.hearts / 100) % 10) * 8) + 0x20;
+    prim->u3 = prim->u1 = prim->u0 + 8;
+    prim->x0 = prim->x2 = statXPos + 4;
+    prim->x1 = prim->x3 = statXPos + 0xC;
+    prim->blendMode = 0x2000;
+    prim->clut = clut;
+    if (leading_zeros != 0) {
+        leading_zeros--;
+        prim->blendMode = BLEND_VISIBLE;
+    }
+    // Tens digit of hearts
+    prim = prim->next;
+    prim->u2 = prim->u0 = (((g_Status.hearts / 10) % 10) * 8) + 0x20;
+    prim->u3 = prim->u1 = prim->u0 + 8;
+    prim->x0 = prim->x2 = statXPos + 8;
+    prim->x1 = prim->x3 = statXPos + 0x10;
+    prim->blendMode = 0x2000;
+    prim->clut = clut;
+    if (leading_zeros != 0) {
+        prim->blendMode = BLEND_VISIBLE;
+    }
+    // Ones digit of hearts
+    prim = prim->next;
+    prim->u2 = prim->u0 = ((g_Status.hearts % 10) * 8) + 0x20;
+    prim->u3 = prim->u1 = prim->u0 + 8;
+    prim->x0 = prim->x2 = statXPos + 0xC;
+    prim->x1 = prim->x3 = statXPos + 0x14;
+    prim->clut = clut;
+}
 
 void func_801024DC(void) {
     Primitive* prim;
