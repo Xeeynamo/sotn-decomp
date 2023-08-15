@@ -615,18 +615,15 @@ $(BUILD_DIR)/$(ASSETS_DIR)/%.tiledef.json.o: $(ASSETS_DIR)/%.tiledef.json
 $(BUILD_DIR)/$(ASSETS_DIR)/%.spritesheet.json.o: $(ASSETS_DIR)/%.spritesheet.json
 	./tools/splat_ext/spritesheet.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
-$(BUILD_DIR)/$(ASSETS_DIR)/%.spriteparts.json.o: $(ASSETS_DIR)/%.spriteparts.json
-	./tools/splat_ext/spriteparts.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
-	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
+$(BUILD_DIR)/$(ASSETS_DIR)/%.animset.json.o: $(ASSETS_DIR)/%.animset.json
+	./tools/splat_ext/animset.py gen-asm $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
+	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/%.equipment.json.o: $(ASSETS_DIR)/%.equipment.json
 	./tools/splat_ext/equipment.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
 	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
 $(BUILD_DIR)/$(ASSETS_DIR)/%.accessory.json.o: $(ASSETS_DIR)/%.accessory.json
 	./tools/splat_ext/accessory.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
 	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
-$(BUILD_DIR)/$(ASSETS_DIR)/%.spritepartslist.json.o: $(ASSETS_DIR)/%.spritepartslist.json
-	./tools/splat_ext/spritepartslist.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
-	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/%.tilelayout.bin.o: $(ASSETS_DIR)/%.tilelayout.bin
 	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(ASSETS_DIR)/$*.tilelayout.bin
 $(BUILD_DIR)/$(ASSETS_DIR)/%.bin.o: $(ASSETS_DIR)/%.bin

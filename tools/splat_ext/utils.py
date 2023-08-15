@@ -1,4 +1,10 @@
 import ctypes
+import os
+import sys
+
+sys.path.append(f"{os.getcwd()}/tools/n64splat")
+sys.path.append(f"{os.getcwd()}/tools/splat_ext")
+from util import log
 
 subchar81_dict = {
     0x44: 0x2E,  # '.'
@@ -15,6 +21,11 @@ subchar81_dict = {
     0x7C: 0x2D,  # '-'
     0x93: 0x25,  # '%'
 }
+
+
+def log_fatal(msg):
+    log.write(msg, status="error")
+    raise Exception(msg)
 
 
 def from_s32(num):
