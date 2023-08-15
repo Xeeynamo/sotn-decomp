@@ -151,7 +151,17 @@ void func_801CE228(s16 step) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CE258);
+void func_801CE258(s16* arg0) {
+    Entity* entity;
+
+    while (*arg0 != 0) {
+        entity = &g_CurrentEntity[*arg0];
+        if (entity->ext.GH_Props.unkA8 == 0) {
+            func_801CD83C(entity);
+        }
+        arg0++;
+    }
+}
 
 void func_801CE2CC(s16* arg0) {
     s16* var_s0;

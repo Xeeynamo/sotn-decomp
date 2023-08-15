@@ -340,7 +340,9 @@ typedef struct {
 } ET_801D0B78;
 
 typedef struct {
-    /* 0x7C */ char pad_0[0x34];
+    /* 0x7C */ char pad_0[0x2C];
+    /* 0xA8 */ u8 unkA8;
+    /* 0xA9 */ char pad_A9[0x7];
     /* 0xB0 */ s16 unkB0[0x6];
 } ET_GurkhaHammer;
 
