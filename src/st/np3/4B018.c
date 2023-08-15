@@ -707,12 +707,12 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D1F38);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D2320);
 
-Primitive* func_801D2470(Primitive* poly) {
-    while (poly != NULL) {
-        if (poly->p3 != 0) {
-            poly = poly->next;
+Primitive* func_801D2470(Primitive* prim) {
+    while (prim != NULL) {
+        if (prim->p3 != 0) {
+            prim = prim->next;
         } else {
-            return poly;
+            return prim;
         }
     }
     return NULL;
