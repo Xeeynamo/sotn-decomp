@@ -103,13 +103,13 @@ void func_801CE04C(Entity* entity, Collider* collider) {
     entity->ext.generic.unk88.S16.unk0 = var_s0;
 }
 
-s32 func_801CE120(Entity* self, s32 arg1) {
+s32 func_801CE120(Entity* self, s32 facing) {
     Collider collider;
     s32 x = self->posX.i.hi;
     s32 y = self->posY.i.hi + 9;
     s32 ret = 0;
 
-    if (arg1 != 0) {
+    if (facing != 0) {
         x += 64;
     } else {
         x -= 64;
