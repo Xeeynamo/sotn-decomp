@@ -144,22 +144,33 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CDC80);
 
 void func_801CDD00(Entity* entity, s16 arg1, s16 arg2) {
     s16 temp_t0 = arg1 - entity->ext.GH_Props.unk9C;
-    
+
     if (temp_t0 > 0x800) {
         temp_t0 -= 0x1000;
     }
-    
+
     if (temp_t0 < -0x800) {
         temp_t0 += 0x1000;
     }
-    
+
     do {
         entity->ext.GH_Props.unkA4 = arg1;
         entity->ext.GH_Props.unkA6 = temp_t0 / arg2;
     } while (0);
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CDD80);
+void func_801CDD80(s16* arg0, Entity* arg1) {
+    s16* var_s1;
+
+    var_s1 = arg1->posY.val;
+    while (*arg0 != 0) {
+        if (*arg0 != 0xFF) {
+            func_801CDD00(&g_CurrentEntity[*arg0], *var_s1, arg1->posX.val);
+        }
+        arg0++;
+        var_s1++;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CDE10);
 
