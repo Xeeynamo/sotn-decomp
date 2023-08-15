@@ -14,8 +14,8 @@ void UpdateStageEntities(void) {
                                        LOH(entity->flags) & 1];
                 entity->flags--;
                 if ((entity->flags & 0xF) == 0) {
-                    entity->palette = entity->unk6A;
-                    entity->unk6A = 0;
+                    entity->palette = entity->hitEffect;
+                    entity->hitEffect = 0;
                 }
             }
         }

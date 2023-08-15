@@ -220,11 +220,11 @@ typedef struct {
     /* 0x04 */ const char* combo;
     /* 0x08 */ const char* description;
     /* 0x0C */ u8 mpUsage;
-    /* 0x0D */ s8 unk0D;
-    /* 0x0E */ s16 unk0E;
-    /* 0x10 */ s16 unk10;
-    /* 0x12 */ s16 unk12;
-    /* 0x14 */ s16 unk14;
+    /* 0x0D */ s8 nFramesInvincibility;
+    /* 0x0E */ s16 stunFrames;
+    /* 0x10 */ s16 hitboxState;
+    /* 0x12 */ s16 hitEffect;
+    /* 0x14 */ s16 entityRoomIndex;
     /* 0x16 */ u16 attackElement;
     /* 0x18 */ s16 attack;
     /* 0x1A */ s16 unk1A;

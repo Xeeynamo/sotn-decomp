@@ -551,13 +551,13 @@ typedef struct Entity {
     /* 0x52 */ s16 animFrameDuration;
     /* 0x54 */ s16 animSet;
     /* 0x56 */ s16 animCurFrame;
-    /* 0x58 */ s16 unk58;
+    /* 0x58 */ s16 stunFrames;
     /* 0x5A */ s16 unk5A;
     /* 0x5C */ s32 unk5C;
     /* 0x60 */ s32 unk60;
     /* 0x64 */ s32 primIndex;
     /* 0x68 */ s16 unk68;
-    /* 0x6A */ u16 unk6A;
+    /* 0x6A */ u16 hitEffect;
     /* 0x6C */ u8 unk6C;
     /* 0x6D */ s8 unk6D;
     /* 0x6E */ s16 unk6E;
@@ -914,16 +914,16 @@ typedef struct {
     /* 0x02 */ s16 heartCost;
     /* 0x04 */ u16 attackElement;
     /* 0x06 */ u8 unk6;
-    /* 0x07 */ u8 sp17;
-    /* 0x08 */ u16 sp18;
+    /* 0x07 */ u8 nFramesInvincibility;
+    /* 0x08 */ u16 stunFrames;
     /* 0x0A */ u8 unkA;
     /* 0x0B */ u8 unkB;
-    /* 0x0C */ u16 sp1C;
-    /* 0x0E */ u16 sp1E;
+    /* 0x0C */ u16 hitboxState;
+    /* 0x0E */ u16 hitEffect;
     /* 0x10 */ u8 crashId; // the ID for the crash version of this subweapon
     /* 0x11 */ u8 unk11;
-    /* 0x12 */ u16 sp22; // entity->entityRoomIndex
-} SubweaponDef;          /* size=0x14 */
+    /* 0x12 */ u16 entityRoomIndex;
+} SubweaponDef; /* size=0x14 */
 
 // Defines the equipment that can be set on left and right hand
 // This includes weapons, throw weapons, consumable and restoration items.
