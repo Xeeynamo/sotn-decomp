@@ -50,7 +50,20 @@ void func_801CD734() {
         func_801CD658();
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CD78C);
+void func_801CD78C(Point32* arg0, s32 arg1, s32 arg2, Point32* arg3) {
+    s16 var_s0;
+    s32 temp1;
+    s32 temp2;
+
+    var_s0 = arg2;
+    if (g_CurrentEntity->facing != 0) {
+        var_s0 = -arg2;
+    }
+    *arg3 = *arg0;
+
+    arg3->x -= arg1 * rsin(var_s0) * 16;
+    arg3->y += arg1 * rcos(var_s0) * 16;
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CD83C);
 
