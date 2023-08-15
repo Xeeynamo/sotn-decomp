@@ -344,7 +344,8 @@ typedef struct {
     /* 0x9C */ s16 unk9C;
     /* 0x9E */ s16 unk9E;
     /* 0xA0 */ struct Entity* unkA0;
-    /* 0xA4 */ char pad_A4[0x4];
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ s16 unkA6;
     /* 0xA8 */ u8 unkA8;
     /* 0xA9 */ char pad_A9[0x7];
     /* 0xB0 */ s16 unkB0[0x6];
