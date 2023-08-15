@@ -1576,7 +1576,7 @@ void func_8010189C(void) {
     }
 }
 
-void func_80101A80() {
+void DrawHudAlucard() {
     SubweaponDef subwpn;
     RECT rect;
     Primitive* prim;

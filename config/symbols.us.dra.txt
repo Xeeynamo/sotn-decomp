@@ -986,6 +986,7 @@ AddHearts = 0x800FE914;
 DealDamage = 0x800FF128;
 InitStatsAndGear = 0x800FF7B8;
 DrawHudRichter = 0x80100750;
+DrawHudAlucard = 0x80101A80;
 jpt_80102810 = 0x80102810;
 DestroyEntity = 0x80106590;
 DestroyEntities = 0x801065F4;
