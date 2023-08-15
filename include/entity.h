@@ -339,6 +339,11 @@ typedef struct {
     /* 0x88 */ u16 unk88;
 } ET_801D0B78;
 
+typedef struct {
+    /* 0x7C */ char pad_0[0x34];
+    /* 0xB0 */ s16 unkB0[0x6];
+} ET_GurkhaHammer;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
@@ -364,5 +369,6 @@ typedef union {
     /* 0x7C */ ET_Elevator elevator;
     /* 0x7C */ ET_801D1BB8 et_801D1BB8;
     /* 0x7C */ ET_801D0B78 et_801D0B78;
+    /* 0x7C */ ET_GurkhaHammer GH_Props;
     /* 0x7C */ char stub[0x40];
 } Ext;

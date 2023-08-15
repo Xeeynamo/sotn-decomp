@@ -128,9 +128,28 @@ s32 func_801CE120(Entity* self, s32 arg1) {
     return ret;
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CE1E8);
+void func_801CE1E8(s16 step) {
+    s32 i;
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CE228);
+    g_CurrentEntity->step = step;
+    g_CurrentEntity->step_s = 0;
+    g_CurrentEntity->animFrameIdx = 0;
+    g_CurrentEntity->animFrameDuration = 0;
+
+    for (i = 0; i < 4; i++) {
+        g_CurrentEntity->ext.GH_Props.unkB0[i] = 0;
+        g_CurrentEntity->ext.GH_Props.unkB0[i + 2] = 0;
+    }
+}
+
+void func_801CE228(s16 step) {
+    s32 i;
+
+    for (i = 0; i < 4; i++) {
+        g_CurrentEntity->ext.GH_Props.unkB0[i] = 0;
+        g_CurrentEntity->ext.GH_Props.unkB0[i + 2] = 0;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CE258);
 
