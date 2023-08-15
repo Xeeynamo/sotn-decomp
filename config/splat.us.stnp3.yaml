@@ -64,10 +64,10 @@ segments:
       - [0x320A0, .rodata, 49BC8]
       - [0x320B4, .rodata, 49F98] # EntityBloodyZombie data
       - [0x320DC, rodata]
-      - [0x321EC, .rodata, 4B018] #########
+      - [0x321EC, .rodata, 4B018]
       - [0x3224C, rodata]
-      - [0x322CC, rodata] # func_801CF254 .rodata, 4B018
-      - [0x322F8, rodata] # Gurka .rodata, 4B018
+      - [0x322CC, rodata] # EntityGurkhaBodyParts
+      - [0x322F8, rodata] # EntityGurkha
       - [0x32380, .rodata, 4E69C] # EntityGurkhaSword
       - [0x323E4, rodata]
       - [0x3246C, c]
