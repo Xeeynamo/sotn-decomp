@@ -209,7 +209,7 @@ s32 func_801CE4CC(Entity* self) {
     }
 
     if ((g_CurrentEntity->ext.et_801CE4CC.unk8E == 0) && (x < 96)) {
-        g_CurrentEntity->ext.stub[0x12] = 3;
+        g_CurrentEntity->ext.et_801CE4CC.unk8E = 3;
         step = 6;
     }
     if (step != g_CurrentEntity->step) {
