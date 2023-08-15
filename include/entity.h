@@ -340,7 +340,11 @@ typedef struct {
 } ET_801D0B78;
 
 typedef struct {
-    /* 0x7C */ char pad_0[0x2C];
+    /* 0x7C */ char pad_0[0x20];
+    /* 0x9C */ s16 unk9C;
+    /* 0x9E */ s16 unk9E;
+    /* 0xA0 */ struct Entity* unkA0;
+    /* 0xA4 */ char pad_A4[0x4];
     /* 0xA8 */ u8 unkA8;
     /* 0xA9 */ char pad_A9[0x7];
     /* 0xB0 */ s16 unkB0[0x6];

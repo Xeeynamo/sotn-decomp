@@ -43,7 +43,7 @@ extern void func_801BB3F4(s16);
 extern s32 func_801BD308(u16* hitSensors, s16 sensorCount);
 extern s32 func_801BD588(Entity* arg0, s32 arg1, s32 arg2, s32 arg3);
 extern s32 GetDistanceToPlayerX(void);
-extern s32 func_801CD658();
+extern void func_801CD658();
 extern void EntityPrizeDrop(Entity* entity);
 extern void EntityEquipItemDrop(Entity* entity);
 extern Primitive* func_801D2470(Primitive* poly);

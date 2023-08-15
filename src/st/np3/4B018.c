@@ -41,7 +41,25 @@ void func_801CD620(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CD658);
+extern s32 D_801D3378;
+extern s32 D_801D337C;
+extern s32 D_801D3380;
+extern s32 D_801D3384;
+extern s32 D_801D3388;
+
+void func_801CD658(void) {
+    g_CurrentBuffer = g_CurrentBuffer->next;
+    FntPrint("a:%x\n", D_801D3378);
+    FntPrint("b:%x\n", D_801D337C);
+    FntPrint("c:%x\n", D_801D3380);
+    FntPrint("d:%x\n", D_801D3384);
+    FntPrint("e:%x\n", D_801D3388);
+    DrawSync(0);
+    VSync(0);
+    PutDrawEnv(&g_CurrentBuffer->draw);
+    PutDispEnv(&g_CurrentBuffer->disp);
+    FntFlush(-1);
+}
 
 void func_801CD734() {
     while (PadRead(0))
@@ -62,11 +80,50 @@ void func_801CD78C(Entity* src, s32 speed, s16 angle, Entity* dst) {
     (*(Point32*)dst).y += speed * rcos(angle) * 16;
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CD83C);
+void func_801CD83C(Entity* self) {
+    s16 angle = self->ext.GH_Props.unk9C;
+    Entity* src;
+    
+    if (g_CurrentEntity->facing != 0) {
+        angle = - angle;
+    }
+    
+    src = self->ext.GH_Props.unkA0;
+    self->posX.val = src->posX.val;
+    self->posY.val = src->posY.val;
+    self->posX.val -= self->ext.GH_Props.unk9E * rsin(angle) * 16;
+    self->posY.val += self->ext.GH_Props.unk9E * rcos(angle) * 16;
+    if (self->ext.GH_Props.unkA8 != 0) {
+        FntPrint("CAUTION!! WARNING_A AT %x\n", self->animCurFrame);
+    }
+    self->ext.GH_Props.unkA8 |= 1;
+}
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CD91C);
+void func_801CD91C(Entity* self) {
+    s16 angle = self->ext.GH_Props.unk9C;
+    Entity* src;
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CDA14);
+    if (g_CurrentEntity->facing != 0) {
+        angle = -angle;
+    }
+    src = self->ext.GH_Props.unkA0;
+    src->posX.val = self->posX.val;
+    src->posY.val = self->posY.val;
+    src->posX.val -= -self->ext.GH_Props.unk9E * rsin(angle) * 16;
+    src->posY.val = -self->ext.GH_Props.unk9E * rcos(angle) * 16 + src->posY.val;
+    if (self->ext.GH_Props.unkA8 != 0) {
+        FntPrint("CAUTION!! WARNING_B AT %x\n", self->animCurFrame);
+    }
+    self->ext.GH_Props.unkA8 |= 1;
+}
+
+void func_801CDA14(Entity* ent1, Entity* ent2) {
+    Entity* temp_a0;
+
+    temp_a0 = ent1->ext.GH_Props.unkA0;
+    func_801CD78C(temp_a0, temp_a0->ext.GH_Props.unk9E, temp_a0->ext.GH_Props.unk9C, ent1);
+    func_801CD78C(ent1, ent2->ext.GH_Props.unk9E, ent2->ext.GH_Props.unk9C, ent2);
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CDA6C);
 
