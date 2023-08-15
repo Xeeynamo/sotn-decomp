@@ -155,7 +155,22 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CE258);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CE2CC);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CE3FC);
+void func_801CE3FC(s16* arg0) {
+    s16* var_s0;
+    s16 var_v0;
+    s32 i;
+
+    for (i = 0, var_s0 = arg0; i < 4; i++) {
+        func_801CD83C(&g_CurrentEntity[*var_s0]);
+        var_s0++;
+    }
+
+    for (arg0 += 4; *arg0 != 0; arg0++) {
+        if (*arg0 != 0xFF) {
+            func_801CD83C(&g_CurrentEntity[*arg0]);
+        }
+    }
+}
 
 s32 func_801CE4CC(Entity* self) {
     Entity* entity;
