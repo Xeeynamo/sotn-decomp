@@ -83,11 +83,11 @@ void func_801CD78C(Entity* src, s32 speed, s16 angle, Entity* dst) {
 void func_801CD83C(Entity* self) {
     s16 angle = self->ext.GH_Props.unk9C;
     Entity* src;
-    
+
     if (g_CurrentEntity->facing != 0) {
-        angle = - angle;
+        angle = -angle;
     }
-    
+
     src = self->ext.GH_Props.unkA0;
     self->posX.val = src->posX.val;
     self->posY.val = src->posY.val;
@@ -110,7 +110,8 @@ void func_801CD91C(Entity* self) {
     src->posX.val = self->posX.val;
     src->posY.val = self->posY.val;
     src->posX.val -= -self->ext.GH_Props.unk9E * rsin(angle) * 16;
-    src->posY.val = -self->ext.GH_Props.unk9E * rcos(angle) * 16 + src->posY.val;
+    src->posY.val =
+        -self->ext.GH_Props.unk9E * rcos(angle) * 16 + src->posY.val;
     if (self->ext.GH_Props.unkA8 != 0) {
         FntPrint("CAUTION!! WARNING_B AT %x\n", self->animCurFrame);
     }
@@ -121,11 +122,21 @@ void func_801CDA14(Entity* ent1, Entity* ent2) {
     Entity* temp_a0;
 
     temp_a0 = ent1->ext.GH_Props.unkA0;
-    func_801CD78C(temp_a0, temp_a0->ext.GH_Props.unk9E, temp_a0->ext.GH_Props.unk9C, ent1);
-    func_801CD78C(ent1, ent2->ext.GH_Props.unk9E, ent2->ext.GH_Props.unk9C, ent2);
+    func_801CD78C(temp_a0, temp_a0->ext.GH_Props.unk9E,
+                  temp_a0->ext.GH_Props.unk9C, ent1);
+    func_801CD78C(
+        ent1, ent2->ext.GH_Props.unk9E, ent2->ext.GH_Props.unk9C, ent2);
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CDA6C);
+void func_801CDA6C(Entity* self, s32 arg1) {
+    Entity* temp_s0;
+
+    temp_s0 = self->ext.GH_Props.unkA0;
+    func_801CD78C(
+        self, -self->ext.GH_Props.unk9E, self->ext.GH_Props.unk9C, temp_s0);
+    func_801CD78C(temp_s0, -temp_s0->ext.GH_Props.unk9E,
+                  temp_s0->ext.GH_Props.unk9C, arg1);
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CDAC8);
 
@@ -326,5 +337,3 @@ s32 func_801CE4CC(Entity* self) {
         }
     }
 }
-
-
