@@ -41,12 +41,6 @@ void func_801CD620(Entity* self) {
     }
 }
 
-extern s32 D_801D3378;
-extern s32 D_801D337C;
-extern s32 D_801D3380;
-extern s32 D_801D3384;
-extern s32 D_801D3388;
-
 void func_801CD658(void) {
     g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint("a:%x\n", D_801D3378);
@@ -160,15 +154,14 @@ void func_801CDD00(Entity* entity, s16 arg1, s16 arg2) {
 }
 
 void func_801CDD80(s16* arg0, Entity* arg1) {
-    s16* var_s1;
-
-    var_s1 = arg1->posY.val;
+    s16* posY = arg1->posY.val;
+    
     while (*arg0 != 0) {
         if (*arg0 != 0xFF) {
-            func_801CDD00(&g_CurrentEntity[*arg0], *var_s1, arg1->posX.val);
+            func_801CDD00(&g_CurrentEntity[*arg0], *posY, arg1->posX.val);
         }
         arg0++;
-        var_s1++;
+        posY++;
     }
 }
 
