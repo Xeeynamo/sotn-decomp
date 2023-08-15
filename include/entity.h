@@ -344,6 +344,15 @@ typedef struct {
     /* 0xB0 */ s16 unkB0[0x6];
 } ET_GurkhaHammer;
 
+typedef struct {
+    /* 0x7C */ char pad_0[0x8];
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ char pad_85[0x9];
+    /* 0x8E */ u8 unk8E;
+    /* 0x8F */ char pad_8F[0x20];
+    /* 0xB0 */ s16 unkB0;
+} ET_801CE4CC;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
@@ -370,5 +379,6 @@ typedef union {
     /* 0x7C */ ET_801D1BB8 et_801D1BB8;
     /* 0x7C */ ET_801D0B78 et_801D0B78;
     /* 0x7C */ ET_GurkhaHammer GH_Props;
+    /* 0x7C */ ET_801CE4CC et_801CE4CC;
     /* 0x7C */ char stub[0x40];
 } Ext;
