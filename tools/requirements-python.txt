@@ -7,7 +7,7 @@ intervaltree
 colorama
 python-Levenshtein
 cxxfilt
-mapfile-parser==2.1.0
+mapfile-parser==2.1.1
 tabulate
 requests
 graphviz
