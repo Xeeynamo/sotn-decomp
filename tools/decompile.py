@@ -215,10 +215,10 @@ def show_asm_differ_command(func: NonMatchingFunc):
 parser = argparse.ArgumentParser(description="automatically decompiles a function")
 parser.add_argument("function", help="function name to decompile")
 parser.add_argument(
-    "-o",
-    "--overlay",
-    help="the overlay where the function to decompile is located",
-    type=str,
+    "-n",
+    "--number-occurrence",
+    help="the occurrence number in case multiple functions with the same name are found",
+    type=int,
     default=None,
     required=False,
 )
@@ -239,27 +239,18 @@ if __name__ == "__main__":
 
     if args.force:
         funcs = funcs[:1]
-
-    if args.overlay == None:
+    elif args.number_occurrence and args.number_occurrence < len(funcs):
+        funcs = [funcs[args.number_occurrence]]
+    else:
         if len(funcs) > 1:
             print(
                 f"{len(funcs)} occurrences found for '{args.function}' in the following overlays:"
             )
-            for func in funcs:
-                print(f"{func.overlay_name} at {func.asm_path}")
-            print("invoke this decompiler again with the -o OVERLAY_NAME parameter.")
+            for n, func in enumerate(funcs):
+                print(f"[{n}] {func.overlay_name} at {func.asm_path}")
+            print("invoke this decompiler again with the -n or -f parameter.")
             os._exit(-1)
-        func = funcs[0]
-    else:
-        func = next((x for x in funcs if x.overlay_name == args.overlay), None)
-        if func == None:
-            print(
-                f"No occurrences found for '{args.function}' between the following overlays:"
-            )
-            for func in funcs:
-                print(f"{func.overlay_name} at {func.asm_path}")
-            print("no action will be taken.")
-            os._exit(-1)
+    func = funcs[0]
 
     # print(f"func: {func.name}")
     # print(f"overlay: {func.overlay_name}")
