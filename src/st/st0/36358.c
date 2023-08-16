@@ -216,7 +216,7 @@ void EntityExplosion(Entity* entity) {
     if (entity->step == 0) {
         u32 zPriority;
 
-        InitializeEntity(D_8018058C);
+        InitializeEntity(g_InitializeEntityData0);
         entity->animSet = ANIMSET_DRA(2);
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;
@@ -573,11 +573,11 @@ u8 func_801B8434(s32 arg0) {
     return bits_01;
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", EntityIntenseExplosion);
+#include "../entity_intense_explosion.h"
 
 void func_801B8AB4(Entity* entity) {
     if (entity->step == 0) {
-        InitializeEntity(D_8018058C);
+        InitializeEntity(g_InitializeEntityData0);
         entity->unk6C = 0xF0;
         entity->unk1A = 0x01A0;
         entity->unk1C = 0x01A0;
@@ -645,7 +645,7 @@ void func_801B8D00(Entity* self) {
     s32 temp;
 
     if (self->step == 0) {
-        InitializeEntity(D_8018058C);
+        InitializeEntity(g_InitializeEntityData0);
         self->animSet = ANIMSET_DRA(2);
         self->palette = 0x81B6;
         self->unk6C = 0x70;

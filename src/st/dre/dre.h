@@ -94,7 +94,7 @@ extern s32 D_801807F8[];
 extern u8 D_80180830[];
 extern u16 UNK_Invincibility0[];
 extern s16 D_80180D80[];
-extern u16 D_80180470[];
+extern u16 g_InitializeEntityData0[];
 extern u16 D_801804AC[];
 extern u16 D_801804F4[];
 extern s8 c_HeartPrizes[];

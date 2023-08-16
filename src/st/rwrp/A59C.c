@@ -309,7 +309,7 @@ void func_8018E1E0(u8 step_s) {
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E1FC);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E290);
+INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", InitializeEntity);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E38C);
 
@@ -592,7 +592,7 @@ u8 func_80191CC8(s32 arg0) {
     return bits_01;
 }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_80192248);
+#include "../entity_intense_explosion.h"
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_80192348);
 
@@ -665,7 +665,7 @@ void EntitySoulStealOrb(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        func_8018E290(D_8018044C);
+        InitializeEntity(D_8018044C);
         D_8008701E[primIndex * 0x1a] = 8;
         self->primIndex = primIndex;
         self->animSet = ANIMSET_DRA(0);
@@ -741,7 +741,7 @@ void func_80194DD4(Entity* entity) {
     ObjInit2* objInit = &D_80181134[entity->params];
 
     if (entity->step == 0) {
-        func_8018E290(D_80180494);
+        InitializeEntity(D_80180494);
         entity->animSet = objInit->animSet;
         entity->zPriority = objInit->zPriority;
         entity->unk5A = objInit->unk4.s;

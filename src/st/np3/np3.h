@@ -54,7 +54,7 @@ extern u8 g_eBreakableExplosionTypes[];
 extern u16 g_eBreakableanimSets[];
 extern u8 g_eBreakableBlendModes[];
 extern u16 D_80180A48[];
-extern u16 D_80180A54[];
+extern u16 g_InitializeEntityData0[];
 extern u16 D_80180A60[];
 extern u16 D_80180A6C[];
 extern u16 D_80180A78[];

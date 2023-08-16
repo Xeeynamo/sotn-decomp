@@ -22,7 +22,7 @@ void EntityBloodSplatter(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BE0);
+        InitializeEntity(g_InitializeEntityData0);
         return;
 
     case 1:
@@ -449,7 +449,7 @@ void func_801C5D20(Entity* self) { // BloodDrips
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BE0);
+        InitializeEntity(g_InitializeEntityData0);
         primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
         if (primIndex != -1) {
             prim = &g_PrimBuf[primIndex];

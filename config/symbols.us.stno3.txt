@@ -2,6 +2,7 @@ g_SpriteBanks = 0x80180040;
 g_pStObjLayout = 0x8018077C;
 PfnEntityUpdates = 0x80180924;
 g_eBreakableInit = 0x80180AAC;
+g_InitializeEntityData0 = 0x80180AC4;
 g_eBreakableAnimations = 0x80180E50;
 g_eBreakableHitboxes = 0x80180E70;
 g_eBreakableExplosionTypes = 0x80180E78;
