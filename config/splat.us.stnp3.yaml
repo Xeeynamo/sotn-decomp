@@ -64,9 +64,9 @@ segments:
       - [0x320A0, .rodata, 49BC8]
       - [0x320B4, .rodata, 49F98] # EntityBloodyZombie data
       - [0x320DC, rodata]
-      - [0x322CC, rodata] # func_801CF254 .rodata, 4B018
-      - [0x322F8, rodata] # Gurka .rodata, 4B018
-      - [0x32380, .rodata, 4B018] # EntityGurkhaSword
+      - [0x322CC, rodata] # func_801CF254 .rodata, 4E69C
+      - [0x322F8, rodata] # Gurka .rodata, 4E69C
+      - [0x32380, .rodata, 4E69C] # EntityGurkhaSword
       - [0x323E4, rodata]
       - [0x3246C, c]
       - [0x36990, c] # Gaibon & Slogra boss
@@ -80,5 +80,6 @@ segments:
       - [0x49BC8, c]
       - [0x49F98, c] # EntityBloodyZombie
       - [0x4B018, c]
+      - [0x4E69C, c]
       - [0x52768, data]
   - [0x53434]
