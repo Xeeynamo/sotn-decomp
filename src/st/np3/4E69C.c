@@ -342,7 +342,7 @@ s32 func_801D0B78(void) {
     return ret;
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", func_801D0D40);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", EntityBlade);
 
 void func_801D1BB8(Entity* self) {
     Primitive *prim, *prim2;
