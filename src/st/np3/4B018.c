@@ -202,8 +202,8 @@ void func_801CDE88(s16* arg0) {
     while (*arg0 != 0) {
         if (*arg0 != 0xFF) {
             temp_a0 = &g_CurrentEntity[*arg0];
-            temp_a0->ext.GH_Props.unk9C = (u16)temp_a0->ext.GH_Props.unk9C +
-                                          (u16)temp_a0->ext.generic.unkA6;
+            temp_a0->ext.GH_Props.unk9C = temp_a0->ext.GH_Props.unk9C +
+                                          temp_a0->ext.generic.unkA6;
             func_801CD83C(temp_a0);
         }
         arg0++;
