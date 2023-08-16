@@ -20,4 +20,5 @@ EntityIntenseExplosion = 0x80192248;
 ClutLerp = 0x8019344C;
 EntitySoulStealOrb = 0x80194590;
 func_801951F0 = 0x801951F0;
+UnkLoopFunc = 0x801959BC;
 UNK_Update0 = 0x801966A8;

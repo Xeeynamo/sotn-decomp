@@ -1101,7 +1101,7 @@ void func_801C2690(Primitive* prim) {
         prim->x2 = prim->x0 = prim->x0 + xPos;
         prim->x1 = prim->x1 + xPos;
         prim->x3 = prim->x0;
-        func_801D2704(prim, 4);
+        UnkLoopFunc(prim, 4);
         break;
     case 2:
         if (prim->p2 < 0x14) {
@@ -1111,7 +1111,7 @@ void func_801C2690(Primitive* prim) {
         prim->x2 = prim->x0 = prim->x0 - xPos;
         prim->x1 = prim->x1 - xPos;
         prim->x3 = prim->x0;
-        func_801D2704(prim, 4);
+        UnkLoopFunc(prim, 4);
         break;
     }
 }

@@ -51,4 +51,5 @@ EntityStageNamePopup = 0x8019A5F0;
 EntitySoulStealOrb = 0x8019B274;
 EntityEnemyBlood = 0x8019B608;
 EntityUnkId08 = 0x8019BAB8;
+UnkLoopFunc = 0x8019C6A0;
 UNK_Update0 = 0x8019D42C;

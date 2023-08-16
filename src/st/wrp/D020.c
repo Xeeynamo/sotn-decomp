@@ -1196,7 +1196,7 @@ void func_801917BC(Primitive* prim) {
         prim->x2 = prim->x0 = prim->x0 + xPos;
         prim->x1 = prim->x1 + xPos;
         prim->x3 = prim->x0;
-        func_80193A3C(prim, 4);
+        UnkLoopFunc(prim, 4);
         break;
     case 2:
         if (prim->p2 < 0x14) {
@@ -1206,7 +1206,7 @@ void func_801917BC(Primitive* prim) {
         prim->x2 = prim->x0 = prim->x0 - xPos;
         prim->x1 = prim->x1 - xPos;
         prim->x3 = prim->x0;
-        func_80193A3C(prim, 4);
+        UnkLoopFunc(prim, 4);
         break;
     }
 }
@@ -1747,27 +1747,4 @@ void func_80193A10(POLY_GT4* poly) {
     ((POLY_GT4*)poly->tag)->pad3 = 8;
 }
 
-s32 func_80193A3C(u8* arg0, u8 value) {
-    s32 ret = 0;
-    u8* phi_a0 = arg0 + 4;
-    s32 i;
-
-    for (i = 0; i < 4; i++) {
-        u8* ptrCur = phi_a0;
-        s32 ptrEnd = (s32)phi_a0 + 3;
-        do {
-            s32 phi_v0 = *ptrCur - value;
-            if (phi_v0 < 0) {
-                phi_v0 = 0;
-            } else {
-                ret |= 1;
-            }
-
-            *ptrCur++ = phi_v0;
-        } while ((s32)ptrCur < ptrEnd);
-
-        phi_a0 += 0xC;
-    }
-
-    return ret;
-}
+#include "../unk_loop_func.h"
