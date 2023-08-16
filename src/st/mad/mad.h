@@ -67,7 +67,7 @@ extern s32 D_80180FE4[];
 extern u8 D_80180FFC[];
 extern u16 D_80181000[];
 extern ObjInit2 D_801810F4[];
-extern u16 D_80180508[];
+extern u16 g_InitializeEntityData0[];
 extern s16 D_801809EC[];
 extern u8 D_80181010[];
 extern RoomHeader g_rooms[];
