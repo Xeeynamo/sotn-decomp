@@ -212,7 +212,15 @@ void func_801CDE88(s16* arg0) {
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CDF1C);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CDFD8);
+void func_801CDFD8(Entity* self, s32 arg1) {
+    if (self->ext.et_801CDFD8.unkB4 == 0) {
+        func_801CDD00(self, self->ext.et_801CDFD8.unkA4, arg1);
+        self->ext.et_801CDFD8.unkB4 = arg1;
+    }
+    self->ext.et_801CDFD8.unkB4--;
+    self->ext.et_801CDFD8.unk9C += self->ext.et_801CDFD8.unkA6;
+    func_801CD83C(self);
+}
 
 void func_801CE04C(Entity* entity, Collider* collider) {
     s16 var_s0 = 0;
