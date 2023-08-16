@@ -55,15 +55,16 @@ void Update(void) {
                                        (unk34 & 1)];
                 entity->flags--;
                 if ((entity->flags & 0xF) == 0) {
-                    entity->palette = entity->unk6A;
-                    entity->unk6A = 0;
+                    entity->palette = entity->hitEffect;
+                    entity->hitEffect = 0;
                 }
             }
 
             if (!(unk34 & 0x20000000) || (unk34 & 0x10000000) ||
                 ((u16)(entity->posX.i.hi + 64) <= 384) &&
                     ((u16)(entity->posY.i.hi + 64) <= 352)) {
-                if (!entity->unk58 || (entity->unk58--, unk34 & 0x100000)) {
+                if (!entity->stunFrames ||
+                    (entity->stunFrames--, unk34 & 0x100000)) {
                     if (!D_800973FC || unk34 & 0x2100 ||
                         (unk34 & 0x200 && !(D_8003C8C4 & 3))) {
                         g_CurrentEntity = entity;

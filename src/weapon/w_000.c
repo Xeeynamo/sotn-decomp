@@ -125,8 +125,8 @@ void SetWeaponProperties(Entity* self, s32 kind) {
         self->attackElement = equip.element;
         self->hitboxState = equip.hitType;
         self->nFramesInvincibility = equip.enemyInvincibilityFrames;
-        self->unk58 = equip.stunFrames;
-        self->unk6A = equip.hitEffect;
+        self->stunFrames = equip.stunFrames;
+        self->hitEffect = equip.hitEffect;
         self->entityRoomIndex = equip.criticalRate;
         g_api.func_80118894(self);
         break;

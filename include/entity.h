@@ -325,6 +325,20 @@ typedef struct {
     /* 0x84 */ s32 elevatorTarget;
 } ET_Elevator;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ char pad_80[0xC];
+    /* 0x8C */ u8 unk8C;
+    /* 0x8D */ u8 unk8D;
+    /* 0x8E */ char pad_8E[0xE];
+    /* 0x9C */ u16 unk9C;
+} ET_801D1BB8;
+
+typedef struct {
+    /* 0x7C */ char pad_0[0xC];
+    /* 0x88 */ u16 unk88;
+} ET_801D0B78;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
@@ -348,5 +362,7 @@ typedef union {
     /* 0x7C */ ET_CastleDoor castleDoor;
     /* 0x7C */ ET_DeathSkySwirl deathSkySwirl;
     /* 0x7C */ ET_Elevator elevator;
+    /* 0x7C */ ET_801D1BB8 et_801D1BB8;
+    /* 0x7C */ ET_801D0B78 et_801D0B78;
     /* 0x7C */ char stub[0x40];
 } Ext;

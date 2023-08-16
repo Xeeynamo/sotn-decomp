@@ -535,11 +535,11 @@ void func_8011A290(Entity* entity) {
     func_800FE3C4(&subwpn, entity->ext.generic.unkB0, 0);
     entity->attack = subwpn.attack;
     entity->attackElement = subwpn.attackElement;
-    entity->hitboxState = subwpn.sp1C;
-    entity->nFramesInvincibility = subwpn.sp17;
-    entity->unk58 = subwpn.sp18;
-    entity->unk6A = subwpn.sp1E;
-    entity->entityRoomIndex = subwpn.sp22;
+    entity->hitboxState = subwpn.hitboxState;
+    entity->nFramesInvincibility = subwpn.nFramesInvincibility;
+    entity->stunFrames = subwpn.stunFrames;
+    entity->hitEffect = subwpn.hitEffect;
+    entity->entityRoomIndex = subwpn.entityRoomIndex;
     entity->ext.generic.unkB2 = subwpn.crashId;
     func_80118894(entity);
 }
@@ -550,11 +550,11 @@ void func_8011A328(Entity* entity, s32 arg1) {
     func_800FD9D4(&spell, arg1);
     entity->attack = spell.attack;
     entity->attackElement = spell.attackElement;
-    entity->hitboxState = spell.unk10;
-    entity->nFramesInvincibility = spell.unk0D;
-    entity->unk58 = spell.unk0E;
-    entity->unk6A = spell.unk12;
-    entity->entityRoomIndex = spell.unk14;
+    entity->hitboxState = spell.hitboxState;
+    entity->nFramesInvincibility = spell.nFramesInvincibility;
+    entity->stunFrames = spell.stunFrames;
+    entity->hitEffect = spell.hitEffect;
+    entity->entityRoomIndex = spell.entityRoomIndex;
     func_80118894(entity);
 }
 
@@ -566,11 +566,11 @@ void func_8011A3AC(Entity* arg0, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3) {
         func_800FD9D4(&spell, arg1);
         arg0->attack = spell.attack;
         arg0->attackElement = spell.attackElement;
-        arg0->hitboxState = spell.unk10;
-        arg0->nFramesInvincibility = spell.unk0D;
-        arg0->unk58 = spell.unk0E;
-        arg0->unk6A = spell.unk12;
-        arg0->entityRoomIndex = spell.unk14;
+        arg0->hitboxState = spell.hitboxState;
+        arg0->nFramesInvincibility = spell.nFramesInvincibility;
+        arg0->stunFrames = spell.stunFrames;
+        arg0->hitEffect = spell.hitEffect;
+        arg0->entityRoomIndex = spell.entityRoomIndex;
         arg0->attack = spell.attack * ((arg3->unk0 * 4 / 95) + 1);
         func_80118894(arg0);
     }
@@ -809,8 +809,8 @@ void EntityUnarmedAttack(Entity* entity) {
         entity->attackElement = equip.element;
         entity->hitboxState = equip.hitType;
         entity->nFramesInvincibility = equip.enemyInvincibilityFrames;
-        entity->unk58 = equip.stunFrames;
-        entity->unk6A = equip.hitEffect;
+        entity->stunFrames = equip.stunFrames;
+        entity->hitEffect = equip.hitEffect;
         entity->entityRoomIndex = equip.criticalRate;
         func_80118894(entity);
         entity->step++;
@@ -845,8 +845,8 @@ void func_8011B334(Entity* entity) {
         entity->attackElement = equip.element;
         entity->hitboxState = equip.hitType;
         entity->nFramesInvincibility = equip.enemyInvincibilityFrames;
-        entity->unk58 = equip.stunFrames;
-        entity->unk6A = equip.hitEffect;
+        entity->stunFrames = equip.stunFrames;
+        entity->hitEffect = equip.hitEffect;
         entity->entityRoomIndex = equip.criticalRate;
         func_80118894(entity);
         entity->hitboxOffX = 9;

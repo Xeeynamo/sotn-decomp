@@ -599,23 +599,24 @@ void func_801B8AB4(Entity* entity) {
     }
 }
 
-void func_801B8B80(u16 entityId, Entity* source, Entity* entity) {
-    u16 palette;
+void func_801B8B80(u16 entityId, Entity* src, Entity* dst) {
+    DestroyEntity(dst);
+    dst->entityId = entityId;
+    dst->pfnUpdate = PfnEntityUpdates[entityId - 1];
+    dst->posX.i.hi = src->posX.i.hi;
+    dst->posY.i.hi = src->posY.i.hi;
+    dst->unk5A = src->unk5A;
+    dst->zPriority = src->zPriority;
+    dst->animSet = src->animSet;
+    dst->flags = FLAG_UNK_2000 | FLAG_UNK_01000000 | FLAG_UNK_04000000 |
+                 FLAG_UNK_08000000 | FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
+                 FLAG_DESTROY_IF_OUT_OF_CAMERA;
 
-    DestroyEntity(entity);
-    entity->entityId = entityId;
-    entity->pfnUpdate = PfnEntityUpdates[entityId - 1];
-    entity->posX.i.hi = source->posX.i.hi;
-    entity->posY.i.hi = source->posY.i.hi;
-    entity->unk5A = source->unk5A;
-    entity->zPriority = source->zPriority;
-    entity->animSet = source->animSet;
-    entity->flags = FLAG_UNK_2000 | FLAG_UNK_01000000 | FLAG_UNK_04000000 |
-                    FLAG_UNK_08000000 | FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
-                    FLAG_DESTROY_IF_OUT_OF_CAMERA;
-
-    palette = source->palette;
-    entity->palette = palette & 0x8000 ? source->unk6A : palette;
+    if (src->palette & 0x8000) {
+        dst->palette = src->hitEffect;
+    } else {
+        dst->palette = src->palette;
+    }
 }
 
 void func_801B8C48(void) {
