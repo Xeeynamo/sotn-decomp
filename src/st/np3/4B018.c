@@ -1,6 +1,6 @@
 #include "np3.h"
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CB018);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", EntityOwlKnight);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CBF18);
 
