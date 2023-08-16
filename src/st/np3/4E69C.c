@@ -344,7 +344,7 @@ s32 func_801D0B78(void) {
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", EntityBlade);
 
-void func_801D1BB8(Entity* self) {
+void EntityBladeSword(Entity* self) {
     Primitive *prim, *prim2;
     s32 x0, x1, y0, y1;
     s16 primIndex;
