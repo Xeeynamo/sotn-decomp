@@ -1,10 +1,10 @@
 #include "np3.h"
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", EntityOwlKnight);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", EntityOwl);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CBF18);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CC2E0);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", EntityOwlKnight);
 
 void func_801CD540(Entity* self) {
     s8* hitbox;
