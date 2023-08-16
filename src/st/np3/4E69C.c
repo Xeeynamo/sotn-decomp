@@ -1,12 +1,12 @@
 #include "np3.h"
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", EntityHammer);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", EntityHammer);
 
 // DECOMP_ME_WIP func_801CF254 https://decomp.me/scratch/EpZEL
 // minor regalloc
 // has jumptable
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", EntityGurkhaBodyParts);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", EntityGurkhaBodyParts);
 #else
 extern u16 D_80180B8C[];
 extern u16 D_80180BA4[];
@@ -162,12 +162,12 @@ void EntityHammerWeapon(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CF778);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", func_801CF778);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CF7A0);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", func_801CF7A0);
 
 // DECOMP_ME_WIP EntityGurkha https://decomp.me/scratch/51iIJ
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", EntityGurkha);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", EntityGurkha);
 
 void EntityGurkhaSword(Entity* self) {
     s16 angle;
@@ -252,9 +252,9 @@ void EntityGurkhaSword(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D0A00);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", func_801D0A00);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D0B40);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", func_801D0B40);
 
 s32 func_801D0B78(void) {
     s32 ret;
@@ -330,7 +330,7 @@ s32 func_801D0B78(void) {
     return ret;
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D0D40);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", func_801D0D40);
 
 void func_801D1BB8(Entity* self) {
     Primitive *prim, *prim2;
@@ -443,9 +443,9 @@ void func_801D1BB8(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D1F38);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", func_801D1F38);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801D2320);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", func_801D2320);
 
 Primitive* func_801D2470(Primitive* poly) {
     while (poly != NULL) {
