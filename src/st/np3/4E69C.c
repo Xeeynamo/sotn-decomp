@@ -255,7 +255,7 @@ void EntityGurkhaSword(Entity* self) {
 void func_801D0A00(s16* arg0) {
     func_801CD91C(&g_CurrentEntity[arg0[1]]);
     func_801CD91C(&g_CurrentEntity[arg0[0]]);
-    func_801CD91C(g_CurrentEntity + 18);
+    func_801CD91C(&g_CurrentEntity[18]);
     func_801CD83C(&g_CurrentEntity[arg0[2]]);
     func_801CD83C(&g_CurrentEntity[arg0[3]]);
 
