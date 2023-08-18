@@ -70,6 +70,7 @@ EntityClockTower3D = 0x801BB2AC;
 EntityCutscenePhotograph = 0x801BB764;
 EntityCutscenePhotographFire = 0x801BC4D0;
 func_801BC5C0 = 0x801BC5C0;
+UnkLoopFunc = 0x801BD88C;
 func_801BD8F0 = 0x801BD8F0;
 EntityBackgroundVortex = 0x801BE1B4;
 g_Dialogue = 0x801C24CC;
