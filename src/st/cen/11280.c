@@ -1076,7 +1076,7 @@ u8 func_801989AC(s32 arg0) {
 }
 
 // ID 06
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", EntityIntenseExplosion);
+#include "../entity_intense_explosion.h"
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", func_8019902C);
 

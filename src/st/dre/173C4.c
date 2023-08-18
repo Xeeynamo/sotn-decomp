@@ -917,7 +917,7 @@ void EntityExplosion(Entity* entity) {
     u32 temp;
 
     if (!entity->step) {
-        InitializeEntity(D_80180470);
+        InitializeEntity(g_InitializeEntityData0);
         entity->animSet = ANIMSET_DRA(2);
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;

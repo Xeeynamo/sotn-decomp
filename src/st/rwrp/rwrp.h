@@ -26,5 +26,8 @@ extern u16 D_80180DF4[];
 
 extern u16 UNK_Update0[];
 extern u16 UNK_Invincibility0[];
+extern u16 g_InitializeEntityData0[];
+
+void InitializeEntity(u16 arg0[]);
 
 #endif

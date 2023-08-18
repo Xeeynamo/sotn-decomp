@@ -220,7 +220,7 @@ void EntityExplosion(Entity* entity) {
     u32 temp_v0;
 
     if (entity->step == 0) {
-        InitializeEntity(D_80180BE0);
+        InitializeEntity(g_InitializeEntityData0);
         entity->animSet = ANIMSET_DRA(2);
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;
@@ -641,7 +641,7 @@ void func_801C0D08(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BE0);
+        InitializeEntity(g_InitializeEntityData0);
         primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
         if (primIndex == -1) {
             return;
@@ -894,7 +894,7 @@ void EntityIntenseExplosion(Entity* entity) {
     u32 temp_v0;
 
     if (entity->step == 0) {
-        InitializeEntity(D_80180BE0);
+        InitializeEntity(g_InitializeEntityData0);
         entity->palette = 0x8170;
         entity->animSet = ANIMSET_DRA(5);
         entity->animCurFrame = 1;
@@ -928,7 +928,7 @@ void EntityIntenseExplosion(Entity* entity) {
 
 void func_801C16B4(Entity* entity) {
     if (entity->step == 0) {
-        InitializeEntity(D_80180BE0);
+        InitializeEntity(g_InitializeEntityData0);
         entity->unk6C = 0xF0;
         entity->unk1A = 0x1A0;
         entity->unk1C = 0x1A0;
@@ -997,7 +997,7 @@ void func_801C1900(Entity* self) {
     s32 temp;
 
     if (self->step == 0) {
-        InitializeEntity(D_80180BE0);
+        InitializeEntity(g_InitializeEntityData0);
         self->animSet = ANIMSET_DRA(2);
         self->palette = 0x81B6;
         self->unk6C = 0x70;

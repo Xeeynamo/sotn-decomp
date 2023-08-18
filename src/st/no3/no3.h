@@ -32,7 +32,7 @@ extern POLY_GT4* func_801D6DB8(POLY_GT4* poly);
 
 LayoutEntity* D_80180850[];
 extern u16 D_80180AB8[];
-extern u16 D_80180AC4[];
+extern u16 g_InitializeEntityData0[];
 extern u16 D_80180AD0[];
 extern u16 D_80180ADC[]; // Init EntityCastleDoor
 extern u16 D_80180AE8[];

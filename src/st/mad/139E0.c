@@ -224,7 +224,7 @@ void EntityExplosion(Entity* entity) {
     u32 temp_v0;
 
     if (entity->step == 0) {
-        InitializeEntity(D_80180508);
+        InitializeEntity(g_InitializeEntityData0);
         entity->animSet = ANIMSET_DRA(2);
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;
@@ -613,44 +613,11 @@ u8 func_80195F64(s32 arg0) {
     return bits_01;
 }
 
-void EntityIntenseExplosion(Entity* entity) {
-    u32 zPriority;
-
-    if (entity->step == 0) {
-        InitializeEntity(D_80180508);
-        entity->palette = 0x8170;
-        entity->animSet = ANIMSET_DRA(5);
-        entity->animCurFrame = 1;
-        entity->blendMode = 0x30;
-        if (entity->params & 0xF0) {
-            entity->palette = 0x8195;
-            entity->blendMode = 0x10;
-        }
-
-        zPriority = entity->params & 0xFF00;
-        if (zPriority != 0) {
-            entity->zPriority = zPriority >> 8;
-        }
-
-        entity->zPriority += 8;
-        return;
-    } else {
-        entity->animFrameDuration++;
-        entity->posY.val -= FIX(0.25);
-
-        if (!(entity->animFrameDuration & 1)) {
-            entity->animCurFrame++;
-        }
-
-        if (entity->animFrameDuration >= 0x25) {
-            DestroyEntity(entity);
-        }
-    }
-}
+#include "../entity_intense_explosion.h"
 
 void func_801965E4(Entity* entity) {
     if (entity->step == 0) {
-        InitializeEntity(D_80180508);
+        InitializeEntity(g_InitializeEntityData0);
         entity->unk6C = 0xF0;
         entity->unk1A = 0x1A0;
         entity->unk1C = 0x1A0;

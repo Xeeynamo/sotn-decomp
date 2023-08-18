@@ -1,5 +1,6 @@
 g_SpriteBanks = 0x80180040;
 PfnEntityUpdates = 0x801804BC;
+g_InitializeEntityData0 = 0x8018058C;
 g_isSecretStairsButtonPressed = 0x8018089C;
 g_isDraculaFirstFormDefeated = 0x8018090C;
 UNK_Invincibility0 = 0x801815EC;

@@ -73,7 +73,7 @@ LayoutEntity* D_801803E8[];
 
 // *** Initializers ***
 extern u16 D_80180574[];
-extern u16 D_8018058C[];
+extern u16 g_InitializeEntityData0[];
 extern u16 D_80180598[]; // Init EntityCutscene
 extern u16 D_801805A4[];
 extern u16 D_801805BC[];
