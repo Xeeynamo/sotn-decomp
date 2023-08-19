@@ -799,9 +799,9 @@ u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity) {
                 break;
             case STAT_LCK:
 #if defined(VERSION_US)
-                damage += (rand() % g_Status.statsTotal[3]) + 1;
+                damage += (rand() % g_Status.statsTotal[STAT_LCK]) + 1;
 #elif defined(VERSION_HD)
-                damage += (rand() % g_Status.statsTotal[3]);
+                damage += (rand() % g_Status.statsTotal[STAT_LCK]);
 #endif
                 break;
             }
