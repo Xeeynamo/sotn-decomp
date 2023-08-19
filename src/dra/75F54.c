@@ -992,7 +992,37 @@ INCLUDE_ASM("dra/nonmatchings/75F54", EntityMist);
 
 INCLUDE_ASM("dra/nonmatchings/75F54", func_80123788);
 
-INCLUDE_ASM("dra/nonmatchings/75F54", func_801238CC);
+// Appears as D_800AD0C4[49].
+void UnknownEntId49(Entity* self) {
+    s32 x_offset;
+
+    if (!(g_Player.unk0C & 0x01000000) || (PLAYER.step != 0x2B)) {
+        DestroyEntity(self);
+        return;
+    }
+    if (self->step == 0) {
+        self->animSet = PLAYER.animSet;
+        self->animCurFrame = 7;
+        self->unk5A = PLAYER.unk5A;
+        self->palette = PLAYER.palette;
+        self->facing = PLAYER.facing;
+        self->zPriority = PLAYER.zPriority;
+        self->flags = 0x04060000;
+        self->step++;
+    }
+    self->unk19 = PLAYER.unk19 & 8;
+    self->unk6C = PLAYER.unk6C;
+
+    if (ABS(PLAYER.rotAngle) == 0x200) {
+        x_offset = PLAYER.entityRoomIndex != 0 ? 0x10 : -0x10;
+        self->posX.i.hi = x_offset + PLAYER.posX.i.hi;
+        self->posY.i.hi = PLAYER.posY.i.hi + 9 + ((D_8003C8C4 >> 1) & 1);
+    } else {
+        x_offset = PLAYER.entityRoomIndex != 0 ? 0x18 : -0x18;
+        self->posX.i.hi = x_offset + PLAYER.posX.i.hi;
+        self->posY.i.hi = PLAYER.posY.i.hi + 16 + ((D_8003C8C4 >> 1) & 1);
+    }
+}
 
 void func_80123A60(Entity* entity) {
     Entity* player = &PLAYER;
