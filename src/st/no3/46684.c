@@ -217,7 +217,7 @@ void EntityExplosion(Entity* entity) {
     u16 zPriority;
 
     if (entity->step == 0) {
-        InitializeEntity(D_80180AC4);
+        InitializeEntity(g_InitializeEntityData0);
         entity->animSet = ANIMSET_DRA(2);
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;
@@ -802,42 +802,11 @@ u8 func_801C93AC(s32 arg0) {
     return bits_01;
 }
 
-void EntityIntenseExplosion(Entity* entity) {
-    u32 zPriority;
-
-    if (entity->step == 0) {
-        InitializeEntity(D_80180AC4);
-        entity->palette = 0x8170;
-        entity->animSet = ANIMSET_DRA(5);
-        entity->animCurFrame = 1;
-        entity->blendMode = 0x30;
-        if (entity->params & 0xF0) {
-            entity->palette = 0x8195;
-            entity->blendMode = 0x10;
-        }
-
-        zPriority = entity->params & 0xFF00;
-        if (zPriority != 0) {
-            entity->zPriority = zPriority >> 8;
-        }
-        entity->zPriority += 8;
-    } else {
-        entity->animFrameDuration++;
-        entity->posY.val -= FIX(0.25);
-
-        if (!(entity->animFrameDuration & 1)) {
-            entity->animCurFrame++;
-        }
-
-        if (entity->animFrameDuration >= 37) {
-            DestroyEntity(entity);
-        }
-    }
-}
+#include "../entity_intense_explosion.h"
 
 void func_801903C8(Entity* entity) {
     if (entity->step == 0) {
-        InitializeEntity(D_80180AC4);
+        InitializeEntity(g_InitializeEntityData0);
         entity->unk6C = 0xF0;
         entity->unk1A = 0x01A0;
         entity->unk1C = 0x01A0;
@@ -1011,7 +980,7 @@ void func_801CAE20(Primitive* prim) {
         prim->x2 = prim->x0 = prim->x0 + xPos;
         prim->x1 = prim->x1 + xPos;
         prim->x3 = prim->x0;
-        func_801D704C(prim, 4);
+        UnkLoopFunc(prim, 4);
         break;
     case 2:
         if (prim->p2 < 0x14) {
@@ -1021,7 +990,7 @@ void func_801CAE20(Primitive* prim) {
         prim->x2 = prim->x0 = prim->x0 - xPos;
         prim->x1 = prim->x1 - xPos;
         prim->x3 = prim->x0;
-        func_801D704C(prim, 4);
+        UnkLoopFunc(prim, 4);
         break;
     }
 }
@@ -1410,7 +1379,7 @@ void EntityWargExplosionPuffTransparent(Entity* entity) {
     u32 temp_v0;
 
     if (entity->step == 0) {
-        InitializeEntity(D_80180AC4);
+        InitializeEntity(g_InitializeEntityData0);
         entity->animSet = ANIMSET_DRA(14);
         entity->unk5A = 0x79;
         entity->palette = 0xD0;
@@ -1592,7 +1561,7 @@ void EntityUnkId3D(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180AC4);
+        InitializeEntity(g_InitializeEntityData0);
         self->animSet = ANIMSET_DRA(2);
         self->velocityY = FIX(-5);
         self->palette = 0x8162;

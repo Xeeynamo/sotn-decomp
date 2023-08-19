@@ -529,45 +529,11 @@ u8 func_8019EAF0(s32 arg0) {
     return bits_01;
 }
 
-void EntityIntenseExplosion(Entity* entity) {
-    u32 temp_v0;
-
-    if (entity->step == 0) {
-        InitializeEntity(D_80180470);
-        entity->palette = 0x8170;
-        entity->animSet = ANIMSET_DRA(5);
-        entity->animCurFrame = 1;
-        entity->blendMode = 0x30;
-
-        if (entity->params & 0xF0) {
-            entity->palette = 0x8195;
-            entity->blendMode = 0x10;
-        }
-
-        temp_v0 = entity->params & 0xFF00;
-        if (temp_v0 != 0) {
-            entity->zPriority = temp_v0 >> 8;
-        }
-
-        entity->zPriority += 8;
-        return;
-    }
-
-    entity->animFrameDuration++;
-    entity->posY.val -= FIX(0.25);
-
-    if (!(entity->animFrameDuration & 1)) {
-        entity->animCurFrame++;
-    }
-
-    if (entity->animFrameDuration >= 0x25) {
-        DestroyEntity(entity);
-    }
-}
+#include "../entity_intense_explosion.h"
 
 void func_8019F170(Entity* entity) {
     if (!entity->step) {
-        InitializeEntity(D_80180470);
+        InitializeEntity(g_InitializeEntityData0);
         entity->unk6C = 0xF0;
         entity->unk1A = 0x1A0;
         entity->unk1C = 0x1A0;
@@ -745,7 +711,7 @@ void func_801A0564(Primitive* prim) {
         prim->x2 = prim->x0 = prim->x0 + xPos;
         prim->x1 = prim->x1 + xPos;
         prim->x3 = prim->x0;
-        func_801A27E4(prim, 4);
+        UnkLoopFunc(prim, 4);
         break;
     case 2:
         if (prim->p2 < 0x14) {
@@ -755,7 +721,7 @@ void func_801A0564(Primitive* prim) {
         prim->x2 = prim->x0 = prim->x0 - xPos;
         prim->x1 = prim->x1 - xPos;
         prim->x3 = prim->x0;
-        func_801A27E4(prim, 4);
+        UnkLoopFunc(prim, 4);
         break;
     }
 }
@@ -1112,33 +1078,7 @@ void func_801A27B8(POLY_GT4* poly) {
     ((POLY_GT4*)poly->tag)->pad3 = 8;
 }
 
-s32 func_801A27E4(s32 arg0, u8 arg1) {
-    s32 var_v0;
-    s32 ret = 0;
-    u8* var_a0 = arg0 + 4;
-    u8* var_v1;
-    s32 i;
-
-    for (i = 0; i < 4; i++) {
-        var_v1 = var_a0;
-        do {
-            var_v0 = *var_v1 - arg1;
-
-            if (var_v0 < 0) {
-                var_v0 = 0;
-            } else {
-                ret |= 1;
-            }
-
-            *var_v1 = var_v0;
-            var_v1++;
-        } while (((s32)var_v1 < ((s32)var_a0 + 3)));
-
-        var_a0 += 0xC;
-    }
-
-    return ret;
-}
+#include "../unk_loop_func.h"
 
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", func_801A2848);
 

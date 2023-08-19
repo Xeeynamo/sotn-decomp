@@ -216,7 +216,7 @@ void EntityExplosion(Entity* entity) {
     if (entity->step == 0) {
         u32 zPriority;
 
-        InitializeEntity(D_8018058C);
+        InitializeEntity(g_InitializeEntityData0);
         entity->animSet = ANIMSET_DRA(2);
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;
@@ -573,11 +573,11 @@ u8 func_801B8434(s32 arg0) {
     return bits_01;
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", EntityIntenseExplosion);
+#include "../entity_intense_explosion.h"
 
 void func_801B8AB4(Entity* entity) {
     if (entity->step == 0) {
-        InitializeEntity(D_8018058C);
+        InitializeEntity(g_InitializeEntityData0);
         entity->unk6C = 0xF0;
         entity->unk1A = 0x01A0;
         entity->unk1C = 0x01A0;
@@ -645,7 +645,7 @@ void func_801B8D00(Entity* self) {
     s32 temp;
 
     if (self->step == 0) {
-        InitializeEntity(D_8018058C);
+        InitializeEntity(g_InitializeEntityData0);
         self->animSet = ANIMSET_DRA(2);
         self->palette = 0x81B6;
         self->unk6C = 0x70;
@@ -1174,31 +1174,7 @@ void func_801BD860(POLY_GT4* arg0) {
     ((POLY_GT4*)arg0->tag)->pad3 = 8;
 }
 
-s32 func_801BD88C(s32 arg0, u8 arg1) {
-    s32 var_v0;
-    s32 ret = 0;
-    s32 j = arg0 + 4;
-    u8* var_v1;
-    s32 i;
-
-    for (i = 0; i < 4; i++, j += 12) {
-        var_v1 = (u8*)j;
-        do {
-            var_v0 = *var_v1 - arg1;
-
-            if (var_v0 < 0) {
-                var_v0 = 0;
-            } else {
-                ret |= 1;
-            }
-
-            *var_v1 = var_v0;
-            var_v1++;
-        } while ((s32)var_v1 < (s32)j + 3);
-    }
-
-    return ret;
-}
+#include "../unk_loop_func.h"
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", func_801BD8F0);
 

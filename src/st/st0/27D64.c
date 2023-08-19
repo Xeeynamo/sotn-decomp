@@ -192,7 +192,7 @@ void func_801A8328(Entity* self) {
             break;
         }
 
-        InitializeEntity(D_8018058C);
+        InitializeEntity(g_InitializeEntityData0);
         firstPrimIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (firstPrimIndex != -1) {
             prim = &g_PrimBuf[firstPrimIndex];

@@ -1076,7 +1076,7 @@ u8 func_801989AC(s32 arg0) {
 }
 
 // ID 06
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", EntityIntenseExplosion);
+#include "../entity_intense_explosion.h"
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", func_8019902C);
 
@@ -1199,7 +1199,7 @@ void func_8019A420(Primitive* prim) {
         prim->x2 = prim->x0 = prim->x0 + xPos;
         prim->x1 = prim->x1 + xPos;
         prim->x3 = prim->x0;
-        func_8019C6A0(prim, 4);
+        UnkLoopFunc(prim, 4);
         break;
     case 2:
         if (prim->p2 < 0x14) {
@@ -1209,7 +1209,7 @@ void func_8019A420(Primitive* prim) {
         prim->x2 = prim->x0 = prim->x0 - xPos;
         prim->x1 = prim->x1 - xPos;
         prim->x3 = prim->x0;
-        func_8019C6A0(prim, 4);
+        UnkLoopFunc(prim, 4);
         break;
     }
 }

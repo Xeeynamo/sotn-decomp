@@ -370,8 +370,8 @@ void EntityStageTitleCard(Entity* self) {
             v++;
         }
 
-        func_801BD88C(prim, 4);
-        if (func_801BD88C(prim->next, 3) == 0) {
+        UnkLoopFunc(prim, 4);
+        if (UnkLoopFunc(prim->next, 3) == 0) {
             PreventEntityFromRespawning(fakeEntity);
             D_8003C8B8 = 1;
             DestroyEntity(fakeEntity);

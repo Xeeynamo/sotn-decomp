@@ -222,7 +222,7 @@ void EntityExplosion(Entity* entity) {
     u32 temp_v0;
 
     if (entity->step == 0) {
-        InitializeEntity(D_80180A54);
+        InitializeEntity(g_InitializeEntityData0);
         entity->animSet = ANIMSET_DRA(2);
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;
@@ -618,7 +618,7 @@ void func_801C08F0(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180A54);
+        InitializeEntity(g_InitializeEntityData0);
         primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
         if (primIndex != -1) {
             prim = &g_PrimBuf[primIndex];
@@ -866,45 +866,11 @@ u8 func_801C0C1C(s32 arg0) {
     return bits_01;
 }
 
-void EntityIntenseExplosion(Entity* entity) {
-    u32 temp_v0;
-
-    if (entity->step == 0) {
-        InitializeEntity(D_80180A54);
-        entity->palette = 0x8170;
-        entity->animSet = ANIMSET_DRA(5);
-        entity->animCurFrame = 1;
-        entity->blendMode = 0x30;
-
-        if (entity->params & 0xF0) {
-            entity->palette = 0x8195;
-            entity->blendMode = 0x10;
-        }
-
-        temp_v0 = entity->params & 0xFF00;
-        if (temp_v0 != 0) {
-            entity->zPriority = temp_v0 >> 8;
-        }
-
-        entity->zPriority += 8;
-        return;
-    }
-
-    entity->animFrameDuration++;
-    entity->posY.val -= FIX(0.25);
-
-    if (!(entity->animFrameDuration & 1)) {
-        entity->animCurFrame++;
-    }
-
-    if (entity->animFrameDuration >= 0x25) {
-        DestroyEntity(entity);
-    }
-}
+#include "../entity_intense_explosion.h"
 
 void func_801C129C(Entity* entity) {
     if (entity->step == 0) {
-        InitializeEntity(D_80180A54);
+        InitializeEntity(g_InitializeEntityData0);
         entity->unk6C = 0xF0;
         entity->unk1A = 0x1A0;
         entity->unk1C = 0x1A0;
@@ -973,7 +939,7 @@ void func_801C14E8(Entity* self) {
     s32 temp;
 
     if (self->step == 0) {
-        InitializeEntity(D_80180A54);
+        InitializeEntity(g_InitializeEntityData0);
         self->animSet = ANIMSET_DRA(2);
         self->palette = 0x81B6;
         self->unk6C = 0x70;
@@ -1135,7 +1101,7 @@ void func_801C2690(Primitive* prim) {
         prim->x2 = prim->x0 = prim->x0 + xPos;
         prim->x1 = prim->x1 + xPos;
         prim->x3 = prim->x0;
-        func_801D2704(prim, 4);
+        UnkLoopFunc(prim, 4);
         break;
     case 2:
         if (prim->p2 < 0x14) {
@@ -1145,7 +1111,7 @@ void func_801C2690(Primitive* prim) {
         prim->x2 = prim->x0 = prim->x0 - xPos;
         prim->x1 = prim->x1 - xPos;
         prim->x3 = prim->x0;
-        func_801D2704(prim, 4);
+        UnkLoopFunc(prim, 4);
         break;
     }
 }

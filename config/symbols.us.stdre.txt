@@ -1,6 +1,7 @@
 g_SpriteBanks = 0x80180040;
 PfnEntityUpdates = 0x801803C8;
 g_eBreakableInit = 0x80180458;
+g_InitializeEntityData0 = 0x80180470;
 g_eBreakableAnimations = 0x80180610;
 g_eBreakableHitboxes = 0x80180630;
 g_eBreakableExplosionTypes = 0x80180638;
@@ -70,6 +71,7 @@ EntitySoulStealOrb = 0x801A13B8;
 EntityEnemyBlood = 0x801A174C;
 EntityRoomForeground = 0x801A1BFC;
 func_801A2018 = 0x801A2018;
+UnkLoopFunc = 0x801A27E4;
 EntityUnkId17 = 0x801A2E20;
 Entity3DBackgroundHouse = 0x801A2F10;
 UNK_Update0 = 0x801A3F8C;
