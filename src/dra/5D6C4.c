@@ -734,7 +734,7 @@ u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity) {
     EnemyDef* enemy;
     u16 temp_v1;
     u16 elementMask;
-    s32 higherStatIdx;
+    s32 highestStatIdx;
     s32 i;
     u16 element;
     u16 damage;
@@ -776,28 +776,28 @@ u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity) {
                 stats[i] = (rand() & 0x3F) + g_Status.statsBase[i];
             }
 
-            higherStatIdx = 0;
+            highestStatIdx = 0;
             for (i = 1; i < 4; i++) {
-                if (stats[i] > stats[higherStatIdx]) {
-                    higherStatIdx = i;
+                if (stats[i] > stats[highestStatIdx]) {
+                    highestStatIdx = i;
                 }
             }
 
-            switch (higherStatIdx) {
-            case 0:
+            switch (highestStatIdx) {
+            case STAT_STR:
                 damage *= 2;
                 break;
-            case 1:
+            case STAT_CON:
                 if (enemy->defense > damage) {
                     damage += enemy->defense / 2;
                 } else {
                     damage += damage / 2;
                 }
                 break;
-            case 2:
+            case STAT_INT:
                 damage += SquareRoot0(g_roomCount);
                 break;
-            case 3:
+            case STAT_LCK:
 #if defined(VERSION_US)
                 damage += (rand() % g_Status.statsTotal[3]) + 1;
 #elif defined(VERSION_HD)
