@@ -303,7 +303,7 @@ void func_801942D0(s16 index) {
     }
 }
 
-void func_8019434C(Entity* entity) {
+void PreventEntityFromRespawning(Entity* entity) {
     if (entity->entityRoomIndex) {
         u32 value = (entity->entityRoomIndex - 1);
         u16 index = value / 32;
@@ -731,7 +731,7 @@ void func_801951C0(u16* hitSensors, s16 sensorCount) {
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", func_80195318);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", func_8019565C);
+#include "../replace_breakable_with_item_drop.h"
 
 void func_80195714(void) {
     s32 temp_v1;

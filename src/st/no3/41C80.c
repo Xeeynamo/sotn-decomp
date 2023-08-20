@@ -707,35 +707,7 @@ void func_801C5BC0(u16* hitSensors, s16 sensorCount) {
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/41C80", func_801C5D18);
 
-void ReplaceBreakableWithItemDrop(Entity* self) {
-    u16 params;
-
-    PreventEntityFromRespawning(self);
-
-#if STAGE != STAGE_ST0
-    if (!(g_Status.relics[RELIC_CUBE_OF_ZOE] & 2)) {
-        DestroyEntity(self);
-        return;
-    }
-#endif
-
-    params = self->params &= 0xFFF;
-
-    if (params < 0x80) {
-        self->entityId = E_PRIZE_DROP;
-        self->pfnUpdate = (PfnEntityUpdate)EntityPrizeDrop;
-        self->animFrameDuration = 0;
-        self->animFrameIdx = 0;
-    } else {
-        params -= 0x80;
-        self->entityId = E_EQUIP_ITEM_DROP;
-        self->pfnUpdate = (PfnEntityUpdate)EntityEquipItemDrop;
-    }
-
-    self->params = params;
-    self->unk6D = 0x10;
-    self->step = 0;
-}
+#include "../replace_breakable_with_item_drop.h"
 
 void func_801C6114(void) {
     s32 temp_v1;
