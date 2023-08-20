@@ -252,7 +252,19 @@ void EntityGurkhaSword(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", func_801D0A00);
+void func_801D0A00(s16* arg0) {
+    func_801CD91C(&g_CurrentEntity[arg0[1]]);
+    func_801CD91C(&g_CurrentEntity[arg0[0]]);
+    func_801CD91C(&g_CurrentEntity[18]);
+    func_801CD83C(&g_CurrentEntity[arg0[2]]);
+    func_801CD83C(&g_CurrentEntity[arg0[3]]);
+
+    for (arg0 += 4; *arg0 != 0; arg0++) {
+        if (*arg0 != 0xFF) {
+            func_801CD83C(&g_CurrentEntity[*arg0]);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", func_801D0B40);
 
@@ -330,9 +342,9 @@ s32 func_801D0B78(void) {
     return ret;
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", func_801D0D40);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", EntityBlade);
 
-void func_801D1BB8(Entity* self) {
+void EntityBladeSword(Entity* self) {
     Primitive *prim, *prim2;
     s32 x0, x1, y0, y1;
     s16 primIndex;
@@ -447,12 +459,12 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", func_801D1F38);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", func_801D2320);
 
-Primitive* func_801D2470(Primitive* poly) {
-    while (poly != NULL) {
-        if (poly->p3 != 0) {
-            poly = poly->next;
+Primitive* func_801D2470(Primitive* prim) {
+    while (prim != NULL) {
+        if (prim->p3 != 0) {
+            prim = prim->next;
         } else {
-            return poly;
+            return prim;
         }
     }
     return NULL;

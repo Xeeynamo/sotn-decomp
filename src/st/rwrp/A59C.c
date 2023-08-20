@@ -153,7 +153,7 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", DestroyEntity);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018D5EC);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018D668);
+INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", PreventEntityFromRespawning);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018D6B0);
 
@@ -319,7 +319,7 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E4DC);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E634);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E978);
+#include "../replace_breakable_with_item_drop.h"
 
 void func_8018EA30(void) {
     s32 temp_v1;
@@ -388,13 +388,13 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018EF28);
 
 void func_8018EF78(void) { DestroyEntity(g_CurrentEntity); }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018EFA0);
+INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", EntityPrizeDrop);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018F814);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018F910);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018F9B4);
+INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", EntityEquipItemDrop);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018FF9C);
 
