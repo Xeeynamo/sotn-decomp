@@ -542,7 +542,7 @@ u8 func_801929DC(u8 arg0, u8 arg1, u8 arg2) {
     return arg2;
 }
 
-void func_80192A34(u16 slope, s16 speed) {
+void UnkEntityFunc0(u16 slope, s16 speed) {
     Entity* entity;
     s32 moveX;
     s32 moveY;

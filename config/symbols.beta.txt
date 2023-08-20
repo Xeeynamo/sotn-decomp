@@ -100,3 +100,5 @@ D_80072EB4 = 0x80072EB4;
 D_80096ED0 = 0x80096ED0;
 
 g_InitializeEntityData0 = 0x80180508;
+g_InitializeData0 = 0x801804FC;
+UnkEntityFunc0 = 0x80192A34;

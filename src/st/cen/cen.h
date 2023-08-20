@@ -46,7 +46,7 @@ extern PfnEntityUpdate PfnEntityUpdates[];
 
 /*** Initializers ***/
 extern u16 D_80180404[];
-extern u16 D_80180410[];
+extern u16 g_InitializeData0[];
 extern u16 D_80180428[];
 extern u16 D_80180434[]; // EntityPlatform
 extern u16 D_80180458[];

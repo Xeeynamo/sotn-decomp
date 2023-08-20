@@ -557,7 +557,7 @@ u8 func_80194CB0(u8 arg0, u8 arg1, u8 arg2) {
     return arg2;
 }
 
-void func_80194D08(s32 slope, s16 speed) {
+void UnkEntityFunc0(s32 slope, s16 speed) {
     Entity* entity;
     s32 moveX;
     s32 moveY;
