@@ -557,7 +557,7 @@ u8 func_801BCF20(u8 arg0, u8 arg1, u8 arg2) {
     return arg2;
 }
 
-void func_801BCF78(u16 slope, s16 speed) {
+void UnkEntityFunc0(u16 slope, s16 speed) {
     Entity* entity;
     s32 moveX;
     s32 moveY;

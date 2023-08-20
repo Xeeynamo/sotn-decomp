@@ -1,5 +1,6 @@
 g_SpriteBanks = 0x80180040;
 PfnEntityUpdates = 0x80180394;
+g_InitializeData0 = 0x80180410;
 g_InitializeEntityData0 = 0x8018041C;
 UNK_Invincibility0 = 0x801807B8;
 g_Rooms = 0x801812D4;
@@ -33,6 +34,7 @@ GetSideToPlayer = 0x801945D4;
 MoveEntity = 0x80194618;
 FallEntity = 0x80194648;
 AllocEntity = 0x80194AD4;
+UnkEntityFunc0 = 0x80194D08;
 SetStep = 0x80194EA4;
 InitializeEntity = 0x80194F74;
 CollectHeart = 0x801958F4;
