@@ -348,7 +348,6 @@ class sotn_function:
                 href=caller + ".svg",
             )
             graph.edge(caller, self.unique_name, taillabel=str(flags[0]))
-        # print("done")
         imgbytes = graph.pipe(format="svg")
         return imgbytes
 
