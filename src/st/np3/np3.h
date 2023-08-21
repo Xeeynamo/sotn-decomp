@@ -187,6 +187,7 @@ extern u8 D_801815B4[];  // Hitbox related
 extern u8 D_8018120C[]; // this could be a struct
 extern const u8 D_80181214[];
 extern s16 D_80181220[][2];
+extern u16 D_8018122C;
 extern u8 D_801813D4[];
 extern u8 D_801813E4[];
 extern s8 D_80181454[];
@@ -213,6 +214,8 @@ extern u8 D_80181FF4[];
 extern u16 D_80181FF8[];
 extern s16* D_80182000;
 extern u8 D_80182008[];
+extern s16 D_80182168[];
+extern Point32 D_80182188[];
 extern u8 D_801822A4[];
 extern const u8 D_801822B0[];
 extern u8 D_801822B8[];
