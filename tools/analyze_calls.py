@@ -330,7 +330,7 @@ class sotn_function:
             fillcolor=graph_colors[self.decompile_status],
         )
 
-        for callee, flags in self.callees.items():
+        for callee, flags in sorted(self.callees.items()):
             graph.node(
                 callee,
                 style="filled",
@@ -338,8 +338,8 @@ class sotn_function:
                 href=callee + ".svg",
             )
             graph.edge(self.unique_name, callee, headlabel=str(flags[0]))
-        # print("callers")
-        for caller, flags in self.callers.items():
+
+        for caller, flags in sorted(self.callers.items()):
             graph.node(
                 caller,
                 style="filled",
