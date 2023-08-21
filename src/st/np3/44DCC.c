@@ -33,20 +33,20 @@ typedef enum {
     MERMAN2_SPIT_FIRE_ATTACK,
 } Merman2SpitFireSubSteps;
 
-// EntitySplashWater ID 0x2D
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", func_801C4DCC);
+// ID 0x2D
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", EntitySplashWater);
 
-// EntitySurfacingWater ID 0x2E
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", func_801C56D8);
+// ID 0x2E
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", EntitySurfacingWater);
 
-// EntitySideWaterSplash ID 0x2F
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", func_801C5BC4);
+// ID 0x2F
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", EntitySideWaterSplash);
 
-// EntitySmallWaterDrop ID 0x30
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", func_801C5F58);
+// ID 0x30
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", EntitySmallWaterDrop);
 
-// EntityWaterDrop ID 0x31
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", func_801C61B4);
+// ID 0x31
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", EntityWaterDrop);
 
 s32 func_801C6458(s16 yOffset) {
     s16 newY = yOffset + g_CurrentEntity->posY.i.hi;

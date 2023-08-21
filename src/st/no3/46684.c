@@ -1263,20 +1263,19 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", func_801D0A2C);
 // Alucard says "ahh" and turns blue from water contact
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityAlucardWaterEffect);
 
-// large splash going upwards
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityLargeUpwardsSplash);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntitySplashWater);
 
 // splash animation and sound when Alucard touches water
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityAlucardSplash);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntitySurfacingWater);
 
 // small water droplets go to the side
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntitySidewaysWaterDroplets);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntitySideWaterSplash);
 
 // small water droplets go upwards
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntitySmallUpwardsSplash);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntitySmallWaterDrop);
 
 // particle effect, part of merman splash
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntitySmallWaterSplash);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityWaterDrop);
 
 s32 func_801D2D40(s16 yVector) {
     s16 newY = yVector + g_CurrentEntity->posY.i.hi;
