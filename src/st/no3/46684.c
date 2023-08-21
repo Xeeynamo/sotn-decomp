@@ -1271,8 +1271,85 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntitySurfacingWater);
 // small water droplets go to the side
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntitySideWaterSplash);
 
-// small water droplets go upwards
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntitySmallWaterDrop);
+// ID 0x38
+void EntitySmallWaterDrop(Entity* self) {
+    s32 params = self->params;
+    s16 temp_s5 = params & 0xFF00;
+    Primitive *prim, *prim2;
+    s16 primIndex;
+    s32 var_v1;
+    s32* ptr;
+    u16 x, y;
+
+    params &= 0xFF;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180B00);
+        primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
+        self->flags |= FLAG_HAS_PRIMS;
+
+        x = self->posX.i.hi;
+        y = self->posY.i.hi;
+        y -= Random() & 3;
+
+        if (temp_s5 > 0) {
+            x += Random() & 3;
+        } else {
+            x -= Random() & 3;
+        }
+        self->posX.i.hi = x;
+        self->posY.i.hi = y;
+
+        while (prim != NULL) {
+            prim->v0 = prim->u0 = 2;
+            prim->x0 = x;
+            prim->y0 = y;
+            prim->r0 = 96;
+            prim->g0 = 96;
+            prim->b0 = 128;
+            prim->priority = self->zPriority + 2;
+            prim->blendMode = 0x33;
+            prim = prim->next;
+        }
+        //! FAKE:
+        ptr = &D_801838F4[params * 2];
+        var_v1 = *ptr;
+        ptr = D_801838F4;
+        if (temp_s5 > 0) {
+            var_v1 = -var_v1;
+        }
+        self->velocityX = var_v1 + (temp_s5 * 16);
+        ptr++;
+        self->velocityY = ptr[params * 2];
+        self->ext.waterEffects.unk7C = 0x4000;
+        break;
+
+    case 1:
+        MoveEntity(self);
+        self->velocityY += self->ext.waterEffects.unk7C;
+        break;
+    }
+
+    x = self->posX.i.hi;
+    y = self->posY.i.hi;
+
+    prim = &g_PrimBuf[self->primIndex];
+    prim->x0 = x;
+    prim->y0 = y;
+    if (prim->b0 >= 8) {
+        prim->b0 += 248;
+        prim->r0 = prim->g0 -= 6;
+        return;
+    }
+    DestroyEntity(self);
+}
 
 // particle effect, part of merman splash
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityWaterDrop);
