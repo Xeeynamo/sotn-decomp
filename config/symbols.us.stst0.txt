@@ -1,5 +1,6 @@
 g_SpriteBanks = 0x80180040;
 PfnEntityUpdates = 0x801804BC;
+g_InitializeData0 = 0x80180580;
 g_InitializeEntityData0 = 0x8018058C;
 g_isSecretStairsButtonPressed = 0x8018089C;
 g_isDraculaFirstFormDefeated = 0x8018090C;
@@ -48,6 +49,7 @@ GetSideToPlayer = 0x801B4C78;
 MoveEntity = 0x801B4CBC;
 FallEntity = 0x801B4CEC;
 AllocEntity = 0x801B53CC;
+UnkEntityFunc0 = 0x801B5600;
 SetStep = 0x801B5794;
 SetSubStep = 0x801B57B4;
 InitializeEntity = 0x801B584C;

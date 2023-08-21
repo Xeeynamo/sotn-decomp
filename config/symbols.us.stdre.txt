@@ -1,6 +1,7 @@
 g_SpriteBanks = 0x80180040;
 PfnEntityUpdates = 0x801803C8;
 g_eBreakableInit = 0x80180458;
+g_InitializeData0 = 0x80180464;
 g_InitializeEntityData0 = 0x80180470;
 g_eBreakableAnimations = 0x80180610;
 g_eBreakableHitboxes = 0x80180630;
@@ -48,6 +49,7 @@ GetSideToPlayer = 0x8019A718;
 MoveEntity = 0x8019A75C;
 FallEntity = 0x8019A78C;
 AllocEntity = 0x8019AC18;
+UnkEntityFunc0 = 0x8019AE4C;
 SetStep = 0x8019AFE8;
 SetSubStep = 0x8019B008;
 InitializeEntity = 0x8019B0B8;

@@ -510,7 +510,7 @@ u8 func_801C56B0(u8 arg0, u8 arg1, u8 arg2) {
 }
 
 // Duplicate
-void func_801C5708(u16 slope, s16 speed) {
+void UnkEntityFunc0(u16 slope, s16 speed) {
     Entity* entity;
     s32 moveX;
     s32 moveY;

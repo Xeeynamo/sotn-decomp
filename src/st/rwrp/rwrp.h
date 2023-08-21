@@ -16,7 +16,7 @@ void CreateEntityFromLayout(Entity*, LayoutEntity*);
 
 extern u16 D_801810A0[]; // NOTE(sestren): Random angle offsets?
 extern u16 D_801810B0[]; // NOTE(sestren): Animation frame properties?
-extern u16 D_8018044C[];
+extern u16 g_InitializeData0[];
 extern u16 D_80181110[];
 
 // *** EntitySoulStealOrb properties END ***
