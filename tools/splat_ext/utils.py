@@ -28,6 +28,10 @@ def log_fatal(msg):
     raise Exception(msg)
 
 
+def log_warn(msg):
+    log.write(msg, status="warn")
+
+
 def from_s32(num):
     return num.to_bytes(4, byteorder="little", signed=True)
 

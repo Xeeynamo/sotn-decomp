@@ -15,28 +15,30 @@ from segtypes.n64.segment import N64Segment
 import utils
 
 
-item_size = 0x18  # sizeof(SpritePart)
+item_size = 0x16  # sizeof(SpritePart)
 
 
 def parse_spriteparts(data: bytearray) -> list:
     count = utils.to_s16(data[0:])
     items = []
+    data = data[2:]
     for i in range(0, count):
         items.append(
             {
-                "flags": utils.to_s16(data[2 + i * item_size + 0 :]),
-                "offsetx": utils.to_s16(data[2 + i * item_size + 2 :]),
-                "offsety": utils.to_s16(data[2 + i * item_size + 4 :]),
-                "width": utils.to_s16(data[2 + i * item_size + 6 :]),
-                "height": utils.to_s16(data[2 + i * item_size + 8 :]),
-                "clut": utils.to_s16(data[2 + i * item_size + 10 :]),
-                "tileset": utils.to_s16(data[2 + i * item_size + 12 :]),
-                "left": utils.to_s16(data[2 + i * item_size + 14 :]),
-                "top": utils.to_s16(data[2 + i * item_size + 16 :]),
-                "right": utils.to_s16(data[2 + i * item_size + 18 :]),
-                "bottom": utils.to_s16(data[2 + i * item_size + 20 :]),
+                "flags": utils.to_s16(data[0:]),
+                "offsetx": utils.to_s16(data[2:]),
+                "offsety": utils.to_s16(data[4:]),
+                "width": utils.to_s16(data[6:]),
+                "height": utils.to_s16(data[8:]),
+                "clut": utils.to_s16(data[10:]),
+                "tileset": utils.to_s16(data[12:]),
+                "left": utils.to_s16(data[14:]),
+                "top": utils.to_s16(data[16:]),
+                "right": utils.to_s16(data[18:]),
+                "bottom": utils.to_s16(data[20:]),
             }
         )
+        data = data[item_size:]
     return items
 
 
@@ -64,24 +66,25 @@ def parse_animset(start_ptr, data: bytearray) -> list:
         if offset != 0:
             animset.append(parse_spriteparts(data[offset:]))
         else:
-            animset.append([])
+            animset.append(None)
     return animset
 
 
 def write_animset_list_as_asm(writer: io.BufferedWriter, name: str, content: str):
-    obj = json.loads(content)
+    animset = json.loads(content)
 
     writer.write(".section .data\n")
     writer.write(f".global {name}\n")
     writer.write(f"{name}:\n")
-    for i, spriteparts in enumerate(obj):
-        if len(spriteparts) > 0:
+
+    for i, spriteparts in enumerate(animset):
+        if spriteparts != None:
             writer.write(f".word {name}_{i}\n")
         else:
             writer.write(".word 0\n")
 
-    for i, spriteparts in enumerate(obj):
-        if len(spriteparts) == 0:
+    for i, spriteparts in enumerate(animset):
+        if spriteparts == None:
             continue
         n_parts = len(spriteparts)
         writer.write(f".global {name}_{i}\n")
@@ -102,7 +105,9 @@ def write_animset_list_as_asm(writer: io.BufferedWriter, name: str, content: str
             writer.write(f".half {part['bottom']}\n")
         # now align by 4
         if (n_parts % 2) == 1:
-            writer.write(f".word 0 # padding\n")
+            writer.write(f".word 0 # terminator\n")
+        else:
+            writer.write(f".half 0 # terminator\n")
 
 
 class PSXSegAnimset(N64Segment):
@@ -119,7 +124,10 @@ class PSXSegAnimset(N64Segment):
         path = self.src_path()
         path.parent.mkdir(parents=True, exist_ok=True)
 
-        data = parse_animset(self.vram_start, rom_bytes[self.rom_start : self.rom_end])
+        data = parse_animset(
+            self.vram_start,
+            rom_bytes[self.rom_start : self.rom_end],
+        )
         with open(path, "w") as f:
             f.write(json.dumps(data, indent=4))
 
