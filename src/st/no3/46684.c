@@ -1274,8 +1274,89 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntitySideWaterSplash);
 // small water droplets go upwards
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntitySmallWaterDrop);
 
-// particle effect, part of merman splash
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityWaterDrop);
+// ID 0x38
+void EntityWaterDrop(Entity* self) {
+    u16 x = self->posX.i.hi;
+    u16 y = self->posY.i.hi;
+    Primitive* prim;
+    s16 primIndex;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180B00);
+        primIndex = g_api.func_800EDB58(0x11, 0x21);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
+        self->ext.generic.unk7C.s = 0x2F;
+        self->flags |= FLAG_HAS_PRIMS;
+
+        while (1) {
+            prim->blendMode = 0x73;
+            prim->priority = self->zPriority + 2;
+
+            if (prim->next == NULL) {
+                prim->u0 = 0;
+                prim->x0 = 0;
+                prim->y0 = 0;
+                prim->blendMode &= ~BLEND_VISIBLE;
+                break;
+            }
+
+            prim->x1 = 0;
+            LOH(prim->r1) = 0;
+            LOW(prim->r2) = (rand() * 8) + self->velocityY;
+            prim->y1 = y + (rand() & 15);
+            LOH(prim->b1) = x + (rand() & 31) - 16;
+            LOH(prim->u2) = (rand() & 15) + 32;
+            prim->b0 = prim->g0 = prim->r0 = 255;
+            prim->v0 = prim->u0 = 2;
+            prim->x0 = LOH(prim->b1);
+            prim->y0 = prim->y1;
+            prim = prim->next;
+        }
+        break;
+
+    case 1:
+        if (--self->ext.generic.unk7C.s == 0) {
+            DestroyEntity(self);
+            return;
+        }
+
+        prim = &g_PrimBuf[self->primIndex];
+
+        while (1) {
+            if (prim->next == NULL) {
+                prim->u0 = 0;
+                prim->x0 = 0;
+                prim->y0 = 0;
+                prim->blendMode &= ~BLEND_VISIBLE;
+                return;
+            }
+            LOH(prim->b1) = prim->x0;
+            prim->y1 = prim->y0;
+            LOH(prim->u2)--;
+            if (LOH(prim->u2) == 0) {
+                prim->blendMode |= BLEND_VISIBLE;
+            }
+            LOW(prim->x1) += LOW(prim->r2);
+            if (LOW(prim->r2) > 0x8000) {
+                prim->r0 += 252;
+                prim->g0 += 252;
+                prim->b0 += 252;
+            } else {
+                LOW(prim->r2) += 0x3800;
+            }
+            prim->x0 = LOW(prim->b1);
+            prim->y0 = prim->y1;
+            prim = prim->next;
+        }
+        break;
+    }
+}
 
 s32 func_801D2D40(s16 yVector) {
     s16 newY = yVector + g_CurrentEntity->posY.i.hi;
