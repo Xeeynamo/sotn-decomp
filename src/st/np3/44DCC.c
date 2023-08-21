@@ -237,7 +237,153 @@ void EntitySplashWater(Entity* self) {
 }
 
 // ID 0x2E
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", EntitySurfacingWater);
+void EntitySurfacingWater(Entity* self) {
+    Unkstruct8* tileLayout = &g_CurrentRoomTileLayout;
+    s16 left, right, bottom;
+    Primitive* prim;
+    s16 primIndex;
+    s16 temp_t0;
+    s32 rnd;
+    s16 var_s2;
+    u16 params;
+    s16* ptr;
+    s16 temp3;
+    s16 tempv0;
+    s16 x, y;
+    s32 i, j;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180A90);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->primIndex = primIndex;
+        self->flags |= FLAG_HAS_PRIMS;
+        var_s2 = (self->posX.i.hi - 120) >> 4;
+        if (var_s2 < -8) {
+            var_s2 = -8;
+        }
+        if (var_s2 > 8) {
+            var_s2 = 8;
+        }
+        params = self->params;
+        if (!(params & 0x8000)) {
+            g_api.func_80134714(D_8018122E, 0x7F, var_s2);
+        }
+        params = (params >> 8) & 0x7F;
+        prim = &g_PrimBuf[primIndex];
+        right = self->posX.i.hi;
+        bottom = self->posY.i.hi;
+        left = right - 9;
+        right += 9;
+        self->ext.waterEffects.unk82 = self->posY.i.hi + g_Camera.posY.i.hi;
+
+        for (i = 0; i < 2; i++) {
+            prim->u2 = 0;
+            prim->u0 = 0;
+            prim->u1 = prim->u3 = 0x1E;
+            prim->v0 = prim->v1 = 0x60;
+            prim->v2 = prim->v3 = 0x7C;
+            prim->y2 = prim->y3 = bottom;
+            prim->x2 = prim->x0 = left;
+            prim->x3 = prim->x1 = right;
+            if (params != 0) {
+                var_s2 = D_80182168[params];
+                prim->y2 = prim->y2 + 9 / var_s2;
+                prim->y3 = prim->y3 - 9 / var_s2;
+            }
+            prim->clut = 0x162;
+            prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
+                255;
+            prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
+                128;
+            prim->tpage = 0x1A;
+            prim->priority = self->zPriority + 2;
+            prim->blendMode = 0x77;
+            if (i != 0) {
+                prim->clut = 0x161;
+                prim->priority = self->zPriority + 4;
+                prim->blendMode = 0x77;
+            }
+            prim = prim->next;
+        }
+        rnd = (rand() & 1) + 12;
+        self->ext.generic.unk84.S16.unk2 = D_801821A8[(u8)self->params] + rnd;
+        self->velocityX = self->ext.generic.unk88.S16.unk2 * 16;
+        if (params != 0) {
+            self->velocityY = self->velocityX / var_s2;
+            if (self->velocityY < 0) {
+                self->velocityY = -self->velocityY;
+            }
+        }
+        break;
+
+    case 1:
+        self->ext.waterEffects.unk84.val -= 0x4000;
+        break;
+    }
+
+    MoveEntity(self);
+
+    //! FAKE:
+    j = self->velocityX;
+
+    if (self->velocityX != 0) {
+        right = D_80181230[self->ext.waterEffects.unk88];
+        ptr = D_80181230;
+        if (self->velocityX < 0) {
+            right += 6;
+            x = right - tileLayout->unkA;
+            if (self->posX.i.hi < x) {
+                DestroyEntity(self);
+                return;
+            }
+        } else {
+            ptr++;
+            temp3 = tileLayout->unkA + 6;
+            x = right;
+            x += (ptr[self->ext.waterEffects.unk88] - temp3);
+            if (self->posX.i.hi >= x) {
+                DestroyEntity(self);
+                return;
+            }
+        }
+    }
+
+    j = 0;
+    tempv0 = self->ext.waterEffects.unk82;
+    x = self->posX.i.hi;
+    y = self->posY.i.hi;
+
+    bottom = tempv0 - y - tileLayout->unkE;
+
+    prim = &g_PrimBuf[self->primIndex];
+    temp_t0 = x - 9;
+    x += 9;
+
+    while (j < 2) {
+        prim->y2 = prim->y2 - bottom;
+        prim->y3 = prim->y3 - bottom;
+        prim->y0 = prim->y2 - self->ext.waterEffects.unk84.modeS16.unk2;
+        prim->y1 = prim->y3 - self->ext.waterEffects.unk84.modeS16.unk2;
+        prim->x2 = prim->x0 = temp_t0;
+        prim->x3 = prim->x1 = x;
+        prim->b1 += 248;
+        prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1;
+        prim->b3 += 252;
+        prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
+        if (prim->r0 < 9) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = prim->next;
+        j++;
+    }
+    self->ext.waterEffects.unk82 = self->posY.i.hi + tileLayout->unkE;
+}
 
 // ID 0x2F
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", EntitySideWaterSplash);
@@ -246,7 +392,88 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", EntitySideWaterSplash);
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", EntitySmallWaterDrop);
 
 // ID 0x31
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", EntityWaterDrop);
+void EntityWaterDrop(Entity* self) {
+    u16 x = self->posX.i.hi;
+    u16 y = self->posY.i.hi;
+    Primitive* prim;
+    s16 primIndex;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180A90);
+        primIndex = g_api.func_800EDB58(0x11, 0x21);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
+        self->ext.generic.unk7C.s = 0x2F;
+        self->flags |= FLAG_HAS_PRIMS;
+
+        while (1) {
+            prim->blendMode = 0x73;
+            prim->priority = self->zPriority + 2;
+
+            if (prim->next == NULL) {
+                prim->u0 = 0;
+                prim->x0 = 0;
+                prim->y0 = 0;
+                prim->blendMode &= ~BLEND_VISIBLE;
+                break;
+            }
+
+            prim->x1 = 0;
+            LOH(prim->r1) = 0;
+            LOW(prim->r2) = (rand() * 8) + self->velocityY;
+            prim->y1 = y + (rand() & 15);
+            LOH(prim->b1) = x + (rand() & 31) - 16;
+            LOH(prim->u2) = (rand() & 15) + 32;
+            prim->b0 = prim->g0 = prim->r0 = 255;
+            prim->v0 = prim->u0 = 2;
+            prim->x0 = LOH(prim->b1);
+            prim->y0 = prim->y1;
+            prim = prim->next;
+        }
+        break;
+
+    case 1:
+        if (--self->ext.generic.unk7C.s == 0) {
+            DestroyEntity(self);
+            return;
+        }
+
+        prim = &g_PrimBuf[self->primIndex];
+
+        while (1) {
+            if (prim->next == NULL) {
+                prim->u0 = 0;
+                prim->x0 = 0;
+                prim->y0 = 0;
+                prim->blendMode &= ~BLEND_VISIBLE;
+                return;
+            }
+            LOH(prim->b1) = prim->x0;
+            prim->y1 = prim->y0;
+            LOH(prim->u2)--;
+            if (LOH(prim->u2) == 0) {
+                prim->blendMode |= BLEND_VISIBLE;
+            }
+            LOW(prim->x1) += LOW(prim->r2);
+            if (LOW(prim->r2) > 0x8000) {
+                prim->r0 += 252;
+                prim->g0 += 252;
+                prim->b0 += 252;
+            } else {
+                LOW(prim->r2) += 0x3800;
+            }
+            prim->x0 = LOW(prim->b1);
+            prim->y0 = prim->y1;
+            prim = prim->next;
+        }
+        break;
+    }
+}
 
 s32 func_801C6458(s16 yOffset) {
     s16 newY = yOffset + g_CurrentEntity->posY.i.hi;
