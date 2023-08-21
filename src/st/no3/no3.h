@@ -26,11 +26,6 @@ typedef enum EntityIDs {
     /* 0x37 */ E_SIDE_WATER_SPLASH,
     /* 0x38 */ E_SMALL_WATER_DROP,
     /* 0x39 */ E_WATER_DROP,
-    /* 0x35 */ E_SPLASH_WATER = 0x35,
-    /* 0x36 */ E_SURFACING_WATER,
-    /* 0x37 */ E_SIDE_WATER_SPLASH,
-    /* 0x38 */ E_SMALL_WATER_DROP,
-    /* 0x39 */ E_WATER_DROP,
 } EntityIDs;
 
 extern void CreateEntityFromCurrentEntity(u16, Entity*);
