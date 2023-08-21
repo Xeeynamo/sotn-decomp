@@ -341,9 +341,17 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ s32 unk7C;
-    /* 0x80 */ char pad_80[0x2];
+    /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 unk82;
-} ET_SplashWater;
+    union {
+        /* 0x84 */ s32 val;
+        struct {
+            /* 0x84 */ s16 unk0;
+            /* 0x86 */ s16 unk2;
+        } modeS16;
+    } unk84; // size = 0x4
+    /* 0x88 */ u16 unk88;
+} ET_WaterEffects;
 
 typedef struct {
     /* 0x7C */ char pad_0[0x20];
@@ -401,7 +409,7 @@ typedef union {
     /* 0x7C */ ET_Elevator elevator;
     /* 0x7C */ ET_801D1BB8 et_801D1BB8;
     /* 0x7C */ ET_801D0B78 et_801D0B78;
-    /* 0x7C */ ET_SplashWater splashWater;
+    /* 0x7C */ ET_WaterEffects waterEffects;
     /* 0x7C */ ET_GurkhaHammer GH_Props;
     /* 0x7C */ ET_801CE4CC et_801CE4CC;
     /* 0x7C */ ET_801CDFD8 et_801CDFD8;
