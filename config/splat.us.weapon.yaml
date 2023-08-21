@@ -34,7 +34,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x04040, animset, w_000]
+      - [0x04040, animset, w_000_1]
+      - [0x04A44, animset, w_000_2]
       - [0x04A44, data, w_000]
       - [0x050D4, c, w_000]
       - [0x05700, sbss, w_000]
@@ -50,10 +51,11 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x0B040, animset, w_001]
-      - [0xBA44, data, w_001]
+      - [0x0B040, animset, w_001_1]
+      - [0x0BA44, animset, w_001_2]
+      - [0x0BA44, data, w_001]
       - [0x0C014, c, w_001]
-      - [0xD430, sbss, w_001]
+      - [0x0D430, sbss, w_001]
   - name: f_002
     type: ci4
     start: 0x0E000
@@ -66,7 +68,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x12040, animset, w_002]
+      - [0x12040, animset, w_002_1]
+      - [0x12884, animset, w_002_2]
       - [0x12884, data, w_002]
       - [0x12BDC, c, w_002]
       - [0x13200, sbss, w_002]
@@ -82,7 +85,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x19040, animset, w_003]
+      - [0x19040, animset, w_003_1]
+      - [0x19884, animset, w_003_2]
       - [0x19884, data, w_003]
       - [0x19C40, c, w_003]
       - [0x1A26C, sbss, w_003]
@@ -98,7 +102,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x20040, animset, w_004]
+      - [0x20040, animset, w_004_1]
+      - [0x20EAC, animset, w_004_2]
       - [0x20EAC, data, w_004]
       - [0x2131C, c, w_004]
       - [0x2196C, sbss, w_004]
@@ -114,7 +119,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x27040, animset, w_005]
+      - [0x27040, animset, w_005_1]
+      - [0x27EAC, animset, w_005_2]
       - [0x27EAC, data, w_005]
       - [0x2831C, c, w_005]
       - [0x28998, sbss, w_005]
@@ -130,7 +136,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x2E040, animset, w_006]
+      - [0x2E040, animset, w_006_1]
+      - [0x2E884, animset, w_006_2]
       - [0x2E884, data, w_006]
       - [0x2EC54, c, w_006]
       - [0x2F9B8, sbss, w_006]
@@ -146,7 +153,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x35040, animset, w_007]
+      - [0x35040, animset, w_007_1]
+      - [0x35884, animset, w_007_2]
       - [0x35884, data, w_007]
       - [0x35CA0, c, w_007]
       - [0x36918, sbss, w_007]
@@ -162,7 +170,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x3C040, animset, w_008]
+      - [0x3C040, animset, w_008_1]
+      - [0x3C804, animset, w_008_2]
       - [0x3C804, data, w_008]
       - [0x3CB4C, c, w_008]
       - [0x3DF78, sbss, w_008]
@@ -178,7 +187,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x43040, animset, w_009]
+      - [0x43040, animset, w_009_1]
+      - [0x43804, animset, w_009_2]
       - [0x43804, data, w_009]
       - [0x43B4C, c, w_009]
       - [0x450F0, sbss, w_009]
@@ -194,7 +204,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x4A040, animset, w_010]
+      - [0x4A040, animset, w_010_1]
+      - [0x4A8EC, animset, w_010_2]
       - [0x4A8EC, data, w_010]
       - [0x4ACC0, c, w_010]
       - [0x4CC1C, sbss, w_010]
@@ -210,7 +221,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x51040, animset, w_011]
+      - [0x51040, animset, w_011_1]
+      - [0x51958, animset, w_011_2]
       - [0x51958, data, w_011]
       - [0x51CDC, c, w_011]
       - [0x53810, sbss, w_011]
@@ -226,7 +238,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x58040, animset, w_012]
+      - [0x58040, animset, w_012_1]
+      - [0x582B0, animset, w_012_2]
       - [0x582B0, data, w_012]
       - [0x58ACC, c, w_012]
       - [0x59B28, sbss, w_012]
@@ -242,7 +255,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x5F040, animset, w_013]
+      - [0x5F040, animset, w_013_1]
+      - [0x5F2B0, animset, w_013_2]
       - [0x5F2B0, data, w_013]
       - [0x5F62C, c, w_013]
       - [0x60C10, sbss, w_013]
@@ -258,7 +272,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x66040, animset, w_014]
+      - [0x66040, animset, w_014_1]
+      - [0x662B0, animset, w_014_2]
       - [0x662B0, data, w_014]
       - [0x665BC, c, w_014]
       - [0x67584, sbss, w_014]
@@ -274,8 +289,9 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x6D040, animset, w_015]
-      - [0x6D2B0, data, w_015]
+      - [0x6D040, animset, w_015_1]
+      - [0x6D2B0, animset, w_015_2]
+      - [0x6D478, data, w_015]
       - [0x6D7E4, c, w_015]
       - [0x6EFC8, sbss, w_015]
   - name: f_016
@@ -290,7 +306,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x74040, animset, w_016]
+      - [0x74040, animset, w_016_1]
+      - [0x742B0, animset, w_016_2]
       - [0x742B0, data, w_016]
       - [0x7460C, c, w_016]
       - [0x75D74, sbss, w_016]
@@ -306,7 +323,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x7B040, animset, w_017]
+      - [0x7B040, animset, w_017_1]
+      - [0x7B040, animset, w_017_2]
       - [0x7B040, data, w_017]
       - [0x7B3AC, c, w_017]
       - [0x7C0F4, sbss, w_017]
@@ -322,7 +340,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x82040, animset, w_018]
+      - [0x82040, animset, w_018_1]
+      - [0x82488, animset, w_018_2]
       - [0x82488, data, w_018]
       - [0x82740, c, w_018]
       - [0x831B4, sbss, w_018]
@@ -338,7 +357,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x89040, animset, w_019]
+      - [0x89040, animset, w_019_1]
+      - [0x8930C, animset, w_019_2]
       - [0x8930C, data, w_019]
       - [0x89554, c, w_019]
       - [0x89DB4, sbss, w_019]
@@ -354,7 +374,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x90040, animset, w_020]
+      - [0x90040, animset, w_020_1]
+      - [0x90630, animset, w_020_2]
       - [0x90630, data, w_020]
       - [0x90BC8, c, w_020]
       - [0x92238, sbss, w_020]
@@ -370,7 +391,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x97040, animset, w_021]
+      - [0x97040, animset, w_021_1]
+      - [0x97564, animset, w_021_2]
       - [0x97564, data, w_021]
       - [0x977B4, c, w_021]
       - [0x98B78, sbss, w_021]
@@ -386,7 +408,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x9E040, animset, w_022]
+      - [0x9E040, animset, w_022_1]
+      - [0x9E540, animset, w_022_2]
       - [0x9E540, data, w_022]
       - [0x9E814, c, w_022]
       - [0x9EF80, sbss, w_022]
@@ -402,7 +425,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xA5040, animset, w_023]
+      - [0xA5040, animset, w_023_1]
+      - [0xA58A4, animset, w_023_2]
       - [0xA58A4, data, w_023]
       - [0xA5D80, c, w_023]
       - [0xA797C, sbss, w_023]
@@ -418,7 +442,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xAC040, animset, w_024]
+      - [0xAC040, animset, w_024_1]
+      - [0xAC804, animset, w_024_2]
       - [0xAC804, data, w_024]
       - [0xACDE0, c, w_024]
       - [0xAEBF4, sbss, w_024]
@@ -434,7 +459,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xB3040, animset, w_025]
+      - [0xB3040, animset, w_025_1]
+      - [0xB3804, animset, w_025_2]
       - [0xB3804, data, w_025]
       - [0xB3B74, c, w_025]
       - [0xB5918, sbss, w_025]
@@ -450,7 +476,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xBA040, animset, w_026]
+      - [0xBA040, animset, w_026_1]
+      - [0xBA804, animset, w_026_2]
       - [0xBA804, data, w_026]
       - [0xBAB9C, c, w_026]
       - [0xBCC3C, sbss, w_026]
@@ -466,7 +493,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xC1040, animset, w_027]
+      - [0xC1040, animset, w_027_1]
+      - [0xC1A18, animset, w_027_2]
       - [0xC1A18, data, w_027]
       - [0xC1D54, c, w_027]
       - [0xC36EC, sbss, w_027]
@@ -482,7 +510,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xC8040, animset, w_028]
+      - [0xC8040, animset, w_028_1]
+      - [0xC8804, animset, w_028_2]
       - [0xC8804, data, w_028]
       - [0xC8BF4, c, w_028]
       - [0xCA954, sbss, w_028]
@@ -498,7 +527,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xCF040, animset, w_029]
+      - [0xCF040, animset, w_029_1]
+      - [0xCF884, animset, w_029_2]
       - [0xCF884, data, w_029]
       - [0xCFDD8, c, w_029]
       - [0xD19A0, sbss, w_029]
@@ -514,7 +544,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xD6040, animset, w_030]
+      - [0xD6040, animset, w_030_1]
+      - [0xD6040, animset, w_030_2]
       - [0xD6040, data, w_030]
       - [0xD66DC, c, w_030]
       - [0xD8C44, sbss, w_030]
@@ -530,7 +561,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xDD040, animset, w_031]
+      - [0xDD040, animset, w_031_1]
+      - [0xDD704, animset, w_031_2]
       - [0xDD704, data, w_031]
       - [0xDD918, c, w_031]
       - [0xDDF88, sbss, w_031]
@@ -546,7 +578,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xE4040, animset, w_032]
+      - [0xE4040, animset, w_032_1]
+      - [0xE4704, animset, w_032_2]
       - [0xE4704, data, w_032]
       - [0xE4924, c, w_032]
       - [0xE5020, sbss, w_032]
@@ -562,7 +595,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xEB040, animset, w_033]
+      - [0xEB040, animset, w_033_1]
+      - [0xEBA9C, animset, w_033_2]
       - [0xEBA9C, data, w_033]
       - [0xEBC58, c, w_033]
       - [0xEC2C8, sbss, w_033]
@@ -578,7 +612,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xF2040, animset, w_034]
+      - [0xF2040, animset, w_034_1]
+      - [0xF2784, animset, w_034_2]
       - [0xF2784, data, w_034]
       - [0xF2950, c, w_034]
       - [0xF33F0, sbss, w_034]
@@ -594,7 +629,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0xF9040, animset, w_035]
+      - [0xF9040, animset, w_035_1]
+      - [0xF9404, animset, w_035_2]
       - [0xF9404, data, w_035]
       - [0xF954C, c, w_035]
       - [0xF9B78, sbss, w_035]
@@ -610,7 +646,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x100040, animset, w_036]
+      - [0x100040, animset, w_036_1]
+      - [0x100404, animset, w_036_2]
       - [0x100404, data, w_036]
       - [0x10055C, c, w_036]
       - [0x100B88, sbss, w_036]
@@ -626,7 +663,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x107040, animset, w_037]
+      - [0x107040, animset, w_037_1]
+      - [0x107504, animset, w_037_2]
       - [0x107504, data, w_037]
       - [0x1077C4, c, w_037]
       - [0x108BE4, sbss, w_037]
@@ -642,7 +680,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x10E040, animset, w_038]
+      - [0x10E040, animset, w_038_1]
+      - [0x10EC08, animset, w_038_2]
       - [0x10EC08, data, w_038]
       - [0x10EDEC, c, w_038]
       - [0x10F844, sbss, w_038]
@@ -658,7 +697,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x115040, animset, w_039]
+      - [0x115040, animset, w_039_1]
+      - [0x115C08, animset, w_039_2]
       - [0x115C08, data, w_039]
       - [0x115DEC, c, w_039]
       - [0x116A28, sbss, w_039]
@@ -674,7 +714,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x11C040, animset, w_040]
+      - [0x11C040, animset, w_040_1]
+      - [0x11C504, animset, w_040_2]
       - [0x11C504, data, w_040]
       - [0x11C874, c, w_040]
       - [0x11D540, sbss, w_040]
@@ -690,7 +731,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x123040, animset, w_041]
+      - [0x123040, animset, w_041_1]
+      - [0x123284, animset, w_041_2]
       - [0x123284, data, w_041]
       - [0x123574, c, w_041]
       - [0x124200, sbss, w_041]
@@ -706,7 +748,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x12A040, animset, w_042]
+      - [0x12A040, animset, w_042_1]
+      - [0x12A3E4, animset, w_042_2]
       - [0x12A3E4, data, w_042]
       - [0x12A764, c, w_042]
       - [0x12B5EC, sbss, w_042]
@@ -722,7 +765,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x131040, animset, w_043]
+      - [0x131040, animset, w_043_1]
+      - [0x131A44, animset, w_043_2]
       - [0x131A44, data, w_043]
       - [0x13205C, c, w_043]
       - [0x132D74, sbss, w_043]
@@ -738,7 +782,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x138040, animset, w_044]
+      - [0x138040, animset, w_044_1]
+      - [0x138040, animset, w_044_2]
       - [0x138040, data, w_044]
       - [0x1382C0, c, w_044]
       - [0x138F24, sbss, w_044]
@@ -754,7 +799,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x13F040, animset, w_045]
+      - [0x13F040, animset, w_045_1]
+      - [0x13F330, animset, w_045_2]
       - [0x13F330, data, w_045]
       - [0x13F378, c, w_045]
       - [0x1403B8, sbss, w_045]
@@ -770,7 +816,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x146040, animset, w_046]
+      - [0x146040, animset, w_046_1]
+      - [0x1462B0, animset, w_046_2]
       - [0x1462B0, data, w_046]
       - [0x146C64, c, w_046]
       - [0x147EC0, sbss, w_046]
@@ -786,9 +833,9 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x14D040, animset, w_047]
-      # - [0x14D0D4, animset, w_047_2]
-      - [0x14D0D4, data, w_047] # - [0x14D228, data, w_047]
+      - [0x14D040, animset, w_047_1]
+      - [0x14D0D4, animset, w_047_2]
+      - [0x14D228, data, w_047]
       - [0x14D568, c, w_047]
       - [0x14E6A4, sbss, w_047]
   - name: f_048
@@ -803,7 +850,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x154040, animset, w_048]
+      - [0x154040, animset, w_048_1]
+      - [0x154A44, animset, w_048_2]
       - [0x154A44, data, w_048]
       - [0x155050, c, w_048]
       - [0x1563B4, sbss, w_048]
@@ -819,8 +867,9 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x15B040, animset, w_049]
-      - [0x15BA44, data, w_049]
+      - [0x15B040, animset, w_049_1]
+      - [0x15BA44, animset, w_049_2]
+      - [0x15BC00, data, w_049]
       - [0x15C14C, c, w_049]
       - [0x15D8CC, sbss, w_049]
   - name: f_050
@@ -835,7 +884,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x162040, animset, w_050]
+      - [0x162040, animset, w_050_1]
+      - [0x162A44, animset, w_050_2]
       - [0x162A44, data, w_050]
       - [0x163080, c, w_050]
       - [0x164BF8, sbss, w_050]
@@ -851,7 +901,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x169040, animset, w_051]
+      - [0x169040, animset, w_051_1]
+      - [0x169950, animset, w_051_2]
       - [0x169950, data, w_051]
       - [0x169ED4, c, w_051]
       - [0x16B0E0, sbss, w_051]
@@ -867,7 +918,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x170040, animset, w_052]
+      - [0x170040, animset, w_052_1]
+      - [0x170808, animset, w_052_2]
       - [0x170808, data, w_052]
       - [0x170CB0, c, w_052]
       - [0x172B84, sbss, w_052]
@@ -883,7 +935,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x177040, animset, w_053]
+      - [0x177040, animset, w_053_1]
+      - [0x177A44, animset, w_053_2]
       - [0x177A44, data, w_053]
       - [0x178280, c, w_053]
       - [0x179894, sbss, w_053]
@@ -899,7 +952,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x17E040, animset, w_054]
+      - [0x17E040, animset, w_054_1]
+      - [0x17EA44, animset, w_054_2]
       - [0x17EA44, data, w_054]
       - [0x17EF0C, c, w_054]
       - [0x17F8F8, sbss, w_054]
@@ -915,7 +969,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x185040, animset, w_055]
+      - [0x185040, animset, w_055_1]
+      - [0x185A44, animset, w_055_2]
       - [0x185A44, data, w_055]
       - [0x1861A0, c, w_055]
       - [0x186C2C, sbss, w_055]
@@ -931,7 +986,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x18C040, animset, w_056]
+      - [0x18C040, animset, w_056_1]
+      - [0x18CA44, animset, w_056_2]
       - [0x18CA44, data, w_056]
       - [0x18D060, c, w_056]
       - [0x18E0B8, sbss, w_056]
@@ -947,7 +1003,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x193040, animset, w_057]
+      - [0x193040, animset, w_057_1]
+      - [0x193A44, animset, w_057_2]
       - [0x193A44, data, w_057]
       - [0x1940B4, c, w_057]
       - [0x1946E0, sbss, w_057]
@@ -963,7 +1020,8 @@ segments:
     vram: 0x8017A000
     subalign: 4
     subsegments:
-      - [0x19A040, animset, w_058]
+      - [0x19A040, animset, w_058_1]
+      - [0x19A808, animset, w_058_2]
       - [0x19A808, data, w_058]
       - [0x19AC50, c, w_058]
       - [0x19BB40, sbss, w_058]
