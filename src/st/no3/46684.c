@@ -1278,7 +1278,6 @@ void EntitySmallWaterDrop(Entity* self) {
     Primitive *prim, *prim2;
     s16 primIndex;
     s32 var_v1;
-    s32* ptr;
     u16 x, y;
 
     params &= 0xFF;
@@ -1318,16 +1317,12 @@ void EntitySmallWaterDrop(Entity* self) {
             prim->blendMode = 0x33;
             prim = prim->next;
         }
-        //! FAKE:
-        ptr = &D_801838F4[params * 2];
-        var_v1 = *ptr;
-        ptr = D_801838F4;
+        var_v1 = D_801838F4[params * 2];
         if (temp_s5 > 0) {
             var_v1 = -var_v1;
         }
         self->velocityX = var_v1 + (temp_s5 * 16);
-        ptr++;
-        self->velocityY = ptr[params * 2];
+        self->velocityY = D_801838F4[params * 2 + 1];
         self->ext.waterEffects.unk7C = 0x4000;
         break;
 
