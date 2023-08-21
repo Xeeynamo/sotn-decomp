@@ -29,6 +29,11 @@ typedef enum {
     /* 0x2F */ E_SIDE_WATER_SPLASH,
     /* 0x30 */ E_SMALL_WATER_DROP,
     /* 0x31 */ E_WATER_DROP,
+    /* 0x2D */ E_SPLASH_WATER = 0x2D,
+    /* 0x2E */ E_SURFACING_WATER,
+    /* 0x2F */ E_SIDE_WATER_SPLASH,
+    /* 0x30 */ E_SMALL_WATER_DROP,
+    /* 0x31 */ E_WATER_DROP,
     /* 0x3F */ E_BONE_SCIMITAR_HEAD = 0x3F,
     /* 0x4D */ E_ID_4D = 0x4D,
     /* 0x4F */ E_SLOGRA_SPEAR = 0x4F,
@@ -187,6 +192,8 @@ extern u8 D_801815B4[];  // Hitbox related
 extern u8 D_8018120C[]; // this could be a struct
 extern const u8 D_80181214[];
 extern s16 D_80181220[][2];
+extern u16 D_8018122E;
+extern u16 D_80181230[];
 extern u8 D_801813D4[];
 extern u8 D_801813E4[];
 extern s8 D_80181454[];
@@ -214,6 +221,8 @@ extern u16 D_80181FF8[];
 extern s16* D_80182000;
 extern u8 D_80182008[];
 extern s32 D_80182204[];
+extern s16 D_80182168[];
+extern s16 D_801821A8[];
 extern u8 D_801822A4[];
 extern const u8 D_801822B0[];
 extern u8 D_801822B8[];
