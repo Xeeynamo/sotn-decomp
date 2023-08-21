@@ -1268,26 +1268,18 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntitySplashWater);
 // ID 0x36
 void EntitySurfacingWater(Entity* self) {
     Unkstruct8* tileLayout = &g_CurrentRoomTileLayout;
+    s16 left, right, bottom;
     Primitive* prim;
     s16 primIndex;
     s16 temp_t0;
-    s16 temp_t3;
-    s32 temp_a0;
-    s32 temp_lo;
     s32 rnd;
-    s32 temp_v1_2;
     s16 var_s2;
-    s16 temp_a2;
     u16 params;
-    u16 temp_t2;
-    s32 tempy;
     s16* ptr;
-    s16 temp;
     s16 temp3;
     s16 tempv0;
-    s16 tempa0;
     s16 x, y;
-    s32 i;
+    s32 i, j;
 
     switch (self->step) {
     case 0:
@@ -1298,8 +1290,8 @@ void EntitySurfacingWater(Entity* self) {
             return;
         }
         self->primIndex = primIndex;
-        var_s2 = (self->posX.i.hi - 120) >> 4;
         self->flags |= FLAG_HAS_PRIMS;
+        var_s2 = (self->posX.i.hi - 120) >> 4;
         if (var_s2 < -8) {
             var_s2 = -8;
         }
@@ -1312,11 +1304,11 @@ void EntitySurfacingWater(Entity* self) {
         }
         params = (params >> 8) & 0x7F;
         prim = &g_PrimBuf[primIndex];
-        temp_a2 = self->posX.i.hi;
-        temp_t2 = self->posY.i.hi;
-        temp_t3 = temp_a2 - 9;
-        temp_a2 += 9;
-        self->ext.waterEffects.unk82 = temp_t2 + g_Camera.posY.i.hi;
+        right = self->posX.i.hi;
+        bottom = self->posY.i.hi;
+        left = right - 9;
+        right += 9;
+        self->ext.waterEffects.unk82 = self->posY.i.hi + g_Camera.posY.i.hi;
 
         for (i = 0; i < 2; i++) {
             prim->u2 = 0;
@@ -1324,14 +1316,13 @@ void EntitySurfacingWater(Entity* self) {
             prim->u1 = prim->u3 = 0x1E;
             prim->v0 = prim->v1 = 0x60;
             prim->v2 = prim->v3 = 0x7C;
-            prim->y2 = prim->y3 = temp_t2;
-            prim->x2 = prim->x0 = temp_t3;
-            prim->x3 = prim->x1 = temp_a2;
+            prim->y2 = prim->y3 = bottom;
+            prim->x2 = prim->x0 = left;
+            prim->x3 = prim->x1 = right;
             if (params != 0) {
                 var_s2 = D_80183858[params];
-                temp_lo = 9 / var_s2;
-                prim->y2 = prim->y2 + temp_lo;
-                prim->y3 = prim->y3 - temp_lo;
+                prim->y2 = prim->y2 + 9 / var_s2;
+                prim->y3 = prim->y3 - 9 / var_s2;
             }
             prim->clut = 0x162;
             prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
@@ -1350,10 +1341,9 @@ void EntitySurfacingWater(Entity* self) {
         }
         rnd = (rand() & 1) + 12;
         self->ext.generic.unk84.S16.unk2 = D_80183898[(u8)self->params] + rnd;
-        temp_a0 = self->ext.generic.unk88.S16.unk2 * 16;
-        self->velocityX = temp_a0;
+        self->velocityX = self->ext.generic.unk88.S16.unk2 * 16;
         if (params != 0) {
-            self->velocityY = temp_a0 / var_s2;
+            self->velocityY = self->velocityX / var_s2;
             if (self->velocityY < 0) {
                 self->velocityY = -self->velocityY;
             }
@@ -1366,69 +1356,62 @@ void EntitySurfacingWater(Entity* self) {
     }
 
     MoveEntity(self);
-    tempy = self->velocityX;
-    if (tempy != 0) {
-        temp_v1_2 = self->ext.waterEffects.unk88;
-        temp_a2 = D_801813AC[temp_v1_2];
+
+    //! FAKE:
+    j = self->velocityX;
+
+    if (self->velocityX != 0) {
+        right = D_801813AC[self->ext.waterEffects.unk88];
         ptr = D_801813AC;
-        if (tempy < 0) {
-            tempy = 0;
-            temp_a2 += 6;
-            x = temp_a2 - tileLayout->unkA;
+        if (self->velocityX < 0) {
+            right += 6;
+            x = right - tileLayout->unkA;
             if (self->posX.i.hi < x) {
                 DestroyEntity(self);
                 return;
             }
-            goto block_27;
-        }
-        tempy = 0;
-        ptr++;
-        temp3 = tileLayout->unkA + 6;
-        x = temp_a2 + (ptr[temp_v1_2] - temp3);
-        if (self->posX.i.hi >= x) {
-        DestroyEntity:
-            DestroyEntity(self);
-            return;
+        } else {
+            ptr++;
+            temp3 = tileLayout->unkA + 6;
+            x = right;
+            x += (ptr[self->ext.waterEffects.unk88] - temp3);
+            if (self->posX.i.hi >= x) {
+                DestroyEntity(self);
+                return;
+            }
         }
     }
-block_27:
-    tempy = 0;
 
+    j = 0;
     tempv0 = self->ext.waterEffects.unk82;
     x = self->posX.i.hi;
     y = self->posY.i.hi;
-    tempa0 = tileLayout->unkE;
 
-    temp_t2 = tempv0 - y;
-    temp_t2 = temp_t2 - tempa0;
+    bottom = tempv0 - y - tileLayout->unkE;
 
     prim = &g_PrimBuf[self->primIndex];
     temp_t0 = x - 9;
     x += 9;
 
-loop_28:
-    prim->y2 = prim->y2 - temp_t2;
-    prim->y3 = prim->y3 - temp_t2;
-    prim->y0 = prim->y2 - self->ext.waterEffects.unk84.modeS16.unk2;
-    temp = self->ext.waterEffects.unk84.modeS16.unk2;
-    prim->y1 = prim->y3 - temp;
-    prim->x2 = prim->x0 = temp_t0;
-    prim->x3 = prim->x1 = x;
-    prim->b1 += 0xF8;
-    prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1;
-    prim->b3 += 0xFC;
-    prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
-    if (prim->r0 >= 9) {
-        prim = prim->next;
-        tempy++;
-        if (tempy >= 2) {
-            self->ext.waterEffects.unk82 = self->posY.i.hi + tileLayout->unkE;
+    while (j < 2) {
+        prim->y2 = prim->y2 - bottom;
+        prim->y3 = prim->y3 - bottom;
+        prim->y0 = prim->y2 - self->ext.waterEffects.unk84.modeS16.unk2;
+        prim->y1 = prim->y3 - self->ext.waterEffects.unk84.modeS16.unk2;
+        prim->x2 = prim->x0 = temp_t0;
+        prim->x3 = prim->x1 = x;
+        prim->b1 += 248;
+        prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1;
+        prim->b3 += 252;
+        prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
+        if (prim->r0 < 9) {
+            DestroyEntity(self);
             return;
         }
-        goto loop_28;
-    } else {
-        goto DestroyEntity;
+        prim = prim->next;
+        j++;
     }
+    self->ext.waterEffects.unk82 = self->posY.i.hi + tileLayout->unkE;
 }
 
 // small water droplets go to the side
