@@ -53,58 +53,59 @@ void EntitySideWaterSplash(Entity* self) {
     s32* ptr;
 
     switch (self->step) {
-        case 0:
-            InitializeEntity(D_80180A90);
-            primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-            if (primIndex != -1) {
-                prim = &g_PrimBuf[primIndex];
-                self->primIndex = primIndex;
-                self->flags |= FLAG_HAS_PRIMS;
-                while (prim != NULL) {
-                    prim->u0 = prim->u2 = 0xF0;
-                    prim->u1 = prim->u3 = 0xFF;
-                    prim->v0 = prim->v1 = 0;
-                    prim->v2 = prim->v3 = 0xF;
-                    prim->clut = 0x161;
-                    prim->tpage = 0x1A;
-                    prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = prim->r0 = prim->g0 = prim->b0 =
-                        prim->r1 = prim->g1 = prim->b1 = 128;
-                    prim->p1 = 0;
-                    prim->priority = self->zPriority + 2;
-                    prim->blendMode = 0x37;
-                    prim = prim->next;
-                }
-                params = self->params;
-                temp_s0 = params & 0xF;
-                if (temp_s0 == 0) {
-                    g_api.PlaySfx(D_8018122C[0]);
-                }
-                angle = LOH(D_801821F4[(params >> 3) & 0x1E]);
-                ptr = (s32*)&D_801821B4[temp_s0];
-                temp_s1 = rcos(angle) * *ptr;
-                temp_s3 = rsin(angle + 0x800) * *ptr;
-                ptr++;
-                temp_s1 += rsin(angle) * *ptr;
-                temp_lo = rcos(angle) * *ptr;
-                self->velocityX = temp_s1 + (((params & 0xFF00) << 0x10) >> 0xE);
-                self->ext.waterEffects.unk7C = 0x2C00;
-                self->velocityY = temp_s3 + temp_lo;
-            } else {
-            DestroyEntity:
-                DestroyEntity(self);
-                return;
+    case 0:
+        InitializeEntity(D_80180A90);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex != -1) {
+            prim = &g_PrimBuf[primIndex];
+            self->primIndex = primIndex;
+            self->flags |= FLAG_HAS_PRIMS;
+            while (prim != NULL) {
+                prim->u0 = prim->u2 = 0xF0;
+                prim->u1 = prim->u3 = 0xFF;
+                prim->v0 = prim->v1 = 0;
+                prim->v2 = prim->v3 = 0xF;
+                prim->clut = 0x161;
+                prim->tpage = 0x1A;
+                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
+                    prim->b3 = prim->r0 = prim->g0 = prim->b0 = prim->r1 =
+                        prim->g1 = prim->b1 = 128;
+                prim->p1 = 0;
+                prim->priority = self->zPriority + 2;
+                prim->blendMode = 0x37;
+                prim = prim->next;
             }
-            break;
+            params = self->params;
+            temp_s0 = params & 0xF;
+            if (temp_s0 == 0) {
+                g_api.PlaySfx(D_8018122C[0]);
+            }
+            angle = LOH(D_801821F4[(params >> 3) & 0x1E]);
+            ptr = (s32*)&D_801821B4[temp_s0];
+            temp_s1 = rcos(angle) * *ptr;
+            temp_s3 = rsin(angle + 0x800) * *ptr;
+            ptr++;
+            temp_s1 += rsin(angle) * *ptr;
+            temp_lo = rcos(angle) * *ptr;
+            self->velocityX = temp_s1 + (((params & 0xFF00) << 0x10) >> 0xE);
+            self->ext.waterEffects.unk7C = 0x2C00;
+            self->velocityY = temp_s3 + temp_lo;
+        } else {
+        DestroyEntity:
+            DestroyEntity(self);
+            return;
+        }
+        break;
 
-        case 1:
-            MoveEntity(self);
-            self->velocityY += self->ext.waterEffects.unk7C;
-            break;
+    case 1:
+        MoveEntity(self);
+        self->velocityY += self->ext.waterEffects.unk7C;
+        break;
     }
 
     x = self->posX.i.hi;
     y = self->posY.i.hi;
-    
+
     prim = &g_PrimBuf[self->primIndex];
     while (prim != NULL) {
         prim->x0 = prim->x2 = x - (prim->p1 / 2) - 4;
