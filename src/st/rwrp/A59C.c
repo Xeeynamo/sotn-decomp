@@ -284,7 +284,7 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018DF84);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018DFCC);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E024);
+INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", UnkEntityFunc0);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E0B0);
 
@@ -665,7 +665,7 @@ void EntitySoulStealOrb(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        InitializeEntity(D_8018044C);
+        InitializeEntity(g_InitializeData0);
         D_8008701E[primIndex * 0x1a] = 8;
         self->primIndex = primIndex;
         self->animSet = ANIMSET_DRA(0);
@@ -712,8 +712,8 @@ void EntitySoulStealOrb(Entity* self) {
         self->ext.soulStealOrb.angle = func_8018E160(
             self->ext.soulStealOrb.unk7E, (u16)self->ext.soulStealOrb.angle,
             0xffff & func_8018E0E0(self, &PLAYER));
-        func_8018E024(self->ext.soulStealOrb.angle & 0xFFFF,
-                      self->ext.soulStealOrb.unk80);
+        UnkEntityFunc0(self->ext.soulStealOrb.angle & 0xFFFF,
+                       self->ext.soulStealOrb.unk80);
         MoveEntity(self); // argument pass necessary to match
         prim = &g_PrimBuf[self->primIndex];
         func_8018D6B0(&D_80181110, self);
@@ -735,7 +735,7 @@ void EntitySoulStealOrb(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_80194924);
+#include "../entity_enemy_blood.h"
 
 void func_80194DD4(Entity* entity) {
     ObjInit2* objInit = &D_80181134[entity->params];
