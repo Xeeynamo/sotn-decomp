@@ -254,7 +254,7 @@ def generate_html(function_list):
         [f for f in function_list if f.overlay != "mad"],
         key=lambda x: (x.overlay, x.name),
     )
-    html = '<html><head><meta charset="UTF-8"></head><body>'
+    html = '<html><head><meta charset="UTF-8"></head><body>\n'
     active_overlay = ""
     # Now iterate through all functions, creating links to their SVG files.
     for f in sorted_funcs:
@@ -262,13 +262,13 @@ def generate_html(function_list):
         if f.overlay != active_overlay:
             # End the previous overlay's list, unless this is the first overlay.
             if active_overlay != "":
-                html += "</ul>"
+                html += "</ul>\n"
             active_overlay = f.overlay
-            html += f"<h2>{active_overlay}</h2>"
-            html += "<ul>"
+            html += f"<h2>{active_overlay}</h2>\n"
+            html += "<ul>\n"
         dec_symbol = "✅" if f.decompile_status == "True" else "❌"
-        html += f'<li><a href="{f.unique_name}.svg">{dec_symbol + f.name}</a></li>'
-    html += "</ul>"
+        html += f'<li><a href="{f.unique_name}.svg">{dec_symbol + f.name}</a></li>\n'
+    html += "</ul>\n"
     html += "</body></html>"
     return html
 
