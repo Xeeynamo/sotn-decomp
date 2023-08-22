@@ -21,6 +21,11 @@ typedef enum EntityIDs {
 
     /* 0x11 */ E_ID_11 = 0x11,
     /* 0x15 */ E_ID_15 = 0x15,
+    /* 0x35 */ E_SPLASH_WATER = 0x35,
+    /* 0x36 */ E_SURFACING_WATER,
+    /* 0x37 */ E_SIDE_WATER_SPLASH,
+    /* 0x38 */ E_SMALL_WATER_DROP,
+    /* 0x39 */ E_WATER_DROP,
 } EntityIDs;
 
 extern void CreateEntityFromCurrentEntity(u16, Entity*);
@@ -31,8 +36,8 @@ extern void func_801C8C84(
 extern POLY_GT4* func_801D6DB8(POLY_GT4* poly);
 
 LayoutEntity* D_80180850[];
-extern u16 D_80180AB8[];
-extern u16 D_80180AC4[];
+extern u16 g_InitializeData0[];
+extern u16 g_InitializeEntityData0[];
 extern u16 D_80180AD0[];
 extern u16 D_80180ADC[]; // Init EntityCastleDoor
 extern u16 D_80180AE8[];
@@ -72,6 +77,11 @@ extern s32 D_80181364;
 extern const u8 D_80181390[];
 extern u16 D_8018139C[];
 extern u16 D_8018139E[];
+extern u16 D_801813A8;
+extern u16 D_801813AA;
+extern u16 D_801813AC[];
+extern u16 D_801813AA;
+extern u16 D_801813AC[];
 extern u16 D_801814EC[];
 extern u16 D_801817F8[];
 extern u8 D_801819D0[];
@@ -99,6 +109,12 @@ extern u8 D_8018267C[];
 extern ObjInit2 D_80182764[];
 extern s32 c_GoldPrizes[];
 extern u8 D_8018383C[];
+extern s16 D_80183858[];
+extern Point32 D_80183878[];
+extern s16 D_80183858[];
+extern s16 D_80183898[];
+extern s16 D_80183858[];
+extern s16 D_80183898[];
 extern u8 D_80183994[];
 extern const u8 D_801839A0[];
 extern u8 D_801839A8[];

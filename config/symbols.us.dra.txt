@@ -1018,6 +1018,7 @@ EntityPlayerPinkEffect = 0x80120AF8;
 EntityPlayerDissolves = 0x80120DD0;
 EntityLevelUpAnimation = 0x80121980;
 EntityMist = 0x8012231C;
+UnknownEntId49 = 0x801238CC;
 EntityTeleport = 0x801243B0;
 EntitySubwpnThrownDagger = 0x80124B88;
 EntitySubwpnThrownAxe = 0x80125330;

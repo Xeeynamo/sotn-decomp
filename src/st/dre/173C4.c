@@ -543,7 +543,7 @@ u8 func_8019ADF4(u8 arg0, u8 arg1, u8 arg2) {
     return arg2;
 }
 
-void func_8019AE4C(u16 slope, s16 speed) {
+void UnkEntityFunc0(u16 slope, s16 speed) {
     Entity* entity;
     s32 moveX;
     s32 moveY;
@@ -747,35 +747,7 @@ void func_8019B304(u16* hitSensors, s16 sensorCount) {
 
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/173C4", func_8019B45C);
 
-void ReplaceBreakableWithItemDrop(Entity* self) {
-    u16 params;
-
-    PreventEntityFromRespawning(self);
-
-#if STAGE != STAGE_ST0
-    if (!(g_Status.relics[RELIC_CUBE_OF_ZOE] & 2)) {
-        DestroyEntity(self);
-        return;
-    }
-#endif
-
-    params = self->params &= 0xFFF;
-
-    if (params < 0x80) {
-        self->entityId = E_PRIZE_DROP;
-        self->pfnUpdate = (PfnEntityUpdate)EntityPrizeDrop;
-        self->animFrameDuration = 0;
-        self->animFrameIdx = 0;
-    } else {
-        params -= 0x80;
-        self->entityId = E_EQUIP_ITEM_DROP;
-        self->pfnUpdate = (PfnEntityUpdate)EntityEquipItemDrop;
-    }
-
-    self->params = params;
-    self->unk6D = 0x10;
-    self->step = 0;
-}
+#include "../replace_breakable_with_item_drop.h"
 
 void func_8019B858(void) {
     s32 temp_v1;
@@ -917,7 +889,7 @@ void EntityExplosion(Entity* entity) {
     u32 temp;
 
     if (!entity->step) {
-        InitializeEntity(D_80180470);
+        InitializeEntity(g_InitializeEntityData0);
         entity->animSet = ANIMSET_DRA(2);
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;

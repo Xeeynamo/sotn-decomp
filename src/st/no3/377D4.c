@@ -98,7 +98,7 @@ void EntityShuttingWindow(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180AC4);
+        InitializeEntity(g_InitializeEntityData0);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);

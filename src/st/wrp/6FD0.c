@@ -226,7 +226,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
 u16 g_eBreakableInit[] = {
     0x8001, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
-u16 D_8018044C[] = {
+u16 g_InitializeData0[] = {
     0x0003, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000,
 };
 u16 D_80180458[] = {

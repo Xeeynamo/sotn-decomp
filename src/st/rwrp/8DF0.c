@@ -11,7 +11,7 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_80188DF0);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_80188ED0);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_8018908C);
+INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", EntityBreakable);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/8DF0", func_801891C0);
 

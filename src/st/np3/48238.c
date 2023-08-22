@@ -475,7 +475,7 @@ void func_801C8F54(Entity* self) {
 
 void EntityMermanExplosion(Entity* self) {
     if (self->step == 0) {
-        InitializeEntity(D_80180A54);
+        InitializeEntity(g_InitializeEntityData0);
         self->palette = 0x82BB;
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = D_80182454[self->params];

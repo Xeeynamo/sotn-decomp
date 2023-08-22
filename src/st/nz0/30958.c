@@ -1410,7 +1410,7 @@ void func_801B3C38(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BE0);
+        InitializeEntity(g_InitializeEntityData0);
         params = self->params & 0xF;
         obj = &D_80180FE0[params];
         self->palette = obj->palette + 0x2E0;

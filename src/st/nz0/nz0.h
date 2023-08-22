@@ -45,7 +45,7 @@ extern u8 D_8003BE6F[];
 LayoutEntity* D_801808EC[];
 LayoutEntity* D_801809C0[];
 extern PfnEntityUpdate PfnEntityUpdates[];
-extern const u16 D_80180BE0[];
+extern const u16 g_InitializeEntityData0[];
 extern u16 D_80180BEC[];
 extern u16 D_80180BF8[]; // Init Elevator2
 extern u16 D_80180C1C[];
@@ -265,7 +265,7 @@ extern u8 D_80180CF4[];
 extern s32 D_80182600[];
 extern s32 D_8018216C;
 extern s32 D_80182174;
-extern u16 D_80180BD4[];
+extern u16 g_InitializeData0[];
 extern u16 D_80180BC8[];
 extern u16 D_80181CA8[];
 extern u16 D_80181CD8[];

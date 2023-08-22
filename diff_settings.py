@@ -91,7 +91,7 @@ def apply(config, args):
             apply_psx_servant(config, version, name)
         elif name.startswith("w_"):
             apply_psx_weapon(config, version, name)
-        elif name is "dra" or name is "main":
+        elif name == "dra" or name == "main":
             apply_psx_base(config, version, name)
         else:
             apply_psx_bin(config, version, name)

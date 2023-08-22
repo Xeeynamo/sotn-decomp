@@ -303,7 +303,7 @@ void func_801942D0(s16 index) {
     }
 }
 
-void func_8019434C(Entity* entity) {
+void PreventEntityFromRespawning(Entity* entity) {
     if (entity->entityRoomIndex) {
         u32 value = (entity->entityRoomIndex - 1);
         u16 index = value / 32;
@@ -557,7 +557,7 @@ u8 func_80194CB0(u8 arg0, u8 arg1, u8 arg2) {
     return arg2;
 }
 
-void func_80194D08(s32 slope, s16 speed) {
+void UnkEntityFunc0(s32 slope, s16 speed) {
     Entity* entity;
     s32 moveX;
     s32 moveY;
@@ -731,7 +731,7 @@ void func_801951C0(u16* hitSensors, s16 sensorCount) {
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", func_80195318);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", func_8019565C);
+#include "../replace_breakable_with_item_drop.h"
 
 void func_80195714(void) {
     s32 temp_v1;
@@ -1076,7 +1076,7 @@ u8 func_801989AC(s32 arg0) {
 }
 
 // ID 06
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", EntityIntenseExplosion);
+#include "../entity_intense_explosion.h"
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", func_8019902C);
 
@@ -1199,7 +1199,7 @@ void func_8019A420(Primitive* prim) {
         prim->x2 = prim->x0 = prim->x0 + xPos;
         prim->x1 = prim->x1 + xPos;
         prim->x3 = prim->x0;
-        func_8019C6A0(prim, 4);
+        UnkLoopFunc(prim, 4);
         break;
     case 2:
         if (prim->p2 < 0x14) {
@@ -1209,7 +1209,7 @@ void func_8019A420(Primitive* prim) {
         prim->x2 = prim->x0 = prim->x0 - xPos;
         prim->x1 = prim->x1 - xPos;
         prim->x3 = prim->x0;
-        func_8019C6A0(prim, 4);
+        UnkLoopFunc(prim, 4);
         break;
     }
 }

@@ -339,6 +339,51 @@ typedef struct {
     /* 0x88 */ u16 unk88;
 } ET_801D0B78;
 
+typedef struct {
+    /* 0x7C */ s32 unk7C;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    union {
+        /* 0x84 */ s32 val;
+        struct {
+            /* 0x84 */ s16 unk0;
+            /* 0x86 */ s16 unk2;
+        } modeS16;
+    } unk84; // size = 0x4
+    /* 0x88 */ u16 unk88;
+} ET_WaterEffects;
+
+typedef struct {
+    /* 0x7C */ char pad_0[0x20];
+    /* 0x9C */ s16 unk9C;
+    /* 0x9E */ s16 unk9E;
+    /* 0xA0 */ struct Entity* unkA0;
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ s16 unkA6;
+    /* 0xA8 */ u8 unkA8;
+    /* 0xA9 */ char pad_A9[0x7];
+    /* 0xB0 */ s16 unkB0[0x6];
+} ET_GurkhaHammer;
+
+typedef struct {
+    /* 0x7C */ char pad_0[0x20];
+    /* 0x9C */ s16 unk9C;
+    /* 0xA0 */ char pad_A0[0x6];
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ s16 unkA6;
+    /* 0xA9 */ char pad_A8[0xC];
+    /* 0xB0 */ u16 unkB4;
+} ET_801CDFD8;
+
+typedef struct {
+    /* 0x7C */ char pad_0[0x8];
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ char pad_85[0x9];
+    /* 0x8E */ u8 unk8E;
+    /* 0x8F */ char pad_8F[0x20];
+    /* 0xB0 */ s16 unkB0;
+} ET_801CE4CC;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
@@ -364,5 +409,9 @@ typedef union {
     /* 0x7C */ ET_Elevator elevator;
     /* 0x7C */ ET_801D1BB8 et_801D1BB8;
     /* 0x7C */ ET_801D0B78 et_801D0B78;
+    /* 0x7C */ ET_WaterEffects waterEffects;
+    /* 0x7C */ ET_GurkhaHammer GH_Props;
+    /* 0x7C */ ET_801CE4CC et_801CE4CC;
+    /* 0x7C */ ET_801CDFD8 et_801CDFD8;
     /* 0x7C */ char stub[0x40];
 } Ext;

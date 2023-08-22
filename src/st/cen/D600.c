@@ -96,7 +96,7 @@ void EntityUnkId01(Entity* self) {
                 }
             }
         }
-        func_8019565C(self);
+        ReplaceBreakableWithItemDrop(self);
         DestroyEntity(&self[1]);
     }
 }

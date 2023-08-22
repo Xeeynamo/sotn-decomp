@@ -24,6 +24,11 @@ typedef enum {
     /* 0x19 */ E_CASTLE_DOOR = 0x19,
     /* 0x1E */ E_ID_1E = 0x1E,
     /* 0x27 */ E_ID_27 = 0x27,
+    /* 0x2D */ E_SPLASH_WATER = 0x2D,
+    /* 0x2E */ E_SURFACING_WATER,
+    /* 0x2F */ E_SIDE_WATER_SPLASH,
+    /* 0x30 */ E_SMALL_WATER_DROP,
+    /* 0x31 */ E_WATER_DROP,
     /* 0x3F */ E_BONE_SCIMITAR_HEAD = 0x3F,
     /* 0x4D */ E_ID_4D = 0x4D,
     /* 0x4F */ E_SLOGRA_SPEAR = 0x4F,
@@ -43,7 +48,7 @@ extern void func_801BB3F4(s16);
 extern s32 func_801BD308(u16* hitSensors, s16 sensorCount);
 extern s32 func_801BD588(Entity* arg0, s32 arg1, s32 arg2, s32 arg3);
 extern s32 GetDistanceToPlayerX(void);
-extern s32 func_801CD658();
+extern void func_801CD658();
 extern void EntityPrizeDrop(Entity* entity);
 extern void EntityEquipItemDrop(Entity* entity);
 extern Primitive* func_801D2470(Primitive* poly);
@@ -53,8 +58,8 @@ extern u8 g_eBreakableHitboxes[];
 extern u8 g_eBreakableExplosionTypes[];
 extern u16 g_eBreakableanimSets[];
 extern u8 g_eBreakableBlendModes[];
-extern u16 D_80180A48[];
-extern u16 D_80180A54[];
+extern u16 g_InitializeData0[];
+extern u16 g_InitializeEntityData0[];
 extern u16 D_80180A60[];
 extern u16 D_80180A6C[];
 extern u16 D_80180A78[];
@@ -182,6 +187,11 @@ extern u8 D_801815B4[];  // Hitbox related
 extern u8 D_8018120C[]; // this could be a struct
 extern const u8 D_80181214[];
 extern s16 D_80181220[][2];
+extern u16 D_8018122C;
+extern u16 D_8018122E;
+extern u16 D_80181230[];
+extern u16 D_8018122E;
+extern u16 D_80181230[];
 extern u8 D_801813D4[];
 extern u8 D_801813E4[];
 extern s8 D_80181454[];
@@ -208,6 +218,12 @@ extern u8 D_80181FF4[];
 extern u16 D_80181FF8[];
 extern s16* D_80182000;
 extern u8 D_80182008[];
+extern s16 D_80182168[];
+extern Point32 D_80182188[];
+extern s16 D_80182168[];
+extern s16 D_801821A8[];
+extern s16 D_80182168[];
+extern s16 D_801821A8[];
 extern u8 D_801822A4[];
 extern const u8 D_801822B0[];
 extern u8 D_801822B8[];
@@ -254,6 +270,11 @@ extern u8 D_801D2770;
 extern u8 D_801D2774;
 extern LayoutEntity* D_801D2768;
 extern LayoutEntity* D_801D276C;
+extern s32 D_801D3378;
+extern s32 D_801D337C;
+extern s32 D_801D3380;
+extern s32 D_801D3384;
+extern s32 D_801D3388;
 extern u16 UNK_Update0[];
 extern s32 D_801825D4;
 extern u16 D_801825E4[];
