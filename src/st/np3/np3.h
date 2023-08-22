@@ -29,6 +29,7 @@ typedef enum {
     /* 0x2F */ E_SIDE_WATER_SPLASH,
     /* 0x30 */ E_SMALL_WATER_DROP,
     /* 0x31 */ E_WATER_DROP,
+    /* 0x35 */ E_MEDIUM_WATER_SPLASH = 0x35,
     /* 0x3F */ E_BONE_SCIMITAR_HEAD = 0x3F,
     /* 0x4D */ E_ID_4D = 0x4D,
     /* 0x4F */ E_SLOGRA_SPEAR = 0x4F,
@@ -121,6 +122,11 @@ extern u8 D_80182270[];      // Animation
 extern u8 D_8018227C[];      // Animation
 extern u8 D_80182294[];      // Animation
 extern u8 D_8018229C[];      // Animation
+extern Point32 D_801822D0[];
+extern u16 D_801822F8[];
+extern u8 D_80182304[];
+extern u16 D_8018230C[];
+extern s32 D_8018231C[];
 extern Point32 D_80182338[];
 extern u8 D_80182358[];
 extern s16 D_8018235C;

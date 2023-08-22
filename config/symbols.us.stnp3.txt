@@ -89,6 +89,7 @@ EntityWaterDrop = 0x801C61B4;
 EntityMerman2 = 0x801C6564;
 EntityExplosion2 = 0x801C7650;
 EntityMediumWaterSplash = 0x801C7880;
+EntityMermanWaterSplash = 0x801C7954;
 EntityLargeFallingObject = 0x801C8010;
 EntityMermanSpawner = 0x801C80DC;
 EntityMerman = 0x801C8238;
