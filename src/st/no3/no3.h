@@ -109,6 +109,7 @@ extern u8 D_8018267C[];
 extern ObjInit2 D_80182764[];
 extern s32 c_GoldPrizes[];
 extern u8 D_8018383C[];
+extern s32 D_801838F4[];
 extern s16 D_80183858[];
 extern Point32 D_80183878[];
 extern s16 D_80183898[];
