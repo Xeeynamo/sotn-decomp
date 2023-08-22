@@ -33,8 +33,203 @@ typedef enum {
     MERMAN2_SPIT_FIRE_ATTACK,
 } Merman2SpitFireSubSteps;
 
-// ID 0x2D
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/44DCC", EntitySplashWater);
+// EntitySplashWater ID 0x2D
+void EntitySplashWater(Entity* self) {
+    Unkstruct8* tileLayout = &g_CurrentRoomTileLayout;
+    u16 params = self->params;
+    u16 temp_s2 = params >> 0xB;
+    u16 temp_s5 = (params >> 8) & 7;
+    u16 temp_s4 = (params >> 5) & 7;
+
+    Primitive *prim, *prim2;
+    Entity* newEntity;
+    s16 primIndex;
+    s16 temp_a0;
+    s16 temp_a1;
+    s16 temp_a2;
+    u16 temp_t3;
+    s16 temp_t8;
+    char pad[0x4];
+    s32 i;
+
+    params &= 0xF;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180A90);
+        if (temp_s2 != 0 && temp_s4 != 7) {
+            primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
+        } else {
+            primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        }
+        if (primIndex != -1) {
+            self->flags |= FLAG_HAS_PRIMS;
+            prim = &g_PrimBuf[primIndex];
+            self->primIndex = primIndex;
+            temp_t3 = self->posY.i.hi;
+            temp_t8 = self->posX.i.hi;
+            self->ext.waterEffects.unk82 = temp_t3 + tileLayout->unkE;
+            for (i = 0; prim != NULL; i++) {
+                if (i % 2) {
+                    prim->u0 = prim->u2 = prim2->u0;
+                    prim->u1 = prim->u3 = prim2->u1;
+                    prim->v0 = prim->v1 = prim2->v0;
+                    prim->v2 = prim->v3 = prim2->v2;
+                    prim->y2 = prim2->y2;
+                    prim->y3 = prim2->y3;
+                    prim->x2 = prim->x0 = prim2->x0;
+                    prim->x3 = prim->x1 = prim2->x1;
+                } else {
+                    prim->u1 = prim->u3 = 0x20;
+                    prim->v2 = prim->v3 = 0x7C;
+                    prim->u0 = prim->u2 = 0;
+                    prim->v0 = prim->v1 = 96;
+                    prim->y2 = prim->y3 = temp_t3;
+                    prim->x2 = prim->x0 = temp_t8 - 0xE;
+                    prim->x3 = prim->x1 = temp_t8 + 0xE;
+                    if (i >= 2) {
+                        temp_a2 = D_80182168[temp_s4];
+                        if (temp_s2 >= 0xF) {
+                            prim->u0 = prim->u2 = prim2->u1;
+                            prim->x0 = prim->x2 = prim2->x1;
+                            temp_a1 = prim2->y3;
+                            prim->y2 = temp_a1;
+                            if (temp_a2 != 0) {
+                                prim->y3 =
+                                    temp_a1 - (prim->x1 - prim->x0) / temp_a2;
+                            } else {
+                                prim->y3 = temp_a1;
+                            }
+                        } else {
+                            prim->u1 = prim->u3 = prim2->u0;
+                            prim->x1 = prim->x3 = prim2->x0;
+                            temp_a1 = prim2->y2;
+                            prim->y3 = temp_a1;
+                            if (temp_a2 != 0) {
+                                prim->y2 =
+                                    temp_a1 + (prim->x1 - prim->x0) / temp_a2;
+                            } else {
+                                prim->y2 = temp_a1;
+                            }
+                        }
+                    } else {
+                        if (temp_s2 != 0) {
+                            if (temp_s2 >= 0xF) {
+                                prim->u1 = prim->u3 =
+                                    prim->u0 + (temp_s2 << 5) / 28;
+                                prim->x1 = prim->x3 = temp_s2 + prim->x0;
+                            } else {
+                                prim->u0 = prim->u2 =
+                                    prim->u2 + (temp_s2 << 5) / 28;
+                                prim->x0 = prim->x2 = temp_s2 + prim->x2;
+                            }
+                        }
+                        if (temp_s5 != 0) {
+                            temp_a0 = D_80182168[temp_s5];
+                            if (temp_a0 < 0) {
+                                if (temp_t8 >= prim->x1) {
+                                    prim->y2 += (prim->x1 - prim->x0) / temp_a0;
+                                } else {
+                                    prim->y2 += (temp_t8 - prim->x0) / temp_a0;
+                                    prim->y3 = prim->y3 -
+                                               (prim->x1 - temp_t8) / temp_a0;
+                                }
+                            } else if (prim->x0 >= temp_t8) {
+                                prim->y3 -= (prim->x1 - prim->x0) / temp_a0;
+                            } else {
+                                prim->y2 += (temp_t8 - prim->x0) / temp_a0;
+                                prim->y3 -= (prim->x1 - temp_t8) / temp_a0;
+                            }
+                        }
+                    }
+                }
+                prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
+                    prim->b1 = 255;
+                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
+                    prim->b3 = 128;
+                prim->clut = 0x162;
+                prim->tpage = 0x1A;
+                prim->priority = self->zPriority + 2;
+                prim->blendMode = 0x77;
+                if (i % 2) {
+                    prim->clut = 0x15F;
+                    prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
+                        prim->b1 = 0;
+                    prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
+                        prim->b3 = 96;
+                    prim->blendMode = 0x37;
+                    prim->priority += 2;
+                }
+                prim2 = prim;
+                prim = prim->next;
+            }
+
+            temp_a2 = (self->posX.i.hi - 120) >> 4;
+            if (temp_a2 < -8) {
+                temp_a2 = -8;
+                temp_a2 = -8;
+            }
+            if (temp_a2 > 8) {
+                temp_a2 = 8;
+            }
+
+            g_api.func_80134714(D_8018122C, 0x7F, temp_a2);
+            self->velocityY = D_80182188[params].x;
+            self->ext.waterEffects.unk7C = D_80182188[params].y;
+            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            if (newEntity != NULL) {
+                CreateEntityFromCurrentEntity(E_WATER_DROP, newEntity);
+                newEntity->velocityY = self->velocityY;
+            }
+            break;
+        }
+        DestroyEntity(self);
+        return;
+
+    case 1:
+        MoveEntity(self);
+        self->velocityY += self->ext.waterEffects.unk7C;
+        if (self->velocityY > FIX(2.5)) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        MoveEntity(self);
+        if (D_80086FF0[self->primIndex * 0x34] < 9) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    temp_t3 = self->ext.waterEffects.unk82 - self->posY.i.hi;
+    temp_t3 -= tileLayout->unkE;
+    prim = &g_PrimBuf[self->primIndex];
+
+    for (i = 0; prim != NULL; i++) {
+        prim->y0 = prim->y2 - temp_t3;
+        prim->y1 = prim->y3 - temp_t3;
+        if (i % 2) {
+            if (prim->b3 >= 4) {
+                prim->b3 += 252;
+            }
+            prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
+        } else {
+            if (prim->b3 >= 8) {
+                prim->b3 += 252;
+            }
+            prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
+            if (prim->b3 <= 8) {
+                if (prim->b1 >= 8) {
+                    prim->b1 += 248;
+                }
+                prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1;
+            }
+        }
+        prim = prim->next;
+    }
+}
 
 // ID 0x2E
 void EntitySurfacingWater(Entity* self) {

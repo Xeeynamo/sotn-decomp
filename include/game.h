@@ -1384,6 +1384,7 @@ extern Event g_EvHwCardEnd;
 extern Event g_EvHwCardErr;
 extern Event g_EvHwCardTmo;
 extern s32 D_80084FE4[];
+extern u8 D_80086FF0[];
 extern Event g_EvHwCardNew;
 extern PixPattern D_8007EFE4;
 extern s32 D_80080FE4; // maybe PixPattern[]?
