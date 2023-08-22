@@ -181,9 +181,6 @@ u16* g_Cluts[] = {
 
 s32 g_HandId = HAND_ID;
 
-extern SpriteParts* g_Animset[];
-extern SpriteParts* g_Animset2[];
-
 void DestroyEntity(Entity* entity) {
     s32 i;
     s32 length;
