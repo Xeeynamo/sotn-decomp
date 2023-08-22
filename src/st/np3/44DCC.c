@@ -419,7 +419,7 @@ void EntitySideWaterSplash(Entity* self) {
             params = self->params;
             temp_s0 = params & 0xF;
             if (temp_s0 == 0) {
-                g_api.PlaySfx(D_8018122C[0]);
+                g_api.PlaySfx(D_8018122C);
             }
             angle = LOH(D_801821F4[(params >> 3) & 0x1E]);
             ptr = (s32*)&D_801821B4[temp_s0];
