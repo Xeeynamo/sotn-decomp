@@ -419,3 +419,4 @@ if __name__ == "__main__":
                 f.write(html)
             print(f"Generated HTML in {time.perf_counter() - timer} seconds")
     print("Exiting.")
+    
