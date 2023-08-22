@@ -217,8 +217,7 @@ extern s32 D_80181FDC[];
 extern u8 D_80181FF4[];
 extern u16 D_80181FF8[];
 extern s16* D_80182000;
-extern u8 D_80182008[];
-extern s32 D_80182204[];
+extern u8 D_80182008[];;
 extern s64 D_801821B4[];
 extern u8 D_801821F4[];
 extern s16 D_80182168[];
@@ -227,6 +226,7 @@ extern s16 D_80182168[];
 extern s16 D_801821A8[];
 extern s16 D_80182168[];
 extern s16 D_801821A8[];
+extern s32 D_80182204[]
 extern u8 D_801822A4[];
 extern const u8 D_801822B0[];
 extern u8 D_801822B8[];
