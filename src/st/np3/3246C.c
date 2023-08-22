@@ -412,7 +412,101 @@ void func_801B3704(Entity* self, s16 primIndex) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B39CC);
+void EntityTransparentWater(Entity* self) {
+    Primitive* prim;
+    s16 primIndex;
+    u32 temp_a0;
+    s16 temp_t1;
+    s32 temp_v0;
+    u8* temp_v1;
+    u8* var_a0;
+    u8 temp_t2;
+    s32 var_a3;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180A6C);
+        self->ext.transparentWater.unk80 = 4;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
+        self->ext.transparentWater.prim = prim;
+        self->flags |= FLAG_HAS_PRIMS;
+        while (prim != NULL) {
+            prim->tpage = 0xF;
+            prim->clut = 0x18;
+            prim->priority = 0xB0;
+            prim->blendMode = 8;
+            prim = prim->next;
+        }
+        break;
+
+    case 1:
+        var_a0 = &D_801810C0;
+        while (*var_a0 != 0xFF) {
+            D_8003C104[var_a0[0]] = D_8003C104[var_a0[2] + 0x200];
+            var_a0 += 4;
+        }
+
+        if (--self->ext.transparentWater.unk80 == 0) {
+            self->ext.transparentWater.unk80 = 4;
+            self->step++;
+        }
+        break;
+
+    case 2:
+        var_a0 = &D_801810C0;
+        while (*var_a0 != 0xFF) {
+            D_8003C104[var_a0[0]] = D_8003C104[var_a0[3] + 0x200];
+            var_a0 += 4;
+        }
+
+        if (--self->ext.transparentWater.unk80 == 0) {
+            self->ext.transparentWater.unk80 = 4;
+            self->step--;
+        }
+        break;
+    }
+
+    AnimateEntity(D_801810EC, self);
+
+    var_a3 = -1 * g_Camera.posX.i.hi % 38;
+    var_a3 += 304;
+    if (self->params != 0) {
+        var_a3 = 96;
+    }
+
+    prim = self->ext.transparentWater.prim;
+    temp_a0 = self->posY.i.hi;
+    temp_v1 = D_801810E0;
+    temp_v1 += 4 * self->animCurFrame;
+    temp_v0 = temp_v1[0];
+    temp_v1 = temp_v1[1];
+    while (var_a3 > 0) {
+        temp_t2 = temp_v0 + 0x26;
+        temp_t1 = temp_v1 + 0x3E;
+        prim->x1 = prim->x3 = var_a3;
+        var_a3 -= 0x26;
+        prim->x0 = prim->x2 = var_a3;
+        prim->u0 = prim->u2 = temp_v0;
+        prim->u1 = prim->u3 = temp_t2;
+        prim->v0 = prim->v1 = temp_v1;
+        prim->v2 = prim->v3 = temp_t1;
+        prim->y0 = prim->y1 = temp_a0;
+        prim->y2 = prim->y3 = temp_a0 + 0x3E;
+        prim->blendMode = 0x33;
+        prim = prim->next;
+    }
+
+    while (prim != NULL) {
+        prim->blendMode = 8;
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B3D24);
 

@@ -384,6 +384,11 @@ typedef struct {
     /* 0xB0 */ s16 unkB0;
 } ET_801CE4CC;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 unk80;
+} ET_TransparentWater;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
@@ -413,5 +418,6 @@ typedef union {
     /* 0x7C */ ET_GurkhaHammer GH_Props;
     /* 0x7C */ ET_801CE4CC et_801CE4CC;
     /* 0x7C */ ET_801CDFD8 et_801CDFD8;
+    /* 0x7C */ ET_TransparentWater transparentWater;
     /* 0x7C */ char stub[0x40];
 } Ext;
