@@ -128,22 +128,17 @@ void EntitySplashWater(Entity* self) {
                             temp_a0 = D_80182168[temp_s5];
                             if (temp_a0 < 0) {
                                 if (temp_t8 >= prim->x1) {
-                                    prim->y2 = prim->y2 +
-                                               (prim->x1 - prim->x0) / temp_a0;
+                                    prim->y2 += (prim->x1 - prim->x0) / temp_a0;
                                 } else {
-                                    prim->y2 = prim->y2 +
-                                               (temp_t8 - prim->x0) / temp_a0;
+                                    prim->y2 += (temp_t8 - prim->x0) / temp_a0;
                                     prim->y3 = prim->y3 -
                                                (prim->x1 - temp_t8) / temp_a0;
                                 }
                             } else if (prim->x0 >= temp_t8) {
-                                prim->y3 =
-                                    prim->y3 - (prim->x1 - prim->x0) / temp_a0;
+                                prim->y3 -= (prim->x1 - prim->x0) / temp_a0;
                             } else {
-                                prim->y2 =
-                                    prim->y2 + (temp_t8 - prim->x0) / temp_a0;
-                                prim->y3 =
-                                    prim->y3 - (prim->x1 - temp_t8) / temp_a0;
+                                prim->y2 += (temp_t8 - prim->x0) / temp_a0;
+                                prim->y3 -= (prim->x1 - temp_t8) / temp_a0;
                             }
                         }
                     }
