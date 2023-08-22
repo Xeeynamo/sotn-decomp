@@ -925,13 +925,7 @@ void func_801A2764(POLY_GT4* poly) {
     ((POLY_GT4*)poly->tag)->pad3 = 0xA;
 }
 
-void func_801A27B8(POLY_GT4* poly) {
-    poly->p3 = 0;
-    poly->pad3 = 8;
-    ((POLY_GT4*)poly->tag)->p3 = 0;
-    ((POLY_GT4*)poly->tag)->code = 4;
-    ((POLY_GT4*)poly->tag)->pad3 = 8;
-}
+#include "../unk_poly_func_0.h"
 
 #include "../unk_loop_func.h"
 

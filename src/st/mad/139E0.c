@@ -919,13 +919,7 @@ void func_801996EC(POLY_GT4* arg0) {
     ((POLY_GT4*)arg0->tag)->pad3 = 0xA;
 }
 
-void func_80199740(POLY_GT4* arg0) {
-    arg0->p3 = 0;
-    arg0->pad3 = 8;
-    ((POLY_GT4*)arg0->tag)->p3 = 0;
-    ((POLY_GT4*)arg0->tag)->code = 4;
-    ((POLY_GT4*)arg0->tag)->pad3 = 8;
-}
+#include "../unk_poly_func_0.h"
 
 s32 func_8019976C(Unkstruct_80128BBC* arg0, u8 value) {
     u8 ret = 0;
