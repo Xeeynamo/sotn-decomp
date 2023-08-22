@@ -329,8 +329,9 @@ class sotn_function:
             style="filled",
             fillcolor=graph_colors[self.decompile_status],
         )
-
-        for callee, flags in self.callees.items():
+        # We sort the items so they will be alphabetized. This reduces changes from
+        # one run to the next. Any differences should be due to changes in the repo.
+        for callee, flags in sorted(self.callees.items()):
             graph.node(
                 callee,
                 style="filled",
@@ -338,8 +339,8 @@ class sotn_function:
                 href=callee + ".svg",
             )
             graph.edge(self.unique_name, callee, headlabel=str(flags[0]))
-        # print("callers")
-        for caller, flags in self.callers.items():
+        # Same sorting as above
+        for caller, flags in sorted(self.callers.items()):
             graph.node(
                 caller,
                 style="filled",
@@ -347,7 +348,6 @@ class sotn_function:
                 href=caller + ".svg",
             )
             graph.edge(caller, self.unique_name, taillabel=str(flags[0]))
-        # print("done")
         imgbytes = graph.pipe(format="svg")
         return imgbytes
 
