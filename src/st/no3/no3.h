@@ -26,6 +26,7 @@ typedef enum EntityIDs {
     /* 0x37 */ E_SIDE_WATER_SPLASH,
     /* 0x38 */ E_SMALL_WATER_DROP,
     /* 0x39 */ E_WATER_DROP,
+    /* 0x3D */ E_MEDIUM_WATER_SPLASH = 0x3D,
 } EntityIDs;
 
 extern void CreateEntityFromCurrentEntity(u16, Entity*);
@@ -119,6 +120,11 @@ extern u8 D_80183994[];
 extern const u8 D_801839A0[];
 extern u8 D_801839A8[];
 extern u8 D_801839B0[];
+extern Point32 D_801839C0[];
+extern u16 D_801839E8[];
+extern u8 D_801839F4[];
+extern u16 D_801839FC[];
+extern s32 D_80183A0C[];
 extern u8 D_80183AF0[];
 extern u8 D_80183B04[];
 extern u16 D_80180B60[];
