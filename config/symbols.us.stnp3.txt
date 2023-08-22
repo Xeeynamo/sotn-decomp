@@ -109,5 +109,6 @@ EntityGurkha = 0x801CF94C;
 EntityGurkhaSword = 0x801D0730;
 EntityBlade = 0x801D0D40;
 EntityBladeSword = 0x801D1BB8;
+UnkPolyFunc0 = 0x801D26D8;
 UnkLoopFunc = 0x801D2704;
 UNK_Update0 = 0x801D33F4;
