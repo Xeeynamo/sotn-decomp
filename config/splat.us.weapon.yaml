@@ -36,9 +36,10 @@ segments:
     subsegments:
       - [0x04040, animset, w_000_1]
       - [0x04A44, animset, w_000_2]
-      - [0x04A44, data, w_000]
+      - [0x04A44, data, w_000] # empty
+      - [0x04A44, .data, w_000]
       - [0x050D4, c, w_000]
-      - [0x05700, sbss, w_000]
+      - [0x05700, sbss, w_000] # empty
   - name: f_001
     type: ci4
     start: 0x07000

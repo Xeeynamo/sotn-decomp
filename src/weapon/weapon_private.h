@@ -4,6 +4,17 @@
 #define INCLUDE_ASM_NEW
 #include <weapon.h>
 
+#define WEAPON0 // forces WEAPON0 for the time being
+
+#if defined(WEAPON0)
+#define HAND_ID 0
+#elif defined(WEAPON1)
+#define HAND_ID 1
+#else
+#warning "WEAPON0 or WEAPON1 not specified. Falling back to WEAPON0."
+#define HAND_ID 0
+#endif
+
 // exported
 void EntityWeaponAttack(Entity* self);
 void LoadWeaponPalette(s32 clutIndex);
@@ -24,5 +35,10 @@ void WeaponUnused3C(void);
 
 // internals
 void DestroyEntity(Entity* entity);
+void SetSpriteBank1(SpriteParts* animset);
+void SetSpriteBank2(SpriteParts* animset);
+void DecelerateX(s32 amount);
+void DecelerateY(s32 amount);
+void SetSpeedX(s32 speed);
 
 #endif
