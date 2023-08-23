@@ -315,3 +315,14 @@ typedef struct {
     /* 0x8 */ s32 damageTaken;
     /* 0xC */ s32 unkC;
 } Unkstruct_800FE97C;
+
+typedef struct Unkstruct_801C7954 {
+    /* 0x00 */ u16 x1;
+    /* 0x02 */ u16 x0;
+    /* 0x04 */ u16 y2;
+    /* 0x06 */ u16 y0;
+    /* 0x08 */ u16 y3;
+    /* 0x0A */ u16 y1;
+    /* 0x0C */ u16 x3;
+    /* 0x0E */ u16 x2;
+} Unkstruct_801C7954; // size = 0x10

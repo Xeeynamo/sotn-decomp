@@ -775,6 +775,6 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8019585C);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8019593C);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_80195990);
+#include "../unk_poly_func_0.h"
 
 #include "../unk_loop_func.h"
