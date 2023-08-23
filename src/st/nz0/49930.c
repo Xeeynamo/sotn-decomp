@@ -105,13 +105,7 @@ void func_801CA07C(Primitive* poly) {
     poly->next->blendMode = 0xA;
 }
 
-void func_801CA0D0(Primitive* poly) {
-    poly->p3 = 0;
-    poly->blendMode = BLEND_VISIBLE;
-    poly->next->p3 = 0;
-    poly->next->type = 4;
-    poly->next->blendMode = BLEND_VISIBLE;
-}
+#include "../unk_poly_func_0.h"
 
 #include "../unk_loop_func.h"
 

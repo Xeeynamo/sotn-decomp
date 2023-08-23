@@ -389,6 +389,14 @@ typedef struct {
     /* 0x80 */ s32 timer;
 } ET_HeartRoomGoldDoor;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ char pad_80[0x4];
+    /* 0x84 */ s8 unk84;
+    /* 0x85 */ char pad_85[0x1];
+    /* 0x86 */ s8 unk86;
+} ET_MermanWaterSplash;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
@@ -399,6 +407,7 @@ typedef union {
     /* 0x7C */ ET_WarpRoom warpRoom;
     /* 0x7C */ ET_Merman merman;
     /* 0x7C */ ET_Merman_2 merman2;
+    /* 0x7C */ ET_MermanWaterSplash mermanWaterSplash;
     /* 0x7C */ ET_Familiar fam;
     /* 0x7C */ ET_801CF254 et_801CF254;
     /* 0x7C */ ET_GurkhaSword gurkhaSword;

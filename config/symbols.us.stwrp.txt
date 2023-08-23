@@ -113,5 +113,6 @@ EntitySoulStealOrb = 0x80192610;
 EntityEnemyBlood = 0x801929A4;
 EntityRoomForeground = 0x80192E54;
 func_80193270 = 0x80193270;
+UnkPolyFunc0 = 0x80193A10;
 UnkLoopFunc = 0x80193A3C;
 UNK_Update0 = 0x80194728;
