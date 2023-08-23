@@ -1318,7 +1318,35 @@ void func_801B5E98(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", EntitySwitch);
+void EntitySwitch(Entity* self) {
+    s32 temp_a0 = func_801BD588(self, 8, 4, 4);
+    Entity* player = &PLAYER;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180AA8);
+        self->animCurFrame = 9;
+        self->zPriority = 0x5E;
+        if (D_8003BDEC[50]) {
+            self->step = 2;
+            self->posY.i.hi += 4;
+        }
+        break;
+
+    case 1:
+        if (temp_a0 != 0) {
+            player->posY.i.hi++;
+            self->posY.val += FIX(0.25);
+            if ((g_Camera.posY.i.hi + self->posY.i.hi) > 193) {
+                self->posY.i.hi = 193 - g_Camera.posY.i.hi;
+                D_8003BDEC[50] = true;
+                g_api.PlaySfx(NA_SE_EV_SWITCH_CLICK);
+                self->step++;
+            }
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B6084);
 

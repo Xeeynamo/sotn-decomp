@@ -1610,11 +1610,168 @@ void EntitySurfacingWater(Entity* self) {
     self->ext.waterEffects.unk82 = self->posY.i.hi + tileLayout->unkE;
 }
 
-// small water droplets go to the side
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntitySideWaterSplash);
+// ID 0x37
+void EntitySideWaterSplash(Entity* self) {
+    Primitive* prim;
+    s16 primIndex;
+    s32 temp_lo;
+    s32 temp_s0;
+    s32 temp_s1;
+    s32 temp_s3;
+    u16 params;
+    s16 angle;
+    u16 x, y;
+    s32* ptr;
 
-// small water droplets go upwards
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntitySmallWaterDrop);
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180B00);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex != -1) {
+            prim = &g_PrimBuf[primIndex];
+            self->primIndex = primIndex;
+            self->flags |= FLAG_HAS_PRIMS;
+            while (prim != NULL) {
+                prim->u0 = prim->u2 = 0xF0;
+                prim->u1 = prim->u3 = 0xFF;
+                prim->v0 = prim->v1 = 0;
+                prim->v2 = prim->v3 = 0xF;
+                prim->clut = 0x161;
+                prim->tpage = 0x1A;
+                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
+                    prim->b3 = prim->r0 = prim->g0 = prim->b0 = prim->r1 =
+                        prim->g1 = prim->b1 = 128;
+                prim->p1 = 0;
+                prim->priority = self->zPriority + 2;
+                prim->blendMode = 0x37;
+                prim = prim->next;
+            }
+            params = self->params;
+            temp_s0 = params & 0xF;
+            if (temp_s0 == 0) {
+                g_api.PlaySfx(D_801813A8);
+            }
+            angle = LOH(D_801838E4[(params >> 3) & 0x1E]);
+            ptr = (s32*)&D_801838A4[temp_s0];
+            temp_s1 = rcos(angle) * *ptr;
+            temp_s3 = rsin(angle + 0x800) * *ptr;
+            ptr++;
+            temp_s1 += rsin(angle) * *ptr;
+            temp_lo = rcos(angle) * *ptr;
+            self->velocityX = temp_s1 + (((params & 0xFF00) << 0x10) >> 0xE);
+            self->ext.waterEffects.unk7C = 0x2C00;
+            self->velocityY = temp_s3 + temp_lo;
+        } else {
+        DestroyEntity:
+            DestroyEntity(self);
+            return;
+        }
+        break;
+
+    case 1:
+        MoveEntity(self);
+        self->velocityY += self->ext.waterEffects.unk7C;
+        break;
+    }
+
+    x = self->posX.i.hi;
+    y = self->posY.i.hi;
+
+    prim = &g_PrimBuf[self->primIndex];
+    while (prim != NULL) {
+        prim->x0 = prim->x2 = x - (prim->p1 / 2) - 4;
+        prim->x1 = prim->x3 = x + (prim->p1 / 2) + 4;
+        prim->y0 = prim->y1 = y - (prim->p1 / 2) - 4;
+        prim->y2 = prim->y3 = y + (prim->p1 / 2) + 4;
+        if (prim->b1 >= 3) {
+            prim->b1 += 253;
+            prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1;
+            if (prim->b3 >= 4) {
+                prim->b3 += 252;
+            }
+            prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
+            prim->p1++;
+            prim = prim->next;
+        } else {
+            goto DestroyEntity;
+        }
+    }
+}
+
+// ID 0x38
+void EntitySmallWaterDrop(Entity* self) {
+    s32 params = self->params;
+    s16 temp_s5 = params & 0xFF00;
+    Primitive *prim, *prim2;
+    s16 primIndex;
+    s32 var_v1;
+    u16 x, y;
+
+    params &= 0xFF;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180B00);
+        primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
+        self->flags |= FLAG_HAS_PRIMS;
+
+        x = self->posX.i.hi;
+        y = self->posY.i.hi;
+        y -= Random() & 3;
+
+        if (temp_s5 > 0) {
+            x += Random() & 3;
+        } else {
+            x -= Random() & 3;
+        }
+        self->posX.i.hi = x;
+        self->posY.i.hi = y;
+
+        while (prim != NULL) {
+            prim->v0 = prim->u0 = 2;
+            prim->x0 = x;
+            prim->y0 = y;
+            prim->r0 = 96;
+            prim->g0 = 96;
+            prim->b0 = 128;
+            prim->priority = self->zPriority + 2;
+            prim->blendMode = 0x33;
+            prim = prim->next;
+        }
+        var_v1 = D_801838F4[params * 2];
+        if (temp_s5 > 0) {
+            var_v1 = -var_v1;
+        }
+        self->velocityX = var_v1 + (temp_s5 * 16);
+        self->velocityY = D_801838F4[params * 2 + 1];
+        self->ext.waterEffects.unk7C = 0x4000;
+        break;
+
+    case 1:
+        MoveEntity(self);
+        self->velocityY += self->ext.waterEffects.unk7C;
+        break;
+    }
+
+    x = self->posX.i.hi;
+    y = self->posY.i.hi;
+
+    prim = &g_PrimBuf[self->primIndex];
+    prim->x0 = x;
+    prim->y0 = y;
+    if (prim->b0 >= 8) {
+        prim->b0 += 248;
+        prim->r0 = prim->g0 -= 6;
+        return;
+    }
+    DestroyEntity(self);
+}
 
 // ID 0x38
 void EntityWaterDrop(Entity* self) {
@@ -1815,7 +1972,117 @@ void EntityMediumWaterSplash(Entity* entity) {
 }
 
 // spawns EntityMediumWaterSplash, part of merman splash
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityLargeWaterSplash);
+void EntityMermanWaterSplash(Entity* self) {
+    Unkstruct_801C7954 sp;
+    Entity* newEntity;
+    Primitive* prim;
+    s16 primIndex;
+    s16* posPtr;
+    s32* velPtr;
+    u8 temp;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180ADC);
+        break;
+
+    case 1:
+        primIndex = g_api.AllocPrimitives(PRIM_TILE, 4);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
+        self->ext.mermanWaterSplash.prim = prim;
+        self->flags |= FLAG_HAS_PRIMS;
+
+        for (i = 0; prim != NULL; i++) {
+            prim->g0 = prim->r0 = 64;
+            prim->b0 = 160;
+            prim->v0 = prim->u0 = 2;
+            prim->x0 = self->posX.i.hi + D_801839E8[i];
+            prim->y0 = self->posY.i.hi - 12;
+            LOW(sp.y3) = D_801839C0[i].x;
+            prim->y1 = sp.y1;
+            prim->y3 = sp.y3;
+            LOW(sp.x3) = D_801839C0[i].y;
+            prim->x2 = sp.x2;
+            prim->x3 = sp.x3;
+            prim->p1 = 0;
+            prim->p3 = 1;
+            prim->p2 = i % 2;
+            prim->priority = self->zPriority + 2;
+            prim->blendMode = 0x33;
+            prim = prim->next;
+        }
+
+        posPtr = &D_801839FC;
+        velPtr = &D_80183A0C;
+
+        for (i = 0; i < 7; i++) {
+            newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(E_MEDIUM_WATER_SPLASH, self, newEntity);
+                newEntity->params = D_801839F4[i];
+                newEntity->posX.i.hi = newEntity->posX.i.hi + posPtr[i];
+                newEntity->velocityX = velPtr[i];
+                newEntity->zPriority = self->zPriority + 1;
+            }
+        }
+        self->ext.mermanWaterSplash.unk84 = 0;
+        self->ext.mermanWaterSplash.unk86 = 0;
+        self->step++;
+        break;
+
+    case 2:
+        prim = self->ext.mermanWaterSplash.prim;
+        temp = false;
+        while (prim != NULL) {
+            if (prim->p1 == 0) {
+                sp.x0 = prim->x0;
+                sp.x1 = prim->x1;
+                sp.y0 = prim->y0;
+                sp.y2 = prim->y2;
+                sp.y1 = prim->y1;
+                sp.y3 = prim->y3;
+                sp.x2 = prim->x2;
+                sp.x3 = prim->x3;
+                temp |= true;
+                LOW(sp.x1) += LOW(sp.y3);
+                LOW(sp.y2) += LOW(sp.x3);
+                LOW(sp.x3) += 0x2000;
+                if ((LOW(sp.x3) > 0) && (prim->p2 != 0) && (prim->p3 != 0)) {
+                    if (LOH(sp.x0) > self->posX.i.hi) {
+                        LOW(sp.y3) += 0x4000;
+                    } else {
+                        LOW(sp.y3) -= 0x4000;
+                    }
+                    prim->p3 = 0;
+                }
+                if (prim->y0 & 0xFF00) {
+                    prim->p1 = 1;
+                    prim->blendMode |= 8;
+                }
+                prim->x0 = sp.x0;
+                prim->x1 = sp.x1;
+                prim->y0 = sp.y0;
+                prim->y2 = sp.y2;
+                prim->x2 = sp.x2;
+                prim->x3 = sp.x3;
+                prim->y1 = sp.y1;
+                prim->y3 = sp.y3;
+            }
+            prim = prim->next;
+        }
+        if (!temp) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+}
 
 // some kind of falling object
 void EntityFallingObject2(Entity* self) {

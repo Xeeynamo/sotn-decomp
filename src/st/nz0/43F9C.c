@@ -42,7 +42,7 @@ void func_801C3F9C(Unkstruct_801C3F9C** self) {
                 newEntity->params = 0;
             }
             func_801C29B0(0x655);
-            func_801CA0D0(self);
+            UnkPolyFunc0(self);
         }
         return;
     }

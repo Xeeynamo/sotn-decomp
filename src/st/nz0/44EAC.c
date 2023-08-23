@@ -132,7 +132,7 @@ void EntityBloodSplatter(Entity* self) {
         prim3 = prim->next;
         prim3->b3 += 254;
         if (func_801C9D18(&D_8018238C, prim) == 0) {
-            func_801CA0D0(prim);
+            UnkPolyFunc0(prim);
         }
 
         prim = *(s32*)&self->ext.generic.unk90;
@@ -152,7 +152,7 @@ void EntityBloodSplatter(Entity* self) {
         }
 
         if (func_801C9D18(&D_801823A4, prim) == 0) {
-            func_801CA0D0(prim);
+            UnkPolyFunc0(prim);
         }
 
         if (self->ext.generic.unk80.modeS16.unk0++ > 128) {
@@ -201,7 +201,7 @@ void func_801C53AC(Primitive* prim) {
         func_801C9930(prim);
         *(s32*)&prim->next->r1 += 0x2000;
         if (*(s32*)&prim->next->r1 > 0x20000) {
-            func_801CA0D0(prim);
+            UnkPolyFunc0(prim);
         }
         break;
     }
