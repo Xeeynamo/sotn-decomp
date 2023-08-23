@@ -1,6 +1,5 @@
 #include "weapon_private.h"
 #include "shared.h"
-#include "setweaponproperties.h"
 
 INCLUDE_ASM("weapon/nonmatchings/w_025", func_B3000_8017AF14);
 

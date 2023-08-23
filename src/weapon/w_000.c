@@ -1,6 +1,5 @@
 #include "weapon_private.h"
 #include "shared.h"
-#include "setweaponproperties.h"
 
 u16 g_Clut0[] = {
     0x0000, 0x8000, 0xA821, 0x9DC0, 0xA821, 0xA821, 0xA821, 0xA821, // 0
