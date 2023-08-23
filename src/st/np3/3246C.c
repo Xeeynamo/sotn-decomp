@@ -1254,7 +1254,122 @@ void EntitySwitch(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B6084);
+void EntityHeartRoomGoldDoor(Entity* self) {
+    Entity* newEntity;
+    Primitive* prim;
+    s16 primIndex;
+    s32 tilePos;
+    s32 temp;
+    s32 temp2;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180AA8);
+        self->animCurFrame = 0x25;
+        self->zPriority = 0x5E;
+
+        if (D_8003BDEC[50] != 0) {
+            for (
+                tilePos = 0x48, i = 7, self->step = 128, self->animCurFrame = 0;
+                i >= 0; tilePos += 0x10, i--) {
+                g_CurrentRoomTileLayout.fg[tilePos] = 0;
+            }
+            break;
+        }
+
+        primIndex = g_api.AllocPrimitives(PRIM_TILE, 64);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
+        self->ext.heartRoomGoldDoor.prim = prim;
+        self->flags |= FLAG_HAS_PRIMS;
+        while (prim != NULL) {
+            prim->v0 = 1;
+            prim->u0 = 1;
+            prim->r0 = 64;
+            prim->b0 = 128;
+            prim->g0 = 96;
+            prim->priority = self->zPriority + 0x18;
+            prim->blendMode = 8;
+            prim->p3 = 0;
+            prim = prim->next;
+        }
+
+        for (tilePos = 0x48, temp = 0x4FA, i = 7; i >= 0; tilePos += 0x10,
+            i--) {
+            g_CurrentRoomTileLayout.fg[tilePos] = temp;
+        }
+        break;
+
+    case 1:
+        if (D_8003BDEC[50]) {
+            g_api.PlaySfx(0x607);
+            self->step++;
+        }
+        break;
+
+    case 2:
+        self->posY.val += FIX(0.375);
+        if (++self->ext.heartRoomGoldDoor.timer & 1) {
+            self->posX.i.hi++;
+        } else {
+            self->posX.i.hi--;
+        }
+
+        if ((self->ext.heartRoomGoldDoor.timer % 16) == 0) {
+            g_api.PlaySfx(0x607);
+        }
+        temp = temp2 = self->posY.i.hi - 112;
+        if (temp2 < 0) {
+            temp2 = self->posY.i.hi - 97;
+        }
+
+        temp = temp2 >> 4;
+        if (temp >= 9) {
+            temp = 8;
+            self->step = 3;
+        }
+
+        for (tilePos = 0x48, i = 0; i < temp; tilePos += 0x10, i++) {
+            g_CurrentRoomTileLayout.fg[tilePos] = 0;
+        }
+
+        if (!(g_blinkTimer & 1)) {
+            prim = func_801D2470(self->ext.heartRoomGoldDoor.prim);
+            if (prim != NULL) {
+                prim->p3 = 1;
+            }
+            if (!(g_blinkTimer & 0xF)) {
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (newEntity != NULL) {
+                    CreateEntityFromEntity(
+                        E_INTENSE_EXPLOSION, self, newEntity);
+                    newEntity->posY.i.hi = 188;
+                    newEntity->posX.i.hi += -8 + (Random() & 15);
+                    newEntity->params = 0x10;
+                    newEntity->unk1A = newEntity->unk1C = 192;
+                    newEntity->unk19 |= 3;
+                }
+            }
+        }
+        break;
+    }
+
+    if (self->flags & FLAG_HAS_PRIMS) {
+        prim = self->ext.heartRoomGoldDoor.prim;
+        while (prim != NULL) {
+            if (prim->p3 != 0) {
+                func_801B3D24(prim);
+            }
+            prim = prim->next;
+        }
+    }
+}
 
 void EntityUnkId49(Entity* self) {
     u16 temp;
