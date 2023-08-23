@@ -1,23 +1,5 @@
 #include "weapon_private.h"
-
-// Variant of DestroyEntity
-INCLUDE_ASM("weapon/nonmatchings/w_029", func_CF000_8017ADD8);
-
-INCLUDE_ASM("weapon/nonmatchings/w_029", LoadWeaponPalette);
-
-INCLUDE_ASM("weapon/nonmatchings/w_029", SetSpriteBank1);
-
-INCLUDE_ASM("weapon/nonmatchings/w_029", SetSpriteBank2);
-
-INCLUDE_ASM("weapon/nonmatchings/w_029", DecelerateX);
-
-INCLUDE_ASM("weapon/nonmatchings/w_029", DecelerateY);
-
-INCLUDE_ASM("weapon/nonmatchings/w_029", func_CF000_8017AFC8);
-
-INCLUDE_ASM("weapon/nonmatchings/w_029", func_CF000_8017AFF8);
-
-INCLUDE_ASM("weapon/nonmatchings/w_029", func_CF000_8017B06C);
+#include "shared.h"
 
 INCLUDE_ASM("weapon/nonmatchings/w_029", EntityWeaponAttack);
 

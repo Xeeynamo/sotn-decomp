@@ -36,6 +36,8 @@ void WeaponUnused3C(void);
 // internals
 extern SpriteParts* g_Animset[];
 extern SpriteParts* g_Animset2[];
+extern u16* g_Cluts[];
+extern s32 g_HandId;
 
 void DestroyEntity(Entity* entity);
 void SetSpriteBank1(SpriteParts* animset);
