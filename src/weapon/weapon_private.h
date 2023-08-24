@@ -24,7 +24,7 @@ void func_ptr_8017000C(Entity* self);
 void func_ptr_80170010(Entity* self);
 void func_ptr_80170014(Entity* self);
 int GetWeaponId(void);
-void func_ptr_80170020(Entity* self);
+void EntityWeaponShieldSpell(Entity* self);
 void func_ptr_80170024(Entity* self);
 void func_ptr_80170028(Entity* self);
 void WeaponUnused2C(void);

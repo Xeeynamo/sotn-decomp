@@ -17,7 +17,7 @@ int GetWeaponId(void) { return 26; }
 
 INCLUDE_ASM("weapon/nonmatchings/w_026", func_BA000_8017B37C);
 
-INCLUDE_ASM("weapon/nonmatchings/w_026", func_ptr_80170020);
+INCLUDE_ASM("weapon/nonmatchings/w_026", EntityWeaponShieldSpell);
 
 INCLUDE_ASM("weapon/nonmatchings/w_026", func_ptr_80170024);
 

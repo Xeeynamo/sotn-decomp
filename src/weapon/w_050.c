@@ -21,7 +21,7 @@ void func_ptr_80170014(Entity* self) {}
 
 int GetWeaponId(void) { return 50; }
 
-void func_ptr_80170020(Entity* self) {}
+void EntityWeaponShieldSpell(Entity* self) {}
 
 void func_ptr_80170024(Entity* self) {}
 

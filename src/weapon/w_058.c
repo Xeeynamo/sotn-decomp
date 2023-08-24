@@ -15,7 +15,7 @@ void func_ptr_80170014(Entity* self) {}
 
 s32 GetWeaponId(void) { return 52; }
 
-INCLUDE_ASM("weapon/nonmatchings/w_058", func_ptr_80170020);
+INCLUDE_ASM("weapon/nonmatchings/w_058", EntityWeaponShieldSpell);
 
 void func_ptr_80170024(Entity* self) {}
 

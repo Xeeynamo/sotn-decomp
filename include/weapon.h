@@ -12,7 +12,7 @@ typedef struct {
     /* 0x14 */ void (*func_ptr_80170014)(Entity* self);
     /* 0x18 */ int (*GetWeaponId)(void);
     /* 0x1C */ void (*LoadWeaponPalette)(s32 clutIndex);
-    /* 0x20 */ void (*func_ptr_80170020)(Entity* self);
+    /* 0x20 */ void (*EntityWeaponShieldSpell)(Entity* self);
     /* 0x24 */ void (*func_ptr_80170024)(Entity* self);
     /* 0x28 */ void (*func_ptr_80170028)(Entity* self);
     /* 0x2C */ void (*WeaponUnused2C)(void);
