@@ -15,7 +15,7 @@ void func_ptr_80170014(Entity* self) {}
 
 int GetWeaponId(void) { return 23; }
 
-INCLUDE_ASM("weapon/nonmatchings/w_023", EntityWeaponShieldRodEffect);
+INCLUDE_ASM("weapon/nonmatchings/w_023", EntityWeaponShieldSpell);
 
 INCLUDE_ASM("weapon/nonmatchings/w_023", func_ptr_80170024);
 

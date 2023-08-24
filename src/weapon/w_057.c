@@ -15,7 +15,7 @@ void func_ptr_80170014(Entity* self) {}
 
 s32 GetWeaponId(void) { return 0; }
 
-void EntityWeaponShieldRodEffect(Entity* self) {}
+void EntityWeaponShieldSpell(Entity* self) {}
 
 void func_ptr_80170024(Entity* self) {}
 
