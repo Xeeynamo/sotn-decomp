@@ -42,7 +42,31 @@ INCLUDE_ASM("weapon/nonmatchings/w_027", func_ptr_80170020);
 
 INCLUDE_ASM("weapon/nonmatchings/w_027", func_ptr_80170024);
 
-INCLUDE_ASM("weapon/nonmatchings/w_027", func_ptr_80170028);
+void func_ptr_80170028(Entity* self) {
+    Entity* parent = self->ext.generic.unk8C.entityPtr;
+    if (parent->entityId == 0) {
+        DestroyEntity(self);
+        return;
+    }
+
+    if (self->step == 0) {
+        self->ext.weapon.equipId = parent->ext.weapon.equipId;
+        SetWeaponProperties(self, 0);
+        self->hitboxHeight = 6;
+        self->hitboxWidth = 6;
+        self->ext.generic.unk80.modeS16.unk0 = 6;
+        self->step++;
+    } else if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
+        DestroyEntity(self);
+    }
+
+    if (self->hitFlags != 0) {
+        if (++self->ext.generic.unkA2 >= 6) {
+            self->ext.generic.unk8C.entityPtr->ext.weapon.unk90 = 0;
+        }
+        self->hitFlags = 0;
+    }
+}
 
 void WeaponUnused2C(void) {}
 
