@@ -121,11 +121,12 @@ typedef struct {
 } ET_EquipItemDrop;
 
 typedef struct {
-    /* 0x7C */ s32 unk7C;
+    /* 0x7C */ s16 unk7C;
+    /* 0x7E */ s16 unk7E;
     /* 0x80 */ s32 unk80;
     /* 0x84 */ s32 unk84;
     /* 0x88 */ s32 unk88;
-    /* 0x8C */ s32 unk8C;
+    /* 0x8C */ struct Entity* parent;
     /* 0x90 */ s32 unk90;
     /* 0x94 */ s32 unk94;
     /* 0x98 */ s32 unk98;
