@@ -172,7 +172,7 @@ void func_ptr_80170004(Entity* self) {
             if ((self->animFrameIdx == 6 || self->animFrameIdx == 0xC ||
                  self->animFrameIdx == 0x12)) {
                 unk = 0x3E;
-                if (g_api_func_8011AAFC(
+                if (g_api.func_8011AAFC(
                         self,
                         ((g_HandId + 1) << 0xC) +
                             (unk + (self->ext.weapon.unk7E << 0x10)),
@@ -190,7 +190,7 @@ void func_ptr_80170004(Entity* self) {
         break;
     case 3:
         if (self->unk1A == 0x40) {
-            g_api_func_8011AAFC(self, ((g_HandId + 1) << 0xC) | 0x46, 0);
+            g_api.func_8011AAFC(self, ((g_HandId + 1) << 0xC) | 0x46, 0);
         }
         if (self->animFrameIdx != 0) {
             self->unk1A -= 4;
@@ -202,7 +202,7 @@ void func_ptr_80170004(Entity* self) {
         self->unk1C = self->unk1A;
         break;
     }
-    g_api_UpdateAnim(D_12A000_8017A6DC, NULL);
+    g_api.UpdateAnim(D_12A000_8017A6DC, NULL);
     func_12A000_8017AC08();
 }
 
@@ -237,7 +237,7 @@ void func_ptr_80170008(Entity* self) {
         self->unk4C = D_12A000_8017A6AC;
         self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;
         SetWeaponProperties(self, 0);
-        g_api_PlaySfx(0x628);
+        g_api.PlaySfx(0x628);
         self->step++;
         break;
     case 1:
@@ -265,7 +265,7 @@ void func_ptr_80170008(Entity* self) {
         }
         break;
     }
-    g_api_UpdateAnim(D_12A000_8017A6DC, NULL);
+    g_api.UpdateAnim(D_12A000_8017A6DC, NULL);
 }
 
 void func_ptr_8017000C(Entity* self) {
