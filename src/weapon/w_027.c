@@ -1,24 +1,5 @@
 #include "weapon_private.h"
-
-INCLUDE_ASM("weapon/nonmatchings/w_027", DestroyEntity);
-
-INCLUDE_ASM("weapon/nonmatchings/w_027", LoadWeaponPalette);
-
-INCLUDE_ASM("weapon/nonmatchings/w_027", SetSpriteBank1);
-
-INCLUDE_ASM("weapon/nonmatchings/w_027", SetSpriteBank2);
-
-INCLUDE_ASM("weapon/nonmatchings/w_027", ResetAnimation);
-
-INCLUDE_ASM("weapon/nonmatchings/w_027", DecelerateX);
-
-INCLUDE_ASM("weapon/nonmatchings/w_027", DecelerateY);
-
-INCLUDE_ASM("weapon/nonmatchings/w_027", SetSpeedX);
-
-INCLUDE_ASM("weapon/nonmatchings/w_027", DestroyEntityWeapon);
-
-INCLUDE_ASM("weapon/nonmatchings/w_027", SetWeaponProperties);
+#include "shared.h"
 
 INCLUDE_ASM("weapon/nonmatchings/w_027", func_C1000_8017B0F4);
 

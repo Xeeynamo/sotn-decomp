@@ -1,16 +1,5 @@
 #include "weapon_private.h"
-
-INCLUDE_ASM("weapon/nonmatchings/w_044", DestroyEntity);
-
-INCLUDE_ASM("weapon/nonmatchings/w_044", LoadWeaponPalette);
-
-INCLUDE_ASM("weapon/nonmatchings/w_044", SetSpriteBank1);
-
-INCLUDE_ASM("weapon/nonmatchings/w_044", SetSpriteBank2);
-
-INCLUDE_ASM("weapon/nonmatchings/w_044", DestroyEntityWeapon);
-
-INCLUDE_ASM("weapon/nonmatchings/w_044", SetWeaponProperties);
+#include "shared.h"
 
 INCLUDE_ASM("weapon/nonmatchings/w_044", EntityWeaponAttack);
 
