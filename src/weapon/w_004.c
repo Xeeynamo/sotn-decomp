@@ -4,7 +4,6 @@
 extern AnimSoundEvent D_20000_8017B2F4[]; // g_SoundEvents
 
 void EntityWeaponAttack(Entity* self) {
-    u8 temp_v1;
     AnimSoundEvent* sndEvent;
     s32 mask;
 
