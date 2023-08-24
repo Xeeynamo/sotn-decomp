@@ -183,7 +183,6 @@ u16* g_Cluts[] = {
 s32 g_HandId = HAND_ID;
 
 void EntityWeaponAttack(Entity* self) {
-    u8 temp_v1;
     AnimSoundEvent* sndEvent;
     s32 mask;
 
@@ -192,10 +191,10 @@ void EntityWeaponAttack(Entity* self) {
     self->facing = PLAYER.facing;
     mask = 0x17F;
     sndEvent = &g_SoundEvents[(self->params >> 8) & mask];
-    temp_v1 = sndEvent->ACshift;
 
-    if (!(PLAYER.ext.weapon.unkAC >= temp_v1 &&
-          PLAYER.ext.weapon.unkAC < temp_v1 + 7 && g_Player.unk46 != 0)) {
+    if (!(PLAYER.ext.weapon.unkAC >= sndEvent->ACshift &&
+          PLAYER.ext.weapon.unkAC < sndEvent->ACshift + 7 &&
+          g_Player.unk46 != 0)) {
         DestroyEntity(self);
         return;
     }
@@ -217,6 +216,7 @@ void EntityWeaponAttack(Entity* self) {
         SetWeaponProperties(self, 0);
         self->step++;
     }
+
     self->ext.generic.unkAC = PLAYER.ext.weapon.unkAC - sndEvent->ACshift;
     if (PLAYER.animFrameDuration == 1 &&
         PLAYER.animFrameIdx == sndEvent->soundFrame) {
