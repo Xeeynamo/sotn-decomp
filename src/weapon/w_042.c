@@ -1,9 +1,28 @@
 #include "weapon_private.h"
 #include "shared.h"
 
-INCLUDE_ASM("weapon/nonmatchings/w_042", func_12A000_8017AB04);
+extern const char D_12A000_8017A760[]; // "\no\n"
+extern s32 D_12A000_8017B5EC;          // g_DebugWaitInfoTimer
 
-INCLUDE_ASM("weapon/nonmatchings/w_042", func_12A000_8017ABA4);
+void DebugShowWaitInfo(const char* msg) {
+    g_CurrentBuffer = g_CurrentBuffer->next;
+    FntPrint(msg);
+    if (D_12A000_8017B5EC++ & 4) {
+        FntPrint(D_12A000_8017A760); // TODO: inline
+    }
+    DrawSync(0);
+    VSync(0);
+    PutDrawEnv(&g_CurrentBuffer->draw);
+    PutDispEnv(&g_CurrentBuffer->disp);
+    FntFlush(-1);
+}
+
+void DebugInputWait(const char* msg) {
+    while (PadRead(0))
+        DebugShowWaitInfo(msg);
+    while (!PadRead(0))
+        DebugShowWaitInfo(msg);
+}
 
 INCLUDE_ASM("weapon/nonmatchings/w_042", func_12A000_8017AC08);
 
