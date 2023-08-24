@@ -59,7 +59,7 @@ void EntityWeaponAttack(Entity* self) {
     case 1:
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        self->velocityY += 0x2800;
+        self->velocityY += FIX(0.15625);
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &col, 0);
         if (col.effects & EFFECT_SOLID) {
             self->posY.i.hi += col.unk18;
