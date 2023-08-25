@@ -962,6 +962,9 @@ void EntityTrapDoor(Entity* entity) {
 
 // left side of the breakable rock, drops pot roast
 void EntityMermanRockLeftSide(Entity* self) {
+    const int jewelSwordRoomUnlock = 51;
+    const int rockBroken = (1 << 0);
+    const int wolfFlag = (1 << 2);
     u16* tileLayoutPtr;
     Entity* newEntity;
     s32 tilePos;
@@ -984,7 +987,7 @@ void EntityMermanRockLeftSide(Entity* self) {
             tilePos += 0x30;
         }
 
-        if (D_8003BDEC[51] & 1) { /* 0 0 0 0 0 0 0 1 = Broken */
+        if (D_8003BDEC[jewelSwordRoomUnlock] & rockBroken) {
             tileLayoutPtr = &D_8018112C;
             tilePos = 0x1F1;
             for (i = 0; i < 3; i++) {
@@ -1041,15 +1044,16 @@ void EntityMermanRockLeftSide(Entity* self) {
                 CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, newEntity);
                 newEntity->params = 0x43;
             }
-            D_8003BDEC[51] |= 1; /* 0 0 0 0 0 0 0 1 = Broken */
+            D_8003BDEC[jewelSwordRoomUnlock] |= rockBroken;
             self->hitboxState = 1;
             self->step++;
         }
         break;
 
     case 2:
-        if ((self->hitFlags != 0) && (g_Player.unk0C & 4)) {
-            D_8003BDEC[51] |= 4; /* 0 0 0 0 0 1 0 0 = Wolf form collision */
+        if ((self->hitFlags != 0) &&
+            (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM)) {
+            D_8003BDEC[jewelSwordRoomUnlock] |= wolfFlag;
         }
         break;
     }
@@ -1058,8 +1062,8 @@ void EntityMermanRockLeftSide(Entity* self) {
 // right side of the merman room rock, breaks when hit
 void EntityMermanRockRightSide(Entity* self) {
     const int jewelSwordRoomUnlock = 51;
-    const int rockBroken = 2;
-    const int batFlag = 8;
+    const int rockBroken = (1 << 1);
+    const int batFlag = (1 << 3);
     u16* tileLayoutPtr;
     Entity* newEntity;
     s32 tilePos;
