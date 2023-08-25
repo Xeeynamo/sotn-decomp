@@ -21,6 +21,7 @@ typedef enum EntityIDs {
 
     /* 0x11 */ E_ID_11 = 0x11,
     /* 0x15 */ E_ID_15 = 0x15,
+    /* 0x27 */ E_FALLING_ROCK_2 = 0x27,
     /* 0x35 */ E_SPLASH_WATER = 0x35,
     /* 0x36 */ E_SURFACING_WATER,
     /* 0x37 */ E_SIDE_WATER_SPLASH,

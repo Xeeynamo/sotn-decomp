@@ -1086,7 +1086,7 @@ void EntityMermanRockLeftSide(Entity* self) {
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(0x27, self, newEntity);
+                    CreateEntityFromEntity(E_FALLING_ROCK_2, self, newEntity);
                     newEntity->params = *params++;
                     newEntity->velocityX = -0x8000 - (Random() << 8);
                     newEntity->velocityY = -Random() * 0x100;
@@ -1185,7 +1185,7 @@ void EntityMermanRockRightSide(Entity* self) {
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(0x27, self, newEntity);
+                    CreateEntityFromEntity(E_FALLING_ROCK_2, self, newEntity);
                     newEntity->params = *params++;
                     newEntity->velocityX = (Random() << 8) + 0x8000;
                     newEntity->velocityY = -Random() * 0x100;

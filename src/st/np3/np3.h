@@ -23,7 +23,7 @@ typedef enum {
 
     /* 0x19 */ E_CASTLE_DOOR = 0x19,
     /* 0x1E */ E_ID_1E = 0x1E,
-    /* 0x27 */ E_ID_27 = 0x27,
+    /* 0x27 */ E_FALLING_ROCK_2 = 0x27,
     /* 0x2D */ E_SPLASH_WATER = 0x2D,
     /* 0x2E */ E_SURFACING_WATER,
     /* 0x2F */ E_SIDE_WATER_SPLASH,
