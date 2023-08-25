@@ -224,7 +224,7 @@ void TestCollisions(void) {
                 prim->u1 = 0x70;
             }
         }
-        if (g_pads[0].tapped & 0x800) {
+        if (g_pads[0].tapped & PAD_START) {
             g_api.PlaySfx(0x63D);
             D_8003C9A4++;
         }
@@ -233,13 +233,13 @@ void TestCollisions(void) {
         D_8003C9A4 = 6;
         return;
     case 4:
-        if (g_pads[0].tapped & 0x6000) {
+        if (g_pads[0].tapped & (PAD_RIGHT | PAD_DOWN)) {
             g_api.PlaySfx(0x688);
             if (++D_800987B4 >= 2) {
                 D_800987B4 = 0;
             }
         }
-        if (g_pads[0].tapped & 0x9000) {
+        if (g_pads[0].tapped & (PAD_UP | PAD_LEFT)) {
             g_api.PlaySfx(0x688);
             if (--D_800987B4 < 0) {
                 D_800987B4 = 1;
@@ -254,7 +254,7 @@ void TestCollisions(void) {
         g_StageId = D_801804D4[D_800987B4];
         func_801B1F4C(1);
         func_801B259C(D_801804D8[D_800987B4], 1);
-        if (g_pads[0].tapped & 0x820) {
+        if (g_pads[0].tapped & (PAD_START | PAD_CIRCLE)) {
             g_api.PlaySfx(0x63D);
             D_8003C9A4++;
         }
