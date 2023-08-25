@@ -29,7 +29,62 @@ void EntityCavernDoorVase(Entity* arg0) {
     AnimateEntity(temp_s0->unk10, arg0);
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityUnkId12);
+void EntityUnkId12(Entity* entity) {
+    s32 ret;
+    u16* temp_v0_2;
+    u16 temp_s1 = entity->params;
+    u16 phi_v1;
+    u16 unk;
+
+    entity->unk6D = 0;
+
+    if (entity->step != 0) {
+        switch (temp_s1) {
+        case 4:
+        case 5:
+            if (g_CurrentRoom.x != 0) {
+                return;
+            }
+            break;
+
+        case 6:
+            if (g_pads->pressed & PAD_TRIANGLE) {
+                g_CurrentRoom.x = 0;
+                g_CurrentRoom.width = 1280;
+                entity->step++;
+                return;
+            }
+            break;
+        }
+
+        if (entity->unk44 != 0) {
+            ret = GetSideToPlayer();
+            phi_v1 = entity->ext.generic.unk7C.s;
+            if (phi_v1 != 0) {
+                phi_v1 = (ret & 2) * 2;
+            } else {
+                phi_v1 = (ret & 1) * 4;
+            }
+            unk = 8;
+            temp_s1 = (temp_s1 * unk) + phi_v1;
+            temp_v0_2 = &D_80180DD0[temp_s1];
+            g_CurrentRoom.x = *(temp_v0_2++);
+            g_CurrentRoom.y = *(temp_v0_2++);
+            g_CurrentRoom.width = *(temp_v0_2++);
+            g_CurrentRoom.height = *(temp_v0_2++);
+        }
+    } else {
+        InitializeEntity(D_80180AF4);
+        entity->ext.generic.unk7C.s = D_80180DC8[temp_s1];
+        if (entity->ext.generic.unk7C.s != 0) {
+            entity->hitboxWidth = D_80180DC0[temp_s1];
+            entity->hitboxHeight = 16;
+        } else {
+            entity->hitboxWidth = 16;
+            entity->hitboxHeight = D_80180DC0[temp_s1];
+        }
+    }
+}
 
 extern u16 g_eBreakableInit[];
 extern u8* g_eBreakableAnimations[8];
