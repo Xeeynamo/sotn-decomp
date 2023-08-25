@@ -393,7 +393,88 @@ void EntityCastleDoor(Entity* self) {
 // bushes in parallax background
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityBackgroundBushes);
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityUnkId1C);
+void EntityUnkId1C(Entity* self, s16 primIndex) {
+    volatile char pad[8]; //! FAKE
+    Primitive* prim;
+    VECTOR vec;
+    MATRIX mtx;
+    long sxy;
+    long p;
+    long flag;
+    s32 temp_s3;
+    s32 temp_a1;
+    s32 temp_a2;
+    s32 var_v1;
+
+    if (self->step == 0) {
+        InitializeEntity(D_80180B18);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
+        self->ext.prim = prim;
+        self->flags |= FLAG_HAS_PRIMS;
+        while (prim != NULL) {
+            prim->tpage = 0xF;
+            prim->clut = D_801811E0[self->params % 16];
+            prim->u0 = prim->u2 = 0xBF;
+            prim->u1 = prim->u3 = 0xFF;
+            prim->v0 = prim->v1 = 0x80;
+            prim->v2 = prim->v3 = 0xB8;
+            prim->priority = 0x5A;
+            prim->blendMode = BLEND_VISIBLE;
+            prim = prim->next;
+        }
+    }
+    var_v1 = D_801811D0[self->params % 16][0];
+    temp_s3 = var_v1;
+
+    SetGeomScreen(0x400);
+    if (self->params & 0x100) {
+        SetGeomOffset(0x80, 0x98);
+    } else {
+        SetGeomOffset(0x80, 0x80);
+    }
+
+    RotMatrix(D_801811F0, &mtx);
+    vec.vx = self->posX.i.hi - 128;
+    vec.vy = self->posY.i.hi - 128;
+    vec.vz = temp_s3 + 0x400;
+    TransMatrix(&mtx, &vec);
+    SetRotMatrix(&mtx);
+    SetTransMatrix(&mtx);
+    RotTransPers(D_801811F0, &sxy, &p, &flag);
+    temp_a1 = sxy & 0xFFFF;
+    temp_a2 = sxy >> 0x10;
+
+    if (temp_a1 < 0) {
+        var_v1 = temp_a1 + 0x3F;
+    } else {
+        var_v1 = temp_a1;
+    }
+
+    prim = self->ext.prim;
+    temp_a1 -= (var_v1 >> 6) << 6;
+    temp_a1 -= 64;
+    temp_a1 -= D_801811D0[self->params % 16][1];
+    while (temp_a1 < 320) {
+        prim->x1 = prim->x3 = temp_a1 + 64;
+        prim->x0 = prim->x2 = temp_a1;
+        prim->y0 = prim->y1 = temp_a2 - 56;
+        prim->y2 = prim->y3 = temp_a2;
+        prim->blendMode = 2;
+        prim = prim->next;
+        temp_a1 += 64;
+    }
+
+    while (prim != NULL) {
+        prim->blendMode = BLEND_VISIBLE;
+        prim = prim->next;
+    }
+}
 
 // transparent water "plane" seen in the merman room
 void EntityTransparentWater(Entity* self) {
