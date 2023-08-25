@@ -1115,6 +1115,9 @@ void EntityMermanRockLeftSide(Entity* self) {
 
 // right side of the merman room rock, breaks when hit
 void EntityMermanRockRightSide(Entity* self) {
+    const int jewelSwordRoomUnlock = 51;
+    const int rockBroken = 2;
+    const int batFlag = 8;
     u16* tileLayoutPtr;
     Entity* newEntity;
     s32 tilePos;
@@ -1137,7 +1140,7 @@ void EntityMermanRockRightSide(Entity* self) {
             tilePos += 0x30;
         }
 
-        if (D_8003BDEC[51] & 2) { /* 0 0 0 0 0 0 1 0 = Half broken */
+        if (D_8003BDEC[jewelSwordRoomUnlock] & rockBroken) {
             tileLayoutPtr = &D_801812A0;
             tilePos = 0x1FD;
             for (i = 0; i < 3; i++) {
@@ -1190,15 +1193,16 @@ void EntityMermanRockRightSide(Entity* self) {
         }
 
         if (self->ext.generic.unk84.S16.unk0 >= 2) {
-            D_8003BDEC[51] |= 2; /* 0 0 0 0 0 0 1 0 = Half broken */
+            D_8003BDEC[jewelSwordRoomUnlock] |= rockBroken;
             self->hitboxState = 1;
             self->step++;
         }
         break;
 
     case 2:
-        if ((self->hitFlags != 0) && (g_Player.unk0C & 1)) {
-            D_8003BDEC[51] |= 8; /* 0 0 0 0 1 0 0 0 = Broken */
+        if ((self->hitFlags != 0) &&
+            (g_Player.unk0C & PLAYER_STATUS_BAT_FORM)) {
+            D_8003BDEC[jewelSwordRoomUnlock] |= batFlag;
         }
         break;
     }
