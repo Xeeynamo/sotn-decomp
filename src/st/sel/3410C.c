@@ -17,13 +17,13 @@ void TestCollisions(void) {
         }
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x11);
         prim = &g_PrimBuf[primIndex];
-        
+
         D_801BB010 = primIndex;
-        for(i=0; i < 3; i++) {
-            prim->x0 = 0x70 + i*0x80;
+        for (i = 0; i < 3; i++) {
+            prim->x0 = 0x70 + i * 0x80;
             prim->y0 = 0xA8;
             prim->u0 = 0x80;
-            prim->v0 = i*0x10 - 0x50;
+            prim->v0 = i * 0x10 - 0x50;
             prim->u1 = 0x80;
             if (i == 2) {
                 prim->u1 = 0x20;
@@ -35,11 +35,11 @@ void TestCollisions(void) {
             prim->blendMode = 8;
             prim = prim->next;
         }
-        for(i=0; i < 4; i++) {
-            prim->x0 = 12 + i*0x80;
+        for (i = 0; i < 4; i++) {
+            prim->x0 = 12 + i * 0x80;
             prim->y0 = 0xD6;
             prim->u0 = 0x80;
-            prim->v0 = i*8 -0x70;
+            prim->v0 = i * 8 - 0x70;
             prim->u1 = 0x80;
             if (i == 3) {
                 prim->u1 = 0x64;
@@ -51,7 +51,7 @@ void TestCollisions(void) {
             prim->blendMode = 8;
             prim = prim->next;
         }
-        for(i=0; i < 4; i++) {
+        for (i = 0; i < 4; i++) {
             prim->x0 = i << 7;
             prim->u1 = 0x80;
             prim->v1 = 0xF0;
@@ -60,7 +60,7 @@ void TestCollisions(void) {
             prim->blendMode = 8;
             prim = prim->next;
         }
-        for(i=0; i < 4; i++) {
+        for (i = 0; i < 4; i++) {
             prim->x0 = i << 7;
             prim->u1 = 0x80;
             prim->y0 = 0x18;
@@ -79,7 +79,7 @@ void TestCollisions(void) {
         prim->priority = 1;
         prim->blendMode = 8;
         prim = prim->next;
-        
+
         prim->v0 = 0x90;
         prim->u1 = 0x78;
         prim->v1 = 0x40;
@@ -94,28 +94,29 @@ void TestCollisions(void) {
     case 1:
         func_801B1A98();
         D_801BB014 += 8;
-        for(i=0, prim = &g_PrimBuf[D_801BB010];prim != NULL; prim = prim->next, i++) {
+        for (i = 0, prim = &g_PrimBuf[D_801BB010]; prim != NULL;
+             prim = prim->next, i++) {
             prim->blendMode = 4;
-            func_801B1CFC((POLY_GT4* ) prim, D_801BB014);
-            if (((u32) (i - 7) < 2U) || (((u32) (i - 9) < 2U) != 0)) {
-                
+            func_801B1CFC((POLY_GT4*)prim, D_801BB014);
+            if (((u32)(i - 7) < 2U) || (((u32)(i - 9) < 2U) != 0)) {
+
                 scaled_b014 = D_801BB014 * 3;
                 if (scaled_b014 < 0) {
                     scaled_b014 += 3;
                 }
-                prim->r0 = (u8) (scaled_b014 >> 2);
-                
+                prim->r0 = (u8)(scaled_b014 >> 2);
+
                 scaled_b014 = D_801BB014 * 7;
                 if (scaled_b014 < 0) {
                     scaled_b014 += 7;
                 }
-                prim->g0 = (u8) (scaled_b014 >> 3);
-                
+                prim->g0 = (u8)(scaled_b014 >> 3);
+
                 scaled_b014 = D_801BB014 * 3;
                 if (scaled_b014 < 0) {
                     scaled_b014 += 3;
                 }
-                prim->b0 = (u8) (scaled_b014 >> 2);
+                prim->b0 = (u8)(scaled_b014 >> 2);
             }
             if (i - 0xF < 2U) {
                 prim->blendMode = 0x15;
@@ -127,7 +128,8 @@ void TestCollisions(void) {
         }
         return;
     case 2:
-        for(i = 0, prim = &g_PrimBuf[D_801BB010]; prim!=NULL; prim = prim->next, i++){
+        for (i = 0, prim = &g_PrimBuf[D_801BB010]; prim != NULL;
+             prim = prim->next, i++) {
             if (i < 3) {
                 prim->blendMode = 8;
                 if (g_blinkTimer & 0x30) {
@@ -149,7 +151,8 @@ void TestCollisions(void) {
                         prim->p1 += 1;
                     }
                 } else {
-                    if ((prim15->p1 >= 2U) || ((prim15->p1 != 0) && ((u8) prim15->p2 < 3U))) {
+                    if ((prim15->p1 >= 2U) ||
+                        ((prim15->p1 != 0) && ((u8)prim15->p2 < 3U))) {
                         prim->p2 = (rand() & 3) + 6;
                         prim->tpage = 0x19;
                         prim->p1 += 1;
@@ -211,15 +214,15 @@ void TestCollisions(void) {
                 }
                 break;
             }
-            
+
             if (i != 0x10) {
                 continue;
             }
-            if (prim->tpage == 0x18){
+            if (prim->tpage == 0x18) {
                 prim->u1 = 0x78;
             } else {
                 prim->u1 = 0x70;
-            } 
+            }
         }
         if (g_pads[0].tapped & 0x800) {
             g_api.PlaySfx(0x63D);
@@ -261,7 +264,7 @@ void TestCollisions(void) {
         func_801B19F4();
         func_801B1DA8();
         g_api.FreePrimitives(D_801BB010);
-        STRCPY(g_Status.saveName,D_801A7B8C);
+        STRCPY(g_Status.saveName, D_801A7B8C);
         if (g_StageId == STAGE_ST0) {
             SetGameState(Game_VideoPlayback);
         } else if (g_StageId == STAGE_MEMORYCARD) {
@@ -273,10 +276,11 @@ void TestCollisions(void) {
         return;
     case 6:
         D_801BB014 -= 8;
-        for (i = 0, prim = &g_PrimBuf[D_801BB010]; prim != NULL; prim = prim->next, i++) {
+        for (i = 0, prim = &g_PrimBuf[D_801BB010]; prim != NULL;
+             prim = prim->next, i++) {
             prim->blendMode = 4;
-            func_801B1CFC((POLY_GT4* ) prim, D_801BB014);
-            if ((u32) (i - 0xF) < 2U) {
+            func_801B1CFC((POLY_GT4*)prim, D_801BB014);
+            if ((u32)(i - 0xF) < 2U) {
                 prim->blendMode = 0x15;
             }
         }
