@@ -1042,7 +1042,7 @@ void EntityMermanRockLeftSide(Entity* self) {
             newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, newEntity);
-                newEntity->params = 0x43;
+                newEntity->params = ITEM_POT_ROAST;
             }
             D_8003BDEC[jewelSwordRoomUnlock] |= rockBroken;
             self->hitboxState = 1;
