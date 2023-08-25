@@ -10,8 +10,14 @@ extern s32 D_80180040[];
 extern s32 D_80180054[];
 extern u8* D_801803B0;
 extern u8* D_801803B4;
+extern s32 D_801804D0;
+extern u8 D_801804D4[];
+extern s32 D_801804D8[];
+extern const s32 D_801A7B8C[2];
 extern s32 D_801BAF20;
 extern s32 D_801BAF30;
+extern s32 D_801BB010;
+extern s32 D_801BB014;
 extern s32 g_InputCursorPos; // cursor Position
 void* g_Cluts[];
 void* g_EntityGfxs[];

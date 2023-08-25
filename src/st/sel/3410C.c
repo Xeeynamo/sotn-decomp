@@ -1,12 +1,5 @@
 #include "sel.h"
 
-extern s32 D_801804D0;
-extern u8 D_801804D4[];
-extern s32 D_801804D8[];
-extern const s32 D_801A7B8C[2];
-extern s32 D_801BB010;
-extern s32 D_801BB014;
-
 void TestCollisions(void) {
     Primitive* prim;
     Primitive* prim15;
