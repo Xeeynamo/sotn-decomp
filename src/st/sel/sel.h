@@ -26,7 +26,7 @@ void* D_8018C404;      // unknown type
 extern u8 g_InputSaveName[9];
 
 void Update(void);
-void TestCollisions(void);
+void HandleMainMenu(void);
 void func_801ACBE4(s32 arg0, u16 arg1);
 void func_801AD1D0(void);
 void func_801AD218(void);

@@ -1,6 +1,6 @@
 #include "sel.h"
 
-void TestCollisions(void) {
+void HandleMainMenu(void) {
     Primitive* prim;
     Primitive* prim15;
     s16 primIndex;

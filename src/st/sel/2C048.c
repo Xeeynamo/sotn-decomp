@@ -8,7 +8,7 @@
 
 Overlay g_StageOverlay = {
     /* 0x00 */ Update,
-    /* 0x04 */ TestCollisions,
+    /* 0x04 */ HandleMainMenu,
     /* 0x08 */ func_801B9C80,
     /* 0x0C */ InitRoomEntities,
     /* 0x10 */ NULL,
