@@ -27,6 +27,7 @@ typedef enum EntityIDs {
     /* 0x38 */ E_SMALL_WATER_DROP,
     /* 0x39 */ E_WATER_DROP,
     /* 0x3D */ E_MEDIUM_WATER_SPLASH = 0x3D,
+    /* 0x5D */ E_FALLING_ROCK = 0x5D,
 } EntityIDs;
 
 extern void CreateEntityFromCurrentEntity(u16, Entity*);
@@ -40,7 +41,7 @@ LayoutEntity* D_80180850[];
 extern u16 g_InitializeData0[];
 extern u16 g_InitializeEntityData0[];
 extern u16 D_80180AD0[];
-extern u16 D_80180ADC[]; // Init EntityCastleDoor
+extern u16 D_80180ADC[];
 extern u16 D_80180AE8[];
 extern u16 D_80180B00[];
 extern u16 D_80180B18[];

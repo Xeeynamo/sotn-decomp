@@ -27,6 +27,7 @@ EntityTrapDoor = 0x801B4BE8;
 EntityMermanRockLeftSide = 0x801B4D60;
 EntityMermanRockRightSide = 0x801B5108;
 EntityFallingRock2 = 0x801B560C;
+EntityStairwayPiece = 0x801B5790;
 EntityFallingRock = 0x801B5C5C;
 EntitySwitch = 0x801B5F60;
 EntityHeartRoomGoldDoor = 0x801B6084;
