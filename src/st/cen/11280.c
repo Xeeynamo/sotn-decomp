@@ -766,7 +766,27 @@ void CollectHeart(u16 index) {
     DestroyEntity(g_CurrentEntity);
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", func_80195974);
+void CollectGold(u16 goldSize) {
+    s32 *gold, *unk;
+    u16 goldSizeIndex;
+
+    g_api.PlaySfx(NA_SE_PL_COLLECT_GOLD);
+    gold = &g_Status.gold;
+    goldSizeIndex = goldSize - 2;
+    *gold += c_GoldPrizes[goldSizeIndex];
+    if (*gold > MAX_GOLD) {
+        *gold = MAX_GOLD;
+    }
+
+    unk = &D_80097410;
+    if (*unk) {
+        g_api.FreePrimitives(D_80097414);
+        *unk = 0;
+    }
+
+    func_8019BBA4(D_80180F30[goldSizeIndex], 1);
+    DestroyEntity(g_CurrentEntity);
+}
 
 void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;
