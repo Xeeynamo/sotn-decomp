@@ -1651,5 +1651,3 @@ void func_801B653C(void) {
         }
     }
 }
-
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B65FC);

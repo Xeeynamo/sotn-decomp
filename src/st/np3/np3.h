@@ -113,6 +113,7 @@ extern u16 D_80181180[];
 extern u16 D_801811AA[];
 extern u16 D_801811E6[];
 extern u16 D_80181204[];
+extern Unkstruct_80180FE0 D_8018129C[];
 
 // *** Merman properties START ***
 
