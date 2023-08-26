@@ -197,6 +197,8 @@ s32 func_8018D880(void) {
     return temp_v1;
 }
 
+// extern s16 PLAYER_posY_i_hi;
+
 s32 func_8018D8BC(void) {
     s32 var_v0 = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
 
@@ -283,7 +285,9 @@ s16 func_8018DE7C(u8 arg0) { return D_80180A94[arg0]; }
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018DE98);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018DF04);
+u8 func_8018DF04(s16 arg0, s16 arg1) {
+    return (ratan2(arg1, arg0) >> 4) + 0x40;
+}
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018DF3C);
 
