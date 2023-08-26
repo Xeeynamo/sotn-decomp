@@ -1,4 +1,5 @@
 #include "rwrp.h"
+
 // The white flying orbs of energy that Alucard summons as part of the Soul
 // Steal spell
 void EntitySoulStealOrb(Entity* self) {
@@ -109,21 +110,21 @@ void func_80194DD4(Entity* entity) {
     func_8018D6B0(objInit->unk10, entity);
 }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_80194EC0);
+INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", func_80194EC0);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_801951F0);
+INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", func_801951F0);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_801955D8);
+INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", func_801955D8);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_80195728);
+INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", func_80195728);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_80195758);
+INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", func_80195758);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_801957D4);
+INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", func_801957D4);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8019585C);
+INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", func_8019585C);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8019593C);
+INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", func_8019593C);
 
 #include "../unk_poly_func_0.h"
 
