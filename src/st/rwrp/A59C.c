@@ -286,13 +286,52 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018DFCC);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", UnkEntityFunc0);
 
+// #ifndef NON_MATCHING
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E0B0);
+// #else
+// s32 func_8018E0B0(s16 arg0, s16 arg1) {
+//     return ratan2((s32)arg1, (s32)arg0) & 0xFFFF;
+// }
+// #endif
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E0E0);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E118);
+// #ifndef NON_MATCHING
+// INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E118);
+// #else
+u16 func_8018E118(s32 arg0, s32 arg1) {
+    s16 x = arg0 - g_CurrentEntity->posX.i.hi;
+    s16 y = arg1 - g_CurrentEntity->posY.i.hi;
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E160);
+    return ratan2(y, x);
+}
+// #endif
+
+// #ifndef NON_MATCHING
+// INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E160);
+// #else
+u16 func_8018E160(u16 arg0, s16 arg1, s16 arg2) {
+    u16 temp_a2;
+    u16 var_v0;
+    u16 var_v0_2;
+
+    temp_a2 = arg2 - arg1;
+    if (temp_a2 & 0x800) {
+        var_v0_2 = (0x800 - temp_a2) & 0x7FF;
+    } else {
+        var_v0_2 = temp_a2;
+    }
+    if (var_v0_2 > arg0) {
+        if (temp_a2 & 0x800) {
+            var_v0 = arg1 - arg0;
+        } else {
+            var_v0 = arg1 + arg0;
+        }
+        return var_v0;
+    }
+    return arg2;
+}
+// #endif
 
 void SetStep(u8 step) {
     g_CurrentEntity->step = step;
@@ -311,7 +350,15 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E1FC);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", InitializeEntity);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E38C);
+// #ifndef NON_MATCHING
+// INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E38C);
+// #else
+void func_8018E38C(Entity* entity) {
+    if (entity->step == 0) {
+        entity->step = (u16)(entity->step + 1);
+    }
+}
+// #endif
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E3B4);
 
@@ -384,7 +431,11 @@ void CollectSubweapon(u16 subWeaponIdx) {
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018EE84);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018EF28);
+void func_8018EF28(void) {
+    g_api_PlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_api_func_800FE044(5, 0x8000);
+    DestroyEntity(g_CurrentEntity);
+}
 
 void func_8018EF78(void) { DestroyEntity(g_CurrentEntity); }
 
