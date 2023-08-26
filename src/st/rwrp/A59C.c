@@ -197,7 +197,14 @@ s32 func_8018D880(void) {
     return temp_v1;
 }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018D8BC);
+s32 func_8018D8BC(void) {
+    s32 var_v0 = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
+
+    if (var_v0 < 0) {
+        var_v0 = -var_v0;
+    }
+    return var_v0;
+}
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018D8F0);
 
