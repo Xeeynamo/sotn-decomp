@@ -882,7 +882,7 @@ void EntityRoomForeground(Entity* entity) {
     AnimateEntity(objInit->unk10, entity);
 }
 
-void BototmCornerText(u8* str, u8 lower_left) {
+void BottomCornerText(u8* str, u8 lower_left) {
     u8 toPrint[64];
     Primitive* prim;
     s32 i;
