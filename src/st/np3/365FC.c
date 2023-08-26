@@ -16,7 +16,7 @@ void func_801B65FC(Entity* self) {
         InitializeEntity(g_InitializeEntityData0);
         params = self->params & 0xF;
         obj = &D_8018129C[params];
-        self->palette = obj->palette + 0xd0;
+        self->palette = obj->palette + 0xD0;
         self->blendMode = obj->blendMode;
         self->animSet = obj->animSet;
         self->unk5A = obj->unk2;
@@ -60,7 +60,7 @@ void func_801B65FC(Entity* self) {
 
             case 2:
                 self->unk6C += 0xFC;
-                return;
+                break;
             }
         } else {
             DestroyEntity(self);
