@@ -158,9 +158,9 @@ void EntityEquipItemDrop(Entity* self) {
         break;
 
     case 5:
-        unk = &D_80097410;
+        unk = &g_BottomCornerTextTimer;
         if (*unk != 0) {
-            g_api.FreePrimitives(D_80097414);
+            g_api.FreePrimitives(g_BottomCornerTextPrims);
             *unk = 0;
         }
 

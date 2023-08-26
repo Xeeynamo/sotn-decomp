@@ -445,9 +445,9 @@ void EntityEquipItemDrop(Entity* self) {
         break;
 
     case 5:
-        unk = &D_80097410;
+        unk = &g_BottomCornerTextTimer;
         if (*unk != 0) {
-            g_api.FreePrimitives(D_80097414);
+            g_api.FreePrimitives(g_BottomCornerTextPrims);
             *unk = 0;
         }
 
@@ -1372,7 +1372,7 @@ void func_80192F40(u8* arg0, u8 arg1) {
     }
 
     primIndex = g_api.AllocPrimitives(PRIM_SPRT, polyCount + 4);
-    D_80097414 = primIndex;
+    g_BottomCornerTextPrims = primIndex;
     if (primIndex == -1) {
         return;
     }
@@ -1488,7 +1488,7 @@ void func_80192F40(u8* arg0, u8 arg1) {
         }
     }
 
-    D_80097410 = 0x130;
+    g_BottomCornerTextTimer = 0x130;
 }
 #endif
 

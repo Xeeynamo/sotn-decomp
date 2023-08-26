@@ -882,23 +882,24 @@ void EntityRoomForeground(Entity* entity) {
     AnimateEntity(objInit->unk10, entity);
 }
 
-void func_801BA7D8(u8* str, s32 arg1) {
-    u8 unkLocalArr[64];
+void BototmCornerText(u8* str, u8 lower_left) {
+    u8 toPrint[64];
     Primitive* prim;
     s32 i;
     u32 ch;
-    u8* arrIdx = &unkLocalArr;
+    u8* chIdx = &toPrint;
 
-    // Values that count up something
-    u16 accumulator1 = 0;
-    u16 accumulator2 = 0;
+    u16 textWidth = 0;
+    // serves two purposes, use #define for dual names
+    u16 dualVar = 0;
+#define charcount dualVar
 
-    // Clear out the unkLocalArr array
+    // Clear out the toPrint array
     for (i = 0; i < 64; i++) {
-        *arrIdx++ = 0;
+        *chIdx++ = 0;
     }
     // Reset array pointer
-    arrIdx = &unkLocalArr;
+    chIdx = &toPrint;
 
     while (1) {
         i = 0;
@@ -911,41 +912,43 @@ void func_801BA7D8(u8* str, s32 arg1) {
                 break;
             }
         }
-        *arrIdx = ch;
-        arrIdx++;
+        *chIdx = ch;
+        chIdx++;
         if (ch != 0) {
-            accumulator2 += 1;
-            accumulator1 += 8;
+            charcount += 1;
+            textWidth += 8;
         } else {
-            accumulator1 += 4;
+            textWidth += 4;
         }
     }
 
-    D_80097414 = g_api_AllocPrimitives(PRIM_SPRT, accumulator2 + 4);
-    if (D_80097414 == -1) {
+    g_BottomCornerTextPrims = g_api_AllocPrimitives(PRIM_SPRT, charcount + 4);
+    if (g_BottomCornerTextPrims == -1) {
         return;
     }
+#undef charcount
 
-    prim = &g_PrimBuf[D_80097414];
+    prim = &g_PrimBuf[g_BottomCornerTextPrims];
     prim->type = 3;
     prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->g0 = prim->g1 = prim->g2 =
         prim->g3 = prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
 
-    if (arg1 & 0xFF) {
+    if (lower_left) {
         prim->b0 = prim->b1 = 0xAF;
     } else {
         prim->g0 = prim->g1 = 0x5F;
     }
 
-    if (arg1 & 0xFF) {
-        accumulator2 = 7;
-        accumulator1 += 4;
+#define xpos dualVar
+    if (lower_left) {
+        xpos = 7;
+        textWidth += 4;
     } else {
-        accumulator2 = 0xD4 - accumulator1;
+        xpos = 0xD4 - textWidth;
     }
 
-    prim->x0 = prim->x2 = accumulator2;
-    prim->x1 = prim->x3 = accumulator2 + accumulator1 + 0x20;
+    prim->x0 = prim->x2 = xpos;
+    prim->x1 = prim->x3 = xpos + textWidth + 0x20;
     prim->y0 = prim->y1 = 0xD0;
     prim->y2 = prim->y3 = 0xDF;
     prim->priority = 0x1EE;
@@ -954,7 +957,7 @@ void func_801BA7D8(u8* str, s32 arg1) {
 
     prim->tpage = 0x1F;
     prim->clut = 0x197;
-    prim->x0 = accumulator2 - 6;
+    prim->x0 = xpos - 6;
     prim->y0 = 0xCB;
     prim->u0 = 0x80;
     prim->v0 = 0;
@@ -966,7 +969,7 @@ void func_801BA7D8(u8* str, s32 arg1) {
 
     prim->tpage = 0x1F;
     prim->clut = 0x197;
-    prim->x0 = accumulator2 + accumulator1 + 0x16;
+    prim->x0 = xpos + textWidth + 0x16;
     prim->y0 = 0xCB;
     prim->u0 = 0xA8;
     prim->v0 = 0;
@@ -984,36 +987,37 @@ void func_801BA7D8(u8* str, s32 arg1) {
     prim->u0 = prim->u2 = 0x98;
     prim->u1 = prim->u3 = 0x9C;
     prim->v0 = prim->v1 = 2;
-    prim->x0 = prim->x2 = accumulator2 + 0xA;
-    prim->x1 = prim->x3 = accumulator2 + accumulator1 + 0x18;
+    prim->x0 = prim->x2 = xpos + 0xA;
+    prim->x1 = prim->x3 = xpos + textWidth + 0x18;
     prim->v2 = prim->v3 = 0x16;
     prim->priority = 0x1EF;
     prim->blendMode = 0;
 
-    accumulator2 += 0x10;
+    xpos += 0x10;
 
     // Reset array pointer
-    arrIdx = &unkLocalArr;
+    chIdx = &toPrint;
     for (prim = prim->next; prim != NULL;) {
-        ch = *arrIdx++;
+        ch = *chIdx++;
         if (ch != 0) {
-            prim->x0 = accumulator2;
+            prim->x0 = xpos;
             prim->u0 = (ch & 0xF) * 8;
             prim->tpage = 0x1E;
             prim->clut = 0x196;
-            prim->v0 = (u8)((u32)(ch & 0xF0) >> 1);
+            prim->v0 = (ch & 0xF0) >> 1;
             prim->v1 = 8;
             prim->u1 = 8;
             prim->priority = 0x1F0;
             prim->blendMode = 0;
             prim->y0 = 0xD4;
             prim = prim->next;
-            accumulator2 += 8;
+            xpos += 8;
         } else {
-            accumulator2 += 4;
+            xpos += 4;
         }
     }
-    D_80097410 = 0x130;
+#undef xpos
+    g_BottomCornerTextTimer = 0x130;
 }
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", EntityClouds);
