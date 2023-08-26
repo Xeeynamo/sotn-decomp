@@ -297,13 +297,7 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018DFCC);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", UnkEntityFunc0);
 
-// #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E0B0);
-// #else
-// s32 func_8018E0B0(s16 arg0, s16 arg1) {
-//     return ratan2((s32)arg1, (s32)arg0) & 0xFFFF;
-// }
-// #endif
+u16 func_8018E0B0(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E0E0);
 
