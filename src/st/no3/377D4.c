@@ -29,7 +29,62 @@ void EntityCavernDoorVase(Entity* arg0) {
     AnimateEntity(temp_s0->unk10, arg0);
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityUnkId12);
+void EntityUnkId12(Entity* entity) {
+    s32 ret;
+    u16* temp_v0_2;
+    u16 temp_s1 = entity->params;
+    u16 phi_v1;
+    u16 unk;
+
+    entity->unk6D = 0;
+
+    if (entity->step != 0) {
+        switch (temp_s1) {
+        case 4:
+        case 5:
+            if (g_CurrentRoom.x != 0) {
+                return;
+            }
+            break;
+
+        case 6:
+            if (g_pads->pressed & PAD_TRIANGLE) {
+                g_CurrentRoom.x = 0;
+                g_CurrentRoom.width = 1280;
+                entity->step++;
+                return;
+            }
+            break;
+        }
+
+        if (entity->unk44 != 0) {
+            ret = GetSideToPlayer();
+            phi_v1 = entity->ext.generic.unk7C.s;
+            if (phi_v1 != 0) {
+                phi_v1 = (ret & 2) * 2;
+            } else {
+                phi_v1 = (ret & 1) * 4;
+            }
+            unk = 8;
+            temp_s1 = (temp_s1 * unk) + phi_v1;
+            temp_v0_2 = &D_80180DD0[temp_s1];
+            g_CurrentRoom.x = *(temp_v0_2++);
+            g_CurrentRoom.y = *(temp_v0_2++);
+            g_CurrentRoom.width = *(temp_v0_2++);
+            g_CurrentRoom.height = *(temp_v0_2++);
+        }
+    } else {
+        InitializeEntity(D_80180AF4);
+        entity->ext.generic.unk7C.s = D_80180DC8[temp_s1];
+        if (entity->ext.generic.unk7C.s != 0) {
+            entity->hitboxWidth = D_80180DC0[temp_s1];
+            entity->hitboxHeight = 16;
+        } else {
+            entity->hitboxWidth = 16;
+            entity->hitboxHeight = D_80180DC0[temp_s1];
+        }
+    }
+}
 
 extern u16 g_eBreakableInit[];
 extern u8* g_eBreakableAnimations[8];
@@ -338,7 +393,88 @@ void EntityCastleDoor(Entity* self) {
 // bushes in parallax background
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityBackgroundBushes);
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityUnkId1C);
+void EntityUnkId1C(Entity* self, s16 primIndex) {
+    volatile char pad[8]; //! FAKE
+    Primitive* prim;
+    VECTOR vec;
+    MATRIX mtx;
+    long sxy;
+    long p;
+    long flag;
+    s32 temp_s3;
+    s32 temp_a1;
+    s32 temp_a2;
+    s32 var_v1;
+
+    if (self->step == 0) {
+        InitializeEntity(D_80180B18);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
+        self->ext.prim = prim;
+        self->flags |= FLAG_HAS_PRIMS;
+        while (prim != NULL) {
+            prim->tpage = 0xF;
+            prim->clut = D_801811E0[self->params % 16];
+            prim->u0 = prim->u2 = 0xBF;
+            prim->u1 = prim->u3 = 0xFF;
+            prim->v0 = prim->v1 = 0x80;
+            prim->v2 = prim->v3 = 0xB8;
+            prim->priority = 0x5A;
+            prim->blendMode = BLEND_VISIBLE;
+            prim = prim->next;
+        }
+    }
+    var_v1 = D_801811D0[self->params % 16][0];
+    temp_s3 = var_v1;
+
+    SetGeomScreen(0x400);
+    if (self->params & 0x100) {
+        SetGeomOffset(0x80, 0x98);
+    } else {
+        SetGeomOffset(0x80, 0x80);
+    }
+
+    RotMatrix(D_801811F0, &mtx);
+    vec.vx = self->posX.i.hi - 128;
+    vec.vy = self->posY.i.hi - 128;
+    vec.vz = temp_s3 + 0x400;
+    TransMatrix(&mtx, &vec);
+    SetRotMatrix(&mtx);
+    SetTransMatrix(&mtx);
+    RotTransPers(D_801811F0, &sxy, &p, &flag);
+    temp_a1 = sxy & 0xFFFF;
+    temp_a2 = sxy >> 0x10;
+
+    if (temp_a1 < 0) {
+        var_v1 = temp_a1 + 0x3F;
+    } else {
+        var_v1 = temp_a1;
+    }
+
+    prim = self->ext.prim;
+    temp_a1 -= (var_v1 >> 6) << 6;
+    temp_a1 -= 64;
+    temp_a1 -= D_801811D0[self->params % 16][1];
+    while (temp_a1 < 320) {
+        prim->x1 = prim->x3 = temp_a1 + 64;
+        prim->x0 = prim->x2 = temp_a1;
+        prim->y0 = prim->y1 = temp_a2 - 56;
+        prim->y2 = prim->y3 = temp_a2;
+        prim->blendMode = 2;
+        prim = prim->next;
+        temp_a1 += 64;
+    }
+
+    while (prim != NULL) {
+        prim->blendMode = BLEND_VISIBLE;
+        prim = prim->next;
+    }
+}
 
 // transparent water "plane" seen in the merman room
 void EntityTransparentWater(Entity* self) {
@@ -884,6 +1020,9 @@ void EntityTrapDoor(Entity* entity) {
 
 // left side of the breakable rock, drops pot roast
 void EntityMermanRockLeftSide(Entity* self) {
+    const int jewelSwordRoomUnlock = 51;
+    const int rockBroken = (1 << 0);
+    const int wolfFlag = (1 << 2);
     u16* tileLayoutPtr;
     Entity* newEntity;
     s32 tilePos;
@@ -906,7 +1045,7 @@ void EntityMermanRockLeftSide(Entity* self) {
             tilePos += 0x30;
         }
 
-        if (D_8003BDEC[51] & 1) { /* 0 0 0 0 0 0 0 1 = Half broken */
+        if (D_8003BDEC[jewelSwordRoomUnlock] & rockBroken) {
             tileLayoutPtr = &D_80181264;
             tilePos = 0x1F1;
             for (i = 0; i < 3; i++) {
@@ -935,7 +1074,7 @@ void EntityMermanRockLeftSide(Entity* self) {
 
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(2, self, newEntity);
+                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = 0x13;
                 newEntity->zPriority = 0xA9;
                 newEntity->posX.i.hi += self->ext.generic.unk84.S16.unk0 * 16;
@@ -947,7 +1086,7 @@ void EntityMermanRockLeftSide(Entity* self) {
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(0x27, self, newEntity);
+                    CreateEntityFromEntity(E_FALLING_ROCK_2, self, newEntity);
                     newEntity->params = *params++;
                     newEntity->velocityX = -0x8000 - (Random() << 8);
                     newEntity->velocityY = -Random() * 0x100;
@@ -960,18 +1099,19 @@ void EntityMermanRockLeftSide(Entity* self) {
         if (self->ext.generic.unk84.S16.unk0 >= 2) {
             newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(0xA, self, newEntity);
-                newEntity->params = 0x43;
+                CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, newEntity);
+                newEntity->params = ITEM_POT_ROAST;
             }
-            D_8003BDEC[51] |= 1; /* 0 0 0 0 0 0 0 1 = Half broken */
+            D_8003BDEC[jewelSwordRoomUnlock] |= rockBroken;
             self->hitboxState = 1;
             self->step++;
         }
         break;
 
     case 2:
-        if ((self->hitFlags != 0) && (g_Player.unk0C & 4)) {
-            D_8003BDEC[51] |= 4; /* 0 0 0 0 0 1 0 0 = Broken */
+        if ((self->hitFlags != 0) &&
+            (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM)) {
+            D_8003BDEC[jewelSwordRoomUnlock] |= wolfFlag;
         }
         break;
     }
@@ -979,6 +1119,9 @@ void EntityMermanRockLeftSide(Entity* self) {
 
 // right side of the merman room rock, breaks when hit
 void EntityMermanRockRightSide(Entity* self) {
+    const int jewelSwordRoomUnlock = 51;
+    const int rockBroken = (1 << 1);
+    const int batFlag = (1 << 3);
     u16* tileLayoutPtr;
     Entity* newEntity;
     s32 tilePos;
@@ -1001,7 +1144,7 @@ void EntityMermanRockRightSide(Entity* self) {
             tilePos += 0x30;
         }
 
-        if (D_8003BDEC[51] & 2) { /* 0 0 0 0 0 0 1 0 = Half broken */
+        if (D_8003BDEC[jewelSwordRoomUnlock] & rockBroken) {
             tileLayoutPtr = &D_801812A0;
             tilePos = 0x1FD;
             for (i = 0; i < 3; i++) {
@@ -1042,7 +1185,7 @@ void EntityMermanRockRightSide(Entity* self) {
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(0x27, self, newEntity);
+                    CreateEntityFromEntity(E_FALLING_ROCK_2, self, newEntity);
                     newEntity->params = *params++;
                     newEntity->velocityX = (Random() << 8) + 0x8000;
                     newEntity->velocityY = -Random() * 0x100;
@@ -1054,15 +1197,16 @@ void EntityMermanRockRightSide(Entity* self) {
         }
 
         if (self->ext.generic.unk84.S16.unk0 >= 2) {
-            D_8003BDEC[51] |= 2; /* 0 0 0 0 0 0 1 0 = Half broken */
+            D_8003BDEC[jewelSwordRoomUnlock] |= rockBroken;
             self->hitboxState = 1;
             self->step++;
         }
         break;
 
     case 2:
-        if ((self->hitFlags != 0) && (g_Player.unk0C & 1)) {
-            D_8003BDEC[51] |= 8; /* 0 0 0 0 1 0 0 0 = Broken */
+        if ((self->hitFlags != 0) &&
+            (g_Player.unk0C & PLAYER_STATUS_BAT_FORM)) {
+            D_8003BDEC[jewelSwordRoomUnlock] |= batFlag;
         }
         break;
     }
@@ -1165,7 +1309,143 @@ void EntityFallingRock2(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityUnkId5C);
+// ID 0x5C
+// Stairway piece you can break before Death encounter
+void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
+    const int stairwayPieceBroken = 56;
+    Primitive *prim, *prim2, *prim3;
+    Entity* newEntity;
+    Collider collider;
+    s16 primIndex;
+    s32 temp;
+    s16 x, y;
+    u8 v1;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180ADC);
+        self->hitboxWidth = 8;
+        self->hitboxHeight = 8;
+        self->posX.i.hi = 1432 - g_Camera.posX.i.hi;
+        self->posY.i.hi = 200 - g_Camera.posY.i.hi;
+        self->hitPoints = 16;
+        if (D_8003BDEC[stairwayPieceBroken]) {
+            self->hitboxState = 0;
+            g_CurrentRoomTileLayout.fg[0x4D9] = 0x3EE;
+            g_CurrentRoomTileLayout.fg[0x539] = 0x3D2;
+            self->step = 32;
+            break;
+        }
+        self->hitboxState = 2;
+        g_CurrentRoomTileLayout.fg[0x4D9] = 0x408;
+        g_CurrentRoomTileLayout.fg[0x539] = 0x40D;
+        break;
+
+    case 1:
+        if (self->hitFlags != 0) {
+            g_api.PlaySfx(0x64B);
+        }
+
+        if (self->flags & 0x100) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        g_api.PlaySfx(0x644);
+        g_CurrentRoomTileLayout.fg[0x4D9] = 0x3EE;
+        g_CurrentRoomTileLayout.fg[0x539] = 0x3D2;
+        D_8003BDEC[stairwayPieceBroken] = true;
+
+        newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        if (newEntity != NULL) {
+            CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, newEntity);
+            newEntity->params = ITEM_TURKEY;
+        }
+
+        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (newEntity != NULL) {
+            CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, newEntity);
+            newEntity->params = 0x10;
+            newEntity->zPriority = self->zPriority + 1;
+            newEntity->posX.i.hi += 8;
+            newEntity->posY.i.hi += 8;
+        }
+
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[primIndex];
+        self->primIndex = primIndex;
+        self->ext.prim = prim;
+        self->flags |= FLAG_HAS_PRIMS;
+        func_801D6FCC(prim, primIndex);
+        v1 = D_80073088->gfxIndex[0x409];
+        arg1 = v1;
+        temp = D_80073088->gfxPage[0x409];
+        prim->clut = D_80073088->clut[0x409];
+        prim->tpage = temp + 8;
+        arg1 *= 16;
+        arg3 = 0xF;
+        arg3 = arg1 | arg3;
+        prim->u0 = prim->u2 = arg1;
+        arg2 = v1 & 0xF0 | 0xF;
+        prim->v0 = prim->v1 = v1 & 0xF0;
+        prim->u1 = prim->u3 = arg3;
+        prim->v2 = prim->v3 = arg2;
+        prim->next->x1 = self->posX.i.hi;
+        prim->next->y0 = self->posY.i.hi;
+        LOW(prim->next->u0) = 0xFFFF0000;
+        LOW(prim->next->r1) = 0xFFFF0000;
+        LOH(prim->next->r2) = 16;
+        LOH(prim->next->b2) = 16;
+        prim->priority = self->zPriority;
+        prim->blendMode = 2;
+        self->step++;
+
+    case 3:
+        prim = self->ext.prim;
+        prim2 = prim->next;
+        prim2->tpage -= 0x20;
+        prim2 = prim->next;
+        LOW(prim2->r1) += 0x2000;
+        func_801D6880(prim);
+        prim3 = prim->next;
+        x = prim3->x1;
+        y = prim3->y0;
+        g_api.CheckCollision(x, (s16)(y + 8), &collider, 0);
+        if (collider.effects & 1) {
+            self->posX.i.hi = x;
+            self->posY.i.hi = y - 4;
+            self->step++;
+        }
+        break;
+
+    case 4:
+        g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
+        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (newEntity != NULL) {
+            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+            newEntity->params = 0x11;
+            newEntity->zPriority = self->zPriority + 1;
+        }
+
+        for (i = 0; i < 6; i++) {
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(E_FALLING_ROCK, self, newEntity);
+                newEntity->params = Random() & 3;
+                if (newEntity->params == 3) {
+                    newEntity->params = 0;
+                }
+            }
+        }
+        DestroyEntity(self);
+    }
+}
 
 // falling rock with puff of smoke when it disappears. I think part of the
 // merman room breakable rock

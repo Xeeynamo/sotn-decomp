@@ -21,12 +21,14 @@ typedef enum EntityIDs {
 
     /* 0x11 */ E_ID_11 = 0x11,
     /* 0x15 */ E_ID_15 = 0x15,
+    /* 0x27 */ E_FALLING_ROCK_2 = 0x27,
     /* 0x35 */ E_SPLASH_WATER = 0x35,
     /* 0x36 */ E_SURFACING_WATER,
     /* 0x37 */ E_SIDE_WATER_SPLASH,
     /* 0x38 */ E_SMALL_WATER_DROP,
     /* 0x39 */ E_WATER_DROP,
     /* 0x3D */ E_MEDIUM_WATER_SPLASH = 0x3D,
+    /* 0x5D */ E_FALLING_ROCK = 0x5D,
 } EntityIDs;
 
 extern void CreateEntityFromCurrentEntity(u16, Entity*);
@@ -40,8 +42,9 @@ LayoutEntity* D_80180850[];
 extern u16 g_InitializeData0[];
 extern u16 g_InitializeEntityData0[];
 extern u16 D_80180AD0[];
-extern u16 D_80180ADC[]; // Init EntityCastleDoor
+extern u16 D_80180ADC[];
 extern u16 D_80180AE8[];
+extern u16 D_80180AF4[];
 extern u16 D_80180B00[];
 extern u16 D_80180B18[];
 extern u16 D_80180B48[];
@@ -51,6 +54,9 @@ extern u16 D_80180B84[];
 extern u16 D_80180B90[];
 extern u16 D_80180BA8[];
 extern ObjInit2 D_80180BFC[];
+extern u8 D_80180DC0[];
+extern u8 D_80180DC8[];
+extern u16 D_80180DD0[];
 extern SVEC4 D_80181024[];
 extern SVEC4 D_801810A4;
 extern MATRIX D_801810D4;
@@ -58,6 +64,9 @@ extern SVECTOR* D_8018110C;
 extern u8 D_80181118[];
 extern u16 D_80181120[];
 extern u16 D_80181130[8];
+extern s16 D_801811D0[][2];
+extern s16 D_801811E0[];
+extern SVECTOR D_801811F0[];
 extern u8 D_801811F8;
 extern u8 D_80181218[];
 extern u8 D_80181224[];

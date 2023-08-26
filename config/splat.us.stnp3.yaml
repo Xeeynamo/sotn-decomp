@@ -50,6 +50,8 @@ segments:
       - [0x3A7C, roomdef, g_Rooms]
       - [0x3B68, rodata]
       - [0x31EA0, rodata]
+      - [0x31EA8, .rodata, 3246C] #EntityStairwayPiece
+      - [0x31EBC, rodata]
       - [0x31ED0, .rodata, 36990] # EntitySlogra .rodata, 36990
       - [0x31EDC, rodata] # EntityGaibon .rodata, 36990
       - [0x31F00, rodata]
