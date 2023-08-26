@@ -23,7 +23,7 @@ typedef enum {
 
     /* 0x19 */ E_CASTLE_DOOR = 0x19,
     /* 0x1E */ E_ID_1E = 0x1E,
-    /* 0x27 */ E_ID_27 = 0x27,
+    /* 0x27 */ E_FALLING_ROCK_2 = 0x27,
     /* 0x2D */ E_SPLASH_WATER = 0x2D,
     /* 0x2E */ E_SURFACING_WATER,
     /* 0x2F */ E_SIDE_WATER_SPLASH,
@@ -31,7 +31,8 @@ typedef enum {
     /* 0x31 */ E_WATER_DROP,
     /* 0x35 */ E_MEDIUM_WATER_SPLASH = 0x35,
     /* 0x3F */ E_BONE_SCIMITAR_HEAD = 0x3F,
-    /* 0x4D */ E_ID_4D = 0x4D,
+    /* 0x4C */ E_FALLING_ROCK = 0x4C,
+    /* 0x4D */ E_ID_4D,
     /* 0x4F */ E_SLOGRA_SPEAR = 0x4F,
     /* 0x50 */ E_SLOGRA_SPEAR_PROJECTILE,
     /* 0x51 */ E_GAIBON,
