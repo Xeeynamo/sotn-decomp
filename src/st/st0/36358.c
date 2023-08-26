@@ -882,7 +882,139 @@ void EntityRoomForeground(Entity* entity) {
     AnimateEntity(objInit->unk10, entity);
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", func_801BA7D8);
+void func_801BA7D8(u8* str, s32 arg1) {
+    u8 unkLocalArr[64];
+    Primitive* prim;
+    s32 i;
+    u32 ch;
+    u8* arrIdx = &unkLocalArr;
+
+    // Values that count up something
+    u16 accumulator1 = 0;
+    u16 accumulator2 = 0;
+
+    // Clear out the unkLocalArr array
+    for (i = 0; i < 64; i++) {
+        *arrIdx++ = 0;
+    }
+    // Reset array pointer
+    arrIdx = &unkLocalArr;
+
+    while (1) {
+        i = 0;
+        // Copy values from the incoming arg0 array to the local array, until we
+        // get a 0xFF followed by a 0
+        ch = *str++;
+        if (ch == 0xFF) {
+            ch = *str++;
+            if (ch == 0) {
+                break;
+            }
+        }
+        *arrIdx = ch;
+        arrIdx++;
+        if (ch != 0) {
+            accumulator2 += 1;
+            accumulator1 += 8;
+        } else {
+            accumulator1 += 4;
+        }
+    }
+
+    D_80097414 = g_api_AllocPrimitives(PRIM_SPRT, accumulator2 + 4);
+    if (D_80097414 == -1) {
+        return;
+    }
+
+    prim = &g_PrimBuf[D_80097414];
+    prim->type = 3;
+    prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->g0 = prim->g1 = prim->g2 =
+        prim->g3 = prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
+
+    if (arg1 & 0xFF) {
+        prim->b0 = prim->b1 = 0xAF;
+    } else {
+        prim->g0 = prim->g1 = 0x5F;
+    }
+
+    if (arg1 & 0xFF) {
+        accumulator2 = 7;
+        accumulator1 += 4;
+    } else {
+        accumulator2 = 0xD4 - accumulator1;
+    }
+
+    prim->x0 = prim->x2 = accumulator2;
+    prim->x1 = prim->x3 = accumulator2 + accumulator1 + 0x20;
+    prim->y0 = prim->y1 = 0xD0;
+    prim->y2 = prim->y3 = 0xDF;
+    prim->priority = 0x1EE;
+    prim->blendMode = 0x11;
+    prim = prim->next;
+
+    prim->tpage = 0x1F;
+    prim->clut = 0x197;
+    prim->x0 = accumulator2 - 6;
+    prim->y0 = 0xCB;
+    prim->u0 = 0x80;
+    prim->v0 = 0;
+    prim->u1 = 0x10;
+    prim->v1 = 0x18;
+    prim->priority = 0x1EF;
+    prim->blendMode = 0;
+    prim = prim->next;
+
+    prim->tpage = 0x1F;
+    prim->clut = 0x197;
+    prim->x0 = accumulator2 + accumulator1 + 0x16;
+    prim->y0 = 0xCB;
+    prim->u0 = 0xA8;
+    prim->v0 = 0;
+    prim->u1 = 0x10;
+    prim->v1 = 0x18;
+    prim->priority = 0x1EF;
+    prim->blendMode = 0;
+    prim = prim->next;
+
+    prim->type = 4;
+    prim->y0 = prim->y1 = 0xCD;
+    prim->tpage = 0x1F;
+    prim->clut = 0x197;
+    prim->y2 = prim->y3 = 0xE1;
+    prim->u0 = prim->u2 = 0x98;
+    prim->u1 = prim->u3 = 0x9C;
+    prim->v0 = prim->v1 = 2;
+    prim->x0 = prim->x2 = accumulator2 + 0xA;
+    prim->x1 = prim->x3 = accumulator2 + accumulator1 + 0x18;
+    prim->v2 = prim->v3 = 0x16;
+    prim->priority = 0x1EF;
+    prim->blendMode = 0;
+
+    accumulator2 += 0x10;
+
+    // Reset array pointer
+    arrIdx = &unkLocalArr;
+    for (prim = prim->next; prim != NULL;) {
+        ch = *arrIdx++;
+        if (ch != 0) {
+            prim->x0 = accumulator2;
+            prim->u0 = (ch & 0xF) * 8;
+            prim->tpage = 0x1E;
+            prim->clut = 0x196;
+            prim->v0 = (u8)((u32)(ch & 0xF0) >> 1);
+            prim->v1 = 8;
+            prim->u1 = 8;
+            prim->priority = 0x1F0;
+            prim->blendMode = 0;
+            prim->y0 = 0xD4;
+            prim = prim->next;
+            accumulator2 += 8;
+        } else {
+            accumulator2 += 4;
+        }
+    }
+    D_80097410 = 0x130;
+}
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", EntityClouds);
 
