@@ -296,26 +296,18 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E0B0);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E0E0);
 
-// #ifndef NON_MATCHING
-// INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E118);
-// #else
 u16 func_8018E118(s32 arg0, s32 arg1) {
     s16 x = arg0 - g_CurrentEntity->posX.i.hi;
     s16 y = arg1 - g_CurrentEntity->posY.i.hi;
 
     return ratan2(y, x);
 }
-// #endif
 
-// #ifndef NON_MATCHING
-// INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E160);
-// #else
 u16 func_8018E160(u16 arg0, s16 arg1, s16 arg2) {
-    u16 temp_a2;
     u16 var_v0;
     u16 var_v0_2;
+    u16 temp_a2 = arg2 - arg1;
 
-    temp_a2 = arg2 - arg1;
     if (temp_a2 & 0x800) {
         var_v0_2 = (0x800 - temp_a2) & 0x7FF;
     } else {
@@ -331,7 +323,6 @@ u16 func_8018E160(u16 arg0, s16 arg1, s16 arg2) {
     }
     return arg2;
 }
-// #endif
 
 void SetStep(u8 step) {
     g_CurrentEntity->step = step;
@@ -350,15 +341,11 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E1FC);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", InitializeEntity);
 
-// #ifndef NON_MATCHING
-// INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E38C);
-// #else
 void func_8018E38C(Entity* entity) {
     if (entity->step == 0) {
         entity->step = (u16)(entity->step + 1);
     }
 }
-// #endif
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E3B4);
 
