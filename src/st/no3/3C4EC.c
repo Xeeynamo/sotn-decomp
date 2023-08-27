@@ -249,77 +249,62 @@ void EntityUnkId52(Entity* self) {
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityUnkId54);
 
-// regalloc
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityUnkId55);
-#else
-void EntityUnkId55(Entity* entity, u16 arg2) {
-    s32 primIndex;
-    POLY_GT4* poly;
-    s32 temp_v0;
+// ID 0x55
+void EntityBackgroundTrees(Entity* self) {
+    Primitive* prim;
+    s16 primIndex;
     s16 temp_v0_2;
-    s16 temp_v1_2;
     s16 var_a2;
-    u16 new_var2;
 
-    switch (entity->step) {
-    case 0:
-        InitializeEntity(D_80180AD0);
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 9);
-        if (primIndex == 0) {
-            DestroyEntity(entity);
-            return;
+    do { //! FAKE:
+        switch (self->step) {
+        case 0:
+            InitializeEntity(D_80180AD0);
+            primIndex = g_api.AllocPrimitives(PRIM_GT4, 9);
+            if (primIndex == 0) {
+                DestroyEntity(self);
+                return;
+            }
+            prim = &g_PrimBuf[primIndex];
+            var_a2 = 0;
+            self->posX.i.hi = 128;
+            self->primIndex = primIndex;
+            self->unk68 = 0x10;
+            self->flags |= FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+
+            while (prim != NULL) {
+                prim->x0 = prim->x2 = var_a2;
+                var_a2 += 0x1E;
+                prim->tpage = 0xE;
+                prim->clut = 0x67;
+                prim->u0 = prim->u2 = 0x61;
+                prim->u1 = prim->u3 = 0x7F;
+                prim->v0 = prim->v1 = 0xE1;
+                prim->v2 = prim->v3 = 0xFF;
+                prim->x1 = prim->x3 = var_a2;
+                prim->y0 = prim->y1 = 0xC0;
+                prim->y2 = prim->y3 = 0xE3;
+                prim->priority = 0x40;
+                prim->blendMode = 0;
+                prim = prim->next;
+            }
+            break;
+
+        case 1:
+            var_a2 = 128 - self->posX.i.hi;
+            self->posX.i.hi = 0x80;
+            primIndex = self->primIndex;
+            prim = &g_PrimBuf[self->primIndex];
+            while (prim != NULL) {
+                temp_v0_2 = prim->x2 - var_a2;
+                prim->x0 = prim->x2 = temp_v0_2;
+                prim->x1 = prim->x3 = temp_v0_2 + 0x1E;
+                prim = prim->next;
+            }
+            break;
         }
-        poly = &g_PrimBuf[primIndex];
-        var_a2 = 0;
-        entity->posX.i.hi = 128;
-        entity->primIndex = primIndex;
-        entity->unk68 = 0x10;
-        entity->flags |= FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
-
-        while (poly != 0) {
-            poly->x2 = 0;
-            poly->x0 = poly->x2 = var_a2;
-            var_a2 += 0x1E;
-            poly->tpage = 0xE;
-            poly->clut = 0x67;
-            poly->u2 = 0x61;
-            poly->u0 = 0x61;
-            poly->u3 = 0x7F;
-            poly->u1 = 0x7F;
-            poly->v1 = 0xE1;
-            poly->v0 = 0xE1;
-            poly->v3 = 0xFF;
-            poly->v2 = 0xFF;
-            poly->x1 = poly->x3 = var_a2;
-            poly->y1 = 0xC0;
-            poly->y0 = 0xC0;
-            poly->y3 = 0xE3;
-            poly->y2 = 0xE3;
-            poly->pad2 = 0x40;
-            poly->pad3 = 0;
-            poly = (POLY_GT4*)poly->tag;
-        }
-        break;
-
-    case 1:
-        new_var2 = 0x80 - entity->posX.i.hi;
-        entity->posX.i.hi = 0x80;
-        primIndex = entity->primIndex;
-        poly = &g_PrimBuf[primIndex];
-        while (poly != 0) {
-            temp_v0_2 = poly->x2 - new_var2;
-            temp_v1_2 = temp_v0_2 + 0x1E;
-            poly->x2 = temp_v0_2;
-            poly->x0 = temp_v0_2;
-            poly->x3 = temp_v1_2;
-            poly->x1 = temp_v1_2;
-            poly = (POLY_GT4*)poly->tag;
-        };
-        break;
-    }
+    } while (0);
 }
-#endif
 
 // shows part of the parallax background castle wall
 void EntityBackgroundCastleWall(Entity* entity) {
