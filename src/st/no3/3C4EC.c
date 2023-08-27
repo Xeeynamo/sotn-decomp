@@ -9,7 +9,7 @@ void EntityPushAlucard(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180AD0);
-        g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = true;
+        g_Entities[alucardController].ext.alucardController.unk7C = true;
         g_Player.D_80072EF4 = 0;
         g_Player.D_80072EFC = 255;
         player->posX.i.hi = 0;
