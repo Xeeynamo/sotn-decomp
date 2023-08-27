@@ -122,9 +122,37 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", func_80195758);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", func_801957D4);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", func_8019585C);
+void func_8019585C(Primitive* prim) {
+    prim->p1 = 0;
+    prim->p2 = 0;
+    prim->p3 = 0;
+    prim->next->x1 = 0;
+    prim->next->y1 = 0;
+    prim->next->y0 = 0;
+    prim->next->x0 = 0;
+    prim->next->clut = 0;
+    *(u16*)&prim->next->u0 = 0;
+    *(u16*)&prim->next->b1 = 0;
+    *(u16*)&prim->next->r1 = 0;
+    *(u16*)&prim->next->u1 = 0;
+    prim->next->tpage = 0;
+    *(u16*)&prim->next->r2 = 0;
+    *(u16*)&prim->next->b2 = 0;
+    prim->next->u2 = 0;
+    prim->next->v2 = 0;
+    prim->next->r3 = 0;
+    prim->next->b3 = 0;
+    prim->next->x2 = 0;
+    prim->next->y2 = 0;
+}
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", func_8019593C);
+void func_8019593C(Primitive* prim) {
+    func_8019585C(prim);
+    prim->p3 = 8;
+    prim->next->p3 = 1;
+    prim->next->type = 2;
+    prim->next->blendMode = 0xA;
+}
 
 #include "../unk_poly_func_0.h"
 
