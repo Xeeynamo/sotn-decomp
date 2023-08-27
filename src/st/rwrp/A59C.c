@@ -294,7 +294,12 @@ u8 func_8018DF3C(Entity* arg0, Entity* arg1) {
     return func_8018DF04(x, y);
 }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018DF84);
+s32 func_8018DF84(s32 arg0, s32 arg1) {
+    s16 x = arg0 - g_CurrentEntity->posX.i.hi;
+    s16 y = arg1 - g_CurrentEntity->posY.i.hi;
+
+    return func_8018DF04(x, y);
+}
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018DFCC);
 
