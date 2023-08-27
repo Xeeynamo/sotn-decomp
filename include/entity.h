@@ -282,7 +282,7 @@ typedef struct ET_Succubus {
 } ET_Succubus;
 
 typedef struct {
-    /* 0x7C */ s16 unk7C;
+    /* 0x7C */ u16 timer;
     /* 0x7E */ char pad_7E[2];
     /* 0x80 */ s32 unk80;
 } ET_RoomTransition2;
@@ -415,6 +415,10 @@ typedef struct {
     /* 0x7C */ u16 unk7C;
 } ET_ForegroundTree;
 
+typedef struct {
+    /* 0x7C */ u16 unk7C;
+} ET_DeathStolenItems;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
@@ -450,5 +454,6 @@ typedef union {
     /* 0x7C */ ET_CastleDoorTransition castleDoorTransition;
     /* 0x7C */ ET_AlucardController alucardController;
     /* 0x7C */ ET_ForegroundTree foregroundTree;
+    /* 0x7C */ ET_DeathStolenItems deathStolenItems;
     /* 0x7C */ char stub[0x40];
 } Ext;

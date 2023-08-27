@@ -5,8 +5,6 @@ void EntityRoomTransition2(Entity* self) {
     Primitive* prim;
     // Used as both a loop variable and a temp
     s32 localVar;
-
-    // These are weird fake vars needed for matching
     Entity* gents = g_Entities;
     Unkstruct8* layout = &g_CurrentRoomTileLayout;
 
@@ -24,12 +22,12 @@ void EntityRoomTransition2(Entity* self) {
         D_8003C8B8 = 0;
         g_Player.D_80072EFC = 1;
         D_801D7DD0 |= 0x100;
-        return;
+        break;
+
     case 1:
         // Evil use of local 'gents' instead of PLAYER
-        if (gents[0].posX.i.hi < 0x34) {
-            // Using generic here because I don't know what g_Entities[1] is
-            g_Entities[1].ext.generic.unk7C.S8.unk0 = 1;
+        if (gents->posX.i.hi < 52) {
+            g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = 1;
             g_Player.D_80072EF4 = 0x2000;
         } else {
             g_Player.D_80072EF4 = 0;
@@ -37,7 +35,8 @@ void EntityRoomTransition2(Entity* self) {
             self->step++;
         }
         g_Player.D_80072EFC = 1;
-        return;
+        break;
+
     case 2:
         if (D_801D7DD0 & 0x20) {
             g_api.InitStatsAndGear(1);
@@ -47,18 +46,18 @@ void EntityRoomTransition2(Entity* self) {
                 if (newEntity == NULL) {
                     break;
                 }
-                CreateEntityFromEntity(0x59, gents, newEntity);
+                CreateEntityFromEntity(E_ID_59, gents, newEntity);
                 newEntity->params = localVar;
             }
             g_Player.D_80072EF4 = 0x10000;
-            self->ext.roomTransition2.unk7C = 0x10;
+            self->ext.roomTransition2.timer = 16;
             self->step++;
         }
         g_Player.D_80072EFC = 1;
-        return;
+        break;
+
     case 3:
-        if (D_801D7DD0 & 0x40 &&
-            !(--self->ext.roomTransition2.unk7C & 0xFFFF)) {
+        if (D_801D7DD0 & 0x40 && !(--self->ext.roomTransition2.timer)) {
             localVar = g_api.AllocPrimitives(PRIM_TILE, 1);
             if (localVar != -1) {
                 prim = &g_PrimBuf[localVar];
@@ -73,16 +72,17 @@ void EntityRoomTransition2(Entity* self) {
                 prim->blendMode = 0x35;
                 self->step++;
             } else {
-                self->ext.roomTransition2.unk7C++;
+                self->ext.roomTransition2.timer++;
             }
         }
         g_Player.D_80072EF4 = 0;
         g_Player.D_80072EFC = 1;
-        return;
+        break;
+
     case 4:
         prim = &g_PrimBuf[self->primIndex];
         prim->r0 = prim->g0 = prim->b0 = prim->b0 + 8;
-        if (prim->r0 >= 0xF0) {
+        if (prim->r0 >= 240) {
             self->step++;
             DestroyEntity(&g_Entities[208]);
             g_CurrentRoom.bg[0].D_800730F4 |= 1;
@@ -91,7 +91,8 @@ void EntityRoomTransition2(Entity* self) {
         }
         g_Player.D_80072EF4 = 0;
         g_Player.D_80072EFC = 1;
-        return;
+        break;
+
     case 5:
         prim = &g_PrimBuf[self->primIndex];
         prim->r0 = prim->g0 = prim->b0 = prim->b0 - 8;
@@ -101,17 +102,147 @@ void EntityRoomTransition2(Entity* self) {
             layout->unk40 = 0;
             D_8003C8B8 = 1;
             DestroyEntity(gents);
-            CreateEntityFromCurrentEntity(0x17, gents);
+            CreateEntityFromCurrentEntity(E_ID_17, gents);
         }
         g_Player.D_80072EF4 = 0;
         g_Player.D_80072EFC = 1;
-        return;
+        break;
     }
 }
 
-// shows the sword taken from you by Death. Using a different params shows
-// the other items?
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3FF00", EntityDeathStolenItem);
+/*
+ * Shows the sword taken from you by Death.
+ * Using a different params shows the other items?
+ */
+void EntityDeathStolenItem(Entity* self) {
+    volatile char pad;
+    Primitive* prim;
+    s32 primIndex;
+    u16 itemId;
+    u16 params;
+    u16 temp1;
+    u16 temp3;
+    u16 temp4;
+    u16 temp6;
+    s32 temp2;
+    s32 temp8;
+    u8 temp7;
+    u8 temp5;
+
+    params = self->params;
+    itemId = D_80181AD4[params];
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_80180B00);
+        break;
+
+    case 1:
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
+            break;
+        }
+        self->primIndex = primIndex;
+        self->flags |= FLAG_HAS_PRIMS;
+
+        if (itemId < NUM_HAND_ITEMS) {
+            g_api.LoadEquipIcon(g_api.D_800A4B04[itemId].icon,
+                                g_api.D_800A4B04[itemId].palette, params);
+        } else {
+            itemId -= NUM_HAND_ITEMS;
+            g_api.LoadEquipIcon(g_api.D_800A7718[itemId].icon,
+                                g_api.D_800A7718[itemId].palette, params);
+        }
+
+        prim = &g_PrimBuf[primIndex];
+        prim->tpage = 0x1A;
+        prim->clut = params + 0x1D0;
+        prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
+            prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 =
+                128;
+        prim->priority = 0x80;
+        prim->u0 = prim->u2 = (params & 7) << 4 | 1;
+        prim->u1 = prim->u3 = (params & 7) << 4 | 0xF;
+        prim->v0 = prim->v1 = (params & 0x18) << 1 | 0x81;
+        prim->v2 = prim->v3 = (params & 0x18) << 1 | 0x8F;
+        prim->blendMode = 8;
+        self->step++;
+        break;
+
+    case 2:
+        UnkEntityFunc0(D_80181AEC[params].x, D_80181AEC[params].y);
+        self->ext.deathStolenItems.unk7C = 16;
+        self->step++;
+        break;
+
+    case 3:
+        self->ext.deathStolenItems.unk7C--;
+        temp6 = self->ext.deathStolenItems.unk7C;
+        MoveEntity();
+        temp8 = (16 - temp6) * 7;
+        if (temp8 < 0) {
+            temp8 += 15;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        temp1 = temp8 >> 4;
+        prim->x0 = prim->x2 = self->posX.i.hi - temp1;
+        prim->y0 = prim->y1 = self->posY.i.hi - temp1;
+        prim->blendMode = 6;
+        temp2 = temp1 << 1;
+        prim->x1 = prim->x3 = prim->x0 + temp2;
+        prim->y2 = prim->y3 = prim->y0 + temp2;
+        if (temp6 == 0) {
+            self->ext.deathStolenItems.unk7C = D_80181AE0[params];
+            self->step++;
+        }
+        break;
+
+    case 4:
+        if (--self->ext.deathStolenItems.unk7C == 0) {
+            self->ext.deathStolenItems.unk7C = 8;
+            g_api.PlaySfx(0x7A2);
+            self->step++;
+        }
+
+        prim = &g_PrimBuf[self->primIndex];
+        if (self->ext.deathStolenItems.unk7C & 2) {
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = 192;
+            prim->g0 = prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
+                prim->b2 = prim->b3 = 64;
+        } else {
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
+                prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
+                    prim->b3 = 128;
+        }
+        break;
+
+    case 5:
+        prim = &g_PrimBuf[self->primIndex];
+        prim->y0 = prim->y1 = prim->y1 - 0x20;
+        if (self->ext.deathStolenItems.unk7C >= 2) {
+            temp3 = prim->x2;
+            temp4 = prim->x3;
+            prim->x2 = temp3 + 1;
+            prim->x0 = temp3;
+            prim->x3 = temp4 - 1;
+            prim->x1 = temp4;
+        }
+        if (--self->ext.deathStolenItems.unk7C == 0) {
+            self->ext.deathStolenItems.unk7C = 16;
+            self->step++;
+        }
+        break;
+
+    case 6:
+        prim = &g_PrimBuf[self->primIndex];
+        prim->y2 = prim->y3 = prim->y3 - 0x10;
+        if (--self->ext.deathStolenItems.unk7C == 0) {
+            self->step++;
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3FF00", EntityUnkId5A);
 
