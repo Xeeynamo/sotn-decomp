@@ -408,8 +408,8 @@ typedef struct {
 } ET_CastleDoorTransition;
 
 typedef struct {
-    /* 0x7C */ s8 unk7C;
-} ET_CastleBridge;
+    /* 0x7C */ s8 takeControl;
+} ET_AlucardController;
 
 typedef struct {
     /* 0x7C */ u16 unk7C;
@@ -448,7 +448,7 @@ typedef union {
     /* 0x7C */ ET_TransparentWater transparentWater;
     /* 0x7C */ ET_HeartRoomGoldDoor heartRoomGoldDoor;
     /* 0x7C */ ET_CastleDoorTransition castleDoorTransition;
-    /* 0x7C */ ET_CastleBridge castleBridge;
+    /* 0x7C */ ET_AlucardController alucardController;
     /* 0x7C */ ET_ForegroundTree foregroundTree;
     /* 0x7C */ char stub[0x40];
 } Ext;
