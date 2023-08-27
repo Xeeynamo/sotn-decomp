@@ -29,6 +29,7 @@ EntityIntenseExplosion = 0x80192248;
 ClutLerp = 0x8019344C;
 EntitySoulStealOrb = 0x80194590;
 EntityEnemyBlood = 0x80194924;
+BottomCornerText = 0x80194EC0;
 func_801951F0 = 0x801951F0;
 UnkPolyFunc0 = 0x80195990;
 UnkLoopFunc = 0x801959BC;
