@@ -132,24 +132,17 @@ void EntityUnkId53(Entity* entity) {
 void EntityForegroundTree(Entity* self) {
     Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
     Entity *EntRange, *ent, *ent2;
-    u16* temp_s0;
+    u16* ptrParams;
     u16 temp_s4;
-    s32* var_v1;
     s16 var_s3;
-    s32 var_v0;
-    s32 temp;
     u16 y;
 
     if (self->params != 0) {
-        var_v0 = self->ext.foregroundTree.unk7C;
         var_s3 = 320;
-        var_v1 = &D_80181468;
-        temp_s0 = var_v0 + var_v1;
+        ptrParams = &D_80181468[self->ext.foregroundTree.unk7C].x;
     } else {
-        var_v0 = self->ext.foregroundTree.unk7C;
         var_s3 = 448;
-        var_v1 = &D_801813DC;
-        temp_s0 = var_v0 + var_v1;
+        ptrParams = &D_801813DC[self->ext.foregroundTree.unk7C].x;
     }
 
     switch (self->step) {
@@ -159,22 +152,20 @@ void EntityForegroundTree(Entity* self) {
         self->unk68 = var_s3;
         self->flags |= FLAG_UNK_08000000;
     label:
-        if (*temp_s0 <= 352) {
+        if (*ptrParams <= 352) {
             ent = AllocEntity(EntRange, &EntRange[64]);
             if (ent != NULL) {
                 CreateEntityFromCurrentEntity(E_ID_11, ent);
-                ent->posX.i.hi = *temp_s0;
-                temp_s0++;
-                y = *temp_s0;
+                ent->posX.i.hi = *ptrParams++;
+                y = *ptrParams++;
                 ent->params = (y >> 8) + self->params;
-                ent->unk68 = var_s3;
                 ent->posY.i.hi = y & 255;
-                temp_s0++;
+                ent->unk68 = var_s3;
                 if (self->params != 0) {
                     ent->unk6C = 0x60;
                 }
             } else {
-                temp_s0 += 2;
+                ptrParams += 2;
             }
             self->ext.foregroundTree.unk7C++;
             goto label;
@@ -183,20 +174,16 @@ void EntityForegroundTree(Entity* self) {
 
     case 1:
         self->posX.i.hi = 128;
-        temp = var_s3 * currentRoomTileLayout->unkA;
-        if (temp < 0) {
-            temp += 255;
-        }
-        temp_s4 = (temp >> 8) + 352;
-        if (temp_s4 >= *temp_s0) {
+        temp_s4 = var_s3 * currentRoomTileLayout->unkA / 256 + 352;
+        if (temp_s4 >= *ptrParams) {
             ent = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (ent != NULL) {
                 CreateEntityFromCurrentEntity(E_ID_11, ent);
-                ent->posX.i.hi = temp_s4 - *temp_s0 + 368;
-                y = temp_s0[1];
+                ent->posX.i.hi = temp_s4 - ptrParams[0] + 368;
+                y = ptrParams[1];
                 ent->params = (y >> 8) + self->params;
-                ent->unk68 = var_s3;
                 ent->posY.i.hi = y & 255;
+                ent->unk68 = var_s3;
                 if (self->params != 0) {
                     ent->unk6C = 0x60;
                 } else if (self->ext.foregroundTree.unk7C == 7) {
