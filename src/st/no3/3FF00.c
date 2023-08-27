@@ -115,11 +115,11 @@ void EntityRoomTransition2(Entity* self) {
  * Using a different params shows the other items?
  */
 void EntityDeathStolenItem(Entity* self) {
+    u16 params = self->params;
+    u16 itemId = D_80181AD4[params];
     volatile char pad;
     Primitive* prim;
     s32 primIndex;
-    u16 itemId;
-    u16 params;
     u16 temp1;
     u16 temp3;
     u16 temp4;
@@ -128,9 +128,6 @@ void EntityDeathStolenItem(Entity* self) {
     s32 temp8;
     u8 temp7;
     u8 temp5;
-
-    params = self->params;
-    itemId = D_80181AD4[params];
 
     switch (self->step) {
     case 0:
