@@ -2,14 +2,13 @@
 
 // pushes alucard to the right
 void EntityPushAlucard(Entity* entity) {
-    const int alucardController = 1;
     Entity* player = &PLAYER;
     Unkstruct8* roomLayout = &g_CurrentRoomTileLayout;
 
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180AD0);
-        g_Entities[alucardController].ext.alucardController.unk7C = true;
+        g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = true;
         g_Player.D_80072EF4 = 0;
         g_Player.D_80072EFC = 255;
         player->posX.i.hi = 0;
@@ -21,7 +20,7 @@ void EntityPushAlucard(Entity* entity) {
     case 1:
         player->posX.val += 0x60000;
         if (roomLayout->unkA > 0x800) {
-            g_Entities[alucardController].ext.alucardController.unk7C =
+            g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C =
                 false;
             g_Player.D_80072EF4 = 0x2000;
             entity->step++;
@@ -85,7 +84,6 @@ void EntityPushAlucard(Entity* entity) {
 
 // Pushes Alucard through the castle door at the entrance
 void EntityCastleDoorTransition(Entity* entity) {
-    const int alucardController = 1;
     Entity* player = &PLAYER;
 
     switch (entity->step) {
@@ -95,7 +93,7 @@ void EntityCastleDoorTransition(Entity* entity) {
             return;
         }
         InitializeEntity(D_80180AD0);
-        g_Entities[alucardController].ext.alucardController.unk7C = true;
+        g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = true;
         g_Player.D_80072EF4 = 0x2000;
         g_Player.D_80072EFC = 0xFF;
         player->posX.i.hi = 8;
