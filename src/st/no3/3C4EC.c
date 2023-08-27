@@ -249,6 +249,7 @@ void EntityUnkId52(Entity* self) {
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityUnkId54);
 
+// ID 0x55
 void EntityBackgroundTrees(Entity* self) {
     Primitive* prim;
     s16 primIndex;
