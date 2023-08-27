@@ -84,6 +84,7 @@ EntityStageNamePopup = 0x801C2860;
 EntitySoulStealOrb = 0x801C34E4;
 EntityEnemyBlood = 0x801C3878;
 EntityRoomForeground = 0x801C3D28;
+BottomCornerText = 0x801C3E14;
 EntitySplashWater = 0x801C4DCC;
 EntitySurfacingWater = 0x801C56D8;
 EntitySideWaterSplash = 0x801C5BC4;
