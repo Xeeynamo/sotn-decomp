@@ -411,6 +411,10 @@ typedef struct {
     /* 0x7C */ s8 unk7C;
 } ET_CastleBridge;
 
+typedef struct {
+    /* 0x7C */ u16 unk7C;
+} ET_ForegroundTree;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
@@ -445,5 +449,6 @@ typedef union {
     /* 0x7C */ ET_HeartRoomGoldDoor heartRoomGoldDoor;
     /* 0x7C */ ET_CastleDoorTransition castleDoorTransition;
     /* 0x7C */ ET_CastleBridge castleBridge;
+    /* 0x7C */ ET_ForegroundTree foregroundTree;
     /* 0x7C */ char stub[0x40];
 } Ext;
