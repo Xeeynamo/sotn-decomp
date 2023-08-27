@@ -269,11 +269,11 @@ void EntityUnkId5B(Entity* entity) {
                 break;
             case 3:
                 AnimateEntity(D_80181B4C, entity);
-                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity == NULL) {
                     break;
                 }
-                CreateEntityFromCurrentEntity(0x5E, newEntity);
+                CreateEntityFromCurrentEntity(E_ID_5E, newEntity);
                 newEntity->animCurFrame = entity->animCurFrame;
                 newEntity->params = 1;
                 break;
@@ -324,13 +324,14 @@ void EntityUnkId5E(Entity* entity) {
 void func_801C13F8() {
     Entity* entity;
     s16 temp_s3;
-    s32 i;
     s8 temp_s4;
+    s32 i;
 
     temp_s4 = Random() & 3;
     temp_s3 = ((Random() & 0xF) << 8) - 0x800;
+
     for (i = 0; i < 6; i++) {
-        entity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             CreateEntityFromEntity(0x62, g_CurrentEntity, entity);
             entity->params = 2;
