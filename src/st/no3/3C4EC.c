@@ -81,11 +81,6 @@ void EntityPushAlucard(Entity* entity) {
     }
 }
 
-// Instruction reorder, only matches in PSY-Q 4.0
-// Probably ASPSX
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityUnkId53);
-#else
 void EntityUnkId53(Entity* entity) {
     s32 temp_v0;
     Entity* player = &PLAYER;
@@ -126,7 +121,6 @@ void EntityUnkId53(Entity* entity) {
         break;
     }
 }
-#endif
 
 // large foreground tree during intro
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityForegroundTree);
