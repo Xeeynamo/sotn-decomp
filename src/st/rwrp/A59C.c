@@ -287,7 +287,12 @@ u8 func_8018DF04(s16 arg0, s16 arg1) {
     return (ratan2(arg1, arg0) >> 4) + 0x40;
 }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018DF3C);
+u8 func_8018DF3C(Entity* arg0, Entity* arg1) {
+    s16 x = arg1->posX.i.hi - arg0->posX.i.hi;
+    s16 y = arg1->posY.i.hi - arg0->posY.i.hi;
+
+    return func_8018DF04(x, y);
+}
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018DF84);
 
