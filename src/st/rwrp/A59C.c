@@ -288,7 +288,10 @@ s32 func_8018DE50(u8 arg0, s16 arg1) { return D_80180A94[arg0] * arg1; }
 
 s16 func_8018DE7C(u8 arg0) { return D_80180A94[arg0]; }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018DE98);
+void func_8018DE98(u8 arg0, s16 arg1) {
+    g_CurrentEntity->velocityX = func_8018DE50(arg0, arg1);
+    g_CurrentEntity->velocityY = func_8018DE50((arg0 - 0x40), arg1);
+}
 
 u8 func_8018DF04(s16 arg0, s16 arg1) {
     return (ratan2(arg1, arg0) >> 4) + 0x40;
