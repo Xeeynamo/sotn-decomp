@@ -408,7 +408,7 @@ typedef struct {
 } ET_CastleDoorTransition;
 
 typedef struct {
-    /* 0x7C */ s8 takeControl;
+    /* 0x7C */ s8 unk7C;
 } ET_AlucardController;
 
 typedef struct {
