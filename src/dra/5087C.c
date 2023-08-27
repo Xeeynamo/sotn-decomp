@@ -367,7 +367,7 @@ void func_800F2404(s32 arg0) {
     s32 count;
 
     if (arg0 == 0) {
-        D_80097410 = 0;
+        g_BottomCornerTextTimer = 0;
         D_800973F8 = 0;
         D_800973FC = 0;
     }
@@ -379,12 +379,12 @@ void func_800F2404(s32 arg0) {
     D_8009741C = 0;
     D_8009740C[0] = 0x80;
 
-    if (D_80097410 != 0) {
-        FreePrimitives(D_80097414);
+    if (g_BottomCornerTextTimer != 0) {
+        FreePrimitives(g_BottomCornerTextPrims);
     }
 
-    D_80097410 = 0;
-    D_80097414 = 0;
+    g_BottomCornerTextTimer = 0;
+    g_BottomCornerTextPrims = 0;
     g_zEntityCenter.unk = 148;
     count = 7;
 
