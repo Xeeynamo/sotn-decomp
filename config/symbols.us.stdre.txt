@@ -74,6 +74,7 @@ EntityStageNamePopup = 0x801A0734;
 EntitySoulStealOrb = 0x801A13B8;
 EntityEnemyBlood = 0x801A174C;
 EntityRoomForeground = 0x801A1BFC;
+BottomCornerText = 0x801A1CE8;
 func_801A2018 = 0x801A2018;
 UnkPolyFunc0 = 0x801A27B8;
 UnkLoopFunc = 0x801A27E4;

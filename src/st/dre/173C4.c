@@ -842,7 +842,7 @@ void CollectGold(u16 goldSize) {
         *unk = 0;
     }
 
-    func_801A1CE8(D_801810F4[goldSizeIndex], 1);
+    BottomCornerText(D_801810F4[goldSizeIndex], 1);
     DestroyEntity(g_CurrentEntity);
 }
 
