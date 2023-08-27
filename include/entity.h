@@ -404,6 +404,14 @@ typedef struct {
 } ET_MermanWaterSplash;
 
 typedef struct {
+    /* 0x7C */ s32 playerVelocity;
+} ET_CastleDoorTransition;
+
+typedef struct {
+    /* 0x7C */ s8 unk7C;
+} ET_CastleBridge;
+
+typedef struct {
     /* 0x7C */ u16 unk7C;
 } ET_ForegroundTree;
 
@@ -439,6 +447,8 @@ typedef union {
     /* 0x7C */ ET_801CDFD8 et_801CDFD8;
     /* 0x7C */ ET_TransparentWater transparentWater;
     /* 0x7C */ ET_HeartRoomGoldDoor heartRoomGoldDoor;
+    /* 0x7C */ ET_CastleDoorTransition castleDoorTransition;
+    /* 0x7C */ ET_CastleBridge castleBridge;
     /* 0x7C */ ET_ForegroundTree foregroundTree;
     /* 0x7C */ char stub[0x40];
 } Ext;
