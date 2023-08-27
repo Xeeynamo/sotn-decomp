@@ -15,7 +15,7 @@ void CreateEntityWhenInHorizontalRange(LayoutEntity*);
 void func_8018A520(s16);
 void func_8018CAB0(void);
 void func_801916C4(u16);
-void func_80192F40(u8*, u8);
+void BottomCornerText(u8*, u8);
 
 u32 D_80181420[];
 u32 D_80181764[];
