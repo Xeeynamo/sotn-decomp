@@ -197,8 +197,6 @@ s32 func_8018D880(void) {
     return temp_v1;
 }
 
-// extern s16 PLAYER_posY_i_hi;
-
 s32 func_8018D8BC(void) {
     s32 var_v0 = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
 
@@ -299,7 +297,12 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", UnkEntityFunc0);
 
 u16 func_8018E0B0(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E0E0);
+u16 func_8018E0E0(Entity* arg0, Entity* arg1) {
+    s32 x = arg1->posX.i.hi - arg0->posX.i.hi;
+    s32 y = arg1->posY.i.hi - arg0->posY.i.hi;
+
+    return ratan2(y, x);
+}
 
 u16 func_8018E118(s32 arg0, s32 arg1) {
     s16 x = arg0 - g_CurrentEntity->posX.i.hi;
