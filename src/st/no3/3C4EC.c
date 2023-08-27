@@ -81,26 +81,27 @@ void EntityPushAlucard(Entity* entity) {
     }
 }
 
-void EntityUnkId53(Entity* entity) {
-    s32 temp_v0;
+// Pushes Alucard through the castle door at the entrance
+void EntityCastleDoorTransition(Entity* entity) {
+    const int castleBridge = 1;
     Entity* player = &PLAYER;
 
     switch (entity->step) {
     case 0:
-        if (D_8003BDEC[0x34] != 0) {
+        if (D_8003BDEC[52]) {
             DestroyEntity(entity);
             return;
         }
         InitializeEntity(D_80180AD0);
-        g_Entities[1].ext.generic.unk7C.S8.unk0 = 1;
+        g_Entities[castleBridge].ext.castleBridge.unk7C = 1;
         g_Player.D_80072EF4 = 0x2000;
         g_Player.D_80072EFC = 0xFF;
         player->posX.i.hi = 8;
-        *(s32*)&entity->ext.generic.unk7C.s = 0x28000;
+        entity->ext.castleDoorTransition.playerVelocity = 0x28000;
         break;
 
     case 1:
-        player->posX.val += *(s32*)&entity->ext.generic.unk7C.s;
+        player->posX.val += entity->ext.castleDoorTransition.playerVelocity;
         g_Player.D_80072EFC = 1;
         if ((player->posX.i.hi + g_Camera.posX.i.hi) > 120) {
             g_Player.D_80072EF4 = 0;
@@ -109,14 +110,14 @@ void EntityUnkId53(Entity* entity) {
         break;
 
     case 2:
-        if (*(s32*)&entity->ext.generic.unk7C.s != 0) {
-            *(s32*)&entity->ext.generic.unk7C.s -= 0x2800;
+        if (entity->ext.castleDoorTransition.playerVelocity != 0) {
+            entity->ext.castleDoorTransition.playerVelocity -= 0x2800;
             func_801C8C84(&PLAYER, 1, 1, 4, 0x18, (Random() & 3) + 1, -4);
         } else {
             D_8003C8B8 = 1;
             entity->step++;
         }
-        player->posX.val += *(s32*)&entity->ext.generic.unk7C.s;
+        player->posX.val += entity->ext.castleDoorTransition.playerVelocity;
         g_Player.D_80072EFC = 1;
         break;
     }
@@ -241,7 +242,7 @@ void EntityUnkId52(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityUnkId54);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityCastleBridge);
 
 // regalloc
 #ifndef NON_MATCHING
