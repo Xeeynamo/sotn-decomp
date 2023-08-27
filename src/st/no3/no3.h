@@ -93,6 +93,8 @@ extern u16 D_801813AA;
 extern u16 D_801813AC[];
 extern u16 D_801813AA;
 extern u16 D_801813AC[];
+extern Point16 D_801813DC[];
+extern Point16 D_80181468[];
 extern u16 D_801814EC[];
 extern u16 D_801817F8[];
 extern u8 D_801819D0[];
