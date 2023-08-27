@@ -20,8 +20,7 @@ void EntityPushAlucard(Entity* entity) {
     case 1:
         player->posX.val += 0x60000;
         if (roomLayout->unkA > 0x800) {
-            g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C =
-                false;
+            g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = false;
             g_Player.D_80072EF4 = 0x2000;
             entity->step++;
         }
