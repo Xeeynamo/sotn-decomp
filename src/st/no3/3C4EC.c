@@ -8,7 +8,7 @@ void EntityPushAlucard(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180AD0);
-        g_Entities[UNK_ENTITY_1].ext.generic.unk7C.S8.unk0 = 1;
+        g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = true;
         g_Player.D_80072EF4 = 0;
         g_Player.D_80072EFC = 255;
         player->posX.i.hi = 0;
@@ -20,7 +20,7 @@ void EntityPushAlucard(Entity* entity) {
     case 1:
         player->posX.val += 0x60000;
         if (roomLayout->unkA > 0x800) {
-            g_Entities[UNK_ENTITY_1].ext.generic.unk7C.S8.unk0 = 0;
+            g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = false;
             g_Player.D_80072EF4 = 0x2000;
             entity->step++;
         }
@@ -81,31 +81,26 @@ void EntityPushAlucard(Entity* entity) {
     }
 }
 
-// Instruction reorder, only matches in PSY-Q 4.0
-// Probably ASPSX
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityUnkId53);
-#else
-void EntityUnkId53(Entity* entity) {
-    s32 temp_v0;
+// Pushes Alucard through the castle door at the entrance
+void EntityCastleDoorTransition(Entity* entity) {
     Entity* player = &PLAYER;
 
     switch (entity->step) {
     case 0:
-        if (D_8003BDEC[0x34] != 0) {
+        if (D_8003BDEC[52]) {
             DestroyEntity(entity);
             return;
         }
         InitializeEntity(D_80180AD0);
-        g_Entities[1].ext.generic.unk7C.S8.unk0 = 1;
+        g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = true;
         g_Player.D_80072EF4 = 0x2000;
         g_Player.D_80072EFC = 0xFF;
         player->posX.i.hi = 8;
-        *(s32*)&entity->ext.generic.unk7C.s = 0x28000;
+        entity->ext.castleDoorTransition.playerVelocity = 0x28000;
         break;
 
     case 1:
-        player->posX.val += *(s32*)&entity->ext.generic.unk7C.s;
+        player->posX.val += entity->ext.castleDoorTransition.playerVelocity;
         g_Player.D_80072EFC = 1;
         if ((player->posX.i.hi + g_Camera.posX.i.hi) > 120) {
             g_Player.D_80072EF4 = 0;
@@ -114,19 +109,18 @@ void EntityUnkId53(Entity* entity) {
         break;
 
     case 2:
-        if (*(s32*)&entity->ext.generic.unk7C.s != 0) {
-            *(s32*)&entity->ext.generic.unk7C.s -= 0x2800;
+        if (entity->ext.castleDoorTransition.playerVelocity != 0) {
+            entity->ext.castleDoorTransition.playerVelocity -= 0x2800;
             func_801C8C84(&PLAYER, 1, 1, 4, 0x18, (Random() & 3) + 1, -4);
         } else {
             D_8003C8B8 = 1;
             entity->step++;
         }
-        player->posX.val += *(s32*)&entity->ext.generic.unk7C.s;
+        player->posX.val += entity->ext.castleDoorTransition.playerVelocity;
         g_Player.D_80072EFC = 1;
         break;
     }
 }
-#endif
 
 // large foreground tree during intro
 void EntityForegroundTree(Entity* self) {
@@ -330,7 +324,7 @@ void EntityUnkId52(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityUnkId54);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityCastleBridge);
 
 // ID 0x55
 void EntityBackgroundTrees(Entity* self) {

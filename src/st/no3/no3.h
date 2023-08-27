@@ -36,8 +36,6 @@ typedef enum EntityIDs {
 extern void CreateEntityFromCurrentEntity(u16, Entity*);
 extern void ReplaceBreakableWithItemDrop(Entity*);
 extern s32 func_801C5D18(Entity* entity, s32 arg1, s32 arg2, s32 arg3);
-extern void func_801C8C84(
-    Entity* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u8 arg5, s32 arg6);
 extern POLY_GT4* func_801D6DB8(POLY_GT4* poly);
 
 LayoutEntity* D_80180850[];
