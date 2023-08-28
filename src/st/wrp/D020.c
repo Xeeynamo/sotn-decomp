@@ -477,125 +477,20 @@ void EntityEquipItemDrop(Entity* self) {
 
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", func_8018E01C);
 
-const char* D_80180F84[] = {
+const char* g_RelicOrbTexts[] = {
     "Obtained ",
 };
 
-u16 D_80180F88[] = {16, 12, 8, 4, 0, -4, -8, -12};
-u16 D_80180F98[] = {-32, -26, -20, -13, -7, -1, 5, 12};
-u16 D_80180FA8[] = {-16, -12, -8, -4, 0, 4, 8, 12};
-u16 D_80180FB8[] = {32, 26, 20, 13, 7, 1, -5, -12};
+u16 g_RelicOrbTextBg1EY[] = {16, 12, 8, 4, 0, -4, -8, -12};
+u16 g_RelicOrbTextBg1SY[] = {-32, -26, -20, -13, -7, -1, 5, 12};
+u16 g_RelicOrbTextBg2SY[] = {-16, -12, -8, -4, 0, 4, 8, 12};
+u16 g_RelicOrbTextBg2EY[] = {32, 26, 20, 13, 7, 1, -5, -12};
 u16 g_RelicOrbSparkleX[] = {-8, 4, -2, 8, 0, 4, -4, 2};
 u16 g_RelicOrbSparkleY[] = {-2, 2, 4, -3, 0, 2, -4, 3};
-
-u16 D_80180FE8[] = {
-    /* FE8 */ 0x0010,
-    /* FEA */ 0x0020,
-    /* FEC */ 0x0030,
-    /* FEE */ 0x0040,
-    /* FF0 */ 0x0050,
-    /* FF2 */ 0x0060,
-    /* FF4 */ 0x0070,
-    /* FF6 */ 0x0000,
-};
-
-u16 D_80180FF8[] = {
-    /* FF8 */ 0x0030,
-    /* FFA */ 0x0050,
-    /* FFC */ 0x0080,
-    /* FFE */ 0x00B0,
-    /* 1000 */ 0x00D0,
-    /* 1002 */ 0x0100,
-    /* 1004 */ 0x0100,
-    /* 1006 */ 0x0000,
-};
-
-s32 D_80181008[] = {
-    /* 1008 */ 0x00000400,
-    /* 100C */ 0x00002400,
-    /* 1010 */ 0x00003C00,
-    /* 1014 */ 0x00006000,
-    /* 1018 */ 0x00007800,
-    /* 101C */ 0x0000C000,
-};
-
-s32 D_80181020[] = {
-    /* 1020 */ 0x00000800,
-    /* 1024 */ 0x00002800,
-    /* 1028 */ 0x00004800,
-    /* 102C */ 0x00007000,
-    /* 1030 */ 0x0000E000,
-    /* 1034 */ 0x00012000,
-};
-
-u8 D_80181038[] = {
-    /* 1038 */ 0x01,
-    /* 1039 */ 0x09,
-    /* 103A */ 0x15,
-    /* 103B */ 0x2B,
-};
-
-u16 D_8018103C[] = {
-    /* 103C */ 0x0010,
-    /* 103E */ 0x0018,
-    /* 1040 */ 0x002A,
-    /* 1042 */ 0x002F,
-};
-
-u32 D_80181044[] = {
-    /* 1044 */ 0x00000000,
-    /* 1048 */ 0x000000FF,
-};
-
-u8 D_8018104C[] = {
-    2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1,
-};
-u16 D_8018105C[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8};
-u16 D_8018107C[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8, 0, 0};
-
-u16 D_801810A0[] = {
-    /* 10A0 */ 0x0820,
-    /* 10A2 */ 0x0840,
-    /* 10A4 */ 0x0860,
-    /* 10A6 */ 0x0880,
-    /* 10A8 */ 0x08C0,
-    /* 10AA */ 0x0900,
-    /* 10AC */ 0x0940,
-    /* 10AE */ 0x0A00,
-};
-
-u16 D_801810B0[] = {
-    0xFFFD, 0xFFFD, 0x0008, 0x0008, 0x00D0, 0x0068, 0x00D8, 0x0070,
-    0xFFFD, 0xFFFD, 0x0008, 0x0008, 0x00C8, 0x0068, 0x00D0, 0x0070,
-    0xFFF9, 0xFFF9, 0x0010, 0x000F, 0x00C8, 0x0070, 0x00D8, 0x007F,
-    0xFFF5, 0xFFF5, 0x0018, 0x0017, 0x0080, 0x0068, 0x0098, 0x007F,
-    0xFFF5, 0xFFF5, 0x0018, 0x0017, 0x0098, 0x0068, 0x00B0, 0x007F,
-    0xFFF5, 0xFFF5, 0x0018, 0x0017, 0x00B0, 0x0068, 0x00C8, 0x007F,
-};
-
-u32 D_80181110[] = {
-    /* 1110 */ 0x03030204,
-    /* 1114 */ 0x05030403,
-    /* 1118 */ 0x03030603,
-    /* 111C */ 0x00000000,
-};
-u8 D_80181120[] = {0x40, 0x01, 0xFF, 0x00};
-u8 D_80181124[] = {0x40, 0x02, 0xFF, 0x00};
-u8 D_80181128[] = {0x40, 0x02, 0xFF, 0x00};
-u8 D_8018112C[] = {0x40, 0x01, 0xFF, 0x00};
-u8 D_80181130[] = {0x40, 0x03, 0xFF, 0x00};
-
-ObjInit2 D_80181134[] = {
-    {0x0006, 0x01EC, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_80181120},
-    {0x000C, 0x01EC, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_80181128},
-    {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_8018112C},
-    {0x0006, 0x01EC, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_80181124},
-    {0x000C, 0x01EC, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_80181130},
-    {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_8018112C},
-};
-
-extern u16 g_ItemIconSlots[];
 void EntityRelicOrb(Entity* self) {
+    // prim 0: green rectangle for Obtained text bg
+    // prim 1: blue rectangle for Obtained text bg
+
     const int MaxItemSlots = LEN(g_ItemIconSlots) - 1;
     RECT rect;
     u16 sp28;
@@ -703,10 +598,12 @@ void EntityRelicOrb(Entity* self) {
         }
         self->flags |= FLAG_UNK_10000;
 
+        // Reserve space in the VRAM to store the pre-render texture with the
+        // "obtained" relic message
         rect.x = 0;
-        rect.y = 0x100;
-        rect.w = 0x40;
-        rect.h = 0x10;
+        rect.y = 256;
+        rect.w = 64;
+        rect.h = 16;
         ClearImage(&rect, 0, 0, 0);
 
         prim = &g_PrimBuf[self->primIndex];
@@ -746,9 +643,11 @@ void EntityRelicOrb(Entity* self) {
         break;
 
     case 6:
+        // This case creates the texture "Obtained RELIC_NAME" and stores it
+        // in the VRAM
         var_s0_2 = 0;
         sp28 = 0;
-        msg = D_80180F84[0];
+        msg = g_RelicOrbTexts[0];
         new_var2 = &D_8007EFE4;
         var_v0_5 = (u8*)new_var2;
         for (i = 0; i < 0xC00; i++) {
@@ -775,6 +674,7 @@ void EntityRelicOrb(Entity* self) {
         break;
 
     case 7:
+        // Animates the blue/green rectangle for the Obtain text bg
         prim = g_PrimBuf[self->primIndex].next;
         for (i = 0; i < 2; i++) {
             if (i == 0) {
@@ -806,16 +706,16 @@ void EntityRelicOrb(Entity* self) {
                 prim->x0 = 0x80 + (temp_a1_2 + 1) * 0xC;
                 prim->x2 = 0x68 + (temp_a1_2 * 0x78) / 7;
                 prim->x3 = 0x98 - (temp_a1_2 * 0x78) / 7;
-                prim->y0 = prim->y1 = D_80180F98[temp_a1_2] + 0xA7;
-                prim->y2 = prim->y3 = D_80180F88[temp_a1_2] + 0xA7;
+                prim->y0 = prim->y1 = g_RelicOrbTextBg1SY[temp_a1_2] + 0xA7;
+                prim->y2 = prim->y3 = g_RelicOrbTextBg1EY[temp_a1_2] + 0xA7;
                 prim->b2 = prim->b3 = prim->b3 - 0x10;
             } else {
                 prim->x0 = 0x68 + (temp_a1_2 * 0x78) / 7;
                 prim->x1 = 0x98 - (temp_a1_2 * 0x78) / 7;
                 prim->x3 = 0x80 - (temp_a1_2 + 1) * 0xC;
                 prim->x2 = 0x80 + (temp_a1_2 + 1) * 0xC;
-                prim->y0 = prim->y1 = D_80180FA8[temp_a1_2] + 0xA7;
-                prim->y2 = prim->y3 = D_80180FB8[temp_a1_2] + 0xA7;
+                prim->y0 = prim->y1 = g_RelicOrbTextBg2SY[temp_a1_2] + 0xA7;
+                prim->y2 = prim->y3 = g_RelicOrbTextBg2EY[temp_a1_2] + 0xA7;
                 prim->g0 = prim->g1 = prim->g1 - 0x10;
             }
             prim = prim->next;
@@ -1011,6 +911,16 @@ void func_8018F510(Entity* entity) {
     }
 }
 
+u16 D_80180FE8[] = {
+    /* FE8 */ 0x0010,
+    /* FEA */ 0x0020,
+    /* FEC */ 0x0030,
+    /* FEE */ 0x0040,
+    /* FF0 */ 0x0050,
+    /* FF2 */ 0x0060,
+    /* FF4 */ 0x0070,
+    /* FF6 */ 0x0000,
+};
 void func_8018F620(
     Entity* self, u8 count, u8 params, s32 x, s32 y, u8 arg5, s16 xGap) {
     Entity* newEntity;
@@ -1065,9 +975,48 @@ void func_8018F750(
 }
 #endif
 
-s32 D_80181020[];
-u8 D_80181038[];
-u16 D_8018103C[];
+u16 D_80180FF8[] = {
+    /* FF8 */ 0x0030,
+    /* FFA */ 0x0050,
+    /* FFC */ 0x0080,
+    /* FFE */ 0x00B0,
+    /* 1000 */ 0x00D0,
+    /* 1002 */ 0x0100,
+    /* 1004 */ 0x0100,
+    /* 1006 */ 0x0000,
+};
+
+s32 D_80181008[] = {
+    /* 1008 */ 0x00000400,
+    /* 100C */ 0x00002400,
+    /* 1010 */ 0x00003C00,
+    /* 1014 */ 0x00006000,
+    /* 1018 */ 0x00007800,
+    /* 101C */ 0x0000C000,
+};
+
+s32 D_80181020[] = {
+    /* 1020 */ 0x00000800,
+    /* 1024 */ 0x00002800,
+    /* 1028 */ 0x00004800,
+    /* 102C */ 0x00007000,
+    /* 1030 */ 0x0000E000,
+    /* 1034 */ 0x00012000,
+};
+
+u8 D_80181038[] = {
+    /* 1038 */ 0x01,
+    /* 1039 */ 0x09,
+    /* 103A */ 0x15,
+    /* 103B */ 0x2B,
+};
+
+u16 D_8018103C[] = {
+    /* 103C */ 0x0010,
+    /* 103E */ 0x0018,
+    /* 1040 */ 0x002A,
+    /* 1042 */ 0x002F,
+};
 void func_8018F838(Entity* entity) {
     if (entity->step == 0) {
         entity->velocityY = D_80181020[entity->ext.generic.unk94];
@@ -1091,8 +1040,6 @@ void func_8018F838(Entity* entity) {
     }
 }
 
-u16 D_80180FF8[];
-s32 D_80181008[];
 void func_8018F928(Entity* arg0) {
     u16 temp_v0;
 
@@ -1120,6 +1067,10 @@ void func_8018F928(Entity* arg0) {
     }
 }
 
+u32 D_80181044[] = {
+    /* 1044 */ 0x00000000,
+    /* 1048 */ 0x000000FF,
+};
 void func_8018FA1C(Entity* self) {
     s16 primIndex;
     Primitive* prim;
@@ -1406,7 +1357,9 @@ void EntityIntenseExplosion(Entity* entity) {
     }
 }
 
-u8 D_8018104C[];
+u8 D_8018104C[] = {
+    2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1,
+};
 void func_801903C8(Entity* entity) {
     if (entity->step == 0) {
         InitializeEntity(D_80180458);
@@ -1472,7 +1425,8 @@ void func_8019055C(void) {
     }
 }
 
-u8 D_80180EEC[];
+extern u8 D_80180EEC[];
+u16 D_8018105C[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8};
 void func_80190614(Entity* self) {
     s32 velocityX;
     s32 velocityY;
@@ -1530,6 +1484,7 @@ void func_80190614(Entity* self) {
 
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", func_801907EC);
 
+u16 D_8018107C[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8, 0, 0};
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", func_80190DCC);
 
 void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
@@ -1658,6 +1613,32 @@ void func_801917BC(Primitive* prim) {
 
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", EntityStageNamePopup);
 
+u16 D_801810A0[] = {
+    /* 10A0 */ 0x0820,
+    /* 10A2 */ 0x0840,
+    /* 10A4 */ 0x0860,
+    /* 10A6 */ 0x0880,
+    /* 10A8 */ 0x08C0,
+    /* 10AA */ 0x0900,
+    /* 10AC */ 0x0940,
+    /* 10AE */ 0x0A00,
+};
+
+u16 D_801810B0[] = {
+    0xFFFD, 0xFFFD, 0x0008, 0x0008, 0x00D0, 0x0068, 0x00D8, 0x0070,
+    0xFFFD, 0xFFFD, 0x0008, 0x0008, 0x00C8, 0x0068, 0x00D0, 0x0070,
+    0xFFF9, 0xFFF9, 0x0010, 0x000F, 0x00C8, 0x0070, 0x00D8, 0x007F,
+    0xFFF5, 0xFFF5, 0x0018, 0x0017, 0x0080, 0x0068, 0x0098, 0x007F,
+    0xFFF5, 0xFFF5, 0x0018, 0x0017, 0x0098, 0x0068, 0x00B0, 0x007F,
+    0xFFF5, 0xFFF5, 0x0018, 0x0017, 0x00B0, 0x0068, 0x00C8, 0x007F,
+};
+
+u32 D_80181110[] = {
+    /* 1110 */ 0x03030204,
+    /* 1114 */ 0x05030403,
+    /* 1118 */ 0x03030603,
+    /* 111C */ 0x00000000,
+};
 // The white flying orbs of energy that Alucard summons as part of the Soul
 // Steal spell
 void EntitySoulStealOrb(Entity* self) {
@@ -1746,7 +1727,19 @@ void EntitySoulStealOrb(Entity* self) {
 
 #include "../entity_enemy_blood.h"
 
-ObjInit2 D_80181134[];
+u8 D_80181120[] = {0x40, 0x01, 0xFF, 0x00};
+u8 D_80181124[] = {0x40, 0x02, 0xFF, 0x00};
+u8 D_80181128[] = {0x40, 0x02, 0xFF, 0x00};
+u8 D_8018112C[] = {0x40, 0x01, 0xFF, 0x00};
+u8 D_80181130[] = {0x40, 0x03, 0xFF, 0x00};
+ObjInit2 D_80181134[] = {
+    {0x0006, 0x01EC, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_80181120},
+    {0x000C, 0x01EC, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_80181128},
+    {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_8018112C},
+    {0x0006, 0x01EC, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_80181124},
+    {0x000C, 0x01EC, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_80181130},
+    {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_8018112C},
+};
 u16 D_80180494[];
 void EntityRoomForeground(Entity* entity) {
     ObjInit2* objInit = &D_80181134[entity->params];
