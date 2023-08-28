@@ -424,8 +424,8 @@ typedef struct {
     /* 0x7E */ char pad_7E[0x2];
     /* 0x80 */ s16 posX;
     /* 0x82 */ s16 posY;
-    /* 0x84 */ u16 unk84;
-    /* 0x86 */ u16 unk86;
+    /* 0x84 */ u16 moveTimer;
+    /* 0x86 */ u16 moveDirection;
 } ET_Death;
 
 typedef union {

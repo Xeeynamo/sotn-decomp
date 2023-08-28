@@ -249,18 +249,18 @@ void EntityDeath(Entity* self) {
     s32 i;
 
     if ((self->step >= 4) && (self->step < 13)) {
-        if (self->ext.death.unk84 != 0) {
-            self->ext.death.unk84--;
+        if (self->ext.death.moveTimer != 0) {
+            self->ext.death.moveTimer--;
         } else {
-            if (self->ext.death.unk86 != 0) {
-                self->ext.death.unk86 = 0;
+            if (self->ext.death.moveDirection != 0) {
+                self->ext.death.moveDirection = 0;
             } else {
-                self->ext.death.unk86 = 1;
+                self->ext.death.moveDirection = 1;
             }
-            self->ext.death.unk84 = 127;
+            self->ext.death.moveTimer = 127;
         }
 
-        if (self->ext.death.unk86 != 0) {
+        if (self->ext.death.moveDirection != 0) {
             self->velocityY += 0x200;
         } else {
             self->velocityY -= 0x200;
@@ -370,8 +370,8 @@ void EntityDeath(Entity* self) {
         if (AnimateEntity(D_80181BE0, self) == 0) {
             SetStep(4);
             g_api.PlaySfx(0x7A1);
-            self->ext.death.unk84 = 64;
-            self->ext.death.unk86 = 0;
+            self->ext.death.moveTimer = 64;
+            self->ext.death.moveDirection = 0;
         }
         self->posX.i.hi = self->ext.death.posX;
         self->posY.i.hi = self->ext.death.posY - 16;
@@ -520,7 +520,7 @@ void EntityDeath(Entity* self) {
             g_api.PlaySfx(0x7A1);
             self->velocityX = FIX(1.0);
             self->velocityY = FIX(5.0);
-            self->ext.death.unk84 = 0;
+            self->ext.death.moveTimer = 0;
         }
 
         if (self->animCurFrame != 1) {
@@ -538,7 +538,7 @@ void EntityDeath(Entity* self) {
             newEntity->ext.death.unk7C = 2;
         }
 
-        if ((self->ext.death.unk84 & 3) == 0) {
+        if ((self->ext.death.moveTimer & 3) == 0) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_ID_5E, newEntity);
@@ -547,7 +547,7 @@ void EntityDeath(Entity* self) {
             }
             newEntity->ext.death.unk7C = 3;
         }
-        self->ext.death.unk84++;
+        self->ext.death.moveTimer++;
 
         if (self->posY.i.hi < -32) {
             D_801D7DD0 |= 0x40;
