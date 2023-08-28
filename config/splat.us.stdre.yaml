@@ -44,6 +44,8 @@ segments:
       - [0x11808, .rodata, 14774]
       - [0x1181C, rodata]
       - [0x118D0, rodata]
+      - [0x11910, .rodata, 1697C] # EntityFadeToWhite
+      - [0x1193C, rodata]
       - [0x119C4, .rodata, 1C7DC]
       - [0x119DC, rodata]
       - [0x11A64, c, 11A64]

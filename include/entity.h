@@ -417,6 +417,12 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ u16 unk7C;
+    /* 0x7E */ u16 unk7E;
+    /* 0x80 */ s16 unk80;
+} ET_FadeToWhite;
+
+typedef struct {
+    /* 0x7C */ u16 unk7C;
 } ET_DeathStolenItems;
 
 typedef union {
@@ -454,6 +460,7 @@ typedef union {
     /* 0x7C */ ET_CastleDoorTransition castleDoorTransition;
     /* 0x7C */ ET_AlucardController alucardController;
     /* 0x7C */ ET_ForegroundTree foregroundTree;
+    /* 0x7C */ ET_FadeToWhite fadeToWhite;
     /* 0x7C */ ET_DeathStolenItems deathStolenItems;
     /* 0x7C */ char stub[0x40];
 } Ext;

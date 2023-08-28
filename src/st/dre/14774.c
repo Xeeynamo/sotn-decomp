@@ -141,5 +141,3 @@ INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", EntityUnkId21);
 
 // appears to load from the CD and freeze the game
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", EntityUnkId23);
-
-
