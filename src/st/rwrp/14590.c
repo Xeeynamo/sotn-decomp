@@ -110,7 +110,7 @@ void func_80194DD4(Entity* entity) {
     func_8018D6B0(objInit->unk10, entity);
 }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", func_80194EC0);
+INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", BottomCornerText);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", func_801951F0);
 
