@@ -204,7 +204,7 @@ s32 func_8018D880(void) {
     return temp_v1;
 }
 
-s32 func_8018D8BC(void) {
+s32 GetDistanceToPlayerY(void) {
     s32 var_v0 = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
 
     if (var_v0 < 0) {
