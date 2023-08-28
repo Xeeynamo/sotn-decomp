@@ -679,7 +679,7 @@ void EntityRelicOrb(Entity* self) {
             }
         }
         self->posY.i.lo = -0x8000;
-        self->velocityY = 0x4000;
+        self->velocityY = FIX(0.25);
         self->ext.relicOrb.unk90 = 0x40;
         self->ext.relicOrb.unk94 = -0x200;
         break;
