@@ -110,10 +110,7 @@ void EntityRoomTransition2(Entity* self) {
     }
 }
 
-/*
- * Shows the sword taken from you by Death.
- * Using a different params shows the other items?
- */
+// Displays items took by Death in the cutscene
 void EntityDeathStolenItem(Entity* self) {
     u16 params = self->params;
     u16 itemId = D_80181AD4[params];
