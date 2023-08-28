@@ -137,7 +137,7 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018C72C);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018C7E0);
 
-void func_8018C854(u16 entityId, Entity* source, Entity* entity) {
+void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
     entity->entityId = entityId;
     entity->pfnUpdate = D_801803E0[entityId];
@@ -359,7 +359,7 @@ void SetStep(u8 step) {
     g_CurrentEntity->animFrameDuration = 0;
 }
 
-void func_8018E1E0(u8 step_s) {
+void SetSubStep(u8 step_s) {
     g_CurrentEntity->step_s = step_s;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
@@ -369,7 +369,7 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E1FC);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", InitializeEntity);
 
-void func_8018E38C(Entity* entity) {
+void EntityDummy(Entity* entity) {
     if (entity->step == 0) {
         entity->step = (u16)(entity->step + 1);
     }
@@ -446,13 +446,13 @@ void CollectSubweapon(u16 subWeaponIdx) {
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018EE84);
 
-void func_8018EF28(void) {
+void CollectLifeVessel(void) {
     g_api_PlaySfx(NA_SE_PL_COLLECT_HEART);
     g_api_func_800FE044(5, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
 
-void func_8018EF78(void) { DestroyEntity(g_CurrentEntity); }
+void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", EntityPrizeDrop);
 
