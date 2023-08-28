@@ -127,6 +127,7 @@ extern u8 D_80181BE0[];
 
 extern u8 D_80181B40[];
 extern u8 D_80181B4C[];
+extern Unkstruct_80180FE0 D_80181C5C[];
 extern u16 D_80181C8C[];
 extern u16 UNK_Invincibility0[];
 extern s16 D_801820C4[];

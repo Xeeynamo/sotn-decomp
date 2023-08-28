@@ -657,8 +657,6 @@ void func_801C13F8() {
     }
 }
 
-extern Unkstruct_80180FE0 D_80181C5C[];
-
 // A single "puff" of the warg explosion animation, opaque
 void EntityWargExplosionPuffOpaque(Entity* self) {
     Unkstruct_80180FE0* obj;
