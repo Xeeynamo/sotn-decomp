@@ -648,7 +648,7 @@ void func_801C13F8() {
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(0x62, g_CurrentEntity, entity);
+            CreateEntityFromEntity(E_ID_62, g_CurrentEntity, entity);
             entity->params = 2;
             entity->ext.generic.unk88.S8.unk1 = 6 - i;
             entity->ext.generic.unk84.S16.unk0 = temp_s3;
