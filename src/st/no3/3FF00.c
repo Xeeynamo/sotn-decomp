@@ -238,7 +238,325 @@ void EntityDeathStolenItem(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3FF00", EntityUnkId5A);
+const s32 rodata_padding_801B7510 = 0;
+
+void EntityDeath(Entity* self) {
+    Entity* newEntity = &self[1];
+    Primitive* prim;
+    s16 left, right;
+    s32 primIndex;
+    s32 x, y;
+    s32 i;
+
+    if ((self->step >= 4) && (self->step < 13)) {
+        if (self->ext.death.moveTimer != 0) {
+            self->ext.death.moveTimer--;
+        } else {
+            if (self->ext.death.moveDirection != 0) {
+                self->ext.death.moveDirection = 0;
+            } else {
+                self->ext.death.moveDirection = 1;
+            }
+            self->ext.death.moveTimer = 127;
+        }
+
+        if (self->ext.death.moveDirection != 0) {
+            self->velocityY += 0x200;
+        } else {
+            self->velocityY -= 0x200;
+        }
+        MoveEntity();
+    }
+
+    if ((self->step >= 13) && (self->step < 18)) {
+        if (self->velocityY != 0) {
+            if (self->velocityY < 0) {
+                self->velocityY += 0x200;
+            } else {
+                self->velocityY -= 0x200;
+            }
+            MoveEntity();
+        }
+    }
+
+    if (self->step >= 19) {
+        self->velocityX -= 0xC00;
+        self->velocityY -= FIX(0.15625);
+        MoveEntity();
+    }
+
+    switch (self->step) {
+    case 0:
+        if (D_801D7DD0 & 0x80) {
+            primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+            if (primIndex != -1) {
+                InitializeEntity(D_80180B00);
+                self->animSet = ANIMSET_OVL(8);
+                self->palette = 0x2D6;
+                self->unk5A = 0x44;
+                self->primIndex = primIndex;
+                self->animCurFrame = 0;
+                self->ext.death.unk7C = 0;
+                self->flags |= FLAG_HAS_PRIMS;
+                DestroyEntity(newEntity);
+                CreateEntityFromCurrentEntity(E_ID_5B, newEntity);
+                prim = &g_PrimBuf[primIndex];
+
+                for (i = 0; prim != NULL; i++) {
+                    if (i != 0) {
+                        prim->clut = self->palette;
+                        prim->blendMode = 0x35;
+                    } else {
+                        prim->clut = 0x15F;
+                        prim->blendMode = 0x55;
+                    }
+                    prim->tpage = self->unk5A >> 2;
+                    prim->u0 = prim->u2 = 0x10;
+                    prim->u1 = prim->u3 = 0x38;
+                    prim->v0 = prim->v1 = 0xB0;
+                    prim->v2 = prim->v3 = 0xFF;
+                    prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 =
+                        prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
+                            prim->b2 = prim->b3 = 0;
+                    prim->priority = self->zPriority + i + 1;
+                    prim = prim->next;
+                }
+            }
+        }
+        break;
+
+    case 1:
+        if (AnimateEntity(D_80181BC8, self) == 0) {
+            SetStep(2);
+            self->unk19 = 4;
+            self->rotAngle = 0x1000;
+            self->posY.i.hi += 16;
+            self->animCurFrame = 0x3A;
+            self->ext.death.posX = self->posX.i.hi;
+            self->ext.death.posY = self->posY.i.hi;
+        }
+        break;
+
+    case 2:
+        self->rotAngle -= 0x40;
+        if (self->rotAngle == 0) {
+            SetStep(3);
+            self->unk19 = 0;
+        }
+
+        x = (0x1000 - self->rotAngle) * 0x1D;
+        if (x < 0) {
+            x += 0xFFF;
+        }
+        self->posX.i.hi = self->ext.death.posX + (x >> 0xC);
+
+        y = (0x1000 - self->rotAngle) * 0x28;
+        if (y < 0) {
+            y += 0xFFF;
+        }
+        self->posY.i.hi = self->ext.death.posY - (y >> 0xC);
+
+        if (!(self->rotAngle & 0x70)) {
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (newEntity != 0) {
+                CreateEntityFromCurrentEntity(E_ID_5E, newEntity);
+                newEntity->rotAngle = self->rotAngle;
+                newEntity->animCurFrame = 0x3A;
+            }
+        }
+        break;
+
+    case 3:
+        if (AnimateEntity(D_80181BE0, self) == 0) {
+            SetStep(4);
+            g_api.PlaySfx(0x7A1);
+            self->ext.death.moveTimer = 64;
+            self->ext.death.moveDirection = 0;
+        }
+        self->posX.i.hi = self->ext.death.posX;
+        self->posY.i.hi = self->ext.death.posY - 16;
+        break;
+
+    case 4:
+        prim = &g_PrimBuf[self->primIndex];
+        self->ext.death.unk7C += 4;
+        if (self->ext.death.unk7C == 96) {
+            D_801D7DD0 |= 1;
+        }
+
+        if (self->ext.death.unk7C == 128) {
+            while (prim != NULL) {
+                prim->blendMode = 8;
+                prim = prim->next;
+            }
+            self->animCurFrame = 16;
+            self->ext.death.unk7C = 32;
+            SetStep(5);
+            break;
+        }
+
+        while (prim != NULL) {
+            left = self->posX.i.hi - 14;
+            right = self->posX.i.hi + 26;
+            prim->x0 = prim->x2 = left;
+            prim->x1 = prim->x3 = right;
+            left = self->posY.i.hi - 40;
+            right = self->posY.i.hi + 39;
+            prim->y0 = prim->y1 = left;
+            prim->y2 = prim->y3 = right;
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
+                prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
+                    prim->b3 = self->ext.death.unk7C;
+            prim = prim->next;
+        }
+        break;
+
+    case 5:
+        AnimateEntity(D_80181B34, self);
+        if (--self->ext.death.unk7C == 0) {
+            SetStep(6);
+        }
+        break;
+
+    case 6:
+        AnimateEntity(D_80181B28, self);
+        if (D_801D7DD0 & 2) {
+            SetStep(7);
+        }
+        break;
+
+    case 7:
+        if (AnimateEntity(D_80181B04, self) == 0) {
+            SetStep(8);
+        }
+        if ((self->animCurFrame >= 7) && (self->animCurFrame < 11)) {
+            newEntity->ext.death.unk7C = 2;
+        } else {
+            newEntity->ext.death.unk7C = 1;
+        }
+
+        if (D_801D7DD0 & 4) {
+            SetStep(9);
+        }
+        break;
+
+    case 8:
+        AnimateEntity(D_80181B28, self);
+        if (D_801D7DD0 & 4) {
+            SetStep(9);
+        }
+        break;
+
+    case 9:
+        if (AnimateEntity(D_80181BB4, self) == 0) {
+            SetStep(10);
+        }
+        newEntity->ext.death.unk7C = 1;
+
+        if (D_801D7DD0 & 8) {
+            SetStep(11);
+        }
+        break;
+
+    case 10:
+        AnimateEntity(D_80181B28, self);
+        if (D_801D7DD0 & 8) {
+            SetStep(11);
+        }
+        break;
+
+    case 11:
+        if (AnimateEntity(D_80181B94, self) == 0) {
+            SetStep(12);
+        }
+        newEntity->ext.death.unk7C = 1;
+
+        if (D_801D7DD0 & 0x10) {
+            SetStep(13);
+        }
+        break;
+
+    case 12:
+        AnimateEntity(D_80181B28, self);
+        if (D_801D7DD0 & 0x10) {
+            SetStep(13);
+        }
+        break;
+
+    case 13:
+        if (AnimateEntity(D_80181B58, self) == 0) {
+            SetStep(14);
+        }
+        newEntity->ext.death.unk7C = 1;
+        break;
+
+    case 14:
+        if (AnimateEntity(D_80181B68, self) == 0) {
+            g_api.PlaySfx(0x7A0);
+            SetStep(15);
+        }
+        break;
+
+    case 15:
+        if (AnimateEntity(D_80181B70, self) == 0) {
+            SetStep(16);
+            D_801D7DD0 |= 0x20;
+        }
+        break;
+
+    case 16:
+        if (AnimateEntity(D_80181B74, self) == 0) {
+            SetStep(18);
+        }
+
+        if (self->animCurFrame != 30) {
+            newEntity->ext.death.unk7C = 1;
+        }
+        break;
+
+    case 18:
+        if (AnimateEntity(D_80181B84, self) == 0) {
+            SetStep(19);
+            g_api.PlaySfx(0x7A1);
+            self->velocityX = FIX(1.0);
+            self->velocityY = FIX(5.0);
+            self->ext.death.moveTimer = 0;
+        }
+
+        if (self->animCurFrame != 1) {
+            newEntity->ext.death.unk7C = 2;
+        } else {
+            newEntity->ext.death.unk7C = 1;
+        }
+        break;
+
+    case 19:
+        AnimateEntity(D_80181B8C, self);
+        if (self->animCurFrame == 1) {
+            newEntity->ext.death.unk7C = 1;
+        } else {
+            newEntity->ext.death.unk7C = 2;
+        }
+
+        if ((self->ext.death.moveTimer & 3) == 0) {
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (newEntity != NULL) {
+                CreateEntityFromCurrentEntity(E_ID_5E, newEntity);
+                newEntity->animCurFrame = self->animCurFrame;
+                newEntity->params = 1;
+            }
+            newEntity->ext.death.unk7C = 3;
+        }
+        self->ext.death.moveTimer++;
+
+        if (self->posY.i.hi < -32) {
+            D_801D7DD0 |= 0x40;
+            DestroyEntity(self);
+            DestroyEntity(&self[1]);
+        }
+        break;
+    }
+}
 
 void EntityUnkId5B(Entity* entity) {
     Entity* newEntity;
