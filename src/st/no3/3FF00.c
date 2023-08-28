@@ -113,7 +113,7 @@ void EntityRoomTransition2(Entity* self) {
 // the other items?
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3FF00", EntityDeathStolenItem);
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3FF00", EntityUnkId5A);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/3FF00", EntityDeath);
 
 void EntityUnkId5B(Entity* entity) {
     Entity* newEntity;
