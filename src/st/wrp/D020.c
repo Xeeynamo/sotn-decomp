@@ -698,7 +698,7 @@ void EntityRelicOrb(Entity* self) {
 
     case 5:
         g_api.func_800FE044(relicId, 0x2000);
-        if (relicId > 0x15 && relicId < 0x14) {
+        if (relicId > RELIC_DEMON_CARD && relicId < RELIC_FAERIE_CARD) {
             g_Status.relics[relicId] = g_Status.relics[relicId] ^ 2;
         }
         self->flags |= FLAG_UNK_10000;
