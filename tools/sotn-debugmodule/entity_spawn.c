@@ -31,7 +31,7 @@ EntityDef g_StageEntities[] = {
     ENTITY_NONE,                        // STAGE_TOP
     ENTITY_DEF(0x80180A94, 0x80180BC4), // STAGE_NZ0
     ENTITY_NONE,                        // STAGE_NZ1
-    ENTITY_NONE,                        // STAGE_WRP
+    ENTITY_DEF(0x801803E4, 0x80180440), // STAGE_WRP
     ENTITY_NONE,                        // STAGE_NO1_ALT
     ENTITY_NONE,                        // STAGE_NO0_ALT
     ENTITY_NONE,                        //
