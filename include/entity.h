@@ -415,6 +415,20 @@ typedef struct {
     /* 0x7C */ u16 unk7C;
 } ET_ForegroundTree;
 
+typedef struct {
+    u16 unk7C;
+    u16 unk7E;
+    u16 unk80;
+    u16 unk82;
+    u32 unk84;
+    u32 unk88;
+    s16 unk8C;
+    u16 unk8E;
+    u16 unk90;
+    u16 unk92;
+    s32 unk94;
+} ET_RelicOrb;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
@@ -450,5 +464,6 @@ typedef union {
     /* 0x7C */ ET_CastleDoorTransition castleDoorTransition;
     /* 0x7C */ ET_AlucardController alucardController;
     /* 0x7C */ ET_ForegroundTree foregroundTree;
+    /* 0x7C */ ET_RelicOrb relicOrb;
     /* 0x7C */ char stub[0x40];
 } Ext;

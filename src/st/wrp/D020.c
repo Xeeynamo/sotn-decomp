@@ -477,7 +477,450 @@ void EntityEquipItemDrop(Entity* self) {
 
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", func_8018E01C);
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", EntityRelicOrb);
+const char* D_80180F84[] = {
+    "Obtained ",
+};
+
+u16 D_80180F88[] = {16, 12, 8, 4, 0, -4, -8, -12};
+u16 D_80180F98[] = {-32, -26, -20, -13, -7, -1, 5, 12};
+u16 D_80180FA8[] = {-16, -12, -8, -4, 0, 4, 8, 12};
+u16 D_80180FB8[] = {32, 26, 20, 13, 7, 1, -5, -12};
+u16 D_80180FC8[] = {-8, 4, -2, 8, 0, 4, -4, 2};
+u16 D_80180FD8[] = {-2, 2, 4, -3, 0, 2, -4, 3};
+
+u16 D_80180FE8[] = {
+    /* FE8 */ 0x0010,
+    /* FEA */ 0x0020,
+    /* FEC */ 0x0030,
+    /* FEE */ 0x0040,
+    /* FF0 */ 0x0050,
+    /* FF2 */ 0x0060,
+    /* FF4 */ 0x0070,
+    /* FF6 */ 0x0000,
+};
+
+u16 D_80180FF8[] = {
+    /* FF8 */ 0x0030,
+    /* FFA */ 0x0050,
+    /* FFC */ 0x0080,
+    /* FFE */ 0x00B0,
+    /* 1000 */ 0x00D0,
+    /* 1002 */ 0x0100,
+    /* 1004 */ 0x0100,
+    /* 1006 */ 0x0000,
+};
+
+s32 D_80181008[] = {
+    /* 1008 */ 0x00000400,
+    /* 100C */ 0x00002400,
+    /* 1010 */ 0x00003C00,
+    /* 1014 */ 0x00006000,
+    /* 1018 */ 0x00007800,
+    /* 101C */ 0x0000C000,
+};
+
+s32 D_80181020[] = {
+    /* 1020 */ 0x00000800,
+    /* 1024 */ 0x00002800,
+    /* 1028 */ 0x00004800,
+    /* 102C */ 0x00007000,
+    /* 1030 */ 0x0000E000,
+    /* 1034 */ 0x00012000,
+};
+
+u8 D_80181038[] = {
+    /* 1038 */ 0x01,
+    /* 1039 */ 0x09,
+    /* 103A */ 0x15,
+    /* 103B */ 0x2B,
+};
+
+u16 D_8018103C[] = {
+    /* 103C */ 0x0010,
+    /* 103E */ 0x0018,
+    /* 1040 */ 0x002A,
+    /* 1042 */ 0x002F,
+};
+
+u32 D_80181044[] = {
+    /* 1044 */ 0x00000000,
+    /* 1048 */ 0x000000FF,
+};
+
+u8 D_8018104C[] = {
+    2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1,
+};
+u16 D_8018105C[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8};
+u16 D_8018107C[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8, 0, 0};
+
+u16 D_801810A0[] = {
+    /* 10A0 */ 0x0820,
+    /* 10A2 */ 0x0840,
+    /* 10A4 */ 0x0860,
+    /* 10A6 */ 0x0880,
+    /* 10A8 */ 0x08C0,
+    /* 10AA */ 0x0900,
+    /* 10AC */ 0x0940,
+    /* 10AE */ 0x0A00,
+};
+
+u16 D_801810B0[] = {
+    0xFFFD, 0xFFFD, 0x0008, 0x0008, 0x00D0, 0x0068, 0x00D8, 0x0070,
+    0xFFFD, 0xFFFD, 0x0008, 0x0008, 0x00C8, 0x0068, 0x00D0, 0x0070,
+    0xFFF9, 0xFFF9, 0x0010, 0x000F, 0x00C8, 0x0070, 0x00D8, 0x007F,
+    0xFFF5, 0xFFF5, 0x0018, 0x0017, 0x0080, 0x0068, 0x0098, 0x007F,
+    0xFFF5, 0xFFF5, 0x0018, 0x0017, 0x0098, 0x0068, 0x00B0, 0x007F,
+    0xFFF5, 0xFFF5, 0x0018, 0x0017, 0x00B0, 0x0068, 0x00C8, 0x007F,
+};
+
+u32 D_80181110[] = {
+    /* 1110 */ 0x03030204,
+    /* 1114 */ 0x05030403,
+    /* 1118 */ 0x03030603,
+    /* 111C */ 0x00000000,
+};
+u8 D_80181120[] = {0x40, 0x01, 0xFF, 0x00};
+u8 D_80181124[] = {0x40, 0x02, 0xFF, 0x00};
+u8 D_80181128[] = {0x40, 0x02, 0xFF, 0x00};
+u8 D_8018112C[] = {0x40, 0x01, 0xFF, 0x00};
+u8 D_80181130[] = {0x40, 0x03, 0xFF, 0x00};
+
+ObjInit2 D_80181134[] = {
+    {0x0006, 0x01EC, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_80181120},
+    {0x000C, 0x01EC, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_80181128},
+    {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_8018112C},
+    {0x0006, 0x01EC, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_80181124},
+    {0x000C, 0x01EC, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_80181130},
+    {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_8018112C},
+};
+
+extern u16 UNK_Update0[];
+void EntityRelicOrb(Entity* self) {
+    RECT rect;
+    u16 sp28;
+    u8* var_v0_5;
+    Primitive* prim;
+    RelicOrb* relic;
+    s16 primIndex;
+    s16 temp_v0_6;
+    s16 iconSlot;
+    u16 relicId;
+    s32 xCoord;
+    u16 yCoord;
+    s32 texSrcX;
+    s32 texSrcY;
+    s16 temp_v1_6;
+    s32 i;
+    s32 var_s0_2;
+    char* msg;
+    u16 temp_a1_2;
+    s16 new_var7;
+    s16 new_var10;
+    s16 new_var6;
+    PixPattern* new_var2;
+    s8 new_var3;
+
+    relicId = self->params & 0x7FFF;
+    if (self->step > 0 && self->step < 5 && self->hitFlags != 0) {
+        self->step = 5;
+    }
+
+    switch (self->step) {
+    case 0:
+        // If the relic was previously obtained, do not spawn it.
+        if (g_Status.relics[relicId & 0xFFFF] & 1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        InitializeEntity(g_InitializeData0);
+        for (iconSlot = 0; iconSlot < 0x1F; iconSlot++) {
+            if (UNK_Update0[iconSlot] == 0) {
+                break;
+            }
+        }
+
+        if (iconSlot >= 0x1F) {
+            self->step = 0;
+            return;
+        }
+
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 7);
+        if (primIndex == -1) {
+            self->step = 0;
+            return;
+        }
+
+        self->primIndex = primIndex;
+        self->flags |= FLAG_HAS_PRIMS;
+        self->ext.relicOrb.unk8C = iconSlot;
+        UNK_Update0[iconSlot] = 0x10;
+        relic = &g_api.D_800A8720[relicId];
+        g_api.LoadEquipIcon(relic->icon, relic->palette, iconSlot);
+        prim = &g_PrimBuf[primIndex];
+        if (prim != NULL) {
+            new_var3 = iconSlot;
+            texSrcX = (new_var3 & 0x07) * 0x10;
+            texSrcY = (new_var3 & 0x18) * 0x02;
+            for (i = 0; prim != NULL; i++) {
+                if (i != 0) {
+                    prim->blendMode = BLEND_VISIBLE;
+                } else {
+                    prim->tpage = 0x1A;
+                    prim->clut = iconSlot + 0x1D0;
+                    prim->u0 = prim->u2 = texSrcX | 1;
+                    prim->u1 = prim->u3 = texSrcX | 0xF;
+                    prim->v0 = prim->v1 = texSrcY | 0x81;
+                    prim->v2 = prim->v3 = texSrcY | 0x8F;
+                    prim->blendMode = 6;
+                }
+                prim->priority = 0x7E;
+                prim = prim->next;
+            }
+        }
+        self->posY.i.lo = -0x8000;
+        self->velocityY = 0x4000;
+        self->ext.relicOrb.unk90 = 0x40;
+        self->ext.relicOrb.unk94 = -0x200;
+        break;
+
+    case 1:
+        self->velocityY += self->ext.relicOrb.unk94;
+        self->ext.relicOrb.unk90--;
+        temp_a1_2 = self->ext.relicOrb.unk90;
+        if (temp_a1_2 == 0) {
+            self->ext.relicOrb.unk90 = 0x40;
+            self->ext.relicOrb.unk94 = -self->ext.relicOrb.unk94;
+        }
+        MoveEntity();
+        UNK_Update0[self->ext.relicOrb.unk8C] = 0x10;
+        break;
+
+    case 5:
+        g_api.func_800FE044(relicId, 0x2000);
+        if (relicId > 0x15 && relicId < 0x14) {
+            g_Status.relics[relicId] = g_Status.relics[relicId] ^ 2;
+        }
+        self->flags |= FLAG_UNK_10000;
+
+        rect.x = 0;
+        rect.y = 0x100;
+        rect.w = 0x40;
+        rect.h = 0x10;
+        ClearImage(&rect, 0, 0, 0);
+
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 3; i++) {
+            if (i == 0) {
+                prim->type = PRIM_SPRT;
+                prim->y0 = 0xA0;
+                prim->u1 = 0xF0;
+                prim->clut = 0x1A1;
+                prim->priority = 0x1FE;
+                prim->tpage = 0x10;
+                prim->x0 = 0x10;
+                prim->u0 = 0;
+                prim->v0 = 0;
+                prim->v1 = 0x10;
+                prim->blendMode = BLEND_VISIBLE;
+            } else {
+                prim->type = PRIM_G4;
+                prim->x0 = prim->x1 = prim->x2 = prim->x3 = 0x80;
+                prim->y0 = prim->y1 = prim->y2 = prim->y3 = 0xA7;
+                prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
+                prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0;
+                prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0;
+
+                if (i == 1) {
+                    prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
+                } else {
+                    prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;
+                }
+                prim->priority = 0x1FD;
+                prim->blendMode = 0x11;
+            }
+            prim = prim->next;
+        }
+
+        self->step++;
+        break;
+
+    case 6:
+        var_s0_2 = 0;
+        sp28 = 0;
+        msg = *D_80180F84;
+        new_var2 = &D_8007EFE4;
+        var_v0_5 = (u8*)new_var2;
+        for (i = 0; i < 0xC00; i++) {
+            *var_v0_5++ = 0;
+        }
+
+        sp28 = 0;
+        while (true) {
+            if (*msg == 0) {
+                if (var_s0_2 != 0) {
+                    break;
+                }
+                msg = g_api.D_800A8720[relicId].name;
+                var_s0_2 = 1;
+            } else {
+                msg = func_8018E01C(msg, &sp28, new_var2, 0xC0);
+            }
+        }
+
+        LoadTPage(new_var2, 0, 0, 0, 0x100, 0x180, 0x10);
+        self->ext.relicOrb.unk7C = 0;
+        self->ext.relicOrb.unk7E = sp28;
+        self->step++;
+        break;
+
+    case 7:
+        prim = g_PrimBuf[self->primIndex].next;
+        for (i = 0; i < 2; i++) {
+            if (i == 0) {
+                prim->x2 = prim->x2 - 3;
+                prim->x3 = prim->x3 + 3;
+                prim->y0 = prim->y1 = prim->y1 - 4;
+                prim->y2 = prim->y3 = prim->y3 + 2;
+            } else {
+                prim->x0 = prim->x0 - 3;
+                prim->x1 = prim->x1 + 3;
+                prim->y0 = prim->y1 = prim->y1 - 2;
+                prim->y2 = prim->y3 = prim->y3 + 4;
+            }
+            prim = prim->next;
+        }
+
+        if (++self->ext.relicOrb.unk7C == 8) {
+            self->ext.relicOrb.unk7C = 0;
+            self->step++;
+        }
+        break;
+
+    case 8:
+        temp_a1_2 = self->ext.relicOrb.unk7C;
+        prim = g_PrimBuf[self->primIndex].next;
+        for (i = 0; i < 3; i++) {
+            if (i == 0) {
+                prim->x1 = 0x80 - (temp_a1_2 + 1) * 0xC;
+                prim->x0 = 0x80 + (temp_a1_2 + 1) * 0xC;
+                prim->x2 = 0x68 + (temp_a1_2 * 0x78) / 7;
+                prim->x3 = 0x98 - (temp_a1_2 * 0x78) / 7;
+                prim->y0 = prim->y1 = D_80180F98[temp_a1_2] + 0xA7;
+                prim->y2 = prim->y3 = D_80180F88[temp_a1_2] + 0xA7;
+                prim->b2 = prim->b3 = prim->b3 - 0x10;
+            } else {
+                prim->x0 = 0x68 + (temp_a1_2 * 0x78) / 7;
+                prim->x1 = 0x98 - (temp_a1_2 * 0x78) / 7;
+                prim->x3 = 0x80 - (temp_a1_2 + 1) * 0xC;
+                prim->x2 = 0x80 + (temp_a1_2 + 1) * 0xC;
+                prim->y0 = prim->y1 = D_80180FA8[temp_a1_2] + 0xA7;
+                prim->y2 = prim->y3 = D_80180FB8[temp_a1_2] + 0xA7;
+                prim->g0 = prim->g1 = prim->g1 - 0x10;
+            }
+            prim = prim->next;
+        }
+
+        if (++self->ext.relicOrb.unk7C == 8) {
+            self->ext.relicOrb.unk7C = 0;
+            self->step++;
+        }
+        break;
+
+    case 9:
+        prim = &g_PrimBuf[self->primIndex];
+        prim->x0 = 0x80 - self->ext.relicOrb.unk7E;
+        prim->blendMode = 0;
+        self->ext.relicOrb.unk7C++;
+        if (self->ext.relicOrb.unk7C > 0x60) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    if (self->step < 2) {
+        func_8018D990(self, (u16)g_blinkTimer);
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 3; i++) {
+            prim = prim->next;
+        }
+
+        if (self->ext.relicOrb.unk80 == 0) {
+            for (i = 0; i < 4; i++) {
+                if (prim->blendMode == BLEND_VISIBLE) {
+                    prim->tpage = 0x1A;
+                    prim->clut = 0x1B1;
+                    prim->u3 = 0x10;
+                    prim->u1 = 0x10;
+                    prim->v1 = 0x50;
+                    prim->v0 = 0x50;
+                    prim->u2 = 0;
+                    prim->u0 = 0;
+                    prim->v3 = 0x60;
+                    prim->v2 = 0x60;
+
+                    temp_v1_6 = self->ext.relicOrb.unk82 & 7;
+                    var_s0_2 = (u16)self->posX.i.hi;
+                    xCoord = var_s0_2 + D_80180FC8[temp_v1_6];
+                    prim->x0 = prim->x2 = xCoord - 6;
+                    prim->x1 = prim->x3 = xCoord + 6;
+
+                    var_s0_2 = (u16)self->posY.i.hi;
+                    yCoord = var_s0_2 + D_80180FD8[temp_v1_6];
+                    prim->y0 = prim->y1 = yCoord - 6;
+                    prim->y2 = prim->y3 = yCoord + 6;
+
+                    prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x80;
+                    prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;
+                    prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
+                    prim->p1 = 0;
+                    prim->priority = 0x7F;
+                    prim->blendMode = 0x37;
+                    break;
+                }
+                prim = prim->next;
+            }
+
+            self->ext.relicOrb.unk80 = 4;
+            self->ext.relicOrb.unk82++;
+        } else {
+            self->ext.relicOrb.unk80--;
+        }
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 3; i++) {
+        prim = prim->next;
+    }
+
+    for (; prim != NULL; prim = prim->next) {
+        if (prim->blendMode != BLEND_VISIBLE) {
+            if (prim->p1 & 3) {
+                new_var10 = prim->y1;
+                temp_v1_6 = prim->y3;
+                prim->y1 = new_var10 - 1;
+                prim->y0 = new_var10;
+                prim->y3 = temp_v1_6 - 1;
+                prim->y2 = temp_v1_6;
+            } else {
+                new_var6 = prim->x2;
+                new_var7 = prim->x3;
+                prim->y2 = prim->y3 = prim->y3 - 2;
+                prim->x2 = new_var6 + 1;
+                prim->x0 = new_var6;
+                prim->x3 = new_var7 - 1;
+                prim->x1 = new_var7;
+            }
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->r3 - 6;
+            prim->g0 = prim->g1 = prim->g2 = prim->g3 = prim->g3 - 6;
+            prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->b3 - 6;
+            prim->p1++;
+            if (prim->p1 > 0x10) {
+                prim->blendMode = BLEND_VISIBLE;
+            }
+        }
+    }
+}
 
 void EntityHeartDrop(Entity* self) {
     u16 temp_a0;
@@ -1364,7 +1807,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
         }
     }
 
-    g_BottomCornerTextPrims = g_api_AllocPrimitives(PRIM_SPRT, charcount + 4);
+    g_BottomCornerTextPrims = g_api.AllocPrimitives(PRIM_SPRT, charcount + 4);
     if (g_BottomCornerTextPrims == -1) {
         return;
     }
