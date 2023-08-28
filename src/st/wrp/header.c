@@ -8,7 +8,7 @@ void func_8018A7AC(void);
 void func_8018CAB0(void);
 void InitRoomEntities(s32 objLayoutId);
 void func_801916C4(u16);
-void func_80192F40(u8*, u8);
+void BottomCornerText(u8*, u8);
 
 RoomHeader g_Rooms[];
 s16** g_SpriteBanks[];

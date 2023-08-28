@@ -117,6 +117,7 @@ ClutLerp = 0x801C27B8;
 EntitySoulStealOrb = 0x801C2AA8;
 EntityEnemyBlood = 0x801C2E3C;
 EntityRoomForeground = 0x801C32EC;
+BottomCornerText = 0x801C33D8;
 EntityBoneScimitar = 0x801C37E4;
 EntityBoneScimitarParts = 0x801C3E94;
 EntityAxeKnight = 0x801C45BC;

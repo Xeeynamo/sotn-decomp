@@ -10,10 +10,10 @@ void Update(void) {
         }
     }
 
-    unk = &D_80097410;
+    unk = &g_BottomCornerTextTimer;
     if (*unk) {
         if (!--*unk) {
-            g_api.FreePrimitives(D_80097414);
+            g_api.FreePrimitives(g_BottomCornerTextPrims);
         }
     }
 

@@ -901,13 +901,13 @@ void CollectGold(u16 goldSize) {
         *gold = MAX_GOLD;
     }
 
-    unk = &D_80097410;
+    unk = &g_BottomCornerTextTimer;
     if (*unk) {
-        g_api.FreePrimitives(D_80097414);
+        g_api.FreePrimitives(g_BottomCornerTextPrims);
         *unk = 0;
     }
 
-    func_80192F40(D_80180E08[goldSizeIndex], 1);
+    BottomCornerText(D_80180E08[goldSizeIndex], 1);
     DestroyEntity(g_CurrentEntity);
 }
 
