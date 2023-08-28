@@ -554,7 +554,7 @@ typedef struct Entity {
     /* 0x54 */ s16 animSet;
     /* 0x56 */ s16 animCurFrame;
     /* 0x58 */ s16 stunFrames;
-    /* 0x5A */ s16 unk5A;
+    /* 0x5A */ u16 unk5A;
     /* 0x5C */ s32 unk5C;
     /* 0x60 */ s32 unk60;
     /* 0x64 */ s32 primIndex;

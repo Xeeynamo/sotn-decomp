@@ -419,6 +419,15 @@ typedef struct {
     /* 0x7C */ u16 unk7C;
 } ET_DeathStolenItems;
 
+typedef struct {
+    /* 0x7C */ u16 unk7C;
+    /* 0x7E */ char pad_7E[0x2];
+    /* 0x80 */ s16 posX;
+    /* 0x82 */ s16 posY;
+    /* 0x84 */ u16 unk84;
+    /* 0x86 */ u16 unk86;
+} ET_Death;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
@@ -455,5 +464,6 @@ typedef union {
     /* 0x7C */ ET_AlucardController alucardController;
     /* 0x7C */ ET_ForegroundTree foregroundTree;
     /* 0x7C */ ET_DeathStolenItems deathStolenItems;
+    /* 0x7C */ ET_Death death;
     /* 0x7C */ char stub[0x40];
 } Ext;
