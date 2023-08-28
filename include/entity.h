@@ -422,7 +422,7 @@ typedef struct {
     u16 unk82;
     u32 unk84;
     u32 unk88;
-    s16 unk8C;
+    s16 iconSlot;
     u16 unk8E;
     u16 unk90;
     u16 unk92;

@@ -1071,7 +1071,7 @@ extern LayoutEntity* D_80193AB0;
 extern u16* D_80193AB4;
 extern u8 D_80193AB8;
 extern u8 D_80193ABC;
-extern u16 UNK_Update0[];
+extern u16 g_ItemIconSlots[];
 // *** bss? section end ***
 
 void func_80186FD0(Entity* arg0) {

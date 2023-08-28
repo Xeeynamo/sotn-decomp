@@ -285,7 +285,7 @@ void func_8018D990(Entity* arg0, s32 renderFlags) {
     }
 }
 
-extern u16 UNK_Update0[];
+extern u16 g_ItemIconSlots[0x20];
 
 void EntityEquipItemDrop(Entity* self) {
     u16 itemId = self->params & 0x7FFF;
@@ -327,7 +327,7 @@ void EntityEquipItemDrop(Entity* self) {
 
         if (!(collider.effects & EFFECT_NOTHROUGH_PLUS)) {
             for (index = 0; index < 32; index++) {
-                if (UNK_Update0[index] == 0) {
+                if (g_ItemIconSlots[index] == 0) {
                     break;
                 }
             }
@@ -351,7 +351,7 @@ void EntityEquipItemDrop(Entity* self) {
 
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
-            UNK_Update0[index] = 0x1E0;
+            g_ItemIconSlots[index] = 0x1E0;
             self->ext.equipItemDrop.unk8C = index;
 
             if (itemId < NUM_HAND_ITEMS) {
@@ -426,7 +426,7 @@ void EntityEquipItemDrop(Entity* self) {
                 self->step++;
             }
         } else {
-            UNK_Update0[self->ext.equipItemDrop.unk8C] = 0x10;
+            g_ItemIconSlots[self->ext.equipItemDrop.unk8C] = 0x10;
         }
         break;
 
@@ -594,8 +594,9 @@ ObjInit2 D_80181134[] = {
     {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_8018112C},
 };
 
-extern u16 UNK_Update0[];
+extern u16 g_ItemIconSlots[];
 void EntityRelicOrb(Entity* self) {
+    const int MaxItemSlots = LEN(g_ItemIconSlots) - 1;
     RECT rect;
     u16 sp28;
     u8* var_v0_5;
@@ -634,13 +635,13 @@ void EntityRelicOrb(Entity* self) {
         }
 
         InitializeEntity(g_InitializeData0);
-        for (iconSlot = 0; iconSlot < 0x1F; iconSlot++) {
-            if (UNK_Update0[iconSlot] == 0) {
+        for (iconSlot = 0; iconSlot < MaxItemSlots; iconSlot++) {
+            if (g_ItemIconSlots[iconSlot] == 0) {
                 break;
             }
         }
 
-        if (iconSlot >= 0x1F) {
+        if (iconSlot >= MaxItemSlots) {
             self->step = 0;
             return;
         }
@@ -653,8 +654,8 @@ void EntityRelicOrb(Entity* self) {
 
         self->primIndex = primIndex;
         self->flags |= FLAG_HAS_PRIMS;
-        self->ext.relicOrb.unk8C = iconSlot;
-        UNK_Update0[iconSlot] = 0x10;
+        self->ext.relicOrb.iconSlot = iconSlot;
+        g_ItemIconSlots[iconSlot] = 0x10;
         relic = &g_api.D_800A8720[relicId];
         g_api.LoadEquipIcon(relic->icon, relic->palette, iconSlot);
         prim = &g_PrimBuf[primIndex];
@@ -678,7 +679,7 @@ void EntityRelicOrb(Entity* self) {
                 prim = prim->next;
             }
         }
-        self->posY.i.lo = -0x8000;
+        self->posY.i.lo = 0x8000;
         self->velocityY = FIX(0.25);
         self->ext.relicOrb.unk90 = 0x40;
         self->ext.relicOrb.unk94 = -0x200;
@@ -693,7 +694,7 @@ void EntityRelicOrb(Entity* self) {
             self->ext.relicOrb.unk94 = -self->ext.relicOrb.unk94;
         }
         MoveEntity();
-        UNK_Update0[self->ext.relicOrb.unk8C] = 0x10;
+        g_ItemIconSlots[self->ext.relicOrb.iconSlot] = 0x10;
         break;
 
     case 5:

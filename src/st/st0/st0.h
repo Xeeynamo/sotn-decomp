@@ -169,7 +169,7 @@ extern u8 D_801824CC[];
 extern u16* D_801C00A4;
 extern s32 D_801C24C8;
 extern s32 D_801C2580;
-extern u16 UNK_Update0[];
+extern u16 g_ItemIconSlots[];
 
 // *** EntitySoulStealOrb properties START ***
 

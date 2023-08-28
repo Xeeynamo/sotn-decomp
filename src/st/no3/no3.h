@@ -175,7 +175,7 @@ extern s16 D_801D7D60;
 extern s16 D_801D7D62;
 extern s32 D_801D7D64;
 extern s32 D_801D7DD0;
-extern u16 UNK_Update0[];
+extern u16 g_ItemIconSlots[];
 
 extern LayoutEntity* g_pStObjLayout[];
 extern PfnEntityUpdate PfnEntityUpdates[];
