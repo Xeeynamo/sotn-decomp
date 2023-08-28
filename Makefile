@@ -476,12 +476,10 @@ build_saturn_binutils_docker_container:
 
 build_saturn_toolchain_gccsh:
 	# get GCCSH
-	wget -nc https://github.com/sozud/saturn-compilers/archive/refs/heads/main.zip
-	unzip -n main.zip
+	git clone https://github.com/sozud/saturn-compilers.git
 	rm -rf ./tools/saturn_toolchain/GCCSH
-	mv saturn-compilers-main/cygnus-2.7-96Q3-bin ./tools/saturn_toolchain/GCCSH
-	rm -rf main.zip
-	rm -rf saturn-compilers-main
+	mv saturn-compilers/cygnus-2.7-96Q3-bin ./tools/saturn_toolchain/GCCSH
+	rm -rf saturn-compilers
 
 # parallel OK
 build_saturn_toolchain_docker: build_saturn_dosemu_docker_container build_saturn_binutils_docker_container build_saturn_toolchain_gccsh $(SATURN_SPLITTER_APP)
