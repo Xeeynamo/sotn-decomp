@@ -195,7 +195,7 @@ u8 func_8018D768(u8 frames[], Entity* self, u8 arg2) {
     return var_a1;
 }
 
-s32 func_8018D880(void) {
+s32 GetDistanceToPlayerX(void) {
     s16 temp_v1 = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
 
     if (temp_v1 >> 16) {
