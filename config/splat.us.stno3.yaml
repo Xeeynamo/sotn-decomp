@@ -57,7 +57,6 @@ segments:
       - [0x37458, rodata]
       - [0x374DC, .rodata, 3FF00] # EntityRoomTransition2
       - [0x374F4, .rodata, 3FF00] # EntityDeathStolenItems
-      #- [0x37510, rodata]
       - [0x37514, .rodata, 3FF00] # EntityDeath
       - [0x37564, rodata]
       - [0x375E0, .rodata, 46684] # EntityPrizeDrop
