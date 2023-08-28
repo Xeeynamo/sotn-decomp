@@ -137,7 +137,7 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018C72C);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018C7E0);
 
-void func_8018C854(u16 entityId, Entity* source, Entity* entity) {
+void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
     entity->entityId = entityId;
     entity->pfnUpdate = D_801803E0[entityId];
@@ -153,7 +153,14 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", DestroyEntity);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018D5EC);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", PreventEntityFromRespawning);
+void PreventEntityFromRespawning(Entity* entity) {
+    if (entity->entityRoomIndex) {
+        u32 value = (entity->entityRoomIndex - 1);
+        u16 index = value / 32;
+        u16 bit = value % 32;
+        g_entityDestroyed[index] |= 1 << bit;
+    }
+}
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018D6B0);
 
@@ -188,7 +195,7 @@ u8 func_8018D768(u8 frames[], Entity* self, u8 arg2) {
     return var_a1;
 }
 
-s32 func_8018D880(void) {
+s32 GetDistanceToPlayerX(void) {
     s16 temp_v1 = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
 
     if (temp_v1 >> 16) {
@@ -197,7 +204,14 @@ s32 func_8018D880(void) {
     return temp_v1;
 }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018D8BC);
+s32 GetDistanceToPlayerY(void) {
+    s32 var_v0 = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
+
+    if (var_v0 < 0) {
+        var_v0 = -var_v0;
+    }
+    return var_v0;
+}
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018D8F0);
 
@@ -274,25 +288,69 @@ s32 func_8018DE50(u8 arg0, s16 arg1) { return D_80180A94[arg0] * arg1; }
 
 s16 func_8018DE7C(u8 arg0) { return D_80180A94[arg0]; }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018DE98);
+void func_8018DE98(u8 arg0, s16 arg1) {
+    g_CurrentEntity->velocityX = func_8018DE50(arg0, arg1);
+    g_CurrentEntity->velocityY = func_8018DE50((arg0 - 0x40), arg1);
+}
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018DF04);
+u8 func_8018DF04(s16 arg0, s16 arg1) {
+    return (ratan2(arg1, arg0) >> 4) + 0x40;
+}
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018DF3C);
+u8 func_8018DF3C(Entity* arg0, Entity* arg1) {
+    s16 x = arg1->posX.i.hi - arg0->posX.i.hi;
+    s16 y = arg1->posY.i.hi - arg0->posY.i.hi;
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018DF84);
+    return func_8018DF04(x, y);
+}
+
+s32 func_8018DF84(s32 arg0, s32 arg1) {
+    s16 x = arg0 - g_CurrentEntity->posX.i.hi;
+    s16 y = arg1 - g_CurrentEntity->posY.i.hi;
+
+    return func_8018DF04(x, y);
+}
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018DFCC);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", UnkEntityFunc0);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E0B0);
+u16 func_8018E0B0(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E0E0);
+u16 func_8018E0E0(Entity* arg0, Entity* arg1) {
+    s32 x = arg1->posX.i.hi - arg0->posX.i.hi;
+    s32 y = arg1->posY.i.hi - arg0->posY.i.hi;
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E118);
+    return ratan2(y, x);
+}
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E160);
+u16 func_8018E118(s32 arg0, s32 arg1) {
+    s16 x = arg0 - g_CurrentEntity->posX.i.hi;
+    s16 y = arg1 - g_CurrentEntity->posY.i.hi;
+
+    return ratan2(y, x);
+}
+
+u16 func_8018E160(u16 arg0, s16 arg1, s16 arg2) {
+    u16 var_v0;
+    u16 var_v0_2;
+    u16 temp_a2 = arg2 - arg1;
+
+    if (temp_a2 & 0x800) {
+        var_v0_2 = (0x800 - temp_a2) & 0x7FF;
+    } else {
+        var_v0_2 = temp_a2;
+    }
+    if (var_v0_2 > arg0) {
+        if (temp_a2 & 0x800) {
+            var_v0 = arg1 - arg0;
+        } else {
+            var_v0 = arg1 + arg0;
+        }
+        return var_v0;
+    }
+    return arg2;
+}
 
 void SetStep(u8 step) {
     g_CurrentEntity->step = step;
@@ -301,7 +359,7 @@ void SetStep(u8 step) {
     g_CurrentEntity->animFrameDuration = 0;
 }
 
-void func_8018E1E0(u8 step_s) {
+void SetSubStep(u8 step_s) {
     g_CurrentEntity->step_s = step_s;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
@@ -311,7 +369,11 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E1FC);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", InitializeEntity);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E38C);
+void EntityDummy(Entity* entity) {
+    if (entity->step == 0) {
+        entity->step = (u16)(entity->step + 1);
+    }
+}
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E3B4);
 
@@ -404,9 +466,13 @@ void CollectSubweapon(u16 subWeaponIdx) {
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018EE84);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018EF28);
+void CollectLifeVessel(void) {
+    g_api_PlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_api_func_800FE044(5, 0x8000);
+    DestroyEntity(g_CurrentEntity);
+}
 
-void func_8018EF78(void) { DestroyEntity(g_CurrentEntity); }
+void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", EntityPrizeDrop);
 
@@ -668,269 +734,3 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_80193644);
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8019373C);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8019390C);
-
-// The white flying orbs of energy that Alucard summons as part of the Soul
-// Steal spell
-void EntitySoulStealOrb(Entity* self) {
-    Primitive* prim;
-    s32 primIndex;
-    u16 *temp_d, temp_e;
-    s32 temp_a, temp_b;
-    u16 angle;
-
-    switch (self->step) {
-    case 0:
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-        if (primIndex == -1) {
-            DestroyEntity(self);
-            return;
-        }
-        InitializeEntity(g_InitializeData0);
-        D_8008701E[primIndex * 0x1a] = 8;
-        self->primIndex = primIndex;
-        self->animSet = ANIMSET_DRA(0);
-        self->flags |= FLAG_HAS_PRIMS;
-        angle = func_8018E0E0(self, &PLAYER);
-        temp_a = self->posY.i.hi < 113;
-        temp_b = temp_a ^ 1;
-        if (self->posX.i.hi < PLAYER.posX.i.hi) {
-            temp_b = temp_a;
-        }
-        if (temp_b & 0xFFFF) {
-            self->ext.soulStealOrb.angle = angle - D_801810A0[Random() & 7];
-        } else {
-            angle += D_801810A0[Random() & 7];
-            self->ext.soulStealOrb.angle = angle;
-        }
-        self->ext.soulStealOrb.unk80 = 0x400;
-        self->ext.soulStealOrb.unk7E = 0;
-        self->hitboxState = 0;
-        break;
-
-    case 1:
-        self->ext.soulStealOrb.unk82++;
-        if (self->ext.soulStealOrb.unk82 == 16) {
-            self->hitboxState = 1;
-        }
-        if (self->hitFlags != 0) {
-            if (g_Player.unk56 == 0) {
-                g_Player.unk56 = 1;
-                g_Player.unk58 = 8;
-            }
-            DestroyEntity(self);
-            return;
-        }
-        if (self->unk1A < 0x100) {
-            self->unk1A = self->unk1C += 0x10;
-        }
-        if (self->ext.soulStealOrb.unk7E < 0x200) {
-            self->ext.soulStealOrb.unk7E += 2;
-        }
-        if (self->ext.soulStealOrb.unk80 < 0x800) {
-            self->ext.soulStealOrb.unk80 += 4;
-        }
-        self->ext.soulStealOrb.angle = func_8018E160(
-            self->ext.soulStealOrb.unk7E, (u16)self->ext.soulStealOrb.angle,
-            0xffff & func_8018E0E0(self, &PLAYER));
-        UnkEntityFunc0(self->ext.soulStealOrb.angle & 0xFFFF,
-                       self->ext.soulStealOrb.unk80);
-        MoveEntity(self); // argument pass necessary to match
-        prim = &g_PrimBuf[self->primIndex];
-        func_8018D6B0(&D_80181110, self);
-        angle = (float)(u32)self; // !FAKE
-        prim->tpage = 0x18;
-        prim->clut = 0x194;
-        temp_d = &D_801810B0[(u16)((8 * (u16)self->animCurFrame) - 8)];
-        prim->x0 = prim->x2 = self->posX.i.hi + *(temp_d++);
-        prim->y0 = prim->y1 = self->posY.i.hi + *(temp_d++);
-        prim->x1 = prim->x3 = prim->x0 + *(temp_d++);
-        prim->y2 = prim->y3 = prim->y0 + *(temp_d++);
-        prim->u0 = prim->u2 = *(temp_d++);
-        prim->v0 = prim->v1 = *(temp_d++);
-        prim->u1 = prim->u3 = *(temp_d++);
-        prim->v2 = prim->v3 = *(temp_d++);
-        prim->priority = self->zPriority;
-        prim->blendMode = 0;
-        break;
-    }
-}
-
-#include "../entity_enemy_blood.h"
-
-void func_80194DD4(Entity* entity) {
-    ObjInit2* objInit = &D_80181134[entity->params];
-
-    if (entity->step == 0) {
-        InitializeEntity(D_80180494);
-        entity->animSet = objInit->animSet;
-        entity->zPriority = objInit->zPriority;
-        entity->unk5A = objInit->unk4.s;
-        entity->palette = objInit->palette;
-        entity->unk19 = objInit->unk8;
-        entity->blendMode = objInit->blendMode;
-        if (objInit->unkC != 0) {
-            entity->flags = objInit->unkC;
-        }
-        if (entity->params >= 5) {
-            entity->rotAngle = 0x800;
-            entity->unk19 = (u8)(entity->unk19 | 4);
-        }
-    }
-    func_8018D6B0(objInit->unk10, entity);
-}
-
-void BottomCornerText(u8* str, u8 lower_left) {
-    u8 toPrint[64];
-    Primitive* prim;
-    s32 i;
-    u32 ch;
-    u8* chIdx = &toPrint;
-
-    u16 textWidth = 0;
-    // serves two purposes, use #define for dual names
-    u16 dualVar = 0;
-#define charcount dualVar
-
-    // Clear out the toPrint array
-    for (i = 0; i < 64; i++) {
-        *chIdx++ = 0;
-    }
-    // Reset array pointer
-    chIdx = &toPrint;
-
-    while (1) {
-        i = 0;
-        // Copy values from the incoming arg0 array to the local array, until we
-        // get a 0xFF followed by a 0
-        ch = *str++;
-        if (ch == 0xFF) {
-            ch = *str++;
-            if (ch == 0) {
-                break;
-            }
-        }
-        *chIdx = ch;
-        chIdx++;
-        if (ch != 0) {
-            charcount += 1;
-            textWidth += 8;
-        } else {
-            textWidth += 4;
-        }
-    }
-
-    g_BottomCornerTextPrims = g_api_AllocPrimitives(PRIM_SPRT, charcount + 4);
-    if (g_BottomCornerTextPrims == -1) {
-        return;
-    }
-#undef charcount
-
-    prim = &g_PrimBuf[g_BottomCornerTextPrims];
-    prim->type = 3;
-    prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->g0 = prim->g1 = prim->g2 =
-        prim->g3 = prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
-
-    if (lower_left) {
-        prim->b0 = prim->b1 = 0xAF;
-    } else {
-        prim->g0 = prim->g1 = 0x5F;
-    }
-
-#define xpos dualVar
-    if (lower_left) {
-        xpos = 7;
-        textWidth += 4;
-    } else {
-        xpos = 0xD4 - textWidth;
-    }
-
-    prim->x0 = prim->x2 = xpos;
-    prim->x1 = prim->x3 = xpos + textWidth + 0x20;
-    prim->y0 = prim->y1 = 0xD0;
-    prim->y2 = prim->y3 = 0xDF;
-    prim->priority = 0x1EE;
-    prim->blendMode = 0x11;
-    prim = prim->next;
-
-    prim->tpage = 0x1F;
-    prim->clut = 0x197;
-    prim->x0 = xpos - 6;
-    prim->y0 = 0xCB;
-    prim->u0 = 0x80;
-    prim->v0 = 0;
-    prim->u1 = 0x10;
-    prim->v1 = 0x18;
-    prim->priority = 0x1EF;
-    prim->blendMode = 0;
-    prim = prim->next;
-
-    prim->tpage = 0x1F;
-    prim->clut = 0x197;
-    prim->x0 = xpos + textWidth + 0x16;
-    prim->y0 = 0xCB;
-    prim->u0 = 0xA8;
-    prim->v0 = 0;
-    prim->u1 = 0x10;
-    prim->v1 = 0x18;
-    prim->priority = 0x1EF;
-    prim->blendMode = 0;
-    prim = prim->next;
-
-    prim->type = 4;
-    prim->y0 = prim->y1 = 0xCD;
-    prim->tpage = 0x1F;
-    prim->clut = 0x197;
-    prim->y2 = prim->y3 = 0xE1;
-    prim->u0 = prim->u2 = 0x98;
-    prim->u1 = prim->u3 = 0x9C;
-    prim->v0 = prim->v1 = 2;
-    prim->x0 = prim->x2 = xpos + 0xA;
-    prim->x1 = prim->x3 = xpos + textWidth + 0x18;
-    prim->v2 = prim->v3 = 0x16;
-    prim->priority = 0x1EF;
-    prim->blendMode = 0;
-
-    xpos += 0x10;
-
-    // Reset array pointer
-    chIdx = &toPrint;
-    for (prim = prim->next; prim != NULL;) {
-        ch = *chIdx++;
-        if (ch != 0) {
-            prim->x0 = xpos;
-            prim->u0 = (ch & 0xF) * 8;
-            prim->tpage = 0x1E;
-            prim->clut = 0x196;
-            prim->v0 = (ch & 0xF0) >> 1;
-            prim->v1 = 8;
-            prim->u1 = 8;
-            prim->priority = 0x1F0;
-            prim->blendMode = 0;
-            prim->y0 = 0xD4;
-            prim = prim->next;
-            xpos += 8;
-        } else {
-            xpos += 4;
-        }
-    }
-#undef xpos
-    g_BottomCornerTextTimer = 0x130;
-}
-
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_801951F0);
-
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_801955D8);
-
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_80195728);
-
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_80195758);
-
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_801957D4);
-
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8019585C);
-
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8019593C);
-
-#include "../unk_poly_func_0.h"
-
-#include "../unk_loop_func.h"

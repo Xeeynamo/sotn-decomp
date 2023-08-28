@@ -51,10 +51,8 @@ jobs:
           sudo apt-get install p7zip-full bchunk binutils-sh-elf
       - name: Install dosemu
         run: |
-          wget https://github.com/sozud/dosemu-deb/archive/refs/heads/main.zip
-          unzip main.zip
-          rm -rf main.zip
-          cd dosemu-deb-main
+          git clone https://github.com/sozud/dosemu-deb.git
+          cd dosemu-deb
           sudo apt-get install xfonts-utils
           sudo dpkg -i fdpp_1.6-1_amd64.deb
           sudo dpkg -i fdpp-dev_1.6-1_amd64.deb
