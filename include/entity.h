@@ -418,15 +418,15 @@ typedef struct {
 typedef struct {
     u16 unk7C;
     u16 unk7E;
-    u16 unk80;
-    u16 unk82;
+    u16 sparkleCycle;
+    u16 sparkleAnim;
     u32 unk84;
     u32 unk88;
     s16 iconSlot;
     u16 unk8E;
-    u16 unk90;
+    u16 floatTimer;
     u16 unk92;
-    s32 unk94;
+    s32 yFloatSpeed;
 } ET_RelicOrb;
 
 typedef union {

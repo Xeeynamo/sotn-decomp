@@ -485,8 +485,8 @@ u16 D_80180F88[] = {16, 12, 8, 4, 0, -4, -8, -12};
 u16 D_80180F98[] = {-32, -26, -20, -13, -7, -1, 5, 12};
 u16 D_80180FA8[] = {-16, -12, -8, -4, 0, 4, 8, 12};
 u16 D_80180FB8[] = {32, 26, 20, 13, 7, 1, -5, -12};
-u16 D_80180FC8[] = {-8, 4, -2, 8, 0, 4, -4, 2};
-u16 D_80180FD8[] = {-2, 2, 4, -3, 0, 2, -4, 3};
+u16 g_RelicOrbSparkleX[] = {-8, 4, -2, 8, 0, 4, -4, 2};
+u16 g_RelicOrbSparkleY[] = {-2, 2, 4, -3, 0, 2, -4, 3};
 
 u16 D_80180FE8[] = {
     /* FE8 */ 0x0010,
@@ -681,17 +681,16 @@ void EntityRelicOrb(Entity* self) {
         }
         self->posY.i.lo = 0x8000;
         self->velocityY = FIX(0.25);
-        self->ext.relicOrb.unk90 = 0x40;
-        self->ext.relicOrb.unk94 = -0x200;
+        self->ext.relicOrb.floatTimer = 64;
+        self->ext.relicOrb.yFloatSpeed = -FIX(0.0078125);
         break;
 
     case 1:
-        self->velocityY += self->ext.relicOrb.unk94;
-        self->ext.relicOrb.unk90--;
-        temp_a1_2 = self->ext.relicOrb.unk90;
-        if (temp_a1_2 == 0) {
-            self->ext.relicOrb.unk90 = 0x40;
-            self->ext.relicOrb.unk94 = -self->ext.relicOrb.unk94;
+        // The relic floats in the air
+        self->velocityY += self->ext.relicOrb.yFloatSpeed;
+        if (--self->ext.relicOrb.floatTimer == 0) {
+            self->ext.relicOrb.floatTimer = 64;
+            self->ext.relicOrb.yFloatSpeed = -self->ext.relicOrb.yFloatSpeed;
         }
         MoveEntity();
         g_ItemIconSlots[self->ext.relicOrb.iconSlot] = 0x10;
@@ -749,7 +748,7 @@ void EntityRelicOrb(Entity* self) {
     case 6:
         var_s0_2 = 0;
         sp28 = 0;
-        msg = *D_80180F84;
+        msg = D_80180F84[0];
         new_var2 = &D_8007EFE4;
         var_v0_5 = (u8*)new_var2;
         for (i = 0; i < 0xC00; i++) {
@@ -841,13 +840,14 @@ void EntityRelicOrb(Entity* self) {
     }
 
     if (self->step < 2) {
+        // Animates the four sparkles while the relic is floating
         func_8018D990(self, (u16)g_blinkTimer);
         prim = &g_PrimBuf[self->primIndex];
-        for (i = 0; i < 3; i++) {
+        for (i = 0; i < 3; i++) { // Skip the first three primitives
             prim = prim->next;
         }
 
-        if (self->ext.relicOrb.unk80 == 0) {
+        if (self->ext.relicOrb.sparkleCycle == 0) {
             for (i = 0; i < 4; i++) {
                 if (prim->blendMode == BLEND_VISIBLE) {
                     prim->tpage = 0x1A;
@@ -861,14 +861,14 @@ void EntityRelicOrb(Entity* self) {
                     prim->v3 = 0x60;
                     prim->v2 = 0x60;
 
-                    temp_v1_6 = self->ext.relicOrb.unk82 & 7;
+                    temp_v1_6 = self->ext.relicOrb.sparkleAnim & 7;
                     var_s0_2 = (u16)self->posX.i.hi;
-                    xCoord = var_s0_2 + D_80180FC8[temp_v1_6];
+                    xCoord = var_s0_2 + g_RelicOrbSparkleX[temp_v1_6];
                     prim->x0 = prim->x2 = xCoord - 6;
                     prim->x1 = prim->x3 = xCoord + 6;
 
                     var_s0_2 = (u16)self->posY.i.hi;
-                    yCoord = var_s0_2 + D_80180FD8[temp_v1_6];
+                    yCoord = var_s0_2 + g_RelicOrbSparkleY[temp_v1_6];
                     prim->y0 = prim->y1 = yCoord - 6;
                     prim->y2 = prim->y3 = yCoord + 6;
 
@@ -883,12 +883,13 @@ void EntityRelicOrb(Entity* self) {
                 prim = prim->next;
             }
 
-            self->ext.relicOrb.unk80 = 4;
-            self->ext.relicOrb.unk82++;
+            self->ext.relicOrb.sparkleCycle = 4;
+            self->ext.relicOrb.sparkleAnim++;
         } else {
-            self->ext.relicOrb.unk80--;
+            self->ext.relicOrb.sparkleCycle--;
         }
     }
+
     prim = &g_PrimBuf[self->primIndex];
     for (i = 0; i < 3; i++) {
         prim = prim->next;
