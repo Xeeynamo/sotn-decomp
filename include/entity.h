@@ -423,7 +423,7 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ s8 unk7C;
-} ET_AlucardController; 
+} ET_AlucardController;
 
 typedef struct {
     /* 0x7C */ u16 unk7C;
