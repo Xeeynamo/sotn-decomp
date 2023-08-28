@@ -19,7 +19,7 @@ void EntityFadeToWhite1(Entity* self) {
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
                 prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
                     prim->b3 = prim->y0 = prim->y1 = prim->x0 = prim->x2 = 0;
-            prim->blendMode = 8;
+            prim->blendMode = BLEND_VISIBLE;
         }
         break;
 
@@ -52,7 +52,7 @@ void EntityFadeToWhite1(Entity* self) {
             prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->r0 =
                 prim->b3 - 2;
         if (prim->r0 < 4) {
-            prim->blendMode = 8;
+            prim->blendMode = BLEND_VISIBLE;
             self->step++;
         }
         break;
