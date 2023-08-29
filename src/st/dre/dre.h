@@ -152,3 +152,5 @@ extern s16 D_801A3F14;
 extern s16 D_801A3F16;
 extern s32 D_801A3F18;
 extern u16 g_ItemIconSlots[];
+
+Dialogue g_Dialogue;

@@ -229,7 +229,7 @@ void func_801B74CC(void) {
 
 // called from EntityMariaCutscene
 s32 func_801B7520(s32 textDialogue) {
-        Primitive* prim;
+    Primitive* prim;
     s16 firstPrimIndex;
 
     firstPrimIndex = g_api.AllocPrimitives(PRIM_SPRT, 7);

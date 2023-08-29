@@ -10,57 +10,57 @@ void func_80194774(void) {
     D_801A3EDE = D_801A3EE0 + 20;
 }
 
-s32 func_801947C8(s32 arg0) {
+s32 func_801947C8(s32 textDialogue) {
     Primitive* prim;
     s16 firstPrimIndex;
 
     firstPrimIndex = g_api.AllocPrimitives(PRIM_SPRT, 7);
-    D_801A3F10[0] = firstPrimIndex;
+    g_Dialogue.D_801C24FC[2] = firstPrimIndex;
     if (firstPrimIndex == -1) {
-        D_801A3F10[0] = 0;
+        g_Dialogue.D_801C24FC[2] = 0;
         return 0;
     }
-    D_801A3ED8 = arg0;
-    D_801A3F14 = 0;
-    D_801A3F0C = -1;
-    D_801A3F08 = -1;
+    g_Dialogue.D_801C24CC = textDialogue;
+    g_Dialogue.D_801C2508 = 0;
+    g_Dialogue.D_801C24FC[1] = -1;
+    g_Dialogue.D_801C24FC[0] = -1;
     func_80194774();
 
     if (prim && prim) { // !FAKE
     }
 
-    prim = D_801A3EF0[0] = &g_PrimBuf[D_801A3F10[0]];
+    prim = g_Dialogue.D_801C24E4[0] = &g_PrimBuf[g_Dialogue.D_801C24FC[2]];
 
     prim->blendMode = BLEND_VISIBLE;
-    prim = D_801A3EF0[1] = prim->next;
+    prim = g_Dialogue.D_801C24E4[1] = prim->next;
 
     prim->blendMode = BLEND_VISIBLE;
-    prim = D_801A3EF0[2] = prim->next;
+    prim = g_Dialogue.D_801C24E4[2] = prim->next;
 
     prim->blendMode = BLEND_VISIBLE;
-    prim = D_801A3EF0[3] = prim->next;
+    prim = g_Dialogue.D_801C24E4[3] = prim->next;
 
     prim->blendMode = BLEND_VISIBLE;
-    prim = D_801A3EF0[4] = prim->next;
+    prim = g_Dialogue.D_801C24E4[4] = prim->next;
 
     prim->blendMode = BLEND_VISIBLE;
-    prim = D_801A3EF0[5] = prim->next;
+    prim = g_Dialogue.D_801C24E4[5] = prim->next;
 
     prim->type = 4;
     prim->blendMode = BLEND_VISIBLE;
 
     prim = prim->next;
-    prim->type = PRIM_G4;
+    prim->type = 3;
     prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0xFF;
-    prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->g0 = prim->g1 = prim->g2 =
-        prim->g3 = 0;
+    prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0;
+    prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0;
     prim->x0 = prim->x2 = 4;
     prim->x1 = prim->x3 = 0xF8;
     prim->priority = 0x1FD;
     prim->blendMode = BLEND_VISIBLE;
 
     prim = prim->next;
-    prim->type = PRIM_TILE;
+    prim->type = 1;
     prim->x0 = 3;
     prim->y0 = 0x2F;
     prim->v0 = 0x4A;
@@ -120,7 +120,33 @@ void func_80194F14(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", func_80194FF4);
+void func_80194FF4(u8 ySteps) {
+    Primitive* prim;
+    s32 primIndex;
+    s32 i;
+
+    primIndex = g_Dialogue.D_801C24DA + 1;
+    while (primIndex >= 5) {
+        primIndex -= 5;
+    }
+    if (g_CurrentEntity->step_s == 0) {
+        prim = g_Dialogue.D_801C24E4[primIndex];
+        prim->v1 -= ySteps;
+        prim->v0 += ySteps;
+        if (prim->v1 == 0) {
+            g_CurrentEntity->step_s++;
+            prim->blendMode = BLEND_VISIBLE;
+        }
+    }
+
+    for (i = 0; i < 5; i++) {
+        if (i != primIndex) {
+            prim = g_Dialogue.D_801C24E4[i];
+            prim->y0 -= ySteps;
+        }
+    }
+    g_Dialogue.D_801C24DC++;
+}
 
 // dialogue with mother opens as alucard walks right ID 20
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", EntitySuccubusCutscene);
