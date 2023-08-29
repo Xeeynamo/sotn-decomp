@@ -105,9 +105,57 @@ void func_801C377C(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/41C80", func_801C37D4);
+void func_801C37D4(s16 arg0) {
+    s32 expected;
+    u8 flag;
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/41C80", func_801C38D0);
+    if (D_801D7118 != 0) {
+        func_801C3730(arg0 - D_80097908);
+        D_801D7118 = 0;
+    }
+
+    while (true) {
+        if ((D_801D7110->posX == 0xFFFF) || (arg0 < D_801D7110->posX)) {
+            return;
+        }
+
+        expected = 0;
+        flag = (D_801D7110->entityRoomIndex >> 8) + 0xFF;
+        if ((flag == 0xFF) ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+            CreateEntityWhenInVerticalRange(D_801D7110);
+        }
+        D_801D7110++;
+    }
+}
+
+void func_801C38D0(s16 arg0) {
+    u8 flag;
+    s32 expected;
+
+    if (arg0 < 0) {
+        arg0 = 0;
+    }
+
+    if (D_801D7118 == 0) {
+        func_801C377C(arg0 - D_80097908);
+        D_801D7118 = 1;
+    }
+
+    while (true) {
+        if ((D_801D7110->posX == 0xFFFE) || (arg0 > D_801D7110->posX)) {
+            return;
+        }
+
+        expected = 0;
+        flag = (D_801D7110->entityRoomIndex >> 8) + 0xFF;
+        if ((flag == 0xFF) ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+            CreateEntityWhenInVerticalRange(D_801D7110);
+        }
+        D_801D7110--;
+    }
+}
 
 void func_801C39E4(s16 arg0) {
     while (true) {
@@ -129,9 +177,57 @@ void func_801C3A30(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/41C80", func_801C3A88);
+void func_801C3A88(s16 arg0) {
+    u8 flag;
+    s32 expected;
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/41C80", func_801C3B84);
+    if (D_801D711C != 0) {
+        func_801C39E4(arg0 - D_8009790C);
+        D_801D711C = 0;
+    }
+
+    while (true) {
+        if ((D_801D7114[1] == 0xFFFF) || (arg0 < D_801D7114[1])) {
+            return;
+        }
+
+        expected = 0;
+        flag = (D_801D7114[3] >> 8) + 0xFF;
+        if ((flag == 0xFF) ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+            CreateEntityWhenInHorizontalRange(D_801D7114);
+        }
+        D_801D7114 += 5;
+    }
+}
+
+void func_801C3B84(s16 arg0) {
+    u8 flag;
+    s32 expected;
+
+    if (arg0 < 0) {
+        arg0 = 0;
+    }
+
+    if (D_801D711C == 0) {
+        func_801C3A30(arg0 - D_8009790C);
+        D_801D711C = 1;
+    }
+
+    while (true) {
+        if ((D_801D7114[1] == 0xFFFE) || (arg0 > D_801D7114[1])) {
+            return;
+        }
+
+        expected = 0;
+        flag = (D_801D7114[3] >> 8) + 0xFF;
+        if ((flag == 0xFF) ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+            CreateEntityWhenInHorizontalRange(D_801D7114);
+        }
+        D_801D7114 -= 5;
+    }
+}
 
 void InitRoomEntities(s32 objLayoutId) {
     u16* pObjLayoutStart = g_pStObjLayout[objLayoutId];

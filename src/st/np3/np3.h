@@ -62,6 +62,8 @@ extern u16 g_eBreakableanimSets[];
 extern u8 g_eBreakableBlendModes[];
 extern u16 g_InitializeData0[];
 extern u16 g_InitializeEntityData0[];
+LayoutEntity* g_pStObjLayout[];
+LayoutEntity* D_801807FC[];
 extern u16 D_80180A60[];
 extern u16 D_80180A6C[];
 extern u16 D_80180A78[];
@@ -284,7 +286,7 @@ extern u16 D_80180B38[]; // InitProps
 extern u8 D_801D2770;
 extern u8 D_801D2774;
 extern LayoutEntity* D_801D2768;
-extern LayoutEntity* D_801D276C;
+extern u16* D_801D276C;
 extern s32 D_801D3378;
 extern s32 D_801D337C;
 extern s32 D_801D3380;
