@@ -121,6 +121,20 @@ typedef struct {
 } ET_EquipItemDrop;
 
 typedef struct {
+    u16 unk7C;
+    u16 unk7E;
+    u16 sparkleCycle;
+    u16 sparkleAnim;
+    u32 unk84;
+    u32 unk88;
+    s16 iconSlot;
+    u16 unk8E;
+    u16 floatTimer;
+    u16 unk92;
+    s32 yFloatSpeed;
+} ET_RelicOrb;
+
+typedef struct {
     /* 0x7C */ s16 unk7C;
     /* 0x7E */ s16 unk7E;
     /* 0x80 */ s32 unk80;
@@ -417,6 +431,12 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ u16 unk7C;
+    /* 0x7E */ u16 unk7E;
+    /* 0x80 */ s16 unk80;
+} ET_FadeToWhite;
+
+typedef struct {
+    /* 0x7C */ u16 unk7C;
 } ET_DeathStolenItems;
 
 typedef struct {
@@ -432,6 +452,7 @@ typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
+    /* 0x7C */ ET_RelicOrb relicOrb;
     /* 0x7C */ ET_Weapon weapon;
     /* 0x7C */ ET_SoulStealOrb soulStealOrb;
     /* 0x7C */ ET_GaibonSlogra GS_Props;
@@ -463,6 +484,7 @@ typedef union {
     /* 0x7C */ ET_CastleDoorTransition castleDoorTransition;
     /* 0x7C */ ET_AlucardController alucardController;
     /* 0x7C */ ET_ForegroundTree foregroundTree;
+    /* 0x7C */ ET_FadeToWhite fadeToWhite;
     /* 0x7C */ ET_DeathStolenItems deathStolenItems;
     /* 0x7C */ ET_Death death;
     /* 0x7C */ char stub[0x40];

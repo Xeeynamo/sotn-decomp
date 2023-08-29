@@ -144,4 +144,4 @@ EntityZombie = 0x801D64B0;
 EntityZombieSpawner = 0x801D6710;
 UnkPolyFunc0 = 0x801D7020;
 UnkLoopFunc = 0x801D704C;
-UNK_Update0 = 0x801D7DD8;
+g_ItemIconSlots = 0x801D7DD8;

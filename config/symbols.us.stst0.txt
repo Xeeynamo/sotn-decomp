@@ -78,4 +78,4 @@ UnkLoopFunc = 0x801BD88C;
 func_801BD8F0 = 0x801BD8F0;
 EntityBackgroundVortex = 0x801BE1B4;
 g_Dialogue = 0x801C24CC;
-UNK_Update0 = 0x801C2584;
+g_ItemIconSlots = 0x801C2584;

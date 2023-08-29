@@ -5,8 +5,8 @@ void Update(void) {
     s32* unk;
 
     for (i = 0; i < 0x20; i++) {
-        if (UNK_Update0[i]) {
-            UNK_Update0[i]--;
+        if (g_ItemIconSlots[i]) {
+            g_ItemIconSlots[i]--;
         }
     }
 

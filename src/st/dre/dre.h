@@ -50,6 +50,7 @@ LayoutEntity* D_801802F4[];
 
 /* *** Initializers *** */
 extern u16 g_InitializeData0[];
+extern u16 D_8018047C[];
 extern u16 D_80180488[]; // EntityBackgroundClouds
 extern u16 D_80180494[];
 extern u16 D_801804A0[];
@@ -150,4 +151,4 @@ extern s32 D_801A3F84;
 extern s16 D_801A3F14;
 extern s16 D_801A3F16;
 extern s32 D_801A3F18;
-extern u16 UNK_Update0[];
+extern u16 g_ItemIconSlots[];
