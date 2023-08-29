@@ -221,7 +221,46 @@ void func_801BB3F4(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/394F0", InitRoomEntities);
+void InitRoomEntities(s32 objLayoutId) {
+    u16* pObjLayoutStart = g_pStObjLayout[objLayoutId];
+    Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
+    s16 temp_s0;
+    s16 arg0;
+    s16 i;
+    u16* temp_v1;
+
+    D_801D2768 = pObjLayoutStart;
+    D_801D276C = D_801807FC[objLayoutId];
+
+    if (*pObjLayoutStart != 0xFFFE) {
+        D_801D2768 = pObjLayoutStart + 1;
+        arg0 = Random() & 0xFF;
+        for (i = 0; true; i++) {
+            temp_v1 = D_801D2768;
+            D_801D2768 = temp_v1 + 1;
+            arg0 -= temp_v1[0];
+            if (arg0 < 0) {
+                break;
+            }
+            D_801D2768 = temp_v1 + 3;
+        }
+        D_801D2768 = (temp_v1[2] << 0x10) + temp_v1[1];
+        D_801D276C += i * 2 + 2;
+        D_801D276C = (D_801D276C[1] << 0x10) + D_801D276C[0];
+    }
+    arg0 = currentRoomTileLayout->unkA;
+    temp_s0 = arg0 + 0x140;
+    i = arg0 - 0x40;
+    if (i < 0) {
+        i = 0;
+    }
+
+    D_801D2770 = 0;
+    D_801D2774 = 0;
+    func_801BAFA0(i);
+    func_801BB044(temp_s0);
+    func_801BB254(currentRoomTileLayout->unkE + 0x120);
+}
 
 void func_801BB680(void) {
     Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;

@@ -62,6 +62,8 @@ extern u16 g_eBreakableanimSets[];
 extern u8 g_eBreakableBlendModes[];
 extern u16 g_InitializeData0[];
 extern u16 g_InitializeEntityData0[];
+LayoutEntity *g_pStObjLayout[];
+LayoutEntity* D_801807FC[];
 extern u16 D_80180A60[];
 extern u16 D_80180A6C[];
 extern u16 D_80180A78[];
