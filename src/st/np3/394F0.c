@@ -155,7 +155,7 @@ void func_801BB254(s16 arg0) {
         if ((D_801D276C[1] != (u16)~1) && !(D_801D276C[1] < arg0)) {
             break;
         }
-        D_801D276C+=5;
+        D_801D276C += 5;
     }
 }
 
@@ -165,7 +165,7 @@ void func_801BB2A0(s16 arg0) {
             ((arg0 >= D_801D276C[1]) || (D_801D276C[1] == 0xFFFE))) {
             break;
         }
-        D_801D276C-=5;
+        D_801D276C -= 5;
     }
 }
 
@@ -189,7 +189,7 @@ void func_801BB2F8(s16 arg0) {
             (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
             CreateEntityWhenInHorizontalRange(D_801D276C);
         }
-        D_801D276C+=5;
+        D_801D276C += 5;
     }
 }
 
@@ -217,7 +217,7 @@ void func_801BB3F4(s16 arg0) {
             (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
             CreateEntityWhenInHorizontalRange(D_801D276C);
         }
-        D_801D276C-=5;
+        D_801D276C -= 5;
     }
 }
 

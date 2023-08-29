@@ -197,7 +197,7 @@ void func_801C3A88(s16 arg0) {
             (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
             CreateEntityWhenInHorizontalRange(D_801D7114);
         }
-        D_801D7114+=5;
+        D_801D7114 += 5;
     }
 }
 
@@ -225,7 +225,7 @@ void func_801C3B84(s16 arg0) {
             (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
             CreateEntityWhenInHorizontalRange(D_801D7114);
         }
-        D_801D7114-=5;
+        D_801D7114 -= 5;
     }
 }
 
