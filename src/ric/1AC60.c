@@ -89,7 +89,71 @@ void func_80158814(void) {
     PLAYER.palette = D_80175954;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_8015885C);
+extern s16 D_80175956;
+
+bool func_8015885C(void) {
+    s32 var_v0_2;
+
+    if (D_80175956 == 0) {
+        if (g_Player.padTapped & PAD_L2) {
+            if (g_Player.D_80072EFC == 0) {
+                func_801587D0();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    if ((g_Player.D_80072EFC != 0) || (g_Player.padTapped & 1)) {
+        func_80158814();
+        return false;
+    }
+
+    if (g_Player.padPressed & PAD_CROSS) {
+        if (g_Player.padPressed & PAD_RIGHT) {
+            g_Entities->posX.val += 0x100000;
+        }
+        if (g_Player.padPressed & PAD_LEFT) {
+            g_Entities->posX.val += 0xFFF00000;
+        }
+        if (g_Player.padPressed & PAD_UP) {
+            PLAYER.posY.val += 0xFFF00000;
+        }
+        var_v0_2 = g_Player.padPressed & PAD_DOWN;
+
+    } else {
+        if (g_Player.padTapped & PAD_RIGHT) {
+            g_Entities->posX.val += 0x100000;
+        }
+        if (g_Player.padTapped & PAD_LEFT) {
+            g_Entities->posX.val += 0xFFF00000;
+        }
+        if (g_Player.padTapped & PAD_UP) {
+            PLAYER.posY.val += 0xFFF00000;
+        }
+        var_v0_2 = g_Player.padTapped & PAD_DOWN;
+    }
+
+    if (var_v0_2 != 0) {
+        PLAYER.posY.val += 0x100000;
+    }
+    if (g_Player.padTapped & PAD_CIRCLE) {
+        PLAYER.animCurFrame -= 1;
+    }
+    if (g_Player.padTapped & PAD_SQUARE) {
+        PLAYER.animCurFrame += 1;
+    }
+
+    if (PLAYER.animCurFrame <= 0) {
+        PLAYER.animCurFrame = 0x1;
+    }
+    if (PLAYER.animCurFrame < 0xD4 == 0) {
+        PLAYER.animCurFrame = 0xD3;
+    }
+    FntPrint("charal:%02x\n", PLAYER.animCurFrame);
+    return true;
+}
+// #endif
 
 void func_80158B04(s32 arg0) {
     s32 var_s0;
