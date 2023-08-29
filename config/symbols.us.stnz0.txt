@@ -135,4 +135,4 @@ EntityStageNamePopup = 0x801C8CAC;
 UnkPolyFunc0 = 0x801CA0D0;
 UnkLoopFunc = 0x801CA0FC;
 EntityLifeUpSpawn = 0x801CA160;
-UNK_Update0 = 0x801CB740;
+g_ItemIconSlots = 0x801CB740;

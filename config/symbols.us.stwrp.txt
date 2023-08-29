@@ -116,4 +116,4 @@ BottomCornerText = 0x80192F40;
 func_80193270 = 0x80193270;
 UnkPolyFunc0 = 0x80193A10;
 UnkLoopFunc = 0x80193A3C;
-UNK_Update0 = 0x80194728;
+g_ItemIconSlots = 0x80194728;
