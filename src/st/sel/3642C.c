@@ -36,11 +36,11 @@ void func_801B690C(u8 ySteps, Entity* self) {
     s32 primIndex = g_Dialogue.D_801C24DA + 1;
     Primitive* prim;
     s32 i;
-    
+
     while (primIndex >= 5) {
         primIndex -= 5;
     }
-    
+
     if (self->step_s == 0) {
         prim = g_Dialogue.D_801C24E4[primIndex];
         prim->v1 -= ySteps;
@@ -50,7 +50,7 @@ void func_801B690C(u8 ySteps, Entity* self) {
             prim->blendMode = 8;
         }
     }
-    
+
     for (i = 0; i < 5; i++) {
         if (i != primIndex) {
             prim = g_Dialogue.D_801C24E4[i];
