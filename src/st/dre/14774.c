@@ -141,9 +141,3 @@ INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", EntityUnkId21);
 
 // appears to load from the CD and freeze the game
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", EntityUnkId23);
-
-// Fades to white
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", EntityFadeToWhite1);
-
-// Fades to white ID 24
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", EntityFadeToWhite2);
