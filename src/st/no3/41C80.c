@@ -105,7 +105,29 @@ void func_801C377C(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/41C80", func_801C37D4);
+void func_801C37D4(s16 arg0) {
+    s32 expected;
+    u8 flag;
+
+    if (D_801D7118 != 0) {
+        func_801C3730(arg0 - D_80097908);
+        D_801D7118 = 0;
+    }
+
+    while (true) {
+        if ((D_801D7110->posX == 0xFFFF) || (arg0 < D_801D7110->posX)) {
+            return;
+        }
+
+        expected = 0;
+        flag = (D_801D7110->entityRoomIndex >> 8) + 0xFF;
+        if ((flag == 0xFF) ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+            CreateEntityWhenInVerticalRange(D_801D7110);
+        }
+        D_801D7110++;
+    }
+}
 
 void func_801C38D0(s16 arg0) {
     u8 flag;
