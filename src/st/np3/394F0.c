@@ -152,20 +152,20 @@ void func_801BB140(s16 arg0) {
 
 void func_801BB254(s16 arg0) {
     while (true) {
-        if ((D_801D276C->posY != (u16)~1) && !(D_801D276C->posY < arg0)) {
+        if ((D_801D276C[1] != (u16)~1) && !(D_801D276C[1] < arg0)) {
             break;
         }
-        D_801D276C++;
+        D_801D276C+=5;
     }
 }
 
 void func_801BB2A0(s16 arg0) {
     while (true) {
-        if ((D_801D276C->posY != 0xFFFF) &&
-            ((arg0 >= D_801D276C->posY) || (D_801D276C->posY == 0xFFFE))) {
+        if ((D_801D276C[1] != 0xFFFF) &&
+            ((arg0 >= D_801D276C[1]) || (D_801D276C[1] == 0xFFFE))) {
             break;
         }
-        D_801D276C--;
+        D_801D276C-=5;
     }
 }
 
@@ -179,17 +179,17 @@ void func_801BB2F8(s16 arg0) {
     }
 
     while (true) {
-        if ((D_801D276C->posY == 0xFFFF) || (arg0 < D_801D276C->posY)) {
+        if ((D_801D276C[1] == 0xFFFF) || (arg0 < D_801D276C[1])) {
             return;
         }
 
         expected = 0;
-        flag = (D_801D276C->entityRoomIndex >> 8) + 0xFF;
+        flag = (D_801D276C[3] >> 8) + 0xFF;
         if ((flag == 0xFF) ||
             (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
             CreateEntityWhenInHorizontalRange(D_801D276C);
         }
-        D_801D276C++;
+        D_801D276C+=5;
     }
 }
 
@@ -207,17 +207,17 @@ void func_801BB3F4(s16 arg0) {
     }
 
     while (true) {
-        if ((D_801D276C->posY == 0xFFFE) || (arg0 > D_801D276C->posY)) {
+        if ((D_801D276C[1] == 0xFFFE) || (arg0 > D_801D276C[1])) {
             return;
         }
 
         expected = 0;
-        flag = (D_801D276C->entityRoomIndex >> 8) + 0xFF;
+        flag = (D_801D276C[3] >> 8) + 0xFF;
         if ((flag == 0xFF) ||
             (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
             CreateEntityWhenInHorizontalRange(D_801D276C);
         }
-        D_801D276C--;
+        D_801D276C-=5;
     }
 }
 
