@@ -374,4 +374,4 @@ extern u8 D_80181FF0;
 
 // *** EntitySoulStealOrb properties END ***
 
-Dialogue g_Dialogue;
+extern Dialogue g_Dialogue;

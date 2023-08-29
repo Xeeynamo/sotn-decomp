@@ -95,4 +95,6 @@ extern u16 g_ItemIconSlots[];
 extern u16 UNK_Invincibility0[];
 extern u16 g_InitializeEntityData0[];
 
+extern Dialogue g_Dialogue;
+
 #endif
