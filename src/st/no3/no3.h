@@ -33,6 +33,7 @@ typedef enum EntityIDs {
     /* 0x5B */ E_ID_5B = 0x5B,
     /* 0x5D */ E_FALLING_ROCK = 0x5D,
     /* 0x5E */ E_ID_5E,
+    /* 0x62 */ E_ID_62 = 0x62,
 } EntityIDs;
 
 extern void CreateEntityFromCurrentEntity(u16, Entity*);
@@ -126,6 +127,7 @@ extern u8 D_80181BE0[];
 
 extern u8 D_80181B40[];
 extern u8 D_80181B4C[];
+extern Unkstruct_80180FE0 D_80181C5C[];
 extern u16 D_80181C8C[];
 extern u16 UNK_Invincibility0[];
 extern s16 D_801820C4[];
