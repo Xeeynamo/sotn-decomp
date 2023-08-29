@@ -292,7 +292,7 @@ extern s32 D_801D337C;
 extern s32 D_801D3380;
 extern s32 D_801D3384;
 extern s32 D_801D3388;
-extern u16 UNK_Update0[];
+extern u16 g_ItemIconSlots[];
 extern s32 D_801825D4;
 extern u16 D_801825E4[];
 extern u8 D_801825EC[]; // Animation: Walking
