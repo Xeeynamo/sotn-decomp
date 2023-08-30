@@ -27,37 +27,39 @@ segments:
     vram:  0x80180000
     subalign: 4
     subsegments:
-      - [0x0, rodata]
-      - [0xE50, rodata]
-      - [0x10C0, rodata]
-      - [0x1300, rodata]
-      - [0x1520, rodata]
-      - [0x22B0, rodata]
-      - [0x23D0, rodata]
-      - [0x2400, rodata]
-      - [0x2440, rodata]
-      - [0x2720, rodata]
-      - [0x2740, rodata]
-      - [0x2A20, rodata]
-      - [0x2B00, rodata]
-      - [0x3010, rodata]
-      - [0x33A0, rodata]
-      - [0x3530, rodata]
-      - [0x3570, rodata]
-      - [0x3580, rodata]
-      - [0x3720, rodata]
-      - [0x3760, rodata]
+      - [0x0, data]
+      - [0xE50, data]
+      - [0x10C0, data]
+      - [0x1300, data]
+      - [0x1520, data]
+      - [0x1F40, .data, entity_relic_orb]
+      - [0x1FA4, data]
+      - [0x22B0, data]
+      - [0x23D0, data]
+      - [0x2400, data]
+      - [0x2440, data]
+      - [0x2720, data]
+      - [0x2740, data]
+      - [0x2A20, data]
+      - [0x2B00, data]
+      - [0x3010, data]
+      - [0x33A0, data]
+      - [0x3530, data]
+      - [0x3570, data]
+      - [0x3580, data]
+      - [0x3720, data]
+      - [0x3760, data]
       - [0x3A7C, roomdef, g_Rooms]
-      - [0x3B68, rodata]
-      - [0x31EA0, rodata]
+      - [0x3B68, data]
+      - [0x31EA0, data]
       - [0x31EA8, .rodata, 3246C] # EntityStairwayPiece
       - [0x31EBC, .rodata, 365FC] # func_801B65FC
       - [0x31ED0, .rodata, 36990] # EntitySlogra .rodata, 36990
       - [0x31EDC, rodata] # EntityGaibon .rodata, 36990
       - [0x31F00, rodata]
       - [0x31F68, .rodata, 3DEF4]
-      - [0x31FA0, rodata]
-      - [0x31FB0, rodata]
+      - [0x31FA0, .rodata, entity_relic_orb]
+      - [0x31FD8, rodata]
       - [0x3200C, rodata] # EntityStageNamePopup .rodata,
       - [0x32020, .rodata, 44DCC] # EntityMerman2
       - [0x32044, .rodata, 48238] # EntityMerman
@@ -78,6 +80,8 @@ segments:
       - [0x390BC, c]
       - [0x394F0, c]
       - [0x3DEF4, c]
+      - [0x3F1A0, c, entity_relic_orb]
+      - [0x3FC70, c]
       - [0x44DCC, c] # Merman Entities
       - [0x48238, c] # Merman Entities (2)
       - [0x490E8, c] # EntityBoneScimitar
@@ -86,5 +90,5 @@ segments:
       - [0x49F98, c] # EntityBloodyZombie
       - [0x4B018, c]
       - [0x4E69C, c]
-      - [0x52768, data]
+      - [0x52768, sbss]
   - [0x53434]

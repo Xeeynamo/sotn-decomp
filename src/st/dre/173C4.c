@@ -937,7 +937,7 @@ void EntityExplosion(Entity* entity) {
     }
 }
 
-void func_8019C738(Entity* entity, s32 renderFlags) {
+void BlinkItem(Entity* entity, s32 renderFlags) {
     POLY_GT4* poly;
     s16 left, top, right, bottom;
 
