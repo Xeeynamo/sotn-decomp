@@ -136,3 +136,5 @@ UnkPolyFunc0 = 0x801CA0D0;
 UnkLoopFunc = 0x801CA0FC;
 EntityLifeUpSpawn = 0x801CA160;
 g_ItemIconSlots = 0x801CB740;
+BlitChar = 0x801BF308;
+BlinkTimer = 0x801BEC7C;

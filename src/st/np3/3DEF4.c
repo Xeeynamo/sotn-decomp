@@ -249,7 +249,7 @@ void EntityExplosion(Entity* entity) {
     }
 }
 
-void func_801BE864(Entity* self, s32 arg1) {
+void BlinkTimer(Entity* self, s32 arg1) {
     POLY_GT4* poly = &g_PrimBuf[self->primIndex];
     s16 right, left, bottom, top;
 
@@ -460,11 +460,11 @@ void EntityEquipItemDrop(Entity* self) {
         if (self->ext.generic.unk7C.u != 0) {
             self->ext.generic.unk7C.u--;
         }
-        func_801BE864(self, self->ext.generic.unk7C.u);
+        BlinkTimer(self, self->ext.generic.unk7C.u);
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", func_801BEEF0);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", BlitChar);
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/3DEF4", EntityRelicOrb);
 

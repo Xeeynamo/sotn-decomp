@@ -145,3 +145,5 @@ EntityZombieSpawner = 0x801D6710;
 UnkPolyFunc0 = 0x801D7020;
 UnkLoopFunc = 0x801D704C;
 g_ItemIconSlots = 0x801D7DD8;
+BlitChar = 0x801C7680;
+BlinkTimer = 0x801C6FF4;

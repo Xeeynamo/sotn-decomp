@@ -117,3 +117,5 @@ EntityBladeSword = 0x801D1BB8;
 UnkPolyFunc0 = 0x801D26D8;
 UnkLoopFunc = 0x801D2704;
 g_ItemIconSlots = 0x801D33F4;
+BlitChar = 0x801BEEF0;
+BlinkTimer = 0x801BE864;

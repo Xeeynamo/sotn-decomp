@@ -184,11 +184,11 @@ void EntityEquipItemDrop(Entity* self) {
         if (self->ext.generic.unk7C.u != 0) {
             self->ext.generic.unk7C.u--;
         }
-        func_8019C738(self, self->ext.generic.unk7C.u);
+        BlinkTimer(self, self->ext.generic.unk7C.u);
     }
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", func_8019CDC4);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", BlitChar);
 
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", EntityRelicOrb);
 

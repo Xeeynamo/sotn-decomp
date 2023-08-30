@@ -81,3 +81,5 @@ UnkLoopFunc = 0x801A27E4;
 EntityUnkId17 = 0x801A2E20;
 Entity3DBackgroundHouse = 0x801A2F10;
 g_ItemIconSlots = 0x801A3F8C;
+BlitChar = 0x8019CDC4;
+BlinkTimer = 0x8019C738;

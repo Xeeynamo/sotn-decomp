@@ -41,3 +41,5 @@ func_801951F0 = 0x801951F0;
 UnkPolyFunc0 = 0x80195990;
 UnkLoopFunc = 0x801959BC;
 g_ItemIconSlots = 0x801966A8;
+BlitChar = 0x8018FF9C;
+BlinkTimer = 0x8018F910;

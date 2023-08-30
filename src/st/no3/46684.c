@@ -241,7 +241,7 @@ void EntityExplosion(Entity* entity) {
     }
 }
 
-void func_801C6FF4(Entity* entity, s32 renderFlags) {
+void BlinkTimer(Entity* entity, s32 renderFlags) {
     POLY_GT4* poly;
     s16 left, top, right, bottom;
 
@@ -456,11 +456,11 @@ void EntityEquipItemDrop(Entity* self) {
         if (self->ext.generic.unk7C.u != 0) {
             self->ext.generic.unk7C.u--;
         }
-        func_801C6FF4(self, self->ext.generic.unk7C.u);
+        BlinkTimer(self, self->ext.generic.unk7C.u);
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", func_801C7680);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", BlitChar);
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", EntityRelicOrb);
 

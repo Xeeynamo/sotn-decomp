@@ -478,11 +478,11 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", EntityPrizeDrop);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018F814);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018F910);
+INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", BlinkTimer);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", EntityEquipItemDrop);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018FF9C);
+INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", BlitChar);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8019024C);
 
