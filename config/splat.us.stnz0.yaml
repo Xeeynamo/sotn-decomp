@@ -33,7 +33,7 @@ segments:
       - [0x47C, data]
       - [0x18C0, data]
       - [0x1DD0, data]
-      - [0x1E68, data, entity_relic_orb]
+      - [0x1E68, .data, entity_relic_orb]
       - [0x1ECC, data]
       - [0x20A0, data]
       - [0x20B0, data]
@@ -86,7 +86,7 @@ segments:
       - [0x3064C, rodata]
       - [0x30790, .rodata, 3E30C]
       - [0x307B0, .rodata, 3E30C]
-      - [0x307C8, rodata, entity_relic_orb]
+      - [0x307C8, .rodata, entity_relic_orb]
       - [0x30800, rodata]
       - [0x30814, .rodata, 43708] # EntityBoneScimitar
       - [0x30834, .rodata, 43F9C] # EntityAxeKnight
@@ -102,6 +102,8 @@ segments:
       - [0x394D4, c]
       - [0x39908, c]
       - [0x3E30C, c]
+      - [0x3F5B8, c, entity_relic_orb]
+      - [0x40088, c]
       - [0x43708, c] # EntityBoneScimitar
       - [0x43F9C, c] # EntityAxeKnight
       - [0x44EAC, c] # EntityBloodyZombie
