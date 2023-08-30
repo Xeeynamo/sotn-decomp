@@ -15,36 +15,36 @@ s32 func_801947C8(s32 textDialogue) {
     s16 firstPrimIndex;
 
     firstPrimIndex = g_api.AllocPrimitives(PRIM_SPRT, 7);
-    g_Dialogue.D_801C24FC[2] = firstPrimIndex;
+    g_Dialogue.primIndex[2] = firstPrimIndex;
     if (firstPrimIndex == -1) {
-        g_Dialogue.D_801C24FC[2] = 0;
+        g_Dialogue.primIndex[2] = 0;
         return 0;
     }
-    g_Dialogue.D_801C24CC = textDialogue;
-    g_Dialogue.D_801C2508 = 0;
-    g_Dialogue.D_801C24FC[1] = -1;
-    g_Dialogue.D_801C24FC[0] = -1;
+    g_Dialogue.nextCharDialogue = textDialogue;
+    g_Dialogue.unk3C = 0;
+    g_Dialogue.primIndex[1] = -1;
+    g_Dialogue.primIndex[0] = -1;
     func_80194774();
 
     if (prim && prim) { // !FAKE
     }
 
-    prim = g_Dialogue.D_801C24E4[0] = &g_PrimBuf[g_Dialogue.D_801C24FC[2]];
+    prim = g_Dialogue.prim[0] = &g_PrimBuf[g_Dialogue.primIndex[2]];
 
     prim->blendMode = BLEND_VISIBLE;
-    prim = g_Dialogue.D_801C24E4[1] = prim->next;
+    prim = g_Dialogue.prim[1] = prim->next;
 
     prim->blendMode = BLEND_VISIBLE;
-    prim = g_Dialogue.D_801C24E4[2] = prim->next;
+    prim = g_Dialogue.prim[2] = prim->next;
 
     prim->blendMode = BLEND_VISIBLE;
-    prim = g_Dialogue.D_801C24E4[3] = prim->next;
+    prim = g_Dialogue.prim[3] = prim->next;
 
     prim->blendMode = BLEND_VISIBLE;
-    prim = g_Dialogue.D_801C24E4[4] = prim->next;
+    prim = g_Dialogue.prim[4] = prim->next;
 
     prim->blendMode = BLEND_VISIBLE;
-    prim = g_Dialogue.D_801C24E4[5] = prim->next;
+    prim = g_Dialogue.prim[5] = prim->next;
 
     prim->type = 4;
     prim->blendMode = BLEND_VISIBLE;
@@ -125,12 +125,12 @@ void func_80194FF4(u8 ySteps) {
     s32 primIndex;
     s32 i;
 
-    primIndex = g_Dialogue.D_801C24DA + 1;
+    primIndex = g_Dialogue.nextCharY + 1;
     while (primIndex >= 5) {
         primIndex -= 5;
     }
     if (g_CurrentEntity->step_s == 0) {
-        prim = g_Dialogue.D_801C24E4[primIndex];
+        prim = g_Dialogue.prim[primIndex];
         prim->v1 -= ySteps;
         prim->v0 += ySteps;
         if (prim->v1 == 0) {
@@ -141,11 +141,11 @@ void func_80194FF4(u8 ySteps) {
 
     for (i = 0; i < 5; i++) {
         if (i != primIndex) {
-            prim = g_Dialogue.D_801C24E4[i];
+            prim = g_Dialogue.prim[i];
             prim->y0 -= ySteps;
         }
     }
-    g_Dialogue.D_801C24DC++;
+    g_Dialogue.portraitAnimTimer++;
 }
 
 // dialogue with mother opens as alucard walks right ID 20

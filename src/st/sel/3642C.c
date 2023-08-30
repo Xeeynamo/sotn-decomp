@@ -33,7 +33,7 @@ void func_801B68E0(s32 arg0) {
 }
 
 void func_801B690C(u8 ySteps, Entity* self) {
-    s32 primIndex = g_Dialogue.D_801C24DA + 1;
+    s32 primIndex = g_Dialogue.nextCharY + 1;
     Primitive* prim;
     s32 i;
 
@@ -42,7 +42,7 @@ void func_801B690C(u8 ySteps, Entity* self) {
     }
 
     if (self->step_s == 0) {
-        prim = g_Dialogue.D_801C24E4[primIndex];
+        prim = g_Dialogue.prim[primIndex];
         prim->v1 -= ySteps;
         prim->v0 = ySteps + prim->v0;
         if (prim->v1 == 0) {
@@ -53,11 +53,11 @@ void func_801B690C(u8 ySteps, Entity* self) {
 
     for (i = 0; i < 5; i++) {
         if (i != primIndex) {
-            prim = g_Dialogue.D_801C24E4[i];
+            prim = g_Dialogue.prim[i];
             prim->y0 -= ySteps;
         }
     }
-    g_Dialogue.D_801C24DC++;
+    g_Dialogue.portraitAnimTimer++;
 }
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/3642C", func_801B69F8);

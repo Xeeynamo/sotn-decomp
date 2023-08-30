@@ -251,12 +251,12 @@ void func_8018E6C4(u8 ySteps) {
     s32 primIndex;
     s32 i;
 
-    primIndex = g_Dialogue.D_801C24DA + 1;
+    primIndex = g_Dialogue.nextCharY + 1;
     while (primIndex >= 5) {
         primIndex -= 5;
     }
     if (g_CurrentEntity->step_s == 0) {
-        prim = g_Dialogue.D_801C24E4[primIndex];
+        prim = g_Dialogue.prim[primIndex];
         prim->v1 -= ySteps;
         prim->v0 += ySteps;
         if (prim->v1 == 0) {
@@ -267,11 +267,11 @@ void func_8018E6C4(u8 ySteps) {
 
     for (i = 0; i < 5; i++) {
         if (i != primIndex) {
-            prim = g_Dialogue.D_801C24E4[i];
+            prim = g_Dialogue.prim[i];
             prim->y0 -= ySteps;
         }
     }
-    g_Dialogue.D_801C24DC++;
+    g_Dialogue.portraitAnimTimer++;
 }
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId16);
