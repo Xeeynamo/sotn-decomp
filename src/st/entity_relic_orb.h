@@ -1,3 +1,5 @@
+#include "stage.h"
+
 const char* g_RelicOrbTexts[] = {
     "Obtained ",
 };
