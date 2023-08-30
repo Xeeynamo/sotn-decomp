@@ -39,7 +39,7 @@ segments:
       - [0xEA0, data]
       - [0x11F0, data]
       - [0x1B40, data]
-      - [0x25B4, data, entity_relic_orb]
+      - [0x25B4, .data, entity_relic_orb]
       - [0x2618, data]
       - [0x3180, data]
       - [0x39A0, data]
@@ -63,7 +63,7 @@ segments:
       - [0x37578, rodata]
       - [0x375E0, .rodata, 46684] # EntityPrizeDrop
       - [0x37600, .rodata, 46684] # EntityEquipItemDrop
-      - [0x37618, rodata, entity_relic_orb]
+      - [0x37618, .rodata, entity_relic_orb]
       - [0x37650, rodata]
       - [0x376E8, rodata]
       - [0x377A4, .rodata, 56264] # EntityBat
@@ -75,6 +75,8 @@ segments:
       - [0x4184C, c]
       - [0x41C80, c]
       - [0x46684, c]
+      - [0x47930, c, entity_relic_orb]
+      - [0x48400, c]
       - [0x56264, c]
       - [0x564B0, c]
       - [0x570B0, sbss]
