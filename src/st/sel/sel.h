@@ -217,6 +217,8 @@ extern s32 D_801D6B0C;
 extern s32 D_801D6B20;
 extern s32 D_801D6B24;
 
+extern Dialogue g_Dialogue;
+
 void func_801B1ED0();
 void func_801B3A54(s32, s32);
 s32 func_801B3A94(s32);

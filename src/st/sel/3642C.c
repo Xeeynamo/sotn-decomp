@@ -32,7 +32,33 @@ void func_801B68E0(s32 arg0) {
     D_801BC390 = 1;
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/3642C", func_801B690C);
+void func_801B690C(u8 ySteps, Entity* self) {
+    s32 primIndex = g_Dialogue.nextCharY + 1;
+    Primitive* prim;
+    s32 i;
+
+    while (primIndex >= 5) {
+        primIndex -= 5;
+    }
+
+    if (self->step_s == 0) {
+        prim = g_Dialogue.prim[primIndex];
+        prim->v1 -= ySteps;
+        prim->v0 = ySteps + prim->v0;
+        if (prim->v1 == 0) {
+            self->step_s++;
+            prim->blendMode = 8;
+        }
+    }
+
+    for (i = 0; i < 5; i++) {
+        if (i != primIndex) {
+            prim = g_Dialogue.prim[i];
+            prim->y0 -= ySteps;
+        }
+    }
+    g_Dialogue.portraitAnimTimer++;
+}
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/3642C", func_801B69F8);
 

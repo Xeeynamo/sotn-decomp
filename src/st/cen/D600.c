@@ -245,7 +245,34 @@ void func_8018E3BC(s32 arg0) {
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8018E3E8);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8018E6C4);
+// Animates the portrait size of the actor by enlarging or shrinking it
+void func_8018E6C4(u8 ySteps) {
+    Primitive* prim;
+    s32 primIndex;
+    s32 i;
+
+    primIndex = g_Dialogue.nextCharY + 1;
+    while (primIndex >= 5) {
+        primIndex -= 5;
+    }
+    if (g_CurrentEntity->step_s == 0) {
+        prim = g_Dialogue.prim[primIndex];
+        prim->v1 -= ySteps;
+        prim->v0 += ySteps;
+        if (prim->v1 == 0) {
+            g_CurrentEntity->step_s++;
+            prim->blendMode = BLEND_VISIBLE;
+        }
+    }
+
+    for (i = 0; i < 5; i++) {
+        if (i != primIndex) {
+            prim = g_Dialogue.prim[i];
+            prim->y0 -= ySteps;
+        }
+    }
+    g_Dialogue.portraitAnimTimer++;
+}
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId16);
 

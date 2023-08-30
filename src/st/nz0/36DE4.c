@@ -228,41 +228,41 @@ void func_801B74CC(void) {
 }
 
 // called from EntityMariaCutscene
-s32 func_801B7520(s32 arg0) {
+s32 func_801B7520(s32 textDialogue) {
     Primitive* prim;
     s16 firstPrimIndex;
 
     firstPrimIndex = g_api.AllocPrimitives(PRIM_SPRT, 7);
-    D_801CB6C0[0] = firstPrimIndex;
+    g_Dialogue.primIndex[2] = firstPrimIndex;
     if (firstPrimIndex == -1) {
-        D_801CB6C0[0] = 0;
+        g_Dialogue.primIndex[2] = 0;
         return 0;
     }
-    D_801CB688 = arg0;
-    D_801CB6C4 = 0;
-    D_801CB6BC = -1;
-    D_801CB6B8 = -1;
+    g_Dialogue.nextCharDialogue = textDialogue;
+    g_Dialogue.unk3C = 0;
+    g_Dialogue.primIndex[1] = -1;
+    g_Dialogue.primIndex[0] = -1;
     func_801B74CC();
 
     if (prim && prim) { // !FAKE
     }
 
-    prim = D_801CB6A0[0] = &g_PrimBuf[D_801CB6C0[0]];
+    prim = g_Dialogue.prim[0] = &g_PrimBuf[g_Dialogue.primIndex[2]];
 
     prim->blendMode = BLEND_VISIBLE;
-    prim = D_801CB6A0[1] = prim->next;
+    prim = g_Dialogue.prim[1] = prim->next;
 
     prim->blendMode = BLEND_VISIBLE;
-    prim = D_801CB6A0[2] = prim->next;
+    prim = g_Dialogue.prim[2] = prim->next;
 
     prim->blendMode = BLEND_VISIBLE;
-    prim = D_801CB6A0[3] = prim->next;
+    prim = g_Dialogue.prim[3] = prim->next;
 
     prim->blendMode = BLEND_VISIBLE;
-    prim = D_801CB6A0[4] = prim->next;
+    prim = g_Dialogue.prim[4] = prim->next;
 
     prim->blendMode = BLEND_VISIBLE;
-    prim = D_801CB6A0[5] = prim->next;
+    prim = g_Dialogue.prim[5] = prim->next;
 
     prim->type = 4;
     prim->blendMode = BLEND_VISIBLE;
@@ -270,8 +270,8 @@ s32 func_801B7520(s32 arg0) {
     prim = prim->next;
     prim->type = 3;
     prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0xFF;
-    prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->g0 = prim->g1 = prim->g2 =
-        prim->g3 = 0;
+    prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0;
+    prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0;
     prim->x0 = prim->x2 = 4;
     prim->x1 = prim->x3 = 0xF8;
     prim->priority = 0x1FD;
@@ -310,7 +310,34 @@ void func_801B797C(s32 arg0) {
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/36DE4", func_801B79A8);
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/36DE4", func_801B7C54);
+// Animates the portrait size of the actor by enlarging or shrinking it
+void func_801B7C54(u8 ySteps) {
+    Primitive* prim;
+    s32 primIndex;
+    s32 i;
+
+    primIndex = g_Dialogue.nextCharY + 1;
+    while (primIndex >= 5) {
+        primIndex -= 5;
+    }
+    if (g_CurrentEntity->step_s == 0) {
+        prim = g_Dialogue.prim[primIndex];
+        prim->v1 -= ySteps;
+        prim->v0 += ySteps;
+        if (prim->v1 == 0) {
+            g_CurrentEntity->step_s++;
+            prim->blendMode = BLEND_VISIBLE;
+        }
+    }
+
+    for (i = 0; i < 5; i++) {
+        if (i != primIndex) {
+            prim = g_Dialogue.prim[i];
+            prim->y0 -= ySteps;
+        }
+    }
+    g_Dialogue.portraitAnimTimer++;
+}
 
 // cutscene where alucard and maria discuss castle changing
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/36DE4", EntityMariaCutscene);

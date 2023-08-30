@@ -989,6 +989,26 @@ typedef struct {
 } RelicOrb; /* size=0x10 */
 
 typedef struct {
+    /* 0x00 */ const char* nextCharDialogue; // ptr to dialogue next character
+    /* 0x04 */ u16 startX;                   // starting x coord
+    /* 0x06 */ u16 nextLineY;                // next line y coord
+    /* 0x08 */ u16 startY;                   // starting y coord
+    /* 0x0A */ u16 nextCharX;                // next char x coord
+    /* 0x0C */ u16 nextLineX;                // next line x coord
+    /* 0x0E */ s16 nextCharY;                // next char y coord
+    /* 0x10 */ u16 portraitAnimTimer;        // portrait animation timer
+    /* 0x12 */ u16 unk12;                    // unknown
+    /* 0x14 */ u16 clutIndex;                // CLUT index
+    /* 0x16 */ u8 nextCharTimer;             // timer to next character
+    /* 0x17 */ u8 unk17;                     // unknown
+    /* 0x18 */ Primitive* prim[6];           // for dialogue graphics rendering
+    /* 0x30 */ s32 primIndex[3];             // primIndices: unk, actorName, unk
+    /* 0x3C */ u16 unk3C;                    // unknown
+    /* 0x3E */ u16 timer;                    // global timer
+    /* 0x40 */ const char* unk40;            // dialogue settings, maybe?
+} Dialogue;                                  // size = 0x44
+
+typedef struct {
     /* 8003C774 */ Overlay o;
     /* 8003C7B4 */ void (*FreePrimitives)(s32);
     /* 8003C7B8 */ s16 (*AllocPrimitives)(PrimitiveType type, s32 count);

@@ -347,7 +347,6 @@ extern s32 D_801823A4;
 extern const char D_801B058C[]; // "charal %x\n"
 extern const char D_801B0598[]; // "charal %x\n"
 extern const char D_801B08C8[]; // "charal %x\n"
-extern s32 D_801CB688;
 extern s16 D_801CB68E;
 extern u16 D_801CB690;
 extern s16 D_801CB692;
@@ -374,3 +373,5 @@ extern u16 D_80181F90[]; // NOTE(sestren): Animation frame properties?
 extern u8 D_80181FF0;
 
 // *** EntitySoulStealOrb properties END ***
+
+extern Dialogue g_Dialogue;

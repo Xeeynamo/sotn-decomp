@@ -8,15 +8,15 @@
 void func_801A8BF8(void) {
     Primitive* prim;
 
-    func_801A8B9C(g_Dialogue.D_801C24DA);
-    prim = g_Dialogue.D_801C24E4[g_Dialogue.D_801C24DA];
+    func_801A8B9C(g_Dialogue.nextCharY);
+    prim = g_Dialogue.prim[g_Dialogue.nextCharY];
     prim->tpage = 0x10;
-    prim->clut = g_Dialogue.D_801C24E0;
-    prim->y0 = g_Dialogue.D_801C24D2;
+    prim->clut = g_Dialogue.clutIndex;
+    prim->y0 = g_Dialogue.nextLineY;
     prim->u0 = 0;
-    prim->x0 = g_Dialogue.D_801C24D0;
+    prim->x0 = g_Dialogue.startX;
     prim->x0 = prim->x0 + 4;
-    prim->v0 = g_Dialogue.D_801C24DA * 0xC - 0x80;
+    prim->v0 = g_Dialogue.nextCharY * 0xC - 0x80;
     prim->u1 = 0xC0;
     prim->v1 = 0xC;
     prim->priority = 0x1FF;
@@ -57,7 +57,7 @@ void func_801A8CB0(u16 actorIndex, Entity* self) {
 
     // Fill prims to render the actor name on screen
     prim = &g_PrimBuf[primIndex];
-    g_Dialogue.D_801C24FC[1] = primIndex;
+    g_Dialogue.primIndex[1] = primIndex;
     actorName = D_80180828[actorIndex];
     x = 0x38;
     while (prim != NULL) {
@@ -75,7 +75,7 @@ void func_801A8CB0(u16 actorIndex, Entity* self) {
             prim->priority = 0x1FF;
             prim->blendMode = BLEND_VISIBLE;
             prim->x0 = x;
-            prim->y0 = g_Dialogue.D_801C24D4 + 6;
+            prim->y0 = g_Dialogue.startY + 6;
             prim = prim->next;
             x += FONT_GAP;
         }
@@ -83,9 +83,9 @@ void func_801A8CB0(u16 actorIndex, Entity* self) {
 }
 
 void func_801A8E34(s32 arg0) {
-    g_Dialogue.D_801C250C = arg0 + 0x100000;
-    g_Dialogue.D_801C250A = 0;
-    g_Dialogue.D_801C2508 = 1;
+    g_Dialogue.unk40 = arg0 + 0x100000;
+    g_Dialogue.timer = 0;
+    g_Dialogue.unk3C = 1;
 }
 
 void func_801A8E60(void) {
@@ -93,49 +93,49 @@ void func_801A8E60(void) {
     u16 startTimer;
     u8 entityIndex;
 
-    g_Dialogue.D_801C250A++;
+    g_Dialogue.timer++;
     // protect from overflows
-    if (g_Dialogue.D_801C250A > 0xFFFE) {
-        g_Dialogue.D_801C2508 = 0;
+    if (g_Dialogue.timer > 0xFFFE) {
+        g_Dialogue.unk3C = 0;
         return;
     }
 
     while (true) {
         // Start the dialogue script only if the start timer has passed
-        startTimer = (*g_Dialogue.D_801C250C++ << 8) | *g_Dialogue.D_801C250C++;
-        if (g_Dialogue.D_801C250A < startTimer) {
+        startTimer = (*g_Dialogue.unk40++ << 8) | *g_Dialogue.unk40++;
+        if (g_Dialogue.timer < startTimer) {
             // Re-evaluate the condition at the next frame
-            g_Dialogue.D_801C250C -= 2;
+            g_Dialogue.unk40 -= 2;
             return;
         }
 
-        switch (*g_Dialogue.D_801C250C++) {
+        switch (*g_Dialogue.unk40++) {
         case 0:
-            entityIndex = *g_Dialogue.D_801C250C++;
+            entityIndex = *g_Dialogue.unk40++;
             entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
             DestroyEntity(entity);
 
-            entity->entityId = *g_Dialogue.D_801C250C++;
+            entity->entityId = *g_Dialogue.unk40++;
             entity->pfnUpdate = PfnEntityUpdates[entity->entityId - 1];
-            entity->posX.i.hi = *g_Dialogue.D_801C250C++ * 0x10;
-            entity->posX.i.hi = *g_Dialogue.D_801C250C++ | entity->posX.i.hi;
-            entity->posY.i.hi = *g_Dialogue.D_801C250C++ * 0x10;
-            entity->posY.i.hi = *g_Dialogue.D_801C250C++ | entity->posY.i.hi;
+            entity->posX.i.hi = *g_Dialogue.unk40++ * 0x10;
+            entity->posX.i.hi = *g_Dialogue.unk40++ | entity->posX.i.hi;
+            entity->posY.i.hi = *g_Dialogue.unk40++ * 0x10;
+            entity->posY.i.hi = *g_Dialogue.unk40++ | entity->posY.i.hi;
             break;
         case 1:
-            entityIndex = *g_Dialogue.D_801C250C++;
+            entityIndex = *g_Dialogue.unk40++;
             entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
             DestroyEntity(entity);
             break;
         case 2:
-            if (!((D_801C257C >> *g_Dialogue.D_801C250C) & 1)) {
-                g_Dialogue.D_801C250C--;
+            if (!((D_801C257C >> *g_Dialogue.unk40) & 1)) {
+                g_Dialogue.unk40--;
                 return;
             }
-            D_801C257C &= ~(1 << *g_Dialogue.D_801C250C++);
+            D_801C257C &= ~(1 << *g_Dialogue.unk40++);
             break;
         case 3:
-            D_801C257C |= 1 << *g_Dialogue.D_801C250C++;
+            D_801C257C |= 1 << *g_Dialogue.unk40++;
             break;
         }
     }
@@ -147,12 +147,12 @@ void func_801A910C(u8 ySteps) {
     s32 primIndex;
     s32 i;
 
-    primIndex = g_Dialogue.D_801C24DA + 1;
+    primIndex = g_Dialogue.nextCharY + 1;
     while (primIndex >= 5) {
         primIndex -= 5;
     }
     if (g_CurrentEntity->step_s == 0) {
-        prim = g_Dialogue.D_801C24E4[primIndex];
+        prim = g_Dialogue.prim[primIndex];
         prim->v1 -= ySteps;
         prim->v0 += ySteps;
         if (prim->v1 == 0) {
@@ -163,11 +163,11 @@ void func_801A910C(u8 ySteps) {
 
     for (i = 0; i < 5; i++) {
         if (i != primIndex) {
-            prim = g_Dialogue.D_801C24E4[i];
+            prim = g_Dialogue.prim[i];
             prim->y0 -= ySteps;
         }
     }
-    g_Dialogue.D_801C24DC++;
+    g_Dialogue.portraitAnimTimer++;
 }
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/28BF8", EntityDialogue);

@@ -378,13 +378,13 @@ void func_801A8620(Entity* entity) {
 }
 
 void func_801A8984(void) {
-    g_Dialogue.D_801C24D8 = 2;
-    g_Dialogue.D_801C24D6 = 2;
-    g_Dialogue.D_801C24DA = 0;
-    g_Dialogue.D_801C24DE = 0;
-    g_Dialogue.D_801C24E2 = 0;
-    g_Dialogue.D_801C24E3 = 8;
-    g_Dialogue.D_801C24D2 = g_Dialogue.D_801C24D4 + 0x14;
+    g_Dialogue.nextLineX = 2;
+    g_Dialogue.nextCharX = 2;
+    g_Dialogue.nextCharY = 0;
+    g_Dialogue.unk12 = 0;
+    g_Dialogue.nextCharTimer = 0;
+    g_Dialogue.unk17 = 8;
+    g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
 }
 
 s32 func_801A89D8(const char* textDialogue) {
@@ -392,36 +392,36 @@ s32 func_801A89D8(const char* textDialogue) {
     s16 firstPrimIndex;
 
     firstPrimIndex = g_api.AllocPrimitives(PRIM_SPRT, 8);
-    g_Dialogue.D_801C24FC[2] = firstPrimIndex;
+    g_Dialogue.primIndex[2] = firstPrimIndex;
     if (firstPrimIndex == -1) {
-        g_Dialogue.D_801C24FC[2] = 0;
+        g_Dialogue.primIndex[2] = 0;
         return 0;
     }
-    g_Dialogue.D_801C24CC = textDialogue;
-    g_Dialogue.D_801C2508 = 0;
-    g_Dialogue.D_801C24FC[1] = -1;
-    g_Dialogue.D_801C24FC[0] = -1;
+    g_Dialogue.nextCharDialogue = textDialogue;
+    g_Dialogue.unk3C = 0;
+    g_Dialogue.primIndex[1] = -1;
+    g_Dialogue.primIndex[0] = -1;
     func_801A8984();
 
     if (prim && prim) { // !FAKE
     }
 
-    prim = g_Dialogue.D_801C24E4[0] = &g_PrimBuf[g_Dialogue.D_801C24FC[2]];
+    prim = g_Dialogue.prim[0] = &g_PrimBuf[g_Dialogue.primIndex[2]];
 
     prim->blendMode = BLEND_VISIBLE;
-    prim = g_Dialogue.D_801C24E4[1] = prim->next;
+    prim = g_Dialogue.prim[1] = prim->next;
 
     prim->blendMode = BLEND_VISIBLE;
-    prim = g_Dialogue.D_801C24E4[2] = prim->next;
+    prim = g_Dialogue.prim[2] = prim->next;
 
     prim->blendMode = BLEND_VISIBLE;
-    prim = g_Dialogue.D_801C24E4[3] = prim->next;
+    prim = g_Dialogue.prim[3] = prim->next;
 
     prim->blendMode = BLEND_VISIBLE;
-    prim = g_Dialogue.D_801C24E4[4] = prim->next;
+    prim = g_Dialogue.prim[4] = prim->next;
 
     prim->blendMode = BLEND_VISIBLE;
-    prim = g_Dialogue.D_801C24E4[5] = prim->next;
+    prim = g_Dialogue.prim[5] = prim->next;
 
     prim->type = 4;
     prim->blendMode = BLEND_VISIBLE;

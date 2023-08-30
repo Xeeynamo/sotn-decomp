@@ -1690,6 +1690,7 @@ func_801BABA4 = 0x801BABA4;
 g_memCardRStep = 0x801BAFEC;
 g_memCardRStepSub = 0x801BAFF0;
 g_memCardRetryCount = 0x801BAFF8;
+g_Dialogue = 0x801BC354;
 g_MemCardSelectorX = 0x801BC3D8;
 g_MemCardSelectorY = 0x801BC3DC;
 g_InputCursorPos = 0x801D6B08;

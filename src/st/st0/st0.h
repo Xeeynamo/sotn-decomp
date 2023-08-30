@@ -32,26 +32,6 @@ typedef enum {
     E_SECRET_STAIRS = 0x29,
 } EntityIDs;
 
-typedef struct {
-    const char* D_801C24CC;   // pointer to dialogue next character
-    u16 D_801C24D0;           // starting x coord
-    u16 D_801C24D2;           // next line y coord
-    u16 D_801C24D4;           // starting y coord
-    u16 D_801C24D6;           // next char x coord
-    u16 D_801C24D8;           // next line x coord
-    s16 D_801C24DA;           // next char y coord
-    u16 D_801C24DC;           // portrait anim timer
-    u16 D_801C24DE;           // unknown
-    u16 D_801C24E0;           // CLUT index
-    u8 D_801C24E2;            // timer to next character
-    u8 D_801C24E3;            // unknown
-    Primitive* D_801C24E4[6]; // necessary for the dialogue graphics rendering
-    s32 D_801C24FC[3];        // primIndices: unk, actorName, unk
-    u16 D_801C2508;           // unknown
-    u16 D_801C250A;           // global timer
-    const char* D_801C250C;   // dialogue settings, maybe?
-} Dialogue;
-
 void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
 s16 GetSideToPlayer();
 void MoveEntity();
