@@ -79,7 +79,7 @@ extern LayoutEntity* D_801997D8;
 extern u16* D_801997DC;
 extern u8 D_801997E0;
 extern s8 D_801997E4;
-extern u16 g_ItemIconSlots[];
+extern u16 g_ItemIconSlots[0x20];
 
 extern u16 g_eBreakableInit[];
 extern u8* g_eBreakableAnimations[8];

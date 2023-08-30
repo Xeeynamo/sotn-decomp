@@ -25,7 +25,7 @@ extern u16 D_80180DC4[];
 extern u16 D_80180DF4[];
 extern u8* D_80180E08[];
 
-extern u16 g_ItemIconSlots[];
+extern u16 g_ItemIconSlots[0x20];
 extern u16 UNK_Invincibility0[];
 extern u16 g_InitializeEntityData0[];
 
