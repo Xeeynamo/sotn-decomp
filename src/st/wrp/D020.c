@@ -477,6 +477,8 @@ void EntityEquipItemDrop(Entity* self) {
 
 char* BlitChar(char* str, u16* xOffset, u8* pix, u16 stride) {
     const u16 MINSCODE = 0x8140;
+    const u16 RIGHT_DOUBLE_QUOTATION_MARK = 0x8168;
+
     const int FontWidth = 12;
     const int FontHeight = 16;
     const int FontStride = FontWidth / 2;
@@ -489,15 +491,15 @@ char* BlitChar(char* str, u16* xOffset, u8* pix, u16 stride) {
     u8* ptr;
     u8* dst;
 
+    // converts the ASCII character into Shift-JIS
     ch = *str++;
     var_s3 = 0;
-
     if (ch >= 'a' && ch <= 'z') {
         ch += 0x8220;
     } else if (ch >= 'A' && ch <= 'Z') {
         ch += 0x821F;
     } else {
-        if (ch == 0x20) {
+        if (ch == ' ') {
             ch = MINSCODE;
             var_s3 = 2;
         } else {
@@ -508,10 +510,11 @@ char* BlitChar(char* str, u16* xOffset, u8* pix, u16 stride) {
         }
     }
 
-    if (ch == 0x8168) {
+    if (ch == RIGHT_DOUBLE_QUOTATION_MARK) {
         str += 2;
     }
 
+    // use the converted Shift-JIS character to retrieve the font data
     chPix = g_api.func_80106A28(ch, 1);
     while (true) {
         if (ch == MINSCODE) {
