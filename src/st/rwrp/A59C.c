@@ -484,7 +484,7 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", EntityEquipItemDrop);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", BlitChar);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8019024C);
+INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", EntityRelicOrb);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_80190D1C);
 
