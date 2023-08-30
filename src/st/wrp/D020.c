@@ -475,7 +475,112 @@ void EntityEquipItemDrop(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/D020", func_8018E01C);
+char* BlitChar(char* str, u16* xOffset, u8* pix, u16 stride) {
+    const u16 MINSCODE = 0x8140;
+    const int FontWidth = 12;
+    const int FontHeight = 16;
+    const int FontStride = FontWidth / 2;
+
+    u16 ch;
+    s32 var_s3;
+    s32 i, j;
+    s32 letterWidth;
+    u8* chPix;
+    u8* ptr;
+    u8* dst;
+
+    ch = *str++;
+    var_s3 = 0;
+
+    if (ch >= 'a' && ch <= 'z') {
+        ch += 0x8220;
+    } else if (ch >= 'A' && ch <= 'Z') {
+        ch += 0x821F;
+    } else {
+        if (ch == 0x20) {
+            ch = MINSCODE;
+            var_s3 = 2;
+        } else {
+            ch = *str++ | (ch << 8);
+            if (ch == MINSCODE) {
+                var_s3 = 2;
+            }
+        }
+    }
+
+    if (ch == 0x8168) {
+        str += 2;
+    }
+
+    chPix = g_api.func_80106A28(ch, 1);
+    while (true) {
+        if (ch == MINSCODE) {
+            break;
+        }
+
+        for (i = 0; i < FontHeight; i++) {
+            dst = &chPix[i * FontStride];
+            if (*dst) {
+                break;
+            }
+        }
+        if (i != FontHeight) {
+            break;
+        }
+
+        // Trim character width from the left-hand side
+        for (i = 0; i < FontHeight; i++) {
+            ptr = chPix;
+            ptr += i * FontStride;
+            for (j = 0; j < 5; j++) {
+                ptr[0] = ptr[1];
+                ptr++;
+            }
+            *ptr = 0;
+        }
+    }
+
+    // scroll every pixel of the letter and finds the furthest horizontal pixel
+    // to calculate what the width is
+    for (i = 0, letterWidth = 0; i < FontHeight; i++) {
+        for (j = 0; j < FontStride; j++) {
+            if (chPix[i * FontStride + j] && letterWidth < j) {
+                letterWidth = j;
+            }
+        }
+    }
+
+    // Check the very last vertical pixel
+    for (i = 0; i < FontHeight; i++) {
+        if (chPix[letterWidth + i * FontStride] & 0xF0) {
+            break;
+        }
+    }
+    if (i != FontHeight) {
+        letterWidth++;
+    }
+
+    // Adds at least a vertical pixel of padding at the end of the character
+    if (letterWidth < FontStride) {
+        letterWidth++;
+    }
+
+    // Copy content to destination
+    for (i = 0; i < FontHeight; i++) {
+        ptr = pix;
+        ptr += *xOffset + i * stride;
+        *ptr++ = *chPix++;
+        *ptr++ = *chPix++;
+        *ptr++ = *chPix++;
+        *ptr++ = *chPix++;
+        *ptr++ = *chPix++;
+        dst = ptr;
+        *dst = *chPix++;
+    }
+
+    *xOffset += letterWidth + var_s3;
+    return str;
+}
 
 const char* g_RelicOrbTexts[] = {
     "Obtained ",
@@ -493,7 +598,7 @@ void EntityRelicOrb(Entity* self) {
 
     const int MaxItemSlots = LEN(g_ItemIconSlots) - 1;
     RECT rect;
-    u16 sp28;
+    u16 xOffset;
     u8* var_v0_5;
     Primitive* prim;
     RelicOrb* relic;
@@ -513,7 +618,7 @@ void EntityRelicOrb(Entity* self) {
     s16 new_var7;
     s16 new_var10;
     s16 new_var6;
-    PixPattern* new_var2;
+    PixPattern* dstPix;
     s8 new_var3;
 
     relicId = self->params & 0x7FFF;
@@ -646,15 +751,15 @@ void EntityRelicOrb(Entity* self) {
         // This case creates the texture "Obtained RELIC_NAME" and stores it
         // in the VRAM
         var_s0_2 = 0;
-        sp28 = 0;
+        xOffset = 0;
         msg = g_RelicOrbTexts[0];
-        new_var2 = &D_8007EFE4;
-        var_v0_5 = (u8*)new_var2;
+        dstPix = &D_8007EFE4;
+        var_v0_5 = (u8*)dstPix;
         for (i = 0; i < 0xC00; i++) {
             *var_v0_5++ = 0;
         }
 
-        sp28 = 0;
+        xOffset = 0;
         while (true) {
             if (*msg == 0) {
                 if (var_s0_2 != 0) {
@@ -663,13 +768,13 @@ void EntityRelicOrb(Entity* self) {
                 msg = g_api.D_800A8720[relicId].name;
                 var_s0_2 = 1;
             } else {
-                msg = func_8018E01C(msg, &sp28, new_var2, 0xC0);
+                msg = BlitChar(msg, &xOffset, dstPix, 0xC0);
             }
         }
 
-        LoadTPage(new_var2, 0, 0, 0, 0x100, 0x180, 0x10);
+        LoadTPage(dstPix, 0, 0, 0, 0x100, 0x180, 0x10);
         self->ext.relicOrb.unk7C = 0;
-        self->ext.relicOrb.unk7E = sp28;
+        self->ext.relicOrb.unk7E = xOffset;
         self->step++;
         break;
 
@@ -1795,7 +1900,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
         *chIdx = ch;
         chIdx++;
         if (ch != 0) {
-            charcount += 1;
+            charcount++;
             textWidth += 8;
         } else {
             textWidth += 4;

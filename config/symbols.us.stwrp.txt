@@ -117,3 +117,4 @@ func_80193270 = 0x80193270;
 UnkPolyFunc0 = 0x80193A10;
 UnkLoopFunc = 0x80193A3C;
 g_ItemIconSlots = 0x80194728;
+func_8018E01C = 0x8018E01C;
