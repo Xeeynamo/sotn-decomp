@@ -32,7 +32,7 @@ segments:
       - [0x10C0, data]
       - [0x1300, data]
       - [0x1520, data]
-      - [0x1F40, data, entity_relic_orb]
+      - [0x1F40, .data, entity_relic_orb]
       - [0x1FA4, data]
       - [0x22B0, data]
       - [0x23D0, data]
@@ -58,7 +58,7 @@ segments:
       - [0x31EDC, rodata] # EntityGaibon .rodata, 36990
       - [0x31F00, rodata]
       - [0x31F68, .rodata, 3DEF4]
-      - [0x31FA0, rodata, entity_relic_orb]
+      - [0x31FA0, .rodata, entity_relic_orb]
       - [0x31FD8, rodata]
       - [0x3200C, rodata] # EntityStageNamePopup .rodata,
       - [0x32020, .rodata, 44DCC] # EntityMerman2
@@ -80,6 +80,8 @@ segments:
       - [0x390BC, c]
       - [0x394F0, c]
       - [0x3DEF4, c]
+      - [0x3F1A0, c, entity_relic_orb]
+      - [0x3FC70, c]
       - [0x44DCC, c] # Merman Entities
       - [0x48238, c] # Merman Entities (2)
       - [0x490E8, c] # EntityBoneScimitar
