@@ -60,3 +60,5 @@ BottomCornerText = 0x8019BBA4;
 UnkPolyFunc0 = 0x8019C674;
 UnkLoopFunc = 0x8019C6A0;
 g_ItemIconSlots = 0x8019D42C;
+BlitChar = 0x80196C80;
+BlinkItem = 0x801965F4;
