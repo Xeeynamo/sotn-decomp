@@ -70,7 +70,7 @@ void EntitySpittleBone(Entity* self) {
         for (i = 0; i < 6; i++) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                func_801C1780(E_ID_31, self, newEntity);
+                func_801C1780(E_SPITTLEBONE, self, newEntity);
                 newEntity->facing = self->facing;
                 newEntity->flags = FLAG_UNK_2000 | FLAG_UNK_08000000 |
                                    FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |

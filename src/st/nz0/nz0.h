@@ -22,7 +22,7 @@ typedef enum {
     /* 0x14 */ E_ID14 = 0x14,
     /* 0x28 */ E_BONE_SCIMITAR_HEAD = 0x28,
     /* 0x2A */ E_AXE_KNIGHT_AXE = 0x2A,
-    /* 0x31 */ E_ID_31 = 0x31,
+    /* 0x31 */ E_SPITTLEBONE = 0x31,
     /* 0x38 */ E_FIRE = 0x38,
     /* 0x41 */ E_SLOGRA_SPEAR = 0x41,
     /* 0x42 */ E_SLOGRA_SPEAR_PROJECTILE = 0x42,
