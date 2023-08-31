@@ -839,4 +839,4 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", BlinkItem);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", EntityEquipItemDrop);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", BlitChar);
+#include "../blit_char.h"
