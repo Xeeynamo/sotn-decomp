@@ -1104,7 +1104,7 @@ void func_801870B0(Entity* entity) {
     u16 temp_s1 = entity->params;
     u16 phi_v1;
     u16 unk;
-    entity->unk6D = 0;
+    entity->unk6D[0] = 0;
 
     if (entity->step != 0) {
         switch (temp_s1) {
