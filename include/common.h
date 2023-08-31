@@ -12,6 +12,9 @@
 #elif defined(_internal_version_hd)
 #define VERSION_HD
 #define VERSION "hd"
+#elif defined(_internal_version_beta)
+#define VERSION_BETA
+#define VERSION "beta"
 #else
 #warning "Version not specified. Falling back to the US version."
 #define VERSION_US

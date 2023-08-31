@@ -981,8 +981,10 @@ typedef struct {
     /* 0x04 */ const char* desc;
     /* 0x08 */ u16 icon;
     /* 0x0A */ u16 palette;
+#ifndef VERSION_BETA
     /* 0x0C */ u16 unk0C;
     /* 0x0E */ u16 unk0E;
+#endif
 } RelicOrb; /* size=0x10 */
 
 typedef struct {
