@@ -254,7 +254,7 @@ void EntityExplosion(Entity* entity) {
     }
 }
 
-void BlinkItem(Entity* arg0, s32 renderFlags) {
+void BlinkItem(Entity* arg0, u16 renderFlags) {
     POLY_GT4* poly;
     s16 left, top, right, bottom;
 

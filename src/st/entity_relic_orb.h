@@ -1,7 +1,11 @@
 #include "stage.h"
 
 const char* g_RelicOrbTexts[] = {
+#if defined(VERSION_US)
     "Obtained ",
+#elif defined(VERSION_BETA)
+    "\x82\xF0\x93\xFC\x8E\xE8\x82\xB5\x82\xBD",
+#endif
 };
 u16 g_RelicOrbTextBg1EY[] = {16, 12, 8, 4, 0, -4, -8, -12};
 u16 g_RelicOrbTextBg1SY[] = {-32, -26, -20, -13, -7, -1, 5, 12};
@@ -9,11 +13,18 @@ u16 g_RelicOrbTextBg2SY[] = {-16, -12, -8, -4, 0, 4, 8, 12};
 u16 g_RelicOrbTextBg2EY[] = {32, 26, 20, 13, 7, 1, -5, -12};
 u16 g_RelicOrbSparkleX[] = {-8, 4, -2, 8, 0, 4, -4, 2};
 u16 g_RelicOrbSparkleY[] = {-2, 2, 4, -3, 0, 2, -4, 3};
+
+void BlinkItem(Entity* entity, u16 blinkFlag);
 void EntityRelicOrb(Entity* self) {
     // prim 0: green rectangle for Obtained text bg
     // prim 1: blue rectangle for Obtained text bg
 
+#if defined(VERSION_US)
     const int MaxItemSlots = LEN(g_ItemIconSlots) - 1;
+#elif defined(VERSION_BETA)
+    const int MaxItemSlots = LEN(g_ItemIconSlots);
+#endif
+
     u16 relicId;
     RelicOrb* relic;
     RECT rect;
@@ -30,6 +41,7 @@ void EntityRelicOrb(Entity* self) {
     bool isObtainedTextStored;
     u16 msgLen;
 
+    // unnamed variables
     u8* var_v0_5;
     s16 temp_v0_6;
     s16 temp_v1_6;
@@ -37,7 +49,15 @@ void EntityRelicOrb(Entity* self) {
     s16 new_var7;
     s16 new_var10;
     s16 new_var6;
-    s8 new_var3;
+    u16 var_s0_2_2;
+
+#if defined(VERSION_BETA)
+    u16 vramX;
+    u16* chPixSrc;
+    u16* chPixDst;
+    u16 ch;
+    s16 left, top, right, bottom;
+#endif
 
     relicId = self->params & 0x7FFF;
     if (self->step > 0 && self->step < 5 && self->hitFlags != 0) {
@@ -73,22 +93,23 @@ void EntityRelicOrb(Entity* self) {
         self->primIndex = primIndex;
         self->flags |= FLAG_HAS_PRIMS;
         self->ext.relicOrb.iconSlot = iconSlot;
+#if defined(VERSION_US)
         g_ItemIconSlots[iconSlot] = 0x10;
+#endif
         relic = &g_api.D_800A8720[relicId];
         g_api.LoadEquipIcon(relic->icon, relic->palette, iconSlot);
         prim = &g_PrimBuf[primIndex];
         if (prim != NULL) {
-            new_var3 = iconSlot;
-            texSrcX = (new_var3 & 0x07) * 0x10;
-            texSrcY = (new_var3 & 0x18) * 0x02;
+            texSrcX = ((u8)iconSlot & 0x07) * 0x10;
+            texSrcY = ((u8)iconSlot & 0x18) * 0x02;
             for (i = 0; prim != NULL; i++) {
                 if (i != 0) {
                     prim->blendMode = BLEND_VISIBLE;
                 } else {
                     prim->tpage = 0x1A;
                     prim->clut = iconSlot + 0x1D0;
-                    prim->u0 = prim->u2 = texSrcX | 1;
-                    prim->u1 = prim->u3 = texSrcX | 0xF;
+                    prim->u0 = prim->u2 = texSrcX | 0x01;
+                    prim->u1 = prim->u3 = texSrcX | 0x0F;
                     prim->v0 = prim->v1 = texSrcY | 0x81;
                     prim->v2 = prim->v3 = texSrcY | 0x8F;
                     prim->blendMode = 6;
@@ -116,9 +137,11 @@ void EntityRelicOrb(Entity* self) {
 
     case 5:
         g_api.func_800FE044(relicId, 0x2000);
+#if defined(VERSION_US)
         if (relicId > RELIC_DEMON_CARD && relicId < RELIC_FAERIE_CARD) {
             g_Status.relics[relicId] = g_Status.relics[relicId] ^ 2;
         }
+#endif
         self->flags |= FLAG_UNK_10000;
 
         // Reserve space in the VRAM to store the pre-render texture with the
@@ -168,8 +191,9 @@ void EntityRelicOrb(Entity* self) {
     case 6:
         // This case creates the texture "Obtained RELIC_NAME" and stores it
         // in the VRAM
-        isObtainedTextStored = 0;
+#if defined(VERSION_US)
         msgLen = 0;
+        isObtainedTextStored = false;
         msg = g_RelicOrbTexts[0];
         chPix = &D_8007EFE4;
         var_v0_5 = (u8*)chPix;
@@ -180,11 +204,11 @@ void EntityRelicOrb(Entity* self) {
         msgLen = 0;
         while (true) {
             if (*msg == 0) {
-                if (isObtainedTextStored != 0) {
+                if (isObtainedTextStored) {
                     break;
                 }
                 msg = g_api.D_800A8720[relicId].name;
-                isObtainedTextStored = 1;
+                isObtainedTextStored = true;
             } else {
                 msg = BlitChar(msg, &msgLen, chPix, 0xC0);
             }
@@ -193,6 +217,37 @@ void EntityRelicOrb(Entity* self) {
         LoadTPage(chPix, 0, 0, 0, 0x100, 0x180, 0x10);
         self->ext.relicOrb.unk7C = 0;
         self->ext.relicOrb.unk7E = msgLen;
+#elif defined(VERSION_BETA)
+        msgLen = 0;
+        isObtainedTextStored = false;
+        vramX = 0;
+        msg = g_api.D_800A8720[relicId].name;
+        while (true) {
+            ch = *msg++;
+            if (ch == 0) {
+                if (isObtainedTextStored) {
+                    break;
+                }
+                isObtainedTextStored = true;
+                msg = g_RelicOrbTexts[0];
+            } else {
+                ch = (ch << 8) | *msg++;
+                chPixSrc = g_api_func_80106A28(ch, 1);
+                if (chPixSrc != NULL) {
+                    chPixDst = &D_801997E8[msgLen * 0x30];
+                    for (i = 0; i < 0x30; i++) {
+                        *chPixDst++ = *chPixSrc++;
+                    }
+                    LoadTPage(&D_801997E8[msgLen * 0x30], 0, 0, vramX, 0x100,
+                              0xC, 0x10);
+                    vramX += 3;
+                    msgLen++;
+                }
+            }
+        }
+        self->ext.relicOrb.unk7E = msgLen;
+        self->ext.relicOrb.unk7C = 0;
+#endif
         self->step++;
         break;
 
@@ -252,7 +307,11 @@ void EntityRelicOrb(Entity* self) {
 
     case 9:
         prim = &g_PrimBuf[self->primIndex];
+#if defined(VERSION_US)
         prim->x0 = 0x80 - self->ext.relicOrb.unk7E;
+#elif defined(VERSION_BETA)
+        prim->x0 = 0x80 - self->ext.relicOrb.unk7E * 6;
+#endif
         prim->blendMode = 0;
         self->ext.relicOrb.unk7C++;
         if (self->ext.relicOrb.unk7C > 0x60) {
@@ -263,9 +322,39 @@ void EntityRelicOrb(Entity* self) {
     }
 
     if (self->step < 2) {
-        // Animates the four sparkles while the relic is floating
-        BlinkItem(self, (u16)g_blinkTimer);
+#if defined(VERSION_US)
+        BlinkItem(self, g_blinkTimer);
         prim = &g_PrimBuf[self->primIndex];
+#elif defined(VERSION_BETA)
+        // This is just the function BlinkItem inlined
+        prim = &g_PrimBuf[self->primIndex];
+
+        left = self->posX.i.hi - 7;
+        right = self->posX.i.hi + 7;
+        prim->x2 = left;
+        prim->x0 = left;
+        prim->x3 = right;
+        prim->x1 = right;
+
+        top = self->posY.i.hi - 7;
+        bottom = self->posY.i.hi + 7;
+        prim->y1 = top;
+        prim->y0 = top;
+        prim->y3 = bottom;
+        prim->y2 = bottom;
+
+        if (g_blinkTimer & RENDERFLAGS_NOSHADOW) {
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
+                prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
+                    prim->b3 = 255;
+        } else {
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
+                prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
+                    prim->b3 = 128;
+        }
+#endif
+
+        // Animates the four sparkles while the relic is floating
         for (i = 0; i < 3; i++) { // Skip the first three primitives
             prim = prim->next;
         }
@@ -284,18 +373,16 @@ void EntityRelicOrb(Entity* self) {
                     prim->v3 = 0x60;
                     prim->v2 = 0x60;
 
-                    temp_v1_6 = self->ext.relicOrb.sparkleAnim & 7;
-                    isObtainedTextStored = (u16)self->posX.i.hi;
-                    xCoord =
-                        isObtainedTextStored + g_RelicOrbSparkleX[temp_v1_6];
-                    prim->x0 = prim->x2 = xCoord - 6;
-                    prim->x1 = prim->x3 = xCoord + 6;
+                    new_var10 = self->ext.relicOrb.sparkleAnim & 7;
+                    iconSlot = self->posX.i.hi;
+                    new_var7 = iconSlot + g_RelicOrbSparkleX[new_var10];
+                    prim->x0 = prim->x2 = new_var7 - 6;
+                    prim->x1 = prim->x3 = new_var7 + 6;
 
-                    isObtainedTextStored = (u16)self->posY.i.hi;
-                    yCoord =
-                        isObtainedTextStored + g_RelicOrbSparkleY[temp_v1_6];
-                    prim->y0 = prim->y1 = yCoord - 6;
-                    prim->y2 = prim->y3 = yCoord + 6;
+                    iconSlot = self->posY.i.hi;
+                    new_var7 = iconSlot + g_RelicOrbSparkleY[new_var10];
+                    prim->y0 = prim->y1 = new_var7 - 6;
+                    prim->y2 = prim->y3 = new_var7 + 6;
 
                     prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x80;
                     prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;

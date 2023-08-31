@@ -1,8 +1,12 @@
 #ifndef MAD_H
 #define MAD_H
 
-// hack to make the code compile for this weird overlay
-#define STAGE_MAD_FIX
+// MAD was compiled earlier than the very first retail release, the JP 1.0 ver.
+// Since MAD is compiled with the US version, we need first to undefine it
+#undef _internal_version_us
+#define _internal_version_beta
+#define VERSION_BETA
+
 #include "stage.h"
 
 typedef enum {
