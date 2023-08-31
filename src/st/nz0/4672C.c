@@ -27,7 +27,7 @@ void EntitySpittleBone(Entity* self) {
         if (func_801BCCFC(&D_801824CC) & 1) {
             newEntity = &self[1];
             self->ext.spittleBone.unk7C = 0;
-            CreateEntityFromEntity(0x32, self, newEntity);
+            CreateEntityFromEntity(E_ROTATE_SPITTLEBONE, self, newEntity);
             newEntity->facing = self->facing;
             newEntity->ext.spittleBone.unk7C = self->ext.spittleBone.unk7C;
             if (self->facing != 0) {
