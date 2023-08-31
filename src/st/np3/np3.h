@@ -18,7 +18,7 @@ typedef enum {
     /* 0x0E */ E_SAVE_GAME_POPUP,
     /* 0x0F */ E_DUMMY_0F,
     /* 0x10 */ E_DUMMY_10,
-
+    /* 0x14 */ E_ID_14 = 0x14,
     /* 0x15 */ E_ID_15 = 0x15,
 
     /* 0x19 */ E_CASTLE_DOOR = 0x19,
@@ -50,6 +50,7 @@ extern void func_801BB3F4(s16);
 extern s32 func_801BD308(u16* hitSensors, s16 sensorCount);
 extern s32 func_801BD588(Entity* arg0, s32 arg1, s32 arg2, s32 arg3);
 extern s32 GetDistanceToPlayerX(void);
+extern void func_801C070C(Entity* entity);
 extern void func_801CD658();
 extern void EntityPrizeDrop(Entity* entity);
 extern void EntityEquipItemDrop(Entity* entity);
@@ -224,6 +225,7 @@ extern s8 c_HeartPrizes[];
 extern u8 D_80181EA8[];
 extern s32 D_80181E80[];
 extern const u8* D_80181F2C[];
+extern u16 D_80181FA4[];
 extern s16 D_80181FB4[];
 extern u32 D_80181FC4[];
 extern s32 D_80181FDC[];
