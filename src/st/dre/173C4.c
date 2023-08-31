@@ -856,10 +856,10 @@ void CollectSubweapon(u16 subWeaponIdx) {
 
     if (subWeapon == g_Status.subWeapon) {
         subWeapon = 1;
-        g_CurrentEntity->unk6D = 0x10;
+        g_CurrentEntity->unk6D[0] = 0x10;
     } else {
         subWeapon = D_801810E0[subWeapon];
-        g_CurrentEntity->unk6D = 0x60;
+        g_CurrentEntity->unk6D[0] = 0x60;
     }
 
     if (subWeapon != 0) {

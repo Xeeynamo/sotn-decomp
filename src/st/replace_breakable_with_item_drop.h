@@ -24,6 +24,6 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
     }
 
     self->params = params;
-    self->unk6D = 0x10;
+    self->unk6D[0] = 0x10;
     self->step = 0;
 }

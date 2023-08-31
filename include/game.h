@@ -561,10 +561,7 @@ typedef struct Entity {
     /* 0x68 */ s16 unk68;
     /* 0x6A */ u16 hitEffect;
     /* 0x6C */ u8 unk6C;
-    /* 0x6D */ s8 unk6D;
-    /* 0x6E */ s16 unk6E;
-    /* 0x70 */ s32 unk70;
-    /* 0x74 */ s32 unk74;
+    /* 0x6D */ u8 unk6D[11];
     /* 0x78 */ s32 unk78;
     /* 0x7C */ Ext ext;
 } Entity; // size = 0xBC
