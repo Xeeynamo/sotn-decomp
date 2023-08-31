@@ -57,7 +57,7 @@ void EntitySpittleBone(Entity* self) {
             (!(Random() & 0x1F))) {
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != 0) {
-                CreateEntityFromEntity(0x33, self, newEntity);
+                CreateEntityFromEntity(E_SPITTLEBONE_SPIT, self, newEntity);
                 newEntity->ext.spittleBone.unk84 = self;
                 newEntity->posY.i.hi += 24;
             }
