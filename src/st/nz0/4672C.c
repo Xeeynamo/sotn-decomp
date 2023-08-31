@@ -115,7 +115,7 @@ void EntitySpittleBone(Entity* self) {
 
 const u32 rodataPadding_801B08B0 = 0;
 
-void func_801C6B24(Entity* self) {
+void EntityRotateSpittlebone(Entity* self) {
     Entity* prevEntity;
     s16 rotAngle;
     u32 temp1;
