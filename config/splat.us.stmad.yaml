@@ -29,7 +29,7 @@ segments:
     subsegments:
       - [0x0, data]
       - [0xE40, data]
-      - [0xEF8, data, entity_relic_orb]
+      - [0xEF8, .data, entity_relic_orb]
       - [0xF5C, data]
       - [0x1130, roomdef, g_Rooms]
       - [0x11D4, data] # assets/st/mad/0.objlayout
@@ -61,7 +61,7 @@ segments:
       - [0xD794, rodata]
       - [0xD83C, .rodata, 139E0]
       - [0xD85C, rodata] # EntityEquipItemDrop
-      - [0xD874, rodata, entity_relic_orb]
+      - [0xD874, .rodata, entity_relic_orb]
       - [0xD8AC, rodata]
       - [0xD8C8, c]
       - [0xE964, c]

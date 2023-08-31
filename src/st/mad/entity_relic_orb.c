@@ -1,20 +1,16 @@
 #include "mad.h"
 
-// #ifdef NON_MATCHING
-// INCLUDE_ASM("asm/us/st/mad/nonmatchings/entity_relic_orb", EntityRelicOrb);
-// #else
-extern s32 D_8003C854_mad;
-extern const char* D_80180EF8[] = {
-    {0x82, 0xF0, 0x93, 0xFC, 0x8E, 0xE8, 0x82, 0xB5, 0x82, 0xBD, 0x00, 0x00,
-     0x00, 0x00, 0x00, 0x00},
+const char* g_RelicOrbTexts[] = {
+    "\x82\xF0\x93\xFC\x8E\xE8\x82\xB5\x82\xBD\x00\x00",
 };
-extern u16 D_80180EFC[];
-extern u16 D_80180F0C[];
-extern u16 D_80180F1C[];
-extern u16 D_80180F2C[];
-extern u16 D_80180F3C[];
-extern u16 D_80180F4C[];
-extern /*?*/ u16 D_801997E8[];
+u16 g_RelicOrbTextBg1EY[] = {16, 12, 8, 4, 0, -4, -8, -12};
+u16 g_RelicOrbTextBg1SY[] = {-32, -26, -20, -13, -7, -1, 5, 12};
+u16 g_RelicOrbTextBg2SY[] = {-16, -12, -8, -4, 0, 4, 8, 12};
+u16 g_RelicOrbTextBg2EY[] = {32, 26, 20, 13, 7, 1, -5, -12};
+u16 g_RelicOrbSparkleX[] = {-8, 4, -2, 8, 0, 4, -4, 2};
+u16 g_RelicOrbSparkleY[] = {-2, 2, 4, -3, 0, 2, -4, 3};
+
+extern u16 D_801997E8[0x600]; // this should fall into the SBSS section
 
 void EntityRelicOrb(Entity* self) {
     // prim 0: green rectangle for Obtained text bg
@@ -177,7 +173,7 @@ void EntityRelicOrb(Entity* self) {
                     break;
                 }
                 isObtainedTextStored = true;
-                msg = D_80180EF8[0];
+                msg = g_RelicOrbTexts[0];
             } else {
                 ch = (ch << 8) | *msg++;
                 chPixSrc = g_api_func_80106A28(ch, 1);
@@ -229,16 +225,16 @@ void EntityRelicOrb(Entity* self) {
                 prim->x0 = 0x80 + (temp_a1_2 + 1) * 0xC;
                 prim->x2 = 0x68 + (temp_a1_2 * 0x78) / 7;
                 prim->x3 = 0x98 - (temp_a1_2 * 0x78) / 7;
-                prim->y0 = prim->y1 = D_80180F0C[temp_a1_2] + 0xA7;
-                prim->y2 = prim->y3 = D_80180EFC[temp_a1_2] + 0xA7;
+                prim->y0 = prim->y1 = g_RelicOrbTextBg1SY[temp_a1_2] + 0xA7;
+                prim->y2 = prim->y3 = g_RelicOrbTextBg1EY[temp_a1_2] + 0xA7;
                 prim->b2 = prim->b3 = prim->b3 - 0x10;
             } else {
                 prim->x0 = 0x68 + (temp_a1_2 * 0x78) / 7;
                 prim->x1 = 0x98 - (temp_a1_2 * 0x78) / 7;
                 prim->x3 = 0x80 - (temp_a1_2 + 1) * 0xC;
                 prim->x2 = 0x80 + (temp_a1_2 + 1) * 0xC;
-                prim->y0 = prim->y1 = D_80180F1C[temp_a1_2] + 0xA7;
-                prim->y2 = prim->y3 = D_80180F2C[temp_a1_2] + 0xA7;
+                prim->y0 = prim->y1 = g_RelicOrbTextBg2SY[temp_a1_2] + 0xA7;
+                prim->y2 = prim->y3 = g_RelicOrbTextBg2EY[temp_a1_2] + 0xA7;
                 prim->g0 = prim->g1 = prim->g1 - 0x10;
             }
             prim = prim->next;
@@ -278,7 +274,7 @@ void EntityRelicOrb(Entity* self) {
         prim->y3 = bottom;
         prim->y2 = bottom;
 
-        if (D_8003C854_mad & RENDERFLAGS_NOSHADOW) {
+        if (g_blinkTimer & RENDERFLAGS_NOSHADOW) {
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
                 prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
                     prim->b3 = 255;
@@ -308,12 +304,12 @@ void EntityRelicOrb(Entity* self) {
 
                     new_var10 = self->ext.relicOrb.sparkleAnim & 7;
                     iconSlot = self->posX.i.hi;
-                    new_var7 = iconSlot + D_80180F3C[new_var10];
+                    new_var7 = iconSlot + g_RelicOrbSparkleX[new_var10];
                     prim->x0 = prim->x2 = new_var7 - 6;
                     prim->x1 = prim->x3 = new_var7 + 6;
 
                     iconSlot = self->posY.i.hi;
-                    new_var7 = iconSlot + D_80180F4C[new_var10];
+                    new_var7 = iconSlot + g_RelicOrbSparkleY[new_var10];
                     prim->y0 = prim->y1 = new_var7 - 6;
                     prim->y2 = prim->y3 = new_var7 + 6;
 
@@ -368,4 +364,3 @@ void EntityRelicOrb(Entity* self) {
         }
     }
 }
-// #endif

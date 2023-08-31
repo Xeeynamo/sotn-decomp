@@ -92,10 +92,10 @@ g_Status_heartsMax = 0x80097658;
 g_Status_gold = 0x8009769C;
 g_Status_killCount = 0x800976A0;
 subWeapon = 0x800976A8;
+g_blinkTimer = 0x8003C854;
 
 D_8003BE1E_mad = 0x8003BE1E;
 D_8003BF28_mad = 0x8003BF28;
-D_8003C854_mad = 0x8003C854;
 D_80072E9C_mad = 0x80072E9C;
 D_80072EB4_mad = 0x80072EB4;
 D_80096ED0_mad = 0x80096ED0;
