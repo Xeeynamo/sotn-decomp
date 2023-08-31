@@ -50,6 +50,7 @@ extern s32 D_800973FC;
 extern s32 D_80097908;
 
 // ST/MAD
+extern u16 g_InitializeData0[];
 extern u16 D_8018052C[];
 extern u16 UNK_Invincibility0[];
 extern u16 D_80180544[];
