@@ -188,4 +188,4 @@ void EntityEquipItemDrop(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1C7DC", BlitChar);
+#include "../blit_char.h"

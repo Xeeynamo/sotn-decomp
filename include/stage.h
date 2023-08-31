@@ -16,6 +16,8 @@ typedef struct {
     /* 0x8 */ u16 params;
 } LayoutEntity; // size = 0xA
 
+PfnEntityUpdate PfnEntityUpdates[];
+
 s32 Random();
 void Update(void);
 void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);

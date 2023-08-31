@@ -460,4 +460,4 @@ void EntityEquipItemDrop(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/46684", BlitChar);
+#include "../blit_char.h"
