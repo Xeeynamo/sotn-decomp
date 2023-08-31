@@ -49,6 +49,10 @@ jobs:
         with:
           ref: ${{ github.ref }}
           submodules: false
+      - name: Format dry run
+        run: pip3 install GitPython |
+             make format
+             ./tools/check_format.py
       - name: Clone dependencies
         uses: actions/checkout@v3
         with:
