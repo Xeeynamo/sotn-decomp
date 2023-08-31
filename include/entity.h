@@ -448,6 +448,14 @@ typedef struct {
     /* 0x86 */ u16 moveDirection;
 } ET_Death;
 
+typedef struct {
+    /* 0x7C */ u8 unk7C;
+    /* 0x7D */ char pad_7D[0x3];
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ struct Entity* unk84;
+} ET_SpittleBone;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
@@ -487,5 +495,6 @@ typedef union {
     /* 0x7C */ ET_FadeToWhite fadeToWhite;
     /* 0x7C */ ET_DeathStolenItems deathStolenItems;
     /* 0x7C */ ET_Death death;
+    /* 0x7C */ ET_SpittleBone spittleBone;
     /* 0x7C */ char stub[0x40];
 } Ext;

@@ -22,6 +22,9 @@ typedef enum {
     /* 0x14 */ E_ID14 = 0x14,
     /* 0x28 */ E_BONE_SCIMITAR_HEAD = 0x28,
     /* 0x2A */ E_AXE_KNIGHT_AXE = 0x2A,
+    /* 0x31 */ E_SPITTLEBONE = 0x31,
+    /* 0x32 */ E_ROTATE_SPITTLEBONE,
+    /* 0x33 */ E_SPITTLEBONE_SPIT,
     /* 0x38 */ E_FIRE = 0x38,
     /* 0x41 */ E_SLOGRA_SPEAR = 0x41,
     /* 0x42 */ E_SLOGRA_SPEAR_PROJECTILE = 0x42,
@@ -259,7 +262,9 @@ extern s32 D_801824C0;
 extern s32 D_801824B8;
 extern s32 D_801824C0;
 extern s32 D_801824CC;
+extern s16 D_801824DC[];
 extern u8 D_801824E2[];
+extern u16 D_801824E4[];
 extern u8 D_80181F30[];
 extern u8 D_80180CF4[];
 extern s32 D_80182600[];
