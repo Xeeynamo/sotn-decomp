@@ -547,7 +547,7 @@ u8 func_801B1EF4(u16 arg0) {
     }
 }
 
-void func_801B1F34(void) { D_801BAFD0 = &D_80080FE4; }
+void func_801B1F34(void) { D_801BAFD0 = g_Pix[1]; }
 
 void func_801B1F4C(s32 arg0) {
     const s32 count = 0x200;
@@ -843,7 +843,7 @@ s32 func_801B3694(void) {
 
     case 3:
         func_801B9698(saveFile, temp_a1);
-        if (MemcardReadFile(nCardSlot, 0, saveFile, &D_8007EFE4, 1) != 0) {
+        if (MemcardReadFile(nCardSlot, 0, saveFile, g_Pix[0], 1) != 0) {
             g_memCardRetryCount--;
             if (g_memCardRetryCount == -1) {
                 temp_v0 = -1;
@@ -869,7 +869,7 @@ s32 func_801B3694(void) {
                     } while (0);
                 }
             }
-            if (LoadSaveData((SaveData*)(&D_8007EFE4)) < 0) {
+            if (LoadSaveData((SaveData*)g_Pix[0]) < 0) {
                 return -2;
             } else {
                 return 1;

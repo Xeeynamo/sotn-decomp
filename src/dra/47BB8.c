@@ -74,13 +74,13 @@ s32 func_800E7E08(u32 arg0) {
         LoadTPage((PixPattern*)0x80284000, 0, 0, 0x2C0, 0x180, 0x80, 0x80);
         break;
     case 9:
-        LoadTPage((PixPattern*)&D_8007EFE4, 0, 0, 0x240, 0x100, 0x100, 0x80);
+        LoadTPage((PixPattern*)g_Pix[0], 0, 0, 0x240, 0x100, 0x100, 0x80);
         break;
     case 10:
-        LoadTPage((PixPattern*)&D_80082FE4, 0, 0, 0x240, 0x180, 0x100, 0x80);
+        LoadTPage((PixPattern*)g_Pix[2], 0, 0, 0x240, 0x180, 0x100, 0x80);
         break;
     case 20:
-        LoadTPage((PixPattern*)(s32*)0x80280000, 2, 0, 0x20, 0x100, 0x60, 0x70);
+        LoadTPage((PixPattern*)0x80280000, 2, 0, 0x20, 0x100, 0x60, 0x70);
         break;
     case 1:
         LoadStageTileset(0x80180000, 0x100);
@@ -260,7 +260,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         buf[15] = ((fileId / 10) % 10) + '0';
         buf[16] = (fileId % 10) + '0';
         D_8013644C->path = buf;
-        D_8013644C->addr = (u8*)&D_8007EFE4;
+        D_8013644C->addr = g_Pix[0];
         D_8013644C->size = 0x4000;
         D_8013644C->type = 9;
     }
@@ -270,7 +270,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         buf[15] = ((fileId / 10) % 10) + '0';
         buf[16] = (fileId % 10) + '0';
         D_8013644C->path = buf;
-        D_8013644C->addr = (u8*)&D_80082FE4;
+        D_8013644C->addr = g_Pix[2];
         D_8013644C->size = 0x4000;
         D_8013644C->type = 10;
     }

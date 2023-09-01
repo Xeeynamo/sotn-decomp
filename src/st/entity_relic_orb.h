@@ -195,7 +195,7 @@ void EntityRelicOrb(Entity* self) {
         msgLen = 0;
         isObtainedTextStored = false;
         msg = g_RelicOrbTexts[0];
-        chPix = &D_8007EFE4;
+        chPix = g_Pix[0];
         var_v0_5 = (u8*)chPix;
         for (i = 0; i < 0xC00; i++) {
             *var_v0_5++ = 0;
