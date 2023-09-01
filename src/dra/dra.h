@@ -232,17 +232,6 @@ typedef struct {
 } SpellDef;
 
 typedef struct {
-    void (*EntityWeaponAttack)(void);
-    void* unk04;
-    void* unk08;
-    void* unk0C;
-    void* unk10;
-    void* unk14;
-    int (*GetWeaponId)();
-    void (*LoadWeaponPalette)(u8);
-} WeaponOvl;
-
-typedef struct {
     u32 unk0;
     u32 damageKind;
     u32 unk8;
@@ -682,9 +671,9 @@ extern s32 D_8013B69C;
 extern s32 D_8016FCC0[];
 extern void (*D_8013C00C)(void);
 extern PfnEntityUpdate D_80179C80[];
-extern WeaponOvl D_8017A000;
+extern Weapon D_8017A000;
 extern PfnEntityUpdate D_8017CC40[];
-extern WeaponOvl D_8017D000;
+extern Weapon D_8017D000;
 extern void (*D_80170000)(void);
 extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
