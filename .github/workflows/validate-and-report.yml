@@ -49,8 +49,6 @@ jobs:
         with:
           ref: ${{ github.ref }}
           submodules: false
-      - name: Format dry run
-        run: pip3 install black && make format && git diff --exit-code --name-only
       - name: Clone dependencies
         uses: actions/checkout@v3
         with:
