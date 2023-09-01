@@ -1358,11 +1358,11 @@ void func_800F97DC(void) {
 void func_800F9808(u32 arg0) {
     s32 temp_s0;
     s32 i;
-    PixPattern* oldPos;
+    u8* oldPos;
 
     temp_s0 = (arg0 == 2) ? 32 : 0;
     arg0 = func_800F548C(arg0);
-    oldPos = (PixPattern*)D_8013794C;
+    oldPos = D_8013794C;
 
     for (i = 0; i < ((temp_s0 + 0x100) * 8); i++) {
         *D_8013794C++ = 0;

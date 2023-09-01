@@ -37,7 +37,7 @@ void EntityRelicOrb(Entity* self) {
     const char* msg;
     s32 xCoord;
     u16 yCoord;
-    PixPattern* chPix;
+    u8* chPix;
     bool isObtainedTextStored;
     u16 msgLen;
 

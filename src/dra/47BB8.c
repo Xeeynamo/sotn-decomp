@@ -70,17 +70,17 @@ s32 func_800E7E08(u32 arg0) {
         } while (i < 0x10);
         break;
     case 19:
-        LoadTPage((PixPattern*)0x80280000, 0, 0, 0x2C0, 0x100, 0x100, 0x80);
-        LoadTPage((PixPattern*)0x80284000, 0, 0, 0x2C0, 0x180, 0x80, 0x80);
+        LoadTPage((u8*)0x80280000, 0, 0, 0x2C0, 0x100, 0x100, 0x80);
+        LoadTPage((u8*)0x80284000, 0, 0, 0x2C0, 0x180, 0x80, 0x80);
         break;
     case 9:
-        LoadTPage((PixPattern*)g_Pix[0], 0, 0, 0x240, 0x100, 0x100, 0x80);
+        LoadTPage(g_Pix[0], 0, 0, 0x240, 0x100, 0x100, 0x80);
         break;
     case 10:
-        LoadTPage((PixPattern*)g_Pix[2], 0, 0, 0x240, 0x180, 0x100, 0x80);
+        LoadTPage(g_Pix[2], 0, 0, 0x240, 0x180, 0x100, 0x80);
         break;
     case 20:
-        LoadTPage((PixPattern*)0x80280000, 2, 0, 0x20, 0x100, 0x60, 0x70);
+        LoadTPage(0x80280000, 2, 0, 0x20, 0x100, 0x60, 0x70);
         break;
     case 1:
         LoadStageTileset(0x80180000, 0x100);

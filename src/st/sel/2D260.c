@@ -346,7 +346,7 @@ void func_801AECA0(void) {
         s32 tmp = 4;
         x = xnext;
         xnext += tmp;
-        LoadTPage((PixPattern*)*pix++, 0, 0, x, y, w, tmp = 0x30);
+        LoadTPage(*pix++, 0, 0, x, y, w, tmp = 0x30);
         x = xnext;
     }
 
@@ -551,17 +551,17 @@ void func_801B1F34(void) { D_801BAFD0 = g_Pix[1]; }
 
 void func_801B1F4C(s32 arg0) {
     const s32 count = 0x200;
-    PixPattern* pixPatterns;
+    u8* pix;
     s32 i;
 
     D_801BC398[arg0] = 0;
     arg0 = func_801B1EF4((u8)arg0);
-    pixPatterns = D_801BAFD0;
-    for (i = 0; i < count * (s32)sizeof(PixPattern); i++) {
+    pix = D_801BAFD0;
+    for (i = 0; i < count * 4; i++) {
         *D_801BAFD0++ = 0;
     }
 
-    LoadTPage(pixPatterns, 0, 0, 0x180, arg0, 0x100, 0x10);
+    LoadTPage(pix, 0, 0, 0x180, arg0, 0x100, 0x10);
 }
 
 void func_801B1FD8(u8* arg0, s32 arg1);
