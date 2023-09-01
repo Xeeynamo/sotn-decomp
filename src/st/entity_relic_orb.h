@@ -4,7 +4,7 @@ const char* g_RelicOrbTexts[] = {
 #if defined(VERSION_US)
     "Obtained ",
 #elif defined(VERSION_BETA)
-    "\x82\xF0\x93\xFC\x8E\xE8\x82\xB5\x82\xBD",
+    "\x82\xF0\x93\xFC\x8E\xE8\x82\xB5\x82\xBD", // を入手した
 #endif
 };
 u16 g_RelicOrbTextBg1EY[] = {16, 12, 8, 4, 0, -4, -8, -12};
