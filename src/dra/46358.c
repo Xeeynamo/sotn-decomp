@@ -245,8 +245,8 @@ void HandleNowLoading(void) {
             if (g_IsUsingCd) {
                 break;
             }
-            pfnWeapon = D_8017A000.func_8017A01C;
-            pfnWeapon(D_800A4B04[D_8003C908.D_8003C90C].unk10);
+            pfnWeapon = D_8017A000.LoadWeaponPalette;
+            pfnWeapon(D_800A4B04[D_8003C908.D_8003C90C].palette);
             goto block_102;
         } else {
             var_s0 = D_800A4B04[g_Status.equipment[LEFT_HAND_SLOT]].weaponId;
@@ -259,9 +259,9 @@ void HandleNowLoading(void) {
             if (LoadFileSim(var_s0, 7) < 0) {
                 break;
             }
-            pfnWeapon = D_8017A000.func_8017A01C;
+            pfnWeapon = D_8017A000.LoadWeaponPalette;
             D_8003C908.D_8003C90C = var_s0;
-            pfnWeapon(D_800A4B04[D_8003C908.D_8003C90C].unk10);
+            pfnWeapon(D_800A4B04[D_8003C908.D_8003C90C].palette);
             var_s0 = D_800A4B04[g_Status.equipment[RIGHT_HAND_SLOT]].weaponId;
             if (var_s0 == 0xFF) {
                 var_s0 = 1;
@@ -271,8 +271,8 @@ void HandleNowLoading(void) {
             }
             if (LoadFileSim(var_s0, 8) >= 0) {
                 D_8003C908.D_8003C910 = var_s0;
-                pfnWeapon = D_8017D000.func_8017A01C;
-                pfnWeapon(D_800A4B04[D_8003C908.D_8003C910].unk10);
+                pfnWeapon = D_8017D000.LoadWeaponPalette;
+                pfnWeapon(D_800A4B04[D_8003C908.D_8003C910].palette);
             block_102:
                 g_GameStep++;
             }
@@ -298,8 +298,8 @@ void HandleNowLoading(void) {
             if (g_IsUsingCd) {
                 break;
             }
-            pfnWeapon = D_8017D000.func_8017A01C;
-            pfnWeapon(D_800A4B04[D_8003C908.D_8003C910].unk10);
+            pfnWeapon = D_8017D000.LoadWeaponPalette;
+            pfnWeapon(D_800A4B04[D_8003C908.D_8003C910].palette);
         } else if (
             (LoadFileSim(D_8003C908.D_8003C90C, SimFileType_Weapon0Chr) < 0) ||
             (LoadFileSim(D_8003C908.D_8003C910, SimFileType_Weapon1Chr) < 0)) {

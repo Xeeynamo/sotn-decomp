@@ -97,7 +97,7 @@ void EntityRelicOrb(Entity* self) {
         g_ItemIconSlots[iconSlot] = 0x10;
 #endif
         relic = &g_api.D_800A8720[relicId];
-        g_api.LoadEquipIcon(relic->icon, relic->palette, iconSlot);
+        g_api.LoadEquipIcon(relic->icon, relic->iconPalette, iconSlot);
         prim = &g_PrimBuf[primIndex];
         if (prim != NULL) {
             texSrcX = ((u8)iconSlot & 0x07) * 0x10;

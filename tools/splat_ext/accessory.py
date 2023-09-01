@@ -36,8 +36,8 @@ def serialize_accessory(content: str) -> bytearray:
         serialized_data += utils.from_s8(item["lckBonus"])
         serialized_data += utils.from_u32(item["unk10"])
         serialized_data += utils.from_u32(item["unk14"])
-        serialized_data += utils.from_16(item["menuIcon"])
-        serialized_data += utils.from_16(item["menuPalette"])
+        serialized_data += utils.from_16(item["icon"])
+        serialized_data += utils.from_16(item["iconPalette"])
         serialized_data += utils.from_u32(item["unk1C"])
 
     expected_data_size = item_count * item_size
@@ -103,8 +103,8 @@ class PSXSegAccessory(N64Segment):
                 "lckBonus": utils.to_s8(item_data[0x0F:]),
                 "unk10": utils.to_u32(item_data[0x10:]),
                 "unk14": utils.to_u32(item_data[0x14:]),
-                "menuIcon": utils.to_u16(item_data[0x18:]),
-                "menuPalette": utils.to_u16(item_data[0x1A:]),
+                "icon": utils.to_u16(item_data[0x18:]),
+                "iconPalette": utils.to_u16(item_data[0x1A:]),
                 "unk1C": utils.to_u32(item_data[0x1C:]),
             }
             items.append(item)

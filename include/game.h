@@ -936,7 +936,7 @@ typedef struct {
     /* 0x0C */ u16 element;
     /* 0x0E */ u8 itemCategory;
     /* 0x0F */ u8 weaponId;
-    /* 0x10 */ u8 unk10;
+    /* 0x10 */ u8 palette;
     /* 0x11 */ u8 unk11;
     /* 0x12 */ u8 playerAnim;
     /* 0x13 */ u8 unk13;
@@ -955,7 +955,7 @@ typedef struct {
     /* 0x28 */ u16 hitType;
     /* 0x2A */ u16 hitEffect;
     /* 0x2C */ u16 icon;
-    /* 0x2E */ u16 palette;
+    /* 0x2E */ u16 iconPalette;
     /* 0x30 */ u16 criticalRate;
     /* 0x32 */ u16 unk32;
 } Equipment; /* size=0x34 */
@@ -972,7 +972,7 @@ typedef struct {
     /* 14 */ u16 unk14;
     /* 10 */ u16 unk16;
     /* 18 */ u16 icon;
-    /* 1A */ u16 palette;
+    /* 1A */ u16 iconPalette;
     /* 1C */ u32 unk1C;
 } Accessory; /* size=0x20 */
 
@@ -980,7 +980,7 @@ typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ const char* desc;
     /* 0x08 */ u16 icon;
-    /* 0x0A */ u16 palette;
+    /* 0x0A */ u16 iconPalette;
 #ifndef VERSION_BETA
     /* 0x0C */ u16 unk0C;
     /* 0x0E */ u16 unk0E;

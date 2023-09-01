@@ -2,6 +2,7 @@
 #define DRA_H
 
 #include "game.h"
+#include "weapon.h"
 #include "items.h"
 
 #define DAMAGE_FLAG_NORMAL 0x0000
@@ -231,14 +232,14 @@ typedef struct {
 } SpellDef;
 
 typedef struct {
-    void (*func_8017A000)(void);
+    void (*EntityWeaponAttack)(void);
     void* unk04;
     void* unk08;
     void* unk0C;
     void* unk10;
     void* unk14;
-    s32 (*func_8017A018)();
-    void (*func_8017A01C)(u8);
+    int (*GetWeaponId)();
+    void (*LoadWeaponPalette)(u8);
 } WeaponOvl;
 
 typedef struct {

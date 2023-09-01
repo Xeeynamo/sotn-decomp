@@ -141,11 +141,11 @@ void EntityDeathStolenItem(Entity* self) {
 
         if (itemId < NUM_HAND_ITEMS) {
             g_api.LoadEquipIcon(g_api.D_800A4B04[itemId].icon,
-                                g_api.D_800A4B04[itemId].palette, params);
+                                g_api.D_800A4B04[itemId].iconPalette, params);
         } else {
             itemId -= NUM_HAND_ITEMS;
             g_api.LoadEquipIcon(g_api.D_800A7718[itemId].icon,
-                                g_api.D_800A7718[itemId].palette, params);
+                                g_api.D_800A7718[itemId].iconPalette, params);
         }
 
         prim = &g_PrimBuf[primIndex];
