@@ -28,7 +28,7 @@ def serialize_equipment(content: str) -> bytearray:
         serialized_data += utils.from_16(item["element"])
         serialized_data += utils.from_u8(item["itemCategory"])
         serialized_data += utils.from_u8(item["weaponId"])
-        serialized_data += utils.from_u8(item["unk10"])
+        serialized_data += utils.from_u8(item["palette"])
         serialized_data += utils.from_u8(item["unk11"])
         serialized_data += utils.from_u8(item["playerAnim"])
         serialized_data += utils.from_u8(item["unk13"])
@@ -46,8 +46,8 @@ def serialize_equipment(content: str) -> bytearray:
         serialized_data += utils.from_16(item["stunFrames"])
         serialized_data += utils.from_16(item["hitType"])
         serialized_data += utils.from_16(item["hitEffect"])
-        serialized_data += utils.from_16(item["menuIcon"])
-        serialized_data += utils.from_16(item["menuPalette"])
+        serialized_data += utils.from_16(item["icon"])
+        serialized_data += utils.from_16(item["iconPalette"])
         serialized_data += utils.from_16(item["criticalRate"])
         serialized_data += utils.from_16(item["unk32"])
 
@@ -111,7 +111,7 @@ class PSXSegEquipment(N64Segment):
                 "element": utils.to_u16(item_data[0x0C:]),
                 "itemCategory": utils.to_u8(item_data[0x0E:]),
                 "weaponId": utils.to_u8(item_data[0x0F:]),
-                "unk10": utils.to_u8(item_data[0x10:]),
+                "palette": utils.to_u8(item_data[0x10:]),
                 "unk11": utils.to_u8(item_data[0x11:]),
                 "playerAnim": utils.to_u8(item_data[0x12:]),
                 "unk13": utils.to_u8(item_data[0x13:]),
@@ -129,8 +129,8 @@ class PSXSegEquipment(N64Segment):
                 "stunFrames": utils.to_u16(item_data[0x26:]),
                 "hitType": utils.to_u16(item_data[0x28:]),
                 "hitEffect": utils.to_u16(item_data[0x2A:]),
-                "menuIcon": utils.to_u16(item_data[0x2C:]),
-                "menuPalette": utils.to_u16(item_data[0x2E:]),
+                "icon": utils.to_u16(item_data[0x2C:]),
+                "iconPalette": utils.to_u16(item_data[0x2E:]),
                 "criticalRate": utils.to_u16(item_data[0x30:]),
                 "unk32": utils.to_u16(item_data[0x32:]),
             }

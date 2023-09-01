@@ -350,12 +350,14 @@ void EntityEquipItemDrop(Entity* self) {
             self->ext.equipItemDrop.unk8C = index;
 
             if (itemId < NUM_HAND_ITEMS) {
-                g_api.LoadEquipIcon(g_api.D_800A4B04[itemId].icon,
-                                    g_api.D_800A4B04[itemId].palette, index);
+                g_api.LoadEquipIcon(
+                    g_api.D_800A4B04[itemId].icon,
+                    g_api.D_800A4B04[itemId].iconPalette, index);
             } else {
                 itemId -= NUM_HAND_ITEMS;
-                g_api.LoadEquipIcon(g_api.D_800A7718[itemId].icon,
-                                    g_api.D_800A7718[itemId].palette, index);
+                g_api.LoadEquipIcon(
+                    g_api.D_800A7718[itemId].icon,
+                    g_api.D_800A7718[itemId].iconPalette, index);
             }
 
             poly = &g_PrimBuf[primIndex];

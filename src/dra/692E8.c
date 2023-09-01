@@ -127,7 +127,7 @@ void func_80109594(void) {
     }
 
     g_CurrentEntity = g_Entities;
-    weapon = D_8017A000.func_8017A018;
+    weapon = D_8017A000.GetWeaponId;
     if (weapon() != 0x2D) {
         return;
     }
@@ -136,7 +136,7 @@ void func_80109594(void) {
     }
     func_8010FAF4();
 
-    weapon = D_8017A000.func_8017A000;
+    weapon = D_8017A000.EntityWeaponAttack;
     weapon();
     g_Player.unk0C |= 0x01000000;
     func_8010DFF0(1, 10);
@@ -166,7 +166,7 @@ INCLUDE_ASM("dra/nonmatchings/692E8", func_8010A234);
 void func_8010A234(s32 arg0) {
     s32 temp;
     g_CurrentEntity = g_Entities;
-    temp = D_8017A000.func_8017A018();
+    temp = D_8017A000.GetWeaponId();
 
     do { // !FAKE
         if ((temp == 0x2D) &&
@@ -211,8 +211,7 @@ void func_8010A234(s32 arg0) {
 void func_8010A3F0(void) {
     s32 temp = 0x38;
 
-    if (D_8017A000.func_8017A018() == temp &&
-        D_8017D000.func_8017A018() == temp) {
+    if (D_8017A000.GetWeaponId() == temp && D_8017D000.GetWeaponId() == temp) {
         if (g_Player.D_80072F16 == 0) {
             func_801092E8(1);
         }

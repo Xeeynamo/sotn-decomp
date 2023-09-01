@@ -1191,10 +1191,10 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
         strEquipName = GetEquipmentName(*new_var, equipId);
         if (D_801375CC.equipTypeFilter == 0) {
             icon = D_800A4B04[equipId].icon;
-            palette = D_800A4B04[equipId].palette;
+            palette = D_800A4B04[equipId].iconPalette;
         } else {
             icon = D_800A7718[equipId].icon;
-            palette = D_800A7718[equipId].palette;
+            palette = D_800A7718[equipId].iconPalette;
         }
 
         LoadEquipIcon(icon, palette, i);

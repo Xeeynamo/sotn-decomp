@@ -2,6 +2,7 @@
 #define DRA_H
 
 #include "game.h"
+#include "weapon.h"
 #include "items.h"
 
 #define DAMAGE_FLAG_NORMAL 0x0000
@@ -229,17 +230,6 @@ typedef struct {
     /* 0x18 */ s16 attack;
     /* 0x1A */ s16 unk1A;
 } SpellDef;
-
-typedef struct {
-    void (*func_8017A000)(void);
-    void* unk04;
-    void* unk08;
-    void* unk0C;
-    void* unk10;
-    void* unk14;
-    s32 (*func_8017A018)();
-    void (*func_8017A01C)(u8);
-} WeaponOvl;
 
 typedef struct {
     u32 unk0;
@@ -681,9 +671,9 @@ extern s32 D_8013B69C;
 extern s32 D_8016FCC0[];
 extern void (*D_8013C00C)(void);
 extern PfnEntityUpdate D_80179C80[];
-extern WeaponOvl D_8017A000;
+extern Weapon D_8017A000;
 extern PfnEntityUpdate D_8017CC40[];
-extern WeaponOvl D_8017D000;
+extern Weapon D_8017D000;
 extern void (*D_80170000)(void);
 extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
