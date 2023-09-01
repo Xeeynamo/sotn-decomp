@@ -1,43 +1,6 @@
 #include "dre.h"
 
-extern u16 D_80180660[];
-void EntityHeartDrop(Entity* self) {
-    u16 temp_a0;
-    u16 temp_a0_2;
-    u16 var_a0;
-
-    if (self->step == 0) {
-        temp_a0 = self->params + 0x118;
-        self->ext.generic.unkB4 = temp_a0;
-        if ((D_8003BEEC[temp_a0 >> 3] >> (temp_a0 & 7)) & 1) {
-            DestroyEntity(self);
-            return;
-        }
-        temp_a0_2 = temp_a0 - 0x118;
-        var_a0 = D_80180660[temp_a0_2];
-        if (var_a0 < 128) {
-            self->ext.generic.unkB8.unkFuncB8 = EntityPrizeDrop;
-        } else {
-            self->ext.generic.unkB8.unkFuncB8 = EntityEquipItemDrop;
-            var_a0 -= 128;
-        }
-        self->params = var_a0 + 0x8000;
-    } else {
-        temp_a0_2 = self->ext.generic.unkB4;
-        if (self->step < 5) {
-            if (self->hitFlags != 0) {
-                var_a0 = self->ext.generic.unkB4;
-                D_8003BEEC[temp_a0_2 >> 3] |= 1 << (var_a0 & 7);
-                self->step = 5;
-            }
-        }
-    }
-    self->ext.generic.unkB8.unkFuncB8(self);
-}
-
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1DC6C", EntityUnkId0E);
-
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1DC6C", func_8019E1C8);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/1E1C8", func_8019E1C8);
 
 void EntityUnkId13(Entity* entity) {
     switch (entity->step) {
@@ -68,9 +31,9 @@ void EntityUnkId13(Entity* entity) {
 }
 
 // DECOMP_ME_WIP func_8019E3C8 https://decomp.me/scratch/lcx4I
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1DC6C", func_8019E3C8);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/1E1C8", func_8019E3C8);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1DC6C", func_8019E4F8);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/1E1C8", func_8019E4F8);
 
 // an explosion animation ID 0x14
 void EntityExplosion14(Entity* entity) {
@@ -135,7 +98,7 @@ void EntityUnkId15(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1DC6C", func_8019E7C4);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/1E1C8", func_8019E7C4);
 
 bool func_8019E9F4(Point16* arg0) {
     Collider collider;
@@ -404,11 +367,11 @@ void func_8019F304(void) {
 }
 
 // DECOMP_ME_WIP func_8019F3BC https://decomp.me/scratch/Hfk9n
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1DC6C", func_8019F3BC);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/1E1C8", func_8019F3BC);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1DC6C", func_8019F594);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/1E1C8", func_8019F594);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1DC6C", func_8019FB74);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/1E1C8", func_8019FB74);
 
 void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     u16 buf[COLORS_PER_PAL];
@@ -534,7 +497,7 @@ void func_801A0564(Primitive* prim) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1DC6C", EntityStageNamePopup);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/1E1C8", EntityStageNamePopup);
 
 // The white flying orbs of energy that Alucard summons as part of the Soul
 // Steal spell
@@ -786,9 +749,9 @@ void BottomCornerText(u8* str, u8 lower_left) {
     g_BottomCornerTextTimer = 0x130;
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1DC6C", func_801A2018);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/1E1C8", func_801A2018);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1DC6C", func_801A2400);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/1E1C8", func_801A2400);
 
 POLY_GT4* func_801A2550(POLY_GT4* poly) {
     while (poly != NULL) {
@@ -801,12 +764,12 @@ POLY_GT4* func_801A2550(POLY_GT4* poly) {
     return NULL;
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1DC6C", func_801A2580);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/1E1C8", func_801A2580);
 
 // DECOMP_ME_WIP func_801A25FC https://decomp.me/scratch/IIvQX a0 -> v0 register
 // swap
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1DC6C", func_801A25FC);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/1E1C8", func_801A25FC);
 #else
 POLY_GT4* func_801A25FC(POLY_GT4* poly, s32 arg1) {
     s32 i;
@@ -873,14 +836,14 @@ void func_801A2764(POLY_GT4* poly) {
 
 #include "../unk_loop_func.h"
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1DC6C", func_801A2848);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/1E1C8", func_801A2848);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1DC6C", func_801A2A58);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/1E1C8", func_801A2A58);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1DC6C", func_801A2C9C);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/1E1C8", func_801A2C9C);
 
 // DECOMP_ME_WIP EntityUnkId17 https://decomp.me/scratch/nNfXk 95.28%
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1DC6C", EntityUnkId17);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/1E1C8", EntityUnkId17);
 
 // 3D house object in background ID 0x16
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1DC6C", Entity3DBackgroundHouse);
+INCLUDE_ASM("asm/us/st/dre/nonmatchings/1E1C8", Entity3DBackgroundHouse);
