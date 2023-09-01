@@ -213,7 +213,7 @@ void func_801078C4(void) {
     } else {
         len = g_Cd.overlayLastBlockSize;
     }
-    g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + (u8*)&D_8007EFE4;
+    g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + g_Pix[0];
     g_Cd.overlayCopySrc = TO_CD_BLOCK(g_Cd.D_80137F70) + D_801EC000;
 #if USE_MICRO_OPTIMIZATIONS == 1
     MEMCPY(g_Cd.overlayCopyDst, g_Cd.overlayCopySrc, len);
@@ -241,15 +241,12 @@ void func_801078C4(void) {
         g_Cd.D_80137F74 = 0;
         CdDataCallback(CopySupportOvlCallback);
         if (g_CdCallback == CdCallback_12) {
-            PixPattern* p = &D_8007EFE4;
-            LoadTPage(p, 0, 0, 0x240, 0x100, 0x100, 0x80);
+            LoadTPage(g_Pix[0], 0, 0, 0x240, 0x100, 0x100, 0x80);
         } else if (g_CdCallback == CdCallback_13) {
-            PixPattern* p = &D_8007EFE4;
-            LoadTPage(p, 0, 0, 0x240, 0x180, 0x100, 0x80);
+            LoadTPage(g_Pix[0], 0, 0, 0x240, 0x180, 0x100, 0x80);
         } else {
-            PixPattern* p = &D_8007EFE4;
-            LoadTPage(p, 0, 0, 0x2C0, 0x100, 0x100, 0x80);
-            LoadTPage(p + 0x1000, 0, 0, 0x2C0, 0x180, 0x80, 0x80);
+            LoadTPage(g_Pix[0], 0, 0, 0x2C0, 0x100, 0x100, 0x80);
+            LoadTPage(g_Pix[2], 0, 0, 0x2C0, 0x180, 0x80, 0x80);
         }
     }
 }
@@ -263,7 +260,7 @@ void func_80107B04(void) {
     } else {
         len = g_Cd.overlayLastBlockSize;
     }
-    g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + (u8*)&D_8007EFE4;
+    g_Cd.overlayCopyDst = TO_CD_BLOCK(g_Cd.D_80137F74) + g_Pix[0];
     g_Cd.overlayCopySrc = TO_CD_BLOCK(g_Cd.D_80137F70) + D_801EC000;
 #if USE_MICRO_OPTIMIZATIONS == 1
     MEMCPY(g_Cd.overlayCopyDst, g_Cd.overlayCopySrc, len);
@@ -279,7 +276,7 @@ void func_80107B04(void) {
     g_Cd.overlayBlockCount--;
     if (g_Cd.overlayBlockCount < 0 ||
         (g_Cd.overlayBlockCount == 0 && g_Cd.overlayLastBlockSize == 0)) {
-        LoadTPage(&D_8007EFE4, 2, 0, 0x20, 0x100, 0x60, 0x70);
+        LoadTPage(g_Pix[0], 2, 0, 0x20, 0x100, 0x60, 0x70);
         g_Cd.D_80137F78 = 1;
         CdDataCallback(NULL);
     }

@@ -4,6 +4,8 @@ g_GpuBuffers  = 0x8003CB08;
 g_Player      = 0x80072BD0;
 g_Camera      = 0x8007308C;
 g_CurrentRoom = 0x800730A0;
+g_Pix         = 0x8007EFE4;
+g_Pix_2       = 0x80082FE4;
 
 g_pads        = 0x80097490;
 g_Status      = 0x80097964;

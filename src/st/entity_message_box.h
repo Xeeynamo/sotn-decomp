@@ -88,7 +88,7 @@ void EntityMessageBox(Entity* self) {
         break;
 
     case 2:
-        dstPix = &D_8007EFE4;
+        dstPix = g_Pix[0];
         chPix = dstPix;
         str = self->ext.messageBox.label;
         xOffset = 0;

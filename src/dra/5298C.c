@@ -1350,7 +1350,7 @@ void func_800F96F4(void) { // !Fake:
 }
 
 void func_800F97DC(void) {
-    D_8013794C = &D_8007EFE4;
+    D_8013794C = g_Pix[0];
     D_80137950 = 0x180;
     D_80137954 = 0;
 }
@@ -1358,11 +1358,11 @@ void func_800F97DC(void) {
 void func_800F9808(u32 arg0) {
     s32 temp_s0;
     s32 i;
-    PixPattern* oldPos;
+    u8* oldPos;
 
     temp_s0 = (arg0 == 2) ? 32 : 0;
     arg0 = func_800F548C(arg0);
-    oldPos = (PixPattern*)D_8013794C;
+    oldPos = D_8013794C;
 
     for (i = 0; i < ((temp_s0 + 0x100) * 8); i++) {
         *D_8013794C++ = 0;
@@ -1379,7 +1379,7 @@ INCLUDE_ASM("dra/nonmatchings/5298C", func_800F99B8);
 
 void func_800F9D40(s32 arg0, s32 arg1, s32 arg2) {
     if (arg2 != 0) {
-        D_8013794C = &D_80082FE4;
+        D_8013794C = g_Pix[2];
     }
 
     D_80137950 = 0;
@@ -1390,7 +1390,7 @@ void func_800F9D40(s32 arg0, s32 arg1, s32 arg2) {
 #if defined(VERSION_US)
 void func_800F9D88(s32 arg0, s32 arg1, s32 arg2) {
     if (arg2 != 0) {
-        D_8013794C = &D_80082FE4;
+        D_8013794C = g_Pix[2];
     }
     D_80137950 = 0;
     D_80137954 = 0x100;
@@ -1636,8 +1636,8 @@ void func_800FAF44(s32 arg0) {
     s32 j;
     s32* var_a1;
 
-    D_801375D8 = &D_80084FE4;
-    var_a1 = &D_80084FE4;
+    D_801375D8 = g_Pix[3];
+    var_a1 = g_Pix[3];
 
     if (arg0 == 0) {
         for (i = 0; i < 169; i++) {
