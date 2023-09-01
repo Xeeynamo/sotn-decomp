@@ -1,41 +1,5 @@
 #include "wrp.h"
 
-void EntityHeartDrop(Entity* self) {
-    u16 temp_a0;
-    u16 temp_a0_2;
-    u16 var_a0;
-
-    if (self->step == 0) {
-        temp_a0 = self->params + 0x118;
-        self->ext.generic.unkB4 = temp_a0;
-        if ((D_8003BEEC[temp_a0 >> 3] >> (temp_a0 & 7)) & 1) {
-            DestroyEntity(self);
-            return;
-        }
-        temp_a0_2 = temp_a0 - 0x118;
-        var_a0 = D_80180608[temp_a0_2];
-        if (var_a0 < 128) {
-            self->ext.generic.unkB8.unkFuncB8 = EntityPrizeDrop;
-        } else {
-            self->ext.generic.unkB8.unkFuncB8 = EntityEquipItemDrop;
-            var_a0 -= 128;
-        }
-        self->params = var_a0 + 0x8000;
-    } else {
-        temp_a0_2 = self->ext.generic.unkB4;
-        if (self->step < 5) {
-            if (self->hitFlags != 0) {
-                var_a0 = self->ext.generic.unkB4;
-                D_8003BEEC[temp_a0_2 >> 3] |= 1 << (var_a0 & 7);
-                self->step = 5;
-            }
-        }
-    }
-    self->ext.generic.unkB8.unkFuncB8(self);
-}
-
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/ED9C", EntityUnkId0E);
-
 u8 func_8018F420(s16* arg0, u8 facing) {
     u8 ret = 0;
     Collider collider;
@@ -124,7 +88,7 @@ void func_8018F620(
 
 // DECOMP_ME_WIP func_8018F750 https://decomp.me/scratch/peM5t by stuckpixel
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/ED9C", func_8018F750);
+INCLUDE_ASM("asm/us/st/wrp/nonmatchings/F420", func_8018F750);
 #else
 extern void func_8018F928(Entity*);
 void func_8018F750(
@@ -658,10 +622,10 @@ void func_80190614(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/ED9C", func_801907EC);
+INCLUDE_ASM("asm/us/st/wrp/nonmatchings/F420", func_801907EC);
 
 u16 D_8018107C[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8, 0, 0};
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/ED9C", func_80190DCC);
+INCLUDE_ASM("asm/us/st/wrp/nonmatchings/F420", func_80190DCC);
 
 void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     u16 buf[COLORS_PER_PAL];
@@ -787,7 +751,7 @@ void func_801917BC(Primitive* prim) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/ED9C", EntityStageNamePopup);
+INCLUDE_ASM("asm/us/st/wrp/nonmatchings/F420", EntityStageNamePopup);
 
 u16 D_801810A0[] = {
     /* 10A0 */ 0x0820,
@@ -1076,9 +1040,9 @@ void BottomCornerText(u8* str, u8 lower_left) {
     g_BottomCornerTextTimer = 0x130;
 }
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/ED9C", func_80193270);
+INCLUDE_ASM("asm/us/st/wrp/nonmatchings/F420", func_80193270);
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/ED9C", func_80193658);
+INCLUDE_ASM("asm/us/st/wrp/nonmatchings/F420", func_80193658);
 
 POLY_GT4* func_801937A8(POLY_GT4* poly) {
     while (poly) {
