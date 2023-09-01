@@ -318,7 +318,7 @@ typedef struct PixPattern {
  * represents the number of pixels, not the actual size of the transfer area in
  * the frame buffer.
  */
-extern u_short LoadTPage(PixPattern* pix,  // Pointer to texture pattern start address
+extern u_short LoadTPage(u_long* pix,  // Pointer to texture pattern start address
           int tp,       // Bit depth (0 = 4-bit; 1 = 8-bit; 2 = 16-bit)
           int abr,      // Semitransparency rate
           int x, int y, // Destination frame buffer address
