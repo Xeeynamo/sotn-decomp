@@ -135,6 +135,14 @@ typedef struct {
 } ET_RelicOrb;
 
 typedef struct {
+    /* 0x7C */ u8* label;
+    /* 0x80 */ u16 width;
+    /* 0x82 */ u16 height;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ u16 duration;
+} ET_MessageBox;
+
+typedef struct {
     /* 0x7C */ s16 unk7C;
     /* 0x7E */ s16 unk7E;
     /* 0x80 */ s32 unk80;
@@ -461,6 +469,7 @@ typedef union {
     /* 0x7C */ ET_Generic generic;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
     /* 0x7C */ ET_RelicOrb relicOrb;
+    /* 0x7C */ ET_MessageBox messageBox;
     /* 0x7C */ ET_Weapon weapon;
     /* 0x7C */ ET_SoulStealOrb soulStealOrb;
     /* 0x7C */ ET_GaibonSlogra GS_Props;

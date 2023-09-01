@@ -32,7 +32,7 @@ segments:
       - [0xB8, layers, rooms]
       - [0x1B8, .data, 6FD0]
       - [0xF84, .data, entity_relic_orb]
-      - [0xFE8, .data, ED9C]
+      - [0xFE8, .data, F420]
       - [0x11AC, roomdef, g_Rooms]
       - [0x1228, layoutobj, D_80181228]
       - [0x1250, layoutobj, D_80181250]
@@ -76,13 +76,15 @@ segments:
       - [0x6F10, .rodata, D020]
       - [0x6F30, .rodata, D020] # EntityEquipItemDrop
       - [0x6F48, .rodata, entity_relic_orb]
-      - [0x6F80, rodata] # EntityUnkId0E
+      - [0x6F80, .rodata, entity_message_box]
       - [0x6F94, rodata] # EntityStageNamePopup
       - [0x6FD0, c]
       - [0x81E8, c]
       - [0x861C, c]
       - [0xD020, c]
       - [0xE2CC, c, entity_relic_orb]
-      - [0xED9C, c]
+      - [0xED9C, c, entity_heart_drop]
+      - [0xEEC4, c, entity_message_box]
+      - [0xF420, c]
       - [0x13AA0, sbss] # bss?
   - [0x14768]

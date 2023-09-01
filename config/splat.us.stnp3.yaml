@@ -59,7 +59,8 @@ segments:
       - [0x31F00, rodata]
       - [0x31F68, .rodata, 3DEF4]
       - [0x31FA0, .rodata, entity_relic_orb]
-      - [0x31FD8, rodata]
+      - [0x31FD8, .rodata, entity_message_box]
+      - [0x31FEC, rodata]
       - [0x3200C, rodata] # EntityStageNamePopup .rodata,
       - [0x32020, .rodata, 44DCC] # EntityMerman2
       - [0x32044, .rodata, 48238] # EntityMerman
@@ -81,7 +82,9 @@ segments:
       - [0x394F0, c]
       - [0x3DEF4, c]
       - [0x3F1A0, c, entity_relic_orb]
-      - [0x3FC70, c]
+      - [0x3FC70, c, entity_heart_drop]
+      - [0x3FD98, c, entity_message_box]
+      - [0x402F4, c]
       - [0x44DCC, c] # Merman Entities
       - [0x48238, c] # Merman Entities (2)
       - [0x490E8, c] # EntityBoneScimitar

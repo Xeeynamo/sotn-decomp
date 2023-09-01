@@ -1,41 +1,5 @@
 #include "no3.h"
 
-void EntityHeartDrop(Entity* self) {
-    u16 temp_a0;
-    u16 temp_a0_2;
-    u16 var_a0;
-
-    if (self->step == 0) {
-        temp_a0 = self->params + 0x30;
-        self->ext.generic.unkB4 = temp_a0;
-        if ((D_8003BEEC[temp_a0 >> 3] >> (temp_a0 & 7)) & 1) {
-            DestroyEntity(self);
-            return;
-        }
-        temp_a0_2 = temp_a0 - 0x30;
-        var_a0 = D_80181C8C[temp_a0_2];
-        if (var_a0 < 128) {
-            self->ext.generic.unkB8.unkFuncB8 = EntityPrizeDrop;
-        } else {
-            self->ext.generic.unkB8.unkFuncB8 = EntityEquipItemDrop;
-            var_a0 -= 128;
-        }
-        self->params = var_a0 + 0x8000;
-    } else {
-        temp_a0_2 = self->ext.generic.unkB4;
-        if (self->step < 5) {
-            if (self->hitFlags != 0) {
-                var_a0 = self->ext.generic.unkB4;
-                D_8003BEEC[temp_a0_2 >> 3] |= 1 << (var_a0 & 7);
-                self->step = 5;
-            }
-        }
-    }
-    self->ext.generic.unkB8.unkFuncB8(self);
-}
-
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", EntityUnkId0E);
-
 u8 func_801C8A84(s16* arg0, u8 facing) {
     u8 ret = 0;
     Collider collider;
@@ -86,9 +50,9 @@ void EntityUnkId13(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", func_801C8C84);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", func_801C8C84);
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", func_801C8DB4);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", func_801C8DB4);
 
 void EntityUnkId14(Entity* entity) {
     if (entity->step == 0) {
@@ -140,7 +104,7 @@ void EntityUnkId15(Entity* arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", func_801C9080);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", func_801C9080);
 
 bool func_801C92B0(Point16* unk) {
     Collider collider;
@@ -401,11 +365,11 @@ void func_801C9BC0(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", func_801C9C78);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", func_801C9C78);
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", func_801C9E50);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", func_801C9E50);
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", func_801CA430);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", func_801CA430);
 
 void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     u16 buf[COLORS_PER_PAL];
@@ -531,7 +495,7 @@ void func_801CAE20(Primitive* prim) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", EntityStageNamePopup);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", EntityStageNamePopup);
 
 // The white flying orbs of energy that Alucard summons as part of the Soul
 // Steal spell
@@ -644,11 +608,11 @@ void EntityRoomForeground(Entity* entity) {
     AnimateEntity(objInit->unk10, entity);
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", func_801CC5A4);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", func_801CC5A4);
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", func_801CC6F8);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", func_801CC6F8);
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", func_801CC820);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", func_801CC820);
 
 void func_801CC90C(Entity* arg0) {
     s16 temp_v0_2;
@@ -672,26 +636,26 @@ void func_801CC90C(Entity* arg0) {
 }
 
 // stronger version of warg with jump and flame attack
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", EntityStrongWarg);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", EntityStrongWarg);
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", EntityUnkId30);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", EntityUnkId30);
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", EntityUnkId31);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", EntityUnkId31);
 
 // some sort of explosion
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", EntityExplosion3);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", EntityExplosion3);
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", func_801CE740);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", func_801CE740);
 
 // flame-like attack on ground from strong warg
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", EntityStrongWargWaveAttack);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", EntityStrongWargWaveAttack);
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", EntityUnkId2F);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", EntityUnkId2F);
 
 // beams that go up when strong warg dies
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", EntityStrongWargDeathBeams);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", EntityStrongWargDeathBeams);
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", func_801CF438);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", func_801CF438);
 
 void func_801CF58C(Entity* self) {
     self->velocityX = 0;
@@ -761,9 +725,9 @@ void func_801CF6D8(Entity* arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", EntityWarg);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", EntityWarg);
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", EntityUnkId4B);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", EntityUnkId4B);
 
 // A single "puff" of the warg explosion animation, transparent
 void EntityWargExplosionPuffTransparent(Entity* entity) {
@@ -930,10 +894,10 @@ void BottomCornerText(u8* str, u8 lower_left) {
     g_BottomCornerTextTimer = 0x130;
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", func_801D0A2C);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", func_801D0A2C);
 
 // Alucard says "ahh" and turns blue from water contact
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", EntityAlucardWaterEffect);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", EntityAlucardWaterEffect);
 
 // ID 0x35
 void EntitySplashWater(Entity* self) {
@@ -1555,7 +1519,7 @@ s32 func_801D2D40(s16 yVector) {
 }
 
 // another merman variant
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", EntityMerman3);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", EntityMerman3);
 
 // some sort of explosion
 void EntityExplosion2(Entity* entity, s32 arg1) {
@@ -1857,9 +1821,9 @@ void EntityLargeFallingObject(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", EntityMermanSpawner);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", EntityMermanSpawner);
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", EntityMerman);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", EntityMerman);
 
 // fireball shot by merman
 void EntityMermanFireball(Entity* self) {
@@ -1924,7 +1888,7 @@ void EntityFallingObject(Entity* arg0) {
 }
 
 // part of explosion when merman dies
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", EntityMermanExplosion);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", EntityMermanExplosion);
 
 s32 func_801C52EC(s32*);
 s32 func_801C5A98(u16* hitSensors, s16 sensorCount);
@@ -1949,7 +1913,7 @@ void func_801D59D0(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48400", EntityBoneScimitar);
+INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", EntityBoneScimitar);
 
 // debris that rotates and falls down
 void EntityBoneScimitarParts(Entity* entity) {

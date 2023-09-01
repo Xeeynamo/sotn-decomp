@@ -1,39 +1,4 @@
 #include "np3.h"
-void EntityHeartDrop(Entity* self) {
-    u16 temp_a0;
-    u16 temp_a0_2;
-    u16 var_a0;
-
-    if (self->step == 0) {
-        temp_a0 = self->params + 0x30;
-        self->ext.generic.unkB4 = temp_a0;
-        if ((D_8003BEEC[temp_a0 >> 3] >> (temp_a0 & 7)) & 1) {
-            DestroyEntity(self);
-            return;
-        }
-        temp_a0_2 = temp_a0 - 0x30;
-        var_a0 = D_80181618[temp_a0_2];
-        if (var_a0 < 128) {
-            self->ext.generic.unkB8.unkFuncB8 = EntityPrizeDrop;
-        } else {
-            self->ext.generic.unkB8.unkFuncB8 = EntityEquipItemDrop;
-            var_a0 -= 128;
-        }
-        self->params = var_a0 + 0x8000;
-    } else {
-        temp_a0_2 = self->ext.generic.unkB4;
-        if (self->step < 5) {
-            if (self->hitFlags != 0) {
-                var_a0 = self->ext.generic.unkB4;
-                D_8003BEEC[temp_a0_2 >> 3] |= 1 << (var_a0 & 7);
-                self->step = 5;
-            }
-        }
-    }
-    self->ext.generic.unkB8.unkFuncB8(self);
-}
-
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3FC70", EntityUnkId0E);
 
 u8 func_801C02F4(s16* arg0, u8 facing) {
     u8 ret = 0;
@@ -108,7 +73,7 @@ void func_801C04F4(
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3FC70", func_801C0624);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/402F4", func_801C0624);
 
 void func_801C070C(Entity* entity) {
     if (entity->step == 0) {
@@ -540,9 +505,9 @@ void func_801C14E8(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3FC70", func_801C16C0);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/402F4", func_801C16C0);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3FC70", func_801C1CA0);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/402F4", func_801C1CA0);
 
 void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     u16 buf[COLORS_PER_PAL];
@@ -668,7 +633,7 @@ void func_801C2690(Primitive* prim) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3FC70", EntityStageNamePopup);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/402F4", EntityStageNamePopup);
 
 // The white flying orbs of energy that Alucard summons as part of the Soul
 // Steal spell
@@ -920,7 +885,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
     g_BottomCornerTextTimer = 0x130;
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3FC70", func_801C4144);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/402F4", func_801C4144);
 
 // ID 0x2C
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3FC70", func_801C424C);
+INCLUDE_ASM("asm/us/st/np3/nonmatchings/402F4", func_801C424C);

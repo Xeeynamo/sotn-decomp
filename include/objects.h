@@ -20,5 +20,5 @@ void EntityHeartDrop(Entity*);
 void EntityHeartDrop(Entity* entity, u32 arg1);
 #endif
 void EntityEnemyBlood(Entity*);
-void EntityUnkId0E(Entity*);
+void EntityMessageBox(Entity*);
 void EntityDummy(Entity*);

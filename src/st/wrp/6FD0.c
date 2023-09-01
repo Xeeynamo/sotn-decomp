@@ -211,7 +211,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     /* 40C */ (PfnEntityUpdate)EntityRelicOrb,
     /* 410 */ (PfnEntityUpdate)EntityHeartDrop,
     /* 414 */ (PfnEntityUpdate)EntityEnemyBlood,
-    /* 418 */ (PfnEntityUpdate)EntityUnkId0E,
+    /* 418 */ (PfnEntityUpdate)EntityMessageBox,
     /* 41C */ (PfnEntityUpdate)EntityDummy,
     /* 420 */ (PfnEntityUpdate)EntityDummy,
     /* 424 */ (PfnEntityUpdate)func_80186FD0, // unused
