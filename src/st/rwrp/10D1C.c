@@ -1,8 +1,8 @@
 #include "rwrp.h"
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/10D1C", func_80190D1C);
+INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/10D1C", EntityHeartDrop);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/10D1C", func_80190E44);
+INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/10D1C", EntityUnkId0E);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/10D1C", func_801913A0);
 

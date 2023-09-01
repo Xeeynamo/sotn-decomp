@@ -44,3 +44,5 @@ func_801951F0 = 0x801951F0;
 UnkPolyFunc0 = 0x80195990;
 UnkLoopFunc = 0x801959BC;
 g_ItemIconSlots = 0x801966A8;
+EntityHeartDrop = 0x80190D1C;
+EntityUnkId0E = 0x80190E44;
