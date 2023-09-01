@@ -2,6 +2,8 @@ name: Format code
 
 on:
   push:
+    branches:
+      - master
     paths:
       - '*/*.c'
       - '*/*.h'
@@ -9,7 +11,6 @@ on:
       - '**/*.h'
       - '**/*.py'
       - 'config/symbols.*.txt'
-  pull_request_target:
   workflow_dispatch:
 
 jobs:
