@@ -1616,9 +1616,6 @@ void func_800FAD34(s32 arg0, u8 arg1, u16 equipIcon, u16 palette) {
     }
 }
 
-extern Equipment D_800A4B04[];
-extern Accessory D_800A7718[];
-
 void func_800FADC0(void) {
     const char* description;
     s32 cursorEquip;
