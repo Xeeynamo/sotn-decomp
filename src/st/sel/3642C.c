@@ -10,7 +10,7 @@ void func_801B642C(void) {
     D_801BC35A = D_801BC35C + 0x14;
 }
 
-s32 func_801B6480(s32 textDialogue) {
+bool func_801B6480(s32 textDialogue) {
     Primitive* prim;
     s16 firstPrimIndex;
 
@@ -18,7 +18,7 @@ s32 func_801B6480(s32 textDialogue) {
     g_Dialogue.primIndex[2] = firstPrimIndex;
     if (firstPrimIndex == -1) {
         g_Dialogue.primIndex[2] = 0;
-        return 0;
+        return false;
     }
     g_Dialogue.nextCharDialogue = textDialogue;
     g_Dialogue.unk3C = 0;
@@ -62,14 +62,14 @@ s32 func_801B6480(s32 textDialogue) {
     prim->blendMode = BLEND_VISIBLE;
 
     prim = prim->next;
-    prim->type = 1;
+    prim->type = PRIM_TILE;
     prim->r0 = prim->g0 = prim->b0 = 16;
     prim->x0 = 3;
     prim->y0 = 0x2F;
     prim->v0 = 0x4A;
     prim->priority = 0x1FC;
     prim->blendMode = BLEND_VISIBLE;
-    return 1;
+    return true;
 }
 
 void func_801B6648(s16 yOffset) {
