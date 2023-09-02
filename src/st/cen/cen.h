@@ -88,7 +88,7 @@ extern s16 D_8019D386;
 extern s16 D_8019D38A;
 extern s8 D_8019D38E;
 extern s8 D_8019D38F;
-extern s32 D_8019D424;
+extern u32 D_8019D424;
 extern u8 D_8019C76C;
 extern u8 D_8019C770;
 

@@ -375,7 +375,60 @@ void func_8018E3BC(s32 arg0) {
     D_8019D3B4 = 1;
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", func_8018E3E8);
+void func_8018E3E8(void) {
+    Entity* entity;
+    u16 startTimer;
+    u8 entityIndex;
+
+    g_Dialogue.timer++;
+    // protect from overflows
+    if (g_Dialogue.timer > 0xFFFE) {
+        g_Dialogue.unk3C = 0;
+        return;
+    }
+
+    while (true) {
+        // Start the dialogue script only if the start timer has passed
+        startTimer = (*g_Dialogue.unk40++ << 8) | *g_Dialogue.unk40++;
+        if (g_Dialogue.timer < startTimer) {
+            // Re-evaluate the condition at the next frame
+            g_Dialogue.unk40 -= 2;
+            return;
+        }
+
+        switch (*g_Dialogue.unk40++) {
+        case 0:
+            entityIndex = *g_Dialogue.unk40++;
+            entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
+            DestroyEntity(entity);
+
+            entity->entityId = *g_Dialogue.unk40++;
+            entity->pfnUpdate = PfnEntityUpdates[entity->entityId - 1];
+            entity->posX.i.hi = *g_Dialogue.unk40++ * 0x10;
+            entity->posX.i.hi = *g_Dialogue.unk40++ | entity->posX.i.hi;
+            entity->posY.i.hi = *g_Dialogue.unk40++ * 0x10;
+            entity->posY.i.hi = *g_Dialogue.unk40++ | entity->posY.i.hi;
+            entity->posX.i.hi -= g_Camera.posX.i.hi;
+            entity->posY.i.hi -= g_Camera.posY.i.hi;
+            break;
+        case 1:
+            entityIndex = *g_Dialogue.unk40++;
+            entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
+            DestroyEntity(entity);
+            break;
+        case 2:
+            if (!((D_8019D424 >> *g_Dialogue.unk40) & 1)) {
+                g_Dialogue.unk40--;
+                return;
+            }
+            D_8019D424 &= ~(1 << *g_Dialogue.unk40++);
+            break;
+        case 3:
+            D_8019D424 |= 1 << *g_Dialogue.unk40++;
+            break;
+        }
+    }
+}
 
 // Animates the portrait size of the actor by enlarging or shrinking it
 void func_8018E6C4(u8 ySteps) {
