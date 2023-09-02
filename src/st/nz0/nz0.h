@@ -368,7 +368,7 @@ extern s32 D_801CB6C0[];
 extern s16 D_801CB6C4;
 extern s16 D_801CB6C6;
 extern s32 D_801CB6C8;
-extern s32 D_801CB734;
+extern u32 D_801CB734;
 extern u16 D_801CB736[];
 
 // *** EntitySoulStealOrb properties START ***
