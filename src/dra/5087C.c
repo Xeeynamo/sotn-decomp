@@ -349,10 +349,7 @@ void func_800F1FC4(s32 arg0) {
                   (playerY >> 8) + g_CurrentRoom.top, arg0);
 }
 
-// #ifndef NON_MATCHING
-// INCLUDE_ASM("dra/nonmatchings/5087C", func_800F2014);
-// #else
-void func_800F1B08(s32, s32, s32, u8); // extern
+void func_800F1B08(s32, s32, s32, u8);
 
 void func_800F2014(void) {
     s32 temp_s0;
@@ -378,7 +375,6 @@ void func_800F2014(void) {
         }
     }
 }
-// #endif
 
 INCLUDE_ASM("dra/nonmatchings/5087C", func_800F2120);
 
