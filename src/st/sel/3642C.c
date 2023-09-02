@@ -47,19 +47,17 @@ s32 func_801B6480(s32 textDialogue) {
     prim->blendMode = BLEND_VISIBLE;
     prim = g_Dialogue.prim[5] = prim->next;
 
-    prim->type = 4;
+    prim->type = PRIM_GT4;
     prim->blendMode = BLEND_VISIBLE;
 
     prim = prim->next;
-    prim->type = 3;
+    prim->type = PRIM_G4;
     prim->b0 = prim->b1 = 0x7F;
     prim->b2 = prim->b3 = 0;
     prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0;
     prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
-    prim->x2 = 4;
-    prim->x0 = 4;
-    prim->x3 = 0xF8;
-    prim->x1 = 0xF8;
+    prim->x0 = prim->x2 = 4;
+    prim->x1 = prim->x3 = 0xF8;
     prim->priority = 0x1FD;
     prim->blendMode = BLEND_VISIBLE;
 
