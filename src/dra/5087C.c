@@ -349,7 +349,32 @@ void func_800F1FC4(s32 arg0) {
                   (playerY >> 8) + g_CurrentRoom.top, arg0);
 }
 
-INCLUDE_ASM("dra/nonmatchings/5087C", func_800F2014);
+void func_800F1B08(s32, s32, s32, u8);
+
+void func_800F2014(void) {
+    s32 temp_s0;
+    s32 temp_s1;
+    s32 temp_v1;
+    s32 var_a2;
+    s32 temp_a3;
+
+    if ((D_8013AED0 != 0) && (g_StageId != STAGE_ST0)) {
+        temp_s0 = (playerX >> 8) + g_CurrentRoom.left;
+        temp_s1 = (playerY >> 8) + g_CurrentRoom.top;
+        var_a2 = (temp_s0 >> 2) + (temp_s1 * 0x10);
+        temp_v1 = 1 << ((3 - (temp_s0 & 3)) * 2);
+        if (g_StageId & 0x20) {
+            var_a2 += 0x400;
+        }
+        temp_a3 = D_8006BB74[var_a2];
+        if (!(temp_a3 & temp_v1)) {
+            D_8006BB74[var_a2] = temp_a3 | temp_v1;
+            g_roomCount += 1;
+            func_800F1B08(temp_s0, temp_s1, 0, temp_a3);
+            func_800F1EB0(temp_s0, temp_s1, 0xFFFF);
+        }
+    }
+}
 
 INCLUDE_ASM("dra/nonmatchings/5087C", func_800F2120);
 
