@@ -411,7 +411,7 @@ void func_8018E3E8(void) {
             entity->posX.i.hi -= g_Camera.posX.i.hi;
             entity->posY.i.hi -= g_Camera.posY.i.hi;
             break;
-            
+
         case 1:
             entityIndex = *g_Dialogue.unk40++;
             entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
