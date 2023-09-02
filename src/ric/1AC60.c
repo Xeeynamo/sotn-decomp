@@ -89,8 +89,6 @@ void func_80158814(void) {
     PLAYER.palette = D_80175954;
 }
 
-extern s16 D_80175956;
-
 bool func_8015885C(void) {
     s32 var_v0_2;
 
@@ -111,31 +109,31 @@ bool func_8015885C(void) {
 
     if (g_Player.padPressed & PAD_CROSS) {
         if (g_Player.padPressed & PAD_RIGHT) {
-            g_Entities->posX.val += 0x100000;
+            g_Entities->posX.val += FIX(16.0);
         }
         if (g_Player.padPressed & PAD_LEFT) {
-            g_Entities->posX.val += 0xFFF00000;
+            g_Entities->posX.val -= FIX(16.0);
         }
         if (g_Player.padPressed & PAD_UP) {
-            PLAYER.posY.val += 0xFFF00000;
+            PLAYER.posY.val -= FIX(16.0);
         }
         var_v0_2 = g_Player.padPressed & PAD_DOWN;
 
     } else {
         if (g_Player.padTapped & PAD_RIGHT) {
-            g_Entities->posX.val += 0x100000;
+            g_Entities->posX.val += FIX(16.0);
         }
         if (g_Player.padTapped & PAD_LEFT) {
-            g_Entities->posX.val += 0xFFF00000;
+            g_Entities->posX.val -= FIX(16.0);
         }
         if (g_Player.padTapped & PAD_UP) {
-            PLAYER.posY.val += 0xFFF00000;
+            PLAYER.posY.val -= FIX(16.0);
         }
         var_v0_2 = g_Player.padTapped & PAD_DOWN;
     }
 
     if (var_v0_2 & PAD_DOWN) {
-        PLAYER.posY.val += 0x100000;
+        PLAYER.posY.val += FIX(16.0);
     }
     if (g_Player.padTapped & PAD_CIRCLE) {
         PLAYER.animCurFrame--;
