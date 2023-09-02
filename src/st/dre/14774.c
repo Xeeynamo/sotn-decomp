@@ -175,7 +175,7 @@ void func_80194C50(void) {
         g_Dialogue.unk3C = 0;
         return;
     }
-    
+
     while (true) {
         // Start the dialogue script only if the start timer has passed
         startTimer = (*g_Dialogue.unk40++ << 8) | *g_Dialogue.unk40++;
@@ -184,7 +184,7 @@ void func_80194C50(void) {
             g_Dialogue.unk40 -= 2;
             return;
         }
-        
+
         switch (*g_Dialogue.unk40++) {
         case 0:
             entityIndex = *g_Dialogue.unk40++;
@@ -197,22 +197,22 @@ void func_80194C50(void) {
             entity->posY.i.hi = *g_Dialogue.unk40++ * 0x10;
             entity->posY.i.hi = *g_Dialogue.unk40++ | entity->posY.i.hi;
             break;
-            
+
         case 1:
             entityIndex = *g_Dialogue.unk40++;
             entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
             DestroyEntity(entity);
             break;
-            
+
         case 2:
             if (!((D_801A3F84 >> *g_Dialogue.unk40) & 1)) {
                 g_Dialogue.unk40 -= 3;
                 g_Dialogue.timer--;
                 return;
-            } 
+            }
             D_801A3F84 &= ~(1 << *g_Dialogue.unk40++);
             break;
-            
+
         case 3:
             D_801A3F84 |= 1 << *g_Dialogue.unk40++;
             break;
