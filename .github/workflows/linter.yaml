@@ -1,4 +1,4 @@
-name: Format code
+name: Linter
 
 on:
   push:
