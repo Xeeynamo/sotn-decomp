@@ -98,7 +98,64 @@ void func_801949E8(void) {
     prim->blendMode = 0;
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", func_80194AA0);
+// Creates primitives for the actor name at the head of the dialogue
+void func_80194AA0(u16 actorIndex, Entity* self) {
+    Primitive* prim;
+    s16 primIndex;
+    s32 x;
+    u16 chCount;
+    const char* actorName;
+    char ch;
+
+    actorName = D_80180938[actorIndex];
+    chCount = 0;
+    while (true) {
+        ch = *actorName++;
+        if (ch == DIAG_EOL) {
+            ch = *actorName++;
+            if (ch == DIAG_EOS) {
+                break;
+            }
+        }
+        if (ch == MENUCHAR(' ')) {
+            continue;
+        }
+        chCount++;
+    }
+
+    // Create chCount amount of sprites based on the actor name's letter count
+    primIndex = g_api.AllocPrimitives(PRIM_SPRT, chCount);
+    if (primIndex == -1) {
+        DestroyEntity(self);
+        return;
+    }
+
+    // Fill prims to render the actor name on screen
+    prim = &g_PrimBuf[primIndex];
+    g_Dialogue.primIndex[1] = primIndex;
+    actorName = D_80180938[actorIndex];
+    x = 0x38;
+    while (prim != NULL) {
+        ch = *actorName++;
+        if (ch == MENUCHAR(' ')) {
+            x += FONT_SPACE;
+        } else {
+            prim->type = PRIM_SPRT;
+            prim->tpage = 0x1E;
+            prim->clut = 0x196;
+            prim->u0 = (ch & 0x0F) * FONT_W;
+            prim->v0 = (ch & 0xF0) / (FONT_H / 4);
+            prim->v1 = FONT_H;
+            prim->u1 = FONT_W;
+            prim->priority = 0x1FF;
+            prim->blendMode = BLEND_VISIBLE;
+            prim->x0 = x;
+            prim->y0 = g_Dialogue.startY + 6;
+            prim = prim->next;
+            x += FONT_GAP;
+        }
+    }
+}
 
 void func_80194C24(s32 arg0) {
     D_801A3F18 = arg0 + 0x100000;

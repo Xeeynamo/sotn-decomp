@@ -106,6 +106,7 @@ extern u16 D_80180528[];
 extern s32 D_80180664;
 extern s32 D_80180668;
 extern s16 D_801807F0[];
+const char* D_80180938[];
 extern s32 D_801811B0[];
 extern u32 D_8018125C[];
 extern s16 D_801812E4[];
