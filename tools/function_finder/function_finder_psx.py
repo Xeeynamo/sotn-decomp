@@ -175,6 +175,7 @@ if __name__ == "__main__":
             svg_path = os.path.join("function_calls", f"{unique_name}.svg")
             if os.path.exists(svg_path):
                 o[0] = f"[{o[0]}]({base_url}/{svg_path})"
+
     if not args.no_fetch:
         # we are mostly waiting on IO so run in parallel
         with concurrent.futures.ThreadPoolExecutor() as executor:
@@ -187,5 +188,6 @@ if __name__ == "__main__":
             if results[i] != None:
                 o[4] = results[i]["link"]
                 o[5] = results[i]["percent"]
+ 
     headers = ["Filename", "Length", "Branches", "Jtbl", "WIP", "%"]
     print(tabulate(output, headers=headers, tablefmt="github"))
