@@ -188,6 +188,6 @@ if __name__ == "__main__":
             if results[i] != None:
                 o[4] = results[i]["link"]
                 o[5] = results[i]["percent"]
- 
+
     headers = ["Filename", "Length", "Branches", "Jtbl", "WIP", "%"]
     print(tabulate(output, headers=headers, tablefmt="github"))
