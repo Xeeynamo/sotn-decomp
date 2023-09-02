@@ -1626,12 +1626,12 @@ void func_800FADC0(void) {
         cursorEquip = g_Status.equipment[g_MenuNavigation.cursorEquip];
         description = D_800A4B04[cursorEquip].description;
         equipIcon = D_800A4B04[cursorEquip].icon;
-        palette = D_800A4B04[cursorEquip].palette;
+        palette = D_800A4B04[cursorEquip].iconPalette;
     } else {
         cursorEquip = g_Status.equipment[g_MenuNavigation.cursorEquip];
         description = D_800A7718[cursorEquip].description;
         equipIcon = D_800A7718[cursorEquip].icon;
-        palette = D_800A7718[cursorEquip].palette;
+        palette = D_800A7718[cursorEquip].iconPalette;
     }
     func_800FAD34(description, 0x1, equipIcon, palette);
 }
