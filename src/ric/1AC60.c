@@ -90,8 +90,6 @@ void func_80158814(void) {
 }
 
 bool func_8015885C(void) {
-    s32 var_v0_2;
-
     if (D_80175956 == 0) {
         if (g_Player.padTapped & PAD_L2) {
             if (g_Player.D_80072EFC == 0) {
@@ -117,7 +115,9 @@ bool func_8015885C(void) {
         if (g_Player.padPressed & PAD_UP) {
             PLAYER.posY.val -= FIX(16.0);
         }
-        var_v0_2 = g_Player.padPressed & PAD_DOWN;
+        if (g_Player.padPressed & PAD_DOWN) {
+            PLAYER.posY.val += FIX(16.0);
+        }
 
     } else {
         if (g_Player.padTapped & PAD_RIGHT) {
@@ -129,12 +129,11 @@ bool func_8015885C(void) {
         if (g_Player.padTapped & PAD_UP) {
             PLAYER.posY.val -= FIX(16.0);
         }
-        var_v0_2 = g_Player.padTapped & PAD_DOWN;
+        if (g_Player.padTapped & PAD_DOWN) {
+            PLAYER.posY.val += FIX(16.0);
+        }
     }
 
-    if (var_v0_2 & PAD_DOWN) {
-        PLAYER.posY.val += FIX(16.0);
-    }
     if (g_Player.padTapped & PAD_CIRCLE) {
         PLAYER.animCurFrame--;
     }
