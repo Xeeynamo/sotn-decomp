@@ -1646,7 +1646,6 @@ void func_800FADC0(void) {
     }
     func_800FAD34(var_a0, 0x1, var_a2, var_a3);
 }
-// #endif
 
 void func_800FAE98(void) {
     func_800FADC0();
