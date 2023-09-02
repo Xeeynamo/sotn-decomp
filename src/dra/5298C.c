@@ -1616,7 +1616,25 @@ void func_800FAD34(s32 arg0, u8 arg1, u16 equipIcon, u16 palette) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/5298C", func_800FADC0);
+void func_800FADC0(void) {
+    const char* description;
+    s32 cursorEquip;
+    u16 equipIcon;
+    u16 palette;
+
+    if (g_MenuNavigation.cursorEquip < 2) {
+        cursorEquip = g_Status.equipment[g_MenuNavigation.cursorEquip];
+        description = D_800A4B04[cursorEquip].description;
+        equipIcon = D_800A4B04[cursorEquip].icon;
+        palette = D_800A4B04[cursorEquip].palette;
+    } else {
+        cursorEquip = g_Status.equipment[g_MenuNavigation.cursorEquip];
+        description = D_800A7718[cursorEquip].description;
+        equipIcon = D_800A7718[cursorEquip].icon;
+        palette = D_800A7718[cursorEquip].palette;
+    }
+    func_800FAD34(description, 0x1, equipIcon, palette);
+}
 
 void func_800FAE98(void) {
     func_800FADC0();
