@@ -350,26 +350,26 @@ void func_800F1FC4(s32 arg0) {
 }
 
 void func_800F2014(void) {
-    s32 temp_s0;
-    s32 temp_s1;
-    s32 temp_v1;
-    s32 var_a2;
-    s32 temp_a3;
+    s32 x;
+    s32 y;
+    s32 subMap;
+    s32 idx;
+    s32 currMapRect;
 
     if ((D_8013AED0 != 0) && (g_StageId != STAGE_ST0)) {
-        temp_s0 = (playerX >> 8) + g_CurrentRoom.left;
-        temp_s1 = (playerY >> 8) + g_CurrentRoom.top;
-        var_a2 = (temp_s0 >> 2) + (temp_s1 * 0x10);
-        temp_v1 = 1 << ((3 - (temp_s0 & 3)) * 2);
-        if (g_StageId & 0x20) {
-            var_a2 += 0x400;
+        x = (playerX >> 8) + g_CurrentRoom.left;
+        y = (playerY >> 8) + g_CurrentRoom.top;
+        idx = (x >> 2) + (y * 16);
+        subMap = 1 << ((3 - (x & 3)) * 2);
+        if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+            idx += 0x400;
         }
-        temp_a3 = D_8006BB74[var_a2];
-        if (!(temp_a3 & temp_v1)) {
-            D_8006BB74[var_a2] = temp_a3 | temp_v1;
+        currMapRect = D_8006BB74[idx];
+        if (!(currMapRect & subMap)) {
+            D_8006BB74[idx] = currMapRect | subMap;
             g_roomCount++;
-            func_800F1B08(temp_s0, temp_s1, 0, temp_a3);
-            func_800F1EB0(temp_s0, temp_s1, 0xFFFF);
+            func_800F1B08(x, y, 0, currMapRect);
+            func_800F1EB0(x, y, 0xFFFF);
         }
     }
 }
