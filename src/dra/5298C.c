@@ -1616,35 +1616,27 @@ void func_800FAD34(s32 arg0, u8 arg1, u16 equipIcon, u16 palette) {
     }
 }
 
-extern s32 D_800A4B08[];
-extern s32 D_800A4B30[];
-extern s32 D_800A4B32[];
-extern s32 D_800A771C[];
-extern s32 D_800A7730[];
-extern s32 D_800A7732[];
+extern Equipment D_800A4B04[];
+extern Accessory D_800A7718[];
 
 void func_800FADC0(void) {
-    s32 var_a0;
-    u32 new_var;
+    const char* description;
+    s32 cursorEquip;
     u16 equipIcon;
     u16 palette;
 
     if (g_MenuNavigation.cursorEquip < 2) {
-        new_var = *(
-            &g_Status.equipment[LEFT_HAND_SLOT] + g_MenuNavigation.cursorEquip);
-        new_var = new_var * 0x34 >> 2;
-        var_a0 = D_800A4B08[new_var];
-        equipIcon = D_800A4B30[new_var];
-        palette = D_800A4B32[new_var];
+        cursorEquip = g_Status.equipment[g_MenuNavigation.cursorEquip];
+        description = D_800A4B04[cursorEquip].description;
+        equipIcon = D_800A4B04[cursorEquip].icon;
+        palette = D_800A4B04[cursorEquip].palette;
     } else {
-        new_var = *(
-            &g_Status.equipment[LEFT_HAND_SLOT] + g_MenuNavigation.cursorEquip);
-        new_var = new_var << 3;
-        var_a0 = D_800A771C[new_var];
-        equipIcon = D_800A7730[new_var];
-        palette = D_800A7732[new_var];
+        cursorEquip = g_Status.equipment[g_MenuNavigation.cursorEquip];
+        description = D_800A7718[cursorEquip].description;
+        equipIcon = D_800A7718[cursorEquip].icon;
+        palette = D_800A7718[cursorEquip].palette;
     }
-    func_800FAD34(var_a0, 0x1, equipIcon, palette);
+    func_800FAD34(description, 0x1, equipIcon, palette);
 }
 
 void func_800FAE98(void) {
