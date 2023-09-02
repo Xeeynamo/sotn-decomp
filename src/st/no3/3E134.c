@@ -210,7 +210,23 @@ void func_801BE75C(s16 yOffset) {
     ClearImage(&rect, 0, 0, 0);
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801BE7BC);
+void func_801BE7BC(void) {
+    Primitive* prim;
+
+    func_801BE75C(g_Dialogue.nextCharY);
+    prim = g_Dialogue.prim[g_Dialogue.nextCharY];
+    prim->tpage = 0x16;
+    prim->clut = g_Dialogue.clutIndex;
+    prim->y0 = g_Dialogue.nextLineY;
+    prim->u0 = 0;
+    prim->x0 = g_Dialogue.startX;
+    prim->x0 = prim->x0 + 4;
+    prim->v0 = g_Dialogue.nextCharY * 0xC;
+    prim->u1 = 0xC0;
+    prim->v1 = 0xC;
+    prim->priority = 0x1FF;
+    prim->blendMode = 0;
+}
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801BE870);
 
