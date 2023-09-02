@@ -293,7 +293,58 @@ void func_801BE9F4(s32 arg0) {
     D_801D7D60 = 1;
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801BEA20);
+void func_801BEA20(void) {
+    Entity* entity;
+    u16 startTimer;
+    u8 entityIndex;
+
+    g_Dialogue.timer++;
+    // protect from overflows
+    if (g_Dialogue.timer > 0xFFFE) {
+        g_Dialogue.unk3C = 0;
+        return;
+    }
+
+    while (true) {
+        // Start the dialogue script only if the start timer has passed
+        startTimer = (*g_Dialogue.unk40++ << 8) | *g_Dialogue.unk40++;
+        if (g_Dialogue.timer < startTimer) {
+            // Re-evaluate the condition at the next frame
+            g_Dialogue.unk40 -= 2;
+            return;
+        }
+
+        switch (*g_Dialogue.unk40++) {
+        case 0:
+            entityIndex = *g_Dialogue.unk40++;
+            entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
+            DestroyEntity(entity);
+
+            entity->entityId = *g_Dialogue.unk40++;
+            entity->pfnUpdate = PfnEntityUpdates[entity->entityId - 1];
+            entity->posX.i.hi = *g_Dialogue.unk40++ * 0x10;
+            entity->posX.i.hi = *g_Dialogue.unk40++ | entity->posX.i.hi;
+            entity->posY.i.hi = *g_Dialogue.unk40++ * 0x10;
+            entity->posY.i.hi = *g_Dialogue.unk40++ | entity->posY.i.hi;
+            break;
+        case 1:
+            entityIndex = *g_Dialogue.unk40++;
+            entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
+            DestroyEntity(entity);
+            break;
+        case 2:
+            if (!((D_801D7DD0 >> *g_Dialogue.unk40) & 1)) {
+                g_Dialogue.unk40--;
+                return;
+            }
+            D_801D7DD0 &= ~(1 << *g_Dialogue.unk40++);
+            break;
+        case 3:
+            D_801D7DD0 |= 1 << *g_Dialogue.unk40++;
+            break;
+        }
+    }
+}
 
 void func_801BECCC(Entity* entity) {
     /** TODO: !FAKE
