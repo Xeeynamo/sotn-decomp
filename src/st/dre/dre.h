@@ -147,7 +147,7 @@ extern Primitive* D_801A3EF0[];
 extern s32 D_801A3F08;
 extern s32 D_801A3F0C;
 extern s32 D_801A3F10[];
-extern s32 D_801A3F84;
+extern u32 D_801A3F84;
 extern s16 D_801A3F14;
 extern s16 D_801A3F16;
 extern s32 D_801A3F18;
