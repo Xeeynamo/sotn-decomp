@@ -76,8 +76,6 @@ extern s32 D_80137FDC;
 extern s8 aCharal02x;
 
 bool func_801119C4(void) {
-    s32 plFrame;
-
     if (D_801396EA == 0) {
         if (g_Player.padTapped & 1) {
             if (g_Player.D_80072EFC == 0) {
@@ -134,7 +132,6 @@ bool func_801119C4(void) {
     if (g_Player.padTapped & PAD_SQUARE) {
         PLAYER.animCurFrame++;
     }
-    plFrame = PLAYER.animCurFrame < 0xE1;
     if (PLAYER.animCurFrame <= 0) {
         PLAYER.animCurFrame = 1;
     }
