@@ -86,7 +86,7 @@ bool func_801119C4(void) {
 
         return false;
     }
-    if ((g_Player.D_80072EFC != 0) || (g_Player.padTapped & 1)) {
+    if ((g_Player.D_80072EFC != 0) || (g_Player.padTapped & PAD_L2)) {
         func_8011197C();
         return false;
     }
