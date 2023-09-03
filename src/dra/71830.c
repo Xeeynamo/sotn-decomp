@@ -70,7 +70,80 @@ void func_8011197C(void) {
     PLAYER.palette = D_801396E8;
 }
 
-INCLUDE_ASM("dra/nonmatchings/71830", func_801119C4);
+// INCLUDE_ASM("dra/nonmatchings/71830", func_801119C4);
+
+extern s32 D_80137FDC;
+extern s8 aCharal02x;
+
+bool func_801119C4(void) {
+    s32 plFrame;
+
+    if (D_801396EA == 0) {
+        if (g_Player.padTapped & 1) {
+            if (g_Player.D_80072EFC == 0) {
+                func_80111938();
+                return 1;
+            }
+        }
+
+        return false;
+    }
+    if ((g_Player.D_80072EFC != 0) || (g_Player.padTapped & 1)) {
+        func_8011197C();
+        return false;
+    }
+    if (g_Player.padPressed & PAD_CROSS) {
+        if (g_Player.padPressed & PAD_RIGHT) {
+            g_Entities->posX.val += FIX(16.0f);
+        }
+        if (g_Player.padPressed & PAD_LEFT) {
+            g_Entities->posX.val -= FIX(16.0f);
+        }
+        if (g_Player.padPressed & PAD_UP) {
+            PLAYER.posY.val -= FIX(16.0f);
+        }
+        if (g_Player.padPressed & PAD_DOWN) {
+            PLAYER.posY.val += FIX(16.0f);
+        }
+
+    } else {
+        if (g_Player.padTapped & PAD_RIGHT) {
+            g_Entities->posX.val += FIX(16.0f);
+        }
+        if (g_Player.padTapped & PAD_LEFT) {
+            g_Entities->posX.val -= FIX(16.0f);
+        }
+        if (g_Player.padTapped & PAD_UP) {
+            PLAYER.posY.val -= FIX(16.0f);
+        }
+        if (g_Player.padTapped & PAD_DOWN) {
+            PLAYER.posY.val += FIX(16.0f);
+        }
+    }
+    if (g_Player.padTapped & PAD_TRIANGLE) {
+        if (!(D_80137FDC & 1)) {
+            PLAYER.palette = 0x8100;
+        } else {
+            PLAYER.palette = 0x810D;
+        }
+        D_80137FDC++;
+    }
+    if (g_Player.padTapped & PAD_CIRCLE) {
+        PLAYER.animCurFrame--;
+    }
+    if (g_Player.padTapped & PAD_SQUARE) {
+        PLAYER.animCurFrame++;
+    }
+    plFrame = PLAYER.animCurFrame < 0xE1;
+    if (PLAYER.animCurFrame <= 0) {
+        PLAYER.animCurFrame = 1;
+    }
+    if ((PLAYER.animCurFrame < 0xE1) == 0) {
+        PLAYER.animCurFrame = 0xE0;
+    }
+    FntPrint(&aCharal02x, PLAYER.animCurFrame);
+    return true;
+}
 
 void func_80111CC0(void) {
     if (g_Player.D_80072F02 != 0) {
