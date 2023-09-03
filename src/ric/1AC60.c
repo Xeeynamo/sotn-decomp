@@ -89,7 +89,67 @@ void func_80158814(void) {
     PLAYER.palette = D_80175954;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_8015885C);
+bool func_8015885C(void) {
+    if (D_80175956 == 0) {
+        if (g_Player.padTapped & PAD_L2) {
+            if (g_Player.D_80072EFC == 0) {
+                func_801587D0();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    if ((g_Player.D_80072EFC != 0) || (g_Player.padTapped & PAD_L2)) {
+        func_80158814();
+        return false;
+    }
+
+    if (g_Player.padPressed & PAD_CROSS) {
+        if (g_Player.padPressed & PAD_RIGHT) {
+            g_Entities->posX.val += FIX(16.0);
+        }
+        if (g_Player.padPressed & PAD_LEFT) {
+            g_Entities->posX.val -= FIX(16.0);
+        }
+        if (g_Player.padPressed & PAD_UP) {
+            PLAYER.posY.val -= FIX(16.0);
+        }
+        if (g_Player.padPressed & PAD_DOWN) {
+            PLAYER.posY.val += FIX(16.0);
+        }
+
+    } else {
+        if (g_Player.padTapped & PAD_RIGHT) {
+            g_Entities->posX.val += FIX(16.0);
+        }
+        if (g_Player.padTapped & PAD_LEFT) {
+            g_Entities->posX.val -= FIX(16.0);
+        }
+        if (g_Player.padTapped & PAD_UP) {
+            PLAYER.posY.val -= FIX(16.0);
+        }
+        if (g_Player.padTapped & PAD_DOWN) {
+            PLAYER.posY.val += FIX(16.0);
+        }
+    }
+
+    if (g_Player.padTapped & PAD_CIRCLE) {
+        PLAYER.animCurFrame--;
+    }
+    if (g_Player.padTapped & PAD_SQUARE) {
+        PLAYER.animCurFrame++;
+    }
+
+    if (PLAYER.animCurFrame <= 0) {
+        PLAYER.animCurFrame = 1;
+    }
+    if (PLAYER.animCurFrame < 212 == 0) {
+        PLAYER.animCurFrame = 211;
+    }
+    FntPrint("charal:%02x\n", PLAYER.animCurFrame);
+    return true;
+}
 
 void func_80158B04(s32 arg0) {
     s32 var_s0;
