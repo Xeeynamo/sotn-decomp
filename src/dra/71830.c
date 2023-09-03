@@ -135,7 +135,7 @@ bool func_801119C4(void) {
     if (PLAYER.animCurFrame <= 0) {
         PLAYER.animCurFrame = 1;
     }
-    if ((PLAYER.animCurFrame < 0xE1) == 0) {
+    if (!(PLAYER.animCurFrame < 0xE1)) {
         PLAYER.animCurFrame = 0xE0;
     }
     FntPrint(&aCharal02x, PLAYER.animCurFrame);
