@@ -36,11 +36,11 @@ TOOLS_DIR       := tools
 MAIN_ASM_DIRS   := $(ASM_DIR)/$(MAIN) $(ASM_DIR)/$(MAIN)/psxsdk $(ASM_DIR)/$(MAIN)/psxsdk/libcd $(ASM_DIR)/$(MAIN)/psxsdk/libsnd $(ASM_DIR)/$(MAIN)/psxsdk/libspu $(ASM_DIR)/$(MAIN)/data
 MAIN_SRC_DIRS   := $(SRC_DIR)/$(MAIN) $(SRC_DIR)/$(MAIN)/psxsdk $(SRC_DIR)/$(MAIN)/psxsdk/libcd $(SRC_DIR)/$(MAIN)/psxsdk/libsnd $(SRC_DIR)/$(MAIN)/psxsdk/libspu
 MAIN_S_FILES    := $(foreach dir,$(MAIN_ASM_DIRS),$(wildcard $(dir)/*.s)) \
-                   $(foreach dir,$(MAIN_ASM_DIRS),$(wildcard $(dir)/**/*.s))
+				$(foreach dir,$(MAIN_ASM_DIRS),$(wildcard $(dir)/**/*.s))
 MAIN_C_FILES    := $(foreach dir,$(MAIN_SRC_DIRS),$(wildcard $(dir)/*.c)) \
-                   $(foreach dir,$(MAIN_SRC_DIRS),$(wildcard $(dir)/**/*.c))
+				$(foreach dir,$(MAIN_SRC_DIRS),$(wildcard $(dir)/**/*.c))
 MAIN_O_FILES    := $(foreach file,$(MAIN_S_FILES),$(BUILD_DIR)/$(file).o) \
-                   $(foreach file,$(MAIN_C_FILES),$(BUILD_DIR)/$(file).o)
+				$(foreach file,$(MAIN_C_FILES),$(BUILD_DIR)/$(file).o)
 MAIN_TARGET     := $(BUILD_DIR)/$(MAIN)
 
 # Tooling
@@ -78,6 +78,14 @@ endef
 
 define list_o_files
 	$(foreach file,$(call list_src_files,$(1)),$(BUILD_DIR)/$(file).o)
+endef
+
+define list_shared_src_files
+	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/*.c))
+endef
+
+define list_shared_o_files
+	$(foreach file,$(call list_shared_src_files,$(1)),$(BUILD_DIR)/$(file).o)
 endef
 
 define link
@@ -204,7 +212,7 @@ tt_000: tt_000_dirs $(BUILD_DIR)/TT_000.BIN
 $(BUILD_DIR)/TT_000.BIN: $(BUILD_DIR)/tt_000.elf
 	$(OBJCOPY) -O binary $< $@
 
-mad_fix: stmad_dirs $$(call list_o_files,st/mad)
+mad_fix: stmad_dirs $$(call list_o_files,st/mad) $$(call list_o_files,st)
 	$(LD) $(LD_FLAGS) -o $(BUILD_DIR)/stmad_fix.elf \
 		-Map $(BUILD_DIR)/stmad_fix.map \
 		-T stmad.ld \
@@ -222,14 +230,14 @@ st%_dirs:
 
 $(BUILD_DIR)/tt_%.elf: $$(call list_o_files,servant/tt_$$*)
 	$(call link,tt_$*,$@)
-$(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad)
+$(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad) $$(call list_shared_o_files,st)
 	$(LD) $(LD_FLAGS) -o $@ \
 		-Map $(BUILD_DIR)/stmad.map \
 		-T stmad.ld \
 		-T $(CONFIG_DIR)/undefined_syms.beta.txt \
 		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt
-$(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*)
+$(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*) $$(call list_shared_o_files,st)
 	$(call link,st$*,$@)
 
 # Weapon overlays

@@ -16,7 +16,9 @@ typedef struct {
     /* 0x8 */ u16 params;
 } LayoutEntity; // size = 0xA
 
-PfnEntityUpdate PfnEntityUpdates[];
+extern PfnEntityUpdate PfnEntityUpdates[];
+extern u16 g_ItemIconSlots[0x20];
+extern u16 UNK_Invincibility0[];
 
 s32 Random();
 void Update(void);

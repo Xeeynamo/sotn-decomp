@@ -61,7 +61,9 @@ segments:
       - [0x2B0C8, c]
       - [0x2C564, c] # EntityDracula
       - [0x30030, c]
-      - [0x3186C, c]
+      - [0x3186C, c, random]
+      - [0x3189C, c, update]
+      - [0x31B98, c, update_stage_entities]
       - [0x31CA0, c]
       - [0x36358, c]
       - [0x3EB00, sbss]

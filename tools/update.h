@@ -1,11 +1,10 @@
-#include <stage.h>
 
 void Update(void) {
     s16 i;
     Entity* entity;
     s32* unk;
 
-    for (i = 0; i < LEN(g_ItemIconSlots); i++) {
+    for (i = 0; i < 0x20; i++) {
         if (g_ItemIconSlots[i]) {
             g_ItemIconSlots[i]--;
         }

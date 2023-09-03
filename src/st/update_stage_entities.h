@@ -1,3 +1,5 @@
+#include <stage.h>
+
 void UpdateStageEntities(void) {
     Entity* entity;
     for (entity = &g_Entities[STAGE_ENTITY_START];
