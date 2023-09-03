@@ -22,40 +22,38 @@ s32 func_800F087C(u32 chunkX, u32 chunkY) {
 
 INCLUDE_ASM("dra/nonmatchings/5087C", func_800F0940);
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("dra/nonmatchings/5087C", SetNextRoomToLoad);
-#else
-bool SetNextRoomToLoad(u32 chunkX, u32 chunkY) {
+bool SetNextRoomToLoad(u32 x, u32 y) {
     s32 res;
     RoomHeader* room;
+    u32 stack[4];
 
     if (g_Player.unk0C & 0x40000) {
         return false;
     }
-
-    res = func_800F087C(chunkX, chunkY);
+    res = func_800F087C(x, y);
     if (res) {
         return res;
     }
 
-    room = g_api.o.unk30;
-loop_3:
-    while (room->left != 0x40) {
-        if (chunkX >= room->left && chunkY >= room->top &&
-            room->right >= chunkX && room->bottom >= chunkY) {
-            if (room->load.tilesetId == 0xFF &&
-                D_800A245C[room->load.tileLayoutId].stageId == STAGE_ST0) {
-                return false;
+    room = g_api.o.rooms;
+    while (true) {
+        if (room->left == 0x40) {
+            return false;
+        }
+        if (room->left <= x && room->top <= y) {
+            if (room->right >= x && room->bottom >= y) {
+                stack[0] = &room->load;
+                if (room->load.tilesetId == 0xFF &&
+                    D_800A245C[room->load.tileLayoutId].stageId == STAGE_ST0) {
+                    return false;
+                }
+                D_801375BC = &room->load;
+                return true;
             }
-            D_801375BC = &room->load;
-            return true;
         }
         room++;
-        goto loop_3;
     }
-    return false;
 }
-#endif
 
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("dra/nonmatchings/5087C", func_800F0CD8);
