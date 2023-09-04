@@ -2042,7 +2042,55 @@ void func_8012D178(void) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/75F54", func_8012D28C);
+void func_8012D28C(bool exitEarly) {
+    bool bitNotFound;
+    s32 i;
+
+    func_80102CD8(2);
+    PlaySfx(0x644);
+    PLAYER.velocityX = 0;
+    g_Player.D_80072EFC = 0x20;
+    g_Player.D_80072EF4 = 0;
+    // Odd logic, if we exit early, we force an R2-tap. Strange!
+    if (exitEarly) {
+        g_Player.padTapped = PAD_R2;
+        func_8012C88C();
+        return;
+    }
+    // Start a routine where we look through this array for a value.
+    bitNotFound = 0;
+    for (i = 3; i < 7; i++) {
+        if ((g_Player.D_80072CF0[i][0] & 2)) {
+            break;
+        }
+    }
+    // If we made it through that loop without finding one, skip i=7,8,9
+    // and keep searching.
+    if (i == 7) {
+        for (i = 10; i < 14; i++) {
+            if ((g_Player.D_80072CF0[i][0] & 2)) {
+                break;
+            }
+        }
+    }
+    // If we even made it through that one, then conclude the bit was not found.
+    if (i == 14) {
+        bitNotFound++;
+    }
+
+    SetSpeedX(FIX(1));
+    func_8011AAFC(g_CurrentEntity, 0x90004U, 0);
+    D_800B0914 = 0;
+    // Finally make use of that bit to control if X is positive or negative.
+    if (bitNotFound) {
+        func_8012CED4();
+        SetSpeedX(FIX(1));
+    } else {
+        func_8012CFA8();
+        SetSpeedX(FIX(-1));
+    }
+    PLAYER.velocityY = FIX(-3.5);
+}
 
 INCLUDE_ASM("dra/nonmatchings/75F54", func_8012D3E8);
 
