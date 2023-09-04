@@ -247,7 +247,8 @@ s32 func_80117D3C(void) {
     }
     if (D_8009744C != 0 || g_Player.padTapped & PAD_L1 ||
         func_800FEEA4(1, 1) < 0 ||
-        (func_800FE3A8(8) == false && (D_80138004 == 0 || --D_80138004 == 0))) {
+        (!IsRelicActive(RELIC_POWER_OF_MIST) &&
+         (D_80138004 == 0 || --D_80138004 == 0))) {
         func_8010E27C();
         SetPlayerStep(0xE);
         return 1;
@@ -1857,7 +1858,7 @@ bool func_8012C88C(void) {
     if (PLAYER.step_s == 8) {
         return false;
     }
-    if (D_8009744C != 0 && func_800FE3A8(0xE) == 0 ||
+    if (D_8009744C != 0 && !IsRelicActive(RELIC_HOLY_SYMBOL) ||
         g_Player.padTapped & PAD_R2 || func_800FEEA4(2, 1) < 0) {
         SetPlayerStep(Player_Unk25);
         func_8010DA48(0xCA);
@@ -1883,10 +1884,10 @@ void func_8012C97C(void) {
     if (D_8009744C < 13) {
         return;
     }
-    if (func_800FE3A8(14) == 0) {
+    if (!IsRelicActive(RELIC_HOLY_SYMBOL)) {
         return;
     }
-    if (func_800FE3A8(6) == 0) {
+    if (!IsRelicActive(RELIC_SKILL_OF_WOLF)) {
         return;
     }
     if (g_Player.pl_vram_flag & 1) {
@@ -1960,7 +1961,7 @@ void func_8012CB4C(void) {
 void func_8012CC30(s32 arg0) {
     if (arg0 == 0) {
         D_80138444 = 1;
-        if (D_80138FC0[1].x == 255 && func_800FE3A8(6) &&
+        if (D_80138FC0[1].x == 255 && IsRelicActive(RELIC_SKILL_OF_WOLF) &&
             CastSpell(SPELL_WOLF_CHARGE)) {
             func_8010E27C();
             PLAYER.step_s = 2;

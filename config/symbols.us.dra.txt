@@ -980,6 +980,7 @@ GetStatusAilmentTimer = 0x800FDB18;
 CastSpell = 0x800FDC94;
 LearnSpell = 0x800FDCE0;
 CheckAndDoLevelUp = 0x800FDE20;
+IsRelicActive = 0x800FE3A8;
 GetEquipProperties = 0x800FE728;
 HasEnoughMp = 0x800FE8B4;
 AddHearts = 0x800FE914;
