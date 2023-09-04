@@ -409,16 +409,9 @@ s32 func_800FE044(s32 amount, s32 type) {
     }
 }
 
-bool func_800FE3A8(s32 arg0) {
-    /*
-     * also matches without the temp like this:
-     * return (g_Status.relics[arg0] & ~0xfd) != 0;
-     * if that array contains a bitmask, it would make
-     * more sense that way.
-     */
-    s32 temp = 2;
-
-    return (g_Status.relics[arg0] & temp) != 0;
+bool IsRelicActive(RelicIds relicId) {
+    u8 bitTest = RELIC_FLAG_ACTIVE;
+    return (g_Status.relics[relicId] & bitTest) != 0;
 }
 
 s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {

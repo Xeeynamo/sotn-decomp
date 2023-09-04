@@ -226,7 +226,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FA30, func_0606FA30);
 
 // SAT: func_0606FC60
 // sh2 compiler is more literal?
-bool func_800FE3A8(s32 arg0) {
+bool IsRelicActive(s32 arg0) {
     if ((g_Status.relics[arg0] & 2) != 0) {
         return 1;
     }

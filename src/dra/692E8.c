@@ -1044,7 +1044,7 @@ bool func_8010FDF8(s32 branchFlags) {
         return 1;
     }
 
-    if (branchFlags & 0x20 && func_800FE3A8(0xD) &&
+    if (branchFlags & 0x20 && IsRelicActive(RELIC_LEAP_STONE) &&
         g_Player.padTapped & PAD_CROSS && !(g_Player.unk44 & 1)) {
         func_8010E940();
         return 1;
