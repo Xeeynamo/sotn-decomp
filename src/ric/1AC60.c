@@ -183,7 +183,7 @@ void func_80158BFC(void) {
     if (PLAYER.step < 64) {
         if (D_8015459C != 0) {
             D_8015459C--;
-        } else if (D_80097448 >= 49) {
+        } else if (D_80097448[0] >= 49) {
             if (PLAYER.facing != 0) {
                 var_s0 = -4;
             } else {

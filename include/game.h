@@ -1430,8 +1430,7 @@ extern s32 D_80097418;
 extern s32 D_8009741C;
 extern s32 D_80097420[];
 extern s32 D_80097424;
-extern s32 D_80097448; // underwater physics
-extern s32 D_8009744C;
+extern s32 D_80097448[]; // underwater physics. 7448 and 744C. Could be struct.
 extern s32 D_80097450;
 extern u16 D_8009748A[];
 

@@ -143,7 +143,8 @@ bool func_80116838(void) {
     if (g_Entities->step_s == 0) {
         return false;
     }
-    if (D_8009744C || g_Player.padTapped & PAD_R1 || func_800FEEA4(0, 1) < 0) {
+    if (D_80097448[1] || g_Player.padTapped & PAD_R1 ||
+        func_800FEEA4(0, 1) < 0) {
         SetPlayerStep(Player_Unk9);
         func_8010DA48(0xCA);
         D_800AFDA6 = 6;
@@ -245,7 +246,7 @@ s32 func_80117D3C(void) {
     if (PLAYER.step_s == 0) {
         return 0;
     }
-    if (D_8009744C != 0 || g_Player.padTapped & PAD_L1 ||
+    if (D_80097448[1] != 0 || g_Player.padTapped & PAD_L1 ||
         func_800FEEA4(1, 1) < 0 ||
         (!IsRelicActive(RELIC_POWER_OF_MIST) &&
          (D_80138004 == 0 || --D_80138004 == 0))) {
@@ -1858,7 +1859,7 @@ bool func_8012C88C(void) {
     if (PLAYER.step_s == 8) {
         return false;
     }
-    if (D_8009744C != 0 && !IsRelicActive(RELIC_HOLY_SYMBOL) ||
+    if (D_80097448[1] != 0 && !IsRelicActive(RELIC_HOLY_SYMBOL) ||
         g_Player.padTapped & PAD_R2 || func_800FEEA4(2, 1) < 0) {
         SetPlayerStep(Player_Unk25);
         func_8010DA48(0xCA);
@@ -1881,7 +1882,7 @@ void func_8012C97C(void) {
         g_Entities[PLAYER_CHARACTER].step_s < 10) {
         return;
     }
-    if (D_8009744C < 13) {
+    if (D_80097448[1] < 13) {
         return;
     }
     if (!IsRelicActive(RELIC_HOLY_SYMBOL)) {
@@ -2059,7 +2060,56 @@ INCLUDE_ASM("dra/nonmatchings/75F54", func_8012E9C0);
 
 INCLUDE_ASM("dra/nonmatchings/75F54", func_8012EAD0);
 
-INCLUDE_ASM("dra/nonmatchings/75F54", func_8012ED30);
+void func_8012ED30(void) {
+    if (g_Player.padTapped & PAD_CROSS) {
+        func_8012CCE4();
+        D_80138440 = 0x10;
+        return;
+    }
+    if (g_Player.pl_vram_flag & 1) {
+        func_8012CA64();
+        return;
+    }
+    if (!IsRelicActive(RELIC_SKILL_OF_WOLF) ||
+        !(g_Player.padPressed & PAD_TRIANGLE) || (D_80097448[1] == 0)) {
+        func_8012CED4();
+        return;
+    }
+    SetSpeedX(FIX(0.5));
+    if (D_80097448[1] >= 13) {
+        PLAYER.velocityY = FIX(-0.5);
+    } else {
+        PLAYER.velocityY = 0;
+    }
+    if (g_Player.padPressed & PAD_RIGHT) {
+        PLAYER.facing = 0;
+        PLAYER.velocityX = FIX(0.5);
+    }
+    if (g_Player.padPressed & PAD_LEFT) {
+        PLAYER.facing = 1;
+        PLAYER.velocityX = FIX(-0.5);
+    }
+    // If you're not pressing any of right, left, or up
+    if (!(g_Player.padPressed & (PAD_RIGHT | PAD_LEFT | PAD_UP))) {
+        func_8010E1EC(0x400);
+        PLAYER.velocityY = FIX(0.5);
+    }
+    if (PLAYER.velocityY <= 0) {
+        if (D_80138430 > 2112) {
+            D_80138430 -= 8;
+        }
+        if (D_80138430 < 2112) {
+            D_80138430 += 8;
+        }
+    } else {
+        if (D_80138430 > 1824) {
+            D_80138430 -= 8;
+        }
+        if (D_80138430 < 1824) {
+            D_80138430 += 8;
+        }
+    }
+}
 
 INCLUDE_ASM("dra/nonmatchings/75F54", func_8012EF2C);
 
