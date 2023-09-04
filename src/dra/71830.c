@@ -70,9 +70,6 @@ void func_8011197C(void) {
     PLAYER.palette = D_801396E8;
 }
 
-extern s32 D_80137FDC;
-extern s8 aCharal02x;
-
 bool func_801119C4(void) {
     if (D_801396EA == 0) {
         if (g_Player.padTapped & PAD_L2) {
@@ -116,6 +113,7 @@ bool func_801119C4(void) {
             PLAYER.posY.val += FIX(16.0f);
         }
     }
+#ifdef VERSION_US
     if (g_Player.padTapped & PAD_TRIANGLE) {
         if (!(D_80137FDC & 1)) {
             PLAYER.palette = 0x8100;
@@ -124,6 +122,7 @@ bool func_801119C4(void) {
         }
         D_80137FDC++;
     }
+#endif
     if (g_Player.padTapped & PAD_CIRCLE) {
         PLAYER.animCurFrame--;
     }
@@ -136,7 +135,7 @@ bool func_801119C4(void) {
     if (!(PLAYER.animCurFrame < 0xE1)) {
         PLAYER.animCurFrame = 0xE0;
     }
-    FntPrint(&aCharal02x, PLAYER.animCurFrame);
+    FntPrint("charal:%02x\n", PLAYER.animCurFrame);
     return true;
 }
 
