@@ -944,7 +944,7 @@ bool func_8010FDF8(s32 branchFlags) {
         }
     }
 
-    if (D_80097448 >= 0x29) {
+    if (D_80097448[0] >= 0x29) {
         if (YAccel < 0) {
             tempYAccel = YAccel + 3;
         } else {
