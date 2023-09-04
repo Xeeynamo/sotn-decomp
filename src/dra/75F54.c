@@ -2088,8 +2088,9 @@ void func_8012D28C(bool exitEarly) {
         func_8012CFA8();
         SetSpeedX(FIX(-1));
     }
-    PLAYER.velocityY = 0xFFFC8000;
+    PLAYER.velocityY = FIX(-3.5);
 }
+
 INCLUDE_ASM("dra/nonmatchings/75F54", func_8012D3E8);
 
 INCLUDE_ASM("dra/nonmatchings/75F54", func_8012DBBC);
