@@ -70,8 +70,6 @@ void func_8011197C(void) {
     PLAYER.palette = D_801396E8;
 }
 
-// INCLUDE_ASM("dra/nonmatchings/71830", func_801119C4);
-
 extern s32 D_80137FDC;
 extern s8 aCharal02x;
 

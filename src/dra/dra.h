@@ -537,7 +537,6 @@ extern s32 D_80137F9C;
 extern s32 D_80137FB4;
 extern s32 D_80137FB8;
 extern s32 D_80137FBC;
-extern s32 D_80137FDC;
 extern s32 D_80137FE4;
 extern s32 D_80137FE8;
 extern s32 D_80138004;
@@ -679,7 +678,6 @@ extern void (*D_80170000)(void);
 extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
 extern u8 D_801EC000[];
-extern s8 aCharal02x;
 
 void InitializePads(void);
 void ReadPads(void);
