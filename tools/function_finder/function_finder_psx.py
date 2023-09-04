@@ -160,8 +160,19 @@ if __name__ == "__main__":
             "https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-duplicates"
         )
         for i, o in enumerate(output):
-            function_name = o[0].split("/")[-1].split(".s")[0]
-            svg_path = os.path.join("function_calls", f"{function_name}.svg")
+            filepath_split = o[0].split("/")
+            function_name = filepath_split[-1].split(".s")[0]
+            # Replicate the logic used in analyze_calls to find what svg name
+            # would have used for this function. Note that these don't include "asm" dir
+            # so the filepath indices are off by one.
+            overlay = filepath_split[1]
+            if overlay == "st":
+                overlay = filepath_split[2]
+            if overlay == "weapon":
+                overlay = filepath_split[3]
+            unique_name = ".".join([overlay, function_name])
+
+            svg_path = os.path.join("function_calls", f"{unique_name}.svg")
             if os.path.exists(svg_path):
                 o[0] = f"[{o[0]}]({base_url}/{svg_path})"
 
