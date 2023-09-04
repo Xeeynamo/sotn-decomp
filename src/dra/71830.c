@@ -70,15 +70,12 @@ void func_8011197C(void) {
     PLAYER.palette = D_801396E8;
 }
 
-extern s32 D_80137FDC;
-extern s8 aCharal02x;
-
 bool func_801119C4(void) {
     if (D_801396EA == 0) {
         if (g_Player.padTapped & PAD_L2) {
             if (g_Player.D_80072EFC == 0) {
                 func_80111938();
-                return 1;
+                return true;
             }
         }
 
