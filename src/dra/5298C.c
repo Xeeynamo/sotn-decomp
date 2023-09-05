@@ -451,12 +451,10 @@ bool ScissorSprite(SPRT* sprite, MenuContext* context) {
 }
 
 void func_800F5904(MenuContext* ctx, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
-                   s32 unk1, s32 unk2, bool disableTexShade, s32 unk4) {
+                   s32 idx, s32 unk2, bool disableTexShade, s32 unk4) {
     SPRT* sp;
     s32 otIdx;
-    s32 idx;
     u32* ot;
-    idx = unk1;
     ot = g_CurrentBuffer->ot;
     sp = &g_CurrentBuffer->sprite[g_GpuUsage.sp];
     if (D_8013784C == 1) {
