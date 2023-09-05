@@ -457,16 +457,18 @@ void func_800F5904(MenuContext* ctx, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
     u32* ot;
     ot = g_CurrentBuffer->ot;
     sp = &g_CurrentBuffer->sprite[g_GpuUsage.sp];
+#if defined(VERSION_US)
     if (D_8013784C == 1) {
         idx = 0x15E;
     }
     if (D_8013784C == 2) {
         idx = 0x15D;
     }
-    if (ctx != 0) {
-        otIdx = ctx->unk18 + 2;
-    } else {
+#endif
+    if (ctx == NULL) {
         otIdx = 0x1FF;
+    } else {
+        otIdx = ctx->unk18 + 2;
     }
     SetSemiTrans(sp, 0);
     SetShadeTex(sp, disableTexShade);
@@ -476,7 +478,7 @@ void func_800F5904(MenuContext* ctx, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
     sp->h = (s16)h;
     sp->u0 = (u8)u;
     sp->v0 = (u8)v;
-    if ((ctx == 0) || (ScissorSprite(sp, ctx) == false)) {
+    if ((ctx == NULL) || (ScissorSprite(sp, ctx) == false)) {
         sp->r0 = (u8)unk4;
         sp->g0 = (u8)unk4;
         sp->b0 = (u8)unk4;
