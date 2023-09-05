@@ -134,7 +134,7 @@ segments:
       - [0x41D78, rodata] # jtbl_800E1D78
       - [0x41D98, rodata] # jtbl_800E1D98
       - [0x41DAC, rodata] # jtbl_800E1DAC
-      - [0x41DCC, rodata] # jtbl_800E1DCC
+      - [0x41DCC, .rodata, 8D3E8] # jtbl_800E1DCC
       - [0x41DE4, rodata] # jtbl_800E1DE4
       - [0x41E0C, rodata] # jtbl_800E1E0C
       - [0x41E34, rodata] # jtbl_800E1E34
@@ -173,6 +173,7 @@ segments:
       - [0x7379C, c, 73AAC]
       - [0x75A90, c, 75DA0]
       - [0x75C44, c, 75F54]
+      - [0x8D0D8, c, 8D3E8]
       - [0x94F7C, c, 953A0]
       - [0x95E88, sbss]
   - name: dra_data
