@@ -464,6 +464,11 @@ typedef struct {
     /* 0x84 */ struct Entity* unk84;
 } ET_SpittleBone;
 
+typedef struct {
+                char pad[0x30];
+                u8 unkAC;
+} ET_Player;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
@@ -505,5 +510,6 @@ typedef union {
     /* 0x7C */ ET_DeathStolenItems deathStolenItems;
     /* 0x7C */ ET_Death death;
     /* 0x7C */ ET_SpittleBone spittleBone;
+    /* 0x7C */ ET_Player player;
     /* 0x7C */ char stub[0x40];
 } Ext;
