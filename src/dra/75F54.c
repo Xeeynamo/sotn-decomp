@@ -2091,4 +2091,3 @@ void func_8012D28C(bool exitEarly) {
     }
     PLAYER.velocityY = FIX(-3.5);
 }
-

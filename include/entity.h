@@ -465,8 +465,8 @@ typedef struct {
 } ET_SpittleBone;
 
 typedef struct {
-                char pad[0x30];
-                u8 unkAC;
+    char pad[0x30];
+    u8 unkAC;
 } ET_Player;
 
 typedef union {

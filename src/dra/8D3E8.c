@@ -5,8 +5,9 @@
 
 void func_8012D3E8(void) {
     byte pad[0x28];
-    s32 directionsPressed = g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
-    
+    s32 directionsPressed =
+        g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
+
     if ((g_Player.padTapped & PAD_CROSS) && (D_800B0914 != 4)) {
         func_8012CCE4();
         return;
@@ -19,7 +20,7 @@ void func_8012D3E8(void) {
         func_8012CFF0();
         return;
     }
-    
+
     switch (D_800B0914) {
     case 0:
         if (g_Player.padTapped & PAD_SQUARE) {
@@ -42,89 +43,97 @@ void func_8012D3E8(void) {
         }
         SetSpeedX(FIX(-1));
         return;
-        
+
     case 1:
         if (g_Player.padTapped & PAD_SQUARE) {
             func_8012CC30(0);
             return;
         }
         SetSpeedX(FIX(1));
-        if ((PLAYER.facing && (directionsPressed & PAD_RIGHT)) || 
-           (!PLAYER.facing && (directionsPressed & PAD_LEFT))){
-                D_800B0914 = 0;
-                func_8010DA48(0xE1);
+        if ((PLAYER.facing && (directionsPressed & PAD_RIGHT)) ||
+            (!PLAYER.facing && (directionsPressed & PAD_LEFT))) {
+            D_800B0914 = 0;
+            func_8010DA48(0xE1);
         }
-        
+
         if (!(directionsPressed & (PAD_LEFT | PAD_RIGHT))) {
             func_8012CA64();
         }
         return;
     case 2:
-        if ((g_Player.padTapped & PAD_SQUARE) && (ABS(PLAYER.velocityX) < FIX(3))) {
+        if ((g_Player.padTapped & PAD_SQUARE) &&
+            (ABS(PLAYER.velocityX) < FIX(3))) {
             func_8012CC30(0);
             return;
         }
-        
+
         if (D_8003C8C4 == ((D_8003C8C4 / 6) * 6)) {
             func_8011AAFC(g_CurrentEntity, 0x10045U, 0);
         }
         if (PLAYER.velocityX > 0) {
-            PLAYER.velocityX += FIX(3.0/128);
+            PLAYER.velocityX += FIX(3.0 / 128);
             if (PLAYER.velocityX > FIX(9)) {
                 PLAYER.velocityX = FIX(9);
             }
-            if (!IsRelicActive(RELIC_POWER_OF_WOLF) && PLAYER.velocityX > FIX(3)) {
+            if (!IsRelicActive(RELIC_POWER_OF_WOLF) &&
+                PLAYER.velocityX > FIX(3)) {
                 PLAYER.velocityX = FIX(3);
             }
         }
         if (PLAYER.velocityX < 0) {
-            PLAYER.velocityX -= FIX(3.0/128);
+            PLAYER.velocityX -= FIX(3.0 / 128);
             if (PLAYER.velocityX < FIX(-9)) {
                 PLAYER.velocityX = FIX(-9);
             }
             // @bug The end of this should be FIX(-3) since we're capping
-            // the negative velocity. This is weird and could be useful for someone!
-            // Namely, if velocity is less than 0 (which was already checked) then you will
-            // instantly accelerate up to -3.
-            if (!IsRelicActive(RELIC_POWER_OF_WOLF) && PLAYER.velocityX < FIX(3)) {
+            // the negative velocity. This is weird and could be useful for
+            // someone! Namely, if velocity is less than 0 (which was already
+            // checked) then you will instantly accelerate up to -3.
+            if (!IsRelicActive(RELIC_POWER_OF_WOLF) &&
+                PLAYER.velocityX < FIX(3)) {
                 PLAYER.velocityX = FIX(-3);
             }
         }
-        if (((g_Player.pl_vram_flag & 4) && PLAYER.velocityX > FIX(5.5)) || 
+        if (((g_Player.pl_vram_flag & 4) && PLAYER.velocityX > FIX(5.5)) ||
             ((g_Player.pl_vram_flag & 8) && PLAYER.velocityX < FIX(-5.5))) {
             func_8012D28C(1);
             return;
         }
-        if (((g_Player.pl_vram_flag & 4) && PLAYER.velocityX > FIX(4)) || 
+        if (((g_Player.pl_vram_flag & 4) && PLAYER.velocityX > FIX(4)) ||
             ((g_Player.pl_vram_flag & 8) && PLAYER.velocityX < FIX(-5.5))) {
             func_8012D28C(0);
             return;
         }
         if ((g_Player.pl_vram_flag & 4) && PLAYER.velocityX > 0 ||
-            (g_Player.pl_vram_flag & 8) && PLAYER.velocityX < 0 || 
+            (g_Player.pl_vram_flag & 8) && PLAYER.velocityX < 0 ||
             (directionsPressed & (PAD_LEFT | PAD_RIGHT)) == 0) {
             PLAYER.ext.player.unkAC = 0xE0;
-            //Set the state to 3, and the timer to 24. Note that in case 3, this decrements.
+            // Set the state to 3, and the timer to 24. Note that in case 3,
+            // this decrements.
             D_800B0914 = 3;
             D_800B091C = 24;
             return;
         }
-        
+
         if (PLAYER.facing) {
-            if (((g_Player.unk04 & 0xF001) == 1) && ((D_80138438 & 0xF001) == 0xC001)) {
+            if (((g_Player.unk04 & 0xF001) == 1) &&
+                ((D_80138438 & 0xF001) == 0xC001)) {
                 func_8012CCE4();
                 PLAYER.velocityY /= 4;
             }
-            if (((g_Player.unk04 & 0xF001) == 0x8001) && ((D_80138438 & 0xF001) == 1)) {
+            if (((g_Player.unk04 & 0xF001) == 0x8001) &&
+                ((D_80138438 & 0xF001) == 1)) {
                 func_8012CCE4();
                 PLAYER.velocityY /= 2;
             }
         } else {
-            if (((g_Player.unk04 & 0xF001) == 1) && ((D_80138438 & 0xF001) == 0x8001)) {
+            if (((g_Player.unk04 & 0xF001) == 1) &&
+                ((D_80138438 & 0xF001) == 0x8001)) {
                 func_8012CCE4();
                 PLAYER.velocityY /= 4;
             }
-            if (((g_Player.unk04 & 0xF001) == 0xC001) && ((D_80138438 & 0xF001) == 1)) {
+            if (((g_Player.unk04 & 0xF001) == 0xC001) &&
+                ((D_80138438 & 0xF001) == 1)) {
                 func_8012CCE4();
                 PLAYER.velocityY /= 2;
             }
@@ -132,15 +141,16 @@ void func_8012D3E8(void) {
 
         return;
     case 3:
-        if ((g_Player.padTapped & PAD_SQUARE) && (ABS(PLAYER.velocityX) < FIX(3))) {
+        if ((g_Player.padTapped & PAD_SQUARE) &&
+            (ABS(PLAYER.velocityX) < FIX(3))) {
             func_8012CC30(0);
             return;
         }
         if (ABS(PLAYER.velocityX) > FIX(1)) {
             func_8010E1EC(0x2000);
         }
-        if ((PLAYER.facing && (directionsPressed & PAD_RIGHT)) || 
-           (!PLAYER.facing && (directionsPressed & PAD_LEFT))){
+        if ((PLAYER.facing && (directionsPressed & PAD_RIGHT)) ||
+            (!PLAYER.facing && (directionsPressed & PAD_LEFT))) {
             D_800B0914 = 0;
             func_8010DA48(0xE1);
         }
@@ -158,7 +168,7 @@ void func_8012D3E8(void) {
         if (PLAYER.animFrameDuration >= 0) {
             return;
         }
-        if (((g_Player.padPressed & PAD_RIGHT) && !PLAYER.facing) || 
+        if (((g_Player.padPressed & PAD_RIGHT) && !PLAYER.facing) ||
             ((g_Player.padPressed & PAD_LEFT) && PLAYER.facing)) {
             func_8010DA48(0xE2);
             D_800B0914 = 2;
