@@ -31,6 +31,8 @@ void func_8012D3E8(void) {
             if (PLAYER.animFrameDuration < 0) {
                 func_8012CB4C();
                 if (!(directionsPressed & (PAD_LEFT | PAD_RIGHT))) {
+                    // Evil! This function takes no arguments! This is
+                    // why func_8012CA64 had to be commented out of dra.h.
                     func_8012CA64(0);
                     return;
                 }

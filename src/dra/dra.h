@@ -875,7 +875,7 @@ void func_8012A89C(Entity* entity);
 void func_8012B78C(Entity* entity);
 void func_8012B990(Entity* entity);
 void func_8012BEF8(Entity* entity);
-// Can't have this here because func_8012CA64 does a bad call
+// Can't have this here because func_8012D3E8 does a bad call
 // which passes a 0 argument.
 // void func_8012CA64(void);
 void func_8012CB4C(void);
