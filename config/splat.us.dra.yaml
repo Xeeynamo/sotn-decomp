@@ -148,7 +148,7 @@ segments:
       - [0x41E5C, rodata] # jpt_80126F54
       - [0x41E7C, rodata] # jpt_80128C94
       - [0x41E90, rodata] # jpt_8012A918
-      - [0x41EB0, rodata] # jpt_8012D4D8
+      - [0x41EB0, .rodata, 8D3E8] # jpt_8012D4D8
       - [0x41EC8, rodata] # jpt_8012EFE4
       - [0x41EF0, rodata] # jpt_8012FA74
       - [0x41F18, rodata] # jpt_8012FAC0
@@ -187,6 +187,7 @@ segments:
       - [0x73AAC, c, 73AAC]
       - [0x75DA0, c, 75DA0]
       - [0x75F54, c, 75F54]
+      - [0x8D3E8, c, 8D3E8]
       - [0x953A0, c, 953A0]
       - [0x962AC, sbss]
   - name: dra_data

@@ -394,6 +394,7 @@ extern s32 D_800B0830[];
 extern s32 D_800B083C[];
 extern s32 D_800B0914;
 extern s32 D_800B0918;
+extern s32 D_800B091C;
 extern const char aPbav[];
 extern const char aPbav_0[];
 extern const char aPbav_1[];
@@ -874,7 +875,9 @@ void func_8012A89C(Entity* entity);
 void func_8012B78C(Entity* entity);
 void func_8012B990(Entity* entity);
 void func_8012BEF8(Entity* entity);
-void func_8012CA64(void);
+// Can't have this here because func_8012D3E8 does a bad call
+// which passes a 0 argument.
+// void func_8012CA64(void);
 void func_8012CB4C(void);
 void func_8012CCE4(void);
 void func_8012CFA8(void);
