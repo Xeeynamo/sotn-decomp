@@ -186,7 +186,71 @@ void func_8012D3E8(void) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/8D3E8", func_8012DBBC);
+void func_8012DBBC(void) {
+    s32 vel_boost;
+
+    if ((g_Player.D_80072F0A != 0) && (g_Player.padTapped & PAD_CROSS)) {
+        func_8012CCE4();
+        return;
+    }
+    if ((PLAYER.facing != 0 && !(g_Player.padPressed & PAD_LEFT)) ||
+        (PLAYER.facing == 0 && !(g_Player.padPressed & PAD_RIGHT))) {
+        func_8010E1EC(FIX(4.0 / 128));
+    }
+    if (g_Player.pl_vram_flag & 1) {
+        if (D_800B0914 == 1) {
+            PLAYER.step_s = 2;
+            D_800B0914 = 2;
+            func_8010DA48(0xE2);
+        } else if (PLAYER.velocityY > FIX(6.875)) {
+            PLAYER.step_s = 3;
+            D_800B0914 = 3;
+            func_8010DA48(0xE5);
+            func_8011AAFC(g_CurrentEntity, 0U, 0);
+        } else {
+            func_8012CA64();
+        }
+        PLAYER.velocityY = 0;
+        PlaySfx(0x64C);
+        return;
+    }
+    if (g_Player.padTapped & PAD_SQUARE) {
+        func_8012CC30(1);
+    }
+    switch (D_800B0914) {
+    case 0:
+        func_8010E27C();
+        break;
+    case 1:
+        if (((g_Player.pl_vram_flag & 4) && PLAYER.velocityX > FIX(5.5)) ||
+            ((g_Player.pl_vram_flag & 8) && PLAYER.velocityX < FIX(-5.5))) {
+            func_8012D28C(1);
+            return;
+        }
+        if (((g_Player.pl_vram_flag & 4) && PLAYER.velocityX > FIX(4)) ||
+            ((g_Player.pl_vram_flag & 8) && PLAYER.velocityX < FIX(-5.5))) {
+            func_8012D28C(0);
+            return;
+        }
+        if (((g_Player.pl_vram_flag & 4) && (PLAYER.velocityX > FIX(2.5))) ||
+            ((g_Player.pl_vram_flag & 8) && (PLAYER.velocityX < FIX(-2.5)))) {
+            func_8010E1EC(FIX(0.125));
+        }
+        if (PLAYER.animFrameIdx == 3) {
+            PLAYER.animFrameDuration = 6;
+        }
+    }
+    if (D_80097448[0] >= 13) {
+        vel_boost = FIX(5.0 / 128);
+    } else {
+        vel_boost = FIX(20.0 / 128);
+    }
+    PLAYER.velocityY += vel_boost;
+    if (PLAYER.velocityY > FIX(7)) {
+        PLAYER.velocityY = FIX(7);
+    }
+    return;
+}
 
 INCLUDE_ASM("dra/nonmatchings/8D3E8", func_8012DF04);
 
