@@ -249,7 +249,6 @@ void func_8012DBBC(void) {
     if (PLAYER.velocityY > FIX(7)) {
         PLAYER.velocityY = FIX(7);
     }
-    return;
 }
 
 INCLUDE_ASM("dra/nonmatchings/8D3E8", func_8012DF04);
