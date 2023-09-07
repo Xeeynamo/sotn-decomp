@@ -272,6 +272,29 @@ def generate_html(function_list):
     html += "</body></html>"
     return html
 
+# Create a markdown file pointing us toward all the different function graphs
+def generate_md(function_list):
+    sorted_funcs = sorted(
+        [f for f in function_list if f.overlay != "mad"],
+        key=lambda x: (x.overlay, x.name),
+    )
+    active_overlay = ""
+    # Sort all functions into overlays, with the name as tiebreaker to sort within overlays
+    sorted_funcs = sorted(
+        [f for f in function_list if f.overlay != "mad"],
+        key=lambda x: (x.overlay, x.name),
+    )
+    md_page = ''
+    active_overlay = ""
+    # Now iterate through all functions, creating links to their SVG files.
+    for f in sorted_funcs:
+        # When the overlay changes, add a heading.
+        if f.overlay != active_overlay:
+            active_overlay = f.overlay
+            md_page += f"# {active_overlay}\n"
+        dec_symbol = "✅" if f.decompile_status == "True" else "❌"
+        md_page += f'- [{dec_symbol} {f.name}]({f.unique_name}.svg)\n'
+    return md_page
 
 # This represents calls that we can't connect to a real C function. This includes SDK functions, or calls where
 # it is unclear what actual function is being called.
@@ -417,5 +440,8 @@ if __name__ == "__main__":
             html = generate_html(functions)
             with open(f"{output_dir}/index.html", "w") as f:
                 f.write(html)
+            markdown = generate_md(functions)
+            with open(f"{output_dir}/function_graphs.md", "w") as f:
+                f.write(markdown)
             print(f"Generated HTML in {time.perf_counter() - timer} seconds")
     print("Exiting.")
