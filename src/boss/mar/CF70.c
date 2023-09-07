@@ -536,7 +536,7 @@ void EntityBirdcageDoor(Entity* self) {
         break;
 
     case 3:
-        self->posX.val += 0x2000;
+        self->posX.val += FIX(0.125);
         if (--self->ext.birdcage.timer == 0) {
             self->ext.birdcage.timer = 64;
             self->animCurFrame = D_801812A8[self->ext.birdcage.state & 1];
@@ -548,7 +548,7 @@ void EntityBirdcageDoor(Entity* self) {
         break;
 
     case 4:
-        self->posY.val -= 0x2000;
+        self->posY.val -= FIX(0.125);
         if (--self->ext.birdcage.timer == 0) {
             self->ext.birdcage.timer = 64;
             self->zPriority = 0x3C;
