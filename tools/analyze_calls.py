@@ -278,12 +278,6 @@ def generate_md(function_list):
         [f for f in function_list if f.overlay != "mad"],
         key=lambda x: (x.overlay, x.name),
     )
-    active_overlay = ""
-    # Sort all functions into overlays, with the name as tiebreaker to sort within overlays
-    sorted_funcs = sorted(
-        [f for f in function_list if f.overlay != "mad"],
-        key=lambda x: (x.overlay, x.name),
-    )
     md_page = ''
     active_overlay = ""
     # Now iterate through all functions, creating links to their SVG files.
