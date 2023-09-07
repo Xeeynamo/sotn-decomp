@@ -310,7 +310,7 @@ void func_8012E040(void) {
     if (g_Player.padTapped & PAD_SQUARE) {
         func_8012CC30(1);
     }
-    switch (D_800B0914) { /* irregular */
+    switch (D_800B0914) {
     case 0:
         func_8010E27C();
         if (var_s0 != 0) {
