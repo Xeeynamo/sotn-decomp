@@ -80,9 +80,82 @@ void func_8019498C(s16 yOffset) {
     ClearImage(&rect, 0, 0, 0);
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", func_801949E8);
+void func_801949E8(void) {
+    Primitive* prim;
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", func_80194AA0);
+    func_8019498C(g_Dialogue.nextCharY);
+    prim = g_Dialogue.prim[g_Dialogue.nextCharY];
+    prim->tpage = 0x10;
+    prim->clut = g_Dialogue.clutIndex;
+    prim->y0 = g_Dialogue.nextLineY;
+    prim->u0 = 0;
+    prim->x0 = g_Dialogue.startX;
+    prim->x0 = prim->x0 + 4;
+    prim->v0 = g_Dialogue.nextCharY * 0xC - 0x80;
+    prim->u1 = 0xC0;
+    prim->v1 = 0xC;
+    prim->priority = 0x1FF;
+    prim->blendMode = 0;
+}
+
+// Creates primitives for the actor name at the head of the dialogue
+void func_80194AA0(u16 actorIndex, Entity* self) {
+    Primitive* prim;
+    s16 primIndex;
+    s32 x;
+    u16 chCount;
+    const char* actorName;
+    char ch;
+
+    actorName = D_80180938[actorIndex];
+    chCount = 0;
+    while (true) {
+        ch = *actorName++;
+        if (ch == DIAG_EOL) {
+            ch = *actorName++;
+            if (ch == DIAG_EOS) {
+                break;
+            }
+        }
+        if (ch == MENUCHAR(' ')) {
+            continue;
+        }
+        chCount++;
+    }
+
+    // Create chCount amount of sprites based on the actor name's letter count
+    primIndex = g_api.AllocPrimitives(PRIM_SPRT, chCount);
+    if (primIndex == -1) {
+        DestroyEntity(self);
+        return;
+    }
+
+    // Fill prims to render the actor name on screen
+    prim = &g_PrimBuf[primIndex];
+    g_Dialogue.primIndex[1] = primIndex;
+    actorName = D_80180938[actorIndex];
+    x = 0x38;
+    while (prim != NULL) {
+        ch = *actorName++;
+        if (ch == MENUCHAR(' ')) {
+            x += FONT_SPACE;
+        } else {
+            prim->type = PRIM_SPRT;
+            prim->tpage = 0x1E;
+            prim->clut = 0x196;
+            prim->u0 = (ch & 0x0F) * FONT_W;
+            prim->v0 = (ch & 0xF0) / (FONT_H / 4);
+            prim->v1 = FONT_H;
+            prim->u1 = FONT_W;
+            prim->priority = 0x1FF;
+            prim->blendMode = BLEND_VISIBLE;
+            prim->x0 = x;
+            prim->y0 = g_Dialogue.startY + 6;
+            prim = prim->next;
+            x += FONT_GAP;
+        }
+    }
+}
 
 void func_80194C24(s32 arg0) {
     D_801A3F18 = arg0 + 0x100000;
@@ -90,7 +163,62 @@ void func_80194C24(s32 arg0) {
     D_801A3F14 = 1;
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", func_80194C50);
+void func_80194C50(void) {
+    Entity* entity;
+    u16 startTimer;
+    u8 entityIndex;
+    Dialogue* ptr;
+
+    g_Dialogue.timer++;
+    // protect from overflows
+    if (g_Dialogue.timer > 0xFFFE) {
+        g_Dialogue.unk3C = 0;
+        return;
+    }
+
+    while (true) {
+        // Start the dialogue script only if the start timer has passed
+        startTimer = (*g_Dialogue.unk40++ << 8) | *g_Dialogue.unk40++;
+        if (g_Dialogue.timer < startTimer) {
+            // Re-evaluate the condition at the next frame
+            g_Dialogue.unk40 -= 2;
+            return;
+        }
+
+        switch (*g_Dialogue.unk40++) {
+        case 0:
+            entityIndex = *g_Dialogue.unk40++;
+            entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
+            DestroyEntity(entity);
+            entity->entityId = *g_Dialogue.unk40++;
+            entity->pfnUpdate = PfnEntityUpdates[entity->entityId - 1];
+            entity->posX.i.hi = *g_Dialogue.unk40++ * 0x10;
+            entity->posX.i.hi = *g_Dialogue.unk40++ | entity->posX.i.hi;
+            entity->posY.i.hi = *g_Dialogue.unk40++ * 0x10;
+            entity->posY.i.hi = *g_Dialogue.unk40++ | entity->posY.i.hi;
+            break;
+
+        case 1:
+            entityIndex = *g_Dialogue.unk40++;
+            entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
+            DestroyEntity(entity);
+            break;
+
+        case 2:
+            if (!((D_801A3F84 >> *g_Dialogue.unk40) & 1)) {
+                g_Dialogue.unk40 -= 3;
+                g_Dialogue.timer--;
+                return;
+            }
+            D_801A3F84 &= ~(1 << *g_Dialogue.unk40++);
+            break;
+
+        case 3:
+            D_801A3F84 |= 1 << *g_Dialogue.unk40++;
+            break;
+        }
+    }
+}
 
 void func_80194F14(Entity* self) {
     /** TODO: !FAKE
