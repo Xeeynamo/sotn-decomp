@@ -473,7 +473,10 @@ void func_8012EF2C(void) {
 
     PLAYER.palette = 0x104;
     PLAYER.blendMode = 0;
+// HD version lacks this line!
+#if defined(VERSION_US)
     PLAYER.zPriority = g_zEntityCenter.S16.unk0 - 2;
+#endif
     if (func_8012C88C() != 0) {
         return;
     }
@@ -538,7 +541,11 @@ void func_8012EF2C(void) {
     if (D_80138430 > 0xA00) {
         D_80138430 = 0xA00;
     }
+    // HD version lacks this line!
+
+#if defined(VERSION_US)
     PLAYER.zPriority = g_zEntityCenter.S16.unk0 - 2;
+#endif
 }
 
 INCLUDE_ASM("dra/nonmatchings/8D3E8", func_8012F178);
