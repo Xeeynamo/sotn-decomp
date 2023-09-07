@@ -149,7 +149,7 @@ segments:
       - [0x41E7C, rodata] # jpt_80128C94
       - [0x41E90, rodata] # jpt_8012A918
       - [0x41EB0, .rodata, 8D3E8] # jpt_8012D4D8
-      - [0x41EC8, rodata] # jpt_8012EFE4
+      - [0x41EC8, .rodata, 8D3E8] # jpt_8012EFE4
       - [0x41EF0, rodata] # jpt_8012FA74
       - [0x41F18, rodata] # jpt_8012FAC0
       - [0x41F30, rodata] # jpt_80130384
