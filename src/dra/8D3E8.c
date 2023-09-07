@@ -251,7 +251,39 @@ void func_8012DBBC(void) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/8D3E8", func_8012DF04);
+void func_8012DF04(void) {
+    s32 velocityBoost;
+
+    if ((g_Player.D_80072F0A != 0) && (g_Player.padTapped & PAD_CROSS)) {
+        func_8012CCE4();
+        return;
+    }
+
+    if (D_80097448[0] >= 13) {
+        velocityBoost = FIX(5.0 / 128);
+    } else {
+        velocityBoost = FIX(20.0 / 128);
+    }
+    PLAYER.velocityY += velocityBoost;
+    if (PLAYER.velocityY > FIX(7)) {
+        PLAYER.velocityY = FIX(7);
+    }
+    if (g_Player.padTapped & PAD_SQUARE) {
+        func_8012CC30(1);
+    }
+    if (g_Player.pl_vram_flag & 1) {
+        PlaySfx(0x64C);
+        if (PLAYER.velocityY > FIX(6.875)) {
+            PLAYER.step_s = 3;
+            D_800B0914 = 3;
+            func_8010DA48(0xE5);
+            func_8011AAFC(g_CurrentEntity, 0, 0);
+        } else {
+            func_8012CA64();
+        }
+        PLAYER.velocityY = 0;
+    }
+}
 
 void func_8012E040(void) {
     s32 vel_boost;
