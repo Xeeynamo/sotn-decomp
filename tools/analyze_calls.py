@@ -272,13 +272,14 @@ def generate_html(function_list):
     html += "</body></html>"
     return html
 
+
 # Create a markdown file pointing us toward all the different function graphs
 def generate_md(function_list):
     sorted_funcs = sorted(
         [f for f in function_list if f.overlay != "mad"],
         key=lambda x: (x.overlay, x.name),
     )
-    md_page = ''
+    md_page = ""
     active_overlay = ""
     # Now iterate through all functions, creating links to their SVG files.
     for f in sorted_funcs:
@@ -287,8 +288,9 @@ def generate_md(function_list):
             active_overlay = f.overlay
             md_page += f"# {active_overlay}\n"
         dec_symbol = "✅" if f.decompile_status == "True" else "❌"
-        md_page += f'- [{dec_symbol} {f.name}]({f.unique_name}.svg)\n'
+        md_page += f"- [{dec_symbol} {f.name}]({f.unique_name}.svg)\n"
     return md_page
+
 
 # This represents calls that we can't connect to a real C function. This includes SDK functions, or calls where
 # it is unclear what actual function is being called.
