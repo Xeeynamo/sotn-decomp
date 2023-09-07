@@ -199,7 +199,7 @@ extern s32 D_801D7D58;
 extern s16 D_801D7D60;
 extern s16 D_801D7D62;
 extern s32 D_801D7D64;
-extern s32 D_801D7DD0;
+extern u32 D_801D7DD0;
 extern u16 g_ItemIconSlots[0x20];
 
 extern LayoutEntity* g_pStObjLayout[];
