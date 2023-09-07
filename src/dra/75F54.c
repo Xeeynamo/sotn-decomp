@@ -865,7 +865,7 @@ void func_8011B480(Entity* entity) {
     if (PLAYER.step != 5 || PLAYER.step_s != 3) {
         DestroyEntity(entity);
     } else {
-        entity->flags = FLAG_UNK_60000;
+        entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
         entity->facing = PLAYER.facing;
         entity->posY.i.hi = PLAYER.posY.i.hi;
         entity->posX.i.hi = PLAYER.posX.i.hi;
