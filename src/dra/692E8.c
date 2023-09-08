@@ -195,7 +195,7 @@ void func_8010A234(s32 arg0) {
         } else {
             func_8010E7AC();
         }
-        g_Player.unk0C &= 0xFEFFFFFF;
+        g_Player.unk0C &= ~0x01000000;
         func_80111CC0();
         if (arg0 != 0) {
             func_8010DBFC(D_800B0130, D_800B01B8);
