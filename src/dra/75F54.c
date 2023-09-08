@@ -861,7 +861,24 @@ void func_8011B334(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/75F54", func_8011B480);
+void func_8011B480(Entity* entity) {
+    if (PLAYER.step != 5 || PLAYER.step_s != 3) {
+        DestroyEntity(entity);
+    } else {
+        entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
+        entity->facing = PLAYER.facing;
+        entity->posY.i.hi = PLAYER.posY.i.hi;
+        entity->posX.i.hi = PLAYER.posX.i.hi;
+        if (entity->step == 0) {
+            func_8011A328(entity, 6);
+            entity->hitboxOffX = 4;
+            entity->hitboxOffY = 0;
+            entity->hitboxWidth = 12;
+            entity->hitboxHeight = 12;
+            entity->step++;
+        }
+    }
+}
 
 void func_8011B530(Entity* entity) {
     if (PLAYER.step != 0x25) {
