@@ -158,55 +158,49 @@ void func_80109990(void) {
 void func_80109A44(s32 arg0);
 INCLUDE_ASM("dra/nonmatchings/692E8", func_80109A44);
 
-// regalloc
-// DECOMP_ME_WIP func_8010A234 https://decomp.me/scratch/rdeqb
-#ifndef NON_MATCHING
-INCLUDE_ASM("dra/nonmatchings/692E8", func_8010A234);
-#else
 void func_8010A234(s32 arg0) {
-    s32 temp;
-    g_CurrentEntity = g_Entities;
-    temp = D_8017A000.GetWeaponId();
+    s32 (*weapon)(void);
 
-    do { // !FAKE
-        if ((temp == 0x2D) &&
-            (CheckEquipmentItemCount(ITEM_AXE_LORD_ARMOR, ARMOR_TYPE) != 0)) {
-            if (!(*(s32*)&g_Player.unk0C & 0x01000000)) {
-                PlaySfx(NA_SE_VO_AL_WHAT);
-                g_Player.D_80072EF4 = 0;
-                g_Player.D_80072EFC = 0x20;
-                func_8010FAF4();
-                D_8017A000();
-                *(s32*)&g_Player.unk0C |= 0x01000000;
-                func_8010DFF0(1, 10);
-                func_80109328();
-                if (arg0 != 0) {
-                    func_8010DBFC(&D_800B0130, &D_800B01B8);
-                }
-            }
-        } else if (*(s32*)&g_Player.unk0C & 0x01000000) {
-            g_Entities[PLAYER_CHARACTER].palette = 0x8100;
-            g_Entities[PLAYER_CHARACTER].animSet = ANIMSET_DRA(1);
-            g_Entities[PLAYER_CHARACTER].unk5A = 0;
-            g_Entities[PLAYER_CHARACTER].unk1E = 0;
-            g_Entities[PLAYER_CHARACTER].unk19 &= 0xF3;
+    g_CurrentEntity = &PLAYER;
+    weapon = D_8017A000.GetWeaponId;
+    // Wearing Axe Lord Armor! This is probably when you initially put it on.
+    if ((weapon() == 0x2D) && CheckEquipmentItemCount(ITEM_AXE_LORD_ARMOR, ARMOR_TYPE)) {
+        if (!(g_Player.unk0C & 0x01000000)) {
+            // Alucard says "WHAT?!" when first putting on Axe Lord Armor
+            PlaySfx(NA_SE_VO_AL_WHAT);
+            g_Player.D_80072EF4 = 0;
+            g_Player.D_80072EFC = 0x20;
             func_8010FAF4();
-            g_Entities[PLAYER_CHARACTER].unk22 = 0;
-            g_Entities[PLAYER_CHARACTER].unk20 = 0;
-            if (g_Player.pl_vram_flag & 1) {
-                func_8010E570(0);
-            } else {
-                func_8010E7AC();
-            }
-            *(s32*)&g_Player.unk0C &= 0xFEFF0000 | 0xFFFF;
-            func_80111CC0();
+            weapon = D_8017A000.EntityWeaponAttack;
+            weapon();
+            g_Player.unk0C |= 0x01000000;
+            func_8010DFF0(1, 0xA);
+            func_80109328();
             if (arg0 != 0) {
-                func_8010DBFC(&D_800B0130, &D_800B01B8);
+                func_8010DBFC(D_800B0130, D_800B01B8);
             }
         }
-    } while (0);
+    } else if (g_Player.unk0C & 0x01000000) {
+        PLAYER.palette = 0x8100;
+        PLAYER.animSet = 1;
+        PLAYER.unk5A = 0;
+        PLAYER.rotAngle = 0;
+        PLAYER.unk19 &= 0xF3;
+        func_8010FAF4();
+        PLAYER.rotPivotY = 0;
+        PLAYER.rotPivotX = 0;
+        if (g_Player.pl_vram_flag & 1) {
+            func_8010E570(0);
+        } else {
+            func_8010E7AC();
+        }
+        g_Player.unk0C &= 0xFEFFFFFF;
+        func_80111CC0();
+        if (arg0 != 0) {
+            func_8010DBFC(D_800B0130, D_800B01B8);
+        }
+    }
 }
-#endif
 
 void func_8010A3F0(void) {
     s32 temp = 0x38;
