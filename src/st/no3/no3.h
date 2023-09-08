@@ -106,6 +106,7 @@ extern u8 D_801819D0[];
 extern u8 D_801819DC[];
 extern s32 D_801819E8[];
 extern s32 D_801819EC[];
+const char* D_80181ACC[];
 extern s16 D_80181AD4[];
 extern s16 D_80181AE0[];
 extern Point16 D_80181AEC[];
@@ -198,7 +199,8 @@ extern s32 D_801D7D58;
 extern s16 D_801D7D60;
 extern s16 D_801D7D62;
 extern s32 D_801D7D64;
-extern s32 D_801D7DD0;
+extern u32 D_801D7DD0;
+extern u16 g_ItemIconSlots[0x20];
 
 extern LayoutEntity* g_pStObjLayout[];
 extern PfnEntityUpdate PfnEntityUpdates[];
@@ -212,3 +214,5 @@ extern u16 D_80182740[];
 // *** EntitySoulStealOrb properties END ***
 
 extern SVECTOR D_801B73E0;
+
+Dialogue g_Dialogue;

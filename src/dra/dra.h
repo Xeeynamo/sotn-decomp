@@ -386,6 +386,7 @@ extern const char* c_strFamiliars;
 extern const char* c_strFamiliar;
 extern const char* c_strSpecial2;
 extern RECT c_backbufferClear;
+extern s16 D_800AFFB8[];
 extern s32 D_800B0130[];
 extern s32 D_800B01B8[];
 extern s32 D_800B0798[];
@@ -394,6 +395,8 @@ extern s32 D_800B0830[];
 extern s32 D_800B083C[];
 extern s32 D_800B0914;
 extern s32 D_800B0918;
+extern s32 D_800B091C;
+extern s32 D_800B0920;
 extern const char aPbav[];
 extern const char aPbav_0[];
 extern const char aPbav_1[];
@@ -735,8 +738,8 @@ void CalcDefense(void);
 bool IsAlucart(void);
 void func_800F53A4(void);
 bool ScissorSprite(SPRT* arg0, MenuContext* arg1);
-void func_800F5904(void*, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v, s32 unk1,
-                   s32 unk2, bool disableTexShade, s32 unk4);
+void func_800F5904(MenuContext* ctx, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
+                   s32 idx, s32 unk2, bool disableTexShade, s32 unk4);
 void DrawMenuSprite(
     MenuContext* context, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v,
     s32 clut, s32 tpage, s32 arg9, s32 colorIntensity, s32 argB);
@@ -874,7 +877,9 @@ void func_8012A89C(Entity* entity);
 void func_8012B78C(Entity* entity);
 void func_8012B990(Entity* entity);
 void func_8012BEF8(Entity* entity);
-void func_8012CA64(void);
+// Can't have this here because func_8012D3E8 does a bad call
+// which passes a 0 argument.
+// void func_8012CA64(void);
 void func_8012CB4C(void);
 void func_8012CCE4(void);
 void func_8012CFA8(void);

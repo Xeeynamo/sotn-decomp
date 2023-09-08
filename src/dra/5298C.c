@@ -450,7 +450,44 @@ bool ScissorSprite(SPRT* sprite, MenuContext* context) {
     return false;
 }
 
-INCLUDE_ASM("dra/nonmatchings/5298C", func_800F5904);
+void func_800F5904(MenuContext* ctx, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
+                   s32 idx, s32 unk2, bool disableTexShade, s32 unk4) {
+    SPRT* sp;
+    s32 otIdx;
+    u32* ot;
+    ot = g_CurrentBuffer->ot;
+    sp = &g_CurrentBuffer->sprite[g_GpuUsage.sp];
+#if defined(VERSION_US)
+    if (D_8013784C == 1) {
+        idx = 0x15E;
+    }
+    if (D_8013784C == 2) {
+        idx = 0x15D;
+    }
+#endif
+    if (ctx == NULL) {
+        otIdx = 0x1FF;
+    } else {
+        otIdx = ctx->unk18 + 2;
+    }
+    SetSemiTrans(sp, 0);
+    SetShadeTex(sp, disableTexShade);
+    sp->x0 = (s16)x;
+    sp->y0 = (s16)y;
+    sp->w = (s16)w;
+    sp->h = (s16)h;
+    sp->u0 = (u8)u;
+    sp->v0 = (u8)v;
+    if ((ctx == NULL) || (ScissorSprite(sp, ctx) == false)) {
+        sp->r0 = (u8)unk4;
+        sp->g0 = (u8)unk4;
+        sp->b0 = (u8)unk4;
+        sp->clut = D_8003C104[idx];
+        AddPrim(&ot[otIdx], sp);
+        g_GpuUsage.sp++;
+        func_800F53D4(unk2, otIdx);
+    }
+}
 
 void func_800F5A90(void) {
     func_800F5904(NULL, 96, 96, 64, 64, 0, 0, 0, 0x114, 1, 0);
