@@ -288,7 +288,9 @@ def generate_md(function_list):
             active_overlay = f.overlay
             md_page += f"# {active_overlay}\n"
         dec_symbol = "✅" if f.decompile_status == "True" else "❌"
-        md_page += f"- [{dec_symbol} {f.name}]({f.unique_name}.svg)\n"
+        md_page += (
+            f"- [{dec_symbol} {f.name}]({output_dir}/{f.unique_name}.svg?raw=1)\n"
+        )
     return md_page
 
 
@@ -437,7 +439,7 @@ if __name__ == "__main__":
             with open(f"{output_dir}/index.html", "w") as f:
                 f.write(html)
             markdown = generate_md(functions)
-            with open(f"{output_dir}/function_graphs.md", "w") as f:
+            with open(f"function_graphs.md", "w") as f:
                 f.write(markdown)
             print(f"Generated HTML in {time.perf_counter() - timer} seconds")
     print("Exiting.")
