@@ -288,7 +288,7 @@ def generate_md(function_list):
             active_overlay = f.overlay
             md_page += f"# {active_overlay}\n"
         dec_symbol = "✅" if f.decompile_status == "True" else "❌"
-        md_page += f"- [{dec_symbol} {f.name}]({f.unique_name}.svg)\n"
+        md_page += f"- [{dec_symbol} {f.name}]({f.unique_name}.svg?raw=1)\n"
     return md_page
 
 
