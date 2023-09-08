@@ -439,7 +439,8 @@ if __name__ == "__main__":
             with open(f"{output_dir}/index.html", "w") as f:
                 f.write(html)
             markdown = generate_md(functions)
-            with open(f"function_graphs.md", "w") as f:
+            with open(f"{output_dir}/../function_graphs.md", "w") as f:
                 f.write(markdown)
+                print("Markdown written to" + os.path.realpath(f.name))
             print(f"Generated HTML in {time.perf_counter() - timer} seconds")
     print("Exiting.")
