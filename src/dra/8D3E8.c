@@ -408,7 +408,72 @@ void func_8012E040(void) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/8D3E8", func_8012E550);
+void func_8012E550(void) {
+    s32 i;
+    u16 playerFrame = PLAYER.animFrameIdx;
+    s32 pressingDown = g_Player.padPressed & PAD_DOWN;
+
+    func_8010E1EC(FIX(0.125));
+    if (g_Player.padTapped & PAD_CROSS) {
+        if ((g_Player.padPressed & PAD_DOWN)) {
+            for (i = 0; i < 4; i++) {
+                if ((g_Player.D_80072BD0[i][0] & 0x40)) {
+                    g_Player.D_80072F0E = 8;
+                    func_8012CED4();
+                    PLAYER.animFrameIdx = 4;
+                    PLAYER.animFrameDuration = 1;
+                    PLAYER.velocityX = 0;
+                    PLAYER.velocityY = FIX(2);
+                    return;
+                }
+            }
+        }
+        func_8012CCE4();
+        return;
+    }
+    if (!(g_Player.pl_vram_flag & 1)) {
+        func_8012CED4();
+        return;
+    }
+    if (g_Player.padTapped & PAD_SQUARE && D_800B0914 != 3) {
+        func_8012CC30(0);
+        return;
+    }
+    switch (D_800B0914) {
+    case 0:
+        if (!pressingDown) {
+            func_8010DA48(0xE4);
+            D_800B0914 = 2;
+            if (playerFrame == 0) {
+                PLAYER.animFrameIdx = 1;
+            }
+        } else if (PLAYER.animFrameDuration < 0) {
+            D_800B0914 = 1;
+        }
+        return;
+    case 1:
+        if (pressingDown) {
+            return;
+        }
+        func_8010DA48(0xE4);
+        D_800B0914 = 2;
+        return;
+    case 2:
+        if (pressingDown) {
+            func_8010DA48(0xE3);
+            D_800B0914 = 0;
+            if (playerFrame != 0) {
+                return;
+            }
+            PLAYER.animFrameIdx = 1;
+            return;
+        }
+    case 3:
+        if (PLAYER.animFrameDuration < 0) {
+            func_8012CA64();
+        }
+    }
+}
 
 INCLUDE_ASM("dra/nonmatchings/8D3E8", func_8012E7A4);
 
