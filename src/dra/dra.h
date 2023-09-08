@@ -235,7 +235,7 @@ typedef struct {
     u32 unk0;
     u32 damageKind;
     s32 damageTaken;
-    s32 unkC
+    s32 unkC;
 } DamageParam;
 
 typedef struct {
