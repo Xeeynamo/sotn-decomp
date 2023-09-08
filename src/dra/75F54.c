@@ -2030,7 +2030,43 @@ void func_8012CFF0(void) {
     D_800B0914 = 0;
 }
 
-INCLUDE_ASM("dra/nonmatchings/75F54", func_8012D024);
+void func_8012D024(void) {
+    s32 separation;
+    func_8010E1EC(0x2000);
+    if (g_Player.padTapped & PAD_CROSS) {
+        func_8012CCE4();
+        return;
+    }
+    if (!(g_Player.pl_vram_flag & 1)) {
+        func_8012CED4();
+        return;
+    }
+    if (g_Player.padTapped & PAD_SQUARE) {
+        func_8012CC30(0);
+        return;
+    }
+    if (g_Player.padPressed & (PAD_RIGHT | PAD_LEFT)) {
+        func_8012CB4C();
+        return;
+    }
+    if (g_Player.padPressed & PAD_DOWN) {
+        func_8012CFF0();
+        return;
+    }
+    if (D_800B0914 != 0) {
+        return;
+    }
+    separation = (PLAYER.posY.i.hi - g_Entities[17].posY.i.hi);
+    if (ABS(separation) < 4 && --D_800B0918 == 0) {
+        D_800B0914 = 1;
+        func_8010DA48(0xE9);
+        return;
+    }
+    if (g_Player.pl_vram_flag & 0x40) {
+        D_800B0914 = 1;
+        func_8010DA48(0xE9);
+    }
+}
 
 void func_8012D178(void) {
     s32 var_v0;
