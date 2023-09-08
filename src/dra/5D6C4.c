@@ -524,13 +524,13 @@ void AddHearts(s32 value) {
 }
 
 // Note: Arg3 is unused, but is given in the call from func_80113D7C
-s32 func_800FE97C(Unkstruct_800FE97C* arg0, s32 arg1, s32 arg2, s32 arg3) {
+s32 func_800FE97C(DamageParam* arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 ret;
     s32 itemCount;
 
     func_800F53A4();
     arg0->unk0 = arg1 & ~0x1F;
-    arg0->unk4 = arg1 & 0x1F;
+    arg0->damageKind = arg1 & 0x1F;
     if (g_Status.defenseElement & arg0->unk0) {
         arg2 *= 2;
     }
@@ -562,7 +562,7 @@ s32 func_800FE97C(Unkstruct_800FE97C* arg0, s32 arg1, s32 arg2, s32 arg3) {
     //  with arg2 doubled. Item description says "Big HP restore" so makes
     //  sense
     if (CheckEquipmentItemCount(ITEM_CAT_EYE_CIRCLET, HEAD_TYPE) != 0 &&
-        arg0->unk4 == 7) {
+        arg0->damageKind == 7) {
         arg2 *= 2;
         if (arg2 < 1) {
             arg2 = 1;
@@ -599,7 +599,7 @@ s32 func_800FE97C(Unkstruct_800FE97C* arg0, s32 arg1, s32 arg2, s32 arg3) {
             arg0->damageTaken = 0;
         }
         ret = 7;
-    } else if (arg0->unk4 == 6) {
+    } else if (arg0->damageKind == 6) {
         if (D_8003C8C4 == ((D_8003C8C4 / 10) * 0xA)) {
             arg0->damageTaken = 1;
         } else {
@@ -607,7 +607,7 @@ s32 func_800FE97C(Unkstruct_800FE97C* arg0, s32 arg1, s32 arg2, s32 arg3) {
         }
         ret = 9;
     } else {
-        if (arg0->unk4 < 16) {
+        if (arg0->damageKind < 16) {
             arg0->damageTaken = arg2 - g_Status.defenseEquip;
         } else {
             arg0->damageTaken = g_Status.hpMax / 8;
@@ -623,23 +623,23 @@ s32 func_800FE97C(Unkstruct_800FE97C* arg0, s32 arg1, s32 arg2, s32 arg3) {
             }
         }
         if (arg0->damageTaken > 0) {
-            if (arg0->unk4 < 2) {
+            if (arg0->damageKind < 2) {
                 if ((arg0->damageTaken * 2) >= g_Status.hpMax) {
-                    arg0->unk4 = 4;
+                    arg0->damageKind = 4;
                 } else if ((arg2 * 50) >= g_Status.hpMax) {
-                    arg0->unk4 = 3;
+                    arg0->damageKind = 3;
                 } else {
-                    arg0->unk4 = 2;
+                    arg0->damageKind = 2;
                 }
             }
             ret = 3;
         } else {
             if ((g_Status.defenseEquip > 99) && !(arg0->unk0 & 0x180) &&
                 !(g_Player_unk0C & 0x80)) {
-                arg0->unk4 = 0;
+                arg0->damageKind = 0;
                 ret = 1;
             } else {
-                arg0->unk4 = 2;
+                arg0->damageKind = 2;
                 ret = 3;
             }
             arg0->damageTaken = 1;
