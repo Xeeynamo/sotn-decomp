@@ -1,6 +1,8 @@
 #include "sel.h"
 
-void func_801B80F0(void) {
+extern Unkstruct_8013B15C D_801BC654[];
+
+void SetupEvents(void) {
     EnterCriticalSection();
     g_EvSwCardEnd = OpenEvent(SwCARD, EvSpIOE, EvMdNOINTR, NULL);
     g_EvSwCardErr = OpenEvent(SwCARD, EvSpERROR, EvMdNOINTR, NULL);
@@ -86,31 +88,23 @@ void func_801B8500(void) {
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/save_mgr", func_801B8518);
 
-s32 func_801B8714(s32 arg0) { return D_801BC654[arg0 * 0x9E]; }
+s32 func_801B8714(s32 arg0) { return D_801BC654[arg0].unk000; }
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/save_mgr", func_801B873C);
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/save_mgr", func_801B881C);
-#else
-extern volatile u8 D_801BC658[];
-u8 func_801B881C(s32 arg0, s32 arg1) {
-    s32 idx = arg0 * 0x9E * 4;
-    return D_801BC658[idx + arg1];
-}
-#endif
+u8 func_801B881C(u32 arg0, u32 arg1) { return D_801BC654[arg0].pad004[arg1]; }
 
 s32 MemcardReadFile(
     s32 slot, s32 block, const char* name, void* data, s32 saveLen) {
     char savePath[32];
     s32 fd;
-    s32 actualSaveLen;
+    s32 nBytes;
 
     sprintf(savePath, g_MemcardSavePath, slot, block, name);
     if (saveLen == 0) {
-        actualSaveLen = 0x2B8;
+        nBytes = 0x2B8;
     } else {
-        actualSaveLen = saveLen * 0x2000;
+        nBytes = saveLen * 0x2000;
     }
 
     fd = open(savePath, O_RDONLY | O_NOWAIT);
@@ -118,9 +112,9 @@ s32 MemcardReadFile(
         return -1;
     }
 
-    D_801BC2FC = fd;
+    g_MemcardFd = fd;
     _clear_event();
-    read(fd, data, actualSaveLen);
+    read(fd, data, nBytes);
     return 0;
 }
 
@@ -150,7 +144,7 @@ s32 MemcardWriteFile(
     if (fd == -1) {
         return -1;
     } else {
-        D_801BC2FC = fd;
+        g_MemcardFd = fd;
         _clear_event();
         write(fd, data, len);
     }
@@ -158,23 +152,24 @@ s32 MemcardWriteFile(
 }
 
 s32 MemcardEraseFile(s32 slot, s32 block, const char* name) {
-    char buf[0x20];
-    sprintf(buf, g_MemcardSavePath, slot, block, name);
-    return -(erase(buf) == 0);
+    char savePath[0x20];
+
+    sprintf(savePath, g_MemcardSavePath, slot, block, name);
+    return -(erase(savePath) == 0);
 }
 
-s32 func_801B8A10(s32 nCardSlot) {
-    s32 unk = _peek_event();
+s32 MemcardClose(s32 nCardSlot) {
+    s32 eventStep = _peek_event();
 
-    if (unk == 0) {
+    if (eventStep == 0) {
         return 0;
     }
 
-    close(D_801BC2FC);
-    if (unk != 1) {
+    close(g_MemcardFd);
+    if (eventStep != 1) {
         return -3;
     }
 
-    D_8006C3AC |= unk << nCardSlot;
+    D_8006C3AC |= eventStep << nCardSlot;
     return 1;
 }

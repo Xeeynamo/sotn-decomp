@@ -1,43 +1,37 @@
 #include "sel.h"
 
-// reg swap and missing move
-s32 MemcardFormat(s32 cardSlot, s32 cardSubSlot);
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/save_mgr3", MemcardFormat);
-#else
-s32 MemcardFormat(s32 cardSlot, s32 cardSubSlot) {
-    s8 cardPath[0x8];
+s32 MemcardFormat(s32 slot, s32 block) {
+    char savePath[0x8];
     s32 ret;
 
-    D_8006C3AC &= D_801808DC[cardSlot];
-    sprintf(cardPath, D_801A7D78, cardSlot, cardSubSlot);
+    D_8006C3AC &= D_801808DC[slot];
+    sprintf(savePath, g_strMemcardRootPath, slot, block);
     _clear_event_x();
-    format(cardPath);
-
+    format(savePath);
     ret = _card_event_x();
+
     if (ret != 1) {
         if (ret == 3) {
-            return -1;
+            ret = -1;
+        } else {
+            ret = -3;
         }
-        return -3;
     }
     return ret;
 }
-#endif
 
 void GetSavePalette(u16* dst, s32 palIdx) {
-    const s32 ColorCount = 16;
     s32 i;
     u16* src = g_saveIconPalette[0];
 
     src = g_saveIconPalette[palIdx];
-    for (i = 0; i < ColorCount; i++) {
+    for (i = 0; i < COLORS_PER_PAL; i++) {
         *dst++ = *src++;
     }
 }
 
 void GetSaveIcon(u8* dst, s32 iconIdx) {
-    const s32 IconSize = 0x80 * 3;
+    const s32 IconSize = sizeof(((MemcardHeader*)0)->Icon);
     s32 i;
     u8* src;
 

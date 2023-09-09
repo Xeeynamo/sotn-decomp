@@ -1,6 +1,8 @@
 #define INCLUDE_ASM_NEW
 #include "dra.h"
 
+extern Unkstruct_8013B15C D_8013B15C[];
+
 void SetupEvents(void) {
     EnterCriticalSection();
     g_EvSwCardEnd = OpenEvent(SwCARD, EvSpIOE, EvMdNOINTR, NULL);
@@ -22,7 +24,7 @@ void SetupEvents(void) {
     EnableEvent(g_EvHwCardNew);
 }
 
-s32 func_800E908C(void) {
+s32 _peek_event_with_retry(void) {
     if (TestEvent(g_EvSwCardEnd) == 1) {
         return 1;
     } else if (TestEvent(g_EvSwCardErr) == 1) {
@@ -37,7 +39,7 @@ s32 func_800E908C(void) {
     return 0;
 }
 
-s32 func_800E912C(void) {
+s32 _peek_event(void) {
     if (TestEvent(g_EvSwCardEnd) == 1) {
         return 1;
     } else if (TestEvent(g_EvSwCardErr) == 1) {
@@ -50,14 +52,14 @@ s32 func_800E912C(void) {
     return 0;
 }
 
-void func_800E91B0(void) {
+void _clear_event(void) {
     TestEvent(g_EvSwCardEnd);
     TestEvent(g_EvSwCardErr);
     TestEvent(g_EvSwCardTmo);
     TestEvent(g_EvSwCardNew);
 }
 
-s32 func_800E9208(void) {
+s32 _card_event_x(void) {
     while (true) {
         if (TestEvent(g_EvHwCardEnd) == 1) {
             return 1;
@@ -71,7 +73,7 @@ s32 func_800E9208(void) {
     }
 }
 
-void func_800E928C(void) {
+void _clear_event_x(void) {
     TestEvent(g_EvHwCardEnd);
     TestEvent(g_EvHwCardErr);
     TestEvent(g_EvHwCardTmo);
@@ -87,40 +89,34 @@ void func_800E92F4(void) {
 
 INCLUDE_ASM("dra/nonmatchings/save_mgr", func_800E930C);
 
-extern Unkstruct_8013B15C D_8013B15C[];
-
-s32 func_800E9508(s32 arg0) {
-    s32 temp = D_8013B15C[arg0].unk000;
-
-    return temp;
-}
+s32 func_800E9508(s32 arg0) { return D_8013B15C[arg0].unk000; }
 
 INCLUDE_ASM("dra/nonmatchings/save_mgr", func_800E9530);
 
-u8 func_800E9610(u32 arg0, u32 arg1) { return D_8013B160[arg0].unk0[arg1]; }
+u8 func_800E9610(u32 arg0, u32 arg1) { return D_8013B15C[arg0].pad004[arg1]; }
 
-s32 MemcardReadFile(s32 slot, s32 block, const char* name, void* data, s32 fd) {
+s32 MemcardReadFile(
+    s32 slot, s32 block, const char* name, void* data, s32 saveLen) {
     char savePath[32];
+    s32 fd;
     s32 nBytes;
-    s32 ret;
 
     sprintf(savePath, g_MemcardSavePath, slot, block, name);
-    nBytes = fd << 0xD;
-
-    if (fd == 0) {
+    if (saveLen == 0) {
         nBytes = 0x2B8;
+    } else {
+        nBytes = saveLen * 0x2000;
     }
 
     fd = open(savePath, O_RDONLY | O_NOWAIT);
-    ret = -1;
-
-    if (fd != -1) {
-        D_80137474 = fd;
-        func_800E91B0();
-        read(fd, data, nBytes);
-        ret = 0;
+    if (fd == -1) {
+        return -1;
     }
-    return ret;
+
+    g_MemcardFd = fd;
+    _clear_event();
+    read(fd, data, nBytes);
+    return 0;
 }
 
 s32 MemcardWriteFile(
@@ -149,8 +145,8 @@ s32 MemcardWriteFile(
     if (fd == -1) {
         return -1;
     } else {
-        D_80137474 = fd;
-        func_800E91B0();
+        g_MemcardFd = fd;
+        _clear_event();
         write(fd, data, len);
     }
     return 0;
@@ -163,18 +159,18 @@ s32 MemcardEraseFile(s32 slot, s32 block, const char* name) {
     return -(erase(savePath) == 0);
 }
 
-s32 func_800E9804(s32 arg0) {
-    s32 funcRet = func_800E912C();
-    s32 ret = 0;
+s32 MemcardClose(s32 nCardSlot) {
+    s32 eventStep = _peek_event();
 
-    if (funcRet != 0) {
-        close(D_80137474);
-        if (funcRet == 1) {
-            D_8006C3AC |= funcRet << arg0;
-            return 1;
-        }
-        ret = -3;
-        return ret;
+    if (eventStep == 0) {
+        return 0;
     }
-    return ret;
+
+    close(g_MemcardFd);
+    if (eventStep != 1) {
+        return -3;
+    }
+
+    D_8006C3AC |= eventStep << nCardSlot;
+    return 1;
 }

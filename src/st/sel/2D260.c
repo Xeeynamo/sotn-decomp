@@ -856,7 +856,7 @@ s32 func_801B3694(void) {
         break;
 
     case 4:
-        temp_v0 = func_801B8A10(nCardSlot);
+        temp_v0 = MemcardClose(nCardSlot);
         if (temp_v0 != 0) {
             if (temp_v0 == -3) {
                 g_memCardRetryCount--;

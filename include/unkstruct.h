@@ -51,10 +51,6 @@ typedef struct {
 } Unkstruct8; // size = unknown
 
 typedef struct {
-    /* 0x00 */ u8 unk0[0x278];
-} Unkstruct_8013B160; // size = 0x278
-
-typedef struct {
     /* 0x00 */ u8 unk0;
     /* 0x01 */ u8 unk1;
     /* 0x02 */ u8 pad2[0x1E - 0x02];
