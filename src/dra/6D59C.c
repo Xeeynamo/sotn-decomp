@@ -7,7 +7,7 @@
 // Direction, action and shoulder buttons. Any button except start or select.
 #define GAMEBUTTONS (~(PAD_START | PAD_SELECT))
 
-u8 c_D_800ACF18[] = {10, 8, 8, 6, 6, 4, 4,   4,   4, 4,
+u8 g_D_800ACF18[] = {10, 8, 8, 6, 6, 4, 4,   4,   4, 4,
                      4,  4, 4, 4, 4, 4, 255, 255, 0, 0};
 
 void func_8010D59C(void) {
