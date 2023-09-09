@@ -39,12 +39,12 @@ void func_8010D59C(void) {
         }
         if (g_Entities[1].ext.ent1.unk3 == 0) {
             g_Entities[1].ext.ent1.unk3 =
-                c_D_800ACF18[g_Entities[1].ext.ent1.unk2];
+                g_D_800ACF18[g_Entities[1].ext.ent1.unk2];
         }
         if (!(--g_Entities[1].ext.ent1.unk3 & 0xFF)) {
             g_Entities[1].ext.ent1.unk2++;
             g_Entities[1].ext.ent1.unk3 =
-                c_D_800ACF18[g_Entities[1].ext.ent1.unk2];
+                g_D_800ACF18[g_Entities[1].ext.ent1.unk2];
         }
     }
     if (g_Entities[1].animFrameIdx != 0) {
