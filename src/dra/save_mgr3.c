@@ -1,47 +1,6 @@
 #define INCLUDE_ASM_NEW
 #include "dra.h"
 
-s32 MemcardFormat(s32 slot, s32 block) {
-    char savePath[0x8];
-    s32 ret;
-
-    D_8006C3AC &= D_800A0510[slot];
-    sprintf(savePath, g_strMemcardRootPath, slot, block);
-    _clear_event_x();
-    format(savePath);
-    ret = _card_event_x();
-
-    if (ret != 1) {
-        if (ret == 3) {
-            ret = -1;
-        } else {
-            ret = -3;
-        }
-    }
-    return ret;
-}
-
-void GetSavePalette(u16* dst, s32 palIdx) {
-    s32 i;
-    u16* src = g_saveIconPalette[0];
-
-    src = g_saveIconPalette[palIdx];
-    for (i = 0; i < COLORS_PER_PAL; i++) {
-        *dst++ = *src++;
-    }
-}
-
-void GetSaveIcon(u8* dst, s32 iconIdx) {
-    const s32 IconSize = sizeof(((MemcardHeader*)0)->Icon);
-    s32 i;
-    u8* src;
-
-    src = g_saveIconTexture[iconIdx];
-    for (i = 0; i < IconSize; i++) {
-        *dst++ = *src++;
-    }
-}
-
 char g_AsciiSet[] = {
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',  'j', 'k',
     'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',  'u', 'v',
@@ -135,6 +94,47 @@ const char* g_SaveAreaNames[] = {
     "",
     "",
 };
+
+s32 MemcardFormat(s32 slot, s32 block) {
+    char savePath[0x8];
+    s32 ret;
+
+    D_8006C3AC &= D_800A0510[slot];
+    sprintf(savePath, g_strMemcardRootPath, slot, block);
+    _clear_event_x();
+    format(savePath);
+    ret = _card_event_x();
+
+    if (ret != 1) {
+        if (ret == 3) {
+            ret = -1;
+        } else {
+            ret = -3;
+        }
+    }
+    return ret;
+}
+
+void GetSavePalette(u16* dst, s32 palIdx) {
+    s32 i;
+    u16* src = g_saveIconPalette[0];
+
+    src = g_saveIconPalette[palIdx];
+    for (i = 0; i < COLORS_PER_PAL; i++) {
+        *dst++ = *src++;
+    }
+}
+
+void GetSaveIcon(u8* dst, s32 iconIdx) {
+    const s32 IconSize = sizeof(((MemcardHeader*)0)->Icon);
+    s32 i;
+    u8* src;
+
+    src = g_saveIconTexture[iconIdx];
+    for (i = 0; i < IconSize; i++) {
+        *dst++ = *src++;
+    }
+}
 
 void StoreSaveData(SaveData* save, s32 slotNo, s32 memcardIcon) {
     const int RoomCount = 942;

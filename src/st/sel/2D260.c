@@ -9,6 +9,8 @@ typedef enum {
     Tips_NoYes,
 } NavigationTips;
 
+extern char g_AsciiSet[];
+
 void DrawNavigationTips(NavigationTips mode) {
     u8** imgs;
     POLY_GT4* poly;
@@ -231,7 +233,7 @@ void UpdateNameEntry(void) {
 
     if (g_pads[0].tapped & PAD_CROSS) { // Input Character
         g_api.PlaySfx(0x8CD);
-        g_InputSaveName[g_InputCursorPos] = D_801823A0[D_801BC3E0];
+        g_InputSaveName[g_InputCursorPos] = g_AsciiSet[D_801BC3E0];
         if (++g_InputCursorPos == 8) {
             g_InputCursorPos = 0;
         }

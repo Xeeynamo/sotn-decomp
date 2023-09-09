@@ -1,5 +1,99 @@
 #include "sel.h"
 
+char g_AsciiSet[] = {
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',  'j', 'k',
+    'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',  'u', 'v',
+    'w', 'x', 'y', 'z', '&', '!', '-', '.', '\'', ' ', ' ',
+};
+
+const char* g_ShiftJisSet[] = {
+    "Ａ", "Ｂ", "Ｃ", "Ｄ", "Ｅ", "Ｆ", "Ｇ", "Ｈ", "Ｉ", "Ｊ", "Ｋ",
+    "Ｌ", "Ｍ", "Ｎ", "Ｏ", "Ｐ", "Ｑ", "Ｒ", "Ｓ", "Ｔ", "Ｕ", "Ｖ",
+    "Ｗ", "Ｘ", "Ｙ", "Ｚ", "＆", "！", "−",  "．", "’",  "　",
+};
+const char* g_SaveAreaNames[] = {
+    "大理石の廊下",
+    "崖側外壁",
+    "蔵書庫",
+    "地下墓地",
+    "オルロックの間",
+    "えん道",
+    "礼拝堂",
+    "城入り口",
+    "",
+    "地下水脈",
+    "闘技場",
+    "悪魔城最上部",
+    "錬金研究棟",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "卑鉱石の廊下",
+    "異界側外壁",
+    "禁書保管庫",
+    "空中墓地",
+    "死翼の間",
+    "洞窟",
+    "異端礼拝堂",
+    "逆さ城入り口",
+    "",
+    "天井水脈",
+    "裏闘技場",
+    "逆さ城最下部",
+    "黒魔術研究棟",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "城入り口",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+};
+
 s32 MemcardFormat(s32 slot, s32 block) {
     char savePath[0x8];
     s32 ret;
@@ -41,8 +135,143 @@ void GetSaveIcon(u8* dst, s32 iconIdx) {
     }
 }
 
-void StoreSaveData(SaveData* save, s32 arg1, s32 arg2);
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/save_mgr3", StoreSaveData);
+void StoreSaveData(SaveData* save, s32 slotNo, s32 memcardIcon) {
+    const int RoomCount = 942;
+    MemcardHeader h;
+    char saveTitle[64];
+
+    u32* saveRaw;
+    s32 roomPercentage;
+    SaveData* dst;
+    s32 saveNameLen;
+    s32 i;
+    s32 j;
+
+    PlayerStatus* dstStatus;
+    MenuNavigation* dstNav;
+    GameSettings* dstSettings;
+
+    saveRaw = save;
+    for (i = 0; i < 0x800; i++) {
+        *saveRaw++ = 0;
+    }
+
+    h.Magic[0] = 'S';
+    h.Magic[1] = 'C';
+    h.Type = 0x13;
+    h.BlockEntry = 1;
+
+    // The h.Title content will look like this:
+    // US: ＣＡＳＴＬＥＶＡＮＩＡ－１１　ＡＬＵＣＡＲＤ　２００％
+    // HD: ドラキュラＸ−１１　ＡＬＵＣＡＲＤ　オルロックの間　２００％
+    for (i = 0; i < 0x5C; i++) {
+        h.Title[i] = 0;
+    }
+
+#if defined(VERSION_US)
+    STRCPY(h.Title, "ＣＡＳＴＬＥＶＡＮＩＡ−");
+#elif defined(VERSION_HD)
+    STRCPY(h.Title, "ドラキュラＸ−");
+#endif
+
+    // writes slot number
+    if (slotNo > 8) {
+        STRCPY(saveTitle, "００");
+        saveTitle[1] += (slotNo + 1) / 10;
+        saveTitle[3] += (slotNo + 1) % 10;
+        strcat(h.Title, saveTitle);
+    } else {
+        STRCPY(saveTitle, "０");
+        saveTitle[1] += slotNo + 1;
+        strcat(h.Title, saveTitle);
+    }
+
+    strcat(h.Title, "　");
+    for (saveNameLen = 7; saveNameLen > 0; saveNameLen--) {
+        if (g_SaveName[saveNameLen] != 0x20) {
+            break;
+        }
+    }
+
+    // writes save name
+    for (i = 0; i < saveNameLen + 1; i++) {
+        char ch = g_SaveName[i];
+        for (j = 0; j < 0x20; j++) {
+            // Converts ASCII into Shift-JIS
+            if (ch == g_AsciiSet[j]) {
+                strcat(h.Title, g_ShiftJisSet[j]);
+                break;
+            }
+        }
+    }
+
+#if defined(VERSION_HD)
+    // writes stage name
+    strcat(h.Title, "　");
+    strcat(h.Title, g_SaveAreaNames[g_StageId]);
+#endif
+
+    // writes room completion percentage
+    strcat(h.Title, "　");
+    i = roomPercentage = g_roomCount * 100 / RoomCount;
+    if (i >= 100) {
+        STRCPY(saveTitle, "０００");
+        saveTitle[1] += i / 100;
+        saveTitle[3] += i / 10 - i / 100 * 10;
+        saveTitle[5] += i % 10;
+        strcat(h.Title, saveTitle);
+    } else if (i >= 10) {
+        STRCPY(saveTitle, "００");
+        saveTitle[1] += i / 10;
+        saveTitle[3] += i % 10;
+        strcat(h.Title, saveTitle);
+    } else {
+        STRCPY(saveTitle, "０");
+        saveTitle[1] += i;
+        strcat(h.Title, saveTitle);
+    }
+    strcat(h.Title, "％");
+
+    GetSavePalette(h.Clut, memcardIcon);
+    GetSaveIcon(h.Icon, memcardIcon);
+
+    dst = save;
+    dstStatus = &save->status;
+    dstNav = &save->menuNavigation;
+    dstSettings = &save->settings;
+    dst->header = h;
+    for (i = 0; i < 10; i++) {
+        dst->saveName[i] = g_SaveName[i];
+    }
+
+    dst->level = g_Status.level;
+    dst->goldAmount = g_Status.gold;
+    dst->playTimeHours = g_Status.timerHours;
+    dst->playTimeMinutes = g_Status.timerMinutes;
+    dst->playTimeSeconds = g_Status.timerSeconds;
+    dst->stageID = g_StageId;
+    dst->memcardIcon = memcardIcon;
+    dst->isTimeAttackUnlocked = g_IsTimeAttackUnlocked;
+    dst->playableCharacter = g_CurrentPlayableCharacter;
+    dst->exploredRoomCount = g_roomCount;
+    dst->roomX = g_CurrentRoom.left;
+    dst->roomY = g_CurrentRoom.top;
+    dst->saveSize = sizeof(SaveData);
+
+    *dstStatus = g_Status;
+    *dstNav = g_MenuNavigation;
+    *dstSettings = g_Settings;
+
+    for (i = 0; i < 0x300; i++) {
+        dst->castleFlags[i] = D_8003BDEC[i];
+    }
+
+    for (i = 0; i < 0x800; i++) {
+        dst->castleMap[i] = D_8006BB74[i];
+    }
+
+    dst->rng = g_randomNext;
+}
 
 s32 LoadSaveData(SaveData* save) {
     s32 i;
