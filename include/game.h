@@ -1493,7 +1493,6 @@ s32 SquareRoot12(s32, s32);
 long ratan2(long x, long y);
 void* DMACallback(int dma, void (*func)());
 void func_800192DC(s32 arg0, s32 arg1);
-void func_8001C550(s32);
 s32 func_8001D290(s32, s32);
 s32 func_8001D374(s8, s16, s16);
 void func_8001D2E0(s32, s32, s32);
