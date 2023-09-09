@@ -469,9 +469,17 @@ typedef struct {
     u8 unkAC;
 } ET_Player;
 
+typedef struct{
+    u8 unk0;
+    byte pad;
+    u8 unk2;
+    u8 unk3;
+} ET_Entity1;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
+    /* 0x7C */ ET_Entity1 ent1;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
     /* 0x7C */ ET_RelicOrb relicOrb;
     /* 0x7C */ ET_MessageBox messageBox;
