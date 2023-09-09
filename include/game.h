@@ -519,7 +519,7 @@ typedef struct Entity {
     /* 0x10 */ u16 hitboxOffX;
 #endif
     /* 0x12 */ s16 hitboxOffY;
-    /* 0x14 */ u16 facing;
+    /* 0x14 */ u16 facingLeft;
     /* 0x16 */ u16 palette;
     /* 0x18 */ s8 blendMode;
     /* 0x19 */ u8 unk19;

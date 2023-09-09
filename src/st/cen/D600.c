@@ -121,7 +121,7 @@ void func_8018DB18(Entity* self) {
 
         temp = (Random() & 30) + 8;
         self->ext.generic.unk80.modeS16.unk0 = temp;
-        if (self->facing != 0) {
+        if (self->facingLeft != 0) {
             self->ext.generic.unk80.modeS16.unk0 = -temp;
         }
 
@@ -617,7 +617,7 @@ void EntityPlatform(Entity* self) {
             D_8009748E[0]--;
         } else {
             g_api.PlaySfx(0x64F);
-            if (player->facing == 0) {
+            if (player->facingLeft == 0) {
                 g_Player.D_80072EF4 = 0x8000;
             }
             D_8019D424 |= 4;

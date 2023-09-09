@@ -303,7 +303,7 @@ typedef struct SubWpnContDebris {
     u16 posX;
     u16 posY;
     u16 params;
-    u16 facing;
+    u16 facingLeft;
 } SubWpnContDebris;
 
 extern SubWpnContDebris D_80182584[ENTITY_SUBWPNCONT_DEBRIS_COUNT];

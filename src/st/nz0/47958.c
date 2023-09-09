@@ -25,7 +25,7 @@ void EntityBloodSkeleton(Entity* self) {
     switch (self->step) {
     case BLOOD_SKELETON_INIT:
         InitializeEntity(D_80180C40);
-        self->facing = (u32)Random() % 2;
+        self->facingLeft = (u32)Random() % 2;
         self->animCurFrame = 1;
         self->flags &= 0x1FFFFFFF;
         self->palette += self->params;
@@ -40,7 +40,7 @@ void EntityBloodSkeleton(Entity* self) {
 
     case BLOOD_SKELETON_WALK:
         if (self->animFrameDuration == 0) {
-            if (self->facing != 0) {
+            if (self->facingLeft != 0) {
                 self->posX.i.hi += D_80182624[self->animFrameIdx];
             } else {
                 self->posX.i.hi -= D_80182624[self->animFrameIdx];
@@ -49,11 +49,11 @@ void EntityBloodSkeleton(Entity* self) {
 
         if ((AnimateEntity(D_80182610, self) == 0) &&
             (GetDistanceToPlayerY() < 48) && (Random() % 4) == 0) {
-            self->facing = GetSideToPlayer() % 2 == 0;
+            self->facingLeft = GetSideToPlayer() % 2 == 0;
         }
 
-        if ((u8)func_801C070C(&D_801826AC, self->facing) != 2) {
-            self->facing ^= 1;
+        if ((u8)func_801C070C(&D_801826AC, self->facingLeft) != 2) {
+            self->facingLeft ^= 1;
         }
         break;
 

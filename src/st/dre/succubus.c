@@ -112,7 +112,7 @@ void EntitySuccubus(Entity* self) {
 
     case SUCCUBUS_CS_1: // Disguised as Lisa
         if (D_8003BDEC[SeenCutscene] || (g_DemoMode != Demo_None)) {
-            self->facing = 0;
+            self->facingLeft = 0;
             self->posX.i.hi = 416 - g_Camera.posX.i.hi;
             self->posY.i.hi = 175 - g_Camera.posY.i.hi;
             SetStep(SUCCUBUS_CS_4);
@@ -171,7 +171,7 @@ void EntitySuccubus(Entity* self) {
         if ((D_801A3ED4 == 0) || (self->step_s == 0)) {
             switch (self->step_s) {
             case 0:
-                self->facing = 0;
+                self->facingLeft = 0;
                 self->posX.i.hi = 416 - g_Camera.posX.i.hi;
                 self->posY.i.hi = 175 - g_Camera.posY.i.hi;
                 self->step_s++;
@@ -287,11 +287,11 @@ void EntitySuccubus(Entity* self) {
                 SetSubStep(SUCCUBUS_DYING_ANIM_1);
                 posX = self->posX.i.hi + g_Camera.posX.i.hi;
                 if (posX < 80) {
-                    D_801816C4 = self->facing = 1;
+                    D_801816C4 = self->facingLeft = 1;
                 } else if (posX > 432) {
-                    D_801816C4 = self->facing = 0;
+                    D_801816C4 = self->facingLeft = 0;
                 } else {
-                    D_801816C4 = self->facing = (GetSideToPlayer() & 1) ^ 1;
+                    D_801816C4 = self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
                 }
                 D_801A3F84 |= 2;
             }
@@ -350,7 +350,7 @@ void EntitySuccubus(Entity* self) {
                     self->ext.succubus.nextAttack = SUCCUBUS_CLONE_ATTACK;
                 }
             }
-            self->ext.succubus.facing = 0;
+            self->ext.succubus.facingLeft = 0;
             self->step_s++;
 
         case SUCCUBUS_FLY_1:
@@ -368,7 +368,7 @@ void EntitySuccubus(Entity* self) {
                 self->velocityY = FIX(0.75);
             }
 
-            if (self->facing != self->ext.succubus.facing) {
+            if (self->facingLeft != self->ext.succubus.facingLeft) {
                 self->velocityX += FIX(0.09375);
                 if (self->velocityX >= FIX(1.375)) {
                     self->velocityX = FIX(1.375);
@@ -387,21 +387,21 @@ void EntitySuccubus(Entity* self) {
             }
 
             temp = GetDistanceToPlayerX();
-            if (self->ext.succubus.facing == 0) {
+            if (self->ext.succubus.facingLeft == 0) {
                 if (temp < posX) {
-                    self->ext.succubus.facing ^= 1;
+                    self->ext.succubus.facingLeft ^= 1;
                 }
-                if (self->ext.succubus.facing != 0) {
+                if (self->ext.succubus.facingLeft != 0) {
                     if (posX < temp) {
-                        self->ext.succubus.facing ^= 1;
+                        self->ext.succubus.facingLeft ^= 1;
                     }
                 }
             } else if (posX < temp) {
-                self->ext.succubus.facing ^= 1;
+                self->ext.succubus.facingLeft ^= 1;
             }
 
             sideToPlayer = ((GetSideToPlayer() & 1) ^ 1);
-            if (self->facing != sideToPlayer) {
+            if (self->facingLeft != sideToPlayer) {
                 if (temp > 16) {
                     self->ext.succubus.nextStep = SUCCUBUS_CLONE_ATTACK;
                     SetStep(SUCCUBUS_NEXT_ACTION_CHECK);
@@ -409,11 +409,11 @@ void EntitySuccubus(Entity* self) {
             }
 
             posX = self->posX.i.hi + g_Camera.posX.i.hi;
-            if (self->facing != 0) {
+            if (self->facingLeft != 0) {
                 posX = 512 - posX;
             }
             if (posX > 416) {
-                self->ext.succubus.facing = 0;
+                self->ext.succubus.facingLeft = 0;
                 self->ext.succubus.timer = 96;
                 self->step_s++;
             }
@@ -435,7 +435,7 @@ void EntitySuccubus(Entity* self) {
             break;
 
         case SUCCUBUS_FLY_2:
-            if (self->facing != self->ext.succubus.facing) {
+            if (self->facingLeft != self->ext.succubus.facingLeft) {
                 self->velocityX += FIX(0.09375);
                 if (self->velocityX >= FIX(1.375)) {
                     self->velocityX = FIX(1.375);
@@ -460,7 +460,7 @@ void EntitySuccubus(Entity* self) {
 
     case SUCCUBUS_FACE_PLAYER:
         if (self->step_s == 0) {
-            self->facing = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step_s++;
         }
 
@@ -488,7 +488,7 @@ void EntitySuccubus(Entity* self) {
     case SUCCUBUS_PETAL_ATTACK:
         switch (self->step_s) {
         case SUCCUBUS_PETAL_ATTACK_SETUP:
-            self->facing = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             if (g_Player.unk0C & PLAYER_STATUS_CURSE) {
                 self->ext.succubus.unk87 = false;
             } else {
@@ -510,7 +510,7 @@ void EntitySuccubus(Entity* self) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(E_SUCCUBUS_PETAL, self, entity);
-                    entity->facing = self->facing;
+                    entity->facingLeft = self->facingLeft;
                     entity->zPriority = self->zPriority - 1;
                 }
             }
@@ -545,7 +545,7 @@ void EntitySuccubus(Entity* self) {
         case SUCCUBUS_CHARGE_FLY_TOWARDS_PLAYER:
             entity = &PLAYER;
             posX = entity->posX.i.hi - self->posX.i.hi;
-            if (self->facing != 0) {
+            if (self->facingLeft != 0) {
                 posX -= 16;
             } else {
                 posX += 16;
@@ -557,7 +557,7 @@ void EntitySuccubus(Entity* self) {
             self->velocityY = (rsin(angle) << 0x11) >> 0xC;
             posX = self->velocityX;
 
-            if (self->facing != 0) {
+            if (self->facingLeft != 0) {
                 posX = -posX;
             }
             if (posX > 0) {
@@ -567,7 +567,7 @@ void EntitySuccubus(Entity* self) {
             MoveEntity();
 
             posX = PLAYER.posX.i.hi - self->posX.i.hi;
-            if (self->facing == 0) {
+            if (self->facingLeft == 0) {
                 posX = -posX;
             }
             posX -= 4;
@@ -607,7 +607,7 @@ void EntitySuccubus(Entity* self) {
         case SUCCUBUS_CHARGE_AT_PLAYER_POSITION:
             entity = &PLAYER;
             posX = entity->posX.i.hi;
-            if (self->facing != 0) {
+            if (self->facingLeft != 0) {
                 posX -= 16;
             } else {
                 posX += 16;
@@ -630,7 +630,7 @@ void EntitySuccubus(Entity* self) {
             if (--self->ext.succubus.timer == 0) {
                 g_Player.unk60 = 0;
                 self->hitboxState = 3;
-                if (self->facing != 0) {
+                if (self->facingLeft != 0) {
                     self->velocityX = FIX(-4);
                 } else {
                     self->velocityX = FIX(4);
@@ -656,7 +656,7 @@ void EntitySuccubus(Entity* self) {
     case SUCCUBUS_TAUNT:
         if (self->step_s == 0) {
             self->ext.succubus.timer = 80;
-            self->facing = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step_s++;
             if (self->ext.succubus.unk87) {
                 func_801A046C(NA_VO_SU_DELICIOUS);
@@ -817,7 +817,7 @@ void EntitySuccubus(Entity* self) {
         switch (self->step_s) {
         case SUCCUBUS_SPIKE_ATTACK_CREATE_SPIKES:
             entity = &g_Entities[96];
-            self->facing = 0;
+            self->facingLeft = 0;
             self->ext.succubus.unk85 = false;
             D_80180668 = 0;
             for (facing = 0; facing < 2; facing++) {
@@ -832,7 +832,7 @@ void EntitySuccubus(Entity* self) {
                         entity->posX.i.hi += 4;
                     }
                     entity->posY.i.hi -= 27;
-                    entity->facing = facing;
+                    entity->facingLeft = facing;
                 }
             }
             self->step_s++;

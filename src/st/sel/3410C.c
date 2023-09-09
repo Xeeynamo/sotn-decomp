@@ -510,7 +510,7 @@ void func_801B54C8(void) {
     if (e->step == 0) {
         e->animSet = ANIMSET_OVL(2);
         e->animCurFrame = 38;
-        e->facing = 1;
+        e->facingLeft = 1;
         e->unk5A = 0xF;
         e->ext.generic.unk80.modeS32 = 0x780000;
         e->posY.i.hi = 158;
@@ -531,7 +531,7 @@ void func_801B5548(void) {
         e->posY.i.hi = 158;
         e->zPriority = 0xC0;
         e->palette = 0x8210;
-        e->facing = 0;
+        e->facingLeft = 0;
         e->step = 1;
     }
 }

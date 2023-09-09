@@ -13,7 +13,7 @@ void func_801B246C(Entity* self) {
         InitializeEntity(D_80180A90);
         self->animSet = temp_s0->animSet;
         self->zPriority = temp_s0->zPriority;
-        self->facing = temp_s0->unk4.U8.unk0;
+        self->facingLeft = temp_s0->unk4.U8.unk0;
         self->unk5A = temp_s0->unk4.U8.unk1;
         self->palette = temp_s0->palette;
         self->unk19 = temp_s0->unk8;
@@ -1131,7 +1131,7 @@ void EntityMermanRockRightSide(Entity* self) {
                     newEntity->params = *params++;
                     newEntity->velocityX = (Random() << 8) + 0x8000;
                     newEntity->velocityY = -Random() * 0x100;
-                    newEntity->facing = 1;
+                    newEntity->facingLeft = 1;
                     newEntity->posY.i.hi += -16 + (i * 16);
                 }
             }
@@ -1407,7 +1407,7 @@ void EntityFallingRock(Entity* self) {
         self->velocityX = rnd * rcos(rndAngle);
         self->velocityY = rnd * rsin(rndAngle);
         if (self->velocityX > 0) {
-            self->facing = 1;
+            self->facingLeft = 1;
         }
         break;
 
@@ -1438,7 +1438,7 @@ void func_801B5DE8(Entity* self) {
         InitializeEntity(D_80180AA8);
         self->zPriority = 0x2A;
         self->flags &= ~FLAG_UNK_08000000;
-        self->facing = Random() & 1;
+        self->facingLeft = Random() & 1;
         g_api.func_80134714(0x665, 0x40, (self->posX.i.hi >> 0x4) - 8);
     }
     if (AnimateEntity(D_80181214, self) == 0) {

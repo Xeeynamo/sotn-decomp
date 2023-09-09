@@ -192,7 +192,7 @@ void EntityGurkhaSword(Entity* self) {
         break;
 
     case 2:
-        if (self->facing == 0) {
+        if (self->facingLeft == 0) {
             self->velocityX = FIX(-8);
         } else {
             self->velocityX = FIX(8);
@@ -208,7 +208,7 @@ void EntityGurkhaSword(Entity* self) {
         self->hitboxOffX = (u32)rsin(self->rotAngle) >> 8;
         self->hitboxOffY = -(rcos(angle) * 16) >> 0xC;
 
-        if (self->facing != 0) {
+        if (self->facingLeft != 0) {
             self->velocityX -= FIX(0.25);
         } else {
             self->velocityX += FIX(0.25);
@@ -336,7 +336,7 @@ s32 func_801D0B78(void) {
         break;
     }
 
-    if (g_CurrentEntity->facing != ((GetSideToPlayer() & 1) ^ 1)) {
+    if (g_CurrentEntity->facingLeft != ((GetSideToPlayer() & 1) ^ 1)) {
         ret = 12;
     }
     return ret;
@@ -400,7 +400,7 @@ void EntityBladeSword(Entity* self) {
         break;
 
     case 8:
-        if (self->facing == 0) {
+        if (self->facingLeft == 0) {
             self->velocityX = FIX(-8.0);
         } else {
             self->velocityX = FIX(8.0);
@@ -431,7 +431,7 @@ void EntityBladeSword(Entity* self) {
     }
 
     angle = self->rotAngle;
-    if (self->facing != 0) {
+    if (self->facingLeft != 0) {
         angle = -angle;
     }
 

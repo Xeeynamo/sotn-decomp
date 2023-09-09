@@ -59,7 +59,7 @@ void func_8010D59C(void) {
             prim->y0 = PLAYER.posY.i.hi;
             prim->x1 = PLAYER.animCurFrame;
             prim->y1 = 0;
-            prim->x2 = PLAYER.facing;
+            prim->x2 = PLAYER.facingLeft;
             prim->y2 = PLAYER.palette;
         }
         prim = prim->next;
@@ -278,7 +278,7 @@ s32 func_8010E27C(void) {
         return 0;
     }
 
-    facing = &PLAYER.facing;
+    facing = &PLAYER.facingLeft;
     if (*facing == 1) {
         if (g_Player.padPressed & PAD_RIGHT) {
             *facing = 0;
@@ -314,7 +314,7 @@ s32 func_8010E334(s32 xStart, s32 xEnd) {
 
 // Sets velocity based on an input speed, and the existing facing value
 void SetSpeedX(s32 speed) {
-    if (g_CurrentEntity->facing == 1) {
+    if (g_CurrentEntity->facingLeft == 1) {
         speed = -speed;
     }
     g_CurrentEntity->velocityX = speed;

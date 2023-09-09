@@ -16,7 +16,7 @@ void func_80109328(void) {
     if (*player_unk1E == 0x800 && PLAYER.step == 8) {
         PLAYER.rotAngle = 0;
         PLAYER.animCurFrame = 0x9D;
-        PLAYER.facing = (PLAYER.facing + 1) & 1;
+        PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
     }
 
     if (g_Player.D_80072F16 != 0) {
@@ -48,7 +48,7 @@ void func_80109594(void) {
     PLAYER.posY.val = 0x200000;
     PLAYER.animSet = ANIMSET_DRA(1);
     PLAYER.palette = 0x8100;
-    PLAYER.facing = 0;
+    PLAYER.facingLeft = 0;
     PLAYER.unk1A = 0x100;
     PLAYER.unk1C = 0x100;
     PLAYER.zPriority = (u16)g_zEntityCenter.S16.unk0;

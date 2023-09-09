@@ -106,7 +106,7 @@ Entity* func_8017110C(Entity* self) {
             }
         }
 
-        if ((self->facing ? entityX < selfX : selfX < entityX) != 0) {
+        if ((self->facingLeft ? entityX < selfX : selfX < entityX) != 0) {
             continue;
         }
         if (e->hitPoints >= 0x7000) {
@@ -196,7 +196,7 @@ init_entity:
     DestroyEntity(entity);
     entity->entityId = 0xDA;
     entity->zPriority = self->zPriority;
-    entity->facing = self->facing;
+    entity->facingLeft = self->facingLeft;
     entity->flags = FLAG_UNK_04000000;
     entity->posX.val = self->posX.val;
     entity->posY.val = self->posY.val;
@@ -223,9 +223,9 @@ void func_8017160C(s32 amount, s32 entityId) {
             entity->entityId = entityId;
             entity->animSet = ANIMSET_OVL(20);
             entity->zPriority = g_Entities[0].zPriority - 2;
-            facing = (g_Entities[0].facing + 1) & 1;
+            facing = (g_Entities[0].facingLeft + 1) & 1;
             entity->params = i + 1;
-            entity->facing = facing;
+            entity->facingLeft = facing;
         }
         *((s16*)(&entity->ext.generic.unkAC)) = g_Camera.posX.i.hi;
         *((s16*)(&entity->ext.generic.unkAE)) = g_Camera.posY.i.hi;
@@ -245,7 +245,7 @@ void func_8017170C(Entity* entity, s32 frameIndex) {
         return;
     }
     index = frameIndex - 1;
-    if (entity->facing != 0) {
+    if (entity->facingLeft != 0) {
         x = entity->posX.i.hi + 2;
     } else {
         x = entity->posX.i.hi - 16;
@@ -277,7 +277,7 @@ void func_801718A0(Entity* entity) {
     s32 x;
 
     frame = 2;
-    if (entity->facing != 0) {
+    if (entity->facingLeft != 0) {
         x = entity->posX.i.hi + 2;
     } else {
         x = entity->posX.i.hi - 16;
@@ -345,7 +345,7 @@ void func_801719E0(Entity* self) {
                 }
             } else {
                 for (i = 0; i < 16; i++) {
-                    if (PLAYER.facing) {
+                    if (PLAYER.facingLeft) {
                         D_80174C3C[self->ext.fam.unk82][i].x =
                             PLAYER.posX.i.hi +
                             ((self->ext.fam.unk82 + 1) * 0x10) +
@@ -360,7 +360,7 @@ void func_801719E0(Entity* self) {
                     D_80174C3C[self->ext.fam.unk82][i].y =
                         PLAYER.posY.i.hi + self->ext.fam.cameraY;
                 }
-                self->posX.i.hi = PLAYER.facing ? 0x180 : -0x80;
+                self->posX.i.hi = PLAYER.facingLeft ? 0x180 : -0x80;
                 self->posY.i.hi = rand() % 256;
             }
             self->ext.fam.unkA8 = 0;
@@ -390,7 +390,7 @@ void func_801719E0(Entity* self) {
             self->ext.fam.cameraY = g_Camera.posY.i.hi;
 
             for (i = 0; i < 16; i++) {
-                if (PLAYER.facing) {
+                if (PLAYER.facingLeft) {
                     D_80174C3C[self->ext.fam.unk82][i].x =
                         PLAYER.posX.i.hi + ((self->ext.fam.unk82 + 1) * 0x10) +
                         self->ext.fam.cameraX;
@@ -456,7 +456,7 @@ void func_80171ED4(s32 arg0) {
     e->animSet = ANIMSET_OVL(20);
     e->params = 0;
     e->zPriority = PLAYER.zPriority - 2;
-    e->facing = (PLAYER.facing + 1) & 1;
+    e->facingLeft = (PLAYER.facingLeft + 1) & 1;
     e->posX.val = PLAYER.posX.val;
     e->posY.val = PLAYER.posY.val;
     if (arg0 == 1) {
@@ -475,7 +475,7 @@ void func_80171ED4(s32 arg0) {
             e->posX.val = x;
             e->posY.val = 0xA00000;
         } else {
-            if (PLAYER.facing == 0) {
+            if (PLAYER.facingLeft == 0) {
                 e->posX.val = PLAYER.posX.val - 0x120000;
             } else {
                 e->posX.val = PLAYER.posX.val + 0x120000;
@@ -863,7 +863,7 @@ init_entity:
     DestroyEntity(entity);
     entity->entityId = entityId;
     entity->zPriority = entityParent->zPriority;
-    entity->facing = entityParent->facing;
+    entity->facingLeft = entityParent->facingLeft;
     entity->flags = FLAG_UNK_04000000;
     entity->posX.val = entityParent->posX.val;
     entity->posY.val = entityParent->posY.val;
