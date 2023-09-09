@@ -1,4 +1,3 @@
-
 /* Location */
 typedef struct {
     u_char minute;
@@ -111,6 +110,9 @@ int CdMode(void);
 int CdLastCom(void);
 int CdReset(int mode);
 void CdFlush(void);
+int CdSetDebug(int level);
+char* CdComstr(u_char com);
+char* CdIntstr(u_char intr);
 int CdSync(int mode, u_char* result);
 int CdReady(int mode, u_char* result);
 CdlCB CdSyncCallback(CdlCB func);
@@ -141,3 +143,9 @@ int CdRead2(long mode);
 void StClearRing(void);
 void StSetStream(u_long mode, u_long start_frame, u_long end_frame,
                  void (*func1)(), void (*func2)());
+
+void StSetMask(u_long mask, u_long start, u_long end);
+u_long StGetNext(u_long** addr, u_long** header);
+u_long StFreeRing(u_long* base);
+int StGetBackloc(CdlLOC* loc);
+void StUnSetRing(void);

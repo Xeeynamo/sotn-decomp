@@ -37,7 +37,7 @@ loop_1:
         arg0[2] = temp_v0_2;
         D_801BC340++;
         func_801BABA4(temp_v0, *((temp_v0_2) + arg0));
-        func_8001C550(temp_v0);
+        StFreeRing(temp_v0);
     }
 }
 
