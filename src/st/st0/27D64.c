@@ -108,7 +108,7 @@ void func_801A805C(Entity* self) {
         if (self->unk44 != 0) {
             params_ = params - 2;
             if (params_ < 2) {
-                self->facing = GetSideToPlayer() & 1;
+                self->facingLeft = GetSideToPlayer() & 1;
                 posY = self->posY.i.hi - 40;
 
                 if (params == 2) {
@@ -129,7 +129,7 @@ void func_801A805C(Entity* self) {
                         CreateEntityFromEntity(E_ID_26, self, newEntity);
                         newEntity->posY.i.hi = posY;
                         newEntity->params = *paramsPtr;
-                        newEntity->facing = self->facing;
+                        newEntity->facingLeft = self->facingLeft;
                     }
                     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
@@ -216,7 +216,7 @@ void func_801A8328(Entity* self) {
             prim->blendMode = 2;
             velX = ((Random() & 7) << 0xC) + 0x8000;
             self->velocityX = velX;
-            if (self->facing == 0) {
+            if (self->facingLeft == 0) {
                 self->velocityX = -velX;
             }
             self->velocityY = ((Random() & 7) << 0xC) - 0x8000;
@@ -233,7 +233,7 @@ void func_801A8328(Entity* self) {
         prim->next->x1 = self->posX.i.hi;
         prim->next->y0 = self->posY.i.hi;
 
-        if (self->facing != 0) {
+        if (self->facingLeft != 0) {
             prim->next->tpage += 0x10;
         } else {
             prim->next->tpage -= 0x10;

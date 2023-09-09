@@ -23,7 +23,7 @@ void func_80113AAC(void) {
                 PLAYER.rotPivotY = 2;
                 PLAYER.rotPivotX = 0;
                 PLAYER.unk19 |= 4;
-                PLAYER.facing = (PLAYER.facing + 1) & 1;
+                PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
                 func_8010DA48(0x2B);
             } else {
                 PLAYER.step_s = 3;
@@ -56,7 +56,7 @@ void func_80113AAC(void) {
             PLAYER.rotAngle = 0;
             PLAYER.step_s = 4;
             PLAYER.unk19 &= 0xFB;
-            PLAYER.facing = (PLAYER.facing + 1) & 1;
+            PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
         }
         break;
 
@@ -140,13 +140,13 @@ void func_80113F7C(void) {
     s32 var_a0;
     s32 var_a2;
 
-    if (entity->facing != 0) {
+    if (entity->facingLeft != 0) {
         var_a2 = -entity->hitboxOffX;
     } else {
         var_a2 = entity->hitboxOffX;
     }
 
-    if (PLAYER.facing != 0) {
+    if (PLAYER.facingLeft != 0) {
         var_a0 = -PLAYER.hitboxOffX;
     } else {
         var_a0 = PLAYER.hitboxOffX;

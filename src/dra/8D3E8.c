@@ -41,7 +41,7 @@ void func_8012D3E8(void) {
             return;
         }
         if (PLAYER.animFrameIdx == 2 && PLAYER.animFrameDuration == 1) {
-            PLAYER.facing = (PLAYER.facing + 1) & 1;
+            PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
         }
         SetSpeedX(FIX(-1));
         return;
@@ -52,8 +52,8 @@ void func_8012D3E8(void) {
             return;
         }
         SetSpeedX(FIX(1));
-        if ((PLAYER.facing && (directionsPressed & PAD_RIGHT)) ||
-            (!PLAYER.facing && (directionsPressed & PAD_LEFT))) {
+        if ((PLAYER.facingLeft && (directionsPressed & PAD_RIGHT)) ||
+            (!PLAYER.facingLeft && (directionsPressed & PAD_LEFT))) {
             D_800B0914 = 0;
             func_8010DA48(0xE1);
         }
@@ -117,7 +117,7 @@ void func_8012D3E8(void) {
             return;
         }
 
-        if (PLAYER.facing) {
+        if (PLAYER.facingLeft) {
             if (((g_Player.unk04 & 0xF001) == 1) &&
                 ((D_80138438 & 0xF001) == 0xC001)) {
                 func_8012CCE4();
@@ -151,8 +151,8 @@ void func_8012D3E8(void) {
         if (ABS(PLAYER.velocityX) > FIX(1)) {
             func_8010E1EC(0x2000);
         }
-        if ((PLAYER.facing && (directionsPressed & PAD_RIGHT)) ||
-            (!PLAYER.facing && (directionsPressed & PAD_LEFT))) {
+        if ((PLAYER.facingLeft && (directionsPressed & PAD_RIGHT)) ||
+            (!PLAYER.facingLeft && (directionsPressed & PAD_LEFT))) {
             D_800B0914 = 0;
             func_8010DA48(0xE1);
         }
@@ -170,8 +170,8 @@ void func_8012D3E8(void) {
         if (PLAYER.animFrameDuration >= 0) {
             return;
         }
-        if (((g_Player.padPressed & PAD_RIGHT) && !PLAYER.facing) ||
-            ((g_Player.padPressed & PAD_LEFT) && PLAYER.facing)) {
+        if (((g_Player.padPressed & PAD_RIGHT) && !PLAYER.facingLeft) ||
+            ((g_Player.padPressed & PAD_LEFT) && PLAYER.facingLeft)) {
             func_8010DA48(0xE2);
             D_800B0914 = 2;
             if (ABS(PLAYER.velocityX) < FIX(2)) {
@@ -193,8 +193,8 @@ void func_8012DBBC(void) {
         func_8012CCE4();
         return;
     }
-    if ((PLAYER.facing != 0 && !(g_Player.padPressed & PAD_LEFT)) ||
-        (PLAYER.facing == 0 && !(g_Player.padPressed & PAD_RIGHT))) {
+    if ((PLAYER.facingLeft != 0 && !(g_Player.padPressed & PAD_LEFT)) ||
+        (PLAYER.facingLeft == 0 && !(g_Player.padPressed & PAD_RIGHT))) {
         func_8010E1EC(FIX(4.0 / 128));
     }
     if (g_Player.pl_vram_flag & 1) {
@@ -291,8 +291,8 @@ void func_8012E040(void) {
     s32 xOffset;
 
     var_s0 = 1;
-    if ((PLAYER.facing != 0 && !(g_Player.padPressed & PAD_LEFT)) ||
-        (PLAYER.facing == 0 && !(g_Player.padPressed & PAD_RIGHT))) {
+    if ((PLAYER.facingLeft != 0 && !(g_Player.padPressed & PAD_LEFT)) ||
+        (PLAYER.facingLeft == 0 && !(g_Player.padPressed & PAD_RIGHT))) {
         var_s0 = 0;
         func_8010E1EC(FIX(16.0 / 128));
     }
@@ -320,7 +320,7 @@ void func_8012E040(void) {
     }
     if ((PLAYER.velocityY < FIX(-1)) && (g_Player.pl_vram_flag & 2)) {
         if (PLAYER.velocityY < FIX(-5)) {
-            if (PLAYER.facing != 0) {
+            if (PLAYER.facingLeft != 0) {
                 xOffset = -3;
             } else {
                 xOffset = 3;
@@ -378,8 +378,8 @@ void func_8012E040(void) {
         if (ABS(PLAYER.velocityX) < FIX(1)) {
             D_800B0914 = 1;
         }
-        if ((PLAYER.facing != 0 && (g_Player.padPressed & PAD_RIGHT)) ||
-            (PLAYER.facing == 0 && (g_Player.padPressed & PAD_LEFT))) {
+        if ((PLAYER.facingLeft != 0 && (g_Player.padPressed & PAD_RIGHT)) ||
+            (PLAYER.facingLeft == 0 && (g_Player.padPressed & PAD_LEFT))) {
             func_8010E27C();
             D_800B0914 = 1;
             SetSpeedX(FIX(1));
@@ -503,11 +503,11 @@ void func_8012ED30(void) {
         PLAYER.velocityY = 0;
     }
     if (g_Player.padPressed & PAD_RIGHT) {
-        PLAYER.facing = 0;
+        PLAYER.facingLeft = 0;
         PLAYER.velocityX = FIX(0.5);
     }
     if (g_Player.padPressed & PAD_LEFT) {
-        PLAYER.facing = 1;
+        PLAYER.facingLeft = 1;
         PLAYER.velocityX = FIX(-0.5);
     }
     // If you're not pressing any of right, left, or up
@@ -659,10 +659,10 @@ void func_8013136C(Entity* entity) {
         entity->step++;
     }
     entity->animCurFrame = 80;
-    entity->facing = PLAYER.facing;
+    entity->facingLeft = PLAYER.facingLeft;
     entity->posX.val = g_Entities[UNK_ENTITY_13].posX.val; // D_800741CC
     entity->posY.val = g_Entities[UNK_ENTITY_13].posY.val; // D_800741D0
-    if (PLAYER.facing == 0) {
+    if (PLAYER.facingLeft == 0) {
         entity->zPriority = PLAYER.zPriority - 5;
         entity->posX.i.hi += 8;
     } else {
@@ -684,7 +684,7 @@ void func_8013136C(Entity* entity) {
     case 0:
         if (D_800B0914 == 1) {
             entity->posY.i.hi -= 2;
-            if (PLAYER.facing == 0) {
+            if (PLAYER.facingLeft == 0) {
                 entity->posX.i.hi -= 8;
             } else {
                 entity->posX.i.hi += 8;
@@ -700,14 +700,14 @@ void func_8013136C(Entity* entity) {
         case 0:
             if (PLAYER.animCurFrame == 33) {
                 entity->animCurFrame = 81;
-                if (PLAYER.facing == 0) {
+                if (PLAYER.facingLeft == 0) {
                     entity->posX.i.hi += 3;
                 } else {
                     entity->posX.i.hi += 6;
                 }
             }
             if (PLAYER.animCurFrame == 34) {
-                if (PLAYER.facing == 0) {
+                if (PLAYER.facingLeft == 0) {
                     entity->posX.i.hi += 3;
                 } else {
                     entity->posX.i.hi += 13;

@@ -7,7 +7,7 @@ void func_ptr_80170004(Entity* self) {
     if (self->step == 0) {
         self->animSet = self->ext.weapon.parent->animSet;
         self->animCurFrame = self->ext.weapon.parent->animCurFrame;
-        self->facing = self->ext.weapon.parent->facing;
+        self->facingLeft = self->ext.weapon.parent->facingLeft;
         self->zPriority = self->ext.weapon.parent->zPriority - 2;
         self->flags = FLAG_UNK_08000000;
         self->palette = self->ext.weapon.parent->palette;

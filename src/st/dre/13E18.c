@@ -40,7 +40,7 @@ void EntityUnkId1C(Entity* self) {
         MoveEntity();
         newEntity = self->ext.generic.unk9C;
         self->animCurFrame = newEntity->animCurFrame;
-        self->facing = newEntity->facing;
+        self->facingLeft = newEntity->facingLeft;
         if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
             self->hitboxState = 3;
             SetStep(2);
@@ -50,7 +50,7 @@ void EntityUnkId1C(Entity* self) {
     case 2:
         newEntity = self->ext.generic.unk9C;
         self->animCurFrame = newEntity->animCurFrame;
-        self->facing = newEntity->facing;
+        self->facingLeft = newEntity->facingLeft;
         if (newEntity->ext.generic.unk84.U8.unk1 != 0) {
             self->ext.generic.unk80.modeS16.unk0 = (self->params * 0x30) + 1;
             SetStep(3);

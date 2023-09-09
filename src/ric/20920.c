@@ -38,9 +38,9 @@ s32 func_8015C9CC(void) {
         return 0;
     }
 
-    if (PLAYER.facing == 1) {
+    if (PLAYER.facingLeft == 1) {
         if (g_Player.padPressed & PAD_RIGHT) {
-            PLAYER.facing = 0;
+            PLAYER.facingLeft = 0;
             g_Player.unk4C = 1;
             return -1;
         } else if (g_Player.padPressed & PAD_LEFT) {
@@ -51,7 +51,7 @@ s32 func_8015C9CC(void) {
             return 1;
         }
         if (g_Player.padPressed & PAD_LEFT) {
-            PLAYER.facing = 1;
+            PLAYER.facingLeft = 1;
             g_Player.unk4C = 1;
             return -1;
         }
@@ -60,7 +60,7 @@ s32 func_8015C9CC(void) {
 }
 
 void func_8015CA84(s32 speed) {
-    if (g_CurrentEntity->facing == 1)
+    if (g_CurrentEntity->facingLeft == 1)
         speed = -speed;
     g_CurrentEntity->velocityX = speed;
 }

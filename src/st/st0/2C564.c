@@ -45,7 +45,7 @@ void EntityDracula(Entity* self) {
         self->animCurFrame = 0x4F;
         self->ext.dracula.unkA1 = 1;
         self->hitboxState = 0;
-        self->facing = 1;
+        self->facingLeft = 1;
         CreateEntityFromCurrentEntity(0x1D, &self[1]);
         self[1].zPriority = self->zPriority + 1;
 
@@ -96,7 +96,7 @@ void EntityDracula(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x1F, self, newEntity);
-                    newEntity->facing = self->facing;
+                    newEntity->facingLeft = self->facingLeft;
                     newEntity->posX.i.hi -= 8;
                     newEntity->posY.i.hi -= 24;
                 }
@@ -160,7 +160,7 @@ void EntityDracula(Entity* self) {
             if (self->ext.dracula.unkA0 != 0) {
                 g_api.PlaySfx(NA_SE_VO_DR_TAUNT_1);
                 self->animCurFrame = 1;
-                self->facing = (GetSideToPlayer() & 1) ^ 1;
+                self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
                 self->ext.dracula.unkA0 = 0;
             }
             if (self->ext.dracula.unk9C != 0xFF) {
@@ -170,7 +170,7 @@ void EntityDracula(Entity* self) {
             break;
 
         case 3:
-            self->facing = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->ext.dracula.unkA2 = (self->ext.dracula.unkA2 + 1) & 3;
             self->hitboxState = 3;
             if (self->ext.dracula.unkA2 == 0) {
@@ -204,10 +204,10 @@ void EntityDracula(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x1B, self, newEntity);
-                    newEntity->facing = self->facing;
+                    newEntity->facingLeft = self->facingLeft;
                     newEntity->zPriority = self->zPriority + 1;
                     newEntity->params = i;
-                    if (self->facing != 0) {
+                    if (self->facingLeft != 0) {
                         newEntity->posX.i.hi -= 24;
                     } else {
                         newEntity->posX.i.hi += 24;
@@ -242,8 +242,8 @@ void EntityDracula(Entity* self) {
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x1C, self, newEntity);
                     index = self->step_s - 1;
-                    newEntity->facing = self->facing;
-                    if (self->facing != 0) {
+                    newEntity->facingLeft = self->facingLeft;
+                    if (self->facingLeft != 0) {
                         newEntity->posX.i.hi += D_80180A58[index].x;
                     } else {
                         newEntity->posX.i.hi -= D_80180A58[index].x;
@@ -430,9 +430,9 @@ void EntityDracula(Entity* self) {
                 prim = prim->next;
             }
             CreateEntityFromCurrentEntity(0x2B, &self[2]);
-            self[2].facing = self->facing;
+            self[2].facingLeft = self->facingLeft;
             CreateEntityFromCurrentEntity(0x20, &self[5]);
-            self[5].facing = self->facing;
+            self[5].facingLeft = self->facingLeft;
             self[5].posY.i.hi += 2;
             self->step_s++;
             break;
@@ -495,7 +495,7 @@ void EntityDraculaBody(Entity* self) {
         self->hitboxHeight = 34;
         break;
     case 1:
-        self->facing = self[-1].facing;
+        self->facingLeft = self[-1].facingLeft;
         self->posX.i.hi = self[-1].posX.i.hi;
         self->posY.i.hi = self[-1].posY.i.hi;
         self->hitboxState = self[-1].hitboxState & 0xFFFD;
@@ -526,7 +526,7 @@ void EntityDraculaFireball(Entity* self) {
     case 0:
         InitializeEntity(D_801805EC);
 
-        if (self->facing == 0) {
+        if (self->facingLeft == 0) {
             self->velocityX = FIX(-2);
         } else {
             self->velocityX = FIX(2);
@@ -590,7 +590,7 @@ void EntityDraculaMeteorball(Entity* entity) {
             speedX = 0xE00;
         }
 
-        if (entity->facing != 0) {
+        if (entity->facingLeft != 0) {
             entity->velocityX += speedX;
         } else {
             entity->velocityX -= speedX;
@@ -721,7 +721,7 @@ void EntityDraculaMegaFireball(Entity* self) {
             self->unk1A = 0x80;
             self->unk19 |= 7;
             self->rotAngle = 0x1C0 - angle;
-            if (self->facing != 0) {
+            if (self->facingLeft != 0) {
                 self->velocityX = rcos(angle) * 0x60;
             } else {
                 self->velocityX = -(rcos(angle) * 0x60);

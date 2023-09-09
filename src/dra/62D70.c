@@ -225,7 +225,7 @@ void DrawEntitiesHitbox(s32 blendMode) {
 
         y = (u16)entity->posY.i.hi + (u16)g_backbufferY;
         x = (u16)entity->posX.i.hi + (u16)g_backbufferX;
-        if (entity->facing) {
+        if (entity->facingLeft) {
             x -= entity->hitboxOffX;
         } else {
             x += entity->hitboxOffX;
@@ -259,7 +259,7 @@ void DrawEntitiesHitbox(s32 blendMode) {
 
         y = (u16)entity->posY.i.hi + (u16)g_backbufferY;
         x = (u16)entity->posX.i.hi + (u16)g_backbufferX;
-        if (entity->facing) {
+        if (entity->facingLeft) {
             x -= entity->hitboxOffX;
         } else {
             x += entity->hitboxOffX;

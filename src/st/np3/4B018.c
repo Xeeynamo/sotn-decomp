@@ -14,7 +14,7 @@ void func_801CD540(Entity* self) {
         InitializeEntity(D_80180B20);
     }
 
-    self->facing = self[-1].facing;
+    self->facingLeft = self[-1].facingLeft;
     self->posX.i.hi = self[-1].posX.i.hi;
     self->posY.i.hi = self[-1].posY.i.hi;
     hitbox = D_80182914;
@@ -63,7 +63,7 @@ void func_801CD734() {
 }
 
 void func_801CD78C(Entity* src, s32 speed, s16 angle, Entity* dst) {
-    if (g_CurrentEntity->facing != 0) {
+    if (g_CurrentEntity->facingLeft != 0) {
         angle = -angle;
     }
 
@@ -78,7 +78,7 @@ void func_801CD83C(Entity* self) {
     s16 angle = self->ext.GH_Props.unk9C;
     Entity* src;
 
-    if (g_CurrentEntity->facing != 0) {
+    if (g_CurrentEntity->facingLeft != 0) {
         angle = -angle;
     }
 
@@ -97,7 +97,7 @@ void func_801CD91C(Entity* self) {
     s16 angle = self->ext.GH_Props.unk9C;
     Entity* src;
 
-    if (g_CurrentEntity->facing != 0) {
+    if (g_CurrentEntity->facingLeft != 0) {
         angle = -angle;
     }
     src = self->ext.GH_Props.unkA0;
@@ -232,13 +232,13 @@ void func_801CE04C(Entity* entity, Collider* collider) {
         var_s0 = 1;
         if (collider->effects & 0x8000) {
             if (collider->effects & 0x4000) {
-                if (g_CurrentEntity->facing != 0) {
+                if (g_CurrentEntity->facingLeft != 0) {
                     var_s0 = 4;
                 } else {
                     var_s0 = 2;
                 }
             } else {
-                if (g_CurrentEntity->facing != 0) {
+                if (g_CurrentEntity->facingLeft != 0) {
                     var_s0 = 2;
                 } else {
                     var_s0 = 4;
@@ -351,7 +351,7 @@ s32 func_801CE4CC(Entity* self) {
     }
 
     x = self->posX.i.hi - PLAYER.posX.i.hi;
-    if (g_CurrentEntity->facing != 0) {
+    if (g_CurrentEntity->facingLeft != 0) {
         x = -x;
     }
 
@@ -366,11 +366,11 @@ s32 func_801CE4CC(Entity* self) {
         entity = g_CurrentEntity + 13;
     }
 
-    if (func_801CE120(entity, g_CurrentEntity->facing) != 0) {
+    if (func_801CE120(entity, g_CurrentEntity->facingLeft) != 0) {
         func_801CE1E8(7);
         return;
     }
-    if (func_801CE120(entity, g_CurrentEntity->facing ^ 1) != 0) {
+    if (func_801CE120(entity, g_CurrentEntity->facingLeft ^ 1) != 0) {
         func_801CE1E8(5);
         return;
     }

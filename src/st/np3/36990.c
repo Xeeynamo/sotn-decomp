@@ -165,7 +165,7 @@ void EntitySlogra(Entity* self) {
             return;
         }
         InitializeEntity(D_80180B44);
-        self->facing = (GetSideToPlayer() & 1) ^ 1;
+        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         CreateEntityFromCurrentEntity(E_SLOGRA_SPEAR, &self[1]);
 
     case SLOGRA_FLOOR_ALIGN:
@@ -189,7 +189,7 @@ void EntitySlogra(Entity* self) {
 
     case SLOGRA_WALKING_WITH_SPEAR:
         if (self->step_s == 0) {
-            self->facing = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             if (self->ext.GS_Props.attackMode != 0) {
                 self->ext.GS_Props.flag = 1;
             } else {
@@ -199,8 +199,8 @@ void EntitySlogra(Entity* self) {
             self->step_s++;
         }
         AnimateEntity(D_801812E8, self);
-        self->facing = (GetSideToPlayer() & 1) ^ 1;
-        if (self->facing != self->ext.GS_Props.flag) {
+        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (self->facingLeft != self->ext.GS_Props.flag) {
             self->velocityX = FIX(0.75);
         } else {
             self->velocityX = FIX(-0.75);
@@ -254,7 +254,7 @@ void EntitySlogra(Entity* self) {
     case SLOGRA_SPEAR_FIRE:
         switch (self->step_s) {
         case SLOGRA_FIRE_FACE_PLAYER:
-            self->facing = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step_s++;
 
         case SLOGRA_FIRE_PROJECTILE:
@@ -264,13 +264,13 @@ void EntitySlogra(Entity* self) {
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
                         E_SLOGRA_SPEAR_PROJECTILE, self, newEntity);
-                    if (self->facing != 0) {
+                    if (self->facingLeft != 0) {
                         newEntity->posX.i.hi += 68;
                     } else {
                         newEntity->posX.i.hi -= 68;
                     }
                     newEntity->posY.i.hi -= 6;
-                    newEntity->facing = self->facing;
+                    newEntity->facingLeft = self->facingLeft;
                     newEntity->zPriority = self->zPriority + 1;
                 }
                 SetSubStep(SLOGRA_FIRE_COOLDOWN);
@@ -327,15 +327,15 @@ void EntitySlogra(Entity* self) {
 
     case SLOGRA_WALKING_WITHOUT_SPEAR:
         if (self->step_s == 0) {
-            self->facing = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->ext.GS_Props.flag = 1;
             self->ext.GS_Props.timer = 128;
             self->step_s++;
         }
 
         AnimateEntity(D_80181370, self);
-        self->facing = (GetSideToPlayer() & 1) ^ 1;
-        if (self->facing != self->ext.GS_Props.flag) {
+        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (self->facingLeft != self->ext.GS_Props.flag) {
             self->velocityX = FIX(0.75);
         } else {
             self->velocityX = FIX(-0.75);
@@ -500,7 +500,7 @@ void EntitySlograSpear(Entity* self) {
         InitializeEntity(D_80180B50);
 
     case 1:
-        self->facing = self[-1].facing;
+        self->facingLeft = self[-1].facingLeft;
         self->posX.i.hi = self[-1].posX.i.hi;
         self->posY.i.hi = self[-1].posY.i.hi;
         hitbox = D_80181454;
@@ -519,7 +519,7 @@ void EntitySlograSpear(Entity* self) {
         case 0:
             self->unk19 = 4;
             self->hitboxState = 0;
-            if (self->facing != 0) {
+            if (self->facingLeft != 0) {
                 self->velocityX = FIX(-2.25);
             } else {
                 self->velocityX = FIX(2.25);
@@ -557,7 +557,7 @@ void EntitySlograSpearProjectile(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180B5C);
-        if (self->facing == 0) {
+        if (self->facingLeft == 0) {
             self->velocityX = FIX(-4);
         } else {
             self->velocityX = FIX(4);
@@ -627,7 +627,7 @@ void EntityGaibon(Entity* self) {
             return;
         }
         InitializeEntity(D_80180B68);
-        self->facing = (GetSideToPlayer() & 1) ^ 1;
+        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         CreateEntityFromCurrentEntity(0x52, &self[1]);
         self[1].zPriority = self->zPriority + 4;
         SetStep(GAIBON_IDLE);
@@ -646,7 +646,7 @@ void EntityGaibon(Entity* self) {
     case GAIBON_FLY_TOWARDS_PLAYER:
         switch (self->step_s) {
         case GAIBON_FLY_TOWARDS_PLAYER_BEGIN:
-            self->facing = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->ext.GS_Props.angle =
                 ratan2((PLAYER.posY.i.hi - 32) - self->posY.i.hi,
                        PLAYER.posX.i.hi - self->posX.i.hi);
@@ -675,7 +675,7 @@ void EntityGaibon(Entity* self) {
             if (self->animFrameIdx == 1 && self->animFrameDuration == 0) {
                 func_801C2598(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
-            self->facing = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->ext.GS_Props.timer--;
             if (self->ext.GS_Props.timer == 0) {
                 self->step_s++;
@@ -700,7 +700,7 @@ void EntityGaibon(Entity* self) {
     case GAIBON_FLY_SHOOT_FIREBALLS:
         switch (self->step_s) {
         case GAIBON_FLY_SHOOT_FIREBALLS_BEGIN:
-            self->facing = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             newEntity = &PLAYER;
             temp_s3 = newEntity->posX.i.hi;
             if (GetSideToPlayer() & 1) {
@@ -749,7 +749,7 @@ void EntityGaibon(Entity* self) {
                         E_GAIBON_SMALL_FIREBALL, self, newEntity);
                     func_801C2598(NA_SE_EN_GAIBON_SMALL_FIREBALL);
                     newEntity->posY.i.hi -= 2;
-                    if (self->facing != 0) {
+                    if (self->facingLeft != 0) {
                         newEntity->unk1E = 0x220;
                         newEntity->posX.i.hi += 12;
                     } else {
@@ -826,7 +826,7 @@ void EntityGaibon(Entity* self) {
     case GAIBON_SHOOT_FROM_GROUND:
         switch (self->step_s) {
         case GAIBON_SHOOT_FROM_GROUND_FACE_PLAYER:
-            self->facing = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step_s++;
 
         case GAIBON_SHOOT_FROM_GROUND_FACE_SETUP:
@@ -854,7 +854,7 @@ void EntityGaibon(Entity* self) {
                     }
 
                     newEntity->posY.i.hi -= 6;
-                    if (self->facing != 0) {
+                    if (self->facingLeft != 0) {
                         newEntity->unk1E = 0;
                         newEntity->posX.i.hi += 16;
                     } else {
@@ -888,7 +888,7 @@ void EntityGaibon(Entity* self) {
                     CreateEntityFromEntity(
                         E_GAIBON_BIG_FIREBALL, self, newEntity);
                     newEntity->posY.i.hi -= 2;
-                    if (self->facing != 0) {
+                    if (self->facingLeft != 0) {
                         newEntity->unk1E = 0x220;
                         newEntity->posX.i.hi += 12;
                     } else {
@@ -899,7 +899,7 @@ void EntityGaibon(Entity* self) {
                 }
             }
             self->velocityY = FIX(-2);
-            if (self->facing != 0) {
+            if (self->facingLeft != 0) {
                 self->velocityX = FIX(-2);
             } else {
                 self->velocityX = FIX(2);
@@ -927,9 +927,9 @@ void EntityGaibon(Entity* self) {
         switch (self->step_s) {
         case GAIBON_PICKUP_SLOGRA_SETUP:
             if (SLOGRA.posX.i.hi - self->posX.i.hi > 0) {
-                self->facing = 1;
+                self->facingLeft = 1;
             } else {
-                self->facing = 0;
+                self->facingLeft = 0;
             }
             self->ext.GS_Props.speed = 0;
             self->step_s++;
@@ -1057,9 +1057,9 @@ void EntityGaibon(Entity* self) {
         switch (self->step_s) {
         case GAIBON_RETREAT_FACE_SLOGRA:
             if ((SLOGRA.posX.i.hi - self->posX.i.hi) > 0) {
-                self->facing = 1;
+                self->facingLeft = 1;
             } else {
-                self->facing = 0;
+                self->facingLeft = 0;
             }
             self->ext.GS_Props.speed = 0;
             D_8003BDEC[RetreatedInEntrance] |= 1;
@@ -1180,7 +1180,7 @@ void func_801B8CC0(Entity* self) {
     }
 
     prevEntity = &self[-1];
-    self->facing = prevEntity->facing;
+    self->facingLeft = prevEntity->facingLeft;
     self->palette = prevEntity->palette;
     self->posX.i.hi = prevEntity->posX.i.hi;
     self->posY.i.hi = prevEntity->posY.i.hi;

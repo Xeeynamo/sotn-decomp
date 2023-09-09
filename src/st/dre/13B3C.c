@@ -35,7 +35,7 @@ void EntitySuccubusPetal(Entity* self) {
         self->animCurFrame = temp_s2 + 64;
 
         angle = ((Random() & 0x1F) * 16) + 0xC0;
-        if (self->facing == 0) {
+        if (self->facingLeft == 0) {
             angle = 0x800 - angle;
         } else {
             angle = angle;
@@ -71,7 +71,7 @@ void EntitySuccubusWingOverlay(Entity* entity) {
     entity->posX.i.hi = entity[-1].posX.i.hi;
     entity->animCurFrame = 0;
     entity->posY.i.hi = entity[-1].posY.i.hi;
-    entity->facing = entity[-1].facing;
+    entity->facingLeft = entity[-1].facingLeft;
 
     if (entity[-1].animCurFrame == 50) {
         entity->animCurFrame = 62;
@@ -125,7 +125,7 @@ void EntitySuccubusClone(Entity* self) {
         MoveEntity();
         newEntity = self->ext.succubus.real;
         self->animCurFrame = newEntity->animCurFrame;
-        self->facing = newEntity->facing;
+        self->facingLeft = newEntity->facingLeft;
         if (--self->ext.succubus.timer == 0) {
             self->hitboxState = 3;
             SetStep(2);
@@ -135,7 +135,7 @@ void EntitySuccubusClone(Entity* self) {
     case 2:
         newEntity = self->ext.succubus.real;
         self->animCurFrame = newEntity->animCurFrame;
-        self->facing = newEntity->facing;
+        self->facingLeft = newEntity->facingLeft;
         if (newEntity->ext.succubus.unk85 != 0) {
             self->ext.succubus.timer = (self->params * 48) + 1;
             SetStep(3);
@@ -302,7 +302,7 @@ void EntitySuccubusWingSpike(Entity* self) {
         self->unk19 |= 1;
         self->unk1A = 0x100;
         CreateEntityFromEntity(E_SUCCUBUS_WING_SPIKE_TIP, self, &self[1]);
-        self[1].facing = self->facing;
+        self[1].facingLeft = self->facingLeft;
         self[1].params = self->params;
         self[1].rotAngle = self->rotAngle;
 
@@ -334,7 +334,7 @@ void EntitySuccubusWingSpike(Entity* self) {
 
     var_s0 = self->rotAngle;
     temp_s2 = (self->unk1A * 0xB) >> 6;
-    if (self->facing == 0) {
+    if (self->facingLeft == 0) {
         var_s0 = 0x800 - var_s0;
     }
 

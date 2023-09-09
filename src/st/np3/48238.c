@@ -116,7 +116,7 @@ void EntityMerman(Entity* self) {
             self->step_s++;
         }
         if (AnimateEntity(D_801823D0, self) == 0) {
-            self->facing = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         MoveEntity();
         camY = g_Camera.posY.i.hi;
@@ -219,8 +219,8 @@ void EntityMerman(Entity* self) {
     case MERMAN_WALKING_TOWARDS_PLAYER:
         switch (self->step_s) {
         case MERMAN_WALKING_TOWARDS_START:
-            self->facing = (GetSideToPlayer() & 1) ^ 1;
-            if (self->facing == 0) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            if (self->facingLeft == 0) {
                 self->velocityX = FIX(-0.375);
             } else {
                 self->velocityX = FIX(0.375);
@@ -233,9 +233,9 @@ void EntityMerman(Entity* self) {
             AnimateEntity(D_80182394, self);
             colRet = func_801BCB5C(&D_8018238C);
             if (colRet == 0xFF) {
-                self->facing ^= 1;
+                self->facingLeft ^= 1;
             }
-            if (self->facing == 0) {
+            if (self->facingLeft == 0) {
                 self->velocityX = FIX(-0.375);
             } else {
                 self->velocityX = FIX(0.375);
@@ -260,7 +260,7 @@ void EntityMerman(Entity* self) {
     case MERMAN_SPIT_FIRE:
         switch (self->step_s) {
         case MERMAN_SPIT_FIRE_FACE_PLAYER:
-            self->facing = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step_s++;
             break;
 
@@ -273,13 +273,13 @@ void EntityMerman(Entity* self) {
                 newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x3A, self, newEntity);
-                    if (self->facing != 0) {
+                    if (self->facingLeft != 0) {
                         newEntity->posX.i.hi += 12;
                     } else {
                         newEntity->posX.i.hi -= 12;
                     }
                     newEntity->posY.i.hi -= 10;
-                    newEntity->facing = self->facing;
+                    newEntity->facingLeft = self->facingLeft;
                 }
             }
         }
@@ -294,7 +294,7 @@ void EntityMerman(Entity* self) {
             break;
 
         case MERMAN_LUNGE_SETUP:
-            if (self->facing == 0) {
+            if (self->facingLeft == 0) {
                 self->velocityX = ~0x27FFF;
             } else {
                 self->velocityX = FIX(2.5);
@@ -311,7 +311,7 @@ void EntityMerman(Entity* self) {
         case MERMAN_LUNGE_TOWARDS_PLAYER:
             posY = self->posY.i.hi + 8;
             posX = self->posX.i.hi;
-            if (self->facing != 0) {
+            if (self->facingLeft != 0) {
                 posX += 24;
             } else {
                 posX -= 24;
@@ -321,7 +321,7 @@ void EntityMerman(Entity* self) {
                 self->velocityX = 0;
             }
             func_801C0B20(&D_8018236C);
-            if (self->facing != 0) {
+            if (self->facingLeft != 0) {
                 self->velocityX -= FIX(0.03125);
             } else {
                 self->velocityX += FIX(0.03125);
@@ -421,7 +421,7 @@ void func_801C8DF0(Entity* self) {
         self->animCurFrame = 0;
         self->hitboxHeight = 3;
 
-        if (self->facing != 0) {
+        if (self->facingLeft != 0) {
             self->velocityX = FIX(1.5);
         } else {
             self->velocityX = ~0x17FFF;

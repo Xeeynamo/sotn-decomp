@@ -181,7 +181,7 @@ void func_80113148(void) {
 INCLUDE_ASM("dra/nonmatchings/72BB0", func_801131C4);
 
 void func_801139CC(s32 arg0) {
-    s32 move = PLAYER.facing != 0 ? -3 : 3;
+    s32 move = PLAYER.facingLeft != 0 ? -3 : 3;
 
     PLAYER.posY.i.hi -= 22;
     PLAYER.posX.i.hi = move + PLAYER.posX.i.hi;

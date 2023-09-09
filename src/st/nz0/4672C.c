@@ -20,7 +20,7 @@ void EntitySpittleBone(Entity* self) {
         self->unk19 = 4;
         self->rotAngle = 0;
         self->flags &= ~(FLAG_UNK_2000 | 0x200);
-        self->facing = self->params;
+        self->facingLeft = self->params;
         break;
 
     case 1:
@@ -28,9 +28,9 @@ void EntitySpittleBone(Entity* self) {
             newEntity = &self[1];
             self->ext.spittleBone.unk7C = 0;
             CreateEntityFromEntity(E_ROTATE_SPITTLEBONE, self, newEntity);
-            newEntity->facing = self->facing;
+            newEntity->facingLeft = self->facingLeft;
             newEntity->ext.spittleBone.unk7C = self->ext.spittleBone.unk7C;
-            if (self->facing != 0) {
+            if (self->facingLeft != 0) {
                 self->velocityX = FIX(1);
                 newEntity->posX.i.hi += 16;
             } else {
@@ -71,7 +71,7 @@ void EntitySpittleBone(Entity* self) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 func_801C1780(E_SPITTLEBONE, self, newEntity);
-                newEntity->facing = self->facing;
+                newEntity->facingLeft = self->facingLeft;
                 newEntity->flags = FLAG_UNK_2000 | FLAG_UNK_08000000 |
                                    FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
                                    FLAG_DESTROY_IF_OUT_OF_CAMERA;
@@ -143,7 +143,7 @@ void EntityRotateSpittlebone(Entity* self) {
                 rotAngle = D_801824DC[temp4 & 3];
             }
 
-            if (self->facing != 0) {
+            if (self->facingLeft != 0) {
                 rotAngle = -rotAngle;
             }
 
@@ -189,7 +189,7 @@ void EntitySpittleBoneSpit(Entity* self) {
     case 1:
         entity = self->ext.spittleBone.unk84;
         if ((entity->rotAngle & 0xFFF) == 0x800) {
-            if (entity->facing != 0) {
+            if (entity->facingLeft != 0) {
                 self->posX.i.hi = entity->posX.i.hi - 3;
             } else {
                 self->posX.i.hi = entity->posX.i.hi + 3;

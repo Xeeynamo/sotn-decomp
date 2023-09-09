@@ -108,7 +108,7 @@ void DecelerateY(s32 amount) {
 }
 
 void SetSpeedX(s32 speed) {
-    if (g_CurrentEntity->facing == 1) {
+    if (g_CurrentEntity->facingLeft == 1) {
         speed = -speed;
     }
     g_CurrentEntity->velocityX = speed;

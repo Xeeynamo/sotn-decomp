@@ -189,7 +189,7 @@ Entity* func_801606BC(Entity* srcEntity, u32 arg1, s32 arg2) {
         entity->ext.generic.unk8C.entityPtr = srcEntity;
         entity->posX.val = srcEntity->posX.val;
         entity->posY.val = srcEntity->posY.val;
-        entity->facing = srcEntity->facing;
+        entity->facingLeft = srcEntity->facingLeft;
         entity->zPriority = srcEntity->zPriority;
         entity->params = arg1 & 0xFFF;
         entity->ext.generic.unkA0 = (arg1 >> 8) & 0xFF00;
@@ -211,7 +211,7 @@ void func_80160C38(Entity* entity) {
     } else {
         entity->posX.i.hi = PLAYER.posX.i.hi;
         entity->posY.i.hi = PLAYER.posY.i.hi;
-        entity->facing = PLAYER.facing;
+        entity->facingLeft = PLAYER.facingLeft;
         if (entity->step == 0) {
             entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000;
             entity->hitboxOffX = 0x14;
@@ -240,7 +240,7 @@ void func_80160D2C(Entity* self) {
     }
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = PLAYER.posY.i.hi;
-    self->facing = PLAYER.facing;
+    self->facingLeft = PLAYER.facingLeft;
 
     if (self->step == 0) {
         self->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000;
@@ -274,7 +274,7 @@ void func_80160E4C(Entity* self) {
     } else {
         self->posX.i.hi = PLAYER.posX.i.hi;
         self->posY.i.hi = PLAYER.posY.i.hi;
-        self->facing = PLAYER.facing;
+        self->facingLeft = PLAYER.facingLeft;
         if (self->step == 0) {
             self->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000;
             self->hitboxHeight = 20;
@@ -298,7 +298,7 @@ void func_80160F0C(Entity* self) {
     }
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = PLAYER.posY.i.hi;
-    self->facing = PLAYER.facing;
+    self->facingLeft = PLAYER.facingLeft;
     if (self->step == 0) {
         self->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000;
         self->hitboxOffX = 0xC;
