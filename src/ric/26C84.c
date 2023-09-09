@@ -516,8 +516,8 @@ void func_8016D328(Entity* entity) {
                 entity->ext.generic.unk8C.entityPtr->ext.generic.unk84.unk;
             entity->posY.val =
                 entity->ext.generic.unk8C.entityPtr->ext.generic.unk88.unk;
-            entity->facingLeft = entity->ext.generic.unk8C.entityPtr->ext.generic
-                                 .unk8C.modeU16.unk0;
+            entity->facingLeft = entity->ext.generic.unk8C.entityPtr->ext
+                                     .generic.unk8C.modeU16.unk0;
             entity->ext.generic.unkB0 = 0x18;
             func_8015FAB8(entity);
             entity->unk5A = 0x79;
