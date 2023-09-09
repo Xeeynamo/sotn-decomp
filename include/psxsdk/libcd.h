@@ -14,6 +14,21 @@ typedef struct {
     u_char val3; /* volume for CD(R) -> SPU (R) */
 } CdlATV;
 
+typedef struct {
+    u_short id;
+    u_short type;
+    u_short secCount;
+    u_short nSectors;
+    u_long frameCount;
+    u_long frameSize;
+
+    u_short width;
+    u_short height;
+    u_long dummy1;
+    u_long dummy2;
+    CdlLOC loc;
+} StHEADER;
+
 /* Low Level File System for CdSearchFile() */
 #define CdlMAXFILE 64 /* max number of files in a directory */
 #define CdlMAXDIR 128 /* max number of total directories */
