@@ -31,6 +31,8 @@ segments:
       - [0x0, data]
       - [0x518, data]
       - [0x1F18, data]
+      - [0x1FD4, .data, save_mgr3]
+      - [0x21B8, data]
       - [0x2BC0, data]
       - [0x2EC0, .data, 5D6C4]
       - [0x2EE8, data]
@@ -59,7 +61,8 @@ segments:
       - [0x3BF10, rodata] # jpt_800E9934
       - [0x3BF28, rodata] # jpt_800E9A48
       - [0x3BF3C, rodata]
-      - [0x3C160, rodata]
+      - [0x3BFB4, .rodata, save_mgr3]
+      - [0x3C194, rodata]
       - [0x3C1A8, rodata] # jpt_800EA8C0
       - [0x3C1E8, rodata] # jpt_800EB120
       - [0x3C228, rodata]

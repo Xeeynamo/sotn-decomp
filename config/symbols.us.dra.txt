@@ -1105,3 +1105,4 @@ _card_event_x = 0x800E9208;
 _clear_event_x = 0x800E928C;
 MemcardClose = 0x800E9804;
 g_MemcardFd = 0x80137474;
+D_800DBFFC = 0x800DBFFC; // ignore:true

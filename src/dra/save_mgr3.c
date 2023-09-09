@@ -42,18 +42,99 @@ void GetSaveIcon(u8* dst, s32 iconIdx) {
     }
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("dra/nonmatchings/save_mgr3", StoreSaveData);
-#else
-extern const char D_800A1FD4[0x24] = {0};
-extern s8* D_800A1FF8[];
-extern const char D_800DBFB4[] = "";     // ?
-extern const char D_800DC160[0x19] = ""; // "ＣＡＳＴＬＥＶＡＮＩＡ－"
-extern const char D_800DC17C[5] = "";    // "００"
-extern const char D_800DC184[3] = "";    // "０"
-extern const char D_800DC188[7] = "";    // ?
-extern const char D_800DC18C[3] = "";    // ?
-extern const char D_800DC190[3] = "";    // ?
+char g_AsciiSet[] = {
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',  'j', 'k',
+    'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',  'u', 'v',
+    'w', 'x', 'y', 'z', '&', '!', '-', '.', '\'', ' ', ' ',
+};
+
+const char* g_ShiftJisSet[] = {
+    "Ａ", "Ｂ", "Ｃ", "Ｄ", "Ｅ", "Ｆ", "Ｇ", "Ｈ", "Ｉ", "Ｊ", "Ｋ",
+    "Ｌ", "Ｍ", "Ｎ", "Ｏ", "Ｐ", "Ｑ", "Ｒ", "Ｓ", "Ｔ", "Ｕ", "Ｖ",
+    "Ｗ", "Ｘ", "Ｙ", "Ｚ", "＆", "！", "−",  "．", "’",  "　",
+};
+const char* g_SaveAreaNames[] = {
+    "大理石の廊下",
+    "崖側外壁",
+    "蔵書庫",
+    "地下墓地",
+    "オルロックの間",
+    "えん道",
+    "礼拝堂",
+    "城入り口",
+    "",
+    "地下水脈",
+    "闘技場",
+    "悪魔城最上部",
+    "錬金研究棟",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "卑鉱石の廊下",
+    "異界側外壁",
+    "禁書保管庫",
+    "空中墓地",
+    "死翼の間",
+    "洞窟",
+    "異端礼拝堂",
+    "逆さ城入り口",
+    "",
+    "天井水脈",
+    "裏闘技場",
+    "逆さ城最下部",
+    "黒魔術研究棟",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "城入り口",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+};
 
 void StoreSaveData(SaveData* save, s32 slotNo, s32 memcardIcon) {
     const int RoomCount = 942;
@@ -82,71 +163,75 @@ void StoreSaveData(SaveData* save, s32 slotNo, s32 memcardIcon) {
     h.BlockEntry = 1;
 
     // The h.Title content will look like this:
-    // ＣＡＳＴＬＥＶＡＮＩＡ－１１　ＡＬＵＣＡＲＤ　２００％
+    // US: ＣＡＳＴＬＥＶＡＮＩＡ－１１　ＡＬＵＣＡＲＤ　２００％
+    // HD: ドラキュラＸ−１１　ＡＬＵＣＡＲＤ　オルロックの間　２００％
     for (i = 0; i < 0x5C; i++) {
         h.Title[i] = 0;
     }
 
-    // ＣＡＳＴＬＥＶＡＮＩＡ－
-    __builtin_memcpy(h.Title, D_800DC160, sizeof(D_800DC160));
+#if defined(VERSION_US)
+    STRCPY(h.Title, "ＣＡＳＴＬＥＶＡＮＩＡ−");
+#elif defined(VERSION_HD)
+    STRCPY(h.Title, "ドラキュラＸ−");
+#endif
 
-    // ＣＡＳＴＬＥＶＡＮＩＡ－１１
-    if (slotNo >= 9) {
-        __builtin_memcpy(saveTitle, D_800DC17C, sizeof(D_800DC17C));
+    // writes slot number
+    if (slotNo > 8) {
+        STRCPY(saveTitle, "００");
         saveTitle[1] += (slotNo + 1) / 10;
         saveTitle[3] += (slotNo + 1) % 10;
         strcat(h.Title, saveTitle);
     } else {
-        __builtin_memcpy(saveTitle, D_800DC184, sizeof(D_800DC184));
+        STRCPY(saveTitle, "０");
         saveTitle[1] += slotNo + 1;
         strcat(h.Title, saveTitle);
     }
 
-    // adds space
-    strcat(h.Title, D_800DBFB4);
-
+    strcat(h.Title, "　");
     for (saveNameLen = 7; saveNameLen > 0; saveNameLen--) {
         if (g_SaveName[saveNameLen] != 0x20) {
             break;
         }
     }
 
-    // ＣＡＳＴＬＥＶＡＮＩＡ－１１　ＡＬＵＣＡＲＤ
+    // writes save name
     for (i = 0; i < saveNameLen + 1; i++) {
         char ch = g_SaveName[i];
         for (j = 0; j < 0x20; j++) {
             // Converts ASCII into Shift-JIS
-            if (ch == D_800A1FD4[j]) {
-                strcat(h.Title, D_800A1FF8[j]);
+            if (ch == g_AsciiSet[j]) {
+                strcat(h.Title, g_ShiftJisSet[j]);
                 break;
             }
         }
     }
 
-    // adds space
-    strcat(h.Title, D_800DBFB4);
+#if defined(VERSION_HD)
+    // writes stage name
+    strcat(h.Title, "　");
+    strcat(h.Title, g_SaveAreaNames[g_StageId]);
+#endif
 
-    // ＣＡＳＴＬＥＶＡＮＩＡ－１１　ＡＬＵＣＡＲＤ　２００
+    // writes room completion percentage
+    strcat(h.Title, "　");
     i = roomPercentage = g_roomCount * 100 / RoomCount;
     if (i >= 100) {
-        __builtin_memcpy(saveTitle, D_800DC188, sizeof(D_800DC188));
+        STRCPY(saveTitle, "０００");
         saveTitle[1] += i / 100;
         saveTitle[3] += i / 10 - i / 100 * 10;
         saveTitle[5] += i % 10;
         strcat(h.Title, saveTitle);
     } else if (i >= 10) {
-        __builtin_memcpy(saveTitle, D_800DC17C, sizeof(D_800DC17C));
+        STRCPY(saveTitle, "００");
         saveTitle[1] += i / 10;
         saveTitle[3] += i % 10;
         strcat(h.Title, saveTitle);
     } else {
-        __builtin_memcpy(saveTitle, D_800DC184, sizeof(D_800DC184));
+        STRCPY(saveTitle, "０");
         saveTitle[1] += i;
         strcat(h.Title, saveTitle);
     }
-
-    // adds '％' symbol
-    strcat(h.Title, D_800DC190);
+    strcat(h.Title, "％");
 
     GetSavePalette(h.Clut, memcardIcon);
     GetSaveIcon(h.Icon, memcardIcon);
@@ -188,7 +273,6 @@ void StoreSaveData(SaveData* save, s32 slotNo, s32 memcardIcon) {
 
     dst->rng = g_randomNext;
 }
-#endif
 
 s32 LoadSaveData(SaveData* save) {
     s32 i;
