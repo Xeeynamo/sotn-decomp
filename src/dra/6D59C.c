@@ -3,6 +3,10 @@
 #include "sfx.h"
 #include "player.h"
 
+// Game Buttons unofficially refers to buttons used in playing the game.
+// Direction, action and shoulder buttons. Any button except start or select.
+#define GAMEBUTTONS (~(PAD_START | PAD_SELECT))
+
 u8 c_D_800ACF18[] = {10, 8, 8, 6, 6, 4, 4,   4,   4, 4,
                      4,  4, 4, 4, 4, 4, 255, 255, 0, 0};
 
@@ -23,9 +27,9 @@ void func_8010D59C(void) {
         g_Entities[1].ext.ent1.unk2 = 10;
         return;
     }
-    if ((g_Player.padTapped & ~(PAD_START | PAD_SELECT)) ||
+    if ((g_Player.padTapped & GAMEBUTTONS) ||
         ((g_Player.padHeld ^ g_Player.padPressed) & g_Player.padHeld &
-         ~(PAD_START | PAD_SELECT)) ||
+         GAMEBUTTONS) ||
         (PLAYER.velocityY > FIX(0.5))) {
         g_Entities[1].ext.ent1.unk2 = 0;
         g_Entities[1].ext.ent1.unk3 = 0;
