@@ -54,7 +54,6 @@ segments:
       - [0x2D260, c, 2D260]
       - [0x3410C, c, 3410C]
       - [0x3585C, c, 3585C]
-      - [0x360D4, c, func_801B60D4]
       - [0x3642C, c, 3642C]
       - [0x380F0, c, save_mgr]
       - [0x38A8C, c, save_mgr2]
