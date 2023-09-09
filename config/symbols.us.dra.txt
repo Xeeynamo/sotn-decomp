@@ -1106,3 +1106,5 @@ _clear_event_x = 0x800E928C;
 MemcardClose = 0x800E9804;
 g_MemcardFd = 0x80137474;
 D_800DBFFC = 0x800DBFFC; // ignore:true
+MakeMemcardPath = 0x800EA48C;
+g_UnkMemcardSlot = 0x800A0510;

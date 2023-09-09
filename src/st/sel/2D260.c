@@ -844,7 +844,7 @@ s32 func_801B3694(void) {
         break;
 
     case 3:
-        func_801B9698(saveFile, temp_a1);
+        MakeMemcardPath(saveFile, temp_a1);
         if (MemcardReadFile(nCardSlot, 0, saveFile, g_Pix[0], 1) != 0) {
             g_memCardRetryCount--;
             if (g_memCardRetryCount == -1) {
@@ -925,7 +925,7 @@ s32 func_801B3E2C(void) {
         g_memCardRStep++;
         break;
     case 1:
-        func_801B9698(saveFile, blockId);
+        MakeMemcardPath(saveFile, blockId);
         if (MemcardEraseFile(nCardSlot, 0, saveFile) != 0) {
             g_memCardRetryCount--;
             if (g_memCardRetryCount == -1) {

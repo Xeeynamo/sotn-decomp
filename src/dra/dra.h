@@ -272,7 +272,7 @@ extern SimFile D_800A036C[];
 extern SimFile D_800A04AC[];
 extern s32 D_800A04EC;
 extern s32 D_800A04F8;
-extern s32 D_800A0510[];
+extern s32 g_UnkMemcardSlot[];
 extern u16 g_saveIconPalette[0x10][0x10];
 extern u8* g_saveIconTexture[0x10];
 extern s32 D_800A2438;
