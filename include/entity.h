@@ -469,7 +469,7 @@ typedef struct {
     u8 unkAC;
 } ET_Player;
 
-typedef struct{
+typedef struct {
     u8 unk0;
     byte pad;
     u8 unk2;

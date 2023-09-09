@@ -3,36 +3,39 @@
 #include "sfx.h"
 #include "player.h"
 
-u8 c_D_800ACF18[] = {10, 8, 8, 6, 6, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 255, 255, 0, 0};
+u8 c_D_800ACF18[] = {10, 8, 8, 6, 6, 4, 4,   4,   4, 4,
+                     4,  4, 4, 4, 4, 4, 255, 255, 0, 0};
 
 void func_8010D59C(void) {
     byte stackpad[40];
     Primitive* prim;
     s32 i;
     s32 tempAC;
-    
+
     if (g_Entities[1].ext.ent1.unk0 != 0) {
         return;
     }
-    // This is disgusting and should be able to do && and || but I couldn't make it work.
-    // Compiler wanted to optimize with -2 and SLTIU and such. If you can get this
-    // to not be ridiculous you will be my hero. For now, at least this compiles right.
+    // This is disgusting and should be able to do && and || but I couldn't make
+    // it work. Compiler wanted to optimize with -2 and SLTIU and such. If you
+    // can get this to not be ridiculous you will be my hero. For now, at least
+    // this compiles right.
     tempAC = PLAYER.ext.player.unkAC;
-    if (tempAC >= 0x5D){
-        if (tempAC < 0x5F){
+    if (tempAC >= 0x5D) {
+        if (tempAC < 0x5F) {
             g_Entities[1].ext.ent1.unk2 = 10;
             return;
         }
-        // This should really be a simple && but that fails to match. 
-        if (0x63 > tempAC){
-            if(tempAC >= 0x60) {
+        // This should really be a simple && but that fails to match.
+        if (0x63 > tempAC) {
+            if (tempAC >= 0x60) {
                 g_Entities[1].ext.ent1.unk2 = 10;
                 return;
             }
         }
     }
-    if ((g_Player.padTapped & ~(PAD_START | PAD_SELECT)) || 
-        ((g_Player.padHeld ^ g_Player.padPressed) & g_Player.padHeld & ~(PAD_START | PAD_SELECT)) || 
+    if ((g_Player.padTapped & ~(PAD_START | PAD_SELECT)) ||
+        ((g_Player.padHeld ^ g_Player.padPressed) & g_Player.padHeld &
+         ~(PAD_START | PAD_SELECT)) ||
         (PLAYER.velocityY > FIX(0.5))) {
         g_Entities[1].ext.ent1.unk2 = 0;
         g_Entities[1].ext.ent1.unk3 = 0;
@@ -41,11 +44,13 @@ void func_8010D59C(void) {
             return;
         }
         if (g_Entities[1].ext.ent1.unk3 == 0) {
-            g_Entities[1].ext.ent1.unk3 = c_D_800ACF18[g_Entities[1].ext.ent1.unk2];
+            g_Entities[1].ext.ent1.unk3 =
+                c_D_800ACF18[g_Entities[1].ext.ent1.unk2];
         }
         if (!(--g_Entities[1].ext.ent1.unk3 & 0xFF)) {
             g_Entities[1].ext.ent1.unk2++;
-            g_Entities[1].ext.ent1.unk3 = c_D_800ACF18[g_Entities[1].ext.ent1.unk2];
+            g_Entities[1].ext.ent1.unk3 =
+                c_D_800ACF18[g_Entities[1].ext.ent1.unk2];
         }
     }
     if (g_Entities[1].animFrameIdx != 0) {
@@ -53,7 +58,7 @@ void func_8010D59C(void) {
         return;
     }
     prim = &g_PrimBuf[g_Entities[1].primIndex];
-    for(i = 0; i < 6; i++){
+    for (i = 0; i < 6; i++) {
         if (i == g_Entities[1].entityId) {
             prim->r0 = prim->g0 = prim->b0 = 0x80;
             prim->x0 = PLAYER.posX.i.hi;
@@ -70,7 +75,6 @@ void func_8010D59C(void) {
     if (g_Entities[1].entityId >= 6) {
         g_Entities[1].entityId = 0;
     }
-    
 }
 
 INCLUDE_ASM("dra/nonmatchings/6D59C", func_8010D800);
