@@ -33,6 +33,8 @@ segments:
       - [0x2178, data]
       - [0x2ED0, .data, 5D6C4]
       - [0x2EF8, data]
+      - [0xCFDC, .data, 6D59C]
+      - [0xCFF0, data]
       - [0x3B458, .rodata, 42398]
       - [0x3B618, .rodata, play]
       - [0x3B648, rodata, gameover] # jtbl_800DB648
@@ -175,6 +177,7 @@ segments:
       - [0x62C00, c, 62D70]
       - [0x67200, c, cd]
       - [0x69100, c, 692E8]
+      - [0x6D2E0, c, 6D59C]
       - [0x71574, c, 71830]
       - [0x7291C, c, 72BB0]
       - [0x7379C, c, 73AAC]
