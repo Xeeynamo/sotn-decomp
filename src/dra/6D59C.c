@@ -10,28 +10,18 @@ void func_8010D59C(void) {
     byte stackpad[40];
     Primitive* prim;
     s32 i;
-    s32 tempAC;
 
     if (g_Entities[1].ext.ent1.unk0 != 0) {
         return;
     }
-    // This is disgusting and should be able to do && and || but I couldn't make
-    // it work. Compiler wanted to optimize with -2 and SLTIU and such. If you
-    // can get this to not be ridiculous you will be my hero. For now, at least
-    // this compiles right.
-    tempAC = PLAYER.ext.player.unkAC;
-    if (tempAC >= 0x5D) {
-        if (tempAC < 0x5F) {
-            g_Entities[1].ext.ent1.unk2 = 10;
-            return;
-        }
-        // This should really be a simple && but that fails to match.
-        if (0x63 > tempAC) {
-            if (tempAC >= 0x60) {
-                g_Entities[1].ext.ent1.unk2 = 10;
-                return;
-            }
-        }
+    switch (PLAYER.ext.player.unkAC) {
+    case 0x5D:
+    case 0x5E:
+    case 0x60:
+    case 0x61:
+    case 0x62:
+        g_Entities[1].ext.ent1.unk2 = 10;
+        return;
     }
     if ((g_Player.padTapped & ~(PAD_START | PAD_SELECT)) ||
         ((g_Player.padHeld ^ g_Player.padPressed) & g_Player.padHeld &
