@@ -28,13 +28,13 @@ s32 func_801B8A8C(s32 arg0, s32 arg1) {
             break;
 
         case 3:
-            D_8006C3AC &= D_801808DC[arg0];
+            D_8006C3AC &= g_UnkMemcardSlot[arg0];
             unk->unk258 = -1;
             D_801D6B20 = 4;
             break;
 
         case 4:
-            D_8006C3AC &= D_801808DC[arg0];
+            D_8006C3AC &= g_UnkMemcardSlot[arg0];
             unk->unk258 = 2;
             _clear_event_x();
             _card_clear(temp_s2);
@@ -43,7 +43,7 @@ s32 func_801B8A8C(s32 arg0, s32 arg1) {
             break;
 
         case 2:
-            D_8006C3AC &= D_801808DC[arg0];
+            D_8006C3AC &= g_UnkMemcardSlot[arg0];
             unk->unk258 = -3;
             D_801D6B20 = 4;
             break;
@@ -68,19 +68,19 @@ s32 func_801B8A8C(s32 arg0, s32 arg1) {
             break;
 
         case 3:
-            D_8006C3AC &= D_801808DC[arg0];
+            D_8006C3AC &= g_UnkMemcardSlot[arg0];
             unk->unk258 = -1;
             D_801D6B20++;
             break;
 
         case 4:
-            D_8006C3AC &= D_801808DC[arg0];
+            D_8006C3AC &= g_UnkMemcardSlot[arg0];
             unk->unk258 = -2;
             D_801D6B20++;
             break;
 
         case 2:
-            D_8006C3AC &= D_801808DC[arg0];
+            D_8006C3AC &= g_UnkMemcardSlot[arg0];
             unk->unk258 = -3;
             D_801D6B20++;
             break;

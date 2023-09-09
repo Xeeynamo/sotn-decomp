@@ -29,6 +29,8 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, data]
+      - [0x1F94, .data, save_mgr3]
+      - [0x2178, data]
       - [0x2ED0, .data, 5D6C4]
       - [0x2EF8, data]
       - [0x3B458, .rodata, 42398]
@@ -45,6 +47,7 @@ segments:
       - [0x3BE90, rodata] # jtbl_800DBE90
       - [0x3BEA8, rodata] # jtbl_800DBEA8
       - [0x3BEBC, rodata]
+      - [0x3BF34, .rodata, save_mgr3]
       - [0x3C11C, rodata] # jtbl_800DC11C
       - [0x3C15C, rodata] # jtbl_800DC15C
       - [0x3C19C, rodata]
@@ -158,6 +161,10 @@ segments:
       - [0x46A0C, c, 46358]
       - [0x47688, c, 46FD4]
       - [0x48250, c, 47BB8]
+      - [0x4957C, c, save_mgr]
+      - [0x49F18, c, save_mgr2]
+      - [0x4A1B0, c, save_mgr3]
+      - [0x4ABF0, c, 4A538]
       - [0x4FAE0, c, collider]
       - [0x5027C, c, demo]
       - [0x50F00, c, 5087C]
