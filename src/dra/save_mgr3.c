@@ -10,6 +10,10 @@ void MakeMemcardPath(char* dstSaveName, s32 saveSlot) {
     dstSaveName[0x11] += saveSlot % 10;
 }
 #elif defined(VERSION_US)
+// The US version has an extra 'n' character after the string terminator,
+// probably a result of some left-overs from a previous build. Defining the
+// string `SaveName` as an array to manually append 'n' at the end was the only
+// way to get a match.
 const char HACK_SaveName[] = {
     'B', 'A', 'S', 'L', 'U', 'S', '-', '0', '0',  '0',
     '6', '7', 'D', 'R', 'A', 'X', '0', '0', '\0', 'n',
