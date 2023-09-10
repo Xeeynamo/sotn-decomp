@@ -1,6 +1,7 @@
 # search for scratches with the name on decomp.me
 import json
 import requests
+import sys
 
 
 def find_scratches(name, platform):
@@ -9,8 +10,10 @@ def find_scratches(name, platform):
         response.raise_for_status()
         scratches = json.loads(response.text)
     except requests.exceptions.HTTPError as http_err:
+        print(f"\033[91mfind_scratches HTTP error: {http_err}", file=sys.stderr)
         return None
     except Exception as err:
+        print(f"\033[91mfind_scratches exception: {err}", file=sys.stderr)
         return None
 
     best_result = None
