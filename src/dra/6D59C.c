@@ -71,7 +71,69 @@ void func_8010D59C(void) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/6D59C", func_8010D800);
+u8 g_shadowOpacityReductionTable[] = {
+    4, 4, 4, 4, 6, 6, 6, 6, 8, 8, 16, 16, 16, 16, 16, 16};
+u8 g_D_800ACF3C[] = {8,  12, 16, 20, 24, 28, 32, 32,
+                     32, 32, 32, 32, 32, 32, 32, 32};
+
+void func_8010D800(void) {
+    byte pad[0x28];
+    Unkstruct_800ECBF8_1* current_thing;
+    Primitive* prim;
+    s32 entNum;
+    s32 i;
+    u8 temp_t0;
+    u8 temp_t1;
+    u8 temp_t2;
+
+    i = 0;
+    prim = &g_PrimBuf[g_Entities[1].primIndex];
+    temp_t2 = g_Entities[1].ext.ent1.unk1;
+    temp_t1 = g_shadowOpacityReductionTable[g_Entities[1].ext.ent1.unk2];
+    temp_t0 = g_D_800ACF3C[g_Entities[1].ext.ent1.unk2];
+
+    current_thing = &D_80097D1C[1];
+    for (i = 0; i < 6; prim = prim->next, i++) {
+        if (temp_t0 < prim->r0) {
+            prim->r0 -= temp_t1;
+        }
+        if ((prim->r0 < 0x70) && (prim->b0 < 0xF0)) {
+            prim->b0 += 6;
+        }
+        if (prim->r0 < 0x58) {
+            prim->y1 = 0x10;
+        } else {
+            prim->y1 = 0;
+        }
+        if (temp_t0 >= prim->r0) {
+            prim->x1 = 0;
+        }
+        if (!((i ^ g_blinkTimer) & 1)) {
+            continue;
+        }
+
+        entNum = ((i / 2) + 1);
+        g_Entities[entNum].posX.i.hi = prim->x0;
+        g_Entities[entNum].posY.i.hi = prim->y0;
+        g_Entities[entNum].animCurFrame = prim->x1;
+        g_Entities[entNum].blendMode = prim->y1;
+        g_Entities[entNum].facingLeft = prim->x2;
+        g_Entities[entNum].palette = prim->y2;
+        g_Entities[entNum].zPriority = PLAYER.zPriority - 2;
+        if (temp_t2) {
+            g_Entities[entNum].animCurFrame = 0;
+            prim->x1 = 0;
+        }
+
+        current_thing->unk18 = current_thing->unk1C = current_thing->unk20 =
+            current_thing->unk24 = current_thing->unk1A = current_thing->unk1E =
+                current_thing->unk22 = current_thing->unk26 = prim->r0;
+        current_thing->unk19 = current_thing->unk1D = current_thing->unk21 =
+            current_thing->unk25 = prim->b0;
+        current_thing->unk1B = 1;
+        current_thing++;
+    }
+}
 
 void func_8010DA2C(s32* arg0) {
     g_CurrentEntity->unk4C = arg0;

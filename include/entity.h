@@ -471,7 +471,7 @@ typedef struct {
 
 typedef struct {
     u8 unk0;
-    byte pad;
+    u8 unk1;
     u8 unk2;
     u8 unk3;
 } ET_Entity1;
