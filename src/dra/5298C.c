@@ -786,9 +786,9 @@ INCLUDE_ASM("dra/nonmatchings/5298C", func_800F6CC0);
 
 extern s32 D_8003C9F0;
 extern u8* D_800A82FC;
-extern /*?*/ s32 D_800A832C[];
-extern /*?*/ s32 D_80137854[];
-extern /*?*/ s32 D_801378C0[];
+extern s32 D_800A832C[];
+extern s32 D_80137854[];
+extern s32 D_801378C0[];
 
 void func_800F6DC8(MenuContext* ctx) {
     s16 cursorX;
