@@ -2,8 +2,8 @@
 
 extern s32 g_StreamWidth;
 extern int g_StreamHeight;
-extern u32 D_801BD034;
-extern u32 D_801BD038; // StSetStream mode
+extern u32 g_StreamEndFrame;
+extern u32 g_StreamIsRGB24;
 extern s32 g_StreamRewindSwitch[];
 
 typedef struct {
@@ -49,7 +49,7 @@ u_long* StreamNext(DECENV* dec) {
     }
 
     rewindSwitch = g_StreamRewindSwitch;
-    if (sector->frameCount >= D_801BD034) {
+    if (sector->frameCount >= g_StreamEndFrame) {
         *rewindSwitch = 1;
     }
 
@@ -92,12 +92,14 @@ INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", func_801B99E4);
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", func_801B9B7C);
 
 void func_801B9C18(s32 unused, void (*callback)()) {
+    const int START_FRAME = 1;
+
     s32* s0 = g_StreamRewindSwitch;
     func_801BA460(0);
     *s0 = 0;
     func_801BA6CC(callback);
     func_800192DC((s32)(s0 + 2), 0x28);
-    StSetStream(D_801BD038, 1, -1, NULL, NULL);
+    StSetStream(g_StreamIsRGB24, START_FRAME, -1, NULL, NULL);
 }
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", func_801B9C80);
