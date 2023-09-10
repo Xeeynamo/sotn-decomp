@@ -259,6 +259,7 @@ typedef struct {
     u16 exteriorLight;
 } JosephsCloak;
 
+extern s32 D_8003C9F0;
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern s32 D_800A0144[];
 extern u32 D_800A0158;
@@ -358,6 +359,10 @@ extern Equipment D_800A4B04[];
 extern Accessory D_800A7718[];
 extern Unkstruct_800A7734 D_800A7734[];
 extern RelicDesc g_RelicsDesc[];
+extern u8* D_800A82FC;
+extern u8* D_800A830C;
+extern s32 D_800A832C[];
+extern s32 D_800A833C[];
 extern unkStruct_800A872C D_800A872C[];
 extern u32 D_800AC90C;
 extern u16 D_800AC958[];
@@ -433,6 +438,7 @@ extern const char aSp03x;
 extern const char aSp1603x;
 extern const char aTile03x;
 extern Unkstruct_800BF554 D_800BF554[];
+
 extern char* aAtariNuki;
 extern s32 g_DebugFreeze;
 extern s32 g_DebugHitboxViewMode;
@@ -459,9 +465,11 @@ extern SimFile D_80136450;
 extern s16 D_80136460[];
 extern s16 D_80136C60[];
 extern u8 g_PadsRepeatTimer[BUTTON_COUNT * PAD_COUNT];
+extern s32 D_80137428[];
 extern s32 D_80137470;
 extern s32 g_MemcardFd;
 extern u16 D_80137478[];
+extern s32 D_80137494[];
 extern u16 D_801374B8[];
 extern u16 D_801374F8[];
 extern u16 D_80137538[];
@@ -495,6 +503,8 @@ extern s32 D_80137840;
 extern s32 D_80137844[];
 extern s32 D_80137848[];
 extern s32 D_8013784C;
+extern s32 D_80137854[];
+extern s32 D_801378C0[];
 extern s32 g_NewAttackRightHand;
 extern s32 g_NewAttackLeftHand;
 extern s32 g_NewDefenseEquip;

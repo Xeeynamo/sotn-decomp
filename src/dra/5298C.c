@@ -784,13 +784,7 @@ void func_800F6BEC(MenuContext* context) {
 
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800F6CC0);
 
-extern s32 D_8003C9F0;
-extern u8* D_800A82FC;
-extern s32 D_800A832C[];
-extern s32 D_80137854[];
-extern s32 D_801378C0[];
-
-void func_800F6DC8(MenuContext* ctx) {
+void DrawTimeAttackMenu(MenuContext* ctx) {
     s16 cursorX;
     s32 temp_s0;
     s32 temp_s1;
@@ -806,6 +800,7 @@ void func_800F6DC8(MenuContext* ctx) {
         temp_s0 = i + D_8003C9F0;
         newCursorY = ctx->cursorY + offsetY;
         DrawMenuInt(temp_s0 + 1, cursorX + 16, newCursorY, ctx);
+#if defined(VERSION_US)
         time = D_80137854[temp_s0];
         if (time == 1000000) {
             DrawMenuStr(D_800A82FC, cursorX + 29, newCursorY, ctx);
@@ -820,7 +815,23 @@ void func_800F6DC8(MenuContext* ctx) {
             DrawMenuChar(0x1AU, cursorX + 308, newCursorY, ctx);
             DrawMenuTime(time % 100, cursorX + 324, newCursorY, ctx, 2);
         }
-        i += 1;
+#elif defined(VERSION_HD)
+        time = D_80137428[temp_s0];
+        if (time == 1000000) {
+            DrawMenuStr(D_800A830C, cursorX + 29, newCursorY, ctx);
+        } else {
+            DrawMenuStr(
+                D_800A833C[D_80137494[temp_s0]], cursorX + 29, newCursorY, ctx);
+            temp_s1 = time / 10000;
+            DrawMenuInt(temp_s1, cursorX + 176, newCursorY, ctx);
+            DrawMenuChar(0x1AU, cursorX + 184, newCursorY, ctx);
+            DrawMenuTime((time / 100) - (temp_s1 * 100), cursorX + 200,
+                         newCursorY, ctx, 2);
+            DrawMenuChar(0x1AU, cursorX + 208, newCursorY, ctx);
+            DrawMenuTime(time % 100, cursorX + 224, newCursorY, ctx, 2);
+        }
+#endif
+        i++;
         offsetY += 12;
     }
 }
