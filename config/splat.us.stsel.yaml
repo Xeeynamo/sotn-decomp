@@ -25,7 +25,7 @@ segments:
     type: code
     start: 0x00000000
     vram:  0x80180000
-    subalign: 2
+    subalign: 4
     subsegments:
       - [0x0, .data, 2C048]
       - [0x40, data]
@@ -50,6 +50,7 @@ segments:
       - [0x27DD4, rodata]
       - [0x27E4C, .rodata, save_mgr3]
       - [0x28040, rodata]
+      - [0x2BF9C, .rodata, stream]
       - [0x2C048, c, 2C048]
       - [0x2D260, c, 2D260]
       - [0x3410C, c, 3410C]
