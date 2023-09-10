@@ -107,7 +107,7 @@ void EntityBloodSkeleton(Entity* self) {
             if (AnimateEntity(animation, self) == 0) {
                 self->hitPoints = 0;
                 self->hitboxState = 3;
-                self->flags = g_api.enemyDefs[70].unk24 & 0x1FFFFFFF;
+                self->flags = g_api.enemyDefs[70].flags & 0x1FFFFFFF;
                 SetStep(BLOOD_SKELETON_WALK);
             }
         }
