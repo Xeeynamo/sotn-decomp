@@ -231,7 +231,7 @@ void MDEC_rest(s32 option) {
         *D_80196430 = 0x60000000;
         return;
     default:
-        printf(D_801ABF9C, option);
+        printf("MDEC_rest:bad option(%d)\n", option);
         return;
     }
 }
@@ -259,7 +259,7 @@ int MDEC_in_sync(void) {
     if (*D_80196430 & 0x20000000) {
         while (true) {
             if (--retries == -1) {
-                MDEC_print_error(D_801ABFB8);
+                MDEC_print_error("MDEC_in_sync");
                 return -1;
             }
             if (!(*D_80196430 & 0x20000000)) {
@@ -276,7 +276,7 @@ int MDEC_out_sync(void) {
 
     while (*D_80196410 & 0x01000000) {
         if (--retries == -1) {
-            MDEC_print_error(D_801ABFC8);
+            MDEC_print_error("MDEC_out_sync");
             return -1;
         }
     }
@@ -284,19 +284,20 @@ int MDEC_out_sync(void) {
     return 0;
 }
 
+const char g_MDEC_ErrDma[] = "\t DMA=(%d,%d), ADDR=(0x%08x->0x%08x)\n";
+const char g_MDEC_ErrFifo[] =
+    "\t FIFO=(%d,%d),BUSY=%d,DREQ=(%d,%d),RGB24=%d,STP=%d\n";
+const char g_MDEC_ErrTimeout[] = "%s timeout:\n";
 int MDEC_print_error(const char* funcName) {
     u32 temp_s0;
 
-    // "%s timeout:\n"
-    printf(D_801AC038, funcName);
+    printf(g_MDEC_ErrTimeout, funcName);
     temp_s0 = *D_80196430;
 
-    // "\t DMA=(%d,%d), ADDR=(0x%08x->0x%08x)\n"
-    printf(D_801ABFD8, (*D_80196404 >> 0x18) & 1, (*D_80196410 >> 0x18) & 1,
+    printf(g_MDEC_ErrDma, (*D_80196404 >> 0x18) & 1, (*D_80196410 >> 0x18) & 1,
            *D_801963FC, *D_80196408);
 
-    // "\t FIFO=(%d,%d),BUSY=%d,DREQ=(%d,%d),RGB24=%d,STP=%d\n"
-    printf(D_801AC000, ~temp_s0 >> 0x1F, (temp_s0 >> 0x1E) & 1,
+    printf(g_MDEC_ErrFifo, ~temp_s0 >> 0x1F, (temp_s0 >> 0x1E) & 1,
            (temp_s0 >> 0x1D) & 1, (temp_s0 >> 0x1C) & 1, (temp_s0 >> 0x1B) & 1,
            (temp_s0 >> 0x19) & 1, (temp_s0 >> 0x17) & 1);
 
