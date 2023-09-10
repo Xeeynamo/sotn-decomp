@@ -83,8 +83,21 @@ void func_801B9924(void) {
     func_801B18F4();
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", func_801B994C);
+void func_801B994C(DECENV* dec) {
+    volatile s32 retries = 0x40000;
 
+    while (dec->isdone == 0) {
+        if (--retries == 0) {
+            dec->isdone = 1;
+            dec->rectid = dec->rectid ? 0 : 1;
+            dec->slice.x = (s16)(u16)dec->rect[dec->rectid].x;
+            dec->slice.y = (s16)(u16)dec->rect[dec->rectid].y;
+        }
+    }
+    dec->isdone = 0;
+}
+
+void func_801B99E4(void);
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", func_801B99E4);
 
 // func_801B9B7C(Unkstruct_801B9B7C* arg0, s16 arg1, s16 arg2, s16 arg3, s32
@@ -200,7 +213,28 @@ void func_801BA6A8(void (*func)()) { DMACallback(0, func); }
 
 void func_801BA6CC(void (*func)()) { DMACallback(1, func); }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", MDEC_rest);
+void MDEC_rest(s32 option) {
+    switch (option) {
+    case 0:
+        *D_80196430 = 0x80000000;
+        *D_80196404 = 0;
+        *D_80196410 = 0;
+        *D_80196430 = 0x60000000;
+        func_801BA7EC(&D_801962F4, 0x20);
+        func_801BA7EC(&D_80196378, 0x20);
+        return;
+    case 1:
+        *D_80196430 = 0x80000000;
+        *D_80196404 = 0;
+        *D_80196410 = 0;
+        *D_80196410;
+        *D_80196430 = 0x60000000;
+        return;
+    default:
+        printf(D_801ABF9C, option);
+        return;
+    }
+}
 
 void func_801BA7EC(s32* arg0, u32 arg1) {
     MDEC_in_sync();
@@ -219,25 +253,61 @@ void func_801BA880(s32 arg0, u32 arg1) {
     *D_80196410 = 0x01000200;
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", MDEC_in_sync);
+int MDEC_in_sync(void) {
+    volatile s32 retries = 0x100000;
 
-// missing a return maybe?
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", MDEC_out_sync);
-#else
-void MDEC_out_sync(void) {
-    volatile s32 sp10 = 0x100000;
-
-    while (*D_80196410 & 0x01000000) {
-        if (--sp10 == -1) {
-            MDEC_print_error(D_801ABFC8);
-            break;
+    if (*D_80196430 & 0x20000000) {
+        while (true) {
+            if (--retries == -1) {
+                MDEC_print_error(D_801ABFB8);
+                return -1;
+            }
+            if (!(*D_80196430 & 0x20000000)) {
+                break;
+            }
         }
     }
-}
-#endif
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", MDEC_print_error);
+    return 0;
+}
+
+int MDEC_out_sync(void) {
+    volatile s32 retries = 0x100000;
+
+    while (*D_80196410 & 0x01000000) {
+        if (--retries == -1) {
+            MDEC_print_error(D_801ABFC8);
+            return -1;
+        }
+    }
+
+    return 0;
+}
+
+int MDEC_print_error(const char* funcName) {
+    u32 temp_s0;
+
+    // "%s timeout:\n"
+    printf(D_801AC038, funcName);
+    temp_s0 = *D_80196430;
+
+    // "\t DMA=(%d,%d), ADDR=(0x%08x->0x%08x)\n"
+    printf(D_801ABFD8, (*D_80196404 >> 0x18) & 1, (*D_80196410 >> 0x18) & 1,
+           *D_801963FC, *D_80196408);
+
+    // "\t FIFO=(%d,%d),BUSY=%d,DREQ=(%d,%d),RGB24=%d,STP=%d\n"
+    printf(D_801AC000, ~temp_s0 >> 0x1F, (temp_s0 >> 0x1E) & 1,
+           (temp_s0 >> 0x1D) & 1, (temp_s0 >> 0x1C) & 1, (temp_s0 >> 0x1B) & 1,
+           (temp_s0 >> 0x19) & 1, (temp_s0 >> 0x17) & 1);
+
+    *D_80196430 = 0x80000000;
+    *D_80196404 = 0;
+    *D_80196410 = 0;
+    *D_80196410;
+    *D_80196430 = 0x60000000;
+
+    return 0;
+}
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", func_801BAB70);
 
