@@ -69,7 +69,7 @@ void func_8015BE84(void) {
     if (g_Player.pl_vram_flag & 1) {
         g_CurrentEntity->velocityX /= 2;
         func_801606BC(g_CurrentEntity, 0, 0);
-        PLAYER.facing = (PLAYER.facing + 1) & 1;
+        PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
         func_8015CCC8(3, PLAYER.velocityX);
         g_api.PlaySfx(0x64B);
         return;
@@ -86,7 +86,7 @@ void func_8015BE84(void) {
         if ((PLAYER.velocityX > (s32)0xFFFD0000) ||
             (g_Player.pl_vram_flag & 8)) {
             PLAYER.velocityX /= 2;
-            PLAYER.facing = (PLAYER.facing + 1) & 1;
+            PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
             func_8015C920(&D_80155788);
             g_Player.unk44 = 0xA;
             PLAYER.step_s = 2;
@@ -100,7 +100,7 @@ void func_8015BE84(void) {
         }
         if ((PLAYER.velocityX <= 0x2FFFF) || (g_Player.pl_vram_flag & 4)) {
             PLAYER.velocityX /= 2;
-            PLAYER.facing = (PLAYER.facing + 1) & 1;
+            PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
             func_8015C920(&D_80155788);
             g_Player.unk44 = 0xA;
             PLAYER.step_s = 2;

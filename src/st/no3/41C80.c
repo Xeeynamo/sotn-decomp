@@ -717,10 +717,10 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->hitPoints = enemyDef->hitPoints;
     g_CurrentEntity->attack = enemyDef->attack;
     g_CurrentEntity->attackElement = enemyDef->attackElement;
-    g_CurrentEntity->hitboxState = enemyDef->unkC;
+    g_CurrentEntity->hitboxState = enemyDef->hitboxState;
     g_CurrentEntity->hitboxWidth = enemyDef->hitboxWidth;
     g_CurrentEntity->hitboxHeight = enemyDef->hitboxHeight;
-    g_CurrentEntity->flags = enemyDef->unk24;
+    g_CurrentEntity->flags = enemyDef->flags;
     g_CurrentEntity->hitboxOffX = 0;
     g_CurrentEntity->hitboxOffY = 0;
     g_CurrentEntity->step_s = 0;
@@ -926,7 +926,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
         g_CurrentEntity->velocityY = FIX(-2.5);
         g_CurrentEntity->animCurFrame = 0;
         g_CurrentEntity->ext.generic.unk88.S16.unk2 = 5;
-        if (player->facing != 1) {
+        if (player->facingLeft != 1) {
             g_CurrentEntity->velocityX = FIX(-2);
             return;
         }

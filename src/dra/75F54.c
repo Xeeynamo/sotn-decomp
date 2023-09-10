@@ -753,7 +753,7 @@ Entity* func_8011AAFC(Entity* self, u32 flags, s32 arg2) {
     entity->ext.generic.unk8C.entityPtr = self;
     entity->posX.val = self->posX.val;
     entity->posY.val = self->posY.val;
-    entity->facing = self->facing;
+    entity->facingLeft = self->facingLeft;
     entity->zPriority = self->zPriority;
     entity->params = flags & 0xFFF;
     if (flags & 0x5000) {
@@ -794,7 +794,7 @@ void EntityUnarmedAttack(Entity* entity) {
     entity->posX.val = PLAYER.posX.val;
     entity->posY.val = PLAYER.posY.val;
     paramsTopBit = entity->params >> 0xF;
-    entity->facing = PLAYER.facing;
+    entity->facingLeft = PLAYER.facingLeft;
     temp_s1 = &D_800AD53C[(entity->params >> 6) & 0x1FC];
 
     if (PLAYER.ext.generic.unkAC < temp_s1->ACshift ||
@@ -836,7 +836,7 @@ void func_8011B334(Entity* entity) {
     }
 
     entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
-    entity->facing = PLAYER.facing;
+    entity->facingLeft = PLAYER.facingLeft;
     entity->posY.i.hi = PLAYER.posY.i.hi;
     entity->posX.i.hi = PLAYER.posX.i.hi;
     g_Player.unk44 &= ~0x80;
@@ -866,7 +866,7 @@ void func_8011B480(Entity* entity) {
         DestroyEntity(entity);
     } else {
         entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
-        entity->facing = PLAYER.facing;
+        entity->facingLeft = PLAYER.facingLeft;
         entity->posY.i.hi = PLAYER.posY.i.hi;
         entity->posX.i.hi = PLAYER.posX.i.hi;
         if (entity->step == 0) {
@@ -1024,7 +1024,7 @@ void UnknownEntId49(Entity* self) {
         self->animCurFrame = 7;
         self->unk5A = PLAYER.unk5A;
         self->palette = PLAYER.palette;
-        self->facing = PLAYER.facing;
+        self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority;
         self->flags = 0x04060000;
         self->step++;
@@ -1102,7 +1102,7 @@ void func_80123F78(Entity* entity) {
         entity->blendMode = 0x30;
         entity->palette = 0x815F;
         entity->zPriority = PLAYER.zPriority - 2;
-        entity->facing = PLAYER.facing;
+        entity->facingLeft = PLAYER.facingLeft;
         do { // TODO: !FAKE
         } while (0);
         D_80097F4A = 0x80;
@@ -1271,7 +1271,7 @@ void func_80124A8C(Entity* entity) {
         entity->palette = 0x819F;
         entity->unk4C = &D_800AE294;
         entity->flags = FLAG_UNK_100000;
-        entity->facing = 0;
+        entity->facingLeft = 0;
         entity->posY.i.hi -= 16;
         entity->posX.val += entity->velocityX << 5;
         entity->step++;
@@ -1514,7 +1514,7 @@ void func_801274DC(Entity* entity) {
         entity->animSet = ANIMSET_DRA(9);
         entity->unk4C = &D_800B0798;
         entity->zPriority = PLAYER.zPriority + 2;
-        entity->facing = (PLAYER.facing + 1) & 1;
+        entity->facingLeft = (PLAYER.facingLeft + 1) & 1;
         SetSpeedX(D_800B0830[entity->params]);
         entity->velocityY = D_800B083C[entity->params];
         entity->ext.generic.unk7C.s = 0x14;
@@ -1569,7 +1569,7 @@ void func_80127840(Entity* entity) {
         entity->unk4C = &D_800B07C8;
         entity->unk19 |= 4;
         entity->zPriority = PLAYER.zPriority + 2;
-        entity->facing = (PLAYER.facing + 1) & 1;
+        entity->facingLeft = (PLAYER.facingLeft + 1) & 1;
         SetSpeedX(-0x10);
         func_8011A328(entity, 2);
         entity->hitboxWidth = 8;
@@ -1602,7 +1602,7 @@ void EntityExpandingCircle(Entity* entity) {
     POLY_GT4* poly;
     s32 primIndex;
 
-    if (PLAYER.facing == 0) {
+    if (PLAYER.facingLeft == 0) {
         entity->posX.i.hi = PLAYER.posX.i.hi - 10;
     } else {
         entity->posX.i.hi = PLAYER.posX.i.hi + 10;
@@ -1958,8 +1958,8 @@ void func_8012CB0C(void) {
 
 void func_8012CB4C(void) {
     PLAYER.step_s = 2;
-    if ((PLAYER.facing != 0 && g_Player.padPressed & PAD_RIGHT) ||
-        (PLAYER.facing == 0 && g_Player.padPressed & PAD_LEFT)) {
+    if ((PLAYER.facingLeft != 0 && g_Player.padPressed & PAD_RIGHT) ||
+        (PLAYER.facingLeft == 0 && g_Player.padPressed & PAD_LEFT)) {
         func_8010DA48(0xE1);
         D_800B0914 = 0;
         D_8013842C = 0;
@@ -2077,7 +2077,7 @@ void func_8012D178(void) {
         func_8012CFA8();
     } else {
 #if defined(VERSION_US)
-        if (PLAYER.facing != 0) {
+        if (PLAYER.facingLeft != 0) {
             var_v0 = g_Player.padPressed & PAD_LEFT;
         } else {
             var_v0 = g_Player.padPressed & PAD_RIGHT;

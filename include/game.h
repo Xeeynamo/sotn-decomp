@@ -519,7 +519,7 @@ typedef struct Entity {
     /* 0x10 */ u16 hitboxOffX;
 #endif
     /* 0x12 */ s16 hitboxOffY;
-    /* 0x14 */ u16 facing;
+    /* 0x14 */ u16 facingLeft;
     /* 0x16 */ u16 palette;
     /* 0x18 */ s8 blendMode;
     /* 0x19 */ u8 unk19;
@@ -892,7 +892,7 @@ typedef struct {
     /* 0x06 */ u16 attack;
     /* 0x08 */ u16 attackElement;
     /* 0x0A */ s16 defense;
-    /* 0x0C */ u16 unkC;
+    /* 0x0C */ u16 hitboxState;
     /* 0x0E */ u16 weaknesses;
     /* 0x10 */ u16 strengths;
     /* 0x12 */ u16 immunes;
@@ -905,7 +905,7 @@ typedef struct {
     /* 0x20 */ u16 uncommonItemDropRate;
     /* 0x22 */ u8 hitboxWidth;
     /* 0x23 */ u8 hitboxHeight;
-    /* 0x24 */ s32 unk24;
+    /* 0x24 */ s32 flags;
 } EnemyDef; /* size=0x28 */
 
 typedef struct {

@@ -9,7 +9,7 @@ void EntityWeaponAttack(Entity* self) {
 
     self->posX.val = g_Entities->posX.val;
     self->posY.val = PLAYER.posY.val;
-    self->facing = PLAYER.facing;
+    self->facingLeft = PLAYER.facingLeft;
     mask = 0x17F;
     sndEvent = &D_20000_8017B2F4[(self->params >> 8) & mask];
 

@@ -668,7 +668,7 @@ void func_801CF58C(Entity* self) {
 void func_801CF5E0(Entity* self) {
     s16 temp_v0;
 
-    if (self->facing == GetSideToPlayer()) {
+    if (self->facingLeft == GetSideToPlayer()) {
         SetStep(5);
         return;
     }
@@ -683,14 +683,14 @@ void func_801CF5E0(Entity* self) {
 
     if (temp_v0 > 16) {
         SetStep(3);
-        if (self->facing != 0) {
+        if (self->facingLeft != 0) {
             self->ext.generic.unk7C.S8.unk0 = 0;
         } else {
             self->ext.generic.unk7C.S8.unk0 = 1;
         }
     } else if (temp_v0 < -16) {
         SetStep(3);
-        if (self->facing != 0) {
+        if (self->facingLeft != 0) {
             self->ext.generic.unk7C.S8.unk0 = 1;
         } else {
             self->ext.generic.unk7C.S8.unk0 = 0;
@@ -1588,7 +1588,7 @@ void EntityMediumWaterSplash(Entity* entity) {
     if (entity->step == 0) {
         InitializeEntity(D_80180B54);
         entity->animCurFrame = 0;
-        if (entity->facing != 0) {
+        if (entity->facingLeft != 0) {
             entity->velocityX = FIX(2);
             return;
         }
@@ -1835,7 +1835,7 @@ void EntityMermanFireball(Entity* self) {
         self->animCurFrame = 0;
         self->hitboxHeight = 3;
 
-        if (self->facing != 0) {
+        if (self->facingLeft != 0) {
             self->velocityX = 0x10000 | 0x8000; // LINT_IGNORE
         } else {
             self->velocityX = 0xFFFE0000 | 0x8000; // LINT_IGNORE
@@ -1904,7 +1904,7 @@ void func_801D59D0(void) {
 
     if (g_CurrentEntity->ext.generic.unk7C.U8.unk0 == 0) {
         if (GetDistanceToPlayerX() < 64) {
-            if (g_CurrentEntity->facing != (GetSideToPlayer() & 1)) {
+            if (g_CurrentEntity->facingLeft != (GetSideToPlayer() & 1)) {
                 SetStep(4);
             }
         }
@@ -1935,7 +1935,7 @@ void EntityBoneScimitarParts(Entity* entity) {
     entity->unk19 = 4;
     entity->animCurFrame = *(u8*)&entity->params + 16;
 
-    if (entity->facing != 0) {
+    if (entity->facingLeft != 0) {
         entity->velocityX = -entity->velocityX;
     }
 

@@ -5,7 +5,7 @@ void func_80162C84(Entity* entity) {
     case 0:
         entity->flags =
             0x100000 | FLAG_UNK_04000000 | FLAG_UNK_10000 | FLAG_UNK_08000000;
-        entity->facing = 1;
+        entity->facingLeft = 1;
         entity->unk5A = 0x66;
         entity->zPriority = PLAYER.zPriority - 8;
         entity->palette = 0x8149;
@@ -254,7 +254,7 @@ void func_8016779C(Entity* entity) {
         return;
     }
 
-    entity->facing = PLAYER.facing;
+    entity->facingLeft = PLAYER.facingLeft;
     if (entity->step == 0) {
         entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000 |
                         FLAG_UNK_10000;
@@ -265,18 +265,18 @@ void func_8016779C(Entity* entity) {
     }
 
     if (PLAYER.step == 2) {
-        if (PLAYER.facing != 0) {
+        if (PLAYER.facingLeft != 0) {
             entity->animCurFrame = D_80155CCC[D_80175080];
         } else {
             entity->animCurFrame = D_80155CB8[D_80175080];
         }
     } else if (PLAYER.step == 0) {
-        if (PLAYER.facing != 0) {
+        if (PLAYER.facingLeft != 0) {
             entity->animCurFrame = D_80155CF4[D_80175080];
         } else {
             entity->animCurFrame = D_80155CE0[D_80175080];
         }
-    } else if (PLAYER.facing != 0) {
+    } else if (PLAYER.facingLeft != 0) {
         entity->animCurFrame = D_80155D1C[D_80175080];
     } else {
         entity->animCurFrame = D_80155D08[D_80175080];
@@ -416,7 +416,7 @@ void func_80169D74(Entity* entity) {
         entity->unk5A = 0x66;
         entity->palette = 0x81B0;
         entity->blendMode = 0x10;
-        entity->facing = PLAYER.facing;
+        entity->facingLeft = PLAYER.facingLeft;
         entity->zPriority = PLAYER.zPriority;
         entity->unk19 = 4;
         entity->rotAngle = 0xC00;
@@ -516,8 +516,8 @@ void func_8016D328(Entity* entity) {
                 entity->ext.generic.unk8C.entityPtr->ext.generic.unk84.unk;
             entity->posY.val =
                 entity->ext.generic.unk8C.entityPtr->ext.generic.unk88.unk;
-            entity->facing = entity->ext.generic.unk8C.entityPtr->ext.generic
-                                 .unk8C.modeU16.unk0;
+            entity->facingLeft = entity->ext.generic.unk8C.entityPtr->ext
+                                     .generic.unk8C.modeU16.unk0;
             entity->ext.generic.unkB0 = 0x18;
             func_8015FAB8(entity);
             entity->unk5A = 0x79;

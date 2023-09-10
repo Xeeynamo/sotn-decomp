@@ -44,7 +44,7 @@ void EntityWeaponAttack(Entity* self) {
         }
 
         self->zPriority = PLAYER.zPriority + 2;
-        self->facing = PLAYER.facing;
+        self->facingLeft = PLAYER.facingLeft;
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
         self->unk4C = D_11C000_8017A804;
         self->posY.i.hi -= 4;
@@ -112,7 +112,7 @@ void func_ptr_80170004(Entity* self) {
         self->animSet = self->ext.weapon.parent->animSet;
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->palette = self->ext.weapon.parent->palette;
-        self->facing = (self->facing + 1) & 1;
+        self->facingLeft = (self->facingLeft + 1) & 1;
         self->flags = FLAG_UNK_08000000;
         self->zPriority = self->ext.weapon.parent->zPriority - 2;
         self->unk4C = D_11C000_8017A724;
@@ -188,7 +188,7 @@ void func_ptr_80170008(Entity* self) {
         self->unk4C = D_11C000_8017A724;
         self->posY.i.hi -= 0xA;
         var_a1 = 0x18;
-        if (self->facing == 0) {
+        if (self->facingLeft == 0) {
             var_a1 = -0x18;
         }
         self->posX.i.hi = var_a1 + self->posX.i.hi;

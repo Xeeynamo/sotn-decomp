@@ -90,7 +90,7 @@ void EntitySubWeaponContainer(Entity* self) {
                 newEntity->posY.i.hi += glassPieceTBL->posY;
                 newEntity->ext.generic.unk84.S16.unk0 = glassPieceTBL->posX;
                 newEntity->params = glassPieceTBL->params;
-                newEntity->facing = glassPieceTBL->facing;
+                newEntity->facingLeft = glassPieceTBL->facingLeft;
                 newEntity->ext.generic.unk84.S16.unk2 = self->params;
             }
             glassPieceTBL++;
@@ -166,13 +166,13 @@ void func_801C7538(Entity* entity) {
         entity->velocityY += FIX(0.125);
 
         if (entity->velocityX != 0) {
-            if (entity->facing == 0) {
+            if (entity->facingLeft == 0) {
                 new_var = (u16)entity->rotAngle - 16;
                 var_v0 = new_var;
             } else {
                 var_v0 = entity->rotAngle + 16;
             }
-        } else if (entity->facing != 0) {
+        } else if (entity->facingLeft != 0) {
             var_v0 = entity->rotAngle - 16;
         } else {
             var_v0 = entity->rotAngle + 16;

@@ -31,7 +31,7 @@ void func_801B65FC(Entity* self) {
         if (self->params & 0xF0) {
             self->palette = 0x819F;
             self->blendMode = 0x10;
-            self->facing = 1;
+            self->facingLeft = 1;
         }
         break;
 
@@ -119,7 +119,7 @@ void func_801B65FC(Entity* self) {
         if (self->step_s == 0) {
             rnd = Random();
             self->velocityY = FIX(-0.75);
-            self->facing = rnd & 1;
+            self->facingLeft = rnd & 1;
             self->unk1A = 0xC0;
             self->unk19 |= 1;
             self->step_s++;

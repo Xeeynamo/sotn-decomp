@@ -51,7 +51,7 @@ void func_801B585C(u16 arg0) {
         break;
 
     case 5:
-        e->facing = 1;
+        e->facingLeft = 1;
         if (!(AnimateEntity(D_80180528, e) & 0xFF)) {
             func_801B4B9C(e, 6);
         }
@@ -113,7 +113,7 @@ void func_801B5A7C(void) {
                 D_800737D4 = 0;
             } while (0);
             g_Entities[5].animFrameDuration = 0;
-            g_Entities[5].facing = 1;
+            g_Entities[5].facingLeft = 1;
             e->step++;
             break;
 

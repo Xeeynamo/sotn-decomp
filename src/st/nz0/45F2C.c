@@ -43,8 +43,8 @@ void EntitySkeleton(Entity* self) {
         break;
 
     case SKELETON_WALK_TOWARDS_PLAYER:
-        self->facing = (GetSideToPlayer() & 1) ^ 1;
-        self->ext.generic.unk80.modeS8.unk0 = self->facing;
+        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        self->ext.generic.unk80.modeS8.unk0 = self->facingLeft;
         AnimateEntity(D_801823DC, self);
 
         if (self->ext.generic.unk80.modeS8.unk0 == 0) {
@@ -60,8 +60,8 @@ void EntitySkeleton(Entity* self) {
         break;
 
     case SKELETON_WALK_AWAY_FROM_PLAYER:
-        self->facing = (GetSideToPlayer() & 1) ^ 1;
-        self->ext.generic.unk80.modeS8.unk0 = self->facing ^ 1;
+        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        self->ext.generic.unk80.modeS8.unk0 = self->facingLeft ^ 1;
         AnimateEntity(D_801823EC, self);
 
         if (self->ext.generic.unk80.modeS8.unk0 == 0) {
@@ -93,13 +93,13 @@ void EntitySkeleton(Entity* self) {
                 if (newEntity != NULL) { // Spawn bone
                     func_801C29B0(NA_SE_EN_SKELETON_THROW_BONE);
                     CreateEntityFromCurrentEntity(0x2F, newEntity);
-                    if (self->facing != 0) {
+                    if (self->facingLeft != 0) {
                         newEntity->posX.i.hi -= 8;
                     } else {
                         newEntity->posX.i.hi += 8;
                     }
                     newEntity->posY.i.hi -= 16;
-                    newEntity->facing = self->facing;
+                    newEntity->facingLeft = self->facingLeft;
                 }
             }
         }
@@ -153,10 +153,10 @@ void EntitySkeleton(Entity* self) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(0x30, newEntity);
-                newEntity->facing = self->facing;
+                newEntity->facingLeft = self->facingLeft;
                 newEntity->params = i;
                 newEntity->ext.generic.unk88.S8.unk0 = D_80182430[i];
-                if (self->facing != 0) {
+                if (self->facingLeft != 0) {
                     newEntity->posX.i.hi -= D_80182468[i];
                 } else {
                     newEntity->posX.i.hi += D_80182468[i];
@@ -194,7 +194,7 @@ void func_801C6494(Entity* entity) { // From skeleton death explosion
     entity->unk19 = 4;
     entity->animCurFrame = entity->params + 15;
 
-    if (entity->facing != 0) {
+    if (entity->facingLeft != 0) {
         entity->velocityX = -entity->velocityX;
     }
 }
@@ -223,7 +223,7 @@ void func_801C6574(Entity* entity) { // Bone Projectile from Skeleton
         xDistanceToPlayer /= 32;
         xDistanceToPlayer = CLAMP_MAX(xDistanceToPlayer, 7);
         velocityX = D_80182488[xDistanceToPlayer];
-        xDistanceToPlayer = entity->facing;
+        xDistanceToPlayer = entity->facingLeft;
 
         if (xDistanceToPlayer > 0) {
             velocityX = -velocityX;
@@ -246,7 +246,7 @@ void func_801C6678(Entity* entity) { // From Skeleton
         return;
     }
 
-    entity->facing = entity[-1].facing;
+    entity->facingLeft = entity[-1].facingLeft;
     entity->zPriority = entity[-1].zPriority - 1;
     entity->animCurFrame = entity[-1].animCurFrame;
     entity->posX.i.hi = entity[-1].posX.i.hi;

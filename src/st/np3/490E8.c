@@ -37,7 +37,7 @@ void func_801C90E8(void) {
     }
     if ((g_CurrentEntity->ext.generic.unk7C.U8.unk0) == 0) {
         if (GetDistanceToPlayerX() < 64) {
-            if (g_CurrentEntity->facing != (GetSideToPlayer() & 1)) {
+            if (g_CurrentEntity->facingLeft != (GetSideToPlayer() & 1)) {
                 SetStep(BONE_SCIMITAR_ATTACK);
             }
         }
@@ -84,9 +84,9 @@ void EntityBoneScimitar(Entity* self) {
 
     case BONE_SCIMITAR_WALK_TOWARDS_PLAYER:
         if (AnimateEntity(D_80182464, self) == 0) {
-            self->facing = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
-        self->ext.generic.unk80.modeS8.unk0 = self->facing;
+        self->ext.generic.unk80.modeS8.unk0 = self->facingLeft;
 
         if (self->ext.generic.unk80.modeS8.unk0 == 0) {
             self->velocityX = FIX(-0.5);
@@ -102,9 +102,9 @@ void EntityBoneScimitar(Entity* self) {
 
     case BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER:
         if (AnimateEntity(D_80182474, self) == 0) {
-            self->facing = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
-        self->ext.generic.unk80.modeS8.unk0 = self->facing ^ 1;
+        self->ext.generic.unk80.modeS8.unk0 = self->facingLeft ^ 1;
 
         if (self->ext.generic.unk80.modeS8.unk0 == 0) {
             self->velocityX = FIX(-0.5);
@@ -188,9 +188,9 @@ void EntityBoneScimitar(Entity* self) {
         break;
 
     case BONE_SCIMITAR_SPECIAL:
-        self->facing = (GetSideToPlayer() & 1) ^ 1;
+        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         func_801BCB5C(&D_80182540);
-        if (((((u32)self->velocityX) >> 0x1F) ^ self->facing) != 0) {
+        if (((((u32)self->velocityX) >> 0x1F) ^ self->facingLeft) != 0) {
             AnimateEntity(D_80182464, self);
         } else {
             AnimateEntity(D_80182474, self);
@@ -232,11 +232,11 @@ void EntityBoneScimitar(Entity* self) {
                 break;
             }
             CreateEntityFromCurrentEntity(E_BONE_SCIMITAR_HEAD, newEntity);
-            newEntity->facing = self->facing;
+            newEntity->facingLeft = self->facingLeft;
             newEntity->params = i;
             newEntity->ext.generic.unk88.S8.unk0 = D_801824C8[i];
 
-            if (self->facing != 0) {
+            if (self->facingLeft != 0) {
                 newEntity->posX.i.hi -= D_80182508[i];
             } else {
                 newEntity->posX.i.hi += D_80182508[i];
@@ -284,7 +284,7 @@ void EntityBoneScimitarParts(Entity* entity) {
     entity->unk19 = 4;
     entity->animCurFrame = *(u8*)&entity->params + 16;
 
-    if (entity->facing != 0) {
+    if (entity->facingLeft != 0) {
         entity->velocityX = -entity->velocityX;
     }
 

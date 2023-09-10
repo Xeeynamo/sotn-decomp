@@ -154,7 +154,7 @@ bool func_8015885C(void) {
 void func_80158B04(s32 arg0) {
     s32 var_s0;
 
-    if (PLAYER.facing != 0) {
+    if (PLAYER.facingLeft != 0) {
         var_s0 = -3;
     } else {
         var_s0 = 3;
@@ -184,7 +184,7 @@ void func_80158BFC(void) {
         if (D_8015459C != 0) {
             D_8015459C--;
         } else if (D_80097448[0] >= 49) {
-            if (PLAYER.facing != 0) {
+            if (PLAYER.facingLeft != 0) {
                 var_s0 = -4;
             } else {
                 var_s0 = 4;
@@ -343,13 +343,13 @@ void func_80159C04(void) {
     s32 var_a0;
     s32 var_a2;
 
-    if (entity->facing != 0) {
+    if (entity->facingLeft != 0) {
         var_a2 = -entity->hitboxOffX;
     } else {
         var_a2 = entity->hitboxOffX;
     }
 
-    if (PLAYER.facing != 0) {
+    if (PLAYER.facingLeft != 0) {
         var_a0 = -PLAYER.hitboxOffX;
     } else {
         var_a0 = PLAYER.hitboxOffX;

@@ -93,21 +93,21 @@ void EntityAxeKnight(Entity* self) {
     switch (self->step) {
     case AXE_KNIGHT_INIT:
         InitializeEntity(D_80180C64);
-        self->facing = (GetSideToPlayer() & 1) ^ 1;
+        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         self->hitboxOffY = 10;
         self->ext.generic.unk7C.S8.unk1 = 0;
         self->ext.generic.unk80.modeS16.unk2 = 512;
 
     case AXE_KNIGHT_IDLE:
         if (func_801BCCFC(&D_80182188) & 1) {
-            self->facing = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
         }
         break;
 
     case AXE_KNIGHT_WALK_TOWARDS_PLAYER:
         if (self->step_s == 0) {
-            if (self->facing == 0) {
+            if (self->facingLeft == 0) {
                 self->velocityX = FIX(-0.1875);
             } else {
                 self->velocityX = FIX(0.1875);
@@ -117,11 +117,11 @@ void EntityAxeKnight(Entity* self) {
 
         animStatus = AnimateEntity(D_80182210, self);
         if (self->animFrameDuration == 0) {
-            self->facing = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
 
         if (animStatus == 0) {
-            if (self->facing == 0) {
+            if (self->facingLeft == 0) {
                 self->velocityX = FIX(-0.1875);
             } else {
                 self->velocityX = FIX(0.1875);
@@ -133,12 +133,12 @@ void EntityAxeKnight(Entity* self) {
         }
 
         if ((self->animFrameIdx == 1) || (self->animFrameIdx == 4)) {
-            if (self->facing == 0) {
+            if (self->facingLeft == 0) {
                 self->velocityX -= 0x300;
             } else {
                 self->velocityX += 0x300;
             }
-        } else if (self->facing != 0) {
+        } else if (self->facingLeft != 0) {
             self->velocityX -= 0x300;
         } else {
             self->velocityX += 0x300;
@@ -153,7 +153,7 @@ void EntityAxeKnight(Entity* self) {
 
     case AXE_KNIGHT_WALK_AWAY_FROM_PLAYER:
         if (self->step_s == 0) {
-            if (self->facing == 0) {
+            if (self->facingLeft == 0) {
                 self->velocityX = FIX(0.1875);
             } else {
                 self->velocityX = FIX(-0.1875);
@@ -163,10 +163,10 @@ void EntityAxeKnight(Entity* self) {
 
         animStatus = AnimateEntity(D_80182210, self);
         if (self->animFrameDuration == 0) {
-            self->facing = (GetSideToPlayer() & 1) ^ 1;
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         if (animStatus == 0) {
-            if (self->facing == 0) {
+            if (self->facingLeft == 0) {
                 self->velocityX = FIX(0.1875);
             } else {
                 self->velocityX = FIX(-0.1875);
@@ -179,12 +179,12 @@ void EntityAxeKnight(Entity* self) {
         }
 
         if ((self->animFrameIdx == 1) || (self->animFrameIdx == 4)) {
-            if (self->facing == 0) {
+            if (self->facingLeft == 0) {
                 self->velocityX += 0x200;
             } else {
                 self->velocityX -= 0x200;
             }
-        } else if (self->facing != 0) {
+        } else if (self->facingLeft != 0) {
             self->velocityX += 0x200;
         } else {
             self->velocityX -= 0x200;
@@ -213,9 +213,9 @@ void EntityAxeKnight(Entity* self) {
             newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);
-                newEntity->facing = self->facing;
+                newEntity->facingLeft = self->facingLeft;
                 newEntity->posY.i.hi -= 12;
-                if (newEntity->facing != 0) {
+                if (newEntity->facingLeft != 0) {
                     newEntity->posX.i.hi += 8;
                 } else {
                     newEntity->posX.i.hi -= 8;
@@ -232,10 +232,10 @@ void EntityAxeKnight(Entity* self) {
                 newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
                 if (newEntity != NULL) {
                     CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);
-                    newEntity->facing = self->facing;
+                    newEntity->facingLeft = self->facingLeft;
                     newEntity->params = 1;
                     newEntity->posY.i.hi += 12;
-                    if (newEntity->facing != 0) {
+                    if (newEntity->facingLeft != 0) {
                         newEntity->posX.i.hi += 8;
                     } else {
                         newEntity->posX.i.hi -= 8;
@@ -265,10 +265,10 @@ void EntityAxeKnight(Entity* self) {
             newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);
-                newEntity->facing = self->facing;
+                newEntity->facingLeft = self->facingLeft;
                 newEntity->params = 2;
                 newEntity->posY.i.hi -= 40;
-                if (newEntity->facing != 0) {
+                if (newEntity->facingLeft != 0) {
                     newEntity->posX.i.hi += 16;
                 } else {
                     newEntity->posX.i.hi -= 16;
@@ -338,7 +338,7 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
         entity->velocityY = D_801822C8[entity->params];
         velocityX = D_801822BC[entity->params];
 
-        if (entity->facing == 0) {
+        if (entity->facingLeft == 0) {
             entity->velocityX = -velocityX;
         } else {
             entity->velocityX = velocityX;
@@ -355,7 +355,7 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
     case 1:
         EntityAxeKnightRotateAxe();
         if ((u16)entity->ext.generic.unk7C.s < 0x20) {
-            if (entity->facing != 0) {
+            if (entity->facingLeft != 0) {
                 entity->velocityX -= FIX(0.125);
             } else {
                 entity->velocityX += FIX(0.125);

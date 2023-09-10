@@ -290,7 +290,7 @@ typedef struct ET_Succubus {
     /* 0x7C */ char pad_7C[0x4];
     /* 0x80 */ s16 timer;
     /* 0x82 */ char pad_82[0x2];
-    /* 0x84 */ u8 facing;
+    /* 0x84 */ u8 facingLeft;
     /* 0x85 */ u8 unk85;
     /* 0x86 */ u8 nextAttack;
     /* 0x87 */ u8 unk87;

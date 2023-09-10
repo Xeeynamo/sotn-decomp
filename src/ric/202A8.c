@@ -13,7 +13,7 @@ void func_8015C2A8(void) {
     switch (PLAYER.step_s) {
     case 0:
         if (g_Player.padPressed & (PAD_LEFT | PAD_RIGHT)) {
-            if (PLAYER.facing == 0) {
+            if (PLAYER.facingLeft == 0) {
                 temp = g_Player.padPressed & PAD_RIGHT;
             } else {
                 temp = g_Player.padPressed & PAD_LEFT;
