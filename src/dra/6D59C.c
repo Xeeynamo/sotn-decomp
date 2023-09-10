@@ -71,7 +71,8 @@ void func_8010D59C(void) {
     }
 }
 
-u8 g_D_800ACF2C[] = {4, 4, 4, 4, 6, 6, 6, 6, 8, 8, 16, 16, 16, 16, 16, 16};
+u8 g_shadowOpacityReductionTable[] = {
+    4, 4, 4, 4, 6, 6, 6, 6, 8, 8, 16, 16, 16, 16, 16, 16};
 u8 g_D_800ACF3C[] = {8,  12, 16, 20, 24, 28, 32, 32,
                      32, 32, 32, 32, 32, 32, 32, 32};
 
@@ -88,7 +89,7 @@ void func_8010D800(void) {
     i = 0;
     prim = &g_PrimBuf[g_Entities[1].primIndex];
     temp_t2 = g_Entities[1].ext.ent1.unk1;
-    temp_t1 = g_D_800ACF2C[g_Entities[1].ext.ent1.unk2];
+    temp_t1 = g_shadowOpacityReductionTable[g_Entities[1].ext.ent1.unk2];
     temp_t0 = g_D_800ACF3C[g_Entities[1].ext.ent1.unk2];
 
     current_thing = &D_80097D1C[1];
