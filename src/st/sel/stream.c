@@ -1,5 +1,22 @@
 #include "sel.h"
 
+extern s32 g_StreamWidth;
+extern int g_StreamHeight;
+extern u32 g_StreamEndFrame;
+extern u32 g_StreamIsRGB24;
+extern s32 g_StreamRewindSwitch[];
+
+typedef struct {
+    u_long* vlcbuf[2];
+    int vlcid;
+    u_short* imgbuf[2];
+    int imgid;
+    RECT rect[2];
+    int rectid;
+    RECT slice;
+    int isdone;
+} DECENV;
+
 s32 func_801B9744(void) {
     u8 res;
     int ret;
@@ -17,28 +34,47 @@ s32 func_801B9744(void) {
     return D_801BC344 = 1;
 }
 
-s32 func_801B97BC(s32*);
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/39744", func_801B97BC);
+u_long* StreamNext(DECENV* dec) {
+    u_long* addr;
+    StHEADER* sector;
+    int* rewindSwitch;
+    int count;
 
-void func_801B988C(u32* arg0) {
-    s32 temp_v0;
-    s32 var_s0;
-
-    var_s0 = 4;
-loop_1:
-    temp_v0 = func_801B97BC(arg0);
-    if (temp_v0 == 0) {
-        var_s0 -= 1;
-        if (var_s0 != 0) {
-            goto loop_1;
+    count = 0x40000;
+    while (StGetNext(&addr, &sector)) {
+        if (--count == 0) {
+            dec->isdone = 1;
+            return 0;
         }
-    } else {
-        s32 temp_v0_2 = arg0[2] == 0;
-        arg0[2] = temp_v0_2;
-        D_801BC340++;
-        func_801BABA4(temp_v0, *((temp_v0_2) + arg0));
-        StFreeRing(temp_v0);
     }
+
+    rewindSwitch = g_StreamRewindSwitch;
+    if (sector->frameCount >= g_StreamEndFrame) {
+        *rewindSwitch = 1;
+    }
+
+    g_StreamWidth = sector->width;
+    g_StreamHeight = sector->height;
+    dec->rect[0].w = dec->rect[1].w = count = g_StreamWidth * 3 / 2;
+    dec->rect[0].h = dec->rect[1].h = g_StreamHeight;
+    dec->slice.h = g_StreamHeight;
+    return addr;
+}
+
+void StreamNextVlc(DECENV* dec) {
+    const int WAIT_TIME = 4;
+    int count = WAIT_TIME;
+    u_long* next;
+
+    while ((next = StreamNext(dec)) == 0) {
+        if (--count == 0)
+            return;
+    }
+
+    D_801BC340++;
+    dec->vlcid = dec->vlcid ? 0 : 1;
+    DecDCTvlc(next, dec->vlcbuf[dec->vlcid]);
+    StFreeRing(next);
 }
 
 void func_801B9924(void) {
@@ -47,24 +83,26 @@ void func_801B9924(void) {
     func_801B18F4();
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/39744", func_801B994C);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", func_801B994C);
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/39744", func_801B99E4);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", func_801B99E4);
 
 // func_801B9B7C(Unkstruct_801B9B7C* arg0, s16 arg1, s16 arg2, s16 arg3, s32
 // arg4);
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/39744", func_801B9B7C);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", func_801B9B7C);
 
 void func_801B9C18(s32 unused, void (*callback)()) {
-    s32* s0 = D_801BD044;
+    const int START_FRAME = 1;
+
+    s32* s0 = g_StreamRewindSwitch;
     func_801BA460(0);
     *s0 = 0;
     func_801BA6CC(callback);
     func_800192DC((s32)(s0 + 2), 0x28);
-    StSetStream(D_801BD038, 1, -1, NULL, NULL);
+    StSetStream(g_StreamIsRGB24, START_FRAME, -1, NULL, NULL);
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/39744", func_801B9C80);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", func_801B9C80);
 
 void func_801BA460(s32 option) {
     if (option == 0) {
@@ -162,7 +200,7 @@ void func_801BA6A8(void (*func)()) { DMACallback(0, func); }
 
 void func_801BA6CC(void (*func)()) { DMACallback(1, func); }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/39744", MDEC_rest);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", MDEC_rest);
 
 void func_801BA7EC(s32* arg0, u32 arg1) {
     MDEC_in_sync();
@@ -181,11 +219,11 @@ void func_801BA880(s32 arg0, u32 arg1) {
     *D_80196410 = 0x01000200;
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/39744", MDEC_in_sync);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", MDEC_in_sync);
 
 // missing a return maybe?
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/39744", MDEC_out_sync);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", MDEC_out_sync);
 #else
 void MDEC_out_sync(void) {
     volatile s32 sp10 = 0x100000;
@@ -199,8 +237,8 @@ void MDEC_out_sync(void) {
 }
 #endif
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/39744", MDEC_print_error);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", MDEC_print_error);
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/39744", func_801BAB70);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", func_801BAB70);
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/39744", func_801BABA4);
+INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", DecDCTvlc);

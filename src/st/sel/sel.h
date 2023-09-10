@@ -209,8 +209,6 @@ extern s32* D_801BC958[];
 extern s32 D_801BCC84[];
 extern s32 D_801BD02C;
 extern u32 D_801BD030;
-extern u32 D_801BD038; // StSetStream mode
-extern s32 D_801BD044[];
 extern s32 D_801D6B04;
 extern s32 D_801D6B08;
 extern s32 D_801D6B0C;
@@ -230,4 +228,4 @@ void func_801BA880();
 void MDEC_in_sync();
 void MDEC_out_sync();
 void MDEC_print_error(const char* funcName);
-void func_801BABA4(s32, s32);
+void DecDCTvlc(s32, s32);
