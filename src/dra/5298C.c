@@ -798,7 +798,6 @@ void func_800F6DC8(MenuContext* ctx) {
     s32 offsetY;
     s32 i;
     s32 time;
-    u8* str;
 
     i = 0;
     offsetY = 8;
