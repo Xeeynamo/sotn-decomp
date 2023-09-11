@@ -104,10 +104,11 @@ def get_c_files(c_path):
 
 def find_wip(o):
     name = o[0]
+    print(name)
     # look for a WIP on decomp.me
     function_name = os.path.basename(name).split(".")[0]
 
-    print(f"scraping decompme for {function_name}", file=sys.stderr)
+    print(f"scraping decompme for {function_name} ({name})", file=sys.stderr)
     result = find_scratches(function_name, "ps1")
 
     if result:
