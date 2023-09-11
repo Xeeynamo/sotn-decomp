@@ -1707,7 +1707,7 @@ void func_800FAF44(s32 arg0) {
         ((s32*)g_MenuNavigation.scrollEquipAccessories)[D_801375D4];
 
     for (i = 0; i < 90; i++) {
-        if (D_800A7734[i].unk00 == D_801375D4) {
+        if (g_AccessoryDefs[i].equipType == D_801375D4) {
             *var_a1 = i;
             var_a1++;
         }

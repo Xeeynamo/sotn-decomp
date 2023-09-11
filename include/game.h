@@ -973,7 +973,8 @@ typedef struct {
     /* 10 */ u16 unk16;
     /* 18 */ u16 icon;
     /* 1A */ u16 iconPalette;
-    /* 1C */ u32 unk1C;
+    /* 1C */ u16 equipType;
+    /* 1E */ u16 unk1E;
 } Accessory; /* size=0x20 */
 
 typedef struct {

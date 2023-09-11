@@ -169,11 +169,6 @@ typedef struct {
     /* 0x0C */ s32 unkC;
 } Unkstruct_800EA5E4;
 
-typedef struct Unkstruct_800A7734 {
-    /* 0x00 */ u16 unk00;
-    /* 0x02 */ char unk02[0x1E];
-} Unkstruct_800A7734; // size = 0x20
-
 typedef struct {
     s32 unk0;
     s32 unk4;

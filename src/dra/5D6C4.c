@@ -27,7 +27,7 @@ s32 func_800FD6C4(s32 equipTypeFilter) {
     }
 
     for (itemCount = 0, i = 0; i < 90; i++) {
-        if (D_800A7734[i].unk00 == equipType) {
+        if (g_AccessoryDefs[i].equipType == equipType) {
             itemCount++;
         }
     }
@@ -102,7 +102,7 @@ void AddToInventory(u16 itemId, s32 itemCategory) {
             itemArray[itemId] = temp_a1;
             phi_a1_2 = itemCategory;
             if (phi_a1_2 != 0) {
-                i = D_800A7734[itemId].unk00;
+                i = g_AccessoryDefs[itemId].equipType;
             }
             phi_a0 = cursorY;
             for (phi_a1_2 = 0; true; phi_a1_2++) {
@@ -115,7 +115,7 @@ void AddToInventory(u16 itemId, s32 itemCategory) {
             phi_a0_2 = cursorY;
             for (phi_a1 = 0; true; phi_a1++) {
                 if (((!itemArray[*phi_a0_2]) && phi_a1_2) &&
-                    (i == D_800A7734[*phi_a0_2].unk00)) {
+                    (i == g_AccessoryDefs[*phi_a0_2].equipType)) {
                     new_var2 = phi_a1;
                     cursorY[new_var2] = itemId;
                     break;
@@ -903,16 +903,16 @@ void func_800FF6C4(void) {
     }
 }
 
-void func_800FF708(s32 arg0, s32 arg1) {
+void func_800FF708(s32 equipType, s32 arg1) {
     s32 rnd;
 
     do {
     loop_1:
         rnd = rand() % 90;
-        if (rnd == 0x19) {
+        while (rnd == 0x19) {
             goto loop_1;
         }
-    } while (D_800A7734[rnd].unk00 != arg0);
+    } while (g_AccessoryDefs[rnd].equipType != equipType);
     g_Status.equipment[arg1 + 2] = rnd;
 }
 

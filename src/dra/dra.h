@@ -356,7 +356,6 @@ extern EnemyDef g_EnemyDefs[];
 extern s32 g_ExpNext[];
 extern Equipment g_EquipDefs[];
 extern Accessory g_AccessoryDefs[];
-extern Unkstruct_800A7734 D_800A7734[];
 extern RelicDesc g_RelicsDefs[];
 extern unkStruct_800A872C D_800A872C[];
 extern u32 D_800AC90C;
