@@ -343,7 +343,7 @@ s32 func_800FE044(s32 amount, s32 type) {
         // achieve the same goal, but this one at least works.
         amount++;
         amount--;
-        if (D_800A872C[amount].unk0) {
+        if (g_RelicsDefs[amount].unk0C) {
             g_Status.relics[amount] = 1;
         }
         D_80137968++;
@@ -1269,7 +1269,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
 #endif
                 for (i = 0; i < LEN(g_Status.relics); i++) {
                     g_Status.relics[i] = RELIC_FLAG_FOUND | RELIC_FLAG_ACTIVE;
-                    if (D_800A872C[i].unk0 != 0) {
+                    if (g_RelicsDefs[i].unk0C != 0) {
                         g_Status.relics[i] = RELIC_FLAG_FOUND;
                     }
                 }
