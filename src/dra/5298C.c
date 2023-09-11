@@ -784,7 +784,42 @@ void func_800F6BEC(MenuContext* context) {
 
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800F6CC0);
 
-INCLUDE_ASM("dra/nonmatchings/5298C", func_800F6DC8);
+void DrawTimeAttackMenu(MenuContext* ctx) {
+    s16 padX;
+    s16 cursorX;
+    s32 cursorY;
+    s32 entryIdx;
+    s32 offsetY;
+    s32 i;
+    s32 hours;
+    s32 seconds;
+
+    for (i = 0, offsetY = 8; i < 12; i++, offsetY += 12) {
+        cursorX = ctx->cursorX;
+        entryIdx = i + g_TimeAttackVerticalPageCursor;
+        cursorY = ctx->cursorY + offsetY;
+        DrawMenuInt(entryIdx + 1, cursorX + 16, cursorY, ctx);
+        seconds = g_TimeAttackEntryTimes[entryIdx];
+        if (seconds == 1000000) {
+            DrawMenuStr(c_strTimeAttackHiddenEntry, cursorX + 29, cursorY, ctx);
+        } else {
+            DrawMenuStr(c_strTimeAttackEntries[c_strTimeAttackEntry[entryIdx]],
+                        cursorX + 29, cursorY, ctx);
+            hours = seconds / 10000;
+#if defined(VERSION_HD)
+            padX = -100;
+#elif defined(VERSION_US)
+            padX = 0;
+#endif
+            DrawMenuInt(hours, cursorX + 276 + padX, cursorY, ctx);
+            DrawMenuChar(0x1A, cursorX + 284 + padX, cursorY, ctx);
+            DrawMenuTime((seconds / 100) - (hours * 100), cursorX + 300 + padX,
+                         cursorY, ctx, 2);
+            DrawMenuChar(0x1A, cursorX + 308 + padX, cursorY, ctx);
+            DrawMenuTime(seconds % 100, cursorX + 324 + padX, cursorY, ctx, 2);
+        }
+    }
+}
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("dra/nonmatchings/5298C", DrawSettingsButton);
@@ -1312,7 +1347,8 @@ void DrawConsumableCount(s32 itemId, s32 hand, MenuContext* ctx) {
         } else {
             if (displayCount == 100) {
                 *str_idx++ = MENUCHAR('1');
-                // Neat trick, set this to 0 so following two steps draw 00
+                // Neat trick, set this to 0 so following two steps draw
+                // 00
                 displayCount = 0;
             }
             *str_idx++ = (displayCount / 10) + MENUCHAR('0');
@@ -1514,8 +1550,8 @@ INCLUDE_ASM("dra/nonmatchings/5298C", func_800FA3C4);
 
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800FA60C);
 
-// If you use both attack buttons at once, see if something special happens.
-// Applies to Shield Rod + Shield, or dual Heaven Swords
+// If you use both attack buttons at once, see if something special
+// happens. Applies to Shield Rod + Shield, or dual Heaven Swords
 void CheckWeaponCombo(void) {
     s32 weapon0;
     s32 weapon1;
@@ -1839,12 +1875,14 @@ s32 TimeAttackController(TimeAttackEvents eventId, TimeAttackActions action) {
 
     switch (action) {
     case TIMEATTACK_GET_RECORD:
-        // get the time attack for a specific defeated boss. this is also
-        // responsible to check if the player should teleport into a boss room
+        // get the time attack for a specific defeated boss. this is
+        // also responsible to check if the player should teleport into
+        // a boss room
         return g_Settings.timeAttackRecords[eventId];
 
     case TIMEATTACK_SET_RECORD:
-        // set new time attack record if the boss was not previously defeated
+        // set new time attack record if the boss was not previously
+        // defeated
         timer = g_Settings.timeAttackRecords[eventId];
         if (timer = timer != 0) {
             return g_Settings.timeAttackRecords[eventId];
