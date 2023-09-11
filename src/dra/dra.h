@@ -259,7 +259,6 @@ typedef struct {
     u16 exteriorLight;
 } JosephsCloak;
 
-extern s32 g_TimeAttackVerticalPageCursor;
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern s32 D_800A0144[];
 extern u32 D_800A0158;
