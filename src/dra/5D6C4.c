@@ -52,9 +52,9 @@ u8* GetEquipCount(s32 equipTypeFilter) {
 
 const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId) {
     if (!equipTypeFilter) {
-        return D_800A4B04[equipId].name;
+        return g_EquipDefs[equipId].name;
     } else {
-        return D_800A7718[equipId].name;
+        return g_AccessoryDefs[equipId].name;
     }
 }
 
@@ -210,7 +210,7 @@ void LearnSpell(s32 spellId) {
 
 bool func_800FDD44(s32 itemType) {
     s32 equippedItem = g_Status.equipment[itemType];
-    bool isConsumable = D_800A4B04[equippedItem].isConsumable;
+    bool isConsumable = g_EquipDefs[equippedItem].isConsumable;
 
     if (CheckEquipmentItemCount(ITEM_DUPLICATOR, ACCESSORY_TYPE) == 0) {
         if (isConsumable) {
@@ -253,7 +253,7 @@ u32 CheckAndDoLevelUp(void) {
     if (g_Status.level == 99) {
         return 0;
     }
-    if (c_arrExpNext[g_Status.level] <= g_Status.exp) {
+    if (g_ExpNext[g_Status.level] <= g_Status.exp) {
         g_Status.level++;
         statsGained = 0;
         g_Status.mpMax += 4 + (rand() & 1);
@@ -306,7 +306,7 @@ s32 func_800FE044(s32 amount, s32 type) {
         if (g_Status.hpMax > 9999) {
             g_Status.hpMax = 9999;
         }
-        if (g_CurrentPlayableCharacter != 0) {
+        if (g_PlayableCharacter != 0) {
             g_Status.hpMax += amount;
             if (g_Status.hpMax > 9999) {
                 g_Status.hpMax = 9999;
@@ -319,7 +319,7 @@ s32 func_800FE044(s32 amount, s32 type) {
 
     // Heart Max Up
     if (type == 0x4000) {
-        if (g_CurrentPlayableCharacter != 0) {
+        if (g_PlayableCharacter != 0) {
             return 1;
         }
         oldHeartMax = g_Status.heartsMax;
@@ -418,7 +418,7 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
     u32 accessoryCount;
 
     if (subweaponId == 0) {
-        *subwpn = g_Subweapons[g_Status.subWeapon];
+        *subwpn = g_SubwpnDefs[g_Status.subWeapon];
         accessoryCount =
             CheckEquipmentItemCount(ITEM_HEART_BROACH, ACCESSORY_TYPE);
         if (accessoryCount == 1) {
@@ -439,7 +439,7 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
             return 0;
         }
     } else {
-        *subwpn = g_Subweapons[subweaponId];
+        *subwpn = g_SubwpnDefs[subweaponId];
         if (CheckEquipmentItemCount(ITEM_BRILLIANT_MAIL, ARMOR_TYPE) != 0) {
             subwpn->attack += 10;
         }
@@ -468,10 +468,10 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     s32 criticalRate;
     u8 itemCategory;
 
-    var_a2 = &D_800A4B04[(s16)equipId]; // FAKE
+    var_a2 = &g_EquipDefs[(s16)equipId]; // FAKE
     criticalModRate = 5;
 
-    __builtin_memcpy(res, &D_800A4B04[equipId], sizeof(Equipment));
+    __builtin_memcpy(res, &g_EquipDefs[equipId], sizeof(Equipment));
     criticalRate = res->criticalRate;
     criticalRate = criticalRate - criticalModRate +
                    SquareRoot0((g_Status.statsTotal[3] * 2) + (rand() & 0xF));
@@ -487,7 +487,7 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
 
     res->criticalRate = criticalRate;
     func_800F4994();
-    itemCategory = D_800A4B04[equipId].itemCategory;
+    itemCategory = g_EquipDefs[equipId].itemCategory;
     if (itemCategory != ITEM_FOOD && itemCategory != ITEM_MEDICINE) {
         res->attack = CalcAttack(equipId, g_Status.equipment[1 - handId]);
         if (g_Player.unk0C & PLAYER_STATUS_POISON) {
@@ -788,7 +788,7 @@ u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity) {
                 }
                 break;
             case STAT_INT:
-                damage += SquareRoot0(g_roomCount);
+                damage += SquareRoot0(g_RoomCount);
                 break;
             case STAT_LCK:
 #if defined(VERSION_US)
@@ -898,8 +898,7 @@ void func_800FF60C(void) {
 void func_800FF60C();
 
 void func_800FF6C4(void) {
-    if (g_StageId != STAGE_ST0 &&
-        g_CurrentPlayableCharacter == PLAYER_ALUCARD) {
+    if (g_StageId != STAGE_ST0 && g_PlayableCharacter == PLAYER_ALUCARD) {
         func_800FF60C();
     }
 }
@@ -983,9 +982,9 @@ void InitStatsAndGear(bool isDeathTakingItems) {
     } else {
         // I think this zeros out all the rooms to mark as unvisited
         for (i = 0; i < 2048; i++) {
-            D_8006BB74[i] = 0;
+            g_CastleMap[i] = 0;
         }
-        g_roomCount = 0;
+        g_RoomCount = 0;
 
         g_Status.D_80097BF8 = 0;
         for (i = 0; i < 4; i++) {
@@ -1025,7 +1024,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
 
         // If playing as Richter, either in the Prologue or Richter Mode
         if ((g_StageId == STAGE_ST0) ||
-            (g_CurrentPlayableCharacter != PLAYER_ALUCARD)) {
+            (g_PlayableCharacter != PLAYER_ALUCARD)) {
 
             for (i = 0; i < LEN(g_Status.relics); i++) {
                 g_Status.relics[i] = RELIC_FLAG_FOUND;
@@ -1372,7 +1371,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
                     if (equipId == 216) {
                         goto loop_check_equip_id_1;
                     }
-                } while (D_800A4B04[equipId].itemCategory > 4);
+                } while (g_EquipDefs[equipId].itemCategory > 4);
 
                 g_Status.equipment[LEFT_HAND_SLOT] = equipId;
                 do {
@@ -1381,7 +1380,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
                     if (equipId == 216) {
                         goto loop_check_equip_id_2;
                     }
-                } while (D_800A4B04[equipId].itemCategory == 5);
+                } while (g_EquipDefs[equipId].itemCategory == 5);
 
                 g_Status.equipment[RIGHT_HAND_SLOT] = equipId;
                 func_800FF708(0, 0);
@@ -1529,8 +1528,7 @@ void func_8010189C(void) {
     g_HealingMailTimer[0] = 0;
     g_DisplayHP[0] = g_Status.hp;
 
-    if ((g_StageId == STAGE_ST0) ||
-        (g_CurrentPlayableCharacter != PLAYER_ALUCARD)) {
+    if ((g_StageId == STAGE_ST0) || (g_PlayableCharacter != PLAYER_ALUCARD)) {
         DrawHudRichter();
         return;
     }
@@ -1581,7 +1579,7 @@ void DrawHudAlucard() {
     s32 digitSpacing;
     u16 clut;
 
-    if (g_StageId == STAGE_ST0 || g_CurrentPlayableCharacter != 0) {
+    if (g_StageId == STAGE_ST0 || g_PlayableCharacter != 0) {
         func_80100B50();
         return;
     }

@@ -926,7 +926,7 @@ typedef struct {
 
 // Defines the equipment that can be set on left and right hand
 // This includes weapons, throw weapons, consumable and restoration items.
-// D_800A4B04 it is assumed the equip data starts from here
+// g_EquipDefs it is assumed the equip data starts from here
 // https://github.com/3snowp7im/SotN-Randomizer/blob/master/src/stats.js
 typedef struct {
     /* 0x00 */ const char* name;
@@ -1042,8 +1042,8 @@ typedef struct {
     /* 8003C828 */ u16 (*DealDamage)(
         Entity* enemyEntity, Entity* attackerEntity);
     /* 8003C82C */ void (*LoadEquipIcon)(s32 equipIcon, s32 palette, s32 index);
-    /* 8003C830 */ Equipment* D_800A4B04;
-    /* 8003C834 */ Accessory* D_800A7718;
+    /* 8003C830 */ Equipment* equipDefs;
+    /* 8003C834 */ Accessory* accessoryDefs;
     /* 8003C838 */ void (*AddHearts)(s32 value);
     /* 8003C83C */ void* func_8010715C;
     /* 8003C840 */ s32 (*TimeAttackController)(
@@ -1107,8 +1107,8 @@ extern void (*g_api_func_8010E168)(s32 arg0, s16 arg1);
 extern void (*g_api_func_8010DFF0)(s32 arg0, s32 arg1);
 extern u16 (*g_api_DealDamage)(Entity* enemyEntity, Entity* attackerEntity);
 extern void (*g_api_LoadEquipIcon)(s32 equipIcon, s32 palette, s32 index);
-extern Equipment* g_api_D_800A4B04;
-extern Accessory* g_api_D_800A7718;
+extern Equipment* g_api_equipDefs;
+extern Accessory* g_api_g_AccessoryDefs;
 extern void (*g_api_AddHearts)(s32 value);
 extern s32 (*g_api_TimeAttackController)(
     TimeAttackEvents eventId, TimeAttackActions action);
@@ -1291,9 +1291,9 @@ extern s32 g_IsTimeAttackUnlocked;
 
 // Holds flags that checks if certain switches are enabled to allow to have
 // shortcuts around the castle. One typical example is the wood column that
-// prevents the player to enter in the warp room. When D_8003BDEC[0x32] the
+// prevents the player to enter in the warp room. When g_CastleFlags[0x32] the
 // column will disappear.
-extern u8 D_8003BDEC[0x300];
+extern u8 g_CastleFlags[0x300];
 extern u8 D_8003BE23;
 extern u8 D_8003BEEC[];
 extern u8 D_8003BF9C[];
@@ -1312,7 +1312,7 @@ extern GameState g_GameState;
 extern s32 D_8003C738;
 extern s32 D_8003C73C;
 extern u32 D_8003C744;
-extern u32 g_roomCount;
+extern u32 g_RoomCount;
 extern Unsktruct_800EAF28** D_8003C798;
 extern GameApi g_api;
 extern s32 D_8003C8B8;
@@ -1321,7 +1321,7 @@ extern Unkstruct_8003C908 D_8003C908;
 extern s32 D_8003C90C[2];
 extern u32 g_blinkTimer;
 /* 0x8003C99C */ extern s32 D_8003C99C;
-/* 0x8003C9A0 */ extern s32 g_CurrentPlayableCharacter;
+/* 0x8003C9A0 */ extern s32 g_PlayableCharacter;
 /* 0x8003C9A4 */ extern s32 D_8003C9A4; // when player change stages?
 /* 0x8003C9A8 */ extern MenuNavigation g_MenuNavigation;
 /* 0x8003C9F8 */ extern GameSettings g_Settings;
@@ -1333,7 +1333,7 @@ extern const char aBaslus00067dra[19];
 extern const char g_strMemcardRootPath[];
 extern s32 g_LoadFile;
 extern s32 D_8006BB00;
-extern u8 D_8006BB74[0x800];
+extern u8 g_CastleMap[0x800];
 extern s32 D_8006C374;
 extern s32 D_8006C378;
 extern GpuBuffer* g_CurrentBuffer; // g_CurrentBuffer;

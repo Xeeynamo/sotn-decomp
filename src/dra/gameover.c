@@ -179,7 +179,7 @@ void HandleGameOver(void) {
 #if defined(VERSION_US)
         PlaySfx(MU_LAND_OF_BENEDICTION);
 #elif defined(VERSION_HD)
-        if (g_CurrentPlayableCharacter == PLAYER_ALUCARD) {
+        if (g_PlayableCharacter == PLAYER_ALUCARD) {
             if (g_StageId == STAGE_BO6) {
                 switch (rand() % 3) {
                 case 0:

@@ -62,8 +62,8 @@ void func_800F4994(void) {
     for (i = 0; i < 5; i++) {
         // Iterate through the 4 stats (STR, CON, INT, LCK)
         for (j = 0; j < 4; j++) {
-            statBonus =
-                D_800A7718[g_Status.equipment[HEAD_SLOT + i]].statsBonus[j];
+            statBonus = g_AccessoryDefs[g_Status.equipment[HEAD_SLOT + i]]
+                            .statsBonus[j];
             if (statBonus > 128) {
                 statBonus -= 256;
             }
@@ -140,10 +140,10 @@ s32 CalcAttack(s32 equipId, s32 otherEquipId) {
     s16 totalAttack;
     s16 strengthStat;
 
-    if (D_800A4B04[equipId].itemCategory == ITEM_FOOD ||
-        D_800A4B04[equipId].itemCategory == ITEM_MEDICINE ||
-        (D_800A4B04[equipId].itemCategory == ITEM_SHIELD &&
-         D_800A4B04[equipId].attack == 1)) {
+    if (g_EquipDefs[equipId].itemCategory == ITEM_FOOD ||
+        g_EquipDefs[equipId].itemCategory == ITEM_MEDICINE ||
+        (g_EquipDefs[equipId].itemCategory == ITEM_SHIELD &&
+         g_EquipDefs[equipId].attack == 1)) {
         return 0;
     }
 
@@ -155,10 +155,10 @@ s32 CalcAttack(s32 equipId, s32 otherEquipId) {
 
     for (i = 0; i < 5; i++) {
         equipmentAttackBonus +=
-            (u16)D_800A7718[g_Status.equipment[2 + i]].attBonus;
+            (u16)g_AccessoryDefs[g_Status.equipment[2 + i]].attBonus;
     }
 
-    totalAttack = D_800A4B04[equipId].attack;
+    totalAttack = g_EquipDefs[equipId].attack;
     strengthStat = g_Status.statsTotal[0];
 
     if (strengthStat >= totalAttack) {
@@ -175,7 +175,7 @@ s32 CalcAttack(s32 equipId, s32 otherEquipId) {
     if (equipId == ITEM_MURAMASA) {
         totalAttack += SquareRoot0(g_Status.D_80097C40);
     }
-    if (equipId == 4 && D_800A4B04[otherEquipId].itemCategory == ITEM_SHIELD) {
+    if (equipId == 4 && g_EquipDefs[otherEquipId].itemCategory == ITEM_SHIELD) {
         totalAttack += 5;
     }
     if (equipId == ITEM_SWORD_FAMILIAR) {
@@ -217,17 +217,17 @@ void CalcDefense(void) {
     // Iterate over player's hands, hand 0 and hand 1.
     for (i = 0; i < 2; i++) {
         thisHandItem = g_Status.equipment[i];
-        totalDefense += D_800A4B04[thisHandItem].defense;
+        totalDefense += g_EquipDefs[thisHandItem].defense;
         // If this hand is shield rod and other hand is a shield, defense bonus
         // of 2.
         if ((thisHandItem == 4) &&
-            D_800A4B04[g_Status.equipment[1 - i]].itemCategory == 9) {
+            g_EquipDefs[g_Status.equipment[1 - i]].itemCategory == 9) {
             totalDefense += 2;
         }
     }
     // Iterate over accessories worn by player
     for (i = 0; i < 5; i++) {
-        acc = &D_800A7718[g_Status.equipment[i + 2]];
+        acc = &g_AccessoryDefs[g_Status.equipment[i + 2]];
         totalDefense += acc->defBonus;
         g_Status.defenseElement |= acc->unk10;
         g_Status.D_80097C2A |= acc->unk12;
@@ -273,7 +273,7 @@ void CalcDefense(void) {
     totalDefense += (SquareRoot0(g_Status.statsTotal[STAT_CON]) - 2);
 
     if (CheckEquipmentItemCount(ITEM_WALK_ARMOR, ARMOR_TYPE) != 0) {
-        totalDefense += g_roomCount / 60;
+        totalDefense += g_RoomCount / 60;
     }
 
     if (*D_80139828 != 0) {
@@ -955,10 +955,9 @@ void DrawPauseMenu(s32 arg0) {
         DrawMenuStr(c_strEXP, 32, 176, ctx);
         DrawMenuInt(g_Status.exp, 144, 176, ctx);
         DrawMenuStr(c_strNEXT, 32, 188, ctx);
-        DrawMenuInt(g_Status.level != 99
-                        ? c_arrExpNext[g_Status.level] - g_Status.exp
-                        : 0,
-                    144, 188, ctx);
+        DrawMenuInt(
+            g_Status.level != 99 ? g_ExpNext[g_Status.level] - g_Status.exp : 0,
+            144, 188, ctx);
         DrawMenuStr(c_strGOLD[0], 32, 200, ctx);
         DrawMenuInt(g_Status.gold, 144, 200, ctx);
         DrawMenuStr(c_strLEVEL, 248, 40, ctx);
@@ -979,7 +978,7 @@ void DrawPauseMenu(s32 arg0) {
         }
         DrawMenuStr(c_strGOLD[i - 7], 260, 68, ctx);
         DrawMenuStr(c_strROOMS, 240, 150, ctx);
-        DrawMenuInt(g_roomCount, 328, 150, ctx);
+        DrawMenuInt(g_RoomCount, 328, 150, ctx);
         DrawMenuStr(c_strKILLS, 240, 164, ctx);
         DrawMenuInt(g_Status.killCount, 328, 164, ctx);
         DrawMenuStr(c_strTIME, 208, 192, ctx);
@@ -1227,11 +1226,11 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
 
         strEquipName = GetEquipmentName(*new_var, equipId);
         if (D_801375CC.equipTypeFilter == 0) {
-            icon = D_800A4B04[equipId].icon;
-            palette = D_800A4B04[equipId].iconPalette;
+            icon = g_EquipDefs[equipId].icon;
+            palette = g_EquipDefs[equipId].iconPalette;
         } else {
-            icon = D_800A7718[equipId].icon;
-            palette = D_800A7718[equipId].iconPalette;
+            icon = g_AccessoryDefs[equipId].icon;
+            palette = g_AccessoryDefs[equipId].iconPalette;
         }
 
         LoadEquipIcon(icon, palette, i);
@@ -1299,7 +1298,7 @@ void DrawConsumableCount(s32 itemId, s32 hand, MenuContext* ctx) {
     s32 displayCount;
     u8 equipCount;
 
-    if (D_800A4B04[itemId].isConsumable != 0) {
+    if (g_EquipDefs[itemId].isConsumable != 0) {
         // This holds one less than how many you have.
         equipCount = g_Status.equipHandCount[itemId];
         str_idx = &outstring;
@@ -1462,14 +1461,14 @@ void func_800F9E18(s32 arg0) {
     }
 
     for (i = nHalfScreenSize; i < nItems; i++, nHalfScreenSize++) {
-        strcpy(buffer, g_RelicsDesc[i * ItemsPerRow + 0].name);
+        strcpy(buffer, g_RelicsDefs[i * ItemsPerRow + 0].name);
         if ((nHalfScreenSize % ItemsPerRow) == 0) {
             func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 128, 1);
         } else {
             func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 259, 1);
         }
 
-        strcpy(buffer, g_RelicsDesc[i * ItemsPerRow + 1].name);
+        strcpy(buffer, g_RelicsDefs[i * ItemsPerRow + 1].name);
         if ((nHalfScreenSize % ItemsPerRow) == 0) {
             func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 640, 1);
         } else {
@@ -1529,16 +1528,16 @@ void CheckWeaponCombo(void) {
     weapon0 = g_Status.equipment[LEFT_HAND_SLOT];
     weapon1 = g_Status.equipment[RIGHT_HAND_SLOT];
 
-    combo1 = D_800A4B04[weapon0].comboSub & D_800A4B04[weapon1].comboMain;
+    combo1 = g_EquipDefs[weapon0].comboSub & g_EquipDefs[weapon1].comboMain;
     oddComboCheck = 0x80000000;
     oddComboCheck &= -(combo1 == 0);
 
-    combo2 = D_800A4B04[weapon0].comboMain & D_800A4B04[weapon1].comboSub;
+    combo2 = g_EquipDefs[weapon0].comboMain & g_EquipDefs[weapon1].comboSub;
     comboBits = combo1 | combo2;
 
     if (comboBits != 0) {
         for (i = 0xAA; i < 0xD9; i++) {
-            if (comboBits & D_800A4B04[i].comboSub) {
+            if (comboBits & g_EquipDefs[i].comboSub) {
                 D_8013AEE4 = oddComboCheck + i;
                 return;
             }
@@ -1556,7 +1555,7 @@ bool LoadWeaponPrg(s32 equipIndex) {
         equipId = 0xD8;
     }
 
-    weaponId = D_800A4B04[equipId].weaponId;
+    weaponId = g_EquipDefs[equipId].weaponId;
     if (weaponId == D_8003C90C[equipIndex] || weaponId == 0xFF) {
         return 1;
     }
@@ -1661,14 +1660,14 @@ void func_800FADC0(void) {
 
     if (g_MenuNavigation.cursorEquip < 2) {
         cursorEquip = g_Status.equipment[g_MenuNavigation.cursorEquip];
-        description = D_800A4B04[cursorEquip].description;
-        equipIcon = D_800A4B04[cursorEquip].icon;
-        palette = D_800A4B04[cursorEquip].iconPalette;
+        description = g_EquipDefs[cursorEquip].description;
+        equipIcon = g_EquipDefs[cursorEquip].icon;
+        palette = g_EquipDefs[cursorEquip].iconPalette;
     } else {
         cursorEquip = g_Status.equipment[g_MenuNavigation.cursorEquip];
-        description = D_800A7718[cursorEquip].description;
-        equipIcon = D_800A7718[cursorEquip].icon;
-        palette = D_800A7718[cursorEquip].iconPalette;
+        description = g_AccessoryDefs[cursorEquip].description;
+        equipIcon = g_AccessoryDefs[cursorEquip].icon;
+        palette = g_AccessoryDefs[cursorEquip].iconPalette;
     }
     func_800FAD34(description, 0x1, equipIcon, palette);
 }
@@ -1895,5 +1894,5 @@ s32 func_800FD664(s32 arg0) {
 }
 
 u8 GetEquipItemCategory(s32 equipId) {
-    return D_800A4B04[g_Status.equipment[equipId]].itemCategory;
+    return g_EquipDefs[g_Status.equipment[equipId]].itemCategory;
 }

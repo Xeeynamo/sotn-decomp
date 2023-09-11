@@ -212,7 +212,7 @@ void StoreSaveData(SaveData* save, s32 slotNo, s32 memcardIcon) {
 
     // writes room completion percentage
     strcat(h.Title, "　");
-    i = roomPercentage = g_roomCount * 100 / RoomCount;
+    i = roomPercentage = g_RoomCount * 100 / RoomCount;
     if (i >= 100) {
         STRCPY(saveTitle, "０００");
         saveTitle[1] += i / 100;
@@ -251,8 +251,8 @@ void StoreSaveData(SaveData* save, s32 slotNo, s32 memcardIcon) {
     dst->stageID = g_StageId;
     dst->memcardIcon = memcardIcon;
     dst->isTimeAttackUnlocked = g_IsTimeAttackUnlocked;
-    dst->playableCharacter = g_CurrentPlayableCharacter;
-    dst->exploredRoomCount = g_roomCount;
+    dst->playableCharacter = g_PlayableCharacter;
+    dst->exploredRoomCount = g_RoomCount;
     dst->roomX = g_CurrentRoom.left;
     dst->roomY = g_CurrentRoom.top;
     dst->saveSize = sizeof(SaveData);
@@ -262,11 +262,11 @@ void StoreSaveData(SaveData* save, s32 slotNo, s32 memcardIcon) {
     *dstSettings = g_Settings;
 
     for (i = 0; i < 0x300; i++) {
-        dst->castleFlags[i] = D_8003BDEC[i];
+        dst->castleFlags[i] = g_CastleFlags[i];
     }
 
     for (i = 0; i < 0x800; i++) {
-        dst->castleMap[i] = D_8006BB74[i];
+        dst->castleMap[i] = g_CastleMap[i];
     }
 
     dst->rng = g_randomNext;
@@ -286,8 +286,8 @@ s32 LoadSaveData(SaveData* save) {
 
     g_StageId = save->stageID;
     g_IsTimeAttackUnlocked = save->isTimeAttackUnlocked;
-    g_CurrentPlayableCharacter = save->playableCharacter;
-    g_roomCount = save->exploredRoomCount;
+    g_PlayableCharacter = save->playableCharacter;
+    g_RoomCount = save->exploredRoomCount;
     g_CurrentRoom.left = save->roomX;
     g_CurrentRoom.top = save->roomY;
 
@@ -304,11 +304,11 @@ s32 LoadSaveData(SaveData* save) {
     g_Settings.D_8003CB04 |= prevCompletionFlags2;
 
     for (i = 0; i < 0x300; i++) {
-        D_8003BDEC[i] = save->castleFlags[i];
+        g_CastleFlags[i] = save->castleFlags[i];
     }
 
     for (i = 0; i < 0x800; i++) {
-        D_8006BB74[i] = save->castleMap[i];
+        g_CastleMap[i] = save->castleMap[i];
     }
 
     g_randomNext = save->rng;

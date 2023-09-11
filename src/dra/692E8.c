@@ -265,7 +265,7 @@ TeleportCheck GetTeleportToOtherCastle(void) {
 INCLUDE_ASM("dra/nonmatchings/692E8", EntityAlucard);
 
 void func_8010BF64(Unkstruct_8010BF64* arg0) {
-    if (g_CurrentPlayableCharacter == PLAYER_ALUCARD) {
+    if (g_PlayableCharacter == PLAYER_ALUCARD) {
         arg0->unk14 = D_800ACEC6.unk1A - ((g_Player_unk0C / 2) & 2);
         arg0->unk1C = D_800ACEC6.unk1C + ((g_Player_unk0C / 2) & 2);
         arg0->unk18 = D_800ACEC6.unk10 - 1;

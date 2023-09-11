@@ -109,7 +109,7 @@ s32 func_800FD664(s32 arg0) {
 
 // SAT: func_0606F348
 u8 GetEquipItemCategory(s32 equipId) {
-    return D_800A4B04[g_Status.equipment[equipId]].itemCategory;
+    return g_EquipDefs[g_Status.equipment[equipId]].itemCategory;
 }
 
 // SAT: func_0606F378
@@ -170,9 +170,9 @@ u8* GetEquipCount(s32 equipTypeFilter) {
 // SAT: func_0606F418
 const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId) {
     if (!equipTypeFilter) {
-        return D_800A4B04[equipId].name;
+        return g_EquipDefs[equipId].name;
     } else {
-        return D_800A7718[equipId].name;
+        return g_AccessoryDefs[equipId].name;
     }
 }
 
@@ -239,7 +239,7 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
     u32 accessoryCount;
 
     if (subweaponId == 0) {
-        *subwpn = g_Subweapons[g_Status.subWeapon];
+        *subwpn = g_SubwpnDefs[g_Status.subWeapon];
         accessoryCount = CheckEquipmentItemCount(0x4f, 4); // 4f instead of 4d
         if (accessoryCount == 1) {
             subwpn->unk2 = subwpn->unk2 / 2;
@@ -259,7 +259,7 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
             return 0;
         }
     } else {
-        *subwpn = g_Subweapons[subweaponId];
+        *subwpn = g_SubwpnDefs[subweaponId];
         if (CheckEquipmentItemCount(0x14, 2) != 0) {
             subwpn->attack += 10;
         }
@@ -286,7 +286,7 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
 
     criticalModRate = 5;
 
-    *res = D_800A4B04[equipId]; // hack not needed
+    *res = g_EquipDefs[equipId]; // hack not needed
     criticalRate = res->criticalRate;
     criticalRate = criticalRate - criticalModRate +
                    SquareRoot0((g_Status.statsTotal[3] * 2) + (rand() & 0xF));
@@ -302,7 +302,7 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
 
     res->criticalRate = criticalRate;
     func_800F4994();
-    itemCategory = D_800A4B04[equipId].itemCategory;
+    itemCategory = g_EquipDefs[equipId].itemCategory;
     if (itemCategory != ITEM_FOOD && itemCategory != ITEM_MEDICINE) {
         res->attack = func_800F4D38(equipId, g_Status.equipment[1 - handId]);
         if (g_Player.unk0C & 0x4000) {
@@ -446,7 +446,7 @@ u16 func_800FF128(Entity* enemyEntity, Entity* attackerEntity) {
                 }
                 break;
             case 2:
-                damage += SquareRoot0(g_roomCount);
+                damage += SquareRoot0(g_RoomCount);
                 break;
             case 3:
                 damage += (rand() % g_Status.statsTotal[3]) + 1;

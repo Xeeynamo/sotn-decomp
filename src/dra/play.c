@@ -40,18 +40,18 @@ void HandlePlay(void) {
         D_8003C9A4 = 0;
         D_8003C738 = 0;
         if (D_8003C730 == 0) {
-            for (i = 0; i < LEN(D_8003BDEC); i++) {
-                D_8003BDEC[i] = 0;
+            for (i = 0; i < LEN(g_CastleFlags); i++) {
+                g_CastleFlags[i] = 0;
             }
-            D_8003BDEC[0xB9] = 1;
-            D_8003BDEC[0x9B] = 1;
-            if (g_CurrentPlayableCharacter != 0) {
-                D_8003BDEC[0x35] = 1;
-                D_8003BDEC[0x62] = 1;
-                D_8003BDEC[0x63] = 1;
-                D_8003BDEC[0x85] = 1;
-                D_8003BDEC[0x95] = 1;
-                D_8003BDEC[0x96] = 1;
+            g_CastleFlags[0xB9] = 1;
+            g_CastleFlags[0x9B] = 1;
+            if (g_PlayableCharacter != 0) {
+                g_CastleFlags[0x35] = 1;
+                g_CastleFlags[0x62] = 1;
+                g_CastleFlags[0x63] = 1;
+                g_CastleFlags[0x85] = 1;
+                g_CastleFlags[0x95] = 1;
+                g_CastleFlags[0x96] = 1;
             }
 
             for (i = 0, ptr = &g_MenuNavigation; i < sizeof(MenuNavigation);
@@ -129,8 +129,8 @@ void HandlePlay(void) {
         DestroyAllPrimitives();
         func_800EDAE4();
         func_801024DC();
-        if (D_8003BDEC[0x13] & 0x80) {
-            D_8003BDEC[0x13] = D_800A01B0[rand() & 0xF] + 0x80;
+        if (g_CastleFlags[0x13] & 0x80) {
+            g_CastleFlags[0x13] = D_800A01B0[rand() & 0xF] + 0x80;
         }
         g_GameStep++;
         break;
