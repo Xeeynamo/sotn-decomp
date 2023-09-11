@@ -1461,14 +1461,14 @@ void func_800F9E18(s32 arg0) {
     }
 
     for (i = nHalfScreenSize; i < nItems; i++, nHalfScreenSize++) {
-        strcpy(buffer, g_RelicsDefs[i * ItemsPerRow + 0].name);
+        strcpy(buffer, g_RelicDefs[i * ItemsPerRow + 0].name);
         if ((nHalfScreenSize % ItemsPerRow) == 0) {
             func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 128, 1);
         } else {
             func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 259, 1);
         }
 
-        strcpy(buffer, g_RelicsDefs[i * ItemsPerRow + 1].name);
+        strcpy(buffer, g_RelicDefs[i * ItemsPerRow + 1].name);
         if ((nHalfScreenSize % ItemsPerRow) == 0) {
             func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 640, 1);
         } else {
