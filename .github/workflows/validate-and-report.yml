@@ -51,6 +51,7 @@ jobs:
           submodules: false
       - name: Get dependencies
         uses: actions/cache@v3
+        id: get-dependencies
         with:
           path: 'disks/dependencies'
           key: sotn-${{ matrix.dependency }}-deps
