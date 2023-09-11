@@ -194,9 +194,6 @@ bool func_8011203C(void) {
     return false;
 }
 
-extern s32 D_800ACF74;
-extern s32 D_800ACF78;
-
 void func_801120B4(void) {
     s32 x_offset;
     u16 local_flags = 3;

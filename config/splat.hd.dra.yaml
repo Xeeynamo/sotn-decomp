@@ -99,7 +99,7 @@ segments:
       - [0x4129C, rodata] # jtbl_800E129C
       - [0x412BC, rodata]
       - [0x412DC, .rodata, 71830]
-      - [0x4132C, rodata] # jtbl_800E132C
+      - [0x4132C, .rodata, 71830] # jtbl_800E132C
       - [0x414A4, .rodata, 72BB0] # jtbl_800E14A4
       - [0x4166C, rodata] # jtbl_800E166C
       - [0x417E4, rodata] # jtbl_800E17E4
