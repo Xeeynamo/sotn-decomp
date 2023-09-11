@@ -3,6 +3,7 @@
 # tool to list functions by difficulty and decomp.me WIP links
 import argparse
 from pathlib import Path
+import sys
 from tabulate import tabulate
 import os
 import concurrent.futures
@@ -105,6 +106,8 @@ def find_wip(o):
     name = o[0]
     # look for a WIP on decomp.me
     function_name = os.path.basename(name).split(".")[0]
+
+    print(f"scraping decompme for {function_name}", file=sys.stderr)
     result = find_scratches(function_name, "ps1")
 
     if result:
@@ -114,9 +117,14 @@ def find_wip(o):
 
 
 if __name__ == "__main__":
+    print("Start function_finder_psx", file=sys.stderr)
     args = parser.parse_args()
+
     asm_files = get_asm_files("asm/us")
+    print(f"Got {len(asm_files)} asm files", file=sys.stderr)
+
     c_files = get_c_files("src")
+    print(f"Got {len(c_files)} asm files", file=sys.stderr)
 
     # sort by name, then number of branches, then length
     asm_files = sorted(asm_files, key=lambda x: (x["name"]))

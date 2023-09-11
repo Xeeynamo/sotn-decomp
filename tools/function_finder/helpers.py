@@ -19,6 +19,7 @@ def find_scratches(name, platform):
     best_result = None
     best_percent = 0
 
+    print(f"Got {len(scratches['results'])} results for {name} in {platform}")
     for result in scratches["results"]:
         if not "name" in result:
             continue
