@@ -6,6 +6,7 @@ from pathlib import Path
 import sys
 from tabulate import tabulate
 import os
+import re
 import concurrent.futures
 
 from helpers import find_scratches
@@ -103,13 +104,7 @@ def get_c_files(c_path):
 
 
 def find_wip(o):
-    name = o[0]
-    print(name)
-    # look for a WIP on decomp.me
-    function_name = os.path.basename(name).split(".")[0]
-
-    print(f"scraping decompme for {function_name} ({name})", file=sys.stderr)
-    result = find_scratches(function_name, "ps1")
+    result = find_scratches(o[1], "ps1")
 
     if result:
         return {"link": result[0], "percent": result[1]}
@@ -118,14 +113,9 @@ def find_wip(o):
 
 
 if __name__ == "__main__":
-    print("Start function_finder_psx", file=sys.stderr)
     args = parser.parse_args()
-
     asm_files = get_asm_files("asm/us")
-    print(f"Got {len(asm_files)} asm files", file=sys.stderr)
-
     c_files = get_c_files("src")
-    print(f"Got {len(c_files)} asm files", file=sys.stderr)
 
     # sort by name, then number of branches, then length
     asm_files = sorted(asm_files, key=lambda x: (x["name"]))
@@ -135,7 +125,7 @@ if __name__ == "__main__":
     output = []
 
     for f in asm_files:
-        name = f["name"]
+        name = str(f["name"])
         length = len(f["text"].split("\n"))
         branches = f["branches"]
         jump_table = f["jump_table"]
@@ -147,15 +137,24 @@ if __name__ == "__main__":
 
             # check if the folder name is part of the asm path and the function name
             # is also part of the path
-            if asm_folder_name in str(name) and c_file[1] in str(name):
+            if asm_folder_name in name and c_file[1] in name:
                 # found a decomp.me WIP, get the URL
                 wip = c_file[2]
+
+        matches = re.search(r"\/(\w+)\/nonmatchings\/\w+\/(\w+)\.s", name)
+        if matches:
+            ovl_name = matches.group(1)
+            func_name = matches.group(2)
+        else:
+            ovl_name = ""
+            func_name = name
 
         wip = ""
         wip_percentage = ""
         output.append(
             [
-                str(name).replace("asm/", ""),
+                ovl_name,
+                func_name,
                 length,
                 branches,
                 jump_table,
@@ -163,27 +162,6 @@ if __name__ == "__main__":
                 wip_percentage,
             ]
         )
-
-    if args.use_call_trees:
-        base_url = (
-            "https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-duplicates"
-        )
-        for i, o in enumerate(output):
-            filepath_split = o[0].split("/")
-            function_name = filepath_split[-1].split(".s")[0]
-            # Replicate the logic used in analyze_calls to find what svg name
-            # would have used for this function. Note that these don't include "asm" dir
-            # so the filepath indices are off by one.
-            overlay = filepath_split[1]
-            if overlay == "st":
-                overlay = filepath_split[2]
-            if overlay == "weapon":
-                overlay = filepath_split[3]
-            unique_name = ".".join([overlay, function_name])
-
-            svg_path = os.path.join("function_calls", f"{unique_name}.svg")
-            if os.path.exists(svg_path):
-                o[0] = f"[{o[0]}]({base_url}/{svg_path})"
 
     if not args.no_fetch:
         # we are mostly waiting on IO so run in parallel
@@ -195,8 +173,19 @@ if __name__ == "__main__":
         for i, o in enumerate(output):
             # keep the in-source results as definitive
             if results[i] != None:
-                o[4] = results[i]["link"]
-                o[5] = results[i]["percent"]
+                o[5] = results[i]["link"]
+                o[6] = results[i]["percent"]
 
-    headers = ["Filename", "Length", "Branches", "Jtbl", "WIP", "%"]
+    if args.use_call_trees:
+        base_url = (
+            "https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-duplicates"
+        )
+        for i, o in enumerate(output):
+            unique_name = ".".join([o[0], o[1]])
+
+            svg_path = os.path.join("function_calls", f"{unique_name}.svg")
+            if os.path.exists(svg_path):
+                o[1] = f"[{o[1]}]({base_url}/{svg_path})"
+
+    headers = ["Ovl", "Function", "Length", "Branches", "Jtbl", "WIP", "%"]
     print(tabulate(output, headers=headers, tablefmt="github"))
