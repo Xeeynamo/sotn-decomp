@@ -1109,3 +1109,7 @@ g_volumeR = 0x8013B698;
 g_imgUnk8013C200 = 0x8013C200;
 g_imgUnk8013C270 = 0x8013C270;
 g_StageOverlay = 0x80180000;
+c_strTimeAttackHiddenEntry = 0x800A82FC;
+c_strTimeAttackEntries = 0x800A832C;
+c_strTimeAttackEntry = 0x801378C0;
+g_TimeAttackEntryTimes = 0x80137854;
