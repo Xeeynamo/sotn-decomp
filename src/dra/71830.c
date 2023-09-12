@@ -197,9 +197,9 @@ bool func_8011203C(void) {
 void func_801120B4(void) {
     s32 x_offset;
     u16 local_flags = 3;
-    // I don't know man
-    s32 new_var = (g_Player.pl_vram_flag & 0x20) > 0;
-    s32 temp_s2 = new_var;
+
+    bool condition = false;
+    condition = ((g_Player.pl_vram_flag & 0x20) != condition);
 
     if (((PLAYER.step_s == 0x57) || (PLAYER.step_s == 0x5B)) &&
         PLAYER.animFrameIdx < 5U) {
@@ -464,7 +464,7 @@ void func_801120B4(void) {
     }
     if ((local_flags & 2) && (g_Player.padPressed & PAD_UP) &&
         g_Player.unk48 == 0) {
-        func_8010DA48(temp_s2);
+        func_8010DA48(condition);
         PLAYER.step_s = 1;
         local_flags |= 0x8000;
         if (g_Player.unk14 != 0) {
