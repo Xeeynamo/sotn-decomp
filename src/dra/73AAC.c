@@ -114,7 +114,7 @@ s32 func_80113D7C(s16 arg0) {
 
 s32 func_80113E68(void) {
     s16 rnd = rand();
-    PLAYER.ext.generic.unkAC = 0x2E + (rnd % 3);
+    PLAYER.ext.player.unkAC = 0x2E + (rnd % 3);
     return rnd % 16;
 }
 
@@ -215,7 +215,7 @@ void func_80114DF4(s32 arg0) {
             func_80102CD8(1);
             PlaySfx(0x644);
             func_8011AAFC(g_CurrentEntity, 0x27, 0);
-            
+
             randvar = rand() % 64;
 
             if (g_Status.hp == 0) {
@@ -236,14 +236,15 @@ void func_80114DF4(s32 arg0) {
         break;
     case 2:
         if (D_80097448[0] >= 0x29) {
-            yShift = FIX(11.0/256);
+            yShift = FIX(11.0 / 256);
         } else {
-            yShift = FIX(44.0/256);
+            yShift = FIX(44.0 / 256);
         }
 
         // I don't know man
-        do{}while(0);
-        
+        do {
+        } while (0);
+
         if (!(g_Player.pl_vram_flag & 1)) {
             PLAYER.velocityY += yShift;
             if (PLAYER.velocityY > FIX(7)) {
@@ -252,12 +253,12 @@ void func_80114DF4(s32 arg0) {
             func_8010E168(1, 4);
             break;
         }
-        
+
         if (!(g_Player.unk04 & 1)) {
             func_80102CD8(1);
             PlaySfx(0x644);
         }
-        
+
         PLAYER.velocityY = 0;
         if (g_Status.hp == 0) {
             if (--D_80137FE0 == 0) {
@@ -268,8 +269,8 @@ void func_80114DF4(s32 arg0) {
             func_8010E168(1, 4);
             break;
         }
-        
-        if (g_Player.padTapped & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT) || 
+
+        if (g_Player.padTapped & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT) ||
             arg0 != 0 || D_800ACE44 != 0) {
             PLAYER.animFrameDuration = 0x10;
             g_Player.padTapped |= (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
@@ -277,7 +278,7 @@ void func_80114DF4(s32 arg0) {
             PlaySfx(0x608);
             if (g_Player.unk5E == 0) {
                 func_8010DA48(0x3B);
-                if (PLAYER.ext.generic.unkAC != 0x3A) {
+                if (PLAYER.ext.player.unkAC != 0x3A) {
                     func_8011AAFC(g_CurrentEntity, 0x30010, 0);
                 } else {
                     func_8011AAFC(g_CurrentEntity, 0x20, 0);
@@ -290,7 +291,7 @@ void func_80114DF4(s32 arg0) {
             }
             func_8010E168(1, 0x1C);
             PLAYER.step_s = 3;
-            if (PLAYER.ext.generic.unkAC != 0x3A) {
+            if (PLAYER.ext.player.unkAC != 0x3A) {
                 func_8011AAFC(g_CurrentEntity, 0x3000D, 0);
                 func_8011AAFC(g_CurrentEntity, 0x3001F, 0);
             } else {
@@ -298,7 +299,7 @@ void func_80114DF4(s32 arg0) {
                 func_8011AAFC(g_CurrentEntity, 0x7001E, 0);
             }
         }
-        PLAYER.palette = ((PLAYER.ext.generic.unkAC + 0xFFC8) & 1) - 0x7E62;
+        PLAYER.palette = ((PLAYER.ext.player.unkAC + 0xFFC8) & 1) - 0x7E62;
         break;
     case 3:
         if (PLAYER.animFrameDuration < 0) {
@@ -308,7 +309,7 @@ void func_80114DF4(s32 arg0) {
             PLAYER.rotPivotX = 0;
             PLAYER.unk19 |= 4;
             PLAYER.rotAngle = D_800ACF94[PLAYER.animFrameDuration] >> 4;
-            if(PLAYER.rotAngle == 0){
+            if (PLAYER.rotAngle == 0) {
                 PLAYER.rotPivotY = 0x18;
             } else {
                 PLAYER.rotPivotY = 0x14;
@@ -316,7 +317,7 @@ void func_80114DF4(s32 arg0) {
         }
         break;
     }
-    if (PLAYER.ext.generic.unkAC == 0x3A) {
+    if (PLAYER.ext.player.unkAC == 0x3A) {
         func_8010E168(1, 4);
     }
     if (wasZero && (g_Player.unk72 != 0)) {
