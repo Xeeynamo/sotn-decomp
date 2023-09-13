@@ -370,6 +370,8 @@ extern u8 D_800ACFB4[][4];
 extern s32 D_800ACE48[];
 extern Unkstruct_800ACEC6 D_800ACEC6;
 extern u8 D_800ACF4C[];
+extern s32 D_800ACF74; // These two might...
+extern s32 D_800ACF78; // ...be an array
 extern unkstruct_800ACF7C D_800ACF7C[];
 extern s16 D_800ACF8A[]; // collection of sounds?
 extern s16 D_800ACF60[]; // collection of sounds?
@@ -392,6 +394,7 @@ extern RECT c_backbufferClear;
 extern s16 D_800AFFB8[];
 extern s32 D_800B0130[];
 extern s32 D_800B01B8[];
+extern u8 D_800B0608[];
 extern s32 D_800B0798[];
 extern s32 D_800B07C8;
 extern s32 D_800B0830[];
