@@ -315,3 +315,9 @@ typedef struct Unkstruct_801C7954 {
     /* 0x0C */ u16 x3;
     /* 0x0E */ u16 x2;
 } Unkstruct_801C7954; // size = 0x10
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+} unk_800B08CC; // size = 0xC
