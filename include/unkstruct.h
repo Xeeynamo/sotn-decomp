@@ -321,3 +321,10 @@ typedef struct {
     s32 unk4;
     s32 unk8;
 } unk_800B08CC; // size = 0xC
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+} Unkstruct_800FE97C; // size = 0x10
