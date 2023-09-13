@@ -141,7 +141,72 @@ void func_80116208(void) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/75F54", func_80116408);
+void func_80116408(void) {
+    // Whether we should run the last 3 function calls at the end
+    bool runFinishingBlock = 0;
+    switch (PLAYER.step_s) {
+    case 0:
+        if (func_8011AAFC(g_CurrentEntity, 0x21U, 0) == NULL) {
+            func_8010E570(0);
+        }
+        func_8010DA48(1);
+        PLAYER.step_s++;
+        break;
+    case 1:
+        if (g_Player.unk5C == 1) {
+            PLAYER.step_s++;
+        }
+        break;
+    case 2:
+        PLAYER.velocityX = 0;
+        if (func_8010E27C() != 0) {
+            if (g_Player.padPressed & PAD_RIGHT) {
+                if ((g_Player.D_80072BD0[2][0] & 0x8001) ||
+                    (g_Player.D_80072BD0[1][0] & 0x8000) ||
+                    (PLAYER.posX.i.hi > 248)) {
+                    SetSpeedX(FIX(3));
+                }
+            } else if ((g_Player.D_80072BD0[3][0] & 0x8001) ||
+                       (g_Player.D_80072BD0[1][0] & 0x8000) ||
+                       (PLAYER.posX.i.hi < 8)) {
+                SetSpeedX(FIX(3));
+            }
+        }
+        if (g_Player.unk5C == 2) {
+            PLAYER.velocityX = 0;
+            func_8010DA48(0x3D);
+            PLAYER.step_s++;
+        }
+        break;
+    case 3:
+        func_8010E27C();
+        if (g_Player.unk5C == 3) {
+            func_8010DA48(0x3C);
+            PLAYER.step_s += 1;
+            if (g_Player.padPressed & PAD_DOWN) {
+                runFinishingBlock = 1;
+            }
+        }
+        break;
+    case 4:
+        if (PLAYER.animFrameIdx == 10 && PLAYER.animFrameDuration == 1) {
+            g_Player.D_80072F18 = 4;
+            func_8011AAFC(g_CurrentEntity, 0x25U, 0);
+        }
+        if (PLAYER.animFrameDuration < 0) {
+            runFinishingBlock = 1;
+        }
+        break;
+    }
+    // Not sure why this cast to u16 is needed but it is
+    if (((u16)runFinishingBlock) || (g_Player.unk5C == 0xFFFF)) {
+        func_8010E570(0);
+        func_8010DA48(0x3D);
+        func_80111CC0();
+    }
+}
+
+const u32 rodataPadding_419FC = 0;
 
 void func_801166A4(void) {
     switch (PLAYER.step_s) {

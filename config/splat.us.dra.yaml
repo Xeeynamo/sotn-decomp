@@ -123,7 +123,7 @@ segments:
       - [0x41990, rodata] # jpt_80114300
       - [0x419B0, rodata] # jpt_80114388
       - [0x419D0, .rodata, 75DA0]
-      - [0x419E8, rodata] # jpt_8011643C
+      - [0x419E8, .rodata, 75F54] # jpt_8011643C
       - [0x41A00, rodata] # jpt_801169F4
       - [0x41A20, rodata] # jpt_80116CF8
       - [0x41A38, rodata]
