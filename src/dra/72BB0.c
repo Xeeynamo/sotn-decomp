@@ -178,7 +178,264 @@ void func_80113148(void) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/72BB0", func_801131C4);
+void func_801131C4(void) {
+    s32 i;
+    s32 x_offset;
+    u16 local_flags;
+    bool condition = false;
+
+    local_flags = 0;
+    condition = ((g_Player.pl_vram_flag & 0x20) != condition);
+
+    if ((g_Player.padTapped & PAD_CROSS) && !(g_Player.unk46 & PAD_LEFT)) {
+        if (g_Player.padPressed & PAD_DOWN) {
+            for (i = 0; i < 4; i++) {
+                if ((g_Player.D_80072BD0[i][0] & 0x40)) {
+                    g_Player.D_80072F0E = 8;
+                    return;
+                }
+            }
+        }
+        if (g_Player.unk72 == 0) {
+            func_8010E83C(1);
+            return;
+        }
+    }
+    if (func_8010FDF8(0x100C) != 0) {
+        return;
+    }
+    func_8010E1EC(0x2000);
+    if (g_Player.unk48 != 0) {
+        if (PLAYER.ext.player.unkAC == 0x11) {
+            PLAYER.ext.player.unkAC = 0x65;
+            PLAYER.animFrameDuration = 2;
+            PLAYER.animFrameIdx = 3;
+        }
+    } else if (PLAYER.ext.player.unkAC == 0x65) {
+        func_8010DA48(0x11);
+    }
+    switch (PLAYER.step_s) { /* switch 1 */
+    case 0x0:
+        if (D_800ACF74 != 0) {
+            D_800ACF74--;
+        } else if (D_80097448[0] >= 0x19) {
+            if (g_Player.unk48 == 0) {
+                x_offset = 0xC;
+                if (PLAYER.facingLeft) {
+                    x_offset = -0xC;
+                }
+                PLAYER.posX.i.hi = x_offset + PLAYER.posX.i.hi;
+                PLAYER.posY.i.hi += 2;
+                func_8011AAFC(g_CurrentEntity, 0xD0004U, 0);
+                D_800ACF74 = 0x60;
+                PLAYER.posY.i.hi -= 2;
+                PLAYER.posX.i.hi -= x_offset;
+            }
+        }
+        local_flags = 6;
+        break;
+    case 0x1: /* switch 1 */
+        if (!(g_Player.padPressed & PAD_DOWN)) {
+            local_flags = 1;
+            if ((PLAYER.animFrameIdx >= 4U) ||
+                PLAYER.ext.player.unkAC == 0x65) {
+                func_8010DA48(0x13);
+                PLAYER.step_s = 2;
+                PLAYER.animFrameIdx = 2;
+                if (g_Player.unk72 == 1) {
+                    PLAYER.animFrameIdx = 0;
+                }
+                if (g_Player.unk72 == 2) {
+                    PLAYER.animFrameIdx = 1;
+                }
+                return;
+            }
+        } else if (PLAYER.ext.player.unkAC == 0x65) {
+            PLAYER.step_s = 0;
+        } else {
+            if (PLAYER.animFrameDuration < 0) {
+                local_flags = 0x20;
+            }
+        }
+        break;
+    case 0x5: /* switch 1 */
+        func_8010DFF0(1, 1);
+        if (g_Player.unk72 == PLAYER.animFrameIdx ||
+            PLAYER.animFrameDuration < 0) {
+            local_flags = 0x20;
+        }
+        break;
+    case 0x3: /* switch 1 */
+    case 0x4: /* switch 1 */
+        func_8010DFF0(1, 1);
+        if (PLAYER.animFrameDuration < 0) {
+            local_flags = 0x20;
+        }
+        break;
+    case 0x2: /* switch 1 */
+        local_flags = 1;
+        if (g_Player.padPressed & PAD_DOWN) {
+            func_8010E470(0, PLAYER.velocityX);
+            break;
+        }
+        if (g_Player.unk72 != 0) {
+            func_8010DFF0(1, 1);
+            if (g_Player.unk72 == 1) {
+                PLAYER.animFrameIdx = 0;
+                PLAYER.animFrameDuration = 3;
+                break;
+            } else if (g_Player.unk72 == 2) {
+                if (PLAYER.animFrameIdx != 0) {
+                    PLAYER.animFrameIdx = 1;
+                    PLAYER.animFrameDuration = 3;
+                }
+                break;
+            } else if (g_Player.unk72 == 3) {
+                if ((u16)PLAYER.animFrameIdx >= 2U) {
+                    PLAYER.animFrameIdx = 2;
+                    PLAYER.animFrameDuration = 3;
+                }
+                break;
+            } else if (g_Player.unk72 == 4) {
+                if ((u16)PLAYER.animFrameIdx >= 3U) {
+                    PLAYER.animFrameIdx = 3;
+                    PLAYER.animFrameDuration = (s16)3U;
+                }
+                break;
+            }
+        }
+        if (PLAYER.animFrameDuration < 0) {
+            func_8010E570(0);
+        }
+
+        break;
+    case 0x40: /* switch 1 */
+    case 0x59: /* switch 1 */
+        func_8010DFF0(1, 1);
+        if ((u16)PLAYER.animFrameIdx < (u16)g_Player.unk54) {
+            if ((u16)PLAYER.animFrameIdx < 2U) {
+                func_8010E27C();
+                if (!(g_Player.padPressed & PAD_DOWN)) {
+                    if (g_Player.unk72 == 0) {
+                        PLAYER.step = 0;
+                        PLAYER.ext.player.unkAC = 0x24;
+                    }
+                }
+            }
+        } else {
+            g_Player.unk46 &= 0x7FFF;
+            local_flags = 0xE;
+            if (PLAYER.animFrameIdx == 7) {
+                if (g_Player.padPressed & g_Player.D_80072EF8) {
+                    PLAYER.animFrameDuration = 2;
+                    local_flags = 0xE;
+                } else {
+                    local_flags = 0x2E;
+                }
+            }
+        }
+        break;
+    case 0x47: /* switch 1 */
+    case 0x49: /* switch 1 */
+        if ((PLAYER.animFrameIdx == 6) &&
+            (g_Player.padPressed & g_Player.D_80072EF8)) {
+            PLAYER.animFrameDuration = 2;
+        case 0x41: /* switch 1 */
+        case 0x42: /* switch 1 */
+        case 0x43: /* switch 1 */
+        case 0x44: /* switch 1 */
+        case 0x45: /* switch 1 */
+        case 0x46: /* switch 1 */
+        case 0x48: /* switch 1 */
+        case 0x4A: /* switch 1 */
+        case 0x4B: /* switch 1 */
+        case 0x4C: /* switch 1 */
+        case 0x4D: /* switch 1 */
+        case 0x4E: /* switch 1 */
+        case 0x4F: /* switch 1 */
+        case 0x50: /* switch 1 */
+        case 0x53: /* switch 1 */
+        case 0x54: /* switch 1 */
+        case 0x55: /* switch 1 */
+        case 0x56: /* switch 1 */
+        case 0x57: /* switch 1 */
+        case 0x58: /* switch 1 */
+        case 0x5A: /* switch 1 */
+        case 0x5B: /* switch 1 */
+        case 0x5C: /* switch 1 */
+        case 0x5D: /* switch 1 */
+        }
+        func_8010DFF0(1, 1);
+        if ((u16)PLAYER.animFrameIdx < (u16)g_Player.unk54) {
+            if ((u16)PLAYER.animFrameIdx < 3U) {
+                func_8010E27C();
+                if (!(g_Player.padPressed & PAD_DOWN)) {
+                    if (g_Player.unk72 == 0) {
+                        PLAYER.ext.player.unkAC =
+                            D_800B0608[PLAYER.step_s - 0x41] + condition;
+                        PLAYER.step = 0;
+                    }
+                }
+            }
+        } else {
+            g_Player.unk46 &= 0x7FFF;
+            local_flags = 0xE;
+            if (PLAYER.animFrameDuration < 0) {
+                local_flags = 0x2E;
+            }
+        }
+        break;
+    case 0x51: /* switch 1 */
+        func_8010DFF0(1, 1);
+        if (PLAYER.animFrameDuration < 0) {
+            local_flags = 0x2E;
+        }
+        break;
+    }
+
+    if (local_flags & 0x20) {
+        func_8010E470(0, 0);
+        local_flags |= 0x8000;
+    }
+    if (local_flags & 2) {
+        if (g_Player.unk4C != 0) {
+            func_8010DA48(0x14);
+            PLAYER.step_s = 0;
+            local_flags |= 0x8000;
+        }
+    }
+    if (local_flags & 4) {
+        if (!(g_Player.padPressed & PAD_DOWN)) {
+            func_8010DA48(0x13);
+            PLAYER.step_s = 2;
+            local_flags |= 0x8000;
+        }
+    }
+    if (local_flags & 1) {
+        if (func_8010E27C()) {
+            switch ((u8)g_Player.unk72) { /* switch 2 */
+            case 0:                       /* switch 2 */
+            case 3:                       /* switch 2 */
+            case 4:                       /* switch 2 */
+                func_8010E6AC(0);
+                local_flags |= 0x8000;
+                break;
+            case 1: /* switch 2 */
+            case 2: /* switch 2 */
+                if (g_Player.padTapped & (PAD_RIGHT | PAD_LEFT)) {
+                    PLAYER.step_s = 5;
+                    func_8010DA48(0xF6);
+                    SetSpeedX(FIX(0.75));
+                    local_flags |= 0x8000;
+                }
+                break;
+            }
+        }
+    }
+    if ((local_flags & 0x8000) && (local_flags & 8)) {
+        func_8010FAF4();
+    }
+}
 
 void func_801139CC(s32 arg0) {
     s32 move = PLAYER.facingLeft != 0 ? -3 : 3;
@@ -198,3 +455,4 @@ void func_801139CC(s32 arg0) {
         PLAYER.velocityY = 0;
     }
 }
+const u32 rodataPadding_418DC = 0;
