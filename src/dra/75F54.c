@@ -87,7 +87,7 @@ void func_80115F54(void) {
 }
 
 void func_80116208(void) {
-    Unkstruct_800FE97C sp10;
+    DamageParam sp10;
     s32 temp_s0;
 
     switch (g_CurrentEntity->step_s) { /* irregular */
@@ -107,7 +107,7 @@ void func_80116208(void) {
     case 1:
         if (g_Player.unk60 == 3) { /* switch 1 */
             temp_s0 = func_800FE97C(&sp10, 2, g_Player.unk64, 1);
-            func_80118C84(sp10.unk8, 0);
+            func_80118C84(sp10.damageTaken, 0);
             if (temp_s0 == 4) {
                 SetPlayerStep(Player_Unk16);
                 func_80115394(&sp10, 0xC, 1);
