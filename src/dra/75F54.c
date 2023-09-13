@@ -86,7 +86,61 @@ void func_80115F54(void) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/75F54", func_80116208);
+void func_80116208(void) {
+    DamageParam damage;
+    s32 temp_s0;
+
+    switch (g_CurrentEntity->step_s) {
+    case 0:
+        func_80113EE0();
+        if (g_Player.unk62 == 0) {
+            PLAYER.ext.generic.unkAC = 0x37;
+            g_Player.D_80072F04 = 8;
+            g_Player.unk40 = 0x8166;
+            PlaySfx(0x6EB);
+        }
+        PLAYER.step_s = 1;
+        PLAYER.velocityY = 0;
+        PLAYER.velocityX = 0;
+        g_Player.unk60 = 2;
+        return;
+    case 1:
+        if (g_Player.unk60 == 3) {
+            temp_s0 = func_800FE97C(&damage, 2, g_Player.unk64, 1);
+            func_80118C84(damage.damageTaken, 0);
+            if (temp_s0 == 4) {
+                SetPlayerStep(Player_Unk16);
+                func_80115394(&damage, 0xC, 1);
+                return;
+            }
+            if (g_Player.unk62 == 0) {
+                g_Player.D_80072F04 = 4;
+                g_Player.unk40 = 0x8166;
+                PlaySfx(0x6E7);
+            }
+            if (g_Player.unk62 == 2) {
+                g_Player.D_80072F04 = 4;
+                g_Player.unk40 = 0x8161;
+            }
+            g_Player.unk60 = 2;
+            return;
+        }
+        if (g_Player.unk60 == 4) {
+            PLAYER.step = Player_Hit;
+            PLAYER.step_s = 0xF;
+            g_Player.unk60 = 0;
+            func_8010DA48(0x2E);
+            g_Player.unk5A = g_Player.unk64;
+            PlaySfx(0x6ED);
+            return;
+        }
+        if (g_Player.unk60 == 0) {
+            PLAYER.step = Player_Hit;
+            PLAYER.step_s = 1;
+            return;
+        }
+    }
+}
 
 INCLUDE_ASM("dra/nonmatchings/75F54", func_80116408);
 
