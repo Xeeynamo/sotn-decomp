@@ -112,10 +112,10 @@ segments:
       - [0x41380, rodata] # jpt_8011131C
       - [0x413A0, rodata]
       - [0x413C0, .rodata, 71830]
-      - [0x41410, rodata] # jpt_80112264
+      - [0x41410, .rodata, 71830] # jpt_80112264
       - [0x41588, .rodata, 72BB0] # jpt_80112C9C
-      - [0x41750, rodata] # jpt_80113328
-      - [0x418C8, rodata] # jpt_80113938
+      - [0x41750, .rodata, 72BB0] # jpt_80113328
+      - [0x418C8, .rodata, 72BB0] # jpt_80113938
       - [0x418E0, .rodata, 73AAC]
       - [0x418F4, rodata]
       - [0x41908, rodata] # jpt_801140A8

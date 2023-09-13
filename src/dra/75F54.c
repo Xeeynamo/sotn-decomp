@@ -1993,7 +1993,46 @@ void func_8012CC30(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/75F54", func_8012CCE4);
+void func_8012CCE4(void) {
+    PLAYER.velocityY = FIX(-3.5);
+    if ((PLAYER.step_s == 2) & (D_800B0914 == 2)) {
+        func_8010DA48(0xE7);
+        // Might be possible to rewrite this block to reduce duplication with
+        // some clever && and ||
+        if (PLAYER.facingLeft) {
+            if ((g_Player.pl_vram_flag & 0xF000) == 0xC000) {
+                PLAYER.velocityY = -(ABS(PLAYER.velocityX) + FIX(3.5));
+            }
+            if ((g_Player.pl_vram_flag & 0xF000) == 0x8000) {
+                PLAYER.velocityY = FIX(-0.5);
+            }
+        } else {
+            if ((g_Player.pl_vram_flag & 0xF000) == 0x8000) {
+                PLAYER.velocityY = -(ABS(PLAYER.velocityX) + FIX(3.5));
+            }
+            if ((g_Player.pl_vram_flag & 0xF000) == 0xC000) {
+                PLAYER.velocityY = FIX(-0.5);
+            }
+        }
+        D_800B0914 = 2;
+    } else if (
+        (g_Player.padPressed & (PAD_RIGHT | PAD_LEFT)) &&
+        ((PLAYER.step_s != 2) || (D_800B0914 != 0)) && (PLAYER.step_s != 9)) {
+        func_8010DA48(0xE7);
+        D_800B0914 = 1;
+        if (g_Player.padPressed & PAD_UP) {
+            PLAYER.velocityY = FIX(-4.875);
+        }
+    } else {
+        func_8010DA48(0xE6);
+        D_800B0914 = 0;
+        if (g_Player.padPressed & PAD_UP) {
+            PLAYER.velocityY = FIX(-4.875);
+        }
+    }
+    PLAYER.step_s = 4;
+    D_80138430 += 0x80;
+}
 
 void func_8012CED4(void) {
     if (PLAYER.step_s == 2 && D_800B0914 == PLAYER.step_s) {

@@ -475,7 +475,66 @@ void func_8012E550(void) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/8D3E8", func_8012E7A4);
+void func_8012E7A4(void) {
+    s32 i;
+    Entity* entity;
+#if defined(VERSION_US)
+    if (g_Entities[16].entityId != 0x22) {
+        if (func_8011AAFC(g_CurrentEntity, 0x23002CU, 0) == NULL) {
+            return;
+        }
+        func_8010FAF4();
+        g_Player.unk66++;
+    }
+#endif
+
+    for (i = 0; i < 6; i++) {
+        D_800B08CC[i].unk0 = 0;
+    }
+
+    D_801396EC = PLAYER.animCurFrame;
+    D_801396E0 = PLAYER.animSet;
+    func_8010E168(1, 4);
+    DestroyEntity(&g_Entities[17]);
+    g_Entities[17].entityId = 0x38;
+    DestroyEntity(&g_Entities[18]);
+    g_Entities[18].entityId = 0x37;
+    DestroyEntity(&g_Entities[19]);
+    g_Entities[19].entityId = 0x39;
+    DestroyEntity(&g_Entities[20]);
+    g_Entities[20].entityId = 0x3A;
+
+    for (entity = &g_Entities[21], i = 0; i < 9; i++, entity++) {
+        DestroyEntity(entity);
+        entity->entityId = 0x3B;
+        entity->params = i;
+    }
+    DestroyEntity(&g_Entities[30]);
+    g_Entities[30].entityId = 0x3C;
+    func_8012CED4();
+    PLAYER.animFrameIdx = 4;
+    PLAYER.animFrameDuration = 4;
+    PLAYER.step_s = 8;
+    D_80138430 = 0x800;
+    PLAYER.unk5A = 0x7E;
+    PLAYER.animSet = 0xF;
+    PLAYER.rotAngle = 0;
+    g_Player.unk48 = 0;
+    g_Player.unk46 = 0;
+    g_Player.unk44 = 0;
+    D_8013842C = 0;
+    PLAYER.velocityX = 0;
+    PLAYER.velocityY = 0;
+    PLAYER.palette = 0x810D;
+    PLAYER.zPriority = g_zEntityCenter.S16.unk0 - 2;
+#if defined(VERSION_HD)
+    if (g_Entities[16].entityId != 0x22) {
+        func_8011AAFC(g_CurrentEntity, 0x23002C, 0);
+        func_8010FAF4();
+        g_Player.unk66++;
+    }
+#endif
+}
 
 INCLUDE_ASM("dra/nonmatchings/8D3E8", func_8012E9C0);
 

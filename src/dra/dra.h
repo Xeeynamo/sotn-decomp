@@ -259,7 +259,6 @@ typedef struct {
     u16 exteriorLight;
 } JosephsCloak;
 
-extern s32 g_TimeAttackVerticalPageCursor;
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern s32 D_800A0144[];
 extern u32 D_800A0158;
@@ -367,12 +366,16 @@ extern s32 D_800ACC64[]; // probably a struct
 extern Vram g_Vram;
 extern CdFile* D_800ACC74[];
 extern u8 D_800ACFB4[][4];
+extern s32 D_800ACE44;
 extern s32 D_800ACE48[];
 extern Unkstruct_800ACEC6 D_800ACEC6;
 extern u8 D_800ACF4C[];
+extern s32 D_800ACF74; // These two might...
+extern s32 D_800ACF78; // ...be an array
 extern unkstruct_800ACF7C D_800ACF7C[];
 extern s16 D_800ACF8A[]; // collection of sounds?
 extern s16 D_800ACF60[]; // collection of sounds?
+extern s16 D_800ACF94[];
 extern u8 D_800AD094[];
 extern PfnEntityUpdate D_800AD0C4[];
 extern AnimSoundEvent* D_800AD53C[];
@@ -392,10 +395,12 @@ extern RECT c_backbufferClear;
 extern s16 D_800AFFB8[];
 extern s32 D_800B0130[];
 extern s32 D_800B01B8[];
+extern u8 D_800B0608[];
 extern s32 D_800B0798[];
 extern s32 D_800B07C8;
 extern s32 D_800B0830[];
 extern s32 D_800B083C[];
+extern unk_800B08CC D_800B08CC[];
 extern s32 D_800B0914;
 extern s32 D_800B0918;
 extern s32 D_800B091C;
@@ -549,6 +554,7 @@ extern s32 D_80137FB4;
 extern s32 D_80137FB8;
 extern s32 D_80137FBC;
 extern s32 D_80137FDC;
+extern s32 D_80137FE0;
 extern s32 D_80137FE4;
 extern s32 D_80137FE8;
 extern s32 D_80138004;
@@ -602,10 +608,12 @@ extern s8 D_801390C4;
 extern GpuBuffer* g_BackBuffer;
 extern u8 D_801390D8;
 extern SfxRingBufferItem g_sfxRingBuffer1[MAX_SND_COUNT];
+extern u16 D_801396E0;
 extern u16 D_801396E4;
 extern Multi D_801396E6;
 extern u16 D_801396E8;
 extern s16 D_801396EA;
+extern u16 D_801396EC;
 extern s32 D_801396F0;
 extern volatile s16 D_801396F4;
 extern s32 D_801396F8[0x20];

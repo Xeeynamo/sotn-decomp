@@ -796,7 +796,7 @@ void DrawTimeAttackMenu(MenuContext* ctx) {
 
     for (i = 0, offsetY = 8; i < 12; i++, offsetY += 12) {
         cursorX = ctx->cursorX;
-        entryIdx = i + g_TimeAttackVerticalPageCursor;
+        entryIdx = i + g_MenuNavigation.cursorTimeAttack;
         cursorY = ctx->cursorY + offsetY;
         DrawMenuInt(entryIdx + 1, cursorX + 16, cursorY, ctx);
         seconds = g_TimeAttackEntryTimes[entryIdx];
