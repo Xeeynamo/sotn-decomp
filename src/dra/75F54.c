@@ -90,7 +90,7 @@ void func_80116208(void) {
     DamageParam sp10;
     s32 temp_s0;
 
-    switch (g_CurrentEntity->step_s) { /* irregular */
+    switch (g_CurrentEntity->step_s) {
     case 0:
         func_80113EE0();
         if (g_Player.unk62 == 0) {
@@ -105,7 +105,7 @@ void func_80116208(void) {
         g_Player.unk60 = 2;
         return;
     case 1:
-        if (g_Player.unk60 == 3) { /* switch 1 */
+        if (g_Player.unk60 == 3) {
             temp_s0 = func_800FE97C(&sp10, 2, g_Player.unk64, 1);
             func_80118C84(sp10.damageTaken, 0);
             if (temp_s0 == 4) {
