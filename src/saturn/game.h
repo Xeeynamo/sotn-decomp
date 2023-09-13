@@ -7,6 +7,6 @@
 #define DAMAGE_FLAG_IMMUNE 0xC000
 
 extern EnemyDef g_EnemyDefs[];
-extern s32 g_roomCount;
+extern s32 g_RoomCount;
 
 #endif

@@ -140,12 +140,13 @@ void EntityDeathStolenItem(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
 
         if (itemId < NUM_HAND_ITEMS) {
-            g_api.LoadEquipIcon(g_api.D_800A4B04[itemId].icon,
-                                g_api.D_800A4B04[itemId].iconPalette, params);
+            g_api.LoadEquipIcon(g_api.equipDefs[itemId].icon,
+                                g_api.equipDefs[itemId].iconPalette, params);
         } else {
             itemId -= NUM_HAND_ITEMS;
-            g_api.LoadEquipIcon(g_api.D_800A7718[itemId].icon,
-                                g_api.D_800A7718[itemId].iconPalette, params);
+            g_api.LoadEquipIcon(
+                g_api.accessoryDefs[itemId].icon,
+                g_api.accessoryDefs[itemId].iconPalette, params);
         }
 
         prim = &g_PrimBuf[primIndex];

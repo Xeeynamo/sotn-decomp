@@ -556,7 +556,7 @@ void UpdateCd(void) {
         }
         if (*pLoadFile == CdFile_GameChr) {
             if (g_StageId == STAGE_ST0 ||
-                g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
+                g_PlayableCharacter != PLAYER_ALUCARD) {
                 D_800AC9F8 = OFF_BIN_FGAME2;
                 D_800ACA06 = CdFile_RichterPrg;
             } else {

@@ -111,7 +111,7 @@ void EntitySuccubus(Entity* self) {
         CreateEntityFromCurrentEntity(E_SUCCUBUS_WING_OVERLAY, &self[1]);
 
     case SUCCUBUS_CS_1: // Disguised as Lisa
-        if (D_8003BDEC[SeenCutscene] || (g_DemoMode != Demo_None)) {
+        if (g_CastleFlags[SeenCutscene] || (g_DemoMode != Demo_None)) {
             self->facingLeft = 0;
             self->posX.i.hi = 416 - g_Camera.posX.i.hi;
             self->posY.i.hi = 175 - g_Camera.posY.i.hi;

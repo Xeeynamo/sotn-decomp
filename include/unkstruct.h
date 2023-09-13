@@ -33,11 +33,6 @@ typedef struct {
 } unkstruct_80072FA0; // size = 0xC
 
 typedef struct {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ char unk4[0xC];
-} unkStruct_800A872C; // size = 0x10
-
-typedef struct {
     /* 0x00 */ u16* fg;
     /* 0x04 */ u16* bg;
     /* 0x08 */ u16 unk8;
@@ -169,11 +164,6 @@ typedef struct {
     /* 0x0C */ s32 unkC;
 } Unkstruct_800EA5E4;
 
-typedef struct Unkstruct_800A7734 {
-    /* 0x00 */ u16 unk00;
-    /* 0x02 */ char unk02[0x1E];
-} Unkstruct_800A7734; // size = 0x20
-
 typedef struct {
     s32 unk0;
     s32 unk4;
@@ -301,8 +291,7 @@ typedef struct {
     /* 0x04 */ const char* desc;
     /* 0x08 */ s16 unk08;
     /* 0x0A */ s16 unk0A;
-    /* 0x0C */ s16 unk0C;
-    /* 0x0E */ s16 unk0E;
+    /* 0x0C */ s32 unk0C;
 } RelicDesc;
 
 typedef struct Unkstruct_801C7954 {

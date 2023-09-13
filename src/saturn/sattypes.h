@@ -313,14 +313,14 @@ void PlaySfx(s16 sfxId);
 
 // Not 100% sure about address, gcc seems to added the offset within
 // the struct to the base address
-extern Equipment D_800A4B04[];
+extern Equipment g_EquipDefs[];
 
 extern GameApi g_api;
 extern Entity g_Entities[TOTAL_ENTITY_COUNT]; // 0x060997F8
 extern EntityEntry** PfnEntityUpdates[];
 extern u16 g_StageId; // u32 in psx
 extern SpellDef g_SpellDefs[];
-extern Accessory D_800A7718[];
+extern Accessory g_AccessoryDefs[];
 extern Unkstruct_800A7734 D_800A7734[];
 extern s32 D_80137960;
 extern s32 D_80137964;
@@ -331,6 +331,6 @@ extern Unkstruct_800A2D98 D_801375CC;
 extern PlayerState g_Player;
 extern Entity* g_CurrentEntity;
 extern PlayerStatus g_Status;
-extern SubweaponDef g_Subweapons[];
+extern SubweaponDef g_SubwpnDefs[];
 
 #endif

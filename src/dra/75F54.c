@@ -779,9 +779,8 @@ void func_8011A9D8(void) {
             DestroyEntity(entity);
         }
 #if defined(VERSION_US)
-        if (g_CurrentPlayableCharacter == PLAYER_ALUCARD &&
-            0x36 < entity->entityId && entity->entityId < 0x3D &&
-            entity->step != 0) {
+        if (g_PlayableCharacter == PLAYER_ALUCARD && 0x36 < entity->entityId &&
+            entity->entityId < 0x3D && entity->step != 0) {
             entity->pfnUpdate(entity);
         }
 #endif
