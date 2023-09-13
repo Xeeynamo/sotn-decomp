@@ -46,7 +46,7 @@ void func_800E5498(void) {
 }
 
 #if !defined(NON_MATCHING) && defined(VERSION_HD)
-INCLUDE_ASM("asm/hd/dra/nonmatchings/gameover", HandleGameOver);
+INCLUDE_ASM("dra/nonmatchings/gameover", HandleGameOver);
 #else
 void HandleGameOver(void) {
     Primitive* prim;
@@ -179,7 +179,7 @@ void HandleGameOver(void) {
 #if defined(VERSION_US)
         PlaySfx(MU_LAND_OF_BENEDICTION);
 #elif defined(VERSION_HD)
-        if (g_CurrentPlayableCharacter == PLAYER_ALUCARD) {
+        if (g_PlayableCharacter == PLAYER_ALUCARD) {
             if (g_StageId == STAGE_BO6) {
                 switch (rand() % 3) {
                 case 0:
@@ -319,11 +319,7 @@ void HandleGameOver(void) {
 }
 #endif
 
-#if defined(VERSION_US)
-INCLUDE_ASM("asm/us/dra/nonmatchings/gameover", func_800E5D30);
-#elif defined(VERSION_HD)
-INCLUDE_ASM("asm/hd/dra/nonmatchings/gameover", func_800E5D30);
-#endif
+INCLUDE_ASM("dra/nonmatchings/gameover", func_800E5D30);
 
 void func_800E6218(void) {
     if (D_8006CBC4 != 0) {
@@ -348,8 +344,9 @@ s32 func_800E6300(void) {
     s32 i;
 
     for (i = 0; i < LEN(g_Status.relics); i++) {
-        if (D_800A872C[i].unk0 > 0 && g_Status.relics[i] & RELIC_FLAG_ACTIVE) {
-            return D_800A872C[i].unk0;
+        if (g_RelicDefs[i].unk0C > 0 &&
+            g_Status.relics[i] & RELIC_FLAG_ACTIVE) {
+            return g_RelicDefs[i].unk0C;
         }
     }
     return 0;

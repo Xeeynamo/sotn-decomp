@@ -156,9 +156,9 @@ void func_801AD66C(void) {
     }
 
     if ((counter == 8) && (g_IsTimeAttackUnlocked != false)) {
-        g_CurrentPlayableCharacter = PLAYER_RICHTER;
+        g_PlayableCharacter = PLAYER_RICHTER;
     } else {
-        g_CurrentPlayableCharacter = PLAYER_ALUCARD;
+        g_PlayableCharacter = PLAYER_ALUCARD;
     }
 }
 #endif

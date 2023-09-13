@@ -96,7 +96,7 @@ void EntityRelicOrb(Entity* self) {
 #if defined(VERSION_US)
         g_ItemIconSlots[iconSlot] = 0x10;
 #endif
-        relic = &g_api.D_800A8720[relicId];
+        relic = &g_api.relicDefs[relicId];
         g_api.LoadEquipIcon(relic->icon, relic->iconPalette, iconSlot);
         prim = &g_PrimBuf[primIndex];
         if (prim != NULL) {
@@ -207,7 +207,7 @@ void EntityRelicOrb(Entity* self) {
                 if (isObtainedTextStored) {
                     break;
                 }
-                msg = g_api.D_800A8720[relicId].name;
+                msg = g_api.relicDefs[relicId].name;
                 isObtainedTextStored = true;
             } else {
                 msg = BlitChar(msg, &msgLen, chPix, 0xC0);
@@ -221,7 +221,7 @@ void EntityRelicOrb(Entity* self) {
         msgLen = 0;
         isObtainedTextStored = false;
         vramX = 0;
-        msg = g_api.D_800A8720[relicId].name;
+        msg = g_api.relicDefs[relicId].name;
         while (true) {
             ch = *msg++;
             if (ch == 0) {

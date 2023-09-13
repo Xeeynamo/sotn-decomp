@@ -1,4 +1,3 @@
-#define INCLUDE_ASM_NEW
 #include "dra.h"
 
 void func_800EA538(s32 arg0) {
@@ -103,8 +102,7 @@ s32 func_800EAD0C(void) { // the return type is needed for matching
     func_800EA5E4(7);
     func_800EA5E4(8);
 
-    if (g_CurrentPlayableCharacter == PLAYER_ALUCARD &&
-        g_StageId != STAGE_ST0) {
+    if (g_PlayableCharacter == PLAYER_ALUCARD && g_StageId != STAGE_ST0) {
         func_800EA5E4(0x17);
     }
 }

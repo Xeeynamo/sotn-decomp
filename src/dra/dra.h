@@ -1,5 +1,6 @@
 #ifndef DRA_H
 #define DRA_H
+#define INCLUDE_ASM_NEW
 
 #include "game.h"
 #include "weapon.h"
@@ -350,17 +351,15 @@ extern JosephsCloak g_JosephsCloak;
 extern Lba g_StagesLba[];
 extern Unsktruct_800EAF28* D_800A3B5C[];
 extern UnkStructClut* D_800A3BB8[];
-extern SubweaponDef g_Subweapons[];
+extern SubweaponDef g_SubwpnDefs[];
 extern SpellDef g_SpellDefs[];
 extern EnemyDef g_EnemyDefs[];
-extern s32 c_arrExpNext[];
-extern Equipment D_800A4B04[];
-extern Accessory D_800A7718[];
-extern Unkstruct_800A7734 D_800A7734[];
-extern RelicDesc g_RelicsDesc[];
+extern s32 g_ExpNext[];
+extern Equipment g_EquipDefs[];
+extern Accessory g_AccessoryDefs[];
+extern RelicDesc g_RelicDefs[];
 extern u8* c_strTimeAttackHiddenEntry;
 extern s32 c_strTimeAttackEntries[];
-extern unkStruct_800A872C D_800A872C[];
 extern u32 D_800AC90C;
 extern u16 D_800AC958[];
 extern s32 D_800ACC64[]; // probably a struct

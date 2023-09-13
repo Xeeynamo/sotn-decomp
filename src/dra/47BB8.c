@@ -1,4 +1,3 @@
-#define INCLUDE_ASM_NEW
 #include "dra.h"
 #include "objects.h"
 #include "sfx.h"

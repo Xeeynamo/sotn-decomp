@@ -519,7 +519,7 @@ void EntityPlatform(Entity* self) {
             self->animCurFrame = 9;
             self->zPriority = 0x80;
 
-            if (D_8003BDEC[216] != 0) {
+            if (g_CastleFlags[216] != 0) {
                 self->step = 9;
             }
 
@@ -704,7 +704,7 @@ void EntityRoomDarkness(Entity* self) {
     switch (self->step) {
     case 0:
         /* Has player seen Maria Holy Glasses Cutscene? */
-        if (D_8003BDEC[216] != 0) {
+        if (g_CastleFlags[216] != 0) {
             DestroyEntity(self);
             return;
         }
@@ -774,7 +774,7 @@ void EntityRoomDarkness(Entity* self) {
 void EntityMaria(Entity* self) {
     if (self->step == 0) {
         /* Has player seen Maria Holy Glasses Cutscene? */
-        if (D_8003BDEC[216] != 0) {
+        if (g_CastleFlags[216] != 0) {
             DestroyEntity(self);
             return;
         }

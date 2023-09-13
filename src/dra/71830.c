@@ -1,5 +1,3 @@
-#define INCLUDE_ASM_NEW
-#include "common.h"
 #include "dra.h"
 #include "objects.h"
 

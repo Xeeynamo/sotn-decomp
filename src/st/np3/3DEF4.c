@@ -299,7 +299,7 @@ void EntityEquipItemDrop(Entity* self) {
 
     switch (self->step) {
     case 0:
-        if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
+        if (g_PlayableCharacter != PLAYER_ALUCARD) {
             self->pfnUpdate = EntityPrizeDrop;
             self->params = 0;
             self->entityId = 3;
@@ -344,14 +344,13 @@ void EntityEquipItemDrop(Entity* self) {
             self->ext.generic.unk8C.modeU16.unk0 = index;
 
             if (itemId < NUM_HAND_ITEMS) {
-                g_api.LoadEquipIcon(
-                    g_api.D_800A4B04[itemId].icon,
-                    g_api.D_800A4B04[itemId].iconPalette, index);
+                g_api.LoadEquipIcon(g_api.equipDefs[itemId].icon,
+                                    g_api.equipDefs[itemId].iconPalette, index);
             } else {
                 itemId -= NUM_HAND_ITEMS;
                 g_api.LoadEquipIcon(
-                    g_api.D_800A7718[itemId].icon,
-                    g_api.D_800A7718[itemId].iconPalette, index);
+                    g_api.accessoryDefs[itemId].icon,
+                    g_api.accessoryDefs[itemId].iconPalette, index);
             }
 
             poly = &g_PrimBuf[primIndex];
@@ -445,11 +444,11 @@ void EntityEquipItemDrop(Entity* self) {
         g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
 
         if (itemId < NUM_HAND_ITEMS) {
-            itemName = g_api.D_800A4B04[itemId].name;
+            itemName = g_api.equipDefs[itemId].name;
             g_api.AddToInventory(itemId, HAND_TYPE);
         } else {
             itemId -= NUM_HAND_ITEMS;
-            itemName = g_api.D_800A7718[itemId].name;
+            itemName = g_api.accessoryDefs[itemId].name;
             g_api.AddToInventory(itemId, ARMOR_TYPE);
         }
 

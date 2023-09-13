@@ -945,7 +945,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
 }
 
 void CollectHeartVessel(void) {
-    if (g_CurrentPlayableCharacter != PLAYER_ALUCARD) {
+    if (g_PlayableCharacter != PLAYER_ALUCARD) {
         g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
         g_Status.hearts += HEART_VESSEL_RICHTER;
 
