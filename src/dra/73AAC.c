@@ -180,13 +180,13 @@ INCLUDE_ASM("dra/nonmatchings/73AAC", AlucardHandleDamage);
 
 void func_80114DF4(s32 arg0) {
     s16 randvar;
-    s32 wasZero;
+    s32 newlyPetrified;
     s32 yShift;
 
-    wasZero = 0;
+    newlyPetrified = 0;
     switch (PLAYER.step_s) {
     case 0:
-        wasZero = 1;
+        newlyPetrified = 1;
         func_80113EE0();
         func_80113F7C();
         PLAYER.velocityY = FIX(-4);
@@ -209,7 +209,7 @@ void func_80114DF4(s32 arg0) {
         func_8010E168(1, 4);
         PLAYER.palette = 0x8161;
         if (func_8010FDF8(0x20280) != 0) {
-            PLAYER.step = 0xB;
+            PLAYER.step = Player_StatusStone;
             PLAYER.velocityY = 0;
             PLAYER.velocityX = 0;
             func_80102CD8(1);
@@ -262,18 +262,19 @@ void func_80114DF4(s32 arg0) {
         PLAYER.velocityY = 0;
         if (g_Status.hp == 0) {
             if (--D_80137FE0 == 0) {
-                PLAYER.step = 16;
+                PLAYER.step = Player_Unk16;
                 PlaySfx(0x6F6);
                 PLAYER.step_s = 16;
             }
             func_8010E168(1, 4);
             break;
         }
-
+        // Handles wiggling out of being petrified.
         if (g_Player.padTapped & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT) ||
             arg0 != 0 || D_800ACE44 != 0) {
             PLAYER.animFrameDuration = 0x10;
             g_Player.padTapped |= (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
+            // Counter for how many wiggles left until we're out
             g_Player.unk5E--;
             PlaySfx(0x608);
             if (g_Player.unk5E == 0) {
@@ -284,7 +285,7 @@ void func_80114DF4(s32 arg0) {
                     func_8011AAFC(g_CurrentEntity, 0x20, 0);
                 }
                 PlaySfx(0x6E7);
-                PLAYER.step = 10;
+                PLAYER.step = Player_Hit;
                 PLAYER.step_s = 6;
                 PLAYER.palette = 0x8100;
                 break;
@@ -320,7 +321,7 @@ void func_80114DF4(s32 arg0) {
     if (PLAYER.ext.player.unkAC == 0x3A) {
         func_8010E168(1, 4);
     }
-    if (wasZero && (g_Player.unk72 != 0)) {
+    if (newlyPetrified && (g_Player.unk72 != 0)) {
         PLAYER.velocityY = 0;
     }
 }
