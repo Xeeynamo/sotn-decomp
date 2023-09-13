@@ -226,7 +226,7 @@ void func_801131C4(void) {
                 }
                 PLAYER.posX.i.hi = x_offset + PLAYER.posX.i.hi;
                 PLAYER.posY.i.hi += 2;
-                func_8011AAFC(g_CurrentEntity, 0xD0004U, 0);
+                func_8011AAFC(g_CurrentEntity, 0xD0004, 0);
                 D_800ACF74 = 0x60;
                 PLAYER.posY.i.hi -= 2;
                 PLAYER.posX.i.hi -= x_offset;
@@ -237,7 +237,7 @@ void func_801131C4(void) {
     case 0x1:
         if (!(g_Player.padPressed & PAD_DOWN)) {
             local_flags = 1;
-            if ((PLAYER.animFrameIdx >= 4U) ||
+            if ((PLAYER.animFrameIdx >= 4) ||
                 PLAYER.ext.player.unkAC == 0x65) {
                 func_8010DA48(0x13);
                 PLAYER.step_s = 2;
@@ -291,15 +291,15 @@ void func_801131C4(void) {
                 }
                 break;
             } else if (g_Player.unk72 == 3) {
-                if ((u16)PLAYER.animFrameIdx >= 2U) {
+                if (PLAYER.animFrameIdx >= 2) {
                     PLAYER.animFrameIdx = 2;
                     PLAYER.animFrameDuration = 3;
                 }
                 break;
             } else if (g_Player.unk72 == 4) {
-                if ((u16)PLAYER.animFrameIdx >= 3U) {
+                if (PLAYER.animFrameIdx >= 3) {
                     PLAYER.animFrameIdx = 3;
-                    PLAYER.animFrameDuration = (s16)3U;
+                    PLAYER.animFrameDuration = 3;
                 }
                 break;
             }
@@ -312,8 +312,8 @@ void func_801131C4(void) {
     case 0x40:
     case 0x59:
         func_8010DFF0(1, 1);
-        if ((u16)PLAYER.animFrameIdx < (u16)g_Player.unk54) {
-            if ((u16)PLAYER.animFrameIdx < 2U) {
+        if (PLAYER.animFrameIdx < g_Player.unk54) {
+            if (PLAYER.animFrameIdx < 2) {
                 func_8010E27C();
                 if (!(g_Player.padPressed & PAD_DOWN)) {
                     if (g_Player.unk72 == 0) {
@@ -366,8 +366,8 @@ void func_801131C4(void) {
         case 0x5D:
         }
         func_8010DFF0(1, 1);
-        if ((u16)PLAYER.animFrameIdx < (u16)g_Player.unk54) {
-            if ((u16)PLAYER.animFrameIdx < 3U) {
+        if (PLAYER.animFrameIdx < g_Player.unk54) {
+            if (PLAYER.animFrameIdx < 3) {
                 func_8010E27C();
                 if (!(g_Player.padPressed & PAD_DOWN)) {
                     if (g_Player.unk72 == 0) {
