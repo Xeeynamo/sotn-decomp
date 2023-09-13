@@ -237,8 +237,7 @@ void func_801131C4(void) {
     case 0x1:
         if (!(g_Player.padPressed & PAD_DOWN)) {
             local_flags = 1;
-            if ((PLAYER.animFrameIdx >= 4) ||
-                PLAYER.ext.player.unkAC == 0x65) {
+            if ((PLAYER.animFrameIdx >= 4) || PLAYER.ext.player.unkAC == 0x65) {
                 func_8010DA48(0x13);
                 PLAYER.step_s = 2;
                 PLAYER.animFrameIdx = 2;
