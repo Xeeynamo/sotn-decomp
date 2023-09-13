@@ -359,7 +359,6 @@ extern Accessory g_AccessoryDefs[];
 extern RelicDesc g_RelicDefs[];
 extern u8* c_strTimeAttackHiddenEntry;
 extern s32 c_strTimeAttackEntries[];
-extern unkStruct_800A872C D_800A872C[];
 extern u32 D_800AC90C;
 extern u16 D_800AC958[];
 extern s32 D_800ACC64[]; // probably a struct
