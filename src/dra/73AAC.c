@@ -178,7 +178,151 @@ block_13:
 void AlucardHandleDamage(DamageParam* param, s16 arg1, s16 arg2);
 INCLUDE_ASM("dra/nonmatchings/73AAC", AlucardHandleDamage);
 
-INCLUDE_ASM("dra/nonmatchings/73AAC", func_80114DF4);
+void func_80114DF4(s32 arg0) {
+    s16 randvar;
+    s32 wasZero;
+    s32 yShift;
+
+    wasZero = 0;
+    switch (PLAYER.step_s) {
+    case 0:
+        wasZero = 1;
+        func_80113EE0();
+        func_80113F7C();
+        PLAYER.velocityY = FIX(-4);
+        if (!(g_Player.pl_vram_flag & 1)) {
+            PLAYER.velocityY = FIX(-2);
+        }
+        func_8010E3B8(FIX(-1.25));
+        func_80113E68();
+        PLAYER.palette = 0x8161;
+        PlaySfx(0x6EC);
+        g_Player.D_80072F04 = 0;
+        g_Player.D_80072F00 = 0;
+        g_Player.D_80072F02 = 0;
+        g_Player.unk5E = GetStatusAilmentTimer(STATUS_AILMENT_PETRIFIED, 8);
+        func_8011AAFC(g_CurrentEntity, 0x3002F, 0);
+        func_8010E168(1, 4);
+        PLAYER.step_s = 1;
+        break;
+    case 1:
+        func_8010E168(1, 4);
+        PLAYER.palette = 0x8161;
+        if (func_8010FDF8(0x20280) != 0) {
+            PLAYER.step = 0xB;
+            PLAYER.velocityY = 0;
+            PLAYER.velocityX = 0;
+            func_80102CD8(1);
+            PlaySfx(0x644);
+            func_8011AAFC(g_CurrentEntity, 0x27, 0);
+            
+            randvar = rand() % 64;
+
+            if (g_Status.hp == 0) {
+                D_80137FE0 = 0x20;
+                randvar = 2;
+            }
+            if (randvar << 0x10) {
+                PLAYER.palette = (randvar & 1) - 0x7E62;
+                func_8010DA48(randvar & 1 | 0x38);
+                func_8011AAFC(g_CurrentEntity, 0x30010, 0);
+            } else {
+                PLAYER.palette = 0x819E;
+                func_8010DA48(0x3A);
+                func_8011AAFC(g_CurrentEntity, 0x7001D, 0);
+            }
+            PLAYER.step_s = 2;
+        }
+        break;
+    case 2:
+        if (D_80097448[0] >= 0x29) {
+            yShift = FIX(11.0/256);
+        } else {
+            yShift = FIX(44.0/256);
+        }
+
+        // I don't know man
+        do{}while(0);
+        
+        if (!(g_Player.pl_vram_flag & 1)) {
+            PLAYER.velocityY += yShift;
+            if (PLAYER.velocityY > FIX(7)) {
+                PLAYER.velocityY = FIX(7);
+            }
+            func_8010E168(1, 4);
+            break;
+        }
+        
+        if (!(g_Player.unk04 & 1)) {
+            func_80102CD8(1);
+            PlaySfx(0x644);
+        }
+        
+        PLAYER.velocityY = 0;
+        if (g_Status.hp == 0) {
+            if (--D_80137FE0 == 0) {
+                PLAYER.step = 16;
+                PlaySfx(0x6F6);
+                PLAYER.step_s = 16;
+            }
+            func_8010E168(1, 4);
+            break;
+        }
+        
+        if (g_Player.padTapped & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT) || 
+            arg0 != 0 || D_800ACE44 != 0) {
+            PLAYER.animFrameDuration = 0x10;
+            g_Player.padTapped |= (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
+            g_Player.unk5E--;
+            PlaySfx(0x608);
+            if (g_Player.unk5E == 0) {
+                func_8010DA48(0x3B);
+                if (PLAYER.ext.generic.unkAC != 0x3A) {
+                    func_8011AAFC(g_CurrentEntity, 0x30010, 0);
+                } else {
+                    func_8011AAFC(g_CurrentEntity, 0x20, 0);
+                }
+                PlaySfx(0x6E7);
+                PLAYER.step = 10;
+                PLAYER.step_s = 6;
+                PLAYER.palette = 0x8100;
+                break;
+            }
+            func_8010E168(1, 0x1C);
+            PLAYER.step_s = 3;
+            if (PLAYER.ext.generic.unkAC != 0x3A) {
+                func_8011AAFC(g_CurrentEntity, 0x3000D, 0);
+                func_8011AAFC(g_CurrentEntity, 0x3001F, 0);
+            } else {
+                func_8011AAFC(g_CurrentEntity, 0x8000D, 0);
+                func_8011AAFC(g_CurrentEntity, 0x7001E, 0);
+            }
+        }
+        PLAYER.palette = ((PLAYER.ext.generic.unkAC + 0xFFC8) & 1) - 0x7E62;
+        break;
+    case 3:
+        if (PLAYER.animFrameDuration < 0) {
+            PLAYER.step_s = 2;
+            PLAYER.unk19 &= 0xFB;
+        } else {
+            PLAYER.rotPivotX = 0;
+            PLAYER.unk19 |= 4;
+            PLAYER.rotAngle = D_800ACF94[PLAYER.animFrameDuration] >> 4;
+            if(PLAYER.rotAngle == 0){
+                PLAYER.rotPivotY = 0x18;
+            } else {
+                PLAYER.rotPivotY = 0x14;
+            }
+        }
+        break;
+    }
+    if (PLAYER.ext.generic.unkAC == 0x3A) {
+        func_8010E168(1, 4);
+    }
+    if (wasZero && (g_Player.unk72 != 0)) {
+        PLAYER.velocityY = 0;
+    }
+}
 
 INCLUDE_ASM("dra/nonmatchings/73AAC", func_80115394);
 

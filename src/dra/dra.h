@@ -367,6 +367,7 @@ extern s32 D_800ACC64[]; // probably a struct
 extern Vram g_Vram;
 extern CdFile* D_800ACC74[];
 extern u8 D_800ACFB4[][4];
+extern s32 D_800ACE44;
 extern s32 D_800ACE48[];
 extern Unkstruct_800ACEC6 D_800ACEC6;
 extern u8 D_800ACF4C[];
@@ -375,6 +376,7 @@ extern s32 D_800ACF78; // ...be an array
 extern unkstruct_800ACF7C D_800ACF7C[];
 extern s16 D_800ACF8A[]; // collection of sounds?
 extern s16 D_800ACF60[]; // collection of sounds?
+extern s16 D_800ACF94[];
 extern u8 D_800AD094[];
 extern PfnEntityUpdate D_800AD0C4[];
 extern AnimSoundEvent* D_800AD53C[];
@@ -552,6 +554,7 @@ extern s32 D_80137FB4;
 extern s32 D_80137FB8;
 extern s32 D_80137FBC;
 extern s32 D_80137FDC;
+extern s32 D_80137FE0;
 extern s32 D_80137FE4;
 extern s32 D_80137FE8;
 extern s32 D_80138004;
