@@ -83,14 +83,15 @@ void func_80113AAC(void) {
     }
 }
 
-s32 func_80113D7C(s16 arg0) {
-    s32 sp10[3];
+s32 func_80113D7C(s16 damageAmount) {
+    DamageParam damage;
     s32 sfx;
-    s32 temp_s0 = func_800FE97C(&sp10[0], 2, arg0 / 2, 1);
+    s32 temp_s0;
     s16 step;
     u16 temp_s1;
 
-    func_80118C84(sp10[2], 0);
+    temp_s0 = HandleDamage(&damage, 2, damageAmount / 2, 1);
+    func_80118C84(damage.damageTaken, 0);
     func_800FE8F0();
     if (temp_s0 != 4) {
         g_Player.D_80072F04 = 4;
@@ -103,10 +104,10 @@ s32 func_80113D7C(s16 arg0) {
     }
     step = PLAYER.step;
     temp_s1 = PLAYER.step_s;
-    sp10[0] = 0;
-    sp10[1] = 0;
+    damage.unk0 = 0;
+    damage.damageKind = 0;
     SetPlayerStep(Player_Unk16);
-    func_80115394(&sp10[0], step, temp_s1);
+    func_80115394(&damage, step, temp_s1);
     return -1;
 }
 

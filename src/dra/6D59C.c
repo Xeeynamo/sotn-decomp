@@ -629,7 +629,7 @@ s32 CheckChainLimit(s32 itemId, s32 handId) {
     s32 i;
     s32 chainLimit;
 
-    chainLimit = D_800A4B04[itemId].chainLimit;
+    chainLimit = g_EquipDefs[itemId].chainLimit;
     if (chainLimit & 0x80) {
         return -(s32)((u16)g_Player.unk46 >> 0xF);
     }

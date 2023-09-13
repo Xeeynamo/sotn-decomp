@@ -25,7 +25,7 @@ s32 func_800FD6C4(s32 equipTypeFilter) {
     }
 
     for (itemCount = 0, i = 0; i < 90; i++) {
-        if (D_800A7734[i].unk00 == equipType) {
+        if (g_AccessoryDefs[i].equipType == equipType) {
             itemCount++;
         }
     }
@@ -50,9 +50,9 @@ u8* GetEquipCount(s32 equipTypeFilter) {
 
 const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId) {
     if (!equipTypeFilter) {
-        return D_800A4B04[equipId].name;
+        return g_EquipDefs[equipId].name;
     } else {
-        return D_800A7718[equipId].name;
+        return g_AccessoryDefs[equipId].name;
     }
 }
 
@@ -100,7 +100,7 @@ void AddToInventory(u16 itemId, s32 itemCategory) {
             itemArray[itemId] = temp_a1;
             phi_a1_2 = itemCategory;
             if (phi_a1_2 != 0) {
-                i = D_800A7734[itemId].unk00;
+                i = g_AccessoryDefs[itemId].equipType;
             }
             phi_a0 = cursorY;
             for (phi_a1_2 = 0; true; phi_a1_2++) {
@@ -113,7 +113,7 @@ void AddToInventory(u16 itemId, s32 itemCategory) {
             phi_a0_2 = cursorY;
             for (phi_a1 = 0; true; phi_a1++) {
                 if (((!itemArray[*phi_a0_2]) && phi_a1_2) &&
-                    (i == D_800A7734[*phi_a0_2].unk00)) {
+                    (i == g_AccessoryDefs[*phi_a0_2].equipType)) {
                     new_var2 = phi_a1;
                     cursorY[new_var2] = itemId;
                     break;
@@ -208,7 +208,7 @@ void LearnSpell(s32 spellId) {
 
 bool func_800FDD44(s32 itemType) {
     s32 equippedItem = g_Status.equipment[itemType];
-    bool isConsumable = D_800A4B04[equippedItem].isConsumable;
+    bool isConsumable = g_EquipDefs[equippedItem].isConsumable;
 
     if (CheckEquipmentItemCount(ITEM_DUPLICATOR, ACCESSORY_TYPE) == 0) {
         if (isConsumable) {
@@ -251,7 +251,7 @@ u32 CheckAndDoLevelUp(void) {
     if (g_Status.level == 99) {
         return 0;
     }
-    if (c_arrExpNext[g_Status.level] <= g_Status.exp) {
+    if (g_ExpNext[g_Status.level] <= g_Status.exp) {
         g_Status.level++;
         statsGained = 0;
         g_Status.mpMax += 4 + (rand() & 1);
@@ -304,7 +304,7 @@ s32 func_800FE044(s32 amount, s32 type) {
         if (g_Status.hpMax > 9999) {
             g_Status.hpMax = 9999;
         }
-        if (g_CurrentPlayableCharacter != 0) {
+        if (g_PlayableCharacter != 0) {
             g_Status.hpMax += amount;
             if (g_Status.hpMax > 9999) {
                 g_Status.hpMax = 9999;
@@ -317,7 +317,7 @@ s32 func_800FE044(s32 amount, s32 type) {
 
     // Heart Max Up
     if (type == 0x4000) {
-        if (g_CurrentPlayableCharacter != 0) {
+        if (g_PlayableCharacter != 0) {
             return 1;
         }
         oldHeartMax = g_Status.heartsMax;
@@ -341,7 +341,7 @@ s32 func_800FE044(s32 amount, s32 type) {
         // achieve the same goal, but this one at least works.
         amount++;
         amount--;
-        if (D_800A872C[amount].unk0) {
+        if (g_RelicDefs[amount].unk0C) {
             g_Status.relics[amount] = 1;
         }
         D_80137968++;
@@ -416,7 +416,7 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
     u32 accessoryCount;
 
     if (subweaponId == 0) {
-        *subwpn = g_Subweapons[g_Status.subWeapon];
+        *subwpn = g_SubwpnDefs[g_Status.subWeapon];
         accessoryCount =
             CheckEquipmentItemCount(ITEM_HEART_BROACH, ACCESSORY_TYPE);
         if (accessoryCount == 1) {
@@ -437,7 +437,7 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
             return 0;
         }
     } else {
-        *subwpn = g_Subweapons[subweaponId];
+        *subwpn = g_SubwpnDefs[subweaponId];
         if (CheckEquipmentItemCount(ITEM_BRILLIANT_MAIL, ARMOR_TYPE) != 0) {
             subwpn->attack += 10;
         }
@@ -466,10 +466,10 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     s32 criticalRate;
     u8 itemCategory;
 
-    var_a2 = &D_800A4B04[(s16)equipId]; // FAKE
+    var_a2 = &g_EquipDefs[(s16)equipId]; // FAKE
     criticalModRate = 5;
 
-    __builtin_memcpy(res, &D_800A4B04[equipId], sizeof(Equipment));
+    __builtin_memcpy(res, &g_EquipDefs[equipId], sizeof(Equipment));
     criticalRate = res->criticalRate;
     criticalRate = criticalRate - criticalModRate +
                    SquareRoot0((g_Status.statsTotal[3] * 2) + (rand() & 0xF));
@@ -485,7 +485,7 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
 
     res->criticalRate = criticalRate;
     func_800F4994();
-    itemCategory = D_800A4B04[equipId].itemCategory;
+    itemCategory = g_EquipDefs[equipId].itemCategory;
     if (itemCategory != ITEM_FOOD && itemCategory != ITEM_MEDICINE) {
         res->attack = CalcAttack(equipId, g_Status.equipment[1 - handId]);
         if (g_Player.unk0C & PLAYER_STATUS_POISON) {
@@ -522,34 +522,34 @@ void AddHearts(s32 value) {
 }
 
 // Note: Arg3 is unused, but is given in the call from func_80113D7C
-s32 func_800FE97C(DamageParam* arg0, s32 arg1, s32 arg2, s32 arg3) {
+s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     s32 ret;
     s32 itemCount;
 
     func_800F53A4();
-    arg0->unk0 = arg1 & ~0x1F;
-    arg0->damageKind = arg1 & 0x1F;
-    if (g_Status.defenseElement & arg0->unk0) {
-        arg2 *= 2;
+    damage->unk0 = arg1 & ~0x1F;
+    damage->damageKind = arg1 & 0x1F;
+    if (g_Status.defenseElement & damage->unk0) {
+        amount *= 2;
     }
-    if (g_Status.D_80097C2A & arg0->unk0) {
-        arg2 /= 2;
+    if (g_Status.D_80097C2A & damage->unk0) {
+        amount /= 2;
     }
-    if (g_Status.D_80097C2C & arg0->unk0) {
-        if (!(g_Status.D_80097C2C & arg0->unk0 & 0x200)) {
+    if (g_Status.D_80097C2C & damage->unk0) {
+        if (!(g_Status.D_80097C2C & damage->unk0 & 0x200)) {
             return 0;
         }
-        arg0->unk0 &= ~0x200;
+        damage->unk0 &= ~0x200;
     }
 
-    if (g_Status.D_80097C2E & arg0->unk0) {
-        if (arg2 < 1) {
-            arg2 = 1;
+    if (g_Status.D_80097C2E & damage->unk0) {
+        if (amount < 1) {
+            amount = 1;
         }
-        arg0->unkC = arg2;
+        damage->unkC = amount;
         if (g_Status.hp != g_Status.hpMax) {
             func_800FE8F0();
-            g_Status.hp += arg0->unkC;
+            g_Status.hp += damage->unkC;
             if (g_Status.hpMax < g_Status.hp) {
                 g_Status.hp = g_Status.hpMax;
             }
@@ -560,15 +560,15 @@ s32 func_800FE97C(DamageParam* arg0, s32 arg1, s32 arg2, s32 arg3) {
     //  with arg2 doubled. Item description says "Big HP restore" so makes
     //  sense
     if (CheckEquipmentItemCount(ITEM_CAT_EYE_CIRCLET, HEAD_TYPE) != 0 &&
-        arg0->damageKind == 7) {
-        arg2 *= 2;
-        if (arg2 < 1) {
-            arg2 = 1;
+        damage->damageKind == 7) {
+        amount *= 2;
+        if (amount < 1) {
+            amount = 1;
         }
-        arg0->unkC = arg2;
+        damage->unkC = amount;
         if (g_Status.hp != g_Status.hpMax) {
             func_800FE8F0();
-            g_Status.hp += arg0->unkC;
+            g_Status.hp += damage->unkC;
             if (g_Status.hpMax < g_Status.hp) {
                 g_Status.hp = g_Status.hpMax;
             }
@@ -580,38 +580,38 @@ s32 func_800FE97C(DamageParam* arg0, s32 arg1, s32 arg2, s32 arg3) {
     // have special behavior. Also, not possible to equip two. This may be
     // a new discovery of a property of the item. Worth further analysis.
     itemCount = CheckEquipmentItemCount(ITEM_BALLROOM_MASK, HEAD_TYPE);
-    if ((itemCount != 0) && (arg0->unk0 & 0xF980)) {
+    if (itemCount != 0 && (damage->unk0 & 0xF980)) {
         if (itemCount == 1) {
-            arg2 -= arg2 / 5;
+            amount -= amount / 5;
         }
         if (itemCount == 2) {
-            arg2 -= arg2 / 3;
+            amount -= amount / 3;
         }
     }
     if (g_Player_unk0C & 0x80) {
-        arg0->damageTaken = g_Status.hpMax / 8;
+        damage->damageTaken = g_Status.hpMax / 8;
         ret = 8;
-    } else if (arg0->unk0 & 0x200) {
-        arg0->damageTaken = arg2 - (g_Status.defenseEquip * 2);
-        if (arg0->damageTaken <= 0) {
-            arg0->damageTaken = 0;
+    } else if (damage->unk0 & 0x200) {
+        damage->damageTaken = amount - (g_Status.defenseEquip * 2);
+        if (damage->damageTaken <= 0) {
+            damage->damageTaken = 0;
         }
         ret = 7;
-    } else if (arg0->damageKind == 6) {
+    } else if (damage->damageKind == 6) {
         if (D_8003C8C4 == ((D_8003C8C4 / 10) * 0xA)) {
-            arg0->damageTaken = 1;
+            damage->damageTaken = 1;
         } else {
-            arg0->damageTaken = 0;
+            damage->damageTaken = 0;
         }
         ret = 9;
     } else {
-        if (arg0->damageKind < 16) {
-            arg0->damageTaken = arg2 - g_Status.defenseEquip;
+        if (damage->damageKind < 16) {
+            damage->damageTaken = amount - g_Status.defenseEquip;
         } else {
-            arg0->damageTaken = g_Status.hpMax / 8;
+            damage->damageTaken = g_Status.hpMax / 8;
         }
         if (g_Player_unk0C & 0x4000) {
-            arg0->damageTaken *= 2;
+            damage->damageTaken *= 2;
         }
         // Check for player wearing a Talisman (chance to dodge attack)
         itemCount = CheckEquipmentItemCount(ITEM_TALISMAN, ACCESSORY_TYPE);
@@ -620,31 +620,32 @@ s32 func_800FE97C(DamageParam* arg0, s32 arg1, s32 arg2, s32 arg3) {
                 return 2;
             }
         }
-        if (arg0->damageTaken > 0) {
-            if (arg0->damageKind < 2) {
-                if ((arg0->damageTaken * 2) >= g_Status.hpMax) {
-                    arg0->damageKind = 4;
-                } else if ((arg2 * 50) >= g_Status.hpMax) {
-                    arg0->damageKind = 3;
+        if (damage->damageTaken > 0) {
+            if (damage->damageKind < 2) {
+                if ((damage->damageTaken * 2) >= g_Status.hpMax) {
+                    damage->damageKind = 4;
+                } else if (amount * 50 >= g_Status.hpMax) {
+                    damage->damageKind = 3;
                 } else {
-                    arg0->damageKind = 2;
+                    damage->damageKind = 2;
                 }
             }
             ret = 3;
         } else {
-            if ((g_Status.defenseEquip > 99) && !(arg0->unk0 & 0x180) &&
+            if (g_Status.defenseEquip > 99 && !(damage->unk0 & 0x180) &&
                 !(g_Player_unk0C & 0x80)) {
-                arg0->damageKind = 0;
+                damage->damageKind = 0;
                 ret = 1;
             } else {
-                arg0->damageKind = 2;
+                damage->damageKind = 2;
                 ret = 3;
             }
-            arg0->damageTaken = 1;
+            damage->damageTaken = 1;
         }
     }
+
     // If our HP is less than the damage, we die.
-    if (g_Status.hp <= arg0->damageTaken) {
+    if (g_Status.hp <= damage->damageTaken) {
         g_Status.hp = 0;
         if (ret == 7) {
             return 7;
@@ -659,11 +660,11 @@ s32 func_800FE97C(DamageParam* arg0, s32 arg1, s32 arg2, s32 arg3) {
             func_800FE8F0();
         }
         // Here is where we actually take the damage away.
-        g_Status.hp -= arg0->damageTaken;
+        g_Status.hp -= damage->damageTaken;
         // Blood cloak gives hearts when damage is taken
         if ((CheckEquipmentItemCount(ITEM_BLOOD_CLOAK, CAPE_TYPE) != 0) &&
             (ret != 9)) {
-            AddHearts(arg0->damageTaken);
+            AddHearts(damage->damageTaken);
         }
         // Fury Plate "DEF goes up when damage taken", that logic is not here
         // though.
@@ -786,7 +787,7 @@ u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity) {
                 }
                 break;
             case STAT_INT:
-                damage += SquareRoot0(g_roomCount);
+                damage += SquareRoot0(g_RoomCount);
                 break;
             case STAT_LCK:
 #if defined(VERSION_US)
@@ -896,22 +897,21 @@ void func_800FF60C(void) {
 void func_800FF60C();
 
 void func_800FF6C4(void) {
-    if (g_StageId != STAGE_ST0 &&
-        g_CurrentPlayableCharacter == PLAYER_ALUCARD) {
+    if (g_StageId != STAGE_ST0 && g_PlayableCharacter == PLAYER_ALUCARD) {
         func_800FF60C();
     }
 }
 
-void func_800FF708(s32 arg0, s32 arg1) {
+void func_800FF708(s32 equipType, s32 arg1) {
     s32 rnd;
 
     do {
     loop_1:
         rnd = rand() % 90;
-        if (rnd == 0x19) {
+        while (rnd == 0x19) {
             goto loop_1;
         }
-    } while (D_800A7734[rnd].unk00 != arg0);
+    } while (g_AccessoryDefs[rnd].equipType != equipType);
     g_Status.equipment[arg1 + 2] = rnd;
 }
 
@@ -981,9 +981,9 @@ void InitStatsAndGear(bool isDeathTakingItems) {
     } else {
         // I think this zeros out all the rooms to mark as unvisited
         for (i = 0; i < 2048; i++) {
-            D_8006BB74[i] = 0;
+            g_CastleMap[i] = 0;
         }
-        g_roomCount = 0;
+        g_RoomCount = 0;
 
         g_Status.D_80097BF8 = 0;
         for (i = 0; i < 4; i++) {
@@ -1023,7 +1023,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
 
         // If playing as Richter, either in the Prologue or Richter Mode
         if ((g_StageId == STAGE_ST0) ||
-            (g_CurrentPlayableCharacter != PLAYER_ALUCARD)) {
+            (g_PlayableCharacter != PLAYER_ALUCARD)) {
 
             for (i = 0; i < LEN(g_Status.relics); i++) {
                 g_Status.relics[i] = RELIC_FLAG_FOUND;
@@ -1268,7 +1268,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
 #endif
                 for (i = 0; i < LEN(g_Status.relics); i++) {
                     g_Status.relics[i] = RELIC_FLAG_FOUND | RELIC_FLAG_ACTIVE;
-                    if (D_800A872C[i].unk0 != 0) {
+                    if (g_RelicDefs[i].unk0C != 0) {
                         g_Status.relics[i] = RELIC_FLAG_FOUND;
                     }
                 }
@@ -1370,7 +1370,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
                     if (equipId == 216) {
                         goto loop_check_equip_id_1;
                     }
-                } while (D_800A4B04[equipId].itemCategory > 4);
+                } while (g_EquipDefs[equipId].itemCategory > 4);
 
                 g_Status.equipment[LEFT_HAND_SLOT] = equipId;
                 do {
@@ -1379,7 +1379,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
                     if (equipId == 216) {
                         goto loop_check_equip_id_2;
                     }
-                } while (D_800A4B04[equipId].itemCategory == 5);
+                } while (g_EquipDefs[equipId].itemCategory == 5);
 
                 g_Status.equipment[RIGHT_HAND_SLOT] = equipId;
                 func_800FF708(0, 0);
@@ -1527,8 +1527,7 @@ void func_8010189C(void) {
     g_HealingMailTimer[0] = 0;
     g_DisplayHP[0] = g_Status.hp;
 
-    if ((g_StageId == STAGE_ST0) ||
-        (g_CurrentPlayableCharacter != PLAYER_ALUCARD)) {
+    if ((g_StageId == STAGE_ST0) || (g_PlayableCharacter != PLAYER_ALUCARD)) {
         DrawHudRichter();
         return;
     }
@@ -1579,7 +1578,7 @@ void DrawHudAlucard() {
     s32 digitSpacing;
     u16 clut;
 
-    if (g_StageId == STAGE_ST0 || g_CurrentPlayableCharacter != 0) {
+    if (g_StageId == STAGE_ST0 || g_PlayableCharacter != 0) {
         func_80100B50();
         return;
     }

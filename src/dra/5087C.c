@@ -361,10 +361,10 @@ void func_800F2014(void) {
         if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
             idx += 0x400;
         }
-        currMapRect = D_8006BB74[idx];
+        currMapRect = g_CastleMap[idx];
         if (!(currMapRect & subMap)) {
-            D_8006BB74[idx] = currMapRect | subMap;
-            g_roomCount++;
+            g_CastleMap[idx] = currMapRect | subMap;
+            g_RoomCount++;
             func_800F1B08(x, y, 0, currMapRect);
             func_800F1EB0(x, y, 0xFFFF);
         }

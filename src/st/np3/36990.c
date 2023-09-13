@@ -160,7 +160,8 @@ void EntitySlogra(Entity* self) {
 
     switch (self->step) {
     case SLOGRA_INIT:
-        if (D_8003BDEC[KilledInAlchLab] || D_8003BDEC[RetreatedInEntrance]) {
+        if (g_CastleFlags[KilledInAlchLab] ||
+            g_CastleFlags[RetreatedInEntrance]) {
             DestroyEntity(self);
             return;
         }
@@ -427,7 +428,7 @@ void EntitySlogra(Entity* self) {
             }
             self->ext.GS_Props.timer = 64;
             func_801C2598(NA_SE_EN_SLOGRA_DEATH_EXPLOSION);
-            D_8003BDEC[RetreatedInEntrance] |= 1;
+            g_CastleFlags[RetreatedInEntrance] |= 1;
             self->step_s++;
 
         case SLOGRA_DYING_EXPLODING:
@@ -622,7 +623,8 @@ void EntityGaibon(Entity* self) {
 
     switch (self->step) {
     case GAIBON_INIT:
-        if (D_8003BDEC[KilledInAlchLab] || D_8003BDEC[RetreatedInEntrance]) {
+        if (g_CastleFlags[KilledInAlchLab] ||
+            g_CastleFlags[RetreatedInEntrance]) {
             DestroyEntity(self);
             return;
         }
@@ -1062,7 +1064,7 @@ void EntityGaibon(Entity* self) {
                 self->facingLeft = 0;
             }
             self->ext.GS_Props.speed = 0;
-            D_8003BDEC[RetreatedInEntrance] |= 1;
+            g_CastleFlags[RetreatedInEntrance] |= 1;
             self->step_s++;
 
         case GAIBON_RETREAT_PICKUP_SLOGRA:
