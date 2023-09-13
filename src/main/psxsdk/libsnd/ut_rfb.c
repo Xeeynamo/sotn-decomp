@@ -1,4 +1,3 @@
-#define INCLUDE_ASM_NEW
 #include "common.h"
 
 extern s32 D_8003C758;

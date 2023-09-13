@@ -1,4 +1,3 @@
-#define INCLUDE_ASM_NEW
 #include "dra.h"
 
 #define CH(x) ((x)-0x20)

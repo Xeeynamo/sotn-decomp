@@ -1,4 +1,3 @@
-#define INCLUDE_ASM_NEW
 #include "dra.h"
 
 s32 func_800F087C(u32 chunkX, u32 chunkY) {

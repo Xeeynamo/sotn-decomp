@@ -1,4 +1,3 @@
-#define INCLUDE_ASM_NEW
 #include "dra.h"
 
 extern Unkstruct_8013B15C D_8013B15C[];
