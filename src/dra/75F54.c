@@ -164,7 +164,7 @@ void func_80116408(void) {
             if (g_Player.padPressed & PAD_RIGHT) {
                 if ((g_Player.D_80072BD0[2][0] & 0x8001) ||
                     (g_Player.D_80072BD0[1][0] & 0x8000) ||
-                    (PLAYER.posX.i.hi > (u8)-8)) {
+                    (PLAYER.posX.i.hi > 248)) {
                     SetSpeedX(FIX(3));
                 }
             } else if ((g_Player.D_80072BD0[3][0] & 0x8001) ||
