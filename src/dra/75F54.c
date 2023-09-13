@@ -126,7 +126,7 @@ void func_80116208(void) {
             return;
         }
         if (g_Player.unk60 == 4) {
-            PLAYER.step = 0xA;
+            PLAYER.step = Player_Hit;
             PLAYER.step_s = 0xF;
             g_Player.unk60 = 0;
             func_8010DA48(0x2E);
@@ -135,7 +135,7 @@ void func_80116208(void) {
             return;
         }
         if (g_Player.unk60 == 0) {
-            PLAYER.step = 0xA;
+            PLAYER.step = Player_Hit;
             PLAYER.step_s = 1;
             return;
         }
