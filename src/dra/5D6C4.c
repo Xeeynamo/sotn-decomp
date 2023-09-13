@@ -524,7 +524,7 @@ void AddHearts(s32 value) {
 }
 
 // Note: Arg3 is unused, but is given in the call from func_80113D7C
-s32 func_800FE97C(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
+s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     s32 ret;
     s32 itemCount;
 
