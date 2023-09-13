@@ -214,7 +214,7 @@ void func_801131C4(void) {
     } else if (PLAYER.ext.player.unkAC == 0x65) {
         func_8010DA48(0x11);
     }
-    switch (PLAYER.step_s) { /* switch 1 */
+    switch (PLAYER.step_s) {
     case 0x0:
         if (D_800ACF74 != 0) {
             D_800ACF74--;
@@ -234,7 +234,7 @@ void func_801131C4(void) {
         }
         local_flags = 6;
         break;
-    case 0x1: /* switch 1 */
+    case 0x1:
         if (!(g_Player.padPressed & PAD_DOWN)) {
             local_flags = 1;
             if ((PLAYER.animFrameIdx >= 4U) ||
@@ -258,21 +258,21 @@ void func_801131C4(void) {
             }
         }
         break;
-    case 0x5: /* switch 1 */
+    case 0x5:
         func_8010DFF0(1, 1);
         if (g_Player.unk72 == PLAYER.animFrameIdx ||
             PLAYER.animFrameDuration < 0) {
             local_flags = 0x20;
         }
         break;
-    case 0x3: /* switch 1 */
-    case 0x4: /* switch 1 */
+    case 0x3:
+    case 0x4:
         func_8010DFF0(1, 1);
         if (PLAYER.animFrameDuration < 0) {
             local_flags = 0x20;
         }
         break;
-    case 0x2: /* switch 1 */
+    case 0x2:
         local_flags = 1;
         if (g_Player.padPressed & PAD_DOWN) {
             func_8010E470(0, PLAYER.velocityX);
@@ -309,8 +309,8 @@ void func_801131C4(void) {
         }
 
         break;
-    case 0x40: /* switch 1 */
-    case 0x59: /* switch 1 */
+    case 0x40:
+    case 0x59:
         func_8010DFF0(1, 1);
         if ((u16)PLAYER.animFrameIdx < (u16)g_Player.unk54) {
             if ((u16)PLAYER.animFrameIdx < 2U) {
@@ -335,35 +335,35 @@ void func_801131C4(void) {
             }
         }
         break;
-    case 0x47: /* switch 1 */
-    case 0x49: /* switch 1 */
+    case 0x47:
+    case 0x49:
         if ((PLAYER.animFrameIdx == 6) &&
             (g_Player.padPressed & g_Player.D_80072EF8)) {
             PLAYER.animFrameDuration = 2;
-        case 0x41: /* switch 1 */
-        case 0x42: /* switch 1 */
-        case 0x43: /* switch 1 */
-        case 0x44: /* switch 1 */
-        case 0x45: /* switch 1 */
-        case 0x46: /* switch 1 */
-        case 0x48: /* switch 1 */
-        case 0x4A: /* switch 1 */
-        case 0x4B: /* switch 1 */
-        case 0x4C: /* switch 1 */
-        case 0x4D: /* switch 1 */
-        case 0x4E: /* switch 1 */
-        case 0x4F: /* switch 1 */
-        case 0x50: /* switch 1 */
-        case 0x53: /* switch 1 */
-        case 0x54: /* switch 1 */
-        case 0x55: /* switch 1 */
-        case 0x56: /* switch 1 */
-        case 0x57: /* switch 1 */
-        case 0x58: /* switch 1 */
-        case 0x5A: /* switch 1 */
-        case 0x5B: /* switch 1 */
-        case 0x5C: /* switch 1 */
-        case 0x5D: /* switch 1 */
+        case 0x41:
+        case 0x42:
+        case 0x43:
+        case 0x44:
+        case 0x45:
+        case 0x46:
+        case 0x48:
+        case 0x4A:
+        case 0x4B:
+        case 0x4C:
+        case 0x4D:
+        case 0x4E:
+        case 0x4F:
+        case 0x50:
+        case 0x53:
+        case 0x54:
+        case 0x55:
+        case 0x56:
+        case 0x57:
+        case 0x58:
+        case 0x5A:
+        case 0x5B:
+        case 0x5C:
+        case 0x5D:
         }
         func_8010DFF0(1, 1);
         if ((u16)PLAYER.animFrameIdx < (u16)g_Player.unk54) {
@@ -385,7 +385,7 @@ void func_801131C4(void) {
             }
         }
         break;
-    case 0x51: /* switch 1 */
+    case 0x51:
         func_8010DFF0(1, 1);
         if (PLAYER.animFrameDuration < 0) {
             local_flags = 0x2E;
@@ -413,15 +413,15 @@ void func_801131C4(void) {
     }
     if (local_flags & 1) {
         if (func_8010E27C()) {
-            switch ((u8)g_Player.unk72) { /* switch 2 */
-            case 0:                       /* switch 2 */
-            case 3:                       /* switch 2 */
-            case 4:                       /* switch 2 */
+            switch ((u8)g_Player.unk72) {
+            case 0:
+            case 3:
+            case 4:
                 func_8010E6AC(0);
                 local_flags |= 0x8000;
                 break;
-            case 1: /* switch 2 */
-            case 2: /* switch 2 */
+            case 1:
+            case 2:
                 if (g_Player.padTapped & (PAD_RIGHT | PAD_LEFT)) {
                     PLAYER.step_s = 5;
                     func_8010DA48(0xF6);
