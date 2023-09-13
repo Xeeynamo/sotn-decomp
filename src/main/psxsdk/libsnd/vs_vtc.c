@@ -1,4 +1,3 @@
-#define INCLUDE_ASM_NEW
 #include "common.h"
 #include "libsnd_internal.h"
 

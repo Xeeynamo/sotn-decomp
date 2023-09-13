@@ -1,4 +1,3 @@
-#define INCLUDE_ASM_NEW
 #include "dra.h"
 
 void func_800EA538(s32 arg0) {

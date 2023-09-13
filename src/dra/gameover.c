@@ -319,11 +319,7 @@ void HandleGameOver(void) {
 }
 #endif
 
-#if defined(VERSION_US)
-INCLUDE_ASM("asm/us/dra/nonmatchings/gameover", func_800E5D30);
-#elif defined(VERSION_HD)
-INCLUDE_ASM("asm/hd/dra/nonmatchings/gameover", func_800E5D30);
-#endif
+INCLUDE_ASM("dra/nonmatchings/gameover", func_800E5D30);
 
 void func_800E6218(void) {
     if (D_8006CBC4 != 0) {
