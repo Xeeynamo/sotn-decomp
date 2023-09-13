@@ -46,7 +46,7 @@ void func_800E5498(void) {
 }
 
 #if !defined(NON_MATCHING) && defined(VERSION_HD)
-INCLUDE_ASM("asm/hd/dra/nonmatchings/gameover", HandleGameOver);
+INCLUDE_ASM("dra/nonmatchings/gameover", HandleGameOver);
 #else
 void HandleGameOver(void) {
     Primitive* prim;
