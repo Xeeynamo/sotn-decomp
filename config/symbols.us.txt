@@ -749,7 +749,6 @@ g_MenuNavigation_cursorSettings = 0x8003C9E0;
 g_MenuNavigation_cursorCloak = 0x8003C9E4;
 g_MenuNavigation_cursorButtons = 0x8003C9E8;
 D_8003C9EC = 0x8003C9EC;
-D_8003C9F0 = 0x8003C9F0;
 g_Settings = 0x8003C9F8;
 g_Settings_buttonConfig_1 = 0x8003C9FC;
 g_Settings_buttonMask_0 = 0x8003CA18;
