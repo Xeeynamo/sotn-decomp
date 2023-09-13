@@ -524,34 +524,34 @@ void AddHearts(s32 value) {
 }
 
 // Note: Arg3 is unused, but is given in the call from func_80113D7C
-s32 func_800FE97C(DamageParam* arg0, s32 arg1, s32 arg2, s32 arg3) {
+s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     s32 ret;
     s32 itemCount;
 
     func_800F53A4();
-    arg0->unk0 = arg1 & ~0x1F;
-    arg0->damageKind = arg1 & 0x1F;
-    if (g_Status.defenseElement & arg0->unk0) {
-        arg2 *= 2;
+    damage->unk0 = arg1 & ~0x1F;
+    damage->damageKind = arg1 & 0x1F;
+    if (g_Status.defenseElement & damage->unk0) {
+        amount *= 2;
     }
-    if (g_Status.D_80097C2A & arg0->unk0) {
-        arg2 /= 2;
+    if (g_Status.D_80097C2A & damage->unk0) {
+        amount /= 2;
     }
-    if (g_Status.D_80097C2C & arg0->unk0) {
-        if (!(g_Status.D_80097C2C & arg0->unk0 & 0x200)) {
+    if (g_Status.D_80097C2C & damage->unk0) {
+        if (!(g_Status.D_80097C2C & damage->unk0 & 0x200)) {
             return 0;
         }
-        arg0->unk0 &= ~0x200;
+        damage->unk0 &= ~0x200;
     }
 
-    if (g_Status.D_80097C2E & arg0->unk0) {
-        if (arg2 < 1) {
-            arg2 = 1;
+    if (g_Status.D_80097C2E & damage->unk0) {
+        if (amount < 1) {
+            amount = 1;
         }
-        arg0->unkC = arg2;
+        damage->unkC = amount;
         if (g_Status.hp != g_Status.hpMax) {
             func_800FE8F0();
-            g_Status.hp += arg0->unkC;
+            g_Status.hp += damage->unkC;
             if (g_Status.hpMax < g_Status.hp) {
                 g_Status.hp = g_Status.hpMax;
             }
@@ -562,15 +562,15 @@ s32 func_800FE97C(DamageParam* arg0, s32 arg1, s32 arg2, s32 arg3) {
     //  with arg2 doubled. Item description says "Big HP restore" so makes
     //  sense
     if (CheckEquipmentItemCount(ITEM_CAT_EYE_CIRCLET, HEAD_TYPE) != 0 &&
-        arg0->damageKind == 7) {
-        arg2 *= 2;
-        if (arg2 < 1) {
-            arg2 = 1;
+        damage->damageKind == 7) {
+        amount *= 2;
+        if (amount < 1) {
+            amount = 1;
         }
-        arg0->unkC = arg2;
+        damage->unkC = amount;
         if (g_Status.hp != g_Status.hpMax) {
             func_800FE8F0();
-            g_Status.hp += arg0->unkC;
+            g_Status.hp += damage->unkC;
             if (g_Status.hpMax < g_Status.hp) {
                 g_Status.hp = g_Status.hpMax;
             }
@@ -582,38 +582,38 @@ s32 func_800FE97C(DamageParam* arg0, s32 arg1, s32 arg2, s32 arg3) {
     // have special behavior. Also, not possible to equip two. This may be
     // a new discovery of a property of the item. Worth further analysis.
     itemCount = CheckEquipmentItemCount(ITEM_BALLROOM_MASK, HEAD_TYPE);
-    if ((itemCount != 0) && (arg0->unk0 & 0xF980)) {
+    if (itemCount != 0 && (damage->unk0 & 0xF980)) {
         if (itemCount == 1) {
-            arg2 -= arg2 / 5;
+            amount -= amount / 5;
         }
         if (itemCount == 2) {
-            arg2 -= arg2 / 3;
+            amount -= amount / 3;
         }
     }
     if (g_Player_unk0C & 0x80) {
-        arg0->damageTaken = g_Status.hpMax / 8;
+        damage->damageTaken = g_Status.hpMax / 8;
         ret = 8;
-    } else if (arg0->unk0 & 0x200) {
-        arg0->damageTaken = arg2 - (g_Status.defenseEquip * 2);
-        if (arg0->damageTaken <= 0) {
-            arg0->damageTaken = 0;
+    } else if (damage->unk0 & 0x200) {
+        damage->damageTaken = amount - (g_Status.defenseEquip * 2);
+        if (damage->damageTaken <= 0) {
+            damage->damageTaken = 0;
         }
         ret = 7;
-    } else if (arg0->damageKind == 6) {
+    } else if (damage->damageKind == 6) {
         if (D_8003C8C4 == ((D_8003C8C4 / 10) * 0xA)) {
-            arg0->damageTaken = 1;
+            damage->damageTaken = 1;
         } else {
-            arg0->damageTaken = 0;
+            damage->damageTaken = 0;
         }
         ret = 9;
     } else {
-        if (arg0->damageKind < 16) {
-            arg0->damageTaken = arg2 - g_Status.defenseEquip;
+        if (damage->damageKind < 16) {
+            damage->damageTaken = amount - g_Status.defenseEquip;
         } else {
-            arg0->damageTaken = g_Status.hpMax / 8;
+            damage->damageTaken = g_Status.hpMax / 8;
         }
         if (g_Player_unk0C & 0x4000) {
-            arg0->damageTaken *= 2;
+            damage->damageTaken *= 2;
         }
         // Check for player wearing a Talisman (chance to dodge attack)
         itemCount = CheckEquipmentItemCount(ITEM_TALISMAN, ACCESSORY_TYPE);
@@ -622,31 +622,32 @@ s32 func_800FE97C(DamageParam* arg0, s32 arg1, s32 arg2, s32 arg3) {
                 return 2;
             }
         }
-        if (arg0->damageTaken > 0) {
-            if (arg0->damageKind < 2) {
-                if ((arg0->damageTaken * 2) >= g_Status.hpMax) {
-                    arg0->damageKind = 4;
-                } else if ((arg2 * 50) >= g_Status.hpMax) {
-                    arg0->damageKind = 3;
+        if (damage->damageTaken > 0) {
+            if (damage->damageKind < 2) {
+                if ((damage->damageTaken * 2) >= g_Status.hpMax) {
+                    damage->damageKind = 4;
+                } else if (amount * 50 >= g_Status.hpMax) {
+                    damage->damageKind = 3;
                 } else {
-                    arg0->damageKind = 2;
+                    damage->damageKind = 2;
                 }
             }
             ret = 3;
         } else {
-            if ((g_Status.defenseEquip > 99) && !(arg0->unk0 & 0x180) &&
+            if (g_Status.defenseEquip > 99 && !(damage->unk0 & 0x180) &&
                 !(g_Player_unk0C & 0x80)) {
-                arg0->damageKind = 0;
+                damage->damageKind = 0;
                 ret = 1;
             } else {
-                arg0->damageKind = 2;
+                damage->damageKind = 2;
                 ret = 3;
             }
-            arg0->damageTaken = 1;
+            damage->damageTaken = 1;
         }
     }
+
     // If our HP is less than the damage, we die.
-    if (g_Status.hp <= arg0->damageTaken) {
+    if (g_Status.hp <= damage->damageTaken) {
         g_Status.hp = 0;
         if (ret == 7) {
             return 7;
@@ -661,11 +662,11 @@ s32 func_800FE97C(DamageParam* arg0, s32 arg1, s32 arg2, s32 arg3) {
             func_800FE8F0();
         }
         // Here is where we actually take the damage away.
-        g_Status.hp -= arg0->damageTaken;
+        g_Status.hp -= damage->damageTaken;
         // Blood cloak gives hearts when damage is taken
         if ((CheckEquipmentItemCount(ITEM_BLOOD_CLOAK, CAPE_TYPE) != 0) &&
             (ret != 9)) {
-            AddHearts(arg0->damageTaken);
+            AddHearts(damage->damageTaken);
         }
         // Fury Plate "DEF goes up when damage taken", that logic is not here
         // though.

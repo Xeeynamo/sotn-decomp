@@ -106,7 +106,7 @@ void func_80116208(void) {
         return;
     case 1:
         if (g_Player.unk60 == 3) {
-            temp_s0 = func_800FE97C(&damage, 2, g_Player.unk64, 1);
+            temp_s0 = HandleDamage(&damage, 2, g_Player.unk64, 1);
             func_80118C84(damage.damageTaken, 0);
             if (temp_s0 == 4) {
                 SetPlayerStep(Player_Unk16);
