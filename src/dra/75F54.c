@@ -87,7 +87,7 @@ void func_80115F54(void) {
 }
 
 void func_80116208(void) {
-    DamageParam sp10;
+    DamageParam damage;
     s32 temp_s0;
 
     switch (g_CurrentEntity->step_s) {
@@ -106,11 +106,11 @@ void func_80116208(void) {
         return;
     case 1:
         if (g_Player.unk60 == 3) {
-            temp_s0 = func_800FE97C(&sp10, 2, g_Player.unk64, 1);
-            func_80118C84(sp10.damageTaken, 0);
+            temp_s0 = func_800FE97C(&damage, 2, g_Player.unk64, 1);
+            func_80118C84(damage.damageTaken, 0);
             if (temp_s0 == 4) {
                 SetPlayerStep(Player_Unk16);
-                func_80115394(&sp10, 0xC, 1);
+                func_80115394(&damage, 0xC, 1);
                 return;
             }
             if (g_Player.unk62 == 0) {
