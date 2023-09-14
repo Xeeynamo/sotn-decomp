@@ -119,7 +119,7 @@ extern u8 D_80180528[];
 const char* D_801808D0[];
 extern s32 g_UnkMemcardPort[2];
 extern u16 g_saveIconPalette[0x10][0x10];
-extern u32 g_saveIconTexture[];
+extern u8* g_saveIconTexture[];
 extern s8 D_801823A0[]; // on-screen keyboard
 extern RECT D_8018258C;
 extern RECT D_801825A4;
@@ -215,7 +215,7 @@ void func_801B3A54(s32, s32);
 s32 func_801B3A94(s32);
 s32 _card_event_x();
 void MemcardInit();
-s32 func_801B8A8C(s32, s32);
+s32 func_800E9880(s32, s32);
 void MDEC_rest(s32 option);
 void func_801BA880();
 void DecDCTvlc(s32, s32);
