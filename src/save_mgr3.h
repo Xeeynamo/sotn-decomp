@@ -93,12 +93,12 @@ const char* g_SaveAreaNames[] = {
     "",
 };
 
-s32 MemcardFormat(s32 port, s32 port_s) {
+s32 MemcardFormat(s32 nPort, s32 nCard) {
     char savePath[0x8];
     s32 ret;
 
-    D_8006C3AC &= g_UnkMemcardPort[port];
-    sprintf(savePath, g_strMemcardRootPath, port, port_s);
+    D_8006C3AC &= g_UnkMemcardPort[nPort];
+    sprintf(savePath, g_strMemcardRootPath, nPort, nCard);
     _clear_event_x();
     format(savePath);
     ret = _card_event_x();

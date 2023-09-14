@@ -5,11 +5,11 @@ void _clear_event(void);
 void _clear_event_x(void);
 s32 _peek_event_with_retry(void);
 
-s32 func_801B8A8C(s32 port, s32 port_s) {
+s32 func_801B8A8C(s32 nPort, s32 nCard) {
     s32 channel;
     MemcardInfo* memcard;
-    channel = (port * 0x10) + port_s;
-    memcard = &g_MemcardInfo[port];
+    channel = (nPort * 0x10) + nCard;
+    memcard = &g_MemcardInfo[nPort];
     switch (g_MemcardStep) {
     case 0:
         memcard->unk25C = 0;
@@ -29,13 +29,13 @@ s32 func_801B8A8C(s32 port, s32 port_s) {
             break;
 
         case 3:
-            D_8006C3AC &= g_UnkMemcardPort[port];
+            D_8006C3AC &= g_UnkMemcardPort[nPort];
             memcard->unk258 = -1;
             g_MemcardStep = 4;
             break;
 
         case 4:
-            D_8006C3AC &= g_UnkMemcardPort[port];
+            D_8006C3AC &= g_UnkMemcardPort[nPort];
             memcard->unk258 = 2;
             _clear_event_x();
             _card_clear(channel);
@@ -44,7 +44,7 @@ s32 func_801B8A8C(s32 port, s32 port_s) {
             break;
 
         case 2:
-            D_8006C3AC &= g_UnkMemcardPort[port];
+            D_8006C3AC &= g_UnkMemcardPort[nPort];
             memcard->unk258 = -3;
             g_MemcardStep = 4;
             break;
@@ -69,19 +69,19 @@ s32 func_801B8A8C(s32 port, s32 port_s) {
             break;
 
         case 3:
-            D_8006C3AC &= g_UnkMemcardPort[port];
+            D_8006C3AC &= g_UnkMemcardPort[nPort];
             memcard->unk258 = -1;
             g_MemcardStep++;
             break;
 
         case 4:
-            D_8006C3AC &= g_UnkMemcardPort[port];
+            D_8006C3AC &= g_UnkMemcardPort[nPort];
             memcard->unk258 = -2;
             g_MemcardStep++;
             break;
 
         case 2:
-            D_8006C3AC &= g_UnkMemcardPort[port];
+            D_8006C3AC &= g_UnkMemcardPort[nPort];
             memcard->unk258 = -3;
             g_MemcardStep++;
             break;

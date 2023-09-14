@@ -85,15 +85,15 @@ void MemcardInfoInit(void) {
     g_MemcardInfo[1].nBlockUsed = 0;
 }
 
-s32 MemcardParse(s32 port, s32 port_s) {
+s32 MemcardParse(s32 nPort, s32 nCard) {
     char cardName[32];
     struct DIRENTRY* dirent;
     s32 totalEntrySize;
     s32 i;
 
     if (g_MemcardStep == 0) {
-        sprintf(cardName, g_strMemcardRootPath, port, port_s);
-        dirent = &g_MemcardInfo[port].entries;
+        sprintf(cardName, g_strMemcardRootPath, nPort, nCard);
+        dirent = &g_MemcardInfo[nPort].entries;
         g_MemcardBlockRead = 0;
         if (firstfile(cardName, dirent) == dirent) {
             g_MemcardBlockRead++;
@@ -105,7 +105,7 @@ s32 MemcardParse(s32 port, s32 port_s) {
         }
     } else {
         if (g_MemcardStep == 1) {
-            dirent = &g_MemcardInfo[port].entries[g_MemcardBlockRead];
+            dirent = &g_MemcardInfo[nPort].entries[g_MemcardBlockRead];
             if (nextfile(dirent) == dirent) {
                 g_MemcardBlockRead++;
                 return -1;
@@ -113,43 +113,43 @@ s32 MemcardParse(s32 port, s32 port_s) {
                 g_MemcardStep++;
             }
         } else {
-            g_MemcardInfo[port].nBlockUsed = g_MemcardBlockRead;
-            dirent = &g_MemcardInfo[port].entries;
+            g_MemcardInfo[nPort].nBlockUsed = g_MemcardBlockRead;
+            dirent = &g_MemcardInfo[nPort].entries;
             totalEntrySize = 0;
             for (i = 0; i < g_MemcardBlockRead; i++) {
                 totalEntrySize += dirent[i].size;
             }
 
             totalEntrySize /= CARD_BLOCK_SIZE;
-            g_MemcardInfo[port].nFreeBlock = BLOCK_PER_CARD - totalEntrySize;
+            g_MemcardInfo[nPort].nFreeBlock = BLOCK_PER_CARD - totalEntrySize;
             do {
-                if (g_MemcardInfo[port].nFreeBlock <= 0) {
+                if (g_MemcardInfo[nPort].nFreeBlock <= 0) {
                     return 0;
                 }
             } while (0);
-            return g_MemcardInfo[port].nFreeBlock;
+            return g_MemcardInfo[nPort].nFreeBlock;
         }
     }
     return -1;
 }
 
-s32 GetMemcardFreeBlockCount(s32 port) {
-    return g_MemcardInfo[port].nFreeBlock;
+s32 GetMemcardFreeBlockCount(s32 nPort) {
+    return g_MemcardInfo[nPort].nFreeBlock;
 }
 
 INCLUDE_ASM("dra/nonmatchings/save_mgr", func_800E9530);
 
-u8 IsMemcardBlockUsed(u32 port, u32 block) {
-    return g_MemcardInfo[port].blocks[block];
+u8 IsMemcardBlockUsed(u32 nPort, u32 block) {
+    return g_MemcardInfo[nPort].blocks[block];
 }
 
 s32 MemcardReadFile(
-    s32 port, s32 port_s, const char* name, void* data, s32 nBlock) {
+    s32 nPort, s32 nCard, const char* name, void* data, s32 nBlock) {
     char savePath[32];
     s32 fd;
     s32 nBytes;
 
-    sprintf(savePath, g_MemcardSavePath, port, port_s, name);
+    sprintf(savePath, g_MemcardSavePath, nPort, nCard, name);
     if (nBlock == 0) {
         nBytes = 0x2B8;
     } else {
@@ -168,12 +168,12 @@ s32 MemcardReadFile(
 }
 
 s32 MemcardWriteFile(
-    s32 port, s32 port_s, const char* name, void* data, s32 flags, s32 create) {
+    s32 nPort, s32 nCard, const char* name, void* data, s32 flags, s32 create) {
     char savePath[32];
     s32 len;
     s32 fd;
 
-    sprintf(savePath, &g_MemcardSavePath, port, port_s, name);
+    sprintf(savePath, &g_MemcardSavePath, nPort, nCard, name);
 
     // known PSX bug: when creating a a file with open(), any read or write
     // will immediately fail. The workaround is to close the file and open
@@ -200,14 +200,14 @@ s32 MemcardWriteFile(
     return 0;
 }
 
-s32 MemcardEraseFile(s32 port, s32 port_s, const char* name) {
+s32 MemcardEraseFile(s32 nPort, s32 nCard, const char* name) {
     char savePath[0x20];
 
-    sprintf(savePath, g_MemcardSavePath, port, port_s, name);
+    sprintf(savePath, g_MemcardSavePath, nPort, nCard, name);
     return -(erase(savePath) == 0);
 }
 
-s32 MemcardClose(s32 port) {
+s32 MemcardClose(s32 nPort) {
     s32 eventStep = _peek_event();
 
     if (eventStep == 0) {
@@ -219,6 +219,6 @@ s32 MemcardClose(s32 port) {
         return -3;
     }
 
-    D_8006C3AC |= eventStep << port;
+    D_8006C3AC |= eventStep << nPort;
     return 1;
 }
