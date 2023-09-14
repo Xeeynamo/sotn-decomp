@@ -1564,25 +1564,25 @@ void func_800FA3C4(s32 arg0, s32 arg1, s32 arg2) {
     }
     arg0_lowbit = arg0 & 1;
     half_arg0 = (arg0 / 2);
-    
+
     left = (arg0_lowbit * 0xA8) + 0x28;
-    limit = - (g_MenuData.D_8013768C / 12);
+    limit = -(g_MenuData.D_8013768C / 12);
 
     // Below some limit
     if (half_arg0 < limit) {
         g_MenuData.D_8013768C += 12;
         top = g_MenuData.D_80137678[0] + 1;
-    // Beyond that limit, on the other side
+        // Beyond that limit, on the other side
     } else if (half_arg0 >= (limit + g_MenuData.D_80137678[2] / 12)) {
         g_MenuData.D_8013768C -= 12;
         top_offset = ((g_MenuData.D_80137678[2] / 12 - 1) * 12) + 1;
         top = g_MenuData.D_80137678[0] + top_offset;
-    // Somewhere in between
+        // Somewhere in between
     } else {
         top = ((half_arg0 - limit) * 12) + g_MenuData.D_80137678[0] + 1;
     }
 
-    //Here is where we use the menuitem, again, FAKE.
+    // Here is where we use the menuitem, again, FAKE.
     if (D_801375CC.equipTypeFilter == 0) {
         g_MenuNavigation.scrollEquipHand = menuitem[11];
     } else {
