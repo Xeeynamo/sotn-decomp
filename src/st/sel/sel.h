@@ -104,13 +104,6 @@ typedef struct {
     char pad2D8[0x3A8 - 0x2D8];
 } SaveSummary; /* size=0x3A8 */
 
-typedef struct {
-    /* 0x000 */ u8 pad0[0x258];
-    /* 0x258 */ u32 unk258;
-    /* 0x25C */ u32 unk25C;
-    /* 0x260 */ u8 pad260[0x18];
-} Unkstruct_801B8A8C; /* size=0x278 */
-
 extern u8* D_80180128[];
 extern u8* D_8018012C[];
 extern u8* D_801803A8;
@@ -200,7 +193,6 @@ extern s32 g_MemCardSelectorX;
 extern s32 g_MemCardSelectorY;
 extern s32 D_801BC3E0; // on-screen keyboard key position
 extern s32 D_801BC3E4;
-extern Unkstruct_801B8A8C D_801BC3F0[];
 extern s32 D_801BC650;
 extern s32 D_801BC8C8;
 extern s32 D_801BC8E0[];
@@ -212,7 +204,8 @@ extern u32 D_801BD030;
 extern s32 D_801D6B04;
 extern s32 D_801D6B08;
 extern s32 D_801D6B0C;
-extern s32 D_801D6B20;
+extern s32 g_MemcardBlockRead;
+extern s32 g_MemcardStep;
 extern s32 D_801D6B24;
 
 extern Dialogue g_Dialogue;
@@ -221,7 +214,7 @@ void func_801B1ED0();
 void func_801B3A54(s32, s32);
 s32 func_801B3A94(s32);
 s32 _card_event_x();
-void func_801B84F0();
+void MemcardInit();
 s32 func_801B8A8C(s32, s32);
 void MDEC_rest(s32 option);
 void func_801BA880();

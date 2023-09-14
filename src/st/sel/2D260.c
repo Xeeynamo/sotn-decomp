@@ -763,7 +763,7 @@ void func_801B2D1C(void) {
 }
 
 void func_801B2D6C(void) {
-    func_801B84F0();
+    MemcardInit();
     D_801BAFDC = 0;
     D_801BAFE0 = 0;
     D_801BAFE4 = 0;
@@ -838,7 +838,7 @@ s32 func_801B3694(void) {
     temp_a1 = &D_801BC91C[nCardSlot];
     switch (g_memCardRStep) {
     case 0:
-        func_801B84F0();
+        MemcardInit();
         g_memCardRetryCount = 10;
         g_memCardRStep = 3;
         break;
@@ -920,7 +920,7 @@ s32 func_801B3E2C(void) {
     blockId = save->unk0;
     switch (g_memCardRStep) {
     case 0:
-        func_801B84F0();
+        MemcardInit();
         g_memCardRetryCount = 10;
         g_memCardRStep++;
         break;

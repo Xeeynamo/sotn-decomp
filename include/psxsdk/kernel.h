@@ -74,6 +74,15 @@
 #define TcbStUNUSED 0x1000
 #define TcbStACTIVE 0x4000
 
+struct DIRENTRY {
+    /* 0x00 */ char name[20];
+    /* 0x14 */ long attr;
+    /* 0x18 */ long size;
+    /* 0x1C */ struct DIRENTRY* next;
+    /* 0x20*/ long head;
+    /* 0x24 */ char system[4];
+}; // size=0x28
+
 void EnterCriticalSection(void);
 void ExitCriticalSection(void);
 

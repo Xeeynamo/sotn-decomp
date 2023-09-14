@@ -84,11 +84,6 @@ typedef struct {
 } Unkstruct_80137990;
 
 typedef struct {
-    /* 0x000 */ s32 unk000;
-    /* 0x004 */ char pad004[0x274];
-} Unkstruct_8013B15C; // size = 0x278
-
-typedef struct {
     struct UnkStructClut* struct1;
     struct UnkStructClut* struct2;
     u16 unk8;
