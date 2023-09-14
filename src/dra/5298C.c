@@ -1554,9 +1554,6 @@ void func_800FA3C4(s32 arg0, s32 arg1, s32 arg2) {
     s32 arg0_lowbit;
     s32 left;
     s32 top;
-    s32 right;
-    s32 right2;
-    s32 bottom;
     s32 half_arg0;
 
     if (g_MenuData.D_80137692 != 0) {
@@ -1590,11 +1587,10 @@ void func_800FA3C4(s32 arg0, s32 arg1, s32 arg2) {
     }
     if (arg2 != 0) {
         if (arg1 == 0) {
-            right2 = left + 0x70;
             BlinkMenuCursor(left, top, left + 0x70, top, 0);
             BlinkMenuCursor(left, top, left, top + 0xB, 0);
-            BlinkMenuCursor(left + 0x70, top, right2, top + 0xB, 0);
-            BlinkMenuCursor(left, top + 0xB, right2, top + 0xB, 0);
+            BlinkMenuCursor(left + 0x70, top, left + 0x70, top + 0xB, 0);
+            BlinkMenuCursor(left, top + 0xB, left + 0x70, top + 0xB, 0);
         } else {
             BlinkMenuCursor(left, top, left + 0x70, top + 0xB, 0);
             BlinkMenuCursor(left, top + 0xB, left + 0x70, top, 0);
