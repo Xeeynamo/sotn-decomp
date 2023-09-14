@@ -4,6 +4,7 @@ import argparse
 import os
 import re
 import sys
+import yaml
 
 parser = argparse.ArgumentParser(description="Perform operations on game symbols")
 parser.add_argument("--version", required=False, type=str, help="Game version")
@@ -23,6 +24,14 @@ cross_parser.add_argument(
 cross_parser.add_argument(
     "to_cross",
     help="Assembly source file to be cross-referenced to",
+)
+orphan_parser = subparsers.add_parser(
+    "remove-orphans",
+    description="Remove all symbols that are not referenced from a specific group of assembly code",
+)
+orphan_parser.add_argument(
+    "config_yaml",
+    help="The Splat YAML config of the overlay to remove the orphan symbols from",
 )
 
 args = parser.parse_args()
@@ -237,8 +246,71 @@ def cross(asm_reference_file_name, asm_to_cross_file_name):
         print(f"{sym} = 0x{syms[sym]:08X};")
 
 
+def get_all_file_paths_recursively(path):
+    file_list = []
+    for root, directories, files in os.walk(path):
+        for file in files:
+            file_list.append(os.path.join(root, file))
+    return file_list
+
+
+def tokenize_symbols(file_path):
+    with open(file_path, "r") as f:
+        content = f.read()
+    content_without_comments = re.sub(r"/\*.*?\*/", "", content, flags=re.DOTALL)
+    content_without_labels = re.sub(r"\bL8\w*", "", content_without_comments)
+    content_without_strings = re.sub(r'"[^"]*"', "", content_without_labels)
+    return re.findall(r"\b[a-zA-Z_]\w*\b", content_without_strings)
+
+
+def remove_orphans(symbol_file_name, symbols_set):
+    with open(symbol_file_name, "r") as symbol_file_ref:
+        symbols_defined = symbol_file_ref.readlines()
+
+    symbols_unorphaned = []
+    for sym_def in symbols_defined:
+        if len(sym_def) > 4 and sym_def.find("ignore:true") == -1:
+            sym_tokenized = sym_def.split("=")
+            if len(sym_tokenized) >= 2:
+                sym = sym_tokenized[0].strip()
+                if sym not in symbols_set:
+                    continue
+        symbols_unorphaned.append(sym_def)
+
+    with open(symbol_file_name, "w") as symbol_file_ref:
+        symbol_file_ref.writelines(symbols_unorphaned)
+
+
+def remove_orphans_from_config(config_yaml):
+    with open(config_yaml, "r") as config_yaml_ref:
+        config = yaml.safe_load(config_yaml_ref)
+    symbol_file_name = config["options"]["symbol_addrs_path"].replace("generated.", "")
+    asm_path = config["options"]["asm_path"]
+
+    file_list = get_all_file_paths_recursively(asm_path)
+    asm_file_list = [file for file in file_list if file.endswith(".s")]
+
+    symbols_found = set()
+    for asm_file in asm_file_list:
+        symbols_found.update(tokenize_symbols(asm_file))
+
+    # The following hack forces to also process symbols from the YAML config itself.
+    # This is because tiledef in ST/WRP uses the symbol list to extract the tile definition.
+    symbols_found.update(tokenize_symbols(config_yaml))
+
+    if len(symbols_found) == 0:
+        print(
+            f"WARN: No symbols found for '{symbol_file_name}' in '{asm_path}'. Terminating before making destructive changes.",
+            file=sys.stderr,
+        )
+        exit(0)
+    remove_orphans(symbol_file_name, symbols_found)
+
+
 if __name__ == "__main__":
     if args.command == "sort":
         sort("config/")
     elif args.command == "cross":
         cross(args.ref, args.to_cross)
+    elif args.command == "remove-orphans":
+        remove_orphans_from_config(args.config_yaml)

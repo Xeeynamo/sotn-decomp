@@ -120,6 +120,20 @@ format:
 	black tools/split_jpt_yaml/*.py
 	VERSION=us $(PYTHON) ./tools/symbols.py sort
 	VERSION=hd $(PYTHON) ./tools/symbols.py sort
+	./tools/symbols.py remove-orphans config/splat.us.dra.yaml
+	./tools/symbols.py remove-orphans config/splat.hd.dra.yaml
+	./tools/symbols.py remove-orphans config/splat.us.ric.yaml
+	./tools/symbols.py remove-orphans config/splat.us.stcen.yaml
+	./tools/symbols.py remove-orphans config/splat.us.stdre.yaml
+	./tools/symbols.py remove-orphans config/splat.us.stno3.yaml
+	./tools/symbols.py remove-orphans config/splat.us.stnp3.yaml
+	./tools/symbols.py remove-orphans config/splat.us.stnz0.yaml
+	./tools/symbols.py remove-orphans config/splat.us.stsel.yaml
+	./tools/symbols.py remove-orphans config/splat.us.stst0.yaml
+	./tools/symbols.py remove-orphans config/splat.us.stwrp.yaml
+	./tools/symbols.py remove-orphans config/splat.us.strwrp.yaml
+	./tools/symbols.py remove-orphans config/splat.us.tt_000.yaml
+	./tools/symbols.py remove-orphans config/splat.us.stmad.yaml
 check:
 	sha1sum --check config/check.$(VERSION).sha
 expected: check
