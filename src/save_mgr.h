@@ -91,7 +91,7 @@ s32 MemcardParse(s32 nPort, s32 nCard) {
     s32 i;
 
     if (g_MemcardStep == 0) {
-        sprintf(cardName, g_strMemcardRootPath, nPort, nCard);
+        sprintf(cardName, "bu%1d%1d:", nPort, nCard);
         dirent = &g_MemcardInfo[nPort].entries;
         g_MemcardBlockRead = 0;
         if (firstfile(cardName, dirent) == dirent) {
@@ -181,7 +181,7 @@ s32 MemcardReadFile(
     s32 fd;
     s32 nBytes;
 
-    sprintf(savePath, g_MemcardSavePath, nPort, nCard, name);
+    sprintf(savePath, "bu%1d%1d:%s", nPort, nCard, name);
     if (nBlock == 0) {
         nBytes = 0x2B8;
     } else {
@@ -205,7 +205,7 @@ s32 MemcardWriteFile(
     s32 len;
     s32 fd;
 
-    sprintf(savePath, &g_MemcardSavePath, nPort, nCard, name);
+    sprintf(savePath, &"bu%1d%1d:%s", nPort, nCard, name);
 
     // known PSX bug: when creating a a file with open(), any read or write
     // will immediately fail. The workaround is to close the file and open
@@ -235,7 +235,7 @@ s32 MemcardWriteFile(
 s32 MemcardEraseFile(s32 nPort, s32 nCard, const char* name) {
     char savePath[0x20];
 
-    sprintf(savePath, g_MemcardSavePath, nPort, nCard, name);
+    sprintf(savePath, "bu%1d%1d:%s", nPort, nCard, name);
     return -(erase(savePath) == 0);
 }
 
@@ -482,7 +482,7 @@ s32 MemcardFormat(s32 nPort, s32 nCard) {
     s32 ret;
 
     D_8006C3AC &= g_UnkMemcardPort[nPort];
-    sprintf(savePath, g_strMemcardRootPath, nPort, nCard);
+    sprintf(savePath, "bu%1d%1d:", nPort, nCard);
     _clear_event_x();
     format(savePath);
     ret = _card_event_x();
