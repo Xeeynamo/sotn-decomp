@@ -290,6 +290,13 @@ def remove_orphans_from_config(config_yaml):
     file_list = get_all_file_paths_recursively(asm_path)
     asm_file_list = [file for file in file_list if file.endswith(".s")]
 
+    if len(file_list) == 0:
+        print(
+            f"WARN: No symbols found for '{symbol_file_name}' in '{asm_path}'. Terminating before making destructive changes.",
+            file=sys.stderr,
+        )
+        exit(0)
+
     symbols_found = set()
     for asm_file in asm_file_list:
         symbols_found.update(tokenize_symbols(asm_file))
@@ -297,13 +304,6 @@ def remove_orphans_from_config(config_yaml):
     # The following hack forces to also process symbols from the YAML config itself.
     # This is because tiledef in ST/WRP uses the symbol list to extract the tile definition.
     symbols_found.update(tokenize_symbols(config_yaml))
-
-    if len(symbols_found) == 0:
-        print(
-            f"WARN: No symbols found for '{symbol_file_name}' in '{asm_path}'. Terminating before making destructive changes.",
-            file=sys.stderr,
-        )
-        exit(0)
     remove_orphans(symbol_file_name, symbols_found)
 
 
