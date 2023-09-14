@@ -246,7 +246,7 @@ typedef struct {
     /* 80137684 */ s32 unused1; // No known use yet, one may be found
     /* 80137688 */ s16 D_80137688;
     /* 8013768A */ s16 D_8013768A;
-    /* 8013768C */ u16 D_8013768C;
+    /* 8013768C */ s16 D_8013768C;
     /* 8013768E */ s16 unused2; // No known use yet, one may be found
     /* 80137690 */ s16 unused3; // No known use yet, one may be found
     /* 80137692 */ u8 D_80137692;

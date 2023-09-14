@@ -1545,7 +1545,62 @@ void func_800F9F40(void) {
 
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800FA034);
 
-INCLUDE_ASM("dra/nonmatchings/5298C", func_800FA3C4);
+void func_800FA3C4(s32 arg0, s32 arg1, s32 arg2) {
+    // FAKE: Should figure out how this actually works.
+    // Could be that 7676 is the start of another struct within MenuData.
+    s16* menuitem = &g_MenuData.D_80137676;
+    s32 limit;
+    s32 top_offset;
+    s32 arg0_lowbit;
+    s32 left;
+    s32 top;
+    s32 right;
+    s32 right2;
+    s32 bottom;
+    s32 half_arg0;
+
+    if (g_MenuData.D_80137692 != 0) {
+        return;
+    }
+    arg0_lowbit = arg0 & 1;
+    half_arg0 = (arg0 / 2);
+    
+    left = (arg0_lowbit * 0xA8) + 0x28;
+    limit = - (g_MenuData.D_8013768C / 12);
+
+    // Below some limit
+    if (half_arg0 < limit) {
+        g_MenuData.D_8013768C += 12;
+        top = g_MenuData.D_80137678[0] + 1;
+    // Beyond that limit, on the other side
+    } else if (half_arg0 >= (limit + g_MenuData.D_80137678[2] / 12)) {
+        g_MenuData.D_8013768C -= 12;
+        top_offset = ((g_MenuData.D_80137678[2] / 12 - 1) * 12) + 1;
+        top = g_MenuData.D_80137678[0] + top_offset;
+    // Somewhere in between
+    } else {
+        top = ((half_arg0 - limit) * 12) + g_MenuData.D_80137678[0] + 1;
+    }
+
+    //Here is where we use the menuitem, again, FAKE.
+    if (D_801375CC.equipTypeFilter == 0) {
+        g_MenuNavigation.scrollEquipHand = menuitem[11];
+    } else {
+        g_MenuNavigation.scrollEquipAccessories[D_801375D4] = menuitem[11];
+    }
+    if (arg2 != 0) {
+        if (arg1 == 0) {
+            right2 = left + 0x70;
+            BlinkMenuCursor(left, top, left + 0x70, top, 0);
+            BlinkMenuCursor(left, top, left, top + 0xB, 0);
+            BlinkMenuCursor(left + 0x70, top, right2, top + 0xB, 0);
+            BlinkMenuCursor(left, top + 0xB, right2, top + 0xB, 0);
+        } else {
+            BlinkMenuCursor(left, top, left + 0x70, top + 0xB, 0);
+            BlinkMenuCursor(left, top + 0xB, left + 0x70, top, 0);
+        }
+    }
+}
 
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800FA60C);
 
