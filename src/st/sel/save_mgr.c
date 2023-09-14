@@ -86,7 +86,7 @@ void MemcardInfoInit(void) {
 }
 
 s32 MemcardParse(s32 slot, s32 slot_s) {
-    const char cardName[0x20];
+    char cardName[0x20];
     struct DIRENTRY* dirent;
     s32 totalEntrySize;
     s32 i;
