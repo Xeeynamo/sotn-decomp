@@ -780,7 +780,7 @@ void func_801B2DEC(void) {}
 
 void func_801B2DF4(void) {
     if (func_801B2DAC() != 0) {
-        D_801BAFDC = func_801B8A8C(D_801BAFE8, 0);
+        D_801BAFDC = func_800E9880(D_801BAFE8, 0);
         if (D_801BAFDC != 0) {
             D_801BAFE0 = D_801BAFDC;
         }

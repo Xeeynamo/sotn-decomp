@@ -215,7 +215,7 @@ void func_801B3A54(s32, s32);
 s32 func_801B3A94(s32);
 s32 _card_event_x();
 void MemcardInit();
-s32 func_801B8A8C(s32, s32);
+s32 func_800E9880(s32, s32);
 void MDEC_rest(s32 option);
 void func_801BA880();
 void DecDCTvlc(s32, s32);
