@@ -923,6 +923,7 @@ MemcardInit = 0x800E92E4;
 MemcardInfoInit = 0x800E92F4;
 MemcardParse = 0x800E930C;
 GetMemcardFreeBlockCount = 0x800E9508;
+MemcardDetectSave = 0x800E9530;
 IsMemcardBlockUsed = 0x800E9610;
 MemcardReadFile = 0x800E9640;
 MemcardWriteFile = 0x800E96E8;
