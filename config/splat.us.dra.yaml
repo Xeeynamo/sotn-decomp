@@ -59,9 +59,7 @@ segments:
       - [0x3BD88, rodata] # jpt_800E7E3C
       - [0x3BDE0, .rodata, 47BB8]
       - [0x3BEE0, rodata]
-      - [0x3BEF8, rodata] # jpt_800E98E4
-      - [0x3BF10, rodata] # jpt_800E9934
-      - [0x3BF28, rodata] # jpt_800E9A48
+      - [0x3BEF8, .rodata, save_mgr2]
       - [0x3BF3C, rodata]
       - [0x3BFB4, .rodata, save_mgr3]
       - [0x3C1A8, rodata] # jpt_800EA8C0
