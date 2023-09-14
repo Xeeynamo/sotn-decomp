@@ -58,14 +58,14 @@ void _clear_event(void) {
 }
 
 s32 _card_event_x(void) {
-    while (1) {
+    while (true) {
         if (TestEvent(g_EvHwCardEnd) == 1) {
             return 1;
-        } else if (TestEvent((u32)g_EvHwCardErr) == 1) {
+        } else if (TestEvent(g_EvHwCardErr) == 1) {
             return 2;
-        } else if (TestEvent((u32)g_EvHwCardTmo) == 1) {
+        } else if (TestEvent(g_EvHwCardTmo) == 1) {
             return 3;
-        } else if (TestEvent((u32)g_EvHwCardNew) == 1) {
+        } else if (TestEvent(g_EvHwCardNew) == 1) {
             return 4;
         }
     }
@@ -85,15 +85,15 @@ void MemcardInfoInit(void) {
     g_MemcardInfo[1].nBlockUsed = 0;
 }
 
-s32 MemcardParse(s32 slot, s32 slot_s) {
-    char cardName[0x20];
+s32 MemcardParse(s32 port, s32 port_s) {
+    char cardName[32];
     struct DIRENTRY* dirent;
     s32 totalEntrySize;
     s32 i;
 
     if (g_MemcardStep == 0) {
-        sprintf(cardName, g_strMemcardRootPath, slot, slot_s);
-        dirent = &g_MemcardInfo[slot].entries;
+        sprintf(cardName, g_strMemcardRootPath, port, port_s);
+        dirent = &g_MemcardInfo[port].entries;
         g_MemcardBlockRead = 0;
         if (firstfile(cardName, dirent) == dirent) {
             g_MemcardBlockRead++;
@@ -105,7 +105,7 @@ s32 MemcardParse(s32 slot, s32 slot_s) {
         }
     } else {
         if (g_MemcardStep == 1) {
-            dirent = &g_MemcardInfo[slot].entries[g_MemcardBlockRead];
+            dirent = &g_MemcardInfo[port].entries[g_MemcardBlockRead];
             if (nextfile(dirent) == dirent) {
                 g_MemcardBlockRead++;
                 return -1;
@@ -113,47 +113,47 @@ s32 MemcardParse(s32 slot, s32 slot_s) {
                 g_MemcardStep++;
             }
         } else {
-            g_MemcardInfo[slot].nBlockUsed = g_MemcardBlockRead;
-            dirent = &g_MemcardInfo[slot].entries;
+            g_MemcardInfo[port].nBlockUsed = g_MemcardBlockRead;
+            dirent = &g_MemcardInfo[port].entries;
             totalEntrySize = 0;
             for (i = 0; i < g_MemcardBlockRead; i++) {
                 totalEntrySize += dirent[i].size;
             }
 
             totalEntrySize /= CARD_BLOCK_SIZE;
-            g_MemcardInfo[slot].nFreeBlock = BLOCK_PER_CARD - totalEntrySize;
+            g_MemcardInfo[port].nFreeBlock = BLOCK_PER_CARD - totalEntrySize;
             do {
-                if (g_MemcardInfo[slot].nFreeBlock <= 0) {
+                if (g_MemcardInfo[port].nFreeBlock <= 0) {
                     return 0;
                 }
             } while (0);
-            return g_MemcardInfo[slot].nFreeBlock;
+            return g_MemcardInfo[port].nFreeBlock;
         }
     }
     return -1;
 }
 
-s32 GetMemcardFreeBlockCount(s32 slot) {
-    return g_MemcardInfo[slot].nFreeBlock;
+s32 GetMemcardFreeBlockCount(s32 port) {
+    return g_MemcardInfo[port].nFreeBlock;
 }
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/save_mgr", func_801B873C);
 
-u8 IsMemcardBlockUsed(u32 slot, u32 block) {
-    return g_MemcardInfo[slot].blocks[block];
+u8 IsMemcardBlockUsed(u32 port, u32 block) {
+    return g_MemcardInfo[port].blocks[block];
 }
 
 s32 MemcardReadFile(
-    s32 slot, s32 block, const char* name, void* data, s32 saveLen) {
+    s32 port, s32 port_s, const char* name, void* data, s32 nBlock) {
     char savePath[32];
     s32 fd;
     s32 nBytes;
 
-    sprintf(savePath, g_MemcardSavePath, slot, block, name);
-    if (saveLen == 0) {
+    sprintf(savePath, g_MemcardSavePath, port, port_s, name);
+    if (nBlock == 0) {
         nBytes = 0x2B8;
     } else {
-        nBytes = saveLen * CARD_BLOCK_SIZE;
+        nBytes = nBlock * CARD_BLOCK_SIZE;
     }
 
     fd = open(savePath, O_RDONLY | O_NOWAIT);
@@ -168,12 +168,12 @@ s32 MemcardReadFile(
 }
 
 s32 MemcardWriteFile(
-    s32 slot, s32 block, const char* name, void* data, s32 flags, s32 create) {
-    s8 savePath[32];
+    s32 port, s32 port_s, const char* name, void* data, s32 flags, s32 create) {
+    char savePath[32];
     s32 len;
     s32 fd;
 
-    sprintf(savePath, &g_MemcardSavePath, slot, block, name);
+    sprintf(savePath, &g_MemcardSavePath, port, port_s, name);
 
     // known PSX bug: when creating a a file with open(), any read or write
     // will immediately fail. The workaround is to close the file and open
@@ -200,14 +200,14 @@ s32 MemcardWriteFile(
     return 0;
 }
 
-s32 MemcardEraseFile(s32 slot, s32 block, const char* name) {
+s32 MemcardEraseFile(s32 port, s32 port_s, const char* name) {
     char savePath[0x20];
 
-    sprintf(savePath, g_MemcardSavePath, slot, block, name);
+    sprintf(savePath, g_MemcardSavePath, port, port_s, name);
     return -(erase(savePath) == 0);
 }
 
-s32 MemcardClose(s32 nCardSlot) {
+s32 MemcardClose(s32 port) {
     s32 eventStep = _peek_event();
 
     if (eventStep == 0) {
@@ -219,6 +219,6 @@ s32 MemcardClose(s32 nCardSlot) {
         return -3;
     }
 
-    D_8006C3AC |= eventStep << nCardSlot;
+    D_8006C3AC |= eventStep << port;
     return 1;
 }

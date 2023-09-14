@@ -1,6 +1,12 @@
 #ifndef MEMCARD_H
 #define MEMCARD_H
 
+// save manager
+// port: 0 or 1, it is the physical port where you plug the memory card.
+// port_s: 0-3, valid only in the context of multi tap, unused in this game.
+// channel: the numerical combination of port and port_s
+// block: 0-14, a memory card can store up to 15 blocks
+
 #include "common.h"
 #include <psxsdk/kernel.h>
 #include <psxsdk/libapi.h>

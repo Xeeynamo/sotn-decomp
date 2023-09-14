@@ -1,4 +1,4 @@
-g_UnkMemcardSlot = 0x800A0510;
+g_UnkMemcardPort = 0x800A0510;
 g_saveIconPalette = 0x800A0518;
 g_saveIconTexture = 0x800A1F18;
 D_800A2438 = 0x800A23F8;
