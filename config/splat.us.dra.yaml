@@ -30,8 +30,7 @@ segments:
     subsegments:
       - [0x0, data]
       - [0x518, data]
-      - [0x1F18, data]
-      - [0x1FD4, .data, save_mgr3]
+      - [0x1F18, .data, save_mgr3]
       - [0x21B8, data]
       - [0x2BC0, data]
       - [0x2EC0, .data, 5D6C4]
@@ -60,8 +59,7 @@ segments:
       - [0x3BDE0, .rodata, 47BB8]
       - [0x3BEE0, rodata]
       - [0x3BEF8, .rodata, save_mgr2]
-      - [0x3BF3C, rodata]
-      - [0x3BFB4, .rodata, save_mgr3]
+      - [0x3BF3C, .rodata, save_mgr3]
       - [0x3C1A8, rodata] # jpt_800EA8C0
       - [0x3C1E8, rodata] # jpt_800EB120
       - [0x3C228, rodata]

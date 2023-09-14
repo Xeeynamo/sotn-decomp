@@ -46,8 +46,7 @@ segments:
       - [0x3BD60, .rodata, 47BB8]
       - [0x3BE60, rodata]
       - [0x3BE78, .rodata, save_mgr2]
-      - [0x3BEBC, rodata]
-      - [0x3BF34, .rodata, save_mgr3]
+      - [0x3BEBC, .rodata, save_mgr3]
       - [0x3C11C, rodata] # jtbl_800DC11C
       - [0x3C15C, rodata] # jtbl_800DC15C
       - [0x3C19C, rodata]

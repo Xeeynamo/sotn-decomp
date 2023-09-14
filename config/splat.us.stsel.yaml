@@ -29,7 +29,7 @@ segments:
     subsegments:
       - [0x0, .data, 2C048]
       - [0x40, data]
-      - [0x23A0, .data, save_mgr3]
+      - [0x22E4, .data, save_mgr3]
       - [0x2584, data]
       - [0xD5D4, .data, D5D4]
       - [0xDBD4, data]
@@ -47,8 +47,7 @@ segments:
       - [0x27CF4, rodata] # func_801B69F8
       - [0x27D78, rodata] # MemcardParse, MemcardWriteFile
       - [0x27D90, .rodata, save_mgr2]
-      - [0x27DD4, rodata]
-      - [0x27E4C, .rodata, save_mgr3]
+      - [0x27DD4, .rodata, save_mgr3]
       - [0x28040, rodata]
       - [0x2BF9C, .rodata, stream]
       - [0x2C048, c, 2C048]

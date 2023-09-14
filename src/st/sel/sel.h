@@ -119,7 +119,7 @@ extern u8 D_80180528[];
 const char* D_801808D0[];
 extern s32 g_UnkMemcardPort[2];
 extern u16 g_saveIconPalette[0x10][0x10];
-extern u32 g_saveIconTexture[];
+extern u8* g_saveIconTexture[];
 extern s8 D_801823A0[]; // on-screen keyboard
 extern RECT D_8018258C;
 extern RECT D_801825A4;

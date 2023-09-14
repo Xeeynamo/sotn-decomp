@@ -1,3 +1,33 @@
+extern u8 g_saveIcon0[];
+extern u8 g_saveIcon1[];
+extern u8 g_saveIcon2[];
+extern u8 g_saveIcon3[];
+extern u8 g_saveIcon4[];
+extern u8 g_saveIcon5[];
+extern u8 g_saveIcon6[];
+extern u8 g_saveIcon7[];
+extern u8 g_saveIcon8[];
+extern u8 g_saveIcon9[];
+extern u8 g_saveIcon10[];
+extern u8 g_saveIcon11[];
+extern u8 g_saveIcon12[];
+extern u8 g_saveIcon13[];
+extern u8 g_saveIcon14[];
+extern u8 g_saveIcon15[];
+
+u8* g_saveIconTexture[] = {
+    g_saveIcon0,  g_saveIcon1,  g_saveIcon2,  g_saveIcon3,
+    g_saveIcon4,  g_saveIcon5,  g_saveIcon6,  g_saveIcon7,
+    g_saveIcon8,  g_saveIcon9,  g_saveIcon10, g_saveIcon11,
+    g_saveIcon12, g_saveIcon13, g_saveIcon14, g_saveIcon15,
+};
+u8* g_saveUnkData[] = {
+    1, 1, 3, 1, 1, 1, 3, 1, 2, 2, 1, 1, 1, 1, 1, 2,
+};
+const char* g_saveBlockName[] = {
+    "　１", "　２", "　３", "　４", "　５", "　６", "　７", "　８",
+    "　９", "１０", "１１", "１２", "１３", "１４", "１５",
+};
 
 char g_AsciiSet[] = {
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',  'j', 'k',
