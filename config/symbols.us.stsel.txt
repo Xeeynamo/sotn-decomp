@@ -1693,6 +1693,7 @@ DecDCTvlc = 0x801BABA4;
 g_memCardRStep = 0x801BAFEC;
 g_memCardRStepSub = 0x801BAFF0;
 g_memCardRetryCount = 0x801BAFF8;
+g_MemcardRetryCount = 0x801BC2F8;
 g_MemcardFd = 0x801BC2FC;
 g_Dialogue = 0x801BC354;
 g_MemCardSelectorX = 0x801BC3D8;

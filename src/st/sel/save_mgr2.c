@@ -13,7 +13,7 @@ s32 func_801B8A8C(s32 port, s32 port_s) {
     switch (g_MemcardStep) {
     case 0:
         memcard->unk25C = 0;
-        D_801BC2F8 = 0x80;
+        g_MemcardRetryCount = 0x80;
         _card_info(channel);
         g_MemcardStep++;
         break;
@@ -55,7 +55,7 @@ s32 func_801B8A8C(s32 port, s32 port_s) {
     case 2:
         _clear_event();
         _card_load(channel);
-        D_801BC2F8 = 0x80;
+        g_MemcardRetryCount = 0x80;
         g_MemcardStep++;
         break;
 

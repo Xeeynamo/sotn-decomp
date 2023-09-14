@@ -172,7 +172,7 @@ extern s32 D_801BB000;
 extern s32 D_801BB004;
 extern s32 D_801BB008;
 extern s32 D_801BB00C;
-extern s32 D_801BC2F8;
+extern s32 g_MemcardRetryCount;
 extern s32 g_MemcardFd;
 extern s32 D_801BC340;
 extern s32 D_801BC344;

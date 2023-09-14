@@ -31,7 +31,7 @@ s32 _peek_event_with_retry(void) {
         return 3;
     } else if (TestEvent(g_EvSwCardNew) == 1) {
         return 4;
-    } else if (D_80137470-- < 0) {
+    } else if (g_MemcardRetryCount-- < 0) {
         return 2;
     }
     return 0;

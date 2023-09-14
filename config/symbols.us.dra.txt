@@ -1074,6 +1074,7 @@ g_DebugWaitInfoTimer = 0x80136300;
 g_DebugRecordVideoFid = 0x80136304;
 g_softResetTimer = 0x80136408;
 g_PadsRepeatTimer = 0x80137460;
+g_MemcardRetryCount = 0x80137470;
 g_MemcardFd = 0x80137474;
 g_DecSrcPtr = 0x80137578;
 g_DecDstPtr = 0x8013757C;

@@ -468,7 +468,7 @@ extern s16 D_80136460[];
 extern s16 D_80136C60[];
 extern u8 g_PadsRepeatTimer[BUTTON_COUNT * PAD_COUNT];
 extern s32 D_80137428[];
-extern s32 D_80137470;
+extern s32 g_MemcardRetryCount;
 extern s32 g_MemcardFd;
 extern u16 D_80137478[];
 extern u16 D_801374B8[];
