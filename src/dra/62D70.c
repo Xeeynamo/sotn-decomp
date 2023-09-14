@@ -32,7 +32,7 @@ s32 func_80102E04(void) {
 
     switch (temp_s0) {
     case 0:
-        func_800E92E4();
+        MemcardInit();
         D_80137E50 = 4;
         D_80137E64++;
         break;
@@ -153,7 +153,7 @@ INCLUDE_ASM("dra/nonmatchings/62D70", func_80103238);
 
 void func_80103EAC(void) {
     D_80137E4C = 0;
-    func_800E92F4();
+    MemcardInfoInit();
 }
 
 INCLUDE_ASM("dra/nonmatchings/62D70", func_80103ED4);

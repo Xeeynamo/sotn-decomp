@@ -1,20 +1,21 @@
 #include "sel.h"
+#include "memcard.h"
 
 void _clear_event(void);
 void _clear_event_x(void);
 s32 _peek_event_with_retry(void);
 
-s32 func_801B8A8C(s32 arg0, s32 arg1) {
-    s32 temp_s2;
-    Unkstruct_801B8A8C* unk;
-    temp_s2 = (arg0 * 0x10) + arg1;
-    unk = &D_801BC3F0[arg0];
-    switch (D_801D6B20) {
+s32 func_801B8A8C(s32 nPort, s32 nCard) {
+    s32 channel;
+    MemcardInfo* memcard;
+    channel = (nPort * 0x10) + nCard;
+    memcard = &g_MemcardInfo[nPort];
+    switch (g_MemcardStep) {
     case 0:
-        unk->unk25C = 0;
-        D_801BC2F8 = 0x80;
-        _card_info(temp_s2);
-        D_801D6B20++;
+        memcard->unk25C = 0;
+        g_MemcardRetryCount = 0x80;
+        _card_info(channel);
+        g_MemcardStep++;
         break;
 
     case 1:
@@ -23,29 +24,29 @@ s32 func_801B8A8C(s32 arg0, s32 arg1) {
             break;
 
         case 1:
-            unk->unk258 = 1;
-            D_801D6B20++;
+            memcard->unk258 = 1;
+            g_MemcardStep++;
             break;
 
         case 3:
-            D_8006C3AC &= g_UnkMemcardSlot[arg0];
-            unk->unk258 = -1;
-            D_801D6B20 = 4;
+            D_8006C3AC &= g_UnkMemcardPort[nPort];
+            memcard->unk258 = -1;
+            g_MemcardStep = 4;
             break;
 
         case 4:
-            D_8006C3AC &= g_UnkMemcardSlot[arg0];
-            unk->unk258 = 2;
+            D_8006C3AC &= g_UnkMemcardPort[nPort];
+            memcard->unk258 = 2;
             _clear_event_x();
-            _card_clear(temp_s2);
+            _card_clear(channel);
             _card_event_x();
-            D_801D6B20++;
+            g_MemcardStep++;
             break;
 
         case 2:
-            D_8006C3AC &= g_UnkMemcardSlot[arg0];
-            unk->unk258 = -3;
-            D_801D6B20 = 4;
+            D_8006C3AC &= g_UnkMemcardPort[nPort];
+            memcard->unk258 = -3;
+            g_MemcardStep = 4;
             break;
         }
 
@@ -53,9 +54,9 @@ s32 func_801B8A8C(s32 arg0, s32 arg1) {
 
     case 2:
         _clear_event();
-        _card_load(temp_s2);
-        D_801BC2F8 = 0x80;
-        D_801D6B20++;
+        _card_load(channel);
+        g_MemcardRetryCount = 0x80;
+        g_MemcardStep++;
         break;
 
     case 3:
@@ -64,35 +65,35 @@ s32 func_801B8A8C(s32 arg0, s32 arg1) {
             break;
 
         case 1:
-            D_801D6B20++;
+            g_MemcardStep++;
             break;
 
         case 3:
-            D_8006C3AC &= g_UnkMemcardSlot[arg0];
-            unk->unk258 = -1;
-            D_801D6B20++;
+            D_8006C3AC &= g_UnkMemcardPort[nPort];
+            memcard->unk258 = -1;
+            g_MemcardStep++;
             break;
 
         case 4:
-            D_8006C3AC &= g_UnkMemcardSlot[arg0];
-            unk->unk258 = -2;
-            D_801D6B20++;
+            D_8006C3AC &= g_UnkMemcardPort[nPort];
+            memcard->unk258 = -2;
+            g_MemcardStep++;
             break;
 
         case 2:
-            D_8006C3AC &= g_UnkMemcardSlot[arg0];
-            unk->unk258 = -3;
-            D_801D6B20++;
+            D_8006C3AC &= g_UnkMemcardPort[nPort];
+            memcard->unk258 = -3;
+            g_MemcardStep++;
             break;
         }
 
         break;
 
     case 4:
-        D_801D6B20 = 0;
-        unk->unk25C = unk->unk258;
+        g_MemcardStep = 0;
+        memcard->unk25C = memcard->unk258;
         break;
     }
 
-    return unk->unk25C;
+    return memcard->unk25C;
 }

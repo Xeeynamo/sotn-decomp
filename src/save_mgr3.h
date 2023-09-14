@@ -93,12 +93,12 @@ const char* g_SaveAreaNames[] = {
     "",
 };
 
-s32 MemcardFormat(s32 slot, s32 block) {
+s32 MemcardFormat(s32 nPort, s32 nCard) {
     char savePath[0x8];
     s32 ret;
 
-    D_8006C3AC &= g_UnkMemcardSlot[slot];
-    sprintf(savePath, g_strMemcardRootPath, slot, block);
+    D_8006C3AC &= g_UnkMemcardPort[nPort];
+    sprintf(savePath, g_strMemcardRootPath, nPort, nCard);
     _clear_event_x();
     format(savePath);
     ret = _card_event_x();
@@ -134,7 +134,7 @@ void GetSaveIcon(u8* dst, s32 iconIdx) {
     }
 }
 
-void StoreSaveData(SaveData* save, s32 slotNo, s32 memcardIcon) {
+void StoreSaveData(SaveData* save, s32 block, s32 memcardIcon) {
     const int RoomCount = 942;
     MemcardHeader h;
     char saveTitle[64];
@@ -174,14 +174,14 @@ void StoreSaveData(SaveData* save, s32 slotNo, s32 memcardIcon) {
 #endif
 
     // writes slot number
-    if (slotNo > 8) {
+    if (block > 8) {
         STRCPY(saveTitle, "００");
-        saveTitle[1] += (slotNo + 1) / 10;
-        saveTitle[3] += (slotNo + 1) % 10;
+        saveTitle[1] += (block + 1) / 10;
+        saveTitle[3] += (block + 1) % 10;
         strcat(h.Title, saveTitle);
     } else {
         STRCPY(saveTitle, "０");
-        saveTitle[1] += slotNo + 1;
+        saveTitle[1] += block + 1;
         strcat(h.Title, saveTitle);
     }
 
