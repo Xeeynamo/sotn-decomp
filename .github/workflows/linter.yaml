@@ -8,10 +8,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  format:
+  linter:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - name: Install requirements
         run: sudo apt-get install clang-format
@@ -20,7 +18,7 @@ jobs:
         with:
           python-version: '3.10'
       - name: Install black
-        run: pip install black
+        run: pip install black pyyaml
       - name: Clone main repo (PR)
         if: github.event_name == 'pull_request_target'
         uses: actions/checkout@v3
