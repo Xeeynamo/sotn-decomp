@@ -588,7 +588,93 @@ void func_800F5E68(MenuContext* context, s32 cursorIdx, s32 x, s32 y, s32 w,
     DrawMenuRect(context, x, y + (cursorIdx * (h + yGap)), w, h, r, 0, 0);
 }
 
-INCLUDE_ASM("dra/nonmatchings/5298C", DrawRelicsMenu);
+void DrawRelicsMenu(MenuContext* ctx) {
+    s32 ctx_h;
+    s32 switchFadeLevel;
+    s32 spriteY;
+    s32 spriteX;
+    s32 var_a0;
+    s32 i;
+    s32 offsetY;
+    s32 baseY;
+    s32 var_s3;
+    s32 u_OnOff;
+    u8* relic;
+
+    ctx_h = ctx->h;
+    relic = &g_Status.relics[RELIC_SOUL_OF_BAT];
+#if defined(VERSION_US)
+    for (i = 0, var_s3 = 0; i < 30; i++, var_s3++, relic++) {
+        // This if-statement only exists in US. This is to skip over
+        // rendering the JP-exclusive familiars (sprite and nosedevil)
+        if (i == 23) {
+            i = 25;
+            relic += 2;
+        }
+
+// Declare this as the var to use for the two comparisons later
+#define INDEXER var_s3
+#else
+    for (i = 0; i < 30; i++, relic++) {
+#define INDEXER i
+#endif
+        offsetY = (INDEXER / 2) * 0x13;
+        baseY = ctx_h + 0x22;
+        spriteY = offsetY + baseY;
+        spriteX = (i & 1) * 0xB0;
+        if (*relic & RELIC_FLAG_FOUND) {
+            if (spriteY < 0) {
+                continue;
+            }
+            if (spriteY >= 193) {
+                continue;
+            }
+            if (!(i & 2)) {
+                if (i < 0) {
+                    var_a0 = i + 3;
+                } else {
+                    var_a0 = i;
+                }
+                DrawMenuSprite(
+                    ctx, spriteX + 0x38, spriteY, 0x78, 0x10, (i & 1) * 0x78,
+                    func_800F548C((var_a0 >> 2) - 0x80), 0x1A1, 6, 1, 0, 0);
+            } else {
+                if (i < 0) {
+                    var_a0 = i + 3;
+                } else {
+                    var_a0 = i;
+                }
+                DrawMenuSprite(
+                    ctx, spriteX + 0x38, spriteY, 0x78, 0x10, (i & 1) * 0x78,
+                    func_800F548C((var_a0 >> 2) + 3), 0x1A1, 7, 1, 0, 0);
+            }
+        }
+        switchFadeLevel = 0;
+        // Determine the U value for the texture to use for the switch
+        u_OnOff = -(!(*relic & RELIC_FLAG_ACTIVE)) & 0x30;
+        if (INDEXER == g_MenuNavigation.cursorRelic) {
+            // This routine handles the fade in/fade out of the ON/OFF switch
+            // when hovering
+            if (++g_RelicMenuFadeTimer >= 0x48) {
+                g_RelicMenuFadeTimer = 0;
+            }
+            if (g_RelicMenuFadeTimer < 0x24) {
+                // Fade up
+                switchFadeLevel = g_RelicMenuFadeTimer / 6;
+            } else {
+                // Fade down
+                switchFadeLevel = 6 - ((g_RelicMenuFadeTimer - 0x24) / 6);
+            }
+        }
+        DrawMenuSprite(ctx, spriteX | 8, spriteY, 0x2F, 0xF, u_OnOff, 0x70,
+                       switchFadeLevel + 0x1C8, 0x1F,
+                       INDEXER == g_MenuNavigation.cursorRelic, 0x40, 0);
+    }
+    spriteY = ctx_h + ((g_MenuNavigation.cursorRelic / 2) * 0x13);
+    DrawMenuRect(ctx, ((g_MenuNavigation.cursorRelic & 1) * 0xB0) | 8,
+                 spriteY + 0x21, 0xA8, 0x12, 0x60, 0, 0);
+#undef INDEXER
+}
 
 void DrawMenuAlucardPortrait(MenuContext* ctx) {
     DrawMenuSprite(ctx, 0x10, 0x24, 0x40, 0x40, 0, 0x80, 0x150, 0x9C, 1, 0, 0);

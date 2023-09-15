@@ -504,6 +504,7 @@ extern s32 D_80137840;
 extern s32 D_80137844[];
 extern s32 D_80137848[];
 extern s32 D_8013784C;
+extern s16 g_RelicMenuFadeTimer;
 extern s32 g_TimeAttackEntryTimes[];
 extern s32 c_strTimeAttackEntry[];
 extern s32 c_strTimeAttackGoals[];

@@ -900,6 +900,7 @@ D_8013783C = 0x80137414;
 D_80137840 = 0x80137418;
 D_80137844 = 0x8013741C;
 D_80137848 = 0x80137420;
+g_RelicMenuFadeTimer = 0x80137424;
 g_TimeAttackEntryTimes = 0x80137428;
 c_strTimeAttackEntry = 0x80137494;
 g_NewAttackRightHand = 0x80137500;
