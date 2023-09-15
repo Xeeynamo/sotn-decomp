@@ -34,4 +34,4 @@ jobs:
       - name: Format code
         run: make format
       - name: Check for pending changes
-        run: git diff --exit-code --name-only
+        run: git diff --exit-code
