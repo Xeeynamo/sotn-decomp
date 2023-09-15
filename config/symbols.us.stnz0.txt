@@ -119,3 +119,4 @@ EntityStageNamePopup = 0x801C8CAC;
 EntityLifeUpSpawn = 0x801CA160;
 g_Dialogue = 0x801CB688;
 g_ItemIconSlots = 0x801CB740;
+

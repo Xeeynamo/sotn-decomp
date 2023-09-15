@@ -75,3 +75,4 @@ UNK_Invincibility0 = 0x801806B4;
 g_ItemIconSlots = 0x80199E54;
 g_InitializeEntityData0 = 0x80180508;
 g_InitializeData0 = 0x801804FC;
+

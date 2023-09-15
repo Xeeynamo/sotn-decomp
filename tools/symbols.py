@@ -280,6 +280,10 @@ def remove_orphans(symbol_file_name, symbols_set):
     with open(symbol_file_name, "w") as symbol_file_ref:
         symbol_file_ref.writelines(symbols_unorphaned)
 
+        # ensure to always end with a new line
+        if len(symbols_unorphaned) > 0 and symbols_unorphaned[-1] != "\n":
+            symbol_file_ref.write("\n")
+
 
 def remove_orphans_from_config(config_yaml):
     with open(config_yaml, "r") as config_yaml_ref:

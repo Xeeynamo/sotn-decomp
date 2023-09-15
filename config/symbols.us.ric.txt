@@ -33,3 +33,4 @@ UpdateEntityRichter = 0x80157BFC;
 SetPlayerStep = 0x8015C908;
 func_8017328C = 0x8017328C;
 g_DebugWaitInfoTimer = 0x80174F7C;
+
