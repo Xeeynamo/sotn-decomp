@@ -536,4 +536,80 @@ void func_801B5548(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/3410C", func_801B55C8);
+void func_801B55C8(void) {
+    Entity* self = &g_Entities[6];
+
+    switch (self->step) {
+    case 0:
+        self->animSet = ANIMSET_OVL(3);
+        self->animCurFrame = 0xC;
+        self->unk5A = 0x46;
+        self->palette = 0x258;
+        self->facingLeft = 1;
+        self->ext.generic.unk80.modeS32 = 0x800000;
+        self->posY.i.hi = 0xA0;
+        self->zPriority = 0xC0;
+        self->step++;
+        break;
+    case 1:
+        if (D_801BC3E8 & 0x10) {
+            self->animSet = ANIMSET_OVL(4);
+            self->unk5A = 0x48;
+            self->animCurFrame = 0x2C;
+            self->velocityX = FIX(-0.75);
+            func_801B4B9C(self, 2);
+        }
+        break;
+    case 2:
+        self->ext.generic.unk80.modeS32 += 0xFFFF4000;
+        if (!(AnimateEntity(D_80180580, self) & 0xFF)) {
+            self->animSet = ANIMSET_OVL(3);
+            self->animCurFrame = 0xC;
+            self->unk5A = 0x46;
+            self->step++;
+        }
+        break;
+    case 3:
+        if (D_801BC3E8 & 0x20) {
+            self->animSet = ANIMSET_OVL(4);
+            self->unk5A = 0x48;
+            self->animCurFrame = 0x2C;
+            self->facingLeft = 0;
+            func_801B4B9C(self, 4);
+        }
+        break;
+    case 4:
+        if (!(AnimateEntity(D_80180578, self) & 0xFF)) {
+            self->animSet = ANIMSET_OVL(3);
+            self->unk5A = 0x46;
+            self->animCurFrame = 0xC;
+            func_801B4B9C(self, 5);
+        }
+        break;
+    case 5:
+        if (D_801BC3E8 & 0x40) {
+            self->animSet = ANIMSET_OVL(4);
+            self->unk5A = 0x48;
+            self->facingLeft = 1;
+            self->animCurFrame = 0x2C;
+            func_801B4B9C(self, 6);
+        }
+        break;
+    case 6:
+        if (!(AnimateEntity(D_80180578, self) & 0xFF)) {
+            self->animSet = ANIMSET_OVL(3);
+            self->unk5A = 0x46;
+            self->animCurFrame = 0x20;
+            func_801B4B9C(self, 7);
+        }
+        self->ext.generic.unk80.modeS32 += 0xFFFF4000;
+        break;
+    case 7:
+        AnimateEntity(D_80180564, self);
+        self->ext.generic.unk80.modeS32 += 0xFFFE8000;
+        if (self->ext.generic.unk80.modeS16.unk2 < 0x20) {
+            self->step = 0xFF;
+        }
+        break;
+    }
+}

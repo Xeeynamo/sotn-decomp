@@ -116,6 +116,9 @@ extern const u8* D_80180468; // pointer to D_801A7748 (string "richter ")
 extern u8 D_8018046C[0x20 * 3];
 extern u8 D_80180504[];
 extern u8 D_80180528[];
+extern u8 D_80180564[];
+extern u8 D_80180578[];
+extern u8 D_80180580[];
 const char* D_801808D0[];
 extern s32 g_UnkMemcardPort[2];
 extern u16 g_saveIconPalette[0x10][0x10];
@@ -194,6 +197,7 @@ extern s32 g_MemCardSelectorX;
 extern s32 g_MemCardSelectorY;
 extern s32 D_801BC3E0; // on-screen keyboard key position
 extern s32 D_801BC3E4;
+extern s32 D_801BC3E8;
 extern s32 D_801BC650;
 extern s32 D_801BC8C8;
 extern s32 D_801BC8E0[];
