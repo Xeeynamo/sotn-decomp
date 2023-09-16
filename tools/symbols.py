@@ -41,6 +41,12 @@ if args.version == None:
         args.version = "us"
 
 
+def add_newline_if_missing(list):
+    if not list[-1].endswith("\n"):
+        list[-1] += "\n"
+    return list
+
+
 def sort_symbols(syms):
     offsets = []
     for line in syms:
@@ -56,6 +62,7 @@ def sort_symbols(syms):
 def sort_symbols_from_file(symbol_file_name):
     with open(symbol_file_name, "r") as symbol_file:
         sorted_lines = sort_symbols(symbol_file)
+    add_newline_if_missing(sorted_lines)
     with open(symbol_file_name, "w") as symbol_file:
         symbol_file.writelines(sorted_lines)
 
@@ -276,13 +283,10 @@ def remove_orphans(symbol_file_name, symbols_set):
                 if sym not in symbols_set:
                     continue
         symbols_unorphaned.append(sym_def)
+    add_newline_if_missing(symbols_unorphaned)
 
     with open(symbol_file_name, "w") as symbol_file_ref:
         symbol_file_ref.writelines(symbols_unorphaned)
-
-        # ensure to always end with a new line
-        if len(symbols_unorphaned) > 0 and symbols_unorphaned[-1] != "\n":
-            symbol_file_ref.write("\n")
 
 
 def remove_orphans_from_config(config_yaml):

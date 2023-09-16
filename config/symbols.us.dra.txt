@@ -943,7 +943,6 @@ g_IsCloakColorUnlocked = 0x80137604;
 g_IsSelectingEquipment = 0x8013760C;
 g_EquipmentCursor = 0x80137610;
 g_MenuData = 0x8013761C;
-g_RelicMenuFadeTimer = 0x80137850;
 g_TimeAttackEntryTimes = 0x80137854;
 c_strTimeAttackEntry = 0x801378C0;
 g_NewAttackRightHand = 0x8013792C;
