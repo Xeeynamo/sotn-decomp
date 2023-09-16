@@ -309,10 +309,11 @@ s32 CheckWingSmashInput(void) {
         backward = PAD_LEFT;
         forward = PAD_RIGHT;
     }
-    // Counter tells us how many correct buttons have been given in the sequence.
-    // In each case, if we aren't pressing the right buttons, we decrement the timer
-    // If the timer expires, progress gets wiped. Otherwise we register the correct
-    // button by incrementing counter and resetting timer to 20 frames.
+    // Counter tells us how many correct buttons have been given in the
+    // sequence. In each case, if we aren't pressing the right buttons, we
+    // decrement the timer If the timer expires, progress gets wiped. Otherwise
+    // we register the correct button by incrementing counter and resetting
+    // timer to 20 frames.
     switch (g_WingSmashButtonCounter) {
     case 0:
         if (directionsPressed != up) {
@@ -384,7 +385,7 @@ s32 CheckWingSmashInput(void) {
         g_WingSmashButtonTimer = 0x14;
         g_WingSmashButtonCounter++;
         break;
-    case 7: //All buttons are in, nothing more to test for.
+    case 7: // All buttons are in, nothing more to test for.
         if (--g_WingSmashButtonTimer == 0) {
             g_WingSmashButtonCounter = 0;
         }
@@ -394,7 +395,8 @@ s32 CheckWingSmashInput(void) {
     if (!(g_Player.padPressed & PAD_CROSS) && (g_WingSmashButtonCounter != 7)) {
         g_WingSmashButtonCounter = 0;
     }
-    // And then we return 7 if all 7 buttons in the input were correctly provided.
+    // And then we return 7 if all 7 buttons in the input were correctly
+    // provided.
     return g_WingSmashButtonCounter == 7;
 }
 
