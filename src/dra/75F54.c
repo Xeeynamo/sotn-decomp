@@ -265,7 +265,7 @@ bool func_80116838(void) {
         func_800FEEA4(0, 1) < 0) {
         SetPlayerStep(Player_Unk9);
         func_8010DA48(0xCA);
-        D_800AFDA6 = 6;
+        D_800AFDA6[0] = 6;
         g_Entities->palette = 0x810D;
         g_Player.unk66 = 0;
         g_Player.unk68 = 0;
@@ -400,7 +400,365 @@ s32 CheckWingSmashInput(void) {
     return g_WingSmashButtonCounter == 7;
 }
 
-INCLUDE_ASM("dra/nonmatchings/75F54", func_80116B0C);
+void func_80116B0C(void) {
+    s32 pressingCross;
+    s32 x_offset;
+    s32 var_s3;
+    u32 directionsPressed;
+
+    var_s3 = 0;
+    if (func_80116838() != 0) {
+        return;
+    }
+    PLAYER.unk19 = 4;
+    PLAYER.rotPivotY = 0;
+    directionsPressed =
+        g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
+    pressingCross = g_Player.padPressed & PAD_CROSS;
+
+#if defined(VERSION_HD)
+    if (PLAYER.step_s != 3) {
+#endif
+
+        if (CheckWingSmashInput() && (!pressingCross) && (PLAYER.step_s != 0) &&
+            (CastSpell(SPELL_WING_SMASH) != 0)) {
+            LearnSpell(SPELL_WING_SMASH);
+            func_8010DA48(0xC6);
+            SetSpeedX(FIX(6));
+            PLAYER.step_s = 3;
+            func_8011AAFC(g_CurrentEntity, 0x5C002CU, 0);
+            func_8011AAFC(g_CurrentEntity, 0x43U, 0);
+            g_WingSmashTimer = 0x40;
+#if defined(VERSION_US)
+            g_WingSmashButtonCounter = 0;
+#endif
+        } else if ((g_Player.padTapped & PAD_TRIANGLE) &&
+                   ((u32)(PLAYER.step_s - 1) < 2U) &&
+                   (IsRelicActive(RELIC_ECHO_OF_BAT))) {
+            func_8011AAFC(g_CurrentEntity, 0x67, 0);
+        } else if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
+                   ((u32)(PLAYER.step_s - 1) < 2U) &&
+                   (IsRelicActive(RELIC_FIRE_OF_BAT)) && (CastSpell(9) != 0)) {
+            func_8010DA48(0xC9);
+            PLAYER.step_s = 4;
+            func_8011AAFC(g_CurrentEntity, 0x5002C, 0);
+        }
+// Just closing off the earlier HD block
+#if defined(VERSION_HD)
+    }
+#endif
+
+    switch (PLAYER.step_s) {
+    case 0:
+        g_WingSmashButtonCounter = 0;
+        PLAYER.rotAngle = 0;
+        g_Player.unk48 = 0;
+        g_Player.unk46 = 0;
+        g_Player.unk44 = 0;
+        if (g_Entities[16].entityId == 0x22) {
+            PLAYER.animSet = 0xD;
+            D_800AFDA6[0] = 6;
+            PLAYER.unk5A = 0;
+            PLAYER.ext.player.unkAC = 0xCA;
+            if (func_8011203C() == 0) {
+                return;
+            }
+        } else {
+            if (g_Player.unk66 == 0) {
+#if defined(VERSION_US)
+                if (func_8011AAFC(g_CurrentEntity, 0x20002CU, 0) == NULL) {
+                    return;
+                }
+#else
+                func_8011AAFC(g_CurrentEntity, 0x20002CU, 0);
+#endif
+                func_8010FAF4();
+                g_Player.unk66++;
+            }
+            func_8010E1EC(0x480);
+            func_8010E234(0x480);
+            if (ABS(PLAYER.velocityY) > FIX(1.25)) {
+                if (PLAYER.velocityY > 0) {
+                    PLAYER.velocityY = FIX(1.25);
+                } else {
+                    PLAYER.velocityY = FIX(-1.25);
+                }
+            }
+            func_8010DA48(0xCA);
+            PLAYER.palette = 0x810D;
+            D_800AFDA6[0] = (s16)PLAYER.animCurFrame;
+            if (g_Player.unk66 == 1) {
+                return;
+            }
+            if (g_Player.unk66 == 2) {
+                PLAYER.animSet = 0xD;
+                PLAYER.unk5A = 0;
+                D_800AFDA6[0] = 6;
+                return;
+            }
+        }
+        func_8010DA48(0xC3);
+        PLAYER.animFrameDuration = 1;
+        PLAYER.animFrameIdx = 2;
+        PLAYER.palette = 0x8100;
+        func_8010E27C();
+        PLAYER.step_s++;
+        break;
+    case 1:
+        if ((directionsPressed != 0) && (pressingCross == 0)) {
+            if (PLAYER.ext.player.unkAC == 0xC3) {
+                PLAYER.animFrameIdx /= 3;
+            }
+            PLAYER.step_s += 1;
+        } else {
+            func_8011690C(0);
+            func_8010E1EC(0x1200);
+            func_8010E234(0x1200);
+            break;
+        }
+    case 2:
+        // If you're pressing cross, you can't move and inputs are ignored.
+        if (pressingCross) {
+            directionsPressed = 0;
+        }
+        switch (directionsPressed) {
+        case 0:
+        default:
+            func_8010DA48(0xC3);
+            PLAYER.step_s = 1;
+            break;
+        case PAD_UP:
+            PLAYER.ext.player.unkAC = 0xC2;
+            if (PLAYER.velocityY < FIX(-1.25)) {
+                func_8010E234(0x1200);
+            } else {
+                PLAYER.velocityY = FIX(-1.25);
+            }
+            func_8011690C(-0x80);
+            func_8010E1EC(0x1200);
+            break;
+        case PAD_DOWN:
+            if (!(g_Player.pl_vram_flag & 1)) {
+                PLAYER.ext.player.unkAC = 0xC5;
+            } else {
+                PLAYER.ext.player.unkAC = 0xC4;
+            }
+            if (PLAYER.velocityY > FIX(1.25)) {
+                func_8010E234(0x1200);
+            } else {
+                PLAYER.velocityY = FIX(1.25);
+            }
+            func_8011690C(0);
+            func_8010E1EC(0x1200);
+            break;
+        case PAD_RIGHT:
+            PLAYER.ext.player.unkAC = 0xC2;
+            PLAYER.facingLeft = 0;
+            func_8011690C(0x180);
+            if (PLAYER.velocityX > FIX(1.25)) {
+                func_8010E1EC(0x1200);
+            } else {
+                PLAYER.velocityX = FIX(1.25);
+            }
+            func_8010E234(0x1200);
+            var_s3 = 1;
+            if (D_80138000 == 0) {
+                PlaySfx(0x64E);
+            }
+            break;
+        case PAD_LEFT:
+            PLAYER.ext.player.unkAC = 0xC2;
+            PLAYER.facingLeft = 1;
+            func_8011690C(0x180);
+            if (PLAYER.velocityX < FIX(-1.25)) {
+                func_8010E1EC(0x1200);
+            } else {
+                PLAYER.velocityX = FIX(-1.25);
+            }
+            func_8010E234(0x1200);
+            var_s3 = 1;
+            if (D_80138000 == 0) {
+                PlaySfx(0x64E);
+            }
+            break;
+        case PAD_RIGHT | PAD_UP:
+            PLAYER.ext.player.unkAC = 0xC2;
+            PLAYER.facingLeft = 0;
+            func_8011690C(0x80);
+            if (PLAYER.velocityX > FIX(0.875)) {
+                func_8010E1EC(0xC00);
+            } else {
+                PLAYER.velocityX = FIX(0.875);
+            }
+            if (PLAYER.velocityY < FIX(-0.875)) {
+                func_8010E234(0xC00);
+            } else {
+                PLAYER.velocityY = FIX(-0.875);
+            }
+            break;
+        case PAD_LEFT | PAD_UP:
+            PLAYER.ext.player.unkAC = 0xC2;
+            PLAYER.facingLeft = 1;
+            func_8011690C(0x80);
+            if (PLAYER.velocityX < FIX(-0.875)) {
+                func_8010E1EC(0xC00);
+            } else {
+                PLAYER.velocityX = FIX(-0.875);
+            }
+            if (PLAYER.velocityY < FIX(-0.875)) {
+                func_8010E234(0xC00);
+            } else {
+                PLAYER.velocityY = FIX(-0.875);
+            }
+            break;
+        case PAD_RIGHT | PAD_DOWN:
+            if (!(g_Player.pl_vram_flag & 1)) {
+                PLAYER.ext.player.unkAC = 0xC5;
+            } else {
+                PLAYER.ext.player.unkAC = 0xC4;
+            }
+            PLAYER.facingLeft = 0;
+            func_8011690C(0);
+            if (PLAYER.velocityX > FIX(0.875)) {
+                func_8010E1EC(0xC00);
+            } else {
+                PLAYER.velocityX = FIX(0.875);
+            }
+            if (PLAYER.velocityY > FIX(1.75)) {
+                func_8010E234(0xC00);
+            } else {
+                PLAYER.velocityY = FIX(1.75);
+            }
+            break;
+        case PAD_LEFT | PAD_DOWN:
+            if (!(g_Player.pl_vram_flag & 1)) {
+                PLAYER.ext.player.unkAC = 0xC5;
+            } else {
+                PLAYER.ext.player.unkAC = 0xC4;
+            }
+            PLAYER.facingLeft = 1;
+            func_8011690C(0);
+            if (PLAYER.velocityX < FIX(-0.875)) {
+                func_8010E1EC(0xC00);
+            } else {
+                PLAYER.velocityX = FIX(-0.875);
+            }
+            if (PLAYER.velocityY > FIX(1.75)) {
+                func_8010E234(0xC00);
+            } else {
+                PLAYER.velocityY = FIX(1.75);
+            }
+            break;
+        }
+        break;
+    case 3:
+        if (PLAYER.facingLeft == 0 && (g_Player.pl_vram_flag & 4) ||
+            PLAYER.facingLeft != 0 && (g_Player.pl_vram_flag & 8)) {
+            g_Player.padTapped = PAD_R1;
+            func_80116838();
+            func_80102CD8(2);
+            PlaySfx(0x644);
+            PLAYER.velocityX = 0;
+            g_Player.D_80072EFC = 0x20;
+            g_Player.D_80072EF4 = 0;
+            break;
+        }
+        // When wing smash ends, force an un-transform
+        if (--g_WingSmashTimer == 0) {
+            g_Player.padTapped = PAD_R1;
+            func_80116838();
+            g_Player.D_80072EFC = 0x20;
+            g_Player.D_80072EF4 = 0;
+        } else {
+            if (directionsPressed & PAD_UP) {
+                PLAYER.velocityY -= FIX(0.125);
+                func_8011690C(0x80);
+            }
+            if (directionsPressed & PAD_DOWN) {
+                PLAYER.velocityY += FIX(0.125);
+            }
+            if (!(directionsPressed & PAD_UP)) {
+                func_8011690C(0x180);
+            }
+            if (!(directionsPressed & (PAD_DOWN | PAD_UP))) {
+                func_8010E234(0x2000);
+            }
+            if (g_Player.pl_vram_flag & 0x800) {
+                if (PLAYER.facingLeft != 0 && (g_Player.pl_vram_flag & 0x400) ||
+                    PLAYER.facingLeft == 0 &&
+                        !(g_Player.pl_vram_flag & 0x400)) {
+                    PLAYER.velocityY = FIX(6);
+                }
+            }
+            if ((g_Player.pl_vram_flag & 0x8000) != 0) {
+                if (PLAYER.facingLeft != 0 &&
+                        (g_Player.pl_vram_flag & 0x4000) ||
+                    PLAYER.facingLeft == 0 &&
+                        !(g_Player.pl_vram_flag & 0x4000)) {
+                    PLAYER.velocityY = FIX(-6);
+                }
+            }
+            if (PLAYER.velocityY < FIX(-6)) {
+                PLAYER.velocityY = FIX(-6);
+            }
+            if (PLAYER.velocityY > FIX(6)) {
+                PLAYER.velocityY = FIX(6);
+            }
+            if (D_8003C8C4 % 3 == 0) {
+                func_8011AAFC(g_CurrentEntity, 0x41U, 0);
+                if (g_Player.pl_vram_flag & 1) {
+                    func_8011AAFC(g_CurrentEntity, 0x90045U, 0);
+                }
+                if (g_Player.pl_vram_flag & 2) {
+                    x_offset = 3;
+                    if (PLAYER.facingLeft != 0) {
+                        x_offset = -3;
+                    }
+                    PLAYER.posY.i.hi -= 8;
+                    PLAYER.posX.i.hi = x_offset + PLAYER.posX.i.hi;
+                    func_8011AAFC(g_CurrentEntity, 0x10004U, 0);
+                    PLAYER.posY.i.hi += 8;
+                    PLAYER.posX.i.hi -= x_offset;
+                }
+            }
+        }
+        break;
+    case 4:
+        func_8010E1EC(0x1800);
+        func_8010E234(0x3800);
+        func_8011690C(0x180);
+        if (PLAYER.animFrameDuration < 0) {
+            func_8011AAFC(g_CurrentEntity, 0x51U, 0);
+            SetSpeedX(FIX(-1.5));
+            func_8011690C(0);
+            func_8010DA48(0xC3);
+            PLAYER.step_s++;
+        }
+        break;
+    case 5:
+        func_8010E1EC(0x1800);
+        func_8010E234(0x3800);
+        func_8011690C(0);
+        if (PLAYER.ext.player.unkAC == 0xC4 && PLAYER.animFrameIdx == 8) {
+            PLAYER.step_s = 1;
+        }
+        break;
+    }
+
+    if (D_8013AECC != 0) {
+        if (PLAYER.velocityX > 0) {
+            PLAYER.velocityX = 0;
+        }
+        if (D_8013AECC > 0) {
+            D_8013AECC--;
+            g_CurrentEntity->posY.i.hi++;
+        } else {
+            D_8013AECC++;
+            g_CurrentEntity->posY.i.hi--;
+        }
+    }
+    D_80138000 = var_s3;
+}
 
 INCLUDE_ASM("dra/nonmatchings/75F54", func_801177A0);
 
@@ -2104,7 +2462,7 @@ bool func_8012C88C(void) {
         g_Player.padTapped & PAD_R2 || func_800FEEA4(2, 1) < 0) {
         SetPlayerStep(Player_Unk25);
         func_8010DA48(0xCA);
-        D_800AFDA6 = 1;
+        D_800AFDA6[0] = 1;
         PLAYER.palette = 0x810D;
         g_Player.unk66 = 0;
         g_Player.unk68 = 0;
