@@ -291,7 +291,7 @@ void func_8011690C(s16 arg0) {
     }
 }
 
-s32 func_80116994(void) {
+s32 CheckWingSmashInput(void) {
     u32 directionsPressed;
     s32 backward;
     s32 forward;
@@ -309,86 +309,93 @@ s32 func_80116994(void) {
         backward = PAD_LEFT;
         forward = PAD_RIGHT;
     }
-    switch (D_80137FF4) {
+    // Counter tells us how many correct buttons have been given in the sequence.
+    // In each case, if we aren't pressing the right buttons, we decrement the timer
+    // If the timer expires, progress gets wiped. Otherwise we register the correct
+    // button by incrementing counter and resetting timer to 20 frames.
+    switch (g_WingSmashButtonCounter) {
     case 0:
         if (directionsPressed != up) {
-            if (--D_80137FF8 == 0) {
-                D_80137FF4 = 0;
+            if (--g_WingSmashButtonTimer == 0) {
+                g_WingSmashButtonCounter = 0;
             }
             break;
         }
-        D_80137FF8 = 0x14;
-        D_80137FF4++;
+        g_WingSmashButtonTimer = 0x14;
+        g_WingSmashButtonCounter++;
         break;
     case 1:
         if (directionsPressed != (backward + up)) {
-            if (--D_80137FF8 == 0) {
-                D_80137FF4 = 0;
+            if (--g_WingSmashButtonTimer == 0) {
+                g_WingSmashButtonCounter = 0;
             }
             break;
         }
-        D_80137FF8 = 0x14;
-        D_80137FF4++;
+        g_WingSmashButtonTimer = 0x14;
+        g_WingSmashButtonCounter++;
         break;
     case 2:
         if (directionsPressed != backward) {
-            if (--D_80137FF8 == 0) {
-                D_80137FF4 = 0;
+            if (--g_WingSmashButtonTimer == 0) {
+                g_WingSmashButtonCounter = 0;
             }
             break;
         }
-        D_80137FF8 = 0x14;
-        D_80137FF4++;
+        g_WingSmashButtonTimer = 0x14;
+        g_WingSmashButtonCounter++;
         break;
     case 3:
         if (directionsPressed != (down + backward)) {
-            if (--D_80137FF8 == 0) {
-                D_80137FF4 = 0;
+            if (--g_WingSmashButtonTimer == 0) {
+                g_WingSmashButtonCounter = 0;
             }
             break;
         }
-        D_80137FF8 = 0x14;
-        D_80137FF4++;
+        g_WingSmashButtonTimer = 0x14;
+        g_WingSmashButtonCounter++;
         break;
     case 4:
         if (directionsPressed != down) {
-            if (--D_80137FF8 == 0) {
-                D_80137FF4 = 0;
+            if (--g_WingSmashButtonTimer == 0) {
+                g_WingSmashButtonCounter = 0;
             }
             break;
         }
-        D_80137FF8 = 0x14;
-        D_80137FF4++;
+        g_WingSmashButtonTimer = 0x14;
+        g_WingSmashButtonCounter++;
         break;
     case 5:
         if (directionsPressed != (down + forward)) {
-            if (--D_80137FF8 == 0) {
-                D_80137FF4 = 0;
+            if (--g_WingSmashButtonTimer == 0) {
+                g_WingSmashButtonCounter = 0;
             }
             break;
         }
-        D_80137FF8 = 0x14;
-        D_80137FF4++;
+        g_WingSmashButtonTimer = 0x14;
+        g_WingSmashButtonCounter++;
         break;
     case 6:
         if (directionsPressed != forward) {
-            if (--D_80137FF8 == 0) {
-                D_80137FF4 = 0;
+            if (--g_WingSmashButtonTimer == 0) {
+                g_WingSmashButtonCounter = 0;
             }
             break;
         }
-        D_80137FF8 = 0x14;
-        D_80137FF4++;
+        g_WingSmashButtonTimer = 0x14;
+        g_WingSmashButtonCounter++;
         break;
-    case 7:
-        if (--D_80137FF8 == 0) {
-            D_80137FF4 = 0;
+    case 7: //All buttons are in, nothing more to test for.
+        if (--g_WingSmashButtonTimer == 0) {
+            g_WingSmashButtonCounter = 0;
         }
     }
-    if (!(g_Player.padPressed & PAD_CROSS) && (D_80137FF4 != 7)) {
-        D_80137FF4 = 0;
+    // If we're not pressing cross (and we haven't put in all the buttons)
+    // then all progress is lost.
+    if (!(g_Player.padPressed & PAD_CROSS) && (g_WingSmashButtonCounter != 7)) {
+        g_WingSmashButtonCounter = 0;
     }
-    return D_80137FF4 == 7;
+    // And then we return 7 if all 7 buttons in the input were correctly provided.
+    return g_WingSmashButtonCounter == 7;
 }
 
 INCLUDE_ASM("dra/nonmatchings/75F54", func_80116B0C);
