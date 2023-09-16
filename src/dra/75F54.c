@@ -291,7 +291,105 @@ void func_8011690C(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/75F54", func_80116994);
+s32 func_80116994(void) {
+    u32 directionsPressed;
+    s32 backward;
+    s32 forward;
+    s32 up;
+    s32 down;
+
+    directionsPressed =
+        g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
+    up = PAD_UP;
+    down = PAD_DOWN;
+    if (PLAYER.facingLeft) {
+        forward = PAD_LEFT;
+        backward = PAD_RIGHT;
+    } else {
+        backward = PAD_LEFT;
+        forward = PAD_RIGHT;
+    }
+    switch (D_80137FF4) {
+    case 0:
+        if (directionsPressed != up) {
+            if (--D_80137FF8 == 0) {
+                D_80137FF4 = 0;
+            }
+            break;
+        }
+        D_80137FF8 = 0x14;
+        D_80137FF4++;
+        break;
+    case 1:
+        if (directionsPressed != (backward + up)) {
+            if (--D_80137FF8 == 0) {
+                D_80137FF4 = 0;
+            }
+            break;
+        }
+        D_80137FF8 = 0x14;
+        D_80137FF4++;
+        break;
+    case 2:
+        if (directionsPressed != backward) {
+            if (--D_80137FF8 == 0) {
+                D_80137FF4 = 0;
+            }
+            break;
+        }
+        D_80137FF8 = 0x14;
+        D_80137FF4++;
+        break;
+    case 3:
+        if (directionsPressed != (down + backward)) {
+            if (--D_80137FF8 == 0) {
+                D_80137FF4 = 0;
+            }
+            break;
+        }
+        D_80137FF8 = 0x14;
+        D_80137FF4++;
+        break;
+    case 4:
+        if (directionsPressed != down) {
+            if (--D_80137FF8 == 0) {
+                D_80137FF4 = 0;
+            }
+            break;
+        }
+        D_80137FF8 = 0x14;
+        D_80137FF4++;
+        break;
+    case 5:
+        if (directionsPressed != (down + forward)) {
+            if (--D_80137FF8 == 0) {
+                D_80137FF4 = 0;
+            }
+            break;
+        }
+        D_80137FF8 = 0x14;
+        D_80137FF4++;
+        break;
+    case 6:
+        if (directionsPressed != forward) {
+            if (--D_80137FF8 == 0) {
+                D_80137FF4 = 0;
+            }
+            break;
+        }
+        D_80137FF8 = 0x14;
+        D_80137FF4++;
+        break;
+    case 7:
+        if (--D_80137FF8 == 0) {
+            D_80137FF4 = 0;
+        }
+    }
+    if (!(g_Player.padPressed & PAD_CROSS) && (D_80137FF4 != 7)) {
+        D_80137FF4 = 0;
+    }
+    return D_80137FF4 == 7;
+}
 
 INCLUDE_ASM("dra/nonmatchings/75F54", func_80116B0C);
 
