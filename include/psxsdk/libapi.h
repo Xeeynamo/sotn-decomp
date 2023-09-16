@@ -1,3 +1,5 @@
+#ifndef LIBAPI_H
+#define LIBAPI_H
 
 struct EXEC {
     unsigned long pc0;
@@ -80,3 +82,5 @@ extern long EnableEvent(long);
 extern void _96_remove(void);
 extern long SetRCnt(unsigned long, unsigned short, long);
 extern long StartRCnt(unsigned long);
+
+#endif

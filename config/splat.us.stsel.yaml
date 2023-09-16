@@ -29,7 +29,7 @@ segments:
     subsegments:
       - [0x0, .data, 2C048]
       - [0x40, data]
-      - [0x23A0, .data, save_mgr3]
+      - [0x22E4, .data, save_mgr]
       - [0x2584, data]
       - [0xD5D4, .data, D5D4]
       - [0xDBD4, data]
@@ -45,10 +45,7 @@ segments:
       - [0x27BF8, .rodata, 3585C]
       - [0x27CD4, rodata] # func_801B675C
       - [0x27CF4, rodata] # func_801B69F8
-      - [0x27D78, rodata] # func_801B8518, MemcardWriteFile
-      - [0x27D90, .rodata, save_mgr2]
-      - [0x27DD4, rodata]
-      - [0x27E4C, .rodata, save_mgr3]
+      - [0x27D78, .rodata, save_mgr]
       - [0x28040, rodata]
       - [0x2BF9C, .rodata, stream]
       - [0x2C048, c, 2C048]
@@ -57,8 +54,6 @@ segments:
       - [0x3585C, c, 3585C]
       - [0x3642C, c, 3642C]
       - [0x380F0, c, save_mgr]
-      - [0x38A8C, c, save_mgr2]
-      - [0x38D24, c, save_mgr3]
       - [0x39744, c, stream]
       - [0x3AEE4, sbss]
   - [0x56B28]
