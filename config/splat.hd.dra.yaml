@@ -106,7 +106,7 @@ segments:
       - [0x418CC, rodata] # jtbl_800E18CC
       - [0x418EC, .rodata, 75DA0]
       - [0x41904, .rodata, 75F54] # jtbl_800E1904
-      - [0x4191C, rodata] # jtbl_800E191C
+      - [0x4191C, .rodata, 75F54] # jtbl_800E191C
       - [0x4193C, rodata] # jtbl_800E193C
       - [0x41954, rodata]
       - [0x41960, rodata] # jtbl_800E1960
