@@ -835,7 +835,6 @@ FreePrimitives = 0x800EDE78;
 RenderPrimitives = 0x800EDEDC;
 CheckCollision = 0x800EF45C;
 SetNextRoomToLoad = 0x800F0BC0;
-DrawMenuSprite = 0x800F5B90;
 DrawMenuRect = 0x800F5D44;
 DrawRelicsMenu = 0x800F5EF0;
 ApplyJosephsCloakPalette = 0x800F6304;

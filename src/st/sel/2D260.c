@@ -541,7 +541,7 @@ void func_801B1ED0(void) {
     } while (--var_v1 >= 0);
 }
 
-u8 func_801B1EF4(u16 arg0) {
+u8 func_801B1EF4(u8 arg0) {
     if (arg0 & 0x80) {
         return func_801B1EF4((arg0 & 0x7F) + 3);
     } else {
@@ -557,7 +557,7 @@ void func_801B1F4C(s32 arg0) {
     s32 i;
 
     D_801BC398[arg0] = 0;
-    arg0 = func_801B1EF4((u8)arg0);
+    arg0 = func_801B1EF4(arg0);
     pix = D_801BAFD0;
     for (i = 0; i < count * 4; i++) {
         *D_801BAFD0++ = 0;
@@ -566,8 +566,30 @@ void func_801B1F4C(s32 arg0) {
     LoadTPage(pix, 0, 0, 0x180, arg0, 0x100, 0x10);
 }
 
-void func_801B1FD8(u8* arg0, s32 arg1);
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B1FD8);
+void func_801B1FD8(u8* arg0, s32 arg1) {
+    const int W = 12;
+    const int H = 16;
+    const int LEN = W * H / 2;
+    s32 y;
+    s32 i;
+    s32 x;
+    u8* srcPix;
+    s32 param;
+
+    y = func_801B1EF4(arg1);
+    x = 0;
+    while (*arg0 != 0 && D_801BAFD0 < g_Pix[4]) {
+        param = *arg0++ << 8;
+        param += *arg0++;
+        srcPix = g_api.func_80106A28(param, 3);
+        for (i = 0; i < LEN; i++) {
+            D_801BAFD0[i] = *srcPix++;
+        }
+        LoadTPage(D_801BAFD0, 0, 0, D_801BAFD4 + x, D_801BAFD8 + y, W, H);
+        D_801BAFD0 += LEN;
+        x += 3;
+    }
+}
 
 void func_801B2108(s32, s32);
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B2108);
@@ -576,7 +598,7 @@ void func_801B248C(s32 arg0, s32 arg1) {
     if (D_801BC398[arg1] != arg0) {
         func_801B1F4C(arg1);
         D_801BC398[arg1] = arg0;
-        func_801B1FD8((u8*)arg0, arg1);
+        func_801B1FD8(arg0, arg1);
     }
 }
 
@@ -649,14 +671,36 @@ void func_801B26A0(
     poly->v3 = v + height;
 }
 
-extern RECT D_80182584;
+void func_801B2700(s32 tpage, s32 otIdx) {
+    DR_MODE* drawMode = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
+    u_long* ot = g_CurrentBuffer->ot;
 
-void func_801B2700(s32 arg0, s32 arg1);
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B2700);
+    SetDrawMode(drawMode, 0, 0, tpage, &D_80182584);
+    AddPrim(&ot[otIdx], drawMode);
+    g_GpuUsage.drawModes++;
+}
 
 void func_801B27A8(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 clut, s32 arg7,
-                   s32 tge, s32 c);
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B27A8);
+                   s32 tge, s32 c) {
+    SPRT* sprite = &g_CurrentBuffer->sprite[g_GpuUsage.sp];
+    GpuBuffer* temp_s4 = g_CurrentBuffer;
+
+    SetSemiTrans(sprite, 0);
+    SetShadeTex(sprite, tge);
+    sprite->x0 = x;
+    sprite->y0 = y;
+    sprite->w = w;
+    sprite->h = h;
+    sprite->u0 = u;
+    sprite->v0 = v;
+    sprite->r0 = c;
+    sprite->g0 = c;
+    sprite->b0 = c;
+    sprite->clut = D_8003C104[clut];
+    AddPrim(&temp_s4->ot[0x20], sprite);
+    g_GpuUsage.sp++;
+    func_801B2700(arg7, 0x20);
+}
 
 void func_801B28D4(u8* str, s32 x, s32 y, s32 tge) {
     const int w = 12;
