@@ -1030,7 +1030,7 @@ typedef struct {
     /* 8003C7F4 */ Entity* (*func_8011AAFC)(Entity* self, u32 flags, s32 arg2);
     /* 8003C7F8 */ bool (*func_80131F68)(void);
     /* 8003C7FC */ DR_ENV* (*func_800EDB08)(POLY_GT4* poly);
-    /* 8003C800 */ u16* (*func_80106A28)(u16 arg0, u16 kind);
+    /* 8003C800 */ u16* (*func_80106A28)(u32 arg0, u16 kind);
     /* 8003C804 */ void (*func_80118894)(Entity*);
     /* 8003C808 */ EnemyDef* enemyDefs;
     /* 8003C80C */ void* func_80118970;
