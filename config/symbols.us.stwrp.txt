@@ -63,4 +63,3 @@ EntityStageNamePopup = 0x8019198C;
 BottomCornerText = 0x80192F40;
 func_80193270 = 0x80193270;
 g_ItemIconSlots = 0x80194728;
-
