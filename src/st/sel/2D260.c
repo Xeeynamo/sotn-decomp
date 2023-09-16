@@ -569,10 +569,11 @@ void func_801B1F4C(s32 arg0) {
 void func_801B1FD8(u8* arg0, s32 arg1) {
     const int W = 12;
     const int H = 16;
+    const int LEN = W * H / 2;
     s32 y;
     s32 i;
     s32 x;
-    u8* var_a1;
+    u8* srcPix;
     s32 param;
 
     y = func_801B1EF4(arg1);
@@ -580,12 +581,12 @@ void func_801B1FD8(u8* arg0, s32 arg1) {
     while (*arg0 != 0 && D_801BAFD0 < g_Pix[4]) {
         param = *arg0++ << 8;
         param += *arg0++;
-        var_a1 = g_api.func_80106A28(param, 3);
-        for (i = 0; i < 0x60; i++) {
-            D_801BAFD0[i] = *var_a1++;
+        srcPix = g_api.func_80106A28(param, 3);
+        for (i = 0; i < LEN; i++) {
+            D_801BAFD0[i] = *srcPix++;
         }
         LoadTPage(D_801BAFD0, 0, 0, D_801BAFD4 + x, D_801BAFD8 + y, W, H);
-        D_801BAFD0 += 0x60;
+        D_801BAFD0 += LEN;
         x += 3;
     }
 }
