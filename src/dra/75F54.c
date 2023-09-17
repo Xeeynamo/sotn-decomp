@@ -400,7 +400,7 @@ s32 CheckWingSmashInput(void) {
     return g_WingSmashButtonCounter == 7;
 }
 
-void func_80116B0C(void) {
+void ControlBatForm(void) {
     s32 pressingCross;
     s32 x_offset;
     // When we initially move left/right, bat makes a screech sound.
