@@ -359,18 +359,18 @@ INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801AED48);
 
 void func_801AEE74(void) {
     s32 i = 0;
-    s32* var_v0 = D_801BC8E0;
-    s32* var_a1 = var_v0 + 0xEA;
-    s32* var_a0 = var_v0;
+    SaveSummary* saveMenuInfo = g_SaveSummary;
+    s32* iconsPort1 = saveMenuInfo[1].icon;
+    s32* iconsPort0 = saveMenuInfo[0].icon;
 
-    for (; i < 0xF; i++) {
-        if (*var_a0 >= 0 || *var_a1 >= 0)
+    for (; i < BLOCK_PER_CARD; i++) {
+        if (*iconsPort0 >= 0 || *iconsPort1 >= 0)
             break;
-        var_a1++;
-        var_a0++;
+        iconsPort1++;
+        iconsPort0++;
     }
 
-    if (i == 0xF) {
+    if (i == BLOCK_PER_CARD) {
         D_801BAF10 = 1;
     }
 }
@@ -591,53 +591,53 @@ void func_801B1FD8(u8* arg0, s32 arg1) {
     }
 }
 
-void func_801B2108(s32, s32);
+void func_801B2108(const char* str, s32 id);
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B2108);
 
-void func_801B248C(s32 arg0, s32 arg1) {
-    if (D_801BC398[arg1] != arg0) {
-        func_801B1F4C(arg1);
-        D_801BC398[arg1] = arg0;
-        func_801B1FD8(arg0, arg1);
+void func_801B248C(const char* str, s32 id) {
+    if (D_801BC398[id] != str) {
+        func_801B1F4C(id);
+        D_801BC398[id] = str;
+        func_801B1FD8(str, id);
     }
 }
 
-void func_801B24F8(s32 arg0, s32 arg1) {
-    if (D_801BC398[arg1] != arg0) {
-        func_801B1F4C(arg1);
-        D_801BC398[arg1] = (u32)arg0;
-        func_801B2108(arg0, arg1);
+void func_801B24F8(const char* str, s32 id) {
+    if (D_801BC398[id] != str) {
+        func_801B1F4C(id);
+        D_801BC398[id] = str;
+        func_801B2108(str, id);
     }
 }
 
-void func_801B2564(s32 arg0, s32 arg1) {
+void func_801B2564(const char* str, s32 id) {
     D_801BAFD4 = 0x3C0;
     D_801BAFD8 = 0x100;
-    func_801B248C(arg0, arg1);
+    func_801B248C(str, id);
 }
 
-void func_801B259C(s32 arg0, s32 arg1) {
+void func_801B259C(const char* str, s32 id) {
     D_801BAFD4 = 0x3C0;
     D_801BAFD8 = 0x100;
-    func_801B24F8(arg0, arg1);
+    func_801B24F8(str, id);
 }
 
-void func_801B25D4(s32 arg0, s32 arg1) {
+void func_801B25D4(const char* str, s32 id) {
     D_801BAFD4 = 0x180;
     D_801BAFD8 = 0;
-    func_801B248C(arg0, arg1);
+    func_801B248C(str, id);
 }
 
-void func_801B2608(s32 arg0, s32 arg1) {
+void func_801B2608(const char* str, s32 id) {
     D_801BAFD4 = 0x180;
     D_801BAFD8 = 0;
-    func_801B24F8(arg0, arg1);
+    func_801B24F8(str, id);
 }
 
-void func_801B263C(u8* arg0, s32 arg1) {
+void func_801B263C(const char* str, s32 id) {
     D_801BAFD4 = 0x180;
     D_801BAFD8 = 0;
-    func_801B1FD8(arg0, arg1);
+    func_801B1FD8(str, id);
 }
 
 void func_801B2670(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height) {
@@ -849,7 +849,7 @@ void func_801B3120(void) {
     g_memCardRStep = 0;
     i = 0;
     n = -1;
-    var_v0 = D_801BC8E0;
+    var_v0 = g_SaveSummary;
     var_a0 = var_v0 + 0xEA;
     var_v1 = var_v0;
     for (; i < 0xF; i++) {
@@ -870,6 +870,7 @@ void func_801B367C(s32 arg0) {
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B3694);
 #else
+// D_801BC91C -> g_SaveSummary[0].slot
 s32 func_801B3694(void) {
     char saveFile[0x20];
     s32 nCardSlot;
@@ -952,6 +953,7 @@ void func_801B3E14(s32 arg0) {
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B3E2C);
 #else
+// D_801BC91C -> g_SaveSummary[0].slot
 s32 func_801B3E2C(void) {
     char saveFile[0x20];
     s32 nCardSlot;

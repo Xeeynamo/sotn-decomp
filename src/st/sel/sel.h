@@ -1,45 +1,11 @@
 #include "stage.h"
 #include <psxsdk/romio.h>
+#include "memcard.h"
 
 #define DISP_W 512
 #define DISP_H 240
 #define DISP_STAGE_W 256
 #define DISP_STAGE_H DISP_H
-
-extern s32 D_80180040[];
-extern s32 D_80180054[];
-extern u8* D_801803B0;
-extern u8* D_801803B4;
-extern s32 D_801804D0;
-extern u8 D_801804D4[];
-extern s32 D_801804D8[];
-extern const s32 D_801A7B8C[2];
-extern s32 D_801BAF20;
-extern s32 D_801BAF30;
-extern s32 D_801BB010;
-extern s32 D_801BB014;
-extern s32 g_InputCursorPos; // cursor Position
-void* g_Cluts[];
-void* g_EntityGfxs[];
-s16** g_SpriteBanks[]; // g_SpriteBanks
-void* D_8018C404;      // unknown type
-extern u8 g_InputSaveName[9];
-
-void Update(void);
-void HandleMainMenu(void);
-void func_801ACBE4(s32 arg0, u16 arg1);
-void func_801AD1D0(void);
-void func_801AD218(void);
-void func_801B2670(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height);
-void DrawString16x16(const char* str, s32 x, s32 y, s32 tga);
-void DrawImages8x8(u8* imgs, s32 x, s32 y, s32 tge);
-void func_801B9C80(void);
-void InitRoomEntities(s32 objLayoutId);
-void func_801B60D4(void);
-void func_801B17C8(void);
-void func_801B1CFC(POLY_GT4* poly, s32 colorIntensity);
-void func_801B26A0(
-    POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v);
 
 typedef struct {
     u32 unk0;
@@ -76,44 +42,53 @@ typedef struct {
 } Unkstruct_801BA498; /* size=0x100 */
 
 typedef struct {
-    /* 0x000 */ s32 unk0;
-    char pad4[0x3C - 0x4];
-    /* 0x03C */ s32 unk3C;
-    char pad40[0x78 - 0x40];
-    /* 0x078 */ s32 areaId;
-    char pad7C[0xB4 - 0x7C];
-    /* 0x0B4 */ s32 unkB4;
-    char padB8[0xF0 - 0xB8];
-    /* 0x0F0 */ s32 level;
-    char padF4[0x12C - 0xF4];
-    /* 0x12C */ s32 money;
-    char pad130[0x168 - 0x130];
-    /* 0x168 */ s32 roomCount;
-    char pad16C[0x1A4 - 0x16C];
-    /* 0x1A4 */ s32 timerHours;
-    char pad1A8[0x1E0 - 0x1A8];
-    /* 0x1E0 */ s32 timerSeconds;
-    char pad1E4[0x21C - 0x1E4];
-    /* 0x21C */ s32 timerMinutes;
-    char pad220[0x258 - 0x220];
-    /* 0x258 */ s32 clearFlag;
-    char pad25C[0x294 - 0x25C];
-    /* 0x294 */ s32 player;
-    char pad298[0x2D0 - 0x298];
-    /* 0x2D0 */ char name[8];
-    char pad2D8[0x3A8 - 0x2D8];
-} SaveSummary; /* size=0x3A8 */
+    /* 801BC8E0 */ u32 icon[BLOCK_PER_CARD];
+    /* 801BC91C */ u32 slot[BLOCK_PER_CARD];
+    /* 801BC958 */ u32 place[BLOCK_PER_CARD];
+    /* 801BC994 */ u32 unk_1[BLOCK_PER_CARD];
+    /* 801BC9D0 */ u32 unk_2[BLOCK_PER_CARD];
+    /* 801BCA0C */ u32 level[BLOCK_PER_CARD];
+    /* 801BCA48 */ u32 money[BLOCK_PER_CARD];
+    /* 801BCA84 */ u32 percentage[BLOCK_PER_CARD];
+    /* 801BCAC0 */ u32 playHours[BLOCK_PER_CARD];
+    /* 801BCAFC */ u32 playSeconds[BLOCK_PER_CARD];
+    /* 801BCB38 */ u32 playMinutes[BLOCK_PER_CARD];
+    /* 801BCB74 */ u32 kind[BLOCK_PER_CARD]; // 0: play, 1: clear, 2: replay
+    /* 801BCBB0 */ u32 isRichter[BLOCK_PER_CARD];
+    /* 801BCBEC */ char name[BLOCK_PER_CARD][10];
+    int padding;
+} SaveSummary; /* size=0x3A4 */
 
+extern const s32 D_801A7B8C[2];
+extern s32 D_801BAF20;
+extern s32 D_801BAF30;
+extern s32 D_801BB010;
+extern s32 D_801BB014;
+extern s32 g_InputCursorPos; // cursor Position
+void* g_Cluts[];
+void* g_EntityGfxs[];
+s16** g_SpriteBanks[]; // g_SpriteBanks
+void* D_8018C404;      // unknown type
+extern u8 g_InputSaveName[9];
+
+extern s32 D_80180040[];
+extern s32 D_80180054[];
 extern u8* D_80180128[];
 extern u8* D_8018012C[];
 extern u8* D_801803A8;
 extern u8* D_801803AC;
+extern u8* D_801803B0;
+extern u8* D_801803B4;
 extern u8* D_801803BC;
 extern u8* D_801803C0;
 extern u8* D_801803C4; // images
+extern u8* D_801803D0[];
 extern s32 D_80180454[];
 extern const u8* D_80180468; // pointer to D_801A7748 (string "richter ")
 extern u8 D_8018046C[0x20 * 3];
+extern s32 D_801804D0;
+extern u8 D_801804D4[];
+extern s32 D_801804D8[];
 extern u8 D_80180504[];
 extern u8 D_80180528[];
 extern u8 D_80180564[];
@@ -200,9 +175,7 @@ extern s32 D_801BC3E4;
 extern s32 D_801BC3E8;
 extern s32 D_801BC650;
 extern s32 D_801BC8C8;
-extern s32 D_801BC8E0[];
-extern SaveSummary D_801BC91C[15];
-extern s32* D_801BC958[];
+extern SaveSummary g_SaveSummary[2];
 extern s32 D_801BCC84[];
 extern s32 D_801BD02C;
 extern u32 D_801BD030;
@@ -215,6 +188,21 @@ extern s32 D_801D6B24;
 
 extern Dialogue g_Dialogue;
 
+void Update(void);
+void HandleMainMenu(void);
+void func_801ACBE4(s32 arg0, u16 arg1);
+void func_801AD1D0(void);
+void func_801AD218(void);
+void func_801B2670(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height);
+void DrawString16x16(const char* str, s32 x, s32 y, s32 tga);
+void DrawImages8x8(u8* imgs, s32 x, s32 y, s32 tge);
+void func_801B9C80(void);
+void InitRoomEntities(s32 objLayoutId);
+void func_801B60D4(void);
+void func_801B17C8(void);
+void func_801B1CFC(POLY_GT4* poly, s32 colorIntensity);
+void func_801B26A0(
+    POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v);
 void func_801B1ED0();
 void func_801B3A54(s32, s32);
 s32 func_801B3A94(s32);
