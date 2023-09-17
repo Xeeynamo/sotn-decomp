@@ -265,8 +265,9 @@ INCLUDE_ASM("dra/nonmatchings/692E8", EntityAlucard);
 
 void func_8010BF64(Unkstruct_8010BF64* arg0) {
     if (g_PlayableCharacter == PLAYER_ALUCARD) {
-        arg0->unk14 = D_800ACED0.pairs[4].unk0 - ((g_Player_unk0C / 2) & 2);
-        arg0->unk1C = D_800ACED0.pairs[4].unk2 + ((g_Player_unk0C / 2) & 2);
+        u32 unk0C_var = (g_Player.unk0C / 2) & 2;
+        arg0->unk14 = D_800ACED0.pairs[4].unk0 - unk0C_var;
+        arg0->unk1C = D_800ACED0.pairs[4].unk2 + unk0C_var;
         arg0->unk18 = D_800ACED0.pairs[1].unk2 - 1;
         arg0->unk20 = D_800ACEC0[1].unk2 + 1;
     } else {
