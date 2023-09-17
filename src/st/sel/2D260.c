@@ -950,41 +950,35 @@ void func_801B3E14(s32 arg0) {
     g_memCardRStepSub = arg0;
 }
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B3E2C);
-#else
-// D_801BC91C -> g_SaveSummary[0].slot
 s32 func_801B3E2C(void) {
-    char saveFile[0x20];
-    s32 nCardSlot;
-    s32 nCardBlock;
-    SaveSummary* save;
+    char path[32];
+    s32 slot;
     s32 blockId;
+    s32 port;
 
-    nCardSlot = g_memCardRStepSub / 15;
-    save = &D_801BC91C[nCardSlot + (g_memCardRStepSub % 15)];
-    blockId = save->unk0;
+    port = g_memCardRStepSub / 15;
+    slot = g_memCardRStepSub % 15;
+    blockId = g_SaveSummary[port].slot[slot];
     switch (g_memCardRStep) {
     case 0:
-        MemcardInit();
+        MemcardInit(slot, blockId);
         g_memCardRetryCount = 10;
         g_memCardRStep++;
         break;
     case 1:
-        MakeMemcardPath(saveFile, blockId);
-        if (MemcardEraseFile(nCardSlot, 0, saveFile) != 0) {
-            g_memCardRetryCount--;
-            if (g_memCardRetryCount == -1) {
+        MakeMemcardPath(path, blockId);
+        if (MemcardEraseFile(port, 0, path)) {
+            if (--g_memCardRetryCount == -1) {
                 return -1;
             }
         } else {
-            // D_801BC91C[temp_s2 + nCardBlock - 0x3C] = -3;
+            g_SaveSummary[port].icon[slot] = -3;
             return 1;
         }
+        break;
     }
     return 0;
 }
-#endif
 
 void func_801B3F7C(s32 arg0) {
     g_memCardRStep = 0;

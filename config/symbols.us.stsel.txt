@@ -1533,7 +1533,6 @@ MemcardDetectSave = 0x801B873C;
 IsMemcardBlockUsed = 0x801B881C;
 MemcardReadFile = 0x801B884C;
 MemcardWriteFile = 0x801B88F4;
-MemcardEraseFile = 0x801B89C8;
 MemcardClose = 0x801B8A10;
 func_800E9880 = 0x801B8A8C;
 MemcardFormat = 0x801B8D24;
