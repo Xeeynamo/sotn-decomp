@@ -172,7 +172,79 @@ bool func_80111D24(void) {
     return false;
 }
 
-INCLUDE_ASM("dra/nonmatchings/71830", func_80111DE8);
+bool func_80111DE8(bool mistReset) {
+    Collider collider1;
+    Collider collider2;
+    s32 yOffset;
+    s32 filtered_effects;
+    s32 colliderXOffset;
+    s32 playerX;
+
+    yOffset = D_800ACEC6.unk10 - 1;
+
+    CheckCollision(
+        PLAYER.posX.i.hi + 9, PLAYER.posY.i.hi + yOffset - 1, &collider1, 0);
+    if (mistReset && (collider1.effects & EFFECT_MIST_ONLY)) {
+        collider1.effects = 0;
+    }
+    filtered_effects =
+        collider1.effects & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
+                             EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID);
+    if (filtered_effects == EFFECT_UNK_8000 + EFFECT_UNK_4000 + EFFECT_SOLID ||
+        filtered_effects == EFFECT_UNK_8000 + EFFECT_UNK_4000 +
+                                EFFECT_UNK_0002 + EFFECT_SOLID ||
+        filtered_effects == EFFECT_UNK_4000 + EFFECT_UNK_0800 + EFFECT_SOLID ||
+        filtered_effects == EFFECT_UNK_4000 + EFFECT_UNK_0800 +
+                                EFFECT_UNK_0002 + EFFECT_SOLID ||
+        filtered_effects == EFFECT_UNK_8000 + EFFECT_UNK_0002 + EFFECT_SOLID ||
+        filtered_effects == EFFECT_UNK_0800 + EFFECT_UNK_0002 + EFFECT_SOLID ||
+        filtered_effects == EFFECT_UNK_0002 + EFFECT_SOLID) {
+        // silly arrangement needed to make registers match
+        playerX = PLAYER.posX.i.hi;
+        colliderXOffset = collider1.unk4;
+        CheckCollision(colliderXOffset + playerX + 8,
+                       PLAYER.posY.i.hi + yOffset - 1, &collider2, 0);
+        if (mistReset && (collider2.effects & EFFECT_MIST_ONLY)) {
+            collider1.effects = 0;
+        }
+        if (!(collider2.effects & EFFECT_SOLID)) {
+            PLAYER.posX.i.hi += collider1.unk4;
+            return 1;
+        }
+    }
+
+    CheckCollision(
+        PLAYER.posX.i.hi - 9, PLAYER.posY.i.hi + yOffset - 1, &collider1, 0);
+    if (mistReset && (collider1.effects & EFFECT_MIST_ONLY)) {
+        collider1.effects = 0;
+    }
+    filtered_effects =
+        collider1.effects & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
+                             EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID);
+    if (filtered_effects == EFFECT_UNK_8000 + EFFECT_SOLID ||
+        filtered_effects == EFFECT_UNK_8000 + EFFECT_UNK_0002 + EFFECT_SOLID ||
+        filtered_effects == EFFECT_UNK_0800 + EFFECT_SOLID ||
+        filtered_effects == EFFECT_UNK_0800 + EFFECT_UNK_0002 + EFFECT_SOLID ||
+        filtered_effects == EFFECT_UNK_8000 + EFFECT_UNK_4000 +
+                                EFFECT_UNK_0002 + EFFECT_SOLID ||
+        filtered_effects == EFFECT_UNK_4000 + EFFECT_UNK_0800 +
+                                EFFECT_UNK_0002 + EFFECT_SOLID ||
+        filtered_effects == EFFECT_UNK_0002 + EFFECT_SOLID) {
+        // silly arrangement needed to make registers match
+        playerX = PLAYER.posX.i.hi;
+        colliderXOffset = collider1.unkC;
+        CheckCollision(colliderXOffset + playerX - 8,
+                       PLAYER.posY.i.hi + yOffset - 1, &collider2, 0);
+        if (mistReset && (collider2.effects & EFFECT_MIST_ONLY)) {
+            collider1.effects = 0;
+        }
+        if (!(collider2.effects & EFFECT_SOLID)) {
+            PLAYER.posX.i.hi += collider1.unkC;
+            return 1;
+        }
+    }
+    return 0;
+}
 
 bool func_8011203C(void) {
     s32 collision = func_80111D24();
