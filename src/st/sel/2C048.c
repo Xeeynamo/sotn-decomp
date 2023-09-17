@@ -5,6 +5,7 @@
  */
 
 #include "sel.h"
+#include "memcard.h"
 
 Overlay g_StageOverlay = {
     /* 0x00 */ Update,
@@ -163,7 +164,37 @@ void func_801ACF7C(void) {
     func_801B25D4(D_801A75C0, 1);
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2C048", func_801ACFBC);
+extern const char D_801A7620[]; // ""
+extern const char D_801A76A4[]; // "Richter"
+extern const char D_801A76AC[]; // "Clear"
+extern const char D_801A76B4[]; // "Replay"
+void func_801ACFBC(s32 port, s32 slot, s32 textId) {
+    char playerName[0x20];
+    const char* strSaveKind;
+    s32 i;
+    char ch;
+
+    playerName[0] = '\0';
+    for (i = 0; i < 8; i++) {
+        ch = g_SaveSummary[port].name[slot][i];
+        strcat(playerName, D_801803D0[func_801B2984(ch)]);
+    }
+
+    do {
+        func_801B263C(playerName, textId);
+        func_801B25D4(D_801A7620, textId + 1);
+    } while (0);
+    if (g_SaveSummary[port].isRichter[slot] != 0) {
+        strSaveKind = D_801A76A4;
+    } else if (g_SaveSummary[port].kind[slot] & 1) {
+        strSaveKind = D_801A76AC;
+    } else if (g_SaveSummary[port].kind[slot] & 2) {
+        strSaveKind = D_801A76B4;
+    } else {
+        strSaveKind = D_801A7620;
+    }
+    func_801B2608(strSaveKind, textId + 2);
+}
 
 void PrintFileSelectPlaceName(s32 arg0, s32 arg1, s32 y) {
     const s32 x = 160;
@@ -172,10 +203,9 @@ void PrintFileSelectPlaceName(s32 arg0, s32 arg1, s32 y) {
     const s32 tge = 1;
     volatile u32 pad; // !FAKE:
 
-    s32* new_var2 = &D_801BC958[arg0 * 0xEA];
-    s32 idx = new_var2[arg1] * 2;
-    DrawImages8x8(D_80180128[idx], x, y + row1y, tge);
-    DrawImages8x8(D_8018012C[idx], x, y + row2y, tge);
+    s32 placeId = g_SaveSummary[arg0].place[arg1] * 2;
+    DrawImages8x8(D_80180128[placeId], x, y + row1y, tge);
+    DrawImages8x8(D_8018012C[placeId], x, y + row2y, tge);
 }
 
 void func_801AD1D0(void) {
