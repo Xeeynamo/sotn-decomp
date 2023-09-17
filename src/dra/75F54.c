@@ -419,8 +419,10 @@ void func_80116B0C(void) {
 
 #if defined(VERSION_HD)
     if (PLAYER.step_s != 3) {
+#elif defined(VERSION_US)
+    // Just to make the curly brackets match at the end of this block
+    if (1) {
 #endif
-
         if (CheckWingSmashInput() && (!pressingCross) && (PLAYER.step_s != 0) &&
             (CastSpell(SPELL_WING_SMASH) != 0)) {
             LearnSpell(SPELL_WING_SMASH);
@@ -444,10 +446,7 @@ void func_80116B0C(void) {
             PLAYER.step_s = 4;
             func_8011AAFC(g_CurrentEntity, 0x5002C, 0);
         }
-// Just closing off the earlier HD block
-#if defined(VERSION_HD)
     }
-#endif
 
     switch (PLAYER.step_s) {
     case 0:
@@ -470,7 +469,7 @@ void func_80116B0C(void) {
                 if (func_8011AAFC(g_CurrentEntity, 0x20002CU, 0) == NULL) {
                     return;
                 }
-#else
+#elif defined(VERSION_HD)
                 func_8011AAFC(g_CurrentEntity, 0x20002CU, 0);
 #endif
                 func_8010FAF4();
