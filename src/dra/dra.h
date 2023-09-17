@@ -561,8 +561,7 @@ extern s32 D_80137FE8;
 extern u32 g_WingSmashButtonCounter;
 extern s32 g_WingSmashButtonTimer;
 extern s32 g_WingSmashTimer;
-extern s32
-    D_80138000; // Something to do with bat screeching when you move left/right
+extern s32 g_BatScreechDone;
 extern s32 D_80138004;
 extern s32 D_80138008;
 extern s32 D_8013800C[];

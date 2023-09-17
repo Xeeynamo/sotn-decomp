@@ -403,10 +403,11 @@ s32 CheckWingSmashInput(void) {
 void func_80116B0C(void) {
     s32 pressingCross;
     s32 x_offset;
-    s32 var_s3;
+    // When we initially move left/right, bat makes a screech sound.
+    s32 screechDone;
     u32 directionsPressed;
 
-    var_s3 = 0;
+    screechDone = 0;
     if (func_80116838() != 0) {
         return;
     }
@@ -561,9 +562,9 @@ void func_80116B0C(void) {
                 PLAYER.velocityX = FIX(1.25);
             }
             func_8010E234(0x1200);
-            var_s3 = 1;
-            if (D_80138000 == 0) {
-                PlaySfx(0x64E);
+            screechDone = 1;
+            if (!g_BatScreechDone) {
+                PlaySfx(SOUND_BAT_SCREECH);
             }
             break;
         case PAD_LEFT:
@@ -576,9 +577,9 @@ void func_80116B0C(void) {
                 PLAYER.velocityX = FIX(-1.25);
             }
             func_8010E234(0x1200);
-            var_s3 = 1;
-            if (D_80138000 == 0) {
-                PlaySfx(0x64E);
+            screechDone = 1;
+            if (!g_BatScreechDone) {
+                PlaySfx(SOUND_BAT_SCREECH);
             }
             break;
         case PAD_RIGHT | PAD_UP:
@@ -757,7 +758,7 @@ void func_80116B0C(void) {
             g_CurrentEntity->posY.i.hi--;
         }
     }
-    D_80138000 = var_s3;
+    g_BatScreechDone = screechDone;
 }
 
 INCLUDE_ASM("dra/nonmatchings/75F54", func_801177A0);
