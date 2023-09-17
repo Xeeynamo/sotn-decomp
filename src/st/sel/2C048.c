@@ -184,11 +184,11 @@ void func_801ACFBC(s32 port, s32 slot, s32 textId) {
         func_801B263C(playerName, textId);
         func_801B25D4(D_801A7620, textId + 1);
     } while (0);
-    if (g_SaveSummary[port].isRichter[slot] != 0) {
+    if (g_SaveSummary[port].isRichter[slot]) {
         strSaveKind = D_801A76A4;
-    } else if (g_SaveSummary[port].kind[slot] & 1) {
+    } else if (g_SaveSummary[port].kind[slot] & SAVE_FLAG_CLEAR) {
         strSaveKind = D_801A76AC;
-    } else if (g_SaveSummary[port].kind[slot] & 2) {
+    } else if (g_SaveSummary[port].kind[slot] & SAVE_FLAG_REPLAY) {
         strSaveKind = D_801A76B4;
     } else {
         strSaveKind = D_801A7620;
