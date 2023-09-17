@@ -874,6 +874,7 @@ UpdateAnim = 0x8010DDA0;
 SetSpeedX = 0x8010E390;
 CheckChainLimit = 0x8010EC8C;
 AlucardHandleDamage = 0x8011405C;
+ControlBatForm = 0x80116B0C;
 GetFreeDraEntity = 0x8011879C;
 EntityNumberMovesToHpMeter = 0x80118D0C;
 EntityGuardText = 0x80119588;
