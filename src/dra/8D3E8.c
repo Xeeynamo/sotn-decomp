@@ -535,7 +535,30 @@ void func_8012E7A4(void) {
 #endif
 }
 
-INCLUDE_ASM("dra/nonmatchings/8D3E8", func_8012E9C0);
+void func_8012E9C0(void) {
+    s32 i;
+
+    PLAYER.palette = 0x810D;
+    for (i = 0; i < 4; i++) {
+        if (D_800ACED0.pairs[i].unk2 < D_800ACE90[i]) {
+            D_800ACED0.pairs[i].unk2++;
+        }
+    }
+    func_8010E168(1, 4);
+    PLAYER.animFrameDuration = 4;
+    PLAYER.velocityY = 0;
+    if (g_Entities[16].entityId == 0x22) {
+        if (func_8011203C() == 0) {
+            return;
+        }
+        func_8011AAFC(g_CurrentEntity, 0x1B002CU, 0);
+    } else if (g_Player.unk66 != 3) {
+        return;
+    }
+    PLAYER.palette = 0x104;
+    PLAYER.step_s = 5;
+    PLAYER.velocityY = FIX(-1.5);
+}
 
 INCLUDE_ASM("dra/nonmatchings/8D3E8", func_8012EAD0);
 

@@ -94,13 +94,16 @@ typedef struct {
 } Unkstruct_8006C3C4; // size = 0x40
 
 typedef struct {
-    /* 0x00 */ s16 unk0; /* D_800ACEC6 */
-    /* 0x02 */ char pad2[0xE];
-    /* 0x10 */ s16 unk10; /* D_800ACED6 */
+    s16 unk0;
+    s16 unk2;
+} s16_pair;
+
+typedef struct {
+    /* 0x10 */ s16_pair pairs[4];
     /* 0x12 */ char pad12[0x8];
     /* 0x1A */ s16 unk1A; /* D_800ACEE0 */
     /* 0x1C */ s16 unk1C; /* D_800ACEE2 */
-} Unkstruct_800ACEC6;
+} Unkstruct_800ACED0;
 
 // Used in:
 // func_8015E7B4
