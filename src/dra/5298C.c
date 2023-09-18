@@ -907,23 +907,22 @@ void DrawTimeAttackMenu(MenuContext* ctx) {
 }
 
 void DrawSettingsButton(MenuContext* ctx) {
-    s32 cursorX;
     s32 i;
     s32 x;
     s32 buttonId;
     s32 btn1_x;
     s32 btn2_x;
 #if defined(VERSION_HD)
-#define CURSORX_VAL 0x80
-#define W 0x28
-#define XVAR cursorX
+    const s32 InitCursorX = 0x80;
+    const s32 W = 0x28;
+    #define XVAR cursorX
 #elif defined(VERSION_US)
-#define CURSORX_VAL 0x98
-#define W 0x54
+    const s32 InitCursorX = 0x98;
+    const s32 W = 0x54;
 #define XVAR x
 #endif
+    s32 cursorX = InitCursorX;
 
-    cursorX = CURSORX_VAL;
     for (i = 0, x = 0xC0; i < 7; i++) {
         DrawMenuStr(c_strButtonRightHand[i], cursorX, 0x30 + (i * 0x10), ctx);
         buttonId = g_Settings.buttonConfig[i];
@@ -939,9 +938,7 @@ void DrawSettingsButton(MenuContext* ctx) {
 
     func_800F5E68(
         ctx, g_MenuNavigation.cursorButtons, cursorX - 2, 46, W, 12, 4, 1);
-#undef W
 #undef XVAR
-#undef CURSORX_VAL
 }
 
 void DrawSettingsReverseCloak(MenuContext* context) {
