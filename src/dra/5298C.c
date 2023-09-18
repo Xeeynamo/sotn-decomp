@@ -1183,11 +1183,11 @@ void DrawSpellMenu(MenuContext* ctx) {
     s32 yCoord;
     const u8* comboPointer;
 #if defined(VERSION_US)
-    s32 startXCoord = 0xB0;
-    DrawMenuStr(c_strSpecial2, 0x68, 0x28, ctx);
+    s32 startXCoord = 176;
+    DrawMenuStr(c_strSpecial2, 104, 40, ctx);
 #elif defined(VERSION_HD)
-    const s32 startXCoord = 0xAC;
-    func_800F66BC(D_800A2D24, 0x88, 0x24, ctx, 1);
+    const s32 startXCoord = 172;
+    func_800F66BC(D_800A2D24, 136, 36, ctx, 1);
 #endif
     for (i = 0; i < NUM_SPELLS; i++) {
         spell = g_Status.spells[i];
@@ -1197,7 +1197,7 @@ void DrawSpellMenu(MenuContext* ctx) {
         spell ^= 0x80;
         comboPointer = g_SpellDefs[spell].combo;
         charNum = 0;
-        yCoord = 0x40 + i * 0x10;
+        yCoord = 64 + i * 16;
         // Count up how many characters are in the combo
         while (*comboPointer != 0) {
             comboPointer++;
@@ -1211,7 +1211,7 @@ void DrawSpellMenu(MenuContext* ctx) {
 #endif
         if (spell != SPELL_WING_SMASH) {
             DrawMenuStr(g_SpellDefs[spell].combo, startXCoord, yCoord, ctx);
-            DrawMenuChar(0xBU, startXCoord + (charNum * 8), yCoord, ctx);
+            DrawMenuChar(CH('+'), startXCoord + (charNum * 8), yCoord, ctx);
             buttonCFG = g_Settings.buttonConfig[0];
             charNum++;
             if (buttonCFG < 4) {
@@ -1224,10 +1224,12 @@ void DrawSpellMenu(MenuContext* ctx) {
                 DrawMenuChar(c_chShoulderButtons[buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
             }
+            // This writes the word "or", because spells say '{Square} or
+            // {Circle}'
             charNum++;
-            DrawMenuChar(0x4FU, startXCoord + (charNum * 8), yCoord, ctx);
+            DrawMenuChar(CH('o'), startXCoord + (charNum * 8), yCoord, ctx);
             charNum++;
-            DrawMenuChar(0x52U, startXCoord + (charNum * 8), yCoord, ctx);
+            DrawMenuChar(CH('r'), startXCoord + (charNum * 8), yCoord, ctx);
             buttonCFG = g_Settings.buttonConfig[1];
             charNum++;
             if (buttonCFG < 4) {
@@ -1250,7 +1252,7 @@ void DrawSpellMenu(MenuContext* ctx) {
                 CH('?'), startXCoord + 0x18 + (charNum * 8), yCoord, ctx);
         }
         DrawMenuStr(c_strMP, 0x124, yCoord, ctx);
-        DrawMenuInt(g_SpellDefs[spell].mpUsage, 0x13C, yCoord, ctx);
+        DrawMenuInt(g_SpellDefs[spell].mpUsage, 316, yCoord, ctx);
     }
     for (i = 0; i < 8; i++) {
         if (g_Status.spells[i] & 0x80) {
@@ -1267,8 +1269,8 @@ void DrawSpellMenu(MenuContext* ctx) {
     }
     // The colorIntensity gets passed to the MenuRect's R and G values, making
     // it a brighter or dimmer yellow.
-    DrawMenuRect(ctx, 0x1A, (g_MenuNavigation.cursorSpells * 0x10) + 0x3B,
-                 0x12C, 0x11, colorIntensity, colorIntensity, 0);
+    DrawMenuRect(ctx, 26, (g_MenuNavigation.cursorSpells * 0x10) + 0x3B, 300,
+                 17, colorIntensity, colorIntensity, 0);
 #elif defined(VERSION_HD)
     func_800F5E68(
         ctx, (g_MenuNavigation.cursorSpells), 0x1A, 0x3B, 0x12C, 0x11, -1, 1);
