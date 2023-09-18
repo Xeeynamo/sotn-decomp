@@ -913,23 +913,32 @@ void DrawSettingsButton(MenuContext* ctx) {
     s32 buttonId;
     s32 btn1_x;
     s32 btn2_x;
-
+#if defined(VERSION_HD)
+    cursorX = 0x80;
+#define W 0x28
+#define XVAR cursorX
+#elif defined(VERSION_US)
     cursorX = 0x98;
+#define W 0x54
+#define XVAR x
+#endif
     for (i = 0, x = 0xC0; i < 7; i++) {
         DrawMenuStr(c_strButtonRightHand[i], cursorX, 0x30 + (i * 0x10), ctx);
         buttonId = g_Settings.buttonConfig[i];
         btn1_x = (buttonId * 12) + 0x30;
-        DrawMenuChar(c_chPlaystationButtons[buttonId], x + btn1_x,
+        DrawMenuChar(c_chPlaystationButtons[buttonId], XVAR + btn1_x,
                      0x30 + (i * 0x10), ctx);
         if (buttonId >= 4) {
             btn2_x = btn1_x + 8;
-            DrawMenuChar(c_chShoulderButtons[buttonId], x + btn2_x,
+            DrawMenuChar(c_chShoulderButtons[buttonId], XVAR + btn2_x,
                          0x30 + (i * 0x10), ctx);
         }
     }
 
     func_800F5E68(
-        ctx, g_MenuNavigation.cursorButtons, cursorX - 2, 46, 84, 12, 4, 1);
+        ctx, g_MenuNavigation.cursorButtons, cursorX - 2, 46, W, 12, 4, 1);
+#undef W
+#undef XVAR
 }
 
 void DrawSettingsReverseCloak(MenuContext* context) {
