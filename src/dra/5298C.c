@@ -1205,6 +1205,7 @@ void DrawSpellMenu(MenuContext* ctx) {
         }
         charNum--;
 #if defined(VERSION_US)
+        // These spells start with an up-arrow colored red.
         if ((spell == SPELL_TETRA_SPIRIT) || (spell == SPELL_SWORD_BROTHERS)) {
             charNum -= 2;
         }
