@@ -1247,11 +1247,11 @@ void DrawSpellMenu(MenuContext* ctx) {
             DrawMenuChar(CH('+'), startXCoord + 8, yCoord, ctx);
             DrawMenuStr(g_WingSmashComboStr, startXCoord + 16, yCoord, ctx);
             DrawMenuChar(
-                CH('+'), startXCoord + 0x10 + (charNum * 8), yCoord, ctx);
+                CH('+'), startXCoord + 16 + (charNum * 8), yCoord, ctx);
             DrawMenuChar(
-                CH('?'), startXCoord + 0x18 + (charNum * 8), yCoord, ctx);
+                CH('?'), startXCoord + 24 + (charNum * 8), yCoord, ctx);
         }
-        DrawMenuStr(c_strMP, 0x124, yCoord, ctx);
+        DrawMenuStr(c_strMP, 292, yCoord, ctx);
         DrawMenuInt(g_SpellDefs[spell].mpUsage, 316, yCoord, ctx);
     }
     for (i = 0; i < 8; i++) {
