@@ -915,7 +915,7 @@ void DrawSettingsButton(MenuContext* ctx) {
 #if defined(VERSION_HD)
     const s32 InitCursorX = 0x80;
     const s32 W = 0x28;
-    #define XVAR cursorX
+#define XVAR cursorX
 #elif defined(VERSION_US)
     const s32 InitCursorX = 0x98;
     const s32 W = 0x54;
