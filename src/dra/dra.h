@@ -368,7 +368,9 @@ extern CdFile* D_800ACC74[];
 extern u8 D_800ACFB4[][4];
 extern s32 D_800ACE44;
 extern s32 D_800ACE48[];
-extern Unkstruct_800ACEC6 D_800ACEC6;
+extern s16 D_800ACE90[];
+extern s16_pair D_800ACEC0[4];
+extern Unkstruct_800ACED0 D_800ACED0;
 extern u8 D_800ACF4C[];
 extern s32 D_800ACF74; // These two might...
 extern s32 D_800ACF78; // ...be an array
