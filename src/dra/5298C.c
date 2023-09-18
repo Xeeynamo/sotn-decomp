@@ -914,14 +914,16 @@ void DrawSettingsButton(MenuContext* ctx) {
     s32 btn1_x;
     s32 btn2_x;
 #if defined(VERSION_HD)
-    cursorX = 0x80;
+#define CURSORX_VAL 0x80
 #define W 0x28
 #define XVAR cursorX
 #elif defined(VERSION_US)
-    cursorX = 0x98;
+#define CURSORX_VAL 0x98
 #define W 0x54
 #define XVAR x
 #endif
+
+    cursorX = CURSORX_VAL;
     for (i = 0, x = 0xC0; i < 7; i++) {
         DrawMenuStr(c_strButtonRightHand[i], cursorX, 0x30 + (i * 0x10), ctx);
         buttonId = g_Settings.buttonConfig[i];
@@ -939,6 +941,7 @@ void DrawSettingsButton(MenuContext* ctx) {
         ctx, g_MenuNavigation.cursorButtons, cursorX - 2, 46, W, 12, 4, 1);
 #undef W
 #undef XVAR
+#undef CURSORX_VAL
 }
 
 void DrawSettingsReverseCloak(MenuContext* context) {
