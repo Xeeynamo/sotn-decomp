@@ -549,7 +549,7 @@
 | zero/f_nonmat/f6006FA8.s     | func_06006FA8   |      280 |         14 |                                 |       |
 | zero/f_nonmat/f601AF5C.s     | func_0601AF5C   |      281 |          2 |                                 |       |
 | game/f_nonmat/f607AC40.s     | func_0607AC40   |      283 |         21 |                                 |       |
-| stage_02/f_nonmat/f60DDF64.s | func_060DDF64   |      284 |         26 | https://decomp.me/scratch/v8C2C | 0.34  |
+| stage_02/f_nonmat/f60DDF64.s | func_060DDF64   |      284 |         26 | https://decomp.me/scratch/v8C2C | 0.345 |
 | stage_02/f_nonmat/f60E1A00.s | func_060E1A00   |      287 |         19 |                                 |       |
 | stage_02/f_nonmat/f60E0684.s | func_060E0684   |      299 |         34 |                                 |       |
 | t_bat/f_nonmat/f60D141C.s    | func_060D141C   |      301 |         44 |                                 |       |
