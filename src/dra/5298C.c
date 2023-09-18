@@ -1174,7 +1174,109 @@ void DrawPauseMenu(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/5298C", DrawSpellMenu);
+void DrawSpellMenu(MenuContext* ctx) {
+    s32 buttonCFG;
+    s32 spell;
+    s32 charNum;
+    s32 i;
+    s32 colorIntensity;
+    s32 yCoord;
+    const u8* comboPointer;
+#if defined(VERSION_US)
+    s32 startXCoord = 176;
+    DrawMenuStr(c_strSpecial2, 104, 40, ctx);
+#elif defined(VERSION_HD)
+    const s32 startXCoord = 172;
+    func_800F66BC(D_800A2D24, 136, 36, ctx, 1);
+#endif
+    for (i = 0; i < NUM_SPELLS; i++) {
+        spell = g_Status.spells[i];
+        if (!(spell & 0x80)) {
+            continue;
+        }
+        spell ^= 0x80;
+        comboPointer = g_SpellDefs[spell].combo;
+        charNum = 0;
+        yCoord = 64 + i * 16;
+        // Count up how many characters are in the combo
+        while (*comboPointer != 0) {
+            comboPointer++;
+            charNum++;
+        }
+        charNum--;
+#if defined(VERSION_US)
+        // These spells start with an up-arrow colored red.
+        if ((spell == SPELL_TETRA_SPIRIT) || (spell == SPELL_SWORD_BROTHERS)) {
+            charNum -= 2;
+        }
+#endif
+        if (spell != SPELL_WING_SMASH) {
+            DrawMenuStr(g_SpellDefs[spell].combo, startXCoord, yCoord, ctx);
+            DrawMenuChar(CH('+'), startXCoord + (charNum * 8), yCoord, ctx);
+            buttonCFG = g_Settings.buttonConfig[0];
+            charNum++;
+            if (buttonCFG < 4) {
+                DrawMenuChar(c_chPlaystationButtons[buttonCFG],
+                             startXCoord + (charNum * 8), yCoord, ctx);
+            } else {
+                DrawMenuChar(c_chPlaystationButtons[buttonCFG],
+                             startXCoord + (charNum * 8), yCoord, ctx);
+                charNum++;
+                DrawMenuChar(c_chShoulderButtons[buttonCFG],
+                             startXCoord + (charNum * 8), yCoord, ctx);
+            }
+            // This writes the word "or", because spells say '{Square} or
+            // {Circle}'
+            charNum++;
+            DrawMenuChar(CH('o'), startXCoord + (charNum * 8), yCoord, ctx);
+            charNum++;
+            DrawMenuChar(CH('r'), startXCoord + (charNum * 8), yCoord, ctx);
+            buttonCFG = g_Settings.buttonConfig[1];
+            charNum++;
+            if (buttonCFG < 4) {
+                DrawMenuChar(c_chPlaystationButtons[buttonCFG],
+                             startXCoord + (charNum * 8), yCoord, ctx);
+            } else {
+                DrawMenuChar(c_chPlaystationButtons[buttonCFG],
+                             startXCoord + (charNum * 8), yCoord, ctx);
+                charNum++;
+                DrawMenuChar(c_chShoulderButtons[buttonCFG],
+                             startXCoord + (charNum * 8), yCoord, ctx);
+            }
+        } else {
+            DrawMenuChar(CH('?'), startXCoord, yCoord, ctx);
+            DrawMenuChar(CH('+'), startXCoord + 8, yCoord, ctx);
+            DrawMenuStr(g_WingSmashComboStr, startXCoord + 16, yCoord, ctx);
+            DrawMenuChar(
+                CH('+'), startXCoord + 16 + (charNum * 8), yCoord, ctx);
+            DrawMenuChar(
+                CH('?'), startXCoord + 24 + (charNum * 8), yCoord, ctx);
+        }
+        DrawMenuStr(c_strMP, 292, yCoord, ctx);
+        DrawMenuInt(g_SpellDefs[spell].mpUsage, 316, yCoord, ctx);
+    }
+    for (i = 0; i < 8; i++) {
+        if (g_Status.spells[i] & 0x80) {
+            func_800F5904(ctx, 0x1C, 0x3C + 0x10 * i, 0xF0, 0x10U, 0,
+                          func_800F548C(-0x80 + i) & 0xFF, 0x1A1, 6, true, 0);
+        }
+    }
+#if defined(VERSION_US)
+    // The highlighted spell glows yellow, increasing and decreasing.
+    if (g_blinkTimer & 0x20) {
+        colorIntensity = (g_blinkTimer & 0x1F) + 0x60;
+    } else {
+        colorIntensity = 0x7F - (g_blinkTimer & 0x1F);
+    }
+    // The colorIntensity gets passed to the MenuRect's R and G values, making
+    // it a brighter or dimmer yellow.
+    DrawMenuRect(ctx, 26, (g_MenuNavigation.cursorSpells * 0x10) + 0x3B, 300,
+                 17, colorIntensity, colorIntensity, 0);
+#elif defined(VERSION_HD)
+    func_800F5E68(
+        ctx, (g_MenuNavigation.cursorSpells), 0x1A, 0x3B, 0x12C, 0x11, -1, 1);
+#endif
+}
 
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800F7F64);
 

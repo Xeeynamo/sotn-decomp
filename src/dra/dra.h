@@ -307,6 +307,7 @@ extern s32 D_800A2FC0[];
 
 extern RoomTeleport D_800A245C[];
 extern s32 D_800A2464[]; // D_800A245C[0].stageId
+extern u32 D_800A2D24;
 extern const char* c_strALUCARD;
 extern const char** c_strSTR;
 extern const char* c_strCON;
@@ -353,6 +354,7 @@ extern Unsktruct_800EAF28* D_800A3B5C[];
 extern UnkStructClut* D_800A3BB8[];
 extern SubweaponDef g_SubwpnDefs[];
 extern SpellDef g_SpellDefs[];
+extern const char* g_WingSmashComboStr;
 extern EnemyDef g_EnemyDefs[];
 extern s32 g_ExpNext[];
 extern Equipment g_EquipDefs[];
