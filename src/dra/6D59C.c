@@ -334,31 +334,26 @@ void DecelerateY(s32 amount) {
 }
 
 s32 func_8010E27C(void) {
-    u16* facing;
-
     if (g_Player.unk44 & 2) {
         return 0;
     }
-
-    facing = &PLAYER.facingLeft;
-    if (*facing == 1) {
+    if (PLAYER.facingLeft == 1) {
         if (g_Player.padPressed & PAD_RIGHT) {
-            *facing = 0;
+            PLAYER.facingLeft = 0;
             g_Player.unk4C = 1;
             return -1;
         } else if (g_Player.padPressed & PAD_LEFT) {
             return 1;
         }
     } else {
-        if (!(g_Player.padPressed & PAD_RIGHT)) {
-            if (g_Player.padPressed & PAD_LEFT) {
-                *facing = 1;
-                g_Player.unk4C = 1;
-                return -1;
-            }
-            return 0;
+        if (g_Player.padPressed & PAD_RIGHT) {
+            return 1;
         }
-        return 1;
+        if (g_Player.padPressed & PAD_LEFT) {
+            PLAYER.facingLeft = 1;
+            g_Player.unk4C = 1;
+            return -1;
+        }
     }
     return 0;
 }
