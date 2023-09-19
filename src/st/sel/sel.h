@@ -127,6 +127,7 @@ extern const char D_801ABFD8[];           // DMA=(%d,%d), ADDR=(0x%08x->0x%08x)
 extern const char D_801AC000[];           // FIFO
 extern const char D_801AC038[];           // "%s timeout:\n"
 extern s32 D_801BAF10;
+extern s32 D_801BAF18[][2];
 extern s32 D_801BAF48;
 extern s32 D_801BAFC0;
 extern s32 D_801BAFC4;

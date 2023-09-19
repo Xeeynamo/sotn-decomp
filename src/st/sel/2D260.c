@@ -1,7 +1,5 @@
 #include "sel.h"
 
-extern s32 D_801BAF18[][2];
-
 typedef enum {
     Tips_Generic,
     Tips_Input,

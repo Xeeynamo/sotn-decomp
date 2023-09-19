@@ -7,8 +7,6 @@
 #include "sel.h"
 #include "memcard.h"
 
-extern s32 D_801BAF18[][2];
-
 Overlay g_StageOverlay = {
     /* 0x00 */ Update,
     /* 0x04 */ HandleMainMenu,
