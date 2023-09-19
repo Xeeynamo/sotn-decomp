@@ -1,5 +1,7 @@
 #include "sel.h"
 
+extern s32 D_801BAF18[][2];
+
 typedef enum {
     Tips_Generic,
     Tips_Input,
@@ -88,7 +90,7 @@ void func_801AD490(void) {
     DrawString16x16("destiny", 232, 64, 1);
 
     for (i = 0; i < 5; i++) {
-        POLY_GT4* poly = &g_PrimBuf[D_801BAF18[i + 1].unk0];
+        POLY_GT4* poly = &g_PrimBuf[D_801BAF18[i + 1][0]];
         if (i == D_801D6B0C) {
             poly->clut = 0x203;
         } else {
@@ -305,7 +307,7 @@ void func_801AE9A8(void) {
 
     for (i = 1; i < 5; i++) {
         func_801ACBE4(i + 1, 4);
-        func_801B26A0(&g_PrimBuf[D_801BAF18[i + 1].unk0], (i * 64) - 32,
+        func_801B26A0(&g_PrimBuf[D_801BAF18[i + 1][0]], (i * 64) - 32,
                       (i * 5) * 8, 127, 31, D_80180040[i], D_80180054[i]);
     }
 

@@ -8,11 +8,6 @@
 #define DISP_STAGE_H DISP_H
 
 typedef struct {
-    u32 unk0;
-    u32 unk4;
-} Unkstruct_801ACBE4;
-
-typedef struct {
     s32 unk0;
     s32 unk4;
     s32 unk8; // D_801D6A54
@@ -132,7 +127,6 @@ extern const char D_801ABFD8[];           // DMA=(%d,%d), ADDR=(0x%08x->0x%08x)
 extern const char D_801AC000[];           // FIFO
 extern const char D_801AC038[];           // "%s timeout:\n"
 extern s32 D_801BAF10;
-extern Unkstruct_801ACBE4 D_801BAF18[];
 extern s32 D_801BAF48;
 extern s32 D_801BAFC0;
 extern s32 D_801BAFC4;

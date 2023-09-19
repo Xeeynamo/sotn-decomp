@@ -7,6 +7,8 @@
 #include "sel.h"
 #include "memcard.h"
 
+extern s32 D_801BAF18[][2];
+
 Overlay g_StageOverlay = {
     /* 0x00 */ Update,
     /* 0x04 */ HandleMainMenu,
@@ -44,7 +46,7 @@ extern s32 D_801800E8[];
 extern s32 D_80180108[];
 
 void func_801AC084(s32 arg0, s32 ypos) {
-    Primitive* prim = &g_PrimBuf[D_801BAF18[arg0].unk0];
+    Primitive* prim = &g_PrimBuf[D_801BAF18[arg0][0]];
     s32 i;
     for (i = 0; i < 8; i++) {
         prim->x0 = D_80180068[i] + 0x68;
@@ -64,7 +66,7 @@ void func_801AC084(s32 arg0, s32 ypos) {
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2C048", func_801AC174);
 
 void func_801ACBE4(s32 arg0, u16 arg1) {
-    POLY_GT4* poly = &g_PrimBuf[D_801BAF18[arg0].unk0];
+    POLY_GT4* poly = &g_PrimBuf[D_801BAF18[arg0][0]];
     while (poly != NULL) {
         poly->pad3 = arg1;
         poly = (POLY_GT4*)poly->tag;
@@ -121,7 +123,7 @@ s32 func_801ACDFC(void) {
     }
 
     func_801B1CFC(poly, var_s1);
-    func_801B1CFC((POLY_GT4*)poly->tag, var_s1);
+    func_801B1CFC(poly->tag, var_s1);
 
     if (var_s1 == 0) {
         do {
@@ -149,7 +151,7 @@ s32 func_801ACEC0(void) {
     func_801B1CFC(poly, var_s0);
     poly = (POLY_GT4*)poly->tag;
     poly->pad3 = 0x51;
-    func_801B1CFC((POLY_GT4*)poly, var_s0);
+    func_801B1CFC(poly, var_s0);
 
     if (g_api.func_80131F68()) {
         return 0;
