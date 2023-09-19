@@ -369,7 +369,7 @@ extern Vram g_Vram;
 extern CdFile* D_800ACC74[];
 extern u8 D_800ACFB4[][4];
 #if defined(VERSION_HD)
-extern s32 D_800ACE40_hd_exclusive;
+extern s32 D_800ACEDC_hd;
 #endif
 extern s32 D_800ACE44;
 extern s32 D_800ACE48[];
