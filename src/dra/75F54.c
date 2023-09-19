@@ -832,7 +832,7 @@ void func_801177A0(void) {
 #if defined(VERSION_US)
             g_Player.unk20[0] = 0x18;
 #elif defined(VERSION_HD)
-            D_800ACE40 = 0x18;
+            D_800ACE40_hd_exclusive = 0x18;
 #endif
             g_Player.unk44 |= 0x100;
             func_80111CC0();

@@ -368,7 +368,9 @@ extern s32 D_800ACC64[]; // probably a struct
 extern Vram g_Vram;
 extern CdFile* D_800ACC74[];
 extern u8 D_800ACFB4[][4];
-extern s32 D_800ACE40;
+#if defined(VERSION_HD)
+extern s32 D_800ACE40_hd_exclusive;
+#endif
 extern s32 D_800ACE44;
 extern s32 D_800ACE48[];
 extern s16 D_800ACE88[];
