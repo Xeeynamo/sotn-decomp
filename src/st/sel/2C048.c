@@ -63,7 +63,236 @@ void func_801AC084(s32 arg0, s32 ypos) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2C048", func_801AC174);
+void func_801AC174(void) {
+    Primitive* prim;
+    s32 i;
+    s32 y;
+    s32 x;
+
+    D_801BAF18[0][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
+    i = 0;
+    y = 0;
+    x = -0x20;
+    prim = &g_PrimBuf[D_801BAF18[0][0]];
+    func_801B26A0(prim, 216, 16, 144, 72, 0, 0);
+    func_801B1D88(prim);
+    prim->tpage = 0xD;
+    prim->clut = 0x201;
+    prim->priority = 0x10;
+    prim->blendMode = 0;
+    for (; i < 5; i++) {
+        D_801BAF18[i + 1][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
+        prim = &g_PrimBuf[D_801BAF18[i + 1][0]];
+        func_801B26A0(prim, x, y, 0x7F, 0x1F, D_80180040[i], D_80180054[i]);
+        func_801B1D88(prim);
+        prim->tpage = 0xC;
+        prim->clut = 0x200;
+        prim->priority = 0x10;
+        if (i == 0) {
+            prim->blendMode = BLEND_VISIBLE;
+        } else {
+            prim->blendMode = 4;
+        }
+        y += 40;
+        x += 64;
+    }
+
+    D_801BAF18[6][0] = g_api.AllocPrimitives(PRIM_GT4, 4);
+    prim = &g_PrimBuf[D_801BAF18[6][0]];
+    func_801B26A0(prim, 0x20, 0xB0, 0x10, 0x10, 0xA0, 0x50);
+    func_801B1D88(prim);
+    prim->tpage = 0xC;
+    prim->clut = 0x200;
+    prim->priority = 0x10;
+    prim->blendMode = 0;
+
+    prim = prim->next;
+    func_801B26A0(prim, 0x20, 0xB0, 0x10, 0x10, 0xA0, 0x70);
+    func_801B1D88(prim);
+    prim->tpage = 0xC;
+    prim->clut = 0x200;
+    prim->priority = 0x10;
+    prim->blendMode = 0;
+
+    prim = prim->next;
+    func_801B26A0(prim, 0x20, 0xB0, 0x10, 0x10, 0xA0, 0x60);
+    func_801B1D88(prim);
+    prim->tpage = 0xC;
+    prim->clut = 0x202;
+    prim->priority = 0x10;
+    prim->blendMode = 0;
+
+    prim = prim->next;
+    func_801B26A0(prim, 0x20, 0xB0, 0x10, 0x10, 0xA0, 0x80);
+    func_801B1D88(prim);
+    prim->tpage = 0xC;
+    prim->clut = 0x200;
+    prim->priority = 0x10;
+    prim->blendMode = 0;
+
+    D_801BAF18[7][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
+    prim = &g_PrimBuf[D_801BAF18[7][0]];
+    func_801B26A0(prim, 0x70, 0x30, 0xA0, 0x30, 0, 0x50);
+    func_801B1D88(prim);
+    prim->tpage = 0xC;
+    prim->clut = 0x202;
+    prim->priority = 0x10;
+    prim->blendMode = BLEND_VISIBLE;
+
+    D_801BAF18[8][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
+    prim = &g_PrimBuf[D_801BAF18[8][0]];
+    func_801B26A0(prim, 0x80, 0x48, 0xF, 0xF, 0xF0, 0xF0);
+    func_801B1D88(prim);
+    prim->tpage = 0xC;
+    prim->clut = 0x200;
+    prim->priority = 0x30;
+    prim->blendMode = BLEND_VISIBLE;
+
+    D_801BAF18[9][0] = g_api.AllocPrimitives(PRIM_SPRT, 3);
+    prim = &g_PrimBuf[D_801BAF18[9][0]];
+    for (i = 0; i < 3; i++) {
+        prim->x0 = 0x30 + i * 0x80;
+        prim->y0 = 0x60;
+        prim->u0 = i * 128;
+        prim->v0 = 0x78;
+        prim->u1 = 0x80;
+        prim->v1 = 0x78;
+        if (i == 2) {
+            prim->u0 = 0xE0;
+            prim->v0 = 0;
+            prim->u1 = 0x20;
+        }
+        prim->tpage = 0xD;
+        prim->clut = 0x202;
+        prim->priority = 0x10;
+        prim->blendMode = 8;
+        prim = prim->next;
+    }
+
+    D_801BAF18[10][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
+    prim = &g_PrimBuf[D_801BAF18[10][0]];
+    func_801B26A0(prim, 0x40, 0x68, 0x20, 0x20, 0, 0x48);
+    func_801B1D88(prim);
+    prim->tpage = 0xD;
+    prim->clut = 0x204;
+    prim->priority = 0x30;
+    prim->blendMode = BLEND_VISIBLE;
+
+    D_801BAF18[11][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
+    prim = &g_PrimBuf[D_801BAF18[11][0]];
+    func_801B26A0(prim, 0x68, 0x58, 0xB0, 0x50, 0, 0);
+    func_801B1D88(prim);
+    prim->tpage = 0xC;
+    prim->clut = 0x202;
+    prim->priority = 0x10;
+    prim->blendMode = BLEND_VISIBLE;
+
+    D_801BAF18[12][0] = (s32)g_api.AllocPrimitives(PRIM_SPRT, 8);
+    func_801AC084(0xC, 0);
+
+    D_801BAF18[13][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
+    prim = &g_PrimBuf[D_801BAF18[13][0]];
+    prim->x0 = 0x18;
+    prim->y0 = 0x38;
+    prim->u0 = 0xB0;
+    prim->v0 = 0;
+    prim->u1 = 0x50;
+    prim->v1 = 0x78;
+    func_801B1D88(prim);
+    prim->tpage = 0xC;
+    prim->clut = 0x202;
+    prim->priority = 0x10;
+    prim->blendMode = BLEND_VISIBLE;
+
+    D_801BAF18[14][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
+    prim = &g_PrimBuf[D_801BAF18[14][0]];
+    prim->x0 = 0x118;
+    prim->y0 = 0x38;
+    prim->u0 = 0x90;
+    prim->v0 = 0;
+    prim->u1 = 0x50;
+    prim->v1 = 0x78;
+    func_801B1D88(prim);
+    prim->tpage = 0xD;
+    prim->clut = 0x202;
+    prim->priority = 0x10;
+    prim->blendMode = BLEND_VISIBLE;
+
+    D_801BAF18[15][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
+    prim = &g_PrimBuf[D_801BAF18[15][0]];
+    prim->x0 = 0x94;
+    prim->y0 = 0x10;
+    prim->u0 = 0;
+    prim->v0 = 0x40;
+    prim->u1 = 0xD0;
+    prim->v1 = 0x20;
+    func_801B1D88(prim);
+    prim->tpage = 6;
+    prim->clut = 0x1A1;
+    prim->priority = 0x10;
+    prim->blendMode = BLEND_VISIBLE;
+
+    D_801BAF18[16][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
+    prim = &g_PrimBuf[D_801BAF18[16][0]];
+    prim->x0 = 0xA0;
+    prim->y0 = 0x60;
+    prim->u0 = 0;
+    prim->v0 = 0x60;
+    prim->u1 = 0x70;
+    prim->v1 = 0x30;
+    func_801B1D88(prim);
+    prim->tpage = 6;
+    prim->clut = 0x1A1;
+    prim->priority = 0x20;
+    prim->blendMode = BLEND_VISIBLE;
+
+    D_801BAF18[17][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
+    prim = &g_PrimBuf[D_801BAF18[17][0]];
+    prim->y0 = 0xC0;
+    prim->x0 = 0x60;
+    prim->u0 = 0;
+    prim->v0 = 0x90;
+    prim->u1 = 1;
+    prim->v1 = 0x10;
+    func_801B1D88(prim);
+    prim->tpage = 6;
+    prim->clut = 0x1A1;
+    prim->priority = 0x20;
+    prim->blendMode = 0;
+
+    D_801BAF18[18][0] = g_api.AllocPrimitives(PRIM_GT4, 2);
+    prim = &g_PrimBuf[D_801BAF18[18][0]];
+    func_801B26A0(prim, 0x68, 0x30, 0xB0, 0x50, 0, 0);
+    func_801B1D88(prim);
+    prim->tpage = 0xC;
+    prim->clut = 0x202;
+    prim->priority = 0x10;
+    prim->blendMode = BLEND_VISIBLE;
+    prim = prim->next;
+    func_801B26A0(prim, 0xA8, 0x80, 0x30, 0x10, 0xB0, 0x80);
+    func_801B1D88(prim);
+    prim->tpage = 0xC;
+    prim->clut = 0x200;
+    prim->priority = 0x10;
+    prim->blendMode = BLEND_VISIBLE;
+
+    D_801BAF18[19][0] = g_api.AllocPrimitives(PRIM_SPRT, 8);
+    func_801AC084(0x13, -0x28);
+
+    D_801BAF18[20][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
+    prim = &g_PrimBuf[D_801BAF18[20][0]];
+    prim->x0 = 0xA0;
+    prim->y0 = 0x38;
+    prim->u0 = 0;
+    prim->v0 = 0xA0;
+    prim->u1 = 0x70;
+    prim->v1 = 0x30;
+    func_801B1D88(prim);
+    prim->tpage = 6;
+    prim->clut = 0x1A1;
+    prim->priority = 0x20;
+    prim->blendMode = BLEND_VISIBLE;
+}
 
 void func_801ACBE4(s32 arg0, u16 arg1) {
     POLY_GT4* poly = &g_PrimBuf[D_801BAF18[arg0][0]];
