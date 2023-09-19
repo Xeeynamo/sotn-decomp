@@ -383,6 +383,7 @@ extern s32 D_800ACF78; // ...be an array
 extern unkstruct_800ACF7C D_800ACF7C[];
 extern s16 D_800ACF8A[]; // collection of sounds?
 extern s16 D_800ACF60[]; // collection of sounds?
+extern s16 D_800ACF6C[];
 extern s16 D_800ACF94[];
 extern u8 D_800AD094[];
 extern PfnEntityUpdate D_800AD0C4[];
