@@ -912,14 +912,14 @@ void func_80117AC0(void) {
     }
 }
 
-s32 func_80117D3C(void) {
+bool MistFormFinished(void) {
     if (PLAYER.step_s == 0) {
         return 0;
     }
     if (D_80097448[1] != 0 || g_Player.padTapped & PAD_L1 ||
         func_800FEEA4(1, 1) < 0 ||
         (!IsRelicActive(RELIC_POWER_OF_MIST) &&
-         (D_80138004 == 0 || --D_80138004 == 0))) {
+         (g_MistTimer == 0 || --g_MistTimer == 0))) {
         func_8010E27C();
         SetPlayerStep(0xE);
         return 1;
@@ -927,7 +927,183 @@ s32 func_80117D3C(void) {
     return 0;
 }
 
-INCLUDE_ASM("dra/nonmatchings/75F54", func_80117DEC);
+void ControlMistForm(void) {
+    s32 xSpeedDiag;
+    s32 ySpeedDiag;
+    s32 ySpeedOrtho;
+    s32 xSpeedOrtho;
+    u32 directionsPressed;
+
+    if (!IsRelicActive(RELIC_POWER_OF_MIST)) {
+        // Ortho and Diag describe the speeds when moving orthogonally (in a
+        // single direction) versus moving diagonally (in two directions at
+        // once). Overall speed diagonally is 5/16 * sqrt(2) which is 0.442, so
+        // a fair bit slower than orthogonal speed.
+        xSpeedOrtho = FIX(0.5);
+        ySpeedOrtho = FIX(0.5);
+        xSpeedDiag = FIX(5.0 / 16);
+        ySpeedDiag = FIX(5.0 / 16);
+    } else {
+        // With Power of Mist, we move at double speed.
+        xSpeedOrtho = FIX(1);
+        ySpeedOrtho = FIX(1);
+        xSpeedDiag = FIX(10.0 / 16);
+        ySpeedDiag = FIX(10.0 / 16);
+    }
+    if (MistFormFinished()) {
+        return;
+    }
+    directionsPressed =
+        g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
+    switch (PLAYER.step_s) {
+    case 0:
+        func_800EA5E4(0x1BU);
+        func_8010E27C();
+        g_Player.unk48 = 0;
+        g_Player.unk46 = 0;
+        g_Player.unk44 = 0;
+        func_8010FAF4();
+        func_8011AAFC(g_CurrentEntity, 0x49U, 0);
+        if (PLAYER.velocityX > 0) {
+            PLAYER.velocityX = xSpeedOrtho;
+        }
+        if (PLAYER.velocityX < 0) {
+            PLAYER.velocityX = -xSpeedOrtho;
+        }
+        if (PLAYER.velocityY > 0) {
+            PLAYER.velocityY = ySpeedOrtho;
+        }
+        if (PLAYER.velocityY < 0) {
+            PLAYER.velocityY = -ySpeedOrtho;
+        }
+        func_8010DA48(0xCA);
+        D_800AFDA6[0] = PLAYER.animCurFrame;
+        func_800EA538(8);
+        if (!IsRelicActive(RELIC_GAS_CLOUD)) {
+            func_800EA5E4(0x11CU);
+        } else {
+            func_800EA5E4(0x11FU);
+            func_8011AAFC(g_CurrentEntity, 0x53U, 0);
+        }
+        // Note that this means Power of Mist doesn't make mist infinite!
+        // It just lasts 100,000 :)
+        if (!IsRelicActive(RELIC_POWER_OF_MIST)) {
+            g_MistTimer = 16;
+        } else {
+            g_MistTimer = 100000;
+        }
+        PLAYER.step_s += 1;
+        break;
+    case 1:
+        switch (directionsPressed) {
+        case 0:
+        default:
+            DecelerateX(FIX(3.0 / 256));
+            DecelerateY(FIX(3.0 / 256));
+            break;
+        case PAD_UP:
+            if (PLAYER.velocityY < -ySpeedOrtho) {
+                DecelerateY(FIX(3.0 / 256));
+            } else {
+                PLAYER.velocityY = -ySpeedOrtho;
+            }
+            DecelerateX(FIX(3.0 / 256));
+            break;
+        case PAD_DOWN:
+            if (ySpeedOrtho < PLAYER.velocityY) {
+                DecelerateY(FIX(3.0 / 256));
+            } else {
+                PLAYER.velocityY = ySpeedOrtho;
+            }
+            DecelerateX(FIX(3.0 / 256));
+            break;
+        case PAD_RIGHT:
+            PLAYER.facingLeft = 0;
+            if (xSpeedOrtho < PLAYER.velocityX) {
+                DecelerateX(FIX(3.0 / 256));
+            } else {
+                PLAYER.velocityX = xSpeedOrtho;
+            }
+            DecelerateY(FIX(3.0 / 256));
+            break;
+        case PAD_LEFT:
+            PLAYER.facingLeft = 1;
+            if (PLAYER.velocityX < -xSpeedOrtho) {
+                DecelerateX(FIX(3.0 / 256));
+            } else {
+                PLAYER.velocityX = -xSpeedOrtho;
+            }
+            DecelerateY(FIX(3.0 / 256));
+            break;
+        case PAD_UP + PAD_RIGHT:
+            PLAYER.facingLeft = 0;
+            if (xSpeedDiag < PLAYER.velocityX) {
+                DecelerateX(FIX(2.0 / 256));
+
+            } else {
+                PLAYER.velocityX = xSpeedDiag;
+            }
+            if (PLAYER.velocityY < -ySpeedDiag) {
+                DecelerateY(FIX(2.0 / 256));
+            } else {
+                PLAYER.velocityY = -ySpeedDiag;
+            }
+            break;
+        case PAD_UP + PAD_LEFT:
+            PLAYER.facingLeft = 1;
+            if (PLAYER.velocityX < -xSpeedDiag) {
+                DecelerateX(FIX(2.0 / 256));
+            } else {
+                PLAYER.velocityX = -xSpeedDiag;
+            }
+            if (PLAYER.velocityY < -ySpeedDiag) {
+                DecelerateY(FIX(2.0 / 256));
+            } else {
+                PLAYER.velocityY = -ySpeedDiag;
+            }
+            break;
+        case PAD_DOWN + PAD_RIGHT:
+            PLAYER.facingLeft = 0;
+            if (xSpeedDiag < PLAYER.velocityX) {
+                DecelerateX(FIX(2.0 / 256));
+            } else {
+                PLAYER.velocityX = xSpeedDiag;
+            }
+            if (ySpeedDiag < PLAYER.velocityY) {
+                DecelerateY(FIX(2.0 / 256));
+            } else {
+                PLAYER.velocityY = ySpeedDiag;
+            }
+            break;
+        case PAD_DOWN + PAD_LEFT:
+            PLAYER.facingLeft = 1;
+            if (PLAYER.velocityX < -xSpeedDiag) {
+                DecelerateX(FIX(2.0 / 256));
+            } else {
+                PLAYER.velocityX = -xSpeedDiag;
+            }
+            if (ySpeedDiag < PLAYER.velocityY) {
+                DecelerateY(FIX(2.0 / 256));
+            } else {
+                PLAYER.velocityY = ySpeedDiag;
+            }
+            break;
+        }
+        break;
+    default:
+        FntPrint(&aErrorStep);
+        break;
+    }
+    if (D_8013AECC != 0) {
+        if (D_8013AECC > 0) {
+            D_8013AECC -= 1;
+            PLAYER.posY.i.hi++;
+        } else {
+            D_8013AECC += 1;
+            PLAYER.posY.i.hi--;
+        }
+    }
+}
 
 INCLUDE_ASM("dra/nonmatchings/75F54", func_801182F8);
 
