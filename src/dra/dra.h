@@ -449,6 +449,7 @@ extern const char aSp1603x;
 extern const char aTile03x;
 extern Unkstruct_800BF554 D_800BF554[];
 
+extern char* aErrorStep;
 extern char* aAtariNuki;
 extern s32 g_DebugFreeze;
 extern s32 g_DebugHitboxViewMode;
@@ -571,7 +572,7 @@ extern u32 g_WingSmashButtonCounter;
 extern s32 g_WingSmashButtonTimer;
 extern s32 g_WingSmashTimer;
 extern s32 g_BatScreechDone;
-extern s32 D_80138004;
+extern s32 g_MistTimer; // remaining time in mist transformation
 extern s32 D_80138008;
 extern s32 D_8013800C[];
 extern u8 D_8013803C;
