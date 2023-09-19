@@ -475,8 +475,8 @@ void ControlBatForm(void) {
                 func_8010FAF4();
                 g_Player.unk66++;
             }
-            func_8010E1EC(0x480);
-            func_8010E234(0x480);
+            DecelerateX(0x480);
+            DecelerateY(0x480);
             if (ABS(PLAYER.velocityY) > FIX(1.25)) {
                 if (PLAYER.velocityY > 0) {
                     PLAYER.velocityY = FIX(1.25);
@@ -512,8 +512,8 @@ void ControlBatForm(void) {
             PLAYER.step_s += 1;
         } else {
             func_8011690C(0);
-            func_8010E1EC(0x1200);
-            func_8010E234(0x1200);
+            DecelerateX(0x1200);
+            DecelerateY(0x1200);
             break;
         }
     case 2:
@@ -530,12 +530,12 @@ void ControlBatForm(void) {
         case PAD_UP:
             PLAYER.ext.player.unkAC = 0xC2;
             if (PLAYER.velocityY < FIX(-1.25)) {
-                func_8010E234(0x1200);
+                DecelerateY(0x1200);
             } else {
                 PLAYER.velocityY = FIX(-1.25);
             }
             func_8011690C(-0x80);
-            func_8010E1EC(0x1200);
+            DecelerateX(0x1200);
             break;
         case PAD_DOWN:
             if (!(g_Player.pl_vram_flag & 1)) {
@@ -544,23 +544,23 @@ void ControlBatForm(void) {
                 PLAYER.ext.player.unkAC = 0xC4;
             }
             if (PLAYER.velocityY > FIX(1.25)) {
-                func_8010E234(0x1200);
+                DecelerateY(0x1200);
             } else {
                 PLAYER.velocityY = FIX(1.25);
             }
             func_8011690C(0);
-            func_8010E1EC(0x1200);
+            DecelerateX(0x1200);
             break;
         case PAD_RIGHT:
             PLAYER.ext.player.unkAC = 0xC2;
             PLAYER.facingLeft = 0;
             func_8011690C(0x180);
             if (PLAYER.velocityX > FIX(1.25)) {
-                func_8010E1EC(0x1200);
+                DecelerateX(0x1200);
             } else {
                 PLAYER.velocityX = FIX(1.25);
             }
-            func_8010E234(0x1200);
+            DecelerateY(0x1200);
             screechDone = 1;
             if (!g_BatScreechDone) {
                 PlaySfx(SOUND_BAT_SCREECH);
@@ -571,11 +571,11 @@ void ControlBatForm(void) {
             PLAYER.facingLeft = 1;
             func_8011690C(0x180);
             if (PLAYER.velocityX < FIX(-1.25)) {
-                func_8010E1EC(0x1200);
+                DecelerateX(0x1200);
             } else {
                 PLAYER.velocityX = FIX(-1.25);
             }
-            func_8010E234(0x1200);
+            DecelerateY(0x1200);
             screechDone = 1;
             if (!g_BatScreechDone) {
                 PlaySfx(SOUND_BAT_SCREECH);
@@ -586,12 +586,12 @@ void ControlBatForm(void) {
             PLAYER.facingLeft = 0;
             func_8011690C(0x80);
             if (PLAYER.velocityX > FIX(0.875)) {
-                func_8010E1EC(0xC00);
+                DecelerateX(0xC00);
             } else {
                 PLAYER.velocityX = FIX(0.875);
             }
             if (PLAYER.velocityY < FIX(-0.875)) {
-                func_8010E234(0xC00);
+                DecelerateY(0xC00);
             } else {
                 PLAYER.velocityY = FIX(-0.875);
             }
@@ -601,12 +601,12 @@ void ControlBatForm(void) {
             PLAYER.facingLeft = 1;
             func_8011690C(0x80);
             if (PLAYER.velocityX < FIX(-0.875)) {
-                func_8010E1EC(0xC00);
+                DecelerateX(0xC00);
             } else {
                 PLAYER.velocityX = FIX(-0.875);
             }
             if (PLAYER.velocityY < FIX(-0.875)) {
-                func_8010E234(0xC00);
+                DecelerateY(0xC00);
             } else {
                 PLAYER.velocityY = FIX(-0.875);
             }
@@ -620,12 +620,12 @@ void ControlBatForm(void) {
             PLAYER.facingLeft = 0;
             func_8011690C(0);
             if (PLAYER.velocityX > FIX(0.875)) {
-                func_8010E1EC(0xC00);
+                DecelerateX(0xC00);
             } else {
                 PLAYER.velocityX = FIX(0.875);
             }
             if (PLAYER.velocityY > FIX(1.75)) {
-                func_8010E234(0xC00);
+                DecelerateY(0xC00);
             } else {
                 PLAYER.velocityY = FIX(1.75);
             }
@@ -639,12 +639,12 @@ void ControlBatForm(void) {
             PLAYER.facingLeft = 1;
             func_8011690C(0);
             if (PLAYER.velocityX < FIX(-0.875)) {
-                func_8010E1EC(0xC00);
+                DecelerateX(0xC00);
             } else {
                 PLAYER.velocityX = FIX(-0.875);
             }
             if (PLAYER.velocityY > FIX(1.75)) {
-                func_8010E234(0xC00);
+                DecelerateY(0xC00);
             } else {
                 PLAYER.velocityY = FIX(1.75);
             }
@@ -681,7 +681,7 @@ void ControlBatForm(void) {
                 func_8011690C(0x180);
             }
             if (!(directionsPressed & (PAD_DOWN | PAD_UP))) {
-                func_8010E234(0x2000);
+                DecelerateY(0x2000);
             }
             if (g_Player.pl_vram_flag & 0x800) {
                 if (PLAYER.facingLeft != 0 && (g_Player.pl_vram_flag & 0x400) ||
@@ -724,8 +724,8 @@ void ControlBatForm(void) {
         }
         break;
     case 4:
-        func_8010E1EC(0x1800);
-        func_8010E234(0x3800);
+        DecelerateX(0x1800);
+        DecelerateY(0x3800);
         func_8011690C(0x180);
         if (PLAYER.animFrameDuration < 0) {
             func_8011AAFC(g_CurrentEntity, 0x51U, 0);
@@ -736,8 +736,8 @@ void ControlBatForm(void) {
         }
         break;
     case 5:
-        func_8010E1EC(0x1800);
-        func_8010E234(0x3800);
+        DecelerateX(0x1800);
+        DecelerateY(0x3800);
         func_8011690C(0);
         if (PLAYER.ext.player.unkAC == 0xC4 && PLAYER.animFrameIdx == 8) {
             PLAYER.step_s = 1;
@@ -766,11 +766,11 @@ void func_801177A0(void) {
     s32 else_cycles;
 
     PLAYER.unk19 = 4;
-    func_8010E1EC(0x2000);
+    DecelerateX(0x2000);
     if (g_Player.pl_vram_flag & 3) {
         PLAYER.velocityY = 0;
     }
-    func_8010E234(0x2000);
+    DecelerateY(0x2000);
     func_8011690C(0);
     else_cycles = 0;
     switch (PLAYER.step_s) {
@@ -2740,7 +2740,7 @@ void func_8012CFF0(void) {
 
 void func_8012D024(void) {
     s32 separation;
-    func_8010E1EC(0x2000);
+    DecelerateX(0x2000);
     if (g_Player.padTapped & PAD_CROSS) {
         func_8012CCE4();
         return;

@@ -276,12 +276,12 @@ void func_801120B4(void) {
         if (func_8010FDF8(0x43018) != 0) {
             return;
         }
-        func_8010E1EC(0x1000);
+        DecelerateX(0x1000);
     } else {
         if (func_8010FDF8(0x4301C) != 0) {
             return;
         }
-        func_8010E1EC(0x2000);
+        DecelerateX(0x2000);
     }
 
     if ((PLAYER.step < 0x40U) && (g_Player.unk48 == 0)) {

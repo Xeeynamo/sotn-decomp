@@ -148,7 +148,7 @@ void func_8012D3E8(void) {
             return;
         }
         if (ABS(PLAYER.velocityX) > FIX(1)) {
-            func_8010E1EC(0x2000);
+            DecelerateX(0x2000);
         }
         if ((PLAYER.facingLeft && (directionsPressed & PAD_RIGHT)) ||
             (!PLAYER.facingLeft && (directionsPressed & PAD_LEFT))) {
@@ -162,7 +162,7 @@ void func_8012D3E8(void) {
         }
         return;
     case 4:
-        func_8010E1EC(0x400);
+        DecelerateX(0x400);
         if (!(D_8003C8C4 & 1)) {
             func_8011AAFC(g_CurrentEntity, 0x10045U, 0);
         }
@@ -194,7 +194,7 @@ void func_8012DBBC(void) {
     }
     if ((PLAYER.facingLeft != 0 && !(g_Player.padPressed & PAD_LEFT)) ||
         (PLAYER.facingLeft == 0 && !(g_Player.padPressed & PAD_RIGHT))) {
-        func_8010E1EC(FIX(4.0 / 128));
+        DecelerateX(FIX(4.0 / 128));
     }
     if (g_Player.pl_vram_flag & 1) {
         if (D_800B0914 == 1) {
@@ -233,7 +233,7 @@ void func_8012DBBC(void) {
         }
         if (((g_Player.pl_vram_flag & 4) && (PLAYER.velocityX > FIX(2.5))) ||
             ((g_Player.pl_vram_flag & 8) && (PLAYER.velocityX < FIX(-2.5)))) {
-            func_8010E1EC(FIX(0.125));
+            DecelerateX(FIX(0.125));
         }
         if (PLAYER.animFrameIdx == 3) {
             PLAYER.animFrameDuration = 6;
@@ -293,7 +293,7 @@ void func_8012E040(void) {
     if ((PLAYER.facingLeft != 0 && !(g_Player.padPressed & PAD_LEFT)) ||
         (PLAYER.facingLeft == 0 && !(g_Player.padPressed & PAD_RIGHT))) {
         var_s0 = 0;
-        func_8010E1EC(FIX(16.0 / 128));
+        DecelerateX(FIX(16.0 / 128));
     }
     if (g_Player.pl_vram_flag & 1) {
         if (D_800B0914 == 2) {
@@ -354,7 +354,7 @@ void func_8012E040(void) {
         func_8010E27C();
         if (var_s0 != 0) {
             if (ABS(PLAYER.velocityX) >= FIX(1)) {
-                func_8010E1EC(FIX(16.0 / 128));
+                DecelerateX(FIX(16.0 / 128));
             } else {
                 SetSpeedX(FIX(1));
             }
@@ -412,7 +412,7 @@ void func_8012E550(void) {
     u16 playerFrame = PLAYER.animFrameIdx;
     s32 pressingDown = g_Player.padPressed & PAD_DOWN;
 
-    func_8010E1EC(FIX(0.125));
+    DecelerateX(FIX(0.125));
     if (g_Player.padTapped & PAD_CROSS) {
         if ((g_Player.padPressed & PAD_DOWN)) {
             for (i = 0; i < 4; i++) {
@@ -564,11 +564,11 @@ void func_8012EAD0(void) {
     s32 i;
     s32 else_cycles;
 
-    func_8010E1EC(FIX(0.125));
+    DecelerateX(FIX(0.125));
     if (g_Player.pl_vram_flag & 3) {
         PLAYER.velocityY = 0;
     }
-    func_8010E234(FIX(0.125));
+    DecelerateY(FIX(0.125));
     else_cycles = 0;
     switch (PLAYER.step_s) {
     case 0:
@@ -660,7 +660,7 @@ void func_8012ED30(void) {
     }
     // If you're not pressing any of right, left, or up
     if (!(g_Player.padPressed & (PAD_RIGHT | PAD_LEFT | PAD_UP))) {
-        func_8010E1EC(0x400);
+        DecelerateX(0x400);
         PLAYER.velocityY = FIX(0.5);
     }
     if (PLAYER.velocityY <= 0) {
