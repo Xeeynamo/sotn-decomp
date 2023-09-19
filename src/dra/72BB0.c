@@ -9,7 +9,7 @@ void func_80112BB0(void) {
     s32 var_s2;
 
     if (PLAYER.step_s != 0x58) {
-        func_8010E1EC(0x1000);
+        DecelerateX(0x1000);
         if (PLAYER.velocityY < -0x10000) {
             if (!(g_Player.unk44 & 0x40) &&
                 !(g_Player.padPressed & PAD_CROSS)) {
@@ -70,7 +70,7 @@ void func_80112BB0(void) {
     case 0x57:
     case 0x5B:
         func_8010DFF0(1, 1);
-        func_8010E1EC(0x1000);
+        DecelerateX(0x1000);
         if (PLAYER.ext.generic.unkAC == 0x6C) {
             if (PLAYER.animFrameDuration < 0) {
                 temp_v0 = (PLAYER.velocityY > 0x10000) ^ 1;
@@ -170,7 +170,7 @@ void func_80113148(void) {
     if (g_Player.D_80072F0A != 0 && g_Player.padTapped & PAD_CROSS) {
         func_8010E83C(1);
     } else if (func_8010FDF8(0x9029) == 0) {
-        func_8010E1EC(0x1000);
+        DecelerateX(0x1000);
         if (func_8010E27C() != 0) {
             SetSpeedX(0xC000);
         }
@@ -203,7 +203,7 @@ void func_801131C4(void) {
     if (func_8010FDF8(0x100C) != 0) {
         return;
     }
-    func_8010E1EC(0x2000);
+    DecelerateX(0x2000);
     if (g_Player.unk48 != 0) {
         if (PLAYER.ext.player.unkAC == 0x11) {
             PLAYER.ext.player.unkAC = 0x65;

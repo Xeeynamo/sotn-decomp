@@ -305,27 +305,28 @@ void func_8010E168(s32 arg0, s16 arg1) {
     }
 }
 
-void func_8010E1EC(s32 speed) {
+void DecelerateX(s32 amount) {
     if (g_CurrentEntity->velocityX < 0) {
-        g_CurrentEntity->velocityX += speed;
+        g_CurrentEntity->velocityX += amount;
         if (g_CurrentEntity->velocityX > 0) {
             g_CurrentEntity->velocityX = 0;
         }
     } else {
-        g_CurrentEntity->velocityX -= speed;
-        if (g_CurrentEntity->velocityX < 0)
+        g_CurrentEntity->velocityX -= amount;
+        if (g_CurrentEntity->velocityX < 0) {
             g_CurrentEntity->velocityX = 0;
+        }
     }
 }
 
-void func_8010E234(s32 speed) {
+void DecelerateY(s32 amount) {
     if (g_CurrentEntity->velocityY < 0) {
-        g_CurrentEntity->velocityY += speed;
+        g_CurrentEntity->velocityY += amount;
         if (g_CurrentEntity->velocityY > 0) {
             g_CurrentEntity->velocityY = 0;
         }
     } else {
-        g_CurrentEntity->velocityY -= speed;
+        g_CurrentEntity->velocityY -= amount;
         if (g_CurrentEntity->velocityY < 0) {
             g_CurrentEntity->velocityY = 0;
         }
