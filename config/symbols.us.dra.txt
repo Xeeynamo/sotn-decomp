@@ -907,7 +907,6 @@ EntityStopWatchExpandingCircle = 0x8012A528;
 EntityStopWatch = 0x8012A89C;
 EntitySubwpnBible = 0x8012B990;
 EntityBatEcho = 0x8012BEF8;
-func_801315F8 = 0x801315F8;
 SetReverbDepth = 0x80131FA4;
 PlaySfx = 0x801347F8;
 nullsub_10 = 0x801362A4;
