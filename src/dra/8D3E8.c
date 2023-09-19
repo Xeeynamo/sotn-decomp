@@ -560,7 +560,74 @@ void func_8012E9C0(void) {
     PLAYER.velocityY = FIX(-1.5);
 }
 
-INCLUDE_ASM("dra/nonmatchings/8D3E8", func_8012EAD0);
+void func_8012EAD0(void) {
+    s32 i;
+    s32 else_cycles;
+
+    func_8010E1EC(FIX(0.125));
+    if (g_Player.pl_vram_flag & 3) {
+        PLAYER.velocityY = 0;
+    }
+    func_8010E234(FIX(0.125));
+    else_cycles = 0;
+    switch (PLAYER.step_s) {
+    case 0:
+        i = 0;
+        for (i = 0; i < 4; i++) {
+            if (D_800ACE88[i] < D_800ACEC0[i].unk2) {
+                D_800ACEC0[i].unk2--;
+            } else {
+                else_cycles += 1;
+            }
+        }
+        if ((g_Player.pl_vram_flag & 3) == 3) {
+            g_Player.unk68 = 1;
+            PLAYER.velocityY = 0;
+            PLAYER.velocityX = 0;
+        }
+        if (else_cycles == 4) {
+            PLAYER.animSet = 1;
+            PLAYER.unk5A = 0;
+            PLAYER.rotAngle = 0;
+            PLAYER.unk19 = 0;
+            func_8010DA48(0xCA);
+            g_Player.unk66 = 1;
+            if (g_Player.unk68 != 0) {
+                PLAYER.step_s = 2;
+                D_800AFDA6[0] = 0xC7;
+            } else {
+                PLAYER.step_s = 1;
+                D_800AFDA6[0] = 0x5F;
+            }
+        }
+        return;
+    case 1:
+        if (g_Player.unk66 == 3) {
+            func_8010E83C(0);
+            if (!(g_Player.pl_vram_flag & 0x8000)) {
+                PLAYER.velocityY = FIX(-1);
+            }
+            PLAYER.palette = 0x8100;
+#if defined(VERSION_US)
+            g_Player.unk20[0] = 0x18;
+#elif defined(VERSION_HD)
+            D_800ACEDC_hd = 0x18;
+#endif
+            g_Player.unk44 |= 0x100;
+            PLAYER.zPriority = g_zEntityCenter.S16.unk0;
+            func_80111CC0();
+        }
+        return;
+    case 2:
+        if (g_Player.unk66 == 3) {
+#if defined(VERSION_US)
+            PLAYER.zPriority = g_zEntityCenter.S16.unk0;
+#endif
+
+            func_8010E4D0();
+        }
+    }
+}
 
 void func_8012ED30(void) {
     if (g_Player.padTapped & PAD_CROSS) {
