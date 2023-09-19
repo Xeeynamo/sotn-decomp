@@ -506,6 +506,7 @@ extern MenuData g_MenuData;
 extern u8 D_801376B0;
 extern s16 D_801376C4;
 extern s16 D_801376C8;
+extern MenuContext g_JosephsCloakContext;
 extern s32 D_8013783C;
 extern s32 D_801377FC[];
 extern s32 D_80137840;

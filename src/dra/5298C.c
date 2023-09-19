@@ -848,7 +848,50 @@ void func_800F6A48(void) {
     func_800EA5E4(0x411);
 }
 
-INCLUDE_ASM("dra/nonmatchings/5298C", func_800F6A70);
+void DrawJosephsCloakMenu(void) {
+    s32 row1Ypos;
+    s32 row2Ypos;
+    s32 i;
+    u8* letter_RGB;
+    s32 x_RGB;
+    const char** exteriorInterior;
+
+    MenuContext* ctx = &g_JosephsCloakContext;
+#if defined(VERSION_US)
+    s32 x_Start = 0xB0;
+    s32 number_spacing = 0x28;
+    const xRGBVal = 0xF8;
+#elif defined(VERSION_HD)
+    s32 x_Start = 0x80;
+    const s32 number_spacing = 0;
+    const xRGBVal = 0xA0;
+#endif
+    i = 0;
+    exteriorInterior = &c_strExterior;
+    x_RGB = xRGBVal;
+    letter_RGB = &D_800A2D7C; // will be R, then G, then B
+    row2Ypos = 0x4C;
+    row1Ypos = 0x28;
+    // 3 iterations, each iteration does Exterior and Lining for one letter
+    for (; i < 3; row1Ypos += 0xC, letter_RGB++, row2Ypos += 0xC, i++) {
+        // Write "Exterior"
+        DrawMenuStr(exteriorInterior[0], x_Start, row1Ypos, ctx);
+        // Write R, G, or B
+        DrawMenuChar(*letter_RGB, x_RGB, row1Ypos, ctx);
+        // Write "Lining"
+        DrawMenuStr(exteriorInterior[1], x_Start, row2Ypos, ctx);
+        // Write R, G, or B
+        DrawMenuChar(*letter_RGB, x_RGB, row2Ypos, ctx);
+    }
+    for (i = 0; i < 6; i++) {
+        DrawMenuInt(g_Settings.cloakColors[i], x_Start + number_spacing + 0x48,
+                    0x28 + 0xC * i, ctx);
+    }
+    func_800F5E68(ctx, g_MenuNavigation.cursorCloak, x_Start - 2, 0x26,
+                  number_spacing + 0x58, 0xC, 0, 1);
+    ApplyJosephsCloakPalette();
+    func_800F6A48();
+}
 
 void func_800F6BEC(MenuContext* context) {
 #if defined(VERSION_HD)
