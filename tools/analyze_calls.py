@@ -141,16 +141,15 @@ def get_sdk_funcs():
 
 # Many functions in main are not being splatted out yet, so we add them here, like SDK.
 def get_main_funcs():
-    with open(f"config/symbols.us.txt") as f:
-        symbols = f.readlines()
-    index_first_func = next(
-        (i for i, s in enumerate(symbols) if s.startswith("__main")), None
-    )
-    index_last_func = next(
-        (i for i, s in enumerate(symbols) if s.startswith("SpuGetAllKeysStatus")), None
-    )
-    symbols = symbols[index_first_func : index_last_func + 1]
-    return [line.split(" = ")[0] for line in symbols]
+    functions = []
+    print("getting mains")
+    for file in Path("asm/us/main").glob("*.s"):
+        with open(file) as f:
+            lines = f.readlines()
+            for line in lines:
+                if "glabel" in line:
+                    functions.append(line.split()[1])
+    return functions
 
 
 # Functions in gameapi are often strange, especially in the Overlay member.
