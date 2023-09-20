@@ -142,7 +142,6 @@ def get_sdk_funcs():
 # Many functions in main are not being splatted out yet, so we add them here, like SDK.
 def get_main_funcs():
     functions = []
-    print("getting mains")
     for file in Path("asm/us/main").glob("*.s"):
         with open(file) as f:
             lines = f.readlines()
