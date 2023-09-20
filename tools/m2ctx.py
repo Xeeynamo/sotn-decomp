@@ -6,19 +6,8 @@ import sys
 import subprocess
 import tempfile
 
-
-def get_root_dir():
-    def search_root_dir(base_dir):
-        for dir in os.listdir(base_dir):
-            if os.path.isdir(dir) and dir == "src":
-                return os.path.normpath(base_dir)
-        return search_root_dir(os.path.join(base_dir, ".."))
-
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    return search_root_dir(base_dir=script_dir)
-
-
-root_dir = get_root_dir()
+script_dir = os.path.dirname(os.path.realpath(__file__))
+root_dir = os.path.abspath(os.path.join(script_dir, ".."))
 src_dir = root_dir + "src/"
 
 # Project-specific
@@ -30,17 +19,15 @@ CPP_FLAGS = [
     "-DF3DEX_GBI_2",
     "-D_MIPS_SZLONG=32",
     "-DSCRIPT(...)={}",
+    "-D__attribute__(...)=",
     "-D__asm__(...)=",
     "-ffreestanding",
     "-DM2CTX",
 ]
 
 
-def import_c_file(src_file) -> str:
-    in_file = src_file
-    if not src_file.startswith(root_dir):
-        in_file = os.path.relpath(src_file, root_dir)
-
+def import_c_file(in_file) -> str:
+    in_file = os.path.relpath(in_file, root_dir)
     cpp_command = ["gcc", "-E", "-P", "-dM", *CPP_FLAGS, in_file]
     cpp_command2 = ["gcc", "-E", "-P", *CPP_FLAGS, in_file]
 
@@ -74,7 +61,7 @@ def import_c_file(src_file) -> str:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="""Create a context file which can be used for mips_to_c"""
+        description="""Create a context file which can be used for m2c / decomp.me"""
     )
     parser.add_argument(
         "c_file",
