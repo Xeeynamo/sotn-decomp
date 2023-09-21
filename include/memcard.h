@@ -11,6 +11,7 @@
 #include <psxsdk/kernel.h>
 #include <psxsdk/libapi.h>
 
+#define PORT_COUNT (2)
 #define BLOCK_PER_CARD (15)
 #define CARD_BLOCK_SIZE (8192)
 

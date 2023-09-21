@@ -170,7 +170,7 @@ extern s32 D_801BC3E4;
 extern s32 D_801BC3E8;
 extern s32 D_801BC650;
 extern s32 D_801BC8C8;
-extern SaveSummary g_SaveSummary[2];
+extern SaveSummary g_SaveSummary[PORT_COUNT];
 extern s32 D_801BCC84[];
 extern s32 D_801BD02C;
 extern u32 D_801BD030;
