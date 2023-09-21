@@ -294,11 +294,11 @@ void InitMainMenuGraphics(void) {
     prim->blendMode = BLEND_VISIBLE;
 }
 
-void func_801ACBE4(s32 arg0, u16 arg1) {
-    POLY_GT4* poly = &g_PrimBuf[D_801BAF18[arg0][0]];
-    while (poly != NULL) {
-        poly->pad3 = arg1;
-        poly = (POLY_GT4*)poly->tag;
+void func_801ACBE4(s32 gfxId, u16 blendMode) {
+    Primitive* prim = &g_PrimBuf[D_801BAF18[gfxId][0]];
+    while (prim != NULL) {
+        prim->blendMode = blendMode;
+        prim = prim->next;
     }
 }
 

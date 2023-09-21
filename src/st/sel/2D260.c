@@ -295,7 +295,40 @@ void UpdateFileSelect(void) {
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801ADF94);
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801AE6D0);
+void func_801AE6D0(void) {
+    Primitive* prim;
+    SaveSummary* s;
+    s32 port;
+    s32 slot;
+    s32 percentage;
+    s32 percentageDecimal;
+    s32 level;
+
+    port = D_801BC3EC / 15;
+    slot = D_801BC3EC % 15;
+    s = &g_SaveSummary[port];
+    func_801ACBE4(0x12, 0x11);
+    prim = g_PrimBuf[D_801BAF18[18][0]].next;
+    func_801B26A0(prim, 168, (D_801BAF08 % 3) + 127, 48, 16, 0xB0, 0x80);
+    prim->blendMode = 0;
+    func_801ACBE4(0x13, 0);
+    func_801ACBE4(0x14, 0);
+    func_801ACFBC(port, slot, 10);
+    PrintFileSelectPlaceName(port, slot, 72);
+
+    level = (g_SaveSummary + port)->level[slot]; // FAKE
+    func_801B2BD4(g_SaveSummary[port].level[slot], 148, 104, 1);
+    func_801B2BD4(g_SaveSummary[port].playHours[slot], 200, 104, 1);
+    func_801B2C70(g_SaveSummary[port].playMinutes[slot], 224, 104, 1);
+    func_801B2C70(g_SaveSummary[port].playSeconds[slot], 248, 104, 1);
+    func_801B2BD4(g_SaveSummary[port].money[slot], 0xB4, 112, 1);
+    percentage = g_SaveSummary[port].percentage[slot];
+    percentage = percentage * 1000 / 942;
+    percentageDecimal = percentage % 10;
+    func_801B2BD4(percentage / 10, 232, 112, 1);
+    func_801B27A8(240, 116, 8, 4, 0xE0, 0x8C, 0x200, 12, 1, 128);
+    func_801B2BD4(percentageDecimal, 248, 112, 1);
+}
 
 void func_801AE9A8(void) {
     s32 i;
@@ -773,9 +806,9 @@ void func_801B2BD4(s32 digit, s32 x, s32 y, s32 tge) {
     } while (digit != 0);
 }
 
-void func_801B2C70(s32 arg0, s32 x, s32 y, s32 tge) {
-    func_801B2B78(arg0 % 10, x, y, tge);
-    func_801B2B78(arg0 / 10, x - 8, y, tge);
+void func_801B2C70(s32 digit, s32 x, s32 y, s32 tge) {
+    func_801B2B78(digit % 10, x, y, tge);
+    func_801B2B78(digit / 10, x - 8, y, tge);
 }
 
 void func_801B2CF8(POLY_GT4* poly) {
