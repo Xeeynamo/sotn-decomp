@@ -1,8 +1,8 @@
 #include "wrp.h"
 
-u16 D_80180DF4[];
-u8* D_80180E58[];
-u16 D_80180EB8[];
+extern u16 D_80180DF4[];
+extern u8* D_80180E58[];
+extern u16 D_80180EB8[];
 
 void EntityPrizeDrop(Entity* self) {
     Collider collider;
@@ -220,9 +220,9 @@ void EntityPrizeDrop(Entity* self) {
     }
 }
 
-u16 D_80180458[];
-s32 D_80180EC4[];
-u8* D_80180F70[];
+extern u16 D_80180458[];
+extern s32 D_80180EC4[];
+extern u8* D_80180F70[];
 void EntityExplosion(Entity* entity) {
     u16 zPriority;
 

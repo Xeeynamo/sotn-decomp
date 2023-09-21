@@ -23,6 +23,6 @@ typedef struct {
 typedef struct {
     u16 start, end;
 } EntitySearch;
-EntitySearch D_80171094[];
+extern EntitySearch D_80171094[];
 
-ServantDesc g_ServantDesc;
+extern ServantDesc g_ServantDesc;

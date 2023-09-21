@@ -1,9 +1,9 @@
 #include "game.h"
 #include "st0.h"
 
-u16 g_InitializeData0[];
-u8* D_80181D18[];
-u16 D_80181D74[];
+extern u16 g_InitializeData0[];
+extern u8* D_80181D18[];
+extern u16 D_80181D74[];
 
 // if self->params & 0x8000 then the item will not disappear
 // self->ext.generic.unk80.modeS8.unk0: frames left before the prize disappear

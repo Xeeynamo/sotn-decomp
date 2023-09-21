@@ -41,7 +41,7 @@ extern void ReplaceBreakableWithItemDrop(Entity*);
 extern s32 func_801C5D18(Entity* entity, s32 arg1, s32 arg2, s32 arg3);
 extern POLY_GT4* func_801D6DB8(POLY_GT4* poly);
 
-LayoutEntity* D_80180850[];
+extern LayoutEntity* D_80180850[];
 extern u16 g_InitializeData0[];
 extern u16 g_InitializeEntityData0[];
 extern u16 D_80180AD0[];
@@ -106,7 +106,7 @@ extern u8 D_801819D0[];
 extern u8 D_801819DC[];
 extern s32 D_801819E8[];
 extern s32 D_801819EC[];
-const char* D_80181ACC[];
+extern const char* D_80181ACC[];
 extern s16 D_80181AD4[];
 extern s16 D_80181AE0[];
 extern Point16 D_80181AEC[];
@@ -215,4 +215,4 @@ extern u16 D_80182740[];
 
 extern SVECTOR D_801B73E0;
 
-Dialogue g_Dialogue;
+extern Dialogue g_Dialogue;
