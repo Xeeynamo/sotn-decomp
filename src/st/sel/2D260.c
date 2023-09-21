@@ -743,7 +743,7 @@ void DrawString16x16(const char* str, s32 x, s32 y, s32 tga) {
         func_801B27A8(x, y, W, H, D_8018046C[uvIndex * 3 + 1],
                       D_8018046C[uvIndex * 3 + 2], 0x200, 12, tga, 0x40);
         x += W;
-        }
+    }
 }
 
 void func_801B2A9C(s32 img, s32 x, s32 y, s32 tge) {
