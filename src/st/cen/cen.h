@@ -60,7 +60,7 @@ extern s16 D_801805A4[];
 extern s8 D_801805B4[];
 extern u16 D_801805BC;
 extern u16 D_801805D8[];
-const char* D_80180684[];
+extern const char* D_80180684[];
 extern s32 D_8018068C[];
 extern u8 D_80180768[]; // Animation
 extern u8 D_80180780[]; // Animation

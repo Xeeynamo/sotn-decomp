@@ -1,9 +1,10 @@
 #include "np3.h"
 
-u16 g_InitializeData0[];
-u16 D_80181DB0[];
-u8* D_80181E14[];
-u16 D_80181E74[];
+extern u16 g_InitializeData0[];
+extern u16 D_80181DB0[];
+extern u8* D_80181E14[];
+extern u16 D_80181E74[];
+
 void EntityPrizeDrop(Entity* self) {
     Collider collider;
     Primitive* prim;

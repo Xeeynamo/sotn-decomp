@@ -60,10 +60,10 @@ extern s32 D_801BAF30;
 extern s32 D_801BB010;
 extern s32 D_801BB014;
 extern s32 g_InputCursorPos; // cursor Position
-void* g_Cluts[];
-void* g_EntityGfxs[];
-s16** g_SpriteBanks[]; // g_SpriteBanks
-void* D_8018C404;      // unknown type
+extern void* g_Cluts[];
+extern void* g_EntityGfxs[];
+extern s16** g_SpriteBanks[]; // g_SpriteBanks
+extern void* D_8018C404;      // unknown type
 extern u8 g_InputSaveName[9];
 
 extern s32 D_80180040[];
@@ -89,7 +89,7 @@ extern u8 D_80180528[];
 extern u8 D_80180564[];
 extern u8 D_80180578[];
 extern u8 D_80180580[];
-const char* D_801808D0[];
+extern const char* D_801808D0[];
 extern s32 g_UnkMemcardPort[2];
 extern u16 g_saveIconPalette[0x10][0x10];
 extern u8* g_saveIconTexture[];

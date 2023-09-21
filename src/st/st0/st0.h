@@ -48,8 +48,8 @@ extern PfnEntityUpdate PfnEntityUpdates[];
 extern bool g_isSecretStairsButtonPressed;
 extern bool g_isDraculaFirstFormDefeated;
 
-LayoutEntity* D_80180314[];
-LayoutEntity* D_801803E8[];
+extern LayoutEntity* D_80180314[];
+extern LayoutEntity* D_801803E8[];
 
 // *** Initializers ***
 extern u16 D_80180574[];

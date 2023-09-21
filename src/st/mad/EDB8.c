@@ -805,8 +805,8 @@ void func_801934D0(u16 arg0) {
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/EDB8", CollectHeart);
 
-void* const D_80180D60[];
-const s32 D_80180D88[]; // c_GoldPrizes
+extern void* const D_80180D60[];
+extern const s32 D_80180D88[]; // c_GoldPrizes
 
 void CollectGold(u16 goldSize) { // CollectGold
     s32 *gold, *unk;

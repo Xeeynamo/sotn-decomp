@@ -45,8 +45,8 @@ void func_8019A78C(void);
 Entity* func_8019AC18(Entity*, Entity*);
 void func_8019E5E0(Entity* entity);
 
-LayoutEntity* D_80180220[];
-LayoutEntity* D_801802F4[];
+extern LayoutEntity* D_80180220[];
+extern LayoutEntity* D_801802F4[];
 
 /* *** Initializers *** */
 extern u16 g_InitializeData0[];
@@ -105,7 +105,7 @@ extern u16 D_80180528[];
 extern s32 D_80180664;
 extern s32 D_80180668;
 extern s16 D_801807F0[];
-const char* D_80180938[];
+extern const char* D_80180938[];
 extern s32 D_801811B0[];
 extern u32 D_8018125C[];
 extern s16 D_801812E4[];

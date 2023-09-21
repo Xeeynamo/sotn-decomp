@@ -10,11 +10,11 @@ void InitRoomEntities(s32 objLayoutId);
 void func_801916C4(u16);
 void BottomCornerText(u8*, u8);
 
-RoomHeader g_Rooms[];
-s16** g_SpriteBanks[];
-void* g_Cluts[];
-RoomDef g_TileLayers[];
-void* g_EntityGfxs[];
+extern RoomHeader g_Rooms[];
+extern s16** g_SpriteBanks[];
+extern void* g_Cluts[];
+extern RoomDef g_TileLayers[];
+extern void* g_EntityGfxs[];
 void UpdateStageEntities(void);
 
 Overlay g_StageOverlay = {
@@ -36,7 +36,7 @@ Overlay g_StageOverlay = {
     /* 0x3C */ 0x00000000,
 };
 
-SpriteParts* D_80186D88[];
+extern SpriteParts* D_80186D88[];
 s16** g_SpriteBanks[] = {
     /* 0x040 */ 0x00000000,
     /* 0x044 */ D_80186D88,
