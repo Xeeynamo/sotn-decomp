@@ -427,14 +427,14 @@ void func_801ACFBC(s32 port, s32 slot, s32 textId) {
     func_801B2608(strSaveKind, textId + 2);
 }
 
-void PrintFileSelectPlaceName(s32 arg0, s32 arg1, s32 y) {
+void PrintFileSelectPlaceName(s32 port, s32 slot, s32 y) {
     const s32 x = 160;
     const s32 row1y = 0;
     const s32 row2y = 8;
     const s32 tge = 1;
     volatile u32 pad; // !FAKE:
 
-    s32 placeId = g_SaveSummary[arg0].place[arg1] * 2;
+    s32 placeId = g_SaveSummary[port].place[slot] * 2;
     DrawImages8x8(D_80180128[placeId], x, y + row1y, tge);
     DrawImages8x8(D_8018012C[placeId], x, y + row2y, tge);
 }

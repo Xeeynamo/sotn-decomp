@@ -727,31 +727,24 @@ s32 func_801B2984(u8 ch) {
     return 0x20;
 }
 
-// reg swap
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", DrawString16x16);
-#else
-extern u8 D_8018046D[];
-
 void DrawString16x16(const char* str, s32 x, s32 y, s32 tga) {
-    u8 ch;
-    u8* new_var2 = D_8018046D;
-    u8* new_var = D_8018046D + 1;
-    do {
-        do {
-        loop_1:
-            ch = *(str++);
-        } while (0);
-        if (ch != 0) {
-            s32 temp_v1 = func_801B2984(ch) * 3;
-            func_801B27A8(x, y, 16, 16, new_var[temp_v1], new_var2[temp_v1],
-                          0x200, 12, tga, 0x40);
-            x += 16;
-            goto loop_1;
+    const int W = 16;
+    const int H = 16;
+    char ch;
+    s32 uvIndex;
+
+    while (true) {
+        ch = *str++;
+        if (ch == 0) {
+            break;
         }
-    } while (0);
+
+        uvIndex = func_801B2984(ch);
+        func_801B27A8(x, y, W, H, D_8018046C[uvIndex * 3 + 1],
+                      D_8018046C[uvIndex * 3 + 2], 0x200, 12, tga, 0x40);
+        x += W;
+        }
 }
-#endif
 
 void func_801B2A9C(s32 img, s32 x, s32 y, s32 tge) {
     func_801B27A8(
