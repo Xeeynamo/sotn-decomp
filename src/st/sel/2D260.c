@@ -333,7 +333,7 @@ void func_801AE6D0(void) {
 void func_801AE9A8(void) {
     s32 i;
 
-    func_801ACC3C();
+    MenuHideAllGfx();
     func_801ACBE4(0, 0);
 
     for (i = 1; i < 5; i++) {
@@ -349,7 +349,7 @@ void func_801AE9A8(void) {
 void func_801AEA8C(s32 arg0) {
     g_InputCursorPos = 0;
     D_801BC3E0 = 0;
-    func_801ACC3C();
+    MenuHideAllGfx();
     func_801ACBE4(7, 0x11);
     func_801ACBE4(8, 0);
     func_801ACBE4(9, 0x11);
@@ -366,7 +366,39 @@ void func_801AEA8C(s32 arg0) {
     DrawNavigationTips(1);
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801AEB74);
+void SelectMainMenuOption(MainMenuCursor cursor) {
+    Primitive* prim;
+    s32 gfxId;
+
+    *D_801BCC84 = 0;
+    D_801BD02C = 0;
+    MenuHideAllGfx();
+    func_801ACBE4(GFX_WND_SAVE_SUMMARY, 0x11);
+    func_801ACBE4(GFX_WND_CARD_1, 0x11);
+    func_801ACBE4(GFX_WND_CARD_2, 0x11);
+    func_801ACBE4(15, 0);
+
+    switch (cursor) {
+    case MAIN_MENU_CURSOR_FILE_SELECT:
+        gfxId = GFX_FILE_SELECT;
+        break;
+    case MAIN_MENU_CURSOR_NAME_CHANGE:
+        gfxId = GFX_NAME_CHANGE;
+        break;
+    case MAIN_MENU_CURSOR_FILE_COPY:
+        gfxId = GFX_FILE_COPY;
+        break;
+    case MAIN_MENU_CURSOR_FILE_DELETE:
+        gfxId = GFX_FILE_DELETE;
+        break;
+    }
+    func_801ACBE4(gfxId, 0);
+
+    // Relocate the graphics at the top-left of the screen
+    prim = &g_PrimBuf[*D_801BAF18[gfxId]];
+    func_801B2670(prim, 16, 16, 127, 31);
+    prim->clut = 0x200;
+}
 
 void func_801AECA0(void) {
     s32 i = 0;
