@@ -2973,7 +2973,7 @@ void func_8012D178(void) {
             func_8012CB4C();
         } else if (g_Player.unk04 & 0x40) {
             func_8012CA64();
-        } else if (g_GameTimer == (g_GameTimer / 6) * 6) {
+        } else if (g_GameTimer % 6 == 0) {
             func_8011AAFC(g_CurrentEntity, 0x10045, 0);
         }
     }

@@ -68,7 +68,7 @@ void func_8012D3E8(void) {
             return;
         }
 
-        if (g_GameTimer == ((g_GameTimer / 6) * 6)) {
+        if (g_GameTimer % 6 == 0) {
             func_8011AAFC(g_CurrentEntity, 0x10045U, 0);
         }
         if (PLAYER.velocityX > 0) {
