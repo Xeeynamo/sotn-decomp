@@ -2211,6 +2211,6 @@ s32 func_800FD664(s32 arg0) {
     return g_StageId & STAGE_INVERTEDCASTLE_FLAG ? arg0 << 1 : arg0;
 }
 
-u8 GetEquipItemCategory(s32 equipId) {
+ItemCategory GetEquipItemCategory(s32 equipId) {
     return g_EquipDefs[g_Status.equipment[equipId]].itemCategory;
 }

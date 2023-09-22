@@ -602,6 +602,7 @@ extern DebugMode g_DebugMode;
 extern s16 g_VolL; // vol_l
 extern s16 D_80138FBC;
 extern Unkstruct_80138FC0 D_80138FC0[0x10];
+
 extern s16 D_80138FC8;
 extern s16 D_80138FCA;
 extern s16 g_sfxRingBufferPos1; // D_80139000
@@ -669,7 +670,7 @@ extern s32 D_8013AE9C;
 extern s32 D_8013AECC;
 extern s32 D_8013AED0;
 extern s16 D_8013AED4[];
-extern u32 D_8013AEE4;
+extern s32 D_8013AEE4;
 extern s16 g_volumeL;
 extern s16 g_volumeR;
 extern s16 D_8013B678[];
