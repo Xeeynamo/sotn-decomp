@@ -674,29 +674,31 @@ bool func_8010EDB8(void) {
     u16 hand;
     s16 var_s5; // Related to animations?
     s32 attBtnsPressed;
-    bool var_s7;// Triggers on some kind of special move spell
+    bool var_s7; // Triggers on some kind of special move spell
     s32 i;
     bool condition = false;
-    
+
     var_s7 = 0;
     attBtnsPressed = g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE);
     condition = ((g_Player.pl_vram_flag & 0x20) != condition);
-    
+
     if (attBtnsPressed != 0 && func_8010EB5C() == 0) {
         return 1;
     }
     if (g_Player.unk48 == 0) {
-        if ((GetEquipItemCategory(0) == ITEM_SHIELD) && (g_Player.padPressed & PAD_SQUARE)) {
+        if ((GetEquipItemCategory(0) == ITEM_SHIELD) &&
+            (g_Player.padPressed & PAD_SQUARE)) {
             attBtnsPressed |= PAD_SQUARE;
         }
-        if ((GetEquipItemCategory(1) == ITEM_SHIELD) && (g_Player.padPressed & PAD_CIRCLE)) {
+        if ((GetEquipItemCategory(1) == ITEM_SHIELD) &&
+            (g_Player.padPressed & PAD_CIRCLE)) {
             attBtnsPressed |= PAD_CIRCLE;
         }
     }
-    if(attBtnsPressed == 0) {
+    if (attBtnsPressed == 0) {
         return 0;
     }
-    if(attBtnsPressed == PAD_CIRCLE){
+    if (attBtnsPressed == PAD_CIRCLE) {
         g_Player.D_80072EF8 = PAD_CIRCLE;
         hand = 1;
     }
@@ -712,7 +714,7 @@ bool func_8010EDB8(void) {
                 equipped_id = var_s2;
             }
             g_Player.D_80072EF8 = 0x80;
-            hand = ((D_8013AEE4 & (1<<31)) != 0);
+            hand = ((D_8013AEE4 & (1 << 31)) != 0);
             if (CheckChainLimit(equipped_id, hand) >= 0) {
                 if (HasEnoughMp(g_EquipDefs[equipped_id].mpUsage, 0) == 0) {
                     var_s7 = 1;
@@ -723,48 +725,51 @@ bool func_8010EDB8(void) {
         g_Player.D_80072EF8 = 0x80;
         hand = 0;
     }
-    
+
     equipped_id = g_Status.equipment[hand];
     equipped_item = &g_EquipDefs[g_Status.equipment[hand]];
 
-    if (equipped_item->unk17 == equipped_item->specialMove && equipped_item->unk17 != 0) { //Literally just the Combat Knife
+    if (equipped_item->unk17 == equipped_item->specialMove &&
+        equipped_item->unk17 != 0) { // Literally just the Combat Knife
         if (g_Entities[16].ext.ent16.unkAE == equipped_id) {
             var_s2 = equipped_item->unk17;
             equipped_item = &g_EquipDefs[var_s2];
             equipped_id = var_s2;
-            if(CheckChainLimit(equipped_id, hand) < 0){
+            if (CheckChainLimit(equipped_id, hand) < 0) {
                 goto block_32;
             }
             goto block_45;
-        } else if (g_Entities[16].ext.ent16.unkAE == equipped_item->unk17 && CheckChainLimit(equipped_id, hand) >= 0){
+        } else if (g_Entities[16].ext.ent16.unkAE == equipped_item->unk17 &&
+                   CheckChainLimit(equipped_id, hand) >= 0) {
             goto block_45;
         }
     }
-    
+
 block_32:
     equipped_id = g_Status.equipment[hand];
     equipped_item = &g_EquipDefs[g_Status.equipment[hand]];
-    if (D_80138FC0[1].x != 0xFF){
+    if (D_80138FC0[1].x != 0xFF) {
         goto block_38c;
     }
     var_s2 = equipped_item->specialMove;
-    if(var_s2 == 0){
+    if (var_s2 == 0) {
         goto block_38c;
     }
-    //Sword of Dawn
-    if((equipped_id == 0x11) && ((g_Player.pl_vram_flag & 0x41) != 1)){
+    // Sword of Dawn
+    if ((equipped_id == 0x11) && ((g_Player.pl_vram_flag & 0x41) != 1)) {
         goto block_38c;
     }
-    if(!(g_Player.pl_vram_flag & 1)){
+    if (!(g_Player.pl_vram_flag & 1)) {
         goto block_38c;
     }
-    //Load up the item's special move as the new "virtual" equipped item since we're attacking with the special
+    // Load up the item's special move as the new "virtual" equipped item since
+    // we're attacking with the special
     equipped_item = &g_EquipDefs[var_s2];
     equipped_id = var_s2;
-    if(CheckChainLimit(equipped_id, hand) < 0){
+    if (CheckChainLimit(equipped_id, hand) < 0) {
         goto block_38c;
     }
-    if(HasEnoughMp(g_EquipDefs[equipped_id].mpUsage, 0)) {
+    if (HasEnoughMp(g_EquipDefs[equipped_id].mpUsage, 0)) {
     block_38c:
         equipped_item = &g_EquipDefs[g_Status.equipment[hand]];
         if (D_80138FC8 == 0xFF) {
@@ -786,9 +791,9 @@ block_32:
     }
 block_45:
     if (equipped_id != 0) {
-        if (equipped_item->unk13 == 55) { //Medicines
+        if (equipped_item->unk13 == 55) {     // Medicines
             if (equipped_item->unk14 == 20) { // Library card!
-                if(PLAYER.step == 0 || PLAYER.step == 1 || PLAYER.step == 2) {
+                if (PLAYER.step == 0 || PLAYER.step == 1 || PLAYER.step == 2) {
                     func_8010E42C(0);
                     func_800FDD44(hand);
                     return 1;
@@ -796,13 +801,17 @@ block_45:
                 return 0;
             }
             ent = &g_Entities[32];
-            for(i = 32; i < 64; i++){
+            for (i = 32; i < 64; i++) {
                 if (ent->entityId == 0x27) {
                     return 0;
                 }
                 ent++;
             }
-            if (func_8011AAFC(g_CurrentEntity, (((equipped_item->unk14 & 0x7F) + (hand << 7)) << 0x10) | 0x37, equipped_id) == NULL) {
+            if (func_8011AAFC(
+                    g_CurrentEntity,
+                    (((equipped_item->unk14 & 0x7F) + (hand << 7)) << 0x10) |
+                        0x37,
+                    equipped_id) == NULL) {
                 return 0;
             }
         } else {
@@ -811,16 +820,27 @@ block_45:
                 goto block_70;
             }
             if (var_s7 == 0) {
-                if (func_8011AAFC(g_CurrentEntity, equipped_item->unk13 + ((hand + 1) << 0xC) + (((equipped_item->unk14 & 0x7F) + (hand << 7)) << 0x10), equipped_id) == NULL) {
+                if (func_8011AAFC(
+                        g_CurrentEntity,
+                        equipped_item->unk13 + ((hand + 1) << 0xC) +
+                            (((equipped_item->unk14 & 0x7F) + (hand << 7))
+                             << 0x10),
+                        equipped_id) == NULL) {
                     return 0;
                 }
             } else {
-                if (func_8011AAFC(g_CurrentEntity, equipped_item->unk13 + ((hand + 1) << 0xE) + (((equipped_item->unk14 & 0x7F) + (hand << 7)) << 0x10), equipped_id) == NULL) {
+                if (func_8011AAFC(
+                        g_CurrentEntity,
+                        equipped_item->unk13 + ((hand + 1) << 0xE) +
+                            (((equipped_item->unk14 & 0x7F) + (hand << 7))
+                             << 0x10),
+                        equipped_id) == NULL) {
                     return 0;
                 }
             }
         }
-    } else if (func_8011AAFC(g_CurrentEntity, (hand + 0x2A) + (hand * 0x800000), 0) == NULL) {
+    } else if (func_8011AAFC(g_CurrentEntity, (hand + 0x2A) + (hand * 0x800000),
+                             0) == NULL) {
         return 0;
     }
     func_800FDD44(hand);
@@ -828,19 +848,19 @@ block_45:
         func_800FDD44((hand + 1) & 1);
     }
     HasEnoughMp(g_EquipDefs[equipped_id].mpUsage, 1);
-    //95 is Estoc
+    // 95 is Estoc
     if ((equipped_id == 95) && (g_Player.unk72 != 0)) {
         return 0;
     }
-    
+
     var_s2 = equipped_item->playerAnim;
     switch (equipped_item->unk11) {
-    case 29: //Muramasa
+    case 29: // Muramasa
         GetEquipProperties(hand, &sp10, equipped_id);
         if (sp10.attack < 11) {
-    case 13: //Red Rust
+        case 13: // Red Rust
             if (!(rand() & 7)) {
-block_70:
+            block_70:
                 switch (PLAYER.step) {
                 case 0:
                 case 1:
@@ -866,53 +886,55 @@ block_70:
         }
         func_8010EA54(8);
         goto block_98;
-    case 12: //Shotel
-        //When shotel is thrown away, attempting to attack will make a punch
-        if ((CheckChainLimit(equipped_item->specialMove, hand) < 0) || (CheckChainLimit(equipped_item->specialMove, (hand + 1) & 1) < 0)) {
+    case 12: // Shotel
+        // When shotel is thrown away, attempting to attack will make a punch
+        if ((CheckChainLimit(equipped_item->specialMove, hand) < 0) ||
+            (CheckChainLimit(equipped_item->specialMove, (hand + 1) & 1) < 0)) {
             equipped_item = &g_EquipDefs[0];
-            func_8011AAFC(g_CurrentEntity, (hand + 0x2A) + (hand * 0x800000), 0);
+            func_8011AAFC(
+                g_CurrentEntity, (hand + 0x2A) + (hand * 0x800000), 0);
             var_s2 = g_EquipDefs[0].playerAnim;
         }
         func_8010EA54(8);
         goto block_98;
-    case 19: //Unknown, not a direct equippable item
+    case 19: // Unknown, not a direct equippable item
         D_80139824 = 0x28;
         PLAYER.step = 0;
         g_CurrentEntity->velocityX = 0;
         PlaySfx(0x6EF);
         goto block_98;
-    case 20: //Unknown, not a direct equippable item
+    case 20: // Unknown, not a direct equippable item
         PLAYER.step = 0;
         D_80139824 = 0x28;
         g_CurrentEntity->velocityX = 0;
         PlaySfx(0x6EF);
         goto block_98;
-    case 21: //Unknown, not a direct equippable item
+    case 21: // Unknown, not a direct equippable item
         PLAYER.step = 0;
         D_80139824 = 0x28;
         g_CurrentEntity->velocityX = 0;
         PlaySfx(0x6EF);
         goto block_98;
-    case 22: //Unknown, not a direct equippable item (but there are 4 of them)
+    case 22: // Unknown, not a direct equippable item (but there are 4 of them)
         PLAYER.step = 0;
         D_80139824 = 0x28;
         g_CurrentEntity->velocityX = 0;
         PlaySfx(0x6EF);
         goto block_98;
-    case 28: //Unknown, not a direct equippable item
+    case 28: // Unknown, not a direct equippable item
         PLAYER.step = 0;
         D_80139824 = 0xA;
         g_CurrentEntity->velocityX = 0;
         PlaySfx(0x6EF);
         goto block_98;
-    case 23: //Unknown, not a direct equippable item (but there are 4 of them)
+    case 23: // Unknown, not a direct equippable item (but there are 4 of them)
         PLAYER.step = 0;
         func_8010E27C();
         SetSpeedX(FIX(5));
         g_CurrentEntity->velocityY = 0;
         PlaySfx(0x6EF);
         goto block_98;
-    case 27: //Estoc
+    case 27: // Estoc
         var_s5 = condition;
         func_8010E27C();
         SetSpeedX(FIX(4));
@@ -930,7 +952,7 @@ block_70:
         PLAYER.step_s = equipped_item->unk11 + 0x40;
         g_Player.D_80072F12 = 4;
         break;
-    case 24: //Unknown, not a direct equippable item (but there are 2 of them)
+    case 24: // Unknown, not a direct equippable item (but there are 2 of them)
         if (2 < PLAYER.step && PLAYER.step < 5) {
             PLAYER.step = 4;
         } else {
@@ -941,31 +963,31 @@ block_70:
         g_CurrentEntity->velocityX = 0;
         PlaySfx(0x6EF);
         goto block_98;
-    case 26: //Unknown, not a direct equippable item (but there are 2 of them)
+    case 26: // Unknown, not a direct equippable item (but there are 2 of them)
         PLAYER.step = 0;
         D_80139824 = 0x28;
         g_CurrentEntity->velocityY = 0;
         g_CurrentEntity->velocityX = 0;
         PlaySfx(0x6EF);
         goto block_98;
-    case 0: //Most normal swords come in this range
-    case 1: 
-    case 2: 
-    case 3: 
-    case 4: 
-    case 6: 
-    case 7: 
-    case 11: 
-    case 14: 
-    case 15: 
+    case 0: // Most normal swords come in this range
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 6:
+    case 7:
+    case 11:
+    case 14:
+    case 15:
     case 16:
     case 18:
         func_8010EA54(8);
-    case 8: 
+    case 8:
     case 9: // Combat Knife
     case 10:
     case 25:
-block_98:
+    block_98:
         switch (PLAYER.step) {
         case 0:
         case 1:
@@ -988,12 +1010,13 @@ block_98:
             var_s5 = 4;
             if (PLAYER.velocityY > 0) {
                 var_s5 = 5;
-                if (equipped_item->unk11 == 0){
-                    if(g_Player.padPressed & (PAD_RIGHT | PAD_LEFT) && g_Player.padPressed & PAD_DOWN){
+                if (equipped_item->unk11 == 0) {
+                    if (g_Player.padPressed & (PAD_RIGHT | PAD_LEFT) &&
+                        g_Player.padPressed & PAD_DOWN) {
                         var_s5 = 6;
                     }
-                } else if(g_Player.padPressed & PAD_DOWN) {
-                        var_s5 = 6;
+                } else if (g_Player.padPressed & PAD_DOWN) {
+                    var_s5 = 6;
                 }
             }
             break;
@@ -1004,51 +1027,51 @@ block_98:
         PLAYER.step_s = equipped_item->unk11 + 0x40;
         g_Player.D_80072F12 = 4;
         break;
-    case 5: //Lots of unknown things
+    case 5: // Lots of unknown things
         // This is stupid but it works
-        step = (s32)*(&PLAYER.step);
-        if (step >= 0){
-            if(step < 3) {
-            g_CurrentEntity->velocityX >>= 1;
-            func_8010DA48(var_s2 + condition);
-            g_Player.unk46 = equipped_item->unk11 - 0x7FFF;
-            g_Player.unk54 = equipped_item->lockDuration;
-            PLAYER.step = 0;
-            PLAYER.step_s = equipped_item->unk11 + 0x40;
-            g_CurrentEntity->velocityX = 0;
+        step = (s32) * (&PLAYER.step);
+        if (step >= 0) {
+            if (step < 3) {
+                g_CurrentEntity->velocityX >>= 1;
+                func_8010DA48(var_s2 + condition);
+                g_Player.unk46 = equipped_item->unk11 - 0x7FFF;
+                g_Player.unk54 = equipped_item->lockDuration;
+                PLAYER.step = 0;
+                PLAYER.step_s = equipped_item->unk11 + 0x40;
+                g_CurrentEntity->velocityX = 0;
             }
         }
         func_8010EA54(8);
         break;
-    case 128: //Shields
+    case 128: // Shields
         var_s2 = equipped_item->playerAnim;
         switch (PLAYER.step) {
         case 0:
             PLAYER.step_s = 2;
             func_8010DA48(var_s2 + condition);
-        break;
+            break;
         case 2:
             PLAYER.step_s = 0;
             func_8010DA48(var_s2 + 2);
-        break;
+            break;
         case 1:
         case 3:
         case 4:
             break;
         }
         break;
-    case 134: //Holbein Dagger and Blue Knuckles
+    case 134: // Holbein Dagger and Blue Knuckles
         func_8010DFF0(1, 0x20);
-    case 129: //Consumable weapons (throwing stars, etc)
+    case 129: // Consumable weapons (throwing stars, etc)
     case 130:
         func_8010EA54(8);
-    case 132: //Food
+    case 132: // Food
         if (PLAYER.step_s < 0x40) {
             var_s2 = equipped_item->playerAnim;
             switch (PLAYER.step) {
             case 0:
                 func_8010DA48(var_s2 + condition);
-            break;
+                break;
             case 2:
                 var_s5 = 2;
                 if (g_Player.unk72 == 0 && PLAYER.step_s == 2) {
@@ -1063,15 +1086,15 @@ block_98:
             }
         }
         break;
-    case 131: //Medicines
+    case 131: // Medicines
         if (PLAYER.step_s < 0x40) {
             var_s2 = equipped_item->playerAnim;
-            if( PLAYER.step == 0){
+            if (PLAYER.step == 0) {
                 func_8010DA48(var_s2 + condition);
             }
         }
         break;
-    case 135: //Unknown
+    case 135: // Unknown
         PlaySfx(0x6F0);
         g_Player.D_80072F12 = 4;
         func_8010ED54(equipped_item->playerAnim);
