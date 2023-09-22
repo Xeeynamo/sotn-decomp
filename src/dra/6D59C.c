@@ -1028,8 +1028,7 @@ block_45:
         g_Player.D_80072F12 = 4;
         break;
     case 5: // Lots of unknown things
-        // This is stupid but it works
-        step = (s32) * (&PLAYER.step);
+        step = PLAYER.step;
         if (step >= 0) {
             if (step < 3) {
                 g_CurrentEntity->velocityX >>= 1;
