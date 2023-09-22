@@ -323,7 +323,7 @@ void EntityRelicOrb(Entity* self) {
 
     if (self->step < 2) {
 #if defined(VERSION_US)
-        BlinkItem(self, g_blinkTimer);
+        BlinkItem(self, g_Timer);
         prim = &g_PrimBuf[self->primIndex];
 #elif defined(VERSION_BETA)
         // This is just the function BlinkItem inlined
@@ -343,7 +343,7 @@ void EntityRelicOrb(Entity* self) {
         prim->y3 = bottom;
         prim->y2 = bottom;
 
-        if (g_blinkTimer & RENDERFLAGS_NOSHADOW) {
+        if (g_Timer & RENDERFLAGS_NOSHADOW) {
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
                 prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
                     prim->b3 = 255;

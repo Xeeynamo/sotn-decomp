@@ -815,7 +815,7 @@ void UpdateCd(void) {
         break;
 
     case CdStep_DmaErr:
-        if (g_blinkTimer & 4) {
+        if (g_Timer & 4) {
             FntPrint("DMA error\n");
         } else {
             FntPrint("\n");
@@ -824,7 +824,7 @@ void UpdateCd(void) {
         break;
 
     case CdStep_SdHeaderErr:
-        if (g_blinkTimer & 4) {
+        if (g_Timer & 4) {
             FntPrint("SD HEADER error\n");
         } else {
             FntPrint("\n");
@@ -833,7 +833,7 @@ void UpdateCd(void) {
         break;
 
     case CdStep_DiskErr:
-        if (g_blinkTimer & 4) {
+        if (g_Timer & 4) {
             FntPrint("disk error\n");
         } else {
             FntPrint("\n");
@@ -842,7 +842,7 @@ void UpdateCd(void) {
         break;
 
     case CdStep_Retry:
-        if (g_blinkTimer & 4) {
+        if (g_Timer & 4) {
             FntPrint("retry\n");
         } else {
             FntPrint("\n");
@@ -856,7 +856,7 @@ void UpdateCd(void) {
         break;
 
     case CdStep_RetryXa:
-        if (g_blinkTimer & 4) {
+        if (g_Timer & 4) {
             FntPrint("retry xa\n");
         } else {
             FntPrint("\n");
@@ -873,7 +873,7 @@ void UpdateCd(void) {
         // The CdlStatShellOpen flag is cleared only when CdlNOP is issued
         CdControlF(CdlNop, 0);
         g_CdStep = CdStep_F1;
-        if (g_blinkTimer & 4) {
+        if (g_Timer & 4) {
             FntPrint("cd shell open error\n");
         }
         break;
@@ -889,7 +889,7 @@ void UpdateCd(void) {
         } else if (temp_v1_8 == 5) {
             g_CdStep = CdStep_CdShellOpenErr;
         }
-        if (g_blinkTimer & 4) {
+        if (g_Timer & 4) {
             FntPrint("cd shell open error\n");
         }
         break;
@@ -914,7 +914,7 @@ void UpdateCd(void) {
         } else if (temp_v1_9 == 5) {
             g_CdStep = CdStep_CdShellOpenErr;
         }
-        if (g_blinkTimer & 4) {
+        if (g_Timer & 4) {
             FntPrint("checking cd\n");
         } else {
             FntPrint("\n");

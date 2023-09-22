@@ -577,10 +577,10 @@ void func_800F5E68(MenuContext* context, s32 cursorIdx, s32 x, s32 y, s32 w,
     s32 r;
 
     if (bColorMode) {
-        if (g_blinkTimer & 0x20) {
-            r = (g_blinkTimer & 0x1F) + 0x60;
+        if (g_Timer & 0x20) {
+            r = (g_Timer & 0x1F) + 0x60;
         } else {
-            r = 0x7F - (g_blinkTimer & 0x1F);
+            r = 0x7F - (g_Timer & 0x1F);
         }
     } else {
         r = 0x80;
@@ -714,10 +714,10 @@ void DrawMenuAlucardCloakPreview(MenuContext* ctx) {
 void func_800F6508(MenuContext* context, s32 x, s32 y) {
     s32 yellow;
 
-    if (g_blinkTimer & 0x10) {
-        yellow = ((g_blinkTimer & 0xF) * 2) + 0x60;
+    if (g_Timer & 0x10) {
+        yellow = ((g_Timer & 0xF) * 2) + 0x60;
     } else {
-        yellow = 0x7F - (g_blinkTimer & 0xF);
+        yellow = 0x7F - (g_Timer & 0xF);
     }
     DrawMenuRect(context, x, y, 0x70, 0xB, yellow, yellow, 0);
 }
@@ -728,10 +728,10 @@ void func_800F6568(MenuContext* context) {
     s32 r;
 
     height = context->cursorH / 5;
-    if (g_blinkTimer & 0x20) {
-        r = (g_blinkTimer & 0x1F) + 0x40;
+    if (g_Timer & 0x20) {
+        r = (g_Timer & 0x1F) + 0x40;
     } else {
-        r = 0x5F - (g_blinkTimer & 0x1F);
+        r = 0x5F - (g_Timer & 0x1F);
     }
     DrawMenuRect(context, context->cursorX,
                  context->cursorY + (height * g_MenuNavigation.cursorMain),
@@ -746,10 +746,10 @@ void func_800F6618(s32 menuContextIndex, s32 bColorMode) {
     if (bColorMode != 0) {
         r = 0x80;
     } else {
-        if (g_blinkTimer & 0x20) {
-            r = (g_blinkTimer & 0x1F) + 0x40;
+        if (g_Timer & 0x20) {
+            r = (g_Timer & 0x1F) + 0x40;
         } else {
-            r = 0x5F - (g_blinkTimer & 0x1F);
+            r = 0x5F - (g_Timer & 0x1F);
         }
     }
     DrawMenuRect(context, 0x70, g_MenuNavigation.cursorEquip * 13 + 0x1C, 0x71,
@@ -1306,10 +1306,10 @@ void DrawSpellMenu(MenuContext* ctx) {
     }
 #if defined(VERSION_US)
     // The highlighted spell glows yellow, increasing and decreasing.
-    if (g_blinkTimer & 0x20) {
-        colorIntensity = (g_blinkTimer & 0x1F) + 0x60;
+    if (g_Timer & 0x20) {
+        colorIntensity = (g_Timer & 0x1F) + 0x60;
     } else {
-        colorIntensity = 0x7F - (g_blinkTimer & 0x1F);
+        colorIntensity = 0x7F - (g_Timer & 0x1F);
     }
     // The colorIntensity gets passed to the MenuRect's R and G values, making
     // it a brighter or dimmer yellow.
@@ -1530,10 +1530,10 @@ void BlinkMenuCursor(s32 left, s32 top, s32 right, s32 bottom, s32 arg4) {
     SetSemiTrans(temp_s0, 0);
     SetShadeTex(temp_s0, 1);
 
-    if (g_blinkTimer & 0x20) {
-        blink_value = g_blinkTimer & 0x1F;
+    if (g_Timer & 0x20) {
+        blink_value = g_Timer & 0x1F;
     } else {
-        blink_value = 0x1F - (g_blinkTimer & 0x1F);
+        blink_value = 0x1F - (g_Timer & 0x1F);
     }
     blink_value *= 4;
     blink_value -= 0x80;

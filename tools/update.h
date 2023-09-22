@@ -66,7 +66,7 @@ void Update(void) {
                 if (!entity->stunFrames ||
                     (entity->stunFrames--, unk34 & 0x100000)) {
                     if (!D_800973FC || unk34 & 0x2100 ||
-                        (unk34 & 0x200 && !(D_8003C8C4 & 3))) {
+                        (unk34 & 0x200 && !(g_GameTimer & 3))) {
                         g_CurrentEntity = entity;
                         entity->pfnUpdate(entity);
                         entity->unk44 = 0;

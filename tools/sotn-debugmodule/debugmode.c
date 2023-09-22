@@ -225,7 +225,7 @@ void ShowDrawCalls(int mode) {
 
 void ShowHBlankInfo() {
     GpuUsage* const gpuMaxUsage = (GpuUsage*)0x801362D0U;
-    if (g_blinkTimer & 1) {
+    if (g_Timer & 1) {
         FntPrint("l=%03x/100\n", gpuMaxUsage[1]);
         FntPrint("l=%03x/100\n", gpuMaxUsage[0]);
     } else {

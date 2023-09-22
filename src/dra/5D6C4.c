@@ -598,7 +598,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
         }
         ret = 7;
     } else if (damage->damageKind == 6) {
-        if (D_8003C8C4 == ((D_8003C8C4 / 10) * 0xA)) {
+        if (g_GameTimer % 10 == 0) {
             damage->damageTaken = 1;
         } else {
             damage->damageTaken = 0;
@@ -1640,12 +1640,12 @@ void DrawHudAlucard() {
 
     ClearImage(&rect, 0, 0, 0);
     if (!(g_Status.D_80097BF8 & 1)) {
-        if (!(D_8003C8C4 & 0x3F)) {
+        if (!(g_GameTimer & 0x3F)) {
             g_Status.mp++;
         }
         if ((CheckEquipmentItemCount(ITEM_MYSTIC_PENDANT, ACCESSORY_TYPE) !=
              0) &&
-            ((D_8003C8C4 & 0x3F) == 0x1F)) {
+            ((g_GameTimer & 0x3F) == 0x1F)) {
             g_Status.mp++;
         }
         if (g_Status.mp > g_Status.mpMax) {
@@ -1775,7 +1775,7 @@ void DrawHudAlucard() {
     // Seems like this should be a simple || but that doesn't work here.
     if (func_800FE3C4(&subwpn, 0, false) == 0) {
         clut = 0x196;
-    } else if (g_blinkTimer & 2) {
+    } else if (g_Timer & 2) {
         clut = 0x196;
     } else {
         clut = 0x193;

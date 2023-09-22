@@ -214,7 +214,7 @@ void EntityGurkhaSword(Entity* self) {
             self->velocityX += FIX(0.25);
         }
 
-        if ((g_blinkTimer % 16) == 0) {
+        if ((g_Timer % 16) == 0) {
             func_801C2598(0x625);
         }
 

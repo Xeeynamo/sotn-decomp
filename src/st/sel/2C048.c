@@ -68,11 +68,11 @@ void InitMainMenuGraphics(void) {
     s32 x;
 
     // Decoration at the top left for "Select Your Destiny"
-    D_801BAF18[0][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
+    D_801BAF18[GFX_UNK_0][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
     i = 0;
     y = 0;
     x = -0x20;
-    prim = &g_PrimBuf[D_801BAF18[0][0]];
+    prim = &g_PrimBuf[D_801BAF18[GFX_UNK_0][0]];
     func_801B26A0(prim, 216, 16, 144, 72, 0, 0);
     func_801B1D88(prim);
     prim->tpage = 0xD;
@@ -178,7 +178,7 @@ void InitMainMenuGraphics(void) {
     prim->priority = 0x30;
     prim->blendMode = BLEND_VISIBLE;
 
-    D_801BAF18[11][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
+    D_801BAF18[GFX_WND_SAVE_SUMMARY][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
     prim = &g_PrimBuf[D_801BAF18[11][0]];
     func_801B26A0(prim, 104, 88, 176, 80, 0, 0);
     func_801B1D88(prim);
@@ -187,10 +187,10 @@ void InitMainMenuGraphics(void) {
     prim->priority = 0x10;
     prim->blendMode = BLEND_VISIBLE;
 
-    D_801BAF18[12][0] = g_api.AllocPrimitives(PRIM_SPRT, 8);
+    D_801BAF18[GFX_UNK_12][0] = g_api.AllocPrimitives(PRIM_SPRT, 8);
     func_801AC084(0xC, 0);
 
-    D_801BAF18[13][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
+    D_801BAF18[GFX_WND_CARD_1][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
     prim = &g_PrimBuf[D_801BAF18[13][0]];
     prim->x0 = 24;
     prim->y0 = 56;
@@ -204,7 +204,7 @@ void InitMainMenuGraphics(void) {
     prim->priority = 0x10;
     prim->blendMode = BLEND_VISIBLE;
 
-    D_801BAF18[14][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
+    D_801BAF18[GFX_WND_CARD_2][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
     prim = &g_PrimBuf[D_801BAF18[14][0]];
     prim->x0 = 280;
     prim->y0 = 56;
@@ -302,9 +302,9 @@ void func_801ACBE4(s32 gfxId, u16 blendMode) {
     }
 }
 
-void func_801ACC3C(void) {
+void MenuHideAllGfx(void) {
     s32 i;
-    for (i = 0; i < 21; i++) {
+    for (i = GFX_UNK_0; i < NUM_GFX; i++) {
         func_801ACBE4(i, 8);
     }
 }
