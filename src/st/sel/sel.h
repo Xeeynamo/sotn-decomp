@@ -7,6 +7,30 @@
 #define DISP_STAGE_W 256
 #define DISP_STAGE_H DISP_H
 
+typedef enum {
+    MAIN_MENU_CURSOR_INVALID = -1,
+    MAIN_MENU_CURSOR_FILE_SELECT,
+    MAIN_MENU_CURSOR_NAME_CHANGE,
+    MAIN_MENU_CURSOR_FILE_COPY,
+    MAIN_MENU_CURSOR_FILE_DELETE,
+} MainMenuCursor;
+
+typedef enum {
+    GFX_UNK_0 = 0,
+    GFX_UNK_1,
+    GFX_FILE_SELECT,
+    GFX_FILE_DELETE,
+    GFX_NAME_CHANGE,
+    GFX_FILE_COPY,
+
+    GFX_WND_SAVE_SUMMARY = 11,
+    GFX_UNK_12,
+    GFX_WND_CARD_1,
+    GFX_WND_CARD_2,
+
+    NUM_GFX = 21,
+} MenuGfx;
+
 typedef struct {
     s32 unk0;
     s32 unk4;
@@ -51,7 +75,7 @@ typedef struct {
     /* 801BCB74 */ u32 kind[BLOCK_PER_CARD]; // 0: play, 1: clear, 2: replay
     /* 801BCBB0 */ u32 isRichter[BLOCK_PER_CARD];
     /* 801BCBEC */ char name[BLOCK_PER_CARD][10];
-    int padding;
+    s32 padding;
 } SaveSummary; /* size=0x3A4 */
 
 extern const s32 D_801A7B8C[2];
