@@ -81,7 +81,7 @@ void EntityBloodSkeleton(Entity* self) {
             break;
 
         case 1:
-            if ((g_blinkTimer % 3) == 0) {
+            if ((g_Timer % 3) == 0) {
                 self->ext.generic.unk80.modeS16.unk0++;
                 if (self->ext.generic.unk80.modeS16.unk0 % 2) {
                     self->rotAngle = 0x10;

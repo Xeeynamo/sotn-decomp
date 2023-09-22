@@ -486,7 +486,7 @@ void func_801B8E0C(Entity* self) {
         } else {
             g_Player.D_80072EF4 = 0;
             if (g_Player.unk0C & 4) {
-                if (g_blinkTimer & 1) {
+                if (g_Timer & 1) {
                     g_Player.D_80072EF4 = 2;
                 }
             } else {

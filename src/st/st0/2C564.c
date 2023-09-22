@@ -596,7 +596,7 @@ void EntityDraculaMeteorball(Entity* entity) {
             entity->velocityX -= speedX;
         }
 
-        if (!(g_blinkTimer & 3)) {
+        if (!(g_Timer & 3)) {
             Entity* newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != 0) {
                 s32 randomPosXYIndex;
@@ -733,7 +733,7 @@ void EntityDraculaMegaFireball(Entity* self) {
         if (AnimateEntity(D_80180BA0, self) == 0) {
             DestroyEntity(self);
         }
-        if (g_blinkTimer & 1) {
+        if (g_Timer & 1) {
             self->animCurFrame = 0;
         }
     } else {

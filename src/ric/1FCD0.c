@@ -119,7 +119,7 @@ void func_8015C178(void) {
         g_Player.unk46 = 0;
         func_8015CF08();
     } else {
-        if (!(D_8003C8C4 & 3) && PLAYER.animFrameIdx < 0x12 &&
+        if (!(g_GameTimer & 3) && PLAYER.animFrameIdx < 0x12 &&
             g_Player.pl_vram_flag & 1) {
             func_801606BC(g_CurrentEntity, 0x20018, 0);
         }

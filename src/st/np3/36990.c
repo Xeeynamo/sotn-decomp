@@ -434,7 +434,7 @@ void EntitySlogra(Entity* self) {
         case SLOGRA_DYING_EXPLODING:
             func_801BC8E4(&D_801812D0);
             AnimateEntity(D_801813C4, self);
-            if (!(g_blinkTimer % 4)) {
+            if (!(g_Timer % 4)) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
@@ -1270,7 +1270,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
     case 1:
         MoveEntity();
         AnimateEntity(D_801815EC, self);
-        if (!(g_blinkTimer & 3)) {
+        if (!(g_Timer & 3)) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_GAIBON_BIG_FIREBALL, self, newEntity);

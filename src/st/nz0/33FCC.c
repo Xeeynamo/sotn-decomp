@@ -149,7 +149,7 @@ void EntityBossRoomBlock(Entity* self) {
         }
         MoveEntity();
         func_801BD9A0(self, 8, 8, 5);
-        if (!(g_blinkTimer & 3)) {
+        if (!(g_Timer & 3)) {
             g_api.PlaySfx(0x608);
         }
         if (--self->ext.GS_Props.timer) {
@@ -536,7 +536,7 @@ void EntitySlogra(Entity* self) {
         case SLOGRA_DYING_EXPLODING:
             EntitySlograSpecialCollision(D_8018105C);
             AnimateEntity(D_80181150, self);
-            if (!(g_blinkTimer % 4)) {
+            if (!(g_Timer % 4)) {
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
@@ -1328,7 +1328,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
     case 1:
         MoveEntity();
         AnimateEntity(D_80181378, self);
-        if (!(g_blinkTimer & 3)) {
+        if (!(g_Timer & 3)) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_GAIBON_BIG_FIREBALL, self, newEntity);

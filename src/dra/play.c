@@ -97,8 +97,8 @@ void HandlePlay(void) {
         if (g_DemoMode != Demo_None) {
             srand(1);
             g_randomNext = 0x4D2;
-            g_blinkTimer = 0;
-            D_8003C8C4 = 0;
+            g_Timer = 0;
+            g_GameTimer = 0;
         }
         g_GameStep++;
         break;
