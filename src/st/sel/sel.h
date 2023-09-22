@@ -75,7 +75,7 @@ typedef struct {
     /* 801BCB74 */ u32 kind[BLOCK_PER_CARD]; // 0: play, 1: clear, 2: replay
     /* 801BCBB0 */ u32 isRichter[BLOCK_PER_CARD];
     /* 801BCBEC */ char name[BLOCK_PER_CARD][10];
-    int padding;
+    s32 padding;
 } SaveSummary; /* size=0x3A4 */
 
 extern const s32 D_801A7B8C[2];

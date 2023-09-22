@@ -248,7 +248,7 @@ void UpdateNameEntry(void) {
 }
 
 void UpdateFileSelect(void) {
-    if (D_801BCC84[0] >= 0 || D_801BD02C >= 0) {
+    if (g_SaveSummary[0].padding >= 0 || g_SaveSummary[1].padding >= 0) {
         if (g_pads[0].repeat & PAD_RIGHT) { // move selector to the right
             g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
             // clamp selector inside the 6 possible X coord positions
@@ -273,18 +273,18 @@ void UpdateFileSelect(void) {
             g_MemCardSelectorY = (g_MemCardSelectorY + 1) % 5;
         }
 
-        if ((D_801BCC84[0] > 0) && (D_801BD02C > 0) &&
+        if (g_SaveSummary[0].padding > 0 && g_SaveSummary[1].padding > 0 &&
             (g_pads[0].tapped & (PAD_L2 + PAD_R2 + PAD_L1 + PAD_R1))) {
             g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
             // clamp selector inside the 6 possible X coord positions
             g_MemCardSelectorX = (g_MemCardSelectorX + 3) % 6;
         }
 
-        if (D_801BCC84[0] < 0) {
+        if (g_SaveSummary[0].padding < 0) {
             g_MemCardSelectorX = (g_MemCardSelectorX % 3) + 3;
         }
 
-        if (D_801BD02C < 0) {
+        if (g_SaveSummary[1].padding < 0) {
             g_MemCardSelectorX %= 3;
         }
 
@@ -370,8 +370,8 @@ void SelectMainMenuOption(MainMenuCursor cursor) {
     Primitive* prim;
     s32 gfxId;
 
-    *D_801BCC84 = 0;
-    D_801BD02C = 0;
+    g_SaveSummary[0].padding = 0;
+    g_SaveSummary[1].padding = 0;
     MenuHideAllGfx();
     func_801ACBE4(GFX_WND_SAVE_SUMMARY, 0x11);
     func_801ACBE4(GFX_WND_CARD_1, 0x11);
@@ -395,7 +395,7 @@ void SelectMainMenuOption(MainMenuCursor cursor) {
     func_801ACBE4(gfxId, 0);
 
     // Relocate the graphics at the top-left of the screen
-    prim = &g_PrimBuf[*D_801BAF18[gfxId]];
+    prim = &g_PrimBuf[D_801BAF18[gfxId][0]];
     func_801B2670(prim, 16, 16, 127, 31);
     prim->clut = 0x200;
 }
