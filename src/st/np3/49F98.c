@@ -110,7 +110,7 @@ void EntityBloodSplatter(Entity* self) {
         prim = self->ext.generic.unk8C.entityPtr;
         func_801D1F38(prim);
 
-        if (g_blinkTimer & 1) {
+        if (g_Timer & 1) {
             prim3 = prim->next;
             *(u16*)&prim3->r2 = *(u16*)&prim3->r2 + 1;
             prim3 = prim->next;
@@ -352,7 +352,7 @@ void EntityBloodyZombie(Entity* self) {
         }
 
         if (self->animFrameIdx < 13) {
-            if (!(g_blinkTimer % 8)) {
+            if (!(g_Timer % 8)) {
                 func_801C2598(NA_SE_EN_BLOODY_ZOMBIE_HEMORRHAGE);
                 newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (newEntity != NULL) {
@@ -374,7 +374,7 @@ void EntityBloodyZombie(Entity* self) {
             }
 
             self->ext.generic.unk80.modeS16.unk0++;
-            if (!(g_blinkTimer & 3)) {
+            if (!(g_Timer & 3)) {
                 prim = func_801D24A0(*(s32*)&self->ext.generic.unk7C, 2);
                 if (prim != NULL) {
                     func_801D2684(prim);

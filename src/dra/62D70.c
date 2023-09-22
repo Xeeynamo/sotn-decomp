@@ -99,10 +99,10 @@ void func_801030B4(s32 arg0, POLY_GT4* poly, s32 arg2) {
     s32 var_v1;
 
     if (arg2 == arg0) {
-        if (g_blinkTimer & 0x20) {
-            var_v1 = (g_blinkTimer & 0x1F) + 0x60;
+        if (g_Timer & 0x20) {
+            var_v1 = (g_Timer & 0x1F) + 0x60;
         } else {
-            var_v1 = 0x7F - (g_blinkTimer & 0x1F);
+            var_v1 = 0x7F - (g_Timer & 0x1F);
         }
 
         poly->r0 = poly->r1 = var_v1 - 16;

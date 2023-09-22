@@ -16,7 +16,7 @@ void func_11C000_8017AC14(void) {
     RECT rectDummy;
     s16 color;
 
-    color = (D_8003C8C4 >> 1) % 2 ? 0x039C : 0x199D;
+    color = (g_GameTimer >> 1) % 2 ? 0x039C : 0x199D;
     D_8006EDCC[g_HandId][10] = color;
 
     rect.x = 0;

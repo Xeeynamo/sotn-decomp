@@ -52,7 +52,7 @@ void EntitySubWeaponContainer(Entity* self) {
         break;
 
     case SUBWPNCONT_IDLE: // Spawn Liquid bubbles
-        if (!(g_blinkTimer & 0xF)) {
+        if (!(g_Timer & 0xF)) {
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x3C, self, newEntity);

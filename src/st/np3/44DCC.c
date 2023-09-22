@@ -991,7 +991,7 @@ void EntityMerman2(Entity* self) {
             break;
 
         case 2:
-            if ((self->ext.merman2.rotation < 0x100) && (g_blinkTimer & 1)) {
+            if ((self->ext.merman2.rotation < 0x100) && (g_Timer & 1)) {
                 self->ext.merman2.rotation *= 2;
             }
             if (self->velocityX != 0) {
@@ -1138,7 +1138,7 @@ void EntityMerman2(Entity* self) {
             }
             prim->next->y0 = self->posY.i.hi + 2;
             func_801D1F38(prim);
-            if (!(g_blinkTimer % 10)) {
+            if (!(g_Timer % 10)) {
                 prim->clut += 2;
                 if (prim->clut >= 0x2A0) {
                     prim->blendMode = BLEND_VISIBLE;
@@ -1474,7 +1474,7 @@ void EntityMermanSpawner(Entity* self) {
         self->flags |= FLAG_UNK_2000;
     }
 
-    if (!(g_blinkTimer & 0x3F)) {
+    if (!(g_Timer & 0x3F)) {
         Entity* player = &PLAYER;
         temp = g_Camera.posY.i.hi + player->posY.i.hi;
         if (temp >= 256) {

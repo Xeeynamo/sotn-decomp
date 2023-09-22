@@ -68,7 +68,7 @@ void func_8012D3E8(void) {
             return;
         }
 
-        if (D_8003C8C4 == ((D_8003C8C4 / 6) * 6)) {
+        if (g_GameTimer % 6 == 0) {
             func_8011AAFC(g_CurrentEntity, 0x10045U, 0);
         }
         if (PLAYER.velocityX > 0) {
@@ -163,7 +163,7 @@ void func_8012D3E8(void) {
         return;
     case 4:
         DecelerateX(0x400);
-        if (!(D_8003C8C4 & 1)) {
+        if (!(g_GameTimer & 1)) {
             func_8011AAFC(g_CurrentEntity, 0x10045U, 0);
         }
         if (PLAYER.animFrameDuration >= 0) {

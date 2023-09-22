@@ -565,7 +565,7 @@ void EntityPlatform(Entity* self) {
     case 2:
         g_Player.D_80072EF4 = 0;
         if (g_Player_unk0C & 7) {
-            if (g_blinkTimer & 1) {
+            if (g_Timer & 1) {
                 if (g_Player_unk0C & 1) {
                     g_Player.D_80072EF4 = 8;
                 } else if (g_Player_unk0C & 2) {
@@ -904,7 +904,7 @@ void EntityElevatorStationary(Entity* self) {
             self->posY.val += FIX(0.5);
             player->posY.i.hi++;
             posY = g_Camera.posY.i.hi + self->posY.i.hi;
-            if ((g_blinkTimer % 16) == 0) {
+            if ((g_Timer % 16) == 0) {
                 func_8019A328(0x60D);
             }
             if (posY == 0x74) {
@@ -944,7 +944,7 @@ void EntityElevatorStationary(Entity* self) {
 
         case 1:
             self->posY.val -= FIX(0.5);
-            if ((g_blinkTimer % 16) == 0) {
+            if ((g_Timer % 16) == 0) {
                 func_8019A328(0x60D);
             }
             break;

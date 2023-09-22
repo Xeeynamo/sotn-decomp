@@ -534,7 +534,7 @@ void EntityCavernDoorLever(Entity* entity) {
                     g_api.PlaySfx(0x675);
                 }
                 g_CastleFlags[48] = 1;
-            } else if (!(g_blinkTimer & 0xF)) {
+            } else if (!(g_Timer & 0xF)) {
                 g_api.PlaySfx(0x675);
             }
         }
@@ -667,13 +667,13 @@ void func_801B40F8(Entity* self) {
             g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
         }
 
-        if (!(g_blinkTimer & 1)) {
+        if (!(g_Timer & 1)) {
             poly = func_801D2470((POLY_GT4*)(*(s32*)&self->ext.generic.unk7C));
             if (poly != NULL) {
                 poly->p3 = 1;
             }
 
-            if (!(g_blinkTimer & 15)) {
+            if (!(g_Timer & 15)) {
                 entity = AllocEntity(D_8007D858, &D_8007D858[32]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
@@ -1577,12 +1577,12 @@ void EntityHeartRoomGoldDoor(Entity* self) {
             g_CurrentRoomTileLayout.fg[tilePos] = 0;
         }
 
-        if (!(g_blinkTimer & 1)) {
+        if (!(g_Timer & 1)) {
             prim = func_801D2470(self->ext.heartRoomGoldDoor.prim);
             if (prim != NULL) {
                 prim->p3 = 1;
             }
-            if (!(g_blinkTimer & 0xF)) {
+            if (!(g_Timer & 0xF)) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(

@@ -704,7 +704,7 @@ void ControlBatForm(void) {
             if (PLAYER.velocityY > FIX(6)) {
                 PLAYER.velocityY = FIX(6);
             }
-            if (D_8003C8C4 % 3 == 0) {
+            if (g_GameTimer % 3 == 0) {
                 func_8011AAFC(g_CurrentEntity, 0x41U, 0);
                 if (g_Player.pl_vram_flag & 1) {
                     func_8011AAFC(g_CurrentEntity, 0x90045U, 0);
@@ -1320,7 +1320,7 @@ void func_80119D3C(Entity* entity) {
             entity->ext.generic.unk7C.s + entity->ext.generic.unk7E.modeU16;
         temp = cos * 8;
 
-        if (!(D_8003C8C4 & 3)) {
+        if (!(g_GameTimer & 3)) {
             entity->ext.generic.unk7E.modeU16--;
         }
         entity->posX.val += temp;
@@ -1880,11 +1880,11 @@ void UnknownEntId49(Entity* self) {
     if (ABS(PLAYER.rotAngle) == 0x200) {
         x_offset = PLAYER.entityRoomIndex != 0 ? 0x10 : -0x10;
         self->posX.i.hi = x_offset + PLAYER.posX.i.hi;
-        self->posY.i.hi = PLAYER.posY.i.hi + 9 + ((D_8003C8C4 >> 1) & 1);
+        self->posY.i.hi = PLAYER.posY.i.hi + 9 + ((g_GameTimer >> 1) & 1);
     } else {
         x_offset = PLAYER.entityRoomIndex != 0 ? 0x18 : -0x18;
         self->posX.i.hi = x_offset + PLAYER.posX.i.hi;
-        self->posY.i.hi = PLAYER.posY.i.hi + 16 + ((D_8003C8C4 >> 1) & 1);
+        self->posY.i.hi = PLAYER.posY.i.hi + 16 + ((g_GameTimer >> 1) & 1);
     }
 }
 
@@ -2424,7 +2424,7 @@ void func_80127840(Entity* entity) {
 
     case 1:
         if (entity->animFrameIdx >= 23) {
-            if (!(D_8003C8C4 & 3)) {
+            if (!(g_GameTimer & 3)) {
                 entity->rotAngle += 0x400;
             }
             if (entity->velocityX < 0) {
@@ -2432,7 +2432,7 @@ void func_80127840(Entity* entity) {
             } else {
                 entity->velocityX += FIX(0.09375);
             }
-            if (!(D_8003C8C4 & 1) && (rand() & 1)) {
+            if (!(g_GameTimer & 1) && (rand() & 1)) {
                 func_8011AAFC(entity, 0x10024, 0);
             }
             entity->posX.val += entity->velocityX;
@@ -2586,7 +2586,7 @@ void func_80127CC8(Entity* entity) {
     poly->y3 = 240;
     poly->y2 = 240;
 
-    if (D_8003C8C4 & 1) {
+    if (g_GameTimer & 1) {
         poly->pad3 = poly->pad3 | 8;
     } else {
         poly->pad3 = poly->pad3 & 0xFFF7;
@@ -2973,7 +2973,7 @@ void func_8012D178(void) {
             func_8012CB4C();
         } else if (g_Player.unk04 & 0x40) {
             func_8012CA64();
-        } else if (D_8003C8C4 == (D_8003C8C4 / 6) * 6) {
+        } else if (g_GameTimer % 6 == 0) {
             func_8011AAFC(g_CurrentEntity, 0x10045, 0);
         }
     }

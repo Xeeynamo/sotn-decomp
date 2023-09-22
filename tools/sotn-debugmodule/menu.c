@@ -58,10 +58,10 @@ void DbgDrawCursor(int x, int y, int w, int h) {
     POLY_G4* poly;
     u8 blinkValue;
 
-    if (g_blinkTimer & 0x20) {
-        blinkValue = g_blinkTimer & 0x1F;
+    if (g_Timer & 0x20) {
+        blinkValue = g_Timer & 0x1F;
     } else {
-        blinkValue = 0x1F - (g_blinkTimer & 0x1F);
+        blinkValue = 0x1F - (g_Timer & 0x1F);
     }
     blinkValue *= 4;
     blinkValue -= 0x80;

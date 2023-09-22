@@ -49,7 +49,7 @@ void EntityBreakable(Entity* self) {
         AnimateEntity((u8*)D_80180E04[params], self);
         if (params == 2) {
             prim = &g_PrimBuf[self->primIndex];
-            if (g_blinkTimer & 2) {
+            if (g_Timer & 2) {
                 prim->clut = 0x21B;
             } else {
                 prim->clut = 0x21C;
@@ -604,14 +604,14 @@ void EntityMoveableBox(Entity* self) {
         if (var_s1 & 1) {
             temp_s1 = GetSideToPlayer();
             if (temp_s1 & 1 && player->velocityX > 0) {
-                if (!(g_blinkTimer & 7)) {
+                if (!(g_Timer & 7)) {
                     g_api.PlaySfx(0x608);
                 }
                 self->velocityX = FIX(0.5);
             }
             temp_s1 = GetSideToPlayer();
             if (!(primIndex = (temp_s1 & 1)) && (player->velocityX < 0)) {
-                if (!(g_blinkTimer & 7)) {
+                if (!(g_Timer & 7)) {
                     g_api.PlaySfx(0x608);
                 }
                 self->velocityX = FIX(-0.5);

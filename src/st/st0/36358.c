@@ -23,7 +23,7 @@ void EntityPrizeDrop(Entity* self) {
         }
     }
     self->palette = 0x100;
-    if ((u8)self->unk6D[0] >= 0x18 && !(D_8003C8C4 & 2) && self->params != 1) {
+    if ((u8)self->unk6D[0] >= 0x18 && !(g_GameTimer & 2) && self->params != 1) {
         self->palette = 0x815F;
     }
 

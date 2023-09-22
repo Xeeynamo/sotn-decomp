@@ -107,7 +107,7 @@ void func_8010D800(void) {
         if (temp_t0 >= prim->r0) {
             prim->x1 = 0;
         }
-        if (!((i ^ g_blinkTimer) & 1)) {
+        if (!((i ^ g_Timer) & 1)) {
             continue;
         }
 

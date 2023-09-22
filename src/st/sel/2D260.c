@@ -188,7 +188,7 @@ void func_801AD78C(void) {
                   0x48, 0x0F, 0x0F, 0xF0, 0xF0);
     func_801B26A0(&g_PrimBuf[D_801BAF68], ((D_801BC3E0 & 7) << 5) + 0x40,
                   (D_801BC3E0 & 0x18) * 3 + 0x68, 0x20, 0x20, 0, 0x48);
-    if (g_blinkTimer & 8) {
+    if (g_Timer & 8) {
         func_801ACBE4(8, 0);
     } else {
         func_801ACBE4(8, 8);

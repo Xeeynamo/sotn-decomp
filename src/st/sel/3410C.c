@@ -132,7 +132,7 @@ void HandleMainMenu(void) {
              prim = prim->next, i++) {
             if (i < 3) {
                 prim->blendMode = 8;
-                if (g_blinkTimer & 0x30) {
+                if (g_Timer & 0x30) {
                     prim->blendMode = 0;
                 }
             }
@@ -246,7 +246,7 @@ void HandleMainMenu(void) {
             }
         }
         prim = &g_PrimBuf[D_801BB010];
-        if (g_blinkTimer & 0x1C) {
+        if (g_Timer & 0x1C) {
             prim->blendMode = 0;
         } else {
             prim->blendMode = 8;

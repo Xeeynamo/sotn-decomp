@@ -613,7 +613,7 @@ void PrintGpuInfo(void) {
 
 void PrintHBlankInfo(void) {
     if (g_DebugEnabled && g_DebugMode != DEBUG_PALETTE_VIEWER) {
-        if (g_blinkTimer & 1) {
+        if (g_Timer & 1) {
             FntPrint("l=%03x/100\n", D_801362D0[1]);
             FntPrint("l=%03x/100\n", D_801362D0[0]);
         } else {
@@ -804,7 +804,7 @@ void entrypoint_sotn(void) {
     for (i = 0; i < 0x50; i++) {
         ((void**)&g_api)[i] = (&D_800A0004)[i];
     }
-    g_blinkTimer = 0;
+    g_Timer = 0;
     D_8003C99C = 0;
     D_800987B4 = 0;
     g_Settings.D_8003CB00 = 0;
@@ -882,7 +882,7 @@ loop_5:
     while (true) {
         g_BackBuffer = g_CurrentBuffer;
         g_CurrentBuffer = g_CurrentBuffer->next;
-        g_blinkTimer++;
+        g_Timer++;
         g_CurrentOT = g_CurrentBuffer->ot;
         ClearOTag(g_CurrentOT, OTSIZE);
         g_GpuUsage.drawModes = 0;

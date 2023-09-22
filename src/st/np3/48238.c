@@ -392,7 +392,7 @@ void EntityMerman(Entity* self) {
             AnimateEntity(D_801823EC, self); // spinning
             MoveEntity();
             self->palette = self->ext.merman.palette;
-            if (!(g_blinkTimer % 8)) {
+            if (!(g_Timer % 8)) {
                 self->ext.merman.palette++;
                 if (self->ext.merman.palette == 0x2C0) {
                     func_801C2598(0x65B);

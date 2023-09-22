@@ -468,7 +468,7 @@ void func_801623E0(Entity* entity) {
     poly->y2 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
     poly->x3 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
     poly->y3 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
-    poly->clut = (LOH(g_blinkTimer) & 1) + 0x13E;
+    poly->clut = (LOH(g_Timer) & 1) + 0x13E;
 }
 
 void func_80162604(Entity* entity) {

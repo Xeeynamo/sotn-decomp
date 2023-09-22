@@ -458,7 +458,7 @@ void func_801120B4(void) {
         func_8010DFF0(1, 1);
         local_flags = 0;
         if ((PLAYER.animFrameIdx < (g_Player.unk54 - 6)) &&
-            (g_Player.pl_vram_flag & 1) && (D_8003C8C4 & 1)) {
+            (g_Player.pl_vram_flag & 1) && (g_GameTimer & 1)) {
             func_8011AAFC(g_CurrentEntity, 0x10045U, 0);
         }
         if ((u16)PLAYER.animFrameIdx >= (u16)g_Player.unk54) {

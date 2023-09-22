@@ -26,7 +26,7 @@ void EntityZombie(Entity* self) {
         self->hitboxOffY = 0x10;
         self->hitboxHeight = 0;
         self->zPriority += 4;
-        if (g_blinkTimer & 1) {
+        if (g_Timer & 1) {
             self->palette++;
         }
         if (Random() & 1) {
