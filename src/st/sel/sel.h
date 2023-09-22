@@ -55,6 +55,7 @@ typedef struct {
 } SaveSummary; /* size=0x3A4 */
 
 extern const s32 D_801A7B8C[2];
+extern s32 D_801BAF08; // block icon animation index
 extern s32 D_801BAF20;
 extern s32 D_801BAF30;
 extern s32 D_801BB010;
@@ -168,6 +169,7 @@ extern s32 g_MemCardSelectorY;
 extern s32 D_801BC3E0; // on-screen keyboard key position
 extern s32 D_801BC3E4;
 extern s32 D_801BC3E8;
+extern s32 D_801BC3EC; // selected memory card block
 extern s32 D_801BC650;
 extern s32 D_801BC8C8;
 extern SaveSummary g_SaveSummary[PORT_COUNT];
