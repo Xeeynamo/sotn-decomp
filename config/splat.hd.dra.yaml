@@ -81,11 +81,11 @@ segments:
       - [0x40DE4, rodata] # jtbl_800E0DE4
       - [0x40E0C, rodata] # jtbl_800E0E0C
       - [0x40EDC, rodata] # jtbl_800E0EDC
-      - [0x40FA8, rodata] # jtbl_800E0FA8
-      - [0x411C8, rodata] # jtbl_800E11C8
-      - [0x411E0, rodata] # jtbl_800E11E0
-      - [0x411F8, rodata] # jtbl_800E11F8
-      - [0x41210, rodata] # jtbl_800E1210
+      - [0x40FA8, .rodata, 6D59C] # jtbl_800E0FA8
+      - [0x411C8, .rodata, 6D59C] # jtbl_800E11C8
+      - [0x411E0, .rodata, 6D59C] # jtbl_800E11E0
+      - [0x411F8, .rodata, 6D59C] # jtbl_800E11F8
+      - [0x41210, .rodata, 6D59C] # jtbl_800E1210
       - [0x41224, rodata] # jtbl_800E1224
       - [0x4123C, rodata] # jtbl_800E123C
       - [0x41250, rodata]

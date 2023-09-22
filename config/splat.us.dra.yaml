@@ -93,11 +93,11 @@ segments:
       - [0x40D38, .rodata, cd] # To be merged with 40D38
       - [0x40E28, rodata]
       - [0x40E48, rodata] # EntityAlucard jump table
-      - [0x4108C, rodata] # func_8010EDB8
-      - [0x412AC, rodata] # func_8010EDB8
-      - [0x412C4, rodata] # func_8010EDB8
-      - [0x412DC, rodata] # func_8010EDB8
-      - [0x412F4, rodata] # func_8010EDB8
+      - [0x4108C, .rodata, 6D59C] # func_8010EDB8
+      - [0x412AC, .rodata, 6D59C] # func_8010EDB8
+      - [0x412C4, .rodata, 6D59C] # func_8010EDB8
+      - [0x412DC, .rodata, 6D59C] # func_8010EDB8
+      - [0x412F4, .rodata, 6D59C] # func_8010EDB8
       - [0x41308, rodata] # func_80110968
       - [0x41320, rodata] # func_80110BC8
       - [0x41334, rodata]

@@ -475,11 +475,16 @@ typedef struct {
     u8 unk2;
     u8 unk3;
 } ET_Entity1;
+typedef struct {
+    char pad[0x32];
+    s16 unkAE;
+} ET_Entity16;
 
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
     /* 0x7C */ ET_Entity1 ent1;
+               ET_Entity16 ent16;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
     /* 0x7C */ ET_RelicOrb relicOrb;
     /* 0x7C */ ET_MessageBox messageBox;
