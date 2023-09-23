@@ -325,7 +325,7 @@ void func_8010BFFC(void) {
                 x = PLAYER.posX.i.hi + D_800ACEC0[i].unk0;
                 y = PLAYER.posY.i.hi + D_800ACEC0[i].unk2;
 #if defined(VERSION_US)
-                if (g_PlayableCharacter != 0) {
+                if (g_PlayableCharacter != PLAYER_ALUCARD) {
                     y += 6;
                 }
 #endif
