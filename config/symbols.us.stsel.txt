@@ -28,6 +28,7 @@ DrawNavigationTips = 0x801AD260;
 UpdateNameEntry = 0x801AD968;
 UpdateFileSelect = 0x801ADC3C;
 SelectMainMenuOption = 0x801AEB74;
+CheckIfMemcardsCanBeUsed = 0x801AED48;
 Update = 0x801AEED8;
 SetGameState = 0x801B18CC;
 DrawString16x16 = 0x801B29C0;
