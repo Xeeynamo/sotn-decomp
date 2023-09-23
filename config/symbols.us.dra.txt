@@ -865,7 +865,6 @@ SetPlayerStep = 0x8010D584;
 UpdateUnarmedAnim = 0x8010DB38;
 UpdateAnim = 0x8010DDA0;
 DecelerateX = 0x8010E1EC;
-DecelerateY = 0x8010E234;
 SetSpeedX = 0x8010E390;
 AlucardHandleDamage = 0x8011405C;
 ControlBatForm = 0x80116B0C;
