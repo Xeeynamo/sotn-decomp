@@ -262,3 +262,10 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 
 // STAGE NO3 / NP3
 #define NA_SE_EV_WINDOW_LATCH 0x79D
+
+// NZ1
+#define SE_HARPY_WING_FLAP 0x601
+
+// SHARED SOUNDS
+// These are sounds that are shared across multiple BIN files
+#define SE_WEAPON_STAB 0x62E
