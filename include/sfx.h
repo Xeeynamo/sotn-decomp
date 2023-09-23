@@ -248,7 +248,7 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define NA_SE_SU_CREATE_CLONES 0x6D5
 #define NA_SE_SU_CHARGE_PINKBALLS 0x6E2
 #define NA_VO_SU_LAUGH 0x86E
-// Blank, may be a leftover from the Jap version.
+// Blank, may be a leftover from the Japanese version.
 #define NA_VO_SU_BLANK 0x86F
 #define NA_VO_SU_GRUNT_1 0x870
 #define NA_VO_SU_GRUNT_2 0x872
@@ -262,3 +262,10 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 
 // STAGE NO3 / NP3
 #define NA_SE_EV_WINDOW_LATCH 0x79D
+
+// NZ1
+SE_HARPY_WING_FLAP 0x601
+
+// SHARED SOUNDS
+// These are sounds that are shared across multiple BIN files
+SE_WEAPON_STAB 0x62E
