@@ -257,7 +257,7 @@ void func_801167D0(void) {
     }
 }
 
-bool func_80116838(void) {
+bool BatFormFinished(void) {
     if (g_Entities->step_s == 0) {
         return false;
     }
@@ -408,7 +408,7 @@ void ControlBatForm(void) {
     u32 directionsPressed;
 
     screechDone = 0;
-    if (func_80116838() != 0) {
+    if (BatFormFinished()) {
         return;
     }
     PLAYER.unk19 = 4;
@@ -655,7 +655,7 @@ void ControlBatForm(void) {
         if (PLAYER.facingLeft == 0 && (g_Player.pl_vram_flag & 4) ||
             PLAYER.facingLeft != 0 && (g_Player.pl_vram_flag & 8)) {
             g_Player.padTapped = PAD_R1;
-            func_80116838();
+            BatFormFinished();
             func_80102CD8(2);
             PlaySfx(0x644);
             PLAYER.velocityX = 0;
@@ -666,7 +666,7 @@ void ControlBatForm(void) {
         // When wing smash ends, force an un-transform
         if (--g_WingSmashTimer == 0) {
             g_Player.padTapped = PAD_R1;
-            func_80116838();
+            BatFormFinished();
             g_Player.D_80072EFC = 0x20;
             g_Player.D_80072EF4 = 0;
         } else {
@@ -2714,7 +2714,7 @@ INCLUDE_ASM("dra/nonmatchings/75F54", EntityBatEcho);
 
 INCLUDE_ASM("dra/nonmatchings/75F54", func_8012C600);
 
-bool func_8012C88C(void) {
+bool WolfFormFinished(void) {
     if (PLAYER.step_s == 0) {
         return false;
     }
@@ -2992,7 +2992,7 @@ void func_8012D28C(bool exitEarly) {
     // Odd logic, if we exit early, we force an R2-tap. Strange!
     if (exitEarly) {
         g_Player.padTapped = PAD_R2;
-        func_8012C88C();
+        WolfFormFinished();
         return;
     }
     // Start a routine where we look through this array for a value.

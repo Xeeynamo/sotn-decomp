@@ -690,7 +690,7 @@ void func_8012EF2C(void) {
 #if defined(VERSION_US)
     PLAYER.zPriority = g_zEntityCenter.S16.unk0 - 2;
 #endif
-    if (func_8012C88C() != 0) {
+    if (WolfFormFinished()) {
         return;
     }
     if (D_8013842C != 0) {
