@@ -518,7 +518,7 @@ void GetSaveIcon(u8* dst, s32 iconIdx) {
     }
 }
 
-void StoreSaveData(SaveData* save, s32 block, s32 memcardIcon) {
+void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
     const int RoomCount = 942;
     MemcardHeader h;
     char saveTitle[64];
@@ -615,8 +615,8 @@ void StoreSaveData(SaveData* save, s32 block, s32 memcardIcon) {
     }
     strcat(h.Title, "％");
 
-    GetSavePalette(h.Clut, memcardIcon);
-    GetSaveIcon(h.Icon, memcardIcon);
+    GetSavePalette(h.Clut, cardIcon);
+    GetSaveIcon(h.Icon, cardIcon);
 
     dst = save;
     dstStatus = &save->status;
@@ -624,22 +624,22 @@ void StoreSaveData(SaveData* save, s32 block, s32 memcardIcon) {
     dstSettings = &save->settings;
     dst->header = h;
     for (i = 0; i < 10; i++) {
-        dst->saveName[i] = g_SaveName[i];
+        dst->info.name[i] = g_SaveName[i];
     }
 
-    dst->level = g_Status.level;
-    dst->goldAmount = g_Status.gold;
-    dst->playTimeHours = g_Status.timerHours;
-    dst->playTimeMinutes = g_Status.timerMinutes;
-    dst->playTimeSeconds = g_Status.timerSeconds;
-    dst->stageID = g_StageId;
-    dst->memcardIcon = memcardIcon;
-    dst->isTimeAttackUnlocked = g_IsTimeAttackUnlocked;
-    dst->playableCharacter = g_PlayableCharacter;
-    dst->exploredRoomCount = g_RoomCount;
-    dst->roomX = g_CurrentRoom.left;
-    dst->roomY = g_CurrentRoom.top;
-    dst->saveSize = sizeof(SaveData);
+    dst->info.level = g_Status.level;
+    dst->info.gold = g_Status.gold;
+    dst->info.playHours = g_Status.timerHours;
+    dst->info.playMinutes = g_Status.timerMinutes;
+    dst->info.playSeconds = g_Status.timerSeconds;
+    dst->info.stage = g_StageId;
+    dst->info.cardIcon = cardIcon;
+    dst->info.endGameFlags = g_IsTimeAttackUnlocked;
+    dst->info.character = g_PlayableCharacter;
+    dst->info.nRoomsExplored = g_RoomCount;
+    dst->info.roomX = g_CurrentRoom.left;
+    dst->info.roomY = g_CurrentRoom.top;
+    dst->info.saveSize = sizeof(SaveData);
 
     *dstStatus = g_Status;
     *dstNav = g_MenuNavigation;
@@ -664,16 +664,16 @@ s32 LoadSaveData(SaveData* save) {
     MenuNavigation* srcNav;
     GameSettings* settings;
 
-    if (save->saveSize != (sizeof(SaveData))) {
+    if (save->info.saveSize != (sizeof(SaveData))) {
         return -1;
     }
 
-    g_StageId = save->stageID;
-    g_IsTimeAttackUnlocked = save->isTimeAttackUnlocked;
-    g_PlayableCharacter = save->playableCharacter;
-    g_RoomCount = save->exploredRoomCount;
-    g_CurrentRoom.left = save->roomX;
-    g_CurrentRoom.top = save->roomY;
+    g_StageId = save->info.stage;
+    g_IsTimeAttackUnlocked = save->info.endGameFlags;
+    g_PlayableCharacter = save->info.character;
+    g_RoomCount = save->info.nRoomsExplored;
+    g_CurrentRoom.left = save->info.roomX;
+    g_CurrentRoom.top = save->info.roomY;
 
     srcStatus = &save->status;
     srcNav = &save->menuNavigation;

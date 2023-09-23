@@ -776,21 +776,25 @@ typedef struct {
 } MemcardHeader; /* size=0x200 */
 
 typedef struct {
+    /* 0x00 */ char name[12];
+    /* 0x0C */ s32 level;
+    /* 0x10 */ s32 gold;
+    /* 0x14 */ s32 playHours;
+    /* 0x18 */ s32 playMinutes;
+    /* 0x1C */ s32 playSeconds;
+    /* 0x20 */ s32 cardIcon;
+    /* 0x24 */ s32 endGameFlags;
+    /* 0x28 */ s16 stage;
+    /* 0x2A */ u16 nRoomsExplored;
+    /* 0x2C */ u16 roomX;
+    /* 0x2E */ u16 roomY;
+    /* 0x30 */ s32 character;
+    /* 0x34 */ s32 saveSize;
+} SaveInfo; /* 0x38 */
+
+typedef struct {
     /* 0x000 */ MemcardHeader header;
-    /* 0x200 */ u8 saveName[12];
-    /* 0x20C */ u32 level;
-    /* 0x210 */ u32 goldAmount;
-    /* 0x214 */ u32 playTimeHours;
-    /* 0x218 */ u32 playTimeMinutes;
-    /* 0x21C */ u32 playTimeSeconds;
-    /* 0x220 */ u32 memcardIcon;
-    /* 0x224 */ u32 isTimeAttackUnlocked;
-    /* 0x228 */ s16 stageID;
-    /* 0x22A */ u16 exploredRoomCount;
-    /* 0x22C */ u16 roomX;
-    /* 0x22E */ u16 roomY;
-    /* 0x230 */ u32 playableCharacter;
-    /* 0x234 */ u32 saveSize;
+    /* 0x200 */ SaveInfo info;
     /* 0x238 */ PlayerStatus status;
     /* 0x56C */ MenuNavigation menuNavigation;
     /* 0x5B8 */ GameSettings settings;
