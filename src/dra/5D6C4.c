@@ -690,7 +690,62 @@ void func_800FEE6C(void) {
     } while ((s32)var_v1 < (s32)&D_80139828[0x10]);
 }
 
-INCLUDE_ASM("dra/nonmatchings/5D6C4", func_800FEEA4);
+s32 func_800FEEA4(s32 arg0, s32 arg1) {
+    if (arg0 == 0) {
+        if (!IsRelicActive(RELIC_SOUL_OF_BAT)) {
+            return -1;
+        }
+        if (g_Status.mp - 1 <= 0) {
+            return -1;
+        }
+        if (arg1 == 0) {
+            return 0;
+        }
+        if (g_GameTimer % 60 == 0) {
+            g_Status.mp -= 1;
+        }
+        return 0;
+    } else if (arg0 == 1) {
+        if (!IsRelicActive(RELIC_FORM_OF_MIST)) {
+            return -1;
+        }
+        if (IsRelicActive(RELIC_POWER_OF_MIST)) {
+            if (g_Status.mp - 2 <= 0) {
+                return -1;
+            }
+            if (arg1 == 0) {
+                return 0;
+            }
+            if (g_GameTimer % 30 == 0) {
+                g_Status.mp -= 2;
+            }
+        } else {
+            if (g_Status.mp - 10 <= 0) {
+                return -1;
+            }
+            if (arg1 == 0) {
+                return 0;
+            }
+            if (!(g_GameTimer & 7)) {
+                g_Status.mp -= 10;
+            }
+        }
+        return 0;
+    } else if (arg0 == 2) {
+        if (IsRelicActive(RELIC_SOUL_OF_WOLF) == false) {
+            return -1;
+        }
+        if (g_Status.mp - 1 > 0) {
+            if (arg1 != 0) {
+                if (g_GameTimer % 120 == 0) {
+                    g_Status.mp -= 1;
+                }
+            }
+            return 0;
+        }
+        return -1;
+    }
+}
 
 s32 func_800FF064(s32 arg0) {
     s32 playerMP;
