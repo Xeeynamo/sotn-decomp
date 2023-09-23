@@ -275,7 +275,84 @@ void func_8010BF64(Unkstruct_8010BF64* arg0) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/692E8", func_8010BFFC);
+void func_8010BFFC(void) {
+    s16 x;
+    s16 y;
+    s32 i;
+    bool collided = false;
+    u16 original_Y = PLAYER.posY.i.hi;
+
+    if ((g_Player.pl_vram_flag & 1) || (D_801396EA != 0) ||
+#if defined(VERSION_US)
+        (g_Player.unk0C & 0x40000007) ||
+        ((g_PlayableCharacter != 0) && (PLAYER.step == 0x18)) ||
+#elif defined(VERSION_HD)
+        ((g_Player.unk0C & 7) != 0) ||
+#endif
+        (g_Player.unk78 == 1)) {
+        return;
+    }
+    if (PLAYER.posY.i.hi < 48) {
+        PLAYER.posY.i.hi -= 16;
+        while (true) {
+            for (i = 0; i < 4; i++) {
+                x = PLAYER.posX.i.hi + D_800ACED0.pairs[i].unk0;
+                y = PLAYER.posY.i.hi + D_800ACED0.pairs[i].unk2;
+                CheckCollision(x, y, (Collider*)&g_Player.D_80072BD0[i][0], 0);
+            }
+            if ((g_Player.D_80072BD0[1][0] & 0x81) == 1 ||
+                (g_Player.D_80072BD0[2][0] & 0x81) == 1 ||
+                (g_Player.D_80072BD0[3][0] & 0x81) == 1) {
+                // I don't know man
+                (*(&PLAYER)).posY.i.hi--;
+                PLAYER.velocityY = 0;
+                collided = true;
+                continue;
+            }
+            if (collided) {
+                return;
+            }
+            PLAYER.posY.i.hi += 8;
+            if (PLAYER.posY.i.hi >= 48) {
+                PLAYER.posY.i.hi = original_Y;
+                return;
+            }
+        }
+    } else if (PLAYER.posY.i.hi > 176) {
+        PLAYER.posY.i.hi += 32;
+        while (true) {
+            for (i = 0; i < 4; i++) {
+                x = PLAYER.posX.i.hi + D_800ACEC0[i].unk0;
+                y = PLAYER.posY.i.hi + D_800ACEC0[i].unk2;
+#if defined(VERSION_US)
+                if (g_PlayableCharacter != 0) {
+                    y += 6;
+                }
+#endif
+                CheckCollision(
+                    x, y, (Collider*)&g_Player.D_80072BD0[4 + i][0], 0);
+            }
+            if ((g_Player.D_80072BD0[5][0] & 0x41) == 1 ||
+                (g_Player.D_80072BD0[6][0] & 0x41) == 1 ||
+                (g_Player.D_80072BD0[7][0] & 0x41) == 1) {
+                // I don't know man
+                (*(&PLAYER)).posY.i.hi++;
+                PLAYER.velocityY = 0;
+                collided = true;
+                continue;
+            }
+            if (collided) {
+                PLAYER.posY.i.hi--;
+                return;
+            }
+            PLAYER.posY.i.hi -= 8;
+            if (PLAYER.posY.i.hi <= 176) {
+                PLAYER.posY.i.hi = original_Y;
+                return;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("dra/nonmatchings/692E8", func_8010C36C);
 
