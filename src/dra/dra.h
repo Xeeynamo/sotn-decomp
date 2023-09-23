@@ -176,6 +176,12 @@ typedef enum {
     STATUS_AILMENT_UNK05, // used by EntityPlayerPinkEffect
 } StatusAilments;
 
+// Used in HandleTransformationMP, maybe elsewhere
+typedef enum { FORM_BAT, FORM_MIST, FORM_WOLF } TransformationForm;
+
+// Used for many functions which do things like testing and decrementing a value
+typedef enum { CHECK_ONLY, REDUCE } CallMode;
+
 // Info necessary to load a file from the Cd in UpdateCd
 typedef struct {
     s32 loc;        // lba offset, might be a s32
@@ -809,7 +815,7 @@ void func_800FDE00(void);
 s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts);
 void GetEquipProperties(s32 handId, Equipment* res, s32 equipId);
 s32 HandleDamage(DamageParam*, s32, s32 amount, s32);
-s32 func_800FEEA4(s32, s32);
+s32 HandleTransformationMP(TransformationForm, CallMode);
 void func_800FF0A0(s32 arg0);
 void func_80102CD8(s32);
 void func_80102DEC(s32 arg0);
