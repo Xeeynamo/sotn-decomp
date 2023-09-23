@@ -321,8 +321,8 @@ void func_801AE6D0(void) {
     func_801B2BD4(g_SaveSummary[port].playHours[slot], 200, 104, 1);
     func_801B2C70(g_SaveSummary[port].playMinutes[slot], 224, 104, 1);
     func_801B2C70(g_SaveSummary[port].playSeconds[slot], 248, 104, 1);
-    func_801B2BD4(g_SaveSummary[port].money[slot], 0xB4, 112, 1);
-    percentage = g_SaveSummary[port].percentage[slot];
+    func_801B2BD4(g_SaveSummary[port].gold[slot], 180, 112, 1);
+    percentage = g_SaveSummary[port].nRoomsExplored[slot];
     percentage = percentage * 1000 / 942;
     percentageDecimal = percentage % 10;
     func_801B2BD4(percentage / 10, 232, 112, 1);
@@ -925,7 +925,33 @@ void func_801B2DF4(void) {
     func_801B2DEC();
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B2E5C);
+extern const char D_801A7AE4[19] ALIGNED4; // "BASLUS-00067DRAX00"
+s32 func_801B2E5C(s32 port) {
+    char cardName[32];
+    struct DIRENTRY* dirent;
+    s32 i;
+    s32 j;
+    s32 totalSize;
+    s32 nBlockUsed;
+
+    STRCPY(cardName, D_801A7AE4);
+    totalSize = 0;
+    nBlockUsed = g_MemcardInfo[port].nBlockUsed;
+    dirent = &g_MemcardInfo[port].entries;
+    for (i = 0; i < nBlockUsed; i++) {
+        for (j = 0; j < 16; j++) {
+            if (cardName[j] != dirent[i].name[j]) {
+                break;
+            }
+        }
+        if (j != 16) {
+            totalSize += dirent[i].size;
+        }
+    }
+
+    totalSize /= CARD_BLOCK_SIZE;
+    return totalSize;
+}
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B2F50);
 
