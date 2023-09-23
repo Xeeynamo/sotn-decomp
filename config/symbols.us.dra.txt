@@ -849,6 +849,7 @@ IsRelicActive = 0x800FE3A8;
 GetEquipProperties = 0x800FE728;
 AddHearts = 0x800FE914;
 HandleDamage = 0x800FE97C;
+HandleTransformationMP = 0x800FEEA4;
 DealDamage = 0x800FF128;
 InitStatsAndGear = 0x800FF7B8;
 DrawHudAlucard = 0x80101A80;

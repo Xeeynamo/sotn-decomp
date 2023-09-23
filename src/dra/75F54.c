@@ -262,7 +262,7 @@ bool func_80116838(void) {
         return false;
     }
     if (D_80097448[1] || g_Player.padTapped & PAD_R1 ||
-        func_800FEEA4(0, 1) < 0) {
+        HandleTransformationMP(FORM_BAT, REDUCE) < 0) {
         SetPlayerStep(Player_Unk9);
         func_8010DA48(0xCA);
         D_800AFDA6[0] = 6;
@@ -917,7 +917,7 @@ bool MistFormFinished(void) {
         return 0;
     }
     if (D_80097448[1] != 0 || g_Player.padTapped & PAD_L1 ||
-        func_800FEEA4(1, 1) < 0 ||
+        HandleTransformationMP(FORM_MIST, REDUCE) < 0 ||
         (!IsRelicActive(RELIC_POWER_OF_MIST) &&
          (g_MistTimer == 0 || --g_MistTimer == 0))) {
         func_8010E27C();
@@ -2722,7 +2722,8 @@ bool func_8012C88C(void) {
         return false;
     }
     if (D_80097448[1] != 0 && !IsRelicActive(RELIC_HOLY_SYMBOL) ||
-        g_Player.padTapped & PAD_R2 || func_800FEEA4(2, 1) < 0) {
+        g_Player.padTapped & PAD_R2 ||
+        HandleTransformationMP(FORM_WOLF, REDUCE) < 0) {
         SetPlayerStep(Player_Unk25);
         func_8010DA48(0xCA);
         D_800AFDA6[0] = 1;
