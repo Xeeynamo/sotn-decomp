@@ -420,7 +420,39 @@ void func_801AECA0(void) {
     g_api.func_800EA5E4(0x8004);
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801AED48);
+void CheckIfMemcardsCanBeUsed(void) {
+    s32 isCard0Full;
+    s32 isCard1Full;
+    s32 i;
+
+    isCard0Full = true;
+    isCard1Full = true;
+    for (i = 0; i < BLOCK_PER_CARD; i++) {
+        if (g_SaveSummary[0].icon[i] != -2) {
+            isCard0Full = false;
+        }
+        if (g_SaveSummary[1].icon[i] != -2) {
+            isCard1Full = false;
+        }
+    }
+
+    D_801BAF10 = 0;
+    if ((g_SaveSummary[0].padding < 0 || isCard0Full) &&
+        (g_SaveSummary[1].padding < 0 || isCard1Full)) {
+        D_801BAF10 = 1;
+    }
+
+    D_801BAF14 = 0;
+    for (i = 0; i < BLOCK_PER_CARD; i++) {
+        if ((g_SaveSummary[0].padding > 0 && g_SaveSummary[0].icon[i] == -3) ||
+            (g_SaveSummary[1].padding > 0 && g_SaveSummary[1].icon[i] == -3)) {
+            break;
+        }
+    }
+    if (i == BLOCK_PER_CARD) {
+        D_801BAF14 = 1;
+    }
+}
 
 void func_801AEE74(void) {
     s32 i = 0;
