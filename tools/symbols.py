@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
 import argparse
+import mapfile_parser
 import os
+from pathlib import Path
 import re
 import sys
 import yaml
@@ -13,6 +15,7 @@ subparsers = parser.add_subparsers(dest="command")
 sort_parser = subparsers.add_parser(
     "sort", description="Sort all the symbols of a given GNU LD script by their offset"
 )
+
 cross_parser = subparsers.add_parser(
     "cross",
     description="Cross-reference the symbols between two assembly files and print the result to stdout for GNU LD. Useful to cross-reference symbols between different overlays or game revisions. The assemblies must be identical.",
@@ -25,6 +28,7 @@ cross_parser.add_argument(
     "to_cross",
     help="Assembly source file to be cross-referenced to",
 )
+
 orphan_parser = subparsers.add_parser(
     "remove-orphans",
     description="Remove all symbols that are not referenced from a specific group of assembly code",
@@ -34,11 +38,35 @@ orphan_parser.add_argument(
     help="The Splat YAML config of the overlay to remove the orphan symbols from",
 )
 
+map_parser = subparsers.add_parser(
+    "map",
+    description="Print the list of symbols from a map file",
+)
+map_parser.add_argument(
+    "map_file_name",
+    help="The map file to extract the symbols from",
+)
+map_parser.add_argument(
+    "--no-default",
+    required=False,
+    action="store_true",
+    help="Do not include Splat default symbols that starts with D_ or func_",
+)
+
 args = parser.parse_args()
 if args.version == None:
     args.version = os.getenv("VERSION")
     if args.version == None:
         args.version = "us"
+
+
+def is_splat_symbol_name(name):
+    return (
+        name.startswith("D_")
+        or name.startswith("func_")
+        or name.startswith("jpt_")
+        or name.startswith("jtbl_")
+    )
 
 
 def add_newline_if_missing(list):
@@ -315,6 +343,26 @@ def remove_orphans_from_config(config_yaml):
     remove_orphans(symbol_file_name, symbols_found)
 
 
+def print_map_symbols(map_file_name, no_default):
+    map_file = mapfile_parser.MapFile()
+    map_file.readMapFile(Path(map_file_name))
+
+    filter = (
+        (lambda name: not is_splat_symbol_name(name))
+        if no_default
+        else (lambda _: True)
+    )
+
+    syms = dict()
+    for segment in map_file:
+        for file in segment:
+            for sym in file:
+                if sym.vram not in syms and filter(sym.name):
+                    syms[sym.vram] = sym.name
+    for vram in syms:
+        print(f"{syms[vram]} = 0x{vram:08X};")
+
+
 if __name__ == "__main__":
     if args.command == "sort":
         sort("config/")
@@ -322,3 +370,5 @@ if __name__ == "__main__":
         cross(args.ref, args.to_cross)
     elif args.command == "remove-orphans":
         remove_orphans_from_config(args.config_yaml)
+    elif args.command == "map":
+        print_map_symbols(args.map_file_name, args.no_default)
