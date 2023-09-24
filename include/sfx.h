@@ -280,10 +280,10 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SE_BOSS_DEFEATED 0x7D2
 
 // UI SOUNDS
-#define SE_UI_CONFIRM 0x633            // DRA, LIB, SEL, TE4
+#define SE_UI_CONFIRM 0x633
 #define SE_UI_START 0x63D
 #define SE_UI_SELECT 0x67B
-#define SE_UI_MAIN_MENU_SELECT 0x67D   // Same sound as MP_GAUGE
+#define SE_UI_MAIN_MENU_SELECT 0x67D
 #define SE_UI_ERROR 0x686
 #define SE_UI_DEBUG_SELECT 0x688
 #define SE_UI_OVERWRITE_SELECT 0x6A4
@@ -299,15 +299,15 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SE_WPN_PENTAGRAM 0x6E4
 
 // UNUSED SOUNDS
-#define SE_UNK_ST0_618 0x618     // ST0, TE1, TE2
-#define SE_UNK_MAD_630 0x630     // Called in all debug stages (sword sound?)
-#define SE_UNK_TE1_651 0x651     // Unused UI Error SFX?
-#define SE_UNK_TE3_667 0x667     // Found only in TE3
-#define SE_UNK_TE1_66F 0x66F     // TE1, TE5
-#define SE_UNK_TE3_679 0x679     // Found only in TE3
-#define SE_UNK_TE1_692 0x692     // Beta Transformation SFX?
+#define SE_UNK_ST0_618 0x618
+#define SE_UNK_MAD_630 0x630
+#define SE_UNK_TE1_651 0x651
+#define SE_UNK_TE3_667 0x667
+#define SE_UNK_TE1_66F 0x66F
+#define SE_UNK_TE3_679 0x679
+#define SE_UNK_TE1_692 0x692
 #define SE_UNK_TE1_6B3 0x6B3
 #define SE_UNK_TE2_6B4 0x6B4
 #define SE_UNK_TE2_6B6 0x6B6
 #define SE_UNK_TE3_6B8 0x6B8
-#define NA_VO_MAR_AIM_HEAD 0x87F // "Aim for his head!" (Unused Maria Prologue Dialogue)
+#define NA_VO_MAR_AIM_HEAD 0x87F
