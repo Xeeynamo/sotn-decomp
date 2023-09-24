@@ -953,7 +953,27 @@ s32 func_801B2E5C(s32 port) {
     return totalSize;
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801B2F50);
+void HydrateSaveSummaryEntry(s32 port, s32 slot, s32 slotValue) {
+    SaveData* save = (SaveData*)g_Pix;
+    g_SaveSummary[port].slot[slot] = slotValue;
+    g_SaveSummary[port].icon[slot] = save->info.cardIcon;
+    g_SaveSummary[port].stage[slot] = save->info.stage;
+    g_SaveSummary[port].roomX[slot] = save->info.roomX;
+    g_SaveSummary[port].roomY[slot] = save->info.roomY;
+    g_SaveSummary[port].nRoomsExplored[slot] = save->info.nRoomsExplored;
+    g_SaveSummary[port].level[slot] = save->info.level;
+    g_SaveSummary[port].gold[slot] = save->info.gold;
+    g_SaveSummary[port].playHours[slot] = save->info.playHours;
+    g_SaveSummary[port].playSeconds[slot] = save->info.playSeconds;
+    g_SaveSummary[port].playMinutes[slot] = save->info.playMinutes;
+    if (save->info.saveSize != sizeof(SaveData)) {
+        save->info.endGameFlags = 0;
+    }
+    g_SaveSummary[port].kind[slot] = save->info.endGameFlags;
+    g_SaveSummary[port].character[slot] = save->info.character;
+    strcpy(g_SaveSummary[port].name[slot], save->info.name);
+    g_IsTimeAttackUnlocked |= save->info.endGameFlags;
+}
 
 void func_801B3120(void) {
     s32* var_a0;

@@ -33,6 +33,7 @@ Update = 0x801AEED8;
 SetGameState = 0x801B18CC;
 DrawString16x16 = 0x801B29C0;
 DrawImages8x8 = 0x801B2AFC;
+HydrateSaveSummaryEntry = 0x801B2F50;
 TryLoadSaveData = 0x801B3694;
 MemcardInit = 0x801B84F0;
 MemcardParse = 0x801B8518;
