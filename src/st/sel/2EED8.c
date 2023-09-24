@@ -91,7 +91,7 @@ void Update(void) {
     case 3:
         func_801AD590();
         func_801AD490();
-        if (func_801ACEC0() != 0) {
+        if (func_801ACEC0()) {
             SetGameState(Game_Title);
         }
         break;
@@ -102,7 +102,7 @@ void Update(void) {
         // fallthrough
     case 17:
         for (i = 0; i < 8; i++) {
-            if (g_InputSaveName[i] != 0x20) {
+            if (g_InputSaveName[i] != ' ') {
                 break;
             }
         }
@@ -135,7 +135,7 @@ void Update(void) {
         break;
     case 18:
         func_801AD78C();
-        if (func_801ACEC0() != 0) {
+        if (func_801ACEC0()) {
             func_801B18F4();
             func_801B19F4();
             func_801B1DA8();
@@ -253,7 +253,7 @@ void Update(void) {
             func_801B2608("as Richter Belmont．", 5);
             D_801BAF0C = 0;
         }
-        if ((g_pads[0].tapped & PAD_START) && (D_801BAF14 != 0)) {
+        if ((g_pads[0].tapped & PAD_START) && D_801BAF14 != 0) {
             g_api.PlaySfx(0x633);
             func_801B2608("You won’t be able to save", 4);
             func_801B2608("your game． Is that OK？", 5);
@@ -358,7 +358,7 @@ void Update(void) {
         // fallthrough
     case 149:
         for (i = 0; i < 8; i++) {
-            if (g_InputSaveName[i] != 0x20) {
+            if (g_InputSaveName[i] != ' ') {
                 break;
             }
         }
@@ -374,7 +374,7 @@ void Update(void) {
                 SelectMainMenuOption(MAIN_MENU_CURSOR_FILE_DELETE);
                 var_a0_2 = 0;
                 for (i = 0; i < 8; i++) {
-                    if (g_InputSaveName[i] == 0x20) {
+                    if (g_InputSaveName[i] == ' ') {
                         var_a0_2++;
                     }
                 }
@@ -399,7 +399,7 @@ void Update(void) {
     case 151:
         func_801ADF94(0x82, 0);
         D_800978C4 = 0;
-        temp_v0 = func_801B3A94((s32)g_InputSaveName);
+        temp_v0 = func_801B3A94(g_InputSaveName);
         if (temp_v0 != 0) {
             D_800978C4 = 1;
         }
@@ -449,13 +449,16 @@ void Update(void) {
     case 81:
         func_801ADF94(0x80, 0);
         D_800978C4 = 0;
-        if ((func_801B3164() != 0) &&
-            ((D_800978C4 = 1, D_8003C9A4 += 1, CheckIfMemcardsCanBeUsed(),
-              (g_SaveSummary[0].padding == -2)) ||
-             (g_SaveSummary[1].padding == -2))) {
-            D_801BAFC8 = 0x50;
-            D_801BAFCC = 0x52;
-            D_8003C9A4 = 0x200;
+        if (func_801B3164()) {
+            D_800978C4 = 1;
+            D_8003C9A4++;
+            CheckIfMemcardsCanBeUsed();
+            if (g_SaveSummary[0].padding == -2 ||
+                g_SaveSummary[1].padding == -2) {
+                D_801BAFC8 = 0x50;
+                D_801BAFCC = 0x52;
+                D_8003C9A4 = 0x200;
+            }
         }
         break;
     case 82:
@@ -800,7 +803,7 @@ void Update(void) {
         break;
     case 260:
         func_801ADF94(0x81, 0);
-        if (func_801ACEC0() != 0) {
+        if (func_801ACEC0()) {
             g_GameStep++;
         }
         break;
