@@ -415,7 +415,7 @@ void func_801ACFBC(s32 port, s32 slot, s32 textId) {
         func_801B263C(playerName, textId);
         func_801B25D4(D_801A7620, textId + 1);
     } while (0);
-    if (g_SaveSummary[port].isRichter[slot]) {
+    if (g_SaveSummary[port].character[slot]) {
         strSaveKind = D_801A76A4;
     } else if (g_SaveSummary[port].kind[slot] & SAVE_FLAG_CLEAR) {
         strSaveKind = D_801A76AC;
@@ -434,9 +434,9 @@ void PrintFileSelectPlaceName(s32 port, s32 slot, s32 y) {
     const s32 tge = 1;
     volatile u32 pad; // !FAKE:
 
-    s32 placeId = g_SaveSummary[port].place[slot] * 2;
-    DrawImages8x8(D_80180128[placeId], x, y + row1y, tge);
-    DrawImages8x8(D_8018012C[placeId], x, y + row2y, tge);
+    s32 stage = g_SaveSummary[port].stage[slot] * 2;
+    DrawImages8x8(D_80180128[stage], x, y + row1y, tge);
+    DrawImages8x8(D_8018012C[stage], x, y + row2y, tge);
 }
 
 void func_801AD1D0(void) {

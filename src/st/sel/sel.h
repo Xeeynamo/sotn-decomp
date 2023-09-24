@@ -63,17 +63,17 @@ typedef struct {
 typedef struct {
     /* 801BC8E0 */ u32 icon[BLOCK_PER_CARD];
     /* 801BC91C */ u32 slot[BLOCK_PER_CARD];
-    /* 801BC958 */ u32 place[BLOCK_PER_CARD];
-    /* 801BC994 */ u32 unk_1[BLOCK_PER_CARD];
-    /* 801BC9D0 */ u32 unk_2[BLOCK_PER_CARD];
+    /* 801BC958 */ u32 stage[BLOCK_PER_CARD];
+    /* 801BC994 */ u32 roomX[BLOCK_PER_CARD];
+    /* 801BC9D0 */ u32 roomY[BLOCK_PER_CARD];
     /* 801BCA0C */ u32 level[BLOCK_PER_CARD];
-    /* 801BCA48 */ u32 money[BLOCK_PER_CARD];
-    /* 801BCA84 */ u32 percentage[BLOCK_PER_CARD];
+    /* 801BCA48 */ u32 gold[BLOCK_PER_CARD];
+    /* 801BCA84 */ u32 nRoomsExplored[BLOCK_PER_CARD];
     /* 801BCAC0 */ u32 playHours[BLOCK_PER_CARD];
     /* 801BCAFC */ u32 playSeconds[BLOCK_PER_CARD];
     /* 801BCB38 */ u32 playMinutes[BLOCK_PER_CARD];
     /* 801BCB74 */ u32 kind[BLOCK_PER_CARD]; // 0: play, 1: clear, 2: replay
-    /* 801BCBB0 */ u32 isRichter[BLOCK_PER_CARD];
+    /* 801BCBB0 */ u32 character[BLOCK_PER_CARD];
     /* 801BCBEC */ char name[BLOCK_PER_CARD][10];
     s32 padding;
 } SaveSummary; /* size=0x3A4 */
@@ -152,6 +152,7 @@ extern const char D_801ABFD8[];           // DMA=(%d,%d), ADDR=(0x%08x->0x%08x)
 extern const char D_801AC000[];           // FIFO
 extern const char D_801AC038[];           // "%s timeout:\n"
 extern s32 D_801BAF10;
+extern s32 D_801BAF14;
 extern s32 D_801BAF18[][2];
 extern s32 D_801BAF48;
 extern s32 D_801BAFC0;
