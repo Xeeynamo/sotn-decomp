@@ -85,7 +85,9 @@ jobs:
         run: make check
       - name: Analyze calls dry run
         if: matrix.version == 'us'
-        run: make force_extract && ./tools/analyze_calls.py --ultradry
+        run: |
+          make force_extract
+          ./tools/analyze_calls.py --ultradry
       - name: Remove clutter from build folder
         run: rm -rf build/${{ matrix.version }}/asm build/${{ matrix.version }}/src build/${{ matrix.version }}/assets
       - name: Export build folder
@@ -191,17 +193,23 @@ jobs:
             wait
       - name: Generate function calls chart
         run: |
+            make force_symbols
             make force_extract
             python3 tools/analyze_calls.py
             git clean -fdx asm/ 
       - name: Generate function report
         run: |
+            git checkout config/
             make -j extract
             python3 tools/function_finder/function_finder_psx.py --use-call-trees > gh-duplicates/functions.md
             rm -rf gh-duplicates/function_calls/ || true
             mv function_calls gh-duplicates/
       - name: Generate duplicates report
-        run: make force_extract && cd tools/dups && cargo run --release -- --threshold .90 --output-file ../../gh-duplicates/duplicates.txt
+        run: |
+          make force_symbols
+          make force_extract
+          cd tools/dups
+          cargo run --release -- --threshold .90 --output-file ../../gh-duplicates/duplicates.txt
       - name: Commit all reports
         run: |
             git config --global user.name 'GitHub Action' 
