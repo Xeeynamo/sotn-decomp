@@ -81,3 +81,4 @@ g_InputCursorPos = 0x801D6B08;
 g_MemcardBlockRead = 0x801D6B10;
 g_InputSaveName = 0x801D6B14;
 g_MemcardStep = 0x801D6B20;
+HydrateSaveSummaryEntry = 0x801B2F50;
