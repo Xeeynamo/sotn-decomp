@@ -1330,7 +1330,7 @@ extern s32 D_8003C90C[2];
 extern u32 g_Timer; // Increases continuously
 /* 0x8003C99C */ extern s32 D_8003C99C;
 /* 0x8003C9A0 */ extern s32 g_PlayableCharacter;
-/* 0x8003C9A4 */ extern s32 D_8003C9A4; // when player change stages?
+/* 0x8003C9A4 */ extern u32 D_8003C9A4; // when player change stages?
 /* 0x8003C9A8 */ extern MenuNavigation g_MenuNavigation;
 /* 0x8003C9F8 */ extern GameSettings g_Settings;
 extern GpuBuffer g_GpuBuffers[2];
