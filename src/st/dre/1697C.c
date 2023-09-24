@@ -26,7 +26,7 @@ void EntityFadeToWhite1(Entity* self) {
     case 1:
         if (D_801A3F84 & 0x10) {
             D_8008701E[self->primIndex * 0x1A] = 0x35;
-            g_api.PlaySfx(0x65A);
+            g_api.PlaySfx(SE_DRE_FADE_TO_WHITE);
             self->step++;
         }
         break;
@@ -41,7 +41,7 @@ void EntityFadeToWhite1(Entity* self) {
             self->ext.fadeToWhite.unk7E = 0x200;
             self->ext.fadeToWhite.unk80 = 0;
             D_801A3F84 |= 0x20;
-            g_api.PlaySfx(0x637);
+            g_api.PlaySfx(SE_SUC_REVEAL);
             self->step++;
         }
         break;
@@ -68,7 +68,7 @@ void EntityFadeToWhite1(Entity* self) {
 
     if (self->ext.fadeToWhite.unk7C != 0) {
         if (--self->ext.fadeToWhite.unk7E == 0) {
-            g_api.PlaySfx(0x637);
+            g_api.PlaySfx(SE_SUC_REVEAL);
         }
     }
 }
