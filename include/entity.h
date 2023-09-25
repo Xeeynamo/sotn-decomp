@@ -143,7 +143,7 @@ typedef struct {
 } ET_MessageBox;
 
 typedef struct {
-    /* 0x7C */ s16 unk7C;
+    /* 0x7C */ s16 lifetime;
     /* 0x7E */ s16 unk7E;
     /* 0x80 */ s32 unk80;
     /* 0x84 */ s32 unk84;
