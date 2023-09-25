@@ -311,11 +311,11 @@ void UpdateEntitySpawn(void) {
         if (g_pads->repeat & PAD_LEFT || g_pads->repeat & PAD_RIGHT ||
             g_pads->repeat & PAD_CROSS) {
             g_Mode++;
-            if (g_CurrentPlayableCharacter == PLAYER_ALUCARD) {
+            if (g_PlayableCharacter == PLAYER_ALUCARD) {
                 if (g_Mode > 1) {
                     g_Mode = 0;
                 }
-            } else if (g_CurrentPlayableCharacter == PLAYER_RICHTER) {
+            } else if (g_PlayableCharacter == PLAYER_RICHTER) {
                 if (g_Mode > 2) {
                     g_Mode = 0;
                 }

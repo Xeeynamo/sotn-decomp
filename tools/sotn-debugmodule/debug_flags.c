@@ -93,7 +93,7 @@ const char* const c_DrawCalls[] = {
 
 void InitDebugFlagsPlayer(void) {
     g_DebugFlagsItems[0].param = g_StageId;
-    g_DebugFlagsItems[1].param = g_CurrentPlayableCharacter;
+    g_DebugFlagsItems[1].param = g_PlayableCharacter;
 }
 void UpdateDebugFlagsPlayer(void) {
     int stageCursor = g_DebugFlagsItems[0].param;
@@ -121,7 +121,7 @@ int HookLoadStage() {
 
     switch (g_DbgLoadState++) {
     case 0:
-        g_CurrentPlayableCharacter = PLAYER_RICHTER;
+        g_PlayableCharacter = PLAYER_RICHTER;
         g_GameState = Game_NowLoading;
         g_GameStep = 2;
         break;
@@ -150,7 +150,7 @@ int HookLoadRichter() {
         g_LoadFile = CdFile_GameChr;
         break;
     case 2:
-        g_CurrentPlayableCharacter = PLAYER_RICHTER;
+        g_PlayableCharacter = PLAYER_RICHTER;
         g_GameState = Game_NowLoading;
         g_GameStep = 2;
         break;
@@ -179,7 +179,7 @@ int HookLoadAlucard() {
         g_LoadFile = CdFile_GameChr;
         break;
     case 2:
-        g_CurrentPlayableCharacter = PLAYER_ALUCARD;
+        g_PlayableCharacter = PLAYER_ALUCARD;
         g_GameState = Game_NowLoading;
         g_GameStep = 2;
         break;
