@@ -17,7 +17,7 @@ void func_ptr_80170004(Entity* self) {
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->zPriority = PLAYER.zPriority - 4;
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_20000;
-        self->palette = self->ext.weapon.parent->ext.generic.unk88.S16.unk0;
+        self->palette = self->ext.weapon.parent->ext.weapon.childPalette;
         self->unk19 = self->ext.weapon.parent->unk19 + 8;
         self->rotAngle = self->ext.weapon.parent->rotAngle;
         self->unk6C = 0x80;
