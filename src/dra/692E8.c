@@ -38,13 +38,13 @@ void func_801093C4(void) {
     case 0:
         if (func_800EDB08(prim) != 0) {
             prim->type = 7;
-            prim->blendMode = 8;
+            prim->blendMode = BLEND_VISIBLE;
             prim = prim->next;
             func_800EDB08(prim);
             if (prim != NULL) {
                 prim->type = 7;
-                prim->blendMode = 8;
-                g_Player.unk6A += 1;
+                prim->blendMode = BLEND_VISIBLE;
+                g_Player.unk6A++;
             }
         }
         break;
@@ -54,7 +54,7 @@ void func_801093C4(void) {
         }
         sp10 = g_CurrentBuffer->draw;
         sp10.isbg = 0;
-        if (g_Player_unk0C & 0x04000000) {
+        if (g_Player.unk0C & 0x04000000) {
             sp10.isbg = 1;
         }
         sp10.r0 = sp10.g0 = sp10.b0 = 0;
