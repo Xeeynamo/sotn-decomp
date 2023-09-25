@@ -22,13 +22,19 @@ typedef enum {
     GFX_FILE_DELETE,
     GFX_NAME_CHANGE,
     GFX_FILE_COPY,
+    GFX_UNK_6,
 
     GFX_WND_SAVE_SUMMARY = 11,
     GFX_UNK_12,
     GFX_WND_CARD_1,
     GFX_WND_CARD_2,
-
-    NUM_GFX = 21,
+    GFX_UNK_15,
+    GFX_UNK_16,
+    GFX_UNK_17,
+    GFX_UNK_18,
+    GFX_UNK_19,
+    GFX_UNK_20,
+    NUM_GFX,
 } MenuGfx;
 
 typedef struct {
@@ -61,7 +67,7 @@ typedef struct {
 } Unkstruct_801BA498; /* size=0x100 */
 
 typedef struct {
-    /* 801BC8E0 */ u32 icon[BLOCK_PER_CARD];
+    /* 801BC8E0 */ s32 icon[BLOCK_PER_CARD];
     /* 801BC91C */ u32 slot[BLOCK_PER_CARD];
     /* 801BC958 */ u32 stage[BLOCK_PER_CARD];
     /* 801BC994 */ u32 roomX[BLOCK_PER_CARD];
