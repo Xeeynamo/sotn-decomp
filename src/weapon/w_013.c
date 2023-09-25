@@ -5,7 +5,30 @@ INCLUDE_ASM("weapon/nonmatchings/w_013", func_5F000_8017A9CC);
 
 INCLUDE_ASM("weapon/nonmatchings/w_013", EntityWeaponAttack);
 
-INCLUDE_ASM("weapon/nonmatchings/w_013", func_ptr_80170004);
+void func_ptr_80170004(Entity* self) {
+    if (self->step == 0) {
+        if (self->ext.weapon.parent->entityId == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        self->animCurFrame = self->ext.weapon.parent->animCurFrame;
+        self->animSet = self->ext.weapon.parent->animSet;
+        self->facingLeft = self->ext.weapon.parent->facingLeft;
+        self->unk5A = self->ext.weapon.parent->unk5A;
+        self->zPriority = PLAYER.zPriority - 4;
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_20000;
+        self->palette = self->ext.weapon.parent->ext.weapon.childPalette;
+        self->unk19 = self->ext.weapon.parent->unk19 + 8;
+        self->rotAngle = self->ext.weapon.parent->rotAngle;
+        self->unk6C = 0x80;
+        self->step++;
+    }
+    if (self->unk6C >= 48) {
+        self->unk6C -= 8;
+        return;
+    }
+    DestroyEntity(self);
+}
 
 INCLUDE_ASM("weapon/nonmatchings/w_013", func_ptr_80170008);
 
