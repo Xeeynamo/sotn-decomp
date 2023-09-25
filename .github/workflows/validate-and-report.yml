@@ -83,6 +83,8 @@ jobs:
         run: make -j build
       - name: Check if they match
         run: make check
+      - name: Check debug module
+        run: make disk_debug
       - name: Analyze calls dry run
         if: matrix.version == 'us'
         run: |
