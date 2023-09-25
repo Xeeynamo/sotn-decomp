@@ -599,7 +599,7 @@ void EntityPlatform(Entity* self) {
             g_Player.D_80072EF4 = 0x8000;
             player->posX.i.hi = 384 - roomLayout->unkA;
             self->step++;
-            g_api.PlaySfx(0x60D);
+            g_api.PlaySfx(SE_CEN_ELEVATOR_MOVE);
             D_8019D424 |= 1;
             roomLayout->unk48 = ((s16)roomLayout->unkE + 0x100);
             func_8018F8EC(0);
@@ -616,7 +616,7 @@ void EntityPlatform(Entity* self) {
             player->posY.i.hi--;
             D_8009748E[0]--;
         } else {
-            g_api.PlaySfx(0x64F);
+            g_api.PlaySfx(SE_CEN_PLATFORM_STOP);
             if (player->facingLeft == 0) {
                 g_Player.D_80072EF4 = 0x8000;
             }
@@ -643,7 +643,7 @@ void EntityPlatform(Entity* self) {
     case 6:
         if (D_8019D424 & 2) {
             self->step++;
-            g_api.PlaySfx(0x60D);
+            g_api.PlaySfx(SE_CEN_ELEVATOR_MOVE);
         }
         g_Player.D_80072EF4 = 0;
         g_Player.D_80072EFC = 1;
@@ -661,7 +661,7 @@ void EntityPlatform(Entity* self) {
             }
             g_Entities[1].ext.generic.unk7C.S8.unk0 = 1;
             self->step++;
-            g_api.PlaySfx(0x64F);
+            g_api.PlaySfx(SE_CEN_PLATFORM_STOP);
         }
         func_8018F890(0x300);
         g_Player.D_80072EF4 = 0;
@@ -905,7 +905,7 @@ void EntityElevatorStationary(Entity* self) {
             player->posY.i.hi++;
             posY = g_Camera.posY.i.hi + self->posY.i.hi;
             if ((g_Timer % 16) == 0) {
-                func_8019A328(0x60D);
+                func_8019A328(SE_CEN_ELEVATOR_MOVE);
             }
             if (posY == 0x74) {
                 self->step_s++;
@@ -921,7 +921,7 @@ void EntityElevatorStationary(Entity* self) {
                 self->step = 1;
             }
             if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
-                g_api.PlaySfx(0x675);
+                g_api.PlaySfx(SE_CEN_ELEVATOR_DOOR);
             }
         }
         break;
@@ -938,14 +938,14 @@ void EntityElevatorStationary(Entity* self) {
                 self->step_s++;
             }
             if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
-                g_api.PlaySfx(0x675);
+                g_api.PlaySfx(SE_CEN_ELEVATOR_DOOR);
             }
             break;
 
         case 1:
             self->posY.val -= FIX(0.5);
             if ((g_Timer % 16) == 0) {
-                func_8019A328(0x60D);
+                func_8019A328(SE_CEN_ELEVATOR_MOVE);
             }
             break;
 
