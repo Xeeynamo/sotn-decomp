@@ -6,9 +6,6 @@ INCLUDE_ASM("weapon/nonmatchings/w_013", func_5F000_8017A9CC);
 INCLUDE_ASM("weapon/nonmatchings/w_013", EntityWeaponAttack);
 
 void func_ptr_80170004(Entity* self) {
-    s16 temp_rotangle;
-    s16 temp_zpriority;
-
     if (self->step == 0) {
         if (self->ext.weapon.parent->entityId == 0) {
             DestroyEntity(self);
@@ -18,15 +15,13 @@ void func_ptr_80170004(Entity* self) {
         self->animSet = self->ext.weapon.parent->animSet;
         self->facingLeft = self->ext.weapon.parent->facingLeft;
         self->unk5A = self->ext.weapon.parent->unk5A;
-        temp_zpriority = PLAYER.zPriority;
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_20000;
-        self->zPriority = temp_zpriority - 4;
+        self->zPriority = PLAYER.zPriority - 4;
+        self->flags = 0x0C020000;
         self->palette = self->ext.weapon.parent->ext.generic.unk88.S16.unk0;
         self->unk19 = self->ext.weapon.parent->unk19 + 8;
-        temp_rotangle = self->ext.weapon.parent->rotAngle;
+        self->rotAngle = self->ext.weapon.parent->rotAngle;
         self->unk6C = 0x80;
-        self->step++;
-        self->rotAngle = temp_rotangle;
+        self->step ++;
     }
     if (self->unk6C >= 48) {
         self->unk6C -= 8;
