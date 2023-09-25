@@ -16,12 +16,12 @@ void func_ptr_80170004(Entity* self) {
         self->facingLeft = self->ext.weapon.parent->facingLeft;
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->zPriority = PLAYER.zPriority - 4;
-        self->flags = 0x0C020000;
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_20000;
         self->palette = self->ext.weapon.parent->ext.generic.unk88.S16.unk0;
         self->unk19 = self->ext.weapon.parent->unk19 + 8;
         self->rotAngle = self->ext.weapon.parent->rotAngle;
         self->unk6C = 0x80;
-        self->step ++;
+        self->step++;
     }
     if (self->unk6C >= 48) {
         self->unk6C -= 8;
