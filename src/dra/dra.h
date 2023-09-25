@@ -379,6 +379,7 @@ extern s32 D_800ACEDC_hd;
 #endif
 extern s32 D_800ACE44;
 extern s32 D_800ACE48[];
+extern RECT D_800ACE60;
 extern s16 D_800ACE88[];
 extern s16 D_800ACE90[];
 extern s16_pair D_800ACEC0[4];
