@@ -19,7 +19,7 @@ void func_ptr_80170004(Entity* self) {
         self->facingLeft = self->ext.weapon.parent->facingLeft;
         self->unk5A = self->ext.weapon.parent->unk5A;
         temp_zpriority = PLAYER.zPriority;
-        self->flags = 0x0C020000;
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_20000;
         self->zPriority = temp_zpriority - 4;
         self->palette = self->ext.weapon.parent->ext.generic.unk88.S16.unk0;
         self->unk19 = self->ext.weapon.parent->unk19 + 8;
