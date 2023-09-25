@@ -4,6 +4,11 @@
 #include "common.h"
 #include "stage.h"
 
+// CEN Sound IDs
+#define SE_CEN_ELEVATOR_MOVE 0x60D
+#define SE_CEN_PLATFORM_STOP 0x64F
+#define SE_CEN_ELEVATOR_DOOR 0X675
+
 typedef enum {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_ID01,
