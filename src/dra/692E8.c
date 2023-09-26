@@ -25,8 +25,50 @@ void func_80109328(void) {
     PLAYER.blendMode = 0;
 }
 
-void func_801093C4(Primitive*);
-INCLUDE_ASM("dra/nonmatchings/692E8", func_801093C4);
+void func_801093C4(void) {
+    DRAWENV sp10;
+    Primitive* prim;
+    s32 i;
+
+    prim = &g_PrimBuf[g_Entities[1].primIndex];
+    for (i = 0; i < 6; i++) {
+        prim = prim->next;
+    }
+    switch (g_Player.unk6A) {
+    case 0:
+        if (func_800EDB08(prim) != 0) {
+            prim->type = 7;
+            prim->blendMode = BLEND_VISIBLE;
+            prim = prim->next;
+            func_800EDB08(prim);
+            if (prim != NULL) {
+                prim->type = 7;
+                prim->blendMode = BLEND_VISIBLE;
+                g_Player.unk6A++;
+            }
+        }
+        break;
+    case 1:
+        if (g_Player.unk6A != 1) {
+            return;
+        }
+        sp10 = g_CurrentBuffer->draw;
+        sp10.isbg = 0;
+        if (g_Player.unk0C & 0x04000000) {
+            sp10.isbg = 1;
+        }
+        sp10.r0 = sp10.g0 = sp10.b0 = 0;
+        sp10.ofs[0] = 0x200;
+        sp10.clip = D_800ACE60;
+        sp10.ofs[1] = 0x1C0;
+        SetDrawEnv(*(s32*)&prim->r1, &sp10);
+        prim->priority = 0x190;
+        prim->blendMode = 0;
+        prim = prim->next;
+        prim->priority = 0x1B0;
+        prim->blendMode = 0x800;
+    }
+}
 
 void func_80109594(void) {
     Entity* e;
@@ -83,7 +125,7 @@ void func_80109594(void) {
         prim->blendMode = 0x10A;
         prim = prim->next;
     }
-    func_801093C4(prim);
+    func_801093C4();
 
 #if defined(VERSION_US)
     g_Player.unk20[0] = 0x10;
