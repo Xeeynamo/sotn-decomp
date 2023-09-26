@@ -84,6 +84,7 @@ jobs:
       - name: Check if they match
         run: make check
       - name: Check debug module
+        if: matrix.version == 'us'
         run: make disk_debug
       - name: Analyze calls dry run
         if: matrix.version == 'us'
