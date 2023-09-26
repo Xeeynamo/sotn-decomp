@@ -1,3 +1,5 @@
+// Weapon ID #22. Used by weapons:
+// Magic Missile
 #include "weapon_private.h"
 #include "shared.h"
 

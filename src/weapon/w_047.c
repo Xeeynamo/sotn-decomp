@@ -1,3 +1,5 @@
+// Weapon ID #47. Used by weapons:
+// Dynamite
 #include "weapon_private.h"
 #include "shared.h"
 

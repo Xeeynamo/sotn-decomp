@@ -1,3 +1,5 @@
+// Weapon ID #31. Used by weapons:
+// Basilard, Unknown#174
 #include "weapon_private.h"
 #include "shared.h"
 

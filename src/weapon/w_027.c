@@ -1,3 +1,5 @@
+// Weapon ID #27. Used by weapons:
+// Medusa shield, Unknown#211
 #include "weapon_private.h"
 #include "shared.h"
 

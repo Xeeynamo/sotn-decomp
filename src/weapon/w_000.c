@@ -1,3 +1,8 @@
+// Weapon ID #0. Used by weapons:
+// Tyrfing, Namakura, Gladius, Scimitar, Cutlass, Saber, Falchion, Broadsword,
+// Bekatowa, Damascus sword, Hunter sword, Bastard sword, Talwar, Sword of
+// Hador, Luminus, Harper, Gram, Mormegil, Terminus Est, Dark Blade,
+// Mourneblade, Badelaire, Unknown#169
 #include "weapon_private.h"
 #include "shared.h"
 

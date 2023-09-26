@@ -1,3 +1,5 @@
+// Weapon ID #9. Used by weapons:
+// Knight shield, Unknown#204
 #include "weapon_private.h"
 #include "shared.h"
 

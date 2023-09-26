@@ -1,3 +1,5 @@
+// Weapon ID #54. Used by weapons:
+// Gurthang, Unknown#195
 #include "weapon_private.h"
 #include "shared.h"
 

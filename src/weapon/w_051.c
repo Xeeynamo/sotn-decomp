@@ -1,3 +1,6 @@
+// Weapon ID #51. Used by weapons:
+// Estoc, Claymore, Flamberge, Zwei hander, Obsidian sword, Great Sword,
+// Unknown#182, Unknown#183, Unknown#184, Unknown#185
 #include "weapon_private.h"
 #include "shared.h"
 

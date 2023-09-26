@@ -1,3 +1,10 @@
+// Weapon ID #21. Used by weapons:
+// Orange, Apple, Banana, Grapes, Strawberry, Pineapple, Peanuts, Toadstool,
+// Shiitake, Cheesecake, Shortcake, Tart, Parfait, Pudding, Ice cream,
+// Frankfurter, Hamburger, Pizza, Cheese, Ham and eggs, Omelette, Morning set,
+// Lunch A, Lunch B, Curry rice, Gyros plate, Spaghetti, Grape juice, Barley
+// tea, Green tea, Natou, Ramen, Miso soup, Sushi, Pork bun, Red bean bun,
+// Chinese bun, Dim Sum set, Pot roast, Sirloin, Turkey, Meal ticket
 #include "weapon_private.h"
 #include "shared.h"
 

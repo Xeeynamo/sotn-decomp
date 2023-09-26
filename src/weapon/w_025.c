@@ -1,3 +1,5 @@
+// Weapon ID #25. Used by weapons:
+// Goddess shield, Unknown#209
 #include "weapon_private.h"
 #include "shared.h"
 

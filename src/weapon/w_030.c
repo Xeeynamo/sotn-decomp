@@ -1,3 +1,5 @@
+// Weapon ID #30. Used by weapons:
+// Sword of Dawn, Unknown#177
 #include "weapon_private.h"
 #include "shared.h"
 

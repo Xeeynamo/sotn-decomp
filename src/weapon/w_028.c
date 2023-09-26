@@ -1,3 +1,5 @@
+// Weapon ID #28. Used by weapons:
+// Skull shield, Unknown#212
 #include "weapon_private.h"
 #include "shared.h"
 

@@ -1,3 +1,5 @@
+// Weapon ID #37. Used by weapons:
+// Short sword, Jewel sword, Stone sword, Unknown#198
 #include "weapon_private.h"
 #include "shared.h"
 

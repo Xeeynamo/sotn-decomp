@@ -1,3 +1,5 @@
+// Weapon ID #18. Used by weapons:
+// Power of Sire
 #include "weapon_private.h"
 #include "shared.h"
 

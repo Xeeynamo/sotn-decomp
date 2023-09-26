@@ -1,3 +1,5 @@
+// Weapon ID #32. Used by weapons:
+// Combat knife, Unknown#175
 #include "weapon_private.h"
 #include "shared.h"
 

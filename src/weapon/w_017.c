@@ -1,3 +1,5 @@
+// Weapon ID #17. Used by weapons:
+// Pentagram, Bat Pentagram
 #include "weapon_private.h"
 #include "shared.h"
 

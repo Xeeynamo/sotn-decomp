@@ -1,3 +1,5 @@
+// Weapon ID #3. Used by weapons:
+// Morningstar
 #include "weapon_private.h"
 #include "shared.h"
 

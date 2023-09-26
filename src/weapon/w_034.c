@@ -1,3 +1,5 @@
+// Weapon ID #34. Used by weapons:
+// Shotel, Unknown#176
 #include "weapon_private.h"
 #include "shared.h"
 

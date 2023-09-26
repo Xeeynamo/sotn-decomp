@@ -1,3 +1,5 @@
+// Weapon ID #7. Used by weapons:
+// Shield rod, Unknown#173
 #include "weapon_private.h"
 #include "shared.h"
 

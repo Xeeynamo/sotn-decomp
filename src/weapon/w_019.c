@@ -1,3 +1,5 @@
+// Weapon ID #19. Used by weapons:
+// Neutron bomb
 #include "weapon_private.h"
 #include "shared.h"
 
