@@ -113,40 +113,30 @@ void func_801AD590(void) {
     func_801B2608(D_80180454[D_801D6B0C], 9);
 }
 
-// single instruction reorder, function tested working in-game
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801AD66C);
-#else
 void func_801AD66C(void) {
-    s32 spaceCounter;
-    s32 counter;
     s32 i;
+    s32 nSpaces;
+    char* strRichter;
 
-    /**
-     * If the entered name contains 8 spaces, sets the default
-     * name to "alucard " which is stored in D_801A7754
-     */
-    for (spaceCounter = 0, i = 0; i < 8; i++) {
+    // check if the name only contain spaces
+    for (nSpaces = 0, i = 0; i < 8; i++) {
         g_SaveName[i] = g_InputSaveName[i];
         if (g_InputSaveName[i] == ' ') {
-            spaceCounter++;
+            nSpaces++;
         }
     }
 
-    if (spaceCounter == 8) {
+    // if it only contain spaces, set a default name
+    if (nSpaces == 8) {
         __builtin_memcpy(g_SaveName, D_801A7754, 9);
     }
 
-    /**
-     * Checks byte by byte if the entered name is equal
-     * to "richter " and if time attack is unlocked,
-     * in which case enables the player to play as Richter
-     */
     D_80097B98 = 0;
     D_80097B99 = 0;
 
-    for (counter = 0; counter < 8; counter++) {
-        if (g_SaveName[counter] != D_80180468[counter]) {
+    // check if the name is Richter
+    for (strRichter = D_80180468, i = 0; i < 8; i++) {
+        if (g_SaveName[i] != *strRichter++) {
             break;
         }
     }
@@ -155,13 +145,13 @@ void func_801AD66C(void) {
         g_IsTimeAttackUnlocked = 2;
     }
 
-    if ((counter == 8) && (g_IsTimeAttackUnlocked != false)) {
+    // play as Richter only if the game was previously cleared
+    if (i == 8 && g_IsTimeAttackUnlocked != false) {
         g_PlayableCharacter = PLAYER_RICHTER;
     } else {
         g_PlayableCharacter = PLAYER_ALUCARD;
     }
 }
-#endif
 
 /* DATA */
 extern u8* D_801803B0;
