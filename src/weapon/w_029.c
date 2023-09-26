@@ -33,7 +33,8 @@ void func_ptr_80170004(Entity* self) {
             return;
         }
     }
-    self->palette = self->ext.weapon.unk80 + D_CF000_8017AD04[g_GameTimer/2 %5];
+    self->palette =
+        self->ext.weapon.unk80 + D_CF000_8017AD04[g_GameTimer / 2 % 5];
 }
 
 void func_ptr_80170008(Entity* self) {}
