@@ -1,3 +1,5 @@
+// Weapon ID #13. Used by weapons:
+// Heaven sword, Unknown#202
 #include "weapon_private.h"
 #include "shared.h"
 

@@ -1,3 +1,5 @@
+// Weapon ID #40. Used by weapons:
+// Monster vial 1
 #include "weapon_private.h"
 #include "shared.h"
 

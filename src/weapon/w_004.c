@@ -1,3 +1,5 @@
+// Weapon ID #4. Used by weapons:
+// Holy rod, Unknown#170
 #include "weapon_private.h"
 #include "shared.h"
 

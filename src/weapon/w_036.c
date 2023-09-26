@@ -1,3 +1,5 @@
+// Weapon ID #36. Used by weapons:
+// Takemitsu
 #include "weapon_private.h"
 #include "shared.h"
 

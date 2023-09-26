@@ -1,3 +1,5 @@
+// Weapon ID #20. Used by weapons:
+// Karma Coin
 #include "weapon_private.h"
 #include "shared.h"
 

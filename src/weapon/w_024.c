@@ -1,3 +1,5 @@
+// Weapon ID #24. Used by weapons:
+// Dark shield, Unknown#208
 #include "weapon_private.h"
 #include "shared.h"
 

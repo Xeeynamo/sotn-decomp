@@ -1,3 +1,5 @@
+// Weapon ID #43. Used by weapons:
+// Alucard sword, Sword Familiar, Alucart sword, Unknown#197
 #include "weapon_private.h"
 #include "shared.h"
 

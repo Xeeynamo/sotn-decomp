@@ -1,3 +1,5 @@
+// Weapon ID #45. Used by weapons:
+// Unknown#216
 #include "weapon_private.h"
 #include "shared.h"
 

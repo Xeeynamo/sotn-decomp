@@ -1,3 +1,5 @@
+// Weapon ID #49. Used by weapons:
+// Firebrand, Marsil, Unknown#179, Unknown#180
 #include "weapon_private.h"
 #include "shared.h"
 

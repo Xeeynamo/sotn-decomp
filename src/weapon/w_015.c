@@ -1,3 +1,5 @@
+// Weapon ID #15. Used by weapons:
+// Shuriken, Cross shuriken, Buffalo star, Flame star, TNT
 #include "weapon_private.h"
 #include "shared.h"
 

@@ -1,3 +1,6 @@
+// Weapon ID #53. Used by weapons:
+// Katana, Osafune katana, Masamune, Yasutsuna, Unknown#189, Unknown#192,
+// Unknown#193, Unknown#194
 #include "weapon_private.h"
 #include "shared.h"
 

@@ -1,3 +1,5 @@
+// Weapon ID #8. Used by weapons:
+// Leather shield, Unknown#203
 #include "weapon_private.h"
 #include "shared.h"
 

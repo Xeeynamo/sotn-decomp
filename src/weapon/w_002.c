@@ -1,3 +1,5 @@
+// Weapon ID #2. Used by weapons:
+// Mace
 #include "weapon_private.h"
 #include "shared.h"
 

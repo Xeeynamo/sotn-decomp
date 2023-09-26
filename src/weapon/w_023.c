@@ -1,3 +1,5 @@
+// Weapon ID #23. Used by weapons:
+// Herald shield, Unknown#207
 #include "weapon_private.h"
 #include "shared.h"
 

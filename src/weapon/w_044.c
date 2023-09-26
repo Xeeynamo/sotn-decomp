@@ -1,3 +1,5 @@
+// Weapon ID #44. Used by weapons:
+// Heart Refresh
 #include "weapon_private.h"
 #include "shared.h"
 

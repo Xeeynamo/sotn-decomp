@@ -1,3 +1,5 @@
+// Weapon ID #11. Used by weapons:
+// AxeLord shield, Unknown#206
 #include "weapon_private.h"
 #include "shared.h"
 

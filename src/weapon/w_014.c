@@ -1,3 +1,5 @@
+// Weapon ID #14. Used by weapons:
+// Runesword
 #include "weapon_private.h"
 #include "shared.h"
 

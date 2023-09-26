@@ -1,3 +1,5 @@
+// Weapon ID #52. Used by weapons:
+// Alucard shield, Unknown#214
 #include "weapon_private.h"
 #include "shared.h"
 

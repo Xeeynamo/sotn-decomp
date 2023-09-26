@@ -1,3 +1,5 @@
+// Weapon ID #46. Used by weapons:
+// Holbein dagger, Blue knuckles
 #include "weapon_private.h"
 #include "shared.h"
 

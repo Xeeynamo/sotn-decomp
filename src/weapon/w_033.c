@@ -1,3 +1,5 @@
+// Weapon ID #33. Used by weapons:
+// Nunchaku
 #include "weapon_private.h"
 #include "shared.h"
 

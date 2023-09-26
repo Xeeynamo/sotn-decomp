@@ -1,3 +1,5 @@
+// Weapon ID #6. Used by weapons:
+// Moon rod, Unknown#172
 #include "weapon_private.h"
 #include "shared.h"
 

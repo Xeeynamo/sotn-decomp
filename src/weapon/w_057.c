@@ -1,3 +1,5 @@
+// Weapon ID #57. Used by weapons:
+// Mablung Sword
 #include "weapon_private.h"
 #include "shared.h"
 

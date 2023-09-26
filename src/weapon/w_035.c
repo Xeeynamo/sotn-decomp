@@ -1,3 +1,5 @@
+// Weapon ID #35. Used by weapons:
+// Red Rust
 #include "weapon_private.h"
 #include "shared.h"
 

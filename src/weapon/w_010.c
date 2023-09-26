@@ -1,3 +1,5 @@
+// Weapon ID #10. Used by weapons:
+// Iron shield, Unknown#205
 #include "weapon_private.h"
 #include "shared.h"
 

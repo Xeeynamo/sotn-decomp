@@ -1,3 +1,5 @@
+// Weapon ID #38. Used by weapons:
+// Rapier, Unknown#191
 #include "weapon_private.h"
 #include "shared.h"
 
