@@ -8,7 +8,7 @@ const char ChToHex[] = {'0', '1', '2', '3', '4', '5', '6', '7',
 int g_FlagOffset;
 int g_FlagCursor;
 bool g_IsFlagEditMode;
-u8 g_CastleFlagsCopy[LEN(D_8003BDEC)];
+u8 g_CastleFlagsCopy[LEN(g_CastleFlags)];
 char g_CastleFlagChanges[MaxFlagChangeLogCount][8];
 int g_CastleFlagChangeCursor;
 
@@ -23,7 +23,7 @@ void InitFlagChecker(void) {
         g_CastleFlagChanges[i][0] = '\0';
 }
 
-void FlipBit(int offset, int bit) { D_8003BDEC[offset] ^= 1 << bit; }
+void FlipBit(int offset, int bit) { g_CastleFlags[offset] ^= 1 << bit; }
 
 void ReportFlagChange(int offset, u8 prev, u8 cur) {
     char* str =
@@ -50,10 +50,10 @@ int UpdateFlagCheckerListenMode(void) {
         return;
     }
 
-    for (i = 0; i < LEN(D_8003BDEC); i++) {
-        if (g_CastleFlagsCopy[i] != D_8003BDEC[i]) {
-            ReportFlagChange(i, g_CastleFlagsCopy[i], D_8003BDEC[i]);
-            g_CastleFlagsCopy[i] = D_8003BDEC[i];
+    for (i = 0; i < LEN(g_CastleFlags); i++) {
+        if (g_CastleFlagsCopy[i] != g_CastleFlags[i]) {
+            ReportFlagChange(i, g_CastleFlagsCopy[i], g_CastleFlags[i]);
+            g_CastleFlagsCopy[i] = g_CastleFlags[i];
         }
     }
 
@@ -68,7 +68,7 @@ int UpdateFlagCheckerListenMode(void) {
 
 void InitFlagCheckerListenMode(void) {
     g_CastleFlagChangeCursor = 0;
-    __builtin_memcpy(g_CastleFlagsCopy, D_8003BDEC, LEN(D_8003BDEC));
+    __builtin_memcpy(g_CastleFlagsCopy, g_CastleFlags, LEN(g_CastleFlags));
 }
 
 void PrintFlagLine(int offset, int columnCount) {
@@ -77,10 +77,10 @@ void PrintFlagLine(int offset, int columnCount) {
 
     FntPrint("%03X ", offset);
     while (columnCount--) {
-        if (offset >= sizeof(D_8003BDEC)) {
+        if (offset >= sizeof(g_CastleFlags)) {
             break;
         }
-        ch = D_8003BDEC[offset++];
+        ch = g_CastleFlags[offset++];
         buf[0] = '0' + !!(ch & 0x01);
         buf[1] = '0' + !!(ch & 0x02);
         buf[2] = '0' + !!(ch & 0x04);
@@ -101,7 +101,7 @@ void UpdateFlagChecker(void) {
     const int BitsCount = 8;
     const int RowCount = 8;
     const int ColumnCount = 3;
-    const int MaxOffset = LEN(D_8003BDEC) - RowCount * ColumnCount;
+    const int MaxOffset = LEN(g_CastleFlags) - RowCount * ColumnCount;
     const int MaxCursor = BitsCount * RowCount * ColumnCount;
 
     int i;

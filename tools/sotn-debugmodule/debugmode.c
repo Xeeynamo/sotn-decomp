@@ -163,7 +163,8 @@ u8 GetColType(s32 x, s32 y) {
         u16 colTile = g_CurrentRoomTileLayout
                           .fg[(absX >> 4) +
                               (((absY >> 4) * g_CurrentRoom.hSize) * new_var)];
-        colType = D_80073088->collision[colTile];
+        TileDefinition* temp = (TileDefinition*)0x80073088;
+        colType = temp->collision[colTile];
     }
     return colType;
 }
