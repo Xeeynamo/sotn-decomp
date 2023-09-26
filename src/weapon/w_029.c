@@ -32,7 +32,7 @@ void func_ptr_80170028(Entity* self) {
         self->hitboxHeight = 14;
         self->hitboxWidth = 14;
         self->ext.weapon.unk80 = 10;
-        self->step ++;
+        self->step++;
         return;
     }
     if (--self->ext.weapon.unk80 == 0) {
