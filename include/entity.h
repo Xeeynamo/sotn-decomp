@@ -145,7 +145,8 @@ typedef struct {
 typedef struct {
     /* 0x7C */ s16 lifetime;
     /* 0x7E */ s16 unk7E;
-    /* 0x80 */ s32 unk80;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
     /* 0x84 */ s32 unk84;
     /* 0x88 */ s16 childPalette;
     /* 0x8A */ s16 unk8A;

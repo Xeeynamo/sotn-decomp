@@ -21,7 +21,24 @@ INCLUDE_ASM("weapon/nonmatchings/w_029", EntityWeaponShieldSpell);
 
 INCLUDE_ASM("weapon/nonmatchings/w_029", func_ptr_80170024);
 
-INCLUDE_ASM("weapon/nonmatchings/w_029", func_ptr_80170028);
+void func_ptr_80170028(Entity* self) {
+    if (self->ext.weapon.parent->entityId == 0) {
+        DestroyEntity(self);
+        return;
+    }
+    if (self->step == 0) {
+        self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;
+        SetWeaponProperties(self, 0);
+        self->hitboxHeight = 14;
+        self->hitboxWidth = 14;
+        self->ext.weapon.unk80 = 10;
+        self->step ++;
+        return;
+    }
+    if (--self->ext.weapon.unk80 == 0) {
+        DestroyEntity(self);
+    }
+}
 
 void WeaponUnused2C(void) {}
 
