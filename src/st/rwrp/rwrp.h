@@ -4,6 +4,10 @@
 #include "common.h"
 #include "stage.h"
 
+// RWRP Sound IDs
+#define SE_RWRP_ENTER 0x636
+#define SE_RWRP_DEBRIS 0x644 // unused?
+
 extern PfnEntityUpdate D_801803E0[];
 extern u16 D_80180494[];
 extern s16 D_80180A94[];
