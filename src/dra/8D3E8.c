@@ -416,7 +416,7 @@ void func_8012E550(void) {
     if (g_Player.padTapped & PAD_CROSS) {
         if ((g_Player.padPressed & PAD_DOWN)) {
             for (i = 0; i < 4; i++) {
-                if ((g_Player.D_80072BD0[i][0] & 0x40)) {
+                if ((g_Player.colliders[i].effects & EFFECT_SOLID_FROM_ABOVE)) {
                     g_Player.D_80072F0E = 8;
                     func_8012CED4();
                     PLAYER.animFrameIdx = 4;

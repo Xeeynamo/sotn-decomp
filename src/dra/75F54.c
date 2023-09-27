@@ -161,13 +161,15 @@ void func_80116408(void) {
         PLAYER.velocityX = 0;
         if (func_8010E27C() != 0) {
             if (g_Player.padPressed & PAD_RIGHT) {
-                if ((g_Player.D_80072BD0[2][0] & 0x8001) ||
-                    (g_Player.D_80072BD0[1][0] & 0x8000) ||
+                if ((g_Player.colliders[2].effects &
+                     (EFFECT_UNK_8000 + EFFECT_SOLID)) ||
+                    (g_Player.colliders[1].effects & EFFECT_UNK_8000) ||
                     (PLAYER.posX.i.hi > 248)) {
                     SetSpeedX(FIX(3));
                 }
-            } else if ((g_Player.D_80072BD0[3][0] & 0x8001) ||
-                       (g_Player.D_80072BD0[1][0] & 0x8000) ||
+            } else if ((g_Player.colliders[3].effects &
+                        (EFFECT_UNK_8000 + EFFECT_SOLID)) ||
+                       (g_Player.colliders[1].effects & EFFECT_UNK_8000) ||
                        (PLAYER.posX.i.hi < 8)) {
                 SetSpeedX(FIX(3));
             }

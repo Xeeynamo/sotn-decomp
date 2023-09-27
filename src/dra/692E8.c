@@ -340,11 +340,14 @@ void func_8010BFFC(void) {
             for (i = 0; i < 4; i++) {
                 x = PLAYER.posX.i.hi + D_800ACED0.pairs[i].unk0;
                 y = PLAYER.posY.i.hi + D_800ACED0.pairs[i].unk2;
-                CheckCollision(x, y, (Collider*)&g_Player.D_80072BD0[i][0], 0);
+                CheckCollision(x, y, &g_Player.colliders[i], 0);
             }
-            if ((g_Player.D_80072BD0[1][0] & 0x81) == 1 ||
-                (g_Player.D_80072BD0[2][0] & 0x81) == 1 ||
-                (g_Player.D_80072BD0[3][0] & 0x81) == 1) {
+            if ((g_Player.colliders[1].effects &
+                 (EFFECT_SOLID_FROM_BELOW + EFFECT_SOLID)) == EFFECT_SOLID ||
+                (g_Player.colliders[2].effects &
+                 (EFFECT_SOLID_FROM_BELOW + EFFECT_SOLID)) == EFFECT_SOLID ||
+                (g_Player.colliders[3].effects &
+                 (EFFECT_SOLID_FROM_BELOW + EFFECT_SOLID)) == EFFECT_SOLID) {
                 // I don't know man
                 (*(&PLAYER)).posY.i.hi--;
                 PLAYER.velocityY = 0;
@@ -371,12 +374,14 @@ void func_8010BFFC(void) {
                     y += 6;
                 }
 #endif
-                CheckCollision(
-                    x, y, (Collider*)&g_Player.D_80072BD0[4 + i][0], 0);
+                CheckCollision(x, y, &g_Player.colliders[4 + i], 0);
             }
-            if ((g_Player.D_80072BD0[5][0] & 0x41) == 1 ||
-                (g_Player.D_80072BD0[6][0] & 0x41) == 1 ||
-                (g_Player.D_80072BD0[7][0] & 0x41) == 1) {
+            if ((g_Player.colliders[5].effects &
+                 (EFFECT_SOLID_FROM_ABOVE + EFFECT_SOLID)) == EFFECT_SOLID ||
+                (g_Player.colliders[6].effects &
+                 (EFFECT_SOLID_FROM_ABOVE + EFFECT_SOLID)) == EFFECT_SOLID ||
+                (g_Player.colliders[7].effects &
+                 (EFFECT_SOLID_FROM_ABOVE + EFFECT_SOLID)) == EFFECT_SOLID) {
                 // I don't know man
                 (*(&PLAYER)).posY.i.hi++;
                 PLAYER.velocityY = 0;
