@@ -67,14 +67,14 @@ void EntityWeaponShieldSpell(Entity* self) {
             self->animSet = -0x7FEE;
             self->ext.weapon.childPalette = 0x128;
             self->unk5A = 0x66;
-            self->ext.generic.unk7C.U8.unk0 = 0;
-            self->ext.generic.unk7C.U8.unk1 = 0x80;
+            self->ext.weapon29.unk7C = 0;
+            self->ext.weapon29.unk7D = 0x80;
         } else {
             self->animSet = -0x7FF0;
             self->ext.weapon.childPalette = 0x110;
             self->unk5A = 0x64;
-            self->ext.generic.unk7C.U8.unk0 = 0x80;
-            self->ext.generic.unk7C.U8.unk1 = 0;
+            self->ext.weapon29.unk7C = 0x80;
+            self->ext.weapon29.unk7D = 0;
         }
         self->posY.i.hi -= 8;
         self->flags = 0x04810000;
@@ -89,8 +89,8 @@ void EntityWeaponShieldSpell(Entity* self) {
         prim->tpage = 0x19;
         prim->u0 = prim->u2 = 0x80;
         prim->u1 = prim->u3 = 0xCF;
-        prim->v0 = prim->v1 = self->ext.generic.unk7C.S8.unk0;
-        prim->v2 = prim->v3 = self->ext.generic.unk7C.S8.unk0 + 0x4F;
+        prim->v0 = prim->v1 = self->ext.weapon29.unk7C;
+        prim->v2 = prim->v3 = self->ext.weapon29.unk7C + 0x4F;
         self->ext.weapon.unk82 = 0;
         prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
             prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =

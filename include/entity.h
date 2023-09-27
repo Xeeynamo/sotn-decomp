@@ -164,6 +164,11 @@ typedef struct {
 } ET_Weapon;
 
 typedef struct {
+    /* 0x7C */ u8 unk7C;
+    /* 0x7D */ u8 unk7D;
+} ET_Weapon29;
+
+typedef struct {
     /* 0x7C */ char pad_7C[0x4];
     /* 0x80 */ s16 timer;
     /* 0x82 */ char pad_82[0x2];
@@ -491,6 +496,7 @@ typedef union {
     /* 0x7C */ ET_RelicOrb relicOrb;
     /* 0x7C */ ET_MessageBox messageBox;
     /* 0x7C */ ET_Weapon weapon;
+    /* 0x7C */ ET_Weapon29 weapon29;
     /* 0x7C */ ET_SoulStealOrb soulStealOrb;
     /* 0x7C */ ET_GaibonSlogra GS_Props;
     /* 0x7C */ ET_WarpRoom warpRoom;
