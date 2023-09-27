@@ -342,9 +342,12 @@ void func_8010BFFC(void) {
                 y = PLAYER.posY.i.hi + D_800ACED0.pairs[i].unk2;
                 CheckCollision(x, y, &g_Player.colliders[i], 0);
             }
-            if ((g_Player.colliders[1].effects & (EFFECT_SOLID_FROM_BELOW + EFFECT_SOLID)) == EFFECT_SOLID ||
-                (g_Player.colliders[2].effects & (EFFECT_SOLID_FROM_BELOW + EFFECT_SOLID)) == EFFECT_SOLID ||
-                (g_Player.colliders[3].effects & (EFFECT_SOLID_FROM_BELOW + EFFECT_SOLID)) == EFFECT_SOLID) {
+            if ((g_Player.colliders[1].effects &
+                 (EFFECT_SOLID_FROM_BELOW + EFFECT_SOLID)) == EFFECT_SOLID ||
+                (g_Player.colliders[2].effects &
+                 (EFFECT_SOLID_FROM_BELOW + EFFECT_SOLID)) == EFFECT_SOLID ||
+                (g_Player.colliders[3].effects &
+                 (EFFECT_SOLID_FROM_BELOW + EFFECT_SOLID)) == EFFECT_SOLID) {
                 // I don't know man
                 (*(&PLAYER)).posY.i.hi--;
                 PLAYER.velocityY = 0;
@@ -371,12 +374,14 @@ void func_8010BFFC(void) {
                     y += 6;
                 }
 #endif
-                CheckCollision(
-                    x, y, &g_Player.colliders[4 + i], 0);
+                CheckCollision(x, y, &g_Player.colliders[4 + i], 0);
             }
-            if ((g_Player.colliders[5].effects & (EFFECT_SOLID_FROM_ABOVE + EFFECT_SOLID)) == EFFECT_SOLID ||
-                (g_Player.colliders[6].effects & (EFFECT_SOLID_FROM_ABOVE + EFFECT_SOLID)) == EFFECT_SOLID ||
-                (g_Player.colliders[7].effects & (EFFECT_SOLID_FROM_ABOVE + EFFECT_SOLID)) == EFFECT_SOLID) {
+            if ((g_Player.colliders[5].effects &
+                 (EFFECT_SOLID_FROM_ABOVE + EFFECT_SOLID)) == EFFECT_SOLID ||
+                (g_Player.colliders[6].effects &
+                 (EFFECT_SOLID_FROM_ABOVE + EFFECT_SOLID)) == EFFECT_SOLID ||
+                (g_Player.colliders[7].effects &
+                 (EFFECT_SOLID_FROM_ABOVE + EFFECT_SOLID)) == EFFECT_SOLID) {
                 // I don't know man
                 (*(&PLAYER)).posY.i.hi++;
                 PLAYER.velocityY = 0;
