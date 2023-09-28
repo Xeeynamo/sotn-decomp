@@ -509,8 +509,8 @@ void func_ptr_80170024(Entity* self) {
     for (i = 0; i < 19; i++, prim = prim->next) {
         prim->clut =
             self->ext.weapon.childPalette + D_CF000_8017AD10[g_Timer / 2 % 10];
-        prim->x0 = (s16)prev_x2;
-        prim->y0 = (s16)prev_y2;
+        prim->x0 = prev_x2;
+        prim->y0 = prev_y2;
         prim->x1 = prev_x3;
         prim->y1 = prev_x4;
         var_s7++;
@@ -520,10 +520,10 @@ void func_ptr_80170024(Entity* self) {
         centerY = var_s7->posY.i.hi;
         angle1 = var_s7->unk8 - 0x400;
         angle2 = var_s7->unk8 + 0x400;
-        prev_x2 = prim->x2 = centerX + (((rcos((s32)angle1) >> 4) * size) >> 8);
-        prev_y2 = prim->y2 = centerY - (((rsin((s32)angle1) >> 4) * size) >> 8);
-        prim->x3 = prev_x3 = centerX + (((rcos((s32)angle2) >> 4) * size) >> 8);
-        prim->y3 = prev_x4 = centerY - (((rsin((s32)angle2) >> 4) * size) >> 8);
+        prev_x2 = prim->x2 = centerX + (((rcos(angle1) >> 4) * size) >> 8);
+        prev_y2 = prim->y2 = centerY - (((rsin(angle1) >> 4) * size) >> 8);
+        prim->x3 = prev_x3 = centerX + (((rcos(angle2) >> 4) * size) >> 8);
+        prim->y3 = prev_x4 = centerY - (((rsin(angle2) >> 4) * size) >> 8);
     }
 
     var_s7 = &D_CF000_8017C9A0[dragonNumber][0];
@@ -536,16 +536,16 @@ void func_ptr_80170024(Entity* self) {
     nextY_copy = nextY;
     angle1 = var_s7->unk8 - 0x199;
     angle2 = var_s7->unk8 + 0x199;
-    firstPrim->x0 = nextX + (((rcos((s32)angle1) >> 4) * size) >> 8);
-    firstPrim->y0 = nextY - (((rsin((s32)angle1) >> 4) * size) >> 8);
-    firstPrim->x1 = nextX + (((rcos((s32)angle2) >> 4) * size) >> 8);
-    firstPrim->y1 = nextY - (((rsin((s32)angle2) >> 4) * size) >> 8);
+    firstPrim->x0 = nextX + (((rcos(angle1) >> 4) * size) >> 8);
+    firstPrim->y0 = nextY - (((rsin(angle1) >> 4) * size) >> 8);
+    firstPrim->x1 = nextX + (((rcos(angle2) >> 4) * size) >> 8);
+    firstPrim->y1 = nextY - (((rsin(angle2) >> 4) * size) >> 8);
     angle1 = var_s7->unk8 + 0x999;
     angle2 = var_s7->unk8 + 0x667;
-    firstPrim->x2 = nextX + (((rcos((s32)angle1) >> 4) * size) >> 8);
-    firstPrim->y2 = nextY - (((rsin((s32)angle1) >> 4) * size) >> 8);
-    firstPrim->x3 = nextX + (((rcos((s32)angle2) >> 4) * size) >> 8);
-    firstPrim->y3 = nextY - (((rsin((s32)angle2) >> 4) * size) >> 8);
+    firstPrim->x2 = nextX + (((rcos(angle1) >> 4) * size) >> 8);
+    firstPrim->y2 = nextY - (((rsin(angle1) >> 4) * size) >> 8);
+    firstPrim->x3 = nextX + (((rcos(angle2) >> 4) * size) >> 8);
+    firstPrim->y3 = nextY - (((rsin(angle2) >> 4) * size) >> 8);
     self->posX.i.hi = nextX_copy;
     self->posY.i.hi = nextY_copy;
     g_api.func_8011AAFC(self, ((g_HandId + 1) << 0xE) + 0x64, 0);
