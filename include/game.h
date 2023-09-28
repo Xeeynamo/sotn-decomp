@@ -1226,8 +1226,8 @@ typedef struct {
 } FgLayer; /* size=0x8 */
 
 typedef struct {
-    /* 80072BD0 */ s32 D_80072BD0[8][9];
-    /* 80072CF0 */ s32 D_80072CF0[14][9];
+    /* 80072BD0 */ Collider colliders[8];
+    /* 80072CF0 */ s32 D_80072CF0[14][9]; // Seems like another collider set
     /* 80072EE8 */ s32 padPressed;
     /* 80072EEC */ s32 padTapped;
     /* 80072EF0 */ s32 padHeld;

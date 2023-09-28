@@ -189,7 +189,7 @@ void func_801131C4(void) {
     if ((g_Player.padTapped & PAD_CROSS) && !(g_Player.unk46 & PAD_LEFT)) {
         if (g_Player.padPressed & PAD_DOWN) {
             for (i = 0; i < 4; i++) {
-                if ((g_Player.D_80072BD0[i][0] & 0x40)) {
+                if ((g_Player.colliders[i].effects & EFFECT_SOLID_FROM_ABOVE)) {
                     g_Player.D_80072F0E = 8;
                     return;
                 }
