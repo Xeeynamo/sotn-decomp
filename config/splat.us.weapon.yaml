@@ -531,7 +531,7 @@ segments:
       - [0xCF040, animset, w_029_1]
       - [0xCF884, animset, w_029_2]
       - [0xCF884, data, w_029]
-      - [0xCFDBC, .rodata, w_029]
+      - [0xCFD54, .rodata, w_029]
       - [0xCFDD8, c, w_029]
       - [0xD19A0, sbss, w_029]
   - name: f_030
