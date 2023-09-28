@@ -49,12 +49,12 @@ void EntityWeaponAttack(Entity* self) {
     switch (self->step) {
     case 0:
         SetSpriteBank1(g_Animset);
-        if (self->params & 0x8000) {
-            self->animSet = -0x7FEE;
+        if (self->params & ANIMSET_OVL_FLAG) {
+            self->animSet = ANIMSET_OVL(18);
             self->ext.weapon.unk80 = 0x128;
             self->unk5A = 0x66;
         } else {
-            self->animSet = -0x7FF0;
+            self->animSet = ANIMSET_OVL(16);
             self->ext.weapon.unk80 = 0x110;
             self->unk5A = 0x64;
         }
