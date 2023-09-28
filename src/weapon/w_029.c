@@ -47,7 +47,7 @@ void EntityWeaponAttack(Entity* self) {
         unkAC_offset++;
     }
     switch (self->step) {
-    case 0:              
+    case 0:
         SetSpriteBank1(g_Animset);
         if (self->params & 0x8000) {
             self->animSet = -0x7FEE;
@@ -69,11 +69,11 @@ void EntityWeaponAttack(Entity* self) {
             self->step++;
         }
         break;
-    case 2:                               
+    case 2:
         switch (PLAYER.ext.player.unkAC) {
-        case 9:                           
-        case 10:                          
-        case 11:                          
+        case 9:
+        case 10:
+        case 11:
             newUnkAC++;
         case 7:
             newUnkAC++;
