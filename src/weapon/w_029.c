@@ -46,8 +46,8 @@ void EntityWeaponAttack(Entity* self) {
     if ((PLAYER.step == 2) && (PLAYER.step_s != 2)) {
         unkAC_offset++;
     }
-    switch (self->step) { /* switch 1 */
-    case 0:               /* switch 1 */
+    switch (self->step) {
+    case 0:              
         SetSpriteBank1(g_Animset);
         if (self->params & 0x8000) {
             self->animSet = -0x7FEE;
@@ -63,37 +63,37 @@ void EntityWeaponAttack(Entity* self) {
         g_Player.unk48 = 1;
         SetWeaponProperties(self, 0);
         self->step++;
-    case 1: /* switch 1 */
+    case 1:
         self->ext.weapon.unkAC = unkAC_offset + 10;
         if (self->animFrameDuration < 0) {
             self->step++;
         }
         break;
-    case 2:                                /* switch 1 */
-        switch (PLAYER.ext.player.unkAC) { /* switch 2 */
-        case 9:                            /* switch 2 */
-        case 10:                           /* switch 2 */
-        case 11:                           /* switch 2 */
+    case 2:                               
+        switch (PLAYER.ext.player.unkAC) {
+        case 9:                           
+        case 10:                          
+        case 11:                          
             newUnkAC++;
-        case 7: /* switch 2 */
+        case 7:
             newUnkAC++;
-        case 8: /* switch 2 */
+        case 8:
             newUnkAC++;
-        case 12: /* switch 2 */
+        case 12:
             newUnkAC++;
-        case 13: /* switch 2 */
+        case 13:
             newUnkAC++;
-        case 24: /* switch 2 */
-        case 25: /* switch 2 */
+        case 24:
+        case 25:
             newUnkAC++;
-        case 14: /* switch 2 */
-        case 15: /* switch 2 */
+        case 14:
+        case 15:
             newUnkAC++;
-        case 26: /* switch 2 */
+        case 26:
             newUnkAC += 2;
             self->animFrameIdx = PLAYER.animFrameIdx;
             break;
-        default: /* switch 2 */
+        default:
             self->animFrameIdx = 0;
             newUnkAC = newUnkAC + unkAC_offset;
             break;
@@ -101,7 +101,7 @@ void EntityWeaponAttack(Entity* self) {
         self->ext.weapon.unkAC = newUnkAC;
         self->animFrameDuration = 2;
         break;
-    case 3: /* switch 1 */
+    case 3:
         g_Player.unk48 = 0;
         self->ext.weapon.unkAC = unkAC_offset + 12;
         if (self->animFrameDuration < 0) {
@@ -109,7 +109,7 @@ void EntityWeaponAttack(Entity* self) {
             return;
         }
         break;
-    case 4: /* switch 1 */
+    case 4:
         self->hitboxState = 0;
         g_Player.unk48 = 0;
         self->unk19 |= 4;
