@@ -5,7 +5,7 @@ void EntityZombie(Entity* self) {
     s32 temp_a0;
 
     if ((self->flags & 0x100) && (self->step < 4)) {
-        func_801CAD28(NA_SE_EN_ZOMBIE_EXPLODE);
+        func_801CAD28(SE_ZOMBIE_EXPLODE);
         self->hitboxState = 0;
         // Spawn Zombie explosion
         newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
