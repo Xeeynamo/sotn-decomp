@@ -266,6 +266,11 @@ typedef struct {
     u16 exteriorLight;
 } JosephsCloak;
 
+typedef struct {
+    s16 buttons_correct;
+    s16 timer;
+} ButtonComboState;
+
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern s32 D_800A0144[];
 extern u32 D_800A0158;
@@ -608,8 +613,7 @@ extern s16 D_80138FAC;
 extern DebugMode g_DebugMode;
 extern s16 g_VolL; // vol_l
 extern s16 D_80138FBC;
-extern Unkstruct_80138FC0 D_80138FC0[0x10];
-
+extern ButtonComboState g_buttonCombo[16];
 extern s16 D_80138FC8;
 extern s16 D_80138FCA;
 extern s16 g_sfxRingBufferPos1; // D_80139000

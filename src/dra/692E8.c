@@ -101,8 +101,8 @@ void func_80109594(void) {
     }
 
     for (i = 0; i < 0x10; i++) {
-        D_80138FC0[i].x = 0;
-        D_80138FC0[i].y = 0;
+        g_buttonCombo[i].buttons_correct = 0;
+        g_buttonCombo[i].timer = 0;
     }
 
     g_Player.unk04 = 1;

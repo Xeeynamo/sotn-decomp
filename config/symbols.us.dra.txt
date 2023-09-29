@@ -956,6 +956,7 @@ g_MistTimer = 0x80138004;
 g_SeqTable = 0x80138460;
 g_DebugMode = 0x80138FB0;
 g_VolL = 0x80138FB8;
+g_buttonCombo = 0x80138FC0;
 g_sfxRingBufferPos1 = 0x80139000;
 g_VolR = 0x80139004;
 g_DebugCurPal = 0x8013900C;
