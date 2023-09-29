@@ -598,7 +598,7 @@ extern s32 D_80137F9C;
 extern s32 D_80137FB4;
 extern s32 D_80137FB8;
 extern s32 D_80137FBC;
-extern s16 g_wasFacingLeft; // used for quarter circle forward
+extern s16 g_WasFacingLeft; // used for quarter circle forward
 extern s32 D_80137FDC;
 extern s32 D_80137FE0;
 extern s32 D_80137FE4;

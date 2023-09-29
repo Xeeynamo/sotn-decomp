@@ -1421,19 +1421,19 @@ bool CheckQuarterCircleForwardInput(void) {
 
     directionsPressed =
         g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
-    if (!g_wasFacingLeft) {
+    if (!g_WasFacingLeft) {
         forward = PAD_RIGHT;
     } else {
         forward = PAD_LEFT;
     }
-    if (!g_wasFacingLeft) {
+    if (!g_WasFacingLeft) {
         down_forward = PAD_DOWN + PAD_RIGHT;
     } else {
         down_forward = PAD_DOWN + PAD_LEFT;
     }
     switch (g_ButtonCombo[COMBO_QCF].buttonsCorrect) {
     case 0:
-        g_wasFacingLeft = PLAYER.facingLeft;
+        g_WasFacingLeft = PLAYER.facingLeft;
         if (directionsPressed == PAD_DOWN) {
             g_ButtonCombo[COMBO_QCF].timer = 20;
             g_ButtonCombo[COMBO_QCF].buttonsCorrect++;
@@ -1471,7 +1471,7 @@ bool CheckQuarterCircleForwardInput(void) {
             }
             if (--g_ButtonCombo[1].timer == 0) {
                 g_ButtonCombo[COMBO_QCF].buttonsCorrect = 0;
-                g_wasFacingLeft = PLAYER.facingLeft;
+                g_WasFacingLeft = PLAYER.facingLeft;
             }
         }
     }
