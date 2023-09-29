@@ -266,6 +266,32 @@ typedef struct {
     u16 exteriorLight;
 } JosephsCloak;
 
+// g_ButtonCombo is an array of 16, here is what each index is for
+// Names should be updated as each one is decompiled.
+typedef enum {
+    COMBO_GRAVITY_BOOTS,
+    COMBO_WOLF_CHARGE,
+    COMBO_UNK2,
+    COMBO_UNK3,
+    COMBO_UNK4,
+    COMBO_UNK5,
+    COMBO_UNK6,
+    COMBO_UNK7,
+    COMBO_UNK8,
+    COMBO_UNK9,
+    COMBO_UNK10,
+    COMBO_UNK11,
+    COMBO_UNK12,
+    COMBO_UNK13,
+    COMBO_UNK14,
+    COMBO_UNK15,
+} ButtonComboIdx;
+
+typedef struct {
+    s16 buttonsCorrect;
+    s16 timer;
+} ButtonComboState;
+
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern s32 D_800A0144[];
 extern u32 D_800A0158;
@@ -608,8 +634,7 @@ extern s16 D_80138FAC;
 extern DebugMode g_DebugMode;
 extern s16 g_VolL; // vol_l
 extern s16 D_80138FBC;
-extern Unkstruct_80138FC0 D_80138FC0[0x10];
-
+extern ButtonComboState g_ButtonCombo[16];
 extern s16 D_80138FC8;
 extern s16 D_80138FCA;
 extern s16 g_sfxRingBufferPos1; // D_80139000

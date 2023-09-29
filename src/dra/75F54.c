@@ -2911,7 +2911,8 @@ void func_8012CB4C(void) {
 void func_8012CC30(s32 arg0) {
     if (arg0 == 0) {
         D_80138444 = 1;
-        if (D_80138FC0[1].x == 255 && IsRelicActive(RELIC_SKILL_OF_WOLF) &&
+        if (g_ButtonCombo[COMBO_WOLF_CHARGE].buttonsCorrect == (u8)(-1) &&
+            IsRelicActive(RELIC_SKILL_OF_WOLF) &&
             CastSpell(SPELL_WOLF_CHARGE)) {
             func_8010E27C();
             PLAYER.step_s = 2;

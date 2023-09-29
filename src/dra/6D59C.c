@@ -748,7 +748,7 @@ bool func_8010EDB8(void) {
 block_32:
     equipped_id = g_Status.equipment[hand];
     equipped_item = &g_EquipDefs[g_Status.equipment[hand]];
-    if (D_80138FC0[1].x != 0xFF) {
+    if (g_ButtonCombo[COMBO_WOLF_CHARGE].buttonsCorrect != 0xFF) {
         goto block_38c;
     }
     var_s2 = equipped_item->specialMove;
@@ -1370,7 +1370,48 @@ s16 func_80110394(void) {
     return 0;
 }
 
-INCLUDE_ASM("dra/nonmatchings/6D59C", func_801104D0);
+bool CheckGravityBootsInput(void) {
+    switch (g_ButtonCombo[COMBO_GRAVITY_BOOTS].buttonsCorrect) {
+    case 0:
+        if ((g_Player.padTapped & PAD_DOWN) && (g_Player.padHeld == 0)) {
+            g_ButtonCombo[COMBO_GRAVITY_BOOTS].timer = 16;
+            g_ButtonCombo[COMBO_GRAVITY_BOOTS].buttonsCorrect++;
+        }
+        break;
+    case 1:
+        if (g_Player.padTapped & PAD_UP) {
+            g_ButtonCombo[COMBO_GRAVITY_BOOTS].timer = 16;
+            g_ButtonCombo[COMBO_GRAVITY_BOOTS].buttonsCorrect++;
+        } else {
+            if (--g_ButtonCombo[COMBO_GRAVITY_BOOTS].timer == 0) {
+                g_ButtonCombo[COMBO_GRAVITY_BOOTS].buttonsCorrect = 0;
+            }
+        }
+        break;
+    case 2:
+        if ((g_ButtonCombo[COMBO_GRAVITY_BOOTS].timer != 0) &&
+            --g_ButtonCombo[COMBO_GRAVITY_BOOTS].timer == 0) {
+            g_ButtonCombo[COMBO_GRAVITY_BOOTS].buttonsCorrect = 0;
+            break;
+        }
+        if (IsRelicActive(RELIC_GRAVITY_BOOTS) &&
+            (g_Player.padTapped & PAD_CROSS) && !(g_Player.unk46 & 0x8000) &&
+            ((PLAYER.step == 2) ||
+             ((PLAYER.step == 4) && (g_Player.unk44 & 1)))) {
+            if (g_Player.unk72 == 0) {
+                if (func_800FF064(1) >= 0) {
+                    func_8010E9A4();
+                    g_ButtonCombo[COMBO_GRAVITY_BOOTS].buttonsCorrect = 0;
+                    return 1;
+                }
+            } else {
+                g_ButtonCombo[COMBO_GRAVITY_BOOTS].buttonsCorrect = 0;
+            }
+        }
+        break;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("dra/nonmatchings/6D59C", func_801106A4);
 

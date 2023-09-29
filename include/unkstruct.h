@@ -217,10 +217,6 @@ typedef struct Unkstruct_801C6C6C {
     } y;
 } Unkstruct_801C6C6C;
 
-typedef struct {
-    s16 x, y;
-} Unkstruct_80138FC0;
-
 // Somehow related to how Player sprites are stored in the VRAM
 typedef struct {
     s16 unk00, unk02;
