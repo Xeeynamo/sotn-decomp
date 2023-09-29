@@ -1,8 +1,10 @@
 #include "stage.h"
 
 // NO3 Sound IDs
-//#define 0x607
-//#define 0x608
+#define SE_BARRIER_MOVE 0x607
+// It's possible that SE_BARRIER_MOVE_2 does not
+// trigger in-game because NP3 uses 0x609 instead
+#define SE_BARRIER_MOVE_2 0x608
 #define SE_SKEL_DEATH 0x62B
 #define SE_DEATH_AMBIENCE 0x631
 // Also used for barrier in "Cube of Zoe" room
@@ -18,7 +20,7 @@
 #define SE_MERMAN_FIRE 0x662
 #define SE_CASTLE_THUNDER 0x665
 #define SE_SKEL_SWORD_SWING 0x66D
-//#define EntityCavernDoorLeverSFX 0x675
+#define SE_LEVER_SWITCH_MOVE 0x675
 #define SE_FLOOR_SWITCH_CLICK 0x676
 //#define 0x684
 #define SE_OWL_WING_FLAP 0x68C
