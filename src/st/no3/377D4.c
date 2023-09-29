@@ -189,7 +189,7 @@ void EntityShuttingWindow(Entity* self) {
         self->ext.shuttingWindow.unk80 += self->ext.shuttingWindow.unk82;
         self->ext.shuttingWindow.unk82 -= 4;
         if (self->ext.shuttingWindow.unk80 < 0) {
-            func_801CAD28(NA_SE_EV_WINDOW_LATCH);
+            func_801CAD28(SE_NO3_WINDOW_CLOSE);
             self->ext.shuttingWindow.unk80 = 0;
             self->ext.shuttingWindow.timer = 32;
             self->step++;
@@ -323,7 +323,7 @@ void EntityCastleDoor(Entity* self) {
         if (self->ext.castleDoor.rotAngle > 0) {
             self->ext.castleDoor.rotAngle = 0;
             self->step += 2;
-            g_api.PlaySfx(0x63D);
+            g_api.PlaySfx(SE_CASTLE_GATE_CLOSE);
             tilePos = 0x445;
             for (i = 0, tilePtr = D_80181130; i < 8; tilePtr++, i++) {
                 g_CurrentRoomTileLayout.fg[tilePos] = *tilePtr;
@@ -597,11 +597,11 @@ void EntityCavernDoorLever(Entity* entity) {
             if (entity->rotAngle > 0) {
                 entity->rotAngle = 0;
                 if (g_CastleFlags[0x30] == 0) {
-                    g_api.PlaySfx(0x675);
+                    g_api.PlaySfx(SE_LEVER_SWITCH_MOVE);
                 }
                 g_CastleFlags[0x30] = 1;
             } else if (!(g_Timer & 0xF)) {
-                g_api.PlaySfx(0x675);
+                g_api.PlaySfx(SE_LEVER_SWITCH_MOVE);
             }
         }
         break;
@@ -697,7 +697,7 @@ void EntityCavernDoor(Entity* self) {
 
     case 1:
         if (g_CastleFlags[48] != 0) {
-            g_api.PlaySfx(NA_SE_EV_SWITCH_CLICK);
+            g_api.PlaySfx(SE_FLOOR_SWITCH_CLICK);
             self->step++;
         }
         break;
@@ -814,7 +814,7 @@ void EntityClickSwitch(Entity* entity) {
             entity->posY.val += FIX(0.75);
             if ((g_Camera.posY.i.hi + entity->posY.i.hi) > 160) {
                 entity->posY.i.hi = 160 - g_Camera.posY.i.hi;
-                g_api.PlaySfx(NA_SE_EV_SWITCH_CLICK);
+                g_api.PlaySfx(SE_FLOOR_SWITCH_CLICK);
                 g_CastleFlags[0x31] = 1;
                 entity->step++;
             }
@@ -1070,7 +1070,7 @@ void EntityMermanRockLeftSide(Entity* self) {
                 tilePos += 0x30;
             }
 
-            g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
+            g_api.PlaySfx(SE_WALL_BREAK);
 
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
@@ -1169,7 +1169,7 @@ void EntityMermanRockRightSide(Entity* self) {
                 tilePos += 0x30;
             }
 
-            g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
+            g_api.PlaySfx(SE_WALL_BREAK);
 
             newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
             if (newEntity != NULL) {
@@ -1228,7 +1228,7 @@ void EntityUnkId26(Entity* self) {
 
     case 1:
         if ((g_CastleFlags[51] & 12) == 12) {
-            func_801CAD28(0x644);
+            func_801CAD28(SE_WALL_BREAK);
             self->step++;
         }
         break;
@@ -1344,7 +1344,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
 
     case 1:
         if (self->hitFlags != 0) {
-            g_api.PlaySfx(0x64B);
+            g_api.PlaySfx(SE_NO3_ALUCARD_FLOOR_HIT);
         }
 
         if (self->flags & 0x100) {
@@ -1353,7 +1353,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
         break;
 
     case 2:
-        g_api.PlaySfx(0x644);
+        g_api.PlaySfx(SE_WALL_BREAK);
         g_CurrentRoomTileLayout.fg[0x4D9] = 0x3EE;
         g_CurrentRoomTileLayout.fg[0x539] = 0x3D2;
         g_CastleFlags[stairwayPieceBroken] = true;
@@ -1425,7 +1425,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
         break;
 
     case 4:
-        g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
+        g_api.PlaySfx(SE_WALL_BREAK);
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
@@ -1564,7 +1564,7 @@ void EntityUnkId29(Entity* self) {
         self->zPriority = 0x2A;
         self->flags &= ~FLAG_UNK_08000000;
         self->facingLeft = Random() & 1;
-        g_api.func_80134714(0x665, 0x40, (self->posX.i.hi >> 0x4) - 8);
+        g_api.func_80134714(SE_CASTLE_THUNDER, 0x40, (self->posX.i.hi >> 0x4) - 8);
     }
     if (AnimateEntity(D_80181390, self) == 0) {
         DestroyEntity(self);
@@ -1610,7 +1610,7 @@ void EntitySwitch(Entity* entity) {
             if ((g_Camera.posY.i.hi + entity->posY.i.hi) > 193) {
                 entity->posY.i.hi = 193 - g_Camera.posY.i.hi;
                 g_CastleFlags[0x32] = 1;
-                g_api.PlaySfx(0x608);
+                g_api.PlaySfx(SE_BARRIER_MOVE_2);
                 entity->step++;
             }
         }
@@ -1673,7 +1673,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
 
     case 1:
         if (g_CastleFlags[50] != 0) {
-            g_api.PlaySfx(0x607);
+            g_api.PlaySfx(SE_BARRIER_MOVE);
             self->step++;
         }
         break;
