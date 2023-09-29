@@ -5,9 +5,9 @@
 //#define 0x608
 #define SE_SKEL_DEATH 0x62B
 #define SE_DEATH_AMBIENCE 0x631
-#define SE_CASTLE_GATE_CLOSE 0x63D
+#define SE_CASTLE_GATE_CLOSE 0x63D // Also used for barrier in "Cube of Zoe" room
 #define SE_WALL_BREAK 0x644
-#define SE_NO3_ALUCARD_FLOOR_HIT 0x64B
+#define SE_NO3_ALUCARD_FLOOR_HIT 0x64B // Normally used for Richter, but this sound is just a louder version of Alucard Floor Hit (Normal)
 //#define 0x655
 #define SE_MERMAN_EXPLODE 0x65B
 #define SE_ZOMBIE_EXPLODE 0x65E
@@ -29,7 +29,7 @@
 #define SE_WARG_PAIN 0x781
 #define SE_WARG_ATTACK 0x782
 #define SE_WARG_GROWL 0x783
-#define SE_HALLWAY_DOOR_CLOSE 0x79D
+#define SE_NO3_WINDOW_CLOSE 0x79D
 #define SE_VO_DEATH_STEALS 0x7A0
 #define SE_VO_DEATH_LAUGH 0x7A1
 #define SE_ITEM_YOINK 0x7A2
