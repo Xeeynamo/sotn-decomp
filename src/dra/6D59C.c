@@ -748,7 +748,7 @@ bool func_8010EDB8(void) {
 block_32:
     equipped_id = g_Status.equipment[hand];
     equipped_item = &g_EquipDefs[g_Status.equipment[hand]];
-    if (g_buttonCombo[1].buttons_correct != 0xFF) {
+    if (g_ButtonCombo[1].buttonsCorrect != 0xFF) {
         goto block_38c;
     }
     var_s2 = equipped_item->specialMove;
@@ -1371,26 +1371,26 @@ s16 func_80110394(void) {
 }
 
 bool CheckGravityBootsInput(void) {
-    switch (g_buttonCombo[0].buttons_correct) {
+    switch (g_ButtonCombo[0].buttonsCorrect) {
     case 0:
         if ((g_Player.padTapped & PAD_DOWN) && (g_Player.padHeld == 0)) {
-            g_buttonCombo[0].timer = 16;
-            g_buttonCombo[0].buttons_correct++;
+            g_ButtonCombo[0].timer = 16;
+            g_ButtonCombo[0].buttonsCorrect++;
         }
         break;
     case 1:
         if (g_Player.padTapped & PAD_UP) {
-            g_buttonCombo[0].timer = 16;
-            g_buttonCombo[0].buttons_correct++;
+            g_ButtonCombo[0].timer = 16;
+            g_ButtonCombo[0].buttonsCorrect++;
         } else {
-            if (--g_buttonCombo[0].timer == 0) {
-                g_buttonCombo[0].buttons_correct = 0;
+            if (--g_ButtonCombo[0].timer == 0) {
+                g_ButtonCombo[0].buttonsCorrect = 0;
             }
         }
         break;
     case 2:
-        if ((g_buttonCombo[0].timer != 0) && --g_buttonCombo[0].timer == 0) {
-            g_buttonCombo[0].buttons_correct = 0;
+        if ((g_ButtonCombo[0].timer != 0) && --g_ButtonCombo[0].timer == 0) {
+            g_ButtonCombo[0].buttonsCorrect = 0;
             break;
         }
         if (IsRelicActive(RELIC_GRAVITY_BOOTS) &&
@@ -1400,11 +1400,11 @@ bool CheckGravityBootsInput(void) {
             if (g_Player.unk72 == 0) {
                 if (func_800FF064(1) >= 0) {
                     func_8010E9A4();
-                    g_buttonCombo[0].buttons_correct = 0;
+                    g_ButtonCombo[0].buttonsCorrect = 0;
                     return 1;
                 }
             } else {
-                g_buttonCombo[0].buttons_correct = 0;
+                g_ButtonCombo[0].buttonsCorrect = 0;
             }
         }
         break;

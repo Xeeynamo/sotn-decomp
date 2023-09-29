@@ -267,7 +267,7 @@ typedef struct {
 } JosephsCloak;
 
 typedef struct {
-    s16 buttons_correct;
+    s16 buttonsCorrect;
     s16 timer;
 } ButtonComboState;
 
@@ -613,7 +613,7 @@ extern s16 D_80138FAC;
 extern DebugMode g_DebugMode;
 extern s16 g_VolL; // vol_l
 extern s16 D_80138FBC;
-extern ButtonComboState g_buttonCombo[16];
+extern ButtonComboState g_ButtonCombo[16];
 extern s16 D_80138FC8;
 extern s16 D_80138FCA;
 extern s16 g_sfxRingBufferPos1; // D_80139000

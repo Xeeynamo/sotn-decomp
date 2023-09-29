@@ -2911,7 +2911,7 @@ void func_8012CB4C(void) {
 void func_8012CC30(s32 arg0) {
     if (arg0 == 0) {
         D_80138444 = 1;
-        if (g_buttonCombo[1].buttons_correct == (u8)(-1) &&
+        if (g_ButtonCombo[1].buttonsCorrect == (u8)(-1) &&
             IsRelicActive(RELIC_SKILL_OF_WOLF) &&
             CastSpell(SPELL_WOLF_CHARGE)) {
             func_8010E27C();
