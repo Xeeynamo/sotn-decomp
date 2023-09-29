@@ -11,7 +11,7 @@ void func_80111830(void) {
             var_v0 = CheckGravityBootsInput();
             break;
         case 1:
-            var_v0 = func_801106A4();
+            var_v0 = CheckQuarterCircleForwardInput();
             break;
         case 2:
             var_v0 = func_8011081C();

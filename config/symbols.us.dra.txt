@@ -948,6 +948,7 @@ g_Cd_addr = 0x80137F88;
 g_Cd_overlayBlockCount = 0x80137F8C;
 g_Cd_overlayLastBlockSize = 0x80137F90;
 g_VabId = 0x80137F94;
+g_wasFacingLeft = 0x80137FC0;
 g_WingSmashButtonCounter = 0x80137FF4;
 g_WingSmashButtonTimer = 0x80137FF8;
 g_WingSmashTimer = 0x80137FFC;
