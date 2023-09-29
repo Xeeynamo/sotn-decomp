@@ -748,7 +748,7 @@ bool func_8010EDB8(void) {
 block_32:
     equipped_id = g_Status.equipment[hand];
     equipped_item = &g_EquipDefs[g_Status.equipment[hand]];
-    if (g_ButtonCombo[COMBO_WOLF_CHARGE].buttonsCorrect != 0xFF) {
+    if (g_ButtonCombo[COMBO_QCF].buttonsCorrect != 0xFF) {
         goto block_38c;
     }
     var_s2 = equipped_item->specialMove;
@@ -1413,7 +1413,70 @@ bool CheckGravityBootsInput(void) {
     return 0;
 }
 
-INCLUDE_ASM("dra/nonmatchings/6D59C", func_801106A4);
+// Used for wolf charge, and for weapons which have a move using this pattern
+bool CheckQuarterCircleForwardInput(void) {
+    s32 directionsPressed;
+    s32 down_forward;
+    s32 forward;
+
+    directionsPressed =
+        g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
+    if (!g_WasFacingLeft) {
+        forward = PAD_RIGHT;
+    } else {
+        forward = PAD_LEFT;
+    }
+    if (!g_WasFacingLeft) {
+        down_forward = PAD_DOWN + PAD_RIGHT;
+    } else {
+        down_forward = PAD_DOWN + PAD_LEFT;
+    }
+    switch (g_ButtonCombo[COMBO_QCF].buttonsCorrect) {
+    case 0:
+        g_WasFacingLeft = PLAYER.facingLeft;
+        if (directionsPressed == PAD_DOWN) {
+            g_ButtonCombo[COMBO_QCF].timer = 20;
+            g_ButtonCombo[COMBO_QCF].buttonsCorrect++;
+            break;
+        }
+        if (--g_ButtonCombo[COMBO_QCF].timer == 0) {
+            g_ButtonCombo[COMBO_QCF].buttonsCorrect = 0;
+        }
+        break;
+    case 1:
+        if (directionsPressed == down_forward) {
+            g_ButtonCombo[COMBO_QCF].timer = 20;
+            g_ButtonCombo[COMBO_QCF].buttonsCorrect++;
+            break;
+        }
+        if (--g_ButtonCombo[COMBO_QCF].timer == 0) {
+            g_ButtonCombo[COMBO_QCF].buttonsCorrect = 0;
+        }
+        break;
+    case 2:
+        if (directionsPressed == forward) {
+            g_ButtonCombo[COMBO_QCF].timer = 20;
+            g_ButtonCombo[COMBO_QCF].buttonsCorrect = 0xFF;
+            break;
+        }
+        if (--g_ButtonCombo[COMBO_QCF].timer == 0) {
+            g_ButtonCombo[COMBO_QCF].buttonsCorrect = 0;
+        }
+        break;
+    default:
+        if (g_ButtonCombo[COMBO_QCF].timer != 0) {
+            if (g_Player.unk72 != 0) {
+                g_ButtonCombo[COMBO_QCF].buttonsCorrect = 0;
+                break;
+            }
+            if (--g_ButtonCombo[1].timer == 0) {
+                g_ButtonCombo[COMBO_QCF].buttonsCorrect = 0;
+                g_WasFacingLeft = PLAYER.facingLeft;
+            }
+        }
+    }
+    return 0;
+}
 
 INCLUDE_ASM("dra/nonmatchings/6D59C", func_8011081C);
 
