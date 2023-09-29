@@ -8,7 +8,8 @@
 // Also used for barrier in "Cube of Zoe" room
 #define SE_CASTLE_GATE_CLOSE 0x63D 
 #define SE_WALL_BREAK 0x644
-// Normally used for Richter, but this sound is just a louder version of Alucard Floor Hit (Normal)
+// Normally used for Richter, but this sound is just
+// a louder version of Alucard Floor Hit (Normal)
 #define SE_NO3_ALUCARD_FLOOR_HIT 0x64B
 //#define 0x655
 #define SE_MERMAN_EXPLODE 0x65B
