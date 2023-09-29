@@ -748,7 +748,7 @@ bool func_8010EDB8(void) {
 block_32:
     equipped_id = g_Status.equipment[hand];
     equipped_item = &g_EquipDefs[g_Status.equipment[hand]];
-    if (g_ButtonCombo[1].buttonsCorrect != 0xFF) {
+    if (g_buttoncombo[COMBO_WOLF_CHARGE].buttonsCorrect != 0xFF) {
         goto block_38c;
     }
     var_s2 = equipped_item->specialMove;
@@ -1371,26 +1371,26 @@ s16 func_80110394(void) {
 }
 
 bool CheckGravityBootsInput(void) {
-    switch (g_ButtonCombo[0].buttonsCorrect) {
+    switch (g_buttoncombo[COMBO_GRAVITY_BOOTS].buttonsCorrect) {
     case 0:
         if ((g_Player.padTapped & PAD_DOWN) && (g_Player.padHeld == 0)) {
-            g_ButtonCombo[0].timer = 16;
-            g_ButtonCombo[0].buttonsCorrect++;
+            g_buttoncombo[COMBO_GRAVITY_BOOTS].timer = 16;
+            g_buttoncombo[COMBO_GRAVITY_BOOTS].buttonsCorrect++;
         }
         break;
     case 1:
         if (g_Player.padTapped & PAD_UP) {
-            g_ButtonCombo[0].timer = 16;
-            g_ButtonCombo[0].buttonsCorrect++;
+            g_buttoncombo[COMBO_GRAVITY_BOOTS].timer = 16;
+            g_buttoncombo[COMBO_GRAVITY_BOOTS].buttonsCorrect++;
         } else {
-            if (--g_ButtonCombo[0].timer == 0) {
-                g_ButtonCombo[0].buttonsCorrect = 0;
+            if (--g_buttoncombo[COMBO_GRAVITY_BOOTS].timer == 0) {
+                g_buttoncombo[COMBO_GRAVITY_BOOTS].buttonsCorrect = 0;
             }
         }
         break;
     case 2:
-        if ((g_ButtonCombo[0].timer != 0) && --g_ButtonCombo[0].timer == 0) {
-            g_ButtonCombo[0].buttonsCorrect = 0;
+        if ((g_buttoncombo[COMBO_GRAVITY_BOOTS].timer != 0) && --g_buttoncombo[COMBO_GRAVITY_BOOTS].timer == 0) {
+            g_buttoncombo[COMBO_GRAVITY_BOOTS].buttonsCorrect = 0;
             break;
         }
         if (IsRelicActive(RELIC_GRAVITY_BOOTS) &&
@@ -1400,11 +1400,11 @@ bool CheckGravityBootsInput(void) {
             if (g_Player.unk72 == 0) {
                 if (func_800FF064(1) >= 0) {
                     func_8010E9A4();
-                    g_ButtonCombo[0].buttonsCorrect = 0;
+                    g_buttoncombo[COMBO_GRAVITY_BOOTS].buttonsCorrect = 0;
                     return 1;
                 }
             } else {
-                g_ButtonCombo[0].buttonsCorrect = 0;
+                g_buttoncombo[COMBO_GRAVITY_BOOTS].buttonsCorrect = 0;
             }
         }
         break;
