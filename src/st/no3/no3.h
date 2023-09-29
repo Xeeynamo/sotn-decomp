@@ -1,5 +1,42 @@
 #include "stage.h"
 
+// NO3 Sound IDs
+//#define 0x607
+//#define 0x608
+#define SE_SKEL_DEATH 0x62B
+#define SE_DEATH_AMBIENCE 0x631
+#define SE_CASTLE_GATE_CLOSE 0x63D
+#define SE_WALL_BREAK 0x644
+#define SE_NO3_ALUCARD_FLOOR_HIT 0x64B
+//#define 0x655
+#define SE_MERMAN_EXPLODE 0x65B
+#define SE_ZOMBIE_EXPLODE 0x65E
+//#define 0x660
+#define SE_MERMAN_FIRE 0x662
+#define SE_CASTLE_THUNDER 0x665
+#define SE_SKEL_SWORD_SWING 0x66D
+//#define EntityCavernDoorLeverSFX 0x675
+#define SE_FLOOR_SWITCH_CLICK 0x676
+//#define 0x684
+#define SE_OWL_WING_FLAP 0x68C
+#define SE_WARG_DEATH_EXPLODE 0x697
+#define SE_BAT_DEATH 0x69C
+#define SE_DEATH_SWIPES 0x6A2
+//#define 0x6C7
+#define SE_NO3_ALUCARD_JUMP 0x6EF
+#define SE_MERMAN_DEATH 0x71D
+#define SE_WARG_DEATH_HOWL 0x780
+#define SE_WARG_PAIN 0x781
+#define SE_WARG_ATTACK 0x782
+#define SE_WARG_GROWL 0x783
+#define SE_HALLWAY_DOOR_CLOSE 0x79D
+#define SE_VO_DEATH_STEALS 0x7A0
+#define SE_VO_DEATH_LAUGH 0x7A1
+#define SE_ITEM_YOINK 0x7A2
+#define SE_TREE_BRANCH 0x7A4
+#define SE_CASTLE_GATE_MOVE 0x7A5
+#define SE_WATER_SPLASH 0x7C2
+
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,
