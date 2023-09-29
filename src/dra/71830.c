@@ -8,7 +8,7 @@ void func_80111830(void) {
     for (i = 0; i < 16; i++) {
         switch (i) {
         case 0:
-            var_v0 = func_801104D0();
+            var_v0 = CheckGravityBootsInput();
             break;
         case 1:
             var_v0 = func_801106A4();
