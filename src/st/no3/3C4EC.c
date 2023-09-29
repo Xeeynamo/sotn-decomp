@@ -58,7 +58,7 @@ void EntityPushAlucard(Entity* entity) {
     case 4:
         player->posX.val += 0x48000;
         if (roomLayout->unkA > 0xF80) {
-            g_api.PlaySfx(0x6EF);
+            g_api.PlaySfx(SE_NO3_ALUCARD_JUMP);
             g_Player.D_80072EF4 = 0x2040;
             entity->ext.generic.unk7C.S8.unk0 = 0;
             entity->step++;
