@@ -1389,7 +1389,8 @@ bool CheckGravityBootsInput(void) {
         }
         break;
     case 2:
-        if ((g_buttoncombo[COMBO_GRAVITY_BOOTS].timer != 0) && --g_buttoncombo[COMBO_GRAVITY_BOOTS].timer == 0) {
+        if ((g_buttoncombo[COMBO_GRAVITY_BOOTS].timer != 0) &&
+            --g_buttoncombo[COMBO_GRAVITY_BOOTS].timer == 0) {
             g_buttoncombo[COMBO_GRAVITY_BOOTS].buttonsCorrect = 0;
             break;
         }

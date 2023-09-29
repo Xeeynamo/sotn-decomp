@@ -285,7 +285,7 @@ typedef enum {
     COMBO_UNK13,
     COMBO_UNK14,
     COMBO_UNK15,
-}ButtonComboIdx;
+} ButtonComboIdx;
 
 typedef struct {
     s16 buttonsCorrect;
