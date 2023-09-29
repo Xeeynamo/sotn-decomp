@@ -6,7 +6,23 @@ extern s32 D_CF000_8017AC78;
 extern s32 D_CF000_8017ACC0;
 extern u16 D_CF000_8017ACF8[];
 extern u16 D_CF000_8017AD04[];
+extern u16 D_CF000_8017AD10[];
+
 extern AnimationFrame D_CF000_8017AD24[];
+
+typedef struct {
+    f32 posX;
+    f32 posY;
+    s16 unk8;
+    u16 unkA;
+    s16 unkC;
+    s16 unkE;
+    s16 unk10;
+    s16 spawnDelay;
+    s16 unk14;
+    s16 state;
+} FireShieldDragon;
+extern FireShieldDragon D_CF000_8017C9A0[][20];
 
 void EntityWeaponAttack(Entity* self) {
     s32 newUnkAC;
@@ -326,7 +342,214 @@ void EntityWeaponShieldSpell(Entity* self) {
     return;
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_029", func_ptr_80170024);
+void func_ptr_80170024(Entity* self) {
+    // All these variables are kind of guessing names, behavior of this
+    // function is a little unclear.
+    Primitive* firstPrim;
+    s16 prev_x2;
+    s16 prev_y2;
+    s16 dragonNumber;
+    Primitive* prim;
+    s16 angle1;
+    s16 temp_s1;
+    s16 angle2;
+    s32 centerX;
+    s32 nextX;
+    s32 centerY;
+    s32 nextY;
+    s16 prev_x3;
+    s16 prev_x4;
+    s32 unkCosine;
+    s32 unkSine;
+    s16 size;
+    s32 i;
+    s16 facingLeft;
+    s16 nextX_copy;
+    s16 nextY_copy;
+
+    FireShieldDragon* var_s7;
+
+    dragonNumber = (u8)self->params;
+    facingLeft = self->facingLeft;
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x13);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        if (g_HandId != 0) {
+            self->ext.weapon.childPalette = 0x128;
+            self->ext.weapon29.unk7D = 0x80;
+        } else {
+            self->ext.weapon.childPalette = 0x110;
+            self->ext.weapon29.unk7D = 0;
+        }
+        self->flags |= 0x04800000;
+        self->ext.weapon.unk9C = 0x40;
+
+        for (i = 0, prim = &g_PrimBuf[self->primIndex]; prim != NULL; i++,
+            prim = prim->next) {
+            prim->tpage = 0x19;
+            prim->clut = self->ext.weapon.childPalette;
+            prim->priority = 0x1BC;
+            prim->blendMode = 0;
+            prim->u0 = prim->u2 = 0x50;
+            prim->v0 = prim->v1 = self->ext.weapon29.unk7D + 8;
+            prim->u1 = prim->u3 = 0x7F;
+            prim->v2 = prim->v3 = self->ext.weapon29.unk7D + 0x2F;
+            if (i == 0) { // for the first prim. Maybe this is the dragon head
+                          // or something?
+                prim->u0 = prim->u1 = 0;
+                prim->u2 = prim->u3 = 0x57;
+                prim->v0 = prim->v2 = self->ext.weapon29.unk7D + 0x30;
+                prim->v1 = prim->v3 = self->ext.weapon29.unk7D + 0x6F;
+            }
+            prim->priority = 0x1BA;
+        }
+        var_s7 = &D_CF000_8017C9A0[dragonNumber][0];
+        for (i = 0; i < 20; i++) {
+            var_s7->unk8 = 0;
+            if (facingLeft) {
+                var_s7->unk8 = 0x800;
+            }
+            var_s7->unk8 += (dragonNumber * 0x540);
+            var_s7->unkA = 0xC00;
+            var_s7->posX.val = self->posX.val;
+            var_s7->posY.val = self->posY.val;
+            var_s7->unkC = 0x70;
+            var_s7->unk10 = 20;
+            if (i == 19) {
+                var_s7->unk10 = 0;
+            }
+            if (i == 18) {
+                var_s7->unk10 = 10;
+            }
+            var_s7->spawnDelay = i * 2 + 1;
+            var_s7->unkE = 0xC00;
+            var_s7->unk14 = 256;
+            var_s7->state = 0;
+            var_s7++;
+        }
+        self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;
+        SetWeaponProperties(self, 0);
+        self->hitboxHeight = 20;
+        self->hitboxWidth = 20;
+        self->step += 1;
+        break;
+    case 1:
+        var_s7 = &D_CF000_8017C9A0[dragonNumber][0];
+        for (i = 0; i < 20; var_s7++, i++) {
+            if (var_s7->state != 0) {
+                var_s7->unkE += 0x80;
+                var_s7->unk14 -= 4;
+                temp_s1 = rsin(var_s7->unkE) / 2 + 0x1000;
+                if (var_s7->unk14 < 0) {
+                    var_s7->unk14 = 0;
+                }
+                unkCosine =
+                    ((rcos(var_s7->unk8) * var_s7->unkC) >> 0xC) * temp_s1;
+                unkSine =
+                    -((rsin(var_s7->unk8) * var_s7->unkC) >> 0xC) * temp_s1;
+                var_s7->posX.val += unkCosine;
+                var_s7->posY.val += unkSine;
+                if (!facingLeft) {
+                    var_s7->unk8 += ((s16)var_s7->unkA >> 4);
+                } else {
+                    var_s7->unk8 -= ((s16)var_s7->unkA >> 4);
+                }
+            }
+            switch (var_s7->state) {
+            case 0:
+                if (--var_s7->spawnDelay == 0) {
+                    var_s7->state++;
+                }
+                break;
+            case 1:
+                var_s7->unkA -= 40;
+                if (var_s7->unkE > 0x1400) {
+                    var_s7->state++;
+                }
+                break;
+            case 2:
+                var_s7->unkA -= 80;
+                var_s7->unkC -= 4;
+                if (var_s7->unkC < 0x40) {
+                    if (!(self->params & 0x7F)) {
+                        g_api.PlaySfx(0x660);
+                    }
+                    var_s7->state++;
+                }
+                break;
+            case 3:
+                var_s7->unkE -= 0x60;
+                var_s7->unkA -= 48;
+
+                if ((var_s7->posX.val < FIX(-288) ||
+                     var_s7->posX.val > FIX(288)) ||
+                    (var_s7->posY.val < FIX(0) ||
+                     var_s7->posY.val > FIX(256))) {
+                    var_s7->unkA = 0;
+                }
+                var_s7->unkC += 2;
+                if (var_s7->unkC > 0x100) {
+                    DestroyEntity(self);
+                    return;
+                }
+                break;
+            }
+        }
+        self->ext.weapon.unk9C += 2;
+        if (self->ext.weapon.unk9C > 0x100) {
+            self->ext.weapon.unk9C = 0x100;
+        }
+    }
+    firstPrim = prim = &g_PrimBuf[self->primIndex];
+    var_s7 = &D_CF000_8017C9A0[dragonNumber][0];
+    for (i = 0; i < 19; i++, prim = prim->next) {
+        prim->clut =
+            self->ext.weapon.childPalette + D_CF000_8017AD10[g_Timer / 2 % 10];
+        prim->x0 = prev_x2;
+        prim->y0 = prev_y2;
+        prim->x1 = prev_x3;
+        prim->y1 = prev_x4;
+        var_s7++;
+        size = var_s7->unk10 *
+               (rsin(var_s7->unkE) * var_s7->unk14 / 256 + 4096) / 4096;
+        centerX = var_s7->posX.i.hi;
+        centerY = var_s7->posY.i.hi;
+        angle1 = var_s7->unk8 - 0x400;
+        angle2 = var_s7->unk8 + 0x400;
+        prev_x2 = prim->x2 = centerX + (((rcos(angle1) >> 4) * size) >> 8);
+        prev_y2 = prim->y2 = centerY - (((rsin(angle1) >> 4) * size) >> 8);
+        prim->x3 = prev_x3 = centerX + (((rcos(angle2) >> 4) * size) >> 8);
+        prim->y3 = prev_x4 = centerY - (((rsin(angle2) >> 4) * size) >> 8);
+    }
+
+    var_s7 = &D_CF000_8017C9A0[dragonNumber][0];
+    size = ((self->ext.weapon.unk9C * 54 / 256) *
+            (rsin(var_s7->unkE) * var_s7->unk14 / 256 + 4096)) /
+           4096;
+    nextX = (var_s7 + 1)->posX.i.hi;
+    nextX_copy = nextX;
+    nextY = (var_s7 + 1)->posY.i.hi;
+    nextY_copy = nextY;
+    angle1 = var_s7->unk8 - 0x199;
+    angle2 = var_s7->unk8 + 0x199;
+    firstPrim->x0 = nextX + (((rcos(angle1) >> 4) * size) >> 8);
+    firstPrim->y0 = nextY - (((rsin(angle1) >> 4) * size) >> 8);
+    firstPrim->x1 = nextX + (((rcos(angle2) >> 4) * size) >> 8);
+    firstPrim->y1 = nextY - (((rsin(angle2) >> 4) * size) >> 8);
+    angle1 = var_s7->unk8 + 0x999;
+    angle2 = var_s7->unk8 + 0x667;
+    firstPrim->x2 = nextX + (((rcos(angle1) >> 4) * size) >> 8);
+    firstPrim->y2 = nextY - (((rsin(angle1) >> 4) * size) >> 8);
+    firstPrim->x3 = nextX + (((rcos(angle2) >> 4) * size) >> 8);
+    firstPrim->y3 = nextY - (((rsin(angle2) >> 4) * size) >> 8);
+    self->posX.i.hi = nextX_copy;
+    self->posY.i.hi = nextY_copy;
+    g_api.func_8011AAFC(self, ((g_HandId + 1) << 0xE) + 0x64, 0);
+}
 
 void func_ptr_80170028(Entity* self) {
     if (self->ext.weapon.parent->entityId == 0) {
