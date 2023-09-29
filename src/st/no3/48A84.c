@@ -661,7 +661,7 @@ void func_801CF58C(Entity* self) {
     self->velocityX = 0;
     self->ext.generic.unk84.S16.unk2 = 0x100;
     SetStep(6);
-    g_api.PlaySfx(0x783);
+    g_api.PlaySfx(SE_WARG_GROWL);
     self->ext.generic.unk80.modeS16.unk0 = 0x20;
 }
 
@@ -1511,7 +1511,7 @@ s32 func_801D2D40(s16 yVector) {
                 newEntity->posY.i.hi += yVector;
                 newEntity->zPriority = g_CurrentEntity->zPriority;
             }
-            g_api.PlaySfx(0x7C2);
+            g_api.PlaySfx(SE_WATER_SPLASH);
             *(u8*)&g_CurrentEntity->ext.generic.unkA0 = 1;
         }
     }

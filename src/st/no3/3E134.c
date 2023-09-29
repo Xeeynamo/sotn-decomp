@@ -36,7 +36,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
 
     case 2:
         if (!(entity->ext.generic.unk7C.s++ & 7)) {
-            g_api.PlaySfx(0x7A4);
+            g_api.PlaySfx(SE_TREE_BRANCH);
         }
         if (entity->posX.i.hi < 192) {
             SetStep(3);
@@ -95,7 +95,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
     }
 
     if (!animFlag) {
-        func_801CAD28(0x68C);
+        func_801CAD28(SE_OWL_WING_FLAP);
     }
 }
 
