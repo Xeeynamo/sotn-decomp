@@ -9,7 +9,7 @@ void EntityRoomTransition2(Entity* self) {
     Unkstruct8* layout = &g_CurrentRoomTileLayout;
 
     if (self->ext.roomTransition2.unk80 == 0 && self->step < 4) {
-        g_api.PlaySfx(0x631);
+        g_api.PlaySfx(SE_DEATH_AMBIENCE);
         self->ext.roomTransition2.unk80 = 0x200;
     }
     self->ext.roomTransition2.unk80--;
@@ -40,7 +40,7 @@ void EntityRoomTransition2(Entity* self) {
     case 2:
         if (D_801D7DD0 & 0x20) {
             g_api.InitStatsAndGear(1);
-            g_api.PlaySfx(0x6A2);
+            g_api.PlaySfx(SE_DEATH_SWIPES);
             for (localVar = 0; localVar < 6; localVar++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity == NULL) {
@@ -195,7 +195,7 @@ void EntityDeathStolenItem(Entity* self) {
     case 4:
         if (--self->ext.deathStolenItems.unk7C == 0) {
             self->ext.deathStolenItems.unk7C = 8;
-            g_api.PlaySfx(0x7A2);
+            g_api.PlaySfx(SE_ITEM_YOINK);
             self->step++;
         }
 
@@ -370,7 +370,7 @@ void EntityDeath(Entity* self) {
     case 3:
         if (AnimateEntity(D_80181BE0, self) == 0) {
             SetStep(4);
-            g_api.PlaySfx(0x7A1);
+            g_api.PlaySfx(SE_VO_DEATH_LAUGH);
             self->ext.death.moveTimer = 64;
             self->ext.death.moveDirection = 0;
         }
@@ -493,7 +493,7 @@ void EntityDeath(Entity* self) {
 
     case 14:
         if (AnimateEntity(D_80181B68, self) == 0) {
-            g_api.PlaySfx(0x7A0);
+            g_api.PlaySfx(SE_VO_DEATH_STEALS);
             SetStep(15);
         }
         break;
@@ -518,7 +518,7 @@ void EntityDeath(Entity* self) {
     case 18:
         if (AnimateEntity(D_80181B84, self) == 0) {
             SetStep(19);
-            g_api.PlaySfx(0x7A1);
+            g_api.PlaySfx(SE_VO_DEATH_LAUGH);
             self->velocityX = FIX(1.0);
             self->velocityY = FIX(5.0);
             self->ext.death.moveTimer = 0;
