@@ -292,6 +292,9 @@ typedef struct {
     s16 timer;
 } ButtonComboState;
 
+// Used for the button combos to signal successfully completing the sequence
+#define COMBO_COMPLETE 0xFF
+
 extern void (*D_800A0004)(); // TODO pointer to 0x50 array of functions
 extern s32 D_800A0144[];
 extern u32 D_800A0158;
