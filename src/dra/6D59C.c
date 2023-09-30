@@ -2,6 +2,10 @@
 #include "sfx.h"
 #include "player.h"
 
+// Used for the button combos such as quarter circle forward to signal
+// successfully completing the sequence.
+#define COMBO_COMPLETE 0xFF;
+
 // Game Buttons unofficially refers to buttons used in playing the game.
 // Direction, action and shoulder buttons. Any button except start or select.
 #define GAMEBUTTONS (~(PAD_START | PAD_SELECT))
@@ -748,7 +752,7 @@ bool func_8010EDB8(void) {
 block_32:
     equipped_id = g_Status.equipment[hand];
     equipped_item = &g_EquipDefs[g_Status.equipment[hand]];
-    if (g_ButtonCombo[COMBO_QCF].buttonsCorrect != 0xFF) {
+    if (g_ButtonCombo[COMBO_QCF].buttonsCorrect != COMBO_COMPLETE) {
         goto block_38c;
     }
     var_s2 = equipped_item->specialMove;
@@ -1456,7 +1460,7 @@ bool CheckQuarterCircleForwardInput(void) {
     case 2:
         if (directionsPressed == forward) {
             g_ButtonCombo[COMBO_QCF].timer = 20;
-            g_ButtonCombo[COMBO_QCF].buttonsCorrect = 0xFF;
+            g_ButtonCombo[COMBO_QCF].buttonsCorrect = COMBO_COMPLETE;
             break;
         }
         if (--g_ButtonCombo[COMBO_QCF].timer == 0) {
@@ -1508,7 +1512,7 @@ bool CheckBackForwardInput(void) {
     case 1:
         if (directionsPressed == forward) {
             g_ButtonCombo[COMBO_BF].timer = 15;
-            g_ButtonCombo[COMBO_BF].buttonsCorrect = 0xFF;
+            g_ButtonCombo[COMBO_BF].buttonsCorrect = COMBO_COMPLETE;
             break;
         } else if (--g_ButtonCombo[COMBO_BF].timer == 0) {
             g_ButtonCombo[COMBO_BF].buttonsCorrect = 0;
