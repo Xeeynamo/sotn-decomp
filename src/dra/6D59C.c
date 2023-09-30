@@ -4,7 +4,7 @@
 
 // Used for the button combos such as quarter circle forward to signal
 // successfully completing the sequence.
-#define COMBO_COMPLETE 0xFF;
+#define COMBO_COMPLETE 0xFF
 
 // Game Buttons unofficially refers to buttons used in playing the game.
 // Direction, action and shoulder buttons. Any button except start or select.
