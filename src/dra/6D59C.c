@@ -1478,7 +1478,56 @@ bool CheckQuarterCircleForwardInput(void) {
     return 0;
 }
 
-INCLUDE_ASM("dra/nonmatchings/6D59C", func_8011081C);
+bool CheckBackForwardInput(void) {
+    s32 directionsPressed;
+    s32 backward;
+    s32 forward;
+
+    directionsPressed =
+        g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
+    if (!g_WasFacingLeft2) {
+        forward = PAD_RIGHT;
+    } else {
+        forward = PAD_LEFT;
+    }
+    switch (g_ButtonCombo[COMBO_BF].buttonsCorrect) {
+    case 0:
+        g_WasFacingLeft2 = PLAYER.facingLeft;
+        if (!g_WasFacingLeft2) {
+            backward = PAD_LEFT;
+        } else {
+            backward = PAD_RIGHT;
+        }
+        if (directionsPressed == backward) {
+            g_ButtonCombo[COMBO_BF].timer = 15;
+            g_ButtonCombo[COMBO_BF].buttonsCorrect++;
+        } else if (--g_ButtonCombo[COMBO_BF].timer == 0) {
+            g_ButtonCombo[COMBO_BF].buttonsCorrect = 0;
+        }
+        break;
+    case 1:
+        if (directionsPressed == forward) {
+            g_ButtonCombo[COMBO_BF].timer = 15;
+            g_ButtonCombo[COMBO_BF].buttonsCorrect = 0xFF;
+            break;
+        } else if (--g_ButtonCombo[COMBO_BF].timer == 0) {
+            g_ButtonCombo[COMBO_BF].buttonsCorrect = 0;
+        }
+        break;
+    case 2:
+    default:
+        if (g_Player.unk72 != 0) {
+            g_ButtonCombo[COMBO_BF].buttonsCorrect = 0;
+            break;
+        }
+        if (g_ButtonCombo[COMBO_BF].timer != 0 &&
+            --g_ButtonCombo[COMBO_BF].timer == 0) {
+            g_ButtonCombo[COMBO_BF].buttonsCorrect = 0;
+            g_WasFacingLeft2 = PLAYER.facingLeft;
+        }
+    }
+    return 0;
+}
 
 INCLUDE_ASM("dra/nonmatchings/6D59C", func_80110968);
 

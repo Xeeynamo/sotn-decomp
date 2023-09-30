@@ -271,7 +271,7 @@ typedef struct {
 typedef enum {
     COMBO_GRAVITY_BOOTS,
     COMBO_QCF, // Quarter circle forward (down, down+forward, forward)
-    COMBO_UNK2,
+    COMBO_BF,  // Back forward
     COMBO_UNK3,
     COMBO_UNK4,
     COMBO_UNK5,
@@ -598,7 +598,8 @@ extern s32 D_80137F9C;
 extern s32 D_80137FB4;
 extern s32 D_80137FB8;
 extern s32 D_80137FBC;
-extern s16 g_WasFacingLeft; // used for quarter circle forward
+extern s16 g_WasFacingLeft;  // for QCF to tell what's "forward"
+extern s16 g_WasFacingLeft2; // for BF to tell what's "forward"
 extern s32 D_80137FDC;
 extern s32 D_80137FE0;
 extern s32 D_80137FE4;
@@ -866,7 +867,7 @@ void func_8010E570(s32);
 void func_8010E83C(s32 arg0);
 s32 func_801104D0();
 bool CheckQuarterCircleForwardInput();
-s32 func_8011081C();
+bool CheckBackForwardInput();
 s32 func_80110968();
 s32 func_80110BC8();
 void func_8010DBFC(s32*, s32*);

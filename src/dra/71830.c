@@ -14,7 +14,7 @@ void func_80111830(void) {
             var_v0 = CheckQuarterCircleForwardInput();
             break;
         case 2:
-            var_v0 = func_8011081C();
+            var_v0 = CheckBackForwardInput();
             break;
         case 3:
             var_v0 = func_80110DF8();
