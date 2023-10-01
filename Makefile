@@ -335,6 +335,7 @@ extract_saturn: $(SATURN_SPLITTER_APP)
 	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/zero.bin.yaml
 	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/stage_02.prg.yaml
 	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/warp.prg.yaml
+	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/alucard.prg.yaml
 
 extract_saturn_pcm: $(SATURN_SPLITTER_APP)
 	mkdir -p build/saturn/SD
@@ -549,6 +550,7 @@ build_saturn_copy_files:
 	cp -r ./asm/saturn/zero $(SATURN_BUILD_DIR)/asm/saturn/zero
 	cp -r ./asm/saturn/stage_02 $(SATURN_BUILD_DIR)/asm/saturn/stage_02
 	cp -r ./asm/saturn/warp $(SATURN_BUILD_DIR)/asm/saturn/warp
+	cp -r ./asm/saturn/alucard $(SATURN_BUILD_DIR)/asm/saturn/alucard
 	cp  ./tools/saturn_toolchain/compile_dosemu.sh $(SATURN_BUILD_DIR)
 	chmod +x $(SATURN_BUILD_DIR)/compile_dosemu.sh
 
@@ -558,6 +560,7 @@ build_saturn_dosemu_native:
 	cd build/saturn && OPT_FLAGS=-O2 FILENAME=zero sh ./compile_dosemu.sh
 	cd build/saturn && OPT_FLAGS=-O2 FILENAME=stage_02 sh ./compile_dosemu.sh
 	cd build/saturn && OPT_FLAGS=-O2 FILENAME=warp sh ./compile_dosemu.sh
+	cd build/saturn && OPT_FLAGS=-O2 FILENAME=alucard sh ./compile_dosemu.sh
 	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/gfs sh ./compile_dosemu.sh
 	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/spr sh ./compile_dosemu.sh
 	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/dma sh ./compile_dosemu.sh
@@ -589,6 +592,7 @@ build_saturn_link_native_ld:
 	cd build/saturn && sh-elf-ld -o game_li.o -Map game.map -T game.ld -T all_syms.txt -T game_user_syms.txt -verbose game.o --no-check-sections -nostdlib -s
 	cd build/saturn && sh-elf-ld -o stage_02_li.o -Map stage_02.map -T stage_02.ld -T all_syms.txt -T stage_02_user_syms.txt -verbose stage_02.o --no-check-sections -nostdlib -s
 	cd build/saturn && sh-elf-ld -o warp_li.o -Map warp.map -T warp.ld -T all_syms.txt -T warp_user_syms.txt -verbose warp.o --no-check-sections -nostdlib -s
+	cd build/saturn && sh-elf-ld -o alucard_li.o -Map alucard.map -T alucard.ld -T all_syms.txt -T alucard_user_syms.txt -verbose alucard.o --no-check-sections -nostdlib -s
 
 build_saturn_link_copy:
 	# link
@@ -599,6 +603,7 @@ build_saturn_link_copy:
 	cp ./config/saturn/game_user_syms.txt ./build/saturn/
 	cp ./config/saturn/stage_02_user_syms.txt ./build/saturn/
 	cp ./config/saturn/warp_user_syms.txt ./build/saturn/
+	cp ./config/saturn/alucard_user_syms.txt ./build/saturn/
 	cp ./config/saturn/zero_user_syms.txt ./build/saturn/
 
 	cp ./config/saturn/*.ld ./build/saturn
@@ -632,6 +637,7 @@ check_saturn_native:
 	sh-elf-objcopy ./build/saturn/zero_li.o -O binary ./build/saturn/0.BIN
 	sh-elf-objcopy ./build/saturn/stage_02_li.o -O binary ./build/saturn/STAGE_02.PRG
 	sh-elf-objcopy ./build/saturn/warp_li.o -O binary ./build/saturn/WARP.PRG
+	sh-elf-objcopy ./build/saturn/alucard_li.o -O binary ./build/saturn/ALUCARD.PRG
 	# check hashes
 	sha1sum --check config/check.saturn.sha
 
