@@ -1,0 +1,51 @@
+options:
+  target_path:  disks/saturn/ALUCARD.PRG
+  asm_path:     asm/saturn/alucard
+  src_path:     src/saturn
+  ld_scripts_path: config/saturn
+  syms_path: config/saturn
+  decomp_empty_funcs: false
+segments:
+  - name: alucard
+    type: code
+    start: 0x00000000
+    vram:  0x060A5000
+    subalign: 2
+    subsegments:
+      - start: 0x0
+        type: data
+        file: alucard
+        end: 0x5f
+
+      - start: 0x60
+        type: c
+        file: alucard
+        end: 0x1be47
+
+      # problem
+      - start: 0x1be48
+        type: data
+        file: alucard
+        end: 0x1c377
+
+      # problem
+      - start: 0x1c378
+        type: data
+        file: alucard
+        end: 0x1FD9F
+
+      - start: 0x1FDA0
+        type: c
+        file: alucard
+        end: 0x22F9F
+
+      # problem
+      - start: 0x22FA0
+        type: data
+        file: alucard
+        end: 0x234b5
+
+      - start: 0x234b6
+        type: data
+        file: alucard
+        end: 0x2947f

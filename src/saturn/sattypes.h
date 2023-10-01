@@ -40,6 +40,38 @@ struct Entity;
 
 typedef void (*PfnEntityUpdate)(struct Entity*);
 
+typedef enum {
+    Player_Stand,
+    Player_Walk,
+    Player_Crouch,
+    Player_Unk3,
+    Player_Jump,
+    Player_MorphBat,
+    Player_Unk_6,
+    Player_MorphMist,
+    Player_Unk8,
+    Player_Unk9,
+    Player_Hit,
+    Player_StatusStone,
+    Player_Unk12,
+    Player_KillWater,
+    Player_Unk14,
+    Player_Unk15,
+    Player_Unk16,
+    Player_Unk17,
+    Player_Unk18,
+    Player_Unk25 = 25,
+    Player_SpellDarkMetamorphosis = 32,
+    Player_SpellSummonSpirit,
+    Player_SpellHellfire,
+    Player_SpellTetraSpirit,
+    Player_Spell36,
+    Player_SpellSoulSteal,
+    Player_Unk38,
+    Player_Unk39,
+    Player_Unk40,
+} PlayerSteps;
+
 typedef struct Entity {
     /* 0x00 */ struct Unk0600B344* unk0;
     /* 0x04 */ SotnFixed32 posX;
