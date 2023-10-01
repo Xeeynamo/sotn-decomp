@@ -32,7 +32,7 @@ void func_80111830(void) {
             var_v0 = func_80110BC8();
             break;
         case 15:
-            var_v0 = func_80110968();
+            var_v0 = CheckDarkMetamorphosisInput();
             break;
         case 5:
         case 7:

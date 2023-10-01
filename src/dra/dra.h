@@ -284,7 +284,7 @@ typedef enum {
     COMBO_UNK12,
     COMBO_UNK13,
     COMBO_UNK14,
-    COMBO_UNK15,
+    COMBO_DARK_METAMORPH,
 } ButtonComboIdx;
 
 typedef struct {
@@ -603,6 +603,7 @@ extern s32 D_80137FB8;
 extern s32 D_80137FBC;
 extern s16 g_WasFacingLeft;  // for QCF to tell what's "forward"
 extern s16 g_WasFacingLeft2; // for BF to tell what's "forward"
+extern s32 g_WasFacingLeft3; // for dark metamorphosis "" ""
 extern s32 D_80137FDC;
 extern s32 D_80137FE0;
 extern s32 D_80137FE4;
@@ -871,7 +872,7 @@ void func_8010E83C(s32 arg0);
 s32 func_801104D0();
 bool CheckQuarterCircleForwardInput();
 bool CheckBackForwardInput();
-s32 func_80110968();
+bool CheckDarkMetamorphosisInput();
 s32 func_80110BC8();
 void func_8010DBFC(s32*, s32*);
 s32 func_80110DF8();
