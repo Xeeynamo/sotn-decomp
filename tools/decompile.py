@@ -211,6 +211,7 @@ def show_asm_differ_command(func: NonMatchingFunc):
     overlay_name = f"st/{func.overlay_name}" if isStage else func.overlay_name
     print(f"python3 {tool_path} -mwo --overlay {overlay_name} {func.name}")
 
+
 def main(args):
     funcs = get_nonmatching_functions(asm_dir, args.function)
     if len(funcs) == 0:
@@ -253,6 +254,7 @@ def main(args):
         print(f"function '{func.name}' might already be decompiled")
     else:
         print("unhandled error!")
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="automatically decompiles a function")
