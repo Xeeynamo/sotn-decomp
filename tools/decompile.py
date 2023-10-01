@@ -124,7 +124,7 @@ class InjectRes(Enum):
 
 
 # check if the overlay can be compiled
-def check_injected_code() -> InjectRes:
+def check_injected_code(func) -> InjectRes:
     compile_result = subprocess.run(
         f"make {func.overlay_name}",
         cwd=root_dir,
@@ -169,7 +169,7 @@ def inject_decompiled_function_into_file(func: NonMatchingFunc, dec: str) -> Inj
 
         if not found:
             return InjectRes.NOT_INJECTED
-        result = check_injected_code()
+        result = check_injected_code(func)
         if result == InjectRes.SUCCESS:
             return result
 
@@ -211,28 +211,7 @@ def show_asm_differ_command(func: NonMatchingFunc):
     overlay_name = f"st/{func.overlay_name}" if isStage else func.overlay_name
     print(f"python3 {tool_path} -mwo --overlay {overlay_name} {func.name}")
 
-
-parser = argparse.ArgumentParser(description="automatically decompiles a function")
-parser.add_argument("function", help="function name to decompile")
-parser.add_argument(
-    "-n",
-    "--number-occurrence",
-    help="the occurrence number in case multiple functions with the same name are found",
-    type=int,
-    default=None,
-    required=False,
-)
-parser.add_argument(
-    "-f",
-    "--force",
-    help="force decompiling only the first occurrence",
-    default=None,
-    required=False,
-    action="store_true",
-)
-
-args = parser.parse_args()
-if __name__ == "__main__":
+def main(args):
     funcs = get_nonmatching_functions(asm_dir, args.function)
     if len(funcs) == 0:
         print(f"function {args.function} not found or already decompiled")
@@ -274,3 +253,26 @@ if __name__ == "__main__":
         print(f"function '{func.name}' might already be decompiled")
     else:
         print("unhandled error!")
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="automatically decompiles a function")
+    parser.add_argument("function", help="function name to decompile")
+    parser.add_argument(
+        "-n",
+        "--number-occurrence",
+        help="the occurrence number in case multiple functions with the same name are found",
+        type=int,
+        default=None,
+        required=False,
+    )
+    parser.add_argument(
+        "-f",
+        "--force",
+        help="force decompiling only the first occurrence",
+        default=None,
+        required=False,
+        action="store_true",
+    )
+
+    args = parser.parse_args()
+    main(args)
