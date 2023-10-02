@@ -1,9 +1,20 @@
 #include "zero.h"
 #include "inc_asm.h"
 #include "sattypes.h"
-#include "saturn/scl.h"
+#include "lib/scl.h"
 
-INCLUDE_ASM("asm/saturn/zero/data", d6004080, d_06004080);
+// func_06004080
+void entrypoint(void) {
+    func_06030df0();
+    Scl_s_reg.tvmode = Scl_s_reg.tvmode & 0x7eff;
+    SclProcess = 1;
+    func_060044D0();
+    DAT_0605cea2 = 0;
+    DAT_0605c658 = 1;
+    do {
+        func_060040D8();
+    } while (true);
+}
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60040D8, func_060040D8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60044D0, func_060044D0);
