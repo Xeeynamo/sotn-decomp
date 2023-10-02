@@ -212,7 +212,7 @@ def show_asm_differ_command(func: NonMatchingFunc):
     print(f"python3 {tool_path} -mwo --overlay {overlay_name} {func.name}")
 
 
-def decompile(func_name: str, number_occurrence:int=None, force:bool=False):
+def decompile(func_name: str, number_occurrence: int = None, force: bool = False):
     funcs = get_nonmatching_functions(asm_dir, func_name)
     if len(funcs) == 0:
         print(f"function {func_name} not found or already decompiled")
