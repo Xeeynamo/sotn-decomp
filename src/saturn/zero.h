@@ -146,4 +146,10 @@ void func_0600B254(void);
 extern s32 DAT_06064214;
 extern s8 DAT_060644C0;
 
+extern u16 DAT_0605cea2;
+extern u32 DAT_0605c658;
+void func_06030df0();
+void func_060044D0();
+void func_060040D8();
+
 #endif

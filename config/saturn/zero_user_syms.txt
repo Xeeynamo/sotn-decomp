@@ -275,3 +275,7 @@ _s_chainTopCmdR = 0x66666666;
 
 _SPR_SlaveCommand = 0x11111111;
 _SPR_SlaveParam = 0x22222222;
+
+_func_06030df0 = 0x06030df0;
+_DAT_0605cea2 = 0x0605cea2;
+_DAT_0605c658 = 0x0605c658;
