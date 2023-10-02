@@ -71,7 +71,7 @@ def get_c_context(src_file) -> str:
     return m2ctx.import_c_file(src_file)
 
 
-def decompile(func: NonMatchingFunc, ctx_str: str):
+def run_m2c(func: NonMatchingFunc, ctx_str: str):
     with tempfile.NamedTemporaryFile(
         mode="w", encoding="utf-8", suffix=".c"
     ) as tmp_ctx:
@@ -212,19 +212,19 @@ def show_asm_differ_command(func: NonMatchingFunc):
     print(f"python3 {tool_path} -mwo --overlay {overlay_name} {func.name}")
 
 
-def main(args):
-    funcs = get_nonmatching_functions(asm_dir, args.function)
+def decompile(func_name: str, number_occurrence:int=None, force:bool=False):
+    funcs = get_nonmatching_functions(asm_dir, func_name)
     if len(funcs) == 0:
-        print(f"function {args.function} not found or already decompiled")
+        print(f"function {func_name} not found or already decompiled")
 
-    if args.force:
+    if force:
         funcs = funcs[:1]
-    elif args.number_occurrence and args.number_occurrence < len(funcs):
-        funcs = [funcs[args.number_occurrence]]
+    elif number_occurrence and number_occurrence < len(funcs):
+        funcs = [funcs[number_occurrence]]
     else:
         if len(funcs) > 1:
             print(
-                f"{len(funcs)} occurrences found for '{args.function}' in the following overlays:"
+                f"{len(funcs)} occurrences found for '{func_name}' in the following overlays:"
             )
             for n, func in enumerate(funcs):
                 print(f"[{n}] {func.overlay_name} at {func.asm_path}")
@@ -239,7 +239,7 @@ def main(args):
     # print(f"src: {func.src_path}")
 
     ctx = get_c_context(func.src_path)
-    dec = decompile(func, ctx)
+    dec = run_m2c(func, ctx)
     dec_res = guess_unknown_type(dec)
     inject_res = inject_decompiled_function_into_file(func, dec_res)
     if inject_res == InjectRes.SUCCESS:
@@ -277,4 +277,4 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
-    main(args)
+    decompile(args.function, args.number_occurrence, args.force)
