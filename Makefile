@@ -63,9 +63,6 @@ GO              := $(HOME)/go/bin/go
 GOPATH          := $(HOME)/go
 SOTNDISK        := $(GOPATH)/bin/sotn-disk
 GFXSTAGE        := $(PYTHON) $(TOOLS_DIR)/gfxstage.py
-SATURN_SPLITTER_DIR := $(TOOLS_DIR)/saturn-splitter
-SATURN_SPLITTER_APP := $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
-SATURN_ADPCM_EXTRACT_APP := $(SATURN_SPLITTER_DIR)/adpcm-extract/target/release/adpcm-extract
 ICONV           := iconv --from-code=UTF-8 --to-code=Shift-JIS
 
 define list_src_files
@@ -99,7 +96,6 @@ define link
 endef
 
 all: build check
-saturn: build_saturn_native check_saturn_native
 build: build_$(VERSION)
 build_us: main dra weapon ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
 build_hd: dra
@@ -365,9 +361,6 @@ extract_disk_psp%:
 	7z x disks/sotn.psp$*.iso -odisks/psp$*/
 extract_disk_ps1%: $(SOTNDISK)
 	$(SOTNDISK) extract disks/sotn.$*.cue disks/$*
-extract_disk_saturn:
-	bchunk disks/sotn.saturn.bin disks/sotn.saturn.cue disks/sotn.saturn.iso
-	7z x disks/sotn.saturn.iso01.iso -odisks/saturn/ || true
 disk_prepare: build $(SOTNDISK)
 	mkdir -p $(DISK_DIR)
 	cp -r disks/${VERSION}/* $(DISK_DIR)
@@ -409,11 +402,13 @@ update-dependencies: $(SPLAT_APP) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MAS
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/sotn-disk@latest
 	git clean -fd bin/
 
-bin/%:
-	cd ./bin && wget https://github.com/Xeeynamo/sotn-decomp/releases/download/$*/$*.tar.gz
-	rm -f $*.tar.gz*
-	cd ./bin && sha256sum --check $*.tar.gz.sha256 && tar -xzf $*.tar.gz
-	rm -f $*.tar.gz*
+bin/%: bin/%.tar.gz
+	sha256sum --check $<.sha256
+	cd bin && tar -xzf ../$<
+	rm $<
+	touch $@
+bin/%.tar.gz: bin/%.tar.gz.sha256
+	wget -O $@ https://github.com/Xeeynamo/sotn-decomp/releases/download/cc1-psx-26/$*.tar.gz
 $(SPLAT_APP):
 	git submodule init $(SPLAT_DIR)
 	git submodule update $(SPLAT_DIR)
@@ -437,32 +432,11 @@ $(GO):
 $(SOTNDISK): $(GO)
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/sotn-disk@latest
 
-$(SATURN_SPLITTER_APP):
-	git submodule init $(SATURN_SPLITTER_DIR)
-	git submodule update $(SATURN_SPLITTER_DIR)
-	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release
-	cd $(SATURN_SPLITTER_DIR)/adpcm-extract && cargo build --release
-
 $(BUILD_DIR)/%.s.o: %.s
 	$(AS) $(AS_FLAGS) -o $@ $<
 $(BUILD_DIR)/%.c.o: %.c $(MASPSX_APP) $(CC1PSX)
 #	$(CROSS)gcc -c -nostartfiles -nodefaultlibs -ggdb -gdwarf-4 $(CPP_FLAGS) $(CC_FLAGS) $(LD_FLAGS) $< -o $@
 	$(CPP) $(CPP_FLAGS) -lang-c $< | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
-
-build_saturn_toolchain_gccsh:
-	# get GCCSH
-	git clone https://github.com/sozud/saturn-compilers.git
-	rm -rf ./tools/saturn_toolchain/GCCSH
-	mv saturn-compilers/cygnus-2.7-96Q3-bin ./tools/saturn_toolchain/GCCSH
-	rm -rf saturn-compilers
-
-# CI prep, don't build dosemu container (parallel OK)
-build_saturn_toolchain: extract_disk_saturn build_saturn_toolchain_gccsh $(SATURN_SPLITTER_APP)
-
-diff_saturn:
-	sh-elf-objdump -z -m sh2 -b binary -D ./build/saturn/$(FILENAME) > ./build/saturn/$(FILENAME)-ours.txt && \
-	sh-elf-objdump -z -m sh2 -b binary -D ./disks/saturn/$(FILENAME) > ./build/saturn/$(FILENAME)-theirs.txt && \
-	diff ./build/saturn/$(FILENAME)-ours.txt ./build/saturn/$(FILENAME)-theirs.txt > ./build/saturn/$(FILENAME)-diff.txt || true
 
 # Handles assets
 $(BUILD_DIR)/$(ASSETS_DIR)/%.layoutobj.json.o: $(ASSETS_DIR)/%.layoutobj.json

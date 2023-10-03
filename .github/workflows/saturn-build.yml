@@ -19,6 +19,8 @@ jobs:
     # due to the missing secrets to clone the game's data repository
     if: github.repository == 'Xeeynamo/sotn-decomp'
     runs-on: ubuntu-latest
+    env:
+      VERSION: "saturn"
     steps:
       - name: Clone main repo (PR)
         if: github.event_name == 'pull_request_target'
@@ -58,14 +60,14 @@ jobs:
           sudo dpkg -i fdpp-dev_1.6-1_amd64.deb
           sudo dpkg -i comcom32_0.1~alpha3-1_all.deb
           sudo dpkg -i dosemu2_2.0~pre9-1_amd64.deb
-      - name: Prep
-        run: make -j build_saturn_toolchain
+      - name: Extract dependencies
+        run: make extract_disk
       - name: Extract asm
-        run: make extract_saturn
+        run: make extract
       - name: Build saturn binaries
         run: make build_saturn
       - name: Check saturn
-        run: make check_saturn
+        run: make check
 
   function-finder-saturn:
     if: github.repository == 'Xeeynamo/sotn-decomp' && github.ref == 'refs/heads/master' && github.event_name == 'push'
