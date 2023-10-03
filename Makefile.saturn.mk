@@ -32,7 +32,7 @@ build/saturn/WARP.PRG: build/saturn/warp.elf
 build/saturn/T_BAT.PRG: build/saturn/t_bat.elf
 	sh-elf-objcopy $< -O binary $@
 
-build/saturn/zero.elf: build/saturn/zero.o $(SATURN_LIB_OBJECTS)
+build/saturn/zero.elf: build/saturn/zero.o $(SATURN_LIB_OBJECTS) config/saturn/zero_syms.txt config/saturn/game_syms.txt config/saturn/zero_user_syms.txt
 	cd build/saturn && \
 		sh-elf-ld -verbose --no-check-sections -nostdlib \
 		-o zero.elf \
@@ -43,7 +43,7 @@ build/saturn/zero.elf: build/saturn/zero.o $(SATURN_LIB_OBJECTS)
 		-T ../../config/saturn/zero_user_syms.txt \
 		zero.o $(addsuffix .o,$(SATURN_LIB_TARGETS))
 
-build/saturn/%.elf: build/saturn/%.o
+build/saturn/%.elf: build/saturn/%.o config/saturn/zero_syms.txt config/saturn/game_syms.txt config/saturn/%_user_syms.txt
 	cd build/saturn && \
 		sh-elf-ld -verbose --no-check-sections -nostdlib \
 		-o $*.elf \
