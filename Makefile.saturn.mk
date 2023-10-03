@@ -6,8 +6,9 @@ SATURN_LIB_TARGETS	:= lib/gfs lib/spr lib/dma lib/scl lib/csh lib/per lib/cdc li
 DOSEMU						:= dosemu -quiet -dumb -f ./dosemurc -K . -E
 SATURN_TOOLCHAIN			:= bin/cygnus-2.7-96Q3-bin
 CC1_SATURN					:= $(SATURN_BUILD_DIR)/CC1.EXE
-SATURN_SPLITTER_APP 		:= $(TOOLS_DIR)/saturn-splitter/rust-dis/target/release/rust-dis
-SATURN_ADPCM_EXTRACT_APP	:= $(TOOLS_DIR)/saturn-splitter/adpcm-extract/target/release/adpcm-extract
+SATURN_SPLITTER_DIR			:= $(TOOLS_DIR)/saturn-splitter
+SATURN_SPLITTER_APP 		:= $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
+SATURN_ADPCM_EXTRACT_APP	:= $(SATURN_SPLITTER_DIR)/adpcm-extract/target/release/adpcm-extract
 
 SATURN_OVL_PRGS			:= $(addprefix $(SATURN_BUILD_DIR)/,$(addsuffix .PRG,$(SATURN_OVL_TARGETS)))
 SATURN_LIB_OBJECTS		:= $(addprefix $(SATURN_BUILD_DIR)/,$(addsuffix .o,$(SATURN_LIB_TARGETS)))
