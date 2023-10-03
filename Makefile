@@ -337,57 +337,7 @@ extract_saturn: $(SATURN_SPLITTER_APP)
 	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/warp.prg.yaml
 	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/alucard.prg.yaml
 
-extract_saturn_pcm: $(SATURN_SPLITTER_APP)
-	mkdir -p build/saturn/SD
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD01.PCM build/saturn/SD/SD01.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD02.PCM build/saturn/SD/SD02.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD03.PCM build/saturn/SD/SD03.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD04.PCM build/saturn/SD/SD04.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD05.PCM build/saturn/SD/SD05.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD06.PCM build/saturn/SD/SD06.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD07.PCM build/saturn/SD/SD07.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD08.PCM build/saturn/SD/SD08.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD09.PCM build/saturn/SD/SD09.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD0A.PCM build/saturn/SD/SD0A.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD0B.PCM build/saturn/SD/SD0B.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD0C.PCM build/saturn/SD/SD0C.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD0D.PCM build/saturn/SD/SD0D.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD0E.PCM build/saturn/SD/SD0E.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD0F.PCM build/saturn/SD/SD0F.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD10.PCM build/saturn/SD/SD10.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD11.PCM build/saturn/SD/SD11.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD12.PCM build/saturn/SD/SD12.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD13.PCM build/saturn/SD/SD13.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD14.PCM build/saturn/SD/SD14.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD15.PCM build/saturn/SD/SD15.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD16.PCM build/saturn/SD/SD16.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD17.PCM build/saturn/SD/SD17.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD18.PCM build/saturn/SD/SD18.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD19.PCM build/saturn/SD/SD19.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD1A.PCM build/saturn/SD/SD1A.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD1B.PCM build/saturn/SD/SD1B.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD1C.PCM build/saturn/SD/SD1C.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD1D.PCM build/saturn/SD/SD1D.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD1E.PCM build/saturn/SD/SD1E.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD1F.PCM build/saturn/SD/SD1F.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD20.PCM build/saturn/SD/SD20.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD21.PCM build/saturn/SD/SD21.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD22.PCM build/saturn/SD/SD22.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD23.PCM build/saturn/SD/SD23.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD24.PCM build/saturn/SD/SD24.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD25.PCM build/saturn/SD/SD25.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD26.PCM build/saturn/SD/SD26.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD27.PCM build/saturn/SD/SD27.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD28.PCM build/saturn/SD/SD28.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD29.PCM build/saturn/SD/SD29.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD2A.PCM build/saturn/SD/SD2A.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD2B.PCM build/saturn/SD/SD2B.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD2C.PCM build/saturn/SD/SD2C.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD2D.PCM build/saturn/SD/SD2D.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD2E.PCM build/saturn/SD/SD2E.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD2F.PCM build/saturn/SD/SD2F.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD30.PCM build/saturn/SD/SD30.wav
-	$(SATURN_ADPCM_EXTRACT_APP) disks/saturn/SD/SD31.PCM build/saturn/SD/SD31.wav
+include Makefile.*.mk
 
 # Force to extract all the assembly code regardless if a function is already decompiled
 force_extract:
@@ -533,114 +483,6 @@ SATURN_DISK_DIR := disks/saturn
 # absolute path for docker mounts
 SATURN_DISK_ABS := $(shell pwd)/$(SATURN_DISK_DIR)
 
-build_saturn_copy_files:
-	# copy everything into same directory since dosemu is hard to use otherwise
-	rm -rf $(SATURN_BUILD_DIR)
-	mkdir -p $(SATURN_BUILD_DIR)
-	cp -r ./tools/saturn_toolchain/GCCSH/* $(SATURN_BUILD_DIR)
-	cp  ./src/saturn/macro.inc $(SATURN_BUILD_DIR)
-	cp -r ./src/saturn/*.c $(SATURN_BUILD_DIR)
-	cp -r ./src/saturn/*.h $(SATURN_BUILD_DIR)
-	cp -r ./src/saturn/lib $(SATURN_BUILD_DIR)/lib
-	cp -r ./include/saturn $(SATURN_BUILD_DIR)/saturn
-	mkdir -p $(SATURN_BUILD_DIR)/asm/saturn/
-	mkdir -p $(SATURN_BUILD_DIR)/asm/saturn/
-	cp -r ./asm/saturn/game $(SATURN_BUILD_DIR)/asm/saturn/game
-	cp -r ./asm/saturn/t_bat $(SATURN_BUILD_DIR)/asm/saturn/t_bat
-	cp -r ./asm/saturn/zero $(SATURN_BUILD_DIR)/asm/saturn/zero
-	cp -r ./asm/saturn/stage_02 $(SATURN_BUILD_DIR)/asm/saturn/stage_02
-	cp -r ./asm/saturn/warp $(SATURN_BUILD_DIR)/asm/saturn/warp
-	cp -r ./asm/saturn/alucard $(SATURN_BUILD_DIR)/asm/saturn/alucard
-	cp  ./tools/saturn_toolchain/compile_dosemu.sh $(SATURN_BUILD_DIR)
-	chmod +x $(SATURN_BUILD_DIR)/compile_dosemu.sh
-
-build_saturn_dosemu_native:
-	cd build/saturn && OPT_FLAGS=-O2 FILENAME=game sh ./compile_dosemu.sh
-	cd build/saturn && OPT_FLAGS=-O2 FILENAME=t_bat sh ./compile_dosemu.sh
-	cd build/saturn && OPT_FLAGS=-O2 FILENAME=zero sh ./compile_dosemu.sh
-	cd build/saturn && OPT_FLAGS=-O2 FILENAME=stage_02 sh ./compile_dosemu.sh
-	cd build/saturn && OPT_FLAGS=-O2 FILENAME=warp sh ./compile_dosemu.sh
-	cd build/saturn && OPT_FLAGS=-O2 FILENAME=alucard sh ./compile_dosemu.sh
-	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/gfs sh ./compile_dosemu.sh
-	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/spr sh ./compile_dosemu.sh
-	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/dma sh ./compile_dosemu.sh
-	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/scl sh ./compile_dosemu.sh
-	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/csh sh ./compile_dosemu.sh
-	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/per sh ./compile_dosemu.sh
-	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/cdc sh ./compile_dosemu.sh
-	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/mth sh ./compile_dosemu.sh
-	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/bup sh ./compile_dosemu.sh
-	cd build/saturn && OPT_FLAGS=-O0 FILENAME=lib/sys sh ./compile_dosemu.sh
-
-build_saturn_dosemu_docker:
-	docker run --rm -e FILENAME=game -v $(SATURN_BUILD_ABS):/build -w /build dosemu:latest /bin/bash -c "./compile_dosemu.sh"
-	docker run --rm -e FILENAME=t_bat -v $(SATURN_BUILD_ABS):/build -w /build dosemu:latest /bin/bash -c "./compile_dosemu.sh"
-	docker run --rm -e FILENAME=zero -v $(SATURN_BUILD_ABS):/build -w /build dosemu:latest /bin/bash -c "./compile_dosemu.sh"
-	docker run --rm -e FILENAME=stage_02 -v $(SATURN_BUILD_ABS):/build -w /build dosemu:latest /bin/bash -c "./compile_dosemu.sh"
-	docker run --rm -e FILENAME=warp -v $(SATURN_BUILD_ABS):/build -w /build dosemu:latest /bin/bash -c "./compile_dosemu.sh"
-
-build_saturn_link_docker_ld:
-	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o zero_li.o -Map zero.map -T zero.ld -T all_syms.txt -T zero_user_syms.txt -verbose zero.o --no-check-sections -nostdlib -s"
-	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o t_bat_li.o -Map t_bat.map -T t_bat.ld -T all_syms.txt -T t_bat_user_syms.txt -verbose t_bat.o --no-check-sections -nostdlib -s"
-	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o game_li.o -Map game.map -T game.ld -T all_syms.txt -T game_user_syms.txt -verbose game.o --no-check-sections -nostdlib -s"
-	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o stage_02_li.o -Map stage_02.map -T stage_02.ld -T all_syms.txt -T stage_02_user_syms.txt -verbose stage_02.o --no-check-sections -nostdlib -s"
-	docker run --rm -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c "sh-elf-ld -o warp_li.o -Map warp.map -T warp.ld -T all_syms.txt -T warp_user_syms.txt -verbose warp.o --no-check-sections -nostdlib -s"
-
-build_saturn_link_native_ld:
-	cd build/saturn && sh-elf-ld -o zero_li.o -Map zero.map -T zero.ld -T all_syms.txt -T zero_user_syms.txt -verbose zero.o lib/gfs.o lib/spr.o lib/dma.o lib/scl.o lib/csh.o lib/per.o lib/cdc.o lib/mth.o lib/bup.o lib/sys.o --no-check-sections -nostdlib
-	cd build/saturn && sh-elf-ld -o t_bat_li.o -Map t_bat.map -T t_bat.ld -T all_syms.txt -T t_bat_user_syms.txt -verbose t_bat.o --no-check-sections -nostdlib
-	cd build/saturn && sh-elf-ld -o game_li.o -Map game.map -T game.ld -T all_syms.txt -T game_user_syms.txt -verbose game.o --no-check-sections -nostdlib
-	cd build/saturn && sh-elf-ld -o stage_02_li.o -Map stage_02.map -T stage_02.ld -T all_syms.txt -T stage_02_user_syms.txt -verbose stage_02.o --no-check-sections -nostdlib
-	cd build/saturn && sh-elf-ld -o warp_li.o -Map warp.map -T warp.ld -T all_syms.txt -T warp_user_syms.txt -verbose warp.o --no-check-sections -nostdlib
-	cd build/saturn && sh-elf-ld -o alucard_li.o -Map alucard.map -T alucard.ld -T all_syms.txt -T alucard_user_syms.txt -verbose alucard.o --no-check-sections -nostdlib
-
-build_saturn_link_copy:
-	# link
-	cat ./config/saturn/game_syms.txt > ./build/saturn/all_syms.txt
-	cat ./config/saturn/t_bat_syms.txt >> ./build/saturn/all_syms.txt
-	cat ./config/saturn/zero_syms.txt >> ./build/saturn/all_syms.txt
-	cp ./config/saturn/t_bat_user_syms.txt ./build/saturn/
-	cp ./config/saturn/game_user_syms.txt ./build/saturn/
-	cp ./config/saturn/stage_02_user_syms.txt ./build/saturn/
-	cp ./config/saturn/warp_user_syms.txt ./build/saturn/
-	cp ./config/saturn/alucard_user_syms.txt ./build/saturn/
-	cp ./config/saturn/zero_user_syms.txt ./build/saturn/
-
-	cp ./config/saturn/*.ld ./build/saturn
-
-build_saturn_link_docker: build_saturn_link_copy build_saturn_link_docker_ld
-
-build_saturn_link_native: build_saturn_link_copy build_saturn_link_native_ld
-
-# do not run in parallel
-build_saturn_docker: build_saturn_copy_files build_saturn_dosemu_docker build_saturn_link_docker
-
-# do not run in parallel
-build_saturn_native: build_saturn_copy_files build_saturn_dosemu_native build_saturn_link_native
-
-check_saturn_docker:
-	# dump binaries using sh binutils container
-	chmod +x tools/saturn_toolchain/strip.sh
-	cp tools/saturn_toolchain/strip.sh $(SATURN_BUILD_DIR)
-	docker run --rm -e INPUT_FILENAME=game_li.o -e OUTPUT_FILENAME=GAME.PRG -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c ./strip.sh
-	docker run --rm -e INPUT_FILENAME=t_bat_li.o -e OUTPUT_FILENAME=T_BAT.PRG -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c ./strip.sh
-	docker run --rm -e INPUT_FILENAME=zero_li.o -e OUTPUT_FILENAME=0.BIN -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c ./strip.sh
-	docker run --rm -e INPUT_FILENAME=stage_02_li.o -e OUTPUT_FILENAME=STAGE_02.PRG -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c ./strip.sh
-	docker run --rm -e INPUT_FILENAME=warp_li.o -e OUTPUT_FILENAME=WARP.PRG -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c ./strip.sh
-	# check hashes
-	sha1sum --check config/check.saturn.sha
-
-check_saturn_native:
-	# dump binaries using sh binutils container
-	sh-elf-objcopy ./build/saturn/game_li.o -O binary ./build/saturn/GAME.PRG
-	sh-elf-objcopy ./build/saturn/t_bat_li.o -O binary ./build/saturn/T_BAT.PRG
-	sh-elf-objcopy ./build/saturn/zero_li.o -O binary ./build/saturn/0.BIN
-	sh-elf-objcopy ./build/saturn/stage_02_li.o -O binary ./build/saturn/STAGE_02.PRG
-	sh-elf-objcopy ./build/saturn/warp_li.o -O binary ./build/saturn/WARP.PRG
-	sh-elf-objcopy ./build/saturn/alucard_li.o -O binary ./build/saturn/ALUCARD.PRG
-	# check hashes
-	sha1sum --check config/check.saturn.sha
-
 diff_saturn_docker:
 	chmod +x tools/saturn_toolchain/diff.sh
 	cp tools/saturn_toolchain/diff.sh $(SATURN_BUILD_DIR)
@@ -690,7 +532,7 @@ SHELL = /bin/bash -e -o pipefail
 
 include tools/tools.mk
 
-.PHONY: all, clean, format, check, expected
+.PHONY: all, clean, format, check, build, expected
 .PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, tt_000
 .PHONY: %_dirs
 .PHONY: extract, extract_%
