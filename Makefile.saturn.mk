@@ -1,39 +1,52 @@
-DOSEMU				:= dosemu -quiet -dumb -f ./dosemurc -K . -E
-SATURN_TOOLCHAIN	:= build/saturn/CC1.EXE
-SATURN_SPLITTER_DIR := $(TOOLS_DIR)/saturn-splitter
-SATURN_SPLITTER_APP := $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
-SATURN_ADPCM_EXTRACT_APP := $(SATURN_SPLITTER_DIR)/adpcm-extract/target/release/adpcm-extract
+SATURN_BUILD_DIR	:= build/saturn
+SATURN_ASSETS_DIR	:= assets/saturn
+SATURN_OVL_TARGETS	:= GAME ALUCARD STAGE_02 WARP T_BAT
+SATURN_LIB_TARGETS	:= lib/gfs lib/spr lib/dma lib/scl lib/csh lib/per lib/cdc lib/mth lib/bup lib/sys
 
-SATURN_OVL_TARGETS  := GAME ALUCARD STAGE_02 WARP T_BAT
-SATURN_OVL_PRGS     := $(addprefix build/saturn/,$(addsuffix .PRG,$(SATURN_OVL_TARGETS)))
-SATURN_LIB_TARGETS := lib/gfs lib/spr lib/dma lib/scl lib/csh lib/per lib/cdc lib/mth lib/bup lib/sys
-SATURN_LIB_OBJECTS  := $(addprefix build/saturn/,$(addsuffix .o,$(SATURN_LIB_TARGETS)))
+DOSEMU						:= dosemu -quiet -dumb -f ./dosemurc -K . -E
+SATURN_TOOLCHAIN			:= $(SATURN_BUILD_DIR)/CC1.EXE
+SATURN_SPLITTER_APP 		:= $(TOOLS_DIR)/saturn-splitter/rust-dis/target/release/rust-dis
+SATURN_ADPCM_EXTRACT_APP	:= $(TOOLS_DIR)/saturn-splitter/adpcm-extract/target/release/adpcm-extract
+
+SATURN_OVL_PRGS			:= $(addprefix $(SATURN_BUILD_DIR)/,$(addsuffix .PRG,$(SATURN_OVL_TARGETS)))
+SATURN_LIB_OBJECTS		:= $(addprefix $(SATURN_BUILD_DIR)/,$(addsuffix .o,$(SATURN_LIB_TARGETS)))
+SATURN_PCM_FILES 		:= $(wildcard disks/saturn/SD/*.PCM)
+SATURN_WAV_FILES 		:= $(patsubst disks/saturn/SD/%.PCM,$(SATURN_ASSETS_DIR)/SD/%.wav,$(SATURN_PCM_FILES))
 
 .PHONY: check_saturn
 check_saturn:
 	sha1sum --check config/check.saturn.sha
 
 .PHONY: build_saturn
-build_saturn: build/saturn/0.BIN $(SATURN_OVL_PRGS)
+build_saturn: $(SATURN_BUILD_DIR)/0.BIN $(SATURN_OVL_PRGS)
+
+.PHONY: extract_saturn
+extract_saturn: $(SATURN_SPLITTER_APP)
+	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/game.prg.yaml
+	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/t_bat.prg.yaml
+	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/zero.bin.yaml
+	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/stage_02.prg.yaml
+	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/warp.prg.yaml
+	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/alucard.prg.yaml
 
 .PHONY: extract_saturn_pcm
 extract_saturn_pcm: $(SATURN_WAV_FILES)
 
-build/saturn/0.BIN: build/saturn/zero.elf
+$(SATURN_BUILD_DIR)/0.BIN: $(SATURN_BUILD_DIR)/zero.elf
 	sh-elf-objcopy $< -O binary $@
-build/saturn/GAME.PRG: build/saturn/game.elf
+$(SATURN_BUILD_DIR)/GAME.PRG: $(SATURN_BUILD_DIR)/game.elf
 	sh-elf-objcopy $< -O binary $@
-build/saturn/ALUCARD.PRG: build/saturn/alucard.elf
+$(SATURN_BUILD_DIR)/ALUCARD.PRG: $(SATURN_BUILD_DIR)/alucard.elf
 	sh-elf-objcopy $< -O binary $@
-build/saturn/STAGE_02.PRG: build/saturn/stage_02.elf
+$(SATURN_BUILD_DIR)/STAGE_02.PRG: $(SATURN_BUILD_DIR)/stage_02.elf
 	sh-elf-objcopy $< -O binary $@
-build/saturn/WARP.PRG: build/saturn/warp.elf
+$(SATURN_BUILD_DIR)/WARP.PRG: $(SATURN_BUILD_DIR)/warp.elf
 	sh-elf-objcopy $< -O binary $@
-build/saturn/T_BAT.PRG: build/saturn/t_bat.elf
+$(SATURN_BUILD_DIR)/T_BAT.PRG: $(SATURN_BUILD_DIR)/t_bat.elf
 	sh-elf-objcopy $< -O binary $@
 
-build/saturn/zero.elf: build/saturn/zero.o $(SATURN_LIB_OBJECTS) config/saturn/zero_syms.txt config/saturn/game_syms.txt config/saturn/zero_user_syms.txt
-	cd build/saturn && \
+$(SATURN_BUILD_DIR)/zero.elf: $(SATURN_BUILD_DIR)/zero.o $(SATURN_LIB_OBJECTS) config/saturn/zero_syms.txt config/saturn/game_syms.txt config/saturn/zero_user_syms.txt
+	cd $(SATURN_BUILD_DIR) && \
 		sh-elf-ld -verbose --no-check-sections -nostdlib \
 		-o zero.elf \
 		-Map zero.map \
@@ -43,8 +56,8 @@ build/saturn/zero.elf: build/saturn/zero.o $(SATURN_LIB_OBJECTS) config/saturn/z
 		-T ../../config/saturn/zero_user_syms.txt \
 		zero.o $(addsuffix .o,$(SATURN_LIB_TARGETS))
 
-build/saturn/%.elf: build/saturn/%.o config/saturn/zero_syms.txt config/saturn/game_syms.txt config/saturn/%_user_syms.txt
-	cd build/saturn && \
+$(SATURN_BUILD_DIR)/%.elf: $(SATURN_BUILD_DIR)/%.o config/saturn/zero_syms.txt config/saturn/game_syms.txt config/saturn/%_user_syms.txt
+	cd $(SATURN_BUILD_DIR) && \
 		sh-elf-ld -verbose --no-check-sections -nostdlib \
 		-o $*.elf \
 		-Map $*.map \
@@ -54,12 +67,12 @@ build/saturn/%.elf: build/saturn/%.o config/saturn/zero_syms.txt config/saturn/g
 		-T ../../config/saturn/$*_user_syms.txt \
 		$*.o
 
-build/saturn/lib/%.o: $(SRC_DIR)/saturn/lib/%.c $(SATURN_TOOLCHAIN)
+$(SATURN_BUILD_DIR)/lib/%.o: $(SRC_DIR)/saturn/lib/%.c $(SATURN_TOOLCHAIN)
 	mkdir -p $(dir $@)
-	cd build/saturn && $(DOSEMU) "GCC.EXE -c -I./ -O0 -m2 -fsigned-char lib/$*.c -o lib/$*.o"
-build/saturn/%.o: $(SRC_DIR)/saturn/%.c $(SATURN_TOOLCHAIN)
+	cd $(SATURN_BUILD_DIR) && $(DOSEMU) "GCC.EXE -c -I./ -O0 -m2 -fsigned-char lib/$*.c -o lib/$*.o"
+$(SATURN_BUILD_DIR)/%.o: $(SRC_DIR)/saturn/%.c $(SATURN_TOOLCHAIN)
 	mkdir -p $(dir $@)
-	cd build/saturn && $(DOSEMU) "GCC.EXE -c -I./ -O2 -m2 -fsigned-char $*.c -o $*.o"
+	cd $(SATURN_BUILD_DIR) && $(DOSEMU) "GCC.EXE -c -I./ -O2 -m2 -fsigned-char $*.c -o $*.o"
 
 $(SATURN_TOOLCHAIN):
 	mkdir -p $(dir $@)
@@ -70,7 +83,6 @@ $(SATURN_TOOLCHAIN):
 	cp -r ./src/saturn/lib $(SATURN_BUILD_DIR)/lib
 	cp -r ./include/saturn $(SATURN_BUILD_DIR)/saturn
 	mkdir -p $(SATURN_BUILD_DIR)/asm/saturn/
-	mkdir -p $(SATURN_BUILD_DIR)/asm/saturn/
 	cp -r ./asm/saturn/game $(SATURN_BUILD_DIR)/asm/saturn/game
 	cp -r ./asm/saturn/t_bat $(SATURN_BUILD_DIR)/asm/saturn/t_bat
 	cp -r ./asm/saturn/zero $(SATURN_BUILD_DIR)/asm/saturn/zero
@@ -78,13 +90,11 @@ $(SATURN_TOOLCHAIN):
 	cp -r ./asm/saturn/warp $(SATURN_BUILD_DIR)/asm/saturn/warp
 	cp -r ./asm/saturn/alucard $(SATURN_BUILD_DIR)/asm/saturn/alucard
 
-
-SATURN_PCM_FILES := $(wildcard disks/saturn/SD/*.PCM)
-SATURN_WAV_FILES := $(patsubst disks/saturn/SD/%.PCM,build/saturn/SD/%.wav,$(SATURN_PCM_FILES))
-
 assets/saturn/SD/%.wav: disks/saturn/SD/%.PCM $(SATURN_SPLITTER_APP)
-	mkdir -p assets/saturn/SD
+	mkdir -p $(ASSET_DIR)/saturn/SD
 	$(SATURN_ADPCM_EXTRACT_APP) $< $@
 
+# TODO: Remove me. Temporary backward compatibility with the CI
 build_saturn_native: build_saturn
 check_saturn_native: check_saturn
+build_saturn_toolchain_native: build_saturn_toolchain

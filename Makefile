@@ -329,14 +329,6 @@ extract_weapon: $(SPLAT_APP)
 	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).weapon.yaml
 $(CONFIG_DIR)/generated.$(VERSION).symbols.%.txt:
 
-extract_saturn: $(SATURN_SPLITTER_APP)
-	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/game.prg.yaml
-	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/t_bat.prg.yaml
-	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/zero.bin.yaml
-	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/stage_02.prg.yaml
-	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/warp.prg.yaml
-	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/alucard.prg.yaml
-
 include Makefile.*.mk
 
 # Force to extract all the assembly code regardless if a function is already decompiled
@@ -457,12 +449,6 @@ $(BUILD_DIR)/%.c.o: %.c $(MASPSX_APP) $(CC1PSX)
 #	$(CROSS)gcc -c -nostartfiles -nodefaultlibs -ggdb -gdwarf-4 $(CPP_FLAGS) $(CC_FLAGS) $(LD_FLAGS) $< -o $@
 	$(CPP) $(CPP_FLAGS) -lang-c $< | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 
-build_saturn_dosemu_docker_container:
-	docker build -t dosemu:latest -f tools/saturn_toolchain/dosemu_dockerfile .
-
-build_saturn_binutils_docker_container:
-	docker build -t binutils-sh-elf:latest -f tools/saturn_toolchain/binutils_dockerfile .
-
 build_saturn_toolchain_gccsh:
 	# get GCCSH
 	git clone https://github.com/sozud/saturn-compilers.git
@@ -470,25 +456,10 @@ build_saturn_toolchain_gccsh:
 	mv saturn-compilers/cygnus-2.7-96Q3-bin ./tools/saturn_toolchain/GCCSH
 	rm -rf saturn-compilers
 
-# parallel OK
-build_saturn_toolchain_docker: build_saturn_dosemu_docker_container build_saturn_binutils_docker_container build_saturn_toolchain_gccsh $(SATURN_SPLITTER_APP)
-
 # CI prep, don't build dosemu container (parallel OK)
-build_saturn_toolchain_native: extract_disk_saturn build_saturn_toolchain_gccsh $(SATURN_SPLITTER_APP)
+build_saturn_toolchain: extract_disk_saturn build_saturn_toolchain_gccsh $(SATURN_SPLITTER_APP)
 
-SATURN_BUILD_DIR := build/saturn
-# absolute path for docker mounts
-SATURN_BUILD_ABS := $(shell pwd)/$(SATURN_BUILD_DIR)
-SATURN_DISK_DIR := disks/saturn
-# absolute path for docker mounts
-SATURN_DISK_ABS := $(shell pwd)/$(SATURN_DISK_DIR)
-
-diff_saturn_docker:
-	chmod +x tools/saturn_toolchain/diff.sh
-	cp tools/saturn_toolchain/diff.sh $(SATURN_BUILD_DIR)
-	docker run --rm -e FILENAME=$(FILENAME) -v $(SATURN_DISK_ABS):/theirs -v $(SATURN_BUILD_ABS):/build -w /build binutils-sh-elf:latest /bin/bash -c ./diff.sh
-
-diff_saturn_native:
+diff_saturn:
 	sh-elf-objdump -z -m sh2 -b binary -D ./build/saturn/$(FILENAME) > ./build/saturn/$(FILENAME)-ours.txt && \
 	sh-elf-objdump -z -m sh2 -b binary -D ./disks/saturn/$(FILENAME) > ./build/saturn/$(FILENAME)-theirs.txt && \
 	diff ./build/saturn/$(FILENAME)-ours.txt ./build/saturn/$(FILENAME)-theirs.txt > ./build/saturn/$(FILENAME)-diff.txt || true

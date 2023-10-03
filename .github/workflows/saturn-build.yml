@@ -59,7 +59,7 @@ jobs:
           sudo dpkg -i comcom32_0.1~alpha3-1_all.deb
           sudo dpkg -i dosemu2_2.0~pre9-1_amd64.deb
       - name: Prep
-        run: make -j build_saturn_toolchain_native
+        run: make -j build_saturn_toolchain
       - name: Extract asm
         run: make extract_saturn
       - name: Build saturn binaries
