@@ -32,31 +32,27 @@ build/saturn/WARP.PRG: build/saturn/warp.elf
 build/saturn/T_BAT.PRG: build/saturn/t_bat.elf
 	sh-elf-objcopy $< -O binary $@
 
-build/saturn/zero.elf: build/saturn/zero.o $(SATURN_LIB_OBJECTS) build/saturn/zero.ld
+build/saturn/zero.elf: build/saturn/zero.o $(SATURN_LIB_OBJECTS)
 	cd build/saturn && \
 		sh-elf-ld -verbose --no-check-sections -nostdlib \
 		-o zero.elf \
 		-Map zero.map \
-		-T zero.ld \
+		-T ../../config/saturn/zero.ld \
 		-T ../../config/saturn/zero_syms.txt \
 		-T ../../config/saturn/game_syms.txt \
 		-T ../../config/saturn/zero_user_syms.txt \
 		zero.o $(addsuffix .o,$(SATURN_LIB_TARGETS))
 
-build/saturn/%.elf: build/saturn/%.o build/saturn/%.ld
+build/saturn/%.elf: build/saturn/%.o
 	cd build/saturn && \
 		sh-elf-ld -verbose --no-check-sections -nostdlib \
 		-o $*.elf \
 		-Map $*.map \
-		-T $*.ld \
+		-T ../../config/saturn/$*.ld \
 		-T ../../config/saturn/zero_syms.txt \
 		-T ../../config/saturn/game_syms.txt \
 		-T ../../config/saturn/$*_user_syms.txt \
 		$*.o
-
-build/saturn/%.ld: config/saturn/%.ld
-	mkdir -p $(dir $@)
-	cp $< $@
 
 build/saturn/lib/%.o: $(SRC_DIR)/saturn/lib/%.c $(SATURN_TOOLCHAIN)
 	mkdir -p $(dir $@)
