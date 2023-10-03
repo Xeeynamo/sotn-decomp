@@ -87,3 +87,6 @@ SATURN_WAV_FILES := $(patsubst disks/saturn/SD/%.PCM,build/saturn/SD/%.wav,$(SAT
 assets/saturn/SD/%.wav: disks/saturn/SD/%.PCM $(SATURN_SPLITTER_APP)
 	mkdir -p assets/saturn/SD
 	$(SATURN_ADPCM_EXTRACT_APP) $< $@
+
+build_saturn_native: build_saturn
+check_saturn_native: check_saturn
