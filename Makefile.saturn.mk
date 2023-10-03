@@ -77,8 +77,6 @@ $(SATURN_TOOLCHAIN):
 	cp -r ./asm/saturn/stage_02 $(SATURN_BUILD_DIR)/asm/saturn/stage_02
 	cp -r ./asm/saturn/warp $(SATURN_BUILD_DIR)/asm/saturn/warp
 	cp -r ./asm/saturn/alucard $(SATURN_BUILD_DIR)/asm/saturn/alucard
-	cp  ./tools/saturn_toolchain/compile_dosemu.sh $(SATURN_BUILD_DIR)
-	chmod +x $(SATURN_BUILD_DIR)/compile_dosemu.sh
 
 
 SATURN_PCM_FILES := $(wildcard disks/saturn/SD/*.PCM)

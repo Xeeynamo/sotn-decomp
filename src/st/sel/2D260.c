@@ -283,7 +283,144 @@ void UpdateFileSelect(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801ADF94);
+extern u8* D_801803B0;
+extern u8* D_801803B8;
+extern u8* D_801803C8;
+extern u8* D_801803CC;
+extern const char D_801A77A0[];
+extern const char D_801A77AC[];
+extern const char D_801A77B4[];
+extern const char D_801A77BC[];
+extern const char D_801A77C0[];
+// #ifndef NON_MATCHING
+// INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801ADF94);
+// #else
+
+void func_801ADF94(s32 arg0, s32 arg1) {
+    s32 slot;
+    s32 x;
+    s32 y;
+    s32 port;
+    s32 percentage;
+    s32 temp_t2;
+    s32 color;
+    s32 percentageInteger;
+    s32 percentageDecimal;
+    s8* var_a0;
+    s32 icon;
+    s32 blah;
+    s32 selectionEffect;
+    s32 tga;
+    s32 i;
+    s32 j;
+
+    temp_t2 = arg0 & 0x7F;
+    blah = arg0 & 0x80;
+    port = D_801D6B04 / 15;
+    slot = D_801D6B04 % 15;
+    y = arg1 * 56;
+    func_801B26A0(
+        &g_PrimBuf[D_801BAF18[11][0]], 104, 88 + (i = y), 176, 80, 0, 0);
+    if (temp_t2 > 0) {
+        if (g_SaveSummary[port].padding == -3 || temp_t2 == 3) {
+            func_801ACBE4(12, 8);
+            func_801ACBE4(16, 8);
+            DrawString16x16(D_801A77A0, 128, 120 + y, 1);
+        } else {
+            icon = g_SaveSummary[port].icon[slot];
+            if (icon >= 0) {
+                func_801AC084(12, y);
+                func_801ACBE4(12, 0);
+                func_801ACBE4(16, 0);
+                (g_PrimBuf + D_801BAF18[16][0])->y0 = 96 + y;
+                func_801ACFBC(port, slot, 6);
+                PrintFileSelectPlaceName(port, slot, 112 + y);
+                func_801B2BD4(g_SaveSummary[port].level[slot], 148, 144 + y, 1);
+                func_801B2BD4(
+                    g_SaveSummary[port].playHours[slot], 200, 144 + y, 1);
+                func_801B2C70(
+                    g_SaveSummary[port].playMinutes[slot], 224, 144 + y, 1);
+                func_801B2C70(
+                    g_SaveSummary[port].playSeconds[slot], 248, 144 + y, 1);
+                func_801B2BD4(g_SaveSummary[port].gold[slot], 180, 152 + y, 1);
+                percentage = g_SaveSummary[port].nRoomsExplored[slot];
+                percentage = percentage * 1000 / 942;
+                percentageDecimal = percentage % 10;
+                percentageInteger = percentage / 10;
+                func_801B2BD4(percentageInteger, 232, 152 + y, 1);
+                func_801B27A8(
+                    240, 156 + y, 8, 4, 0xE0, 0x8C, 0x200, 12, 1, 0x80);
+                func_801B2BD4(percentageDecimal, 248, 152 + y, 1);
+            } else {
+                func_801ACBE4(12, 8);
+                func_801ACBE4(16, 8);
+                if (icon == -2) {
+                    DrawString16x16(D_801A77AC, 160, 120 + y, 1);
+                } else if (temp_t2 == 2) {
+                    DrawString16x16(D_801A77B4, 136, 120 + y, 1);
+                } else {
+                    DrawString16x16(D_801A77A0, 128, 120 + y, 1);
+                }
+            }
+        }
+    }
+
+    if (!blah) {
+        DrawImages8x8(D_801803A8, 52, 180, 1);
+        DrawImages8x8(D_801803AC, 52, 196, 1);
+        DrawImages8x8(D_801803B0, 52, 212, 1);
+    }
+
+    for (i = 0; i < PORT_COUNT; i++) {
+        switch (g_SaveSummary[i].padding) {
+        case -1:
+            DrawString16x16(D_801A77BC, 48 + (i * 256), 88, 1);
+            DrawString16x16(D_801A77C0, 32 + (i * 256), 104, 1);
+            break;
+        case -2:
+            DrawImages8x8(D_801803B8, 30 + (i * 256), 108, 1);
+            DrawImages8x8(D_801803CC, 30 + (i * 256), 116, 1);
+            break;
+        case -3:
+            DrawImages8x8(D_801803C8, 54 + (i * 256), 108, 1);
+            break;
+        default:
+            for (j = 0; j < BLOCK_PER_CARD; j++) {
+                icon = g_SaveSummary[i].icon[j];
+                x = j % 3 * 24 + 32 + i * 256;
+                y = -(j / 3 * 0x10) + 0x90;
+                if (j % 3 + i * 3 == g_MemCardSelectorX && temp_t2 != 3 &&
+                    j / 3 == g_MemCardSelectorY && temp_t2 > 0 &&
+                    D_801BAF10 == 0) {
+                    if (g_Timer & 0x10) {
+                        selectionEffect = g_Timer & 0xF;
+                    } else {
+                        selectionEffect = 0xF - (g_Timer & 0xF);
+                    }
+                    color = selectionEffect * 8 + 0x80;
+                } else {
+                    color = 0x40;
+                }
+
+                if (icon == -2) {
+                    func_801B27A8(
+                        x, y, 16, 16, 0x90, 0x80, 0x200, 0xC, 0, color);
+                }
+                if (icon == -3) {
+                    func_801B27A8(
+                        x, y, 16, 16, 0x80, 0x80, 0x200, 0xC, 0, color);
+                }
+                if (icon >= 0) {
+                    func_801B27A8(
+                        x, y, 16, 16, icon * 0x10, (D_801BAF08 % 3) * 0x10,
+                        icon + 0x220, 0x16, 0, color);
+                }
+            }
+            break;
+        }
+    }
+}
+// #endif
 
 void func_801AE6D0(void) {
     Primitive* prim;
