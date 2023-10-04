@@ -307,6 +307,7 @@ include Makefile.*.mk
 # Force to extract all the assembly code regardless if a function is already decompiled
 force_extract:
 	mv src src_tmp
+	rm $(BUILD_DIR)/*.ld
 	make extract -j
 	rm -rf src/
 	mv src_tmp src
