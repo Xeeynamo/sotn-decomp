@@ -615,6 +615,7 @@ extern s32 g_BatScreechDone;
 extern s32 g_MistTimer; // remaining time in mist transformation
 extern s32 D_80138008;
 extern s32 D_8013800C[];
+extern s32 D_80138038;
 extern u8 D_8013803C;
 extern u8 D_80138040;
 extern u8 D_80138044;

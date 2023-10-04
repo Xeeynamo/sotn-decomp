@@ -1299,7 +1299,51 @@ void func_80118894(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/75F54", func_80118970);
+Entity* func_80118970(void) {
+    s32 big_arr[128];
+    Entity* ent;
+    s32 i;
+    s32 successes;
+    s32 var_v1;
+    s32 temp_a0;
+
+    successes = 0;
+    // Hunt through these entities looking for ones that match all criteria.
+    // Call them a success and increment successes.
+    ent = &g_Entities[STAGE_ENTITY_START];
+    for (i = 0; i < 128; i++, ent++) {
+        big_arr[i] = 0;
+        if ((ent->entityId != 0) && (ent->hitboxState != 0) &&
+            !(ent->flags & FLAG_UNK_00200000) &&
+            ((LOH(ent->posX.i.hi) >= -16) && (ent->posX.i.hi < 273)) &&
+            ((LOH(ent->posY.i.hi) < 241) && (ent->posY.i.hi >= 0)) &&
+            (ent->hitPoints < 0x7000)) {
+            successes++;
+            if (!(ent->flags & FLAG_UNK_80000)) {
+                ent->flags |= FLAG_UNK_80000;
+                return ent;
+            }
+            big_arr[i] = 1;
+        }
+    }
+
+    if (successes != 0) {
+        temp_a0 = D_80138038;
+        var_v1 = temp_a0 / 128;
+        var_v1 = temp_a0 - var_v1 * 128;
+        for (i = 0; i < 128; i++) {
+            temp_a0 = var_v1 + 1;
+            if (big_arr[var_v1] != 0) {
+                ent = &g_Entities[STAGE_ENTITY_START + var_v1];
+                D_80138038 = temp_a0 - temp_a0 / 128 * 128;
+                return ent;
+            }
+            var_v1 = temp_a0 / 128;
+            var_v1 = temp_a0 - var_v1 * 128;
+        }
+    }
+    return NULL;
+}
 
 s32 func_80118B18(Entity* ent1, Entity* ent2, s32 arg2) {
     s16 var_a1;
