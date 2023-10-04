@@ -71,7 +71,7 @@ def get_c_context(src_file) -> str:
     return m2ctx.import_c_file(src_file)
 
 
-def decompile(func: NonMatchingFunc, ctx_str: str):
+def run_m2c(func: NonMatchingFunc, ctx_str: str):
     with tempfile.NamedTemporaryFile(
         mode="w", encoding="utf-8", suffix=".c"
     ) as tmp_ctx:
@@ -124,7 +124,7 @@ class InjectRes(Enum):
 
 
 # check if the overlay can be compiled
-def check_injected_code() -> InjectRes:
+def check_injected_code(func) -> InjectRes:
     compile_result = subprocess.run(
         f"make {func.overlay_name}",
         cwd=root_dir,
@@ -169,7 +169,7 @@ def inject_decompiled_function_into_file(func: NonMatchingFunc, dec: str) -> Inj
 
         if not found:
             return InjectRes.NOT_INJECTED
-        result = check_injected_code()
+        result = check_injected_code(func)
         if result == InjectRes.SUCCESS:
             return result
 
@@ -212,39 +212,19 @@ def show_asm_differ_command(func: NonMatchingFunc):
     print(f"python3 {tool_path} -mwo --overlay {overlay_name} {func.name}")
 
 
-parser = argparse.ArgumentParser(description="automatically decompiles a function")
-parser.add_argument("function", help="function name to decompile")
-parser.add_argument(
-    "-n",
-    "--number-occurrence",
-    help="the occurrence number in case multiple functions with the same name are found",
-    type=int,
-    default=None,
-    required=False,
-)
-parser.add_argument(
-    "-f",
-    "--force",
-    help="force decompiling only the first occurrence",
-    default=None,
-    required=False,
-    action="store_true",
-)
-
-args = parser.parse_args()
-if __name__ == "__main__":
-    funcs = get_nonmatching_functions(asm_dir, args.function)
+def decompile(func_name: str, number_occurrence: int = None, force: bool = False):
+    funcs = get_nonmatching_functions(asm_dir, func_name)
     if len(funcs) == 0:
-        print(f"function {args.function} not found or already decompiled")
+        print(f"function {func_name} not found or already decompiled")
 
-    if args.force:
+    if force:
         funcs = funcs[:1]
-    elif args.number_occurrence and args.number_occurrence < len(funcs):
-        funcs = [funcs[args.number_occurrence]]
+    elif number_occurrence and number_occurrence < len(funcs):
+        funcs = [funcs[number_occurrence]]
     else:
         if len(funcs) > 1:
             print(
-                f"{len(funcs)} occurrences found for '{args.function}' in the following overlays:"
+                f"{len(funcs)} occurrences found for '{func_name}' in the following overlays:"
             )
             for n, func in enumerate(funcs):
                 print(f"[{n}] {func.overlay_name} at {func.asm_path}")
@@ -259,7 +239,7 @@ if __name__ == "__main__":
     # print(f"src: {func.src_path}")
 
     ctx = get_c_context(func.src_path)
-    dec = decompile(func, ctx)
+    dec = run_m2c(func, ctx)
     dec_res = guess_unknown_type(dec)
     inject_res = inject_decompiled_function_into_file(func, dec_res)
     if inject_res == InjectRes.SUCCESS:
@@ -274,3 +254,27 @@ if __name__ == "__main__":
         print(f"function '{func.name}' might already be decompiled")
     else:
         print("unhandled error!")
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="automatically decompiles a function")
+    parser.add_argument("function", help="function name to decompile")
+    parser.add_argument(
+        "-n",
+        "--number-occurrence",
+        help="the occurrence number in case multiple functions with the same name are found",
+        type=int,
+        default=None,
+        required=False,
+    )
+    parser.add_argument(
+        "-f",
+        "--force",
+        help="force decompiling only the first occurrence",
+        default=None,
+        required=False,
+        action="store_true",
+    )
+
+    args = parser.parse_args()
+    decompile(args.function, args.number_occurrence, args.force)
