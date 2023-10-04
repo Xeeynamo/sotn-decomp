@@ -1300,7 +1300,7 @@ void func_80118894(Entity* self) {
 }
 
 Entity* func_80118970(void) {
-    s32 big_arr[0x80];
+    s32 big_arr[128];
     Entity* ent;
     s32 i;
     s32 successes;
@@ -1314,13 +1314,13 @@ Entity* func_80118970(void) {
     for (i = 0; i < 128; i++, ent++) {
         big_arr[i] = 0;
         if ((ent->entityId != 0) && (ent->hitboxState != 0) &&
-            !(ent->flags & 0x200000) &&
+            !(ent->flags & FLAG_UNK_00200000) &&
             ((LOH(ent->posX.i.hi) >= -16) && (ent->posX.i.hi < 273)) &&
             ((LOH(ent->posY.i.hi) < 241) && (ent->posY.i.hi >= 0)) &&
             (ent->hitPoints < 0x7000)) {
             successes++;
-            if (!(ent->flags & 0x80000)) {
-                ent->flags |= 0x80000;
+            if (!(ent->flags & FLAG_UNK_80000)) {
+                ent->flags |= FLAG_UNK_80000;
                 return ent;
             }
             big_arr[i] = 1;
