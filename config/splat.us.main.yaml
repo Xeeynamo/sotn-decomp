@@ -7,6 +7,7 @@ options:
   asm_path:     asm/us/main
   asset_path:   assets/main
   src_path:     src/main
+  ld_script_path: build/us/main.ld
   compiler:     GCC
   symbol_addrs_path:    config/symbols.us.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.us.main.txt

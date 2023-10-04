@@ -7,6 +7,7 @@ options:
   asm_path:     asm/us/st/rwrp
   asset_path:   assets/st/rwrp
   src_path:     src/st/rwrp
+  ld_script_path: build/us/strwrp.ld
   compiler:     GCC
   symbol_addrs_path:    config/generated.symbols.us.strwrp.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.us.strwrp.txt

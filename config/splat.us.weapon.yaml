@@ -7,6 +7,7 @@ options:
   asm_path:     asm/us/weapon
   asset_path:   assets/weapon
   src_path:     src/weapon
+  ld_script_path: build/us/weapon.ld
   compiler:     GCC
   symbol_addrs_path:    config/generated.symbols.us.weapon.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.us.weapon.txt

@@ -89,7 +89,7 @@ endef
 define link
 	$(LD) $(LD_FLAGS) -o $(2) \
 		-Map $(BUILD_DIR)/$(1).map \
-		-T $(1).ld \
+		-T $(BUILD_DIR)/$(1).ld \
 		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
 		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(1).txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt
@@ -145,7 +145,7 @@ $(MAIN_TARGET).exe: $(MAIN_TARGET).elf
 $(MAIN_TARGET).elf: $(MAIN_O_FILES)
 	$(LD) $(LD_FLAGS) -o $@ \
 	-Map $(MAIN_TARGET).map \
-	-T $(MAIN).ld \
+	-T $(BUILD_DIR)/main.ld \
 	-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
 	-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(MAIN).txt
 
@@ -226,7 +226,7 @@ $(BUILD_DIR)/TT_000.BIN: $(BUILD_DIR)/tt_000.elf
 mad_fix: stmad_dirs $$(call list_o_files,st/mad) $$(call list_o_files,st)
 	$(LD) $(LD_FLAGS) -o $(BUILD_DIR)/stmad_fix.elf \
 		-Map $(BUILD_DIR)/stmad_fix.map \
-		-T stmad.ld \
+		-T $(BUILD_DIR)/stmad.ld \
 		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
 		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt
@@ -244,7 +244,7 @@ $(BUILD_DIR)/tt_%.elf: $$(call list_o_files,servant/tt_$$*)
 $(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad) $$(call list_shared_o_files,st)
 	$(LD) $(LD_FLAGS) -o $@ \
 		-Map $(BUILD_DIR)/stmad.map \
-		-T stmad.ld \
+		-T $(BUILD_DIR)/stmad.ld \
 		-T $(CONFIG_DIR)/undefined_syms.beta.txt \
 		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt
@@ -299,31 +299,6 @@ $(BUILD_DIR)/$(ASSETS_DIR)/weapon/%_2.animset.o: $(ASSETS_DIR)/weapon/%_2.animse
 	$(AS) $(AS_FLAGS) -o $@ $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*_2.animset.s
 
 extract: extract_$(VERSION)
-extract_us: extract_main extract_dra extract_weapon extract_ric extract_stcen extract_stdre extract_stmad extract_stno3 extract_stnp3 extract_stnz0 extract_stsel extract_stst0 extract_stwrp extract_strwrp extract_tt_000
-extract_hd: extract_dra
-extract_main: $(SPLAT_APP)
-	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).$(MAIN).yaml
-extract_dra: $(SPLAT_APP)
-	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).dra.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).dra.txt
-	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).$(DRA).yaml
-extract_ric: $(SPLAT_APP)
-	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).ric.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).ric.txt
-	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).ric.yaml
-extract_stmad: $(SPLAT_APP)
-	cat $(CONFIG_DIR)/symbols.beta.txt $(CONFIG_DIR)/symbols.stmad.txt > $(CONFIG_DIR)/generated.symbols.stmad.txt
-	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).stmad.yaml
-	$(GFXSTAGE) d disks/$(VERSION)/ST/MAD/F_MAD.BIN $(ASSETS_DIR)/st/mad
-extract_st%: $(SPLAT_APP)
-	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).st$*.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).st$*.txt
-	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).st$*.yaml
-	$(GFXSTAGE) d disks/$(VERSION)/ST/$$(echo '$*' | tr '[:lower:]' '[:upper:]')/F_$$(echo '$*' | tr '[:lower:]' '[:upper:]').BIN $(ASSETS_DIR)/st/$*
-extract_tt_%: $(SPLAT_APP)
-	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).tt_$*.txt > $(CONFIG_DIR)/generated.symbols.$(VERSION).tt_$*.txt
-	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).tt_$*.yaml
-extract_weapon: $(SPLAT_APP)
-	cat $(CONFIG_DIR)/symbols.$(VERSION).txt $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt.in > $(CONFIG_DIR)/generated.symbols.$(VERSION).weapon.txt
-	$(SPLAT) $(CONFIG_DIR)/splat.$(VERSION).weapon.yaml
-$(CONFIG_DIR)/generated.$(VERSION).symbols.%.txt:
 
 include Makefile.*.mk
 
@@ -354,13 +329,6 @@ context:
 	@echo ctx.c has been updated.
 
 extract_disk: extract_disk_$(VERSION)
-extract_disk_us: extract_disk_ps1us
-extract_disk_hd: extract_disk_pspeu
-extract_disk_psp%:
-	mkdir -p disks/psp$*
-	7z x disks/sotn.psp$*.iso -odisks/psp$*/
-extract_disk_ps1%: $(SOTNDISK)
-	$(SOTNDISK) extract disks/sotn.$*.cue disks/$*
 disk_prepare: build $(SOTNDISK)
 	mkdir -p $(DISK_DIR)
 	cp -r disks/${VERSION}/* $(DISK_DIR)

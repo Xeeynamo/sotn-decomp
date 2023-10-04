@@ -7,6 +7,7 @@ options:
   asm_path:     asm/us/st/nz0
   asset_path:   assets/st/nz0
   src_path:     src/st/nz0
+  ld_script_path: build/us/stnz0.ld
   compiler:     GCC
   symbol_addrs_path:    config/generated.symbols.us.stnz0.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.us.stnz0.txt
