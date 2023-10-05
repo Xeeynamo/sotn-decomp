@@ -6,9 +6,6 @@ ST/
 
 ctx.c
 ctx.c.m2c
-*.ld
-!weapon0.ld
-!weapon1.ld
 *.map
 *auto.*.txt
 generated.symbols.*.txt

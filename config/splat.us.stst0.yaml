@@ -7,6 +7,7 @@ options:
   asm_path:     asm/us/st/st0
   asset_path:   assets/st/st0
   src_path:     src/st/st0
+  ld_script_path: build/us/stst0.ld
   compiler:     GCC
   symbol_addrs_path:    config/generated.symbols.us.stst0.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.us.stst0.txt

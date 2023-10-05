@@ -7,6 +7,7 @@ options:
   asm_path:     asm/us/st/mad
   asset_path:   assets/st/mad
   src_path:     src/st/mad
+  ld_script_path: build/us/stmad.ld
   compiler:     GCC
   symbol_addrs_path:    config/generated.symbols.stmad.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.stmad.txt

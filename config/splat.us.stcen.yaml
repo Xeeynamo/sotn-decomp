@@ -7,6 +7,7 @@ options:
   asm_path:     asm/us/st/cen
   asset_path:   assets/st/cen
   src_path:     src/st/cen
+  ld_script_path: build/us/stcen.ld
   compiler:     GCC
   symbol_addrs_path:    config/generated.symbols.us.stcen.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.us.stcen.txt
