@@ -192,6 +192,9 @@ typedef struct Primitive {
 #define ANIMSET_DRA(x) (x)
 #define ANIMSET_OVL(x) ((x) | ANIMSET_OVL_FLAG)
 
+#ifndef SOTN_STR
+#define _S(x) (x) // Strings processed by tools/sotn-str.py
+#endif
 #define FONT_W 8               // small font size used for dialogues and menu
 #define FONT_H 8               // small font size used for dialogues and menu
 #define FONT_GAP FONT_W        // gap between the beginning of two letters
