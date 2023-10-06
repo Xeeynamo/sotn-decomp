@@ -155,7 +155,7 @@ void func_801AC084(s32 arg0, s32 ypos) {
 
     for (i = 0; i < NUM_MENU_UNK_084; i++) {
         prim->x0 = g_MenuUnk084X[i] + 104;
-        prim->y0 = g_MenuUnk084Y[i] + 0x58 + ypos;
+        prim->y0 = g_MenuUnk084Y[i] + 88 + ypos;
         prim->u0 = g_MenuUnk084U0[i];
         prim->v0 = g_MenuUnk084V0[i];
         prim->u1 = g_MenuUnk084U1[i];
