@@ -12,6 +12,7 @@ from util import options, log
 from segtypes.n64.segment import N64Segment
 import utils
 
+
 def get_serializer(dataType: str):
     match dataType:
         case "str_ptr":
@@ -30,6 +31,7 @@ def get_serializer(dataType: str):
             return utils.from_u32
         case _:
             print(f"Failed to find serializer for {dataType}")
+
 
 def get_parser_and_size(dataType: str):
     match dataType:
@@ -50,7 +52,8 @@ def get_parser_and_size(dataType: str):
         case _:
             print(f"Failed to find parser for {dataType}")
 
-def serialize_asset(content: str, asset_config:str) -> bytearray:
+
+def serialize_asset(content: str, asset_config: str) -> bytearray:
     obj = json.loads(content)
     config = json.loads(asset_config)
     item_count = len(obj)
@@ -62,6 +65,7 @@ def serialize_asset(content: str, asset_config:str) -> bytearray:
             serialized_data += serializer(item[entry])
 
     return serialized_data
+
 
 class PSXSegAssets(N64Segment):
     def __init__(self, rom_start, rom_end, type, name, vram_start, args, yaml):
@@ -86,8 +90,9 @@ class PSXSegAssets(N64Segment):
             return rom[
                 utils.to_u32(src_ptr_data) - (self.vram_start - self.rom_start) :
             ]
+
         config_file_name = f"tools/splat_ext/{self.name}_config.json"
-        with open(config_file_name,"r") as config_in:
+        with open(config_file_name, "r") as config_in:
             config_json = config_in.read()
         config = json.loads(config_json)
 
@@ -114,7 +119,7 @@ class PSXSegAssets(N64Segment):
                 ),
                 "desc_resolved": utils.sotn_menu_desc_to_str(
                     get_ptr_data(item_data[0x04:])
-                )
+                ),
             }
             data_pointer = 0
             for entry, entryType in config.items():
@@ -128,9 +133,9 @@ class PSXSegAssets(N64Segment):
 if __name__ == "__main__":
     input_file_name = sys.argv[1]
     output_file_name = sys.argv[2]
-    config_file_name = input_file_name.replace(".json","_config.json")
-    config_file_name = config_file_name.replace("assets/dra","tools/splat_ext")
-    with open(config_file_name,"r") as config_in:
+    config_file_name = input_file_name.replace(".json", "_config.json")
+    config_file_name = config_file_name.replace("assets/dra", "tools/splat_ext")
+    with open(config_file_name, "r") as config_in:
         config_json = config_in.read()
 
     with open(input_file_name, "r") as f_in:
