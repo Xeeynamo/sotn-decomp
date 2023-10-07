@@ -120,10 +120,12 @@ class PSXSegAssets(N64Segment):
                 "ram_addr": hex(self.vram_start + i * item_size)[2:].upper(),
                 "name_resolved": utils.sotn_menu_name_to_str(
                     get_ptr_data(item_data[0x00:])
-                )
+                ),
             }
             if "desc_addr" in config:
-                item["desc_resolved"] =  utils.sotn_menu_desc_to_str(get_ptr_data(item_data[0x04:]))
+                item["desc_resolved"] = utils.sotn_menu_desc_to_str(
+                    get_ptr_data(item_data[0x04:])
+                )
             data_pointer = 0
             for entry, entryType in config.items():
                 parser, dataSizeBytes = get_parser_and_size(entryType)
