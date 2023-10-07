@@ -27,6 +27,8 @@ def get_serializer(dataType: str):
             return utils.from_16
         case "u16":
             return utils.from_16
+        case "s32":
+            return utils.from_s32
         case "u32":
             return utils.from_u32
         case _:
@@ -47,6 +49,8 @@ def get_parser_and_size(dataType: str):
             return (utils.to_s16, 2)
         case "u16":
             return (utils.to_u16, 2)
+        case "s32":
+            return (utils.to_s32, 4)
         case "u32":
             return (utils.to_u32, 4)
         case _:
@@ -116,11 +120,10 @@ class PSXSegAssets(N64Segment):
                 "ram_addr": hex(self.vram_start + i * item_size)[2:].upper(),
                 "name_resolved": utils.sotn_menu_name_to_str(
                     get_ptr_data(item_data[0x00:])
-                ),
-                "desc_resolved": utils.sotn_menu_desc_to_str(
-                    get_ptr_data(item_data[0x04:])
-                ),
+                )
             }
+            if "desc_addr" in config:
+                item["desc_resolved"] =  utils.sotn_menu_desc_to_str(get_ptr_data(item_data[0x04:]))
             data_pointer = 0
             for entry, entryType in config.items():
                 parser, dataSizeBytes = get_parser_and_size(entryType)

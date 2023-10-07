@@ -1,0 +1,21 @@
+    {
+        "name_addr": "str_ptr",
+        "hitPoints": "s16",
+        "attack": "u16",
+        "attackElement": "u16",
+        "defense": "s16",
+        "hitboxState": "u16",
+        "weaknesses": "u16",
+        "strengths": "u16",
+        "immunes": "u16",
+        "absorbs": "u16",
+        "level": "s16",
+        "exp": "s16",
+        "rareItemId": "s16",
+        "uncommonItemId": "s16",
+        "rareItemDropRate": "u16",
+        "uncommonItemDropRate": "u16",
+        "hitboxWidth": "u8",
+        "hitboxHeight": "u8",
+        "flags": "s32"
+    }
