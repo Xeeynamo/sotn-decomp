@@ -1,5 +1,12 @@
 #!/usr/bin/python3
 
+
+# Parses game assets based on a config file. Config file needs to be in tools/splat_ext
+# and named {something}_config.json, where {something} is what you're extracting.
+# In that file is a member "struct" which is the structure you're extracting, which should
+# match the C struct. "fields" holds the names to use for the bits of any bit fields.
+# The names are ordered as 1 << {i} where i is the index in "fields".
+# Hopefully the existing _config.json files are enough examples.
 import json
 import os
 import sys
@@ -64,9 +71,20 @@ def serialize_asset(content: str, asset_config: str) -> bytearray:
     serialized_data = bytearray()
     for i in range(0, item_count):
         item = obj[i]
-        for entry, entryType in config.items():
+        for entry, entryType in config["struct"].items():
             serializer = get_serializer(entryType)
-            serialized_data += serializer(item[entry])
+            json_value = item[entry]
+            # Lists are from fields, so we need to go back to the config to repack the bits from fields
+            if type(json_value) is list:
+                field_def = config["fields"][entry]
+                packed_value = 0
+                for i, field_name in enumerate(field_def):
+                    if field_name in json_value:
+                        packed_value += 1 << i
+                serialized_data += serializer(packed_value)
+            # Anything else can go straight to serializer
+            else:
+                serialized_data += serializer(item[entry])
 
     return serialized_data
 
@@ -100,7 +118,7 @@ class PSXSegAssets(N64Segment):
             config_json = config_in.read()
         config = json.loads(config_json)
 
-        item_size = sum(get_parser_and_size(x)[1] for x in config.values())
+        item_size = sum(get_parser_and_size(x)[1] for x in config["struct"].values())
         count = int(len(data) / item_size)
         expected_data_size = count * item_size
 
@@ -122,14 +140,23 @@ class PSXSegAssets(N64Segment):
                     get_ptr_data(item_data[0x00:])
                 ),
             }
-            if "desc_addr" in config:
+            if "desc_addr" in config["struct"]:
                 item["desc_resolved"] = utils.sotn_menu_desc_to_str(
                     get_ptr_data(item_data[0x04:])
                 )
             data_pointer = 0
-            for entry, entryType in config.items():
+            for entry, entryType in config["struct"].items():
                 parser, dataSizeBytes = get_parser_and_size(entryType)
-                item[entry] = parser(item_data[data_pointer:])
+                parsed_value = parser(item_data[data_pointer:])
+                if entry in config["fields"]:
+                    field_def = config["fields"][entry]
+                    parsed_fields = []
+                    for i, field_name in enumerate(field_def):
+                        if parsed_value & (1 << i):
+                            parsed_fields.append(field_name)
+                    item[entry] = parsed_fields
+                else:
+                    item[entry] = parsed_value
                 data_pointer += dataSizeBytes
             items.append(item)
         return items
