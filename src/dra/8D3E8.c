@@ -763,13 +763,11 @@ void func_8012EF2C(void) {
 
 INCLUDE_ASM("dra/nonmatchings/8D3E8", func_8012F178);
 
-s32 func_8012F83C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    s32 temp_a0 = arg0 - arg2;
-    s32 temp_a1 = arg1 - arg3;
+s32 func_8012F83C(s32 x0, s32 y0, s32 x1, s32 y1, s32 distance) {
+    s32 diffX = x0 - x1;
+    s32 diffY = y0 - y1;
 
-    return ((SquareRoot12((SQ(temp_a0) + SQ(temp_a1)) << 12, temp_a1) >> 12) <
-            arg4) ^
-           1;
+    return (SquareRoot12((SQ(diffX) + SQ(diffY)) << 12) >> 12) >= distance;
 }
 
 INCLUDE_ASM("dra/nonmatchings/8D3E8", func_8012F894);
