@@ -529,8 +529,8 @@ typedef struct Entity {
     /* 0x1A */ s16 unk1A;
     /* 0x1C */ s16 unk1C;
     /* 0x1E */ s16 rotAngle;
-    /* 0x20 */ s16 rotPivotX;
-    /* 0x22 */ s16 rotPivotY;
+    /* 0x20 */ u16 rotPivotX;
+    /* 0x22 */ u16 rotPivotY;
     /* 0x24 */ u16 zPriority;
     /* 0x26 */ u16 entityId;
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
