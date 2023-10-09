@@ -272,10 +272,10 @@ typedef enum {
     COMBO_GRAVITY_BOOTS,
     COMBO_QCF, // Quarter circle forward (down, down+forward, forward)
     COMBO_BF,  // Back forward
-    COMBO_UNK3,
-    COMBO_UNK4,
+    COMBO_HELLFIRE,
+    COMBO_TETRA_SPIRIT,
     COMBO_UNK5,
-    COMBO_UNK6,
+    COMBO_SOUL_STEAL,
     COMBO_UNK7,
     COMBO_UNK8,
     COMBO_UNK9,
@@ -283,7 +283,7 @@ typedef enum {
     COMBO_UNK11,
     COMBO_UNK12,
     COMBO_UNK13,
-    COMBO_UNK14,
+    COMBO_SUMMON_SPIRIT,
     COMBO_DARK_METAMORPH,
 } ButtonComboIdx;
 
@@ -604,6 +604,10 @@ extern s32 D_80137FBC;
 extern s16 g_WasFacingLeft;  // for QCF to tell what's "forward"
 extern s16 g_WasFacingLeft2; // for BF to tell what's "forward"
 extern s32 g_WasFacingLeft3; // for dark metamorphosis "" ""
+extern s32 g_WasFacingLeft4; // for summon spirit "" ""
+extern s16 g_WasFacingLeft5; // for hellfire "" ""
+extern s32 g_WasFacingLeft6; // for tetra spirit "" ""
+extern s32 g_WasFacingLeft7; // for soul steal "" ""
 extern s32 D_80137FDC;
 extern s32 D_80137FE0;
 extern s32 D_80137FE4;
@@ -874,11 +878,11 @@ s32 func_801104D0();
 bool CheckQuarterCircleForwardInput();
 bool CheckBackForwardInput();
 bool CheckDarkMetamorphosisInput();
-s32 func_80110BC8();
+bool CheckSummonSpiritInput();
 void func_8010DBFC(s32*, s32*);
-s32 func_80110DF8();
-s32 func_80111018();
-s32 func_801112AC();
+bool CheckHellfireInput();
+bool CheckTetraSpiritInput();
+bool CheckSoulStealInput();
 s32 func_8011151C();
 void func_80111928(void);
 void func_80111CC0(void);

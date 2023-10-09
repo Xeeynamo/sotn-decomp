@@ -1,15 +1,18 @@
 {
-    "name_addr": "str_ptr",
-    "desc_addr": "str_ptr",
-    "attBonus": "s16",
-    "defBonus": "s16",
-    "strBonus": "s8",
-    "conBonus": "s8",
-    "intBonus": "s8",
-    "lckBonus": "s8",
-    "unk10": "u32",
-    "unk14": "u32",
-    "icon": "s16",
-    "iconPalette": "s16",
-    "unk1C": "u32"
+    "struct": {
+        "name_addr": "str_ptr",
+        "desc_addr": "str_ptr",
+        "attBonus": "s16",
+        "defBonus": "s16",
+        "strBonus": "s8",
+        "conBonus": "s8",
+        "intBonus": "s8",
+        "lckBonus": "s8",
+        "unk10": "u32",
+        "unk14": "u32",
+        "icon": "s16",
+        "iconPalette": "s16",
+        "unk1C": "u32"
+    },
+    "fields": {}
 }

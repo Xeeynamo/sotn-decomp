@@ -41,7 +41,8 @@ segments:
       - [0x4B04, assets, equipment]
       - [0x7718, assets, accessory]
       - [0x8258, data]
-      - [0x8900, data]
+      - [0x8900, assets, enemydefs]
+      - [0xC780, data]
       - [0xCEB0, data]
       - [0xCF18, .data, 6D59C]
       - [0xCF4C, data]
@@ -96,11 +97,6 @@ segments:
       - [0x40E48, rodata] # EntityAlucard jump table
       - [0x4108C, .rodata, 6D59C] # func_8010EDB8
       - [0x41308, .rodata, 704D8] # func_80110968
-      - [0x41320, rodata] # func_80110BC8
-      - [0x41334, rodata]
-      - [0x41348, rodata] # func_80110DF8
-      - [0x41360, rodata] # func_80111018
-      - [0x41380, rodata] # func_801112AC
       - [0x413A0, rodata]
       - [0x413C0, .rodata, 71830]
       - [0x41410, .rodata, 71830] # func_801120B4
