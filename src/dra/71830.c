@@ -17,10 +17,10 @@ void func_80111830(void) {
             var_v0 = CheckBackForwardInput();
             break;
         case 3:
-            var_v0 = func_80110DF8();
+            var_v0 = CheckHellfireInput();
             break;
         case 4:
-            var_v0 = func_80111018();
+            var_v0 = CheckTetraSpiritInput();
             break;
         case 6:
             var_v0 = func_801112AC();
