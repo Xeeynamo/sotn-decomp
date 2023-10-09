@@ -17,7 +17,7 @@ void EntityBackgroundBlock(Entity* self) {
         self->zPriority = obj->zPriority;
         self->unk5A = obj->unk4.s;
         self->palette = obj->palette;
-        self->unk19 = obj->unk8;
+        self->drawFlags = obj->drawFlags;
         self->blendMode = obj->blendMode;
 
         if (obj->unkC != 0) {
@@ -25,8 +25,8 @@ void EntityBackgroundBlock(Entity* self) {
         }
 
         if (self->params == 1) {
-            self->unk1C = 0x200;
-            self->unk1A = 0x200;
+            self->rotY = 0x200;
+            self->rotX = 0x200;
         }
     }
     func_80194394(obj->unk10, self);
@@ -115,7 +115,7 @@ void func_8018DB18(Entity* self) {
     case 0:
         InitializeEntity(D_80180404);
         self->zPriority = 0xB0;
-        self->unk19 = 4;
+        self->drawFlags = FLAG_DRAW_ROTZ;
         self->animCurFrame = self->params + 28;
         facing = GetSideToPlayer() & 1;
 
@@ -174,7 +174,7 @@ void func_8018DB18(Entity* self) {
 
     case 1:
         MoveEntity();
-        self->rotAngle += self->ext.generic.unk80.modeS16.unk0;
+        self->rotZ += self->ext.generic.unk80.modeS16.unk0;
         self->velocityY += FIX(0.25);
         g_api.CheckCollision(
             self->posX.i.hi, self->posY.i.hi + 6, &collider, 0);

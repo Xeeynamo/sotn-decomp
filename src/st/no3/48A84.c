@@ -78,18 +78,14 @@ void EntityUnkId14(Entity* entity) {
 }
 
 void EntityUnkId15(Entity* arg0) {
-    u16 temp_v0;
-
     if (arg0->step == 0) {
         arg0->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         arg0->palette = 0x8195;
         arg0->animSet = ANIMSET_DRA(5);
-        arg0->animCurFrame = 1U;
+        arg0->animCurFrame = 1;
         arg0->blendMode = 0x10;
-        arg0->unk19 = 3;
-        temp_v0 = D_80182628[arg0->params];
-        arg0->unk1A = temp_v0;
-        arg0->unk1C = temp_v0;
+        arg0->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        arg0->rotY = arg0->rotX = D_80182628[arg0->params];
         arg0->velocityY = D_80182638[arg0->params];
         arg0->step++;
     } else {
@@ -308,8 +304,8 @@ void func_801903C8(Entity* entity) {
     if (entity->step == 0) {
         InitializeEntity(g_InitializeEntityData0);
         entity->unk6C = 0xF0;
-        entity->unk1A = 0x01A0;
-        entity->unk1C = 0x01A0;
+        entity->rotX = 0x01A0;
+        entity->rotY = 0x01A0;
         entity->animSet = ANIMSET_DRA(8);
         entity->animCurFrame = 1;
         entity->zPriority += 16;
@@ -549,8 +545,8 @@ void EntitySoulStealOrb(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        if (self->unk1A < 0x100) {
-            self->unk1A = (self->unk1C += 0x10);
+        if (self->rotX < 0x100) {
+            self->rotX = (self->rotY += 0x10);
         }
         if (self->ext.soulStealOrb.unk7E < 0x200) {
             self->ext.soulStealOrb.unk7E += 2;
@@ -595,14 +591,14 @@ void EntityRoomForeground(Entity* entity) {
         entity->zPriority = objInit->zPriority;
         entity->unk5A = objInit->unk4.s;
         entity->palette = objInit->palette;
-        entity->unk19 = objInit->unk8;
+        entity->drawFlags = objInit->drawFlags;
         entity->blendMode = objInit->blendMode;
         if (objInit->unkC != 0) {
             entity->flags = objInit->unkC;
         }
         if (entity->params >= 5) {
-            entity->rotAngle = 0x800;
-            entity->unk19 |= 4;
+            entity->rotZ = 0x800;
+            entity->drawFlags |= 4;
         }
     }
     AnimateEntity(objInit->unk10, entity);
@@ -739,7 +735,7 @@ void EntityWargExplosionPuffTransparent(Entity* entity) {
         entity->unk5A = 0x79;
         entity->palette = 0xD0;
         entity->blendMode = 0x30;
-        entity->unk19 = 8;
+        entity->drawFlags = FLAG_DRAW_UNK8;
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;
         entity->unk6C = 0x60;
@@ -1749,12 +1745,12 @@ void EntityUnkId3D(Entity* self) {
         self->palette = 0x8018;
         self->blendMode = 0x30;
         self->unk6C = 0xA0;
-        self->unk1A = 0x100;
-        self->unk1C = 0x1A0;
-        self->unk19 |= 3;
+        self->rotX = 0x100;
+        self->rotY = 0x1A0;
+        self->drawFlags |= 3;
         self->ext.generic.unk84.S8.unk1 = 0x11;
         self->ext.generic.unk84.S8.unk0 = self->params;
-        self->unk19 |= 8;
+        self->drawFlags |= 8;
         break;
 
     case 1:
@@ -1770,8 +1766,8 @@ void EntityUnkId3D(Entity* self) {
         AnimateEntity(D_801839B0, self);
         MoveEntity();
         self->velocityY += FIX(0.25);
-        self->unk1A += 6;
-        self->unk1C -= 4;
+        self->rotX += 6;
+        self->rotY -= 4;
         if (self->posY.i.hi > 256) {
             DestroyEntity(self);
         }
@@ -1785,8 +1781,8 @@ void EntityUnkId3D(Entity* self) {
         if (AnimateEntity(D_801839B0, self) == 0) {
             MoveEntity();
             self->velocityY += FIX(0.25);
-            self->unk1A += 6;
-            self->unk1C -= 4;
+            self->rotX += 6;
+            self->rotY -= 4;
         }
         if (self->posY.i.hi > 256) {
             DestroyEntity(self);
@@ -1807,7 +1803,7 @@ void EntityLargeFallingObject(Entity* self) {
         self->velocityY = FIX(0.0625);
         self->palette = self->params + 0xE;
         self->unk6C = 0x80;
-        self->unk19 |= 8;
+        self->drawFlags |= 8;
         self->flags |= 0x2000;
         return;
     }
@@ -1841,23 +1837,23 @@ void EntityMermanFireball(Entity* self) {
             self->velocityX = 0xFFFE0000 | 0x8000; // LINT_IGNORE
         }
 
-        self->unk19 = 3;
-        self->unk1C = self->unk1A = 0x80;
+        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        self->rotY = self->rotX = 0x80;
 
         entity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (entity != NULL) {
             CreateEntityFromEntity(E_ID_15, self, entity);
             entity->ext.generic.unk94 = 4;
-            entity->unk19 = 3;
+            entity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
             entity->zPriority = self->zPriority + 8;
-            entity->unk1C = entity->unk1A = 192;
+            entity->rotY = entity->rotX = 192;
         }
     } else {
         AnimateEntity(D_80183AF0, self);
         MoveEntity();
 
-        if (self->unk1A < 0x100) {
-            self->unk1C = self->unk1A += 8;
+        if (self->rotX < 0x100) {
+            self->rotY = self->rotX += 8;
         }
 
         if (self->flags & 0x100) {
@@ -1920,7 +1916,7 @@ void EntityBoneScimitarParts(Entity* entity) {
     if (entity->step) {
         entity->ext.generic.unk88.S8.unk0--;
         if (entity->ext.generic.unk88.S8.unk0 & 0xFF) {
-            entity->rotAngle += D_80183BA8[entity->params];
+            entity->rotZ += D_80183BA8[entity->params];
             FallEntity();
             MoveEntity();
             return;
@@ -1932,7 +1928,7 @@ void EntityBoneScimitarParts(Entity* entity) {
         return;
     }
     InitializeEntity(D_80180B84);
-    entity->unk19 = 4;
+    entity->drawFlags = FLAG_DRAW_ROTZ;
     entity->animCurFrame = *(u8*)&entity->params + 16;
 
     if (entity->facingLeft != 0) {

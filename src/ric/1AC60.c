@@ -77,7 +77,7 @@ void func_801587C0() { D_80175956 = 0; }
 void func_801587D0(void) {
     D_80175956 = 1;
     D_80175950 = PLAYER.animCurFrame;
-    D_80175952 = PLAYER.unk19;
+    D_80175952 = PLAYER.drawFlags;
     D_80175954 = PLAYER.palette;
 }
 
@@ -85,7 +85,7 @@ void func_80158814(void) {
     D_80175956 = 0;
     PLAYER.unk44 = 0;
     PLAYER.animCurFrame = D_80175950;
-    PLAYER.unk19 = *(u8*)&D_80175952;
+    PLAYER.drawFlags = *(u8*)&D_80175952;
     PLAYER.palette = D_80175954;
 }
 
@@ -334,7 +334,7 @@ void func_80159BC8(void) {
     PLAYER.animFrameIdx = 0;
     g_Player.unk44 = 0;
     g_Player.unk46 = 0;
-    PLAYER.unk19 &= 0xFB;
+    PLAYER.drawFlags &= 0xFB;
 }
 
 void func_80159C04(void) {

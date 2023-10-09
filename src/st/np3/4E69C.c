@@ -45,7 +45,7 @@ void EntityGurkhaBodyParts(Entity* self) {
         self->hitboxHeight = 6;
         self->params = (u8)self->params;
         self->animCurFrame = self->params;
-        self->unk19 |= 4;
+        self->drawFlags |= 4;
         break;
 
     case 1:
@@ -73,7 +73,7 @@ void EntityGurkhaBodyParts(Entity* self) {
                 self->step = 0;
                 self->pfnUpdate = EntityExplosion;
                 self->params = 0;
-                self->unk19 = 0;
+                self->drawFlags = 0;
                 return;
             }
         }
@@ -131,11 +131,11 @@ void EntityHammerWeapon(Entity* self) {
         InitializeEntity(D_80180B98);
         self->hitboxWidth = 10;
         self->hitboxHeight = 10;
-        self->unk19 |= 4;
+        self->drawFlags |= 4;
 
     case 1:
         angle = *(u16*)&self->ext.stub[0x20];
-        self->rotAngle = angle;
+        self->rotZ = angle;
         self->hitboxOffX = ((u32)(rsin(angle) * 0xD) >> 0xA);
         self->hitboxOffY = (-(rcos(angle) * 0x34) >> 0xC);
         break;
@@ -156,7 +156,7 @@ void EntityHammerWeapon(Entity* self) {
         case 1:
             MoveEntity();
             self->velocityY += FIX(0.125);
-            func_801CDC80(&self->rotAngle, 0x800, 0x20);
+            func_801CDC80(&self->rotZ, 0x800, 0x20);
             break;
         }
     }
@@ -178,12 +178,12 @@ void EntityGurkhaSword(Entity* self) {
         InitializeEntity(D_80180BB0);
         self->hitboxWidth = 8;
         self->hitboxHeight = 8;
-        self->unk19 |= 4;
+        self->drawFlags |= 4;
         break;
 
     case 1:
         angle = self->ext.gurkhaSword.unk9C;
-        self->rotAngle = angle;
+        self->rotZ = angle;
         self->hitboxOffX = (u32)rsin(angle) >> 8;
         self->hitboxOffY = -(rcos(angle) * 16) >> 0xC;
         if (self->ext.gurkhaSword.unk8C) {
@@ -201,11 +201,11 @@ void EntityGurkhaSword(Entity* self) {
 
     case 3:
         MoveEntity();
-        self->rotAngle -= 0x100;
-        self->ext.gurkhaSword.unk9C = self->rotAngle;
+        self->rotZ -= 0x100;
+        self->ext.gurkhaSword.unk9C = self->rotZ;
         self->ext.gurkhaSword.unkA6 = -0xC0;
-        angle = self->rotAngle;
-        self->hitboxOffX = (u32)rsin(self->rotAngle) >> 8;
+        angle = self->rotZ;
+        self->hitboxOffX = (u32)rsin(self->rotZ) >> 8;
         self->hitboxOffY = -(rcos(angle) * 16) >> 0xC;
 
         if (self->facingLeft != 0) {
@@ -240,12 +240,12 @@ void EntityGurkhaSword(Entity* self) {
         case 1:
             MoveEntity();
             self->velocityY += FIX(0.125);
-            self->rotAngle += self->ext.gurkhaSword.unkA6;
+            self->rotZ += self->ext.gurkhaSword.unkA6;
             if (--self->ext.gurkhaSword.unk80 == 0) {
                 self->step = 0;
                 self->pfnUpdate = EntityExplosion;
                 self->params = 0;
-                self->unk19 = 0;
+                self->drawFlags = 0;
             }
         }
         break;
@@ -360,7 +360,7 @@ void EntityBladeSword(Entity* self) {
         InitializeEntity(D_80180BC8);
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
-        self->unk19 |= 4;
+        self->drawFlags |= 4;
         primIndex = g_api.AllocPrimitives(PRIM_G4, 6);
         if (primIndex == -1) {
             self->ext.et_801D1BB8.prim = NULL;
@@ -391,7 +391,7 @@ void EntityBladeSword(Entity* self) {
         }
 
     case 1:
-        self->rotAngle = self->ext.et_801D1BB8.unk9C;
+        self->rotZ = self->ext.et_801D1BB8.unk9C;
         break;
 
     case 24:
@@ -409,7 +409,7 @@ void EntityBladeSword(Entity* self) {
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
     }
 
-    angle = self->rotAngle;
+    angle = self->rotZ;
     self->hitboxOffX = -1 * (rsin(angle) * 13) >> 12;
     self->hitboxOffY = +1 * (rcos(angle) * 13) >> 12;
 
@@ -430,7 +430,7 @@ void EntityBladeSword(Entity* self) {
         }
     }
 
-    angle = self->rotAngle;
+    angle = self->rotZ;
     if (self->facingLeft != 0) {
         angle = -angle;
     }

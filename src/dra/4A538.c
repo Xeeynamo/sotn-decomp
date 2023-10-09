@@ -400,23 +400,23 @@ void func_800EB758(
     }
     py = pivotY + e->rotPivotY;
 
-    if (flags & 1) {
-        scaledValue = (e->unk1A * (s16)(p->x0 - px) - 0x80000000) >> 8;
+    if (flags & FLAG_DRAW_ROTX) {
+        scaledValue = (e->rotX * (s16)(p->x0 - px) - 0x80000000) >> 8;
         p->x0 = p->x2 = scaledValue + px;
-        scaledValue = (e->unk1A * (s16)(p->x1 - px) - 0x80000000) >> 8;
+        scaledValue = (e->rotX * (s16)(p->x1 - px) - 0x80000000) >> 8;
         p->x1 = p->x3 = scaledValue + px;
     }
-    if (flags & 2) {
-        scaledValue = (e->unk1C * (s16)(p->y0 - py) - 0x80000000) >> 8;
+    if (flags & FLAG_DRAW_ROTY) {
+        scaledValue = (e->rotY * (s16)(p->y0 - py) - 0x80000000) >> 8;
         p->y0 = p->y1 = scaledValue + py;
-        scaledValue = (e->unk1C * (s16)(p->y2 - py) - 0x80000000) >> 8;
+        scaledValue = (e->rotY * (s16)(p->y2 - py) - 0x80000000) >> 8;
         p->y2 = p->y3 = scaledValue + py;
     }
-    if (flags & 4) {
+    if (flags & FLAG_DRAW_ROTZ) {
         if (flipX) {
-            rot = -e->rotAngle;
+            rot = -e->rotZ;
         } else {
-            rot = e->rotAngle;
+            rot = e->rotZ;
         }
 
         dx = p->x0 - px;

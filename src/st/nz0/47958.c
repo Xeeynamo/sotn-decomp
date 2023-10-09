@@ -72,8 +72,8 @@ void EntityBloodSkeleton(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
-                self->rotAngle = 0;
-                self->unk19 |= 4;
+                self->rotZ = 0;
+                self->drawFlags |= 4;
                 func_801C29B0(NA_SE_EN_BLOOD_SKELETON_REASSEMBLES);
                 self->step_s++;
                 return;
@@ -84,15 +84,15 @@ void EntityBloodSkeleton(Entity* self) {
             if ((g_Timer % 3) == 0) {
                 self->ext.generic.unk80.modeS16.unk0++;
                 if (self->ext.generic.unk80.modeS16.unk0 % 2) {
-                    self->rotAngle = 0x10;
+                    self->rotZ = 0x10;
                 } else {
-                    self->rotAngle = -0x10;
+                    self->rotZ = -0x10;
                 }
             }
 
             if (self->ext.generic.unk80.modeS16.unk0 >= 9) {
-                self->unk19 = 0;
-                self->rotAngle = 0;
+                self->drawFlags = 0;
+                self->rotZ = 0;
                 self->step_s++;
             }
             break;

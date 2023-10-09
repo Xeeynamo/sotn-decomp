@@ -314,12 +314,12 @@ void EntityAxeKnight(Entity* self) {
 
 void EntityAxeKnightRotateAxe(void) {
     if (g_CurrentEntity->params != 0) {
-        g_CurrentEntity->rotAngle += 0x80;
+        g_CurrentEntity->rotZ += 0x80;
     } else {
-        g_CurrentEntity->rotAngle -= 0x80;
+        g_CurrentEntity->rotZ -= 0x80;
     }
 
-    g_CurrentEntity->rotAngle &= 0xFFF;
+    g_CurrentEntity->rotZ &= 0xFFF;
 }
 
 void EntityAxeKnightThrowingAxe(Entity* entity) {
@@ -334,7 +334,7 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180C70);
-        entity->unk19 = 4;
+        entity->drawFlags = FLAG_DRAW_ROTZ;
         entity->velocityY = D_801822C8[entity->params];
         velocityX = D_801822BC[entity->params];
 

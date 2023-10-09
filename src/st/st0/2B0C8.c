@@ -394,8 +394,8 @@ s32 func_801AC458(s16 arg0) {
     case 0:
         e = g_CurrentEntity;
         ret = 1;
-        e[1].unk19 = 2;
-        e[1].unk1C = 0x600;
+        e[1].drawFlags = FLAG_DRAW_ROTY;
+        e[1].rotY = 0x600;
         e[1].animFrameIdx = 0;
         e[1].animFrameDuration = 0;
         e[1].step = 2;
@@ -415,7 +415,7 @@ s32 func_801AC458(s16 arg0) {
     case 2:
         e = &g_CurrentEntity[1];
         e->animCurFrame = 0;
-        e->unk19 = 0;
+        e->drawFlags = 0;
         e->step = 1;
         ret = 0xFF;
         break;

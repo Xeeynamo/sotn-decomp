@@ -15,7 +15,7 @@ void func_801B0958(Entity* self) {
         self->zPriority = temp_s0->zPriority;
         self->unk5A = temp_s0->unk4.u;
         self->palette = temp_s0->palette;
-        self->unk19 = temp_s0->unk8;
+        self->drawFlags = temp_s0->drawFlags;
         self->blendMode = temp_s0->blendMode;
         if (temp_s0->unkC != 0) {
             self->flags = temp_s0->unkC;
@@ -362,7 +362,7 @@ void func_801B19A0(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180C34);
-        self->unk19 = 4;
+        self->drawFlags = FLAG_DRAW_ROTZ;
 
         if (Random() & 1) {
             self->animCurFrame = 1;
@@ -386,9 +386,9 @@ void func_801B19A0(Entity* self) {
 
     case 1:
         MoveEntity();
-        self->rotAngle += 0x20;
+        self->rotZ += 0x20;
         if (self->params != 0) {
-            self->rotAngle += 0x20;
+            self->rotZ += 0x20;
         }
 
         self->velocityY += FIX(0.125);
@@ -1444,7 +1444,7 @@ void func_801B3C38(Entity* self) {
         if (AnimateEntity((u8*)self->ext.et38.unk80, self) != 0) {
             switch (self->step_s) {
             case 0:
-                self->unk19 = 8;
+                self->drawFlags = FLAG_DRAW_UNK8;
                 self->unk6C = 0x80;
                 self->step_s++;
                 break;
@@ -1466,7 +1466,7 @@ void func_801B3C38(Entity* self) {
 
     case 3:
         if (self->step_s == 0) {
-            self->unk19 |= 4;
+            self->drawFlags |= 4;
             switch (self->ext.et38.unk88) {
             case 1:
                 if (self->ext.et38.unk89 >= 0x4) {
@@ -1481,7 +1481,7 @@ void func_801B3C38(Entity* self) {
                 break;
             }
             self->ext.et38.unk84 = self->ext.et38.unk84 & 0xFFF;
-            self->rotAngle = self->ext.generic.unk84.S16.unk0 & 0xFFF;
+            self->rotZ = self->ext.generic.unk84.S16.unk0 & 0xFFF;
             temp_s0 = self->ext.generic.unk88.U8.unk1 * 0x140;
             temp_s0 /= 28;
             self->velocityX = temp_s0 * rsin(self->ext.et38.unk84);
@@ -1517,8 +1517,8 @@ void func_801B3C38(Entity* self) {
             rnd = Random();
             self->velocityY = FIX(-0.75);
             self->facingLeft = rnd & 1;
-            self->unk1A = 0xC0;
-            self->unk19 |= 1;
+            self->rotX = 0xC0;
+            self->drawFlags |= 1;
             self->step_s++;
         }
         MoveEntity();

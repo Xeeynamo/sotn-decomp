@@ -270,7 +270,7 @@ void EntityBoneScimitarParts(Entity* entity) {
     if (entity->step) {
         entity->ext.generic.unk88.S8.unk0--;
         if (entity->ext.generic.unk88.S8.unk0 & 0xFF) {
-            entity->rotAngle += D_801820E4[entity->params];
+            entity->rotZ += D_801820E4[entity->params];
             FallEntity();
             MoveEntity();
             return;
@@ -282,7 +282,7 @@ void EntityBoneScimitarParts(Entity* entity) {
         return;
     }
     InitializeEntity(D_80180C58);
-    entity->unk19 = 4;
+    entity->drawFlags = FLAG_DRAW_ROTZ;
     entity->animCurFrame = *(u8*)&entity->params + 16;
 
     if (entity->facingLeft != 0) {

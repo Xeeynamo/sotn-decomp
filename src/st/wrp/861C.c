@@ -702,7 +702,7 @@ void func_8018C27C(u16 arg0, u16 arg1) {
     }
 
     entity = g_CurrentEntity;
-    entity->unk19 = 0;
+    entity->drawFlags = 0;
     entity->entityId = E_EXPLOSION;
     entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
     entity->params = arg0;

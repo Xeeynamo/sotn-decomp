@@ -9,11 +9,11 @@ void func_801092E8(s32 arg0) {
 }
 
 void func_80109328(void) {
-    s16* player_unk1E = &PLAYER.rotAngle;
+    s16* player_unk1E = &PLAYER.rotZ;
 
     g_Player.unk66 = 0;
     if (*player_unk1E == 0x800 && PLAYER.step == 8) {
-        PLAYER.rotAngle = 0;
+        PLAYER.rotZ = 0;
         PLAYER.animCurFrame = 0x9D;
         PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
     }
@@ -90,8 +90,8 @@ void func_80109594(void) {
     PLAYER.animSet = ANIMSET_DRA(1);
     PLAYER.palette = 0x8100;
     PLAYER.facingLeft = 0;
-    PLAYER.unk1A = 0x100;
-    PLAYER.unk1C = 0x100;
+    PLAYER.rotX = 0x100;
+    PLAYER.rotY = 0x100;
     PLAYER.zPriority = (u16)g_zEntityCenter.S16.unk0;
 
     memset_len = sizeof(PlayerState) / sizeof(s32);
@@ -226,8 +226,8 @@ void func_8010A234(s32 arg0) {
         PLAYER.palette = 0x8100;
         PLAYER.animSet = 1;
         PLAYER.unk5A = 0;
-        PLAYER.rotAngle = 0;
-        PLAYER.unk19 &= 0xF3;
+        PLAYER.rotZ = 0;
+        PLAYER.drawFlags &= 0xF3;
         func_8010FAF4();
         PLAYER.rotPivotY = 0;
         PLAYER.rotPivotX = 0;

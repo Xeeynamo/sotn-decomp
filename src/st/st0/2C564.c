@@ -306,7 +306,7 @@ void EntityDracula(Entity* self) {
             self->ext.dracula.unk94 = 0x40;
             self->ext.dracula.unk98 = 0;
             self->unk6C = 0x80;
-            self->unk19 |= 8;
+            self->drawFlags |= 8;
             prim->type = PRIM_G4;
             prim->x0 = prim->x2 = self->posX.i.hi;
             prim->x1 = prim->x3 = self->posX.i.hi;
@@ -573,7 +573,7 @@ void EntityDraculaMeteorball(Entity* entity) {
     case 0:
         InitializeEntity(D_801805F8);
         entity->hitboxState = 0;
-        entity->unk19 |= 4;
+        entity->drawFlags |= 4;
         break;
     case 1:
         if (AnimateEntity(D_801809B0, entity) == 0) {
@@ -584,7 +584,7 @@ void EntityDraculaMeteorball(Entity* entity) {
     case 2:
         AnimateEntity(D_80180990, entity);
         MoveEntity();
-        entity->rotAngle += 4;
+        entity->rotZ += 4;
         speedX = 0x1000;
         if (entity->params != 0) {
             speedX = 0xE00;
@@ -641,7 +641,7 @@ void EntityDraculaGlass(Entity* entity) {
     case 0:
         InitializeEntity(D_801805EC);
         entity->animCurFrame = 0x59;
-        entity->unk19 = 4;
+        entity->drawFlags = FLAG_DRAW_ROTZ;
         entity->hitboxState = 0;
         entity->velocityX = FIX(-1);
         entity->velocityY = 0;
@@ -657,7 +657,7 @@ void EntityDraculaGlass(Entity* entity) {
         }
     case 1:
         MoveEntity();
-        entity->rotAngle += 0x20;
+        entity->rotZ += 0x20;
         entity->velocityY += FIX(0.125);
         if (entity->posY.i.hi >= 205) {
             g_api.PlaySfx(NA_SE_BREAK_GLASS);
@@ -666,7 +666,7 @@ void EntityDraculaGlass(Entity* entity) {
         }
         break;
     case 2:
-        entity->unk19 = 0;
+        entity->drawFlags = 0;
         if (AnimateEntity(D_80180A40, entity) == 0) {
             s32 i;
             for (i = 0; i < 8; i++) {
@@ -716,11 +716,11 @@ void EntityDraculaMegaFireball(Entity* self) {
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                        FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
         if (self->params == 0) {
-            angle = self->rotAngle;
-            self->unk1C = 0x80;
-            self->unk1A = 0x80;
-            self->unk19 |= 7;
-            self->rotAngle = 0x1C0 - angle;
+            angle = self->rotZ;
+            self->rotY = 0x80;
+            self->rotX = 0x80;
+            self->drawFlags |= 7;
+            self->rotZ = 0x1C0 - angle;
             if (self->facingLeft != 0) {
                 self->velocityX = rcos(angle) * 0x60;
             } else {
@@ -737,8 +737,8 @@ void EntityDraculaMegaFireball(Entity* self) {
             self->animCurFrame = 0;
         }
     } else {
-        if (self->unk1A < 0x100) {
-            self->unk1A = self->unk1C = self->unk1C + 0x10;
+        if (self->rotX < 0x100) {
+            self->rotX = self->rotY = self->rotY + 0x10;
         }
         AnimateEntity(D_80180BB8, self);
         MoveEntity();

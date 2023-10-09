@@ -79,8 +79,8 @@ void func_8018F620(
             newEntity->pfnUpdate = func_8018F838;
             newEntity->params = params;
             newEntity->ext.generic.unk94 = arg5 + i;
-            newEntity->unk1C = newEntity->unk1A = D_80180FE8[arg5 + i];
-            newEntity->unk19 = 3;
+            newEntity->rotY = newEntity->rotX = D_80180FE8[arg5 + i];
+            newEntity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
             newEntity->zPriority = self->zPriority + 1;
         }
     }
@@ -180,29 +180,25 @@ void func_8018F838(Entity* entity) {
     }
 }
 
-void func_8018F928(Entity* arg0) {
-    u16 temp_v0;
-
-    if (arg0->step == 0) {
-        arg0->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        arg0->palette = 0x8195;
-        arg0->animSet = ANIMSET_DRA(5);
-        arg0->animCurFrame = 1U;
-        arg0->blendMode = 0x10;
-        arg0->unk19 = 3;
-        temp_v0 = D_80180FF8[arg0->params];
-        arg0->unk1A = temp_v0;
-        arg0->unk1C = temp_v0;
-        arg0->velocityY = D_80181008[arg0->params];
-        arg0->step++;
+void func_8018F928(Entity* self) {
+    if (self->step == 0) {
+        self->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
+        self->palette = 0x8195;
+        self->animSet = ANIMSET_DRA(5);
+        self->animCurFrame = 1U;
+        self->blendMode = 0x10;
+        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        self->rotY = self->rotX = D_80180FF8[self->params];
+        self->velocityY = D_80181008[self->params];
+        self->step++;
     } else {
-        arg0->animFrameDuration++;
-        arg0->posY.val -= arg0->velocityY;
-        if (!(arg0->animFrameDuration & 1)) {
-            arg0->animCurFrame++;
+        self->animFrameDuration++;
+        self->posY.val -= self->velocityY;
+        if (!(self->animFrameDuration & 1)) {
+            self->animCurFrame++;
         }
-        if (arg0->animFrameDuration >= 37) {
-            DestroyEntity(arg0);
+        if (self->animFrameDuration >= 37) {
+            DestroyEntity(self);
         }
     }
 }
@@ -504,8 +500,8 @@ void func_801903C8(Entity* entity) {
     if (entity->step == 0) {
         InitializeEntity(D_80180458);
         entity->unk6C = 0xF0;
-        entity->unk1A = 0x01A0;
-        entity->unk1C = 0x01A0;
+        entity->rotX = 0x01A0;
+        entity->rotY = 0x01A0;
         entity->animSet = ANIMSET_DRA(8);
         entity->animCurFrame = 1;
         entity->zPriority += 16;
@@ -578,7 +574,7 @@ void func_80190614(Entity* self) {
         self->palette = 0x81B6;
         self->unk6C = 0x70;
         self->zPriority = 192;
-        self->unk19 |= 0xC;
+        self->drawFlags |= 0xC;
         self->blendMode |= 0x30;
 
         switch (self->ext.generic.unk84.U8.unk0) {
@@ -595,7 +591,7 @@ void func_80190614(Entity* self) {
             break;
         }
 
-        self->rotAngle = self->ext.generic.unk80.modeS16.unk0 &= 0xFFF;
+        self->rotZ = self->ext.generic.unk80.modeS16.unk0 &= 0xFFF;
         temp = (self->ext.generic.unk84.U8.unk1 * 320) / 24;
         self->velocityX = temp * rsin(self->ext.generic.unk80.modeS16.unk0);
         self->velocityY = -(temp * rcos(self->ext.generic.unk80.modeS16.unk0));
@@ -830,8 +826,8 @@ void EntitySoulStealOrb(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        if (self->unk1A < 0x100) {
-            self->unk1A = self->unk1C += 0x10;
+        if (self->rotX < 0x100) {
+            self->rotX = self->rotY += 0x10;
         }
         if (self->ext.soulStealOrb.unk7E < 0x200) {
             self->ext.soulStealOrb.unk7E += 2;
@@ -889,14 +885,14 @@ void EntityRoomForeground(Entity* entity) {
         entity->zPriority = objInit->zPriority;
         entity->unk5A = objInit->unk4.s;
         entity->palette = objInit->palette;
-        entity->unk19 = objInit->unk8;
+        entity->drawFlags = objInit->drawFlags;
         entity->blendMode = objInit->blendMode;
         if (objInit->unkC != 0) {
             entity->flags = objInit->unkC;
         }
         if (entity->params >= 5) {
-            entity->rotAngle = 0x800;
-            entity->unk19 |= 4;
+            entity->rotZ = 0x800;
+            entity->drawFlags |= 4;
         }
     }
     AnimateEntity(objInit->unk10, entity);

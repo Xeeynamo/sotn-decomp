@@ -427,23 +427,23 @@ void func_801C8DF0(Entity* self) {
             self->velocityX = ~0x17FFF;
         }
 
-        self->unk19 = 3;
-        self->unk1C = self->unk1A = 0x80;
+        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        self->rotY = self->rotX = 0x80;
 
         entity = AllocEntity(D_8007D858, &D_8007D858[32]);
         if (entity != NULL) {
             CreateEntityFromEntity(E_ID_15, self, entity);
             entity->ext.generic.unk94 = 4;
-            entity->unk19 = 3;
+            entity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
             entity->zPriority = self->zPriority + 8;
-            entity->unk1C = entity->unk1A = 192;
+            entity->rotY = entity->rotX = 192;
         }
     } else {
         AnimateEntity(D_80182400, self);
         MoveEntity();
 
-        if (self->unk1A < 0x100) {
-            self->unk1C = self->unk1A += 8;
+        if (self->rotX < 0x100) {
+            self->rotY = self->rotX += 8;
         }
 
         if (self->flags & 0x100) {

@@ -47,7 +47,7 @@ void func_801B65FC(Entity* self) {
         if (AnimateEntity((u8*)self->ext.et38.unk80, self) != 0) {
             switch (self->step_s) {
             case 0:
-                self->unk19 = 8;
+                self->drawFlags = FLAG_DRAW_UNK8;
                 self->unk6C = 0x80;
                 self->step_s++;
                 break;
@@ -69,7 +69,7 @@ void func_801B65FC(Entity* self) {
 
     case 3:
         if (self->step_s == 0) {
-            self->unk19 |= 4;
+            self->drawFlags |= 4;
             switch (self->ext.et38.unk88) {
             case 1:
                 if (self->ext.et38.unk89 >= 0x4) {
@@ -84,7 +84,7 @@ void func_801B65FC(Entity* self) {
                 break;
             }
             self->ext.et38.unk84 = self->ext.et38.unk84 & 0xFFF;
-            self->rotAngle = self->ext.generic.unk84.S16.unk0 & 0xFFF;
+            self->rotZ = self->ext.generic.unk84.S16.unk0 & 0xFFF;
             temp_s0 = self->ext.generic.unk88.U8.unk1 * 0x140;
             temp_s0 /= 28;
             self->velocityX = temp_s0 * rsin(self->ext.et38.unk84);
@@ -120,8 +120,8 @@ void func_801B65FC(Entity* self) {
             rnd = Random();
             self->velocityY = FIX(-0.75);
             self->facingLeft = rnd & 1;
-            self->unk1A = 0xC0;
-            self->unk19 |= 1;
+            self->rotX = 0xC0;
+            self->drawFlags |= 1;
             self->step_s++;
         }
         MoveEntity();

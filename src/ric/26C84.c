@@ -418,13 +418,13 @@ void func_80169D74(Entity* entity) {
         entity->blendMode = 0x10;
         entity->facingLeft = PLAYER.facingLeft;
         entity->zPriority = PLAYER.zPriority;
-        entity->unk19 = 4;
-        entity->rotAngle = 0xC00;
+        entity->drawFlags = FLAG_DRAW_ROTZ;
+        entity->rotZ = 0xC00;
         entity->step++;
         break;
 
     case 1:
-        entity->rotAngle -= 0x80;
+        entity->rotZ -= 0x80;
         if (entity->ext.generic.unk8C.entityPtr->step == 7) {
             entity->step++;
             entity->ext.generic.unk7C.s = (entity->params + 1) * 4;
@@ -432,7 +432,7 @@ void func_80169D74(Entity* entity) {
         break;
 
     case 2:
-        entity->rotAngle -= 0x80;
+        entity->rotZ -= 0x80;
         entity->ext.generic.unk7C.s--;
         if (entity->ext.generic.unk7C.s == 0) {
             func_80156C60(entity);
@@ -525,7 +525,7 @@ void func_8016D328(Entity* entity) {
             entity->palette = 0x819E;
             entity->unk4C = &D_80155EA8;
             entity->blendMode = 0x30;
-            entity->unk19 = 8;
+            entity->drawFlags = FLAG_DRAW_UNK8;
             entity->unk6C = 0x60;
             entity->hitboxWidth = 8;
             entity->hitboxHeight = 8;

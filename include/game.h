@@ -160,6 +160,15 @@ typedef struct Primitive {
 #define DEMO_KEY_PTR 0x801E8000
 #define DEBUG_PTR 0x80280000
 
+// Flags for entity->drawFlags
+#define FLAG_DRAW_ROTX 0x01
+#define FLAG_DRAW_ROTY 0x02
+#define FLAG_DRAW_ROTZ 0x04
+#define FLAG_DRAW_UNK8 0x08
+#define FLAG_DRAW_UNK10 0x10
+#define FLAG_DRAW_UNK20 0x20
+#define FLAG_DRAW_UNK80 0x80
+
 // Flags for entity->flags
 #define FLAG_UNK_2000 0x2000
 #define FLAG_UNK_10000 0x10000
@@ -525,10 +534,10 @@ typedef struct Entity {
     /* 0x14 */ u16 facingLeft;
     /* 0x16 */ u16 palette;
     /* 0x18 */ s8 blendMode;
-    /* 0x19 */ u8 unk19;
-    /* 0x1A */ s16 unk1A;
-    /* 0x1C */ s16 unk1C;
-    /* 0x1E */ s16 rotAngle;
+    /* 0x19 */ u8 drawFlags;
+    /* 0x1A */ s16 rotX;
+    /* 0x1C */ s16 rotY;
+    /* 0x1E */ s16 rotZ;
     /* 0x20 */ u16 rotPivotX;
     /* 0x22 */ u16 rotPivotY;
     /* 0x24 */ u16 zPriority;
@@ -574,7 +583,7 @@ typedef struct {
     /* 0x02 */ u16 zPriority;
     /* 0x04 */ Multi16 unk4;
     /* 0x06 */ u16 palette;
-    /* 0x08 */ u8 unk8;
+    /* 0x08 */ u8 drawFlags;
     /* 0x09 */ u8 unk9;
     /* 0x0A */ u8 blendMode;
     /* 0x0B */ u8 unkB;

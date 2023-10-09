@@ -517,7 +517,7 @@ void func_8012E7A4(void) {
     D_80138430 = 0x800;
     PLAYER.unk5A = 0x7E;
     PLAYER.animSet = 0xF;
-    PLAYER.rotAngle = 0;
+    PLAYER.rotZ = 0;
     g_Player.unk48 = 0;
     g_Player.unk46 = 0;
     g_Player.unk44 = 0;
@@ -588,8 +588,8 @@ void func_8012EAD0(void) {
         if (else_cycles == 4) {
             PLAYER.animSet = 1;
             PLAYER.unk5A = 0;
-            PLAYER.rotAngle = 0;
-            PLAYER.unk19 = 0;
+            PLAYER.rotZ = 0;
+            PLAYER.drawFlags = 0;
             func_8010DA48(0xCA);
             g_Player.unk66 = 1;
             if (g_Player.unk68 != 0) {
@@ -800,7 +800,7 @@ void func_8013136C(Entity* entity) {
         entity->unk5A = 0x7E;
         entity->palette = PLAYER.palette;
         entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000;
-        entity->unk19 = 4;
+        entity->drawFlags = FLAG_DRAW_ROTZ;
         entity->unk20 = -8;
         entity->step++;
     }

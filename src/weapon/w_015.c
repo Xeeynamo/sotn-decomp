@@ -16,7 +16,7 @@ void func_ptr_80170004(Entity* self) {
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->ext.generic.unk7C.s = 10;
         self->blendMode = 0x10;
-        self->unk19 = 8;
+        self->drawFlags = FLAG_DRAW_UNK8;
         self->unk6C = 0x80;
         self->step++;
     }

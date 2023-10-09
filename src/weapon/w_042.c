@@ -148,17 +148,17 @@ void func_ptr_80170004(Entity* self) {
         self->flags = FLAG_UNK_08000000;
         self->zPriority = self->ext.weapon.parent->zPriority - 2;
         self->unk4C = D_12A000_8017A604;
-        self->unk19 |= 3;
-        self->unk1C = 0;
-        self->unk1A = 0;
+        self->drawFlags |= 3;
+        self->rotY = 0;
+        self->rotX = 0;
         self->rotPivotY = 0x14;
         self->posY.i.hi -= 0x14;
         self->step++;
         break;
     case 1:
-        self->unk1A += 4;
-        if (self->unk1A >= 0x100) {
-            self->unk1A = 0x100;
+        self->rotX += 4;
+        if (self->rotX >= 0x100) {
+            self->rotX = 0x100;
             self->unk4C = D_12A000_8017A620;
             self->animFrameIdx = 0;
             self->animFrameDuration = 0;
@@ -167,7 +167,7 @@ void func_ptr_80170004(Entity* self) {
             SetWeaponProperties(self, 0);
             self->step++;
         }
-        self->unk1C = self->unk1A;
+        self->rotY = self->rotX;
         break;
     case 2:
         if (self->animFrameDuration == 1) {
@@ -191,17 +191,17 @@ void func_ptr_80170004(Entity* self) {
         }
         break;
     case 3:
-        if (self->unk1A == 0x40) {
+        if (self->rotX == 0x40) {
             g_api.func_8011AAFC(self, ((g_HandId + 1) << 0xC) | 0x46, 0);
         }
         if (self->animFrameIdx != 0) {
-            self->unk1A -= 4;
+            self->rotX -= 4;
         }
-        if (self->unk1A < 0) {
+        if (self->rotX < 0) {
             DestroyEntity(self);
             return;
         }
-        self->unk1C = self->unk1A;
+        self->rotY = self->rotX;
         break;
     }
     g_api.UpdateAnim(D_12A000_8017A6DC, NULL);
@@ -224,7 +224,7 @@ void func_ptr_80170008(Entity* self) {
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->palette = self->ext.weapon.parent->palette;
         self->flags = FLAG_UNK_08000000;
-        self->unk19 = 4;
+        self->drawFlags = FLAG_DRAW_ROTZ;
         self->zPriority = self->ext.weapon.parent->zPriority - 2;
         self->posY.i.hi -= 0x10;
         if (self->facingLeft == 0) {
@@ -243,7 +243,7 @@ void func_ptr_80170008(Entity* self) {
         self->step++;
         break;
     case 1:
-        self->rotAngle -= 0x60;
+        self->rotZ -= 0x60;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         self->velocityY += FIX(0.15625);
@@ -254,7 +254,7 @@ void func_ptr_80170008(Entity* self) {
             self->unk5A = 0;
             self->animFrameDuration = 0;
             self->animFrameIdx = 0;
-            self->unk19 = 0;
+            self->drawFlags = 0;
             self->velocityY = -FIX(0.5);
             self->step++;
         }
