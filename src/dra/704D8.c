@@ -551,7 +551,7 @@ bool CheckSoulStealInput(void) {
     down = PAD_DOWN;
     switch (g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect) {
     case 0:
-        if (PLAYER.facingLeft == 0) {
+        if (!PLAYER.facingLeft) {
             if (g_Player.padTapped == PAD_LEFT) {
                 g_ButtonCombo[COMBO_SOUL_STEAL].timer = 24;
                 g_WasFacingLeft7 = 0;
