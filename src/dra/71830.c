@@ -26,7 +26,7 @@ void func_80111830(void) {
             var_v0 = CheckSoulStealInput();
             break;
         case 9:
-            var_v0 = func_8011151C();
+            var_v0 = CheckSwordBrothersInput();
             break;
         case 14:
             var_v0 = CheckSummonSpiritInput();

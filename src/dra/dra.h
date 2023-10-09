@@ -278,7 +278,7 @@ typedef enum {
     COMBO_SOUL_STEAL,
     COMBO_UNK7,
     COMBO_UNK8,
-    COMBO_UNK9,
+    COMBO_SWORD_BROTHERS,
     COMBO_UNK10,
     COMBO_UNK11,
     COMBO_UNK12,
@@ -883,7 +883,7 @@ void func_8010DBFC(s32*, s32*);
 bool CheckHellfireInput();
 bool CheckTetraSpiritInput();
 bool CheckSoulStealInput();
-s32 func_8011151C();
+bool CheckSwordBrothersInput();
 void func_80111928(void);
 void func_80111CC0(void);
 bool func_80111D24(void);
