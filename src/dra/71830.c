@@ -29,7 +29,7 @@ void func_80111830(void) {
             var_v0 = func_8011151C();
             break;
         case 14:
-            var_v0 = func_80110BC8();
+            var_v0 = CheckSummonSpiritInput();
             break;
         case 15:
             var_v0 = CheckDarkMetamorphosisInput();

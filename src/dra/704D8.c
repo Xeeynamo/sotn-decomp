@@ -254,7 +254,80 @@ bool CheckDarkMetamorphosisInput(void) {
     return 0;
 }
 
-INCLUDE_ASM("dra/nonmatchings/704D8", func_80110BC8);
+bool CheckSummonSpiritInput(void) {
+    s32 directionsPressed;
+    s32 forward;
+
+    directionsPressed =
+        g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
+    if (g_WasFacingLeft4) {
+        forward = g_Player.padPressed & PAD_LEFT;
+    } else {
+        forward = g_Player.padPressed & PAD_RIGHT;
+    }
+    switch (g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect) {
+    case 0:
+        if (!PLAYER.facingLeft) {
+            if (g_Player.padTapped == PAD_LEFT) {
+                g_ButtonCombo[COMBO_SUMMON_SPIRIT].timer = 20;
+                g_WasFacingLeft4 = 0;
+                g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect++;
+            }
+            break;
+        }
+        if (g_Player.padTapped == PAD_RIGHT) {
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].timer = 20;
+            g_WasFacingLeft4 = 1;
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect++;
+        }
+        break;
+    case 1:
+        if (directionsPressed == forward) {
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].timer = 20;
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect++;
+            break;
+        }
+        if (--g_ButtonCombo[COMBO_SUMMON_SPIRIT].timer == 0) {
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect = 0;
+        }
+        break;
+
+    case 2:
+        if (directionsPressed == PAD_UP) {
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].timer = 20;
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect++;
+            break;
+        }
+        if (--g_ButtonCombo[COMBO_SUMMON_SPIRIT].timer == 0) {
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect = 0;
+        }
+        break;
+    case 3:
+        if (directionsPressed == PAD_DOWN) {
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].timer = 20;
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect++;
+            break;
+        }
+        if (--g_ButtonCombo[COMBO_SUMMON_SPIRIT].timer == 0) {
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect = 0;
+        }
+        break;
+    case 4:
+        if (--g_ButtonCombo[COMBO_SUMMON_SPIRIT].timer == 0) {
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect = 0;
+        }
+        if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
+            !(g_Player.unk46 & 0x8000) && (PLAYER.step == Player_Crouch) &&
+            (CastSpell(SPELL_SUMMON_SPIRIT) != 0)) {
+            func_8010FC50();
+            g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect = 0;
+            LearnSpell(SPELL_SUMMON_SPIRIT);
+            return 1;
+        }
+        break;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("dra/nonmatchings/704D8", func_80110DF8);
 
