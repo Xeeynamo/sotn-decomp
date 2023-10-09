@@ -84,9 +84,6 @@ segments:
       - [0x40EDC, rodata] # jtbl_800E0EDC
       - [0x40FA8, .rodata, 6D59C] # func_8010EDB8
       - [0x41224, .rodata, 704D8] # jtbl_800E1224
-      - [0x41250, rodata]
-      - [0x41264, rodata] # jtbl_800E1264
-      - [0x4127C, rodata] # jtbl_800E127C
       - [0x4129C, rodata] # jtbl_800E129C
       - [0x412BC, rodata]
       - [0x412DC, .rodata, 71830]
