@@ -380,7 +380,83 @@ bool func_800EB720(void) {
     return false;
 }
 
-INCLUDE_ASM("dra/nonmatchings/4A538", func_800EB758);
+void func_800EB758(
+    s16 pivotX, s16 pivotY, Entity* e, u16 flags, POLY_GT4* p, u8 flipX) {
+    const int H_CENTER = FLT(STAGE_WIDTH / 2);
+    s16 px, py;
+    s16 dx, dy;
+    s32 rot;
+    s32 distance;
+    s32 angle;
+    s16 rx0, ry0;
+    s16 rx1, ry1;
+    s16 rx2, ry2;
+    s16 rx3, ry3;
+    s16 scaledValue;
+
+    if (flipX) {
+        px = pivotX - e->rotPivotX;
+    } else {
+        px = e->rotPivotX + pivotX;
+    }
+    py = pivotY + e->rotPivotY;
+
+    if (flags & FLAG_DRAW_ROTX) {
+        scaledValue = (e->rotX * (s16)(p->x0 - px) - 0x80000000) >> 8;
+        p->x0 = p->x2 = scaledValue + px;
+        scaledValue = (e->rotX * (s16)(p->x1 - px) - 0x80000000) >> 8;
+        p->x1 = p->x3 = scaledValue + px;
+    }
+    if (flags & FLAG_DRAW_ROTY) {
+        scaledValue = (e->rotY * (s16)(p->y0 - py) - 0x80000000) >> 8;
+        p->y0 = p->y1 = scaledValue + py;
+        scaledValue = (e->rotY * (s16)(p->y2 - py) - 0x80000000) >> 8;
+        p->y2 = p->y3 = scaledValue + py;
+    }
+    if (flags & FLAG_DRAW_ROTZ) {
+        if (flipX) {
+            rot = -e->rotZ;
+        } else {
+            rot = e->rotZ;
+        }
+
+        dx = p->x0 - px;
+        dy = p->y0 - py;
+        distance = SquareRoot12((dx * dx + dy * dy) * FLT(1.0));
+        angle = ratan2(dy, dx) + rot;
+        rx0 = ((rcos(angle) >> 4) * distance + H_CENTER) >> 0x14;
+        ry0 = ((rsin(angle) >> 4) * distance + H_CENTER) >> 0x14;
+        p->x0 = rx0 + px;
+        p->y0 = ry0 + py;
+
+        dx = p->x1 - px;
+        dy = p->y1 - py;
+        distance = SquareRoot12((dx * dx + dy * dy) * FLT(1.0));
+        angle = ratan2(dy, dx) + rot;
+        rx1 = ((rcos(angle) >> 4) * distance + H_CENTER) >> 0x14;
+        ry1 = ((rsin(angle) >> 4) * distance + H_CENTER) >> 0x14;
+        p->x1 = rx1 + px;
+        p->y1 = ry1 + py;
+
+        dx = p->x2 - px;
+        dy = p->y2 - py;
+        distance = SquareRoot12((dx * dx + dy * dy) * 4096);
+        angle = ratan2(dy, dx) + rot;
+        rx2 = ((rcos(angle) >> 4) * distance + H_CENTER) >> 0x14;
+        ry2 = ((rsin(angle) >> 4) * distance + H_CENTER) >> 0x14;
+        p->x2 = rx2 + px;
+        p->y2 = ry2 + py;
+
+        dx = p->x3 - px;
+        dy = p->y3 - py;
+        distance = SquareRoot12((dx * dx + dy * dy) * 4096);
+        angle = ratan2(dy, dx) + rot;
+        rx3 = ((rcos(angle) >> 4) * distance + H_CENTER) >> 0x14;
+        ry3 = ((rsin(angle) >> 4) * distance + H_CENTER) >> 0x14;
+        p->x3 = rx3 + px;
+        p->y3 = ry3 + py;
+    }
+}
 
 void ResetEntityArray(void) {
     Entity* entity;

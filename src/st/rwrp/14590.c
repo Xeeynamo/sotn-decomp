@@ -51,8 +51,8 @@ void EntitySoulStealOrb(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        if (self->unk1A < 0x100) {
-            self->unk1A = self->unk1C += 0x10;
+        if (self->rotX < 0x100) {
+            self->rotX = self->rotY += 0x10;
         }
         if (self->ext.soulStealOrb.unk7E < 0x200) {
             self->ext.soulStealOrb.unk7E += 2;
@@ -97,14 +97,14 @@ void func_80194DD4(Entity* entity) {
         entity->zPriority = objInit->zPriority;
         entity->unk5A = objInit->unk4.s;
         entity->palette = objInit->palette;
-        entity->unk19 = objInit->unk8;
+        entity->drawFlags = objInit->drawFlags;
         entity->blendMode = objInit->blendMode;
         if (objInit->unkC != 0) {
             entity->flags = objInit->unkC;
         }
         if (entity->params >= 5) {
-            entity->rotAngle = 0x800;
-            entity->unk19 = (u8)(entity->unk19 | 4);
+            entity->rotZ = 0x800;
+            entity->drawFlags = (u8)(entity->drawFlags | FLAG_DRAW_ROTZ);
         }
     }
     func_8018D6B0(objInit->unk10, entity);

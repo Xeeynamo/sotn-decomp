@@ -7,26 +7,24 @@
 #include "no3.h"
 
 // vase in the room with the door to the caverns
-void EntityCavernDoorVase(Entity* arg0) {
-    s32 temp_v0;
-    ObjInit2* temp_s0 = &D_80180BFC[arg0->params];
+void EntityCavernDoorVase(Entity* self) {
+    ObjInit2* objInit = &D_80180BFC[self->params];
 
-    if (arg0->step == 0) {
+    if (self->step == 0) {
         InitializeEntity(D_80180B00);
-        arg0->animSet = temp_s0->animSet;
-        arg0->zPriority = temp_s0->zPriority;
-        arg0->facingLeft = temp_s0->unk4.U8.unk0;
-        arg0->unk5A = temp_s0->unk4.U8.unk1;
-        arg0->palette = temp_s0->palette;
-        arg0->unk19 = temp_s0->unk8;
-        arg0->blendMode = temp_s0->blendMode;
-        temp_v0 = temp_s0->unkC;
-        if (temp_v0 != 0) {
-            arg0->flags = temp_v0;
+        self->animSet = objInit->animSet;
+        self->zPriority = objInit->zPriority;
+        self->facingLeft = objInit->unk4.U8.unk0;
+        self->unk5A = objInit->unk4.U8.unk1;
+        self->palette = objInit->palette;
+        self->drawFlags = objInit->drawFlags;
+        self->blendMode = objInit->blendMode;
+        if (objInit->unkC != 0) {
+            self->flags = objInit->unkC;
         }
     }
 
-    AnimateEntity(temp_s0->unk10, arg0);
+    AnimateEntity(objInit->unk10, self);
 }
 
 void EntityUnkId12(Entity* entity) {
@@ -286,7 +284,7 @@ void EntityCastleDoor(Entity* self) {
             var_a0++;
         }
         if (g_CastleFlags[52] != 0) {
-            self->ext.castleDoor.rotAngle = 0;
+            self->ext.castleDoor.rotZ = 0;
             self->step = 5;
         }
         break;
@@ -297,16 +295,16 @@ void EntityCastleDoor(Entity* self) {
             g_CurrentRoomTileLayout.fg[tilePos] = *tilePtr;
             tilePos += 0x20;
         }
-        self->ext.castleDoor.rotAngle = -0x380;
+        self->ext.castleDoor.rotZ = -0x380;
         self->ext.castleDoor.timer = 32;
         self->step = 4;
         g_CastleFlags[52] = 1;
         break;
 
     case 2:
-        self->ext.castleDoor.rotAngle -= 8;
-        if (self->ext.castleDoor.rotAngle < -0x380) {
-            self->ext.castleDoor.rotAngle = -0x380;
+        self->ext.castleDoor.rotZ -= 8;
+        if (self->ext.castleDoor.rotZ < -0x380) {
+            self->ext.castleDoor.rotZ = -0x380;
             self->ext.castleDoor.timer = 128;
             self->step++;
         }
@@ -319,9 +317,9 @@ void EntityCastleDoor(Entity* self) {
         break;
 
     case 4:
-        self->ext.castleDoor.rotAngle += 0x10;
-        if (self->ext.castleDoor.rotAngle > 0) {
-            self->ext.castleDoor.rotAngle = 0;
+        self->ext.castleDoor.rotZ += 0x10;
+        if (self->ext.castleDoor.rotZ > 0) {
+            self->ext.castleDoor.rotZ = 0;
             self->step += 2;
             g_api.PlaySfx(SE_CASTLE_GATE_CLOSE);
             tilePos = 0x445;
@@ -344,7 +342,7 @@ void EntityCastleDoor(Entity* self) {
     SetGeomScreen(768);
     SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
     sVec1.vx = 0;
-    sVec1.vy = self->ext.castleDoor.rotAngle;
+    sVec1.vy = self->ext.castleDoor.rotZ;
     sVec1.vz = 0;
     RotMatrix(&sVec2, &mtx1);
     RotMatrixY(sVec1.vy, &mtx1);
@@ -584,18 +582,18 @@ void EntityCavernDoorLever(Entity* entity) {
     case 0:
         InitializeEntity(D_80180B18);
         entity->animCurFrame = 18;
-        entity->rotAngle = -0x200;
-        entity->unk19 |= 4;
+        entity->rotZ = -0x200;
+        entity->drawFlags |= 4;
         CreateEntityFromEntity(0x1E, entity, &entity[1]);
         if (g_CastleFlags[0x30] != 0) {
-            entity->rotAngle = 0;
+            entity->rotZ = 0;
         }
 
     case 1:
         if (entity[1].ext.generic.unk84.S8.unk0 != 0) {
-            entity->rotAngle += 4;
-            if (entity->rotAngle > 0) {
-                entity->rotAngle = 0;
+            entity->rotZ += 4;
+            if (entity->rotZ > 0) {
+                entity->rotZ = 0;
                 if (g_CastleFlags[0x30] == 0) {
                     g_api.PlaySfx(SE_LEVER_SWITCH_MOVE);
                 }
@@ -609,8 +607,8 @@ void EntityCavernDoorLever(Entity* entity) {
 
     posX = entity->posX.val;
     posY = entity->posY.val;
-    posX += rcos(entity->rotAngle) * 0x280;
-    posY += rsin(entity->rotAngle) * 0x280;
+    posX += rcos(entity->rotZ) * 0x280;
+    posY += rsin(entity->rotZ) * 0x280;
     entity[1].posX.val = posX;
     entity[1].posY.val = posY;
 }
@@ -742,8 +740,8 @@ void EntityCavernDoor(Entity* self) {
                     entity->posX.i.hi += -8 + (Random() & 15);
                     entity->zPriority = self->zPriority + 2;
                     entity->params = 0x10;
-                    entity->unk19 |= 3;
-                    entity->unk1A = entity->unk1C = 192;
+                    entity->drawFlags |= 3;
+                    entity->rotX = entity->rotY = 192;
                 }
             }
         }
@@ -1271,13 +1269,13 @@ void EntityFallingRock2(Entity* self) {
         self->animCurFrame = animFrame;
         self->animCurFrame += 31;
         self->zPriority = 0x9F;
-        self->unk19 |= 4;
+        self->drawFlags |= 4;
         break;
 
     case 1:
         MoveEntity();
         self->velocityY += FIX(0.25);
-        self->rotAngle -= 0x20;
+        self->rotZ -= 0x20;
         new_var2 = self->posY.i.hi;
         new_var2 += D_8018133C[animFrame];
         g_api.CheckCollision(self->posX.i.hi, new_var2, &collider, 0);
@@ -1460,9 +1458,9 @@ void EntityFallingRock(Entity* self) {
     case 0:
         InitializeEntity(D_80180B18);
         self->animCurFrame = animFrame + 31;
-        self->unk1C = 0x60;
-        self->unk1A = 0x60;
-        self->unk19 |= 7;
+        self->rotY = 0x60;
+        self->rotX = 0x60;
+        self->drawFlags |= 7;
         rnd = (Random() & 0x1F) + 16;
         rndAngle = (Random() * 6) + 0x900;
         self->velocityX = rnd * rcos(rndAngle);
@@ -1475,7 +1473,7 @@ void EntityFallingRock(Entity* self) {
     case 1:
         MoveEntity();
         self->velocityY += FIX(0.125);
-        self->rotAngle -= 0x20;
+        self->rotZ -= 0x20;
 
         g_api.CheckCollision(
             self->posX.i.hi, self->posY.i.hi + 8, &collider, 0);
@@ -1714,8 +1712,8 @@ void EntityHeartRoomGoldDoor(Entity* self) {
                     newEntity->posY.i.hi = 188;
                     newEntity->posX.i.hi += -8 + (Random() & 0xF);
                     newEntity->params = 0x10;
-                    newEntity->unk1A = newEntity->unk1C = 192;
-                    newEntity->unk19 |= 3;
+                    newEntity->rotX = newEntity->rotY = 192;
+                    newEntity->drawFlags |= 3;
                 }
             }
         }

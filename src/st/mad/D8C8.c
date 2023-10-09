@@ -114,7 +114,7 @@ void func_8018E5AC(Entity* self) {
         self->zPriority = objInit->zPriority;
         self->unk5A = objInit->unk4.s;
         self->palette = objInit->palette;
-        self->unk19 = objInit->unk8;
+        self->drawFlags = objInit->drawFlags;
         self->blendMode = objInit->blendMode;
         temp_v0 = objInit->unkC;
         if (temp_v0 != 0) {

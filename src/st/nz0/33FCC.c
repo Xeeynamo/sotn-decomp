@@ -621,7 +621,7 @@ void EntitySlograSpear(Entity* self) {
     case 2:
         switch (self->step_s) {
         case 0:
-            self->unk19 = 4;
+            self->drawFlags = FLAG_DRAW_ROTZ;
             self->hitboxState = 0;
             if (self->facingLeft != 0) {
                 self->velocityX = FIX(-2.25);
@@ -636,8 +636,8 @@ void EntitySlograSpear(Entity* self) {
         case 1:
             MoveEntity();
             self->velocityY += FIX(0.15625);
-            self->rotAngle += 0x80;
-            if (!(self->rotAngle & 0xFFF)) {
+            self->rotZ += 0x80;
+            if (!(self->rotZ & 0xFFF)) {
                 func_801C29B0(0x625);
             }
         }
@@ -1262,7 +1262,7 @@ void func_801B69E8(Entity* self) {
 void EntitySmallGaibonProjectile(Entity* self) {
     if (self->flags & 0x100) {
         self->pfnUpdate = EntityExplosion;
-        self->unk19 = 0;
+        self->drawFlags = 0;
         self->step = 0;
         self->entityId = 2;
         self->params = 0;
@@ -1274,12 +1274,12 @@ void EntitySmallGaibonProjectile(Entity* self) {
         InitializeEntity(D_80180D3C);
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = 1;
-        self->unk19 = 5;
-        self->unk1A = 0xC0;
-        self->velocityX = (rcos(self->rotAngle) * 0x28000) >> 0xC;
-        self->velocityY = (rsin(self->rotAngle) * 0x28000) >> 0xC;
+        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTZ;
+        self->rotX = 0xC0;
+        self->velocityX = (rcos(self->rotZ) * 0x28000) >> 0xC;
+        self->velocityY = (rsin(self->rotZ) * 0x28000) >> 0xC;
         self->palette = 0x81B6;
-        self->rotAngle -= 0x400;
+        self->rotZ -= 0x400;
 
     case 1:
         MoveEntity();
@@ -1295,7 +1295,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
     if (self->flags & 0x100) {
         self->pfnUpdate = EntityExplosion;
         self->entityId = 2;
-        self->unk19 = 0;
+        self->drawFlags = 0;
         self->step = 0;
         self->params = 1;
         return;
@@ -1306,16 +1306,16 @@ void EntityLargeGaibonProjectile(Entity* self) {
         InitializeEntity(D_80180D48);
         if (self->params == 0) {
             self->animSet = ANIMSET_DRA(2);
-            self->unk19 = 4;
-            self->velocityX = (rcos(self->rotAngle) * 0x38000) >> 0xC;
-            self->velocityY = (rsin(self->rotAngle) * 0x38000) >> 0xC;
+            self->drawFlags = FLAG_DRAW_ROTZ;
+            self->velocityX = (rcos(self->rotZ) * 0x38000) >> 0xC;
+            self->velocityY = (rsin(self->rotZ) * 0x38000) >> 0xC;
             self->palette = 0x81B6;
-            self->rotAngle -= 0x400;
+            self->rotZ -= 0x400;
         } else {
             self->animSet = ANIMSET_DRA(14);
             self->unk5A = 0x79;
-            self->unk19 = 0xD;
-            self->unk1A = 0x100;
+            self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTZ | FLAG_DRAW_UNK8;
+            self->rotX = 0x100;
             self->unk6C = 0x80;
             self->palette = 0x81F3;
             self->blendMode = 0x30;
@@ -1333,7 +1333,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_GAIBON_BIG_FIREBALL, self, newEntity);
                 newEntity->params = 1;
-                newEntity->rotAngle = self->rotAngle;
+                newEntity->rotZ = self->rotZ;
                 newEntity->zPriority = self->zPriority + 1;
             }
         }
@@ -1341,7 +1341,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
 
     case 2:
         self->unk6C += 0xFE;
-        self->unk1A -= 4;
+        self->rotX -= 4;
         if (AnimateEntity(D_80181388, self) == 0) {
             DestroyEntity(self);
         }

@@ -1082,7 +1082,7 @@ void func_80186FD0(Entity* arg0) {
         arg0->zPriority = objInit->zPriority;
         arg0->unk5A = objInit->unk4.s;
         arg0->palette = objInit->palette;
-        arg0->unk19 = objInit->unk8;
+        arg0->drawFlags = objInit->drawFlags;
         arg0->blendMode = objInit->blendMode;
 
         if (objInit->unkC != 0) {
@@ -1090,8 +1090,7 @@ void func_80186FD0(Entity* arg0) {
         }
 
         if (arg0->params == 1) {
-            arg0->unk1C = 0x0200;
-            arg0->unk1A = 0x0200;
+            arg0->rotX = arg0->rotY = 0x0200;
         }
     }
 
@@ -1473,7 +1472,7 @@ void EntityWarpSmallRocks(Entity* entity) {
     case 0:
         unk = D_80180648;
         InitializeEntity(D_801804C4);
-        entity->unk19 = 4;
+        entity->drawFlags = FLAG_DRAW_ROTZ;
         entity->unk1E = Random() * 0x10;
         entity->animCurFrame = (Random() % 5) + 1;
         if (*unk != 0) {
@@ -1498,10 +1497,10 @@ void EntityWarpSmallRocks(Entity* entity) {
             MoveEntity();
             entity->velocityY += FIX(0.25);
             if (entity->velocityY > ((s32)0xFFFF0000)) {
-                entity->unk19 = 3;
-                entity->unk1C = 0x100;
+                entity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+                entity->rotY = 0x100;
                 distance = 0x100;
-                entity->unk1A = distance;
+                entity->rotX = distance;
                 entity->step++;
             }
         }
@@ -1518,7 +1517,7 @@ void EntityWarpSmallRocks(Entity* entity) {
         if (distance >= 0x101) {
             distance = 0x100;
         }
-        entity->unk1A = entity->unk1C = distance;
+        entity->rotX = entity->rotY = distance;
         if (distance < 8) {
             DestroyEntity(entity);
         }

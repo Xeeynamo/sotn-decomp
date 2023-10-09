@@ -20,8 +20,8 @@ void func_ptr_80170004(Entity* self) {
         self->zPriority = PLAYER.zPriority - 4;
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_20000;
         self->palette = self->ext.weapon.parent->ext.weapon.childPalette;
-        self->unk19 = self->ext.weapon.parent->unk19 + 8;
-        self->rotAngle = self->ext.weapon.parent->rotAngle;
+        self->drawFlags = self->ext.weapon.parent->drawFlags + FLAG_DRAW_UNK8;
+        self->rotZ = self->ext.weapon.parent->rotZ;
         self->unk6C = 0x80;
         self->step++;
     }

@@ -16,7 +16,7 @@ void EntityUnkId11(Entity* entity) {
         entity->zPriority = obj->zPriority;
         entity->unk5A = obj->unk4.s;
         entity->palette = obj->palette;
-        entity->unk19 = obj->unk8;
+        entity->drawFlags = obj->drawFlags;
         entity->blendMode = obj->blendMode;
 
         if (obj->unkC != 0) {
@@ -24,8 +24,8 @@ void EntityUnkId11(Entity* entity) {
         }
 
         if (entity->params == 1) {
-            entity->unk1C = 0x200;
-            entity->unk1A = 0x200;
+            entity->rotY = 0x200;
+            entity->rotX = 0x200;
         }
     }
 

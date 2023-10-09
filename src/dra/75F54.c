@@ -9,7 +9,7 @@ void func_80115F54(void) {
     u8 var_v1;
 
     var_s2 = false;
-    PLAYER.unk19 = 4;
+    PLAYER.drawFlags = FLAG_DRAW_ROTZ;
     temp_s0 = D_80097D1C;
     if (*D_80097420 == 0xFFF && PLAYER.step_s != 0) {
         SetPlayerStep(Player_Unk17);
@@ -28,7 +28,7 @@ void func_80115F54(void) {
         PLAYER.velocityY = -0x1A000;
         PLAYER.ext.generic.unkAC = 0xC1;
         PLAYER.blendMode = 0x30;
-        PLAYER.rotAngle = 0x200;
+        PLAYER.rotZ = 0x200;
         func_80118C28(1);
         func_8011AAFC(g_CurrentEntity, 0x59002C, 0);
         func_8011AAFC(g_CurrentEntity, 0x60031, 0);
@@ -279,16 +279,16 @@ bool BatFormFinished(void) {
 }
 
 void func_8011690C(s16 arg0) {
-    if (PLAYER.rotAngle < arg0) {
-        PLAYER.rotAngle += 16;
-        if (arg0 < PLAYER.rotAngle) {
-            PLAYER.rotAngle = arg0;
+    if (PLAYER.rotZ < arg0) {
+        PLAYER.rotZ += 16;
+        if (arg0 < PLAYER.rotZ) {
+            PLAYER.rotZ = arg0;
         }
     }
-    if (arg0 < PLAYER.rotAngle) {
-        PLAYER.rotAngle -= 16;
-        if (PLAYER.rotAngle < arg0) {
-            PLAYER.rotAngle = arg0;
+    if (arg0 < PLAYER.rotZ) {
+        PLAYER.rotZ -= 16;
+        if (PLAYER.rotZ < arg0) {
+            PLAYER.rotZ = arg0;
         }
     }
 }
@@ -413,7 +413,7 @@ void ControlBatForm(void) {
     if (BatFormFinished()) {
         return;
     }
-    PLAYER.unk19 = 4;
+    PLAYER.drawFlags = FLAG_DRAW_ROTZ;
     PLAYER.rotPivotY = 0;
     directionsPressed =
         g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
@@ -453,7 +453,7 @@ void ControlBatForm(void) {
     switch (PLAYER.step_s) {
     case 0:
         g_WingSmashButtonCounter = 0;
-        PLAYER.rotAngle = 0;
+        PLAYER.rotZ = 0;
         g_Player.unk48 = 0;
         g_Player.unk46 = 0;
         g_Player.unk44 = 0;
@@ -767,7 +767,7 @@ void func_801177A0(void) {
     s32 i;
     s32 else_cycles;
 
-    PLAYER.unk19 = 4;
+    PLAYER.drawFlags = FLAG_DRAW_ROTZ;
     DecelerateX(0x2000);
     if (g_Player.pl_vram_flag & 3) {
         PLAYER.velocityY = 0;
@@ -811,8 +811,8 @@ void func_801177A0(void) {
         }
         if (else_cycles == 8) {
             PLAYER.animSet = 1;
-            PLAYER.rotAngle = 0;
-            PLAYER.unk19 = 0;
+            PLAYER.rotZ = 0;
+            PLAYER.drawFlags = 0;
             g_Player.unk66 = 1;
             if (g_Player.unk68 != 0) {
                 PLAYER.step_s = 2;
@@ -868,7 +868,7 @@ void func_80117AC0(void) {
     if ((g_Player.pl_vram_flag & 0x41) == 0x41) {
         collisionCount += 1;
     }
-    PLAYER.rotAngle = 0;
+    PLAYER.rotZ = 0;
     func_8010E27C();
     if (collisionCount == 0) {
         func_8010E7AC();
@@ -1442,7 +1442,7 @@ void func_80119D3C(Entity* entity) {
 
     case 1:
         if (entity->ext.generic.unk80.modeS16.unk0 < 32) {
-            entity->unk19 = 128;
+            entity->drawFlags = FLAG_DRAW_UNK80;
         }
         entity->posY.val += entity->velocityY;
         cos = rcos(entity->ext.generic.unk7C.s);
@@ -1921,12 +1921,13 @@ void func_8011F074(Entity* entity) {
         } else {
             entity->blendMode = 0x10;
         }
-        entity->unk1C = 0x40;
-        entity->unk1A = 0x40;
+        entity->rotY = 0x40;
+        entity->rotX = 0x40;
         entity->unk4C = &D_800ADC44;
         D_8013808C++;
         entity->unk6C = 0xFF;
-        entity->unk19 = 0x33;
+        entity->drawFlags =
+            FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20;
         posX = 10;
         posY = 15;
         entity->posY.i.hi = entity->posY.i.hi - posY + (rand() % 35);
@@ -1940,8 +1941,8 @@ void func_8011F074(Entity* entity) {
             entity->unk6C += 248;
         }
         entity->posY.val += entity->velocityY;
-        entity->unk1A += 8;
-        entity->unk1C += 8;
+        entity->rotX += 8;
+        entity->rotY += 8;
         if (entity->animFrameDuration < 0) {
             DestroyEntity(entity);
         }
@@ -2004,10 +2005,10 @@ void UnknownEntId49(Entity* self) {
         self->flags = 0x04060000;
         self->step++;
     }
-    self->unk19 = PLAYER.unk19 & 8;
+    self->drawFlags = PLAYER.drawFlags & FLAG_DRAW_UNK8;
     self->unk6C = PLAYER.unk6C;
 
-    if (ABS(PLAYER.rotAngle) == 0x200) {
+    if (ABS(PLAYER.rotZ) == 0x200) {
         x_offset = PLAYER.entityRoomIndex != 0 ? 0x10 : -0x10;
         self->posX.i.hi = x_offset + PLAYER.posX.i.hi;
         self->posY.i.hi = PLAYER.posY.i.hi + 9 + ((g_GameTimer >> 1) & 1);
@@ -2073,7 +2074,7 @@ void func_80123F78(Entity* entity) {
         entity->animSet = ANIMSET_DRA(1);
         entity->animCurFrame = PLAYER.animCurFrame;
         entity->unk5A = 0xD;
-        entity->unk19 = PLAYER.unk19;
+        entity->drawFlags = PLAYER.drawFlags;
         entity->blendMode = 0x30;
         entity->palette = 0x815F;
         entity->zPriority = PLAYER.zPriority - 2;
@@ -2540,9 +2541,9 @@ void func_80127840(Entity* entity) {
         }
 
         entity->animSet = ANIMSET_DRA(9);
-        entity->rotAngle = 0;
+        entity->rotZ = 0;
         entity->unk4C = &D_800B07C8;
-        entity->unk19 |= 4;
+        entity->drawFlags |= FLAG_DRAW_ROTZ;
         entity->zPriority = PLAYER.zPriority + 2;
         entity->facingLeft = (PLAYER.facingLeft + 1) & 1;
         SetSpeedX(-0x10);
@@ -2555,7 +2556,7 @@ void func_80127840(Entity* entity) {
     case 1:
         if (entity->animFrameIdx >= 23) {
             if (!(g_GameTimer & 3)) {
-                entity->rotAngle += 0x400;
+                entity->rotZ += 0x400;
             }
             if (entity->velocityX < 0) {
                 entity->velocityX -= FIX(0.09375);

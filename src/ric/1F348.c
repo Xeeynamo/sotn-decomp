@@ -18,15 +18,15 @@ void func_8015B348(void) {
         break;
 
     case 1:
-        PLAYER.unk19 = 2;
+        PLAYER.drawFlags = FLAG_DRAW_ROTY;
         D_801545AA += 64;
-        PLAYER.unk1C = (rsin(D_801545AA) >> 0xA) + 256;
+        PLAYER.rotY = (rsin(D_801545AA) >> 0xA) + 256;
 
         if (D_801545AC != 0) {
             D_801545AC--;
             if ((D_801545AC) == 0) {
-                PLAYER.unk19 = 0;
-                PLAYER.unk1C = 0x100;
+                PLAYER.drawFlags = 0;
+                PLAYER.rotY = 0x100;
                 func_801606BC(g_CurrentEntity, 0x17, 0);
                 D_801545A8 = 0x90;
                 PLAYER.step_s++;

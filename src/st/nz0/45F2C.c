@@ -177,7 +177,7 @@ void func_801C6494(Entity* entity) { // From skeleton death explosion
     if (entity->step) {
         entity->ext.generic.unk88.S8.unk0--;
         if (entity->ext.generic.unk88.S8.unk0 & 0xFF) {
-            entity->rotAngle += D_80182424[entity->params];
+            entity->rotZ += D_80182424[entity->params];
             FallEntity();
             MoveEntity();
             return;
@@ -191,7 +191,7 @@ void func_801C6494(Entity* entity) { // From skeleton death explosion
     }
 
     InitializeEntity(D_80180C94);
-    entity->unk19 = 4;
+    entity->drawFlags = FLAG_DRAW_ROTZ;
     entity->animCurFrame = entity->params + 15;
 
     if (entity->facingLeft != 0) {
@@ -209,7 +209,7 @@ void func_801C6574(Entity* entity) { // Bone Projectile from Skeleton
             return;
         }
 
-        entity->rotAngle += 0x80;
+        entity->rotZ += 0x80;
         entity->velocityY += 0x2400;
         MoveEntity();
 
@@ -231,18 +231,18 @@ void func_801C6574(Entity* entity) { // Bone Projectile from Skeleton
 
         entity->velocityY = FIX(-4.5);
         entity->velocityX = velocityX;
-        entity->unk19 = 4;
+        entity->drawFlags = FLAG_DRAW_ROTZ;
     }
 }
 
 void func_801C6678(Entity* entity) { // From Skeleton
     if (entity->step == 0) {
         InitializeEntity(D_80180C88);
-        entity->unk1A = 0x120;
-        entity->unk1C = 0x200;
+        entity->rotX = 0x120;
+        entity->rotY = 0x200;
         entity->unk6C = 0;
         entity->hitboxState = 0;
-        entity->unk19 = entity->unk19 | 0xB;
+        entity->drawFlags = entity->drawFlags | 0xB;
         return;
     }
 

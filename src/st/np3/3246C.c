@@ -16,7 +16,7 @@ void func_801B246C(Entity* self) {
         self->facingLeft = temp_s0->unk4.U8.unk0;
         self->unk5A = temp_s0->unk4.U8.unk1;
         self->palette = temp_s0->palette;
-        self->unk19 = temp_s0->unk8;
+        self->drawFlags = temp_s0->drawFlags;
         self->blendMode = temp_s0->blendMode;
         if (temp_s0->unkC != 0) {
             self->flags = temp_s0->unkC;
@@ -270,7 +270,7 @@ void EntityCastleDoor(Entity* self) {
             prim = prim->next;
             temp_a0++;
         }
-        self->ext.castleDoor.rotAngle = 0;
+        self->ext.castleDoor.rotZ = 0;
 
         tilePos = 0x445;
         for (i = 0, tilePtr = D_80180FF8; i < 8; tilePtr++, i++) {
@@ -281,7 +281,7 @@ void EntityCastleDoor(Entity* self) {
     SetGeomScreen(0x300);
     SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
     svec1.vx = 0;
-    svec1.vy = self->ext.castleDoor.rotAngle;
+    svec1.vy = self->ext.castleDoor.rotZ;
     svec1.vz = 0;
     RotMatrix(&svec2, &mtx1);
     RotMatrixY(svec1.vy, &mtx1);
@@ -518,18 +518,18 @@ void EntityCavernDoorLever(Entity* entity) {
     case 0:
         InitializeEntity(D_80180AA8);
         entity->animCurFrame = 18;
-        entity->rotAngle = -0x200;
-        entity->unk19 |= 4;
+        entity->rotZ = -0x200;
+        entity->drawFlags |= 4;
         CreateEntityFromEntity(E_ID_1E, entity, &entity[1]);
         if (g_CastleFlags[0x30] != 0) {
-            entity->rotAngle = 0;
+            entity->rotZ = 0;
         }
 
     case 1:
         if (entity[1].ext.generic.unk84.S8.unk0 != 0) {
-            entity->rotAngle += 4;
-            if (entity->rotAngle > 0) {
-                entity->rotAngle = 0;
+            entity->rotZ += 4;
+            if (entity->rotZ > 0) {
+                entity->rotZ = 0;
                 if (g_CastleFlags[48] == 0) {
                     g_api.PlaySfx(0x675);
                 }
@@ -543,8 +543,8 @@ void EntityCavernDoorLever(Entity* entity) {
 
     posX = entity->posX.val;
     posY = entity->posY.val;
-    posX += rcos(entity->rotAngle) * 0x280;
-    posY += rsin(entity->rotAngle) * 0x280;
+    posX += rcos(entity->rotZ) * 0x280;
+    posY += rsin(entity->rotZ) * 0x280;
     entity[1].posX.val = posX;
     entity[1].posY.val = posY;
 }
@@ -681,8 +681,8 @@ void func_801B40F8(Entity* self) {
                     entity->posX.i.hi += -8 + (Random() & 15);
                     entity->zPriority = self->zPriority + 2;
                     entity->params = 0x10;
-                    entity->unk19 |= 3;
-                    entity->unk1A = entity->unk1C = 192;
+                    entity->drawFlags |= 3;
+                    entity->rotX = entity->rotY = 192;
                 }
             }
         }
@@ -1212,13 +1212,13 @@ void EntityFallingRock2(Entity* self) {
         self->animCurFrame = animFrame;
         self->animCurFrame += 31;
         self->zPriority = 0x9F;
-        self->unk19 |= 4;
+        self->drawFlags |= 4;
         break;
 
     case 1:
         MoveEntity();
         self->velocityY += FIX(0.25);
-        self->rotAngle -= 0x20;
+        self->rotZ -= 0x20;
         new_var2 = self->posY.i.hi;
         new_var2 += D_80181204[animFrame];
         g_api.CheckCollision(self->posX.i.hi, new_var2, &collider, 0);
@@ -1399,9 +1399,9 @@ void EntityFallingRock(Entity* self) {
     case 0:
         InitializeEntity(D_80180AA8);
         self->animCurFrame = animFrame + 31;
-        self->unk1C = 0x60;
-        self->unk1A = 0x60;
-        self->unk19 |= 7;
+        self->rotY = 0x60;
+        self->rotX = 0x60;
+        self->drawFlags |= 7;
         rnd = (Random() & 0x1F) + 16;
         rndAngle = (Random() * 6) + 0x900;
         self->velocityX = rnd * rcos(rndAngle);
@@ -1414,7 +1414,7 @@ void EntityFallingRock(Entity* self) {
     case 1:
         MoveEntity();
         self->velocityY += FIX(0.125);
-        self->rotAngle -= 0x20;
+        self->rotZ -= 0x20;
 
         g_api.CheckCollision(
             self->posX.i.hi, self->posY.i.hi + 8, &collider, 0);
@@ -1590,8 +1590,8 @@ void EntityHeartRoomGoldDoor(Entity* self) {
                     newEntity->posY.i.hi = 188;
                     newEntity->posX.i.hi += -8 + (Random() & 15);
                     newEntity->params = 0x10;
-                    newEntity->unk1A = newEntity->unk1C = 192;
-                    newEntity->unk19 |= 3;
+                    newEntity->rotX = newEntity->rotY = 192;
+                    newEntity->drawFlags |= 3;
                 }
             }
         }

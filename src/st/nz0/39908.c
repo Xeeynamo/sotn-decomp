@@ -699,7 +699,7 @@ void func_801BD568(u16 arg0, u16 sfxId) {
     g_CurrentEntity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
     g_CurrentEntity->params = arg0;
     g_CurrentEntity->animCurFrame = 0;
-    g_CurrentEntity->unk19 = 0;
+    g_CurrentEntity->drawFlags = 0;
     g_CurrentEntity->step = 0;
     g_CurrentEntity->step_s = 0;
 }

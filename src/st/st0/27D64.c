@@ -10,7 +10,7 @@ void func_801A7D64(Entity* self) {
         self->zPriority = obj->zPriority;
         self->unk5A = obj->unk4.s;
         self->palette = obj->palette;
-        self->unk19 = obj->unk8;
+        self->drawFlags = obj->drawFlags;
         self->blendMode = obj->blendMode;
         if (obj->unkC != 0) {
             self->flags = obj->unkC;

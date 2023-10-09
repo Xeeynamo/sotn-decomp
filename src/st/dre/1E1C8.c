@@ -76,10 +76,10 @@ void EntityUnkId15(Entity* entity) {
         entity->animSet = ANIMSET_DRA(5);
         entity->animCurFrame = 1;
         entity->blendMode = 0x10;
-        entity->unk19 = 3;
+        entity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
         temp_v0 = D_801812E4[entity->params];
-        entity->unk1A = temp_v0;
-        entity->unk1C = temp_v0;
+        entity->rotX = temp_v0;
+        entity->rotY = temp_v0;
         temp2 = D_801812F4[entity->params];
         entity->step += 1;
         entity->velocityY = temp2;
@@ -306,8 +306,8 @@ void func_8019F170(Entity* entity) {
     if (!entity->step) {
         InitializeEntity(g_InitializeEntityData0);
         entity->unk6C = 0xF0;
-        entity->unk1A = 0x1A0;
-        entity->unk1C = 0x1A0;
+        entity->rotX = 0x1A0;
+        entity->rotY = 0x1A0;
         entity->animSet = ANIMSET_DRA(8);
         entity->animCurFrame = 1;
         entity->zPriority += 0x10;
@@ -550,8 +550,8 @@ void EntitySoulStealOrb(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        if (self->unk1A < 0x100) {
-            self->unk1A = self->unk1C += 0x10;
+        if (self->rotX < 0x100) {
+            self->rotX = self->rotY += 0x10;
         }
         if (self->ext.soulStealOrb.unk7E < 0x200) {
             self->ext.soulStealOrb.unk7E += 2;
@@ -598,14 +598,14 @@ void EntityRoomForeground(Entity* entity) {
         entity->zPriority = objInit->zPriority;
         entity->unk5A = objInit->unk4.s;
         entity->palette = objInit->palette;
-        entity->unk19 = objInit->unk8;
+        entity->drawFlags = objInit->drawFlags;
         entity->blendMode = objInit->blendMode;
         if (objInit->unkC != 0) {
             entity->flags = objInit->unkC;
         }
         if (entity->params >= 5) {
-            entity->rotAngle = 0x800;
-            entity->unk19 |= 4;
+            entity->rotZ = 0x800;
+            entity->drawFlags |= 4;
         }
     }
     AnimateEntity(objInit->unk10, entity);
