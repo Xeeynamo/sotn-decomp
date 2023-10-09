@@ -560,6 +560,9 @@ bool CheckSoulStealInput(void) {
             break;
         }
         if (g_Player.padTapped == PAD_RIGHT) {
+            // @bug - Most spells use a 20-frame button timing. Soul Steal uses
+            // 24. It appears that this spot was forgotten, meaning Soul Steal
+            // is easier if you start facing right than left!
             g_ButtonCombo[COMBO_SOUL_STEAL].timer = 20;
             g_WasFacingLeft7 = 1;
             g_ButtonCombo[COMBO_SOUL_STEAL].buttonsCorrect++;
