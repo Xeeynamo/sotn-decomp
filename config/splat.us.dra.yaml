@@ -97,9 +97,6 @@ segments:
       - [0x40E48, rodata] # EntityAlucard jump table
       - [0x4108C, .rodata, 6D59C] # func_8010EDB8
       - [0x41308, .rodata, 704D8] # func_80110968
-      - [0x41334, rodata]
-      - [0x41348, rodata] # func_80110DF8
-      - [0x41360, rodata] # func_80111018
       - [0x41380, rodata] # func_801112AC
       - [0x413A0, rodata]
       - [0x413C0, .rodata, 71830]
