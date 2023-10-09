@@ -317,7 +317,7 @@ bool CheckSummonSpiritInput(void) {
             g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect = 0;
         }
         if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
-            !(g_Player.unk46 & 0x8000) && (PLAYER.step == 2) &&
+            !(g_Player.unk46 & 0x8000) && (PLAYER.step == Player_Crouch) &&
             (CastSpell(SPELL_SUMMON_SPIRIT) != 0)) {
             func_8010FC50();
             g_ButtonCombo[COMBO_SUMMON_SPIRIT].buttonsCorrect = 0;
