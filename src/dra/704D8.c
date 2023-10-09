@@ -240,7 +240,9 @@ bool CheckDarkMetamorphosisInput(void) {
     case 5:
         if (--g_ButtonCombo[COMBO_DARK_METAMORPH].timer != 0) {
             if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
-                !(g_Player.unk46 & 0x8000) && (PLAYER.step < 2) &&
+                !(g_Player.unk46 & 0x8000) &&
+                ((PLAYER.step == Player_Walk) ||
+                 (PLAYER.step == Player_Stand)) &&
                 (CastSpell(SPELL_DARK_METAMORPHOSIS) != 0)) {
                 func_8010FB68();
                 g_ButtonCombo[COMBO_DARK_METAMORPH].buttonsCorrect = 0;
@@ -391,7 +393,9 @@ bool CheckHellfireInput(void) {
             FntPrint("pl_pose:%02x\n", PLAYER.animFrameIdx);
             if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
                 !(g_Player.unk46 & 0x8000) &&
-                ((PLAYER.step == Player_Crouch) || (PLAYER.step < 2))) {
+                ((PLAYER.step == Player_Crouch) ||
+                 ((PLAYER.step == Player_Walk) ||
+                  (PLAYER.step == Player_Stand)))) {
                 if (g_Player.unk72 == 0) {
                     if (CastSpell(SPELL_HELLFIRE) == 0) {
                         return 0;
@@ -454,7 +458,7 @@ bool CheckTetraSpiritInput(void) {
         g_ButtonCombo[COMBO_TETRA_SPIRIT].buttonsCorrect = 0;
         break;
     case 2:
-        // After holding UP, must let go for at least a frame to move to step 3
+        // After holding UP, you must let go for one frame to move to step 3
         if (directionsPressed != PAD_UP) {
             g_ButtonCombo[COMBO_TETRA_SPIRIT].buttonsCorrect++;
             g_ButtonCombo[COMBO_TETRA_SPIRIT].timer = 32;
