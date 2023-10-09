@@ -283,7 +283,7 @@ typedef enum {
     COMBO_UNK11,
     COMBO_UNK12,
     COMBO_UNK13,
-    COMBO_UNK14,
+    COMBO_SUMMON_SPIRIT,
     COMBO_DARK_METAMORPH,
 } ButtonComboIdx;
 
@@ -604,6 +604,7 @@ extern s32 D_80137FBC;
 extern s16 g_WasFacingLeft;  // for QCF to tell what's "forward"
 extern s16 g_WasFacingLeft2; // for BF to tell what's "forward"
 extern s32 g_WasFacingLeft3; // for dark metamorphosis "" ""
+extern s32 g_WasFacingLeft4; // for summon spirit "" ""
 extern s32 D_80137FDC;
 extern s32 D_80137FE0;
 extern s32 D_80137FE4;
@@ -874,7 +875,7 @@ s32 func_801104D0();
 bool CheckQuarterCircleForwardInput();
 bool CheckBackForwardInput();
 bool CheckDarkMetamorphosisInput();
-s32 func_80110BC8();
+bool CheckSummonSpiritInput();
 void func_8010DBFC(s32*, s32*);
 s32 func_80110DF8();
 s32 func_80111018();
