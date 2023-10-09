@@ -454,7 +454,7 @@ bool CheckTetraSpiritInput(void) {
         g_ButtonCombo[COMBO_TETRA_SPIRIT].buttonsCorrect = 0;
         break;
     case 2:
-        // After holding UP, you must let go for at least one frame to move to step 3
+        // After holding UP, must let go for at least a frame to move to step 3
         if (directionsPressed != PAD_UP) {
             g_ButtonCombo[COMBO_TETRA_SPIRIT].buttonsCorrect++;
             g_ButtonCombo[COMBO_TETRA_SPIRIT].timer = 32;
