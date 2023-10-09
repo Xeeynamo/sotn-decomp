@@ -382,6 +382,7 @@ bool func_800EB720(void) {
 
 void func_800EB758(
     s16 pivotX, s16 pivotY, Entity* e, u16 flags, POLY_GT4* p, u8 flipX) {
+    const int H_CENTER = FLT(STAGE_WIDTH / 2);
     s16 px, py;
     s16 dx, dy;
     s32 rot;
@@ -421,19 +422,19 @@ void func_800EB758(
 
         dx = p->x0 - px;
         dy = p->y0 - py;
-        distance = SquareRoot12((dx * dx + dy * dy) * 4096);
+        distance = SquareRoot12((dx * dx + dy * dy) * FLT(1.0));
         angle = ratan2(dy, dx) + rot;
-        rx0 = ((rcos(angle) >> 4) * distance + 0x80000) >> 0x14;
-        ry0 = ((rsin(angle) >> 4) * distance + 0x80000) >> 0x14;
+        rx0 = ((rcos(angle) >> 4) * distance + H_CENTER) >> 0x14;
+        ry0 = ((rsin(angle) >> 4) * distance + H_CENTER) >> 0x14;
         p->x0 = rx0 + px;
         p->y0 = ry0 + py;
 
         dx = p->x1 - px;
         dy = p->y1 - py;
-        distance = SquareRoot12((dx * dx + dy * dy) * 4096);
+        distance = SquareRoot12((dx * dx + dy * dy) * FLT(1.0));
         angle = ratan2(dy, dx) + rot;
-        rx1 = ((rcos(angle) >> 4) * distance + 0x80000) >> 0x14;
-        ry1 = ((rsin(angle) >> 4) * distance + 0x80000) >> 0x14;
+        rx1 = ((rcos(angle) >> 4) * distance + H_CENTER) >> 0x14;
+        ry1 = ((rsin(angle) >> 4) * distance + H_CENTER) >> 0x14;
         p->x1 = rx1 + px;
         p->y1 = ry1 + py;
 
@@ -441,8 +442,8 @@ void func_800EB758(
         dy = p->y2 - py;
         distance = SquareRoot12((dx * dx + dy * dy) * 4096);
         angle = ratan2(dy, dx) + rot;
-        rx2 = ((rcos(angle) >> 4) * distance + 0x80000) >> 0x14;
-        ry2 = ((rsin(angle) >> 4) * distance + 0x80000) >> 0x14;
+        rx2 = ((rcos(angle) >> 4) * distance + H_CENTER) >> 0x14;
+        ry2 = ((rsin(angle) >> 4) * distance + H_CENTER) >> 0x14;
         p->x2 = rx2 + px;
         p->y2 = ry2 + py;
 
@@ -450,8 +451,8 @@ void func_800EB758(
         dy = p->y3 - py;
         distance = SquareRoot12((dx * dx + dy * dy) * 4096);
         angle = ratan2(dy, dx) + rot;
-        rx3 = ((rcos(angle) >> 4) * distance + 0x80000) >> 0x14;
-        ry3 = ((rsin(angle) >> 4) * distance + 0x80000) >> 0x14;
+        rx3 = ((rcos(angle) >> 4) * distance + H_CENTER) >> 0x14;
+        ry3 = ((rsin(angle) >> 4) * distance + H_CENTER) >> 0x14;
         p->x3 = rx3 + px;
         p->y3 = ry3 + py;
     }

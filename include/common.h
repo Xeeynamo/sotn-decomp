@@ -41,4 +41,8 @@ int sprintf(char* dst, const char* fmt, ...);
 #define FIX(x) ((s32)((x)*65536.0))
 #define FIX_TO_I(x) ((s32)((x) >> 16))
 
+// PSX SDK libraries do not use float. Instead they use a fix-point number
+// where 4096 is equal to 1.0.
+#define FLT(x) ((s32)((x)*4096.0))
+
 #endif

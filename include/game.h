@@ -114,6 +114,9 @@ typedef struct Primitive {
 #define OTSIZE 0x200
 #define MAXSPRT16 0x280
 
+// Width in pixel of how wide is the horizontal camera during normal game play
+#define STAGE_WIDTH 256
+
 #define BUTTON_COUNT 8
 #define PAD_COUNT 2
 #define PAD_L2 0x0001
