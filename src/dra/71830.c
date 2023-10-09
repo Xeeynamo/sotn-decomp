@@ -23,7 +23,7 @@ void func_80111830(void) {
             var_v0 = CheckTetraSpiritInput();
             break;
         case 6:
-            var_v0 = func_801112AC();
+            var_v0 = CheckSoulStealInput();
             break;
         case 9:
             var_v0 = func_8011151C();

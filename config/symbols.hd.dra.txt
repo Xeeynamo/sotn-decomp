@@ -802,6 +802,7 @@ g_WasFacingLeft3 = 0x80137B98;
 g_WasFacingLeft4 = 0x80137B9C;
 g_WasFacingLeft5 = 0x80137BA0;
 g_WasFacingLeft6 = 0x80137BA4;
+g_WasFacingLeft7 = 0x80137BA8;
 D_80137FE0 = 0x80137BAC;
 D_80137FE4 = 0x80137BB0;
 D_80137FE8 = 0x80137BB4;
