@@ -860,11 +860,11 @@ void DrawJosephsCloakMenu(void) {
 #if defined(VERSION_US)
     s32 x_Start = 0xB0;
     s32 number_spacing = 0x28;
-    const xRGBVal = 0xF8;
+    const s32 xRGBVal = 0xF8;
 #elif defined(VERSION_HD)
     s32 x_Start = 0x80;
     const s32 number_spacing = 0;
-    const xRGBVal = 0xA0;
+    const s32 xRGBVal = 0xA0;
 #endif
     i = 0;
     exteriorInterior = &c_strExterior;

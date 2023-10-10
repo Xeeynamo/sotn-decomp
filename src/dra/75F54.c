@@ -1985,7 +1985,37 @@ INCLUDE_ASM("dra/nonmatchings/75F54", func_80121F58);
 // spawns mist (player transform)
 INCLUDE_ASM("dra/nonmatchings/75F54", EntityMist);
 
-INCLUDE_ASM("dra/nonmatchings/75F54", func_80123788);
+// Appears as D_800AD0C4[48].
+void UnknownEntId48(Entity* self) {
+    s32 params;
+
+    params = (u8)self->params;
+    if (!(g_Player.unk0C & 2)) {
+        DestroyEntity(self);
+        return;
+    }
+    if (!IsRelicActive(RELIC_GAS_CLOUD)) {
+        self->hitboxState = 0;
+    } else {
+        self->hitboxState = 2;
+    }
+    if (self->step == 0) {
+        func_8011A328(self, 0xC);
+        self->enemyId = 4;
+        self->hitboxHeight = 8;
+        self->hitboxWidth = 8;
+        self->flags = 0x04020000;
+        self->step++;
+    }
+    if (params == 0) {
+        self->posX.i.hi = (PLAYER.posX.i.hi + g_Entities[16].posX.i.hi) / 2;
+        self->posY.i.hi = (PLAYER.posY.i.hi + g_Entities[16].posY.i.hi) / 2;
+        self->hitboxWidth = self->hitboxHeight = 0x1C;
+    } else {
+        self->posX.i.hi = D_80138096[params - 1].posX;
+        self->posY.i.hi = D_80138096[params - 1].posY;
+    }
+}
 
 // Appears as D_800AD0C4[49].
 void UnknownEntId49(Entity* self) {
