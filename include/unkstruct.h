@@ -281,12 +281,6 @@ typedef struct Unkstruct_800F9F40 {
 } Unkstruct_800F9F40;
 
 typedef struct {
-    s32 posX;
-    s32 posY;
-    byte pad[12];
-} unkStruct80138096; // Size = 0x14
-
-typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ const char* desc;
     /* 0x08 */ s16 unk08;
