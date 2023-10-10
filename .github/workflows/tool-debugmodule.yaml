@@ -1,0 +1,31 @@
+name: Build Debug Module tool
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'config/**.txt'
+      - 'include/**'
+      - 'tools/sotn-debugmodule/**'
+  pull_request:
+    paths:
+      - 'config/**.txt'
+      - 'include/**'
+      - 'tools/sotn-debugmodule/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install requirements
+        run: sudo apt-get install gcc-mipsel-linux-gnu
+      - name: Clone repo
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+          submodules: false
+      - name: build
+        working-directory: tools/sotn-debugmodule
+        run: make

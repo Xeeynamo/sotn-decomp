@@ -1,4 +1,4 @@
-name: Update progress
+name: Build PSX version
 
 on:
   push:
@@ -83,9 +83,6 @@ jobs:
         run: make -j build
       - name: Check if they match
         run: make check
-      - name: Check debug module
-        if: matrix.version == 'us'
-        run: make disk_debug
       - name: Analyze calls dry run
         if: matrix.version == 'us'
         run: |
