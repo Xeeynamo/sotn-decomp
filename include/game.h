@@ -695,16 +695,33 @@ typedef enum {
     NUM_SPELLS,
 } SpellIds;
 
+// Need two familiar enums. One has a zero entry, one does not.
+// This one is used in places that need to access the familiar
+// stats array...
 typedef enum {
-    FAMILIAR_BAT,
-    FAMILIAR_GHOST,
-    FAMILIAR_FAERIE,
-    FAMILIAR_DEMON,
-    FAMILIAR_SWORD,
-    FAMILIAR_YOUSEI,     // JP only
-    FAMILIAR_NOSE_DEMON, // JP only
+    FAM_STATS_BAT,
+    FAM_STATS_GHOST,
+    FAM_STATS_FAERIE,
+    FAM_STATS_DEMON,
+    FAM_STATS_SWORD,
+    FAM_STATS_YOUSEI,     // JP only
+    FAM_STATS_NOSE_DEMON, // JP only
     NUM_FAMILIARS
-} FamiliarIds;
+} FamiliarStatsIds;
+
+// ...and this one is used to designate the active familiar, where
+// 0 means no familiar is active, and the rest are off-by-one from
+// the previous enum set. Hacky, but works.
+typedef enum {
+    FAM_ACTIVE_NONE,
+    FAM_ACTIVE_BAT,
+    FAM_ACTIVE_GHOST,
+    FAM_ACTIVE_FAERIE,
+    FAM_ACTIVE_DEMON,
+    FAM_ACTIVE_SWORD,
+    FAM_ACTIVE_YOUSEI,     // JP only
+    FAM_ACTIVE_NOSE_DEMON, // JP only
+} FamiliarActiveIds;
 
 typedef struct {
     /* 80097964 */ u8 relics[30];

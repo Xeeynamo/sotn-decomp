@@ -178,7 +178,7 @@ s32 CalcAttack(s32 equipId, s32 otherEquipId) {
         totalAttack += 5;
     }
     if (equipId == ITEM_SWORD_FAMILIAR) {
-        totalAttack += g_Status.statsFamiliars[FAMILIAR_SWORD].level;
+        totalAttack += g_Status.statsFamiliars[FAM_STATS_SWORD].level;
     }
     if (D_8013982C != 0) {
         totalAttack += 20;
