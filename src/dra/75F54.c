@@ -1968,15 +1968,14 @@ INCLUDE_ASM("dra/nonmatchings/75F54", EntityPlayerDissolves);
 // level up animation
 INCLUDE_ASM("dra/nonmatchings/75F54", EntityLevelUpAnimation);
 
-extern Unkstruct_80138094 D_80138094[];
 
 void func_80121F14(s32 arg0, s32 arg1) {
     Unkstruct_80138094* ptr = D_80138094;
     s32 i;
 
     for (i = 0; i < 16; i++, ptr++) {
-        ptr->unk0 = arg0 + ptr->unk0;
-        ptr->unk4 = arg1 + ptr->unk4;
+        ptr->posX.val = arg0 + ptr->posX.val;
+        ptr->posY.val = arg1 + ptr->posY.val;
     }
 }
 
@@ -2012,8 +2011,8 @@ void UnknownEntId48(Entity* self) {
         self->posY.i.hi = (PLAYER.posY.i.hi + g_Entities[16].posY.i.hi) / 2;
         self->hitboxWidth = self->hitboxHeight = 0x1C;
     } else {
-        self->posX.i.hi = D_80138096[params - 1].posX;
-        self->posY.i.hi = D_80138096[params - 1].posY;
+        self->posX.i.hi = D_80138094[params - 1].posX.i.hi;
+        self->posY.i.hi = D_80138094[params - 1].posY.i.hi;
     }
 }
 
