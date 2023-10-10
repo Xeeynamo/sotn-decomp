@@ -6,6 +6,8 @@ import os
 import subprocess
 import tempfile
 from contextlib import redirect_stdout
+from pathlib import Path
+import re
 from enum import Enum
 import m2ctx
 import m2c.m2c.main as m2c
@@ -212,6 +214,57 @@ def show_asm_differ_command(func: NonMatchingFunc):
     print(f"python3 {tool_path} -mwo --overlay {overlay_name} {func.name}")
 
 
+def resolve_jumptables(func: NonMatchingFunc):
+    filepath = func.asm_path
+    with open(filepath, "r+") as asm_file:
+        lines = asm_file.readlines()
+        for i, line in enumerate(lines):
+            if "jr" in line and "$ra" not in line:
+                print(f"\nJump table call at line {i}")
+                jumpreg = line.split()[-1]
+                if "nop" not in lines[i - 1]:
+                    break
+                print("good nop")
+                # Build a regex to search for the standard jump table setup
+                lw_regex = "lw\s*\\" + jumpreg + ", %lo\(([^)]*)\)\(\$at\)"
+                lwcheck = re.search(lw_regex, lines[i - 2])
+                if lwcheck == None:
+                    break
+                jumptable_name = lwcheck.group(1)
+                print(f"Jumptable: {jumptable_name}")
+                addu_regex = "addu\s*\$at, \$at, \\" + jumpreg
+                adducheck = re.search(addu_regex, lines[i - 3])
+                if adducheck == None:
+                    print("Couldn't get the addu")
+                    print(lines[i - 3])
+                    break
+                print("Good addu")
+                lui_regex = "lui\s*\$at, %hi\(" + jumptable_name + "\)"
+                luicheck = re.search(lui_regex, lines[i - 4])
+                if luicheck == None:
+                    break
+                print("Good lui")
+                # Confirmed the jump table is as expected. Now find it.
+                # Look in all rodata and data files.
+                paths = list(Path("asm").rglob("*.rodata.s"))
+                paths += list(Path("asm").rglob("*.data.s"))
+                for rodata_file in paths:
+                    with open(rodata_file) as f:
+                        rodata = f.read()
+                        if jumptable_name in rodata:
+                            print("Found jump table in rodata")
+                            all_rodata_lines = rodata.split("\n")
+                            outlines = [".section .rodata"]
+                            for line in all_rodata_lines:
+                                if jumptable_name in line or len(outlines) > 1:
+                                    outlines.append(line)
+                                    if len(line) == 0:
+                                        print("Outputting")
+                                        print(outlines)
+                                        asm_file.write("\n".join(outlines))
+                                        break
+
+
 def decompile(func_name: str, number_occurrence: int = None, force: bool = False):
     funcs = get_nonmatching_functions(asm_dir, func_name)
     if len(funcs) == 0:
@@ -237,6 +290,7 @@ def decompile(func_name: str, number_occurrence: int = None, force: bool = False
     # print(f"text: {func.text_offset}")
     # print(f"asm: {func.asm_path}")
     # print(f"src: {func.src_path}")
+    resolve_jumptables(func)
 
     ctx = get_c_context(func.src_path)
     dec = run_m2c(func, ctx)
