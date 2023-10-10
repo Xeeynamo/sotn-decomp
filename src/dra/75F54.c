@@ -1949,15 +1949,13 @@ INCLUDE_ASM("dra/nonmatchings/75F54", EntityPlayerDissolves);
 // level up animation
 INCLUDE_ASM("dra/nonmatchings/75F54", EntityLevelUpAnimation);
 
-extern Unkstruct_80138094 D_80138094[];
-
 void func_80121F14(s32 arg0, s32 arg1) {
     Unkstruct_80138094* ptr = D_80138094;
     s32 i;
 
     for (i = 0; i < 16; i++, ptr++) {
-        ptr->unk0 = arg0 + ptr->unk0;
-        ptr->unk4 = arg1 + ptr->unk4;
+        ptr->posX.val = arg0 + ptr->posX.val;
+        ptr->posY.val = arg1 + ptr->posY.val;
     }
 }
 
@@ -1966,7 +1964,37 @@ INCLUDE_ASM("dra/nonmatchings/75F54", func_80121F58);
 // spawns mist (player transform)
 INCLUDE_ASM("dra/nonmatchings/75F54", EntityMist);
 
-INCLUDE_ASM("dra/nonmatchings/75F54", func_80123788);
+// Appears as D_800AD0C4[48].
+void UnknownEntId48(Entity* self) {
+    s32 params;
+
+    params = (u8)self->params;
+    if (!(g_Player.unk0C & 2)) {
+        DestroyEntity(self);
+        return;
+    }
+    if (!IsRelicActive(RELIC_GAS_CLOUD)) {
+        self->hitboxState = 0;
+    } else {
+        self->hitboxState = 2;
+    }
+    if (self->step == 0) {
+        func_8011A328(self, 0xC);
+        self->enemyId = 4;
+        self->hitboxHeight = 8;
+        self->hitboxWidth = 8;
+        self->flags = FLAG_UNK_04000000 | FLAG_UNK_20000;
+        self->step++;
+    }
+    if (params == 0) {
+        self->posX.i.hi = (PLAYER.posX.i.hi + g_Entities[16].posX.i.hi) / 2;
+        self->posY.i.hi = (PLAYER.posY.i.hi + g_Entities[16].posY.i.hi) / 2;
+        self->hitboxWidth = self->hitboxHeight = 0x1C;
+    } else {
+        self->posX.i.hi = D_80138094[params - 1].posX.i.hi;
+        self->posY.i.hi = D_80138094[params - 1].posY.i.hi;
+    }
+}
 
 // Appears as D_800AD0C4[49].
 void UnknownEntId49(Entity* self) {

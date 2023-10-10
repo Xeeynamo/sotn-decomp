@@ -67,8 +67,8 @@ typedef struct {
 } Unkstruct_800BF554; // size = 0x7
 
 typedef struct {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ s32 unk4;
+    /* 0x00 */ f32 posX;
+    /* 0x04 */ f32 posY;
     /* 0x08 */ char pad8[0xC];
 } Unkstruct_80138094; // size = 0x14
 
