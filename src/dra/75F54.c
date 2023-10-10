@@ -1968,7 +1968,6 @@ INCLUDE_ASM("dra/nonmatchings/75F54", EntityPlayerDissolves);
 // level up animation
 INCLUDE_ASM("dra/nonmatchings/75F54", EntityLevelUpAnimation);
 
-
 void func_80121F14(s32 arg0, s32 arg1) {
     Unkstruct_80138094* ptr = D_80138094;
     s32 i;
