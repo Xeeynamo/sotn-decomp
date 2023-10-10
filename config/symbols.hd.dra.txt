@@ -266,7 +266,6 @@ func_800EB6B4 = 0x800EBD6C;
 func_800EB720 = 0x800EBDD8;
 func_800EB758 = 0x800EBE10;
 RenderEntities = 0x800EC264;
-func_800ECBF8 = 0x800ED27C;
 HideAllBackgroundLayers = 0x800ED4B0;
 RenderTilemap = 0x800ED4DC;
 LoadRoomLayer = 0x800EE078;

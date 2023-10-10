@@ -476,32 +476,7 @@ void ResetEntityArray(void) {
 
 INCLUDE_ASM("dra/nonmatchings/4A538", RenderEntities);
 
-// The loop at the end is weird, the rest is matching
-#ifndef NON_MATCHING
-INCLUDE_ASM("dra/nonmatchings/4A538", func_800ECBF8);
-#else
-typedef struct {
-    s16 unk0, unk2;
-} Unkstruct_800ECBF8_2; /* size = 0x4 */
-
-extern POLY_GT4 D_8004077C[0x300]; // TODO D_8003CB08.polyGT4
-extern POLY_G4 D_8004A37C[0x100];  // TODO D_8003CB08.polyG4
-extern POLY_GT3 D_8004C77C[0x30];  // TODO D_8003CB08.polyGT3
-extern LINE_G2 D_8004CEFC[0x100];  // TODO D_8003CB08.lineG2
-extern SPRT_16 D_8004E2FC[0x280];  // TODO D_8003CB08.sprite16
-extern TILE D_80050AFC[0x100];     // TODO D_8003CB08.tiles
-extern SPRT D_80051AFC[0x200];     // TODO D_8003CB08.sprite
-extern POLY_GT4 D_80057F70[0x300]; // TODO D_800542FC.polyGT4
-extern POLY_G4 D_80061B70[0x100];  // TODO D_80542FC8.polyG4
-extern POLY_GT3 D_80063F70[0x30];  // TODO D_800542FC.polyGT3
-extern LINE_G2 D_800646F0[0x100];  // TODO D_80542FC8.lineG2
-extern SPRT_16 D_80065AF0[0x280];  // TODO D_8003542FCsprite16
-extern TILE D_800682F0[0x100];     // TODO D_8542FC08.tiles
-extern SPRT D_800692F0[0x200];     // TODO D_80542FC8.sprite
-extern Unkstruct_800ECBF8_1 D_80097D1C[0x10];
-extern Unkstruct_800ECBF8_2 D_800A21B8[0x10];
-
-void func_800ECBF8(void) {
+void InitRenderer(void) {
     int i;
     POLY_GT4 *a1, *a2;
     SPRT_16 *b1, *b2;
@@ -510,14 +485,7 @@ void func_800ECBF8(void) {
     POLY_G4 *e1, *e2;
     SPRT *f1, *f2;
     POLY_GT3 *g1, *g2;
-
-    s16* new_var4;
-    int new_var5;
-    int new_var2;
-    Unkstruct_800ECBF8_1* var_v1;
-    s16* new_var;
-    s16* var_a2;
-    s16* var_a0;
+    PlayerDraw* plDraw;
 
     a1 = g_GpuBuffers[0].polyGT4;
     a2 = g_GpuBuffers[1].polyGT4;
@@ -568,25 +536,13 @@ void func_800ECBF8(void) {
         SetPolyGT3(g2);
     }
 
-    var_v1 = &D_80097D1C;
-    i = 0;
-    new_var5 = -2;
-    new_var4 = &D_800A21B8->unk0;
-    var_a0 = &D_800A21B8->unk0 + 1;
-    var_a2 = new_var4;
-    for (; i < 16;) {
-        var_v1->unk00 = *var_a2;
-        var_v1->unk02 = (*var_a0) & 0x1FF;
-        var_v1->unk23 = ((*var_a0) >> 8) & new_var5;
-        var_v1->unk1F = (var_v1->unk00 >> 6) - (-0x10);
-        var_a2 += 2;
-        i++;
-        var_a0 += 2;
-        var_v1++;
+    for (plDraw = g_PlayerDraw, i = 0; i < 16; i++, plDraw++) {
+        plDraw->rect0.x = D_800A21B8[i * 2 + 0];
+        plDraw->rect0.y = D_800A21B8[i * 2 + 1] & 0x1FF;
+        plDraw->flipX = (D_800A21B8[i * 2 + 1] >> 8) & 0xFE;
+        plDraw->tpage = (plDraw->rect0.x >> 6) + 0x10;
     }
 }
-
-#endif
 
 void HideAllBackgroundLayers(void) {
     s32 i;

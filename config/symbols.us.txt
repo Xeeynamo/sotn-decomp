@@ -987,6 +987,7 @@ g_Status_D_80097C48 = 0x80097C48;
 g_Status_D_80097C4C = 0x80097C4C;
 g_Status_D_80097C74 = 0x80097C74;
 _ss_score = 0x80097C9C;
+g_PlayerDraw = 0x80097D1C;
 _SsMarkCallback = 0x80097F9C;
 _snd_seq_s_max = 0x8009879C;
 _snd_seq_t_max = 0x800987A4;
