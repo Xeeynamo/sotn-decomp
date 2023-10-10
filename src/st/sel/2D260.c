@@ -87,7 +87,7 @@ void func_801AD490(void) {
     DrawString16x16("your", 256, 48, 1);
     DrawString16x16("destiny", 232, 64, 1);
 
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < NUM_MENU_OPTIONS; i++) {
         POLY_GT4* poly = &g_PrimBuf[D_801BAF18[i + 1][0]];
         if (i == D_801D6B0C) {
             poly->clut = 0x203;
@@ -320,16 +320,19 @@ void func_801AE6D0(void) {
     func_801B2BD4(percentageDecimal, 248, 112, 1);
 }
 
+extern s32 g_MenuHeadGfxU[];
+extern s32 g_MenuHeadGfxV[];
 void func_801AE9A8(void) {
     s32 i;
 
     MenuHideAllGfx();
     func_801ACBE4(0, 0);
 
-    for (i = 1; i < 5; i++) {
+    for (i = 1; i < NUM_MENU_OPTIONS; i++) {
         func_801ACBE4(i + 1, 4);
-        func_801B26A0(&g_PrimBuf[D_801BAF18[i + 1][0]], (i * 64) - 32,
-                      (i * 5) * 8, 127, 31, D_80180040[i], D_80180054[i]);
+        func_801B26A0(
+            &g_PrimBuf[D_801BAF18[i + 1][0]], (i * 64) - 32, (i * 5) * 8, 127,
+            31, g_MenuHeadGfxU[i], g_MenuHeadGfxV[i]);
     }
 
     DrawNavigationTips(0);

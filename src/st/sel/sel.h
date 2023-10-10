@@ -7,6 +7,9 @@
 #define DISP_STAGE_W 256
 #define DISP_STAGE_H DISP_H
 
+#define NUM_MENU_OPTIONS 5
+#define NUM_MENU_UNK_084 8
+
 typedef enum {
     MAIN_MENU_CURSOR_INVALID = -1,
     MAIN_MENU_CURSOR_FILE_SELECT,
@@ -99,8 +102,6 @@ extern u8 g_InputSaveName[9];
 
 extern s32 D_80180040[];
 extern s32 D_80180054[];
-extern u8* D_80180128[];
-extern u8* D_8018012C[];
 extern u8* D_801803A8;
 extern u8* D_801803AC;
 extern u8* D_801803B0;

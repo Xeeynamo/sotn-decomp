@@ -26,6 +26,120 @@ Overlay g_StageOverlay = {
     /* 0x3C */ func_801B17C8,
 };
 
+// The five possible header options that are displayed on the top-left for each
+// sub-menu in the main menu. The same graphics is also re-used for the main
+// menu selectable options.
+s32 g_MenuHeadGfxU[NUM_MENU_OPTIONS] = {0, 128, 0, 0, 0};
+s32 g_MenuHeadGfxV[NUM_MENU_OPTIONS] = {192, 144, 224, 128, 160};
+
+// Unknown. Named 084 due to the name of the function that uses it.
+s32 g_MenuUnk084X[NUM_MENU_UNK_084] = {
+    16, 16, 24, 61, 104, 128, 24, 152,
+};
+s32 g_MenuUnk084Y[NUM_MENU_UNK_084] = {
+    8, 24, 56, 56, 56, 56, 64, 64,
+};
+s32 g_MenuUnk084U0[NUM_MENU_UNK_084] = {
+    128, 168, 224, 232, 224, 224, 232, 240,
+};
+s32 g_MenuUnk084V0[NUM_MENU_UNK_084] = {
+    240, 240, 128, 128, 136, 136, 136, 136,
+};
+s32 g_MenuUnk084U1[NUM_MENU_UNK_084] = {
+    40, 40, 8, 24, 8, 8, 8, 8,
+};
+s32 g_MenuUnk084V1[NUM_MENU_UNK_084] = {
+    16, 16, 8, 8, 8, 8, 8, 8,
+};
+
+typedef struct {
+    const char* line1;
+    const char* line2;
+} StageName;
+
+StageName D_80180128[] = {
+    {_S("Marble"), _S("Gallery")},
+    {_S("Outer"), _S("Wall")},
+    {_S("Long"), _S("Library")},
+    {_S("Catacombs"), _S("")},
+    {_S("Olrox's"), _S("Quarters")},
+    {_S("Abandoned"), _S("Mine")},
+    {_S("Royal"), _S("Chapel")},
+    {_S("Entrance"), _S("")},
+    {_S(""), _S("")},
+    {_S("Underground"), _S("Caverns")},
+    {_S("Colosseum"), _S("")},
+    {_S("Castle"), _S("Keep")},
+    {_S("Alchemy"), _S("Laboratory")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S("Black Marble"), _S("Gallery")},
+    {_S("Reverse"), _S("Outer Wall")},
+    {_S("Forbidden"), _S("Library")},
+    {_S("Floating"), _S("Catacombs")},
+    {_S("Death Wing's"), _S("Lair")},
+    {_S("Cave"), _S("")},
+    {_S("Anti-Chapel"), _S("")},
+    {_S("Reverse"), _S("Entrance")},
+    {_S(""), _S("")},
+    {_S("Reverce"), _S("Caverns")},
+    {_S("Reverce"), _S("Colosseum")},
+    {_S("Reverce"), _S("Keep")},
+    {_S("Necromancy"), _S("Laboratory")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S("Entrance"), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+    {_S(""), _S("")},
+};
+
 void SetupFileChoose(void) {
     D_801D6B0C = 1;
     g_InputCursorPos = 0;
@@ -35,24 +149,17 @@ void SetupFileChoose(void) {
     g_MemCardSelectorY = 0;
 }
 
-// These arrays are weird. They do not store s32 but they are used as such.
-extern s32 D_80180068[];
-extern s32 D_80180088[];
-extern s32 D_801800A8[];
-extern s32 D_801800C8[];
-extern s32 D_801800E8[];
-extern s32 D_80180108[];
-
 void func_801AC084(s32 arg0, s32 ypos) {
     Primitive* prim = &g_PrimBuf[D_801BAF18[arg0][0]];
     s32 i;
-    for (i = 0; i < 8; i++) {
-        prim->x0 = D_80180068[i] + 0x68;
-        prim->y0 = D_80180088[i] + 0x58 + ypos;
-        prim->u0 = D_801800A8[i];
-        prim->v0 = D_801800C8[i];
-        prim->u1 = D_801800E8[i];
-        prim->v1 = D_80180108[i];
+
+    for (i = 0; i < NUM_MENU_UNK_084; i++) {
+        prim->x0 = g_MenuUnk084X[i] + 104;
+        prim->y0 = g_MenuUnk084Y[i] + 88 + ypos;
+        prim->u0 = g_MenuUnk084U0[i];
+        prim->v0 = g_MenuUnk084V0[i];
+        prim->u1 = g_MenuUnk084U1[i];
+        prim->v1 = g_MenuUnk084V1[i];
         prim->tpage = 0xC;
         prim->clut = 0x200;
         prim->priority = 0x11;
@@ -80,10 +187,11 @@ void InitMainMenuGraphics(void) {
     prim->priority = 0x10;
     prim->blendMode = 0;
 
-    for (; i < 5; i++) {
+    for (; i < NUM_MENU_OPTIONS; i++) {
         D_801BAF18[i + 1][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
         prim = &g_PrimBuf[D_801BAF18[i + 1][0]];
-        func_801B26A0(prim, x, y, 0x7F, 0x1F, D_80180040[i], D_80180054[i]);
+        func_801B26A0(
+            prim, x, y, 127, 31, g_MenuHeadGfxU[i], g_MenuHeadGfxV[i]);
         func_801B1D88(prim);
         prim->tpage = 0xC;
         prim->clut = 0x200;
@@ -434,9 +542,9 @@ void PrintFileSelectPlaceName(s32 port, s32 slot, s32 y) {
     const s32 tge = 1;
     volatile u32 pad; // !FAKE:
 
-    s32 stage = g_SaveSummary[port].stage[slot] * 2;
-    DrawImages8x8(D_80180128[stage], x, y + row1y, tge);
-    DrawImages8x8(D_8018012C[stage], x, y + row2y, tge);
+    s32 stage = g_SaveSummary[port].stage[slot];
+    DrawImages8x8(D_80180128[stage].line1, x, y + row1y, tge);
+    DrawImages8x8(D_80180128[stage].line2, x, y + row2y, tge);
 }
 
 void func_801AD1D0(void) {

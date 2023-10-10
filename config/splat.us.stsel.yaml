@@ -29,12 +29,14 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, 2C048]
-      - [0x40, data]
+      - [0x3A8, data]
       - [0x22E4, .data, save_mgr]
       - [0x2584, data]
       - [0xD5D4, .data, D5D4]
       - [0xDBD4, data]
       - [0x176C0, rodata]
+      - [0x27438, .rodata, 2C048]
+      - [0x275A0, rodata]
       - [0x276C0, .rodata, 2D260]
       - [0x276F0, rodata]
       - [0x277C8, .rodata, 2EED8] # Update function

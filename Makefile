@@ -19,7 +19,7 @@ PSXCC_FLAGS		:= -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff
 CC_FLAGS        += -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g
 CPP_FLAGS       += -Iinclude -undef -Wall -fno-builtin
 CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DHACKS -DUSE_INCLUDE_ASM
-CPP_FLAGS       += -D_internal_version_$(VERSION)
+CPP_FLAGS       += -D_internal_version_$(VERSION) -DSOTN_STR
 LD_FLAGS		:= -nostdlib --no-check-sections
 
 # Directories
@@ -56,6 +56,7 @@ M2C_DIR         := $(TOOLS_DIR)/m2c
 M2C_APP         := $(M2C_DIR)/m2c.py
 M2C             := $(PYTHON) $(M2C_APP)
 M2C_ARGS        := -P 4
+SOTNSTR			:= $(PYTHON) $(TOOLS_DIR)/sotn-str.py process
 MASPSX_DIR      := $(TOOLS_DIR)/maspsx
 MASPSX_APP      := $(MASPSX_DIR)/maspsx.py
 MASPSX          := $(PYTHON) $(MASPSX_APP) --no-macro-inc --expand-div
@@ -284,9 +285,9 @@ $(BUILD_DIR)/weapon/w1_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/header.c.o $(BUILD_
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).weapon.txt \
 		$^
 $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o: $(SRC_DIR)/weapon/w_%.c $(MASPSX_APP) $(CC1PSX)
-	$(CPP) $(CPP_FLAGS) -lang-c -DW_$* $< | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
+	$(CPP) $(CPP_FLAGS) -lang-c -DW_$* $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 $(BUILD_DIR)/$(SRC_DIR)/weapon/w_029.c.o: $(SRC_DIR)/weapon/w_029.c $(MASPSX_APP) $(CC1PSX)
-	$(CPP) $(CPP_FLAGS) -lang-c -DW_029 $< | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) -O1 | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
+	$(CPP) $(CPP_FLAGS) -lang-c -DW_029 $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) -O1 | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 $(BUILD_DIR)/weapon/f0_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o
 	$(LD) -r -b binary -o $@ $<
 $(BUILD_DIR)/weapon/f1_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o
@@ -406,8 +407,7 @@ $(SOTNDISK): $(GO)
 $(BUILD_DIR)/%.s.o: %.s
 	$(AS) $(AS_FLAGS) -o $@ $<
 $(BUILD_DIR)/%.c.o: %.c $(MASPSX_APP) $(CC1PSX)
-#	$(CROSS)gcc -c -nostartfiles -nodefaultlibs -ggdb -gdwarf-4 $(CPP_FLAGS) $(CC_FLAGS) $(LD_FLAGS) $< -o $@
-	$(CPP) $(CPP_FLAGS) -lang-c $< | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
+	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 
 # Handles assets
 $(BUILD_DIR)/$(ASSETS_DIR)/%.layoutobj.json.o: $(ASSETS_DIR)/%.layoutobj.json
