@@ -701,14 +701,14 @@ typedef enum {
 // 0 means no familiar is active, and the rest are off-by-one from
 // the previous enum set. Hacky, but works.
 typedef enum {
-    NO_FAMILIAR_ACTIVE,
-    BAT_FAMILIAR_ACTIVE,
-    GHOST_FAMILIAR_ACTIVE,
-    FAERIE_FAMILIAR_ACTIVE,
-    DEMON_FAMILIAR_ACTIVE,
-    SWORD_FAMILIAR_ACTIVE,
-    YOUSEI_FAMILIAR_ACTIVE,     // JP only
-    NOSE_DEMON_FAMILIAR_ACTIVE, // JP only
+    FAM_ACTIVE_NONE,
+    FAM_ACTIVE_BAT,
+    FAM_ACTIVE_GHOST,
+    FAM_ACTIVE_FAERIE,
+    FAM_ACTIVE_DEMON,
+    FAM_ACTIVE_SWORD,
+    FAM_ACTIVE_YOUSEI,     // JP only
+    FAM_ACTIVE_NOSE_DEMON, // JP only
 } FamiliarActiveIds;
 
 typedef struct {
