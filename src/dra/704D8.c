@@ -667,7 +667,7 @@ bool CheckSwordBrothersInput(void) {
 
     // Check if sword familiar is currently active. If not, prevent having
     // buttons correct
-    if (D_8006CBC4 != 5) {
+    if (D_8006CBC4 != SWORD_FAMILIAR_ACTIVE) {
         g_ButtonCombo[COMBO_SWORD_BROTHERS].buttonsCorrect = 0;
     }
 
