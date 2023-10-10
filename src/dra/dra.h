@@ -312,6 +312,7 @@ extern s32 D_800A04F8;
 extern s32 g_UnkMemcardPort[];
 extern u16 g_saveIconPalette[0x10][0x10];
 extern u8* g_saveIconTexture[0x10];
+extern s16 D_800A21B8[0x20];
 extern s32 D_800A2438;
 extern u8 D_800A243C[];
 extern RoomBossTeleport D_800A297C[];

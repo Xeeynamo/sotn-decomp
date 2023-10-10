@@ -3,14 +3,12 @@
 #include "sfx.h"
 
 void func_80115F54(void) {
-    Unkstruct_800ECBF8_1* temp_s0;
+    PlayerDraw* plDraw;
     bool var_s2;
-    u8 var_v0;
-    u8 var_v1;
 
     var_s2 = false;
     PLAYER.drawFlags = FLAG_DRAW_ROTZ;
-    temp_s0 = D_80097D1C;
+    plDraw = g_PlayerDraw;
     if (*D_80097420 == 0xFFF && PLAYER.step_s != 0) {
         SetPlayerStep(Player_Unk17);
         PLAYER.velocityY = 0;
@@ -32,40 +30,23 @@ void func_80115F54(void) {
         func_80118C28(1);
         func_8011AAFC(g_CurrentEntity, 0x59002C, 0);
         func_8011AAFC(g_CurrentEntity, 0x60031, 0);
-        temp_s0->unk25 = 0x80;
-        temp_s0->unk26 = 0x80;
-        temp_s0->unk24 = 0x80;
-        temp_s0->unk21 = 0x80;
-        temp_s0->unk22 = 0x80;
-        temp_s0->unk20 = 0x80;
-        temp_s0->unk1D = 0x80;
-        temp_s0->unk1E = 0x80;
-        temp_s0->unk1C = 0x80;
-        temp_s0->unk19 = 0x80;
-        temp_s0->unk1A = 0x80;
-        temp_s0->unk18 = 0x80;
-        temp_s0->unk1B = 1;
+        plDraw->r3 = plDraw->b3 = plDraw->g3 = 128;
+        plDraw->r2 = plDraw->b2 = plDraw->g2 = 128;
+        plDraw->r1 = plDraw->b1 = plDraw->g1 = 128;
+        plDraw->r0 = plDraw->b0 = plDraw->g0 = 128;
+        plDraw->enableColorBlend = true;
         PLAYER.step_s++;
         break;
     case 1:
-        if (temp_s0->unk19 < 0xF8) {
-            temp_s0->unk19++;
+        if (plDraw->g0 < 0xF8) {
+            plDraw->g0++;
         }
-        if (temp_s0->unk18 >= 9) {
-            temp_s0->unk18--;
+        if (plDraw->r0 >= 9) {
+            plDraw->r0--;
         }
-        var_v1 = temp_s0->unk18;
-        var_v0 = temp_s0->unk19;
-        temp_s0->unk1D = var_v0;
-        temp_s0->unk21 = var_v0;
-        temp_s0->unk25 = var_v0;
-        temp_s0->unk24 = var_v1;
-        temp_s0->unk26 = var_v1;
-        temp_s0->unk20 = var_v1;
-        temp_s0->unk22 = var_v1;
-        temp_s0->unk1C = var_v1;
-        temp_s0->unk1E = var_v1;
-        temp_s0->unk1A = var_v1;
+        plDraw->g3 = plDraw->g2 = plDraw->g1 = plDraw->g0;
+        plDraw->b0 = plDraw->b1 = plDraw->r1 = plDraw->b2 = plDraw->r2 =
+            plDraw->b3 = plDraw->r3 = plDraw->r0;
         PLAYER.velocityY += 0x1000;
         if (PLAYER.velocityY > 0x4000) {
             PLAYER.velocityY = 0x1000;
@@ -2085,8 +2066,10 @@ void func_80123A60(Entity* entity) {
 INCLUDE_ASM("dra/nonmatchings/75F54", func_80123B40);
 
 void func_80123F78(Entity* entity) {
+    PlayerDraw* plDraw = &g_PlayerDraw[13];
+
     if (D_800973FC == 0) {
-        D_80097F3F = 0;
+        plDraw->enableColorBlend = 0;
         DestroyEntity(entity);
         return;
     }
@@ -2107,44 +2090,24 @@ void func_80123F78(Entity* entity) {
         entity->palette = 0x815F;
         entity->zPriority = PLAYER.zPriority - 2;
         entity->facingLeft = PLAYER.facingLeft;
-        do { // TODO: !FAKE
-        } while (0);
-        D_80097F4A = 0x80;
-        D_80097F46 = 0x80;
-        D_80097F42 = 0x80;
-        D_80097F3E = 0x80;
-        D_80097F49 = 0x80;
-        D_80097F45 = 0x80;
-        D_80097F41 = 0x80;
-        D_80097F3D = 0x80;
-        D_80097F48 = 0x80;
-        D_80097F44 = 0x80;
-        D_80097F40 = 0x80;
-        D_80097F3C = 0x80;
-        D_80097F3F = 1;
-        do { // TODO: !FAKE
-        } while (0);
+
+        plDraw->b0 = plDraw->b1 = plDraw->b2 = plDraw->b3 = 128;
+        plDraw->g0 = plDraw->g1 = plDraw->g2 = plDraw->g3 = 128;
+        plDraw->r0 = plDraw->r1 = plDraw->r2 = plDraw->r3 = 128;
+        plDraw->enableColorBlend = true;
         entity->step++;
         break;
 
     case 1:
-        D_80097F4A += 255;
-        if (D_80097F4A < 4) {
-            D_80097F3F = 0;
+        plDraw->b3 += 255;
+        if (plDraw->b3 < 4) {
+            plDraw->enableColorBlend = 0;
             DestroyEntity(entity);
             break;
         }
-        D_80097F46 = D_80097F4A;
-        D_80097F42 = D_80097F4A;
-        D_80097F3E = D_80097F4A;
-        D_80097F49 = D_80097F4A;
-        D_80097F45 = D_80097F4A;
-        D_80097F41 = D_80097F4A;
-        D_80097F3D = D_80097F4A;
-        D_80097F48 = D_80097F4A;
-        D_80097F44 = D_80097F4A;
-        D_80097F40 = D_80097F4A;
-        D_80097F3C = D_80097F4A;
+        plDraw->r0 = plDraw->r1 = plDraw->r2 = plDraw->r3 = plDraw->g0 =
+            plDraw->g1 = plDraw->g2 = plDraw->g3 = plDraw->b0 = plDraw->b1 =
+                plDraw->b2 = plDraw->b3;
         break;
     }
 }

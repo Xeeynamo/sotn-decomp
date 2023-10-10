@@ -1321,6 +1321,29 @@ typedef struct {
     /* 80072F9E */ u16 unk7E;
 } PlayerState;
 
+// Primitive used ad-hoc for the Player entity and the after-image effect
+typedef struct {
+    /* 0x00 */ RECT rect0;
+    /* 0x08 */ RECT rect1;
+    /* 0x10 */ RECT rect2;
+    /* 0x18 */ u8 r0;
+    /* 0x19 */ u8 g0;
+    /* 0x1A */ u8 b0;
+    /* 0x1B */ u8 enableColorBlend;
+    /* 0x1C */ u8 r1;
+    /* 0x1D */ u8 g1;
+    /* 0x1E */ u8 b1;
+    /* 0x1F */ u8 tpage;
+    /* 0x20 */ u8 r2;
+    /* 0x21 */ u8 g2;
+    /* 0x22 */ u8 b2;
+    /* 0x23 */ u8 flipX;
+    /* 0x24 */ u8 r3;
+    /* 0x25 */ u8 g3;
+    /* 0x26 */ u8 b3;
+    /* 0x27 */ u8 unk27;
+} PlayerDraw; /* size = 0x28 */
+
 extern const s16 g_AtanTable[0x400];
 
 extern s32 D_8003925C;
@@ -1501,7 +1524,7 @@ extern u8 g_SaveName[12] ALIGNED4;
 extern Unkstruct_8011A3AC D_80097C38[];
 extern u32 D_80097C40[];
 extern s32 D_80097C98;
-extern Unkstruct_800ECBF8_1 D_80097D1C[0x10];
+extern PlayerDraw g_PlayerDraw[0x10];
 extern s8 D_80097D37;
 extern u8 D_80097F3C;
 extern u8 D_80097F3D;
