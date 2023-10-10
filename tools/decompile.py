@@ -227,12 +227,10 @@ def resolve_jumptables(func: NonMatchingFunc):
                 print("good nop")
                 # Build a regex to search for the standard jump table setup
                 lw_regex = "lw\s*\\" + jumpreg + ", %lo\(([^)]*)\)\(\$at\)"
-                lw_result = re.search(lw_regex, lines[i - 2])
-                print(lw_regex)
-                print(lines[i - 2])
-                print(i)
-                print(lw_result)
-                jumptable_name = lw_result.group(1)
+                lwcheck = re.search(lw_regex, lines[i - 2])
+                if lwcheck == None:
+                    break
+                jumptable_name = lwcheck.group(1)
                 print(f"Jumptable: {jumptable_name}")
                 addu_regex = "addu\s*\$at, \$at, \\" + jumpreg
                 adducheck = re.search(addu_regex, lines[i - 3])
