@@ -17,8 +17,8 @@ void EntitySpittleBone(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180CAC);
-        self->unk19 = 4;
-        self->rotAngle = 0;
+        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->rotZ = 0;
         self->flags &= ~(FLAG_UNK_2000 | 0x200);
         self->facingLeft = self->params;
         break;
@@ -47,10 +47,10 @@ void EntitySpittleBone(Entity* self) {
         self->ext.spittleBone.unk7C =
             func_801C1034(self->ext.spittleBone.unk7C);
         if (self->ext.spittleBone.unk82 != 0) {
-            self->rotAngle += self->ext.spittleBone.unk80;
+            self->rotZ += self->ext.spittleBone.unk80;
             self->ext.spittleBone.unk82--;
             if (self->ext.spittleBone.unk82 == 0) {
-                self->rotAngle = self[1].rotAngle;
+                self->rotZ = self[1].rotZ;
             }
         }
         if (((self->ext.spittleBone.unk7C & 0x3F) == 1) &&
@@ -62,8 +62,8 @@ void EntitySpittleBone(Entity* self) {
                 newEntity->posY.i.hi += 24;
             }
         }
-        self->hitboxOffX = (u32)rsin(self->rotAngle) >> 8;
-        self->hitboxOffY = -(rcos(self->rotAngle) * 16) >> 0xC;
+        self->hitboxOffX = (u32)rsin(self->rotZ) >> 8;
+        self->hitboxOffY = -(rcos(self->rotZ) * 16) >> 0xC;
         return;
 
     case 3:
@@ -77,8 +77,8 @@ void EntitySpittleBone(Entity* self) {
                                    FLAG_DESTROY_IF_OUT_OF_CAMERA;
                 newEntity->palette = 0x20D;
                 newEntity->animCurFrame = i + 0x3A;
-                newEntity->unk19 |= 4;
-                newEntity->rotAngle = self->rotAngle;
+                newEntity->drawFlags |= 4;
+                newEntity->rotZ = self->rotZ;
                 newEntity->step = 4;
                 newEntity->velocityX = D_80182504[i];
                 newEntity->velocityY = 0xFFFD0000 - ((Random() & 3) << 0xF);
@@ -90,8 +90,8 @@ void EntitySpittleBone(Entity* self) {
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->params = 1;
-            newEntity->posX.i.hi += -(rsin(self->rotAngle) * 0x10) >> 0xC;
-            newEntity->posY.i.hi += -(rcos(self->rotAngle) * 0x10) >> 0xC;
+            newEntity->posX.i.hi += -(rsin(self->rotZ) * 0x10) >> 0xC;
+            newEntity->posY.i.hi += -(rcos(self->rotZ) * 0x10) >> 0xC;
         }
         func_801C29B0(0x62B);
         DestroyEntity(self);
@@ -117,7 +117,7 @@ const u32 rodataPadding_801B08B0 = 0;
 
 void EntityRotateSpittlebone(Entity* self) {
     Entity* prevEntity;
-    s16 rotAngle;
+    s16 rotZ;
     u32 temp1;
     u32 temp2;
     s32 temp3;
@@ -138,26 +138,26 @@ void EntityRotateSpittlebone(Entity* self) {
             temp2 = temp4 & 0x3C;
             if (temp2 != 0) {
                 temp1 = temp2 >> 2;
-                rotAngle = D_801824E4[temp1];
+                rotZ = D_801824E4[temp1];
             } else {
-                rotAngle = D_801824DC[temp4 & 3];
+                rotZ = D_801824DC[temp4 & 3];
             }
 
             if (self->facingLeft != 0) {
-                rotAngle = -rotAngle;
+                rotZ = -rotZ;
             }
 
-            self->rotAngle = rotAngle;
-            rotAngle -= prevEntity->rotAngle;
+            self->rotZ = rotZ;
+            rotZ -= prevEntity->rotZ;
 
-            if (rotAngle > 0x800) {
-                rotAngle -= 0x1000;
+            if (rotZ > 0x800) {
+                rotZ -= 0x1000;
             }
-            if (rotAngle < -0x800) {
-                rotAngle += 0x1000;
+            if (rotZ < -0x800) {
+                rotZ += 0x1000;
             }
 
-            temp3 = rotAngle;
+            temp3 = rotZ;
             if (temp3 < 0) {
                 temp3 += 0x1F;
             }
@@ -182,29 +182,29 @@ void EntitySpittleBoneSpit(Entity* self) {
     case 0:
         InitializeEntity(D_80180CB8);
         self->ext.spittleBone.unk82 = 0;
-        self->unk1A = 0;
-        self->unk1C = 0;
+        self->rotX = 0;
+        self->rotY = 0;
         return;
 
     case 1:
         entity = self->ext.spittleBone.unk84;
-        if ((entity->rotAngle & 0xFFF) == 0x800) {
+        if ((entity->rotZ & 0xFFF) == 0x800) {
             if (entity->facingLeft != 0) {
                 self->posX.i.hi = entity->posX.i.hi - 3;
             } else {
                 self->posX.i.hi = entity->posX.i.hi + 3;
             }
             self->posY.i.hi = entity->posY.i.hi + 27;
-            self->unk1A += 16;
-            self->unk1C += 20;
+            self->rotX += 16;
+            self->rotY += 20;
             if (++self->ext.spittleBone.unk82 > 16) {
                 self->ext.spittleBone.unk82 = 0;
                 self->step++;
             }
             return;
         }
-        self->unk1C = 0x140;
-        self->unk1A = 0x100;
+        self->rotY = 0x140;
+        self->rotX = 0x100;
         self->step++;
         return;
 
@@ -254,9 +254,9 @@ void EntitySpittleBoneSpit(Entity* self) {
         break;
 
     case 4:
-        self->unk1C -= 0x14;
-        if (self->unk1C < 0) {
-            self->unk1C = 0;
+        self->rotY -= 0x14;
+        if (self->rotY < 0) {
+            self->rotY = 0;
         }
 
         prim = *(s32*)&self->ext.spittleBone.unk84;

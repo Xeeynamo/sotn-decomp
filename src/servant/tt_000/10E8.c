@@ -649,7 +649,7 @@ s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
     s32 diffX = x - entity->posX.i.hi;
     s32 diffY = y - entity->posY.i.hi;
 
-    return SquareRoot12((diffX * diffX + diffY * diffY) << 12, diffX) >> 12;
+    return SquareRoot12((SQ(diffX) + SQ(diffY)) << 12) >> 12;
 }
 
 void func_80174038(Entity* entity) {

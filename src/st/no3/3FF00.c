@@ -329,8 +329,8 @@ void EntityDeath(Entity* self) {
     case 1:
         if (AnimateEntity(D_80181BC8, self) == 0) {
             SetStep(2);
-            self->unk19 = 4;
-            self->rotAngle = 0x1000;
+            self->drawFlags = FLAG_DRAW_ROTZ;
+            self->rotZ = 0x1000;
             self->posY.i.hi += 16;
             self->animCurFrame = 0x3A;
             self->ext.death.posX = self->posX.i.hi;
@@ -339,29 +339,29 @@ void EntityDeath(Entity* self) {
         break;
 
     case 2:
-        self->rotAngle -= 0x40;
-        if (self->rotAngle == 0) {
+        self->rotZ -= 0x40;
+        if (self->rotZ == 0) {
             SetStep(3);
-            self->unk19 = 0;
+            self->drawFlags = 0;
         }
 
-        x = (0x1000 - self->rotAngle) * 0x1D;
+        x = (0x1000 - self->rotZ) * 0x1D;
         if (x < 0) {
             x += 0xFFF;
         }
         self->posX.i.hi = self->ext.death.posX + (x >> 0xC);
 
-        y = (0x1000 - self->rotAngle) * 0x28;
+        y = (0x1000 - self->rotZ) * 0x28;
         if (y < 0) {
             y += 0xFFF;
         }
         self->posY.i.hi = self->ext.death.posY - (y >> 0xC);
 
-        if (!(self->rotAngle & 0x70)) {
+        if (!(self->rotZ & 0x70)) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != 0) {
                 CreateEntityFromCurrentEntity(E_ID_5E, newEntity);
-                newEntity->rotAngle = self->rotAngle;
+                newEntity->rotZ = self->rotZ;
                 newEntity->animCurFrame = 0x3A;
             }
         }
@@ -613,10 +613,10 @@ void EntityUnkId5E(Entity* entity) {
         entity->palette = 0x2D6;
         entity->unk5A = 0x44;
         if (entity->params != 0) {
-            entity->unk19 = 8;
+            entity->drawFlags = FLAG_DRAW_UNK8;
             entity->ext.generic.unk84.U16.unk0 = 0x40;
         } else {
-            entity->unk19 = 0xC;
+            entity->drawFlags = FLAG_DRAW_ROTZ | FLAG_DRAW_UNK8;
             entity->ext.generic.unk84.U16.unk0 = 0x20;
         }
         entity->unk6C = 0x40;
@@ -706,7 +706,7 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
         if (AnimateEntity((u8*)self->ext.et38.unk80, self) != 0) {
             switch (self->step_s) {
             case 0:
-                self->unk19 = 8;
+                self->drawFlags = FLAG_DRAW_UNK8;
                 self->unk6C = 0x80;
                 self->step_s++;
                 break;
@@ -728,7 +728,7 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
 
     case 3:
         if (self->step_s == 0) {
-            self->unk19 |= 4;
+            self->drawFlags |= 4;
             switch (self->ext.et38.unk88) {
             case 1:
                 if (self->ext.et38.unk89 >= 0x4) {
@@ -743,7 +743,7 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
                 break;
             }
             self->ext.et38.unk84 = self->ext.et38.unk84 & 0xFFF;
-            self->rotAngle = self->ext.generic.unk84.S16.unk0 & 0xFFF;
+            self->rotZ = self->ext.generic.unk84.S16.unk0 & 0xFFF;
             temp_s0 = self->ext.generic.unk88.U8.unk1 * 0x140;
             temp_s0 /= 28;
             self->velocityX = temp_s0 * rsin(self->ext.et38.unk84);
@@ -779,8 +779,8 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
             rnd = Random();
             self->velocityY = FIX(-0.75);
             self->facingLeft = rnd & 1;
-            self->unk1A = 0xC0;
-            self->unk19 |= 1;
+            self->rotX = 0xC0;
+            self->drawFlags |= 1;
             self->step_s++;
         }
         MoveEntity();

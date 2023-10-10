@@ -272,18 +272,18 @@ typedef enum {
     COMBO_GRAVITY_BOOTS,
     COMBO_QCF, // Quarter circle forward (down, down+forward, forward)
     COMBO_BF,  // Back forward
-    COMBO_UNK3,
-    COMBO_UNK4,
+    COMBO_HELLFIRE,
+    COMBO_TETRA_SPIRIT,
     COMBO_UNK5,
-    COMBO_UNK6,
+    COMBO_SOUL_STEAL,
     COMBO_UNK7,
     COMBO_UNK8,
-    COMBO_UNK9,
+    COMBO_SWORD_BROTHERS,
     COMBO_UNK10,
     COMBO_UNK11,
     COMBO_UNK12,
     COMBO_UNK13,
-    COMBO_UNK14,
+    COMBO_SUMMON_SPIRIT,
     COMBO_DARK_METAMORPH,
 } ButtonComboIdx;
 
@@ -312,6 +312,7 @@ extern s32 D_800A04F8;
 extern s32 g_UnkMemcardPort[];
 extern u16 g_saveIconPalette[0x10][0x10];
 extern u8* g_saveIconTexture[0x10];
+extern s16 D_800A21B8[0x20];
 extern s32 D_800A2438;
 extern u8 D_800A243C[];
 extern RoomBossTeleport D_800A297C[];
@@ -604,6 +605,10 @@ extern s32 D_80137FBC;
 extern s16 g_WasFacingLeft;  // for QCF to tell what's "forward"
 extern s16 g_WasFacingLeft2; // for BF to tell what's "forward"
 extern s32 g_WasFacingLeft3; // for dark metamorphosis "" ""
+extern s32 g_WasFacingLeft4; // for summon spirit "" ""
+extern s16 g_WasFacingLeft5; // for hellfire "" ""
+extern s32 g_WasFacingLeft6; // for tetra spirit "" ""
+extern s32 g_WasFacingLeft7; // for soul steal "" ""
 extern s32 D_80137FDC;
 extern s32 D_80137FE0;
 extern s32 D_80137FE4;
@@ -621,6 +626,7 @@ extern u8 D_80138040;
 extern u8 D_80138044;
 extern u8 D_80138048;
 extern s32 D_8013808C;
+extern Unkstruct_80138094 D_80138094[];
 extern s32 D_8013841C;
 extern s32 D_8013842C;
 extern s32 D_80138430;
@@ -874,12 +880,12 @@ s32 func_801104D0();
 bool CheckQuarterCircleForwardInput();
 bool CheckBackForwardInput();
 bool CheckDarkMetamorphosisInput();
-s32 func_80110BC8();
+bool CheckSummonSpiritInput();
 void func_8010DBFC(s32*, s32*);
-s32 func_80110DF8();
-s32 func_80111018();
-s32 func_801112AC();
-s32 func_8011151C();
+bool CheckHellfireInput();
+bool CheckTetraSpiritInput();
+bool CheckSoulStealInput();
+bool CheckSwordBrothersInput();
 void func_80111928(void);
 void func_80111CC0(void);
 bool func_80111D24(void);

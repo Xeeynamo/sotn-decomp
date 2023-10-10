@@ -233,8 +233,8 @@ void EntityWeaponAttack(Entity* self) {
         return;
     }
 
-    self->unk19 = PLAYER.unk19;
-    self->unk1C = PLAYER.unk1C;
+    self->drawFlags = PLAYER.drawFlags;
+    self->rotY = PLAYER.rotY;
     self->rotPivotY = PLAYER.rotPivotY;
 }
 

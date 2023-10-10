@@ -17,10 +17,10 @@ void func_80113AAC(void) {
             func_801139CC(3);
             if (g_Player.unk4A >= 5) {
                 PLAYER.step_s = 2;
-                PLAYER.rotAngle = 0x800;
+                PLAYER.rotZ = 0x800;
                 PLAYER.rotPivotY = 2;
                 PLAYER.rotPivotX = 0;
-                PLAYER.unk19 |= 4;
+                PLAYER.drawFlags |= 4;
                 PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
                 func_8010DA48(0x2B);
             } else {
@@ -46,14 +46,14 @@ void func_80113AAC(void) {
         break;
 
     case 2:
-        PLAYER.unk19 |= 4;
+        PLAYER.drawFlags |= 4;
         PLAYER.rotPivotX = 0;
         PLAYER.rotPivotY = 2;
         if (g_Player.unk4A >= 0x39) {
             func_8010DA48(0x2D);
-            PLAYER.rotAngle = 0;
+            PLAYER.rotZ = 0;
             PLAYER.step_s = 4;
-            PLAYER.unk19 &= 0xFB;
+            PLAYER.drawFlags &= 0xFB;
             PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
         }
         break;
@@ -119,14 +119,14 @@ s32 func_80113E68(void) {
 
 void func_80113EE0(void) {
     PLAYER.animSet = ANIMSET_DRA(1);
-    PLAYER.unk19 &= 0xF3;
+    PLAYER.drawFlags &= 0xF3;
     PLAYER.animFrameDuration = 0;
     PLAYER.animFrameIdx = 0;
     PLAYER.entityId = 0;
     PLAYER.blendMode = 0;
     g_Player.unk44 = 0;
     g_Player.unk46 = 0;
-    PLAYER.rotAngle = 0;
+    PLAYER.rotZ = 0;
     PLAYER.zPriority = g_zEntityCenter.S16.unk0;
     if (g_Entities[E_WEAPON].entityId == E_UNK_22) {
         func_8010FAF4();
@@ -304,12 +304,12 @@ void func_80114DF4(s32 arg0) {
     case 3:
         if (PLAYER.animFrameDuration < 0) {
             PLAYER.step_s = 2;
-            PLAYER.unk19 &= 0xFB;
+            PLAYER.drawFlags &= 0xFB;
         } else {
             PLAYER.rotPivotX = 0;
-            PLAYER.unk19 |= 4;
-            PLAYER.rotAngle = D_800ACF94[PLAYER.animFrameDuration] >> 4;
-            if (PLAYER.rotAngle == 0) {
+            PLAYER.drawFlags |= 4;
+            PLAYER.rotZ = D_800ACF94[PLAYER.animFrameDuration] >> 4;
+            if (PLAYER.rotZ == 0) {
                 PLAYER.rotPivotY = 0x18;
             } else {
                 PLAYER.rotPivotY = 0x14;
@@ -328,7 +328,7 @@ void func_80114DF4(s32 arg0) {
 INCLUDE_ASM("dra/nonmatchings/73AAC", func_80115394);
 
 void func_80115BB0(void) {
-    PLAYER.unk19 = 4;
+    PLAYER.drawFlags = FLAG_DRAW_ROTZ;
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     PLAYER.animFrameDuration = 4;

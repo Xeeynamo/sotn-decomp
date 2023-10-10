@@ -128,13 +128,13 @@ void EntityWeaponAttack(Entity* self) {
     case 4:
         self->hitboxState = 0;
         g_Player.unk48 = 0;
-        self->unk19 |= 4;
+        self->drawFlags |= 4;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         self->velocityY += FIX(20.0 / 128);
-        self->rotAngle = self->rotAngle + 0x80;
+        self->rotZ = self->rotZ + 0x80;
         if (--self->ext.weapon.lifetime < 16) {
-            self->unk19 |= 0x80;
+            self->drawFlags |= 0x80;
         }
         if (--self->ext.weapon.lifetime == 0) {
             DestroyEntity(self);
@@ -150,8 +150,8 @@ void EntityWeaponAttack(Entity* self) {
     }
     self->palette =
         self->ext.weapon.unk80 + D_CF000_8017ACF8[g_GameTimer / 2 % 5];
-    self->unk19 = PLAYER.unk19;
-    self->unk1C = PLAYER.unk1C;
+    self->drawFlags = PLAYER.drawFlags;
+    self->rotY = PLAYER.rotY;
     self->rotPivotY = PLAYER.rotPivotY;
     return;
 }
@@ -168,7 +168,7 @@ void func_ptr_80170004(Entity* self) {
         self->ext.weapon.unk80 = self->ext.weapon.parent->ext.weapon.unk80;
         self->animCurFrame = self->ext.weapon.parent->animCurFrame;
         self->flags = 0x08000000;
-        self->unk19 = 0x18;
+        self->drawFlags = FLAG_DRAW_UNK8 | FLAG_DRAW_UNK10;
         self->unk6C = 0x80;
         self->ext.weapon.unk7E = 0x14;
         self->step++;
@@ -228,9 +228,9 @@ void EntityWeaponShieldSpell(Entity* self) {
         self->zPriority = PLAYER.zPriority - 2;
         self->facingLeft = PLAYER.facingLeft;
         self->animCurFrame = 0x3E;
-        self->unk19 = 3;
-        self->unk1C = 0;
-        self->unk1A = 0;
+        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        self->rotY = 0;
+        self->rotX = 0;
         prim = &g_PrimBuf[self->primIndex];
         prim->clut = 0x19F;
         prim->tpage = 0x19;
@@ -257,14 +257,14 @@ void EntityWeaponShieldSpell(Entity* self) {
         self->velocityY -= FIX(20.0 / 128);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        self->unk1A += 12;
-        self->unk1C = self->unk1A;
-        self->ext.weapon.unk82 = self->unk1A * 40 / 256;
+        self->rotX += 12;
+        self->rotY = self->rotX;
+        self->ext.weapon.unk82 = self->rotX * 40 / 256;
 
-        if (self->unk1A >= 0x100) {
+        if (self->rotX >= 0x100) {
             self->ext.weapon.unk82 = 0x28;
-            self->unk1A = 0x100;
-            self->unk1C = 0x100;
+            self->rotX = 0x100;
+            self->rotY = 0x100;
             self->ext.weapon.unk80 = 8;
             self->step++;
         }
@@ -281,10 +281,10 @@ void EntityWeaponShieldSpell(Entity* self) {
     case 3:
         self->palette = self->ext.weapon.childPalette +
                         D_CF000_8017ACF8[g_GameTimer / 2 % 5];
-        self->unk1A -= 0x10;
-        self->unk1C = self->unk1A;
-        if (self->unk1A <= 0) {
-            self->unk1A = 0;
+        self->rotX -= 0x10;
+        self->rotY = self->rotX;
+        if (self->rotX <= 0) {
+            self->rotX = 0;
             self->unk4C = D_CF000_8017AD24;
             self->animFrameIdx = 0;
             self->animFrameDuration = 0;
@@ -298,11 +298,11 @@ void EntityWeaponShieldSpell(Entity* self) {
         break;
     case 4:
         self->ext.weapon.unk82 += 8;
-        self->unk1A += 0x10;
-        if (self->unk1A >= 0x100) {
-            self->unk1A = 0x100;
+        self->rotX += 0x10;
+        if (self->rotX >= 0x100) {
+            self->rotX = 0x100;
         }
-        self->unk1C = self->unk1A;
+        self->rotY = self->rotX;
         prim = &g_PrimBuf[self->primIndex];
         if (prim->b3 >= 9) {
             prim->b3 -= 4;
@@ -324,9 +324,9 @@ void EntityWeaponShieldSpell(Entity* self) {
         }
         break;
     case 6:
-        self->unk1A -= 0x10;
-        self->unk1C = self->unk1A;
-        if (self->unk1A <= 0) {
+        self->rotX -= 0x10;
+        self->rotY = self->rotX;
+        if (self->rotX <= 0) {
             DestroyEntity(self);
             return;
         }

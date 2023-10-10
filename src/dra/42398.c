@@ -23,7 +23,7 @@ void SetupEvents(void);
 void func_800EA7CC(void);
 void func_800EB314(void);
 void RenderEntities(void);
-void func_800ECBF8(void);
+void InitRenderer(void);
 void RenderTilemap(void);
 void RenderPrimitives(void);
 void func_800FADC0(void);
@@ -844,7 +844,7 @@ void entrypoint_sotn(void) {
 loop_5:
     D_8003C73C = 0;
     SetStageDisplayBuffer();
-    func_800ECBF8();
+    InitRenderer();
     func_800EAD7C();
     HideAllBackgroundLayers();
     DestroyAllPrimitives();
@@ -1127,7 +1127,7 @@ void HandleTitle(void) {
     switch (g_GameStep) {
     case 0:
         ClearBackbuffer();
-        func_800ECBF8();
+        InitRenderer();
         func_800EAD7C();
         HideAllBackgroundLayers();
         DestroyAllPrimitives();

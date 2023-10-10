@@ -16,9 +16,9 @@ void func_ptr_80170004(Entity* self) {
         self->palette = self->ext.weapon.parent->palette;
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->ext.weapon.lifetime = 0x16;
-        self->unk19 = 0xC;
+        self->drawFlags = FLAG_DRAW_ROTZ | FLAG_DRAW_UNK8;
         self->blendMode = 0x10;
-        self->rotAngle = self->ext.weapon.parent->rotAngle;
+        self->rotZ = self->ext.weapon.parent->rotZ;
         self->unk6C = 0x80;
         self->step++;
     }

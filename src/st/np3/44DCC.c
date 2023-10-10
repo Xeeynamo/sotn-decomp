@@ -678,7 +678,7 @@ void EntityMerman2(Entity* self) {
 
     if ((self->flags & 0x100) && (self->step < MERMAN2_DYING)) {
         func_801C2598(0x71D);
-        self->unk19 = 0;
+        self->drawFlags = 0;
         if (self->flags & FLAG_HAS_PRIMS) {
             g_api.FreePrimitives(self->primIndex);
             self->flags &= ~FLAG_HAS_PRIMS;
@@ -816,8 +816,8 @@ void EntityMerman2(Entity* self) {
                     newEntity->posY.i.hi -= 24;
                     newEntity->zPriority = self->zPriority;
                 }
-                self->rotAngle = 0;
-                self->unk19 |= 4;
+                self->rotZ = 0;
+                self->drawFlags |= 4;
                 self->step_s++;
             }
             break;
@@ -828,7 +828,7 @@ void EntityMerman2(Entity* self) {
                 prim->blendMode = BLEND_VISIBLE;
                 self->animCurFrame = 18;
                 self->hitboxHeight = 8;
-                self->rotAngle -= 0x80;
+                self->rotZ -= 0x80;
             } else {
                 if (self->facingLeft != 0) {
                     s16 posX = self->posX.i.hi;
@@ -874,7 +874,7 @@ void EntityMerman2(Entity* self) {
                     g_api.FreePrimitives(self->primIndex);
                     self->hitboxHeight = 21;
                     self->flags &= ~FLAG_HAS_PRIMS;
-                    self->unk19 &= 0xFB;
+                    self->drawFlags &= 0xFB;
                     SetStep(MERMAN2_WALKING_TO_PLAYER);
                     return;
                 }
@@ -977,8 +977,8 @@ void EntityMerman2(Entity* self) {
                     }
                 }
                 self->ext.merman2.rotation = 1;
-                self->rotAngle = 0;
-                self->unk19 |= 4;
+                self->rotZ = 0;
+                self->drawFlags |= 4;
                 if (self->facingLeft != 0) {
                     self->velocityX = FIX(-6);
                 } else {
@@ -1012,7 +1012,7 @@ void EntityMerman2(Entity* self) {
             if (collider.effects & EFFECT_SOLID) {
                 self->velocityX = 0;
             }
-            self->rotAngle += self->ext.merman2.rotation;
+            self->rotZ += self->ext.merman2.rotation;
             self->velocityY -= FIX(0.125);
 
             if (func_801BC8E4(&D_80182248) & 1) {
@@ -1044,10 +1044,10 @@ void EntityMerman2(Entity* self) {
                 self->velocityX = 0;
             }
             MoveEntity();
-            self->rotAngle += 0xC0;
-            if (self->rotAngle > 0x1000) {
+            self->rotZ += 0xC0;
+            if (self->rotZ > 0x1000) {
                 self->posY.i.hi -= 10;
-                self->unk19 &= 0xFB;
+                self->drawFlags &= 0xFB;
                 SetStep(MERMAN2_WALKING_TO_PLAYER);
             }
             if (func_801C6458(0x1B)) {
@@ -1391,12 +1391,12 @@ void func_801C7E18(Entity* self) {
         self->palette = 0x8018;
         self->blendMode = 0x30;
         self->unk6C = 0xA0;
-        self->unk1A = 0x100;
-        self->unk1C = 0x1A0;
-        self->unk19 |= 3;
+        self->rotX = 0x100;
+        self->rotY = 0x1A0;
+        self->drawFlags |= 3;
         self->ext.generic.unk84.S8.unk1 = 0x11;
         self->ext.generic.unk84.S8.unk0 = self->params;
-        self->unk19 |= 8;
+        self->drawFlags |= 8;
         break;
 
     case 1:
@@ -1412,8 +1412,8 @@ void func_801C7E18(Entity* self) {
         AnimateEntity(D_801822C0, self);
         MoveEntity();
         self->velocityY += FIX(0.25);
-        self->unk1A += 6;
-        self->unk1C -= 4;
+        self->rotX += 6;
+        self->rotY -= 4;
         if (self->posY.i.hi > 256) {
             DestroyEntity(self);
         }
@@ -1427,8 +1427,8 @@ void func_801C7E18(Entity* self) {
         if (AnimateEntity(D_801822C0, self) == 0) {
             MoveEntity();
             self->velocityY += FIX(0.25);
-            self->unk1A += 6;
-            self->unk1C -= 4;
+            self->rotX += 6;
+            self->rotY -= 4;
         }
         if (self->posY.i.hi > 256) {
             DestroyEntity(self);
@@ -1448,7 +1448,7 @@ void EntityLargeFallingObject(Entity* self) {
         self->velocityY = FIX(0.0625);
         self->palette = self->params + 0xE;
         self->unk6C = 0x80;
-        self->unk19 |= 8;
+        self->drawFlags |= 8;
         self->flags |= FLAG_UNK_2000;
         return;
     }

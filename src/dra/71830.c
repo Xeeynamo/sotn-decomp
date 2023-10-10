@@ -1,62 +1,12 @@
 #include "dra.h"
 #include "objects.h"
 
-void func_80111830(void) {
-    s32 var_v0;
-    s32 i;
-
-    for (i = 0; i < 16; i++) {
-        switch (i) {
-        case 0:
-            var_v0 = CheckGravityBootsInput();
-            break;
-        case 1:
-            var_v0 = CheckQuarterCircleForwardInput();
-            break;
-        case 2:
-            var_v0 = CheckBackForwardInput();
-            break;
-        case 3:
-            var_v0 = func_80110DF8();
-            break;
-        case 4:
-            var_v0 = func_80111018();
-            break;
-        case 6:
-            var_v0 = func_801112AC();
-            break;
-        case 9:
-            var_v0 = func_8011151C();
-            break;
-        case 14:
-            var_v0 = func_80110BC8();
-            break;
-        case 15:
-            var_v0 = CheckDarkMetamorphosisInput();
-            break;
-        case 5:
-        case 7:
-        case 8:
-        case 10:
-        case 11:
-        case 12:
-        case 13:
-        default:
-            var_v0 = 0;
-            break;
-        }
-        if (var_v0 != 0) {
-            return;
-        }
-    }
-}
-
 void func_80111928(void) { D_801396EA = 0; }
 
 void func_80111938(void) {
     D_801396EA = 1;
     D_801396E4 = PLAYER.animCurFrame;
-    D_801396E6.S16.unk0 = PLAYER.unk19;
+    D_801396E6.S16.unk0 = PLAYER.drawFlags;
     D_801396E8 = PLAYER.palette;
 }
 
@@ -64,7 +14,7 @@ void func_8011197C(void) {
     D_801396EA = 0;
     PLAYER.unk44 = 0;
     PLAYER.animCurFrame = D_801396E4;
-    PLAYER.unk19 = D_801396E6.S8.unk0;
+    PLAYER.drawFlags = D_801396E6.S8.unk0;
     PLAYER.palette = D_801396E8;
 }
 

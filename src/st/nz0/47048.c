@@ -106,7 +106,7 @@ void EntitySubWeaponContainer(Entity* self) {
                 rndPosY = -(Random() & 0x3F) - 16;
                 newEntity->posX.i.hi += rndPosX;
                 newEntity->posY.i.hi += rndPosY;
-                newEntity->rotAngle = ratan2(rndPosY, rndPosX);
+                newEntity->rotZ = ratan2(rndPosY, rndPosX);
                 newEntity->zPriority = self->zPriority + 1;
             }
         }
@@ -153,7 +153,7 @@ void func_801C7538(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180CF4);
-        entity->unk19 = 4;
+        entity->drawFlags = FLAG_DRAW_ROTZ;
         entity->animCurFrame = entity->params;
         entity->palette += entity->ext.generic.unk84.S16.unk2;
         entity->velocityX = entity->ext.generic.unk84.S16.unk0 << 12;
@@ -167,18 +167,18 @@ void func_801C7538(Entity* entity) {
 
         if (entity->velocityX != 0) {
             if (entity->facingLeft == 0) {
-                new_var = (u16)entity->rotAngle - 16;
+                new_var = (u16)entity->rotZ - 16;
                 var_v0 = new_var;
             } else {
-                var_v0 = entity->rotAngle + 16;
+                var_v0 = entity->rotZ + 16;
             }
         } else if (entity->facingLeft != 0) {
-            var_v0 = entity->rotAngle - 16;
+            var_v0 = entity->rotZ - 16;
         } else {
-            var_v0 = entity->rotAngle + 16;
+            var_v0 = entity->rotZ + 16;
         }
 
-        entity->rotAngle = var_v0;
+        entity->rotZ = var_v0;
         break;
     }
 }
@@ -193,8 +193,8 @@ void func_801C7654(Entity* entity) {
         entity->animSet = ANIMSET_DRA(2);
         entity->palette = 0x816D;
         entity->blendMode = 0x70;
-        entity->velocityX = rcos(entity->rotAngle) * 0x10;
-        entity->velocityY = rsin(entity->rotAngle) * 0x10;
+        entity->velocityX = rcos(entity->rotZ) * 0x10;
+        entity->velocityY = rsin(entity->rotZ) * 0x10;
         break;
 
     case 1:
@@ -206,8 +206,8 @@ void func_801C7654(Entity* entity) {
             entity->posX.i.hi, entity->posY.i.hi + 8, &collider.effects, 0);
 
         if (collider.effects & EFFECT_SOLID) {
-            entity->unk19 = 2;
-            entity->unk1C = 0x100;
+            entity->drawFlags = FLAG_DRAW_ROTY;
+            entity->rotY = 0x100;
             entity->velocityY = FIX(0.25);
             entity->velocityX *= 8;
             entity->step++;
@@ -216,8 +216,8 @@ void func_801C7654(Entity* entity) {
 
     case 2:
         MoveEntity();
-        entity->unk1C -= 8;
-        if (!(entity->unk1C << 0x10)) {
+        entity->rotY -= 8;
+        if (!(entity->rotY << 0x10)) {
             DestroyEntity(entity);
         }
         break;
@@ -231,9 +231,9 @@ void func_801C77B8(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(D_80180CF4);
-        entity->unk19 = 3;
-        entity->unk1C = 0x100;
-        entity->unk1A = 0x100;
+        entity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        entity->rotY = 0x100;
+        entity->rotX = 0x100;
         entity->velocityX = 0;
         entity->animCurFrame = entity->params + 8;
         entity->velocityY = D_80182600[entity->params];
@@ -241,10 +241,10 @@ void func_801C77B8(Entity* entity) {
 
     case 1:
         MoveEntity();
-        temp_v1_2 = entity->unk1C - 8;
+        temp_v1_2 = entity->rotY - 8;
         entity->velocityY -= 0x400;
-        entity->unk1C = temp_v1_2;
-        entity->unk1A = temp_v1_2;
+        entity->rotY = temp_v1_2;
+        entity->rotX = temp_v1_2;
 
         if ((temp_v1_2 << 0x10) == 0) {
             DestroyEntity(entity);
@@ -265,8 +265,8 @@ void func_801C7884(Entity* entity) {
         MoveEntity();
         AnimateEntity(D_80181D3C[params], entity);
 
-        entity->velocityY = rsin(entity->rotAngle) * 2;
-        entity->rotAngle += 0x20;
+        entity->velocityY = rsin(entity->rotZ) * 2;
+        entity->rotZ += 0x20;
 
         if (entity[-1].step != 1) {
             entity->entityId = E_PRIZE_DROP;

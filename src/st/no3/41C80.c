@@ -693,7 +693,7 @@ void func_801C58E0(u16 arg0, u16 arg1) {
     }
 
     entity = g_CurrentEntity;
-    entity->unk19 = 0;
+    entity->drawFlags = 0;
     entity->entityId = 2;
     entity->pfnUpdate = EntityExplosion;
     entity->params = arg0;

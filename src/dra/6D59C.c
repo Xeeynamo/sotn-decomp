@@ -77,7 +77,7 @@ u8 g_D_800ACF3C[] = {8,  12, 16, 20, 24, 28, 32, 32,
 
 void func_8010D800(void) {
     byte pad[0x28];
-    Unkstruct_800ECBF8_1* current_thing;
+    PlayerDraw* plDraw;
     Primitive* prim;
     s32 entNum;
     s32 i;
@@ -91,16 +91,16 @@ void func_8010D800(void) {
     temp_t1 = g_shadowOpacityReductionTable[g_Entities[1].ext.ent1.unk2];
     temp_t0 = g_D_800ACF3C[g_Entities[1].ext.ent1.unk2];
 
-    current_thing = &D_80097D1C[1];
+    plDraw = &g_PlayerDraw[1];
     for (i = 0; i < 6; prim = prim->next, i++) {
         if (temp_t0 < prim->r0) {
             prim->r0 -= temp_t1;
         }
-        if ((prim->r0 < 0x70) && (prim->b0 < 0xF0)) {
+        if (prim->r0 < 112 && prim->b0 < 240) {
             prim->b0 += 6;
         }
-        if (prim->r0 < 0x58) {
-            prim->y1 = 0x10;
+        if (prim->r0 < 88) {
+            prim->y1 = 16;
         } else {
             prim->y1 = 0;
         }
@@ -111,7 +111,7 @@ void func_8010D800(void) {
             continue;
         }
 
-        entNum = ((i / 2) + 1);
+        entNum = (i / 2) + 1;
         g_Entities[entNum].posX.i.hi = prim->x0;
         g_Entities[entNum].posY.i.hi = prim->y0;
         g_Entities[entNum].animCurFrame = prim->x1;
@@ -124,13 +124,11 @@ void func_8010D800(void) {
             prim->x1 = 0;
         }
 
-        current_thing->unk18 = current_thing->unk1C = current_thing->unk20 =
-            current_thing->unk24 = current_thing->unk1A = current_thing->unk1E =
-                current_thing->unk22 = current_thing->unk26 = prim->r0;
-        current_thing->unk19 = current_thing->unk1D = current_thing->unk21 =
-            current_thing->unk25 = prim->b0;
-        current_thing->unk1B = 1;
-        current_thing++;
+        plDraw->r0 = plDraw->r1 = plDraw->r2 = plDraw->r3 = plDraw->b0 =
+            plDraw->b1 = plDraw->b2 = plDraw->b3 = prim->r0;
+        plDraw->g0 = plDraw->g1 = plDraw->g2 = plDraw->g3 = prim->b0;
+        plDraw->enableColorBlend = true;
+        plDraw++;
     }
 }
 

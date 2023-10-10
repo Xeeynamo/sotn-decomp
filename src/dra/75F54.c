@@ -3,14 +3,12 @@
 #include "sfx.h"
 
 void func_80115F54(void) {
-    Unkstruct_800ECBF8_1* temp_s0;
+    PlayerDraw* plDraw;
     bool var_s2;
-    u8 var_v0;
-    u8 var_v1;
 
     var_s2 = false;
-    PLAYER.unk19 = 4;
-    temp_s0 = D_80097D1C;
+    PLAYER.drawFlags = FLAG_DRAW_ROTZ;
+    plDraw = g_PlayerDraw;
     if (*D_80097420 == 0xFFF && PLAYER.step_s != 0) {
         SetPlayerStep(Player_Unk17);
         PLAYER.velocityY = 0;
@@ -28,44 +26,27 @@ void func_80115F54(void) {
         PLAYER.velocityY = -0x1A000;
         PLAYER.ext.generic.unkAC = 0xC1;
         PLAYER.blendMode = 0x30;
-        PLAYER.rotAngle = 0x200;
+        PLAYER.rotZ = 0x200;
         func_80118C28(1);
         func_8011AAFC(g_CurrentEntity, 0x59002C, 0);
         func_8011AAFC(g_CurrentEntity, 0x60031, 0);
-        temp_s0->unk25 = 0x80;
-        temp_s0->unk26 = 0x80;
-        temp_s0->unk24 = 0x80;
-        temp_s0->unk21 = 0x80;
-        temp_s0->unk22 = 0x80;
-        temp_s0->unk20 = 0x80;
-        temp_s0->unk1D = 0x80;
-        temp_s0->unk1E = 0x80;
-        temp_s0->unk1C = 0x80;
-        temp_s0->unk19 = 0x80;
-        temp_s0->unk1A = 0x80;
-        temp_s0->unk18 = 0x80;
-        temp_s0->unk1B = 1;
+        plDraw->r3 = plDraw->b3 = plDraw->g3 = 128;
+        plDraw->r2 = plDraw->b2 = plDraw->g2 = 128;
+        plDraw->r1 = plDraw->b1 = plDraw->g1 = 128;
+        plDraw->r0 = plDraw->b0 = plDraw->g0 = 128;
+        plDraw->enableColorBlend = true;
         PLAYER.step_s++;
         break;
     case 1:
-        if (temp_s0->unk19 < 0xF8) {
-            temp_s0->unk19++;
+        if (plDraw->g0 < 0xF8) {
+            plDraw->g0++;
         }
-        if (temp_s0->unk18 >= 9) {
-            temp_s0->unk18--;
+        if (plDraw->r0 >= 9) {
+            plDraw->r0--;
         }
-        var_v1 = temp_s0->unk18;
-        var_v0 = temp_s0->unk19;
-        temp_s0->unk1D = var_v0;
-        temp_s0->unk21 = var_v0;
-        temp_s0->unk25 = var_v0;
-        temp_s0->unk24 = var_v1;
-        temp_s0->unk26 = var_v1;
-        temp_s0->unk20 = var_v1;
-        temp_s0->unk22 = var_v1;
-        temp_s0->unk1C = var_v1;
-        temp_s0->unk1E = var_v1;
-        temp_s0->unk1A = var_v1;
+        plDraw->g3 = plDraw->g2 = plDraw->g1 = plDraw->g0;
+        plDraw->b0 = plDraw->b1 = plDraw->r1 = plDraw->b2 = plDraw->r2 =
+            plDraw->b3 = plDraw->r3 = plDraw->r0;
         PLAYER.velocityY += 0x1000;
         if (PLAYER.velocityY > 0x4000) {
             PLAYER.velocityY = 0x1000;
@@ -279,16 +260,16 @@ bool BatFormFinished(void) {
 }
 
 void func_8011690C(s16 arg0) {
-    if (PLAYER.rotAngle < arg0) {
-        PLAYER.rotAngle += 16;
-        if (arg0 < PLAYER.rotAngle) {
-            PLAYER.rotAngle = arg0;
+    if (PLAYER.rotZ < arg0) {
+        PLAYER.rotZ += 16;
+        if (arg0 < PLAYER.rotZ) {
+            PLAYER.rotZ = arg0;
         }
     }
-    if (arg0 < PLAYER.rotAngle) {
-        PLAYER.rotAngle -= 16;
-        if (PLAYER.rotAngle < arg0) {
-            PLAYER.rotAngle = arg0;
+    if (arg0 < PLAYER.rotZ) {
+        PLAYER.rotZ -= 16;
+        if (PLAYER.rotZ < arg0) {
+            PLAYER.rotZ = arg0;
         }
     }
 }
@@ -413,7 +394,7 @@ void ControlBatForm(void) {
     if (BatFormFinished()) {
         return;
     }
-    PLAYER.unk19 = 4;
+    PLAYER.drawFlags = FLAG_DRAW_ROTZ;
     PLAYER.rotPivotY = 0;
     directionsPressed =
         g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
@@ -453,7 +434,7 @@ void ControlBatForm(void) {
     switch (PLAYER.step_s) {
     case 0:
         g_WingSmashButtonCounter = 0;
-        PLAYER.rotAngle = 0;
+        PLAYER.rotZ = 0;
         g_Player.unk48 = 0;
         g_Player.unk46 = 0;
         g_Player.unk44 = 0;
@@ -767,7 +748,7 @@ void func_801177A0(void) {
     s32 i;
     s32 else_cycles;
 
-    PLAYER.unk19 = 4;
+    PLAYER.drawFlags = FLAG_DRAW_ROTZ;
     DecelerateX(0x2000);
     if (g_Player.pl_vram_flag & 3) {
         PLAYER.velocityY = 0;
@@ -811,8 +792,8 @@ void func_801177A0(void) {
         }
         if (else_cycles == 8) {
             PLAYER.animSet = 1;
-            PLAYER.rotAngle = 0;
-            PLAYER.unk19 = 0;
+            PLAYER.rotZ = 0;
+            PLAYER.drawFlags = 0;
             g_Player.unk66 = 1;
             if (g_Player.unk68 != 0) {
                 PLAYER.step_s = 2;
@@ -868,7 +849,7 @@ void func_80117AC0(void) {
     if ((g_Player.pl_vram_flag & 0x41) == 0x41) {
         collisionCount += 1;
     }
-    PLAYER.rotAngle = 0;
+    PLAYER.rotZ = 0;
     func_8010E27C();
     if (collisionCount == 0) {
         func_8010E7AC();
@@ -1442,7 +1423,7 @@ void func_80119D3C(Entity* entity) {
 
     case 1:
         if (entity->ext.generic.unk80.modeS16.unk0 < 32) {
-            entity->unk19 = 128;
+            entity->drawFlags = FLAG_DRAW_UNK80;
         }
         entity->posY.val += entity->velocityY;
         cos = rcos(entity->ext.generic.unk7C.s);
@@ -1921,12 +1902,13 @@ void func_8011F074(Entity* entity) {
         } else {
             entity->blendMode = 0x10;
         }
-        entity->unk1C = 0x40;
-        entity->unk1A = 0x40;
+        entity->rotY = 0x40;
+        entity->rotX = 0x40;
         entity->unk4C = &D_800ADC44;
         D_8013808C++;
         entity->unk6C = 0xFF;
-        entity->unk19 = 0x33;
+        entity->drawFlags =
+            FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20;
         posX = 10;
         posY = 15;
         entity->posY.i.hi = entity->posY.i.hi - posY + (rand() % 35);
@@ -1940,8 +1922,8 @@ void func_8011F074(Entity* entity) {
             entity->unk6C += 248;
         }
         entity->posY.val += entity->velocityY;
-        entity->unk1A += 8;
-        entity->unk1C += 8;
+        entity->rotX += 8;
+        entity->rotY += 8;
         if (entity->animFrameDuration < 0) {
             DestroyEntity(entity);
         }
@@ -1967,15 +1949,13 @@ INCLUDE_ASM("dra/nonmatchings/75F54", EntityPlayerDissolves);
 // level up animation
 INCLUDE_ASM("dra/nonmatchings/75F54", EntityLevelUpAnimation);
 
-extern Unkstruct_80138094 D_80138094[];
-
 void func_80121F14(s32 arg0, s32 arg1) {
     Unkstruct_80138094* ptr = D_80138094;
     s32 i;
 
     for (i = 0; i < 16; i++, ptr++) {
-        ptr->unk0 = arg0 + ptr->unk0;
-        ptr->unk4 = arg1 + ptr->unk4;
+        ptr->posX.val = arg0 + ptr->posX.val;
+        ptr->posY.val = arg1 + ptr->posY.val;
     }
 }
 
@@ -1984,7 +1964,37 @@ INCLUDE_ASM("dra/nonmatchings/75F54", func_80121F58);
 // spawns mist (player transform)
 INCLUDE_ASM("dra/nonmatchings/75F54", EntityMist);
 
-INCLUDE_ASM("dra/nonmatchings/75F54", func_80123788);
+// Appears as D_800AD0C4[48].
+void UnknownEntId48(Entity* self) {
+    s32 params;
+
+    params = (u8)self->params;
+    if (!(g_Player.unk0C & 2)) {
+        DestroyEntity(self);
+        return;
+    }
+    if (!IsRelicActive(RELIC_GAS_CLOUD)) {
+        self->hitboxState = 0;
+    } else {
+        self->hitboxState = 2;
+    }
+    if (self->step == 0) {
+        func_8011A328(self, 0xC);
+        self->enemyId = 4;
+        self->hitboxHeight = 8;
+        self->hitboxWidth = 8;
+        self->flags = FLAG_UNK_04000000 | FLAG_UNK_20000;
+        self->step++;
+    }
+    if (params == 0) {
+        self->posX.i.hi = (PLAYER.posX.i.hi + g_Entities[16].posX.i.hi) / 2;
+        self->posY.i.hi = (PLAYER.posY.i.hi + g_Entities[16].posY.i.hi) / 2;
+        self->hitboxWidth = self->hitboxHeight = 0x1C;
+    } else {
+        self->posX.i.hi = D_80138094[params - 1].posX.i.hi;
+        self->posY.i.hi = D_80138094[params - 1].posY.i.hi;
+    }
+}
 
 // Appears as D_800AD0C4[49].
 void UnknownEntId49(Entity* self) {
@@ -2004,10 +2014,10 @@ void UnknownEntId49(Entity* self) {
         self->flags = 0x04060000;
         self->step++;
     }
-    self->unk19 = PLAYER.unk19 & 8;
+    self->drawFlags = PLAYER.drawFlags & FLAG_DRAW_UNK8;
     self->unk6C = PLAYER.unk6C;
 
-    if (ABS(PLAYER.rotAngle) == 0x200) {
+    if (ABS(PLAYER.rotZ) == 0x200) {
         x_offset = PLAYER.entityRoomIndex != 0 ? 0x10 : -0x10;
         self->posX.i.hi = x_offset + PLAYER.posX.i.hi;
         self->posY.i.hi = PLAYER.posY.i.hi + 9 + ((g_GameTimer >> 1) & 1);
@@ -2056,8 +2066,10 @@ void func_80123A60(Entity* entity) {
 INCLUDE_ASM("dra/nonmatchings/75F54", func_80123B40);
 
 void func_80123F78(Entity* entity) {
+    PlayerDraw* plDraw = &g_PlayerDraw[13];
+
     if (D_800973FC == 0) {
-        D_80097F3F = 0;
+        plDraw->enableColorBlend = 0;
         DestroyEntity(entity);
         return;
     }
@@ -2073,49 +2085,29 @@ void func_80123F78(Entity* entity) {
         entity->animSet = ANIMSET_DRA(1);
         entity->animCurFrame = PLAYER.animCurFrame;
         entity->unk5A = 0xD;
-        entity->unk19 = PLAYER.unk19;
+        entity->drawFlags = PLAYER.drawFlags;
         entity->blendMode = 0x30;
         entity->palette = 0x815F;
         entity->zPriority = PLAYER.zPriority - 2;
         entity->facingLeft = PLAYER.facingLeft;
-        do { // TODO: !FAKE
-        } while (0);
-        D_80097F4A = 0x80;
-        D_80097F46 = 0x80;
-        D_80097F42 = 0x80;
-        D_80097F3E = 0x80;
-        D_80097F49 = 0x80;
-        D_80097F45 = 0x80;
-        D_80097F41 = 0x80;
-        D_80097F3D = 0x80;
-        D_80097F48 = 0x80;
-        D_80097F44 = 0x80;
-        D_80097F40 = 0x80;
-        D_80097F3C = 0x80;
-        D_80097F3F = 1;
-        do { // TODO: !FAKE
-        } while (0);
+
+        plDraw->b0 = plDraw->b1 = plDraw->b2 = plDraw->b3 = 128;
+        plDraw->g0 = plDraw->g1 = plDraw->g2 = plDraw->g3 = 128;
+        plDraw->r0 = plDraw->r1 = plDraw->r2 = plDraw->r3 = 128;
+        plDraw->enableColorBlend = true;
         entity->step++;
         break;
 
     case 1:
-        D_80097F4A += 255;
-        if (D_80097F4A < 4) {
-            D_80097F3F = 0;
+        plDraw->b3 += 255;
+        if (plDraw->b3 < 4) {
+            plDraw->enableColorBlend = 0;
             DestroyEntity(entity);
             break;
         }
-        D_80097F46 = D_80097F4A;
-        D_80097F42 = D_80097F4A;
-        D_80097F3E = D_80097F4A;
-        D_80097F49 = D_80097F4A;
-        D_80097F45 = D_80097F4A;
-        D_80097F41 = D_80097F4A;
-        D_80097F3D = D_80097F4A;
-        D_80097F48 = D_80097F4A;
-        D_80097F44 = D_80097F4A;
-        D_80097F40 = D_80097F4A;
-        D_80097F3C = D_80097F4A;
+        plDraw->r0 = plDraw->r1 = plDraw->r2 = plDraw->r3 = plDraw->g0 =
+            plDraw->g1 = plDraw->g2 = plDraw->g3 = plDraw->b0 = plDraw->b1 =
+                plDraw->b2 = plDraw->b3;
         break;
     }
 }
@@ -2540,9 +2532,9 @@ void func_80127840(Entity* entity) {
         }
 
         entity->animSet = ANIMSET_DRA(9);
-        entity->rotAngle = 0;
+        entity->rotZ = 0;
         entity->unk4C = &D_800B07C8;
-        entity->unk19 |= 4;
+        entity->drawFlags |= FLAG_DRAW_ROTZ;
         entity->zPriority = PLAYER.zPriority + 2;
         entity->facingLeft = (PLAYER.facingLeft + 1) & 1;
         SetSpeedX(-0x10);
@@ -2555,7 +2547,7 @@ void func_80127840(Entity* entity) {
     case 1:
         if (entity->animFrameIdx >= 23) {
             if (!(g_GameTimer & 3)) {
-                entity->rotAngle += 0x400;
+                entity->rotZ += 0x400;
             }
             if (entity->velocityX < 0) {
                 entity->velocityX -= FIX(0.09375);

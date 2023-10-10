@@ -380,7 +380,83 @@ bool func_800EB720(void) {
     return false;
 }
 
-INCLUDE_ASM("dra/nonmatchings/4A538", func_800EB758);
+void func_800EB758(
+    s16 pivotX, s16 pivotY, Entity* e, u16 flags, POLY_GT4* p, u8 flipX) {
+    const int H_CENTER = FLT(STAGE_WIDTH / 2);
+    s16 px, py;
+    s16 dx, dy;
+    s32 rot;
+    s32 distance;
+    s32 angle;
+    s16 rx0, ry0;
+    s16 rx1, ry1;
+    s16 rx2, ry2;
+    s16 rx3, ry3;
+    s16 scaledValue;
+
+    if (flipX) {
+        px = pivotX - e->rotPivotX;
+    } else {
+        px = e->rotPivotX + pivotX;
+    }
+    py = pivotY + e->rotPivotY;
+
+    if (flags & FLAG_DRAW_ROTX) {
+        scaledValue = (e->rotX * (s16)(p->x0 - px) - 0x80000000) >> 8;
+        p->x0 = p->x2 = scaledValue + px;
+        scaledValue = (e->rotX * (s16)(p->x1 - px) - 0x80000000) >> 8;
+        p->x1 = p->x3 = scaledValue + px;
+    }
+    if (flags & FLAG_DRAW_ROTY) {
+        scaledValue = (e->rotY * (s16)(p->y0 - py) - 0x80000000) >> 8;
+        p->y0 = p->y1 = scaledValue + py;
+        scaledValue = (e->rotY * (s16)(p->y2 - py) - 0x80000000) >> 8;
+        p->y2 = p->y3 = scaledValue + py;
+    }
+    if (flags & FLAG_DRAW_ROTZ) {
+        if (flipX) {
+            rot = -e->rotZ;
+        } else {
+            rot = e->rotZ;
+        }
+
+        dx = p->x0 - px;
+        dy = p->y0 - py;
+        distance = SquareRoot12((dx * dx + dy * dy) * FLT(1.0));
+        angle = ratan2(dy, dx) + rot;
+        rx0 = ((rcos(angle) >> 4) * distance + H_CENTER) >> 0x14;
+        ry0 = ((rsin(angle) >> 4) * distance + H_CENTER) >> 0x14;
+        p->x0 = rx0 + px;
+        p->y0 = ry0 + py;
+
+        dx = p->x1 - px;
+        dy = p->y1 - py;
+        distance = SquareRoot12((dx * dx + dy * dy) * FLT(1.0));
+        angle = ratan2(dy, dx) + rot;
+        rx1 = ((rcos(angle) >> 4) * distance + H_CENTER) >> 0x14;
+        ry1 = ((rsin(angle) >> 4) * distance + H_CENTER) >> 0x14;
+        p->x1 = rx1 + px;
+        p->y1 = ry1 + py;
+
+        dx = p->x2 - px;
+        dy = p->y2 - py;
+        distance = SquareRoot12((dx * dx + dy * dy) * 4096);
+        angle = ratan2(dy, dx) + rot;
+        rx2 = ((rcos(angle) >> 4) * distance + H_CENTER) >> 0x14;
+        ry2 = ((rsin(angle) >> 4) * distance + H_CENTER) >> 0x14;
+        p->x2 = rx2 + px;
+        p->y2 = ry2 + py;
+
+        dx = p->x3 - px;
+        dy = p->y3 - py;
+        distance = SquareRoot12((dx * dx + dy * dy) * 4096);
+        angle = ratan2(dy, dx) + rot;
+        rx3 = ((rcos(angle) >> 4) * distance + H_CENTER) >> 0x14;
+        ry3 = ((rsin(angle) >> 4) * distance + H_CENTER) >> 0x14;
+        p->x3 = rx3 + px;
+        p->y3 = ry3 + py;
+    }
+}
 
 void ResetEntityArray(void) {
     Entity* entity;
@@ -400,32 +476,7 @@ void ResetEntityArray(void) {
 
 INCLUDE_ASM("dra/nonmatchings/4A538", RenderEntities);
 
-// The loop at the end is weird, the rest is matching
-#ifndef NON_MATCHING
-INCLUDE_ASM("dra/nonmatchings/4A538", func_800ECBF8);
-#else
-typedef struct {
-    s16 unk0, unk2;
-} Unkstruct_800ECBF8_2; /* size = 0x4 */
-
-extern POLY_GT4 D_8004077C[0x300]; // TODO D_8003CB08.polyGT4
-extern POLY_G4 D_8004A37C[0x100];  // TODO D_8003CB08.polyG4
-extern POLY_GT3 D_8004C77C[0x30];  // TODO D_8003CB08.polyGT3
-extern LINE_G2 D_8004CEFC[0x100];  // TODO D_8003CB08.lineG2
-extern SPRT_16 D_8004E2FC[0x280];  // TODO D_8003CB08.sprite16
-extern TILE D_80050AFC[0x100];     // TODO D_8003CB08.tiles
-extern SPRT D_80051AFC[0x200];     // TODO D_8003CB08.sprite
-extern POLY_GT4 D_80057F70[0x300]; // TODO D_800542FC.polyGT4
-extern POLY_G4 D_80061B70[0x100];  // TODO D_80542FC8.polyG4
-extern POLY_GT3 D_80063F70[0x30];  // TODO D_800542FC.polyGT3
-extern LINE_G2 D_800646F0[0x100];  // TODO D_80542FC8.lineG2
-extern SPRT_16 D_80065AF0[0x280];  // TODO D_8003542FCsprite16
-extern TILE D_800682F0[0x100];     // TODO D_8542FC08.tiles
-extern SPRT D_800692F0[0x200];     // TODO D_80542FC8.sprite
-extern Unkstruct_800ECBF8_1 D_80097D1C[0x10];
-extern Unkstruct_800ECBF8_2 D_800A21B8[0x10];
-
-void func_800ECBF8(void) {
+void InitRenderer(void) {
     int i;
     POLY_GT4 *a1, *a2;
     SPRT_16 *b1, *b2;
@@ -434,14 +485,7 @@ void func_800ECBF8(void) {
     POLY_G4 *e1, *e2;
     SPRT *f1, *f2;
     POLY_GT3 *g1, *g2;
-
-    s16* new_var4;
-    int new_var5;
-    int new_var2;
-    Unkstruct_800ECBF8_1* var_v1;
-    s16* new_var;
-    s16* var_a2;
-    s16* var_a0;
+    PlayerDraw* plDraw;
 
     a1 = g_GpuBuffers[0].polyGT4;
     a2 = g_GpuBuffers[1].polyGT4;
@@ -492,25 +536,13 @@ void func_800ECBF8(void) {
         SetPolyGT3(g2);
     }
 
-    var_v1 = &D_80097D1C;
-    i = 0;
-    new_var5 = -2;
-    new_var4 = &D_800A21B8->unk0;
-    var_a0 = &D_800A21B8->unk0 + 1;
-    var_a2 = new_var4;
-    for (; i < 16;) {
-        var_v1->unk00 = *var_a2;
-        var_v1->unk02 = (*var_a0) & 0x1FF;
-        var_v1->unk23 = ((*var_a0) >> 8) & new_var5;
-        var_v1->unk1F = (var_v1->unk00 >> 6) - (-0x10);
-        var_a2 += 2;
-        i++;
-        var_a0 += 2;
-        var_v1++;
+    for (plDraw = g_PlayerDraw, i = 0; i < 16; i++, plDraw++) {
+        plDraw->rect0.x = D_800A21B8[i * 2 + 0];
+        plDraw->rect0.y = D_800A21B8[i * 2 + 1] & 0x1FF;
+        plDraw->flipX = (D_800A21B8[i * 2 + 1] >> 8) & 0xFE;
+        plDraw->tpage = (plDraw->rect0.x >> 6) + 0x10;
     }
 }
-
-#endif
 
 void HideAllBackgroundLayers(void) {
     s32 i;

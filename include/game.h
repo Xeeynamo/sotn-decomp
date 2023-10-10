@@ -114,6 +114,9 @@ typedef struct Primitive {
 #define OTSIZE 0x200
 #define MAXSPRT16 0x280
 
+// Width in pixel of how wide is the horizontal camera during normal game play
+#define STAGE_WIDTH 256
+
 #define BUTTON_COUNT 8
 #define PAD_COUNT 2
 #define PAD_L2 0x0001
@@ -159,6 +162,15 @@ typedef struct Primitive {
 #define CASTLE_MAP_PTR 0x801E0000
 #define DEMO_KEY_PTR 0x801E8000
 #define DEBUG_PTR 0x80280000
+
+// Flags for entity->drawFlags
+#define FLAG_DRAW_ROTX 0x01
+#define FLAG_DRAW_ROTY 0x02
+#define FLAG_DRAW_ROTZ 0x04
+#define FLAG_DRAW_UNK8 0x08
+#define FLAG_DRAW_UNK10 0x10
+#define FLAG_DRAW_UNK20 0x20
+#define FLAG_DRAW_UNK80 0x80
 
 // Flags for entity->flags
 #define FLAG_UNK_2000 0x2000
@@ -533,12 +545,12 @@ typedef struct Entity {
     /* 0x14 */ u16 facingLeft;
     /* 0x16 */ u16 palette;
     /* 0x18 */ s8 blendMode;
-    /* 0x19 */ u8 unk19;
-    /* 0x1A */ s16 unk1A;
-    /* 0x1C */ s16 unk1C;
-    /* 0x1E */ s16 rotAngle;
-    /* 0x20 */ s16 rotPivotX;
-    /* 0x22 */ s16 rotPivotY;
+    /* 0x19 */ u8 drawFlags;
+    /* 0x1A */ s16 rotX;
+    /* 0x1C */ s16 rotY;
+    /* 0x1E */ s16 rotZ;
+    /* 0x20 */ u16 rotPivotX;
+    /* 0x22 */ u16 rotPivotY;
     /* 0x24 */ u16 zPriority;
     /* 0x26 */ u16 entityId;
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
@@ -582,7 +594,7 @@ typedef struct {
     /* 0x02 */ u16 zPriority;
     /* 0x04 */ Multi16 unk4;
     /* 0x06 */ u16 palette;
-    /* 0x08 */ u8 unk8;
+    /* 0x08 */ u8 drawFlags;
     /* 0x09 */ u8 unk9;
     /* 0x0A */ u8 blendMode;
     /* 0x0B */ u8 unkB;
@@ -691,16 +703,33 @@ typedef enum {
     NUM_SPELLS,
 } SpellIds;
 
+// Need two familiar enums. One has a zero entry, one does not.
+// This one is used in places that need to access the familiar
+// stats array...
 typedef enum {
-    FAMILIAR_BAT,
-    FAMILIAR_GHOST,
-    FAMILIAR_FAERIE,
-    FAMILIAR_DEMON,
-    FAMILIAR_SWORD,
-    FAMILIAR_YOUSEI,     // JP only
-    FAMILIAR_NOSE_DEMON, // JP only
+    FAM_STATS_BAT,
+    FAM_STATS_GHOST,
+    FAM_STATS_FAERIE,
+    FAM_STATS_DEMON,
+    FAM_STATS_SWORD,
+    FAM_STATS_YOUSEI,     // JP only
+    FAM_STATS_NOSE_DEMON, // JP only
     NUM_FAMILIARS
-} FamiliarIds;
+} FamiliarStatsIds;
+
+// ...and this one is used to designate the active familiar, where
+// 0 means no familiar is active, and the rest are off-by-one from
+// the previous enum set. Hacky, but works.
+typedef enum {
+    FAM_ACTIVE_NONE,
+    FAM_ACTIVE_BAT,
+    FAM_ACTIVE_GHOST,
+    FAM_ACTIVE_FAERIE,
+    FAM_ACTIVE_DEMON,
+    FAM_ACTIVE_SWORD,
+    FAM_ACTIVE_YOUSEI,     // JP only
+    FAM_ACTIVE_NOSE_DEMON, // JP only
+} FamiliarActiveIds;
 
 typedef struct {
     /* 80097964 */ u8 relics[30];
@@ -1300,6 +1329,29 @@ typedef struct {
     /* 80072F9E */ u16 unk7E;
 } PlayerState;
 
+// Primitive used ad-hoc for the Player entity and the after-image effect
+typedef struct {
+    /* 0x00 */ RECT rect0;
+    /* 0x08 */ RECT rect1;
+    /* 0x10 */ RECT rect2;
+    /* 0x18 */ u8 r0;
+    /* 0x19 */ u8 g0;
+    /* 0x1A */ u8 b0;
+    /* 0x1B */ u8 enableColorBlend;
+    /* 0x1C */ u8 r1;
+    /* 0x1D */ u8 g1;
+    /* 0x1E */ u8 b1;
+    /* 0x1F */ u8 tpage;
+    /* 0x20 */ u8 r2;
+    /* 0x21 */ u8 g2;
+    /* 0x22 */ u8 b2;
+    /* 0x23 */ u8 flipX;
+    /* 0x24 */ u8 r3;
+    /* 0x25 */ u8 g3;
+    /* 0x26 */ u8 b3;
+    /* 0x27 */ u8 unk27;
+} PlayerDraw; /* size = 0x28 */
+
 extern const s16 g_AtanTable[0x400];
 
 extern s32 D_8003925C;
@@ -1480,7 +1532,7 @@ extern u8 g_SaveName[12] ALIGNED4;
 extern Unkstruct_8011A3AC D_80097C38[];
 extern u32 D_80097C40[];
 extern s32 D_80097C98;
-extern Unkstruct_800ECBF8_1 D_80097D1C[0x10];
+extern PlayerDraw g_PlayerDraw[0x10];
 extern s8 D_80097D37;
 extern u8 D_80097F3C;
 extern u8 D_80097F3D;
@@ -1505,7 +1557,7 @@ int VSync(s32);
 s32 rcos(s32);
 s32 rsin(s32);
 s32 SquareRoot0(s32);
-s32 SquareRoot12(s32, s32);
+s32 SquareRoot12(s32);
 long ratan2(long x, long y);
 void* DMACallback(int dma, void (*func)());
 void func_800192DC(s32 arg0, s32 arg1);

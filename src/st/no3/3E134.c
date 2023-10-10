@@ -13,14 +13,15 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
         entity->animSet = ANIMSET_OVL(1);
         entity->animCurFrame = 56;
         if (entity->params != 0) {
-            entity->unk19 = 0xB;
-            entity->unk1A = 0x180;
-            entity->unk1C = 0x180;
+            entity->drawFlags =
+                FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK8;
+            entity->rotX = 0x180;
+            entity->rotY = 0x180;
             entity->unk6C = 0x60;
             entity->posY.i.hi = -16;
             entity->zPriority = 0xC1;
         } else {
-            entity->unk19 = 8;
+            entity->drawFlags = FLAG_DRAW_UNK8;
             entity->unk6C = 0x20;
             entity->zPriority = 0xBF;
         }

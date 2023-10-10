@@ -142,12 +142,13 @@ void func_801601DC(Entity* entity) {
         } else {
             entity->blendMode = 0x10;
         }
-        entity->unk1C = 0x40;
-        entity->unk1A = 0x40;
+        entity->rotY = 0x40;
+        entity->rotX = 0x40;
         entity->unk4C = &D_80154924;
         D_80174FFC++;
         entity->unk6C = 0xFF;
-        entity->unk19 = 0x33;
+        entity->drawFlags =
+            FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20;
         posX = 10;
         posY = 15;
         entity->posY.i.hi = entity->posY.i.hi - posY + (rand() % 35);
@@ -161,8 +162,8 @@ void func_801601DC(Entity* entity) {
             entity->unk6C += 248;
         }
         entity->posY.val += entity->velocityY;
-        entity->unk1A += 8;
-        entity->unk1C += 8;
+        entity->rotX += 8;
+        entity->rotY += 8;
         if (entity->animFrameDuration < 0) {
             func_80156C60(entity);
         }
@@ -324,9 +325,9 @@ void func_80161C2C(Entity* self) {
     switch (step) {
     case 0:
         if (paramsHi == 1) {
-            self->unk1A = 0xC0;
-            self->unk1C = 0xC0;
-            self->unk19 = 3;
+            self->rotX = 0xC0;
+            self->rotY = 0xC0;
+            self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
             self->animSet = ANIMSET_DRA(2);
             self->unk4C = D_80154E04;
         }
@@ -334,9 +335,9 @@ void func_80161C2C(Entity* self) {
         if ((paramsHi == 0) || (paramsHi == 2)) {
             if (params & 3) {
                 self->unk4C = D_80154DC8;
-                self->unk1A = 0x120;
-                self->unk1C = 0x120;
-                self->unk19 = 3;
+                self->rotX = 0x120;
+                self->rotY = 0x120;
+                self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
                 self->animSet = ANIMSET_DRA(2);
             } else {
                 self->animSet = ANIMSET_DRA(5);
@@ -366,8 +367,8 @@ void func_80161C2C(Entity* self) {
         break;
 
     case 1:
-        self->unk1A -= 4;
-        self->unk1C -= 4;
+        self->rotX -= 4;
+        self->rotY -= 4;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         if ((self->animFrameIdx == 8) && (self->unk4C != D_80154C80)) {
