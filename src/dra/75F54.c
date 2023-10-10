@@ -2002,7 +2002,7 @@ void UnknownEntId48(Entity* self) {
         self->enemyId = 4;
         self->hitboxHeight = 8;
         self->hitboxWidth = 8;
-        self->flags = 0x04020000;
+        self->flags = FLAG_UNK_04000000 | FLAG_UNK_20000;
         self->step++;
     }
     if (params == 0) {
