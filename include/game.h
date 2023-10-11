@@ -1439,7 +1439,7 @@ extern u16 g_Player_D_80072EF6; // TODO merge with g_Player
 extern u32 g_Player_unk0C;      // TODO merge with g_Player
 
 extern unkstruct_80072FA0 D_80072FA0[];
-extern u32 g_GameStep; // set to 4 to reload stage from disk
+extern u32 g_GameStep;
 extern s32 D_80073064;
 extern Event g_EvSwCardEnd; // 80073068
 extern Event g_EvSwCardErr; // 8007306C

@@ -148,7 +148,7 @@ void func_800F298C(void) {
             while (prim != NULL) {
                 prim->tpage = 0x1A;
                 prim->clut = 0x120;
-                prim->blendMode = 8;
+                prim->blendMode = BLEND_VISIBLE;
                 prim = prim->next;
             }
         }
