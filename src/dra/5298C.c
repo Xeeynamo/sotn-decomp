@@ -9,7 +9,7 @@ void func_800F298C(void) {
     s32 i;
     s32 ent_unk68;
     void (*unk_function)();
-    void (*unk_function2)();
+    void (*RichterUpdater)();
     s32 tempX;
     s32 tempY;
     s32* ptr_791c;
@@ -483,6 +483,9 @@ void func_800F298C(void) {
                 layer = g_api.o.tileLayers[D_801375BC->tileLayoutId].fg;
                 if (layer->bottom & 0x80) {
                     D_801375BC = &g_api.o.rooms[layer->bottom & 0x7F].load;
+                    // TODO: !FAKE
+                    // D_8009791C is probably part of a struct. see also
+                    // (&g_Camera.posX)->i.hi seen elsewhere in this function.
                     // do-while prevents instruction reordering
                     do {
                         D_8009791C = layer->zPriority;
@@ -674,10 +677,10 @@ void func_800F298C(void) {
                 } else {
                     D_8013759C = PLAYER.posX.i.hi;
                     D_801375A0 = PLAYER.posY.i.hi;
-                    unk_function2 = D_8013C000;
-                    unk_function2();
-                    unk_function2 = D_8013C008;
-                    unk_function2();
+                    RichterUpdater = D_8013C000;
+                    RichterUpdater();
+                    RichterUpdater = D_8013C008;
+                    RichterUpdater();
                     D_801375A4 = D_8013759C - PLAYER.posX.i.hi;
                     D_801375A8 = D_801375A0 - PLAYER.posY.i.hi;
                     playerX -= D_801375A4;
