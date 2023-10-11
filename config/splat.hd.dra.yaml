@@ -54,10 +54,7 @@ segments:
       - [0x3C404, .rodata, demo]
       - [0x3C488, .rodata, 5087C] # func_800F0940
       - [0x3C4A8, .rodata, 52860]
-      - [0x3C4D0, rodata] # jtbl_800DC4D0
-      - [0x3C4F0, rodata] # jtbl_800DC4F0
-      - [0x3C510, rodata] # jtbl_800DC510
-      - [0x3C528, rodata] # jtbl_800DC528
+      - [0x3C4D0, .rodata, 5298C] #func_800F298C
       - [0x3C548, rodata]
       - [0x3C6F8, rodata] # jtbl_800DC6F8
       - [0x3C718, rodata] # jtbl_800DC718

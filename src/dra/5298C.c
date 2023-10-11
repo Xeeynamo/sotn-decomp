@@ -58,7 +58,11 @@ void func_800F298C(void) {
         //  a struct that is 11 bytes in size.
         D_80097910 = D_800A3C58[g_StageId * 11];
         if (g_StageId == STAGE_NO3 && D_8003C730 == 0) {
+#if defined(VERSION_US)
             D_80097910 = 0x32A;
+#elif defined(VERSION_HD)
+            D_80097910 = 0x327;
+#endif
         }
         if ((D_8003C730 == 0) && !(D_8003C708.flags & 0x20)) {
             PlaySfx(D_80097910);
@@ -153,8 +157,11 @@ void func_800F298C(void) {
         func_800FF6C4();
         D_8003C9A4++;
         return;
-    case 0x1:
+    case 1:
         g_GameTimer++;
+#if defined(VERSION_HD)
+        func_800F1424();
+#endif
         func_800F2014();
         D_80097908 = g_Camera.posX.i.hi - D_80073074;
         D_8009790C = g_Camera.posY.i.hi - D_8007307C;
@@ -178,11 +185,17 @@ void func_800F298C(void) {
         }
         g_api.o.unk08();
         g_api.o.Update();
+
+#if defined(VERSION_US)
         if (g_GameState == Game_Ending) {
             if (D_80097C98 == 6) {
                 D_80097C98 = 0;
                 return;
             }
+#elif defined(VERSION_HD)
+        if (0) {
+#endif
+
         } else {
             func_800F2860();
             if (g_DemoMode == Demo_End) {
@@ -372,9 +385,11 @@ void func_800F298C(void) {
                         PlaySfx(0xa7);
                         PlaySfx(0xa3);
                         PlaySfx(0xe);
+#if defined(VERSION_US)
                         if (g_StageId == 0x1f) {
                             func_80131EE8();
                         }
+#endif
                         return;
                     }
                     PlaySfx(0xa7);
@@ -384,7 +399,7 @@ void func_800F298C(void) {
                     D_8003C9A4++;
                     D_800978F8 = 0;
                 } else if ((g_pads[0].tapped & PAD_SELECT) &&
-                           (g_StageId != 0x1f) && (D_8003C8B8 != 0)) {
+                           (g_StageId != STAGE_ST0) && (D_8003C8B8 != 0)) {
                     func_801027C4(6);
                     D_800974A4 = 1;
                     D_8003C9A4 = 20;
@@ -401,9 +416,11 @@ void func_800F298C(void) {
                     PlaySfx(0xF);
                     PlaySfx(0xA4);
                     PlaySfx(0xA8);
-                    if (g_StageId == 0x1f) {
+#if defined(VERSION_US)
+                    if (g_StageId == STAGE_ST0) {
                         func_80131F04();
                     }
+#endif
                 }
             }
             func_801028AC(1);
@@ -609,7 +626,9 @@ void func_800F298C(void) {
                 if (D_80097C98 == 3) {
                     D_8003C9A4 = 1;
                 }
+#if defined(VERSION_US)
                 func_8011A9D8();
+#endif
                 D_800978F8++;
 
                 break;
