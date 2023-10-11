@@ -52,7 +52,7 @@ segments:
       - [0x3C1AC, rodata] # jtbl_800DC1AC
       - [0x3C204, .rodata, collider]
       - [0x3C404, .rodata, demo]
-      - [0x3C488, rodata] # jtbl_800DC488
+      - [0x3C488, .rodata, 5087C] # func_800F0940
       - [0x3C4A8, .rodata, 52860]
       - [0x3C4D0, rodata] # jtbl_800DC4D0
       - [0x3C4F0, rodata] # jtbl_800DC4F0
