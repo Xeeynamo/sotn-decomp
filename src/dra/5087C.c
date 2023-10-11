@@ -19,6 +19,7 @@ s32 func_800F087C(u32 chunkX, u32 chunkY) {
     }
 }
 
+// Performs calculations for background parallax
 void func_800F0940(void) {
     s32 temp;
 
@@ -38,14 +39,14 @@ void func_800F0940(void) {
     case 4:
         g_CurrentRoom.bg[0].scrollX.i.hi = g_Camera.posX.i.hi;
         g_CurrentRoom.bg[0].scrollY.i.hi = g_Camera.posY.i.hi / 2;
-        if (g_StageId == 0x25) {
+        if (g_StageId == STAGE_RCHI) {
             g_CurrentRoom.bg[0].scrollY.i.hi += 0x80;
         }
         return;
     case 5:
         g_CurrentRoom.bg[0].scrollX.i.hi = g_Camera.posX.i.hi / 2;
         g_CurrentRoom.bg[0].scrollY.i.hi = g_Camera.posY.i.hi / 2;
-        if (g_StageId == 0x26) {
+        if (g_StageId == STAGE_RDAI) {
             g_CurrentRoom.bg[0].scrollX.i.hi += 0x80;
         }
         return;
@@ -54,7 +55,7 @@ void func_800F0940(void) {
         temp = (g_Camera.posY.i.hi / 2 - ((g_CurrentRoom.vSize - 1) << 7)) +
                (g_CurrentRoom.bg[0].h << 7);
         g_CurrentRoom.bg[0].scrollY.i.hi = temp;
-        if (g_StageId == 0x26) {
+        if (g_StageId == STAGE_RDAI) {
             g_CurrentRoom.bg[0].scrollX.i.hi += 0x80;
             g_CurrentRoom.bg[0].scrollY.i.hi = g_Camera.posY.i.hi / 2;
         }
