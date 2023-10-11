@@ -19,7 +19,10 @@ s32 func_800F087C(u32 chunkX, u32 chunkY) {
     }
 }
 
+<<<<<<< HEAD
 // Performs calculations for background parallax
+=======
+>>>>>>> b1346836 (Decompile DRA func_800F0940)
 void func_800F0940(void) {
     s32 temp;
 
