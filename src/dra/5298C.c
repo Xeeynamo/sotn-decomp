@@ -275,7 +275,7 @@ void func_800F298C(void) {
             D_801375A8 -= D_8009748C;
             func_800F0940();
 
-            for (i = 0, ent = &g_Entities[0]; i < 256; i++, ent++) {
+            for (i = 0, ent = &g_Entities[0]; i < LEN(g_Entities); i++, ent++) {
                 ent_unk68 = ent->unk68;
                 if (ent_unk68 != 0) {
                     ent->posX.val += ent_unk68 * D_801375B4 * 0x100;
@@ -294,7 +294,7 @@ void func_800F298C(void) {
             func_80121F14(D_801375B4 << 0x10, D_801375B8 << 0x10);
             D_801375A4 = D_801375A6;
             D_801375A8 = D_801375AA;
-
+            // Note: g_PrimBuf is MAX_PRIM_COUNT=1280 total in size.
             for (i = 0, prim = &g_PrimBuf[0]; i < 1024; i++, prim++) {
                 if (prim->blendMode & 2) {
                     switch (prim->type & 0xf) {
@@ -544,7 +544,7 @@ void func_800F298C(void) {
                 func_800F0CD8(0);
                 if (g_StageId == STAGE_RTOP) {
                     DestroyEntities(0x40);
-                    for (i = 0; i < 8; i++) {
+                    for (i = 0; i < LEN(g_unkGraphicsStruct.D_8009742C); i++) {
                         g_unkGraphicsStruct.D_8009742C[i] = 0;
                     }
                     D_80073074 = (s32)g_Camera.posX.i.hi;
@@ -554,13 +554,14 @@ void func_800F298C(void) {
                     func_800F0CD8(0);
                     func_800F0CD8(0);
                     DestroyEntities(0x40);
-                    for (i = 0; i < 8; i++) {
+                    for (i = 0; i < LEN(g_unkGraphicsStruct.D_8009742C); i++) {
                         g_unkGraphicsStruct.D_8009742C[i] = 0;
                     }
                 }
                 D_801375A4 = D_8013759C - PLAYER.posX.val;
                 D_801375A8 = D_801375A0 - PLAYER.posY.val;
-                for (i = 0, ent = &g_Entities[0]; i < 256; i++, ent++) {
+                for (i = 0, ent = &g_Entities[0]; i < LEN(g_Entities); i++,
+                    ent++) {
                     if (ent->flags & 0x20000) {
                         ent->posX.val -= D_801375A4;
                         ent->posY.val -= D_801375A8;
@@ -570,6 +571,7 @@ void func_800F298C(void) {
                 func_80121F14(-D_801375A4, -D_801375A8);
                 D_801375A4 = D_801375A6;
                 D_801375A8 = D_801375AA;
+                // Note: g_PrimBuf is MAX_PRIM_COUNT=1280 total in size.
                 for (i = 0, prim = &g_PrimBuf[0]; i < 1024; i++, prim++) {
                     if (prim->blendMode & 0x100) {
                         switch (prim->type & 0xf) {
@@ -595,7 +597,7 @@ void func_800F298C(void) {
                 }
                 if (g_StageId != STAGE_RTOP) {
                     DestroyEntities(0x40);
-                    for (i = 0; i < 8; i++) {
+                    for (i = 0; i < LEN(g_unkGraphicsStruct.D_8009742C); i++) {
                         g_unkGraphicsStruct.D_8009742C[i] = 0;
                     }
                     D_80073074 = g_Camera.posX.i.hi;
@@ -605,7 +607,7 @@ void func_800F298C(void) {
                     func_800F0CD8(0);
                     func_800F0CD8(0);
                     DestroyEntities(0x40);
-                    for (i = 0; i < 8; i++) {
+                    for (i = 0; i < LEN(g_unkGraphicsStruct.D_8009742C); i++) {
                         g_unkGraphicsStruct.D_8009742C[i] = 0;
                     }
                 }
