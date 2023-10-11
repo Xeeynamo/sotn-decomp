@@ -1917,7 +1917,7 @@ void func_801024DC(void) {
 
 extern Unkstruct_80086FFA D_80086FFA[];
 
-u16 func_801025F4(void) { return D_80086FFA[D_8013799C].unk0; }
+s32 func_801025F4(void) { return D_80086FFA[D_8013799C].unk0; }
 
 void func_80102628(s32 arg0) {
     Primitive* poly;

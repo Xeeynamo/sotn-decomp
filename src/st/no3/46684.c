@@ -22,7 +22,7 @@ void EntityPrizeDrop(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_InitializeData0);
-        self->zPriority = g_zEntityCenter.S16.unk0 - 0x14;
+        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 0x14;
         self->blendMode = 0;
         if (itemId >= 0x18) {
             self->params = 0;
@@ -45,7 +45,8 @@ void EntityPrizeDrop(Entity* self) {
             self->step++;
             if (LOH(self->ext.generic.unk94) != 0) {
                 temp_a0 = LOH(self->ext.generic.unk94) - 1;
-                g_zEntityCenter.S16 = g_zEntityCenter.S16;
+                g_unkGraphicsStruct.g_zEntityCenter.S16 =
+                    g_unkGraphicsStruct.g_zEntityCenter.S16;
                 D_8003BF9C[temp_a0 >> 3] |= 1 << (temp_a0 & 7);
             }
         }

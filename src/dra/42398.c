@@ -673,7 +673,7 @@ void func_800E346C(void) {
     g_GpuBuffers[1].draw.b0 = 0;
 }
 
-void func_800E34A4(s8 arg0) {
+void func_800E34A4(u8 arg0) {
     g_GpuBuffers[0].draw.r0 = arg0;
     g_GpuBuffers[0].draw.g0 = arg0;
     g_GpuBuffers[0].draw.b0 = arg0;
