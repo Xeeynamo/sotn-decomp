@@ -232,7 +232,7 @@ def resolve_jumptables(func: NonMatchingFunc):
                     break
                 jumptable_name = lwcheck.group(1)
                 print(f"Jumptable: {jumptable_name}")
-                addu_regex = "addu\s*\$at, \$at, \\" + jumpreg
+                addu_regex = "addu\s*\$at, \$at, \$"
                 adducheck = re.search(addu_regex, lines[i - 3])
                 if adducheck == None:
                     print("Couldn't get the addu")
