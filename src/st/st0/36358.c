@@ -30,7 +30,7 @@ void EntityPrizeDrop(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_InitializeData0);
-        self->zPriority = g_zEntityCenter.S16.unk0 - 0x14;
+        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 0x14;
         self->blendMode = 0;
         if (itemId >= 0x17) {
             self->params = 0;

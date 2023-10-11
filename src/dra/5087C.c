@@ -455,7 +455,7 @@ void func_800F2404(s32 arg0) {
 
     g_BottomCornerTextTimer = 0;
     g_BottomCornerTextPrims = 0;
-    g_zEntityCenter.unk = 148;
+    g_unkGraphicsStruct.g_zEntityCenter.unk = 148;
     count = 7;
 
     ptr = &D_80097400[17];

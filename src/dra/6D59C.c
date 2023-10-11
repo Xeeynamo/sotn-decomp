@@ -414,7 +414,7 @@ void func_8010E4D0(void) {
     func_80111CC0();
 
     PLAYER.palette = 0x8100;
-    PLAYER.zPriority = g_zEntityCenter.S16.unk0;
+    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0;
 
     if ((u32)(g_Player.unk72 - 1) < 2U) {
         func_8010DA48(0xC7);

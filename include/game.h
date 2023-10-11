@@ -583,7 +583,7 @@ typedef struct Entity {
     /* 0x5C */ s32 unk5C;
     /* 0x60 */ s32 unk60;
     /* 0x64 */ s32 primIndex;
-    /* 0x68 */ s16 unk68;
+    /* 0x68 */ u16 unk68;
     /* 0x6A */ u16 hitEffect;
     /* 0x6C */ u8 unk6C;
     /* 0x6D */ u8 unk6D[11];
@@ -868,10 +868,12 @@ typedef struct {
 typedef struct {
     /* 0x00 */ const u16* layout;
     /* 0x04 */ const TileDefinition* tileDef;
-    /* 0x08 */ const u32 rect;
+    /* 0x08 */ const u8 left;
+    /* 0x09 */ const u8 top;
+    /* 0x0A */ const u8 right;
+    /* 0x0B */ const u8 bottom;
     /* 0x0C */ const u16 zPriority;
-    /* 0x0E */ const u8 unkE;
-    /* 0x0F */ const u8 unkF;
+    /* 0x0E */ const u16 unkE;
 } LayerDef; // size = 0x10
 
 typedef struct {
@@ -1437,12 +1439,14 @@ extern u16 g_Player_D_80072EF6; // TODO merge with g_Player
 extern u32 g_Player_unk0C;      // TODO merge with g_Player
 
 extern unkstruct_80072FA0 D_80072FA0[];
-extern u32 g_GameStep; // set to 4 to reload stage from disk
+extern u32 g_GameStep;
 extern s32 D_80073064;
-extern Event g_EvSwCardEnd;
-extern Event g_EvSwCardErr;
-extern Event g_EvSwCardTmo;
-extern Event g_EvSwCardNew;
+extern Event g_EvSwCardEnd; // 80073068
+extern Event g_EvSwCardErr; // 8007306C
+extern Event g_EvSwCardTmo; // 80073070
+extern s32 D_80073074;      // Probably also an Event?
+extern Event g_EvSwCardNew; // 80073078
+extern s32 D_8007307C;      // Maybe also an Event?
 extern s32 D_80073080;
 extern TileDefinition* D_80073088;
 extern Camera g_Camera;
@@ -1469,7 +1473,7 @@ extern Entity D_8007A958[]; // &g_Entities[160]
 extern Entity D_8007C0D8[]; // &g_Entities[192]
 extern Entity D_8007D858[]; // &g_Entities[224]
 extern Entity D_8007DE38[];
-extern Multi g_zEntityCenter;
+extern unkGraphicsStruct g_unkGraphicsStruct;
 extern s32 g_entityDestroyed[];
 extern Entity D_8007EF1C;
 extern Event g_EvHwCardEnd;
@@ -1502,7 +1506,10 @@ extern s32 D_80097420[];
 extern s32 D_80097424;
 extern s32 D_80097448[]; // underwater physics. 7448 and 744C. Could be struct.
 extern s32 D_80097450;
+extern s32 D_80097488;
+// Overlapping data, worth further investigation
 extern u16 D_8009748A[];
+extern s32 D_8009748C;
 
 /*
  * Elevator moving, "underflowed" to 0xFF
@@ -1524,6 +1531,8 @@ extern s32 D_8009790C;
 extern s32 D_80097910;
 extern DemoMode g_DemoMode;
 extern s32 g_mapTilesetId; // 0x80097918
+extern s32 D_8009791C;
+extern s32 D_80097920;
 extern s32 D_80097924;
 extern s32 D_80097928;
 extern GpuUsage g_GpuUsage;

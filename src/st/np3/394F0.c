@@ -710,7 +710,8 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->step_s = 0;
     g_CurrentEntity->step++;
     if (g_CurrentEntity->zPriority == 0) {
-        g_CurrentEntity->zPriority = g_zEntityCenter.S16.unk0 - 0xC;
+        g_CurrentEntity->zPriority =
+            g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 0xC;
     }
 }
 

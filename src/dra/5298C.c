@@ -2,7 +2,732 @@
 
 #define CH(x) ((x)-0x20)
 
-INCLUDE_ASM("dra/nonmatchings/5298C", func_800F298C);
+void func_800F298C(void) {
+    Entity* ent;
+    Primitive* prim;
+    LayerDef* layer;
+    s32 i;
+    s32 ent_unk68;
+    void (*RichterInitializer)();
+    void (*RichterUpdater)();
+    s32 tempX;
+    s32 tempY;
+    s32* ptr_791c;
+    // This function is a state machine, this variable is some kind of
+    // overall state of the game engine
+    switch (D_8003C9A4) {
+    case 0:
+        if (g_IsUsingCd) {
+            return;
+        }
+        D_8006BB00 = 0;
+        D_801375C8 = 0;
+        D_8003C8B8 = 1;
+        g_StageId = func_800F16D0();
+        DestroyEntities(0);
+        DestroyAllPrimitives();
+        func_800EDAE4();
+        func_800EAD7C();
+        func_8010189C();
+        func_800F2404(0);
+        if ((g_StageId == STAGE_ST0) ||
+            (g_PlayableCharacter != PLAYER_ALUCARD)) {
+            RichterInitializer = D_8013C004;
+            if (g_StageId == STAGE_ST0) {
+                RichterInitializer(1);
+            } else {
+                RichterInitializer(0);
+            }
+        } else {
+            func_80109594();
+        }
+        if (g_StageId == STAGE_MAD) {
+            g_api.o.unk3C();
+        }
+        g_backbufferX = 0;
+        g_backbufferY = 0;
+        func_800F14CC();
+        LoadRoomLayer(D_801375BC->tileLayoutId);
+        if (D_8003C708.flags & 0x20) {
+            func_800EAF28(3);
+        }
+        if (D_8003C708.flags & 0x40) {
+            func_800EAF28(4);
+        }
+        D_80097910 = g_StagesLba[g_StageId].unk18;
+        if (g_StageId == STAGE_NO3 && D_8003C730 == 0) {
+#if defined(VERSION_US)
+            D_80097910 = 0x32A;
+#elif defined(VERSION_HD)
+            D_80097910 = 0x327;
+#endif
+        }
+        if ((D_8003C730 == 0) && !(D_8003C708.flags & 0x20)) {
+            PlaySfx(D_80097910);
+        }
+        D_80097928 = 0;
+        func_800EA538(2);
+        if (D_801375BC->tilesetId != 0) {
+            func_800EA5E4(D_801375BC->tilesetId + 0x7fff | 0x4000);
+        }
+        if (D_801375BC->objGfxId != 0) {
+            func_800EAF28(D_801375BC->objGfxId + 0x7fff);
+            D_80097904 = D_801375BC->objGfxId + 0x7fff;
+        } else {
+            D_80097904 = 0;
+        }
+        tempX = PLAYER.posX.i.hi;
+        tempY = PLAYER.posY.i.hi;
+        playerX = tempX;
+        playerY = tempY;
+        PLAYER.posX.i.hi = (u8)tempX;
+        PLAYER.posY.i.hi = (u8)tempY;
+        if (PLAYER.posX.i.hi < 0x80) {
+            PLAYER.facingLeft = 0;
+        } else {
+            PLAYER.facingLeft = 1;
+        }
+        ptr_791c = &D_8009791C;
+        g_CurrentRoom.x =
+            ((D_801375BC - 1)->tileLayoutId - g_CurrentRoom.left) << 8;
+        g_CurrentRoom.y =
+            ((D_801375BC - 1)->tilesetId - g_CurrentRoom.top) << 8;
+        g_CurrentRoom.width =
+            (((D_801375BC - 1)->objGfxId - g_CurrentRoom.left) + 1) << 8;
+        g_CurrentRoom.height =
+            (((D_801375BC - 1)->objLayoutId - g_CurrentRoom.top) + 1) << 8;
+
+        *ptr_791c = (playerX >> 8) + g_CurrentRoom.left;
+        D_80097920 = (playerY >> 8) + g_CurrentRoom.top;
+
+        g_Camera.posX.i.hi = (*ptr_791c - g_CurrentRoom.left) << 8;
+        g_Camera.posY.i.hi = (D_80097920 - g_CurrentRoom.top) << 8;
+
+        if (D_8003C730 == 2) {
+            g_CurrentRoom.height -= 0x100;
+            PLAYER.facingLeft = 1;
+            g_CurrentRoom.bottom -= 1;
+        }
+        if (D_8006C374 == 0x2C) {
+            g_CurrentRoom.y = 0x2FB;
+            g_CurrentRoom.height = 0x3FB;
+            g_StageId = STAGE_TOP;
+        }
+        if (D_80097C98 == 6) {
+            PLAYER.facingLeft = 1;
+        }
+        if ((D_80097C98 == 4) || (D_80097C98 == 5) || (D_80097C98 == 6)) {
+            func_800EA5AC(2, 0xFF, 0xFF, 0xFF);
+        }
+        func_800F0CD8(0);
+        func_800F0CD8(0);
+        D_80073074 = (s32)g_Camera.posX.i.hi;
+        D_8007307C = (s32)g_Camera.posY.i.hi;
+        g_api.o.InitRoomEntities(D_801375BC->objLayoutId);
+        g_api.o.Update();
+        g_api.o.Update();
+        func_800F0940();
+        func_801024DC();
+        if ((D_80097C98 != 4) && (D_80097C98 != 5) && (D_80097C98 != 6)) {
+            func_801027C4(4);
+            func_801027C4(2);
+        }
+        D_80097C98 = 0;
+        if (D_8003C730 == 1) {
+            func_800E6218(2);
+        } else {
+            func_800E6218(0);
+        }
+        if (D_8003C730 == 3) {
+            D_8003C730 = 0;
+        }
+        func_800F24F4();
+        D_800973F8 = AllocPrimitives(PRIM_GT4, 16);
+        if (D_800973F8 != 0) {
+            prim = &g_PrimBuf[D_800973F8];
+            while (prim != NULL) {
+                prim->tpage = 0x1A;
+                prim->clut = 0x120;
+                prim->blendMode = BLEND_VISIBLE;
+                prim = prim->next;
+            }
+        }
+        func_800FF6C4();
+        D_8003C9A4++;
+        return;
+    case 1:
+        g_GameTimer++;
+#if defined(VERSION_HD)
+        func_800F1424();
+#endif
+        func_800F2014();
+        D_80097908 = g_Camera.posX.i.hi - D_80073074;
+        D_8009790C = g_Camera.posY.i.hi - D_8007307C;
+        D_80073074 = g_Camera.posX.i.hi;
+        D_8007307C = g_Camera.posY.i.hi;
+
+        g_api.o.TestCollisions();
+        D_8013759C = PLAYER.posX.i.hi;
+        g_Player.unk7C = PLAYER.posX.i.hi;
+        D_80097488 = 0;
+        D_8009748C = 0;
+        D_801375A0 = PLAYER.posY.i.hi;
+        g_Player.unk7E = PLAYER.posY.i.hi;
+        if ((g_StageId == STAGE_ST0) ||
+            (g_PlayableCharacter != PLAYER_ALUCARD)) {
+            D_8013C000();
+            D_8013C008();
+        } else {
+            EntityAlucard();
+            func_8011A4D0();
+        }
+        g_api.o.unk08();
+        g_api.o.Update();
+
+#if defined(VERSION_US)
+        if (g_GameState == Game_Ending) {
+            if (D_80097C98 == 6) {
+                D_80097C98 = 0;
+                return;
+            }
+#elif defined(VERSION_HD)
+        if (0) {
+#endif
+
+        } else {
+            func_800F2860();
+            if (g_DemoMode == Demo_End) {
+                g_DemoMode = Demo_None;
+                D_80097C98 = 0x08000000;
+                LoadSaveData(0x801EA000);
+                D_8003C730 = 2;
+                g_GameStep = Play_PrepareNextStage;
+                return;
+            }
+            if (D_80097C98 < 0) {
+                PlaySfx(7);
+                StoreSaveData(0x801EA000, 0, 0);
+                g_GameStep = Play_PrepareNextStage;
+                return;
+            }
+            if ((D_80097C98 == 4) || (D_80097C98 == 5) || (D_80097C98 == 6)) {
+                PlaySfx(7);
+                func_800EA5AC(0xFFFF, 0xFF, 0xFF, 0xFF);
+            }
+            if (D_80097C98 == 4) {
+                func_800F223C();
+                D_8006C374 = 0x25;
+                g_GameStep = Play_PrepareNextStage;
+                return;
+            } else if (D_80097C98 == 5) {
+                func_800F223C();
+                D_8006C374 = 0x26;
+                g_GameStep = Play_PrepareNextStage;
+                return;
+            } else if (D_80097C98 == 6) {
+                g_StageId = 0x22;
+                func_800F223C();
+                D_8006C374 = 0x27;
+                g_GameStep = Play_PrepareNextStage;
+                return;
+            } else if (D_80097C98 == 1) {
+                PLAYER.posX.i.hi += 0x100;
+            }
+            D_801375A4 = D_8013759C - PLAYER.posX.i.hi;
+            D_801375A8 = D_801375A0 - PLAYER.posY.i.hi;
+            playerX -= D_801375A4;
+            playerY -= D_801375A8;
+            D_8013759C = PLAYER.posX.val;
+            D_801375A0 = PLAYER.posY.val;
+            D_801375AC = g_Camera.posX.i.hi;
+            D_801375B0 = g_Camera.posY.i.hi;
+
+            if (*D_80097420 != 0) {
+                func_8010E0D0(*D_80097420);
+                PlaySfx(0xE);
+                D_8003C9A4 = 5;
+                return;
+            }
+            i = func_800F0CD8(1);
+            if (i != 0) {
+                func_801027A4();
+                if (i >= 2) {
+                    D_8006C374 = i - 2;
+                    g_GameStep = Play_PrepareNextStage;
+                    return;
+                }
+                if (D_801375BC->tilesetId == 0xFF) {
+                    D_8006C374 = D_801375BC->tileLayoutId;
+                    g_GameStep = Play_PrepareNextStage;
+                    return;
+                }
+                D_8003C9A4 = 3;
+                D_800978F8 = 0;
+                return;
+            }
+            D_801375B4 = D_801375AC - g_Camera.posX.i.hi;
+            D_801375B8 = D_801375B0 - g_Camera.posY.i.hi;
+            D_801375A4 = D_8013759C - PLAYER.posX.val;
+            D_801375A8 = D_801375A0 - PLAYER.posY.val;
+            D_801375A4 -= D_80097488;
+            D_801375A8 -= D_8009748C;
+            func_800F0940();
+
+            for (i = 0, ent = &g_Entities[0]; i < LEN(g_Entities); i++, ent++) {
+                ent_unk68 = ent->unk68;
+                if (ent_unk68 != 0) {
+                    ent->posX.val += ent_unk68 * D_801375B4 * 0x100;
+                    ent->posY.val += ent_unk68 * D_801375B8 * 0x100;
+                } else {
+                    if (ent->flags & FLAG_UNK_08000000) {
+                        ent->posX.i.hi += D_801375B4;
+                        ent->posY.i.hi += D_801375B8;
+                    }
+                    if ((ent->flags & FLAG_UNK_40000) != 0) {
+                        ent->posX.val -= D_801375A4;
+                        ent->posY.val -= D_801375A8;
+                    }
+                }
+            }
+            func_80121F14(D_801375B4 << 0x10, D_801375B8 << 0x10);
+            D_801375A4 = D_801375A6;
+            D_801375A8 = D_801375AA;
+            // Note: g_PrimBuf is MAX_PRIM_COUNT=1280 total in size.
+            for (i = 0, prim = &g_PrimBuf[0]; i < 1024; i++, prim++) {
+                if (prim->blendMode & 2) {
+                    switch (prim->type & 0xf) {
+                    case PRIM_G4:
+                    case PRIM_GT4:
+                        prim->x3 += D_801375B4;
+                        prim->y3 += D_801375B8;
+                    case PRIM_GT3:
+                        prim->x2 += D_801375B4;
+                        prim->y2 += D_801375B8;
+                    case PRIM_LINE_G2:
+                        prim->x1 += D_801375B4;
+                        prim->y1 += D_801375B8;
+                    case PRIM_TILE:
+                    case PRIM_SPRT:
+                        prim->x0 += D_801375B4;
+                        prim->y0 += D_801375B8;
+                    case PRIM_NONE:
+                    case PRIM_ENV:
+                        break;
+                    }
+                } else if (prim->blendMode & 0x200) {
+                    switch (prim->type & 0xf) {
+                    case PRIM_G4:
+                    case PRIM_GT4:
+                        prim->x3 -= D_801375A4;
+                        prim->y3 -= D_801375A8;
+                    case PRIM_GT3:
+                        prim->x2 -= D_801375A4;
+                        prim->y2 -= D_801375A8;
+                    case PRIM_LINE_G2:
+                        prim->x1 -= D_801375A4;
+                        prim->y1 -= D_801375A8;
+                    case PRIM_TILE:
+                    case PRIM_SPRT:
+                        prim->x0 -= D_801375A4;
+                        prim->y0 -= D_801375A8;
+                    case PRIM_NONE:
+                    case PRIM_ENV:
+                        break;
+                    }
+                }
+            }
+            func_80102D70();
+            func_801028AC(0);
+            DrawHudAlucard();
+            func_800E414C();
+            if (D_80137598 != 0) {
+                func_80105428();
+            }
+            if (g_Player.unk0C & 0x80000) {
+                D_8003C9A4 = 10;
+                D_800978F8 = 0;
+            }
+            if (D_800973FC != 0) {
+                if (D_8006BB00 == 0) {
+                    D_8006BB00 = 1;
+                    func_80131EE8();
+                }
+            } else if (D_8006BB00 != 0) {
+                if (*D_80097400 != 0) {
+                    D_80097928 = 0;
+                    D_8006BB00 = 0;
+                    func_80131F04();
+                } else if (D_80097928 == 0) {
+                    D_8006BB00 = 0;
+                    func_80131F04();
+                } else {
+                    func_80131F04();
+                    if (!(D_8003C708.flags & 0x60)) {
+                        PlaySfx(D_80097910);
+                        if (D_80097910 != 0) {
+                            D_80097928 = 0;
+                        }
+                    }
+                    D_8006BB00 = 0;
+                }
+            }
+            if (!(g_Player.unk0C & 0x40000)) {
+                if ((g_pads[0].tapped & PAD_START) && (D_8003C8B8 != 0)) {
+                    func_801027A4();
+                    if ((g_StageId == STAGE_ST0) ||
+                        (g_PlayableCharacter != PLAYER_ALUCARD)) {
+                        if (func_8010183C(0) == 0) {
+                            return;
+                        }
+                        D_800974A4 = 1;
+                        D_8003C9A4 = 0x70;
+                        PlaySfx(0xa7);
+                        PlaySfx(0xa3);
+                        PlaySfx(0xe);
+#if defined(VERSION_US)
+                        if (g_StageId == STAGE_ST0) {
+                            func_80131EE8();
+                        }
+#endif
+                        return;
+                    }
+                    PlaySfx(0xa7);
+                    PlaySfx(0xa3);
+                    PlaySfx(0xe);
+                    func_801027C4(1);
+                    D_8003C9A4++;
+                    D_800978F8 = 0;
+                } else if ((g_pads[0].tapped & PAD_SELECT) &&
+                           (g_StageId != STAGE_ST0) && (D_8003C8B8 != 0)) {
+                    func_801027C4(6);
+                    D_800974A4 = 1;
+                    D_8003C9A4 = 20;
+                }
+                break;
+            }
+            break;
+        case 0x70:
+            DrawHudAlucard();
+            if (g_pads[0].tapped & PAD_START) {
+                if (func_8010183C(1) != 0) {
+                    D_800974A4 = 0;
+                    D_8003C9A4 = 1;
+                    PlaySfx(0xF);
+                    PlaySfx(0xA4);
+                    PlaySfx(0xA8);
+#if defined(VERSION_US)
+                    if (g_StageId == STAGE_ST0) {
+                        func_80131F04();
+                    }
+#endif
+                }
+            }
+            func_801028AC(1);
+            break;
+        case 0x2:
+            func_800FBC24();
+            func_801028AC(1);
+            break;
+        case 0x14:
+            if (D_8013AED0 != 0) {
+                func_800F2658();
+            }
+            if (g_pads[0].tapped & (PAD_START | PAD_SELECT)) {
+                func_801027C4(7);
+                D_800974A4 = 0;
+                D_8003C9A4 = 1;
+            }
+            g_api.o.unk28();
+            func_80102D70();
+            func_801028AC(1);
+            break;
+        case 0x3:
+            switch (D_800978F8) {
+            case 0:
+                if (D_80097C98 == 2) {
+                    func_800EA5AC(0xFF, 0xFF, 0xFF, 0xFF);
+                    D_800978F8 = 3;
+                } else {
+                    func_801027C4(1);
+                case 2:
+                    D_800978F8++;
+                }
+                break;
+            case 1:
+                if (func_801025F4() != 0) {
+                    D_800978F8++;
+                }
+                break;
+            case 3:
+                if (g_IsUsingCd) {
+                    if (D_80097C98 == 2) {
+                        func_800EA5AC(0xFF, 0xFF, 0xFF, 0xFF);
+                    }
+                    break;
+                } else if (D_80097928 != 0) {
+                    D_80097910 = g_StagesLba[g_StageId].unk18;
+                    if (D_800973FC != 1) {
+                        PlaySfx(0xA);
+                        if (func_80131F68() == false) {
+                            PlaySfx(D_80097910);
+                            D_80097928 = 0;
+                        } else {
+                            break;
+                        }
+                    }
+                }
+                if (D_80137598 != 0) {
+                    func_8010427C();
+                    D_80137598 = 0;
+                }
+                layer = g_api.o.tileLayers[D_801375BC->tileLayoutId].fg;
+                if (layer->bottom & 0x80) {
+                    D_801375BC = &g_api.o.rooms[layer->bottom & 0x7F].load;
+                    // TODO: !FAKE
+                    // D_8009791C is probably part of a struct. see also
+                    // (&g_Camera.posX)->i.hi seen elsewhere in this function.
+                    // do-while prevents instruction reordering
+                    do {
+                        D_8009791C = layer->zPriority;
+                    } while (0);
+                    D_80097920 = layer->unkE;
+                } else {
+                    D_8009791C = (playerX >> 8) + g_CurrentRoom.left;
+                    D_80097920 = (playerY >> 8) + g_CurrentRoom.top;
+                }
+                D_8013759C = PLAYER.posX.val;
+                D_801375A0 = PLAYER.posY.val;
+                PLAYER.posX.i.hi = D_801375C0 + g_Camera.posX.i.hi;
+                PLAYER.posY.i.hi = D_801375C4 + g_Camera.posY.i.hi;
+                if (D_8003C708.flags & 0x60) {
+                    func_800EAF28(1);
+                }
+                func_800EA538(2);
+                if (D_801375BC->tilesetId != 0) {
+                    func_800EA5E4((D_801375BC->tilesetId + 0x7FFF) | 0x4000);
+                }
+                if (D_801375BC->objGfxId != 0) {
+                    func_800EAF28(D_801375BC->objGfxId + 0x7FFF);
+                    D_80097904 = D_801375BC->objGfxId + 0x7FFF;
+                } else {
+                    D_80097904 = 0;
+                }
+                func_800F2404(1);
+                PLAYER.posY.i.hi = (u8)PLAYER.posY.i.hi;
+                PLAYER.posX.i.hi = (u8)PLAYER.posX.i.hi;
+                LoadRoomLayer(D_801375BC->tileLayoutId);
+                if (D_8003C708.flags & 0x20) {
+                    func_800EAF28(3);
+                }
+                if (D_8003C708.flags & 0x40) {
+                    func_800EAF28(4);
+                }
+                g_CurrentRoom.x =
+                    ((D_801375BC - 1)->tileLayoutId - g_CurrentRoom.left) << 8;
+                g_CurrentRoom.y =
+                    ((D_801375BC - 1)->tilesetId - g_CurrentRoom.top) << 8;
+                g_CurrentRoom.width =
+                    (((D_801375BC - 1)->objGfxId - g_CurrentRoom.left) + 1)
+                    << 8;
+                g_CurrentRoom.height =
+                    (((D_801375BC - 1)->objLayoutId - g_CurrentRoom.top) + 1)
+                    << 8;
+                // permuter found this weird & -> thing, I don't know man
+                (&g_Camera.posX)->i.hi = (D_8009791C - g_CurrentRoom.left) << 8;
+                g_Camera.posY.i.hi = (D_80097920 - g_CurrentRoom.top) << 8;
+                playerX = PLAYER.posX.i.hi + g_Camera.posX.i.hi;
+                playerY = PLAYER.posY.i.hi + g_Camera.posY.i.hi;
+                func_8011A9D8();
+                PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0;
+                func_800F0CD8(0);
+                func_8010BFFC();
+                playerX = PLAYER.posX.i.hi + g_Camera.posX.i.hi;
+                playerY = PLAYER.posY.i.hi + g_Camera.posY.i.hi;
+                func_800F0CD8(0);
+                if (g_StageId == STAGE_RTOP) {
+                    DestroyEntities(0x40);
+                    for (i = 0; i < LEN(g_unkGraphicsStruct.D_8009742C); i++) {
+                        g_unkGraphicsStruct.D_8009742C[i] = 0;
+                    }
+                    D_80073074 = (s32)g_Camera.posX.i.hi;
+                    D_8007307C = (s32)g_Camera.posY.i.hi;
+                    g_api.o.InitRoomEntities(D_801375BC->objLayoutId);
+                    g_api.o.Update();
+                    func_800F0CD8(0);
+                    func_800F0CD8(0);
+                    DestroyEntities(0x40);
+                    for (i = 0; i < LEN(g_unkGraphicsStruct.D_8009742C); i++) {
+                        g_unkGraphicsStruct.D_8009742C[i] = 0;
+                    }
+                }
+                D_801375A4 = D_8013759C - PLAYER.posX.val;
+                D_801375A8 = D_801375A0 - PLAYER.posY.val;
+                for (i = 0, ent = &g_Entities[0]; i < LEN(g_Entities); i++,
+                    ent++) {
+                    if (ent->flags & 0x20000) {
+                        ent->posX.val -= D_801375A4;
+                        ent->posY.val -= D_801375A8;
+                    }
+                }
+                i = 0;
+                func_80121F14(-D_801375A4, -D_801375A8);
+                D_801375A4 = D_801375A6;
+                D_801375A8 = D_801375AA;
+                // Note: g_PrimBuf is MAX_PRIM_COUNT=1280 total in size.
+                for (i = 0, prim = &g_PrimBuf[0]; i < 1024; i++, prim++) {
+                    if (prim->blendMode & 0x100) {
+                        switch (prim->type & 0xf) {
+                        case PRIM_G4:
+                        case PRIM_GT4:
+                            prim->x3 -= D_801375A4;
+                            prim->y3 -= D_801375A8;
+                        case PRIM_GT3:
+                            prim->x2 -= D_801375A4;
+                            prim->y2 -= D_801375A8;
+                        case PRIM_LINE_G2:
+                            prim->x1 -= D_801375A4;
+                            prim->y1 -= D_801375A8;
+                        case PRIM_TILE:
+                        case PRIM_SPRT:
+                            prim->x0 -= D_801375A4;
+                            prim->y0 -= D_801375A8;
+                        case PRIM_NONE:
+                        case PRIM_ENV:
+                            break;
+                        }
+                    }
+                }
+                if (g_StageId != STAGE_RTOP) {
+                    DestroyEntities(0x40);
+                    for (i = 0; i < LEN(g_unkGraphicsStruct.D_8009742C); i++) {
+                        g_unkGraphicsStruct.D_8009742C[i] = 0;
+                    }
+                    D_80073074 = g_Camera.posX.i.hi;
+                    D_8007307C = g_Camera.posY.i.hi;
+                    g_api.o.InitRoomEntities(D_801375BC->objLayoutId);
+                    g_api.o.Update();
+                    func_800F0CD8(0);
+                    func_800F0CD8(0);
+                    DestroyEntities(0x40);
+                    for (i = 0; i < LEN(g_unkGraphicsStruct.D_8009742C); i++) {
+                        g_unkGraphicsStruct.D_8009742C[i] = 0;
+                    }
+                }
+                D_80073074 = g_Camera.posX.i.hi;
+                D_8007307C = g_Camera.posY.i.hi;
+                if (D_80097C98 == 2) {
+                    D_80097C98 = 3;
+                    func_800EA5AC(0x40, 0xFF, 0xFF, 0xFF);
+                } else {
+                    D_80097C98 = 0;
+                }
+                g_api.o.InitRoomEntities(D_801375BC->objLayoutId);
+                g_api.o.Update();
+                g_api.o.Update();
+                func_800F0940();
+                func_800E414C();
+                func_800F24F4();
+                if (D_80097C98 == 3) {
+                    D_8003C9A4 = 1;
+                }
+#if defined(VERSION_US)
+                func_8011A9D8();
+#endif
+                D_800978F8++;
+
+                break;
+            case 4:
+                if (func_800EB720() == 0) {
+                    func_801027C4(2);
+                    D_800978F8++;
+                }
+                break;
+            case 5:
+                if (func_801025F4() != 0) {
+                    D_8003C9A4 = 1;
+                }
+                break;
+            }
+            func_801028AC(1);
+            func_801028AC(1);
+            break;
+        case 0x5:
+            if (*D_80097420 != 0) {
+                if (g_StageId != STAGE_ST0) {
+                    if (g_PlayableCharacter == PLAYER_ALUCARD) {
+                        if (*D_80097420 == 0xFFF) {
+                            EntityAlucard();
+                            func_8011A870();
+                            g_api.o.unk28();
+                            if (g_pads[1].pressed & PAD_DOWN) {
+                                *D_80097420 = 0;
+                            }
+                        } else {
+                            if (*D_80097420 != 0xFF) {
+                                func_8010DF70(*D_80097420);
+                                func_8011A4D0();
+                            }
+                            g_api.o.unk28();
+                            func_80102D70();
+                        }
+                    } else {
+                        g_api.o.unk28();
+                        func_80102D70();
+                    }
+                } else {
+                    D_8013759C = PLAYER.posX.i.hi;
+                    D_801375A0 = PLAYER.posY.i.hi;
+                    RichterUpdater = D_8013C000;
+                    RichterUpdater();
+                    RichterUpdater = D_8013C008;
+                    RichterUpdater();
+                    D_801375A4 = D_8013759C - PLAYER.posX.i.hi;
+                    D_801375A8 = D_801375A0 - PLAYER.posY.i.hi;
+                    playerX -= D_801375A4;
+                    playerY -= D_801375A8;
+                }
+            } else {
+                func_8010E168(1, 0x30);
+                D_8003C9A4 = 1;
+                PlaySfx(0xF);
+            }
+            DrawHudAlucard();
+            return;
+        case 0xA:
+            switch (D_800978F8) {
+            case 0:
+                if (g_IsUsingCd) {
+                    break;
+                }
+                PlaySfx(0x81);
+                D_80097910 = 0;
+                if (g_StageId == STAGE_ST0) {
+                    SetGameState(Game_GameOver);
+                    ClearImage(&g_Vram.D_800ACDA0, 0xFF, 0xFF, 0xFF);
+                    func_800E34A4(-1);
+                    DestroyEntities(0);
+                    DestroyAllPrimitives();
+                    func_800EDAE4();
+                    return;
+                }
+                SetGameState(Game_GameOver);
+                func_800E5498();
+                return;
+            case 1:
+                if (func_801025F4() != 0) {
+                    D_800978F8++;
+                }
+                break;
+            case 2:
+                SetGameState(Game_GameOver);
+                func_800E346C();
+                break;
+            }
+            func_801028AC(0);
+            break;
+        }
+    }
+}
 
 bool func_800F483C(void) {
     s32 buf[BUTTON_COUNT];
@@ -1997,7 +2722,7 @@ void func_800FAEC4(u16 pad, u16 arg1, s32 arg2, s16 arg3, u16 arg4) {
     g_IsSelectingEquipment = 0;
     func_800FAC98();
     func_800FAD34(arg2, arg1, arg3, arg4);
-    D_800978F8 += 1;
+    D_800978F8++;
 }
 
 void func_800FAF44(s32 arg0) {

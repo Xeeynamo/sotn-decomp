@@ -1174,7 +1174,7 @@ void EntityBreakable(Entity* entity) {
         }
     } else {
         InitializeEntity(g_eBreakableInit);
-        entity->zPriority = g_zEntityCenter.S16.unk0 - 0x14;
+        entity->zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 0x14;
         entity->blendMode = g_eBreakableBlendModes[breakableType];
         entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
         entity->animSet = g_eBreakableanimSets[breakableType];
@@ -1308,7 +1308,7 @@ void EntityWarpRoom(Entity* self) {
         g_Player.D_80072EFC = 0x80;
         g_Player.D_80072EF4 = 0;
         PLAYER.zPriority = 0x5C;
-        g_zEntityCenter.unk = 0x5C;
+        g_unkGraphicsStruct.g_zEntityCenter.unk = 0x5C;
         D_8003C8B8 = 0;
         prim = self->ext.warpRoom.primFade;
         prim->g0 = prim->b0 = prim->r0 = prim->r0 + 2;
@@ -1325,7 +1325,7 @@ void EntityWarpRoom(Entity* self) {
         g_Player.D_80072EFC = 0x80;
         g_Player.D_80072EF4 = 0;
         PLAYER.zPriority = 0x5C;
-        g_zEntityCenter.unk = 0x5C;
+        g_unkGraphicsStruct.g_zEntityCenter.unk = 0x5C;
         D_8003C8B8 = 0;
         prim = self->ext.warpRoom.primFade;
         prim->blendMode = 0x31;

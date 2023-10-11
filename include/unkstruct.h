@@ -278,3 +278,9 @@ typedef struct {
     s32 unk4;
     s32 unk8;
 } unk_800B08CC; // size = 0xC
+
+typedef struct {
+    Multi g_zEntityCenter;
+    byte pad[0x1A];
+    s32 D_8009742C[8];
+} unkGraphicsStruct;
