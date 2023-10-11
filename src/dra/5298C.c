@@ -374,7 +374,8 @@ void func_800F298C(void) {
             if (!(g_Player.unk0C & 0x40000)) {
                 if ((g_pads[0].tapped & PAD_START) && (D_8003C8B8 != 0)) {
                     func_801027A4();
-                    if ((g_StageId == 0x1f) || (g_PlayableCharacter != 0)) {
+                    if ((g_StageId == STAGE_ST0) ||
+                        (g_PlayableCharacter != PLAYER_ALUCARD)) {
                         if (func_8010183C(0) == 0) {
                             return;
                         }
@@ -384,7 +385,7 @@ void func_800F298C(void) {
                         PlaySfx(0xa3);
                         PlaySfx(0xe);
 #if defined(VERSION_US)
-                        if (g_StageId == 0x1f) {
+                        if (g_StageId == STAGE_ST0) {
                             func_80131EE8();
                         }
 #endif
