@@ -19,7 +19,56 @@ s32 func_800F087C(u32 chunkX, u32 chunkY) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/5087C", func_800F0940);
+void func_800F0940(void) {
+    s32 temp;
+
+    switch (g_CurrentRoom.bg[0].flags) {
+    case 1:
+        g_CurrentRoom.bg[0].scrollX.i.hi = g_Camera.posX.i.hi;
+        g_CurrentRoom.bg[0].scrollY.i.hi = g_Camera.posY.i.hi;
+        return;
+    case 2:
+        g_CurrentRoom.bg[0].scrollX.i.hi = (g_Camera.posX.i.hi / 2);
+        g_CurrentRoom.bg[0].scrollY.i.hi = (g_Camera.posY.i.hi / 2) + 0x76;
+        return;
+    case 3:
+        g_CurrentRoom.bg[0].scrollX.i.hi = g_Camera.posX.i.hi / 2;
+        g_CurrentRoom.bg[0].scrollY.i.hi = g_Camera.posY.i.hi;
+        return;
+    case 4:
+        g_CurrentRoom.bg[0].scrollX.i.hi = g_Camera.posX.i.hi;
+        g_CurrentRoom.bg[0].scrollY.i.hi = g_Camera.posY.i.hi / 2;
+        if (g_StageId == 0x25) {
+            g_CurrentRoom.bg[0].scrollY.i.hi += 0x80;
+        }
+        return;
+    case 5:
+        g_CurrentRoom.bg[0].scrollX.i.hi = g_Camera.posX.i.hi / 2;
+        g_CurrentRoom.bg[0].scrollY.i.hi = g_Camera.posY.i.hi / 2;
+        if (g_StageId == 0x26) {
+            g_CurrentRoom.bg[0].scrollX.i.hi += 0x80;
+        }
+        return;
+    case 6:
+        g_CurrentRoom.bg[0].scrollX.i.hi = g_Camera.posX.i.hi / 2;
+        temp = (g_Camera.posY.i.hi / 2 - ((g_CurrentRoom.vSize - 1) << 7)) +
+               (g_CurrentRoom.bg[0].h << 7);
+        g_CurrentRoom.bg[0].scrollY.i.hi = temp;
+        if (g_StageId == 0x26) {
+            g_CurrentRoom.bg[0].scrollX.i.hi += 0x80;
+            g_CurrentRoom.bg[0].scrollY.i.hi = g_Camera.posY.i.hi / 2;
+        }
+        return;
+    case 7:
+        g_CurrentRoom.bg[0].scrollY.i.hi = 4;
+        g_CurrentRoom.bg[0].scrollX.i.hi = g_Camera.posX.i.hi / 2;
+        return;
+    default:
+        g_CurrentRoom.bg[0].scrollX.i.hi = 0;
+        g_CurrentRoom.bg[0].scrollY.i.hi = 4;
+        return;
+    }
+}
 
 bool SetNextRoomToLoad(u32 x, u32 y) {
     s32 res;
@@ -492,3 +541,5 @@ bool func_800F27F4(s32 arg0) {
     }
     D_801375C8 = 8;
 }
+
+const u32 rodata_padding_3C530 = 0;

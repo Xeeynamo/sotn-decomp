@@ -66,7 +66,7 @@ segments:
       - [0x3C238, rodata] # RenderPrimitives
       - [0x3C290, .rodata, collider]
       - [0x3C490, .rodata, demo]
-      - [0x3C514, rodata] # func_800F0940
+      - [0x3C514, .rodata, 5087C] # func_800F0940
       - [0x3C534, .rodata, 52860] # func_800F2860
       - [0x3C55C, rodata] # func_800F298C
       - [0x3C57C, rodata] # func_800F298C
