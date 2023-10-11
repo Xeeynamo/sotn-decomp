@@ -388,7 +388,6 @@ extern JosephsCloak g_JosephsCloak;
 extern Lba g_StagesLba[];
 extern Unsktruct_800EAF28* D_800A3B5C[];
 extern UnkStructClut* D_800A3BB8[];
-extern u32 D_800A3C58[];
 extern SubweaponDef g_SubwpnDefs[];
 extern SpellDef g_SpellDefs[];
 extern const char* g_WingSmashComboStr;

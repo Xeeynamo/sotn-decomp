@@ -1,13 +1,12 @@
 #include "game.h"
 
-extern Lba g_StagesLba[]; // g_lba
-extern u32 D_800A3C44;    // g_StagesLba.unk4
-extern u32 D_800A3C48;    // g_StagesLba.unk8
-extern u32 D_800A3C4C;    // g_StagesLba.unkC
-extern u32 D_800A3C50;    // g_StagesLba.unk10
-extern u32 D_800A3C54;    // g_StagesLba.unk14
-// need to comment out this one due to use in func_800F298C
-// extern u32 D_800A3C58;          // g_StagesLba.unk18
+extern Lba g_StagesLba[];       // g_lba
+extern u32 D_800A3C44;          // g_StagesLba.unk4
+extern u32 D_800A3C48;          // g_StagesLba.unk8
+extern u32 D_800A3C4C;          // g_StagesLba.unkC
+extern u32 D_800A3C50;          // g_StagesLba.unk10
+extern u32 D_800A3C54;          // g_StagesLba.unk14
+extern u32 D_800A3C58;          // g_StagesLba.unk18
 extern const char D_800A3C5C[]; // g_StagesLba.unk1C
 extern const char D_800A3C60[]; // g_StagesLba.unk20
 extern const char D_800A3C64[]; // g_StagesLba.unk24

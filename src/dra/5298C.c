@@ -54,9 +54,7 @@ void func_800F298C(void) {
         if (D_8003C708.flags & 0x40) {
             func_800EAF28(4);
         }
-        // Rather than *11, this is probably loading a value from
-        //  a struct that is 11 bytes in size.
-        D_80097910 = D_800A3C58[g_StageId * 11];
+        D_80097910 = g_StagesLba[g_StageId].unk18;
         if (g_StageId == STAGE_NO3 && D_8003C730 == 0) {
 #if defined(VERSION_US)
             D_80097910 = 0x32A;
@@ -466,7 +464,7 @@ void func_800F298C(void) {
                     }
                     break;
                 } else if (D_80097928 != 0) {
-                    D_80097910 = D_800A3C58[g_StageId * 11];
+                    D_80097910 = g_StagesLba[g_StageId].unk18;
                     if (D_800973FC != 1) {
                         PlaySfx(0xA);
                         if (func_80131F68() == false) {
