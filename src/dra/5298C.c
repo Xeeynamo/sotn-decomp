@@ -8,7 +8,7 @@ void func_800F298C(void) {
     LayerDef* layer;
     s32 i;
     s32 ent_unk68;
-    void (*unk_function)();
+    void (*RichterInitializer)();
     void (*RichterUpdater)();
     s32 tempX;
     s32 tempY;
@@ -32,11 +32,11 @@ void func_800F298C(void) {
         func_800F2404(0);
         if ((g_StageId == STAGE_ST0) ||
             (g_PlayableCharacter != PLAYER_ALUCARD)) {
-            unk_function = D_8013C004;
+            RichterInitializer = D_8013C004;
             if (g_StageId == STAGE_ST0) {
-                unk_function(1);
+                RichterInitializer(1);
             } else {
-                unk_function(0);
+                RichterInitializer(0);
             }
         } else {
             func_80109594();
