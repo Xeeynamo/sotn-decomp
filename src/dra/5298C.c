@@ -631,12 +631,12 @@ void func_800F298C(void) {
         case 0x5:
             if (*D_80097420 != 0) {
                 if (g_StageId != STAGE_ST0) {
-                    if (g_PlayableCharacter == 0) {
+                    if (g_PlayableCharacter == PLAYER_ALUCARD) {
                         if (*D_80097420 == 0xFFF) {
                             EntityAlucard();
                             func_8011A870();
                             g_api.o.unk28();
-                            if (g_pads[1].pressed & 0x4000) {
+                            if (g_pads[1].pressed & PAD_DOWN) {
                                 *D_80097420 = 0;
                             }
                         } else {
