@@ -201,13 +201,13 @@ void func_800F298C(void) {
                 D_80097C98 = 0x08000000;
                 LoadSaveData(0x801EA000);
                 D_8003C730 = 2;
-                g_GameStep = 4;
+                g_GameStep = Play_PrepareNextStage;
                 return;
             }
             if (D_80097C98 < 0) {
                 PlaySfx(7);
                 StoreSaveData(0x801EA000, 0, 0);
-                g_GameStep = 4;
+                g_GameStep = Play_PrepareNextStage;
                 return;
             }
             if ((D_80097C98 == 4) || (D_80097C98 == 5) || (D_80097C98 == 6)) {
@@ -217,18 +217,18 @@ void func_800F298C(void) {
             if (D_80097C98 == 4) {
                 func_800F223C();
                 D_8006C374 = 0x25;
-                g_GameStep = 4;
+                g_GameStep = Play_PrepareNextStage;
                 return;
             } else if (D_80097C98 == 5) {
                 func_800F223C();
                 D_8006C374 = 0x26;
-                g_GameStep = 4;
+                g_GameStep = Play_PrepareNextStage;
                 return;
             } else if (D_80097C98 == 6) {
                 g_StageId = 0x22;
                 func_800F223C();
                 D_8006C374 = 0x27;
-                g_GameStep = 4;
+                g_GameStep = Play_PrepareNextStage;
                 return;
             } else if (D_80097C98 == 1) {
                 PLAYER.posX.i.hi += 0x100;
@@ -253,12 +253,12 @@ void func_800F298C(void) {
                 func_801027A4();
                 if (i >= 2) {
                     D_8006C374 = i - 2;
-                    g_GameStep = 4;
+                    g_GameStep = Play_PrepareNextStage;
                     return;
                 }
                 if (D_801375BC->tilesetId == 0xFF) {
                     D_8006C374 = D_801375BC->tileLayoutId;
-                    g_GameStep = 4;
+                    g_GameStep = Play_PrepareNextStage;
                     return;
                 }
                 D_8003C9A4 = 3;
