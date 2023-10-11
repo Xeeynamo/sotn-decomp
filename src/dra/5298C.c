@@ -482,8 +482,8 @@ void func_800F298C(void) {
                     D_80137598 = 0;
                 }
                 layer = g_api.o.tileLayers[D_801375BC->tileLayoutId].fg;
-                if (layer->unkB & 0x80) {
-                    D_801375BC = &g_api.o.rooms[((layer->unkB & 0x7F))].load;
+                if (layer->bottom & 0x80) {
+                    D_801375BC = &g_api.o.rooms[((layer->bottom & 0x7F))].load;
                     // do-while prevents instruction reordering
                     do {
                         D_8009791C = layer->zPriority;

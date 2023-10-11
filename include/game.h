@@ -868,10 +868,10 @@ typedef struct {
 typedef struct {
     /* 0x00 */ const u16* layout;
     /* 0x04 */ const TileDefinition* tileDef;
-    const u8 unk8;
-    const u8 unk9;
-    const u8 unkA;
-    const u8 unkB;
+    /* 0x08 */ const u8 left;
+    /* 0x09 */ const u8 top;
+    /* 0x0A */ const u8 right;
+    /* 0x0B */ const u8 bottom;
     /* 0x0C */ const u16 zPriority;
     /* 0x0E */ const u16 unkE;
 } LayerDef; // size = 0x10
