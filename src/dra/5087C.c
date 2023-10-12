@@ -71,13 +71,13 @@ void func_800F0940(void) {
     }
 }
 
-bool SetNextRoomToLoad(u32 x, u32 y) {
+s32 SetNextRoomToLoad(u32 x, u32 y) {
     s32 res;
     RoomHeader* room;
     u32 stack[4];
 
     if (g_Player.unk0C & 0x40000) {
-        return false;
+        return 0;
     }
     res = func_800F087C(x, y);
     if (res) {
@@ -87,18 +87,17 @@ bool SetNextRoomToLoad(u32 x, u32 y) {
     room = g_api.o.rooms;
     while (true) {
         if (room->left == 0x40) {
-            return false;
+            return 0;
         }
-        if (room->left <= x && room->top <= y) {
-            if (room->right >= x && room->bottom >= y) {
-                stack[0] = &room->load;
-                if (room->load.tilesetId == 0xFF &&
-                    D_800A245C[room->load.tileLayoutId].stageId == STAGE_ST0) {
-                    return false;
-                }
-                D_801375BC = &room->load;
-                return true;
+        if (room->left <= x && room->top <= y && room->right >= x &&
+            room->bottom >= y) {
+            stack[0] = &room->load;
+            if (room->load.tilesetId == 0xFF &&
+                D_800A245C[room->load.tileLayoutId].stageId == STAGE_ST0) {
+                return 0;
             }
+            D_801375BC = &room->load;
+            return 1;
         }
         room++;
     }
