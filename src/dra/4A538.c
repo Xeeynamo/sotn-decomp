@@ -159,7 +159,7 @@ void func_800EAF28(s32 arg0) {
     s32 temp_v1;
     s32 i;
     s32 new_var;
-    Unsktruct_800EAF28* var_a1;
+    u16* var_a1;
     unkstruct_80072FA0* var_a0;
 
     if (arg0 & ANIMSET_OVL_FLAG) {
@@ -173,10 +173,10 @@ void func_800EAF28(s32 arg0) {
         for (i = 0; i < 0x10; i++) {
             var_a0 = &D_80072FA0[i];
             if (var_a0->unk4 == 0) {
-                var_a0->unk4 = var_a1->unk0;
+                var_a0->unk4 = var_a1[0];
                 var_a0->unk6 = 0;
                 var_a0->unk8 = 0;
-                var_a0->unk0 = var_a1 + 1;
+                var_a0->unk0 = var_a1 + 2;
                 break;
             }
         }

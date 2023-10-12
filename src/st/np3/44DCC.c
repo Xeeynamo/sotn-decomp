@@ -196,7 +196,7 @@ void EntitySplashWater(Entity* self) {
 
     case 2:
         MoveEntity(self);
-        if (D_80086FF0[self->primIndex * 0x34] < 9) {
+        if (g_PrimBuf[self->primIndex].r0 < 9) {
             DestroyEntity(self);
             return;
         }

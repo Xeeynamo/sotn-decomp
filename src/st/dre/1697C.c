@@ -25,7 +25,7 @@ void EntityFadeToWhite1(Entity* self) {
 
     case 1:
         if (D_801A3F84 & 0x10) {
-            D_8008701E[self->primIndex * 0x1A] = 0x35;
+            g_PrimBuf[self->primIndex].blendMode = 0x35;
             g_api.PlaySfx(SE_DRE_FADE_TO_WHITE);
             self->step++;
         }
@@ -105,7 +105,7 @@ void EntityFadeToWhite2(Entity* self) {
 
     case 1:
         if (D_801A3F84 & 0x10) {
-            D_8008701E[self->primIndex * 0x1A] = 0x35;
+            g_PrimBuf[self->primIndex].blendMode = 0x35;
             self->step++;
         }
         break;

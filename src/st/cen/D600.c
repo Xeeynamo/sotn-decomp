@@ -543,11 +543,11 @@ void EntityPlatform(Entity* self) {
             ((self->posY.i.hi - player->posY.i.hi) < 80)) {
             D_8003C8B8 = 0;
             *D_80097400 = 1;
-            if (g_Player_unk0C & 1) {
+            if (g_Player.unk0C & 1) {
                 g_Player.D_80072EF4 = 8;
-            } else if (g_Player_unk0C & 2) {
+            } else if (g_Player.unk0C & 2) {
                 g_Player.D_80072EF4 = 4;
-            } else if (g_Player_unk0C & 4) {
+            } else if (g_Player.unk0C & 4) {
                 g_Player.D_80072EF4 = 2;
             } else if (temp_s1 > 384) {
                 g_Player.D_80072EF4 = 0x8000;
@@ -564,13 +564,13 @@ void EntityPlatform(Entity* self) {
 
     case 2:
         g_Player.D_80072EF4 = 0;
-        if (g_Player_unk0C & 7) {
+        if (g_Player.unk0C & 7) {
             if (g_Timer & 1) {
-                if (g_Player_unk0C & 1) {
+                if (g_Player.unk0C & 1) {
                     g_Player.D_80072EF4 = 8;
-                } else if (g_Player_unk0C & 2) {
+                } else if (g_Player.unk0C & 2) {
                     g_Player.D_80072EF4 = 4;
-                } else if (g_Player_unk0C & 4) {
+                } else if (g_Player.unk0C & 4) {
                     g_Player.D_80072EF4 = 2;
                 }
             }
