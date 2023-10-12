@@ -3,13 +3,6 @@
  */
 
 typedef struct {
-    /* 0x0 */ char pad0[0xA];
-    /* 0xA */ s16 unkA;
-    /* 0xC */ s16 unkC;
-    /* 0xE */ s16 unkE;
-} Unkstruct4; // size = 0x10
-
-typedef struct {
     /* 0x0 */ s16 x;
     /* 0x2 */ s16 y;
 } Point16; // size = 0x4
@@ -20,12 +13,7 @@ typedef struct {
 } Point32; // size = 0x8
 
 typedef struct {
-    /* 0x0 */ u16 unk0;
-    /* 0x2 */ u16 unk2;
-} Unsktruct_800EAF28; // size = 0x4
-
-typedef struct {
-    /* 0x0 */ Unsktruct_800EAF28* unk0;
+    /* 0x0 */ u16* unk0;
     /* 0x4 */ u16 unk4;
     /* 0x6 */ s16 unk6;
     /* 0x8 */ s16 unk8;
@@ -43,18 +31,7 @@ typedef struct {
     /* 0x40 */ s32 unk40;
     /* 0x44 */ s32 unk44;
     /* 0x48 */ s32 unk48;
-} Unkstruct8; // size = unknown
-
-typedef struct {
-    /* 0x00 */ u8 unk0;
-    /* 0x01 */ u8 unk1;
-    /* 0x02 */ u8 pad2[0x1E - 0x02];
-} Unkstruct_80137638; // size = 0x1E
-
-typedef struct {
-    /* 0x00 */ u16 unk0;
-    /* 0x02 */ char pad2[0x32];
-} Unkstruct_80086FFA; // size = 0x34
+} Unkstruct8; // size = 0x4C
 
 typedef struct {
     /* 0x00 */ u8 vabid;
@@ -139,16 +116,6 @@ typedef struct Unkstruct_80128BBC {
     /* 0x04 */ Unkstruct_80128BBC_Sub unk04[4];
 } Unkstruct_80128BBC;
 
-typedef struct Unkstruct_aSimCBinDemoKey {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ s8 unk4;
-    /* 0x05 */ char pad5[0x3];
-    /* 0x08 */ s32 unk8;
-    /* 0x0C */ s32 unkC;
-    /* 0x10 */ s32 unk10;
-    /* 0x14 */ s32 unk14;
-} Unkstruct_aSimCBinDemoKey;
-
 typedef struct Unkstruct_800A2D98 {
     /* 0x0 */ s32 equipTypeFilter;
     /* 0x4 */ s32 unk4;
@@ -229,6 +196,7 @@ typedef struct {
     u8 unk2;
     u8 unk3;
 } unkstruct_800ACF7C;
+
 typedef struct {
     /* 0x0 */ s16 animSet;
     /* 0x2 */ s16 unk2; // Entity::unk5A
@@ -253,14 +221,6 @@ typedef struct Unkstruct_800F9F40 {
     /* 0xA */ s8 unkA;
     /* 0xC */ s16 unkC;
 } Unkstruct_800F9F40;
-
-typedef struct {
-    /* 0x00 */ const char* name;
-    /* 0x04 */ const char* desc;
-    /* 0x08 */ s16 unk08;
-    /* 0x0A */ s16 unk0A;
-    /* 0x0C */ s32 unk0C;
-} RelicDesc;
 
 typedef struct Unkstruct_801C7954 {
     /* 0x00 */ u16 x1;

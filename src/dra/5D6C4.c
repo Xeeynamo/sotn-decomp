@@ -588,7 +588,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
             amount -= amount / 3;
         }
     }
-    if (g_Player_unk0C & 0x80) {
+    if (g_Player.unk0C & 0x80) {
         damage->damageTaken = g_Status.hpMax / 8;
         ret = 8;
     } else if (damage->unk0 & 0x200) {
@@ -610,7 +610,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
         } else {
             damage->damageTaken = g_Status.hpMax / 8;
         }
-        if (g_Player_unk0C & 0x4000) {
+        if (g_Player.unk0C & 0x4000) {
             damage->damageTaken *= 2;
         }
         // Check for player wearing a Talisman (chance to dodge attack)
@@ -633,7 +633,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
             ret = 3;
         } else {
             if (g_Status.defenseEquip > 99 && !(damage->unk0 & 0x180) &&
-                !(g_Player_unk0C & 0x80)) {
+                !(g_Player.unk0C & 0x80)) {
                 damage->damageKind = 0;
                 ret = 1;
             } else {
@@ -1915,60 +1915,52 @@ void func_801024DC(void) {
     prim->blendMode = BLEND_VISIBLE;
 }
 
-extern Unkstruct_80086FFA D_80086FFA[];
-
-s32 func_801025F4(void) { return D_80086FFA[D_8013799C].unk0; }
+s32 func_801025F4(void) { return g_PrimBuf[D_8013799C].clut; }
 
 void func_80102628(s32 arg0) {
-    Primitive* poly;
-    s32 temp;
-    s32 i = 0;
+    Primitive* prim;
+    s32 i;
 
-    poly = &g_PrimBuf[D_8013799C];
-
-    if (poly != NULL) {
-        temp = arg0 / 2;
-        while (poly != NULL) {
-            poly->y0 = 0;
-            poly->u0 = (u8)temp;
-            poly->v0 = 0xF0;
-            poly->b0 = 0;
-            poly->g0 = 0;
-            poly->r0 = 0;
-            poly->priority = 0x1FD;
-            poly->blendMode = BLEND_VISIBLE;
-            poly->x0 = temp * (i & 1);
-            poly = poly->next;
-            i++;
-        }
+    prim = &g_PrimBuf[D_8013799C];
+    for (i = 0; prim != NULL; i++) {
+        prim->y0 = 0;
+        prim->u0 = arg0 / 2;
+        prim->v0 = 0xF0;
+        prim->b0 = 0;
+        prim->g0 = 0;
+        prim->r0 = 0;
+        prim->priority = 0x1FD;
+        prim->blendMode = BLEND_VISIBLE;
+        prim->x0 = arg0 / 2 * (i & 1);
+        prim = prim->next;
     }
 }
 
 void func_801026BC(s32 arg0) {
-    Primitive* poly = &g_PrimBuf[D_801379A0];
+    Primitive* prim = &g_PrimBuf[D_801379A0];
 
     if (arg0 == 0) {
-        poly->blendMode = BLEND_VISIBLE;
+        prim->blendMode = BLEND_VISIBLE;
         return;
     } else if (!(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
-        SetPrimRect(poly, 0, 1, 255, 255);
+        SetPrimRect(prim, 0, 1, 255, 255);
     } else {
-        poly->x2 = 255;
-        poly->x0 = 255;
-        poly->y1 = 240;
-        poly->y0 = 240;
-        poly->x3 = 0;
-        poly->x1 = 0;
-        poly->y3 = -15;
-        poly->y2 = -15;
+        prim->x2 = 255;
+        prim->x0 = 255;
+        prim->y1 = 240;
+        prim->y0 = 240;
+        prim->x3 = 0;
+        prim->x1 = 0;
+        prim->y3 = -15;
+        prim->y2 = -15;
     }
 
-    func_80107250(poly, arg0 * 2);
+    func_80107250(prim, arg0 * 2);
 
     if (arg0 == 0x40) {
-        poly->blendMode = 0;
+        prim->blendMode = 0;
     } else {
-        poly->blendMode = 0x35;
+        prim->blendMode = 0x35;
     }
 }
 

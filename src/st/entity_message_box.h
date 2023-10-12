@@ -142,7 +142,7 @@ void EntityMessageBox(Entity* self) {
         break;
 
     case 4:
-        D_8008701E[self->primIndex * 0x1A] = 0;
+        g_PrimBuf[self->primIndex].blendMode = 0;
         self->ext.messageBox.duration++;
         if (self->ext.messageBox.duration > self->params) {
             DestroyEntity(self);

@@ -81,7 +81,7 @@ struct DIRENTRY {
     /* 0x1C */ struct DIRENTRY* next;
     /* 0x20*/ long head;
     /* 0x24 */ char system[4];
-}; // size=0x28
+}; // size = 0x28
 
 void EnterCriticalSection(void);
 void ExitCriticalSection(void);

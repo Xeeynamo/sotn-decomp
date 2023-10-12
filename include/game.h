@@ -1028,6 +1028,14 @@ typedef struct {
 typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ const char* desc;
+    /* 0x08 */ s16 unk08;
+    /* 0x0A */ s16 unk0A;
+    /* 0x0C */ s32 unk0C;
+} RelicDesc; /* size=0x10 */
+
+typedef struct {
+    /* 0x00 */ const char* name;
+    /* 0x04 */ const char* desc;
     /* 0x08 */ u16 icon;
     /* 0x0A */ u16 iconPalette;
 #ifndef VERSION_BETA
@@ -1385,7 +1393,6 @@ extern s32 D_8003C738;
 extern s32 D_8003C73C;
 extern u32 D_8003C744;
 extern u32 g_RoomCount;
-extern Unsktruct_800EAF28** D_8003C798;
 extern GameApi g_api;
 extern s32 D_8003C8B8;
 extern u32 g_GameTimer; // Increases when unpaused
@@ -1432,13 +1439,11 @@ extern u16 D_8006F3CC[];
 extern u16 D_8006F42C[];
 extern s16 D_800705CC[];
 extern u32 D_80070BCC;
-extern Unkstruct4 D_80072B34;
 
 extern PlayerState g_Player;
 extern u16 g_Player_D_80072EF6; // TODO merge with g_Player
-extern u32 g_Player_unk0C;      // TODO merge with g_Player
 
-extern unkstruct_80072FA0 D_80072FA0[];
+extern unkstruct_80072FA0 D_80072FA0[0x10];
 extern u32 g_GameStep;
 extern s32 D_80073064;
 extern Event g_EvSwCardEnd; // 80073068
@@ -1479,11 +1484,9 @@ extern Entity D_8007EF1C;
 extern Event g_EvHwCardEnd;
 extern Event g_EvHwCardErr;
 extern Event g_EvHwCardTmo;
-extern u8 D_80086FF0[];
 extern Event g_EvHwCardNew;
 extern u8 g_Pix[4][128 * 128 / 2];
-extern u16 D_8008701E[];
-extern Primitive g_PrimBuf[MAX_PRIM_COUNT]; // entity polygons
+extern Primitive g_PrimBuf[MAX_PRIM_COUNT];
 extern s32 playerX;
 extern s32 playerY;
 extern u32 g_randomNext;

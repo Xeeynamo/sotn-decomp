@@ -511,7 +511,7 @@ void EntitySoulStealOrb(Entity* self) {
             return;
         }
         InitializeEntity(g_InitializeData0);
-        D_8008701E[primIndex * 0x1a] = 8;
+        g_PrimBuf[primIndex].blendMode = BLEND_VISIBLE;
         self->primIndex = primIndex;
         self->animSet = ANIMSET_DRA(0);
         self->flags |= FLAG_HAS_PRIMS;
@@ -1058,7 +1058,7 @@ void EntitySplashWater(Entity* self) {
 
     case 2:
         MoveEntity(self);
-        if (D_80086FF0[self->primIndex * 0x34] < 9) {
+        if (g_PrimBuf[self->primIndex].r0 < 9) {
             DestroyEntity(self);
             return;
         }

@@ -2632,21 +2632,19 @@ void func_800FAB1C(void) {
     }
 }
 
-extern Unkstruct_80137638 D_80137638[];
-
-void func_800FAB8C(s32 arg0) {
-    D_80137638[arg0].unk0 = 1;
-    D_80137638[arg0].unk1 = 0;
+void func_800FAB8C(s32 menuIndex) {
+    g_MenuData.menus[menuIndex].unk1C = 1;
+    g_MenuData.menus[menuIndex].unk1D = 0;
 }
 
-void func_800FABBC(s32 arg0) {
-    D_80137638[arg0].unk0 = 3;
-    D_80137638[arg0].unk1 = 0;
+void func_800FABBC(s32 menuIndex) {
+    g_MenuData.menus[menuIndex].unk1C = 3;
+    g_MenuData.menus[menuIndex].unk1D = 0;
 }
 
-void func_800FABEC(s32 context) { D_80137638[context].unk0 = 0; }
+void func_800FABEC(s32 menuIndex) { g_MenuData.menus[menuIndex].unk1C = 0; }
 
-void func_800FAC0C(s32 context) { D_80137638[context].unk0 = 2; }
+void func_800FAC0C(s32 menuIndex) { g_MenuData.menus[menuIndex].unk1C = 2; }
 
 void func_800FAC30(void) {
     D_80137844[0] = 0;
