@@ -14,7 +14,7 @@ void func_8010D59C(void) {
     Primitive* prim;
     s32 i;
 
-    if (g_Entities[1].ext.ent1.unk0 != 0) {
+    if (g_Entities[1].ext.entSlot1.unk0 != 0) {
         return;
     }
     switch (PLAYER.ext.player.unkAC) {
@@ -23,27 +23,27 @@ void func_8010D59C(void) {
     case 0x60:
     case 0x61:
     case 0x62:
-        g_Entities[1].ext.ent1.unk2 = 10;
+        g_Entities[1].ext.entSlot1.unk2 = 10;
         return;
     }
     if ((g_Player.padTapped & GAMEBUTTONS) ||
         ((g_Player.padHeld ^ g_Player.padPressed) & g_Player.padHeld &
          GAMEBUTTONS) ||
         (PLAYER.velocityY > FIX(0.5))) {
-        g_Entities[1].ext.ent1.unk2 = 0;
-        g_Entities[1].ext.ent1.unk3 = 0;
+        g_Entities[1].ext.entSlot1.unk2 = 0;
+        g_Entities[1].ext.entSlot1.unk3 = 0;
     } else {
-        if (g_Entities[1].ext.ent1.unk2 >= 10) {
+        if (g_Entities[1].ext.entSlot1.unk2 >= 10) {
             return;
         }
-        if (g_Entities[1].ext.ent1.unk3 == 0) {
-            g_Entities[1].ext.ent1.unk3 =
-                g_D_800ACF18[g_Entities[1].ext.ent1.unk2];
+        if (g_Entities[1].ext.entSlot1.unk3 == 0) {
+            g_Entities[1].ext.entSlot1.unk3 =
+                g_D_800ACF18[g_Entities[1].ext.entSlot1.unk2];
         }
-        if (!(--g_Entities[1].ext.ent1.unk3 & 0xFF)) {
-            g_Entities[1].ext.ent1.unk2++;
-            g_Entities[1].ext.ent1.unk3 =
-                g_D_800ACF18[g_Entities[1].ext.ent1.unk2];
+        if (!(--g_Entities[1].ext.entSlot1.unk3 & 0xFF)) {
+            g_Entities[1].ext.entSlot1.unk2++;
+            g_Entities[1].ext.entSlot1.unk3 =
+                g_D_800ACF18[g_Entities[1].ext.entSlot1.unk2];
         }
     }
     if (g_Entities[1].animFrameIdx != 0) {
@@ -87,9 +87,9 @@ void func_8010D800(void) {
 
     i = 0;
     prim = &g_PrimBuf[g_Entities[1].primIndex];
-    temp_t2 = g_Entities[1].ext.ent1.unk1;
-    temp_t1 = g_shadowOpacityReductionTable[g_Entities[1].ext.ent1.unk2];
-    temp_t0 = g_D_800ACF3C[g_Entities[1].ext.ent1.unk2];
+    temp_t2 = g_Entities[1].ext.entSlot1.unk1;
+    temp_t1 = g_shadowOpacityReductionTable[g_Entities[1].ext.entSlot1.unk2];
+    temp_t0 = g_D_800ACF3C[g_Entities[1].ext.entSlot1.unk2];
 
     plDraw = &g_PlayerDraw[1];
     for (i = 0; i < 6; prim = prim->next, i++) {

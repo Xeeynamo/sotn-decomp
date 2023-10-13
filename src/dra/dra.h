@@ -540,7 +540,8 @@ extern s32 D_801375AC;
 extern s32 D_801375B0;
 extern s32 D_801375B4;
 extern s32 D_801375B8;
-extern RoomLoadDef* D_801375BC;
+// clues indicate being in a struct, unclear what else is with it though.
+extern RoomLoadDefHolder D_801375BC;
 extern s32 D_801375C0;
 extern s32 D_801375C4;
 extern s32 D_801375C8;

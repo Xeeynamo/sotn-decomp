@@ -47,7 +47,7 @@ void func_800F298C(void) {
         g_backbufferX = 0;
         g_backbufferY = 0;
         func_800F14CC();
-        LoadRoomLayer(D_801375BC->tileLayoutId);
+        LoadRoomLayer(D_801375BC.def->tileLayoutId);
         if (D_8003C708.flags & 0x20) {
             func_800EAF28(3);
         }
@@ -67,12 +67,12 @@ void func_800F298C(void) {
         }
         D_80097928 = 0;
         func_800EA538(2);
-        if (D_801375BC->tilesetId != 0) {
-            func_800EA5E4(D_801375BC->tilesetId + 0x7fff | 0x4000);
+        if (D_801375BC.def->tilesetId != 0) {
+            func_800EA5E4(D_801375BC.def->tilesetId + 0x7fff | 0x4000);
         }
-        if (D_801375BC->objGfxId != 0) {
-            func_800EAF28(D_801375BC->objGfxId + 0x7fff);
-            D_80097904 = D_801375BC->objGfxId + 0x7fff;
+        if (D_801375BC.def->objGfxId != 0) {
+            func_800EAF28(D_801375BC.def->objGfxId + 0x7fff);
+            D_80097904 = D_801375BC.def->objGfxId + 0x7fff;
         } else {
             D_80097904 = 0;
         }
@@ -89,13 +89,13 @@ void func_800F298C(void) {
         }
         ptr_791c = &D_8009791C;
         g_CurrentRoom.x =
-            ((D_801375BC - 1)->tileLayoutId - g_CurrentRoom.left) << 8;
+            ((D_801375BC.def - 1)->tileLayoutId - g_CurrentRoom.left) << 8;
         g_CurrentRoom.y =
-            ((D_801375BC - 1)->tilesetId - g_CurrentRoom.top) << 8;
+            ((D_801375BC.def - 1)->tilesetId - g_CurrentRoom.top) << 8;
         g_CurrentRoom.width =
-            (((D_801375BC - 1)->objGfxId - g_CurrentRoom.left) + 1) << 8;
+            (((D_801375BC.def - 1)->objGfxId - g_CurrentRoom.left) + 1) << 8;
         g_CurrentRoom.height =
-            (((D_801375BC - 1)->objLayoutId - g_CurrentRoom.top) + 1) << 8;
+            (((D_801375BC.def - 1)->objLayoutId - g_CurrentRoom.top) + 1) << 8;
 
         *ptr_791c = (playerX >> 8) + g_CurrentRoom.left;
         D_80097920 = (playerY >> 8) + g_CurrentRoom.top;
@@ -123,7 +123,7 @@ void func_800F298C(void) {
         func_800F0CD8(0);
         D_80073074 = (s32)g_Camera.posX.i.hi;
         D_8007307C = (s32)g_Camera.posY.i.hi;
-        g_api.o.InitRoomEntities(D_801375BC->objLayoutId);
+        g_api.o.InitRoomEntities(D_801375BC.def->objLayoutId);
         g_api.o.Update();
         g_api.o.Update();
         func_800F0940();
@@ -256,8 +256,8 @@ void func_800F298C(void) {
                     g_GameStep = Play_PrepareNextStage;
                     return;
                 }
-                if (D_801375BC->tilesetId == 0xFF) {
-                    D_8006C374 = D_801375BC->tileLayoutId;
+                if (D_801375BC.def->tilesetId == 0xFF) {
+                    D_8006C374 = D_801375BC.def->tileLayoutId;
                     g_GameStep = Play_PrepareNextStage;
                     return;
                 }
@@ -480,9 +480,9 @@ void func_800F298C(void) {
                     func_8010427C();
                     D_80137598 = 0;
                 }
-                layer = g_api.o.tileLayers[D_801375BC->tileLayoutId].fg;
+                layer = g_api.o.tileLayers[D_801375BC.def->tileLayoutId].fg;
                 if (layer->bottom & 0x80) {
-                    D_801375BC = &g_api.o.rooms[layer->bottom & 0x7F].load;
+                    D_801375BC.def = &g_api.o.rooms[layer->bottom & 0x7F].load;
                     // TODO: !FAKE
                     // D_8009791C is probably part of a struct. see also
                     // (&g_Camera.posX)->i.hi seen elsewhere in this function.
@@ -503,19 +503,20 @@ void func_800F298C(void) {
                     func_800EAF28(1);
                 }
                 func_800EA538(2);
-                if (D_801375BC->tilesetId != 0) {
-                    func_800EA5E4((D_801375BC->tilesetId + 0x7FFF) | 0x4000);
+                if (D_801375BC.def->tilesetId != 0) {
+                    func_800EA5E4(
+                        (D_801375BC.def->tilesetId + 0x7FFF) | 0x4000);
                 }
-                if (D_801375BC->objGfxId != 0) {
-                    func_800EAF28(D_801375BC->objGfxId + 0x7FFF);
-                    D_80097904 = D_801375BC->objGfxId + 0x7FFF;
+                if (D_801375BC.def->objGfxId != 0) {
+                    func_800EAF28(D_801375BC.def->objGfxId + 0x7FFF);
+                    D_80097904 = D_801375BC.def->objGfxId + 0x7FFF;
                 } else {
                     D_80097904 = 0;
                 }
                 func_800F2404(1);
                 PLAYER.posY.i.hi = (u8)PLAYER.posY.i.hi;
                 PLAYER.posX.i.hi = (u8)PLAYER.posX.i.hi;
-                LoadRoomLayer(D_801375BC->tileLayoutId);
+                LoadRoomLayer(D_801375BC.def->tileLayoutId);
                 if (D_8003C708.flags & 0x20) {
                     func_800EAF28(3);
                 }
@@ -523,14 +524,16 @@ void func_800F298C(void) {
                     func_800EAF28(4);
                 }
                 g_CurrentRoom.x =
-                    ((D_801375BC - 1)->tileLayoutId - g_CurrentRoom.left) << 8;
+                    ((D_801375BC.def - 1)->tileLayoutId - g_CurrentRoom.left)
+                    << 8;
                 g_CurrentRoom.y =
-                    ((D_801375BC - 1)->tilesetId - g_CurrentRoom.top) << 8;
+                    ((D_801375BC.def - 1)->tilesetId - g_CurrentRoom.top) << 8;
                 g_CurrentRoom.width =
-                    (((D_801375BC - 1)->objGfxId - g_CurrentRoom.left) + 1)
+                    (((D_801375BC.def - 1)->objGfxId - g_CurrentRoom.left) + 1)
                     << 8;
                 g_CurrentRoom.height =
-                    (((D_801375BC - 1)->objLayoutId - g_CurrentRoom.top) + 1)
+                    (((D_801375BC.def - 1)->objLayoutId - g_CurrentRoom.top) +
+                     1)
                     << 8;
                 // permuter found this weird & -> thing, I don't know man
                 (&g_Camera.posX)->i.hi = (D_8009791C - g_CurrentRoom.left) << 8;
@@ -551,7 +554,7 @@ void func_800F298C(void) {
                     }
                     D_80073074 = (s32)g_Camera.posX.i.hi;
                     D_8007307C = (s32)g_Camera.posY.i.hi;
-                    g_api.o.InitRoomEntities(D_801375BC->objLayoutId);
+                    g_api.o.InitRoomEntities(D_801375BC.def->objLayoutId);
                     g_api.o.Update();
                     func_800F0CD8(0);
                     func_800F0CD8(0);
@@ -604,7 +607,7 @@ void func_800F298C(void) {
                     }
                     D_80073074 = g_Camera.posX.i.hi;
                     D_8007307C = g_Camera.posY.i.hi;
-                    g_api.o.InitRoomEntities(D_801375BC->objLayoutId);
+                    g_api.o.InitRoomEntities(D_801375BC.def->objLayoutId);
                     g_api.o.Update();
                     func_800F0CD8(0);
                     func_800F0CD8(0);
@@ -621,7 +624,7 @@ void func_800F298C(void) {
                 } else {
                     D_80097C98 = 0;
                 }
-                g_api.o.InitRoomEntities(D_801375BC->objLayoutId);
+                g_api.o.InitRoomEntities(D_801375BC.def->objLayoutId);
                 g_api.o.Update();
                 g_api.o.Update();
                 func_800F0940();
