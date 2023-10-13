@@ -1638,7 +1638,7 @@ void func_800F6BEC(MenuContext* context) {
         context, g_MenuNavigation.cursorWindowColors, x - 2, 78, 120, 12, 0, 1);
 }
 
-void SortTimeAttackEntires(void) {
+void SortTimeAttackEntries(void) {
     s32 i;
     s32 isLooping;
     s32 swapTime;
