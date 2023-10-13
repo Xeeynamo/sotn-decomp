@@ -21,7 +21,7 @@ void UpdateGame(void);
 void func_800E7BB8(void);
 void SetupEvents(void);
 void func_800EA7CC(void);
-void func_800EB314(void);
+void LoadPendingGfx(void);
 void RenderEntities(void);
 void InitRenderer(void);
 void RenderTilemap(void);
@@ -919,7 +919,7 @@ loop_5:
 #endif
         VSync(D_8003C73C);
         GsClearVcount();
-        func_800EB314();
+        LoadPendingGfx();
         ReadPads();
 #if defined(VERSION_US)
         if ((g_pads->pressed & PAD_RESETCOMBO) == PAD_RESETCOMBO) {

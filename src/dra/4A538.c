@@ -145,38 +145,35 @@ void func_800EAEA4(void) {
 }
 
 void func_800EAEEC(void) {
-    unkstruct_80072FA0* ptr = D_80072FA0;
+    GfxLoad* ptr = g_GfxLoad;
     s32 i;
 
     for (i = 0; i < 16; i++, ptr++) {
-        ptr->unk4 = 0;
+        ptr->kind = GFX_BANK_NONE;
     }
 
     func_800EAEA4();
 }
 
-void func_800EAF28(s32 arg0) {
-    s32 temp_v1;
+void LoadGfxAsync(s32 gfxId) {
     s32 i;
-    s32 new_var;
-    u16* var_a1;
-    unkstruct_80072FA0* var_a0;
+    GfxBank* gfxBank;
+    GfxLoad* gfxLoad;
 
-    if (arg0 & ANIMSET_OVL_FLAG) {
-        var_a1 = g_api.o.entityGfxs[arg0 & 0x7FFF];
+    if (gfxId & ANIMSET_OVL_FLAG) {
+        gfxBank = g_api.o.gfxBanks[gfxId & 0x7FFF];
     } else {
-        var_a1 = D_800A3B5C[arg0];
+        gfxBank = g_GfxSharedBank[gfxId];
     }
 
-    temp_v1 = *(s32*)var_a1;
-    if (temp_v1 != 0 && temp_v1 != (new_var = -1)) {
-        for (i = 0; i < 0x10; i++) {
-            var_a0 = &D_80072FA0[i];
-            if (var_a0->unk4 == 0) {
-                var_a0->unk4 = var_a1[0];
-                var_a0->unk6 = 0;
-                var_a0->unk8 = 0;
-                var_a0->unk0 = var_a1 + 2;
+    if (gfxBank->kind != GFX_BANK_NONE && gfxBank->kind != -1) {
+        for (i = 0; i < LEN(g_GfxLoad); i++) {
+            gfxLoad = &g_GfxLoad[i];
+            if (gfxLoad->kind == GFX_BANK_NONE) {
+                gfxLoad->kind = gfxBank->kind;
+                gfxLoad->unk6 = 0;
+                gfxLoad->unk8 = 0;
+                gfxLoad->next = gfxBank->entries;
                 break;
             }
         }
@@ -318,7 +315,60 @@ s32 DecompressData(u8* dst, u8* src) {
 }
 #endif
 
-INCLUDE_ASM("dra/nonmatchings/4A538", func_800EB314);
+void LoadPendingGfx(void) {
+    char buf[0x100];
+    s32 i;
+    s32 j;
+    u32 xy;
+    u32 wh;
+    u8* src;
+    u8* src2;
+    u8* dst;
+    s32 over;
+    GfxLoad* gfxLoad;
+    GfxEntry* gfxEntry;
+
+    j = 0;
+    gfxLoad = g_GfxLoad;
+    for (i = 0; i < LEN(g_GfxLoad); i++, gfxLoad++) {
+        switch (gfxLoad->kind) {
+        case GFX_BANK_NONE:
+            break;
+        case GFX_BANK_4BPP:
+        case GFX_BANK_8BPP:
+        case GFX_BANK_16BPP:
+            for (gfxEntry = gfxLoad->next; gfxEntry->xy != -1; gfxEntry++) {
+                xy = gfxEntry->xy;
+                wh = gfxEntry->wh;
+                src2 = gfxEntry->data;
+                LoadTPage(src2, gfxLoad->kind - 1, 0, xy >> 0x10, (u16)xy,
+                          wh >> 0x10, (u16)wh);
+            }
+            gfxLoad->kind = GFX_BANK_NONE;
+            break;
+        case GFX_BANK_COMPRESSED:
+            gfxEntry = gfxLoad->next;
+            for (; j < 4; j++) {
+                dst = g_Pix[j];
+                xy = gfxEntry->xy;
+                wh = gfxEntry->wh;
+                src = gfxEntry->data;
+                over = DecompressData(dst, src);
+                if (over) {
+                    sprintf(buf, "over:%08x(%04x)", src, over);
+                    DebugInputWait(buf);
+                }
+                LoadTPage(dst, 0, 0, xy >> 0x10, (u16)xy, wh >> 0x10, (u16)wh);
+                gfxLoad->next = ++gfxEntry;
+                if (gfxEntry->xy == -1) {
+                    gfxLoad->kind = GFX_BANK_NONE;
+                    break;
+                }
+            }
+            break;
+        }
+    }
+}
 
 void func_800EB4F8(PixPattern* pix, s32 bitDepth, s32 x, s32 y) {
     LoadTPage(pix + 1, bitDepth, 0, x, y, (int)pix->w, (int)pix->h);
@@ -368,11 +418,11 @@ void func_800EB6B4(void) {
 }
 
 bool func_800EB720(void) {
-    unkstruct_80072FA0* temp = D_80072FA0;
+    GfxLoad* temp = g_GfxLoad;
     s32 i;
 
     for (i = 0; i < 16; i++) {
-        if (temp[i].unk4 != 0) {
+        if (temp[i].kind != 0) {
             return true;
         }
     }

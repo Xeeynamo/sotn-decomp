@@ -376,10 +376,10 @@ void func_801B60D4(void) {
         D_801D6B24 = 0;
         D_801BD030 = 0;
         g_Entities[8].params = D_800978B4 - 1;
-        g_api.func_800EA5E4(0x16);
-        g_api.func_800EA5E4(0);
-        g_api.func_800EA5E4(0x8005);
-        g_api.func_800EAF28(0x8000);
+        g_api.func_800EA5E4(ANIMSET_DRA(0x16));
+        g_api.func_800EA5E4(ANIMSET_DRA(0));
+        g_api.func_800EA5E4(ANIMSET_OVL(5));
+        g_api.LoadGfxAsync(ANIMSET_OVL(0));
         D_8003C9A4++;
         break;
 
@@ -429,7 +429,7 @@ void func_801B60D4(void) {
         break;
 
     case 6:
-        g_api.func_800EA5E4(0);
+        g_api.func_800EA5E4(ANIMSET_DRA(0));
         D_8003C9A4++;
         break;
 

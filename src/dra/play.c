@@ -85,8 +85,8 @@ void HandlePlay(void) {
         g_GameStep++;
         break;
     case Play_Init:
-        func_800EAF28(ANIMSET_DRA(1));
-        func_800EAF28(ANIMSET_OVL(0));
+        LoadGfxAsync(ANIMSET_DRA(1));
+        LoadGfxAsync(ANIMSET_OVL(0));
         func_800EA5E4(ANIMSET_OVL(0));
         g_GameStep++;
         break;

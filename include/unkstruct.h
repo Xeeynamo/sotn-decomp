@@ -13,14 +13,6 @@ typedef struct {
 } Point32; // size = 0x8
 
 typedef struct {
-    /* 0x0 */ u16* unk0;
-    /* 0x4 */ u16 unk4;
-    /* 0x6 */ s16 unk6;
-    /* 0x8 */ s16 unk8;
-    /* 0xA */ s16 unkA;
-} unkstruct_80072FA0; // size = 0xC
-
-typedef struct {
     /* 0x00 */ u16* fg;
     /* 0x04 */ u16* bg;
     /* 0x08 */ u16 unk8;

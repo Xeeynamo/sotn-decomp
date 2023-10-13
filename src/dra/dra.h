@@ -386,7 +386,7 @@ extern s32 D_800A3194[];
 extern Unkstruct_801092E8 D_800A37D8;
 extern JosephsCloak g_JosephsCloak;
 extern Lba g_StagesLba[];
-extern u32* D_800A3B5C[];
+extern GfxBank** g_GfxSharedBank[];
 extern UnkStructClut* D_800A3BB8[];
 extern SubweaponDef g_SubwpnDefs[];
 extern SpellDef g_SpellDefs[];
