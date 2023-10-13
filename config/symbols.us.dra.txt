@@ -791,6 +791,7 @@ MemcardWriteFile = 0x800E96E8;
 MemcardClose = 0x800E9804;
 StoreSaveData = 0x800E9C14;
 MakeMemcardPath = 0x800EA48C;
+LoadGfxAsync = 0x800EAF28;
 DecompressWriteNibble = 0x800EAFC8;
 DecompressReadNibble = 0x800EB03C;
 DecompressData = 0x800EB098;
