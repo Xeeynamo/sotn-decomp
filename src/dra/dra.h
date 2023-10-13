@@ -811,7 +811,7 @@ void MemcardInfoInit(void);
 s32 func_800EA5E4(u32);
 void func_800EA538(s32);
 void func_800EAD7C(void);
-void func_800EAEEC(void);
+void ResetPendingGfxLoad(void);
 void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index);
 bool func_800EB720(void);
 void HideAllBackgroundLayers(void);

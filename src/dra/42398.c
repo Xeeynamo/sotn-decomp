@@ -851,7 +851,7 @@ loop_5:
     func_800EDAE4();
     DestroyEntities(0);
     func_800EA538(0);
-    func_800EAEEC();
+    ResetPendingGfxLoad();
     D_801362B4 = 0x20;
     g_DebugCurPal = 0x200;
     g_DebugEnabled = 0;
@@ -1135,7 +1135,7 @@ void HandleTitle(void) {
         ResetEntityArray();
         DestroyEntities(0);
         func_800EA538(0);
-        func_800EAEEC();
+        ResetPendingGfxLoad();
         SetStageDisplayBuffer();
         g_StageId = STAGE_SEL;
         if (g_UseDisk) {

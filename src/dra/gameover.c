@@ -72,7 +72,7 @@ void HandleGameOver(void) {
         }
         DestroyEntities(0);
         func_800EA538(0);
-        func_800EAEEC();
+        ResetPendingGfxLoad();
         DestroyAllPrimitives();
         func_800EDAE4();
         HideAllBackgroundLayers();

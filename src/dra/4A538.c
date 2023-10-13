@@ -144,12 +144,12 @@ void func_800EAEA4(void) {
     }
 }
 
-void func_800EAEEC(void) {
-    GfxLoad* ptr = g_GfxLoad;
+void ResetPendingGfxLoad(void) {
+    GfxLoad* gfxLoad = g_GfxLoad;
     s32 i;
 
-    for (i = 0; i < 16; i++, ptr++) {
-        ptr->kind = GFX_BANK_NONE;
+    for (i = 0; i < LEN(g_GfxLoad); i++, gfxLoad++) {
+        gfxLoad->kind = GFX_BANK_NONE;
     }
 
     func_800EAEA4();
