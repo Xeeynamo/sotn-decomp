@@ -482,17 +482,44 @@ typedef struct {
     u8 unk1;
     u8 unk2;
     u8 unk3;
-} ET_Entity1;
+} ET_EntitySlot1;
+
 typedef struct {
     char pad[0x32];
     s16 unkAE;
 } ET_Entity16;
 
+typedef struct {
+    s32 unk7C;
+    s32 unk80;
+    s32 unk84;
+    s32 unk88;
+    s32 entityPtr;
+    s16 unk90;
+    s16 unk92;
+    s16 unk94;
+    s16 unk96;
+    s16 unk98;
+    s16 unk9A;
+    s16 unk9C;
+    s16 unk9E;
+    s16 unkA0;
+    s16 unkA2;
+    s16 unkA4;
+    s16 unkA6;
+    s16 unkA8;
+    s16 unkAA;
+    s16 unkAC;
+    s16 unkAE;
+    s16 unkB0;
+} ET_Entity1;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
     /* 0x7C */ ET_Entity1 ent1;
-    ET_Entity16 ent16;
+    /* 0x7C */ ET_EntitySlot1 entSlot1;
+    /* 0x7C */ ET_Entity16 ent16;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
     /* 0x7C */ ET_RelicOrb relicOrb;
     /* 0x7C */ ET_MessageBox messageBox;

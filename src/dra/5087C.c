@@ -96,7 +96,7 @@ s32 SetNextRoomToLoad(u32 x, u32 y) {
                 D_800A245C[room->load.tileLayoutId].stageId == STAGE_ST0) {
                 return 0;
             }
-            D_801375BC = &room->load;
+            D_801375BC.def = &room->load;
             return 1;
         }
         room++;
@@ -272,7 +272,66 @@ void func_800F1424(void) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/5087C", func_800F14CC);
+void func_800F14CC(void) {
+    RoomTeleport* temp_a2;
+    s32 temp_a1;
+    s32 newY;
+
+    if (D_8003C730 == 1) {
+        PLAYER.posX.i.hi = 0x80;
+        PLAYER.posY.i.hi = 0xA4;
+        if (g_StageId & 0x20) {
+            PLAYER.posY.i.hi = 0xB4;
+        }
+        SetNextRoomToLoad(g_CurrentRoom.left, g_CurrentRoom.top);
+        return;
+    }
+    if (D_8003C730 == 2) {
+        PLAYER.posX.i.hi = 0x74;
+        PLAYER.posY.i.hi = 0xA4;
+        SetNextRoomToLoad(g_CurrentRoom.left, g_CurrentRoom.top);
+        return;
+    }
+    temp_a2 = &D_800A245C[D_8006C374];
+    do {
+    } while (0);
+    // TODO: !FAKE Ugly casts, need to work this out.
+    D_801375BC.def =
+        &((RoomHeader*)((u8*)g_api.o.rooms + temp_a2->roomId))->load;
+    PLAYER.posX.i.hi = temp_a2->x;
+    PLAYER.posY.i.hi = temp_a2->y;
+
+    if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+        temp_a1 =
+            (D_801375BC.def - 1)->objLayoutId - (D_801375BC.def - 1)->tilesetId;
+        PLAYER.posX.i.hi =
+            (((D_801375BC.def - 1)->objGfxId -
+              (D_801375BC.def - 1)->tileLayoutId + 1)
+             << 8) -
+            temp_a2->x;
+        newY = (temp_a1 << 8) - (temp_a2->y & 0xFF00);
+        if (D_80097C98 == 4) {
+            newY |= 0x47;
+        } else if (g_StageId == STAGE_RCEN) {
+            newY |= 0xD0;
+        } else if ((g_StageId == STAGE_RNO0) && (D_8006C374 == 7)) {
+            newY |= 0x30;
+        } else if (D_8006C374 == 8) {
+            newY = 0xB3;
+        } else if (newY == 0) {
+            if (temp_a1 != 0) {
+                newY = 0x88;
+            } else {
+                newY = 0x84;
+            }
+        } else if (newY == temp_a1) {
+            newY |= 0x84;
+        } else {
+            newY |= 0x88;
+        }
+        PLAYER.posY.i.hi = newY;
+    }
+}
 
 s32 func_800F16D0(void) {
     if (D_8003C730 != 0)
