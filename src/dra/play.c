@@ -19,7 +19,7 @@ void func_800E4970(void) {
     DestroyAllPrimitives();
     func_800EA538(0);
     HideAllBackgroundLayers();
-    func_800EAEEC();
+    ResetPendingGfxLoad();
     func_800EDAE4();
     PlaySfx(SET_UNK_12);
     PlaySfx(SET_UNK_0B);
@@ -85,8 +85,8 @@ void HandlePlay(void) {
         g_GameStep++;
         break;
     case Play_Init:
-        func_800EAF28(ANIMSET_DRA(1));
-        func_800EAF28(ANIMSET_OVL(0));
+        LoadGfxAsync(ANIMSET_DRA(1));
+        LoadGfxAsync(ANIMSET_OVL(0));
         func_800EA5E4(ANIMSET_OVL(0));
         g_GameStep++;
         break;
@@ -124,7 +124,7 @@ void HandlePlay(void) {
         g_GpuBuffers[0].draw.isbg = 0;
         HideAllBackgroundLayers();
         func_800EA538(1);
-        func_800EAEEC();
+        ResetPendingGfxLoad();
         DestroyEntities(0);
         DestroyAllPrimitives();
         func_800EDAE4();

@@ -304,6 +304,14 @@ typedef enum {
 } Stages;
 
 typedef enum {
+    GFX_BANK_NONE,
+    GFX_BANK_4BPP,
+    GFX_BANK_8BPP,
+    GFX_BANK_16BPP,
+    GFX_BANK_COMPRESSED,
+} GfxBankKind;
+
+typedef enum {
     // Clean-up and reset all the gameplay related memory
     Play_Reset = 0,
     // Re-initialize stage-specific resources
@@ -639,6 +647,25 @@ typedef struct {
     /* 0x20 */ u32 env;
 } GpuUsage;
 
+typedef struct {
+    /* 0x00 */ u32 xy;
+    /* 0x04 */ u32 wh;
+    /* 0x08 */ void* data;
+} GfxEntry; // size=0xC
+
+typedef struct {
+    GfxBankKind kind;
+    GfxEntry entries[0];
+} GfxBank;
+
+typedef struct {
+    /* 0x0 */ GfxEntry* next;
+    /* 0x4 */ u16 kind;
+    /* 0x6 */ s16 unk6;
+    /* 0x8 */ s16 unk8;
+    /* 0xA */ s16 unkA;
+} GfxLoad; // size=0xC
+
 typedef enum {
     ITEM_S_SWORD,
     ITEM_SWORD,
@@ -896,7 +923,7 @@ typedef struct {
     /* 8003C78C */ UnkStructClut** cluts;
     /* 8003C790 */ void* unk1C; // related to entity layout
     /* 8003C794 */ RoomDef* tileLayers;
-    /* 8003C798 */ void** entityGfxs;
+    /* 8003C798 */ GfxBank** gfxBanks;
     /* 8003C79C */ void (*unk28)(void);
     /* 8003C7A0 */ void (*unk2c)(void); // similar to Update
     /* 8003C7A4 */ void* unk30;
@@ -1081,7 +1108,7 @@ typedef struct {
     /* 8003C7D0 */ void (*GetEquipProperties)(
         s32 handId, Equipment* res, s32 equipId);
     /* 8003C7D4 */ s32 (*func_800EA5E4)(u32);
-    /* 8003C7D8 */ void (*func_800EAF28)(s32);
+    /* 8003C7D8 */ void (*LoadGfxAsync)(s32 gfxId);
     /* 8003C7DC */ void (*PlaySfx)(s32 sfxId);
     /* 8003C7E0 */ s16 (*func_800EDB58)(s32, s32);
     /* 8003C7E4 */ void (*func_800EA538)(s32 arg0);
@@ -1152,7 +1179,7 @@ extern Entity* (*g_api_GetFreeDraEntity)(s16 start, s16 end);
 extern void (*g_api_GetEquipProperties)(
     s32 handId, Equipment* res, s32 equipId);
 extern s32 (*g_api_func_800EA5E4)(u32);
-extern void (*g_api_func_800EAF28)(s32);
+extern void (*g_api_LoadGfxAsync)(s32);
 extern void (*g_api_PlaySfx)(s32 sfxId);
 extern s16 (*g_api_func_800EDB58)(s32, s32);
 extern void (*g_api_func_800EA538)(s32 arg0);
@@ -1448,7 +1475,7 @@ extern u32 D_80070BCC;
 extern PlayerState g_Player;
 extern u16 g_Player_D_80072EF6; // TODO merge with g_Player
 
-extern unkstruct_80072FA0 D_80072FA0[0x10];
+extern GfxLoad g_GfxLoad[0x10];
 extern u32 g_GameStep;
 extern s32 D_80073064;
 extern Event g_EvSwCardEnd; // 80073068

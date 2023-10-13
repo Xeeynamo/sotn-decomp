@@ -49,10 +49,10 @@ void func_800F298C(void) {
         func_800F14CC();
         LoadRoomLayer(D_801375BC.def->tileLayoutId);
         if (D_8003C708.flags & 0x20) {
-            func_800EAF28(3);
+            LoadGfxAsync(ANIMSET_DRA(3));
         }
         if (D_8003C708.flags & 0x40) {
-            func_800EAF28(4);
+            LoadGfxAsync(ANIMSET_DRA(4));
         }
         D_80097910 = g_StagesLba[g_StageId].unk18;
         if (g_StageId == STAGE_NO3 && D_8003C730 == 0) {
@@ -71,7 +71,7 @@ void func_800F298C(void) {
             func_800EA5E4(D_801375BC.def->tilesetId + 0x7fff | 0x4000);
         }
         if (D_801375BC.def->objGfxId != 0) {
-            func_800EAF28(D_801375BC.def->objGfxId + 0x7fff);
+            LoadGfxAsync(D_801375BC.def->objGfxId + 0x7fff);
             D_80097904 = D_801375BC.def->objGfxId + 0x7fff;
         } else {
             D_80097904 = 0;
@@ -500,7 +500,7 @@ void func_800F298C(void) {
                 PLAYER.posX.i.hi = D_801375C0 + g_Camera.posX.i.hi;
                 PLAYER.posY.i.hi = D_801375C4 + g_Camera.posY.i.hi;
                 if (D_8003C708.flags & 0x60) {
-                    func_800EAF28(1);
+                    LoadGfxAsync(ANIMSET_DRA(1));
                 }
                 func_800EA538(2);
                 if (D_801375BC.def->tilesetId != 0) {
@@ -508,7 +508,7 @@ void func_800F298C(void) {
                         (D_801375BC.def->tilesetId + 0x7FFF) | 0x4000);
                 }
                 if (D_801375BC.def->objGfxId != 0) {
-                    func_800EAF28(D_801375BC.def->objGfxId + 0x7FFF);
+                    LoadGfxAsync(D_801375BC.def->objGfxId + 0x7FFF);
                     D_80097904 = D_801375BC.def->objGfxId + 0x7FFF;
                 } else {
                     D_80097904 = 0;
@@ -518,10 +518,10 @@ void func_800F298C(void) {
                 PLAYER.posX.i.hi = (u8)PLAYER.posX.i.hi;
                 LoadRoomLayer(D_801375BC.def->tileLayoutId);
                 if (D_8003C708.flags & 0x20) {
-                    func_800EAF28(3);
+                    LoadGfxAsync(ANIMSET_DRA(3));
                 }
                 if (D_8003C708.flags & 0x40) {
-                    func_800EAF28(4);
+                    LoadGfxAsync(ANIMSET_DRA(4));
                 }
                 g_CurrentRoom.x =
                     ((D_801375BC.def - 1)->tileLayoutId - g_CurrentRoom.left)

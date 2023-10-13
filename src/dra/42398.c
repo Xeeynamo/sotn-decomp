@@ -21,7 +21,7 @@ void UpdateGame(void);
 void func_800E7BB8(void);
 void SetupEvents(void);
 void func_800EA7CC(void);
-void func_800EB314(void);
+void LoadPendingGfx(void);
 void RenderEntities(void);
 void InitRenderer(void);
 void RenderTilemap(void);
@@ -851,7 +851,7 @@ loop_5:
     func_800EDAE4();
     DestroyEntities(0);
     func_800EA538(0);
-    func_800EAEEC();
+    ResetPendingGfxLoad();
     D_801362B4 = 0x20;
     g_DebugCurPal = 0x200;
     g_DebugEnabled = 0;
@@ -919,7 +919,7 @@ loop_5:
 #endif
         VSync(D_8003C73C);
         GsClearVcount();
-        func_800EB314();
+        LoadPendingGfx();
         ReadPads();
 #if defined(VERSION_US)
         if ((g_pads->pressed & PAD_RESETCOMBO) == PAD_RESETCOMBO) {
@@ -1135,7 +1135,7 @@ void HandleTitle(void) {
         ResetEntityArray();
         DestroyEntities(0);
         func_800EA538(0);
-        func_800EAEEC();
+        ResetPendingGfxLoad();
         SetStageDisplayBuffer();
         g_StageId = STAGE_SEL;
         if (g_UseDisk) {
