@@ -321,9 +321,9 @@ void HandleGameOver(void) {
 
 INCLUDE_ASM("dra/nonmatchings/gameover", func_800E5D30);
 
-void func_800E6218(void) {
+void func_800E6218(s32 arg0) {
     if (D_8006CBC4 != 0) {
-        D_80170000();
+        D_80170000(arg0);
     }
 }
 

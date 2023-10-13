@@ -778,7 +778,7 @@ extern PfnEntityUpdate D_80179C80[];
 extern Weapon D_8017A000;
 extern PfnEntityUpdate D_8017CC40[];
 extern Weapon D_8017D000;
-extern void (*D_80170000)(void);
+extern void (*D_80170000)(s32 arg0);
 extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
 extern u8 D_801EC000[];

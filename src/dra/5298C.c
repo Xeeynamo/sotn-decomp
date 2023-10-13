@@ -1638,7 +1638,39 @@ void func_800F6BEC(MenuContext* context) {
         context, g_MenuNavigation.cursorWindowColors, x - 2, 78, 120, 12, 0, 1);
 }
 
-INCLUDE_ASM("dra/nonmatchings/5298C", func_800F6CC0);
+void SortTimeAttackEntries(void) {
+    s32 i;
+    s32 isLooping;
+    s32 swapTime;
+    s32 swapName;
+
+    // All the uninitialised time attack timers needs to be set to a large
+    // value, so their record can be beat.
+    for (i = 0; i < NUM_TIMEATTACK_EVENTS; i++) {
+        g_TimeAttackEntryTimes[i] =
+            TimeAttackController(i, TIMEATTACK_GET_RECORD);
+        if (g_TimeAttackEntryTimes[i] == 0) {
+            g_TimeAttackEntryTimes[i] = 1000000;
+        }
+        c_strTimeAttackEntry[i] = i;
+    }
+
+    // Ensure the time attacks are sequentially ordered by their timer
+    do {
+        isLooping = false;
+        for (i = 0; i < NUM_TIMEATTACK_EVENTS - 1; i++) {
+            swapTime = g_TimeAttackEntryTimes[i];
+            if (g_TimeAttackEntryTimes[i + 1] < g_TimeAttackEntryTimes[i]) {
+                g_TimeAttackEntryTimes[i] = g_TimeAttackEntryTimes[i + 1];
+                g_TimeAttackEntryTimes[i + 1] = swapTime;
+                swapName = c_strTimeAttackEntry[i];
+                c_strTimeAttackEntry[i] = c_strTimeAttackEntry[i + 1];
+                c_strTimeAttackEntry[i + 1] = swapName;
+                isLooping++;
+            }
+        }
+    } while (isLooping);
+}
 
 void DrawTimeAttackMenu(MenuContext* ctx) {
     s16 padX;

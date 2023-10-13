@@ -810,6 +810,7 @@ DrawMenuAlucardCloakPreview = 0x800F643C;
 DrawMenuStr = 0x800F67EC;
 DrawMenuInt = 0x800F68F4;
 DrawJosephsCloakMenu = 0x800F6A70;
+SortTimeAttackEntries = 0x800F6CC0;
 DrawTimeAttackMenu = 0x800F6DC8;
 DrawSettingsButton = 0x800F6FA4;
 DrawSettingsReverseCloak = 0x800F70DC;
