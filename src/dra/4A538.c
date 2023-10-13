@@ -156,6 +156,9 @@ void func_800EAEEC(void) {
 }
 
 void LoadGfxAsync(s32 gfxId) {
+    // Schedule the load of new graphics into the video RAM in the very next
+    // frame by LoadPendingGfx. A maximum amount of 16 transfers can be chained.
+
     s32 i;
     GfxBank* gfxBank;
     GfxLoad* gfxLoad;
@@ -316,6 +319,12 @@ s32 DecompressData(u8* dst, u8* src) {
 #endif
 
 void LoadPendingGfx(void) {
+    // Called every frame, it continuously checks if there is any new graphics
+    // to transfer from RAM to Video RAM. Compressed graphics are loaded as
+    // 128x128 images into a 256x256 tpage (hence the `j < 4`). Each pending
+    // GFX load contains a descriptor to instruct this function in which area
+    // of the Video RAM the texture will be transferred to.
+
     char buf[0x100];
     s32 i;
     s32 j;
