@@ -13,21 +13,21 @@
 // Normally used for Richter, but this sound is just
 // a louder version of Alucard Floor Hit (Normal)
 #define SE_NO3_ALUCARD_FLOOR_HIT 0x64B
-//#define 0x655
+// #define 0x655
 #define SE_MERMAN_EXPLODE 0x65B
 #define SE_ZOMBIE_EXPLODE 0x65E
-//#define 0x660
+// #define 0x660
 #define SE_MERMAN_FIRE 0x662
 #define SE_THUNDER 0x665
 #define SE_SKEL_SWORD_SWING 0x66D
 #define SE_LEVER_SWITCH_MOVE 0x675
 #define SE_FLOOR_SWITCH_CLICK 0x676
-//#define 0x684
+// #define 0x684
 #define SE_OWL_WING_FLAP 0x68C
 #define SE_WARG_DEATH_EXPLODE 0x697
 #define SE_BAT_DEATH 0x69C
 #define SE_DEATH_SWIPES 0x6A2
-//#define 0x6C7
+// #define 0x6C7
 #define SE_NO3_ALUCARD_JUMP 0x6EF
 #define SE_MERMAN_DEATH 0x71D
 #define SE_WARG_DEATH_HOWL 0x780
