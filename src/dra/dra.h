@@ -563,7 +563,7 @@ extern s16 D_801376C4;
 extern s16 D_801376C8;
 extern MenuContext g_JosephsCloakContext;
 extern s32 D_8013783C;
-extern s32 D_801377FC[];
+extern s32 D_801377FC[0x10];
 extern s32 D_80137840;
 extern s32 D_80137844[];
 extern s32 D_80137848[];
