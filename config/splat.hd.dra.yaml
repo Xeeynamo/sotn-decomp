@@ -32,6 +32,8 @@ segments:
       - [0x0, data]
       - [0x1F18, .data, save_mgr]
       - [0x2178, data]
+      - [0x2CF4, .data, 5298C]
+      - [0x2D1C, data]
       - [0x2ED0, .data, 5D6C4]
       - [0x2EF8, data]
       - [0xCFDC, .data, 6D59C]
@@ -54,8 +56,9 @@ segments:
       - [0x3C404, .rodata, demo]
       - [0x3C488, .rodata, 5087C] # func_800F0940
       - [0x3C4A8, .rodata, 52860]
-      - [0x3C4D0, .rodata, 5298C] #func_800F298C
-      - [0x3C548, rodata]
+      - [0x3C4D0, .rodata, 5298C] # func_800F298C
+      - [0x3C548, .rodata, 5298C]
+      - [0x3C658, rodata]
       - [0x3C6F8, rodata] # jtbl_800DC6F8
       - [0x3C718, rodata] # jtbl_800DC718
       - [0x3C758, rodata]
