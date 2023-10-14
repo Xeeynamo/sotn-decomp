@@ -732,6 +732,54 @@ void func_800F298C(void) {
     }
 }
 
+// menu.c
+const char* D_800A2D48[] = {
+#if defined(VERSION_US)
+    "？？？？？",
+    "Button set−up",
+    "Select front／back of reversible cloak",
+    "Custom cloak settings",
+    "Window color settings",
+    "Sound settings",
+    "Time from game start",
+#elif defined(VERSION_HD)
+    "？？？？？",
+    "ボタン割当変更",
+    "リバーシブルマントの表\裏の選択",
+    "オーダーメイドのカラーの設定",
+    "ウィンドウカラーの設定",
+    "サウンドの設定",
+    "ゲームスタートからの経過時間",
+#endif
+};
+
+#if defined(VERSION_US)
+const char* D_800A2D64[] = {
+    "ＡＴＤＥＦ",
+};
+#elif defined(VERSION_HD)
+const char* D_800A2D10[] = {
+    "装備技システム短剣必殺使攻撃力防",
+};
+
+const char* D_800A2D14[] = {
+    "御魔導器拳こ一覧棒両手食物爆弾盾",
+};
+
+const char* D_800A2D18[] = {
+    "投射薬ん右左武兜鎧マントその他い",
+};
+#endif
+
+#if defined(VERSION_US)
+const char* D_800A2D68[] = {
+    "\x00\x01\x01\xFF",
+    "\x02\x03\x04\xFF",
+};
+#elif defined(VERSION_HD)
+extern const char* D_800A2D68[];
+#endif
+
 bool func_800F483C(void) {
     s32 buf[BUTTON_COUNT];
     s32 i;
@@ -1178,7 +1226,7 @@ bool ScissorSprite(SPRT* sprite, MenuContext* context) {
 }
 
 void func_800F5904(MenuContext* ctx, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
-                   s32 idx, s32 unk2, bool disableTexShade, s32 unk4) {
+                   s32 clut, s32 tpage, bool disableTexShade, s32 c) {
     SPRT* sp;
     s32 otIdx;
     u32* ot;
@@ -1186,10 +1234,10 @@ void func_800F5904(MenuContext* ctx, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
     sp = &g_CurrentBuffer->sprite[g_GpuUsage.sp];
 #if defined(VERSION_US)
     if (D_8013784C == 1) {
-        idx = 0x15E;
+        clut = 0x15E;
     }
     if (D_8013784C == 2) {
-        idx = 0x15D;
+        clut = 0x15D;
     }
 #endif
     if (ctx == NULL) {
@@ -1206,13 +1254,13 @@ void func_800F5904(MenuContext* ctx, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
     sp->u0 = (u8)u;
     sp->v0 = (u8)v;
     if ((ctx == NULL) || (ScissorSprite(sp, ctx) == false)) {
-        sp->r0 = (u8)unk4;
-        sp->g0 = (u8)unk4;
-        sp->b0 = (u8)unk4;
-        sp->clut = D_8003C104[idx];
+        sp->r0 = (u8)c;
+        sp->g0 = (u8)c;
+        sp->b0 = (u8)c;
+        sp->clut = D_8003C104[clut];
         AddPrim(&ot[otIdx], sp);
         g_GpuUsage.sp++;
-        func_800F53D4(unk2, otIdx);
+        func_800F53D4(tpage, otIdx);
     }
 }
 
@@ -1861,7 +1909,8 @@ void DrawPauseMenu(s32 arg0) {
     func_800F53A4();
     if (arg0 == 1) {
         DrawMenuAlucardPortrait(ctx);
-        DrawMenuStr(IsAlucart() ? c_strALUCART : c_strALUCARD, 128, 40, ctx);
+        DrawMenuStr(
+            IsAlucart() ? c_strALUCARD[42] : c_strALUCARD[0], 128, 40, ctx);
         DrawMenuStr(c_strHP, 96, 56, ctx);
         DrawMenuInt(g_Status.hp, 168, 56, ctx);
         DrawMenuChar(CH('/'), 176, 56, ctx);
@@ -1918,7 +1967,7 @@ void DrawPauseMenu(s32 arg0) {
         x = 232;
         y = 80;
     }
-    func_800F66BC(D_800A2D68, x, y, ctx, 1);
+    func_800F66BC(D_800A2D68[0], x, y, ctx, 1);
 
     temp_var = g_Settings.buttonConfig[0];
     temp_s1 = temp_var;
@@ -1941,7 +1990,7 @@ void DrawPauseMenu(s32 arg0) {
 
     DrawMenuInt(g_Status.attackHands[1], x + 76, y + 10, ctx);
 #if defined(VERSION_US)
-    func_800F66BC(D_800A2D6C, x, y + 20, ctx, 1);
+    func_800F66BC(D_800A2D68[1], x, y + 20, ctx, 1);
 #elif defined(VERSION_HD)
     func_800F66BC(D_800A83AC[0], x, y + 20, ctx, 1);
 #endif
