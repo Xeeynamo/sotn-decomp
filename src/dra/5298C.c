@@ -1225,11 +1225,12 @@ bool ScissorSprite(SPRT* sprite, MenuContext* context) {
     return false;
 }
 
-void func_800F5904(MenuContext* ctx, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
-                   s32 clut, s32 tpage, bool disableTexShade, s32 c) {
+void DrawMenuImg(MenuContext* menu, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
+                 s32 clut, s32 tpage, bool disableTexShade, s32 c) {
     SPRT* sp;
     s32 otIdx;
     u32* ot;
+
     ot = g_CurrentBuffer->ot;
     sp = &g_CurrentBuffer->sprite[g_GpuUsage.sp];
 #if defined(VERSION_US)
@@ -1240,23 +1241,23 @@ void func_800F5904(MenuContext* ctx, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
         clut = 0x15D;
     }
 #endif
-    if (ctx == NULL) {
+    if (menu == NULL) {
         otIdx = 0x1FF;
     } else {
-        otIdx = ctx->unk18 + 2;
+        otIdx = menu->unk18 + 2;
     }
     SetSemiTrans(sp, 0);
     SetShadeTex(sp, disableTexShade);
-    sp->x0 = (s16)x;
-    sp->y0 = (s16)y;
-    sp->w = (s16)w;
-    sp->h = (s16)h;
-    sp->u0 = (u8)u;
-    sp->v0 = (u8)v;
-    if ((ctx == NULL) || (ScissorSprite(sp, ctx) == false)) {
-        sp->r0 = (u8)c;
-        sp->g0 = (u8)c;
-        sp->b0 = (u8)c;
+    sp->x0 = x;
+    sp->y0 = y;
+    sp->w = w;
+    sp->h = h;
+    sp->u0 = u;
+    sp->v0 = v;
+    if (menu == NULL || ScissorSprite(sp, menu) == false) {
+        sp->r0 = c;
+        sp->g0 = c;
+        sp->b0 = c;
         sp->clut = D_8003C104[clut];
         AddPrim(&ot[otIdx], sp);
         g_GpuUsage.sp++;
@@ -1265,15 +1266,15 @@ void func_800F5904(MenuContext* ctx, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
 }
 
 void func_800F5A90(void) {
-    func_800F5904(NULL, 96, 96, 64, 64, 0, 0, 0, 0x114, 1, 0);
+    DrawMenuImg(NULL, 96, 96, 64, 64, 0, 0, 0, 0x114, 1, 0);
 }
 
-void func_800F5AE4(MenuContext* context) {
+void func_800F5AE4(MenuContext* menu) {
     s32 i, x;
 
     for (i = 0, x = 72; i < 3; i++, x += 128)
-        func_800F5904(context, x, 201, 128, 16, (i & 1) << 7,
-                      func_800F548C(2) & 0xFF, 0x1A1, (i / 2) + 6, 1, 0);
+        DrawMenuImg(menu, x, 201, 128, 16, (i & 1) << 7,
+                    func_800F548C(2) & 0xFF, 0x1A1, (i / 2) + 6, 1, 0);
 }
 void DrawMenuSprite(
     MenuContext* context, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v,
@@ -1533,7 +1534,7 @@ void func_800F6618(s32 menuContextIndex, s32 bColorMode) {
 }
 
 void func_800F66BC(
-    const char* str, s32 x, s32 y, MenuContext* context, bool disableTexShade) {
+    const char* str, s32 x, s32 y, MenuContext* menu, bool disableTexShade) {
     u16 temp;
     const int ChWidth = 12;
     const int ChHeight = 16;
@@ -1549,15 +1550,15 @@ loop_1:
     unk = unk != 0;
     temp = ch;
     temp = temp >> 5;
-    func_800F5904(context, x, y, ChWidth, ChHeight, (ch & 0xF) * ChWidth,
-                  temp * ChHeight, 0x1A1, unk + 6, disableTexShade, 0x40);
+    DrawMenuImg(menu, x, y, ChWidth, ChHeight, (ch & 0xF) * ChWidth,
+                temp * ChHeight, 0x1A1, unk + 6, disableTexShade, 0x40);
     x += ChWidth;
     goto loop_1;
 }
 
-void DrawMenuChar(u8 ch, int x, int y, MenuContext* context) {
-    func_800F5904(context, x, y, 8, 8, (ch & 0xF) * 8, (u32)(ch & 0xF0) >> 1,
-                  0x196, 0x1E, 1, 0);
+void DrawMenuChar(u8 ch, int x, int y, MenuContext* menu) {
+    DrawMenuImg(menu, x, y, 8, 8, (ch & 0xF) * 8, (u32)(ch & 0xF0) >> 1, 0x196,
+                0x1E, 1, 0);
 }
 
 void DrawMenuStr(const u8* str, s32 x, s32 y, MenuContext* context) {
@@ -2109,8 +2110,8 @@ void DrawSpellMenu(MenuContext* ctx) {
     }
     for (i = 0; i < 8; i++) {
         if (g_Status.spells[i] & 0x80) {
-            func_800F5904(ctx, 0x1C, 0x3C + 0x10 * i, 0xF0, 0x10U, 0,
-                          func_800F548C(-0x80 + i) & 0xFF, 0x1A1, 6, true, 0);
+            DrawMenuImg(ctx, 0x1C, 0x3C + 0x10 * i, 0xF0, 0x10U, 0,
+                        func_800F548C(-0x80 + i) & 0xFF, 0x1A1, 6, true, 0);
         }
     }
 #if defined(VERSION_US)
@@ -2130,7 +2131,74 @@ void DrawSpellMenu(MenuContext* ctx) {
 #endif
 }
 
-INCLUDE_ASM("dra/nonmatchings/5298C", func_800F7F64);
+#if defined(VERSION_HD)
+// TODO import 0x3C658 rodata first
+INCLUDE_ASM("dra/nonmatchings/5298C", DrawMenuFamiliars);
+#else
+void DrawMenuFamiliars(MenuContext* menu) {
+    s32 i;
+    s32 baseX;
+    s32 x;
+    s32 y;
+    s32 strId;
+    s32 new_var;
+
+    DrawMenuStr(c_strALUCARD[97], 120, 40, menu);
+    for (i = 0; i < 7; i++) {
+        if (D_801375E0[i] == 0) {
+            continue;
+        }
+        baseX = (i & 1) * 172;
+        y = new_var = (i / 2) * 40;
+        new_var = y + 68;
+        x = baseX + 48;
+        if (i == 6) {
+            x = baseX + 220;
+        }
+        strId = i + 46;
+        DrawMenuStr(c_strALUCARD[strId], x, y + 68, menu);
+        strId = 43;
+        if (i < 5) {
+            if (1) {
+                strId = 8;
+            }
+        }
+        DrawMenuStr(c_strALUCARD[strId], x + 56, y + 68, menu);
+        DrawMenuInt(g_Status.statsFamiliars[i].level, x + 112, y + 68, menu);
+        strId = 44;
+        if (i < 5) {
+            strId = 5;
+        }
+        DrawMenuStr(c_strALUCARD[strId], x + 56, y + 84, menu);
+        DrawMenuInt(
+            g_Status.statsFamiliars[i].exp % 100, x + 112, y + 84, menu);
+        switch (i) {
+        case 0:
+            DrawMenuImg(menu, 16, 64, 24, 30, 104, 129, 0x1D2, 0x1E, 1, 0);
+            break;
+        case 1:
+            DrawMenuImg(menu, 176, 64, 40, 30, 32, 161, 0x1D1, 0x1E, 1, 0);
+            break;
+        case 2:
+            DrawMenuImg(menu, 12, 104, 32, 30, 72, 129, 0x1D4, 0x1E, 1, 0);
+            break;
+        case 3:
+            DrawMenuImg(menu, 180, 104, 32, 30, 0, 225, 0x1D6, 0x1E, 1, 0);
+            break;
+        case 4:
+            DrawMenuImg(menu, 12, 144, 32, 54, 0, 129, 0x1D0, 0x1E, 1, 0);
+            break;
+        case 5:
+            DrawMenuImg(menu, 176, 144, 40, 30, 32, 129, 0x1D3, 0x1E, 1, 0);
+            break;
+        case 6:
+            DrawMenuImg(menu, 180, 184, 32, 38, 0, 185, 0x1D5, 0x1E, 1, 0);
+            break;
+        }
+    }
+}
+const u32 rodataPadding_DrawMenuFamiliars_jtbl = 0;
+#endif
 
 void func_800F82F4(void) {
     RECT dstRect;
@@ -2295,9 +2363,9 @@ void func_800F8858(MenuContext* context) {
                   context->cursorY + 4, UnkX, 16, 0, true);
 }
 
-void func_800F892C(s32 index, s32 x, s32 y, MenuContext* context) {
-    func_800F5904(context, x, y, 16, 16, (index & 7) * 16,
-                  ((index & 0xF8) * 2) | 0x80, index + 0x1D0, 0x1A, 1, 0);
+void func_800F892C(s32 index, s32 x, s32 y, MenuContext* menu) {
+    DrawMenuImg(menu, x, y, 16, 16, (index & 7) * 16,
+                ((index & 0xF8) * 2) | 0x80, index + 0x1D0, 0x1A, 1, 0);
 }
 
 void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
