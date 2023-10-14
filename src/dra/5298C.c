@@ -2128,7 +2128,56 @@ void DrawSystemMenu(MenuContext* ctx) {
     DrawMenuStr(menuOptions[strIdx], 32, 128, ctx);
 }
 
-INCLUDE_ASM("dra/nonmatchings/5298C", func_800F84CC);
+void func_800F84CC(void) {
+    Primitive* prim;
+    s32 i;
+    s32 primIndex;
+
+    for (i = 0; i < LEN(D_801377FC); i++) {
+        D_801377FC[i] = func_800EDD9C(PRIM_G4, 1);
+        prim = &g_PrimBuf[D_801377FC[i]];
+        prim->blendMode = BLEND_VISIBLE;
+    }
+
+    D_8013783C = func_800EDD9C(PRIM_GT4, 1);
+    prim = &g_PrimBuf[D_8013783C];
+    SetPrimRect(prim, 20, 195, 42, 28);
+    prim->u0 = 113;
+    prim->v0 = 177;
+    prim->u1 = 127;
+    prim->v1 = 177;
+    prim->u2 = 113;
+    prim->v2 = 191;
+    prim->u3 = 127;
+    prim->v3 = 191;
+    prim->tpage = 0x1A;
+    prim->clut = 0x1EF;
+    prim->priority = 0x40;
+    prim->blendMode = 0x80 | BLEND_VISIBLE;
+
+    D_80137840 = func_800EDD9C(PRIM_GT4, 2);
+    prim = &g_PrimBuf[D_80137840];
+    for (i = 0; prim; i++) {
+        prim->x0 = prim->x2 = 7;
+        prim->x1 = prim->x3 = 23;
+        prim->v0 = prim->v1 = 48;
+        prim->v2 = prim->v3 = 64;
+        if (i == 0) {
+            prim->y0 = prim->y1 = 124;
+            prim->u0 = prim->u2 = 80;
+        } else {
+            prim->y0 = prim->y1 = 174;
+            prim->u0 = prim->u2 = 96;
+        }
+        prim->y2 = prim->y3 = prim->y0 + 0x10;
+        prim->u1 = prim->u3 = prim->u0 + 0x10;
+        func_80107250(prim, 64);
+        prim->tpage = 0x1A;
+        prim->priority = 0x40;
+        prim->blendMode = BLEND_VISIBLE;
+        prim = prim->next;
+    }
+}
 
 void func_800F86E4(void) {
     s32 i;
