@@ -547,6 +547,7 @@ extern Unkstruct_800A2D98 D_801375CC;
 extern s32 D_801375D4;
 extern s32* D_801375D8;
 extern s32 D_801375DC;
+extern s32 D_801375E0[];
 extern s32 D_801375FC;
 extern s32 D_80137608;
 extern s32 g_IsCloakLiningUnlocked;
@@ -839,8 +840,8 @@ void CalcDefense(void);
 bool IsAlucart(void);
 void func_800F53A4(void);
 bool ScissorSprite(SPRT* arg0, MenuContext* arg1);
-void func_800F5904(MenuContext* ctx, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
-                   s32 idx, s32 unk2, bool disableTexShade, s32 unk4);
+void DrawMenuImg(MenuContext* ctx, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
+                 s32 idx, s32 unk2, bool disableTexShade, s32 unk4);
 void DrawMenuSprite(
     MenuContext* context, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v,
     s32 clut, s32 tpage, s32 arg9, s32 colorIntensity, s32 argB);

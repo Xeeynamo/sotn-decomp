@@ -72,7 +72,7 @@ segments:
       - [0x3C534, .rodata, 52860] # func_800F2860
       - [0x3C55C, .rodata, 5298C] # func_800F298C
       - [0x3C5D4, .rodata, 5298C] # strings
-      - [0x3C68C, rodata] # func_800F7F64
+      - [0x3C68C, .rodata, 5298C] # DrawMenuFamiliars
       - [0x3C6AC, rodata] # func_800F8F28
       - [0x3C6EC, rodata]
       - [0x3C71C, rodata] # func_800FA034
