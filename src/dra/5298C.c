@@ -2144,7 +2144,7 @@ void DrawMenuFamiliars(MenuContext* menu) {
     s32 new_var;
 
     DrawMenuStr(c_strALUCARD[97], 120, 40, menu);
-    for (i = 0; i < 7; i++) {
+    for (i = 0; i < NUM_FAMILIARS; i++) {
         if (D_801375E0[i] == 0) {
             continue;
         }
