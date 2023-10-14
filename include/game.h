@@ -474,7 +474,7 @@ typedef struct {
     /* 0x12 */ s16 h;
     /* 0x14 */ s16 unk14;
     /* 0x16 */ s16 unk16;
-    /* 0x18 */ s16 unk18;
+    /* 0x18 */ s16 otIdx;
     /* 0x1A */ s16 unk1A;
     /* 0x1C */ u8 unk1C;
     /* 0x1D */ u8 unk1D;
@@ -487,7 +487,7 @@ typedef struct {
     /* 0x02 */ s16 cursorY;
     /* 0x04 */ s16 cursorW;
     /* 0x06 */ s16 cursorH;
-    /* 0x08 */ s16 unk08;
+    /* 0x08 */ s16 otIdx;
     /* 0x0A */ s16 padding;
 } MenuContextInit; // size = 0x1C
 

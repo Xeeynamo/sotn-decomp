@@ -1244,7 +1244,7 @@ void DrawMenuImg(MenuContext* menu, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
     if (menu == NULL) {
         otIdx = 0x1FF;
     } else {
-        otIdx = menu->unk18 + 2;
+        otIdx = menu->otIdx + 2;
     }
     SetSemiTrans(sp, 0);
     SetShadeTex(sp, disableTexShade);
@@ -1281,7 +1281,7 @@ void DrawMenuSprite(
     s32 clut, s32 tpage, s32 arg9, s32 colorIntensity, s32 argB) {
     u32* ot = g_CurrentBuffer->ot;
     POLY_GT4* poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
-    s32 otIdx = context->unk18 + 2;
+    s32 otIdx = context->otIdx + 2;
     u32 polyColorIntensity;
     s32 temp_polyx0;
 
@@ -1324,7 +1324,7 @@ void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b) {
     u32* ot = g_CurrentBuffer->ot;
     POLY_G4* poly = &g_CurrentBuffer->polyG4[g_GpuUsage.g4];
-    s32 otIdx = context->unk18 + 1;
+    s32 otIdx = context->otIdx + 1;
     u32 temp;
 
     poly->x0 = posX;
@@ -1599,7 +1599,7 @@ void DrawMenuStr(const u8* str, s32 x, s32 y, MenuContext* context) {
         x += ChWidth;
     }
     D_80137614 = 1;
-    func_800F53D4(0x1E, context->unk18 + 2);
+    func_800F53D4(0x1E, context->otIdx + 2);
 }
 
 void DrawMenuInt(s32 digit, s32 x, s32 y, MenuContext* context) {
@@ -2444,11 +2444,11 @@ void BlinkMenuCursor(s32 left, s32 top, s32 right, s32 bottom, s32 arg4) {
     s32 var_s2;
     u8 blink_value;
 
-    u32* temp_s3 = g_CurrentBuffer->ot;
+    u32* ot = g_CurrentBuffer->ot;
     LINE_G2* temp_s0 = &g_CurrentBuffer->lineG2[g_GpuUsage.line];
 
     if (arg4 != 0) {
-        var_s2 = g_MenuData.menus[arg4 - 1].unk18 + 4;
+        var_s2 = g_MenuData.menus[arg4 - 1].otIdx + 4;
     } else {
         var_s2 = 0x80;
     }
@@ -2478,7 +2478,7 @@ void BlinkMenuCursor(s32 left, s32 top, s32 right, s32 bottom, s32 arg4) {
     temp_s0->y0 = top;
     temp_s0->x1 = right;
     temp_s0->y1 = bottom;
-    AddPrim(&temp_s3[var_s2], temp_s0);
+    AddPrim(&ot[var_s2], temp_s0);
     g_GpuUsage.line++;
 }
 
@@ -3036,7 +3036,7 @@ void func_800FB9BC(void) {
         context->w = 0;
         context->unk16 = 0;
         context->h = 0;
-        context->unk18 = MenuContextData[i].unk08;
+        context->otIdx = MenuContextData[i].otIdx;
         context->unk1C = 2;
     }
     D_801376C4 = D_801376C8 =
