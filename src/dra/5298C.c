@@ -2152,13 +2152,13 @@ void DrawMenuFamiliars(MenuContext* menu) {
         y = new_var = (i / 2) * 40;
         new_var = y + 68;
         x = baseX + 48;
-        if (i == 6) {
+        if (i == FAM_STATS_NOSE_DEMON) {
             x = baseX + 220;
         }
         strId = i + 46;
         DrawMenuStr(c_strALUCARD[strId], x, y + 68, menu);
         strId = 43;
-        if (i < 5) {
+        if (i < FAM_STATS_YOUSEI) {
             if (1) {
                 strId = 8;
             }
@@ -2166,32 +2166,32 @@ void DrawMenuFamiliars(MenuContext* menu) {
         DrawMenuStr(c_strALUCARD[strId], x + 56, y + 68, menu);
         DrawMenuInt(g_Status.statsFamiliars[i].level, x + 112, y + 68, menu);
         strId = 44;
-        if (i < 5) {
+        if (i < FAM_STATS_YOUSEI) {
             strId = 5;
         }
         DrawMenuStr(c_strALUCARD[strId], x + 56, y + 84, menu);
         DrawMenuInt(
             g_Status.statsFamiliars[i].exp % 100, x + 112, y + 84, menu);
         switch (i) {
-        case 0:
+        case FAM_STATS_BAT:
             DrawMenuImg(menu, 16, 64, 24, 30, 104, 129, 0x1D2, 0x1E, 1, 0);
             break;
-        case 1:
+        case FAM_STATS_GHOST:
             DrawMenuImg(menu, 176, 64, 40, 30, 32, 161, 0x1D1, 0x1E, 1, 0);
             break;
-        case 2:
+        case FAM_STATS_FAERIE:
             DrawMenuImg(menu, 12, 104, 32, 30, 72, 129, 0x1D4, 0x1E, 1, 0);
             break;
-        case 3:
+        case FAM_STATS_DEMON:
             DrawMenuImg(menu, 180, 104, 32, 30, 0, 225, 0x1D6, 0x1E, 1, 0);
             break;
-        case 4:
+        case FAM_STATS_SWORD:
             DrawMenuImg(menu, 12, 144, 32, 54, 0, 129, 0x1D0, 0x1E, 1, 0);
             break;
-        case 5:
+        case FAM_STATS_YOUSEI:
             DrawMenuImg(menu, 176, 144, 40, 30, 32, 129, 0x1D3, 0x1E, 1, 0);
             break;
-        case 6:
+        case FAM_STATS_NOSE_DEMON:
             DrawMenuImg(menu, 180, 184, 32, 38, 0, 185, 0x1D5, 0x1E, 1, 0);
             break;
         }
