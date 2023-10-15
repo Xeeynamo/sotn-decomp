@@ -849,7 +849,7 @@ void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b);
 s32 func_800F62E8(s32 arg0);
 void InitStatsAndGear(bool isDeathTakingItems);
-void func_800F98AC(s32 arg0, s32 arg1);
+void func_800F98AC(u8* arg0, u32 arg1);
 void func_800F99B8(s32 arg0, s32 arg1, s32 arg2);
 void DrawMenuChar(u8 ch, int x, int y, MenuContext* context);
 void DrawMenuStr(const u8* str, s32 x, s32 y, MenuContext* context);

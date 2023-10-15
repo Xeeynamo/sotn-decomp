@@ -2598,7 +2598,33 @@ void func_800F9808(u32 arg0) {
     LoadTPage(oldPos, 0, 0, 0x180, arg0, temp_s0 + 256, 16);
 }
 
-INCLUDE_ASM("dra/nonmatchings/5298C", func_800F98AC);
+void func_800F98AC(u8* arg0, u32 arg1) {
+    u32 temp_s2;
+    s32 i;
+    u8* data_ptr;
+    s32 var_s1;
+    u8* var_a1;
+    u32 loaded_data;
+
+    temp_s2 = arg1;
+    var_s1 = (temp_s2 >> 2) & 0x40;
+    temp_s2 = func_800F548C(temp_s2);
+
+    for (data_ptr = arg0; *data_ptr != 0;) {
+        // Loads a big-endian u16 from data_ptr.
+        // This is connected to shift-jis.
+        loaded_data = *data_ptr++ << 8;
+        loaded_data += *data_ptr++;
+        var_a1 = func_80106A28(loaded_data, 0);
+        for (i = 0; i < 0x60; i++) {
+            D_8013794C[i] = *var_a1++;
+        }
+        LoadTPage((PixPattern*)D_8013794C, 0, 0, var_s1 + D_80137950,
+                  temp_s2 + D_80137954, 0xC, 0x10);
+        D_8013794C += 0x60;
+        var_s1 += 3;
+    }
+}
 
 #if defined(VERSION_US)
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800F99B8);
