@@ -678,6 +678,7 @@ extern u32 g_DebugCurPal;
 extern s16 D_8013901C;
 extern u8 D_80139020;
 extern s8 D_80139058[];
+extern s32 g_PrevEquippedWeapons[2];
 extern s16 D_8013909C;
 extern u8 D_801390A0;
 extern s16 D_801390A4;

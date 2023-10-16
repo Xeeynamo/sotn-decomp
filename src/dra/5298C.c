@@ -2844,7 +2844,55 @@ bool LoadWeaponPrg(s32 equipIndex) {
     return 1;
 }
 
-INCLUDE_ASM("dra/nonmatchings/5298C", func_800FA9DC);
+void InitWeapon(s32 itemSlot) {
+    // Called twice every time the in-game menu is closed.
+    // It will be called twice, with LEFT_HAND_SLOT and then RIGHT_HAND_SLOT
+
+    void (*loadWeaponPalette)(u8 clutIndex);
+    s32 equipId;
+    Entity* entity;
+    u16 entityId;
+    s32 i;
+
+    equipId = g_Status.equipment[itemSlot];
+
+    // Having the Axe Lord Armor equipped will not load any normal weapon
+    if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
+        equipId = 0xD8;
+    }
+
+    // Do not re-load the same weapon
+    if (equipId == g_PrevEquippedWeapons[itemSlot]) {
+        return;
+    }
+
+    // Assign the right palette to the weapon graphics
+    if (itemSlot == LEFT_HAND_SLOT) {
+        loadWeaponPalette = D_8017A000.LoadWeaponPalette;
+    } else {
+        loadWeaponPalette = D_8017D000.LoadWeaponPalette;
+    }
+    loadWeaponPalette(g_EquipDefs[equipId].palette);
+
+    // Destroy any entity spawned by the previously equipped weapon.
+    // 0xE0-0xEF: weapon0 (left hand) entities
+    // 0xF0-0xFF: weapon1 (right hand) entities
+    entity = g_Entities;
+    for (i = 0; i < STAGE_ENTITY_START; i++) {
+        entityId = entity->entityId;
+        if (entityId >= itemSlot * 0x10 + WEAPON_0_START &&
+            entityId <= itemSlot * 0x10 + WEAPON_0_END) {
+            DestroyEntity(entity);
+        }
+        if (entityId >= WEAPON_0_START + 8 && entityId < WEAPON_0_START + 14) {
+            DestroyEntity(entity);
+        }
+        if (entityId >= WEAPON_1_START + 8 && entityId < WEAPON_1_START + 14) {
+            DestroyEntity(entity);
+        }
+        entity++;
+    }
+}
 
 void func_800FAB1C(void) {
     const int START = 4;
