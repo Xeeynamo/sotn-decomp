@@ -2880,14 +2880,14 @@ void InitWeapon(s32 itemSlot) {
     entity = g_Entities;
     for (i = 0; i < STAGE_ENTITY_START; i++) {
         entityId = entity->entityId;
-        if (entityId >= itemSlot * 0x10 + 0xE0 &&
-            entityId <= itemSlot * 0x10 + 0xEF) {
+        if (entityId >= itemSlot * 0x10 + WEAPON_0_START &&
+            entityId <= itemSlot * 0x10 + WEAPON_0_END) {
             DestroyEntity(entity);
         }
-        if (entityId >= 0xE8 && entityId < 0xEE) {
+        if (entityId >= WEAPON_0_START + 8 && entityId < WEAPON_0_START + 14) {
             DestroyEntity(entity);
         }
-        if (entityId >= 0xF8 && entityId < 0xFE) {
+        if (entityId >= WEAPON_1_START + 8 && entityId < WEAPON_1_START + 14) {
             DestroyEntity(entity);
         }
         entity++;
