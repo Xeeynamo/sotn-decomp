@@ -2862,7 +2862,7 @@ void InitWeapon(s32 itemSlot) {
     }
 
     // Do not re-load the same weapon
-    if (equipId == D_8013905C[itemSlot]) {
+    if (equipId == g_PrevEquippedWeapons[itemSlot]) {
         return;
     }
 

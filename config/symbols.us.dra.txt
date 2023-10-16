@@ -957,6 +957,7 @@ g_ButtonCombo = 0x80138FC0;
 g_sfxRingBufferPos1 = 0x80139000;
 g_VolR = 0x80139004;
 g_DebugCurPal = 0x8013900C;
+g_PrevEquippedWeapons = 0x8013905C;
 g_BackBuffer = 0x801390D4;
 g_sfxRingBuffer1 = 0x801390DC;
 g_sfxRingBufferPos2 = 0x80139A70;
