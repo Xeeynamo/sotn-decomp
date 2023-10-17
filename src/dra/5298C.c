@@ -1625,7 +1625,7 @@ void func_800F6A48(void) {
     func_800EA5E4(0x411);
 }
 
-void DrawJosephsCloakMenu(void) {
+void DrawJosephsCloakMenu(MenuContext* context) {
     s32 row1Ypos;
     s32 row2Ypos;
     s32 i;
@@ -2518,7 +2518,248 @@ void DrawConsumableCount(s32 itemId, s32 hand, MenuContext* ctx) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/5298C", func_800F8F28);
+#if defined(VERSION_HD)
+INCLUDE_ASM("dra/nonmatchings/5298C", DrawMenu);
+#elif defined(VERSION_US)
+void DrawMenu(void) {
+    u8 padding[32];
+    s32 x;
+    s32 y;
+    Accessory* acc;
+    Equipment* equip;
+    MenuContext* menu;
+    Primitive* prim;
+    s16 swap;
+    s32 ch;
+    s32 cy;
+    s32 cx;
+    s32 cw;
+    s16 r0;
+    s16 g0;
+    s16 b0;
+    s16 r1;
+    s16 g1;
+    s16 b1;
+    s32 var_a1;
+    s32 cursorXMovement;
+    s32 equipIndex;
+    s32 flag;
+    s32 i;
+    s32 j;
+    s32 new_var2;
+    s32 stuff;
+    s32 stuffed;
+
+    for (i = 0; i < 0x10; i++) {
+        prim = &g_PrimBuf[D_801377FC[i]];
+        menu = &g_MenuData.menus[i];
+        if (menu->unk1C == 2) {
+            prim->blendMode = 8;
+            continue;
+        }
+        cx = menu->cursorX;
+        cy = menu->cursorY;
+        cw = menu->cursorW;
+        ch = menu->cursorH;
+        var_a1 = menu->unk14 - menu->w;
+        if (var_a1 == 1) {
+            var_a1 = 2;
+        }
+        new_var2 = -1;
+        if (var_a1 == new_var2) {
+            var_a1 = -2;
+        }
+        menu->w += var_a1 / 2;
+
+        var_a1 = menu->unk16 - menu->h;
+        if (var_a1 == 1) {
+            var_a1 = 2;
+        }
+        if (var_a1 == -1) {
+            var_a1 = -2;
+        }
+        menu->h += var_a1 / 2;
+
+        x = cx + menu->w;
+        y = cy + menu->h;
+
+        if (menu->unk1C == 1) {
+            menu->unk1D++;
+            j = menu->unk1D; // FAKE?
+            if (menu->unk1D == 16) {
+                menu->unk1C = 2;
+                prim->blendMode = 8;
+                continue;
+            }
+            cy += ch / 16 * menu->unk1D;
+            ch -= ch / 16 * menu->unk1D;
+            j = 16 - menu->unk1D;
+
+            cursorXMovement = cw / 2 * (128 - D_800A2D80[j]) / 128;
+            cx += cursorXMovement;
+            cw -= cursorXMovement * 2;
+        }
+        if (menu->unk1C == 3) {
+            menu->unk1D++;
+            j = menu->unk1D; // FAKE?
+            if (menu->unk1D == 16) {
+                menu->unk1C = 0;
+            } else {
+                cursorXMovement =
+                    cw / 2 * (128 - D_800A2D80[menu->unk1D]) / 128;
+                cx += cursorXMovement;
+                cw -= cursorXMovement * 2;
+                j = 16 - menu->unk1D; // FAKE?
+                var_a1 = ch / 16 * j;
+                ch -= var_a1;
+            }
+        }
+        menu->unk1.x = cx;
+        menu->unk1.y = cy;
+        menu->unk1.w = cw;
+        menu->unk1.h = ch;
+        SetPrimRect(prim, cx, cy, cw, ch);
+
+        r0 = g_Settings.windowColors[0] * 8 - 0x20;
+        if (r0 < 0) {
+            r0 = 0;
+        }
+        g0 = g_Settings.windowColors[1] * 8 - 0x20;
+        if (g0 < 0) {
+            g0 = 0;
+        }
+        b0 = g_Settings.windowColors[2] * 8 - 0x20;
+        if (b0 < 0) {
+            b0 = 0;
+        }
+        r1 = g_Settings.windowColors[0] * 8 + 0x20;
+        if (r1 >= 0x100) {
+            r1 = 0xFF;
+        }
+        g1 = g_Settings.windowColors[1] * 8 + 0x20;
+        if (g1 >= 0x100) {
+            g1 = 0xFF;
+        }
+        b1 = g_Settings.windowColors[2] * 8 + 0x20;
+        if (b1 >= 0x100) {
+            b1 = 0xFF;
+        }
+        if (g_StageId >= 0x20 && g_StageId < 0x40) {
+            swap = r0;
+            r0 = r1;
+            r1 = swap;
+            swap = g0;
+            g0 = g1;
+            g1 = swap;
+            swap = b0;
+            b0 = b1;
+            b1 = swap;
+        }
+        prim->r0 = r0;
+        prim->g0 = g0;
+        prim->b0 = b0;
+        prim->r1 = r0;
+        prim->g1 = g0;
+        prim->b1 = b0;
+        prim->r2 = r1;
+        prim->g2 = g1;
+        prim->b2 = b1;
+        prim->r3 = r1;
+        prim->g3 = g1;
+        prim->b3 = b1;
+        prim->priority = menu->otIdx;
+        prim->blendMode = 0x480;
+
+        BlinkMenuCursor(cx, cy, cx, cy + ch - 1, i + 1);
+        BlinkMenuCursor(cx, cy, cx + cw - 1, cy, i + 1);
+        BlinkMenuCursor(cx + cw - 1, cy, cx + cw - 1, cy + ch - 1, i + 1);
+        BlinkMenuCursor(cx, cy + ch - 1, cx + cw - 1, cy + ch - 1, i + 1);
+
+        switch (i) {
+        case 0:
+            func_800F6568(menu);
+            func_800F8754(menu, x, y);
+            break;
+        case 1:
+            DrawPauseMenu(1);
+            break;
+        case 2:
+            DrawPauseMenu(2);
+            equipIndex = g_Status.equipment[0];
+            equip = &g_EquipDefs[equipIndex];
+            DrawMenuStr(equip->name, 112, 30, menu);
+            DrawConsumableCount(equipIndex, 0, menu);
+            LoadEquipIcon(equip->icon, equip->iconPalette, 0x10);
+
+            equipIndex = g_Status.equipment[1];
+            equip = &g_EquipDefs[equipIndex];
+            DrawMenuStr(equip->name, 112, 43, menu);
+            DrawConsumableCount(equipIndex, 1, menu);
+            flag = equip->itemCategory == 5;
+            LoadEquipIcon(equip->icon, equip->iconPalette, 0x11);
+
+            for (j = 0; j < 5; j++) {
+                acc = &g_AccessoryDefs[g_Status.equipment[j + 2]];
+                DrawMenuStr(acc->name, 112, 56 + j * 13, menu);
+                LoadEquipIcon(acc->icon, acc->iconPalette, j + 0x12);
+            }
+
+            for (j = 0; j < 7; j++) {
+                if (j >= 0 && j < 2 && flag) {
+                    if (j == 0) {
+                        func_800F892C(0x10, 0x5E, 0x20, menu);
+                    }
+                } else {
+                    func_800F892C(j + 0x10, 0x5E, 0x1a + j * 13, menu);
+                }
+            }
+            func_800F6618(i, D_800978F8 != 0x40);
+            break;
+        case 3:
+            func_800F8990(menu, x, y);
+            DrawStatChanges();
+            break;
+        case 4:
+            func_800F5AE4(menu);
+            break;
+        case 5:
+            DrawRelicsMenu(menu);
+            break;
+        case 6:
+            DrawSpellMenu(menu);
+            break;
+        case 7:
+            DrawSystemMenu(menu);
+            break;
+        case 8:
+            DrawMenuAlucardCloakPreview(menu);
+            DrawJosephsCloakMenu(menu);
+            break;
+        case 9:
+            DrawSettingsButton(menu);
+            break;
+        case 10:
+            DrawSettingsReverseCloak(menu);
+            break;
+        case 11:
+            DrawSettingsSound(menu);
+            break;
+        case 12:
+            func_800F6BEC(menu);
+            break;
+        case 13:
+            DrawTimeAttackMenu(menu);
+            break;
+        case 14:
+            func_800F8858(menu);
+            break;
+        case 15:
+            DrawMenuFamiliars(menu);
+            break;
+        }
+    }
+}
+#endif
 
 void func_800F9690(void) {
     POLY_GT4* poly = &g_PrimBuf[D_8013783C];
