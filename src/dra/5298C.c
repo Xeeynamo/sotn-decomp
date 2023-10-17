@@ -2597,7 +2597,7 @@ void DrawMenu(void) {
 
             cursorXMovement = cw / 2 * (128 - D_800A2D80[j]) / 128;
             cx += cursorXMovement;
-            cw -= cursorXMovement << 1;
+            cw -= cursorXMovement * 2;
         }
         if (menu->unk1C == 3) {
             menu->unk1D++;
@@ -2606,9 +2606,9 @@ void DrawMenu(void) {
                 menu->unk1C = 0;
             } else {
                 cursorXMovement =
-                    (cw / 2 * (128 - D_800A2D80[menu->unk1D])) / 128;
+                    cw / 2 * (128 - D_800A2D80[menu->unk1D]) / 128;
                 cx += cursorXMovement;
-                cw -= cursorXMovement << 1;
+                cw -= cursorXMovement * 2;
                 j = 16 - menu->unk1D; // FAKE?
                 var_a1 = ch / 16 * j;
                 ch -= var_a1;
