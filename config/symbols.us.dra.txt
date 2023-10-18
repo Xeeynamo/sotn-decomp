@@ -223,6 +223,7 @@ SetNextRoomToLoad = 0x800F0BC0;
 DrawMenuStr = 0x800F67EC;
 SortTimeAttackEntries = 0x800F6CC0;
 DrawMenu = 0x800F8F28;
+MenuEquipHandlePageScroll = 0x800FA60C;
 CheckWeaponCombo = 0x800FA7E8;
 LoadWeaponPrg = 0x800FA8C4;
 InitWeapon = 0x800FA9DC;
