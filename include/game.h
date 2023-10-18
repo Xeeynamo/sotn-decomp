@@ -670,6 +670,15 @@ typedef struct {
     /* 0xA */ s16 unkA;
 } GfxLoad; // size=0xC
 
+typedef enum ItemTypes {
+    HAND_TYPE,
+    HEAD_TYPE,
+    ARMOR_TYPE,
+    CAPE_TYPE,
+    ACCESSORY_TYPE,
+    NUM_ITEM_TYPES,
+} ItemTypes;
+
 typedef enum {
     ITEM_S_SWORD,
     ITEM_SWORD,
@@ -812,13 +821,8 @@ typedef struct {
     /* 0x00, 8003C9A8 */ s32 cursorMain;
     /* 0x04, 8003C9AC */ s32 cursorRelic;
     /* 0x08, 8003C9B0 */ s32 cursorEquip;
-    /* 0x0C, 8003C9B4 */ s32 cursorEquipHand;
-    /* 0x10, 8003C9B8 */ s32 cursorEquipHead;
-    /* 0x14, 8003C9BC */ s32 cursorEquipBody;
-    /* 0x18, 8003C9C0 */ s32 cursorEquipCloak;
-    /* 0x1C, 8003C9C4 */ s32 cursorEquipOther;
-    /* 0x20, 8003C9C8 */ s32 scrollEquipHand;
-    /* 0x24, 8003C9CC */ s32 scrollEquipAccessories[4];
+    /* 0x0C, 8003C9B4 */ s32 cursorEquipType[NUM_ITEM_TYPES];
+    /* 0x20, 8003C9C8 */ s32 scrollEquipType[NUM_ITEM_TYPES];
     /* 0x34, 8003C9DC */ s32 cursorSpells;
     /* 0x38, 8003C9E0 */ s32 cursorSettings;
     /* 0x3C, 8003C9E4 */ s32 cursorCloak;

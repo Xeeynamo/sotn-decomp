@@ -8,14 +8,6 @@ typedef enum ItemSlots {
     /* 6 */ ACCESSORY_2_SLOT,
 } ItemSlots;
 
-typedef enum ItemTypes {
-    /* 0 */ HAND_TYPE,
-    /* 1 */ HEAD_TYPE,
-    /* 2 */ ARMOR_TYPE,
-    /* 3 */ CAPE_TYPE,
-    /* 4 */ ACCESSORY_TYPE,
-} ItemTypes;
-
 typedef enum HandItems {
     /* 0x000 */ ITEM_EMPTY_HAND,
     /* 0x001 */ ITEM_MONSTER_VIAL_1,

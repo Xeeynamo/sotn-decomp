@@ -3128,9 +3128,9 @@ void func_800FA3C4(s32 cursorIndex, s32 arg1, s32 arg2) {
 
     // Here is where we use the menuitem, again, FAKE.
     if (D_801375CC.equipTypeFilter == 0) {
-        g_MenuNavigation.scrollEquipHand = menuitem[11];
+        g_MenuNavigation.scrollEquipType[HAND_TYPE] = menuitem[11];
     } else {
-        g_MenuNavigation.scrollEquipAccessories[D_801375D4] = menuitem[11];
+        g_MenuNavigation.scrollEquipType[HEAD_TYPE + D_801375D4] = menuitem[11];
     }
     if (arg2 != 0) {
         if (arg1 == 0) {
@@ -3154,9 +3154,9 @@ void MenuEquipHandlePageScroll(s32 arg0) {
     MenuContext* menu = &g_MenuData.menus[3];
 
     if (D_801375CC.equipTypeFilter == 0) {
-        cursorIndex = &g_MenuNavigation.cursorEquipHand;
+        cursorIndex = &g_MenuNavigation.cursorEquipType[HAND_TYPE];
     } else {
-        cursorIndex = &(&g_MenuNavigation.cursorEquipHead)[D_801375D4];
+        cursorIndex = &g_MenuNavigation.cursorEquipType[HEAD_TYPE + D_801375D4];
     }
 
     nItems = func_800FD6C4(D_801375CC.equipTypeFilter);
@@ -3430,11 +3430,11 @@ void func_800FAF44(s32 arg0) {
         }
 
         g_MenuData.D_80137688 = g_MenuData.D_8013768C =
-            g_MenuNavigation.scrollEquipHand;
+            g_MenuNavigation.scrollEquipType[HAND_TYPE];
         return;
     }
     g_MenuData.D_80137688 = g_MenuData.D_8013768C =
-        ((s32*)g_MenuNavigation.scrollEquipAccessories)[D_801375D4];
+        g_MenuNavigation.scrollEquipType[HEAD_TYPE + D_801375D4];
 
     for (i = 0; i < 90; i++) {
         if (g_AccessoryDefs[i].equipType == D_801375D4) {
