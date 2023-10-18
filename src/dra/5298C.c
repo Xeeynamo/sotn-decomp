@@ -1,4 +1,5 @@
 #include "dra.h"
+#include "sfx.h"
 
 #define CH(x) ((x)-0x20)
 
@@ -1890,7 +1891,7 @@ void DrawStatChanges(void) {
     MenuContext* ctx;
     s32 arrow;
 
-    if ((g_MenuData.D_80137692 != 0) || (D_80137948 == 0)) {
+    if ((g_MenuData.menus[3].unk1C != 0) || (D_80137948 == 0)) {
         return;
     }
     ctx = &g_MenuData.menus[2];
@@ -2814,7 +2815,7 @@ void func_800F96F4(void) { // !Fake:
 
     new_var = D_80137848;
     poly = &g_PrimBuf[D_80137840];
-    temp_a2 = g_MenuData.D_80137692 == 0;
+    temp_a2 = g_MenuData.menus[3].unk1C == 0;
     temp = D_80137844;
 
     if ((D_80137844[0] != 0) && (temp_a2 != 0)) {
@@ -3132,12 +3133,131 @@ void func_800F9F40(void) {
 }
 const u32 rodataPadding_func_800F9F40_str = 0;
 
-INCLUDE_ASM("dra/nonmatchings/5298C", func_800FA034);
+void MenuHandleCursorInput(MenuNavigation* nav, u8 nOptions, u32 arg2) {
+    const int ItemsPerPage = 12;
+    const int Unk16 = 72;
+    s32 limit;
+    u8 prevCursor;
+
+    prevCursor = nav->cursorMain;
+    switch (arg2) {
+    case 3:
+        if (g_pads[0].repeat & PAD_UP) {
+            if (nav->cursorMain) {
+                nav->cursorMain--;
+            }
+        }
+        if (g_pads[0].repeat & PAD_DOWN) {
+            if (nav->cursorMain != nOptions - 1) {
+                nav->cursorMain++;
+            }
+        }
+        break;
+    case 0:
+        if (g_pads[0].repeat & PAD_UP) {
+            nav->cursorMain--;
+            if (nav->cursorMain == -1) {
+                nav->cursorMain = nOptions - 1;
+            }
+        }
+        if (g_pads[0].repeat & PAD_DOWN) {
+            nav->cursorMain++;
+            if (nav->cursorMain == nOptions) {
+                nav->cursorMain = 0;
+            }
+        }
+        break;
+    case 4:
+        if (g_pads[0].repeat & PAD_LEFT) {
+            if (nav->cursorMain != 0) {
+                nav->cursorMain--;
+            }
+        }
+        if (g_pads[0].repeat & PAD_RIGHT) {
+            if (nav->cursorMain != nOptions - 1) {
+                nav->cursorMain++;
+            }
+        }
+        break;
+    case 5:
+        if (g_pads[0].repeat & PAD_LEFT) {
+            nav->cursorMain--;
+            if (nav->cursorMain == -1) {
+                nav->cursorMain = nOptions - 1;
+            }
+        }
+        if (g_pads[0].repeat & PAD_RIGHT) {
+            nav->cursorMain++;
+            if (nav->cursorMain == nOptions) {
+                nav->cursorMain = 0;
+            }
+        }
+        break;
+    case 1:
+    case 2:
+        if (g_pads[0].repeat & PAD_UP) {
+            if (nav->cursorMain >= 2) {
+                nav->cursorMain -= 2;
+            }
+        }
+        if (g_pads[0].repeat & PAD_DOWN) {
+            if (nav->cursorMain == nOptions - 2) {
+                if (nav->cursorMain & 1) {
+                    nav->cursorMain = nOptions - 1;
+                }
+            }
+            if (nav->cursorMain < nOptions - 2) {
+                nav->cursorMain += 2;
+            }
+        }
+        if (g_pads[0].repeat & (PAD_RIGHT | PAD_LEFT)) {
+            nav->cursorMain ^= 1;
+            if (nav->cursorMain == nOptions) {
+                nav->cursorMain ^= 1;
+            }
+        }
+        if (arg2 == 2) {
+            if (g_pads[0].repeat & 4) {
+                if (nav->cursorMain >= ItemsPerPage) {
+                    nav->cursorMain -= ItemsPerPage;
+                    g_MenuData.menus[3].unk16 += Unk16;
+                    if (g_MenuData.menus[3].unk16 > 0) {
+                        g_MenuData.menus[3].unk16 = 0;
+                    }
+                } else {
+                    nav->cursorMain = 0;
+                    g_MenuData.menus[3].unk16 = 0;
+                }
+            }
+            if (g_pads[0].repeat & 8) {
+                if (nav->cursorMain < nOptions - ItemsPerPage) {
+                    nav->cursorMain += ItemsPerPage;
+                    limit = ((nOptions - 1) / 2 - 5) * -ItemsPerPage;
+                    g_MenuData.menus[3].unk16 -= Unk16;
+                    if (g_MenuData.menus[3].unk16 < limit) {
+                        g_MenuData.menus[3].unk16 = limit;
+                    }
+                } else {
+                    nav->cursorMain = nOptions - 1;
+                    if (nOptions >= 0xDU) {
+                        g_MenuData.menus[3].unk16 =
+                            (nav->cursorMain / 2 - 5) * -ItemsPerPage;
+                    }
+                }
+            }
+        }
+        break;
+    }
+
+    if (prevCursor != nav->cursorMain) {
+        PlaySfx(SE_UI_SELECT);
+    }
+}
 
 void func_800FA3C4(s32 cursorIndex, s32 arg1, s32 arg2) {
     // FAKE: Should figure out how this actually works.
     // Could be that 7676 is the start of another struct within MenuData.
-    s16* menuitem = &g_MenuData.D_80137676;
+    s16* menuitem = &g_MenuData.menus[3].cursorX;
     s32 limit;
     s32 top_offset;
     s32 arg0_lowbit;
@@ -3145,27 +3265,27 @@ void func_800FA3C4(s32 cursorIndex, s32 arg1, s32 arg2) {
     s32 top;
     s32 half_arg0;
 
-    if (g_MenuData.D_80137692 != 0) {
+    if (g_MenuData.menus[3].unk1C != 0) {
         return;
     }
     arg0_lowbit = cursorIndex & 1;
     half_arg0 = (cursorIndex / 2);
 
     left = (arg0_lowbit * 0xA8) + 0x28;
-    limit = -(g_MenuData.D_8013768C / 12);
+    limit = -(g_MenuData.menus[3].unk16 / 12);
 
     // Below some limit
     if (half_arg0 < limit) {
-        g_MenuData.D_8013768C += 12;
-        top = g_MenuData.D_80137678[0] + 1;
+        g_MenuData.menus[3].unk16 += 12;
+        top = g_MenuData.menus[3].cursorY + 1;
         // Beyond that limit, on the other side
-    } else if (half_arg0 >= (limit + g_MenuData.D_80137678[2] / 12)) {
-        g_MenuData.D_8013768C -= 12;
-        top_offset = ((g_MenuData.D_80137678[2] / 12 - 1) * 12) + 1;
-        top = g_MenuData.D_80137678[0] + top_offset;
+    } else if (half_arg0 >= (limit + g_MenuData.menus[3].cursorH / 12)) {
+        g_MenuData.menus[3].unk16 -= 12;
+        top_offset = ((g_MenuData.menus[3].cursorH / 12 - 1) * 12) + 1;
+        top = g_MenuData.menus[3].cursorY + top_offset;
         // Somewhere in between
     } else {
-        top = ((half_arg0 - limit) * 12) + g_MenuData.D_80137678[0] + 1;
+        top = ((half_arg0 - limit) * 12) + g_MenuData.menus[3].cursorY + 1;
     }
 
     // Here is where we use the menuitem, again, FAKE.
@@ -3471,11 +3591,11 @@ void func_800FAF44(s32 arg0) {
             var_a1++;
         }
 
-        g_MenuData.D_80137688 = g_MenuData.D_8013768C =
+        g_MenuData.menus[3].h = g_MenuData.menus[3].unk16 =
             g_MenuNavigation.scrollEquipType[HAND_TYPE];
         return;
     }
-    g_MenuData.D_80137688 = g_MenuData.D_8013768C =
+    g_MenuData.menus[3].h = g_MenuData.menus[3].unk16 =
         g_MenuNavigation.scrollEquipType[HEAD_TYPE + D_801375D4];
 
     for (i = 0; i < 90; i++) {
@@ -3490,7 +3610,7 @@ void func_800FB004(void) {
     s32 temp_a1 = func_800FD6C4(D_801375CC.equipTypeFilter);
     s32 temp_v0;
 
-    if (((-g_MenuData.D_80137688) / 12) != 0) {
+    if (((-g_MenuData.menus[3].h) / 12) != 0) {
         if (*D_80137844 == 0) {
             *D_80137844 = 1;
         }
@@ -3498,7 +3618,7 @@ void func_800FB004(void) {
         *D_80137844 = 0;
     }
 
-    temp_v0 = -g_MenuData.D_80137688 + g_MenuData.D_80137678[2];
+    temp_v0 = -g_MenuData.menus[3].h + g_MenuData.menus[3].cursorH;
 
     if ((temp_v0 / 12) < (temp_a1 / 2)) {
         if (D_80137848[0] == 0) {
