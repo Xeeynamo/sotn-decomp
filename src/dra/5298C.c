@@ -2928,8 +2928,8 @@ void func_800F99B8(u8* arg0, s32 arg1, s32 arg2) {
                 break;
             }
             for (i = 0; i < 16; i++) {
-            // probably fake, i think var_a2 is a 2d array like [6][??]
-                if (var_a2[i * 6] != 0) { 
+                // probably fake, i think var_a2 is a 2d array like [6][??]
+                if (var_a2[i * 6] != 0) {
                     break;
                 }
             }
