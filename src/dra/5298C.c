@@ -3133,7 +3133,7 @@ void func_800F9F40(void) {
 }
 const u32 rodataPadding_func_800F9F40_str = 0;
 
-void MenuHandleCursorInput(MenuNavigation* nav, u8 arg1, u32 arg2) {
+void MenuHandleCursorInput(MenuNavigation* nav, u8 nOptions, u32 arg2) {
     const int ItemsPerPage = 12;
     const int Unk16 = 72;
     s32 limit;
@@ -3148,7 +3148,7 @@ void MenuHandleCursorInput(MenuNavigation* nav, u8 arg1, u32 arg2) {
             }
         }
         if (g_pads[0].repeat & PAD_DOWN) {
-            if (nav->cursorMain != arg1 - 1) {
+            if (nav->cursorMain != nOptions - 1) {
                 nav->cursorMain++;
             }
         }
@@ -3157,12 +3157,12 @@ void MenuHandleCursorInput(MenuNavigation* nav, u8 arg1, u32 arg2) {
         if (g_pads[0].repeat & PAD_UP) {
             nav->cursorMain--;
             if (nav->cursorMain == -1) {
-                nav->cursorMain = arg1 - 1;
+                nav->cursorMain = nOptions - 1;
             }
         }
         if (g_pads[0].repeat & PAD_DOWN) {
             nav->cursorMain++;
-            if (nav->cursorMain == arg1) {
+            if (nav->cursorMain == nOptions) {
                 nav->cursorMain = 0;
             }
         }
@@ -3174,7 +3174,7 @@ void MenuHandleCursorInput(MenuNavigation* nav, u8 arg1, u32 arg2) {
             }
         }
         if (g_pads[0].repeat & PAD_RIGHT) {
-            if (nav->cursorMain != arg1 - 1) {
+            if (nav->cursorMain != nOptions - 1) {
                 nav->cursorMain++;
             }
         }
@@ -3183,12 +3183,12 @@ void MenuHandleCursorInput(MenuNavigation* nav, u8 arg1, u32 arg2) {
         if (g_pads[0].repeat & PAD_LEFT) {
             nav->cursorMain--;
             if (nav->cursorMain == -1) {
-                nav->cursorMain = arg1 - 1;
+                nav->cursorMain = nOptions - 1;
             }
         }
         if (g_pads[0].repeat & PAD_RIGHT) {
             nav->cursorMain++;
-            if (nav->cursorMain == arg1) {
+            if (nav->cursorMain == nOptions) {
                 nav->cursorMain = 0;
             }
         }
@@ -3201,18 +3201,18 @@ void MenuHandleCursorInput(MenuNavigation* nav, u8 arg1, u32 arg2) {
             }
         }
         if (g_pads[0].repeat & PAD_DOWN) {
-            if (nav->cursorMain == arg1 - 2) {
+            if (nav->cursorMain == nOptions - 2) {
                 if (nav->cursorMain & 1) {
-                    nav->cursorMain = arg1 - 1;
+                    nav->cursorMain = nOptions - 1;
                 }
             }
-            if (nav->cursorMain < arg1 - 2) {
+            if (nav->cursorMain < nOptions - 2) {
                 nav->cursorMain += 2;
             }
         }
         if (g_pads[0].repeat & (PAD_RIGHT | PAD_LEFT)) {
             nav->cursorMain ^= 1;
-            if (nav->cursorMain == arg1) {
+            if (nav->cursorMain == nOptions) {
                 nav->cursorMain ^= 1;
             }
         }
@@ -3230,16 +3230,16 @@ void MenuHandleCursorInput(MenuNavigation* nav, u8 arg1, u32 arg2) {
                 }
             }
             if (g_pads[0].repeat & 8) {
-                if (nav->cursorMain < arg1 - ItemsPerPage) {
+                if (nav->cursorMain < nOptions - ItemsPerPage) {
                     nav->cursorMain += ItemsPerPage;
-                    limit = ((arg1 - 1) / 2 - 5) * -ItemsPerPage;
+                    limit = ((nOptions - 1) / 2 - 5) * -ItemsPerPage;
                     g_MenuData.menus[3].unk16 -= Unk16;
                     if (g_MenuData.menus[3].unk16 < limit) {
                         g_MenuData.menus[3].unk16 = limit;
                     }
                 } else {
-                    nav->cursorMain = arg1 - 1;
-                    if (arg1 >= 0xDU) {
+                    nav->cursorMain = nOptions - 1;
+                    if (nOptions >= 0xDU) {
                         g_MenuData.menus[3].unk16 =
                             (nav->cursorMain / 2 - 5) * -ItemsPerPage;
                     }
