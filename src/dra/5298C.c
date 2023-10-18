@@ -2868,7 +2868,121 @@ void func_800F98AC(u8* arg0, u32 arg1) {
 }
 
 #if defined(VERSION_US)
-INCLUDE_ASM("dra/nonmatchings/5298C", func_800F99B8);
+void func_800F99B8(u8* arg0, s32 arg1, s32 arg2) {
+    s32 var_a0;
+    u8* var_a2;
+    s32 var_a3;
+    u8 var_s0;
+    u8* var_s1;
+    s32 var_s2;
+    s32 var_s3;
+    s32 var_s4;
+    s32 var_s5;
+    s32 var_s6;
+    s32 i; // var_a1
+    s32 j; // var_v1
+    u8* dest_addr;
+
+    var_s1 = arg0;
+    var_s5 = arg1;
+    if (arg2 == 0) {
+        var_s4 = 0x90;
+    } else {
+        var_s4 = 0x3C;
+    }
+    for (i = 0; i < var_s4 * 16; i++) {
+        D_8013794C[i] = 0;
+    }
+    var_s6 = ((u32)var_s5 >> 2) & 0x40;
+    var_s3 = 0;
+    if (var_s5 & 0x200) {
+        var_s6 += 0x20;
+        var_s5 &= ~0x200;
+    }
+    var_s5 = func_800F548C(var_s5 & 0xFF) & 0xFF;
+    while (*var_s1 != 0) {
+        var_s2 = 0;
+        var_s0 = *var_s1++;
+        if (0x60 < var_s0 && var_s0 < 0x7B) {
+            var_a0 = var_s0 + 0x8220;
+        } else if (0x40 < var_s0 && var_s0 < 0x5B) {
+            var_a0 = var_s0 + 0x821F;
+        } else if (var_s0 == 0x20) {
+            var_a0 = 0x8140;
+            var_s2 = 2;
+        } else {
+            // load var_a0 as a big-endian value corresponding with shift-jis
+            var_a0 = (var_s0 << 8);
+            var_a0 += *var_s1++;
+            if (var_a0 == 0x8168) {
+                var_s1 += 2;
+            }
+            if (var_a0 == 0x8140) {
+                var_s0 = 0x20;
+                var_s2 = 2;
+            }
+        }
+        var_a2 = func_80106A28(var_a0, 0);
+        while (1) {
+            if (var_s0 == 0x20) {
+                break;
+            }
+            for (i = 0; i < 16; i++) {
+            // probably fake, i think var_a2 is a 2d array like [6][??]
+                if (var_a2[i * 6] != 0) { 
+                    break;
+                }
+            }
+            if (i != 16) {
+                break;
+            }
+            for (i = 0; i < 16; i++) {
+                dest_addr = &var_a2[i * 6];
+                for (j = 0; j < 5; j++) {
+                    dest_addr[0] = dest_addr[1];
+                    dest_addr += 1;
+                }
+                *dest_addr = 0;
+            }
+        }
+        for (i = 0, var_a3 = 0; i < 16; i++) {
+            for (j = 0; j < 6; j++) {
+                // similar to above comment, this could be var_a2[i][j]
+                if ((var_a2[i * 6 + j] != 0) && (var_a3 < j)) {
+                    var_a3 = j;
+                }
+            }
+        }
+        for (i = 0; i < 16; i++) {
+            if ((var_a2[i * 6 + var_a3] & 0xF0)) {
+                break;
+            }
+        }
+        if (i != 16) {
+            var_a3 += 1;
+        }
+        if (var_a3 < 6) {
+            var_a3 += 1;
+        }
+        for (i = 0; i < 16; i++) {
+            dest_addr = &D_8013794C[var_s3 + var_s4 * i];
+            *dest_addr++ = *var_a2++;
+            *dest_addr++ = *var_a2++;
+            *dest_addr++ = *var_a2++;
+            *dest_addr++ = *var_a2++;
+            *dest_addr++ = *var_a2++;
+            *dest_addr++ = *var_a2++;
+        }
+        var_s3 += var_a3 + var_s2;
+        if (var_s3 >= var_s4) {
+            break;
+        }
+    }
+
+    LoadTPage((PixPattern*)D_8013794C, 0, 0, var_s6 + D_80137950,
+              var_s5 + D_80137954, var_s4 * 2, 0x10);
+    D_8013794C += var_s4 * 0x10;
+}
 #endif
 
 void func_800F9D40(s32 arg0, s32 arg1, s32 arg2) {
