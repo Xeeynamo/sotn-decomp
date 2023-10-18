@@ -2879,8 +2879,8 @@ void func_800F99B8(u8* arg0, s32 arg1, s32 arg2) {
     s32 var_s4;
     s32 var_s5;
     s32 var_s6;
-    s32 i; // var_a1
-    s32 j; // var_v1
+    s32 i;
+    s32 j;
     u8* dest_addr;
 
     var_s1 = arg0;
