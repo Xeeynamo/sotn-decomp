@@ -220,7 +220,6 @@ FreePrimitives = 0x800EDE78;
 RenderPrimitives = 0x800EDEDC;
 CheckCollision = 0x800EF45C;
 SetNextRoomToLoad = 0x800F0BC0;
-DrawMenuStr = 0x800F67EC;
 SortTimeAttackEntries = 0x800F6CC0;
 DrawMenu = 0x800F8F28;
 MenuEquipHandlePageScroll = 0x800FA60C;
