@@ -32,8 +32,9 @@ segments:
       - [0x0, data]
       - [0x1F18, .data, save_mgr]
       - [0x2178, data]
-      - [0x2CF4, .data, 5298C]
-      - [0x2D1C, data]
+      - [0x2CF4, .data, 5298C] # array of strings
+      - [0x2D1C, .data, 5298C] # HD exclusive array of strings
+      - [0x2D88, data]
       - [0x2ED0, .data, 5D6C4]
       - [0x2EF8, data]
       - [0xCFDC, .data, 6D59C]
@@ -57,16 +58,16 @@ segments:
       - [0x3C488, .rodata, 5087C] # func_800F0940
       - [0x3C4A8, .rodata, 52860]
       - [0x3C4D0, .rodata, 5298C] # func_800F298C
-      - [0x3C548, .rodata, 5298C]
-      - [0x3C658, rodata]
-      - [0x3C6F8, rodata] # jtbl_800DC6F8
-      - [0x3C718, rodata] # jtbl_800DC718
-      - [0x3C758, rodata]
-      - [0x3C788, rodata] # jtbl_800DC788
+      - [0x3C548, .rodata, 5298C] # strings
+      - [0x3C658, .rodata, 5298C] # HD exclusive array of strings
+      - [0x3C6F8, .rodata, 5298C] # DrawMenuFamiliars
+      - [0x3C718, .rodata, 5298C] # DrawMenu
+      - [0x3C758, .rodata, 5298C] # func_800F9F40
+      - [0x3C788, rodata] # func_800FA034
       - [0x3C7A0, rodata]
-      - [0x3C7C8, rodata] # jtbl_800DC7C8
-      - [0x3CBE8, rodata] # jtbl_800DCBE8
-      - [0x3CC00, rodata] # jtbl_800DCC00
+      - [0x3C7C8, rodata] # func_800FBC24
+      - [0x3CBE8, rodata] # func_800FBC24
+      - [0x3CC00, rodata] # func_800FBC24
       - [0x3CC18, .rodata, 5D6C4]
       - [0x3CC60, rodata]
       - [0x3CC78, .rodata, 627C4] # jtbl_800DCC78

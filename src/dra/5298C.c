@@ -780,6 +780,38 @@ const char* D_800A2D68[] = {
 extern const char* D_800A2D68[];
 #endif
 
+#if defined(VERSION_HD)
+const char* D_800A2D68[] = {
+    "\x0C\x0D\x0E\xFF",         //
+    "\x0F\x10\x0E\xFF",         // D_800A83AC
+    "\x09\x0A\x02\x16\x17\xFF", // D_800A2D24
+    "\x00\x01\xFF",             // c_strSpells
+    "\x09\x0A\x02\xFF",         // c_strFamiliars
+    "\x11\x12\x13\xFF",         // c_strEquip
+    "\x03\x04\x05\x06\xFF",     // c_strRelics
+    "\x07\x08\xFF",             // c_strSSword
+    "\x08\xFF",                 //
+    "\x20\x08\xFF",             //
+    "\x14\xFF",                 //
+    "\x15\x23\x18\xFF",         //
+    "\x19\x1A\x08\xFF",         //
+    "\x1B\x1C\xFF",             //
+    "\x1D\x1E\xFF",             //
+    "\x20\x21\xFF",             //
+    "\x1F\xFF",                 //
+    "\x22\xFF",                 //
+    "\x24\x1A\x26\x13\xFF",     //
+    "\x25\x1A\x26\x13\xFF",     //
+    "\x27\xFF",                 //
+    "\x28\xFF",                 //
+    "\x29\x2A\x2B\xFF",         //
+    "\x2C\x2D\x2E\xFF",         //
+    "\x2C\x2D\x2E\xFF",         //
+    "\x0B\x2F\x11\xFF",         // c_strSystem
+    "\x0B\x2F\x11\x16\x17\xFF", // D_800A2D84
+};
+#endif
+
 bool func_800F483C(void) {
     s32 buf[BUTTON_COUNT];
     s32 i;
@@ -1993,7 +2025,7 @@ void DrawPauseMenu(s32 arg0) {
 #if defined(VERSION_US)
     func_800F66BC(D_800A2D68[1], x, y + 20, ctx, 1);
 #elif defined(VERSION_HD)
-    func_800F66BC(D_800A83AC[0], x, y + 20, ctx, 1);
+    func_800F66BC(D_800A2D68[1], x, y + 20, ctx, 1);
 #endif
     DrawMenuInt(g_Status.defenseEquip, x + 76, y + 26, ctx);
     if (ctx == (&g_MenuData.menus[1])) {
@@ -2004,7 +2036,7 @@ void DrawPauseMenu(s32 arg0) {
         DrawMenuStr(D_800A83AC[g_MenuNavigation.cursorEquip], 8, 40, ctx);
 #elif defined(VERSION_HD)
         func_800F66BC(
-            D_800A83AC[g_MenuNavigation.cursorEquip + 0x11], 24, 40, ctx, true);
+            D_800A2D68[g_MenuNavigation.cursorEquip + 0x12], 24, 40, ctx, true);
 #endif
         x = 12;
         y = 70;
@@ -2040,7 +2072,7 @@ void DrawSpellMenu(MenuContext* ctx) {
     DrawMenuStr(c_strSpecial2, 104, 40, ctx);
 #elif defined(VERSION_HD)
     const s32 startXCoord = 172;
-    func_800F66BC(D_800A2D24, 136, 36, ctx, 1);
+    func_800F66BC(D_800A2D68[2], 136, 36, ctx, 1);
 #endif
     for (i = 0; i < NUM_SPELLS; i++) {
         spell = g_Status.spells[i];
@@ -2131,10 +2163,6 @@ void DrawSpellMenu(MenuContext* ctx) {
 #endif
 }
 
-#if defined(VERSION_HD)
-// TODO import 0x3C658 rodata first
-INCLUDE_ASM("dra/nonmatchings/5298C", DrawMenuFamiliars);
-#else
 void DrawMenuFamiliars(MenuContext* menu) {
     s32 i;
     s32 baseX;
@@ -2143,7 +2171,11 @@ void DrawMenuFamiliars(MenuContext* menu) {
     s32 strId;
     s32 new_var;
 
+#if defined(VERSION_US)
     DrawMenuStr(c_strALUCARD[97], 120, 40, menu);
+#elif defined(VERSION_HD)
+    func_800F66BC(D_800A2D68[26], 136, 36, menu, 1);
+#endif
     for (i = 0; i < NUM_FAMILIARS; i++) {
         if (D_801375E0[i] == 0) {
             continue;
@@ -2198,7 +2230,6 @@ void DrawMenuFamiliars(MenuContext* menu) {
     }
 }
 const u32 rodataPadding_DrawMenuFamiliars_jtbl = 0;
-#endif
 
 void func_800F82F4(void) {
     RECT dstRect;
@@ -2328,11 +2359,11 @@ void func_800F8754(MenuContext* menu, s32 x, s32 y) {
 }
 #elif defined(VERSION_HD)
 void func_800F8754(MenuContext* menu, s32 x, s32 y) {
-    func_800F66BC(c_strSpells, x + 0xC, y, menu, true);
-    func_800F66BC(c_strFamiliars, x + 6, y + 0x10, menu, D_801375DC != 0);
-    func_800F66BC(c_strEquip, x + 6, y + 0x20, menu, true);
-    func_800F66BC(c_strRelics, x, y + 0x30, menu, true);
-    func_800F66BC(c_strSystem, x + 6, y + 0x40, menu, D_801375FC != 0);
+    func_800F66BC(D_800A2D68[3], x + 0xC, y, menu, true);
+    func_800F66BC(D_800A2D68[4], x + 6, y + 0x10, menu, D_801375DC != 0);
+    func_800F66BC(D_800A2D68[5], x + 6, y + 0x20, menu, true);
+    func_800F66BC(D_800A2D68[6], x, y + 0x30, menu, true);
+    func_800F66BC(D_800A2D68[25], x + 6, y + 0x40, menu, D_801375FC != 0);
 }
 #endif
 
@@ -2345,7 +2376,11 @@ void func_800F8858(MenuContext* context) {
     const int UnkX = 40;
 #endif
     s32 i = 0;
+#if defined(VERSION_US)
     const char** pStrEquipTypes = &c_strSSword;
+#elif defined(VERSION_HD)
+    const char** pStrEquipTypes = &D_800A2D68[7];
+#endif
     s32 y = TextY;
 
     for (; i < ITEM_END; i++) {
@@ -2518,9 +2553,6 @@ void DrawConsumableCount(s32 itemId, s32 hand, MenuContext* ctx) {
     }
 }
 
-#if defined(VERSION_HD)
-INCLUDE_ASM("dra/nonmatchings/5298C", DrawMenu);
-#elif defined(VERSION_US)
 void DrawMenu(void) {
     u8 padding[32];
     s32 x;
@@ -2759,7 +2791,6 @@ void DrawMenu(void) {
         }
     }
 }
-#endif
 
 void func_800F9690(void) {
     POLY_GT4* poly = &g_PrimBuf[D_8013783C];
@@ -3027,9 +3058,11 @@ void func_800F9DD0(u8* arg0, u8* arg1) {
     }
 }
 
-#if defined(VERSION_HD)
-INCLUDE_ASM("dra/nonmatchings/5298C", func_800F9E18);
-#else
+const char D_800DC6EC[] = {
+    "　　　　　　　　　　　　　　　　　　　　　",
+};
+
+#if defined(VERSION_US)
 void func_800F9E18(s32 arg0) {
     const int ItemsPerRow = 2;
     char buffer[38];
@@ -3058,37 +3091,46 @@ void func_800F9E18(s32 arg0) {
         }
     }
 }
+#elif defined(VERSION_HD)
+void func_800F9E18(s32 arg0) {
+    const int ItemsPerRow = 2;
+    char buffer[2][0x14];
+    s32 nItems = (arg0 * 5) + 5;
+    s32 i;
+
+    for (i = arg0 * 5; i < nItems; i++) {
+        STRCPY(buffer, D_800DC6EC);
+        func_800F9DD0(g_RelicDefs[i * ItemsPerRow + 0].name, buffer[0]);
+        func_800F9DD0(g_RelicDefs[i * ItemsPerRow + 1].name, buffer[1]);
+        if ((i % ItemsPerRow) == 0) {
+            func_800F98AC(buffer, i / ItemsPerRow + 0x80);
+        } else {
+            func_800F98AC(buffer, i / ItemsPerRow + 0x103);
+        }
+    }
+}
 #endif
 
 void func_800F9F40(void) {
-    Unkstruct_800F9F40* var_a2;
-    Unkstruct_800F9F40* var_a3;
-    Unkstruct_800F9F40* ptr;
     char buffer[38];
-    s32 idx;
     u8 spellId;
     s32 i;
 
-    for (i = 0, ptr = D_800DC70C, idx = 0x80; i < 8; i++) {
-        spellId = D_80097902[idx];
+    for (i = 0; i < NUM_SPELLS; i++) {
+        spellId = D_80097902[0x80 + i];
         if (spellId & 0x80) {
             spellId ^= 0x80;
-            var_a3 = (Unkstruct_800F9F40*)buffer;
-            var_a2 = (Unkstruct_800F9F40*)&D_800DC6EC;
-            do {
-                __builtin_memcpy(var_a3++, var_a2++, 0x10);
-            } while (var_a2 != ptr);
-            __builtin_memcpy(var_a3++, var_a2++, 0xB);
+            STRCPY(buffer, D_800DC6EC);
             func_800F9DD0(g_SpellDefs[spellId].name, buffer);
 #if defined(VERSION_US)
-            func_800F99B8(&buffer, idx, 0);
+            func_800F99B8(buffer, 0x80 + i, 0);
 #elif defined(VERSION_HD)
-            func_800F98AC(&buffer, idx);
+            func_800F98AC(buffer, 0x80 + i);
 #endif
         }
-        idx++;
     }
 }
+const u32 rodataPadding_func_800F9F40_str = 0;
 
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800FA034);
 
