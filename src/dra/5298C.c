@@ -3134,7 +3134,7 @@ const u32 rodataPadding_func_800F9F40_str = 0;
 
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800FA034);
 
-void func_800FA3C4(s32 arg0, s32 arg1, s32 arg2) {
+void func_800FA3C4(s32 cursorIndex, s32 arg1, s32 arg2) {
     // FAKE: Should figure out how this actually works.
     // Could be that 7676 is the start of another struct within MenuData.
     s16* menuitem = &g_MenuData.D_80137676;
@@ -3148,8 +3148,8 @@ void func_800FA3C4(s32 arg0, s32 arg1, s32 arg2) {
     if (g_MenuData.D_80137692 != 0) {
         return;
     }
-    arg0_lowbit = arg0 & 1;
-    half_arg0 = (arg0 / 2);
+    arg0_lowbit = cursorIndex & 1;
+    half_arg0 = (cursorIndex / 2);
 
     left = (arg0_lowbit * 0xA8) + 0x28;
     limit = -(g_MenuData.D_8013768C / 12);
@@ -3170,9 +3170,9 @@ void func_800FA3C4(s32 arg0, s32 arg1, s32 arg2) {
 
     // Here is where we use the menuitem, again, FAKE.
     if (D_801375CC.equipTypeFilter == 0) {
-        g_MenuNavigation.scrollEquipHand = menuitem[11];
+        g_MenuNavigation.scrollEquipType[HAND_TYPE] = menuitem[11];
     } else {
-        g_MenuNavigation.scrollEquipAccessories[D_801375D4] = menuitem[11];
+        g_MenuNavigation.scrollEquipType[HEAD_TYPE + D_801375D4] = menuitem[11];
     }
     if (arg2 != 0) {
         if (arg1 == 0) {
@@ -3187,7 +3187,58 @@ void func_800FA3C4(s32 arg0, s32 arg1, s32 arg2) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/5298C", func_800FA60C);
+void MenuEquipHandlePageScroll(s32 arg0) {
+    const int ItemsPerPage = 12;
+    const int Unk16 = 72;
+    s32 nItems;
+    s32 limit;
+    s32* cursorIndex;
+    MenuContext* menu = &g_MenuData.menus[3];
+
+    if (D_801375CC.equipTypeFilter == 0) {
+        cursorIndex = &g_MenuNavigation.cursorEquipType[HAND_TYPE];
+    } else {
+        cursorIndex = &g_MenuNavigation.cursorEquipType[HEAD_TYPE + D_801375D4];
+    }
+
+    nItems = func_800FD6C4(D_801375CC.equipTypeFilter);
+    if (arg0 != 0) {
+        if (g_pads[0].repeat & PAD_L1) {
+            if (*cursorIndex >= ItemsPerPage) {
+                *cursorIndex -= ItemsPerPage;
+                menu->unk16 += Unk16;
+                if (menu->unk16 > 0) {
+                    menu->unk16 = 0;
+                }
+                if (*D_80137844 != 0) {
+                    *D_80137844 = 5;
+                }
+            } else {
+                *cursorIndex = 0;
+                menu->unk16 = 0;
+            }
+        }
+        if (g_pads[0].repeat & PAD_R1) {
+            if (*cursorIndex < nItems - ItemsPerPage) {
+                *cursorIndex += ItemsPerPage;
+                limit = -(((nItems - 1) / 2 - 5) * ItemsPerPage);
+                menu->unk16 -= Unk16;
+                if (menu->unk16 < limit) {
+                    menu->unk16 = limit;
+                }
+                if (*D_80137848 != 0) {
+                    *D_80137848 = 5;
+                }
+            } else {
+                *cursorIndex = nItems - 1;
+                if (nItems > ItemsPerPage) {
+                    menu->unk16 = -((*cursorIndex / 2 - 5) * ItemsPerPage);
+                }
+            }
+        }
+    }
+    func_800FA3C4(*cursorIndex, 0, 0);
+}
 
 // If you use both attack buttons at once, see if something special
 // happens. Applies to Shield Rod + Shield, or dual Heaven Swords
@@ -3421,11 +3472,11 @@ void func_800FAF44(s32 arg0) {
         }
 
         g_MenuData.D_80137688 = g_MenuData.D_8013768C =
-            g_MenuNavigation.scrollEquipHand;
+            g_MenuNavigation.scrollEquipType[HAND_TYPE];
         return;
     }
     g_MenuData.D_80137688 = g_MenuData.D_8013768C =
-        ((s32*)g_MenuNavigation.scrollEquipAccessories)[D_801375D4];
+        g_MenuNavigation.scrollEquipType[HEAD_TYPE + D_801375D4];
 
     for (i = 0; i < 90; i++) {
         if (g_AccessoryDefs[i].equipType == D_801375D4) {
