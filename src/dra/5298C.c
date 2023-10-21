@@ -3712,9 +3712,9 @@ void func_800FBAC4(void) {
     D_80137618 = 0;
     var_a1 = D_801375D8;
     *var_a1++ = 0;
-    for (i = 0; i < 11; i++) {
+    for (i = 0; i < ITEM_END; i++) {
         importantcategory = g_Settings.equipOrderTypes[i];
-        for (j = 0; j < 0xA9; j++) {
+        for (j = 0; j < NUM_HAND_ITEMS; j++) {
             if (g_Status.equipHandCount[g_Status.equipHandOrder[j]] != 0 &&
                 g_Status.equipHandOrder[j] != 0 &&
                 g_EquipDefs[g_Status.equipHandOrder[j]].itemCategory ==
@@ -3724,14 +3724,14 @@ void func_800FBAC4(void) {
         }
     }
 
-    for (j = 0; j < 0xA9; j++) {
+    for (j = 0; j < NUM_HAND_ITEMS; j++) {
         if (g_Status.equipHandCount[g_Status.equipHandOrder[j]] == 0) {
             *var_a1++ = g_Status.equipHandOrder[j];
         }
     }
 
     var_a1 = D_801375D8;
-    for (i = 0; i < 0xA9; i++) {
+    for (i = 0; i < NUM_HAND_ITEMS; i++) {
         g_Status.equipHandOrder[i] = *var_a1++;
     }
 }
