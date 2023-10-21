@@ -3696,7 +3696,45 @@ void func_800FB9BC(void) {
         YScrollPerElement;
 }
 
-INCLUDE_ASM("dra/nonmatchings/5298C", func_800FBAC4);
+void func_800FBAC4(void) {
+    s32 i;
+    s32 j;
+    s32* var_a1;
+    s32 importantcategory;
+
+    for (i = D_80137618; i > 0; i--) {
+        // j is used as a temp to swap these two variables.
+        j = g_Settings.equipOrderTypes[i];
+        g_Settings.equipOrderTypes[i] = g_Settings.equipOrderTypes[i - 1];
+        g_Settings.equipOrderTypes[i - 1] = j;
+    }
+
+    D_80137618 = 0;
+    var_a1 = D_801375D8;
+    *var_a1++ = 0;
+    for (i = 0; i < ITEM_END; i++) {
+        importantcategory = g_Settings.equipOrderTypes[i];
+        for (j = 0; j < NUM_HAND_ITEMS; j++) {
+            if (g_Status.equipHandCount[g_Status.equipHandOrder[j]] != 0 &&
+                g_Status.equipHandOrder[j] != 0 &&
+                g_EquipDefs[g_Status.equipHandOrder[j]].itemCategory ==
+                    importantcategory) {
+                *var_a1++ = g_Status.equipHandOrder[j];
+            }
+        }
+    }
+
+    for (j = 0; j < NUM_HAND_ITEMS; j++) {
+        if (g_Status.equipHandCount[g_Status.equipHandOrder[j]] == 0) {
+            *var_a1++ = g_Status.equipHandOrder[j];
+        }
+    }
+
+    var_a1 = D_801375D8;
+    for (i = 0; i < NUM_HAND_ITEMS; i++) {
+        g_Status.equipHandOrder[i] = *var_a1++;
+    }
+}
 
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800FBC24);
 
