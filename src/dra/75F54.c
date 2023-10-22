@@ -1921,7 +1921,8 @@ void EntityGravityBootBeam(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
+                      FLAG_UNK_20000;
         for (prim = &g_PrimBuf[self->primIndex]; prim != NULL;
              prim = prim->next) {
             prim->g0 = prim->r0 = 0;
@@ -1940,7 +1941,7 @@ void EntityGravityBootBeam(Entity* self) {
         if (PLAYER.velocityY > FIX(-1.5)) {
             self->step = 2;
         }
-        // If we have any of the 1, 2, or 4 bit set, timer drains faster 
+        // If we have any of the 1, 2, or 4 bit set, timer drains faster
         if (g_Player.unk0C & 7) {
             self->step = 3;
         }
