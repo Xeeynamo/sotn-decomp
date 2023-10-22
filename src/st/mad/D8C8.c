@@ -134,7 +134,7 @@ void EntityBreakable(Entity* entity) {
             Entity* entityDropItem;
             g_api.PlaySfx(0x635);
             entityDropItem =
-                AllocEntity(D_8007D858, D_8007D858 + MaxEntityCount);
+                AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entityDropItem != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);
                 entityDropItem->params =

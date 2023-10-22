@@ -49,7 +49,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
             entity->velocityX = FIX(10);
             entity->velocityY = FIX(1.625);
             for (i = 0; i < 8; i++) {
-                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromCurrentEntity(0x60, newEntity);
                     newEntity->params = i;

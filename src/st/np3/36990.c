@@ -435,7 +435,7 @@ void EntitySlogra(Entity* self) {
             func_801BC8E4(&D_801812D0);
             AnimateEntity(D_801813C4, self);
             if (!(g_Timer % 4)) {
-                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                     newEntity->posX.i.hi -= 16 - (Random() & 31);
@@ -451,7 +451,7 @@ void EntitySlogra(Entity* self) {
             break;
 
         case SLOGRA_DYING_END:
-            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = 3;
@@ -546,7 +546,7 @@ void EntitySlograSpearProjectile(Entity* self) {
     Entity* entity;
 
     if (self->flags & 0x100) {
-        entity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, entity);
             entity->params = 1;
@@ -1122,7 +1122,7 @@ void EntityGaibon(Entity* self) {
 
         case GAIBON_DYING_TURN_INTO_BONES:
             if (!(self->ext.GS_Props.timer & 7)) {
-                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                     newEntity->posY.i.hi += 28;
@@ -1271,7 +1271,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
         MoveEntity();
         AnimateEntity(D_801815EC, self);
         if (!(g_Timer & 3)) {
-            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_GAIBON_BIG_FIREBALL, self, newEntity);
                 newEntity->params = 1;

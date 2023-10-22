@@ -98,7 +98,7 @@ void EntityBreakable(Entity* entity) {
             Entity* entityDropItem;
             g_api.PlaySfx(NA_SE_BREAK_CANDLE);
             entityDropItem =
-                AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+                AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entityDropItem != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);
                 entityDropItem->params =
@@ -733,7 +733,7 @@ void EntityCavernDoor(Entity* self) {
             }
 
             if (!(g_Timer & 15)) {
-                entity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(6, self, entity);
                     entity->posY.i.hi = 156;
@@ -1070,7 +1070,7 @@ void EntityMermanRockLeftSide(Entity* self) {
 
             g_api.PlaySfx(SE_WALL_BREAK);
 
-            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = 0x13;
@@ -1082,7 +1082,7 @@ void EntityMermanRockLeftSide(Entity* self) {
             params = &D_80181344[self->ext.generic.unk84.S16.unk0 * 3];
 
             for (i = 0; i < 3; i++) {
-                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_FALLING_ROCK_2, self, newEntity);
                     newEntity->params = *params++;
@@ -1169,7 +1169,7 @@ void EntityMermanRockRightSide(Entity* self) {
 
             g_api.PlaySfx(SE_WALL_BREAK);
 
-            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(2, self, newEntity);
                 newEntity->params = 0x13;
@@ -1181,7 +1181,7 @@ void EntityMermanRockRightSide(Entity* self) {
             params = &D_80181344[self->ext.generic.unk84.S16.unk0 * 3];
 
             for (i = 0; i < 3; i++) {
-                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_FALLING_ROCK_2, self, newEntity);
                     newEntity->params = *params++;
@@ -1282,7 +1282,7 @@ void EntityFallingRock2(Entity* self) {
 
         if (collider.effects & EFFECT_SOLID) {
             if (self->velocityY > FIX(4.0)) {
-                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != 0) {
                     CreateEntityFromEntity(2, self, newEntity);
                     newEntity->params = 0x11;
@@ -1478,7 +1478,7 @@ void EntityFallingRock(Entity* self) {
         g_api.CheckCollision(
             self->posX.i.hi, self->posY.i.hi + 8, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
-            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(6, self, newEntity);
                 newEntity->params = 0x10;
@@ -1706,7 +1706,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
             }
 
             if (!(g_Timer & 0xF)) {
-                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(6, self, newEntity);
                     newEntity->posY.i.hi = 188;

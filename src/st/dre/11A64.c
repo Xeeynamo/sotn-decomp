@@ -102,7 +102,7 @@ void EntityBreakable(Entity* entity) {
         AnimateEntity(g_eBreakableAnimations[temp_s0], entity);
         if (entity->unk44 != 0) {
             g_api.PlaySfx(NA_SE_BREAK_CANDLE);
-            temp_v0 = AllocEntity(D_8007D858, &D_8007D858[32]);
+            temp_v0 = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (temp_v0 != NULL) {
                 CreateEntityFromCurrentEntity(2, temp_v0);
                 temp_v0->params = g_eBreakableExplosionTypes[temp_s0];

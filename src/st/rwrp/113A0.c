@@ -201,7 +201,7 @@ void func_801924DC(void) {
     s32 i;
 
     for (i = 0; i < 6; i++) {
-        entity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             CreateEntityFromEntity(2, g_CurrentEntity, entity);
             entity->ext.generic.unk84.U8.unk1 = 6 - i;

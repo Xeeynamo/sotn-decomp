@@ -329,7 +329,7 @@ void EntityBottomSecretRoomFloor(
             tilePos += 0x10;
         }
 
-        newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->params = 0x11;
@@ -400,7 +400,7 @@ void func_801B19A0(Entity* self) {
                 func_801C29B0(0x644);
                 for (i = 0; i < 2; i++) {
                     newEntity =
-                        AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+                        AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
                         CreateEntityFromEntity(0x22, self, newEntity);
                         newEntity->params = 0x1;
@@ -411,7 +411,7 @@ void func_801B19A0(Entity* self) {
             }
             if (self->velocityY < FIX(0.5)) {
                 newEntity =
-                    AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+                    AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
                         E_INTENSE_EXPLOSION, self, newEntity);
@@ -782,7 +782,7 @@ void EntityCannon(Entity* self) {
             g_api.func_80102CD8(1);
             g_api.PlaySfx(0x6AC);
             self->velocityX = FIX(8);
-            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != 0) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = 0x13;
@@ -837,7 +837,7 @@ void EntityCannonShot(Entity* self) {
         MoveEntity();
         if ((self->posX.i.hi + g_Camera.posX.i.hi) < 112) {
             g_api.func_80102CD8(1);
-            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = 3;
@@ -1252,7 +1252,7 @@ void func_801B3648(Entity* self) {
         if (AnimateEntity(D_80180F30, self) == 0) {
             CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
             self[1].params = D_80180F4C[self->params];
-            newEntity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = 2;
@@ -1310,7 +1310,7 @@ void func_801B37C0(Entity* self) {
         self[1].params = D_80180F9C[self->params];
         do { // !FAKE
         } while (0);
-        newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->params = 2;
@@ -1385,7 +1385,7 @@ void func_801B3B78() {
     s32 i;
 
     for (i = 0; i < 6; i++) {
-        entity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             CreateEntityFromEntity(0x38, g_CurrentEntity, entity);
             entity->params = 2;

@@ -8,7 +8,7 @@ void EntityZombie(Entity* self) {
         func_801CAD28(SE_ZOMBIE_EXPLODE);
         self->hitboxState = 0;
         // Spawn Zombie explosion
-        newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(0x62, self, newEntity);
             newEntity->zPriority = self->zPriority + 1;

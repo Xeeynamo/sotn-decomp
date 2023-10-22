@@ -62,14 +62,14 @@ void EntityUnkId01(Entity* self) {
 
     if (self->unk44 != 0) {
         g_api.PlaySfx(NA_SE_BREAK_CANDLE);
-        newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != 0) {
             CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
             newEntity->params = D_8018059C[params] | 0x10;
         }
 
         for (ptr = &D_801805BC, i = 0; i < 4; i++) {
-            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != 0) {
                 CreateEntityFromEntity(0x80, self, newEntity);
                 newEntity->posX.i.hi += *ptr;
@@ -85,7 +85,7 @@ void EntityUnkId01(Entity* self) {
 
         if (params != 0) {
             for (j = 0; j < 3; j++) {
-                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != 0) {
                     CreateEntityFromEntity(0x80, self, newEntity);
                     newEntity->posX.i.hi += *ptr;
