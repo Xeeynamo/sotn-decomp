@@ -23,6 +23,8 @@ typedef enum {
     PRIM_GT3,
     PRIM_SPRT,
     PRIM_ENV,
+    PRIM_TILE_ALT = PRIM_TILE | 0x10,
+    PRIM_G4_ALT = PRIM_G4 | 0x10
 } PrimitiveType;
 
 typedef struct Vertex {
