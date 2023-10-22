@@ -11,8 +11,7 @@ void EntityUnkId13(Entity* entity) {
             entity->ext.generic.unk80.entityPtr->entityId;
     case 1:
         if (entity->ext.generic.unk7C.U8.unk0++ >= 5) {
-            Entity* newEntity =
-                AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+            Entity* newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
                 newEntity->entityId = E_EXPLOSION;
@@ -223,7 +222,22 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/18084", func_8019902C);
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/18084", func_801990F8);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/18084", func_801991C0);
+void func_801991C0(void) {
+    Entity* entity;
+    s8 temp_s4 = Random() & 3;
+    s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
+    s32 i;
+
+    for (i = 0; i < 6; i++) {
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(2, g_CurrentEntity, entity);
+            entity->ext.generic.unk84.U8.unk1 = 6 - i;
+            entity->ext.generic.unk80.modeS16.unk0 = temp_s3;
+            entity->ext.generic.unk84.U8.unk0 = temp_s4;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/18084", func_80199278);
 

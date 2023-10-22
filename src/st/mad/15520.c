@@ -60,8 +60,7 @@ void func_8019572C(Entity* entity) {
             entity->ext.generic.unk80.entityPtr->entityId;
     case 1:
         if (entity->ext.generic.unk7C.U8.unk0++ >= 5) {
-            Entity* newEntity =
-                AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+            Entity* newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
                 newEntity->entityId = E_EXPLOSION;
@@ -400,7 +399,7 @@ void func_80196934(void) {
     temp_s3 = ((Random() & 0xF) << 8) - 0x800;
 
     for (i = 0; i < 6; i++) {
-        entity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             CreateEntityFromEntity(2, g_CurrentEntity, entity);
             entity->ext.generic.unk84.U8.unk1 = 6 - i;

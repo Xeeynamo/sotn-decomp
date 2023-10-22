@@ -30,8 +30,7 @@ void EntityUnkId13(Entity* entity) {
             entity->ext.generic.unk80.entityPtr->entityId;
     case 1:
         if (entity->ext.generic.unk7C.U8.unk0++ >= 5) {
-            Entity* newEntity =
-                AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+            Entity* newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
                 newEntity->entityId = E_EXPLOSION;
@@ -351,7 +350,7 @@ void func_801C9BC0(void) {
     s32 i;
 
     for (i = 0; i < 6; i++) {
-        entity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             CreateEntityFromEntity(2, g_CurrentEntity, entity);
             entity->ext.generic.unk84.U8.unk1 = 6 - i;
@@ -1038,7 +1037,7 @@ void EntitySplashWater(Entity* self) {
             g_api.func_80134714(D_801813A8, 0x7F, temp_a2);
             self->velocityY = D_80183878[params].x;
             self->ext.waterEffects.unk7C = D_80183878[params].y;
-            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_WATER_DROP, newEntity);
                 newEntity->velocityY = self->velocityY;
@@ -1594,7 +1593,7 @@ void EntityMediumWaterSplash(Entity* entity) {
     AnimateEntity(D_80183994, entity);
     MoveEntity();
     if (entity->flags & 0x100) {
-        newEntity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(2, entity, newEntity);
             newEntity->params = 0;
@@ -1840,7 +1839,7 @@ void EntityMermanFireball(Entity* self) {
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
         self->rotY = self->rotX = 0x80;
 
-        entity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             CreateEntityFromEntity(E_ID_15, self, entity);
             entity->ext.generic.unk94 = 4;
@@ -1857,7 +1856,7 @@ void EntityMermanFireball(Entity* self) {
         }
 
         if (self->flags & 0x100) {
-            entity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 CreateEntityFromEntity(2, self, entity);
                 entity->params = 0;

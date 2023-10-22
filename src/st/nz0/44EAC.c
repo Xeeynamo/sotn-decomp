@@ -262,7 +262,7 @@ void EntityBloodyZombie(Entity* self) {
         }
 
         if (!(Random() % 64)) { // Drop BloodDrips from the enemy knife
-            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x2C, self, newEntity);
                 if (self->facingLeft != 0) {
@@ -293,7 +293,7 @@ void EntityBloodyZombie(Entity* self) {
         }
 
         if (!(Random() % 64)) { // Drop BloodDrips from the enemy knife
-            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x2C, self, newEntity);
                 if (self->facingLeft != 0) {
@@ -323,7 +323,7 @@ void EntityBloodyZombie(Entity* self) {
     case BLOODY_ZOMBIE_TAKE_HIT:
         if (self->step_s == 0) {
             // Splat blood
-            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x2D, self, newEntity);
                 newEntity->facingLeft = GetSideToPlayer() & 1;
@@ -354,7 +354,7 @@ void EntityBloodyZombie(Entity* self) {
         if (self->animFrameIdx < 13) {
             if (!(g_Timer % 8)) {
                 func_801C29B0(NA_SE_EN_BLOODY_ZOMBIE_HEMORRHAGE);
-                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x2D, self, newEntity);
                     newEntity->facingLeft = self->ext.generic.unk84.U8.unk0;
@@ -395,7 +395,7 @@ void EntityBloodyZombie(Entity* self) {
         }
 
         if (AnimateEntity(D_80182334, self) == 0) {
-            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = 2;

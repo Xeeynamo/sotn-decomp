@@ -227,7 +227,7 @@ void EntityBoneScimitar(Entity* self) {
     case BONE_SCIMITAR_DESTROY:
         g_api.PlaySfx(NA_SE_EN_SKELETON_DESTROY);
         for (i = 0; i < 7; i++) {
-            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity == NULL) {
                 break;
             }

@@ -150,7 +150,7 @@ void EntitySkeleton(Entity* self) {
     case SKELETON_DESTROY:
         func_801C29B0(NA_SE_EN_SKELETON_DESTROY);
         for (i = 0; i < 6; i++) { // Spawn Skeleton pieces
-            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(0x30, newEntity);
                 newEntity->facingLeft = self->facingLeft;
