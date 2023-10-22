@@ -1941,8 +1941,10 @@ void EntityGravityBootBeam(Entity* self) {
         if (PLAYER.velocityY > FIX(-1.5)) {
             self->step = 2;
         }
-        // If we have any of the 1, 2, or 4 bit set, timer drains faster
-        if (g_Player.unk0C & 7) {
+        // If transformed, timer drains faster
+        if (g_Player.unk0C &
+            (PLAYER_STATUS_WOLF_FORM | PLAYER_STATUS_MIST_FORM |
+             PLAYER_STATUS_BAT_FORM)) {
             self->step = 3;
         }
         break;
