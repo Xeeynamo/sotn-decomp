@@ -3730,24 +3730,6 @@ void func_800FBAC4(void) {
     }
 }
 
-// 000: Opening menu
-// 010: Menu opened
-// 02X: Relics
-// 03X: Spells
-// 040: Equip
-// 05x: Equip hand
-// 06x: Equip accessory
-// 070: Familiars opening
-// 071: Familiars opened
-// 100: System opening
-// 101: System opened
-// 102: System - Button settings
-// 103: System - Cloak lining
-// 104: System - Cloak color
-// 105: System - Window color
-// 106: System - Sound
-// 107: System - Time attack
-
 typedef enum {
     MENU_STEP_INIT,
     MENU_STEP_FADE_FROM_GAME,
