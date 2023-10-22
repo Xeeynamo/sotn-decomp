@@ -263,7 +263,7 @@ void func_800F298C(void) {
                     return;
                 }
                 D_8003C9A4 = 3;
-                D_800978F8 = 0;
+                g_MenuStep = 0;
                 return;
             }
             D_801375B4 = D_801375AC - g_Camera.posX.i.hi;
@@ -346,7 +346,7 @@ void func_800F298C(void) {
             }
             if (g_Player.unk0C & 0x80000) {
                 D_8003C9A4 = 10;
-                D_800978F8 = 0;
+                g_MenuStep = 0;
             }
             if (D_800973FC != 0) {
                 if (D_8006BB00 == 0) {
@@ -397,7 +397,7 @@ void func_800F298C(void) {
                     PlaySfx(0xe);
                     func_801027C4(1);
                     D_8003C9A4++;
-                    D_800978F8 = 0;
+                    g_MenuStep = 0;
                 } else if ((g_pads[0].tapped & PAD_SELECT) &&
                            (g_StageId != STAGE_ST0) && (D_8003C8B8 != 0)) {
                     func_801027C4(6);
@@ -426,7 +426,7 @@ void func_800F298C(void) {
             func_801028AC(1);
             break;
         case 0x2:
-            func_800FBC24();
+            HandleMenu();
             func_801028AC(1);
             break;
         case 0x14:
@@ -443,20 +443,20 @@ void func_800F298C(void) {
             func_801028AC(1);
             break;
         case 0x3:
-            switch (D_800978F8) {
+            switch (g_MenuStep) {
             case 0:
                 if (D_80097C98 == 2) {
                     func_800EA5AC(0xFF, 0xFF, 0xFF, 0xFF);
-                    D_800978F8 = 3;
+                    g_MenuStep = 3;
                 } else {
                     func_801027C4(1);
                 case 2:
-                    D_800978F8++;
+                    g_MenuStep++;
                 }
                 break;
             case 1:
                 if (func_801025F4() != 0) {
-                    D_800978F8++;
+                    g_MenuStep++;
                 }
                 break;
             case 3:
@@ -637,13 +637,13 @@ void func_800F298C(void) {
 #if defined(VERSION_US)
                 func_8011A9D8();
 #endif
-                D_800978F8++;
+                g_MenuStep++;
 
                 break;
             case 4:
                 if (func_800EB720() == 0) {
                     func_801027C4(2);
-                    D_800978F8++;
+                    g_MenuStep++;
                 }
                 break;
             case 5:
@@ -698,7 +698,7 @@ void func_800F298C(void) {
             DrawHudAlucard();
             return;
         case 0xA:
-            switch (D_800978F8) {
+            switch (g_MenuStep) {
             case 0:
                 if (g_IsUsingCd) {
                     break;
@@ -719,7 +719,7 @@ void func_800F298C(void) {
                 return;
             case 1:
                 if (func_801025F4() != 0) {
-                    D_800978F8++;
+                    g_MenuStep++;
                 }
                 break;
             case 2:
@@ -2257,7 +2257,7 @@ void DrawSystemMenu(MenuContext* ctx) {
     s8** menuOptions;
 
     func_800F5E68(ctx, g_MenuNavigation.cursorSettings, 30, 46, Width, 12, 4,
-                  D_800978F8 == 0x101);
+                  g_MenuStep == 0x101);
 
     new_var = &c_strButton;
     DrawMenuStr(*new_var, 0x20, 0x30, ctx);
@@ -2339,7 +2339,7 @@ void func_800F86E4(void) {
 
 #if defined(VERSION_US)
 void func_800F8754(MenuContext* menu, s32 x, s32 y) {
-    if (D_801375DC == 0) {
+    if (D_801375DC[0] == 0) {
         D_8013784C = 1;
     }
 
@@ -2742,7 +2742,7 @@ void DrawMenu(void) {
                     func_800F892C(j + 0x10, 0x5E, 0x1a + j * 13, menu);
                 }
             }
-            func_800F6618(i, D_800978F8 != 0x40);
+            func_800F6618(i, g_MenuStep != 0x40);
             break;
         case 3:
             func_800F8990(menu, x, y);
@@ -2867,7 +2867,7 @@ void func_800F9808(u32 arg0) {
     LoadTPage(oldPos, 0, 0, 0x180, arg0, temp_s0 + 256, 16);
 }
 
-void func_800F98AC(u8* arg0, u32 arg1) {
+void func_800F98AC(const char* str, u32 arg1) {
     u32 temp_s2;
     s32 i;
     u8* data_ptr;
@@ -2879,7 +2879,7 @@ void func_800F98AC(u8* arg0, u32 arg1) {
     var_s1 = (temp_s2 >> 2) & 0x40;
     temp_s2 = func_800F548C(temp_s2);
 
-    for (data_ptr = arg0; *data_ptr != 0;) {
+    for (data_ptr = str; *data_ptr != 0;) {
         // Loads a big-endian u16 from data_ptr.
         // This is connected to shift-jis.
         loaded_data = *data_ptr++ << 8;
@@ -2896,7 +2896,7 @@ void func_800F98AC(u8* arg0, u32 arg1) {
 }
 
 #if defined(VERSION_US)
-void func_800F99B8(u8* str, s32 arg1, s32 arg2) {
+void func_800F99B8(const char* str, s32 arg1, s32 arg2) {
     // See src/st/blit_char.h
     const u16 MINSCODE = 0x8140;
     const u16 RIGHT_DOUBLE_QUOTATION_MARK = 0x8168;
@@ -3129,115 +3129,115 @@ void func_800F9F40(void) {
 }
 const u32 rodataPadding_func_800F9F40_str = 0;
 
-void MenuHandleCursorInput(MenuNavigation* nav, u8 nOptions, u32 arg2) {
+void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2) {
     const int ItemsPerPage = 12;
     const int Unk16 = 72;
     s32 limit;
     u8 prevCursor;
 
-    prevCursor = nav->cursorMain;
+    prevCursor = *nav;
     switch (arg2) {
     case 3:
         if (g_pads[0].repeat & PAD_UP) {
-            if (nav->cursorMain) {
-                nav->cursorMain--;
+            if (*nav) {
+                *nav -= 1;
             }
         }
         if (g_pads[0].repeat & PAD_DOWN) {
-            if (nav->cursorMain != nOptions - 1) {
-                nav->cursorMain++;
+            if (*nav != nOptions - 1) {
+                *nav += 1;
             }
         }
         break;
     case 0:
         if (g_pads[0].repeat & PAD_UP) {
-            nav->cursorMain--;
-            if (nav->cursorMain == -1) {
-                nav->cursorMain = nOptions - 1;
+            *nav -= 1;
+            if (*nav == -1) {
+                *nav = nOptions - 1;
             }
         }
         if (g_pads[0].repeat & PAD_DOWN) {
-            nav->cursorMain++;
-            if (nav->cursorMain == nOptions) {
-                nav->cursorMain = 0;
+            *nav += 1;
+            if (*nav == nOptions) {
+                *nav = 0;
             }
         }
         break;
     case 4:
         if (g_pads[0].repeat & PAD_LEFT) {
-            if (nav->cursorMain != 0) {
-                nav->cursorMain--;
+            if (*nav != 0) {
+                *nav -= 1;
             }
         }
         if (g_pads[0].repeat & PAD_RIGHT) {
-            if (nav->cursorMain != nOptions - 1) {
-                nav->cursorMain++;
+            if (*nav != nOptions - 1) {
+                *nav += 1;
             }
         }
         break;
     case 5:
         if (g_pads[0].repeat & PAD_LEFT) {
-            nav->cursorMain--;
-            if (nav->cursorMain == -1) {
-                nav->cursorMain = nOptions - 1;
+            *nav -= 1;
+            if (*nav == -1) {
+                *nav = nOptions - 1;
             }
         }
         if (g_pads[0].repeat & PAD_RIGHT) {
-            nav->cursorMain++;
-            if (nav->cursorMain == nOptions) {
-                nav->cursorMain = 0;
+            *nav += 1;
+            if (*nav == nOptions) {
+                *nav = 0;
             }
         }
         break;
     case 1:
     case 2:
         if (g_pads[0].repeat & PAD_UP) {
-            if (nav->cursorMain >= 2) {
-                nav->cursorMain -= 2;
+            if (*nav >= 2) {
+                *nav -= 2;
             }
         }
         if (g_pads[0].repeat & PAD_DOWN) {
-            if (nav->cursorMain == nOptions - 2) {
-                if (nav->cursorMain & 1) {
-                    nav->cursorMain = nOptions - 1;
+            if (*nav == nOptions - 2) {
+                if (*nav & 1) {
+                    *nav = nOptions - 1;
                 }
             }
-            if (nav->cursorMain < nOptions - 2) {
-                nav->cursorMain += 2;
+            if (*nav < nOptions - 2) {
+                *nav += 2;
             }
         }
         if (g_pads[0].repeat & (PAD_RIGHT | PAD_LEFT)) {
-            nav->cursorMain ^= 1;
-            if (nav->cursorMain == nOptions) {
-                nav->cursorMain ^= 1;
+            *nav ^= 1;
+            if (*nav == nOptions) {
+                *nav ^= 1;
             }
         }
         if (arg2 == 2) {
             if (g_pads[0].repeat & PAD_L1) {
-                if (nav->cursorMain >= ItemsPerPage) {
-                    nav->cursorMain -= ItemsPerPage;
+                if (*nav >= ItemsPerPage) {
+                    *nav -= ItemsPerPage;
                     g_MenuData.menus[3].unk16 += Unk16;
                     if (g_MenuData.menus[3].unk16 > 0) {
                         g_MenuData.menus[3].unk16 = 0;
                     }
                 } else {
-                    nav->cursorMain = 0;
+                    *nav = 0;
                     g_MenuData.menus[3].unk16 = 0;
                 }
             }
             if (g_pads[0].repeat & PAD_R1) {
-                if (nav->cursorMain < nOptions - ItemsPerPage) {
-                    nav->cursorMain += ItemsPerPage;
+                if (*nav < nOptions - ItemsPerPage) {
+                    *nav += ItemsPerPage;
                     limit = ((nOptions - 1) / 2 - 5) * -ItemsPerPage;
                     g_MenuData.menus[3].unk16 -= Unk16;
                     if (g_MenuData.menus[3].unk16 < limit) {
                         g_MenuData.menus[3].unk16 = limit;
                     }
                 } else {
-                    nav->cursorMain = nOptions - 1;
-                    if (nOptions >= 0xDU) {
+                    *nav = nOptions - 1;
+                    if (nOptions >= 13) {
                         g_MenuData.menus[3].unk16 =
-                            (nav->cursorMain / 2 - 5) * -ItemsPerPage;
+                            (*nav / 2 - 5) * -ItemsPerPage;
                     }
                 }
             }
@@ -3245,7 +3245,7 @@ void MenuHandleCursorInput(MenuNavigation* nav, u8 nOptions, u32 arg2) {
         break;
     }
 
-    if (prevCursor != nav->cursorMain) {
+    if (prevCursor != *nav) {
         PlaySfx(SE_UI_SELECT);
     }
 }
@@ -3522,16 +3522,16 @@ bool func_800FACB8(void) {
     return false;
 }
 
-void func_800FAD34(s32 arg0, u8 arg1, u16 equipIcon, u16 palette) {
+void func_800FAD34(const char* str, u8 count, u16 equipIcon, u16 palette) {
     D_80137608 = 0;
     func_800F9808(2);
 
-    if (arg1) {
+    if (count > 0) {
         D_80137608 = 1;
 #if defined(VERSION_US)
-        func_800F99B8(arg0, 2, 0);
+        func_800F99B8(str, 2, 0);
 #elif defined(VERSION_HD)
-        func_800F98AC(arg0, 2);
+        func_800F98AC(str, 2);
 #endif
         LoadEquipIcon(equipIcon, palette, 0x1F);
     }
@@ -3559,14 +3559,14 @@ void func_800FADC0(void) {
 
 void func_800FAE98(void) {
     func_800FADC0();
-    D_800978F8 = 0x40;
+    g_MenuStep = 0x40;
 }
 
-void func_800FAEC4(u16 pad, u16 arg1, s32 arg2, s16 arg3, u16 arg4) {
+void func_800FAEC4(s32 cursor, u16 count, const char* str, u16 icon, u16 pal) {
     g_IsSelectingEquipment = 0;
     func_800FAC98();
-    func_800FAD34(arg2, arg1, arg3, arg4);
-    D_800978F8++;
+    func_800FAD34(str, count, icon, pal);
+    g_MenuStep++;
 }
 
 void func_800FAF44(s32 arg0) {
@@ -3730,7 +3730,763 @@ void func_800FBAC4(void) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/5298C", func_800FBC24);
+// 000: Opening menu
+// 010: Menu opened
+// 02X: Relics
+// 03X: Spells
+// 040: Equip
+// 05x: Equip hand
+// 06x: Equip accessory
+// 070: Familiars opening
+// 071: Familiars opened
+// 100: System opening
+// 101: System opened
+// 102: System - Button settings
+// 103: System - Cloak lining
+// 104: System - Cloak color
+// 105: System - Window color
+// 106: System - Sound
+// 107: System - Time attack
+
+typedef enum {
+    MENU_STEP_INIT,
+    MENU_STEP_FADE_FROM_GAME,
+    MENU_STEP_OPENING,
+    MENU_STEP_EXIT_BEGIN,
+    MENU_STEP_EXIT_4,
+    MENU_STEP_EXIT_5,
+    MENU_STEP_EXIT_6,
+    MENU_STEP_EXIT_7,
+    MENU_STEP_EXIT_8,
+    MENU_STEP_EXIT_9,
+    MENU_STEP_EXIT_10,
+    MENU_STEP_EXIT_11,
+    MENU_STEP_EXIT_12,
+    MENU_STEP_EXIT_13,
+    MENU_STEP_RETURN_TO_GAMEPLAY,
+    MENU_STEP_OPENED = 0x10,
+    MENU_STEP_RELIC_INIT = 0x20,
+    MENU_STEP_RELIC_INIT_2,
+    MENU_STEP_RELIC,
+    MENU_STEP_SPELL_INIT = 0x30,
+    MENU_STEP_SPELL,
+    MENU_STEP_UNK_32,
+    MENU_STEP_UNK_33,
+    MENU_STEP_UNK_34,
+    MENU_STEP_UNK_35,
+    MENU_STEP_UNK_36,
+    MENU_STEP_UNK_37,
+    MENU_STEP_EQUIP = 0x40,
+    MENU_STEP_EQUIP_SORT,
+    MENU_STEP_EQUIP_HAND_INIT = 0x50,
+    MENU_STEP_EQUIP_HAND,
+    MENU_STEP_EQUIP_ACC_INIT = 0x60,
+    MENU_STEP_EQUIP_ACC,
+    MENU_STEP_FAMILIAR_INIT = 0x70,
+    MENU_STEP_FAMILIAR,
+    MENU_STEP_SYSTEM_INIT = 0x100,
+    MENU_STEP_SYSTEM,
+    MENU_STEP_SYSTEM_BUTTONS,
+    MENU_STEP_SYSTEM_CLOAK_LINING,
+    MENU_STEP_SYSTEM_CLOAK_COLOR,
+    MENU_STEP_SYSTEM_WINDOW_COLOR,
+    MENU_STEP_SYSTEM_SOUND,
+    MENU_STEP_SYSTEM_TIME_ATTACK,
+} MenuSteps;
+
+void HandleMenu(void) {
+    s32 temp_s1;
+    s32 var_a0;
+    s32 id;
+    s32 var_s1;
+    s32 i;
+    u8 equipId;
+    s32 isSecondAccessory;
+
+    D_8013784C = 0;
+    D_80137614 = 1;
+    func_800F97DC();
+    if (g_MenuStep >= MENU_STEP_OPENED && g_pads[0].tapped & PAD_START) {
+        if (func_800F483C()) {
+            g_MenuStep = MENU_STEP_EXIT_BEGIN;
+        } else {
+            goto block_117;
+        }
+    }
+block_4:
+    switch (g_MenuStep) {
+    case MENU_STEP_INIT:
+        if (!func_80133940()) {
+            break;
+        }
+        PlaySfx(0x10);
+        func_800EA5E4(0);
+        func_800FAC30();
+        func_800FB9BC();
+        *g_PrevEquippedWeapons = g_Status.equipment[0];
+        D_80139060 = g_Status.equipment[1];
+        if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
+            *g_PrevEquippedWeapons = 0xD8;
+            D_80139060 = 0xD8;
+        }
+        g_ServantPrevoius = g_Servant;
+        for (i = 0; i < NUM_SPELLS; i++) {
+            if (!(g_Status.spells[i] & SPELL_FLAG_KNOWN)) {
+                break;
+            }
+        }
+        D_801375DC[0] = i;
+        for (i = 0; i < LEN(D_801375E0); i++) {
+            D_801375E0[i] = 0;
+        }
+        for (i = 0; i < NUM_RELICS; i++) {
+            if (!(g_Status.relics[i] & RELIC_FLAG_FOUND)) {
+                continue;
+            }
+            if (g_RelicDefs[i].unk0C == 0) {
+                continue;
+            }
+            D_801375DC[g_RelicDefs[i].unk0C] = 1;
+            D_801375DC[8] = 1;
+        }
+        g_IsCloakLiningUnlocked =
+            g_Status.equipBodyCount[ITEM_REVERSE_CLOAK] |
+            g_Status.equipment[CAPE_SLOT] == ITEM_REVERSE_CLOAK;
+        g_IsCloakColorUnlocked =
+            g_Status.equipBodyCount[ITEM_JOSEPHS_CLOAK] |
+            g_Status.equipment[CAPE_SLOT] == ITEM_JOSEPHS_CLOAK;
+        g_MenuStep++;
+        break;
+    case MENU_STEP_FADE_FROM_GAME:
+        if (func_801025F4() == 0) {
+            break;
+        }
+        func_800E346C();
+        func_80102628(0x180);
+        SetMenuDisplayBuffer();
+        func_800FAC48();
+        D_800973EC = 1;
+        g_MenuStep++;
+        break;
+    case MENU_STEP_OPENING:
+        if (func_80133950()) {
+            D_80137958 = D_80097910;
+            D_80097910 = 0;
+            func_800F6A48();
+            func_800F84CC();
+            func_801027C4(2);
+            func_800F98AC(*D_800A2D64, 0);
+            func_800FABEC(0);
+            func_800FABEC(1);
+            D_80137608 = 0;
+            g_IsSelectingEquipment = 0;
+            g_MenuStep = MENU_STEP_OPENED;
+        }
+        break;
+    case MENU_STEP_EXIT_BEGIN:
+        func_801027C4(1);
+        g_MenuStep++;
+        break;
+    case MENU_STEP_EXIT_4:
+        if (func_801025F4()) {
+            func_80102628(0x100);
+            SetStageDisplayBuffer();
+            func_800FAC48();
+            func_800EB6B4();
+            g_MenuStep++;
+        }
+        break;
+    case MENU_STEP_EXIT_5:
+        func_800FF60C();
+        LoadGfxAsync(D_80097904);
+        g_MenuStep++;
+        break;
+    case MENU_STEP_EXIT_6:
+        if (func_800EB720() != false) {
+            break;
+        }
+        if (LoadWeaponPrg(0) == false) {
+            break;
+        }
+        if (g_UseDisk) {
+            g_MenuStep++;
+            break;
+        }
+        InitWeapon(LEFT_HAND_SLOT);
+        g_MenuStep++;
+        break;
+    case MENU_STEP_EXIT_7:
+        if (!g_UseDisk) {
+            g_MenuStep++;
+            break;
+        }
+        if (g_IsUsingCd) {
+            break;
+        }
+        InitWeapon(LEFT_HAND_SLOT);
+        g_MenuStep++;
+        break;
+    case MENU_STEP_EXIT_8:
+        if (LoadWeaponPrg(1) == false) {
+            break;
+        }
+        if (g_UseDisk) {
+            g_MenuStep++;
+            break;
+        }
+        InitWeapon(RIGHT_HAND_SLOT);
+        g_MenuStep++;
+        break;
+    case MENU_STEP_EXIT_9:
+        if (!g_UseDisk) {
+            g_MenuStep++;
+            break;
+        }
+        if (g_IsUsingCd) {
+            break;
+        }
+        InitWeapon(RIGHT_HAND_SLOT);
+        g_MenuStep++;
+        break;
+    case MENU_STEP_EXIT_10:
+        if (g_Servant == FAM_ACTIVE_NONE || g_Servant != g_ServantPrevoius) {
+            func_800FAB1C();
+        }
+        if (g_Servant == FAM_ACTIVE_NONE) {
+            g_MenuStep += 2;
+        } else if (g_Servant == g_ServantLoaded) {
+            if (g_Servant != g_ServantPrevoius) {
+                if (g_Status.statsFamiliars[g_Servant - 1].unk8 < 9999) {
+                    g_Status.statsFamiliars[g_Servant - 1].unk8++;
+                }
+                func_800E6218(1);
+            } else {
+                func_800E6218(3);
+            }
+            g_MenuStep += 2;
+        } else {
+            if (g_UseDisk) {
+                g_CdStep = CdStep_LoadInit;
+                g_LoadFile = CdFile_ServantChr;
+                g_LoadOvlIdx = g_Servant - 1;
+            }
+            g_MenuStep++;
+        }
+        break;
+    case MENU_STEP_EXIT_11:
+        if (!g_UseDisk || !g_IsUsingCd) {
+            if (!g_UseDisk) {
+                func_800E6250();
+                func_800E6218(1);
+            } else if (!g_IsUsingCd) {
+                func_800E6218(1);
+            }
+            g_ServantLoaded = g_Servant;
+            if (g_Status.statsFamiliars[g_Servant - 1].unk8 < 9999) {
+                g_Status.statsFamiliars[g_Servant - 1].unk8++;
+            }
+            g_MenuStep++;
+        }
+        break;
+    case MENU_STEP_EXIT_12:
+        if (g_IsUsingCd) {
+            break;
+        }
+        if (func_80133940() == false) {
+            break;
+        }
+        D_80097910 = D_80137958;
+        if (D_80097928 == 0) {
+            PlaySfx(0x11);
+        }
+        CheckWeaponCombo();
+        func_800F53A4();
+        D_800973EC = 0;
+        func_800FAC30();
+        func_800F86E4();
+        func_8010A234(1);
+        g_MenuStep++;
+        break;
+    case MENU_STEP_EXIT_13:
+        if (func_80133950() == false) {
+            break;
+        }
+        func_801027C4(2);
+        g_MenuStep++;
+        break;
+    case MENU_STEP_RETURN_TO_GAMEPLAY:
+        if (func_801025F4() == 0) {
+            break;
+        }
+        PlaySfx(0xF);
+        PlaySfx(0xA4);
+        PlaySfx(0xA8);
+        D_8003C9A4 = 1;
+        break;
+    case MENU_STEP_OPENED:
+        if (g_pads[0].tapped & PAD_TRIANGLE) {
+            g_MenuStep = MENU_STEP_EXIT_BEGIN;
+            goto block_4;
+        }
+        MenuHandleCursorInput(&g_MenuNavigation, 5, 0);
+        if (g_pads[0].tapped & PAD_CROSS) {
+            switch (g_MenuNavigation.cursorMain) {
+            case 0:
+                func_800FABBC(2);
+                func_800FB0FC();
+                func_800FADC0();
+                func_800FABBC(3);
+                func_800FABBC(4);
+                g_MenuStep = MENU_STEP_EQUIP;
+                break;
+            case 1:
+                if (D_801375DC[0]) {
+                    g_MenuStep = MENU_STEP_SPELL_INIT;
+                }
+                break;
+            case 2:
+                func_800F9E18(0);
+                g_MenuStep = MENU_STEP_RELIC_INIT;
+                break;
+            case 3:
+                g_MenuStep = MENU_STEP_SYSTEM_INIT;
+                break;
+            case 4:
+                if (D_801375FC) {
+                    g_MenuStep = MENU_STEP_FAMILIAR_INIT;
+                }
+                break;
+            }
+            if (g_MenuStep == MENU_STEP_OPENED) {
+                PlaySfx(0x686);
+                break;
+            }
+            func_800FAB8C(0);
+            func_800FAB8C(1);
+            PlaySfx(0x633);
+        }
+        break;
+    case MENU_STEP_FAMILIAR_INIT:
+        func_800EA5E4(0x21);
+        func_800EAEA4();
+        func_800FABBC(0xF);
+        g_MenuStep++;
+        break;
+    case MENU_STEP_FAMILIAR:
+        if (g_pads[0].tapped & (PAD_TRIANGLE | PAD_CROSS)) {
+            func_800FABBC(0);
+            func_800FABBC(1);
+            func_800EAEA4();
+            func_800FAB8C(15);
+            g_MenuStep = MENU_STEP_OPENED;
+        }
+        break;
+    case MENU_STEP_SYSTEM_INIT:
+        func_800F82F4();
+        func_800FABBC(4);
+        func_800FABBC(7);
+        g_MenuStep++;
+    case MENU_STEP_SYSTEM:
+        MenuHandleCursorInput(&g_MenuNavigation.cursorSettings, 6, 0);
+        func_800F9808(2);
+        i = g_MenuNavigation.cursorSettings + 1;
+        if (i == 2 && g_IsCloakLiningUnlocked == false) {
+            i = 0;
+        }
+        if (i == 3 && g_IsCloakColorUnlocked == false) {
+            i = 0;
+        }
+        if (i == 6 && g_IsTimeAttackUnlocked == false) {
+            i = 0;
+        }
+        func_800F99B8(D_800A2D48[i], 2, 0);
+        if (g_pads[0].tapped & PAD_TRIANGLE) {
+            func_800FABBC(0);
+            func_800FABBC(1);
+            func_800FAB8C(4);
+            func_800FAB8C(7);
+            g_MenuStep = MENU_STEP_OPENED;
+        } else if (g_pads[0].tapped & PAD_CROSS) {
+            switch (g_MenuNavigation.cursorSettings) {
+            case 0:
+                func_800FABBC(9);
+                g_MenuStep = MENU_STEP_SYSTEM_BUTTONS;
+                break;
+            case 1:
+                if (g_IsCloakLiningUnlocked) {
+                    func_800FABBC(10);
+                    g_MenuStep = MENU_STEP_SYSTEM_CLOAK_LINING;
+                }
+                break;
+            case 2:
+                if (g_IsCloakColorUnlocked) {
+                    func_800FABEC(8);
+                    g_MenuStep = MENU_STEP_SYSTEM_CLOAK_COLOR;
+                }
+                break;
+            case 3:
+                func_800FABBC(12);
+                g_MenuStep = MENU_STEP_SYSTEM_WINDOW_COLOR;
+                break;
+            case 4:
+                func_800FABBC(11);
+                g_MenuStep = MENU_STEP_SYSTEM_SOUND;
+                break;
+            case 5:
+                if (g_IsTimeAttackUnlocked) {
+                    SortTimeAttackEntries();
+                    func_800FABBC(13);
+                    g_MenuStep = MENU_STEP_SYSTEM_TIME_ATTACK;
+                }
+                break;
+            }
+            if (g_MenuStep == MENU_STEP_SYSTEM) {
+                PlaySfx(0x686);
+            } else {
+                PlaySfx(0x633);
+            }
+        }
+        break;
+    case MENU_STEP_SYSTEM_BUTTONS:
+        MenuHandleCursorInput(&g_MenuNavigation.cursorButtons, 7, 0);
+        MenuHandleCursorInput(
+            &g_Settings.buttonConfig[g_MenuNavigation.cursorButtons], 8, 5);
+        if (!(g_pads[0].tapped & (PAD_TRIANGLE | PAD_CROSS))) {
+            break;
+        }
+        if (func_800F483C()) {
+            PlaySfx(0x633);
+            func_800FAB8C(9);
+            g_MenuStep = MENU_STEP_SYSTEM;
+        } else {
+        block_117:
+            func_800F9808(2);
+            func_800F99B8("Assign the function to each button\x81\x44", 2, 0);
+            PlaySfx(0x686);
+        }
+        break;
+    case MENU_STEP_SYSTEM_CLOAK_LINING:
+        MenuHandleCursorInput(&g_Settings.isCloakLiningReversed, 2, 0);
+        if (!(g_pads[0].tapped & (PAD_TRIANGLE | PAD_CROSS))) {
+            break;
+        }
+        PlaySfx(0x633);
+        func_800FAB8C(10);
+        g_MenuStep = MENU_STEP_SYSTEM;
+        break;
+    case MENU_STEP_SYSTEM_CLOAK_COLOR:
+        MenuHandleCursorInput(&g_MenuNavigation.cursorCloak, 6, 0);
+        MenuHandleCursorInput(
+            &g_Settings.cloakColors[g_MenuNavigation.cursorCloak], 0x20, 5);
+        if (g_pads[0].tapped & (PAD_TRIANGLE | PAD_CROSS)) {
+            PlaySfx(0x633);
+            func_800FAC0C(8);
+            g_MenuStep = MENU_STEP_SYSTEM;
+        }
+        break;
+    case MENU_STEP_SYSTEM_WINDOW_COLOR:
+        MenuHandleCursorInput(&g_MenuNavigation.cursorWindowColors, 3, 0);
+        MenuHandleCursorInput(
+            &g_Settings.windowColors[g_MenuNavigation.cursorWindowColors], 16,
+            5);
+        if (g_pads[0].tapped & (PAD_TRIANGLE | PAD_CROSS)) {
+            PlaySfx(0x633);
+            func_800FAB8C(12);
+            g_MenuStep = MENU_STEP_SYSTEM;
+        }
+        break;
+    case MENU_STEP_SYSTEM_SOUND:
+        MenuHandleCursorInput(&g_Settings.isSoundMono, 2, 0);
+        func_800E493C();
+        if (g_pads[0].tapped & (PAD_TRIANGLE | PAD_CROSS)) {
+            PlaySfx(0x633);
+            func_800FAB8C(11);
+            g_MenuStep = MENU_STEP_SYSTEM;
+        }
+        break;
+    case MENU_STEP_SYSTEM_TIME_ATTACK:
+        MenuHandleCursorInput(&g_MenuNavigation.cursorTimeAttack, 0x10, 3);
+        if (g_pads[0].tapped & (PAD_TRIANGLE | PAD_CROSS)) {
+            PlaySfx(0x633);
+            func_800FAB8C(13);
+            g_MenuStep = MENU_STEP_SYSTEM;
+        }
+        break;
+    case MENU_STEP_RELIC_INIT:
+        func_800F9E18(1);
+        g_MenuStep++;
+        break;
+    case MENU_STEP_RELIC_INIT_2:
+        func_800FABBC(4);
+        func_800FABBC(5);
+        func_800F9808(2);
+        id = g_MenuNavigation.cursorRelic;
+        if (id >= RELIC_JP_0) {
+            id += 2; // Skip the two exclusive Japanese relics
+        }
+        if (g_Status.relics[id] & RELIC_FLAG_FOUND) {
+            func_800F99B8(g_RelicDefs[id].desc, 2, 0);
+        }
+        func_800F9E18(2);
+        g_MenuStep++;
+        break;
+    case MENU_STEP_RELIC:
+        D_801376C8 = (-((g_MenuNavigation.cursorRelic / 2) * 0x78)) / 14;
+        var_s1 = g_MenuNavigation.cursorRelic;
+        if (var_s1 >= RELIC_JP_0) {
+            var_s1 += 2; // Skip the two exclusive Japanese relics
+        }
+        MenuHandleCursorInput(&g_MenuNavigation.cursorRelic, 0x1C, 1);
+        id = g_MenuNavigation.cursorRelic;
+        if (id >= RELIC_JP_0) {
+            id += 2; // Skip the two exclusive Japanese relics
+        }
+        if (g_pads[0].tapped & PAD_CROSS &&
+            g_Status.relics[id] & RELIC_FLAG_FOUND) {
+            PlaySfx(0x633);
+            g_Status.relics[id] = g_Status.relics[id] ^ 2;
+            if (g_RelicDefs[id].unk0C > 0) {
+                for (var_a0 = 0; var_a0 < NUM_RELICS; var_a0++) {
+                    if (var_a0 == id) {
+                        continue;
+                    }
+                    if (g_RelicDefs[var_a0].unk0C <= 0) {
+                        continue;
+                    }
+                    g_Status.relics[var_a0] &= ~RELIC_FLAG_ACTIVE;
+                }
+
+                if (g_Status.relics[id] & RELIC_FLAG_ACTIVE) {
+                    var_a0 = ITEM_SWORD_FAMILIAR;
+                    g_Servant = g_RelicDefs[id].unk0C;
+                    if (g_Servant == FAM_ACTIVE_SWORD) {
+                        if (g_Status.equipment[LEFT_HAND_SLOT] == var_a0) {
+                            g_Status.equipment[LEFT_HAND_SLOT] =
+                                ITEM_EMPTY_HAND;
+                            AddToInventory(var_a0, 0);
+                        }
+                        if (g_Status.equipment[RIGHT_HAND_SLOT] == var_a0) {
+                            g_Status.equipment[RIGHT_HAND_SLOT] =
+                                ITEM_EMPTY_HAND;
+                            AddToInventory(var_a0, 0);
+                        }
+                    }
+                } else {
+                    g_Servant = FAM_ACTIVE_NONE;
+                }
+            }
+        }
+        if (var_s1 != id) {
+            func_800F9808(2);
+            if (g_Status.relics[id] & RELIC_FLAG_FOUND) {
+                func_800F99B8(g_RelicDefs[id].desc, 2, 0);
+            }
+        }
+
+        D_80137608 = 0;
+        if (g_Status.relics[id] & RELIC_FLAG_FOUND) {
+            D_80137608 = 1;
+            LoadEquipIcon(g_RelicDefs[id].unk08, g_RelicDefs[id].unk0A, 0x1F);
+        }
+        if (g_pads[0].tapped & PAD_TRIANGLE) {
+            func_800FABBC(0);
+            func_800FABBC(1);
+            func_800FAB8C(4);
+            func_800FAB8C(5);
+            D_80137608 = 0;
+            g_MenuStep = MENU_STEP_OPENED;
+        }
+
+        break;
+    case MENU_STEP_SPELL_INIT:
+        func_800FABBC(4);
+        func_800FABBC(6);
+        func_800F9808(2);
+        func_800F9F40();
+        func_800F9808(2);
+        id = g_Status.spells[g_MenuNavigation.cursorSpells];
+        id ^= SPELL_FLAG_KNOWN;
+        func_800F99B8(g_SpellDefs[id].description, 2, 0);
+        g_MenuStep++;
+        break;
+    case MENU_STEP_SPELL:
+        temp_s1 = g_MenuNavigation.cursorSpells;
+        MenuHandleCursorInput(&g_MenuNavigation.cursorSpells, D_801375DC[0], 3);
+        if (temp_s1 != g_MenuNavigation.cursorSpells) {
+            func_800F9808(2);
+            id = g_Status.spells[g_MenuNavigation.cursorSpells];
+            id ^= SPELL_FLAG_KNOWN;
+            func_800F99B8(g_SpellDefs[id].description, 2, 0);
+        }
+        if (g_pads[0].tapped & PAD_TRIANGLE) {
+            func_800FABBC(0);
+            func_800FABBC(1);
+            func_800FAB8C(4);
+            func_800FAB8C(6);
+            g_MenuStep = MENU_STEP_OPENED;
+        }
+        break;
+    case MENU_STEP_UNK_32:
+        if (func_801025F4()) {
+            func_80102628(0x100);
+            SetStageDisplayBuffer();
+            func_800FAC48();
+            g_MenuStep++;
+        }
+        break;
+    case MENU_STEP_UNK_33:
+        if (!g_IsUsingCd) {
+            g_GpuBuffers[1].draw.isbg = 0;
+            g_GpuBuffers[0].draw.isbg = 0;
+            func_801083BC();
+            g_MenuStep++;
+        }
+        break;
+    case MENU_STEP_UNK_34:
+        func_800F5A90();
+        g_MenuStep++;
+        break;
+    case MENU_STEP_UNK_35:
+        func_800F5A90();
+        if (g_pads[0].tapped & (PAD_TRIANGLE | PAD_CROSS)) {
+            func_801073C0();
+            g_CdStep = CdStep_None;
+            func_800E346C();
+            func_80102628(0x180);
+            SetMenuDisplayBuffer();
+            func_800FAC48();
+            g_MenuStep++;
+        }
+        break;
+    case MENU_STEP_UNK_36:
+        func_801027C4(2);
+        func_800F9808(2);
+        id = g_Status.spells[g_MenuNavigation.cursorSpells];
+        id ^= SPELL_FLAG_KNOWN;
+        func_800F98AC(g_SpellDefs[id].description, 2);
+        func_800F9F40();
+        g_MenuStep++;
+        break;
+    case MENU_STEP_UNK_37:
+        if (func_801025F4() == 0) {
+            break;
+        }
+        g_MenuStep = MENU_STEP_SPELL;
+        break;
+    case MENU_STEP_EQUIP:
+        D_80137948 = 0;
+        func_800FB0FC();
+        temp_s1 = g_MenuNavigation.cursorEquip;
+        MenuHandleCursorInput(&g_MenuNavigation.cursorEquip, NUM_ITEM_SLOTS, 0);
+        MenuEquipHandlePageScroll(1);
+        func_800FB0FC();
+        if (temp_s1 != g_MenuNavigation.cursorEquip) {
+            func_800FADC0();
+        }
+        if (g_pads[0].tapped & PAD_SQUARE && D_801375CC == 0) {
+            PlaySfx(0x633);
+            func_800FABBC(14);
+            g_MenuStep = MENU_STEP_EQUIP_SORT;
+            D_80137618 = 0;
+        } else if (g_pads[0].tapped & PAD_TRIANGLE) {
+            func_800FAB8C(2);
+            func_800FAB8C(3);
+            func_800FAB8C(4);
+            func_800FABBC(0);
+            func_800FABBC(1);
+            *D_80137844 = 0;
+            *D_80137848 = 0;
+            D_80137608 = 0;
+            g_MenuStep = MENU_STEP_OPENED;
+        } else if (g_pads[0].tapped & PAD_CROSS) {
+            PlaySfx(0x633);
+        block_191:
+            func_800FB0FC();
+            if (g_MenuNavigation.cursorEquip < HEAD_SLOT) {
+                g_MenuStep = MENU_STEP_EQUIP_HAND_INIT;
+            } else {
+                g_MenuStep = MENU_STEP_EQUIP_ACC_INIT;
+            }
+        }
+        break;
+    case MENU_STEP_EQUIP_SORT:
+        func_800FB0FC();
+        MenuHandleCursorInput(&D_80137618, 11, 0);
+        MenuEquipHandlePageScroll(0);
+        if (g_pads[0].tapped & PAD_CROSS) {
+            PlaySfx(0x633);
+            func_800FBAC4();
+            g_MenuData.menus[3].unk16 = 0;
+            g_MenuNavigation.cursorEquipType[0] = 0;
+            func_800FB0FC();
+        } else if (g_pads[0].tapped & PAD_TRIANGLE) {
+            func_800FAB8C(14);
+            g_MenuStep = MENU_STEP_EQUIP;
+        }
+        break;
+    case MENU_STEP_EQUIP_HAND_INIT:
+        equipId = g_Status.equipHandOrder[g_MenuNavigation.cursorEquipType[0]];
+        func_800FAEC4(
+            &g_MenuNavigation.cursorEquipType[0],
+            g_Status.equipHandCount[equipId], g_EquipDefs[equipId].description,
+            g_EquipDefs[equipId].icon, g_EquipDefs[equipId].iconPalette);
+        func_800FAF44(0);
+    case MENU_STEP_EQUIP_HAND:
+        if (g_MenuNavigation.cursorEquip == LEFT_HAND_SLOT) {
+            D_801375D0 = LEFT_HAND_SLOT;
+        } else {
+            D_801375D0 = RIGHT_HAND_SLOT;
+        }
+        i = func_800FB23C(
+            &g_MenuNavigation.cursorEquipType[0], g_Status.equipHandOrder,
+            g_Status.equipHandCount, &g_Status.equipment[D_801375D0]);
+        if (i == 2) {
+            equipId =
+                g_Status.equipHandOrder[g_MenuNavigation.cursorEquipType[0]];
+            func_800FAD34(
+                g_EquipDefs[equipId].description,
+                g_Status.equipHandCount[equipId], g_EquipDefs[equipId].icon,
+                g_EquipDefs[equipId].iconPalette);
+        } else if (i == 1) {
+            goto block_191;
+        }
+        break;
+    case MENU_STEP_EQUIP_ACC_INIT:
+        equipId =
+            g_Status.equipBodyOrder
+                [D_801375D8[g_MenuNavigation.cursorEquipType[1 + D_801375D4]]];
+        func_800FAEC4(
+            &g_MenuNavigation.cursorEquipType[1 + D_801375D4],
+            g_Status.equipBodyCount[equipId],
+            g_AccessoryDefs[equipId].description, g_AccessoryDefs[equipId].icon,
+            g_AccessoryDefs[equipId].iconPalette);
+        func_800FAF44(1);
+    case MENU_STEP_EQUIP_ACC:
+        isSecondAccessory = g_MenuNavigation.cursorEquip == ACCESSORY_2_SLOT;
+        i = func_800FB23C(
+            &g_MenuNavigation.cursorEquipType[1 + D_801375D4],
+            g_Status.equipBodyOrder, g_Status.equipBodyCount,
+            &g_Status.equipment[isSecondAccessory + D_801375D4 + 2]);
+        if (i == 2) {
+            equipId = g_Status.equipBodyOrder
+                          [D_801375D8[g_MenuNavigation
+                                          .cursorEquipType[1 + D_801375D4]]];
+            func_800FAD34(
+                g_AccessoryDefs[equipId].description,
+                g_Status.equipBodyCount[equipId], g_AccessoryDefs[equipId].icon,
+                g_AccessoryDefs[equipId].iconPalette);
+        } else if (i == 1) {
+            goto block_191;
+        }
+        break;
+    }
+    if (g_MenuStep >= MENU_STEP_OPENED ||
+        g_MenuStep >= MENU_STEP_EXIT_BEGIN && g_MenuStep < MENU_STEP_EXIT_5) {
+        DrawMenu();
+        func_800F9690();
+        func_800F96F4();
+    }
+}
 
 #if defined(VERSION_US)
 void func_800FD39C(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 pal, s32 _,

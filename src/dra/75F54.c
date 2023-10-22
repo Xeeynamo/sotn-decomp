@@ -1520,7 +1520,7 @@ void func_8011A328(Entity* entity, s32 arg1) {
 void func_8011A3AC(Entity* arg0, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3) {
     SpellDef spell;
 
-    *arg3 = D_80097C38[D_8006CBC4];
+    *arg3 = D_80097C38[g_Servant];
     if (arg2 != 0) {
         func_800FD9D4(&spell, arg1);
         arg0->attack = spell.attack;

@@ -199,7 +199,7 @@ void DemoOpenFile(s32 arg0) {
     if (g_UseDisk) {
         g_CdStep = CdStep_LoadInit;
         g_LoadFile = CdFile_DemoKey;
-        g_mapTilesetId = D_80137594;
+        g_LoadOvlIdx = D_80137594;
         return;
     }
     if (arg0 == 0) {

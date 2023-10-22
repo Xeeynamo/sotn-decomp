@@ -743,6 +743,7 @@ typedef enum {
     NUM_RELICS,
 } RelicIds;
 
+#define SPELL_FLAG_KNOWN 0x80
 typedef enum {
     SPELL_DARK_METAMORPHOSIS,
     SPELL_SUMMON_SPIRIT,
@@ -774,13 +775,13 @@ typedef enum {
 // the previous enum set. Hacky, but works.
 typedef enum {
     FAM_ACTIVE_NONE,
-    FAM_ACTIVE_BAT,
-    FAM_ACTIVE_GHOST,
-    FAM_ACTIVE_FAERIE,
-    FAM_ACTIVE_DEMON,
-    FAM_ACTIVE_SWORD,
-    FAM_ACTIVE_YOUSEI,     // JP only
-    FAM_ACTIVE_NOSE_DEMON, // JP only
+    FAM_ACTIVE_BAT = FAM_STATS_BAT + 1,
+    FAM_ACTIVE_GHOST = FAM_STATS_GHOST + 1,
+    FAM_ACTIVE_FAERIE = FAM_STATS_FAERIE + 1,
+    FAM_ACTIVE_DEMON = FAM_STATS_DEMON + 1,
+    FAM_ACTIVE_SWORD = FAM_STATS_SWORD + 1,
+    FAM_ACTIVE_YOUSEI = FAM_STATS_YOUSEI + 1,
+    FAM_ACTIVE_NOSE_DEMON = FAM_STATS_NOSE_DEMON + 1,
 } FamiliarActiveIds;
 
 typedef struct {
@@ -1073,8 +1074,8 @@ typedef struct {
 typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ const char* desc;
-    /* 0x08 */ s16 unk08;
-    /* 0x0A */ s16 unk0A;
+    /* 0x08 */ u16 unk08;
+    /* 0x0A */ u16 unk0A;
     /* 0x0C */ s32 unk0C;
 } RelicDesc; /* size=0x10 */
 
@@ -1476,7 +1477,7 @@ extern s32 g_backbufferY;
 extern s32 g_IsUsingCd;
 extern Entity* g_CurrentEntity;
 extern Unkstruct_8006C3C4 D_8006C3C4[32];
-extern s32 D_8006CBC4;
+extern s32 g_Servant; // Currently selected familiar in the menu
 extern u16 g_Clut[];
 extern u32 D_8006EBCC;
 extern u16 D_8006EBE0;
@@ -1490,7 +1491,7 @@ extern u16 g_Player_D_80072EF6; // TODO merge with g_Player
 
 extern GfxLoad g_GfxLoad[0x10];
 extern u32 g_GameStep;
-extern s32 D_80073064;
+extern s32 g_ServantLoaded; // Currently loaded servant in-memory
 extern Event g_EvSwCardEnd; // 80073068
 extern Event g_EvSwCardErr; // 8007306C
 extern Event g_EvSwCardTmo; // 80073070
@@ -1570,14 +1571,14 @@ extern DR_ENV D_800974AC;
 extern s32 g_UseDisk;
 extern s32 D_800978B4;
 extern s32 D_800978C4;
-extern u32 D_800978F8;
+extern u32 g_MenuStep;
 extern char D_80097902[];
 extern s32 D_80097904;
 extern s32 D_80097908;
 extern s32 D_8009790C;
 extern s32 D_80097910;
 extern DemoMode g_DemoMode;
-extern s32 g_mapTilesetId; // 0x80097918
+extern s32 g_LoadOvlIdx; // 0x80097918
 extern s32 D_8009791C;
 extern s32 D_80097920;
 extern s32 D_80097924;

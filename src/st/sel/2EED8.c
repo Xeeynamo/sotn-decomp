@@ -946,19 +946,19 @@ void Update(void) {
 }
 
 void func_801B17C8(void) {
-    switch (D_800978F8) {
+    switch (g_MenuStep) {
     case 0:
         if (D_80097924 == -1 || D_8006C378 == -1) {
             g_GameStep++;
         } else {
             D_800978C4 = 0;
-            D_800978F8++;
+            g_MenuStep++;
         }
         break;
 
     case 1:
         func_801B3A54(D_80097924, D_8006C378);
-        D_800978F8++;
+        g_MenuStep++;
         break;
 
     case 2:

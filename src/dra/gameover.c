@@ -322,20 +322,20 @@ void HandleGameOver(void) {
 INCLUDE_ASM("dra/nonmatchings/gameover", func_800E5D30);
 
 void func_800E6218(s32 arg0) {
-    if (D_8006CBC4 != 0) {
+    if (g_Servant != 0) {
         D_80170000(arg0);
     }
 }
 
 void func_800E6250(void) {
-    if (D_8006CBC4 != 0) {
-        while (LoadFileSim(D_8006CBC4 - 1, SimFileType_FamiliarPrg) != 0)
+    if (g_Servant != 0) {
+        while (LoadFileSim(g_Servant - 1, SimFileType_FamiliarPrg) != 0)
             ;
-        while (LoadFileSim(D_8006CBC4 - 1, SimFileType_FamiliarChr) != 0)
+        while (LoadFileSim(g_Servant - 1, SimFileType_FamiliarChr) != 0)
             ;
-        while (LoadFileSim((D_8006CBC4 + 2) * 2 + 0x8000, SimFileType_Vh) != 0)
+        while (LoadFileSim((g_Servant + 2) * 2 + 0x8000, SimFileType_Vh) != 0)
             ;
-        while (LoadFileSim((D_8006CBC4 + 2) * 2 + 0x8001, SimFileType_Vb) != 0)
+        while (LoadFileSim((g_Servant + 2) * 2 + 0x8001, SimFileType_Vb) != 0)
             ;
     }
 }

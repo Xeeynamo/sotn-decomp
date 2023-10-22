@@ -1072,7 +1072,7 @@ void func_800E414C(void) {
                 g_CdStep = CdStep_LoadInit;
                 g_LoadFile = CdFile_StageChr | 0x8000;
             }
-            g_mapTilesetId = D_8003C710;
+            g_LoadOvlIdx = D_8003C710;
             D_8003C708.unk2++;
             return;
         }
@@ -1085,14 +1085,14 @@ void func_800E414C(void) {
             func_801073C0();
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StageChr;
-            g_mapTilesetId = D_8003C710;
+            g_LoadOvlIdx = D_8003C710;
             D_8003C708.unk2++;
         }
         if (D_8003C708.flags == 0x41 && PLAYER.posX.i.hi >= 0x89) {
             func_801073C0();
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StageChr;
-            g_mapTilesetId = D_8003C710;
+            g_LoadOvlIdx = D_8003C710;
             D_8003C708.unk2++;
             return;
         }
@@ -1105,14 +1105,14 @@ void func_800E414C(void) {
             func_801073C0();
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StageChr;
-            g_mapTilesetId = D_8003C712;
+            g_LoadOvlIdx = D_8003C712;
             D_8003C708.unk2 = 2;
         }
         if (D_8003C708.flags == 0x41 && PLAYER.posX.i.hi < 0x78) {
             func_801073C0();
             g_CdStep = 1;
             g_LoadFile = CdFile_StageChr;
-            g_mapTilesetId = D_8003C712;
+            g_LoadOvlIdx = D_8003C712;
             D_8003C708.unk2 = 2;
         }
         break;

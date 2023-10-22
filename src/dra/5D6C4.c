@@ -376,8 +376,8 @@ s32 func_800FE044(s32 amount, s32 type) {
             g_Status.exp = D_800AC90C;
         }
 
-        activeFamiliar = D_8006CBC4 - 1;
-        if (D_8006CBC4 == 0) {
+        activeFamiliar = g_Servant - 1;
+        if (g_Servant == 0) {
             return;
         }
 

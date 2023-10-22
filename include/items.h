@@ -1,11 +1,12 @@
 typedef enum ItemSlots {
-    /* 0 */ LEFT_HAND_SLOT,
-    /* 1 */ RIGHT_HAND_SLOT,
-    /* 2 */ HEAD_SLOT,
-    /* 3 */ ARMOR_SLOT,
-    /* 4 */ CAPE_SLOT,
-    /* 5 */ ACCESSORY_1_SLOT,
-    /* 6 */ ACCESSORY_2_SLOT,
+    LEFT_HAND_SLOT,
+    RIGHT_HAND_SLOT,
+    HEAD_SLOT,
+    ARMOR_SLOT,
+    CAPE_SLOT,
+    ACCESSORY_1_SLOT,
+    ACCESSORY_2_SLOT,
+    NUM_ITEM_SLOTS,
 } ItemSlots;
 
 typedef enum HandItems {
