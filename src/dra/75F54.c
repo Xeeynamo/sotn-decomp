@@ -1913,14 +1913,15 @@ void EntityGravityBootBeam(Entity* self) {
 
     switch (self->step) { /* irregular */
     case 0:
-        self->posY.i.hi = PLAYER.posY.i.hi + 0x25;
-        self->ext.bootBeam.unk7C = 0x600;
+        self->posY.i.hi = PLAYER.posY.i.hi + 37;
+        self->ext.bootBeam.timer = 1536;
+        // Prim type 0x13 is not in PrimitiveType enum
         self->primIndex = func_800EDB58(0x13, 4);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        self->flags = 0x0C820000;
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         for (prim = &g_PrimBuf[self->primIndex]; prim != NULL;
              prim = prim->next) {
             prim->g0 = prim->r0 = 0;
@@ -1939,16 +1940,17 @@ void EntityGravityBootBeam(Entity* self) {
         if (PLAYER.velocityY > FIX(-1.5)) {
             self->step = 2;
         }
+        // If we have any of the 1, 2, or 4 bit set, timer drains faster 
         if (g_Player.unk0C & 7) {
             self->step = 3;
         }
         break;
     case 3:
         // note that with the fallthrough these decrements stack
-        self->ext.bootBeam.unk7C -= 160;
+        self->ext.bootBeam.timer -= 160;
     case 2:
-        self->ext.bootBeam.unk7C -= 96;
-        if (self->ext.bootBeam.unk7C < 0) {
+        self->ext.bootBeam.timer -= 96;
+        if (self->ext.bootBeam.timer < 0) {
             DestroyEntity(self);
             return;
         }
@@ -1956,7 +1958,8 @@ void EntityGravityBootBeam(Entity* self) {
     }
     for (i = 0, prim = &g_PrimBuf[self->primIndex]; prim != NULL; i++,
         prim = prim->next) {
-        halfWidth = (self->ext.bootBeam.unk7C >> 8) - i;
+        // As timer counts down, beam gets narrower.
+        halfWidth = (self->ext.bootBeam.timer >> 8) - i;
         if (halfWidth << 16 < 0) {
             halfWidth = 0;
         }

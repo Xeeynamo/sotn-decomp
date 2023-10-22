@@ -515,7 +515,7 @@ typedef struct {
 } ET_Entity1;
 
 typedef struct {
-    s16 unk7C;
+    s16 timer;
 } ET_GravBootsBeam;
 
 typedef union {
