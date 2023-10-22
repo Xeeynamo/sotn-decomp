@@ -1905,7 +1905,72 @@ INCLUDE_ASM("dra/nonmatchings/75F54", EntityMpReplenished);
 
 void func_8011E0E4(Entity* entity) {}
 
-INCLUDE_ASM("dra/nonmatchings/75F54", func_8011E0EC);
+void EntityGravityBootBeam(Entity* self) {
+    Primitive* prim;
+    s16 halfWidth;
+    s32 i;
+    s32 yOffset = -12;
+
+    switch (self->step) {
+    case 0:
+        self->posY.i.hi = PLAYER.posY.i.hi + 37;
+        self->ext.bootBeam.timer = 1536;
+        self->primIndex = func_800EDB58(PRIM_G4_ALT, 4);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
+                      FLAG_UNK_20000;
+        for (prim = &g_PrimBuf[self->primIndex]; prim != NULL;
+             prim = prim->next) {
+            prim->g0 = prim->r0 = 0;
+            prim->b0 = 0xC0;
+            prim->g1 = prim->r1 = 0;
+            prim->b1 = 0xC0;
+            prim->b3 = prim->g3 = prim->r3 = prim->b2 = prim->g2 = prim->r2 =
+                0x40;
+            prim->priority = PLAYER.zPriority - 2;
+            prim->blendMode = 0x537;
+        }
+        self->step++;
+        break;
+
+    case 1:
+        if (PLAYER.velocityY > FIX(-1.5)) {
+            self->step = 2;
+        }
+        // If transformed, timer drains faster
+        if (g_Player.unk0C & PLAYER_STATUS_TRANSFORM) {
+            self->step = 3;
+        }
+        break;
+    case 3:
+        // note that with the fallthrough these decrements stack
+        self->ext.bootBeam.timer -= 160;
+    case 2:
+        self->ext.bootBeam.timer -= 96;
+        if (self->ext.bootBeam.timer < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    for (i = 0, prim = &g_PrimBuf[self->primIndex]; prim != NULL; i++,
+        prim = prim->next) {
+        // As timer counts down, beam gets narrower.
+        halfWidth = (self->ext.bootBeam.timer >> 8) - i;
+        if (halfWidth << 16 < 0) {
+            halfWidth = 0;
+        }
+        prim->x0 = self->posX.i.hi - halfWidth;
+        prim->x1 = halfWidth + self->posX.i.hi;
+        prim->x2 = PLAYER.posX.i.hi - halfWidth;
+        prim->x3 = halfWidth + PLAYER.posX.i.hi;
+        prim->y2 = prim->y3 = PLAYER.posY.i.hi - yOffset;
+        prim->y0 = prim->y1 = self->posY.i.hi;
+    }
+}
 
 INCLUDE_ASM("dra/nonmatchings/75F54", func_8011E390);
 

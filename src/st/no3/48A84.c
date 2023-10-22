@@ -1414,7 +1414,7 @@ void EntityWaterDrop(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180B00);
-        primIndex = g_api.func_800EDB58(0x11, 0x21);
+        primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 0x21);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;

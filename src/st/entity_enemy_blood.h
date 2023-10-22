@@ -9,7 +9,7 @@ void EntityEnemyBlood(Entity* self) {
 
     switch (self->step) {
     case 0:
-        i = g_api.func_800EDB58(17, 12);
+        i = g_api.func_800EDB58(PRIM_TILE_ALT, 12);
         if (i != -1) {
             InitializeEntity(g_InitializeData0);
             prim = &g_PrimBuf[i];

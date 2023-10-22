@@ -930,7 +930,7 @@ void EntityUnkId24(Entity* entity);
 void func_8011BDA4(Entity* entity);
 void func_8011D9F8(Entity* entity);
 void func_8011E0E4(Entity* entity);
-void func_8011E0EC(Entity* entity);
+void EntityGravityBootBeam(Entity* entity);
 void func_8011E390(Entity* entity);
 void func_8011E4BC(Entity* entity);
 void func_8011EDA0(Entity* entity);
