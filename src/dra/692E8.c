@@ -329,7 +329,7 @@ void func_8010BFFC(void) {
         (g_Player.unk0C & 0x40000007) ||
         ((g_PlayableCharacter != 0) && (PLAYER.step == 0x18)) ||
 #elif defined(VERSION_HD)
-        ((g_Player.unk0C & 7) != 0) ||
+        (g_Player.unk0C & PLAYER_STATUS_TRANSFORM) ||
 #endif
         (g_Player.unk78 == 1)) {
         return;

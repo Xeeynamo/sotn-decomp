@@ -2000,7 +2000,7 @@ void UnknownEntId48(Entity* self) {
     s32 params;
 
     params = (u8)self->params;
-    if (!(g_Player.unk0C & 2)) {
+    if (!(g_Player.unk0C & PLAYER_STATUS_MIST_FORM)) {
         DestroyEntity(self);
         return;
     }

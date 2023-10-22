@@ -473,7 +473,7 @@ void func_801B8E0C(Entity* self) {
         D_8003C8B8 = 0;
         *D_80097400 = 1;
         g_Player.D_80072EF4 = 0x8000;
-        if (g_Player.unk0C & 4) {
+        if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
             g_Player.D_80072EF4 = 2;
         }
         g_Player.D_80072EFC = 1;
@@ -485,7 +485,7 @@ void func_801B8E0C(Entity* self) {
             self->step++;
         } else {
             g_Player.D_80072EF4 = 0;
-            if (g_Player.unk0C & 4) {
+            if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
                 if (g_Timer & 1) {
                     g_Player.D_80072EF4 = 2;
                 }
