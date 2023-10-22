@@ -415,6 +415,7 @@ extern s16 D_800ACF94[];
 extern u8 D_800AD094[];
 extern PfnEntityUpdate D_800AD0C4[];
 extern AnimSoundEvent* D_800AD53C[];
+extern AnimationFrame D_800AD5FC[];
 extern s32 D_800ADC44;
 extern RECT D_800AE130;
 extern s32 D_800AE270[];
