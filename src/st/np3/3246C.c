@@ -91,8 +91,7 @@ void EntityBreakable(Entity* entity) {
         if (entity->unk44) { // If the candle is destroyed
             Entity* entityDropItem;
             g_api.PlaySfx(NA_SE_BREAK_CANDLE);
-            entityDropItem =
-                AllocEntity(&g_Entities[224], &g_Entities[256]);
+            entityDropItem = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entityDropItem != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);
                 entityDropItem->params =

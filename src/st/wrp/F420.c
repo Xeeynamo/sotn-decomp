@@ -31,8 +31,7 @@ void func_8018F510(Entity* entity) {
             entity->ext.generic.unk80.entityPtr->entityId;
     case 1:
         if (entity->ext.generic.unk7C.U8.unk0++ >= 5) {
-            Entity* newEntity =
-                AllocEntity(&g_Entities[224], &g_Entities[256]);
+            Entity* newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
                 newEntity->entityId = E_EXPLOSION;

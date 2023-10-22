@@ -399,8 +399,7 @@ void func_801B19A0(Entity* self) {
             if (self->params == 0) {
                 func_801C29B0(0x644);
                 for (i = 0; i < 2; i++) {
-                    newEntity =
-                        AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
                         CreateEntityFromEntity(0x22, self, newEntity);
                         newEntity->params = 0x1;
@@ -410,8 +409,7 @@ void func_801B19A0(Entity* self) {
                 break;
             }
             if (self->velocityY < FIX(0.5)) {
-                newEntity =
-                    AllocEntity(&g_Entities[224], &g_Entities[256]);
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
                         E_INTENSE_EXPLOSION, self, newEntity);
