@@ -267,6 +267,7 @@ EntityUnarmedAttack = 0x8011B190;
 EntityUnkId24 = 0x8011BBE0;
 EntityPlayerBlinkWhite = 0x8011BDA4;
 EntityMpReplenished = 0x8011D9F8;
+EntityGravityBootBeam = 0x8011E0EC;
 EntityHitByLightning = 0x8011F24C;
 EntityHitByIce = 0x8011F934;
 EntityTransparentWhiteCircle = 0x801200AC;

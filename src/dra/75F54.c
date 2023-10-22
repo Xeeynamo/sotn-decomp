@@ -1905,7 +1905,70 @@ INCLUDE_ASM("dra/nonmatchings/75F54", EntityMpReplenished);
 
 void func_8011E0E4(Entity* entity) {}
 
-INCLUDE_ASM("dra/nonmatchings/75F54", func_8011E0EC);
+void EntityGravityBootBeam(Entity* self) {
+    Primitive* prim;
+    s16 halfWidth;
+    s32 i;
+    s32 yOffset = -12;
+
+    switch (self->step) { /* irregular */
+    case 0:
+        self->posY.i.hi = PLAYER.posY.i.hi + 0x25;
+        self->ext.bootBeam.unk7C = 0x600;
+        self->primIndex = func_800EDB58(0x13, 4);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = 0x0C820000;
+        for (prim = &g_PrimBuf[self->primIndex]; prim != NULL;
+             prim = prim->next) {
+            prim->g0 = prim->r0 = 0;
+            prim->b0 = 0xC0;
+            prim->g1 = prim->r1 = 0;
+            prim->b1 = 0xC0;
+            prim->b3 = prim->g3 = prim->r3 = prim->b2 = prim->g2 = prim->r2 =
+                0x40;
+            prim->priority = PLAYER.zPriority - 2;
+            prim->blendMode = 0x537;
+        }
+        self->step++;
+        break;
+
+    case 1:
+        if (PLAYER.velocityY > FIX(-1.5)) {
+            self->step = 2;
+        }
+        if (g_Player.unk0C & 7) {
+            self->step = 3;
+        }
+        break;
+    case 3:
+        // note that with the fallthrough these decrements stack
+        self->ext.bootBeam.unk7C -= 160;
+    case 2:
+        self->ext.bootBeam.unk7C -= 96;
+        if (self->ext.bootBeam.unk7C < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    for (i = 0, prim = &g_PrimBuf[self->primIndex]; prim != NULL; i++,
+        prim = prim->next) {
+        halfWidth = (self->ext.bootBeam.unk7C >> 8) - i;
+        if (halfWidth << 16 < 0) {
+            halfWidth = 0;
+        }
+        prim->x0 = self->posX.i.hi - halfWidth;
+        prim->x1 = halfWidth + self->posX.i.hi;
+        prim->x2 = PLAYER.posX.i.hi - halfWidth;
+        prim->x3 = halfWidth + PLAYER.posX.i.hi;
+        prim->y2 = prim->y3 = PLAYER.posY.i.hi - yOffset;
+        prim->y0 = prim->y1 = self->posY.i.hi;
+    }
+    return;
+}
 
 INCLUDE_ASM("dra/nonmatchings/75F54", func_8011E390);
 

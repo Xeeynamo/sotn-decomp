@@ -514,12 +514,17 @@ typedef struct {
     s16 unkB0;
 } ET_Entity1;
 
+typedef struct {
+    s16 unk7C;
+} ET_GravBootsBeam;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_Generic generic;
     /* 0x7C */ ET_Entity1 ent1;
     /* 0x7C */ ET_EntitySlot1 entSlot1;
     /* 0x7C */ ET_Entity16 ent16;
+    /* 0x7C */ ET_GravBootsBeam bootBeam;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
     /* 0x7C */ ET_RelicOrb relicOrb;
     /* 0x7C */ ET_MessageBox messageBox;

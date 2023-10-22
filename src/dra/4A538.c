@@ -729,7 +729,9 @@ DR_ENV* func_800EDB08(POLY_GT4* poly) {
     return NULL;
 }
 
-s16 func_800EDB58(u8 primType, s32 count) {
+// This function casts its return value as an s16, but at least one caller
+// (EntityGravityBootBeam) needs to receive a returned s32 so we use that here.
+s32 func_800EDB58(u8 primType, s32 count) {
     Primitive* prim;
     Primitive* temp_v0;
     bool isLooping;
@@ -774,8 +776,8 @@ s16 func_800EDB58(u8 primType, s32 count) {
     }
     prim[-1].next = NULL;
     prim[-1].type &= 0xEF;
-
-    return primStartIdx;
+    // Casted return value as mentioned above
+    return (s16)primStartIdx;
 }
 
 s32 AllocPrimitives(u8 primType, s32 count) {
