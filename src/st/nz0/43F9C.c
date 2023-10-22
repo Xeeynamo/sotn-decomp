@@ -34,7 +34,7 @@ void func_801C3F9C(Unkstruct_801C3F9C** self) {
         (*self)->unk10 += 0x1800;
         (*self)->unk2C--;
         if ((*self)->unk2C == 0) {
-            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
                 newEntity->posX.i.hi = (*self)->unk14;
@@ -281,7 +281,7 @@ void EntityAxeKnight(Entity* self) {
         if (self->ext.generic.unk80.modeS16.unk0 != 0) {
             temp = --self->ext.generic.unk80.modeS16.unk0;
             if (!(self->ext.generic.unk80.modeS16.unk0 & 7)) {
-                newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                     temp >>= 3;

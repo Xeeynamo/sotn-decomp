@@ -67,7 +67,7 @@ void EntityMerman(Entity* self) {
         func_801C2598(0x71D);
         self->hitboxState = 0;
         if (self->step == MERMAN_LUNGE) {
-            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = 2;
@@ -396,7 +396,7 @@ void EntityMerman(Entity* self) {
                 self->ext.merman.palette++;
                 if (self->ext.merman.palette == 0x2C0) {
                     func_801C2598(0x65B);
-                    newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                    newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
                         CreateEntityFromEntity(0x3C, self, newEntity);
                         newEntity->params = 2;
@@ -430,7 +430,7 @@ void func_801C8DF0(Entity* self) {
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
         self->rotY = self->rotX = 0x80;
 
-        entity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             CreateEntityFromEntity(E_ID_15, self, entity);
             entity->ext.generic.unk94 = 4;
@@ -447,7 +447,7 @@ void func_801C8DF0(Entity* self) {
         }
 
         if (self->flags & 0x100) {
-            entity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, entity);
                 entity->params = 0;

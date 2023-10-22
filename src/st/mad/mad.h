@@ -44,7 +44,6 @@ void func_8019344C(void);
 extern u8 D_8003BEE8[];
 extern Entity* g_CurrentEntity;
 extern Entity g_Entities[];
-extern Entity D_8007D858[];
 extern Entity D_8007EF1C;
 extern s32 g_BottomCornerTextTimer;
 extern s32 g_BottomCornerTextPrims;

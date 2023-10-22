@@ -176,7 +176,7 @@ void EntitySplashWater(Entity* self) {
             g_api.func_80134714(D_8018122C, 0x7F, temp_a2);
             self->velocityY = D_80182188[params].x;
             self->ext.waterEffects.unk7C = D_80182188[params].y;
-            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_WATER_DROP, newEntity);
                 newEntity->velocityY = self->velocityY;
@@ -1144,7 +1144,7 @@ void EntityMerman2(Entity* self) {
                     prim->blendMode = BLEND_VISIBLE;
                     self->step_s++;
                 } else {
-                    newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+                    newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
                         CreateEntityFromEntity(0x37, self, newEntity);
                         newEntity->facingLeft = self->facingLeft;
@@ -1241,7 +1241,7 @@ void EntityMediumWaterSplash(Entity* entity) {
     AnimateEntity(D_801822A4, entity);
     MoveEntity();
     if (entity->flags & 0x100) {
-        newEntity = AllocEntity(D_8007D858, &D_8007D858[MaxEntityCount]);
+        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
             newEntity->params = 0;

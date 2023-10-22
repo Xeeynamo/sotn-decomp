@@ -53,7 +53,7 @@ void EntitySubWeaponContainer(Entity* self) {
 
     case SUBWPNCONT_IDLE: // Spawn Liquid bubbles
         if (!(g_Timer & 0xF)) {
-            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x3C, self, newEntity);
                 rnd = (Random() & 0x18) - 12;
@@ -83,7 +83,7 @@ void EntitySubWeaponContainer(Entity* self) {
         self->flags &= ~FLAG_HAS_PRIMS;
         g_api.PlaySfx(NA_SE_EV_GLASS_BREAK);
         while (i < ENTITY_SUBWPNCONT_DEBRIS_COUNT) {
-            newEntity = AllocEntity(D_8007D858, &D_8007D858[32]);
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x3A, self, newEntity);
                 newEntity->posX.i.hi += glassPieceTBL->posX;

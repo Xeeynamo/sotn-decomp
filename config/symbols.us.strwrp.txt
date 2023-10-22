@@ -18,6 +18,7 @@ PreventEntityFromRespawning = 0x8018D668;
 GetDistanceToPlayerX = 0x8018D880;
 MoveEntity = 0x8018D934;
 FallEntity = 0x8018D964;
+AllocEntity = 0x8018DDF0;
 UnkEntityFunc0 = 0x8018E024;
 SetStep = 0x8018E1C0;
 InitializeEntity = 0x8018E290;
