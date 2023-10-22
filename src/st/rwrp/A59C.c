@@ -282,7 +282,18 @@ s32 func_8018DC08(s16* posX) {
     return 1;
 }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018DDF0);
+Entity* AllocEntity(Entity* start, Entity* end) {
+    Entity* current = start;
+    while (current < end) {
+        if (current->entityId == E_NONE) {
+            DestroyEntity(current);
+            return current;
+        }
+
+        current++;
+    }
+    return NULL;
+}
 
 s32 func_8018DE50(u8 arg0, s16 arg1) { return D_80180A94[arg0] * arg1; }
 

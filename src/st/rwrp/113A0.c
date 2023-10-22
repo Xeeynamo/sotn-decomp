@@ -194,8 +194,22 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_80192348);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_80192414);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_801924DC);
+void func_801924DC(void) {
+    Entity* entity;
+    s8 temp_s4 = Random() & 3;
+    s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
+    s32 i;
 
+    for (i = 0; i < 6; i++) {
+        entity = AllocEntity(D_8007D858, &D_8007D858[32]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(2, g_CurrentEntity, entity);
+            entity->ext.generic.unk84.U8.unk1 = 6 - i;
+            entity->ext.generic.unk80.modeS16.unk0 = temp_s3;
+            entity->ext.generic.unk84.U8.unk0 = temp_s4;
+        }
+    }
+}
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_80192594);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_8019276C);
