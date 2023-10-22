@@ -1915,7 +1915,6 @@ void EntityGravityBootBeam(Entity* self) {
     case 0:
         self->posY.i.hi = PLAYER.posY.i.hi + 37;
         self->ext.bootBeam.timer = 1536;
-        // Prim type 19 is not in PrimitiveType enum
         self->primIndex = func_800EDB58(PRIM_G4_ALT, 4);
         if (self->primIndex == -1) {
             DestroyEntity(self);
