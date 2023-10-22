@@ -1911,12 +1911,12 @@ void EntityGravityBootBeam(Entity* self) {
     s32 i;
     s32 yOffset = -12;
 
-    switch (self->step) { /* irregular */
+    switch (self->step) {
     case 0:
         self->posY.i.hi = PLAYER.posY.i.hi + 37;
         self->ext.bootBeam.timer = 1536;
-        // Prim type 0x13 is not in PrimitiveType enum
-        self->primIndex = func_800EDB58(0x13, 4);
+        // Prim type 19 is not in PrimitiveType enum
+        self->primIndex = func_800EDB58(19, 4);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1942,9 +1942,7 @@ void EntityGravityBootBeam(Entity* self) {
             self->step = 2;
         }
         // If transformed, timer drains faster
-        if (g_Player.unk0C &
-            (PLAYER_STATUS_WOLF_FORM | PLAYER_STATUS_MIST_FORM |
-             PLAYER_STATUS_BAT_FORM)) {
+        if (g_Player.unk0C & PLAYER_STATUS_TRANSFORM) {
             self->step = 3;
         }
         break;
@@ -1973,7 +1971,6 @@ void EntityGravityBootBeam(Entity* self) {
         prim->y2 = prim->y3 = PLAYER.posY.i.hi - yOffset;
         prim->y0 = prim->y1 = self->posY.i.hi;
     }
-    return;
 }
 
 INCLUDE_ASM("dra/nonmatchings/75F54", func_8011E390);
