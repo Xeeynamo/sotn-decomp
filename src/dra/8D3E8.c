@@ -791,7 +791,7 @@ extern s32 D_800741CC;
 extern s32 D_800741D0;
 
 void func_8013136C(Entity* entity) {
-    if (!(g_Player.unk0C & 4)) {
+    if (!(g_Player.unk0C & PLAYER_STATUS_WOLF_FORM)) {
         DestroyEntity(entity);
         return;
     }

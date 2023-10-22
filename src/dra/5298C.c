@@ -1882,8 +1882,6 @@ void func_800F7244(void) {
     }
 }
 
-extern s32 D_80137948;
-
 void DrawStatChanges(void) {
     s32 xcoord;
     s32 ycoord;
@@ -2411,7 +2409,6 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
 
     u8* sp20;
     s32 itemsPerPage;
-    s32* new_var;
     s32 totalItemCount;
     s32 curX;
     s32 curY;
@@ -2426,10 +2423,9 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
     u8* equipsAmount;
     s32 idx;
 
-    new_var = &D_801375CC.equipTypeFilter;
-    sp20 = GetEquipOrder(*new_var);
-    equipsAmount = GetEquipCount(*new_var);
-    totalItemCount = func_800FD6C4(*new_var);
+    sp20 = GetEquipOrder(D_801375CC);
+    equipsAmount = GetEquipCount(D_801375CC);
+    totalItemCount = func_800FD6C4(D_801375CC);
     curX = 0;
     curY = 0;
     itemsPerPage = Cols + ctx->cursorH / Height * Cols;
@@ -2450,8 +2446,8 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
         if (equipsAmount[equipId] == 0)
             continue;
 
-        strEquipName = GetEquipmentName(*new_var, equipId);
-        if (D_801375CC.equipTypeFilter == 0) {
+        strEquipName = GetEquipmentName(D_801375CC, equipId);
+        if (D_801375CC == 0) {
             icon = g_EquipDefs[equipId].icon;
             palette = g_EquipDefs[equipId].iconPalette;
         } else {
@@ -2463,9 +2459,9 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
         func_800F892C(i, myX - 16, myY - 4, ctx);
         DrawMenuStr(strEquipName, myX, myY, ctx);
 
-        if (D_801375CC.equipTypeFilter == 0 && equipId != 0 ||
-            D_801375CC.equipTypeFilter != 0 && equipId != 0x1A &&
-                equipId != 0 && equipId != 0x30 && equipId != 0x39) {
+        if (D_801375CC == 0 && equipId != 0 ||
+            D_801375CC != 0 && equipId != 0x1A && equipId != 0 &&
+                equipId != 0x30 && equipId != 0x39) {
             DrawMenuInt(equipsAmount[equipId], myX + 128, myY, ctx);
         }
     }
@@ -3217,7 +3213,7 @@ void MenuHandleCursorInput(MenuNavigation* nav, u8 nOptions, u32 arg2) {
             }
         }
         if (arg2 == 2) {
-            if (g_pads[0].repeat & 4) {
+            if (g_pads[0].repeat & PAD_L1) {
                 if (nav->cursorMain >= ItemsPerPage) {
                     nav->cursorMain -= ItemsPerPage;
                     g_MenuData.menus[3].unk16 += Unk16;
@@ -3229,7 +3225,7 @@ void MenuHandleCursorInput(MenuNavigation* nav, u8 nOptions, u32 arg2) {
                     g_MenuData.menus[3].unk16 = 0;
                 }
             }
-            if (g_pads[0].repeat & 8) {
+            if (g_pads[0].repeat & PAD_R1) {
                 if (nav->cursorMain < nOptions - ItemsPerPage) {
                     nav->cursorMain += ItemsPerPage;
                     limit = ((nOptions - 1) / 2 - 5) * -ItemsPerPage;
@@ -3255,44 +3251,41 @@ void MenuHandleCursorInput(MenuNavigation* nav, u8 nOptions, u32 arg2) {
 }
 
 void func_800FA3C4(s32 cursorIndex, s32 arg1, s32 arg2) {
-    // FAKE: Should figure out how this actually works.
-    // Could be that 7676 is the start of another struct within MenuData.
-    s16* menuitem = &g_MenuData.menus[3].cursorX;
     s32 limit;
     s32 top_offset;
     s32 arg0_lowbit;
     s32 left;
     s32 top;
     s32 half_arg0;
+    MenuContext* menu = &g_MenuData.menus[3];
 
-    if (g_MenuData.menus[3].unk1C != 0) {
+    if (menu->unk1C != 0) {
         return;
     }
     arg0_lowbit = cursorIndex & 1;
     half_arg0 = (cursorIndex / 2);
 
     left = (arg0_lowbit * 0xA8) + 0x28;
-    limit = -(g_MenuData.menus[3].unk16 / 12);
+    limit = -(menu->unk16 / 12);
 
     // Below some limit
     if (half_arg0 < limit) {
-        g_MenuData.menus[3].unk16 += 12;
-        top = g_MenuData.menus[3].cursorY + 1;
+        menu->unk16 += 12;
+        top = menu->cursorY + 1;
         // Beyond that limit, on the other side
-    } else if (half_arg0 >= (limit + g_MenuData.menus[3].cursorH / 12)) {
-        g_MenuData.menus[3].unk16 -= 12;
-        top_offset = ((g_MenuData.menus[3].cursorH / 12 - 1) * 12) + 1;
-        top = g_MenuData.menus[3].cursorY + top_offset;
+    } else if (half_arg0 >= (limit + menu->cursorH / 12)) {
+        menu->unk16 -= 12;
+        top_offset = (menu->cursorH / 12 - 1) * 12 + 1;
+        top = menu->cursorY + top_offset;
         // Somewhere in between
     } else {
-        top = ((half_arg0 - limit) * 12) + g_MenuData.menus[3].cursorY + 1;
+        top = ((half_arg0 - limit) * 12) + menu->cursorY + 1;
     }
 
-    // Here is where we use the menuitem, again, FAKE.
-    if (D_801375CC.equipTypeFilter == 0) {
-        g_MenuNavigation.scrollEquipType[HAND_TYPE] = menuitem[11];
+    if (D_801375CC == 0) {
+        g_MenuNavigation.scrollEquipType[HAND_TYPE] = menu->unk16;
     } else {
-        g_MenuNavigation.scrollEquipType[HEAD_TYPE + D_801375D4] = menuitem[11];
+        g_MenuNavigation.scrollEquipType[HEAD_TYPE + D_801375D4] = menu->unk16;
     }
     if (arg2 != 0) {
         if (arg1 == 0) {
@@ -3315,13 +3308,13 @@ void MenuEquipHandlePageScroll(s32 arg0) {
     s32* cursorIndex;
     MenuContext* menu = &g_MenuData.menus[3];
 
-    if (D_801375CC.equipTypeFilter == 0) {
+    if (D_801375CC == 0) {
         cursorIndex = &g_MenuNavigation.cursorEquipType[HAND_TYPE];
     } else {
         cursorIndex = &g_MenuNavigation.cursorEquipType[HEAD_TYPE + D_801375D4];
     }
 
-    nItems = func_800FD6C4(D_801375CC.equipTypeFilter);
+    nItems = func_800FD6C4(D_801375CC);
     if (arg0 != 0) {
         if (g_pads[0].repeat & PAD_L1) {
             if (*cursorIndex >= ItemsPerPage) {
@@ -3512,14 +3505,14 @@ void func_800FAC48(void) {
 void func_800FAC98(void) { func_800F9808(2); }
 
 bool func_800FACB8(void) {
-    if (g_pads[0].tapped & 2) {
+    if (g_pads[0].tapped & PAD_R2) {
         g_MenuNavigation.cursorEquip++;
         if (g_MenuNavigation.cursorEquip == 7) {
             g_MenuNavigation.cursorEquip = 0;
         }
         return true;
     }
-    if (g_pads[0].tapped & 1) {
+    if (g_pads[0].tapped & PAD_L2) {
         g_MenuNavigation.cursorEquip--;
         if (g_MenuNavigation.cursorEquip == -1) {
             g_MenuNavigation.cursorEquip = 6;
@@ -3607,7 +3600,7 @@ void func_800FAF44(s32 arg0) {
 }
 
 void func_800FB004(void) {
-    s32 temp_a1 = func_800FD6C4(D_801375CC.equipTypeFilter);
+    s32 temp_a1 = func_800FD6C4(D_801375CC);
     s32 temp_v0;
 
     if (((-g_MenuData.menus[3].h) / 12) != 0) {
@@ -3634,8 +3627,8 @@ void func_800FB0FC(void) {
     s32 temp_a1 = temp->unk4;
     s32 new_var2 = temp->unk8;
 
-    D_801375CC.equipTypeFilter = temp->equipTypeFilter;
-    D_801375CC.unk8 = temp_a1;
+    D_801375CC = temp->equipTypeFilter;
+    D_801375D4 = temp_a1;
     func_800FAF44(new_var2);
     func_800FB004();
 }
@@ -3651,7 +3644,7 @@ void func_800FB160(s32 arg0, s32 arg1, s32 equipType) {
 }
 
 bool func_800FB1EC(s32 arg0) {
-    if (D_801375CC.equipTypeFilter == 0) {
+    if (D_801375CC == 0) {
         if (arg0 == 0) {
             return true;
         }
@@ -3663,6 +3656,7 @@ bool func_800FB1EC(s32 arg0) {
     return false;
 }
 
+s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected);
 INCLUDE_ASM("dra/nonmatchings/5298C", func_800FB23C);
 
 void func_800FB9BC(void) {

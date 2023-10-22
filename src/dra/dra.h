@@ -534,7 +534,7 @@ extern RoomLoadDefHolder D_801375BC;
 extern s32 D_801375C0;
 extern s32 D_801375C4;
 extern s32 D_801375C8;
-extern Unkstruct_800A2D98 D_801375CC;
+extern s32 D_801375CC;
 extern s32 D_801375D4;
 extern s32* D_801375D8;
 extern s32 D_801375DC;
@@ -566,6 +566,7 @@ extern s32 g_NewAttackRightHand;
 extern s32 g_NewAttackLeftHand;
 extern s32 g_NewDefenseEquip;
 extern s32 g_NewPlayerStatsTotal[];
+extern s32 D_80137948;
 extern s8* D_8013794C; // Pointer to texture pattern
 extern s32 D_80137950;
 extern s32 D_80137954;
