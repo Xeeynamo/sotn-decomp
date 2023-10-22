@@ -925,7 +925,7 @@ void func_8011B334(Entity* entity);
 void func_8011B480(Entity* entity);
 void func_8011B530(Entity* entity);
 void func_8011B5A4(Entity* entity);
-void func_8011BBE0(Entity* entity);
+void EntityUnkId24(Entity* entity);
 void func_8011BDA4(Entity* entity);
 void func_8011D9F8(Entity* entity);
 void func_8011E0E4(Entity* entity);

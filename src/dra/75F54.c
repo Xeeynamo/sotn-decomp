@@ -1848,7 +1848,7 @@ void func_8011B530(Entity* entity) {
 
 INCLUDE_ASM("dra/nonmatchings/75F54", func_8011B5A4);
 
-void func_8011BBE0(Entity* self) {
+void EntityUnkId24(Entity* self) {
     u16 upperparams = self->params >> 8;
     if (self->step == 0) {
         self->animSet = 2;
