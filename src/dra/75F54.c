@@ -1848,7 +1848,38 @@ void func_8011B530(Entity* entity) {
 
 INCLUDE_ASM("dra/nonmatchings/75F54", func_8011B5A4);
 
-INCLUDE_ASM("dra/nonmatchings/75F54", func_8011BBE0);
+void EntityUnkId24(Entity* self) {
+    u16 upperparams = self->params >> 8;
+    if (self->step == 0) {
+        self->animSet = 2;
+        self->unk4C = D_800AD5FC;
+
+        // Weird thing here where we have to set flags to the same value twice
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->zPriority = PLAYER.zPriority + 2;
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+
+        self->velocityY = FIX(-1);
+        if (upperparams == 0) {
+            self->posX.i.hi -= 32 - (rand() & 63);
+            self->posY.i.hi -= 48 - (rand() & 63);
+            self->blendMode = 0x10;
+            self->palette = 0x8195;
+        } else {
+            self->posY.i.hi -= 12 - rand() % 24;
+            self->drawFlags = 3;
+            self->rotX = self->rotY = 0x80;
+            self->palette = 0x8170;
+        }
+        self->step++;
+        return;
+    }
+    if (self->animFrameDuration < 0) {
+        DestroyEntity(self);
+    }
+    self->posY.val += self->velocityY;
+    self->posX.val += self->velocityX;
+}
 
 // same as RIC/func_80162E9C
 bool func_8011BD48(Entity* entity) {
