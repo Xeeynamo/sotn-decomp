@@ -518,8 +518,39 @@ typedef struct {
     s16 timer;
 } ET_GravBootsBeam;
 
+typedef struct {
+    /* 0x7C */ s16 unk7C;
+    /* 0x7E */ s16 unk7E;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ s16 unk88;
+    /* 0x8A */ s16 unk8A;
+    /* 0x8C */ s32 unk8C;
+    /* 0x90 */ s16 unk90;
+    /* 0x92 */ s16 unk92;
+    /* 0x94 */ s16 unk94;
+    /* 0x96 */ s16 unk96;
+    /* 0x98 */ s16 unk98;
+    /* 0x9A */ s16 unk9A;
+    /* 0x9C */ s16 unk9C;
+    /* 0x9E */ s16 unk9E;
+    /* 0xA0 */ s16 unkA0;
+    /* 0xA2 */ s16 unkA2;
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ s16 unkA6;
+    /* 0xA8 */ s16 unkA8;
+    /* 0xAA */ s16 unkAA;
+    /* 0xAC */ s16 unkAC;
+    /* 0xAE */ s16 unkAE;
+    /* 0xB0 */ s16 unkB0;
+
+} ET_UNKAC3C;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
+    /* 0x7C */ ET_UNKAC3C unkAC3C;
     /* 0x7C */ ET_Generic generic;
     /* 0x7C */ ET_Entity1 ent1;
     /* 0x7C */ ET_EntitySlot1 entSlot1;
