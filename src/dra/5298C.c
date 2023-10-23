@@ -3,6 +3,12 @@
 
 #define CH(x) ((x)-0x20)
 
+#if defined(VERSION_US)
+#define ShowText(str, id) func_800F99B8(str, id, 0);
+#elif defined(VERSION_HD)
+#define ShowText(str, id) func_800F98AC(str, id);
+#endif
+
 void func_800F298C(void) {
     Entity* ent;
     Primitive* prim;
@@ -2359,7 +2365,7 @@ void func_800F8754(MenuContext* menu, s32 x, s32 y) {
 #elif defined(VERSION_HD)
 void func_800F8754(MenuContext* menu, s32 x, s32 y) {
     func_800F66BC(D_800A2D68[3], x + 0xC, y, menu, true);
-    func_800F66BC(D_800A2D68[4], x + 6, y + 0x10, menu, D_801375DC != 0);
+    func_800F66BC(D_800A2D68[4], x + 6, y + 0x10, menu, D_801375DC[0] != 0);
     func_800F66BC(D_800A2D68[5], x + 6, y + 0x20, menu, true);
     func_800F66BC(D_800A2D68[6], x, y + 0x30, menu, true);
     func_800F66BC(D_800A2D68[25], x + 6, y + 0x40, menu, D_801375FC != 0);
@@ -3119,11 +3125,7 @@ void func_800F9F40(void) {
             spellId ^= 0x80;
             STRCPY(buffer, D_800DC6EC);
             func_800F9DD0(g_SpellDefs[spellId].name, buffer);
-#if defined(VERSION_US)
-            func_800F99B8(buffer, 0x80 + i, 0);
-#elif defined(VERSION_HD)
-            func_800F98AC(buffer, 0x80 + i);
-#endif
+            ShowText(buffer, 0x80 + i);
         }
     }
 }
@@ -3528,11 +3530,7 @@ void func_800FAD34(const char* str, u8 count, u16 equipIcon, u16 palette) {
 
     if (count > 0) {
         D_80137608 = 1;
-#if defined(VERSION_US)
-        func_800F99B8(str, 2, 0);
-#elif defined(VERSION_HD)
-        func_800F98AC(str, 2);
-#endif
+        ShowText(str, 2);
         LoadEquipIcon(equipIcon, palette, 0x1F);
     }
 }
@@ -3776,6 +3774,19 @@ typedef enum {
     MENU_STEP_SYSTEM_TIME_ATTACK,
 } MenuSteps;
 
+#if defined(VERSION_US)
+#define PAD_MENU_SELECT_ALT (PAD_CROSS)
+#define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT)
+#define PAD_MENU_BACK (PAD_TRIANGLE)
+#define PAD_MENU_SORT (PAD_SQUARE)
+#elif defined(VERSION_HD)
+#define PAD_MENU_SELECT_ALT (PAD_CIRCLE)
+#define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT | PAD_SQUARE)
+#define PAD_MENU_BACK (PAD_CROSS)
+#define PAD_MENU_SORT (PAD_TRIANGLE)
+#endif
+#define PAD_MENU_BACK_ALT (PAD_MENU_SELECT | PAD_MENU_BACK)
+
 void HandleMenu(void) {
     s32 temp_s1;
     s32 var_a0;
@@ -3785,7 +3796,9 @@ void HandleMenu(void) {
     u8 equipId;
     s32 isSecondAccessory;
 
+#if defined(VERSION_US)
     D_8013784C = 0;
+#endif
     D_80137614 = 1;
     func_800F97DC();
     if (g_MenuStep >= MENU_STEP_OPENED && g_pads[0].tapped & PAD_START) {
@@ -3857,7 +3870,13 @@ block_4:
             func_800F6A48();
             func_800F84CC();
             func_801027C4(2);
+#if defined(VERSION_US)
             func_800F98AC(*D_800A2D64, 0);
+#elif defined(VERSION_HD)
+            func_800F98AC(*D_800A2D10, 0);
+            func_800F98AC(*D_800A2D14, 0x100);
+            func_800F98AC(*D_800A2D18, 1);
+#endif
             func_800FABEC(0);
             func_800FABEC(1);
             D_80137608 = 0;
@@ -3884,10 +3903,10 @@ block_4:
         g_MenuStep++;
         break;
     case MENU_STEP_EXIT_6:
-        if (func_800EB720() != false) {
+        if (func_800EB720()) {
             break;
         }
-        if (LoadWeaponPrg(0) == false) {
+        if (LoadWeaponPrg(LEFT_HAND_SLOT) == false) {
             break;
         }
         if (g_UseDisk) {
@@ -3909,7 +3928,7 @@ block_4:
         g_MenuStep++;
         break;
     case MENU_STEP_EXIT_8:
-        if (LoadWeaponPrg(1) == false) {
+        if (LoadWeaponPrg(RIGHT_HAND_SLOT) == false) {
             break;
         }
         if (g_UseDisk) {
@@ -4006,12 +4025,12 @@ block_4:
         D_8003C9A4 = 1;
         break;
     case MENU_STEP_OPENED:
-        if (g_pads[0].tapped & PAD_TRIANGLE) {
+        if (g_pads[0].tapped & PAD_MENU_BACK) {
             g_MenuStep = MENU_STEP_EXIT_BEGIN;
             goto block_4;
         }
         MenuHandleCursorInput(&g_MenuNavigation, 5, 0);
-        if (g_pads[0].tapped & PAD_CROSS) {
+        if (g_pads[0].tapped & PAD_MENU_SELECT) {
             switch (g_MenuNavigation.cursorMain) {
             case 0:
                 func_800FABBC(2);
@@ -4055,7 +4074,7 @@ block_4:
         g_MenuStep++;
         break;
     case MENU_STEP_FAMILIAR:
-        if (g_pads[0].tapped & (PAD_TRIANGLE | PAD_CROSS)) {
+        if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
             func_800FABBC(0);
             func_800FABBC(1);
             func_800EAEA4();
@@ -4081,14 +4100,14 @@ block_4:
         if (i == 6 && g_IsTimeAttackUnlocked == false) {
             i = 0;
         }
-        func_800F99B8(D_800A2D48[i], 2, 0);
-        if (g_pads[0].tapped & PAD_TRIANGLE) {
+        ShowText(D_800A2D48[i], 2);
+        if (g_pads[0].tapped & PAD_MENU_BACK) {
             func_800FABBC(0);
             func_800FABBC(1);
             func_800FAB8C(4);
             func_800FAB8C(7);
             g_MenuStep = MENU_STEP_OPENED;
-        } else if (g_pads[0].tapped & PAD_CROSS) {
+        } else if (g_pads[0].tapped & PAD_MENU_SELECT) {
             switch (g_MenuNavigation.cursorSettings) {
             case 0:
                 func_800FABBC(9);
@@ -4133,7 +4152,7 @@ block_4:
         MenuHandleCursorInput(&g_MenuNavigation.cursorButtons, 7, 0);
         MenuHandleCursorInput(
             &g_Settings.buttonConfig[g_MenuNavigation.cursorButtons], 8, 5);
-        if (!(g_pads[0].tapped & (PAD_TRIANGLE | PAD_CROSS))) {
+        if (!(g_pads[0].tapped & PAD_MENU_BACK_ALT)) {
             break;
         }
         if (func_800F483C()) {
@@ -4143,13 +4162,20 @@ block_4:
         } else {
         block_117:
             func_800F9808(2);
+#if defined(VERSION_US)
             func_800F99B8("Assign the function to each button\x81\x44", 2, 0);
+#elif defined(VERSION_HD)
+            func_800F98AC("\x82\xB7\x82\xD7\x82\xC4\x82\xCC\x83\x7B\x83\x5E\x83"
+                          "\x93\x82\xF0\x8A\x84\x82\xE8\x93\x96\x82\xC4\x82\xC4"
+                          "\x82\xAD\x82\xBE\x82\xB3\x82\xA2\x81\x42",
+                          2);
+#endif
             PlaySfx(0x686);
         }
         break;
     case MENU_STEP_SYSTEM_CLOAK_LINING:
         MenuHandleCursorInput(&g_Settings.isCloakLiningReversed, 2, 0);
-        if (!(g_pads[0].tapped & (PAD_TRIANGLE | PAD_CROSS))) {
+        if (!(g_pads[0].tapped & PAD_MENU_BACK_ALT)) {
             break;
         }
         PlaySfx(0x633);
@@ -4160,7 +4186,7 @@ block_4:
         MenuHandleCursorInput(&g_MenuNavigation.cursorCloak, 6, 0);
         MenuHandleCursorInput(
             &g_Settings.cloakColors[g_MenuNavigation.cursorCloak], 0x20, 5);
-        if (g_pads[0].tapped & (PAD_TRIANGLE | PAD_CROSS)) {
+        if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
             PlaySfx(0x633);
             func_800FAC0C(8);
             g_MenuStep = MENU_STEP_SYSTEM;
@@ -4171,7 +4197,7 @@ block_4:
         MenuHandleCursorInput(
             &g_Settings.windowColors[g_MenuNavigation.cursorWindowColors], 16,
             5);
-        if (g_pads[0].tapped & (PAD_TRIANGLE | PAD_CROSS)) {
+        if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
             PlaySfx(0x633);
             func_800FAB8C(12);
             g_MenuStep = MENU_STEP_SYSTEM;
@@ -4180,7 +4206,7 @@ block_4:
     case MENU_STEP_SYSTEM_SOUND:
         MenuHandleCursorInput(&g_Settings.isSoundMono, 2, 0);
         func_800E493C();
-        if (g_pads[0].tapped & (PAD_TRIANGLE | PAD_CROSS)) {
+        if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
             PlaySfx(0x633);
             func_800FAB8C(11);
             g_MenuStep = MENU_STEP_SYSTEM;
@@ -4188,7 +4214,7 @@ block_4:
         break;
     case MENU_STEP_SYSTEM_TIME_ATTACK:
         MenuHandleCursorInput(&g_MenuNavigation.cursorTimeAttack, 0x10, 3);
-        if (g_pads[0].tapped & (PAD_TRIANGLE | PAD_CROSS)) {
+        if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
             PlaySfx(0x633);
             func_800FAB8C(13);
             g_MenuStep = MENU_STEP_SYSTEM;
@@ -4203,27 +4229,38 @@ block_4:
         func_800FABBC(5);
         func_800F9808(2);
         id = g_MenuNavigation.cursorRelic;
+#if defined(VERSION_US)
         if (id >= RELIC_JP_0) {
             id += 2; // Skip the two exclusive Japanese relics
         }
+#endif
         if (g_Status.relics[id] & RELIC_FLAG_FOUND) {
-            func_800F99B8(g_RelicDefs[id].desc, 2, 0);
+            ShowText(g_RelicDefs[id].desc, 2);
         }
         func_800F9E18(2);
         g_MenuStep++;
         break;
     case MENU_STEP_RELIC:
+#if defined(VERSION_US)
         D_801376C8 = (-((g_MenuNavigation.cursorRelic / 2) * 0x78)) / 14;
+#elif defined(VERSION_HD)
+        D_801376C8 = (-((g_MenuNavigation.cursorRelic / 2) * 0x8C)) / 15;
+#endif
         var_s1 = g_MenuNavigation.cursorRelic;
+#if defined(VERSION_US)
         if (var_s1 >= RELIC_JP_0) {
             var_s1 += 2; // Skip the two exclusive Japanese relics
         }
-        MenuHandleCursorInput(&g_MenuNavigation.cursorRelic, 0x1C, 1);
+#endif
+        MenuHandleCursorInput(
+            &g_MenuNavigation.cursorRelic, NUM_AVAIL_RELICS, 1);
         id = g_MenuNavigation.cursorRelic;
+#if defined(VERSION_US)
         if (id >= RELIC_JP_0) {
             id += 2; // Skip the two exclusive Japanese relics
         }
-        if (g_pads[0].tapped & PAD_CROSS &&
+#endif
+        if (g_pads[0].tapped & PAD_MENU_SELECT &&
             g_Status.relics[id] & RELIC_FLAG_FOUND) {
             PlaySfx(0x633);
             g_Status.relics[id] = g_Status.relics[id] ^ 2;
@@ -4261,7 +4298,7 @@ block_4:
         if (var_s1 != id) {
             func_800F9808(2);
             if (g_Status.relics[id] & RELIC_FLAG_FOUND) {
-                func_800F99B8(g_RelicDefs[id].desc, 2, 0);
+                ShowText(g_RelicDefs[id].desc, 2);
             }
         }
 
@@ -4270,7 +4307,7 @@ block_4:
             D_80137608 = 1;
             LoadEquipIcon(g_RelicDefs[id].unk08, g_RelicDefs[id].unk0A, 0x1F);
         }
-        if (g_pads[0].tapped & PAD_TRIANGLE) {
+        if (g_pads[0].tapped & PAD_MENU_BACK) {
             func_800FABBC(0);
             func_800FABBC(1);
             func_800FAB8C(4);
@@ -4285,22 +4322,28 @@ block_4:
         func_800FABBC(6);
         func_800F9808(2);
         func_800F9F40();
+#if defined(VERSION_US)
         func_800F9808(2);
         id = g_Status.spells[g_MenuNavigation.cursorSpells];
         id ^= SPELL_FLAG_KNOWN;
         func_800F99B8(g_SpellDefs[id].description, 2, 0);
+#endif
         g_MenuStep++;
         break;
     case MENU_STEP_SPELL:
         temp_s1 = g_MenuNavigation.cursorSpells;
         MenuHandleCursorInput(&g_MenuNavigation.cursorSpells, D_801375DC[0], 3);
+#if defined(VERSION_US)
         if (temp_s1 != g_MenuNavigation.cursorSpells) {
+#elif defined(VERSION_HD)
+        if (1) {
+#endif
             func_800F9808(2);
             id = g_Status.spells[g_MenuNavigation.cursorSpells];
             id ^= SPELL_FLAG_KNOWN;
-            func_800F99B8(g_SpellDefs[id].description, 2, 0);
+            ShowText(g_SpellDefs[id].description, 2);
         }
-        if (g_pads[0].tapped & PAD_TRIANGLE) {
+        if (g_pads[0].tapped & PAD_MENU_BACK) {
             func_800FABBC(0);
             func_800FABBC(1);
             func_800FAB8C(4);
@@ -4330,7 +4373,7 @@ block_4:
         break;
     case MENU_STEP_UNK_35:
         func_800F5A90();
-        if (g_pads[0].tapped & (PAD_TRIANGLE | PAD_CROSS)) {
+        if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
             func_801073C0();
             g_CdStep = CdStep_None;
             func_800E346C();
@@ -4358,19 +4401,19 @@ block_4:
     case MENU_STEP_EQUIP:
         D_80137948 = 0;
         func_800FB0FC();
-        temp_s1 = g_MenuNavigation.cursorEquip;
+        var_s1 = g_MenuNavigation.cursorEquip;
         MenuHandleCursorInput(&g_MenuNavigation.cursorEquip, NUM_ITEM_SLOTS, 0);
         MenuEquipHandlePageScroll(1);
         func_800FB0FC();
-        if (temp_s1 != g_MenuNavigation.cursorEquip) {
+        if (var_s1 != g_MenuNavigation.cursorEquip) {
             func_800FADC0();
         }
-        if (g_pads[0].tapped & PAD_SQUARE && D_801375CC == 0) {
+        if (g_pads[0].tapped & PAD_MENU_SORT && D_801375CC == 0) {
             PlaySfx(0x633);
             func_800FABBC(14);
             g_MenuStep = MENU_STEP_EQUIP_SORT;
             D_80137618 = 0;
-        } else if (g_pads[0].tapped & PAD_TRIANGLE) {
+        } else if (g_pads[0].tapped & PAD_MENU_BACK) {
             func_800FAB8C(2);
             func_800FAB8C(3);
             func_800FAB8C(4);
@@ -4380,7 +4423,7 @@ block_4:
             *D_80137848 = 0;
             D_80137608 = 0;
             g_MenuStep = MENU_STEP_OPENED;
-        } else if (g_pads[0].tapped & PAD_CROSS) {
+        } else if (g_pads[0].tapped & PAD_MENU_SELECT) {
             PlaySfx(0x633);
         block_191:
             func_800FB0FC();
@@ -4395,13 +4438,13 @@ block_4:
         func_800FB0FC();
         MenuHandleCursorInput(&D_80137618, 11, 0);
         MenuEquipHandlePageScroll(0);
-        if (g_pads[0].tapped & PAD_CROSS) {
+        if (g_pads[0].tapped & PAD_MENU_SELECT_ALT) {
             PlaySfx(0x633);
             func_800FBAC4();
             g_MenuData.menus[3].unk16 = 0;
             g_MenuNavigation.cursorEquipType[0] = 0;
             func_800FB0FC();
-        } else if (g_pads[0].tapped & PAD_TRIANGLE) {
+        } else if (g_pads[0].tapped & PAD_MENU_BACK) {
             func_800FAB8C(14);
             g_MenuStep = MENU_STEP_EQUIP;
         }

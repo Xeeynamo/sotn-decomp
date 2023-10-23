@@ -709,6 +709,11 @@ typedef struct {
 #define RELIC_FLAG_DISABLE 0
 #define RELIC_FLAG_FOUND 1
 #define RELIC_FLAG_ACTIVE 2
+#if defined(VERSION_US)
+#define NUM_AVAIL_RELICS (NUM_RELICS - 2)
+#elif defined(VERSION_HD)
+#define NUM_AVAIL_RELICS (NUM_RELICS)
+#endif
 typedef enum {
     RELIC_SOUL_OF_BAT,
     RELIC_FIRE_OF_BAT,
