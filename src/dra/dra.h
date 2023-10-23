@@ -572,7 +572,7 @@ extern s8* D_8013794C; // Pointer to texture pattern
 extern s32 D_80137950;
 extern s32 D_80137954;
 extern s32 D_80137958;
-extern s32 g_ServantPrevoius;
+extern s32 g_ServantPrevious;
 extern s32 D_80137960;
 extern s32 D_80137964;
 extern s32 D_80137968;

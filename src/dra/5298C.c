@@ -3811,7 +3811,7 @@ block_4:
             *g_PrevEquippedWeapons = 0xD8;
             D_80139060 = 0xD8;
         }
-        g_ServantPrevoius = g_Servant;
+        g_ServantPrevious = g_Servant;
         for (i = 0; i < NUM_SPELLS; i++) {
             if (!(g_Status.spells[i] & SPELL_FLAG_KNOWN)) {
                 break;
@@ -3931,13 +3931,13 @@ block_4:
         g_MenuStep++;
         break;
     case MENU_STEP_EXIT_10:
-        if (g_Servant == FAM_ACTIVE_NONE || g_Servant != g_ServantPrevoius) {
+        if (g_Servant == FAM_ACTIVE_NONE || g_Servant != g_ServantPrevious) {
             func_800FAB1C();
         }
         if (g_Servant == FAM_ACTIVE_NONE) {
             g_MenuStep += 2;
         } else if (g_Servant == g_ServantLoaded) {
-            if (g_Servant != g_ServantPrevoius) {
+            if (g_Servant != g_ServantPrevious) {
                 if (g_Status.statsFamiliars[g_Servant - 1].unk8 < 9999) {
                     g_Status.statsFamiliars[g_Servant - 1].unk8++;
                 }
