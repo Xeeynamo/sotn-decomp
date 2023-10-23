@@ -295,8 +295,7 @@ void func_8011AC3C(Entity* self) {
         endIndex = *(data_idx + 1);
 
         if (self->ext.unkAC3C.unk9C == 3 || self->ext.unkAC3C.unk9C == 10 ||
-            self->ext.unkAC3C.unk9C == 11 ||
-            self->ext.unkAC3C.unk9C == 12 ||
+            self->ext.unkAC3C.unk9C == 11 || self->ext.unkAC3C.unk9C == 12 ||
             self->ext.unkAC3C.unk9C == 13) {
             DestroyEntity(&g_Entities[startIndex]);
             newEntity = &g_Entities[startIndex];
@@ -324,8 +323,7 @@ void func_8011AC3C(Entity* self) {
             break;
         }
         DestroyEntity(newEntity);
-        newEntity->entityId =
-            self->ext.unkAC3C.unk90 + self->ext.unkAC3C.unkA8;
+        newEntity->entityId = self->ext.unkAC3C.unk90 + self->ext.unkAC3C.unkA8;
         newEntity->params = self->ext.unkAC3C.unkA0;
         newEntity->ext.unkAC3C.unk8C = self->ext.unkAC3C.unk8C;
         newEntity->posX.val = self->posX.val;
