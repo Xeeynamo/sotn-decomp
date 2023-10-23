@@ -204,7 +204,7 @@ Entity* func_8011AAFC(Entity* self, u32 flags, s32 arg2) {
     return entity;
 }
 
-void func_8011AC3C(Entity* parent) {
+void func_8011AC3C(Entity* self) {
     Entity* newEntity;
     s16 unk96Copy;
     s16 i;
@@ -212,105 +212,105 @@ void func_8011AC3C(Entity* parent) {
     s16 startIndex;
     u8* data_idx;
 
-    if (parent->step == 0) {
-        data_idx = &D_800AD1D4[parent->params][0];
-        parent->ext.unkAC3C.unk90 = *data_idx++;          // index 0
-        parent->ext.unkAC3C.unk94 = *data_idx++;          // index 1
-        parent->ext.unkAC3C.unk96 = *data_idx & 0x3F;     // index 2
-        parent->ext.unkAC3C.unk9E = *data_idx >> 7;       // index 2
-        parent->ext.unkAC3C.unkA2 = *data_idx++ >> 6 & 1; // index 2
-        parent->ext.unkAC3C.unk98 = *data_idx++;          // index 3
-        parent->ext.unkAC3C.unk9C = *data_idx & 0xF;      // index 4
-        parent->ext.unkAC3C.unkA4 = *data_idx++ >> 4;     // index 4
-        parent->ext.unkAC3C.unk9A = *data_idx;            // index 5
-        parent->flags |= FLAG_UNK_04000000;
+    if (self->step == 0) {
+        data_idx = &D_800AD1D4[self->params][0];
+        self->ext.unkAC3C.unk90 = *data_idx++;          // index 0
+        self->ext.unkAC3C.unk94 = *data_idx++;          // index 1
+        self->ext.unkAC3C.unk96 = *data_idx & 0x3F;     // index 2
+        self->ext.unkAC3C.unk9E = *data_idx >> 7;       // index 2
+        self->ext.unkAC3C.unkA2 = *data_idx++ >> 6 & 1; // index 2
+        self->ext.unkAC3C.unk98 = *data_idx++;          // index 3
+        self->ext.unkAC3C.unk9C = *data_idx & 0xF;      // index 4
+        self->ext.unkAC3C.unkA4 = *data_idx++ >> 4;     // index 4
+        self->ext.unkAC3C.unk9A = *data_idx;            // index 5
+        self->flags |= FLAG_UNK_04000000;
 
-        parent->step++;
-        switch (parent->ext.unkAC3C.unkA4) {
+        self->step++;
+        switch (self->ext.unkAC3C.unkA4) {
         case 0:
         case 6:
-            parent->flags |= FLAG_UNK_08000000;
+            self->flags |= FLAG_UNK_08000000;
             break;
         case 4:
         case 5:
-            parent->flags |= FLAG_UNK_20000;
+            self->flags |= FLAG_UNK_20000;
         case 2:
         case 7:
-            parent->posX.val = PLAYER.posX.val;
-            parent->posY.val = PLAYER.posY.val;
+            self->posX.val = PLAYER.posX.val;
+            self->posY.val = PLAYER.posY.val;
             break;
         }
     } else {
-        switch (parent->ext.unkAC3C.unkA4) {
+        switch (self->ext.unkAC3C.unkA4) {
         case 0:
             break;
         case 2:
-            parent->posX = PLAYER.posX.val;
-            parent->posY = PLAYER.posY.val;
+            self->posX = PLAYER.posX.val;
+            self->posY = PLAYER.posY.val;
             break;
         case 4:
-            parent->posX = PLAYER.posX.val;
-            parent->posY = PLAYER.posY.val;
+            self->posX = PLAYER.posX.val;
+            self->posY = PLAYER.posY.val;
             if (PLAYER.step != 1) {
-                parent->entityId = 0;
+                self->entityId = 0;
                 return;
             }
             break;
         case 5:
-            parent->posX = PLAYER.posX.val;
-            parent->posY = PLAYER.posY.val;
+            self->posX = PLAYER.posX.val;
+            self->posY = PLAYER.posY.val;
             if (PLAYER.step_s != 0x70) {
-                parent->entityId = 0;
+                self->entityId = 0;
                 return;
             }
             break;
         case 7:
-            parent->posX = PLAYER.posX.val;
-            parent->posY = PLAYER.posY.val;
+            self->posX = PLAYER.posX.val;
+            self->posY = PLAYER.posY.val;
             if (PLAYER.step != 0xA) {
             setIdZeroAndReturn:
-                parent->entityId = 0;
+                self->entityId = 0;
                 return;
             }
             break;
         }
     }
-    if (parent->ext.unkAC3C.unk9A != 0) {
-        parent->ext.unkAC3C.unk9A--;
-        if (parent->ext.unkAC3C.unk9A != 0) {
+    if (self->ext.unkAC3C.unk9A != 0) {
+        self->ext.unkAC3C.unk9A--;
+        if (self->ext.unkAC3C.unk9A != 0) {
             return;
         }
-        parent->ext.unkAC3C.unk9A = parent->ext.unkAC3C.unk98;
+        self->ext.unkAC3C.unk9A = self->ext.unkAC3C.unk98;
     }
     // Save this value so we don't have to re-fetch on every for-loop cycle
-    unk96Copy = parent->ext.unkAC3C.unk96;
+    unk96Copy = self->ext.unkAC3C.unk96;
     for (i = 0; i < unk96Copy; i++) {
 
         // !FAKE, this should probably be &D_800AD4B8[unk9C] or similar,
         // instead of doing &D_800AD4B8 followed by +=
         data_idx = &D_800AD4B8[0];
-        data_idx += parent->ext.unkAC3C.unk9C * 2;
+        data_idx += self->ext.unkAC3C.unk9C * 2;
 
         startIndex = *data_idx;
         endIndex = *(data_idx + 1);
 
-        if (parent->ext.unkAC3C.unk9C == 3 || parent->ext.unkAC3C.unk9C == 10 ||
-            parent->ext.unkAC3C.unk9C == 11 ||
-            parent->ext.unkAC3C.unk9C == 12 ||
-            parent->ext.unkAC3C.unk9C == 13) {
+        if (self->ext.unkAC3C.unk9C == 3 || self->ext.unkAC3C.unk9C == 10 ||
+            self->ext.unkAC3C.unk9C == 11 ||
+            self->ext.unkAC3C.unk9C == 12 ||
+            self->ext.unkAC3C.unk9C == 13) {
             DestroyEntity(&g_Entities[startIndex]);
             newEntity = &g_Entities[startIndex];
             g_Player.unk48 = 0;
-        } else if (parent->ext.unkAC3C.unk9C == 0) {
+        } else if (self->ext.unkAC3C.unk9C == 0) {
             newEntity = func_80118810(startIndex, endIndex + 1);
-        } else if (parent->ext.unkAC3C.unk9C == 8) {
-            if ((parent->ext.unkAC3C.unkA6 % 3) == 0) {
+        } else if (self->ext.unkAC3C.unk9C == 8) {
+            if ((self->ext.unkAC3C.unkA6 % 3) == 0) {
                 newEntity = GetFreeDraEntity(17, 32);
             }
-            if ((parent->ext.unkAC3C.unkA6 % 3) == 1) {
+            if ((self->ext.unkAC3C.unkA6 % 3) == 1) {
                 newEntity = GetFreeDraEntity(32, 48);
             }
-            if ((parent->ext.unkAC3C.unkA6 % 3) == 2) {
+            if ((self->ext.unkAC3C.unkA6 % 3) == 2) {
                 newEntity = GetFreeDraEntity(48, 64);
             }
         } else {
@@ -318,36 +318,36 @@ void func_8011AC3C(Entity* parent) {
         }
 
         if (newEntity == NULL) {
-            if (parent->ext.unkAC3C.unk9E == 1) {
+            if (self->ext.unkAC3C.unk9E == 1) {
                 goto setIdZeroAndReturn;
             }
             break;
         }
         DestroyEntity(newEntity);
         newEntity->entityId =
-            parent->ext.unkAC3C.unk90 + parent->ext.unkAC3C.unkA8;
-        newEntity->params = parent->ext.unkAC3C.unkA0;
-        newEntity->ext.unkAC3C.unk8C = parent->ext.unkAC3C.unk8C;
-        newEntity->posX.val = parent->posX.val;
-        newEntity->posY.val = parent->posY.val;
-        newEntity->facingLeft = parent->facingLeft;
-        newEntity->zPriority = parent->zPriority;
-        newEntity->ext.fam.cameraY = parent->ext.unkAC3C.unk92 & 0x1FF;
-        newEntity->ext.unkAC3C.unkB0 = parent->ext.unkAC3C.unk92 >> 9;
-        if (parent->flags & FLAG_UNK_10000) {
+            self->ext.unkAC3C.unk90 + self->ext.unkAC3C.unkA8;
+        newEntity->params = self->ext.unkAC3C.unkA0;
+        newEntity->ext.unkAC3C.unk8C = self->ext.unkAC3C.unk8C;
+        newEntity->posX.val = self->posX.val;
+        newEntity->posY.val = self->posY.val;
+        newEntity->facingLeft = self->facingLeft;
+        newEntity->zPriority = self->zPriority;
+        newEntity->ext.fam.cameraY = self->ext.unkAC3C.unk92 & 0x1FF;
+        newEntity->ext.unkAC3C.unkB0 = self->ext.unkAC3C.unk92 >> 9;
+        if (self->flags & FLAG_UNK_10000) {
             newEntity->flags |= FLAG_UNK_10000;
         }
-        if (parent->ext.unkAC3C.unkA2 != 0) {
-            newEntity->params += parent->ext.unkAC3C.unkA6;
+        if (self->ext.unkAC3C.unkA2 != 0) {
+            newEntity->params += self->ext.unkAC3C.unkA6;
         } else {
             newEntity->params += i;
         }
-        if (++parent->ext.unkAC3C.unkA6 == parent->ext.unkAC3C.unk94) {
-            parent->entityId = 0;
+        if (++self->ext.unkAC3C.unkA6 == self->ext.unkAC3C.unk94) {
+            self->entityId = 0;
             return;
         }
     }
-    parent->ext.unkAC3C.unk9A = parent->ext.unkAC3C.unk98;
+    self->ext.unkAC3C.unk9A = self->ext.unkAC3C.unk98;
     return;
 }
 
@@ -643,7 +643,7 @@ INCLUDE_ASM("dra/nonmatchings/7A4D0", EntityHitByLightning);
 // player gets frozen
 INCLUDE_ASM("dra/nonmatchings/7A4D0", EntityHitByIce);
 
-// transparent white circle closes over player
+// Transparent white circle closes over player
 INCLUDE_ASM("dra/nonmatchings/7A4D0", EntityTransparentWhiteCircle);
 
 // pink effect on player
