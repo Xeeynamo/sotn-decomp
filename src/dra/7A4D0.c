@@ -251,7 +251,7 @@ void func_8011AC3C(Entity* self) {
         case 4:
             self->posX = PLAYER.posX.val;
             self->posY = PLAYER.posY.val;
-            if (PLAYER.step != 1) {
+            if (PLAYER.step != Player_Walk) {
                 self->entityId = 0;
                 return;
             }
@@ -267,7 +267,7 @@ void func_8011AC3C(Entity* self) {
         case 7:
             self->posX = PLAYER.posX.val;
             self->posY = PLAYER.posY.val;
-            if (PLAYER.step != 0xA) {
+            if (PLAYER.step != Player_Hit) {
             setIdZeroAndReturn:
                 self->entityId = 0;
                 return;
@@ -346,7 +346,6 @@ void func_8011AC3C(Entity* self) {
         }
     }
     self->ext.unkAC3C.unk9A = self->ext.unkAC3C.unk98;
-    return;
 }
 
 // Name comes purely from emulator breakpoint experiments, could be wrong
