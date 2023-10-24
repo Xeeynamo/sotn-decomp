@@ -579,7 +579,40 @@ void EntityGravityBootBeam(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/7A4D0", func_8011E390);
+// The blue outlines of the bat that show up when wing smashing
+void EntityWingSmashTrail(Entity* entity) {
+    // Make sure we are currently wing smashing.
+    if (!(PLAYER.step == Player_MorphBat && PLAYER.step_s == 3)) {
+        DestroyEntity(entity);
+        return;
+    }
+    if (entity->step == 0) {
+        entity->flags = FLAG_UNK_08000000;
+        entity->animSet = PLAYER.animSet;
+        entity->animCurFrame = PLAYER.animCurFrame | 0x8000;
+        entity->zPriority = PLAYER.zPriority - 2;
+        entity->drawFlags = PLAYER.drawFlags | 0xB;
+        entity->unk6C = 0x80; // a lifetime counter
+        entity->blendMode = 0x30;
+        entity->rotZ = PLAYER.rotZ;
+        entity->facingLeft = PLAYER.facingLeft;
+        entity->palette = 0x8102;
+        entity->rotX = entity->rotY = 0x100;
+        entity->step++;
+        return;
+    }
+    // This actually makes the wing smashes shrink over time, not rotate.
+    entity->rotX -= 8;
+    entity->rotY -= 8;
+    entity->animCurFrame = PLAYER.animCurFrame | 0x8000;
+    // Unclear why we count down by 5's instead of just making unk6C start
+    // smaller
+    if (entity->unk6C >= 5) {
+        entity->unk6C -= 5;
+    } else {
+        DestroyEntity(entity);
+    }
+}
 
 INCLUDE_ASM("dra/nonmatchings/7A4D0", func_8011E4BC);
 
