@@ -228,3 +228,50 @@ typedef struct {
     byte pad[0x1A];
     s32 D_8009742C[8];
 } unkGraphicsStruct;
+
+typedef struct{
+    u8 unk0;
+    u8 unk1;
+    u8 unk2;
+    u8 unk3;
+    u8 unk4;
+    u8 unk5;    
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+    s32 unkC;
+    s16 unk10;
+    s16 unk12;
+    s16 unk14;
+    s16 unk16;
+    s16 unk18;
+    s16 unk1A;
+    s16 unk1C;
+} unkStr_8011E4BC;
+
+typedef struct FakePrim{
+    struct FakePrim* next;
+    u8 unk4;
+    u8 unk5;
+    u8 unk6;
+    u8 unk7;
+    s16 unk8;
+    s16 unkA;
+    u8 unkC;
+    u8 unkD;
+    s16 unkE;
+    f32 unk10;
+    f32 unk14;
+    s32 unk18;
+    s32 unk1C;
+    s16 unk20;
+    s16 unk22;
+    s16 unk24;
+    s16 unk26;
+    s16 unk28;
+    s16 unk2A;
+    s16 unk2C;
+    s16 unk2E;
+    s16 unk30;
+    s16 unk32;
+} FakePrim;
