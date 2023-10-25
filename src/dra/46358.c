@@ -159,7 +159,7 @@ void HandleNowLoading(void) {
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StageChr;
-            g_mapTilesetId = g_StageId;
+            g_LoadOvlIdx = g_StageId;
         }
         g_GameStep++;
         break;
@@ -217,8 +217,8 @@ void HandleNowLoading(void) {
         }
         D_8003C908.D_8003C90C = -1;
         D_8003C908.D_8003C910 = -1;
-        D_8006CBC4 = 0;
-        D_80073064 = 0;
+        g_Servant = 0;
+        g_ServantLoaded = 0;
         if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
             g_GameStep = 0x10;
         } else {
@@ -307,14 +307,14 @@ void HandleNowLoading(void) {
         g_GameStep++;
         break;
     case 14:
-        D_8006CBC4 = func_800E6300();
-        if (D_8006CBC4 == 0) {
+        g_Servant = func_800E6300();
+        if (g_Servant == 0) {
             g_GameStep += 2;
         } else {
             if (g_UseDisk) {
                 g_CdStep = CdStep_LoadInit;
                 g_LoadFile = CdFile_ServantChr;
-                g_mapTilesetId = D_8006CBC4 - 1;
+                g_LoadOvlIdx = g_Servant - 1;
             }
             g_GameStep++;
         }
@@ -327,7 +327,7 @@ void HandleNowLoading(void) {
         } else {
             func_800E6250();
         }
-        D_80073064 = D_8006CBC4;
+        g_ServantLoaded = g_Servant;
         g_GameStep++;
         break;
     case 16:

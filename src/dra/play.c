@@ -143,7 +143,7 @@ void HandlePlay(void) {
                 }
                 g_CdStep = CdStep_LoadInit;
                 g_LoadFile = CdFile_StageChr;
-                g_mapTilesetId = g_StageId;
+                g_LoadOvlIdx = g_StageId;
             }
             if (D_8006C374 == 0x07) {
                 if (g_IsUsingCd) {
@@ -151,7 +151,7 @@ void HandlePlay(void) {
                 }
                 g_CdStep = CdStep_LoadInit;
                 g_LoadFile = CdFile_StageChr;
-                g_mapTilesetId = g_StageId;
+                g_LoadOvlIdx = g_StageId;
             }
             if (D_8006C374 == 0x3C) {
                 if (g_IsUsingCd) {
@@ -159,7 +159,7 @@ void HandlePlay(void) {
                 }
                 g_CdStep = CdStep_LoadInit;
                 g_LoadFile = CdFile_StageChr;
-                g_mapTilesetId = 9;
+                g_LoadOvlIdx = 9;
             }
             if (D_8006C374 == 0x25) {
                 if (g_IsUsingCd) {
@@ -167,7 +167,7 @@ void HandlePlay(void) {
                 }
                 g_CdStep = CdStep_LoadInit;
                 g_LoadFile = CdFile_StageChr;
-                g_mapTilesetId = 0x2B;
+                g_LoadOvlIdx = 0x2B;
             }
             if (D_8006C374 == 0x26) {
                 if (g_IsUsingCd) {
@@ -175,7 +175,7 @@ void HandlePlay(void) {
                 }
                 g_CdStep = CdStep_LoadInit;
                 g_LoadFile = CdFile_StageChr;
-                g_mapTilesetId = 0xB;
+                g_LoadOvlIdx = 0xB;
             }
             if (D_8006C374 == 0x27) {
                 if (g_IsUsingCd) {
@@ -183,7 +183,7 @@ void HandlePlay(void) {
                 }
                 g_CdStep = CdStep_LoadInit;
                 g_LoadFile = CdFile_StageChr;
-                g_mapTilesetId = 2;
+                g_LoadOvlIdx = 2;
             }
         }
         MoveImage(&g_Vram.D_800ACD80, 0, 0x100);
@@ -239,7 +239,7 @@ void HandlePlay(void) {
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StageSfx;
-            g_mapTilesetId = g_StageId;
+            g_LoadOvlIdx = g_StageId;
         } else {
             if (LoadFileSim(0, SimFileType_StageChr) < 0 ||
                 LoadFileSim(0, SimFileType_Vh) < 0 ||

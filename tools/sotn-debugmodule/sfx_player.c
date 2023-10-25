@@ -10,12 +10,12 @@ void ChangeSoundMode(int param) {
 void LoadStageSounds(int param) {
     g_CdStep = CdStep_LoadInit;
     g_LoadFile = CdFile_StageSfx;
-    g_mapTilesetId = param;
+    g_LoadOvlIdx = param;
 }
 void LoadServant(int param) {
     g_CdStep = CdStep_LoadInit;
     g_LoadFile = CdFile_ServantChr;
-    g_mapTilesetId = param;
+    g_LoadOvlIdx = param;
 }
 
 DbgMenuItem g_SoundItems[] = {

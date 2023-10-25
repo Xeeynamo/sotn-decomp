@@ -313,7 +313,7 @@ bool func_8010715C(s32 mapTilesetId) {
     } else {
         g_CdStep = CdStep_LoadInit;
         g_LoadFile = CdFile_28;
-        g_mapTilesetId = mapTilesetId;
+        g_LoadOvlIdx = mapTilesetId;
     }
     return true;
 }

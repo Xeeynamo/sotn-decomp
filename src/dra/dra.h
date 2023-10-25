@@ -246,7 +246,7 @@ typedef struct {
 } DamageParam;
 
 typedef struct {
-    /* 8013761C */ MenuContext menus[4]; // 761C, 763A, 7658, 7676
+    /* 8013761C */ MenuContext menus[0x10]; // 761C, 763A, 7658, 7676
 } MenuData;
 
 // All the Joseph's Cloak color fields are in RGB555 format
@@ -537,10 +537,11 @@ extern s32 D_801375C0;
 extern s32 D_801375C4;
 extern s32 D_801375C8;
 extern s32 D_801375CC;
+extern s32 D_801375D0;
 extern s32 D_801375D4;
 extern s32* D_801375D8;
-extern s32 D_801375DC;
-extern s32 D_801375E0[];
+extern s32 D_801375DC[0];
+extern s32 D_801375E0[8];
 extern s32 D_801375FC;
 extern s32 D_80137608;
 extern s32 g_IsCloakLiningUnlocked;
@@ -572,6 +573,8 @@ extern s32 D_80137948;
 extern s8* D_8013794C; // Pointer to texture pattern
 extern s32 D_80137950;
 extern s32 D_80137954;
+extern s32 D_80137958;
+extern s32 g_ServantPrevious;
 extern s32 D_80137960;
 extern s32 D_80137964;
 extern s32 D_80137968;
@@ -657,6 +660,7 @@ extern DebugMode g_DebugMode;
 extern s16 g_VolL; // vol_l
 extern Unkstruct_80138FB4* D_80138FB4;
 extern s16 D_80138FBC;
+extern s32 D_80139060;
 extern Unkstruct_80138FB4* D_801390C8;
 extern Unkstruct_80138FB4* D_801390CC;
 extern ButtonComboState g_ButtonCombo[16];
@@ -844,8 +848,6 @@ void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b);
 s32 func_800F62E8(s32 arg0);
 void InitStatsAndGear(bool isDeathTakingItems);
-void func_800F98AC(u8* arg0, u32 arg1);
-void func_800F99B8(u8* arg0, s32 arg1, s32 arg2);
 void DrawMenuChar(u8 ch, int x, int y, MenuContext* context);
 void DrawMenuStr(const u8* str, s32 x, s32 y, MenuContext* context);
 void DrawMenuInt(s32 value, s32 x, s32 y, MenuContext*);
