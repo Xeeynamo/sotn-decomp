@@ -548,16 +548,16 @@ typedef struct {
 
 } ET_UNKAC3C;
 
-typedef struct{
+typedef struct {
     char pad[8];
     s32 unk8;
 } unk_sub_8011E4BC;
 
-typedef struct{
+typedef struct {
     s16 unk7C;
     byte pad[14];
     unk_sub_8011E4BC* unk8C;
-}ET_8011E4BC;
+} ET_8011E4BC;
 
 typedef union {
     /* 0x7C */ struct Primitive* prim;

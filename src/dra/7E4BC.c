@@ -25,7 +25,7 @@ void func_8011E4BC(Entity* self) {
     playerXpos = PLAYER.posX.i.hi;
     playerYpos = PLAYER.posY.i.hi;
     switch (self->step) {
-    case 0:              
+    case 0:
         self->primIndex = func_800EDB58(0x11, temp_s5->unk0 + 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
@@ -33,10 +33,10 @@ void func_8011E4BC(Entity* self) {
         }
         self->flags = temp_s5->unkC;
         switch (upperParams) {
-        case 13:              
+        case 13:
             self->ext.et_8011E4BC.unk7C = 0x100;
             break;
-        case 8: 
+        case 8:
         case 10:
         case 12:
         case 14:
@@ -47,8 +47,8 @@ void func_8011E4BC(Entity* self) {
         case 6:
             self->ext.et_8011E4BC.unk7C = 0x2F;
             break;
-        case 4: 
-        case 7: 
+        case 4:
+        case 7:
         case 11:
             self->ext.et_8011E4BC.unk7C = 0x1F;
             break;
@@ -70,7 +70,7 @@ void func_8011E4BC(Entity* self) {
             fakePrim->unk14.i.lo = 0;
             fakePrim->unk10.i.lo = 0;
             switch (temp_s5->unkA) {
-            case 0:                 
+            case 0:
                 randVar = rand();
                 randAngleShift = (randVar & 1) + 2;
                 fakePrim->unk18 = (rcos(randVar) << randAngleShift);
@@ -158,17 +158,17 @@ void func_8011E4BC(Entity* self) {
         }
         self->step++;
         return;
-    case 1:                   
+    case 1:
         switch (upperParams) {
-        case 10:              
+        case 10:
             if (PLAYER.step != 0x22) {
                 DestroyEntity(self);
                 return;
             }
-        case 3: 
-        case 4: 
-        case 7: 
-        case 8: 
+        case 3:
+        case 4:
+        case 7:
+        case 8:
         case 11:
         case 12:
         case 13:
@@ -196,16 +196,16 @@ void func_8011E4BC(Entity* self) {
             fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
             while (1) {
                 if (fakePrim->next == NULL) {
-                fakePrim->unkC = 0;
-                fakePrim->unk8 = 0;
-                fakePrim->unkA = 0;
-                fakePrim->unk32 &= 0xFFF7;
-                return;
+                    fakePrim->unkC = 0;
+                    fakePrim->unk8 = 0;
+                    fakePrim->unkA = 0;
+                    fakePrim->unk32 &= 0xFFF7;
+                    return;
                 }
                 fakePrim->unk10.i.hi = fakePrim->unk8;
                 fakePrim->unk14.i.hi = fakePrim->unkA;
                 switch (temp_s5->unkA) {
-                case 0:                 
+                case 0:
                     fakePrim->unk14.val += fakePrim->unk1C;
                     fakePrim->unk10.val += fakePrim->unk18;
                     fakePrim->unk4 += 0xFA;
@@ -238,7 +238,7 @@ void func_8011E4BC(Entity* self) {
                     fakePrim->unk14.val += fakePrim->unk1C;
                     fakePrim->unk1C = (fakePrim->unk1C + 0x1400);
                     break;
-                case 3: 
+                case 3:
                 case 10:
                 case 12:
                     fakePrim->unk14.val += fakePrim->unk1C;
@@ -250,7 +250,8 @@ void func_8011E4BC(Entity* self) {
                     fakePrim->unk10.val += fakePrim->unk18;
                     fakePrim->unk14.val += fakePrim->unk1C;
                     // There is probably a clever way to write this
-                    fakePrim->unk1C = (fakePrim->unk1C - (fakePrim->unk1C >> 5));
+                    fakePrim->unk1C =
+                        (fakePrim->unk1C - (fakePrim->unk1C >> 5));
                     if (!(var_a2 & 7)) {
                         fakePrim->unk18 = (fakePrim->unk18 >> 1);
                         fakePrim->unk1C >>= 1;

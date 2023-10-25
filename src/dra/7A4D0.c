@@ -613,5 +613,3 @@ void EntityWingSmashTrail(Entity* entity) {
         DestroyEntity(entity);
     }
 }
-
-

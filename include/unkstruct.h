@@ -229,13 +229,13 @@ typedef struct {
     s32 D_8009742C[8];
 } unkGraphicsStruct;
 
-typedef struct{
+typedef struct {
     u8 unk0;
     u8 unk1;
     u8 unk2;
     u8 unk3;
     u8 unk4;
-    u8 unk5;    
+    u8 unk5;
     s16 unk6;
     s16 unk8;
     s16 unkA;
@@ -249,7 +249,7 @@ typedef struct{
     s16 unk1C;
 } unkStr_8011E4BC;
 
-typedef struct FakePrim{
+typedef struct FakePrim {
     struct FakePrim* next;
     u8 unk4;
     u8 unk5;
