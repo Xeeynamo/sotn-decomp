@@ -230,16 +230,16 @@ typedef struct {
 } unkGraphicsStruct;
 
 typedef struct {
-    u8 unk0;
-    u8 unk1;
-    u8 unk2;
-    u8 unk3;
-    u8 unk4;
-    u8 unk5;
-    s16 unk6;
-    s16 unk8;
+    u8 count;
+    u8 r;
+    u8 g;
+    u8 b;
+    u8 w;
+    u8 h;
+    u16 priority;
+    u16 blendMode;
     s16 unkA;
-    s32 unkC;
+    u32 flags;
     s16 unk10;
     s16 unk12;
     s16 unk14;
@@ -251,27 +251,29 @@ typedef struct {
 
 typedef struct FakePrim {
     struct FakePrim* next;
-    u8 unk4;
-    u8 unk5;
-    u8 unk6;
-    u8 unk7;
-    s16 unk8;
-    s16 unkA;
-    u8 unkC;
-    u8 unkD;
-    s16 unkE;
-    f32 unk10;
-    f32 unk14;
-    s32 unk18;
-    s32 unk1C;
-    s16 unk20;
-    s16 unk22;
-    s16 unk24;
-    s16 unk26;
-    s16 unk28;
-    s16 unk2A;
-    s16 unk2C;
-    s16 unk2E;
-    s16 unk30;
-    s16 unk32;
+    /* 0x04 */ u8 r0;
+    /* 0x05 */ u8 g0;
+    /* 0x06 */ u8 b0;
+    /* 0x07 */ u8 type; // PrimitiveType
+    /* 0x08 */ s16 x0;
+    /* 0x0A */ s16 y0;
+    /* 0x0C */ u8 w;
+    /* 0x0D */ u8 h;
+    /* 0x0E */ u16 clut;
+    /* 0x10 */ f32 posX;
+    /* 0x14 */ f32 posY;
+    /* 0x18 */ s32 unk18; // velocityX/accelerationX?
+    /* 0x1C */ s32 unk1C; // velocityY/accelerationY?
+    /* 0x20 */ s16 x2;
+    /* 0x22 */ s16 y2;
+    /* 0x24 */ s16 delay;
+    /* 0x26 */ u16 priority;
+    /* 0x28 */ u8 r3;
+    /* 0x29 */ u8 g3;
+    /* 0x2A */ u8 b3;
+    /* 0x2B */ u8 p3; // TODO not verified
+    /* 0x2C */ s16 x3;
+    /* 0x2E */ s16 y3;
+    s16 timer;
+    /* 0x32 */ u16 blendMode;
 } FakePrim;

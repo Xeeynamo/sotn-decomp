@@ -4,7 +4,7 @@
 
 void func_8011E4BC(Entity* self) {
     byte stackpad[0x28];
-    FakePrim* fakePrim;
+    FakePrim* tilePrim;
     s16 randVar;
     s32 randAngleShift;
     s32 twelveShift;
@@ -15,7 +15,7 @@ void func_8011E4BC(Entity* self) {
     u16 selfXPos;
     u32 upperParams;
     unkStr_8011E4BC* temp_s5;
-    s32 var_a3;
+    s32 thickness;
     s32 var_a2;
 
     selfXPos = self->posX.i.hi;
@@ -26,12 +26,12 @@ void func_8011E4BC(Entity* self) {
     playerYpos = PLAYER.posY.i.hi;
     switch (self->step) {
     case 0:
-        self->primIndex = func_800EDB58(0x11, temp_s5->unk0 + 1);
+        self->primIndex = func_800EDB58(PRIM_TILE_ALT, temp_s5->count + 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        self->flags = temp_s5->unkC;
+        self->flags = temp_s5->flags;
         switch (upperParams) {
         case 13:
             self->ext.et_8011E4BC.unk7C = 0x100;
@@ -54,40 +54,40 @@ void func_8011E4BC(Entity* self) {
             break;
         }
         i = 0;
-        fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
+        tilePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
         while (1) {
-            fakePrim->unk32 = temp_s5->unk8;
-            fakePrim->unk26 = PLAYER.zPriority + temp_s5->unk6;
-            if (fakePrim->next == NULL) {
-                fakePrim->unkC = 0;
-                fakePrim->unk8 = 0;
-                fakePrim->unkA = 0;
-                fakePrim->unk32 &= 0xFFF7;
+            tilePrim->blendMode = temp_s5->blendMode;
+            tilePrim->priority = PLAYER.zPriority + temp_s5->priority;
+            if (tilePrim->next == NULL) {
+                tilePrim->w = 0;
+                tilePrim->x0 = 0;
+                tilePrim->y0 = 0;
+                tilePrim->blendMode &= ~BLEND_VISIBLE;
                 break;
             }
-            fakePrim->unk10.i.hi = selfXPos;
-            fakePrim->unk14.i.hi = selfYPos;
-            fakePrim->unk14.i.lo = 0;
-            fakePrim->unk10.i.lo = 0;
+            tilePrim->posX.i.hi = selfXPos;
+            tilePrim->posY.i.hi = selfYPos;
+            tilePrim->posY.i.lo = 0;
+            tilePrim->posX.i.lo = 0;
             switch (temp_s5->unkA) {
             case 0:
                 randVar = rand();
                 randAngleShift = (randVar & 1) + 2;
-                fakePrim->unk18 = (rcos(randVar) << randAngleShift);
-                fakePrim->unk1C = -(rsin(randVar) << randAngleShift);
+                tilePrim->unk18 = (rcos(randVar) << randAngleShift);
+                tilePrim->unk1C = -(rsin(randVar) << randAngleShift);
                 break;
             case 1:
             case 9:
-                fakePrim->unk18 = (((rand() & 0x1FF) - 0x100) << 8);
-                fakePrim->unk1C = (((rand() & 0x1FF) - 0x100) << 8);
+                tilePrim->unk18 = (((rand() & 0x1FF) - 0x100) << 8);
+                tilePrim->unk1C = (((rand() & 0x1FF) - 0x100) << 8);
                 break;
             case 2:
-                fakePrim->unk18 = (((rand() * 2) - 0x8000) >> 1);
-                fakePrim->unk1C = -(rand() & 0x3FFF);
-                fakePrim->unk10.val += (fakePrim->unk18 * 0x13);
-                fakePrim->unk14.i.hi = (selfYPos + (rand() & 7)) - 3;
+                tilePrim->unk18 = (((rand() * 2) - 0x8000) >> 1);
+                tilePrim->unk1C = -(rand() & 0x3FFF);
+                tilePrim->posX.val += (tilePrim->unk18 * 0x13);
+                tilePrim->posY.i.hi = (selfYPos + (rand() & 7)) - 3;
                 randVar = rand() & 0xF;
-                fakePrim->unk24 = (randVar + 0x10);
+                tilePrim->delay = (randVar + 0x10);
                 break;
             case 8:
                 if (PLAYER.facingLeft) {
@@ -95,69 +95,69 @@ void func_8011E4BC(Entity* self) {
                 } else {
                     twelveShift = -12;
                 }
-                fakePrim->unk18 = ((rand() * 4) + 0xFFFF0000);
-                fakePrim->unk1C = -(rand() & 0x3FFF);
+                tilePrim->unk18 = ((rand() * 4) + 0xFFFF0000);
+                tilePrim->unk1C = -(rand() & 0x3FFF);
                 // This ends up adding the unk18 to unk18.lo and twelveShift to
                 // unk10.hi
-                fakePrim->unk10.val +=
-                    ((fakePrim->unk18 * 0x23) + (twelveShift << 16));
-                fakePrim->unk18 = (fakePrim->unk18 >> 2);
-                fakePrim->unk14.i.hi = selfYPos - (rand() & 0x1F);
+                tilePrim->posX.val +=
+                    ((tilePrim->unk18 * 0x23) + (twelveShift << 16));
+                tilePrim->unk18 = (tilePrim->unk18 >> 2);
+                tilePrim->posY.i.hi = selfYPos - (rand() & 0x1F);
                 randVar = rand() & 0x1F;
-                fakePrim->unk24 = (randVar + 0x10);
+                tilePrim->delay = (randVar + 0x10);
                 break;
             case 3:
-                fakePrim->unk10.i.hi = ((selfXPos + (rand() & 0xF)) - 7);
-                fakePrim->unk14.i.hi = selfYPos - (rand() & 0x1F);
-                fakePrim->unk1C = (0xFFFF4000 - (rand() & 0x7FFF));
+                tilePrim->posX.i.hi = (selfXPos + (rand() & 0xF)) - 7;
+                tilePrim->posY.i.hi = selfYPos - (rand() & 0x1F);
+                tilePrim->unk1C = 0xFFFF4000 - (rand() & 0x7FFF);
                 if (self->ext.et_8011E4BC.unk8C != NULL) {
-                    fakePrim->unk18 = self->ext.et_8011E4BC.unk8C->unk8;
+                    tilePrim->unk18 = self->ext.et_8011E4BC.unk8C->unk8;
                 }
-                fakePrim->unk24 = ((i * 2) + 0xF);
+                tilePrim->delay = ((i * 2) + 0xF);
                 break;
             case 4:
-                fakePrim->unk10.i.hi = ((selfXPos + (rand() & 0x1F)) - 0x10);
-                fakePrim->unk14.i.hi = (selfYPos + (rand() & 0x1F)) - 0x14;
+                tilePrim->posX.i.hi = (selfXPos + (rand() & 0x1F)) - 0x10;
+                tilePrim->posY.i.hi = (selfYPos + (rand() & 0x1F)) - 0x14;
                 randVar = rand() & 0x1F;
-                fakePrim->unk18 = D_801396F8[randVar];
-                fakePrim->unk1C = D_80139778[randVar];
+                tilePrim->unk18 = D_801396F8[randVar];
+                tilePrim->unk1C = D_80139778[randVar];
                 break;
             case 10:
-                fakePrim->unk10.i.hi = playerXpos;
-                fakePrim->unk14.i.hi = playerYpos;
-                fakePrim->unk24 = 0x3F;
-                fakePrim->unk1C = -(((i * i) << 0xC) + 0x4000);
+                tilePrim->posX.i.hi = playerXpos;
+                tilePrim->posY.i.hi = playerYpos;
+                tilePrim->delay = 0x3F;
+                tilePrim->unk1C = -(((i * i) << 0xC) + 0x4000);
                 break;
             case 12:
-                fakePrim->unk10.i.hi = selfXPos;
-                fakePrim->unk14.i.hi = selfYPos;
+                tilePrim->posX.i.hi = selfXPos;
+                tilePrim->posY.i.hi = selfYPos;
                 if (i < 10) {
-                    fakePrim->unk1C = -((i * i * 0x1800) + 0x2000);
+                    tilePrim->unk1C = -((i * i * 0x1800) + 0x2000);
                 } else {
-                    fakePrim->unk1C = ((i - 10) * (i - 10) * 0x1800) + 0x2000;
+                    tilePrim->unk1C = ((i - 10) * (i - 10) * 0x1800) + 0x2000;
                 }
-                fakePrim->unk24 = 0x3F;
+                tilePrim->delay = 0x3F;
                 break;
             case 13:
-                fakePrim->unk10.i.hi = selfXPos;
-                fakePrim->unk14.i.hi = selfYPos;
-                fakePrim->unk18 = ((rand() - 0x4000) >> 1);
-                fakePrim->unk1C = -((rand() & 0x1FFF) + 0x6000);
-                fakePrim->unk30 = (i * 4);
+                tilePrim->posX.i.hi = selfXPos;
+                tilePrim->posY.i.hi = selfYPos;
+                tilePrim->unk18 = (rand() - 0x4000) >> 1;
+                tilePrim->unk1C = -((rand() & 0x1FFF) + 0x6000);
+                tilePrim->timer = i * 4;
                 break;
             }
-            fakePrim->unk8 = fakePrim->unk10.i.hi;
-            fakePrim->unkA = fakePrim->unk14.i.hi;
-            fakePrim->unk4 = temp_s5->unk1;
-            fakePrim->unk5 = temp_s5->unk2;
-            fakePrim->unk6 = temp_s5->unk3;
-            fakePrim->unkC = temp_s5->unk4;
-            fakePrim->unkD = temp_s5->unk5;
-            fakePrim = fakePrim->next;
+            tilePrim->x0 = tilePrim->posX.i.hi;
+            tilePrim->y0 = tilePrim->posY.i.hi;
+            tilePrim->r0 = temp_s5->r;
+            tilePrim->g0 = temp_s5->g;
+            tilePrim->b0 = temp_s5->b;
+            tilePrim->w = temp_s5->w;
+            tilePrim->h = temp_s5->h;
+            tilePrim = tilePrim->next;
             i++;
         }
         self->step++;
-        return;
+        break;
     case 1:
         switch (upperParams) {
         case 10:
@@ -185,110 +185,110 @@ void func_8011E4BC(Entity* self) {
             }
             var_a2 = self->ext.et_8011E4BC.unk7C;
             if (var_a2 < 9) {
-                var_a3 = 2;
+                thickness = 2;
             } else {
-                var_a3 = 3;
+                thickness = 3;
             }
             if (var_a2 < 4) {
-                var_a3--;
+                thickness--;
             }
-        default:
-            fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
-            while (1) {
-                if (fakePrim->next == NULL) {
-                    fakePrim->unkC = 0;
-                    fakePrim->unk8 = 0;
-                    fakePrim->unkA = 0;
-                    fakePrim->unk32 &= 0xFFF7;
+            break;
+        }
+        tilePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
+        while (1) {
+            if (tilePrim->next == NULL) {
+                tilePrim->w = 0;
+                tilePrim->x0 = 0;
+                tilePrim->y0 = 0;
+                tilePrim->blendMode &= ~BLEND_VISIBLE;
+                return;
+            }
+
+            tilePrim->posX.i.hi = tilePrim->x0;
+            tilePrim->posY.i.hi = tilePrim->y0;
+            switch (temp_s5->unkA) {
+            case 0:
+                tilePrim->posY.val += tilePrim->unk1C;
+                tilePrim->posX.val += tilePrim->unk18;
+                tilePrim->r0 -= 6;
+                tilePrim->g0 -= 6;
+                tilePrim->b0 -= 6;
+                if (tilePrim->r0 < 8) {
+                    DestroyEntity(self);
                     return;
                 }
-                fakePrim->unk10.i.hi = fakePrim->unk8;
-                fakePrim->unk14.i.hi = fakePrim->unkA;
-                switch (temp_s5->unkA) {
-                case 0:
-                    fakePrim->unk14.val += fakePrim->unk1C;
-                    fakePrim->unk10.val += fakePrim->unk18;
-                    fakePrim->unk4 += 0xFA;
-                    fakePrim->unk5 += 0xFA;
-                    fakePrim->unk6 += 0xFA;
-                    if (fakePrim->unk4 < 8U) {
-                        DestroyEntity(self);
-                        return;
-                    }
-                    break;
-                case 1:
-                case 9:
-                    fakePrim->unk14.val += fakePrim->unk1C;
-                    fakePrim->unk10.val += fakePrim->unk18;
-                    fakePrim->unk1C = (fakePrim->unk1C + 0x2800);
-                    fakePrim->unk4 += 0xFD;
-                    fakePrim->unk5 += 0xFD;
-                    fakePrim->unk6 += 0xFD;
-                    if (fakePrim->unk4 < 8U) {
-                        DestroyEntity(self);
-                        return;
-                    }
-                    break;
-                case 2:
-                case 8:
-                    if (--fakePrim->unk24 == 0) {
-                        fakePrim->unk32 |= 8;
-                    }
-                    fakePrim->unk10.val += fakePrim->unk18;
-                    fakePrim->unk14.val += fakePrim->unk1C;
-                    fakePrim->unk1C = (fakePrim->unk1C + 0x1400);
-                    break;
-                case 3:
-                case 10:
-                case 12:
-                    fakePrim->unk14.val += fakePrim->unk1C;
-                    if (--fakePrim->unk24 < 0) {
-                        fakePrim->unk32 |= 8;
-                    }
-                    break;
-                case 4:
-                    fakePrim->unk10.val += fakePrim->unk18;
-                    fakePrim->unk14.val += fakePrim->unk1C;
-                    // There is probably a clever way to write this
-                    fakePrim->unk1C =
-                        (fakePrim->unk1C - (fakePrim->unk1C >> 5));
-                    if (!(var_a2 & 7)) {
-                        fakePrim->unk18 = (fakePrim->unk18 >> 1);
-                        fakePrim->unk1C >>= 1;
-                        if (var_a2 & 0x20) {
-                            fakePrim->unk1C >>= 1;
-                        }
-                        if (var_a2 == 0x18) {
-                            fakePrim->unk32 = 2;
-                        }
-                    }
-                    fakePrim->unkD = var_a3;
-                    fakePrim->unkC = var_a3;
-                    break;
-                case 13:
-                    if (fakePrim->unk30 == 0) {
-                        fakePrim->unk32 &= 0xFFF7;
-                        fakePrim->unk4 += 0xFF;
-                        fakePrim->unk5 += 0xFF;
-                        fakePrim->unk6 += 0xFF;
-                        fakePrim->unk14.val += fakePrim->unk1C;
-                        fakePrim->unk10.val += fakePrim->unk18;
-                        if ((*D_80097448 == 0) ||
-                            (((PLAYER.posY.i.hi - *D_80097448) + 0x19) >=
-                             fakePrim->unk14.i.hi)) {
-                            fakePrim->unk32 |= 8;
-                            break;
-                        }
-                    } else {
-                        fakePrim->unk30--;
-                    }
-                    break;
+                break;
+            case 1:
+            case 9:
+                tilePrim->posY.val += tilePrim->unk1C;
+                tilePrim->posX.val += tilePrim->unk18;
+                tilePrim->unk1C = (tilePrim->unk1C + 0x2800);
+                tilePrim->r0 -= 3;
+                tilePrim->g0 -= 3;
+                tilePrim->b0 -= 3;
+                if (tilePrim->r0 < 8) {
+                    DestroyEntity(self);
+                    return;
                 }
-                fakePrim->unk8 = fakePrim->unk10.i.hi;
-                fakePrim->unkA = fakePrim->unk14.i.hi;
-                fakePrim = fakePrim->next;
+                break;
+            case 2:
+            case 8:
+                if (--tilePrim->delay == 0) {
+                    tilePrim->blendMode |= BLEND_VISIBLE;
+                }
+                tilePrim->posX.val += tilePrim->unk18;
+                tilePrim->posY.val += tilePrim->unk1C;
+                tilePrim->unk1C = (tilePrim->unk1C + 0x1400);
+                break;
+            case 3:
+            case 10:
+            case 12:
+                tilePrim->posY.val += tilePrim->unk1C;
+                if (--tilePrim->delay < 0) {
+                    tilePrim->blendMode |= BLEND_VISIBLE;
+                }
+                break;
+            case 4:
+                tilePrim->posX.val += tilePrim->unk18;
+                tilePrim->posY.val += tilePrim->unk1C;
+                // There is probably a clever way to write this
+                tilePrim->unk1C = (tilePrim->unk1C - (tilePrim->unk1C >> 5));
+                if (!(var_a2 & 7)) {
+                    tilePrim->unk18 = (tilePrim->unk18 >> 1);
+                    tilePrim->unk1C >>= 1;
+                    if (var_a2 & 0x20) {
+                        tilePrim->unk1C >>= 1;
+                    }
+                    if (var_a2 == 0x18) {
+                        tilePrim->blendMode = 2;
+                    }
+                }
+                tilePrim->h = thickness;
+                tilePrim->w = thickness;
+                break;
+            case 13:
+                if (tilePrim->timer == 0) {
+                    tilePrim->blendMode &= ~BLEND_VISIBLE;
+                    tilePrim->r0 -= 1;
+                    tilePrim->g0 -= 1;
+                    tilePrim->b0 -= 1;
+                    tilePrim->posY.val += tilePrim->unk1C;
+                    tilePrim->posX.val += tilePrim->unk18;
+                    if ((*D_80097448 == 0) ||
+                        (((PLAYER.posY.i.hi - *D_80097448) + 0x19) >=
+                         tilePrim->posY.i.hi)) {
+                        tilePrim->blendMode |= BLEND_VISIBLE;
+                    }
+                } else {
+                    tilePrim->timer--;
+                }
+                break;
             }
+            tilePrim->x0 = tilePrim->posX.i.hi;
+            tilePrim->y0 = tilePrim->posY.i.hi;
+            tilePrim = tilePrim->next;
         }
+        break;
     }
 }
 
