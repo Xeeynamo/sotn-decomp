@@ -112,10 +112,7 @@ segments:
       - [0x41AB0, rodata] # jtbl_800E1AB0
       - [0x41B10, rodata] # jtbl_800E1B10
       - [0x41B70, rodata] # jtbl_800E1B70
-      - [0x41BD0, .rodata, 7E4BC] # jtbl_800E1BD0
-      - [0x41C00, .rodata, 7E4BC] # jtbl_800E1C00
-      - [0x41C38, .rodata, 7E4BC] # jtbl_800E1C38
-      - [0x41C68, .rodata, 7E4BC] # jtbl_800E1C68
+      - [0x41BD0, .rodata, 7E4BC] # func_8011E4BC
       - [0x41CA0, rodata] # jtbl_800E1CA0
       - [0x41CC0, rodata] # jtbl_800E1CC0
       - [0x41CD8, rodata] # jtbl_800E1CD8
