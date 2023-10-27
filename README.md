@@ -45,7 +45,7 @@ Decompiling a game is a mastodontic task. If you have computer science knowledge
 
 This project is possible thanks to the hard work of tools provided by the Decompilation community:
 
-* [mips2c](https://github.com/matt-kempster/m2c) from @matt-kempster to decompile MIPS assembly into C. This proven to be more accurate than Hexrays IDA and Ghidra.
+* [mips2c](https://github.com/matt-kempster/m2c) from @matt-kempster to decompile MIPS assembly into C. This has proven to be more accurate than Hexrays IDA and Ghidra.
 * [splat](https://github.com/ethteck/splat) from @ethteck to disassemble code and extract data with a symbol map. This tool provides the fundamental of the SOTN decomp.
 * [asm-differ](https://github.com/simonlindholm/asm-differ) from @simonlindholm to know how the decompiled code compares to the original binary.
 * [decomp-permuter](https://github.com/simonlindholm/decomp-permuter) from @simonlindholm to pick different versions of the same code that better matches the original binary.
