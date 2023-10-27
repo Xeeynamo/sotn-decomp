@@ -130,7 +130,7 @@ void HandleMainMenu(void) {
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StageChr;
-            g_mapTilesetId = STAGE_SEL;
+            g_LoadOvlIdx = STAGE_SEL;
         }
         g_GameStep++;
         break;
@@ -264,7 +264,7 @@ void HandleEnding(void) {
         break;
     case 5:
         g_GameStep = 6;
-        D_800978F8 = 0;
+        g_MenuStep = 0;
         break;
     case 6:
         if (g_UseDisk) {

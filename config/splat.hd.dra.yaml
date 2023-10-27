@@ -64,10 +64,8 @@ segments:
       - [0x3C718, .rodata, 5298C] # DrawMenu
       - [0x3C758, .rodata, 5298C] # func_800F9F40
       - [0x3C788, .rodata, 5298C] # MenuHandleCursorInput
-      - [0x3C7A0, rodata]
-      - [0x3C7C8, rodata] # func_800FBC24
-      - [0x3CBE8, rodata] # func_800FBC24
-      - [0x3CC00, rodata] # func_800FBC24
+      - [0x3C7A0, .rodata, 5298C] # HandleMenu str
+      - [0x3C7C8, .rodata, 5298C] # HandleMenu jtbl
       - [0x3CC18, .rodata, 5D6C4]
       - [0x3CC60, rodata]
       - [0x3CC78, .rodata, 627C4] # jtbl_800DCC78

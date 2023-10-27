@@ -766,10 +766,10 @@ void func_80174210(Entity* self, s32 arg1) {
     }
     cameraX = g_Camera.posX.i.hi;
     cameraY = g_Camera.posY.i.hi;
-    if (D_801710A0 != D_8006CBC4 || D_801710A4 != g_CurrentRoom.left ||
+    if (D_801710A0 != g_Servant || D_801710A4 != g_CurrentRoom.left ||
         D_801710A8 != g_CurrentRoom.top) {
         var_s1 = D_8017109C;
-        D_801710A0 = D_8006CBC4;
+        D_801710A0 = g_Servant;
         D_801710A4 = g_CurrentRoom.left;
         D_801710A8 = g_CurrentRoom.top;
         if (D_80170760[1].unkC != -1) {

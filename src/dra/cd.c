@@ -547,12 +547,12 @@ void UpdateCd(void) {
     } else {
         cdFile = D_800ACC74[g_LoadFile & 0x7FFF];
         if (g_LoadFile == CdFile_StageChr) {
-            cdFile->loc = g_StagesLba[g_mapTilesetId].gfxOff;
+            cdFile->loc = g_StagesLba[g_LoadOvlIdx].gfxOff;
         }
         if (g_LoadFile == CdFile_StageSfx) {
-            D_800ACAC8 = *(temp_s0 = &g_StagesLba[g_mapTilesetId].vhOff);
-            D_800ACAD0 = *(temp_s0 = &g_StagesLba[g_mapTilesetId].vhLen);
-            D_800ACAE0 = *(temp_s0 = &g_StagesLba[g_mapTilesetId].vbLen);
+            D_800ACAC8 = *(temp_s0 = &g_StagesLba[g_LoadOvlIdx].vhOff);
+            D_800ACAD0 = *(temp_s0 = &g_StagesLba[g_LoadOvlIdx].vhLen);
+            D_800ACAE0 = *(temp_s0 = &g_StagesLba[g_LoadOvlIdx].vbLen);
         }
         if (*pLoadFile == CdFile_GameChr) {
             if (g_StageId == STAGE_ST0 ||
@@ -566,15 +566,15 @@ void UpdateCd(void) {
         }
         if (g_LoadFile == CdFile_ServantChr) {
             // SERVANT/FT_xxx.BIN
-            D_800ACBD4 = *(temp_s0 = &D_800ACB48[g_mapTilesetId]);
+            D_800ACBD4 = *(temp_s0 = &D_800ACB48[g_LoadOvlIdx]);
 
             // SERVANT/SD_xxx.VH
-            D_800ACBE4 = *(temp_s0 = &D_800ACB64[g_mapTilesetId]);
-            D_800ACBEC = *(temp_s0 = &D_800ACB80[g_mapTilesetId]);
+            D_800ACBE4 = *(temp_s0 = &D_800ACB64[g_LoadOvlIdx]);
+            D_800ACBEC = *(temp_s0 = &D_800ACB80[g_LoadOvlIdx]);
 
             // SERVANT/SD_xxx.VB
-            D_800ACBF4 = *(temp_s0 = &D_800ACB9C[g_mapTilesetId]);
-            D_800ACBFC = *(temp_s0 = &D_800ACBB8[g_mapTilesetId]);
+            D_800ACBF4 = *(temp_s0 = &D_800ACB9C[g_LoadOvlIdx]);
+            D_800ACBFC = *(temp_s0 = &D_800ACBB8[g_LoadOvlIdx]);
         }
     }
 
@@ -680,10 +680,10 @@ void UpdateCd(void) {
                         D_8003C908.D_8003C910 * 14 + cdFile->loc, &g_CdLoc);
                 }
                 if (g_CdCallback == CdCallback_14) {
-                    CdIntToPos(g_mapTilesetId * 11 + cdFile->loc, &g_CdLoc);
+                    CdIntToPos(g_LoadOvlIdx * 11 + cdFile->loc, &g_CdLoc);
                 }
                 if (g_CdCallback == CdCallback_4) {
-                    CdIntToPos(g_mapTilesetId * 4 + cdFile->loc, &g_CdLoc);
+                    CdIntToPos(g_LoadOvlIdx * 4 + cdFile->loc, &g_CdLoc);
                 }
                 if (CdControl(CdlSetloc, &g_CdLoc, 0) != 0) {
                     if (CdSync(1, NULL) != 5) {

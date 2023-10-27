@@ -13,7 +13,7 @@ void HandleMainMenu(void) {
         if (g_UseDisk != 0) {
             g_CdStep = 1;
             g_LoadFile = 0x8003;
-            g_mapTilesetId = 0xFF;
+            g_LoadOvlIdx = 0xFF;
         }
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x11);
         prim = &g_PrimBuf[primIndex];

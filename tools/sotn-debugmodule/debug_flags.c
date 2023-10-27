@@ -12,7 +12,7 @@ int HookLoadRichter();
 
 void ChangeStage(int param) {
     g_DbgLoadState = 0;
-    g_mapTilesetId = param;
+    g_LoadOvlIdx = param;
     g_StageId = param;
     SetHook(HookLoadStage);
 }
