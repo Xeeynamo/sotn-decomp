@@ -110,7 +110,7 @@ void func_801641A0(Entity* entity) {
             entity->step++;
             goto def;
         } else {
-            func_80156C60(entity);
+            DestroyEntity(entity);
             break;
         }
 
@@ -118,7 +118,7 @@ void func_801641A0(Entity* entity) {
         entity->ext.generic.unk7C.s += 2;
         entity->ext.generic.unk7E.modeU16 += 2;
         if (entity->ext.generic.unk7C.s >= 57) {
-            func_80156C60(entity);
+            DestroyEntity(entity);
             break;
         }
 
@@ -250,7 +250,7 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_80166784);
 
 void func_8016779C(Entity* entity) {
     if (g_Player.unk46 == 0) {
-        func_80156C60(entity);
+        DestroyEntity(entity);
         return;
     }
 
@@ -308,10 +308,10 @@ void func_80167964(Entity* entity) {
           (*(&D_80155D30 + (entity->animFrameDuration)) * 0x5E)) = 4;
         entity->animFrameDuration++;
         if (entity->animFrameDuration == 0xF) {
-            func_80156C60(entity);
+            DestroyEntity(entity);
         }
     } else {
-        func_80156C60(entity);
+        DestroyEntity(entity);
     }
 }
 
@@ -388,7 +388,7 @@ void func_80169C10(Entity* entity) {
             func_8015FDB0(poly, entity->posX.i.hi, entity->posY.i.hi);
             entity->step++;
         } else {
-            func_80156C60(entity);
+            DestroyEntity(entity);
         }
         break;
 
@@ -396,7 +396,7 @@ void func_80169C10(Entity* entity) {
         entity->posY.val += entity->velocityY;
         poly = &g_PrimBuf[entity->primIndex];
         if (func_8015FDB0(poly, entity->posX.i.hi, entity->posY.i.hi) != 0) {
-            func_80156C60(entity);
+            DestroyEntity(entity);
         }
         break;
     }
@@ -435,7 +435,7 @@ void func_80169D74(Entity* entity) {
         entity->rotZ -= 0x80;
         entity->ext.generic.unk7C.s--;
         if (entity->ext.generic.unk7C.s == 0) {
-            func_80156C60(entity);
+            DestroyEntity(entity);
             return;
         }
         break;
@@ -535,13 +535,13 @@ void func_8016D328(Entity* entity) {
             entity->velocityY = -(rsin(newVelocity) * 32);
             entity->step++;
         } else {
-            func_80156C60(entity);
+            DestroyEntity(entity);
         }
         break;
 
     case 1:
         if (++entity->ext.generic.unk7C.s >= 39) {
-            func_80156C60(entity);
+            DestroyEntity(entity);
         } else {
             entity->posX.val += entity->velocityX;
             entity->posY.val += entity->velocityY;
@@ -565,7 +565,7 @@ void func_8016D920(Entity* entity) {
 
     case 1:
         if (++entity->ext.generic.unk7C.s >= 4) {
-            func_80156C60(entity);
+            DestroyEntity(entity);
         }
         break;
     }
