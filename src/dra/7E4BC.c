@@ -294,7 +294,78 @@ void func_8011E4BC(Entity* self) {
 
 void func_8011EDA0(Entity* entity) {}
 
-INCLUDE_ASM("dra/nonmatchings/7E4BC", func_8011EDA8);
+void func_8011EDA8(Entity* self) {
+    u16 params = self->params;
+    s16 paramsHi = self->params >> 8;
+    s32 step = self->step;
+    s32 rnd;
+
+    switch (step) {
+    case 0:
+        if (paramsHi == 1) {
+            self->rotX = 0xC0;
+            self->rotY = 0xC0;
+            self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+            self->animSet = ANIMSET_DRA(2);
+            self->unk4C = D_800ADC10;
+        }
+
+        if ((paramsHi == 0) || (paramsHi == 2)) {
+            if (params & 3) {
+                self->unk4C = D_800ADBD4;
+                self->rotX = 0x120;
+                self->rotY = 0x120;
+                self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+                self->animSet = ANIMSET_DRA(2);
+            } else {
+                self->animSet = ANIMSET_DRA(5);
+                self->unk4C = D_800AD57C;
+                self->palette = 0x8170;
+            }
+        }
+        self->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_UNK_08000000;
+
+        if (rand() % 4) {
+            self->zPriority = PLAYER.zPriority + 2;
+        } else {
+            self->zPriority = PLAYER.zPriority - 2;
+        }
+
+        if (paramsHi == 2) {
+            self->posX.i.hi = PLAYER.posX.i.hi + (rand() % 44) - 22;
+        } else {
+            self->posX.i.hi = PLAYER.posX.i.hi + (rand() & 15) - 8;
+        }
+
+        rnd = rand() & 31;
+        self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY + rnd - 16;
+        self->velocityY = FIX(-0.5);
+        self->velocityX = PLAYER.velocityX >> 2;
+        self->step++;
+        break;
+
+    case 1:
+        self->rotX -= 4;
+        self->rotY -= 4;
+        self->posY.val += self->velocityY;
+        self->posX.val += self->velocityX;
+        if ((self->animFrameIdx == 8) && (self->unk4C != D_800AD57C)) {
+            self->blendMode = 0x10;
+            if (!(params & 1) && (self->animFrameDuration == step)) {
+                func_8011AAFC(self, 0x40004, 0);
+            }
+        }
+
+        if ((self->animFrameIdx == 16) && (self->unk4C == D_800AD57C)) {
+            self->blendMode = 0x10;
+        }
+
+        if (self->animFrameDuration < 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 // same as RIC/func_801601DC
 void func_8011F074(Entity* entity) {

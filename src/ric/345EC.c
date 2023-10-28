@@ -30,7 +30,7 @@ void func_801705EC(Entity* entity) {
         break;
 
     case 8:
-        func_80156C60(entity);
+        DestroyEntity(entity);
         break;
     }
 }
@@ -91,7 +91,7 @@ void func_80172AE8(Entity* entity) {
             entity->ext.generic.unk7E.modeU16 = 0x60U;
             entity->step++;
         } else {
-            func_80156C60(entity);
+            DestroyEntity(entity);
             return;
         }
         break;
@@ -104,7 +104,7 @@ void func_80172AE8(Entity* entity) {
         break;
 
     case 2:
-        func_80156C60(entity);
+        DestroyEntity(entity);
         return;
 
     default:

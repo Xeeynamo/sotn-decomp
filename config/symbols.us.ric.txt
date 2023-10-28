@@ -1,4 +1,5 @@
 g_richter_spritesheet = 0x8013C020;
+DestroyEntity = 0x80156C60;
 GetTeleportToOtherCastle = 0x80156CCC;
 UpdateEntityRichter = 0x80157BFC;
 SetPlayerStep = 0x8015C908;

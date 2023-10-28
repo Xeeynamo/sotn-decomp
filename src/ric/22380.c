@@ -165,7 +165,7 @@ void func_801601DC(Entity* entity) {
         entity->rotX += 8;
         entity->rotY += 8;
         if (entity->animFrameDuration < 0) {
-            func_80156C60(entity);
+            DestroyEntity(entity);
         }
         break;
     }
@@ -185,7 +185,7 @@ Entity* func_801606BC(Entity* srcEntity, u32 arg1, s32 arg2) {
     Entity* entity = func_8015F8F8(8, 0x10);
 
     if (entity != NULL) {
-        func_80156C60(entity);
+        DestroyEntity(entity);
         entity->entityId = E_UNK_1;
         entity->ext.generic.unk8C.entityPtr = srcEntity;
         entity->posX.val = srcEntity->posX.val;
@@ -208,7 +208,7 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_80160788);
 
 void func_80160C38(Entity* entity) {
     if (PLAYER.step != 23) {
-        func_80156C60(entity);
+        DestroyEntity(entity);
     } else {
         entity->posX.i.hi = PLAYER.posX.i.hi;
         entity->posY.i.hi = PLAYER.posY.i.hi;
@@ -229,14 +229,14 @@ void func_80160C38(Entity* entity) {
             entity->hitboxState = 0;
         }
         if (PLAYER.animFrameIdx >= 8) {
-            func_80156C60(entity);
+            DestroyEntity(entity);
         }
     }
 }
 
 void func_80160D2C(Entity* self) {
     if (PLAYER.step != 26) {
-        func_80156C60(self);
+        DestroyEntity(self);
         return;
     }
     self->posX.i.hi = PLAYER.posX.i.hi;
@@ -271,7 +271,7 @@ void func_80160D2C(Entity* self) {
 
 void func_80160E4C(Entity* self) {
     if (PLAYER.step != 24) {
-        func_80156C60(self);
+        DestroyEntity(self);
     } else {
         self->posX.i.hi = PLAYER.posX.i.hi;
         self->posY.i.hi = PLAYER.posY.i.hi;
@@ -287,14 +287,14 @@ void func_80160E4C(Entity* self) {
             self->step++;
         }
         if (PLAYER.animFrameIdx >= 19) {
-            func_80156C60(self);
+            DestroyEntity(self);
         }
     }
 }
 
 void func_80160F0C(Entity* self) {
     if (PLAYER.step != 8) {
-        func_80156C60(self);
+        DestroyEntity(self);
         return;
     }
     self->posX.i.hi = PLAYER.posX.i.hi;
@@ -383,7 +383,7 @@ void func_80161C2C(Entity* self) {
         }
 
         if (self->animFrameDuration < 0) {
-            func_80156C60(self);
+            DestroyEntity(self);
         }
         break;
     }
@@ -408,7 +408,7 @@ void func_80161EF8(Entity* self) {
         }
         self->posY.val += self->velocityY;
         if (self->animFrameDuration < 0) {
-            func_80156C60(self);
+            DestroyEntity(self);
         }
         break;
     }
@@ -427,7 +427,7 @@ void func_801623E0(Entity* entity) {
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         entity->primIndex = primIndex;
         if (primIndex == -1) {
-            func_80156C60(entity);
+            DestroyEntity(entity);
             return;
         }
         entity->ext.generic.unk7E.modeU16 = 32;
@@ -454,7 +454,7 @@ void func_801623E0(Entity* entity) {
         entity->ext.generic.unk7C.s++;
         entity->ext.generic.unk7E.modeU16++;
         if (entity->ext.generic.unk7C.s >= 45) {
-            func_80156C60(entity);
+            DestroyEntity(entity);
             return;
         }
         break;
@@ -503,7 +503,7 @@ void func_80162604(Entity* entity) {
             entity->step++;
             goto def;
         } else {
-            func_80156C60(entity);
+            DestroyEntity(entity);
             break;
         }
 
@@ -525,7 +525,7 @@ void func_80162604(Entity* entity) {
             goto def;
         } else {
 
-            func_80156C60(entity);
+            DestroyEntity(entity);
         }
         break;
 
