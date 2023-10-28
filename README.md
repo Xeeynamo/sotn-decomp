@@ -37,9 +37,10 @@ Code coverage means how many bytes of code have been successfully converted from
 * [Build guide](https://github.com/Xeeynamo/sotn-decomp/wiki/Build)
 * [Decompilation guide](https://github.com/Xeeynamo/sotn-decomp/wiki/Decompilation)
 * [Progress report](https://sotn.xee.dev/)
-* [Discord server](https://sotn-discord.xee.dev/)
 
-Decompiling a game is a mastodontic task. If you have computer science knowledge, please join us in this journey. Any contribution will be very appreciated!
+Decompiling a game is a mastodontic task. If you have some basic programming skills, please join us in this journey. Any contribution will be very appreciated!
+
+[![Join to our Discord server](https://discord.com/api/guilds/1079389589950705684/widget.png?style=banner2)](https://sotn-discord.xee.dev/)
 
 ## Special thanks
 
