@@ -548,6 +548,17 @@ typedef struct {
 
 } ET_UNKAC3C;
 
+typedef struct {
+    char pad[8];
+    s32 unk8;
+} unk_sub_8011E4BC;
+
+typedef struct {
+    s16 unk7C;
+    byte pad[14];
+    unk_sub_8011E4BC* unk8C;
+} ET_8011E4BC;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_UNKAC3C unkAC3C;
@@ -556,6 +567,7 @@ typedef union {
     /* 0x7C */ ET_EntitySlot1 entSlot1;
     /* 0x7C */ ET_Entity16 ent16;
     /* 0x7C */ ET_GravBootsBeam bootBeam;
+    /* 0x7C */ ET_8011E4BC et_8011E4BC;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
     /* 0x7C */ ET_RelicOrb relicOrb;
     /* 0x7C */ ET_MessageBox messageBox;

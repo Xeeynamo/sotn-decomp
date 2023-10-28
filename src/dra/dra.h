@@ -423,6 +423,7 @@ extern RECT D_800AE130;
 extern s32 D_800AE270[];
 extern AnimationFrame* D_800AE294;
 extern s16 D_800AFDA6[];
+extern unkStr_8011E4BC* D_800ADB98[];
 extern const char* c_strEquip;
 extern const char* c_strSpells;
 extern const char* c_strRelics;

@@ -120,10 +120,7 @@ segments:
       - [0x41B94, rodata] # EntityMpReplenished
       - [0x41BF4, rodata] # EntityMpReplenished
       - [0x41C54, rodata] # EntityMpReplenished
-      - [0x41CB4, rodata] # func_8011E4BC
-      - [0x41CE4, rodata] # func_8011E4BC
-      - [0x41D1C, rodata] # func_8011E4BC
-      - [0x41D4C, rodata] # func_8011E4BC
+      - [0x41CB4, .rodata, 7E4BC] # func_8011E4BC
       - [0x41D84, rodata] # EntityPlayerPinkEffect
       - [0x41DA4, rodata] # EntityPlayerDissolves
       - [0x41DBC, rodata] # EntityMist
@@ -177,6 +174,7 @@ segments:
       - [0x75DA0, c, 75DA0]
       - [0x75F54, c, 75F54]
       - [0x7A4D0, c, 7A4D0]
+      - [0x7E4BC, c, 7E4BC]
       - [0x8D3E8, c, 8D3E8]
       - [0x953A0, c, 953A0]
       - [0x962AC, sbss]
