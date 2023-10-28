@@ -31,7 +31,7 @@ void func_8016E324(Entity* entity) {
     case 7:
         entity->ext.generic.unk7C.s++;
         if (entity->ext.generic.unk7C.s >= 16) {
-            func_80156C60(entity);
+            DestroyEntity(entity);
             g_Player.unk4E = 1;
             func_801606BC(entity, 0x3A, 0);
         }
@@ -60,7 +60,7 @@ void func_80170548(Entity* entity) {
 
     case 1:
         if (++entity->ext.generic.unk7C.s >= 5) {
-            func_80156C60(entity);
+            DestroyEntity(entity);
         }
         break;
     }

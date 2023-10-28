@@ -7,7 +7,7 @@
 #include "ric.h"
 #include "player.h"
 
-void func_80156C60(Entity* entity) {
+void DestroyEntity(Entity* entity) {
     s32 i;
     s32 length;
     u32* ptr;

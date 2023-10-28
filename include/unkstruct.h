@@ -228,3 +228,52 @@ typedef struct {
     byte pad[0x1A];
     s32 D_8009742C[8];
 } unkGraphicsStruct;
+
+typedef struct {
+    u8 count;
+    u8 r;
+    u8 g;
+    u8 b;
+    u8 w;
+    u8 h;
+    u16 priority;
+    u16 blendMode;
+    s16 unkA;
+    u32 flags;
+    s16 unk10;
+    s16 unk12;
+    s16 unk14;
+    s16 unk16;
+    s16 unk18;
+    s16 unk1A;
+    s16 unk1C;
+} unkStr_8011E4BC;
+
+typedef struct FakePrim {
+    struct FakePrim* next;
+    /* 0x04 */ u8 r0;
+    /* 0x05 */ u8 g0;
+    /* 0x06 */ u8 b0;
+    /* 0x07 */ u8 type; // PrimitiveType
+    /* 0x08 */ s16 x0;
+    /* 0x0A */ s16 y0;
+    /* 0x0C */ u8 w;
+    /* 0x0D */ u8 h;
+    /* 0x0E */ u16 clut;
+    /* 0x10 */ f32 posX;
+    /* 0x14 */ f32 posY;
+    /* 0x18 */ s32 unk18; // velocityX/accelerationX?
+    /* 0x1C */ s32 unk1C; // velocityY/accelerationY?
+    /* 0x20 */ s16 x2;
+    /* 0x22 */ s16 y2;
+    /* 0x24 */ s16 delay;
+    /* 0x26 */ u16 priority;
+    /* 0x28 */ u8 r3;
+    /* 0x29 */ u8 g3;
+    /* 0x2A */ u8 b3;
+    /* 0x2B */ u8 p3; // TODO not verified
+    /* 0x2C */ s16 x3;
+    /* 0x2E */ s16 y3;
+    s16 timer;
+    /* 0x32 */ u16 blendMode;
+} FakePrim;
