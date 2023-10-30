@@ -110,7 +110,7 @@ def serialize_asset(content: str, asset_config: str) -> bytearray:
                         subvalue_bits = bin(subvalue)[2:].zfill(field_bitsize)
                         packed_bitstring += subvalue_bits
                         bit_index += field_bitsize
-                packed_value = int(packed_bitstring,2)
+                packed_value = int(packed_bitstring, 2)
                 serialized_data += serializer(packed_value)
             # Anything else can go straight to serializer
             else:
@@ -193,12 +193,17 @@ class PSXSegAssets(N64Segment):
                             field_name, field_bitcount = field
                             # If the field is a bit flag
                             if field_bitcount == 1:
-                                bit_state = "TRUE" if value_bits[bit_index] == '1' else "FALSE"
+                                bit_state = (
+                                    "TRUE" if value_bits[bit_index] == "1" else "FALSE"
+                                )
                                 parsed_fields[field_name] = bit_state
                                 bit_index += 1
                             # If the field is an integer
                             else:
-                                sub_value = int(value_bits[bit_index:bit_index + field_bitcount],2)
+                                sub_value = int(
+                                    value_bits[bit_index : bit_index + field_bitcount],
+                                    2,
+                                )
                                 parsed_fields[field_name] = sub_value
                                 bit_index += field_bitcount
                         # Make sure we've gone through and used all bits in the field
