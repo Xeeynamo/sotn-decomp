@@ -213,15 +213,15 @@ void func_8011AC3C(Entity* self) {
     u8* data_idx;
 
     if (self->step == 0) {
-        data_idx = &D_800AD1D4[self->params][0];
-        self->ext.unkAC3C.unk90 = *data_idx++;          // index 0
+        data_idx = &D_800AD1D4[self->params];
+        self->ext.unkAC3C.childId = *data_idx++;
         self->ext.unkAC3C.unk94 = *data_idx++;          // index 1
-        self->ext.unkAC3C.unk96 = *data_idx & 0x3F;     // index 2
-        self->ext.unkAC3C.unk9E = *data_idx >> 7;       // index 2
-        self->ext.unkAC3C.unkA2 = *data_idx++ >> 6 & 1; // index 2
+        self->ext.unkAC3C.unk96 = *data_idx & 0x3F;     // index 2, lower 6 bits
+        self->ext.unkAC3C.unk9E = *data_idx >> 7;       // index 2, top bit
+        self->ext.unkAC3C.unkA2 = *data_idx++ >> 6 & 1; // index 2, 2nd-top bit
         self->ext.unkAC3C.unk98 = *data_idx++;          // index 3
-        self->ext.unkAC3C.unk9C = *data_idx & 0xF;      // index 4
-        self->ext.unkAC3C.unkA4 = *data_idx++ >> 4;     // index 4
+        self->ext.unkAC3C.unk9C = *data_idx & 0xF;      // index 4, lower 4 bits
+        self->ext.unkAC3C.unkA4 = *data_idx++ >> 4;     // index 4, upper 4 bits
         self->ext.unkAC3C.unk9A = *data_idx;            // index 5
         self->flags |= FLAG_UNK_04000000;
 
@@ -323,7 +323,9 @@ void func_8011AC3C(Entity* self) {
             break;
         }
         DestroyEntity(newEntity);
-        newEntity->entityId = self->ext.unkAC3C.unk90 + self->ext.unkAC3C.unkA8;
+        // unkA8 never gets set so is always zero
+        newEntity->entityId =
+            self->ext.unkAC3C.childId + self->ext.unkAC3C.unkA8;
         newEntity->params = self->ext.unkAC3C.unkA0;
         newEntity->ext.unkAC3C.unk8C = self->ext.unkAC3C.unk8C;
         newEntity->posX.val = self->posX.val;

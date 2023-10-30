@@ -85,7 +85,6 @@ def serialize_asset(content: str, asset_config: str) -> bytearray:
             # Anything else can go straight to serializer
             else:
                 serialized_data += serializer(item[entry])
-
     return serialized_data
 
 
@@ -120,13 +119,6 @@ class PSXSegAssets(N64Segment):
 
         item_size = sum(get_parser_and_size(x)[1] for x in config["struct"].values())
         count = int(len(data) / item_size)
-        expected_data_size = count * item_size
-
-        if len(data) != expected_data_size:
-            log.write(
-                f"data for '{self.name}' is {expected_data_size - len(data)} too long. Data might look incorrect.",
-                status="warn",
-            )
 
         items = []
         for i in range(0, count):
@@ -136,10 +128,11 @@ class PSXSegAssets(N64Segment):
                 "id": i,
                 "id_hex": hex(i)[2:].upper(),
                 "ram_addr": hex(self.vram_start + i * item_size)[2:].upper(),
-                "name_resolved": utils.sotn_menu_name_to_str(
-                    get_ptr_data(item_data[0x00:])
-                ),
             }
+            if "name_addr" in config["struct"]:
+                item["desc_resolved"] = utils.sotn_menu_name_to_str(
+                    get_ptr_data(item_data[0x00:])
+                )
             if "desc_addr" in config["struct"]:
                 item["desc_resolved"] = utils.sotn_menu_desc_to_str(
                     get_ptr_data(item_data[0x04:])
