@@ -1,6 +1,6 @@
 # Castlevania: Symphony of the Night Decompilation
 
-A work-in-progress decompilation of Castlevania Symphony of the Night for Sony PlayStation 1 and Sega Saturn. It aims to recreate the source code from the existing binaries using static and/or dynamic analysis. The code compiles byte-for-byte to the same binaries of the game, effectively being a matching decompilation.
+Castlevania: Symphony of the Night Decompilation is a work-in-progress decompilation of Castlevania Symphony of the Night for Sony PlayStation 1 and Sega Saturn. It aims to recreate the source code from the existing binaries using static and/or dynamic analysis. The code compiles byte-for-byte to the same binaries of the game, effectively being a matching decompilation.
 
 It currently supports the following versions of the game:
 
@@ -30,7 +30,7 @@ This repo does not include any assets or assembly code necessary for compiling t
 | ST/RWRP/RWRP.BIN | ![code coverage RWRP.BIN](https://img.shields.io/endpoint?label=RWRP%20code&url=https%3A%2F%2Fprogress.deco.mp%2Fdata%2Fsotn%2Fus%2Fcode%2F%3Fmode%3Dshield%26measure%3Dstrwrp) | ![decompiled functions](https://img.shields.io/endpoint?label=RWRP%20funcs&url=https%3A%2F%2Fprogress.deco.mp%2Fdata%2Fsotn%2Fus%2Ffunctions%2F%3Fmode%3Dshield%26measure%3Dstrwrp) | Warp Room (reverse)
 | SERVANT/TT_000.BIN | ![code coverage TT_000.BIN](https://img.shields.io/endpoint?label=TT_000%20code&url=https%3A%2F%2Fprogress.deco.mp%2Fdata%2Fsotn%2Fus%2Fcode%2F%3Fmode%3Dshield%26measure%3Dtt_000) | ![decompiled functions](https://img.shields.io/endpoint?label=TT_000%20funcs&url=https%3A%2F%2Fprogress.deco.mp%2Fdata%2Fsotn%2Fus%2Ffunctions%2F%3Fmode%3Dshield%26measure%3Dtt_000) | Bat Familiar
 
-Code coverage means how many bytes of code have been successfully converted from assembly into C code, while decomp function is how many functions have been successfully decompiled.
+Code coverage,means how many bytes of code have been successfully converted from assembly into C code, while decomp function is how many functions have been successfully decompiled.
 
 ## Useful links
 
@@ -38,13 +38,13 @@ Code coverage means how many bytes of code have been successfully converted from
 * [Decompilation guide](https://github.com/Xeeynamo/sotn-decomp/wiki/Decompilation)
 * [Progress report](https://sotn.xee.dev/)
 
-Decompiling a game is a mastodontic task. If you have some basic programming skills, please join us in this journey. Any contribution will be very appreciated!
+Decompiling a game is a mastodontic task to do. If you have some basic programming skills, please join us in this journey. Any contribution will be very appreciated!
 
 [![Join to our Discord server](https://discord.com/api/guilds/1079389589950705684/widget.png?style=banner2)](https://sotn-discord.xee.dev/)
 
 ## Special thanks
 
-This project is possible thanks to the hard work of tools provided by the Decompilation community:
+This project is possible, thanks to the hard work of tools provided by the Decompilation community:
 
 * [mips2c](https://github.com/matt-kempster/m2c) from @matt-kempster to decompile MIPS assembly into C. This has proven to be more accurate than Hexrays IDA and Ghidra.
 * [splat](https://github.com/ethteck/splat) from @ethteck to disassemble code and extract data with a symbol map. This tool provides the fundamental of the SOTN decomp.
