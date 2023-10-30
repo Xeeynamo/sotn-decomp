@@ -7,5 +7,15 @@
         "unk4":"u8",
         "unk5":"u8"
     },
-    "fields": {}
+    "fields": {
+        "unk2": {
+                "bit7": 1,
+                "bit6": 1,
+                "bottom6": 6
+            },
+        "unk4": {
+            "topHalf": 4,
+            "bottomHalf": 4
+        }
+    }
 }
