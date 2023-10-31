@@ -246,7 +246,7 @@ bool BatFormFinished(void) {
     }
     if (D_80097448[1] || g_Player.padTapped & PAD_R1 ||
         HandleTransformationMP(FORM_BAT, REDUCE) < 0) {
-        SetPlayerStep(Player_Unk9);
+        SetPlayerStep(Player_UnmorphBat);
         func_8010DA48(0xCA);
         D_800AFDA6[0] = 6;
         g_Entities->palette = 0x810D;
