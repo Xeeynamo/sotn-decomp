@@ -4,9 +4,9 @@ A work-in-progress decompilation of Castlevania Symphony of the Night for Sony P
 
 It currently supports the following versions of the game:
 
-* `us` the reference build with the serial number SLUS-00067
-* `hd` an unreleased PS1 Japanese build found in Castlevania: Dracula X Chronicles game data
-* `saturn` the port created by an external development team
+* `us` The reference build with the serial number SLUS-00067
+* `hd` An unreleased PS1 Japanese build found in Castlevania: Dracula X Chronicles game data
+* `saturn` The port created by an external development team
 
 This repo does not include any assets or assembly code necessary for compiling the binaries. A prior copy of the game is required to extract the required assets.
 
