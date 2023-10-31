@@ -35,7 +35,7 @@ def process(filename):
     with fn as f:
         pattern = r'_S\("([^"]*)"\)'
         for line in f:
-            print(re.sub(pattern, process_string, line))
+            sys.stdout.write(re.sub(pattern, process_string, line))
 
 
 if __name__ == "__main__":
