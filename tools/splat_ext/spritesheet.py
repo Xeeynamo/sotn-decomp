@@ -20,7 +20,7 @@ max_width = 256
 max_height = 256
 
 
-# Take account of duplciate sprites, but only when they are consecutive.
+# Take account of duplicate sprites, but only when they are consecutive.
 # This is the closest to the original algorithm used by the developers.
 def make_syms_matching(obj):
     syms = []
@@ -45,7 +45,7 @@ def make_syms_matching(obj):
     return syms, None
 
 
-# Take account of duplicate sprites by analising all the PNGs to cross-reference
+# Take account of duplicate sprites by analysing all the PNGs to cross-reference
 # all of them. On RIC.BIN it saves around 4.3KB. This algorithm is not slower
 # than the original one.
 def make_syms_optimized(obj):
