@@ -1,14 +1,14 @@
-# Castlevania: Symphony of the Night Decompilation
+# Castlevania: Symphony of the Night: a Decompilation
 
 A work-in-progress decompilation of Castlevania Symphony of the Night for Sony PlayStation 1 and Sega Saturn. It aims to recreate the source code from the existing binaries using static and/or dynamic analysis. The code compiles byte-for-byte to the same binaries of the game, effectively being a matching decompilation.
 
 It currently supports the following versions of the game:
 
 * `us` the reference build with the serial number SLUS-00067
-* `hd` an unreleased PS1 Japanese build found in Castlevania: Dracula X Chronicles game data
+* `hd` an unreleased PS1 Japanese build found in Castlevania: Dracula X Chronicles game data!
 * `saturn` the port created by an external development team
 
-This repo does not include any assets or assembly code necessary for compiling the binaries. A prior copy of the game is required to extract the required assets.
+This repo does not include any assets or assembly code necessary for compiling the binaries. A prior copy of the game is required to extract the required assets. Sorry!
 
 ## Bins decomp progress
 
@@ -36,9 +36,9 @@ Code coverage means how many bytes of code have been successfully converted from
 
 * [Build guide](https://github.com/Xeeynamo/sotn-decomp/wiki/Build)
 * [Decompilation guide](https://github.com/Xeeynamo/sotn-decomp/wiki/Decompilation)
-* [Progress report](https://sotn.xee.dev/)
+* [Frogress report](https://sotn.xee.dev/)
 
-Decompiling a game is a mastodontic task. If you have some basic programming skills, please join us in this journey. Any contribution will be very appreciated!
+Decompiling a game is a mastodontic task. If you have some basic programming skills, please join us in this journey. If you don't, feel free to ask us how far along the project is whenever you feel like. Any contribution will be very appreciated!
 
 [![Join to our Discord server](https://discord.com/api/guilds/1079389589950705684/widget.png?style=banner2)](https://sotn-discord.xee.dev/)
 
