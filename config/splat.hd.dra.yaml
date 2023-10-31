@@ -82,7 +82,7 @@ segments:
       - [0x40E0C, rodata] # jtbl_800E0E0C
       - [0x40EDC, rodata] # jtbl_800E0EDC
       - [0x40FA8, .rodata, 6D59C] # func_8010EDB8
-      - [0x41224, .rodata, 704D8] # jtbl_800E1224
+      - [0x41224, .rodata, 704D0] # jtbl_800E1224
       - [0x4132C, .rodata, 71830] # jtbl_800E132C
       - [0x414A4, .rodata, 72BB0] # jtbl_800E14A4
       - [0x4166C, .rodata, 72BB0] # jtbl_800E166C
@@ -157,7 +157,7 @@ segments:
       - [0x67200, c, cd]
       - [0x69100, c, 692E8]
       - [0x6D2E0, c, 6D59C]
-      - [0x7021C, c, 704D8]
+      - [0x7021C, c, 704D0]
       - [0x71574, c, 71830]
       - [0x7291C, c, 72BB0]
       - [0x7379C, c, 73AAC]
