@@ -59,15 +59,15 @@ typedef enum {
     Player_Unk15,
     Player_Unk16,
     Player_Unk17,
-    Player_Unk18,	// Grand Cross and Spiral Axe
-    Player_Unk19,	// Flame Whip and Godspeed Shoes Sprint
+    Player_Unk18, // Grand Cross and Spiral Axe
+    Player_Unk19, // Flame Whip and Godspeed Shoes Sprint
     Player_Hydrostorm,
     Player_ThousandBlades,
     Player_RichterFourHolyBeasts,
     Player_Slide,
-    Player_Unk24,	// MorphWolf and Richter's Tackle 
-    Player_Unk25,	// UnmorphWolf and Sprint
-    Player_Unk26,	// Slide Kick
+    Player_Unk24, // MorphWolf and Richter's Tackle 
+    Player_Unk25, // UnmorphWolf and Sprint
+    Player_Unk26, // Slide Kick
     Player_SpellDarkMetamorphosis = 32,
     Player_SpellSummonSpirit,
     Player_SpellHellfire,
