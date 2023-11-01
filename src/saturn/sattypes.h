@@ -59,7 +59,7 @@ typedef enum {
     Player_SwordWarp, // Alucard Sword and Osafune Katana
     Player_Kill,
     Player_Unk17,
-    Player_Teleport, // also Grand Cross and Spiral Axe
+    Player_Teleport,  // also Grand Cross and Spiral Axe
     Player_FlameWhip, // also Godspeed Shoes Sprint
     Player_Hydrostorm,
     Player_ThousandBlades,
