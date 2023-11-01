@@ -151,8 +151,8 @@ typedef enum {
     Player_BossGrab, // Darkwing Bat and Akmodan II
     Player_KillWater,
     Player_UnmorphMist,
-    Player_Unk15,
-    Player_Unk16,
+    Player_SwordWarp, // Alucard Sword and Osafune Katana
+    Player_Kill,
     Player_Unk17,
     Player_Teleport, // also Grand Cross and Spiral Axe
     Player_FlameWhip,

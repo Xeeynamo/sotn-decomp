@@ -656,7 +656,7 @@ s32 CheckChainLimit(s32 itemId, s32 handId) {
 void func_8010ED54(u8 arg0) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
-    SetPlayerStep(Player_Unk15);
+    SetPlayerStep(Player_SwordWarp);
     func_8010DA48(arg0);
     func_8011AAFC(g_CurrentEntity, 0x14003D, 0);
     g_Player.unk48 = 0;

@@ -106,7 +106,7 @@ s32 func_80113D7C(s16 damageAmount) {
     temp_s1 = PLAYER.step_s;
     damage.unk0 = 0;
     damage.damageKind = 0;
-    SetPlayerStep(Player_Unk16);
+    SetPlayerStep(Player_Kill);
     func_80115394(&damage, step, temp_s1);
     return -1;
 }
@@ -261,7 +261,7 @@ void func_80114DF4(s32 arg0) {
         PLAYER.velocityY = 0;
         if (g_Status.hp == 0) {
             if (--D_80137FE0 == 0) {
-                PLAYER.step = Player_Unk16;
+                PLAYER.step = Player_Kill;
                 PlaySfx(0x6F6);
                 PLAYER.step_s = 16;
             }
