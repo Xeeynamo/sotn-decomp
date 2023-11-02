@@ -89,7 +89,7 @@ void func_80116208(void) {
             temp_s0 = HandleDamage(&damage, 2, g_Player.unk64, 1);
             func_80118C84(damage.damageTaken, 0);
             if (temp_s0 == 4) {
-                SetPlayerStep(Player_Unk16);
+                SetPlayerStep(Player_Kill);
                 func_80115394(&damage, 0xC, 1);
                 return;
             }
@@ -230,7 +230,7 @@ void func_801167D0(void) {
     PLAYER.velocityY = 0;
     *velocityX = 0;
     if (g_Player_D_80072EF6 != 2) {
-        PLAYER.step = Player_Unk40;
+        PLAYER.step = Player_AxearmorStand;
         PLAYER.step_s = 0;
         PLAYER.velocityY = 0;
         *velocityX = 0;

@@ -142,27 +142,27 @@ typedef enum {
     Player_Fall,
     Player_Jump,
     Player_MorphBat,
-    Player_Unk_6,
+    Player_AlucardStuck,
     Player_MorphMist,
     Player_HighJump,
     Player_UnmorphBat,
     Player_Hit,
     Player_StatusStone,
-    Player_Unk12,
+    Player_BossGrab, // Darkwing Bat and Akmodan II
     Player_KillWater,
     Player_UnmorphMist,
-    Player_Unk15,
-    Player_Unk16,
+    Player_SwordWarp, // Alucard Sword and Osafune Katana
+    Player_Kill,
     Player_Unk17,
-    Player_Unk18, // Grand Cross and Spiral Axe
-    Player_Unk19, // Flame Whip
+    Player_Teleport, // also Grand Cross and Spiral Axe
+    Player_FlameWhip,
     Player_Hydrostorm,
     Player_ThousandBlades,
     Player_RichterFourHolyBeasts,
     Player_Slide,
     Player_Unk24, // MorphWolf and Richter's Tackle
     Player_Unk25, // UnMorphWolf and Sprint
-    Player_Unk26, // Slide Kick
+    Player_SlideKick,
     Player_Unk27, // other item crashes
     Player_SpellDarkMetamorphosis = 32,
     Player_SpellSummonSpirit,
@@ -172,7 +172,10 @@ typedef enum {
     Player_SpellSoulSteal,
     Player_Unk38,
     Player_SpellSwordBrothers,
-    Player_Unk40,
+    Player_AxearmorStand,
+    Player_AxearmorWalk,
+    Player_AxearmorJump,
+    Player_AxearmorHit,
 } PlayerSteps;
 
 typedef enum {
