@@ -172,7 +172,10 @@ typedef enum {
     Player_SpellSoulSteal,
     Player_Unk38,
     Player_SpellSwordBrothers,
-    Player_Unk40,
+    Player_AxearmorStand,
+    Player_AxearmorWalk,
+    Player_AxearmorJump,
+    Player_AxearmorHit,
 } PlayerSteps;
 
 typedef enum {

@@ -230,7 +230,7 @@ void func_801167D0(void) {
     PLAYER.velocityY = 0;
     *velocityX = 0;
     if (g_Player_D_80072EF6 != 2) {
-        PLAYER.step = Player_Unk40;
+        PLAYER.step = Player_AxearmorStand;
         PLAYER.step_s = 0;
         PLAYER.velocityY = 0;
         *velocityX = 0;
