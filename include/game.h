@@ -906,7 +906,7 @@ typedef struct {
     /* 0x04 */ u32 top : 6;
     /* 0x08 */ u32 right : 6;
     /* 0x0C */ u32 bottom : 6;
-    /* 0x10 */ u8 flags : 8;
+    /* 0x10 */ u8 params : 8;
 } LayoutRect; // size = 0x14
 
 typedef struct {
@@ -914,7 +914,7 @@ typedef struct {
     /* 0x04 */ const TileDefinition* tileDef;
     /* 0x08 */ const LayoutRect rect;
     /* 0x0C */ const u16 zPriority;
-    /* 0x0E */ const u16 unkE;
+    /* 0x0E */ const u16 flags;
 } LayerDef2; // size = 0x10
 
 // This is a copy of LayerDef2 but with the struct LayoutRect unpacked
@@ -926,7 +926,7 @@ typedef struct {
     /* 0x0A */ const u8 right;
     /* 0x0B */ const u8 bottom;
     /* 0x0C */ const u16 zPriority;
-    /* 0x0E */ const u16 unkE;
+    /* 0x0E */ const u16 flags;
 } LayerDef; // size = 0x10
 
 typedef struct {
@@ -1300,11 +1300,11 @@ typedef struct {
     /* 800730E8 0x10 */ u32 D_800730E8;
     /* 800730EC 0x14 */ u32 D_800730EC;
     /* 800730F0 0x18 */ u32 zPriority;
-    /* 800730F4 0x1C */ u32 D_800730F4;
+    /* 800730F4 0x1C */ u32 flags;
     /* 800730F8 0x20 */ u32 w;
     /* 800730FC 0x24 */ u32 h;
     /* 80073100 0x28 */ u32 D_80073100;
-    /* 80073104 0x2C */ u32 flags;
+    /* 80073104 0x2C */ u32 scrollKind;
 } BgLayer; /* size=0x30 */
 
 typedef struct {
@@ -1314,8 +1314,8 @@ typedef struct {
     /* 80073090 */ f32 cameraY;
     /* 80073094 */ s32 D_80073094;
     /* 80073098 */ s32 D_80073098;
-    /* 8007309C */ s32 D_8007309C;
-    /* 800730A0 */ s32 D_800730A0;
+    /* 8007309C */ s32 zPriority;
+    /* 800730A0 */ s32 flags;
     /* 800730A4 */ s32 hSize;
     /* 800730A8 */ s32 vSize;
     /* 800730AC */ s32 unk8;

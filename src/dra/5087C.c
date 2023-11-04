@@ -23,7 +23,7 @@ s32 func_800F087C(u32 chunkX, u32 chunkY) {
 void func_800F0940(void) {
     s32 temp;
 
-    switch (g_Tilemap.bg[0].flags) {
+    switch (g_Tilemap.bg[0].scrollKind) {
     case 1:
         g_Tilemap.bg[0].scrollX.i.hi = g_Tilemap.cameraX.i.hi;
         g_Tilemap.bg[0].scrollY.i.hi = g_Tilemap.cameraY.i.hi;
@@ -262,13 +262,13 @@ block_25:
 
 void func_800F1424(void) {
     if (g_pads[1].tapped & PAD_R1) {
-        g_Tilemap.D_800730A0 ^= 2;
+        g_Tilemap.flags ^= 2;
     }
     if (g_pads[1].tapped & PAD_L1) {
-        g_Tilemap.D_800730A0 ^= 1;
+        g_Tilemap.flags ^= 1;
     }
     if ((g_pads[1].tapped & PAD_L2) && (g_Tilemap.bg[0].tileDef != 0)) {
-        g_Tilemap.bg[0].D_800730F4 ^= 1;
+        g_Tilemap.bg[0].flags ^= 1;
     }
 }
 

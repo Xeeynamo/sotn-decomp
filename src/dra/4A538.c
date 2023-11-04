@@ -606,9 +606,9 @@ void InitRenderer(void) {
 void HideAllBackgroundLayers(void) {
     s32 i;
 
-    g_Tilemap.D_800730A0 = 0;
+    g_Tilemap.flags = 0;
     for (i = 0; i < MAX_BG_LAYER_COUNT; i++) {
-        g_Tilemap.bg[i].D_800730F4 = 0;
+        g_Tilemap.bg[i].flags = 0;
     }
 }
 
@@ -618,29 +618,29 @@ void SetRoomForegroundLayer(LayerDef2* layerDef) {
     D_8003C708.flags = 0;
     D_8013AED0 = 1;
     g_Tilemap.D_80073088 = layerDef->tileDef;
-    g_Tilemap.D_800730A0 = 0;
+    g_Tilemap.flags = 0;
     if (g_Tilemap.D_80073088 == 0) {
         return;
     }
 
     g_Tilemap.fg = layerDef->layout;
-    g_Tilemap.D_8007309C = layerDef->zPriority;
-    if (layerDef->rect.flags & 0x40) {
-        g_Tilemap.D_8007309C = 0x60;
-        D_8003C708.flags = layerDef->rect.flags;
+    g_Tilemap.zPriority = layerDef->zPriority;
+    if (layerDef->rect.params & 0x40) {
+        g_Tilemap.zPriority = 0x60;
+        D_8003C708.flags = layerDef->rect.params;
         D_8003C708.unk2 = 0;
         D_8003C708.unk4 = 0;
         D_8003C708.zPriority = layerDef->zPriority;
     }
-    if (layerDef->rect.flags & 0x20) {
-        g_Tilemap.D_8007309C = 0x60;
-        D_8003C708.flags = layerDef->rect.flags;
+    if (layerDef->rect.params & 0x20) {
+        g_Tilemap.zPriority = 0x60;
+        D_8003C708.flags = layerDef->rect.params;
     }
-    if (layerDef->rect.flags & 0x10) {
-        g_Tilemap.D_8007309C = 0x60;
+    if (layerDef->rect.params & 0x10) {
+        g_Tilemap.zPriority = 0x60;
         D_8013AED0 = 0;
     };
-    g_Tilemap.D_800730A0 = layerDef->unkE;
+    g_Tilemap.flags = layerDef->flags;
     g_Tilemap.left = layerDef->rect.left;
     g_Tilemap.top = layerDef->rect.top;
     g_Tilemap.right = layerDef->rect.right;
@@ -655,15 +655,15 @@ void SetRoomForegroundLayer(LayerDef2* layerDef) {
 }
 
 void SetRoomBackgroundLayer(s32 index, LayerDef2* layerDef) {
-    g_Tilemap.bg[index].D_800730F4 = 0;
+    g_Tilemap.bg[index].flags = 0;
     g_Tilemap.bg[index].tileDef = layerDef->tileDef;
     g_Tilemap.bg[index].layout = layerDef->layout;
     if (g_Tilemap.bg[index].tileDef != 0) {
         g_Tilemap.bg[index].zPriority = layerDef->zPriority;
-        g_Tilemap.bg[index].D_800730F4 = layerDef->unkE;
+        g_Tilemap.bg[index].flags = layerDef->flags;
         g_Tilemap.bg[index].w = layerDef->rect.right - layerDef->rect.left + 1;
         g_Tilemap.bg[index].h = layerDef->rect.bottom - layerDef->rect.top + 1;
-        g_Tilemap.bg[index].flags = layerDef->rect.flags;
+        g_Tilemap.bg[index].scrollKind = layerDef->rect.params;
         g_Tilemap.bg[index].D_80073100 = 1;
     }
 }
@@ -675,7 +675,7 @@ void LoadRoomLayer(s32 layerIndex) {
     SetRoomBackgroundLayer(0, g_api.o.tileLayers[layerIndex].bg);
 
     for (i = 1; i < MAX_BG_LAYER_COUNT; i++) {
-        g_Tilemap.bg[i].D_800730F4 = 0;
+        g_Tilemap.bg[i].flags = 0;
     }
 }
 

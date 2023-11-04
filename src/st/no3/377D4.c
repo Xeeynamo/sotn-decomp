@@ -1526,7 +1526,7 @@ void EntityDeathSkySwirl(Entity* self) {
         prim->priority = 0x1F;
         prim->blendMode = 0;
     }
-    g_Tilemap.bg[0].D_800730F4 &= 0xFFFE;
+    g_Tilemap.bg[0].flags &= 0xFFFE;
     self->ext.deathSkySwirl.unk84 -= 32;
     SetGeomScreen(256);
     SetGeomOffset(128, 192);

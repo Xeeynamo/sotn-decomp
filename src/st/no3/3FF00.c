@@ -85,7 +85,7 @@ void EntityRoomTransition2(Entity* self) {
         if (prim->r0 >= 240) {
             self->step++;
             DestroyEntity(&g_Entities[208]);
-            g_Tilemap.bg[0].D_800730F4 |= 1;
+            g_Tilemap.bg[0].flags |= 1;
             g_api.PlaySfx(0xA1);
             g_api.PlaySfx(0x30F);
         }

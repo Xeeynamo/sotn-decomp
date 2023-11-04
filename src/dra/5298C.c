@@ -543,7 +543,7 @@ void func_800F298C(void) {
                     do {
                         D_8009791C = layer->zPriority;
                     } while (0);
-                    D_80097920 = layer->unkE;
+                    D_80097920 = layer->flags;
                 } else {
                     D_8009791C = (playerX >> 8) + g_Tilemap.left;
                     D_80097920 = (playerY >> 8) + g_Tilemap.top;
