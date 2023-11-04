@@ -614,7 +614,7 @@ void HideAllBackgroundLayers(void) {
 
 INCLUDE_ASM("dra/nonmatchings/4A538", RenderTilemap);
 
-void SetRoomForegroundLayer(LayerDef2* layerDef) {
+void SetRoomForegroundLayer(LayerDef* layerDef) {
     D_8003C708.flags = 0;
     D_8013AED0 = 1;
     g_Tilemap.D_80073088 = layerDef->tileDef;
@@ -654,7 +654,7 @@ void SetRoomForegroundLayer(LayerDef2* layerDef) {
     g_Tilemap.unk8 = 1;
 }
 
-void SetRoomBackgroundLayer(s32 index, LayerDef2* layerDef) {
+void SetRoomBackgroundLayer(s32 index, LayerDef* layerDef) {
     g_Tilemap.bg[index].flags = 0;
     g_Tilemap.bg[index].tileDef = layerDef->tileDef;
     g_Tilemap.bg[index].layout = layerDef->layout;

@@ -533,8 +533,9 @@ void func_800F298C(void) {
                     D_80137598 = 0;
                 }
                 layer = g_api.o.tileLayers[D_801375BC.def->tileLayoutId].fg;
-                if (layer->bottom & 0x80) {
-                    D_801375BC.def = &g_api.o.rooms[layer->bottom & 0x7F].load;
+                if (layer->rect.params & 0x80) {
+                    D_801375BC.def =
+                        &g_api.o.rooms[layer->rect.params & 0x7F].load;
                     // TODO: !FAKE
                     // D_8009791C is probably part of a struct. see also
                     // (&g_Tilemap.cameraX)->i.hi seen elsewhere
