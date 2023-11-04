@@ -617,8 +617,6 @@ INCLUDE_ASM("dra/nonmatchings/4A538", RenderTilemap);
 void SetRoomForegroundLayer(LayerDef2* layerDef) {
     D_8003C708.flags = 0;
     D_8013AED0 = 1;
-    if (g_Tilemap.hSize && g_Tilemap.vSize) {
-    }
     g_Tilemap.D_80073088 = layerDef->tileDef;
     g_Tilemap.D_800730A0 = 0;
     if (g_Tilemap.D_80073088 == 0) {
