@@ -227,8 +227,8 @@ void func_8017160C(s32 amount, s32 entityId) {
             entity->params = i + 1;
             entity->facingLeft = facing;
         }
-        *((s16*)(&entity->ext.generic.unkAC)) = g_Camera.posX.i.hi;
-        *((s16*)(&entity->ext.generic.unkAE)) = g_Camera.posY.i.hi;
+        *((s16*)(&entity->ext.generic.unkAC)) = g_Tilemap.cameraX.i.hi;
+        *((s16*)(&entity->ext.generic.unkAE)) = g_Tilemap.cameraY.i.hi;
     }
 }
 
@@ -333,8 +333,8 @@ void func_801719E0(Entity* self) {
             } else {
                 self->ext.fam.ent = &g_Entities[3 + self->ext.fam.unk82];
             }
-            self->ext.fam.cameraX = g_Camera.posX.i.hi;
-            self->ext.fam.cameraY = g_Camera.posY.i.hi;
+            self->ext.fam.cameraX = g_Tilemap.cameraX.i.hi;
+            self->ext.fam.cameraY = g_Tilemap.cameraY.i.hi;
 
             if (self->ext.fam.unk82 == 0) {
                 for (i = 0; i < 16; i++) {
@@ -386,8 +386,8 @@ void func_801719E0(Entity* self) {
             } else {
                 self->ext.fam.ent = &g_Entities[3 + self->ext.fam.unk82];
             }
-            self->ext.fam.cameraX = g_Camera.posX.i.hi;
-            self->ext.fam.cameraY = g_Camera.posY.i.hi;
+            self->ext.fam.cameraX = g_Tilemap.cameraX.i.hi;
+            self->ext.fam.cameraY = g_Tilemap.cameraY.i.hi;
 
             for (i = 0; i < 16; i++) {
                 if (PLAYER.facingLeft) {
@@ -484,8 +484,8 @@ void func_80171ED4(s32 arg0) {
         }
     }
     D_80174D3C = 0;
-    *(u16*)&e->ext.generic.unkAC = g_Camera.posX.i.hi;
-    *(u16*)&e->ext.generic.unkAE = g_Camera.posY.i.hi;
+    *(u16*)&e->ext.generic.unkAC = g_Tilemap.cameraX.i.hi;
+    *(u16*)&e->ext.generic.unkAE = g_Tilemap.cameraY.i.hi;
 }
 
 INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80172120);
@@ -764,14 +764,14 @@ void func_80174210(Entity* self, s32 arg1) {
         D_801710A0 = 0;
         return;
     }
-    cameraX = g_Camera.posX.i.hi;
-    cameraY = g_Camera.posY.i.hi;
-    if (D_801710A0 != g_Servant || D_801710A4 != g_CurrentRoom.left ||
-        D_801710A8 != g_CurrentRoom.top) {
+    cameraX = g_Tilemap.cameraX.i.hi;
+    cameraY = g_Tilemap.cameraY.i.hi;
+    if (D_801710A0 != g_Servant || D_801710A4 != g_Tilemap.left ||
+        D_801710A8 != g_Tilemap.top) {
         var_s1 = D_8017109C;
         D_801710A0 = g_Servant;
-        D_801710A4 = g_CurrentRoom.left;
-        D_801710A8 = g_CurrentRoom.top;
+        D_801710A4 = g_Tilemap.left;
+        D_801710A8 = g_Tilemap.top;
         if (D_80170760[1].unkC != -1) {
             var_s2 = 1;
             do {

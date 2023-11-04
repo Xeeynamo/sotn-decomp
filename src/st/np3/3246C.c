@@ -39,15 +39,15 @@ void func_801B2540(Entity* entity) {
         switch (temp_s1) {
         case 4:
         case 5:
-            if (g_CurrentRoom.x != 0) {
+            if (g_Tilemap.x != 0) {
                 return;
             }
             break;
 
         case 6:
             if (g_pads->pressed & PAD_TRIANGLE) {
-                g_CurrentRoom.x = 0;
-                g_CurrentRoom.width = 1280;
+                g_Tilemap.x = 0;
+                g_Tilemap.width = 1280;
                 entity->step++;
                 return;
             }
@@ -65,10 +65,10 @@ void func_801B2540(Entity* entity) {
             unk = 8;
             temp_s1 = (temp_s1 * unk) + phi_v1;
             temp_v0_2 = &D_80180DA8[temp_s1];
-            g_CurrentRoom.x = *(temp_v0_2++);
-            g_CurrentRoom.y = *(temp_v0_2++);
-            g_CurrentRoom.width = *(temp_v0_2++);
-            g_CurrentRoom.height = *(temp_v0_2++);
+            g_Tilemap.x = *(temp_v0_2++);
+            g_Tilemap.y = *(temp_v0_2++);
+            g_Tilemap.width = *(temp_v0_2++);
+            g_Tilemap.height = *(temp_v0_2++);
         }
     } else {
         InitializeEntity(D_80180A84);
@@ -273,7 +273,7 @@ void EntityCastleDoor(Entity* self) {
 
         tilePos = 0x445;
         for (i = 0, tilePtr = D_80180FF8; i < 8; tilePtr++, i++) {
-            g_CurrentRoomTileLayout.fg[tilePos] = *tilePtr;
+            g_Tilemap.fg[tilePos] = *tilePtr;
             tilePos += 0x20;
         }
     }
@@ -473,7 +473,7 @@ void EntityTransparentWater(Entity* self) {
 
     AnimateEntity(D_801810EC, self);
 
-    var_a3 = -1 * g_Camera.posX.i.hi % 38;
+    var_a3 = -1 * g_Tilemap.cameraX.i.hi % 38;
     var_a3 += 304;
     if (self->params != 0) {
         var_a3 = 96;
@@ -624,7 +624,7 @@ void func_801B40F8(Entity* self) {
         }
 
         for (tilePos = 0x76, i = 0; i < 3; i++) {
-            g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
+            g_Tilemap.fg[tilePos] = *tileLayoutPtr;
             tileLayoutPtr++;
             tilePos += 0x10;
         }
@@ -663,7 +663,7 @@ void func_801B40F8(Entity* self) {
 
         for (tilePos = 0x76, tileLayoutPtr = &D_801810F8[3], i = 0; i < temp;
              tileLayoutPtr++, tilePos += 0x10, i++) {
-            g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
+            g_Tilemap.fg[tilePos] = *tileLayoutPtr;
         }
 
         if (!(g_Timer & 1)) {
@@ -750,8 +750,8 @@ void EntityClickSwitch(Entity* entity) {
         if (temp_a0 != 0) {
             player->posY.i.hi++;
             entity->posY.val += FIX(0.75);
-            if ((g_Camera.posY.i.hi + entity->posY.i.hi) > 160) {
-                entity->posY.i.hi = 160 - g_Camera.posY.i.hi;
+            if ((g_Tilemap.cameraY.i.hi + entity->posY.i.hi) > 160) {
+                entity->posY.i.hi = 160 - g_Tilemap.cameraY.i.hi;
                 g_api.PlaySfx(NA_SE_EV_SWITCH_CLICK);
                 g_CastleFlags[49] = 1;
                 entity->step++;
@@ -797,8 +797,8 @@ void EntityPathBlockSmallWeight(Entity* self) {
             poly = (POLY_GT4*)poly->tag;
         }
 
-        self->posX.i.hi = 416 - g_Camera.posX.i.hi;
-        self->posY.i.hi = 64 - g_Camera.posY.i.hi;
+        self->posX.i.hi = 416 - g_Tilemap.cameraX.i.hi;
+        self->posY.i.hi = 64 - g_Tilemap.cameraY.i.hi;
         if (g_CastleFlags[49] != 0) {
             self->posY.i.hi += 111;
             self->step = 3;
@@ -813,17 +813,17 @@ void EntityPathBlockSmallWeight(Entity* self) {
 
     case 2:
         self->posY.val += FIX(0.5);
-        if ((self->posY.i.hi + g_Camera.posY.i.hi) >= 175) {
+        if ((self->posY.i.hi + g_Tilemap.cameraY.i.hi) >= 175) {
             func_801C2598(0x63D);
-            self->posY.i.hi = 175 - g_Camera.posY.i.hi;
+            self->posY.i.hi = 175 - g_Tilemap.cameraY.i.hi;
             self->step++;
         }
         break;
 
     case 3:
         for (var_a1 = 0x179, i = 0; i < 2; var_a1 -= 0x20, i++) {
-            g_CurrentRoomTileLayout.fg[var_a1] = 0x4FA;
-            g_CurrentRoomTileLayout.fg[var_a1 + 1] = 0x4FA;
+            g_Tilemap.fg[var_a1] = 0x4FA;
+            g_Tilemap.fg[var_a1 + 1] = 0x4FA;
         }
         self->step++;
         break;
@@ -890,9 +890,9 @@ void EntityPathBlockTallWeight(Entity* self) {
 
     case 2:
         self->posY.val -= FIX(0.5);
-        temp = self->posY.i.hi + g_Camera.posY.i.hi;
+        temp = self->posY.i.hi + g_Tilemap.cameraY.i.hi;
         if (temp <= -16) {
-            self->posY.i.hi = -16 - g_Camera.posY.i.hi;
+            self->posY.i.hi = -16 - g_Tilemap.cameraY.i.hi;
             self->step++;
         }
         break;
@@ -900,7 +900,7 @@ void EntityPathBlockTallWeight(Entity* self) {
 
     func_801B44B4(WEIGHT_TALL);
     do {
-        temp = self->posY.i.hi + g_Camera.posY.i.hi;
+        temp = self->posY.i.hi + g_Tilemap.cameraY.i.hi;
     } while (0);
     var_v0 = 112 - temp;
     var_a1 = 0x157;
@@ -910,13 +910,13 @@ void EntityPathBlockTallWeight(Entity* self) {
     }
 
     for (temp_a2 = var_v0 >> 4, i = 0; i < temp_a2; var_a1 -= 0x20, i++) {
-        g_CurrentRoomTileLayout.fg[var_a1] = 0;
-        g_CurrentRoomTileLayout.fg[var_a1 + 1] = 0;
+        g_Tilemap.fg[var_a1] = 0;
+        g_Tilemap.fg[var_a1 + 1] = 0;
     }
 
     for (temp_a2 = 8 - temp_a2, i = 0; i < temp_a2; var_a1 -= 0x20, i++) {
-        g_CurrentRoomTileLayout.fg[var_a1] = 0x4FA;
-        g_CurrentRoomTileLayout.fg[var_a1 + 1] = 0x4FA;
+        g_Tilemap.fg[var_a1] = 0x4FA;
+        g_Tilemap.fg[var_a1 + 1] = 0x4FA;
     }
 }
 
@@ -932,17 +932,17 @@ void EntityTrapDoor(Entity* entity) {
 
         if (g_TrapDoorFlag == 0) {
             if (PLAYER.posY.val < entity->posY.val) {
-                g_CurrentRoomTileLayout.fg[0xA8E / 2] = 0x129;
-                g_CurrentRoomTileLayout.fg[0xA90 / 2] = 0x132;
+                g_Tilemap.fg[0xA8E / 2] = 0x129;
+                g_Tilemap.fg[0xA90 / 2] = 0x132;
                 DestroyEntity(entity);
                 return;
             }
-            g_CurrentRoomTileLayout.fg[0xA8E / 2] = 0x6C8;
-            g_CurrentRoomTileLayout.fg[0xA90 / 2] = 0x6C9;
+            g_Tilemap.fg[0xA8E / 2] = 0x6C8;
+            g_Tilemap.fg[0xA90 / 2] = 0x6C9;
         } else {
             entity->animCurFrame = 30;
-            g_CurrentRoomTileLayout.fg[0xA8E / 2] = 0x6C8;
-            g_CurrentRoomTileLayout.fg[0xA90 / 2] = 0x6C9;
+            g_Tilemap.fg[0xA8E / 2] = 0x6C8;
+            g_Tilemap.fg[0xA90 / 2] = 0x6C9;
             entity->step = 128;
         }
 
@@ -980,8 +980,8 @@ void EntityMermanRockLeftSide(Entity* self) {
         tileLayoutPtr = &D_80181144;
         tilePos = 0x1F1;
         for (i = 0; i < 3; i++) {
-            g_CurrentRoom.bg[0].layout[tilePos] = *tileLayoutPtr;
-            g_CurrentRoom.bg[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
+            g_Tilemap.bg[0].layout[tilePos] = *tileLayoutPtr;
+            g_Tilemap.bg[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
             tileLayoutPtr++;
             tilePos += 0x30;
         }
@@ -990,8 +990,8 @@ void EntityMermanRockLeftSide(Entity* self) {
             tileLayoutPtr = &D_8018112C;
             tilePos = 0x1F1;
             for (i = 0; i < 3; i++) {
-                g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
-                g_CurrentRoomTileLayout.fg[tilePos + 1] = *(tileLayoutPtr + 3);
+                g_Tilemap.fg[tilePos] = *tileLayoutPtr;
+                g_Tilemap.fg[tilePos + 1] = *(tileLayoutPtr + 3);
                 tileLayoutPtr++;
                 tilePos += 0x30;
             }
@@ -1005,8 +1005,8 @@ void EntityMermanRockLeftSide(Entity* self) {
             tileLayoutPtr = &D_80181120[self->ext.generic.unk84.S16.unk0 * 6];
             tilePos = 0x1F1;
             for (i = 0; i < 3; i++) {
-                g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
-                g_CurrentRoomTileLayout.fg[tilePos + 1] = *(tileLayoutPtr + 3);
+                g_Tilemap.fg[tilePos] = *tileLayoutPtr;
+                g_Tilemap.fg[tilePos + 1] = *(tileLayoutPtr + 3);
                 tileLayoutPtr++;
                 tilePos += 0x30;
             }
@@ -1079,8 +1079,8 @@ void EntityMermanRockRightSide(Entity* self) {
         tileLayoutPtr = &D_80181180;
         tilePos = 0x1FD;
         for (i = 0; i < 3; i++) {
-            g_CurrentRoom.bg[0].layout[tilePos] = *tileLayoutPtr;
-            g_CurrentRoom.bg[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
+            g_Tilemap.bg[0].layout[tilePos] = *tileLayoutPtr;
+            g_Tilemap.bg[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
             tileLayoutPtr++;
             tilePos += 0x30;
         }
@@ -1089,8 +1089,8 @@ void EntityMermanRockRightSide(Entity* self) {
             tileLayoutPtr = &D_80181168;
             tilePos = 0x1FD;
             for (i = 0; i < 3; i++) {
-                g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
-                g_CurrentRoomTileLayout.fg[tilePos + 1] = *(tileLayoutPtr + 3);
+                g_Tilemap.fg[tilePos] = *tileLayoutPtr;
+                g_Tilemap.fg[tilePos + 1] = *(tileLayoutPtr + 3);
                 tileLayoutPtr++;
                 tilePos += 0x30;
             }
@@ -1104,8 +1104,8 @@ void EntityMermanRockRightSide(Entity* self) {
             tileLayoutPtr = &D_8018115C[(self->ext.generic.unk84.S16.unk0 * 6)];
             tilePos = 0x1FD;
             for (i = 0; i < 3; i++) {
-                g_CurrentRoomTileLayout.fg[tilePos] = *tileLayoutPtr;
-                g_CurrentRoomTileLayout.fg[tilePos + 1] = *(tileLayoutPtr + 3);
+                g_Tilemap.fg[tilePos] = *tileLayoutPtr;
+                g_Tilemap.fg[tilePos + 1] = *(tileLayoutPtr + 3);
                 tileLayoutPtr++;
                 tilePos += 0x30;
             }
@@ -1178,14 +1178,14 @@ void func_801B5488(Entity* self) {
         for (tileLayoutPtr = &D_801811AA, i = 0; i < 3; i++) {
             tileLayoutPos = 0x420 + i;
             for (j = 0; j < 5; tileLayoutPos += 0x30, j++, tileLayoutPtr++) {
-                g_CurrentRoomTileLayout.fg[tileLayoutPos] = *tileLayoutPtr;
+                g_Tilemap.fg[tileLayoutPos] = *tileLayoutPtr;
             }
         }
 
         for (tileLayoutPtr = &D_801811E6, i = 0; i < 3; i++) {
             tileLayoutPos = 0x420 + i;
             for (j = 0; j < 5; j++, tileLayoutPtr++) {
-                g_CurrentRoom.bg[0].layout[tileLayoutPos] = *tileLayoutPtr;
+                g_Tilemap.bg[0].layout[tileLayoutPos] = *tileLayoutPtr;
                 tileLayoutPos += 0x30;
             }
         }
@@ -1267,19 +1267,19 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
         InitializeEntity(D_80180A6C);
         self->hitboxWidth = 8;
         self->hitboxHeight = 8;
-        self->posX.i.hi = 1432 - g_Camera.posX.i.hi;
-        self->posY.i.hi = 200 - g_Camera.posY.i.hi;
+        self->posX.i.hi = 1432 - g_Tilemap.cameraX.i.hi;
+        self->posY.i.hi = 200 - g_Tilemap.cameraY.i.hi;
         self->hitPoints = 16;
         if (g_CastleFlags[stairwayPieceBroken]) {
             self->hitboxState = 0;
-            g_CurrentRoomTileLayout.fg[0x4D9] = 0x3EE;
-            g_CurrentRoomTileLayout.fg[0x539] = 0x3D2;
+            g_Tilemap.fg[0x4D9] = 0x3EE;
+            g_Tilemap.fg[0x539] = 0x3D2;
             self->step = 32;
             break;
         }
         self->hitboxState = 2;
-        g_CurrentRoomTileLayout.fg[0x4D9] = 0x408;
-        g_CurrentRoomTileLayout.fg[0x539] = 0x40D;
+        g_Tilemap.fg[0x4D9] = 0x408;
+        g_Tilemap.fg[0x539] = 0x40D;
         break;
 
     case 1:
@@ -1294,8 +1294,8 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
 
     case 2:
         g_api.PlaySfx(0x644);
-        g_CurrentRoomTileLayout.fg[0x4D9] = 0x3EE;
-        g_CurrentRoomTileLayout.fg[0x539] = 0x3D2;
+        g_Tilemap.fg[0x4D9] = 0x3EE;
+        g_Tilemap.fg[0x539] = 0x3D2;
         g_CastleFlags[stairwayPieceBroken] = true;
 
         newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
@@ -1323,10 +1323,10 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
         self->ext.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
         func_801D2684(prim, primIndex);
-        v1 = D_80073088->gfxIndex[0x409];
+        v1 = g_Tilemap.D_80073088->gfxIndex[0x409];
         arg1 = v1;
-        temp = D_80073088->gfxPage[0x409];
-        prim->clut = D_80073088->clut[0x409];
+        temp = g_Tilemap.D_80073088->gfxPage[0x409];
+        prim->clut = g_Tilemap.D_80073088->clut[0x409];
         prim->tpage = temp + 8;
         arg1 *= 16;
         arg3 = 0xF;
@@ -1480,8 +1480,8 @@ void EntitySwitch(Entity* self) {
         if (temp_a0 != 0) {
             player->posY.i.hi++;
             self->posY.val += FIX(0.25);
-            if ((g_Camera.posY.i.hi + self->posY.i.hi) > 193) {
-                self->posY.i.hi = 193 - g_Camera.posY.i.hi;
+            if ((g_Tilemap.cameraY.i.hi + self->posY.i.hi) > 193) {
+                self->posY.i.hi = 193 - g_Tilemap.cameraY.i.hi;
                 g_CastleFlags[50] = true;
                 g_api.PlaySfx(NA_SE_EV_SWITCH_CLICK);
                 self->step++;
@@ -1510,7 +1510,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
             for (
                 tilePos = 0x48, i = 7, self->step = 128, self->animCurFrame = 0;
                 i >= 0; tilePos += 0x10, i--) {
-                g_CurrentRoomTileLayout.fg[tilePos] = 0;
+                g_Tilemap.fg[tilePos] = 0;
             }
             break;
         }
@@ -1539,7 +1539,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
 
         for (tilePos = 0x48, temp = 0x4FA, i = 7; i >= 0; tilePos += 0x10,
             i--) {
-            g_CurrentRoomTileLayout.fg[tilePos] = temp;
+            g_Tilemap.fg[tilePos] = temp;
         }
         break;
 
@@ -1573,7 +1573,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
         }
 
         for (tilePos = 0x48, i = 0; i < temp; tilePos += 0x10, i++) {
-            g_CurrentRoomTileLayout.fg[tilePos] = 0;
+            g_Tilemap.fg[tilePos] = 0;
         }
 
         if (!(g_Timer & 1)) {
@@ -1616,18 +1616,18 @@ void EntityUnkId49(Entity* self) {
         InitializeEntity(D_80180A6C);
         break;
     case 1:
-        temp = g_CurrentRoomTileLayout.fg[0x12 / 2];
-        g_CurrentRoomTileLayout.fg[0xC / 2] = temp;
-        temp = g_CurrentRoomTileLayout.fg[0x14 / 2];
-        g_CurrentRoomTileLayout.fg[0xE / 2] = temp;
-        temp = g_CurrentRoomTileLayout.fg[0x72 / 2];
-        g_CurrentRoomTileLayout.fg[0x6C / 2] = temp;
-        temp = g_CurrentRoomTileLayout.fg[0x74 / 2];
-        g_CurrentRoomTileLayout.fg[0x6E / 2] = temp;
-        temp = g_CurrentRoomTileLayout.fg[0xD2 / 2];
-        g_CurrentRoomTileLayout.fg[0xCC / 2] = temp;
-        temp = g_CurrentRoomTileLayout.fg[0xD4 / 2];
-        g_CurrentRoomTileLayout.fg[0xCE / 2] = temp;
+        temp = g_Tilemap.fg[0x12 / 2];
+        g_Tilemap.fg[0xC / 2] = temp;
+        temp = g_Tilemap.fg[0x14 / 2];
+        g_Tilemap.fg[0xE / 2] = temp;
+        temp = g_Tilemap.fg[0x72 / 2];
+        g_Tilemap.fg[0x6C / 2] = temp;
+        temp = g_Tilemap.fg[0x74 / 2];
+        g_Tilemap.fg[0x6E / 2] = temp;
+        temp = g_Tilemap.fg[0xD2 / 2];
+        g_Tilemap.fg[0xCC / 2] = temp;
+        temp = g_Tilemap.fg[0xD4 / 2];
+        g_Tilemap.fg[0xCE / 2] = temp;
         self->step++;
         break;
     }

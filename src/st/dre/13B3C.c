@@ -113,7 +113,7 @@ void EntitySuccubusClone(Entity* self) {
         InitializeEntity(D_801804F4);
         self->hitboxState = 0;
         velX = self->ext.succubus.clonePosX -
-                   (self->posX.i.hi + g_Camera.posX.i.hi)
+                   (self->posX.i.hi + g_Tilemap.cameraX.i.hi)
                << 0x10;
         if (velX < 0) {
             velX += 0x3F;

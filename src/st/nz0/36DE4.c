@@ -9,7 +9,8 @@ void func_801B6DE4(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180BF8);
-        self->ext.generic.unk80.modeS32 = self->posY.i.hi + g_Camera.posY.i.hi;
+        self->ext.generic.unk80.modeS32 =
+            self->posY.i.hi + g_Tilemap.cameraY.i.hi;
         self->hitboxHeight = 8;
         self->hitboxOffY = -22;
         self->hitboxWidth = 6;
@@ -38,10 +39,10 @@ void func_801B6DE4(Entity* self) {
     case 1:
         if (temp_s1 != 0) {
             self->posY.val += FIX(1.0);
-            y = g_Camera.posY.i.hi + self->posY.i.hi;
+            y = g_Tilemap.cameraY.i.hi + self->posY.i.hi;
             if ((self->ext.generic.unk80.modeS32 + 4) < y) {
                 self->posY.i.hi = (u16)(self->ext.generic.unk80.modeS16.unk0 -
-                                        (g_Camera.posY.i.hi - 4));
+                                        (g_Tilemap.cameraY.i.hi - 4));
                 self->step++;
                 func_801C29B0(NA_SE_EV_SWITCH_CLICK);
                 g_ElevatorTarget = self->params;
@@ -52,10 +53,10 @@ void func_801B6DE4(Entity* self) {
     case 2:
         if (temp_s1 == 0) {
             self->posY.val += 0xFFFF0000;
-            y = g_Camera.posY.i.hi + self->posY.i.hi;
+            y = g_Tilemap.cameraY.i.hi + self->posY.i.hi;
             if (y < self->ext.generic.unk80.modeS32) {
                 self->posY.i.hi = (u16)(self->ext.generic.unk80.modeS16.unk0) -
-                                  g_Camera.posY.i.hi;
+                                  g_Tilemap.cameraY.i.hi;
                 self->step = 1;
             }
         }
@@ -104,7 +105,7 @@ void EntityElevator(Entity* self) {
 
         if (g_ElevatorTarget != 0) {
             y = g_ElevatorTargetPos[g_ElevatorTarget];
-            self->posY.i.hi = y - g_Camera.posY.i.hi;
+            self->posY.i.hi = y - g_Tilemap.cameraY.i.hi;
         } else {
             g_ElevatorTarget = self->params;
         }
@@ -158,7 +159,7 @@ void EntityElevator(Entity* self) {
 
         if (g_ElevatorTarget != self->ext.elevator.elevatorTarget) {
             y = g_ElevatorTargetPos[g_ElevatorTarget];
-            y -= g_Camera.posY.i.hi;
+            y -= g_Tilemap.cameraY.i.hi;
             if (y >= self->posY.i.hi) {
                 self->step = ELEVATOR_DESCEND;
             } else {
@@ -172,7 +173,7 @@ void EntityElevator(Entity* self) {
     case ELEVATOR_ASCEND:
         self->posY.i.hi--;
         y = g_ElevatorTargetPos[self->ext.elevator.elevatorTarget] -
-            g_Camera.posY.i.hi;
+            g_Tilemap.cameraY.i.hi;
         if (self->posY.i.hi >= y) {
             if (temp != 0) {
                 g_api.func_8010DFF0(0, 1);
@@ -188,7 +189,7 @@ void EntityElevator(Entity* self) {
     case ELEVATOR_DESCEND:
         self->posY.i.hi++;
         y = g_ElevatorTargetPos[self->ext.elevator.elevatorTarget] -
-            g_Camera.posY.i.hi;
+            g_Tilemap.cameraY.i.hi;
         if (y < self->posY.i.hi) {
             self->posY.i.hi = y;
             self->step = ELEVATOR_IDLE;

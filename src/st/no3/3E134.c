@@ -2,7 +2,7 @@
 
 // intro owl and leaves
 void EntityFlyingOwlAndLeaves(Entity* entity) {
-    Unkstruct8* currentRoomTiles = &g_CurrentRoomTileLayout;
+    Tilemap* tilemap = &g_Tilemap;
     Entity* newEntity;
     u16 animFlag = true;
     u16 i;
@@ -69,7 +69,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
             }
         }
         MoveEntity();
-        if ((entity->params == 0) && (currentRoomTiles->unkA > 0xD80)) {
+        if ((entity->params == 0) && (tilemap->cameraX.i.hi > 0xD80)) {
             entity->step++;
         }
         if (entity->posX.i.hi > 288) {
