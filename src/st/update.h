@@ -42,8 +42,8 @@ void Update(void) {
             }
 
             if ((unk34 & 0x02000000)) {
-                s16 posY = entity->posY.i.hi + g_Camera.posY.i.hi;
-                s16 test = (LOHU(g_CurrentRoom.vSize) * 256) + 128;
+                s16 posY = entity->posY.i.hi + g_Tilemap.cameraY.i.hi;
+                s16 test = (LOHU(g_Tilemap.vSize) * 256) + 128;
                 if (posY > test) {
                     DestroyEntity(entity);
                     continue;

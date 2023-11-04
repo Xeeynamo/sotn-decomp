@@ -30,7 +30,7 @@ void CreateEntityWhenInVerticalRange(LayoutEntity* layoutObj) {
     s16 posY;
     Entity* entity;
 
-    posY = g_Camera.posY.i.hi;
+    posY = g_Tilemap.cameraY.i.hi;
     yClose = posY - 0x40;
     yFar = posY + 0x120;
     if (yClose < 0) {
@@ -70,7 +70,7 @@ void CreateEntityWhenInHorizontalRange(LayoutEntity* layoutObj) {
     s16 posX;
     Entity* entity;
 
-    posX = g_Camera.posX.i.hi;
+    posX = g_Tilemap.cameraX.i.hi;
     xClose = posX - 0x40;
     xFar = posX + 0x140;
     if (xClose < 0) {
@@ -252,7 +252,7 @@ void func_8018A520(s16 arg0) {
 
 void InitRoomEntities(s32 objLayoutId) {
     u16* pObjLayoutStart = g_pStObjLayout[objLayoutId];
-    Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
+    Tilemap* tilemap = &g_Tilemap;
     s16 temp_s0;
     s16 arg0;
     s16 i;
@@ -277,7 +277,7 @@ void InitRoomEntities(s32 objLayoutId) {
         D_80193AB4 += i * 2 + 2;
         D_80193AB4 = (D_80193AB4[1] << 0x10) + D_80193AB4[0];
     }
-    arg0 = currentRoomTileLayout->unkA;
+    arg0 = tilemap->cameraX.i.hi;
     temp_s0 = arg0 + 0x140;
     i = arg0 - 0x40;
     if (i < 0) {
@@ -288,14 +288,14 @@ void InitRoomEntities(s32 objLayoutId) {
     D_80193ABC = 0;
     func_8018A0CC(i);
     func_8018A170(temp_s0);
-    func_8018A380(currentRoomTileLayout->unkE + 0x120);
+    func_8018A380(tilemap->cameraY.i.hi + 0x120);
 }
 
 void func_8018A7AC(void) {
-    Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
+    Tilemap* tilemap = &g_Tilemap;
 
     if (D_80097908 != 0) {
-        s16 tmp = g_Camera.posX.i.hi;
+        s16 tmp = tilemap->cameraX.i.hi;
         if (D_80097908 > 0)
             func_8018A170(tmp + 0x140);
         else
@@ -303,9 +303,9 @@ void func_8018A7AC(void) {
     }
 
     if (D_8009790C != 0) {
-        s16 tmp = currentRoomTileLayout->unkE;
+        s16 tmp = tilemap->cameraY.i.hi;
         if (D_8009790C > 0)
-            func_8018A424(currentRoomTileLayout->unkE + 0x120);
+            func_8018A424(tilemap->cameraY.i.hi + 0x120);
         else
             func_8018A520(tmp - 0x40);
     }

@@ -26,16 +26,16 @@ void EntitySecretButton(Entity* self) {
             self->animCurFrame = 4;
             self->hitboxState = 0;
             self->palette += 1;
-            g_CurrentRoomTileLayout.fg[0x1C4] = 0;
+            g_Tilemap.fg[0x1C4] = 0;
             self->step = 3;
             break;
         }
-        g_CurrentRoomTileLayout.fg[0x1C4] = 0x32F;
+        g_Tilemap.fg[0x1C4] = 0x32F;
         break;
 
     case 1:
         if (self->hitFlags != 0) {
-            g_CurrentRoomTileLayout.fg[0x1C4] = 0;
+            g_Tilemap.fg[0x1C4] = 0;
             self->animCurFrame = 4;
             g_api.PlaySfx(0x644);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -156,9 +156,9 @@ void EntitySecretStairs(Entity* self) {
                 self->zPriority += 1;
                 for (tilePos = &D_801808B0; *tilePos != 0xFFFF; tilePos += 2) {
                     if (!g_isSecretStairsButtonPressed) {
-                        g_CurrentRoomTileLayout.fg[*tilePos] = 0;
+                        g_Tilemap.fg[*tilePos] = 0;
                     } else {
-                        g_CurrentRoomTileLayout.fg[*tilePos] = *(tilePos + 1);
+                        g_Tilemap.fg[*tilePos] = *(tilePos + 1);
                     }
                 }
 
@@ -170,8 +170,8 @@ void EntitySecretStairs(Entity* self) {
         if (g_isSecretStairsButtonPressed) {
             temp_s0 = D_801808A0[self->params].x;
             temp_s1 = D_801808A0[self->params].y;
-            self->posX.i.hi = temp_s0 - g_Camera.posX.i.hi;
-            self->posY.i.hi = temp_s1 - g_Camera.posY.i.hi;
+            self->posX.i.hi = temp_s0 - g_Tilemap.cameraX.i.hi;
+            self->posY.i.hi = temp_s1 - g_Tilemap.cameraY.i.hi;
             self->step = 15;
             break;
         }
@@ -214,8 +214,8 @@ void EntitySecretStairs(Entity* self) {
 
         switch (self->step_s) {
         case 0:
-            posX = g_Camera.posX.i.hi + self->posX.i.hi;
-            posY = g_Camera.posY.i.hi + self->posY.i.hi;
+            posX = g_Tilemap.cameraX.i.hi + self->posX.i.hi;
+            posY = g_Tilemap.cameraY.i.hi + self->posY.i.hi;
             angle = ratan2(temp_s1 - posY, temp_s0 - posX);
             self->velocityX = rcos(angle) * 12;
             self->velocityY = rsin(angle) * 12;
@@ -224,17 +224,17 @@ void EntitySecretStairs(Entity* self) {
 
         case 1:
             MoveEntity();
-            posX = g_Camera.posX.i.hi + self->posX.i.hi;
+            posX = g_Tilemap.cameraX.i.hi + self->posX.i.hi;
             if (temp_s0 == posX) {
                 g_api.PlaySfx(0x64F);
-                self->posX.i.hi = temp_s0 - g_Camera.posX.i.hi;
-                self->posY.i.hi = temp_s1 - g_Camera.posY.i.hi;
+                self->posX.i.hi = temp_s0 - g_Tilemap.cameraX.i.hi;
+                self->posY.i.hi = temp_s1 - g_Tilemap.cameraY.i.hi;
                 if (self->params != 3) {
                     self[1].ext.stub[0x8] = 1;
                 } else {
                     tilePos = &D_801808B0;
                     while (*tilePos != 0xFFFF) {
-                        g_CurrentRoomTileLayout.fg[*tilePos] = *(tilePos + 1);
+                        g_Tilemap.fg[*tilePos] = *(tilePos + 1);
                         tilePos += 2;
                     }
                 }

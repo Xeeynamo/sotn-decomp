@@ -349,14 +349,14 @@ void func_80115C50(void) {
     s32 dist;
 
     if (g_StageId == STAGE_TOP) {
-        dist = (g_CurrentRoom.left * 256) + playerX;
+        dist = g_Tilemap.left * 256 + playerX;
         dist = ABS(dist);
 
         if (dist - 8000 > 0) {
             PLAYER.posX.i.hi--;
         }
 
-        dist = (g_CurrentRoom.left * 256) + playerX;
+        dist = g_Tilemap.left * 256 + playerX;
         dist = ABS(dist);
 
         if (dist - 8000 < 0) {
@@ -365,14 +365,14 @@ void func_80115C50(void) {
     }
 
     if (g_StageId == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
-        dist = (g_CurrentRoom.left * 256) + playerX;
+        dist = g_Tilemap.left * 256 + playerX;
         dist = ABS(dist);
 
         if (dist - 8384 > 0) {
             PLAYER.posX.i.hi--;
         }
 
-        dist = (g_CurrentRoom.left * 256) + playerX;
+        dist = g_Tilemap.left * 256 + playerX;
         dist = ABS(dist);
 
         if (dist - 8384 < 0) {

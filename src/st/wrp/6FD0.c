@@ -1109,15 +1109,15 @@ void func_801870B0(Entity* entity) {
         switch (temp_s1) {
         case 4:
         case 5:
-            if (g_CurrentRoom.x != 0) {
+            if (g_Tilemap.x != 0) {
                 return;
             }
             break;
 
         case 6:
             if (g_pads->pressed & PAD_TRIANGLE) {
-                g_CurrentRoom.x = 0;
-                g_CurrentRoom.width = 1280;
+                g_Tilemap.x = 0;
+                g_Tilemap.width = 1280;
                 entity->step++;
                 return;
             }
@@ -1135,10 +1135,10 @@ void func_801870B0(Entity* entity) {
             unk = 8;
             temp_s1 = (temp_s1 * unk) + phi_v1;
             temp_v0_2 = &D_80180538[temp_s1];
-            g_CurrentRoom.x = *(temp_v0_2++);
-            g_CurrentRoom.y = *(temp_v0_2++);
-            g_CurrentRoom.width = *(temp_v0_2++);
-            g_CurrentRoom.height = *(temp_v0_2++);
+            g_Tilemap.x = *(temp_v0_2++);
+            g_Tilemap.y = *(temp_v0_2++);
+            g_Tilemap.width = *(temp_v0_2++);
+            g_Tilemap.height = *(temp_v0_2++);
         }
     } else {
         InitializeEntity(D_80180488);
@@ -1267,7 +1267,7 @@ void EntityWarpRoom(Entity* self) {
             newEntity = AllocEntity(&g_Entities[0xA0], &g_Entities[0x100]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(0x17, newEntity);
-                newEntity->posY.i.hi = 0xCC - g_Camera.posY.i.hi;
+                newEntity->posY.i.hi = 0xCC - g_Tilemap.cameraY.i.hi;
                 newEntity->posX.i.hi = (Random() & 0x7F) + 0x40;
             }
         }
@@ -1279,7 +1279,7 @@ void EntityWarpRoom(Entity* self) {
         D_80180648 = 0;
         *D_8003BEBC |= 1;
         *D_8003BEBC |= 1 << self->params;
-        moveX = g_Camera.posX.i.hi + (&PLAYER)->posX.i.hi;
+        moveX = g_Tilemap.cameraX.i.hi + (&PLAYER)->posX.i.hi;
         if (moveX > 0x60 && moveX < 0xA0) {
             g_Player.D_80072EFC = 0x10;
             g_Player.D_80072EF4 = 0;
@@ -1357,8 +1357,8 @@ void EntityWarpRoom(Entity* self) {
         }
 
         warpCoords = &D_8018065C[move_room];
-        moveX = warpCoords->x - g_CurrentRoom.left;
-        moveY = warpCoords->y - g_CurrentRoom.top;
+        moveX = warpCoords->x - g_Tilemap.left;
+        moveY = warpCoords->y - g_Tilemap.top;
         D_80193AA0 = move_room;
         FntPrint(D_80186E3C, move_room);
         FntPrint(D_80186E4C, warpCoords->x, warpCoords->y);
@@ -1413,8 +1413,8 @@ void EntityWarpRoom(Entity* self) {
 
     default:
         warpCoords = &D_8018065C[D_80193AA0];
-        moveX = warpCoords->x - g_CurrentRoom.left;
-        moveY = warpCoords->y - g_CurrentRoom.top;
+        moveX = warpCoords->x - g_Tilemap.left;
+        moveY = warpCoords->y - g_Tilemap.top;
         FntPrint(D_80186E3C, D_80193AA0);
         FntPrint(D_80186E4C, warpCoords->x, warpCoords->y);
         FntPrint(D_80186E5C, moveX, moveY);
@@ -1533,7 +1533,7 @@ void EntityWarpSmallRocks(Entity* entity) {
         break;
 
     case 5:
-        y_unk = &g_Camera.posY.i.hi;
+        y_unk = &g_Tilemap.cameraY.i.hi;
         *(u32*)&entity->ext.generic.unk88 =
             *(u32*)&entity->ext.generic.unk88 - 1;
         if (*(u32*)&entity->ext.generic.unk88 == 0) {

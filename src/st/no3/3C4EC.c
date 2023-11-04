@@ -3,7 +3,7 @@
 // pushes alucard to the right
 void EntityPushAlucard(Entity* entity) {
     Entity* player = &PLAYER;
-    Unkstruct8* roomLayout = &g_CurrentRoomTileLayout;
+    Tilemap* tilemap = &g_Tilemap;
 
     switch (entity->step) {
     case 0:
@@ -19,7 +19,7 @@ void EntityPushAlucard(Entity* entity) {
 
     case 1:
         player->posX.val += 0x60000;
-        if (roomLayout->unkA > 0x800) {
+        if (tilemap->cameraX.i.hi > 0x800) {
             g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = false;
             g_Player.D_80072EF4 = 0x2000;
             entity->step++;
@@ -57,7 +57,7 @@ void EntityPushAlucard(Entity* entity) {
 
     case 4:
         player->posX.val += 0x48000;
-        if (roomLayout->unkA > 0xF80) {
+        if (tilemap->cameraX.i.hi > 0xF80) {
             g_api.PlaySfx(SE_NO3_ALUCARD_JUMP);
             g_Player.D_80072EF4 = 0x2040;
             entity->ext.generic.unk7C.S8.unk0 = 0;
@@ -102,7 +102,7 @@ void EntityCastleDoorTransition(Entity* entity) {
     case 1:
         player->posX.val += entity->ext.castleDoorTransition.playerVelocity;
         g_Player.D_80072EFC = 1;
-        if ((player->posX.i.hi + g_Camera.posX.i.hi) > 120) {
+        if ((player->posX.i.hi + g_Tilemap.cameraX.i.hi) > 120) {
             g_Player.D_80072EF4 = 0;
             entity->step++;
         }
@@ -124,7 +124,7 @@ void EntityCastleDoorTransition(Entity* entity) {
 
 // large foreground tree during intro
 void EntityForegroundTree(Entity* self) {
-    Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
+    Tilemap* tilemap = &g_Tilemap;
     Entity *EntRange, *ent, *ent2;
     u16* ptrParams;
     u16 temp_s4;
@@ -168,7 +168,7 @@ void EntityForegroundTree(Entity* self) {
 
     case 1:
         self->posX.i.hi = 128;
-        temp_s4 = var_s3 * currentRoomTileLayout->unkA / 256 + 352;
+        temp_s4 = var_s3 * tilemap->cameraX.i.hi / 256 + 352;
         if (temp_s4 >= *ptrParams) {
             ent = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (ent != NULL) {
@@ -209,7 +209,7 @@ void EntityForegroundTree(Entity* self) {
 }
 
 void EntityUnkId50(Entity* self) {
-    Unkstruct8* roomLayout = &g_CurrentRoomTileLayout;
+    Tilemap* tilemap = &g_Tilemap;
     Entity* newEntity;
     Entity* temp;
     u16 temp_s3;
@@ -243,7 +243,7 @@ void EntityUnkId50(Entity* self) {
     case 1:
         self->posX.i.hi = 128;
         ptr = &D_801814EC[self->ext.et_801BCC4C.unk7C * 2];
-        var_v0 = roomLayout->unkA * 0xC0;
+        var_v0 = tilemap->cameraX.i.hi * 0xC0;
 
         if (var_v0 < 0) {
             var_v0 += 0xFF;
@@ -268,7 +268,7 @@ void EntityUnkId50(Entity* self) {
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityBackgroundPineTrees);
 
 void EntityUnkId52(Entity* self) {
-    Unkstruct8* layout = &g_CurrentRoomTileLayout;
+    Tilemap* tilemap = &g_Tilemap;
     Entity* newEntity;
     Entity* temp;
     u16 temp_s3;
@@ -301,7 +301,7 @@ void EntityUnkId52(Entity* self) {
         self->posX.i.hi = 0x80;
         ptr = &D_801817F8[self->ext.et_801BCC4C.unk7C];
 
-        var_v0 = layout->unkA * 0x18;
+        var_v0 = tilemap->cameraX.i.hi * 0x18;
         if (var_v0 < 0) {
             var_v0 += 0xFF;
         }

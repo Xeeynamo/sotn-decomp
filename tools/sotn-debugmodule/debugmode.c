@@ -154,15 +154,15 @@ u8 GetColType(s32 x, s32 y) {
     absX = x + *cameraX;
     absY = y + *cameraY;
     new_var = 0x10;
-    if (absX < 0 || (u32)absX >= g_CurrentRoom.hSize << 8 || absY < 0 ||
-        (u32)absY >= g_CurrentRoom.vSize << 8) {
+    if (absX < 0 || (u32)absX >= g_Tilemap.hSize << 8 || absY < 0 ||
+        (u32)absY >= g_Tilemap.vSize << 8) {
         colType = 0;
     } else {
 
         // 16x16 blocks
-        u16 colTile = g_CurrentRoomTileLayout
-                          .fg[(absX >> 4) +
-                              (((absY >> 4) * g_CurrentRoom.hSize) * new_var)];
+        u16 colTile =
+            g_Tilemap
+                .fg[(absX >> 4) + (((absY >> 4) * g_Tilemap.hSize) * new_var)];
         TileDefinition* temp = (TileDefinition*)0x80073088;
         colType = temp->collision[colTile];
     }

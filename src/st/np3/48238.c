@@ -119,7 +119,7 @@ void EntityMerman(Entity* self) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         MoveEntity();
-        camY = g_Camera.posY.i.hi;
+        camY = g_Tilemap.cameraY.i.hi;
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
         posY -= 24;
@@ -131,9 +131,9 @@ void EntityMerman(Entity* self) {
 
         pos = D_80181230;
         pos += (self->params >> 8) & 1;
-        posY += g_Camera.posY.i.hi;
+        posY += g_Tilemap.cameraY.i.hi;
         if (pos[4] < posY) {
-            self->posY.i.hi = pos[4] - g_Camera.posY.i.hi - 24;
+            self->posY.i.hi = pos[4] - g_Tilemap.cameraY.i.hi - 24;
         }
         if ((u8)self->ext.merman.timer2++ > 32) {
             self->ext.merman.timer2 = 0;
@@ -156,7 +156,7 @@ void EntityMerman(Entity* self) {
             MoveEntity();
             pos = D_80181230;
             pos += (self->params >> 8) & 1;
-            camY = g_Camera.posY.i.hi;
+            camY = g_Tilemap.cameraY.i.hi;
             posY = self->posY.i.hi;
             posY -= 20;
             posY += camY;
