@@ -392,7 +392,7 @@ void func_8010E3E0(void) {
 
 void func_8010E42C(u16 arg0) {
     PLAYER.step_s = arg0;
-    PLAYER.step = Player_Unk18;
+    PLAYER.step = Player_Teleport;
 
     if (!(arg0 & 1)) {
         func_8010DA48(0xF4);
@@ -420,7 +420,7 @@ void func_8010E4D0(void) {
         func_8010DA48(0xC7);
         PLAYER.velocityY = 0;
         PLAYER.velocityX = 0;
-        SetPlayerStep(Player_Unk_6);
+        SetPlayerStep(Player_AlucardStuck);
         func_80111CC0();
         PlaySfx(NA_SE_VO_AL_WHAT);
         return;
@@ -463,7 +463,7 @@ void func_8010E6AC(s32 arg0) {
 }
 
 void func_8010E7AC(void) {
-    SetPlayerStep(Player_Unk3);
+    SetPlayerStep(Player_Fall);
 
     if (g_Player.unk50 != 1) {
         func_8010DA48(0x1C);
@@ -534,7 +534,7 @@ void func_8010E9A4(void) {
     }
 
     func_8011AAFC(g_CurrentEntity, 2, 0);
-    SetPlayerStep(Player_Unk8);
+    SetPlayerStep(Player_HighJump);
     PLAYER.velocityY = -0xC0000;
     func_8010DA48(0x21);
     g_Player.unk4A = 0;
@@ -656,7 +656,7 @@ s32 CheckChainLimit(s32 itemId, s32 handId) {
 void func_8010ED54(u8 arg0) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
-    SetPlayerStep(Player_Unk15);
+    SetPlayerStep(Player_SwordWarp);
     func_8010DA48(arg0);
     func_8011AAFC(g_CurrentEntity, 0x14003D, 0);
     g_Player.unk48 = 0;
@@ -1164,7 +1164,7 @@ void func_8010FCB8(void) {
 void func_8010FD24(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
-    SetPlayerStep(Player_Unk39);
+    SetPlayerStep(Player_SpellSwordBrothers);
     func_8010E3E0();
     func_8010DA48(0xF1);
     func_8011AAFC(g_CurrentEntity, 0x170028, 0);

@@ -139,23 +139,31 @@ typedef enum {
     Player_Stand,
     Player_Walk,
     Player_Crouch,
-    Player_Unk3,
+    Player_Fall,
     Player_Jump,
     Player_MorphBat,
-    Player_Unk_6,
+    Player_AlucardStuck,
     Player_MorphMist,
-    Player_Unk8,
-    Player_Unk9,
+    Player_HighJump,
+    Player_UnmorphBat,
     Player_Hit,
     Player_StatusStone,
-    Player_Unk12,
+    Player_BossGrab, // Darkwing Bat and Akmodan II
     Player_KillWater,
-    Player_Unk14,
-    Player_Unk15,
-    Player_Unk16,
+    Player_UnmorphMist,
+    Player_SwordWarp, // Alucard Sword and Osafune Katana
+    Player_Kill,
     Player_Unk17,
-    Player_Unk18,
-    Player_Unk25 = 25,
+    Player_Teleport, // also Grand Cross and Spiral Axe
+    Player_FlameWhip,
+    Player_Hydrostorm,
+    Player_ThousandBlades,
+    Player_RichterFourHolyBeasts,
+    Player_Slide,
+    Player_Unk24, // MorphWolf and Richter's Tackle
+    Player_Unk25, // UnMorphWolf and Sprint
+    Player_SlideKick,
+    Player_Unk27, // other item crashes
     Player_SpellDarkMetamorphosis = 32,
     Player_SpellSummonSpirit,
     Player_SpellHellfire,
@@ -163,8 +171,11 @@ typedef enum {
     Player_Spell36,
     Player_SpellSoulSteal,
     Player_Unk38,
-    Player_Unk39,
-    Player_Unk40,
+    Player_SpellSwordBrothers,
+    Player_AxearmorStand,
+    Player_AxearmorWalk,
+    Player_AxearmorJump,
+    Player_AxearmorHit,
 } PlayerSteps;
 
 typedef enum {
@@ -788,8 +799,8 @@ extern u8 D_801EC000[];
 void InitializePads(void);
 void ReadPads(void);
 void ClearBackbuffer(void);
-void SetRoomForegroundLayer(LayerDef2* layerDef);
-void SetRoomBackgroundLayer(s32 index, LayerDef2* layerDef);
+void SetRoomForegroundLayer(LayerDef* layerDef);
+void SetRoomBackgroundLayer(s32 index, LayerDef* layerDef);
 void CheckCollision(s32 x, s32 y, Collider* res, s32 unk);
 void DemoInit(s32 arg0);
 void DemoUpdate(void);

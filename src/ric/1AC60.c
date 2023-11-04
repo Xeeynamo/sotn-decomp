@@ -35,9 +35,9 @@ TeleportCheck GetTeleportToOtherCastle(void) {
 
     // Check for X/Y boundaries in TOP
     if (g_StageId == STAGE_TOP) {
-        xCheckTop = (g_CurrentRoom.left << 8) + playerX - 8000;
+        xCheckTop = (g_Tilemap.left << 8) + playerX - 8000;
         if (ABS(xCheckTop) < 4) {
-            yCheckTop = (g_CurrentRoom.top << 8) + playerY - 2127;
+            yCheckTop = (g_Tilemap.top << 8) + playerY - 2127;
             if (ABS(yCheckTop) < 4) {
                 return TELEPORT_CHECK_TO_RTOP;
             }
@@ -46,9 +46,9 @@ TeleportCheck GetTeleportToOtherCastle(void) {
 
     // Check for X/Y boundaries in RTOP
     if (g_StageId == STAGE_RTOP) {
-        xCheckRTop = (g_CurrentRoom.left << 8) + playerX - 8384;
+        xCheckRTop = (g_Tilemap.left << 8) + playerX - 8384;
         if (ABS(xCheckRTop) < 4) {
-            yCheckRTop = (g_CurrentRoom.top << 8) + playerY;
+            yCheckRTop = (g_Tilemap.top << 8) + playerY;
             if (ABS(yCheckRTop) - 14407 < 4) {
                 return TELEPORT_CHECK_TO_TOP;
             }

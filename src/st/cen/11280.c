@@ -11,7 +11,7 @@ void CreateEntityWhenInVerticalRange(LayoutEntity* layoutObj) {
     s16 posY;
     Entity* entity;
 
-    posY = g_Camera.posY.i.hi;
+    posY = g_Tilemap.cameraY.i.hi;
     yClose = posY - 0x40;
     yFar = posY + 0x120;
     if (yClose < 0) {
@@ -51,7 +51,7 @@ void CreateEntityWhenInHorizontalRange(LayoutEntity* layoutObj) {
     s16 posX;
     Entity* entity;
 
-    posX = g_Camera.posX.i.hi;
+    posX = g_Tilemap.cameraX.i.hi;
     xClose = posX - 0x40;
     xFar = posX + 0x140;
     if (xClose < 0) {
@@ -205,7 +205,7 @@ INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", func_80193184);
 
 void InitRoomEntities(s32 objLayoutId) {
     u16* pObjLayoutStart = D_801801EC[objLayoutId];
-    Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
+    Tilemap* tilemap = &g_Tilemap;
     s16 temp_s0;
     s16 arg0;
     s16 i;
@@ -230,7 +230,7 @@ void InitRoomEntities(s32 objLayoutId) {
         D_8019C768 += i * 2 + 2;
         D_8019C768 = (D_8019C768[1] << 0x10) + D_8019C768[0];
     }
-    arg0 = currentRoomTileLayout->unkA;
+    arg0 = tilemap->cameraX.i.hi;
     temp_s0 = arg0 + 0x140;
     i = arg0 - 0x40;
     if (i < 0) {
@@ -241,7 +241,7 @@ void InitRoomEntities(s32 objLayoutId) {
     D_8019C770 = 0;
     func_80192D30(i);
     func_80192DD4(temp_s0);
-    func_80192FE4(currentRoomTileLayout->unkE + 0x120);
+    func_80192FE4(tilemap->cameraY.i.hi + 0x120);
 }
 
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", func_80193410);
