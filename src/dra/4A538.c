@@ -606,9 +606,9 @@ void InitRenderer(void) {
 void HideAllBackgroundLayers(void) {
     s32 i;
 
-    g_CurrentRoom.unk00 = 0;
+    g_Tilemap.D_800730A0 = 0;
     for (i = 0; i < MAX_BG_LAYER_COUNT; i++) {
-        g_CurrentRoom.bg[i].D_800730F4 = 0;
+        g_Tilemap.bg[i].D_800730F4 = 0;
     }
 }
 
@@ -617,58 +617,56 @@ INCLUDE_ASM("dra/nonmatchings/4A538", RenderTilemap);
 void SetRoomForegroundLayer(LayerDef2* layerDef) {
     D_8003C708.flags = 0;
     D_8013AED0 = 1;
-    D_80073088 = layerDef->tileDef;
-    if (g_CurrentRoom.hSize && g_CurrentRoom.vSize) {
+    if (g_Tilemap.hSize && g_Tilemap.vSize) {
     }
-    g_CurrentRoom.unk00 = 0;
-    if (D_80073088 == 0) {
+    g_Tilemap.D_80073088 = layerDef->tileDef;
+    g_Tilemap.D_800730A0 = 0;
+    if (g_Tilemap.D_80073088 == 0) {
         return;
     }
 
-    g_CurrentRoomTileLayout.fg = layerDef->layout;
-    D_8007309C = layerDef->zPriority;
+    g_Tilemap.fg = layerDef->layout;
+    g_Tilemap.D_8007309C = layerDef->zPriority;
     if (layerDef->rect.flags & 0x40) {
-        D_8007309C = 0x60;
+        g_Tilemap.D_8007309C = 0x60;
         D_8003C708.flags = layerDef->rect.flags;
         D_8003C708.unk2 = 0;
         D_8003C708.unk4 = 0;
         D_8003C708.zPriority = layerDef->zPriority;
     }
     if (layerDef->rect.flags & 0x20) {
-        D_8007309C = 0x60;
+        g_Tilemap.D_8007309C = 0x60;
         D_8003C708.flags = layerDef->rect.flags;
     }
     if (layerDef->rect.flags & 0x10) {
-        D_8007309C = 0x60;
+        g_Tilemap.D_8007309C = 0x60;
         D_8013AED0 = 0;
     };
-    g_CurrentRoom.unk00 = layerDef->unkE;
-    g_CurrentRoom.left = layerDef->rect.left;
-    g_CurrentRoom.top = layerDef->rect.top;
-    g_CurrentRoom.right = layerDef->rect.right;
-    g_CurrentRoom.bottom = layerDef->rect.bottom;
-    g_CurrentRoom.hSize = g_CurrentRoom.right - g_CurrentRoom.left + 1;
-    g_CurrentRoom.vSize = g_CurrentRoom.bottom - g_CurrentRoom.top + 1;
-    g_CurrentRoom.y = 0;
-    g_CurrentRoom.x = 0;
-    g_CurrentRoom.width = g_CurrentRoom.hSize << 8;
-    g_CurrentRoom.height = g_CurrentRoom.vSize << 8;
-    g_CurrentRoom.unk8 = 1;
+    g_Tilemap.D_800730A0 = layerDef->unkE;
+    g_Tilemap.left = layerDef->rect.left;
+    g_Tilemap.top = layerDef->rect.top;
+    g_Tilemap.right = layerDef->rect.right;
+    g_Tilemap.bottom = layerDef->rect.bottom;
+    g_Tilemap.hSize = g_Tilemap.right - g_Tilemap.left + 1;
+    g_Tilemap.vSize = g_Tilemap.bottom - g_Tilemap.top + 1;
+    g_Tilemap.y = 0;
+    g_Tilemap.x = 0;
+    g_Tilemap.width = g_Tilemap.hSize << 8;
+    g_Tilemap.height = g_Tilemap.vSize << 8;
+    g_Tilemap.unk8 = 1;
 }
 
 void SetRoomBackgroundLayer(s32 index, LayerDef2* layerDef) {
-    g_CurrentRoom.bg[index].D_800730F4 = 0;
-    g_CurrentRoom.bg[index].tileDef = layerDef->tileDef;
-    g_CurrentRoom.bg[index].layout = layerDef->layout;
-    if (g_CurrentRoom.bg[index].tileDef != 0) {
-        g_CurrentRoom.bg[index].zPriority = layerDef->zPriority;
-        g_CurrentRoom.bg[index].D_800730F4 = layerDef->unkE;
-        g_CurrentRoom.bg[index].w =
-            layerDef->rect.right - layerDef->rect.left + 1;
-        g_CurrentRoom.bg[index].h =
-            layerDef->rect.bottom - layerDef->rect.top + 1;
-        g_CurrentRoom.bg[index].flags = layerDef->rect.flags;
-        g_CurrentRoom.bg[index].D_80073100 = 1;
+    g_Tilemap.bg[index].D_800730F4 = 0;
+    g_Tilemap.bg[index].tileDef = layerDef->tileDef;
+    g_Tilemap.bg[index].layout = layerDef->layout;
+    if (g_Tilemap.bg[index].tileDef != 0) {
+        g_Tilemap.bg[index].zPriority = layerDef->zPriority;
+        g_Tilemap.bg[index].D_800730F4 = layerDef->unkE;
+        g_Tilemap.bg[index].w = layerDef->rect.right - layerDef->rect.left + 1;
+        g_Tilemap.bg[index].h = layerDef->rect.bottom - layerDef->rect.top + 1;
+        g_Tilemap.bg[index].flags = layerDef->rect.flags;
+        g_Tilemap.bg[index].D_80073100 = 1;
     }
 }
 
@@ -679,7 +677,7 @@ void LoadRoomLayer(s32 layerIndex) {
     SetRoomBackgroundLayer(0, g_api.o.tileLayers[layerIndex].bg);
 
     for (i = 1; i < MAX_BG_LAYER_COUNT; i++) {
-        g_CurrentRoom.bg[i].D_800730F4 = 0;
+        g_Tilemap.bg[i].D_800730F4 = 0;
     }
 }
 

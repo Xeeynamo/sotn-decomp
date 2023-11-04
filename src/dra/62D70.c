@@ -293,7 +293,7 @@ void DrawEntitiesHitbox(s32 blendMode) {
         g_GpuUsage.tile++;
     }
 
-    if (g_GpuUsage.drawModes < 0x400) {
+    if (g_GpuUsage.drawModes < MAX_DRAW_MODES) {
         SetDrawMode(drawMode, 0, 0, (blendMode - 1) << 5, &g_Vram.D_800ACD80);
         AddPrim(&ot[otIdx], drawMode);
         g_GpuUsage.drawModes++;

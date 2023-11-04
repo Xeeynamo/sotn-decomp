@@ -28,8 +28,9 @@ void EntityUnkId1C(Entity* self) {
     case 0:
         InitializeEntity(D_801804F4);
         self->hitboxState = 0;
-        velX = self->ext.generic.unkA0 - (self->posX.i.hi + g_Camera.posX.i.hi)
-               << 0x10;
+        velX =
+            self->ext.generic.unkA0 - (self->posX.i.hi + g_Tilemap.cameraX.i.hi)
+            << 0x10;
         if (velX < 0) {
             velX += 0x3F;
         }

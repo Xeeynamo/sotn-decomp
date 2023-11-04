@@ -111,9 +111,10 @@ void EntityZombieSpawner(Entity* self) {
 
                 // Zombies are prevented from spawning too close to the
                 // edges of the room.
-                distCameraEntity = g_Camera.posX.i.hi + newEntity->posX.i.hi;
-                if ((distCameraEntity < (g_CurrentRoom.x + 128)) ||
-                    ((g_CurrentRoom.width - 128) < distCameraEntity)) {
+                distCameraEntity =
+                    g_Tilemap.cameraX.i.hi + newEntity->posX.i.hi;
+                if ((distCameraEntity < (g_Tilemap.x + 128)) ||
+                    ((g_Tilemap.width - 128) < distCameraEntity)) {
                     DestroyEntity(newEntity);
                 }
             }

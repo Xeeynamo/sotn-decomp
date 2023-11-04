@@ -141,29 +141,28 @@ void func_800F298C(void) {
             PLAYER.facingLeft = 1;
         }
         ptr_791c = &D_8009791C;
-        g_CurrentRoom.x =
-            ((D_801375BC.def - 1)->tileLayoutId - g_CurrentRoom.left) << 8;
-        g_CurrentRoom.y =
-            ((D_801375BC.def - 1)->tilesetId - g_CurrentRoom.top) << 8;
-        g_CurrentRoom.width =
-            (((D_801375BC.def - 1)->objGfxId - g_CurrentRoom.left) + 1) << 8;
-        g_CurrentRoom.height =
-            (((D_801375BC.def - 1)->objLayoutId - g_CurrentRoom.top) + 1) << 8;
+        g_Tilemap.x =
+            ((D_801375BC.def - 1)->tileLayoutId - g_Tilemap.left) << 8;
+        g_Tilemap.y = ((D_801375BC.def - 1)->tilesetId - g_Tilemap.top) << 8;
+        g_Tilemap.width =
+            (((D_801375BC.def - 1)->objGfxId - g_Tilemap.left) + 1) << 8;
+        g_Tilemap.height =
+            (((D_801375BC.def - 1)->objLayoutId - g_Tilemap.top) + 1) << 8;
 
-        *ptr_791c = (playerX >> 8) + g_CurrentRoom.left;
-        D_80097920 = (playerY >> 8) + g_CurrentRoom.top;
+        *ptr_791c = (playerX >> 8) + g_Tilemap.left;
+        D_80097920 = (playerY >> 8) + g_Tilemap.top;
 
-        g_Camera.posX.i.hi = (*ptr_791c - g_CurrentRoom.left) << 8;
-        g_Camera.posY.i.hi = (D_80097920 - g_CurrentRoom.top) << 8;
+        g_Tilemap.cameraX.i.hi = (*ptr_791c - g_Tilemap.left) << 8;
+        g_Tilemap.cameraY.i.hi = (D_80097920 - g_Tilemap.top) << 8;
 
         if (D_8003C730 == 2) {
-            g_CurrentRoom.height -= 0x100;
+            g_Tilemap.height -= 0x100;
             PLAYER.facingLeft = 1;
-            g_CurrentRoom.bottom -= 1;
+            g_Tilemap.bottom -= 1;
         }
         if (D_8006C374 == 0x2C) {
-            g_CurrentRoom.y = 0x2FB;
-            g_CurrentRoom.height = 0x3FB;
+            g_Tilemap.y = 0x2FB;
+            g_Tilemap.height = 0x3FB;
             g_StageId = STAGE_TOP;
         }
         if (D_80097C98 == 6) {
@@ -174,8 +173,8 @@ void func_800F298C(void) {
         }
         func_800F0CD8(0);
         func_800F0CD8(0);
-        D_80073074 = (s32)g_Camera.posX.i.hi;
-        D_8007307C = (s32)g_Camera.posY.i.hi;
+        D_80073074 = (s32)g_Tilemap.cameraX.i.hi;
+        D_8007307C = (s32)g_Tilemap.cameraY.i.hi;
         g_api.o.InitRoomEntities(D_801375BC.def->objLayoutId);
         g_api.o.Update();
         g_api.o.Update();
@@ -214,10 +213,10 @@ void func_800F298C(void) {
         func_800F1424();
 #endif
         func_800F2014();
-        D_80097908 = g_Camera.posX.i.hi - D_80073074;
-        D_8009790C = g_Camera.posY.i.hi - D_8007307C;
-        D_80073074 = g_Camera.posX.i.hi;
-        D_8007307C = g_Camera.posY.i.hi;
+        D_80097908 = g_Tilemap.cameraX.i.hi - D_80073074;
+        D_8009790C = g_Tilemap.cameraY.i.hi - D_8007307C;
+        D_80073074 = g_Tilemap.cameraX.i.hi;
+        D_8007307C = g_Tilemap.cameraY.i.hi;
 
         g_api.o.TestCollisions();
         D_8013759C = PLAYER.posX.i.hi;
@@ -292,8 +291,8 @@ void func_800F298C(void) {
             playerY -= D_801375A8;
             D_8013759C = PLAYER.posX.val;
             D_801375A0 = PLAYER.posY.val;
-            D_801375AC = g_Camera.posX.i.hi;
-            D_801375B0 = g_Camera.posY.i.hi;
+            D_801375AC = g_Tilemap.cameraX.i.hi;
+            D_801375B0 = g_Tilemap.cameraY.i.hi;
 
             if (*D_80097420 != 0) {
                 func_8010E0D0(*D_80097420);
@@ -318,8 +317,8 @@ void func_800F298C(void) {
                 g_MenuStep = MENU_STEP_INIT;
                 return;
             }
-            D_801375B4 = D_801375AC - g_Camera.posX.i.hi;
-            D_801375B8 = D_801375B0 - g_Camera.posY.i.hi;
+            D_801375B4 = D_801375AC - g_Tilemap.cameraX.i.hi;
+            D_801375B8 = D_801375B0 - g_Tilemap.cameraY.i.hi;
             D_801375A4 = D_8013759C - PLAYER.posX.val;
             D_801375A8 = D_801375A0 - PLAYER.posY.val;
             D_801375A4 -= D_80097488;
@@ -538,20 +537,21 @@ void func_800F298C(void) {
                     D_801375BC.def = &g_api.o.rooms[layer->bottom & 0x7F].load;
                     // TODO: !FAKE
                     // D_8009791C is probably part of a struct. see also
-                    // (&g_Camera.posX)->i.hi seen elsewhere in this function.
-                    // do-while prevents instruction reordering
+                    // (&g_Tilemap.cameraX)->i.hi seen elsewhere
+                    // in this function. do-while prevents instruction
+                    // reordering
                     do {
                         D_8009791C = layer->zPriority;
                     } while (0);
                     D_80097920 = layer->unkE;
                 } else {
-                    D_8009791C = (playerX >> 8) + g_CurrentRoom.left;
-                    D_80097920 = (playerY >> 8) + g_CurrentRoom.top;
+                    D_8009791C = (playerX >> 8) + g_Tilemap.left;
+                    D_80097920 = (playerY >> 8) + g_Tilemap.top;
                 }
                 D_8013759C = PLAYER.posX.val;
                 D_801375A0 = PLAYER.posY.val;
-                PLAYER.posX.i.hi = D_801375C0 + g_Camera.posX.i.hi;
-                PLAYER.posY.i.hi = D_801375C4 + g_Camera.posY.i.hi;
+                PLAYER.posX.i.hi = D_801375C0 + g_Tilemap.cameraX.i.hi;
+                PLAYER.posY.i.hi = D_801375C4 + g_Tilemap.cameraY.i.hi;
                 if (D_8003C708.flags & 0x60) {
                     LoadGfxAsync(ANIMSET_DRA(1));
                 }
@@ -576,37 +576,35 @@ void func_800F298C(void) {
                 if (D_8003C708.flags & 0x40) {
                     LoadGfxAsync(ANIMSET_DRA(4));
                 }
-                g_CurrentRoom.x =
-                    ((D_801375BC.def - 1)->tileLayoutId - g_CurrentRoom.left)
+                g_Tilemap.x =
+                    ((D_801375BC.def - 1)->tileLayoutId - g_Tilemap.left) << 8;
+                g_Tilemap.y =
+                    ((D_801375BC.def - 1)->tilesetId - g_Tilemap.top) << 8;
+                g_Tilemap.width =
+                    (((D_801375BC.def - 1)->objGfxId - g_Tilemap.left) + 1)
                     << 8;
-                g_CurrentRoom.y =
-                    ((D_801375BC.def - 1)->tilesetId - g_CurrentRoom.top) << 8;
-                g_CurrentRoom.width =
-                    (((D_801375BC.def - 1)->objGfxId - g_CurrentRoom.left) + 1)
-                    << 8;
-                g_CurrentRoom.height =
-                    (((D_801375BC.def - 1)->objLayoutId - g_CurrentRoom.top) +
-                     1)
+                g_Tilemap.height =
+                    (((D_801375BC.def - 1)->objLayoutId - g_Tilemap.top) + 1)
                     << 8;
                 // permuter found this weird & -> thing, I don't know man
-                (&g_Camera.posX)->i.hi = (D_8009791C - g_CurrentRoom.left) << 8;
-                g_Camera.posY.i.hi = (D_80097920 - g_CurrentRoom.top) << 8;
-                playerX = PLAYER.posX.i.hi + g_Camera.posX.i.hi;
-                playerY = PLAYER.posY.i.hi + g_Camera.posY.i.hi;
+                (&g_Tilemap.cameraX)->i.hi = (D_8009791C - g_Tilemap.left) << 8;
+                g_Tilemap.cameraY.i.hi = (D_80097920 - g_Tilemap.top) << 8;
+                playerX = PLAYER.posX.i.hi + g_Tilemap.cameraX.i.hi;
+                playerY = PLAYER.posY.i.hi + g_Tilemap.cameraY.i.hi;
                 func_8011A9D8();
                 PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0;
                 func_800F0CD8(0);
                 func_8010BFFC();
-                playerX = PLAYER.posX.i.hi + g_Camera.posX.i.hi;
-                playerY = PLAYER.posY.i.hi + g_Camera.posY.i.hi;
+                playerX = PLAYER.posX.i.hi + g_Tilemap.cameraX.i.hi;
+                playerY = PLAYER.posY.i.hi + g_Tilemap.cameraY.i.hi;
                 func_800F0CD8(0);
                 if (g_StageId == STAGE_RTOP) {
                     DestroyEntities(0x40);
                     for (i = 0; i < LEN(g_unkGraphicsStruct.D_8009742C); i++) {
                         g_unkGraphicsStruct.D_8009742C[i] = 0;
                     }
-                    D_80073074 = (s32)g_Camera.posX.i.hi;
-                    D_8007307C = (s32)g_Camera.posY.i.hi;
+                    D_80073074 = (s32)g_Tilemap.cameraX.i.hi;
+                    D_8007307C = (s32)g_Tilemap.cameraY.i.hi;
                     g_api.o.InitRoomEntities(D_801375BC.def->objLayoutId);
                     g_api.o.Update();
                     func_800F0CD8(0);
@@ -658,8 +656,8 @@ void func_800F298C(void) {
                     for (i = 0; i < LEN(g_unkGraphicsStruct.D_8009742C); i++) {
                         g_unkGraphicsStruct.D_8009742C[i] = 0;
                     }
-                    D_80073074 = g_Camera.posX.i.hi;
-                    D_8007307C = g_Camera.posY.i.hi;
+                    D_80073074 = g_Tilemap.cameraX.i.hi;
+                    D_8007307C = g_Tilemap.cameraY.i.hi;
                     g_api.o.InitRoomEntities(D_801375BC.def->objLayoutId);
                     g_api.o.Update();
                     func_800F0CD8(0);
@@ -669,8 +667,8 @@ void func_800F298C(void) {
                         g_unkGraphicsStruct.D_8009742C[i] = 0;
                     }
                 }
-                D_80073074 = g_Camera.posX.i.hi;
-                D_8007307C = g_Camera.posY.i.hi;
+                D_80073074 = g_Tilemap.cameraX.i.hi;
+                D_8007307C = g_Tilemap.cameraY.i.hi;
                 if (D_80097C98 == 2) {
                     D_80097C98 = 3;
                     func_800EA5AC(0x40, 0xFF, 0xFF, 0xFF);

@@ -44,15 +44,15 @@ void func_80191B44(Entity* entity) {
         switch (temp_s1) {
         case 4:
         case 5:
-            if (g_CurrentRoom.x != 0) {
+            if (g_Tilemap.x != 0) {
                 return;
             }
             break;
 
         case 6:
             if (g_pads->pressed & PAD_TRIANGLE) {
-                g_CurrentRoom.x = 0;
-                g_CurrentRoom.width = 1280;
+                g_Tilemap.x = 0;
+                g_Tilemap.width = 1280;
                 entity->step++;
                 return;
             }
@@ -70,10 +70,10 @@ void func_80191B44(Entity* entity) {
             unk = 8;
             temp_s1 = (temp_s1 * unk) + phi_v1;
             temp_v0_2 = &D_80180590[temp_s1];
-            g_CurrentRoom.x = *(temp_v0_2++);
-            g_CurrentRoom.y = *(temp_v0_2++);
-            g_CurrentRoom.width = *(temp_v0_2++);
-            g_CurrentRoom.height = *(temp_v0_2++);
+            g_Tilemap.x = *(temp_v0_2++);
+            g_Tilemap.y = *(temp_v0_2++);
+            g_Tilemap.width = *(temp_v0_2++);
+            g_Tilemap.height = *(temp_v0_2++);
         }
     } else {
         InitializeEntity(D_801804A0);
@@ -139,7 +139,7 @@ void EntityBackgroundClouds(Entity* self) {
         prim->type = PRIM_G4;
         prim->x0 = prim->x2 = 0;
         prim->x1 = prim->x3 = 0x100;
-        prim->y0 = prim->y1 = 0x6E - g_Camera.posY.i.hi;
+        prim->y0 = prim->y1 = 0x6E - g_Tilemap.cameraY.i.hi;
         prim->y2 = prim->y3 = 0xF0;
         setRGB0(prim, 16, 16, 16);
         prim->priority = 0x20;
@@ -148,8 +148,8 @@ void EntityBackgroundClouds(Entity* self) {
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
         prim = prim->next;
-        camX = -g_Camera.posX.i.hi;
-        camY = 32 - g_Camera.posY.i.hi;
+        camX = -g_Tilemap.cameraX.i.hi;
+        camY = 32 - g_Tilemap.cameraY.i.hi;
         while (prim != 0) {
             prim->x0 = prim->x2 = camX;
             camX += 95;

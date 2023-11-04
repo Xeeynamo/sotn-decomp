@@ -186,7 +186,7 @@ void func_801AA218(s16 arg0) {
 }
 
 void EntityCutscene(Entity* self) {
-    Unkstruct8* roomLayout = &g_CurrentRoomTileLayout;
+    Tilemap* tilemap = &g_Tilemap;
     Entity* player = &PLAYER;
     u16 posX;
 
@@ -210,7 +210,7 @@ void EntityCutscene(Entity* self) {
     case 1:
         if (self->step_s != 0) {
             if ((player->step < 3) || (player->step == 25)) {
-                posX = player->posX.i.hi + roomLayout->unkA;
+                posX = player->posX.i.hi + tilemap->cameraX.i.hi;
                 if (posX > 0x8000) {
                     posX = 0;
                 }
@@ -225,7 +225,7 @@ void EntityCutscene(Entity* self) {
                 SetStep(2);
             }
         } else {
-            if ((player->posX.i.hi + roomLayout->unkA) < 0xE1) {
+            if ((player->posX.i.hi + tilemap->cameraX.i.hi) < 0xE1) {
                 D_8003C8B8 = 0;
                 self->step_s++;
             }
@@ -233,7 +233,7 @@ void EntityCutscene(Entity* self) {
         break;
 
     case 2:
-        posX = player->posX.i.hi + roomLayout->unkA;
+        posX = player->posX.i.hi + tilemap->cameraX.i.hi;
         if (posX > 0x8000) {
             posX = 0;
         }
@@ -250,7 +250,7 @@ void EntityCutscene(Entity* self) {
         break;
 
     case 3:
-        posX = player->posX.i.hi + roomLayout->unkA;
+        posX = player->posX.i.hi + tilemap->cameraX.i.hi;
         if (posX > 0x8000) {
             posX = 0;
         }
@@ -266,7 +266,7 @@ void EntityCutscene(Entity* self) {
         g_Player.D_80072EFC = 1;
         if (AnimateEntity(D_80180830, self) == 0) {
             self->step++;
-            g_CurrentRoom.width = 0x100;
+            g_Tilemap.width = 0x100;
         }
         player->animCurFrame = self->animCurFrame;
         break;

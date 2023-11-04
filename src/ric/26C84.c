@@ -442,8 +442,8 @@ void func_80169D74(Entity* entity) {
     }
     temp = entity->ext.generic.unk84;
     ptr = temp.unk + ((u16)entity->ext.generic.unk80.modeS16.unk0 * 4);
-    entity->posX.i.hi = ptr[0] - g_Camera.posX.i.hi;
-    entity->posY.i.hi = ptr[1] - g_Camera.posY.i.hi;
+    entity->posX.i.hi = ptr[0] - g_Tilemap.cameraX.i.hi;
+    entity->posY.i.hi = ptr[1] - g_Tilemap.cameraY.i.hi;
     entity->ext.generic.unk80.modeS16.unk0 =
         (entity->ext.generic.unk80.modeS16.unk0 + 1) & 0x3F;
 }

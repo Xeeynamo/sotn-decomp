@@ -84,6 +84,8 @@
 #define catPrim(p0, p1) setaddr(p0, p1)
 #define termPrim(p) setaddr(p, 0xffffffff)
 
+#define setSprt16(p) setlen(p, 3), setcode(p, 0x7c)
+
 #define setSemiTrans(p, abe)                                                   \
     ((abe) ? setcode(p, getcode(p) | 0x02) : setcode(p, getcode(p) & ~0x02))
 
