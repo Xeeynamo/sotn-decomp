@@ -294,6 +294,18 @@ typedef struct {
     s16 timer;
 } ButtonComboState;
 
+struct SeqData
+{
+    u8 volume;
+    u8 reverb_depth;
+    union unk2 {
+        struct {
+            u8 one_shot : 4;
+            u8 vab_id : 4;
+        } info;
+    } unk2;
+};
+
 // Used for the button combos to signal successfully completing the sequence
 #define COMBO_COMPLETE 0xFF
 
@@ -466,6 +478,7 @@ extern const char aPbav_1[];
 extern const char aPbav_2[];
 extern s16 D_800BD07C[];
 extern s16 D_800BD19C[];
+extern struct SeqData D_800BD1E0[];
 extern s32 g_DebugEnabled;
 extern s32 D_800BD1C4;
 extern s32 g_VabAddrs[6];
@@ -744,6 +757,7 @@ extern s16 D_8013AE84[];
 extern s16 D_8013AE8C;
 extern s16 D_8013AEA0[];
 extern s16 D_8013AE94;
+extern u8 D_8013AE98;
 extern s32 D_8013AE9C;
 extern s32 D_8013AECC;
 extern s32 D_8013AED0;
