@@ -294,8 +294,7 @@ typedef struct {
     s16 timer;
 } ButtonComboState;
 
-struct SeqData
-{
+struct SeqData {
     u8 volume;
     u8 reverb_depth;
     union unk2 {
