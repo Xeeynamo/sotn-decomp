@@ -473,7 +473,7 @@ void func_800F2014(void) {
         if (!(currMapRect & subMap)) {
             g_CastleMap[idx] = currMapRect | subMap;
             g_RoomCount++;
-            func_800F1B08(x, y, 0, currMapRect);
+            func_800F1B08(x, y, 0);
             func_800F1EB0(x, y, 0xFFFF);
         }
     }
