@@ -1245,7 +1245,28 @@ void func_801337B4(void) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/8D3E8", func_80133810);
+void func_80133810(u8 arg0) {
+    s16 index;
+
+    if (D_80139810 != 0) {
+        func_801337B4();
+    }
+    index = arg0;
+    g_SeqAccessNum =
+        SsSeqOpen(D_80138F84[index], D_800BD1E0[index].unk2.info.vab_id);
+    D_8013AE98 = D_800BD1E0[index].reverb_depth;
+    SetReverbDepth(D_8013AE98);
+    D_8013909C = D_800BD1E0[index].volume;
+    D_8013AEF0 = D_800BD1E0[index].volume;
+    SsSeqSetVol(g_SeqAccessNum, D_8013909C, D_8013909C);
+    if (!D_800BD1E0[index].unk2.info.one_shot) {
+        SsSeqPlay(g_SeqAccessNum, 1, 1);
+    } else {
+        SsSeqPlay(g_SeqAccessNum, 1, 0);
+    }
+    D_80139810 = index;
+    D_801390C4 = 0xE;
+}
 
 bool func_80133940(void) { return D_801396F4 == 0; }
 
