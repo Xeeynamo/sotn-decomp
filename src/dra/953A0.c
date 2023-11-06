@@ -131,7 +131,7 @@ void func_801361F8(void) {
         func_80134F50();
         func_80133FCC();
         func_801353A0();
-        func_8002A024(0, D_80138F28);
+        SpuSetKey(0, D_80138F28);
         D_80138F28 = 0;
         func_80131FCC();
 

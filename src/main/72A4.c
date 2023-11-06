@@ -50,39 +50,39 @@ INCLUDE_ASM("asm/us/main/nonmatchings/72A4", InitGeom);
 
 INCLUDE_ASM("asm/us/main/nonmatchings/72A4", SquareRoot0);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/72A4", func_80016F7C);
+INCLUDE_ASM("asm/us/main/nonmatchings/72A4", InvSquareRoot);
 
 INCLUDE_ASM("asm/us/main/nonmatchings/72A4", func_80017008);
 
 INCLUDE_ASM("asm/us/main/nonmatchings/72A4", func_80017078);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/72A4", func_80017134);
+INCLUDE_ASM("asm/us/main/nonmatchings/72A4", MatrixNormal);
 
 INCLUDE_ASM("asm/us/main/nonmatchings/72A4", SquareRoot12);
 
 INCLUDE_ASM("asm/us/main/nonmatchings/72A4", CompMatrix);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/72A4", func_8001741C);
+INCLUDE_ASM("asm/us/main/nonmatchings/72A4", MulMatrix0);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/72A4", func_80017528);
+INCLUDE_ASM("asm/us/main/nonmatchings/72A4", MulRotMatrix0);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/72A4", func_8001760C);
+INCLUDE_ASM("asm/us/main/nonmatchings/72A4", MulRotMatrix);
 
 INCLUDE_ASM("asm/us/main/nonmatchings/72A4", SetMulMatrix);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/72A4", func_80017804);
+INCLUDE_ASM("asm/us/main/nonmatchings/72A4", ApplyMatrixLV);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/72A4", func_80017964);
+INCLUDE_ASM("asm/us/main/nonmatchings/72A4", ApplyRotMatrix);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/72A4", func_80017994);
+INCLUDE_ASM("asm/us/main/nonmatchings/72A4", ScaleMatrixL);
 
 INCLUDE_ASM("asm/us/main/nonmatchings/72A4", PushMatrix);
 
 INCLUDE_ASM("asm/us/main/nonmatchings/72A4", PopMatrix);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/72A4", func_80017BF8);
+INCLUDE_ASM("asm/us/main/nonmatchings/72A4", ReadRotMatrix);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/72A4", func_80017C40);
+INCLUDE_ASM("asm/us/main/nonmatchings/72A4", ReadLightMatrix);
 
 INCLUDE_ASM("asm/us/main/nonmatchings/72A4", ReadColorMatrix);
 
@@ -237,9 +237,9 @@ INCLUDE_ASM("asm/us/main/nonmatchings/72A4", func_8001929C);
 
 INCLUDE_ASM("asm/us/main/nonmatchings/72A4", FlushCache);
 
-void func_800192DC(s32 arg0, s32 arg1) {
-    D_800987C8 = arg0;
-    D_80098894 = arg1;
+void StSetRing(u_long* ring_addr, u_long ring_size1) {
+    D_800987C8 = ring_addr;
+    D_80098894 = ring_size1;
     StClearRing();
 }
 

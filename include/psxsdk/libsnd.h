@@ -168,4 +168,6 @@ void SsUtSetReverbDepth(
     short rdepth  // Right channel depth. Value between 0 and 127
 );
 
+void SsUtSetReverbDelay(short delay);
+
 #endif
