@@ -890,10 +890,10 @@ void func_80131F04(void) {
 s32 func_80131F28(void) { return D_80138F7C; }
 
 u16 func_80131F38(void) {
-    if (g_SeqInfoIndex == 0) {
+    if (g_SeqPlayingId == 0) {
         return 0;
     }
-    return g_SeqInfoIndex | 0x200;
+    return g_SeqPlayingId | 0x200;
 }
 
 bool func_80131F68(void) {
@@ -1108,7 +1108,7 @@ void SoundInit(void) {
 s32 func_801326D8(void) {
     if (D_8013901C != 0)
         return 1;
-    if (g_SeqInfoIndex != 0)
+    if (g_SeqPlayingId != 0)
         return 3;
     return (D_801390D8 != 0) * 2;
 }
@@ -1236,11 +1236,11 @@ void func_80133604();
 void func_80133780(s8 arg0) { SsSetSerialAttr(0, 1, arg0 == 1); }
 
 void StopSeq(void) {
-    if (g_SeqInfoIndex != 0) {
+    if (g_SeqPlayingId != 0) {
         SsSeqStop(g_SeqAccessNum);
         SsSeqClose(g_SeqAccessNum);
         func_8013415C();
-        g_SeqInfoIndex = 0;
+        g_SeqPlayingId = 0;
         D_801390C4 = 0;
     }
 }
@@ -1248,7 +1248,7 @@ void StopSeq(void) {
 void PlaySeq(u8 arg0) {
     s16 index;
 
-    if (g_SeqInfoIndex != 0) {
+    if (g_SeqPlayingId != 0) {
         StopSeq();
     }
     index = arg0;
@@ -1264,7 +1264,7 @@ void PlaySeq(u8 arg0) {
     } else {
         SsSeqPlay(g_SeqAccessNum, 1, 0);
     }
-    g_SeqInfoIndex = index;
+    g_SeqPlayingId = index;
     D_801390C4 = 0xE;
 }
 

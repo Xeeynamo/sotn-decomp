@@ -729,7 +729,7 @@ extern s32 D_801397FC;
 extern s16 D_80139800;
 extern s16 D_80139804;
 extern s32 D_8013980C;
-extern u8 g_SeqInfoIndex;
+extern u8 g_SeqPlayingId;
 extern s16 D_80139814[];
 extern s16 D_80139820;
 extern s32 D_80139824;
