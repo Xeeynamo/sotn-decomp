@@ -61,4 +61,10 @@ void SetTransMatrix(MATRIX* m);
 void SetFarColor(long rfc, long gfc, long bfc); // Color values (input)
 void SetFogNear(long a, long h); // Distance between visual point and screen
 
+extern long SquareRoot0(long a);
+extern long SquareRoot12(long a);
+extern int rcos(int a);
+extern int rsin(int a);
+extern long ratan2(long y, long x);
+
 #endif

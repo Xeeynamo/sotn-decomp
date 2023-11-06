@@ -29,7 +29,6 @@ HydrateSaveSummaryEntry = 0x801B2F50;
 MemcardInit = 0x801B84F0;
 MemcardParse = 0x801B8518;
 MemcardDetectSave = 0x801B873C;
-MemcardDetectSave = 0x801B873C;
 IsMemcardBlockUsed = 0x801B881C;
 MemcardReadFile = 0x801B884C;
 MemcardWriteFile = 0x801B88F4;

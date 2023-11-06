@@ -9,6 +9,7 @@
 #include <psxsdk/libgpu.h>
 #include <psxsdk/libgs.h>
 #include <psxsdk/libgte.h>
+#include <psxsdk/libspu.h>
 #include <psxsdk/libsnd.h>
 #include <psxsdk/romio.h>
 
@@ -1306,7 +1307,7 @@ typedef struct {
     /* 800730A0 */ s32 flags;
     /* 800730A4 */ s32 hSize;
     /* 800730A8 */ s32 vSize;
-    /* 800730AC */ s32 unk8;
+    /* 800730AC */ u32 unk8;
     /* 800730B0 */ s32 left;
     /* 800730B4 */ s32 top;
     /* 800730B8 */ s32 right;
@@ -1416,8 +1417,6 @@ typedef struct {
     /* 0x26 */ u8 b3;
     /* 0x27 */ u8 unk27;
 } PlayerDraw; /* size = 0x28 */
-
-extern const s16 g_AtanTable[0x400];
 
 extern s32 D_8003925C;
 extern s32 g_IsTimeAttackUnlocked;
@@ -1613,19 +1612,5 @@ extern s32 D_800987B4;
 extern s32 D_800987C8;
 extern s32 g_DebugPlayer;
 extern s32 D_80098894;
-
-void PadInit(s32 arg0);
-int VSync(s32);
-s32 rcos(s32);
-s32 rsin(s32);
-s32 SquareRoot0(s32);
-s32 SquareRoot12(s32);
-long ratan2(long x, long y);
-void* DMACallback(int dma, void (*func)());
-void func_800192DC(s32 arg0, s32 arg1);
-s32 func_8001D290(s32, s32);
-s32 func_8001D374(s8, s16, s16);
-void func_8001D2E0(s32, s32, s32);
-void func_8002A024(s32, s32);
 
 #endif

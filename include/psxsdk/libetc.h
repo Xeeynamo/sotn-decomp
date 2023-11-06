@@ -14,9 +14,12 @@ struct Callbacks {
 extern u16 D_8002C2BA;
 extern struct Callbacks* D_8002D340;
 
-int ResetCallback(void);
+int VSync(int mode);
 int VSyncCallback(void (*f)());
 int VSyncCallbacks(int ch, void (*f)());
+
+void* DMACallback(int dma, void (*func)());
+int ResetCallback(void);
 int StopCallback(void);
 int RestartCallback(void);
 u16 CheckCallback(void);

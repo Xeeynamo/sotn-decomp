@@ -7,6 +7,7 @@ from pathlib import Path
 import re
 import sys
 import yaml
+from collections import OrderedDict
 
 parser = argparse.ArgumentParser(description="Perform operations on game symbols")
 parser.add_argument("--version", required=False, type=str, help="Game version")
@@ -83,7 +84,7 @@ def sort_symbols(syms):
             offset = int(parts[2].rstrip(";"), 16)
             offsets.append((line, offset))
     offsets.sort(key=lambda x: x[1])
-    return [line[0] for line in offsets]
+    return list(OrderedDict.fromkeys([line[0] for line in offsets]))
 
 
 # rewrite the same file with an ordered symbol list
