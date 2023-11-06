@@ -18,6 +18,10 @@ class TestSortSymbols(unittest.TestCase):
             ["sym1 = 0x1234;", "sym2 = 0x5678; // some comment", "sym3 = 0x9ABC;"],
         )
 
+    def test_remove_duplicates_with_same_name_and_offset(self):
+        sorted = sort_symbols(["func_stuff = 0x1234;", "func_stuff = 0x1234;"])
+        self.assertEqual(sorted, ["func_stuff = 0x1234;"])
+
 
 class TestTokenizeAssembly(unittest.TestCase):
     def test_tokenize_instruction_with_no_parameters(self):
