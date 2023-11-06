@@ -1418,8 +1418,6 @@ typedef struct {
     /* 0x27 */ u8 unk27;
 } PlayerDraw; /* size = 0x28 */
 
-extern const s16 g_AtanTable[0x400];
-
 extern s32 D_8003925C;
 extern s32 g_IsTimeAttackUnlocked;
 

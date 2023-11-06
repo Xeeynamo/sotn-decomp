@@ -612,7 +612,250 @@ void HideAllBackgroundLayers(void) {
     }
 }
 
+typedef struct {
+    /* 0x1F800010 0x00 */ u16 unk10;
+    /* 0x1F800012 0x02 */ u16 unk12;
+    /* 0x1F800014 0x04 */ u16 unk14;
+    /* 0x1F800016 0x06 */ u16 unk16;
+    /* 0x1F800018 0x08 */ u16 zPriority;
+    /* 0x1F80001A 0x0A */ u16 unk1A;
+    /* 0x1F80001C 0x0C */ u16 unk1C;
+    /* 0x1F80001E 0x0E */ u16 w;
+    /* 0x1F800020 0x10 */ u16 h;
+    /* 0x1F800022 0x12 */ u16 pad22;
+    /* 0x1F800024 0x14 */ u16* layout;
+    /* 0x1F800028 0x18 */ u8* gfxPage;
+    /* 0x1F80002C 0x1C */ u8* gfxIndex;
+    /* 0x1F800030 0x20 */ u8* clut;
+    /* 0x1F800034 0x24 */ u32* ot;
+    /* 0x1F800038 0x28 */ SPRT_16* sp16;
+    /* 0x1F80003C 0x2C */ DR_MODE* dr;
+    /* 0x1F800040 0x30 */ RECT rect;
+} TilemapRenderer;
+#ifndef NON_MATCHING
 INCLUDE_ASM("dra/nonmatchings/4A538", RenderTilemap);
+#else
+void RenderTilemap(void) {
+    SPRT_16* sprt = (SPRT_16*)0x1F800000;
+    TilemapRenderer* r = (TilemapRenderer*)0x1F800010;
+    Tilemap* t = &g_Tilemap;
+    s32 sp18;
+    s32 tileX;
+    s32 var_a0;
+    s32 var_s4;
+    s32 i;
+    s32 k;
+    s32 j;
+    s32 var_t7;
+    BgLayer* bg;
+    u16 tile;
+    s32 x;
+    s32 y;
+    u16 gfxIndex;
+    u16 gfxPage;
+    u16 clut;
+    u16 temp_v0_3;
+    s32 temp_lo;
+    u16 var_a3_2;
+
+    r->rect.x = 0;
+    r->rect.y = 0;
+    r->rect.w = 255;
+    r->rect.h = 255;
+    setSprt16(sprt);
+    r->ot = g_CurrentBuffer->ot;
+    r->sp16 = &g_CurrentBuffer->sprite16[g_GpuUsage.sp16];
+    r->dr = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
+    r->unk10 = g_backbufferX;
+    r->unk12 = g_backbufferY;
+    if (t->unk8 > 0) {
+        t->unk8--;
+    } else {
+        r->unk14 = t->flags;
+        if (r->unk14 & 1) {
+            r->unk16 = r->unk14 & 0x200;
+            r->gfxPage = t->D_80073088->gfxPage;
+            r->gfxIndex = t->D_80073088->gfxIndex;
+            r->clut = t->D_80073088->clut;
+            r->zPriority = t->zPriority;
+            r->w = t->hSize * TILE_SIZE;
+            r->h = t->vSize * TILE_SIZE;
+            r->unk1C = 0;
+            r->unk1A = 0;
+            sp18 = t->cameraX.i.hi & 0xF;
+            var_t7 = t->cameraX.i.hi << 0x10 >> 0x14;
+            if (r->unk14 & 0x80) {
+                r->unk1A = 1;
+                r->unk1C = r->unk14 & 0x60;
+            }
+            var_s4 = t->cameraY.i.hi << 0x10 >> 0x14;
+            y = r->unk12 - (t->cameraY.i.hi & 0xF);
+            for (i = 0; i < N_VERTI_TILES; i++, y += TILE_SIZE) {
+                x = r->unk10 - sp18;
+                var_a0 = var_s4 + i;
+                if (var_a0 < 0) {
+                    continue;
+                }
+                if (var_a0 >= r->h) {
+                    break;
+                }
+                j = 0;
+                tileX = var_t7;
+                temp_lo = var_a0 * r->w;
+                r->layout = &t->fg[tileX + temp_lo];
+                for (; j < N_HORIZ_TILES; j++, x += TILE_SIZE, tileX++) {
+                    if (tileX < 0) {
+                        continue;
+                    }
+                    if (tileX >= r->w) {
+                        break;
+                    }
+                    tile = *r->layout++;
+                    if (tile == 0) {
+                        continue;
+                    }
+                    gfxPage = r->gfxPage[tile];
+                    gfxIndex = r->gfxIndex[tile];
+                    clut = D_8003C104[r->clut[tile]];
+                    if (r->unk16) {
+                        clut = D_8003C104[0x100 + r->clut[tile]];
+                    }
+                    if (g_GpuUsage.sp16 >= MAXSPRT16) {
+                        continue;
+                    }
+                    sprt->clut = clut;
+                    sprt->x0 = x;
+                    sprt->y0 = y;
+                    sprt->u0 = gfxIndex * TILE_SIZE;
+                    sprt->v0 = gfxIndex & ~TILE_MASK;
+                    setSemiTrans(sprt, r->unk1A);
+                    setShadeTex(sprt, true);
+                    __builtin_memcpy(r->sp16, sprt, sizeof(SPRT_16));
+                    addPrim(r->zPriority + gfxPage + r->ot, r->sp16);
+                    r->sp16++;
+                    g_GpuUsage.sp16++;
+                }
+            }
+
+            for (i = 0; i < 0x18; i++) {
+                if (g_GpuUsage.drawModes >= MAX_DRAW_MODES) {
+                    break;
+                }
+                var_a3_2 = i + 8 + r->unk1C;
+                if (r->unk14 & 0x100) {
+                    var_a3_2 += 0x80;
+                }
+                SetDrawMode(r->dr, 0, 0, var_a3_2, &r->rect);
+                AddPrim(i + r->zPriority + r->ot, r->dr);
+                r->dr++;
+                g_GpuUsage.drawModes++;
+            }
+        }
+    }
+
+    k = 0;
+    for (; k < MAX_BG_LAYER_COUNT; k++) {
+        bg = &t->bg[k];
+        if (bg->D_80073100 > 0) {
+            bg->D_80073100--;
+            continue;
+        }
+        r->unk14 = bg->flags;
+        if (!(r->unk14 & 1)) {
+            continue;
+        }
+        r->unk16 = r->unk14 & 0x200;
+        r->gfxPage = bg->tileDef->gfxPage;
+        r->gfxIndex = bg->tileDef->gfxIndex;
+        r->clut = bg->tileDef->clut;
+        r->zPriority = bg->zPriority;
+        r->w = bg->w * TILE_SIZE;
+        r->h = bg->h * TILE_SIZE;
+        temp_v0_3 = bg->scrollX.i.hi;
+        sp18 = temp_v0_3 & 0xF;
+        var_t7 = temp_v0_3 << 0x10 >> 0x14;
+        var_s4 = bg->scrollY.i.hi << 0x10 >> 0x14;
+        if (r->unk14 & 0x1000) {
+            var_t7 &= 0xF;
+            var_s4 &= 0xF;
+        }
+        r->unk1C = 0;
+        r->unk1A = 0;
+        if (r->unk14 & 0x80) {
+            r->unk1A = 1;
+            r->unk1C = r->unk14 & 0x60;
+        }
+        y = r->unk12 - (bg->scrollY.i.hi & 0xF);
+        for (i = 0; i < N_VERTI_TILES; i++, y += TILE_SIZE) {
+            var_a0 = var_s4 + i;
+            x = r->unk10 - sp18;
+            if (r->unk14 & 0x1000) {
+                var_a0 &= 0xF;
+            }
+            if (var_a0 < 0) {
+                continue;
+            }
+            if (var_a0 >= r->h) {
+                break;
+            }
+            j = 0;
+            tileX = var_t7;
+            temp_lo = var_a0 * r->w;
+            r->layout = &bg->layout[tileX + temp_lo];
+            for (; j < N_HORIZ_TILES; j++, x += TILE_SIZE, tileX++) {
+                if (r->unk14 & 0x1000) {
+                    tileX &= 0xF;
+                    r->layout = &bg->layout[tileX + temp_lo];
+                }
+                if (tileX < 0) {
+                    continue;
+                }
+                if (tileX >= r->w) {
+                    break;
+                }
+                tile = *r->layout++;
+                if (tile == 0) {
+                    continue;
+                }
+                gfxPage = r->gfxPage[tile];
+                gfxIndex = r->gfxIndex[tile];
+                clut = D_8003C104[r->clut[tile]];
+                if (r->unk16) {
+                    clut = D_8003C104[0x100 + r->clut[tile]];
+                }
+                if (g_GpuUsage.sp16 >= MAXSPRT16) {
+                    continue;
+                }
+                sprt->clut = clut;
+                sprt->x0 = x;
+                sprt->y0 = y;
+                sprt->u0 = gfxIndex * TILE_SIZE;
+                sprt->v0 = gfxIndex & ~TILE_MASK;
+                setSemiTrans(sprt, r->unk1A);
+                setShadeTex(sprt, true);
+                __builtin_memcpy(r->sp16, sprt, sizeof(SPRT_16));
+                addPrim(r->zPriority + gfxPage + r->ot, r->sp16);
+                r->sp16++;
+                g_GpuUsage.sp16++;
+            }
+        }
+
+        for (i = 0; i < 0x18; i++) {
+            if (g_GpuUsage.drawModes >= MAX_DRAW_MODES) {
+                break;
+            }
+            var_a3_2 = i + 8 + r->unk1C;
+            if (r->unk14 & 0x100) {
+                var_a3_2 += 0x80;
+            }
+            SetDrawMode(r->dr, 0, 0, var_a3_2, &r->rect);
+            AddPrim(i + r->zPriority + r->ot, r->dr);
+            r->dr++;
+            g_GpuUsage.drawModes++;
+        }
+    }
+}
+#endif
 
 void SetRoomForegroundLayer(LayerDef* layerDef) {
     D_8003C708.flags = 0;
