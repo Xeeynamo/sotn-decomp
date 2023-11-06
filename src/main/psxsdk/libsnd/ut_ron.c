@@ -1,5 +1,4 @@
 #include "common.h"
+#include "libsnd_internal.h"
 
-void func_80029148(s32);
-
-void SsUtReverbOn(void) { func_80029148(1); }
+void SsUtReverbOn(void) { SpuSetReverb(1); }

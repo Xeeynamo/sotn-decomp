@@ -33,8 +33,8 @@ CONFIG_DIR      := config
 TOOLS_DIR       := tools
 
 # Files
-MAIN_ASM_DIRS   := $(ASM_DIR)/$(MAIN) $(ASM_DIR)/$(MAIN)/psxsdk $(ASM_DIR)/$(MAIN)/psxsdk/libcd $(ASM_DIR)/$(MAIN)/psxsdk/libsnd $(ASM_DIR)/$(MAIN)/psxsdk/libspu $(ASM_DIR)/$(MAIN)/data
-MAIN_SRC_DIRS   := $(SRC_DIR)/$(MAIN) $(SRC_DIR)/$(MAIN)/psxsdk $(SRC_DIR)/$(MAIN)/psxsdk/libcd $(SRC_DIR)/$(MAIN)/psxsdk/libsnd $(SRC_DIR)/$(MAIN)/psxsdk/libspu
+MAIN_ASM_DIRS   := $(ASM_DIR)/$(MAIN) $(ASM_DIR)/$(MAIN)/psxsdk $(ASM_DIR)/$(MAIN)/psxsdk/libc $(ASM_DIR)/$(MAIN)/psxsdk/libc2 $(ASM_DIR)/$(MAIN)/psxsdk/libapi $(ASM_DIR)/$(MAIN)/psxsdk/libetc $(ASM_DIR)/$(MAIN)/psxsdk/libcard $(ASM_DIR)/$(MAIN)/psxsdk/libgpu $(ASM_DIR)/$(MAIN)/psxsdk/libgs $(ASM_DIR)/$(MAIN)/psxsdk/libgte $(ASM_DIR)/$(MAIN)/psxsdk/libcd $(ASM_DIR)/$(MAIN)/psxsdk/libsnd $(ASM_DIR)/$(MAIN)/psxsdk/libspu $(ASM_DIR)/$(MAIN)/data
+MAIN_SRC_DIRS   := $(SRC_DIR)/$(MAIN) $(SRC_DIR)/$(MAIN)/psxsdk $(SRC_DIR)/$(MAIN)/psxsdk/libc $(SRC_DIR)/$(MAIN)/psxsdk/libc2 $(SRC_DIR)/$(MAIN)/psxsdk/libapi $(SRC_DIR)/$(MAIN)/psxsdk/libetc $(SRC_DIR)/$(MAIN)/psxsdk/libcard $(SRC_DIR)/$(MAIN)/psxsdk/libgpu $(SRC_DIR)/$(MAIN)/psxsdk/libgs $(SRC_DIR)/$(MAIN)/psxsdk/libgte $(SRC_DIR)/$(MAIN)/psxsdk/libcd $(SRC_DIR)/$(MAIN)/psxsdk/libsnd $(SRC_DIR)/$(MAIN)/psxsdk/libspu
 MAIN_S_FILES    := $(foreach dir,$(MAIN_ASM_DIRS),$(wildcard $(dir)/*.s)) \
 				$(foreach dir,$(MAIN_ASM_DIRS),$(wildcard $(dir)/**/*.s))
 MAIN_C_FILES    := $(foreach dir,$(MAIN_SRC_DIRS),$(wildcard $(dir)/*.c)) \

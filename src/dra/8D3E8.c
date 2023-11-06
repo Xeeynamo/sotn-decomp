@@ -1099,10 +1099,10 @@ void SoundInit(void) {
     func_80132028(0xE, D_80138F24, 0);
     func_80132264();
     SetReverbDepth(10);
-    func_8002ABF4(0);
-    func_80029FBC(0);
+    SpuSetTransferMode(0);
+    SpuSetIRQCallback(NULL);
     CdReadyCallback(NULL);
-    func_80028D3C(0x1010, 0x10000);
+    SpuMallocWithStartAddr(0x1010, 0x10000);
 }
 
 s32 func_801326D8(void) {
@@ -1281,19 +1281,19 @@ void func_80133BDC();
 INCLUDE_ASM("dra/nonmatchings/8D3E8", func_80133FCC);
 
 void func_80134104(void) {
-    D_80138FB4->unk4 = 0x4000;
-    D_80138FB4->unk0 = 0xFFFFFF;
-    D_80138FB4->unk36 = 0xE;
-    func_8002A09C(D_80138FB4);
+    D_80138FB4->mask = SPU_VOICE_ADSR_RR;
+    D_80138FB4->voice = 0xFFFFFF;
+    D_80138FB4->rr = 14;
+    SpuSetVoiceAttr(D_80138FB4);
     D_80138F28 = 0xFFFFFF;
     func_801321FC();
 }
 
 void func_8013415C(void) {
-    D_80138FB4->unk4 = 0x4000;
-    D_80138FB4->unk0 = 0xFFFFFF;
-    D_80138FB4->unk36 = 8;
-    func_8002A09C(D_80138FB4);
+    D_80138FB4->mask = SPU_VOICE_ADSR_RR;
+    D_80138FB4->voice = 0xFFFFFF;
+    D_80138FB4->rr = 8;
+    SpuSetVoiceAttr(D_80138FB4);
     D_80138F28 = 0xFFFFFF;
     func_801321FC();
 }
@@ -1393,34 +1393,34 @@ void func_80134388(void) {
 }
 
 void func_80134508(void) {
-    D_801390C8->unk0 = 0x300000;
-    D_801390C8->unk4 = 0x4000;
-    D_801390C8->unk36 = 0xE;
-    func_8002A09C(D_801390C8);
+    D_801390C8->voice = 0x300000;
+    D_801390C8->mask = SPU_VOICE_ADSR_RR;
+    D_801390C8->rr = 14;
+    SpuSetVoiceAttr(D_801390C8);
     D_80138F28 |= 0x300000;
 }
 
 void func_80134564(void) {
-    D_801390CC->unk0 = 0xC00000;
-    D_801390CC->unk4 = 0x4000;
-    D_801390CC->unk36 = 0xE;
-    func_8002A09C(D_801390CC);
+    D_801390CC->voice = 0xC00000;
+    D_801390CC->mask = SPU_VOICE_ADSR_RR;
+    D_801390CC->rr = 14;
+    SpuSetVoiceAttr(D_801390CC);
     D_80138F28 |= 0xC00000;
 }
 
 void func_801345C0(void) {
-    D_801390C8->unk0 = 0x300000;
-    D_801390C8->unk4 = 0x4000;
-    D_801390C8->unk36 = 8;
-    func_8002A09C(D_801390C8);
+    D_801390C8->voice = 0x300000;
+    D_801390C8->mask = SPU_VOICE_ADSR_RR;
+    D_801390C8->rr = 8;
+    SpuSetVoiceAttr(D_801390C8);
     D_80138F28 |= 0x300000;
 }
 
 void func_8013461C(void) {
-    D_801390CC->unk0 = 0xC00000;
-    D_801390CC->unk4 = 0x4000;
-    D_801390CC->unk36 = 8;
-    func_8002A09C(D_801390CC);
+    D_801390CC->voice = 0xC00000;
+    D_801390CC->mask = SPU_VOICE_ADSR_RR;
+    D_801390CC->rr = 8;
+    SpuSetVoiceAttr(D_801390CC);
     D_80138F28 |= 0xC00000;
 }
 
