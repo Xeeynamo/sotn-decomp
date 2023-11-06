@@ -1617,6 +1617,3 @@ void func_80134E64(void) {
     SsUtSetVVol(0x16, g_VolL, g_VolR);
     SsUtSetVVol(0x17, g_VolL, g_VolR);
 }
-
-void func_80134F50();
-INCLUDE_ASM("dra/nonmatchings/8D3E8", func_80134F50);

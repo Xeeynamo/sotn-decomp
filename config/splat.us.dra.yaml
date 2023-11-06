@@ -176,6 +176,7 @@ segments:
       - [0x7A4D0, c, 7A4D0]
       - [0x7E4BC, c, 7E4BC]
       - [0x8D3E8, c, 8D3E8]
+      - [0x94F50, c, 94F50]
       - [0x953A0, c, 953A0]
       - [0x962AC, sbss]
   - name: dra_data
