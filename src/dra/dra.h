@@ -294,6 +294,17 @@ typedef struct {
     s16 timer;
 } ButtonComboState;
 
+struct SeqData {
+    u8 volume;
+    u8 reverb_depth;
+    union unk2 {
+        struct {
+            u8 one_shot : 4;
+            u8 vab_id : 4;
+        } info;
+    } unk2;
+};
+
 // Used for the button combos to signal successfully completing the sequence
 #define COMBO_COMPLETE 0xFF
 
@@ -318,6 +329,7 @@ extern s16 D_800A21B8[0x20];
 extern s32 D_800A2438;
 extern u8 D_800A243C[];
 extern RoomBossTeleport D_800A297C[];
+extern u8 D_800A2BC0[];
 extern u8 D_800A2D7C[3];
 extern u8 D_800A2D80[0x10];
 extern u8 c_chPlaystationButtons[];
@@ -465,6 +477,7 @@ extern const char aPbav_1[];
 extern const char aPbav_2[];
 extern s16 D_800BD07C[];
 extern s16 D_800BD19C[];
+extern struct SeqData g_SeqInfo[];
 extern s32 g_DebugEnabled;
 extern s32 D_800BD1C4;
 extern s32 g_VabAddrs[6];
@@ -669,7 +682,7 @@ extern u8 D_80138F2C[];
 extern s32 D_80138F28;
 extern s32 D_80138F7C;
 extern s16 D_80138F80;
-extern s32 D_80138F84[];
+extern s32 g_SeqPointers[];
 extern s16 D_80138FAC;
 extern DebugMode g_DebugMode;
 extern s16 g_VolL; // vol_l
@@ -692,7 +705,7 @@ extern s16 D_8013901C;
 extern u8 D_80139020;
 extern s8 D_80139058[];
 extern s32 g_PrevEquippedWeapons[2];
-extern s16 D_8013909C;
+extern s16 g_SeqVolume1;
 extern u8 D_801390A0;
 extern s16 D_801390A4;
 extern u8 D_801390A8;
@@ -716,7 +729,7 @@ extern s32 D_801397FC;
 extern s16 D_80139800;
 extern s16 D_80139804;
 extern s32 D_8013980C;
-extern u8 D_80139810;
+extern u8 g_SeqPlayingId;
 extern s16 D_80139814[];
 extern s16 D_80139820;
 extern s32 D_80139824;
@@ -743,6 +756,7 @@ extern s16 D_8013AE84[];
 extern s16 D_8013AE8C;
 extern s16 D_8013AEA0[];
 extern s16 D_8013AE94;
+extern u8 g_ReverbDepth;
 extern s32 D_8013AE9C;
 extern s32 D_8013AECC;
 extern s32 D_8013AED0;
@@ -759,7 +773,7 @@ extern u8 D_801A9C80[]; // VAB file
 extern u16 D_8013AEE0;
 extern s8 D_8013AEE8;
 extern u8 D_8013AEEC;
-extern s16 D_8013AEF0;
+extern s16 g_SeqVolume2;
 extern s32 D_8013B158;
 extern s32 D_8013B3D0;
 extern s16 g_sfxRingBuffer2[MAX_SND_COUNT]; // D_8013B3E8
@@ -1026,7 +1040,7 @@ void func_8013271C(void);
 void func_80132760(void);
 void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note,
                    s16 volume, s16 distance);
-void func_801337B4(void);
+void StopSeq(void);
 bool func_80133940(void);
 bool func_80133950(void);
 void func_80133FCC(void);

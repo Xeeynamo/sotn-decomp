@@ -447,7 +447,40 @@ INCLUDE_ASM("dra/nonmatchings/5087C", func_800F1B08);
 
 INCLUDE_ASM("dra/nonmatchings/5087C", func_800F1D54);
 
-INCLUDE_ASM("dra/nonmatchings/5087C", func_800F1EB0);
+void func_800F1EB0(s32 arg0, s32 arg1, s32 arg2) {
+    s32 data_0;
+    s32 data_1;
+    s32 data_2;
+    s32 data_3;
+    s32 data_4;
+    u8* ptr;
+
+    if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+        arg0 = 0x3F - arg0;
+        arg1 = 0x3F - arg1;
+    }
+    ptr = &D_800A2BC0;
+    while (*ptr != 0) {
+        data_0 = *ptr++;
+        data_1 = *ptr++;
+        data_2 = *ptr++;
+        data_3 = *ptr++;
+        data_4 = *ptr++;
+        if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+            data_3 = data_4;
+        }
+        if (data_3 != 0xFF) {
+            if (arg2 != 0xFFFF) {
+                if (arg2 == data_3) {
+                    func_800F1D54(data_0, data_1, data_2, data_4);
+                }
+            } else if ((data_0 == arg0) && (data_1 == arg1) &&
+                       (g_CastleFlags[data_3] != 0)) {
+                func_800F1D54(data_0, data_1, data_2, data_4);
+            }
+        }
+    }
+}
 
 void func_800F1FC4(s32 arg0) {
     func_800F1EB0(
