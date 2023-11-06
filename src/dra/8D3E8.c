@@ -890,10 +890,10 @@ void func_80131F04(void) {
 s32 func_80131F28(void) { return D_80138F7C; }
 
 u16 func_80131F38(void) {
-    if (D_80139810 == 0) {
+    if (g_SeqPlayingId == 0) {
         return 0;
     }
-    return D_80139810 | 0x200;
+    return g_SeqPlayingId | 0x200;
 }
 
 bool func_80131F68(void) {
@@ -985,7 +985,7 @@ void func_80132264(void) {
     D_8013B684 = 0;
     D_80138454 = 0;
     do {
-        D_80138F84[D_80138454] = 0;
+        g_SeqPointers[D_80138454] = 0;
     } while (++D_80138454 < 0xA);
 
     for (D_80138454 = 0; D_80138454 < LEN(D_80139868); D_80138454++) {
@@ -1027,8 +1027,8 @@ void func_80132264(void) {
     D_8013980C = 0;
     D_8013AE80 = 0;
     D_801390A0 = 0;
-    D_8013909C = 0x70;
-    D_8013AEF0 = 0x70;
+    g_SeqVolume1 = 0x70;
+    g_SeqVolume2 = 0x70;
     D_8013B680 = 0;
     D_80138F7C = 0;
     D_801390D8 = 0;
@@ -1108,7 +1108,7 @@ void SoundInit(void) {
 s32 func_801326D8(void) {
     if (D_8013901C != 0)
         return 1;
-    if (D_80139810 != 0)
+    if (g_SeqPlayingId != 0)
         return 3;
     return (D_801390D8 != 0) * 2;
 }
@@ -1235,36 +1235,36 @@ void func_80133604();
 
 void func_80133780(s8 arg0) { SsSetSerialAttr(0, 1, arg0 == 1); }
 
-void func_801337B4(void) {
-    if (D_80139810 != 0) {
+void StopSeq(void) {
+    if (g_SeqPlayingId != 0) {
         SsSeqStop(g_SeqAccessNum);
         SsSeqClose(g_SeqAccessNum);
         func_8013415C();
-        D_80139810 = 0;
+        g_SeqPlayingId = 0;
         D_801390C4 = 0;
     }
 }
 
-void func_80133810(u8 arg0) {
+void PlaySeq(u8 arg0) {
     s16 index;
 
-    if (D_80139810 != 0) {
-        func_801337B4();
+    if (g_SeqPlayingId != 0) {
+        StopSeq();
     }
     index = arg0;
     g_SeqAccessNum =
-        SsSeqOpen(D_80138F84[index], D_800BD1E0[index].unk2.info.vab_id);
-    D_8013AE98 = D_800BD1E0[index].reverb_depth;
-    SetReverbDepth(D_8013AE98);
-    D_8013909C = D_800BD1E0[index].volume;
-    D_8013AEF0 = D_800BD1E0[index].volume;
-    SsSeqSetVol(g_SeqAccessNum, D_8013909C, D_8013909C);
-    if (!D_800BD1E0[index].unk2.info.one_shot) {
+        SsSeqOpen(g_SeqPointers[index], g_SeqInfo[index].unk2.info.vab_id);
+    g_ReverbDepth = g_SeqInfo[index].reverb_depth;
+    SetReverbDepth(g_ReverbDepth);
+    g_SeqVolume1 = g_SeqInfo[index].volume;
+    g_SeqVolume2 = g_SeqInfo[index].volume;
+    SsSeqSetVol(g_SeqAccessNum, g_SeqVolume1, g_SeqVolume1);
+    if (!g_SeqInfo[index].unk2.info.one_shot) {
         SsSeqPlay(g_SeqAccessNum, 1, 1);
     } else {
         SsSeqPlay(g_SeqAccessNum, 1, 0);
     }
-    D_80139810 = index;
+    g_SeqPlayingId = index;
     D_801390C4 = 0xE;
 }
 
@@ -1330,7 +1330,7 @@ void func_801341B4(void) {
 
     case 2:
         SetReverbDepth(0);
-        func_801337B4();
+        StopSeq();
         func_80132C2C(3);
         D_800BD1C4 = 3;
         D_8013AE80++;
