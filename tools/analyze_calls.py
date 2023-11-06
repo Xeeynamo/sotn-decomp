@@ -76,7 +76,7 @@ def handle_jal_call(full_file, call_index):
         if (
             f"lw         {call_target}, %lo(D_" in callreg_setline
         ):  # Simply jumping to what's stored in a D_ variable
-            jump_variable = callreg_setline[51:61]
+            jump_variable = callreg_setline[-16:-6]
             return jump_variable
         if "0x28($s0)" in callreg_setline or "-0xC($s0)" in callreg_setline:
             return "UnknownpfnEntityUpdate"
@@ -142,7 +142,7 @@ def get_sdk_funcs():
 # Many functions in main are not being splatted out yet, so we add them here, like SDK.
 def get_main_funcs():
     functions = []
-    for file in Path("asm/us/main").glob("*.s"):
+    for file in Path("asm/us/main").rglob("*.s"):
         with open(file) as f:
             lines = f.readlines()
             for line in lines:
@@ -221,7 +221,6 @@ def analyze(input_function):
         for i, line in enumerate(asm_lines):
             if "jal" in line:
                 callee_name = handle_jal_call(asm_lines, i)
-
                 if callee_name.startswith("D_"):
                     input_function.add_callee(fake_function(callee_name))
                     continue
