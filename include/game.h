@@ -1613,8 +1613,4 @@ extern s32 D_800987C8;
 extern s32 g_DebugPlayer;
 extern s32 D_80098894;
 
-s32 func_8001D290(s32, s32);
-s32 func_8001D374(s8, s16, s16);
-void func_8001D2E0(s32, s32, s32);
-
 #endif
