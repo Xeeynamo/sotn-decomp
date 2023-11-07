@@ -71,12 +71,14 @@ def get_parser_and_size(dataType: str):
 
 
 def serialize_asset(content: str, asset_config: str) -> bytearray:
-    obj = json.loads(content)
+    raw_json_data = json.loads(content)
     config = json.loads(asset_config)
-    item_count = len(obj)
+    symbol_name = raw_json_data["symbol_name"]
+    asset_data = raw_json_data["asset_data"]
+    item_count = len(asset_data)
     serialized_data = bytearray()
     for i in range(0, item_count):
-        item = obj[i]
+        item = asset_data[i]
         for entry, entryType in config["struct"].items():
             serializer = get_serializer(entryType)
             json_value = item[entry]
@@ -115,7 +117,13 @@ def serialize_asset(content: str, asset_config: str) -> bytearray:
             # Anything else can go straight to serializer
             else:
                 serialized_data += serializer(item[entry])
-    return serialized_data
+    # Take serialized data (raw bytes) and turn into asm file
+    asm_output = ""
+    asm_output += ".section .data\n\n"
+    asm_output += f".global {symbol_name}\n\n"
+    for databyte in serialized_data:
+        asm_output += f".byte {int(databyte)}\n"
+    return asm_output
 
 
 class PSXSegAssets(N64Segment):
@@ -133,8 +141,11 @@ class PSXSegAssets(N64Segment):
         path.parent.mkdir(parents=True, exist_ok=True)
 
         data = self.parse_asset(rom_bytes[self.rom_start : self.rom_end], rom_bytes)
+        json_output = {}
+        json_output["symbol_name"] = self.args[0]
+        json_output["asset_data"] = data
         with open(path, "w") as f:
-            f.write(json.dumps(data, indent=4))
+            f.write(json.dumps(json_output, indent=4))
 
     def parse_asset(self, data: bytearray, rom: bytearray) -> list:
         def get_ptr_data(src_ptr_data):
@@ -226,5 +237,5 @@ if __name__ == "__main__":
 
     with open(input_file_name, "r") as f_in:
         data = serialize_asset(f_in.read(), config_json)
-        with open(output_file_name, "wb") as f_out:
+        with open(output_file_name, "w") as f_out:
             f_out.write(data)
