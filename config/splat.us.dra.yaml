@@ -29,7 +29,8 @@ segments:
     vram:  0x800A0000
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, .data, dra_header]
+      - [0x144, data]
       - [0x518, data]
       - [0x1F18, .data, save_mgr]
       - [0x21B8, data]
