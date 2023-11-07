@@ -108,7 +108,7 @@ def handle_jal_call(full_file, call_index):
         if "0xB8($a2)" in callreg_setline or "-0x20($s0)" in callreg_setline:
             return "UnknownEntityFunction"
         if "8017B5A8" in callreg_setline:
-            return "g_api_func_8011AAFC"
+            return "g_api_CreateEntFactoryFromEntity"
 
         if any(
             x in callreg_setline for x in ["80015840", "80015E74", "8001923C"]

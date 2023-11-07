@@ -160,7 +160,7 @@ void func_8011A9D8(void) {
     }
 }
 
-Entity* func_8011AAFC(Entity* self, u32 flags, s32 arg2) {
+Entity* CreateEntFactoryFromEntity(Entity* source, u32 flags, s32 arg2) {
     Entity* entity;
     s16 temp = arg2;
 
@@ -171,11 +171,11 @@ Entity* func_8011AAFC(Entity* self, u32 flags, s32 arg2) {
 
     DestroyEntity(entity);
     entity->entityId = E_UNK_1;
-    entity->ext.generic.unk8C.entityPtr = self;
-    entity->posX.val = self->posX.val;
-    entity->posY.val = self->posY.val;
-    entity->facingLeft = self->facingLeft;
-    entity->zPriority = self->zPriority;
+    entity->ext.generic.unk8C.entityPtr = source;
+    entity->posX.val = source->posX.val;
+    entity->posY.val = source->posY.val;
+    entity->facingLeft = source->facingLeft;
+    entity->zPriority = source->zPriority;
     entity->params = flags & 0xFFF;
     if (flags & 0x5000) {
         entity->ext.generic.unkA8 = 0xE0;
@@ -185,7 +185,7 @@ Entity* func_8011AAFC(Entity* self, u32 flags, s32 arg2) {
     }
     entity->ext.generic.unkA0 = (flags >> 8) & 0xFF00;
     entity->ext.generic.unk92 = temp;
-    if (self->flags & FLAG_UNK_10000) {
+    if (source->flags & FLAG_UNK_10000) {
         entity->flags |= FLAG_UNK_10000;
     }
     if (flags & 0x1000) {
@@ -204,7 +204,13 @@ Entity* func_8011AAFC(Entity* self, u32 flags, s32 arg2) {
     return entity;
 }
 
-void func_8011AC3C(Entity* self) {
+// This is a complicated function with ongoing research.
+// This function is created with its self->params which defines
+// what blueprint to read in order to create an entity. Then, based on
+// that blueprint, it creates some number of child entities.
+// This entity has an ID of 1, but is not an "entity" of an independent
+// variety. It is only responsible for creating child entities.
+void EntityEntFactory(Entity* self) {
     Entity* newEntity;
     s16 unk96Copy;
     s16 i;
@@ -213,15 +219,15 @@ void func_8011AC3C(Entity* self) {
     u8* data_idx;
 
     if (self->step == 0) {
-        data_idx = &D_800AD1D4[self->params][0];
-        self->ext.unkAC3C.unk90 = *data_idx++;          // index 0
+        data_idx = &g_FactoryBlueprints[self->params];
+        self->ext.unkAC3C.childId = *data_idx++;
         self->ext.unkAC3C.unk94 = *data_idx++;          // index 1
-        self->ext.unkAC3C.unk96 = *data_idx & 0x3F;     // index 2
-        self->ext.unkAC3C.unk9E = *data_idx >> 7;       // index 2
-        self->ext.unkAC3C.unkA2 = *data_idx++ >> 6 & 1; // index 2
+        self->ext.unkAC3C.unk96 = *data_idx & 0x3F;     // index 2, lower 6 bits
+        self->ext.unkAC3C.unk9E = *data_idx >> 7;       // index 2, top bit
+        self->ext.unkAC3C.unkA2 = *data_idx++ >> 6 & 1; // index 2, 2nd-top bit
         self->ext.unkAC3C.unk98 = *data_idx++;          // index 3
-        self->ext.unkAC3C.unk9C = *data_idx & 0xF;      // index 4
-        self->ext.unkAC3C.unkA4 = *data_idx++ >> 4;     // index 4
+        self->ext.unkAC3C.unk9C = *data_idx & 0xF;      // index 4, lower 4 bits
+        self->ext.unkAC3C.unkA4 = *data_idx++ >> 4;     // index 4, upper 4 bits
         self->ext.unkAC3C.unk9A = *data_idx;            // index 5
         self->flags |= FLAG_UNK_04000000;
 
@@ -323,7 +329,9 @@ void func_8011AC3C(Entity* self) {
             break;
         }
         DestroyEntity(newEntity);
-        newEntity->entityId = self->ext.unkAC3C.unk90 + self->ext.unkAC3C.unkA8;
+        // unkA8 never gets set so is always zero
+        newEntity->entityId =
+            self->ext.unkAC3C.childId + self->ext.unkAC3C.unkA8;
         newEntity->params = self->ext.unkAC3C.unkA0;
         newEntity->ext.unkAC3C.unk8C = self->ext.unkAC3C.unk8C;
         newEntity->posX.val = self->posX.val;

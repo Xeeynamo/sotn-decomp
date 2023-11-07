@@ -257,3 +257,12 @@ typedef struct FakePrim {
     s16 timer;
     /* 0x32 */ u16 blendMode;
 } FakePrim;
+
+typedef struct {
+    u8 childId;
+    u8 unk1;
+    u8 unk2;
+    u8 unk3;
+    u8 unk4;
+    u8 unk5;
+} FactoryBlueprint;
