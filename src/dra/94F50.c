@@ -4,7 +4,7 @@
 
 extern s16 D_80139064;
 
-void func_80134F50(void) {
+void ExecSoundCommands(void) {
     s16 id;
 
     while (g_SoundCommandRingBufferReadPos != g_SoundCommandRingBufferWritePos) {
@@ -45,10 +45,10 @@ void func_80134F50(void) {
                 func_8013271C();
                 break;
             case 0x4:
-                func_80132500(0);
+                SetMonoStereo(MONO_SOUND);
                 break;
             case 0x5:
-                func_80132500(1);
+                SetMonoStereo(STEREO_SOUND);
                 break;
             case 0x6:
                 StopSeq();
