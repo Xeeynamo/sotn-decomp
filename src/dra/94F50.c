@@ -8,8 +8,8 @@ void func_80134F50(void) {
     s16 id;
 
     while (D_80139A68 != g_sfxRingBufferPos2) {
-        id = g_sfxRingBuffer2[D_80139A68];
-        g_sfxRingBuffer2[D_80139A68] = 0;
+        id = g_SoundCommandRingBuffer[D_80139A68];
+        g_SoundCommandRingBuffer[D_80139A68] = 0;
         D_80139A68++;
         if (D_80139A68 == 0x100) {
             D_80139A68 = 0;

@@ -95,14 +95,14 @@ void func_80135C2C(void) {
     s32 isFound;
     s16 sndId;
 
-    if (g_sfxRingBufferPos1 == D_80138FAC)
+    if (g_sfxRingBufferWritePos == g_SfxRingBufferReadPos)
         return;
-    while (D_80138FAC != g_sfxRingBufferPos1) {
-        sndId = g_sfxRingBuffer1[D_80138FAC].sndId;
-        g_sfxRingBuffer1[D_80138FAC].sndId = 0;
+    while (g_SfxRingBufferReadPos != g_sfxRingBufferWritePos) {
+        sndId = g_sfxRingBuffer1[g_SfxRingBufferReadPos].sndId;
+        g_sfxRingBuffer1[g_SfxRingBufferReadPos].sndId = 0;
         isFound = 0;
-        for (sfxBufPos = IncrementRingBufferPos(D_80138FAC);
-             sfxBufPos != g_sfxRingBufferPos1;
+        for (sfxBufPos = IncrementRingBufferPos(g_SfxRingBufferReadPos);
+             sfxBufPos != g_sfxRingBufferWritePos;
              sfxBufPos = IncrementRingBufferPos(sfxBufPos)) {
             if (sndId == g_sfxRingBuffer1[sfxBufPos].sndId) {
                 isFound = 1;
@@ -110,11 +110,11 @@ void func_80135C2C(void) {
             }
         }
         if (isFound == 0) {
-            func_8013572C(sndId, g_sfxRingBuffer1[D_80138FAC].unk02,
-                          g_sfxRingBuffer1[D_80138FAC].unk04);
+            func_8013572C(sndId, g_sfxRingBuffer1[g_SfxRingBufferReadPos].unk02,
+                          g_sfxRingBuffer1[g_SfxRingBufferReadPos].unk04);
         }
 
-        D_80138FAC = IncrementRingBufferPos(D_80138FAC);
+        g_SfxRingBufferReadPos = IncrementRingBufferPos(g_SfxRingBufferReadPos);
     }
 }
 

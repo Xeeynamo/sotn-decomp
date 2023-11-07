@@ -683,7 +683,7 @@ extern s32 D_80138F28;
 extern s32 D_80138F7C;
 extern s16 D_80138F80;
 extern s32 g_SeqPointers[];
-extern s16 D_80138FAC;
+extern s16 g_SfxRingBufferReadPos;
 extern DebugMode g_DebugMode;
 extern s16 g_VolL; // vol_l
 extern SpuVoiceAttr* D_80138FB4;
@@ -694,7 +694,7 @@ extern SpuVoiceAttr* D_801390CC;
 extern ButtonComboState g_ButtonCombo[16];
 extern s16 D_80138FC8;
 extern s16 D_80138FCA;
-extern s16 g_sfxRingBufferPos1; // D_80139000
+extern s16 g_sfxRingBufferWritePos; // D_80139000
 extern s16 g_VolR;              // vol_r
 extern s32 D_80139008;
 extern s16 D_80139010;
@@ -776,7 +776,7 @@ extern u8 D_8013AEEC;
 extern s16 g_SeqVolume2;
 extern s32 D_8013B158;
 extern s32 D_8013B3D0;
-extern s16 g_sfxRingBuffer2[MAX_SND_COUNT]; // D_8013B3E8
+extern s16 g_SoundCommandRingBuffer[MAX_SND_COUNT]; // D_8013B3E8
 extern s32 D_8013B5E8;
 extern u8 D_8013B5EC[];
 extern s8 D_8013B614[];
