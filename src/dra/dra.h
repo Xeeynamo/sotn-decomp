@@ -683,7 +683,7 @@ extern s32 D_80138F28;
 extern s32 D_80138F7C;
 extern s16 D_80138F80;
 extern s32 g_SeqPointers[];
-extern s16 D_80138FAC;
+extern s16 g_SfxRingBufferReadPos;
 extern DebugMode g_DebugMode;
 extern s16 g_VolL; // vol_l
 extern SpuVoiceAttr* D_80138FB4;
@@ -694,8 +694,8 @@ extern SpuVoiceAttr* D_801390CC;
 extern ButtonComboState g_ButtonCombo[16];
 extern s16 D_80138FC8;
 extern s16 D_80138FCA;
-extern s16 g_sfxRingBufferPos1; // D_80139000
-extern s16 g_VolR;              // vol_r
+extern s16 g_sfxRingBufferWritePos; // D_80139000
+extern s16 g_VolR;                  // vol_r
 extern s32 D_80139008;
 extern s16 D_80139010;
 extern u8 D_80139014;
@@ -714,7 +714,7 @@ extern s32 D_801390B4[];
 extern s8 D_801390C4;
 extern GpuBuffer* g_BackBuffer;
 extern u8 D_801390D8;
-extern SfxRingBufferItem g_sfxRingBuffer1[MAX_SND_COUNT];
+extern SfxRingBufferItem g_SfxRingBuffer[MAX_SND_COUNT];
 extern u16 D_801396E0;
 extern u16 D_801396E4;
 extern Multi D_801396E6;
@@ -744,9 +744,9 @@ extern s32 D_8013984C;
 extern s32 D_80139850;
 extern s32 D_80139854;
 extern s16 D_80139868[MAX_SND_COUNT];
-extern s16 D_80139A68;
+extern s16 g_SoundCommandRingBufferReadPos;
 extern s16 D_80139A6C;
-extern s16 g_sfxRingBufferPos2; // D_80139A70
+extern s16 g_SoundCommandRingBufferWritePos; // D_80139A70
 extern s16 D_80139A74;
 extern s16 D_80139A78;
 extern u_long* D_80139A7C;
@@ -776,7 +776,7 @@ extern u8 D_8013AEEC;
 extern s16 g_SeqVolume2;
 extern s32 D_8013B158;
 extern s32 D_8013B3D0;
-extern s16 g_sfxRingBuffer2[MAX_SND_COUNT]; // D_8013B3E8
+extern s16 g_SoundCommandRingBuffer[MAX_SND_COUNT]; // D_8013B3E8
 extern s32 D_8013B5E8;
 extern u8 D_8013B5EC[];
 extern s8 D_8013B614[];

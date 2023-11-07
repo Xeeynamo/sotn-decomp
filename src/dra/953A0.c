@@ -83,38 +83,38 @@ INCLUDE_ASM("dra/nonmatchings/953A0", func_8013572C);
 s16 IncrementRingBufferPos(s16 arg0) {
     arg0++;
 
-    if (arg0 == LEN(g_sfxRingBuffer1)) {
+    if (arg0 == LEN(g_SfxRingBuffer)) {
         arg0 = 0;
     }
 
     return arg0;
 }
 
-void func_80135C2C(void) {
+void ExecSfx(void) {
     s16 sfxBufPos;
     s32 isFound;
     s16 sndId;
 
-    if (g_sfxRingBufferPos1 == D_80138FAC)
+    if (g_sfxRingBufferWritePos == g_SfxRingBufferReadPos)
         return;
-    while (D_80138FAC != g_sfxRingBufferPos1) {
-        sndId = g_sfxRingBuffer1[D_80138FAC].sndId;
-        g_sfxRingBuffer1[D_80138FAC].sndId = 0;
+    while (g_SfxRingBufferReadPos != g_sfxRingBufferWritePos) {
+        sndId = g_SfxRingBuffer[g_SfxRingBufferReadPos].sndId;
+        g_SfxRingBuffer[g_SfxRingBufferReadPos].sndId = 0;
         isFound = 0;
-        for (sfxBufPos = IncrementRingBufferPos(D_80138FAC);
-             sfxBufPos != g_sfxRingBufferPos1;
+        for (sfxBufPos = IncrementRingBufferPos(g_SfxRingBufferReadPos);
+             sfxBufPos != g_sfxRingBufferWritePos;
              sfxBufPos = IncrementRingBufferPos(sfxBufPos)) {
-            if (sndId == g_sfxRingBuffer1[sfxBufPos].sndId) {
+            if (sndId == g_SfxRingBuffer[sfxBufPos].sndId) {
                 isFound = 1;
                 break;
             }
         }
         if (isFound == 0) {
-            func_8013572C(sndId, g_sfxRingBuffer1[D_80138FAC].unk02,
-                          g_sfxRingBuffer1[D_80138FAC].unk04);
+            func_8013572C(sndId, g_SfxRingBuffer[g_SfxRingBufferReadPos].unk02,
+                          g_SfxRingBuffer[g_SfxRingBufferReadPos].unk04);
         }
 
-        D_80138FAC = IncrementRingBufferPos(D_80138FAC);
+        g_SfxRingBufferReadPos = IncrementRingBufferPos(g_SfxRingBufferReadPos);
     }
 }
 
@@ -126,9 +126,9 @@ INCLUDE_ASM("dra/nonmatchings/953A0", func_80136010);
 void func_801361F8(void) {
     if (D_8013AEEC != 0) {
         func_80136010();
-        func_80135C2C();
+        ExecSfx();
         func_80135D8C();
-        func_80134F50();
+        ExecSoundCommands();
         func_80133FCC();
         func_801353A0();
         SpuSetKey(0, D_80138F28);

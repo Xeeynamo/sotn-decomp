@@ -994,22 +994,23 @@ void func_80132264(void) {
 
     D_801396F4 = 0;
     D_8013AEE8 = 0;
-    for (D_80138454 = 0; D_80138454 < LEN(g_sfxRingBuffer2); D_80138454++) {
-        g_sfxRingBuffer2[D_80138454] = 0;
+    for (D_80138454 = 0; D_80138454 < LEN(g_SoundCommandRingBuffer);
+         D_80138454++) {
+        g_SoundCommandRingBuffer[D_80138454] = 0;
     }
 
-    D_80139A68 = 0;
-    g_sfxRingBufferPos2 = 0;
-    for (D_80138454 = 0; D_80138454 < LEN(g_sfxRingBuffer1); D_80138454++) {
-        g_sfxRingBuffer1[D_80138454].sndId = 0;
-        g_sfxRingBuffer1[D_80138454].unk02 = 0;
-        g_sfxRingBuffer1[D_80138454].unk04 = 0;
+    g_SoundCommandRingBufferReadPos = 0;
+    g_SoundCommandRingBufferWritePos = 0;
+    for (D_80138454 = 0; D_80138454 < LEN(g_SfxRingBuffer); D_80138454++) {
+        g_SfxRingBuffer[D_80138454].sndId = 0;
+        g_SfxRingBuffer[D_80138454].unk02 = 0;
+        g_SfxRingBuffer[D_80138454].unk04 = 0;
     }
 
     D_80139A6C = 0x20;
     D_8013AE7C = 0x7F;
-    D_80138FAC = 0;
-    g_sfxRingBufferPos1 = 0;
+    g_SfxRingBufferReadPos = 0;
+    g_sfxRingBufferWritePos = 0;
     D_801390C4 = 0;
     D_8013AEE0 = 0;
     D_8013AE94 = 0;
@@ -1045,7 +1046,7 @@ void func_801324B4(s8 s_num, s16 arg1, s16 arg2) {
     SsSetSerialVol(s_num, voll, volr);
 }
 
-void func_80132500(u8 soundMode) {
+void SetMonoStereo(u8 soundMode) {
     CdlATV audioVolume;
 
     switch (soundMode) {
@@ -1084,7 +1085,7 @@ void SoundInit(void) {
     D_8013AEEC = 1;
     SsInitHot();
     SsSetTickMode(SS_TICK60);
-    func_80132500(STEREO_SOUND);
+    SetMonoStereo(STEREO_SOUND);
     SsSetReservedVoice(0x10);
     SsStart();
     SsSetTableSize(g_SeqTable, SEQ_TABLE_S_MAX, SEQ_TABLE_T_MAX);
@@ -1439,11 +1440,11 @@ s32 func_80134678(s16 arg0, u16 arg1) {
 
         D_8013AE94 = arg1;
         D_8013AEE0 = arg0;
-        g_sfxRingBuffer2[g_sfxRingBufferPos2] = 1;
-        g_sfxRingBufferPos2++;
+        g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] = 1;
+        g_SoundCommandRingBufferWritePos++;
 
-        if (g_sfxRingBufferPos2 == 0x100) {
-            g_sfxRingBufferPos2 = 0;
+        if (g_SoundCommandRingBufferWritePos == 0x100) {
+            g_SoundCommandRingBufferWritePos = 0;
         }
     }
     return ret;
@@ -1461,19 +1462,19 @@ u32 func_80134714(s16 sfxId, s32 arg1, u16 arg2) {
         return -2;
     }
     if (sfxId > SFX_START && sfxId <= SFX_LAST) {
-        g_sfxRingBuffer1[g_sfxRingBufferPos1].sndId = sfxId - SFX_START;
-        g_sfxRingBuffer1[g_sfxRingBufferPos1].unk02 = arg1 & 0x7F;
+        g_SfxRingBuffer[g_sfxRingBufferWritePos].sndId = sfxId - SFX_START;
+        g_SfxRingBuffer[g_sfxRingBufferWritePos].unk02 = arg1 & 0x7F;
         var = (arg2 + 8);
         if (var > 16) {
-            g_sfxRingBuffer1[g_sfxRingBufferPos1].unk04 = 0;
+            g_SfxRingBuffer[g_sfxRingBufferWritePos].unk04 = 0;
             ret = -1;
         } else {
-            g_sfxRingBuffer1[g_sfxRingBufferPos1].unk04 = arg2;
+            g_SfxRingBuffer[g_sfxRingBufferWritePos].unk04 = arg2;
         }
 
-        g_sfxRingBufferPos1++;
-        if (g_sfxRingBufferPos1 == LEN(g_sfxRingBuffer1)) {
-            g_sfxRingBufferPos1 = 0;
+        g_sfxRingBufferWritePos++;
+        if (g_sfxRingBufferWritePos == LEN(g_SfxRingBuffer)) {
+            g_sfxRingBufferWritePos = 0;
         }
     } else {
         ret = -3;
@@ -1484,13 +1485,13 @@ u32 func_80134714(s16 sfxId, s32 arg1, u16 arg2) {
 void PlaySfx(s16 sfxId) {
     if (D_8013AEEC != 0) {
         if (sfxId > SFX_START && sfxId <= SFX_LAST) {
-            g_sfxRingBuffer1[g_sfxRingBufferPos1].sndId = sfxId - SFX_START;
-            g_sfxRingBuffer1[g_sfxRingBufferPos1].unk02 = 0xFFFF;
-            g_sfxRingBuffer1[g_sfxRingBufferPos1].unk04 = 0;
+            g_SfxRingBuffer[g_sfxRingBufferWritePos].sndId = sfxId - SFX_START;
+            g_SfxRingBuffer[g_sfxRingBufferWritePos].unk02 = 0xFFFF;
+            g_SfxRingBuffer[g_sfxRingBufferWritePos].unk04 = 0;
 
-            g_sfxRingBufferPos1++;
-            if (g_sfxRingBufferPos1 == LEN(g_sfxRingBuffer1)) {
-                g_sfxRingBufferPos1 = 0;
+            g_sfxRingBufferWritePos++;
+            if (g_sfxRingBufferWritePos == LEN(g_SfxRingBuffer)) {
+                g_sfxRingBufferWritePos = 0;
             }
         } else {
             switch (sfxId) {
@@ -1516,10 +1517,10 @@ void PlaySfx(s16 sfxId) {
                 break;
             }
 
-            g_sfxRingBuffer2[g_sfxRingBufferPos2] = sfxId;
-            g_sfxRingBufferPos2++;
-            if (g_sfxRingBufferPos2 == 0x100) {
-                g_sfxRingBufferPos2 = 0;
+            g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] = sfxId;
+            g_SoundCommandRingBufferWritePos++;
+            if (g_SoundCommandRingBufferWritePos == 0x100) {
+                g_SoundCommandRingBufferWritePos = 0;
             }
         }
     }
