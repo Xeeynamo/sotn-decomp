@@ -28,8 +28,8 @@ void func_80115F54(void) {
         PLAYER.blendMode = 0x30;
         PLAYER.rotZ = 0x200;
         func_80118C28(1);
-        func_8011AAFC(g_CurrentEntity, 0x59002C, 0);
-        func_8011AAFC(g_CurrentEntity, 0x60031, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 0x59002C, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 0x60031, 0);
         plDraw->r3 = plDraw->b3 = plDraw->g3 = 128;
         plDraw->r2 = plDraw->b2 = plDraw->g2 = 128;
         plDraw->r1 = plDraw->b1 = plDraw->g1 = 128;
@@ -127,7 +127,7 @@ void func_80116408(void) {
     bool runFinishingBlock = 0;
     switch (PLAYER.step_s) {
     case 0:
-        if (func_8011AAFC(g_CurrentEntity, 0x21U, 0) == NULL) {
+        if (CreateEntFactoryFromEntity(g_CurrentEntity, 0x21U, 0) == NULL) {
             func_8010E570(0);
         }
         func_8010DA48(1);
@@ -174,7 +174,7 @@ void func_80116408(void) {
     case 4:
         if (PLAYER.animFrameIdx == 10 && PLAYER.animFrameDuration == 1) {
             g_Player.D_80072F18 = 4;
-            func_8011AAFC(g_CurrentEntity, 0x25U, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0x25U, 0);
         }
         if (PLAYER.animFrameDuration < 0) {
             runFinishingBlock = 1;
@@ -200,8 +200,8 @@ void func_801166A4(void) {
         PLAYER.velocityX = 0;
         PLAYER.velocityY = 0;
         PLAYER.ext.generic.unkAC = 0x33;
-        func_8011AAFC(g_CurrentEntity, 0, 0);
-        func_8011AAFC(g_CurrentEntity, 0x58002C, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 0x58002C, 0);
         PLAYER.step_s++;
         break;
 
@@ -252,7 +252,7 @@ bool BatFormFinished(void) {
         g_Entities->palette = 0x810D;
         g_Player.unk66 = 0;
         g_Player.unk68 = 0;
-        func_8011AAFC(g_CurrentEntity, 0x21002C, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 0x21002C, 0);
         g_Entities->velocityY = g_Entities->velocityY >> 1;
         return true;
     }
@@ -412,8 +412,8 @@ void ControlBatForm(void) {
             func_8010DA48(0xC6);
             SetSpeedX(FIX(6));
             PLAYER.step_s = 3;
-            func_8011AAFC(g_CurrentEntity, 0x5C002CU, 0);
-            func_8011AAFC(g_CurrentEntity, 0x43U, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0x5C002CU, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0x43U, 0);
             g_WingSmashTimer = 0x40;
 #if defined(VERSION_US)
             g_WingSmashButtonCounter = 0;
@@ -421,13 +421,13 @@ void ControlBatForm(void) {
         } else if ((g_Player.padTapped & PAD_TRIANGLE) &&
                    ((u32)(PLAYER.step_s - 1) < 2U) &&
                    (IsRelicActive(RELIC_ECHO_OF_BAT))) {
-            func_8011AAFC(g_CurrentEntity, 0x67, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0x67, 0);
         } else if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
                    ((u32)(PLAYER.step_s - 1) < 2U) &&
                    (IsRelicActive(RELIC_FIRE_OF_BAT)) && (CastSpell(9) != 0)) {
             func_8010DA48(0xC9);
             PLAYER.step_s = 4;
-            func_8011AAFC(g_CurrentEntity, 0x5002C, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0x5002C, 0);
         }
     }
 
@@ -449,11 +449,11 @@ void ControlBatForm(void) {
         } else {
             if (g_Player.unk66 == 0) {
 #if defined(VERSION_US)
-                if (func_8011AAFC(g_CurrentEntity, 0x20002CU, 0) == NULL) {
+                if (CreateEntFactoryFromEntity(g_CurrentEntity, 0x20002CU, 0) == NULL) {
                     return;
                 }
 #elif defined(VERSION_HD)
-                func_8011AAFC(g_CurrentEntity, 0x20002CU, 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, 0x20002CU, 0);
 #endif
                 func_8010FAF4();
                 g_Player.unk66++;
@@ -688,9 +688,9 @@ void ControlBatForm(void) {
                 PLAYER.velocityY = FIX(6);
             }
             if (g_GameTimer % 3 == 0) {
-                func_8011AAFC(g_CurrentEntity, 0x41U, 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, 0x41U, 0);
                 if (g_Player.pl_vram_flag & 1) {
-                    func_8011AAFC(g_CurrentEntity, 0x90045U, 0);
+                    CreateEntFactoryFromEntity(g_CurrentEntity, 0x90045U, 0);
                 }
                 if (g_Player.pl_vram_flag & 2) {
                     x_offset = 3;
@@ -699,7 +699,7 @@ void ControlBatForm(void) {
                     }
                     PLAYER.posY.i.hi -= 8;
                     PLAYER.posX.i.hi = x_offset + PLAYER.posX.i.hi;
-                    func_8011AAFC(g_CurrentEntity, 0x10004U, 0);
+                    CreateEntFactoryFromEntity(g_CurrentEntity, 0x10004U, 0);
                     PLAYER.posY.i.hi += 8;
                     PLAYER.posX.i.hi -= x_offset;
                 }
@@ -711,7 +711,7 @@ void ControlBatForm(void) {
         DecelerateY(0x3800);
         func_8011690C(0x180);
         if (PLAYER.animFrameDuration < 0) {
-            func_8011AAFC(g_CurrentEntity, 0x51U, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0x51U, 0);
             SetSpeedX(FIX(-1.5));
             func_8011690C(0);
             func_8010DA48(0xC3);
@@ -946,7 +946,7 @@ void ControlMistForm(void) {
         g_Player.unk46 = 0;
         g_Player.unk44 = 0;
         func_8010FAF4();
-        func_8011AAFC(g_CurrentEntity, 0x49U, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 0x49U, 0);
         if (PLAYER.velocityX > 0) {
             PLAYER.velocityX = xSpeedOrtho;
         }
@@ -966,7 +966,7 @@ void ControlMistForm(void) {
             func_800EA5E4(0x11CU);
         } else {
             func_800EA5E4(0x11FU);
-            func_8011AAFC(g_CurrentEntity, 0x53U, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0x53U, 0);
         }
         // Note that this means Power of Mist doesn't make mist infinite!
         // It just lasts 100,000 :)
@@ -1150,7 +1150,7 @@ void func_801182F8(void) {
         if (g_Entities[16].step == 5) {
             PLAYER.palette = 0x8100;
             func_8010FAF4();
-            func_8011AAFC(g_CurrentEntity, 0x5B002CU, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0x5B002CU, 0);
             if (PLAYER.step_s != 0) {
                 func_8010E4D0();
                 return;
@@ -1188,9 +1188,9 @@ void func_80118640(void) {
 
 void func_80118670(void) {
     if (PLAYER.animFrameIdx == 7 && PLAYER.animFrameDuration == 1) {
-        func_8011AAFC(g_CurrentEntity, 0x160028, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 0x160028, 0);
         PlaySfx(NA_SE_PL_MP_GAUGE);
-        func_8011AAFC(g_CurrentEntity, 0x70, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 0x70, 0);
     }
     if (PLAYER.animFrameDuration < 0) {
         func_8010E570(0);
@@ -1201,7 +1201,7 @@ void func_801186EC(void) {
     if (PLAYER.step_s == 0) {
         if (g_Entities[E_WEAPON].entityId == E_NONE) {
             D_80138008 = 0x10;
-            func_8011AAFC(g_CurrentEntity, 0x15003D, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0x15003D, 0);
             PLAYER.step_s++;
         }
     } else if (--D_80138008 == 0) {

@@ -352,7 +352,7 @@ void func_8011EDA8(Entity* self) {
         if ((self->animFrameIdx == 8) && (self->unk4C != D_800AD57C)) {
             self->blendMode = 0x10;
             if (!(params & 1) && (self->animFrameDuration == step)) {
-                func_8011AAFC(self, 0x40004, 0);
+                CreateEntFactoryFromEntity(self, 0x40004, 0);
             }
         }
 
@@ -847,7 +847,7 @@ void EntityHolyWater(Entity* entity) {
         temp2 = temp & 1;
         if (temp2 != 0) {
             PlaySfx(0x69A);
-            func_8011AAFC(entity, 0x3B, 0);
+            CreateEntFactoryFromEntity(entity, 0x3B, 0);
             entity->ext.generic.unk7C.s = 0x10;
             entity->animSet = ANIMSET_DRA(0);
             entity->step = 2;
@@ -856,7 +856,7 @@ void EntityHolyWater(Entity* entity) {
 
     case 2:
         if (!(entity->ext.generic.unk7C.s & 3)) {
-            func_8011AAFC(entity, (D_8013841C << 0x10) | 0x1C,
+            CreateEntFactoryFromEntity(entity, (D_8013841C << 0x10) | 0x1C,
                           entity->ext.generic.unkB2 << 9);
             D_8013841C++;
         }
@@ -1038,7 +1038,7 @@ void func_80127840(Entity* entity) {
                 entity->velocityX += FIX(0.09375);
             }
             if (!(g_GameTimer & 1) && (rand() & 1)) {
-                func_8011AAFC(entity, 0x10024, 0);
+                CreateEntFactoryFromEntity(entity, 0x10024, 0);
             }
             entity->posX.val += entity->velocityX;
             entity->posY.val += entity->velocityY;
@@ -1335,7 +1335,7 @@ bool WolfFormFinished(void) {
         PLAYER.palette = 0x810D;
         g_Player.unk66 = 0;
         g_Player.unk68 = 0;
-        func_8011AAFC(g_CurrentEntity, 0x24002C, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 0x24002C, 0);
         PLAYER.velocityY >>= 1;
         return true;
     }
@@ -1581,7 +1581,7 @@ void func_8012D178(void) {
         } else if (g_Player.unk04 & 0x40) {
             func_8012CA64();
         } else if (g_GameTimer % 6 == 0) {
-            func_8011AAFC(g_CurrentEntity, 0x10045, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0x10045, 0);
         }
     }
 }
@@ -1623,7 +1623,7 @@ void func_8012D28C(bool exitEarly) {
     }
 
     SetSpeedX(FIX(1));
-    func_8011AAFC(g_CurrentEntity, 0x90004U, 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, 0x90004U, 0);
     D_800B0914 = 0;
     // Finally make use of that bit to control if X is positive or negative.
     if (bitNotFound) {

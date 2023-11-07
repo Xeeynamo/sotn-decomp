@@ -160,7 +160,7 @@ void func_8011A9D8(void) {
     }
 }
 
-Entity* func_8011AAFC(Entity* self, u32 flags, s32 arg2) {
+Entity* CreateEntFactoryFromEntity(Entity* source, u32 flags, s32 arg2) {
     Entity* entity;
     s16 temp = arg2;
 
@@ -171,11 +171,11 @@ Entity* func_8011AAFC(Entity* self, u32 flags, s32 arg2) {
 
     DestroyEntity(entity);
     entity->entityId = E_UNK_1;
-    entity->ext.generic.unk8C.entityPtr = self;
-    entity->posX.val = self->posX.val;
-    entity->posY.val = self->posY.val;
-    entity->facingLeft = self->facingLeft;
-    entity->zPriority = self->zPriority;
+    entity->ext.generic.unk8C.entityPtr = source;
+    entity->posX.val = source->posX.val;
+    entity->posY.val = source->posY.val;
+    entity->facingLeft = source->facingLeft;
+    entity->zPriority = source->zPriority;
     entity->params = flags & 0xFFF;
     if (flags & 0x5000) {
         entity->ext.generic.unkA8 = 0xE0;
@@ -185,7 +185,7 @@ Entity* func_8011AAFC(Entity* self, u32 flags, s32 arg2) {
     }
     entity->ext.generic.unkA0 = (flags >> 8) & 0xFF00;
     entity->ext.generic.unk92 = temp;
-    if (self->flags & FLAG_UNK_10000) {
+    if (source->flags & FLAG_UNK_10000) {
         entity->flags |= FLAG_UNK_10000;
     }
     if (flags & 0x1000) {

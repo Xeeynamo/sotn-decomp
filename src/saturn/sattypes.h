@@ -154,7 +154,7 @@ typedef struct {
 } Collider;
 
 typedef struct {
-    /* 8003C7F4 */ Entity* (*func_8011AAFC)(Entity* self, u32 flags, s32 arg2);
+    /* 8003C7F4 */ Entity* (*CreateEntFactoryFromEntity)(Entity* self, u32 flags, s32 arg2);
 } GameApi; /* size=0x140 */
 
 typedef struct {

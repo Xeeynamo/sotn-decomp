@@ -258,6 +258,7 @@ ControlMistForm = 0x80117DEC;
 GetFreeDraEntity = 0x8011879C;
 EntityNumberMovesToHpMeter = 0x80118D0C;
 EntityGuardText = 0x80119588;
+CreateEntFactoryFromEntity = 0x8011AAFC;
 EntityEntFactory = 0x8011AC3C;
 EntityUnarmedAttack = 0x8011B190;
 EntityUnkId24 = 0x8011BBE0;

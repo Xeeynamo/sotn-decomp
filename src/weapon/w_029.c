@@ -145,7 +145,7 @@ void EntityWeaponAttack(Entity* self) {
     if (self->step != 4) {
         g_api.func_8010DBFC(&D_CF000_8017AC78, &D_CF000_8017ACC0);
         if (g_GameTimer % 5 == 0) {
-            g_api.func_8011AAFC(self, ((g_HandId + 1) << 0xC) + 0x38, 0);
+            g_api.CreateEntFactoryFromEntity(self, ((g_HandId + 1) << 0xC) + 0x38, 0);
         }
     }
     self->palette =
@@ -312,7 +312,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         if (--self->ext.weapon.unk80 == 0) {
             prim->blendMode |= 8;
             g_api.PlaySfx(0x660);
-            g_api.func_8011AAFC(self, ((g_HandId + 1) << 0xE) + 0x66, 0);
+            g_api.CreateEntFactoryFromEntity(self, ((g_HandId + 1) << 0xE) + 0x66, 0);
             self->ext.weapon.unk80 = 0x18;
             *D_80097420 = 0;
             self->step++;
@@ -548,7 +548,7 @@ void func_ptr_80170024(Entity* self) {
     firstPrim->y3 = nextY - (((rsin(angle2) >> 4) * size) >> 8);
     self->posX.i.hi = nextX_copy;
     self->posY.i.hi = nextY_copy;
-    g_api.func_8011AAFC(self, ((g_HandId + 1) << 0xE) + 0x64, 0);
+    g_api.CreateEntFactoryFromEntity(self, ((g_HandId + 1) << 0xE) + 0x64, 0);
 }
 
 void func_ptr_80170028(Entity* self) {
