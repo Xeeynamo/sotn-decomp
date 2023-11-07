@@ -7,12 +7,12 @@ extern s16 D_80139064;
 void func_80134F50(void) {
     s16 id;
 
-    while (D_80139A68 != g_sfxRingBufferPos2) {
-        id = g_SoundCommandRingBuffer[D_80139A68];
-        g_SoundCommandRingBuffer[D_80139A68] = 0;
-        D_80139A68++;
-        if (D_80139A68 == 0x100) {
-            D_80139A68 = 0;
+    while (g_SoundCommandRingBufferReadPos != g_SoundCommandRingBufferWritePos) {
+        id = g_SoundCommandRingBuffer[g_SoundCommandRingBufferReadPos];
+        g_SoundCommandRingBuffer[g_SoundCommandRingBufferReadPos] = 0;
+        g_SoundCommandRingBufferReadPos++;
+        if (g_SoundCommandRingBufferReadPos == 0x100) {
+            g_SoundCommandRingBufferReadPos = 0;
         }
 
         if (id > 0x200 && id <= 0x205) {

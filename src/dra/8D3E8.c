@@ -998,8 +998,8 @@ void func_80132264(void) {
         g_SoundCommandRingBuffer[D_80138454] = 0;
     }
 
-    D_80139A68 = 0;
-    g_sfxRingBufferPos2 = 0;
+    g_SoundCommandRingBufferReadPos = 0;
+    g_SoundCommandRingBufferWritePos = 0;
     for (D_80138454 = 0; D_80138454 < LEN(g_sfxRingBuffer1); D_80138454++) {
         g_sfxRingBuffer1[D_80138454].sndId = 0;
         g_sfxRingBuffer1[D_80138454].unk02 = 0;
@@ -1439,11 +1439,11 @@ s32 func_80134678(s16 arg0, u16 arg1) {
 
         D_8013AE94 = arg1;
         D_8013AEE0 = arg0;
-        g_SoundCommandRingBuffer[g_sfxRingBufferPos2] = 1;
-        g_sfxRingBufferPos2++;
+        g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] = 1;
+        g_SoundCommandRingBufferWritePos++;
 
-        if (g_sfxRingBufferPos2 == 0x100) {
-            g_sfxRingBufferPos2 = 0;
+        if (g_SoundCommandRingBufferWritePos == 0x100) {
+            g_SoundCommandRingBufferWritePos = 0;
         }
     }
     return ret;
@@ -1516,10 +1516,10 @@ void PlaySfx(s16 sfxId) {
                 break;
             }
 
-            g_SoundCommandRingBuffer[g_sfxRingBufferPos2] = sfxId;
-            g_sfxRingBufferPos2++;
-            if (g_sfxRingBufferPos2 == 0x100) {
-                g_sfxRingBufferPos2 = 0;
+            g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] = sfxId;
+            g_SoundCommandRingBufferWritePos++;
+            if (g_SoundCommandRingBufferWritePos == 0x100) {
+                g_SoundCommandRingBufferWritePos = 0;
             }
         }
     }

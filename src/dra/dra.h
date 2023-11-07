@@ -744,9 +744,9 @@ extern s32 D_8013984C;
 extern s32 D_80139850;
 extern s32 D_80139854;
 extern s16 D_80139868[MAX_SND_COUNT];
-extern s16 D_80139A68;
+extern s16 g_SoundCommandRingBufferReadPos;
 extern s16 D_80139A6C;
-extern s16 g_sfxRingBufferPos2; // D_80139A70
+extern s16 g_SoundCommandRingBufferWritePos; // D_80139A70
 extern s16 D_80139A74;
 extern s16 D_80139A78;
 extern u_long* D_80139A7C;
