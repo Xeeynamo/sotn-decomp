@@ -949,7 +949,7 @@ void func_8011A3AC(
     Entity* entity, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3);
 void func_8011A4C8(Entity* entity);
 Entity* func_8011AAFC(Entity* entity, u32, s32);
-void func_8011AC3C(Entity* entity);
+void EntityEntFactory(Entity* entity);
 void EntityUnarmedAttack(Entity* entity);
 void func_8011B334(Entity* entity);
 void func_8011B480(Entity* entity);

@@ -204,7 +204,13 @@ Entity* func_8011AAFC(Entity* self, u32 flags, s32 arg2) {
     return entity;
 }
 
-void func_8011AC3C(Entity* self) {
+// This is a complicated function with ongoing research.
+// This function is created with its self->params which defines
+// what blueprint to read in order to create an entity. Then, based on
+// that blueprint, it creates some number of child entities.
+// This entity has an ID of 1, but is not an "entity" of an independent
+// variety. It is only responsible for creating child entities.
+void EntityEntFactory(Entity* self) {
     Entity* newEntity;
     s16 unk96Copy;
     s16 i;

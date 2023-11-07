@@ -113,8 +113,8 @@ segments:
       - [0x41A74, rodata]
       - [0x41A84, rodata] # EntityGuardText
       - [0x41AA4, rodata]
-      - [0x41AB4, .rodata, 7A4D0] # func_8011AC3C
-      - [0x41AD4, .rodata, 7A4D0] # func_8011AC3C
+      - [0x41AB4, .rodata, 7A4D0] # EntityEntFactory
+      - [0x41AD4, .rodata, 7A4D0] # EntityEntFactory
       - [0x41AF4, rodata] # EntityPlayerBlinkWhite
       - [0x41B44, rodata] # EntityPlayerBlinkWhite
       - [0x41B74, rodata] # EntityPlayerBlinkWhite
