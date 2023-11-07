@@ -7,7 +7,8 @@ extern s16 D_80139064;
 void ExecSoundCommands(void) {
     s16 id;
 
-    while (g_SoundCommandRingBufferReadPos != g_SoundCommandRingBufferWritePos) {
+    while (
+        g_SoundCommandRingBufferReadPos != g_SoundCommandRingBufferWritePos) {
         id = g_SoundCommandRingBuffer[g_SoundCommandRingBufferReadPos];
         g_SoundCommandRingBuffer[g_SoundCommandRingBufferReadPos] = 0;
         g_SoundCommandRingBufferReadPos++;

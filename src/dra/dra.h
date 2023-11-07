@@ -695,7 +695,7 @@ extern ButtonComboState g_ButtonCombo[16];
 extern s16 D_80138FC8;
 extern s16 D_80138FCA;
 extern s16 g_sfxRingBufferWritePos; // D_80139000
-extern s16 g_VolR;              // vol_r
+extern s16 g_VolR;                  // vol_r
 extern s32 D_80139008;
 extern s16 D_80139010;
 extern u8 D_80139014;

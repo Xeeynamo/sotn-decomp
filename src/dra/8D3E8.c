@@ -994,7 +994,8 @@ void func_80132264(void) {
 
     D_801396F4 = 0;
     D_8013AEE8 = 0;
-    for (D_80138454 = 0; D_80138454 < LEN(g_SoundCommandRingBuffer); D_80138454++) {
+    for (D_80138454 = 0; D_80138454 < LEN(g_SoundCommandRingBuffer);
+         D_80138454++) {
         g_SoundCommandRingBuffer[D_80138454] = 0;
     }
 
