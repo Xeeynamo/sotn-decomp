@@ -48,7 +48,7 @@ segments:
       - [0xCEB0, data]
       - [0xCF18, .data, 6D59C]
       - [0xCF4C, data]
-      - [0xD1D4, assets, AC3CTable]
+      - [0xD1D4, assets, factory_blueprint]
       - [0xD4B8, data]
       - [0x2217C, data]
       - [0x227B0, data]

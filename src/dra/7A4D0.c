@@ -219,7 +219,7 @@ void EntityEntFactory(Entity* self) {
     u8* data_idx;
 
     if (self->step == 0) {
-        data_idx = &D_800AD1D4[self->params];
+        data_idx = &g_FactoryBlueprints[self->params];
         self->ext.unkAC3C.childId = *data_idx++;
         self->ext.unkAC3C.unk94 = *data_idx++;          // index 1
         self->ext.unkAC3C.unk96 = *data_idx & 0x3F;     // index 2, lower 6 bits

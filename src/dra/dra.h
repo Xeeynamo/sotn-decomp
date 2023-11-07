@@ -437,7 +437,7 @@ extern s16 D_800ACF6C[];
 extern s16 D_800ACF94[];
 extern u8 D_800AD094[];
 extern PfnEntityUpdate D_800AD0C4[];
-extern Unkstruct_800AD1D4 D_800AD1D4[];
+extern FactoryBlueprint g_FactoryBlueprints[];
 extern u8 D_800AD4B8[];
 extern AnimSoundEvent* D_800AD53C[];
 extern AnimationFrame D_800AD57C[];
