@@ -40,7 +40,7 @@ void func_8010DFF0(s32 arg0, s32 arg1);
 u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity);
 void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index);
 void AddHearts(s32 value);
-bool func_8010715C(s32 mapTilesetId);
+bool LoadMonsterLibrarianPreview(s32 monsterId);
 s32 TimeAttackController(TimeAttackEvents eventId, TimeAttackActions action);
 void func_8010E0A8(void);
 s32 func_800FE044(s32 amount, s32 type);
@@ -102,7 +102,7 @@ GameApi g_ApiInit = {
     g_EquipDefs,
     g_AccessoryDefs,
     AddHearts,
-    func_8010715C,
+    LoadMonsterLibrarianPreview,
     TimeAttackController,
     func_8010E0A8,
     func_800FE044,

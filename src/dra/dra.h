@@ -95,7 +95,7 @@ typedef enum {
     CdFile_25,
     CdFile_26,
     CdFile_ServantChr,
-    CdFile_28,
+    CdFile_Monster,
     CdFile_ServantPrg,
     CdFile_30,
     CdFile_31,
@@ -119,7 +119,7 @@ typedef enum {
     CdCallback_11,       // func_801080DC
     CdCallback_12,       // func_801078C4
     CdCallback_13,       // func_801078C4
-    CdCallback_14,       // func_80107B04
+    CdCallback_Monster,  // CopyMonsterPreviewCallback
     CdCallback_Familiar, // func_801078C4
     CdCallback_16,       // func_80107DB4
     CdCallback_17,       // func_80107C6C

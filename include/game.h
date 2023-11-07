@@ -1123,8 +1123,9 @@ typedef struct {
     /* 8003C7E0 */ s16 (*func_800EDB58)(s32, s32);
     /* 8003C7E4 */ void (*func_800EA538)(s32 arg0);
     /* 8003C7E8 */ void (*g_pfn_800EA5AC)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
-    /* 8003C7EC */ void* func_801027C4;
-    /* 8003C7F0 */ void* func_800EB758;
+    /* 8003C7EC */ void (*func_801027C4)(u32 arg0);
+    /* 8003C7F0 */ void (*func_800EB758)(
+        s16 pivotX, s16 pivotY, Entity* e, u16 flags, POLY_GT4* p, u8 flipX);
     /* 8003C7F4 */ Entity* (*CreateEntFactoryFromEntity)(
         Entity* self, u32 flags, s32 arg2);
     /* 8003C7F8 */ bool (*func_80131F68)(void);
@@ -1132,11 +1133,12 @@ typedef struct {
     /* 8003C800 */ u16* (*func_80106A28)(u32 arg0, u16 kind);
     /* 8003C804 */ void (*func_80118894)(Entity*);
     /* 8003C808 */ EnemyDef* enemyDefs;
-    /* 8003C80C */ void* func_80118970;
-    /* 8003C810 */ void* func_80118B18;
+    /* 8003C80C */ Entity* (*func_80118970)(void);
+    /* 8003C810 */ s32 (*func_80118B18)(Entity* ent1, Entity* ent2, s32 arg2);
+    ;
     /* 8003C814 */ s32 (*UpdateUnarmedAnim)(s8* frameProps, u16** frames);
     /* 8003C818 */ void (*func_8010DBFC)(s32*, s32*);
-    /* 8003C81C */ void* func_80118C28;
+    /* 8003C81C */ void (*func_80118C28)(s32 arg0);
     /* 8003C820 */ void (*func_8010E168)(s32 arg0, s16 arg1);
     /* 8003C824 */ void (*func_8010DFF0)(s32 arg0, s32 arg1);
     /* 8003C828 */ u16 (*DealDamage)(
@@ -1145,7 +1147,7 @@ typedef struct {
     /* 8003C830 */ Equipment* equipDefs;
     /* 8003C834 */ Accessory* accessoryDefs;
     /* 8003C838 */ void (*AddHearts)(s32 value);
-    /* 8003C83C */ void* func_8010715C;
+    /* 8003C83C */ bool (*LoadMonsterLibrarianPreview)(s32 monsterId);
     /* 8003C840 */ s32 (*TimeAttackController)(
         TimeAttackEvents eventId, TimeAttackActions action);
     /* 8003C844 */ void* (*func_8010E0A8)(void);
