@@ -145,7 +145,7 @@ void func_80112BB0(void) {
                 (g_Player.padTapped & PAD_CROSS)) {
                 func_8010DA48(0x22U);
                 PLAYER.step_s = 0x70;
-                func_8011AAFC(g_CurrentEntity, 5U, 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, 5U, 0);
                 PLAYER.velocityY = 0x60000;
                 g_Player.unk44 &= 0xFF7F;
                 if (var_s2 != 0) {
@@ -225,7 +225,7 @@ void func_801131C4(void) {
                 }
                 PLAYER.posX.i.hi = x_offset + PLAYER.posX.i.hi;
                 PLAYER.posY.i.hi += 2;
-                func_8011AAFC(g_CurrentEntity, 0xD0004, 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, 0xD0004, 0);
                 D_800ACF74 = 0x60;
                 PLAYER.posY.i.hi -= 2;
                 PLAYER.posX.i.hi -= x_offset;
@@ -440,7 +440,7 @@ void func_801139CC(s32 arg0) {
 
     PLAYER.posY.i.hi -= 22;
     PLAYER.posX.i.hi = move + PLAYER.posX.i.hi;
-    func_8011AAFC(g_CurrentEntity, 0x10004, 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, 0x10004, 0);
     PLAYER.posY.i.hi = PLAYER.posY.i.hi + 22;
     PLAYER.posX.i.hi = PLAYER.posX.i.hi - move;
 

@@ -516,7 +516,7 @@ void AddHearts(s32 value) {
         if (g_Status.heartsMax < g_Status.hearts) {
             g_Status.hearts = g_Status.heartsMax;
         }
-        func_8011AAFC(g_Entities, 99, 0);
+        CreateEntFactoryFromEntity(g_Entities, 99, 0);
         PlaySfx(NA_SE_PL_COLLECT_HEART);
     }
 }

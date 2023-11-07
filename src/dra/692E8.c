@@ -155,15 +155,15 @@ void func_80109594(void) {
     }
     func_80111928();
     if (D_80097C98 == 6) {
-        func_8011AAFC(g_CurrentEntity, 0x10079, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 0x10079, 0);
         func_8010E42C(1);
     }
     if (D_80097C98 == 4) {
-        func_8011AAFC(g_CurrentEntity, 0x30079, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 0x30079, 0);
         func_8010E42C(3);
     }
     if (D_80097C98 == 5) {
-        func_8011AAFC(g_CurrentEntity, 0x50079, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 0x50079, 0);
         func_8010E42C(5);
     }
 
@@ -187,7 +187,7 @@ void func_80109594(void) {
 void func_80109990(void) {
     if (D_80137FB4 == 0) {
         if (g_Status.mp == g_Status.mpMax && !(g_Player.unk0C & 0x100000)) {
-            func_8011AAFC(g_CurrentEntity, 0x28, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0x28, 0);
             PlaySfx(NA_SE_PL_MP_GAUGE);
             D_80137FB4++;
         }
