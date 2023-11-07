@@ -857,7 +857,7 @@ void EntityHolyWater(Entity* entity) {
     case 2:
         if (!(entity->ext.generic.unk7C.s & 3)) {
             CreateEntFactoryFromEntity(entity, (D_8013841C << 0x10) | 0x1C,
-                          entity->ext.generic.unkB2 << 9);
+                                       entity->ext.generic.unkB2 << 9);
             D_8013841C++;
         }
         entity->ext.generic.unk7C.s--;

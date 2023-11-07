@@ -98,7 +98,8 @@ void EntityWeaponAttack(Entity* self) {
             self->animFrameIdx = 0;
             self->blendMode = 0x30;
             g_api.func_80134714(0x619, 0x50, 0);
-            g_api.CreateEntFactoryFromEntity(self, ((g_HandId + 1) << 0xC) | 0x38, 0);
+            g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xC) | 0x38, 0);
             self->step++;
             return;
         }
@@ -192,7 +193,8 @@ void func_ptr_80170004(Entity* self) {
         break;
     case 3:
         if (self->rotX == 0x40) {
-            g_api.CreateEntFactoryFromEntity(self, ((g_HandId + 1) << 0xC) | 0x46, 0);
+            g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xC) | 0x46, 0);
         }
         if (self->animFrameIdx != 0) {
             self->rotX -= 4;

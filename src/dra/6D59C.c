@@ -605,7 +605,8 @@ s32 func_8010EB5C(void) {
     if (subWpnId == 0) {
         return 3;
     }
-    CreateEntFactoryFromEntity(g_CurrentEntity, (u32)subWpn.unkB, subWpnId << 9);
+    CreateEntFactoryFromEntity(
+        g_CurrentEntity, (u32)subWpn.unkB, subWpnId << 9);
     g_Player.D_80072F14 = 4;
     if (PLAYER.step_s < 64) {
         faker = subWpn.unkA;
@@ -837,8 +838,9 @@ block_45:
                 }
             }
         }
-    } else if (CreateEntFactoryFromEntity(g_CurrentEntity, (hand + 0x2A) + (hand * 0x800000),
-                             0) == NULL) {
+    } else if (
+        CreateEntFactoryFromEntity(
+            g_CurrentEntity, (hand + 0x2A) + (hand * 0x800000), 0) == NULL) {
         return 0;
     }
     func_800FDD44(hand);

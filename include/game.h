@@ -1125,7 +1125,8 @@ typedef struct {
     /* 8003C7E8 */ void (*g_pfn_800EA5AC)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
     /* 8003C7EC */ void* func_801027C4;
     /* 8003C7F0 */ void* func_800EB758;
-    /* 8003C7F4 */ Entity* (*CreateEntFactoryFromEntity)(Entity* self, u32 flags, s32 arg2);
+    /* 8003C7F4 */ Entity* (*CreateEntFactoryFromEntity)(
+        Entity* self, u32 flags, s32 arg2);
     /* 8003C7F8 */ bool (*func_80131F68)(void);
     /* 8003C7FC */ DR_ENV* (*func_800EDB08)(POLY_GT4* poly);
     /* 8003C800 */ u16* (*func_80106A28)(u32 arg0, u16 kind);
@@ -1194,7 +1195,8 @@ extern void (*g_api_PlaySfx)(s32 sfxId);
 extern s16 (*g_api_func_800EDB58)(s32, s32);
 extern void (*g_api_func_800EA538)(s32 arg0);
 extern void (*g_api_g_pfn_800EA5AC)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
-extern Entity* (*g_api_CreateEntFactoryFromEntity)(Entity* self, u32 flags, s32 arg2);
+extern Entity* (*g_api_CreateEntFactoryFromEntity)(
+    Entity* self, u32 flags, s32 arg2);
 extern bool (*g_api_func_80131F68)(void);
 extern DR_ENV* (*g_api_func_800EDB08)(POLY_GT4* poly);
 extern u16* (*g_api_func_80106A28)(u16 arg0, u16 kind);

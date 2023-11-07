@@ -449,7 +449,8 @@ void ControlBatForm(void) {
         } else {
             if (g_Player.unk66 == 0) {
 #if defined(VERSION_US)
-                if (CreateEntFactoryFromEntity(g_CurrentEntity, 0x20002CU, 0) == NULL) {
+                if (CreateEntFactoryFromEntity(g_CurrentEntity, 0x20002CU, 0) ==
+                    NULL) {
                     return;
                 }
 #elif defined(VERSION_HD)

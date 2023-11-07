@@ -145,7 +145,8 @@ void EntityWeaponAttack(Entity* self) {
     if (self->step != 4) {
         g_api.func_8010DBFC(&D_CF000_8017AC78, &D_CF000_8017ACC0);
         if (g_GameTimer % 5 == 0) {
-            g_api.CreateEntFactoryFromEntity(self, ((g_HandId + 1) << 0xC) + 0x38, 0);
+            g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xC) + 0x38, 0);
         }
     }
     self->palette =
@@ -312,7 +313,8 @@ void EntityWeaponShieldSpell(Entity* self) {
         if (--self->ext.weapon.unk80 == 0) {
             prim->blendMode |= 8;
             g_api.PlaySfx(0x660);
-            g_api.CreateEntFactoryFromEntity(self, ((g_HandId + 1) << 0xE) + 0x66, 0);
+            g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xE) + 0x66, 0);
             self->ext.weapon.unk80 = 0x18;
             *D_80097420 = 0;
             self->step++;
