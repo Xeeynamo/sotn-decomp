@@ -30,7 +30,10 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, dra_header]
-      - [0x144, data]
+      - [0x144, .data, 42398]
+      - [0x160, .data, play]
+      - [0x240, .data, loading]
+      - [0x248, data]
       - [0x518, data]
       - [0x1F18, .data, save_mgr]
       - [0x21B8, data]
@@ -57,7 +60,7 @@ segments:
       - [0x3B3B4, .rodata, 42398]
       - [0x3B530, .rodata, play]
       - [0x3B560, .rodata, gameover]
-      - [0x3B720, .rodata, 46358]
+      - [0x3B720, .rodata, loading]
       - [0x3B7E8, .rodata, 46FD4]
       - [0x3B9B8, rodata]
       - [0x3BD70, rodata] # func_800E7BB8
@@ -153,7 +156,7 @@ segments:
       - [0x42398, c, 42398]
       - [0x4493C, c, play]
       - [0x45358, c, gameover]
-      - [0x46358, c, 46358]
+      - [0x45D30, c, loading]
       - [0x46FD4, c, 46FD4]
       - [0x47BB8, c, 47BB8]
       - [0x48EE4, c, save_mgr]

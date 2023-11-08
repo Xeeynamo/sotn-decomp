@@ -1,10 +1,40 @@
 #include "dra.h"
 
-// TODO functions probably part of the same file
-void SetStageDisplayBuffer(void);
+u32 D_800A0240[] = {0x01800340, 0x00400040};
+
 void func_800E5D30(void* arg0, u16 arg1, u16 arg2, s32 arg3);
-void func_800E6250(void);
-s32 func_800E6300(void);
+INCLUDE_ASM("dra/nonmatchings/loading", func_800E5D30);
+
+void func_800E6218(s32 arg0) {
+    if (g_Servant != 0) {
+        D_80170000(arg0);
+    }
+}
+
+void func_800E6250(void) {
+    if (g_Servant != 0) {
+        while (LoadFileSim(g_Servant - 1, SimFileType_FamiliarPrg) != 0)
+            ;
+        while (LoadFileSim(g_Servant - 1, SimFileType_FamiliarChr) != 0)
+            ;
+        while (LoadFileSim((g_Servant + 2) * 2 + 0x8000, SimFileType_Vh) != 0)
+            ;
+        while (LoadFileSim((g_Servant + 2) * 2 + 0x8001, SimFileType_Vb) != 0)
+            ;
+    }
+}
+
+s32 func_800E6300(void) {
+    s32 i;
+
+    for (i = 0; i < LEN(g_Status.relics); i++) {
+        if (g_RelicDefs[i].unk0C > 0 &&
+            g_Status.relics[i] & RELIC_FLAG_ACTIVE) {
+            return g_RelicDefs[i].unk0C;
+        }
+    }
+    return 0;
+}
 
 void HandleNowLoading(void) {
     void (*pfnWeapon)(u8);
@@ -49,7 +79,7 @@ void HandleNowLoading(void) {
             D_800987B4 += 0x3F;
         }
 
-        g_StageId = D_800A0170[D_800987B4];
+        g_StageId = g_StageSelectOrder[D_800987B4];
         FntPrint("%02x (%02x)\n", D_800987B4, g_StageId);
         if (g_StageId == STAGE_MEMORYCARD) {
             FntPrint("memory card load\n");
@@ -332,7 +362,7 @@ void HandleNowLoading(void) {
         break;
     case 16:
         func_800E5D30(var_s1, 0x40, 0x70, 1);
-        if (((s32)g_StageId) >= STAGE_RNZ1) {
+        if (((s32)g_StageId) >= STAGE_RNZ1_DEMO) {
             D_8006C374 = g_StagesLba[g_StageId].unk28;
         } else {
             D_8006C374 =

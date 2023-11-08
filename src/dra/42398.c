@@ -39,23 +39,11 @@ void SoundInit(void);
 void func_801353A0(void);
 s32 func_80136010(void);
 
-const char aO[] = "\no\n";
-const char D_800DB3B8[] = "sim:c:\\bin\\dra000.bmp";
-const char D_800DB3D0[] = "cre err:%s\n";
-const char D_800DB3DC[] = "wr err\n";
-const char D_800DB3E4[] = "clo err\n";
-const char D_800DB3F0[] = "sim:c:\\bin\\dra000.mov";
-const char D_800DB408[] = "pale";
-const char D_800DB410[] = "reverse";
-const char D_800DB418[] = "light";
-const char D_800DB420[] = "dark";
-const char D_800DB428[] = "normal";
-
 void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint(msg);
     if (g_DebugWaitInfoTimer++ & 4) {
-        FntPrint(&aO); // TODO: inline
+        FntPrint("\no\n");
     }
     DrawSync(0);
     VSync(0);
@@ -96,7 +84,7 @@ void DebugCaptureScreen(void) {
     DrawSync(0);
 
     for (i = 0; i < MaxScreenshotCount; i++) {
-        __builtin_memcpy(fileName, D_800DB3B8, sizeof(D_800DB3B8));
+        STRCPY(fileName, "sim:c:\\bin\\dra000.bmp");
         fileName[14] += i / 100;
         fileName[15] += i / 10 - i / 100 * 10;
         fileName[16] += i % 10;
@@ -109,7 +97,7 @@ void DebugCaptureScreen(void) {
 
     fid = open(fileName, O_CREAT);
     if (fid < 0) {
-        FntPrint(D_800DB3D0, &fileName);
+        FntPrint("cre err:%s\n", &fileName);
         return;
     }
 
@@ -134,7 +122,7 @@ void DebugCaptureScreen(void) {
     bmp[0x16] = height;
     bmp[0x17] = height / 256;
     if (write(fid, &bmp, BmpHeaderLen) < 0) {
-        FntPrint(D_800DB3DC);
+        FntPrint("wr err\n");
         return;
     }
 
@@ -150,7 +138,7 @@ void DebugCaptureScreen(void) {
             *dst++ = (pixelColor & 0x1F) << 3; // R
             if (++bufferPos == 0x10) {
                 if (write(fid, start, bufferPos * BytesPerPixel) < 0) {
-                    FntPrint(D_800DB3DC);
+                    FntPrint("wr err\n");
                     return;
                 }
                 bufferPos = 0;
@@ -161,12 +149,12 @@ void DebugCaptureScreen(void) {
 
     if (bufferPos != 0) {
         if (write(fid, &buffer, bufferPos * BytesPerPixel) < 0) {
-            FntPrint(D_800DB3DC);
+            FntPrint("wr err\n");
             return;
         }
     }
     if (close(fid) < 0) {
-        FntPrint(D_800DB3E4);
+        FntPrint("clo err\n");
         return;
     }
     DebugInputWait(fileName);
@@ -197,7 +185,7 @@ void DebugCaptureVideo(void) {
         }
 
         for (i = 0; i < MaxVideoFramesCount; i++) {
-            __builtin_memcpy(fileName, D_800DB3F0, sizeof(D_800DB3F0));
+            STRCPY(fileName, "sim:c:\\bin\\dra000.mov");
             fileName[14] += i / 100;
             fileName[15] += i / 10 - i / 100 * 10;
             fileName[16] += i % 10;
@@ -210,14 +198,14 @@ void DebugCaptureVideo(void) {
 
         g_DebugRecordVideoFid = open(fileName, O_CREAT);
         if (g_DebugRecordVideoFid < 0) {
-            FntPrint(D_800DB3D0, fileName);
+            FntPrint("cre err:%s\n", fileName);
             return;
         }
         g_DebugIsRecordingVideo = true;
     } else if (g_pads[0].tapped & PAD_TRIANGLE) {
         g_DebugIsRecordingVideo = false;
         if (close(g_DebugRecordVideoFid) < 0) {
-            FntPrint(D_800DB3E4);
+            FntPrint("clo err\n");
         }
         return;
     }
@@ -235,7 +223,7 @@ void DebugCaptureVideo(void) {
             *dst++ = src[0x6060 + i * 0x100 + j];
             if (++bufferPos == 0x10) {
                 if (write(g_DebugRecordVideoFid, start, bufferPos * 2) < 0) {
-                    FntPrint(D_800DB3DC);
+                    FntPrint("wr err\n");
                     return;
                 }
                 bufferPos = 0;
@@ -246,12 +234,15 @@ void DebugCaptureVideo(void) {
 
     if (bufferPos != 0) {
         if (write(g_DebugRecordVideoFid, buffer, bufferPos * 2) < 0) {
-            FntPrint(D_800DB3DC);
+            FntPrint("wr err\n");
             return;
         }
     }
 }
 
+const char* D_800A0144[] = {
+    "normal", "dark", "light", "reverse", "pale",
+};
 void func_800E2B00(void) {
     DR_MODE* drMode;
     SPRT* sprite;
@@ -278,7 +269,7 @@ void func_800E2B00(void) {
         var_s7 = 0;
     } else {
         SetSemiTrans(sprite, 1);
-        var_s7 = (((u16)D_801362C8) << 5) - 0x20;
+        var_s7 = (D_801362C8 << 5) - 0x20;
     }
 
     SetShadeTex(sprite, 1);
@@ -294,8 +285,7 @@ void func_800E2B00(void) {
     sprite->clut = D_8003C104[g_DebugCurPal];
     AddPrim(&g_CurrentOT[0x1FE], sprite);
     g_GpuUsage.sp++;
-    SetDrawMode(
-        drMode, 0, 0, (((u32)D_801362B4) >> 2) + var_s7, &g_Vram.D_800ACD80);
+    SetDrawMode(drMode, 0, 0, (D_801362B4 >> 2) + var_s7, &g_Vram.D_800ACD80);
     AddPrim(&g_CurrentOT[0x1FE], drMode++);
 
     i = 0;
@@ -766,6 +756,8 @@ void func_800E385C(u_long* ot) {
     }
 }
 
+u32 D_800A0158 = 0;
+s32 D_800A015C = 0;
 void func_800E38CC(void) {
     if (D_800A015C != 0) {
         if (D_800A0158 >= 0x24) {

@@ -14,7 +14,7 @@ void DemoGameInit(s32 arg0) {
             g_StageId = STAGE_LIB_DEMO;
         }
         if (g_StageId == (STAGE_NZ1 | STAGE_INVERTEDCASTLE_FLAG)) {
-            g_StageId = STAGE_RNZ1;
+            g_StageId = STAGE_RNZ1_DEMO;
         }
     } else {
         D_80137594 = D_80097C98 & STAGE_INVERTEDCASTLE_MASK;
@@ -131,7 +131,7 @@ void DemoGameInit(s32 arg0) {
             g_Status.mpMax = 200;
             g_Status.mp = 200;
         }
-        if (g_StageId == STAGE_RNZ1) {
+        if (g_StageId == STAGE_RNZ1_DEMO) {
             g_Status.subWeapon = 2;
             g_Status.statsBase[0] = 25;
             g_Status.statsBase[2] = 35;
