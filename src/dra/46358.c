@@ -49,7 +49,7 @@ void HandleNowLoading(void) {
             D_800987B4 += 0x3F;
         }
 
-        g_StageId = D_800A0170[D_800987B4];
+        g_StageId = g_StageSelectOrder[D_800987B4];
         FntPrint("%02x (%02x)\n", D_800987B4, g_StageId);
         if (g_StageId == STAGE_MEMORYCARD) {
             FntPrint("memory card load\n");
@@ -332,7 +332,7 @@ void HandleNowLoading(void) {
         break;
     case 16:
         func_800E5D30(var_s1, 0x40, 0x70, 1);
-        if (((s32)g_StageId) >= STAGE_RNZ1) {
+        if (((s32)g_StageId) >= STAGE_RNZ1_DEMO) {
             D_8006C374 = g_StagesLba[g_StageId].unk28;
         } else {
             D_8006C374 =

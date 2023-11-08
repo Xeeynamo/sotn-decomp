@@ -886,7 +886,7 @@ bool CheckIfAllButtonsAreAssigned(void) {
     }
 
     for (i = 0; i < 8; i++) {
-        g_Settings.buttonMask[i] = D_800A0160[g_Settings.buttonConfig[i]];
+        g_Settings.buttonMask[i] = g_ButtonMask[g_Settings.buttonConfig[i]];
     }
 
     var_a1 = 0;

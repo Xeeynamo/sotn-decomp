@@ -939,7 +939,7 @@ s32 func_801747B8(void) {
 s32 func_80174864(void) {
     int tmp;
 
-    if (g_StageId >= STAGE_RNO0 && g_StageId < STAGE_RNZ1) {
+    if (g_StageId >= STAGE_RNO0 && g_StageId < STAGE_RNZ1_DEMO) {
         if (D_8003C708.flags == 0x22) {
             return 1;
         }

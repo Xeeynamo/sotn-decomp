@@ -31,7 +31,8 @@ segments:
     subsegments:
       - [0x0, .data, dra_header]
       - [0x144, .data, 42398]
-      - [0x160, data]
+      - [0x160, .data, play]
+      - [0x240, data]
       - [0x1F18, .data, save_mgr]
       - [0x2178, data]
       - [0x2CF4, .data, 5298C] # array of strings

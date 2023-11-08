@@ -31,7 +31,8 @@ segments:
     subsegments:
       - [0x0, .data, dra_header]
       - [0x144, .data, 42398]
-      - [0x160, data]
+      - [0x160, .data, play]
+      - [0x240, data]
       - [0x518, data]
       - [0x1F18, .data, save_mgr]
       - [0x21B8, data]
