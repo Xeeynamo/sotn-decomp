@@ -121,6 +121,7 @@ def serialize_asset(content: str, asset_config: str) -> bytearray:
     asm_output = ""
     asm_output += ".section .data\n\n"
     asm_output += f".global {symbol_name}\n\n"
+    asm_output += f"{symbol_name}:\n"
     for databyte in serialized_data:
         asm_output += f".byte {int(databyte)}\n"
     return asm_output

@@ -15,6 +15,8 @@
     ((PAD_START) | (PAD_SELECT) | (PAD_L2) | (PAD_R2) | (PAD_L1) | (PAD_R1))
 #endif
 
+extern void* g_ApiInit[sizeof(GameApi) / sizeof(void*)];
+
 s32 LoadVabData(void);
 void func_800E385C(u32*);
 void UpdateGame(void);
@@ -778,7 +780,7 @@ void func_800E38CC(void) {
     }
 }
 
-void entrypoint_sotn(void) {
+void MainGame(void) {
 #if defined(VERSION_HD)
     CdlFILE fp;
 #endif
@@ -801,8 +803,8 @@ void entrypoint_sotn(void) {
     g_GpuBuffers[1].next = &g_GpuBuffers[0];
     ClearImage(&g_Vram.D_800ACD88, 0x5A, 0x50, 0x46);
     ClearImage(&g_Vram.D_800ACD90, 0, 0, 0);
-    for (i = 0; i < 0x50; i++) {
-        ((void**)&g_api)[i] = (&D_800A0004)[i];
+    for (i = 0; i < LEN(g_ApiInit); i++) {
+        ((void**)&g_api)[i] = g_ApiInit[i];
     }
     g_Timer = 0;
     D_8003C99C = 0;

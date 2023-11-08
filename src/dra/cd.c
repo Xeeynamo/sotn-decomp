@@ -251,7 +251,7 @@ void func_801078C4(void) {
     }
 }
 
-void func_80107B04(void) {
+void CopyMonsterPreviewCallback(void) {
     s32 i;
     s32 len;
 
@@ -679,7 +679,7 @@ void UpdateCd(void) {
                     CdIntToPos(
                         D_8003C908.D_8003C910 * 14 + cdFile->loc, &g_CdLoc);
                 }
-                if (g_CdCallback == CdCallback_14) {
+                if (g_CdCallback == CdCallback_Monster) {
                     CdIntToPos(g_LoadOvlIdx * 11 + cdFile->loc, &g_CdLoc);
                 }
                 if (g_CdCallback == CdCallback_4) {

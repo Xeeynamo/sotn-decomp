@@ -1077,10 +1077,6 @@ void SetMonoStereo(u8 soundMode) {
     }
 }
 
-/**
- * Called by entrypoint_sotn, seems to be initializing
- * various parts of the sound system
- */
 void SoundInit(void) {
     D_8013AEEC = 1;
     SsInitHot();

@@ -73,11 +73,10 @@ def handle_jal_call(full_file, call_index):
             # Handle remaining symbols that are just straight in GameApi
             if match.group(1) in function_lookup:
                 return match.group(1)
-        if (
-            f"lw         {call_target}, %lo(D_" in callreg_setline
-        ):  # Simply jumping to what's stored in a D_ variable
-            jump_variable = callreg_setline[-16:-6]
-            return jump_variable
+        # Calling something held in a variable, usually a D_ or a g_
+        variable_pattern = r"lw\s+" + "\\" + call_target + r", %lo\(([^)]+)\)"
+        if match := re.search(variable_pattern, callreg_setline):
+            return match.group(1)
         if "0x28($s0)" in callreg_setline or "-0xC($s0)" in callreg_setline:
             return "UnknownpfnEntityUpdate"
         # happens in NZ0/func_801C1034. v0 is set by dereferencing a register.
@@ -141,7 +140,8 @@ def get_sdk_funcs():
 
 # Many functions in main are not being splatted out yet, so we add them here, like SDK.
 def get_main_funcs():
-    functions = []
+    # hardcode this one in there, it's not in any assembly file
+    functions = ["g_MainGame"]
     for file in Path("asm/us/main").rglob("*.s"):
         with open(file) as f:
             lines = f.readlines()
