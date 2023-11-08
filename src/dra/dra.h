@@ -308,9 +308,6 @@ struct SeqData {
 // Used for the button combos to signal successfully completing the sequence
 #define COMBO_COMPLETE 0xFF
 
-extern s32 D_800A0144[];
-extern u32 D_800A0158;
-extern s32 D_800A015C;
 extern s16 D_800A0160[];
 extern u8 D_800A0170[];
 extern u8 D_800A01B0[];
