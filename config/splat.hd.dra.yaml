@@ -32,7 +32,8 @@ segments:
       - [0x0, .data, dra_header]
       - [0x144, .data, 42398]
       - [0x160, .data, play]
-      - [0x240, data]
+      - [0x240, .data, loading]
+      - [0x248, data]
       - [0x1F18, .data, save_mgr]
       - [0x2178, data]
       - [0x2CF4, .data, 5298C] # array of strings
@@ -45,7 +46,7 @@ segments:
       - [0x3B458, .rodata, 42398]
       - [0x3B618, .rodata, play]
       - [0x3B648, rodata, gameover] # jtbl_800DB648
-      - [0x3B808, .rodata, 46358]
+      - [0x3B808, .rodata, loading]
       - [0x3B8D0, .rodata, 46FD4]
       - [0x3B938, rodata]
       - [0x3BCF0, rodata] # jtbl_800DBCF0
@@ -144,7 +145,7 @@ segments:
       - [0x422B4, c, 42398]
       - [0x44EC8, c, play]
       - [0x458E4, c, gameover]
-      - [0x46A0C, c, 46358]
+      - [0x463E4, c, loading]
       - [0x47688, c, 46FD4]
       - [0x48250, c, 47BB8]
       - [0x4957C, c, save_mgr]
