@@ -415,6 +415,7 @@ extern u16 D_800AC958[];
 extern s32 D_800ACC64[]; // probably a struct
 extern Vram g_Vram;
 extern CdFile* D_800ACC74[];
+extern u8 D_800ACF54[];
 extern u8 D_800ACFB4[][4];
 #if defined(VERSION_HD)
 extern s32 D_800ACEDC_hd;
