@@ -849,7 +849,7 @@ void UpdateCd(void) {
         }
         do {
         } while (CdInit() == 0);
-        func_80132760();
+        MuteSound();
         g_CdStep = CdStep_LoadInit;
         D_800ACD7C = 1;
         D_80137FA0++;
@@ -863,7 +863,7 @@ void UpdateCd(void) {
         }
         do {
         } while (CdInit() == 0);
-        func_80132760();
+        MuteSound();
         PlaySfx(D_80097910);
         g_CdStep = CdStep_None;
         D_800ACD7C = 1;

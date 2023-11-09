@@ -71,7 +71,7 @@ void func_800E4970(void) {
     func_800EDAE4();
     PlaySfx(SET_UNK_12);
     PlaySfx(SET_UNK_0B);
-    func_80132760();
+    MuteSound();
     func_800E493C();
 }
 
@@ -157,7 +157,7 @@ void HandlePlay(void) {
     case Play_PrepareNextStage:
         PlaySfx(SET_UNK_12);
         PlaySfx(SET_UNK_0B);
-        func_80132760();
+        MuteSound();
         if (D_80097C98 < 0) {
             func_800E4970();
             DemoInit(2);

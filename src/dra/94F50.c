@@ -169,10 +169,10 @@ void ExecSoundCommands(void) {
                 func_8013415C();
                 break;
             case 0x59:
-                func_80133780(1);
+                EnableCdReverb(1);
                 break;
             case 0x5A:
-                func_80133780(0);
+                EnableCdReverb(0);
                 break;
             case 0x5B:
                 SetReverbDepth(0x8);

@@ -919,22 +919,23 @@ void func_80131FCC(void) {
     D_8013B680 = 0;
 }
 
-u8 func_80132028(u_char com, u_char* param, u_char* result) {
-    D_801396F0 = CdSync(1, D_80138F2C);
+u8 DoCdCommand(u_char com, u_char* param, u_char* result) {
+    g_CdCommandStatus = CdSync(1, g_CdCommandResult);
 
     if (com == CdlGetlocL) {
-        if (D_801396F0 != 2) {
+        if (g_CdCommandStatus != CdlComplete) {
             CdControl(CdlNop, 0, 0);
             D_8013B680 = 2;
             return D_8013B680;
         }
-    } else if (*D_80138F2C & 0x10 || *D_80138F2C & 4) {
+    } else if (*g_CdCommandResult & CdlStatShellOpen ||
+               *g_CdCommandResult & CdlStatSeekError) {
         CdControl(CdlNop, 0, 0);
         D_8013B680 = 2;
         return D_8013B680;
     }
 
-    if (D_801396F0 == 2) {
+    if (g_CdCommandStatus == CdlComplete) {
         if (CdControl(com, param, result)) {
             D_8013B680 = 0;
             return D_8013B680;
@@ -1039,7 +1040,7 @@ void func_80132264(void) {
     D_8013B61C = 0;
 }
 
-void func_801324B4(s8 s_num, s16 arg1, s16 arg2) {
+void SetCdVolume(s8 s_num, s16 arg1, s16 arg2) {
     short voll = D_800BD07C[arg1];
     short volr = D_800BD07C[arg2];
 
@@ -1078,7 +1079,7 @@ void SetMonoStereo(u8 soundMode) {
 }
 
 void SoundInit(void) {
-    D_8013AEEC = 1;
+    g_SoundInitialized = 1;
     SsInitHot();
     SsSetTickMode(SS_TICK60);
     SetMonoStereo(STEREO_SOUND);
@@ -1091,9 +1092,9 @@ void SoundInit(void) {
     func_80132134();
     D_8013B668 = 0x78;
     SsSetSerialAttr(0, 0, 1);
-    func_801324B4(0, D_8013B668, D_8013B668);
-    D_80138F24[0] = -0x38; // !FAKE: D_80138F24 part of an array / struct
-    func_80132028(0xE, D_80138F24, 0);
+    SetCdVolume(0, D_8013B668, D_8013B668);
+    g_CdMode[0] = CdlModeSpeed | CdlModeRT | CdlModeSF;
+    DoCdCommand(CdlSetmode, g_CdMode, 0);
     func_80132264();
     SetReverbDepth(10);
     SpuSetTransferMode(0);
@@ -1117,10 +1118,10 @@ void func_8013271C(void) {
     }
 }
 
-void func_80132760(void) {
+void MuteSound(void) {
     SsSetMVol(0, 0);
-    SsSetSerialAttr(0, 0, 0);
-    func_801324B4(0, 0, 0);
+    SsSetSerialAttr(SS_SERIAL_A, SS_MIX, SS_SOFF);
+    SetCdVolume(SS_SERIAL_A, 0, 0);
     func_80132134();
     func_80132264();
 }
@@ -1133,8 +1134,8 @@ void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note,
         g_VolL = volume;
         g_VolR = volume;
     } else {
-        g_VolR = (volume * D_800BD19C[distance * 2 + 0]) >> 7;
-        g_VolL = (volume * D_800BD19C[distance * 2 + 1]) >> 7;
+        g_VolR = (volume * g_VolumeTable[distance * 2 + 0]) >> 7;
+        g_VolL = (volume * g_VolumeTable[distance * 2 + 1]) >> 7;
     }
 
     if (voice >= 0 && voice < 0x18) {
@@ -1208,14 +1209,14 @@ u16 func_80132E38(void) {
     return --D_801396F4;
 }
 
-void func_80132E90(u32 arg0, s8* arg1) {
-    u16 temp;
-    u16 temp2;
+#define ENCODE_BCD(x) ((((x) / 10) << 4) + ((x) % 10))
 
-    arg1[2] = (((arg0 % 75) / 10) * 0x10) + ((arg0 % 75) % 10);
-    arg1[1] = ((((arg0 / 75) % 60) / 10) * 0x10) + (((arg0 / 75) % 60) % 10);
-    temp = ((arg0 / 75) / 60) % 10;
-    arg1[0] = (temp2 = (((arg0 / 75) / 60) / 10) * 0x10) + temp;
+void MakeCdLoc(u32 address, CdlLOC* cd_loc) {
+    u32 minutes;
+    cd_loc->sector = ENCODE_BCD(address % 75);
+    cd_loc->second = ENCODE_BCD(address / 75 % 60);
+    minutes = address / 75 / 60;
+    cd_loc->minute = ENCODE_BCD(minutes);
 }
 
 INCLUDE_ASM("dra/nonmatchings/8D3E8", func_80132F60);
@@ -1230,7 +1231,9 @@ void func_80133488();
 INCLUDE_ASM("dra/nonmatchings/8D3E8", func_80133604);
 void func_80133604();
 
-void func_80133780(s8 arg0) { SsSetSerialAttr(0, 1, arg0 == 1); }
+void EnableCdReverb(s8 arg0) {
+    SsSetSerialAttr(SS_SERIAL_A, SS_REV, arg0 == SS_SON);
+}
 
 void StopSeq(void) {
     if (g_SeqPlayingId != 0) {
@@ -1371,7 +1374,7 @@ void func_80134388(void) {
         } else {
             D_8013B668 = 0;
         }
-        func_801324B4(0, D_8013B668, D_8013B668);
+        SetCdVolume(0, D_8013B668, D_8013B668);
         if (D_8013B668 == 0) {
             D_8013AE80++;
         }
@@ -1454,7 +1457,7 @@ u32 func_80134714(s16 sfxId, s32 arg1, u16 arg2) {
     u16 var;
 
     ret = 0;
-    if (D_8013AEEC == 0) {
+    if (g_SoundInitialized == 0) {
         return -2;
     }
     if (sfxId > SFX_START && sfxId <= SFX_LAST) {
@@ -1479,7 +1482,7 @@ u32 func_80134714(s16 sfxId, s32 arg1, u16 arg2) {
 }
 
 void PlaySfx(s16 sfxId) {
-    if (D_8013AEEC != 0) {
+    if (g_SoundInitialized != 0) {
         if (sfxId > SFX_START && sfxId <= SFX_LAST) {
             g_SfxRingBuffer[g_sfxRingBufferWritePos].sndId = sfxId - SFX_START;
             g_SfxRingBuffer[g_sfxRingBufferWritePos].unk02 = 0xFFFF;
@@ -1598,8 +1601,8 @@ void func_80134D14(void) {
     func_80132A04(0x16, D_800BF554[D_80139804].vabid,
                   D_800BF554[D_80139804].prog, D_800BF554[D_80139804].tone,
                   D_800BF554[D_80139804].note, volume, D_8013AE94);
-    g_VolR = (volume * D_800BD19C[D_8013AE94 * 2 + 0]) >> 8;
-    g_VolL = (volume * D_800BD19C[D_8013AE94 * 2 + 1]) >> 8;
+    g_VolR = (volume * g_VolumeTable[D_8013AE94 * 2 + 0]) >> 8;
+    g_VolL = (volume * g_VolumeTable[D_8013AE94 * 2 + 1]) >> 8;
     SsUtSetVVol(0x16, g_VolL, g_VolR);
     SsUtSetVVol(0x17, g_VolL, g_VolR);
 }
@@ -1609,8 +1612,8 @@ void func_80134E64(void) {
 
     volume = D_8013AE7C * D_800BF554[D_80139804].volume >> 7;
     volume = volume * D_8013AEE0 >> 7;
-    g_VolR = (volume * D_800BD19C[D_8013AE94 * 2 + 0]) >> 8;
-    g_VolL = (volume * D_800BD19C[D_8013AE94 * 2 + 1]) >> 8;
+    g_VolR = (volume * g_VolumeTable[D_8013AE94 * 2 + 0]) >> 8;
+    g_VolL = (volume * g_VolumeTable[D_8013AE94 * 2 + 1]) >> 8;
     SsUtSetVVol(0x16, g_VolL, g_VolR);
     SsUtSetVVol(0x17, g_VolL, g_VolR);
 }

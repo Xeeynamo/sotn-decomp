@@ -27,6 +27,13 @@
 #define SS_REV_TYPE_DELAY 8
 #define SS_REV_TYPE_PIPE 9
 
+#define SS_SOFF 0
+#define SS_SON 1
+#define SS_MIX 0
+#define SS_REV 1
+#define SS_SERIAL_A 0
+#define SS_SERIAL_B 1
+
 // Closes the SEQ data holding the seq_acces_num that is no longer necessary.
 extern void SsSeqClose(short seq_access_num);
 

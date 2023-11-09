@@ -136,7 +136,7 @@ void HandleGameOver(void) {
         break;
     case Gameover_3:
     case Gameover_3_Alt:
-        func_80132760();
+        MuteSound();
         if (g_GameStep == 103) {
             g_GameStep = 111;
             break;

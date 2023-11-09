@@ -124,7 +124,7 @@ void func_80135D8C();
 INCLUDE_ASM("dra/nonmatchings/953A0", func_80136010);
 
 void func_801361F8(void) {
-    if (D_8013AEEC != 0) {
+    if (g_SoundInitialized != 0) {
         func_80136010();
         ExecSfx();
         func_80135D8C();
@@ -136,9 +136,9 @@ void func_801361F8(void) {
         func_80131FCC();
 
         if (D_80139020) {
-            func_801324B4(0, 0, 0);
+            SetCdVolume(0, 0, 0);
         } else {
-            func_801324B4(0, D_8013B668, D_8013B668);
+            SetCdVolume(0, D_8013B668, D_8013B668);
         }
     }
 }

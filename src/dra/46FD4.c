@@ -299,7 +299,7 @@ void HandleEnding(void) {
 #if defined(VERSION_US)
         PlaySfx(18);
         PlaySfx(11);
-        func_80132760();
+        MuteSound();
 #endif
         SetGameState(Game_Init);
         return;
