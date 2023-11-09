@@ -903,7 +903,7 @@ bool func_80131F68(void) {
     return true;
 }
 
-s16 func_80131F94(void) { return g_CdVolume; }
+s16 GetCdVolume(void) { return g_CdVolume; }
 
 void SetReverbDepth(short depth) { SsUtSetReverbDepth(depth, depth); }
 
