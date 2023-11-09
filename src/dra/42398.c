@@ -34,7 +34,7 @@ void DrawEntitiesHitbox(s32 blendMode);
 void UpdateCd(void);
 s32 func_8010E27C(void);
 void SetSpeedX(s32);
-void func_801324B4(s8 s_num, s16 arg1, s16 arg2);
+void SetCdVolume(s8 s_num, s16 arg1, s16 arg2);
 void SoundInit(void);
 void func_801353A0(void);
 s32 func_80136010(void);
@@ -940,7 +940,7 @@ loop_5:
             PlaySfx(0xB);
             func_801361F8();
             VSync(D_8003C73C);
-            func_80132760();
+            MuteSound();
             SetGameState(Game_Title);
 #if defined(VERSION_HD)
             FntFlush(-1);
@@ -954,7 +954,7 @@ loop_5:
         func_801361F8();
         if (func_80131F28() > 900) {
             CdInit();
-            func_80132760();
+            MuteSound();
         }
 
         if (g_GpuMaxUsage.drawModes < g_GpuUsage.drawModes) {
