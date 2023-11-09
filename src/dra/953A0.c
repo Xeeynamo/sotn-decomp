@@ -138,7 +138,7 @@ void func_801361F8(void) {
         if (D_80139020) {
             SetCdVolume(0, 0, 0);
         } else {
-            SetCdVolume(0, D_8013B668, D_8013B668);
+            SetCdVolume(0, g_CdVolume, g_CdVolume);
         }
     }
 }

@@ -373,6 +373,7 @@ g_SoundCommandRingBuffer = 0x8013B3E8;
 g_MemcardBlockRead = 0x8013B5F0;
 g_SeqAccessNum = 0x8013B658;
 g_MemcardStep = 0x8013B660;
+g_CdVolume = 0x8013B668;
 g_volumeR = 0x8013B698;
 g_imgUnk8013C200 = 0x8013C200;
 g_imgUnk8013C270 = 0x8013C270;

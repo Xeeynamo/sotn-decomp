@@ -903,7 +903,7 @@ bool func_80131F68(void) {
     return true;
 }
 
-s16 func_80131F94(void) { return D_8013B668; }
+s16 func_80131F94(void) { return g_CdVolume; }
 
 void SetReverbDepth(short depth) { SsUtSetReverbDepth(depth, depth); }
 
@@ -1090,9 +1090,9 @@ void SoundInit(void) {
     SpuClearReverbWorkArea(SS_REV_TYPE_STUDIO_B);
     SsUtReverbOn();
     func_80132134();
-    D_8013B668 = 0x78;
+    g_CdVolume = 0x78;
     SsSetSerialAttr(0, 0, 1);
-    SetCdVolume(0, D_8013B668, D_8013B668);
+    SetCdVolume(0, g_CdVolume, g_CdVolume);
     g_CdMode[0] = CdlModeSpeed | CdlModeRT | CdlModeSF;
     DoCdCommand(CdlSetmode, g_CdMode, 0);
     func_80132264();
@@ -1362,20 +1362,20 @@ void func_80134388(void) {
 
     case 1:
         D_80139A78++;
-        if (D_8013B668 > 0) {
+        if (g_CdVolume > 0) {
             temp = D_80139820 * D_80139A6C * D_80139A78;
             if (temp < 0) {
                 temp += 0x1FF;
             }
-            D_8013B668 = D_80139820 - (temp >> 9);
-            if (D_8013B668 >> 0x10) {
-                D_8013B668 = 0;
+            g_CdVolume = D_80139820 - (temp >> 9);
+            if (g_CdVolume >> 0x10) {
+                g_CdVolume = 0;
             }
         } else {
-            D_8013B668 = 0;
+            g_CdVolume = 0;
         }
-        SetCdVolume(0, D_8013B668, D_8013B668);
-        if (D_8013B668 == 0) {
+        SetCdVolume(0, g_CdVolume, g_CdVolume);
+        if (g_CdVolume == 0) {
             D_8013AE80++;
         }
         break;
