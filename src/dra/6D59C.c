@@ -460,7 +460,7 @@ void func_8010E570(s32 arg0) {
     case 3:
     case 4:
         var_a0 = 6;
-        if (ABS(PLAYER.velocityX) > 0x28000) {
+        if (ABS(PLAYER.velocityX) > FIX(2.5)) {
             var_a0 = 4;
         }
         break;
