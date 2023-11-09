@@ -429,8 +429,48 @@ void func_8010E4D0(void) {
     func_8010E470(0, 0);
 }
 
-INCLUDE_ASM("dra/nonmatchings/6D59C", func_8010E570);
-void func_8010E570(/*?*/ s32);
+void func_8010E570(s32 arg0) {
+    s32 var_a0;
+    bool condition = false;
+
+    condition = ((g_Player.pl_vram_flag & 0x20) != condition);
+
+    PLAYER.velocityX = arg0;
+    PLAYER.velocityY = 0;
+    SetPlayerStep(Player_Stand);
+    if (g_Player.unk48 != 0) {
+        PLAYER.step_s = 2;
+        condition = 0;
+    }
+    switch (g_Player.unk50) {
+
+    case 9:
+        var_a0 = 4;
+        break;
+    case 1:
+        var_a0 = 4;
+        if (PLAYER.ext.player.unkAC == 9) {
+            PLAYER.ext.player.unkAC = D_800ACF54[2 + condition];
+            return;
+        }
+        if (PLAYER.ext.player.unkAC == 7) {
+            var_a0 = 0;
+        }
+        break;
+    case 3:
+    case 4:
+        var_a0 = 6;
+        if (ABS(PLAYER.velocityX) > FIX(2.5)) {
+            var_a0 = 4;
+        }
+        break;
+    default:
+        var_a0 = 8;
+        break;
+    }
+    var_a0 += condition;
+    func_8010DA48(D_800ACF54[var_a0]);
+}
 
 void func_8010E6AC(s32 arg0) {
     bool condition = false;
