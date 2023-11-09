@@ -294,7 +294,7 @@ void func_8010E0D0(s32 arg0) {
 }
 void func_8010E168(s32 arg0, s16 arg1) {
     if (arg0 == 0) {
-        CreateEntFactoryFromEntity(g_CurrentEntity, 0x150000 | 44, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 0x15002C, 0);
         if (arg1 >= g_Player.D_80072F1A) {
             g_Player.D_80072F1A = arg1;
         }
