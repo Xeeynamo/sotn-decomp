@@ -1240,7 +1240,7 @@ void StopSeq(void) {
     if (g_SeqPlayingId != 0) {
         SsSeqStop(g_SeqAccessNum);
         SsSeqClose(g_SeqAccessNum);
-        func_8013415C();
+        SetReleaseRate2();
         g_SeqPlayingId = 0;
         D_801390C4 = 0;
     }
@@ -1281,7 +1281,7 @@ void func_80133BDC();
 
 INCLUDE_ASM("dra/nonmatchings/8D3E8", func_80133FCC);
 
-void func_80134104(void) {
+void SetReleaseRate1(void) {
     D_80138FB4->mask = SPU_VOICE_ADSR_RR;
     D_80138FB4->voice = 0xFFFFFF;
     D_80138FB4->rr = 14;
@@ -1290,7 +1290,7 @@ void func_80134104(void) {
     InitSoundVars2();
 }
 
-void func_8013415C(void) {
+void SetReleaseRate2(void) {
     D_80138FB4->mask = SPU_VOICE_ADSR_RR;
     D_80138FB4->voice = 0xFFFFFF;
     D_80138FB4->rr = 8;
@@ -1340,7 +1340,7 @@ void func_801341B4(void) {
     case 3:
         D_800BD1C4--;
         if (D_800BD1C4 == 0) {
-            func_8013415C();
+            SetReleaseRate2();
         default:
             D_8013AE80 = 0;
             D_801390A0 = D_8013AE80;
@@ -1393,7 +1393,7 @@ void func_80134388(void) {
     }
 }
 
-void func_80134508(void) {
+void SetReleaseRate3(void) {
     D_801390C8->voice = 0x300000;
     D_801390C8->mask = SPU_VOICE_ADSR_RR;
     D_801390C8->rr = 14;
@@ -1401,7 +1401,7 @@ void func_80134508(void) {
     D_80138F28 |= 0x300000;
 }
 
-void func_80134564(void) {
+void SetReleaseRate4(void) {
     D_801390CC->voice = 0xC00000;
     D_801390CC->mask = SPU_VOICE_ADSR_RR;
     D_801390CC->rr = 14;
@@ -1409,7 +1409,7 @@ void func_80134564(void) {
     D_80138F28 |= 0xC00000;
 }
 
-void func_801345C0(void) {
+void SetReleaseRate5(void) {
     D_801390C8->voice = 0x300000;
     D_801390C8->mask = SPU_VOICE_ADSR_RR;
     D_801390C8->rr = 8;
@@ -1417,7 +1417,7 @@ void func_801345C0(void) {
     D_80138F28 |= 0x300000;
 }
 
-void func_8013461C(void) {
+void SetReleaseRate6(void) {
     D_801390CC->voice = 0xC00000;
     D_801390CC->mask = SPU_VOICE_ADSR_RR;
     D_801390CC->rr = 8;

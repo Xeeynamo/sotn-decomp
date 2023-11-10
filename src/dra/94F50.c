@@ -104,23 +104,23 @@ void ExecSoundCommands(void) {
                 func_80132C2C(8);
                 break;
             case 0x9F:
-                func_80134104();
+                SetReleaseRate1();
                 break;
             case 0xA0:
-                func_80134508();
+                SetReleaseRate3();
                 D_8013B664 = 0;
                 break;
             case 0xA4:
-                func_80134564();
+                SetReleaseRate4();
                 D_80139804 = 0;
                 break;
             case 0xA1:
-                func_801345C0();
+                SetReleaseRate5();
                 D_8013B664 = 0;
                 break;
             case 0xA2:
                 if (D_8013B664 != 0) {
-                    func_801345C0();
+                    SetReleaseRate5();
                 }
                 break;
             case 0xA3:
@@ -129,12 +129,12 @@ void ExecSoundCommands(void) {
                 }
                 break;
             case 0xA5:
-                func_8013461C();
+                SetReleaseRate6();
                 D_80139804 = 0;
                 break;
             case 0xA6:
                 if (D_80139804 != 0) {
-                    func_8013461C();
+                    SetReleaseRate6();
                 }
                 break;
             case 0xA7:
@@ -157,16 +157,16 @@ void ExecSoundCommands(void) {
             case 0xA:
                 func_80132C2C(2);
                 StopSeq();
-                func_8013415C();
+                SetReleaseRate2();
                 break;
             case 0x7:
-                func_8013415C();
+                SetReleaseRate2();
                 break;
             case 0xB:
                 func_80132C2C(2);
                 StopSeq();
                 SoundWait();
-                func_8013415C();
+                SetReleaseRate2();
                 break;
             case 0x59:
                 EnableCdReverb(1);

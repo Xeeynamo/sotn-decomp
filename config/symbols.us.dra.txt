@@ -290,6 +290,7 @@ SoundWait = 0x8013271C;
 MuteSound = 0x80132760;
 MakeCdLoc = 0x80132E90;
 EnableCdReverb = 0x80133780;
+SetReleaseRate6 = 0x8013461C;
 PlaySfx = 0x801347F8;
 nullsub_10 = 0x801362A4;
 g_DebugFreeze = 0x801362AC;

@@ -1035,7 +1035,7 @@ void StopSeq(void);
 bool func_80133940(void);
 bool func_80133950(void);
 void func_80133FCC(void);
-void func_8013415C(void);
+void SetReleaseRate2(void);
 void func_801361F8(void);
 
 #endif
