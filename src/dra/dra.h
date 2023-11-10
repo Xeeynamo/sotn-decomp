@@ -671,7 +671,7 @@ extern s32 D_80138444;
 extern s32 D_80138454;
 extern char g_SeqTable[SS_SEQ_TABSIZ * SEQ_TABLE_S_MAX * SEQ_TABLE_T_MAX];
 extern const char* D_80138784[487];
-extern s32 D_80138F20;
+extern s32 g_CurCdPos;
 extern u8 g_CdMode[];
 extern u8 g_CdCommandResult[];
 extern s32 D_80138F28;
@@ -1013,7 +1013,7 @@ void func_8013136C(Entity* entity);
 void func_801315F8(Entity* entity);
 // commented as a requirement for UpdateCd to match
 // void func_80131EBC(const char* str, s16 arg1);
-void func_80131ED8(s32 value);
+void SetCdPos(s32 value);
 void func_80131EE8(void);
 void func_80131F04(void);
 s32 func_80131F28(void);

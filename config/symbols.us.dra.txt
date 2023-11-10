@@ -380,3 +380,5 @@ g_imgUnk8013C270 = 0x8013C270;
 g_StageOverlay = 0x80180000;
 SetMaxVolume = 0x80132134;
 InitSoundVars1 = 0x80132264;
+SetCdPos = 0x80131ED8;
+g_CurCdPos = 0x80138F20;

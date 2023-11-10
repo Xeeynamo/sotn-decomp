@@ -875,7 +875,8 @@ INCLUDE_ASM("dra/nonmatchings/8D3E8", func_801315F8);
 
 void func_80131EBC(const char* str, s16 id) { D_80138784[id] = str; }
 
-void func_80131ED8(s32 value) { D_80138F20 = value; }
+// gets used later with MakeCdLoc
+void SetCdPos(s32 value) { g_CurCdPos = value; }
 
 void func_80131EE8(void) {
     D_80139020 = 1;
