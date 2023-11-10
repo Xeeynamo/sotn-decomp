@@ -283,7 +283,6 @@ DoCdCommand = 0x80132028;
 SetCdVolume = 0x801324B4;
 MuteSound = 0x80132760;
 MakeCdLoc = 0x80132E90;
-EnableCdReverb = 0x80133780;
 PlaySfx = 0x801347F8;
 nullsub_10 = 0x801362A4;
 g_DebugFreeze = 0x801362AC;

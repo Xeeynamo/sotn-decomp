@@ -222,14 +222,15 @@ void EntityEntFactory(Entity* self) {
     if (self->step == 0) {
         data_idx = &g_FactoryBlueprints[self->params];
         self->ext.entFactory.childId = *data_idx++;
-        self->ext.entFactory.unk94 = *data_idx++;          // index 1
-        self->ext.entFactory.unk96 = *data_idx & 0x3F;     // index 2, lower 6 bits
-        self->ext.entFactory.unk9E = *data_idx >> 7;       // index 2, top bit
-        self->ext.entFactory.unkA2 = *data_idx++ >> 6 & 1; // index 2, 2nd-top bit
-        self->ext.entFactory.unk98 = *data_idx++;          // index 3
-        self->ext.entFactory.unk9C = *data_idx & 0xF;      // index 4, lower 4 bits
-        self->ext.entFactory.unkA4 = *data_idx++ >> 4;     // index 4, upper 4 bits
-        self->ext.entFactory.unk9A = *data_idx;            // index 5
+        self->ext.entFactory.unk94 = *data_idx++;      // index 1
+        self->ext.entFactory.unk96 = *data_idx & 0x3F; // index 2, lower 6 bits
+        self->ext.entFactory.unk9E = *data_idx >> 7;   // index 2, top bit
+        self->ext.entFactory.unkA2 =
+            *data_idx++ >> 6 & 1;                      // index 2, 2nd-top bit
+        self->ext.entFactory.unk98 = *data_idx++;      // index 3
+        self->ext.entFactory.unk9C = *data_idx & 0xF;  // index 4, lower 4 bits
+        self->ext.entFactory.unkA4 = *data_idx++ >> 4; // index 4, upper 4 bits
+        self->ext.entFactory.unk9A = *data_idx;        // index 5
         self->flags |= FLAG_UNK_04000000;
 
         self->step++;
@@ -301,8 +302,10 @@ void EntityEntFactory(Entity* self) {
         startIndex = *data_idx;
         endIndex = *(data_idx + 1);
 
-        if (self->ext.entFactory.unk9C == 3 || self->ext.entFactory.unk9C == 10 ||
-            self->ext.entFactory.unk9C == 11 || self->ext.entFactory.unk9C == 12 ||
+        if (self->ext.entFactory.unk9C == 3 ||
+            self->ext.entFactory.unk9C == 10 ||
+            self->ext.entFactory.unk9C == 11 ||
+            self->ext.entFactory.unk9C == 12 ||
             self->ext.entFactory.unk9C == 13) {
             DestroyEntity(&g_Entities[startIndex]);
             newEntity = &g_Entities[startIndex];
