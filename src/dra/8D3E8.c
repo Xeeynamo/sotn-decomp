@@ -875,15 +875,16 @@ INCLUDE_ASM("dra/nonmatchings/8D3E8", func_801315F8);
 
 void func_80131EBC(const char* str, s16 id) { D_80138784[id] = str; }
 
-void func_80131ED8(s32 value) { D_80138F20 = value; }
+// gets used later with MakeCdLoc
+void SetCdPos(s32 value) { g_CurCdPos = value; }
 
-void func_80131EE8(void) {
-    D_80139020 = 1;
+void MuteCd(void) {
+    g_MuteCd = 1;
     D_8013B694 = 0;
 }
 
-void func_80131F04(void) {
-    D_80139020 = 0;
+void UnMuteCd(void) {
+    g_MuteCd = 0;
     D_8013B694++;
 }
 
@@ -946,13 +947,13 @@ u8 DoCdCommand(u_char com, u_char* param, u_char* result) {
     return D_8013B680;
 }
 
-void func_80132134(void) {
+void SetMaxVolume(void) {
     g_volumeL = 127;
     g_volumeR = 127;
     SsSetMVol(g_volumeL, g_volumeR);
 }
 
-void func_8013216C(void) {
+void InitSoundVars3(void) {
     s32 i;
 
     for (i = 0; i < 4; i++) {
@@ -967,10 +968,10 @@ void func_8013216C(void) {
     }
 }
 
-void func_801321FC(void) {
+void InitSoundVars2(void) {
     s32 i;
 
-    func_8013216C();
+    InitSoundVars3();
     D_8013B690 = 0;
 
     for (i = 0; i < 4; i++) {
@@ -981,8 +982,8 @@ void func_801321FC(void) {
     D_8013B664 = 0;
 }
 
-void func_80132264(void) {
-    func_801321FC();
+void InitSoundVars1(void) {
+    InitSoundVars2();
     D_8013B684 = 0;
     D_80138454 = 0;
     do {
@@ -1035,7 +1036,7 @@ void func_80132264(void) {
     D_80138F7C = 0;
     D_801390D8 = 0;
     D_80138F28 = 0;
-    D_80139020 = 0;
+    g_MuteCd = 0;
     D_8013B694 = 0;
     D_8013B61C = 0;
 }
@@ -1089,13 +1090,13 @@ void SoundInit(void) {
     SsUtSetReverbType(SS_REV_TYPE_STUDIO_B);
     SpuClearReverbWorkArea(SS_REV_TYPE_STUDIO_B);
     SsUtReverbOn();
-    func_80132134();
+    SetMaxVolume();
     g_CdVolume = 0x78;
     SsSetSerialAttr(0, 0, 1);
     SetCdVolume(0, g_CdVolume, g_CdVolume);
     g_CdMode[0] = CdlModeSpeed | CdlModeRT | CdlModeSF;
     DoCdCommand(CdlSetmode, g_CdMode, 0);
-    func_80132264();
+    InitSoundVars1();
     SetReverbDepth(10);
     SpuSetTransferMode(0);
     SpuSetIRQCallback(NULL);
@@ -1111,7 +1112,7 @@ s32 func_801326D8(void) {
     return (D_801390D8 != 0) * 2;
 }
 
-void func_8013271C(void) {
+void SoundWait(void) {
     while (!(func_801326D8() & 0xFF) == 0) {
         VSync(0);
         func_801361F8();
@@ -1122,8 +1123,8 @@ void MuteSound(void) {
     SsSetMVol(0, 0);
     SsSetSerialAttr(SS_SERIAL_A, SS_MIX, SS_SOFF);
     SetCdVolume(SS_SERIAL_A, 0, 0);
-    func_80132134();
-    func_80132264();
+    SetMaxVolume();
+    InitSoundVars1();
 }
 
 INCLUDE_ASM("dra/nonmatchings/8D3E8", func_801327B4);
@@ -1239,7 +1240,7 @@ void StopSeq(void) {
     if (g_SeqPlayingId != 0) {
         SsSeqStop(g_SeqAccessNum);
         SsSeqClose(g_SeqAccessNum);
-        func_8013415C();
+        SetReleaseRate2();
         g_SeqPlayingId = 0;
         D_801390C4 = 0;
     }
@@ -1280,22 +1281,22 @@ void func_80133BDC();
 
 INCLUDE_ASM("dra/nonmatchings/8D3E8", func_80133FCC);
 
-void func_80134104(void) {
+void SetReleaseRate1(void) {
     D_80138FB4->mask = SPU_VOICE_ADSR_RR;
     D_80138FB4->voice = 0xFFFFFF;
     D_80138FB4->rr = 14;
     SpuSetVoiceAttr(D_80138FB4);
     D_80138F28 = 0xFFFFFF;
-    func_801321FC();
+    InitSoundVars2();
 }
 
-void func_8013415C(void) {
+void SetReleaseRate2(void) {
     D_80138FB4->mask = SPU_VOICE_ADSR_RR;
     D_80138FB4->voice = 0xFFFFFF;
     D_80138FB4->rr = 8;
     SpuSetVoiceAttr(D_80138FB4);
     D_80138F28 = 0xFFFFFF;
-    func_801321FC();
+    InitSoundVars2();
 }
 
 void func_801341B4(void) {
@@ -1339,7 +1340,7 @@ void func_801341B4(void) {
     case 3:
         D_800BD1C4--;
         if (D_800BD1C4 == 0) {
-            func_8013415C();
+            SetReleaseRate2();
         default:
             D_8013AE80 = 0;
             D_801390A0 = D_8013AE80;
@@ -1392,7 +1393,7 @@ void func_80134388(void) {
     }
 }
 
-void func_80134508(void) {
+void SetReleaseRate3(void) {
     D_801390C8->voice = 0x300000;
     D_801390C8->mask = SPU_VOICE_ADSR_RR;
     D_801390C8->rr = 14;
@@ -1400,7 +1401,7 @@ void func_80134508(void) {
     D_80138F28 |= 0x300000;
 }
 
-void func_80134564(void) {
+void SetReleaseRate4(void) {
     D_801390CC->voice = 0xC00000;
     D_801390CC->mask = SPU_VOICE_ADSR_RR;
     D_801390CC->rr = 14;
@@ -1408,7 +1409,7 @@ void func_80134564(void) {
     D_80138F28 |= 0xC00000;
 }
 
-void func_801345C0(void) {
+void SetReleaseRate5(void) {
     D_801390C8->voice = 0x300000;
     D_801390C8->mask = SPU_VOICE_ADSR_RR;
     D_801390C8->rr = 8;
@@ -1416,7 +1417,7 @@ void func_801345C0(void) {
     D_80138F28 |= 0x300000;
 }
 
-void func_8013461C(void) {
+void SetReleaseRate6(void) {
     D_801390CC->voice = 0xC00000;
     D_801390CC->mask = SPU_VOICE_ADSR_RR;
     D_801390CC->rr = 8;
