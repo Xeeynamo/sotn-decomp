@@ -805,12 +805,12 @@ void MainGame(void) {
     g_Settings.D_8003CB04 = 0;
     g_CurrentBuffer = &g_GpuBuffers[0];
 #if defined(VERSION_US)
-    func_80131ED8(0xB9B6);
+    SetCdPos(0xB9B6);
 #elif defined(VERSION_HD)
     do {
 
     } while (CdSearchFile(&fp, "\\SD\\XA_STR1.;1") == 0);
-    func_80131ED8(CdPosToInt(&fp));
+    SetCdPos(CdPosToInt(&fp));
 #endif
     SoundInit();
     while (LoadVabData() < 0)
