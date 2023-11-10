@@ -294,7 +294,9 @@ void func_8010E0D0(s32 arg0) {
 }
 void func_8010E168(s32 arg0, s16 arg1) {
     if (arg0 == 0) {
-        CreateEntFactoryFromEntity(g_CurrentEntity, 0x15002C, 0);
+        // Create factory with unkA0 = 0x1500, blueprint #44.
+        // Blueprint 44 is to make child entity #11, or EntityPlayerBlinkWhite
+        CreateEntFactoryFromEntity(g_CurrentEntity, 0x1500 << 8 | 44, 0);
         if (arg1 >= g_Player.D_80072F1A) {
             g_Player.D_80072F1A = arg1;
         }
@@ -1147,7 +1149,7 @@ void func_8010FAF4(void) {
     g_Player.unk46 = 0;
 }
 
-void func_8010FB24(void) {
+void PerformHellfire(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SpellHellfire);

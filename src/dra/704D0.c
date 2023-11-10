@@ -400,7 +400,7 @@ bool CheckHellfireInput(void) {
                     if (CastSpell(SPELL_HELLFIRE) == 0) {
                         return 0;
                     }
-                    func_8010FB24();
+                    PerformHellfire();
                     g_ButtonCombo[COMBO_HELLFIRE].buttonsCorrect = 0;
                     LearnSpell(SPELL_HELLFIRE);
                     return 1;

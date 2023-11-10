@@ -129,7 +129,7 @@ typedef enum {
 
 typedef enum {
     E_NONE,
-    E_UNK_1,
+    E_ENTITYFACTORY,
 
     ENTITY_13 = 0x13,
     E_UNK_22 = 0x22,
