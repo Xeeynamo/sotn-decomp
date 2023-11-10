@@ -952,7 +952,7 @@ void SetMaxVolume(void) {
     SsSetMVol(g_volumeL, g_volumeR);
 }
 
-void func_8013216C(void) {
+void InitSoundVars3(void) {
     s32 i;
 
     for (i = 0; i < 4; i++) {
@@ -967,10 +967,10 @@ void func_8013216C(void) {
     }
 }
 
-void func_801321FC(void) {
+void InitSoundVars2(void) {
     s32 i;
 
-    func_8013216C();
+    InitSoundVars3();
     D_8013B690 = 0;
 
     for (i = 0; i < 4; i++) {
@@ -981,8 +981,8 @@ void func_801321FC(void) {
     D_8013B664 = 0;
 }
 
-void func_80132264(void) {
-    func_801321FC();
+void InitSoundVars1(void) {
+    InitSoundVars2();
     D_8013B684 = 0;
     D_80138454 = 0;
     do {
@@ -1095,7 +1095,7 @@ void SoundInit(void) {
     SetCdVolume(0, g_CdVolume, g_CdVolume);
     g_CdMode[0] = CdlModeSpeed | CdlModeRT | CdlModeSF;
     DoCdCommand(CdlSetmode, g_CdMode, 0);
-    func_80132264();
+    InitSoundVars1();
     SetReverbDepth(10);
     SpuSetTransferMode(0);
     SpuSetIRQCallback(NULL);
@@ -1123,7 +1123,7 @@ void MuteSound(void) {
     SsSetSerialAttr(SS_SERIAL_A, SS_MIX, SS_SOFF);
     SetCdVolume(SS_SERIAL_A, 0, 0);
     SetMaxVolume();
-    func_80132264();
+    InitSoundVars1();
 }
 
 INCLUDE_ASM("dra/nonmatchings/8D3E8", func_801327B4);
@@ -1286,7 +1286,7 @@ void func_80134104(void) {
     D_80138FB4->rr = 14;
     SpuSetVoiceAttr(D_80138FB4);
     D_80138F28 = 0xFFFFFF;
-    func_801321FC();
+    InitSoundVars2();
 }
 
 void func_8013415C(void) {
@@ -1295,7 +1295,7 @@ void func_8013415C(void) {
     D_80138FB4->rr = 8;
     SpuSetVoiceAttr(D_80138FB4);
     D_80138F28 = 0xFFFFFF;
-    func_801321FC();
+    InitSoundVars2();
 }
 
 void func_801341B4(void) {
