@@ -121,13 +121,15 @@ void func_80116208(void) {
         }
     }
 }
-
-void func_80116408(void) {
+// Called in EntityAlucard when PLAYER.step is Player_SpellHellfire
+void PlayerStepHellfire(void) {
     // Whether we should run the last 3 function calls at the end
     bool runFinishingBlock = 0;
     switch (PLAYER.step_s) {
     case 0:
-        if (CreateEntFactoryFromEntity(g_CurrentEntity, 0x21U, 0) == NULL) {
+        // Make factory with blueprint #33. Factory makes entities with ID 25.
+        // This is func_80126ECC.
+        if (CreateEntFactoryFromEntity(g_CurrentEntity, 33, 0) == NULL) {
             func_8010E570(0);
         }
         func_8010DA48(1);
@@ -166,6 +168,7 @@ void func_80116408(void) {
         if (g_Player.unk5C == 3) {
             func_8010DA48(0x3C);
             PLAYER.step_s += 1;
+            // In Hellfire, if you press down, it cancels the spell
             if (g_Player.padPressed & PAD_DOWN) {
                 runFinishingBlock = 1;
             }
@@ -174,7 +177,9 @@ void func_80116408(void) {
     case 4:
         if (PLAYER.animFrameIdx == 10 && PLAYER.animFrameDuration == 1) {
             g_Player.D_80072F18 = 4;
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0x25U, 0);
+            // Make factory with blueprint 37. This creates entity with ID 28,
+            // which is EntityExpandingCircle.
+            CreateEntFactoryFromEntity(g_CurrentEntity, 37, 0);
         }
         if (PLAYER.animFrameDuration < 0) {
             runFinishingBlock = 1;
