@@ -382,3 +382,7 @@ SetMaxVolume = 0x80132134;
 InitSoundVars1 = 0x80132264;
 SetCdPos = 0x80131ED8;
 g_CurCdPos = 0x80138F20;
+g_MuteCd = 0x80139020;
+MuteCd = 0x80131EE8;
+UnMuteCd = 0x80131F04;
+SoundWait = 0x8013271C;

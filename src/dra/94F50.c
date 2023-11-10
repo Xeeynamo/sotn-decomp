@@ -43,7 +43,7 @@ void ExecSoundCommands(void) {
         } else {
             switch (--id) {
             case 0xC:
-                func_8013271C();
+                SoundWait();
                 break;
             case 0x4:
                 SetMonoStereo(MONO_SOUND);
@@ -165,7 +165,7 @@ void ExecSoundCommands(void) {
             case 0xB:
                 func_80132C2C(2);
                 StopSeq();
-                func_8013271C();
+                SoundWait();
                 func_8013415C();
                 break;
             case 0x59:

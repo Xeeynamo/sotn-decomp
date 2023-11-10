@@ -697,7 +697,7 @@ extern u8 D_80139014;
 extern s8 D_80139018[];
 extern u32 g_DebugCurPal;
 extern s16 D_8013901C;
-extern u8 D_80139020;
+extern u8 g_MuteCd;
 extern s8 D_80139058[];
 extern s32 g_PrevEquippedWeapons[2];
 extern s16 g_SeqVolume1;
@@ -1014,8 +1014,8 @@ void func_801315F8(Entity* entity);
 // commented as a requirement for UpdateCd to match
 // void func_80131EBC(const char* str, s16 arg1);
 void SetCdPos(s32 value);
-void func_80131EE8(void);
-void func_80131F04(void);
+void MuteCd(void);
+void UnMuteCd(void);
 s32 func_80131F28(void);
 u16 func_80131F38(void);
 bool func_80131F68(void);
@@ -1027,7 +1027,7 @@ void InitSoundVars1(void);
 s32 func_801326D8(void);
 void func_80132C2C(s16);
 u8 DoCdCommand(u_char com, u_char* param, u_char* result);
-void func_8013271C(void);
+void SoundWait(void);
 void MuteSound(void);
 void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note,
                    s16 volume, s16 distance);

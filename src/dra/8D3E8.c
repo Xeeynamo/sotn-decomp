@@ -878,13 +878,13 @@ void func_80131EBC(const char* str, s16 id) { D_80138784[id] = str; }
 // gets used later with MakeCdLoc
 void SetCdPos(s32 value) { g_CurCdPos = value; }
 
-void func_80131EE8(void) {
-    D_80139020 = 1;
+void MuteCd(void) {
+    g_MuteCd = 1;
     D_8013B694 = 0;
 }
 
-void func_80131F04(void) {
-    D_80139020 = 0;
+void UnMuteCd(void) {
+    g_MuteCd = 0;
     D_8013B694++;
 }
 
@@ -1036,7 +1036,7 @@ void InitSoundVars1(void) {
     D_80138F7C = 0;
     D_801390D8 = 0;
     D_80138F28 = 0;
-    D_80139020 = 0;
+    g_MuteCd = 0;
     D_8013B694 = 0;
     D_8013B61C = 0;
 }
@@ -1112,7 +1112,7 @@ s32 func_801326D8(void) {
     return (D_801390D8 != 0) * 2;
 }
 
-void func_8013271C(void) {
+void SoundWait(void) {
     while (!(func_801326D8() & 0xFF) == 0) {
         VSync(0);
         func_801361F8();

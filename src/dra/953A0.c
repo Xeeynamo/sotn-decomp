@@ -135,7 +135,7 @@ void func_801361F8(void) {
         D_80138F28 = 0;
         func_80131FCC();
 
-        if (D_80139020) {
+        if (g_MuteCd) {
             SetCdVolume(0, 0, 0);
         } else {
             SetCdVolume(0, g_CdVolume, g_CdVolume);
