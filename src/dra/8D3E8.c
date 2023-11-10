@@ -946,7 +946,7 @@ u8 DoCdCommand(u_char com, u_char* param, u_char* result) {
     return D_8013B680;
 }
 
-void func_80132134(void) {
+void SetMaxVolume(void) {
     g_volumeL = 127;
     g_volumeR = 127;
     SsSetMVol(g_volumeL, g_volumeR);
@@ -1089,7 +1089,7 @@ void SoundInit(void) {
     SsUtSetReverbType(SS_REV_TYPE_STUDIO_B);
     SpuClearReverbWorkArea(SS_REV_TYPE_STUDIO_B);
     SsUtReverbOn();
-    func_80132134();
+    SetMaxVolume();
     g_CdVolume = 0x78;
     SsSetSerialAttr(0, 0, 1);
     SetCdVolume(0, g_CdVolume, g_CdVolume);
@@ -1122,7 +1122,7 @@ void MuteSound(void) {
     SsSetMVol(0, 0);
     SsSetSerialAttr(SS_SERIAL_A, SS_MIX, SS_SOFF);
     SetCdVolume(SS_SERIAL_A, 0, 0);
-    func_80132134();
+    SetMaxVolume();
     func_80132264();
 }
 

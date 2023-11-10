@@ -1020,7 +1020,7 @@ s32 func_80131F28(void);
 u16 func_80131F38(void);
 bool func_80131F68(void);
 s16 func_80131F94(void);
-void func_80132134(void);
+void SetMaxVolume(void);
 void func_8013216C(void);
 void func_801321FC(void);
 void func_80132264(void);
