@@ -156,7 +156,7 @@ void HandleGameOver(void) {
             if (g_IsUsingCd) {
                 break;
             }
-            LoadImage(&g_Vram.D_800ACDD0, (u32*)0x80180000);
+            LoadImage(&g_Vram.D_800ACDD0, STAGE_PRG_PTR);
             LoadImage(&g_Vram.D_800ACDD8, (u32*)0x80188000);
             LoadImage(&g_Vram.D_800ACDB8, (u32*)0x80198000);
             StoreImage(&g_Vram.D_800ACDB8, &D_80070BCC);

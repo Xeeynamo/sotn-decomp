@@ -310,10 +310,11 @@ struct SeqData {
 
 extern u16 g_ButtonMask[];
 extern u8 g_StageSelectOrder[];
-extern s32 D_800A0248;
+extern s32 g_SimVabId;
 extern SimFile D_800A024C[];
 extern SimFile D_800A036C[];
 extern SimFile D_800A04AC[];
+extern u16 D_800A04CC[];
 extern s32 D_800A04EC;
 extern s32 D_800A04F8;
 extern s32 g_UnkMemcardPort[];
@@ -523,7 +524,7 @@ extern s16 D_80136308[];
 extern s32 D_8013640C;
 extern s32 D_80136410;
 extern s32 D_80136414[];
-extern SimFile* D_8013644C;
+extern SimFile* g_SimFile;
 extern SimFile D_80136450;
 extern s16 D_80136460[];
 extern s16 D_80136C60[];

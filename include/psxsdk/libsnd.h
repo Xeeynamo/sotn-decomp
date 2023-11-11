@@ -144,7 +144,7 @@ void SsSetStereo(void);
 // Open a VAB header and specify transfer address in sound buffer.
 s32 /*short*/ SsVabOpenHeadSticky(
     u_char* addr, // Start address of VAB header (.VH) in main memory
-    short vabid,  // Desired VAB ID or -1
+    u_long vabid, // Desired VAB ID or -1
     u_long sbaddr // Start address in sound buffer where VabBody is to be
                   // transferred
 );
@@ -154,7 +154,7 @@ s32 /*short*/ SsVabOpenHeadSticky(
 s32 /*short*/ SsVabTransBodyPartly(
     u_char* addr, // Pointer to starting address of the segment transfer buffer
     u_long bufsize, // Buffer size
-    short vabid     // VAB ID
+    u_long vabid    // VAB ID
 );
 
 // Determines whether data transfer to SPU local memory has terminated
