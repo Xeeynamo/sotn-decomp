@@ -957,9 +957,9 @@ void InitSoundVars3(void) {
     s32 i;
 
     for (i = 0; i < 4; i++) {
-        D_8013B620[i] = 0;
-        D_8013B614[i] = 0;
-        D_8013AE84[i] = 0;
+        g_ChannelGroupVolume[i] = 0;
+        g_UnkChannelSetting1[i] = 0;
+        g_UnkChannelSetting2[i] = 0;
         D_8013B66C[i] = 0;
         D_8013B5EC[i] = 0;
         D_8013B628[i] = 0;
@@ -1035,7 +1035,7 @@ void InitSoundVars1(void) {
     D_8013B680 = 0;
     D_80138F7C = 0;
     D_801390D8 = 0;
-    D_80138F28 = 0;
+    g_KeyOffChannels = 0;
     g_MuteCd = 0;
     D_8013B694 = 0;
     D_8013B61C = 0;
@@ -1286,7 +1286,7 @@ void SetReleaseRate1(void) {
     D_80138FB4->voice = 0xFFFFFF;
     D_80138FB4->rr = 14;
     SpuSetVoiceAttr(D_80138FB4);
-    D_80138F28 = 0xFFFFFF;
+    g_KeyOffChannels = 0xFFFFFF;
     InitSoundVars2();
 }
 
@@ -1295,7 +1295,7 @@ void SetReleaseRate2(void) {
     D_80138FB4->voice = 0xFFFFFF;
     D_80138FB4->rr = 8;
     SpuSetVoiceAttr(D_80138FB4);
-    D_80138F28 = 0xFFFFFF;
+    g_KeyOffChannels = 0xFFFFFF;
     InitSoundVars2();
 }
 
@@ -1398,7 +1398,7 @@ void SetReleaseRate3(void) {
     D_801390C8->mask = SPU_VOICE_ADSR_RR;
     D_801390C8->rr = 14;
     SpuSetVoiceAttr(D_801390C8);
-    D_80138F28 |= 0x300000;
+    g_KeyOffChannels |= 0x300000;
 }
 
 void SetReleaseRate4(void) {
@@ -1406,7 +1406,7 @@ void SetReleaseRate4(void) {
     D_801390CC->mask = SPU_VOICE_ADSR_RR;
     D_801390CC->rr = 14;
     SpuSetVoiceAttr(D_801390CC);
-    D_80138F28 |= 0xC00000;
+    g_KeyOffChannels |= 0xC00000;
 }
 
 void SetReleaseRate5(void) {
@@ -1414,7 +1414,7 @@ void SetReleaseRate5(void) {
     D_801390C8->mask = SPU_VOICE_ADSR_RR;
     D_801390C8->rr = 8;
     SpuSetVoiceAttr(D_801390C8);
-    D_80138F28 |= 0x300000;
+    g_KeyOffChannels |= 0x300000;
 }
 
 void SetReleaseRate6(void) {
@@ -1422,7 +1422,7 @@ void SetReleaseRate6(void) {
     D_801390CC->mask = SPU_VOICE_ADSR_RR;
     D_801390CC->rr = 8;
     SpuSetVoiceAttr(D_801390CC);
-    D_80138F28 |= 0xC00000;
+    g_KeyOffChannels |= 0xC00000;
 }
 
 s32 func_80134678(s16 arg0, u16 arg1) {
@@ -1527,9 +1527,9 @@ void PlaySfx(s16 sfxId) {
 }
 
 void func_8013493C(s16 arg0, s16 arg1) {
-    D_8013AE84[arg1] = D_8013B678[arg0];
-    D_8013B620[arg1] = D_801390AC[arg0];
-    D_8013B614[arg1] = D_80139058[arg0];
+    g_UnkChannelSetting2[arg1] = D_8013B678[arg0];
+    g_ChannelGroupVolume[arg1] = D_801390AC[arg0];
+    g_UnkChannelSetting1[arg1] = D_80139058[arg0];
     D_8013B66C[arg1] = D_80139814[arg0];
     D_8013B5EC[arg1] = D_80139018[arg0];
     D_8013B628[arg1] = D_801390B4[arg0];
@@ -1539,21 +1539,21 @@ void func_801349F4(void) {
     s16 i;
 
     for (i = 0; i < 4; i++) {
-        if (D_8013AE84[i] == 0) {
+        if (g_UnkChannelSetting2[i] == 0) {
             continue;
         }
         if (D_8013B5EC[i] == 5) {
             continue;
         }
-        D_8013B678[i] = D_8013AE84[i];
-        D_801390AC[i] = D_8013B620[i];
-        D_80139058[i] = D_8013B614[i];
+        D_8013B678[i] = g_UnkChannelSetting2[i];
+        D_801390AC[i] = g_ChannelGroupVolume[i];
+        D_80139058[i] = g_UnkChannelSetting1[i];
         D_80139814[i] = D_8013B66C[i];
         D_80139018[i] = D_8013B5EC[i];
         D_801390B4[i] = D_8013B628[i];
-        D_8013AE84[i] = 0;
-        D_8013B620[i] = 0;
-        D_8013B614[i] = 0;
+        g_UnkChannelSetting2[i] = 0;
+        g_ChannelGroupVolume[i] = 0;
+        g_UnkChannelSetting1[i] = 0;
         D_8013B66C[i] = 0;
         D_8013B5EC[i] = 0;
         D_8013B628[i] = 0;

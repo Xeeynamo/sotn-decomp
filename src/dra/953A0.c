@@ -39,43 +39,52 @@ void func_801353A0(void) {
     }
 }
 
-void func_80135484(s16 arg0, s32 arg1, s32 arg2, s32 volume, u16 arg4) {
+void ApplyQuadChannelSetting(
+    s16 arg0, s32 channel_group, s32 do_key_off, s32 volume, u16 arg4) {
     u16 volumeMod;
     u16 calcVolume;
     s32 progId;
 
-    if (arg2 != 0) {
-        D_80138F28 |= (1 << (arg1 * 4 + 0)) + (1 << (arg1 * 4 + 1)) +
-                      (1 << (arg1 * 4 + 2)) + (1 << (arg1 * 4 + 3));
+    if (do_key_off != 0) {
+        // do key off for 4 consecutive channels
+        // channel_group 0 -> 0,1,2,3 etc.
+        g_KeyOffChannels |=
+            (1 << (channel_group * 4 + 0)) + (1 << (channel_group * 4 + 1)) +
+            (1 << (channel_group * 4 + 2)) + (1 << (channel_group * 4 + 3));
     }
 
     volumeMod = volume;
     if (volumeMod == 0xFFFF) {
-        D_8013B620[arg1] = (D_8013AE7C * D_800BF554[arg0].volume) >> 7;
-        D_8013B614[arg1] = 0;
+        g_ChannelGroupVolume[channel_group] =
+            (D_8013AE7C * D_800BF554[arg0].volume) >> 7;
+        g_UnkChannelSetting1[channel_group] = 0;
     } else {
         calcVolume = (D_8013AE7C * D_800BF554[arg0].volume) >> 7;
-        D_8013B620[arg1] = (calcVolume * volumeMod) >> 7;
-        D_8013B614[arg1] = arg4;
+        g_ChannelGroupVolume[channel_group] = (calcVolume * volumeMod) >> 7;
+        g_UnkChannelSetting1[channel_group] = arg4;
     }
-    D_8013AE84[arg1] = arg0;
-    D_8013B5EC[arg1] = D_800BF554[arg0].unk4;
+    g_UnkChannelSetting2[channel_group] = arg0;
+    D_8013B5EC[channel_group] = D_800BF554[arg0].unk4;
     progId = D_800BF554[arg0].prog + 1;
-    D_8013B628[arg1] = D_800C1ECC[progId];
-    D_8013B66C[arg1] = 0;
-    D_8013B648[arg1] = arg0;
-    D_8013AEA0[arg1] = D_800BF554[arg0].unk6;
+    D_8013B628[channel_group] = D_800C1ECC[progId];
+    D_8013B66C[channel_group] = 0;
+    D_8013B648[channel_group] = arg0;
+    D_8013AEA0[channel_group] = D_800BF554[arg0].unk6;
 }
 
-void func_80135624(s16 arg0, s32 arg1, s32 arg2, s16 volume, s16 distance) {
-    if (arg2 != 0) {
-        D_80138F28 |= (1 << ((arg1 + 6) * 2)) + (1 << (((arg1 + 6) * 2) + 1));
+void func_80135624(
+    s16 arg0, s32 channel_group, s32 should_key_off, s16 volume, s16 distance) {
+    if (should_key_off != 0) {
+        // do key off for two channels
+        // channel_group 0 -> 12, 13 etc.
+        g_KeyOffChannels |= (1 << ((channel_group + 6) * 2)) +
+                            (1 << (((channel_group + 6) * 2) + 1));
     }
     func_80132A04(
-        (arg1 * 2) + 12, D_800BF554[arg0].vabid, D_800BF554[arg0].prog,
+        (channel_group * 2) + 12, D_800BF554[arg0].vabid, D_800BF554[arg0].prog,
         D_800BF554[arg0].tone, D_800BF554[arg0].note, volume, distance);
-    D_8013B650[arg1] = arg0;
-    D_8013AED4[arg1] = D_800BF554[arg0].unk6;
+    D_8013B650[channel_group] = arg0;
+    D_8013AED4[channel_group] = D_800BF554[arg0].unk6;
 }
 
 INCLUDE_ASM("dra/nonmatchings/953A0", func_8013572C);
@@ -131,8 +140,8 @@ void func_801361F8(void) {
         ExecSoundCommands();
         func_80133FCC();
         func_801353A0();
-        SpuSetKey(0, D_80138F28);
-        D_80138F28 = 0;
+        SpuSetKey(SPU_OFF, g_KeyOffChannels);
+        g_KeyOffChannels = 0;
         func_80131FCC();
 
         if (g_MuteCd) {
