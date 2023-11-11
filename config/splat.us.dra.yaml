@@ -148,7 +148,7 @@ segments:
       - [0x42000, rodata] # func_8013136C
       - [0x4202C, rodata]
       - [0x42034, rodata] # func_80132F60
-      - [0x4205C, rodata] # func_80133290
+      - [0x4205C, .rodata, 93290] # func_80133290
       - [0x42074, rodata] # func_80133960
       - [0x4208C, rodata] # func_80133BDC
       - [0x420B4, .rodata, 94F50] # func_80134F50
