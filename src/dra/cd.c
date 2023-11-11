@@ -45,7 +45,6 @@ extern s32 D_80137FA0;
 extern s16 D_80137FA8;
 extern s32 D_80137FAC;
 extern s32 D_80137FB0;
-extern const char aPqes_1[];
 
 typedef struct {
     RECT dstRect;

@@ -49,11 +49,36 @@ typedef enum {
     SimFileType_Monster,
 } SimFileType;
 
+typedef enum {
+    SIM_STAGE_PRG,
+    SIM_1,
+    SIM_STAGE_CHR,
+    SIM_3,
+    SIM_VH,
+    SIM_VB,
+    SIM_6,
+    SIM_SEQ,
+    SIM_WEAPON_PRG,
+    SIM_WEAPON0_CHR,
+    SIM_WEAPON1_CHR,
+    SIM_11,
+    SIM_12,
+    SIM_13,
+    SIM_14,
+    SIM_15,
+    SIM_16,
+    SIM_17,
+    SIM_FAMILIAR_PRG,
+    SIM_FAMILIAR_CHR,
+    SIM_MONSTER,
+    SIM_21,
+} SimKind;
+
 typedef struct {
     const char* path; // file name
     u8* addr;         // where to load the file to
     s32 size;         // file size
-    s32 type;         // file type
+    SimKind kind;
 } SimFile;
 
 typedef enum {
@@ -308,20 +333,19 @@ struct SeqData {
 // Used for the button combos to signal successfully completing the sequence
 #define COMBO_COMPLETE 0xFF
 
+// File list:
+extern u8 aPqes[];   // TODO: extract file
+extern u8 aPqes_0[]; // TODO: extract file
+extern u8 aPqes_1[]; // TODO: extract file
+extern u8 aPbav[];   // TODO: extract file
+extern u8 aPbav_0[]; // TODO: extract file
+extern u8 aPbav_1[]; // TODO: extract file
+extern u8 aPbav_2[]; // TODO: extract file
+
 extern u16 g_ButtonMask[];
 extern u8 g_StageSelectOrder[];
-extern s32 g_SimVabId;
-extern SimFile D_800A024C[];
-extern SimFile D_800A036C[];
-extern SimFile D_800A04AC[];
 extern u16 D_800A04CC[];
-extern s32 D_800A04EC;
-extern s32 D_800A04F0;
-extern u32 D_800A04F4;
-extern s32 D_800A04F8;
-extern u32 D_800A04FC;
-extern RECT D_800A0500;
-extern RECT D_800A0508;
+extern u32 D_800A04F8;
 extern s32 g_UnkMemcardPort[];
 extern u16 g_saveIconPalette[0x10][0x10];
 extern u8* g_saveIconTexture[0x10];
@@ -472,10 +496,6 @@ extern s32 D_800B0914;
 extern s32 D_800B0918;
 extern s32 D_800B091C;
 extern s32 D_800B0920;
-extern const char aPbav[];
-extern const char aPbav_0[];
-extern const char aPbav_1[];
-extern const char aPbav_2[];
 extern s16 D_800BD07C[];
 extern s16 g_VolumeTable[];
 extern struct SeqData g_SeqInfo[];
