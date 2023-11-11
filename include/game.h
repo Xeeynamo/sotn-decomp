@@ -169,6 +169,8 @@ typedef struct Primitive {
 #define STAGE_PRG_PTR 0x80180000
 #define CASTLE_MAP_PTR 0x801E0000
 #define DEMO_KEY_PTR 0x801E8000
+#define SIM_CHR0 0x80280000
+#define SIM_CHR1 0x80284000
 #define SIM_PTR 0x80280000
 
 // Flags for entity->drawFlags

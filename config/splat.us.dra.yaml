@@ -33,8 +33,8 @@ segments:
       - [0x144, .data, 42398]
       - [0x160, .data, play]
       - [0x240, .data, loading]
-      - [0x248, data]
-      - [0x518, data]
+      - [0x248, .data, 47BB8]
+      - [0x510, data]
       - [0x1F18, .data, save_mgr]
       - [0x21B8, data]
       - [0x2BC0, data]
@@ -62,7 +62,7 @@ segments:
       - [0x3B560, .rodata, gameover]
       - [0x3B720, .rodata, loading]
       - [0x3B7E8, .rodata, 46FD4]
-      - [0x3B9B8, rodata]
+      - [0x3B9B8, .rodata, 47BB8] # SimFile strings
       - [0x3BD70, .rodata, 47BB8] # VSyncHandler
       - [0x3BD88, .rodata, 47BB8] # func_800E7E08
       - [0x3BDE0, .rodata, 47BB8] # LoadFileSim
