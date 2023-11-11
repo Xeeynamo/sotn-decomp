@@ -27,6 +27,9 @@
 #define SPU_REV_DELAYTIME (0x01 << 3) // Delay Time  (ECHO, DELAY only)
 #define SPU_REV_FEEDBACK (0x01 << 4)  // Feedback    (ECHO only)
 
+#define SPU_OFF 0
+#define SPU_ON 1
+
 #ifndef __SPU_IRQCALLBACK_PROC
 #define __SPU_IRQCALLBACK_PROC
 typedef void (*SpuIRQCallbackProc)(void);
