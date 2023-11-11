@@ -63,7 +63,7 @@ segments:
       - [0x3B720, .rodata, loading]
       - [0x3B7E8, .rodata, 46FD4]
       - [0x3B9B8, rodata]
-      - [0x3BD70, rodata] # func_800E7BB8
+      - [0x3BD70, .rodata, 47BB8] # VSyncHandler
       - [0x3BD88, .rodata, 47BB8] # func_800E7E08
       - [0x3BDE0, .rodata, 47BB8] # LoadFileSim
       - [0x3BEE0, .rodata, save_mgr]

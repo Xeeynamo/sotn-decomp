@@ -20,7 +20,7 @@ extern void* g_ApiInit[sizeof(GameApi) / sizeof(void*)];
 s32 LoadVabData(void);
 void func_800E385C(u32*);
 void UpdateGame(void);
-void func_800E7BB8(void);
+void VSyncHandler(void);
 void SetupEvents(void);
 void func_800EA7CC(void);
 void LoadPendingGfx(void);
@@ -815,7 +815,7 @@ void MainGame(void) {
     SoundInit();
     while (LoadVabData() < 0)
         ;
-    VSyncCallback(func_800E7BB8);
+    VSyncCallback(VSyncHandler);
     FntLoad(0x380, 0x100);
     SetDumpFnt(FntOpen(8, 0x30, 0x200, 0x100, 0, 0x200));
     SetDispMask(1);

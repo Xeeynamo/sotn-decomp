@@ -1,17 +1,57 @@
 #include "dra.h"
-#include "objects.h"
-#include "sfx.h"
+
+#define VSYNC_UNK_LEN 1024
 
 extern const char aPqes_1[]; // TODO: import rodata
 
-s32 DecompressData(u8* dst, u8* src);
+void VSyncHandler(void) {
+    RECT* rect;
 
-INCLUDE_ASM("dra/nonmatchings/47BB8", func_800E7BB8);
+    D_800A04F4++;
+    D_800A04F8 = (D_800A04F4 / 4) % 32;
+    nullsub_10();
+    if (D_800A04F0) {
+        return;
+    }
+
+    switch (D_800A04EC) {
+    case 0:
+        break;
+    case 2:
+        D_80136460[D_800A04FC * 2] |= 0xFF00;
+        rect = &D_800A0500;
+        if (g_CurrentBuffer->disp.disp.x == 0) {
+            rect = &D_800A0508;
+        }
+        LoadImage(rect, D_80136460);
+        if (D_800A04FC < VSYNC_UNK_LEN) {
+            D_800A04FC++;
+        }
+        break;
+    case 1:
+    case 3:
+        D_800A04FC = 0;
+        D_800A04EC++;
+        break;
+    case 4:
+        D_80136460[D_800A04FC * 2] |= 0x00FF;
+        rect = &D_800A0500;
+        if (g_CurrentBuffer->disp.disp.x == 0) {
+            rect = &D_800A0508;
+        }
+        LoadImage(rect, D_80136460);
+        if (D_800A04FC < VSYNC_UNK_LEN) {
+            D_800A04FC++;
+        }
+        break;
+    }
+    D_800A04F0 = 0;
+}
 
 void func_800E7D08(void) {
     s32 i;
 
-    for (i = 0; i < 1024; i++) {
+    for (i = 0; i < VSYNC_UNK_LEN; i++) {
         D_80136460[i] = 0;
         D_80136C60[i] = 0;
     }
