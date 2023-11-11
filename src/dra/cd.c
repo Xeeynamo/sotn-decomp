@@ -502,12 +502,12 @@ void UpdateCd(void) {
 
     unsigned char result[8];
     unsigned char setModeArg[24];
-    u32* var_v1;
+    u32* pDst;
     CdFile* cdFile;
     s32 temp_v1_2;
     s32 temp_v1_8;
     s32 temp_v1_9;
-    s32 var_a0;
+    s32 i;
     s32 cdFileSize;
     s32 var_v0_3;
     s32 var_v0_4;
@@ -515,7 +515,7 @@ void UpdateCd(void) {
     u32 temp_v1_3;
     u32 temp_v1_4;
     u32* temp_s0;
-    u32* var_a1;
+    u32* pSrc;
     u16* clutAddr;
 
     s32* pLoadFile;
@@ -741,18 +741,14 @@ void UpdateCd(void) {
         }
         switch (g_CdCallback) {
         case CdCallback_StagePrg:
-            var_a1 = 0x80180000;
-            var_a0 = 0;
-            var_v1 = &g_api;
-            for (; var_a0 < 0x10;) {
-                *var_v1 = *var_a1;
-                var_a0++;
-                var_v1++;
-                var_a1++;
-            }
-
+            pSrc = STAGE_PRG_PTR;
+            i = 0;
+            pDst = &g_api.o;
+            do {
+                i++;
+                *pDst++ = *pSrc++;
+            } while (i < (s32)(sizeof(Overlay) / sizeof(void*)));
             break;
-
         case CdCallback_6:
             clutAddr = g_Clut;
             StoreImage(&g_Vram.D_800ACDB8, clutAddr);
@@ -761,30 +757,24 @@ void UpdateCd(void) {
             DrawSync(0);
             LoadImage(&g_Vram.D_800ACDB0, clutAddr);
             break;
-
         case CdCallback_0:
             LoadImage(&g_Vram.D_800ACD98, &D_800A04CC);
             break;
-
         case CdCallback_1:
             StoreImage(&g_Vram.D_800ACDA8, &D_8006EBCC);
             break;
-
         case CdCallback_2:
             StoreImage(&g_Vram.D_800ACDB8, g_Clut);
             break;
-
         case CdCallback_16:
             D_80137FB0 = (short)SsVabOpenHeadSticky(
                 g_Cd.addr, g_VabId, g_VabAddrs[g_VabId]);
             break;
-
         case CdCallback_17:
         case CdCallback_Vh:
             while ((s16)SsVabTransCompleted(SS_IMEDIATE) != 1) {
             }
             break;
-
         case CdCallback_Seq:
             temp_v1_9 = g_StagesLba[g_StageId].seqIdx;
             func_80131EBC(aPqes_1, D_800ACCF8[temp_v1_9].unk8);

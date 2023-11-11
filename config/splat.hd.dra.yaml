@@ -49,9 +49,9 @@ segments:
       - [0x3B808, .rodata, loading]
       - [0x3B8D0, .rodata, 46FD4]
       - [0x3B938, rodata]
-      - [0x3BCF0, rodata] # jtbl_800DBCF0
-      - [0x3BD08, rodata] # jtbl_800DBD08
-      - [0x3BD60, .rodata, 47BB8]
+      - [0x3BCF0, rodata] # func_800E7BB8
+      - [0x3BD08, .rodata, 47BB8] # func_800E7E08
+      - [0x3BD60, .rodata, 47BB8] # LoadFileSim
       - [0x3BE60, .rodata, save_mgr]
       - [0x3C11C, rodata] # func_800EA7CC
       - [0x3C15C, rodata] # DecompressData
