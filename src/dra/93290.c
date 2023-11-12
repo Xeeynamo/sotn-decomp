@@ -79,7 +79,6 @@ const u32 rodata_padding_80133290 = 0;
 
 s32 func_80133488(void) {
     s32 var_v0;
-    u16 temp_v0;
 
     switch (D_8013AE80 & 0xFF) {
     case 0:
@@ -88,18 +87,16 @@ s32 func_80133488(void) {
             break;
         }
         D_801390A0 = 1;
-        temp_v0 = g_CdVolume - 0x20;
-        g_CdVolume = temp_v0;
-        if (temp_v0 << 16 < 0) {
+        g_CdVolume -= 0x20;
+        if (g_CdVolume < 0) {
             g_CdVolume = 0;
         }
         SetCdVolume(0, g_CdVolume, g_CdVolume);
-        var_v0 = g_CdVolume;
-        if (var_v0 == 0) {
+        if (g_CdVolume == 0) {
             D_8013AE80 += 1;
             return D_8013AE80;
         }
-        return var_v0;
+        return g_CdVolume;
     case 1:
         SsSetSerialAttr(0, 0, 0);
         D_8013AE80 += 1;
