@@ -77,8 +77,6 @@ s32 func_80133290(void) {
 
 const u32 rodata_padding_80133290 = 0;
 
-#endif
-
 INCLUDE_ASM("dra/nonmatchings/93290", func_80133488);
 void func_80133488();
 
