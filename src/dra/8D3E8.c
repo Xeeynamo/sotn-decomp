@@ -984,17 +984,18 @@ void InitSoundVars2(void) {
 
 void InitSoundVars1(void) {
     InitSoundVars2();
-    D_8013B684 = 0;
+    g_CdSoundCommand16 = 0;
     D_80138454 = 0;
     do {
         g_SeqPointers[D_80138454] = 0;
     } while (++D_80138454 < 0xA);
 
-    for (D_80138454 = 0; D_80138454 < LEN(D_80139868); D_80138454++) {
-        D_80139868[D_80138454] = 0;
+    for (D_80138454 = 0; D_80138454 < LEN(g_CdSoundCommandQueue);
+         D_80138454++) {
+        g_CdSoundCommandQueue[D_80138454] = 0;
     }
 
-    D_801396F4 = 0;
+    g_CdSoundCommandQueuePos = 0;
     D_8013AEE8 = 0;
     for (D_80138454 = 0; D_80138454 < LEN(g_SoundCommandRingBuffer);
          D_80138454++) {
@@ -1028,7 +1029,7 @@ void InitSoundVars1(void) {
     D_80139014 = 0;
     D_8013B618 = 0;
     D_8013980C = 0;
-    D_8013AE80 = 0;
+    g_CdSoundCommandStep = 0;
     D_801390A0 = 0;
     g_SeqVolume1 = 0x70;
     g_SeqVolume2 = 0x70;
@@ -1161,53 +1162,53 @@ void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note,
     }
 }
 
-void func_80132C2C(s16 arg0) {
+void AddCdSoundCommand(s16 arg0) {
     s32 i;
     s32 isFound;
 
     if (arg0 == 6) {
         isFound = 0;
-        for (i = 0; i < D_801396F4; i++) {
-            if (D_80139868[i] == 0xC) {
+        for (i = 0; i < g_CdSoundCommandQueuePos; i++) {
+            if (g_CdSoundCommandQueue[i] == 0xC) {
                 isFound = 1;
             }
         }
 
         if (isFound) {
             g_DebugEnabled++;
-            D_80139868[D_801396F4] = 0xE;
-            D_801396F4++;
-            if (D_801396F4 == 0x100) {
+            g_CdSoundCommandQueue[g_CdSoundCommandQueuePos] = 0xE;
+            g_CdSoundCommandQueuePos++;
+            if (g_CdSoundCommandQueuePos == 0x100) {
                 D_8013AEE8++;
                 for (i = 1; i < 0x100; i++) {
-                    D_80139868[i] = 0;
+                    g_CdSoundCommandQueue[i] = 0;
                 }
 
-                D_801396F4 = 1;
-                D_80139868[D_801396F4] = 0xE;
-                D_801396F4++;
+                g_CdSoundCommandQueuePos = 1;
+                g_CdSoundCommandQueue[g_CdSoundCommandQueuePos] = 0xE;
+                g_CdSoundCommandQueuePos++;
             }
         }
     }
-    D_80139868[D_801396F4] = arg0;
-    D_801396F4++;
-    if (D_801396F4 == 0x100) {
+    g_CdSoundCommandQueue[g_CdSoundCommandQueuePos] = arg0;
+    g_CdSoundCommandQueuePos++;
+    if (g_CdSoundCommandQueuePos == 0x100) {
         D_8013AEE8++;
         for (i = 1; i < 0x100; i++) {
-            D_80139868[i] = 0;
+            g_CdSoundCommandQueue[i] = 0;
         }
 
-        D_801396F4 = 1;
+        g_CdSoundCommandQueuePos = 1;
     }
 }
 
-u16 func_80132E38(void) {
+u16 AdvanceCdSoundCommandQueue(void) {
     s32 i;
 
     for (i = 0; i < 255; i++) {
-        D_80139868[i] = D_80139868[i + 1];
+        g_CdSoundCommandQueue[i] = g_CdSoundCommandQueue[i + 1];
     }
-    return --D_801396F4;
+    return --g_CdSoundCommandQueuePos;
 }
 
 #define ENCODE_BCD(x) ((((x) / 10) << 4) + ((x) % 10))
@@ -1220,5 +1221,5 @@ void MakeCdLoc(u32 address, CdlLOC* cd_loc) {
     cd_loc->minute = ENCODE_BCD(minutes);
 }
 
-INCLUDE_ASM("dra/nonmatchings/8D3E8", func_80132F60);
-void func_80132F60();
+INCLUDE_ASM("dra/nonmatchings/8D3E8", CdSoundCommand4);
+void CdSoundCommand4();

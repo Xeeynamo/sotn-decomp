@@ -2,7 +2,7 @@
 #include "objects.h"
 #include "sfx.h"
 
-extern s16 D_80139064;
+extern s16 g_CurrentXaSoundId;
 
 void ExecSoundCommands(void) {
     s16 id;
@@ -28,16 +28,16 @@ void ExecSoundCommands(void) {
 #endif
             if (D_8013901C != 0) {
                 if (D_8013901C != (id - 0x300)) {
-                    func_80132C2C(2);
-                    D_80139064 = id - 0x300;
-                    func_80132C2C(4);
+                    AddCdSoundCommand(CD_SOUND_COMMAND_FADE_OUT_2);
+                    g_CurrentXaSoundId = id - 0x300;
+                    AddCdSoundCommand(CD_SOUND_COMMAND_START_XA);
                     continue;
                 } else {
                     return;
                 }
             } else {
-                D_80139064 = id - 0x300;
-                func_80132C2C(4);
+                g_CurrentXaSoundId = id - 0x300;
+                AddCdSoundCommand(CD_SOUND_COMMAND_START_XA);
                 continue;
             }
         } else {
@@ -45,17 +45,17 @@ void ExecSoundCommands(void) {
             case 0xC:
                 SoundWait();
                 break;
-            case 0x4:
+            case SET_SOUNDMODE_MONO - 1:
                 SetMonoStereo(MONO_SOUND);
                 break;
-            case 0x5:
+            case SET_SOUNDMODE_STEREO - 1:
                 SetMonoStereo(STEREO_SOUND);
                 break;
-            case 0x6:
+            case SET_STOP_SEQ - 1:
                 StopSeq();
                 break;
-            case 0x9:
-                func_80132C2C(2);
+            case SET_STOP_MUSIC - 1:
+                AddCdSoundCommand(CD_SOUND_COMMAND_FADE_OUT_2);
                 break;
             case 0xD:
                 func_801349F4();
@@ -65,43 +65,43 @@ void ExecSoundCommands(void) {
                 break;
             case 0x7F:
                 D_80139A6C = 0x20;
-                func_80132C2C(0xA);
+                AddCdSoundCommand(CD_SOUND_COMMAND_10);
                 break;
             case 0x80:
                 D_80139A6C = 8;
-                func_80132C2C(0xA);
+                AddCdSoundCommand(CD_SOUND_COMMAND_10);
                 break;
             case 0x81:
                 D_80139A6C = 4;
-                func_80132C2C(0xA);
+                AddCdSoundCommand(CD_SOUND_COMMAND_10);
                 break;
             case 0x82:
                 D_80139A6C = 2;
-                func_80132C2C(0xA);
+                AddCdSoundCommand(CD_SOUND_COMMAND_10);
                 break;
             case 0x83:
                 D_80139A6C = 1;
-                func_80132C2C(0xA);
+                AddCdSoundCommand(CD_SOUND_COMMAND_10);
                 break;
             case 0x8F:
                 D_80139A6C = 0x80;
-                func_80132C2C(8);
+                AddCdSoundCommand(CD_SOUND_COMMAND_8);
                 break;
             case 0x90:
                 D_80139A6C = 8;
-                func_80132C2C(8);
+                AddCdSoundCommand(CD_SOUND_COMMAND_8);
                 break;
             case 0x91:
                 D_80139A6C = 4;
-                func_80132C2C(8);
+                AddCdSoundCommand(CD_SOUND_COMMAND_8);
                 break;
             case 0x92:
                 D_80139A6C = 2;
-                func_80132C2C(8);
+                AddCdSoundCommand(CD_SOUND_COMMAND_8);
                 break;
             case 0x93:
                 D_80139A6C = 1;
-                func_80132C2C(8);
+                AddCdSoundCommand(CD_SOUND_COMMAND_8);
                 break;
             case 0x9F:
                 SetReleaseRate1();
@@ -145,17 +145,17 @@ void ExecSoundCommands(void) {
             case 0x0:
                 func_80134E64();
                 break;
-            case 0xF:
-                func_80132C2C(0xC);
+            case SET_UNK_10 - 1:
+                AddCdSoundCommand(CD_SOUND_COMMAND_12);
                 break;
-            case 0x10:
-                func_80132C2C(0xE);
+            case SET_UNK_11 - 1:
+                AddCdSoundCommand(CD_SOUND_COMMAND_14);
                 break;
-            case 0x11:
-                func_80132C2C(0x10);
+            case SET_UNK_12 - 1:
+                AddCdSoundCommand(CD_SOUND_COMMAND_16);
                 break;
-            case 0xA:
-                func_80132C2C(2);
+            case SET_UNK_0B - 1:
+                AddCdSoundCommand(CD_SOUND_COMMAND_FADE_OUT_2);
                 StopSeq();
                 SetReleaseRate2();
                 break;
@@ -163,7 +163,7 @@ void ExecSoundCommands(void) {
                 SetReleaseRate2();
                 break;
             case 0xB:
-                func_80132C2C(2);
+                AddCdSoundCommand(CD_SOUND_COMMAND_FADE_OUT_2);
                 StopSeq();
                 SoundWait();
                 SetReleaseRate2();
