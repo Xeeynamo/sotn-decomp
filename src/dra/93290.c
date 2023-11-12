@@ -2,8 +2,80 @@
 #include "objects.h"
 #include "sfx.h"
 
-INCLUDE_ASM("dra/nonmatchings/93290", func_80133290);
-void func_80133290();
+// incorrect function prototype seems to be required
+s32 func_80132E38(void);
+
+#define CD_PREGAP_BLOCKS 150
+
+extern u8 D_800BD224[];
+extern s32 D_800BD228[];
+extern u8 D_800BD22D[];
+extern s16 D_8013845C;
+extern s16 D_80139064;
+extern s32 D_8013AE90;
+extern s32 D_8013AEF4;
+extern CdlLOC D_8013B640;
+
+s32 func_80133290(void) {
+    s32 temp_v0;
+    u8 var_v0;
+    s32 temp;
+    u32 cd_pos;
+
+    switch (D_8013AE80 & 0xFF) {
+    case 0:
+        D_801390A0 = 1;
+        D_8013845C = D_80139064;
+        temp_v0 = (D_80139064 << 4) + 0x10;
+        cd_pos = D_800BD22D[temp_v0] + *(u32*)&D_800BD224[temp_v0];
+        cd_pos += CD_PREGAP_BLOCKS + g_CurCdPos;
+        MakeCdLoc(cd_pos, &D_8013B640);
+        D_8013AE80 += 1;
+        var_v0 = D_8013AE80;
+        /* fallthrough */
+    case 1:
+        var_v0 = DoCdCommand(CdlSetloc, &D_8013B640, NULL);
+        if (var_v0 == 0) {
+            D_8013AE80 += 1;
+            return D_8013AE80;
+        }
+        return var_v0;
+    case 2:
+        var_v0 = DoCdCommand(CdlReadN, NULL, NULL);
+        if (var_v0 == 0) {
+            D_8013AE80 += 1;
+            return D_8013AE80;
+        }
+        return var_v0;
+    case 3:
+        var_v0 = DoCdCommand(CdlNop, NULL, g_CdCommandResult);
+        if (var_v0 == 0) {
+            var_v0 = *g_CdCommandResult & CdlStatSeek;
+            if (var_v0 == 0) {
+                D_8013AE80 += 1;
+                return D_8013AE80;
+            }
+            return var_v0;
+        }
+        return var_v0;
+    case 4:
+        D_8013AEF4 = VSync(-1);
+        temp = D_8013845C;
+        temp++;
+        D_8013AE90 = D_800BD228[temp * 4];
+        SetReverbDepth(g_ReverbDepth);
+        D_8013AE80 = 0;
+        D_8013901C = (s16)D_8013845C;
+        D_801390A0 = D_8013AE80;
+        return func_80132E38();
+    default:
+        D_8013AE80 = 0;
+        D_801390A0 = D_8013AE80;
+        return func_80132E38();
+    }
+}
+
+const u32 rodata_padding_80133290 = 0;
 
 INCLUDE_ASM("dra/nonmatchings/93290", func_80133488);
 void func_80133488();
