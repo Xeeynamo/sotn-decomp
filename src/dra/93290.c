@@ -77,8 +77,51 @@ s32 func_80133290(void) {
 
 const u32 rodata_padding_80133290 = 0;
 
-INCLUDE_ASM("dra/nonmatchings/93290", func_80133488);
-void func_80133488();
+s32 func_80133488(void) {
+    s32 var_v0;
+    u16 temp_v0;
+
+    switch (D_8013AE80 & 0xFF) {
+    case 0:
+        if (D_8013901C == 0) {
+            SetMaxVolume();
+            break;
+        }
+        D_801390A0 = 1;
+        temp_v0 = g_CdVolume - 0x20;
+        g_CdVolume = temp_v0;
+        if (temp_v0 << 16 < 0) {
+            g_CdVolume = 0;
+        }
+        SetCdVolume(0,  g_CdVolume, g_CdVolume);
+        var_v0 = g_CdVolume;
+        if (var_v0 == 0) {
+            D_8013AE80 += 1;
+            return D_8013AE80;
+        }
+        return var_v0;
+    case 1:
+        SsSetSerialAttr(0, 0, 0);
+        D_8013AE80 += 1;
+        var_v0 = D_8013AE80;
+        /* fallthrough */
+    case 2:
+        var_v0 = DoCdCommand(CdlPause, 0, 0);
+        if (var_v0 == 0) {
+            D_8013AE80 += 1;
+            return D_8013AE80;
+        }
+        return var_v0;
+    case 3:
+        D_8013901C = 0;
+        SetMaxVolume();
+        /* fallthrough */
+    default:
+        D_8013AE80 = 0;
+        D_801390A0 = D_8013AE80;
+    }
+    return func_80132E38();
+}
 
 INCLUDE_ASM("dra/nonmatchings/93290", func_80133604);
 void func_80133604();
