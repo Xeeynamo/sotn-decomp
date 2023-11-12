@@ -2,14 +2,7 @@
 #include "objects.h"
 #include "sfx.h"
 
-// INCLUDE_ASM("dra/nonmatchings/93290", func_80133290);
-// void func_80133290();
-
-#if 0
-INCLUDE_ASM("dra/nonmatchings/93290", func_80133290);
-void func_80133290();
-#else
-
+// incorrect function prototype seems to be required
 s32 func_80132E38(void);
 
 #define CD_PREGAP_BLOCKS 150
@@ -81,6 +74,9 @@ s32 func_80133290(void) {
         return func_80132E38();
     }
 }
+
+const u32 rodata_padding_80133290 = 0;
+
 #endif
 
 INCLUDE_ASM("dra/nonmatchings/93290", func_80133488);
