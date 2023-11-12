@@ -1135,6 +1135,15 @@ s16 g_VolumeTable[] = {
     0x0040, 0x007F, 0x0030, 0x007F, 0x0020, 0x007F, 0x0010, 0x007F, 0x0000};
 
 s32 g_DebugEnabled = 0;
+s32 D_800BD1C4 = 0;
+
+#ifdef VERSION_US
+s32 g_VabAddrs[] = {0x00001010, 0x00042CC0, 0x00050E50,
+                    0x00060A40, 0x00060A40, 0x00060A40};
+#else // VERSION_HD
+s32 g_VabAddrs[] = {0x00001010, 0x00042CC0, 0x00050E90,
+                    0x00060D40, 0x00060D40, 0x00060D40};
+#endif
 
 void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note,
                    s16 volume, s16 distance) {
