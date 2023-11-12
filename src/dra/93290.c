@@ -93,7 +93,7 @@ s32 func_80133488(void) {
         if (temp_v0 << 16 < 0) {
             g_CdVolume = 0;
         }
-        SetCdVolume(0,  g_CdVolume, g_CdVolume);
+        SetCdVolume(0, g_CdVolume, g_CdVolume);
         var_v0 = g_CdVolume;
         if (var_v0 == 0) {
             D_8013AE80 += 1;
