@@ -351,13 +351,13 @@ s32 func_800F16D0(void) {
     }
 }
 
-void func_800F1770(s8 arg0[], s32 arg1, s32 arg2, s32 arg3) {
+void func_800F1770(s8 arg0[], s32 arg1, s32 arg2, s32 isEnabled) {
     s32 temp_v0 = (arg1 / 2) + (arg2 * 4);
 
     if (!(arg1 & 1)) {
-        arg0[temp_v0] = (arg0[temp_v0] & 0xF0) + arg3;
+        arg0[temp_v0] = (arg0[temp_v0] & 0xF0) + isEnabled;
     } else {
-        arg0[temp_v0] = (arg0[temp_v0] & 0xF) + (arg3 * 0x10);
+        arg0[temp_v0] = (arg0[temp_v0] & 0xF) + (isEnabled * 0x10);
     }
 }
 
@@ -417,13 +417,31 @@ void func_800F18C4(s32 arg0, s32 arg1) {
 
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 5; j++) {
-            func_800F1770(sp10, j, i, 0);
+            func_800F1770(sp10, j, i, false);
         }
     }
     func_800F1868(arg0, arg1, &sp10);
 }
 
-INCLUDE_ASM("dra/nonmatchings/5087C", func_800F1954);
+void func_800F1954(s32 x, s32 y, s32 arg2) {
+    u8 sp10[20];
+    s32 i;
+    s32 j;
+
+    func_800F180C(x, y, sp10);
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 5; j++) {
+            if (arg2 == 1 && j == 0) {
+                func_800F1770(sp10, 0, i, false);
+            } else if (arg2 != 2 && j == 4) {
+                func_800F1770(sp10, 4, i, false);
+            } else {
+                func_800F1770(sp10, j, i, true);
+            }
+        }
+    }
+    func_800F1868(x, y, &sp10);
+}
 
 void func_800F1A3C(s32 arg0) {
     if (arg0 == 0) {
