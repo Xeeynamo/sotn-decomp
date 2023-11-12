@@ -98,7 +98,7 @@ s32 func_80133488(void) {
         }
         return g_CdVolume;
     case 1:
-        SsSetSerialAttr(0, 0, 0);
+        SsSetSerialAttr(SS_SERIAL_A, SS_MIX, SS_SOFF);
         D_8013AE80 += 1;
         var_v0 = D_8013AE80;
         /* fallthrough */
@@ -120,8 +120,48 @@ s32 func_80133488(void) {
     return func_80132E38();
 }
 
-INCLUDE_ASM("dra/nonmatchings/93290", func_80133604);
-void func_80133604();
+s32 func_80133604(void) {
+    s16 var_v0;
+
+    switch (D_8013AE80 & 0xFF) {
+    case 0:
+        if (D_8013901C != 0) {
+            D_801390A0 = 1;
+            g_CdVolume -= 0x20;
+            if (g_CdVolume < 0) {
+                g_CdVolume = 0;
+            }
+            SetCdVolume(0, g_CdVolume, g_CdVolume);
+            if (g_CdVolume == 0) {
+                D_8013AE80 += 1;
+                return D_8013AE80;
+            }
+            return g_CdVolume;
+        }
+        break;
+    case 1:
+        SsSetSerialAttr(SS_SERIAL_A, SS_MIX, SS_SOFF);
+        D_8013AE80 += 1;
+        var_v0 = D_8013AE80;
+        /* fallthrough */
+    case 2:
+        var_v0 = DoCdCommand(CdlPause, 0, 0);
+        if (var_v0 == 0) {
+            D_8013AE80 += 1;
+            return D_8013AE80;
+        }
+        return var_v0;
+    case 3:
+        D_8013AE80 = 0;
+        D_8013901C = 0;
+        D_801390A0 = D_8013AE80;
+        break;
+    default:
+        D_8013AE80 = 0;
+        D_801390A0 = D_8013AE80;
+    }
+    return func_80132E38();
+}
 
 void EnableCdReverb(s8 arg0) {
     SsSetSerialAttr(SS_SERIAL_A, SS_REV, arg0 == SS_SON);
