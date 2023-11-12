@@ -496,7 +496,7 @@ extern s32 D_800B0914;
 extern s32 D_800B0918;
 extern s32 D_800B091C;
 extern s32 D_800B0920;
-extern s16 D_800BD07C[];
+extern s16 g_CdVolumeTable[];
 extern s16 g_VolumeTable[];
 extern struct SeqData g_SeqInfo[];
 extern s32 g_DebugEnabled;
