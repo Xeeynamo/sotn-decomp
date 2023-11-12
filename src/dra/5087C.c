@@ -479,7 +479,37 @@ void func_800F2014(void) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/5087C", func_800F2120);
+void func_800F2120(void) {
+    s32 x;
+    s32 y;
+    s32 subMap;
+    s32 idx;
+    u8 currMapRect;
+    s32 var_v1;
+
+    func_800F1A3C(g_StageId & STAGE_INVERTEDCASTLE_FLAG);
+    ClearImage(&g_Vram.D_800ACDE8, 0U, 0U, 0U);
+    DrawSync(0);
+
+    for (y = 0; y < 64; y++) {
+        for (x = 0; x < 64; x++) {
+            var_v1 = x >> 2;
+            idx = var_v1 + (y * 16);
+            subMap = 3 << ((3 - (x & 3)) * 2);
+
+            if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+                idx += 0x400;
+            }
+            currMapRect = g_CastleMap[idx];
+            if (currMapRect & 85 & subMap) {
+                func_800F1B08(x, y, 0);
+                func_800F1EB0(x, y, 0xFFFF);
+            } else if (currMapRect & 170 & subMap) {
+                func_800F1B08(x, y, 1);
+            }
+        }
+    }
+}
 
 void func_800F223C(void) {
     g_StageId ^= STAGE_INVERTEDCASTLE_FLAG;
