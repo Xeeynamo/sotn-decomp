@@ -44,6 +44,10 @@ segments:
       - [0x2EF8, data]
       - [0xCFDC, .data, 6D59C]
       - [0xD010, data]
+      - [0x1D260, .data, 8D3E8] # g_VolumeTable
+      - [0x1D284, .data, 8D3E8] # g_DebugEnabled
+      - [0x1D288, data] # D_800BD1C4
+      - [0x1D28C, data] # g_VabAddrs
       - [0x3B458, .rodata, 42398]
       - [0x3B618, .rodata, play]
       - [0x3B648, rodata, gameover] # jtbl_800DB648

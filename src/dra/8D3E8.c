@@ -1130,6 +1130,12 @@ void MuteSound(void) {
 
 INCLUDE_ASM("dra/nonmatchings/8D3E8", func_801327B4);
 
+s16 g_VolumeTable[] = {
+    0x007F, 0x007F, 0x007F, 0x0070, 0x007F, 0x0060, 0x007F, 0x0050, 0x007F,
+    0x0040, 0x007F, 0x0030, 0x007F, 0x0020, 0x007F, 0x0010, 0x007F, 0x0000};
+
+s32 g_DebugEnabled = 0;
+
 void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note,
                    s16 volume, s16 distance) {
     if (distance == 0) {
