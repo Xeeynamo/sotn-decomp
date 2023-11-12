@@ -661,7 +661,7 @@ void func_80174038(Entity* entity) {
             DestroyEntity(entity);
             return;
         }
-        if (g_api.func_80133940() != 0) {
+        if (g_api.CdSoundCommandQueueEmpty() != 0) {
             g_api.PlaySfx(16);
             entity->step++;
         }
@@ -695,7 +695,7 @@ void func_80174038(Entity* entity) {
             DestroyEntity(entity);
             return;
         }
-        if (g_api.func_80133940() != 0) {
+        if (g_api.CdSoundCommandQueueEmpty() != 0) {
             g_api.PlaySfx(17);
             entity->step++;
         }

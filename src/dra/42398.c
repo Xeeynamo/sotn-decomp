@@ -37,7 +37,7 @@ s32 func_8010E27C(void);
 void SetSpeedX(s32);
 void SetCdVolume(s8 s_num, s16 arg1, s16 arg2);
 void SoundInit(void);
-void func_801353A0(void);
+void ExecCdSoundCommands(void);
 s32 func_80136010(void);
 
 void DebugShowWaitInfo(const char* msg) {

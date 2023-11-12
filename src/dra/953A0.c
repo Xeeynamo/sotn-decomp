@@ -2,39 +2,39 @@
 #include "objects.h"
 #include "sfx.h"
 
-void func_801353A0(void) {
-    if (*(u16*)&D_801396F4 == 0)
+void ExecCdSoundCommands(void) {
+    if (*(u16*)&g_CdSoundCommandQueuePos == 0)
         return;
 
-    switch (D_80139868[0]) {
-    case 2:
-        func_80133604();
+    switch (g_CdSoundCommandQueue[0]) {
+    case CD_SOUND_COMMAND_FADE_OUT_2:
+        CdFadeOut2();
         break;
-    case 3:
-        func_80133488();
+    case CD_SOUND_COMMAND_FADE_OUT_1:
+        CdFadeOut1();
         break;
-    case 4:
-        func_80132F60();
+    case CD_SOUND_COMMAND_START_XA:
+        CdSoundCommand4();
         break;
-    case 6:
-        func_80133290();
+    case CD_SOUND_COMMAND_6:
+        CdSoundCommand6();
         break;
-    case 8:
-        func_80134388();
+    case CD_SOUND_COMMAND_8:
+        CdSoundCommand8();
         break;
-    case 10:
-        func_801341B4();
+    case CD_SOUND_COMMAND_10:
+        CdSoundCommand10();
         break;
-    case 12:
-        func_80133960();
+    case CD_SOUND_COMMAND_12:
+        CdSoundCommand12();
         break;
-    case 14:
-        func_80133BDC();
+    case CD_SOUND_COMMAND_14:
+        CdSoundCommand14();
         break;
-    case 16:
-        D_8013B684 = 0;
+    case CD_SOUND_COMMAND_16:
+        g_CdSoundCommand16 = 0;
     case 0:
-        func_80132E38();
+        AdvanceCdSoundCommandQueue();
         break;
     }
 }
@@ -139,7 +139,7 @@ void func_801361F8(void) {
         func_80135D8C();
         ExecSoundCommands();
         func_80133FCC();
-        func_801353A0();
+        ExecCdSoundCommands();
         SpuSetKey(SPU_OFF, g_KeyOffChannels);
         g_KeyOffChannels = 0;
         func_80131FCC();

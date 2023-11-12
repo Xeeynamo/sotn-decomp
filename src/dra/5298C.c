@@ -257,13 +257,13 @@ void func_800F298C(void) {
                 return;
             }
             if (D_80097C98 < 0) {
-                PlaySfx(SET_UNK_07);
+                PlaySfx(SET_STOP_SEQ);
                 StoreSaveData(0x801EA000, 0, 0);
                 g_GameStep = Play_PrepareNextStage;
                 return;
             }
             if ((D_80097C98 == 4) || (D_80097C98 == 5) || (D_80097C98 == 6)) {
-                PlaySfx(SET_UNK_07);
+                PlaySfx(SET_STOP_SEQ);
                 func_800EA5AC(0xFFFF, 0xFF, 0xFF, 0xFF);
             }
             if (D_80097C98 == 4) {
@@ -3810,7 +3810,7 @@ void HandleMenu(void) {
 block_4:
     switch (g_MenuStep) {
     case MENU_STEP_INIT:
-        if (!func_80133940()) {
+        if (!CdSoundCommandQueueEmpty()) {
             break;
         }
         PlaySfx(SET_UNK_10);
@@ -3992,7 +3992,7 @@ block_4:
         if (g_IsUsingCd) {
             break;
         }
-        if (func_80133940() == false) {
+        if (CdSoundCommandQueueEmpty() == false) {
             break;
         }
         D_80097910 = D_80137958;
