@@ -7,7 +7,7 @@ INCLUDE_ASM("asm/us/st/np3/nonmatchings/394F0", EntityNumericDamage);
 
 void CreateEntityWhenInVerticalRange(LayoutEntity* layoutObj) {
     Entity* entity;
-    s16 posY = g_Camera.posY.i.hi;
+    s16 posY = g_Tilemap.cameraY.i.hi;
     s16 yClose = posY - 64;
     s16 yFar = posY + 288;
 
@@ -44,7 +44,7 @@ void CreateEntityWhenInVerticalRange(LayoutEntity* layoutObj) {
 
 void CreateEntityWhenInHorizontalRange(LayoutEntity* layoutObj) {
     Entity* entity;
-    s16 posX = g_Camera.posX.i.hi;
+    s16 posX = g_Tilemap.cameraX.i.hi;
     s16 xClose = posX - 64;
     s16 xFar = posX + 320;
 
@@ -223,7 +223,7 @@ void func_801BB3F4(s16 arg0) {
 
 void InitRoomEntities(s32 objLayoutId) {
     u16* pObjLayoutStart = g_pStObjLayout[objLayoutId];
-    Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
+    Tilemap* tilemap = &g_Tilemap;
     s16 temp_s0;
     s16 arg0;
     s16 i;
@@ -248,7 +248,7 @@ void InitRoomEntities(s32 objLayoutId) {
         D_801D276C += i * 2 + 2;
         D_801D276C = (D_801D276C[1] << 0x10) + D_801D276C[0];
     }
-    arg0 = currentRoomTileLayout->unkA;
+    arg0 = tilemap->cameraX.i.hi;
     temp_s0 = arg0 + 0x140;
     i = arg0 - 0x40;
     if (i < 0) {
@@ -259,14 +259,14 @@ void InitRoomEntities(s32 objLayoutId) {
     D_801D2774 = 0;
     func_801BAFA0(i);
     func_801BB044(temp_s0);
-    func_801BB254(currentRoomTileLayout->unkE + 0x120);
+    func_801BB254(tilemap->cameraY.i.hi + 0x120);
 }
 
 void func_801BB680(void) {
-    Unkstruct8* currentRoomTileLayout = &g_CurrentRoomTileLayout;
+    Tilemap* tilemap = &g_Tilemap;
 
     if (D_80097908 != 0) {
-        s16 tmp = g_Camera.posX.i.hi;
+        s16 tmp = tilemap->cameraX.i.hi;
         if (D_80097908 > 0)
             func_801BB044(tmp + 320);
         else
@@ -274,9 +274,9 @@ void func_801BB680(void) {
     }
 
     if (D_8009790C != 0) {
-        s16 tmp = currentRoomTileLayout->unkE;
+        s16 tmp = tilemap->cameraY.i.hi;
         if (D_8009790C > 0)
-            func_801BB2F8(currentRoomTileLayout->unkE + 288);
+            func_801BB2F8(tilemap->cameraY.i.hi + 288);
         else
             func_801BB3F4(tmp - 64);
     }

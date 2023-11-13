@@ -68,10 +68,10 @@ void EntityLockCamera(Entity* entity) {
 
     if (entity->params & 0x100) {
         temp_v1_2 = &D_80180664[(((temp_s1 & 0xFFFF) * 4) & 0xFFFF)];
-        g_CurrentRoom.x = *temp_v1_2++;
-        g_CurrentRoom.y = *temp_v1_2++;
-        g_CurrentRoom.width = *temp_v1_2++;
-        g_CurrentRoom.height = *temp_v1_2++;
+        g_Tilemap.x = *temp_v1_2++;
+        g_Tilemap.y = *temp_v1_2++;
+        g_Tilemap.width = *temp_v1_2++;
+        g_Tilemap.height = *temp_v1_2++;
         DestroyEntity(entity);
         return;
     }
@@ -85,10 +85,10 @@ void EntityLockCamera(Entity* entity) {
         }
 
         temp_v1_5 = &D_80180664[(phi_v1 + temp_s1 * 8) & 0xFFFF];
-        g_CurrentRoom.x = *temp_v1_5++;
-        g_CurrentRoom.y = *temp_v1_5++;
-        g_CurrentRoom.width = *temp_v1_5++;
-        g_CurrentRoom.height = *temp_v1_5++;
+        g_Tilemap.x = *temp_v1_5++;
+        g_Tilemap.y = *temp_v1_5++;
+        g_Tilemap.width = *temp_v1_5++;
+        g_Tilemap.height = *temp_v1_5++;
     }
 }
 #endif
@@ -261,8 +261,8 @@ void func_801A8620(Entity* entity) {
     s32 params = (s16)entity->params;
 
     FntPrint("set:%04x\n", params);
-    FntPrint("sx:%04x\n", g_CurrentRoom.left);
-    FntPrint("ex:%04x\n", g_CurrentRoom.right);
+    FntPrint("sx:%04x\n", g_Tilemap.left);
+    FntPrint("ex:%04x\n", g_Tilemap.right);
 
     switch (entity->step) {
     case 0:
@@ -280,83 +280,83 @@ void func_801A8620(Entity* entity) {
             switch (params) {
             case 0:
                 if (playerX > 0x280) {
-                    g_CurrentRoom.width = 0x280;
-                    g_CurrentRoom.right--;
+                    g_Tilemap.width = 0x280;
+                    g_Tilemap.right--;
                     entity->step++;
                 }
                 break;
 
             case 1:
                 if (playerX < 0x180) {
-                    g_CurrentRoom.x = 0x180;
-                    g_CurrentRoom.left++;
+                    g_Tilemap.x = 0x180;
+                    g_Tilemap.left++;
                     entity->step++;
                 }
                 break;
 
             case 3:
                 if (playerX < 0x100) {
-                    g_CurrentRoom.x = 0x100;
-                    g_CurrentRoom.left++;
+                    g_Tilemap.x = 0x100;
+                    g_Tilemap.left++;
                     entity->step++;
                 }
                 break;
 
             case 5:
                 if (playerX < 0x80) {
-                    g_CurrentRoom.x = 0x80;
+                    g_Tilemap.x = 0x80;
                     entity->step++;
                 }
                 break;
 
             case 6:
                 if (playerX > 0x480) {
-                    g_CurrentRoom.width = 0x480;
+                    g_Tilemap.width = 0x480;
                     entity->step++;
                 }
                 break;
 
             case 7:
                 if (playerX > 0x480) {
-                    g_CurrentRoom.width = 0x480;
+                    g_Tilemap.width = 0x480;
                     entity->step++;
                 }
                 break;
 
             case 8:
                 if (playerX < 0x80) {
-                    g_CurrentRoom.x = 0x80;
+                    g_Tilemap.x = 0x80;
                     entity->step++;
                 }
                 break;
 
             case 9:
                 if (playerX > 0x280) {
-                    g_CurrentRoom.width = 0x280;
+                    g_Tilemap.width = 0x280;
                     entity->step++;
                 }
                 break;
 
             case 10:
                 if (playerX < 0x180) {
-                    g_CurrentRoom.x = 0x180;
-                    g_CurrentRoom.left++;
+                    g_Tilemap.x = 0x180;
+                    g_Tilemap.left++;
                     entity->step++;
                 }
                 break;
 
             case 11:
                 if (playerX > 0x280) {
-                    g_CurrentRoom.width = 0x280;
-                    g_CurrentRoom.right--;
+                    g_Tilemap.width = 0x280;
+                    g_Tilemap.right--;
                     entity->step++;
                 }
                 break;
 
             case 12:
                 if (playerX < 0x180) {
-                    g_CurrentRoom.x = 0x180;
-                    g_CurrentRoom.left++;
+                    g_Tilemap.x = 0x180;
+                    g_Tilemap.left++;
                     entity->step++;
                 }
                 break;
@@ -366,8 +366,8 @@ void func_801A8620(Entity* entity) {
             case 13:
             case 14:
                 if (playerX > 0x300) {
-                    g_CurrentRoom.width = 0x300;
-                    g_CurrentRoom.right--;
+                    g_Tilemap.width = 0x300;
+                    g_Tilemap.right--;
                     entity->step++;
                 }
                 break;

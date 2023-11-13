@@ -528,7 +528,7 @@ typedef struct {
     /* 0x88 */ s16 unk88;
     /* 0x8A */ s16 unk8A;
     /* 0x8C */ s32 unk8C;
-    /* 0x90 */ s16 unk90;
+    /* 0x90 */ s16 childId;
     /* 0x92 */ s16 unk92;
     /* 0x94 */ s16 unk94;
     /* 0x96 */ s16 unk96;

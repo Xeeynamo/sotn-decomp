@@ -204,6 +204,7 @@ jobs:
             python3 tools/function_finder/function_finder_psx.py --use-call-trees > gh-duplicates/functions.md
             rm -rf gh-duplicates/function_calls/ || true
             mv function_calls gh-duplicates/
+            mv function_graphs.md gh-duplicates
       - name: Generate duplicates report
         run: |
           make force_symbols

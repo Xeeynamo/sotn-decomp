@@ -215,7 +215,7 @@ void HandleEnding(void) {
             if (g_IsUsingCd) {
                 break;
             }
-            LoadImage(&g_Vram.D_800ACDE0, 0x80180000);
+            LoadImage(&g_Vram.D_800ACDE0, STAGE_PRG_PTR);
             LoadImage(&g_Vram.D_800ACDD8, 0x80182000);
             LoadImage(&g_Vram.D_800ACDB8, 0x80192000);
             StoreImage(&g_Vram.D_800ACDB8, &D_80070BCC);
@@ -299,7 +299,7 @@ void HandleEnding(void) {
 #if defined(VERSION_US)
         PlaySfx(18);
         PlaySfx(11);
-        func_80132760();
+        MuteSound();
 #endif
         SetGameState(Game_Init);
         return;

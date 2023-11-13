@@ -9,6 +9,7 @@
 #include <psxsdk/libgpu.h>
 #include <psxsdk/libgs.h>
 #include <psxsdk/libgte.h>
+#include <psxsdk/libspu.h>
 #include <psxsdk/libsnd.h>
 #include <psxsdk/romio.h>
 
@@ -115,6 +116,7 @@ typedef struct Primitive {
 #define PALETTE_LEN ((COLORS_PER_PAL) * ((COLOR_BPP) / 8))
 #define OTSIZE 0x200
 #define MAXSPRT16 0x280
+#define MAX_DRAW_MODES 0x400
 
 // Width in pixel of how wide is the horizontal camera during normal game play
 #define STAGE_WIDTH 256
@@ -167,7 +169,9 @@ typedef struct Primitive {
 #define STAGE_PRG_PTR 0x80180000
 #define CASTLE_MAP_PTR 0x801E0000
 #define DEMO_KEY_PTR 0x801E8000
-#define DEBUG_PTR 0x80280000
+#define SIM_CHR0 0x80280000
+#define SIM_CHR1 0x80284000
+#define SIM_PTR 0x80280000
 
 // Flags for entity->drawFlags
 #define FLAG_DRAW_ROTX 0x01
@@ -281,11 +285,21 @@ typedef enum {
     STAGE_BO0 = 0x1E,
     STAGE_ST0 = 0x1F,
     STAGE_RNO0 = STAGE_NO0 | STAGE_INVERTEDCASTLE_FLAG,
+    STAGE_RNO1 = STAGE_NO1 | STAGE_INVERTEDCASTLE_FLAG,
+    STAGE_RLIB = STAGE_LIB | STAGE_INVERTEDCASTLE_FLAG,
+    STAGE_RCAT = STAGE_CAT | STAGE_INVERTEDCASTLE_FLAG,
+    STAGE_RNO2 = STAGE_NO2 | STAGE_INVERTEDCASTLE_FLAG,
     STAGE_RCHI = STAGE_CHI | STAGE_INVERTEDCASTLE_FLAG,
     STAGE_RDAI = STAGE_DAI | STAGE_INVERTEDCASTLE_FLAG,
+    STAGE_RNO3 = STAGE_NP3 | STAGE_INVERTEDCASTLE_FLAG,
     STAGE_RCEN = STAGE_CEN | STAGE_INVERTEDCASTLE_FLAG,
+    STAGE_RNO4 = STAGE_NO4 | STAGE_INVERTEDCASTLE_FLAG,
+    STAGE_RARE = STAGE_ARE | STAGE_INVERTEDCASTLE_FLAG,
     STAGE_RTOP = STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG,
-    STAGE_RNZ1 = 0x35,
+    STAGE_RNZ0 = STAGE_NZ0 | STAGE_INVERTEDCASTLE_FLAG,
+    STAGE_RNZ1 = STAGE_NZ1 | STAGE_INVERTEDCASTLE_FLAG,
+    STAGE_RWRP = STAGE_WRP | STAGE_INVERTEDCASTLE_FLAG,
+    STAGE_RNZ1_DEMO = 0x35,
     STAGE_RBO8 = 0x36,
     STAGE_RBO7 = 0x37,
     STAGE_RBO6 = 0x38,
@@ -629,20 +643,20 @@ typedef struct {
 #define GPU_MAX_TILE_COUNT 0x100
 
 typedef struct GpuBuffer { // also called 'DB' in the PSY-Q samples
-    /* 0x00000 */ struct GpuBuffer* next;         // next chained buffer
-    /* 0x00004 */ DRAWENV draw;                   // drawing environment
-    /* 0x0005C */ DISPENV disp;                   // display environment
-    /* 0x00074 */ DR_ENV env[0x10];               // packed drawing environment
-    /* 0x00474 */ u_long ot[OTSIZE];              // ordering table
-    /* 0x00474 */ DR_MODE drawModes[0x400];       // draw modes
-    /* 0x03C74 */ POLY_GT4 polyGT4[0x300];        // textured quads
-    /* 0x0D874 */ POLY_G4 polyG4[0x100];          // untextured quads
-    /* 0x0FC74 */ POLY_GT3 polyGT3[0x30];         // textured triangles
-    /* 0x103F4 */ LINE_G2 lineG2[0x100];          // lines
-    /* 0x117F4 */ SPRT_16 sprite16[MAXSPRT16];    // 16x16 fixed-size sprites
-    /* 0x13FF4 */ TILE tiles[GPU_MAX_TILE_COUNT]; // squared sprites
-    /* 0x14FF4 */ SPRT sprite[0x200];             // dynamic-size sprites
-} GpuBuffer;                                      /* size = 0x177F4 */
+    /* 0x00000 */ struct GpuBuffer* next; // next chained buffer
+    /* 0x00004 */ DRAWENV draw;           // drawing environment
+    /* 0x0005C */ DISPENV disp;           // display environment
+    /* 0x00074 */ DR_ENV env[0x10];       // packed drawing environment
+    /* 0x00474 */ u_long ot[OTSIZE];      // ordering table
+    /* 0x00474 */ DR_MODE drawModes[MAX_DRAW_MODES]; // draw modes
+    /* 0x03C74 */ POLY_GT4 polyGT4[0x300];           // textured quads
+    /* 0x0D874 */ POLY_G4 polyG4[0x100];             // untextured quads
+    /* 0x0FC74 */ POLY_GT3 polyGT3[0x30];            // textured triangles
+    /* 0x103F4 */ LINE_G2 lineG2[0x100];             // lines
+    /* 0x117F4 */ SPRT_16 sprite16[MAXSPRT16];       // tile map sprites
+    /* 0x13FF4 */ TILE tiles[GPU_MAX_TILE_COUNT];    // squared sprites
+    /* 0x14FF4 */ SPRT sprite[0x200];                // dynamic-size sprites
+} GpuBuffer;                                         // size=0x177F4
 
 typedef struct {
     /* 0x00 */ u32 drawModes;
@@ -905,7 +919,7 @@ typedef struct {
     /* 0x04 */ u32 top : 6;
     /* 0x08 */ u32 right : 6;
     /* 0x0C */ u32 bottom : 6;
-    /* 0x10 */ u8 flags : 8;
+    /* 0x10 */ u8 params : 8;
 } LayoutRect; // size = 0x14
 
 typedef struct {
@@ -913,18 +927,7 @@ typedef struct {
     /* 0x04 */ const TileDefinition* tileDef;
     /* 0x08 */ const LayoutRect rect;
     /* 0x0C */ const u16 zPriority;
-    /* 0x0E */ const u16 unkE;
-} LayerDef2; // size = 0x10
-
-typedef struct {
-    /* 0x00 */ const u16* layout;
-    /* 0x04 */ const TileDefinition* tileDef;
-    /* 0x08 */ const u8 left;
-    /* 0x09 */ const u8 top;
-    /* 0x0A */ const u8 right;
-    /* 0x0B */ const u8 bottom;
-    /* 0x0C */ const u16 zPriority;
-    /* 0x0E */ const u16 unkE;
+    /* 0x0E */ const u16 flags;
 } LayerDef; // size = 0x10
 
 typedef struct {
@@ -1132,19 +1135,22 @@ typedef struct {
     /* 8003C7E0 */ s16 (*func_800EDB58)(s32, s32);
     /* 8003C7E4 */ void (*func_800EA538)(s32 arg0);
     /* 8003C7E8 */ void (*g_pfn_800EA5AC)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
-    /* 8003C7EC */ void* func_801027C4;
-    /* 8003C7F0 */ void* func_800EB758;
-    /* 8003C7F4 */ Entity* (*func_8011AAFC)(Entity* self, u32 flags, s32 arg2);
+    /* 8003C7EC */ void (*func_801027C4)(u32 arg0);
+    /* 8003C7F0 */ void (*func_800EB758)(
+        s16 pivotX, s16 pivotY, Entity* e, u16 flags, POLY_GT4* p, u8 flipX);
+    /* 8003C7F4 */ Entity* (*CreateEntFactoryFromEntity)(
+        Entity* self, u32 flags, s32 arg2);
     /* 8003C7F8 */ bool (*func_80131F68)(void);
     /* 8003C7FC */ DR_ENV* (*func_800EDB08)(POLY_GT4* poly);
     /* 8003C800 */ u16* (*func_80106A28)(u32 arg0, u16 kind);
     /* 8003C804 */ void (*func_80118894)(Entity*);
     /* 8003C808 */ EnemyDef* enemyDefs;
-    /* 8003C80C */ void* func_80118970;
-    /* 8003C810 */ void* func_80118B18;
+    /* 8003C80C */ Entity* (*func_80118970)(void);
+    /* 8003C810 */ s32 (*func_80118B18)(Entity* ent1, Entity* ent2, s32 arg2);
+    ;
     /* 8003C814 */ s32 (*UpdateUnarmedAnim)(s8* frameProps, u16** frames);
     /* 8003C818 */ void (*func_8010DBFC)(s32*, s32*);
-    /* 8003C81C */ void* func_80118C28;
+    /* 8003C81C */ void (*func_80118C28)(s32 arg0);
     /* 8003C820 */ void (*func_8010E168)(s32 arg0, s16 arg1);
     /* 8003C824 */ void (*func_8010DFF0)(s32 arg0, s32 arg1);
     /* 8003C828 */ u16 (*DealDamage)(
@@ -1153,7 +1159,7 @@ typedef struct {
     /* 8003C830 */ Equipment* equipDefs;
     /* 8003C834 */ Accessory* accessoryDefs;
     /* 8003C838 */ void (*AddHearts)(s32 value);
-    /* 8003C83C */ void* func_8010715C;
+    /* 8003C83C */ bool (*LoadMonsterLibrarianPreview)(s32 monsterId);
     /* 8003C840 */ s32 (*TimeAttackController)(
         TimeAttackEvents eventId, TimeAttackActions action);
     /* 8003C844 */ void* (*func_8010E0A8)(void);
@@ -1172,7 +1178,7 @@ typedef struct {
         Entity* entity, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3);
     /* 8003C878 */ s32 (*func_800FF460)(s32 arg0);
     /* 8003C87C */ s32 (*func_800FF494)(EnemyDef* arg0);
-    /* 8003C880 */ bool (*func_80133940)(void);
+    /* 8003C880 */ bool (*CdSoundCommandQueueEmpty)(void);
     /* 8003C884 */ bool (*func_80133950)(void);
     /* 8003C888 */ bool (*func_800F27F4)(s32 arg0);
     /* 8003C88C */ s32 (*func_800FF110)(s32 arg0);
@@ -1203,7 +1209,8 @@ extern void (*g_api_PlaySfx)(s32 sfxId);
 extern s16 (*g_api_func_800EDB58)(s32, s32);
 extern void (*g_api_func_800EA538)(s32 arg0);
 extern void (*g_api_g_pfn_800EA5AC)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
-extern Entity* (*g_api_func_8011AAFC)(Entity* self, u32 flags, s32 arg2);
+extern Entity* (*g_api_CreateEntFactoryFromEntity)(
+    Entity* self, u32 flags, s32 arg2);
 extern bool (*g_api_func_80131F68)(void);
 extern DR_ENV* (*g_api_func_800EDB08)(POLY_GT4* poly);
 extern u16* (*g_api_func_80106A28)(u16 arg0, u16 kind);
@@ -1234,7 +1241,7 @@ extern void (*g_api_func_8011A3AC)(
     Entity* entity, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3);
 extern s32 (*g_api_func_800FF460)(s32 arg0);
 extern s32 (*g_api_func_800FF494)(EnemyDef* arg0);
-extern bool (*g_api_func_80133940)(void);
+extern bool (*g_api_CdSoundCommandQueueEmpty)(void);
 extern bool (*g_api_func_80133950)(void);
 extern bool (*g_api_func_800F27F4)(s32 arg0);
 extern s32 (*g_api_func_800FF110)(s32 arg0);
@@ -1285,38 +1292,50 @@ typedef struct {
     /* 0x0D */ u8 soundFrame;
 } AnimSoundEvent;
 
+#define TILE_SIZE 16
+#define TILE_MASK 0x0F
+#define N_HORIZ_TILES 17
+#define N_VERTI_TILES 16
+
 typedef struct {
     /* 800730D8 0x00 */ u16* layout;
-    /* 800730DC 0x04 */ u32 tileDef;
+    /* 800730DC 0x04 */ TileDefinition* tileDef;
     /* 800730E0 0x08 */ f32 scrollX;
     /* 800730E4 0x0C */ f32 scrollY;
     /* 800730E8 0x10 */ u32 D_800730E8;
     /* 800730EC 0x14 */ u32 D_800730EC;
     /* 800730F0 0x18 */ u32 zPriority;
-    /* 800730F4 0x1C */ u32 D_800730F4;
+    /* 800730F4 0x1C */ u32 flags;
     /* 800730F8 0x20 */ u32 w;
     /* 800730FC 0x24 */ u32 h;
     /* 80073100 0x28 */ u32 D_80073100;
-    /* 80073104 0x2C */ u32 flags;
+    /* 80073104 0x2C */ u32 scrollKind;
 } BgLayer; /* size=0x30 */
 
 typedef struct {
-    /* 800730A0 0x00 */ s32 unk00;
-    /* 800730A4 0x04 */ s32 hSize;
-    /* 800730A8 0x08 */ s32 vSize;
-    /* 800730AC 0x0C */ s32 unk8;
-    /* 800730B0 0x10 */ s32 left;
-    /* 800730B4 0x14 */ s32 top;
-    /* 800730B8 0x18 */ s32 right;
-    /* 800730BC 0x1C */ s32 bottom;
-    /* 800730C0 0x20 */ s32 x;
-    /* 800730C4 0x24 */ s32 y;
-    /* 800730C8 0x28 */ s32 width;
-    /* 800730CC 0x2C */ s32 height;
-    /* 800730D0 0x30 */ s32 unk30;
-    /* 800730D4 0x34 */ s32 D_800730D4;
-    /* 800730D8 0x38 */ BgLayer bg[MAX_BG_LAYER_COUNT];
-} RoomDimensions;
+    /* 80073084 */ u16* fg;
+    /* 80073088 */ TileDefinition* D_80073088;
+    /* 8007308C */ f32 cameraX;
+    /* 80073090 */ f32 cameraY;
+    /* 80073094 */ s32 D_80073094;
+    /* 80073098 */ s32 D_80073098;
+    /* 8007309C */ s32 zPriority;
+    /* 800730A0 */ s32 flags;
+    /* 800730A4 */ s32 hSize;
+    /* 800730A8 */ s32 vSize;
+    /* 800730AC */ u32 unk8;
+    /* 800730B0 */ s32 left;
+    /* 800730B4 */ s32 top;
+    /* 800730B8 */ s32 right;
+    /* 800730BC */ s32 bottom;
+    /* 800730C0 */ s32 x;
+    /* 800730C4 */ s32 y;
+    /* 800730C8 */ s32 width;
+    /* 800730CC */ s32 height;
+    /* 800730D0 */ s32 unk30;
+    /* 800730D4 */ s32 D_800730D4;
+    /* 800730D8 */ BgLayer bg[MAX_BG_LAYER_COUNT];
+} Tilemap;
 
 typedef struct {
     /* D_8003C708 */ u16 flags;
@@ -1415,8 +1434,6 @@ typedef struct {
     /* 0x27 */ u8 unk27;
 } PlayerDraw; /* size = 0x28 */
 
-extern const s16 g_AtanTable[0x400];
-
 extern s32 D_8003925C;
 extern s32 g_IsTimeAttackUnlocked;
 
@@ -1504,11 +1521,8 @@ extern s32 D_80073074;      // Probably also an Event?
 extern Event g_EvSwCardNew; // 80073078
 extern s32 D_8007307C;      // Maybe also an Event?
 extern s32 D_80073080;
-extern TileDefinition* D_80073088;
-extern Camera g_Camera;
-extern s32 D_8007309C;
-extern RoomDimensions g_CurrentRoom;
-extern s32 g_CurrentRoom_vSize; // g_CurrentRoom.vSize
+
+extern Tilemap g_Tilemap;
 
 // Beginning of Player Character offset = 0x800733D8
 extern Entity g_Entities[TOTAL_ENTITY_COUNT];
@@ -1524,7 +1538,6 @@ extern Entity g_Entities[TOTAL_ENTITY_COUNT];
 extern Entity D_80074C08[];
 // *** ENTITY DIRECT ACCESS PROPERTIES END ***
 
-extern Unkstruct8 g_CurrentRoomTileLayout;
 extern Entity D_8007A958[]; // &g_Entities[160]
 extern Entity D_8007C0D8[]; // &g_Entities[192]
 extern Entity D_8007DE38[];
@@ -1615,19 +1628,5 @@ extern s32 D_800987B4;
 extern s32 D_800987C8;
 extern s32 g_DebugPlayer;
 extern s32 D_80098894;
-
-void PadInit(s32 arg0);
-int VSync(s32);
-s32 rcos(s32);
-s32 rsin(s32);
-s32 SquareRoot0(s32);
-s32 SquareRoot12(s32);
-long ratan2(long x, long y);
-void* DMACallback(int dma, void (*func)());
-void func_800192DC(s32 arg0, s32 arg1);
-s32 func_8001D290(s32, s32);
-s32 func_8001D374(s8, s16, s16);
-void func_8001D2E0(s32, s32, s32);
-void func_8002A024(s32, s32);
 
 #endif

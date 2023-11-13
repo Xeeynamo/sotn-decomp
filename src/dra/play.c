@@ -1,6 +1,54 @@
 #include "dra.h"
 #include "sfx.h"
 
+u16 g_ButtonMask[] = {
+    PAD_SQUARE, PAD_CIRCLE, PAD_CROSS, PAD_TRIANGLE,
+    PAD_R2,     PAD_L1,     PAD_R1,    PAD_L2,
+};
+
+u8 g_StageSelectOrder[] = {
+    STAGE_MEMORYCARD, STAGE_ST0,      STAGE_ARE,      STAGE_CAT,  STAGE_CEN,
+    STAGE_CHI,        STAGE_DAI,      STAGE_DRE,      STAGE_LIB,  STAGE_NO0,
+    STAGE_NO1,        STAGE_NO2,      STAGE_NO3,      STAGE_NO4,  STAGE_NP3,
+    STAGE_NZ0,        STAGE_NZ1,      STAGE_TOP,      STAGE_WRP,  STAGE_RARE,
+    STAGE_RCAT,       STAGE_RCEN,     STAGE_RCHI,     STAGE_RDAI, STAGE_RLIB,
+    STAGE_RNO0,       STAGE_RNO1,     STAGE_RNO2,     STAGE_RNO3, STAGE_RNO4,
+    STAGE_RNZ0,       STAGE_RNZ1,     STAGE_RTOP,     STAGE_RWRP, STAGE_MAD,
+    STAGE_HAGI_LOAD,  STAGE_IGA_LOAD, STAGE_IWA_LOAD, STAGE_TE1,  STAGE_TE2,
+    STAGE_TE3,        STAGE_TE4,      STAGE_TE5,      STAGE_MAR,  STAGE_BO0,
+    STAGE_BO1,        STAGE_BO2,      STAGE_BO3,      STAGE_BO4,  STAGE_BO5,
+    STAGE_BO6,        STAGE_BO7,      STAGE_RBO0,     STAGE_RBO1, STAGE_RBO2,
+    STAGE_RBO3,       STAGE_RBO4,     STAGE_RBO5,     STAGE_RBO6, STAGE_RBO7,
+    STAGE_RBO8,       STAGE_TOP_ALT,  STAGE_ENDING,
+};
+
+// The effect of this array is unknown
+// 0: 25% of chance
+// 1: 62.5% of chance
+// 2: 12.5% of chance
+u8 g_RandomizeCastleFlag13[] = {
+    0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2,
+};
+
+RECT D_800A01C0[] = {
+    {128, 0, 192, 0},     // unknown usage
+    {192, 0, 255, 0},     // unknown usage
+    {255, 0, 255, 64},    // unknown usage
+    {255, 64, 255, 128},  // unknown usage
+    {255, 128, 255, 192}, // unknown usage
+    {255, 192, 255, 255}, // unknown usage
+    {255, 255, 192, 255}, // unknown usage
+    {192, 255, 128, 255}, // unknown usage
+    {128, 255, 64, 255},  // unknown usage
+    {64, 255, 0, 255},    // unknown usage
+    {0, 255, 0, 192},     // unknown usage
+    {0, 192, 0, 128},     // unknown usage
+    {0, 128, 0, 64},      // unknown usage
+    {0, 64, 0, 0},        // unknown usage
+    {0, 0, 64, 0},        // unknown usage
+    {64, 0, 128, 0},      // unknown usage
+};
+
 void func_800E493C(void) {
     if (g_Settings.isSoundMono == false) {
         PlaySfx(SET_SOUNDMODE_STEREO);
@@ -23,7 +71,7 @@ void func_800E4970(void) {
     func_800EDAE4();
     PlaySfx(SET_UNK_12);
     PlaySfx(SET_UNK_0B);
-    func_80132760();
+    MuteSound();
     func_800E493C();
 }
 
@@ -61,7 +109,7 @@ void HandlePlay(void) {
 
             for (i = 0; i < BUTTON_COUNT; i++) {
                 g_Settings.buttonConfig[i] = i;
-                g_Settings.buttonMask[i] = D_800A0160[i];
+                g_Settings.buttonMask[i] = g_ButtonMask[i];
             }
             for (i = 0; i < LEN(g_Settings.cloakColors); i++) {
                 g_Settings.cloakColors[i] = 0;
@@ -109,7 +157,7 @@ void HandlePlay(void) {
     case Play_PrepareNextStage:
         PlaySfx(SET_UNK_12);
         PlaySfx(SET_UNK_0B);
-        func_80132760();
+        MuteSound();
         if (D_80097C98 < 0) {
             func_800E4970();
             DemoInit(2);
@@ -130,7 +178,7 @@ void HandlePlay(void) {
         func_800EDAE4();
         func_801024DC();
         if (g_CastleFlags[0x13] & 0x80) {
-            g_CastleFlags[0x13] = D_800A01B0[rand() & 0xF] + 0x80;
+            g_CastleFlags[0x13] = g_RandomizeCastleFlag13[rand() & 0xF] + 0x80;
         }
         g_GameStep++;
         break;
@@ -202,25 +250,25 @@ void HandlePlay(void) {
             prim->x1 = *ex;
             prim->y1 = *ey;
             prim->x2 =
-                0x80 +
+                128 +
                 (((rcos(0x400 - ((i + 0) << 8)) >> 4) * D_80136410) >> 10);
             prim->y2 =
-                0x80 -
+                128 -
                 (((rsin(0x400 - ((i + 0) << 8)) >> 4) * D_80136410) >> 10);
             prim->x3 =
-                0x80 +
+                128 +
                 (((rcos(0x400 - ((i + 1) << 8)) >> 4) * D_80136410) >> 10);
             prim->y3 =
-                0x80 -
+                128 -
                 (((rsin(0x400 - ((i + 1) << 8)) >> 4) * D_80136410) >> 10);
             prim->u0 = *sx;
             prim->v0 = *sy;
             prim->u1 = *ex;
             prim->v1 = *ey;
-            prim->u2 = 0x80;
-            prim->v2 = 0x80;
-            prim->u3 = 0x80;
-            prim->v3 = 0x80;
+            prim->u2 = 128;
+            prim->v2 = 128;
+            prim->u3 = 128;
+            prim->v3 = 128;
             prim->tpage = 0x110;
             prim = prim->next;
         }

@@ -1,11 +1,8 @@
 #include "common.h"
-
-extern s32 D_8003C758;
-extern s32* _svm_rattr;
+#include "libsnd_internal.h"
 
 void SsUtSetReverbFeedback(s16 feedback) {
-    s32* temp = &_svm_rattr;
-    *temp = 0x10;
-    D_8003C758 = feedback;
-    func_80029300(temp);
+    _svm_rattr.mask = SPU_REV_FEEDBACK;
+    _svm_rattr.feedback = feedback;
+    SpuSetReverbModeParam(&_svm_rattr);
 }

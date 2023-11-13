@@ -34,7 +34,7 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 
 #define SET_SOUNDMODE_MONO 5
 #define SET_SOUNDMODE_STEREO 6
-#define SET_UNK_07 7
+#define SET_STOP_SEQ 7
 #define SET_STOP_MUSIC 0xA
 #define SET_UNK_0B 0xB
 #define SET_UNK_0E 0xE
@@ -42,6 +42,16 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SET_UNK_10 0x10
 #define SET_UNK_11 0x11
 #define SET_UNK_12 0x12
+
+#define CD_SOUND_COMMAND_FADE_OUT_2 2
+#define CD_SOUND_COMMAND_FADE_OUT_1 3
+#define CD_SOUND_COMMAND_START_XA 4
+#define CD_SOUND_COMMAND_6 6
+#define CD_SOUND_COMMAND_8 8
+#define CD_SOUND_COMMAND_10 10
+#define CD_SOUND_COMMAND_12 12
+#define CD_SOUND_COMMAND_14 14
+#define CD_SOUND_COMMAND_16 16
 
 // XA music tracks
 // LOOP_POINT means it starts playing from part way into the song

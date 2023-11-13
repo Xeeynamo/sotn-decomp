@@ -33,8 +33,8 @@ CONFIG_DIR      := config
 TOOLS_DIR       := tools
 
 # Files
-MAIN_ASM_DIRS   := $(ASM_DIR)/$(MAIN) $(ASM_DIR)/$(MAIN)/psxsdk $(ASM_DIR)/$(MAIN)/psxsdk/libcd $(ASM_DIR)/$(MAIN)/psxsdk/libsnd $(ASM_DIR)/$(MAIN)/psxsdk/libspu $(ASM_DIR)/$(MAIN)/data
-MAIN_SRC_DIRS   := $(SRC_DIR)/$(MAIN) $(SRC_DIR)/$(MAIN)/psxsdk $(SRC_DIR)/$(MAIN)/psxsdk/libcd $(SRC_DIR)/$(MAIN)/psxsdk/libsnd $(SRC_DIR)/$(MAIN)/psxsdk/libspu
+MAIN_ASM_DIRS   := $(ASM_DIR)/$(MAIN) $(ASM_DIR)/$(MAIN)/psxsdk $(ASM_DIR)/$(MAIN)/psxsdk/libc $(ASM_DIR)/$(MAIN)/psxsdk/libc2 $(ASM_DIR)/$(MAIN)/psxsdk/libapi $(ASM_DIR)/$(MAIN)/psxsdk/libetc $(ASM_DIR)/$(MAIN)/psxsdk/libcard $(ASM_DIR)/$(MAIN)/psxsdk/libgpu $(ASM_DIR)/$(MAIN)/psxsdk/libgs $(ASM_DIR)/$(MAIN)/psxsdk/libgte $(ASM_DIR)/$(MAIN)/psxsdk/libcd $(ASM_DIR)/$(MAIN)/psxsdk/libsnd $(ASM_DIR)/$(MAIN)/psxsdk/libspu $(ASM_DIR)/$(MAIN)/data
+MAIN_SRC_DIRS   := $(SRC_DIR)/$(MAIN) $(SRC_DIR)/$(MAIN)/psxsdk $(SRC_DIR)/$(MAIN)/psxsdk/libc $(SRC_DIR)/$(MAIN)/psxsdk/libc2 $(SRC_DIR)/$(MAIN)/psxsdk/libapi $(SRC_DIR)/$(MAIN)/psxsdk/libetc $(SRC_DIR)/$(MAIN)/psxsdk/libcard $(SRC_DIR)/$(MAIN)/psxsdk/libgpu $(SRC_DIR)/$(MAIN)/psxsdk/libgs $(SRC_DIR)/$(MAIN)/psxsdk/libgte $(SRC_DIR)/$(MAIN)/psxsdk/libcd $(SRC_DIR)/$(MAIN)/psxsdk/libsnd $(SRC_DIR)/$(MAIN)/psxsdk/libspu
 MAIN_S_FILES    := $(foreach dir,$(MAIN_ASM_DIRS),$(wildcard $(dir)/*.s)) \
 				$(foreach dir,$(MAIN_ASM_DIRS),$(wildcard $(dir)/**/*.s))
 MAIN_C_FILES    := $(foreach dir,$(MAIN_SRC_DIRS),$(wildcard $(dir)/*.c)) \
@@ -91,7 +91,7 @@ define link
 	$(LD) $(LD_FLAGS) -o $(2) \
 		-Map $(BUILD_DIR)/$(1).map \
 		-T $(BUILD_DIR)/$(1).ld \
-		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
+		-T $(CONFIG_DIR)/symbols.$(VERSION).txt \
 		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(1).txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt
 endef
@@ -429,8 +429,8 @@ $(BUILD_DIR)/$(ASSETS_DIR)/%.animset.json.o: $(ASSETS_DIR)/%.animset.json
 	./tools/splat_ext/animset.py gen-asm $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/%.json.o: $(ASSETS_DIR)/%.json
-	./tools/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
-	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
+	./tools/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
+	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/%.tilelayout.bin.o: $(ASSETS_DIR)/%.tilelayout.bin
 	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(ASSETS_DIR)/$*.tilelayout.bin
 $(BUILD_DIR)/$(ASSETS_DIR)/%.bin.o: $(ASSETS_DIR)/%.bin

@@ -1,6 +1,8 @@
 #ifndef LIBSND_INTERNAL_H
 #define LIBSND_INTERNAL_H
 
+#include <psxsdk/libspu.h>
+
 #include "common.h"
 struct Unk {
     u16 unk0;
@@ -35,16 +37,15 @@ void _SsStart(s32);
 extern void (*D_80032EF8)();
 extern void (*D_80032EFC)();
 extern s32 D_80032F04;
+extern SpuReverbAttr _svm_rattr;
 
 void SpuVmSeKeyOn(s32, u8, u16, u8, u16, u16);
 void SpuVmSetSeqVol(s16, u16, u16, s32);
 s32 SpuVmGetSeqVol(s16, s16*, s16*);
-s16 func_8002ACB4(s16);
+s16 SpuIsTransferCompleted(s16);
 
 void _spu_setInTransfer(s32);
-void func_8002AB58(u8*, s32);
-void func_8002ABB8(s32);
-void func_8002ABF4(s32);
+void SpuSetTransferStartAddr(s32);
 extern s32 D_800987CC[];
 extern s32 D_80098810[];
 extern u8 svm_vab_used[];
@@ -55,7 +56,7 @@ void _spu_setInTransfer(s32);
 extern u8 svm_vab_used[];
 
 extern u8 svm_vab_used[];
-void func_80028FF4(s32);
+void SpuFree(s32);
 extern s32 D_80098810[];
 extern u16 _svm_vab_count;
 
@@ -123,11 +124,6 @@ struct SeqStruct {
 };
 
 extern struct SeqStruct* _ss_score[32];
-
-typedef struct {
-    short left;  /* Lch */
-    short right; /* Rch */
-} SpuVolume;
 
 typedef struct {
     SpuVolume volume; /* volume       */

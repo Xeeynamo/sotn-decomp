@@ -293,7 +293,7 @@ void DrawEntitiesHitbox(s32 blendMode) {
         g_GpuUsage.tile++;
     }
 
-    if (g_GpuUsage.drawModes < 0x400) {
+    if (g_GpuUsage.drawModes < MAX_DRAW_MODES) {
         SetDrawMode(drawMode, 0, 0, (blendMode - 1) << 5, &g_Vram.D_800ACD80);
         AddPrim(&ot[otIdx], drawMode);
         g_GpuUsage.drawModes++;
@@ -302,18 +302,18 @@ void DrawEntitiesHitbox(s32 blendMode) {
 
 INCLUDE_ASM("dra/nonmatchings/62D70", func_80106A28);
 
-bool func_8010715C(s32 mapTilesetId) {
+bool LoadMonsterLibrarianPreview(s32 monsterId) {
     if (g_IsUsingCd)
         return false;
 
     if (!g_UseDisk) {
-        if (LoadFileSim(mapTilesetId, SimFileType_Monster) < 0) {
+        if (LoadFileSim(monsterId, SimFileType_Monster) < 0) {
             return false;
         }
     } else {
         g_CdStep = CdStep_LoadInit;
-        g_LoadFile = CdFile_28;
-        g_LoadOvlIdx = mapTilesetId;
+        g_LoadFile = CdFile_Monster;
+        g_LoadOvlIdx = monsterId;
     }
     return true;
 }

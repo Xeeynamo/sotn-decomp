@@ -163,4 +163,5 @@ void StSetMask(u_long mask, u_long start, u_long end);
 u_long StGetNext(u_long** addr, u_long** header);
 u_long StFreeRing(u_long* base);
 int StGetBackloc(CdlLOC* loc);
+void StSetRing(u_long* ring_addr, u_long ring_size1);
 void StUnSetRing(void);

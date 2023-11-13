@@ -29,8 +29,12 @@ segments:
     vram:  0x800A0000
     subalign: 4
     subsegments:
-      - [0x0, data]
-      - [0x518, data]
+      - [0x0, .data, dra_header]
+      - [0x144, .data, 42398]
+      - [0x160, .data, play]
+      - [0x240, .data, loading]
+      - [0x248, .data, 47BB8]
+      - [0x510, data]
       - [0x1F18, .data, save_mgr]
       - [0x21B8, data]
       - [0x2BC0, data]
@@ -40,27 +44,34 @@ segments:
       - [0x2EE8, data]
       - [0x3C40, data]
       - [0x4A00, data]
-      - [0x4B04, assets, equipment]
-      - [0x7718, assets, accessory]
+      - [0x4B04, assets, equipment, g_EquipDefs]
+      - [0x7718, assets, accessory, g_AccessoryDefs]
       - [0x8258, data]
-      - [0x8900, assets, enemydefs]
+      - [0x8900, assets, enemydefs, g_EnemyDefs]
       - [0xC780, data]
       - [0xCEB0, data]
       - [0xCF18, .data, 6D59C]
       - [0xCF4C, data]
-      - [0xD670, data]
+      - [0xD1D4, assets, factory_blueprint, g_FactoryBlueprints]
+      - [0xD4B8, data]
+      - [0x1D07C, .data, 8D3E8] # g_CdVolumeTable
+      - [0x1D19C, .data, 8D3E8] # g_VolumeTable
+      - [0x1D1C0, .data, 8D3E8] # g_DebugEnabled
+      - [0x1D1C4, .data, 8D3E8] # D_800BD1C4
+      - [0x1D1C8, .data, 8D3E8] # g_VabAddrs
+      - [0x1D1E0, data] # g_SeqInfo
       - [0x2217C, data]
       - [0x227B0, data]
       - [0x3B3B0, rodata]
       - [0x3B3B4, .rodata, 42398]
       - [0x3B530, .rodata, play]
       - [0x3B560, .rodata, gameover]
-      - [0x3B720, .rodata, 46358]
+      - [0x3B720, .rodata, loading]
       - [0x3B7E8, .rodata, 46FD4]
-      - [0x3B9B8, rodata]
-      - [0x3BD70, rodata] # func_800E7BB8
-      - [0x3BD88, rodata] # func_800E7E08
-      - [0x3BDE0, .rodata, 47BB8]
+      - [0x3B9B8, .rodata, 47BB8] # SimFile strings
+      - [0x3BD70, .rodata, 47BB8] # VSyncHandler
+      - [0x3BD88, .rodata, 47BB8] # func_800E7E08
+      - [0x3BDE0, .rodata, 47BB8] # LoadFileSim
       - [0x3BEE0, .rodata, save_mgr]
       - [0x3C1A8, rodata] # func_800EA7CC
       - [0x3C1E8, rodata] # DecompressData
@@ -92,7 +103,7 @@ segments:
       - [0x40E28, rodata]
       - [0x40E48, rodata] # EntityAlucard jump table
       - [0x4108C, .rodata, 6D59C] # func_8010EDB8
-      - [0x41308, .rodata, 704D8] # func_80110968
+      - [0x41308, .rodata, 704D0] # func_80110968
       - [0x41410, .rodata, 71830] # func_801120B4
       - [0x41588, .rodata, 72BB0] # func_80112BB0
       - [0x41750, .rodata, 72BB0] # func_801131C4
@@ -112,8 +123,8 @@ segments:
       - [0x41A74, rodata]
       - [0x41A84, rodata] # EntityGuardText
       - [0x41AA4, rodata]
-      - [0x41AB4, .rodata, 7A4D0] # func_8011AC3C
-      - [0x41AD4, .rodata, 7A4D0] # func_8011AC3C
+      - [0x41AB4, .rodata, 7A4D0] # EntityEntFactory
+      - [0x41AD4, .rodata, 7A4D0] # EntityEntFactory
       - [0x41AF4, rodata] # EntityPlayerBlinkWhite
       - [0x41B44, rodata] # EntityPlayerBlinkWhite
       - [0x41B74, rodata] # EntityPlayerBlinkWhite
@@ -142,16 +153,16 @@ segments:
       - [0x41FD8, rodata] # func_80130E94
       - [0x42000, rodata] # func_8013136C
       - [0x4202C, rodata]
-      - [0x42034, rodata] # func_80132F60
-      - [0x4205C, rodata] # func_80133290
-      - [0x42074, rodata] # func_80133960
-      - [0x4208C, rodata] # func_80133BDC
-      - [0x420B4, rodata] # func_80134F50
+      - [0x42034, rodata] # CdSoundCommand4
+      - [0x4205C, .rodata, 93290] # CdSoundCommand6
+      - [0x42074, rodata] # CdSoundCommand12
+      - [0x4208C, rodata] # CdSoundCommand14
+      - [0x420B4, .rodata, 94F50] # func_80134F50
       - [0x42354, .rodata, 953A0]
       - [0x42398, c, 42398]
       - [0x4493C, c, play]
       - [0x45358, c, gameover]
-      - [0x46358, c, 46358]
+      - [0x45D30, c, loading]
       - [0x46FD4, c, 46FD4]
       - [0x47BB8, c, 47BB8]
       - [0x48EE4, c, save_mgr]
@@ -167,7 +178,7 @@ segments:
       - [0x673C0, c, cd]
       - [0x692E8, c, 692E8]
       - [0x6D59C, c, 6D59C]
-      - [0x704D8, c, 704D8]
+      - [0x704D0, c, 704D0]
       - [0x71830, c, 71830]
       - [0x72BB0, c, 72BB0]
       - [0x73AAC, c, 73AAC]
@@ -176,6 +187,8 @@ segments:
       - [0x7A4D0, c, 7A4D0]
       - [0x7E4BC, c, 7E4BC]
       - [0x8D3E8, c, 8D3E8]
+      - [0x93290, c, 93290]
+      - [0x94F50, c, 94F50]
       - [0x953A0, c, 953A0]
       - [0x962AC, sbss]
   - name: dra_data

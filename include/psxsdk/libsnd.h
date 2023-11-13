@@ -27,6 +27,13 @@
 #define SS_REV_TYPE_DELAY 8
 #define SS_REV_TYPE_PIPE 9
 
+#define SS_SOFF 0
+#define SS_SON 1
+#define SS_MIX 0
+#define SS_REV 1
+#define SS_SERIAL_A 0
+#define SS_SERIAL_B 1
+
 // Closes the SEQ data holding the seq_acces_num that is no longer necessary.
 extern void SsSeqClose(short seq_access_num);
 
@@ -137,7 +144,7 @@ void SsSetStereo(void);
 // Open a VAB header and specify transfer address in sound buffer.
 s32 /*short*/ SsVabOpenHeadSticky(
     u_char* addr, // Start address of VAB header (.VH) in main memory
-    short vabid,  // Desired VAB ID or -1
+    u_long vabid, // Desired VAB ID or -1
     u_long sbaddr // Start address in sound buffer where VabBody is to be
                   // transferred
 );
@@ -147,7 +154,7 @@ s32 /*short*/ SsVabOpenHeadSticky(
 s32 /*short*/ SsVabTransBodyPartly(
     u_char* addr, // Pointer to starting address of the segment transfer buffer
     u_long bufsize, // Buffer size
-    short vabid     // VAB ID
+    u_long vabid    // VAB ID
 );
 
 // Determines whether data transfer to SPU local memory has terminated
@@ -167,5 +174,7 @@ void SsUtSetReverbDepth(
     short ldepth, // Left channel depth. Value between 0 and 127
     short rdepth  // Right channel depth. Value between 0 and 127
 );
+
+void SsUtSetReverbDelay(short delay);
 
 #endif

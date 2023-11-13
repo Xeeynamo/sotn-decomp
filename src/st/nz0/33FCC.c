@@ -188,19 +188,19 @@ s32 EntitySlograSpecialCollision(u16* unused) {
 
     MoveEntity();
     g_CurrentEntity->velocityY += FIX(0.25);
-    slograPosX = g_CurrentEntity->posX.i.hi + g_Camera.posX.i.hi;
+    slograPosX = g_CurrentEntity->posX.i.hi + g_Tilemap.cameraX.i.hi;
 
     if (g_CurrentEntity->velocityX > 0 && slograPosX > 896) {
-        g_CurrentEntity->posX.i.hi = 896 - g_Camera.posX.i.hi;
+        g_CurrentEntity->posX.i.hi = 896 - g_Tilemap.cameraX.i.hi;
     }
 
     if (g_CurrentEntity->velocityX < 0 && slograPosX < 64) {
-        g_CurrentEntity->posX.i.hi = 64 - g_Camera.posX.i.hi;
+        g_CurrentEntity->posX.i.hi = 64 - g_Tilemap.cameraX.i.hi;
     }
 
-    if (g_CurrentEntity->posY.i.hi + g_Camera.posY.i.hi > 416) {
+    if (g_CurrentEntity->posY.i.hi + g_Tilemap.cameraY.i.hi > 416) {
         ret = 1;
-        g_CurrentEntity->posY.i.hi = 416 - g_Camera.posY.i.hi;
+        g_CurrentEntity->posY.i.hi = 416 - g_Tilemap.cameraY.i.hi;
         g_CurrentEntity->velocityX = 0;
         g_CurrentEntity->velocityY = 0;
     }
@@ -502,8 +502,8 @@ void EntitySlogra(Entity* self) {
 
             MoveEntity();
             self->velocityY += FIX(0.25);
-            if (self->posY.i.hi + g_Camera.posY.i.hi > 416) {
-                self->posY.i.hi = 416 - g_Camera.posY.i.hi;
+            if (self->posY.i.hi + g_Tilemap.cameraY.i.hi > 416) {
+                self->posY.i.hi = 416 - g_Tilemap.cameraY.i.hi;
                 func_801C29B0(NA_SE_EN_SLOGRA_FLOOR_STOMP);
                 g_api.func_80102CD8(1);
                 self->ext.GS_Props.timer = 16;
@@ -1204,18 +1204,18 @@ void EntityGaibon(Entity* self) {
     }
 
     if (!(self->flags & 0x100)) {
-        slograGaibonDistX = self->posX.i.hi + g_Camera.posX.i.hi;
-        slograGaibonDistY = self->posY.i.hi + g_Camera.posY.i.hi;
+        slograGaibonDistX = self->posX.i.hi + g_Tilemap.cameraX.i.hi;
+        slograGaibonDistY = self->posY.i.hi + g_Tilemap.cameraY.i.hi;
 
         if (self->velocityX > 0 && slograGaibonDistX > 784) {
-            self->posX.i.hi = 784 - g_Camera.posX.i.hi;
+            self->posX.i.hi = 784 - g_Tilemap.cameraX.i.hi;
         }
 
         if (self->velocityX < 0 && slograGaibonDistX < 96) {
-            self->posX.i.hi = 96 - g_Camera.posX.i.hi;
+            self->posX.i.hi = 96 - g_Tilemap.cameraX.i.hi;
         }
         if (self->velocityY > 0 && slograGaibonDistY > 420) {
-            self->posY.i.hi = 420 - g_Camera.posY.i.hi;
+            self->posY.i.hi = 420 - g_Tilemap.cameraY.i.hi;
         }
 
         hitbox = &D_80181340[self->animCurFrame][D_80181310];

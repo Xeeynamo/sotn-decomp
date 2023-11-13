@@ -200,7 +200,7 @@ void func_80114DF4(s32 arg0) {
         g_Player.D_80072F00 = 0;
         g_Player.D_80072F02 = 0;
         g_Player.unk5E = GetStatusAilmentTimer(STATUS_AILMENT_PETRIFIED, 8);
-        func_8011AAFC(g_CurrentEntity, 0x3002F, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 0x3002F, 0);
         func_8010E168(1, 4);
         PLAYER.step_s = 1;
         break;
@@ -213,7 +213,7 @@ void func_80114DF4(s32 arg0) {
             PLAYER.velocityX = 0;
             func_80102CD8(1);
             PlaySfx(0x644);
-            func_8011AAFC(g_CurrentEntity, 0x27, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0x27, 0);
 
             randvar = rand() % 64;
 
@@ -224,11 +224,11 @@ void func_80114DF4(s32 arg0) {
             if (randvar << 0x10) {
                 PLAYER.palette = (randvar & 1) - 0x7E62;
                 func_8010DA48(randvar & 1 | 0x38);
-                func_8011AAFC(g_CurrentEntity, 0x30010, 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, 0x30010, 0);
             } else {
                 PLAYER.palette = 0x819E;
                 func_8010DA48(0x3A);
-                func_8011AAFC(g_CurrentEntity, 0x7001D, 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, 0x7001D, 0);
             }
             PLAYER.step_s = 2;
         }
@@ -279,9 +279,9 @@ void func_80114DF4(s32 arg0) {
             if (g_Player.unk5E == 0) {
                 func_8010DA48(0x3B);
                 if (PLAYER.ext.player.unkAC != 0x3A) {
-                    func_8011AAFC(g_CurrentEntity, 0x30010, 0);
+                    CreateEntFactoryFromEntity(g_CurrentEntity, 0x30010, 0);
                 } else {
-                    func_8011AAFC(g_CurrentEntity, 0x20, 0);
+                    CreateEntFactoryFromEntity(g_CurrentEntity, 0x20, 0);
                 }
                 PlaySfx(0x6E7);
                 PLAYER.step = Player_Hit;
@@ -292,11 +292,11 @@ void func_80114DF4(s32 arg0) {
             func_8010E168(1, 0x1C);
             PLAYER.step_s = 3;
             if (PLAYER.ext.player.unkAC != 0x3A) {
-                func_8011AAFC(g_CurrentEntity, 0x3000D, 0);
-                func_8011AAFC(g_CurrentEntity, 0x3001F, 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, 0x3000D, 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, 0x3001F, 0);
             } else {
-                func_8011AAFC(g_CurrentEntity, 0x8000D, 0);
-                func_8011AAFC(g_CurrentEntity, 0x7001E, 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, 0x8000D, 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, 0x7001E, 0);
             }
         }
         PLAYER.palette = ((PLAYER.ext.player.unkAC + 0xFFC8) & 1) - 0x7E62;
@@ -339,7 +339,7 @@ void func_80115BB0(void) {
         } else {
             func_8010E7AC();
         }
-        func_8011AAFC(g_CurrentEntity, 0x4A0000 | 0x2C, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 0x4A0000 | 0x2C, 0);
         D_80097D37 = 0;
     }
 }
@@ -349,14 +349,14 @@ void func_80115C50(void) {
     s32 dist;
 
     if (g_StageId == STAGE_TOP) {
-        dist = (g_CurrentRoom.left * 256) + playerX;
+        dist = g_Tilemap.left * 256 + playerX;
         dist = ABS(dist);
 
         if (dist - 8000 > 0) {
             PLAYER.posX.i.hi--;
         }
 
-        dist = (g_CurrentRoom.left * 256) + playerX;
+        dist = g_Tilemap.left * 256 + playerX;
         dist = ABS(dist);
 
         if (dist - 8000 < 0) {
@@ -365,14 +365,14 @@ void func_80115C50(void) {
     }
 
     if (g_StageId == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
-        dist = (g_CurrentRoom.left * 256) + playerX;
+        dist = g_Tilemap.left * 256 + playerX;
         dist = ABS(dist);
 
         if (dist - 8384 > 0) {
             PLAYER.posX.i.hi--;
         }
 
-        dist = (g_CurrentRoom.left * 256) + playerX;
+        dist = g_Tilemap.left * 256 + playerX;
         dist = ABS(dist);
 
         if (dist - 8384 < 0) {

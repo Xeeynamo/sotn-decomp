@@ -73,11 +73,10 @@ def handle_jal_call(full_file, call_index):
             # Handle remaining symbols that are just straight in GameApi
             if match.group(1) in function_lookup:
                 return match.group(1)
-        if (
-            f"lw         {call_target}, %lo(D_" in callreg_setline
-        ):  # Simply jumping to what's stored in a D_ variable
-            jump_variable = callreg_setline[51:61]
-            return jump_variable
+        # Calling something held in a variable, usually a D_ or a g_
+        variable_pattern = r"lw\s+" + "\\" + call_target + r", %lo\(([^)]+)\)"
+        if match := re.search(variable_pattern, callreg_setline):
+            return match.group(1)
         if "0x28($s0)" in callreg_setline or "-0xC($s0)" in callreg_setline:
             return "UnknownpfnEntityUpdate"
         # happens in NZ0/func_801C1034. v0 is set by dereferencing a register.
@@ -108,7 +107,7 @@ def handle_jal_call(full_file, call_index):
         if "0xB8($a2)" in callreg_setline or "-0x20($s0)" in callreg_setline:
             return "UnknownEntityFunction"
         if "8017B5A8" in callreg_setline:
-            return "g_api_func_8011AAFC"
+            return "g_api_CreateEntFactoryFromEntity"
 
         if any(
             x in callreg_setline for x in ["80015840", "80015E74", "8001923C"]
@@ -141,8 +140,9 @@ def get_sdk_funcs():
 
 # Many functions in main are not being splatted out yet, so we add them here, like SDK.
 def get_main_funcs():
-    functions = []
-    for file in Path("asm/us/main").glob("*.s"):
+    # hardcode this one in there, it's not in any assembly file
+    functions = ["g_MainGame"]
+    for file in Path("asm/us/main").rglob("*.s"):
         with open(file) as f:
             lines = f.readlines()
             for line in lines:
@@ -221,7 +221,6 @@ def analyze(input_function):
         for i, line in enumerate(asm_lines):
             if "jal" in line:
                 callee_name = handle_jal_call(asm_lines, i)
-
                 if callee_name.startswith("D_"):
                     input_function.add_callee(fake_function(callee_name))
                     continue
@@ -439,6 +438,6 @@ if __name__ == "__main__":
             markdown = generate_md(functions)
             with open(f"{output_dir}/../function_graphs.md", "w") as f:
                 f.write(markdown)
-                print("Markdown written to" + os.path.realpath(f.name))
+                print("Markdown written to " + os.path.realpath(f.name))
             print(f"Generated HTML in {time.perf_counter() - timer} seconds")
     print("Exiting.")

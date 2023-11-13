@@ -29,7 +29,12 @@ segments:
     vram:  0x800A0000
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, .data, dra_header]
+      - [0x144, .data, 42398]
+      - [0x160, .data, play]
+      - [0x240, .data, loading]
+      - [0x248, .data, 47BB8]
+      - [0x510, data]
       - [0x1F18, .data, save_mgr]
       - [0x2178, data]
       - [0x2CF4, .data, 5298C] # array of strings
@@ -39,15 +44,21 @@ segments:
       - [0x2EF8, data]
       - [0xCFDC, .data, 6D59C]
       - [0xD010, data]
+      - [0x1D140, .data, 8D3E8] # g_CdVolumeTable
+      - [0x1D260, .data, 8D3E8] # g_VolumeTable
+      - [0x1D284, .data, 8D3E8] # g_DebugEnabled
+      - [0x1D288, .data, 8D3E8] # D_800BD1C4
+      - [0x1D28C, .data, 8D3E8] # g_VabAddrs
+      - [0x1D2A4, data] # g_SeqInfo
       - [0x3B458, .rodata, 42398]
       - [0x3B618, .rodata, play]
       - [0x3B648, rodata, gameover] # jtbl_800DB648
-      - [0x3B808, .rodata, 46358]
+      - [0x3B808, .rodata, loading]
       - [0x3B8D0, .rodata, 46FD4]
-      - [0x3B938, rodata]
-      - [0x3BCF0, rodata] # jtbl_800DBCF0
-      - [0x3BD08, rodata] # jtbl_800DBD08
-      - [0x3BD60, .rodata, 47BB8]
+      - [0x3B938, .rodata, 47BB8] # SimFile strings
+      - [0x3BCF0, .rodata, 47BB8] # VSyncHandler
+      - [0x3BD08, .rodata, 47BB8] # func_800E7E08
+      - [0x3BD60, .rodata, 47BB8] # LoadFileSim
       - [0x3BE60, .rodata, save_mgr]
       - [0x3C11C, rodata] # func_800EA7CC
       - [0x3C15C, rodata] # DecompressData
@@ -82,7 +93,7 @@ segments:
       - [0x40E0C, rodata] # jtbl_800E0E0C
       - [0x40EDC, rodata] # jtbl_800E0EDC
       - [0x40FA8, .rodata, 6D59C] # func_8010EDB8
-      - [0x41224, .rodata, 704D8] # jtbl_800E1224
+      - [0x41224, .rodata, 704D0] # jtbl_800E1224
       - [0x4132C, .rodata, 71830] # jtbl_800E132C
       - [0x414A4, .rodata, 72BB0] # jtbl_800E14A4
       - [0x4166C, .rodata, 72BB0] # jtbl_800E166C
@@ -133,15 +144,15 @@ segments:
       - [0x41F1C, rodata] # jtbl_800E1F1C
       - [0x41F48, rodata]
       - [0x41F50, rodata] # jtbl_800E1F50
-      - [0x41F78, rodata] # jtbl_800E1F78
+      - [0x41F78, .rodata, 93290] # jtbl_800E1F78
       - [0x41F90, rodata] # jtbl_800E1F90
       - [0x41FA8, rodata] # jtbl_800E1FA8
-      - [0x41FD0, rodata] # jtbl_800E1FD0
+      - [0x41FD0, .rodata, 94F50] # jtbl_800E1FD0
       - [0x42270, .rodata, 953A0]
       - [0x422B4, c, 42398]
       - [0x44EC8, c, play]
       - [0x458E4, c, gameover]
-      - [0x46A0C, c, 46358]
+      - [0x463E4, c, loading]
       - [0x47688, c, 46FD4]
       - [0x48250, c, 47BB8]
       - [0x4957C, c, save_mgr]
@@ -157,7 +168,7 @@ segments:
       - [0x67200, c, cd]
       - [0x69100, c, 692E8]
       - [0x6D2E0, c, 6D59C]
-      - [0x7021C, c, 704D8]
+      - [0x7021C, c, 704D0]
       - [0x71574, c, 71830]
       - [0x7291C, c, 72BB0]
       - [0x7379C, c, 73AAC]
@@ -166,6 +177,8 @@ segments:
       - [0x7A1C8, c, 7A4D0]
       - [0x7E168, c, 7E4BC]
       - [0x8D050, c, 8D3E8]
+      - [0x92E6C, c, 93290]
+      - [0x94B2C, c, 94F50]
       - [0x94F7C, c, 953A0]
       - [0x95E88, sbss]
   - name: dra_data

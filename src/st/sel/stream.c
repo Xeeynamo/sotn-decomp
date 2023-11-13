@@ -111,7 +111,7 @@ void func_801B9C18(s32 unused, void (*callback)()) {
     func_801BA460(0);
     *s0 = 0;
     func_801BA6CC(callback);
-    func_800192DC((s32)(s0 + 2), 0x28);
+    StSetRing((s32)(s0 + 2), 0x28);
     StSetStream(g_StreamIsRGB24, START_FRAME, -1, NULL, NULL);
 }
 

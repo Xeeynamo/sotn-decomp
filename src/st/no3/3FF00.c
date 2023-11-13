@@ -6,7 +6,7 @@ void EntityRoomTransition2(Entity* self) {
     // Used as both a loop variable and a temp
     s32 localVar;
     Entity* gents = g_Entities;
-    Unkstruct8* layout = &g_CurrentRoomTileLayout;
+    Tilemap* tilemap = &g_Tilemap;
 
     if (self->ext.roomTransition2.unk80 == 0 && self->step < 4) {
         g_api.PlaySfx(SE_DEATH_AMBIENCE);
@@ -17,7 +17,7 @@ void EntityRoomTransition2(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180AD0);
-        layout->unk40 = 0xFC;
+        tilemap->y = 0xFC;
         g_Player.D_80072EF4 = 0x2000;
         D_8003C8B8 = 0;
         g_Player.D_80072EFC = 1;
@@ -85,7 +85,7 @@ void EntityRoomTransition2(Entity* self) {
         if (prim->r0 >= 240) {
             self->step++;
             DestroyEntity(&g_Entities[208]);
-            g_CurrentRoom.bg[0].D_800730F4 |= 1;
+            g_Tilemap.bg[0].flags |= 1;
             g_api.PlaySfx(0xA1);
             g_api.PlaySfx(0x30F);
         }
@@ -99,7 +99,7 @@ void EntityRoomTransition2(Entity* self) {
         if (prim->r0 == 0) {
             DestroyEntity(self);
             gents = &g_Entities[192];
-            layout->unk40 = 0;
+            tilemap->y = 0;
             D_8003C8B8 = 1;
             DestroyEntity(gents);
             CreateEntityFromCurrentEntity(E_ID_17, gents);

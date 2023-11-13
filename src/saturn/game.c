@@ -338,7 +338,7 @@ void AddHearts(s32 value) {
             g_Status.hearts = g_Status.heartsMax;
         }
         temp = g_Entities;
-        g_api.func_8011AAFC(temp, 99, 0); // g_api is new
+        g_api.CreateEntFactoryFromEntity(temp, 99, 0); // g_api is new
         PlaySfx(NA_SE_PL_COLLECT_HEART);
     }
 }

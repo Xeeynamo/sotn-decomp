@@ -1,4 +1,5 @@
 #include "dra.h"
+#include "lba.h"
 
 #define DISP_ALL_H 240
 #define DISP_STAGE_W 256
@@ -15,10 +16,12 @@
     ((PAD_START) | (PAD_SELECT) | (PAD_L2) | (PAD_R2) | (PAD_L1) | (PAD_R1))
 #endif
 
+extern void* g_ApiInit[sizeof(GameApi) / sizeof(void*)];
+
 s32 LoadVabData(void);
 void func_800E385C(u32*);
 void UpdateGame(void);
-void func_800E7BB8(void);
+void VSyncHandler(void);
 void SetupEvents(void);
 void func_800EA7CC(void);
 void LoadPendingGfx(void);
@@ -32,28 +35,16 @@ void DrawEntitiesHitbox(s32 blendMode);
 void UpdateCd(void);
 s32 func_8010E27C(void);
 void SetSpeedX(s32);
-void func_801324B4(s8 s_num, s16 arg1, s16 arg2);
+void SetCdVolume(s8 s_num, s16 arg1, s16 arg2);
 void SoundInit(void);
-void func_801353A0(void);
+void ExecCdSoundCommands(void);
 s32 func_80136010(void);
-
-const char aO[] = "\no\n";
-const char D_800DB3B8[] = "sim:c:\\bin\\dra000.bmp";
-const char D_800DB3D0[] = "cre err:%s\n";
-const char D_800DB3DC[] = "wr err\n";
-const char D_800DB3E4[] = "clo err\n";
-const char D_800DB3F0[] = "sim:c:\\bin\\dra000.mov";
-const char D_800DB408[] = "pale";
-const char D_800DB410[] = "reverse";
-const char D_800DB418[] = "light";
-const char D_800DB420[] = "dark";
-const char D_800DB428[] = "normal";
 
 void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint(msg);
     if (g_DebugWaitInfoTimer++ & 4) {
-        FntPrint(&aO); // TODO: inline
+        FntPrint("\no\n");
     }
     DrawSync(0);
     VSync(0);
@@ -94,7 +85,7 @@ void DebugCaptureScreen(void) {
     DrawSync(0);
 
     for (i = 0; i < MaxScreenshotCount; i++) {
-        __builtin_memcpy(fileName, D_800DB3B8, sizeof(D_800DB3B8));
+        STRCPY(fileName, "sim:c:\\bin\\dra000.bmp");
         fileName[14] += i / 100;
         fileName[15] += i / 10 - i / 100 * 10;
         fileName[16] += i % 10;
@@ -107,7 +98,7 @@ void DebugCaptureScreen(void) {
 
     fid = open(fileName, O_CREAT);
     if (fid < 0) {
-        FntPrint(D_800DB3D0, &fileName);
+        FntPrint("cre err:%s\n", &fileName);
         return;
     }
 
@@ -132,7 +123,7 @@ void DebugCaptureScreen(void) {
     bmp[0x16] = height;
     bmp[0x17] = height / 256;
     if (write(fid, &bmp, BmpHeaderLen) < 0) {
-        FntPrint(D_800DB3DC);
+        FntPrint("wr err\n");
         return;
     }
 
@@ -148,7 +139,7 @@ void DebugCaptureScreen(void) {
             *dst++ = (pixelColor & 0x1F) << 3; // R
             if (++bufferPos == 0x10) {
                 if (write(fid, start, bufferPos * BytesPerPixel) < 0) {
-                    FntPrint(D_800DB3DC);
+                    FntPrint("wr err\n");
                     return;
                 }
                 bufferPos = 0;
@@ -159,12 +150,12 @@ void DebugCaptureScreen(void) {
 
     if (bufferPos != 0) {
         if (write(fid, &buffer, bufferPos * BytesPerPixel) < 0) {
-            FntPrint(D_800DB3DC);
+            FntPrint("wr err\n");
             return;
         }
     }
     if (close(fid) < 0) {
-        FntPrint(D_800DB3E4);
+        FntPrint("clo err\n");
         return;
     }
     DebugInputWait(fileName);
@@ -195,7 +186,7 @@ void DebugCaptureVideo(void) {
         }
 
         for (i = 0; i < MaxVideoFramesCount; i++) {
-            __builtin_memcpy(fileName, D_800DB3F0, sizeof(D_800DB3F0));
+            STRCPY(fileName, "sim:c:\\bin\\dra000.mov");
             fileName[14] += i / 100;
             fileName[15] += i / 10 - i / 100 * 10;
             fileName[16] += i % 10;
@@ -208,14 +199,14 @@ void DebugCaptureVideo(void) {
 
         g_DebugRecordVideoFid = open(fileName, O_CREAT);
         if (g_DebugRecordVideoFid < 0) {
-            FntPrint(D_800DB3D0, fileName);
+            FntPrint("cre err:%s\n", fileName);
             return;
         }
         g_DebugIsRecordingVideo = true;
     } else if (g_pads[0].tapped & PAD_TRIANGLE) {
         g_DebugIsRecordingVideo = false;
         if (close(g_DebugRecordVideoFid) < 0) {
-            FntPrint(D_800DB3E4);
+            FntPrint("clo err\n");
         }
         return;
     }
@@ -233,7 +224,7 @@ void DebugCaptureVideo(void) {
             *dst++ = src[0x6060 + i * 0x100 + j];
             if (++bufferPos == 0x10) {
                 if (write(g_DebugRecordVideoFid, start, bufferPos * 2) < 0) {
-                    FntPrint(D_800DB3DC);
+                    FntPrint("wr err\n");
                     return;
                 }
                 bufferPos = 0;
@@ -244,12 +235,15 @@ void DebugCaptureVideo(void) {
 
     if (bufferPos != 0) {
         if (write(g_DebugRecordVideoFid, buffer, bufferPos * 2) < 0) {
-            FntPrint(D_800DB3DC);
+            FntPrint("wr err\n");
             return;
         }
     }
 }
 
+const char* D_800A0144[] = {
+    "normal", "dark", "light", "reverse", "pale",
+};
 void func_800E2B00(void) {
     DR_MODE* drMode;
     SPRT* sprite;
@@ -276,7 +270,7 @@ void func_800E2B00(void) {
         var_s7 = 0;
     } else {
         SetSemiTrans(sprite, 1);
-        var_s7 = (((u16)D_801362C8) << 5) - 0x20;
+        var_s7 = (D_801362C8 << 5) - 0x20;
     }
 
     SetShadeTex(sprite, 1);
@@ -292,8 +286,7 @@ void func_800E2B00(void) {
     sprite->clut = D_8003C104[g_DebugCurPal];
     AddPrim(&g_CurrentOT[0x1FE], sprite);
     g_GpuUsage.sp++;
-    SetDrawMode(
-        drMode, 0, 0, (((u32)D_801362B4) >> 2) + var_s7, &g_Vram.D_800ACD80);
+    SetDrawMode(drMode, 0, 0, (D_801362B4 >> 2) + var_s7, &g_Vram.D_800ACD80);
     AddPrim(&g_CurrentOT[0x1FE], drMode++);
 
     i = 0;
@@ -624,10 +617,6 @@ void PrintHBlankInfo(void) {
     }
 }
 
-extern const char aPqes[];
-extern const char aPqes_0[];
-extern const char aPqes_1[];
-
 void SsVabClose(short vab_id);
 #define LOAD_VAB(vab_id, name, addr, data, dataLen)                            \
     SsVabClose(vab_id);                                                        \
@@ -643,24 +632,13 @@ void SsVabClose(short vab_id);
     while (SsVabTransCompleted(SS_IMEDIATE) != 1)
 
 s32 LoadVabData(void) {
-    const int vab0Len = 269488;
-#if defined(VERSION_US)
-    const int vab1Len = 57744;
-    const int vab2Len = 64496;
-    const int vab3Len = 108048;
-#elif defined(VERSION_HD)
-    const int vab1Len = 57808;
-    const int vab2Len = 65200;
-    const int vab3Len = 107792;
-#endif
-
-    LOAD_VAB(0, &aPbav, g_VabAddrs[0], D_8013B6A0, vab0Len);
-    LOAD_VAB(1, &aPbav_0, g_VabAddrs[1], D_8017D350, vab1Len);
-    LOAD_VAB(2, &aPbav_1, g_VabAddrs[2], D_801A9C80, vab2Len);
-    LOAD_VAB(3, &aPbav_2, g_VabAddrs[3], D_8018B4E0, vab3Len);
-    func_80131EBC(&aPqes, 0x618);
-    func_80131EBC(&aPqes_0, 0x201);
-    func_80131EBC(&aPqes_1, 0x205);
+    LOAD_VAB(0, aPbav, g_VabAddrs[0], D_8013B6A0, vab0Len);
+    LOAD_VAB(1, aPbav_0, g_VabAddrs[1], D_8017D350, vab1Len);
+    LOAD_VAB(2, aPbav_1, g_VabAddrs[2], D_801A9C80, vab2Len);
+    LOAD_VAB(3, aPbav_2, g_VabAddrs[3], D_8018B4E0, vab3Len);
+    func_80131EBC(aPqes, 0x618);
+    func_80131EBC(aPqes_0, 0x201);
+    func_80131EBC(aPqes_1, 0x205);
     return 0;
 }
 
@@ -764,6 +742,8 @@ void func_800E385C(u_long* ot) {
     }
 }
 
+u32 D_800A0158 = 0;
+s32 D_800A015C = 0;
 void func_800E38CC(void) {
     if (D_800A015C != 0) {
         if (D_800A0158 >= 0x24) {
@@ -778,7 +758,7 @@ void func_800E38CC(void) {
     }
 }
 
-void entrypoint_sotn(void) {
+void MainGame(void) {
 #if defined(VERSION_HD)
     CdlFILE fp;
 #endif
@@ -801,8 +781,8 @@ void entrypoint_sotn(void) {
     g_GpuBuffers[1].next = &g_GpuBuffers[0];
     ClearImage(&g_Vram.D_800ACD88, 0x5A, 0x50, 0x46);
     ClearImage(&g_Vram.D_800ACD90, 0, 0, 0);
-    for (i = 0; i < 0x50; i++) {
-        ((void**)&g_api)[i] = (&D_800A0004)[i];
+    for (i = 0; i < LEN(g_ApiInit); i++) {
+        ((void**)&g_api)[i] = g_ApiInit[i];
     }
     g_Timer = 0;
     D_8003C99C = 0;
@@ -811,17 +791,17 @@ void entrypoint_sotn(void) {
     g_Settings.D_8003CB04 = 0;
     g_CurrentBuffer = &g_GpuBuffers[0];
 #if defined(VERSION_US)
-    func_80131ED8(0xB9B6);
+    SetCdPos(0xB9B6);
 #elif defined(VERSION_HD)
     do {
 
     } while (CdSearchFile(&fp, "\\SD\\XA_STR1.;1") == 0);
-    func_80131ED8(CdPosToInt(&fp));
+    SetCdPos(CdPosToInt(&fp));
 #endif
     SoundInit();
     while (LoadVabData() < 0)
         ;
-    VSyncCallback(func_800E7BB8);
+    VSyncCallback(VSyncHandler);
     FntLoad(0x380, 0x100);
     SetDumpFnt(FntOpen(8, 0x30, 0x200, 0x100, 0, 0x200));
     SetDispMask(1);
@@ -946,7 +926,7 @@ loop_5:
             PlaySfx(0xB);
             func_801361F8();
             VSync(D_8003C73C);
-            func_80132760();
+            MuteSound();
             SetGameState(Game_Title);
 #if defined(VERSION_HD)
             FntFlush(-1);
@@ -960,7 +940,7 @@ loop_5:
         func_801361F8();
         if (func_80131F28() > 900) {
             CdInit();
-            func_80132760();
+            MuteSound();
         }
 
         if (g_GpuMaxUsage.drawModes < g_GpuUsage.drawModes) {

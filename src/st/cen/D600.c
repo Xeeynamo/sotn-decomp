@@ -408,8 +408,8 @@ void func_8018E3E8(void) {
             entity->posX.i.hi = *g_Dialogue.unk40++ | entity->posX.i.hi;
             entity->posY.i.hi = *g_Dialogue.unk40++ * 0x10;
             entity->posY.i.hi = *g_Dialogue.unk40++ | entity->posY.i.hi;
-            entity->posX.i.hi -= g_Camera.posX.i.hi;
-            entity->posY.i.hi -= g_Camera.posY.i.hi;
+            entity->posX.i.hi -= g_Tilemap.cameraX.i.hi;
+            entity->posY.i.hi -= g_Tilemap.cameraY.i.hi;
             break;
 
         case 1:
@@ -465,19 +465,19 @@ void func_8018E6C4(u8 ySteps) {
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId16);
 
 void func_8018F890(s16 arg0) {
-    s16 temp_v0 = arg0 - g_CurrentRoom.height;
+    s16 temp_v0 = arg0 - g_Tilemap.height;
 
     if (temp_v0 > 1) {
-        g_CurrentRoom.height++;
+        g_Tilemap.height++;
     } else if (temp_v0 < -1) {
-        g_CurrentRoom.height--;
+        g_Tilemap.height--;
     } else {
-        g_CurrentRoom.height = arg0;
+        g_Tilemap.height = arg0;
     }
 }
 
 void func_8018F8EC(u16 index) {
-    Unkstruct8* t = &g_CurrentRoomTileLayout;
+    Tilemap* tilemap = &g_Tilemap;
     u16 tilePos = 0x5B6;
     u16* tileLayoutPtr = &D_8018068C[index * 4];
     s32 i;
@@ -485,7 +485,7 @@ void func_8018F8EC(u16 index) {
 
     for (i = 0; i < 2; i++) {
         for (j = 0; j < 4; j++) {
-            t->fg[tilePos] = *tileLayoutPtr;
+            tilemap->fg[tilePos] = *tileLayoutPtr;
             tileLayoutPtr++;
             tilePos++;
         }
@@ -495,7 +495,7 @@ void func_8018F8EC(u16 index) {
 
 // platform that lifts you into chamber, starts cutscene, gives you holy glasses
 void EntityPlatform(Entity* self) {
-    Unkstruct8* roomLayout = &g_CurrentRoomTileLayout;
+    Tilemap* tilemap = &g_Tilemap;
     Entity* player = &PLAYER;
     Primitive* prim;
     s16 primIndex;
@@ -507,8 +507,8 @@ void EntityPlatform(Entity* self) {
 
     self->posY.i.hi -= 8;
     temp_a1 = func_80195318(self, 0x20, 0x11, 4);
-    temp_s1 = player->posX.i.hi + g_Camera.posX.i.hi;
-    temp_v0 = self->posY.i.hi + g_Camera.posY.i.hi;
+    temp_s1 = player->posX.i.hi + g_Tilemap.cameraX.i.hi;
+    temp_v0 = self->posY.i.hi + g_Tilemap.cameraY.i.hi;
 
     switch (self->step) {
     case 0:
@@ -597,11 +597,11 @@ void EntityPlatform(Entity* self) {
         }
         if (g_Player.D_80072EF4 == 0) {
             g_Player.D_80072EF4 = 0x8000;
-            player->posX.i.hi = 384 - roomLayout->unkA;
+            player->posX.i.hi = 384 - tilemap->cameraX.i.hi;
             self->step++;
             g_api.PlaySfx(SE_CEN_ELEVATOR_MOVE);
             D_8019D424 |= 1;
-            roomLayout->unk48 = ((s16)roomLayout->unkE + 0x100);
+            tilemap->height = ((s16)tilemap->cameraY.i.hi + 0x100);
             func_8018F8EC(0);
         }
         g_Player.D_80072EFC = 1;
@@ -610,7 +610,7 @@ void EntityPlatform(Entity* self) {
     case 4:
         g_Player.D_80072EF4 = 0;
         g_Player.D_80072EFC = 1;
-        player->posX.i.hi = 384 - roomLayout->unkA;
+        player->posX.i.hi = 384 - tilemap->cameraX.i.hi;
         if (temp_v0 > 496) {
             self->posY.i.hi--;
             player->posY.i.hi--;
@@ -670,7 +670,7 @@ void EntityPlatform(Entity* self) {
 
     case 8:
         func_8018F890(0x300);
-        if (roomLayout->unk48 == 0x300) {
+        if (tilemap->height == 0x300) {
             self->step++;
         }
         break;
@@ -686,7 +686,7 @@ void EntityPlatform(Entity* self) {
     prim->x0 = prim->x2 = temp_a0;
     prim->x1 = prim->x3 = temp_v1_4;
     prim->y0 = prim->y1 = self->posY.i.hi + 15;
-    prim->y2 = prim->y3 = 0x268 - roomLayout->unkE;
+    prim->y2 = prim->y3 = 0x268 - tilemap->cameraY.i.hi;
 }
 
 // Black layer that covers room interior and lights up when cutscene starts
@@ -720,7 +720,7 @@ void EntityRoomDarkness(Entity* self) {
             temp_t0 = self->posX.i.hi - 32;
             temp_a0 = self->posX.i.hi + 32;
             self->flags |= FLAG_HAS_PRIMS;
-            temp_v1 = 0x178 - g_Camera.posY.i.hi;
+            temp_v1 = 0x178 - g_Tilemap.cameraY.i.hi;
             temp_v0 = temp_v1 - 0x58;
             temp_a1 = temp_v1 + 0x68;
             self->posY.i.hi = temp_v1;
@@ -871,7 +871,7 @@ void EntityElevatorStationary(Entity* self) {
             prim = prim->next;
         }
 
-        if ((s16)(player->posY.i.hi + g_Camera.posY.i.hi) < 80) {
+        if ((s16)(player->posY.i.hi + g_Tilemap.cameraY.i.hi) < 80) {
             self->posY.i.hi = player->posY.i.hi;
             player->posX.i.hi = self->posX.i.hi;
             self->animCurFrame = 10;
@@ -903,7 +903,7 @@ void EntityElevatorStationary(Entity* self) {
         case 0:
             self->posY.val += FIX(0.5);
             player->posY.i.hi++;
-            posY = g_Camera.posY.i.hi + self->posY.i.hi;
+            posY = g_Tilemap.cameraY.i.hi + self->posY.i.hi;
             if ((g_Timer % 16) == 0) {
                 func_8019A328(SE_CEN_ELEVATOR_MOVE);
             }
