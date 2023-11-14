@@ -205,7 +205,7 @@ void func_8012DBBC(void) {
             PLAYER.step_s = 3;
             D_800B0914 = 3;
             func_8010DA48(0xE5);
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0U, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0x0, 0);
         } else {
             func_8012CA64();
         }
@@ -276,7 +276,7 @@ void func_8012DF04(void) {
             PLAYER.step_s = 3;
             D_800B0914 = 3;
             func_8010DA48(0xE5);
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0x0, 0);
         } else {
             func_8012CA64();
         }
@@ -304,7 +304,7 @@ void func_8012E040(void) {
             PLAYER.step_s = 3;
             D_800B0914 = 3;
             func_8010DA48(0xE5);
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0U, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0x0, 0);
         } else {
             if (D_800B0914 == 0) {
                 func_8012CA64();

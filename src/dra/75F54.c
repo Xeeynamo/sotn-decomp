@@ -129,7 +129,8 @@ void PlayerStepHellfire(void) {
     case 0:
         // Make factory with blueprint #33. Factory makes entities with ID 25.
         // This is func_80126ECC.
-        if (CreateEntFactoryFromEntity(g_CurrentEntity, 33, 0) == NULL) {
+        if (CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0, 33), 0) ==
+            NULL) {
             func_8010E570(0);
         }
         func_8010DA48(1);
@@ -179,7 +180,7 @@ void PlayerStepHellfire(void) {
             g_Player.D_80072F18 = 4;
             // Make factory with blueprint 37. This creates entity with ID 28,
             // which is EntityExpandingCircle.
-            CreateEntFactoryFromEntity(g_CurrentEntity, 37, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0x25, 0);
         }
         if (PLAYER.animFrameDuration < 0) {
             runFinishingBlock = 1;
@@ -205,7 +206,7 @@ void func_801166A4(void) {
         PLAYER.velocityX = 0;
         PLAYER.velocityY = 0;
         PLAYER.ext.generic.unkAC = 0x33;
-        CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 0x0, 0);
         CreateEntFactoryFromEntity(g_CurrentEntity, 0x58002C, 0);
         PLAYER.step_s++;
         break;
@@ -454,12 +455,13 @@ void ControlBatForm(void) {
         } else {
             if (g_Player.unk66 == 0) {
 #if defined(VERSION_US)
-                if (CreateEntFactoryFromEntity(g_CurrentEntity, 0x20002CU, 0) ==
-                    NULL) {
+                if (CreateEntFactoryFromEntity(
+                        g_CurrentEntity, FACTORY(0, 0x2000, 44), 0) == NULL) {
                     return;
                 }
 #elif defined(VERSION_HD)
-                CreateEntFactoryFromEntity(g_CurrentEntity, 0x20002CU, 0);
+                CreateEntFactoryFromEntity(
+                    g_CurrentEntity, FACTORY(0, 0x2000, 44), 0);
 #endif
                 func_8010FAF4();
                 g_Player.unk66++;

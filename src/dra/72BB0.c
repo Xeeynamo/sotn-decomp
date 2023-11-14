@@ -145,7 +145,7 @@ void func_80112BB0(void) {
                 (g_Player.padTapped & PAD_CROSS)) {
                 func_8010DA48(0x22U);
                 PLAYER.step_s = 0x70;
-                CreateEntFactoryFromEntity(g_CurrentEntity, 5U, 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, 0x5, 0);
                 PLAYER.velocityY = 0x60000;
                 g_Player.unk44 &= 0xFF7F;
                 if (var_s2 != 0) {

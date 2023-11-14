@@ -339,7 +339,7 @@ void func_80115BB0(void) {
         } else {
             func_8010E7AC();
         }
-        CreateEntFactoryFromEntity(g_CurrentEntity, 0x4A0000 | 0x2C, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 0x4A002C, 0);
         D_80097D37 = 0;
     }
 }

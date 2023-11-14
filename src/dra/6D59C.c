@@ -296,7 +296,7 @@ void func_8010E168(s32 arg0, s16 arg1) {
     if (arg0 == 0) {
         // Create factory with unkA0 = 0x1500, blueprint #44.
         // Blueprint 44 is to make child entity #11, or EntityPlayerBlinkWhite
-        CreateEntFactoryFromEntity(g_CurrentEntity, 0x1500 << 8 | 44, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0x1500, 44), 0);
         if (arg1 >= g_Player.D_80072F1A) {
             g_Player.D_80072F1A = arg1;
         }
@@ -575,7 +575,7 @@ void func_8010E9A4(void) {
         g_Player.unk44 = 0;
     }
 
-    CreateEntFactoryFromEntity(g_CurrentEntity, 2, 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, 0x2, 0);
     SetPlayerStep(Player_HighJump);
     PLAYER.velocityY = -0xC0000;
     func_8010DA48(0x21);
@@ -648,7 +648,7 @@ s32 func_8010EB5C(void) {
         return 3;
     }
     CreateEntFactoryFromEntity(
-        g_CurrentEntity, (u32)subWpn.unkB, subWpnId << 9);
+        g_CurrentEntity, FACTORY(0, 0, subWpn.unkB), subWpnId << 9);
     g_Player.D_80072F14 = 4;
     if (PLAYER.step_s < 64) {
         faker = subWpn.unkA;
@@ -848,6 +848,7 @@ block_45:
                 }
                 ent++;
             }
+            // TODO: FACTORY()
             if (CreateEntFactoryFromEntity(
                     g_CurrentEntity,
                     (((equipped_item->unk14 & 0x7F) + (hand << 7)) << 0x10) |
@@ -861,18 +862,20 @@ block_45:
                 goto block_70;
             }
             if (var_s7 == 0) {
+                // TODO: FACTORY()
                 if (CreateEntFactoryFromEntity(
                         g_CurrentEntity,
-                        equipped_item->unk13 + ((hand + 1) << 0xC) +
+                        equipped_item->unk13 + ((hand + 1) << 12) +
                             (((equipped_item->unk14 & 0x7F) + (hand << 7))
                              << 0x10),
                         equipped_id) == NULL) {
                     return 0;
                 }
             } else {
+                // TODO: FACTORY()
                 if (CreateEntFactoryFromEntity(
                         g_CurrentEntity,
-                        equipped_item->unk13 + ((hand + 1) << 0xE) +
+                        equipped_item->unk13 + ((hand + 1) << 14) +
                             (((equipped_item->unk14 & 0x7F) + (hand << 7))
                              << 0x10),
                         equipped_id) == NULL) {
@@ -881,8 +884,9 @@ block_45:
             }
         }
     } else if (
+        // TODO: FACTORY()
         CreateEntFactoryFromEntity(
-            g_CurrentEntity, (hand + 0x2A) + (hand * 0x800000), 0) == NULL) {
+            g_CurrentEntity, (hand + 42) + (hand << 23), 0) == NULL) {
         return 0;
     }
     func_800FDD44(hand);
@@ -933,8 +937,9 @@ block_45:
         if ((CheckChainLimit(equipped_item->specialMove, hand) < 0) ||
             (CheckChainLimit(equipped_item->specialMove, (hand + 1) & 1) < 0)) {
             equipped_item = &g_EquipDefs[0];
+            // TODO: FACTORY()
             CreateEntFactoryFromEntity(
-                g_CurrentEntity, (hand + 0x2A) + (hand * 0x800000), 0);
+                g_CurrentEntity, (hand + 42) + (hand << 23), 0);
             var_s2 = g_EquipDefs[0].playerAnim;
         }
         func_8010EA54(8);
@@ -1221,7 +1226,7 @@ void func_8010FD88(void) {
     SetSpeedX(0xFFFC8000);
     g_CurrentEntity->velocityY = 0;
     func_8010DA48(0xDB);
-    CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, 0x0, 0);
     g_Player.unk46 = 0;
     PlaySfx(NA_SE_AL_BACKSLIDE);
 }
@@ -1286,7 +1291,7 @@ bool func_8010FDF8(s32 branchFlags) {
                 if (PLAYER.velocityY > 0x6E000) {
                     func_8010E470(1, 0);
                     func_80134714(0x647);
-                    CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+                    CreateEntFactoryFromEntity(g_CurrentEntity, 0x0, 0);
                 } else {
                     if (g_Player.unk44 & 0x10) {
                         func_8010E6AC(1);
@@ -1307,7 +1312,7 @@ bool func_8010FDF8(s32 branchFlags) {
                     func_8010E470(1, 0);
                 }
                 PlaySfx(0x647);
-                CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, 0x0, 0);
                 return 1;
             }
 
@@ -1318,7 +1323,7 @@ bool func_8010FDF8(s32 branchFlags) {
 
             if (ABS(PLAYER.velocityX) > 0x20000) {
                 PlaySfx(0x647);
-                CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, 0x0, 0);
                 func_8010E570(PLAYER.velocityX);
             } else {
                 PlaySfx(0x64C, 0x30, 0);
@@ -1329,7 +1334,7 @@ bool func_8010FDF8(s32 branchFlags) {
         if (branchFlags & 0x20000 && g_Player.pl_vram_flag & 1) {
             func_8010E470(3, PLAYER.velocityX);
             PlaySfx(0x647);
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0x0, 0);
             return 1;
         }
     }

@@ -160,7 +160,8 @@ void func_8011A9D8(void) {
     }
 }
 
-Entity* CreateEntFactoryFromEntity(Entity* source, u32 flags, s32 arg2_raw) {
+Entity* CreateEntFactoryFromEntity(
+    Entity* source, u32 factoryParams, s32 arg2_raw) {
     Entity* newFactory;
     // Weird thing needed for callers to match
     s16 arg2 = arg2_raw;
@@ -177,28 +178,28 @@ Entity* CreateEntFactoryFromEntity(Entity* source, u32 flags, s32 arg2_raw) {
     newFactory->posY.val = source->posY.val;
     newFactory->facingLeft = source->facingLeft;
     newFactory->zPriority = source->zPriority;
-    newFactory->params = flags & 0xFFF;
-    if (flags & 0x5000) {
+    newFactory->params = factoryParams & 0xFFF;
+    if (factoryParams & 0x5000) {
         newFactory->ext.entFactory.unkA8 = 0xE0;
     }
-    if (flags & 0xA000) {
+    if (factoryParams & 0xA000) {
         newFactory->ext.entFactory.unkA8 = 0xF0;
     }
-    newFactory->ext.entFactory.unkA0 = (flags >> 8) & 0xFF00;
+    newFactory->ext.entFactory.unkA0 = (factoryParams >> 8) & 0xFF00;
     newFactory->ext.entFactory.unk92 = arg2;
     if (source->flags & FLAG_UNK_10000) {
         newFactory->flags |= FLAG_UNK_10000;
     }
-    if (flags & 0x1000) {
+    if (factoryParams & 0x1000) {
         newFactory->entityId = 0xEF;
     }
-    if (flags & 0x2000) {
+    if (factoryParams & 0x2000) {
         newFactory->entityId = 0xFF;
     }
-    if (flags & 0x4000) {
+    if (factoryParams & 0x4000) {
         newFactory->entityId = 0xED;
     }
-    if (flags & 0x8000) {
+    if (factoryParams & 0x8000) {
         newFactory->entityId = 0xFD;
     }
 
