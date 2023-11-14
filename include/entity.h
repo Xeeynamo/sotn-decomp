@@ -535,7 +535,7 @@ typedef struct {
 
 typedef union {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x7C */ ET_EntFactory entFactory;
+    /* 0x7C */ ET_EntFactory factory;
     /* 0x7C */ ET_Generic generic;
     /* 0x7C */ ET_EntitySlot1 entSlot1; // g_Entities[1], not entityID 1
     /* 0x7C */ ET_Entity16 ent16;
