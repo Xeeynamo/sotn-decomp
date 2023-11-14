@@ -55,11 +55,36 @@ typedef enum {
     SimFileType_Monster,
 } SimFileType;
 
+typedef enum {
+    SIM_STAGE_PRG,
+    SIM_1,
+    SIM_STAGE_CHR,
+    SIM_3,
+    SIM_VH,
+    SIM_VB,
+    SIM_6,
+    SIM_SEQ,
+    SIM_WEAPON_PRG,
+    SIM_WEAPON0_CHR,
+    SIM_WEAPON1_CHR,
+    SIM_11,
+    SIM_12,
+    SIM_13,
+    SIM_14,
+    SIM_15,
+    SIM_16,
+    SIM_17,
+    SIM_FAMILIAR_PRG,
+    SIM_FAMILIAR_CHR,
+    SIM_MONSTER,
+    SIM_21,
+} SimKind;
+
 typedef struct {
     const char* path; // file name
     u8* addr;         // where to load the file to
     s32 size;         // file size
-    s32 type;         // file type
+    SimKind kind;
 } SimFile;
 
 typedef enum {
@@ -314,14 +339,19 @@ struct SeqData {
 // Used for the button combos to signal successfully completing the sequence
 #define COMBO_COMPLETE 0xFF
 
+// File list:
+extern u8 aPqes[];   // TODO: extract file
+extern u8 aPqes_0[]; // TODO: extract file
+extern u8 aPqes_1[]; // TODO: extract file
+extern u8 aPbav[];   // TODO: extract file
+extern u8 aPbav_0[]; // TODO: extract file
+extern u8 aPbav_1[]; // TODO: extract file
+extern u8 aPbav_2[]; // TODO: extract file
+
 extern u16 g_ButtonMask[];
 extern u8 g_StageSelectOrder[];
-extern s32 D_800A0248;
-extern SimFile D_800A024C[];
-extern SimFile D_800A036C[];
-extern SimFile D_800A04AC[];
-extern s32 D_800A04EC;
-extern s32 D_800A04F8;
+extern u16 D_800A04CC[];
+extern u32 D_800A04F8;
 extern s32 g_UnkMemcardPort[];
 extern u16 g_saveIconPalette[0x10][0x10];
 extern u8* g_saveIconTexture[0x10];
@@ -472,11 +502,7 @@ extern s32 D_800B0914;
 extern s32 D_800B0918;
 extern s32 D_800B091C;
 extern s32 D_800B0920;
-extern const char aPbav[];
-extern const char aPbav_0[];
-extern const char aPbav_1[];
-extern const char aPbav_2[];
-extern s16 D_800BD07C[];
+extern s16 g_CdVolumeTable[];
 extern s16 g_VolumeTable[];
 extern struct SeqData g_SeqInfo[];
 extern s32 g_DebugEnabled;
@@ -529,7 +555,7 @@ extern s16 D_80136308[];
 extern s32 D_8013640C;
 extern s32 D_80136410;
 extern s32 D_80136414[];
-extern SimFile* D_8013644C;
+extern SimFile* g_SimFile;
 extern SimFile D_80136450;
 extern s16 D_80136460[];
 extern s16 D_80136C60[];
@@ -680,7 +706,7 @@ extern const char* D_80138784[487];
 extern s32 g_CurCdPos;
 extern u8 g_CdMode[];
 extern u8 g_CdCommandResult[];
-extern s32 D_80138F28;
+extern s32 g_KeyOffChannels;
 extern s32 D_80138F7C;
 extern s16 D_80138F80;
 extern s32 g_SeqPointers[];
@@ -723,7 +749,7 @@ extern u16 D_801396E8;
 extern s16 D_801396EA;
 extern u16 D_801396EC;
 extern s32 g_CdCommandStatus;
-extern volatile s16 D_801396F4;
+extern volatile s16 g_CdSoundCommandQueuePos;
 extern s32 D_801396F8[0x20];
 extern s32 D_80139778[0x20];
 extern s32 D_801397FC;
@@ -744,7 +770,7 @@ extern s32 D_80139848;
 extern s32 D_8013984C;
 extern s32 D_80139850;
 extern s32 D_80139854;
-extern s16 D_80139868[MAX_SND_COUNT];
+extern s16 g_CdSoundCommandQueue[MAX_SND_COUNT];
 extern s16 g_SoundCommandRingBufferReadPos;
 extern s16 D_80139A6C;
 extern s16 g_SoundCommandRingBufferWritePos; // D_80139A70
@@ -752,8 +778,8 @@ extern s16 D_80139A74;
 extern s16 D_80139A78;
 extern u_long* D_80139A7C;
 extern u16 D_8013AE7C;
-extern volatile unsigned char D_8013AE80;
-extern s16 D_8013AE84[];
+extern volatile unsigned char g_CdSoundCommandStep;
+extern s16 g_UnkChannelSetting2[];
 extern s16 D_8013AE8C;
 extern s16 D_8013AEA0[];
 extern s16 D_8013AE94;
@@ -780,10 +806,10 @@ extern s32 D_8013B3D0;
 extern s16 g_SoundCommandRingBuffer[MAX_SND_COUNT]; // D_8013B3E8
 extern s32 D_8013B5E8;
 extern u8 D_8013B5EC[];
-extern s8 D_8013B614[];
+extern s8 g_UnkChannelSetting1[];
 extern s8 D_8013B618;
 extern s32 D_8013B61C;
-extern s16 D_8013B620[];
+extern s16 g_ChannelGroupVolume[];
 extern s32 D_8013B628[];
 extern s16 D_8013B648[];
 extern s16 D_8013B650[];
@@ -793,7 +819,7 @@ extern s16 D_8013B664;
 extern s16 g_CdVolume;
 extern s16 D_8013B66C[];
 extern u8 D_8013B680;
-extern s8 D_8013B684;
+extern s8 g_CdSoundCommand16;
 extern s8 D_8013B690;
 extern s32 D_8013B694;
 extern s32 D_8013B69C;
@@ -1031,14 +1057,14 @@ void InitSoundVars3(void);
 void InitSoundVars2(void);
 void InitSoundVars1(void);
 s32 func_801326D8(void);
-void func_80132C2C(s16);
+void AddCdSoundCommand(s16);
 u8 DoCdCommand(u_char com, u_char* param, u_char* result);
 void SoundWait(void);
 void MuteSound(void);
 void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note,
                    s16 volume, s16 distance);
 void StopSeq(void);
-bool func_80133940(void);
+bool CdSoundCommandQueueEmpty(void);
 bool func_80133950(void);
 void func_80133FCC(void);
 void SetReleaseRate2(void);

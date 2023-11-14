@@ -56,7 +56,7 @@ void func_800F2288(void); // unknown signature
 void func_8011A3AC(Entity* arg0, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3);
 s32 func_800FF460(s32 arg0);
 s32 func_800FF494(EnemyDef* arg0);
-bool func_80133940(void);
+bool CdSoundCommandQueueEmpty(void);
 bool func_80133950(void);
 bool func_800F27F4(s32 arg0);
 s32 func_800FF110(s32 arg0);
@@ -119,7 +119,7 @@ GameApi g_ApiInit = {
     func_8011A3AC,
     func_800FF460,
     func_800FF494,
-    func_80133940,
+    CdSoundCommandQueueEmpty,
     func_80133950,
     func_800F27F4,
     func_800FF110,

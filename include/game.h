@@ -169,7 +169,9 @@ typedef struct Primitive {
 #define STAGE_PRG_PTR 0x80180000
 #define CASTLE_MAP_PTR 0x801E0000
 #define DEMO_KEY_PTR 0x801E8000
-#define DEBUG_PTR 0x80280000
+#define SIM_CHR0 0x80280000
+#define SIM_CHR1 0x80284000
+#define SIM_PTR 0x80280000
 
 // Flags for entity->drawFlags
 #define FLAG_DRAW_ROTX 0x01
@@ -1176,7 +1178,7 @@ typedef struct {
         Entity* entity, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3);
     /* 8003C878 */ s32 (*func_800FF460)(s32 arg0);
     /* 8003C87C */ s32 (*func_800FF494)(EnemyDef* arg0);
-    /* 8003C880 */ bool (*func_80133940)(void);
+    /* 8003C880 */ bool (*CdSoundCommandQueueEmpty)(void);
     /* 8003C884 */ bool (*func_80133950)(void);
     /* 8003C888 */ bool (*func_800F27F4)(s32 arg0);
     /* 8003C88C */ s32 (*func_800FF110)(s32 arg0);
@@ -1239,7 +1241,7 @@ extern void (*g_api_func_8011A3AC)(
     Entity* entity, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3);
 extern s32 (*g_api_func_800FF460)(s32 arg0);
 extern s32 (*g_api_func_800FF494)(EnemyDef* arg0);
-extern bool (*g_api_func_80133940)(void);
+extern bool (*g_api_CdSoundCommandQueueEmpty)(void);
 extern bool (*g_api_func_80133950)(void);
 extern bool (*g_api_func_800F27F4)(s32 arg0);
 extern s32 (*g_api_func_800FF110)(s32 arg0);

@@ -958,9 +958,9 @@ void InitSoundVars3(void) {
     s32 i;
 
     for (i = 0; i < 4; i++) {
-        D_8013B620[i] = 0;
-        D_8013B614[i] = 0;
-        D_8013AE84[i] = 0;
+        g_ChannelGroupVolume[i] = 0;
+        g_UnkChannelSetting1[i] = 0;
+        g_UnkChannelSetting2[i] = 0;
         D_8013B66C[i] = 0;
         D_8013B5EC[i] = 0;
         D_8013B628[i] = 0;
@@ -985,17 +985,18 @@ void InitSoundVars2(void) {
 
 void InitSoundVars1(void) {
     InitSoundVars2();
-    D_8013B684 = 0;
+    g_CdSoundCommand16 = 0;
     D_80138454 = 0;
     do {
         g_SeqPointers[D_80138454] = 0;
     } while (++D_80138454 < 0xA);
 
-    for (D_80138454 = 0; D_80138454 < LEN(D_80139868); D_80138454++) {
-        D_80139868[D_80138454] = 0;
+    for (D_80138454 = 0; D_80138454 < LEN(g_CdSoundCommandQueue);
+         D_80138454++) {
+        g_CdSoundCommandQueue[D_80138454] = 0;
     }
 
-    D_801396F4 = 0;
+    g_CdSoundCommandQueuePos = 0;
     D_8013AEE8 = 0;
     for (D_80138454 = 0; D_80138454 < LEN(g_SoundCommandRingBuffer);
          D_80138454++) {
@@ -1029,22 +1030,22 @@ void InitSoundVars1(void) {
     D_80139014 = 0;
     D_8013B618 = 0;
     D_8013980C = 0;
-    D_8013AE80 = 0;
+    g_CdSoundCommandStep = 0;
     D_801390A0 = 0;
     g_SeqVolume1 = 0x70;
     g_SeqVolume2 = 0x70;
     D_8013B680 = 0;
     D_80138F7C = 0;
     D_801390D8 = 0;
-    D_80138F28 = 0;
+    g_KeyOffChannels = 0;
     g_MuteCd = 0;
     D_8013B694 = 0;
     D_8013B61C = 0;
 }
 
 void SetCdVolume(s8 s_num, s16 arg1, s16 arg2) {
-    short voll = D_800BD07C[arg1];
-    short volr = D_800BD07C[arg2];
+    short voll = g_CdVolumeTable[arg1];
+    short volr = g_CdVolumeTable[arg2];
 
     SsSetSerialVol(s_num, voll, volr);
 }
@@ -1130,6 +1131,67 @@ void MuteSound(void) {
 
 INCLUDE_ASM("dra/nonmatchings/8D3E8", func_801327B4);
 
+// last entries seem like a different table
+s16 g_CdVolumeTable[] = {
+    0x0000, 0x0002, 0x0004, 0x0006, 0x0008, 0x000A, 0x000C, 0x000E, 0x0010,
+    0x0012, 0x0014, 0x0016, 0x0018, 0x001A, 0x001C, 0x001E, 0x0020, 0x0022,
+    0x0024, 0x0026, 0x0028, 0x002A, 0x002C, 0x002E, 0x0030, 0x0032, 0x0034,
+    0x0036, 0x0038, 0x003A, 0x003C, 0x003E, 0x0040, 0x0041, 0x0042, 0x0043,
+    0x0044, 0x0045, 0x0046, 0x0047, 0x0048, 0x0049, 0x004A, 0x004B, 0x004C,
+    0x004D, 0x004E, 0x004F, 0x0050, 0x0051, 0x0052, 0x0053, 0x0054, 0x0055,
+    0x0056, 0x0057, 0x0058, 0x0059, 0x005A, 0x005B, 0x005C, 0x005D, 0x005E,
+    0x005F, 0x0060, 0x0060, 0x0061, 0x0061, 0x0062, 0x0062, 0x0063, 0x0063,
+    0x0064, 0x0064, 0x0065, 0x0065, 0x0066, 0x0066, 0x0067, 0x0067, 0x0068,
+    0x0068, 0x0069, 0x0069, 0x006A, 0x006A, 0x006B, 0x006B, 0x006C, 0x006C,
+    0x006D, 0x006D, 0x006E, 0x006E, 0x006F, 0x006F, 0x0070, 0x0070, 0x0071,
+    0x0071, 0x0072, 0x0072, 0x0073, 0x0073, 0x0074, 0x0074, 0x0075, 0x0075,
+    0x0076, 0x0076, 0x0077, 0x0077, 0x0078, 0x0078, 0x0079, 0x0079, 0x007A,
+    0x007A, 0x007B, 0x007B, 0x007C, 0x007C, 0x007D, 0x007D, 0x007E, 0x007E,
+    0x007F, 0x007F, 0x0000, 0x007F, 0x0010, 0x007F, 0x0020, 0x007F, 0x0030,
+    0x007F, 0x0040, 0x007F, 0x0050, 0x007F, 0x0060, 0x007F, 0x0070, 0x007F};
+
+s16 g_VolumeTable[] = {
+    0x007F, 0x007F, 0x007F, 0x0070, 0x007F, 0x0060, 0x007F, 0x0050, 0x007F,
+    0x0040, 0x007F, 0x0030, 0x007F, 0x0020, 0x007F, 0x0010, 0x007F, 0x0000};
+
+s32 g_DebugEnabled = 0;
+s32 D_800BD1C4 = 0;
+
+#ifdef VERSION_US
+s32 g_VabAddrs[] = {0x00001010, 0x00042CC0, 0x00050E50,
+                    0x00060A40, 0x00060A40, 0x00060A40};
+#else // VERSION_HD
+s32 g_VabAddrs[] = {0x00001010, 0x00042CC0, 0x00050E90,
+                    0x00060D40, 0x00060D40, 0x00060D40};
+#endif
+
+// clang-format off
+struct SeqData g_SeqInfo[] = {
+    {0x7f, 0x3c, {0, 0}},
+    {0x6c, 0x20, {0, 0}},
+    {0x62, 0x30, {0, 0}},
+    {0x60, 0x30, {1, 0}},
+    {0x70, 0x40, {1, 3}},
+    {0x68, 0x40, {1, 0}},
+    {0x68, 0x40, {1, 3}},
+    {0x68, 0x40, {1, 3}},
+    {0x68, 0x40, {1, 3}},
+    {0x68, 0x40, {1, 3}},
+    {0x68, 0x40, {1, 3}},
+    {0x68, 0x40, {1, 3}},
+    {0x68, 0x40, {1, 3}},
+    {0x68, 0x40, {1, 3}},
+    {0x68, 0x40, {1, 3}},
+    {0x68, 0x40, {1, 3}},
+    {0x68, 0x40, {1, 3}},
+    {0x68, 0x40, {1, 3}},
+    {0x68, 0x40, {1, 3}},
+    {0x68, 0x40, {1, 3}},
+    {0x68, 0x40, {1, 3}},
+    {0x68, 0x40, {1, 3}}
+};
+// clang-format on
+
 void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note,
                    s16 volume, s16 distance) {
     if (distance == 0) {
@@ -1162,53 +1224,53 @@ void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note,
     }
 }
 
-void func_80132C2C(s16 arg0) {
+void AddCdSoundCommand(s16 arg0) {
     s32 i;
     s32 isFound;
 
     if (arg0 == 6) {
         isFound = 0;
-        for (i = 0; i < D_801396F4; i++) {
-            if (D_80139868[i] == 0xC) {
+        for (i = 0; i < g_CdSoundCommandQueuePos; i++) {
+            if (g_CdSoundCommandQueue[i] == 0xC) {
                 isFound = 1;
             }
         }
 
         if (isFound) {
             g_DebugEnabled++;
-            D_80139868[D_801396F4] = 0xE;
-            D_801396F4++;
-            if (D_801396F4 == 0x100) {
+            g_CdSoundCommandQueue[g_CdSoundCommandQueuePos] = 0xE;
+            g_CdSoundCommandQueuePos++;
+            if (g_CdSoundCommandQueuePos == 0x100) {
                 D_8013AEE8++;
                 for (i = 1; i < 0x100; i++) {
-                    D_80139868[i] = 0;
+                    g_CdSoundCommandQueue[i] = 0;
                 }
 
-                D_801396F4 = 1;
-                D_80139868[D_801396F4] = 0xE;
-                D_801396F4++;
+                g_CdSoundCommandQueuePos = 1;
+                g_CdSoundCommandQueue[g_CdSoundCommandQueuePos] = 0xE;
+                g_CdSoundCommandQueuePos++;
             }
         }
     }
-    D_80139868[D_801396F4] = arg0;
-    D_801396F4++;
-    if (D_801396F4 == 0x100) {
+    g_CdSoundCommandQueue[g_CdSoundCommandQueuePos] = arg0;
+    g_CdSoundCommandQueuePos++;
+    if (g_CdSoundCommandQueuePos == 0x100) {
         D_8013AEE8++;
         for (i = 1; i < 0x100; i++) {
-            D_80139868[i] = 0;
+            g_CdSoundCommandQueue[i] = 0;
         }
 
-        D_801396F4 = 1;
+        g_CdSoundCommandQueuePos = 1;
     }
 }
 
-u16 func_80132E38(void) {
+u16 AdvanceCdSoundCommandQueue(void) {
     s32 i;
 
     for (i = 0; i < 255; i++) {
-        D_80139868[i] = D_80139868[i + 1];
+        g_CdSoundCommandQueue[i] = g_CdSoundCommandQueue[i + 1];
     }
-    return --D_801396F4;
+    return --g_CdSoundCommandQueuePos;
 }
 
 #define ENCODE_BCD(x) ((((x) / 10) << 4) + ((x) % 10))
@@ -1221,401 +1283,5 @@ void MakeCdLoc(u32 address, CdlLOC* cd_loc) {
     cd_loc->minute = ENCODE_BCD(minutes);
 }
 
-INCLUDE_ASM("dra/nonmatchings/8D3E8", func_80132F60);
-void func_80132F60();
-
-INCLUDE_ASM("dra/nonmatchings/8D3E8", func_80133290);
-void func_80133290();
-
-INCLUDE_ASM("dra/nonmatchings/8D3E8", func_80133488);
-void func_80133488();
-
-INCLUDE_ASM("dra/nonmatchings/8D3E8", func_80133604);
-void func_80133604();
-
-void EnableCdReverb(s8 arg0) {
-    SsSetSerialAttr(SS_SERIAL_A, SS_REV, arg0 == SS_SON);
-}
-
-void StopSeq(void) {
-    if (g_SeqPlayingId != 0) {
-        SsSeqStop(g_SeqAccessNum);
-        SsSeqClose(g_SeqAccessNum);
-        SetReleaseRate2();
-        g_SeqPlayingId = 0;
-        D_801390C4 = 0;
-    }
-}
-
-void PlaySeq(u8 arg0) {
-    s16 index;
-
-    if (g_SeqPlayingId != 0) {
-        StopSeq();
-    }
-    index = arg0;
-    g_SeqAccessNum =
-        SsSeqOpen(g_SeqPointers[index], g_SeqInfo[index].unk2.info.vab_id);
-    g_ReverbDepth = g_SeqInfo[index].reverb_depth;
-    SetReverbDepth(g_ReverbDepth);
-    g_SeqVolume1 = g_SeqInfo[index].volume;
-    g_SeqVolume2 = g_SeqInfo[index].volume;
-    SsSeqSetVol(g_SeqAccessNum, g_SeqVolume1, g_SeqVolume1);
-    if (!g_SeqInfo[index].unk2.info.one_shot) {
-        SsSeqPlay(g_SeqAccessNum, 1, 1);
-    } else {
-        SsSeqPlay(g_SeqAccessNum, 1, 0);
-    }
-    g_SeqPlayingId = index;
-    D_801390C4 = 0xE;
-}
-
-bool func_80133940(void) { return D_801396F4 == 0; }
-
-bool func_80133950(void) { return D_8013980C == 0; }
-
-INCLUDE_ASM("dra/nonmatchings/8D3E8", func_80133960);
-void func_80133960();
-
-INCLUDE_ASM("dra/nonmatchings/8D3E8", func_80133BDC);
-void func_80133BDC();
-
-INCLUDE_ASM("dra/nonmatchings/8D3E8", func_80133FCC);
-
-void SetReleaseRate1(void) {
-    D_80138FB4->mask = SPU_VOICE_ADSR_RR;
-    D_80138FB4->voice = 0xFFFFFF;
-    D_80138FB4->rr = 14;
-    SpuSetVoiceAttr(D_80138FB4);
-    D_80138F28 = 0xFFFFFF;
-    InitSoundVars2();
-}
-
-void SetReleaseRate2(void) {
-    D_80138FB4->mask = SPU_VOICE_ADSR_RR;
-    D_80138FB4->voice = 0xFFFFFF;
-    D_80138FB4->rr = 8;
-    SpuSetVoiceAttr(D_80138FB4);
-    D_80138F28 = 0xFFFFFF;
-    InitSoundVars2();
-}
-
-void func_801341B4(void) {
-    s32 temp;
-
-    switch (D_8013AE80) {
-    case 0:
-        D_801390A0 = 1;
-        D_80139A78 = 0;
-        D_8013AE80++;
-        break;
-
-    case 1:
-        D_80139A78++;
-        if (g_volumeL > 0) {
-            temp = g_volumeR * D_80139A6C * D_80139A78;
-            if (temp < 0) {
-                temp += 0x1FF;
-            }
-            g_volumeL = g_volumeR - (temp >> 9);
-            if (g_volumeL >> 0x10) {
-                g_volumeL = 0;
-            }
-        } else {
-            g_volumeL = 0;
-        }
-        SsSetMVol(g_volumeL, g_volumeL);
-        if (g_volumeL == 0) {
-            D_8013AE80++;
-        }
-        break;
-
-    case 2:
-        SetReverbDepth(0);
-        StopSeq();
-        func_80132C2C(3);
-        D_800BD1C4 = 3;
-        D_8013AE80++;
-        break;
-
-    case 3:
-        D_800BD1C4--;
-        if (D_800BD1C4 == 0) {
-            SetReleaseRate2();
-        default:
-            D_8013AE80 = 0;
-            D_801390A0 = D_8013AE80;
-            D_8013B61C = 0;
-            func_80132E38();
-        }
-        break;
-    }
-}
-
-void func_80134388(void) {
-    s32 temp;
-
-    switch (D_8013AE80) {
-    case 0:
-        D_8013AE80++;
-        D_801390A0 = 1;
-        D_80139A78 = 0;
-        break;
-
-    case 1:
-        D_80139A78++;
-        if (g_CdVolume > 0) {
-            temp = D_80139820 * D_80139A6C * D_80139A78;
-            if (temp < 0) {
-                temp += 0x1FF;
-            }
-            g_CdVolume = D_80139820 - (temp >> 9);
-            if (g_CdVolume >> 0x10) {
-                g_CdVolume = 0;
-            }
-        } else {
-            g_CdVolume = 0;
-        }
-        SetCdVolume(0, g_CdVolume, g_CdVolume);
-        if (g_CdVolume == 0) {
-            D_8013AE80++;
-        }
-        break;
-
-    case 2:
-        func_80132C2C(2);
-
-    default:
-        D_8013AE80 = 0;
-        D_801390A0 = D_8013AE80;
-        D_8013B61C = 0;
-        func_80132E38();
-        break;
-    }
-}
-
-void SetReleaseRate3(void) {
-    D_801390C8->voice = 0x300000;
-    D_801390C8->mask = SPU_VOICE_ADSR_RR;
-    D_801390C8->rr = 14;
-    SpuSetVoiceAttr(D_801390C8);
-    D_80138F28 |= 0x300000;
-}
-
-void SetReleaseRate4(void) {
-    D_801390CC->voice = 0xC00000;
-    D_801390CC->mask = SPU_VOICE_ADSR_RR;
-    D_801390CC->rr = 14;
-    SpuSetVoiceAttr(D_801390CC);
-    D_80138F28 |= 0xC00000;
-}
-
-void SetReleaseRate5(void) {
-    D_801390C8->voice = 0x300000;
-    D_801390C8->mask = SPU_VOICE_ADSR_RR;
-    D_801390C8->rr = 8;
-    SpuSetVoiceAttr(D_801390C8);
-    D_80138F28 |= 0x300000;
-}
-
-void SetReleaseRate6(void) {
-    D_801390CC->voice = 0xC00000;
-    D_801390CC->mask = SPU_VOICE_ADSR_RR;
-    D_801390CC->rr = 8;
-    SpuSetVoiceAttr(D_801390CC);
-    D_80138F28 |= 0xC00000;
-}
-
-s32 func_80134678(s16 arg0, u16 arg1) {
-    s32 ret = -2;
-    u16 temp;
-
-    if (D_80139804 != 0) {
-        ret = 0;
-        temp = arg1 + 8;
-
-        if (temp >= 0x11) {
-            arg1 = 0;
-            ret = -1;
-        }
-
-        D_8013AE94 = arg1;
-        D_8013AEE0 = arg0;
-        g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] = 1;
-        g_SoundCommandRingBufferWritePos++;
-
-        if (g_SoundCommandRingBufferWritePos == 0x100) {
-            g_SoundCommandRingBufferWritePos = 0;
-        }
-    }
-    return ret;
-}
-
-u32 func_80134714(s16 sfxId, s32 arg1, u16 arg2) {
-    u32 ret;
-    u32 var_v0;
-    s16 temp_v0;
-    s32 temp_a0;
-    u16 var;
-
-    ret = 0;
-    if (g_SoundInitialized == 0) {
-        return -2;
-    }
-    if (sfxId > SFX_START && sfxId <= SFX_LAST) {
-        g_SfxRingBuffer[g_sfxRingBufferWritePos].sndId = sfxId - SFX_START;
-        g_SfxRingBuffer[g_sfxRingBufferWritePos].unk02 = arg1 & 0x7F;
-        var = (arg2 + 8);
-        if (var > 16) {
-            g_SfxRingBuffer[g_sfxRingBufferWritePos].unk04 = 0;
-            ret = -1;
-        } else {
-            g_SfxRingBuffer[g_sfxRingBufferWritePos].unk04 = arg2;
-        }
-
-        g_sfxRingBufferWritePos++;
-        if (g_sfxRingBufferWritePos == LEN(g_SfxRingBuffer)) {
-            g_sfxRingBufferWritePos = 0;
-        }
-    } else {
-        ret = -3;
-    }
-    return ret;
-}
-
-void PlaySfx(s16 sfxId) {
-    if (g_SoundInitialized != 0) {
-        if (sfxId > SFX_START && sfxId <= SFX_LAST) {
-            g_SfxRingBuffer[g_sfxRingBufferWritePos].sndId = sfxId - SFX_START;
-            g_SfxRingBuffer[g_sfxRingBufferWritePos].unk02 = 0xFFFF;
-            g_SfxRingBuffer[g_sfxRingBufferWritePos].unk04 = 0;
-
-            g_sfxRingBufferWritePos++;
-            if (g_sfxRingBufferWritePos == LEN(g_SfxRingBuffer)) {
-                g_sfxRingBufferWritePos = 0;
-            }
-        } else {
-            switch (sfxId) {
-            case 0x10:
-            case 0x11:
-                D_8013980C = 1;
-                break;
-
-            case 0x80:
-            case 0x81:
-            case 0x82:
-            case 0x83:
-            case 0x84:
-            case 0x90:
-            case 0x91:
-            case 0x92:
-            case 0x93:
-            case 0x94:
-                D_8013B61C = 1;
-                break;
-
-            default:
-                break;
-            }
-
-            g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] = sfxId;
-            g_SoundCommandRingBufferWritePos++;
-            if (g_SoundCommandRingBufferWritePos == 0x100) {
-                g_SoundCommandRingBufferWritePos = 0;
-            }
-        }
-    }
-}
-
-void func_8013493C(s16 arg0, s16 arg1) {
-    D_8013AE84[arg1] = D_8013B678[arg0];
-    D_8013B620[arg1] = D_801390AC[arg0];
-    D_8013B614[arg1] = D_80139058[arg0];
-    D_8013B66C[arg1] = D_80139814[arg0];
-    D_8013B5EC[arg1] = D_80139018[arg0];
-    D_8013B628[arg1] = D_801390B4[arg0];
-}
-
-void func_801349F4(void) {
-    s16 i;
-
-    for (i = 0; i < 4; i++) {
-        if (D_8013AE84[i] == 0) {
-            continue;
-        }
-        if (D_8013B5EC[i] == 5) {
-            continue;
-        }
-        D_8013B678[i] = D_8013AE84[i];
-        D_801390AC[i] = D_8013B620[i];
-        D_80139058[i] = D_8013B614[i];
-        D_80139814[i] = D_8013B66C[i];
-        D_80139018[i] = D_8013B5EC[i];
-        D_801390B4[i] = D_8013B628[i];
-        D_8013AE84[i] = 0;
-        D_8013B620[i] = 0;
-        D_8013B614[i] = 0;
-        D_8013B66C[i] = 0;
-        D_8013B5EC[i] = 0;
-        D_8013B628[i] = 0;
-        D_8013B648[i] = 0;
-        D_8013AEA0[i] = 0;
-    }
-    D_8013B690 = 1;
-}
-
-void func_80134B48(void) {
-    s16 i;
-    s16 j;
-
-    for (i = 0; i < 3; i++) {
-        if (D_8013B678[i]) {
-            for (j = 0; j < 3; j++) {
-                if (D_8013B648[j] == 0) {
-                    func_8013493C(i, j);
-                    break;
-                }
-            }
-            D_8013B678[i] = 0;
-        }
-    }
-
-    if (D_8013B678[3] != 0 && D_8013B648[3] == 0) {
-        func_8013493C(3, 3);
-        D_8013B678[3] = 0;
-    }
-    D_8013B690 = 0;
-}
-
-void func_80134C60(void) {
-    u16 temp = (D_8013AE7C * D_800BF554[D_8013B664].volume) >> 7;
-    func_80132A04(
-        0x14, D_800BF554[D_8013B664].vabid, D_800BF554[D_8013B664].prog,
-        D_800BF554[D_8013B664].tone, D_800BF554[D_8013B664].note,
-        (temp * (u16)D_801390A4) >> 7, D_80139010);
-}
-
-void func_80134D14(void) {
-    u16 volume;
-
-    volume = D_8013AE7C * D_800BF554[D_80139804].volume >> 7;
-    volume = volume * D_8013AEE0 >> 7;
-    func_80132A04(0x16, D_800BF554[D_80139804].vabid,
-                  D_800BF554[D_80139804].prog, D_800BF554[D_80139804].tone,
-                  D_800BF554[D_80139804].note, volume, D_8013AE94);
-    g_VolR = (volume * g_VolumeTable[D_8013AE94 * 2 + 0]) >> 8;
-    g_VolL = (volume * g_VolumeTable[D_8013AE94 * 2 + 1]) >> 8;
-    SsUtSetVVol(0x16, g_VolL, g_VolR);
-    SsUtSetVVol(0x17, g_VolL, g_VolR);
-}
-
-void func_80134E64(void) {
-    u16 volume;
-
-    volume = D_8013AE7C * D_800BF554[D_80139804].volume >> 7;
-    volume = volume * D_8013AEE0 >> 7;
-    g_VolR = (volume * g_VolumeTable[D_8013AE94 * 2 + 0]) >> 8;
-    g_VolL = (volume * g_VolumeTable[D_8013AE94 * 2 + 1]) >> 8;
-    SsUtSetVVol(0x16, g_VolL, g_VolR);
-    SsUtSetVVol(0x17, g_VolL, g_VolR);
-}
+INCLUDE_ASM("dra/nonmatchings/8D3E8", CdSoundCommand4);
+void CdSoundCommand4();

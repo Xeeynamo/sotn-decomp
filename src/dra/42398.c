@@ -1,4 +1,5 @@
 #include "dra.h"
+#include "lba.h"
 
 #define DISP_ALL_H 240
 #define DISP_STAGE_W 256
@@ -20,7 +21,7 @@ extern void* g_ApiInit[sizeof(GameApi) / sizeof(void*)];
 s32 LoadVabData(void);
 void func_800E385C(u32*);
 void UpdateGame(void);
-void func_800E7BB8(void);
+void VSyncHandler(void);
 void SetupEvents(void);
 void func_800EA7CC(void);
 void LoadPendingGfx(void);
@@ -36,7 +37,7 @@ s32 func_8010E27C(void);
 void SetSpeedX(s32);
 void SetCdVolume(s8 s_num, s16 arg1, s16 arg2);
 void SoundInit(void);
-void func_801353A0(void);
+void ExecCdSoundCommands(void);
 s32 func_80136010(void);
 
 void DebugShowWaitInfo(const char* msg) {
@@ -616,10 +617,6 @@ void PrintHBlankInfo(void) {
     }
 }
 
-extern const char aPqes[];
-extern const char aPqes_0[];
-extern const char aPqes_1[];
-
 void SsVabClose(short vab_id);
 #define LOAD_VAB(vab_id, name, addr, data, dataLen)                            \
     SsVabClose(vab_id);                                                        \
@@ -635,24 +632,13 @@ void SsVabClose(short vab_id);
     while (SsVabTransCompleted(SS_IMEDIATE) != 1)
 
 s32 LoadVabData(void) {
-    const int vab0Len = 269488;
-#if defined(VERSION_US)
-    const int vab1Len = 57744;
-    const int vab2Len = 64496;
-    const int vab3Len = 108048;
-#elif defined(VERSION_HD)
-    const int vab1Len = 57808;
-    const int vab2Len = 65200;
-    const int vab3Len = 107792;
-#endif
-
-    LOAD_VAB(0, &aPbav, g_VabAddrs[0], D_8013B6A0, vab0Len);
-    LOAD_VAB(1, &aPbav_0, g_VabAddrs[1], D_8017D350, vab1Len);
-    LOAD_VAB(2, &aPbav_1, g_VabAddrs[2], D_801A9C80, vab2Len);
-    LOAD_VAB(3, &aPbav_2, g_VabAddrs[3], D_8018B4E0, vab3Len);
-    func_80131EBC(&aPqes, 0x618);
-    func_80131EBC(&aPqes_0, 0x201);
-    func_80131EBC(&aPqes_1, 0x205);
+    LOAD_VAB(0, aPbav, g_VabAddrs[0], D_8013B6A0, vab0Len);
+    LOAD_VAB(1, aPbav_0, g_VabAddrs[1], D_8017D350, vab1Len);
+    LOAD_VAB(2, aPbav_1, g_VabAddrs[2], D_801A9C80, vab2Len);
+    LOAD_VAB(3, aPbav_2, g_VabAddrs[3], D_8018B4E0, vab3Len);
+    func_80131EBC(aPqes, 0x618);
+    func_80131EBC(aPqes_0, 0x201);
+    func_80131EBC(aPqes_1, 0x205);
     return 0;
 }
 
@@ -815,7 +801,7 @@ void MainGame(void) {
     SoundInit();
     while (LoadVabData() < 0)
         ;
-    VSyncCallback(func_800E7BB8);
+    VSyncCallback(VSyncHandler);
     FntLoad(0x380, 0x100);
     SetDumpFnt(FntOpen(8, 0x30, 0x200, 0x100, 0, 0x200));
     SetDispMask(1);
