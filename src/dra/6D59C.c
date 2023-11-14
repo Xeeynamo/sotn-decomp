@@ -278,13 +278,13 @@ void func_8010E0D0(s32 arg0) {
     Entity* entity;
 
     if (arg0 == 1) {
-        entity = CreateEntFactoryFromEntity(g_Entities, 0x47002C, 0);
+        entity = CreateEntFactoryFromEntity(g_Entities, FACTORY(0x4700,44), 0);
 
         if (entity != NULL) {
             entity->flags |= FLAG_UNK_10000;
         }
 
-        entity = CreateEntFactoryFromEntity(g_Entities, 0x40002C, 0);
+        entity = CreateEntFactoryFromEntity(g_Entities, FACTORY(0x4000,44), 0);
 
         if (entity != NULL) {
             entity->flags |= FLAG_UNK_10000;
@@ -296,7 +296,7 @@ void func_8010E168(s32 arg0, s16 arg1) {
     if (arg0 == 0) {
         // Create factory with unkA0 = 0x1500, blueprint #44.
         // Blueprint 44 is to make child entity #11, or EntityPlayerBlinkWhite
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0x1500, 44), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1500, 44), 0);
         if (arg1 >= g_Player.D_80072F1A) {
             g_Player.D_80072F1A = arg1;
         }
@@ -488,7 +488,7 @@ void func_8010E6AC(s32 arg0) {
         }
     } else {
         func_8010DA48(7);
-        CreateEntFactoryFromEntity(g_CurrentEntity, 0x50001, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x500,1), 0);
     }
 
     if (g_Player.unk4C != 0) {
@@ -575,7 +575,7 @@ void func_8010E9A4(void) {
         g_Player.unk44 = 0;
     }
 
-    CreateEntFactoryFromEntity(g_CurrentEntity, 0x2, 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0,2), 0);
     SetPlayerStep(Player_HighJump);
     PLAYER.velocityY = -0xC0000;
     func_8010DA48(0x21);
@@ -648,7 +648,7 @@ s32 func_8010EB5C(void) {
         return 3;
     }
     CreateEntFactoryFromEntity(
-        g_CurrentEntity, FACTORY(0, 0, subWpn.unkB), subWpnId << 9);
+        g_CurrentEntity, FACTORY(0, subWpn.unkB), subWpnId << 9);
     g_Player.D_80072F14 = 4;
     if (PLAYER.step_s < 64) {
         faker = subWpn.unkA;
@@ -701,7 +701,7 @@ void func_8010ED54(u8 arg0) {
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SwordWarp);
     func_8010DA48(arg0);
-    CreateEntFactoryFromEntity(g_CurrentEntity, 0x14003D, 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1400,61), 0);
     g_Player.unk48 = 0;
 }
 
@@ -858,7 +858,7 @@ block_45:
             }
         } else {
             if (g_Player.D_80072F02 != 0) {
-                CreateEntFactoryFromEntity(g_CurrentEntity, 0x10039, 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x100,57), 0);
                 goto block_70;
             }
             if (var_s7 == 0) {
@@ -1173,7 +1173,7 @@ void func_8010FB68(void) { // Related to Dark Metamorphosis
     g_Player.D_80072F16 =
         GetStatusAilmentTimer(STATUS_AILMENT_DARK_METAMORPHOSIS, 0x400);
     func_801092E8(1);
-    CreateEntFactoryFromEntity(g_CurrentEntity, 0x110028, 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1100,40), 0);
     func_80118C28(0xB);
 }
 
@@ -1193,7 +1193,7 @@ void func_8010FC50(void) {
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SpellSummonSpirit);
     func_8010E3E0();
-    CreateEntFactoryFromEntity(g_CurrentEntity, 0x75, 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0,117), 0);
     func_8010DA48(0xF0);
     PlaySfx(NA_SE_VO_AL_PUNCH);
     g_Player.D_80072F18 = 4;
@@ -1204,7 +1204,7 @@ void func_8010FCB8(void) {
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SpellTetraSpirit);
     func_8010E3E0();
-    CreateEntFactoryFromEntity(g_CurrentEntity, 0x10075, 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x100,117), 0);
     func_8010DA48(0xF1);
     PlaySfx(NA_SE_VO_AL_PUNCH);
     g_Player.D_80072F18 = 4;
@@ -1216,7 +1216,7 @@ void func_8010FD24(void) {
     SetPlayerStep(Player_SpellSwordBrothers);
     func_8010E3E0();
     func_8010DA48(0xF1);
-    CreateEntFactoryFromEntity(g_CurrentEntity, 0x170028, 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1700,40), 0);
     g_Player.D_80072F18 = 4;
 }
 
@@ -1226,7 +1226,7 @@ void func_8010FD88(void) {
     SetSpeedX(0xFFFC8000);
     g_CurrentEntity->velocityY = 0;
     func_8010DA48(0xDB);
-    CreateEntFactoryFromEntity(g_CurrentEntity, 0x0, 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0,0), 0);
     g_Player.unk46 = 0;
     PlaySfx(NA_SE_AL_BACKSLIDE);
 }
@@ -1291,7 +1291,7 @@ bool func_8010FDF8(s32 branchFlags) {
                 if (PLAYER.velocityY > 0x6E000) {
                     func_8010E470(1, 0);
                     func_80134714(0x647);
-                    CreateEntFactoryFromEntity(g_CurrentEntity, 0x0, 0);
+                    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0,0), 0);
                 } else {
                     if (g_Player.unk44 & 0x10) {
                         func_8010E6AC(1);
@@ -1312,7 +1312,7 @@ bool func_8010FDF8(s32 branchFlags) {
                     func_8010E470(1, 0);
                 }
                 PlaySfx(0x647);
-                CreateEntFactoryFromEntity(g_CurrentEntity, 0x0, 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0,0), 0);
                 return 1;
             }
 
@@ -1323,7 +1323,7 @@ bool func_8010FDF8(s32 branchFlags) {
 
             if (ABS(PLAYER.velocityX) > 0x20000) {
                 PlaySfx(0x647);
-                CreateEntFactoryFromEntity(g_CurrentEntity, 0x0, 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0,0), 0);
                 func_8010E570(PLAYER.velocityX);
             } else {
                 PlaySfx(0x64C, 0x30, 0);
@@ -1334,7 +1334,7 @@ bool func_8010FDF8(s32 branchFlags) {
         if (branchFlags & 0x20000 && g_Player.pl_vram_flag & 1) {
             func_8010E470(3, PLAYER.velocityX);
             PlaySfx(0x647);
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0x0, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0,0), 0);
             return 1;
         }
     }
