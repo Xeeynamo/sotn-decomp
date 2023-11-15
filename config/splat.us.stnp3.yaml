@@ -18,9 +18,10 @@ options:
   asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
   section_order:
+    - ".data"
     - ".rodata"
     - ".text"
-    - ".data"
+    - ".bss"
 segments:
   - name: stnp3
     type: code
