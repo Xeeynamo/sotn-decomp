@@ -538,7 +538,7 @@ void func_800F2120(void) {
     u8 currMapRect;
 
     func_800F1A3C(g_StageId & STAGE_INVERTEDCASTLE_FLAG);
-    ClearImage(&g_Vram.D_800ACDE8, 0U, 0U, 0U);
+    ClearImage(&g_Vram.D_800ACDE8, 0, 0, 0);
     DrawSync(0);
 
     for (y = 0; y < 64; y++) {
@@ -550,10 +550,10 @@ void func_800F2120(void) {
                 idx += 0x400;
             }
             currMapRect = g_CastleMap[idx];
-            if (currMapRect & 85 & subMap) {
+            if (currMapRect & 0x55 & subMap) {
                 func_800F1B08(x, y, 0);
                 func_800F1EB0(x, y, 0xFFFF);
-            } else if (currMapRect & 170 & subMap) {
+            } else if (currMapRect & 0xAA & subMap) {
                 func_800F1B08(x, y, 1);
             }
         }
