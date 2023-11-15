@@ -31,7 +31,7 @@ s32 func_8015D250(void) {
     switch (PLAYER.step) {
     case 25:
         PLAYER.step = 0;
-        func_801606BC(g_CurrentEntity, 0, 0);
+        func_801606BC(g_CurrentEntity, 0x0, 0);
         func_8015C920(D_801555E8);
         break;
 

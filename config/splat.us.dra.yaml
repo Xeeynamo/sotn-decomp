@@ -116,7 +116,7 @@ segments:
       - [0x41990, rodata] # AlucardHandleDamage
       - [0x419B0, rodata] # AlucardHandleDamage
       - [0x419D0, .rodata, 75DA0]
-      - [0x419E8, .rodata, 75F54] # func_80116408
+      - [0x419E8, .rodata, 75F54] # PlayerStepHellfire
       - [0x41A00, .rodata, 75F54] # func_80116994
       - [0x41A20, .rodata, 75F54] # func_80116B0C
       - [0x41A38, rodata]

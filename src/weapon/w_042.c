@@ -98,8 +98,9 @@ void EntityWeaponAttack(Entity* self) {
             self->animFrameIdx = 0;
             self->blendMode = 0x30;
             g_api.func_80134714(0x619, 0x50, 0);
+            // TODO: FACTORY()
             g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) | 0x38, 0);
+                self, ((g_HandId + 1) << 12) | 56, 0);
             self->step++;
             return;
         }
@@ -175,10 +176,11 @@ void func_ptr_80170004(Entity* self) {
             if ((self->animFrameIdx == 6 || self->animFrameIdx == 0xC ||
                  self->animFrameIdx == 0x12)) {
                 unk = 0x3E;
+                // TODO: FACTORY()
                 if (g_api.CreateEntFactoryFromEntity(
                         self,
-                        ((g_HandId + 1) << 0xC) +
-                            (unk + (self->ext.weapon.unk7E << 0x10)),
+                        ((g_HandId + 1) << 12) +
+                            (unk + (self->ext.weapon.unk7E << 16)),
                         0) != NULL) {
                     self->ext.weapon.unk7E++;
                 }
@@ -193,8 +195,9 @@ void func_ptr_80170004(Entity* self) {
         break;
     case 3:
         if (self->rotX == 0x40) {
+            // TODO: FACTORY()
             g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) | 0x46, 0);
+                self, ((g_HandId + 1) << 12) | 70, 0);
         }
         if (self->animFrameIdx != 0) {
             self->rotX -= 4;

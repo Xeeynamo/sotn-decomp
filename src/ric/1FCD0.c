@@ -68,7 +68,7 @@ void func_8015BE84(void) {
 
     if (g_Player.pl_vram_flag & 1) {
         g_CurrentEntity->velocityX /= 2;
-        func_801606BC(g_CurrentEntity, 0, 0);
+        func_801606BC(g_CurrentEntity, 0x0, 0);
         PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
         func_8015CCC8(3, PLAYER.velocityX);
         g_api.PlaySfx(0x64B);
@@ -126,7 +126,7 @@ void func_8015C178(void) {
 
         if (PLAYER.animFrameIdx == 18 && PLAYER.animFrameDuration == 1 &&
             (g_Player.pl_vram_flag & 1)) {
-            func_801606BC(g_CurrentEntity, 0, 0);
+            func_801606BC(g_CurrentEntity, 0x0, 0);
         }
     }
 }
