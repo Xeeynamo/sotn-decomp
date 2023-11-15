@@ -17,9 +17,10 @@ options:
   migrate_rodata_to_functions: no
   asm_jtbl_label_macro: jlabel
   section_order:
+    - ".data"
     - ".rodata"
     - ".text"
-    - ".data"
+    - ".bss"
 segments:
   - name: tt_000
     type: code
