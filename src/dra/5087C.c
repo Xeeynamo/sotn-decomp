@@ -536,7 +536,6 @@ void func_800F2120(void) {
     s32 subMap;
     s32 idx;
     u8 currMapRect;
-    s32 var_v1;
 
     func_800F1A3C(g_StageId & STAGE_INVERTEDCASTLE_FLAG);
     ClearImage(&g_Vram.D_800ACDE8, 0U, 0U, 0U);
@@ -544,8 +543,7 @@ void func_800F2120(void) {
 
     for (y = 0; y < 64; y++) {
         for (x = 0; x < 64; x++) {
-            var_v1 = x >> 2;
-            idx = var_v1 + (y * 16);
+            idx = (x >> 2) + (y * 16);
             subMap = 3 << ((3 - (x & 3)) * 2);
 
             if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
