@@ -139,4 +139,3 @@ u32 CdSoundCommand4(void) {
 }
 
 const u32 padding_CdSoundCommand4 = 0;
-
