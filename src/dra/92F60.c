@@ -26,7 +26,6 @@ extern struct Temp D_800BD224[];
 
 u32 CdSoundCommand4(void) {
     u32 address;
-    u8 vol;
     u8 var_v0;
 
     switch (g_CdSoundCommandStep) {
@@ -42,10 +41,9 @@ u32 CdSoundCommand4(void) {
             g_CdSoundCommand16 = 0;
         }
 
-        vol = D_800BD224[D_80138458].unk22e;
-        D_80139820 = vol;
-        g_CdVolume = vol;
-        SetCdVolume(0, vol, vol);
+        D_80139820 = D_800BD224[D_80138458].unk22e;
+        g_CdVolume = D_80139820;
+        SetCdVolume(0, g_CdVolume, g_CdVolume);
 
         *g_CdMode = 0xC8;
         g_CdSoundCommandStep += 1;
