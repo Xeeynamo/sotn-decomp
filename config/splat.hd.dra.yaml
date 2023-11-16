@@ -144,7 +144,7 @@ segments:
       - [0x41EF4, rodata] # jtbl_800E1EF4
       - [0x41F1C, rodata] # jtbl_800E1F1C
       - [0x41F48, rodata]
-      - [0x41F50, rodata] # jtbl_800E1F50
+      - [0x41F50, .rodata, 92F60] # jtbl_800E1F50
       - [0x41F78, .rodata, 93290] # jtbl_800E1F78
       - [0x41F90, rodata] # jtbl_800E1F90
       - [0x41FA8, rodata] # jtbl_800E1FA8
