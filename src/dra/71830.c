@@ -89,10 +89,10 @@ bool func_801119C4(void) {
 
 void func_80111CC0(void) {
     if (g_Player.D_80072F02 != 0) {
-        CreateEntFactoryFromEntity(g_CurrentEntity, 0x17002C, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1700, 44), 0);
     }
     if (g_Player.D_80072F00 != 0) {
-        CreateEntFactoryFromEntity(g_CurrentEntity, 0x16002C, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1600, 44), 0);
     }
 }
 
@@ -244,7 +244,7 @@ void func_801120B4(void) {
             }
             PLAYER.posX.i.hi = x_offset + PLAYER.posX.i.hi;
             PLAYER.posY.i.hi -= 0x10;
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0xD0004U, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0xd00, 4), 0);
             D_800ACF74 = 0x60;
             PLAYER.posY.i.hi += 0x10;
             PLAYER.posX.i.hi -= x_offset;
@@ -310,7 +310,7 @@ void func_801120B4(void) {
             if (g_StageId == 1) {
                 PlaySfx(0x7AD);
             }
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0x7AU, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 122), 0);
             D_800ACF78 = 0x200;
         }
         local_flags = 1;
@@ -409,7 +409,7 @@ void func_801120B4(void) {
         local_flags = 0;
         if ((PLAYER.animFrameIdx < (g_Player.unk54 - 6)) &&
             (g_Player.pl_vram_flag & 1) && (g_GameTimer & 1)) {
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0x10045U, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x100, 69), 0);
         }
         if ((u16)PLAYER.animFrameIdx >= (u16)g_Player.unk54) {
             local_flags = 0x19;

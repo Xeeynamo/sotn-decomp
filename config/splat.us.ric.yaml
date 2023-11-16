@@ -18,9 +18,10 @@ options:
   asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
   section_order:
+    - ".data"
     - ".rodata"
     - ".text"
-    - ".data"
+    - ".bss"
 segments:
   - name: ric
     type: code
@@ -28,15 +29,15 @@ segments:
     vram:  0x8013C000
     subalign: 4
     subsegments:
-      - [0x0, rodata]
+      - [0x0, data]
       - [0x20, spritesheet, richter, disks/us/BIN/F_GAME2.BIN, 0x40400]
-      - [0x170AC, rodata]
-      - [0x194B0, rodata]
-      - [0x19B50, rodata]
-      - [0x19BE0, rodata]
-      - [0x19C70, rodata]
-      - [0x19EE0, rodata]
-      - [0x1A454, rodata]
+      - [0x170AC, data]
+      - [0x194B0, data]
+      - [0x19B50, data]
+      - [0x19BE0, data]
+      - [0x19C70, data]
+      - [0x19EE0, data]
+      - [0x1A444, rodata]
       - [0x1A5E0, .rodata, 1AC60]
       - [0x1A5F0, rodata]
       - [0x1A788, .rodata, 1F348]
@@ -64,5 +65,5 @@ segments:
       - [0x26C84, c, 26C84]
       - [0x32324, c, 32324]
       - [0x345EC, c, 345EC]
-      - [0x37B60, data]
+      - [0x37B60, sbss]
   - [0x39A58]
