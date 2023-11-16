@@ -18,10 +18,9 @@ options:
   asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
   section_order:
-    - ".data"
     - ".rodata"
     - ".text"
-    - ".bss"
+    - ".data"
 segments:
   - name: stcen
     type: code
@@ -50,5 +49,8 @@ segments:
       - [0x17B28, c, entity_message_box]
       - [0x18084, c]
       - [0x1B274, c]
-      - [0x1C704, sbss]
+      - [0x1C704, rodata]
+      - [0x1C764, rodata]
+      - [0x1D374, rodata]
+      - [0x1D424, rodata]
   - [0x1D46C]
