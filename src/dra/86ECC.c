@@ -44,7 +44,7 @@ void EntityHellfireHandler(Entity* self) {
         prim->tpage = 0x11C;
         prim->blendMode = 0x331;
         prim->priority = self->zPriority = 0x1C0;
-        PlaySfx(0x636);
+        PlaySfx(NA_SE_PL_WARP);
         self->step++;
         break;
     case 1:
