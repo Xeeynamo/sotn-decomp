@@ -1282,6 +1282,3 @@ void MakeCdLoc(u32 address, CdlLOC* cd_loc) {
     minutes = address / 75 / 60;
     cd_loc->minute = ENCODE_BCD(minutes);
 }
-
-INCLUDE_ASM("dra/nonmatchings/8D3E8", CdSoundCommand4);
-void CdSoundCommand4();
