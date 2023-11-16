@@ -128,7 +128,7 @@ void PlayerStepHellfire(void) {
     switch (PLAYER.step_s) {
     case 0:
         // Make factory with blueprint #33. Factory makes entities with ID 25.
-        // This is func_80126ECC.
+        // This is EntityHellfireHandler.
         if (CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 33), 0) ==
             NULL) {
             func_8010E570(0);

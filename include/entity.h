@@ -533,6 +533,12 @@ typedef struct {
     unk_sub_8011E4BC* unk8C;
 } ET_8011E4BC;
 
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+} ET_HellfireHandler;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_EntFactory factory;
@@ -541,6 +547,7 @@ typedef union {
     /* 0x7C */ ET_Entity16 ent16;
     /* 0x7C */ ET_GravBootsBeam bootBeam;
     /* 0x7C */ ET_8011E4BC et_8011E4BC;
+    /* 0x7C */ ET_HellfireHandler hellfireHandler;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
     /* 0x7C */ ET_RelicOrb relicOrb;
     /* 0x7C */ ET_MessageBox messageBox;
