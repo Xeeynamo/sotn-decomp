@@ -29,7 +29,8 @@ void EntityHellfireHandler(Entity* self) {
             g_Player.unk5C = -1;
             return;
         }
-        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000 |
+                      FLAG_UNK_20000;
         self->posY.i.hi = 120;
         // I think this is to make the yellow laser beam?
         // it ends up looking like the library card effect.
