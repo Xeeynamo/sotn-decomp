@@ -299,7 +299,7 @@ void func_80158FA4(void) {
             if (g_Player.D_80072F16 == 0) {
                 if (!(g_Player.pl_vram_flag & 0xC)) {
                     func_8015C920(&D_8015539C);
-                    func_801606BC(g_CurrentEntity, 0, 0);
+                    func_801606BC(g_CurrentEntity, 0x0, 0);
                 }
             } else {
                 PLAYER.velocityX = 0;

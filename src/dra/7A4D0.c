@@ -160,48 +160,50 @@ void func_8011A9D8(void) {
     }
 }
 
-Entity* CreateEntFactoryFromEntity(Entity* source, u32 flags, s32 arg2) {
-    Entity* entity;
-    s16 temp = arg2;
+Entity* CreateEntFactoryFromEntity(
+    Entity* source, u32 factoryParams, s32 arg2_raw) {
+    Entity* newFactory;
+    // Weird thing needed for callers to match
+    s16 arg2 = arg2_raw;
 
-    entity = GetFreeDraEntity(8, 16);
-    if (entity == NULL) {
+    newFactory = GetFreeDraEntity(8, 16);
+    if (newFactory == NULL) {
         return NULL;
     }
 
-    DestroyEntity(entity);
-    entity->entityId = E_UNK_1;
-    entity->ext.generic.unk8C.entityPtr = source;
-    entity->posX.val = source->posX.val;
-    entity->posY.val = source->posY.val;
-    entity->facingLeft = source->facingLeft;
-    entity->zPriority = source->zPriority;
-    entity->params = flags & 0xFFF;
-    if (flags & 0x5000) {
-        entity->ext.generic.unkA8 = 0xE0;
+    DestroyEntity(newFactory);
+    newFactory->entityId = E_ENTITYFACTORY;
+    newFactory->ext.factory.parent = source;
+    newFactory->posX.val = source->posX.val;
+    newFactory->posY.val = source->posY.val;
+    newFactory->facingLeft = source->facingLeft;
+    newFactory->zPriority = source->zPriority;
+    newFactory->params = factoryParams & 0xFFF;
+    if (factoryParams & 0x5000) {
+        newFactory->ext.factory.unkA8 = 0xE0;
     }
-    if (flags & 0xA000) {
-        entity->ext.generic.unkA8 = 0xF0;
+    if (factoryParams & 0xA000) {
+        newFactory->ext.factory.unkA8 = 0xF0;
     }
-    entity->ext.generic.unkA0 = (flags >> 8) & 0xFF00;
-    entity->ext.generic.unk92 = temp;
+    newFactory->ext.factory.unkA0 = (factoryParams >> 8) & 0xFF00;
+    newFactory->ext.factory.unk92 = arg2;
     if (source->flags & FLAG_UNK_10000) {
-        entity->flags |= FLAG_UNK_10000;
+        newFactory->flags |= FLAG_UNK_10000;
     }
-    if (flags & 0x1000) {
-        entity->entityId = 0xEF;
+    if (factoryParams & 0x1000) {
+        newFactory->entityId = 0xEF;
     }
-    if (flags & 0x2000) {
-        entity->entityId = 0xFF;
+    if (factoryParams & 0x2000) {
+        newFactory->entityId = 0xFF;
     }
-    if (flags & 0x4000) {
-        entity->entityId = 0xED;
+    if (factoryParams & 0x4000) {
+        newFactory->entityId = 0xED;
     }
-    if (flags & 0x8000) {
-        entity->entityId = 0xFD;
+    if (factoryParams & 0x8000) {
+        newFactory->entityId = 0xFD;
     }
 
-    return entity;
+    return newFactory;
 }
 
 // This is a complicated function with ongoing research.
@@ -220,19 +222,19 @@ void EntityEntFactory(Entity* self) {
 
     if (self->step == 0) {
         data_idx = &g_FactoryBlueprints[self->params];
-        self->ext.unkAC3C.childId = *data_idx++;
-        self->ext.unkAC3C.unk94 = *data_idx++;          // index 1
-        self->ext.unkAC3C.unk96 = *data_idx & 0x3F;     // index 2, lower 6 bits
-        self->ext.unkAC3C.unk9E = *data_idx >> 7;       // index 2, top bit
-        self->ext.unkAC3C.unkA2 = *data_idx++ >> 6 & 1; // index 2, 2nd-top bit
-        self->ext.unkAC3C.unk98 = *data_idx++;          // index 3
-        self->ext.unkAC3C.unk9C = *data_idx & 0xF;      // index 4, lower 4 bits
-        self->ext.unkAC3C.unkA4 = *data_idx++ >> 4;     // index 4, upper 4 bits
-        self->ext.unkAC3C.unk9A = *data_idx;            // index 5
+        self->ext.factory.childId = *data_idx++;
+        self->ext.factory.unk94 = *data_idx++;          // index 1
+        self->ext.factory.unk96 = *data_idx & 0x3F;     // index 2, lower 6 bits
+        self->ext.factory.unk9E = *data_idx >> 7;       // index 2, top bit
+        self->ext.factory.unkA2 = *data_idx++ >> 6 & 1; // index 2, 2nd-top bit
+        self->ext.factory.unk98 = *data_idx++;          // index 3
+        self->ext.factory.unk9C = *data_idx & 0xF;      // index 4, lower 4 bits
+        self->ext.factory.unkA4 = *data_idx++ >> 4;     // index 4, upper 4 bits
+        self->ext.factory.unk9A = *data_idx;            // index 5
         self->flags |= FLAG_UNK_04000000;
 
         self->step++;
-        switch (self->ext.unkAC3C.unkA4) {
+        switch (self->ext.factory.unkA4) {
         case 0:
         case 6:
             self->flags |= FLAG_UNK_08000000;
@@ -247,7 +249,7 @@ void EntityEntFactory(Entity* self) {
             break;
         }
     } else {
-        switch (self->ext.unkAC3C.unkA4) {
+        switch (self->ext.factory.unkA4) {
         case 0:
             break;
         case 2:
@@ -281,41 +283,41 @@ void EntityEntFactory(Entity* self) {
             break;
         }
     }
-    if (self->ext.unkAC3C.unk9A != 0) {
-        self->ext.unkAC3C.unk9A--;
-        if (self->ext.unkAC3C.unk9A != 0) {
+    if (self->ext.factory.unk9A != 0) {
+        self->ext.factory.unk9A--;
+        if (self->ext.factory.unk9A != 0) {
             return;
         }
-        self->ext.unkAC3C.unk9A = self->ext.unkAC3C.unk98;
+        self->ext.factory.unk9A = self->ext.factory.unk98;
     }
     // Save this value so we don't have to re-fetch on every for-loop cycle
-    unk96Copy = self->ext.unkAC3C.unk96;
+    unk96Copy = self->ext.factory.unk96;
     for (i = 0; i < unk96Copy; i++) {
 
         // !FAKE, this should probably be &D_800AD4B8[unk9C] or similar,
         // instead of doing &D_800AD4B8 followed by +=
         data_idx = &D_800AD4B8[0];
-        data_idx += self->ext.unkAC3C.unk9C * 2;
+        data_idx += self->ext.factory.unk9C * 2;
 
         startIndex = *data_idx;
         endIndex = *(data_idx + 1);
 
-        if (self->ext.unkAC3C.unk9C == 3 || self->ext.unkAC3C.unk9C == 10 ||
-            self->ext.unkAC3C.unk9C == 11 || self->ext.unkAC3C.unk9C == 12 ||
-            self->ext.unkAC3C.unk9C == 13) {
+        if (self->ext.factory.unk9C == 3 || self->ext.factory.unk9C == 10 ||
+            self->ext.factory.unk9C == 11 || self->ext.factory.unk9C == 12 ||
+            self->ext.factory.unk9C == 13) {
             DestroyEntity(&g_Entities[startIndex]);
             newEntity = &g_Entities[startIndex];
             g_Player.unk48 = 0;
-        } else if (self->ext.unkAC3C.unk9C == 0) {
+        } else if (self->ext.factory.unk9C == 0) {
             newEntity = func_80118810(startIndex, endIndex + 1);
-        } else if (self->ext.unkAC3C.unk9C == 8) {
-            if ((self->ext.unkAC3C.unkA6 % 3) == 0) {
+        } else if (self->ext.factory.unk9C == 8) {
+            if ((self->ext.factory.unkA6 % 3) == 0) {
                 newEntity = GetFreeDraEntity(17, 32);
             }
-            if ((self->ext.unkAC3C.unkA6 % 3) == 1) {
+            if ((self->ext.factory.unkA6 % 3) == 1) {
                 newEntity = GetFreeDraEntity(32, 48);
             }
-            if ((self->ext.unkAC3C.unkA6 % 3) == 2) {
+            if ((self->ext.factory.unkA6 % 3) == 2) {
                 newEntity = GetFreeDraEntity(48, 64);
             }
         } else {
@@ -323,7 +325,7 @@ void EntityEntFactory(Entity* self) {
         }
 
         if (newEntity == NULL) {
-            if (self->ext.unkAC3C.unk9E == 1) {
+            if (self->ext.factory.unk9E == 1) {
                 goto setIdZeroAndReturn;
             }
             break;
@@ -331,29 +333,32 @@ void EntityEntFactory(Entity* self) {
         DestroyEntity(newEntity);
         // unkA8 never gets set so is always zero
         newEntity->entityId =
-            self->ext.unkAC3C.childId + self->ext.unkAC3C.unkA8;
-        newEntity->params = self->ext.unkAC3C.unkA0;
-        newEntity->ext.unkAC3C.unk8C = self->ext.unkAC3C.unk8C;
+            self->ext.factory.childId + self->ext.factory.unkA8;
+        newEntity->params = self->ext.factory.unkA0;
+        // The child  (newEntity) is not an ent factory, but because the
+        // factory creates many entities, we can't pick a particular extension.
+        // But we're not allowed to use generic, so i'll just reuse entFactory.
+        newEntity->ext.factory.parent = self->ext.factory.parent;
         newEntity->posX.val = self->posX.val;
         newEntity->posY.val = self->posY.val;
         newEntity->facingLeft = self->facingLeft;
         newEntity->zPriority = self->zPriority;
-        newEntity->ext.fam.cameraY = self->ext.unkAC3C.unk92 & 0x1FF;
-        newEntity->ext.unkAC3C.unkB0 = self->ext.unkAC3C.unk92 >> 9;
+        newEntity->ext.fam.cameraY = self->ext.factory.unk92 & 0x1FF;
+        newEntity->ext.factory.unkB0 = self->ext.factory.unk92 >> 9;
         if (self->flags & FLAG_UNK_10000) {
             newEntity->flags |= FLAG_UNK_10000;
         }
-        if (self->ext.unkAC3C.unkA2 != 0) {
-            newEntity->params += self->ext.unkAC3C.unkA6;
+        if (self->ext.factory.unkA2 != 0) {
+            newEntity->params += self->ext.factory.unkA6;
         } else {
             newEntity->params += i;
         }
-        if (++self->ext.unkAC3C.unkA6 == self->ext.unkAC3C.unk94) {
+        if (++self->ext.factory.unkA6 == self->ext.factory.unk94) {
             self->entityId = 0;
             return;
         }
     }
-    self->ext.unkAC3C.unk9A = self->ext.unkAC3C.unk98;
+    self->ext.factory.unk9A = self->ext.factory.unk98;
 }
 
 // Name comes purely from emulator breakpoint experiments, could be wrong

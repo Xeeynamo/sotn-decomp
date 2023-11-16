@@ -59,7 +59,8 @@ segments:
       - [0x1D1C0, .data, 8D3E8] # g_DebugEnabled
       - [0x1D1C4, .data, 8D3E8] # D_800BD1C4
       - [0x1D1C8, .data, 8D3E8] # g_VabAddrs
-      - [0x1D1E0, data] # g_SeqInfo
+      - [0x1D1E0, .data, 8D3E8] # g_SeqInfo
+      - [0x1D224, data] # D_800BD224
       - [0x2217C, data]
       - [0x227B0, data]
       - [0x3B3B0, rodata]
@@ -115,7 +116,7 @@ segments:
       - [0x41990, rodata] # AlucardHandleDamage
       - [0x419B0, rodata] # AlucardHandleDamage
       - [0x419D0, .rodata, 75DA0]
-      - [0x419E8, .rodata, 75F54] # func_80116408
+      - [0x419E8, .rodata, 75F54] # PlayerStepHellfire
       - [0x41A00, .rodata, 75F54] # func_80116994
       - [0x41A20, .rodata, 75F54] # func_80116B0C
       - [0x41A38, rodata]

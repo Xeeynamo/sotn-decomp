@@ -19,9 +19,10 @@ options:
   extensions_path: tools/splat_ext
   string_encoding: SHIFT-JIS
   section_order:
+    - ".data"
     - ".rodata"
     - ".text"
-    - ".data"
+    - ".bss"
 segments:
   - name: stmad
     type: code

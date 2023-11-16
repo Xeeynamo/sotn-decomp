@@ -186,7 +186,7 @@ Entity* func_801606BC(Entity* srcEntity, u32 arg1, s32 arg2) {
 
     if (entity != NULL) {
         DestroyEntity(entity);
-        entity->entityId = E_UNK_1;
+        entity->entityId = E_ENTITYFACTORY;
         entity->ext.generic.unk8C.entityPtr = srcEntity;
         entity->posX.val = srcEntity->posX.val;
         entity->posY.val = srcEntity->posY.val;

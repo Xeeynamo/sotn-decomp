@@ -12,7 +12,8 @@ void func_80115DA0(void) {
     switch (PLAYER.step_s) {
     case 0:
         if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1 &&
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0x79, 0) == NULL) {
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 121), 0) ==
+                NULL) {
             PLAYER.animFrameDuration = 2;
         }
         if (PLAYER.animFrameDuration < 0) {
@@ -23,7 +24,8 @@ void func_80115DA0(void) {
     case 2:
         func_80115C50();
         if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1 &&
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0x20079, 0) == NULL) {
+            CreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(0x200, 121), 0) == NULL) {
             PLAYER.animFrameDuration = 2;
         }
         if (PLAYER.animFrameDuration < 0) {
@@ -34,7 +36,8 @@ void func_80115DA0(void) {
     case 4:
         func_80115C50();
         if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1 &&
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0x40079, 0) == NULL) {
+            CreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(0x400, 121), 0) == NULL) {
             PLAYER.animFrameDuration = 2;
         }
         if (PLAYER.animFrameDuration < 0) {

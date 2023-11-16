@@ -200,7 +200,7 @@ void func_80114DF4(s32 arg0) {
         g_Player.D_80072F00 = 0;
         g_Player.D_80072F02 = 0;
         g_Player.unk5E = GetStatusAilmentTimer(STATUS_AILMENT_PETRIFIED, 8);
-        CreateEntFactoryFromEntity(g_CurrentEntity, 0x3002F, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x300, 47), 0);
         func_8010E168(1, 4);
         PLAYER.step_s = 1;
         break;
@@ -213,7 +213,7 @@ void func_80114DF4(s32 arg0) {
             PLAYER.velocityX = 0;
             func_80102CD8(1);
             PlaySfx(0x644);
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0x27, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 39), 0);
 
             randvar = rand() % 64;
 
@@ -224,11 +224,13 @@ void func_80114DF4(s32 arg0) {
             if (randvar << 0x10) {
                 PLAYER.palette = (randvar & 1) - 0x7E62;
                 func_8010DA48(randvar & 1 | 0x38);
-                CreateEntFactoryFromEntity(g_CurrentEntity, 0x30010, 0);
+                CreateEntFactoryFromEntity(
+                    g_CurrentEntity, FACTORY(0x300, 16), 0);
             } else {
                 PLAYER.palette = 0x819E;
                 func_8010DA48(0x3A);
-                CreateEntFactoryFromEntity(g_CurrentEntity, 0x7001D, 0);
+                CreateEntFactoryFromEntity(
+                    g_CurrentEntity, FACTORY(0x700, 29), 0);
             }
             PLAYER.step_s = 2;
         }
@@ -279,9 +281,11 @@ void func_80114DF4(s32 arg0) {
             if (g_Player.unk5E == 0) {
                 func_8010DA48(0x3B);
                 if (PLAYER.ext.player.unkAC != 0x3A) {
-                    CreateEntFactoryFromEntity(g_CurrentEntity, 0x30010, 0);
+                    CreateEntFactoryFromEntity(
+                        g_CurrentEntity, FACTORY(0x300, 16), 0);
                 } else {
-                    CreateEntFactoryFromEntity(g_CurrentEntity, 0x20, 0);
+                    CreateEntFactoryFromEntity(
+                        g_CurrentEntity, FACTORY(0, 32), 0);
                 }
                 PlaySfx(0x6E7);
                 PLAYER.step = Player_Hit;
@@ -292,11 +296,15 @@ void func_80114DF4(s32 arg0) {
             func_8010E168(1, 0x1C);
             PLAYER.step_s = 3;
             if (PLAYER.ext.player.unkAC != 0x3A) {
-                CreateEntFactoryFromEntity(g_CurrentEntity, 0x3000D, 0);
-                CreateEntFactoryFromEntity(g_CurrentEntity, 0x3001F, 0);
+                CreateEntFactoryFromEntity(
+                    g_CurrentEntity, FACTORY(0x300, 13), 0);
+                CreateEntFactoryFromEntity(
+                    g_CurrentEntity, FACTORY(0x300, 31), 0);
             } else {
-                CreateEntFactoryFromEntity(g_CurrentEntity, 0x8000D, 0);
-                CreateEntFactoryFromEntity(g_CurrentEntity, 0x7001E, 0);
+                CreateEntFactoryFromEntity(
+                    g_CurrentEntity, FACTORY(0x800, 13), 0);
+                CreateEntFactoryFromEntity(
+                    g_CurrentEntity, FACTORY(0x700, 30), 0);
             }
         }
         PLAYER.palette = ((PLAYER.ext.player.unkAC + 0xFFC8) & 1) - 0x7E62;
@@ -339,7 +347,7 @@ void func_80115BB0(void) {
         } else {
             func_8010E7AC();
         }
-        CreateEntFactoryFromEntity(g_CurrentEntity, 0x4A0000 | 0x2C, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4a00, 44), 0);
         D_80097D37 = 0;
     }
 }

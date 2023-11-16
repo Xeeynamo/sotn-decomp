@@ -490,31 +490,6 @@ typedef struct {
 } ET_Entity16;
 
 typedef struct {
-    s32 unk7C;
-    s32 unk80;
-    s32 unk84;
-    s32 unk88;
-    s32 entityPtr;
-    s16 unk90;
-    s16 unk92;
-    s16 unk94;
-    s16 unk96;
-    s16 unk98;
-    s16 unk9A;
-    s16 unk9C;
-    s16 unk9E;
-    s16 unkA0;
-    s16 unkA2;
-    s16 unkA4;
-    s16 unkA6;
-    s16 unkA8;
-    s16 unkAA;
-    s16 unkAC;
-    s16 unkAE;
-    s16 unkB0;
-} ET_Entity1;
-
-typedef struct {
     s16 timer;
 } ET_GravBootsBeam;
 
@@ -527,7 +502,7 @@ typedef struct {
     /* 0x86 */ s16 unk86;
     /* 0x88 */ s16 unk88;
     /* 0x8A */ s16 unk8A;
-    /* 0x8C */ s32 unk8C;
+    /* 0x8C */ struct Entity* parent;
     /* 0x90 */ s16 childId;
     /* 0x92 */ s16 unk92;
     /* 0x94 */ s16 unk94;
@@ -545,8 +520,7 @@ typedef struct {
     /* 0xAC */ s16 unkAC;
     /* 0xAE */ s16 unkAE;
     /* 0xB0 */ s16 unkB0;
-
-} ET_UNKAC3C;
+} ET_EntFactory;
 
 typedef struct {
     char pad[8];
@@ -561,10 +535,9 @@ typedef struct {
 
 typedef union {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x7C */ ET_UNKAC3C unkAC3C;
+    /* 0x7C */ ET_EntFactory factory;
     /* 0x7C */ ET_Generic generic;
-    /* 0x7C */ ET_Entity1 ent1;
-    /* 0x7C */ ET_EntitySlot1 entSlot1;
+    /* 0x7C */ ET_EntitySlot1 entSlot1; // g_Entities[1], not entityID 1
     /* 0x7C */ ET_Entity16 ent16;
     /* 0x7C */ ET_GravBootsBeam bootBeam;
     /* 0x7C */ ET_8011E4BC et_8011E4BC;

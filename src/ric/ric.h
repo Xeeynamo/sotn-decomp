@@ -5,7 +5,7 @@
 
 typedef enum {
     E_NONE,
-    E_UNK_1,
+    E_ENTITYFACTORY,
 } EntityIDs;
 
 typedef enum {
