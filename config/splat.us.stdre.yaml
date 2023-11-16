@@ -18,10 +18,9 @@ options:
   asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
   section_order:
-    - ".data"
     - ".rodata"
     - ".text"
-    - ".bss"
+    - ".data"
 segments:
   - name: stdre
     type: code
