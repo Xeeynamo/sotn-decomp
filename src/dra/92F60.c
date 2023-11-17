@@ -74,8 +74,8 @@ u32 CdSoundCommand4(void) {
         }
 
     case 4:
-        address =
-            g_XaMusicConfigs[D_80138458].filter_channel_id + g_XaMusicConfigs[D_80138458].cd_addr + 150;
+        address = g_XaMusicConfigs[D_80138458].filter_channel_id +
+                  g_XaMusicConfigs[D_80138458].cd_addr + 150;
         D_80139014 = g_XaMusicConfigs[D_80138458].unk230;
 
         if (D_80139014 == 2) {
