@@ -716,11 +716,13 @@ void ControlBatForm(void) {
             }
         }
         break;
+    // Happens when shooting fireball with Fire of Bat
     case 4:
-        DecelerateX(0x1800);
-        DecelerateY(0x3800);
+        DecelerateX(FIX(12.0 / 128));
+        DecelerateY(FIX(28.0 / 128));
         func_8011690C(0x180);
         if (PLAYER.animFrameDuration < 0) {
+            // This actually creates the entity factory to produce the fireball
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 81), 0);
             SetSpeedX(FIX(-1.5));
             func_8011690C(0);
@@ -728,9 +730,10 @@ void ControlBatForm(void) {
             PLAYER.step_s++;
         }
         break;
+    // Finishing up on the fireball
     case 5:
-        DecelerateX(0x1800);
-        DecelerateY(0x3800);
+        DecelerateX(FIX(12.0 / 128));
+        DecelerateY(FIX(28.0 / 128));
         func_8011690C(0);
         if (PLAYER.ext.player.unkAC == 0xC4 && PLAYER.animFrameIdx == 8) {
             PLAYER.step_s = 1;

@@ -200,7 +200,61 @@ void func_801274DC(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/86ECC", func_8012768C);
+// Entity ID 45. Created by factory blueprint 81.
+// That blueprint is used in ControlBatForm, when step_s is 4.
+// Also, when bat familiar shoots a fireball, the blueprint
+// is used in func_80172C30. Will decompile that next.
+
+void EntityBatFireball(Entity* self) {
+    s8 params;
+
+    params = (self->params >> 8) & 0x7F;
+    switch (self->step) {
+    case 0:
+        PlaySfx(NA_SE_PL_BT_FIREBALL);
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->animSet = 9;
+        self->unk4C = D_800B0798;
+        self->zPriority = PLAYER.zPriority - 2;
+
+        // Wow, this is weird logic! But it's in the assembly.
+        if (params == 0) {
+            self->facingLeft = (PLAYER.facingLeft + 1) & 1;
+        }
+        self->facingLeft = (PLAYER.facingLeft + 1) & 1;
+
+        SetSpeedX(FIX(-3.5));
+        self->drawFlags = 3;
+        // Initial fireball size is 0x40 by 0x40
+        self->rotX = self->rotY = 0x40;
+        self->posX.val += self->velocityX * 2;
+        self->posY.i.hi -= 4;
+        func_8011A328(self, 9);
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 8;
+        g_Player.D_80072F14 = 4;
+        self->step++;
+        break;
+    case 1:
+        // Once the fireball hits something, destroy it.
+        if (self->hitFlags != 0) {
+            DestroyEntity(self);
+            return;
+        }
+        self->posX.val += self->velocityX;
+        // Much like the wing smash, these rot values are actually the size.
+        // After shooting, the fireballs grow until they are 0x100 in size
+        self->rotX += 0x10;
+        self->rotY += 0x10;
+        if (self->rotY >= 0x101) {
+            self->rotY = 0x100;
+        }
+        if (self->rotX >= 0x181) {
+            self->rotX = 0x180;
+        }
+    }
+    return;
+}
 
 void func_80127840(Entity* entity) {
     switch (entity->step) {
