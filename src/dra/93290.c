@@ -7,9 +7,6 @@ s32 AdvanceCdSoundCommandQueue(void);
 
 #define CD_PREGAP_BLOCKS 150
 
-extern u8 g_XaMusicConfigs[];
-extern s32 D_800BD228[];
-extern u8 D_800BD22D[];
 extern s16 D_8013845C;
 extern s16 g_CurrentXaSoundId;
 extern s32 D_8013AE90;
@@ -17,7 +14,6 @@ extern s32 D_8013AEF4;
 extern CdlLOC D_8013B640;
 
 s32 CdSoundCommand6(void) {
-    s32 temp_v0;
     u8 var_v0;
     s32 temp;
     u32 cd_pos;
@@ -26,8 +22,8 @@ s32 CdSoundCommand6(void) {
     case 0:
         D_801390A0 = 1;
         D_8013845C = g_CurrentXaSoundId;
-        temp_v0 = (g_CurrentXaSoundId << 4) + 0x10;
-        cd_pos = D_800BD22D[temp_v0] + *(u32*)&g_XaMusicConfigs[temp_v0];
+        cd_pos = g_XaMusicConfigs[g_CurrentXaSoundId + 1].filter_channel_id +
+                 g_XaMusicConfigs[g_CurrentXaSoundId + 1].cd_addr;
         cd_pos += CD_PREGAP_BLOCKS + g_CurCdPos;
         MakeCdLoc(cd_pos, &D_8013B640);
         g_CdSoundCommandStep += 1;
@@ -60,9 +56,7 @@ s32 CdSoundCommand6(void) {
         return var_v0;
     case 4:
         D_8013AEF4 = VSync(-1);
-        temp = D_8013845C;
-        temp++;
-        D_8013AE90 = D_800BD228[temp * 4];
+        D_8013AE90 = g_XaMusicConfigs[D_8013845C + 1].unk228;
         SetReverbDepth(g_ReverbDepth);
         g_CdSoundCommandStep = 0;
         D_8013901C = (s16)D_8013845C;

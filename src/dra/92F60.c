@@ -11,19 +11,6 @@ extern s32 D_8013AE90;
 extern u8 D_8013B640;
 extern s32 D_8013AEF4;
 
-struct Temp {
-    u32 cd_addr;
-    s32 unk228;
-    u8 filter_file;
-    u8 filter_channel_id;
-    u8 volume;
-    u8 unk22f;
-    u8 unk230;
-    u8 pad[3];
-};
-
-extern struct Temp g_XaMusicConfigs[];
-
 u32 CdSoundCommand4(void) {
     u32 address;
     u8 var_v0;
