@@ -27,8 +27,8 @@ u32 CdSoundCommand4(void) {
             g_CdSoundCommand16 = 0;
         }
 
-        D_80139820 = g_XaMusicConfigs[D_80138458].volume;
-        g_CdVolume = D_80139820;
+        g_XaMusicVolume = g_XaMusicConfigs[D_80138458].volume;
+        g_CdVolume = g_XaMusicVolume;
         SetCdVolume(0, g_CdVolume, g_CdVolume);
         g_CdMode[0] = CdlModeSpeed | CdlModeRT | CdlModeSF;
         g_CdSoundCommandStep += 1;

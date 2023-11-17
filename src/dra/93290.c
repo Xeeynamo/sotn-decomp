@@ -289,11 +289,11 @@ void CdSoundCommand8(void) {
     case 1:
         D_80139A78++;
         if (g_CdVolume > 0) {
-            temp = D_80139820 * D_80139A6C * D_80139A78;
+            temp = g_XaMusicVolume * D_80139A6C * D_80139A78;
             if (temp < 0) {
                 temp += 0x1FF;
             }
-            g_CdVolume = D_80139820 - (temp >> 9);
+            g_CdVolume = g_XaMusicVolume - (temp >> 9);
             if (g_CdVolume >> 0x10) {
                 g_CdVolume = 0;
             }

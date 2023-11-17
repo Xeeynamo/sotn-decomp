@@ -374,6 +374,7 @@ g_SfxRingBuffer = 0x801390DC;
 g_CdCommandStatus = 0x801396F0;
 g_CdSoundCommandQueuePos = 0x801396F4;
 g_SeqPlayingId = 0x80139810;
+g_XaMusicVolume = 0x80139820;
 g_CdSoundCommandQueue = 0x80139868;
 g_SoundCommandRingBufferReadPos = 0x80139A68;
 g_SoundCommandRingBufferWritePos = 0x80139A70;
