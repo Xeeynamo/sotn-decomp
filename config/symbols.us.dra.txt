@@ -270,6 +270,7 @@ EntityHolyWaterFlame = 0x801262AC;
 EntitySubwpnCrashCross = 0x801267B0;
 EntitySubwpnCrashCrossParticles = 0x80126C48;
 EntityHellfireHandler = 0x80126ECC;
+EntityBatFireball = 0x8012768C;
 EntityExpandingCircle = 0x801279FC;
 EntitySubwpnReboundStone = 0x80127F40;
 EntitySubwpnThrownVibhuti = 0x80128714;
