@@ -6,7 +6,6 @@ void SetCdVolume(s8 s_num, s16 arg1, s16 arg2);
 
 extern s16 g_CurrentXaSoundId;
 extern s16 D_80138458;
-extern s8 D_80138F25;
 extern s32 D_8013AE90;
 extern u8 D_8013B640;
 extern s32 D_8013AEF4;
@@ -31,8 +30,7 @@ u32 CdSoundCommand4(void) {
         D_80139820 = g_XaMusicConfigs[D_80138458].volume;
         g_CdVolume = D_80139820;
         SetCdVolume(0, g_CdVolume, g_CdVolume);
-
-        *g_CdMode = 0xC8;
+        g_CdMode[0] = CdlModeSpeed | CdlModeRT | CdlModeSF;
         g_CdSoundCommandStep += 1;
         var_v0 = g_CdSoundCommandStep;
 
@@ -46,8 +44,8 @@ u32 CdSoundCommand4(void) {
         }
 
     case 2:
-        *g_CdMode = g_XaMusicConfigs[D_80138458].filter_file;
-        D_80138F25 = g_XaMusicConfigs[D_80138458].filter_channel_id % 16;
+        g_CdMode[0] = g_XaMusicConfigs[D_80138458].filter_file;
+        g_CdMode[1] = g_XaMusicConfigs[D_80138458].filter_channel_id % 16;
         g_CdSoundCommandStep += 1;
         var_v0 = g_CdSoundCommandStep;
 
