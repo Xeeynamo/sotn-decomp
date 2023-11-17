@@ -117,7 +117,7 @@ PfnEntityUpdate D_800AD0C4[] = {
     EntityStopWatchExpandingCircle,
     EntitySubwpnBible,
     func_8012B78C,
-    0x8012768C,
+    EntityBatFireball,
     func_80123B40,
     func_80119F70,
     UnknownEntId48,

@@ -44,6 +44,8 @@ segments:
       - [0x2EF8, data]
       - [0xCFDC, .data, 6D59C]
       - [0xD010, data]
+      - [0xD188, .data, 7A4D0] # D_800AD0C4
+      - [0xD298, data]
       - [0x1D140, .data, 8D3E8] # g_CdVolumeTable
       - [0x1D260, .data, 8D3E8] # g_VolumeTable
       - [0x1D284, .data, 8D3E8] # g_DebugEnabled
