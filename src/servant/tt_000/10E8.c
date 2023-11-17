@@ -1,4 +1,5 @@
 #include "servant.h"
+#include "sfx.h"
 
 extern SpriteParts* D_80170040[];
 extern u16 D_80170448[];
@@ -178,7 +179,7 @@ bool func_80171434(s16 x, s16 y, s16* outX, s16* outY) {
     return 0;
 }
 
-void func_80171560(void) {}
+void func_80171560(Entity* self) {}
 
 void func_80171568(Entity* self) {
     Entity* entity;
@@ -490,7 +491,128 @@ void func_80171ED4(s32 arg0) {
 
 INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80172120);
 
-INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80172C30);
+void func_80172C30(Entity* self) {
+    if (self->step == 1 && self->flags & FLAG_UNK_00200000) {
+        D_80174B38 = (self->ext.fam.cameraX - g_Tilemap.cameraX.i.hi) +
+                     (self->ext.fam.unkB0 - PLAYER.posX.i.hi);
+        D_80174B3C = (self->ext.fam.cameraY - g_Tilemap.cameraY.i.hi) +
+                     (self->ext.fam.unkB2 - PLAYER.posY.i.hi);
+
+        for (D_80174B30 = 0; D_80174B30 < 0x10; D_80174B30++) {
+            D_80174C3C[self->ext.fam.unk82][D_80174B30].x -= D_80174B38;
+            D_80174C3C[self->ext.fam.unk82][D_80174B30].y -= D_80174B3C;
+        }
+        return;
+    }
+
+    g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
+    if (D_80174D3C != 0) {
+        self->zPriority = PLAYER.zPriority - 2;
+    }
+    switch (self->step) {
+    case 0:
+        func_801719E0(self);
+        if (self->ext.fam.unk82 == 0) {
+            func_8017160C(*(&D_80170660 + ((D_80174C30.unk0 / 10) * 5)), 0xD2);
+        }
+        break;
+    case 1:
+        self->ext.fam.unkB0 = PLAYER.posX.i.hi;
+        self->ext.fam.unkB2 = PLAYER.posY.i.hi;
+        self->ext.fam.cameraX = g_Tilemap.cameraX.i.hi;
+        self->ext.fam.cameraY = g_Tilemap.cameraY.i.hi;
+        D_80174B40 =
+            D_80174C3C[self->ext.fam.unk82][0].x - self->ext.fam.cameraX;
+        D_80174B44 =
+            D_80174C3C[self->ext.fam.unk82][0].y - self->ext.fam.cameraY;
+        self->velocityX = (D_80174B40 - self->posX.i.hi) << 0xC;
+        self->velocityY = (D_80174B44 - self->posY.i.hi) << 0xC;
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        if ((self->velocityX == 0) && (self->velocityY == 0)) {
+            if (self->ext.fam.unk8E != 0) {
+                func_801710E8(self, &D_8017054C);
+                self->ext.fam.unk8E = 0;
+            }
+        } else {
+            if (self->velocityY > FIX(1)) {
+                func_801710E8(self, &D_801705EC);
+            } else {
+                func_801710E8(self, &D_801704A8);
+            }
+            self->ext.fam.unk8E = 1;
+        }
+        self->facingLeft = PLAYER.facingLeft == 0;
+        if (self->ext.fam.unkA8 == 0) {
+            if (g_Player.unk0C & 0x800) {
+                // This causes the bat familiar to shoot a fireball when the
+                // player does so in bat form.
+                g_api.CreateEntFactoryFromEntity(self, FACTORY(0x100, 81), 0);
+                self->ext.fam.unkA8 = 1;
+            }
+        } else if (!(g_Player.unk0C & 0x800)) {
+            self->ext.fam.unkA8 = 0;
+        }
+        D_80174B38 = self->ext.fam.ent->posX.i.hi - self->posX.i.hi;
+        D_80174B3C = self->ext.fam.ent->posY.i.hi - self->posY.i.hi;
+        D_80174B34 =
+            SquareRoot12(((D_80174B38 * D_80174B38) + (D_80174B3C * D_80174B3C))
+                         << 0xC) >>
+            0xC;
+        if ((func_801746A0(0) != 0) || (D_80174B34 >= 0x19)) {
+            for (D_80174B30 = 0; D_80174B30 < 0xF; D_80174B30++) {
+                D_80174C3C[self->ext.fam.unk82][D_80174B30].x =
+                    D_80174C3C[self->ext.fam.unk82][D_80174B30 + 1].x;
+                D_80174C3C[self->ext.fam.unk82][D_80174B30].y =
+                    D_80174C3C[self->ext.fam.unk82][D_80174B30 + 1].y;
+            }
+            D_80174C3C[self->ext.fam.unk82][D_80174B30].x =
+                self->ext.fam.ent->posX.i.hi + self->ext.fam.cameraX;
+            D_80174C3C[self->ext.fam.unk82][D_80174B30].y =
+                self->ext.fam.ent->posY.i.hi + self->ext.fam.cameraY;
+        }
+        if (!(g_Player.unk0C & 1)) {
+            self->ext.fam.unk8C = 0;
+            self->step += 1;
+        }
+        break;
+    case 2:
+        if (++self->ext.fam.unk8C == 1) {
+            if (self->ext.fam.unk82 == 0) {
+                g_api.PlaySfx(SOUND_BAT_SCREECH);
+            }
+            func_8017170C(self, 2);
+        } else if (self->ext.fam.unk8C >= 0x1F) {
+            func_8017170C(self, 0);
+            if (self->ext.fam.unk82 == 0) {
+                self->entityId = 0xD1;
+                self->step = 0;
+                break;
+            }
+            self->step++;
+            D_80174C3C[self->ext.fam.unk82][0].x =
+                PLAYER.facingLeft ? -0x80 : 0x180;
+            D_80174C3C[self->ext.fam.unk82][0].y = rand() % 256;
+            func_801710E8(self, &D_801704A8);
+        }
+        break;
+    case 3:
+        D_80174B40 = D_80174C3C[self->ext.fam.unk82][0].x;
+        D_80174B44 = D_80174C3C[self->ext.fam.unk82][0].y;
+        self->velocityX = (D_80174B40 - self->posX.i.hi) << 0xA;
+        self->velocityY = (D_80174B44 - self->posY.i.hi) << 0xA;
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        if (self->posX.i.hi < -0x20 || 0x120 < self->posX.i.hi) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    func_80174210(self, 0);
+    func_80171560(self);
+    g_api.UpdateAnim(NULL, &D_801705F4);
+}
 
 void func_8017339C(void) {}
 
