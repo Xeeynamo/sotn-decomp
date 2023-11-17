@@ -7,7 +7,7 @@ s32 AdvanceCdSoundCommandQueue(void);
 
 #define CD_PREGAP_BLOCKS 150
 
-extern u8 D_800BD224[];
+extern u8 g_XaMusicConfigs[];
 extern s32 D_800BD228[];
 extern u8 D_800BD22D[];
 extern s16 D_8013845C;
@@ -27,7 +27,7 @@ s32 CdSoundCommand6(void) {
         D_801390A0 = 1;
         D_8013845C = g_CurrentXaSoundId;
         temp_v0 = (g_CurrentXaSoundId << 4) + 0x10;
-        cd_pos = D_800BD22D[temp_v0] + *(u32*)&D_800BD224[temp_v0];
+        cd_pos = D_800BD22D[temp_v0] + *(u32*)&g_XaMusicConfigs[temp_v0];
         cd_pos += CD_PREGAP_BLOCKS + g_CurCdPos;
         MakeCdLoc(cd_pos, &D_8013B640);
         g_CdSoundCommandStep += 1;

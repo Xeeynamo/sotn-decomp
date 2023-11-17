@@ -12,17 +12,17 @@ extern u8 D_8013B640;
 extern s32 D_8013AEF4;
 
 struct Temp {
-    u32 unk224;
+    u32 cd_addr;
     s32 unk228;
-    u8 unk22c;
-    u8 unk22d;
-    u8 unk22e;
+    u8 filter_file;
+    u8 filter_channel_id;
+    u8 volume;
     u8 unk22f;
     u8 unk230;
     u8 pad[3];
 };
 
-extern struct Temp D_800BD224[];
+extern struct Temp g_XaMusicConfigs[];
 
 u32 CdSoundCommand4(void) {
     u32 address;
@@ -41,7 +41,7 @@ u32 CdSoundCommand4(void) {
             g_CdSoundCommand16 = 0;
         }
 
-        D_80139820 = D_800BD224[D_80138458].unk22e;
+        D_80139820 = g_XaMusicConfigs[D_80138458].volume;
         g_CdVolume = D_80139820;
         SetCdVolume(0, g_CdVolume, g_CdVolume);
 
@@ -59,8 +59,8 @@ u32 CdSoundCommand4(void) {
         }
 
     case 2:
-        *g_CdMode = D_800BD224[D_80138458].unk22c;
-        D_80138F25 = D_800BD224[D_80138458].unk22d % 16;
+        *g_CdMode = g_XaMusicConfigs[D_80138458].filter_file;
+        D_80138F25 = g_XaMusicConfigs[D_80138458].filter_channel_id % 16;
         g_CdSoundCommandStep += 1;
         var_v0 = g_CdSoundCommandStep;
 
@@ -75,13 +75,13 @@ u32 CdSoundCommand4(void) {
 
     case 4:
         address =
-            D_800BD224[D_80138458].unk22d + D_800BD224[D_80138458].unk224 + 150;
-        D_80139014 = D_800BD224[D_80138458].unk230;
+            g_XaMusicConfigs[D_80138458].filter_channel_id + g_XaMusicConfigs[D_80138458].cd_addr + 150;
+        D_80139014 = g_XaMusicConfigs[D_80138458].unk230;
 
         if (D_80139014 == 2) {
-            D_8013AE90 = D_800BD224[D_80138458].unk228 + 20;
+            D_8013AE90 = g_XaMusicConfigs[D_80138458].unk228 + 20;
         } else {
-            D_8013AE90 = D_800BD224[D_80138458].unk228;
+            D_8013AE90 = g_XaMusicConfigs[D_80138458].unk228;
         }
 
         address += g_CurCdPos;
