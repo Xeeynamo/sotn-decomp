@@ -1228,17 +1228,18 @@ void AddCdSoundCommand(s16 arg0) {
     s32 i;
     s32 isFound;
 
-    if (arg0 == 6) {
+    if (arg0 == CD_SOUND_COMMAND_6) {
         isFound = 0;
         for (i = 0; i < g_CdSoundCommandQueuePos; i++) {
-            if (g_CdSoundCommandQueue[i] == 0xC) {
+            if (g_CdSoundCommandQueue[i] == CD_SOUND_COMMAND_12) {
                 isFound = 1;
             }
         }
 
         if (isFound) {
             g_DebugEnabled++;
-            g_CdSoundCommandQueue[g_CdSoundCommandQueuePos] = 0xE;
+            g_CdSoundCommandQueue[g_CdSoundCommandQueuePos] =
+                CD_SOUND_COMMAND_14;
             g_CdSoundCommandQueuePos++;
             if (g_CdSoundCommandQueuePos == 0x100) {
                 D_8013AEE8++;
@@ -1247,7 +1248,8 @@ void AddCdSoundCommand(s16 arg0) {
                 }
 
                 g_CdSoundCommandQueuePos = 1;
-                g_CdSoundCommandQueue[g_CdSoundCommandQueuePos] = 0xE;
+                g_CdSoundCommandQueue[g_CdSoundCommandQueuePos] =
+                    CD_SOUND_COMMAND_14;
                 g_CdSoundCommandQueuePos++;
             }
         }

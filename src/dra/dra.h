@@ -336,6 +336,17 @@ struct SeqData {
     } unk2;
 };
 
+struct XaMusicConfig {
+    u32 cd_addr;
+    s32 unk228;
+    u8 filter_file;
+    u8 filter_channel_id;
+    u8 volume;
+    u8 unk22f;
+    u8 unk230;
+    u8 pad[3];
+};
+
 // Used for the button combos to signal successfully completing the sequence
 #define COMBO_COMPLETE 0xFF
 
@@ -509,6 +520,7 @@ extern s32 D_800B0920;
 extern s16 g_CdVolumeTable[];
 extern s16 g_VolumeTable[];
 extern struct SeqData g_SeqInfo[];
+extern struct XaMusicConfig g_XaMusicConfigs[];
 extern s32 g_DebugEnabled;
 extern s32 D_800BD1C4;
 extern s32 g_VabAddrs[6];
@@ -763,7 +775,7 @@ extern s16 D_80139804;
 extern s32 D_8013980C;
 extern u8 g_SeqPlayingId;
 extern s16 D_80139814[];
-extern s16 D_80139820;
+extern s16 g_XaMusicVolume;
 extern s32 D_80139824;
 extern s32 D_80139828[];
 extern s32 D_8013982C;

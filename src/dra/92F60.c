@@ -5,24 +5,10 @@
 void SetCdVolume(s8 s_num, s16 arg1, s16 arg2);
 
 extern s16 g_CurrentXaSoundId;
-extern s16 D_80138458;
-extern s8 D_80138F25;
+extern s16 g_CurrentXaConfigId;
 extern s32 D_8013AE90;
 extern u8 D_8013B640;
 extern s32 D_8013AEF4;
-
-struct Temp {
-    u32 unk224;
-    s32 unk228;
-    u8 unk22c;
-    u8 unk22d;
-    u8 unk22e;
-    u8 unk22f;
-    u8 unk230;
-    u8 pad[3];
-};
-
-extern struct Temp D_800BD224[];
 
 u32 CdSoundCommand4(void) {
     u32 address;
@@ -31,7 +17,7 @@ u32 CdSoundCommand4(void) {
     switch (g_CdSoundCommandStep) {
     case 0:
         D_801390A0 = 1;
-        D_80138458 = g_CurrentXaSoundId;
+        g_CurrentXaConfigId = g_CurrentXaSoundId;
 
 #ifdef VERSION_HD
         if (g_CurrentXaSoundId < 0x3d) {
@@ -41,11 +27,10 @@ u32 CdSoundCommand4(void) {
             g_CdSoundCommand16 = 0;
         }
 
-        D_80139820 = D_800BD224[D_80138458].unk22e;
-        g_CdVolume = D_80139820;
+        g_XaMusicVolume = g_XaMusicConfigs[g_CurrentXaConfigId].volume;
+        g_CdVolume = g_XaMusicVolume;
         SetCdVolume(0, g_CdVolume, g_CdVolume);
-
-        *g_CdMode = 0xC8;
+        g_CdMode[0] = CdlModeSpeed | CdlModeRT | CdlModeSF;
         g_CdSoundCommandStep += 1;
         var_v0 = g_CdSoundCommandStep;
 
@@ -59,8 +44,9 @@ u32 CdSoundCommand4(void) {
         }
 
     case 2:
-        *g_CdMode = D_800BD224[D_80138458].unk22c;
-        D_80138F25 = D_800BD224[D_80138458].unk22d % 16;
+        g_CdMode[0] = g_XaMusicConfigs[g_CurrentXaConfigId].filter_file;
+        g_CdMode[1] =
+            g_XaMusicConfigs[g_CurrentXaConfigId].filter_channel_id % 16;
         g_CdSoundCommandStep += 1;
         var_v0 = g_CdSoundCommandStep;
 
@@ -74,14 +60,14 @@ u32 CdSoundCommand4(void) {
         }
 
     case 4:
-        address =
-            D_800BD224[D_80138458].unk22d + D_800BD224[D_80138458].unk224 + 150;
-        D_80139014 = D_800BD224[D_80138458].unk230;
+        address = g_XaMusicConfigs[g_CurrentXaConfigId].filter_channel_id +
+                  g_XaMusicConfigs[g_CurrentXaConfigId].cd_addr + 150;
+        D_80139014 = g_XaMusicConfigs[g_CurrentXaConfigId].unk230;
 
         if (D_80139014 == 2) {
-            D_8013AE90 = D_800BD224[D_80138458].unk228 + 20;
+            D_8013AE90 = g_XaMusicConfigs[g_CurrentXaConfigId].unk228 + 20;
         } else {
-            D_8013AE90 = D_800BD224[D_80138458].unk228;
+            D_8013AE90 = g_XaMusicConfigs[g_CurrentXaConfigId].unk228;
         }
 
         address += g_CurCdPos;
@@ -125,7 +111,7 @@ u32 CdSoundCommand4(void) {
         SsSetSerialAttr(0, 0, 1);
         D_8013AEF4 = VSync(-1);
         g_CdSoundCommandStep = 0;
-        D_8013901C = D_80138458;
+        D_8013901C = g_CurrentXaConfigId;
         D_801390A0 = g_CdSoundCommandStep;
         return AdvanceCdSoundCommandQueue();
 
