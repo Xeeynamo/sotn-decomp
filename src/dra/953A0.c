@@ -56,20 +56,20 @@ void ApplyQuadChannelSetting(
     volumeMod = volume;
     if (volumeMod == 0xFFFF) {
         g_ChannelGroupVolume[channel_group] =
-            (D_8013AE7C * D_800BF554[arg0].volume) >> 7;
+            (D_8013AE7C * g_SfxData[arg0].volume) >> 7;
         g_UnkChannelSetting1[channel_group] = 0;
     } else {
-        calcVolume = (D_8013AE7C * D_800BF554[arg0].volume) >> 7;
+        calcVolume = (D_8013AE7C * g_SfxData[arg0].volume) >> 7;
         g_ChannelGroupVolume[channel_group] = (calcVolume * volumeMod) >> 7;
         g_UnkChannelSetting1[channel_group] = arg4;
     }
     g_UnkChannelSetting2[channel_group] = arg0;
-    D_8013B5EC[channel_group] = D_800BF554[arg0].unk4;
-    progId = D_800BF554[arg0].prog + 1;
+    D_8013B5EC[channel_group] = g_SfxData[arg0].unk4;
+    progId = g_SfxData[arg0].prog + 1;
     D_8013B628[channel_group] = D_800C1ECC[progId];
     D_8013B66C[channel_group] = 0;
     D_8013B648[channel_group] = arg0;
-    D_8013AEA0[channel_group] = D_800BF554[arg0].unk6;
+    D_8013AEA0[channel_group] = g_SfxData[arg0].unk6;
 }
 
 void func_80135624(
@@ -81,10 +81,10 @@ void func_80135624(
                             (1 << (((channel_group + 6) * 2) + 1));
     }
     func_80132A04(
-        (channel_group * 2) + 12, D_800BF554[arg0].vabid, D_800BF554[arg0].prog,
-        D_800BF554[arg0].tone, D_800BF554[arg0].note, volume, distance);
+        (channel_group * 2) + 12, g_SfxData[arg0].vabid, g_SfxData[arg0].prog,
+        g_SfxData[arg0].tone, g_SfxData[arg0].note, volume, distance);
     D_8013B650[channel_group] = arg0;
-    D_8013AED4[channel_group] = D_800BF554[arg0].unk6;
+    D_8013AED4[channel_group] = g_SfxData[arg0].unk6;
 }
 
 INCLUDE_ASM("dra/nonmatchings/953A0", func_8013572C);

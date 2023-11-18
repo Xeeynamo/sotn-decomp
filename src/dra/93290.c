@@ -512,21 +512,20 @@ void func_80134B48(void) {
 }
 
 void func_80134C60(void) {
-    u16 temp = (D_8013AE7C * D_800BF554[D_8013B664].volume) >> 7;
-    func_80132A04(
-        0x14, D_800BF554[D_8013B664].vabid, D_800BF554[D_8013B664].prog,
-        D_800BF554[D_8013B664].tone, D_800BF554[D_8013B664].note,
-        (temp * (u16)D_801390A4) >> 7, D_80139010);
+    u16 temp = (D_8013AE7C * g_SfxData[D_8013B664].volume) >> 7;
+    func_80132A04(0x14, g_SfxData[D_8013B664].vabid, g_SfxData[D_8013B664].prog,
+                  g_SfxData[D_8013B664].tone, g_SfxData[D_8013B664].note,
+                  (temp * (u16)D_801390A4) >> 7, D_80139010);
 }
 
 void func_80134D14(void) {
     u16 volume;
 
-    volume = D_8013AE7C * D_800BF554[D_80139804].volume >> 7;
+    volume = D_8013AE7C * g_SfxData[D_80139804].volume >> 7;
     volume = volume * D_8013AEE0 >> 7;
-    func_80132A04(0x16, D_800BF554[D_80139804].vabid,
-                  D_800BF554[D_80139804].prog, D_800BF554[D_80139804].tone,
-                  D_800BF554[D_80139804].note, volume, D_8013AE94);
+    func_80132A04(0x16, g_SfxData[D_80139804].vabid, g_SfxData[D_80139804].prog,
+                  g_SfxData[D_80139804].tone, g_SfxData[D_80139804].note,
+                  volume, D_8013AE94);
     g_VolR = (volume * g_VolumeTable[D_8013AE94 * 2 + 0]) >> 8;
     g_VolL = (volume * g_VolumeTable[D_8013AE94 * 2 + 1]) >> 8;
     SsUtSetVVol(0x16, g_VolL, g_VolR);
@@ -536,7 +535,7 @@ void func_80134D14(void) {
 void func_80134E64(void) {
     u16 volume;
 
-    volume = D_8013AE7C * D_800BF554[D_80139804].volume >> 7;
+    volume = D_8013AE7C * g_SfxData[D_80139804].volume >> 7;
     volume = volume * D_8013AEE0 >> 7;
     g_VolR = (volume * g_VolumeTable[D_8013AE94 * 2 + 0]) >> 8;
     g_VolL = (volume * g_VolumeTable[D_8013AE94 * 2 + 1]) >> 8;

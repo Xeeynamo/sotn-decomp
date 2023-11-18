@@ -541,7 +541,7 @@ extern const char aRgb02x02x02x;
 extern const char aSp03x;
 extern const char aSp1603x;
 extern const char aTile03x;
-extern Unkstruct_800BF554 D_800BF554[];
+extern Unkstruct_800BF554 g_SfxData[];
 
 extern char* aErrorStep;
 extern char* aAtariNuki;

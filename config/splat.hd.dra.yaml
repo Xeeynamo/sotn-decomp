@@ -53,7 +53,8 @@ segments:
       - [0x1D28C, .data, 8D3E8] # g_VabAddrs
       - [0x1D2A4, .data, 8D3E8] # g_SeqInfo
       - [0x1D2E8, data, assets, music_xa, g_XaMusicConfigs] # g_XaMusicConfigs
-      - [0x1F5F8, data] # D_800BF554
+      - [0x1F5F8, assets, sfx, g_SfxData] # g_SfxData
+      - [0x20A20, data]
       - [0x3B458, .rodata, 42398]
       - [0x3B618, .rodata, play]
       - [0x3B648, rodata, gameover] # jtbl_800DB648
