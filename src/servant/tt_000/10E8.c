@@ -634,10 +634,10 @@ void func_801733CC(void) {}
 
 void func_801733D4(Entity* self) {
     const s32 nPrim = 16;
-    const XS = 11; // X start, left
-    const XE = 13; // X end, right
-    const YS = 24; // Y start, top
-    const YE = 8;  // Y end, bottom
+    const s32 XS = 11; // X start, left
+    const s32 XE = 13; // X end, right
+    const s32 YS = 24; // Y start, top
+    const s32 YE = 8;  // Y end, bottom
     s32 i;
     s32 isEntityAlive;
 
