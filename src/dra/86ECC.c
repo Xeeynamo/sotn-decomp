@@ -492,7 +492,7 @@ void EntitySubwpnReboundStone(Entity* self) {
     s32 currX;
     s32 currY;
 
-    s32 hexFourHundred = 0x400;
+    s32 speed = 0x400;
     s32 facingLeft;
 
     self->ext.reboundStone.unk82 = 0;
@@ -501,7 +501,7 @@ void EntitySubwpnReboundStone(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimitives(2U, 0x10);
+        self->primIndex = AllocPrimitives(PRIM_LINE_G2, 16);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -548,7 +548,7 @@ void EntitySubwpnReboundStone(Entity* self) {
         if (self->ext.reboundStone.unk84 == 0) {
             for (i = 0; i < 6; i++) {
                 CheckCollision(
-                    currX >> 0x10, (currY + deltaY) >> 0x10, &collider, 0);
+                    FIX_TO_I(currX), FIX_TO_I(currY + deltaY), &collider, 0);
                 if (collider.effects & EFFECT_SOLID) {
                     colliderFlags =
                         collider.effects &
@@ -614,7 +614,7 @@ void EntitySubwpnReboundStone(Entity* self) {
                     }
                 }
                 CheckCollision(
-                    (currX + deltaX) >> 0x10, currY >> 0x10, &collider, 0);
+                    FIX_TO_I(currX + deltaX), FIX_TO_I(currY), &collider, 0);
                 if (collider.effects & EFFECT_SOLID) {
                     colliderFlags =
                         collider.effects &
@@ -697,18 +697,16 @@ void EntitySubwpnReboundStone(Entity* self) {
             CreateEntFactoryFromEntity(self, FACTORY(0, 10), 0);
             PlaySfx(REBOUND_STONE_BOUNCE);
         }
-        if (((((u16)self->posX.i.hi + 0x40) & 0xFFFF) >= 0x181U) ||
-            ((((u16)self->posY.i.hi + 0x40) & 0xFFFF) >= 0x181U) ||
-            (self->ext.reboundStone.unk80 == 15)) {
+        if (self->posX.i.hi < -0x40 || self->posX.i.hi > 0x140 ||
+            self->posY.i.hi < -0x40 || self->posY.i.hi > 0x140 ||
+            self->ext.reboundStone.unk80 == 15) {
             self->step = 2;
         } else {
-            deltaX = ((rcos(self->ext.reboundStone.stoneAngle) << 4) *
-                      hexFourHundred) >>
-                     8;
+            deltaX =
+                ((rcos(self->ext.reboundStone.stoneAngle) << 4) * speed) >> 8;
             self->posX.val += deltaX;
-            deltaY = -((rsin(self->ext.reboundStone.stoneAngle) << 4) *
-                       hexFourHundred) >>
-                     8;
+            deltaY =
+                -((rsin(self->ext.reboundStone.stoneAngle) << 4) * speed) >> 8;
             self->posY.val += deltaY;
         }
         break;
