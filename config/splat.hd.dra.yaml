@@ -151,7 +151,7 @@ segments:
       - [0x41F50, .rodata, 92F60] # jtbl_800E1F50
       - [0x41F78, .rodata, 93290] # jtbl_800E1F78
       - [0x41F90, rodata] # jtbl_800E1F90
-      - [0x41FA8, rodata] # jtbl_800E1FA8
+      - [0x41FA8, .rodata, 93BDC] # CdSoundCommand14
       - [0x41FD0, .rodata, 94F50] # jtbl_800E1FD0
       - [0x42270, .rodata, 953A0]
       - [0x422B4, c, 42398]

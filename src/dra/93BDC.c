@@ -2,8 +2,131 @@
 #include "objects.h"
 #include "sfx.h"
 
-INCLUDE_ASM("dra/nonmatchings/93BDC", CdSoundCommand14);
-void CdSoundCommand14();
+struct Cmd14 {
+    u8 unk0[8];
+    s32 unk8;
+    s16 unkc;
+    s8 unke;
+};
+
+extern s32 D_8013AE90;
+extern s32 D_8013AEF4;
+
+extern u8 D_8013B688[];
+extern struct Cmd14 D_8013B5F4[];
+
+void CdSoundCommand14(void) {
+    s16 temp_v0_2;
+    s32 var_v1;
+    s32 var_v0;
+
+    switch (g_CdSoundCommandStep & 0xFF) {
+    case 0:
+        if (g_CdSoundCommand16 == 0 || g_CdSoundCommand16 >= 3) {
+            D_8013980C = 0;
+            AdvanceCdSoundCommandQueue();
+            return;
+        }
+        if (D_8013901C != 0) {
+            D_8013980C = 0;
+            AdvanceCdSoundCommandQueue();
+            return;
+        }
+        D_801390A0 = 1;
+        var_v1 = 0;
+        do {
+            D_8013B688[var_v1] =
+                D_8013B5F4[g_CdSoundCommand16 - 1].unk0[var_v1];
+            var_v1 += 1;
+        } while (var_v1 < 8);
+        D_8013901C = D_8013B5F4[g_CdSoundCommand16 - 1].unkc;
+        g_XaMusicVolume = g_XaMusicConfigs[D_8013901C].volume;
+        g_CdVolume = 0;
+        SetCdVolume(0, 0, 0);
+        g_CdMode[0] = 0xC8;
+        g_CdSoundCommandStep = g_CdSoundCommandStep + 1;
+        var_v0 = g_CdSoundCommandStep;
+        return;
+    case 1:
+        var_v0 = DoCdCommand(CdlSetmode, g_CdMode, NULL);
+        if (var_v0 == 0) {
+            g_CdMode[0] = g_XaMusicConfigs[D_8013901C].filter_file;
+            g_CdMode[1] = g_XaMusicConfigs[D_8013901C].filter_channel_id & 0xf;
+            g_CdSoundCommandStep = g_CdSoundCommandStep + 1;
+            var_v0 = g_CdSoundCommandStep;
+            return;
+        }
+        break;
+    case 2:
+        var_v0 = DoCdCommand(CdlSetfilter, g_CdMode, NULL);
+        if (var_v0 == 0) {
+            g_CdSoundCommandStep = g_CdSoundCommandStep + 1;
+            var_v0 = g_CdSoundCommandStep;
+            return;
+        }
+        break;
+    case 3:
+        var_v0 = DoCdCommand(CdlSetloc, D_8013B688, NULL);
+        if (var_v0 == 0) {
+            g_CdSoundCommandStep = g_CdSoundCommandStep + 1;
+            var_v0 = g_CdSoundCommandStep;
+            return;
+        }
+        break;
+    case 4:
+        var_v0 = DoCdCommand(CdlReadN, NULL, NULL);
+        if (var_v0 == 0) {
+            g_CdSoundCommandStep = g_CdSoundCommandStep + 1;
+            var_v0 = g_CdSoundCommandStep;
+            return;
+        }
+        break;
+    case 5:
+        var_v0 = DoCdCommand(CdlNop, NULL, g_CdCommandResult);
+        if (var_v0 == 0) {
+            var_v0 = *g_CdCommandResult & 0x40;
+            if (var_v0 == 0) {
+                g_CdSoundCommandStep = g_CdSoundCommandStep + 1;
+                var_v0 = g_CdSoundCommandStep;
+                return;
+            }
+        }
+        break;
+    case 6:
+        D_8013AEF4 = VSync(-1);
+        SsSetSerialAttr(0, 0, 1);
+        D_8013AE90 = D_8013B5F4[g_CdSoundCommand16 - 1].unk8;
+        D_80139014 = D_8013B5F4[g_CdSoundCommand16 - 1].unke;
+        g_CdSoundCommandStep = g_CdSoundCommandStep + 1;
+        var_v0 = g_CdSoundCommandStep;
+        return;
+    case 7:
+        if ((g_CdVolume >= g_XaMusicVolume) ||
+            (temp_v0_2 = g_CdVolume + 0xC, g_CdVolume = temp_v0_2,
+             ((temp_v0_2 < g_XaMusicVolume) == 0))) {
+            g_CdVolume = g_XaMusicVolume;
+            g_CdSoundCommandStep = g_CdSoundCommandStep + 1;
+            var_v0 = g_CdSoundCommandStep;
+        }
+        SetCdVolume(0, g_CdVolume, g_CdVolume);
+        return;
+    case 8:
+        D_801390A0 = 0;
+        D_8013980C = 0;
+        g_CdSoundCommandStep = 0;
+        g_CdSoundCommand16--;
+        AdvanceCdSoundCommandQueue();
+        return;
+    default:
+        g_CdSoundCommandStep = 0;
+        D_8013980C = 0;
+        D_801390A0 = g_CdSoundCommandStep;
+        AdvanceCdSoundCommandQueue();
+        return;
+    }
+}
+
+const u32 padding_CdSoundCommand14 = 0;
 
 INCLUDE_ASM("dra/nonmatchings/93BDC", func_80133FCC);
 
