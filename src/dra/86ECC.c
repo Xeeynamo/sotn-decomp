@@ -533,7 +533,7 @@ void EntitySubwpnReboundStone(Entity* self) {
         self->hitboxHeight = 4;
         g_Player.D_80072F14 = 4;
         CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
-        if (collider.effects & 1) {
+        if (collider.effects & EFFECT_SOLID) {
             self->ext.reboundStone.unk84 = 4;
         }
         self->step += 1;
@@ -549,59 +549,73 @@ void EntitySubwpnReboundStone(Entity* self) {
             for (i = 0; i < 6; i++) {
                 CheckCollision(
                     currX >> 0x10, (currY + deltaY) >> 0x10, &collider, 0);
-                if (collider.effects & 1) {
-                    colliderFlags = collider.effects & 0xF800;
+                if (collider.effects & EFFECT_SOLID) {
+                    colliderFlags =
+                        collider.effects &
+                        (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+                         EFFECT_UNK_1000 | EFFECT_UNK_0800);
                     if (deltaY > 0) {
                         if ((colliderFlags == 0) ||
-                            (collider.effects & 0x800)) {
+                            (collider.effects & EFFECT_UNK_0800)) {
                             ReboundStoneBounce1(0x800);
                         }
-                        if (colliderFlags == 0x8000) {
+                        if (colliderFlags == EFFECT_UNK_8000) {
                             ReboundStoneBounce2(0x200);
                         }
-                        if (colliderFlags == 0x9000) {
+                        if (colliderFlags ==
+                            EFFECT_UNK_8000 + EFFECT_UNK_1000) {
                             ReboundStoneBounce2(0x12E);
                         }
-                        if (colliderFlags == 0xA000) {
+                        if (colliderFlags ==
+                            EFFECT_UNK_8000 + EFFECT_UNK_2000) {
                             ReboundStoneBounce2(0xA0);
                         }
-                        if (colliderFlags == 0xC000) {
+                        if (colliderFlags ==
+                            EFFECT_UNK_8000 + EFFECT_UNK_4000) {
                             ReboundStoneBounce2(0x600);
                         }
-                        if (colliderFlags == 0xD000) {
+                        if (colliderFlags == EFFECT_UNK_8000 + EFFECT_UNK_4000 +
+                                                 EFFECT_UNK_1000) {
                             ReboundStoneBounce2(0x6D2);
                         }
-                        if (colliderFlags == 0xE000) {
+                        if (colliderFlags == EFFECT_UNK_8000 + EFFECT_UNK_4000 +
+                                                 EFFECT_UNK_2000) {
                             ReboundStoneBounce2(0x760);
                         }
                     }
                     if (deltaY < 0) {
-                        if ((colliderFlags == 0) || (colliderFlags & 0x8000)) {
+                        if ((colliderFlags == 0) ||
+                            (colliderFlags & EFFECT_UNK_8000)) {
                             ReboundStoneBounce1(0x800);
                         }
-                        if (colliderFlags == 0x800) {
+                        if (colliderFlags == EFFECT_UNK_0800) {
                             ReboundStoneBounce2(0xE00);
                         }
-                        if (colliderFlags == 0x1800) {
+                        if (colliderFlags ==
+                            EFFECT_UNK_0800 + EFFECT_UNK_1000) {
                             ReboundStoneBounce2(0xED2);
                         }
-                        if (colliderFlags == 0x2800) {
+                        if (colliderFlags ==
+                            EFFECT_UNK_0800 + EFFECT_UNK_2000) {
                             ReboundStoneBounce2(0xF60);
                         }
-                        if (colliderFlags == 0x4800) {
+                        if (colliderFlags ==
+                            EFFECT_UNK_0800 + EFFECT_UNK_4000) {
                             ReboundStoneBounce2(0xA00);
                         }
-                        if (colliderFlags == 0x5800) {
+                        if (colliderFlags == EFFECT_UNK_0800 + EFFECT_UNK_4000 +
+                                                 EFFECT_UNK_1000) {
                             ReboundStoneBounce2(0x92E);
                         }
-                        if (colliderFlags == 0x6800) {
+                        if (colliderFlags == EFFECT_UNK_0800 + EFFECT_UNK_4000 +
+                                                 EFFECT_UNK_2000) {
                             ReboundStoneBounce2(0x8A0);
                         }
                     }
                 }
                 CheckCollision(
                     (currX + deltaX) >> 0x10, currY >> 0x10, &collider, 0);
-                if (collider.effects & 1) {
+                if (collider.effects & EFFECT_SOLID) {
                     colliderFlags =
                         collider.effects &
                         (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
@@ -613,22 +627,26 @@ void EntitySubwpnReboundStone(Entity* self) {
                             TEST_BITS(collider.effects, 0xC000)) {
                             ReboundStoneBounce1(0x400);
                         }
-                        if (colliderFlags == 0x800) {
+                        if (colliderFlags == EFFECT_UNK_0800) {
                             ReboundStoneBounce2(0xE00);
                         }
-                        if (colliderFlags == 0x1800) {
+                        if (colliderFlags ==
+                            EFFECT_UNK_0800 + EFFECT_UNK_1000) {
                             ReboundStoneBounce2(0xED2);
                         }
-                        if (colliderFlags == 0x2800) {
+                        if (colliderFlags ==
+                            EFFECT_UNK_0800 + EFFECT_UNK_2000) {
                             ReboundStoneBounce2(0xF60);
                         }
-                        if (colliderFlags == 0x8000) {
+                        if (colliderFlags == EFFECT_UNK_8000) {
                             ReboundStoneBounce2(0x200);
                         }
-                        if (colliderFlags == 0x9000) {
+                        if (colliderFlags ==
+                            EFFECT_UNK_8000 + EFFECT_UNK_1000) {
                             ReboundStoneBounce2(0x12E);
                         }
-                        if (colliderFlags == 0xA000) {
+                        if (colliderFlags ==
+                            EFFECT_UNK_8000 + EFFECT_UNK_2000) {
                             ReboundStoneBounce2(0xA0);
                         }
                     }
@@ -639,22 +657,28 @@ void EntitySubwpnReboundStone(Entity* self) {
                             ((colliderFlags & 0xC000) == 0x8000)) {
                             ReboundStoneBounce1(0x400);
                         }
-                        if (colliderFlags == 0x4800) {
+                        if (colliderFlags ==
+                            EFFECT_UNK_0800 + EFFECT_UNK_4000) {
                             ReboundStoneBounce2(0xA00);
                         }
-                        if (colliderFlags == 0x5800) {
+                        if (colliderFlags == EFFECT_UNK_0800 + EFFECT_UNK_4000 +
+                                                 EFFECT_UNK_1000) {
                             ReboundStoneBounce2(0x92E);
                         }
-                        if (colliderFlags == 0x6800) {
+                        if (colliderFlags == EFFECT_UNK_0800 + EFFECT_UNK_4000 +
+                                                 EFFECT_UNK_2000) {
                             ReboundStoneBounce2(0x8A0);
                         }
-                        if (colliderFlags == 0xC000) {
+                        if (colliderFlags ==
+                            EFFECT_UNK_8000 + EFFECT_UNK_4000) {
                             ReboundStoneBounce2(0x600);
                         }
-                        if (colliderFlags == 0xD000) {
+                        if (colliderFlags == EFFECT_UNK_8000 + EFFECT_UNK_4000 +
+                                                 EFFECT_UNK_1000) {
                             ReboundStoneBounce2(0x6D2);
                         }
-                        if (colliderFlags == 0xE000) {
+                        if (colliderFlags == EFFECT_UNK_8000 + EFFECT_UNK_4000 +
+                                                 EFFECT_UNK_2000) {
                             ReboundStoneBounce2(0x760);
                         }
                     }
@@ -724,7 +748,7 @@ void EntitySubwpnReboundStone(Entity* self) {
             prim->x1 = self->posX.i.hi;
             prim->y1 = self->posY.i.hi;
         }
-        if (!(prim->blendMode & 8)) {
+        if (!(prim->blendMode & BLEND_VISIBLE)) {
             if (LOH(prim->u3) != 0) {
                 LOH(prim->u3)--;
             } else {
