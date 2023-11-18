@@ -71,8 +71,9 @@ def is_splat_symbol_name(name):
 
 
 def add_newline_if_missing(list):
-    if not list[-1].endswith("\n"):
-        list[-1] += "\n"
+    if len(list) > 0:
+        if not list[-1].endswith("\n"):
+            list[-1] += "\n"
     return list
 
 
