@@ -203,12 +203,14 @@ void func_801274DC(Entity* entity) {
 // Entity ID 45. Created by factory blueprint 81.
 // That blueprint is used in ControlBatForm, when step_s is 4.
 // Also, when bat familiar shoots a fireball, the blueprint
-// is used in func_80172C30. Will decompile that next.
+// is used in func_80172C30.
 
 void EntityBatFireball(Entity* self) {
-    s8 params;
+    // This is a 1 when a bat familiar is shooting, and a 0
+    // when the player (in bat form) is shooting the fireball.
+    // Appears to have no impact on the behavior of this function.
+    s8 params = (self->params >> 8) & 0x7F;
 
-    params = (self->params >> 8) & 0x7F;
     switch (self->step) {
     case 0:
         PlaySfx(NA_SE_PL_BT_FIREBALL);
