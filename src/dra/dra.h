@@ -830,7 +830,7 @@ extern s16 D_8013B664;
 extern s16 g_CdVolume;
 extern s16 D_8013B66C[];
 extern u8 D_8013B680;
-extern s8 g_CdSoundCommand16;
+extern u8 g_CdSoundCommand16;
 extern s8 D_8013B690;
 extern s32 D_8013B694;
 extern s32 D_8013B69C;
