@@ -2,18 +2,8 @@
 #include "objects.h"
 #include "sfx.h"
 
-struct Cmd14 {
-    u8 unk0[8];
-    s32 unk8;
-    s16 unkc;
-    s8 unke;
-};
-
 extern s32 D_8013AE90;
 extern s32 D_8013AEF4;
-
-extern u8 D_8013B688[];
-extern struct Cmd14 D_8013B5F4[];
 
 void CdSoundCommand14(void) {
     s32 i;
