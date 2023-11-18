@@ -514,7 +514,7 @@ void EntitySubwpnReboundStone(Entity* self) {
             prim->priority = PLAYER.zPriority + 2;
             prim->blendMode = 0x33;
             if (i != 0) {
-                prim->blendMode = 0x3B;
+                prim->blendMode |= BLEND_VISIBLE;
             }
             prim->x0 = prim->x1 = playerX;
             prim->y0 = prim->y1 = playerY;
