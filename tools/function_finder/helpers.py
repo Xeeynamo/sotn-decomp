@@ -37,6 +37,6 @@ def find_scratches(name, platform):
             best_result = result
 
     if best_result:
-        return [f"https://decomp.me{best_result['url']}", round(best_percent, 3)]
+        return [f"https://decomp.me/scratch/{best_result['slug']}", round(best_percent, 3)]
 
     return None
