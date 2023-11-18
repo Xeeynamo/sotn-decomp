@@ -62,7 +62,8 @@ segments:
       - [0x1D1C8, .data, 8D3E8] # g_VabAddrs
       - [0x1D1E0, .data, 8D3E8] # g_SeqInfo
       - [0x1D224, assets, music_xa, g_XaMusicConfigs] # g_XaMusicConfigs
-      - [0x1F554, data] # D_800BF554
+      - [0x1F554, assets, sfx, g_SfxData] # g_SfxData
+      - [0x2097C, data] # D_800C097C (not sure where sfx ends)
       - [0x2217C, data]
       - [0x227B0, data]
       - [0x3B3B0, rodata]
