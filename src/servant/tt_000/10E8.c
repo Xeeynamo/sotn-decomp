@@ -11,6 +11,13 @@ extern s32 D_80171090;
 extern EntitySearch D_80171094[];
 extern s32 D_801748D8[];
 extern Collider D_80174AD8;
+extern Primitive* D_80174B48;
+extern s32 D_80174B4C[16];
+extern Point16 D_80174B8C[16];
+extern s16 D_80174BCC[16];
+extern s16 D_80174BEC[16];
+extern s16 D_80174C0C[16];
+extern s32 D_80174C2C;
 extern Unkstruct_8011A3AC D_80174C30;
 extern Point16 D_80174C3C[][16];
 extern s32 D_80174D3C;
@@ -39,9 +46,6 @@ ServantDesc g_ServantDesc = {
     func_801733C4, func_801733CC, func_801733D4, func_80173C0C,
     func_80173C14, func_80173C1C, func_80173C24, func_80173C2C,
 };
-
-void func_80174210(Entity* self, s32 arg1);
-s32 func_80174864(void);
 
 void func_801710E8(Entity* entity, s32* arg1) {
     if (entity->unk4C != arg1) {
@@ -573,7 +577,7 @@ void func_80172C30(Entity* self) {
         }
         if (!(g_Player.unk0C & 1)) {
             self->ext.fam.unk8C = 0;
-            self->step += 1;
+            self->step++;
         }
         break;
     case 2:
@@ -628,7 +632,137 @@ void func_801733C4(void) {}
 
 void func_801733CC(void) {}
 
-INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_801733D4);
+void func_801733D4(Entity* self) {
+    const s32 nPrim = 16;
+    const XS = 11; // X start, left
+    const XE = 13; // X end, right
+    const YS = 24; // Y start, top
+    const YE = 8;  // Y end, bottom
+    s32 i;
+    s32 isEntityAlive;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, nPrim);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        } else {
+            self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+            D_80174B48 = &g_PrimBuf[self->primIndex];
+            for (i = 0; i < nPrim; i++) {
+                D_80174B48->tpage = 0x1B;
+                D_80174B48->clut = 0x143;
+                D_80174B48->u0 = D_80174B48->u2 = 64;
+                D_80174B48->v0 = D_80174B48->v1 = 0;
+                D_80174B48->u1 = D_80174B48->u3 = 88;
+                D_80174B48->v2 = D_80174B48->v3 = 32;
+                D_80174B48->priority = self->zPriority;
+                D_80174B48->blendMode = 0x15 | BLEND_VISIBLE;
+                D_80174B48 = D_80174B48->next;
+                D_80174B4C[i] = 0;
+            }
+            D_80174C2C = 0;
+            self->step++;
+        }
+        break;
+    case 1:
+        if (self->ext.factory.parent->step != 3) {
+            self->step++;
+        }
+        D_80174B8C[D_80174C2C].x = self->ext.factory.parent->posX.i.hi;
+        D_80174B8C[D_80174C2C].y = self->ext.factory.parent->posY.i.hi;
+        D_80174BCC[D_80174C2C] = self->ext.factory.parent->facingLeft;
+        D_80174BEC[D_80174C2C] = 256;
+        D_80174C0C[D_80174C2C] = 192;
+        D_80174B4C[D_80174C2C] = 1;
+        D_80174C2C++;
+        D_80174C2C = D_80174C2C >= nPrim ? 0 : D_80174C2C;
+        D_80174B48 = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < nPrim; i++) {
+            if (D_80174B4C[i]) {
+                if (D_80174BCC[i]) {
+                    D_80174B48->x0 = D_80174B48->x2 =
+                        D_80174B8C[i].x + D_80174BEC[i] * XS / 256;
+                    D_80174B48->x1 = D_80174B48->x3 =
+                        D_80174B8C[i].x - D_80174BEC[i] * XE / 256;
+                } else {
+                    D_80174B48->x0 = D_80174B48->x2 =
+                        D_80174B8C[i].x - D_80174BEC[i] * XS / 256;
+                    D_80174B48->x1 = D_80174B48->x3 =
+                        D_80174B8C[i].x + D_80174BEC[i] * XE / 256;
+                }
+                D_80174B48->y0 = D_80174B48->y1 =
+                    D_80174B8C[i].y - D_80174BEC[i] * YS / 256;
+                D_80174B48->y2 = D_80174B48->y3 =
+                    D_80174B8C[i].y + D_80174BEC[i] * YE / 256;
+                D_80174B48->r0 = D_80174B48->r1 = D_80174B48->r2 =
+                    D_80174B48->r3 = D_80174B48->g0 = D_80174B48->g1 =
+                        D_80174B48->g2 = D_80174B48->g3 = D_80174B48->b0 =
+                            D_80174B48->b1 = D_80174B48->b2 = D_80174B48->b3 =
+                                D_80174C0C[i];
+                D_80174BEC[i] -= 8;
+                D_80174C0C[i] -= 8;
+                if (D_80174C0C[i] < 81) {
+                    D_80174B48->blendMode |= BLEND_VISIBLE;
+                    D_80174B4C[i] = 0;
+                } else {
+                    D_80174B48->blendMode ^= BLEND_VISIBLE;
+                }
+            }
+            D_80174B48 = D_80174B48->next;
+        }
+        break;
+    case 2:
+        isEntityAlive = false;
+        D_80174B48 = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < nPrim; i++) {
+            if (D_80174B4C[i]) {
+                if (D_80174BCC[i]) {
+                    D_80174B48->x0 = D_80174B48->x2 =
+                        D_80174B8C[i].x + D_80174BEC[i] * XS / 256;
+                    D_80174B48->x1 = D_80174B48->x3 =
+                        D_80174B8C[i].x - D_80174BEC[i] * XE / 256;
+                } else {
+                    D_80174B48->x0 = D_80174B48->x2 =
+                        D_80174B8C[i].x - D_80174BEC[i] * XS / 256;
+                    D_80174B48->x1 = D_80174B48->x3 =
+                        D_80174B8C[i].x + D_80174BEC[i] * XE / 256;
+                }
+                D_80174B48->y0 = D_80174B48->y1 =
+                    D_80174B8C[i].y - D_80174BEC[i] * YS / 256;
+                D_80174B48->y2 = D_80174B48->y3 =
+                    D_80174B8C[i].y + D_80174BEC[i] * YE / 256;
+                D_80174B48->r0 = D_80174B48->r1 = D_80174B48->r2 =
+                    D_80174B48->r3 = D_80174B48->g0 = D_80174B48->g1 =
+                        D_80174B48->g2 = D_80174B48->g3 = D_80174B48->b0 =
+                            D_80174B48->b1 = D_80174B48->b2 = D_80174B48->b3 =
+                                D_80174C0C[i];
+                D_80174B48->r0 = D_80174B48->r1 = D_80174B48->r2 =
+                    D_80174B48->r3 = D_80174B48->g0 = D_80174B48->g1 =
+                        D_80174B48->g2 = D_80174B48->g3 = D_80174B48->b0 =
+                            D_80174B48->b1 = D_80174B48->b2 = D_80174B48->b3 =
+                                D_80174C0C[i];
+                D_80174BEC[i] -= 8;
+                D_80174C0C[i] -= 8;
+                if (D_80174C0C[i] < 81) {
+                    D_80174B48->blendMode |= BLEND_VISIBLE;
+                    D_80174B4C[i] = 0;
+                } else {
+                    D_80174B48->blendMode ^= BLEND_VISIBLE;
+                }
+            }
+            isEntityAlive |= D_80174B4C[i];
+            D_80174B48 = D_80174B48->next;
+        }
+
+        if (isEntityAlive == false) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+}
 
 void func_80173C0C(void) {}
 
