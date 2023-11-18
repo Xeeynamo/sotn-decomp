@@ -41,6 +41,12 @@ int sprintf(char* dst, const char* fmt, ...);
 #define FIX(x) ((s32)((x)*65536.0))
 #define FIX_TO_I(x) ((s32)((x) >> 16))
 
+// The second argument to CreateEntFactoryFromEntity has weird bit packing,
+// this takes the 2 relevant inputs and packs them up.
+// A0 should be a value like 0x##00 where ## is two hexadecimal digits.
+// BLUEPRINTNUM is which blueprint gets loaded from g_FactoryBlueprints.
+#define FACTORY(A0, BLUEPRINTNUM) (A0 << 8 | BLUEPRINTNUM)
+
 // PSX SDK libraries do not use float. Instead they use a fix-point number
 // where 4096 is equal to 1.0.
 #define FLT(x) ((s32)((x)*4096.0))

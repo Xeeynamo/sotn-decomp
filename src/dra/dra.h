@@ -18,12 +18,6 @@
 #define SEQ_TABLE_S_MAX 0x10
 #define SEQ_TABLE_T_MAX 1
 
-// The second argument to CreateEntFactoryFromEntity has weird bit packing,
-// this takes the 2 relevant inputs and packs them up.
-// A0 should be a value like 0x##00 where ## is two hexadecimal digits.
-// BLUEPRINTNUM is which blueprint gets loaded from g_FactoryBlueprints.
-#define FACTORY(A0, BLUEPRINTNUM) (A0 << 8 | BLUEPRINTNUM)
-
 typedef enum {
     DEBUG_NORMAL,
     DEBUG_TEXTURE_VIEWER,
