@@ -12,7 +12,7 @@ s32 func_8015D250(void) {
     if (subweaponId <= 0) {
         return 1;
     }
-    if (subweapon.unkB == 0) {
+    if (subweapon.blueprintNum == 0) {
         return 4;
     }
     if (func_8015D1D0(subweaponId, subweapon.unk6) < 0) {
@@ -25,7 +25,7 @@ s32 func_8015D250(void) {
         return 5;
     }
 
-    func_801606BC(g_CurrentEntity, subweapon.unkB, 0);
+    func_801606BC(g_CurrentEntity, subweapon.blueprintNum, 0);
     g_Player.D_80072F14 = 4;
 
     switch (PLAYER.step) {

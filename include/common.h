@@ -46,6 +46,8 @@ int sprintf(char* dst, const char* fmt, ...);
 // A0 should be a value like 0x##00 where ## is two hexadecimal digits.
 // BLUEPRINTNUM is which blueprint gets loaded from g_FactoryBlueprints.
 #define FACTORY(A0, BLUEPRINTNUM) (A0 << 8 | BLUEPRINTNUM)
+// Tests multiple bits of x being set, based on the bitmask defined in y.
+#define TEST_BITS(x, y) ((x & y) == y)
 
 // PSX SDK libraries do not use float. Instead they use a fix-point number
 // where 4096 is equal to 1.0.
