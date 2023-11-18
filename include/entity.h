@@ -540,6 +540,14 @@ typedef struct {
     s16 unk80;
 } ET_HellfireHandler;
 
+typedef struct {
+    s16 stoneAngle;
+    s16 lifeTimer;
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+} ET_ReboundStone;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_EntFactory factory;
@@ -549,6 +557,7 @@ typedef union {
     /* 0x7C */ ET_GravBootsBeam bootBeam;
     /* 0x7C */ ET_8011E4BC et_8011E4BC;
     /* 0x7C */ ET_HellfireHandler hellfireHandler;
+    /* 0x7C */ ET_ReboundStone reboundStone;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
     /* 0x7C */ ET_RelicOrb relicOrb;
     /* 0x7C */ ET_MessageBox messageBox;

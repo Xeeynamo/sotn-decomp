@@ -457,25 +457,286 @@ void func_80127CC8(Entity* entity) {
     }
 }
 
-void func_80127EAC(s16 arg0) {
-    g_CurrentEntity->ext.generic.unk7C.s =
-        (arg0 * 2) - g_CurrentEntity->ext.generic.unk7C.s;
-    if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 == 0) {
-        g_CurrentEntity->ext.generic.unk80.modeS16.unk0++;
-        g_CurrentEntity->ext.generic.unk80.modeS16.unk2++;
+// These are a pair of helper functions used for the rebound stone rebounding.
+// No clear reason why the first one puts the first line outside the
+// if statement.
+
+void ReboundStoneBounce1(s16 bounceAngle) {
+    g_CurrentEntity->ext.reboundStone.stoneAngle =
+        (bounceAngle * 2) - g_CurrentEntity->ext.reboundStone.stoneAngle;
+    if (g_CurrentEntity->ext.reboundStone.unk82 == 0) {
+        g_CurrentEntity->ext.reboundStone.unk80++;
+        g_CurrentEntity->ext.reboundStone.unk82++;
     }
 }
 
-void func_80127EF0(s16 arg0) {
-    if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 == 0) {
-        g_CurrentEntity->ext.generic.unk7C.s =
-            (arg0 * 2) - g_CurrentEntity->ext.generic.unk7C.s;
-        g_CurrentEntity->ext.generic.unk80.modeS16.unk0++;
-        g_CurrentEntity->ext.generic.unk80.modeS16.unk2++;
+void ReboundStoneBounce2(s16 bounceAngle) {
+    if (g_CurrentEntity->ext.reboundStone.unk82 == 0) {
+        g_CurrentEntity->ext.reboundStone.stoneAngle =
+            (bounceAngle * 2) - g_CurrentEntity->ext.reboundStone.stoneAngle;
+        g_CurrentEntity->ext.reboundStone.unk80++;
+        g_CurrentEntity->ext.reboundStone.unk82++;
     }
 }
+// Entity ID 20. Created by blueprint 24. This comes from BlueprintNum for
+// the rebound stone SubweaponDef.
+void EntitySubwpnReboundStone(Entity* self) {
+    Collider collider;
+    u16 playerX;
+    u16 playerY;
+    Primitive* prim;
+    s32 colliderFlags;
+    s32 i;
+    s32 deltaX;
+    s32 deltaY;
+    s32 currX;
+    s32 currY;
 
-INCLUDE_ASM("dra/nonmatchings/86ECC", EntitySubwpnReboundStone);
+    s32 hexFourHundred = 0x400;
+    s32 facingLeft;
+
+    self->ext.reboundStone.unk82 = 0;
+    playerX = self->posX.i.hi;
+    playerY = self->posY.i.hi;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = AllocPrimitives(2U, 0x10);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        for (i = 0, prim = &g_PrimBuf[self->primIndex]; prim != NULL;
+             prim = prim->next, i++) {
+            prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
+                0xFF;
+            prim->priority = PLAYER.zPriority + 2;
+            prim->blendMode = 0x33;
+            if (i != 0) {
+                prim->blendMode = 0x3B;
+            }
+            prim->x0 = prim->x1 = playerX;
+            prim->y0 = prim->y1 = playerY;
+            LOH(prim->u3) = 0x14;
+        }
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        self->zPriority = PLAYER.zPriority + 2;
+
+        facingLeft = PLAYER.facingLeft;
+        self->ext.reboundStone.stoneAngle = facingLeft == 0 ? 0xE80 : 0x980;
+        self->ext.reboundStone.stoneAngle += (rand() & 0x7F) - 0x40;
+
+        self->ext.reboundStone.lifeTimer = 0x40;
+        func_8011A290(self);
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 4;
+        g_Player.D_80072F14 = 4;
+        CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
+        if (collider.effects & 1) {
+            self->ext.reboundStone.unk84 = 4;
+        }
+        self->step += 1;
+        PlaySfx(REBOUND_STONE_THROW);
+        break;
+
+    case 1:
+        deltaX = rcos(self->ext.reboundStone.stoneAngle) * 0x10;
+        deltaY = -rsin(self->ext.reboundStone.stoneAngle) * 0x10;
+        currX = self->posX.val;
+        currY = self->posY.val;
+        if (self->ext.reboundStone.unk84 == 0) {
+            for (i = 0; i < 6; i++) {
+                CheckCollision(
+                    currX >> 0x10, (currY + deltaY) >> 0x10, &collider, 0);
+                if (collider.effects & 1) {
+                    colliderFlags = collider.effects & 0xF800;
+                    if (deltaY > 0) {
+                        if ((colliderFlags == 0) ||
+                            (collider.effects & 0x800)) {
+                            ReboundStoneBounce1(0x800);
+                        }
+                        if (colliderFlags == 0x8000) {
+                            ReboundStoneBounce2(0x200);
+                        }
+                        if (colliderFlags == 0x9000) {
+                            ReboundStoneBounce2(0x12E);
+                        }
+                        if (colliderFlags == 0xA000) {
+                            ReboundStoneBounce2(0xA0);
+                        }
+                        if (colliderFlags == 0xC000) {
+                            ReboundStoneBounce2(0x600);
+                        }
+                        if (colliderFlags == 0xD000) {
+                            ReboundStoneBounce2(0x6D2);
+                        }
+                        if (colliderFlags == 0xE000) {
+                            ReboundStoneBounce2(0x760);
+                        }
+                    }
+                    if (deltaY < 0) {
+                        if ((colliderFlags == 0) || (colliderFlags & 0x8000)) {
+                            ReboundStoneBounce1(0x800);
+                        }
+                        if (colliderFlags == 0x800) {
+                            ReboundStoneBounce2(0xE00);
+                        }
+                        if (colliderFlags == 0x1800) {
+                            ReboundStoneBounce2(0xED2);
+                        }
+                        if (colliderFlags == 0x2800) {
+                            ReboundStoneBounce2(0xF60);
+                        }
+                        if (colliderFlags == 0x4800) {
+                            ReboundStoneBounce2(0xA00);
+                        }
+                        if (colliderFlags == 0x5800) {
+                            ReboundStoneBounce2(0x92E);
+                        }
+                        if (colliderFlags == 0x6800) {
+                            ReboundStoneBounce2(0x8A0);
+                        }
+                    }
+                }
+                CheckCollision(
+                    (currX + deltaX) >> 0x10, currY >> 0x10, &collider, 0);
+                if (collider.effects & 1) {
+                    colliderFlags =
+                        collider.effects &
+                        (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+                         EFFECT_UNK_1000 | EFFECT_UNK_0800);
+                    // Cases when traveling right
+                    if (deltaX > 0) {
+                        if ((colliderFlags == 0) ||
+                            TEST_BITS(collider.effects, 0x4800) ||
+                            TEST_BITS(collider.effects, 0xC000)) {
+                            ReboundStoneBounce1(0x400);
+                        }
+                        if (colliderFlags == 0x800) {
+                            ReboundStoneBounce2(0xE00);
+                        }
+                        if (colliderFlags == 0x1800) {
+                            ReboundStoneBounce2(0xED2);
+                        }
+                        if (colliderFlags == 0x2800) {
+                            ReboundStoneBounce2(0xF60);
+                        }
+                        if (colliderFlags == 0x8000) {
+                            ReboundStoneBounce2(0x200);
+                        }
+                        if (colliderFlags == 0x9000) {
+                            ReboundStoneBounce2(0x12E);
+                        }
+                        if (colliderFlags == 0xA000) {
+                            ReboundStoneBounce2(0xA0);
+                        }
+                    }
+                    // Cases when traveling left
+                    if (deltaX < 0) {
+                        if ((colliderFlags == 0) ||
+                            ((colliderFlags & 0x4800) == 0x800) ||
+                            ((colliderFlags & 0xC000) == 0x8000)) {
+                            ReboundStoneBounce1(0x400);
+                        }
+                        if (colliderFlags == 0x4800) {
+                            ReboundStoneBounce2(0xA00);
+                        }
+                        if (colliderFlags == 0x5800) {
+                            ReboundStoneBounce2(0x92E);
+                        }
+                        if (colliderFlags == 0x6800) {
+                            ReboundStoneBounce2(0x8A0);
+                        }
+                        if (colliderFlags == 0xC000) {
+                            ReboundStoneBounce2(0x600);
+                        }
+                        if (colliderFlags == 0xD000) {
+                            ReboundStoneBounce2(0x6D2);
+                        }
+                        if (colliderFlags == 0xE000) {
+                            ReboundStoneBounce2(0x760);
+                        }
+                    }
+                }
+                currX += deltaX;
+                if (self->ext.reboundStone.unk82 != 0) {
+                    goto block_93;
+                }
+                currY += deltaY;
+            }
+        } else {
+            self->ext.reboundStone.unk84--;
+        }
+        if (self->ext.reboundStone.unk82 != 0) {
+        block_93:
+            CreateEntFactoryFromEntity(self, FACTORY(0, 10), 0);
+            PlaySfx(REBOUND_STONE_BOUNCE);
+        }
+        if (((((u16)self->posX.i.hi + 0x40) & 0xFFFF) >= 0x181U) ||
+            ((((u16)self->posY.i.hi + 0x40) & 0xFFFF) >= 0x181U) ||
+            (self->ext.reboundStone.unk80 == 15)) {
+            self->step = 2;
+        } else {
+            deltaX = ((rcos(self->ext.reboundStone.stoneAngle) << 4) *
+                      hexFourHundred) >>
+                     8;
+            self->posX.val += deltaX;
+            deltaY = -((rsin(self->ext.reboundStone.stoneAngle) << 4) *
+                       hexFourHundred) >>
+                     8;
+            self->posY.val += deltaY;
+        }
+        break;
+    case 2:
+        if (--self->ext.reboundStone.lifeTimer == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        if (self->ext.reboundStone.lifeTimer == 0x20) {
+            self->hitboxState = 0;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        while (prim != NULL) {
+            LOH(prim->u3) = 0;
+            prim = prim->next;
+        }
+        break;
+    }
+
+    i = 0;
+    prim = &g_PrimBuf[self->primIndex];
+    colliderFlags = self->step == 2 ? 4 : 2; // reused var, not colliderFlags
+    // cleaner to use previous 3 lines than to put them in the for's initializer
+    for (; prim != NULL; i++, prim = prim->next) {
+        if (self->ext.reboundStone.unk82 != 0) {
+            if (i == self->ext.reboundStone.unk80) {
+                prim->x0 = playerX;
+                prim->y0 = playerY;
+                prim->blendMode &= ~BLEND_VISIBLE;
+                // unusual nesting of the same condition
+                if (i == self->ext.reboundStone.unk80) {
+                    prim->x1 = self->posX.i.hi;
+                    prim->y1 = self->posY.i.hi;
+                }
+            }
+        } else if (i == self->ext.reboundStone.unk80) {
+            prim->x1 = self->posX.i.hi;
+            prim->y1 = self->posY.i.hi;
+        }
+        if (!(prim->blendMode & 8)) {
+            if (LOH(prim->u3) != 0) {
+                LOH(prim->u3)--;
+            } else {
+                // again not colliderFlags, seems to control stone fading
+                if (colliderFlags < prim->b1) {
+                    prim->b1 -= colliderFlags;
+                }
+                prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1;
+            }
+        }
+    }
+}
 
 // ash thrown when using vibhuti subweapon
 INCLUDE_ASM("dra/nonmatchings/86ECC", EntitySubwpnThrownVibhuti);

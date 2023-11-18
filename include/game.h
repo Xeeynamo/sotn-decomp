@@ -1018,7 +1018,7 @@ typedef struct {
     /* 0x07 */ u8 nFramesInvincibility;
     /* 0x08 */ u16 stunFrames;
     /* 0x0A */ u8 unkA;
-    /* 0x0B */ u8 unkB;
+    /* 0x0B */ u8 blueprintNum; // Blueprint for entity factory spawning subwpn
     /* 0x0C */ u16 hitboxState;
     /* 0x0E */ u16 hitEffect;
     /* 0x10 */ u8 crashId; // the ID for the crash version of this subweapon
