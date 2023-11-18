@@ -241,7 +241,8 @@ typedef struct {
     /* 0xAA */ s16 unkAA;
     /* 0xAC */ s16 cameraX;
     /* 0xAE */ s16 cameraY;
-    /* 0xB0 */ s32 unkB0;
+    /* 0xB0 */ s16 unkB0;
+    /* 0xB2 */ s16 unkB2;
     /* 0xB4 */ struct Entity* ent;
 } ET_Familiar;
 
