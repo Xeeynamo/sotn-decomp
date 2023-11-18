@@ -341,6 +341,13 @@ struct XaMusicConfig {
     u8 pad[3];
 };
 
+struct Cmd14 {
+    u8 unk0[8];
+    s32 unk8;
+    s16 unkc;
+    s8 unke;
+};
+
 // Used for the button combos to signal successfully completing the sequence
 #define COMBO_COMPLETE 0xFF
 
@@ -847,6 +854,8 @@ extern void (*D_80170000)(s32 arg0);
 extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
 extern u8 D_801EC000[];
+extern u8 D_8013B688[];
+extern struct Cmd14 D_8013B5F4[];
 
 void InitializePads(void);
 void ReadPads(void);
