@@ -52,6 +52,7 @@ segments:
       - [0xCEB0, data]
       - [0xCF18, .data, 6D59C]
       - [0xCF4C, data]
+      - [0xD0C4, .data, 7A4D0]
       - [0xD1D4, assets, factory_blueprint, g_FactoryBlueprints]
       - [0xD4B8, data]
       - [0x1D07C, .data, 8D3E8] # g_CdVolumeTable

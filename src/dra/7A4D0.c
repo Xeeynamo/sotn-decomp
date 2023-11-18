@@ -2,6 +2,145 @@
 #include "objects.h"
 #include "sfx.h"
 
+void func_8011A4C8(struct Entity*);
+void EntityEntFactory(struct Entity*);
+void func_8011B5A4(struct Entity*);
+void EntityGravityBootBeam(struct Entity*);
+void EntitySubwpnThrownDagger(struct Entity*);
+void func_8011E4BC(struct Entity*);
+void func_8011B334(struct Entity*);
+void func_801315F8(struct Entity*);
+void EntitySubwpnCrashCross(struct Entity*);
+void EntitySubwpnCrashCrossParticles(struct Entity*);
+void EntitySubwpnThrownAxe(struct Entity*);
+void EntityPlayerBlinkWhite(struct Entity*);
+void EntitySubwpnThrownVibhuti(struct Entity*);
+void func_8011E0E4(struct Entity*);
+void func_8011EDA0(struct Entity*);
+void EntityUnarmedAttack(struct Entity*);
+void func_8011EDA8(struct Entity*);
+void func_80128C2C(struct Entity*);
+void func_801291C4(struct Entity*);
+void EntityNumberMovesToHpMeter(struct Entity*);
+void EntitySubwpnReboundStone(struct Entity*);
+void EntityLevelUpAnimation(struct Entity*);
+void EntityHolyWater(struct Entity*);
+void EntityHolyWaterFlame(struct Entity*);
+void EntityUnkId24(struct Entity*);
+void EntityHellfireHandler(struct Entity*);
+void func_801274DC(struct Entity*);
+void func_80127840(struct Entity*);
+void EntityExpandingCircle(struct Entity*);
+void func_80127CC8(struct Entity*);
+void EntityHitByLightning(struct Entity*);
+void EntityMpReplenished(struct Entity*);
+void EntityPlayerDissolves(struct Entity*);
+void EntityHitByIce(struct Entity*);
+void EntityMist(struct Entity*);
+void EntityWingSmashTrail(struct Entity*);
+void func_8011B480(struct Entity*);
+void EntityGuardText(struct Entity*);
+void EntityTransparentWhiteCircle(struct Entity*);
+void EntityPlayerPinkEffect(struct Entity*);
+void EntityHolyWaterBreakGlass(struct Entity*);
+void EntityStopWatch(struct Entity*);
+void EntityStopWatchExpandingCircle(struct Entity*);
+void EntitySubwpnBible(struct Entity*);
+void func_8012B78C(struct Entity*);
+void func_8012768C(struct Entity*);
+void func_80123B40(struct Entity*);
+void func_80119F70(struct Entity*);
+void UnknownEntId48(struct Entity*);
+void UnknownEntId49(struct Entity*);
+void func_80123A60(struct Entity*);
+void func_80119D3C(struct Entity*);
+void EntityBatEcho(struct Entity*);
+void func_8011B530(struct Entity*);
+void func_8011F074(struct Entity*);
+void func_80130264(struct Entity*);
+void func_8012F894(struct Entity*);
+void func_80130618(struct Entity*);
+void func_801309B4(struct Entity*);
+void func_80130E94(struct Entity*);
+void func_8013136C(struct Entity*);
+void func_80129864(struct Entity*);
+void func_8011A4C8(struct Entity*);
+void EntitySummonSpirit(struct Entity*);
+void func_80123F78(struct Entity*);
+void EntityTeleport(struct Entity*);
+void func_80124A8C(struct Entity*);
+void func_8011A4C8(struct Entity*);
+
+PfnEntityUpdate D_800AD0C4[] = {
+    func_8011A4C8,
+    EntityEntFactory,
+    func_8011B5A4,
+    EntityGravityBootBeam,
+    EntitySubwpnThrownDagger,
+    func_8011E4BC,
+    func_8011B334,
+    func_801315F8,
+    EntitySubwpnCrashCross,
+    EntitySubwpnCrashCrossParticles,
+    EntitySubwpnThrownAxe,
+    EntityPlayerBlinkWhite,
+    EntitySubwpnThrownVibhuti,
+    func_8011E0E4,
+    func_8011EDA0,
+    EntityUnarmedAttack,
+    func_8011EDA8,
+    func_80128C2C,
+    func_801291C4,
+    EntityNumberMovesToHpMeter,
+    EntitySubwpnReboundStone,
+    EntityLevelUpAnimation,
+    EntityHolyWater,
+    EntityHolyWaterFlame,
+    EntityUnkId24,
+    EntityHellfireHandler,
+    func_801274DC,
+    func_80127840,
+    EntityExpandingCircle,
+    func_80127CC8,
+    EntityHitByLightning,
+    EntityMpReplenished,
+    EntityPlayerDissolves,
+    EntityHitByIce,
+    EntityMist,
+    EntityWingSmashTrail,
+    func_8011B480,
+    EntityGuardText,
+    EntityTransparentWhiteCircle,
+    EntityPlayerPinkEffect,
+    EntityHolyWaterBreakGlass,
+    EntityStopWatch,
+    EntityStopWatchExpandingCircle,
+    EntitySubwpnBible,
+    func_8012B78C,
+    EntityBatFireball,
+    func_80123B40,
+    func_80119F70,
+    UnknownEntId48,
+    UnknownEntId49,
+    func_80123A60,
+    func_80119D3C,
+    EntityBatEcho,
+    func_8011B530,
+    func_8011F074,
+    func_80130264,
+    func_8012F894,
+    func_80130618,
+    func_801309B4,
+    func_80130E94,
+    func_8013136C,
+    func_80129864,
+    func_8011A4C8,
+    EntitySummonSpirit,
+    func_80123F78,
+    EntityTeleport,
+    func_80124A8C,
+    func_8011A4C8};
+
 void func_8011A4D0(void) {
     Entity* entity;
     s32 temp_s2;
