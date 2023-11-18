@@ -26,7 +26,6 @@ typedef struct {
 extern s32 D_8017054C;
 extern s32 D_801705EC;
 extern s32 D_801705F4;
-extern s32 D_80170660;
 extern EntitySearch D_80171094[];
 extern s32 D_80174B30;
 extern s32 D_80174B34;

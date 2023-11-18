@@ -285,7 +285,6 @@ SetCdVolume = 0x801324B4;
 MuteSound = 0x80132760;
 AddCdSoundCommand = 0x80132C2C;
 AdvanceCdSoundCommandQueue = 0x80132E38;
-MakeCdLoc = 0x80132E90;
 CdSoundCommand4 = 0x80132F60;
 CdSoundCommand6 = 0x80133290;
 CdSoundCommand12 = 0x80133960;

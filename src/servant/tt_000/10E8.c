@@ -5,7 +5,7 @@ extern SpriteParts* D_80170040[];
 extern u16 D_80170448[];
 extern s32 D_801704A8;
 extern Sprite D_80170608[];
-extern s32 D_80170664[][5];
+extern s32 D_80170660[][5];
 extern u16 D_80170720[];
 extern s32 D_80171090;
 extern EntitySearch D_80171094[];
@@ -88,7 +88,7 @@ Entity* func_8017110C(Entity* self) {
         if (e->posY.i.hi < 0) {
             continue;
         }
-        if (e->hitboxState & 8 && D_80170664[D_80174C30.unk0 / 10][1] == 0) {
+        if (e->hitboxState & 8 && D_80170660[D_80174C30.unk0 / 10][2] == 0) {
             continue;
         }
 
@@ -118,7 +118,7 @@ Entity* func_8017110C(Entity* self) {
             e->flags |= FLAG_UNK_80000;
             return e;
         }
-        if (e->hitPoints >= D_80170664[D_80174C30.unk0 / 10][0]) {
+        if (e->hitPoints >= D_80170660[D_80174C30.unk0 / 10][1]) {
             found++;
             D_801748D8[i] = 1;
         }
@@ -513,7 +513,7 @@ void func_80172C30(Entity* self) {
     case 0:
         func_801719E0(self);
         if (self->ext.fam.unk82 == 0) {
-            func_8017160C(*(&D_80170660 + ((D_80174C30.unk0 / 10) * 5)), 0xD2);
+            func_8017160C(D_80170660[(D_80174C30.unk0 / 10)][0], 0xD2);
         }
         break;
     case 1:
