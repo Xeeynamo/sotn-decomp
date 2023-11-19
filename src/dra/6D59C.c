@@ -648,7 +648,7 @@ s32 func_8010EB5C(void) {
         return 3;
     }
     CreateEntFactoryFromEntity(
-        g_CurrentEntity, FACTORY(0, subWpn.unkB), subWpnId << 9);
+        g_CurrentEntity, FACTORY(0, subWpn.blueprintNum), subWpnId << 9);
     g_Player.D_80072F14 = 4;
     if (PLAYER.step_s < 64) {
         faker = subWpn.unkA;

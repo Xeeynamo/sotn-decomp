@@ -43,7 +43,7 @@ segments:
       - [0x2EC0, .data, 5D6C4]
       - [0x2EE8, data]
       - [0x3C40, data]
-      - [0x4A00, data]
+      - [0x4A00, assets, subweapondefs, g_SubwpnDefs]
       - [0x4B04, assets, equipment, g_EquipDefs]
       - [0x7718, assets, accessory, g_AccessoryDefs]
       - [0x8258, data]
@@ -159,7 +159,7 @@ segments:
       - [0x4202C, rodata]
       - [0x42034, .rodata, 92F60] # CdSoundCommand4
       - [0x4205C, .rodata, 93290] # CdSoundCommand6
-      - [0x42074, rodata] # CdSoundCommand12
+      - [0x42074, .rodata, 93290] # CdSoundCommand12
       - [0x4208C, .rodata, 93BDC] # CdSoundCommand14
       - [0x420B4, .rodata, 94F50] # func_80134F50
       - [0x42354, .rodata, 953A0]

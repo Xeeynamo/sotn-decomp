@@ -198,5 +198,71 @@ bool CdSoundCommandQueueEmpty(void) { return g_CdSoundCommandQueuePos == 0; }
 
 bool func_80133950(void) { return D_8013980C == 0; }
 
-INCLUDE_ASM("dra/nonmatchings/93290", CdSoundCommand12);
-void CdSoundCommand12();
+void CdSoundCommand12(void) {
+    s32 temp_a2;
+    s32 i;
+    s32 var_t0;
+
+    switch (g_CdSoundCommandStep) {
+    case 0:
+        if (g_CdSoundCommand16 >= 2) {
+            g_CdSoundCommand16 = 0;
+        }
+        if (D_8013901C == 0) {
+            D_8013980C = 0;
+            AdvanceCdSoundCommandQueue();
+            return;
+        }
+        D_801390A0 = 1;
+        g_CdSoundCommandStep++;
+        break;
+    case 1:
+        if (g_CdVolume <= 0 || (g_CdVolume -= 0xC, g_CdVolume <= 0)) {
+            g_CdVolume = 0;
+        }
+        SetCdVolume(0, g_CdVolume, g_CdVolume);
+        if (g_CdVolume == 0) {
+            g_CdSoundCommandStep++;
+        }
+        break;
+    case 2:
+        if (DoCdCommand(CdlGetlocL, NULL, D_8013B688) == 0) {
+            g_CdSoundCommandStep++;
+        }
+        break;
+    case 3:
+        temp_a2 = VSync(-1);
+        for (i = 0; i < 8; i++) {
+            D_8013B5F4[g_CdSoundCommand16].unk0[i] = D_8013B688[i];
+        }
+        var_t0 = D_8013AE90 - (temp_a2 - D_8013AEF4);
+        if (var_t0 <= 0) {
+            var_t0 = 1;
+        }
+
+        D_8013B5F4[g_CdSoundCommand16].unk8 = var_t0;
+        D_8013B5F4[g_CdSoundCommand16].unkc = D_8013901C;
+        D_8013B5F4[g_CdSoundCommand16].unke = D_80139014;
+        SsSetSerialAttr(0, 0, 0);
+        if (DoCdCommand(CdlPause, NULL, NULL) == 0) {
+            g_CdSoundCommandStep++;
+        }
+        break;
+    case 4:
+        D_8013901C = 0;
+        D_801390A0 = 0;
+        D_8013980C = 0;
+        g_CdSoundCommandStep = 0;
+        g_CdSoundCommand16 += 1;
+        AdvanceCdSoundCommandQueue();
+        break;
+    default:
+        g_CdSoundCommandStep = 0;
+        D_8013980C = 0;
+        D_801390A0 = g_CdSoundCommandStep;
+        AdvanceCdSoundCommandQueue();
+        break;
+    }
+}
+
+const u32 padding_CdSoundCommand12 = 0;
