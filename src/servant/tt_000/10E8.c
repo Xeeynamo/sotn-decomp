@@ -1216,36 +1216,46 @@ void func_80174038(Entity* entity) {
 INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80174210);
 #else
 typedef struct {
-    u32 unk0;
-    u32 unk4;
-    u32 unk8;
-    s32 unkC;
-    u32 unk10;
-    u32 cameraX;
-    u32 cameraY;
-    s32 unk1C;
-    u32 unk20;
-    u32 entityId;
-    u32 params;
-    u32 unk2C;
+    /* 0x00 */ u32 unk0;
+    /* 0x04 */ u32 unk4;
+    /* 0x08 */ u32 unk8;
+    /* 0x0C */ s32 unkC;
+    /* 0x10 */ u32 unk10;
+    /* 0x14 */ u32 cameraX;
+    /* 0x18 */ u32 cameraY;
+    /* 0x1C */ s32 unk1C;
+    /* 0x20 */ u32 unk20;
+    /* 0x24 */ u32 entityId;
+    /* 0x28 */ u32 params;
+    /* 0x2C */ u32 unk2C;
 } Unkstruct_80174210;
-
 extern Unkstruct_80174210 D_80170760[];
-extern s32* D_8017109C;
+extern Unkstruct_80174210* D_8017109C;
 extern s32 D_801710A0;
 extern s32 D_801710A4;
 extern s32 D_801710A8;
 
+// #ifndef NON_MATCHING
+// INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80174210);
+// #else
+extern /*?*/ s32 D_8017076C;
+extern s32 D_8017079C;
+
 void func_80174210(Entity* self, s32 arg1) {
     Unkstruct_80174210* temp_s0;
-    Unkstruct_80174210** var_s1_2;
-    Unkstruct_80174210* temp_v1_5;
-    Unkstruct_80174210* temp_v1_4;
-    s32* var_s1;
+    Unkstruct_80174210* var_s1;
+    Unkstruct_80174210* var_s1_2;
     s32 cameraY;
     s32 cameraX;
-    s32 var_s2;
+    s32 temp_v0;
+    s32 temp_v1_2;
+    s32 i;
+    s32 var_v0;
     s32 var_v0_2;
+    u32 temp_v1_3;
+    Unkstruct_80174210* temp_v1_5;
+    Unkstruct_80174210* temp_v1_4;
+    u32 temp_v1_6;
 
     if (arg1 != 0) {
         D_801710A8 = 0;
@@ -1261,78 +1271,73 @@ void func_80174210(Entity* self, s32 arg1) {
         D_801710A0 = g_Servant;
         D_801710A4 = g_Tilemap.left;
         D_801710A8 = g_Tilemap.top;
-        if (D_80170760[1].unkC != -1) {
-            var_s2 = 1;
-            do {
-                temp_s0 = &D_80170760[var_s2];
-                if (temp_s0->unk8 == -1 || temp_s0->unk8 == D_801710A0) {
-                    if ((temp_s0->unkC < 0 &&
-                         !(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) ||
-                        !(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
-                        if (ABS(temp_s0->unkC) == D_801710A4 &&
-                            temp_s0->unk10 == D_801710A8) {
-                            if (temp_s0->cameraX == cameraX &&
-                                temp_s0->cameraY == cameraY &&
-                                (temp_s0->unk1C == -1 ||
-                                 (temp_s0->unk1C >= 0 ||
-                                  g_CastleFlags[temp_s0->unk1C & 0xFFFF] ==
-                                      0) &&
-                                     (!(temp_s0->unk1C & 0x40000000) ||
-                                      !(g_Status
-                                            .relics[temp_s0->unk1C & 0xFFFF] &
-                                        1)))) {
-                                temp_s0->unk4 = 0;
-                                if (temp_s0->unk20 == 0) {
-                                    func_801745E4(self, temp_s0->entityId,
-                                                  temp_s0->params);
-                                    if (temp_s0->unk2C == 0) {
-                                        goto block_26;
-                                    }
-                                } else {
-                                    goto block_27;
-                                }
-                            } else {
-                            block_26:
-                                if (temp_s0->unk20 != 0) {
-                                block_27:
-                                    temp_s0->unk4 = (s32)(temp_s0->unk20 - 1);
-                                }
-                                *var_s1 = temp_s0;
-                                var_s1 = temp_s0;
-                            }
-                        }
-                    }
-                }
-            } while (D_80170760[++var_s2].unkC != -1);
-        }
-        *var_s1 = NULL;
-    } else {
-        var_s1_2 = D_8017109C;
-        while (*var_s1_2 != NULL) {
-            temp_v1_5 = *var_s1_2;
-            if (temp_v1_5->cameraX == cameraX &&
-                temp_v1_5->cameraY == cameraY &&
-                (temp_v1_5->unk1C == -1 ||
-                 (temp_v1_5->unk1C >= 0 ||
-                  g_CastleFlags[temp_v1_5->unk1C & 0xFFFF] == 0) &&
-                     (!(temp_v1_5->unk1C & 0x40000000) ||
-                      !(g_Status.relics[temp_v1_5->unk1C & 0xFFFF] & 1)))) {
-                temp_v1_5 = *var_s1_2;
-                var_v0_2 = temp_v1_5->unk4 - 1;
-                if (temp_v1_5->unk4 == 0) {
-                    func_801745E4(self, temp_v1_5->entityId, temp_v1_5->params);
-                    temp_v1_4 = *var_s1_2;
-                    if (temp_v1_4->unk2C != 0) {
-                        *var_s1_2 = temp_v1_4->unk0;
-                        continue;
-                    } else {
-                        var_v0_2 = temp_v1_4->unk20;
-                    }
-                }
-                temp_v1_5->unk4 = var_v0_2;
+        for (i = 1; D_80170760[i].unkC != -1; i++) {
+            temp_s0 = &D_80170760[i];
+            if (temp_s0->unk8 != -1 && temp_s0->unk8 != D_801710A0) {
+                continue;
             }
-            var_s1_2 = *var_s1_2;
+
+            if (temp_s0->unkC < 0 && !(g_StageId & 0x20) || g_StageId & 0x20) {
+                continue;
+            }
+
+            if (ABS(temp_s0->unkC) != D_801710A4 ||
+                temp_s0->unk10 != D_801710A8) {
+                continue;
+            }
+
+            if (temp_s0->cameraX == cameraX && temp_s0->cameraY == cameraY &&
+                (temp_s0->unk1C == -1 ||
+                 (temp_s0->unk1C >= 0 ||
+                  g_CastleFlags[temp_s0->unk1C & 0xFFFF] == 0) &&
+                     (!(temp_s0->unk1C & 0x40000000) ||
+                      !(g_Status.relics[temp_s0->unk1C & 0xFFFF] & 1)))) {
+                temp_s0->unk4 = 0;
+                if (temp_s0->unk20 == 0) {
+                    func_801745E4(self, temp_s0->entityId, temp_s0->params);
+                    if (temp_s0->unk2C == 0) {
+                        goto block_26;
+                    }
+                } else {
+                    goto block_27;
+                }
+            } else {
+            block_26:
+                if (temp_s0->unk20 != 0) {
+                block_27:
+                    temp_s0->unk4 = temp_s0->unk20 - 1;
+                }
+                var_s1->unk0 = temp_s0;
+                var_s1 = temp_s0;
+            }
         }
+        var_s1->unk0 = NULL;
+        return;
+    }
+    var_s1_2 = D_8017109C;
+    while (*var_s1_2 != NULL) {
+        temp_v1_5 = *var_s1_2;
+        if (temp_v1_5->cameraX == cameraX && temp_v1_5->cameraY == cameraY &&
+            (temp_v1_5->unk1C == -1 ||
+             (temp_v1_5->unk1C >= 0 ||
+              g_CastleFlags[temp_v1_5->unk1C & 0xFFFF] == 0) &&
+                 (!(temp_v1_5->unk1C & 0x40000000) ||
+                  !(g_Status.relics[temp_v1_5->unk1C & 0xFFFF] & 1)))) {
+            temp_v1_5 = *var_s1_2;
+            var_v0_2 = temp_v1_5->unk4 - 1;
+            if (temp_v1_5->unk4 == 0) {
+                func_801745E4(self, temp_v1_5->entityId, temp_v1_5->params);
+                temp_v1_4 = *var_s1_2;
+                if (temp_v1_4->unk2C != 0) {
+                    *var_s1_2 = temp_v1_4->unk0;
+                    continue;
+                } else {
+                    var_v0_2 = temp_v1_4->unk20;
+                }
+            }
+            temp_v1_5->unk4 = var_v0_2;
+        }
+        var_s1_2 = *var_s1_2;
     }
 }
 #endif
