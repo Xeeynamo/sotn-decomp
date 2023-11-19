@@ -238,7 +238,7 @@ typedef struct {
     /* 0xA0 */ s32 unkA0;
     /* 0xA4 */ struct Entity* target;
     /* 0xA8 */ s16 unkA8;
-    /* 0xA8 */ s16 unkAA;
+    /* 0xAA */ s16 unkAA;
     /* 0xAC */ s16 cameraX;
     /* 0xAE */ s16 cameraY;
     /* 0xB0 */ s16 unkB0;
