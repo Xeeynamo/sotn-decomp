@@ -1,6 +1,9 @@
 #include "servant.h"
 #include "sfx.h"
 
+#define SFX_BAT_SCREECH SOUND_BAT_SCREECH
+#define SFX_BAT_NOTIFY SE_UI_OVERWRITE_MSG
+
 extern s32 D_801748D8[0x80];
 extern Collider D_80174AD8;
 extern s16 D_80174AFC;
@@ -542,7 +545,7 @@ void func_80172120(Entity* self) {
     D_80174B0C = self->ext.bat.unk84;
     self->ext.bat.unk84 += 0x10;
     D_80174B14 = self->ext.bat.unk88;
-    D_80174AFC = D_80174B04 + (((rcos(D_80174B0C) >> 4) * D_80174B14) >> 8);
+    D_80174AFC = D_80174B04 + ((rcos(D_80174B0C) >> 4) * D_80174B14 >> 8);
     D_80174B00 = D_80174B08 - ((rsin(D_80174B0C / 2) >> 4) * D_80174B14 >> 8);
     switch (self->step) {
     case 0:
@@ -619,7 +622,7 @@ void func_80172120(Entity* self) {
                 self->velocityX = (D_80174AFC - self->posX.i.hi) << 0xE;
                 self->velocityY = (D_80174B00 - self->posY.i.hi) << 0xE;
             }
-            if (self->velocityY > 0x10000) {
+            if (self->velocityY > FIX(1.0)) {
                 func_801710E8(self, D_801705EC);
             } else if (D_80174B14 < 0x3C) {
                 func_801710E8(self, D_801704A8);
@@ -659,7 +662,7 @@ void func_80172120(Entity* self) {
     case 2:
         self->ext.bat.unk8C++;
         if (self->ext.bat.unk8C == 1) {
-            g_api.PlaySfx(0x6AD);
+            g_api.PlaySfx(SFX_BAT_NOTIFY);
             func_8017170C(self, 1);
         } else if (self->ext.bat.unk8C >= 0x1F) {
             self->ext.bat.unk8C = 0;
@@ -723,7 +726,7 @@ void func_80172120(Entity* self) {
     case 5:
         self->ext.bat.unk8C++;
         if (self->ext.bat.unk8C == 1) {
-            g_api.PlaySfx(0x64E);
+            g_api.PlaySfx(SFX_BAT_SCREECH);
             func_8017170C(self, 3);
         } else if (self->ext.bat.unk8C >= 0x1F) {
             func_8017170C(self, 0);
@@ -826,7 +829,7 @@ void func_80172C30(Entity* self) {
     case 2:
         if (++self->ext.bat.unk8C == 1) {
             if (self->ext.bat.unk82 == 0) {
-                g_api.PlaySfx(SOUND_BAT_SCREECH);
+                g_api.PlaySfx(SFX_BAT_SCREECH);
             }
             func_8017170C(self, 2);
         } else if (self->ext.bat.unk8C >= 0x1F) {
@@ -1161,7 +1164,7 @@ void func_80174038(Entity* entity) {
             return;
         }
         if (g_api.CdSoundCommandQueueEmpty() != 0) {
-            g_api.PlaySfx(16);
+            g_api.PlaySfx(SET_UNK_10);
             entity->step++;
         }
         break;
@@ -1195,7 +1198,7 @@ void func_80174038(Entity* entity) {
             return;
         }
         if (g_api.CdSoundCommandQueueEmpty() != 0) {
-            g_api.PlaySfx(17);
+            g_api.PlaySfx(SET_UNK_11);
             entity->step++;
         }
         break;
@@ -1209,7 +1212,7 @@ void func_80174038(Entity* entity) {
         break;
 
     case 7:
-        g_api.PlaySfx(10);
+        g_api.PlaySfx(SET_STOP_MUSIC);
         entity->step = 4;
         break;
 
