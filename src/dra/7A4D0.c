@@ -482,7 +482,7 @@ void EntityEntFactory(Entity* self) {
         newEntity->posY.val = self->posY.val;
         newEntity->facingLeft = self->facingLeft;
         newEntity->zPriority = self->zPriority;
-        newEntity->ext.fam.cameraY = self->ext.factory.unk92 & 0x1FF;
+        newEntity->ext.factory.unkAE = self->ext.factory.unk92 & 0x1FF;
         newEntity->ext.factory.unkB0 = self->ext.factory.unk92 >> 9;
         if (self->flags & FLAG_UNK_10000) {
             newEntity->flags |= FLAG_UNK_10000;

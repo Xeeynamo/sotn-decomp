@@ -220,31 +220,31 @@ typedef struct {
 } ET_Merman_2;
 
 typedef struct {
-    /* 0x7C */ s32 unk7C;
+    /* 0x7C */ s16 unk7C;
+    /* 0x7E */ s16 unk7E;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 unk82;
     /* 0x84 */ s16 unk84;
-    /* 0x86 */ s16 unk86;
+    /* 0x84 */ s16 unk86;
     /* 0x88 */ s16 unk88;
     /* 0x8A */ s16 unk8A;
     /* 0x8C */ s16 unk8C;
-    /* 0x8E */ s16 unk8E;
+    /* 0x8e */ s16 unk8E;
     /* 0x90 */ s32 unk90;
     /* 0x94 */ s32 unk94;
     /* 0x98 */ s32 unk98;
-    /* 0x9C */ s32 unk9C;
-    /* 0xA0 */ s16 unkA0;
-    /* 0xA2 */ s16 unkA2;
-    /* 0xA4 */ s16 unkA4;
-    /* 0xA6 */ s16 unkA6;
+    /* 0x9C */ s16 unk9C;
+    /* 0x9E */ s16 unk9E;
+    /* 0xA0 */ s32 unkA0;
+    /* 0xA4 */ struct Entity* target;
     /* 0xA8 */ s16 unkA8;
     /* 0xAA */ s16 unkAA;
     /* 0xAC */ s16 cameraX;
     /* 0xAE */ s16 cameraY;
     /* 0xB0 */ s16 unkB0;
     /* 0xB2 */ s16 unkB2;
-    /* 0xB4 */ struct Entity* ent;
-} ET_Familiar;
+    /* 0xB4 */ struct Entity* follow;
+} ET_Bat;
 
 typedef struct {
     /* 0x7C */ char pad_0[0xC];
@@ -563,13 +563,13 @@ typedef union {
     /* 0x7C */ ET_MessageBox messageBox;
     /* 0x7C */ ET_Weapon weapon;
     /* 0x7C */ ET_Weapon29 weapon29;
+    /* 0x7C */ ET_Bat bat;
     /* 0x7C */ ET_SoulStealOrb soulStealOrb;
     /* 0x7C */ ET_GaibonSlogra GS_Props;
     /* 0x7C */ ET_WarpRoom warpRoom;
     /* 0x7C */ ET_Merman merman;
     /* 0x7C */ ET_Merman_2 merman2;
     /* 0x7C */ ET_MermanWaterSplash mermanWaterSplash;
-    /* 0x7C */ ET_Familiar fam;
     /* 0x7C */ ET_801CF254 et_801CF254;
     /* 0x7C */ ET_GurkhaSword gurkhaSword;
     /* 0x7C */ ET_Dracula dracula;

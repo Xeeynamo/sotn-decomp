@@ -1,16 +1,31 @@
 #include "servant.h"
 #include "sfx.h"
 
-extern SpriteParts* D_80170040[];
-extern u16 D_80170448[];
-extern s32 D_801704A8;
-extern Sprite D_80170608[];
-extern s32 D_80170660[][5];
-extern u16 D_80170720[];
-extern s32 D_80171090;
-extern EntitySearch D_80171094[];
-extern s32 D_801748D8[];
+#define SFX_BAT_SCREECH SOUND_BAT_SCREECH
+#define SFX_BAT_NOTIFY SE_UI_OVERWRITE_MSG
+
+extern s32 D_801748D8[0x80];
 extern Collider D_80174AD8;
+extern s16 D_80174AFC;
+extern s16 D_80174B00;
+extern s16 D_80174B04;
+extern s16 D_80174B08;
+extern s16 D_80174B0C;
+extern s16 D_80174B10;
+extern s16 D_80174B14;
+extern s16 D_80174B18;
+extern s32 D_80174B1C;
+extern s32 D_80174B20;
+extern s32 D_80174B24;
+extern s32 D_80174B28;
+extern s32 D_80174B2C;
+extern s32 D_80174B2C;
+extern s32 D_80174B30;
+extern s32 D_80174B34;
+extern s16 D_80174B38;
+extern s16 D_80174B3C;
+extern s16 D_80174B40;
+extern s16 D_80174B44;
 extern Primitive* D_80174B48;
 extern s32 D_80174B4C[16];
 extern Point16 D_80174B8C[16];
@@ -19,9 +34,10 @@ extern s16 D_80174BEC[16];
 extern s16 D_80174C0C[16];
 extern s32 D_80174C2C;
 extern Unkstruct_8011A3AC D_80174C30;
-extern Point16 D_80174C3C[][16];
+extern Point16 D_80174C3C[4][16];
 extern s32 D_80174D3C;
 extern s32 D_80174D40;
+extern s32 D_80170514[];
 
 void func_80171ED4(s32 arg0);
 void func_80172120(Entity* self);
@@ -92,7 +108,7 @@ Entity* func_8017110C(Entity* self) {
         if (e->posY.i.hi < 0) {
             continue;
         }
-        if (e->hitboxState & 8 && D_80170660[D_80174C30.unk0 / 10][2] == 0) {
+        if (e->hitboxState & 8 && D_80170658[D_80174C30.unk0 / 10][4] == 0) {
             continue;
         }
 
@@ -122,7 +138,7 @@ Entity* func_8017110C(Entity* self) {
             e->flags |= FLAG_UNK_80000;
             return e;
         }
-        if (e->hitPoints >= D_80170660[D_80174C30.unk0 / 10][1]) {
+        if (e->hitPoints >= D_80170658[D_80174C30.unk0 / 10][3]) {
             found++;
             D_801748D8[i] = 1;
         }
@@ -232,8 +248,8 @@ void func_8017160C(s32 amount, s32 entityId) {
             entity->params = i + 1;
             entity->facingLeft = facing;
         }
-        *((s16*)(&entity->ext.generic.unkAC)) = g_Tilemap.cameraX.i.hi;
-        *((s16*)(&entity->ext.generic.unkAE)) = g_Tilemap.cameraY.i.hi;
+        entity->ext.bat.cameraX = g_Tilemap.cameraX.i.hi;
+        entity->ext.bat.cameraY = g_Tilemap.cameraY.i.hi;
     }
 }
 
@@ -289,8 +305,8 @@ void func_801718A0(Entity* entity) {
     }
     y = entity->posY.i.hi - 16;
 
-    x += (rsin(entity->ext.generic.unk8C.modeS16.unk0 << 7) * 8) >> 12;
-    y -= entity->ext.generic.unk8C.modeS16.unk0 / 2;
+    x += (rsin(entity->ext.bat.unk8C << 7) * 8) >> 12;
+    y -= entity->ext.bat.unk8C / 2;
 
     poly = &g_PrimBuf[entity->primIndex];
     poly->x0 = poly->x2 = x - D_80170608[frame].x;
@@ -302,9 +318,9 @@ void func_801718A0(Entity* entity) {
 void func_801719E0(Entity* self) {
     s32 i;
 
-    if (self->ext.fam.unk80 == 0) {
-        self->ext.fam.unk8E = 0;
-        self->ext.fam.unk82 = self->params;
+    if (self->ext.bat.unk80 == 0) {
+        self->ext.bat.unk8E = 0;
+        self->ext.bat.unk82 = self->params;
         switch (self->entityId) {
         case 0xD1:
             self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
@@ -316,11 +332,11 @@ void func_801719E0(Entity* self) {
             self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
             func_801710E8(self, &D_801704A8);
-            self->ext.fam.unk84 = rand() % 4096;
-            self->ext.fam.unk86 = 0;
-            self->ext.fam.unk88 = 0xC;
-            self->ext.fam.unk8C = rand() % 4096;
-            self->ext.fam.unk8A = 0x20;
+            self->ext.bat.unk84 = rand() % 4096;
+            self->ext.bat.unk86 = 0;
+            self->ext.bat.unk88 = 0xC;
+            self->ext.bat.unk8C = rand() % 4096;
+            self->ext.bat.unk8A = 0x20;
             self->step++;
             break;
         case 0xD2:
@@ -333,86 +349,86 @@ void func_801719E0(Entity* self) {
             self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
                           FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
             func_801710E8(self, &D_801704A8);
-            if (self->ext.fam.unk82 == 0) {
-                self->ext.fam.ent = &PLAYER;
+            if (self->ext.bat.unk82 == 0) {
+                self->ext.bat.follow = &PLAYER;
             } else {
-                self->ext.fam.ent = &g_Entities[3 + self->ext.fam.unk82];
+                self->ext.bat.follow = &g_Entities[3 + self->ext.bat.unk82];
             }
-            self->ext.fam.cameraX = g_Tilemap.cameraX.i.hi;
-            self->ext.fam.cameraY = g_Tilemap.cameraY.i.hi;
+            self->ext.bat.cameraX = g_Tilemap.cameraX.i.hi;
+            self->ext.bat.cameraY = g_Tilemap.cameraY.i.hi;
 
-            if (self->ext.fam.unk82 == 0) {
+            if (self->ext.bat.unk82 == 0) {
                 for (i = 0; i < 16; i++) {
-                    D_80174C3C[self->ext.fam.unk82][i].x =
-                        self->ext.fam.ent->posX.i.hi + self->ext.fam.cameraX;
-                    D_80174C3C[self->ext.fam.unk82][i].y =
-                        self->ext.fam.ent->posY.i.hi + self->ext.fam.cameraY;
+                    D_80174C3C[self->ext.bat.unk82][i].x =
+                        self->ext.bat.follow->posX.i.hi + self->ext.bat.cameraX;
+                    D_80174C3C[self->ext.bat.unk82][i].y =
+                        self->ext.bat.follow->posY.i.hi + self->ext.bat.cameraY;
                 }
             } else {
                 for (i = 0; i < 16; i++) {
                     if (PLAYER.facingLeft) {
-                        D_80174C3C[self->ext.fam.unk82][i].x =
+                        D_80174C3C[self->ext.bat.unk82][i].x =
                             PLAYER.posX.i.hi +
-                            ((self->ext.fam.unk82 + 1) * 0x10) +
-                            self->ext.fam.cameraX;
+                            ((self->ext.bat.unk82 + 1) * 0x10) +
+                            self->ext.bat.cameraX;
 
                     } else {
-                        D_80174C3C[self->ext.fam.unk82][i].x =
+                        D_80174C3C[self->ext.bat.unk82][i].x =
                             PLAYER.posX.i.hi -
-                            ((self->ext.fam.unk82 + 1) * 0x10) +
-                            self->ext.fam.cameraX;
+                            ((self->ext.bat.unk82 + 1) * 0x10) +
+                            self->ext.bat.cameraX;
                     }
-                    D_80174C3C[self->ext.fam.unk82][i].y =
-                        PLAYER.posY.i.hi + self->ext.fam.cameraY;
+                    D_80174C3C[self->ext.bat.unk82][i].y =
+                        PLAYER.posY.i.hi + self->ext.bat.cameraY;
                 }
                 self->posX.i.hi = PLAYER.facingLeft ? 0x180 : -0x80;
                 self->posY.i.hi = rand() % 256;
             }
-            self->ext.fam.unkA8 = 0;
+            self->ext.bat.unkA8 = 0;
             self->step++;
             break;
         }
     } else {
-        self->ext.fam.unk8E = 0;
+        self->ext.bat.unk8E = 0;
         switch (self->entityId) {
         case 0xD1:
             self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
             func_801710E8(self, &D_801704A8);
-            self->ext.fam.unk8C = rand() % 4096;
+            self->ext.bat.unk8C = rand() % 4096;
             self->step++;
             break;
         case 0xD2:
             self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
                           FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
             func_801710E8(self, &D_801704A8);
-            if (self->ext.fam.unk82 == 0) {
-                self->ext.fam.ent = &PLAYER;
+            if (self->ext.bat.unk82 == 0) {
+                self->ext.bat.follow = &PLAYER;
             } else {
-                self->ext.fam.ent = &g_Entities[3 + self->ext.fam.unk82];
+                self->ext.bat.follow = &g_Entities[3 + self->ext.bat.unk82];
             }
-            self->ext.fam.cameraX = g_Tilemap.cameraX.i.hi;
-            self->ext.fam.cameraY = g_Tilemap.cameraY.i.hi;
+            self->ext.bat.cameraX = g_Tilemap.cameraX.i.hi;
+            self->ext.bat.cameraY = g_Tilemap.cameraY.i.hi;
 
             for (i = 0; i < 16; i++) {
                 if (PLAYER.facingLeft) {
-                    D_80174C3C[self->ext.fam.unk82][i].x =
-                        PLAYER.posX.i.hi + ((self->ext.fam.unk82 + 1) * 0x10) +
-                        self->ext.fam.cameraX;
+                    D_80174C3C[self->ext.bat.unk82][i].x =
+                        PLAYER.posX.i.hi + ((self->ext.bat.unk82 + 1) * 0x10) +
+                        self->ext.bat.cameraX;
                 } else {
-                    D_80174C3C[self->ext.fam.unk82][i].x =
-                        PLAYER.posX.i.hi - ((self->ext.fam.unk82 + 1) * 0x10) +
-                        self->ext.fam.cameraX;
+                    D_80174C3C[self->ext.bat.unk82][i].x =
+                        PLAYER.posX.i.hi - ((self->ext.bat.unk82 + 1) * 0x10) +
+                        self->ext.bat.cameraX;
                 }
-                D_80174C3C[self->ext.fam.unk82][i].y =
-                    PLAYER.posY.i.hi + self->ext.fam.cameraY;
+                D_80174C3C[self->ext.bat.unk82][i].y =
+                    PLAYER.posY.i.hi + self->ext.bat.cameraY;
             }
-            self->ext.fam.unkA8 = 0;
+            self->ext.bat.unkA8 = 0;
             self->step++;
             break;
         }
     }
-    self->ext.fam.unk80 = self->entityId;
+    self->ext.bat.unk80 = self->entityId;
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
 }
 
@@ -489,22 +505,252 @@ void func_80171ED4(s32 arg0) {
         }
     }
     D_80174D3C = 0;
-    *(u16*)&e->ext.generic.unkAC = g_Tilemap.cameraX.i.hi;
-    *(u16*)&e->ext.generic.unkAE = g_Tilemap.cameraY.i.hi;
+    e->ext.bat.cameraX = g_Tilemap.cameraX.i.hi;
+    e->ext.bat.cameraY = g_Tilemap.cameraY.i.hi;
 }
 
-INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80172120);
+void func_80172120(Entity* self) {
+    s32 var_v0;
+    s32 var_v1;
+
+    g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
+    if (D_80174D3C != 0) {
+        self->zPriority = PLAYER.zPriority - 2;
+    }
+    if (D_8003C708.flags & 0x20) {
+        switch (func_80174864()) {
+        case 0:
+            D_80174B04 = 0x40;
+            break;
+        case 1:
+            D_80174B04 = 0xC0;
+            break;
+        case 2:
+            var_v1 = 0x40;
+            if (self->posX.i.hi > 0x80) {
+                var_v1 += 0x80;
+            }
+            D_80174B04 = var_v1;
+            break;
+        }
+        D_80174B08 = 0xA0;
+    } else {
+        D_80174B18 = -0x12;
+        if (PLAYER.facingLeft != 0) {
+            D_80174B18 = 0x12;
+        }
+        D_80174B04 = PLAYER.posX.i.hi + D_80174B18;
+        D_80174B08 = PLAYER.posY.i.hi - 0x22;
+    }
+    D_80174B0C = self->ext.bat.unk84;
+    self->ext.bat.unk84 += 0x10;
+    D_80174B14 = self->ext.bat.unk88;
+    D_80174AFC = D_80174B04 + ((rcos(D_80174B0C) >> 4) * D_80174B14 >> 8);
+    D_80174B00 = D_80174B08 - ((rsin(D_80174B0C / 2) >> 4) * D_80174B14 >> 8);
+    switch (self->step) {
+    case 0:
+        func_801719E0(self);
+        break;
+    case 1:
+        if (g_Player.unk0C & 1) {
+            self->ext.bat.unk8C = 0;
+            self->step = 5;
+        } else {
+            if (D_8003C708.flags & 0x20) {
+                if (PLAYER.posX.i.hi < self->posX.i.hi) {
+                    self->facingLeft = false;
+                } else {
+                    self->facingLeft = true;
+                }
+            } else {
+                if (PLAYER.facingLeft == self->facingLeft) {
+                    var_v0 = D_80174AFC - self->posX.i.hi;
+                    if (var_v0 < 0) {
+                        var_v0 = -var_v0;
+                    }
+                    if (var_v0 <= 0) {
+                        self->facingLeft = !self->facingLeft;
+                    } else {
+                        if (self->facingLeft) {
+                            if (D_80174AFC < self->posX.i.hi) {
+                                self->facingLeft = !self->facingLeft;
+                            }
+                        } else if (self->posX.i.hi < D_80174AFC) {
+                            self->facingLeft = 1;
+                        }
+                    }
+                } else if (self->facingLeft) {
+                    var_v0 = self->posX.i.hi - D_80174AFC;
+                    if (var_v0 >= 0x20) {
+                        self->facingLeft = PLAYER.facingLeft;
+                    }
+                } else {
+                    var_v0 = D_80174AFC - self->posX.i.hi;
+                    if (var_v0 >= 0x20) {
+                        self->facingLeft = PLAYER.facingLeft;
+                    }
+                }
+            }
+            D_80174B0C = func_80173F30(self, D_80174AFC, D_80174B00);
+            D_80174B10 = func_80173F74(
+                D_80174B0C, self->ext.bat.unk86, self->ext.bat.unk8A);
+            self->ext.bat.unk86 = D_80174B10;
+            D_80174B04 = D_80174AFC - self->posX.i.hi;
+            D_80174B08 = D_80174B00 - self->posY.i.hi;
+            D_80174B14 =
+                SquareRoot12((D_80174B04 * D_80174B04 + D_80174B08 * D_80174B08)
+                             << 0xC) >>
+                0xC;
+            if (D_80174B14 < 0x1E) {
+                self->velocityY = -(rsin(D_80174B10) * 8);
+                self->velocityX = rcos(D_80174B10) * 8;
+                self->ext.bat.unk8A = 0x20;
+            } else if (D_80174B14 < 0x3C) {
+                self->velocityY = -(rsin(D_80174B10) * 0x10);
+                self->velocityX = rcos(D_80174B10) * 0x10;
+                self->ext.bat.unk8A = 0x40;
+            } else if (D_80174B14 < 0x64) {
+                self->velocityY = -(rsin(D_80174B10) << 5);
+                self->velocityX = rcos(D_80174B10) << 5;
+                self->ext.bat.unk8A = 0x60;
+            } else if (D_80174B14 < 0x100) {
+                self->velocityY = -(rsin(D_80174B10) << 6);
+                self->velocityX = rcos(D_80174B10) << 6;
+                self->ext.bat.unk8A = 0x80;
+            } else {
+                self->ext.bat.unk8A = 0x80;
+                self->velocityX = (D_80174AFC - self->posX.i.hi) << 0xE;
+                self->velocityY = (D_80174B00 - self->posY.i.hi) << 0xE;
+            }
+            if (self->velocityY > FIX(1.0)) {
+                func_801710E8(self, D_801705EC);
+            } else if (D_80174B14 < 0x3C) {
+                func_801710E8(self, D_801704A8);
+            } else if (D_80174B14 >= 0x65) {
+                func_801710E8(self, D_80170514);
+            }
+            self->posX.val += self->velocityX;
+            self->posY.val += self->velocityY;
+            if (D_8003C704 == 0) {
+                D_80174B24 = D_80174AFC - self->posX.i.hi;
+                D_80174B28 = D_80174B00 - self->posY.i.hi;
+                D_80174B2C =
+                    SquareRoot12(
+                        (D_80174B24 * D_80174B24 + D_80174B28 * D_80174B28)
+                        << 0xC) >>
+                    0xC;
+                if (D_80174B2C < 0x18) {
+                    if (self->ext.bat.unk8E != 0) {
+                        self->ext.bat.unk8E = 0;
+                        func_801710E8(self, D_8017054C);
+                    }
+                    self->ext.bat.unk8C++;
+                    if (D_80170658[D_80174C30.unk0 / 10][0] <
+                        self->ext.bat.unk8C) {
+                        self->ext.bat.unk8C = 0;
+                        self->ext.bat.target = func_8017110C(self);
+                        if (self->ext.bat.target != 0) {
+                            self->step++;
+                        }
+                    }
+                } else {
+                    self->ext.bat.unk8E = 1;
+                }
+            }
+        }
+        break;
+    case 2:
+        self->ext.bat.unk8C++;
+        if (self->ext.bat.unk8C == 1) {
+            g_api.PlaySfx(SFX_BAT_NOTIFY);
+            func_8017170C(self, 1);
+        } else if (self->ext.bat.unk8C >= 0x1F) {
+            self->ext.bat.unk8C = 0;
+            func_8017170C(self, 0);
+            D_80174B1C = self->ext.bat.target->posX.i.hi;
+            D_80174B20 = self->ext.bat.target->posY.i.hi;
+            self->hitboxWidth = 5;
+            self->hitboxHeight = 5;
+            g_api.func_8011A3AC(self, 0xF, 1, &D_80174C30);
+            self->ext.bat.unk86 = 0xC00;
+            func_801710E8(self, D_801705EC);
+            func_80171568(self);
+            self->step++;
+        }
+        break;
+    case 3:
+        D_80174B1C = self->ext.bat.target->posX.i.hi;
+        D_80174B20 = self->ext.bat.target->posY.i.hi;
+        D_80174B0C = func_80173F30(self, (s16)D_80174B1C, (s16)D_80174B20);
+        D_80174B10 = func_80173F74(D_80174B0C, self->ext.bat.unk86,
+                                   (s16)D_80170658[D_80174C30.unk0 / 10][1]);
+        self->ext.bat.unk86 = D_80174B10;
+        self->velocityX = rcos(D_80174B10) << 6;
+        self->velocityY = -(rsin(D_80174B10) << 6);
+        if (self->velocityX > 0) {
+            self->facingLeft = 1;
+        }
+        if (self->velocityX < 0) {
+            self->facingLeft = 0;
+        }
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        D_80174B24 = D_80174B1C - self->posX.i.hi;
+        D_80174B28 = D_80174B20 - self->posY.i.hi;
+        D_80174B2C =
+            SquareRoot12(
+                (D_80174B24 * D_80174B24 + D_80174B28 * D_80174B28) << 0xC) >>
+            0xC;
+        if (!func_801713C8(self->ext.bat.target) || D_80174B2C < 8) {
+            self->ext.bat.unk8C = 0;
+            self->step++;
+            func_801710E8(self, D_8017054C);
+        }
+        break;
+    case 4:
+        D_80174B0C = func_80173F30(self, D_80174AFC, D_80174B00);
+        D_80174B10 = func_80173F74(D_80174B0C, self->ext.bat.unk86, 0x10);
+        self->ext.bat.unk86 = D_80174B10;
+        self->velocityX = rcos(D_80174B10) << 6;
+        self->velocityY = -(rsin(D_80174B10) << 6);
+        self->facingLeft = self->velocityX >= 0;
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->ext.bat.unk8C++;
+        if (self->ext.bat.unk8C >= 0x1F) {
+            self->hitboxWidth = 0;
+            self->hitboxHeight = 0;
+            self->step = 1;
+        }
+        break;
+    case 5:
+        self->ext.bat.unk8C++;
+        if (self->ext.bat.unk8C == 1) {
+            g_api.PlaySfx(SFX_BAT_SCREECH);
+            func_8017170C(self, 3);
+        } else if (self->ext.bat.unk8C >= 0x1F) {
+            func_8017170C(self, 0);
+            self->entityId = 0xD2;
+            self->step = 0;
+        }
+        func_801718A0(self);
+        break;
+    }
+    func_80174210(self, 0);
+    func_80171560(self);
+    g_api.UpdateAnim(NULL, D_801705F4);
+}
 
 void func_80172C30(Entity* self) {
     if (self->step == 1 && self->flags & FLAG_UNK_00200000) {
-        D_80174B38 = (self->ext.fam.cameraX - g_Tilemap.cameraX.i.hi) +
-                     (self->ext.fam.unkB0 - PLAYER.posX.i.hi);
-        D_80174B3C = (self->ext.fam.cameraY - g_Tilemap.cameraY.i.hi) +
-                     (self->ext.fam.unkB2 - PLAYER.posY.i.hi);
+        D_80174B38 = (self->ext.bat.cameraX - g_Tilemap.cameraX.i.hi) +
+                     (self->ext.bat.unkB0 - PLAYER.posX.i.hi);
+        D_80174B3C = (self->ext.bat.cameraY - g_Tilemap.cameraY.i.hi) +
+                     (self->ext.bat.unkB2 - PLAYER.posY.i.hi);
 
         for (D_80174B30 = 0; D_80174B30 < 0x10; D_80174B30++) {
-            D_80174C3C[self->ext.fam.unk82][D_80174B30].x -= D_80174B38;
-            D_80174C3C[self->ext.fam.unk82][D_80174B30].y -= D_80174B3C;
+            D_80174C3C[self->ext.bat.unk82][D_80174B30].x -= D_80174B38;
+            D_80174C3C[self->ext.bat.unk82][D_80174B30].y -= D_80174B3C;
         }
         return;
     }
@@ -516,27 +762,27 @@ void func_80172C30(Entity* self) {
     switch (self->step) {
     case 0:
         func_801719E0(self);
-        if (self->ext.fam.unk82 == 0) {
-            func_8017160C(D_80170660[(D_80174C30.unk0 / 10)][0], 0xD2);
+        if (self->ext.bat.unk82 == 0) {
+            func_8017160C(D_80170658[D_80174C30.unk0 / 10][2], 0xD2);
         }
         break;
     case 1:
-        self->ext.fam.unkB0 = PLAYER.posX.i.hi;
-        self->ext.fam.unkB2 = PLAYER.posY.i.hi;
-        self->ext.fam.cameraX = g_Tilemap.cameraX.i.hi;
-        self->ext.fam.cameraY = g_Tilemap.cameraY.i.hi;
+        self->ext.bat.unkB0 = PLAYER.posX.i.hi;
+        self->ext.bat.unkB2 = PLAYER.posY.i.hi;
+        self->ext.bat.cameraX = g_Tilemap.cameraX.i.hi;
+        self->ext.bat.cameraY = g_Tilemap.cameraY.i.hi;
         D_80174B40 =
-            D_80174C3C[self->ext.fam.unk82][0].x - self->ext.fam.cameraX;
+            D_80174C3C[self->ext.bat.unk82][0].x - self->ext.bat.cameraX;
         D_80174B44 =
-            D_80174C3C[self->ext.fam.unk82][0].y - self->ext.fam.cameraY;
+            D_80174C3C[self->ext.bat.unk82][0].y - self->ext.bat.cameraY;
         self->velocityX = (D_80174B40 - self->posX.i.hi) << 0xC;
         self->velocityY = (D_80174B44 - self->posY.i.hi) << 0xC;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         if ((self->velocityX == 0) && (self->velocityY == 0)) {
-            if (self->ext.fam.unk8E != 0) {
-                func_801710E8(self, &D_8017054C);
-                self->ext.fam.unk8E = 0;
+            if (self->ext.bat.unk8E != 0) {
+                func_801710E8(self, D_8017054C);
+                self->ext.bat.unk8E = 0;
             }
         } else {
             if (self->velocityY > FIX(1)) {
@@ -544,65 +790,65 @@ void func_80172C30(Entity* self) {
             } else {
                 func_801710E8(self, &D_801704A8);
             }
-            self->ext.fam.unk8E = 1;
+            self->ext.bat.unk8E = 1;
         }
         self->facingLeft = PLAYER.facingLeft == 0;
-        if (self->ext.fam.unkA8 == 0) {
+        if (self->ext.bat.unkA8 == 0) {
             if (g_Player.unk0C & 0x800) {
                 // This causes the bat familiar to shoot a fireball when the
                 // player does so in bat form.
                 g_api.CreateEntFactoryFromEntity(self, FACTORY(0x100, 81), 0);
-                self->ext.fam.unkA8 = 1;
+                self->ext.bat.unkA8 = 1;
             }
         } else if (!(g_Player.unk0C & 0x800)) {
-            self->ext.fam.unkA8 = 0;
+            self->ext.bat.unkA8 = 0;
         }
-        D_80174B38 = self->ext.fam.ent->posX.i.hi - self->posX.i.hi;
-        D_80174B3C = self->ext.fam.ent->posY.i.hi - self->posY.i.hi;
+        D_80174B38 = self->ext.bat.follow->posX.i.hi - self->posX.i.hi;
+        D_80174B3C = self->ext.bat.follow->posY.i.hi - self->posY.i.hi;
         D_80174B34 =
             SquareRoot12(((D_80174B38 * D_80174B38) + (D_80174B3C * D_80174B3C))
                          << 0xC) >>
             0xC;
         if ((func_801746A0(0) != 0) || (D_80174B34 >= 0x19)) {
             for (D_80174B30 = 0; D_80174B30 < 0xF; D_80174B30++) {
-                D_80174C3C[self->ext.fam.unk82][D_80174B30].x =
-                    D_80174C3C[self->ext.fam.unk82][D_80174B30 + 1].x;
-                D_80174C3C[self->ext.fam.unk82][D_80174B30].y =
-                    D_80174C3C[self->ext.fam.unk82][D_80174B30 + 1].y;
+                D_80174C3C[self->ext.bat.unk82][D_80174B30].x =
+                    D_80174C3C[self->ext.bat.unk82][D_80174B30 + 1].x;
+                D_80174C3C[self->ext.bat.unk82][D_80174B30].y =
+                    D_80174C3C[self->ext.bat.unk82][D_80174B30 + 1].y;
             }
-            D_80174C3C[self->ext.fam.unk82][D_80174B30].x =
-                self->ext.fam.ent->posX.i.hi + self->ext.fam.cameraX;
-            D_80174C3C[self->ext.fam.unk82][D_80174B30].y =
-                self->ext.fam.ent->posY.i.hi + self->ext.fam.cameraY;
+            D_80174C3C[self->ext.bat.unk82][D_80174B30].x =
+                self->ext.bat.follow->posX.i.hi + self->ext.bat.cameraX;
+            D_80174C3C[self->ext.bat.unk82][D_80174B30].y =
+                self->ext.bat.follow->posY.i.hi + self->ext.bat.cameraY;
         }
         if (!(g_Player.unk0C & 1)) {
-            self->ext.fam.unk8C = 0;
+            self->ext.bat.unk8C = 0;
             self->step++;
         }
         break;
     case 2:
-        if (++self->ext.fam.unk8C == 1) {
-            if (self->ext.fam.unk82 == 0) {
-                g_api.PlaySfx(SOUND_BAT_SCREECH);
+        if (++self->ext.bat.unk8C == 1) {
+            if (self->ext.bat.unk82 == 0) {
+                g_api.PlaySfx(SFX_BAT_SCREECH);
             }
             func_8017170C(self, 2);
-        } else if (self->ext.fam.unk8C >= 0x1F) {
+        } else if (self->ext.bat.unk8C >= 0x1F) {
             func_8017170C(self, 0);
-            if (self->ext.fam.unk82 == 0) {
+            if (self->ext.bat.unk82 == 0) {
                 self->entityId = 0xD1;
                 self->step = 0;
                 break;
             }
             self->step++;
-            D_80174C3C[self->ext.fam.unk82][0].x =
+            D_80174C3C[self->ext.bat.unk82][0].x =
                 PLAYER.facingLeft ? -0x80 : 0x180;
-            D_80174C3C[self->ext.fam.unk82][0].y = rand() % 256;
+            D_80174C3C[self->ext.bat.unk82][0].y = rand() % 256;
             func_801710E8(self, &D_801704A8);
         }
         break;
     case 3:
-        D_80174B40 = D_80174C3C[self->ext.fam.unk82][0].x;
-        D_80174B44 = D_80174C3C[self->ext.fam.unk82][0].y;
+        D_80174B40 = D_80174C3C[self->ext.bat.unk82][0].x;
+        D_80174B44 = D_80174C3C[self->ext.bat.unk82][0].y;
         self->velocityX = (D_80174B40 - self->posX.i.hi) << 0xA;
         self->velocityY = (D_80174B44 - self->posY.i.hi) << 0xA;
         self->posX.val += self->velocityX;
@@ -615,7 +861,7 @@ void func_80172C30(Entity* self) {
     }
     func_80174210(self, 0);
     func_80171560(self);
-    g_api.UpdateAnim(NULL, &D_801705F4);
+    g_api.UpdateAnim(NULL, D_801705F4);
 }
 
 void func_8017339C(void) {}
@@ -918,7 +1164,7 @@ void func_80174038(Entity* entity) {
             return;
         }
         if (g_api.CdSoundCommandQueueEmpty() != 0) {
-            g_api.PlaySfx(16);
+            g_api.PlaySfx(SET_UNK_10);
             entity->step++;
         }
         break;
@@ -952,7 +1198,7 @@ void func_80174038(Entity* entity) {
             return;
         }
         if (g_api.CdSoundCommandQueueEmpty() != 0) {
-            g_api.PlaySfx(17);
+            g_api.PlaySfx(SET_UNK_11);
             entity->step++;
         }
         break;
@@ -966,7 +1212,7 @@ void func_80174038(Entity* entity) {
         break;
 
     case 7:
-        g_api.PlaySfx(10);
+        g_api.PlaySfx(SET_STOP_MUSIC);
         entity->step = 4;
         break;
 
