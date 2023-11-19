@@ -774,12 +774,12 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = func_800EDB58(0x11, 0xD);
+        self->primIndex = func_800EDB58(PRIM_TILE_ALT, 13);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        self->flags = 0x08800000;
+        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
         func_8011A290(self);
         selfX = self->posX.i.hi;
         selfY = self->posY.i.hi;
