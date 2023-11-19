@@ -548,6 +548,10 @@ typedef struct {
     s16 unk84;
 } ET_ReboundStone;
 
+typedef struct {
+    s16 timer;
+} ET_Vibhuti;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_EntFactory factory;
@@ -558,6 +562,7 @@ typedef union {
     /* 0x7C */ ET_8011E4BC et_8011E4BC;
     /* 0x7C */ ET_HellfireHandler hellfireHandler;
     /* 0x7C */ ET_ReboundStone reboundStone;
+    /* 0x7C */ ET_Vibhuti vibhuti;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
     /* 0x7C */ ET_RelicOrb relicOrb;
     /* 0x7C */ ET_MessageBox messageBox;
