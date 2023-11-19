@@ -43,7 +43,7 @@ segments:
       - [0x2EC0, .data, 5D6C4]
       - [0x2EE8, data]
       - [0x3C40, data]
-      - [0x4A00, data]
+      - [0x4A00, assets, subweapondefs, g_SubwpnDefs]
       - [0x4B04, assets, equipment, g_EquipDefs]
       - [0x7718, assets, accessory, g_AccessoryDefs]
       - [0x8258, data]
