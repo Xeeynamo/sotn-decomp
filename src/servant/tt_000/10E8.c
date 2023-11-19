@@ -1,27 +1,51 @@
 #include "servant.h"
 #include "sfx.h"
 
-extern SpriteParts* D_80170040[];
-extern u16 D_80170448[];
-extern s32 D_801704A8;
-extern Sprite D_80170608[];
-extern s32 D_80170660[][5];
-extern u16 D_80170720[];
-extern s32 D_80171090;
-extern EntitySearch D_80171094[];
-extern s32 D_801748D8[];
-extern Collider D_80174AD8;
-extern Primitive* D_80174B48;
-extern s32 D_80174B4C[16];
-extern Point16 D_80174B8C[16];
-extern s16 D_80174BCC[16];
-extern s16 D_80174BEC[16];
-extern s16 D_80174C0C[16];
-extern s32 D_80174C2C;
-extern Unkstruct_8011A3AC D_80174C30;
-extern Point16 D_80174C3C[][16];
-extern s32 D_80174D3C;
-extern s32 D_80174D40;
+s32 D_801748D8[0x80];
+Collider D_80174AD8;
+s16 D_80174AFC;
+s16 D_80174AFC_;
+s16 D_80174B00;
+s16 D_80174B00_;
+s16 D_80174B04;
+s16 D_80174B04_;
+s16 D_80174B08;
+s16 D_80174B08_;
+s16 D_80174B0C;
+s16 D_80174B0C_;
+s16 D_80174B10;
+s16 D_80174B10_;
+s16 D_80174B14;
+s16 D_80174B14_;
+s16 D_80174B18;
+s16 D_80174B18_;
+s32 D_80174B1C;
+s32 D_80174B20;
+s32 D_80174B24;
+s32 D_80174B28;
+s32 D_80174B2C;
+s32 D_80174B2C;
+s32 D_80174B30;
+s32 D_80174B34;
+s16 D_80174B38;
+s16 D_80174B38_;
+s16 D_80174B3C;
+s16 D_80174B3C_;
+s16 D_80174B40;
+s16 D_80174B40_;
+s16 D_80174B44;
+s16 D_80174B44_;
+Primitive* D_80174B48;
+s32 D_80174B4C[16];
+Point16 D_80174B8C[16];
+s16 D_80174BCC[16];
+s16 D_80174BEC[16];
+s16 D_80174C0C[16];
+s32 D_80174C2C;
+Unkstruct_8011A3AC D_80174C30;
+Point16 D_80174C3C[4][16];
+s32 D_80174D3C;
+s32 D_80174D40;
 
 void func_80171ED4(s32 arg0);
 void func_80172120(Entity* self);
@@ -517,7 +541,7 @@ void func_80172C30(Entity* self) {
     case 0:
         func_801719E0(self);
         if (self->ext.fam.unk82 == 0) {
-            func_8017160C(D_80170660[(D_80174C30.unk0 / 10)][0], 0xD2);
+            func_8017160C(D_80170660[D_80174C30.unk0 / 10][0], 0xD2);
         }
         break;
     case 1:
@@ -535,7 +559,7 @@ void func_80172C30(Entity* self) {
         self->posY.val += self->velocityY;
         if ((self->velocityX == 0) && (self->velocityY == 0)) {
             if (self->ext.fam.unk8E != 0) {
-                func_801710E8(self, &D_8017054C);
+                func_801710E8(self, D_8017054C);
                 self->ext.fam.unk8E = 0;
             }
         } else {
@@ -615,7 +639,7 @@ void func_80172C30(Entity* self) {
     }
     func_80174210(self, 0);
     func_80171560(self);
-    g_api.UpdateAnim(NULL, &D_801705F4);
+    g_api.UpdateAnim(NULL, D_801705F4);
 }
 
 void func_8017339C(void) {}
