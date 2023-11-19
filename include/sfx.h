@@ -181,7 +181,7 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define NA_SE_UNK_62F 0x62F
 #define NA_SE_EV_HEAVY_BLOCK_DRAG 0x609
 #define NA_SE_EN_BLOOD_ZOMBIE_SWORD_SLASH 0x60B
-#define REBOUND_STONE_THROW 0x60C
+#define SUBWPN_THROW 0x60C // Throwing rebound stone, vibhuti, others?
 #define NA_SE_AL_BACKSLIDE 0x617
 #define NA_SE_EV_VASE_BREAK 0x61D
 #define NA_SE_PL_BT_ECHO 0x61F

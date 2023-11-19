@@ -242,8 +242,8 @@ typedef struct FakePrim {
     /* 0x0E */ u16 clut;
     /* 0x10 */ f32 posX;
     /* 0x14 */ f32 posY;
-    /* 0x18 */ s32 unk18; // velocityX/accelerationX?
-    /* 0x1C */ s32 unk1C; // velocityY/accelerationY?
+    /* 0x18 */ f32 velocityX;
+    /* 0x1C */ f32 velocityY;
     /* 0x20 */ s16 x2;
     /* 0x22 */ s16 y2;
     /* 0x24 */ s16 delay;
