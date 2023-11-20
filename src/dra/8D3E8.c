@@ -873,4 +873,3 @@ void func_8013136C(Entity* entity) {
 
 // one rotating cross from the cross subweapon crash
 INCLUDE_ASM("dra/nonmatchings/8D3E8", func_801315F8);
-
