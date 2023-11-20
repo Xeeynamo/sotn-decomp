@@ -1,6 +1,6 @@
 void EntityEnemyBlood(Entity* self) {
     int fakeTemp; // !TODO: !FAKE
-    Primitive* prim;
+    FakePrim* prim;
     s32 var_a0_2;
     u16 params;
     s16 posX;
@@ -27,10 +27,10 @@ void EntityEnemyBlood(Entity* self) {
                 prim->x0 = self->posX.i.hi + ((Random() & (fakeTemp = 7)) - 5);
                 rnd = (Random() & 7) - 5;
                 prim->y0 = self->posY.i.hi + rnd;
-                *(s32*)&prim->r1 = 0;
-                *(s32*)&prim->x1 = 0;
-                prim->u0 = 4;
-                prim->v0 = 4;
+                prim->posX.val = 0;
+                prim->posY.val = 0;
+                prim->w = 4;
+                prim->h = 4;
 
                 if (params != 0) {
                     UnkEntityFunc0(
@@ -40,16 +40,16 @@ void EntityEnemyBlood(Entity* self) {
                         0xB40 - i * 64, ((Random() & 0xF) * 0x10) + 0x180);
                 }
 
-                *(s32*)&prim->u1 = self->velocityX;
-                *(s32*)&prim->r2 = self->velocityY;
+                prim->velocityX.val = self->velocityX;
+                prim->velocityY.val = self->velocityY;
 
-                var_a0_2 = *(s32*)&prim->u1;
+                var_a0_2 = prim->velocityX.val;
                 if (var_a0_2 <= -1) {
                     var_a0_2 += 0x3F;
                 }
 
-                *(s32*)&prim->r3 = -(var_a0_2 >> 6);
-                *(s32*)&prim->x3 = -(*(s32*)&prim->r2 / 48) + 0xC00;
+                prim->accelerationX.val = -(var_a0_2 >> 6);
+                prim->accelerationY.val = -(prim->velocityY.val / 48) + 0xC00;
 
                 prim->x2 = prim->y2 = (Random() & 7) + 7;
                 prim->r0 = 128;
@@ -122,20 +122,20 @@ void EntityEnemyBlood(Entity* self) {
 
         prim = &g_PrimBuf[self->primIndex];
         for (i = 12; i != 0; i--, prim++) {
-            *(u16*)&prim->b1 = prim->x0;
-            prim->y1 = prim->y0;
-            *(s32*)&prim->u1 += *(s32*)&prim->r3;
-            *(s32*)&prim->r2 += *(s32*)&prim->x3;
-            *(s32*)&prim->r1 += *(s32*)&prim->u1;
-            *(s32*)&prim->x1 += *(s32*)&prim->r2;
-            *(s16*)&prim->x0 = *(s16*)&prim->b1;
-            prim->y0 = prim->y1;
+            prim->posX.i.hi = prim->x0;
+            prim->posY.i.hi = prim->y0;
+            prim->velocityX.val += prim->accelerationX.val;
+            prim->velocityY.val += prim->accelerationY.val;
+            prim->posX.val += prim->velocityX.val;
+            prim->posY.val += prim->velocityY.val;
+            prim->x0 = prim->posX.i.hi;
+            prim->y0 = prim->posY.i.hi;
             prim->x2--;
 
-            if ((prim->x2 == 0) && (prim->u0 != 0)) {
-                prim->v0--;
-                prim->u0--;
-                if (!(prim->u0 & 1)) {
+            if ((prim->x2 == 0) && (prim->w != 0)) {
+                prim->h--;
+                prim->w--;
+                if (!(prim->w & 1)) {
                     prim->x0++;
                     prim->y0++;
                 }
