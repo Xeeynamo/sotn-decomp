@@ -466,7 +466,6 @@ void func_801D1F38(Primitive* arg0) {
     SVECTOR sp50;
     MATRIX sp58;
     SVECTOR sp78;
-    u16 temp_a0;
     u8 temp_v1_2;
 
     sp78 = D_801B2464;
