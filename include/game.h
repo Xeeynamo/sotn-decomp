@@ -2,7 +2,12 @@
 #define GAME_H
 #include "common.h"
 #include <psxsdk/kernel.h>
+
+// lseek etc. conflicts
+#ifndef VERSION_PC
 #include <psxsdk/libapi.h>
+#endif
+
 #include <psxsdk/libc.h>
 #include <psxsdk/libcd.h>
 #include <psxsdk/libetc.h>

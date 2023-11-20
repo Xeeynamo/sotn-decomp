@@ -1,0 +1,30 @@
+name: Build C code
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'include/**'
+      - 'src/**'
+      - 'Makefile*'
+  pull_request:
+    paths:
+      - 'include/**'
+      - 'src/**'
+      - 'Makefile*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install requirements
+        run: sudo apt-get install build-essential
+      - name: Clone repo
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+          submodules: false
+      - name: build
+        run: make build_pc
