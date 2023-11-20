@@ -42,14 +42,14 @@ void SsSetTableSize(char* table, short s_max, short t_max) {
     DEBUGF("not implemented");
 }
 
-void SsStart(void) { printf("SsStart\n"); }
+void SsStart(void) { DEBUGF("not implemented"); }
 
 char SsSetReservedVoice(char voices) {
     DEBUGF("%d", voices);
     return 0;
 }
 
-void SsSetTickMode(long tick_mode) { printf("SsSetTickMode %d\n", tick_mode); }
+void SsSetTickMode(long tick_mode) { DEBUGF("%d", tick_mode); }
 
 void SsInitHot(void) { DEBUGF("not implemented"); }
 

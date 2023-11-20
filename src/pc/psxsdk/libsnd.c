@@ -3,7 +3,7 @@
 #include <psxsdk/libsnd.h>
 #include "../log.h"
 
-void SpuSetVoiceAttr(SpuVoiceAttr* arg) { printf("SpuSetVoiceAttr\n"); }
+void SpuSetVoiceAttr(SpuVoiceAttr* arg) { DEBUGF("SpuSetVoiceAttr"); }
 
 long SpuMallocWithStartAddr(unsigned long addr, long size) {
     DEBUGF("not implemented");
