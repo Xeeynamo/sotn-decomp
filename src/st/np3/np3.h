@@ -322,3 +322,4 @@ extern u16 D_801820CC[];
 // *** EntitySoulStealOrb properties END ***
 
 extern SVECTOR D_801B1EA0;
+extern SVECTOR D_801B2464;

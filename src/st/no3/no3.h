@@ -256,5 +256,6 @@ extern u16 D_80182740[];
 // *** EntitySoulStealOrb properties END ***
 
 extern SVECTOR D_801B73E0;
+extern SVECTOR D_801B77CC;
 
 extern Dialogue g_Dialogue;

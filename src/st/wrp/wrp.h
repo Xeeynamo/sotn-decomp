@@ -42,4 +42,6 @@ extern u32 D_80181110[];
 
 // *** EntitySoulStealOrb properties END ***
 
+extern SVECTOR D_80186FC8;
+
 void func_8018F838(Entity*);

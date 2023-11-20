@@ -12,6 +12,7 @@ extern PfnEntityUpdate D_801803E0[];
 extern u16 D_80180494[];
 extern s16 D_80180A94[];
 extern ObjInit2 D_80181134[];
+extern SVECTOR D_80188DE8;
 extern LayoutEntity* D_80195A30;
 extern LayoutEntity* D_80195A34;
 void CreateEntityFromLayout(Entity*, LayoutEntity*);

@@ -1035,7 +1035,82 @@ void BottomCornerText(u8* str, u8 lower_left) {
     g_BottomCornerTextTimer = 0x130;
 }
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/F420", func_80193270);
+void func_80193270(Primitive* arg0) {
+    SVECTOR sp10; //FAKE, not really an svector
+    SVECTOR stackpad;
+    SVECTOR sp20;
+    VECTOR sp28;
+    SVECTOR sp38;
+    SVECTOR sp40;
+    SVECTOR sp48;
+    SVECTOR sp50;
+    MATRIX sp58;
+    SVECTOR sp78;
+    u16 temp_a0;
+    u8 temp_v1_2;
+
+    sp78 = D_80186FC8;
+    if (arg0->p3 & 8) {
+        // Fake logic here, sp10 is not an SVECTOR but it matches.
+        // tried using an f32 but couldn't get it to work.
+        sp10.vy = arg0->next->x1;
+        sp10.vx = arg0->next->y1;
+        LOW(sp10.vx) += LOW(arg0->next->u0);
+        arg0->next->x1 = sp10.vy;
+        arg0->next->y1 = sp10.vx;
+        LOW(arg0->next->x0) += LOW(arg0->next->r1);
+    }
+    temp_v1_2 = arg0->next->b3;
+    LOH(arg0->r0) = LOH(arg0->r1) = LOH(arg0->r2) = LOH(arg0->r3) = temp_v1_2 | (temp_v1_2 << 8);
+    arg0->b0 = arg0->b1 = arg0->b2 = arg0->b3 = temp_v1_2;
+    sp28.vx = 0;
+    sp28.vy = 0;
+    sp28.vz = 0x400 - LOH(arg0->next->u1);
+    RotMatrix(&sp78, &sp58);
+    if (arg0->p3 & 0x20) {
+        sp20.vx = arg0->next->x3;
+        sp20.vy = arg0->next->y3;
+        RotMatrixX(sp20.vx, &sp58);
+        RotMatrixY(sp20.vy, &sp58);
+    }
+    sp20.vz = arg0->next->tpage;
+    RotMatrixZ(sp20.vz, &sp58);
+    TransMatrix(&sp58, &sp28);
+    if (arg0->p3 & 0x10) {
+        sp28.vx = (s32) arg0->next->x2;
+        sp28.vy = (s32) arg0->next->y2;
+        sp28.vz = 0x1000;
+        ScaleMatrix(&sp58, &sp28.vx);
+    }
+    SetRotMatrix(&sp58);
+    SetTransMatrix(&sp58);
+    SetGeomScreen(0x400);
+    SetGeomOffset(arg0->next->x1, arg0->next->y0);
+    sp38.vx = -LOH(arg0->next->r2) / 2;
+    sp38.vy = -LOH(arg0->next->b2) / 2;
+    sp38.vz = 0;
+    sp40.vx = LOH(arg0->next->r2) / 2;
+    sp40.vy = -LOH(arg0->next->b2) / 2;
+    sp40.vz = 0;
+    sp48.vx = -LOH(arg0->next->r2) / 2;
+    sp48.vy = LOH(arg0->next->b2) / 2;
+    sp48.vz = 0;
+    sp50.vx = LOH(arg0->next->r2) / 2;
+    sp50.vy = LOH(arg0->next->b2) / 2;
+    sp50.vz = 0;
+    gte_ldv0(&sp38);
+    gte_rtps();
+    gte_stsxy(&arg0->x0); 
+    gte_ldv0(&sp40);
+    gte_rtps();
+    gte_stsxy(&arg0->x1);
+    gte_ldv0(&sp48);
+    gte_rtps();
+    gte_stsxy(&arg0->x2);
+    gte_ldv0(&sp50);
+    gte_rtps();
+    gte_stsxy(&arg0->x3);
+}
 
 INCLUDE_ASM("asm/us/st/wrp/nonmatchings/F420", func_80193658);
 
