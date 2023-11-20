@@ -871,8 +871,197 @@ void func_8013136C(Entity* entity) {
 }
 #endif
 
-// one rotating cross from the cross subweapon crash
-INCLUDE_ASM("dra/nonmatchings/8D3E8", func_801315F8);
+// When Alucard uses the cross subweapon for 100 hearts.
+// Entity ID 7, blueprint #7 (this is a coincidence)
+void EntityGiantSpinningCross(Entity* self) {
+    MATRIX sp10;
+    SVECTOR sp30;
+    VECTOR sp38;
+    SVECTOR sp48;
+    SVECTOR sp50;
+    s32 sp58;
+    s32 sp5C;
+    Primitive* prim;
+    s32 i;
+    u8* primUVCoords;
+    SVECTOR* temp_a3;
+    SVECTOR** vectors_ptr;
+    u16 priority;
+
+    sp48 = D_800E2024;
+    sp50 = D_800E202C;
+
+    if (self->step == 0) {
+        self->primIndex = g_api_func_800EDB58(4, 0x2E);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        while (prim != NULL) {
+            prim->tpage = 0x1C;
+            prim->blendMode = 0x108;
+            prim = prim->next;
+        }
+        func_8011A290(self);
+        self->hitboxHeight = 0x50;
+        self->hitboxWidth = 0xC;
+        self->posY.i.hi = 0x160;
+        self->velocityY = FIX(-6);
+        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        self->facingLeft = 0;
+        self->ext.giantcross.unk7C = 0;
+        self->ext.giantcross.unk7E = 0x400;
+        PlaySfx(0x661);
+        self->step++;
+        primUVCoords = &D_800B0F94[0][0];
+        prim = &g_PrimBuf[self->primIndex];
+        for(i = 0; i < 46; i++,prim = prim->next, primUVCoords += 5) { // i is t1
+            prim->clut = (primUVCoords[4] & 0xF) | 0x1A0;
+            switch (primUVCoords[4] & 0xF0) {
+            case 0x10:
+                prim->u0 = primUVCoords[0] + primUVCoords[2];
+                prim->v0 = primUVCoords[1];
+                prim->u1 = primUVCoords[0];
+                prim->v1 = primUVCoords[1];
+                prim->u2 = primUVCoords[0] + primUVCoords[2];
+                prim->v2 = primUVCoords[1] + primUVCoords[3];
+                prim->u3 = primUVCoords[0];
+                prim->v3 = primUVCoords[1] + primUVCoords[3];
+                break;
+            case 0x20:
+                prim->u0 = primUVCoords[0];
+                prim->v0 = primUVCoords[1] + primUVCoords[3];
+                prim->u1 = primUVCoords[0] + primUVCoords[2];
+                prim->v1 = primUVCoords[1] + primUVCoords[3];
+                prim->u2 = primUVCoords[0];
+                prim->v2 = primUVCoords[1];
+                prim->u3 = primUVCoords[0] + primUVCoords[2];
+                prim->v3 = primUVCoords[1];
+                break;
+            case 0x30:
+                prim->u0 = primUVCoords[0] + primUVCoords[2];
+                prim->v0 = primUVCoords[1] + primUVCoords[3];
+                prim->u1 = primUVCoords[0];
+                prim->v1 = primUVCoords[1] + primUVCoords[3];
+                prim->u2 = primUVCoords[0] + primUVCoords[2];
+                prim->v2 = primUVCoords[1];
+                prim->u3 = primUVCoords[0];
+                prim->v3 = primUVCoords[1];
+                break;
+            case 0x40:
+                prim->u3 = primUVCoords[0];
+                prim->v3 = primUVCoords[1];
+                prim->u1 = primUVCoords[0] + primUVCoords[2];
+                prim->v1 = primUVCoords[1];
+                prim->u2 = primUVCoords[0];
+                prim->v2 = primUVCoords[1] + primUVCoords[3];
+                prim->u0 = primUVCoords[0] + primUVCoords[2];
+                prim->v0 = primUVCoords[1] + primUVCoords[3];
+                break;
+            case 0x50:
+                prim->u3 = primUVCoords[0] + primUVCoords[2];
+                prim->v3 = primUVCoords[1];
+                prim->u1 = primUVCoords[0];
+                prim->v1 = primUVCoords[1];
+                prim->u2 = primUVCoords[0] + primUVCoords[2];
+                prim->v2 = primUVCoords[1] + primUVCoords[3];
+                prim->u0 = primUVCoords[0];
+                prim->v0 = primUVCoords[1] + primUVCoords[3];
+                break;
+            case 0x60:
+                prim->u3 = primUVCoords[0];
+                prim->v3 = primUVCoords[1] + primUVCoords[3];
+                prim->u1 = primUVCoords[0] + primUVCoords[2];
+                prim->v1 = primUVCoords[1] + primUVCoords[3];
+                prim->u2 = primUVCoords[0];
+                prim->v2 = primUVCoords[1];
+                prim->u0 = primUVCoords[0] + primUVCoords[2];
+                prim->v0 = primUVCoords[1];
+                break;
+            case 0x70:
+                prim->u3 = primUVCoords[0] + primUVCoords[2];
+                prim->v3 = primUVCoords[1] + primUVCoords[3];
+                prim->u1 = primUVCoords[0];
+                prim->v1 = primUVCoords[1] + primUVCoords[3];
+                prim->u2 = primUVCoords[0] + primUVCoords[2];
+                prim->v2 = primUVCoords[1];
+                prim->u0 = primUVCoords[0];
+                prim->v0 = primUVCoords[1];
+                break;
+            default:
+                prim->u0 = primUVCoords[0];
+                prim->v0 = primUVCoords[1];
+                prim->u1 = primUVCoords[0] + primUVCoords[2];
+                prim->v1 = primUVCoords[1];
+                prim->u2 = primUVCoords[0];
+                prim->v2 = primUVCoords[1] + primUVCoords[3];
+                prim->u3 = primUVCoords[0] + primUVCoords[2];
+                prim->v3 = primUVCoords[1] + primUVCoords[3];
+                break;
+            }
+            
+        }
+        return;
+    }
+    if (self->posY.i.hi < -0x40) {
+        DestroyEntity(self);
+        return;
+    }
+    if (self->posY.i.hi < 0) {
+        self->velocityY -= FIX(0.5);
+    }
+    self->posY.val += self->velocityY;
+    self->ext.giantcross.unk7C += 0x60;
+    self->ext.giantcross.unk7E += 0x60;
+    sp38.vx = -(rcos(self->ext.giantcross.unk7C) * 0x60) >> 0xC;
+    sp38.vy = self->posY.i.hi - 0x80;
+    sp38.vz = ((rsin(self->ext.giantcross.unk7C) * 0x60) >> 0xC) + 0x180;
+    sp30.vy = self->ext.giantcross.unk7E;
+    sp30.vz = 0x40;
+    sp30.vx = 0;
+
+    SetGeomOffset(self->posX.i.hi, 120);
+    gte_SetGeomScreen(320);
+    RotMatrix(&sp30, &sp10);
+    TransMatrix(&sp10, &sp38);
+    gte_SetRotMatrix(&sp10);
+    gte_SetTransMatrix(&sp10);
+    gte_ldv0(&sp48);
+    gte_rtps();
+    prim = &g_PrimBuf[self->primIndex];
+    vectors_ptr = &D_800B0CB4;
+    gte_stsxy2(&prim->x0);
+    gte_stszotz(&sp58);
+    self->hitboxOffX =  prim->x0 - self->posX.i.hi;
+    self->hitboxOffY =  prim->y0 - self->posY.i.hi;
+    for(i = 0; i < 46; i++, prim = prim->next, vectors_ptr += 4) {
+        gte_ldv3(vectors_ptr[0], vectors_ptr[1], vectors_ptr[3]);
+        gte_rtpt();
+        temp_a3 = vectors_ptr[2];
+        prim->type = 4;
+        gte_nclip();
+        prim->blendMode = 8;
+        gte_stopz(&sp5C);
+        if (sp5C < 0) {
+            continue;
+        }
+        gte_stsxy3(&prim->x0,&prim->x1,&prim->x2);
+        gte_ldv0(temp_a3);
+        gte_rtps();
+        prim->blendMode = 0;
+        if (sp58 < 16) {
+            priority = 0x1B6;
+        } else if (sp58 >= 999) {
+            priority = 0x10;
+        } else {
+            priority = 0x120;
+            priority -= sp58;
+        }
+        prim->priority = priority;
+        gte_stsxy(&prim->x3);
+    }
+}
 
 void func_80131EBC(const char* str, s16 id) { D_80138784[id] = str; }
 
