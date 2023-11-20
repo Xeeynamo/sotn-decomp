@@ -46,12 +46,12 @@ segments:
       - [0xD010, data]
       - [0xD188, .data, 7A4D0] # D_800AD0C4
       - [0xD298, data]
-      - [0x1D140, .data, 8D3E8] # g_CdVolumeTable
-      - [0x1D260, .data, 8D3E8] # g_VolumeTable
-      - [0x1D284, .data, 8D3E8] # g_DebugEnabled
-      - [0x1D288, .data, 8D3E8] # D_800BD1C4
-      - [0x1D28C, .data, 8D3E8] # g_VabAddrs
-      - [0x1D2A4, .data, 8D3E8] # g_SeqInfo
+      - [0x1D140, .data, 91EBC] # g_CdVolumeTable
+      - [0x1D260, .data, 91EBC] # g_VolumeTable
+      - [0x1D284, .data, 91EBC] # g_DebugEnabled
+      - [0x1D288, .data, 91EBC] # D_800BD1C4
+      - [0x1D28C, .data, 91EBC] # g_VabAddrs
+      - [0x1D2A4, .data, 91EBC] # g_SeqInfo
       - [0x1D2E8, data, assets, music_xa, g_XaMusicConfigs] # g_XaMusicConfigs
       - [0x1F5F8, assets, sfx, g_SfxData] # g_SfxData
       - [0x20A20, data]
@@ -183,6 +183,7 @@ segments:
       - [0x7E168, c, 7E4BC]
       - [0x86B58, c, 86ECC]
       - [0x8D050, c, 8D3E8]
+      - [0x91A98, c, 91EBC]
       - [0x92B3C, c, 92F60]
       - [0x92E6C, c, 93290]
       - [0x937B8, c, 93BDC]
