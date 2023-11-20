@@ -459,16 +459,16 @@ void func_801D1F38(Primitive* arg0) {
     SVECTOR sp10; // FAKE, not really an svector
     SVECTOR stackpad;
     SVECTOR sp20;
-    VECTOR sp28;
+    VECTOR trans1;
     SVECTOR sp38;
     SVECTOR sp40;
     SVECTOR sp48;
     SVECTOR sp50;
-    MATRIX sp58;
-    SVECTOR sp78;
+    MATRIX m;
+    SVECTOR rot;
     u8 temp_v1_2;
 
-    sp78 = D_801B2464;
+    rot = D_801B2464;
     if (arg0->p3 & 8) {
         // Fake logic here, sp10 is not an SVECTOR but it matches.
         // tried using an f32 but couldn't get it to work.
@@ -483,27 +483,27 @@ void func_801D1F38(Primitive* arg0) {
     LOH(arg0->r0) = LOH(arg0->r1) = LOH(arg0->r2) = LOH(arg0->r3) =
         temp_v1_2 | (temp_v1_2 << 8);
     arg0->b0 = arg0->b1 = arg0->b2 = arg0->b3 = temp_v1_2;
-    sp28.vx = 0;
-    sp28.vy = 0;
-    sp28.vz = 0x400 - LOH(arg0->next->u1);
-    RotMatrix(&sp78, &sp58);
+    trans1.vx = 0;
+    trans1.vy = 0;
+    trans1.vz = 0x400 - LOH(arg0->next->u1);
+    RotMatrix(&rot, &m);
     if (arg0->p3 & 0x20) {
         sp20.vx = arg0->next->x3;
         sp20.vy = arg0->next->y3;
-        RotMatrixX(sp20.vx, &sp58);
-        RotMatrixY(sp20.vy, &sp58);
+        RotMatrixX(sp20.vx, &m);
+        RotMatrixY(sp20.vy, &m);
     }
     sp20.vz = arg0->next->tpage;
-    RotMatrixZ(sp20.vz, &sp58);
-    TransMatrix(&sp58, &sp28);
+    RotMatrixZ(sp20.vz, &m);
+    TransMatrix(&m, &trans1);
     if (arg0->p3 & 0x10) {
-        sp28.vx = (s32)arg0->next->x2;
-        sp28.vy = (s32)arg0->next->y2;
-        sp28.vz = 0x1000;
-        ScaleMatrix(&sp58, &sp28.vx);
+        trans1.vx = (s32)arg0->next->x2;
+        trans1.vy = (s32)arg0->next->y2;
+        trans1.vz = 0x1000;
+        ScaleMatrix(&m, &trans1);
     }
-    SetRotMatrix(&sp58);
-    SetTransMatrix(&sp58);
+    SetRotMatrix(&m);
+    SetTransMatrix(&m);
     SetGeomScreen(0x400);
     SetGeomOffset(arg0->next->x1, arg0->next->y0);
     sp38.vx = -LOH(arg0->next->r2) / 2;
