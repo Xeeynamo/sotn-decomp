@@ -552,6 +552,11 @@ typedef struct {
     s16 timer;
 } ET_Vibhuti;
 
+typedef struct {
+    /* 0x7C */ s16 unk7C;
+    /* 0x7E */ s16 unk7E;
+} ET_GiantSpinningCross;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_EntFactory factory;
@@ -563,6 +568,7 @@ typedef union {
     /* 0x7C */ ET_HellfireHandler hellfireHandler;
     /* 0x7C */ ET_ReboundStone reboundStone;
     /* 0x7C */ ET_Vibhuti vibhuti;
+    /* 0x7C */ ET_GiantSpinningCross giantcross;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
     /* 0x7C */ ET_RelicOrb relicOrb;
     /* 0x7C */ ET_MessageBox messageBox;

@@ -9,7 +9,7 @@ void EntityGravityBootBeam(struct Entity*);
 void EntitySubwpnThrownDagger(struct Entity*);
 void func_8011E4BC(struct Entity*);
 void func_8011B334(struct Entity*);
-void func_801315F8(struct Entity*);
+void EntityGiantSpinningCross(struct Entity*);
 void EntitySubwpnCrashCross(struct Entity*);
 void EntitySubwpnCrashCrossParticles(struct Entity*);
 void EntitySubwpnThrownAxe(struct Entity*);
@@ -79,7 +79,7 @@ PfnEntityUpdate D_800AD0C4[] = {
     EntitySubwpnThrownDagger,
     func_8011E4BC,
     func_8011B334,
-    func_801315F8,
+    EntityGiantSpinningCross,
     EntitySubwpnCrashCross,
     EntitySubwpnCrashCrossParticles,
     EntitySubwpnThrownAxe,
