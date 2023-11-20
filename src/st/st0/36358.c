@@ -1055,7 +1055,7 @@ void EntityCutscenePhotographFire(Entity* entity) {
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", func_801BC5C0);
 
 void func_801BD0C0(Primitive* arg0) {
-    SVECTOR sp10; //FAKE, not really an svector
+    SVECTOR sp10; // FAKE, not really an svector
     SVECTOR stackpad;
     SVECTOR sp20;
     VECTOR sp28;
@@ -1080,7 +1080,8 @@ void func_801BD0C0(Primitive* arg0) {
         LOW(arg0->next->x0) += LOW(arg0->next->r1);
     }
     temp_v1_2 = arg0->next->b3;
-    LOH(arg0->r0) = LOH(arg0->r1) = LOH(arg0->r2) = LOH(arg0->r3) = temp_v1_2 | (temp_v1_2 << 8);
+    LOH(arg0->r0) = LOH(arg0->r1) = LOH(arg0->r2) = LOH(arg0->r3) =
+        temp_v1_2 | (temp_v1_2 << 8);
     arg0->b0 = arg0->b1 = arg0->b2 = arg0->b3 = temp_v1_2;
     sp28.vx = 0;
     sp28.vy = 0;
@@ -1096,8 +1097,8 @@ void func_801BD0C0(Primitive* arg0) {
     RotMatrixZ(sp20.vz, &sp58);
     TransMatrix(&sp58, &sp28);
     if (arg0->p3 & 0x10) {
-        sp28.vx = (s32) arg0->next->x2;
-        sp28.vy = (s32) arg0->next->y2;
+        sp28.vx = (s32)arg0->next->x2;
+        sp28.vy = (s32)arg0->next->y2;
         sp28.vz = 0x1000;
         ScaleMatrix(&sp58, &sp28.vx);
     }
@@ -1119,7 +1120,7 @@ void func_801BD0C0(Primitive* arg0) {
     sp50.vz = 0;
     gte_ldv0(&sp38);
     gte_rtps();
-    gte_stsxy(&arg0->x0); 
+    gte_stsxy(&arg0->x0);
     gte_ldv0(&sp40);
     gte_rtps();
     gte_stsxy(&arg0->x1);
