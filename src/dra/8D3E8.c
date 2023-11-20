@@ -874,13 +874,13 @@ void func_8013136C(Entity* entity) {
 // When Alucard uses the cross subweapon for 100 hearts.
 // Entity ID 7, blueprint #7 (this is a coincidence)
 void EntityGiantSpinningCross(Entity* self) {
-    MATRIX sp10;
-    SVECTOR sp30;
-    VECTOR sp38;
-    SVECTOR sp48;
+    MATRIX m;
+    SVECTOR rot;
+    VECTOR trans1;
+    SVECTOR pos;
     SVECTOR sp50;
-    s32 sp58;
-    s32 sp5C;
+    s32 z;
+    s32 nclip;
     Primitive* prim;
     s32 i;
     u8* primUVCoords;
@@ -888,11 +888,11 @@ void EntityGiantSpinningCross(Entity* self) {
     SVECTOR** vectors_ptr;
     u16 priority;
 
-    sp48 = D_800E2024;
+    pos = D_800E2024;
     sp50 = D_800E202C;
 
     if (self->step == 0) {
-        self->primIndex = g_api.func_800EDB58(4, 0x2E);
+        self->primIndex = g_api.func_800EDB58(PRIM_GT4, 46);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1014,25 +1014,25 @@ void EntityGiantSpinningCross(Entity* self) {
     self->posY.val += self->velocityY;
     self->ext.giantcross.unk7C += 0x60;
     self->ext.giantcross.unk7E += 0x60;
-    sp38.vx = -(rcos(self->ext.giantcross.unk7C) * 0x60) >> 0xC;
-    sp38.vy = self->posY.i.hi - 0x80;
-    sp38.vz = ((rsin(self->ext.giantcross.unk7C) * 0x60) >> 0xC) + 0x180;
-    sp30.vy = self->ext.giantcross.unk7E;
-    sp30.vz = 0x40;
-    sp30.vx = 0;
+    trans1.vx = -(rcos(self->ext.giantcross.unk7C) * 0x60) >> 0xC;
+    trans1.vy = self->posY.i.hi - 0x80;
+    trans1.vz = ((rsin(self->ext.giantcross.unk7C) * 0x60) >> 0xC) + 0x180;
+    rot.vy = self->ext.giantcross.unk7E;
+    rot.vz = 0x40;
+    rot.vx = 0;
 
     SetGeomOffset(self->posX.i.hi, 120);
     gte_SetGeomScreen(320);
-    RotMatrix(&sp30, &sp10);
-    TransMatrix(&sp10, &sp38);
-    gte_SetRotMatrix(&sp10);
-    gte_SetTransMatrix(&sp10);
-    gte_ldv0(&sp48);
+    RotMatrix(&rot, &m);
+    TransMatrix(&m, &trans1);
+    gte_SetRotMatrix(&m);
+    gte_SetTransMatrix(&m);
+    gte_ldv0(&pos);
     gte_rtps();
     prim = &g_PrimBuf[self->primIndex];
     vectors_ptr = &D_800B0CB4;
     gte_stsxy2(&prim->x0);
-    gte_stszotz(&sp58);
+    gte_stszotz(&z);
     self->hitboxOffX = prim->x0 - self->posX.i.hi;
     self->hitboxOffY = prim->y0 - self->posY.i.hi;
     for (i = 0; i < 46; i++, prim = prim->next, vectors_ptr += 4) {
@@ -1042,21 +1042,21 @@ void EntityGiantSpinningCross(Entity* self) {
         prim->type = 4;
         gte_nclip();
         prim->blendMode = 8;
-        gte_stopz(&sp5C);
-        if (sp5C < 0) {
+        gte_stopz(&nclip);
+        if (nclip < 0) {
             continue;
         }
         gte_stsxy3(&prim->x0, &prim->x1, &prim->x2);
         gte_ldv0(temp_a3);
         gte_rtps();
         prim->blendMode = 0;
-        if (sp58 < 16) {
+        if (z < 16) {
             priority = 0x1B6;
-        } else if (sp58 >= 999) {
+        } else if (z >= 999) {
             priority = 0x10;
         } else {
             priority = 0x120;
-            priority -= sp58;
+            priority -= z;
         }
         prim->priority = priority;
         gte_stsxy(&prim->x3);
