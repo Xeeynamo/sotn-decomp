@@ -248,12 +248,8 @@ typedef struct FakePrim {
     /* 0x22 */ s16 y2;
     /* 0x24 */ s16 delay;
     /* 0x26 */ u16 priority;
-    /* 0x28 */ u8 r3;
-    /* 0x29 */ u8 g3;
-    /* 0x2A */ u8 b3;
-    /* 0x2B */ u8 p3; // TODO not verified
-    /* 0x2C */ s16 x3;
-    /* 0x2E */ s16 y3;
+    /* 0x28 */ f32 accelerationX;
+    /* 0x2C */ f32 accelerationY;
     s16 timer;
     /* 0x32 */ u16 blendMode;
 } FakePrim;
