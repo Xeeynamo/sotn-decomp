@@ -892,7 +892,7 @@ void EntityGiantSpinningCross(Entity* self) {
     sp50 = D_800E202C;
 
     if (self->step == 0) {
-        self->primIndex = g_api_func_800EDB58(4, 0x2E);
+        self->primIndex = g_api.func_800EDB58(4, 0x2E);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
