@@ -5,7 +5,7 @@ CC_PC               := gcc
 LD_PC               := ld
 CC_FLAGS_PC         := -c -g -DVERSION_PC -DPERMUTER  -fno-stack-protector 
 CC_FLAGS_PC         += -I$(INCLUDE_DIR) -I$(SRC_DIR)/dra/
-LD_FLAGS_PC         := -lc
+LD_FLAGS_PC         := -fsanitize=address -lc
 
 C_FILES_PC          := main.c log.c
 C_FILES_PSX_SDK     := libapi.c libcd.c libspu.c libsnd.c
