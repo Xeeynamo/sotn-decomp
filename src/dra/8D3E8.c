@@ -916,7 +916,8 @@ void EntityGiantSpinningCross(Entity* self) {
         self->step++;
         primUVCoords = &D_800B0F94[0][0];
         prim = &g_PrimBuf[self->primIndex];
-        for(i = 0; i < 46; i++,prim = prim->next, primUVCoords += 5) { // i is t1
+        for (i = 0; i < 46; i++, prim = prim->next,
+            primUVCoords += 5) { // i is t1
             prim->clut = (primUVCoords[4] & 0xF) | 0x1A0;
             switch (primUVCoords[4] & 0xF0) {
             case 0x10:
@@ -1000,7 +1001,6 @@ void EntityGiantSpinningCross(Entity* self) {
                 prim->v3 = primUVCoords[1] + primUVCoords[3];
                 break;
             }
-            
         }
         return;
     }
@@ -1033,9 +1033,9 @@ void EntityGiantSpinningCross(Entity* self) {
     vectors_ptr = &D_800B0CB4;
     gte_stsxy2(&prim->x0);
     gte_stszotz(&sp58);
-    self->hitboxOffX =  prim->x0 - self->posX.i.hi;
-    self->hitboxOffY =  prim->y0 - self->posY.i.hi;
-    for(i = 0; i < 46; i++, prim = prim->next, vectors_ptr += 4) {
+    self->hitboxOffX = prim->x0 - self->posX.i.hi;
+    self->hitboxOffY = prim->y0 - self->posY.i.hi;
+    for (i = 0; i < 46; i++, prim = prim->next, vectors_ptr += 4) {
         gte_ldv3(vectors_ptr[0], vectors_ptr[1], vectors_ptr[3]);
         gte_rtpt();
         temp_a3 = vectors_ptr[2];
@@ -1046,7 +1046,7 @@ void EntityGiantSpinningCross(Entity* self) {
         if (sp5C < 0) {
             continue;
         }
-        gte_stsxy3(&prim->x0,&prim->x1,&prim->x2);
+        gte_stsxy3(&prim->x0, &prim->x1, &prim->x2);
         gte_ldv0(temp_a3);
         gte_rtps();
         prim->blendMode = 0;
