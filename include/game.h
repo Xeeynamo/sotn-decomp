@@ -6,9 +6,9 @@
 // lseek etc. conflicts
 #ifndef VERSION_PC
 #include <psxsdk/libapi.h>
+#include <psxsdk/libc.h>
 #endif
 
-#include <psxsdk/libc.h>
 #include <psxsdk/libcd.h>
 #include <psxsdk/libetc.h>
 #include <psxsdk/libgpu.h>
@@ -1489,10 +1489,6 @@ extern u8 g_CastleMap[0x800];
 extern s32 D_8006C374;
 extern s32 D_8006C378;
 extern GpuBuffer* g_CurrentBuffer; // g_CurrentBuffer;
-extern s32 D_8006C384;
-extern s32 D_8006C388;
-extern s32 D_8006C38C;
-extern s32 D_8006C390;
 extern s32 D_8006C384;
 extern s32 D_8006C388;
 extern s32 D_8006C38C;

@@ -1,6 +1,6 @@
 #include <common.h>
 #include <psxsdk/libcd.h>
-#include "../log.h"
+#include <log.h>
 
 CdlCB CdReadyCallback(CdlCB func) {
     DEBUGF("not implemented");
