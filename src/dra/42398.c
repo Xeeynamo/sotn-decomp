@@ -19,7 +19,7 @@
 extern void* g_ApiInit[sizeof(GameApi) / sizeof(void*)];
 
 s32 LoadVabData(void);
-void func_800E385C(u32*);
+void func_800E385C(u_long*);
 void UpdateGame(void);
 void VSyncHandler(void);
 void SetupEvents(void);
@@ -758,6 +758,13 @@ void func_800E38CC(void) {
     }
 }
 
+#if defined(VERSION_PC)
+#define IS_QUIT_REQUESTED g_IsQuitRequested
+extern bool g_IsQuitRequested;
+#else
+#define IS_QUIT_REQUESTED (false)
+#endif
+
 void MainGame(void) {
 #if defined(VERSION_HD)
     CdlFILE fp;
@@ -859,7 +866,7 @@ loop_5:
 #endif
     D_800978C4 = 1;
 
-    while (true) {
+    while (!IS_QUIT_REQUESTED) {
         g_BackBuffer = g_CurrentBuffer;
         g_CurrentBuffer = g_CurrentBuffer->next;
         g_Timer++;

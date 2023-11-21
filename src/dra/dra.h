@@ -724,7 +724,7 @@ extern s32 D_80138440;
 extern s32 D_80138444;
 extern s32 D_80138454;
 extern char g_SeqTable[SS_SEQ_TABSIZ * SEQ_TABLE_S_MAX * SEQ_TABLE_T_MAX];
-extern const char* D_80138784[487];
+extern const char* D_80138784[]; // 487?
 extern s32 g_CurCdPos;
 extern u8 g_CdMode[];
 extern u8 g_CdCommandResult[];
