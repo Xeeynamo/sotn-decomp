@@ -71,6 +71,7 @@ segments:
       - [0x376E8, rodata]
       - [0x377A4, .rodata, 56264] # EntityBat
       - [0x377B8, .rodata, 564B0] # EntityZombie
+      - [0x377CC, rodata] #D_801B77CC
       - [0x377D4, c]
       - [0x3C4EC, c]
       - [0x3E134, c]

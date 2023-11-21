@@ -121,6 +121,8 @@ extern u16 D_801810E0[];
 extern u8* D_801810F4[];
 extern s32 c_GoldPrizes[];
 
+extern SVECTOR D_80191A5C;
+
 // *** EntitySoulStealOrb properties START ***
 
 extern u16 D_8018138C[]; // NOTE(sestren): Random angle offsets?

@@ -353,6 +353,7 @@ extern s32 D_801823A4;
 extern const char D_801B058C[]; // "charal %x\n"
 extern const char D_801B0598[]; // "charal %x\n"
 extern const char D_801B08C8[]; // "charal %x\n"
+extern SVECTOR D_801B0934;
 extern s16 D_801CB68E;
 extern u16 D_801CB690;
 extern s16 D_801CB692;
