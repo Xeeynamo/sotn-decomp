@@ -1,3 +1,5 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libspu/s_cb", _SpuCallback);
+void InterruptCallback(s32, s32);
+
+void _SpuCallback(s32 arg0) { InterruptCallback(9, arg0); }

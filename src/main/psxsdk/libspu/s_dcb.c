@@ -1,3 +1,3 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libspu/s_dcb", _SpuDataCallback);
+void _SpuDataCallback(void (*arg0)()) { DMACallback(4, arg0); }
