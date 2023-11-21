@@ -8,8 +8,6 @@ extern SDL_Renderer* g_Renderer;
 bool g_IsQuitRequested;
 int g_Frame = 0;
 
-void SotnInit() { SoundInit(); }
-
 void UpdateGame() {
     // SDL event handling
     SDL_Event event;
