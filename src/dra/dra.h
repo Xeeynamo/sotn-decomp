@@ -714,6 +714,7 @@ extern u8 D_8013803C;
 extern u8 D_80138040;
 extern u8 D_80138044;
 extern u8 D_80138048;
+extern s16_pair D_8013804C[];
 extern s32 D_8013808C;
 extern Unkstruct_80138094 D_80138094[];
 extern s32 D_8013841C;

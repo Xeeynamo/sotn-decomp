@@ -1456,7 +1456,7 @@ void func_80119D3C(Entity* entity) {
     }
 }
 
-s32 func_80119E78(Primitive* poly, s32 xCenter, s32 yCenter) {
+s32 func_80119E78(Primitive* prim, s32 xCenter, s32 yCenter) {
     s16 left;
     s16 top;
     s16 right;
@@ -1466,40 +1466,114 @@ s32 func_80119E78(Primitive* poly, s32 xCenter, s32 yCenter) {
     // These are sets of 4 pairs of u,v values.
     // the ->b0 value is very likely fake.
     idx = D_800AD094;
-    idx += poly->b0 * 8;
+    idx += prim->b0 * 8;
     size = 6;
-    if (poly->b0 >= 3U) {
+    if (prim->b0 >= 3U) {
         size = 4;
     }
-    if (poly->b0 == 6) {
+    if (prim->b0 == 6) {
         return -1;
     }
     left = xCenter - size;
     top = yCenter - size;
-    poly->y0 = top;            // a
-    poly->y1 = top;            // 16
-    poly->x0 = left;           // 8
-    poly->x1 = xCenter + size; // 14
-    poly->x2 = left;           // 20
-    poly->y2 = yCenter + size; // 22
-    poly->x3 = xCenter + size; // 2c
-    poly->y3 = yCenter + size; // 2e
+    prim->y0 = top;            // a
+    prim->y1 = top;            // 16
+    prim->x0 = left;           // 8
+    prim->x1 = xCenter + size; // 14
+    prim->x2 = left;           // 20
+    prim->y2 = yCenter + size; // 22
+    prim->x3 = xCenter + size; // 2c
+    prim->y3 = yCenter + size; // 2e
 
-    poly->u0 = *idx++;
-    poly->v0 = *idx++;
-    poly->u1 = *idx++;
-    poly->v1 = *idx++;
-    poly->u2 = *idx++;
-    poly->v2 = *idx++;
-    poly->u3 = *idx++;
-    poly->v3 = *idx;
-    if (!(++poly->b1 & 1)) {
-        poly->b0++;
+    prim->u0 = *idx++;
+    prim->v0 = *idx++;
+    prim->u1 = *idx++;
+    prim->v1 = *idx++;
+    prim->u2 = *idx++;
+    prim->v2 = *idx++;
+    prim->u3 = *idx++;
+    prim->v3 = *idx;
+    if (!(++prim->b1 & 1)) {
+        prim->b0++;
     }
     return 0;
 }
+// Entity ID 47. Created by blueprint 119.
+// No calls to FACTORY with 119 exist yet.
+void func_80119F70(Entity* entity) {
+    Primitive* prim;
+    s16 temp_xRand;
+    s32 temp_yRand;
+    s32 i;
+    s16 hitboxY;
+    s16 hitboxX;
+    s32 temp;
 
-INCLUDE_ASM("dra/nonmatchings/75F54", func_80119F70);
+    switch (entity->step) {
+    case 0:
+        entity->primIndex = AllocPrimitives(PRIM_GT4, 16);
+        if (entity->primIndex == -1) {
+            DestroyEntity(entity);
+            return;
+        }
+        entity->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
+        hitboxX = PLAYER.posX.i.hi + PLAYER.hitboxOffX;
+        hitboxY = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
+        prim = &g_PrimBuf[entity->primIndex];
+        for (i = 0; i < 16; i++) {
+            temp_xRand = hitboxX + rand() % 24 - 12;
+            temp_yRand = rand();
+            D_8013804C[i].unk0 = temp_xRand;
+            D_8013804C[i].unk2 = hitboxY + temp_yRand % 48 - 24;
+            prim->clut = 0x1B2;
+            prim->tpage = 0x1A;
+            prim->b0 = 0;
+            prim->b1 = 0;
+            prim->g0 = 0;
+            prim->g1 = (rand() & 7) + 1;
+            prim->g2 = 0;
+            prim->priority = PLAYER.zPriority + 4;
+            prim->blendMode = 0x11B;
+            if (rand() & 1) {
+                prim->blendMode = 0x17B;
+            }
+            prim = prim->next;
+        }
+        entity->step++;
+        break;
+
+    case 1:
+        if (!(g_Player.unk0C & 0x10000)) {
+            DestroyEntity(entity);
+            return;
+        }
+    }
+
+    prim = &g_PrimBuf[entity->primIndex];
+    for (i = 0; i < 16; i++) {
+        switch (prim->g0) {
+        case 0:
+            if (!(--prim->g1 & 0xFF)) {
+                prim->g0++;
+            }
+            break;
+        case 1:
+            hitboxX = D_8013804C[i].unk2;
+            hitboxY = D_8013804C[i].unk0;
+            temp = func_80119E78(prim, hitboxY, hitboxX);
+            D_8013804C[i].unk2--;
+            if (temp < 0) {
+                prim->blendMode |= BLEND_VISIBLE;
+                prim->g0++;
+            } else {
+                prim->blendMode &= ~BLEND_VISIBLE;
+            }
+            break;
+        }
+        prim = prim->next;
+    }
+    return;
+}
 
 void func_8011A290(Entity* entity) {
     SubweaponDef subwpn;
