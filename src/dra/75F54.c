@@ -1502,8 +1502,8 @@ s32 func_80119E78(Primitive* prim, s32 xCenter, s32 yCenter) {
 // No calls to FACTORY with 119 exist yet.
 void func_80119F70(Entity* entity) {
     Primitive* prim;
-    s16 temp_s0;
-    s32 temp_rand;
+    s16 temp_xRand;
+    s32 temp_yRand;
     s32 i;
     s16 hitboxY;
     s16 hitboxX;
@@ -1521,10 +1521,10 @@ void func_80119F70(Entity* entity) {
         hitboxY = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
         prim = &g_PrimBuf[entity->primIndex];
         for (i = 0; i < 16; i++) {
-            temp_s0 = hitboxX + rand() % 24 - 12;
-            temp_rand = rand();
-            D_8013804C[i].unk0 = temp_s0;
-            D_8013804C[i].unk2 = hitboxY + temp_rand % 48 - 24;
+            temp_xRand = hitboxX + rand() % 24 - 12;
+            temp_yRand = rand();
+            D_8013804C[i].unk0 = temp_xRand;
+            D_8013804C[i].unk2 = hitboxY + temp_yRand % 48 - 24;
             prim->clut = 0x1B2;
             prim->tpage = 0x1A;
             prim->b0 = 0;
@@ -1563,10 +1563,10 @@ void func_80119F70(Entity* entity) {
             temp = func_80119E78(prim, hitboxY, hitboxX);
             D_8013804C[i].unk2--;
             if (temp < 0) {
-                prim->blendMode |= 8;
+                prim->blendMode |= BLEND_VISIBLE;
                 prim->g0++;
             } else {
-                prim->blendMode &= 0xFFF7;
+                prim->blendMode &= ~BLEND_VISIBLE;
             }
             break;
         }
