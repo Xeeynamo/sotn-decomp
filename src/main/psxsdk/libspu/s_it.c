@@ -1,7 +1,13 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libspu/s_it", _spu_setInTransfer);
-
 extern s32 _spu_inTransfer;
+
+void _spu_setInTransfer(s32 arg0) {
+    if (arg0 == 1) {
+        _spu_inTransfer = 0;
+        return;
+    }
+    _spu_inTransfer = 1;
+}
 
 s32 _spu_getInTransfer(void) { return _spu_inTransfer == 0; }
