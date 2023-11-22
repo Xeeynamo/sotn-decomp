@@ -23,7 +23,7 @@ void OpenCd(char* filename) {
 int CdReading() { return reading; }
 
 CdlCB CdReadyCallback(CdlCB func) {
-    DEBUGF("not implemented");
+    NOT_IMPLEMENTED;
     return func;
 }
 
@@ -89,7 +89,7 @@ int CdSync(int mode, u_char* result) {
 }
 
 int CdMix(CdlATV* vol) {
-    DEBUGF("not implemented");
+    NOT_IMPLEMENTED;
     return 0;
 }
 

@@ -2,8 +2,8 @@
 #include <psxsdk/libgs.h>
 #include <log.h>
 
-void GsClearVcount(void) { DEBUGF("not implemented"); }
+void GsClearVcount(void) { NOT_IMPLEMENTED; }
 
-long GsGetVcount() { DEBUGF("not implemented"); }
+long GsGetVcount() { NOT_IMPLEMENTED; }
 
-void GsInitVcount() { DEBUGF("not implemented"); }
+void GsInitVcount() { NOT_IMPLEMENTED; }

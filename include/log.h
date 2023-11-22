@@ -11,6 +11,7 @@ typedef enum {
 } LOG_LEVEL;
 
 #define NAMEOF(var) #var
+#define NOT_IMPLEMENTED DEBUGF("not implemented")
 
 #ifndef NO_LOGS
 

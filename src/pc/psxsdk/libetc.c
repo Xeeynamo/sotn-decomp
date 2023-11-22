@@ -30,8 +30,8 @@ u_long PadRead(int id) {
     return pressed;
 }
 
-int VSyncCallback(void (*f)()) { DEBUGF("not implemented"); }
+int VSyncCallback(void (*f)()) { NOT_IMPLEMENTED; }
 
-int VSyncCallbacks(int ch, void (*f)()) { DEBUGF("not implemented"); }
+int VSyncCallbacks(int ch, void (*f)()) { NOT_IMPLEMENTED; }
 
-long SetVideoMode(long mode) { DEBUGF("not implemented"); }
+long SetVideoMode(long mode) { NOT_IMPLEMENTED; }

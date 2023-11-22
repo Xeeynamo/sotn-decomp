@@ -3,6 +3,6 @@
 #include <psxsdk/libcard.h>
 #include <log.h>
 
-void InitCARD(long val) { DEBUGF("not implemented"); }
+void InitCARD(long val) { NOT_IMPLEMENTED; }
 
-long StartCARD(void) { DEBUGF("not implemented"); }
+long StartCARD(void) { NOT_IMPLEMENTED; }

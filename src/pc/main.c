@@ -12,6 +12,7 @@
 SDL_Window* g_Window;
 SDL_Renderer* g_Renderer;
 
+void InitGame(void);
 void MainGame(void);
 
 void SDLAudioCallback(void* data, Uint8* buffer, int length) {
@@ -38,6 +39,7 @@ void SDLAudioCallback(void* data, Uint8* buffer, int length) {
 }
 
 int main(int argc, char* argv[]) {
+    const char* filename;
     int ret;
 
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
@@ -46,11 +48,12 @@ int main(int argc, char* argv[]) {
     }
 
     if (argc < 2) {
-        ERRORF("Specify a filename");
-        exit(1);
+        filename = "disks/sotn.us.bin";
+    } else {
+        filename = argv[1];
     }
 
-    OpenCd(argv[1]);
+    OpenCd(filename);
 
     SDL_AudioSpec spec;
 
@@ -80,6 +83,7 @@ int main(int argc, char* argv[]) {
             ERRORF("SDL_CreateRenderer: %s", SDL_GetError());
             ret = 1;
         } else {
+            InitGame();
             MainGame();
             SDL_DestroyRenderer(g_Renderer);
         }

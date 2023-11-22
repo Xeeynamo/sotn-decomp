@@ -7,8 +7,8 @@ int VSync(int mode) {
     return 0;
 }
 
-long SetRCnt(unsigned long, unsigned short, long) { DEBUGF("not implemented"); }
+long SetRCnt(unsigned long, unsigned short, long) { NOT_IMPLEMENTED; }
 
-void ChangeClearPAD(long) { DEBUGF("not implemented"); }
+void ChangeClearPAD(long) { NOT_IMPLEMENTED; }
 
-void _bu_init(void) { DEBUGF("not implemented"); }
+void _bu_init(void) { NOT_IMPLEMENTED; }
