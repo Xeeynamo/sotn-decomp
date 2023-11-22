@@ -66,9 +66,25 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmSetSeqVol);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmGetSeqVol);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmGetSeqLVol);
+extern s16 D_800978DE;
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmGetSeqRVol);
+s16 SpuVmGetSeqLVol(s16 arg0) {
+    struct SeqStruct* new_var;
+    new_var = _ss_score[arg0 & 0xFF];
+    do {
+    } while (0);
+    D_800978DE = arg0;
+    return new_var[((s32)(arg0 & 0xFF00)) >> 8].unk74;
+}
+
+s16 SpuVmGetSeqRVol(s16 arg0) {
+    struct SeqStruct* new_var;
+    new_var = _ss_score[arg0 & 0xFF];
+    do {
+    } while (0);
+    D_800978DE = arg0;
+    return new_var[((s32)(arg0 & 0xFF00)) >> 8].unk76;
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmSeqKeyOff);
 

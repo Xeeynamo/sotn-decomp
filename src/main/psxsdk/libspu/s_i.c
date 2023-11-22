@@ -1,3 +1,5 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libspu/s_i", SpuInit);
+void _SpuInit(s32);
+
+void SpuInit(void) { _SpuInit(0); }
