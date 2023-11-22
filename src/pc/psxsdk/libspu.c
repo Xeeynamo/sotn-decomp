@@ -4,22 +4,20 @@
 
 void SpuSetVoiceAttr(SpuVoiceAttr* arg) { DEBUGF("SpuSetVoiceAttr"); }
 
-long SpuMallocWithStartAddr(unsigned long addr, long size) {
-    DEBUGF("not implemented");
-}
+long SpuMallocWithStartAddr(unsigned long addr, long size) { NOT_IMPLEMENTED; }
 
 SpuIRQCallbackProc SpuSetIRQCallback(SpuIRQCallbackProc in) {
-    DEBUGF("not implemented");
+    NOT_IMPLEMENTED;
     return in;
 }
 
 long SpuSetTransferMode(long mode) {
-    DEBUGF("not implemented");
+    NOT_IMPLEMENTED;
     return 0;
 }
 
 long SpuClearReverbWorkArea(long rev_mode) {
-    DEBUGF("not implemented");
+    NOT_IMPLEMENTED;
     return 0;
 }
 

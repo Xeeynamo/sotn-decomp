@@ -29,16 +29,9 @@ void RenderEntities(void);
 void InitRenderer(void);
 void RenderTilemap(void);
 void RenderPrimitives(void);
-void func_800FADC0(void);
-void func_801026BC(s32);
 void DrawEntitiesHitbox(s32 blendMode);
 void UpdateCd(void);
-s32 func_8010E27C(void);
-void SetSpeedX(s32);
-void SetCdVolume(s8 s_num, s16 arg1, s16 arg2);
 void SoundInit(void);
-void ExecCdSoundCommands(void);
-s32 func_80136010(void);
 
 void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;

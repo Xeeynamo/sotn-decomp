@@ -14,6 +14,8 @@ s32 g_LoadFile;
 u32 g_CdStep;
 GameState g_GameState;
 Entity g_Entities[TOTAL_ENTITY_COUNT];
+Primitive g_PrimBuf[MAX_PRIM_COUNT];
+Lba g_StagesLba[0x50];
 FgLayer D_8003C708;
 s16 D_8003C710;
 s16 D_8003C712;
@@ -57,15 +59,26 @@ s16 D_80136308[];
 u16 g_Clut[];
 s32 D_8006C384;
 s32 D_8006C388;
+MenuNavigation g_MenuNavigation;
 GameSettings g_Settings;
 s32 D_8006C384;
 s32 D_8006C388;
 s32 D_8006C38C;
 s32 D_8006C390;
 u16 D_8003C104[];
+s32 D_8003C738;
+u8 g_CastleFlags[0x300];
+s32 D_8006C374;
+u16 D_8003C3C2[];
+u32 D_80070BCC;
+s32 g_Servant;
+s32 g_ServantLoaded;
+s32 g_IsTimeAttackUnlocked;
+Unkstruct_8003C908 D_8003C908;
+s32 D_8003C100;
+s32 D_800978B4;
 
 // dra.h
-void* g_ApiInit[sizeof(GameApi) / sizeof(void*)] = {0};
 GpuUsage g_GpuMaxUsage;
 GpuBuffer* g_BackBuffer;
 s32 g_DebugFreeze;
@@ -104,6 +117,8 @@ s32 D_800A2438;
 s32 D_801362D0[];
 s32 D_800987B4;
 u8 g_PadsRepeatTimer[BUTTON_COUNT * PAD_COUNT];
+s32 D_80136410;
+s32 D_80136414[];
 
 // sound bss
 s16 g_SoundCommandRingBufferReadPos;
@@ -209,71 +224,125 @@ s32 D_800C1ECC[];
 // sound stubs
 void func_801327B4(int arg0, int arg1, int vabId, int prog, int tone, int note,
                    int g_VolL, int g_VolR) {
-    DEBUGF("not implemented");
+    NOT_IMPLEMENTED;
 }
 
-void func_80133FCC(void) { DEBUGF("not implemented"); }
+void func_80133FCC(void) { NOT_IMPLEMENTED; }
 
-void func_80135D8C() { DEBUGF("not implemented"); }
+void func_80135D8C() { NOT_IMPLEMENTED; }
 
 s32 func_80136010(void) {
-    DEBUGF("not implemented");
+    NOT_IMPLEMENTED;
     return 0;
 }
 
-void func_8013572C(int sndId, int unk02, int unk04) {
-    DEBUGF("not implemented");
-}
+void func_8013572C(int sndId, int unk02, int unk04) { NOT_IMPLEMENTED; }
 
-void func_801073C0(void) { DEBUGF("not implemented"); }
+void func_801073C0(void) { NOT_IMPLEMENTED; }
 
-void func_800EAD7C(void) { DEBUGF("not implemented"); }
+void func_800EAD7C(void) { NOT_IMPLEMENTED; }
 
-void HideAllBackgroundLayers(void) { DEBUGF("not implemented"); }
+void HideAllBackgroundLayers(void) { NOT_IMPLEMENTED; }
 
-void DestroyAllPrimitives(void) { DEBUGF("not implemented"); }
+void DestroyAllPrimitives(void) { NOT_IMPLEMENTED; }
 
-void DestroyEntities(s16 startIndex) { DEBUGF("not implemented"); }
+void DestroyEntities(s16 startIndex) { NOT_IMPLEMENTED; }
 
-void SetupEvents(void) { DEBUGF("not implemented"); }
+void SetupEvents(void) { NOT_IMPLEMENTED; }
 
 s32 LoadFileSim(s32 fileId, SimFileType type) {
-    DEBUGF("not implemented");
+    NOT_IMPLEMENTED;
     return 0;
 }
 
-void ResetPendingGfxLoad(void) { DEBUGF("not implemented"); }
+void ResetPendingGfxLoad(void) { NOT_IMPLEMENTED; }
 
-void func_800EA538(s32 arg0) { DEBUGF("not implemented"); }
+void func_800EA538(s32 arg0) { NOT_IMPLEMENTED; }
 
-void func_800EA7CC(void) { DEBUGF("not implemented"); }
+void func_800EA7CC(void) { NOT_IMPLEMENTED; }
 
-void func_800EDAE4(void) { DEBUGF("not implemented"); }
+void func_800EDAE4(void) { NOT_IMPLEMENTED; }
 
-void VSyncHandler(void) { DEBUGF("not implemented"); }
+void VSyncHandler(void) { NOT_IMPLEMENTED; }
 
-void InitRenderer(void) { DEBUGF("not implemented"); }
+void InitRenderer(void) { NOT_IMPLEMENTED; }
 
-void RenderEntities(void) { DEBUGF("not implemented"); }
+void RenderEntities(void) { NOT_IMPLEMENTED; }
 
-void RenderTilemap(void) { DEBUGF("not implemented"); }
+void RenderTilemap(void) { NOT_IMPLEMENTED; }
 
-void RenderPrimitives(void) { DEBUGF("not implemented"); }
+void RenderPrimitives(void) { NOT_IMPLEMENTED; }
 
-void DrawEntitiesHitbox(s32 blendMode) { DEBUGF("not implemented"); }
+void DrawEntitiesHitbox(s32 blendMode) { NOT_IMPLEMENTED; }
 
-void UpdateCd(void) { DEBUGF("not implemented"); }
+void UpdateCd(void) { NOT_IMPLEMENTED; }
 
-void LoadPendingGfx(void) { DEBUGF("not implemented"); }
+void LoadPendingGfx(void) { NOT_IMPLEMENTED; }
 
 int CdInit(void) {
-    DEBUGF("not implemented");
+    NOT_IMPLEMENTED;
     return 0;
 }
 
-void func_8010DFF0(s32 arg0, s32 arg1) { DEBUGF("not implemented"); }
+void func_8010DFF0(s32 arg0, s32 arg1) { NOT_IMPLEMENTED; }
 
-void ResetEntityArray(void) { DEBUGF("not implemented"); }
+void ResetEntityArray(void) { NOT_IMPLEMENTED; }
+
+void func_800F2120(void) { NOT_IMPLEMENTED; }
+
+void func_800FF0B8(void) { NOT_IMPLEMENTED; }
+
+void ApplyJosephsCloakPalette(void) { NOT_IMPLEMENTED; }
+
+void LoadGfxAsync(s32 gfxId) {
+    NOT_IMPLEMENTED;
+    DEBUGF("gfxId: %d", gfxId);
+}
+
+void func_800FDE00(void) { NOT_IMPLEMENTED; }
+
+s32 func_800EAD0C(void) { NOT_IMPLEMENTED; }
+
+s32 func_800EA5E4(u32) { NOT_IMPLEMENTED; }
+
+s32 func_800F16D0(void) { NOT_IMPLEMENTED; }
+
+bool func_800EB720(void) { return false; }
+
+void DemoInit(s32) { NOT_IMPLEMENTED; }
+
+void DemoUpdate(void) { NOT_IMPLEMENTED; }
+
+void func_801024DC(void) { NOT_IMPLEMENTED; }
+
+s32 AllocPrimitives(u8 primType, s32 count) { NOT_IMPLEMENTED; }
+
+void FreePrimitives(s32 index) { NOT_IMPLEMENTED; }
+
+void func_800EA5AC(u16 arg0, u8 arg1, u8 arg2, u8 arg3) { NOT_IMPLEMENTED; }
+
+void func_80107250(POLY_GT4* poly, s32 colorIntensity) { NOT_IMPLEMENTED; }
+
+void func_801072BC(POLY_GT4* poly) { NOT_IMPLEMENTED; }
+
+void func_801072DC(POLY_GT4* poly) { NOT_IMPLEMENTED; }
+
+void SetTexturedPrimRect(
+    Primitive* poly, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v) {
+    NOT_IMPLEMENTED;
+}
+
+void SetPrimRect(Primitive* poly, s32 x, s32 y, s32 width, s32 height) {
+    NOT_IMPLEMENTED;
+}
+
+void func_800E5D30(void* arg0, u16 arg1, u16 arg2, s32 arg3) {
+    NOT_IMPLEMENTED;
+}
+
+void InitStatsAndGear(bool isDeathTakingItems) { NOT_IMPLEMENTED; }
+
+void CheckWeaponCombo(void) { NOT_IMPLEMENTED; }
 
 void ResetPadsRepeat(void) {
     s8* ptr;

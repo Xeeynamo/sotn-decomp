@@ -2,4 +2,8 @@
 #include <psxsdk/libgte.h>
 #include <log.h>
 
-void InitGeom() { DEBUGF("not implemented"); }
+void InitGeom() { NOT_IMPLEMENTED; }
+
+int rsin(int x) { NOT_IMPLEMENTED; }
+
+int rcos(int x) { NOT_IMPLEMENTED; }
