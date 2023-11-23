@@ -78,6 +78,7 @@ extern RoomHeader g_rooms[];
 extern LayoutEntity* g_pStObjLayout[];
 extern LayoutEntity* D_801803C8[];
 extern PfnEntityUpdate PfnEntityUpdates[];
+extern SVECTOR D_8018D8C0;
 
 extern LayoutEntity* D_801997D8;
 extern u16* D_801997DC;
