@@ -1124,7 +1124,7 @@ void EntityMerman2(Entity* self) {
                 }
                 prim->next->y0 = self->posY.i.hi + 2;
             }
-            func_801D1F38(prim);
+            UnkPrimHelper(prim);
             break;
 
         case 1:
@@ -1137,7 +1137,7 @@ void EntityMerman2(Entity* self) {
                 prim->next->x1 = self->posX.i.hi + 3;
             }
             prim->next->y0 = self->posY.i.hi + 2;
-            func_801D1F38(prim);
+            UnkPrimHelper(prim);
             if (!(g_Timer % 10)) {
                 prim->clut += 2;
                 if (prim->clut >= 0x2A0) {
@@ -1207,7 +1207,7 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
 
     if (entity->params != 0) {
         poly = *(s32*)&entity->ext.generic.unk7C.s;
-        func_801D1F38(poly);
+        UnkPrimHelper(poly);
         ((POLY_GT4*)poly->next)->b3 += 252;
         LOH(poly->next->u1) -= 128;
         if (poly->next->b3 < 16) {

@@ -11,7 +11,7 @@ void func_801C3F9C(Unkstruct_801C3F9C** self) {
     Entity* newEntity;
     s16 temp;
 
-    func_801C9930();
+    UnkPrimHelper();
     switch ((*self)->unk24) {
     case 0:
         (*self)->unk0C = 0;

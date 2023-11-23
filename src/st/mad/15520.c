@@ -563,10 +563,7 @@ void EntityRoomForeground(Entity* entity) {
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_80198BC8);
 
-// This is a heavily duplicated function. It does not work here
-// because GTE functions are not found in MAD, I think there is
-// an issue in the #include structure where parts of the sdk are missing.
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_80198FA0);
+#include "../unk_prim_helper.h"
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_80199388);
 

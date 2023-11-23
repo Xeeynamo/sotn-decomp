@@ -108,7 +108,7 @@ void EntityBloodSplatter(Entity* self) {
 
     case 3:
         prim = self->ext.generic.unk8C.entityPtr;
-        func_801C9930(prim);
+        UnkPrimHelper(prim);
 
         if (g_Timer & 1) {
             prim3 = prim->next;
@@ -136,7 +136,7 @@ void EntityBloodSplatter(Entity* self) {
         }
 
         prim = *(s32*)&self->ext.generic.unk90;
-        func_801C9930(prim);
+        UnkPrimHelper(prim);
         prim3 = prim->next;
         *(u16*)&prim3->r2 = *(u16*)&prim3->r2 + 2;
         prim3 = prim->next;
@@ -198,7 +198,7 @@ void func_801C53AC(Primitive* prim) {
         break;
 
     case 1:
-        func_801C9930(prim);
+        UnkPrimHelper(prim);
         *(s32*)&prim->next->r1 += 0x2000;
         if (*(s32*)&prim->next->r1 > 0x20000) {
             UnkPolyFunc0(prim);

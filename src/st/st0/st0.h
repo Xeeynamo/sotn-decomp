@@ -145,7 +145,7 @@ extern u8 D_80181EF0[];
 extern u16 D_80181EF4[];
 extern u16 D_80181F04[];
 extern u8 D_801824CC[];
-extern SVECTOR D_801A7D3C;
+
 extern u16* D_801C00A4;
 extern s32 D_801C24C8;
 extern s32 D_801C2580;

@@ -79,7 +79,7 @@ extern u16 D_801811C8[];
 extern u16 D_801811D8[];
 extern u8 D_80181238;
 extern ObjInit2 D_8018125C[];
-extern SVECTOR D_8018D5F8;
+
 extern LayoutEntity* D_8019C764;
 extern u16* D_8019C768;
 extern u8 D_8019C76C;

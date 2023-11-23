@@ -239,7 +239,7 @@ void func_801A8328(Entity* self) {
             prim->next->tpage -= 0x10;
         }
 
-        func_801BD0C0(prim);
+        UnkPrimHelper(prim);
 
         g_api.CheckCollision(
             self->posX.i.hi, (s16)(self->posY.i.hi + 8), &collider, 0);
