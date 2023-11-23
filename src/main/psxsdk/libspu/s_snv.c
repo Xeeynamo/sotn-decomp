@@ -1,3 +1,5 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libspu/s_snv", SpuSetNoiseVoice);
+void SpuSetAnyVoice(s32, s32, u16, u16);
+
+void SpuSetNoiseVoice(s32 a, s32 b) { SpuSetAnyVoice(a, b, 0xCA, 0xCB); }
