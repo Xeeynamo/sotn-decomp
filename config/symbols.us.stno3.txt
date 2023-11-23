@@ -13,7 +13,6 @@ g_TrapDoorFlag = 0x8018123C;
 UNK_Invincibility0 = 0x80181CC0;
 c_GoldPrizes = 0x80182460;
 g_Rooms = 0x80183CC4;
-g_UnkPrimHelperRot = 0x801B77CC; // ignore:true
 g_UnkPrimHelperRot = 0x801B77CC;
 EntityCavernDoorVase = 0x801B77D4;
 EntityUnkId12 = 0x801B78A8;
