@@ -102,3 +102,5 @@ EntityBlade = 0x801D0D40;
 EntityBladeSword = 0x801D1BB8;
 UnkLoopFunc = 0x801D2704;
 g_ItemIconSlots = 0x801D33F4;
+g_UnkPrimHelperRot = 0x801B2464;
+UnkPrimHelper = 0x801D1F38;

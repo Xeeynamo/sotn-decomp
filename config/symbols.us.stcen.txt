@@ -53,3 +53,5 @@ EntityUnkId08 = 0x8019BAB8;
 BottomCornerText = 0x8019BBA4;
 g_Dialogue = 0x8019D378;
 g_ItemIconSlots = 0x8019D42C;
+g_UnkPrimHelperRot = 0x8018D5F8;
+UnkPrimHelper = 0x8019BED4;

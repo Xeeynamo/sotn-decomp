@@ -1558,7 +1558,7 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
 
     if (entity->params != 0) {
         poly = *(s32*)&entity->ext.generic.unk7C.s;
-        func_801D6880(poly);
+        UnkPrimHelper(poly);
         ((POLY_GT4*)poly->tag)->b3 += 252;
         LOH(((POLY_GT4*)poly->tag)->u1) -= 128;
         if (((POLY_GT4*)poly->tag)->b3 < 16) {

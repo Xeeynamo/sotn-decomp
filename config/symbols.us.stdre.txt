@@ -72,3 +72,5 @@ EntityUnkId17 = 0x801A2E20;
 Entity3DBackgroundHouse = 0x801A2F10;
 g_Dialogue = 0x801A3ED8;
 g_ItemIconSlots = 0x801A3F8C;
+g_UnkPrimHelperRot = 0x80191A5C;
+UnkPrimHelper = 0x801A2018;

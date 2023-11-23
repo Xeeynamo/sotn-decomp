@@ -196,7 +196,7 @@ void func_8018DB18(Entity* self) {
 
         if (self->primIndex != 0) {
             prim = &g_PrimBuf[self->primIndex];
-            func_8019BED4(prim);
+            UnkPrimHelper(prim);
             LOH(prim->next->r2) = LOH(prim->next->b2) += 4;
             if (LOH(prim->next->r2) > 64) {
                 prim->next->b3 += 252;

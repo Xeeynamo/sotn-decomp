@@ -62,3 +62,5 @@ EntityEquipItemDrop = 0x8018DA34;
 EntityStageNamePopup = 0x8019198C;
 BottomCornerText = 0x80192F40;
 g_ItemIconSlots = 0x80194728;
+g_UnkPrimHelperRot = 0x80186FC8;
+UnkPrimHelper = 0x80193270;
