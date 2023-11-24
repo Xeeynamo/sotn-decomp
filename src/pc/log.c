@@ -5,7 +5,7 @@
 #ifdef NDEBUG
 LOG_LEVEL g_MinLogLevel = LOG_LEVEL_I;
 #else
-LOG_LEVEL g_MinLogLevel = LOG_LEVEL_D;
+LOG_LEVEL g_MinLogLevel = LOG_LEVEL_I;
 #endif
 
 void SetMinLogLevel(LOG_LEVEL level) { g_MinLogLevel = level; }
