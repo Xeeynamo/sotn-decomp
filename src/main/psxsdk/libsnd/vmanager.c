@@ -32,7 +32,16 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SetAutoPan);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmInit);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmNoiseOnWithAdsr);
+void SpuVmNoiseOnWithAdsr(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s16 temp_v0;
+
+    D_800978D7 = 0x7F;
+    temp_v0 = SpuVmAlloc(0xFF) & 0xFF;
+    D_800978E2 = temp_v0;
+    if (temp_v0 < (s32)spuVmMaxVoice) {
+        vmNoiseOn2((u8)D_800978E2, arg0, arg1, arg2, arg3);
+    }
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmNoiseOff);
 

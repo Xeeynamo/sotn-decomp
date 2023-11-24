@@ -8,7 +8,14 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsGetSeqData);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsNoteOn);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsSetProgramChange);
+s32 _SsReadDeltaValue(s16, s16);
+
+void _SsSetProgramChange(s16 arg0, s16 arg1, s8 arg2) {
+    struct SeqStruct* temp_s0;
+    temp_s0 = &_ss_score[arg0][arg1];
+    temp_s0->programs[temp_s0->channel] = arg2;
+    temp_s0->delta_value = _SsReadDeltaValue(arg0, arg1);
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsSetControlChange);
 
@@ -24,9 +31,23 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContNrpn1);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContNrpn2);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContRpn1);
+void _SsContRpn1(s16 arg0, s16 arg1, u8 arg2) {
+    struct SeqStruct* temp_s0;
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContRpn2);
+    temp_s0 = &_ss_score[arg0][arg1];
+    temp_s0->unk13 = arg2;
+    temp_s0->unk29 += 1;
+    temp_s0->delta_value = _SsReadDeltaValue(arg0, arg1);
+}
+
+void _SsContRpn2(s16 arg0, s16 arg1, u8 arg2) {
+    struct SeqStruct* temp_s0;
+
+    temp_s0 = &_ss_score[arg0][arg1];
+    temp_s0->unk14 = arg2;
+    temp_s0->unk29 += 1;
+    temp_s0->delta_value = _SsReadDeltaValue(arg0, arg1);
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContDataEntry);
 
