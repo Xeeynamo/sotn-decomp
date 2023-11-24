@@ -48,7 +48,8 @@ char SsSetReservedVoice(char voices) {
 
 void SsSetTickMode(long tick_mode) { DEBUGF("%d", tick_mode); }
 
-void SsInitHot(void) { NOT_IMPLEMENTED; }
+void MySsInitHot();
+void SsInitHot(void) { MySsInitHot(); }
 
 void SsSetStereo(void) { NOT_IMPLEMENTED; }
 

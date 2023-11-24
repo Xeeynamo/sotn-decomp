@@ -344,6 +344,7 @@ void InitStatsAndGear(bool isDeathTakingItems) { NOT_IMPLEMENTED; }
 
 void CheckWeaponCombo(void) { NOT_IMPLEMENTED; }
 
+// copied from 47BB8.c
 void ResetPadsRepeat(void) {
     s8* ptr;
     s32 i;
@@ -356,6 +357,7 @@ void ResetPadsRepeat(void) {
     }
 }
 
+// copied from 47BB8.c
 void InitializePads(void) {
     Pad* pad;
     s32 i;
@@ -369,6 +371,7 @@ void InitializePads(void) {
     ResetPadsRepeat();
 }
 
+// copied from 47BB8.c
 void ReadPads(void) {
     Pad* pad;
     s32 i;

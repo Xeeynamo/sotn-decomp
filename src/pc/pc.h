@@ -9,6 +9,8 @@
 
 #include <log.h>
 
+#define DISP_WIDTH 256
+#define DISP_HEIGHT 256
 #define SCREEN_SCALE 2
 
 #endif

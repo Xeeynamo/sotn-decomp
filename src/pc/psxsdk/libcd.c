@@ -6,19 +6,11 @@
 #include "cdc.h"
 #include <stdio.h>
 
-FILE* cd_fp = NULL;
+extern FILE* cd_fp;
 bool reading = false;
 const int sector_size = 2352;
 int current_file = 0;
 int current_channel = 0;
-
-void OpenCd(char* filename) {
-    cd_fp = fopen(filename, "rb");
-
-    if (!cd_fp) {
-        DEBUGF("Couldn't open CD.\n");
-    }
-}
 
 int CdReading() { return reading; }
 
