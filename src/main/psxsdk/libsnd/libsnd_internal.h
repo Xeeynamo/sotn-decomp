@@ -99,7 +99,12 @@ struct SeqStruct {
     u8 unk0;
     u8 pad1[3];
     u8* read_pos;
-    u8 pad[0x34];
+    u8 pad[0xb];
+    u8 unk13;
+    u8 unk14;
+    u8 pad2[0x14];
+    u8 unk29;
+    u8 pad4[0x12];
     u8 unk3C;
     u8 pad3D;
     s16 unk3E;
@@ -113,7 +118,9 @@ struct SeqStruct {
     s16 unk7A;
     u8 pad7C[2];
     u32 unk80;
-    u8 pad84[0xc];
+    u8 pad84[4];
+    s32 unk88;
+    u8 pad5[1];
     s32 unk90;
     s32 unk94;
     s32 unk98;
