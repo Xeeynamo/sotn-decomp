@@ -8,6 +8,7 @@ CC_FLAGS_PC         += -I$(INCLUDE_DIR) -I$(SRC_DIR)/dra/
 LD_FLAGS_PC         := -fsanitize=address -lc -lm -lSDL2
 
 C_FILES_PC          := main.c log.c stubs.c sotn.c
+C_FILES_PC          += pc.c sdl2.c
 C_FILES_PSX_SDK     := libapi.c libetc.c libgpu.c libgte.c libgs.c libcd.c libcard.c libspu.c libsnd.c cdc.c
 C_FILES_DRA         := 42398.c play.c gameover.c loading.c 46FD4.c
 C_FILES_DRA         += 91EBC.c 92F60.c 93290.c 93BDC.c 94F50.c 953A0.c

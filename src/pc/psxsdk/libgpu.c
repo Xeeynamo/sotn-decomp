@@ -8,18 +8,18 @@ int FntOpen(int x, int y, int w, int h, int isbg, int n) { NOT_IMPLEMENTED; }
 
 void FntLoad(int tx, int ty) { NOT_IMPLEMENTED; }
 
+int MyFntPrint(const char* fmt, va_list arg);
 int FntPrint(const char* fmt, ...) {
+    int n;
     va_list args;
     va_start(args, fmt);
-
-    char buf[256];
-    vsnprintf(buf, sizeof(buf), fmt, args);
-    INFOF(buf);
-
+    n = MyFntPrint(fmt, args);
     va_end(args);
+    return n;
 }
 
-u_long* FntFlush(int) { fflush(stderr); }
+u_long* MyFntFlush(int id);
+u_long* FntFlush(int id) { return MyFntFlush(id); }
 
 void SetDumpFnt(int id) { NOT_IMPLEMENTED; }
 
@@ -37,7 +37,7 @@ int LoadImage(RECT* rect, u_long* p) { NOT_IMPLEMENTED; }
 int StoreImage(RECT* rect, u_long* p) { NOT_IMPLEMENTED; }
 int MoveImage(RECT* rect, int x, int y) { NOT_IMPLEMENTED; }
 
-int DrawSync(int mode);
+int MyDrawSync(int mode);
 int DrawSync(int mode) { return MyDrawSync(mode); }
 
 DRAWENV* PutDrawEnv(DRAWENV* env) { NOT_IMPLEMENTED; }
@@ -56,7 +56,8 @@ void SetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw) {
     NOT_IMPLEMENTED;
 }
 
-int ResetGraph(int mode) { NOT_IMPLEMENTED; }
+int MyResetGraph(int mode);
+int ResetGraph(int mode) { return MyResetGraph(mode); }
 
 int SetGraphDebug(int level) { NOT_IMPLEMENTED; }
 

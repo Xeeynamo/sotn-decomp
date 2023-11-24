@@ -4,14 +4,6 @@
 #include "sfx.h"
 #include <SDL2/SDL.h>
 
-extern SDL_Window* g_Window;
-extern SDL_Renderer* g_Renderer;
-bool g_IsQuitRequested;
-int g_Frame = 0;
-
-void HandleTitle();
-void HandlePlay();
-
 GameApi g_ApiInit = {0};
 Equipment g_EquipDefs[0x100] = {0};
 Accessory g_AccessoryDefs[0x100] = {0};
@@ -39,32 +31,21 @@ void DebugInputWait(const char* msg);
 // stub to the original UpdateGame
 void func_800F298C() { PlaySfx(MU_REQUIEM_FOR_THE_GODS); }
 
-int MyDrawSync(int mode) {
-    SDL_RenderPresent(g_Renderer);
-    SDL_RenderSetScale(g_Renderer, SCREEN_SCALE, SCREEN_SCALE);
-
-    // SDL event handling
-    SDL_Event event;
-    while (SDL_PollEvent(&event)) {
-        switch (event.type) {
-        case SDL_QUIT:
-            g_IsQuitRequested = 1;
-            break;
-        }
-    }
-    // Clear the renderer
-    SDL_SetRenderDrawColor(g_Renderer, 0, 0, 0, 255);
-    SDL_RenderClear(g_Renderer);
-
+int g_Frame = 0;
+void MyDrawSyncCallback(int mode) {
     DEBUGF("-------------------- frame %d --------------------", g_Frame);
     DEBUGF("state: %d, game step: %d", g_GameState, g_GameStep);
 
     g_Frame++;
-    return 0;
 }
 
 // called before MainGame
-void InitGame() {
+bool InitPlatform(void);
+bool InitGame(void) {
+    if (!InitPlatform()) {
+        return false;
+    }
+
     // These two are necessary to make HandleTitle working
     GameApi api;
     api.FreePrimitives = FreePrimitives;
@@ -151,4 +132,9 @@ void InitGame() {
 
     D_8017A000.LoadWeaponPalette = WeaponLoadPaletteStub;
     D_8017D000.LoadWeaponPalette = WeaponLoadPaletteStub;
+
+    return true;
 }
+
+void ResetPlatform(void);
+void ResetGame(void) { ResetPlatform(); }
