@@ -24,6 +24,7 @@ D_801A085C = 0x801A085C;
 D_801A0E5C = 0x801A0E5C;
 D_801A4E6C = 0x801A4E6C;
 D_801A6E7C = 0x801A6E7C;
+g_UnkPrimHelperRot = 0x801B0934;
 EntityBreakable = 0x801B0EEC;
 EntityRedEyeBust = 0x801B11C0;
 EntityPurpleBrickScrollingBackground = 0x801B12E8;

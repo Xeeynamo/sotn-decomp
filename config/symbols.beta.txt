@@ -93,6 +93,16 @@ g_Status_gold = 0x8009769C;
 g_Status_killCount = 0x800976A0;
 subWeapon = 0x800976A8;
 g_Timer = 0x8003C854;
+RotMatrix = 0x800186AC;
+RotMatrixX = 0x80018BCC;
+RotMatrixY = 0x80018D6C;
+RotMatrixZ = 0x80018F0C;
+TransMatrix = 0x80017CDC;
+ScaleMatrix = 0x80017D0C;
+SetRotMatrix = 0x80017E3C;
+SetTransMatrix = 0x80017ECC;
+SetGeomScreen = 0x8001805C;
+SetGeomOffset = 0x8001803C;
 
 D_8003BE1E_mad = 0x8003BE1E;
 D_8003BF28_mad = 0x8003BF28;

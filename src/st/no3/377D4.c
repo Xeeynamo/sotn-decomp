@@ -1409,7 +1409,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
         prim2->tpage -= 0x20;
         prim2 = prim->next;
         LOW(prim2->r1) += 0x2000;
-        func_801D6880(prim);
+        UnkPrimHelper(prim);
         prim3 = prim->next;
         x = prim3->x1;
         y = prim3->y0;
