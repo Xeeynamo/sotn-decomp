@@ -85,7 +85,7 @@ extern u8 spuVmMaxVoice;
 extern s16 _svm_stereo_mono;
 
 u8 SpuVmAlloc(u8);
-s32 vmNoiseOn2(u8, u16, u16, s32, s32);
+s32 vmNoiseOn2(u8, u16, u16, u16, u16);
 extern s8 D_800978D7;
 extern s16 D_800978E2;
 extern u8 spuVmMaxVoice;
@@ -99,12 +99,14 @@ struct SeqStruct {
     u8 unk0;
     u8 pad1[3];
     u8* read_pos;
-    u8 pad[0xb];
+    u8 pad[0xa];
+    u8 channel;
     u8 unk13;
     u8 unk14;
     u8 pad2[0x14];
     u8 unk29;
-    u8 pad4[0x12];
+    u8 pad7[2];
+    u8 programs[16];
     u8 unk3C;
     u8 pad3D;
     s16 unk3E;
@@ -119,7 +121,7 @@ struct SeqStruct {
     u8 pad7C[2];
     u32 unk80;
     u8 pad84[4];
-    s32 unk88;
+    s32 delta_value;
     u8 pad5[1];
     s32 unk90;
     s32 unk94;
