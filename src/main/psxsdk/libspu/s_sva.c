@@ -1,7 +1,6 @@
 #include "common.h"
 #include "psxsdk/libspu.h"
-
-void _SpuSetVoiceAttr(SpuVoiceAttr* arg, s32, s32, s32);
+#include "libspu_internal.h"
 
 void SpuSetVoiceAttr(SpuVoiceAttr* arg) { _SpuSetVoiceAttr(arg, 0, 0x17, 0); }
 

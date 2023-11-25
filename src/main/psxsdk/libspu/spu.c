@@ -1,4 +1,5 @@
 #include "common.h"
+#include "libspu_internal.h"
 
 INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libspu/spu", _spu_reset);
 
@@ -12,13 +13,7 @@ INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libspu/spu", _spu_r_);
 
 INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libspu/spu", _spu_t);
 
-s32 _spu_t(s32, ...);
-s32 _spu_writeByIO(s32, s32);
-extern s32 _spu_mem_mode_plus;
-extern s32 _spu_transMode;
-extern u16 _spu_tsa;
-
-s32 _spu_write(s32 arg0, s32 arg1) {
+s32 _spu_write(u32 arg0, u32 arg1) {
 
     if (_spu_transMode != 0) {
         _spu_writeByIO(arg0, arg1);
@@ -32,15 +27,13 @@ s32 _spu_write(s32 arg0, s32 arg1) {
 
 INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libspu/spu", _spu_read);
 
-extern volatile u16* _spu_RXX[];
-extern s32 _spu_mem_mode_plus;
-
 void _spu_FsetRXX(s32 arg0, u32 arg1, s32 arg2) {
     if (arg2 == 0) {
-        (*_spu_RXX)[arg0] = arg1;
+        _spu_RXX->raw[arg0] = arg1;
         return;
     }
-    (*_spu_RXX)[arg0] = (arg1 >> _spu_mem_mode_plus);
+
+    _spu_RXX->raw[arg0] = (arg1 >> _spu_mem_mode_plus);
 }
 
 INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libspu/spu", _spu_FsetRXXa);

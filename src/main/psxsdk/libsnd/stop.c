@@ -1,4 +1,7 @@
 #include "common.h"
+#include "libsnd_internal.h"
+
+s32 SpuVmSeqKeyOff(s32, s32, struct SeqStruct*, s32);
 
 INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libsnd/stop", _SsSndStop);
 

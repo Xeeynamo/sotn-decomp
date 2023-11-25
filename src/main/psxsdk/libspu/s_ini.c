@@ -1,11 +1,7 @@
 #include "common.h"
+#include "libspu_internal.h"
 
 INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libspu/s_ini", _SpuInit);
-
-void _spu_FiDMA();
-extern s32 D_80033098;
-extern s32 _spu_EVdma;
-extern s32 _spu_isCalled;
 
 void SpuStart(void) {
     s32 temp_v0;
