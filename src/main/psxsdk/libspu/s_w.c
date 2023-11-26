@@ -1,8 +1,5 @@
 #include "common.h"
-
-void _spu_write(u32, u32);
-extern s32 _spu_inTransfer;
-extern s32 _spu_transferCallback;
+#include "libspu_internal.h"
 
 unsigned long SpuWrite(unsigned char* addr, unsigned long size) {
     u32 var_s0;

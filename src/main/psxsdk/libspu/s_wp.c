@@ -1,11 +1,6 @@
 #include "common.h"
+#include "libspu_internal.h"
 
-u16 _spu_FsetRXXa(s32, s32);
-s32 _spu_write(u32, u32);
-extern s32 _spu_inTransfer;
-extern s32 _spu_mem_mode_plus;
-extern s32 _spu_transferCallback;
-extern u16 _spu_tsa;
 u32 SpuWritePartly(u8* addr, u32 size) {
     s32 temp_s0;
     u32 var_s1;

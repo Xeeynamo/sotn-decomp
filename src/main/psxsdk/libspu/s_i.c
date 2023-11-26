@@ -1,5 +1,4 @@
 #include "common.h"
-
-void _SpuInit(s32);
+#include "libspu_internal.h"
 
 void SpuInit(void) { _SpuInit(0); }

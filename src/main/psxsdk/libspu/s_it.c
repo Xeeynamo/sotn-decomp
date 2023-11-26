@@ -1,6 +1,5 @@
 #include "common.h"
-
-extern s32 _spu_inTransfer;
+#include "libspu_internal.h"
 
 void _spu_setInTransfer(s32 arg0) {
     if (arg0 == 1) {
