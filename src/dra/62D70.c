@@ -149,8 +149,272 @@ POLY_GT4* func_80103148(POLY_GT4* poly1, POLY_GT4* arg1) {
     return (POLY_GT4*)poly1->tag;
 }
 
-INCLUDE_ASM("dra/nonmatchings/62D70", func_80103238);
+s32 func_80103238(s32 arg0) {
+    Primitive* prim1;
+    Primitive* prim2;
+    Primitive* prim3;
+    u8 temp_t0;
+    s32 temp_a1;
 
+    prim2 = &g_PrimBuf[D_80137E58];
+    temp_t0 = prim2->p1;
+    prim1 = &g_PrimBuf[D_80137E5C];
+    prim3 = &g_PrimBuf[D_80137E60];
+    if (arg0 == 0) {
+        if (temp_t0 == 0) {
+            prim2->blendMode = 0;
+            prim1->blendMode = 0x404;
+            if (D_80137E4C == 6) {
+                PlaySfx(0x63D);
+            } else {
+                PlaySfx(0x6AD);
+            }
+            if (D_80137E4C == 6) {
+                func_800F9D88("Data saved\x81\x44", 0, 1);
+                prim2->p1 += 2;
+            }
+            if (D_80137E4C == 7) {
+                func_800F9D88("Memory Card", 0, 1);
+                func_800F9D88("  not found\x81\x44", 1, 0);
+                prim2->p1 += 2;
+            }
+            if (D_80137E4C == 8) {
+                func_800F9D88("Memory Card", 0, 1);
+                func_800F9D88("is Defective\x81\x44", 1, 0);
+                prim2->p1 += 2;
+            }
+            if (D_80137E4C == 9) {
+                func_800F9D88("Memory Card is", 0, 1);
+                func_800F9D88("not formatted\x81\x44", 1, 0);
+                prim2->p1 += 2;
+            }
+            if (D_80137E4C == 10) {
+                if (D_80137E54 == 2) {
+                    func_800F9D88("Cannot", 0, 1);
+                    func_800F9D88("overwrite file\x81\x44", 1, 0);
+                } else if (D_80137E54 == 3) {
+                    func_800F9D88("No game", 0, 1);
+                    func_800F9D88("data found\x81\x44", 1, 0);
+                } else {
+                    func_800F9D88("   \x82\x4F memory", 0, 1);
+                    func_800F9D88("blocks available\x81\x44", 1, 0);
+                }
+                prim2->p1 += 2;
+            }
+            if (D_80137E4C == 11) {
+                func_800F9D88("  Memory card", 0, 1);
+                func_800F9D88("  format error\x81\x44", 1, 0);
+                prim2->p1 += 2;
+            }
+        } else {
+            if ((D_80137E4C == 7 || D_80137E4C == 8) && (temp_t0 < 0x21)) {
+                SetTexturedPrimRect(
+                    prim2, 0x50, 0x60 - temp_t0, 0x60, temp_t0, 0, 0);
+                prim2->p1 += 2;
+                SetPrimRect(prim1, 0x48, 0x60 - temp_t0, 0x70, temp_t0);
+                func_80103148(prim3, prim1);
+            } else if (
+                (D_80137E4C == 9 || D_80137E4C == 11) && (temp_t0 < 0x21)) {
+                SetTexturedPrimRect(
+                    prim2, 0x44, 0x60 - temp_t0, 0x78, temp_t0, 0, 0);
+                prim2->p1 += 2;
+                SetPrimRect(prim1, 0x3C, 0x60 - temp_t0, 0x88, temp_t0);
+                func_80103148(prim3, prim1);
+            } else if (D_80137E4C == 10 && temp_t0 < 0x21) {
+                // silly logic here. if 2 or 3, it's 0, otherwise it's -10
+                temp_a1 = (-(!(D_80137E54 == 2 || D_80137E54 == 3))) & -10;
+                SetTexturedPrimRect(prim2, temp_a1 + 0x50, 0x60 - temp_t0,
+                                    0x70, temp_t0, 0, 0);
+                prim2->p1 += 2;
+                if (D_80137E54 == 2 || D_80137E54 == 3) {
+                    SetPrimRect(prim1, 0x48, 0x60 - temp_t0, 0x70, temp_t0);
+                } else {
+                    SetPrimRect(prim1, 0x44, 0x60 - temp_t0, 0x78, temp_t0);
+                }
+                func_80103148(prim3, prim1);
+            } else if (temp_t0 < 0x11) {
+                SetTexturedPrimRect(
+                    prim2, 0x56, 0x50 - temp_t0, 0x60, temp_t0, 0, 0);
+                prim2->p1 += 2;
+                SetPrimRect(prim1, 0x50, 0x50 - temp_t0, 0x60, temp_t0);
+                func_80103148(prim3, prim1);
+            } else {
+                func_80103148(prim3, prim1);
+                if (D_80137E4C == 6) {
+                    prim2->p1 += 2;
+                }
+                if ((prim2->p1 >= 0xE0) || (g_pads[0].tapped & 0x40)) {
+                    FreePrimitives(D_80137E58);
+                    FreePrimitives(D_80137E5C);
+                    FreePrimitives(D_80137E60);
+                    return 1;
+                }
+            }
+        }
+        // Seems this one shouldn't be needed since the else's would send it to
+        // the end anyway?
+        return 0;
+    } else if (arg0 == 1) {
+        if (temp_t0 == 0) {
+            PlaySfx(0x6AD);
+            prim2->p1 += 2;
+            func_800F9D88("  Select the slot\x81\x44", 0, 1);
+            func_800F9D88(" Slot \x82\x50", 1, 0);
+            func_800F9D88(" Slot \x82\x51", 2, 0);
+            SetTexturedPrimRect(prim2, 0x38, 0x4F, 0x90, 0, 0, 0);
+            prim2->blendMode = 0;
+            prim1->blendMode = 0x404;
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+            prim2->blendMode = 0;
+            func_801030B4(0, prim1, D_80097924);
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+            prim2->blendMode = 0;
+            func_801030B4(1, prim1, D_80097924);
+        } else if (temp_t0 < 0x11) {
+            prim2->p1 += 2;
+            SetTexturedPrimRect(
+                prim2, 0x3E, 0x50 - temp_t0, 0x90, temp_t0, 0, 0);
+            SetPrimRect(prim1, 0x38, 0x50 - temp_t0, 0x90, temp_t0);
+            prim3 = func_80103148(prim3, prim1);
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+            SetTexturedPrimRect(
+                prim2, 0x36, 0x68 - temp_t0, 0x40, temp_t0, 0, 0x10);
+            SetPrimRect(prim1, 0x34, 0x68 - temp_t0, 0x40, temp_t0);
+            func_801030B4(0, prim1, D_80097924);
+            prim3 = func_80103148(prim3, prim1);
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+            SetTexturedPrimRect(
+                prim2, 0x8E, 0x68 - temp_t0, 0x40, temp_t0, 0, 0x20);
+            SetPrimRect(prim1, 0x8C, 0x68 - temp_t0, 0x40, temp_t0);
+            func_801030B4(1, prim1, D_80097924);
+            func_80103148(prim3, prim1);
+        } else {
+            if (g_pads[0].tapped & 0x8000) {
+                if (D_80097924 != 0) {
+                    PlaySfx(0x6A4);
+                }
+                D_80097924 = 0;
+            }
+            if (g_pads[0].tapped & 0x2000) {
+                if (D_80097924 == 0) {
+                    PlaySfx(0x6A4);
+                }
+                D_80097924 = 1;
+            }
+            prim3 = func_80103148(prim3, prim1);
+            prim1 = prim1->next;
+            func_801030B4(0, prim1, D_80097924);
+            prim3 = func_80103148(prim3, prim1);
+            prim1 = prim1->next;
+            func_801030B4(1, prim1, D_80097924);
+            func_80103148(prim3, prim1);
+            if (g_pads[0].tapped & 0x10) {
+                FreePrimitives(D_80137E58);
+                FreePrimitives(D_80137E5C);
+                FreePrimitives(D_80137E60);
+                D_80097924 = -1;
+                return 2;
+            }
+            if (g_pads[0].tapped & 0x40) {
+                PlaySfx(0x633);
+                FreePrimitives(D_80137E58);
+                FreePrimitives(D_80137E5C);
+                FreePrimitives(D_80137E60);
+                D_8006C378 = -1;
+                return 1;
+            }
+        }
+    } else {
+        if (temp_t0 == 0) {
+            PlaySfx(0x6AD);
+            prim2->p1 += 2;
+            if (arg0 == 2) {
+                func_800F9D88(" Wish to format\x81\x48", 0, 1);
+                D_80137E6C = 1;
+            }
+            if (arg0 == 3) {
+                func_800F9D88(" Overwrite data\x81\x48", 0, 1);
+                D_80137E6C = 0;
+            }
+            if (arg0 == 4) {
+                func_800F9D88("   Wish to save\x81\x48", 0, 1);
+                D_80137E6C = 0;
+            }
+            func_800F9D88("Yes ", 1, 0);
+            func_800F9D88("  No  ", 2, 0);
+            SetTexturedPrimRect(prim2, 0x38, 0x4F, 0x90, 0, 0, 0);
+            prim2->blendMode = 0;
+            prim1->blendMode = 0x404;
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+            prim2->blendMode = 0;
+            func_801030B4(0, prim1, D_80137E6C);
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+            prim2->blendMode = 0;
+            func_801030B4(1, prim1, D_80137E6C);
+        } else if (temp_t0 < 0x11) {
+            prim2->p1 += 2;
+            SetTexturedPrimRect(
+                prim2, 0x3E, 0x50 - temp_t0, 0x90, temp_t0, 0, 0);
+            SetPrimRect(prim1, 0x38, 0x50 - temp_t0, 0x90, temp_t0);
+            prim3 = func_80103148(prim3, prim1);
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+            SetTexturedPrimRect(
+                prim2, 0x48, 0x68 - temp_t0, 0x18, temp_t0, 0, 0x10);
+            SetPrimRect(prim1, 0x3C, 0x68 - temp_t0, 0x30, temp_t0);
+            func_801030B4(0, prim1, D_80137E6C);
+            prim3 = func_80103148(prim3, prim1);
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+            SetTexturedPrimRect(
+                prim2, 0x9A, 0x68 - temp_t0, 0x24, temp_t0, 0, 0x20);
+            SetPrimRect(prim1, 0x94, 0x68 - temp_t0, 0x30, temp_t0);
+            func_801030B4(1, prim1, D_80137E6C);
+            func_80103148(prim3, prim1);
+        } else {
+            if (g_pads[0].tapped & 0x8000) {
+                if (D_80137E6C != 0) {
+                    PlaySfx(0x6A4);
+                }
+                D_80137E6C = 0;
+            }
+            if (g_pads[0].tapped & 0x2000) {
+                if (D_80137E6C == 0) {
+                    PlaySfx(0x6A4);
+                }
+                D_80137E6C = 1;
+            }
+            prim3 = func_80103148(prim3, prim1);
+            prim1 = prim1->next;
+            func_801030B4(0, prim1, D_80137E6C);
+            prim3 = func_80103148(prim3, prim1);
+            prim1 = prim1->next;
+
+            func_801030B4(1, prim1, D_80137E6C);
+            func_80103148(prim3, prim1);
+            if (g_pads[0].tapped & 0x10) {
+                D_80137E6C = 1;
+                FreePrimitives(D_80137E58);
+                FreePrimitives(D_80137E5C);
+                FreePrimitives(D_80137E60);
+                return 1;
+            } else if (g_pads[0].tapped & 0x40) {
+                PlaySfx(0x633);
+                FreePrimitives(D_80137E58);
+                FreePrimitives(D_80137E5C);
+                FreePrimitives(D_80137E60);
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
 void func_80103EAC(void) {
     D_80137E4C = 0;
     MemcardInfoInit();
