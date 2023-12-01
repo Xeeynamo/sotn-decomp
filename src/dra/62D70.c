@@ -223,8 +223,8 @@ s32 func_80103238(s32 arg0) {
             } else if (D_80137E4C == 10 && temp_t0 < 0x21) {
                 // silly logic here. if 2 or 3, it's 0, otherwise it's -10
                 temp_a1 = (-(!(D_80137E54 == 2 || D_80137E54 == 3))) & -10;
-                SetTexturedPrimRect(prim2, temp_a1 + 0x50, 0x60 - temp_t0,
-                                    0x70, temp_t0, 0, 0);
+                SetTexturedPrimRect(
+                    prim2, temp_a1 + 0x50, 0x60 - temp_t0, 0x70, temp_t0, 0, 0);
                 prim2->p1 += 2;
                 if (D_80137E54 == 2 || D_80137E54 == 3) {
                     SetPrimRect(prim1, 0x48, 0x60 - temp_t0, 0x70, temp_t0);
