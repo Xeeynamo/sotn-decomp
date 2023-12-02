@@ -165,9 +165,9 @@ s32 func_80103238(s32 arg0) {
             prim2->blendMode = 0;
             prim1->blendMode = 0x404;
             if (D_80137E4C == 6) {
-                PlaySfx(0x63D);
+                PlaySfx(SE_UI_START);
             } else {
-                PlaySfx(0x6AD);
+                PlaySfx(SE_UI_OVERWRITE_MSG);
             }
             if (D_80137E4C == 6) {
                 func_800F9D88("Data saved．", 0, 1);
@@ -256,7 +256,7 @@ s32 func_80103238(s32 arg0) {
         return 0;
     } else if (arg0 == 1) {
         if (temp_t0 == 0) {
-            PlaySfx(0x6AD);
+            PlaySfx(SE_UI_OVERWRITE_MSG);
             prim2->p1 += 2;
             func_800F9D88("  Select the slot．", 0, 1);
             func_800F9D88(" Slot １", 1, 0);
@@ -295,13 +295,13 @@ s32 func_80103238(s32 arg0) {
         } else {
             if (g_pads[0].tapped & PAD_LEFT) {
                 if (D_80097924 != 0) {
-                    PlaySfx(0x6A4);
+                    PlaySfx(SE_UI_OVERWRITE_SELECT);
                 }
                 D_80097924 = 0;
             }
             if (g_pads[0].tapped & PAD_RIGHT) {
                 if (D_80097924 == 0) {
-                    PlaySfx(0x6A4);
+                    PlaySfx(SE_UI_OVERWRITE_SELECT);
                 }
                 D_80097924 = 1;
             }
@@ -312,6 +312,7 @@ s32 func_80103238(s32 arg0) {
             prim1 = prim1->next;
             func_801030B4(1, prim1, D_80097924);
             func_80103148(prim3, prim1);
+            // Triangle exits, same as selecting "No"
             if (g_pads[0].tapped & PAD_TRIANGLE) {
                 FreePrimitives(D_80137E58);
                 FreePrimitives(D_80137E5C);
@@ -320,7 +321,7 @@ s32 func_80103238(s32 arg0) {
                 return 2;
             }
             if (g_pads[0].tapped & PAD_CROSS) {
-                PlaySfx(0x633);
+                PlaySfx(SE_UI_CONFIRM);
                 FreePrimitives(D_80137E58);
                 FreePrimitives(D_80137E5C);
                 FreePrimitives(D_80137E60);
@@ -330,7 +331,7 @@ s32 func_80103238(s32 arg0) {
         }
     } else {
         if (temp_t0 == 0) {
-            PlaySfx(0x6AD);
+            PlaySfx(SE_UI_OVERWRITE_MSG);
             prim2->p1 += 2;
             if (arg0 == 2) {
                 func_800F9D88(" Wish to format？", 0, 1);
@@ -380,13 +381,13 @@ s32 func_80103238(s32 arg0) {
         } else {
             if (g_pads[0].tapped & PAD_LEFT) {
                 if (D_80137E6C != 0) {
-                    PlaySfx(0x6A4);
+                    PlaySfx(SE_UI_OVERWRITE_SELECT);
                 }
                 D_80137E6C = 0;
             }
             if (g_pads[0].tapped & PAD_RIGHT) {
                 if (D_80137E6C == 0) {
-                    PlaySfx(0x6A4);
+                    PlaySfx(SE_UI_OVERWRITE_SELECT);
                 }
                 D_80137E6C = 1;
             }
@@ -398,6 +399,7 @@ s32 func_80103238(s32 arg0) {
 
             func_801030B4(1, prim1, D_80137E6C);
             func_80103148(prim3, prim1);
+            // Triangle exits, same as selecting "No"
             if (g_pads[0].tapped & PAD_TRIANGLE) {
                 D_80137E6C = 1;
                 FreePrimitives(D_80137E58);
@@ -405,7 +407,7 @@ s32 func_80103238(s32 arg0) {
                 FreePrimitives(D_80137E60);
                 return 1;
             } else if (g_pads[0].tapped & PAD_CROSS) {
-                PlaySfx(0x633);
+                PlaySfx(SE_UI_CONFIRM);
                 FreePrimitives(D_80137E58);
                 FreePrimitives(D_80137E5C);
                 FreePrimitives(D_80137E60);
