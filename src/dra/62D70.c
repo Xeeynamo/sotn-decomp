@@ -170,40 +170,40 @@ s32 func_80103238(s32 arg0) {
                 PlaySfx(0x6AD);
             }
             if (D_80137E4C == 6) {
-                func_800F9D88("Data saved\x81\x44", 0, 1);
+                func_800F9D88("Data saved．", 0, 1);
                 prim2->p1 += 2;
             }
             if (D_80137E4C == 7) {
                 func_800F9D88("Memory Card", 0, 1);
-                func_800F9D88("  not found\x81\x44", 1, 0);
+                func_800F9D88("  not found．", 1, 0);
                 prim2->p1 += 2;
             }
             if (D_80137E4C == 8) {
                 func_800F9D88("Memory Card", 0, 1);
-                func_800F9D88("is Defective\x81\x44", 1, 0);
+                func_800F9D88("is Defective．", 1, 0);
                 prim2->p1 += 2;
             }
             if (D_80137E4C == 9) {
                 func_800F9D88("Memory Card is", 0, 1);
-                func_800F9D88("not formatted\x81\x44", 1, 0);
+                func_800F9D88("not formatted．", 1, 0);
                 prim2->p1 += 2;
             }
             if (D_80137E4C == 10) {
                 if (D_80137E54 == 2) {
                     func_800F9D88("Cannot", 0, 1);
-                    func_800F9D88("overwrite file\x81\x44", 1, 0);
+                    func_800F9D88("overwrite file．", 1, 0);
                 } else if (D_80137E54 == 3) {
                     func_800F9D88("No game", 0, 1);
-                    func_800F9D88("data found\x81\x44", 1, 0);
+                    func_800F9D88("data found．", 1, 0);
                 } else {
-                    func_800F9D88("   \x82\x4F memory", 0, 1);
-                    func_800F9D88("blocks available\x81\x44", 1, 0);
+                    func_800F9D88("   ０ memory", 0, 1);
+                    func_800F9D88("blocks available．", 1, 0);
                 }
                 prim2->p1 += 2;
             }
             if (D_80137E4C == 11) {
                 func_800F9D88("  Memory card", 0, 1);
-                func_800F9D88("  format error\x81\x44", 1, 0);
+                func_800F9D88("  format error．", 1, 0);
                 prim2->p1 += 2;
             }
         } else {
@@ -243,7 +243,7 @@ s32 func_80103238(s32 arg0) {
                 if (D_80137E4C == 6) {
                     prim2->p1 += 2;
                 }
-                if ((prim2->p1 >= 0xE0) || (g_pads[0].tapped & 0x40)) {
+                if ((prim2->p1 >= 0xE0) || (g_pads[0].tapped & PAD_CROSS)) {
                     FreePrimitives(D_80137E58);
                     FreePrimitives(D_80137E5C);
                     FreePrimitives(D_80137E60);
@@ -258,9 +258,9 @@ s32 func_80103238(s32 arg0) {
         if (temp_t0 == 0) {
             PlaySfx(0x6AD);
             prim2->p1 += 2;
-            func_800F9D88("  Select the slot\x81\x44", 0, 1);
-            func_800F9D88(" Slot \x82\x50", 1, 0);
-            func_800F9D88(" Slot \x82\x51", 2, 0);
+            func_800F9D88("  Select the slot．", 0, 1);
+            func_800F9D88(" Slot １", 1, 0);
+            func_800F9D88(" Slot ２", 2, 0);
             SetTexturedPrimRect(prim2, 0x38, 0x4F, 0x90, 0, 0, 0);
             prim2->blendMode = 0;
             prim1->blendMode = 0x404;
@@ -293,13 +293,13 @@ s32 func_80103238(s32 arg0) {
             func_801030B4(1, prim1, D_80097924);
             func_80103148(prim3, prim1);
         } else {
-            if (g_pads[0].tapped & 0x8000) {
+            if (g_pads[0].tapped & PAD_LEFT) {
                 if (D_80097924 != 0) {
                     PlaySfx(0x6A4);
                 }
                 D_80097924 = 0;
             }
-            if (g_pads[0].tapped & 0x2000) {
+            if (g_pads[0].tapped & PAD_RIGHT) {
                 if (D_80097924 == 0) {
                     PlaySfx(0x6A4);
                 }
@@ -312,14 +312,14 @@ s32 func_80103238(s32 arg0) {
             prim1 = prim1->next;
             func_801030B4(1, prim1, D_80097924);
             func_80103148(prim3, prim1);
-            if (g_pads[0].tapped & 0x10) {
+            if (g_pads[0].tapped & PAD_TRIANGLE) {
                 FreePrimitives(D_80137E58);
                 FreePrimitives(D_80137E5C);
                 FreePrimitives(D_80137E60);
                 D_80097924 = -1;
                 return 2;
             }
-            if (g_pads[0].tapped & 0x40) {
+            if (g_pads[0].tapped & PAD_CROSS) {
                 PlaySfx(0x633);
                 FreePrimitives(D_80137E58);
                 FreePrimitives(D_80137E5C);
@@ -333,15 +333,15 @@ s32 func_80103238(s32 arg0) {
             PlaySfx(0x6AD);
             prim2->p1 += 2;
             if (arg0 == 2) {
-                func_800F9D88(" Wish to format\x81\x48", 0, 1);
+                func_800F9D88(" Wish to format？", 0, 1);
                 D_80137E6C = 1;
             }
             if (arg0 == 3) {
-                func_800F9D88(" Overwrite data\x81\x48", 0, 1);
+                func_800F9D88(" Overwrite data？", 0, 1);
                 D_80137E6C = 0;
             }
             if (arg0 == 4) {
-                func_800F9D88("   Wish to save\x81\x48", 0, 1);
+                func_800F9D88("   Wish to save？", 0, 1);
                 D_80137E6C = 0;
             }
             func_800F9D88("Yes ", 1, 0);
@@ -378,13 +378,13 @@ s32 func_80103238(s32 arg0) {
             func_801030B4(1, prim1, D_80137E6C);
             func_80103148(prim3, prim1);
         } else {
-            if (g_pads[0].tapped & 0x8000) {
+            if (g_pads[0].tapped & PAD_LEFT) {
                 if (D_80137E6C != 0) {
                     PlaySfx(0x6A4);
                 }
                 D_80137E6C = 0;
             }
-            if (g_pads[0].tapped & 0x2000) {
+            if (g_pads[0].tapped & PAD_RIGHT) {
                 if (D_80137E6C == 0) {
                     PlaySfx(0x6A4);
                 }
@@ -398,13 +398,13 @@ s32 func_80103238(s32 arg0) {
 
             func_801030B4(1, prim1, D_80137E6C);
             func_80103148(prim3, prim1);
-            if (g_pads[0].tapped & 0x10) {
+            if (g_pads[0].tapped & PAD_TRIANGLE) {
                 D_80137E6C = 1;
                 FreePrimitives(D_80137E58);
                 FreePrimitives(D_80137E5C);
                 FreePrimitives(D_80137E60);
                 return 1;
-            } else if (g_pads[0].tapped & 0x40) {
+            } else if (g_pads[0].tapped & PAD_CROSS) {
                 PlaySfx(0x633);
                 FreePrimitives(D_80137E58);
                 FreePrimitives(D_80137E5C);
@@ -415,6 +415,7 @@ s32 func_80103238(s32 arg0) {
     }
     return 0;
 }
+
 void func_80103EAC(void) {
     D_80137E4C = 0;
     MemcardInfoInit();
