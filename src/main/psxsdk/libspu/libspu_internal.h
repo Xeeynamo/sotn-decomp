@@ -5,7 +5,7 @@
 
 void InterruptCallback(s32, s32);
 void _SpuInit(s32);
-void _spu_read(u32, u32);
+s32 _spu_read(s32 arg0, s32 arg1);
 void _spu_FiDMA();
 
 extern s32 D_80033098;

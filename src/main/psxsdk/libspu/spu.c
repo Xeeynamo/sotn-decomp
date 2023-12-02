@@ -25,7 +25,13 @@ s32 _spu_write(u32 arg0, u32 arg1) {
     return arg1;
 }
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libspu/spu", _spu_read);
+s32 _spu_read(s32 arg0, s32 arg1) {
+    s32 temp = _spu_tsa << _spu_mem_mode_plus;
+    _spu_t(2, temp);
+    _spu_t(0);
+    _spu_t(3, arg0, arg1);
+    return arg1;
+}
 
 void _spu_FsetRXX(s32 arg0, u32 arg1, s32 arg2) {
     if (arg2 == 0) {
