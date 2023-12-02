@@ -37,6 +37,8 @@ void _SsStart(s32);
 extern void (*D_80032EF8)();
 extern void (*D_80032EFC)();
 extern s32 D_80032F04;
+
+extern s32 D_8003C74C;
 extern SpuReverbAttr _svm_rattr;
 
 void SpuVmSeKeyOn(s32, u8, u16, u8, u16, u16);
