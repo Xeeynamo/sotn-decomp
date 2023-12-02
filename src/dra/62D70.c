@@ -149,7 +149,7 @@ POLY_GT4* func_80103148(POLY_GT4* poly1, POLY_GT4* arg1) {
     return (POLY_GT4*)poly1->tag;
 }
 
-s32 func_80103238(s32 arg0) {
+s32 HandleSaveMenu(s32 arg0) {
     Primitive* prim1;
     Primitive* prim2;
     Primitive* prim3;
