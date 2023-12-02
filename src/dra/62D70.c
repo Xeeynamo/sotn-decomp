@@ -255,51 +255,49 @@ s32 HandleSaveMenu(s32 arg0) {
                 prim2->p1 += 2;
             }
         } else {
-            if ((D_80137E4C == 7 || D_80137E4C == 8) && (temp_t0 < 0x21)) {
-                SetTexturedPrimRect(
-                    prim2, 0x50, 0x60 - temp_t0, 0x60, temp_t0, 0, 0);
+            if ((D_80137E4C == 7 || D_80137E4C == 8) && (temp_t0 < 33)) {
+                SetTexturedPrimRect(prim2, 80, 96 - temp_t0, 96, temp_t0, 0, 0);
                 prim2->p1 += 2;
-                SetPrimRect(prim1, 0x48, 0x60 - temp_t0, 0x70, temp_t0);
+                SetPrimRect(prim1, 72, 96 - temp_t0, 112, temp_t0);
                 func_80103148(prim3, prim1);
             } else if (
-                (D_80137E4C == 9 || D_80137E4C == 11) && (temp_t0 < 0x21)) {
+                (D_80137E4C == 9 || D_80137E4C == 11) && (temp_t0 < 33)) {
                 SetTexturedPrimRect(
-                    prim2, 0x44, 0x60 - temp_t0, 0x78, temp_t0, 0, 0);
+                    prim2, 68, 96 - temp_t0, 120, temp_t0, 0, 0);
                 prim2->p1 += 2;
-                SetPrimRect(prim1, 0x3C, 0x60 - temp_t0, 0x88, temp_t0);
+                SetPrimRect(prim1, 60, 96 - temp_t0, 136, temp_t0);
                 func_80103148(prim3, prim1);
-            } else if (D_80137E4C == 10 && temp_t0 < 0x21) {
+            } else if (D_80137E4C == 10 && temp_t0 < 33) {
 #if defined(VERSION_US)
                 // silly logic here. if 2 or 3, it's 0, otherwise it's -10
                 temp_a1 = (-(!(D_80137E54 == 2 || D_80137E54 == 3))) & -10;
                 SetTexturedPrimRect(
-                    prim2, temp_a1 + 0x50, 0x60 - temp_t0, 0x70, temp_t0, 0, 0);
+                    prim2, temp_a1 + 80, 96 - temp_t0, 112, temp_t0, 0, 0);
                 prim2->p1 += 2;
                 if (D_80137E54 == 2 || D_80137E54 == 3) {
-                    SetPrimRect(prim1, 0x48, 0x60 - temp_t0, 0x70, temp_t0);
+                    SetPrimRect(prim1, 72, 96 - temp_t0, 112, temp_t0);
                 } else {
-                    SetPrimRect(prim1, 0x44, 0x60 - temp_t0, 0x78, temp_t0);
+                    SetPrimRect(prim1, 68, 96 - temp_t0, 120, temp_t0);
                 }
 #elif defined(VERSION_HD)
                 temp_a1 = (-(!(D_80137E54 ^ 3))) & -6;
                 SetTexturedPrimRect(
-                    prim2, temp_a1 + 0x56, 0x60 - temp_t0, 0x60, temp_t0, 0, 0);
+                    prim2, temp_a1 + 86, 96 - temp_t0, 96, temp_t0, 0, 0);
                 prim2->p1 += 2;
-                SetPrimRect(prim1, 0x48, 0x60 - temp_t0, 0x70, temp_t0);
+                SetPrimRect(prim1, 72, 96 - temp_t0, 112, temp_t0);
 #endif
                 func_80103148(prim3, prim1);
-            } else if (temp_t0 < 0x11) {
-                SetTexturedPrimRect(
-                    prim2, 0x56, 0x50 - temp_t0, 0x60, temp_t0, 0, 0);
+            } else if (temp_t0 < 17) {
+                SetTexturedPrimRect(prim2, 86, 80 - temp_t0, 96, temp_t0, 0, 0);
                 prim2->p1 += 2;
-                SetPrimRect(prim1, 0x50, 0x50 - temp_t0, 0x60, temp_t0);
+                SetPrimRect(prim1, 80, 80 - temp_t0, 96, temp_t0);
                 func_80103148(prim3, prim1);
             } else {
                 func_80103148(prim3, prim1);
                 if (D_80137E4C == 6) {
                     prim2->p1 += 2;
                 }
-                if ((prim2->p1 >= 0xE0) || (g_pads[0].tapped & CONFIRM)) {
+                if ((prim2->p1 >= 224) || (g_pads[0].tapped & CONFIRM)) {
                     FreePrimitives(D_80137E58);
                     FreePrimitives(D_80137E5C);
                     FreePrimitives(D_80137E60);
@@ -323,7 +321,7 @@ s32 HandleSaveMenu(s32 arg0) {
             func_800F9D40("スロット１　", 1, 0);
             func_800F9D40("スロット２　", 2, 0);
 #endif
-            SetTexturedPrimRect(prim2, 0x38, 0x4F, 0x90, 0, 0, 0);
+            SetTexturedPrimRect(prim2, 56, 79, 144, 0, 0, 0);
             prim2->blendMode = 0;
             prim1->blendMode = 0x404;
             prim2 = prim2->next;
@@ -334,24 +332,21 @@ s32 HandleSaveMenu(s32 arg0) {
             prim1 = prim1->next;
             prim2->blendMode = 0;
             func_801030B4(1, prim1, D_80097924);
-        } else if (temp_t0 < 0x11) {
+        } else if (temp_t0 < 17) {
             prim2->p1 += 2;
-            SetTexturedPrimRect(
-                prim2, 0x3E, 0x50 - temp_t0, 0x90, temp_t0, 0, 0);
-            SetPrimRect(prim1, 0x38, 0x50 - temp_t0, 0x90, temp_t0);
+            SetTexturedPrimRect(prim2, 62, 80 - temp_t0, 144, temp_t0, 0, 0);
+            SetPrimRect(prim1, 56, 80 - temp_t0, 144, temp_t0);
             prim3 = func_80103148(prim3, prim1);
             prim2 = prim2->next;
             prim1 = prim1->next;
-            SetTexturedPrimRect(
-                prim2, 0x36, 0x68 - temp_t0, 0x40, temp_t0, 0, 0x10);
-            SetPrimRect(prim1, 0x34, 0x68 - temp_t0, 0x40, temp_t0);
+            SetTexturedPrimRect(prim2, 54, 104 - temp_t0, 64, temp_t0, 0, 16);
+            SetPrimRect(prim1, 52, 104 - temp_t0, 64, temp_t0);
             func_801030B4(0, prim1, D_80097924);
             prim3 = func_80103148(prim3, prim1);
             prim2 = prim2->next;
             prim1 = prim1->next;
-            SetTexturedPrimRect(
-                prim2, 0x8E, 0x68 - temp_t0, 0x40, temp_t0, 0, 0x20);
-            SetPrimRect(prim1, 0x8C, 0x68 - temp_t0, 0x40, temp_t0);
+            SetTexturedPrimRect(prim2, 142, 104 - temp_t0, 64, temp_t0, 0, 32);
+            SetPrimRect(prim1, 140, 104 - temp_t0, 64, temp_t0);
             func_801030B4(1, prim1, D_80097924);
             func_80103148(prim3, prim1);
         } else {
@@ -427,7 +422,7 @@ s32 HandleSaveMenu(s32 arg0) {
 
 #endif
 
-            SetTexturedPrimRect(prim2, 0x38, 0x4F, 0x90, 0, 0, 0);
+            SetTexturedPrimRect(prim2, 56, 79, 144, 0, 0, 0);
             prim2->blendMode = 0;
             prim1->blendMode = 0x404;
             prim2 = prim2->next;
@@ -438,24 +433,21 @@ s32 HandleSaveMenu(s32 arg0) {
             prim1 = prim1->next;
             prim2->blendMode = 0;
             func_801030B4(1, prim1, D_80137E6C);
-        } else if (temp_t0 < 0x11) {
+        } else if (temp_t0 < 17) {
             prim2->p1 += 2;
-            SetTexturedPrimRect(
-                prim2, 0x3E, 0x50 - temp_t0, 0x90, temp_t0, 0, 0);
-            SetPrimRect(prim1, 0x38, 0x50 - temp_t0, 0x90, temp_t0);
+            SetTexturedPrimRect(prim2, 62, 80 - temp_t0, 144, temp_t0, 0, 0);
+            SetPrimRect(prim1, 56, 80 - temp_t0, 144, temp_t0);
             prim3 = func_80103148(prim3, prim1);
             prim2 = prim2->next;
             prim1 = prim1->next;
-            SetTexturedPrimRect(
-                prim2, 0x48, 0x68 - temp_t0, 0x18, temp_t0, 0, 0x10);
-            SetPrimRect(prim1, 0x3C, 0x68 - temp_t0, 0x30, temp_t0);
+            SetTexturedPrimRect(prim2, 72, 104 - temp_t0, 24, temp_t0, 0, 16);
+            SetPrimRect(prim1, 60, 104 - temp_t0, 48, temp_t0);
             func_801030B4(0, prim1, D_80137E6C);
             prim3 = func_80103148(prim3, prim1);
             prim2 = prim2->next;
             prim1 = prim1->next;
-            SetTexturedPrimRect(
-                prim2, 0x9A, 0x68 - temp_t0, 0x24, temp_t0, 0, 0x20);
-            SetPrimRect(prim1, 0x94, 0x68 - temp_t0, 0x30, temp_t0);
+            SetTexturedPrimRect(prim2, 154, 104 - temp_t0, 36, temp_t0, 0, 32);
+            SetPrimRect(prim1, 148, 104 - temp_t0, 48, temp_t0);
             func_801030B4(1, prim1, D_80137E6C);
             func_80103148(prim3, prim1);
         } else {
