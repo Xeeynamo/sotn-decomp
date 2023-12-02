@@ -3074,24 +3074,24 @@ void func_800F99B8(const char* str, s32 arg1, s32 arg2) {
 }
 #endif
 
-void func_800F9D40(s32 arg0, s32 arg1, s32 arg2) {
+void func_800F9D40(const char* str, s32 arg1, s32 arg2) {
     if (arg2 != 0) {
         D_8013794C = g_Pix[2];
     }
 
     D_80137950 = 0;
     D_80137954 = 0x100;
-    func_800F98AC(arg0, arg1);
+    func_800F98AC(str, arg1);
 }
 
 #if defined(VERSION_US)
-void func_800F9D88(s32 arg0, s32 arg1, s32 arg2) {
+void func_800F9D88(const char* str, s32 arg1, s32 arg2) {
     if (arg2 != 0) {
         D_8013794C = g_Pix[2];
     }
     D_80137950 = 0;
     D_80137954 = 0x100;
-    func_800F99B8(arg0, arg1, 0);
+    func_800F99B8(str, arg1, 0);
 }
 #endif
 
