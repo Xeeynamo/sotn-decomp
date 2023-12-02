@@ -87,7 +87,7 @@ segments:
       - [0x3CC78, .rodata, 627C4] # jtbl_800DCC78
       - [0x3CC98, rodata] # jtbl_800DCC98
       - [0x3CCC0, .rodata, 62D70]
-      - [0x3CCDC, rodata]
+      - [0x3CCC0, .rodata, 62D70] # HandleSaveMenu, all the strings
       - [0x3CED4, rodata] # jtbl_800DCED4
       - [0x3CEF0, rodata]
       - [0x40C74, .rodata, cd]

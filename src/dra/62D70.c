@@ -149,29 +149,6 @@ POLY_GT4* func_80103148(POLY_GT4* poly1, POLY_GT4* arg1) {
     return (POLY_GT4*)poly1->tag;
 }
 
-extern char* D_800DCCDC;
-extern char* D_800DCD0C;
-extern char* D_800DCD24;
-extern char* D_800DCD54;
-extern char* D_800DCD84;
-extern char* D_800DCDB4;
-extern char* D_800DCDCC;
-extern char* D_800DCDE4;
-extern char* D_800DCE14;
-extern char* D_800DCE2C;
-extern char* D_800DCE48;
-extern char* D_800DCE58;
-extern char* D_800DCE68;
-extern char* D_800DCE84;
-extern char* D_800DCD9C;
-extern char* D_800DCD6C;
-extern char* D_800DCCF4;
-extern char* D_800DCD3C;
-extern char* D_800DCDFC;
-extern char* D_800DCEC8;
-extern char* D_800DCEA0;
-extern char* D_800DCEBC;
-
 s32 HandleSaveMenu(s32 arg0) {
 // For some reason, US and HD have different controls for confirm and exit,
 // so we handle that with a couple of constants.
@@ -205,7 +182,7 @@ s32 HandleSaveMenu(s32 arg0) {
 #if defined(VERSION_US)
                 func_800F9D88("Data saved．", 0, 1);
 #elif defined(VERSION_HD)
-                func_800F9D40(&D_800DCCDC, 0, 1);
+                func_800F9D40("セーブしました　　　", 0, 1);
 #endif
                 prim2->p1 += 2;
             }
@@ -214,8 +191,8 @@ s32 HandleSaveMenu(s32 arg0) {
                 func_800F9D88("Memory Card", 0, 1);
                 func_800F9D88("  not found．", 1, 0);
 #elif defined(VERSION_HD)
-                func_800F9D40(&D_800DCCF4, 0, 1);
-                func_800F9D40(&D_800DCD0C, 1, 0);
+                func_800F9D40("メモリーカードが　　", 0, 1);
+                func_800F9D40("ささっていません　　", 1, 0);
 #endif
                 prim2->p1 += 2;
             }
@@ -224,8 +201,8 @@ s32 HandleSaveMenu(s32 arg0) {
                 func_800F9D88("Memory Card", 0, 1);
                 func_800F9D88("is Defective．", 1, 0);
 #elif defined(VERSION_HD)
-                func_800F9D40(&D_800DCCF4, 0, 1);
-                func_800F9D40(&D_800DCD24, 1, 0);
+                func_800F9D40("メモリーカードが　　", 0, 1);
+                func_800F9D40("　壊れています　　　", 1, 0);
 #endif
                 prim2->p1 += 2;
             }
@@ -234,8 +211,8 @@ s32 HandleSaveMenu(s32 arg0) {
                 func_800F9D88("Memory Card is", 0, 1);
                 func_800F9D88("not formatted．", 1, 0);
 #elif defined(VERSION_HD)
-                func_800F9D40(&D_800DCD3C, 0, 1);
-                func_800F9D40(&D_800DCD54, 1, 0);
+                func_800F9D40("　メモリーカードが　", 0, 1);
+                func_800F9D40("初期化されていません", 1, 0);
 #endif
                 prim2->p1 += 2;
             }
@@ -245,24 +222,24 @@ s32 HandleSaveMenu(s32 arg0) {
                     func_800F9D88("Cannot", 0, 1);
                     func_800F9D88("overwrite file．", 1, 0);
 #elif defined(VERSION_HD)
-                    func_800F9D40(&D_800DCD6C, 0, 1);
-                    func_800F9D40(&D_800DCD84, 1, 0);
+                    func_800F9D40("　　上書き　　　　　", 0, 1);
+                    func_800F9D40("　できません　　　　", 1, 0);
 #endif
                 } else if (D_80137E54 == 3) {
 #if defined(VERSION_US)
                     func_800F9D88("No game", 0, 1);
                     func_800F9D88("data found．", 1, 0);
 #elif defined(VERSION_HD)
-                    func_800F9D40(&D_800DCD9C, 0, 1);
-                    func_800F9D40(&D_800DCDB4, 1, 0);
+                    func_800F9D40("データがないため　　", 0, 1);
+                    func_800F9D40("上書きできません　　", 1, 0);
 #endif
                 } else {
 #if defined(VERSION_US)
                     func_800F9D88("   ０ memory", 0, 1);
                     func_800F9D88("blocks available．", 1, 0);
 #elif defined(VERSION_HD)
-                    func_800F9D40(&D_800DCDCC, 0, 1);
-                    func_800F9D40(&D_800DCDE4, 1, 0);
+                    func_800F9D40("空きブロックが　　　", 0, 1);
+                    func_800F9D40("　足りません　　　　", 1, 0);
 #endif
                 }
                 prim2->p1 += 2;
@@ -272,8 +249,8 @@ s32 HandleSaveMenu(s32 arg0) {
                 func_800F9D88("  Memory card", 0, 1);
                 func_800F9D88("  format error．", 1, 0);
 #elif defined(VERSION_HD)
-                func_800F9D40(&D_800DCDFC, 0, 1);
-                func_800F9D40(&D_800DCE14, 1, 0);
+                func_800F9D40("　メモリーカードの　", 0, 1);
+                func_800F9D40("初期化に失敗しました　", 1, 0);
 #endif
                 prim2->p1 += 2;
             }
@@ -342,9 +319,9 @@ s32 HandleSaveMenu(s32 arg0) {
             func_800F9D88(" Slot １", 1, 0);
             func_800F9D88(" Slot ２", 2, 0);
 #elif defined(VERSION_HD)
-            func_800F9D40(&D_800DCE2C, 0, 1);
-            func_800F9D40(&D_800DCE48, 1, 0);
-            func_800F9D40(&D_800DCE58, 2, 0);
+            func_800F9D40("スロットを選んで下さい　", 0, 1);
+            func_800F9D40("スロット１　", 1, 0);
+            func_800F9D40("スロット２　", 2, 0);
 #endif
             SetTexturedPrimRect(prim2, 0x38, 0x4F, 0x90, 0, 0, 0);
             prim2->blendMode = 0;
@@ -421,7 +398,7 @@ s32 HandleSaveMenu(s32 arg0) {
 #if defined(VERSION_US)
                 func_800F9D88(" Wish to format？", 0, 1);
 #elif defined(VERSION_HD)
-                func_800F9D40(&D_800DCE68, 0, 1);
+                func_800F9D40("初期化してもいいですか　", 0, 1);
 #endif
                 D_80137E6C = 1;
             }
@@ -429,7 +406,7 @@ s32 HandleSaveMenu(s32 arg0) {
 #if defined(VERSION_US)
                 func_800F9D88(" Overwrite data？", 0, 1);
 #elif defined(VERSION_HD)
-                func_800F9D40(&D_800DCE84, 0, 1);
+                func_800F9D40("　　上書きしますか　　　", 0, 1);
 #endif
                 D_80137E6C = 0;
             }
@@ -437,7 +414,7 @@ s32 HandleSaveMenu(s32 arg0) {
 #if defined(VERSION_US)
                 func_800F9D88("   Wish to save？", 0, 1);
 #elif defined(VERSION_HD)
-                func_800F9D40(&D_800DCEA0, 0, 1);
+                func_800F9D40("　　セーブしますか　　　", 0, 1);
 #endif
                 D_80137E6C = 0;
             }
@@ -445,8 +422,8 @@ s32 HandleSaveMenu(s32 arg0) {
             func_800F9D88("Yes ", 1, 0);
             func_800F9D88("  No  ", 2, 0);
 #elif defined(VERSION_HD)
-            func_800F9D40(&D_800DCEBC, 1, 0);
-            func_800F9D40(&D_800DCEC8, 2, 0);
+            func_800F9D40("はい　　", 1, 0);
+            func_800F9D40("いいえ　", 2, 0);
 
 #endif
 
