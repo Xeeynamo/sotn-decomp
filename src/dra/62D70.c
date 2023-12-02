@@ -149,7 +149,39 @@ POLY_GT4* func_80103148(POLY_GT4* poly1, POLY_GT4* arg1) {
     return (POLY_GT4*)poly1->tag;
 }
 
+extern char* D_800DCCDC;
+extern char* D_800DCD0C;
+extern char* D_800DCD24;
+extern char* D_800DCD54;
+extern char* D_800DCD84;
+extern char* D_800DCDB4;
+extern char* D_800DCDCC;
+extern char* D_800DCDE4;
+extern char* D_800DCE14;
+extern char* D_800DCE2C;
+extern char* D_800DCE48;
+extern char* D_800DCE58;
+extern char* D_800DCE68;
+extern char* D_800DCE84;
+extern char* D_800DCD9C;
+extern char* D_800DCD6C;
+extern char* D_800DCCF4;
+extern char* D_800DCD3C;
+extern char* D_800DCDFC;
+extern char* D_800DCEC8;
+extern char* D_800DCEA0;
+extern char* D_800DCEBC;
+
 s32 HandleSaveMenu(s32 arg0) {
+// For some reason, US and HD have different controls for confirm and exit,
+// so we handle that with a couple of constants.
+#if defined(VERSION_US)
+    const s32 CONFIRM = PAD_CROSS;
+    const s32 EXIT = PAD_TRIANGLE;
+#elif defined(VERSION_HD)
+    const s32 CONFIRM = (PAD_START | PAD_SQUARE | PAD_CIRCLE);
+    const s32 EXIT = PAD_CROSS;
+#endif
     Primitive* prim1;
     Primitive* prim2;
     Primitive* prim3;
@@ -170,40 +202,79 @@ s32 HandleSaveMenu(s32 arg0) {
                 PlaySfx(SE_UI_OVERWRITE_MSG);
             }
             if (D_80137E4C == 6) {
+#if defined(VERSION_US)
                 func_800F9D88("Data saved．", 0, 1);
+#elif defined(VERSION_HD)
+                func_800F9D40(&D_800DCCDC, 0, 1);
+#endif
                 prim2->p1 += 2;
             }
             if (D_80137E4C == 7) {
+#if defined(VERSION_US)
                 func_800F9D88("Memory Card", 0, 1);
                 func_800F9D88("  not found．", 1, 0);
+#elif defined(VERSION_HD)
+                func_800F9D40(&D_800DCCF4, 0, 1);
+                func_800F9D40(&D_800DCD0C, 1, 0);
+#endif
                 prim2->p1 += 2;
             }
             if (D_80137E4C == 8) {
+#if defined(VERSION_US)
                 func_800F9D88("Memory Card", 0, 1);
                 func_800F9D88("is Defective．", 1, 0);
+#elif defined(VERSION_HD)
+                func_800F9D40(&D_800DCCF4, 0, 1);
+                func_800F9D40(&D_800DCD24, 1, 0);
+#endif
                 prim2->p1 += 2;
             }
             if (D_80137E4C == 9) {
+#if defined(VERSION_US)
                 func_800F9D88("Memory Card is", 0, 1);
                 func_800F9D88("not formatted．", 1, 0);
+#elif defined(VERSION_HD)
+                func_800F9D40(&D_800DCD3C, 0, 1);
+                func_800F9D40(&D_800DCD54, 1, 0);
+#endif
                 prim2->p1 += 2;
             }
             if (D_80137E4C == 10) {
                 if (D_80137E54 == 2) {
+#if defined(VERSION_US)
                     func_800F9D88("Cannot", 0, 1);
                     func_800F9D88("overwrite file．", 1, 0);
+#elif defined(VERSION_HD)
+                    func_800F9D40(&D_800DCD6C, 0, 1);
+                    func_800F9D40(&D_800DCD84, 1, 0);
+#endif
                 } else if (D_80137E54 == 3) {
+#if defined(VERSION_US)
                     func_800F9D88("No game", 0, 1);
                     func_800F9D88("data found．", 1, 0);
+#elif defined(VERSION_HD)
+                    func_800F9D40(&D_800DCD9C, 0, 1);
+                    func_800F9D40(&D_800DCDB4, 1, 0);
+#endif
                 } else {
+#if defined(VERSION_US)
                     func_800F9D88("   ０ memory", 0, 1);
                     func_800F9D88("blocks available．", 1, 0);
+#elif defined(VERSION_HD)
+                    func_800F9D40(&D_800DCDCC, 0, 1);
+                    func_800F9D40(&D_800DCDE4, 1, 0);
+#endif
                 }
                 prim2->p1 += 2;
             }
             if (D_80137E4C == 11) {
+#if defined(VERSION_US)
                 func_800F9D88("  Memory card", 0, 1);
                 func_800F9D88("  format error．", 1, 0);
+#elif defined(VERSION_HD)
+                func_800F9D40(&D_800DCDFC, 0, 1);
+                func_800F9D40(&D_800DCE14, 1, 0);
+#endif
                 prim2->p1 += 2;
             }
         } else {
@@ -221,6 +292,7 @@ s32 HandleSaveMenu(s32 arg0) {
                 SetPrimRect(prim1, 0x3C, 0x60 - temp_t0, 0x88, temp_t0);
                 func_80103148(prim3, prim1);
             } else if (D_80137E4C == 10 && temp_t0 < 0x21) {
+#if defined(VERSION_US)
                 // silly logic here. if 2 or 3, it's 0, otherwise it's -10
                 temp_a1 = (-(!(D_80137E54 == 2 || D_80137E54 == 3))) & -10;
                 SetTexturedPrimRect(
@@ -231,6 +303,13 @@ s32 HandleSaveMenu(s32 arg0) {
                 } else {
                     SetPrimRect(prim1, 0x44, 0x60 - temp_t0, 0x78, temp_t0);
                 }
+#elif defined(VERSION_HD)
+                temp_a1 = (-(!(D_80137E54 ^ 3))) & -6;
+                SetTexturedPrimRect(
+                    prim2, temp_a1 + 0x56, 0x60 - temp_t0, 0x60, temp_t0, 0, 0);
+                prim2->p1 += 2;
+                SetPrimRect(prim1, 0x48, 0x60 - temp_t0, 0x70, temp_t0);
+#endif
                 func_80103148(prim3, prim1);
             } else if (temp_t0 < 0x11) {
                 SetTexturedPrimRect(
@@ -243,7 +322,7 @@ s32 HandleSaveMenu(s32 arg0) {
                 if (D_80137E4C == 6) {
                     prim2->p1 += 2;
                 }
-                if ((prim2->p1 >= 0xE0) || (g_pads[0].tapped & PAD_CROSS)) {
+                if ((prim2->p1 >= 0xE0) || (g_pads[0].tapped & CONFIRM)) {
                     FreePrimitives(D_80137E58);
                     FreePrimitives(D_80137E5C);
                     FreePrimitives(D_80137E60);
@@ -258,9 +337,15 @@ s32 HandleSaveMenu(s32 arg0) {
         if (temp_t0 == 0) {
             PlaySfx(SE_UI_OVERWRITE_MSG);
             prim2->p1 += 2;
+#if defined(VERSION_US)
             func_800F9D88("  Select the slot．", 0, 1);
             func_800F9D88(" Slot １", 1, 0);
             func_800F9D88(" Slot ２", 2, 0);
+#elif defined(VERSION_HD)
+            func_800F9D40(&D_800DCE2C, 0, 1);
+            func_800F9D40(&D_800DCE48, 1, 0);
+            func_800F9D40(&D_800DCE58, 2, 0);
+#endif
             SetTexturedPrimRect(prim2, 0x38, 0x4F, 0x90, 0, 0, 0);
             prim2->blendMode = 0;
             prim1->blendMode = 0x404;
@@ -312,15 +397,14 @@ s32 HandleSaveMenu(s32 arg0) {
             prim1 = prim1->next;
             func_801030B4(1, prim1, D_80097924);
             func_80103148(prim3, prim1);
-            // Triangle exits, same as selecting "No"
-            if (g_pads[0].tapped & PAD_TRIANGLE) {
+            if (g_pads[0].tapped & EXIT) {
                 FreePrimitives(D_80137E58);
                 FreePrimitives(D_80137E5C);
                 FreePrimitives(D_80137E60);
                 D_80097924 = -1;
                 return 2;
             }
-            if (g_pads[0].tapped & PAD_CROSS) {
+            if (g_pads[0].tapped & CONFIRM) {
                 PlaySfx(SE_UI_CONFIRM);
                 FreePrimitives(D_80137E58);
                 FreePrimitives(D_80137E5C);
@@ -334,19 +418,38 @@ s32 HandleSaveMenu(s32 arg0) {
             PlaySfx(SE_UI_OVERWRITE_MSG);
             prim2->p1 += 2;
             if (arg0 == 2) {
+#if defined(VERSION_US)
                 func_800F9D88(" Wish to format？", 0, 1);
+#elif defined(VERSION_HD)
+                func_800F9D40(&D_800DCE68, 0, 1);
+#endif
                 D_80137E6C = 1;
             }
             if (arg0 == 3) {
+#if defined(VERSION_US)
                 func_800F9D88(" Overwrite data？", 0, 1);
+#elif defined(VERSION_HD)
+                func_800F9D40(&D_800DCE84, 0, 1);
+#endif
                 D_80137E6C = 0;
             }
             if (arg0 == 4) {
+#if defined(VERSION_US)
                 func_800F9D88("   Wish to save？", 0, 1);
+#elif defined(VERSION_HD)
+                func_800F9D40(&D_800DCEA0, 0, 1);
+#endif
                 D_80137E6C = 0;
             }
+#if defined(VERSION_US)
             func_800F9D88("Yes ", 1, 0);
             func_800F9D88("  No  ", 2, 0);
+#elif defined(VERSION_HD)
+            func_800F9D40(&D_800DCEBC, 1, 0);
+            func_800F9D40(&D_800DCEC8, 2, 0);
+
+#endif
+
             SetTexturedPrimRect(prim2, 0x38, 0x4F, 0x90, 0, 0, 0);
             prim2->blendMode = 0;
             prim1->blendMode = 0x404;
@@ -399,14 +502,13 @@ s32 HandleSaveMenu(s32 arg0) {
 
             func_801030B4(1, prim1, D_80137E6C);
             func_80103148(prim3, prim1);
-            // Triangle exits, same as selecting "No"
-            if (g_pads[0].tapped & PAD_TRIANGLE) {
+            if (g_pads[0].tapped & EXIT) {
                 D_80137E6C = 1;
                 FreePrimitives(D_80137E58);
                 FreePrimitives(D_80137E5C);
                 FreePrimitives(D_80137E60);
                 return 1;
-            } else if (g_pads[0].tapped & PAD_CROSS) {
+            } else if (g_pads[0].tapped & CONFIRM) {
                 PlaySfx(SE_UI_CONFIRM);
                 FreePrimitives(D_80137E58);
                 FreePrimitives(D_80137E5C);
