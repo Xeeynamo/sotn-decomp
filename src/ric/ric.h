@@ -39,6 +39,7 @@ extern s32 func_8016840C(s16 x, s16 y);
 extern void func_80169C10(Entity* entity);
 extern void func_80169D74(Entity* entity);
 
+extern s16 D_80154568[];
 extern s32 D_80154570;
 extern s32 D_8015459C;
 extern s16 D_801545A8;
