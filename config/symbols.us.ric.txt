@@ -3,4 +3,5 @@ DestroyEntity = 0x80156C60;
 GetTeleportToOtherCastle = 0x80156CCC;
 UpdateEntityRichter = 0x80157BFC;
 SetPlayerStep = 0x8015C908;
+SetSpeedX = 0x8015CA84;
 g_DebugWaitInfoTimer = 0x80174F7C;
