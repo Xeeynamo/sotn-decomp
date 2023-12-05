@@ -747,14 +747,10 @@ s32 HandleTransformationMP(TransformationForm form, CallMode mode) {
     }
 }
 
-s32 func_800FF064(s32 arg0) {
-    s32 playerMP;
-
-    playerMP = g_Status.mp - 4;
-
-    if (playerMP > 0) {
-        if (arg0 != 0) {
-            g_Status.mp = playerMP;
+bool HandleGravityBootsMP(CallMode mode) {
+    if ((g_Status.mp - 4) > 0) {
+        if (mode != CHECK_ONLY) {
+            g_Status.mp -= 4;
         }
         return 0;
     }

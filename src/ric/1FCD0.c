@@ -54,7 +54,7 @@ void func_8015BE84(void) {
     if (g_Player.padPressed & PAD_SQUARE && g_Player.unk44 & 0x80) {
         PLAYER.step = 4;
         func_8015C920(&D_8015555C);
-        func_8015CA84(-0x18000);
+        SetSpeedX(-0x18000);
         PLAYER.velocityY = 0;
         if (g_Player.unk72 == 0) {
             PLAYER.velocityY = -0x48000;

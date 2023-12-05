@@ -59,7 +59,7 @@ s32 func_8015C9CC(void) {
     return 0;
 }
 
-void func_8015CA84(s32 speed) {
+void SetSpeedX(s32 speed) {
     if (g_CurrentEntity->facingLeft == 1)
         speed = -speed;
     g_CurrentEntity->velocityX = speed;
@@ -167,7 +167,7 @@ void func_8015CDE0(s32 arg0) {
     g_Player.unk44 = 0;
     SetPlayerStep(1);
     func_8015C920(&D_80155488);
-    func_8015CA84(0x14000);
+    SetSpeedX(0x14000);
     PLAYER.velocityY = 0;
 }
 
@@ -178,7 +178,7 @@ void func_8015CE7C(void) {
         g_Player.unk44 = 0;
         SetPlayerStep(0x19);
         func_8015C920(&D_80155670);
-        func_8015CA84(0x24000);
+        SetSpeedX(0x24000);
         g_Player.D_80072F16 = 0x28;
         PLAYER.velocityY = 0;
         func_801606BC(g_CurrentEntity, 0x50001, 0);
@@ -220,43 +220,36 @@ block_6:
 }
 
 void func_8015D020(void) {
-    u16 temp; // TODO: !FAKE
-
     if (g_Player.unk72 != 0) {
         func_8015CF08();
         return;
     }
-
-    if (func_8015C9CC() != 0 || PLAYER.step == 0x17) {
+    if (func_8015C9CC() != 0 || PLAYER.step == Player_Slide) {
         func_8015C920(&D_8015550C);
-        if (PLAYER.step == 0x19) {
-            func_8015CA84(0x24000);
-            temp = 0x10;
-            goto block_8;
+        if (PLAYER.step == Player_Unk25) {
+            SetSpeedX(FIX(2.25));
+            g_Player.unk44 = 0x10;
+        } else {
+            SetSpeedX(FIX(1.25));
+            g_Player.unk44 = 0;
         }
-        func_8015CA84(0x14000);
-        g_Player.unk44 = 0;
     } else {
         func_8015C920(&D_801554F0);
-        temp = 4;
         PLAYER.velocityX = 0;
-    block_8:
-        g_Player.unk44 = temp;
+        g_Player.unk44 = 4;
     }
-
-    SetPlayerStep(4);
-
+    SetPlayerStep(Player_Jump);
     if (D_80154570 != 0) {
-        PLAYER.velocityY = -0x4B000;
+        PLAYER.velocityY = -FIX(4.6875);
     } else {
-        PLAYER.velocityY = -0x57000;
+        PLAYER.velocityY = -FIX(5.4375);
     }
 }
 
 void func_8015D120(void) {
     SetPlayerStep(8);
     PLAYER.velocityX = 0;
-    func_8015CA84(0x14000);
+    SetSpeedX(0x14000);
     PLAYER.velocityY = -0x78000;
     g_Player.pl_high_jump_timer = 0;
     func_8015C920(&D_8015579C);

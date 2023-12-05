@@ -28,11 +28,11 @@ bool CheckGravityBootsInput(void) {
         }
         if (IsRelicActive(RELIC_GRAVITY_BOOTS) &&
             (g_Player.padTapped & PAD_CROSS) && !(g_Player.unk46 & 0x8000) &&
-            ((PLAYER.step == 2) ||
-             ((PLAYER.step == 4) && (g_Player.unk44 & 1)))) {
+            ((PLAYER.step == Player_Crouch) ||
+             ((PLAYER.step == Player_Jump) && (g_Player.unk44 & 1)))) {
             if (g_Player.unk72 == 0) {
-                if (func_800FF064(1) >= 0) {
-                    func_8010E9A4();
+                if (HandleGravityBootsMP(REDUCE) >= 0) {
+                    DoGravityJump();
                     g_ButtonCombo[COMBO_GRAVITY_BOOTS].buttonsCorrect = 0;
                     return 1;
                 }

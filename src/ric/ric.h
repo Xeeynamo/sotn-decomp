@@ -9,7 +9,46 @@ typedef enum {
 } EntityIDs;
 
 typedef enum {
-    Dummy,
+    Player_Stand,
+    Player_Walk,
+    Player_Crouch,
+    Player_Fall,
+    Player_Jump,
+    Player_MorphBat,
+    Player_AlucardStuck,
+    Player_MorphMist,
+    Player_HighJump,
+    Player_UnmorphBat,
+    Player_Hit,
+    Player_StatusStone,
+    Player_BossGrab, // Darkwing Bat and Akmodan II
+    Player_KillWater,
+    Player_UnmorphMist,
+    Player_SwordWarp, // Alucard Sword and Osafune Katana
+    Player_Kill,
+    Player_Unk17,
+    Player_Teleport, // also Grand Cross and Spiral Axe
+    Player_FlameWhip,
+    Player_Hydrostorm,
+    Player_ThousandBlades,
+    Player_RichterFourHolyBeasts,
+    Player_Slide,
+    Player_Unk24, // MorphWolf and Richter's Tackle
+    Player_Unk25, // UnMorphWolf and Sprint
+    Player_SlideKick,
+    Player_Unk27, // other item crashes
+    Player_SpellDarkMetamorphosis = 32,
+    Player_SpellSummonSpirit,
+    Player_SpellHellfire,
+    Player_SpellTetraSpirit,
+    Player_Spell36,
+    Player_SpellSoulSteal,
+    Player_Unk38,
+    Player_SpellSwordBrothers,
+    Player_AxearmorStand,
+    Player_AxearmorWalk,
+    Player_AxearmorJump,
+    Player_AxearmorHit,
 } PlayerSteps;
 
 extern void func_80159C04(void);
@@ -20,7 +59,7 @@ extern void SetPlayerStep(PlayerSteps step);
 void func_8015C920(AnimationFrame* unk0);
 extern void func_8015C93C(s32 speed);
 extern s32 func_8015C9CC(void);
-extern void func_8015CA84(s32 speed);
+extern void SetSpeedX(s32 speed);
 extern void func_8015CCC8(s32 arg0, s32 velocityX);
 extern void func_8015CD98(s32 velocityX);
 extern void func_8015CDE0(s32);

@@ -311,7 +311,7 @@ void func_80158F38(void) {
         }
 
         if (PLAYER.step_s == 0) {
-            func_8015CA84(0x14000);
+            SetSpeedX(0x14000);
         }
     }
 }
@@ -337,7 +337,7 @@ void func_80158FA4(void) {
                 PLAYER.velocityX = 0;
             }
         } else if (PLAYER.step_s == 0) {
-            func_8015CA84(0x24000);
+            SetSpeedX(0x24000);
         }
     }
 }
@@ -355,7 +355,7 @@ void func_801595D8(void) {
     if (g_Player.D_80072F0A != 0 && g_Player.padTapped & PAD_CROSS) {
         func_8015D020();
     } else if (func_8015C9CC() != 0) {
-        func_8015CA84(0xC000);
+        SetSpeedX(0xC000);
     }
 }
 
