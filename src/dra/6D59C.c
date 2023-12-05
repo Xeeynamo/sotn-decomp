@@ -562,22 +562,23 @@ void func_8010E940(void) {
     }
 }
 
-void func_8010E9A4(void) {
+void DoGravityJump(void) {
     if (func_8010E27C() != 0) {
-        SetSpeedX(0x30000);
+        SetSpeedX(FIX(3));
     } else {
         PLAYER.velocityX = 0;
     }
 
-    if (PLAYER.step == 4) {
+    if (PLAYER.step == Player_Jump) {
         g_Player.unk44 |= 1;
     } else {
         g_Player.unk44 = 0;
     }
-
+    // Factory with blueprint 2, creates child entity 3 which is
+    // EntityGravityBootBeam
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 2), 0);
     SetPlayerStep(Player_HighJump);
-    PLAYER.velocityY = -0xC0000;
+    PLAYER.velocityY = FIX(-12);
     func_8010DA48(0x21);
     g_Player.unk4A = 0;
 }
