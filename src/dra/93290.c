@@ -69,7 +69,6 @@ s32 CdSoundCommand6(void) {
     }
 }
 
-const u32 rodata_padding_80133290 = 0;
 // func_80133488
 s32 CdFadeOut1(void) {
     s32 var_v0;

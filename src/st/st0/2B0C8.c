@@ -182,8 +182,6 @@ void EntityStageTitleFadeout(Entity* self) {
     }
 }
 
-const u32 rodataPadding_801A7AFC = 0;
-
 void EntityStageTitleCard(Entity* self) {
     Entity* fakeEntity; // !FAKE
     s16 primIndex;

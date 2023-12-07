@@ -3024,7 +3024,6 @@ void DrawMenuFamiliars(MenuContext* menu) {
         }
     }
 }
-const u32 rodataPadding_DrawMenuFamiliars_jtbl = 0;
 
 void func_800F82F4(void) {
     RECT dstRect;
@@ -3919,7 +3918,6 @@ void func_800F9F40(void) {
         }
     }
 }
-const u32 rodataPadding_func_800F9F40_str = 0;
 
 void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2) {
     const int ItemsPerPage = 12;

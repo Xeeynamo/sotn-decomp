@@ -92,8 +92,6 @@ void EntitySecretButton(Entity* self) {
     }
 }
 
-const u32 rodataPadding_801A7AC8 = 0;
-
 void EntitySecretStairsCeiling(Entity* entity) {
     switch (entity->step) {
     case 0:

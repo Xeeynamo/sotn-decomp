@@ -195,8 +195,6 @@ void PlayerStepHellfire(void) {
     }
 }
 
-const u32 rodataPadding_419FC = 0;
-
 void func_801166A4(void) {
     switch (PLAYER.step_s) {
     case 0:

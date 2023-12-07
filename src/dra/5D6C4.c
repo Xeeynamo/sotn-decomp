@@ -32,8 +32,6 @@ s32 func_800FD6C4(s32 equipTypeFilter) {
     return itemCount;
 }
 
-const u32 rodataPadding_jpt_800FD6E0 = 0;
-
 u8* GetEquipOrder(s32 equipTypeFilter) {
     if (equipTypeFilter == 0) {
         return g_Status.equipHandOrder;
@@ -75,10 +73,6 @@ u32 CheckEquipmentItemCount(u32 itemId, u32 equipType) {
     }
     // seems to require missing return
 }
-
-// fix missing padding at end of jump table.
-// this probably indicates the end of a C file
-const u32 rodataPadding_800DCBD8 = 0;
 
 #ifndef NON_EQUIVALENT
 INCLUDE_ASM("dra/nonmatchings/5D6C4", AddToInventory);

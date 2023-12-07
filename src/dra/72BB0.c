@@ -164,8 +164,6 @@ void func_80112BB0(void) {
     }
 }
 
-const u32 rodataPadding = 0;
-
 void func_80113148(void) {
     if (g_Player.D_80072F0A != 0 && g_Player.padTapped & PAD_CROSS) {
         func_8010E83C(1);
