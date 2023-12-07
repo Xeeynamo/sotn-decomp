@@ -142,7 +142,6 @@ g_PalEquipIcon = 0x800D88D4;
 D_800DBFFC = 0x800DBFFC; // ignore:true
 aXXVQ = 0x800DCBF4;
 aAxearmor = 0x800DCC00;
-jpt_80102918 = 0x800DCC2C;
 aGold = 0x800DD0A8;
 aNz0 = 0x800DD0B0;
 aFNz0 = 0x800DD0B4;

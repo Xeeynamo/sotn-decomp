@@ -5343,4 +5343,3 @@ s32 func_800FD664(s32 arg0) {
 ItemCategory GetEquipItemCategory(s32 equipId) {
     return g_EquipDefs[g_Status.equipment[equipId]].itemCategory;
 }
-
