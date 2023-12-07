@@ -95,9 +95,9 @@ segments:
       - [0x3CBAC, .rodata, 5D6C4] # func_800FD6C4
       - [0x3CBF4, rodata]
       - [0x3CC0C, .rodata, 627C4]
-      - [0x3CC2C, rodata] # func_801028AC
-      - [0x3CC54, .rodata, 62D70] # func_80102D70
-      - [0x3CC70, .rodata, 62D70] # HandleSaveMenu, all the strings
+      - [0x3CC2C, .rodata, 627C4] # func_801028AC
+      - [0x3CC54, .rodata, 627C4] # func_80102D70
+      - [0x3CC70, .rodata, 627C4] # HandleSaveMenu, all the strings
       - [0x3CDC0, .rodata, 63ED4] # func_80103ED4
       - [0x3CDDC, rodata]
       - [0x40D38, .rodata, cd] # To be merged with 40D38
@@ -175,7 +175,6 @@ segments:
       - [0x5298C, c, 5298C]
       - [0x5D6C4, c, 5D6C4]
       - [0x627C4, c, 627C4]
-      - [0x62D70, c, 62D70]
       - [0x63ED4, c, 63ED4]
       - [0x673C0, c, cd]
       - [0x692E8, c, 692E8]
