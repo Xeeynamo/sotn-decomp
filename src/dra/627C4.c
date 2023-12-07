@@ -48,142 +48,129 @@ void func_801027C4(u32 arg0) {
 }
 
 void func_801028AC(s32 arg0) {
-    Primitive* temp_s0;
-    Primitive* temp_s1;
-    s32 temp_v1;
-    s32 temp_a0;
-    s32* temp_ptr;
+    Primitive* prim1;
+    Primitive* prim2;
+    s32 prim1clut;
+    s32* D_801379A8_ptr;
 
-    temp_s0 = &g_PrimBuf[D_8013799C];
-    temp_s1 = temp_s0->next;
-    temp_a0 = temp_s0->clut;
+    prim1 = &g_PrimBuf[D_8013799C];
+    prim2 = prim1->next;
+    prim1clut = prim1->clut;
     switch (D_801379A4) {
     case 0:
-        temp_s0->blendMode = 8;
-        temp_s1->blendMode = 8;
+        prim2->blendMode = prim1->blendMode = BLEND_VISIBLE;
         break;
     case 2:
     case 6:
     case 7:
-        temp_s0->r0 = temp_s0->g0 = temp_s0->b0 = temp_s1->r0 = temp_s1->g0 = temp_s1->b0 = temp_s0->x1;
-        if (temp_a0 == 0) {
+        prim1->r0 = prim1->g0 = prim1->b0 = prim2->r0 = prim2->g0 = prim2->b0 =
+            prim1->x1;
+        if (prim1clut == 0) {
             if (D_801379A4 - 1 == 1) {
-                temp_s0->x1 += 0x20;
+                prim1->x1 += 0x20;
             } else if (D_801379A4 - 1 == 6) {
-                temp_s0->x1 += 8;
+                prim1->x1 += 8;
             } else {
-                temp_s0->x1 += 2;
+                prim1->x1 += 2;
             }
             if ((D_801379A4 - 1) == 6) {
-                if (temp_s0->x1 >= 0x40) {
-                    temp_s0->x1 = 0x40;
-                    temp_s0->clut += 1;
+                if (prim1->x1 >= 0x40) {
+                    prim1->x1 = 0x40;
+                    prim1->clut++;
                 }
-                func_801026BC(temp_s0->x1);
+                func_801026BC(prim1->x1);
             } else {
-                if (temp_s0->x1 >= 0x100) {
-                    temp_s0->x1 = 0xFF;
-                    temp_s0->clut += 1;
+                if (prim1->x1 >= 0x100) {
+                    prim1->x1 = 0xFF;
+                    prim1->clut++;
                 }
             }
         }
-        temp_s1->blendMode = 0xD1;
-        temp_s0->blendMode = 0xD1;
+        prim1->blendMode = prim2->blendMode = 0xD1;
         break;
     case 8:
-        temp_s0->r0 = temp_s0->g0 = temp_s0->b0 = temp_s1->r0 = temp_s1->g0 = temp_s1->b0 = 0x40 - temp_s0->x1;
-        if (temp_a0 == 0) {
-            temp_s0->x1 += 8;
-            if (temp_s0->x1 >= 0x40) {
-                temp_s0->x1 = 0x40;
-                temp_s0->clut += 1;
+        prim1->r0 = prim1->g0 = prim1->b0 = prim2->r0 = prim2->g0 = prim2->b0 =
+            0x40 - prim1->x1;
+        if (prim1clut == 0) {
+            prim1->x1 += 8;
+            if (prim1->x1 >= 0x40) {
+                prim1->x1 = 0x40;
+                prim1->clut++;
             }
-            func_801026BC(0x40 - temp_s0->x1);
+            func_801026BC(0x40 - prim1->x1);
         } else {
             func_801026BC(0);
             D_801379A4 = 0;
         }
-        temp_s1->blendMode = 0xD1;
-        temp_s0->blendMode = 0xD1;
+        prim1->blendMode = prim2->blendMode = 0xD1;
         break;
     case 3:
-        temp_s0->r0 = temp_s0->g0 = temp_s0->b0 = temp_s1->r0 = temp_s1->g0 = temp_s1->b0 = ~temp_s0->x1;
-        if (temp_a0 == 0) {
-            temp_s0->x1 += 0x20;
-            if (temp_s0->x1 >= 0x100) {
-                    temp_s0->x1 = 0xFF;
-                    temp_s0->clut += 1;
-                }
+        prim1->r0 = prim1->g0 = prim1->b0 = prim2->r0 = prim2->g0 = prim2->b0 =
+            ~prim1->x1;
+        if (prim1clut == 0) {
+            prim1->x1 += 0x20;
+            if (prim1->x1 >= 0x100) {
+                prim1->x1 = 0xFF;
+                prim1->clut++;
+            }
         } else {
             D_801379A4 = 0;
         }
-        temp_s1->blendMode = 0xD1;
-        temp_s0->blendMode = 0xD1;
+        prim1->blendMode = prim2->blendMode = 0xD1;
         break;
     }
     if (arg0 != 0) {
         return;
     }
-    temp_s0 = temp_s1->next;
-    temp_s1 = temp_s0->next;
-    temp_a0 = temp_s0->clut;
-    temp_ptr = &D_801379A8;
-    switch (*temp_ptr - 1) {                        /* switch 1; irregular */
-    case -1:                                    /* switch 1 */
-        temp_s0->blendMode = 8;
-        temp_s1->blendMode = 8;
+
+    prim1 = prim2->next;
+    prim2 = prim1->next;
+    prim1clut = prim1->clut;
+    D_801379A8_ptr = &D_801379A8;
+    switch (*D_801379A8_ptr - 1) {
+    case -1:
+        prim2->blendMode = prim1->blendMode = BLEND_VISIBLE;
         return;
-    case 0:                                     /* switch 1 */
-        temp_s0->r0 = temp_s0->g0 = temp_s0->b0 = temp_s1->r0 = temp_s1->g0 = temp_s1->b0 = temp_s0->x1;
-        if (temp_a0 == 0) {
-            temp_s0->x1 += 8;
-            if (temp_s0->x1 >= 0x100) {
-                temp_s0->y1 = 4;
-                temp_s0->clut += 1;
-                temp_s0->x1 = (u16) temp_s0->x1 - 8;
+    case 0:
+        prim1->r0 = prim1->g0 = prim1->b0 = prim2->r0 = prim2->g0 = prim2->b0 =
+            prim1->x1;
+        if (prim1clut == 0) {
+            prim1->x1 += 8;
+            if (prim1->x1 >= 0x100) {
+                prim1->y1 = 4;
+                prim1->clut++;
+                prim1->x1 -= 8;
             }
-            temp_s1->blendMode = 0x2031;
-            temp_s0->blendMode = 0x2031;
-            return;
-        }
-        if (temp_a0 != 1) {
-            temp_s0->x1 -= 4;
-            if (temp_s0->x1 < 0) {
-                temp_s1->blendMode = 8;
-                temp_s0->blendMode = 8;
-                *temp_ptr = 0;
+            prim1->blendMode = prim2->blendMode = 0x2031;
+        } else if (prim1clut != 1) {
+            prim1->x1 -= 4;
+            if (prim1->x1 < 0) {
+                prim1->blendMode = prim2->blendMode = BLEND_VISIBLE;
+                *D_801379A8_ptr = 0;
             }
         } else {
-            if (--temp_s0->y1 == -1) {
-                temp_s0->clut += 1;
+            if (--prim1->y1 == -1) {
+                prim1->clut++;
             }
-            return;
         }
-        break;
-    case 3:                                     /* switch 1 */
-        temp_s1->b0 = 0;          
-        temp_s0->b0 = 0;
-        temp_s0->r0 = temp_s0->g0 = temp_s1->r0 = temp_s1->g0 = temp_s0->x1;
-        if (temp_a0 == 0) {
-            if (++temp_s0->x1 >= 0x20) {
-                temp_s0->y1 = 0xA0;
-                temp_s0->clut += 1;
-                temp_s0->x1 = (u16) temp_s0->x1 - 1;
+        return;
+    case 3:
+        prim1->b0 = prim2->b0 = 0;
+        prim1->r0 = prim1->g0 = prim2->r0 = prim2->g0 = prim1->x1;
+        if (prim1clut == 0) {
+            if (++prim1->x1 >= 0x20) {
+                prim1->y1 = 0xA0;
+                prim1->clut++;
+                prim1->x1--;
             }
-            temp_s1->blendMode = 0x2051;
-            temp_s0->blendMode = 0x2051;
-            return;
-        }
-        if (temp_a0 == 1) {
-            if (--temp_s0->y1 == -1) {
-                temp_s0->clut += 1;
+            prim1->blendMode = prim2->blendMode = 0x2051;
+        } else if (prim1clut == 1) {
+            if (--prim1->y1 == -1) {
+                prim1->clut++;
             }
-            return;
-        }
-        if (--temp_s0->x1 < 0) {
-            temp_s1->blendMode = 8;
-            temp_s0->blendMode = 8;
-            *temp_ptr = 0;
+        } else if (--prim1->x1 < 0) {
+            prim1->blendMode = prim2->blendMode = BLEND_VISIBLE;
+            *D_801379A8_ptr = 0;
         }
     }
 }
