@@ -58,7 +58,39 @@ TeleportCheck GetTeleportToOtherCastle(void) {
     return TELEPORT_CHECK_NONE;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80156DE4);
+s16 func_80156DE4(void) {
+    // Variables that change during execution
+    Collider collider;
+    s32 yvar;
+    s32 collisions;
+    s32 i;
+    // Values that are set once and never again (but not const for some reason)
+    s32 xpos = PLAYER.posX.i.hi;
+    s32 xp4 = xpos + 4;
+    s32 xm4 = xpos - 4;
+    s32 coll_flags = EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID;
+
+    for (i = 0; i < 3; i++) {
+        yvar = PLAYER.posY.i.hi + D_80154568[i];
+        g_api.CheckCollision(xpos, yvar, &collider, 0);
+        collisions = 0;
+        if ((collider.effects & coll_flags) == EFFECT_SOLID) {
+            collisions += 1;
+        }
+        g_api.CheckCollision(xp4, yvar, &collider, 0);
+        if ((collider.effects & coll_flags) == EFFECT_SOLID) {
+            collisions += 1;
+        }
+        g_api.CheckCollision(xm4, yvar, &collider, 0);
+        if ((collider.effects & coll_flags) == EFFECT_SOLID) {
+            collisions += 1;
+        }
+        if (collisions != 0) {
+            return i + 1;
+        }
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80156F40);
 
