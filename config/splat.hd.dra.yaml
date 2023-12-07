@@ -57,7 +57,7 @@ segments:
       - [0x20A20, data]
       - [0x3B458, .rodata, 42398]
       - [0x3B618, .rodata, play]
-      - [0x3B648, rodata, gameover] # jtbl_800DB648
+      - [0x3B648, rodata, play] # jtbl_800DB648
       - [0x3B808, .rodata, loading]
       - [0x3B8D0, .rodata, loading]
       - [0x3B938, .rodata, 47BB8] # SimFile strings
@@ -156,7 +156,6 @@ segments:
       - [0x42270, .rodata, 953A0]
       - [0x422B4, c, 42398]
       - [0x44EC8, c, play]
-      - [0x458E4, c, gameover]
       - [0x463E4, c, loading]
       - [0x48250, c, 47BB8]
       - [0x4957C, c, save_mgr]

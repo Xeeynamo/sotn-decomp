@@ -386,7 +386,8 @@ void func_800E5498(void) {
 }
 
 #if !defined(NON_MATCHING) && defined(VERSION_HD)
-INCLUDE_ASM("dra/nonmatchings/gameover", HandleGameOver);
+const u32 gameover_rodata_padding = 0;
+INCLUDE_ASM("dra/nonmatchings/play", HandleGameOver);
 #else
 void HandleGameOver(void) {
     Primitive* prim;
