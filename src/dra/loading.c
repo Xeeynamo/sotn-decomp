@@ -721,4 +721,3 @@ void UpdateGame(void) {
         break;
     }
 }
-
