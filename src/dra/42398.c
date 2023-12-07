@@ -1239,6 +1239,10 @@ void HandleTitle(void) {
     }
 }
 
+// This indicates that in HD, this file and the next one (play.c)
+// are one continues C file. In US, they are not. rodata for functions
+// in the same file has four 00 bytes separating them, and the fact that
+// they exist in one version and not the other is indicative of a file split.
 #if defined(VERSION_HD)
 const int filesplit_42398_rodata = 0x00000000;
 #endif
