@@ -37,7 +37,7 @@ void func_801705EC(Entity* entity) {
 
 s16 func_801706C0(u16* arg0, s16 arg1, s16 arg2, s16* arg3) {
     s16 temp_s3;
-    
+
     s16 temp = 0x80;
     temp_s3 = arg1 - temp + rand() % 256;
 
@@ -52,7 +52,7 @@ s16 func_801706C0(u16* arg0, s16 arg1, s16 arg2, s16* arg3) {
         } else {
             rand();
             rand();
-            return func_801706C0(arg0, (temp_s3 + 0x140), (arg2-1) / 2, arg3);
+            return func_801706C0(arg0, (temp_s3 + 0x140), (arg2 - 1) / 2, arg3);
         }
     } else {
         return temp_s3;
