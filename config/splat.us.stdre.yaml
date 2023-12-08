@@ -44,7 +44,6 @@ segments:
       - [0x16C0, data]
       - [0x1171C, .rodata, 11A64]
       - [0x11728, .rodata, succubus] # EntitySuccubus
-      - [0x117F0, .rodata, 13B3C]
       - [0x11808, .rodata, 14774]
       - [0x1181C, rodata]
       - [0x118D0, rodata]
@@ -56,7 +55,6 @@ segments:
       - [0x11A28, rodata]
       - [0x11A64, c]
       - [0x11A64, c, succubus]
-      - [0x13B3C, c]
       - [0x14774, c]
       - [0x1697C, c]
       - [0x16F90, c, random]

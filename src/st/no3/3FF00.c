@@ -239,8 +239,6 @@ void EntityDeathStolenItem(Entity* self) {
     }
 }
 
-const s32 rodata_padding_801B7510 = 0;
-
 void EntityDeath(Entity* self) {
     Entity* newEntity = &self[1];
     Primitive* prim;

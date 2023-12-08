@@ -38,7 +38,7 @@ segments:
       - [0x1F18, .data, save_mgr]
       - [0x21B8, data]
       - [0x2BC0, data]
-      - [0x2D48, .data, 5298C]
+      - [0x2D48, .data, 5087C]
       - [0x2D70, data]
       - [0x2EC0, .data, 5D6C4]
       - [0x2EE8, data]
@@ -69,9 +69,8 @@ segments:
       - [0x3B3B0, rodata]
       - [0x3B3B4, .rodata, 42398]
       - [0x3B530, .rodata, play]
-      - [0x3B560, .rodata, gameover]
       - [0x3B720, .rodata, loading]
-      - [0x3B7E8, .rodata, 46FD4]
+      - [0x3B7E8, .rodata, loading]
       - [0x3B9B8, .rodata, 47BB8] # SimFile strings
       - [0x3BD70, .rodata, 47BB8] # VSyncHandler
       - [0x3BD88, .rodata, 47BB8] # func_800E7E08
@@ -84,14 +83,14 @@ segments:
       - [0x3C290, .rodata, collider]
       - [0x3C490, .rodata, demo]
       - [0x3C514, .rodata, 5087C] # func_800F0940
-      - [0x3C534, .rodata, 52860] # func_800F2860
-      - [0x3C55C, .rodata, 5298C] # func_800F298C
-      - [0x3C5D4, .rodata, 5298C] # strings
-      - [0x3C68C, .rodata, 5298C] # DrawMenuFamiliars
-      - [0x3C6AC, .rodata, 5298C] # DrawMenu
-      - [0x3C71C, .rodata, 5298C] # MenuHandleCursorInput
-      - [0x3C734, .rodata, 5298C] # HandleMenu str
-      - [0x3C75C, .rodata, 5298C] # HandleMenu jtbl
+      - [0x3C534, .rodata, 5087C] # func_800F2860
+      - [0x3C55C, .rodata, 5087C] # func_800F298C
+      - [0x3C5D4, .rodata, 5087C] # strings
+      - [0x3C68C, .rodata, 5087C] # DrawMenuFamiliars
+      - [0x3C6AC, .rodata, 5087C] # DrawMenu
+      - [0x3C71C, .rodata, 5087C] # MenuHandleCursorInput
+      - [0x3C734, .rodata, 5087C] # HandleMenu str
+      - [0x3C75C, .rodata, 5087C] # HandleMenu jtbl
       - [0x3CBAC, .rodata, 5D6C4] # func_800FD6C4
       - [0x3CBF4, rodata]
       - [0x3CC0C, .rodata, 627C4]
@@ -109,7 +108,7 @@ segments:
       - [0x41588, .rodata, 72BB0] # func_80112BB0
       - [0x41750, .rodata, 72BB0] # func_801131C4
       - [0x418C8, .rodata, 72BB0] # func_801131C4
-      - [0x418E0, .rodata, 73AAC]
+      - [0x418E0, .rodata, 72BB0]
       - [0x418F4, rodata]
       - [0x41908, rodata] # AlucardHandleDamage
       - [0x41948, rodata] # AlucardHandleDamage
@@ -162,17 +161,13 @@ segments:
       - [0x42354, .rodata, 953A0]
       - [0x42398, c, 42398]
       - [0x4493C, c, play]
-      - [0x45358, c, gameover]
       - [0x45D30, c, loading]
-      - [0x46FD4, c, 46FD4]
       - [0x47BB8, c, 47BB8]
       - [0x48EE4, c, save_mgr]
       - [0x4A538, c, 4A538]
       - [0x4F45C, c, collider]
       - [0x4FBF8, c, demo]
       - [0x5087C, c, 5087C]
-      - [0x52860, c, 52860]
-      - [0x5298C, c, 5298C]
       - [0x5D6C4, c, 5D6C4]
       - [0x627C4, c, 627C4]
       - [0x63ED4, c, 63ED4]
@@ -182,7 +177,6 @@ segments:
       - [0x704D0, c, 704D0]
       - [0x71830, c, 71830]
       - [0x72BB0, c, 72BB0]
-      - [0x73AAC, c, 73AAC]
       - [0x75DA0, c, 75DA0]
       - [0x75F54, c, 75F54]
       - [0x7A4D0, c, 7A4D0]

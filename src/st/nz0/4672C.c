@@ -113,8 +113,6 @@ void EntitySpittleBone(Entity* self) {
     }
 }
 
-const u32 rodataPadding_801B08B0 = 0;
-
 void EntityRotateSpittlebone(Entity* self) {
     Entity* prevEntity;
     s16 rotZ;
