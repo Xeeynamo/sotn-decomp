@@ -74,7 +74,7 @@ void func_8017091C(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = 0x04840000;
+        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000;
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 15; i++) {
             prim->tpage = 0x1A;
