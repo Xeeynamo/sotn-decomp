@@ -557,6 +557,11 @@ typedef struct {
     /* 0x7E */ s16 unk7E;
 } ET_GiantSpinningCross;
 
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+} ET_8017091C;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_EntFactory factory;
@@ -581,6 +586,7 @@ typedef union {
     /* 0x7C */ ET_Merman merman;
     /* 0x7C */ ET_Merman_2 merman2;
     /* 0x7C */ ET_MermanWaterSplash mermanWaterSplash;
+    /* 0x7C */ ET_8017091C et_8017091C;
     /* 0x7C */ ET_801CF254 et_801CF254;
     /* 0x7C */ ET_GurkhaSword gurkhaSword;
     /* 0x7C */ ET_Dracula dracula;
