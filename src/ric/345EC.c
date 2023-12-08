@@ -39,7 +39,7 @@ s16 func_801706C0(u16* arg0, s16 arg1, s16 arg2, s16* arg3) {
     s16 temp_s3;
     s16 s3_offset = 0x80;
     s8 arg2_copy = arg2;
-    
+
     temp_s3 = arg1 - s3_offset + rand() % 256;
     *arg3 = (rand() % 48) + 0x10;
     arg0[0] = arg0[1];
