@@ -342,7 +342,131 @@ void func_80158FA4(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_801590A0);
+void func_801590A0(void) {
+    if ((D_80154570 == 0) && (PLAYER.velocityY < FIX(-1)) &&
+        !(g_Player.unk44 & 0x40) && !(g_Player.padPressed & PAD_CROSS)) {
+        PLAYER.velocityY = FIX(-1);
+    }
+    if ((g_Player.pl_vram_flag & 2) && (PLAYER.velocityY < FIX(-1))) {
+        PLAYER.velocityY = FIX(-0.25);
+        g_Player.unk44 |= 0x20;
+    }
+    if (func_8015DBB0(0x11009)) {
+        return;
+    }
+    switch (PLAYER.step_s) {
+    // Need at least one fake case to make the switch match
+    case 1:
+        return;
+    case 0:
+        func_8015C93C(0x1000);
+        if (func_8015C9CC()) {
+            if (g_Player.unk44 & 0x10) {
+                SetSpeedX(FIX(2.25));
+            } else {
+                SetSpeedX(FIX(1.25));
+            }
+            g_Player.unk44 &= ~4;
+        } else {
+            g_Player.unk44 &= ~0x10;
+            if ((PLAYER.animFrameIdx < 2) &&
+                ((LOW(g_Player.unk44) & 0xC) == 4) &&
+                (g_Player.padTapped & PAD_CROSS)) {
+                func_8015C920(D_8015555C);
+                SetSpeedX(FIX(-1.5));
+                PLAYER.velocityY = FIX(-2.625);
+                if (g_Player.unk72 != 0) {
+                    PLAYER.velocityY = 0;
+                }
+                PLAYER.step_s = 2;
+                g_Player.unk44 |= 0xA;
+                g_Player.unk44 &= ~4;
+            }
+        }
+        return;
+    case 0x40:
+        func_8015CB58(1, 1);
+        if (PLAYER.animFrameIdx < 3) {
+            if (func_8015C9CC() != 0) {
+                if (g_Player.unk44 & 0x10) {
+                    SetSpeedX(FIX(2.25));
+                } else {
+                    SetSpeedX(FIX(1.25));
+                }
+                g_Player.unk44 &= ~4;
+            } else {
+                g_Player.unk44 &= ~0x10;
+            }
+        } else {
+            if (((g_Player.padPressed & PAD_RIGHT) && !PLAYER.facingLeft) ||
+                ((g_Player.padPressed & PAD_LEFT) && PLAYER.facingLeft)) {
+                if (g_Player.unk44 & 0x10) {
+                    SetSpeedX(FIX(2.25));
+                } else {
+                    SetSpeedX(FIX(1.25));
+                }
+                SetSpeedX(FIX(1.25));
+                g_Player.unk44 &= ~4;
+            } else {
+                g_Player.unk44 &= ~0x10;
+            }
+        }
+        if (PLAYER.animFrameDuration < 0) {
+            if (g_Player.padPressed & PAD_SQUARE) {
+                g_Player.unk46 = 2;
+                PLAYER.step_s += 1;
+                func_8015C920(D_80155740);
+                func_801606BC(g_CurrentEntity, 0x11U, 0);
+            } else {
+                g_Player.unk46 = 0;
+                PLAYER.step_s = 0;
+                func_8015C920(D_80155528);
+            }
+        }
+        return;
+    case 0x41:
+        func_8015CB58(1, 1);
+        if (!(g_Player.padPressed & PAD_SQUARE)) {
+            g_Player.unk46 = 0;
+            PLAYER.step_s = 0;
+            func_8015C920(D_80155528);
+        }
+        return;
+    case 0x42:
+        func_8015CB58(1, 1);
+        if (PLAYER.animFrameIdx < 3) {
+            if (func_8015C9CC() != 0) {
+                if (g_Player.unk44 & 0x10) {
+                    SetSpeedX(FIX(2.25));
+                } else {
+                    SetSpeedX(FIX(1.25));
+                }
+                g_Player.unk44 &= ~4;
+            } else {
+                g_Player.unk44 &= ~0x10;
+            }
+        } else {
+            if (((g_Player.padPressed & PAD_RIGHT) && !PLAYER.facingLeft) ||
+                ((g_Player.padPressed & PAD_LEFT) && PLAYER.facingLeft)) {
+                if (g_Player.unk44 & 0x10) {
+                    SetSpeedX(FIX(2.25));
+                } else {
+                    SetSpeedX(FIX(1.25));
+                }
+                SetSpeedX(FIX(1.25));
+                g_Player.unk44 &= ~4;
+            } else {
+                g_Player.unk44 &= ~0x10;
+            }
+        }
+        if (PLAYER.animFrameDuration < 0) {
+            g_Player.unk46 = 0;
+            PLAYER.step_s = 0;
+            func_8015C920(D_80155528);
+        }
+        return;
+    }
+}
 
 void func_801595D8(void) {
     if (func_8015DBB0(0x9009)) {
