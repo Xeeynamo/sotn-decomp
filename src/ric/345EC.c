@@ -359,7 +359,72 @@ void func_80170F64(Entity* self) {
 // Can remove once all rodata is pulled in.
 const u32 rodataPadding_345EC = 0;
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/345EC", func_8017161C);
+void func_8017161C(Entity* self) {
+    Primitive* prim;
+    s16 temp_s0_4;
+    s32 sine;
+    s32 cosine;
+    s32 i;
+    s16 yCoord;
+    s16 xCoord;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x10);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 16; i++) {
+            prim->tpage = 0x1A;
+            prim->clut = 0x15F;
+            prim->priority = self->zPriority = 0xC2;
+            prim->blendMode = 0x435;
+            prim->u0 = ((rsin((s16)(i * 0x100)) << 5) >> 0xC) + 0x20;
+            prim->v0 = -((rcos((s16)(i * 0x100)) << 5) >> 0xC) - 0x21;
+            prim->u1 = ((rsin((s16)((i + 1) * 0x100)) << 5) >> 0xC) + 0x20;
+            prim->v1 = -((rcos((s16)((i + 1) * 0x100)) << 5) >> 0xC) - 0x21;
+            prim->v2 = prim->v3 = 0xE0;
+            prim->u2 = prim->u3 = 0x20;
+            prim->r0 = prim->r1 = prim->g0 = prim->g1 = prim->b0 = prim->b1 =
+                0x40;
+            prim->r2 = prim->r3 = prim->g2 = prim->g3 = 0;
+            prim->b2 = prim->b3 = 0x20;
+            prim = prim->next;
+        }
+        self->ext.et_8017161C.unk7E = 0x20;
+        self->step++;
+        break;
+    case 1:
+        self->ext.et_8017161C.unk7E += 0x18;
+        if (++self->ext.et_8017161C.unk7C >= 0x1F) {
+            DestroyEntity(self);
+            return;
+        }
+    }
+    xCoord = self->posX.i.hi;
+    yCoord = self->posY.i.hi;
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 16; i++) {
+        sine = rsin(i * 0x100);
+        cosine = rcos(i * 0x100);
+        temp_s0_4 = self->ext.et_8017161C.unk7E - 0x20;
+        prim->x0 = xCoord + ((sine * self->ext.et_8017161C.unk7E) >> 0xC);
+        prim->y0 = yCoord - ((cosine * self->ext.et_8017161C.unk7E) >> 0xC);
+        prim->x2 = xCoord + ((sine * (temp_s0_4)) >> 0xC);
+        prim->y2 = yCoord - ((cosine * temp_s0_4) >> 0xC);
+        sine = rsin((i + 1) * 0x100);
+        cosine = rcos((i + 1) * 0x100);
+        prim->x1 = xCoord + ((sine * self->ext.et_8017161C.unk7E) >> 0xC);
+        prim->y1 = yCoord - ((cosine * self->ext.et_8017161C.unk7E) >> 0xC);
+        prim->x3 = xCoord + ((sine * temp_s0_4) >> 0xC);
+        prim->y3 = yCoord - ((cosine * temp_s0_4) >> 0xC);
+        prim = prim->next;
+    }
+    return;
+}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/345EC", func_801719A4);
 

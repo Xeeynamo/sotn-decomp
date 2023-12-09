@@ -571,6 +571,11 @@ typedef struct {
     s16 unkB0;
 } ET_80170F64;
 
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+} ET_8017161C;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_EntFactory factory;
@@ -597,6 +602,7 @@ typedef union {
     /* 0x7C */ ET_MermanWaterSplash mermanWaterSplash;
     /* 0x7C */ ET_8017091C et_8017091C;
     /* 0x7C */ ET_80170F64 et_80170F64;
+    /* 0x7C */ ET_8017161C et_8017161C;
     /* 0x7C */ ET_801CF254 et_801CF254;
     /* 0x7C */ ET_GurkhaSword gurkhaSword;
     /* 0x7C */ ET_Dracula dracula;
