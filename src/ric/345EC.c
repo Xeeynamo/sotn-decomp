@@ -208,11 +208,156 @@ void func_8017091C(Entity* self) {
         break;
     }
 }
+
+void func_80170F64(Entity* self) {
+    Primitive* prim;
+    s16 rand_angle;
+    s16 xCoord;
+    s16 yCoord;
+    s32 quarterSelfY;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            g_Player.unk4E = 1;
+            return;
+        }
+        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000;
+        prim = &g_PrimBuf[self->primIndex];
+        self->posX.i.hi = PLAYER.posX.i.hi;
+        self->posY.i.hi = PLAYER.posY.i.hi - 0x20;
+        quarterSelfY = self->posY.i.hi / 4;
+        xCoord = self->posX.i.hi;
+        yCoord = 0;
+        for (i = 0; i < 4; i++) {
+            prim->tpage = 0x1A;
+            prim->clut = 0x194;
+            prim->x0 = xCoord - 8;
+            prim->x2 = xCoord + 8;
+            prim->y0 = prim->y2 = yCoord;
+            if (i < 3) {
+                rand_angle = rand() % 0x100 + 0x380;
+                xCoord += ((rcos(rand_angle) * quarterSelfY) >> 0xC);
+                yCoord += ((rsin(rand_angle) * quarterSelfY) >> 0xC);
+                prim->x1 = xCoord - 8;
+                prim->x3 = xCoord + 8;
+            } else {
+                xCoord = self->posX.i.hi;
+                yCoord = self->posY.i.hi;
+                prim->x1 = xCoord - 4;
+                prim->x3 = xCoord + 4;
+            }
+            prim->y1 = prim->y3 = yCoord;
+            prim->u0 = prim->u2 = (rand() % 6) * 0x10 - 0x70;
+            prim->u1 = prim->u3 = prim->u0 + 0x10;
+            if (rand() & 1) {
+                prim->v0 = prim->v1 = 0xD0;
+                prim->v2 = prim->v3 = 0xE0;
+            } else {
+                prim->v0 = prim->v1 = 0xE0;
+                prim->v2 = prim->v3 = 0xD0;
+            }
+            prim->priority = 0xC2;
+            prim->blendMode = 0x200 | BLEND_VISIBLE;
+            prim = prim->next;
+        }
+        self->ext.et_80170F64.unkB0 = 0x1A;
+        func_8015FAB8(self);
+        self->step++;
+        break;
+    case 1:
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < self->ext.et_80170F64.unk7C; i++) {
+            prim = prim->next;
+        }
+        prim->blendMode &= ~BLEND_VISIBLE;
+        if (++self->ext.et_80170F64.unk7C >= 4) {
+            self->ext.et_80170F64.unk7C = 0;
+            self->step++;
+        }
+        break;
+    case 2:
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < self->ext.et_80170F64.unk7C; i++) {
+            prim = prim->next;
+        }
+        if (self->ext.et_80170F64.unk7C == 0) {
+            prim->blendMode = 0x235;
+            prim->tpage = 0x1A;
+            prim->clut = 0x19F;
+            prim->u0 = prim->u2 = 0;
+            prim->u1 = prim->u3 = 0x3F;
+            prim->v0 = prim->v1 = 0xC0;
+            prim->v2 = prim->v3 = 0xFF;
+            prim->r0 = prim->g0 = prim->r1 = prim->g1 = prim->r2 = prim->g2 =
+                prim->r3 = prim->g3 = 0x7F;
+            prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0xFF;
+            self->ext.et_80170F64.unk7E = 1;
+            self->ext.et_80170F64.unk80 = 2;
+            self->ext.et_80170F64.unk82 = 0x64;
+        } else {
+            self->ext.et_80170F64.unk80 += 2;
+            prim->blendMode |= BLEND_VISIBLE;
+        }
+        if (++self->ext.et_80170F64.unk7C >= 4) {
+            // think this loop has to count down since we assign to i
+            for (i = 7; i >= 0; i--) {
+                D_801758B0[i] = i;
+            }
+            func_80170874(8, &D_801758B0[0]);
+            self->ext.et_80170F64.unk7C = 0;
+            g_api.PlaySfx(0x665);
+            self->step++;
+        }
+        break;
+    case 3:
+        func_801606BC(
+            self, FACTORY(D_801758B0[self->ext.et_80170F64.unk7C] * 0x100, 68),
+            0);
+        if (++self->ext.et_80170F64.unk7C >= 8) {
+            self->hitboxHeight = self->hitboxWidth = 0x80;
+            self->ext.et_80170F64.unk7C = 0;
+            self->step++;
+        }
+        break;
+    case 4:
+        if (++self->ext.et_80170F64.unk7C >= 9) {
+            self->step++;
+        }
+        break;
+    case 5:
+        self->ext.et_80170F64.unk80 += 2;
+        self->ext.et_80170F64.unk82 -= 10;
+        if (self->ext.et_80170F64.unk82 <= 0) {
+            self->hitboxHeight = self->hitboxWidth = 0;
+            self->step++;
+        }
+        break;
+    case 6:
+        g_Player.unk4E = 1;
+        DestroyEntity(self);
+        return;
+    }
+    if (self->ext.et_80170F64.unk7E != 0) {
+        prim = &g_PrimBuf[self->primIndex];
+        prim->x0 = prim->x2 = self->posX.i.hi - self->ext.et_80170F64.unk80;
+        prim->x1 = prim->x3 = self->posX.i.hi + self->ext.et_80170F64.unk80;
+        prim->y0 = prim->y1 = self->posY.i.hi - self->ext.et_80170F64.unk80;
+        prim->y2 = prim->y3 = self->posY.i.hi + self->ext.et_80170F64.unk80;
+        prim->r0 = prim->g0 = prim->r1 = prim->g1 = prim->r2 = prim->g2 =
+            prim->r3 = prim->g3 = (self->ext.et_80170F64.unk82 * 0x7F) / 100;
+        prim->b0 = prim->b1 = prim->b2 = prim->b3 =
+            (self->ext.et_80170F64.unk82 * 0xFF) / 100;
+    }
+    return;
+}
+
 // Needs to be in between functions in this file with rodata
 // Can remove once all rodata is pulled in.
 const u32 rodataPadding_345EC = 0;
-
-INCLUDE_ASM("asm/us/ric/nonmatchings/345EC", func_80170F64);
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/345EC", func_8017161C);
 
