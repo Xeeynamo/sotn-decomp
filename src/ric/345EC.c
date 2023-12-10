@@ -465,13 +465,13 @@ void func_801719A4(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = 0x0C820000;
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         prim = &g_PrimBuf[self->primIndex];
         prim->tpage = 0x1E;
         prim->clut = 0x17F;
         prim->v0 = prim->v1 = 0xC0;
         prim->v2 = prim->v3 = 0xD8;
-        if (self->facingLeft != 0) {
+        if (self->facingLeft) {
             prim->u0 = prim->u2 = 0x98;
             prim->u1 = prim->u3 = 0xA8;
         } else {
@@ -640,7 +640,7 @@ void func_801719A4(Entity* self) {
                 xDiff = var_s4 - self->posX.val;
                 if (ABS(xDiff) < FIX(1)) {
                     self->facingLeft = PLAYER.facingLeft;
-                } else if (self->facingLeft == 0) {
+                } else if (!self->facingLeft) {
                     if (var_s4 < self->posX.val) {
                         self->facingLeft = PLAYER.facingLeft;
                     } else {
@@ -655,7 +655,7 @@ void func_801719A4(Entity* self) {
             if (parent->facingLeft != self->facingLeft) {
                 xDiff = var_s4 - self->posX.val;
                 if (ABS(xDiff) >= FIX(1)) {
-                    if (self->facingLeft == 0) {
+                    if (!self->facingLeft) {
                         if (var_s4 < self->posX.val) {
                             self->facingLeft = parent->facingLeft;
                         } else {
