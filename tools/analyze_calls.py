@@ -142,7 +142,7 @@ def get_sdk_funcs():
 def get_main_funcs():
     # hardcode this one in there, it's not in any assembly file
     functions = ["g_MainGame"]
-    for file in Path("asm/us/main").rglob("*.s"):
+    for file in Path("asm/us/main").rglob("*[!data].s"):
         with open(file) as f:
             lines = f.readlines()
             for line in lines:
@@ -201,12 +201,16 @@ def find_func_match(caller, candidates):
     if longest_match_count == 1:
         return candidates[prefix_lengths.index(max(prefix_lengths))]
     elif longest_match_count > 1:
-        # Currently the only overlap is in UpdateAnim, which is in both dra and servant,
-        # but is called from ric and some weapons. Hard-code this to use the dra version.
-        assert candidates[0].name == "UpdateAnim"
+        # We have a tie. This happens when there are multiple copies of a function,
+        # but neither matches the caller's overlay. For example, UpdateAnim is in both DRA
+        # and tt_000, while being called from RIC (and some weapons). CreateEntFactoryFromEntity
+        # is in both DRA and RIC, while being called from tt_000. When we run into these situations,
+        # we will use the DRA version, since it's the overarching unifier for the rest of the game.
         for candidate in candidates:
             if candidate.unique_name.startswith("dra."):
                 return candidate
+        print("Can't resolve tie, none in DRA!")
+        exit(4)
     else:
         print("No candidates!")
         exit(3)
