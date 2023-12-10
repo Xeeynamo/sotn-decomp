@@ -178,7 +178,8 @@ void func_801603BC(void) {}
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_801603C4);
 
 // Similar to the version in DRA but with some logic removed
-Entity* CreateEntFactoryFromEntity(Entity* source, u32 factoryParams, s32 arg2) {
+Entity* CreateEntFactoryFromEntity(
+    Entity* source, u32 factoryParams, s32 arg2) {
     /**
      * arg2 is unused, but needed to match other functions that call
      * this function, probably part of the code for a debug build
