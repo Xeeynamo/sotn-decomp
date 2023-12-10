@@ -455,14 +455,6 @@ struct Entity;
 
 typedef void (*PfnEntityUpdate)(struct Entity*);
 
-typedef union {
-    s32 val;
-    struct {
-        s16 lo;
-        s16 hi;
-    } i;
-} f32;
-
 #include "unkstruct.h"
 
 typedef struct {

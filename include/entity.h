@@ -576,6 +576,23 @@ typedef struct {
     s16 unk7E;
 } ET_8017161C;
 
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    f32 unk84;
+    s32 unk88;
+    s32 unk8C;
+    s16 unk90;
+    s16 unk92;
+    s16 unk94;
+    s16 unk96;
+    struct Entity* unk98;
+    s32 pad[5];
+    s16 unkB0;
+} ET_801719A4;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_EntFactory factory;
@@ -603,6 +620,7 @@ typedef union {
     /* 0x7C */ ET_8017091C et_8017091C;
     /* 0x7C */ ET_80170F64 et_80170F64;
     /* 0x7C */ ET_8017161C et_8017161C;
+    /* 0x7C */ ET_801719A4 et_801719A4;
     /* 0x7C */ ET_801CF254 et_801CF254;
     /* 0x7C */ ET_GurkhaSword gurkhaSword;
     /* 0x7C */ ET_Dracula dracula;

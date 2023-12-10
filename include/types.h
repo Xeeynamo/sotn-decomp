@@ -34,4 +34,12 @@ typedef enum { false, true } bool;
 #define NULL (0)
 #endif
 
+typedef union {
+    s32 val;
+    struct {
+        s16 lo;
+        s16 hi;
+    } i;
+} f32;
+
 #endif
