@@ -18,6 +18,14 @@
 #define SEQ_TABLE_S_MAX 0x10
 #define SEQ_TABLE_T_MAX 1
 
+#define RED_MASK 0x1F
+#define GREEN_MASK 0x3E0
+#define BLUE_MASK 0x7C00
+
+#define GET_RED(x) ((x)&RED_MASK)
+#define GET_GREEN(x) ((x)&GREEN_MASK)
+#define GET_BLUE(x) ((x)&BLUE_MASK)
+
 typedef enum {
     DEBUG_NORMAL,
     DEBUG_TEXTURE_VIEWER,
