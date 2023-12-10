@@ -14,7 +14,7 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk);
 void func_80102CD8(s32 start);
 u32 UpdateAnim(s8* frameProps, s32* frames);
 void SetSpeedX(s32 speed);
-Entity* GetFreeDraEntity(s16 start, s16 end);
+Entity* GetFreeEntity(s16 start, s16 end);
 void GetEquipProperties(s32 handId, Equipment* res, s32 equipId);
 s32 func_800EA5E4(u32 arg0);
 void LoadGfxAsync(s32 gfxId);
@@ -74,7 +74,7 @@ GameApi g_ApiInit = {
     func_80102CD8,
     UpdateAnim,
     SetSpeedX,
-    GetFreeDraEntity,
+    GetFreeEntity,
     GetEquipProperties,
     func_800EA5E4,
     LoadGfxAsync,

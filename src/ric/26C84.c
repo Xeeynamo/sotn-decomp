@@ -36,7 +36,7 @@ void func_80162C84(Entity* entity) {
             func_8015C920(&D_80154EF8);
             entity->velocityX = 0;
             entity->step++;
-            func_801606BC(entity, 0x40000, 0);
+            CreateEntFactoryFromEntity(entity, 0x40000, 0);
         }
         break;
 
@@ -51,7 +51,7 @@ void func_80162C84(Entity* entity) {
     case 3:
         entity->ext.generic.unk7C.s--;
         if ((entity->ext.generic.unk7C.s) == 0) {
-            func_801606BC(entity, 0x1E, 0);
+            CreateEntFactoryFromEntity(entity, 0x1E, 0);
             entity->step++;
         }
         break;

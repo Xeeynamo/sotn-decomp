@@ -1220,8 +1220,10 @@ void func_801186EC(void) {
         func_8010E570(0);
     }
 }
-
-Entity* GetFreeDraEntity(s16 start, s16 end) {
+// Given a range of start and end values, finds an unused entity
+// slot in g_Entities to fill in. Starts at start, and goes to
+// end-1. If none in the range are available, returns NULL.
+Entity* GetFreeEntity(s16 start, s16 end) {
     Entity* entity = &g_Entities[start];
     s16 i;
 
@@ -1232,8 +1234,9 @@ Entity* GetFreeDraEntity(s16 start, s16 end) {
     }
     return NULL;
 }
-
-Entity* func_80118810(s16 start, s16 end) {
+// Like GetFreeEntity, but searches for an open spot
+// starting from the end and working backward
+Entity* GetFreeEntityReverse(s16 start, s16 end) {
     Entity* entity = &g_Entities[end - 1];
     s16 i;
 
@@ -1394,7 +1397,7 @@ void func_80118C28(s32 arg0) {
 }
 
 s32 func_80118C84(s16 arg0, s16 arg1) {
-    Entity* entity = GetFreeDraEntity(0x38, 0x40);
+    Entity* entity = GetFreeEntity(0x38, 0x40);
 
     if (entity != NULL) {
         DestroyEntity(entity);
