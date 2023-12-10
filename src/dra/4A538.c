@@ -91,7 +91,32 @@ s32 func_800EA5E4(u32 arg0) {
     return -1;
 }
 
-INCLUDE_ASM("dra/nonmatchings/4A538", func_800EA720);
+u16 func_800EA720(u32 colorDst, u32 colorSrc) {
+    u16 colorRes = colorSrc;
+
+    if (GET_RED(colorRes) < GET_RED(colorDst)) {
+        colorRes = (colorRes & ~RED_MASK) | (GET_RED(colorRes) + 1);
+    }
+    if (GET_RED(colorDst) < GET_RED(colorRes)) {
+        colorRes = (colorRes & ~RED_MASK) | (GET_RED(colorRes) - 1);
+    }
+
+    if (GET_GREEN(colorRes) < GET_GREEN(colorDst)) {
+        colorRes = (colorRes & ~GREEN_MASK) | (GET_GREEN(colorRes) + 0x20);
+    }
+    if (GET_GREEN(colorDst) < GET_GREEN(colorRes)) {
+        colorRes = (colorRes & ~GREEN_MASK) | (GET_GREEN(colorRes) - 0x20);
+    }
+
+    if (GET_BLUE(colorRes) < GET_BLUE(colorDst)) {
+        colorRes = (colorRes & ~BLUE_MASK) | (GET_BLUE(colorRes) + 0x400);
+    }
+    if (GET_BLUE(colorDst) < GET_BLUE(colorRes)) {
+        colorRes = (colorRes & ~BLUE_MASK) | (GET_BLUE(colorRes) - 0x400);
+    }
+
+    return colorRes;
+}
 
 INCLUDE_ASM("dra/nonmatchings/4A538", func_800EA7CC);
 
