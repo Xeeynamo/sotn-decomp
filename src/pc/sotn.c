@@ -54,7 +54,7 @@ bool InitGame(void) {
     api.func_80102CD8 = NULL;
     api.UpdateAnim = NULL;
     api.SetSpeedX = NULL;
-    api.GetFreeDraEntity = NULL;
+    api.GetFreeEntity = NULL;
     api.GetEquipProperties = NULL;
     api.func_800EA5E4 = func_800EA5E4;
     api.LoadGfxAsync = LoadGfxAsync;

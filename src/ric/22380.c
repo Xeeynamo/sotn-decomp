@@ -39,7 +39,7 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F414);
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F680);
 
-Entity* func_8015F8F8(s16 start, s16 end) {
+Entity* GetFreeEntity(s16 start, s16 end) {
     Entity* entity = &g_Entities[start];
     s16 i;
 
@@ -51,7 +51,7 @@ Entity* func_8015F8F8(s16 start, s16 end) {
     return NULL;
 }
 
-Entity* func_8015F96C(s16 start, s16 end) {
+Entity* GetFreeEntityReverse(s16 start, s16 end) {
     Entity* entity = &g_Entities[end - 1];
     s16 i;
     for (i = end - 1; i >= start; i--, entity--) {
@@ -177,25 +177,26 @@ void func_801603BC(void) {}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_801603C4);
 
-Entity* func_801606BC(Entity* srcEntity, u32 arg1, s32 arg2) {
+// Similar to the version in DRA but with some logic removed
+Entity* CreateEntFactoryFromEntity(Entity* source, u32 factoryParams, s32 arg2) {
     /**
      * arg2 is unused, but needed to match other functions that call
      * this function, probably part of the code for a debug build
      */
-    Entity* entity = func_8015F8F8(8, 0x10);
+    Entity* entity = GetFreeEntity(8, 0x10);
 
     if (entity != NULL) {
         DestroyEntity(entity);
         entity->entityId = E_ENTITYFACTORY;
-        entity->ext.generic.unk8C.entityPtr = srcEntity;
-        entity->posX.val = srcEntity->posX.val;
-        entity->posY.val = srcEntity->posY.val;
-        entity->facingLeft = srcEntity->facingLeft;
-        entity->zPriority = srcEntity->zPriority;
-        entity->params = arg1 & 0xFFF;
-        entity->ext.generic.unkA0 = (arg1 >> 8) & 0xFF00;
+        entity->ext.generic.unk8C.entityPtr = source;
+        entity->posX.val = source->posX.val;
+        entity->posY.val = source->posY.val;
+        entity->facingLeft = source->facingLeft;
+        entity->zPriority = source->zPriority;
+        entity->params = factoryParams & 0xFFF;
+        entity->ext.generic.unkA0 = (factoryParams >> 8) & 0xFF00;
 
-        if (srcEntity->flags & FLAG_UNK_10000) {
+        if (source->flags & FLAG_UNK_10000) {
             entity->flags |= FLAG_UNK_10000;
         }
     } else {
@@ -374,7 +375,7 @@ void func_80161C2C(Entity* self) {
         if ((self->animFrameIdx == 8) && (self->unk4C != D_80154C80)) {
             self->blendMode = 0x10;
             if (!(params & 1) && (self->animFrameDuration == step)) {
-                func_801606BC(self, 0x40004, 0);
+                CreateEntFactoryFromEntity(self, 0x40004, 0);
             }
         }
 
@@ -404,7 +405,7 @@ void func_80161EF8(Entity* self) {
     case 1:
         if ((self->animFrameIdx == 6) &&
             (self->animFrameDuration == self->step) && (rand() & 1)) {
-            func_801606BC(self, 4, 0);
+            CreateEntFactoryFromEntity(self, 4, 0);
         }
         self->posY.val += self->velocityY;
         if (self->animFrameDuration < 0) {

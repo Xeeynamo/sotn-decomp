@@ -1132,7 +1132,7 @@ typedef struct {
     /* 8003C7C0 */ void (*func_80102CD8)(s32 arg0);
     /* 8003C7C4 */ void (*UpdateAnim)(FrameProperty* frameProps, s32* arg1);
     /* 8003C7C8 */ void (*SetSpeedX)(s32 value);
-    /* 8003C7CC */ Entity* (*GetFreeDraEntity)(s16 start, s16 end);
+    /* 8003C7CC */ Entity* (*GetFreeEntity)(s16 start, s16 end);
     /* 8003C7D0 */ void (*GetEquipProperties)(
         s32 handId, Equipment* res, s32 equipId);
     /* 8003C7D4 */ s32 (*func_800EA5E4)(u32);
@@ -1206,7 +1206,7 @@ extern void (*g_api_CheckCollision)(s32 x, s32 y, Collider* res, s32 unk);
 extern void (*g_api_func_80102CD8)(s32 arg0);
 extern void (*g_api_UpdateAnim)(FrameProperty* frameProps, s32* arg1);
 extern void (*g_api_SetSpeedX)(s32 value);
-extern Entity* (*g_api_GetFreeDraEntity)(s16 start, s16 end);
+extern Entity* (*g_api_GetFreeEntity)(s16 start, s16 end);
 extern void (*g_api_GetEquipProperties)(
     s32 handId, Equipment* res, s32 equipId);
 extern s32 (*g_api_func_800EA5E4)(u32);

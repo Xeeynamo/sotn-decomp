@@ -305,7 +305,7 @@ Entity* CreateEntFactoryFromEntity(
     // Weird thing needed for callers to match
     s16 arg2 = arg2_raw;
 
-    newFactory = GetFreeDraEntity(8, 16);
+    newFactory = GetFreeEntity(8, 16);
     if (newFactory == NULL) {
         return NULL;
     }
@@ -448,19 +448,19 @@ void EntityEntFactory(Entity* self) {
             newEntity = &g_Entities[startIndex];
             g_Player.unk48 = 0;
         } else if (self->ext.factory.unk9C == 0) {
-            newEntity = func_80118810(startIndex, endIndex + 1);
+            newEntity = GetFreeEntityReverse(startIndex, endIndex + 1);
         } else if (self->ext.factory.unk9C == 8) {
             if ((self->ext.factory.unkA6 % 3) == 0) {
-                newEntity = GetFreeDraEntity(17, 32);
+                newEntity = GetFreeEntity(17, 32);
             }
             if ((self->ext.factory.unkA6 % 3) == 1) {
-                newEntity = GetFreeDraEntity(32, 48);
+                newEntity = GetFreeEntity(32, 48);
             }
             if ((self->ext.factory.unkA6 % 3) == 2) {
-                newEntity = GetFreeDraEntity(48, 64);
+                newEntity = GetFreeEntity(48, 64);
             }
         } else {
-            newEntity = GetFreeDraEntity(startIndex, endIndex + 1);
+            newEntity = GetFreeEntity(startIndex, endIndex + 1);
         }
 
         if (newEntity == NULL) {

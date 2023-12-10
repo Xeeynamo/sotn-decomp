@@ -15,7 +15,7 @@ void func_801705EC(Entity* entity) {
     case 7:
         temp = entity->ext.generic.unk7E.modeU16 + 1;
         entity->ext.generic.unk7E.modeU16 = temp;
-        func_801606BC(entity, (temp << 0x10) | 0x3F, 0);
+        CreateEntFactoryFromEntity(entity, (temp << 0x10) | 0x3F, 0);
         entity->ext.generic.unk7C.s = 0;
         entity->step++;
         break;
@@ -314,7 +314,7 @@ void func_80170F64(Entity* self) {
         }
         break;
     case 3:
-        func_801606BC(
+        CreateEntFactoryFromEntity(
             self, FACTORY(D_801758B0[self->ext.et_80170F64.unk7C] * 0x100, 68),
             0);
         if (++self->ext.et_80170F64.unk7C >= 8) {

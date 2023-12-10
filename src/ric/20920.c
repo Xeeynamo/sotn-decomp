@@ -73,7 +73,7 @@ void func_8015CAAC(s32 speed) {
 
 void func_8015CAD4(s32 arg0, s16 arg1) {
     if (arg0 == 0) {
-        func_801606BC(g_CurrentEntity, 0x15002C, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 0x15002C, 0);
         if (arg1 >= g_Player.D_80072F1A) {
             g_Player.D_80072F1A = arg1;
         }
@@ -181,7 +181,7 @@ void func_8015CE7C(void) {
         SetSpeedX(0x24000);
         g_Player.D_80072F16 = 0x28;
         PLAYER.velocityY = 0;
-        func_801606BC(g_CurrentEntity, 0x50001, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 0x50001, 0);
     }
 }
 
@@ -254,7 +254,7 @@ void func_8015D120(void) {
     g_Player.pl_high_jump_timer = 0;
     func_8015C920(&D_8015579C);
     func_8015CC28();
-    func_801606BC(g_CurrentEntity, 0x2DU, 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, 0x2DU, 0);
     g_api.PlaySfx(0x6FB);
     g_Player.D_80072F18 = 4;
     if (g_Player.unk72 != 0) {
