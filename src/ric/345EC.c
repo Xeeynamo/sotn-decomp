@@ -435,7 +435,7 @@ void func_801719A4(Entity* self) {
     Entity* parent;
     s32 sine;
     s32 cosine;
-    s32 var_s4;    
+    s32 var_s4;
     s32 var_s6;
     s32 xDiff;
     s32 ySub;
@@ -450,8 +450,10 @@ void func_801719A4(Entity* self) {
     s32 temp_t0;
     s32 temp_v1_11;
     if (*D_80097400 != 0) {
-        //FAKE, needed to make step load at the right time
-        do{D_800973FC = 0;}while(0);
+        // FAKE, needed to make step load at the right time
+        do {
+            D_800973FC = 0;
+        } while (0);
         if ((self->step > 0) && (self->step < 4)) {
             self->step = 4;
         }
@@ -479,26 +481,27 @@ void func_801719A4(Entity* self) {
         prim->priority = PLAYER.zPriority + 1;
         prim->blendMode = 0x10A;
         prim = prim->next;
-        
+
         prim->tpage = 0x1A;
         prim->clut = 0x186;
         prim->priority = PLAYER.zPriority + 3;
         prim->blendMode = 0x10A;
 
         prim = prim->next;
-        
+
         prim->tpage = 0x1A;
         prim->clut = 0x186;
         prim->priority = PLAYER.zPriority + 3;
         prim->blendMode = 0x10A;
         if (self->params & 0xFF00) {
             CreateEntFactoryFromEntity(self, 0x42U, 0);
-            D_801758D0 = self->ext.et_801719A4.unk94 =self->params >> 8;
+            D_801758D0 = self->ext.et_801719A4.unk94 = self->params >> 8;
             if (self->ext.et_801719A4.unk94 < 4) {
-                (&D_801758D0)[self->ext.et_801719A4.unk94] = (u32) self;
+                (&D_801758D0)[self->ext.et_801719A4.unk94] = (u32)self;
             }
             if (self->ext.et_801719A4.unk94 >= 2) {
-                self->ext.et_801719A4.unk98 = D_801758CC[self->ext.et_801719A4.unk94];
+                self->ext.et_801719A4.unk98 =
+                    D_801758CC[self->ext.et_801719A4.unk94];
             }
         } else {
             CreateEntFactoryFromEntity(self, 0x40U, 0);
@@ -510,14 +513,14 @@ void func_801719A4(Entity* self) {
         if (self->ext.et_801719A4.unk94 < 2) {
             D_800973FC = 1;
         }
-        self->step ++;
+        self->step++;
         break;
     case 1:
         prim = &g_PrimBuf[self->primIndex];
         prim->blendMode &= ~BLEND_VISIBLE;
         self->ext.et_801719A4.unk84.val += 0x18000;
         if (self->ext.et_801719A4.unk84.val > 0x19FFFF) {
-            self->step ++;
+            self->step++;
         }
         break;
     case 2:
@@ -525,26 +528,26 @@ void func_801719A4(Entity* self) {
         if (self->ext.et_801719A4.unk84.val <= 0x100000) {
             self->ext.et_801719A4.unk7C = 5;
             g_api.PlaySfx(0x6A1);
-            self->step ++;
+            self->step++;
         }
         break;
     case 3:
-        if (++self->ext.et_801719A4.unk7E >= 0x51){
+        if (++self->ext.et_801719A4.unk7E >= 0x51) {
             g_api.PlaySfx(0x6A1);
             self->ext.et_801719A4.unk7E = 0;
             self->ext.et_801719A4.unk90 = 1;
-             if(--self->ext.et_801719A4.unk7C < 0) {
-                 self->step ++;
-                 break;
-             }
+            if (--self->ext.et_801719A4.unk7C < 0) {
+                self->step++;
+                break;
+            }
         }
 
         if (self->ext.et_801719A4.unk7C < 5) {
             prim = g_PrimBuf[self->primIndex].next;
             if (self->ext.et_801719A4.unk7C >= 10) {
                 self->ext.et_801719A4.unk92 = 1;
-                //MISMATCH: Not using S4 for this
-                var_s4 = 8 *(self->ext.et_801719A4.unk7C / 10) ;
+                // MISMATCH: Not using S4 for this
+                var_s4 = 8 * (self->ext.et_801719A4.unk7C / 10);
                 prim->u0 = prim->u2 = var_s4 + 0x18;
                 prim->u1 = prim->u3 = var_s4 + 0x1E;
                 prim->v0 = prim->v1 = 0x40;
@@ -554,10 +557,10 @@ void func_801719A4(Entity* self) {
             } else {
                 self->ext.et_801719A4.unk92 = 0;
             }
-            var_s4 = 8 *(self->ext.et_801719A4.unk7C % 10);
+            var_s4 = 8 * (self->ext.et_801719A4.unk7C % 10);
             if (var_s4 == 0) {
                 var_s4 = 0x50;
-            } 
+            }
             prim->u0 = prim->u2 = var_s4 + 0x18;
             prim->u1 = prim->u3 = var_s4 + 0x1E;
             prim->v0 = prim->v1 = 0x40;
@@ -582,28 +585,30 @@ void func_801719A4(Entity* self) {
             self->step = 7;
             CreateEntFactoryFromEntity(self, 0x48U, 0);
         } else {
-            self->step ++;
+            self->step++;
         }
         break;
     case 5:
         if (++self->ext.et_801719A4.unk7C >= 4) {
             prim = &g_PrimBuf[self->primIndex];
             prim->clut = 0x15F;
-            prim->g0 = prim->g1 = prim->g2 = prim->g3 = prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x40;
+            prim->g0 = prim->g1 = prim->g2 = prim->g3 = prim->r0 = prim->r1 =
+                prim->r2 = prim->r3 = 0x40;
             prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x60;
             prim->blendMode |= 4;
             g_api.PlaySfx(0x6A4);
-            self->step ++;
+            self->step++;
         }
         break;
     case 6:
         if (++self->ext.et_801719A4.unk7C >= 0xF) {
             CreateEntFactoryFromEntity(self, 0x70004U, 0);
-            self->step ++;
+            self->step++;
         }
         break;
     case 7:
-        if ((self->ext.et_801719A4.unk94 == 0) || (self->ext.et_801719A4.unk94 == D_801758D0)) {
+        if ((self->ext.et_801719A4.unk94 == 0) ||
+            (self->ext.et_801719A4.unk94 == D_801758D0)) {
             D_800973FC = 0;
         }
         if (self->ext.et_801719A4.unk94 != 0) {
@@ -621,14 +626,15 @@ void func_801719A4(Entity* self) {
             var_s4 = PLAYER.posX.val + (PLAYER.facingLeft ? FIX(8) : FIX(-8));
             var_s6 = PLAYER.posY.val + FIX(-16);
         } else if (D_801758CC[self->ext.et_801719A4.unk94] != 0) {
-            var_s4 = self->ext.et_801719A4.unk98->posX.val + (PLAYER.facingLeft ? FIX(16) : FIX(-16));
+            var_s4 = self->ext.et_801719A4.unk98->posX.val +
+                     (PLAYER.facingLeft ? FIX(16) : FIX(-16));
             var_s6 = self->ext.et_801719A4.unk98->posY.val + FIX(-16);
         } else {
             var_s4 = self->posX.val;
             var_s6 = self->posY.val;
         }
         self->posX.val += (var_s4 - self->posX.val) / 12;
-        self->posY.val += (var_s6 - self->posY.val)/4;
+        self->posY.val += (var_s6 - self->posY.val) / 4;
         if (self->ext.et_801719A4.unk94 < 2) {
             if (PLAYER.facingLeft != self->facingLeft) {
                 xDiff = var_s4 - self->posX.val;
@@ -668,11 +674,11 @@ void func_801719A4(Entity* self) {
             prim->u0 = 0x98;
             prim->u1 = prim->u3 = 0xA8;
         } else {
-block_84:
+        block_84:
             prim->u2 = 0xA8;
             prim->u0 = 0xA8;
             prim->u1 = prim->u3 = 0x98;
-        }        
+        }
     }
     if (self->step < 3) {
         var_s4 = self->posX.i.hi + (self->facingLeft ? 6 : -6);
@@ -734,7 +740,7 @@ block_84:
     } else {
         temp_v0 = 8 - self->ext.et_801719A4.unk7C;
         var_a0 = temp_v0;
-        if (temp_v0 <= 0){
+        if (temp_v0 <= 0) {
             var_a0 = 1;
         }
         var_a1 = ((self->ext.et_801719A4.unk7C << 0x10) >> 0xB) + 0xC;
@@ -752,13 +758,16 @@ block_84:
             var_s4 = self->posX.i.hi + (self->facingLeft ? -10 : 4);
             prim = prim->next;
             if (self->ext.et_801719A4.unk7E < 8) {
-                prim->x0 = prim->x2 = var_s4 - (self->ext.et_801719A4.unk7E / 2);
-                prim->x1 = prim->x3 = var_s4 + (self->ext.et_801719A4.unk7E / 2);
+                prim->x0 = prim->x2 =
+                    var_s4 - (self->ext.et_801719A4.unk7E / 2);
+                prim->x1 = prim->x3 =
+                    var_s4 + (self->ext.et_801719A4.unk7E / 2);
                 temp_t2 = 0xF;
-                prim->y0 = prim->y1 = var_s6 + (self->ext.et_801719A4.unk7E - temp_t2);
-                prim->y2 = prim->y3 = var_s6 - (self->ext.et_801719A4.unk7E - temp_t2);
-            }
-            else if (self->ext.et_801719A4.unk7E >= 0x44) {
+                prim->y0 = prim->y1 =
+                    var_s6 + (self->ext.et_801719A4.unk7E - temp_t2);
+                prim->y2 = prim->y3 =
+                    var_s6 - (self->ext.et_801719A4.unk7E - temp_t2);
+            } else if (self->ext.et_801719A4.unk7E >= 0x44) {
                 var_a0 = (0x4C - self->ext.et_801719A4.unk7E) / 2;
                 if (var_a0 < 0) {
                     var_a0 = 0;
@@ -771,7 +780,8 @@ block_84:
                 prim->x0 = prim->x2 = var_s4 - var_a0;
                 prim->x1 = prim->x3 = var_s4 + var_a0;
                 prim->y0 = prim->y1 = var_s6 - var_a1;
-                //FAKE horrible thing needed to match, secondmult should be totally irrelevant here
+                // FAKE horrible thing needed to match, secondmult should be
+                // totally irrelevant here
                 prim->y2 = prim->y3 = (secondmult = var_s6) + var_a1;
             } else {
                 prim->x0 = prim->x2 = var_s4 - 4;
@@ -794,7 +804,8 @@ block_84:
                 prim->x0 = prim->x2 = var_s4 - var_a0;
                 prim->x1 = prim->x3 = var_s4 + var_a0;
                 prim->y0 = prim->y1 = var_s6 - var_a1;
-                //FAKE horrible thing needed to match, secondmult should be totally irrelevant here
+                // FAKE horrible thing needed to match, secondmult should be
+                // totally irrelevant here
                 prim->y2 = prim->y3 = (secondmult = var_s6) + var_a1;
             } else if (self->ext.et_801719A4.unk7E < 0x48) {
                 prim->x0 = prim->x2 = var_s4 - 4;
@@ -802,28 +813,39 @@ block_84:
                 prim->y0 = prim->y1 = var_s6 - 8;
                 prim->y2 = prim->y3 = var_s6 + 8;
             } else {
-                prim->x0 = prim->x2 = var_s4 - ((0x50 - self->ext.et_801719A4.unk7E) / 2);
-                prim->x1 = prim->x3 = var_s4 + ((0x50 - self->ext.et_801719A4.unk7E) / 2);
+                prim->x0 = prim->x2 =
+                    var_s4 - ((0x50 - self->ext.et_801719A4.unk7E) / 2);
+                prim->x1 = prim->x3 =
+                    var_s4 + ((0x50 - self->ext.et_801719A4.unk7E) / 2);
                 temp_t2 = -0x40;
-                prim->y0 = prim->y1 = var_s6 - (self->ext.et_801719A4.unk7E + temp_t2);
-                prim->y2 = prim->y3 = var_s6 + (self->ext.et_801719A4.unk7E + temp_t2);
+                prim->y0 = prim->y1 =
+                    var_s6 - (self->ext.et_801719A4.unk7E + temp_t2);
+                prim->y2 = prim->y3 =
+                    var_s6 + (self->ext.et_801719A4.unk7E + temp_t2);
             }
         } else {
             var_s4 = self->posX.i.hi + (self->facingLeft ? -4 : 4);
             prim = prim->next;
             if (self->ext.et_801719A4.unk7E < 8) {
-                prim->x0 = prim->x2 = var_s4 - (self->ext.et_801719A4.unk7E / 2);
-                prim->x1 = prim->x3 = var_s4 + (self->ext.et_801719A4.unk7E / 2);
+                prim->x0 = prim->x2 =
+                    var_s4 - (self->ext.et_801719A4.unk7E / 2);
+                prim->x1 = prim->x3 =
+                    var_s4 + (self->ext.et_801719A4.unk7E / 2);
                 temp_t2 = 0xF;
-                prim->y0 = prim->y1 = var_s6 + (self->ext.et_801719A4.unk7E - temp_t2);
-                prim->y2 = prim->y3 = var_s6 - (self->ext.et_801719A4.unk7E - temp_t2);
-            }
-            else if (self->ext.et_801719A4.unk7E >= 0x48) {
-                prim->x0 = prim->x2 = var_s4 - ((0x50 - self->ext.et_801719A4.unk7E) / 2);
-                prim->x1 = prim->x3 = var_s4 + ((0x50 - self->ext.et_801719A4.unk7E) / 2);
+                prim->y0 = prim->y1 =
+                    var_s6 + (self->ext.et_801719A4.unk7E - temp_t2);
+                prim->y2 = prim->y3 =
+                    var_s6 - (self->ext.et_801719A4.unk7E - temp_t2);
+            } else if (self->ext.et_801719A4.unk7E >= 0x48) {
+                prim->x0 = prim->x2 =
+                    var_s4 - ((0x50 - self->ext.et_801719A4.unk7E) / 2);
+                prim->x1 = prim->x3 =
+                    var_s4 + ((0x50 - self->ext.et_801719A4.unk7E) / 2);
                 temp_t2 = -0x40;
-                prim->y0 = prim->y1 = var_s6 - (self->ext.et_801719A4.unk7E + temp_t2);
-                prim->y2 = prim->y3 = var_s6 + (self->ext.et_801719A4.unk7E + temp_t2);
+                prim->y0 = prim->y1 =
+                    var_s6 - (self->ext.et_801719A4.unk7E + temp_t2);
+                prim->y2 = prim->y3 =
+                    var_s6 + (self->ext.et_801719A4.unk7E + temp_t2);
             } else {
                 prim->x0 = prim->x2 = var_s4 - 5;
                 prim->x1 = prim->x3 = var_s4 + 5;
