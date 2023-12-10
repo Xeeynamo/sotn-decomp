@@ -464,7 +464,6 @@ void func_801590A0(void) {
             PLAYER.step_s = 0;
             func_8015C920(D_80155528);
         }
-        return;
     }
 }
 
