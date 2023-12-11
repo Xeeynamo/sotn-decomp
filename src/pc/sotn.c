@@ -4,13 +4,17 @@
 #include "sfx.h"
 #include <SDL2/SDL.h>
 
+RelicDesc g_RelicDummy = {"dummy", "dummy", 0, 0, 0};
+
 GameApi g_ApiInit = {0};
 Equipment g_EquipDefs[0x100] = {0};
 Accessory g_AccessoryDefs[0x100] = {0};
-RelicDesc g_RelicDefs[0x100] = {0};
+RelicDesc g_RelicDefs[NUM_RELICS] = {0};
+SpellDef g_SpellDefs[0x100] = {0};
 void (*D_80170000)(s32 arg0); // ServantDesc D_80170000 = {0};
 Weapon D_8017A000 = {0};
 Weapon D_8017D000 = {0};
+extern bool g_IsQuitRequested;
 
 void StageOvlCb() {
     SetGameState(Game_NowLoading);
@@ -25,7 +29,11 @@ s32 AllocPrimitives(u8 primType, s32 count);
 s32 func_800EA5E4(u32);
 void LoadGfxAsync(s32 gfxId);
 void func_800EA538(s32 arg0);
+u16* func_80106A28(u32 arg0, u16 kind);
 void func_8010DFF0(s32 arg0, s32 arg1);
+void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index);
+void AddToInventory(u16 itemId, s32 itemCategory);
+u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void DebugInputWait(const char* msg);
 
 // stub to the original UpdateGame
@@ -67,7 +75,7 @@ bool InitGame(void) {
     api.CreateEntFactoryFromEntity = NULL;
     api.func_80131F68 = NULL;
     api.func_800EDB08 = NULL;
-    api.func_80106A28 = NULL;
+    api.func_80106A28 = func_80106A28;
     api.func_80118894 = NULL;
     api.enemyDefs = NULL;
     api.func_80118970 = NULL;
@@ -78,7 +86,7 @@ bool InitGame(void) {
     api.func_8010E168 = NULL;
     api.func_8010DFF0 = func_8010DFF0;
     api.DealDamage = NULL;
-    api.LoadEquipIcon = NULL;
+    api.LoadEquipIcon = LoadEquipIcon;
     api.equipDefs = g_EquipDefs;
     api.accessoryDefs = g_AccessoryDefs;
     api.AddHearts = NULL;
@@ -86,13 +94,13 @@ bool InitGame(void) {
     api.TimeAttackController = NULL;
     api.func_8010E0A8 = NULL;
     api.func_800FE044 = NULL;
-    api.AddToInventory = NULL;
+    api.AddToInventory = AddToInventory;
     api.relicDefs = g_RelicDefs;
     api.InitStatsAndGear = NULL;
     api.func_80134714 = NULL;
     api.func_80134678 = NULL;
     api.func_800F53A4 = NULL;
-    api.CheckEquipmentItemCount = NULL;
+    api.CheckEquipmentItemCount = CheckEquipmentItemCount;
     api.func_8010BF64 = NULL;
     api.func_800F1FC4 = NULL;
     api.func_800F2288 = NULL;
@@ -133,8 +141,34 @@ bool InitGame(void) {
     D_8017A000.LoadWeaponPalette = WeaponLoadPaletteStub;
     D_8017D000.LoadWeaponPalette = WeaponLoadPaletteStub;
 
+    for (int i = 0; i < LEN(g_RelicDefs); i++) {
+        memcpy(&g_RelicDefs[i], &g_RelicDummy, sizeof(g_RelicDummy));
+    }
+    for (int i = 0; i < LEN(g_EquipDefs); i++) {
+        Equipment dummy = {0};
+        dummy.name = g_RelicDummy.name;
+        dummy.description = g_RelicDummy.desc;
+        memcpy(&g_EquipDefs[i], &dummy, sizeof(dummy));
+    }
+    for (int i = 0; i < LEN(g_AccessoryDefs); i++) {
+        Accessory dummy = {0};
+        dummy.name = g_RelicDummy.name;
+        dummy.description = g_RelicDummy.desc;
+        memcpy(&g_AccessoryDefs[i], &dummy, sizeof(dummy));
+    }
+
     return true;
 }
 
 void ResetPlatform(void);
 void ResetGame(void) { ResetPlatform(); }
+
+MyRenderPrimitives();
+void RenderPrimitives(void) {
+    INFOF("dr  :%03x, gt4 :%03x", g_GpuUsage.drawModes, g_GpuUsage.gt4);
+    INFOF("g4  :%03x, gt3 :%03x", g_GpuUsage.g4, g_GpuUsage.gt3);
+    INFOF("line:%03x, sp16:%03x", g_GpuUsage.line, g_GpuUsage.sp16);
+    INFOF("sp  :%03x, tile:%03x", g_GpuUsage.sp, g_GpuUsage.tile);
+    INFOF("env :%03x, prim :%03x", g_GpuUsage.env, g_GpuUsage.env);
+    MyRenderPrimitives();
+}

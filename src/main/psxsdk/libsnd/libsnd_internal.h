@@ -91,7 +91,6 @@ s32 vmNoiseOn2(u8, u16, u16, u16, u16);
 extern s8 D_800978D7;
 extern s16 D_800978E2;
 extern u8 spuVmMaxVoice;
-void SpuVmKeyOff(s32, s16, s16, u16);
 void SeAutoVol(s16, s16, s16, s16);
 void SeAutoPan(s16, s16, s16, s16);
 
@@ -124,7 +123,7 @@ struct SeqStruct {
     s16 unk40;
     s16 unk42;
     s16 unk44;
-    u8 pad9[1];
+    s16 unk46;
     s16 unk48;
     u8 pad8[2];
     s16 unk4c;
@@ -132,7 +131,7 @@ struct SeqStruct {
     u8 pad10[1];
     s16 unk70;
     s16 unk72;
-    s16 unk74;
+    u16 unk74;
     s16 unk76;
     s16 unk78;
     s16 unk7A;
@@ -147,7 +146,8 @@ struct SeqStruct {
     s32 unk9C;
     s32 unkA0;
     s32 unkA4;
-    u8 padA6[2];
+    s16 padA6;
+    s16 padaa;
 };
 
 extern struct SeqStruct* _ss_score[32];
