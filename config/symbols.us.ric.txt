@@ -7,4 +7,5 @@ SetSpeedX = 0x8015CA84;
 GetFreeEntity = 0x8015F8F8;
 GetFreeEntityReverse = 0x8015F96C;
 CreateEntFactoryFromEntity = 0x801606BC;
+EntitySubwpnBible = 0x80172D00;
 g_DebugWaitInfoTimer = 0x80174F7C;
