@@ -95,6 +95,24 @@ u_long MyPadRead(int id) {
         if (keyb[SDL_SCANCODE_RIGHT]) {
             pressed |= PAD_RIGHT;
         }
+        if (keyb[SDL_SCANCODE_X]) {
+            pressed |= PAD_CROSS;
+        }
+        if (keyb[SDL_SCANCODE_S]) {
+            pressed |= PAD_TRIANGLE;
+        }
+        if (keyb[SDL_SCANCODE_Z]) {
+            pressed |= PAD_SQUARE;
+        }
+        if (keyb[SDL_SCANCODE_D]) {
+            pressed |= PAD_CIRCLE;
+        }
+        if (keyb[SDL_SCANCODE_BACKSPACE]) {
+            pressed |= PAD_SELECT;
+        }
+        if (keyb[SDL_SCANCODE_RETURN]) {
+            pressed |= PAD_START;
+        }
         if (keyb[SDL_SCANCODE_Q]) {
             pressed |= PAD_L1;
         }
@@ -129,4 +147,85 @@ int MyDrawSync(int mode) {
     MyDrawSyncCallback(mode);
 
     return 0;
+}
+
+void SetSdlVertexG4(SDL_Vertex* v, POLY_G4* poly) {
+    v[0].position.x = poly->x0;
+    v[0].position.y = poly->y0;
+    v[0].color.r = poly->r0;
+    v[0].color.g = poly->g0;
+    v[0].color.b = poly->b0;
+    v[0].color.a = 0xFF;
+    v[1].position.x = poly->x1;
+    v[1].position.y = poly->y1;
+    v[1].color.r = poly->r1;
+    v[1].color.g = poly->g1;
+    v[1].color.b = poly->b1;
+    v[1].color.a = 0xFF;
+    v[2].position.x = poly->x2;
+    v[2].position.y = poly->y2;
+    v[2].color.r = poly->r2;
+    v[2].color.g = poly->g2;
+    v[2].color.b = poly->b2;
+    v[2].color.a = 0xFF;
+    v[4].position.x = poly->x3;
+    v[4].position.y = poly->y3;
+    v[4].color.r = poly->r3;
+    v[4].color.g = poly->g3;
+    v[4].color.b = poly->b3;
+    v[4].color.a = 0xFF;
+    v[3] = v[1];
+    v[5] = v[2];
+}
+
+void SetSdlVertexPrim(SDL_Vertex* v, Primitive* prim) {
+    v[0].position.x = prim->x0;
+    v[0].position.y = prim->y0;
+    v[0].color.r = prim->r0;
+    v[0].color.g = prim->g0;
+    v[0].color.b = prim->b0;
+    v[0].color.a = 0xFF;
+    v[1].position.x = prim->x1;
+    v[1].position.y = prim->y1;
+    v[1].color.r = prim->r1;
+    v[1].color.g = prim->g1;
+    v[1].color.b = prim->b1;
+    v[1].color.a = 0xFF;
+    v[2].position.x = prim->x2;
+    v[2].position.y = prim->y2;
+    v[2].color.r = prim->r2;
+    v[2].color.g = prim->g2;
+    v[2].color.b = prim->b2;
+    v[2].color.a = 0xFF;
+    v[4].position.x = prim->x3;
+    v[4].position.y = prim->y3;
+    v[4].color.r = prim->r3;
+    v[4].color.g = prim->g3;
+    v[4].color.b = prim->b3;
+    v[4].color.a = 0xFF;
+    v[3] = v[1];
+    v[5] = v[2];
+}
+
+void MyRenderPrimitives(void) {
+    SDL_Vertex v[6];
+
+    for (int i = 0; i < LEN(g_PrimBuf); i++) {
+        Primitive* prim = &g_PrimBuf[i];
+        switch (prim->type) {
+        case PRIM_GT4:
+            SetSdlVertexPrim(v, prim);
+            SDL_RenderGeometry(g_Renderer, NULL, v, 6, NULL, 0);
+            break;
+        }
+    }
+    for (int i = 0; i < g_GpuUsage.g4; i++) {
+        SetSdlVertexG4(v, &g_CurrentBuffer->polyG4[i]);
+        SDL_RenderGeometry(g_Renderer, NULL, v, 6, NULL, 0);
+    }
+    for (int i = 0; i < g_GpuUsage.line; i++) {
+        LINE_G2* poly = &g_CurrentBuffer->lineG2[i];
+        SDL_SetRenderDrawColor(g_Renderer, poly->r0, poly->g0, poly->b0, 255);
+        SDL_RenderDrawLine(g_Renderer, poly->x0, poly->y0, poly->x1, poly->y1);
+    }
 }
