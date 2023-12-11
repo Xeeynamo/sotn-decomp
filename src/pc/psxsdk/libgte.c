@@ -4,6 +4,22 @@
 
 void InitGeom() { NOT_IMPLEMENTED; }
 
-int rsin(int x) { NOT_IMPLEMENTED; }
+int rsin(int x) {
+    NOT_IMPLEMENTED;
+    return 0;
+}
 
-int rcos(int x) { NOT_IMPLEMENTED; }
+int rcos(int x) {
+    NOT_IMPLEMENTED;
+    return 0;
+}
+
+long ratan2(long y, long x) {
+    NOT_IMPLEMENTED;
+    return 0;
+}
+
+long SquareRoot0(long a) {
+    NOT_IMPLEMENTED;
+    return 0;
+}

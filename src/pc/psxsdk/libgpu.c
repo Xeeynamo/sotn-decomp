@@ -64,3 +64,7 @@ int SetGraphDebug(int level) { NOT_IMPLEMENTED; }
 u_long* ClearOTag(u_long* ot, int n) { NOT_IMPLEMENTED; }
 
 u_short LoadClut2(u_long* clut, int x, int y) { NOT_IMPLEMENTED; }
+
+u_short LoadTPage(u_long* pix, int tp, int abr, int x, int y, int w, int h) {
+    NOT_IMPLEMENTED;
+}
