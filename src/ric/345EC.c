@@ -1060,7 +1060,7 @@ void EntityGiantSpinningCross(Entity* self) {
     pos = D_80156C50;
     sp50 = D_80156C58;
     if (self->step == 0) {
-        self->primIndex = g_api.func_800EDB58(4, 0x2E);
+        self->primIndex = g_api.func_800EDB58(PRIM_GT4, 46);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1068,7 +1068,7 @@ void EntityGiantSpinningCross(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         while (prim != NULL) {
             prim->tpage = 0x1C;
-            prim->blendMode = 0x108;
+            prim->blendMode = 0x100 | BLEND_VISIBLE;
             prim = prim->next;
         }
         self->ext.giantcross.unkB0 = 0xD;
@@ -1076,8 +1076,8 @@ void EntityGiantSpinningCross(Entity* self) {
         self->hitboxHeight = 0x50;
         self->hitboxWidth = 0xC;
         self->posY.i.hi = 0x160;
-        self->velocityY = -0x60000;
-        self->flags = 0x04820000;
+        self->velocityY = FIX(-6.0);
+        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         self->facingLeft = 0;
         self->ext.giantcross.unk7C = 0;
         self->ext.giantcross.unk7E = 0x400;
@@ -1085,8 +1085,7 @@ void EntityGiantSpinningCross(Entity* self) {
         self->step++;
         primUVCoords = &D_8015635C[0][0];
         prim = &g_PrimBuf[self->primIndex];
-        for (i = 0; i < 46; i++, prim = prim->next,
-            primUVCoords += 5) { // i is t1
+        for (i = 0; i < 46; i++, prim = prim->next, primUVCoords += 5) {
             prim->clut = (primUVCoords[4] & 0xF) | 0x1A0;
             switch (primUVCoords[4] & 0xF0) {
             case 0x10:
@@ -1189,7 +1188,7 @@ void EntityGiantSpinningCross(Entity* self) {
     rot.vy = self->ext.giantcross.unk7E;
     rot.vz = 0x40;
     rot.vx = 0;
-    
+
     SetGeomOffset(self->posX.i.hi, 120);
     gte_SetGeomScreen(320);
     RotMatrix(&rot, &m);
