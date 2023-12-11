@@ -38,7 +38,7 @@ segments:
       - [0x1F18, .data, save_mgr]
       - [0x21B8, data]
       - [0x2BC0, data]
-      - [0x2D48, .data, 5087C]
+      - [0x2D48, .data, menu]
       - [0x2D70, data]
       - [0x2EC0, .data, 5D6C4]
       - [0x2EE8, data]
@@ -85,12 +85,12 @@ segments:
       - [0x3C514, .rodata, 5087C] # func_800F0940
       - [0x3C534, .rodata, 5087C] # func_800F2860
       - [0x3C55C, .rodata, 5087C] # func_800F298C
-      - [0x3C5D4, .rodata, 5087C] # strings
-      - [0x3C68C, .rodata, 5087C] # DrawMenuFamiliars
-      - [0x3C6AC, .rodata, 5087C] # DrawMenu
-      - [0x3C71C, .rodata, 5087C] # MenuHandleCursorInput
-      - [0x3C734, .rodata, 5087C] # HandleMenu str
-      - [0x3C75C, .rodata, 5087C] # HandleMenu jtbl
+      - [0x3C5D4, .rodata, menu] # strings
+      - [0x3C68C, .rodata, menu] # DrawMenuFamiliars
+      - [0x3C6AC, .rodata, menu] # DrawMenu
+      - [0x3C71C, .rodata, menu] # MenuHandleCursorInput
+      - [0x3C734, .rodata, menu] # HandleMenu str
+      - [0x3C75C, .rodata, menu] # HandleMenu jtbl
       - [0x3CBAC, .rodata, 5D6C4] # func_800FD6C4
       - [0x3CBF4, rodata]
       - [0x3CC0C, .rodata, 627C4]
@@ -168,6 +168,7 @@ segments:
       - [0x4F45C, c, collider]
       - [0x4FBF8, c, demo]
       - [0x5087C, c, 5087C]
+      - [0x5483C, c, menu]
       - [0x5D6C4, c, 5D6C4]
       - [0x627C4, c, 627C4]
       - [0x63ED4, c, 63ED4]
