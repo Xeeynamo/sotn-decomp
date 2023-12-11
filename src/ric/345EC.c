@@ -953,8 +953,8 @@ void EntitySubwpnBible(Entity* self) {
         prim->v2 = prim->v3 = 0xF0;
         prim->priority = PLAYER.zPriority + 1;
         prim->blendMode = 0x108;
-        self->ext.et_80172D00.unk84 = self->facingLeft ? 0x20 : -0x20;
-        self->ext.et_80172D00.unkB0 = 5;
+        self->ext.et_BibleSubwpn.unk84 = self->facingLeft ? 0x20 : -0x20;
+        self->ext.et_BibleSubwpn.unkB0 = 5;
         func_8015FAB8(self);
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
@@ -963,34 +963,34 @@ void EntitySubwpnBible(Entity* self) {
     case 1:
         prim = &g_PrimBuf[self->primIndex];
         prim->blendMode &= ~BLEND_VISIBLE;
-        self->ext.et_80172D00.unk86++;
+        self->ext.et_BibleSubwpn.unk86++;
         self->step++;
     case 2:
-        self->ext.et_80172D00.unk7C++;
-        if (++self->ext.et_80172D00.unk7E >= 0x30) {
+        self->ext.et_BibleSubwpn.unk7C++;
+        if (++self->ext.et_BibleSubwpn.unk7E >= 0x30) {
             self->step++;
         }
         break;
     case 3:
-        if (++self->ext.et_80172D00.unk7C >= 0x12C) {
+        if (++self->ext.et_BibleSubwpn.unk7C >= 0x12C) {
             self->flags &= ~FLAG_UNK_04000000;
             self->velocityX = self->facingLeft ? FIX(-12) : FIX(12);
             self->velocityY = FIX(-12);
             g_api.PlaySfx(0x6B2);
-            self->ext.et_80172D00.unk86++;
+            self->ext.et_BibleSubwpn.unk86++;
             self->step++;
         }
         break;
     }
-    switch (self->ext.et_80172D00.unk86) {
+    switch (self->ext.et_BibleSubwpn.unk86) {
     case 0:
         break;
     case 1:
         // All this logic is a mess, could use a cleanup
-        sine = rsin(self->ext.et_80172D00.unk80);
-        cosine = rcos(self->ext.et_80172D00.unk80);
-        temp_s2 = (sine * self->ext.et_80172D00.unk7E) >> 0xC;
-        temp_s3 = (cosine * self->ext.et_80172D00.unk7E) >> 0xC;
+        sine = rsin(self->ext.et_BibleSubwpn.unk80);
+        cosine = rcos(self->ext.et_BibleSubwpn.unk80);
+        temp_s2 = (sine * self->ext.et_BibleSubwpn.unk7E) >> 0xC;
+        temp_s3 = (cosine * self->ext.et_BibleSubwpn.unk7E) >> 0xC;
         cos_s2 = cosine * temp_s2;
         sin_s3 = sine * temp_s3;
         cos_s3 = cosine * temp_s3;
@@ -998,8 +998,8 @@ void EntitySubwpnBible(Entity* self) {
         sin_s2 = sine * temp_s2;
         temp_s2 = temp_a1 >> 0xC;
         temp_s3 = (cos_s3 - sin_s2) >> 0xC;
-        sine = rsin(self->ext.et_80172D00.unk82);
-        cosine = rcos(self->ext.et_80172D00.unk82);
+        sine = rsin(self->ext.et_BibleSubwpn.unk82);
+        cosine = rcos(self->ext.et_BibleSubwpn.unk82);
         temp_a1 = ((cosine * temp_s2) + (sine * var_s4)) >> 0xC;
         temp_a3 = ((cosine * var_s4) - (sine * temp_s2)) >> 0xC;
         if (self->facingLeft != 0) {
@@ -1008,14 +1008,14 @@ void EntitySubwpnBible(Entity* self) {
             temp_a3 = ((cosine * temp_a3) - (sine * temp_s3)) >> 0xC;
         }
 
-        self->ext.et_80172D00.unk80 += (self->facingLeft ? 0x80 : -0x80);
-        self->ext.et_80172D00.unk80 &= 0xFFF;
-        self->ext.et_80172D00.unk82 += self->ext.et_80172D00.unk84;
-        if (ABS(self->ext.et_80172D00.unk82) >= 0x200) {
+        self->ext.et_BibleSubwpn.unk80 += (self->facingLeft ? 0x80 : -0x80);
+        self->ext.et_BibleSubwpn.unk80 &= 0xFFF;
+        self->ext.et_BibleSubwpn.unk82 += self->ext.et_BibleSubwpn.unk84;
+        if (ABS(self->ext.et_BibleSubwpn.unk82) >= 0x200) {
             // temp_v0 needed because otherwise unk84 gets loaded with lhu
             // instead of lh
-            temp_v0 = -self->ext.et_80172D00.unk84;
-            self->ext.et_80172D00.unk84 = temp_v0;
+            temp_v0 = -self->ext.et_BibleSubwpn.unk84;
+            self->ext.et_BibleSubwpn.unk84 = temp_v0;
         }
         self->posX.i.hi = PLAYER.posX.i.hi + temp_a1;
         self->posY.i.hi = PLAYER.posY.i.hi + temp_a3;
@@ -1027,7 +1027,7 @@ void EntitySubwpnBible(Entity* self) {
         self->velocityY += FIX(-2);
         break;
     }
-    if (self->ext.et_80172D00.unk86 != 0) {
+    if (self->ext.et_BibleSubwpn.unk86 != 0) {
         prim = &g_PrimBuf[self->primIndex];
         left = self->posX.i.hi - 8;
         right = self->posX.i.hi + 8;
@@ -1040,7 +1040,7 @@ void EntitySubwpnBible(Entity* self) {
         prim->priority = self->zPriority;
         CreateEntFactoryFromEntity(self, 0x3E, 0);
         if (g_GameTimer % 10 == 0) {
-            g_api.PlaySfx(0x8C3);
+            g_api.PlaySfx(BIBLE_SUBWPN_SWOOSH);
         }
     }
 }

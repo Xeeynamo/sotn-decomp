@@ -609,7 +609,7 @@ typedef struct {
     struct Entity* unk98;
     s32 pad[5];
     s16 unkB0;
-} ET_80172D00;
+} ET_BibleSubwpn;
 
 typedef union {
     /* 0x7C */ struct Primitive* prim;
@@ -639,7 +639,7 @@ typedef union {
     /* 0x7C */ ET_80170F64 et_80170F64;
     /* 0x7C */ ET_8017161C et_8017161C;
     /* 0x7C */ ET_801719A4 et_801719A4;
-    /* 0x7C */ ET_80172D00 et_80172D00;
+    /* 0x7C */ ET_BibleSubwpn et_BibleSubwpn;
     /* 0x7C */ ET_801CF254 et_801CF254;
     /* 0x7C */ ET_GurkhaSword gurkhaSword;
     /* 0x7C */ ET_Dracula dracula;
