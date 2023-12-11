@@ -123,7 +123,7 @@ struct SeqStruct {
     s16 unk40;
     s16 unk42;
     s16 unk44;
-    u8 pad9[1];
+    s16 unk46;
     s16 unk48;
     u8 pad8[2];
     s16 unk4c;
