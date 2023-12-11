@@ -912,7 +912,7 @@ void func_80172AE8(Entity* entity) {
             entity->ext.generic.unk7E.modeU8.unk0;
 }
 
-void func_80172D00(Entity* self) {
+void EntitySubwpnBible(Entity* self) {
     Primitive* prim;
     s16 left;
     s16 top;
