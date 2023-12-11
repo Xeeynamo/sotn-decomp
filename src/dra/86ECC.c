@@ -995,14 +995,14 @@ void EntitySubwpnBible(Entity* self) {
     s16 top;
     s16 bottom;
     s16 right;
-    
+
     s32 sine;
     s32 cosine;
     s32 cos_s2;
     s32 sin_s3;
     s32 cos_s3;
     s32 sin_s2;
-    
+
     s32 temp_a3;
     s32 temp_s2;
     s32 temp_s3;
@@ -1012,7 +1012,7 @@ void EntitySubwpnBible(Entity* self) {
 
     s32 var_s4;
 
-    switch (self->step) {                              /* irregular */
+    switch (self->step) {
     case 0:
         self->primIndex = AllocPrimitives(PRIM_GT4, 1);
         if (self->primIndex == -1) {
@@ -1079,16 +1079,17 @@ void EntitySubwpnBible(Entity* self) {
         temp_a1 = ((cosine * temp_s2) + (sine * var_s4)) >> 0xC;
         temp_a3 = ((cosine * var_s4) - (sine * temp_s2)) >> 0xC;
         if (self->facingLeft != 0) {
-            temp_a3 = ((cosine * temp_a3) + (sine * temp_s3))>> 0xC;
+            temp_a3 = ((cosine * temp_a3) + (sine * temp_s3)) >> 0xC;
         } else {
-            temp_a3 = ((cosine * temp_a3) - (sine * temp_s3))>> 0xC;
+            temp_a3 = ((cosine * temp_a3) - (sine * temp_s3)) >> 0xC;
         }
-        
+
         self->ext.et_80172D00.unk80 += (self->facingLeft ? 0x80 : -0x80);
         self->ext.et_80172D00.unk80 &= 0xFFF;
         self->ext.et_80172D00.unk82 += self->ext.et_80172D00.unk84;
         if (ABS(self->ext.et_80172D00.unk82) >= 0x200) {
-            // temp_v0 needed because otherwise unk84 gets loaded with lhu instead of lh
+            // temp_v0 needed because otherwise unk84 gets loaded with lhu
+            // instead of lh
             temp_v0 = -self->ext.et_80172D00.unk84;
             self->ext.et_80172D00.unk84 = temp_v0;
         }
