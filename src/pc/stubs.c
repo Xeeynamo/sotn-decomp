@@ -227,7 +227,7 @@ void func_801327B4(int arg0, int arg1, int vabId, int prog, int tone, int note,
     NOT_IMPLEMENTED;
 }
 
-void func_80133FCC(void) { NOT_IMPLEMENTED; }
+// void func_80133FCC(void) { NOT_IMPLEMENTED; }
 
 void func_80135D8C() { NOT_IMPLEMENTED; }
 
