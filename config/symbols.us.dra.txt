@@ -1,6 +1,3 @@
-c_chPlaystationButtons = 0x800A2D70;
-c_chShoulderButtons = 0x800A2D74;
-MenuContextData = 0x800A2E00;
 g_CheatCodes = 0x800A300C;
 g_JosephsCloak = 0x800A37DC;
 g_JosephsCloak_liningLight = 0x800A37DE;

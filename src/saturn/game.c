@@ -555,7 +555,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f60733A4, func_060733A4);
 
 // SAT: func_0607356C
 bool func_800FB1EC(s32 arg0) {
-    if (D_801375CC.equipTypeFilter == 0) {
+    if (D_801375CC == HAND_TYPE) {
         if (arg0 == 0) {
             return true;
         }

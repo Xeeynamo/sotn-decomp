@@ -76,7 +76,6 @@ segments:
       - [0x2BC0, .data, 5087C] # D_800A2BC0
       - [0x2C0C, .data, 5087C] # D_800A2C0C, D_800A2D44
       - [0x2D48, .data, menu]
-      - [0x2D70, data]
       - [0x2EC0, .data, 5D6C4]
       - [0x2EE8, data]
       - [0x3C40, data]

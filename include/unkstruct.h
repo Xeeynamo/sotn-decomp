@@ -88,12 +88,6 @@ typedef struct Unkstruct_80128BBC {
     /* 0x04 */ Unkstruct_80128BBC_Sub unk04[4];
 } Unkstruct_80128BBC;
 
-typedef struct Unkstruct_800A2D98 {
-    /* 0x0 */ s32 equipTypeFilter;
-    /* 0x4 */ s32 unk4;
-    /* 0x8 */ s32 unk8;
-} Unkstruct_800A2D98;
-
 typedef struct {
     /* 0x00 */ s32 unk0;
     /* 0x04 */ s32 unk4;
