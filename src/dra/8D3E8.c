@@ -900,7 +900,7 @@ void EntityGiantSpinningCross(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         while (prim != NULL) {
             prim->tpage = 0x1C;
-            prim->blendMode = 0x108;
+            prim->blendMode = 0x100 | BLEND_VISIBLE;
             prim = prim->next;
         }
         func_8011A290(self);
@@ -916,8 +916,7 @@ void EntityGiantSpinningCross(Entity* self) {
         self->step++;
         primUVCoords = &D_800B0F94[0][0];
         prim = &g_PrimBuf[self->primIndex];
-        for (i = 0; i < 46; i++, prim = prim->next,
-            primUVCoords += 5) { // i is t1
+        for (i = 0; i < 46; i++, prim = prim->next, primUVCoords += 5) {
             prim->clut = (primUVCoords[4] & 0xF) | 0x1A0;
             switch (primUVCoords[4] & 0xF0) {
             case 0x10:
@@ -1041,7 +1040,7 @@ void EntityGiantSpinningCross(Entity* self) {
         temp_a3 = vectors_ptr[2];
         prim->type = 4;
         gte_nclip();
-        prim->blendMode = 8;
+        prim->blendMode = BLEND_VISIBLE;
         gte_stopz(&nclip);
         if (nclip < 0) {
             continue;
