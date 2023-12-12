@@ -70,6 +70,7 @@ void func_801093C4(void) {
     }
 }
 
+// Duplicate of RIC func_80156F40
 void func_80109594(void) {
     Entity* e;
     Primitive* prim;

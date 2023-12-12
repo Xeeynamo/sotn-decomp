@@ -91,8 +91,87 @@ s16 func_80156DE4(void) {
     }
     return 0;
 }
+// Duplicate of DRA func_80109594
+void func_80156F40(s16 arg0) {
+    Entity* e;
+    s32 radius;
+    s32 intensity;
+    s32 primIndex;
+    Primitive* prim;
+    s32 i;
+    s32 val;
+    s32 memset_len;
+    s32* memset_ptr;
+    SpriteParts** spriteptr;
+    Entity* playerPtr = &PLAYER;
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80156F40);
+    DestroyEntity(&PLAYER);
+    PLAYER.posX.val = FIX(32);
+    PLAYER.posY.val = FIX(32);
+    PLAYER.animSet = ANIMSET_OVL(0x10);
+    PLAYER.palette = 0x8120;
+    PLAYER.rotX = PLAYER.rotY = 0x100;
+    PLAYER.facingLeft = 0;
+    PLAYER.rotPivotY = 0x18;
+    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0;
+    memset_len = sizeof(PlayerState) / sizeof(s32);
+    memset_ptr = &g_Player;
+    for (i = 0; i < memset_len; i++) {
+        *memset_ptr++ = 0;
+    }
+    g_Player.unk04 = 1;
+    g_Player.pl_vram_flag = 1;
+    func_8015CD98(0);
+    PLAYER.unk4C = D_80155480;
+    g_Player.unk5C = arg0;
+    if (g_StageId == STAGE_ST0) {
+        D_80154570 = 1;
+    } else {
+        D_80154570 = 0;
+    }
+    D_80097D37 = 0;
+    func_801587C0();
+    for (i = 0; i < 0x20; i++) {
+        radius = (rand() & 0x3FF) + 0x100;
+        intensity = (rand() & 0xFF) + 0x100;
+        val = rcos(radius) * 0x10;
+        D_80175958[i] = +((val * intensity) >> 8);
+        val = rsin(radius) * 0x10;
+        D_801759D8[i] = -((val * intensity) >> 7);
+    }
+    spriteptr = g_api.o.spriteBanks;
+    spriteptr += 0x10;
+    *spriteptr++ = D_801530AC;
+    *spriteptr++ = D_80153AA0;
+    *spriteptr++ = D_80153D24;
+    *spriteptr++ = D_801541A8;
+    for (e = &g_Entities[1], i = 0; i < 3; i++, e++) {
+        DestroyEntity(e);
+        e->animSet = ANIMSET_OVL(0x10);
+        e->unk5A = i + 1;
+        e->palette = 0x8120;
+        e->flags = FLAG_UNK_20000 | FLAG_UNK_08000000;
+    }
+    primIndex = g_api.AllocPrimitives(PRIM_TILE, 6);
+
+    g_Entities[1].primIndex = primIndex;
+    g_Entities[1].flags |= FLAG_HAS_PRIMS;
+    for (prim = &g_PrimBuf[primIndex]; prim != NULL; prim = prim->next) {
+        prim->blendMode = 0x102 | BLEND_VISIBLE;
+    }
+    if (D_80097C98 == 6) {
+        CreateEntFactoryFromEntity(playerPtr, 0x1004D, 0);
+        func_8015CC70(1);
+    }
+    if (D_80097C98 == 4) {
+        CreateEntFactoryFromEntity(playerPtr, 0x3004D, 0);
+        func_8015CC70(3);
+    }
+    if (D_80097C98 == 5) {
+        CreateEntFactoryFromEntity(playerPtr, 0x5004D, 0);
+        func_8015CC70(5);
+    }
+}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_801572A8);
 
