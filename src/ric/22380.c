@@ -23,10 +23,10 @@ void DebugInputWait(const char* msg) {
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015E484);
 
 void func_8015E7B4(Unkstruct_8010BF64* arg0) { // !FAKE:
-    s32 temp = D_80154604;
+    s32 temp = D_80154604[0].unk0;
 
     arg0->unk14 = temp;
-    arg0->unk1C = temp = D_80154606;
+    arg0->unk1C = temp = D_80154604[0].unk2;
     arg0->unk18 = D_801545EA[8] - 1;
     arg0->unk20 = D_801545EA[0] + 1;
 }
@@ -37,7 +37,59 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015EE28);
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F414);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F680);
+void func_8015F680(void) {
+    Collider sp10;
+    s32 temp_s0;
+    s32 i;
+    s16 argX;
+    s16 argY;
+
+    u16* yPosPtr = &PLAYER.posY.i.hi;
+    u16* xPosPtr = &PLAYER.posX.i.hi;
+    s32* vram_ptr = &g_Player.pl_vram_flag;
+
+    if (D_80097418 != 0) {
+        return;
+    }
+    temp_s0 = g_Player.unk04 & 0xCC03;
+    if ((temp_s0 == 0xC003) || (temp_s0 == 0xC03) ||  (temp_s0 == 0xCC03)) {
+        *vram_ptr |= 8;
+        return;
+    }
+    for(i = 7; i < 14; i++){
+        temp_s0 = g_Player.colliders2[i].effects & 0xC803;
+        if ((temp_s0 == 0x8001) || 
+            (temp_s0 == 0x8003) || 
+            (temp_s0 == 0x801) || 
+            (temp_s0 == 0x803) || 
+            (temp_s0 == 0xC003) || 
+            (temp_s0 == 0x4803) || 
+            (temp_s0 == 3)){
+            argX = *xPosPtr + D_80154604[i].unk0 + g_Player.colliders2[i].unkC + 1;
+            argY = *yPosPtr + D_80154604[i].unk2;
+            g_api.CheckCollision(argX, argY, &sp10, 0);
+            if((sp10.effects & 1) == 0) {
+                *vram_ptr |= 8;
+                *xPosPtr += g_Player.colliders2[i].unkC;
+                return;
+            }
+        }
+        if (!(*vram_ptr & 1)) {
+            if (((temp_s0 & 0xC800) == 0xC000) && (i != 7) && 
+                ((g_Player.colliders2[7].effects & 0x800) || !(g_Player.colliders2[7].effects & 0x8802))) {
+                *vram_ptr |= 8;
+                *xPosPtr += g_Player.colliders2[i].unkC;
+                return;
+            }
+            if (((temp_s0 & 0xC800) == 0x4800) && (i != 13) && 
+                ((g_Player.colliders2[13].effects & 0x8000) || !(g_Player.colliders2[13].effects & 0x8802))) {
+                *vram_ptr |= 8;
+                *xPosPtr += g_Player.colliders2[i].unkC;
+                return;
+            }
+        }
+    }
+}
 
 Entity* GetFreeEntity(s16 start, s16 end) {
     Entity* entity = &g_Entities[start];
