@@ -499,9 +499,9 @@ s32 MemcardFormat(s32 nPort, s32 nCard) {
 
 void GetSavePalette(u16* dst, s32 palIdx) {
     s32 i;
-    u16* src = g_saveIconPalette[0];
+    u16* src = g_saveIconPal0[0];
 
-    src = g_saveIconPalette[palIdx];
+    src = g_saveIconPal0[palIdx];
     for (i = 0; i < COLORS_PER_PAL; i++) {
         *dst++ = *src++;
     }
