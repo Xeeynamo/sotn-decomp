@@ -68,7 +68,9 @@ segments:
       - [0x1C18, ci4, memcard_14, 16, 48]
       - [0x1D98, ci4, memcard_15, 16, 48]
       - [0x1F18, .data, save_mgr]
-      - [0x21B8, data]
+      - [0x21B8, .data, 4A538] # D_800A21B8
+      - [0x2438, .data, 4A538] # D_800A2438
+      - [0x243C, data]
       - [0x2BC0, data]
       - [0x2D48, .data, menu]
       - [0x2D70, data]

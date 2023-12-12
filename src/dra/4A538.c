@@ -560,6 +560,21 @@ void ResetEntityArray(void) {
 
 INCLUDE_ASM("dra/nonmatchings/4A538", RenderEntities);
 
+#define PL_SPRT(x, y, flipx) (x), ((y)&0x1FF) | ((flipx) << 9)
+s16 D_800A21B8[] = {
+    PL_SPRT(0x0201, 0x0101, false), PL_SPRT(0x0221, 0x0101, false),
+    PL_SPRT(0x0231, 0x0101, false), PL_SPRT(0x0201, 0x0181, false),
+    PL_SPRT(0x0201, 0x0101, false), PL_SPRT(0x0201, 0x0101, false),
+    PL_SPRT(0x0201, 0x0101, false), PL_SPRT(0x0201, 0x0101, false),
+    PL_SPRT(0x0001, 0x0101, false), PL_SPRT(0x0021, 0x0101, false),
+    PL_SPRT(0x0001, 0x0181, false), PL_SPRT(0x0021, 0x0181, false),
+    PL_SPRT(0x0221, 0x0181, false), PL_SPRT(0x0221, 0x0101, false),
+    PL_SPRT(0x0221, 0x0181, false), PL_SPRT(0x0221, 0x0181, false),
+    PL_SPRT(0x0101, 0x0101, false),
+};
+
+s16 unused_800A21FC[286] = {};
+
 void InitRenderer(void) {
     int i;
     POLY_GT4 *a1, *a2;
@@ -749,6 +764,8 @@ DR_ENV* func_800EDB08(POLY_GT4* poly) {
 
     return NULL;
 }
+
+s32 D_800A2438 = 0;
 
 // This function casts its return value as an s16, but at least one caller
 // (EntityGravityBootBeam) needs to receive a returned s32 so we use that here.

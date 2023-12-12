@@ -698,3 +698,9 @@ s32 LoadSaveData(SaveData* save) {
     g_randomNext = save->rng;
     return 0;
 }
+
+void MakeMemcardPath(char* dstSaveName, s32 block) {
+    STRCPY(dstSaveName, MEMCARD_ID);
+    dstSaveName[0x10] += block / 10;
+    dstSaveName[0x11] += block % 10;
+}
