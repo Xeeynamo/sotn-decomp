@@ -555,6 +555,8 @@ typedef struct {
 typedef struct {
     /* 0x7C */ s16 unk7C;
     /* 0x7E */ s16 unk7E;
+    /* 0x80 */ s16 pad[24];
+    /* 0xB0 */ s16 unkB0;
 } ET_GiantSpinningCross;
 
 typedef struct {
