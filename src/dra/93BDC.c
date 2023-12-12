@@ -95,31 +95,33 @@ void CdSoundCommand14(void) {
 const u32 padding_CdSoundCommand14 = 0;
 
 void func_80133FCC(void) {
-    s16 var_a0;
-    s32 temp_v0;
+    if (D_8013901C == 0)
+        return;
 
-    if ((D_8013901C != 0) && (D_801390A0 == 0) &&
-        (temp_v0 = VSync(-1) - D_8013AEF4, D_8013B65C = temp_v0,
-         ((D_8013AE90 < temp_v0) != 0))) {
-        switch (D_80139014) {
-        case 2:
-            var_a0 = 2;
-            AddCdSoundCommand(var_a0);
-            break;
-        case 1:
-            g_CurrentXaSoundId = D_8013901C;
-            D_80139014 =
-                *(&D_800BD240 + (((g_CurrentXaSoundId) << 0x10) >> 0xE));
-            D_8013AEF4 = VSync(-1);
-            D_8013AE90 = *(&D_800BD228 + ((g_CurrentXaSoundId + 1) << 0x2));
-            break;
-        case 0:
-            g_CurrentXaSoundId = D_8013901C;
-            var_a0 = 6;
-            SetReverbDepth(0x7F);
-            AddCdSoundCommand(var_a0);
-            break;
-        }
+    if (D_801390A0 != 0)
+        return;
+
+    D_8013B65C = VSync(-1) - D_8013AEF4;
+
+    if (D_8013AE90 >= D_8013B65C) {
+        return;
+    }
+
+    switch (D_80139014) {
+    case 2:
+        AddCdSoundCommand(2);
+        break;
+    case 1:
+        g_CurrentXaSoundId = D_8013901C;
+        D_80139014 = *(&D_800BD240 + (((g_CurrentXaSoundId) << 0x10) >> 0xE));
+        D_8013AEF4 = VSync(-1);
+        D_8013AE90 = *(&D_800BD228 + ((g_CurrentXaSoundId + 1) << 0x2));
+        break;
+    case 0:
+        g_CurrentXaSoundId = D_8013901C;
+        SetReverbDepth(0x7F);
+        AddCdSoundCommand(6);
+        break;
     }
 }
 
