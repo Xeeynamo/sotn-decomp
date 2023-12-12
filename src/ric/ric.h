@@ -51,6 +51,10 @@ typedef enum {
     Player_AxearmorHit,
 } PlayerSteps;
 
+extern SpriteParts* D_801530AC[];
+extern SpriteParts* D_80153AA0[];
+extern SpriteParts* D_80153D24[];
+extern SpriteParts* D_801541A8[];
 extern void func_80159C04(void);
 extern void DestroyEntity(Entity* entity);
 extern void func_8015BB80(void);
@@ -100,6 +104,7 @@ extern AnimationFrame* D_80154E38;
 extern AnimationFrame* D_80155394;
 extern AnimationFrame* D_8015539C;
 extern AnimationFrame* D_801553BC;
+extern AnimationFrame D_80155480[];
 extern AnimationFrame* D_80155488;
 extern AnimationFrame* D_801554B0;
 extern AnimationFrame* D_801554C0;
@@ -157,3 +162,5 @@ extern u16 D_80175950;
 extern u16 D_80175952;
 extern u16 D_80175954;
 extern s16 D_80175956;
+extern s32 D_80175958[];
+extern s32 D_801759D8[];
