@@ -3,9 +3,10 @@ from math import ceil
 from typing import List, Tuple
 from segtypes.n64.palette import N64SegPalette
 
+
 # ABBBBBGG GGGRRRRR
 def unpack_color(data):
-    s = int.from_bytes(data[0:2], byteorder='little')
+    s = int.from_bytes(data[0:2], byteorder="little")
 
     r = s & 0x1F
     g = (s >> 5) & 0x1F
@@ -18,9 +19,11 @@ def unpack_color(data):
 
     return r, g, b, a
 
+
 def iter_in_groups(iterable, n, fillvalue=None):
     args = [iter(iterable)] * n
     return zip_longest(*args, fillvalue=fillvalue)
+
 
 class PSXSegPalette(N64SegPalette):
     def __init__(self, *args, **kwargs):
