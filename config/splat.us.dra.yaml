@@ -34,7 +34,7 @@ segments:
       - [0x160, .data, play]
       - [0x240, .data, loading]
       - [0x248, .data, 47BB8]
-      - [0x510, data]
+      - [0x510, .data, save_mgr_pre]
       - [0x518, palette, memcard_0]
       - [0x538, palette, memcard_1]
       - [0x558, palette, memcard_2]

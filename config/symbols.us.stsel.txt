@@ -1,7 +1,6 @@
 g_SpriteBanks = 0x8018059C;
 g_Cluts = 0x8018070C;
 g_EntityGfxs = 0x80180760;
-g_UnkMemcardPort = 0x801808DC;
 g_StreamWidth = 0x8018B2FC;
 g_StreamHeight = 0x8018B300;
 PrintFileSelectPlaceName = 0x801AD134;

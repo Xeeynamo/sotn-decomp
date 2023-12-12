@@ -279,13 +279,13 @@ s32 func_800E9880(s32 nPort, s32 nCard) {
             break;
 
         case 3:
-            D_8006C3AC &= g_UnkMemcardPort[nPort];
+            D_8006C3AC &= g_MemcardPortMask[nPort];
             memcard->unk258 = -1;
             g_MemcardStep = 4;
             break;
 
         case 4:
-            D_8006C3AC &= g_UnkMemcardPort[nPort];
+            D_8006C3AC &= g_MemcardPortMask[nPort];
             memcard->unk258 = 2;
             _clear_event_x();
             _card_clear(channel);
@@ -294,7 +294,7 @@ s32 func_800E9880(s32 nPort, s32 nCard) {
             break;
 
         case 2:
-            D_8006C3AC &= g_UnkMemcardPort[nPort];
+            D_8006C3AC &= g_MemcardPortMask[nPort];
             memcard->unk258 = -3;
             g_MemcardStep = 4;
             break;
@@ -319,19 +319,19 @@ s32 func_800E9880(s32 nPort, s32 nCard) {
             break;
 
         case 3:
-            D_8006C3AC &= g_UnkMemcardPort[nPort];
+            D_8006C3AC &= g_MemcardPortMask[nPort];
             memcard->unk258 = -1;
             g_MemcardStep++;
             break;
 
         case 4:
-            D_8006C3AC &= g_UnkMemcardPort[nPort];
+            D_8006C3AC &= g_MemcardPortMask[nPort];
             memcard->unk258 = -2;
             g_MemcardStep++;
             break;
 
         case 2:
-            D_8006C3AC &= g_UnkMemcardPort[nPort];
+            D_8006C3AC &= g_MemcardPortMask[nPort];
             memcard->unk258 = -3;
             g_MemcardStep++;
             break;
@@ -481,7 +481,7 @@ s32 MemcardFormat(s32 nPort, s32 nCard) {
     char savePath[0x8];
     s32 ret;
 
-    D_8006C3AC &= g_UnkMemcardPort[nPort];
+    D_8006C3AC &= g_MemcardPortMask[nPort];
     sprintf(savePath, "bu%1d%1d:", nPort, nCard);
     _clear_event_x();
     format(savePath);

@@ -1,4 +1,3 @@
-g_UnkMemcardPort = 0x800A0510;
 c_chPlaystationButtons = 0x800A2D70;
 c_chShoulderButtons = 0x800A2D74;
 MenuContextData = 0x800A2E00;

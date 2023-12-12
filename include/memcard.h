@@ -26,5 +26,8 @@ typedef struct {
 
 extern MemcardInfo g_MemcardInfo[2];
 extern s32 g_MemcardBlockRead;
+extern s32 g_MemcardPortMask[];
+extern u16 g_saveIconPal0[0x10][0x10];
+extern u8* g_saveIconTexture[0x10];
 
 #endif
