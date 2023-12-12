@@ -969,6 +969,9 @@ typedef enum {
     EFFECT_SOLID_FROM_ABOVE = 1 << 6,
     // Doesn't collide when falling on it but you cannot go back up.
     EFFECT_SOLID_FROM_BELOW = 1 << 7,
+    EFFECT_UNK_0100 = 1 << 8,
+    EFFECT_UNK_0200 = 1 << 9,
+    EFFECT_UNK_0400 = 1 << 10,
     EFFECT_UNK_0800 = 1 << 11,
     EFFECT_UNK_1000 = 1 << 12,
     EFFECT_UNK_2000 = 1 << 13,
