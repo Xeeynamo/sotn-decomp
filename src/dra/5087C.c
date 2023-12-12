@@ -78,7 +78,7 @@ RoomTeleport D_800A245C[] = {
 #if defined(VERSION_US)
     {496, 132, 0x0000, 0x0001, STAGE_BO4},
 #elif defined(VERSION_HD)
-    {0x80, 0x4D, 0x0010, 0x0028, 0x18},
+    {128, 77, 0x0010, 0x0028, STAGE_BO6},
 #endif
     {240, 644, 0x0008, 0x0039, STAGE_NO4},
     {16, 132, 0x00E8, 0x0039, STAGE_NO4},
