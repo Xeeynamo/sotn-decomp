@@ -104,7 +104,7 @@ void func_80156F40(s16 arg0) {
     s32* memset_ptr;
     SpriteParts** spriteptr;
     Entity* playerPtr = &PLAYER;
-    
+
     DestroyEntity(&PLAYER);
     PLAYER.posX.val = FIX(32);
     PLAYER.posY.val = FIX(32);
@@ -153,7 +153,7 @@ void func_80156F40(s16 arg0) {
         e->flags = FLAG_UNK_20000 | FLAG_UNK_08000000;
     }
     primIndex = g_api.AllocPrimitives(PRIM_TILE, 6);
-    
+
     g_Entities[1].primIndex = primIndex;
     g_Entities[1].flags |= 0x800000;
     for (prim = &g_PrimBuf[primIndex]; prim != NULL; prim = prim->next) {
