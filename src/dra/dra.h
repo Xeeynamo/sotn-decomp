@@ -374,7 +374,6 @@ extern u16 D_800A04CC[];
 extern u32 D_800A04F8;
 extern s32 D_800A2438;
 extern RoomBossTeleport D_800A297C[];
-extern u8 D_800A2BC0[];
 extern u8 D_800A2D7C[3];
 extern u8 D_800A2D80[0x10];
 extern u8 c_chPlaystationButtons[];
