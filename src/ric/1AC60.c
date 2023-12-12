@@ -108,7 +108,7 @@ void func_80156F40(s16 arg0) {
     DestroyEntity(&PLAYER);
     PLAYER.posX.val = FIX(32);
     PLAYER.posY.val = FIX(32);
-    PLAYER.animSet = 0x8010;
+    PLAYER.animSet = ANIMSET_OVL(0x10);
     PLAYER.palette = 0x8120;
     PLAYER.rotX = PLAYER.rotY = 0x100;
     PLAYER.facingLeft = 0;
@@ -139,7 +139,7 @@ void func_80156F40(s16 arg0) {
         val = rsin(radius) * 0x10;
         D_801759D8[i] = -((val * intensity) >> 7);
     }
-    spriteptr = &g_api.o.spriteBanks[0];
+    spriteptr = g_api.o.spriteBanks;
     spriteptr += 0x10;
     *spriteptr++ = D_801530AC;
     *spriteptr++ = D_80153AA0;
@@ -147,7 +147,7 @@ void func_80156F40(s16 arg0) {
     *spriteptr++ = D_801541A8;
     for (e = &g_Entities[1], i = 0; i < 3; i++, e++) {
         DestroyEntity(e);
-        e->animSet = ANIMSET_DRA(0x8010);
+        e->animSet = ANIMSET_OVL(0x10);
         e->unk5A = i + 1;
         e->palette = 0x8120;
         e->flags = FLAG_UNK_20000 | FLAG_UNK_08000000;
@@ -155,7 +155,7 @@ void func_80156F40(s16 arg0) {
     primIndex = g_api.AllocPrimitives(PRIM_TILE, 6);
 
     g_Entities[1].primIndex = primIndex;
-    g_Entities[1].flags |= 0x800000;
+    g_Entities[1].flags |= FLAG_HAS_PRIMS;
     for (prim = &g_PrimBuf[primIndex]; prim != NULL; prim = prim->next) {
         prim->blendMode = 0x102 | BLEND_VISIBLE;
     }
