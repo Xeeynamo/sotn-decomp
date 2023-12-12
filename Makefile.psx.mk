@@ -58,3 +58,12 @@ $(BUILD_DIR)/assets/dra/memcard_%.png.o: assets/dra/memcard_%.png
 	rm $(BUILD_DIR)/assets/dra/memcard_$*.png.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/assets/dra/memcard_$*.pal.o $(BUILD_DIR)/assets/dra/memcard_$*.pal.s
 	rm $(BUILD_DIR)/assets/dra/memcard_$*.pal.s
+$(BUILD_DIR)/assets/st/sel/memcard_%.png.o: assets/st/sel/memcard_%.png
+	mkdir -p $(dir $@)
+	$(PNG2S) $< \
+		$(BUILD_DIR)/assets/st/sel/memcard_$*.png.s g_saveIcon$* \
+		$(BUILD_DIR)/assets/st/sel/memcard_$*.pal.s g_saveIconPal$*
+	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/assets/st/sel/memcard_$*.png.o $(BUILD_DIR)/assets/st/sel/memcard_$*.png.s
+	rm $(BUILD_DIR)/assets/st/sel/memcard_$*.png.s
+	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/assets/st/sel/memcard_$*.pal.o $(BUILD_DIR)/assets/st/sel/memcard_$*.pal.s
+	rm $(BUILD_DIR)/assets/st/sel/memcard_$*.pal.s
