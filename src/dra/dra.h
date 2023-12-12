@@ -373,7 +373,6 @@ extern u8 g_StageSelectOrder[];
 extern u16 D_800A04CC[];
 extern u32 D_800A04F8;
 extern s32 D_800A2438;
-extern u8 D_800A243C[];
 extern RoomBossTeleport D_800A297C[];
 extern u8 D_800A2BC0[];
 extern u8 D_800A2D7C[3];
@@ -401,7 +400,6 @@ extern s32 D_800A2FBC[];
 extern s32 D_800A2FC0[];
 
 extern RoomTeleport D_800A245C[];
-extern s32 D_800A2464[]; // D_800A245C[0].stageId
 extern u32 D_800A2D24;
 extern const char* c_strALUCARD[];
 extern const char** c_strSTR;

@@ -70,7 +70,8 @@ segments:
       - [0x1F18, .data, save_mgr]
       - [0x21B8, .data, 4A538] # D_800A21B8
       - [0x2438, .data, 4A538] # D_800A2438
-      - [0x243C, data]
+      - [0x243C, .data, demo] # D_800A243C
+      - [0x245C, data]
       - [0x2BC0, data]
       - [0x2D48, .data, menu]
       - [0x2D70, data]
