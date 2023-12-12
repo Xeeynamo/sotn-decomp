@@ -55,9 +55,7 @@ extern u8 svm_vab_used[];
 s16 SsVabOpenHeadWithMode(u8* addr, s16 vabid, s32 arg2, u32 sbaddr);
 
 void _spu_setInTransfer(s32);
-extern u8 svm_vab_used[];
 
-extern u8 svm_vab_used[];
 void SpuFree(s32);
 extern s32 D_80098810[];
 extern u16 _svm_vab_count;
@@ -174,5 +172,22 @@ extern void SpuSetCommonAttr(SpuCommonAttr* attr);
 
 extern s16 _snd_seq_s_max;
 extern s16 _snd_seq_t_max;
+
+typedef struct ProgAtr { /* Program Headdings */
+
+    unsigned char tones;      /* # of tones */
+    unsigned char mvol;       /* program volume */
+    unsigned char prior;      /* program priority */
+    unsigned char mode;       /* program mode */
+    unsigned char mpan;       /* program pan */
+    char reserved0;           /* system reserved */
+    short attr;               /* program attribute */
+    unsigned long reserved1;  // "fake" program index (skips empties)
+    unsigned short reserved2; // even vag spu ptr
+    unsigned short reserved3; // odd vag spu ptr
+} ProgAtr;                    /* 16 byte */
+
+extern ProgAtr* D_8006C3B4;
+extern u8 svm_vab_used[];
 
 #endif
