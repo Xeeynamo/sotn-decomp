@@ -1,6 +1,6 @@
 [submodule "tools/n64splat"]
 	path = tools/n64splat
-	url = https://github.com/ethteck/splat.git
+	url = https://github.com/Xeeynamo/splat.git
 [submodule "tools/asm-differ"]
 	path = tools/asm-differ
 	url = https://github.com/simonlindholm/asm-differ.git
