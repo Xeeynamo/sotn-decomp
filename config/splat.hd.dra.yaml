@@ -68,7 +68,13 @@ segments:
       - [0x1C18, ci4, memcard_14, 16, 48]
       - [0x1D98, ci4, memcard_15, 16, 48]
       - [0x1F18, .data, save_mgr]
-      - [0x2178, data]
+      - [0x2178, .data, 4A538] # D_800A21B8
+      - [0x23F8, .data, 4A538] # D_800A2438
+      - [0x23FC, .data, demo] # D_800A243C
+      - [0x241C, .data, 5087C] # D_800A245C
+      - [0x293C, .data, 5087C] # D_800A297C
+      - [0x2B6C, .data, 5087C] # D_800A2BC0
+      - [0x2BB8, .data, 5087C] # D_800A2C0C, D_800A2D44
       - [0x2CF4, .data, menu] # array of strings
       - [0x2D1C, .data, menu] # HD exclusive array of strings
       - [0x2D88, data]

@@ -1090,7 +1090,7 @@ void func_800E414C(void) {
         }
         if (D_8003C708.flags == 0x41 && PLAYER.posX.i.hi < 0x78) {
             func_801073C0();
-            g_CdStep = 1;
+            g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StageChr;
             g_LoadOvlIdx = D_8003C712;
             D_8003C708.unk2 = 2;

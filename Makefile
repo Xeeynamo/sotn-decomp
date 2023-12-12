@@ -66,6 +66,7 @@ SOTNDISK        := $(GOPATH)/bin/sotn-disk
 GFXSTAGE        := $(PYTHON) $(TOOLS_DIR)/gfxstage.py
 PNG2S           := $(PYTHON) $(TOOLS_DIR)/png2s.py
 ICONV           := iconv --from-code=UTF-8 --to-code=Shift-JIS
+DIRT_PATCHER    := $(PYTHON) $(TOOLS_DIR)/dirt_patcher.py
 
 define list_src_files
 	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
@@ -134,7 +135,9 @@ format:
 	./tools/symbols.py remove-orphans config/splat.us.strwrp.yaml
 	./tools/symbols.py remove-orphans config/splat.us.tt_000.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stmad.yaml
-check:
+patch:
+	$(DIRT_PATCHER) config/dirt.$(VERSION).json
+check: patch
 	sha1sum --check config/check.$(VERSION).sha
 expected: check
 	mkdir -p expected/build

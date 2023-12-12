@@ -242,6 +242,12 @@ typedef struct Primitive {
 #define SAVE_FLAG_CLEAR (1)
 #define SAVE_FLAG_REPLAY (2)
 
+#if defined(VERSION_US)
+#define MEMCARD_ID "BASLUS-00067DRAX00"
+#elif defined(VERSION_HD)
+#define MEMCARD_ID "BISLPM-86023DRAX00"
+#endif
+
 typedef enum {
     Game_Init,
     Game_Title,
