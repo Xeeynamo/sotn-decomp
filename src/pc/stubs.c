@@ -119,6 +119,13 @@ u8 g_saveIcon13[0x180];
 u8 g_saveIcon14[0x180];
 u8 g_saveIcon15[0x180];
 u16 g_saveIconPal0[0x10][0x10];
+s32 D_8003C0EC[4] = {};
+Unkstruct_8006C3C4 D_8006C3C4[32] = {};
+GfxLoad g_GfxLoad[0x10] = {};
+s16 D_800705CC[0x100];
+PlayerDraw g_PlayerDraw[0x10];
+s32 D_8013AED0;
+DR_ENV D_800974AC;
 
 // dra.h
 GpuUsage g_GpuMaxUsage;
@@ -155,7 +162,6 @@ u8 aPbav_2[] = {0};    // VAB file?
 u8 aPqes[] = {0};      // SEQ file
 u8 aPqes_0[] = {0};    // SEQ file
 u8 aPqes_1[] = {0};    // SEQ file
-s32 D_800A2438;
 s32 D_801362D0[];
 s32 D_800987B4;
 u8 g_PadsRepeatTimer[BUTTON_COUNT * PAD_COUNT];
@@ -217,6 +223,48 @@ s32 D_80139848;
 s32 D_8013984C;
 s32 D_80139850;
 s32 D_80139854;
+u16 D_80137538[32];
+GfxBank g_FakeGfxBank = {0};
+GfxBank** g_GfxSharedBank[] = {
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+};
+u8* g_DecSrcPtr = NULL;
+u8* g_DecDstPtr = NULL;
+s32 g_DecReadNibbleFlag = 0;
+s32 g_DecWriteNibbleFlag = 0;
+u8 g_GfxEquipIcon[32][16 * 16 / 2] = {0};
+s16 g_PalEquipIcon[32] = {0};
+UnkStructClut g_FakeUnkStruct = {0};
+UnkStructClut* D_800A3BB8[] = {
+    &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct,
+    &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct,
+    &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct,
+    &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct,
+    &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct,
+    &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct,
+    &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct,
+    &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct,
+    &g_FakeUnkStruct, &g_FakeUnkStruct,
+};
+u16 D_80137478[0x20];
+u16 D_801374B8[0x20];
+u16 D_801374F8[0x20];
+u16 D_80137538[0x20];
 
 u8 g_ChActionButtons[];
 u8 g_ChShoulderButtons[];
@@ -429,36 +477,20 @@ void func_8013572C(int sndId, int unk02, int unk04) { NOT_IMPLEMENTED; }
 
 void func_801073C0(void) { NOT_IMPLEMENTED; }
 
-void func_800EAD7C(void) { NOT_IMPLEMENTED; }
-
-void HideAllBackgroundLayers(void) { NOT_IMPLEMENTED; }
-
-void DestroyAllPrimitives(void) { NOT_IMPLEMENTED; }
-
 s32 LoadFileSim(s32 fileId, SimFileType type) {
     NOT_IMPLEMENTED;
     return 0;
 }
 
-void ResetPendingGfxLoad(void) { NOT_IMPLEMENTED; }
-
-void func_800EA538(s32 arg0) { NOT_IMPLEMENTED; }
-
 void func_800EA7CC(void) { NOT_IMPLEMENTED; }
 
-void func_800EDAE4(void) { NOT_IMPLEMENTED; }
-
 void VSyncHandler(void) { NOT_IMPLEMENTED; }
-
-void InitRenderer(void) { NOT_IMPLEMENTED; }
 
 void RenderEntities(void) { NOT_IMPLEMENTED; }
 
 void RenderTilemap(void) { NOT_IMPLEMENTED; }
 
 void UpdateCd(void) { NOT_IMPLEMENTED; }
-
-void LoadPendingGfx(void) { NOT_IMPLEMENTED; }
 
 int CdInit(void) {
     NOT_IMPLEMENTED;
@@ -467,38 +499,19 @@ int CdInit(void) {
 
 void func_8010DFF0(s32 arg0, s32 arg1) { NOT_IMPLEMENTED; }
 
-void ResetEntityArray(void) { NOT_IMPLEMENTED; }
-
 void func_800F2120(void) { NOT_IMPLEMENTED; }
 
 void func_800FF0B8(void) { NOT_IMPLEMENTED; }
 
-void LoadGfxAsync(s32 gfxId) {
-    NOT_IMPLEMENTED;
-    DEBUGF("gfxId: %d", gfxId);
-}
-
 void func_800FDE00(void) { NOT_IMPLEMENTED; }
 
-s32 func_800EAD0C(void) { NOT_IMPLEMENTED; }
-
-s32 func_800EA5E4(u32) { NOT_IMPLEMENTED; }
-
 s32 func_800F16D0(void) { NOT_IMPLEMENTED; }
-
-bool func_800EB720(void) { return false; }
 
 void DemoInit(s32) { NOT_IMPLEMENTED; }
 
 void DemoUpdate(void) { NOT_IMPLEMENTED; }
 
 void func_801024DC(void) { NOT_IMPLEMENTED; }
-
-s32 AllocPrimitives(u8 primType, s32 count) { NOT_IMPLEMENTED; }
-
-void FreePrimitives(s32 index) { NOT_IMPLEMENTED; }
-
-void func_800EA5AC(u16 arg0, u8 arg1, u8 arg2, u8 arg3) { NOT_IMPLEMENTED; }
 
 void func_800E5D30(void* arg0, u16 arg1, u16 arg2, s32 arg3) {
     NOT_IMPLEMENTED;
@@ -509,8 +522,6 @@ void InitStatsAndGear(bool isDeathTakingItems) { NOT_IMPLEMENTED; }
 void func_801083BC(void) { NOT_IMPLEMENTED; }
 
 void func_80102628(s32 arg0) { NOT_IMPLEMENTED; }
-
-void func_800EB6B4(void) { NOT_IMPLEMENTED; }
 
 void func_8010A234(s32 arg0) { NOT_IMPLEMENTED; }
 
@@ -524,11 +535,7 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
     return 0;
 }
 
-void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) { NOT_IMPLEMENTED; }
-
 void AddToInventory(u16 itemId, s32 itemCategory) { NOT_IMPLEMENTED; }
-
-void func_800EAEA4(void) { NOT_IMPLEMENTED; }
 
 void func_800FF60C(void) { NOT_IMPLEMENTED; }
 
@@ -569,17 +576,6 @@ void ApplyJosephsCloakPalette(void) { NOT_IMPLEMENTED; }
 
 // can be removed with 5298C.c
 void CheckWeaponCombo(void) { NOT_IMPLEMENTED; }
-
-int g_AllocatedPrims = 0;
-s32 func_800EDD9C(u8 primitives, s32 count) {
-    for (int i = 0; i < count; i++) {
-        g_PrimBuf[i].type = primitives;
-    }
-
-    int lastFreePrim = g_AllocatedPrims;
-    g_AllocatedPrims += count;
-    return g_AllocatedPrims;
-}
 
 // copied from 47BB8.c
 void ResetPadsRepeat(void) {

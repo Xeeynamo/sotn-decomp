@@ -23,3 +23,8 @@ long SquareRoot0(long a) {
     NOT_IMPLEMENTED;
     return 0;
 }
+
+long SquareRoot12(long a) {
+    NOT_IMPLEMENTED;
+    return 0;
+}
