@@ -83,6 +83,9 @@ u_long MyPadRead(int id) {
 
     switch (id) {
     case 0:
+        if (keyb[SDL_SCANCODE_ESCAPE]) {
+            g_IsQuitRequested = 1;
+        }
         if (keyb[SDL_SCANCODE_UP]) {
             pressed |= PAD_UP;
         }
