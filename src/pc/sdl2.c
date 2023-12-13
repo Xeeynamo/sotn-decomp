@@ -215,10 +215,21 @@ void MyRenderPrimitives(void) {
 
     for (int i = 0; i < LEN(g_PrimBuf); i++) {
         Primitive* prim = &g_PrimBuf[i];
+        if (prim->blendMode & 8) {
+            continue;
+        }
+
         switch (prim->type) {
+        case PRIM_G4:
         case PRIM_GT4:
             SetSdlVertexPrim(v, prim);
             SDL_RenderGeometry(g_Renderer, NULL, v, 6, NULL, 0);
+            break;
+        case PRIM_LINE_G2:
+            SDL_SetRenderDrawColor(
+                g_Renderer, prim->r0, prim->g0, prim->b0, 255);
+            SDL_RenderDrawLine(
+                g_Renderer, prim->x0, prim->y0, prim->x1, prim->y1);
             break;
         }
     }
