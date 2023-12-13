@@ -1,5 +1,6 @@
 #include "pc.h"
 #include "dra.h"
+#include "memcard.h"
 
 // game.h
 GameApi g_api;
@@ -75,6 +76,17 @@ u16 D_8003C3C2[];
 u32 D_80070BCC;
 s32 g_Servant;
 s32 g_ServantLoaded;
+Event g_EvHwCardEnd;
+Event g_EvHwCardErr;
+Event g_EvHwCardTmo;
+Event g_EvHwCardNew;
+Event g_EvSwCardEnd;
+Event g_EvSwCardErr;
+Event g_EvSwCardTmo;
+s32 D_80073074;
+Event g_EvSwCardNew;
+s32 D_8007307C;
+s32 D_80073080;
 s32 g_IsTimeAttackUnlocked;
 Unkstruct_8003C908 D_8003C908;
 s32 D_8003C100;
@@ -82,6 +94,31 @@ s32 D_800978B4;
 u32 g_RoomCount;
 char D_80097902[] = "dummy";
 s32 D_8003C90C[2] = {0};
+MemcardInfo g_MemcardInfo[2];
+s32 g_MemcardBlockRead;
+s32 g_MemcardStep;
+s32 g_MemcardRetryCount;
+s32 g_MemcardFd;
+u8 g_SaveName[12];
+Tilemap g_Tilemap;
+u8 g_CastleMap[0x800];
+u8 g_saveIcon0[0x180];
+u8 g_saveIcon1[0x180];
+u8 g_saveIcon2[0x180];
+u8 g_saveIcon3[0x180];
+u8 g_saveIcon4[0x180];
+u8 g_saveIcon5[0x180];
+u8 g_saveIcon6[0x180];
+u8 g_saveIcon7[0x180];
+u8 g_saveIcon8[0x180];
+u8 g_saveIcon9[0x180];
+u8 g_saveIcon10[0x180];
+u8 g_saveIcon11[0x180];
+u8 g_saveIcon12[0x180];
+u8 g_saveIcon13[0x180];
+u8 g_saveIcon14[0x180];
+u8 g_saveIcon15[0x180];
+u16 g_saveIconPal0[0x10][0x10];
 
 // dra.h
 GpuUsage g_GpuMaxUsage;
@@ -398,8 +435,6 @@ void HideAllBackgroundLayers(void) { NOT_IMPLEMENTED; }
 
 void DestroyAllPrimitives(void) { NOT_IMPLEMENTED; }
 
-void SetupEvents(void) { NOT_IMPLEMENTED; }
-
 s32 LoadFileSim(s32 fileId, SimFileType type) {
     NOT_IMPLEMENTED;
     return 0;
@@ -528,53 +563,6 @@ s32 func_800FD6C4(s32 equipTypeFilter) {
 void func_801026BC(s32 arg0) { NOT_IMPLEMENTED; }
 
 void func_800F9D88(const char* str, s32 arg1, s32 arg2) { NOT_IMPLEMENTED; }
-
-void MemcardInit(void) { NOT_IMPLEMENTED; }
-
-void MemcardInfoInit(void) { NOT_IMPLEMENTED; }
-
-s32 MemcardFormat(s32 nPort, s32 nCard) {
-    NOT_IMPLEMENTED;
-    return -1;
-}
-
-s32 MemcardParse(s32 nPort, s32 nCard) {
-    NOT_IMPLEMENTED;
-    return -1;
-}
-
-void MakeMemcardPath(char* dstSaveName, s32 block) {
-    NOT_IMPLEMENTED;
-    return -1;
-}
-
-s32 MemcardClose(s32 nPort) {
-    NOT_IMPLEMENTED;
-    return -1;
-}
-
-s32 func_800E9880(s32 nPort, s32 nCard) {
-    NOT_IMPLEMENTED;
-    return -1;
-}
-
-s32 MemcardDetectSave(s32 nPort, u8* expectedSaveName, s32 block) {
-    NOT_IMPLEMENTED;
-    return -1;
-}
-
-s32 GetMemcardFreeBlockCount(s32 nPort) {
-    NOT_IMPLEMENTED;
-    return -1;
-}
-
-s32 MemcardWriteFile(
-    s32 nPort, s32 nCard, const char* name, void* data, s32 flags, s32 create) {
-    NOT_IMPLEMENTED;
-    return -1;
-}
-
-void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) { NOT_IMPLEMENTED; }
 
 // can be removed with 5298C.c
 void ApplyJosephsCloakPalette(void) { NOT_IMPLEMENTED; }
