@@ -35,7 +35,79 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015E800);
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015EE28);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F414);
+void func_8015F414(void) {
+    Collider collider;
+    s32 temp_s0;
+    s32 i;
+
+    s16 argX;
+    s16 argY;
+
+    u16* yPosPtr = &PLAYER.posY.i.hi;
+    u16* xPosPtr = &PLAYER.posX.i.hi;
+    s32* vram_ptr = &g_Player.pl_vram_flag;
+
+    if (D_80097418 != 0) {
+        return;
+    }
+    temp_s0 =
+        g_Player.unk04 & (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
+                          EFFECT_UNK_0400 | EFFECT_UNK_0002 | EFFECT_SOLID);
+    if ((temp_s0 == (EFFECT_UNK_8000 | EFFECT_UNK_0002 | EFFECT_SOLID)) ||
+        (temp_s0 == (EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID)) ||
+        (temp_s0 == (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_UNK_0002 |
+                     EFFECT_SOLID))) {
+        *vram_ptr |= 4;
+        return;
+    }
+
+    for (i = 0; i < 7; i++) {
+        temp_s0 = g_Player.colliders2[i].effects &
+                  (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
+                   EFFECT_UNK_0002 | EFFECT_SOLID);
+        if ((temp_s0 == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_SOLID)) ||
+            (temp_s0 == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0002 |
+                         EFFECT_SOLID)) ||
+            (temp_s0 == (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SOLID)) ||
+            (temp_s0 == (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_UNK_0002 |
+                         EFFECT_SOLID)) ||
+            (temp_s0 == (EFFECT_UNK_8000 | EFFECT_UNK_0002 | EFFECT_SOLID)) ||
+            (temp_s0 == (EFFECT_UNK_0002 | EFFECT_SOLID))) {
+            argX =
+                *xPosPtr + D_80154604[i].unk0 + g_Player.colliders2[i].unk4 - 1;
+            argY = *yPosPtr + D_80154604[i].unk2;
+            g_api.CheckCollision(argX, argY, &sp10, 0);
+            if ((sp10.effects & 1) == 0) {
+                *vram_ptr |= 4;
+                *xPosPtr += g_Player.colliders2[i].unk4;
+                return;
+            }
+        }
+
+        if (!(*vram_ptr & 1)) {
+            if ((temp_s0 & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
+                            EFFECT_UNK_0800)) == EFFECT_UNK_8000 &&
+                (i != 0) &&
+                ((g_Player.colliders2[0].effects & EFFECT_UNK_0800) ||
+                 !(g_Player.colliders2[0].effects &
+                   (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_UNK_0002)))) {
+                *vram_ptr |= 4;
+                *xPosPtr += g_Player.colliders2[i].unk4;
+                return;
+            }
+            if (((temp_s0 & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
+                             EFFECT_UNK_0800)) == EFFECT_UNK_0800) &&
+                (i != 6) &&
+                ((g_Player.colliders2[6].effects & EFFECT_UNK_8000) ||
+                 !(g_Player.colliders2[6].effects &
+                   (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_UNK_0002)))) {
+                *vram_ptr |= 4;
+                *xPosPtr += g_Player.colliders2[i].unk4;
+                return;
+            }
+        }
+    }
+}
 
 void func_8015F680(void) {
     Collider collider;
