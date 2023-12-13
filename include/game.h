@@ -979,7 +979,7 @@ typedef enum {
 } ColliderEffectFlags;
 
 typedef struct Collider {
-    /* 0x00 */ s32 effects;
+    /* 0x00 */ u32 effects;
     /* 0x04 */ s32 unk4;
     /* 0x08 */ s32 unk8;
     /* 0x0C */ s32 unkC;
@@ -1347,8 +1347,9 @@ typedef struct {
 } FgLayer; /* size=0x8 */
 
 typedef struct {
-    /* 80072BD0 */ Collider colliders[8];
-    /* 80072CF0 */ Collider colliders2[14];
+    /* 80072BD0 */ Collider colliders[4];
+    /* 80072C60 */ Collider colliders2[4];
+    /* 80072CF0 */ Collider colliders3[14];
     /* 80072EE8 */ s32 padPressed;
     /* 80072EEC */ s32 padTapped;
     /* 80072EF0 */ s32 padHeld;
