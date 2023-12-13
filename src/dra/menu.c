@@ -2235,8 +2235,6 @@ void func_800F98AC(const char* str, u32 arg1) {
     temp_s2 = func_800F548C(temp_s2);
 
     for (data_ptr = str; *data_ptr != 0;) {
-        var_a1 = func_80106A28(loaded_data, 0);
-        D_8013794C[0] = *var_a1;
         // Loads a big-endian u16 from data_ptr.
         // This is connected to shift-jis.
         loaded_data = *data_ptr++ << 8;
