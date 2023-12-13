@@ -27,6 +27,26 @@
 #define GET_BLUE(x) ((x)&BLUE_MASK)
 
 typedef enum {
+    MENU_DG_MAIN,
+    MENU_DG_BG,
+    MENU_DG_EQUIP_OVERVIEW,
+    MENU_DG_EQUIP_SELECTOR,
+    MENU_DG_INFO_BAR,
+    MENU_DG_RELICS,
+    MENU_DG_SPELLS,
+    MENU_DG_SETTINGS,
+    MENU_DG_CLOAK_COLOR,
+    MENU_DG_CFG_BUTTONS,
+    MENU_DG_CLOAK_LINING,
+    MENU_DG_CFG_SOUND,
+    MENU_DG_WINDOW_COLORS,
+    MENU_DG_TIME_ATTACK,
+    MENU_DG_EQUIP_SORT,
+    MENU_DG_FAMILIARS,
+    NUM_MENU,
+} MenuDialogue;
+
+typedef enum {
     DEBUG_NORMAL,
     DEBUG_TEXTURE_VIEWER,
     DEBUG_TILESET_VIEWER,
@@ -290,7 +310,7 @@ typedef struct {
 } DamageParam;
 
 typedef struct {
-    /* 8013761C */ MenuContext menus[0x10]; // 761C, 763A, 7658, 7676
+    /* 8013761C */ MenuContext menus[NUM_MENU]; // 761C, 763A, 7658, 7676
 } MenuData;
 
 // All the Joseph's Cloak color fields are in RGB555 format
@@ -445,7 +465,7 @@ extern Equipment g_EquipDefs[];
 extern Accessory g_AccessoryDefs[];
 extern RelicDesc g_RelicDefs[];
 extern u8* c_strTimeAttackHiddenEntry;
-extern s32 c_strTimeAttackEntries[];
+extern const char* c_strTimeAttackEntries[];
 extern u32 D_800AC90C;
 extern u16 D_800AC958[];
 extern s32 D_800ACC64[]; // probably a struct
@@ -619,7 +639,7 @@ extern s32 g_IsCloakColorUnlocked;
 extern s32 g_IsSelectingEquipment;
 extern s32 g_EquipmentCursor;
 extern s32 D_80137614;
-extern s32 D_80137618;
+extern s32 g_EquipOrderType;
 extern MenuData g_MenuData;
 extern u8 D_801376B0;
 extern s16 D_801376C4;
@@ -911,27 +931,16 @@ void CalcDefense(void);
 bool IsAlucart(void);
 void func_800F53A4(void);
 bool ScissorSprite(SPRT* arg0, MenuContext* arg1);
-void DrawMenuImg(MenuContext* ctx, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
+void MenuDrawImg(MenuContext* ctx, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
                  s32 idx, s32 unk2, bool disableTexShade, s32 unk4);
-void DrawMenuSprite(
+void MenuDrawSprite(
     MenuContext* context, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v,
     s32 clut, s32 tpage, s32 arg9, s32 colorIntensity, s32 argB);
-void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
+void MenuDrawRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b);
 s32 func_800F62E8(s32 arg0);
 void InitStatsAndGear(bool isDeathTakingItems);
-void DrawMenuChar(u8 ch, int x, int y, MenuContext* context);
-void DrawMenuStr(const u8* str, s32 x, s32 y, MenuContext* context);
-void DrawMenuInt(s32 value, s32 x, s32 y, MenuContext*);
-void DrawSettingsReverseCloak(MenuContext* context);
-void DrawSettingsSound(MenuContext* context);
-void DrawPauseMenu(s32 arg0);
-void func_800F82F4(void);
-void func_800F8858(MenuContext* context);
-void CheckWeaponCombo(void);
-void func_800FABEC(s32 arg0);
-void func_800FAC30(void);
-void func_800FAF44(s32);
+
 s32 TimeAttackController(TimeAttackEvents eventId, TimeAttackActions action);
 s32 func_800FD664(s32 arg0);
 s32 func_800FD6C4(s32 equipTypeFilter);

@@ -129,41 +129,41 @@ s32 D_800A2DEC[] = {
     0x1A, 0x00, 0x30, 0x39, 0x39,
 };
 
-MenuContextInit g_MenuInit[] = {
+MenuContextInit g_MenuInit[NUM_MENU] = {
 #if defined(VERSION_US)
-    {0x009E, 0x0064, 0x004C, 0x0050, 0x0040},
-    {0x0000, 0x0018, 0x0168, 0x00C8, 0x0010},
-    {0x0000, 0x0018, 0x0168, 0x0061, 0x0020},
-    {0x0000, 0x0078, 0x0168, 0x004A, 0x0020},
-    {0x0000, 0x00C1, 0x0168, 0x001F, 0x0040},
-    {0x0000, 0x0018, 0x0168, 0x00AA, 0x0020},
-    {0x0000, 0x0018, 0x0168, 0x00AA, 0x0020},
-    {0x0000, 0x0018, 0x0168, 0x00AA, 0x0020},
-    {0x00A8, 0x0078, 0x0090, 0x0040, 0x0030},
-    {0x0094, 0x002C, 0x00C8, 0x0070, 0x0030},
-    {0x00AC, 0x002C, 0x0041, 0x0020, 0x0030},
-    {0x00AC, 0x0070, 0x0039, 0x0020, 0x0030},
-    {0x00AC, 0x004C, 0x007C, 0x0028, 0x0030},
-    {0x000C, 0x0020, 0x0154, 0x0099, 0x0030},
-    {0x0114, 0x0020, 0x004D, 0x00B7, 0x0050},
-    {0x0000, 0x0018, 0x0168, 0x00C8, 0x0018},
+    {158, 100, 76, 80, 0x40},  // MENU_DG_MAIN
+    {0, 24, 360, 200, 0x10},   // MENU_DG_BG
+    {0, 24, 360, 97, 0x20},    // MENU_DG_EQUIP_OVERVIEW
+    {0, 120, 360, 74, 0x20},   // MENU_DG_EQUIP_SELECTOR
+    {0, 193, 360, 31, 0x40},   // MENU_DG_INFO_BAR
+    {0, 24, 360, 170, 0x20},   // MENU_DG_RELICS
+    {0, 24, 360, 170, 0x20},   // MENU_DG_SPELLS
+    {0, 24, 360, 170, 0x20},   // MENU_DG_SETTINGS
+    {168, 120, 144, 64, 0x30}, // MENU_DG_CLOAK_COLOR
+    {148, 44, 200, 112, 0x30}, // MENU_DG_CFG_BUTTONS
+    {172, 44, 65, 32, 0x30},   // MENU_DG_CLOAK_LINING
+    {172, 112, 57, 32, 0x30},  // MENU_DG_CFG_SOUND
+    {172, 76, 124, 40, 0x30},  // MENU_DG_WINDOW_COLORS
+    {12, 32, 340, 153, 0x30},  // MENU_DG_TIME_ATTACK
+    {276, 32, 77, 183, 0x50},  // MENU_DG_EQUIP_SORT
+    {0, 24, 360, 200, 0x18},   // MENU_DG_FAMILIARS
 #elif defined(VERSION_HD)
-    {0x00AC, 0x0064, 0x0030, 0x0050, 0x0040},
-    {0x0000, 0x0018, 0x0168, 0x00C8, 0x0010},
-    {0x0000, 0x0018, 0x0168, 0x0061, 0x0020},
-    {0x0000, 0x0078, 0x0168, 0x004A, 0x0020},
-    {0x0000, 0x00C1, 0x0168, 0x001F, 0x0040},
-    {0x0000, 0x0018, 0x0168, 0x00AA, 0x0020},
-    {0x0000, 0x0018, 0x0168, 0x00AA, 0x0020},
-    {0x0000, 0x0018, 0x0168, 0x00AA, 0x0020},
-    {0x00A8, 0x0078, 0x0090, 0x0040, 0x0030},
-    {0x007C, 0x002C, 0x00A0, 0x0070, 0x0030},
-    {0x007C, 0x002C, 0x002C, 0x0020, 0x0030},
-    {0x007C, 0x0070, 0x0029, 0x0020, 0x0030},
-    {0x007C, 0x004C, 0x007C, 0x0028, 0x0030},
-    {0x0070, 0x0020, 0x00F0, 0x0099, 0x0030},
-    {0x0128, 0x0020, 0x002D, 0x00B7, 0x0050},
-    {0x0000, 0x0018, 0x0168, 0x00C8, 0x0018},
+    {172, 100, 48, 80, 0x40},  // MENU_DG_MAIN
+    {0, 24, 360, 200, 0x10},   // MENU_DG_BG
+    {0, 24, 360, 97, 0x20},    // MENU_DG_EQUIP_OVERVIEW
+    {0, 120, 360, 74, 0x20},   // MENU_DG_EQUIP_SELECTOR
+    {0, 193, 360, 31, 0x40},   // MENU_DG_INFO_BAR
+    {0, 24, 360, 170, 0x20},   // MENU_DG_RELICS
+    {0, 24, 360, 170, 0x20},   // MENU_DG_SPELLS
+    {0, 24, 360, 170, 0x20},   // MENU_DG_SETTINGS
+    {168, 120, 144, 64, 0x30}, // MENU_DG_CLOAK_COLOR
+    {124, 44, 160, 112, 0x30}, // MENU_DG_CFG_BUTTONS
+    {124, 44, 44, 32, 0x30},   // MENU_DG_CLOAK_LINING
+    {124, 112, 41, 32, 0x30},  // MENU_DG_CFG_SOUND
+    {124, 76, 124, 40, 0x30},  // MENU_DG_WINDOW_COLORS
+    {112, 32, 240, 153, 0x30}, // MENU_DG_TIME_ATTACK
+    {296, 32, 45, 183, 0x50},  // MENU_DG_EQUIP_SORT
+    {0, 24, 360, 200, 0x18},   // MENU_DG_FAMILIARS
 #endif
 };
 
@@ -614,7 +614,7 @@ bool ScissorSprite(SPRT* sprite, MenuContext* context) {
     return false;
 }
 
-void DrawMenuImg(MenuContext* menu, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
+void MenuDrawImg(MenuContext* menu, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
                  s32 clut, s32 tpage, bool disableTexShade, s32 c) {
     SPRT* sp;
     s32 otIdx;
@@ -655,17 +655,17 @@ void DrawMenuImg(MenuContext* menu, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
 }
 
 void func_800F5A90(void) {
-    DrawMenuImg(NULL, 96, 96, 64, 64, 0, 0, 0, 0x114, 1, 0);
+    MenuDrawImg(NULL, 96, 96, 64, 64, 0, 0, 0, 0x114, 1, 0);
 }
 
 void func_800F5AE4(MenuContext* menu) {
     s32 i, x;
 
     for (i = 0, x = 72; i < 3; i++, x += 128)
-        DrawMenuImg(menu, x, 201, 128, 16, (i & 1) << 7,
+        MenuDrawImg(menu, x, 201, 128, 16, (i & 1) << 7,
                     func_800F548C(2) & 0xFF, 0x1A1, (i / 2) + 6, 1, 0);
 }
-void DrawMenuSprite(
+void MenuDrawSprite(
     MenuContext* context, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v,
     s32 clut, s32 tpage, s32 arg9, s32 colorIntensity, s32 argB) {
     u32* ot = g_CurrentBuffer->ot;
@@ -674,7 +674,7 @@ void DrawMenuSprite(
     u32 polyColorIntensity;
     s32 temp_polyx0;
 
-    if (context == &g_MenuData.menus[1]) {
+    if (context == &g_MenuData.menus[MENU_DG_BG]) {
         otIdx--;
     }
 
@@ -709,7 +709,7 @@ void DrawMenuSprite(
 }
 
 // NOTE: used to draw the menu cursor
-void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
+void MenuDrawRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b) {
     u32* ot = g_CurrentBuffer->ot;
     POLY_G4* poly = &g_CurrentBuffer->polyG4[g_GpuUsage.g4];
@@ -751,7 +751,7 @@ void func_800F5E68(MenuContext* context, s32 cursorIdx, s32 x, s32 y, s32 w,
     } else {
         r = 0x80;
     }
-    DrawMenuRect(context, x, y + (cursorIdx * (h + yGap)), w, h, r, 0, 0);
+    MenuDrawRect(context, x, y + (cursorIdx * (h + yGap)), w, h, r, 0, 0);
 }
 
 void DrawRelicsMenu(MenuContext* ctx) {
@@ -801,7 +801,7 @@ void DrawRelicsMenu(MenuContext* ctx) {
                 } else {
                     var_a0 = i;
                 }
-                DrawMenuSprite(
+                MenuDrawSprite(
                     ctx, spriteX + 0x38, spriteY, 0x78, 0x10, (i & 1) * 0x78,
                     func_800F548C((var_a0 >> 2) - 0x80), 0x1A1, 6, 1, 0, 0);
             } else {
@@ -810,7 +810,7 @@ void DrawRelicsMenu(MenuContext* ctx) {
                 } else {
                     var_a0 = i;
                 }
-                DrawMenuSprite(
+                MenuDrawSprite(
                     ctx, spriteX + 0x38, spriteY, 0x78, 0x10, (i & 1) * 0x78,
                     func_800F548C((var_a0 >> 2) + 3), 0x1A1, 7, 1, 0, 0);
             }
@@ -832,19 +832,19 @@ void DrawRelicsMenu(MenuContext* ctx) {
                 switchFadeLevel = 6 - ((g_RelicMenuFadeTimer - 0x24) / 6);
             }
         }
-        DrawMenuSprite(ctx, spriteX | 8, spriteY, 0x2F, 0xF, u_OnOff, 0x70,
+        MenuDrawSprite(ctx, spriteX | 8, spriteY, 0x2F, 0xF, u_OnOff, 0x70,
                        switchFadeLevel + 0x1C8, 0x1F,
                        INDEXER == g_MenuNavigation.cursorRelic, 0x40, 0);
     }
     spriteY = ctx_h + ((g_MenuNavigation.cursorRelic / 2) * 0x13);
-    DrawMenuRect(ctx, ((g_MenuNavigation.cursorRelic & 1) * 0xB0) | 8,
+    MenuDrawRect(ctx, ((g_MenuNavigation.cursorRelic & 1) * 0xB0) | 8,
                  spriteY + 0x21, 0xA8, 0x12, 0x60, 0, 0);
 #undef INDEXER
 }
 
-void DrawMenuAlucardPortrait(MenuContext* ctx) {
-    DrawMenuSprite(ctx, 0x10, 0x24, 0x40, 0x40, 0, 0x80, 0x150, 0x9C, 1, 0, 0);
-    DrawMenuSprite(ctx, 0x10, 0x64, 0x40, 0x20, 0, 0xC0, 0x150, 0x9C, 0, 0, 1);
+void MenuDrawAlucardPortrait(MenuContext* ctx) {
+    MenuDrawSprite(ctx, 0x10, 0x24, 0x40, 0x40, 0, 0x80, 0x150, 0x9C, 1, 0, 0);
+    MenuDrawSprite(ctx, 0x10, 0x64, 0x40, 0x20, 0, 0xC0, 0x150, 0x9C, 0, 0, 1);
 }
 
 // Equivalent of floor(number * .75)
@@ -872,9 +872,9 @@ void ApplyJosephsCloakPalette(void) {
         ((u32)g_Settings.cloakColors[2] << 0xA);
 }
 
-void DrawMenuAlucardCloakPreview(MenuContext* ctx) {
-    DrawMenuSprite(ctx, 0xC0, 0x80, 0x20, 0x40, 0, 0xB0, 0x100, 7, 1, 0, 2);
-    DrawMenuSprite(ctx, 0x100, 0x80, 0x40, 0x40, 0x80, 0xB0, 0x100, 7, 1, 0, 0);
+void MenuDrawAlucardCloakPreview(MenuContext* ctx) {
+    MenuDrawSprite(ctx, 0xC0, 0x80, 0x20, 0x40, 0, 0xB0, 0x100, 7, 1, 0, 2);
+    MenuDrawSprite(ctx, 0x100, 0x80, 0x40, 0x40, 0x80, 0xB0, 0x100, 7, 1, 0, 0);
 }
 
 void func_800F6508(MenuContext* context, s32 x, s32 y) {
@@ -885,7 +885,7 @@ void func_800F6508(MenuContext* context, s32 x, s32 y) {
     } else {
         yellow = 0x7F - (g_Timer & 0xF);
     }
-    DrawMenuRect(context, x, y, 0x70, 0xB, yellow, yellow, 0);
+    MenuDrawRect(context, x, y, 0x70, 0xB, yellow, yellow, 0);
 }
 
 // Draw main menu cursor
@@ -899,15 +899,15 @@ void func_800F6568(MenuContext* context) {
     } else {
         r = 0x5F - (g_Timer & 0x1F);
     }
-    DrawMenuRect(context, context->cursorX,
+    MenuDrawRect(context, context->cursorX,
                  context->cursorY + (height * g_MenuNavigation.cursorMain),
                  context->cursorW, height, r, 0, 0);
 }
 
 // Draw equip menu cursor
-void func_800F6618(s32 menuContextIndex, s32 bColorMode) {
+void func_800F6618(s32 menuDialogue, s32 bColorMode) {
     s32 r;
-    MenuContext* context = &g_MenuData.menus[menuContextIndex];
+    MenuContext* context = &g_MenuData.menus[menuDialogue];
 
     if (bColorMode != 0) {
         r = 0x80;
@@ -918,7 +918,7 @@ void func_800F6618(s32 menuContextIndex, s32 bColorMode) {
             r = 0x5F - (g_Timer & 0x1F);
         }
     }
-    DrawMenuRect(context, 0x70, g_MenuNavigation.cursorEquip * 13 + 0x1C, 0x71,
+    MenuDrawRect(context, 0x70, g_MenuNavigation.cursorEquip * 13 + 0x1C, 0x71,
                  0xB, r, 0, 0);
 }
 
@@ -939,18 +939,18 @@ loop_1:
     unk = unk != 0;
     temp = ch;
     temp = temp >> 5;
-    DrawMenuImg(menu, x, y, ChWidth, ChHeight, (ch & 0xF) * ChWidth,
+    MenuDrawImg(menu, x, y, ChWidth, ChHeight, (ch & 0xF) * ChWidth,
                 temp * ChHeight, 0x1A1, unk + 6, disableTexShade, 0x40);
     x += ChWidth;
     goto loop_1;
 }
 
-void DrawMenuChar(u8 ch, int x, int y, MenuContext* menu) {
-    DrawMenuImg(menu, x, y, 8, 8, (ch & 0xF) * 8, (u32)(ch & 0xF0) >> 1, 0x196,
+void MenuDrawChar(u8 ch, int x, int y, MenuContext* menu) {
+    MenuDrawImg(menu, x, y, 8, 8, (ch & 0xF) * 8, (u32)(ch & 0xF0) >> 1, 0x196,
                 0x1E, 1, 0);
 }
 
-void DrawMenuStr(const u8* str, s32 x, s32 y, MenuContext* context) {
+void MenuDrawStr(const u8* str, s32 x, s32 y, MenuContext* context) {
     const int ChWidth = 8;
     const int ChHeight = 8;
     u8 ch;
@@ -984,25 +984,25 @@ void DrawMenuStr(const u8* str, s32 x, s32 y, MenuContext* context) {
                 x -= ChWidth;
             }
         }
-        DrawMenuChar(ch, xcopy, ycopy, context);
+        MenuDrawChar(ch, xcopy, ycopy, context);
         x += ChWidth;
     }
     D_80137614 = 1;
     func_800F53D4(0x1E, context->otIdx + 2);
 }
 
-void DrawMenuInt(s32 digit, s32 x, s32 y, MenuContext* context) {
+void MenuDrawInt(s32 digit, s32 x, s32 y, MenuContext* context) {
     do {
-        DrawMenuChar((digit % 10) + 16, x, y, context);
+        MenuDrawChar((digit % 10) + 16, x, y, context);
         digit /= 10;
         x += -8;
     } while (digit != 0);
 }
 
 // Draw a number with a limit of N digits
-void DrawMenuTime(s32 number, s32 x, s32 y, MenuContext* context, s32 digits) {
+void MenuDrawTime(s32 number, s32 x, s32 y, MenuContext* context, s32 digits) {
     do {
-        DrawMenuChar(((number % 10) + 0x10), x, y, context);
+        MenuDrawChar(((number % 10) + 0x10), x, y, context);
         number /= 10;
         x -= 8;
         digits -= 1;
@@ -1014,7 +1014,7 @@ void func_800F6A48(void) {
     func_800EA5E4(0x411);
 }
 
-void DrawJosephsCloakMenu(MenuContext* context) {
+void MenuJosephsCloakDraw(MenuContext* context) {
     s32 row1Ypos;
     s32 row2Ypos;
     s32 i;
@@ -1041,16 +1041,16 @@ void DrawJosephsCloakMenu(MenuContext* context) {
     // 3 iterations, each iteration does Exterior and Lining for one letter
     for (; i < 3; row1Ypos += 0xC, chsRgb++, row2Ypos += 0xC, i++) {
         // Write "Exterior"
-        DrawMenuStr(exteriorInterior[0], x_Start, row1Ypos, ctx);
+        MenuDrawStr(exteriorInterior[0], x_Start, row1Ypos, ctx);
         // Write R, G, or B
-        DrawMenuChar(*chsRgb, x_RGB, row1Ypos, ctx);
+        MenuDrawChar(*chsRgb, x_RGB, row1Ypos, ctx);
         // Write "Lining"
-        DrawMenuStr(exteriorInterior[1], x_Start, row2Ypos, ctx);
+        MenuDrawStr(exteriorInterior[1], x_Start, row2Ypos, ctx);
         // Write R, G, or B
-        DrawMenuChar(*chsRgb, x_RGB, row2Ypos, ctx);
+        MenuDrawChar(*chsRgb, x_RGB, row2Ypos, ctx);
     }
     for (i = 0; i < 6; i++) {
-        DrawMenuInt(g_Settings.cloakColors[i], x_Start + number_spacing + 0x48,
+        MenuDrawInt(g_Settings.cloakColors[i], x_Start + number_spacing + 0x48,
                     0x28 + 0xC * i, ctx);
     }
     func_800F5E68(ctx, g_MenuNavigation.cursorCloak, x_Start - 2, 0x26,
@@ -1059,7 +1059,7 @@ void DrawJosephsCloakMenu(MenuContext* context) {
     func_800F6A48();
 }
 
-void func_800F6BEC(MenuContext* context) {
+void MenuWindowColorsDraw(MenuContext* context) {
 #if defined(VERSION_HD)
     s32 x = 128;
 #else
@@ -1069,8 +1069,8 @@ void func_800F6BEC(MenuContext* context) {
     s32 i;
 
     for (i = 0; i < LEN(g_ChRgb); i++) {
-        DrawMenuChar(g_ChRgb[i], x + 32, (i * 12) + 80, context);
-        DrawMenuInt(g_Settings.windowColors[i], x + 72, 80 + i * 12, context);
+        MenuDrawChar(g_ChRgb[i], x + 32, (i * 12) + 80, context);
+        MenuDrawInt(g_Settings.windowColors[i], x + 72, 80 + i * 12, context);
     }
     func_800F5E68(
         context, g_MenuNavigation.cursorWindowColors, x - 2, 78, 120, 12, 0, 1);
@@ -1110,7 +1110,7 @@ void SortTimeAttackEntries(void) {
     } while (isLooping);
 }
 
-void DrawTimeAttackMenu(MenuContext* ctx) {
+void MenuTimeAttackDraw(MenuContext* ctx) {
     s16 padX;
     s16 cursorX;
     s32 cursorY;
@@ -1124,12 +1124,12 @@ void DrawTimeAttackMenu(MenuContext* ctx) {
         cursorX = ctx->cursorX;
         entryIdx = i + g_MenuNavigation.cursorTimeAttack;
         cursorY = ctx->cursorY + offsetY;
-        DrawMenuInt(entryIdx + 1, cursorX + 16, cursorY, ctx);
+        MenuDrawInt(entryIdx + 1, cursorX + 16, cursorY, ctx);
         seconds = g_TimeAttackEntryTimes[entryIdx];
         if (seconds == 1000000) {
-            DrawMenuStr(c_strTimeAttackHiddenEntry, cursorX + 29, cursorY, ctx);
+            MenuDrawStr(c_strTimeAttackHiddenEntry, cursorX + 29, cursorY, ctx);
         } else {
-            DrawMenuStr(c_strTimeAttackEntries[c_strTimeAttackEntry[entryIdx]],
+            MenuDrawStr(c_strTimeAttackEntries[c_strTimeAttackEntry[entryIdx]],
                         cursorX + 29, cursorY, ctx);
             hours = seconds / 10000;
 #if defined(VERSION_HD)
@@ -1137,17 +1137,17 @@ void DrawTimeAttackMenu(MenuContext* ctx) {
 #elif defined(VERSION_US)
             padX = 0;
 #endif
-            DrawMenuInt(hours, cursorX + 276 + padX, cursorY, ctx);
-            DrawMenuChar(0x1A, cursorX + 284 + padX, cursorY, ctx);
-            DrawMenuTime((seconds / 100) - (hours * 100), cursorX + 300 + padX,
+            MenuDrawInt(hours, cursorX + 276 + padX, cursorY, ctx);
+            MenuDrawChar(0x1A, cursorX + 284 + padX, cursorY, ctx);
+            MenuDrawTime((seconds / 100) - (hours * 100), cursorX + 300 + padX,
                          cursorY, ctx, 2);
-            DrawMenuChar(0x1A, cursorX + 308 + padX, cursorY, ctx);
-            DrawMenuTime(seconds % 100, cursorX + 324 + padX, cursorY, ctx, 2);
+            MenuDrawChar(0x1A, cursorX + 308 + padX, cursorY, ctx);
+            MenuDrawTime(seconds % 100, cursorX + 324 + padX, cursorY, ctx, 2);
         }
     }
 }
 
-void DrawSettingsButton(MenuContext* ctx) {
+void MenuButtonConfigDraw(MenuContext* ctx) {
     s32 i;
     s32 x;
     s32 buttonId;
@@ -1165,14 +1165,14 @@ void DrawSettingsButton(MenuContext* ctx) {
     s32 cursorX = InitCursorX;
 
     for (i = 0, x = 0xC0; i < 7; i++) {
-        DrawMenuStr(c_strButtonRightHand[i], cursorX, 0x30 + (i * 0x10), ctx);
+        MenuDrawStr(c_strButtonRightHand[i], cursorX, 0x30 + (i * 0x10), ctx);
         buttonId = g_Settings.buttonConfig[i];
         btn1_x = (buttonId * 12) + 0x30;
-        DrawMenuChar(
+        MenuDrawChar(
             g_ChActionButtons[buttonId], XVAR + btn1_x, 0x30 + (i * 0x10), ctx);
         if (buttonId >= 4) {
             btn2_x = btn1_x + 8;
-            DrawMenuChar(g_ChShoulderButtons[buttonId], XVAR + btn2_x,
+            MenuDrawChar(g_ChShoulderButtons[buttonId], XVAR + btn2_x,
                          0x30 + (i * 0x10), ctx);
         }
     }
@@ -1182,7 +1182,7 @@ void DrawSettingsButton(MenuContext* ctx) {
 #undef XVAR
 }
 
-void DrawSettingsReverseCloak(MenuContext* context) {
+void MenuReverseCloakDraw(MenuContext* context) {
 #if defined(VERSION_US)
     const int StrX = 176;
     const int ImgW = 64;
@@ -1191,13 +1191,13 @@ void DrawSettingsReverseCloak(MenuContext* context) {
     const int ImgW = 40;
 #endif
 
-    DrawMenuStr(c_strNormal, StrX, 48, context);
-    DrawMenuStr(c_strReversal, StrX, 64, context);
+    MenuDrawStr(c_strNormal, StrX, 48, context);
+    MenuDrawStr(c_strReversal, StrX, 64, context);
     func_800F5E68(context, g_Settings.isCloakLiningReversed, StrX - 2, 46, ImgW,
                   12, 4, 1);
 }
 
-void DrawSettingsSound(MenuContext* context) {
+void MenuSoundConfigDraw(MenuContext* context) {
 #if defined(VERSION_US)
     const int ImgW = 53;
 #elif defined(VERSION_HD)
@@ -1207,8 +1207,8 @@ void DrawSettingsSound(MenuContext* context) {
     s16 cursorX = context->cursorX;
     s16 cursorY = context->cursorY;
     s32 subMenuX = cursorX + 4;
-    DrawMenuStr(c_strStereo, subMenuX, cursorY + 4, context);
-    DrawMenuStr(c_strMono, subMenuX, cursorY + 0x14, context);
+    MenuDrawStr(c_strStereo, subMenuX, cursorY + 4, context);
+    MenuDrawStr(c_strMono, subMenuX, cursorY + 0x14, context);
     func_800F5E68(context, g_Settings.isSoundMono, cursorX + 2, cursorY + 2,
                   ImgW, 12, 4, 1);
 }
@@ -1238,52 +1238,53 @@ void func_800F7244(void) {
     }
 }
 
-void DrawStatChanges(void) {
+void MenuStatChangesDraw(void) {
     s32 xcoord;
     s32 ycoord;
     s32 i;
     MenuContext* ctx;
     s32 arrow;
 
-    if ((g_MenuData.menus[3].unk1C != 0) || (D_80137948 == 0)) {
+    if ((g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk1C != 0) ||
+        (D_80137948 == 0)) {
         return;
     }
-    ctx = &g_MenuData.menus[2];
+    ctx = &g_MenuData.menus[MENU_DG_EQUIP_OVERVIEW];
     // Print the destination value for the square attack item
-    DrawMenuInt(g_NewAttackRightHand, 0x154, 0x50, ctx);
+    MenuDrawInt(g_NewAttackRightHand, 0x154, 0x50, ctx);
     // Show arrow icon for increasing, decreasing, or staying the same
     arrow = StatChangeArrow(g_Status.attackHands[0], g_NewAttackRightHand);
-    DrawMenuChar(arrow, 0x13C, 0x50, ctx);
+    MenuDrawChar(arrow, 0x13C, 0x50, ctx);
 
     // Same but for the circle attack item
-    DrawMenuInt(g_NewAttackLeftHand, 0x154, 0x5A, ctx);
+    MenuDrawInt(g_NewAttackLeftHand, 0x154, 0x5A, ctx);
     arrow = StatChangeArrow(g_Status.attackHands[1], g_NewAttackLeftHand);
-    DrawMenuChar(arrow, 0x13C, 0x5A, ctx);
+    MenuDrawChar(arrow, 0x13C, 0x5A, ctx);
     // And repeat for defense.
-    DrawMenuInt(g_NewDefenseEquip, 0x154, 0x6A, ctx);
+    MenuDrawInt(g_NewDefenseEquip, 0x154, 0x6A, ctx);
     arrow = StatChangeArrow(g_Status.defenseEquip, g_NewDefenseEquip);
-    DrawMenuChar(arrow, 0x13C, 0x6A, ctx);
+    MenuDrawChar(arrow, 0x13C, 0x6A, ctx);
 
     // Iterate through the 4 stats (STR CON INT LCK) doing the same.
     xcoord = 0x108;
     for (i = 0; i < 4; i++) {
         ycoord = 0x22 + i * 10;
         // Name of the stat
-        DrawMenuStr((&c_strSTR)[i], xcoord, ycoord, ctx);
+        MenuDrawStr((&c_strSTR)[i], xcoord, ycoord, ctx);
         // Current value for the stat
-        DrawMenuInt(g_Status.statsBase[i] + g_Status.statsEquip[i],
+        MenuDrawInt(g_Status.statsBase[i] + g_Status.statsEquip[i],
                     xcoord + 0x2C, ycoord, ctx);
         // Indication of change
         arrow =
             StatChangeArrow((g_Status.statsBase[i] + g_Status.statsEquip[i]),
                             g_NewPlayerStatsTotal[i]);
-        DrawMenuChar(arrow, xcoord + 0x34, ycoord, ctx);
+        MenuDrawChar(arrow, xcoord + 0x34, ycoord, ctx);
         // Final value for the stat
-        DrawMenuInt(g_NewPlayerStatsTotal[i], xcoord + 0x4C, ycoord, ctx);
+        MenuDrawInt(g_NewPlayerStatsTotal[i], xcoord + 0x4C, ycoord, ctx);
     }
 }
 
-void DrawPauseMenu(s32 arg0) {
+void MenuDrawStats(s32 menuDialogue) {
     MenuContext* ctx;
     s32 temp_s1;
     s32 temp_var;
@@ -1293,35 +1294,35 @@ void DrawPauseMenu(s32 arg0) {
     s32 temp_y;
     s32 phi_a0_5;
 
-    ctx = &g_MenuData.menus[arg0];
+    ctx = &g_MenuData.menus[menuDialogue];
     func_800F53A4();
-    if (arg0 == 1) {
-        DrawMenuAlucardPortrait(ctx);
-        DrawMenuStr(
+    if (menuDialogue == MENU_DG_BG) {
+        MenuDrawAlucardPortrait(ctx);
+        MenuDrawStr(
             IsAlucart() ? c_strALUCARD[42] : c_strALUCARD[0], 128, 40, ctx);
-        DrawMenuStr(c_strHP, 96, 56, ctx);
-        DrawMenuInt(g_Status.hp, 168, 56, ctx);
-        DrawMenuChar(CH('/'), 176, 56, ctx);
-        DrawMenuInt(g_Status.hpMax, 208, 56, ctx);
-        DrawMenuStr(c_strMP, 96, 68, ctx);
-        DrawMenuInt(g_Status.mp, 168, 68, ctx);
-        DrawMenuChar(CH('/'), 176, 68, ctx);
-        DrawMenuInt(g_Status.mpMax, 208, 68, ctx);
-        DrawMenuStr(c_strHEART, 96, 80, ctx);
-        DrawMenuInt(g_Status.hearts, 168, 80, ctx);
-        DrawMenuChar(CH('/'), 176, 80, ctx);
-        DrawMenuInt(g_Status.heartsMax, 208, 80, ctx);
-        DrawMenuStr(c_strEXP, 32, 176, ctx);
-        DrawMenuInt(g_Status.exp, 144, 176, ctx);
-        DrawMenuStr(c_strNEXT, 32, 188, ctx);
-        DrawMenuInt(
+        MenuDrawStr(c_strHP, 96, 56, ctx);
+        MenuDrawInt(g_Status.hp, 168, 56, ctx);
+        MenuDrawChar(CH('/'), 176, 56, ctx);
+        MenuDrawInt(g_Status.hpMax, 208, 56, ctx);
+        MenuDrawStr(c_strMP, 96, 68, ctx);
+        MenuDrawInt(g_Status.mp, 168, 68, ctx);
+        MenuDrawChar(CH('/'), 176, 68, ctx);
+        MenuDrawInt(g_Status.mpMax, 208, 68, ctx);
+        MenuDrawStr(c_strHEART, 96, 80, ctx);
+        MenuDrawInt(g_Status.hearts, 168, 80, ctx);
+        MenuDrawChar(CH('/'), 176, 80, ctx);
+        MenuDrawInt(g_Status.heartsMax, 208, 80, ctx);
+        MenuDrawStr(c_strEXP, 32, 176, ctx);
+        MenuDrawInt(g_Status.exp, 144, 176, ctx);
+        MenuDrawStr(c_strNEXT, 32, 188, ctx);
+        MenuDrawInt(
             g_Status.level != 99 ? g_ExpNext[g_Status.level] - g_Status.exp : 0,
             144, 188, ctx);
-        DrawMenuStr(c_strGOLD[0], 32, 200, ctx);
-        DrawMenuInt(g_Status.gold, 144, 200, ctx);
-        DrawMenuStr(c_strLEVEL, 248, 40, ctx);
-        DrawMenuInt(g_Status.level, 304, 40, ctx);
-        DrawMenuStr(c_strSTATUS, 248, 56, ctx);
+        MenuDrawStr(c_strGOLD[0], 32, 200, ctx);
+        MenuDrawInt(g_Status.gold, 144, 200, ctx);
+        MenuDrawStr(c_strLEVEL, 248, 40, ctx);
+        MenuDrawInt(g_Status.level, 304, 40, ctx);
+        MenuDrawStr(c_strSTATUS, 248, 56, ctx);
         i = 37;
         if (g_Player.unk0C & PLAYER_STATUS_CURSE) {
             i = 40;
@@ -1335,20 +1336,20 @@ void DrawPauseMenu(s32 arg0) {
         if (IsAlucart()) {
             i = 45;
         }
-        DrawMenuStr(c_strGOLD[i - 7], 260, 68, ctx);
-        DrawMenuStr(c_strROOMS, 240, 150, ctx);
-        DrawMenuInt(g_RoomCount, 328, 150, ctx);
-        DrawMenuStr(c_strKILLS, 240, 164, ctx);
-        DrawMenuInt(g_Status.killCount, 328, 164, ctx);
-        DrawMenuStr(c_strTIME, 208, 192, ctx);
-        DrawMenuInt(g_Status.timerHours, 264, 192, ctx);
-        DrawMenuChar(CH(':'), 272, 192, ctx);
-        DrawMenuTime(g_Status.timerMinutes, 288, 192, ctx, 2);
-        DrawMenuChar(CH(':'), 296, 192, ctx);
-        DrawMenuTime(g_Status.timerSeconds, 312, 192, ctx, 2);
+        MenuDrawStr(c_strGOLD[i - 7], 260, 68, ctx);
+        MenuDrawStr(c_strROOMS, 240, 150, ctx);
+        MenuDrawInt(g_RoomCount, 328, 150, ctx);
+        MenuDrawStr(c_strKILLS, 240, 164, ctx);
+        MenuDrawInt(g_Status.killCount, 328, 164, ctx);
+        MenuDrawStr(c_strTIME, 208, 192, ctx);
+        MenuDrawInt(g_Status.timerHours, 264, 192, ctx);
+        MenuDrawChar(CH(':'), 272, 192, ctx);
+        MenuDrawTime(g_Status.timerMinutes, 288, 192, ctx, 2);
+        MenuDrawChar(CH(':'), 296, 192, ctx);
+        MenuDrawTime(g_Status.timerSeconds, 312, 192, ctx, 2);
     }
 
-    if (ctx == &g_MenuData.menus[1]) {
+    if (ctx == &g_MenuData.menus[MENU_DG_BG]) {
         x = 248;
         y = 88;
     } else {
@@ -1360,35 +1361,35 @@ void DrawPauseMenu(s32 arg0) {
     temp_var = g_Settings.buttonConfig[0];
     temp_s1 = temp_var;
     if (temp_s1 < 4) {
-        DrawMenuChar(g_ChActionButtons[temp_s1], x + 44, y, ctx);
+        MenuDrawChar(g_ChActionButtons[temp_s1], x + 44, y, ctx);
     } else {
-        DrawMenuChar(g_ChActionButtons[temp_s1], x + 40, y, ctx);
-        DrawMenuChar(g_ChShoulderButtons[temp_s1], x + 48, y, ctx);
+        MenuDrawChar(g_ChActionButtons[temp_s1], x + 40, y, ctx);
+        MenuDrawChar(g_ChShoulderButtons[temp_s1], x + 48, y, ctx);
     }
-    DrawMenuInt(g_Status.attackHands[0], x + 76, y, ctx);
+    MenuDrawInt(g_Status.attackHands[0], x + 76, y, ctx);
 
     temp_var = g_Settings.buttonConfig[1];
     temp_s1 = temp_var;
     if (temp_s1 < 4) {
-        DrawMenuChar(g_ChActionButtons[temp_s1], x + 44, y + 10, ctx);
+        MenuDrawChar(g_ChActionButtons[temp_s1], x + 44, y + 10, ctx);
     } else {
-        DrawMenuChar(g_ChActionButtons[temp_s1], x + 40, y + 10, ctx);
-        DrawMenuChar(g_ChShoulderButtons[temp_s1], x + 48, y + 10, ctx);
+        MenuDrawChar(g_ChActionButtons[temp_s1], x + 40, y + 10, ctx);
+        MenuDrawChar(g_ChShoulderButtons[temp_s1], x + 48, y + 10, ctx);
     }
 
-    DrawMenuInt(g_Status.attackHands[1], x + 76, y + 10, ctx);
+    MenuDrawInt(g_Status.attackHands[1], x + 76, y + 10, ctx);
 #if defined(VERSION_US)
     func_800F66BC(D_800A2D68[1], x, y + 20, ctx, 1);
 #elif defined(VERSION_HD)
     func_800F66BC(D_800A2D68[1], x, y + 20, ctx, 1);
 #endif
-    DrawMenuInt(g_Status.defenseEquip, x + 76, y + 26, ctx);
-    if (ctx == (&g_MenuData.menus[1])) {
+    MenuDrawInt(g_Status.defenseEquip, x + 76, y + 26, ctx);
+    if (ctx == (&g_MenuData.menus[MENU_DG_BG])) {
         x = 32;
         y = 120;
     } else {
 #if defined(VERSION_US)
-        DrawMenuStr(D_800A83AC[g_MenuNavigation.cursorEquip], 8, 40, ctx);
+        MenuDrawStr(D_800A83AC[g_MenuNavigation.cursorEquip], 8, 40, ctx);
 #elif defined(VERSION_HD)
         func_800F66BC(
             D_800A2D68[g_MenuNavigation.cursorEquip + 0x12], 24, 40, ctx, true);
@@ -1399,22 +1400,22 @@ void DrawPauseMenu(s32 arg0) {
 
     for (i = 0, temp_y = y; i < 4; temp_y += 12, i++) {
         s32* statsBase = &g_Status.statsBase[i];
-        DrawMenuStr((&c_strSTR)[i], x, temp_y, ctx);
-        DrawMenuInt(*statsBase, x + 44, temp_y, ctx);
+        MenuDrawStr((&c_strSTR)[i], x, temp_y, ctx);
+        MenuDrawInt(*statsBase, x + 44, temp_y, ctx);
         if (g_Status.statsEquip[i] != 0) {
             if (g_Status.statsEquip[i] > 0) {
-                DrawMenuChar(CH('+'), x + 52, temp_y, ctx);
+                MenuDrawChar(CH('+'), x + 52, temp_y, ctx);
                 phi_a0_5 = g_Status.statsEquip[i];
             } else {
-                DrawMenuChar(CH('-'), x + 52, temp_y, ctx);
+                MenuDrawChar(CH('-'), x + 52, temp_y, ctx);
                 phi_a0_5 = -g_Status.statsEquip[i];
             }
-            DrawMenuInt(phi_a0_5, x + 68, temp_y, ctx);
+            MenuDrawInt(phi_a0_5, x + 68, temp_y, ctx);
         }
     }
 }
 
-void DrawSpellMenu(MenuContext* ctx) {
+void MenuSpellsDraw(MenuContext* ctx) {
     s32 buttonCFG;
     s32 spell;
     s32 charNum;
@@ -1424,7 +1425,7 @@ void DrawSpellMenu(MenuContext* ctx) {
     const u8* comboPointer;
 #if defined(VERSION_US)
     s32 startXCoord = 176;
-    DrawMenuStr(c_strSpecial2, 104, 40, ctx);
+    MenuDrawStr(c_strSpecial2, 104, 40, ctx);
 #elif defined(VERSION_HD)
     const s32 startXCoord = 172;
     func_800F66BC(D_800A2D68[2], 136, 36, ctx, 1);
@@ -1451,53 +1452,53 @@ void DrawSpellMenu(MenuContext* ctx) {
         }
 #endif
         if (spell != SPELL_WING_SMASH) {
-            DrawMenuStr(g_SpellDefs[spell].combo, startXCoord, yCoord, ctx);
-            DrawMenuChar(CH('+'), startXCoord + (charNum * 8), yCoord, ctx);
+            MenuDrawStr(g_SpellDefs[spell].combo, startXCoord, yCoord, ctx);
+            MenuDrawChar(CH('+'), startXCoord + (charNum * 8), yCoord, ctx);
             buttonCFG = g_Settings.buttonConfig[0];
             charNum++;
             if (buttonCFG < 4) {
-                DrawMenuChar(g_ChActionButtons[buttonCFG],
+                MenuDrawChar(g_ChActionButtons[buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
             } else {
-                DrawMenuChar(g_ChActionButtons[buttonCFG],
+                MenuDrawChar(g_ChActionButtons[buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
                 charNum++;
-                DrawMenuChar(g_ChShoulderButtons[buttonCFG],
+                MenuDrawChar(g_ChShoulderButtons[buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
             }
             // This writes the word "or", because spells say '{Square} or
             // {Circle}'
             charNum++;
-            DrawMenuChar(CH('o'), startXCoord + (charNum * 8), yCoord, ctx);
+            MenuDrawChar(CH('o'), startXCoord + (charNum * 8), yCoord, ctx);
             charNum++;
-            DrawMenuChar(CH('r'), startXCoord + (charNum * 8), yCoord, ctx);
+            MenuDrawChar(CH('r'), startXCoord + (charNum * 8), yCoord, ctx);
             buttonCFG = g_Settings.buttonConfig[1];
             charNum++;
             if (buttonCFG < 4) {
-                DrawMenuChar(g_ChActionButtons[buttonCFG],
+                MenuDrawChar(g_ChActionButtons[buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
             } else {
-                DrawMenuChar(g_ChActionButtons[buttonCFG],
+                MenuDrawChar(g_ChActionButtons[buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
                 charNum++;
-                DrawMenuChar(g_ChShoulderButtons[buttonCFG],
+                MenuDrawChar(g_ChShoulderButtons[buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
             }
         } else {
-            DrawMenuChar(CH('?'), startXCoord, yCoord, ctx);
-            DrawMenuChar(CH('+'), startXCoord + 8, yCoord, ctx);
-            DrawMenuStr(g_WingSmashComboStr, startXCoord + 16, yCoord, ctx);
-            DrawMenuChar(
+            MenuDrawChar(CH('?'), startXCoord, yCoord, ctx);
+            MenuDrawChar(CH('+'), startXCoord + 8, yCoord, ctx);
+            MenuDrawStr(g_WingSmashComboStr, startXCoord + 16, yCoord, ctx);
+            MenuDrawChar(
                 CH('+'), startXCoord + 16 + (charNum * 8), yCoord, ctx);
-            DrawMenuChar(
+            MenuDrawChar(
                 CH('?'), startXCoord + 24 + (charNum * 8), yCoord, ctx);
         }
-        DrawMenuStr(c_strMP, 292, yCoord, ctx);
-        DrawMenuInt(g_SpellDefs[spell].mpUsage, 316, yCoord, ctx);
+        MenuDrawStr(c_strMP, 292, yCoord, ctx);
+        MenuDrawInt(g_SpellDefs[spell].mpUsage, 316, yCoord, ctx);
     }
     for (i = 0; i < 8; i++) {
         if (g_Status.spells[i] & 0x80) {
-            DrawMenuImg(ctx, 0x1C, 0x3C + 0x10 * i, 0xF0, 0x10U, 0,
+            MenuDrawImg(ctx, 0x1C, 0x3C + 0x10 * i, 0xF0, 0x10U, 0,
                         func_800F548C(-0x80 + i) & 0xFF, 0x1A1, 6, true, 0);
         }
     }
@@ -1510,7 +1511,7 @@ void DrawSpellMenu(MenuContext* ctx) {
     }
     // The colorIntensity gets passed to the MenuRect's R and G values, making
     // it a brighter or dimmer yellow.
-    DrawMenuRect(ctx, 26, (g_MenuNavigation.cursorSpells * 0x10) + 0x3B, 300,
+    MenuDrawRect(ctx, 26, (g_MenuNavigation.cursorSpells * 0x10) + 0x3B, 300,
                  17, colorIntensity, colorIntensity, 0);
 #elif defined(VERSION_HD)
     func_800F5E68(
@@ -1518,7 +1519,7 @@ void DrawSpellMenu(MenuContext* ctx) {
 #endif
 }
 
-void DrawMenuFamiliars(MenuContext* menu) {
+void MenuFamiliarsDraw(MenuContext* menu) {
     s32 i;
     s32 baseX;
     s32 x;
@@ -1527,7 +1528,7 @@ void DrawMenuFamiliars(MenuContext* menu) {
     s32 new_var;
 
 #if defined(VERSION_US)
-    DrawMenuStr(c_strALUCARD[97], 120, 40, menu);
+    MenuDrawStr(c_strALUCARD[97], 120, 40, menu);
 #elif defined(VERSION_HD)
     func_800F66BC(D_800A2D68[26], 136, 36, menu, 1);
 #endif
@@ -1543,43 +1544,43 @@ void DrawMenuFamiliars(MenuContext* menu) {
             x = baseX + 220;
         }
         strId = i + 46;
-        DrawMenuStr(c_strALUCARD[strId], x, y + 68, menu);
+        MenuDrawStr(c_strALUCARD[strId], x, y + 68, menu);
         strId = 43;
         if (i < FAM_STATS_YOUSEI) {
             if (1) {
                 strId = 8;
             }
         }
-        DrawMenuStr(c_strALUCARD[strId], x + 56, y + 68, menu);
-        DrawMenuInt(g_Status.statsFamiliars[i].level, x + 112, y + 68, menu);
+        MenuDrawStr(c_strALUCARD[strId], x + 56, y + 68, menu);
+        MenuDrawInt(g_Status.statsFamiliars[i].level, x + 112, y + 68, menu);
         strId = 44;
         if (i < FAM_STATS_YOUSEI) {
             strId = 5;
         }
-        DrawMenuStr(c_strALUCARD[strId], x + 56, y + 84, menu);
-        DrawMenuInt(
+        MenuDrawStr(c_strALUCARD[strId], x + 56, y + 84, menu);
+        MenuDrawInt(
             g_Status.statsFamiliars[i].exp % 100, x + 112, y + 84, menu);
         switch (i) {
         case FAM_STATS_BAT:
-            DrawMenuImg(menu, 16, 64, 24, 30, 104, 129, 0x1D2, 0x1E, 1, 0);
+            MenuDrawImg(menu, 16, 64, 24, 30, 104, 129, 0x1D2, 0x1E, 1, 0);
             break;
         case FAM_STATS_GHOST:
-            DrawMenuImg(menu, 176, 64, 40, 30, 32, 161, 0x1D1, 0x1E, 1, 0);
+            MenuDrawImg(menu, 176, 64, 40, 30, 32, 161, 0x1D1, 0x1E, 1, 0);
             break;
         case FAM_STATS_FAERIE:
-            DrawMenuImg(menu, 12, 104, 32, 30, 72, 129, 0x1D4, 0x1E, 1, 0);
+            MenuDrawImg(menu, 12, 104, 32, 30, 72, 129, 0x1D4, 0x1E, 1, 0);
             break;
         case FAM_STATS_DEMON:
-            DrawMenuImg(menu, 180, 104, 32, 30, 0, 225, 0x1D6, 0x1E, 1, 0);
+            MenuDrawImg(menu, 180, 104, 32, 30, 0, 225, 0x1D6, 0x1E, 1, 0);
             break;
         case FAM_STATS_SWORD:
-            DrawMenuImg(menu, 12, 144, 32, 54, 0, 129, 0x1D0, 0x1E, 1, 0);
+            MenuDrawImg(menu, 12, 144, 32, 54, 0, 129, 0x1D0, 0x1E, 1, 0);
             break;
         case FAM_STATS_YOUSEI:
-            DrawMenuImg(menu, 176, 144, 40, 30, 32, 129, 0x1D3, 0x1E, 1, 0);
+            MenuDrawImg(menu, 176, 144, 40, 30, 32, 129, 0x1D3, 0x1E, 1, 0);
             break;
         case FAM_STATS_NOSE_DEMON:
-            DrawMenuImg(menu, 180, 184, 32, 38, 0, 185, 0x1D5, 0x1E, 1, 0);
+            MenuDrawImg(menu, 180, 184, 32, 38, 0, 185, 0x1D5, 0x1E, 1, 0);
             break;
         }
     }
@@ -1600,7 +1601,7 @@ void func_800F82F4(void) {
     LoadImage(&dstRect, (u_long*)g_imgUnk8013C270->data);
 }
 
-void DrawSystemMenu(MenuContext* ctx) {
+void MenuSystemDraw(MenuContext* ctx) {
 #if defined(VERSION_US)
     const int Width = 128;
 #else
@@ -1615,19 +1616,19 @@ void DrawSystemMenu(MenuContext* ctx) {
                   g_MenuStep == 0x101);
 
     new_var = &c_strButton;
-    DrawMenuStr(*new_var, 0x20, 0x30, ctx);
+    MenuDrawStr(*new_var, 0x20, 0x30, ctx);
 
     strIdx = g_IsCloakLiningUnlocked ? 0x11 : 0x13;
     menuOptions = (&c_strButton) - 0x10;
-    DrawMenuStr(menuOptions[strIdx], 32, 64, ctx);
+    MenuDrawStr(menuOptions[strIdx], 32, 64, ctx);
 
     strIdx = g_IsCloakColorUnlocked ? 0x12 : 0x13;
-    DrawMenuStr(menuOptions[strIdx], 32, 80, ctx);
-    DrawMenuStr(c_strWindow, 32, 96, ctx);
-    DrawMenuStr(c_strSound, 32, 112, ctx);
+    MenuDrawStr(menuOptions[strIdx], 32, 80, ctx);
+    MenuDrawStr(c_strWindow, 32, 96, ctx);
+    MenuDrawStr(c_strSound, 32, 112, ctx);
 
     strIdx = g_IsTimeAttackUnlocked ? 0x24 : 0x13;
-    DrawMenuStr(menuOptions[strIdx], 32, 128, ctx);
+    MenuDrawStr(menuOptions[strIdx], 32, 128, ctx);
 }
 
 void func_800F84CC(void) {
@@ -1635,7 +1636,7 @@ void func_800F84CC(void) {
     s32 i;
     s32 primIndex;
 
-    for (i = 0; i < LEN(D_801377FC); i++) {
+    for (i = 0; i < NUM_MENU; i++) {
         D_801377FC[i] = func_800EDD9C(PRIM_G4, 1);
         prim = &g_PrimBuf[D_801377FC[i]];
         prim->blendMode = BLEND_VISIBLE;
@@ -1684,7 +1685,7 @@ void func_800F84CC(void) {
 void func_800F86E4(void) {
     s32 i;
 
-    for (i = 0; i < 16; i++) {
+    for (i = 0; i < NUM_MENU; i++) {
         FreePrimitives(D_801377FC[i]);
     }
 
@@ -1698,18 +1699,18 @@ void func_800F8754(MenuContext* menu, s32 x, s32 y) {
         D_8013784C = 1;
     }
 
-    DrawMenuStr(c_strSpells, x + 14, y + 20, menu);
+    MenuDrawStr(c_strSpells, x + 14, y + 20, menu);
     if (D_801375FC == 0) {
         D_8013784C = 1;
     } else {
         D_8013784C = 0;
     }
 
-    DrawMenuStr(c_strFamiliars, x + 2, y + 68, menu);
+    MenuDrawStr(c_strFamiliars, x + 2, y + 68, menu);
     D_8013784C = 0;
-    DrawMenuStr(c_strEquip, x + 18, y + 4, menu);
-    DrawMenuStr(c_strRelics, x + 14, y + 36, menu);
-    DrawMenuStr(c_strSystem, x + 14, y + 52, menu);
+    MenuDrawStr(c_strEquip, x + 18, y + 4, menu);
+    MenuDrawStr(c_strRelics, x + 14, y + 36, menu);
+    MenuDrawStr(c_strSystem, x + 14, y + 52, menu);
 }
 #elif defined(VERSION_HD)
 void func_800F8754(MenuContext* menu, s32 x, s32 y) {
@@ -1721,7 +1722,7 @@ void func_800F8754(MenuContext* menu, s32 x, s32 y) {
 }
 #endif
 
-void func_800F8858(MenuContext* context) {
+void MenuEquipSortDraw(MenuContext* context) {
 #if defined(VERSION_US)
     const int TextY = 8;
     const int UnkX = 72;
@@ -1739,7 +1740,7 @@ void func_800F8858(MenuContext* context) {
 
     for (; i < ITEM_END; i++) {
 #if defined(VERSION_US)
-        DrawMenuStr(pStrEquipTypes[g_Settings.equipOrderTypes[i]],
+        MenuDrawStr(pStrEquipTypes[g_Settings.equipOrderTypes[i]],
                     context->cursorX + 4, context->cursorY + y, context);
 #elif defined(VERSION_HD)
         func_800F66BC(
@@ -1748,12 +1749,12 @@ void func_800F8858(MenuContext* context) {
 #endif
         y += 16;
     }
-    func_800F5E68(context, D_80137618, context->cursorX + 2,
+    func_800F5E68(context, g_EquipOrderType, context->cursorX + 2,
                   context->cursorY + 4, UnkX, 16, 0, true);
 }
 
 void func_800F892C(s32 index, s32 x, s32 y, MenuContext* menu) {
-    DrawMenuImg(menu, x, y, 16, 16, (index & 7) * 16,
+    MenuDrawImg(menu, x, y, 16, 16, (index & 7) * 16,
                 ((index & 0xF8) * 2) | 0x80, index + 0x1D0, 0x1A, 1, 0);
 }
 
@@ -1812,12 +1813,12 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
 
         LoadEquipIcon(icon, palette, i);
         func_800F892C(i, myX - 16, myY - 4, ctx);
-        DrawMenuStr(strEquipName, myX, myY, ctx);
+        MenuDrawStr(strEquipName, myX, myY, ctx);
 
         if (D_801375CC == 0 && equipId != 0 ||
             D_801375CC != 0 && equipId != 0x1A && equipId != 0 &&
                 equipId != 0x30 && equipId != 0x39) {
-            DrawMenuInt(equipsAmount[equipId], myX + 128, myY, ctx);
+            MenuDrawInt(equipsAmount[equipId], myX + 128, myY, ctx);
         }
     }
 
@@ -1900,11 +1901,11 @@ void DrawConsumableCount(s32 itemId, s32 hand, MenuContext* ctx) {
         *str_idx++ = 0xFF;
         *str_idx++ = 0;
         // Draw it after the item name. X=224, Y = 30 + 13*hand
-        DrawMenuStr(&outstring, 224, (hand * 13) + 30, ctx);
+        MenuDrawStr(&outstring, 224, (hand * 13) + 30, ctx);
     }
 }
 
-void DrawMenu(void) {
+void MenuDraw(void) {
     u8 padding[32];
     s32 x;
     s32 y;
@@ -1933,7 +1934,7 @@ void DrawMenu(void) {
     s32 stuff;
     s32 stuffed;
 
-    for (i = 0; i < 0x10; i++) {
+    for (i = 0; i < NUM_MENU; i++) {
         prim = &g_PrimBuf[D_801377FC[i]];
         menu = &g_MenuData.menus[i];
         if (menu->unk1C == 2) {
@@ -2060,31 +2061,31 @@ void DrawMenu(void) {
         MenuDrawLine(cx, cy + ch - 1, cx + cw - 1, cy + ch - 1, i + 1);
 
         switch (i) {
-        case 0:
+        case MENU_DG_MAIN:
             func_800F6568(menu);
             func_800F8754(menu, x, y);
             break;
-        case 1:
-            DrawPauseMenu(1);
+        case MENU_DG_BG:
+            MenuDrawStats(1);
             break;
-        case 2:
-            DrawPauseMenu(2);
+        case MENU_DG_EQUIP_OVERVIEW:
+            MenuDrawStats(2);
             equipIndex = g_Status.equipment[0];
             equip = &g_EquipDefs[equipIndex];
-            DrawMenuStr(equip->name, 112, 30, menu);
+            MenuDrawStr(equip->name, 112, 30, menu);
             DrawConsumableCount(equipIndex, 0, menu);
             LoadEquipIcon(equip->icon, equip->iconPalette, 0x10);
 
             equipIndex = g_Status.equipment[1];
             equip = &g_EquipDefs[equipIndex];
-            DrawMenuStr(equip->name, 112, 43, menu);
+            MenuDrawStr(equip->name, 112, 43, menu);
             DrawConsumableCount(equipIndex, 1, menu);
             flag = equip->itemCategory == 5;
             LoadEquipIcon(equip->icon, equip->iconPalette, 0x11);
 
             for (j = 0; j < 5; j++) {
                 acc = &g_AccessoryDefs[g_Status.equipment[j + 2]];
-                DrawMenuStr(acc->name, 112, 56 + j * 13, menu);
+                MenuDrawStr(acc->name, 112, 56 + j * 13, menu);
                 LoadEquipIcon(acc->icon, acc->iconPalette, j + 0x12);
             }
 
@@ -2099,46 +2100,46 @@ void DrawMenu(void) {
             }
             func_800F6618(i, g_MenuStep != 0x40);
             break;
-        case 3:
+        case MENU_DG_EQUIP_SELECTOR:
             func_800F8990(menu, x, y);
-            DrawStatChanges();
+            MenuStatChangesDraw();
             break;
-        case 4:
+        case MENU_DG_INFO_BAR:
             func_800F5AE4(menu);
             break;
-        case 5:
+        case MENU_DG_RELICS:
             DrawRelicsMenu(menu);
             break;
-        case 6:
-            DrawSpellMenu(menu);
+        case MENU_DG_SPELLS:
+            MenuSpellsDraw(menu);
             break;
-        case 7:
-            DrawSystemMenu(menu);
+        case MENU_DG_SETTINGS:
+            MenuSystemDraw(menu);
             break;
-        case 8:
-            DrawMenuAlucardCloakPreview(menu);
-            DrawJosephsCloakMenu(menu);
+        case MENU_DG_CLOAK_COLOR:
+            MenuDrawAlucardCloakPreview(menu);
+            MenuJosephsCloakDraw(menu);
             break;
-        case 9:
-            DrawSettingsButton(menu);
+        case MENU_DG_CFG_BUTTONS:
+            MenuButtonConfigDraw(menu);
             break;
-        case 10:
-            DrawSettingsReverseCloak(menu);
+        case MENU_DG_CLOAK_LINING:
+            MenuReverseCloakDraw(menu);
             break;
-        case 11:
-            DrawSettingsSound(menu);
+        case MENU_DG_CFG_SOUND:
+            MenuSoundConfigDraw(menu);
             break;
-        case 12:
-            func_800F6BEC(menu);
+        case MENU_DG_WINDOW_COLORS:
+            MenuWindowColorsDraw(menu);
             break;
-        case 13:
-            DrawTimeAttackMenu(menu);
+        case MENU_DG_TIME_ATTACK:
+            MenuTimeAttackDraw(menu);
             break;
-        case 14:
-            func_800F8858(menu);
+        case MENU_DG_EQUIP_SORT:
+            MenuEquipSortDraw(menu);
             break;
-        case 15:
-            DrawMenuFamiliars(menu);
+        case MENU_DG_FAMILIARS:
+            MenuFamiliarsDraw(menu);
             break;
         }
     }
@@ -2166,7 +2167,7 @@ void func_800F96F4(void) { // !Fake:
 
     new_var = D_80137848;
     poly = &g_PrimBuf[D_80137840];
-    temp_a2 = g_MenuData.menus[3].unk1C == 0;
+    temp_a2 = g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk1C == 0;
     temp = D_80137844;
 
     if ((D_80137844[0] != 0) && (temp_a2 != 0)) {
@@ -2566,27 +2567,28 @@ void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2) {
             if (g_pads[0].repeat & PAD_L1) {
                 if (*nav >= ItemsPerPage) {
                     *nav -= ItemsPerPage;
-                    g_MenuData.menus[3].unk16 += Unk16;
-                    if (g_MenuData.menus[3].unk16 > 0) {
-                        g_MenuData.menus[3].unk16 = 0;
+                    g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 += Unk16;
+                    if (g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 > 0) {
+                        g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 = 0;
                     }
                 } else {
                     *nav = 0;
-                    g_MenuData.menus[3].unk16 = 0;
+                    g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 = 0;
                 }
             }
             if (g_pads[0].repeat & PAD_R1) {
                 if (*nav < nOptions - ItemsPerPage) {
                     *nav += ItemsPerPage;
                     limit = ((nOptions - 1) / 2 - 5) * -ItemsPerPage;
-                    g_MenuData.menus[3].unk16 -= Unk16;
-                    if (g_MenuData.menus[3].unk16 < limit) {
-                        g_MenuData.menus[3].unk16 = limit;
+                    g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 -= Unk16;
+                    if (g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 <
+                        limit) {
+                        g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 = limit;
                     }
                 } else {
                     *nav = nOptions - 1;
                     if (nOptions >= 13) {
-                        g_MenuData.menus[3].unk16 =
+                        g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 =
                             (*nav / 2 - 5) * -ItemsPerPage;
                     }
                 }
@@ -2607,7 +2609,7 @@ void func_800FA3C4(s32 cursorIndex, s32 arg1, s32 arg2) {
     s32 left;
     s32 top;
     s32 half_arg0;
-    MenuContext* menu = &g_MenuData.menus[3];
+    MenuContext* menu = &g_MenuData.menus[MENU_DG_EQUIP_SELECTOR];
 
     if (menu->unk1C != 0) {
         return;
@@ -2656,7 +2658,7 @@ void MenuEquipHandlePageScroll(s32 arg0) {
     s32 nItems;
     s32 limit;
     s32* cursorIndex;
-    MenuContext* menu = &g_MenuData.menus[3];
+    MenuContext* menu = &g_MenuData.menus[MENU_DG_EQUIP_SELECTOR];
 
     if (D_801375CC == 0) {
         cursorIndex = &g_MenuNavigation.cursorEquipType[HAND_TYPE];
@@ -2828,19 +2830,23 @@ void func_800FAB1C(void) {
     }
 }
 
-void func_800FAB8C(s32 menuIndex) {
-    g_MenuData.menus[menuIndex].unk1C = 1;
-    g_MenuData.menus[menuIndex].unk1D = 0;
+void MenuHide(s32 menuDialogue) {
+    g_MenuData.menus[menuDialogue].unk1C = 1;
+    g_MenuData.menus[menuDialogue].unk1D = 0;
 }
 
-void func_800FABBC(s32 menuIndex) {
-    g_MenuData.menus[menuIndex].unk1C = 3;
-    g_MenuData.menus[menuIndex].unk1D = 0;
+void MenuShow(s32 menuDialogue) {
+    g_MenuData.menus[menuDialogue].unk1C = 3;
+    g_MenuData.menus[menuDialogue].unk1D = 0;
 }
 
-void func_800FABEC(s32 menuIndex) { g_MenuData.menus[menuIndex].unk1C = 0; }
+void func_800FABEC(s32 menuDialogue) {
+    g_MenuData.menus[menuDialogue].unk1C = 0;
+}
 
-void func_800FAC0C(s32 menuIndex) { g_MenuData.menus[menuIndex].unk1C = 2; }
+void func_800FAC0C(s32 menuDialogue) {
+    g_MenuData.menus[menuDialogue].unk1C = 2;
+}
 
 void func_800FAC30(void) {
     D_80137844[0] = 0;
@@ -2930,11 +2936,13 @@ void func_800FAF44(s32 isAccessory) {
             var_a1++;
         }
 
-        g_MenuData.menus[3].h = g_MenuData.menus[3].unk16 =
-            g_MenuNavigation.scrollEquipType[HAND_TYPE];
+        g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h =
+            g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 =
+                g_MenuNavigation.scrollEquipType[HAND_TYPE];
     } else {
-        g_MenuData.menus[3].h = g_MenuData.menus[3].unk16 =
-            g_MenuNavigation.scrollEquipType[HEAD_TYPE + D_801375D4];
+        g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h =
+            g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 =
+                g_MenuNavigation.scrollEquipType[HEAD_TYPE + D_801375D4];
         for (i = 0; i < 90; i++) {
             if (g_AccessoryDefs[i].equipType == D_801375D4) {
                 *var_a1 = i;
@@ -2948,7 +2956,7 @@ void func_800FB004(void) {
     s32 temp_a1 = func_800FD6C4(D_801375CC);
     s32 temp_v0;
 
-    if (((-g_MenuData.menus[3].h) / 12) != 0) {
+    if (((-g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h) / 12) != 0) {
         if (*D_80137844 == 0) {
             *D_80137844 = 1;
         }
@@ -2956,7 +2964,8 @@ void func_800FB004(void) {
         *D_80137844 = 0;
     }
 
-    temp_v0 = -g_MenuData.menus[3].h + g_MenuData.menus[3].cursorH;
+    temp_v0 = -g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h +
+              g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].cursorH;
 
     if ((temp_v0 / 12) < (temp_a1 / 2)) {
         if (D_80137848[0] == 0) {
@@ -3017,7 +3026,7 @@ void func_800FB9BC(void) {
     MenuContext* context;
 
     context = &g_MenuData.menus[0];
-    for (i = 0; i < 16; i++, context++) {
+    for (i = 0; i < NUM_MENU; i++, context++) {
         context->cursorX = context->unk1.x = g_MenuInit[i].cursorX;
         context->cursorY = context->unk1.y = g_MenuInit[i].cursorY;
         context->cursorW = context->unk1.w = g_MenuInit[i].cursorW;
@@ -3040,14 +3049,14 @@ void func_800FBAC4(void) {
     s32* var_a1;
     s32 importantcategory;
 
-    for (i = D_80137618; i > 0; i--) {
+    for (i = g_EquipOrderType; i > 0; i--) {
         // j is used as a temp to swap these two variables.
         j = g_Settings.equipOrderTypes[i];
         g_Settings.equipOrderTypes[i] = g_Settings.equipOrderTypes[i - 1];
         g_Settings.equipOrderTypes[i - 1] = j;
     }
 
-    D_80137618 = 0;
+    g_EquipOrderType = 0;
     var_a1 = D_801375D8;
     *var_a1++ = 0;
     for (i = 0; i < ITEM_END; i++) {
@@ -3087,7 +3096,7 @@ void func_800FBAC4(void) {
 #endif
 #define PAD_MENU_BACK_ALT (PAD_MENU_SELECT | PAD_MENU_BACK)
 
-void HandleMenu(void) {
+void MenuHandle(void) {
     s32 temp_s1;
     s32 var_a0;
     s32 id;
@@ -3177,8 +3186,8 @@ block_4:
             func_800F98AC(*D_800A2D14, 0x100);
             func_800F98AC(*D_800A2D18, 1);
 #endif
-            func_800FABEC(0);
-            func_800FABEC(1);
+            func_800FABEC(MENU_DG_MAIN);
+            func_800FABEC(MENU_DG_BG);
             D_80137608 = 0;
             g_IsSelectingEquipment = 0;
             g_MenuStep = MENU_STEP_OPENED;
@@ -3329,15 +3338,15 @@ block_4:
             g_MenuStep = MENU_STEP_EXIT_BEGIN;
             goto block_4;
         }
-        MenuHandleCursorInput(&g_MenuNavigation, 5, 0);
+        MenuHandleCursorInput(&g_MenuNavigation.cursorMain, 5, 0);
         if (g_pads[0].tapped & PAD_MENU_SELECT) {
             switch (g_MenuNavigation.cursorMain) {
             case 0:
-                func_800FABBC(2);
+                MenuShow(MENU_DG_EQUIP_OVERVIEW);
                 func_800FB0FC();
                 func_800FADC0();
-                func_800FABBC(3);
-                func_800FABBC(4);
+                MenuShow(MENU_DG_EQUIP_SELECTOR);
+                MenuShow(MENU_DG_INFO_BAR);
                 g_MenuStep = MENU_STEP_EQUIP;
                 break;
             case 1:
@@ -3362,30 +3371,30 @@ block_4:
                 PlaySfx(SE_UI_ERROR);
                 break;
             }
-            func_800FAB8C(0);
-            func_800FAB8C(1);
+            MenuHide(MENU_DG_MAIN);
+            MenuHide(MENU_DG_BG);
             PlaySfx(SE_UI_CONFIRM);
         }
         break;
     case MENU_STEP_FAMILIAR_INIT:
         func_800EA5E4(0x21);
         func_800EAEA4();
-        func_800FABBC(0xF);
+        MenuShow(MENU_DG_FAMILIARS);
         g_MenuStep++;
         break;
     case MENU_STEP_FAMILIAR:
         if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
-            func_800FABBC(0);
-            func_800FABBC(1);
+            MenuShow(MENU_DG_MAIN);
+            MenuShow(MENU_DG_BG);
             func_800EAEA4();
-            func_800FAB8C(15);
+            MenuHide(MENU_DG_FAMILIARS);
             g_MenuStep = MENU_STEP_OPENED;
         }
         break;
     case MENU_STEP_SYSTEM_INIT:
         func_800F82F4();
-        func_800FABBC(4);
-        func_800FABBC(7);
+        MenuShow(MENU_DG_INFO_BAR);
+        MenuShow(MENU_DG_SETTINGS);
         g_MenuStep++;
     case MENU_STEP_SYSTEM:
         MenuHandleCursorInput(&g_MenuNavigation.cursorSettings, 6, 0);
@@ -3402,41 +3411,41 @@ block_4:
         }
         ShowText(D_800A2D48[i], 2);
         if (g_pads[0].tapped & PAD_MENU_BACK) {
-            func_800FABBC(0);
-            func_800FABBC(1);
-            func_800FAB8C(4);
-            func_800FAB8C(7);
+            MenuShow(MENU_DG_MAIN);
+            MenuShow(MENU_DG_BG);
+            MenuHide(MENU_DG_INFO_BAR);
+            MenuHide(MENU_DG_SETTINGS);
             g_MenuStep = MENU_STEP_OPENED;
         } else if (g_pads[0].tapped & PAD_MENU_SELECT) {
             switch (g_MenuNavigation.cursorSettings) {
             case 0:
-                func_800FABBC(9);
+                MenuShow(MENU_DG_CFG_BUTTONS);
                 g_MenuStep = MENU_STEP_SYSTEM_BUTTONS;
                 break;
             case 1:
                 if (g_IsCloakLiningUnlocked) {
-                    func_800FABBC(10);
+                    MenuShow(MENU_DG_CLOAK_LINING);
                     g_MenuStep = MENU_STEP_SYSTEM_CLOAK_LINING;
                 }
                 break;
             case 2:
                 if (g_IsCloakColorUnlocked) {
-                    func_800FABEC(8);
+                    func_800FABEC(MENU_DG_CLOAK_COLOR);
                     g_MenuStep = MENU_STEP_SYSTEM_CLOAK_COLOR;
                 }
                 break;
             case 3:
-                func_800FABBC(12);
+                MenuShow(MENU_DG_WINDOW_COLORS);
                 g_MenuStep = MENU_STEP_SYSTEM_WINDOW_COLOR;
                 break;
             case 4:
-                func_800FABBC(11);
+                MenuShow(MENU_DG_CFG_SOUND);
                 g_MenuStep = MENU_STEP_SYSTEM_SOUND;
                 break;
             case 5:
                 if (g_IsTimeAttackUnlocked) {
                     SortTimeAttackEntries();
-                    func_800FABBC(13);
+                    MenuShow(MENU_DG_TIME_ATTACK);
                     g_MenuStep = MENU_STEP_SYSTEM_TIME_ATTACK;
                 }
                 break;
@@ -3455,15 +3464,15 @@ block_4:
         if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
             if (CheckIfAllButtonsAreAssigned()) {
                 PlaySfx(SE_UI_CONFIRM);
-                func_800FAB8C(9);
+                MenuHide(MENU_DG_CFG_BUTTONS);
                 g_MenuStep = MENU_STEP_SYSTEM;
             } else {
             block_117:
                 func_800F9808(2);
 #if defined(VERSION_US)
-                func_800F99B8("Assign the function to each button．", 2, 0);
+                ShowText("Assign the function to each button．", 2);
 #elif defined(VERSION_HD)
-                func_800F98AC("すべてのボタンを割り当ててください。", 2);
+                ShowText("すべてのボタンを割り当ててください。", 2);
 #endif
                 PlaySfx(SE_UI_ERROR);
             }
@@ -3475,16 +3484,16 @@ block_4:
             break;
         }
         PlaySfx(SE_UI_CONFIRM);
-        func_800FAB8C(10);
+        MenuHide(MENU_DG_CLOAK_LINING);
         g_MenuStep = MENU_STEP_SYSTEM;
         break;
     case MENU_STEP_SYSTEM_CLOAK_COLOR:
         MenuHandleCursorInput(&g_MenuNavigation.cursorCloak, 6, 0);
         MenuHandleCursorInput(
-            &g_Settings.cloakColors[g_MenuNavigation.cursorCloak], 0x20, 5);
+            &g_Settings.cloakColors[g_MenuNavigation.cursorCloak], 32, 5);
         if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
             PlaySfx(SE_UI_CONFIRM);
-            func_800FAC0C(8);
+            func_800FAC0C(MENU_DG_CLOAK_COLOR);
             g_MenuStep = MENU_STEP_SYSTEM;
         }
         break;
@@ -3495,7 +3504,7 @@ block_4:
             5);
         if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
             PlaySfx(SE_UI_CONFIRM);
-            func_800FAB8C(12);
+            MenuHide(MENU_DG_WINDOW_COLORS);
             g_MenuStep = MENU_STEP_SYSTEM;
         }
         break;
@@ -3504,7 +3513,7 @@ block_4:
         func_800E493C();
         if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
             PlaySfx(SE_UI_CONFIRM);
-            func_800FAB8C(11);
+            MenuHide(MENU_DG_CFG_SOUND);
             g_MenuStep = MENU_STEP_SYSTEM;
         }
         break;
@@ -3512,7 +3521,7 @@ block_4:
         MenuHandleCursorInput(&g_MenuNavigation.cursorTimeAttack, 0x10, 3);
         if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
             PlaySfx(SE_UI_CONFIRM);
-            func_800FAB8C(13);
+            MenuHide(MENU_DG_TIME_ATTACK);
             g_MenuStep = MENU_STEP_SYSTEM;
         }
         break;
@@ -3521,8 +3530,8 @@ block_4:
         g_MenuStep++;
         break;
     case MENU_STEP_RELIC_INIT_2:
-        func_800FABBC(4);
-        func_800FABBC(5);
+        MenuShow(MENU_DG_INFO_BAR);
+        MenuShow(MENU_DG_RELICS);
         func_800F9808(2);
         id = g_MenuNavigation.cursorRelic;
 #if defined(VERSION_US)
@@ -3604,25 +3613,25 @@ block_4:
             LoadEquipIcon(g_RelicDefs[id].unk08, g_RelicDefs[id].unk0A, 0x1F);
         }
         if (g_pads[0].tapped & PAD_MENU_BACK) {
-            func_800FABBC(0);
-            func_800FABBC(1);
-            func_800FAB8C(4);
-            func_800FAB8C(5);
+            MenuShow(MENU_DG_MAIN);
+            MenuShow(MENU_DG_BG);
+            MenuHide(MENU_DG_INFO_BAR);
+            MenuHide(MENU_DG_RELICS);
             D_80137608 = 0;
             g_MenuStep = MENU_STEP_OPENED;
         }
 
         break;
     case MENU_STEP_SPELL_INIT:
-        func_800FABBC(4);
-        func_800FABBC(6);
+        MenuShow(MENU_DG_INFO_BAR);
+        MenuShow(MENU_DG_SPELLS);
         func_800F9808(2);
         func_800F9F40();
 #if defined(VERSION_US)
         func_800F9808(2);
         id = g_Status.spells[g_MenuNavigation.cursorSpells];
         id ^= SPELL_FLAG_KNOWN;
-        func_800F99B8(g_SpellDefs[id].description, 2, 0);
+        ShowText(g_SpellDefs[id].description, 2);
 #endif
         g_MenuStep++;
         break;
@@ -3640,10 +3649,10 @@ block_4:
             ShowText(g_SpellDefs[id].description, 2);
         }
         if (g_pads[0].tapped & PAD_MENU_BACK) {
-            func_800FABBC(0);
-            func_800FABBC(1);
-            func_800FAB8C(4);
-            func_800FAB8C(6);
+            MenuShow(MENU_DG_MAIN);
+            MenuShow(MENU_DG_BG);
+            MenuHide(MENU_DG_INFO_BAR);
+            MenuHide(MENU_DG_SPELLS);
             g_MenuStep = MENU_STEP_OPENED;
         }
         break;
@@ -3706,15 +3715,15 @@ block_4:
         }
         if (g_pads[0].tapped & PAD_MENU_SORT && D_801375CC == 0) {
             PlaySfx(SE_UI_CONFIRM);
-            func_800FABBC(14);
+            MenuShow(MENU_DG_EQUIP_SORT);
             g_MenuStep = MENU_STEP_EQUIP_SORT;
-            D_80137618 = 0;
+            g_EquipOrderType = 0;
         } else if (g_pads[0].tapped & PAD_MENU_BACK) {
-            func_800FAB8C(2);
-            func_800FAB8C(3);
-            func_800FAB8C(4);
-            func_800FABBC(0);
-            func_800FABBC(1);
+            MenuHide(MENU_DG_EQUIP_OVERVIEW);
+            MenuHide(MENU_DG_EQUIP_SELECTOR);
+            MenuHide(MENU_DG_INFO_BAR);
+            MenuShow(MENU_DG_MAIN);
+            MenuShow(MENU_DG_BG);
             *D_80137844 = 0;
             *D_80137848 = 0;
             D_80137608 = 0;
@@ -3732,16 +3741,16 @@ block_4:
         break;
     case MENU_STEP_EQUIP_SORT:
         func_800FB0FC();
-        MenuHandleCursorInput(&D_80137618, 11, 0);
+        MenuHandleCursorInput(&g_EquipOrderType, 11, 0);
         MenuEquipHandlePageScroll(0);
         if (g_pads[0].tapped & PAD_MENU_SELECT_ALT) {
             PlaySfx(SE_UI_CONFIRM);
             func_800FBAC4();
-            g_MenuData.menus[3].unk16 = 0;
+            g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 = 0;
             g_MenuNavigation.cursorEquipType[0] = 0;
             func_800FB0FC();
         } else if (g_pads[0].tapped & PAD_MENU_BACK) {
-            func_800FAB8C(14);
+            MenuHide(MENU_DG_EQUIP_SORT);
             g_MenuStep = MENU_STEP_EQUIP;
         }
         break;
@@ -3803,7 +3812,7 @@ block_4:
     }
     if (g_MenuStep >= MENU_STEP_OPENED ||
         g_MenuStep >= MENU_STEP_EXIT_BEGIN && g_MenuStep < MENU_STEP_EXIT_5) {
-        DrawMenu();
+        MenuDraw();
         func_800F9690();
         func_800F96F4();
     }
