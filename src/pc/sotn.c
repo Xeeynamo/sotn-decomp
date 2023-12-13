@@ -14,7 +14,29 @@ SpellDef g_SpellDefs[0x100] = {0};
 void (*D_80170000)(s32 arg0); // ServantDesc D_80170000 = {0};
 Weapon D_8017A000 = {0};
 Weapon D_8017D000 = {0};
+u8 g_DemoRecordingBuffer[DEMO_MAX_LEN];
 extern bool g_IsQuitRequested;
+
+extern GfxBank g_FakeGfxBank;
+GfxBank** g_GfxStageBank[0x40] = {
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
+};
+extern UnkStructClut* D_800A3BB8[];
 
 void StageOvlCb() {
     SetGameState(Game_NowLoading);
@@ -126,10 +148,10 @@ bool InitGame(void) {
     api.o.InitRoomEntities = StageOvlCb;
     api.o.rooms = NULL;
     api.o.spriteBanks = NULL;
-    api.o.cluts = NULL;
+    api.o.cluts = D_800A3BB8;
     api.o.unk1C = NULL;
     api.o.tileLayers = NULL;
-    api.o.gfxBanks = NULL;
+    api.o.gfxBanks = g_GfxStageBank;
     api.o.unk28 = NULL;
     api.o.unk2c = NULL;
     api.o.unk30 = NULL;
@@ -156,6 +178,8 @@ bool InitGame(void) {
         dummy.description = g_RelicDummy.desc;
         memcpy(&g_AccessoryDefs[i], &dummy, sizeof(dummy));
     }
+
+    D_80137590 = g_DemoRecordingBuffer;
 
     return true;
 }
