@@ -120,11 +120,19 @@ typedef struct {
     /* 0x4 */ u_long code[15];
 } DR_ENV; /* Packed Drawing Environment, size = 0x40 */
 
+#ifndef VERSION_PC
 typedef struct {
     unsigned addr : 24;
     unsigned len : 8;
     u_char r0, g0, b0, code;
 } P_TAG;
+#else
+typedef struct {
+    void* addr;
+    s32 len;
+    u_char r0, g0, b0, code;
+} P_TAG;
+#endif
 
 typedef struct {
     u_char r0, g0, b0, code;
