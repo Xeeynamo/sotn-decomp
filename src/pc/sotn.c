@@ -14,6 +14,7 @@ SpellDef g_SpellDefs[0x100] = {0};
 void (*D_80170000)(s32 arg0); // ServantDesc D_80170000 = {0};
 Weapon D_8017A000 = {0};
 Weapon D_8017D000 = {0};
+u8 g_DemoRecordingBuffer[DEMO_MAX_LEN];
 extern bool g_IsQuitRequested;
 
 extern GfxBank g_FakeGfxBank;
@@ -177,6 +178,8 @@ bool InitGame(void) {
         dummy.description = g_RelicDummy.desc;
         memcpy(&g_AccessoryDefs[i], &dummy, sizeof(dummy));
     }
+
+    D_80137590 = g_DemoRecordingBuffer;
 
     return true;
 }

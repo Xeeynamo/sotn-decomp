@@ -265,6 +265,8 @@ u16 D_80137478[0x20];
 u16 D_801374B8[0x20];
 u16 D_801374F8[0x20];
 u16 D_80137538[0x20];
+u8* D_80137590;
+s32 D_80137594;
 
 u8 g_ChActionButtons[];
 u8 g_ChShoulderButtons[];
@@ -507,9 +509,7 @@ void func_800FDE00(void) { NOT_IMPLEMENTED; }
 
 s32 func_800F16D0(void) { NOT_IMPLEMENTED; }
 
-void DemoInit(s32) { NOT_IMPLEMENTED; }
-
-void DemoUpdate(void) { NOT_IMPLEMENTED; }
+void func_800F53A4(void) { NOT_IMPLEMENTED; }
 
 void func_801024DC(void) { NOT_IMPLEMENTED; }
 
