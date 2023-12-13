@@ -34,7 +34,7 @@ void func_8015E7B4(Unkstruct_8010BF64* arg0) { // !FAKE:
 INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015E800);
 
 void func_8015EE28(void) {
-    Collider sp10;
+    Collider collider;
     s32 temp_fp;
     u32 temp_s0;
     s32 temp_v1;
@@ -48,7 +48,7 @@ void func_8015EE28(void) {
     s16 argX;
     s16 argY;
 
-    u32 sp10effects;
+    u32 collidereffects;
 
     u16* yPosPtr = &PLAYER.posY.i.hi;
     u16* xPosPtr = &PLAYER.posX.i.hi;
@@ -73,9 +73,9 @@ void func_8015EE28(void) {
             argX = *xPosPtr + D_801545E4[i].unk0;
             argY = *yPosPtr + D_801545E4[i].unk2 +
                    g_Player.colliders2[i].unk10 + 1;
-            g_api.CheckCollision(argX, argY, &sp10, 0);
-            sp10effects = sp10.effects;
-            if (!(sp10effects & 1)) {
+            g_api.CheckCollision(argX, argY, &collider, 0);
+            collidereffects = collider.effects;
+            if (!(collidereffects & 1)) {
                 if ((g_Player.colliders2[i].effects != 1) ||
                     (PLAYER.velocityY <= 0)) {
                     *vram_ptr |= 2;
@@ -90,30 +90,30 @@ void func_8015EE28(void) {
                 }
                 continue;
             }
-            if ((sp10.effects & 0x803) == 0x801) {
+            if ((collider.effects & 0x803) == 0x801) {
                 if (i < 2) {
-                    *vram_ptr |= (0x802 | ((sp10effects >> 4) & 0x700));
+                    *vram_ptr |= (0x802 | ((collidereffects >> 4) & 0x700));
                     if (!(*vram_ptr & 1)) {
                         newY = *yPosPtr + 1 +
-                               (g_Player.colliders2[i].unk10 + sp10.unk20);
+                               (g_Player.colliders2[i].unk10 + collider.unk20);
                         *yPosPtr = newY;
                     }
                     return;
                 }
-                if ((i == 2) && ((sp10effects & 0x4801) == 0x801)) {
-                    g_Player.colliders[2].effects = sp10effects;
+                if ((i == 2) && ((collidereffects & 0x4801) == 0x801)) {
+                    g_Player.colliders[2].effects = collidereffects;
                     g_Player.colliders[2].unk8 = g_Player.colliders[2].unk10;
                 }
-                if ((i == 3) && ((sp10effects & 0x4801) == 0x4801)) {
-                    g_Player.colliders[3].effects = sp10effects;
+                if ((i == 3) && ((collidereffects & 0x4801) == 0x4801)) {
+                    g_Player.colliders[3].effects = collidereffects;
                     g_Player.colliders[3].unk8 = g_Player.colliders[3].unk10;
                 }
             }
-            if ((sp10effects & 0x800) == 0) {
-                *vram_ptr |= (0x802 | ((sp10effects >> 4) & 0x700));
+            if ((collidereffects & 0x800) == 0) {
+                *vram_ptr |= (0x802 | ((collidereffects >> 4) & 0x700));
                 if (!(*vram_ptr & 1)) {
                     newY = *yPosPtr + 1 +
-                           (g_Player.colliders2[i].unk10 + sp10.unk20);
+                           (g_Player.colliders2[i].unk10 + collider.unk20);
                     *yPosPtr = newY;
                 }
                 return;
@@ -134,8 +134,8 @@ void func_8015EE28(void) {
     }
     argX = *xPosPtr + D_801545E4[0].unk0;
     argY = (*yPosPtr + D_801545E4[0].unk2) - 0xA;
-    g_api.CheckCollision(argX, argY, &sp10, 0);
-    if ((sp10.effects & 1) != 0) {
+    g_api.CheckCollision(argX, argY, &collider, 0);
+    if ((collider.effects & 1) != 0) {
         return;
     }
     for (i = 2; i < 4; i++) {
@@ -160,11 +160,11 @@ void func_8015EE28(void) {
             if ((temp_s0 & 0x4000) == var_a0) {
                 argX = var_a1 + (*xPosPtr + D_801545E4[i].unk0);
                 argY = *yPosPtr + D_801545E4[i].unk2;
-                g_api.CheckCollision(argX, argY, &sp10, 0);
-                if (sp10.effects & 1) {
+                g_api.CheckCollision(argX, argY, &collider, 0);
+                if (collider.effects & 1) {
                     *vram_ptr |= temp_fp;
                     if (!(*vram_ptr & 1)) {
-                        *yPosPtr += sp10.unk20;
+                        *yPosPtr += collider.unk20;
                     }
                     return;
                 }
@@ -172,10 +172,11 @@ void func_8015EE28(void) {
                 argX = var_a1 + (*xPosPtr + D_801545E4[i].unk0);
                 argY =
                     *yPosPtr + D_801545E4[i].unk2 + g_Player.colliders2[i].unk8;
-                g_api.CheckCollision(argX, argY, &sp10, 0);
-                if ((sp10.effects & 1)) {
+                g_api.CheckCollision(argX, argY, &collider, 0);
+                if ((collider.effects & 1)) {
                     if (!(*vram_ptr & 1)) {
-                        *yPosPtr += sp10.unk20 + g_Player.colliders2[i].unk8;
+                        *yPosPtr +=
+                            collider.unk20 + g_Player.colliders2[i].unk8;
                     }
                     *vram_ptr |= temp_fp;
                     return;
