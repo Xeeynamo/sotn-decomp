@@ -174,7 +174,9 @@ typedef struct Primitive {
 #define WEAPON1_PTR 0x8017D000
 #define STAGE_PRG_PTR 0x80180000
 #define CASTLE_MAP_PTR 0x801E0000
+#ifndef DEMO_KEY_PTR
 #define DEMO_KEY_PTR 0x801E8000
+#endif
 #define SIM_CHR0 0x80280000
 #define SIM_CHR1 0x80284000
 #define SIM_PTR 0x80280000
@@ -230,6 +232,9 @@ typedef struct Primitive {
 // e.g. _S("I am a Symphony of the Night encoded string")
 #define _S(x) (x)
 #endif
+
+#define DEMO_KEY_LEN 3
+#define DEMO_MAX_LEN 0x2000
 
 #define FONT_W 8               // small font size used for dialogues and menu
 #define FONT_H 8               // small font size used for dialogues and menu
@@ -1547,9 +1552,6 @@ extern s32 playerX;
 extern s32 playerY;
 extern u32 g_randomNext;
 extern s32 D_80096ED8[];
-extern u32 D_80097364;
-extern s32 D_800973B4;
-extern POLY_GT4 D_800973B8[];
 extern s8 D_80097B98;
 extern s8 D_80097B99;
 extern s32 D_800973EC; // flag to check if the menu is shown

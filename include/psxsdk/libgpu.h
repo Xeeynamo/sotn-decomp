@@ -84,7 +84,14 @@
 #define catPrim(p0, p1) setaddr(p0, p1)
 #define termPrim(p) setaddr(p, 0xffffffff)
 
+#define setLineG2(p) setlen(p, 4), setcode(p, 0x50)
+#define setPolyGT3(p) setlen(p, 9), setcode(p, 0x34)
+#define setPolyG4(p) setlen(p, 8), setcode(p, 0x38)
+#define setPolyGT4(p) setlen(p, 12), setcode(p, 0x3c)
+#define setSprt(p) setlen(p, 4), setcode(p, 0x64)
 #define setSprt16(p) setlen(p, 3), setcode(p, 0x7c)
+#define setSprt8(p) setlen(p, 3), setcode(p, 0x74)
+#define setTile(p) setlen(p, 3), setcode(p, 0x60)
 
 #define setSemiTrans(p, abe)                                                   \
     ((abe) ? setcode(p, getcode(p) | 0x02) : setcode(p, getcode(p) & ~0x02))
@@ -113,11 +120,19 @@ typedef struct {
     /* 0x4 */ u_long code[15];
 } DR_ENV; /* Packed Drawing Environment, size = 0x40 */
 
+#ifndef VERSION_PC
 typedef struct {
     unsigned addr : 24;
     unsigned len : 8;
     u_char r0, g0, b0, code;
 } P_TAG;
+#else
+typedef struct {
+    void* addr;
+    s32 len;
+    u_char r0, g0, b0, code;
+} P_TAG;
+#endif
 
 typedef struct {
     u_char r0, g0, b0, code;

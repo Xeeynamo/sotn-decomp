@@ -855,41 +855,31 @@ s32 AllocPrimitives(u8 primType, s32 count) {
     return -1;
 }
 
-s32 func_800EDD9C(u8 primitives, s32 count) {
-    u8* pCode;
-    u8 temp_v0;
-    u8* polyCode;
-    POLY_GT4* poly;
-    s32 polyIndex;
+s32 func_800EDD9C(u8 type, s32 count) {
+    Primitive* prim;
+    s32 i;
     s16 foundPolyIndex;
-    poly = D_800973B8;
-    polyIndex = 0x4FF;
-    polyCode = &D_800973B8->code;
 
-    while (polyIndex >= 0) {
-        pCode = &poly->code;
-        temp_v0 = *polyCode;
-        if (temp_v0 == 0) {
-            DestroyPrimitive(poly);
+    prim = &g_PrimBuf[LEN(g_PrimBuf) - 1];
+    i = LEN(g_PrimBuf) - 1;
+
+    while (i >= 0) {
+        if (prim->type == 0) {
+            DestroyPrimitive(prim);
             if (count == 1) {
-                *polyCode = primitives;
-                poly->tag = 0;
+                prim->type = type;
+                prim->next = NULL;
             } else {
-                *polyCode = primitives;
-                foundPolyIndex = func_800EDD9C(primitives, count - 1);
-                poly->tag = &g_PrimBuf[foundPolyIndex];
+                prim->type = type;
+                foundPolyIndex = func_800EDD9C(type, count - 1);
+                prim->next = &g_PrimBuf[foundPolyIndex];
             }
-            foundPolyIndex = polyIndex;
+            foundPolyIndex = i;
             return foundPolyIndex;
         }
-        polyIndex--;
-        polyCode -= sizeof(POLY_GT4);
-        poly--;
-        if (polyIndex < 0) {
-            return (s16)temp_v0;
-        }
+        i--;
+        prim--;
     }
-    return (s16)temp_v0;
 }
 
 void FreePrimitives(s32 primitiveIndex) {

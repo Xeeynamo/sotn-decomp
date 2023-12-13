@@ -251,8 +251,10 @@ void DemoSaveFile(void) {
 }
 
 void DemoInit(s32 arg0) {
+#if !defined(VERSION_PC)
     D_80137590 = DEMO_KEY_PTR;
-    *((s32*)DEMO_KEY_PTR) = 0;
+#endif
+    *((s32*)D_80137590) = 0;
 
     DemoGameInit(arg0);
 
@@ -271,8 +273,6 @@ void DemoInit(s32 arg0) {
     }
 }
 
-#define DEMO_KEY_LEN 3
-#define DEMO_MAX_LEN 0x2000
 void DemoUpdate(void) {
     u8 curBtnLo;
     u8 curBtnHi;
