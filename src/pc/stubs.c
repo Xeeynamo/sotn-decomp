@@ -268,9 +268,6 @@ u16 D_80137538[0x20];
 u8* D_80137590;
 s32 D_80137594;
 
-u8 g_ChActionButtons[];
-u8 g_ChShoulderButtons[];
-RECT D_800A2D90;
 JosephsCloak g_JosephsCloak;
 u8 g_Pix[4][128 * 128 / 2];
 const char* c_strALUCARD[] = {"dummy"};
@@ -331,11 +328,6 @@ ImgSrc* g_imgUnk8013C200 = &g_imgUnk8013C200_impl;
 ImgSrc* g_imgUnk8013C270 = &g_imgUnk8013C200_impl;
 s32 g_ExpNext[100] = {0};
 s32 g_PrevEquippedWeapons[2];
-u8 g_ChRgb[3] = {0};
-u8 D_800A2D80[0x10] = {
-    0x00, 0x20, 0x30, 0x40, 0x50, 0x60, 0x69, 0x70,
-    0x75, 0x78, 0x7A, 0x7C, 0x7D, 0x7E, 0x7F, 0x80,
-};
 s32 D_8013AEE4;
 s32 D_800A3194[];
 s32 D_80139060;
@@ -509,8 +501,6 @@ void func_800FDE00(void) { NOT_IMPLEMENTED; }
 
 s32 func_800F16D0(void) { NOT_IMPLEMENTED; }
 
-void func_800F53A4(void) { NOT_IMPLEMENTED; }
-
 void func_801024DC(void) { NOT_IMPLEMENTED; }
 
 void func_800E5D30(void* arg0, u16 arg1, u16 arg2, s32 arg3) {
@@ -568,14 +558,6 @@ s32 func_800FD6C4(s32 equipTypeFilter) {
 }
 
 void func_801026BC(s32 arg0) { NOT_IMPLEMENTED; }
-
-void func_800F9D88(const char* str, s32 arg1, s32 arg2) { NOT_IMPLEMENTED; }
-
-// can be removed with 5298C.c
-void ApplyJosephsCloakPalette(void) { NOT_IMPLEMENTED; }
-
-// can be removed with 5298C.c
-void CheckWeaponCombo(void) { NOT_IMPLEMENTED; }
 
 // copied from 47BB8.c
 void ResetPadsRepeat(void) {
