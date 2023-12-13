@@ -1826,46 +1826,45 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
     }
 }
 
-void BlinkMenuCursor(s32 left, s32 top, s32 right, s32 bottom, s32 arg4) {
-
-    s32 var_s2;
-    u8 blink_value;
+void MenuDrawLine(s32 x0, s32 y0, s32 x1, s32 y1, s32 isColorStatic) {
+    s32 z;
+    u8 color;
 
     u32* ot = g_CurrentBuffer->ot;
-    LINE_G2* temp_s0 = &g_CurrentBuffer->lineG2[g_GpuUsage.line];
+    LINE_G2* line = &g_CurrentBuffer->lineG2[g_GpuUsage.line];
 
-    if (arg4 != 0) {
-        var_s2 = g_MenuData.menus[arg4 - 1].otIdx + 4;
+    if (isColorStatic) {
+        z = g_MenuData.menus[isColorStatic - 1].otIdx + 4;
     } else {
-        var_s2 = 0x80;
+        z = 0x80;
     }
 
-    SetSemiTrans(temp_s0, 0);
-    SetShadeTex(temp_s0, 1);
+    SetSemiTrans(line, 0);
+    SetShadeTex(line, 1);
 
     if (g_Timer & 0x20) {
-        blink_value = g_Timer & 0x1F;
+        color = g_Timer & 0x1F;
     } else {
-        blink_value = 0x1F - (g_Timer & 0x1F);
+        color = 0x1F - (g_Timer & 0x1F);
     }
-    blink_value *= 4;
-    blink_value -= 0x80;
+    color *= 4;
+    color -= 0x80;
 
-    if (arg4 != 0) {
-        blink_value = 0xFF;
+    if (isColorStatic) {
+        color = 0xFF;
     }
 
-    temp_s0->r0 = blink_value;
-    temp_s0->g0 = blink_value;
-    temp_s0->b0 = blink_value;
-    temp_s0->r1 = blink_value;
-    temp_s0->g1 = blink_value;
-    temp_s0->b1 = blink_value;
-    temp_s0->x0 = left;
-    temp_s0->y0 = top;
-    temp_s0->x1 = right;
-    temp_s0->y1 = bottom;
-    AddPrim(&ot[var_s2], temp_s0);
+    line->r0 = color;
+    line->g0 = color;
+    line->b0 = color;
+    line->r1 = color;
+    line->g1 = color;
+    line->b1 = color;
+    line->x0 = x0;
+    line->y0 = y0;
+    line->x1 = x1;
+    line->y1 = y1;
+    AddPrim(&ot[z], line);
     g_GpuUsage.line++;
 }
 
@@ -2054,10 +2053,11 @@ void DrawMenu(void) {
         prim->priority = menu->otIdx;
         prim->blendMode = 0x480;
 
-        BlinkMenuCursor(cx, cy, cx, cy + ch - 1, i + 1);
-        BlinkMenuCursor(cx, cy, cx + cw - 1, cy, i + 1);
-        BlinkMenuCursor(cx + cw - 1, cy, cx + cw - 1, cy + ch - 1, i + 1);
-        BlinkMenuCursor(cx, cy + ch - 1, cx + cw - 1, cy + ch - 1, i + 1);
+        // draw the white window border
+        MenuDrawLine(cx, cy, cx, cy + ch - 1, i + 1);
+        MenuDrawLine(cx, cy, cx + cw - 1, cy, i + 1);
+        MenuDrawLine(cx + cw - 1, cy, cx + cw - 1, cy + ch - 1, i + 1);
+        MenuDrawLine(cx, cy + ch - 1, cx + cw - 1, cy + ch - 1, i + 1);
 
         switch (i) {
         case 0:
@@ -2641,13 +2641,13 @@ void func_800FA3C4(s32 cursorIndex, s32 arg1, s32 arg2) {
     }
     if (arg2 != 0) {
         if (arg1 == 0) {
-            BlinkMenuCursor(left, top, left + 0x70, top, 0);
-            BlinkMenuCursor(left, top, left, top + 0xB, 0);
-            BlinkMenuCursor(left + 0x70, top, left + 0x70, top + 0xB, 0);
-            BlinkMenuCursor(left, top + 0xB, left + 0x70, top + 0xB, 0);
+            MenuDrawLine(left, top, left + 0x70, top, 0);
+            MenuDrawLine(left, top, left, top + 0xB, 0);
+            MenuDrawLine(left + 0x70, top, left + 0x70, top + 0xB, 0);
+            MenuDrawLine(left, top + 0xB, left + 0x70, top + 0xB, 0);
         } else {
-            BlinkMenuCursor(left, top, left + 0x70, top + 0xB, 0);
-            BlinkMenuCursor(left, top + 0xB, left + 0x70, top, 0);
+            MenuDrawLine(left, top, left + 0x70, top + 0xB, 0);
+            MenuDrawLine(left, top + 0xB, left + 0x70, top, 0);
         }
     }
 }
