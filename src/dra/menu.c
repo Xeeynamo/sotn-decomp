@@ -2,6 +2,22 @@
 #include "menu.h"
 #include "sfx.h"
 
+typedef struct EquipMenuHelper {
+    s32 equipTypeFilter;
+    s32 index;
+    s32 isAccessory;
+} EquipMenuHelper;
+
+// Struct for table of values to intitialize MenuContext structs
+typedef struct {
+    /* 0x00 */ s16 cursorX;
+    /* 0x02 */ s16 cursorY;
+    /* 0x04 */ s16 cursorW;
+    /* 0x06 */ s16 cursorH;
+    /* 0x08 */ s16 otIdx;
+    /* 0x0A */ s16 padding;
+} MenuContextInit; // size = 0x1C
+
 #define CH(x) ((x)-0x20)
 
 #if defined(VERSION_US)
@@ -88,6 +104,68 @@ const char* D_800A2D68[] = {
     "\x0B\x2F\x11\x16\x17\xFF", // D_800A2D84
 };
 #endif
+
+u8 g_ChActionButtons[] = {0xEA, 0xE8, 0xE9, 0xEB};
+u8 g_ChShoulderButtons[] = {0x32, 0x2C, 0x32, 0x2C, 0x12, 0x11, 0x11, 0x12};
+u8 g_ChRgb[] = {MENUCHAR('R'), MENUCHAR('G'), MENUCHAR('B')};
+u8 D_800A2D80[] = {0x00, 0x20, 0x30, 0x40, 0x50, 0x60, 0x69, 0x70,
+                   0x75, 0x78, 0x7A, 0x7C, 0x7D, 0x7E, 0x7F, 0x80};
+
+#if defined(VERSION_US)
+RECT D_800A2D90 = {0x180, 0x30, 0x80, 0x80};
+#endif
+
+EquipMenuHelper g_EquipMenuHelper[] = {
+    {HAND_TYPE, 0, false},     // LEFT_HAND_SLOT
+    {HAND_TYPE, 0, false},     // RIGHT_HAND_SLOT
+    {HEAD_TYPE, 0, true},      // HEAD_SLOT
+    {ARMOR_TYPE, 1, true},     // ARMOR_SLOT
+    {CAPE_TYPE, 2, true},      // CAPE_SLOT
+    {ACCESSORY_TYPE, 3, true}, // ACCESSORY_1_SLOT
+    {ACCESSORY_TYPE, 3, true}, // ACCESSORY_2_SLOT
+};
+
+s32 D_800A2DEC[] = {
+    0x1A, 0x00, 0x30, 0x39, 0x39,
+};
+
+MenuContextInit g_MenuInit[] = {
+#if defined(VERSION_US)
+    {0x009E, 0x0064, 0x004C, 0x0050, 0x0040},
+    {0x0000, 0x0018, 0x0168, 0x00C8, 0x0010},
+    {0x0000, 0x0018, 0x0168, 0x0061, 0x0020},
+    {0x0000, 0x0078, 0x0168, 0x004A, 0x0020},
+    {0x0000, 0x00C1, 0x0168, 0x001F, 0x0040},
+    {0x0000, 0x0018, 0x0168, 0x00AA, 0x0020},
+    {0x0000, 0x0018, 0x0168, 0x00AA, 0x0020},
+    {0x0000, 0x0018, 0x0168, 0x00AA, 0x0020},
+    {0x00A8, 0x0078, 0x0090, 0x0040, 0x0030},
+    {0x0094, 0x002C, 0x00C8, 0x0070, 0x0030},
+    {0x00AC, 0x002C, 0x0041, 0x0020, 0x0030},
+    {0x00AC, 0x0070, 0x0039, 0x0020, 0x0030},
+    {0x00AC, 0x004C, 0x007C, 0x0028, 0x0030},
+    {0x000C, 0x0020, 0x0154, 0x0099, 0x0030},
+    {0x0114, 0x0020, 0x004D, 0x00B7, 0x0050},
+    {0x0000, 0x0018, 0x0168, 0x00C8, 0x0018},
+#elif defined(VERSION_HD)
+    {0x00AC, 0x0064, 0x0030, 0x0050, 0x0040},
+    {0x0000, 0x0018, 0x0168, 0x00C8, 0x0010},
+    {0x0000, 0x0018, 0x0168, 0x0061, 0x0020},
+    {0x0000, 0x0078, 0x0168, 0x004A, 0x0020},
+    {0x0000, 0x00C1, 0x0168, 0x001F, 0x0040},
+    {0x0000, 0x0018, 0x0168, 0x00AA, 0x0020},
+    {0x0000, 0x0018, 0x0168, 0x00AA, 0x0020},
+    {0x0000, 0x0018, 0x0168, 0x00AA, 0x0020},
+    {0x00A8, 0x0078, 0x0090, 0x0040, 0x0030},
+    {0x007C, 0x002C, 0x00A0, 0x0070, 0x0030},
+    {0x007C, 0x002C, 0x002C, 0x0020, 0x0030},
+    {0x007C, 0x0070, 0x0029, 0x0020, 0x0030},
+    {0x007C, 0x004C, 0x007C, 0x0028, 0x0030},
+    {0x0070, 0x0020, 0x00F0, 0x0099, 0x0030},
+    {0x0128, 0x0020, 0x002D, 0x00B7, 0x0050},
+    {0x0000, 0x0018, 0x0168, 0x00C8, 0x0018},
+#endif
+};
 
 bool CheckIfAllButtonsAreAssigned(void) {
     s32 buf[BUTTON_COUNT];
@@ -938,7 +1016,7 @@ void DrawJosephsCloakMenu(MenuContext* context) {
     s32 row1Ypos;
     s32 row2Ypos;
     s32 i;
-    u8* letter_RGB;
+    u8* chsRgb;
     s32 x_RGB;
     const char** exteriorInterior;
 
@@ -955,19 +1033,19 @@ void DrawJosephsCloakMenu(MenuContext* context) {
     i = 0;
     exteriorInterior = &c_strExterior;
     x_RGB = xRGBVal;
-    letter_RGB = &D_800A2D7C; // will be R, then G, then B
+    chsRgb = g_ChRgb;
     row2Ypos = 0x4C;
     row1Ypos = 0x28;
     // 3 iterations, each iteration does Exterior and Lining for one letter
-    for (; i < 3; row1Ypos += 0xC, letter_RGB++, row2Ypos += 0xC, i++) {
+    for (; i < 3; row1Ypos += 0xC, chsRgb++, row2Ypos += 0xC, i++) {
         // Write "Exterior"
         DrawMenuStr(exteriorInterior[0], x_Start, row1Ypos, ctx);
         // Write R, G, or B
-        DrawMenuChar(*letter_RGB, x_RGB, row1Ypos, ctx);
+        DrawMenuChar(*chsRgb, x_RGB, row1Ypos, ctx);
         // Write "Lining"
         DrawMenuStr(exteriorInterior[1], x_Start, row2Ypos, ctx);
         // Write R, G, or B
-        DrawMenuChar(*letter_RGB, x_RGB, row2Ypos, ctx);
+        DrawMenuChar(*chsRgb, x_RGB, row2Ypos, ctx);
     }
     for (i = 0; i < 6; i++) {
         DrawMenuInt(g_Settings.cloakColors[i], x_Start + number_spacing + 0x48,
@@ -988,8 +1066,8 @@ void func_800F6BEC(MenuContext* context) {
     s32 y;
     s32 i;
 
-    for (i = 0; i < 3; i++) {
-        DrawMenuChar(D_800A2D7C[i], x + 32, (i * 12) + 80, context);
+    for (i = 0; i < LEN(g_ChRgb); i++) {
+        DrawMenuChar(g_ChRgb[i], x + 32, (i * 12) + 80, context);
         DrawMenuInt(g_Settings.windowColors[i], x + 72, 80 + i * 12, context);
     }
     func_800F5E68(
@@ -1088,11 +1166,11 @@ void DrawSettingsButton(MenuContext* ctx) {
         DrawMenuStr(c_strButtonRightHand[i], cursorX, 0x30 + (i * 0x10), ctx);
         buttonId = g_Settings.buttonConfig[i];
         btn1_x = (buttonId * 12) + 0x30;
-        DrawMenuChar(c_chPlaystationButtons[buttonId], XVAR + btn1_x,
-                     0x30 + (i * 0x10), ctx);
+        DrawMenuChar(
+            g_ChActionButtons[buttonId], XVAR + btn1_x, 0x30 + (i * 0x10), ctx);
         if (buttonId >= 4) {
             btn2_x = btn1_x + 8;
-            DrawMenuChar(c_chShoulderButtons[buttonId], XVAR + btn2_x,
+            DrawMenuChar(g_ChShoulderButtons[buttonId], XVAR + btn2_x,
                          0x30 + (i * 0x10), ctx);
         }
     }
@@ -1280,20 +1358,20 @@ void DrawPauseMenu(s32 arg0) {
     temp_var = g_Settings.buttonConfig[0];
     temp_s1 = temp_var;
     if (temp_s1 < 4) {
-        DrawMenuChar(c_chPlaystationButtons[temp_s1], x + 44, y, ctx);
+        DrawMenuChar(g_ChActionButtons[temp_s1], x + 44, y, ctx);
     } else {
-        DrawMenuChar(c_chPlaystationButtons[temp_s1], x + 40, y, ctx);
-        DrawMenuChar(c_chShoulderButtons[temp_s1], x + 48, y, ctx);
+        DrawMenuChar(g_ChActionButtons[temp_s1], x + 40, y, ctx);
+        DrawMenuChar(g_ChShoulderButtons[temp_s1], x + 48, y, ctx);
     }
     DrawMenuInt(g_Status.attackHands[0], x + 76, y, ctx);
 
     temp_var = g_Settings.buttonConfig[1];
     temp_s1 = temp_var;
     if (temp_s1 < 4) {
-        DrawMenuChar(c_chPlaystationButtons[temp_s1], x + 44, y + 10, ctx);
+        DrawMenuChar(g_ChActionButtons[temp_s1], x + 44, y + 10, ctx);
     } else {
-        DrawMenuChar(c_chPlaystationButtons[temp_s1], x + 40, y + 10, ctx);
-        DrawMenuChar(c_chShoulderButtons[temp_s1], x + 48, y + 10, ctx);
+        DrawMenuChar(g_ChActionButtons[temp_s1], x + 40, y + 10, ctx);
+        DrawMenuChar(g_ChShoulderButtons[temp_s1], x + 48, y + 10, ctx);
     }
 
     DrawMenuInt(g_Status.attackHands[1], x + 76, y + 10, ctx);
@@ -1376,13 +1454,13 @@ void DrawSpellMenu(MenuContext* ctx) {
             buttonCFG = g_Settings.buttonConfig[0];
             charNum++;
             if (buttonCFG < 4) {
-                DrawMenuChar(c_chPlaystationButtons[buttonCFG],
+                DrawMenuChar(g_ChActionButtons[buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
             } else {
-                DrawMenuChar(c_chPlaystationButtons[buttonCFG],
+                DrawMenuChar(g_ChActionButtons[buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
                 charNum++;
-                DrawMenuChar(c_chShoulderButtons[buttonCFG],
+                DrawMenuChar(g_ChShoulderButtons[buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
             }
             // This writes the word "or", because spells say '{Square} or
@@ -1394,13 +1472,13 @@ void DrawSpellMenu(MenuContext* ctx) {
             buttonCFG = g_Settings.buttonConfig[1];
             charNum++;
             if (buttonCFG < 4) {
-                DrawMenuChar(c_chPlaystationButtons[buttonCFG],
+                DrawMenuChar(g_ChActionButtons[buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
             } else {
-                DrawMenuChar(c_chPlaystationButtons[buttonCFG],
+                DrawMenuChar(g_ChActionButtons[buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
                 charNum++;
-                DrawMenuChar(c_chShoulderButtons[buttonCFG],
+                DrawMenuChar(g_ChShoulderButtons[buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
             }
         } else {
@@ -2835,7 +2913,7 @@ void func_800FAEC4(s32 cursor, u16 count, const char* str, u16 icon, u16 pal) {
     g_MenuStep++;
 }
 
-void func_800FAF44(s32 arg0) {
+void func_800FAF44(s32 isAccessory) {
     s32 var_a0;
     s32 i;
     s32 j;
@@ -2844,7 +2922,7 @@ void func_800FAF44(s32 arg0) {
     D_801375D8 = g_Pix[3];
     var_a1 = g_Pix[3];
 
-    if (arg0 == 0) {
+    if (isAccessory == 0) {
         for (i = 0; i < 169; i++) {
             *var_a1 = i;
             var_a1++;
@@ -2852,15 +2930,14 @@ void func_800FAF44(s32 arg0) {
 
         g_MenuData.menus[3].h = g_MenuData.menus[3].unk16 =
             g_MenuNavigation.scrollEquipType[HAND_TYPE];
-        return;
-    }
-    g_MenuData.menus[3].h = g_MenuData.menus[3].unk16 =
-        g_MenuNavigation.scrollEquipType[HEAD_TYPE + D_801375D4];
-
-    for (i = 0; i < 90; i++) {
-        if (g_AccessoryDefs[i].equipType == D_801375D4) {
-            *var_a1 = i;
-            var_a1++;
+    } else {
+        g_MenuData.menus[3].h = g_MenuData.menus[3].unk16 =
+            g_MenuNavigation.scrollEquipType[HEAD_TYPE + D_801375D4];
+        for (i = 0; i < 90; i++) {
+            if (g_AccessoryDefs[i].equipType == D_801375D4) {
+                *var_a1 = i;
+                var_a1++;
+            }
         }
     }
 }
@@ -2889,13 +2966,13 @@ void func_800FB004(void) {
 }
 
 void func_800FB0FC(void) {
-    Unkstruct_800A2D98* temp = &D_800A2D98[g_MenuNavigation.cursorEquip];
-    s32 temp_a1 = temp->unk4;
-    s32 new_var2 = temp->unk8;
+    EquipMenuHelper* helper = &g_EquipMenuHelper[g_MenuNavigation.cursorEquip];
+    s32 index = helper->index;
+    s32 isAccessory = helper->isAccessory;
 
-    D_801375CC = temp->equipTypeFilter;
-    D_801375D4 = temp_a1;
-    func_800FAF44(new_var2);
+    D_801375CC = helper->equipTypeFilter;
+    D_801375D4 = index;
+    func_800FAF44(isAccessory);
     func_800FB004();
 }
 
@@ -2910,12 +2987,11 @@ void func_800FB160(s32 arg0, s32 arg1, s32 equipType) {
 }
 
 bool func_800FB1EC(s32 arg0) {
-    if (D_801375CC == 0) {
+    if (D_801375CC == HAND_TYPE) {
         if (arg0 == 0) {
             return true;
         }
-    } else if (
-        (arg0 == 0x1A) || (arg0 == 0) || (arg0 == 0x30) || (arg0 == 0x39)) {
+    } else if (arg0 == 0x1A || arg0 == 0 || arg0 == 0x30 || arg0 == 0x39) {
         return true;
     }
 
@@ -2940,15 +3016,15 @@ void func_800FB9BC(void) {
 
     context = &g_MenuData.menus[0];
     for (i = 0; i < 16; i++, context++) {
-        context->cursorX = context->unk1.x = MenuContextData[i].cursorX;
-        context->cursorY = context->unk1.y = MenuContextData[i].cursorY;
-        context->cursorW = context->unk1.w = MenuContextData[i].cursorW;
-        context->cursorH = context->unk1.h = MenuContextData[i].cursorH;
+        context->cursorX = context->unk1.x = g_MenuInit[i].cursorX;
+        context->cursorY = context->unk1.y = g_MenuInit[i].cursorY;
+        context->cursorW = context->unk1.w = g_MenuInit[i].cursorW;
+        context->cursorH = context->unk1.h = g_MenuInit[i].cursorH;
         context->unk14 = 0;
         context->w = 0;
         context->unk16 = 0;
         context->h = 0;
-        context->otIdx = MenuContextData[i].otIdx;
+        context->otIdx = g_MenuInit[i].otIdx;
         context->unk1C = 2;
     }
     D_801376C4 = D_801376C8 =
