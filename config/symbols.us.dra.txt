@@ -262,6 +262,7 @@ g_IsCloakLiningUnlocked = 0x80137600;
 g_IsCloakColorUnlocked = 0x80137604;
 g_IsSelectingEquipment = 0x8013760C;
 g_EquipmentCursor = 0x80137610;
+g_EquipOrderType = 0x80137618;
 g_MenuData = 0x8013761C;
 g_JosephsCloakContext = 0x801376EE;
 g_RelicMenuFadeTimer = 0x80137850;
