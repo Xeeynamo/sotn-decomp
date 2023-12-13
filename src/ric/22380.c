@@ -76,8 +76,8 @@ void func_8015F414(void) {
             argX =
                 *xPosPtr + D_80154604[i].unk0 + g_Player.colliders2[i].unk4 - 1;
             argY = *yPosPtr + D_80154604[i].unk2;
-            g_api.CheckCollision(argX, argY, &sp10, 0);
-            if ((sp10.effects & 1) == 0) {
+            g_api.CheckCollision(argX, argY, &collider, 0);
+            if ((collider.effects & 1) == 0) {
                 *vram_ptr |= 4;
                 *xPosPtr += g_Player.colliders2[i].unk4;
                 return;
