@@ -1544,9 +1544,6 @@ extern s32 playerX;
 extern s32 playerY;
 extern u32 g_randomNext;
 extern s32 D_80096ED8[];
-extern u32 D_80097364;
-extern s32 D_800973B4;
-extern POLY_GT4 D_800973B8[];
 extern s8 D_80097B98;
 extern s8 D_80097B99;
 extern s32 D_800973EC; // flag to check if the menu is shown
