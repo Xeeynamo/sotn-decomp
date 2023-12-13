@@ -77,7 +77,7 @@ segments:
       - [0x2BB8, .data, 5087C] # D_800A2C0C, D_800A2D44
       - [0x2CF4, .data, menu] # array of strings
       - [0x2D1C, .data, menu] # HD exclusive array of strings
-      - [0x2D88, data]
+      - [0x2D88, .data, menu]
       - [0x2ED0, .data, 5D6C4]
       - [0x2EF8, data]
       - [0xCFDC, .data, 6D59C]
