@@ -3207,7 +3207,7 @@ block_4:
         }
         break;
     case MENU_STEP_EXIT_5:
-        func_800FF60C();
+        UpdateCapePalette();
         LoadGfxAsync(D_80097904);
         g_MenuStep++;
         break;

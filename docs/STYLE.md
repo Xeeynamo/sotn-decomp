@@ -91,7 +91,7 @@ If a function returns only `0` or `1`, and is used as a boolean (i.e. in conditi
 - Flag checks or functions that return booleans do not need the `== 0`/`!= 0`.
 - Prefer `if-else` over `if { return; }`, i.e.
 
-**Exception**: There are instances when at the beginning of a function you want to return immediately if a validation fails so the rest of the body wouldn't be indented in an else if. See `func_8010189C` for an example.
+**Exception**: There are instances when at the beginning of a function you want to return immediately if a validation fails so the rest of the body wouldn't be indented in an else if. See `DrawHud` for an example.
 
   ```c
   if (cond) {
@@ -117,7 +117,7 @@ If a function returns only `0` or `1`, and is used as a boolean (i.e. in conditi
   - `ABS`, `ABS_ALT`,
   - `CLAMP` and friends.
 
-  ## Arrays
+## Arrays
 
 - It's better to not hardcode array sizes (easier to mod)
 - Use `sizeof` or `ARRAY_COUNT`/`ARRAY_COUNTU` where it makes sense, e.g. in loops that are using an array.

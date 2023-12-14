@@ -78,8 +78,13 @@ segments:
       - [0x2CF4, .data, menu] # array of strings
       - [0x2D1C, .data, menu] # HD exclusive array of strings
       - [0x2D88, .data, menu]
-      - [0x2ED0, .data, 5D6C4]
-      - [0x2EF8, data]
+      - [0x2ED0, .data, 5D6C4] # g_LevelHPIncrease
+      - [0x2EF8, .data, 5D6C4] # hud sprites def
+      - [0x2FCC, .data, 5D6C4] # g_CapePaletteDefs
+      - [0x301C, .data, 5D6C4] # g_CheatCodes
+      - [0x3024, .data, 5D6C4] # D_800A3014
+      - [0x3144, data, 627C4]
+      - [0x37E8, data, 63ED4]
       - [0xCFDC, .data, 6D59C]
       - [0xD010, data]
       - [0xD188, .data, 7A4D0] # D_800AD0C4
@@ -121,7 +126,7 @@ segments:
       - [0x3C7A0, .rodata, menu] # MenuHandle str
       - [0x3C7C8, .rodata, menu] # MenuHandle jtbl
       - [0x3CC18, .rodata, 5D6C4]
-      - [0x3CC60, rodata]
+      - [0x3CC60, .rodata, 5D6C4] # g_CheatCodes
       - [0x3CC78, .rodata, 627C4] # jtbl_800DCC78
       - [0x3CC98, .rodata, 627C4] # jtbl_800DCC98
       - [0x3CCC0, .rodata, 627C4]

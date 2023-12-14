@@ -536,7 +536,7 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
 
 void AddToInventory(u16 itemId, s32 itemCategory) { NOT_IMPLEMENTED; }
 
-void func_800FF60C(void) { NOT_IMPLEMENTED; }
+void UpdateCapePalette(void) { NOT_IMPLEMENTED; }
 
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType) { NOT_IMPLEMENTED; }
 
