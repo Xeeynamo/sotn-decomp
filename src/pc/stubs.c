@@ -183,7 +183,7 @@ s32 g_IsCloakColorUnlocked;
 s32 g_IsSelectingEquipment;
 s32 g_EquipmentCursor;
 s32 D_80137614;
-s32 D_80137618;
+s32 g_EquipOrderType;
 MenuData g_MenuData = {0};
 u8 D_801376B0;
 s16 D_801376C4;
@@ -317,7 +317,16 @@ const char* c_strFamiliars = "dummy";
 const char* c_strFamiliar = "dummy";
 const char* c_strSpecial2 = "dummy";
 u8* c_strTimeAttackHiddenEntry = "dummy";
-s32 c_strTimeAttackEntries[0x40] = {0};
+const char* c_strTimeAttackEntries[] = {
+    "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy",
+    "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy",
+    "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy",
+    "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy",
+    "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy",
+    "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy",
+    "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy",
+    "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy",
+};
 ImgSrc* g_imgUnk8013C200_impl = {
     0,
     0,
