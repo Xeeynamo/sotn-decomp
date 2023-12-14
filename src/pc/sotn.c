@@ -11,6 +11,8 @@ Equipment g_EquipDefs[0x100] = {0};
 Accessory g_AccessoryDefs[0x100] = {0};
 RelicDesc g_RelicDefs[NUM_RELICS] = {0};
 SpellDef g_SpellDefs[0x100] = {0};
+SubweaponDef g_SubwpnDefs[0x10] = {0};
+EnemyDef g_EnemyDefs[0x100] = {0};
 void (*D_80170000)(s32 arg0); // ServantDesc D_80170000 = {0};
 Weapon D_8017A000 = {0};
 Weapon D_8017D000 = {0};
@@ -177,6 +179,11 @@ bool InitGame(void) {
         dummy.name = g_RelicDummy.name;
         dummy.description = g_RelicDummy.desc;
         memcpy(&g_AccessoryDefs[i], &dummy, sizeof(dummy));
+    }
+    for (int i = 0; i < LEN(g_EnemyDefs); i++) {
+        EnemyDef dummy = {0};
+        dummy.name = g_RelicDummy.name;
+        memcpy(&g_EnemyDefs[i], &dummy, sizeof(dummy));
     }
 
     D_80137590 = g_DemoRecordingBuffer;
