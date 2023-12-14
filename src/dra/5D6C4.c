@@ -75,7 +75,7 @@ s32 func_800FD6C4(s32 equipTypeFilter) {
         break;
     }
 
-    for (itemCount = 0, i = 0; i < 90; i++) {
+    for (itemCount = 0, i = 0; i < NUM_BODY_ITEMS; i++) {
         if (g_AccessoryDefs[i].equipType == equipType) {
             itemCount++;
         }
@@ -1483,7 +1483,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
     func_800F53A4();
 }
 
-void DrawHudRichter(void) {
+void DrawRichterHud(void) {
     Primitive* prim;
 
     D_80137978 = 400;
@@ -1595,7 +1595,7 @@ s32 D_800A3014[] = {
     0x018, 0x018, 0x080, 0x0D8, 0x01E, 0x17F,
 };
 
-INCLUDE_ASM("dra/nonmatchings/5D6C4", func_80100B50);
+INCLUDE_ASM("dra/nonmatchings/5D6C4", DrawRichterHudSubweapon);
 
 extern Unkstruct_80137990 D_80137990;
 
@@ -1615,9 +1615,8 @@ bool func_8010183C(s32 arg0) {
     }
     return true;
 }
-void DrawHudRichter(void);
 
-void func_8010189C(void) {
+void DrawHud(void) {
     Primitive* prim;
     s32 i;
 
@@ -1626,7 +1625,7 @@ void func_8010189C(void) {
     g_DisplayHP[0] = g_Status.hp;
 
     if ((g_StageId == STAGE_ST0) || (g_PlayableCharacter != PLAYER_ALUCARD)) {
-        DrawHudRichter();
+        DrawRichterHud();
         return;
     }
 
@@ -1664,7 +1663,7 @@ void func_8010189C(void) {
     }
 }
 
-void DrawHudAlucard() {
+void DrawHudSubweapon() {
     SubweaponDef subwpn;
     RECT rect;
     Primitive* prim;
@@ -1676,8 +1675,8 @@ void DrawHudAlucard() {
     s32 digitSpacing;
     u16 clut;
 
-    if (g_StageId == STAGE_ST0 || g_PlayableCharacter != 0) {
-        func_80100B50();
+    if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
+        DrawRichterHudSubweapon();
         return;
     }
     func_800EB4F8(D_800C52F8[g_Status.subWeapon], 0, 0x3C0, 0x120);

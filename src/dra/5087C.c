@@ -981,7 +981,7 @@ void func_800F298C(void) {
         DestroyAllPrimitives();
         func_800EDAE4();
         func_800EAD7C();
-        func_8010189C();
+        DrawHud();
         func_800F2404(0);
         if ((g_StageId == STAGE_ST0) ||
             (g_PlayableCharacter != PLAYER_ALUCARD)) {
@@ -1290,7 +1290,7 @@ void func_800F298C(void) {
             }
             func_80102D70();
             func_801028AC(0);
-            DrawHudAlucard();
+            DrawHudSubweapon();
             func_800E414C();
             if (D_80137598 != 0) {
                 func_80105428();
@@ -1359,7 +1359,7 @@ void func_800F298C(void) {
             }
             break;
         case 0x70:
-            DrawHudAlucard();
+            DrawHudSubweapon();
             if (g_pads[0].tapped & PAD_START) {
                 if (func_8010183C(1) != 0) {
                     D_800974A4 = 0;
@@ -1646,7 +1646,7 @@ void func_800F298C(void) {
                 D_8003C9A4 = 1;
                 PlaySfx(SET_UNK_0F);
             }
-            DrawHudAlucard();
+            DrawHudSubweapon();
             return;
         case 0xA:
             switch (g_MenuStep) {
