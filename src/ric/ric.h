@@ -90,6 +90,7 @@ extern s16 D_801545AA;
 extern s16 D_801545AC;
 extern s16_pair D_801545E4[];
 extern s16 D_801545EA[];
+extern s16_pair D_801545F4[];
 extern s16_pair D_80154604[];
 extern u8 D_80154674[][4];
 extern SubweaponDef D_80154688[];
