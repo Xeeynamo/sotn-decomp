@@ -25,8 +25,9 @@ void SetDumpFnt(int id) { NOT_IMPLEMENTED; }
 
 void SetDispMask(int mask) { NOT_IMPLEMENTED; }
 
+DISPENV* MySetDefDispEnv(DISPENV* env, int x, int y, int w, int h);
 DISPENV* SetDefDispEnv(DISPENV* env, int x, int y, int w, int h) {
-    NOT_IMPLEMENTED;
+    MySetDefDispEnv(env, x, y, w, h);
 }
 DRAWENV* SetDefDrawEnv(DRAWENV* env, int x, int y, int w, int h) {
     NOT_IMPLEMENTED;
