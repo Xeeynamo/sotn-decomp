@@ -1377,7 +1377,7 @@ void func_800F298C(void) {
             func_801028AC(1);
             break;
         case 0x2:
-            HandleMenu();
+            MenuHandle();
             func_801028AC(1);
             break;
         case 0x14:

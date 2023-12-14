@@ -114,12 +114,12 @@ segments:
       - [0x3C4D0, .rodata, 5087C] # func_800F298C
       - [0x3C548, .rodata, menu] # strings
       - [0x3C658, .rodata, menu] # HD exclusive array of strings
-      - [0x3C6F8, .rodata, menu] # DrawMenuFamiliars
-      - [0x3C718, .rodata, menu] # DrawMenu
+      - [0x3C6F8, .rodata, menu] # MenuDrawFamiliars
+      - [0x3C718, .rodata, menu] # MenuDraw
       - [0x3C758, .rodata, menu] # func_800F9F40
       - [0x3C788, .rodata, menu] # MenuHandleCursorInput
-      - [0x3C7A0, .rodata, menu] # HandleMenu str
-      - [0x3C7C8, .rodata, menu] # HandleMenu jtbl
+      - [0x3C7A0, .rodata, menu] # MenuHandle str
+      - [0x3C7C8, .rodata, menu] # MenuHandle jtbl
       - [0x3CC18, .rodata, 5D6C4]
       - [0x3CC60, rodata]
       - [0x3CC78, .rodata, 627C4] # jtbl_800DCC78
