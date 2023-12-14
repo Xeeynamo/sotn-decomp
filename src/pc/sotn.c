@@ -61,7 +61,12 @@ u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void DebugInputWait(const char* msg);
 
 // stub to the original UpdateGame
-void func_800F298C() { PlaySfx(MU_REQUIEM_FOR_THE_GODS); }
+void MenuHandle(void);
+void func_800F298C() {
+    g_PrimBuf[D_8013799C].clut = 1;
+    MenuHandle();
+    PlaySfx(MU_REQUIEM_FOR_THE_GODS);
+}
 
 int g_Frame = 0;
 void MyDrawSyncCallback(int mode) {

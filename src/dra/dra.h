@@ -397,7 +397,7 @@ extern s32 D_800A2438;
 extern RoomTeleport D_800A245C[];
 extern u32 D_800A2D24;
 extern const char* c_strALUCARD[];
-extern const char** c_strSTR;
+extern const char* c_strSTR[4];
 extern const char* c_strCON;
 extern const char* c_strINT;
 extern const char* c_strLCK;

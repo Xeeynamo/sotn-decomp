@@ -1270,7 +1270,7 @@ void MenuStatChangesDraw(void) {
     for (i = 0; i < 4; i++) {
         ycoord = 0x22 + i * 10;
         // Name of the stat
-        MenuDrawStr((&c_strSTR)[i], xcoord, ycoord, ctx);
+        MenuDrawStr(c_strSTR[i], xcoord, ycoord, ctx);
         // Current value for the stat
         MenuDrawInt(g_Status.statsBase[i] + g_Status.statsEquip[i],
                     xcoord + 0x2C, ycoord, ctx);
@@ -1400,7 +1400,7 @@ void MenuDrawStats(s32 menuDialogue) {
 
     for (i = 0, temp_y = y; i < 4; temp_y += 12, i++) {
         s32* statsBase = &g_Status.statsBase[i];
-        MenuDrawStr((&c_strSTR)[i], x, temp_y, ctx);
+        MenuDrawStr(c_strSTR[i], x, temp_y, ctx);
         MenuDrawInt(*statsBase, x + 44, temp_y, ctx);
         if (g_Status.statsEquip[i] != 0) {
             if (g_Status.statsEquip[i] > 0) {
