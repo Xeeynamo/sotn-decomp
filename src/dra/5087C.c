@@ -1104,7 +1104,7 @@ void func_800F298C(void) {
                 prim = prim->next;
             }
         }
-        func_800FF6C4();
+        RefreshCapePalette();
         D_8003C9A4++;
         return;
     case 1:
