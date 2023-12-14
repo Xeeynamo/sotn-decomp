@@ -83,6 +83,9 @@ u_long MyPadRead(int id) {
 
     switch (id) {
     case 0:
+        if (keyb[SDL_SCANCODE_ESCAPE]) {
+            g_IsQuitRequested = 1;
+        }
         if (keyb[SDL_SCANCODE_UP]) {
             pressed |= PAD_UP;
         }
@@ -149,6 +152,10 @@ int MyDrawSync(int mode) {
     return 0;
 }
 
+DISPENV* MySetDefDispEnv(DISPENV* env, int x, int y, int w, int h) {
+    SDL_SetWindowSize(g_Window, w * SCREEN_SCALE, h * SCREEN_SCALE);
+}
+
 void SetSdlVertexG4(SDL_Vertex* v, POLY_G4* poly) {
     v[0].position.x = poly->x0;
     v[0].position.y = poly->y0;
@@ -212,10 +219,21 @@ void MyRenderPrimitives(void) {
 
     for (int i = 0; i < LEN(g_PrimBuf); i++) {
         Primitive* prim = &g_PrimBuf[i];
+        if (prim->blendMode & 8) {
+            continue;
+        }
+
         switch (prim->type) {
+        case PRIM_G4:
         case PRIM_GT4:
             SetSdlVertexPrim(v, prim);
             SDL_RenderGeometry(g_Renderer, NULL, v, 6, NULL, 0);
+            break;
+        case PRIM_LINE_G2:
+            SDL_SetRenderDrawColor(
+                g_Renderer, prim->r0, prim->g0, prim->b0, 255);
+            SDL_RenderDrawLine(
+                g_Renderer, prim->x0, prim->y0, prim->x1, prim->y1);
             break;
         }
     }
