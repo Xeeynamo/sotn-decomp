@@ -126,6 +126,18 @@ s16 D_800705CC[0x100];
 PlayerDraw g_PlayerDraw[0x10];
 s32 D_8013AED0;
 DR_ENV D_800974AC;
+u32 D_8003C744 = 0;
+u32 mocked_800C52F8[0x200] = {0};
+PixPattern* D_800C52F8[] = {
+    mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
+    mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
+    mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
+    mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
+    mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
+    mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
+    mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
+    mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
+};
 
 // dra.h
 GpuUsage g_GpuMaxUsage;
@@ -267,25 +279,44 @@ u16 D_801374F8[0x20];
 u16 D_80137538[0x20];
 u8* D_80137590;
 s32 D_80137594;
+u32 g_DisplayHP[];
+s32 D_80137970;
+s32 D_80137974;
+u32 D_80137978;
+u32 D_8013797C;
+s32 D_80137980;
+s32 D_80137984;
+u32 D_80137988;
+u32 D_8013798C;
+Unkstruct_80137990 D_80137990;
+u32 D_800AC90C = 0x000F423F;
+s32 D_8013B5E8;
+s32 g_HealingMailTimer[1] = {0};
+s32 D_8013B5E8;
+s32 D_80137994;
+s32 D_80139008;
+s32 D_801397FC;
 
 JosephsCloak g_JosephsCloak;
 u8 g_Pix[4][128 * 128 / 2];
+const char dummy[] = "dummy\xFF";
 const char* c_strALUCARD[] = {"dummy"};
 const char* c_strGOLD[] = {"dummy"};
-const char* c_strButtonRightHand[] = {"dummy"};
-const char* D_800A83AC[] = {"dummy"};
-const char** c_strSTR = {"dummy"};
-const char* c_strCON = "dummy";
-const char* c_strINT = "dummy";
-const char* c_strLCK = "dummy";
-const char* c_strEXP = "dummy";
-const char* c_strNEXT = "dummy";
+const char* c_strButtonRightHand[] = {
+    "x\xFF", "x\xFF", "x\xFF", "x\xFF", "x\xFF", "x\xFF", "x\xFF", "x\xFF"};
+const char* D_800A83AC[] = {"x"};
+const char* c_strSTR[] = {dummy, dummy, dummy, dummy};
+const char* c_strCON = "xxx";
+const char* c_strINT = "xxx";
+const char* c_strLCK = "xxx";
+const char* c_strEXP = "xxx";
+const char* c_strNEXT = "xxxx";
 const char* c_strLEVEL = "dummy";
-const char* c_strTIME = "dummy";
+const char* c_strTIME = "xxx";
 const char* c_strROOMS = "dummy";
 const char* c_strKILLS = "dummy";
-const char* c_strHP = "dummy";
-const char* c_strMP = "dummy";
+const char* c_strHP = "xx";
+const char* c_strMP = "xx";
 const char* c_strHEART = "dummy";
 const char* c_strSTATUS = "dummy";
 const char* c_strButton = "dummy";
@@ -307,7 +338,9 @@ const char* c_strMono = "dummy";
 const char* c_strWindow = "dummy";
 const char* c_strTime = "dummy";
 const char* c_strALUCART = "dummy";
-const char* c_strSSword = "dummy";
+const char* c_strSSword[] = {
+    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
+};
 const char* g_WingSmashComboStr = "dummy";
 const char* c_strEquip = "dummy";
 const char* c_strSpells = "dummy";
@@ -318,14 +351,12 @@ const char* c_strFamiliar = "dummy";
 const char* c_strSpecial2 = "dummy";
 u8* c_strTimeAttackHiddenEntry = "dummy";
 const char* c_strTimeAttackEntries[] = {
-    "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy",
-    "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy",
-    "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy",
-    "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy",
-    "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy",
-    "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy",
-    "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy",
-    "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy",
+    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
+    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
+    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
+    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
+    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
+    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
 };
 ImgSrc* g_imgUnk8013C200_impl = {
     0,
@@ -504,30 +535,17 @@ void func_8010DFF0(s32 arg0, s32 arg1) { NOT_IMPLEMENTED; }
 
 void func_800F2120(void) { NOT_IMPLEMENTED; }
 
-void func_800FF0B8(void) { NOT_IMPLEMENTED; }
-
-void func_800FDE00(void) { NOT_IMPLEMENTED; }
-
 s32 func_800F16D0(void) { NOT_IMPLEMENTED; }
-
-void func_801024DC(void) { NOT_IMPLEMENTED; }
 
 void func_800E5D30(void* arg0, u16 arg1, u16 arg2, s32 arg3) {
     NOT_IMPLEMENTED;
 }
 
-void InitStatsAndGear(bool isDeathTakingItems) { NOT_IMPLEMENTED; }
-
 void func_801083BC(void) { NOT_IMPLEMENTED; }
 
-void func_80102628(s32 arg0) { NOT_IMPLEMENTED; }
+void DrawRichterHudSubweapon(void) { NOT_IMPLEMENTED; }
 
 void func_8010A234(s32 arg0) { NOT_IMPLEMENTED; }
-
-s32 func_801025F4(void) {
-    NOT_IMPLEMENTED;
-    return 1;
-}
 
 s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
     NOT_IMPLEMENTED;
@@ -536,23 +554,10 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
 
 void AddToInventory(u16 itemId, s32 itemCategory) { NOT_IMPLEMENTED; }
 
-void UpdateCapePalette(void) { NOT_IMPLEMENTED; }
-
-u32 CheckEquipmentItemCount(u32 itemId, u32 equipType) { NOT_IMPLEMENTED; }
-
-u8* GetEquipOrder(s32 equipTypeFilter) {
-    NOT_IMPLEMENTED;
-    return NULL;
-}
-
-u8* GetEquipCount(s32 equipTypeFilter) {
-    NOT_IMPLEMENTED;
-    return NULL;
-}
-
-const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId) {
-    NOT_IMPLEMENTED;
-    return "NOT_IMPLEMENTED";
+Entity* GetFreeEntity(s16 start, s16 end);
+Entity* CreateEntFactoryFromEntity(
+    Entity* source, u32 factoryParams, s32 arg2_raw) {
+    return GetFreeEntity(8, 16);
 }
 
 u16 g_FontCharData[0x60] = {1, 1, 1, 0, 0, 0};
@@ -561,82 +566,15 @@ u16* func_80106A28(u32 arg0, u16 kind) {
     return g_FontCharData;
 }
 
-s32 func_800FD6C4(s32 equipTypeFilter) {
-    NOT_IMPLEMENTED;
-    return 0;
-}
+// copied from 75F54.c
+Entity* GetFreeEntity(s16 start, s16 end) {
+    Entity* entity = &g_Entities[start];
+    s16 i;
 
-void func_801026BC(s32 arg0) { NOT_IMPLEMENTED; }
-
-// copied from 47BB8.c
-void ResetPadsRepeat(void) {
-    s8* ptr;
-    s32 i;
-
-    g_pads[0].repeat = 0;
-    ptr = g_PadsRepeatTimer;
-
-    for (i = 0; i < LEN(g_PadsRepeatTimer); i++) {
-        *ptr++ = 0x10;
-    }
-}
-
-// copied from 47BB8.c
-void UpdatePadsRepeat(void) {
-    u16 button = 1;
-    u16 repeat = 0;
-    u16 unk = g_pads[0].tapped;
-    u16 pressed = g_pads[0].pressed;
-    u8* timers = g_PadsRepeatTimer;
-    s32 i = 0;
-
-    while (i < 0x10) {
-        if (pressed & button) {
-            if (unk & button) {
-                repeat |= button;
-                timers[0] = 0x10;
-            } else {
-                if (--timers[0] == 0xFF) {
-                    repeat |= button;
-                    timers[0] = 5;
-                }
-            }
+    for (i = start; i < end; i++, entity++) {
+        if (entity->entityId == E_NONE) {
+            return entity;
         }
-        i++;
-        timers++;
-        button <<= 1;
     }
-    g_pads[0].repeat = repeat;
-}
-
-// copied from 47BB8.c
-void InitializePads(void) {
-    Pad* pad;
-    s32 i;
-
-    PadInit(0);
-    for (pad = g_pads, i = 0; i < PAD_COUNT; i++, pad++) {
-        pad->tapped = 0;
-        pad->previous = 0;
-        pad->pressed = 0;
-    }
-    ResetPadsRepeat();
-}
-
-// copied from 47BB8.c
-void ReadPads(void) {
-    Pad* pad;
-    s32 i;
-    u_long padd;
-
-    for (pad = g_pads, i = 0; i < PAD_COUNT; i++, pad++) {
-        pad->previous = pad->pressed;
-        padd = PadRead(i >> 1);
-        if (!(i & 1))
-            pad->pressed = padd;
-        else
-            pad->pressed = padd >> 0x10;
-        pad->tapped = (pad->pressed ^ pad->previous) & pad->pressed;
-    }
-    UpdatePadsRepeat();
+    return NULL;
 }
