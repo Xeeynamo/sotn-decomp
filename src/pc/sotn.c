@@ -4,7 +4,7 @@
 #include "sfx.h"
 #include <SDL2/SDL.h>
 
-RelicDesc g_RelicDummy = {"dummy", "dummy", 0, 0, 0};
+RelicDesc g_RelicDummy = {"DUMMY\xFF", "dummy description", 0, 0, 0};
 
 GameApi g_ApiInit = {0};
 Equipment g_EquipDefs[0x100] = {0};

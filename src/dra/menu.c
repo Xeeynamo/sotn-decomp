@@ -1732,7 +1732,7 @@ void MenuEquipSortDraw(MenuContext* context) {
 #endif
     s32 i = 0;
 #if defined(VERSION_US)
-    const char** pStrEquipTypes = &c_strSSword;
+    const char** pStrEquipTypes = c_strSSword;
 #elif defined(VERSION_HD)
     const char** pStrEquipTypes = &D_800A2D68[7];
 #endif

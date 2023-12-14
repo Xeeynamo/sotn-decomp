@@ -433,7 +433,7 @@ extern const char* c_strWindow;
 extern const char* c_strTime;
 extern const char* c_strALUCART;
 extern const char* D_800A83AC[];
-extern const char* c_strSSword;
+extern const char* c_strSSword[];
 extern s32 D_800A3194[];
 extern Unkstruct_801092E8 D_800A37D8;
 extern JosephsCloak g_JosephsCloak;

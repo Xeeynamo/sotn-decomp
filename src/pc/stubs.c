@@ -302,7 +302,8 @@ u8 g_Pix[4][128 * 128 / 2];
 const char dummy[] = "dummy\xFF";
 const char* c_strALUCARD[] = {"dummy"};
 const char* c_strGOLD[] = {"dummy"};
-const char* c_strButtonRightHand[] = {"x"};
+const char* c_strButtonRightHand[] = {
+    "x\xFF", "x\xFF", "x\xFF", "x\xFF", "x\xFF", "x\xFF", "x\xFF", "x\xFF"};
 const char* D_800A83AC[] = {"x"};
 const char* c_strSTR[] = {dummy, dummy, dummy, dummy};
 const char* c_strCON = "xxx";
@@ -337,7 +338,9 @@ const char* c_strMono = "dummy";
 const char* c_strWindow = "dummy";
 const char* c_strTime = "dummy";
 const char* c_strALUCART = "dummy";
-const char* c_strSSword = "dummy";
+const char* c_strSSword[] = {
+    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
+};
 const char* g_WingSmashComboStr = "dummy";
 const char* c_strEquip = "dummy";
 const char* c_strSpells = "dummy";
@@ -348,14 +351,12 @@ const char* c_strFamiliar = "dummy";
 const char* c_strSpecial2 = "dummy";
 u8* c_strTimeAttackHiddenEntry = "dummy";
 const char* c_strTimeAttackEntries[] = {
-    "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy",
-    "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy",
-    "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy",
-    "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy",
-    "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy",
-    "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy",
-    "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy",
-    "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy",
+    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
+    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
+    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
+    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
+    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
+    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
 };
 ImgSrc* g_imgUnk8013C200_impl = {
     0,
