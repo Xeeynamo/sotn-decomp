@@ -266,7 +266,13 @@ void func_801D0A00(s16* arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", func_801D0B40);
+void func_801D0B40(void) {
+    s16* mypointer = g_CurrentEntity[15].ext.et_801D0B40.mypointer;
+    g_CurrentEntity[15].ext.et_801D0B40.firstunk = mypointer[0x4E] - 0x600;
+
+    mypointer = g_CurrentEntity[16].ext.et_801D0B40.mypointer;
+    g_CurrentEntity[16].ext.et_801D0B40.firstunk = mypointer[0x4E] - 0x600;
+}
 
 s32 func_801D0B78(void) {
     s32 ret;
