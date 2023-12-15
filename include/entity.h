@@ -359,9 +359,9 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ s32 pad[8];
-    /* 0x84 */ s16 firstunk;
-    /* 0x86 */ s16 secondunk;
-    /* 0x88 */ s16* mypointer;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ s16* unk88;
 } ET_801D0B40;
 
 typedef struct {
