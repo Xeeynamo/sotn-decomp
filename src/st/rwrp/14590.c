@@ -116,7 +116,16 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", BottomCornerText);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", func_801955D8);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", func_80195728);
+POLY_GT4* func_80195728(POLY_GT4* poly) {
+    while (poly != NULL) {
+        if (poly->p3 != 0) {
+            poly = (POLY_GT4*)poly->tag;
+        } else {
+            return poly;
+        }
+    }
+    return NULL;
+}
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", func_80195758);
 
