@@ -4,13 +4,15 @@
 #include "sfx.h"
 #include <SDL2/SDL.h>
 
-RelicDesc g_RelicDummy = {"dummy", "dummy", 0, 0, 0};
+RelicDesc g_RelicDummy = {"DUMMY\xFF", "dummy description", 0, 0, 0};
 
 GameApi g_ApiInit = {0};
 Equipment g_EquipDefs[0x100] = {0};
 Accessory g_AccessoryDefs[0x100] = {0};
 RelicDesc g_RelicDefs[NUM_RELICS] = {0};
 SpellDef g_SpellDefs[0x100] = {0};
+SubweaponDef g_SubwpnDefs[0x10] = {0};
+EnemyDef g_EnemyDefs[0x100] = {0};
 void (*D_80170000)(s32 arg0); // ServantDesc D_80170000 = {0};
 Weapon D_8017A000 = {0};
 Weapon D_8017D000 = {0};
@@ -59,7 +61,12 @@ u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void DebugInputWait(const char* msg);
 
 // stub to the original UpdateGame
-void func_800F298C() { PlaySfx(MU_REQUIEM_FOR_THE_GODS); }
+void MenuHandle(void);
+void func_800F298C() {
+    g_PrimBuf[D_8013799C].clut = 1;
+    MenuHandle();
+    PlaySfx(MU_REQUIEM_FOR_THE_GODS);
+}
 
 int g_Frame = 0;
 void MyDrawSyncCallback(int mode) {
@@ -177,6 +184,11 @@ bool InitGame(void) {
         dummy.name = g_RelicDummy.name;
         dummy.description = g_RelicDummy.desc;
         memcpy(&g_AccessoryDefs[i], &dummy, sizeof(dummy));
+    }
+    for (int i = 0; i < LEN(g_EnemyDefs); i++) {
+        EnemyDef dummy = {0};
+        dummy.name = g_RelicDummy.name;
+        memcpy(&g_EnemyDefs[i], &dummy, sizeof(dummy));
     }
 
     D_80137590 = g_DemoRecordingBuffer;

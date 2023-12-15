@@ -266,7 +266,13 @@ void func_801D0A00(s16* arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", func_801D0B40);
+void func_801D0B40(void) {
+    s16* unk88 = g_CurrentEntity[15].ext.et_801D0B40.unk88;
+    g_CurrentEntity[15].ext.et_801D0B40.unk84 = unk88[0x4E] - 0x600;
+
+    unk88 = g_CurrentEntity[16].ext.et_801D0B40.unk88;
+    g_CurrentEntity[16].ext.et_801D0B40.unk84 = unk88[0x4E] - 0x600;
+}
 
 s32 func_801D0B78(void) {
     s32 ret;

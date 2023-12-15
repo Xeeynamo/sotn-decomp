@@ -358,6 +358,13 @@ typedef struct {
 } ET_Elevator;
 
 typedef struct {
+    /* 0x7C */ s32 pad[8];
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ s16* unk88;
+} ET_801D0B40;
+
+typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ char pad_80[0xC];
     /* 0x8C */ u8 unk8C;
@@ -654,6 +661,7 @@ typedef union {
     /* 0x7C */ ET_CastleDoor castleDoor;
     /* 0x7C */ ET_DeathSkySwirl deathSkySwirl;
     /* 0x7C */ ET_Elevator elevator;
+    /* 0x7C */ ET_801D0B40 et_801D0B40;
     /* 0x7C */ ET_801D1BB8 et_801D1BB8;
     /* 0x7C */ ET_801D0B78 et_801D0B78;
     /* 0x7C */ ET_WaterEffects waterEffects;

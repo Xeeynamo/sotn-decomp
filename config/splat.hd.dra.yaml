@@ -201,6 +201,7 @@ segments:
       - [0x44EC8, c, play]
       - [0x463E4, c, loading]
       - [0x48250, c, 47BB8]
+      - [0x493BC, c, pads]
       - [0x4957C, c, save_mgr]
       - [0x4ABF0, c, 4A538]
       - [0x4FAE0, c, collider]
