@@ -40,8 +40,9 @@ DISPENV* PutDispEnv(DISPENV* env) { MyPutDispEnv(env); }
 
 void DrawOTag(u_long* p) { NOT_IMPLEMENTED; }
 
+void MySetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw);
 void SetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw) {
-    NOT_IMPLEMENTED;
+    MySetDrawMode(p, dfe, dtd, tpage, tw);
 }
 
 int MyResetGraph(int mode);

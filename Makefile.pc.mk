@@ -6,7 +6,7 @@ LD_PC               := ld
 CC_FLAGS_PC         := -c -g -DVERSION_PC -DPERMUTER -DNON_MATCHING  -fno-stack-protector 
 CC_FLAGS_PC         += -DDEMO_KEY_PTR=0
 CC_FLAGS_PC         += -I$(INCLUDE_DIR) -I$(SRC_DIR)/dra/ -I$(SRC_DIR)/pc/3rd
-LD_FLAGS_PC         := -fsanitize=address -lc -lm -lSDL2
+LD_FLAGS_PC         := -fsanitize=address -lc -lm -lSDL2 -lSDL2_image
 
 C_FILES_PC          := main.c log.c stubs.c sotn.c
 C_FILES_PC          += pc.c sdl2.c
