@@ -135,7 +135,13 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018C5B4);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018C72C);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018C7E0);
+void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity) {
+    DestroyEntity(entity);
+    entity->entityId = entityId;
+    entity->pfnUpdate = PfnEntityUpdates[entityId - 1];
+    entity->posX.i.hi = g_CurrentEntity->posX.i.hi;
+    entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
+}
 
 void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
