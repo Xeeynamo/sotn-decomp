@@ -752,16 +752,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
 
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/1E1C8", func_801A2400);
 
-POLY_GT4* func_801A2550(POLY_GT4* poly) {
-    while (poly != NULL) {
-        if (poly->p3 != 0) {
-            poly = (POLY_GT4*)poly->tag;
-        } else {
-            return poly;
-        }
-    }
-    return NULL;
-}
+#include "../find_first_unk_prim.h"
 
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/1E1C8", func_801A2580);
 

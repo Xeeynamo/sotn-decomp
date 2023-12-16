@@ -172,7 +172,7 @@ class PSXSegAssets(N64Segment):
                 "ram_addr": hex(self.vram_start + i * item_size)[2:].upper(),
             }
             if "name_addr" in config["struct"]:
-                item["desc_resolved"] = utils.sotn_menu_name_to_str(
+                item["name_resolved"] = utils.sotn_menu_name_to_str(
                     get_ptr_data(item_data[0x00:])
                 )
             if "desc_addr" in config["struct"]:

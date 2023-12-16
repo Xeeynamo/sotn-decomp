@@ -726,7 +726,8 @@ void EntityCavernDoor(Entity* self) {
         }
 
         if (!(g_Timer & 1)) {
-            poly = func_801D6DB8((POLY_GT4*)(*(s32*)&self->ext.generic.unk7C));
+            poly =
+                FindFirstUnkPrim((Primitive*)(*(s32*)&self->ext.generic.unk7C));
             if (poly != NULL) {
                 poly->p3 = 1;
             }
@@ -1699,7 +1700,8 @@ void EntityHeartRoomGoldDoor(Entity* self) {
         }
 
         if (!(g_Timer & 1)) {
-            poly = func_801D6DB8((POLY_GT4*)(*(s32*)&self->ext.generic.unk7C));
+            poly =
+                FindFirstUnkPrim((POLY_GT4*)(*(s32*)&self->ext.generic.unk7C));
             if (poly != NULL) {
                 poly->p3 = 1;
             }

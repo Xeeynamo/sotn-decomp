@@ -667,7 +667,8 @@ void func_801B40F8(Entity* self) {
         }
 
         if (!(g_Timer & 1)) {
-            poly = func_801D2470((POLY_GT4*)(*(s32*)&self->ext.generic.unk7C));
+            poly =
+                FindFirstUnkPrim((Primitive*)(*(s32*)&self->ext.generic.unk7C));
             if (poly != NULL) {
                 poly->p3 = 1;
             }
@@ -1577,7 +1578,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
         }
 
         if (!(g_Timer & 1)) {
-            prim = func_801D2470(self->ext.heartRoomGoldDoor.prim);
+            prim = FindFirstUnkPrim(self->ext.heartRoomGoldDoor.prim);
             if (prim != NULL) {
                 prim->p3 = 1;
             }

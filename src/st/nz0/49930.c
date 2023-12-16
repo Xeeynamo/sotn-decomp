@@ -4,16 +4,7 @@
 
 INCLUDE_ASM("asm/us/st/nz0/nonmatchings/49930", func_801C9D18);
 
-Primitive* func_801C9E68(Primitive* poly) {
-    while (poly != NULL) {
-        if (poly->p3 != 0) {
-            poly = poly->next;
-        } else {
-            return poly;
-        }
-    }
-    return NULL;
-}
+#include "../find_first_unk_prim.h"
 
 Primitive* func_801C9E98(Primitive* prim, u8 index) {
     if (prim) {

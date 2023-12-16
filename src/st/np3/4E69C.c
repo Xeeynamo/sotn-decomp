@@ -465,16 +465,7 @@ void EntityBladeSword(Entity* self) {
 
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", func_801D2320);
 
-Primitive* func_801D2470(Primitive* prim) {
-    while (prim != NULL) {
-        if (prim->p3 != 0) {
-            prim = prim->next;
-        } else {
-            return prim;
-        }
-    }
-    return NULL;
-}
+#include "../find_first_unk_prim.h"
 
 Primitive* func_801D24A0(Primitive* prim, u8 index) {
     if (prim) {
