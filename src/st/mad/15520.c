@@ -567,16 +567,7 @@ INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_80198BC8);
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_80199388);
 
-POLY_GT4* func_801994D8(POLY_GT4* poly) {
-    while (poly != NULL) {
-        if (poly->p3 != 0) {
-            poly = (POLY_GT4*)poly->tag;
-        } else {
-            return poly;
-        }
-    }
-    return NULL;
-}
+#include "../find_first_unk_prim.h"
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_80199508);
 
