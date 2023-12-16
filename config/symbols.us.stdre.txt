@@ -69,6 +69,7 @@ EntitySoulStealOrb = 0x801A13B8;
 EntityEnemyBlood = 0x801A174C;
 EntityRoomForeground = 0x801A1BFC;
 BottomCornerText = 0x801A1CE8;
+FindFirstUnkPrim = 0x801A2550;
 EntityUnkId17 = 0x801A2E20;
 Entity3DBackgroundHouse = 0x801A2F10;
 g_Dialogue = 0x801A3ED8;
