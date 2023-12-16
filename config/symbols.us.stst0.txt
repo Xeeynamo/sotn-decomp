@@ -60,7 +60,6 @@ EntityClouds = 0x801BAB08;
 EntityClockTower3D = 0x801BB2AC;
 EntityCutscenePhotograph = 0x801BB764;
 EntityCutscenePhotographFire = 0x801BC4D0;
-FindFirstUnkPrim = 0x801BD5F8;
 UnkLoopFunc = 0x801BD88C;
 EntityBackgroundVortex = 0x801BE1B4;
 g_Dialogue = 0x801C24CC;

@@ -667,7 +667,8 @@ void func_801B40F8(Entity* self) {
         }
 
         if (!(g_Timer & 1)) {
-            poly = FindFirstUnkPrim((Primitive*)(*(s32*)&self->ext.generic.unk7C));
+            poly =
+                FindFirstUnkPrim((Primitive*)(*(s32*)&self->ext.generic.unk7C));
             if (poly != NULL) {
                 poly->p3 = 1;
             }

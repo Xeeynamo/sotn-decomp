@@ -39,6 +39,5 @@ EntityIntenseExplosion = 0x80192248;
 EntitySoulStealOrb = 0x80194590;
 EntityEnemyBlood = 0x80194924;
 BottomCornerText = 0x80194EC0;
-FindFirstUnkPrim = 0x80195728;
 UnkLoopFunc = 0x801959BC;
 g_ItemIconSlots = 0x801966A8;
