@@ -171,7 +171,7 @@ int func_801CF7A0(s16* arg0) {
     Entity* var_a0;
     s32 var_s0;
     s32 var_s1;
-    
+
     if (g_CurrentEntity->ext.et_801CE4CC.unk8E != 0) {
         --g_CurrentEntity->ext.et_801CE4CC.unk8E;
     }
