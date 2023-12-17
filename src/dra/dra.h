@@ -676,13 +676,13 @@ extern s32 D_80137E40;
 extern s32 D_80137E44;
 extern s32 D_80137E48;
 extern s32 D_80137E4C;
-extern s32 D_80137E50;
+extern s32 g_MemCardRetryCount;
 extern s32 D_80137E54;
 extern s32 D_80137E58;
 extern s32 D_80137E5C;
 extern s32 D_80137E60; // most likely part of the g_Cd struct
-extern s32 D_80137E64; // most likely part of the g_Cd struct
-extern s32 D_80137E68; // most likely part of the g_Cd struct
+extern s32 g_MemCardRStep;
+extern s32 g_MemCardRStepSub;
 extern s32 D_80137E6C;
 extern s32 D_80137F6C; // most likely part of the g_Cd struct
 extern void* D_80137F7C;
@@ -945,7 +945,6 @@ void func_800FF0A0(s32 arg0);
 bool func_8010183C(s32 arg0);
 s32 func_801025F4(void);
 void func_80102CD8(s32);
-void func_80102DEC(s32 arg0);
 void func_80103EAC(void);
 void DestroyEntity(Entity*);
 void DestroyEntities(s16 startIndex);
