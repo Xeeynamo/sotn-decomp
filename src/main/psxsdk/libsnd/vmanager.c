@@ -131,7 +131,7 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtGetDetVVol);
 
 s32 SsUtSetDetVVol(s16 arg0, s16 arg1, s16 arg2) {
     s32 temp[2];
-    if ((u32)(arg0) < 24) {
+    if (arg0 >= 0 && arg0 < 24) {
         _svm_sreg_buf[arg0].field_0_vol_left = arg1;
         _svm_sreg_buf[arg0].field_2_vol_right = arg2;
         _svm_sreg_dirty[arg0] = _svm_sreg_dirty[arg0] | 3;
