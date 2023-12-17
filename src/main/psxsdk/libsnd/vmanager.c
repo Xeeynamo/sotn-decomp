@@ -99,7 +99,13 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmSeqKeyOff);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmSetProgVol);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmGetProgVol);
+s32 SpuVmGetProgVol(s16 arg0, s16 arg1) {
+    if (!(SpuVmVSetUp(arg0, arg1))) {
+        return D_8006C3B4[arg1].mvol;
+    } else {
+        return -1;
+    }
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmSetProgPan);
 
@@ -123,7 +129,17 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtChangeADSR);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtGetDetVVol);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtSetDetVVol);
+s32 SsUtSetDetVVol(s16 arg0, s16 arg1, s16 arg2) {
+    s32 temp[2];
+    if (arg0 >= 0 && arg0 < 24) {
+        _svm_sreg_buf[arg0].field_0_vol_left = arg1;
+        _svm_sreg_buf[arg0].field_2_vol_right = arg2;
+        _svm_sreg_dirty[arg0] = _svm_sreg_dirty[arg0] | 3;
+        return 0;
+    }
+
+    return -1;
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtGetVVol);
 

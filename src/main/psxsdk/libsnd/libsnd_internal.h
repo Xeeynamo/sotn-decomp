@@ -190,4 +190,19 @@ typedef struct ProgAtr { /* Program Headdings */
 extern ProgAtr* D_8006C3B4;
 extern u8 svm_vab_used[];
 
+struct RegBufStruct {
+    short field_0_vol_left;
+    short field_2_vol_right;
+    short field_4_pitch;
+    unsigned short field_6_vagAddr;
+    unsigned short field_8_adsr1;
+    unsigned short field_A_adsr2;
+    short field_0xc;
+    short field_0xe;
+};
+extern struct RegBufStruct _svm_sreg_buf[24];
+extern unsigned char _svm_sreg_dirty[24];
+
+extern ProgAtr* D_8006C3B4;
+
 #endif
