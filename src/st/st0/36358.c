@@ -1058,14 +1058,7 @@ INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", func_801BC5C0);
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", func_801BD4A8);
 
-POLY_GT4* func_801BD5F8(POLY_GT4* poly) {
-    while (poly) {
-        if (poly->p3 == 0)
-            return poly;
-        poly = (POLY_GT4*)poly->tag;
-    }
-    return NULL;
-}
+#include "../find_first_unk_prim.h"
 
 POLY_GT4* func_801BD628(POLY_GT4* poly, u8 index) {
     if (poly) {
