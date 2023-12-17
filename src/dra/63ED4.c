@@ -5,7 +5,6 @@
 // Note: Including this as part of the previous file (62D70.c) caused
 // four 00 bytes to be added to the rodata at 0x3CDC0; this indicates
 // that this function should be the start of this new file.
-
 void func_80103ED4(void) {
     char saveFile[32];
     s32 memCardClose;
@@ -15,7 +14,7 @@ void func_80103ED4(void) {
     switch (D_80137E4C) {
     case 0:
         MemcardInit();
-        D_80137E50 = 4;
+        g_MemcardMaxAttempts = 4;
         D_80137E4C++;
         return;
     case 1:
@@ -25,13 +24,13 @@ void func_80103ED4(void) {
             return;
         }
         if (case1_state == -1) {
-            if (--D_80137E50 == -1) {
+            if (--g_MemcardMaxAttempts == -1) {
                 D_80137E4C = 7;
             }
             return;
         }
         if (case1_state == -3) {
-            if (--D_80137E50 == -1) {
+            if (--g_MemcardMaxAttempts == -1) {
                 D_80137E4C = 8;
             }
             return;
@@ -45,7 +44,7 @@ void func_80103ED4(void) {
         return;
     case 2:
         if (MemcardParse(D_80097924, 0) >= 0) {
-            D_80137E50 = 10;
+            g_MemcardMaxAttempts = 10;
             if (D_8006C378 >= 0) {
                 i = 0;
                 if (D_80137E54 == 2) {
@@ -102,12 +101,12 @@ void func_80103ED4(void) {
         // in the save-select screen.
         StoreSaveData(g_Pix, D_8006C378, rand() & 0xF);
         if (MemcardWriteFile(D_80097924, 0, saveFile, g_Pix, 1, i) != 0) {
-            if (--D_80137E50 == -1) {
+            if (--g_MemcardMaxAttempts == -1) {
                 D_80137E4C = 0;
                 return;
             }
         } else {
-            D_80137E50 = 10;
+            g_MemcardMaxAttempts = 10;
             D_80137E4C++;
             return;
         }
@@ -118,7 +117,7 @@ void func_80103ED4(void) {
             return;
         }
         if (memCardClose == -3) {
-            if (--D_80137E50 != -1) {
+            if (--g_MemcardMaxAttempts != -1) {
                 D_80137E4C--;
                 return;
             }

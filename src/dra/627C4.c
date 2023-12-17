@@ -208,28 +208,26 @@ void func_80102D70(void) {
     }
 }
 
-void func_80102DEC(s32 context) {
-    D_80137E64 = 0;
-    D_80137E68 = context;
+void MemcardSetPort(s32 nPort) {
+    g_MemCardInitState = 0;
+    g_MemCardPort = nPort;
 }
 
-s32 func_80102E04(void) {
-    u32 new_var2 = D_80137E68;
-    s32 temp_s0 = D_80137E64;
+s32 MemcardInitAndFormat(void) {
+    u32 nPort = g_MemCardPort;
+    s32 state = g_MemCardInitState;
 
-    switch (temp_s0) {
+    switch (state) {
     case 0:
         MemcardInit();
-        D_80137E50 = 4;
-        D_80137E64++;
+        g_MemcardMaxAttempts = 4;
+        g_MemCardInitState++;
         break;
 
     case 1:
-        if (MemcardFormat(new_var2, 0) != temp_s0) {
-            D_80137E50 = D_80137E50 - 1;
-            if (D_80137E50 == -1) {
-                temp_s0 = -1;
-                return temp_s0;
+        if (MemcardFormat(nPort, 0) != 1) {
+            if (--g_MemcardMaxAttempts == -1) {
+                return -1;
             }
         } else {
             return 1;
