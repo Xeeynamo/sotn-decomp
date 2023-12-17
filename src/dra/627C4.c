@@ -208,12 +208,12 @@ void func_80102D70(void) {
     }
 }
 
-void MemcardSetPort(s32 nPort) {
+void MemCardSetPort(s32 nPort) {
     g_MemCardRStep = 0;
     g_MemCardRStepSub = nPort;
 }
 
-s32 MemcardInitAndFormat(void) {
+s32 MemCardInitAndFormat(void) {
     u32 nPort = g_MemCardRStepSub;
     s32 state = g_MemCardRStep;
 

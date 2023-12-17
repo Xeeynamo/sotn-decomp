@@ -823,7 +823,7 @@ void Update(void) {
         if (g_pads[0].tapped & PAD_TRIANGLE) {
             g_api.PlaySfx(0x633);
             func_801ACBE4(GFX_UNK_6, 8);
-            func_801B3F7C(0);
+            MemCardSetPort(0);
             D_8003C9A4++;
         } else {
             if (g_pads[0].tapped & PAD_CROSS) {
@@ -835,7 +835,7 @@ void Update(void) {
     case 514:
         func_801ADF94(0x80, 0);
         D_800978C4 = 0;
-        temp_v0 = func_801B3F94();
+        temp_v0 = MemCardInitAndFormat();
         if (temp_v0 != 0) {
             D_800978C4 = 1;
         }
@@ -885,7 +885,7 @@ void Update(void) {
         if (g_pads[0].tapped & PAD_TRIANGLE) {
             g_api.PlaySfx(0x633);
             func_801ACBE4(GFX_UNK_6, 8);
-            func_801B3F7C(1);
+            MemCardSetPort(1);
             D_8003C9A4++;
         } else {
             if (g_pads[0].tapped & 0x40) {
@@ -897,7 +897,7 @@ void Update(void) {
     case 530:
         func_801ADF94(0x80, 0);
         D_800978C4 = 0;
-        temp_v0 = func_801B3F94();
+        temp_v0 = MemCardInitAndFormat();
         if (temp_v0 != 0) {
             D_800978C4 = 1;
         }
@@ -1581,12 +1581,12 @@ s32 func_801B3E2C(void) {
     return 0;
 }
 
-void func_801B3F7C(s32 arg0) {
+void MemCardSetPort(s32 arg0) {
     g_MemCardRStep = 0;
     g_MemCardRStepSub = arg0;
 }
 
-s32 func_801B3F94(void) {
+s32 MemCardInitAndFormat(void) {
     int dummy[8];
     u32 nPort = g_MemCardRStepSub;
     s32 state = g_MemCardRStep;
