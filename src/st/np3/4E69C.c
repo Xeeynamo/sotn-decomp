@@ -167,7 +167,60 @@ void func_801CF778(void) {
     et->unk9C = et->next->ext.et_801CF254.unk9C + 0x300;
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", func_801CF7A0);
+int func_801CF7A0(s16* arg0) {
+    Entity* var_a0;
+    s32 var_s0;
+    s32 var_s1;
+    
+    if (g_CurrentEntity->ext.et_801CE4CC.unk8E != 0) {
+        --g_CurrentEntity->ext.et_801CE4CC.unk8E;
+    }
+    var_s1 = arg0[1] - PLAYER.posX.i.hi;
+    if (g_CurrentEntity->facingLeft) {
+        var_s1 = -var_s1;
+    }
+    if (var_s1 < -16) {
+        func_801CE1E8(10, g_CurrentEntity);
+        return;
+    }
+    if ((u8)g_CurrentEntity->ext.generic.unk84.S8.unk0 == 1) {
+        var_a0 = g_CurrentEntity + 10;
+    } else {
+        var_a0 = g_CurrentEntity + 13;
+    }
+    if (func_801CE120(var_a0, g_CurrentEntity->facingLeft)) {
+        func_801CE1E8(7);
+        return;
+    }
+    var_s0 = 5;
+    if (var_s1 < 48) {
+        var_s0 = 7;
+    }
+    if (var_s1 < 80) {
+        var_s0 = 5;
+    }
+    if (var_s1 >= 129) {
+        var_s0 = 8;
+    }
+    if (g_CurrentEntity->ext.et_801CE4CC.unk8E == 0) {
+        if (var_s1 < 160) {
+            var_s0 = 6;
+            g_CurrentEntity->ext.et_801CE4CC.unk8E = 3;
+            g_CurrentEntity->ext.gurkhaSword.unk8C = 1;
+        }
+        if (var_s1 < 64) {
+            g_CurrentEntity->ext.gurkhaSword.unk8C = 0;
+        }
+    }
+    if (var_s0 != g_CurrentEntity->step) {
+        do {
+            func_801CE1E8(var_s0);
+        } while (0); // no idea why, found by permuter
+    }
+    if ((g_CurrentEntity->step == 7) && (var_s0 == 5)) {
+        g_CurrentEntity->ext.factory.unkB0 = 1;
+    }
+}
 
 // DECOMP_ME_WIP EntityGurkha https://decomp.me/scratch/51iIJ
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", EntityGurkha);
