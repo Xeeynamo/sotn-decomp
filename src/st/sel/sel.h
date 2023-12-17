@@ -168,9 +168,9 @@ extern s32 D_801BAFDC;
 extern s32 D_801BAFE0;
 extern u32 D_801BAFE4;
 extern s32 D_801BAFE8;
-extern s32 g_MemCardInitState;
-extern s32 g_MemCardPort; // rstep sub
-extern s32 g_MemcardMaxAttempts;
+extern s32 g_MemCardRStep;
+extern s32 g_MemCardRStepSub; // rstep sub
+extern s32 g_MemCardRetryCount;
 extern s32 D_801BAFFC;
 extern s32 D_801BB000;
 extern s32 D_801BB004;

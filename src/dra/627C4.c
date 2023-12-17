@@ -209,24 +209,24 @@ void func_80102D70(void) {
 }
 
 void MemcardSetPort(s32 nPort) {
-    g_MemCardInitState = 0;
-    g_MemCardPort = nPort;
+    g_MemCardRStep = 0;
+    g_MemCardRStepSub = nPort;
 }
 
 s32 MemcardInitAndFormat(void) {
-    u32 nPort = g_MemCardPort;
-    s32 state = g_MemCardInitState;
+    u32 nPort = g_MemCardRStepSub;
+    s32 state = g_MemCardRStep;
 
     switch (state) {
     case 0:
         MemcardInit();
-        g_MemcardMaxAttempts = 4;
-        g_MemCardInitState++;
+        g_MemCardRetryCount = 4;
+        g_MemCardRStep++;
         break;
 
     case 1:
         if (MemcardFormat(nPort, 0) != 1) {
-            if (--g_MemcardMaxAttempts == -1) {
+            if (--g_MemCardRetryCount == -1) {
                 return -1;
             }
         } else {

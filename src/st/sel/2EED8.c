@@ -1453,7 +1453,7 @@ void func_801B3120(void) {
     s32 i;
     s32 n;
 
-    g_MemCardInitState = 0;
+    g_MemCardRStep = 0;
     i = 0;
     n = -1;
     var_v0 = g_SaveSummary;
@@ -1470,8 +1470,8 @@ void func_801B3120(void) {
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2EED8", func_801B3164);
 
 void func_801B367C(s32 arg0) {
-    g_MemCardInitState = 0;
-    g_MemCardPort = arg0;
+    g_MemCardRStep = 0;
+    g_MemCardRStepSub = arg0;
 }
 
 s32 TryLoadSaveData(void) {
@@ -1481,39 +1481,39 @@ s32 TryLoadSaveData(void) {
     s32 temp_v0;
     s32 blockId;
 
-    FntPrint(D_801A7AF8, g_MemCardInitState, g_MemCardPort);
-    FntPrint(D_801A7B08, g_MemcardMaxAttempts);
+    FntPrint(D_801A7AF8, g_MemCardRStep, g_MemCardRStepSub);
+    FntPrint(D_801A7B08, g_MemCardRetryCount);
 
-    nPort = g_MemCardPort / 15;
-    nSlot = g_MemCardPort % 15;
+    nPort = g_MemCardRStepSub / 15;
+    nSlot = g_MemCardRStepSub % 15;
     blockId = g_SaveSummary[nPort].slot[nSlot];
-    switch (g_MemCardInitState) {
+    switch (g_MemCardRStep) {
     case 0:
         MemcardInit();
-        g_MemcardMaxAttempts = 10;
-        g_MemCardInitState = 3;
+        g_MemCardRetryCount = 10;
+        g_MemCardRStep = 3;
         break;
     case 3:
         MakeMemcardPath(saveFile, blockId);
         if (MemcardReadFile(nPort, 0, saveFile, g_Pix[0], 1) != 0) {
-            g_MemcardMaxAttempts--;
-            if (g_MemcardMaxAttempts != -1) {
+            g_MemCardRetryCount--;
+            if (g_MemCardRetryCount != -1) {
                 return 0;
             }
             temp_v0 = -1;
             return temp_v0;
         }
-        g_MemCardInitState++;
+        g_MemCardRStep++;
         break;
     case 4:
         temp_v0 = MemcardClose(nPort);
         if (temp_v0 != 0) {
             if (temp_v0 == -3) {
-                g_MemcardMaxAttempts--;
-                if (g_MemcardMaxAttempts == -1) {
+                g_MemCardRetryCount--;
+                if (g_MemCardRetryCount == -1) {
                     return -1;
                 } else {
-                    g_MemCardInitState--;
+                    g_MemCardRStep--;
                     do {
                         return 0;
                     } while (0); // FAKE!
@@ -1536,7 +1536,7 @@ INCLUDE_ASM("asm/us/st/sel/nonmatchings/2EED8", func_801B38B4);
 void func_801B3A54(s32 arg0, s32 arg1) {
     char pad[0x20];
 
-    g_MemCardInitState = 0;
+    g_MemCardRStep = 0;
     D_801BAFFC = arg0;
     D_801BB000 = arg1;
     D_801BB004 = arg0;
@@ -1547,8 +1547,8 @@ void func_801B3A54(s32 arg0, s32 arg1) {
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/2EED8", func_801B3A94);
 
 void func_801B3E14(s32 arg0) {
-    g_MemCardInitState = 0;
-    g_MemCardPort = arg0;
+    g_MemCardRStep = 0;
+    g_MemCardRStepSub = arg0;
 }
 
 s32 func_801B3E2C(void) {
@@ -1557,19 +1557,19 @@ s32 func_801B3E2C(void) {
     s32 blockId;
     s32 port;
 
-    port = g_MemCardPort / 15;
-    slot = g_MemCardPort % 15;
+    port = g_MemCardRStepSub / 15;
+    slot = g_MemCardRStepSub % 15;
     blockId = g_SaveSummary[port].slot[slot];
-    switch (g_MemCardInitState) {
+    switch (g_MemCardRStep) {
     case 0:
         MemcardInit(slot, blockId);
-        g_MemcardMaxAttempts = 10;
-        g_MemCardInitState++;
+        g_MemCardRetryCount = 10;
+        g_MemCardRStep++;
         break;
     case 1:
         MakeMemcardPath(path, blockId);
         if (MemcardEraseFile(port, 0, path)) {
-            if (--g_MemcardMaxAttempts == -1) {
+            if (--g_MemCardRetryCount == -1) {
                 return -1;
             }
         } else {
@@ -1582,25 +1582,25 @@ s32 func_801B3E2C(void) {
 }
 
 void func_801B3F7C(s32 arg0) {
-    g_MemCardInitState = 0;
-    g_MemCardPort = arg0;
+    g_MemCardRStep = 0;
+    g_MemCardRStepSub = arg0;
 }
 
 s32 func_801B3F94(void) {
     int dummy[8];
-    u32 nPort = g_MemCardPort;
-    s32 state = g_MemCardInitState;
+    u32 nPort = g_MemCardRStepSub;
+    s32 state = g_MemCardRStep;
 
     switch (state) {
     case 0:
         MemcardInit();
-        g_MemcardMaxAttempts = 5;
-        g_MemCardInitState++;
+        g_MemCardRetryCount = 5;
+        g_MemCardRStep++;
         break;
 
     case 1:
         if (MemcardFormat(nPort, 0) != 1) {
-            if (--g_MemcardMaxAttempts == -1) {
+            if (--g_MemCardRetryCount == -1) {
                 return -1;
             }
         } else {

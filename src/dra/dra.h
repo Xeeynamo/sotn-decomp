@@ -676,13 +676,13 @@ extern s32 D_80137E40;
 extern s32 D_80137E44;
 extern s32 D_80137E48;
 extern s32 D_80137E4C;
-extern s32 g_MemcardMaxAttempts;
+extern s32 g_MemCardRetryCount;
 extern s32 D_80137E54;
 extern s32 D_80137E58;
 extern s32 D_80137E5C;
 extern s32 D_80137E60; // most likely part of the g_Cd struct
-extern s32 g_MemCardInitState;
-extern s32 g_MemCardPort;
+extern s32 g_MemCardRStep;
+extern s32 g_MemCardRStepSub;
 extern s32 D_80137E6C;
 extern s32 D_80137F6C; // most likely part of the g_Cd struct
 extern void* D_80137F7C;
