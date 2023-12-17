@@ -27,10 +27,12 @@ void _spu_r_(s32 arg0, u16 arg1, s32 arg2) {
     _spu_RXX->rxx.trans_addr = arg1;
     WASTE_TIME();
     WASTE_TIME();
+
+    _spu_RXX->rxx.spucnt |= 0x30;
     do {
-        _spu_RXX->rxx.spucnt |= 0x30;
+        WASTE_TIME();
     } while (0);
-    WASTE_TIME();
+
     WASTE_TIME();
     *D_80033518 = (*D_80033518 & 0xF0FFFFFF) | 0x22000000;
     *D_80033508 = arg0;
