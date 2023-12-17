@@ -1581,9 +1581,9 @@ s32 func_801B3E2C(void) {
     return 0;
 }
 
-void MemCardSetPort(s32 arg0) {
+void MemCardSetPort(s32 port) {
     g_MemCardRStep = 0;
-    g_MemCardRStepSub = arg0;
+    g_MemCardRStepSub = port;
 }
 
 s32 MemCardInitAndFormat(void) {

@@ -945,7 +945,6 @@ void func_800FF0A0(s32 arg0);
 bool func_8010183C(s32 arg0);
 s32 func_801025F4(void);
 void func_80102CD8(s32);
-void func_80102DEC(s32 arg0);
 void func_80103EAC(void);
 void DestroyEntity(Entity*);
 void DestroyEntities(s16 startIndex);
