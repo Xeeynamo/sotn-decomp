@@ -140,7 +140,7 @@ PfnEntityUpdate D_800AD0C4[] = {
     EntityTeleport,
     func_80124A8C,
     func_8011A4C8};
-
+// Corresponding RIC function is func_801603C4
 void func_8011A4D0(void) {
     Entity* entity;
     s32 temp_s2;

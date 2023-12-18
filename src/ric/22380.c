@@ -663,7 +663,79 @@ void func_801603B4(void) {}
 
 void func_801603BC(void) {}
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_801603C4);
+// Corresponding DRA function is func_8011A4D0
+void func_801603C4(void) {
+    SubweaponDef subwpn;
+    Entity* entity;
+    s32 i;
+    s32 i2;
+    s32 i3;
+    s32 temp_s2;
+    s32 enemy;
+    s32 enemy2;
+
+    temp_s2 = *D_80097420;
+    entity = g_CurrentEntity = &g_Entities[4];
+    for (i = 4; i < 0x40; i++, g_CurrentEntity++, entity++) {
+        if (entity->entityId != 0) {
+            if (entity->step == 0) {
+                entity->pfnUpdate = D_8015495C[entity->entityId];
+            }
+            if ((temp_s2 == 0) || (entity->flags & 0x10000)) {
+                entity->pfnUpdate(entity);
+                entity = g_CurrentEntity;
+                if (entity->entityId != 0) {
+                    if (!(entity->flags & FLAG_UNK_04000000) &&
+                        ((u16)(entity->posX.i.hi + 32) > 320 ||
+                         (u16)(entity->posY.i.hi + 16) > 272)) {
+                        DestroyEntity(entity);
+                    } else if (entity->flags & 0x100000) {
+                        g_api.UpdateAnim(0, (s32*)D_80154674);
+                    }
+                }
+            }
+        }
+    }
+
+    if (D_80174FAC != 0) {
+        if (--D_80174FAC & 1) {
+            g_api.g_pfn_800EA5AC(1, D_80174FB0, D_80174FB4, D_80174FB8);
+        }
+    }
+
+    D_80174F80[1] = D_80174F80[2] = 0;
+    enemy = g_Entities[16].enemyId;
+    if (enemy == 1) {
+        D_80174F80[1] = 1;
+    } else if (enemy == 2) {
+        D_80174F80[2] = 1;
+    }
+
+    for (i2 = 3; i2 < 11; i2++) {
+        D_80174F80[i2] = 0;
+    }
+
+    entity = &g_Entities[17];
+    for (i3 = 17; i3 < 48; entity++, i3++) {
+        enemy2 = entity->enemyId;
+        if (enemy2 >= 3) {
+            D_80174F80[entity->enemyId]++;
+        }
+    }
+    // This IF will fire if we have enough hearts to use a subweapon crash.
+    // No idea what it's doing here.
+    if (func_8015FB84(&subwpn, 1, 0) >= 0) {
+        g_Player.unk0C |= 0x200000;
+    }
+    if (g_Player.unk0C & 0xC0000) {
+        FntPrint("dead player\n");
+        entity = &g_Entities[17]; // Weird code here. Set entity to #17 but...
+        entity -= 13; // then change to #4 before the for-loop starting with 4?
+        for (i = 4; i < 64; i++, entity++) {
+            entity->hitboxState = 0;
+        }
+    }
+}
 
 // Similar to the version in DRA but with some logic removed
 Entity* CreateEntFactoryFromEntity(
