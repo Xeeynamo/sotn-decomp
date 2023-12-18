@@ -156,11 +156,11 @@ segments:
       - [0x41904, .rodata, 75F54] # jtbl_800E1904
       - [0x4191C, .rodata, 75F54] # jtbl_800E191C
       - [0x4193C, .rodata, 75F54] # jtbl_800E193C
-      - [0x41954, rodata]
+      - [0x41954, .rodata, 75F54] # "error step\n"
       - [0x41960, rodata] # jtbl_800E1960
       - [0x41990, rodata]
       - [0x419A0, rodata] # jtbl_800E19A0
-      - [0x419C0, rodata]
+      - [0x419C0, .rodata, 7A4D0] # "atari nuki\n"
       - [0x419D0, .rodata, 7A4D0] # jtbl_800E19D0
       - [0x419F0, .rodata, 7A4D0] # jtbl_800E19F0
       - [0x41A10, rodata] # jtbl_800E1A10

@@ -2,7 +2,7 @@
 
 #include "../unk_prim_helper.h"
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/49930", func_801C9D18);
+#include "../update_animation.h"
 
 #include "../find_first_unk_prim.h"
 

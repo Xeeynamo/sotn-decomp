@@ -565,7 +565,7 @@ INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_80198BC8);
 
 #include "../unk_prim_helper.h"
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_80199388);
+#include "../update_animation.h"
 
 #include "../find_first_unk_prim.h"
 

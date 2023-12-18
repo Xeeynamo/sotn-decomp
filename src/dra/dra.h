@@ -342,11 +342,6 @@ typedef enum {
     COMBO_DARK_METAMORPH,
 } ButtonComboIdx;
 
-typedef struct {
-    s16 buttonsCorrect;
-    s16 timer;
-} ButtonComboState;
-
 struct SeqData {
     u8 volume;
     u8 reverb_depth;
@@ -549,8 +544,6 @@ extern const char aSp1603x;
 extern const char aTile03x;
 extern Unkstruct_800BF554 g_SfxData[];
 
-extern char* aErrorStep;
-extern char* aAtariNuki;
 extern char* aLightTimer02x;
 extern SVECTOR D_800E2024;
 extern SVECTOR D_800E202C;
