@@ -145,6 +145,7 @@ ClearOTag = 0x80012C90;
 ClearOTagR = 0x80012D3C;
 DrawOTag = 0x80012E1C;
 PutDrawEnv = 0x80012E8C;
+GetDrawEnv = 0x80012F84;
 PutDispEnv = 0x80012FE4;
 GetDispEnv = 0x8001342C;
 GetODE = 0x80013490;
