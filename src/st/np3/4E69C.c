@@ -466,7 +466,7 @@ void EntityBladeSword(Entity* self) {
 
 #include "../unk_prim_helper.h"
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", func_801D2320);
+#include "../update_animation.h"
 
 #include "../find_first_unk_prim.h"
 

@@ -750,7 +750,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
 
 #include "../unk_prim_helper.h"
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1E1C8", func_801A2400);
+#include "../update_animation.h"
 
 #include "../find_first_unk_prim.h"
 

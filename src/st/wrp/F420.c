@@ -1037,7 +1037,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
 
 #include "../unk_prim_helper.h"
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/F420", func_80193658);
+#include "../update_animation.h"
 
 #include "../find_first_unk_prim.h"
 
