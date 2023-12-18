@@ -1,13 +1,13 @@
 #include "sel.h"
 
 void func_801B642C(void) {
-    D_801BC360 = 2;
-    D_801BC35E = 2;
-    D_801BC362 = 0;
-    D_801BC366 = 0;
-    D_801BC36A = 0;
-    D_801BC36B = 8;
-    D_801BC35A = D_801BC35C + 0x14;
+    g_Dialogue.nextLineX = 2;
+    g_Dialogue.nextCharX = 2;
+    g_Dialogue.nextCharY = 0;
+    g_Dialogue.unk12 = 0;
+    g_Dialogue.nextCharTimer = 0;
+    g_Dialogue.unk17 = 8;
+    g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
 }
 
 bool func_801B6480(s32 textDialogue) {
@@ -160,9 +160,9 @@ void func_801B675C(u16 actorIndex, Entity* self) {
 }
 
 void func_801B68E0(s32 arg0) {
-    D_801BC394 = arg0 + 0x100000;
-    D_801BC392 = 0;
-    D_801BC390 = 1;
+    g_Dialogue.unk40 = arg0 + 0x100000;
+    g_Dialogue.timer = 0;
+    g_Dialogue.unk3C = 1;
 }
 
 void func_801B690C(u8 ySteps, Entity* self) {
