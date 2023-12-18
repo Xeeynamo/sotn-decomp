@@ -51,7 +51,7 @@ class NonMatchingFunc(object):
         self.overlay_name = split[split.index("nonmatchings") - 1]
         self.text_offset = split[split.index("nonmatchings") + 1]
 
-        assumed_path = f"/{self.overlay_name}/{self.text_offset}.c"
+        assumed_path = "/".join(split[split.index("nonmatchings") + 1 : -1]) + ".c"
         c_paths = [src for src in src_files if src.endswith(assumed_path)]
         assert len(c_paths) == 1
         self.src_path = c_paths[0]
