@@ -319,6 +319,21 @@ typedef struct {
     /* 0x04 */ u_long code[2];
 } DR_MODE; /* Drawing Mode, size = 0x0C */
 
+typedef struct {
+    u_long tag;
+    u_long code[2];
+} DR_TWIN;
+
+typedef struct {
+    u_long tag;
+    u_long code[2];
+} DR_AREA; // Drawing Area
+
+typedef struct {
+    u_long tag;
+    u_long code[2];
+} DR_OFFSET; // Drawing Offset
+
 typedef struct PixPattern {
     u8 w;
     u8 h;
