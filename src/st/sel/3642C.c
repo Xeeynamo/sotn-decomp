@@ -195,7 +195,48 @@ void func_801B690C(u8 ySteps, Entity* self) {
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/3642C", func_801B69F8);
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/3642C", func_801B76F0);
+s32 func_801B76F0(const char* msg) {
+    const int PRIM = -5;
+    Primitive* prim;
+    s16 i;
+
+    g_Dialogue.primIndex[PRIM] = g_api.AllocPrimitives(PRIM_SPRT, 0x20);
+    if (g_Dialogue.primIndex[PRIM] != -1) {
+        g_Dialogue.nextCharX = 0x200;
+        g_Dialogue.nextCharDialogue = msg;
+        g_Dialogue.startY = 0x20B;
+        g_Dialogue.nextLineX = 0;
+        g_Dialogue.nextCharY = 0;
+        g_Dialogue.portraitAnimTimer = 0;
+        g_Dialogue.unk12 = 0;
+        g_Dialogue.clutIndex = 0;
+        g_Dialogue.prim[0] = &g_PrimBuf[g_Dialogue.primIndex[PRIM]];
+        prim = &g_PrimBuf[g_Dialogue.primIndex[PRIM]];
+        for (i = 0; i < 0x20; i++) {
+            if (i & 1) {
+                prim->tpage = 9;
+                prim->x0 = 0xF8;
+            } else {
+                prim->tpage = 8;
+                prim->x0 = 0x18;
+            }
+            prim->v0 = (i >> 1) * 0x10;
+            prim->u0 = 0;
+            prim->u1 = 0xF0;
+            prim->x1 = 0;
+            prim->v1 = 0x10;
+            prim->y0 = (i >> 1) * 0x13 + 0xF0;
+            prim->clut = 0x1A1;
+            prim->priority = 3;
+            prim->blendMode = 0;
+            prim = prim->next;
+        }
+
+        return true;
+    }
+    g_Dialogue.primIndex[PRIM] = 0;
+    return false;
+}
 
 void func_801B786C(s16 arg0) {
     RECT rect;
