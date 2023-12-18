@@ -1437,6 +1437,13 @@ typedef struct {
     /* 0x27 */ u8 unk27;
 } PlayerDraw; /* size = 0x28 */
 
+// Used to track the state of moves the player does with a sequence of buttons.
+// This includes spells, some of Richter's moves, etc.
+typedef struct {
+    s16 buttonsCorrect;
+    s16 timer;
+} ButtonComboState;
+
 extern s32 D_8003925C;
 extern s32 g_IsTimeAttackUnlocked;
 

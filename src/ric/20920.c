@@ -246,15 +246,15 @@ void func_8015D020(void) {
     }
 }
 
-void func_8015D120(void) {
-    SetPlayerStep(8);
+void DoHighJump(void) {
+    SetPlayerStep(Player_HighJump);
     PLAYER.velocityX = 0;
-    SetSpeedX(0x14000);
-    PLAYER.velocityY = -0x78000;
+    SetSpeedX(FIX(1.25));
+    PLAYER.velocityY = FIX(-7.5);
     g_Player.pl_high_jump_timer = 0;
     func_8015C920(&D_8015579C);
     func_8015CC28();
-    CreateEntFactoryFromEntity(g_CurrentEntity, 0x2DU, 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 45), 0);
     g_api.PlaySfx(0x6FB);
     g_Player.D_80072F18 = 4;
     if (g_Player.unk72 != 0) {
