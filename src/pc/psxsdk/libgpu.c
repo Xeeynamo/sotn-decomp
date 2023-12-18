@@ -25,14 +25,6 @@ void SetDumpFnt(int id) { NOT_IMPLEMENTED; }
 
 void SetDispMask(int mask) { NOT_IMPLEMENTED; }
 
-DISPENV* MySetDefDispEnv(DISPENV* env, int x, int y, int w, int h);
-DISPENV* SetDefDispEnv(DISPENV* env, int x, int y, int w, int h) {
-    MySetDefDispEnv(env, x, y, w, h);
-}
-DRAWENV* SetDefDrawEnv(DRAWENV* env, int x, int y, int w, int h) {
-    NOT_IMPLEMENTED;
-}
-
 int ClearImage(RECT* rect, u_char r, u_char g, u_char b) { NOT_IMPLEMENTED; }
 int LoadImage(RECT* rect, u_long* p) { NOT_IMPLEMENTED; }
 int StoreImage(RECT* rect, u_long* p) { NOT_IMPLEMENTED; }
@@ -43,7 +35,8 @@ int DrawSync(int mode) { return MyDrawSync(mode); }
 
 DRAWENV* PutDrawEnv(DRAWENV* env) { NOT_IMPLEMENTED; }
 
-DISPENV* PutDispEnv(DISPENV* env) { NOT_IMPLEMENTED; }
+DISPENV* MyPutDispEnv(DISPENV* env);
+DISPENV* PutDispEnv(DISPENV* env) { MyPutDispEnv(env); }
 
 void DrawOTag(u_long* p) { NOT_IMPLEMENTED; }
 
@@ -58,10 +51,9 @@ int SetGraphDebug(int level) { NOT_IMPLEMENTED; }
 
 u_long* ClearOTag(u_long* ot, int n) { NOT_IMPLEMENTED; }
 
-u_short LoadClut2(u_long* clut, int x, int y) { NOT_IMPLEMENTED; }
-
-u_short LoadTPage(u_long* pix, int tp, int abr, int x, int y, int w, int h) {
+u_short GetTPage(int tp, int abr, int x, int y) {
     NOT_IMPLEMENTED;
+    return 0;
 }
 
 u_short GetClut(int x, int y) { return getClut(x, y); }

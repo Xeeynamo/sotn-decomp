@@ -326,8 +326,6 @@ typedef struct PixPattern {
     u8 y;
 } PixPattern;
 
-// clang-format off
-
 /*
  * Loads a texture pattern from the memory area starting at the address pix into
  * the frame buffer area starting at the address (x, y), and calculates the
@@ -335,16 +333,15 @@ typedef struct PixPattern {
  * represents the number of pixels, not the actual size of the transfer area in
  * the frame buffer.
  */
-extern u_short LoadTPage(u_long* pix,  // Pointer to texture pattern start address
-          int tp,       // Bit depth (0 = 4-bit; 1 = 8-bit; 2 = 16-bit)
-          int abr,      // Semitransparency rate
-          int x, int y, // Destination frame buffer address
-          int w, int h  // Texture pattern size
+extern u_short LoadTPage(
+    u_long* pix,  // Pointer to texture pattern start address
+    int tp,       // Bit depth (0 = 4-bit; 1 = 8-bit; 2 = 16-bit)
+    int abr,      // Semitransparency rate
+    int x, int y, // Destination frame buffer address
+    int w, int h  // Texture pattern size
 );
 
-extern u_short LoadClut2(u_long *clut, int x, int y);
-
-// clang-format on
+extern u_short LoadClut2(u_long* clut, int x, int y);
 
 /**
  * Calculates and returns the texture CLUT ID.
@@ -354,6 +351,7 @@ u_short GetClut(int x, // Horizontal frame buffer address of CLUT
                 int y  // Vertical frame buffer address of CLUT
 );
 
+u_short GetTPage(int tp, int abr, int x, int y);
 extern void AddPrim(void* ot, void* p);
 extern void SetShadeTex(void* p, int tge);
 extern void SetLineG2(LINE_G2* p);

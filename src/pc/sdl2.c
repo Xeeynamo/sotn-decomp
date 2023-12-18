@@ -152,8 +152,9 @@ int MyDrawSync(int mode) {
     return 0;
 }
 
-DISPENV* MySetDefDispEnv(DISPENV* env, int x, int y, int w, int h) {
-    SDL_SetWindowSize(g_Window, w * SCREEN_SCALE, h * SCREEN_SCALE);
+DISPENV* MyPutDispEnv(DISPENV* env) {
+    SDL_SetWindowSize(
+        g_Window, env->disp.w * SCREEN_SCALE, env->disp.h * SCREEN_SCALE);
 }
 
 void SetSdlVertexG4(SDL_Vertex* v, POLY_G4* poly) {
