@@ -370,9 +370,9 @@ void func_8018E238(u16 actorIndex, Entity* self) {
 }
 
 void func_8018E3BC(s32 arg0) {
-    D_8019D3B8 = arg0 + 0x100000;
-    D_8019D3B6 = 0;
-    D_8019D3B4 = 1;
+    g_Dialogue.unk40 = arg0 + 0x100000;
+    g_Dialogue.timer = 0;
+    g_Dialogue.unk3C = 1;
 }
 
 void func_8018E3E8(void) {

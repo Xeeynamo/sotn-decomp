@@ -238,9 +238,6 @@ extern s8 D_801D7D3A;
 extern s8 D_801D7D3B;
 extern s32 D_801D7D54;
 extern s32 D_801D7D58;
-extern s16 D_801D7D60;
-extern s16 D_801D7D62;
-extern s32 D_801D7D64;
 extern u32 D_801D7DD0;
 extern u16 g_ItemIconSlots[0x20];
 
