@@ -158,9 +158,9 @@ int MoveImage(RECT* rect, int x, int y) {
     checkRECT("MoveImage", rect);
     param[0] = 0x04FFFFFF;
     param[1] = 0x80000000;
-    param[2] = *(u32*)&rect->x;
+    param[2] = LOW(rect->x);
     param[3] = (u16)y << 0x10 | (u16)x;
-    param[4] = *(u32*)&rect->w;
+    param[4] = LOW(rect->w);
     return D_8002C260->addque2(D_8002C260->cwc, param, sizeof(param), 0);
 }
 
