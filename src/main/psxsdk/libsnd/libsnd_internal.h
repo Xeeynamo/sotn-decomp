@@ -205,7 +205,7 @@ extern unsigned char _svm_sreg_dirty[24];
 
 extern ProgAtr* D_8006C3B4;
 
-void SpuVmVSetUp(s16, s16);
+u32 SpuVmVSetUp(s16, s16);
 extern u8 D_800978CF;
 
 typedef struct VagAtr { /* VAG Tone Headdings */
