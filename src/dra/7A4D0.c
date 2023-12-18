@@ -140,7 +140,7 @@ PfnEntityUpdate D_800AD0C4[] = {
     EntityTeleport,
     func_80124A8C,
     func_8011A4C8};
-
+// Corresponding RIC function is func_801603C4
 void func_8011A4D0(void) {
     Entity* entity;
     s32 temp_s2;
@@ -222,8 +222,12 @@ void func_8011A4D0(void) {
     // Appears to be a temporary debugging block that was left in.
     if ((g_Player.unk0C & 0xC0000) ||
         (PLAYER.step == 0x12 && PLAYER.step_s == 0)) {
-        // prints "atari nuki", Japanese for "without hit".
-        FntPrint(&aAtariNuki);
+#if defined(VERSION_US)
+        // Japanese for "without hit".
+        FntPrint("atari nuki\n");
+#elif defined(VERSION_HD)
+        FntPrint("dead player\n");
+#endif
         entity = &g_Entities[4];
         // Disable all hitboxes!
         for (i = 4; i < 64; i++, entity++) {

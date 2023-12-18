@@ -131,7 +131,7 @@ void EntityBloodSplatter(Entity* self) {
 
         prim3 = prim->next;
         prim3->b3 += 254;
-        if (func_801C9D18(&D_8018238C, prim) == 0) {
+        if (UpdateAnimation(&D_8018238C, prim) == 0) {
             UnkPolyFunc0(prim);
         }
 
@@ -151,7 +151,7 @@ void EntityBloodSplatter(Entity* self) {
             prim3->b3 = 0;
         }
 
-        if (func_801C9D18(&D_801823A4, prim) == 0) {
+        if (UpdateAnimation(&D_801823A4, prim) == 0) {
             UnkPolyFunc0(prim);
         }
 
