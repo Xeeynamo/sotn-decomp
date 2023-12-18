@@ -139,17 +139,17 @@ void checkRECT(const char* log, RECT* r) {
 int ClearImage(RECT* rect, u8 r, u8 g, u8 b) {
     checkRECT("ClearImage", rect);
     return D_8002C260->addque2(
-        D_8002C260->clr, rect, 8, (b << 0x10) | (g << 8) | r);
+        D_8002C260->clr, rect, sizeof(RECT), (b << 0x10) | (g << 8) | r);
 }
 
 int LoadImage(RECT* rect, u_long* p) {
     checkRECT("LoadImage", rect);
-    return D_8002C260->addque2(D_8002C260->dws, rect, 8, p);
+    return D_8002C260->addque2(D_8002C260->dws, rect, sizeof(RECT), p);
 }
 
 int StoreImage(RECT* rect, u_long* p) {
     checkRECT("StoreImage", rect);
-    return D_8002C260->addque2(D_8002C260->drs, rect, 8, p);
+    return D_8002C260->addque2(D_8002C260->drs, rect, sizeof(RECT), p);
 }
 
 int MoveImage(RECT* rect, int x, int y) {
@@ -206,7 +206,7 @@ DRAWENV* PutDrawEnv(DRAWENV* env) {
 
     SetDrawEnv(&env->dr_env, env);
     env->dr_env.tag |= 0xFFFFFF;
-    D_8002C260->addque2(D_8002C260->cwc, &env->dr_env, 0x40, 0);
+    D_8002C260->addque2(D_8002C260->cwc, &env->dr_env, sizeof(DR_ENV), 0);
     __builtin_memcpy(&D_80037E60, env, sizeof(DRAWENV));
 
     return env;
