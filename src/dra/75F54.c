@@ -1085,7 +1085,7 @@ void ControlMistForm(void) {
         }
         break;
     default:
-        FntPrint(&aErrorStep);
+        FntPrint("error step\n");
         break;
     }
     if (D_8013AECC != 0) {
