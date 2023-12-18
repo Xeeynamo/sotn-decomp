@@ -342,11 +342,6 @@ typedef enum {
     COMBO_DARK_METAMORPH,
 } ButtonComboIdx;
 
-typedef struct {
-    s16 buttonsCorrect;
-    s16 timer;
-} ButtonComboState;
-
 struct SeqData {
     u8 volume;
     u8 reverb_depth;

@@ -177,9 +177,44 @@ INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_801572A8);
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80157894);
 
-// DECOMP_ME_WIP func_80157A50 https://decomp.me/scratch/hk5zb
-// Almost matched, just a jump issue
-INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80157A50);
+void CheckHighJumpInput(void) {
+    switch (D_801758E4.buttonsCorrect) { /* irregular */
+    case 0:
+        if (g_Player.padTapped & PAD_DOWN) {
+            if (g_Player.padHeld == 0) {
+                D_801758E4.timer = 16;
+                D_801758E4.buttonsCorrect++;
+                return;
+            }
+        }
+        return;
+    case 1:
+        if (g_Player.padTapped & PAD_UP) {
+            D_801758E4.timer = 16;
+            D_801758E4.buttonsCorrect++;
+            return;
+        }
+        if (--D_801758E4.timer == 0) {
+            D_801758E4.buttonsCorrect = 0;
+        }
+        break;
+    case 2:
+        if ((D_801758E4.timer != 0) && (--D_801758E4.timer == 0)) {
+            D_801758E4.buttonsCorrect = 0;
+            return;
+        }
+        if ((g_Player.padTapped & PAD_CROSS) && (g_Player.unk46 == 0) &&
+            ((PLAYER.step == Player_Crouch) || (PLAYER.step == Player_Stand) ||
+             ((PLAYER.step == Player_Jump) && (PLAYER.velocityY > FIX(1))) ||
+             (PLAYER.step == Player_Fall))) {
+            if (g_Player.unk72 == 0) {
+                DoHighJump();
+            }
+            D_801758E4.buttonsCorrect = 0;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", UpdateEntityRichter);
 

@@ -125,7 +125,7 @@ void EntityZombieSpawner(Entity* self) {
 
 #include "../unk_prim_helper.h"
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/564B0", func_801D6C68);
+#include "../update_animation.h"
 
 #include "../find_first_unk_prim.h"
 

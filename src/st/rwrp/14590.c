@@ -114,7 +114,7 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", BottomCornerText);
 
 #include "../unk_prim_helper.h"
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", func_801955D8);
+#include "../update_animation.h"
 
 #include "../find_first_unk_prim.h"
 
