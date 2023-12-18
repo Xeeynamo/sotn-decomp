@@ -1,6 +1,8 @@
 #include "common.h"
 #include "libspu_internal.h"
 
+extern s32 _spu_transferCallback;
+
 u32 SpuWritePartly(u8* addr, u32 size) {
     s32 temp_s0;
     u32 var_s1;

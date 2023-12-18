@@ -7,12 +7,6 @@ INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libspu/spu", _spu_init);
 
 INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libspu/spu", _spu_writeByIO);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libspu/spu", _spu_FiDMA);
-
-extern s32* D_80033508;
-extern s32* D_8003350C;
-extern s32* D_80033510;
-extern s32* D_80033518;
 extern s32 D_80033550;
 
 #define WASTE_TIME()                                                           \
@@ -20,6 +14,43 @@ extern s32 D_80033550;
     for (sp0 = 0; sp0 < 0xF0; sp0++) {                                         \
         sp4 *= 3;                                                              \
     }
+
+extern void (* volatile _spu_transferCallback)();
+
+void _spu_FiDMA(void) {
+    volatile s32 sp0;
+    volatile s32 sp4;
+    s32 var_v1;
+    s32 temp_v0;
+    SPU_RXX* rxx;
+
+    if (D_80033550 == 0) {
+        WASTE_TIME();
+        WASTE_TIME();
+        WASTE_TIME();
+    }
+
+    rxx = &_spu_RXX->rxx;
+    rxx->spucnt &= 0xFFCF;
+
+    for (var_v1 = 0; rxx->spucnt & 0x30; var_v1++) {
+        if (var_v1 + 1 > 0xF00) {
+            break;
+        }
+    }
+
+    if (_spu_transferCallback) {
+        _spu_transferCallback();
+        return;
+    }
+    DeliverEvent(0xF0000009U, 0x20U);
+}
+
+extern s32* D_80033508;
+extern s32* D_8003350C;
+extern s32* D_80033510;
+extern s32* D_80033518;
+extern s32 D_80033550;
 
 void _spu_r_(s32 arg0, u16 arg1, s32 arg2) {
     volatile s32 sp0;

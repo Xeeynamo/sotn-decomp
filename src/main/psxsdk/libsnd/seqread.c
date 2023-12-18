@@ -49,7 +49,18 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContPortaTime);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContPortamento);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContResetAll);
+void _SsContResetAll(s16 arg0, s16 arg1) {
+    struct SeqStruct* temp_s0;
+    temp_s0 = &_ss_score[arg0][arg1];
+    func_80021F0C();
+    SpuVmDamperOff();
+    temp_s0->programs[temp_s0->channel] = temp_s0->channel;
+    temp_s0->unk13 = 0;
+    temp_s0->unk14 = 0;
+    temp_s0->vol[temp_s0->channel] = 0x7f;
+    temp_s0->panpot[temp_s0->channel] = 64;
+    temp_s0->delta_value = _SsReadDeltaValue(arg0, arg1);
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContNrpn1);
 

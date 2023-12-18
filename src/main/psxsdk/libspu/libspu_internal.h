@@ -24,7 +24,6 @@ typedef struct tagSpuMalloc {
 } SPU_MALLOC;
 
 extern s32 _spu_inTransfer;
-extern s32 _spu_transferCallback;
 
 void _SpuCallback(s32 arg0);
 extern void (*_spu_IRQCallback)();
@@ -103,7 +102,7 @@ typedef struct tagSpuControl {
     u16 irq_addr;            // 1A4
     volatile u16 trans_addr; // 1A6
     u16 trans_fifo;          // 1A8
-    u16 spucnt;              // 1AA SPUCNT
+    volatile u16 spucnt;     // 1AA SPUCNT
     u16 data_trans;          // 1AC
     u16 spustat;             // 1AE SPUSTAT
     SpuVolume cd_vol;        // 1B0

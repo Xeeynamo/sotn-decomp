@@ -1,6 +1,8 @@
 #include "common.h"
 #include "libspu_internal.h"
 
+extern s32 _spu_transferCallback;
+
 u32 SpuRead(u8* arg0, u32 size) {
     if (size > 0x7F000U) {
         size = 0x7F000;

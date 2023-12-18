@@ -205,4 +205,35 @@ extern unsigned char _svm_sreg_dirty[24];
 
 extern ProgAtr* D_8006C3B4;
 
+void SpuVmVSetUp(s16, s16);
+extern u8 D_800978CF;
+
+typedef struct VagAtr { /* VAG Tone Headdings */
+
+    unsigned char prior;     /* tone priority */
+    unsigned char mode;      /* play mode */
+    unsigned char vol;       /* tone volume*/
+    unsigned char pan;       /* tone panning */
+    unsigned char center;    /* center note */
+    unsigned char shift;     /* center note fine tune */
+    unsigned char min;       /* minimam note limit */
+    unsigned char max;       /* maximam note limit */
+    unsigned char vibW;      /* vibrate depth */
+    unsigned char vibT;      /* vibrate duration */
+    unsigned char porW;      /* portamento depth */
+    unsigned char porT;      /* portamento duration */
+    unsigned char pbmin;     /* under pitch bend max */
+    unsigned char pbmax;     /* upper pitch bend max */
+    unsigned char reserved1; /* system reserved */
+    unsigned char reserved2; /* system reserved */
+    unsigned short adsr1;    /* adsr1 */
+    unsigned short adsr2;    /* adsr2 */
+    short prog;              /* parent program*/
+    short vag;               /* vag reference */
+    short reserved[4];       /* system reserved */
+
+} VagAtr; /* 32 byte */
+
+extern VagAtr* _svm_tn;
+
 #endif
