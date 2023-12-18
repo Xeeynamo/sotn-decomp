@@ -159,6 +159,7 @@ extern s32 D_80175080;
 extern s32 D_801758B0[];
 extern Entity* D_801758CC[];
 extern u32 D_801758D0;
+extern ButtonComboState D_801758E4;
 extern u16 D_80175950;
 extern u16 D_80175952;
 extern u16 D_80175954;
