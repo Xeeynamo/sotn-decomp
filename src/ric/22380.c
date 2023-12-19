@@ -27,8 +27,8 @@ void func_8015E7B4(Unkstruct_8010BF64* arg0) { // !FAKE:
 
     arg0->unk14 = temp;
     arg0->unk1C = temp = D_80154604[0].unk2;
-    arg0->unk18 = D_801545EA[8] - 1;
-    arg0->unk20 = D_801545EA[0] + 1;
+    arg0->unk18 = D_801545EA[4].unk0 - 1;
+    arg0->unk20 = D_801545EA[0].unk0 + 1;
 }
 
 void func_8015E800(void) {
