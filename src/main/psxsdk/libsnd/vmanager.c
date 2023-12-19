@@ -43,7 +43,18 @@ void SpuVmNoiseOnWithAdsr(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     }
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmNoiseOff);
+void SpuVmNoiseOff(void) {
+    s16 i;
+    for (i = 0; i < spuVmMaxVoice; i++) {
+        if (_svm_voice[i].unk1b == 2) {
+            _svm_voice[i & 0xff].unk1b = 0;
+            _svm_voice[i & 0xff].unk04 = 0;
+            // pointer to 0x1F801C00
+            D_80032F10[0x194 / 2] = 0;
+            D_80032F10[0x196 / 2] = 0;
+        }
+    }
+}
 
 void SpuVmNoiseOn(s32 arg0, s32 arg1) {
     D_800978D7 = 0x7F;
