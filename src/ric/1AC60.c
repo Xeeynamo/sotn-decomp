@@ -757,10 +757,9 @@ void func_80159670(void) {
     s32 i;
     s16 xShift;
 
-    if ((g_Player.padTapped & PAD_CROSS) &&
-        (g_Player.unk46 == 0) &&
+    if ((g_Player.padTapped & PAD_CROSS) && (g_Player.unk46 == 0) &&
         (g_Player.padPressed & PAD_DOWN)) {
-        for(i = 0; i < 4; i++){
+        for (i = 0; i < 4; i++) {
             if ((g_Player.colliders[i].effects & EFFECT_SOLID_FROM_ABOVE)) {
                 g_Player.D_80072F0E = 8;
                 return;
@@ -770,10 +769,12 @@ void func_80159670(void) {
     if (func_8015DBB0(0x4100C)) {
         return;
     }
-    if ((g_Player.padTapped & PAD_CROSS) && (g_Player.unk46 == 0) && (g_Player.unk72 == 0)) {
+    if ((g_Player.padTapped & PAD_CROSS) && (g_Player.unk46 == 0) &&
+        (g_Player.unk72 == 0)) {
         func_8015D020(1);
         return;
-    } else if ((g_Player.unk72 == 0) && (g_Player.unk46 == 0) && (g_Player.padTapped & PAD_TRIANGLE) && func_8015D678()) {
+    } else if ((g_Player.unk72 == 0) && (g_Player.unk46 == 0) &&
+               (g_Player.padTapped & PAD_TRIANGLE) && func_8015D678()) {
         return;
     }
     func_8015C93C(0x2000);
@@ -794,14 +795,16 @@ void func_80159670(void) {
             PLAYER.posY.i.hi -= 2;
             PLAYER.posX.i.hi -= xShift;
         }
-        if (!(g_Player.padPressed & PAD_DOWN) && ((g_Player.unk72 == 0) || !(g_Player.pl_vram_flag & 0x40))) {
+        if (!(g_Player.padPressed & PAD_DOWN) &&
+            ((g_Player.unk72 == 0) || !(g_Player.pl_vram_flag & 0x40))) {
             func_8015C920(D_801554E0);
             PLAYER.step_s = 2;
             return;
         }
         break;
     case 0x1:
-        if (!(g_Player.padPressed & PAD_DOWN) && ((g_Player.unk72 == 0) || !(g_Player.pl_vram_flag & 0x40))) {
+        if (!(g_Player.padPressed & PAD_DOWN) &&
+            ((g_Player.unk72 == 0) || !(g_Player.pl_vram_flag & 0x40))) {
             if (func_8015C9CC() == 0) {
                 PLAYER.unk4C = D_801554E0;
                 PLAYER.step_s = 2;
