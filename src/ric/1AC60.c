@@ -320,14 +320,14 @@ void CheckBladeDashInput(void) {
         if (--D_801758E0.timer == 0) {
             D_801758E0.buttonsCorrect = 0;
         }
-        if ((PLAYER.step == Player_Stand || PLAYER.step == Player_Walk) || 
+        if ((PLAYER.step == Player_Stand || PLAYER.step == Player_Walk) ||
             PLAYER.step == Player_Crouch ||
             (PLAYER.step == Player_Fall || PLAYER.step == Player_Jump)) {
             if (g_Player.unk72 != 0) {
                 D_801758E0.buttonsCorrect = 0;
             } else if (
                 (g_Player.unk46 == 0) && (g_Player.padTapped & PAD_SQUARE)) {
-                func_8015DB04();
+                DoBladeDash();
             }
         }
         break;

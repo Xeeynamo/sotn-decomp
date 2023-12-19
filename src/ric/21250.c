@@ -85,11 +85,11 @@ void func_8015DA60(void) {
     CreateEntFactoryFromEntity(g_CurrentEntity, 0x1F, 0);
 }
 
-void func_8015DB04(void) {
+void DoBladeDash(void) {
     SetPlayerStep(0x18);
     func_8015C920(&D_801557D8);
     g_CurrentEntity->velocityY = 0;
-    SetSpeedX(0x58000);
+    SetSpeedX(FIX(5.5));
     g_Player.unk46 = 5;
     g_Player.D_80072F18 = 4;
     CreateEntFactoryFromEntity(g_CurrentEntity, 0x1A, 0);
