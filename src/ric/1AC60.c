@@ -173,7 +173,7 @@ void func_80156F40(s16 arg0) {
     }
 }
 
-void func_801572A8(s32 arg0) {
+void func_801572A8(bool arg0) {
     Collider collider;
     s16 argX;
     s16 argY;
@@ -189,7 +189,7 @@ void func_801572A8(s32 arg0) {
     *vram_ptr = 0;
     unk0C = g_Player.unk0C;
 
-    if (arg0 != 0) {
+    if (arg0) {
         for (i = 0; i < LEN(D_801545E4); i++) {
             if (unk0C & 0x20) {
                 D_801545F4[i].unk2 = D_80154644[i];
