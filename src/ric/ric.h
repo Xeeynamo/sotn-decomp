@@ -88,6 +88,7 @@ extern s32 D_8015459C;
 extern s16 D_801545A8;
 extern s16 D_801545AA;
 extern s16 D_801545AC;
+// These appear to be a set of collision boxes
 extern s16_pair D_801545E4[];
 extern s16_pair D_801545EA[];
 extern s16_pair D_801545F4[];
