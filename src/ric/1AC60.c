@@ -278,10 +278,64 @@ void func_801572A8(bool arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80157894);
+void CheckBladeDashInput(void) {
+    s32 up;
+    s32 down;
+    s32 temp_down = PAD_DOWN;
+    s32 directionsPressed =
+        g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
+
+    s32 down_forward = temp_down + (!PLAYER.facingLeft ? PAD_RIGHT : PAD_LEFT);
+    up = PAD_UP;
+    down = PAD_DOWN;
+
+    switch (D_801758E0.buttonsCorrect) {
+    case 0:
+        if (g_Player.padTapped == up) {
+            D_801758E0.timer = 20;
+            D_801758E0.buttonsCorrect++;
+        }
+        break;
+    case 1:
+        if (directionsPressed == down) {
+            D_801758E0.timer = 20;
+            D_801758E0.buttonsCorrect++;
+            break;
+        }
+        if (--D_801758E0.timer == 0) {
+            D_801758E0.buttonsCorrect = 0;
+        }
+        break;
+    case 2:
+        if (directionsPressed == down_forward) {
+            D_801758E0.timer = 20;
+            D_801758E0.buttonsCorrect++;
+            break;
+        }
+        if (--D_801758E0.timer == 0) {
+            D_801758E0.buttonsCorrect = 0;
+        }
+        break;
+    case 3:
+        if (--D_801758E0.timer == 0) {
+            D_801758E0.buttonsCorrect = 0;
+        }
+        if ((PLAYER.step == Player_Stand || PLAYER.step == Player_Walk) ||
+            PLAYER.step == Player_Crouch ||
+            (PLAYER.step == Player_Fall || PLAYER.step == Player_Jump)) {
+            if (g_Player.unk72 != 0) {
+                D_801758E0.buttonsCorrect = 0;
+            } else if (
+                (g_Player.unk46 == 0) && (g_Player.padTapped & PAD_SQUARE)) {
+                DoBladeDash();
+            }
+        }
+        break;
+    }
+}
 
 void CheckHighJumpInput(void) {
-    switch (D_801758E4.buttonsCorrect) { /* irregular */
+    switch (D_801758E4.buttonsCorrect) {
     case 0:
         if (g_Player.padTapped & PAD_DOWN) {
             if (g_Player.padHeld == 0) {
