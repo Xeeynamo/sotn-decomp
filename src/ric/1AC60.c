@@ -173,7 +173,110 @@ void func_80156F40(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_801572A8);
+void func_801572A8(bool arg0) {
+    Collider collider;
+    s16 argX;
+    s16 argY;
+    s32 xVel;
+    s32 i;
+    s32 j;
+    s32 unk0C;
+
+    s32* vram_ptr = &g_Player.pl_vram_flag;
+    s32* unk04_ptr = &g_Player.unk04;
+
+    g_Player.unk04 = *vram_ptr;
+    *vram_ptr = 0;
+    unk0C = g_Player.unk0C;
+
+    if (arg0) {
+        for (i = 0; i < LEN(D_801545E4); i++) {
+            if (unk0C & 0x20) {
+                D_801545F4[i].unk2 = D_80154644[i];
+                D_801545E4[i].unk2 = D_8015465C[i];
+            } else {
+                D_801545F4[i].unk2 = D_80154644[i];
+                D_801545E4[i].unk2 = D_8015463C[i];
+            }
+        }
+        for (i = 0; i < 7; i++) {
+            if (unk0C & 0x20) {
+                D_80154604[i].unk2 = D_80154664[i];
+                D_80154604[i + 7].unk2 = D_80154664[i];
+            } else {
+                D_80154604[i].unk2 = D_8015464C[i];
+                D_80154604[i + 7].unk2 = D_8015464C[i];
+            }
+        }
+    }
+    xVel = PLAYER.velocityX;
+    if (PLAYER.velocityX < 0) {
+        if (!(*unk04_ptr & 8)) {
+            if ((*unk04_ptr & 0xF000) == 0xC000) {
+                xVel = xVel * 10 / 16;
+            }
+            if ((*unk04_ptr & 0xF000) == 0xD000) {
+                xVel = xVel * 13 / 16;
+            }
+            PLAYER.posX.val += xVel;
+        }
+    }
+    if (PLAYER.velocityX > 0) {
+        if (!(*unk04_ptr & 4)) {
+            if ((*unk04_ptr & 0xF000) == 0x8000) {
+                xVel = xVel * 10 / 16;
+            }
+            if ((*unk04_ptr & 0xF000) == 0x9000) {
+                xVel = xVel * 13 / 16;
+            }
+            PLAYER.posX.val += xVel;
+        }
+    }
+    if ((PLAYER.velocityY < 0) && !(*unk04_ptr & 2)) {
+        PLAYER.posY.val += PLAYER.velocityY;
+    }
+    if ((PLAYER.velocityY > 0) && !(*unk04_ptr & 1)) {
+        PLAYER.posY.val += PLAYER.velocityY;
+    }
+    for (i = 0; i < 4; i++) {
+        argX = PLAYER.posX.i.hi + D_801545F4[i].unk0;
+        argY = PLAYER.posY.i.hi + D_801545F4[i].unk2;
+        g_api.CheckCollision(argX, argY, &g_Player.colliders[i], 0);
+        if ((g_Player.D_80072F0E != 0) &&
+            (g_Player.colliders[i].effects & 0x40)) {
+            g_api.CheckCollision(argX, argY + 0xC, &collider, 0);
+            if (!(collider.effects & EFFECT_SOLID)) {
+                g_Player.colliders[i].effects = 0;
+            }
+        }
+    }
+    func_8015E800();
+    for (i = 0; i < 4; i++) {
+        argX = PLAYER.posX.i.hi + D_801545E4[i].unk0;
+        argY = PLAYER.posY.i.hi + D_801545E4[i].unk2;
+        g_api.CheckCollision(argX, argY, &g_Player.colliders2[i], 0);
+    }
+    func_8015EE28();
+    if ((*vram_ptr & 1) && (PLAYER.velocityY >= 0)) {
+        PLAYER.posY.i.lo = 0;
+    }
+    if ((*vram_ptr & 2) && (PLAYER.velocityY <= 0)) {
+        PLAYER.posY.i.lo = 0;
+    }
+    for (i = 0; i < 14; i++) {
+        argX = PLAYER.posX.i.hi + D_80154604[i].unk0;
+        argY = PLAYER.posY.i.hi + D_80154604[i].unk2;
+        g_api.CheckCollision(argX, argY, &g_Player.colliders3[i], 0);
+    }
+    func_8015F414();
+    func_8015F680();
+    if ((*vram_ptr & 4) && (PLAYER.velocityX > 0)) {
+        PLAYER.posX.i.lo = 0;
+    }
+    if ((*vram_ptr & 8) && (PLAYER.velocityX < 0)) {
+        PLAYER.posX.i.lo = 0;
+    }
+}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80157894);
 
