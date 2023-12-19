@@ -44,11 +44,11 @@ void SpuVmNoiseOnWithAdsr(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 }
 
 void SpuVmNoiseOff(void) {
-    s16 var_a0;
-    for (var_a0 = 0; var_a0 < spuVmMaxVoice; var_a0++) {
-        if (_svm_voice[var_a0].unk1b == 2) {
-            _svm_voice[var_a0 & 0xff].unk1b = 0;
-            _svm_voice[var_a0 & 0xff].unk04 = 0;
+    s16 i;
+    for (i = 0; i < spuVmMaxVoice; i++) {
+        if (_svm_voice[i].unk1b == 2) {
+            _svm_voice[i & 0xff].unk1b = 0;
+            _svm_voice[i & 0xff].unk04 = 0;
             // pointer to 0x1F801C00
             D_80032F10[0x194 / 2] = 0;
             D_80032F10[0x196 / 2] = 0;
