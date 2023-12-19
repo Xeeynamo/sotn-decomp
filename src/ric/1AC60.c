@@ -190,7 +190,7 @@ void func_801572A8(s32 arg0) {
     unk0C = g_Player.unk0C;
 
     if (arg0 != 0) {
-        for (i = 0; i < 4; i++) {
+        for (i = 0; i < LEN(D_801545E4); i++) {
             if (unk0C & 0x20) {
                 D_801545F4[i].unk2 = D_80154644[i];
                 D_801545E4[i].unk2 = D_8015465C[i];

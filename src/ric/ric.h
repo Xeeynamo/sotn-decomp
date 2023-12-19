@@ -91,12 +91,12 @@ extern s16 D_801545AC;
 // These appear to be a set of collision boxes
 extern s16_pair D_801545E4[4];
 extern s16_pair D_801545F4[4];
-extern s16_pair D_80154604[];
-extern u16 D_8015463C[];
-extern u16 D_80154644[];
-extern u16 D_8015464C[];
-extern u16 D_8015465C[];
-extern u16 D_80154664[];
+extern s16_pair D_80154604[14];
+extern u16 D_8015463C[4];
+extern u16 D_80154644[4];
+extern u16 D_8015464C[8];
+extern u16 D_8015465C[4];
+extern u16 D_80154664[8];
 extern u8 D_80154674[][4];
 extern SubweaponDef D_80154688[];
 extern AnimationFrame* D_80154924;
