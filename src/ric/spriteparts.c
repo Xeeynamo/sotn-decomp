@@ -214,962 +214,537 @@ int D_80153A90[];
 int D_80153A98[];
 
 SpriteParts* D_801530AC[] = {
-(SpriteParts*)NULL      , (SpriteParts*)D_80153400,
-(SpriteParts*)D_80153408, (SpriteParts*)D_80153410,
-(SpriteParts*)D_80153418, (SpriteParts*)D_80153420,
-(SpriteParts*)D_80153428, (SpriteParts*)D_80153430,
-(SpriteParts*)D_80153438, (SpriteParts*)D_80153440,
-(SpriteParts*)D_80153448, (SpriteParts*)D_80153450,
-(SpriteParts*)D_80153458, (SpriteParts*)D_80153460,
-(SpriteParts*)D_80153468, (SpriteParts*)D_80153470,
-(SpriteParts*)D_80153478, (SpriteParts*)D_80153480,
-(SpriteParts*)D_80153488, (SpriteParts*)D_80153490,
-(SpriteParts*)D_80153498, (SpriteParts*)D_801534A0,
-(SpriteParts*)D_801534A8, (SpriteParts*)D_801534B0,
-(SpriteParts*)D_801534B8, (SpriteParts*)D_801534C0,
-(SpriteParts*)D_801534C8, (SpriteParts*)D_801534D0,
-(SpriteParts*)D_801534D8, (SpriteParts*)D_801534E0,
-(SpriteParts*)D_801534E8, (SpriteParts*)D_801534F0,
-(SpriteParts*)D_801534F8, (SpriteParts*)D_80153500,
-(SpriteParts*)D_80153508, (SpriteParts*)D_80153510,
-(SpriteParts*)D_80153518, (SpriteParts*)D_80153520,
-(SpriteParts*)D_80153528, (SpriteParts*)D_80153530,
-(SpriteParts*)D_80153538, (SpriteParts*)D_80153540,
-(SpriteParts*)D_80153548, (SpriteParts*)D_80153550,
-(SpriteParts*)D_80153558, (SpriteParts*)D_80153560,
-(SpriteParts*)D_80153568, (SpriteParts*)D_80153570,
-(SpriteParts*)D_80153578, (SpriteParts*)D_80153580,
-(SpriteParts*)D_80153588, (SpriteParts*)D_80153590,
-(SpriteParts*)D_80153598, (SpriteParts*)D_801535A0,
-(SpriteParts*)D_801535A8, (SpriteParts*)D_801535B0,
-(SpriteParts*)D_801535B8, (SpriteParts*)D_801535C0,
-(SpriteParts*)D_801535C8, (SpriteParts*)D_801535D0,
-(SpriteParts*)D_801535D8, (SpriteParts*)D_801535E0,
-(SpriteParts*)D_801535E8, (SpriteParts*)D_801535F0,
-(SpriteParts*)D_801535F8, (SpriteParts*)D_80153600,
-(SpriteParts*)D_80153608, (SpriteParts*)D_80153610,
-(SpriteParts*)D_80153618, (SpriteParts*)D_80153620,
-(SpriteParts*)D_80153628, (SpriteParts*)D_80153630,
-(SpriteParts*)D_80153638, (SpriteParts*)D_80153640,
-(SpriteParts*)D_80153648, (SpriteParts*)D_80153650,
-(SpriteParts*)D_80153658, (SpriteParts*)D_80153660,
-(SpriteParts*)D_80153668, (SpriteParts*)D_80153670,
-(SpriteParts*)D_80153678, (SpriteParts*)D_80153680,
-(SpriteParts*)D_80153688, (SpriteParts*)D_80153690,
-(SpriteParts*)D_80153698, (SpriteParts*)D_801536A0,
-(SpriteParts*)D_801536A8, (SpriteParts*)D_801536B0,
-(SpriteParts*)D_801536B8, (SpriteParts*)D_801536C0,
-(SpriteParts*)D_801536C8, (SpriteParts*)D_801536D0,
-(SpriteParts*)D_801536D8, (SpriteParts*)D_801536E0,
-(SpriteParts*)D_801536E8, (SpriteParts*)D_801536F0,
-(SpriteParts*)D_801536F8, (SpriteParts*)D_80153700,
-(SpriteParts*)D_80153708, (SpriteParts*)D_80153710,
-(SpriteParts*)D_80153718, (SpriteParts*)D_80153720,
-(SpriteParts*)D_80153728, (SpriteParts*)D_80153730,
-(SpriteParts*)D_80153738, (SpriteParts*)D_80153740,
-(SpriteParts*)D_80153748, (SpriteParts*)D_80153750,
-(SpriteParts*)D_80153758, (SpriteParts*)D_80153760,
-(SpriteParts*)D_80153768, (SpriteParts*)D_80153770,
-(SpriteParts*)D_80153778, (SpriteParts*)D_80153780,
-(SpriteParts*)D_80153788, (SpriteParts*)D_80153790,
-(SpriteParts*)D_80153798, (SpriteParts*)D_801537A0,
-(SpriteParts*)D_801537A8, (SpriteParts*)D_801537B0,
-(SpriteParts*)D_801537B8, (SpriteParts*)D_801537C0,
-(SpriteParts*)D_801537C8, (SpriteParts*)D_801537D0,
-(SpriteParts*)D_801537D8, (SpriteParts*)D_801537E0,
-(SpriteParts*)D_801537E8, (SpriteParts*)D_801537F0,
-(SpriteParts*)D_801537F8, (SpriteParts*)D_80153800,
-(SpriteParts*)D_80153808, (SpriteParts*)D_80153810,
-(SpriteParts*)D_80153818, (SpriteParts*)D_80153820,
-(SpriteParts*)D_80153828, (SpriteParts*)D_80153830,
-(SpriteParts*)D_80153838, (SpriteParts*)D_80153840,
-(SpriteParts*)D_80153848, (SpriteParts*)D_80153850,
-(SpriteParts*)D_80153858, (SpriteParts*)D_80153860,
-(SpriteParts*)D_80153868, (SpriteParts*)D_80153870,
-(SpriteParts*)D_80153878, (SpriteParts*)D_80153880,
-(SpriteParts*)D_80153888, (SpriteParts*)D_80153890,
-(SpriteParts*)D_80153898, (SpriteParts*)D_801538A0,
-(SpriteParts*)D_801538A8, (SpriteParts*)D_801538B0,
-(SpriteParts*)D_801538B8, (SpriteParts*)D_801538C0,
-(SpriteParts*)D_801538C8, (SpriteParts*)D_801538D0,
-(SpriteParts*)D_801538D8, (SpriteParts*)D_801538E0,
-(SpriteParts*)D_801538E8, (SpriteParts*)D_801538F0,
-(SpriteParts*)D_801538F8, (SpriteParts*)D_80153900,
-(SpriteParts*)D_80153908, (SpriteParts*)D_80153910,
-(SpriteParts*)D_80153918, (SpriteParts*)D_80153920,
-(SpriteParts*)D_80153928, (SpriteParts*)D_80153930,
-(SpriteParts*)D_80153938, (SpriteParts*)D_80153940,
-(SpriteParts*)D_80153948, (SpriteParts*)D_80153950,
-(SpriteParts*)D_80153958, (SpriteParts*)D_80153960,
-(SpriteParts*)D_80153968, (SpriteParts*)D_80153970,
-(SpriteParts*)D_80153978, (SpriteParts*)D_80153980,
-(SpriteParts*)D_80153988, (SpriteParts*)D_80153990,
-(SpriteParts*)D_80153998, (SpriteParts*)D_801539A0,
-(SpriteParts*)D_801539A8, (SpriteParts*)D_801539B0,
-(SpriteParts*)D_801539B8, (SpriteParts*)D_801539C0,
-(SpriteParts*)D_801539C8, (SpriteParts*)D_801539D0,
-(SpriteParts*)D_801539D8, (SpriteParts*)D_801539E0,
-(SpriteParts*)D_801539E8, (SpriteParts*)D_801539F0,
-(SpriteParts*)D_801539F8, (SpriteParts*)D_80153A00,
-(SpriteParts*)D_80153A08, (SpriteParts*)D_80153A10,
-(SpriteParts*)D_80153A18, (SpriteParts*)D_80153A20,
-(SpriteParts*)D_80153A28, (SpriteParts*)D_80153A30,
-(SpriteParts*)D_80153A38, (SpriteParts*)D_80153A40,
-(SpriteParts*)D_80153A48, (SpriteParts*)D_80153A50,
-(SpriteParts*)D_80153A58, (SpriteParts*)D_80153A60,
-(SpriteParts*)D_80153A68, (SpriteParts*)D_80153A70,
-(SpriteParts*)D_80153A78, (SpriteParts*)D_80153A80,
-(SpriteParts*)D_80153A88, (SpriteParts*)D_80153A90,
-(SpriteParts*)D_80153A98
-};
-
-int D_80153400[] = {
-	0xFFF08000, 0x0000FFE8
-};
-
-int D_80153408[] = {
-	0xFFF08001, 0x0000FFE8
-};
-
-int D_80153410[] = {
-	0xFFF08002, 0x0000FFE8
-};
-
-int D_80153418[] = {
-	0xFFF08003, 0x0000FFE8
-};
-
-int D_80153420[] = {
-	0xFFF08004, 0x0000FFE8
-};
-
-int D_80153428[] = {
-	0xFFF08005, 0x0000FFE8
-};
-
-int D_80153430[] = {
-	0xFFF08006, 0x0000FFE8
-};
-
-int D_80153438[] = {
-	0xFFF08007, 0x0000FFE8
-};
-
-int D_80153440[] = {
-	0xFFF08008, 0x0000FFE8
-};
-
-int D_80153448[] = {
-	0xFFF08009, 0x0000FFE8
-};
-
-int D_80153450[] = {
-	0xFFF0800A, 0x0000FFE8
-};
-
-int D_80153458[] = {
-	0xFFF0800B, 0x0000FFE8
-};
-
-int D_80153460[] = {
-	0xFFF0800C, 0x0000FFE8
-};
-
-int D_80153468[] = {
-	0xFFF0800D, 0x0000FFE8
-};
-
-int D_80153470[] = {
-	0xFFF0800E, 0x0000FFE8
-};
-
-int D_80153478[] = {
-	0xFFF0800F, 0x0000FFF0
-};
-
-int D_80153480[] = {
-	0xFFF08010, 0x0000FFE8
-};
-
-int D_80153488[] = {
-	0xFFF08011, 0x0000FFE8
-};
-
-int D_80153490[] = {
-	0xFFF08012, 0x0000FFE8
-};
-
-int D_80153498[] = {
-	0xFFF08013, 0x0000FFE8
-};
-
-int D_801534A0[] = {
-	0xFFF08014, 0x0000FFE0
-};
-
-int D_801534A8[] = {
-	0xFFF08015, 0x0000FFE8
-};
-
-int D_801534B0[] = {
-	0xFFF08016, 0x0000FFE8
-};
-
-int D_801534B8[] = {
-	0xFFF08017, 0x0000FFE8
-};
-
-int D_801534C0[] = {
-	0xFFF08018, 0x0000FFE8
-};
-
-int D_801534C8[] = {
-	0xFFF08019, 0x0000FFE8
-};
-
-int D_801534D0[] = {
-	0xFFE0801A, 0x0000FFF0
-};
-
-int D_801534D8[] = {
-	0xFFE8801B, 0x0000FFE8
-};
-
-int D_801534E0[] = {
-	0xFFF3801C, 0x0000FFDA
-};
-
-int D_801534E8[] = {
-	0xFFF0801D, 0x0000FFE8
-};
-
-int D_801534F0[] = {
-	0xFFF0801E, 0x0000FFF0
-};
-
-int D_801534F8[] = {
-	0xFFF0801F, 0x0000FFE8
-};
-
-int D_80153500[] = {
-	0xFFE88020, 0x0000FFF0
-};
-
-int D_80153508[] = {
-	0xFFE88021, 0x0000FFE8
-};
-
-int D_80153510[] = {
-	0xFFF08022, 0x0000FFE0
-};
-
-int D_80153518[] = {
-	0xFFF08023, 0x0000FFE0
-};
-
-int D_80153520[] = {
-	0xFFE88024, 0x0000FFF0
-};
-
-int D_80153528[] = {
-	0xFFF08025, 0x0000FFE8
-};
-
-int D_80153530[] = {
-	0xFFE88026, 0x0000FFE8
-};
-
-int D_80153538[] = {
-	0xFFF08027, 0x0000FFE8
-};
-
-int D_80153540[] = {
-	0xFFF08028, 0x0000FFE8
-};
-
-int D_80153548[] = {
-	0xFFF08029, 0x0000FFE8
-};
-
-int D_80153550[] = {
-	0xFFF0802A, 0x0000FFE8
-};
-
-int D_80153558[] = {
-	0xFFF0802B, 0x0000FFE8
-};
-
-int D_80153560[] = {
-	0xFFF0802C, 0x0000FFE8
-};
-
-int D_80153568[] = {
-	0xFFF0802D, 0x0000FFE8
-};
-
-int D_80153570[] = {
-	0xFFF0802E, 0x0000FFF8
-};
-
-int D_80153578[] = {
-	0xFFE8802F, 0x0000FFF8
-};
-
-int D_80153580[] = {
-	0xFFF08030, 0x0000FFF8
-};
-
-int D_80153588[] = {
-	0xFFF08031, 0x0000FFF8
-};
-
-int D_80153590[] = {
-	0xFFF08032, 0x0000FFF8
-};
-
-int D_80153598[] = {
-	0xFFF08033, 0x0000FFF8
-};
-
-int D_801535A0[] = {
-	0xFFF38034, 0x0000FFF4
-};
-
-int D_801535A8[] = {
-	0xFFF08035, 0x0000FFE8
-};
-
-int D_801535B0[] = {
-	0xFFE88036, 0x0000FFE8
-};
-
-int D_801535B8[] = {
-	0xFFF08037, 0x0000FFE8
-};
-
-int D_801535C0[] = {
-	0xFFF58038, 0x0000FFEC
-};
-
-int D_801535C8[] = {
-	0xFFEA8039, 0x0000FFEB
-};
-
-int D_801535D0[] = {
-	0xFFE8803A, 0x0000FFE8
-};
-
-int D_801535D8[] = {
-	0xFFE8803B, 0x0000FFE8
-};
-
-int D_801535E0[] = {
-	0xFFF0803C, 0x0000FFE8
-};
-
-int D_801535E8[] = {
-	0xFFF0803D, 0x0000FFE8
-};
-
-int D_801535F0[] = {
-	0xFFF0803E, 0x0000FFE8
-};
-
-int D_801535F8[] = {
-	0xFFF0803F, 0x0000FFE8
-};
-
-int D_80153600[] = {
-	0xFFF08040, 0x0000FFF8
-};
-
-int D_80153608[] = {
-	0xFFF08041, 0x0000FFF8
-};
-
-int D_80153610[] = {
-	0xFFF08042, 0x0000FFF0
-};
-
-int D_80153618[] = {
-	0xFFF28043, 0x0000FFEE
-};
-
-int D_80153620[] = {
-	0xFFF08044, 0x0000FFE8
-};
-
-int D_80153628[] = {
-	0xFFF08045, 0x0000FFE8
-};
-
-int D_80153630[] = {
-	0xFFF08046, 0x0000FFE8
-};
-
-int D_80153638[] = {
-	0xFFF08047, 0x0000FFE8
-};
-
-int D_80153640[] = {
-	0xFFF08048, 0x0000FFE8
-};
-
-int D_80153648[] = {
-	0xFFF08049, 0x0000FFE0
-};
-
-int D_80153650[] = {
-	0xFFF8804A, 0x0000FFE8
-};
-
-int D_80153658[] = {
-	0xFFF8804B, 0x0000FFE8
-};
-
-int D_80153660[] = {
-	0xFFF0804C, 0x0000FFE8
-};
-
-int D_80153668[] = {
-	0xFFF8804D, 0x0000FFE8
-};
-
-int D_80153670[] = {
-	0xFFF8804E, 0x0000FFE8
-};
-
-int D_80153678[] = {
-	0xFFF8804F, 0x0000FFE8
-};
-
-int D_80153680[] = {
-	0xFFF08050, 0x0000FFE8
-};
-
-int D_80153688[] = {
-	0xFFF88051, 0x0000FFE8
-};
-
-int D_80153690[] = {
-	0xFFF88052, 0x0000FFE8
-};
-
-int D_80153698[] = {
-	0xFFF88053, 0x0000FFE8
-};
-
-int D_801536A0[] = {
-	0xFFF88054, 0x0000FFE8
-};
-
-int D_801536A8[] = {
-	0xFFF08055, 0x0000FFE8
-};
-
-int D_801536B0[] = {
-	0xFFE88056, 0x0000FFE8
-};
-
-int D_801536B8[] = {
-	0xFFF08057, 0x0000FFE8
-};
-
-int D_801536C0[] = {
-	0xFFF08058, 0x0000FFE8
-};
-
-int D_801536C8[] = {
-	0xFFF08059, 0x0000FFE8
-};
-
-int D_801536D0[] = {
-	0xFFF0805A, 0x0000FFE8
-};
-
-int D_801536D8[] = {
-	0xFFF9805B, 0x0000FFEC
-};
-
-int D_801536E0[] = {
-	0xFFF0805C, 0x0000FFF0
-};
-
-int D_801536E8[] = {
-	0xFFF0805D, 0x0000FFE8
-};
-
-int D_801536F0[] = {
-	0xFFF4805E, 0x0000FFE4
-};
-
-int D_801536F8[] = {
-	0xFFED805F, 0x0000FFE5
-};
-
-int D_80153700[] = {
-	0xFFF08038, 0x0000FFEC
-};
-
-int D_80153708[] = {
-	0xFFE48039, 0x0000FFEB
-};
-
-int D_80153710[] = {
-	0xFFE0803A, 0x0000FFE8
-};
-
-int D_80153718[] = {
-	0xFFE08060, 0x0000FFE8
-};
-
-int D_80153720[] = {
-	0xFFEB803C, 0x0000FFE8
-};
-
-int D_80153728[] = {
-	0xFFEA803C, 0x0000FFE8
-};
-
-int D_80153730[] = {
-	0xFFEC803E, 0x0000FFE8
-};
-
-int D_80153738[] = {
-	0xFFEB803E, 0x0000FFE8
-};
-
-int D_80153740[] = {
-	0xFFF08061, 0x0000FFE8
-};
-
-int D_80153748[] = {
-	0xFFF08062, 0x0000FFE8
-};
-
-int D_80153750[] = {
-	0xFFF08063, 0x0000FFE8
-};
-
-int D_80153758[] = {
-	0xFFF08064, 0x0000FFE8
-};
-
-int D_80153760[] = {
-	0xFFF08065, 0x0000FFE8
-};
-
-int D_80153768[] = {
-	0xFFF08066, 0x0000FFE8
-};
-
-int D_80153770[] = {
-	0xFFF08067, 0x0000FFE8
-};
-
-int D_80153778[] = {
-	0xFFF08068, 0x0000FFE8
-};
-
-int D_80153780[] = {
-	0xFFF08069, 0x0000FFE8
-};
-
-int D_80153788[] = {
-	0xFFF0806A, 0x0000FFE8
-};
-
-int D_80153790[] = {
-	0xFFF8806B, 0x0000FFE8
-};
-
-int D_80153798[] = {
-	0xFFF3806C, 0x0000FFED
-};
-
-int D_801537A0[] = {
-	0xFFF68038, 0x0000FFEC
-};
-
-int D_801537A8[] = {
-	0xFFEC8039, 0x0000FFEB
-};
-
-int D_801537B0[] = {
-	0xFFE7803A, 0x0000FFE8
-};
-
-int D_801537B8[] = {
-	0xFFE6803B, 0x0000FFE8
-};
-
-int D_801537C0[] = {
-	0xFFF1806D, 0x0000FFE8
-};
-
-int D_801537C8[] = {
-	0xFFF0806D, 0x0000FFE8
-};
-
-int D_801537D0[] = {
-	0xFFF2806E, 0x0000FFE8
-};
-
-int D_801537D8[] = {
-	0xFFF1806E, 0x0000FFE8
-};
-
-int D_801537E0[] = {
-	0xFFF8806F, 0x0000FFE8
-};
-
-int D_801537E8[] = {
-	0xFFF08070, 0x0000FFE0
-};
-
-int D_801537F0[] = {
-	0xFFE88071, 0x0000FFE8
-};
-
-int D_801537F8[] = {
-	0xFFE88072, 0x0000FFE8
-};
-
-int D_80153800[] = {
-	0xFFF08073, 0x0000FFE8
-};
-
-int D_80153808[] = {
-	0xFFE88074, 0x0000FFE8
-};
-
-int D_80153810[] = {
-	0xFFE88075, 0x0000FFE8
-};
-
-int D_80153818[] = {
-	0xFFE88076, 0x0000FFE8
-};
-
-int D_80153820[] = {
-	0xFFF08077, 0x0000FFE8
-};
-
-int D_80153828[] = {
-	0xFFF08078, 0x0000FFE8
-};
-
-int D_80153830[] = {
-	0xFFF08079, 0x0000FFE8
-};
-
-int D_80153838[] = {
-	0xFFF0807A, 0x0000FFF8
-};
-
-int D_80153840[] = {
-	0xFFF0807B, 0x00000000
-};
-
-int D_80153848[] = {
-	0xFFE8807C, 0x00000000
-};
-
-int D_80153850[] = {
-	0xFFF0807D, 0x0000FFF8
-};
-
-int D_80153858[] = {
-	0xFFE8807E, 0x00000000
-};
-
-int D_80153860[] = {
-	0xFFE8807F, 0x00000000
-};
-
-int D_80153868[] = {
-	0xFFF08080, 0x0000FFF8
-};
-
-int D_80153870[] = {
-	0xFFE88081, 0x0000FFF8
-};
-
-int D_80153878[] = {
-	0xFFE88082, 0x0000FFF0
-};
-
-int D_80153880[] = {
-	0xFFE88083, 0x0000FFF0
-};
-
-int D_80153888[] = {
-	0xFFE88084, 0x0000FFF9
-};
-
-int D_80153890[] = {
-	0xFFE08085, 0x0000FFE8
-};
-
-int D_80153898[] = {
-	0xFFE08086, 0x0000FFE8
-};
-
-int D_801538A0[] = {
-	0xFFE08087, 0x0000FFF0
-};
-
-int D_801538A8[] = {
-	0xFFE08088, 0x0000FFE8
-};
-
-int D_801538B0[] = {
-	0xFFE08089, 0x0000FFF0
-};
-
-int D_801538B8[] = {
-	0xFFF0808A, 0x0000FFF8
-};
-
-int D_801538C0[] = {
-	0xFFF8808B, 0x0000FFF0
-};
-
-int D_801538C8[] = {
-	0xFFF8808C, 0x0000FFF0
-};
-
-int D_801538D0[] = {
-	0xFFF8808D, 0x0000FFD0
-};
-
-int D_801538D8[] = {
-	0xFFF8808E, 0x0000FFD0
-};
-
-int D_801538E0[] = {
-	0xFFF0808F, 0x0000FFE8
-};
-
-int D_801538E8[] = {
-	0xFFF08090, 0x0000FFF8
-};
-
-int D_801538F0[] = {
-	0xFFF08091, 0x0000FFF8
-};
-
-int D_801538F8[] = {
-	0xFFF08092, 0x0000FFF8
-};
-
-int D_80153900[] = {
-	0xFFF08093, 0x0000FFE8
-};
-
-int D_80153908[] = {
-	0xFFF08094, 0x0000FFE8
-};
-
-int D_80153910[] = {
-	0xFFF08095, 0x0000FFE8
-};
-
-int D_80153918[] = {
-	0xFFF08096, 0x0000FFE8
-};
-
-int D_80153920[] = {
-	0xFFF08097, 0x0000FFE8
-};
-
-int D_80153928[] = {
-	0xFFF08098, 0x0000FFE0
-};
-
-int D_80153930[] = {
-	0xFFF08099, 0x0000FFE0
-};
-
-int D_80153938[] = {
-	0xFFF0809A, 0x0000FFE8
-};
-
-int D_80153940[] = {
-	0xFFF0809B, 0x0000FFE8
-};
-
-int D_80153948[] = {
-	0xFFF0809C, 0x0000FFE8
-};
-
-int D_80153950[] = {
-	0xFFF0809D, 0x0000FFE8
-};
-
-int D_80153958[] = {
-	0xFFF0809E, 0x0000FFE8
-};
-
-int D_80153960[] = {
-	0xFFF0809F, 0x0000FFE8
-};
-
-int D_80153968[] = {
-	0xFFF080A0, 0x0000FFE8
-};
-
-int D_80153970[] = {
-	0xFFF080A1, 0x0000FFE8
-};
-
-int D_80153978[] = {
-	0xFFF080A2, 0x0000FFE8
-};
-
-int D_80153980[] = {
-	0xFFF080A3, 0x0000FFE8
-};
-
-int D_80153988[] = {
-	0xFFF080A4, 0x000BFFE8
-};
-
-int D_80153990[] = {
-	0xFFF080A5, 0x000CFFE8
-};
-
-int D_80153998[] = {
-	0xFFF080A6, 0x000DFFE8
-};
-
-int D_801539A0[] = {
-	0xFFF080A7, 0x0000FFE8
-};
-
-int D_801539A8[] = {
-	0xFFF080A8, 0x0000FFE8
-};
-
-int D_801539B0[] = {
-	0xFFF080A9, 0x000FFFE8
-};
-
-int D_801539B8[] = {
-	0xFFF080AA, 0x000FFFE8
-};
-
-int D_801539C0[] = {
-	0xFFE880AB, 0x000FFFE8
-};
-
-int D_801539C8[] = {
-	0xFFF080AC, 0x000FFFD8
-};
-
-int D_801539D0[] = {
-	0xFFF080AD, 0x000EFFE8
-};
-
-int D_801539D8[] = {
-	0xFFE880AE, 0x000EFFE8
-};
-
-int D_801539E0[] = {
-	0xFFED80AF, 0x0011FFE7
-};
-
-int D_801539E8[] = {
-	0xFFED80AF, 0x0012FFE7
-};
-
-int D_801539F0[] = {
-	0xFFED80AF, 0x0013FFE7
-};
-
-int D_801539F8[] = {
-	0xFFF080B0, 0x0010FFE8
-};
-
-int D_80153A00[] = {
-	0xFFF080B1, 0x0010FFE8
-};
-
-int D_80153A08[] = {
-	0xFFF080B2, 0x0010FFE8
-};
-
-int D_80153A10[] = {
-	0xFFF080B3, 0x0010FFE8
-};
-
-int D_80153A18[] = {
-	0xFFF080B4, 0x0000FFE8
-};
-
-int D_80153A20[] = {
-	0xFFF080B5, 0x0000FFE8
-};
-
-int D_80153A28[] = {
-	0xFFF080B6, 0x0000FFE8
-};
-
-int D_80153A30[] = {
-	0xFFF080B7, 0x0000FFE8
-};
-
-int D_80153A38[] = {
-	0xFFF080B8, 0x0000FFF8
-};
-
-int D_80153A40[] = {
-	0xFFF080B9, 0x0000FFF8
-};
-
-int D_80153A48[] = {
-	0xFFF080BA, 0x00000000
-};
-
-int D_80153A50[] = {
-	0xFFF080BB, 0x0000FFF8
-};
-
-int D_80153A58[] = {
-	0xFFF080BC, 0x00000000
-};
-
-int D_80153A60[] = {
-	0xFFF080BD, 0x0000FFF8
-};
-
-int D_80153A68[] = {
-	0xFFF080BE, 0x0000FFE8
-};
-
-int D_80153A70[] = {
-	0xFFF080BF, 0x0000FFE8
-};
-
-int D_80153A78[] = {
-	0xFFF080C0, 0x0000FFE8
-};
-
-int D_80153A80[] = {
-	0xFFF080C1, 0x0000FFE8
-};
-
-int D_80153A88[] = {
-	0xFFF880C2, 0x0000FFE8
-};
-
-int D_80153A90[] = {
-	0xFFF880C3, 0x0000FFE8
-};
-
-int D_80153A98[] = {
-	0xFFF080C4, 0x0000FFE8
-};
+    (SpriteParts*)NULL,       (SpriteParts*)D_80153400,
+    (SpriteParts*)D_80153408, (SpriteParts*)D_80153410,
+    (SpriteParts*)D_80153418, (SpriteParts*)D_80153420,
+    (SpriteParts*)D_80153428, (SpriteParts*)D_80153430,
+    (SpriteParts*)D_80153438, (SpriteParts*)D_80153440,
+    (SpriteParts*)D_80153448, (SpriteParts*)D_80153450,
+    (SpriteParts*)D_80153458, (SpriteParts*)D_80153460,
+    (SpriteParts*)D_80153468, (SpriteParts*)D_80153470,
+    (SpriteParts*)D_80153478, (SpriteParts*)D_80153480,
+    (SpriteParts*)D_80153488, (SpriteParts*)D_80153490,
+    (SpriteParts*)D_80153498, (SpriteParts*)D_801534A0,
+    (SpriteParts*)D_801534A8, (SpriteParts*)D_801534B0,
+    (SpriteParts*)D_801534B8, (SpriteParts*)D_801534C0,
+    (SpriteParts*)D_801534C8, (SpriteParts*)D_801534D0,
+    (SpriteParts*)D_801534D8, (SpriteParts*)D_801534E0,
+    (SpriteParts*)D_801534E8, (SpriteParts*)D_801534F0,
+    (SpriteParts*)D_801534F8, (SpriteParts*)D_80153500,
+    (SpriteParts*)D_80153508, (SpriteParts*)D_80153510,
+    (SpriteParts*)D_80153518, (SpriteParts*)D_80153520,
+    (SpriteParts*)D_80153528, (SpriteParts*)D_80153530,
+    (SpriteParts*)D_80153538, (SpriteParts*)D_80153540,
+    (SpriteParts*)D_80153548, (SpriteParts*)D_80153550,
+    (SpriteParts*)D_80153558, (SpriteParts*)D_80153560,
+    (SpriteParts*)D_80153568, (SpriteParts*)D_80153570,
+    (SpriteParts*)D_80153578, (SpriteParts*)D_80153580,
+    (SpriteParts*)D_80153588, (SpriteParts*)D_80153590,
+    (SpriteParts*)D_80153598, (SpriteParts*)D_801535A0,
+    (SpriteParts*)D_801535A8, (SpriteParts*)D_801535B0,
+    (SpriteParts*)D_801535B8, (SpriteParts*)D_801535C0,
+    (SpriteParts*)D_801535C8, (SpriteParts*)D_801535D0,
+    (SpriteParts*)D_801535D8, (SpriteParts*)D_801535E0,
+    (SpriteParts*)D_801535E8, (SpriteParts*)D_801535F0,
+    (SpriteParts*)D_801535F8, (SpriteParts*)D_80153600,
+    (SpriteParts*)D_80153608, (SpriteParts*)D_80153610,
+    (SpriteParts*)D_80153618, (SpriteParts*)D_80153620,
+    (SpriteParts*)D_80153628, (SpriteParts*)D_80153630,
+    (SpriteParts*)D_80153638, (SpriteParts*)D_80153640,
+    (SpriteParts*)D_80153648, (SpriteParts*)D_80153650,
+    (SpriteParts*)D_80153658, (SpriteParts*)D_80153660,
+    (SpriteParts*)D_80153668, (SpriteParts*)D_80153670,
+    (SpriteParts*)D_80153678, (SpriteParts*)D_80153680,
+    (SpriteParts*)D_80153688, (SpriteParts*)D_80153690,
+    (SpriteParts*)D_80153698, (SpriteParts*)D_801536A0,
+    (SpriteParts*)D_801536A8, (SpriteParts*)D_801536B0,
+    (SpriteParts*)D_801536B8, (SpriteParts*)D_801536C0,
+    (SpriteParts*)D_801536C8, (SpriteParts*)D_801536D0,
+    (SpriteParts*)D_801536D8, (SpriteParts*)D_801536E0,
+    (SpriteParts*)D_801536E8, (SpriteParts*)D_801536F0,
+    (SpriteParts*)D_801536F8, (SpriteParts*)D_80153700,
+    (SpriteParts*)D_80153708, (SpriteParts*)D_80153710,
+    (SpriteParts*)D_80153718, (SpriteParts*)D_80153720,
+    (SpriteParts*)D_80153728, (SpriteParts*)D_80153730,
+    (SpriteParts*)D_80153738, (SpriteParts*)D_80153740,
+    (SpriteParts*)D_80153748, (SpriteParts*)D_80153750,
+    (SpriteParts*)D_80153758, (SpriteParts*)D_80153760,
+    (SpriteParts*)D_80153768, (SpriteParts*)D_80153770,
+    (SpriteParts*)D_80153778, (SpriteParts*)D_80153780,
+    (SpriteParts*)D_80153788, (SpriteParts*)D_80153790,
+    (SpriteParts*)D_80153798, (SpriteParts*)D_801537A0,
+    (SpriteParts*)D_801537A8, (SpriteParts*)D_801537B0,
+    (SpriteParts*)D_801537B8, (SpriteParts*)D_801537C0,
+    (SpriteParts*)D_801537C8, (SpriteParts*)D_801537D0,
+    (SpriteParts*)D_801537D8, (SpriteParts*)D_801537E0,
+    (SpriteParts*)D_801537E8, (SpriteParts*)D_801537F0,
+    (SpriteParts*)D_801537F8, (SpriteParts*)D_80153800,
+    (SpriteParts*)D_80153808, (SpriteParts*)D_80153810,
+    (SpriteParts*)D_80153818, (SpriteParts*)D_80153820,
+    (SpriteParts*)D_80153828, (SpriteParts*)D_80153830,
+    (SpriteParts*)D_80153838, (SpriteParts*)D_80153840,
+    (SpriteParts*)D_80153848, (SpriteParts*)D_80153850,
+    (SpriteParts*)D_80153858, (SpriteParts*)D_80153860,
+    (SpriteParts*)D_80153868, (SpriteParts*)D_80153870,
+    (SpriteParts*)D_80153878, (SpriteParts*)D_80153880,
+    (SpriteParts*)D_80153888, (SpriteParts*)D_80153890,
+    (SpriteParts*)D_80153898, (SpriteParts*)D_801538A0,
+    (SpriteParts*)D_801538A8, (SpriteParts*)D_801538B0,
+    (SpriteParts*)D_801538B8, (SpriteParts*)D_801538C0,
+    (SpriteParts*)D_801538C8, (SpriteParts*)D_801538D0,
+    (SpriteParts*)D_801538D8, (SpriteParts*)D_801538E0,
+    (SpriteParts*)D_801538E8, (SpriteParts*)D_801538F0,
+    (SpriteParts*)D_801538F8, (SpriteParts*)D_80153900,
+    (SpriteParts*)D_80153908, (SpriteParts*)D_80153910,
+    (SpriteParts*)D_80153918, (SpriteParts*)D_80153920,
+    (SpriteParts*)D_80153928, (SpriteParts*)D_80153930,
+    (SpriteParts*)D_80153938, (SpriteParts*)D_80153940,
+    (SpriteParts*)D_80153948, (SpriteParts*)D_80153950,
+    (SpriteParts*)D_80153958, (SpriteParts*)D_80153960,
+    (SpriteParts*)D_80153968, (SpriteParts*)D_80153970,
+    (SpriteParts*)D_80153978, (SpriteParts*)D_80153980,
+    (SpriteParts*)D_80153988, (SpriteParts*)D_80153990,
+    (SpriteParts*)D_80153998, (SpriteParts*)D_801539A0,
+    (SpriteParts*)D_801539A8, (SpriteParts*)D_801539B0,
+    (SpriteParts*)D_801539B8, (SpriteParts*)D_801539C0,
+    (SpriteParts*)D_801539C8, (SpriteParts*)D_801539D0,
+    (SpriteParts*)D_801539D8, (SpriteParts*)D_801539E0,
+    (SpriteParts*)D_801539E8, (SpriteParts*)D_801539F0,
+    (SpriteParts*)D_801539F8, (SpriteParts*)D_80153A00,
+    (SpriteParts*)D_80153A08, (SpriteParts*)D_80153A10,
+    (SpriteParts*)D_80153A18, (SpriteParts*)D_80153A20,
+    (SpriteParts*)D_80153A28, (SpriteParts*)D_80153A30,
+    (SpriteParts*)D_80153A38, (SpriteParts*)D_80153A40,
+    (SpriteParts*)D_80153A48, (SpriteParts*)D_80153A50,
+    (SpriteParts*)D_80153A58, (SpriteParts*)D_80153A60,
+    (SpriteParts*)D_80153A68, (SpriteParts*)D_80153A70,
+    (SpriteParts*)D_80153A78, (SpriteParts*)D_80153A80,
+    (SpriteParts*)D_80153A88, (SpriteParts*)D_80153A90,
+    (SpriteParts*)D_80153A98};
+
+int D_80153400[] = {0xFFF08000, 0x0000FFE8};
+
+int D_80153408[] = {0xFFF08001, 0x0000FFE8};
+
+int D_80153410[] = {0xFFF08002, 0x0000FFE8};
+
+int D_80153418[] = {0xFFF08003, 0x0000FFE8};
+
+int D_80153420[] = {0xFFF08004, 0x0000FFE8};
+
+int D_80153428[] = {0xFFF08005, 0x0000FFE8};
+
+int D_80153430[] = {0xFFF08006, 0x0000FFE8};
+
+int D_80153438[] = {0xFFF08007, 0x0000FFE8};
+
+int D_80153440[] = {0xFFF08008, 0x0000FFE8};
+
+int D_80153448[] = {0xFFF08009, 0x0000FFE8};
+
+int D_80153450[] = {0xFFF0800A, 0x0000FFE8};
+
+int D_80153458[] = {0xFFF0800B, 0x0000FFE8};
+
+int D_80153460[] = {0xFFF0800C, 0x0000FFE8};
+
+int D_80153468[] = {0xFFF0800D, 0x0000FFE8};
+
+int D_80153470[] = {0xFFF0800E, 0x0000FFE8};
+
+int D_80153478[] = {0xFFF0800F, 0x0000FFF0};
+
+int D_80153480[] = {0xFFF08010, 0x0000FFE8};
+
+int D_80153488[] = {0xFFF08011, 0x0000FFE8};
+
+int D_80153490[] = {0xFFF08012, 0x0000FFE8};
+
+int D_80153498[] = {0xFFF08013, 0x0000FFE8};
+
+int D_801534A0[] = {0xFFF08014, 0x0000FFE0};
+
+int D_801534A8[] = {0xFFF08015, 0x0000FFE8};
+
+int D_801534B0[] = {0xFFF08016, 0x0000FFE8};
+
+int D_801534B8[] = {0xFFF08017, 0x0000FFE8};
+
+int D_801534C0[] = {0xFFF08018, 0x0000FFE8};
+
+int D_801534C8[] = {0xFFF08019, 0x0000FFE8};
+
+int D_801534D0[] = {0xFFE0801A, 0x0000FFF0};
+
+int D_801534D8[] = {0xFFE8801B, 0x0000FFE8};
+
+int D_801534E0[] = {0xFFF3801C, 0x0000FFDA};
+
+int D_801534E8[] = {0xFFF0801D, 0x0000FFE8};
+
+int D_801534F0[] = {0xFFF0801E, 0x0000FFF0};
+
+int D_801534F8[] = {0xFFF0801F, 0x0000FFE8};
+
+int D_80153500[] = {0xFFE88020, 0x0000FFF0};
+
+int D_80153508[] = {0xFFE88021, 0x0000FFE8};
+
+int D_80153510[] = {0xFFF08022, 0x0000FFE0};
+
+int D_80153518[] = {0xFFF08023, 0x0000FFE0};
+
+int D_80153520[] = {0xFFE88024, 0x0000FFF0};
+
+int D_80153528[] = {0xFFF08025, 0x0000FFE8};
+
+int D_80153530[] = {0xFFE88026, 0x0000FFE8};
+
+int D_80153538[] = {0xFFF08027, 0x0000FFE8};
+
+int D_80153540[] = {0xFFF08028, 0x0000FFE8};
+
+int D_80153548[] = {0xFFF08029, 0x0000FFE8};
+
+int D_80153550[] = {0xFFF0802A, 0x0000FFE8};
+
+int D_80153558[] = {0xFFF0802B, 0x0000FFE8};
+
+int D_80153560[] = {0xFFF0802C, 0x0000FFE8};
+
+int D_80153568[] = {0xFFF0802D, 0x0000FFE8};
+
+int D_80153570[] = {0xFFF0802E, 0x0000FFF8};
+
+int D_80153578[] = {0xFFE8802F, 0x0000FFF8};
+
+int D_80153580[] = {0xFFF08030, 0x0000FFF8};
+
+int D_80153588[] = {0xFFF08031, 0x0000FFF8};
+
+int D_80153590[] = {0xFFF08032, 0x0000FFF8};
+
+int D_80153598[] = {0xFFF08033, 0x0000FFF8};
+
+int D_801535A0[] = {0xFFF38034, 0x0000FFF4};
+
+int D_801535A8[] = {0xFFF08035, 0x0000FFE8};
+
+int D_801535B0[] = {0xFFE88036, 0x0000FFE8};
+
+int D_801535B8[] = {0xFFF08037, 0x0000FFE8};
+
+int D_801535C0[] = {0xFFF58038, 0x0000FFEC};
+
+int D_801535C8[] = {0xFFEA8039, 0x0000FFEB};
+
+int D_801535D0[] = {0xFFE8803A, 0x0000FFE8};
+
+int D_801535D8[] = {0xFFE8803B, 0x0000FFE8};
+
+int D_801535E0[] = {0xFFF0803C, 0x0000FFE8};
+
+int D_801535E8[] = {0xFFF0803D, 0x0000FFE8};
+
+int D_801535F0[] = {0xFFF0803E, 0x0000FFE8};
+
+int D_801535F8[] = {0xFFF0803F, 0x0000FFE8};
+
+int D_80153600[] = {0xFFF08040, 0x0000FFF8};
+
+int D_80153608[] = {0xFFF08041, 0x0000FFF8};
+
+int D_80153610[] = {0xFFF08042, 0x0000FFF0};
+
+int D_80153618[] = {0xFFF28043, 0x0000FFEE};
+
+int D_80153620[] = {0xFFF08044, 0x0000FFE8};
+
+int D_80153628[] = {0xFFF08045, 0x0000FFE8};
+
+int D_80153630[] = {0xFFF08046, 0x0000FFE8};
+
+int D_80153638[] = {0xFFF08047, 0x0000FFE8};
+
+int D_80153640[] = {0xFFF08048, 0x0000FFE8};
+
+int D_80153648[] = {0xFFF08049, 0x0000FFE0};
+
+int D_80153650[] = {0xFFF8804A, 0x0000FFE8};
+
+int D_80153658[] = {0xFFF8804B, 0x0000FFE8};
+
+int D_80153660[] = {0xFFF0804C, 0x0000FFE8};
+
+int D_80153668[] = {0xFFF8804D, 0x0000FFE8};
+
+int D_80153670[] = {0xFFF8804E, 0x0000FFE8};
+
+int D_80153678[] = {0xFFF8804F, 0x0000FFE8};
+
+int D_80153680[] = {0xFFF08050, 0x0000FFE8};
+
+int D_80153688[] = {0xFFF88051, 0x0000FFE8};
+
+int D_80153690[] = {0xFFF88052, 0x0000FFE8};
+
+int D_80153698[] = {0xFFF88053, 0x0000FFE8};
+
+int D_801536A0[] = {0xFFF88054, 0x0000FFE8};
+
+int D_801536A8[] = {0xFFF08055, 0x0000FFE8};
+
+int D_801536B0[] = {0xFFE88056, 0x0000FFE8};
+
+int D_801536B8[] = {0xFFF08057, 0x0000FFE8};
+
+int D_801536C0[] = {0xFFF08058, 0x0000FFE8};
+
+int D_801536C8[] = {0xFFF08059, 0x0000FFE8};
+
+int D_801536D0[] = {0xFFF0805A, 0x0000FFE8};
+
+int D_801536D8[] = {0xFFF9805B, 0x0000FFEC};
+
+int D_801536E0[] = {0xFFF0805C, 0x0000FFF0};
+
+int D_801536E8[] = {0xFFF0805D, 0x0000FFE8};
+
+int D_801536F0[] = {0xFFF4805E, 0x0000FFE4};
+
+int D_801536F8[] = {0xFFED805F, 0x0000FFE5};
+
+int D_80153700[] = {0xFFF08038, 0x0000FFEC};
+
+int D_80153708[] = {0xFFE48039, 0x0000FFEB};
+
+int D_80153710[] = {0xFFE0803A, 0x0000FFE8};
+
+int D_80153718[] = {0xFFE08060, 0x0000FFE8};
+
+int D_80153720[] = {0xFFEB803C, 0x0000FFE8};
+
+int D_80153728[] = {0xFFEA803C, 0x0000FFE8};
+
+int D_80153730[] = {0xFFEC803E, 0x0000FFE8};
+
+int D_80153738[] = {0xFFEB803E, 0x0000FFE8};
+
+int D_80153740[] = {0xFFF08061, 0x0000FFE8};
+
+int D_80153748[] = {0xFFF08062, 0x0000FFE8};
+
+int D_80153750[] = {0xFFF08063, 0x0000FFE8};
+
+int D_80153758[] = {0xFFF08064, 0x0000FFE8};
+
+int D_80153760[] = {0xFFF08065, 0x0000FFE8};
+
+int D_80153768[] = {0xFFF08066, 0x0000FFE8};
+
+int D_80153770[] = {0xFFF08067, 0x0000FFE8};
+
+int D_80153778[] = {0xFFF08068, 0x0000FFE8};
+
+int D_80153780[] = {0xFFF08069, 0x0000FFE8};
+
+int D_80153788[] = {0xFFF0806A, 0x0000FFE8};
+
+int D_80153790[] = {0xFFF8806B, 0x0000FFE8};
+
+int D_80153798[] = {0xFFF3806C, 0x0000FFED};
+
+int D_801537A0[] = {0xFFF68038, 0x0000FFEC};
+
+int D_801537A8[] = {0xFFEC8039, 0x0000FFEB};
+
+int D_801537B0[] = {0xFFE7803A, 0x0000FFE8};
+
+int D_801537B8[] = {0xFFE6803B, 0x0000FFE8};
+
+int D_801537C0[] = {0xFFF1806D, 0x0000FFE8};
+
+int D_801537C8[] = {0xFFF0806D, 0x0000FFE8};
+
+int D_801537D0[] = {0xFFF2806E, 0x0000FFE8};
+
+int D_801537D8[] = {0xFFF1806E, 0x0000FFE8};
+
+int D_801537E0[] = {0xFFF8806F, 0x0000FFE8};
+
+int D_801537E8[] = {0xFFF08070, 0x0000FFE0};
+
+int D_801537F0[] = {0xFFE88071, 0x0000FFE8};
+
+int D_801537F8[] = {0xFFE88072, 0x0000FFE8};
+
+int D_80153800[] = {0xFFF08073, 0x0000FFE8};
+
+int D_80153808[] = {0xFFE88074, 0x0000FFE8};
+
+int D_80153810[] = {0xFFE88075, 0x0000FFE8};
+
+int D_80153818[] = {0xFFE88076, 0x0000FFE8};
+
+int D_80153820[] = {0xFFF08077, 0x0000FFE8};
+
+int D_80153828[] = {0xFFF08078, 0x0000FFE8};
+
+int D_80153830[] = {0xFFF08079, 0x0000FFE8};
+
+int D_80153838[] = {0xFFF0807A, 0x0000FFF8};
+
+int D_80153840[] = {0xFFF0807B, 0x00000000};
+
+int D_80153848[] = {0xFFE8807C, 0x00000000};
+
+int D_80153850[] = {0xFFF0807D, 0x0000FFF8};
+
+int D_80153858[] = {0xFFE8807E, 0x00000000};
+
+int D_80153860[] = {0xFFE8807F, 0x00000000};
+
+int D_80153868[] = {0xFFF08080, 0x0000FFF8};
+
+int D_80153870[] = {0xFFE88081, 0x0000FFF8};
+
+int D_80153878[] = {0xFFE88082, 0x0000FFF0};
+
+int D_80153880[] = {0xFFE88083, 0x0000FFF0};
+
+int D_80153888[] = {0xFFE88084, 0x0000FFF9};
+
+int D_80153890[] = {0xFFE08085, 0x0000FFE8};
+
+int D_80153898[] = {0xFFE08086, 0x0000FFE8};
+
+int D_801538A0[] = {0xFFE08087, 0x0000FFF0};
+
+int D_801538A8[] = {0xFFE08088, 0x0000FFE8};
+
+int D_801538B0[] = {0xFFE08089, 0x0000FFF0};
+
+int D_801538B8[] = {0xFFF0808A, 0x0000FFF8};
+
+int D_801538C0[] = {0xFFF8808B, 0x0000FFF0};
+
+int D_801538C8[] = {0xFFF8808C, 0x0000FFF0};
+
+int D_801538D0[] = {0xFFF8808D, 0x0000FFD0};
+
+int D_801538D8[] = {0xFFF8808E, 0x0000FFD0};
+
+int D_801538E0[] = {0xFFF0808F, 0x0000FFE8};
+
+int D_801538E8[] = {0xFFF08090, 0x0000FFF8};
+
+int D_801538F0[] = {0xFFF08091, 0x0000FFF8};
+
+int D_801538F8[] = {0xFFF08092, 0x0000FFF8};
+
+int D_80153900[] = {0xFFF08093, 0x0000FFE8};
+
+int D_80153908[] = {0xFFF08094, 0x0000FFE8};
+
+int D_80153910[] = {0xFFF08095, 0x0000FFE8};
+
+int D_80153918[] = {0xFFF08096, 0x0000FFE8};
+
+int D_80153920[] = {0xFFF08097, 0x0000FFE8};
+
+int D_80153928[] = {0xFFF08098, 0x0000FFE0};
+
+int D_80153930[] = {0xFFF08099, 0x0000FFE0};
+
+int D_80153938[] = {0xFFF0809A, 0x0000FFE8};
+
+int D_80153940[] = {0xFFF0809B, 0x0000FFE8};
+
+int D_80153948[] = {0xFFF0809C, 0x0000FFE8};
+
+int D_80153950[] = {0xFFF0809D, 0x0000FFE8};
+
+int D_80153958[] = {0xFFF0809E, 0x0000FFE8};
+
+int D_80153960[] = {0xFFF0809F, 0x0000FFE8};
+
+int D_80153968[] = {0xFFF080A0, 0x0000FFE8};
+
+int D_80153970[] = {0xFFF080A1, 0x0000FFE8};
+
+int D_80153978[] = {0xFFF080A2, 0x0000FFE8};
+
+int D_80153980[] = {0xFFF080A3, 0x0000FFE8};
+
+int D_80153988[] = {0xFFF080A4, 0x000BFFE8};
+
+int D_80153990[] = {0xFFF080A5, 0x000CFFE8};
+
+int D_80153998[] = {0xFFF080A6, 0x000DFFE8};
+
+int D_801539A0[] = {0xFFF080A7, 0x0000FFE8};
+
+int D_801539A8[] = {0xFFF080A8, 0x0000FFE8};
+
+int D_801539B0[] = {0xFFF080A9, 0x000FFFE8};
+
+int D_801539B8[] = {0xFFF080AA, 0x000FFFE8};
+
+int D_801539C0[] = {0xFFE880AB, 0x000FFFE8};
+
+int D_801539C8[] = {0xFFF080AC, 0x000FFFD8};
+
+int D_801539D0[] = {0xFFF080AD, 0x000EFFE8};
+
+int D_801539D8[] = {0xFFE880AE, 0x000EFFE8};
+
+int D_801539E0[] = {0xFFED80AF, 0x0011FFE7};
+
+int D_801539E8[] = {0xFFED80AF, 0x0012FFE7};
+
+int D_801539F0[] = {0xFFED80AF, 0x0013FFE7};
+
+int D_801539F8[] = {0xFFF080B0, 0x0010FFE8};
+
+int D_80153A00[] = {0xFFF080B1, 0x0010FFE8};
+
+int D_80153A08[] = {0xFFF080B2, 0x0010FFE8};
+
+int D_80153A10[] = {0xFFF080B3, 0x0010FFE8};
+
+int D_80153A18[] = {0xFFF080B4, 0x0000FFE8};
+
+int D_80153A20[] = {0xFFF080B5, 0x0000FFE8};
+
+int D_80153A28[] = {0xFFF080B6, 0x0000FFE8};
+
+int D_80153A30[] = {0xFFF080B7, 0x0000FFE8};
+
+int D_80153A38[] = {0xFFF080B8, 0x0000FFF8};
+
+int D_80153A40[] = {0xFFF080B9, 0x0000FFF8};
+
+int D_80153A48[] = {0xFFF080BA, 0x00000000};
+
+int D_80153A50[] = {0xFFF080BB, 0x0000FFF8};
+
+int D_80153A58[] = {0xFFF080BC, 0x00000000};
+
+int D_80153A60[] = {0xFFF080BD, 0x0000FFF8};
+
+int D_80153A68[] = {0xFFF080BE, 0x0000FFE8};
+
+int D_80153A70[] = {0xFFF080BF, 0x0000FFE8};
+
+int D_80153A78[] = {0xFFF080C0, 0x0000FFE8};
+
+int D_80153A80[] = {0xFFF080C1, 0x0000FFE8};
+
+int D_80153A88[] = {0xFFF880C2, 0x0000FFE8};
+
+int D_80153A90[] = {0xFFF880C3, 0x0000FFE8};
+
+int D_80153A98[] = {0xFFF080C4, 0x0000FFE8};
 
 int D_80153AF4[];
 int D_80153B10[];
@@ -1193,98 +768,77 @@ int D_80153CEC[];
 int D_80153D08[];
 
 SpriteParts* D_80153AA0[] = {
-(SpriteParts*)NULL      , (SpriteParts*)D_80153AF4,
-(SpriteParts*)D_80153B10, (SpriteParts*)D_80153B2C,
-(SpriteParts*)D_80153B48, (SpriteParts*)D_80153B64,
-(SpriteParts*)D_80153B80, (SpriteParts*)D_80153B9C,
-(SpriteParts*)D_80153BB8, (SpriteParts*)D_80153BD4,
-(SpriteParts*)D_80153BF0, (SpriteParts*)D_80153C0C,
-(SpriteParts*)D_80153C28, (SpriteParts*)D_80153C44,
-(SpriteParts*)D_80153C60, (SpriteParts*)D_80153C7C,
-(SpriteParts*)D_80153C98, (SpriteParts*)D_80153CB4,
-(SpriteParts*)D_80153CD0, (SpriteParts*)D_80153CEC,
-(SpriteParts*)D_80153D08
-};
+    (SpriteParts*)NULL,       (SpriteParts*)D_80153AF4,
+    (SpriteParts*)D_80153B10, (SpriteParts*)D_80153B2C,
+    (SpriteParts*)D_80153B48, (SpriteParts*)D_80153B64,
+    (SpriteParts*)D_80153B80, (SpriteParts*)D_80153B9C,
+    (SpriteParts*)D_80153BB8, (SpriteParts*)D_80153BD4,
+    (SpriteParts*)D_80153BF0, (SpriteParts*)D_80153C0C,
+    (SpriteParts*)D_80153C28, (SpriteParts*)D_80153C44,
+    (SpriteParts*)D_80153C60, (SpriteParts*)D_80153C7C,
+    (SpriteParts*)D_80153C98, (SpriteParts*)D_80153CB4,
+    (SpriteParts*)D_80153CD0, (SpriteParts*)D_80153CEC,
+    (SpriteParts*)D_80153D08};
 
-int D_80153AF4[] = {
-	0x00300001, 0xFFF5FFF5, 0x00180018, 0x00000000, 0x00000000, 0x00180018, 0x00000000
-};
+int D_80153AF4[] = {0x00300001, 0xFFF5FFF5, 0x00180018, 0x00000000,
+                    0x00000000, 0x00180018, 0x00000000};
 
-int D_80153B10[] = {
-	0x00200001, 0xFFF5FFF5, 0x00180018, 0x00000000, 0x00000018, 0x00180030, 0x00000000
-};
+int D_80153B10[] = {0x00200001, 0xFFF5FFF5, 0x00180018, 0x00000000,
+                    0x00000018, 0x00180030, 0x00000000};
 
-int D_80153B2C[] = {
-	0x00200001, 0xFFF5FFF5, 0x00180018, 0x00000000, 0x00000030, 0x00180048, 0x00000000
-};
+int D_80153B2C[] = {0x00200001, 0xFFF5FFF5, 0x00180018, 0x00000000,
+                    0x00000030, 0x00180048, 0x00000000};
 
-int D_80153B48[] = {
-	0x00200001, 0xFFF5FFF5, 0x00180018, 0x00000000, 0x00000048, 0x00180060, 0x00000000
-};
+int D_80153B48[] = {0x00200001, 0xFFF5FFF5, 0x00180018, 0x00000000,
+                    0x00000048, 0x00180060, 0x00000000};
 
-int D_80153B64[] = {
-	0x00100001, 0xFFF5FFF5, 0x00180018, 0x00000000, 0x00180000, 0x00300018, 0x00000000
-};
+int D_80153B64[] = {0x00100001, 0xFFF5FFF5, 0x00180018, 0x00000000,
+                    0x00180000, 0x00300018, 0x00000000};
 
-int D_80153B80[] = {
-	0x00230001, 0xFFF5FFF5, 0x00180018, 0x00000000, 0x00000048, 0x00180060, 0x00000000
-};
+int D_80153B80[] = {0x00230001, 0xFFF5FFF5, 0x00180018, 0x00000000,
+                    0x00000048, 0x00180060, 0x00000000};
 
-int D_80153B9C[] = {
-	0x00230001, 0xFFF5FFF5, 0x00180018, 0x00000000, 0x00000030, 0x00180048, 0x00000000
-};
+int D_80153B9C[] = {0x00230001, 0xFFF5FFF5, 0x00180018, 0x00000000,
+                    0x00000030, 0x00180048, 0x00000000};
 
-int D_80153BB8[] = {
-	0x00230001, 0xFFF5FFF5, 0x00180018, 0x00000000, 0x00000018, 0x00180030, 0x00000000
-};
+int D_80153BB8[] = {0x00230001, 0xFFF5FFF5, 0x00180018, 0x00000000,
+                    0x00000018, 0x00180030, 0x00000000};
 
-int D_80153BD4[] = {
-	0x00000001, 0xFFF5FFF5, 0x00180018, 0x00000000, 0x00180018, 0x00300030, 0x00000000
-};
+int D_80153BD4[] = {0x00000001, 0xFFF5FFF5, 0x00180018, 0x00000000,
+                    0x00180018, 0x00300030, 0x00000000};
 
-int D_80153BF0[] = {
-	0x00000001, 0xFFF5FFF5, 0x00180018, 0x00000001, 0x00180018, 0x00300030, 0x00000000
-};
+int D_80153BF0[] = {0x00000001, 0xFFF5FFF5, 0x00180018, 0x00000001,
+                    0x00180018, 0x00300030, 0x00000000};
 
-int D_80153C0C[] = {
-	0x00000001, 0xFFF5FFF5, 0x00180018, 0x00000000, 0x00180030, 0x00300048, 0x00000000
-};
+int D_80153C0C[] = {0x00000001, 0xFFF5FFF5, 0x00180018, 0x00000000,
+                    0x00180030, 0x00300048, 0x00000000};
 
-int D_80153C28[] = {
-	0x00000001, 0xFFF5FFF5, 0x00180018, 0x00000001, 0x00180030, 0x00300048, 0x00000000
-};
+int D_80153C28[] = {0x00000001, 0xFFF5FFF5, 0x00180018, 0x00000001,
+                    0x00180030, 0x00300048, 0x00000000};
 
-int D_80153C44[] = {
-	0x00100001, 0xFFF9FFF9, 0x00100010, 0x00190000, 0x00400000, 0x00500010, 0x00000000
-};
+int D_80153C44[] = {0x00100001, 0xFFF9FFF9, 0x00100010, 0x00190000,
+                    0x00400000, 0x00500010, 0x00000000};
 
-int D_80153C60[] = {
-	0x00000001, 0xFFF9FFF9, 0x00100010, 0x00190000, 0x00400010, 0x00500020, 0x00000000
-};
+int D_80153C60[] = {0x00000001, 0xFFF9FFF9, 0x00100010, 0x00190000,
+                    0x00400010, 0x00500020, 0x00000000};
 
-int D_80153C7C[] = {
-	0x00100001, 0xFFF9FFF9, 0x00100010, 0x00190000, 0x00500000, 0x00600010, 0x00000000
-};
+int D_80153C7C[] = {0x00100001, 0xFFF9FFF9, 0x00100010, 0x00190000,
+                    0x00500000, 0x00600010, 0x00000000};
 
-int D_80153C98[] = {
-	0x00000001, 0xFFF9FFF9, 0x00100010, 0x00190000, 0x00500010, 0x00600020, 0x00000000
-};
+int D_80153C98[] = {0x00000001, 0xFFF9FFF9, 0x00100010, 0x00190000,
+                    0x00500010, 0x00600020, 0x00000000};
 
-int D_80153CB4[] = {
-	0x00040001, 0xFFF9FFF9, 0x00100010, 0x00190000, 0x00400070, 0x00500080, 0x00000000
-};
+int D_80153CB4[] = {0x00040001, 0xFFF9FFF9, 0x00100010, 0x00190000,
+                    0x00400070, 0x00500080, 0x00000000};
 
-int D_80153CD0[] = {
-	0x00000001, 0xFFFDFFFD, 0x00080008, 0x00190000, 0x00300070, 0x00380078, 0x00000000
-};
+int D_80153CD0[] = {0x00000001, 0xFFFDFFFD, 0x00080008, 0x00190000,
+                    0x00300070, 0x00380078, 0x00000000};
 
-int D_80153CEC[] = {
-	0x00040001, 0xFFFDFFFD, 0x00080008, 0x00190000, 0x00300078, 0x00380080, 0x00000000
-};
+int D_80153CEC[] = {0x00040001, 0xFFFDFFFD, 0x00080008, 0x00190000,
+                    0x00300078, 0x00380080, 0x00000000};
 
-int D_80153D08[] = {
-	0x00000001, 0xFFFDFFFD, 0x00080008, 0x00190000, 0x00380070, 0x00400078, 0x00000000
-};
+int D_80153D08[] = {0x00000001, 0xFFFDFFFD, 0x00080008, 0x00190000,
+                    0x00380070, 0x00400078, 0x00000000};
 
 int D_80153DB8[];
 int D_80153DD4[];
@@ -1324,170 +878,133 @@ int D_80154170[];
 int D_8015418C[];
 
 SpriteParts* D_80153D24[] = {
-(SpriteParts*)NULL      , (SpriteParts*)D_80153DB8,
-(SpriteParts*)D_80153DD4, (SpriteParts*)D_80153DF0,
-(SpriteParts*)D_80153E0C, (SpriteParts*)D_80153E28,
-(SpriteParts*)D_80153E44, (SpriteParts*)D_80153E60,
-(SpriteParts*)D_80153E7C, (SpriteParts*)D_80153E98,
-(SpriteParts*)D_80153EB4, (SpriteParts*)D_80153ED0,
-(SpriteParts*)D_80153EEC, (SpriteParts*)D_80153F08,
-(SpriteParts*)D_80153F24, (SpriteParts*)D_80153F40,
-(SpriteParts*)D_80153F5C, (SpriteParts*)D_80153F78,
-(SpriteParts*)D_80153F94, (SpriteParts*)D_80153FB0,
-(SpriteParts*)D_80153FCC, (SpriteParts*)D_80153FE8,
-(SpriteParts*)D_80154004, (SpriteParts*)D_80154020,
-(SpriteParts*)D_8015403C, (SpriteParts*)D_80154058,
-(SpriteParts*)D_80154074, (SpriteParts*)D_80154090,
-(SpriteParts*)D_801540AC, (SpriteParts*)D_801540C8,
-(SpriteParts*)D_801540E4, (SpriteParts*)D_80154100,
-(SpriteParts*)D_8015411C, (SpriteParts*)D_80154138,
-(SpriteParts*)D_80154154, (SpriteParts*)D_80154170,
-(SpriteParts*)D_8015418C
-};
+    (SpriteParts*)NULL,       (SpriteParts*)D_80153DB8,
+    (SpriteParts*)D_80153DD4, (SpriteParts*)D_80153DF0,
+    (SpriteParts*)D_80153E0C, (SpriteParts*)D_80153E28,
+    (SpriteParts*)D_80153E44, (SpriteParts*)D_80153E60,
+    (SpriteParts*)D_80153E7C, (SpriteParts*)D_80153E98,
+    (SpriteParts*)D_80153EB4, (SpriteParts*)D_80153ED0,
+    (SpriteParts*)D_80153EEC, (SpriteParts*)D_80153F08,
+    (SpriteParts*)D_80153F24, (SpriteParts*)D_80153F40,
+    (SpriteParts*)D_80153F5C, (SpriteParts*)D_80153F78,
+    (SpriteParts*)D_80153F94, (SpriteParts*)D_80153FB0,
+    (SpriteParts*)D_80153FCC, (SpriteParts*)D_80153FE8,
+    (SpriteParts*)D_80154004, (SpriteParts*)D_80154020,
+    (SpriteParts*)D_8015403C, (SpriteParts*)D_80154058,
+    (SpriteParts*)D_80154074, (SpriteParts*)D_80154090,
+    (SpriteParts*)D_801540AC, (SpriteParts*)D_801540C8,
+    (SpriteParts*)D_801540E4, (SpriteParts*)D_80154100,
+    (SpriteParts*)D_8015411C, (SpriteParts*)D_80154138,
+    (SpriteParts*)D_80154154, (SpriteParts*)D_80154170,
+    (SpriteParts*)D_8015418C};
 
-int D_80153DB8[] = {
-	0x00000001, 0xFFF20000, 0x00100010, 0x00200000, 0x00100070, 0x00200080, 0x00000000
-};
+int D_80153DB8[] = {0x00000001, 0xFFF20000, 0x00100010, 0x00200000,
+                    0x00100070, 0x00200080, 0x00000000};
 
-int D_80153DD4[] = {
-	0x00200001, 0xFFEE0000, 0x00100010, 0x00200000, 0x00000070, 0x00100080, 0x00000000
-};
+int D_80153DD4[] = {0x00200001, 0xFFEE0000, 0x00100010, 0x00200000,
+                    0x00000070, 0x00100080, 0x00000000};
 
-int D_80153DF0[] = {
-	0x00000001, 0xFFF0FFFD, 0x00100018, 0x00200000, 0x00300040, 0x00400058, 0x00000000
-};
+int D_80153DF0[] = {0x00000001, 0xFFF0FFFD, 0x00100018, 0x00200000,
+                    0x00300040, 0x00400058, 0x00000000};
 
-int D_80153E0C[] = {
-	0x00000001, 0xFFF0FFFD, 0x00100018, 0x00200000, 0x00300058, 0x00400070, 0x00000000
-};
+int D_80153E0C[] = {0x00000001, 0xFFF0FFFD, 0x00100018, 0x00200000,
+                    0x00300058, 0x00400070, 0x00000000};
 
-int D_80153E28[] = {
-	0x00000001, 0xFFF30000, 0x00100010, 0x00200000, 0x00200050, 0x00300060, 0x00000000
-};
+int D_80153E28[] = {0x00000001, 0xFFF30000, 0x00100010, 0x00200000,
+                    0x00200050, 0x00300060, 0x00000000};
 
-int D_80153E44[] = {
-	0x00000001, 0xFFEFFFFE, 0x00180010, 0x00200000, 0x00200070, 0x00380080, 0x00000000
-};
+int D_80153E44[] = {0x00000001, 0xFFEFFFFE, 0x00180010, 0x00200000,
+                    0x00200070, 0x00380080, 0x00000000};
 
-int D_80153E60[] = {
-	0x00000001, 0xFFF2FFFE, 0x00100010, 0x00200000, 0x00200060, 0x00300070, 0x00000000
-};
+int D_80153E60[] = {0x00000001, 0xFFF2FFFE, 0x00100010, 0x00200000,
+                    0x00200060, 0x00300070, 0x00000000};
 
-int D_80153E7C[] = {
-	0x00000001, 0xFFF2FFFE, 0x00100010, 0x00200000, 0x00100060, 0x00200070, 0x00000000
-};
+int D_80153E7C[] = {0x00000001, 0xFFF2FFFE, 0x00100010, 0x00200000,
+                    0x00100060, 0x00200070, 0x00000000};
 
-int D_80153E98[] = {
-	0x00200001, 0xFFF1FFFF, 0x00100010, 0x00200000, 0x00000060, 0x00100070, 0x00000000
-};
+int D_80153E98[] = {0x00200001, 0xFFF1FFFF, 0x00100010, 0x00200000,
+                    0x00000060, 0x00100070, 0x00000000};
 
-int D_80153EB4[] = {
-	0x00000001, 0xFFFF0001, 0x00100010, 0x00200000, 0x00100070, 0x00200080, 0x00000000
-};
+int D_80153EB4[] = {0x00000001, 0xFFFF0001, 0x00100010, 0x00200000,
+                    0x00100070, 0x00200080, 0x00000000};
 
-int D_80153ED0[] = {
-	0x00200001, 0xFFFB0001, 0x00100010, 0x00200000, 0x00000070, 0x00100080, 0x00000000
-};
+int D_80153ED0[] = {0x00200001, 0xFFFB0001, 0x00100010, 0x00200000,
+                    0x00000070, 0x00100080, 0x00000000};
 
-int D_80153EEC[] = {
-	0x00000001, 0xFFFDFFFE, 0x00100018, 0x00200000, 0x00300040, 0x00400058, 0x00000000
-};
+int D_80153EEC[] = {0x00000001, 0xFFFDFFFE, 0x00100018, 0x00200000,
+                    0x00300040, 0x00400058, 0x00000000};
 
-int D_80153F08[] = {
-	0x00000001, 0xFFFDFFFE, 0x00100018, 0x00200000, 0x00300058, 0x00400070, 0x00000000
-};
+int D_80153F08[] = {0x00000001, 0xFFFDFFFE, 0x00100018, 0x00200000,
+                    0x00300058, 0x00400070, 0x00000000};
 
-int D_80153F24[] = {
-	0x00000001, 0x00000001, 0x00100010, 0x00200000, 0x00200050, 0x00300060, 0x00000000
-};
+int D_80153F24[] = {0x00000001, 0x00000001, 0x00100010, 0x00200000,
+                    0x00200050, 0x00300060, 0x00000000};
 
-int D_80153F40[] = {
-	0x00000001, 0xFFFCFFFF, 0x00180010, 0x00200000, 0x00200070, 0x00380080, 0x00000000
-};
+int D_80153F40[] = {0x00000001, 0xFFFCFFFF, 0x00180010, 0x00200000,
+                    0x00200070, 0x00380080, 0x00000000};
 
-int D_80153F5C[] = {
-	0x00000001, 0xFFFFFFFF, 0x00100010, 0x00200000, 0x00200060, 0x00300070, 0x00000000
-};
+int D_80153F5C[] = {0x00000001, 0xFFFFFFFF, 0x00100010, 0x00200000,
+                    0x00200060, 0x00300070, 0x00000000};
 
-int D_80153F78[] = {
-	0x00000001, 0xFFFFFFFF, 0x00100010, 0x00200000, 0x00100060, 0x00200070, 0x00000000
-};
+int D_80153F78[] = {0x00000001, 0xFFFFFFFF, 0x00100010, 0x00200000,
+                    0x00100060, 0x00200070, 0x00000000};
 
-int D_80153F94[] = {
-	0x00200001, 0xFFFE0000, 0x00100010, 0x00200000, 0x00000060, 0x00100070, 0x00000000
-};
+int D_80153F94[] = {0x00200001, 0xFFFE0000, 0x00100010, 0x00200000,
+                    0x00000060, 0x00100070, 0x00000000};
 
-int D_80153FB0[] = {
-	0x00000001, 0xFFF00000, 0x00100010, 0x00200000, 0x00100070, 0x00200080, 0x00000000
-};
+int D_80153FB0[] = {0x00000001, 0xFFF00000, 0x00100010, 0x00200000,
+                    0x00100070, 0x00200080, 0x00000000};
 
-int D_80153FCC[] = {
-	0x00200001, 0xFFEC0000, 0x00100010, 0x00200000, 0x00000070, 0x00100080, 0x00000000
-};
+int D_80153FCC[] = {0x00200001, 0xFFEC0000, 0x00100010, 0x00200000,
+                    0x00000070, 0x00100080, 0x00000000};
 
-int D_80153FE8[] = {
-	0x00000001, 0xFFEEFFFD, 0x00100018, 0x00200000, 0x00300040, 0x00400058, 0x00000000
-};
+int D_80153FE8[] = {0x00000001, 0xFFEEFFFD, 0x00100018, 0x00200000,
+                    0x00300040, 0x00400058, 0x00000000};
 
-int D_80154004[] = {
-	0x00000001, 0xFFEEFFFD, 0x00100018, 0x00200000, 0x00300058, 0x00400070, 0x00000000
-};
+int D_80154004[] = {0x00000001, 0xFFEEFFFD, 0x00100018, 0x00200000,
+                    0x00300058, 0x00400070, 0x00000000};
 
-int D_80154020[] = {
-	0x00000001, 0xFFF10000, 0x00100010, 0x00200000, 0x00200050, 0x00300060, 0x00000000
-};
+int D_80154020[] = {0x00000001, 0xFFF10000, 0x00100010, 0x00200000,
+                    0x00200050, 0x00300060, 0x00000000};
 
-int D_8015403C[] = {
-	0x00000001, 0xFFEDFFFE, 0x00180010, 0x00200000, 0x00200070, 0x00380080, 0x00000000
-};
+int D_8015403C[] = {0x00000001, 0xFFEDFFFE, 0x00180010, 0x00200000,
+                    0x00200070, 0x00380080, 0x00000000};
 
-int D_80154058[] = {
-	0x00000001, 0xFFF0FFFE, 0x00100010, 0x00200000, 0x00200060, 0x00300070, 0x00000000
-};
+int D_80154058[] = {0x00000001, 0xFFF0FFFE, 0x00100010, 0x00200000,
+                    0x00200060, 0x00300070, 0x00000000};
 
-int D_80154074[] = {
-	0x00000001, 0xFFF0FFFE, 0x00100010, 0x00200000, 0x00100060, 0x00200070, 0x00000000
-};
+int D_80154074[] = {0x00000001, 0xFFF0FFFE, 0x00100010, 0x00200000,
+                    0x00100060, 0x00200070, 0x00000000};
 
-int D_80154090[] = {
-	0x00200001, 0xFFEFFFFF, 0x00100010, 0x00200000, 0x00000060, 0x00100070, 0x00000000
-};
+int D_80154090[] = {0x00200001, 0xFFEFFFFF, 0x00100010, 0x00200000,
+                    0x00000060, 0x00100070, 0x00000000};
 
-int D_801540AC[] = {
-	0x00100001, 0xFFFDFFFD, 0x00080008, 0x00200018, 0x00300000, 0x00380008, 0x00000000
-};
+int D_801540AC[] = {0x00100001, 0xFFFDFFFD, 0x00080008, 0x00200018,
+                    0x00300000, 0x00380008, 0x00000000};
 
-int D_801540C8[] = {
-	0x00000001, 0xFFFDFFFD, 0x00080008, 0x00200018, 0x00300008, 0x00380010, 0x00000000
-};
+int D_801540C8[] = {0x00000001, 0xFFFDFFFD, 0x00080008, 0x00200018,
+                    0x00300008, 0x00380010, 0x00000000};
 
-int D_801540E4[] = {
-	0x00000001, 0xFFFDFFFD, 0x00080008, 0x00200018, 0x00300010, 0x00380018, 0x00000000
-};
+int D_801540E4[] = {0x00000001, 0xFFFDFFFD, 0x00080008, 0x00200018,
+                    0x00300010, 0x00380018, 0x00000000};
 
-int D_80154100[] = {
-	0x00000001, 0xFFFDFFFD, 0x00080008, 0x00200018, 0x00300018, 0x00380020, 0x00000000
-};
+int D_80154100[] = {0x00000001, 0xFFFDFFFD, 0x00080008, 0x00200018,
+                    0x00300018, 0x00380020, 0x00000000};
 
-int D_8015411C[] = {
-	0x00000001, 0xFFFDFFFD, 0x00080008, 0x00200018, 0x00300020, 0x00380028, 0x00000000
-};
+int D_8015411C[] = {0x00000001, 0xFFFDFFFD, 0x00080008, 0x00200018,
+                    0x00300020, 0x00380028, 0x00000000};
 
-int D_80154138[] = {
-	0x00000001, 0xFFFDFFFD, 0x00080008, 0x00200018, 0x00300028, 0x00380030, 0x00000000
-};
+int D_80154138[] = {0x00000001, 0xFFFDFFFD, 0x00080008, 0x00200018,
+                    0x00300028, 0x00380030, 0x00000000};
 
-int D_80154154[] = {
-	0x00000001, 0xFFFDFFFD, 0x00080008, 0x002000B0, 0x00180048, 0x00200050, 0x00000000
-};
+int D_80154154[] = {0x00000001, 0xFFFDFFFD, 0x00080008, 0x002000B0,
+                    0x00180048, 0x00200050, 0x00000000};
 
-int D_80154170[] = {
-	0x00000001, 0xFFFDFFFD, 0x00080008, 0x0020000F, 0x00180050, 0x00200058, 0x00000000
-};
+int D_80154170[] = {0x00000001, 0xFFFDFFFD, 0x00080008, 0x0020000F,
+                    0x00180050, 0x00200058, 0x00000000};
 
-int D_8015418C[] = {
-	0x00000001, 0xFFFDFFFD, 0x00080008, 0x00200011, 0x00180058, 0x00200060, 0x00000000
-};
+int D_8015418C[] = {0x00000001, 0xFFFDFFFD, 0x00080008, 0x00200011,
+                    0x00180058, 0x00200060, 0x00000000};
 
 int D_8015421C[];
 int D_80154238[];
@@ -1519,131 +1036,105 @@ int D_80154530[];
 int D_8015454C[];
 
 SpriteParts* D_801541A8[] = {
-(SpriteParts*)NULL      , (SpriteParts*)D_8015421C,
-(SpriteParts*)D_80154238, (SpriteParts*)D_80154254,
-(SpriteParts*)D_80154270, (SpriteParts*)D_8015428C,
-(SpriteParts*)D_801542A8, (SpriteParts*)D_801542C4,
-(SpriteParts*)D_801542E0, (SpriteParts*)D_801542FC,
-(SpriteParts*)D_80154318, (SpriteParts*)D_80154348,
-(SpriteParts*)D_80154378, (SpriteParts*)D_801543A8,
-(SpriteParts*)D_801543C4, (SpriteParts*)D_801543E0,
-(SpriteParts*)D_801543FC, (SpriteParts*)D_80154418,
-(SpriteParts*)D_80154434, (SpriteParts*)D_80154450,
-(SpriteParts*)D_8015446C, (SpriteParts*)D_80154488,
-(SpriteParts*)D_801544A4, (SpriteParts*)D_801544C0,
-(SpriteParts*)D_801544DC, (SpriteParts*)D_801544F8,
-(SpriteParts*)D_80154514, (SpriteParts*)D_80154530,
-(SpriteParts*)D_8015454C
-};
+    (SpriteParts*)NULL,       (SpriteParts*)D_8015421C,
+    (SpriteParts*)D_80154238, (SpriteParts*)D_80154254,
+    (SpriteParts*)D_80154270, (SpriteParts*)D_8015428C,
+    (SpriteParts*)D_801542A8, (SpriteParts*)D_801542C4,
+    (SpriteParts*)D_801542E0, (SpriteParts*)D_801542FC,
+    (SpriteParts*)D_80154318, (SpriteParts*)D_80154348,
+    (SpriteParts*)D_80154378, (SpriteParts*)D_801543A8,
+    (SpriteParts*)D_801543C4, (SpriteParts*)D_801543E0,
+    (SpriteParts*)D_801543FC, (SpriteParts*)D_80154418,
+    (SpriteParts*)D_80154434, (SpriteParts*)D_80154450,
+    (SpriteParts*)D_8015446C, (SpriteParts*)D_80154488,
+    (SpriteParts*)D_801544A4, (SpriteParts*)D_801544C0,
+    (SpriteParts*)D_801544DC, (SpriteParts*)D_801544F8,
+    (SpriteParts*)D_80154514, (SpriteParts*)D_80154530,
+    (SpriteParts*)D_8015454C};
 
-int D_8015421C[] = {
-	0x00300001, 0xFFEAFFF5, 0x00280018, 0x00010000, 0x00000000, 0x00280018, 0x00000000
-};
+int D_8015421C[] = {0x00300001, 0xFFEAFFF5, 0x00280018, 0x00010000,
+                    0x00000000, 0x00280018, 0x00000000};
 
-int D_80154238[] = {
-	0x00200001, 0xFFEAFFF5, 0x00280018, 0x00010000, 0x00000018, 0x00280030, 0x00000000
-};
+int D_80154238[] = {0x00200001, 0xFFEAFFF5, 0x00280018, 0x00010000,
+                    0x00000018, 0x00280030, 0x00000000};
 
-int D_80154254[] = {
-	0x00200001, 0xFFEAFFF2, 0x00280018, 0x00010000, 0x00000030, 0x00280048, 0x00000000
-};
+int D_80154254[] = {0x00200001, 0xFFEAFFF2, 0x00280018, 0x00010000,
+                    0x00000030, 0x00280048, 0x00000000};
 
-int D_80154270[] = {
-	0x00200001, 0xFFEAFFF2, 0x00280018, 0x00010000, 0x00000048, 0x00280060, 0x00000000
-};
+int D_80154270[] = {0x00200001, 0xFFEAFFF2, 0x00280018, 0x00010000,
+                    0x00000048, 0x00280060, 0x00000000};
 
-int D_8015428C[] = {
-	0x00200001, 0xFFEAFFF3, 0x00280018, 0x00010000, 0x00000060, 0x00280078, 0x00000000
-};
+int D_8015428C[] = {0x00200001, 0xFFEAFFF3, 0x00280018, 0x00010000,
+                    0x00000060, 0x00280078, 0x00000000};
 
-int D_801542A8[] = {
-	0x00100001, 0xFFEAFFF2, 0x00280018, 0x00010000, 0x00280000, 0x00500018, 0x00000000
-};
+int D_801542A8[] = {0x00100001, 0xFFEAFFF2, 0x00280018, 0x00010000,
+                    0x00280000, 0x00500018, 0x00000000};
 
-int D_801542C4[] = {
-	0x00000001, 0xFFEAFFF2, 0x00280018, 0x00010000, 0x00280018, 0x00500030, 0x00000000
-};
+int D_801542C4[] = {0x00000001, 0xFFEAFFF2, 0x00280018, 0x00010000,
+                    0x00280018, 0x00500030, 0x00000000};
 
-int D_801542E0[] = {
-	0x00000001, 0xFFEAFFF2, 0x00280018, 0x00010000, 0x00280030, 0x00500048, 0x00000000
-};
+int D_801542E0[] = {0x00000001, 0xFFEAFFF2, 0x00280018, 0x00010000,
+                    0x00280030, 0x00500048, 0x00000000};
 
-int D_801542FC[] = {
-	0x00000001, 0xFFEAFFF5, 0x00280018, 0x00010000, 0x00280048, 0x00500060, 0x00000000
-};
+int D_801542FC[] = {0x00000001, 0xFFEAFFF5, 0x00280018, 0x00010000,
+                    0x00280048, 0x00500060, 0x00000000};
 
-int D_80154318[] = {
-	0x00000002, 0xFFEAFFF4, 0x00280018, 0x00010000, 0x00280060, 0x00500078, 0x00000000, 0x0018FFDF, 0x00000018, 0x00180000, 0x00300038, 0x00000050
-};
+int D_80154318[] = {0x00000002, 0xFFEAFFF4, 0x00280018, 0x00010000,
+                    0x00280060, 0x00500078, 0x00000000, 0x0018FFDF,
+                    0x00000018, 0x00180000, 0x00300038, 0x00000050};
 
-int D_80154348[] = {
-	0x00000002, 0xFFEAFFF4, 0x00280018, 0x00010000, 0x00280060, 0x00500078, 0x00030000, 0x0010FFE5, 0x00000010, 0x00300000, 0x00400038, 0x00000048
-};
+int D_80154348[] = {0x00000002, 0xFFEAFFF4, 0x00280018, 0x00010000,
+                    0x00280060, 0x00500078, 0x00030000, 0x0010FFE5,
+                    0x00000010, 0x00300000, 0x00400038, 0x00000048};
 
-int D_80154378[] = {
-	0x00000002, 0xFFEAFFF4, 0x00280018, 0x00010000, 0x00280060, 0x00500078, 0x00050000, 0x0008FFEA, 0x00000008, 0x00480000, 0x00500028, 0x00000030
-};
+int D_80154378[] = {0x00000002, 0xFFEAFFF4, 0x00280018, 0x00010000,
+                    0x00280060, 0x00500078, 0x00050000, 0x0008FFEA,
+                    0x00000008, 0x00480000, 0x00500028, 0x00000030};
 
-int D_801543A8[] = {
-	0x00000001, 0xFFEAFFF4, 0x00280018, 0x00010000, 0x00280060, 0x00500078, 0x00000000
-};
+int D_801543A8[] = {0x00000001, 0xFFEAFFF4, 0x00280018, 0x00010000,
+                    0x00280060, 0x00500078, 0x00000000};
 
-int D_801543C4[] = {
-	0x00100001, 0xFFEAFFF4, 0x00280018, 0x00010000, 0x00500000, 0x00780018, 0x00000000
-};
+int D_801543C4[] = {0x00100001, 0xFFEAFFF4, 0x00280018, 0x00010000,
+                    0x00500000, 0x00780018, 0x00000000};
 
-int D_801543E0[] = {
-	0x00000001, 0xFFEAFFF4, 0x00280018, 0x00010000, 0x00500018, 0x00780030, 0x00000000
-};
+int D_801543E0[] = {0x00000001, 0xFFEAFFF4, 0x00280018, 0x00010000,
+                    0x00500018, 0x00780030, 0x00000000};
 
-int D_801543FC[] = {
-	0x00000001, 0xFFEAFFF5, 0x00280018, 0x00010000, 0x00500030, 0x00780048, 0x00000000
-};
+int D_801543FC[] = {0x00000001, 0xFFEAFFF5, 0x00280018, 0x00010000,
+                    0x00500030, 0x00780048, 0x00000000};
 
-int D_80154418[] = {
-	0x00000001, 0xFFEAFFF5, 0x00280018, 0x00000000, 0x00400050, 0x00680068, 0x00000000
-};
+int D_80154418[] = {0x00000001, 0xFFEAFFF5, 0x00280018, 0x00000000,
+                    0x00400050, 0x00680068, 0x00000000};
 
-int D_80154434[] = {
-	0x00040001, 0xFFF2FFF5, 0x00200018, 0x00000000, 0x00400068, 0x00600080, 0x00000000
-};
+int D_80154434[] = {0x00040001, 0xFFF2FFF5, 0x00200018, 0x00000000,
+                    0x00400068, 0x00600080, 0x00000000};
 
-int D_80154450[] = {
-	0x000C0001, 0xFFF2FFF5, 0x00200018, 0x00000000, 0x00600068, 0x00800080, 0x00000000
-};
+int D_80154450[] = {0x000C0001, 0xFFF2FFF5, 0x00200018, 0x00000000,
+                    0x00600068, 0x00800080, 0x00000000};
 
-int D_8015446C[] = {
-	0x00000001, 0xFFEAFFF8, 0x00280018, 0x00010000, 0x00500048, 0x00780060, 0x00000000
-};
+int D_8015446C[] = {0x00000001, 0xFFEAFFF8, 0x00280018, 0x00010000,
+                    0x00500048, 0x00780060, 0x00000000};
 
-int D_80154488[] = {
-	0x00100001, 0xFFF2FFF8, 0x00200018, 0x00000000, 0x00380000, 0x00580018, 0x00000000
-};
+int D_80154488[] = {0x00100001, 0xFFF2FFF8, 0x00200018, 0x00000000,
+                    0x00380000, 0x00580018, 0x00000000};
 
-int D_801544A4[] = {
-	0x00000001, 0xFFFAFFF5, 0x00180018, 0x00010000, 0x00500060, 0x00680078, 0x00000000
-};
+int D_801544A4[] = {0x00000001, 0xFFFAFFF5, 0x00180018, 0x00010000,
+                    0x00500060, 0x00680078, 0x00000000};
 
-int D_801544C0[] = {
-	0x00080001, 0xFFFAFFF5, 0x00180018, 0x00010000, 0x00680060, 0x00800078, 0x00000000
-};
+int D_801544C0[] = {0x00080001, 0xFFFAFFF5, 0x00180018, 0x00010000,
+                    0x00680060, 0x00800078, 0x00000000};
 
-int D_801544DC[] = {
-	0x00080001, 0xFFFAFFF5, 0x00180018, 0x00000000, 0x00680050, 0x00800068, 0x00000000
-};
+int D_801544DC[] = {0x00080001, 0xFFFAFFF5, 0x00180018, 0x00000000,
+                    0x00680050, 0x00800068, 0x00000000};
 
-int D_801544F8[] = {
-	0x00080001, 0xFFEEFFEF, 0x00280020, 0x00000001, 0x00580030, 0x00800050, 0x00000000
-};
+int D_801544F8[] = {0x00080001, 0xFFEEFFEF, 0x00280020, 0x00000001,
+                    0x00580030, 0x00800050, 0x00000000};
 
-int D_80154514[] = {
-	0x00000001, 0xFFF9FFF4, 0x00100018, 0x00000004, 0x00500018, 0x00600030, 0x00000000
-};
+int D_80154514[] = {0x00000001, 0xFFF9FFF4, 0x00100018, 0x00000004,
+                    0x00500018, 0x00600030, 0x00000000};
 
-int D_80154530[] = {
-	0x00000001, 0xFFF3FFF7, 0x00180010, 0x00000003, 0x00400040, 0x00580050, 0x00000000
-};
+int D_80154530[] = {0x00000001, 0xFFF3FFF7, 0x00180010, 0x00000003,
+                    0x00400040, 0x00580050, 0x00000000};
 
-int D_8015454C[] = {
-	0x00000001, 0xFFF9FFF8, 0x00100010, 0x00000002, 0x00480030, 0x00580040, 0x00000000
-};
+int D_8015454C[] = {0x00000001, 0xFFF9FFF8, 0x00100010, 0x00000002,
+                    0x00480030, 0x00580040, 0x00000000};
