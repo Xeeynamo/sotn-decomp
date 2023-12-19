@@ -205,4 +205,17 @@ extern unsigned char _svm_sreg_dirty[24];
 
 extern ProgAtr* D_8006C3B4;
 
+extern volatile u16* D_80032F10;
+extern u8 spuVmMaxVoice;
+
+struct SpuVoice {
+    u8 pad[4];
+    s16 unk04;
+    u8 pad2[21];
+    u8 unk1b;
+    u8 pad3[24];
+};
+
+extern struct SpuVoice _svm_voice[24];
+
 #endif
