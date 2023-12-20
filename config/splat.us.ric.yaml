@@ -31,7 +31,8 @@ segments:
     subsegments:
       - [0x0, data]
       - [0x20, spritesheet, richter, disks/us/BIN/F_GAME2.BIN, 0x40400]
-      - [0x170AC, data]
+      - [0x170AC, .data, spriteparts]
+      - [0x18568, data]
       - [0x194B0, data]
       - [0x19B50, data]
       - [0x19BE0, data]
