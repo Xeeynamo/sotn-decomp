@@ -614,7 +614,7 @@ void EntityPlatform(Entity* self) {
         if (temp_v0 > 496) {
             self->posY.i.hi--;
             player->posY.i.hi--;
-            D_8009748E[0]--;
+            D_80097488.y.i.hi--;
         } else {
             g_api.PlaySfx(SE_CEN_PLATFORM_STOP);
             if (player->facingLeft == 0) {
@@ -653,7 +653,7 @@ void EntityPlatform(Entity* self) {
         if (temp_v0 < 592) {
             self->posY.i.hi++;
             player->posY.i.hi++;
-            *D_8009748A += 1;
+            D_80097488.x.i.hi++;
         } else {
             D_8003C8B8 = 1;
             if (*D_80097400 != 0) {

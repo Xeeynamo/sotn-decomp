@@ -1121,8 +1121,8 @@ void func_800F298C(void) {
         g_api.o.TestCollisions();
         D_8013759C = PLAYER.posX.i.hi;
         g_Player.unk7C = PLAYER.posX.i.hi;
-        D_80097488 = 0;
-        D_8009748C = 0;
+        D_80097488.x.val = 0;
+        D_80097488.y.val = 0;
         D_801375A0 = PLAYER.posY.i.hi;
         g_Player.unk7E = PLAYER.posY.i.hi;
         if ((g_StageId == STAGE_ST0) ||
@@ -1221,8 +1221,8 @@ void func_800F298C(void) {
             D_801375B8 = D_801375B0 - g_Tilemap.cameraY.i.hi;
             D_801375A4 = D_8013759C - PLAYER.posX.val;
             D_801375A8 = D_801375A0 - PLAYER.posY.val;
-            D_801375A4 -= D_80097488;
-            D_801375A8 -= D_8009748C;
+            D_801375A4 -= D_80097488.x.val;
+            D_801375A8 -= D_80097488.y.val;
             func_800F0940();
 
             for (i = 0, ent = &g_Entities[0]; i < LEN(g_Entities); i++, ent++) {
