@@ -570,8 +570,8 @@ void EntityCavernDoorPlatform(Entity* self) {
             temp -= self->ext.generic.unk88.S16.unk2;
             player->posX.i.hi += temp;
             player->posY.i.hi++;
-            D_8009748A[0] += temp;
-            D_8009748A[2] += 1;
+            D_80097488.x.i.hi += temp;
+            D_80097488.y.i.hi += 1;
         }
         self->ext.generic.unk88.unk = self->posX.val;
         self->ext.generic.unk8C.modeS32 = self->posY.val;
