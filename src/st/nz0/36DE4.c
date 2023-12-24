@@ -178,7 +178,7 @@ void EntityElevator(Entity* self) {
             if (temp != 0) {
                 g_api.func_8010DFF0(0, 1);
                 g_Entities[player].posY.i.hi--;
-                D_8009748E[0]--;
+                D_80097488.y.i.hi--;
             }
         } else {
             self->posY.i.hi = y;
@@ -198,7 +198,7 @@ void EntityElevator(Entity* self) {
         if (temp != 0) {
             g_api.func_8010DFF0(0, 1);
             g_Entities[player].posY.i.hi++;
-            D_8009748E[0]++;
+            D_80097488.y.i.hi++;
         }
         break;
     }

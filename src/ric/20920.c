@@ -130,7 +130,7 @@ void func_8015CC70(s16 arg0) {
 
 void func_8015CCC8(s32 arg0, s32 velocityX) {
     SetPlayerStep(2);
-    func_8015C920(&D_801554C0);
+    func_8015C920(D_801554C0);
     PLAYER.velocityX = velocityX;
     PLAYER.velocityY = 0;
     if (arg0 == 1) {

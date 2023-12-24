@@ -469,6 +469,11 @@ typedef void (*PfnEntityUpdate)(struct Entity*);
 #include "unkstruct.h"
 
 typedef struct {
+    f32 x;
+    f32 y;
+} Pos;
+
+typedef struct {
     f32 posX;
     f32 posY;
 } Camera;
@@ -1575,16 +1580,7 @@ extern s32 D_80097420[];
 extern s32 D_80097424;
 extern s32 D_80097448[]; // underwater physics. 7448 and 744C. Could be struct.
 extern s32 D_80097450;
-extern s32 D_80097488;
-// Overlapping data, worth further investigation
-extern u16 D_8009748A[];
-extern s32 D_8009748C;
-
-/*
- * Elevator moving, "underflowed" to 0xFF
- * when going up, 0x1 when going up
- */
-extern u16 D_8009748E[];
+extern Pos D_80097488;
 extern Pad g_pads[PAD_COUNT];
 extern Stages g_StageId;
 extern s32 D_800974A4; // map open
