@@ -140,6 +140,11 @@ void func_8010427C(void) {
 INCLUDE_ASM("dra/nonmatchings/63ED4", func_801042C4);
 
 void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
+#if defined(VERSION_US)
+    const s32 PRIORITY_SHIFT = 16;
+#elif defined(VERSION_HD)
+    const s32 PRIORITY_SHIFT = 8;
+#endif
     VECTOR sp28;
     SVECTOR pad;
     SVECTOR sp40[3];
@@ -309,12 +314,13 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
             prim->u2 = 0xFA;
             prim->v2 = 0xDE;
         }
+
         if ((arg0 == 0) && (arg2 < 0x10)) {
-            prim->priority -= 0x10;
+            prim->priority -= PRIORITY_SHIFT;
         }
         if (arg0 == 3) {
             if (arg2 < 0x30) {
-                prim->priority -= 0x10;
+                prim->priority -= PRIORITY_SHIFT;
             }
             prim->blendMode = 4;
         } else if ((arg0 != 2) && (arg2 >= 0x40)) {
