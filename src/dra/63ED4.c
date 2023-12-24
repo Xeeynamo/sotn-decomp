@@ -141,7 +141,80 @@ INCLUDE_ASM("dra/nonmatchings/63ED4", func_801042C4);
 
 INCLUDE_ASM("dra/nonmatchings/63ED4", func_80104790);
 
-INCLUDE_ASM("dra/nonmatchings/63ED4", func_80105078);
+void func_80105078(s32 arg0, s32 arg1) {
+    VECTOR sp28;
+    SVECTOR pad;
+    SVECTOR sp40[3];
+    SVECTOR sp58[3];
+    u8 sp70[4];
+    s32 sp78;
+    s32 sp7C;
+    s32 sp80;
+    s32 sp88;
+    SVECTOR** sp90;
+    Primitive* prim;
+    s32 temp_v0_4;
+    s32 i;
+
+    sp70[2] = sp70[1] = sp70[0] = 0x80;
+    sp70[3] = 0;
+    RotMatrix(&D_801379C8, &D_80137E00);
+    RotMatrix(&D_801379C8, &D_80137E20);
+    SetColorMatrix(&D_800A37B8);
+    SetLightMatrix(&D_80137E20);
+    SetBackColor(0xC0, 0xC0, 0xC0);
+
+    sp90 = &D_800A34C0;
+    prim = &g_PrimBuf[D_80137E44];
+
+    for (sp88 = 0; sp88 < 18; sp88++, prim = prim->next, sp90 += 3) {
+        if (arg0 == 0) {
+            prim->blendMode = BLEND_VISIBLE;
+            continue;
+        }
+        TransMatrix(&D_80137E00, &D_801379D0);
+        SetRotMatrix(&D_80137E00);
+        SetTransMatrix(&D_80137E00);
+        sp7C = 0;
+        for (i = 0; i < 3; i++) {
+            sp28.vx = sp40[i].vx = (sp90[i]->vx * arg0) >> 8;
+            sp28.vy = sp40[i].vy = (sp90[i]->vy * arg0) >> 8;
+            sp28.vz = sp40[i].vz = (sp90[i]->vz * arg0) >> 8;
+            func_80017008(&sp28, &sp58[i]);
+        }
+        temp_v0_4 = RotAverageNclip3(
+            &sp40[0], &sp40[1], &sp40[2], (s32*)&prim->x0, (s32*)&prim->x1,
+            (s32*)&prim->x2, &sp78, &sp7C, &sp80);
+        if (temp_v0_4 < 0) {
+            RotAverage3(&sp40[0], &sp40[2], &sp40[1], (s32*)&prim->x0,
+                        (s32*)&prim->x2, (s32*)&prim->x1, &sp78, &sp80);
+        }
+        prim->type = 2;
+        if (sp7C < 0xF0) {
+            if (temp_v0_4 >= 0) {
+                prim->priority =
+                    g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 + 3;
+            } else {
+                prim->priority =
+                    g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 3;
+            }
+            if (arg1 != 0) {
+                if (arg1 & 0x80) {
+                    prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
+                        prim->b1 = arg1 & 0x7F;
+                } else if (arg1 < 0x11) {
+                    prim->r0 = prim->g0 = prim->b0 = (0x10 - arg1) * 8;
+                } else if (arg1 < 0x21) {
+                    prim->r1 = prim->g1 = prim->b1 = (0x20 - arg1) * 8;
+                } else {
+                    prim->blendMode = BLEND_VISIBLE;
+                    continue;
+                }
+            }
+            prim->blendMode = 0x35;
+        }
+    }
+}
 
 void func_80105408(void) {
     g_Player.D_80072EF4 = 0x1000;
