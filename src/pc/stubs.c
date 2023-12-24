@@ -119,6 +119,9 @@ s32 D_800987B4;
 u8 g_PadsRepeatTimer[BUTTON_COUNT * PAD_COUNT];
 s32 D_80136410;
 s32 D_80136414[];
+s32 D_8013B65C;
+s32 D_800BD228;
+s32 D_800BD240;
 
 // sound bss
 s16 g_SoundCommandRingBufferReadPos;
