@@ -324,18 +324,19 @@ force_extract:
 
 # Rewrites symbol list from a successful build
 force_symbols:
-	$(PYTHON) ./tools/symbols.py map build/us/dra.map > config/symbols.us.dra.txt --no-default
-	$(PYTHON) ./tools/symbols.py map build/us/stcen.map > config/symbols.us.stcen.txt --no-default
-	$(PYTHON) ./tools/symbols.py map build/us/stdre.map > config/symbols.us.stdre.txt --no-default
-	$(PYTHON) ./tools/symbols.py map build/us/stmad.map > config/symbols.us.stmad.txt --no-default
-	$(PYTHON) ./tools/symbols.py map build/us/stno3.map > config/symbols.us.stno3.txt --no-default
-	$(PYTHON) ./tools/symbols.py map build/us/stnp3.map > config/symbols.us.stnp3.txt --no-default
-	$(PYTHON) ./tools/symbols.py map build/us/stnz0.map > config/symbols.us.stnz0.txt --no-default
-	$(PYTHON) ./tools/symbols.py map build/us/stsel.map > config/symbols.us.stsel.txt --no-default
-	$(PYTHON) ./tools/symbols.py map build/us/stst0.map > config/symbols.us.stst0.txt --no-default
-	$(PYTHON) ./tools/symbols.py map build/us/stwrp.map > config/symbols.us.stwrp.txt --no-default
-	$(PYTHON) ./tools/symbols.py map build/us/strwrp.map > config/symbols.us.strwrp.txt --no-default
-	$(PYTHON) ./tools/symbols.py map build/us/tt_000.map > config/symbols.us.tt_000.txt --no-default
+	$(PYTHON) ./tools/symbols.py map build/us/dra.map --no-default > config/symbols.us.dra.txt
+	$(PYTHON) ./tools/symbols.py map build/us/ric.map --no-default > config/symbols.us.ric.txt
+	$(PYTHON) ./tools/symbols.py map build/us/stcen.map --no-default > config/symbols.us.stcen.txt
+	$(PYTHON) ./tools/symbols.py map build/us/stdre.map --no-default > config/symbols.us.stdre.txt
+	$(PYTHON) ./tools/symbols.py map build/us/stmad.map --no-default > config/symbols.us.stmad.txt
+	$(PYTHON) ./tools/symbols.py map build/us/stno3.map --no-default > config/symbols.us.stno3.txt
+	$(PYTHON) ./tools/symbols.py map build/us/stnp3.map --no-default > config/symbols.us.stnp3.txt
+	$(PYTHON) ./tools/symbols.py map build/us/stnz0.map --no-default > config/symbols.us.stnz0.txt
+	$(PYTHON) ./tools/symbols.py map build/us/stsel.map --no-default > config/symbols.us.stsel.txt
+	$(PYTHON) ./tools/symbols.py map build/us/stst0.map --no-default > config/symbols.us.stst0.txt
+	$(PYTHON) ./tools/symbols.py map build/us/stwrp.map --no-default > config/symbols.us.stwrp.txt
+	$(PYTHON) ./tools/symbols.py map build/us/strwrp.map --no-default > config/symbols.us.strwrp.txt
+	$(PYTHON) ./tools/symbols.py map build/us/tt_000.map --no-default > config/symbols.us.tt_000.txt
 
 context:
 	$(M2CTX) $(SOURCE)
