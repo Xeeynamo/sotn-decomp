@@ -20,7 +20,70 @@ void DebugInputWait(const char* msg) {
         DebugShowWaitInfo(msg);
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015E484);
+void func_8015E484(void) {
+    s32 i;
+    s32 collision = 0;
+    s16 startingPosY = PLAYER.posY.i.hi;
+
+    if (g_Player.pl_vram_flag & 1 || D_80175956 != 0 || g_Player.unk78 == 1) {
+        return;
+    }
+    if (PLAYER.posY.i.hi < 0x30) {
+        PLAYER.posY.i.hi -= 0x10;
+        while (true) {
+            for (i = 0; i < 4; ++i) {
+                g_api_CheckCollision(
+                    (s16)(PLAYER.posX.i.hi + D_801545F4[i].unk0),
+                    (s16)(PLAYER.posY.i.hi + D_801545F4[i].unk2),
+                    &g_Player.colliders[i], 0);
+            }
+
+            if ((g_Player.colliders[1].effects & 0x81) == 1 ||
+                (g_Player.colliders[2].effects & 0x81) == 1 ||
+                (g_Player.colliders[3].effects & 0x81) == 1) {
+                PLAYER.velocityY = 0;
+                PLAYER.posY.i.hi -= 1;
+                collision = 1;
+            } else if (collision == 0) {
+                PLAYER.posY.i.hi += 8;
+                if (PLAYER.posY.i.hi >= 0x30) {
+                    PLAYER.posY.i.hi = startingPosY;
+                    return;
+                }
+            } else {
+                return;
+            }
+        }
+
+    } else if (PLAYER.posY.i.hi >= 0xB1) {
+        PLAYER.posY.i.hi += 0x20;
+        while (true) {
+            for (i = 0; i < 4; ++i) {
+                g_api_CheckCollision(
+                    (s16)(PLAYER.posX.i.hi + D_801545E4[i].unk0),
+                    (s16)(PLAYER.posY.i.hi + D_801545E4[i].unk2),
+                    &g_Player.colliders2[i], 0);
+            }
+
+            if ((g_Player.colliders2[1].effects & 0x41) == 1 ||
+                (g_Player.colliders2[2].effects & 0x41) == 1 ||
+                (g_Player.colliders2[3].effects & 0x41) == 1) {
+                PLAYER.velocityY = 0;
+                PLAYER.posY.i.hi += 1;
+                collision = 1;
+            } else if (collision != 0) {
+                PLAYER.posY.i.hi -= 1;
+                return;
+            } else {
+                PLAYER.posY.i.hi -= 8;
+                if (PLAYER.posY.i.hi < 0xB1) {
+                    PLAYER.posY.i.hi = startingPosY;
+                    return;
+                }
+            }
+        }
+    }
+}
 
 void func_8015E7B4(Unkstruct_8010BF64* arg0) { // !FAKE:
     s32 temp = D_80154604[0].unk0;
