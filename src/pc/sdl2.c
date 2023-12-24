@@ -152,9 +152,19 @@ int MyDrawSync(int mode) {
     return 0;
 }
 
+int g_WndWidth = -1;
+int g_WndHeight = -1;
 DISPENV* MyPutDispEnv(DISPENV* env) {
-    SDL_SetWindowSize(
-        g_Window, env->disp.w * SCREEN_SCALE, env->disp.h * SCREEN_SCALE);
+    int w = env->disp.w * SCREEN_SCALE;
+    int h = env->disp.h * SCREEN_SCALE;
+    if (g_WndWidth == w && g_WndHeight == h) {
+        return env;
+    }
+
+    g_WndWidth = w;
+    g_WndHeight = h;
+    SDL_SetWindowSize(g_Window, w, h);
+    return env;
 }
 
 void SetSdlVertexG4(SDL_Vertex* v, POLY_G4* poly) {
