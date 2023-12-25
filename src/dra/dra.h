@@ -527,8 +527,6 @@ extern struct XaMusicConfig g_XaMusicConfigs[];
 extern s32 g_DebugEnabled;
 extern s32 D_800BD1C4;
 extern s16 g_CurrentXaSoundId;
-extern s32 D_800BD228;
-extern s32 D_800BD240;
 extern s32 g_VabAddrs[6];
 extern s32 D_800C1ECC[];
 extern PixPattern* D_800C52F8[];

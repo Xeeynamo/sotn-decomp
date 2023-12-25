@@ -113,9 +113,9 @@ void func_80133FCC(void) {
         break;
     case 1:
         g_CurrentXaSoundId = D_8013901C;
-        D_80139014 = *(&D_800BD240 + (((g_CurrentXaSoundId) << 0x10) >> 0xE));
+        D_80139014 = g_XaMusicConfigs[g_CurrentXaSoundId + 1].unk230;
         D_8013AEF4 = VSync(-1);
-        D_8013AE90 = *(&D_800BD228 + ((g_CurrentXaSoundId + 1) << 0x2));
+        D_8013AE90 = g_XaMusicConfigs[g_CurrentXaSoundId + 1].unk228;
         break;
     case 0:
         g_CurrentXaSoundId = D_8013901C;
