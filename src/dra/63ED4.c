@@ -62,7 +62,7 @@ void func_80103ED4(void) {
                 D_80137E4C += 2;
                 return;
             } else {
-                D_80137E4C ++;
+                D_80137E4C++;
                 return;
             }
         }
@@ -281,11 +281,9 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
             continue;
         }
         if (temp_v0_5 >= 0) {
-            prim->priority =
-                g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 + 4;
+            prim->priority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 + 4;
         } else {
-            prim->priority =
-                g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 4;
+            prim->priority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 4;
         }
         prim->blendMode = 4;
         if (((D_80137E4C == 6) || (D_80137EE0 != 0)) &&
@@ -480,7 +478,7 @@ void func_80105428(void) {
             // are fully restored (regardless of whether they actually save)
             g_Status.hp = g_Status.hpMax;
             g_Status.mp = g_Status.mpMax;
-            D_801379BC ++;
+            D_801379BC++;
         }
         break;
     case 0x1:
@@ -489,9 +487,10 @@ void func_80105428(void) {
             D_80137EE4 += 4;
         }
         func_80104790(0, D_80137EE4, 0);
-        if ((D_801379B8 < (((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) >> 1) + 8)) &&
+        if ((D_801379B8 <
+             (((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) >> 1) + 8)) &&
             (g_GameTimer != 0)) {
-            D_801379B8 ++;
+            D_801379B8++;
         }
         if (PLAYER.posX.i.hi < 0x7F) {
             g_Player.D_80072EF4 = 0x2000;
@@ -499,7 +498,8 @@ void func_80105428(void) {
         } else if (PLAYER.posX.i.hi > 0x80) {
             g_Player.D_80072EF4 = 0x8000;
             g_Player.D_80072EFC = 1;
-        } else if (D_801379B8 == (((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) >> 1) + 8)) {
+        } else if (D_801379B8 ==
+                   (((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) >> 1) + 8)) {
             func_80105408();
             D_80137EE8 = 8;
             if (D_80137EE0 == 0) {
