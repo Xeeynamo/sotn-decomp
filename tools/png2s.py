@@ -110,7 +110,7 @@ def decode_to_png(bmp_name, png_name, x, y, w, h, bpp, stride, bmp_offset, pal):
                 lo = src[x + i] & 15
                 hi = src[x + i] >> 4
                 row.extend([lo, hi])
-            src = src[stride :]
+            src = src[stride:]
             pixels.append(row)
     else:
         src = bmp_data
@@ -129,9 +129,9 @@ def decode_to_png(bmp_name, png_name, x, y, w, h, bpp, stride, bmp_offset, pal):
             r = (color & 31) << 3
             g = ((color >> 5) & 31) << 3
             b = ((color >> 10) & 31) << 3
-            r |= r >> 5 # enrich the colors by
-            g |= g >> 5 # filling the lowest three bits
-            b |= b >> 5 # with the upper bits
+            r |= r >> 5  # enrich the colors by
+            g |= g >> 5  # filling the lowest three bits
+            b |= b >> 5  # with the upper bits
             a = 0 if color < 0x8000 and alpha == True else 255
             palette.append((r, g, b, a))
     else:
@@ -149,7 +149,7 @@ def decode_to_png(bmp_name, png_name, x, y, w, h, bpp, stride, bmp_offset, pal):
 def decode_batch(input, source_dir, output):
     with open(input, "r") as f:
         config = json.load(f)
-    
+
     source = os.path.join(source_dir, config["source"])
     clut = get_num(config["clut"])
     stride = get_num(config["stride"])
@@ -180,7 +180,7 @@ def decode_batch(input, source_dir, output):
             item["bpp"],
             stride,
             get_num(item["offset"]),
-            pal
+            pal,
         )
 
         if "palette" in item and "brute" in item["palette"]:
@@ -195,7 +195,7 @@ def decode_batch(input, source_dir, output):
                     item["bpp"],
                     stride,
                     get_num(item["offset"]),
-                    (source, clut + i * 0x20, False)
+                    (source, clut + i * 0x20, False),
                 )
 
         if err:
@@ -284,10 +284,6 @@ if __name__ == "__main__":
             args.palette,
         )
     elif args.command == "bdecode":
-        err = decode_batch(
-            args.input,
-            args.source,
-            args.output
-        )
+        err = decode_batch(args.input, args.source, args.output)
     if err:
         raise Exception(err)
