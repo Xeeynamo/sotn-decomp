@@ -2,6 +2,7 @@
 #include <log.h>
 #include <game.h>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include "pc.h"
 
 extern bool g_IsQuitRequested;
@@ -9,10 +10,18 @@ SDL_Window* g_Window = NULL;
 SDL_Renderer* g_Renderer = NULL;
 SDL_AudioSpec g_SdlAudioSpecs = {0};
 SDL_AudioDeviceID g_SdlAudioDevice = {0};
+SDL_Surface* g_SdlVramSurfaces[0x20];
+SDL_Texture* g_SdlVramTextures[0x20];
+unsigned int g_Tpage = 0;
 
 bool InitPlatform() {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
         ERRORF("SDL_Init: %s", SDL_GetError());
+        return false;
+    }
+
+    if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
+        ERRORF("IMG_Init: %s", SDL_GetError());
         return false;
     }
 
@@ -32,10 +41,21 @@ bool InitPlatform() {
         return false;
     }
 
+    memset(g_SdlVramSurfaces, 0, sizeof(g_SdlVramSurfaces));
+    memset(g_SdlVramTextures, 0, sizeof(g_SdlVramTextures));
+    g_Tpage = 0;
+
     return true;
 }
 
 void ResetPlatform() {
+    for (int i = 0; i < sizeof(g_SdlVramTextures); i++) {
+        SDL_DestroyTexture(g_SdlVramTextures[i]);
+    }
+    for (int i = 0; i < sizeof(g_SdlVramSurfaces); i++) {
+        SDL_FreeSurface(g_SdlVramSurfaces[i]);
+    }
+
     if (g_Renderer) {
         SDL_DestroyRenderer(g_Renderer);
         g_Renderer = NULL;
@@ -46,7 +66,50 @@ void ResetPlatform() {
         g_Window = NULL;
     }
 
+    IMG_Quit();
     SDL_Quit();
+}
+
+bool LoadPngToTexture(const char* pngPath, unsigned int textureIndex) {
+    INFOF("loading '%s' into %d", pngPath, textureIndex);
+    if (textureIndex >= LEN(g_SdlVramTextures)) {
+        ERRORF("textureIndex %d out of bound for '%s'", textureIndex, pngPath);
+        return false;
+    }
+
+    g_SdlVramSurfaces[textureIndex] = IMG_Load(pngPath);
+    if (!g_SdlVramSurfaces[textureIndex]) {
+        ERRORF("IMG_Load error: %s", SDL_GetError());
+        return false;
+    }
+
+    g_SdlVramTextures[textureIndex] = SDL_CreateTextureFromSurface(
+        g_Renderer, g_SdlVramSurfaces[textureIndex]);
+    return true;
+}
+
+bool InitializeTexture(unsigned int textureIndex) {
+    if (textureIndex >= LEN(g_SdlVramTextures)) {
+        ERRORF("textureIndex %d out of bound", textureIndex);
+        return false;
+    }
+
+    if (g_SdlVramSurfaces[textureIndex] || g_SdlVramTextures[textureIndex]) {
+        ERRORF("textureIndex %d previously initialized, now replacing it",
+               textureIndex);
+        if (g_SdlVramTextures[textureIndex]) {
+            SDL_DestroyTexture(g_SdlVramTextures[textureIndex]);
+        }
+        if (g_SdlVramSurfaces[textureIndex]) {
+            SDL_FreeSurface(g_SdlVramSurfaces[textureIndex]);
+        }
+    }
+
+    switch (textureIndex) {
+    case 0x1E:
+        return LoadPngToTexture("assets/game/font.png", textureIndex);
+    }
+    return false;
 }
 
 int MyResetGraph(int) { return 0; }
@@ -167,6 +230,60 @@ DISPENV* MyPutDispEnv(DISPENV* env) {
     return env;
 }
 
+void MySetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw) {
+    if (tpage >= LEN(g_SdlVramTextures)) {
+        DEBUGF("tpage %d, how to handle?", tpage);
+        return false;
+    }
+    if (!g_SdlVramTextures[tpage] && !InitializeTexture(tpage)) {
+        return;
+    }
+
+    g_Tpage = tpage;
+}
+
+#define PSX_TEX_U(x) ((float)(x) / 128.0f)
+#define PSX_TEX_V(x) ((float)(x) / 128.0f)
+void SetSdlVertexSprite(SDL_Vertex* v, SPRT* sprt) {
+    sprt->r0 = 255;
+    sprt->g0 = 255;
+    sprt->b0 = 255;
+    v[0].position.x = sprt->x0;
+    v[0].position.y = sprt->y0;
+    v[0].tex_coord.x = PSX_TEX_U(sprt->u0);
+    v[0].tex_coord.y = PSX_TEX_V(sprt->v0);
+    v[0].color.r = sprt->r0;
+    v[0].color.g = sprt->g0;
+    v[0].color.b = sprt->b0;
+    v[0].color.a = 0xFF;
+    v[1].position.x = sprt->x0 + sprt->w;
+    v[1].position.y = sprt->y0;
+    v[1].tex_coord.x = PSX_TEX_U(sprt->u0 + sprt->w);
+    v[1].tex_coord.y = PSX_TEX_V(sprt->v0);
+    v[1].color.r = sprt->r0;
+    v[1].color.g = sprt->g0;
+    v[1].color.b = sprt->b0;
+    v[1].color.a = 0xFF;
+    v[2].position.x = sprt->x0;
+    v[2].position.y = sprt->y0 + sprt->h;
+    v[2].tex_coord.x = PSX_TEX_U(sprt->u0);
+    v[2].tex_coord.y = PSX_TEX_V(sprt->v0 + sprt->h);
+    v[2].color.r = sprt->r0;
+    v[2].color.g = sprt->g0;
+    v[2].color.b = sprt->b0;
+    v[2].color.a = 0xFF;
+    v[4].position.x = sprt->x0 + sprt->w;
+    v[4].position.y = sprt->y0 + sprt->h;
+    v[4].tex_coord.x = PSX_TEX_U(sprt->u0 + sprt->w);
+    v[4].tex_coord.y = PSX_TEX_V(sprt->v0 + sprt->h);
+    v[4].color.r = sprt->r0;
+    v[4].color.g = sprt->g0;
+    v[4].color.b = sprt->b0;
+    v[4].color.a = 0xFF;
+    v[3] = v[1];
+    v[5] = v[2];
+}
+
 void SetSdlVertexG4(SDL_Vertex* v, POLY_G4* poly) {
     v[0].position.x = poly->x0;
     v[0].position.y = poly->y0;
@@ -195,28 +312,72 @@ void SetSdlVertexG4(SDL_Vertex* v, POLY_G4* poly) {
     v[3] = v[1];
     v[5] = v[2];
 }
+void SetSdlVertexGT4(SDL_Vertex* v, POLY_GT4* poly) {
+    v[0].position.x = poly->x0;
+    v[0].position.y = poly->y0;
+    v[0].tex_coord.x = PSX_TEX_U(poly->u0);
+    v[0].tex_coord.y = PSX_TEX_V(poly->v0);
+    v[0].color.r = poly->r0;
+    v[0].color.g = poly->g0;
+    v[0].color.b = poly->b0;
+    v[0].color.a = 0xFF;
+    v[1].position.x = poly->x1;
+    v[1].position.y = poly->y1;
+    v[1].tex_coord.x = PSX_TEX_U(poly->u1);
+    v[1].tex_coord.y = PSX_TEX_V(poly->v1);
+    v[1].color.r = poly->r1;
+    v[1].color.g = poly->g1;
+    v[1].color.b = poly->b1;
+    v[1].color.a = 0xFF;
+    v[2].position.x = poly->x2;
+    v[2].position.y = poly->y2;
+    v[2].tex_coord.x = PSX_TEX_U(poly->u2);
+    v[2].tex_coord.y = PSX_TEX_V(poly->v2);
+    v[2].color.r = poly->r2;
+    v[2].color.g = poly->g2;
+    v[2].color.b = poly->b2;
+    v[2].color.a = 0xFF;
+    v[4].position.x = poly->x3;
+    v[4].position.y = poly->y3;
+    v[4].tex_coord.x = PSX_TEX_U(poly->u3);
+    v[4].tex_coord.y = PSX_TEX_V(poly->v3);
+    v[4].color.r = poly->r3;
+    v[4].color.g = poly->g3;
+    v[4].color.b = poly->b3;
+    v[4].color.a = 0xFF;
+    v[3] = v[1];
+    v[5] = v[2];
+}
 
 void SetSdlVertexPrim(SDL_Vertex* v, Primitive* prim) {
     v[0].position.x = prim->x0;
     v[0].position.y = prim->y0;
+    v[0].tex_coord.x = PSX_TEX_U(prim->u0);
+    v[0].tex_coord.y = PSX_TEX_V(prim->v0);
     v[0].color.r = prim->r0;
     v[0].color.g = prim->g0;
     v[0].color.b = prim->b0;
     v[0].color.a = 0xFF;
     v[1].position.x = prim->x1;
     v[1].position.y = prim->y1;
+    v[1].tex_coord.x = PSX_TEX_U(prim->u1);
+    v[1].tex_coord.y = PSX_TEX_V(prim->v1);
     v[1].color.r = prim->r1;
     v[1].color.g = prim->g1;
     v[1].color.b = prim->b1;
     v[1].color.a = 0xFF;
     v[2].position.x = prim->x2;
     v[2].position.y = prim->y2;
+    v[2].tex_coord.x = PSX_TEX_U(prim->u2);
+    v[2].tex_coord.y = PSX_TEX_V(prim->v2);
     v[2].color.r = prim->r2;
     v[2].color.g = prim->g2;
     v[2].color.b = prim->b2;
     v[2].color.a = 0xFF;
     v[4].position.x = prim->x3;
     v[4].position.y = prim->y3;
+    v[4].tex_coord.x = PSX_TEX_U(prim->u3);
+    v[4].tex_coord.y = PSX_TEX_V(prim->v3);
     v[4].color.r = prim->r3;
     v[4].color.g = prim->g3;
     v[4].color.b = prim->b3;
@@ -236,9 +397,13 @@ void MyRenderPrimitives(void) {
 
         switch (prim->type) {
         case PRIM_G4:
-        case PRIM_GT4:
             SetSdlVertexPrim(v, prim);
             SDL_RenderGeometry(g_Renderer, NULL, v, 6, NULL, 0);
+            break;
+        case PRIM_GT4:
+            SetSdlVertexPrim(v, prim);
+            SDL_RenderGeometry(
+                g_Renderer, g_SdlVramTextures[g_Tpage], v, 6, NULL, 0);
             break;
         case PRIM_LINE_G2:
             SDL_SetRenderDrawColor(
@@ -251,6 +416,11 @@ void MyRenderPrimitives(void) {
     for (int i = 0; i < g_GpuUsage.g4; i++) {
         SetSdlVertexG4(v, &g_CurrentBuffer->polyG4[i]);
         SDL_RenderGeometry(g_Renderer, NULL, v, 6, NULL, 0);
+    }
+    for (int i = 0; i < g_GpuUsage.sp; i++) {
+        SetSdlVertexSprite(v, &g_CurrentBuffer->sprite[i]);
+        SDL_RenderGeometry(
+            g_Renderer, g_SdlVramTextures[g_Tpage], v, 6, NULL, 0);
     }
     for (int i = 0; i < g_GpuUsage.line; i++) {
         LINE_G2* poly = &g_CurrentBuffer->lineG2[i];
