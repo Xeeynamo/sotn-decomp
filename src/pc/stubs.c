@@ -322,65 +322,21 @@ s32 D_801397FC;
 JosephsCloak g_JosephsCloak;
 u8 g_Pix[4][128 * 128 / 2];
 const char dummy[] = "DUMMY\xFF";
-const char* g_MenuStr[] = {"BLAHBLAH\xFF", "DUMMY\xFF"};
-const char* g_MenuStr_7_[] = {"GOLD\xFF"};
-const char* g_MenuStr_22_[] = {
-    "X\xFF", "X\xFF", "X\xFF", "X\xFF", "X\xFF", "X\xFF", "X\xFF", "X\xFF"};
+const char* g_MenuStr[] = {
+    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
+    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
+    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
+    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
+    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
+    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
+    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
+    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
+    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
+    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
+};
 const char* D_800A83AC[] = {
     "XX\xFF", "XX\xFF", "XX\xFF", "XX\xFF", "XX\xFF", "XX\xFF", "XX\xFF"};
-const char* g_MenuStr_1_[] = {dummy, dummy, dummy, dummy};
-const char* g_MenuStr_2_ = "XXX\xFF";
-const char* g_MenuStr_3_ = "XXX\xFF";
-const char* g_MenuStr_4_ = "XXX\xFF";
-const char* g_MenuStr_5_ = "EXP\xFF";
-const char* g_MenuStr_6_ = "NEXT\xFF";
-const char* g_MenuStr_8_ = "LEVEL\xFF";
-const char* g_MenuStr_9_ = "TIME\xFF";
-const char* g_MenuStr_10_ = "ROOMS\xFF";
-const char* g_MenuStr_11_ = "KILLS\xFF";
-const char* g_MenuStr_12_ = "HP\xFF";
-const char* g_MenuStr_13_ = "MP\xFF";
-const char* g_MenuStr_14_ = dummy;
-const char* g_MenuStr_15_ = dummy;
-const char* g_MenuStr_16_ = dummy;
-const char* g_MenuStr_17_ = dummy;
-const char* g_MenuStr_18_ = dummy;
-const char* g_MenuStr_20_ = dummy;
-const char* g_MenuStr_21_ = dummy;
-const char* g_MenuStr_23_ = dummy;
-const char* g_MenuStr_24_ = dummy;
-const char* g_MenuStr_25_ = dummy;
-const char* g_MenuStr_26_ = dummy;
-const char* g_MenuStr_27_ = dummy;
-const char* g_MenuStr_28_ = dummy;
-const char* g_MenuStr_30_ = dummy;
-const char* g_MenuStr_31_ = dummy;
-const char* g_MenuStr_32_ = dummy;
-const char* g_MenuStr_33_ = dummy;
-const char* g_MenuStr_34_ = dummy;
-const char* g_MenuStr_35_ = dummy;
-const char* g_MenuStr_36_ = dummy;
-const char* g_MenuStr_42_ = dummy;
-const char* g_MenuStr_99_[] = {
-    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
-};
 const char* g_WingSmashComboStr = "dummy";
-const char* g_MenuStr_92_ = "EQUIP\xFF";
-const char* g_MenuStr_93_ = "SPELLS\xFF";
-const char* g_MenuStr_94_ = "RELICS\xFF";
-const char* g_MenuStr_95_ = "SYSTEM\xFF";
-const char* g_MenuStr_96_ = "FAMILIARS\xFF";
-const char* g_MenuStr_97_ = "FAMILIAR\xFF";
-const char* g_MenuStr_98_ = "SPECIAL\xFF";
-const char* g_MenuStr_41_ = "DOTSDOTS\xFF";
-const char* g_MenuStr_53_[] = {
-    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
-    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
-    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
-    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
-    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
-    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
-};
 ImgSrc* g_imgUnk8013C200_impl = {
     0,
     0,
