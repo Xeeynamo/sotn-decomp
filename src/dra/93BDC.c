@@ -94,7 +94,36 @@ void CdSoundCommand14(void) {
 
 const u32 padding_CdSoundCommand14 = 0;
 
-INCLUDE_ASM("dra/nonmatchings/93BDC", func_80133FCC);
+void func_80133FCC(void) {
+    if (D_8013901C == 0)
+        return;
+
+    if (D_801390A0 != 0)
+        return;
+
+    D_8013B65C = VSync(-1) - D_8013AEF4;
+
+    if (D_8013AE90 >= D_8013B65C) {
+        return;
+    }
+
+    switch (D_80139014) {
+    case 2:
+        AddCdSoundCommand(2);
+        break;
+    case 1:
+        g_CurrentXaSoundId = D_8013901C;
+        D_80139014 = g_XaMusicConfigs[g_CurrentXaSoundId + 1].unk230;
+        D_8013AEF4 = VSync(-1);
+        D_8013AE90 = g_XaMusicConfigs[g_CurrentXaSoundId + 1].unk228;
+        break;
+    case 0:
+        g_CurrentXaSoundId = D_8013901C;
+        SetReverbDepth(0x7F);
+        AddCdSoundCommand(6);
+        break;
+    }
+}
 
 void SetReleaseRate1(void) {
     D_80138FB4->mask = SPU_VOICE_ADSR_RR;
