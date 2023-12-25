@@ -422,9 +422,9 @@ void func_80105408(void) {
 
 void func_80105428(void) {
 #if defined(VERSION_US)
-    const s32 PAD_MASK = 0x50;
+    const s32 PAD_MASK = PAD_CROSS | PAD_TRIANGLE;
 #elif defined(VERSION_HD)
-    const s32 PAD_MASK = 0x8E0;
+    const s32 PAD_MASK = PAD_START | PAD_SQUARE | PAD_CROSS | PAD_CIRCLE;
 #endif
     s32 temp_s0;
     s32 temp_result;
