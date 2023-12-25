@@ -572,6 +572,11 @@ void DrawRichterHudSubweapon(void) { NOT_IMPLEMENTED; }
 
 void func_8010A234(s32 arg0) { NOT_IMPLEMENTED; }
 
+s32 func_8010E334(s32 xStart, s32 xEnd) {
+    NOT_IMPLEMENTED;
+    return 0;
+}
+
 s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
     NOT_IMPLEMENTED;
     return 0;
