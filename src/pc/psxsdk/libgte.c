@@ -4,6 +4,15 @@
 
 void InitGeom() { NOT_IMPLEMENTED; }
 
+void SetGeomOffset(long ofx, long ofy) {
+    NOT_IMPLEMENTED;
+    return 0;
+}
+void SetGeomScreen(long h) {
+    NOT_IMPLEMENTED;
+    return 0;
+}
+
 int rsin(int x) {
     NOT_IMPLEMENTED;
     return 0;
