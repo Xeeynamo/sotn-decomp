@@ -684,23 +684,18 @@ void func_80105428(void) {
             func_801027C4(5);
             D_801379BC = 0x300;
 
-        } else {
+        } else if (D_80137E4C >= 6 && HandleSaveMenu(0) != 0) {
+            if (D_80137E4C == 9) {
+                func_80102EB8();
+                D_801379BC = 0x200;
 
-            if (D_80137E4C >= 6) {
-                if (HandleSaveMenu(0) != 0) {
-                    if (D_80137E4C == 9) {
-                        func_80102EB8();
-                        D_801379BC = 0x200;
-
-                    } else {
-                        if (D_80137E4C != temp_s0) {
-                            D_80097924 = -1;
-                            D_801379BC = 0x20;
-                            D_80137EEC = 0x60;
-                        } else {
-                            D_801379BC++;
-                        }
-                    }
+            } else {
+                if (D_80137E4C != temp_s0) {
+                    D_80097924 = -1;
+                    D_801379BC = 0x20;
+                    D_80137EEC = 0x60;
+                } else {
+                    D_801379BC++;
                 }
             }
         }
