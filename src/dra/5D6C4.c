@@ -2,6 +2,57 @@
 #include "objects.h"
 #include "sfx.h"
 
+s32 g_LevelHPIncrease[] = {1, 3, 6, 10, 20, 30, 40, 50, 100, 200};
+
+#define HUD_NUM_SPRITES 14
+u8 g_HudSpriteX[HUD_NUM_SPRITES] = {
+    90, 90, 90, 34, 2, 31, 3, 9, 15, 21, 59, 63, 67, 71,
+};
+u8 g_HudSpriteY[HUD_NUM_SPRITES] = {
+    25, 25, 25, 22, 19, 26, 33, 33, 33, 33, 34, 34, 34, 34,
+};
+u8 g_HudSpriteU[HUD_NUM_SPRITES] = {
+    0x00, 0x10, 0x68, 0x20, 0x00, 0x70, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+};
+u8 g_HudSpriteV[HUD_NUM_SPRITES] = {
+    0x20, 0x20, 0x00, 0x00, 0x00, 0x00, 0x20,
+    0x20, 0x20, 0x20, 0x18, 0x18, 0x18, 0x18,
+};
+u8 g_HudSpriteW[HUD_NUM_SPRITES] = {
+    16, 16, 8, 72, 32, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+};
+u8 g_HudSpriteH[HUD_NUM_SPRITES] = {
+    16, 16, 8, 24, 32, 56, 16, 16, 16, 16, 8, 8, 8, 8,
+};
+u16 g_HudSpriteClut[HUD_NUM_SPRITES] = {
+    0x0173, 0x0175, 0x0170, 0x0172, 0x0171, 0x0174, 0x0171,
+    0x0171, 0x0171, 0x0171, 0x0196, 0x0196, 0x0196, 0x0196,
+};
+u16 g_HudSpriteBlend[HUD_NUM_SPRITES] = {
+    BLEND_VISIBLE, BLEND_VISIBLE, BLEND_VISIBLE, 0x2000, 0x2000, 0x2000, 0x2000,
+    0x2000,        0x2000,        0x2000,        0x2000, 0x2000, 0x2000, 0x2000,
+};
+s16 g_HudSubwpnSpriteClut[HUD_NUM_SPRITES] = {
+    0x0175, 0x0176, 0x0175, 0x0176, 0x0175, 0x0176, 0x0175,
+    0x0176, 0x0176, 0x0175, 0x0176, 0x0175, 0x0176, 0x0175,
+};
+u8 g_HudSubwpnSpriteU[HUD_NUM_SPRITES] = {
+    0x10, 0x10, 0x00, 0x00, 0x10, 0x10, 0x20,
+    0x20, 0x20, 0x20, 0x10, 0x10, 0x00, 0x00};
+u8 g_HudSubwpnSpriteV[HUD_NUM_SPRITES] = {
+    0x20, 0x20, 0x30, 0x30, 0x30, 0x30, 0x30,
+    0x30, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40};
+
+#define CAPE_PAL_TERMINATOR -1
+s32 g_CapePaletteDefs[] = {
+    ITEM_NO_CAPE,        0x409, ITEM_CLOTH_CAPE,     0x412,
+    ITEM_REVERSE_CLOAK,  0x40B, ITEM_ELVEN_CLOAK,    0x40E,
+    ITEM_CRYSTAL_CLOAK,  0x410, ITEM_ROYAL_CLOAK,    0x40D,
+    ITEM_BLOOD_CLOAK,    0x40F, ITEM_JOSEPHS_CLOAK,  0x411,
+    ITEM_TWILIGHT_CLOAK, 0x40A, CAPE_PAL_TERMINATOR, 0x409,
+};
+
 s32 func_800FD6C4(s32 equipTypeFilter) {
     s32 itemCount;
     s32 equipType;
@@ -24,7 +75,7 @@ s32 func_800FD6C4(s32 equipTypeFilter) {
         break;
     }
 
-    for (itemCount = 0, i = 0; i < 90; i++) {
+    for (itemCount = 0, i = 0; i < NUM_BODY_ITEMS; i++) {
         if (g_AccessoryDefs[i].equipType == equipType) {
             itemCount++;
         }
@@ -222,8 +273,6 @@ void func_800FDE00(void) {
     D_80137964 = 0;
     D_80137968 = 0;
 }
-
-s32 g_LevelHPIncrease[] = {1, 3, 6, 10, 20, 30, 40, 50, 100, 200};
 
 u32 CheckAndDoLevelUp(void) {
     s32 i;
@@ -910,40 +959,39 @@ s32 func_800FF494(EnemyDef* arg0) {
     }
 }
 
-void func_800FF60C(void) {
-    s32 var_a0_2;
+void UpdateCapePalette(void) {
+    s32 clut;
     s32 i;
 
     func_800EA538(6);
 
     i = 0;
     while (1) {
-        if (g_Status.equipment[CAPE_SLOT] == D_800A2FBC[i]) {
+        if (g_Status.equipment[CAPE_SLOT] == g_CapePaletteDefs[i]) {
             break;
         }
 
-        if (D_800A2FBC[i] == -1) {
+        if (g_CapePaletteDefs[i] == CAPE_PAL_TERMINATOR) {
             break;
         }
         i += 2;
     }
 
-    var_a0_2 = D_800A2FC0[i];
+    clut = g_CapePaletteDefs[i + 1];
     if (g_Status.equipment[CAPE_SLOT] == ITEM_REVERSE_CLOAK &&
         g_Settings.isCloakLiningReversed) {
-        var_a0_2++;
+        clut++;
     }
-    func_800EA5E4(var_a0_2);
+
+    func_800EA5E4(clut);
     if (g_Status.equipment[CAPE_SLOT] == ITEM_TWILIGHT_CLOAK) {
         func_800EA5E4(0x415);
     }
 }
 
-void func_800FF60C();
-
-void func_800FF6C4(void) {
+void RefreshCapePalette(void) {
     if (g_StageId != STAGE_ST0 && g_PlayableCharacter == PLAYER_ALUCARD) {
-        func_800FF60C();
+        UpdateCapePalette();
     }
 }
 
@@ -960,13 +1008,9 @@ void func_800FF708(s32 equipType, s32 arg1) {
     g_Status.equipment[arg1 + 2] = rnd;
 }
 
-extern const char* g_CheatCodes[2];
-// I cannot use the following declaration because it forces to import both data
-// and rodata, leading to a linker error as we are not yet importing data in DRA
-// const char g_CheatCodes[2][12] = {
-// {'x', '-', 'x', '!', 'v', '\'', '\'', 'q', '\0', '\0', '\0', '\0'},
-// {'a', 'x', 'e', 'a', 'r', 'm', 'o', 'r', '\0', '\n', '\r', '\n'},
-// };
+const char g_CheatLuckCode[] = {"x-x!v''q"};
+const char g_CheatAxearmorCode[] = {"axearmor"};
+const char* g_CheatCodes[] = {g_CheatLuckCode, g_CheatAxearmorCode};
 void InitStatsAndGear(bool isDeathTakingItems) {
     s32 prologueBonusState;
     s32 dracDefeatTime;
@@ -976,7 +1020,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
 
     if (D_8003C730 != 0) {
         func_800F53A4();
-        func_800FF60C();
+        UpdateCapePalette();
         return;
     }
 
@@ -1011,7 +1055,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
 
         if (g_Status.equipment[CAPE_SLOT] == ITEM_TWILIGHT_CLOAK) {
             g_Status.equipment[CAPE_SLOT] = ITEM_NO_CAPE;
-            func_800FF60C();
+            UpdateCapePalette();
         } else if (g_Status.equipBodyCount[ITEM_TWILIGHT_CLOAK] != 0) {
             g_Status.equipBodyCount[ITEM_TWILIGHT_CLOAK]--;
         }
@@ -1439,7 +1483,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
     func_800F53A4();
 }
 
-void DrawHudRichter(void) {
+void DrawRichterHud(void) {
     Primitive* prim;
 
     D_80137978 = 400;
@@ -1453,7 +1497,7 @@ void DrawHudRichter(void) {
     D_80137990.unk0 = 0;
     D_8013798C = 40000 / D_80137978;
     D_80137988 = 40000 / D_8013797C;
-    D_80137970 = func_800EDD9C(4, 9);
+    D_80137970 = func_800EDD9C(PRIM_GT4, 9);
     prim = &g_PrimBuf[D_80137970];
 
     SetTexturedPrimRect(prim, 2, 22, 32, 96, 0, 0);
@@ -1541,7 +1585,17 @@ void DrawHudRichter(void) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/5D6C4", func_80100B50);
+s32 D_800A3014[] = {
+    0x9,   0x00F, 0x018, 0x010, 0x0A8, 0x0C0, 0x01E, 0x17F, 0x009, 0x007, 0x018,
+    0x018, 0x080, 0x0C0, 0x01E, 0x17F, 0x00C, 0x00D, 0x010, 0x010, 0x028, 0x070,
+    0x01B, 0x102, 0x008, 0x00C, 0x018, 0x018, 0x038, 0x068, 0x01B, 0x102, 0x00C,
+    0x007, 0x010, 0x018, 0x098, 0x0D8, 0x01E, 0x17F, 0x00C, 0x007, 0x010, 0x018,
+    0x098, 0x0C0, 0x01E, 0x17F, 0x00F, 0x013, 0x008, 0x008, 0x0C0, 0x0D0, 0x01E,
+    0x163, 0x008, 0x00D, 0x018, 0x010, 0x0A8, 0x0D0, 0x01E, 0x17F, 0x008, 0x006,
+    0x018, 0x018, 0x080, 0x0D8, 0x01E, 0x17F,
+};
+
+INCLUDE_ASM("dra/nonmatchings/5D6C4", DrawRichterHudSubweapon);
 
 extern Unkstruct_80137990 D_80137990;
 
@@ -1561,57 +1615,55 @@ bool func_8010183C(s32 arg0) {
     }
     return true;
 }
-void DrawHudRichter(void);
 
-void func_8010189C(void) {
-    Primitive* poly;
+void DrawHud(void) {
+    Primitive* prim;
     s32 i;
-    u16* new_var;
 
     D_8013B5E8 = 0;
     g_HealingMailTimer[0] = 0;
     g_DisplayHP[0] = g_Status.hp;
 
     if ((g_StageId == STAGE_ST0) || (g_PlayableCharacter != PLAYER_ALUCARD)) {
-        DrawHudRichter();
+        DrawRichterHud();
         return;
     }
 
-    D_80137970 = func_800EDD9C(4, 14);
-    poly = &g_PrimBuf[D_80137970];
+    D_80137970 = func_800EDD9C(PRIM_GT4, HUD_NUM_SPRITES);
+    prim = &g_PrimBuf[D_80137970];
+    if (!prim) {
+        return;
+    }
 
-    if (poly != NULL) {
-        for (i = 0; poly != NULL; i++) {
-            SetTexturedPrimRect(
-                poly, D_800A2EE8[i], D_800A2EF8[i], D_800A2F28[i],
-                D_800A2F38[i], D_800A2F08[i], D_800A2F18[i]);
-            poly->tpage = 0x1F;
-            new_var = &D_800A2F48[i];
-            poly->clut = *new_var;
-            poly->priority = 0x1F0;
-            poly->blendMode = D_800A2F64[i];
+    for (i = 0; prim != NULL; i++) {
+        SetTexturedPrimRect(
+            prim, g_HudSpriteX[i], g_HudSpriteY[i], g_HudSpriteW[i],
+            g_HudSpriteH[i], g_HudSpriteU[i], g_HudSpriteV[i]);
+        prim->tpage = 0x1F;
+        prim->clut = g_HudSpriteClut[i];
+        prim->priority = 0x1F0;
+        prim->blendMode = g_HudSpriteBlend[i];
 
-            if (i == 5) {
-                SetPrimRect(
-                    poly, D_800A2EED, D_800A2EFD, D_800A2F3D, D_800A2F2D);
-                poly->y0 = poly->y2;
-                poly->x1 = poly->x0;
-                poly->x2 = poly->x3;
-                poly->y3 = poly->y1;
-            }
-
-            if (i == 1) {
-                poly->p1 = 0;
-                poly->p2 = rand() + 8;
-                poly->p3 = (7 & rand()) + 1;
-            }
-
-            poly = poly->next;
+        if (i == 5) {
+            SetPrimRect(prim, g_HudSpriteX[i], g_HudSpriteY[i], g_HudSpriteH[i],
+                        g_HudSpriteW[i]);
+            prim->y0 = prim->y2;
+            prim->x1 = prim->x0;
+            prim->x2 = prim->x3;
+            prim->y3 = prim->y1;
         }
+
+        if (i == 1) {
+            prim->p1 = 0;
+            prim->p2 = rand() + 8;
+            prim->p3 = (7 & rand()) + 1;
+        }
+
+        prim = prim->next;
     }
 }
 
-void DrawHudAlucard() {
+void DrawHudSubweapon() {
     SubweaponDef subwpn;
     RECT rect;
     Primitive* prim;
@@ -1623,8 +1675,8 @@ void DrawHudAlucard() {
     s32 digitSpacing;
     u16 clut;
 
-    if (g_StageId == STAGE_ST0 || g_PlayableCharacter != 0) {
-        func_80100B50();
+    if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
+        DrawRichterHudSubweapon();
         return;
     }
     func_800EB4F8(D_800C52F8[g_Status.subWeapon], 0, 0x3C0, 0x120);
@@ -1648,15 +1700,15 @@ void DrawHudAlucard() {
                 }
             } else {
                 prim->p2 = 1;
-                prim->clut = D_800A2F7E[prim->p1];
-                prim->u0 = D_800A2F9B[prim->p1];
-                prim->v0 = D_800A2F9B[prim->p1 + 16];
-                prim->u1 = D_800A2F9B[prim->p1] + 16;
-                prim->v1 = D_800A2F9B[prim->p1 + 16];
-                prim->u2 = D_800A2F9B[prim->p1];
-                prim->v2 = D_800A2F9B[prim->p1 + 16] + 16;
-                prim->u3 = D_800A2F9B[prim->p1] + 16;
-                prim->v3 = D_800A2F9B[prim->p1 + 16] + 16;
+                prim->clut = g_HudSubwpnSpriteClut[prim->p1 - 1];
+                prim->u0 = g_HudSubwpnSpriteU[prim->p1 - 1];
+                prim->v0 = g_HudSubwpnSpriteV[prim->p1 - 1];
+                prim->u1 = g_HudSubwpnSpriteU[prim->p1 - 1] + 16;
+                prim->v1 = g_HudSubwpnSpriteV[prim->p1 - 1];
+                prim->u2 = g_HudSubwpnSpriteU[prim->p1 - 1];
+                prim->v2 = g_HudSubwpnSpriteV[prim->p1 - 1] + 16;
+                prim->u3 = g_HudSubwpnSpriteU[prim->p1 - 1] + 16;
+                prim->v3 = g_HudSubwpnSpriteV[prim->p1 - 1] + 16;
             }
         }
         if (prim->p1 != 0) {

@@ -91,7 +91,32 @@ s32 func_800EA5E4(u32 arg0) {
     return -1;
 }
 
-INCLUDE_ASM("dra/nonmatchings/4A538", func_800EA720);
+u16 func_800EA720(u32 colorDst, u32 colorSrc) {
+    u16 colorRes = colorSrc;
+
+    if (GET_RED(colorRes) < GET_RED(colorDst)) {
+        colorRes = (colorRes & ~RED_MASK) | (GET_RED(colorRes) + 1);
+    }
+    if (GET_RED(colorDst) < GET_RED(colorRes)) {
+        colorRes = (colorRes & ~RED_MASK) | (GET_RED(colorRes) - 1);
+    }
+
+    if (GET_GREEN(colorRes) < GET_GREEN(colorDst)) {
+        colorRes = (colorRes & ~GREEN_MASK) | (GET_GREEN(colorRes) + 0x20);
+    }
+    if (GET_GREEN(colorDst) < GET_GREEN(colorRes)) {
+        colorRes = (colorRes & ~GREEN_MASK) | (GET_GREEN(colorRes) - 0x20);
+    }
+
+    if (GET_BLUE(colorRes) < GET_BLUE(colorDst)) {
+        colorRes = (colorRes & ~BLUE_MASK) | (GET_BLUE(colorRes) + 0x400);
+    }
+    if (GET_BLUE(colorDst) < GET_BLUE(colorRes)) {
+        colorRes = (colorRes & ~BLUE_MASK) | (GET_BLUE(colorRes) - 0x400);
+    }
+
+    return colorRes;
+}
 
 INCLUDE_ASM("dra/nonmatchings/4A538", func_800EA7CC);
 
@@ -535,6 +560,21 @@ void ResetEntityArray(void) {
 
 INCLUDE_ASM("dra/nonmatchings/4A538", RenderEntities);
 
+#define PL_SPRT(x, y, flipx) (x), ((y)&0x1FF) | ((flipx) << 9)
+s16 D_800A21B8[] = {
+    PL_SPRT(0x0201, 0x0101, false), PL_SPRT(0x0221, 0x0101, false),
+    PL_SPRT(0x0231, 0x0101, false), PL_SPRT(0x0201, 0x0181, false),
+    PL_SPRT(0x0201, 0x0101, false), PL_SPRT(0x0201, 0x0101, false),
+    PL_SPRT(0x0201, 0x0101, false), PL_SPRT(0x0201, 0x0101, false),
+    PL_SPRT(0x0001, 0x0101, false), PL_SPRT(0x0021, 0x0101, false),
+    PL_SPRT(0x0001, 0x0181, false), PL_SPRT(0x0021, 0x0181, false),
+    PL_SPRT(0x0221, 0x0181, false), PL_SPRT(0x0221, 0x0101, false),
+    PL_SPRT(0x0221, 0x0181, false), PL_SPRT(0x0221, 0x0181, false),
+    PL_SPRT(0x0101, 0x0101, false),
+};
+
+s16 unused_800A21FC[286] = {};
+
 void InitRenderer(void) {
     int i;
     POLY_GT4 *a1, *a2;
@@ -725,6 +765,8 @@ DR_ENV* func_800EDB08(POLY_GT4* poly) {
     return NULL;
 }
 
+s32 D_800A2438 = 0;
+
 // This function casts its return value as an s16, but at least one caller
 // (EntityGravityBootBeam) needs to receive a returned s32 so we use that here.
 s32 func_800EDB58(u8 primType, s32 count) {
@@ -813,41 +855,31 @@ s32 AllocPrimitives(u8 primType, s32 count) {
     return -1;
 }
 
-s32 func_800EDD9C(u8 primitives, s32 count) {
-    u8* pCode;
-    u8 temp_v0;
-    u8* polyCode;
-    POLY_GT4* poly;
-    s32 polyIndex;
+s32 func_800EDD9C(u8 type, s32 count) {
+    Primitive* prim;
+    s32 i;
     s16 foundPolyIndex;
-    poly = D_800973B8;
-    polyIndex = 0x4FF;
-    polyCode = &D_800973B8->code;
 
-    while (polyIndex >= 0) {
-        pCode = &poly->code;
-        temp_v0 = *polyCode;
-        if (temp_v0 == 0) {
-            DestroyPrimitive(poly);
+    prim = &g_PrimBuf[LEN(g_PrimBuf) - 1];
+    i = LEN(g_PrimBuf) - 1;
+
+    while (i >= 0) {
+        if (prim->type == 0) {
+            DestroyPrimitive(prim);
             if (count == 1) {
-                *polyCode = primitives;
-                poly->tag = 0;
+                prim->type = type;
+                prim->next = NULL;
             } else {
-                *polyCode = primitives;
-                foundPolyIndex = func_800EDD9C(primitives, count - 1);
-                poly->tag = &g_PrimBuf[foundPolyIndex];
+                prim->type = type;
+                foundPolyIndex = func_800EDD9C(type, count - 1);
+                prim->next = &g_PrimBuf[foundPolyIndex];
             }
-            foundPolyIndex = polyIndex;
+            foundPolyIndex = i;
             return foundPolyIndex;
         }
-        polyIndex--;
-        polyCode -= sizeof(POLY_GT4);
-        poly--;
-        if (polyIndex < 0) {
-            return (s16)temp_v0;
-        }
+        i--;
+        prim--;
     }
-    return (s16)temp_v0;
 }
 
 void FreePrimitives(s32 primitiveIndex) {

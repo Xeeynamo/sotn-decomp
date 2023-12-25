@@ -12,7 +12,8 @@
         "unk14": "u32",
         "icon": "s16",
         "iconPalette": "s16",
-        "unk1C": "u32"
+        "equipType": "u16",
+        "unk1E": "u16"
     },
     "fields": {}
 }

@@ -55,9 +55,7 @@ extern u8 svm_vab_used[];
 s16 SsVabOpenHeadWithMode(u8* addr, s16 vabid, s32 arg2, u32 sbaddr);
 
 void _spu_setInTransfer(s32);
-extern u8 svm_vab_used[];
 
-extern u8 svm_vab_used[];
 void SpuFree(s32);
 extern s32 D_80098810[];
 extern u16 _svm_vab_count;
@@ -91,7 +89,6 @@ s32 vmNoiseOn2(u8, u16, u16, u16, u16);
 extern s8 D_800978D7;
 extern s16 D_800978E2;
 extern u8 spuVmMaxVoice;
-void SpuVmKeyOff(s32, s16, s16, u16);
 void SeAutoVol(s16, s16, s16, s16);
 void SeAutoPan(s16, s16, s16, s16);
 
@@ -124,7 +121,7 @@ struct SeqStruct {
     s16 unk40;
     s16 unk42;
     s16 unk44;
-    u8 pad9[1];
+    s16 unk46;
     s16 unk48;
     u8 pad8[2];
     s16 unk4c;
@@ -132,7 +129,7 @@ struct SeqStruct {
     u8 pad10[1];
     s16 unk70;
     s16 unk72;
-    s16 unk74;
+    u16 unk74;
     s16 unk76;
     s16 unk78;
     s16 unk7A;
@@ -147,7 +144,8 @@ struct SeqStruct {
     s32 unk9C;
     s32 unkA0;
     s32 unkA4;
-    u8 padA6[2];
+    s16 padA6;
+    s16 padaa;
 };
 
 extern struct SeqStruct* _ss_score[32];
@@ -174,5 +172,80 @@ extern void SpuSetCommonAttr(SpuCommonAttr* attr);
 
 extern s16 _snd_seq_s_max;
 extern s16 _snd_seq_t_max;
+
+typedef struct ProgAtr { /* Program Headdings */
+
+    unsigned char tones;      /* # of tones */
+    unsigned char mvol;       /* program volume */
+    unsigned char prior;      /* program priority */
+    unsigned char mode;       /* program mode */
+    unsigned char mpan;       /* program pan */
+    char reserved0;           /* system reserved */
+    short attr;               /* program attribute */
+    unsigned long reserved1;  // "fake" program index (skips empties)
+    unsigned short reserved2; // even vag spu ptr
+    unsigned short reserved3; // odd vag spu ptr
+} ProgAtr;                    /* 16 byte */
+
+extern ProgAtr* D_8006C3B4;
+extern u8 svm_vab_used[];
+
+struct RegBufStruct {
+    short field_0_vol_left;
+    short field_2_vol_right;
+    short field_4_pitch;
+    unsigned short field_6_vagAddr;
+    unsigned short field_8_adsr1;
+    unsigned short field_A_adsr2;
+    short field_0xc;
+    short field_0xe;
+};
+extern struct RegBufStruct _svm_sreg_buf[24];
+extern unsigned char _svm_sreg_dirty[24];
+
+extern ProgAtr* D_8006C3B4;
+
+extern volatile u16* D_80032F10;
+extern u8 spuVmMaxVoice;
+
+struct SpuVoice {
+    u8 pad[4];
+    s16 unk04;
+    u8 pad2[21];
+    u8 unk1b;
+    u8 pad3[24];
+};
+
+extern struct SpuVoice _svm_voice[24];
+u32 SpuVmVSetUp(s16, s16);
+extern u8 D_800978CF;
+
+typedef struct VagAtr { /* VAG Tone Headdings */
+
+    unsigned char prior;     /* tone priority */
+    unsigned char mode;      /* play mode */
+    unsigned char vol;       /* tone volume*/
+    unsigned char pan;       /* tone panning */
+    unsigned char center;    /* center note */
+    unsigned char shift;     /* center note fine tune */
+    unsigned char min;       /* minimam note limit */
+    unsigned char max;       /* maximam note limit */
+    unsigned char vibW;      /* vibrate depth */
+    unsigned char vibT;      /* vibrate duration */
+    unsigned char porW;      /* portamento depth */
+    unsigned char porT;      /* portamento duration */
+    unsigned char pbmin;     /* under pitch bend max */
+    unsigned char pbmax;     /* upper pitch bend max */
+    unsigned char reserved1; /* system reserved */
+    unsigned char reserved2; /* system reserved */
+    unsigned short adsr1;    /* adsr1 */
+    unsigned short adsr2;    /* adsr2 */
+    short prog;              /* parent program*/
+    short vag;               /* vag reference */
+    short reserved[4];       /* system reserved */
+
+} VagAtr; /* 32 byte */
+
+extern VagAtr* _svm_tn;
 
 #endif

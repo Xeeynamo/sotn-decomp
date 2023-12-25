@@ -9,7 +9,37 @@ INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libspu/spu", _spu_writeByIO);
 
 INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libspu/spu", _spu_FiDMA);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libspu/spu", _spu_r_);
+extern s32* D_80033508;
+extern s32* D_8003350C;
+extern s32* D_80033510;
+extern s32* D_80033518;
+extern s32 D_80033550;
+
+#define WASTE_TIME()                                                           \
+    sp4 = 0xD;                                                                 \
+    for (sp0 = 0; sp0 < 0xF0; sp0++) {                                         \
+        sp4 *= 3;                                                              \
+    }
+
+void _spu_r_(s32 arg0, u16 arg1, s32 arg2) {
+    volatile s32 sp0;
+    volatile s32 sp4;
+    _spu_RXX->rxx.trans_addr = arg1;
+    WASTE_TIME();
+    WASTE_TIME();
+
+    _spu_RXX->rxx.spucnt |= 0x30;
+    do {
+        WASTE_TIME();
+    } while (0);
+
+    WASTE_TIME();
+    *D_80033518 = (*D_80033518 & 0xF0FFFFFF) | 0x22000000;
+    *D_80033508 = arg0;
+    *D_8003350C = (arg2 << 0x10) | 0x10;
+    D_80033550 = 1;
+    *D_80033510 = 0x01000200;
+}
 
 INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libspu/spu", _spu_t);
 

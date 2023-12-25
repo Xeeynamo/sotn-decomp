@@ -162,9 +162,77 @@ void EntityHammerWeapon(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", func_801CF778);
+void func_801CF778(void) {
+    ET_801CF254* et = &g_CurrentEntity[15].ext.et_801CF254;
+    et->unk9C = et->next->ext.et_801CF254.unk9C + 0x300;
+}
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", func_801CF7A0);
+int func_801CF7A0(Entity* ent) {
+    Entity* otherEnt;
+    s32 step;
+    s32 xDistance;
+
+    if (g_CurrentEntity->ext.et_801CE4CC.unk8E != 0) {
+        --g_CurrentEntity->ext.et_801CE4CC.unk8E;
+    }
+
+    xDistance = ent->posX.i.hi - PLAYER.posX.i.hi;
+
+    if (g_CurrentEntity->facingLeft) {
+        xDistance = -xDistance;
+    }
+
+    if (xDistance < -16) {
+        func_801CE1E8(10, g_CurrentEntity);
+        return;
+    }
+
+    if ((u8)g_CurrentEntity->ext.generic.unk84.S8.unk0 == 1) {
+        otherEnt = g_CurrentEntity + 10;
+    } else {
+        otherEnt = g_CurrentEntity + 13;
+    }
+
+    if (func_801CE120(otherEnt, g_CurrentEntity->facingLeft)) {
+        func_801CE1E8(7);
+        return;
+    }
+
+    step = 5;
+
+    if (xDistance < 48) {
+        step = 7;
+    }
+
+    if (xDistance < 80) {
+        step = 5;
+    }
+
+    if (xDistance >= 129) {
+        step = 8;
+    }
+
+    if (g_CurrentEntity->ext.et_801CE4CC.unk8E == 0) {
+        if (xDistance < 160) {
+            step = 6;
+            g_CurrentEntity->ext.et_801CE4CC.unk8E = 3;
+            g_CurrentEntity->ext.gurkhaSword.unk8C = 1;
+        }
+        if (xDistance < 64) {
+            g_CurrentEntity->ext.gurkhaSword.unk8C = 0;
+        }
+    }
+
+    if (step != g_CurrentEntity->step) {
+        do {
+            func_801CE1E8(step);
+        } while (0); // no idea why, found by permuter
+    }
+
+    if ((g_CurrentEntity->step == 7) && (step == 5)) {
+        g_CurrentEntity->ext.factory.unkB0 = 1;
+    }
+}
 
 // DECOMP_ME_WIP EntityGurkha https://decomp.me/scratch/51iIJ
 INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", EntityGurkha);
@@ -266,7 +334,13 @@ void func_801D0A00(s16* arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", func_801D0B40);
+void func_801D0B40(void) {
+    s16* unk88 = g_CurrentEntity[15].ext.et_801D0B40.unk88;
+    g_CurrentEntity[15].ext.et_801D0B40.unk84 = unk88[0x4E] - 0x600;
+
+    unk88 = g_CurrentEntity[16].ext.et_801D0B40.unk88;
+    g_CurrentEntity[16].ext.et_801D0B40.unk84 = unk88[0x4E] - 0x600;
+}
 
 s32 func_801D0B78(void) {
     s32 ret;
@@ -457,18 +531,9 @@ void EntityBladeSword(Entity* self) {
 
 #include "../unk_prim_helper.h"
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", func_801D2320);
+#include "../update_animation.h"
 
-Primitive* func_801D2470(Primitive* prim) {
-    while (prim != NULL) {
-        if (prim->p3 != 0) {
-            prim = prim->next;
-        } else {
-            return prim;
-        }
-    }
-    return NULL;
-}
+#include "../find_first_unk_prim.h"
 
 Primitive* func_801D24A0(Primitive* prim, u8 index) {
     if (prim) {

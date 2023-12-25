@@ -208,28 +208,26 @@ void func_80102D70(void) {
     }
 }
 
-void func_80102DEC(s32 context) {
-    D_80137E64 = 0;
-    D_80137E68 = context;
+void MemCardSetPort(s32 nPort) {
+    g_MemCardRStep = 0;
+    g_MemCardRStepSub = nPort;
 }
 
-s32 func_80102E04(void) {
-    u32 new_var2 = D_80137E68;
-    s32 temp_s0 = D_80137E64;
+s32 MemCardInitAndFormat(void) {
+    u32 nPort = g_MemCardRStepSub;
+    s32 state = g_MemCardRStep;
 
-    switch (temp_s0) {
+    switch (state) {
     case 0:
         MemcardInit();
-        D_80137E50 = 4;
-        D_80137E64++;
+        g_MemCardRetryCount = 4;
+        g_MemCardRStep++;
         break;
 
     case 1:
-        if (MemcardFormat(new_var2, 0) != temp_s0) {
-            D_80137E50 = D_80137E50 - 1;
-            if (D_80137E50 == -1) {
-                temp_s0 = -1;
-                return temp_s0;
+        if (MemcardFormat(nPort, 0) != 1) {
+            if (--g_MemCardRetryCount == -1) {
+                return -1;
             }
         } else {
             return 1;

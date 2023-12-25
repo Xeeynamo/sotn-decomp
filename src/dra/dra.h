@@ -18,6 +18,34 @@
 #define SEQ_TABLE_S_MAX 0x10
 #define SEQ_TABLE_T_MAX 1
 
+#define RED_MASK 0x1F
+#define GREEN_MASK 0x3E0
+#define BLUE_MASK 0x7C00
+
+#define GET_RED(x) ((x)&RED_MASK)
+#define GET_GREEN(x) ((x)&GREEN_MASK)
+#define GET_BLUE(x) ((x)&BLUE_MASK)
+
+typedef enum {
+    MENU_DG_MAIN,
+    MENU_DG_BG,
+    MENU_DG_EQUIP_OVERVIEW,
+    MENU_DG_EQUIP_SELECTOR,
+    MENU_DG_INFO_BAR,
+    MENU_DG_RELICS,
+    MENU_DG_SPELLS,
+    MENU_DG_SETTINGS,
+    MENU_DG_CLOAK_COLOR,
+    MENU_DG_CFG_BUTTONS,
+    MENU_DG_CLOAK_LINING,
+    MENU_DG_CFG_SOUND,
+    MENU_DG_WINDOW_COLORS,
+    MENU_DG_TIME_ATTACK,
+    MENU_DG_EQUIP_SORT,
+    MENU_DG_FAMILIARS,
+    NUM_MENU,
+} MenuDialogue;
+
 typedef enum {
     DEBUG_NORMAL,
     DEBUG_TEXTURE_VIEWER,
@@ -282,7 +310,7 @@ typedef struct {
 } DamageParam;
 
 typedef struct {
-    /* 8013761C */ MenuContext menus[0x10]; // 761C, 763A, 7658, 7676
+    /* 8013761C */ MenuContext menus[NUM_MENU]; // 761C, 763A, 7658, 7676
 } MenuData;
 
 // All the Joseph's Cloak color fields are in RGB555 format
@@ -313,11 +341,6 @@ typedef enum {
     COMBO_SUMMON_SPIRIT,
     COMBO_DARK_METAMORPH,
 } ButtonComboIdx;
-
-typedef struct {
-    s16 buttonsCorrect;
-    s16 timer;
-} ButtonComboState;
 
 struct SeqData {
     u8 volume;
@@ -364,43 +387,12 @@ extern u16 g_ButtonMask[];
 extern u8 g_StageSelectOrder[];
 extern u16 D_800A04CC[];
 extern u32 D_800A04F8;
-extern s32 g_UnkMemcardPort[];
-extern u16 g_saveIconPalette[0x10][0x10];
-extern u8* g_saveIconTexture[0x10];
-extern s16 D_800A21B8[0x20];
 extern s32 D_800A2438;
-extern u8 D_800A243C[];
-extern RoomBossTeleport D_800A297C[];
-extern u8 D_800A2BC0[];
-extern u8 D_800A2D7C[3];
-extern u8 D_800A2D80[0x10];
-extern u8 c_chPlaystationButtons[];
-extern u8 c_chShoulderButtons[];
-extern RECT D_800A2D90;
-extern Unkstruct_800A2D98 D_800A2D98[];
-extern MenuContextInit MenuContextData[];
-extern u8 D_800A2EE8[];
-extern u8 D_800A2EED;
-extern u8 D_800A2EF8[];
-extern u8 D_800A2EFD;
-extern u8 D_800A2F08[];
-extern u8 D_800A2F18[];
-extern u8 D_800A2F28[];
-extern u8 D_800A2F2D;
-extern u8 D_800A2F38[];
-extern u8 D_800A2F3D;
-extern u16 D_800A2F48[];
-extern u16 D_800A2F64[];
-extern s16 D_800A2F7E[];
-extern u8 D_800A2F9B[];
-extern s32 D_800A2FBC[];
-extern s32 D_800A2FC0[];
 
 extern RoomTeleport D_800A245C[];
-extern s32 D_800A2464[]; // D_800A245C[0].stageId
 extern u32 D_800A2D24;
 extern const char* c_strALUCARD[];
-extern const char** c_strSTR;
+extern const char* c_strSTR[4];
 extern const char* c_strCON;
 extern const char* c_strINT;
 extern const char* c_strLCK;
@@ -436,8 +428,16 @@ extern const char* c_strWindow;
 extern const char* c_strTime;
 extern const char* c_strALUCART;
 extern const char* D_800A83AC[];
-extern const char* c_strSSword;
+extern const char* c_strSSword[];
 extern s32 D_800A3194[];
+extern SVECTOR* D_800A3210[];
+extern SVECTOR* D_800A33A0[];
+extern SVECTOR* D_800A34C0[18][3];
+extern SVECTOR* D_800A3598[];
+extern SVECTOR* D_800A35D0[];
+extern SVECTOR* D_800A3608[];
+extern u8 D_800A3728;
+extern MATRIX D_800A37B8;
 extern Unkstruct_801092E8 D_800A37D8;
 extern JosephsCloak g_JosephsCloak;
 extern Lba g_StagesLba[];
@@ -452,7 +452,7 @@ extern Equipment g_EquipDefs[];
 extern Accessory g_AccessoryDefs[];
 extern RelicDesc g_RelicDefs[];
 extern u8* c_strTimeAttackHiddenEntry;
-extern s32 c_strTimeAttackEntries[];
+extern const char* c_strTimeAttackEntries[];
 extern u32 D_800AC90C;
 extern u16 D_800AC958[];
 extern s32 D_800ACC64[]; // probably a struct
@@ -534,8 +534,8 @@ extern const char D_800DB524[];
 extern const char a0104x04x;
 extern const char a2304x04x;
 extern const char aBlue;
-extern u8 g_GfxEquipIcon[][16 * 16 / 2];
-extern s16 g_PalEquipIcon[];
+extern u8 g_GfxEquipIcon[32][16 * 16 / 2];
+extern s16 g_PalEquipIcon[32];
 extern const char aDr03x;
 extern const char aEff03x;
 extern const char aEnv03x;
@@ -553,8 +553,6 @@ extern const char aSp1603x;
 extern const char aTile03x;
 extern Unkstruct_800BF554 g_SfxData[];
 
-extern char* aErrorStep;
-extern char* aAtariNuki;
 extern char* aLightTimer02x;
 extern SVECTOR D_800E2024;
 extern SVECTOR D_800E202C;
@@ -586,10 +584,10 @@ extern u8 g_PadsRepeatTimer[BUTTON_COUNT * PAD_COUNT];
 extern s32 D_80137428[];
 extern s32 g_MemcardRetryCount;
 extern s32 g_MemcardFd;
-extern u16 D_80137478[];
-extern u16 D_801374B8[];
-extern u16 D_801374F8[];
-extern u16 D_80137538[];
+extern u16 D_80137478[0x20];
+extern u16 D_801374B8[0x20];
+extern u16 D_801374F8[0x20];
+extern u16 D_80137538[0x20];
 extern u8* g_DecSrcPtr;
 extern u8* g_DecDstPtr;
 extern s32 g_DecReadNibbleFlag;
@@ -614,7 +612,7 @@ extern RoomLoadDefHolder D_801375BC;
 extern s32 D_801375C0;
 extern s32 D_801375C4;
 extern s32 D_801375C8;
-extern s32 D_801375CC;
+extern ItemTypes D_801375CC;
 extern s32 D_801375D0;
 extern s32 D_801375D4;
 extern s32* D_801375D8;
@@ -627,7 +625,7 @@ extern s32 g_IsCloakColorUnlocked;
 extern s32 g_IsSelectingEquipment;
 extern s32 g_EquipmentCursor;
 extern s32 D_80137614;
-extern s32 D_80137618;
+extern s32 g_EquipOrderType;
 extern MenuData g_MenuData;
 extern u8 D_801376B0;
 extern s16 D_801376C4;
@@ -676,18 +674,28 @@ extern s32 D_801379A4;
 extern s32 D_801379A8;
 extern Unkstruct_80102CD8 D_801379AC;
 extern s32 D_801379B0;
+extern SVECTOR D_801379C8;
+extern VECTOR D_801379D0;
+extern VECTOR D_801379E0;
+extern VECTOR D_80137B20;
+extern SVECTOR D_80137CA0;
+extern SVECTOR D_80137D40;
+extern MATRIX D_80137E00;
+extern MATRIX D_80137E20;
 extern s32 D_80137E40;
 extern s32 D_80137E44;
 extern s32 D_80137E48;
 extern s32 D_80137E4C;
-extern s32 D_80137E50;
+extern s32 g_MemCardRetryCount;
 extern s32 D_80137E54;
 extern s32 D_80137E58;
 extern s32 D_80137E5C;
 extern s32 D_80137E60; // most likely part of the g_Cd struct
-extern s32 D_80137E64; // most likely part of the g_Cd struct
-extern s32 D_80137E68; // most likely part of the g_Cd struct
+extern s32 g_MemCardRStep;
+extern s32 g_MemCardRStepSub;
 extern s32 D_80137E6C;
+extern SVECTOR D_80137E70[];
+extern s32 D_80137EE0;
 extern s32 D_80137F6C; // most likely part of the g_Cd struct
 extern void* D_80137F7C;
 extern s32 D_80137F9C;
@@ -920,27 +928,16 @@ void CalcDefense(void);
 bool IsAlucart(void);
 void func_800F53A4(void);
 bool ScissorSprite(SPRT* arg0, MenuContext* arg1);
-void DrawMenuImg(MenuContext* ctx, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
+void MenuDrawImg(MenuContext* ctx, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
                  s32 idx, s32 unk2, bool disableTexShade, s32 unk4);
-void DrawMenuSprite(
+void MenuDrawSprite(
     MenuContext* context, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v,
     s32 clut, s32 tpage, s32 arg9, s32 colorIntensity, s32 argB);
-void DrawMenuRect(MenuContext* context, s32 posX, s32 posY, s32 width,
+void MenuDrawRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b);
 s32 func_800F62E8(s32 arg0);
 void InitStatsAndGear(bool isDeathTakingItems);
-void DrawMenuChar(u8 ch, int x, int y, MenuContext* context);
-void DrawMenuStr(const u8* str, s32 x, s32 y, MenuContext* context);
-void DrawMenuInt(s32 value, s32 x, s32 y, MenuContext*);
-void DrawSettingsReverseCloak(MenuContext* context);
-void DrawSettingsSound(MenuContext* context);
-void DrawPauseMenu(s32 arg0);
-void func_800F82F4(void);
-void func_800F8858(MenuContext* context);
-void CheckWeaponCombo(void);
-void func_800FABEC(s32 arg0);
-void func_800FAC30(void);
-void func_800FAF44(s32);
+
 s32 TimeAttackController(TimeAttackEvents eventId, TimeAttackActions action);
 s32 func_800FD664(s32 arg0);
 s32 func_800FD6C4(s32 equipTypeFilter);
@@ -961,7 +958,6 @@ void func_800FF0A0(s32 arg0);
 bool func_8010183C(s32 arg0);
 s32 func_801025F4(void);
 void func_80102CD8(s32);
-void func_80102DEC(s32 arg0);
 void func_80103EAC(void);
 void DestroyEntity(Entity*);
 void DestroyEntities(s16 startIndex);

@@ -570,8 +570,8 @@ void EntityCavernDoorPlatform(Entity* self) {
             temp -= self->ext.generic.unk88.S16.unk2;
             player->posX.i.hi += temp;
             player->posY.i.hi++;
-            D_8009748A[0] += temp;
-            D_8009748A[2] += 1;
+            D_80097488.x.i.hi += temp;
+            D_80097488.y.i.hi += 1;
         }
         self->ext.generic.unk88.unk = self->posX.val;
         self->ext.generic.unk8C.modeS32 = self->posY.val;
@@ -667,7 +667,8 @@ void func_801B40F8(Entity* self) {
         }
 
         if (!(g_Timer & 1)) {
-            poly = func_801D2470((POLY_GT4*)(*(s32*)&self->ext.generic.unk7C));
+            poly =
+                FindFirstUnkPrim((Primitive*)(*(s32*)&self->ext.generic.unk7C));
             if (poly != NULL) {
                 poly->p3 = 1;
             }
@@ -1577,7 +1578,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
         }
 
         if (!(g_Timer & 1)) {
-            prim = func_801D2470(self->ext.heartRoomGoldDoor.prim);
+            prim = FindFirstUnkPrim(self->ext.heartRoomGoldDoor.prim);
             if (prim != NULL) {
                 prim->p3 = 1;
             }

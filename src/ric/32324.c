@@ -12,7 +12,7 @@ void func_8016E324(Entity* entity) {
         if ((entity->ext.generic.unk7C.s) == 0) {
         case 3:
         case 5:
-            func_801606BC(entity, 0x39, 0);
+            CreateEntFactoryFromEntity(entity, 0x39, 0);
             entity->step++;
         case 2:
         case 4:
@@ -22,7 +22,7 @@ void func_8016E324(Entity* entity) {
                 entity->ext.generic.unk7C.s = 0;
                 entity->posX.val = FIX(128.0);
                 entity->posY.val = 0;
-                func_801606BC(entity, 0x10004, 0);
+                CreateEntFactoryFromEntity(entity, 0x10004, 0);
                 entity->step++;
             }
         }
@@ -33,7 +33,7 @@ void func_8016E324(Entity* entity) {
         if (entity->ext.generic.unk7C.s >= 16) {
             DestroyEntity(entity);
             g_Player.unk4E = 1;
-            func_801606BC(entity, 0x3A, 0);
+            CreateEntFactoryFromEntity(entity, 0x3A, 0);
         }
         break;
     }

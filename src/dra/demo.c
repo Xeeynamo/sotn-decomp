@@ -1,5 +1,14 @@
 #include "dra.h"
 
+extern u8 D_800A243C[32] = {
+    STAGE_ST0,       STAGE_BO0,      STAGE_BO4,      STAGE_BO1,  STAGE_BO2,
+    STAGE_BO3,       STAGE_NZ0_DEMO, STAGE_BO5,      STAGE_RBO1, STAGE_DRE,
+    STAGE_NZ1_DEMO,  STAGE_RBO0,     STAGE_RBO2,     STAGE_BO7,  STAGE_BO6,
+    STAGE_RBO3,      STAGE_RBO4,     STAGE_LIB_DEMO, STAGE_RBO5, STAGE_RBO7,
+    STAGE_RNZ1_DEMO, STAGE_RBO8,     STAGE_NO0,      STAGE_NO0,  STAGE_NO0,
+    STAGE_NO0,       STAGE_NO0,      STAGE_RCEN,     STAGE_RBO6,
+};
+
 void DemoGameInit(s32 arg0) {
     s32 i;
 
@@ -242,8 +251,10 @@ void DemoSaveFile(void) {
 }
 
 void DemoInit(s32 arg0) {
+#if !defined(VERSION_PC)
     D_80137590 = DEMO_KEY_PTR;
-    *((s32*)DEMO_KEY_PTR) = 0;
+#endif
+    *((s32*)D_80137590) = 0;
 
     DemoGameInit(arg0);
 
@@ -262,8 +273,6 @@ void DemoInit(s32 arg0) {
     }
 }
 
-#define DEMO_KEY_LEN 3
-#define DEMO_MAX_LEN 0x2000
 void DemoUpdate(void) {
     u8 curBtnLo;
     u8 curBtnHi;

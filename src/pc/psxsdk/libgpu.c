@@ -25,13 +25,6 @@ void SetDumpFnt(int id) { NOT_IMPLEMENTED; }
 
 void SetDispMask(int mask) { NOT_IMPLEMENTED; }
 
-DISPENV* SetDefDispEnv(DISPENV* env, int x, int y, int w, int h) {
-    NOT_IMPLEMENTED;
-}
-DRAWENV* SetDefDrawEnv(DRAWENV* env, int x, int y, int w, int h) {
-    NOT_IMPLEMENTED;
-}
-
 int ClearImage(RECT* rect, u_char r, u_char g, u_char b) { NOT_IMPLEMENTED; }
 int LoadImage(RECT* rect, u_long* p) { NOT_IMPLEMENTED; }
 int StoreImage(RECT* rect, u_long* p) { NOT_IMPLEMENTED; }
@@ -42,15 +35,10 @@ int DrawSync(int mode) { return MyDrawSync(mode); }
 
 DRAWENV* PutDrawEnv(DRAWENV* env) { NOT_IMPLEMENTED; }
 
-DISPENV* PutDispEnv(DISPENV* env) { NOT_IMPLEMENTED; }
+DISPENV* MyPutDispEnv(DISPENV* env);
+DISPENV* PutDispEnv(DISPENV* env) { MyPutDispEnv(env); }
 
 void DrawOTag(u_long* p) { NOT_IMPLEMENTED; }
-
-void AddPrim(void* ot, void* p) { NOT_IMPLEMENTED; }
-
-void SetShadeTex(void* p, int tge) { NOT_IMPLEMENTED; }
-
-void SetSemiTrans(void* p, int abe) { NOT_IMPLEMENTED; }
 
 void SetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw) {
     NOT_IMPLEMENTED;
@@ -63,4 +51,20 @@ int SetGraphDebug(int level) { NOT_IMPLEMENTED; }
 
 u_long* ClearOTag(u_long* ot, int n) { NOT_IMPLEMENTED; }
 
-u_short LoadClut2(u_long* clut, int x, int y) { NOT_IMPLEMENTED; }
+u_short GetTPage(int tp, int abr, int x, int y) {
+    NOT_IMPLEMENTED;
+    return 0;
+}
+
+u_short GetClut(int x, int y) { return getClut(x, y); }
+void AddPrim(void* ot, void* p) { addPrim(ot, p); }
+void SetShadeTex(void* p, int tge) { setShadeTex(p, tge); }
+void SetLineG2(LINE_G2* p) { setLineG2(p); }
+void SetPolyGT3(POLY_GT3* p) { setPolyGT3(p); }
+void SetPolyG4(POLY_G4* p) { setPolyG4(p); }
+void SetPolyGT4(POLY_GT4* p) { setPolyGT4(p); }
+void SetSemiTrans(void* p, int abe) { setSemiTrans(p, abe); }
+void SetSprt(SPRT* p) { setSprt(p); }
+void SetSprt16(SPRT_16* p) { setSprt16(p); }
+void SetSprt8(SPRT_8* p) { setSprt8(p); }
+void SetTile(TILE* p) { setTile(p); }

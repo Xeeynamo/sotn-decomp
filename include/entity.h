@@ -358,6 +358,13 @@ typedef struct {
 } ET_Elevator;
 
 typedef struct {
+    /* 0x7C */ s32 pad[8];
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ s16* unk88;
+} ET_801D0B40;
+
+typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ char pad_80[0xC];
     /* 0x8C */ u8 unk8C;
@@ -555,6 +562,8 @@ typedef struct {
 typedef struct {
     /* 0x7C */ s16 unk7C;
     /* 0x7E */ s16 unk7E;
+    /* 0x80 */ s16 pad[24];
+    /* 0xB0 */ s16 unkB0;
 } ET_GiantSpinningCross;
 
 typedef struct {
@@ -575,6 +584,53 @@ typedef struct {
     s16 unk7C;
     s16 unk7E;
 } ET_8017161C;
+
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    f32 unk84;
+    s32 unk88;
+    s32 unk8C;
+    s16 unk90;
+    s16 unk92;
+    s16 unk94;
+    s16 unk96;
+    struct Entity* unk98;
+    s32 pad[5];
+    s16 unkB0;
+} ET_801719A4;
+
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+    s16 unk86;
+    s32 unk88;
+    s32 unk8C;
+    s16 unk90;
+    s16 unk92;
+    s16 unk94;
+    s16 unk96;
+    struct Entity* unk98;
+    s32 pad[5];
+    s16 unkB0;
+} ET_BibleSubwpn;
+
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    s32 unk84;
+    s32 unk88;
+    struct Entity* parent1;
+    s32 pad[10];
+    struct Entity* parent2;
+} ET_80128C2C;
 
 typedef union {
     /* 0x7C */ struct Primitive* prim;
@@ -600,9 +656,12 @@ typedef union {
     /* 0x7C */ ET_Merman merman;
     /* 0x7C */ ET_Merman_2 merman2;
     /* 0x7C */ ET_MermanWaterSplash mermanWaterSplash;
+    /* 0x7C */ ET_80128C2C et_80128C2C;
     /* 0x7C */ ET_8017091C et_8017091C;
     /* 0x7C */ ET_80170F64 et_80170F64;
     /* 0x7C */ ET_8017161C et_8017161C;
+    /* 0x7C */ ET_801719A4 et_801719A4;
+    /* 0x7C */ ET_BibleSubwpn et_BibleSubwpn;
     /* 0x7C */ ET_801CF254 et_801CF254;
     /* 0x7C */ ET_GurkhaSword gurkhaSword;
     /* 0x7C */ ET_Dracula dracula;
@@ -615,6 +674,7 @@ typedef union {
     /* 0x7C */ ET_CastleDoor castleDoor;
     /* 0x7C */ ET_DeathSkySwirl deathSkySwirl;
     /* 0x7C */ ET_Elevator elevator;
+    /* 0x7C */ ET_801D0B40 et_801D0B40;
     /* 0x7C */ ET_801D1BB8 et_801D1BB8;
     /* 0x7C */ ET_801D0B78 et_801D0B78;
     /* 0x7C */ ET_WaterEffects waterEffects;

@@ -8,7 +8,7 @@ void func_8015BCD0(void) {
     switch (PLAYER.step_s) {
     case 0:
         if (PLAYER.animFrameIdx == 5 && PLAYER.animFrameDuration == 1 &&
-            func_801606BC(g_CurrentEntity, 0x4D, 0) == NULL) {
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0x4D, 0) == NULL) {
             PLAYER.animFrameDuration = 2;
         }
         if (PLAYER.animFrameDuration < 0) {
@@ -19,7 +19,7 @@ void func_8015BCD0(void) {
     case 2:
         func_8015BB80();
         if (PLAYER.animFrameIdx == 5 && PLAYER.animFrameDuration == 1 &&
-            func_801606BC(g_CurrentEntity, 0x2004D, 0) == NULL) {
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0x2004D, 0) == NULL) {
             PLAYER.animFrameDuration = 2;
         }
         if (PLAYER.animFrameDuration < 0) {
@@ -30,7 +30,7 @@ void func_8015BCD0(void) {
     case 4:
         func_8015BB80();
         if (PLAYER.animFrameIdx == 5 && PLAYER.animFrameDuration == 1 &&
-            func_801606BC(g_CurrentEntity, 0x4004D, 0) == NULL) {
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0x4004D, 0) == NULL) {
             PLAYER.animFrameDuration = 2;
         }
         if (PLAYER.animFrameDuration < 0) {
@@ -68,7 +68,7 @@ void func_8015BE84(void) {
 
     if (g_Player.pl_vram_flag & 1) {
         g_CurrentEntity->velocityX /= 2;
-        func_801606BC(g_CurrentEntity, 0x0, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 0x0, 0);
         PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
         func_8015CCC8(3, PLAYER.velocityX);
         g_api.PlaySfx(0x64B);
@@ -121,12 +121,12 @@ void func_8015C178(void) {
     } else {
         if (!(g_GameTimer & 3) && PLAYER.animFrameIdx < 0x12 &&
             g_Player.pl_vram_flag & 1) {
-            func_801606BC(g_CurrentEntity, 0x20018, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0x20018, 0);
         }
 
         if (PLAYER.animFrameIdx == 18 && PLAYER.animFrameDuration == 1 &&
             (g_Player.pl_vram_flag & 1)) {
-            func_801606BC(g_CurrentEntity, 0x0, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0x0, 0);
         }
     }
 }

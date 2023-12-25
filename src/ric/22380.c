@@ -20,26 +20,577 @@ void DebugInputWait(const char* msg) {
         DebugShowWaitInfo(msg);
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015E484);
+void func_8015E484(void) {
+    s32 i;
+    s32 collision = 0;
+    s16 startingPosY = PLAYER.posY.i.hi;
 
-void func_8015E7B4(Unkstruct_8010BF64* arg0) { // !FAKE:
-    s32 temp = D_80154604;
+    if (g_Player.pl_vram_flag & 1 || D_80175956 != 0 || g_Player.unk78 == 1) {
+        return;
+    }
+    if (PLAYER.posY.i.hi < 0x30) {
+        PLAYER.posY.i.hi -= 0x10;
+        while (true) {
+            for (i = 0; i < 4; ++i) {
+                g_api_CheckCollision(
+                    (s16)(PLAYER.posX.i.hi + D_801545F4[i].unk0),
+                    (s16)(PLAYER.posY.i.hi + D_801545F4[i].unk2),
+                    &g_Player.colliders[i], 0);
+            }
 
-    arg0->unk14 = temp;
-    arg0->unk1C = temp = D_80154606;
-    arg0->unk18 = D_801545EA[8] - 1;
-    arg0->unk20 = D_801545EA[0] + 1;
+            if ((g_Player.colliders[1].effects & 0x81) == 1 ||
+                (g_Player.colliders[2].effects & 0x81) == 1 ||
+                (g_Player.colliders[3].effects & 0x81) == 1) {
+                PLAYER.velocityY = 0;
+                PLAYER.posY.i.hi -= 1;
+                collision = 1;
+            } else if (collision == 0) {
+                PLAYER.posY.i.hi += 8;
+                if (PLAYER.posY.i.hi >= 0x30) {
+                    PLAYER.posY.i.hi = startingPosY;
+                    return;
+                }
+            } else {
+                return;
+            }
+        }
+
+    } else if (PLAYER.posY.i.hi >= 0xB1) {
+        PLAYER.posY.i.hi += 0x20;
+        while (true) {
+            for (i = 0; i < 4; ++i) {
+                g_api_CheckCollision(
+                    (s16)(PLAYER.posX.i.hi + D_801545E4[i].unk0),
+                    (s16)(PLAYER.posY.i.hi + D_801545E4[i].unk2),
+                    &g_Player.colliders2[i], 0);
+            }
+
+            if ((g_Player.colliders2[1].effects & 0x41) == 1 ||
+                (g_Player.colliders2[2].effects & 0x41) == 1 ||
+                (g_Player.colliders2[3].effects & 0x41) == 1) {
+                PLAYER.velocityY = 0;
+                PLAYER.posY.i.hi += 1;
+                collision = 1;
+            } else if (collision != 0) {
+                PLAYER.posY.i.hi -= 1;
+                return;
+            } else {
+                PLAYER.posY.i.hi -= 8;
+                if (PLAYER.posY.i.hi < 0xB1) {
+                    PLAYER.posY.i.hi = startingPosY;
+                    return;
+                }
+            }
+        }
+    }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015E800);
+void func_8015E7B4(Unkstruct_8010BF64* arg0) { // !FAKE:
+    s32 temp = D_80154604[0].unk0;
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015EE28);
+    arg0->unk14 = temp;
+    arg0->unk1C = temp = D_80154604[0].unk2;
+    arg0->unk18 = D_801545F4[1].unk2 - 1;
+    arg0->unk20 = D_801545E4[1].unk2 + 1;
+}
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F414);
+void func_8015E800(void) {
+    Collider sp10;
+    s32 temp_a0;
+    s32 temp_a1;
+    s32 temp_s0;
+    s32 temp_s7;
+    s32 i;
+    s32 var_s5;
+    s32 var_v1;
+    u16 var_a1;
+    s16 argX;
+    s16 argY;
+    s32 sp10effects;
+    s16 temp_s16;
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F680);
+    u16* yPosPtr = &PLAYER.posY.i.hi;
+    u16* xPosPtr = &PLAYER.posX.i.hi;
+    s32* vram_ptr = &g_Player.pl_vram_flag;
 
-Entity* func_8015F8F8(s16 start, s16 end) {
+    var_s5 = 0;
+    i = 0;
+    if (D_80097418 != 0) {
+        *vram_ptr = 1;
+        return;
+    }
+    if ((PLAYER.velocityY == 0) && (g_Player.unk04 & 1)) {
+        var_s5 = 4;
+    } else {
+        i = 1;
+    }
+    for (; i < 4; i++, var_s5 = 0) {
+        temp_a0 = g_Player.colliders[i].effects;
+        if (temp_a0 & EFFECT_SOLID_FROM_BELOW) {
+            continue;
+        }
+        if (((temp_a0 & EFFECT_UNK_0002) || (PLAYER.velocityY >= 0) ||
+             ((PLAYER.step == 26) && (temp_a0 & EFFECT_UNK_8000)))) {
+            temp_s0 = g_Player.colliders[i].effects &
+                      (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_SOLID);
+            if ((temp_s0 == EFFECT_SOLID) ||
+                (g_Player.colliders[i].effects & EFFECT_UNK_0800)) {
+                argX = *xPosPtr + D_801545F4[i].unk0;
+                argY = *yPosPtr + D_801545F4[i].unk2 +
+                       (g_Player.colliders[i].unk18 - 1);
+                g_api.CheckCollision(argX, argY, &sp10, 0);
+                sp10effects = sp10.effects;
+                if (!(sp10effects & EFFECT_SOLID)) {
+                    if ((g_Player.colliders[i].effects != 1) ||
+                        (PLAYER.velocityY >= 0) || (PLAYER.step == 26)) {
+                        if (temp_s0 & EFFECT_UNK_0800) {
+                            *yPosPtr += var_s5 + g_Player.colliders[i].unk8;
+                        } else {
+                            *yPosPtr += var_s5 + g_Player.colliders[i].unk18;
+                        }
+                        *vram_ptr |= 1;
+                        return;
+                    }
+                    continue;
+                } else {
+                    temp_a1 = sp10effects & (EFFECT_UNK_8000 | EFFECT_UNK_0002 |
+                                             EFFECT_SOLID);
+                    if ((temp_a1) == (EFFECT_UNK_8000 | EFFECT_SOLID)) {
+                        if (i < 2) {
+                            *vram_ptr |= ((sp10effects &
+                                           (EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+                                            EFFECT_UNK_1000)) +
+                                          temp_a1);
+                            *yPosPtr += g_Player.colliders[i].unk8 +
+                                        sp10.unk18 + (var_s5 - 1);
+                            return;
+                        }
+                        if ((i == 2) &&
+                            ((sp10effects & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
+                                             EFFECT_SOLID)) ==
+                             (EFFECT_UNK_8000 | EFFECT_SOLID))) {
+                            g_Player.colliders[2].effects = sp10effects;
+                            g_Player.colliders[2].unk10 =
+                                g_Player.colliders[2].unk8;
+                        }
+                        if ((i == 3) &&
+                            ((sp10effects & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
+                                             EFFECT_SOLID)) ==
+                             (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
+                              EFFECT_SOLID))) {
+                            g_Player.colliders[3].effects = sp10effects;
+                            g_Player.colliders[3].unk10 =
+                                g_Player.colliders[3].unk8;
+                        }
+                    }
+                }
+            }
+            if ((temp_s0 != (EFFECT_UNK_8000 | EFFECT_SOLID)) || (i >= 2)) {
+                continue;
+            }
+            *vram_ptr |= g_Player.colliders[i].effects &
+                         (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+                          EFFECT_UNK_1000 | EFFECT_SOLID);
+            *yPosPtr += var_s5 + g_Player.colliders[i].unk18;
+            return;
+        }
+    }
+    if (g_Player.colliders[1].effects & 4) {
+        *vram_ptr |= 0x11;
+        if ((g_Timer & 3) == 0) {
+            (*yPosPtr)++;
+        }
+        return;
+    }
+    if (g_Player.colliders[1].effects & 8) {
+        *vram_ptr |= 0x80;
+    }
+    if (PLAYER.velocityY < 0) {
+        return;
+    }
+    argX = *xPosPtr + D_801545F4[0].unk0;
+    argY = *yPosPtr + D_801545F4[0].unk2 + 10;
+    g_api.CheckCollision(argX, argY, &sp10, 0);
+    if ((sp10.effects & (EFFECT_UNK_8000 | EFFECT_SOLID)) != 0) {
+        return;
+    }
+
+    for (i = 2; i < 4; i++) {
+        if ((g_Player.colliders[3].effects & EFFECT_UNK_8000) &&
+            (g_Player.colliders[2].effects & EFFECT_UNK_8000)) {
+            return;
+        }
+        temp_s0 = g_Player.colliders[i].effects;
+        temp_s7 = ((g_Player.colliders[i].effects &
+                    (EFFECT_UNK_4000 | EFFECT_UNK_2000 | EFFECT_UNK_1000)) |
+                   (EFFECT_UNK_8000 | EFFECT_SOLID));
+        if (!(temp_s0 & EFFECT_UNK_8000)) {
+            continue;
+        }
+        if (i == 2) {
+            temp_a0 = EFFECT_UNK_4000;
+            var_a1 = g_Player.colliders[2].unk4;
+            temp_s16 = g_Player.colliders[2].unk4;
+            var_v1 = temp_s16 + 8;
+        } else {
+            temp_a0 = 0;
+            var_a1 = g_Player.colliders[3].unkC;
+            temp_s16 = g_Player.colliders[3].unkC;
+            var_v1 = 8 - temp_s16;
+        }
+        if ((temp_s0 & EFFECT_UNK_4000) == temp_a0) {
+            argX = var_a1 + (*xPosPtr + D_801545F4[i].unk0);
+            argY = *yPosPtr + D_801545F4[i].unk2;
+            g_api.CheckCollision(argX, argY, &sp10, 0);
+            if (sp10.effects & 1) {
+                *yPosPtr += sp10.unk18;
+                *vram_ptr |= temp_s7;
+                return;
+            }
+            continue;
+        }
+        if (var_v1 <= 0) {
+            continue;
+        }
+        if (!(temp_s0 & 1)) {
+            continue;
+        }
+        argX = var_a1 + (*xPosPtr + D_801545F4[i].unk0);
+        argY = *yPosPtr + D_801545F4[i].unk2 + g_Player.colliders[i].unk10;
+        g_api.CheckCollision(argX, argY, &sp10, 0);
+        if (sp10.effects & 1) {
+            *yPosPtr += (sp10.unk18 + g_Player.colliders[i].unk10);
+            *vram_ptr |= temp_s7;
+            return;
+        }
+    }
+}
+
+void func_8015EE28(void) {
+    Collider collider;
+    s32 temp_fp;
+    u32 temp_s0;
+    s32 temp_v1;
+    s32 var_a0;
+    s32 i;
+    u16 var_a1;
+    s16 temp_s16;
+
+    s16 newY;
+
+    s16 argX;
+    s16 argY;
+
+    u32 collidereffects;
+
+    u16* yPosPtr = &PLAYER.posY.i.hi;
+    u16* xPosPtr = &PLAYER.posX.i.hi;
+    s32* vram_ptr = &g_Player.pl_vram_flag;
+    // weird thing where i has to get initialized first
+    i = 1;
+
+    if (D_80097418 != 0) {
+        return;
+    }
+    for (i = 1; i < 4; i++) {
+        var_a0 = g_Player.colliders2[i].effects;
+        temp_s0 = var_a0 & (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_SOLID);
+        if ((var_a0 & EFFECT_SOLID_FROM_ABOVE)) {
+            continue;
+        }
+        if ((temp_s0 == EFFECT_SOLID) || (var_a0 & EFFECT_UNK_8000)) {
+            if (((PLAYER.step == 26) || (PLAYER.step == 23)) &&
+                !(var_a0 & EFFECT_SOLID)) {
+                continue;
+            }
+            argX = *xPosPtr + D_801545E4[i].unk0;
+            argY = *yPosPtr + D_801545E4[i].unk2 +
+                   g_Player.colliders2[i].unk10 + 1;
+            g_api.CheckCollision(argX, argY, &collider, 0);
+            collidereffects = collider.effects;
+            if (!(collidereffects & 1)) {
+                if ((g_Player.colliders2[i].effects != 1) ||
+                    (PLAYER.velocityY <= 0)) {
+                    *vram_ptr |= 2;
+                    if (!(*vram_ptr & 1) &&
+                        ((g_Player.unk04 &
+                          (EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID)) !=
+                         (EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID))) {
+                        if (g_Player.colliders2[i].effects & EFFECT_UNK_8000) {
+                            *yPosPtr += g_Player.colliders2[i].unk10;
+                        } else {
+                            *yPosPtr += g_Player.colliders2[i].unk20;
+                        }
+                    }
+                    return;
+                }
+                continue;
+            }
+            if ((collider.effects &
+                 (EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID)) ==
+                (EFFECT_UNK_0800 | EFFECT_SOLID)) {
+                if (i < 2) {
+                    *vram_ptr |= (EFFECT_UNK_0800 | EFFECT_UNK_0002 |
+                                  ((collidereffects >> 4) &
+                                   (EFFECT_UNK_0400 | EFFECT_UNK_0200 |
+                                    EFFECT_UNK_0100)));
+                    if (!(*vram_ptr & 1)) {
+                        newY = *yPosPtr + 1 +
+                               (g_Player.colliders2[i].unk10 + collider.unk20);
+                        *yPosPtr = newY;
+                    }
+                    return;
+                }
+                if ((i == 2) &&
+                    ((collidereffects &
+                      (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SOLID)) ==
+                     (EFFECT_UNK_0800 | EFFECT_SOLID))) {
+                    g_Player.colliders[2].effects = collidereffects;
+                    g_Player.colliders[2].unk8 = g_Player.colliders[2].unk10;
+                }
+                if ((i == 3) &&
+                    ((collidereffects &
+                      (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SOLID)) ==
+                     (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SOLID))) {
+                    g_Player.colliders[3].effects = collidereffects;
+                    g_Player.colliders[3].unk8 = g_Player.colliders[3].unk10;
+                }
+            }
+            if ((collidereffects & EFFECT_UNK_0800) == 0) {
+                *vram_ptr |=
+                    (EFFECT_UNK_0800 | EFFECT_UNK_0002 |
+                     ((collidereffects >> 4) &
+                      (EFFECT_UNK_0400 | EFFECT_UNK_0200 | EFFECT_UNK_0100)));
+                if (!(*vram_ptr & 1)) {
+                    newY = *yPosPtr + 1 +
+                           (g_Player.colliders2[i].unk10 + collider.unk20);
+                    *yPosPtr = newY;
+                }
+                return;
+            }
+        }
+        if ((temp_s0 == (EFFECT_UNK_0800 | EFFECT_SOLID)) && (i < 2)) {
+            *vram_ptr |=
+                (EFFECT_UNK_0800 | EFFECT_UNK_0002 |
+                 ((g_Player.colliders2[i].effects >> 4) &
+                  (EFFECT_UNK_0400 | EFFECT_UNK_0200 | EFFECT_UNK_0100)));
+            if (!(*vram_ptr & 1)) {
+                *yPosPtr += g_Player.colliders2[i].unk20;
+            }
+            return;
+        }
+    }
+
+    if (PLAYER.velocityY > 0) {
+        return;
+    }
+    argX = *xPosPtr + D_801545E4[0].unk0;
+    argY = (*yPosPtr + D_801545E4[0].unk2) - 10;
+    g_api.CheckCollision(argX, argY, &collider, 0);
+    if ((collider.effects & 1) != 0) {
+        return;
+    }
+    for (i = 2; i < 4; i++) {
+        if ((g_Player.colliders[7].effects & EFFECT_UNK_0800) &&
+            (g_Player.colliders[6].effects & EFFECT_UNK_0800)) {
+            return;
+        }
+        temp_s0 = g_Player.colliders2[i].effects;
+        temp_fp = ((temp_s0 >> 4) &
+                   (EFFECT_UNK_0400 | EFFECT_UNK_0200 | EFFECT_UNK_0100)) +
+                  (EFFECT_UNK_0800 | EFFECT_UNK_0002);
+        if (temp_s0 & EFFECT_UNK_0800) {
+            if (i == 2) {
+                var_a0 = EFFECT_UNK_4000;
+                var_a1 = g_Player.colliders[6].unk4;
+                temp_s16 = g_Player.colliders[6].unk4;
+                temp_v1 = temp_s16 + 8;
+            } else {
+                var_a0 = 0;
+                var_a1 = g_Player.colliders[7].unkC;
+                temp_s16 = g_Player.colliders[7].unkC;
+                temp_v1 = 8 - temp_s16;
+            }
+            if ((temp_s0 & EFFECT_UNK_4000) == var_a0) {
+                argX = var_a1 + (*xPosPtr + D_801545E4[i].unk0);
+                argY = *yPosPtr + D_801545E4[i].unk2;
+                g_api.CheckCollision(argX, argY, &collider, 0);
+                if (collider.effects & 1) {
+                    *vram_ptr |= temp_fp;
+                    if (!(*vram_ptr & 1)) {
+                        *yPosPtr += collider.unk20;
+                    }
+                    return;
+                }
+            } else if ((temp_v1 > 0) && (temp_s0 & 1)) {
+                argX = var_a1 + (*xPosPtr + D_801545E4[i].unk0);
+                argY =
+                    *yPosPtr + D_801545E4[i].unk2 + g_Player.colliders2[i].unk8;
+                g_api.CheckCollision(argX, argY, &collider, 0);
+                if ((collider.effects & 1)) {
+                    if (!(*vram_ptr & 1)) {
+                        *yPosPtr +=
+                            collider.unk20 + g_Player.colliders2[i].unk8;
+                    }
+                    *vram_ptr |= temp_fp;
+                    return;
+                }
+            }
+        }
+    }
+}
+
+void func_8015F414(void) {
+    Collider collider;
+    s32 temp_s0;
+    s32 i;
+
+    s16 argX;
+    s16 argY;
+
+    u16* yPosPtr = &PLAYER.posY.i.hi;
+    u16* xPosPtr = &PLAYER.posX.i.hi;
+    s32* vram_ptr = &g_Player.pl_vram_flag;
+
+    if (D_80097418 != 0) {
+        return;
+    }
+    temp_s0 =
+        g_Player.unk04 & (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
+                          EFFECT_UNK_0400 | EFFECT_UNK_0002 | EFFECT_SOLID);
+    if ((temp_s0 == (EFFECT_UNK_8000 | EFFECT_UNK_0002 | EFFECT_SOLID)) ||
+        (temp_s0 == (EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID)) ||
+        (temp_s0 == (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_UNK_0002 |
+                     EFFECT_SOLID))) {
+        *vram_ptr |= 4;
+        return;
+    }
+
+    for (i = 0; i < 7; i++) {
+        temp_s0 = g_Player.colliders3[i].effects &
+                  (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
+                   EFFECT_UNK_0002 | EFFECT_SOLID);
+        if ((temp_s0 == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_SOLID)) ||
+            (temp_s0 == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0002 |
+                         EFFECT_SOLID)) ||
+            (temp_s0 == (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SOLID)) ||
+            (temp_s0 == (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_UNK_0002 |
+                         EFFECT_SOLID)) ||
+            (temp_s0 == (EFFECT_UNK_8000 | EFFECT_UNK_0002 | EFFECT_SOLID)) ||
+            (temp_s0 == (EFFECT_UNK_0002 | EFFECT_SOLID))) {
+            argX =
+                *xPosPtr + D_80154604[i].unk0 + g_Player.colliders3[i].unk4 - 1;
+            argY = *yPosPtr + D_80154604[i].unk2;
+            g_api.CheckCollision(argX, argY, &collider, 0);
+            if ((collider.effects & 1) == 0) {
+                *vram_ptr |= 4;
+                *xPosPtr += g_Player.colliders3[i].unk4;
+                return;
+            }
+        }
+
+        if (!(*vram_ptr & 1)) {
+            if ((temp_s0 & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
+                            EFFECT_UNK_0800)) == EFFECT_UNK_8000 &&
+                (i != 0) &&
+                ((g_Player.colliders3[0].effects & EFFECT_UNK_0800) ||
+                 !(g_Player.colliders3[0].effects &
+                   (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_UNK_0002)))) {
+                *vram_ptr |= 4;
+                *xPosPtr += g_Player.colliders3[i].unk4;
+                return;
+            }
+            if (((temp_s0 & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
+                             EFFECT_UNK_0800)) == EFFECT_UNK_0800) &&
+                (i != 6) &&
+                ((g_Player.colliders3[6].effects & EFFECT_UNK_8000) ||
+                 !(g_Player.colliders3[6].effects &
+                   (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_UNK_0002)))) {
+                *vram_ptr |= 4;
+                *xPosPtr += g_Player.colliders3[i].unk4;
+                return;
+            }
+        }
+    }
+}
+
+void func_8015F680(void) {
+    Collider collider;
+    s32 temp_s0;
+    s32 i;
+    s16 argX;
+    s16 argY;
+
+    u16* yPosPtr = &PLAYER.posY.i.hi;
+    u16* xPosPtr = &PLAYER.posX.i.hi;
+    s32* vram_ptr = &g_Player.pl_vram_flag;
+
+    if (D_80097418 != 0) {
+        return;
+    }
+    temp_s0 =
+        g_Player.unk04 & (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
+                          EFFECT_UNK_0400 | EFFECT_UNK_0002 | EFFECT_SOLID);
+    if ((temp_s0 == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0002 |
+                     EFFECT_SOLID)) ||
+        (temp_s0 == (EFFECT_UNK_0800 | EFFECT_UNK_0400 | EFFECT_UNK_0002 |
+                     EFFECT_SOLID)) ||
+        (temp_s0 == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
+                     EFFECT_UNK_0400 | EFFECT_UNK_0002 | EFFECT_SOLID))) {
+        *vram_ptr |= 8;
+        return;
+    }
+    for (i = 7; i < 14; i++) {
+        temp_s0 = g_Player.colliders3[i].effects &
+                  (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
+                   EFFECT_UNK_0002 | EFFECT_SOLID);
+        if ((temp_s0 == (EFFECT_UNK_8000 | EFFECT_SOLID)) ||
+            (temp_s0 == (EFFECT_UNK_8000 | EFFECT_UNK_0002 | EFFECT_SOLID)) ||
+            (temp_s0 == (EFFECT_UNK_0800 | EFFECT_SOLID)) ||
+            (temp_s0 == (EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID)) ||
+            (temp_s0 == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0002 |
+                         EFFECT_SOLID)) ||
+            (temp_s0 == (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_UNK_0002 |
+                         EFFECT_SOLID)) ||
+            (temp_s0 == (EFFECT_UNK_0002 | EFFECT_SOLID))) {
+            argX =
+                *xPosPtr + D_80154604[i].unk0 + g_Player.colliders3[i].unkC + 1;
+            argY = *yPosPtr + D_80154604[i].unk2;
+            g_api.CheckCollision(argX, argY, &collider, 0);
+            if ((collider.effects & 1) == 0) {
+                *vram_ptr |= 8;
+                *xPosPtr += g_Player.colliders3[i].unkC;
+                return;
+            }
+        }
+        if (!(*vram_ptr & 1)) {
+            if (((temp_s0 &
+                  (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800)) ==
+                 (EFFECT_UNK_8000 | EFFECT_UNK_4000)) &&
+                (i != 7) &&
+                ((g_Player.colliders3[7].effects & EFFECT_UNK_0800) ||
+                 !(g_Player.colliders3[7].effects &
+                   (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_UNK_0002)))) {
+                *vram_ptr |= 8;
+                *xPosPtr += g_Player.colliders3[i].unkC;
+                return;
+            }
+            if (((temp_s0 &
+                  (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800)) ==
+                 (EFFECT_UNK_4000 | EFFECT_UNK_0800)) &&
+                (i != 13) &&
+                ((g_Player.colliders3[13].effects & EFFECT_UNK_8000) ||
+                 !(g_Player.colliders3[13].effects &
+                   (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_UNK_0002)))) {
+                *vram_ptr |= 8;
+                *xPosPtr += g_Player.colliders3[i].unkC;
+                return;
+            }
+        }
+    }
+}
+
+Entity* GetFreeEntity(s16 start, s16 end) {
     Entity* entity = &g_Entities[start];
     s16 i;
 
@@ -51,7 +602,7 @@ Entity* func_8015F8F8(s16 start, s16 end) {
     return NULL;
 }
 
-Entity* func_8015F96C(s16 start, s16 end) {
+Entity* GetFreeEntityReverse(s16 start, s16 end) {
     Entity* entity = &g_Entities[end - 1];
     s16 i;
     for (i = end - 1; i >= start; i--, entity--) {
@@ -175,27 +726,101 @@ void func_801603B4(void) {}
 
 void func_801603BC(void) {}
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_801603C4);
+// Corresponding DRA function is func_8011A4D0
+void func_801603C4(void) {
+    SubweaponDef subwpn;
+    Entity* entity;
+    s32 i;
+    s32 i2;
+    s32 i3;
+    s32 temp_s2;
+    s32 enemy;
+    s32 enemy2;
 
-Entity* func_801606BC(Entity* srcEntity, u32 arg1, s32 arg2) {
+    temp_s2 = *D_80097420;
+    entity = g_CurrentEntity = &g_Entities[4];
+    for (i = 4; i < 0x40; i++, g_CurrentEntity++, entity++) {
+        if (entity->entityId != 0) {
+            if (entity->step == 0) {
+                entity->pfnUpdate = D_8015495C[entity->entityId];
+            }
+            if ((temp_s2 == 0) || (entity->flags & 0x10000)) {
+                entity->pfnUpdate(entity);
+                entity = g_CurrentEntity;
+                if (entity->entityId != 0) {
+                    if (!(entity->flags & FLAG_UNK_04000000) &&
+                        ((u16)(entity->posX.i.hi + 32) > 320 ||
+                         (u16)(entity->posY.i.hi + 16) > 272)) {
+                        DestroyEntity(entity);
+                    } else if (entity->flags & 0x100000) {
+                        g_api.UpdateAnim(0, (s32*)D_80154674);
+                    }
+                }
+            }
+        }
+    }
+
+    if (D_80174FAC != 0) {
+        if (--D_80174FAC & 1) {
+            g_api.g_pfn_800EA5AC(1, D_80174FB0, D_80174FB4, D_80174FB8);
+        }
+    }
+
+    D_80174F80[1] = D_80174F80[2] = 0;
+    enemy = g_Entities[16].enemyId;
+    if (enemy == 1) {
+        D_80174F80[1] = 1;
+    } else if (enemy == 2) {
+        D_80174F80[2] = 1;
+    }
+
+    for (i2 = 3; i2 < 11; i2++) {
+        D_80174F80[i2] = 0;
+    }
+
+    entity = &g_Entities[17];
+    for (i3 = 17; i3 < 48; entity++, i3++) {
+        enemy2 = entity->enemyId;
+        if (enemy2 >= 3) {
+            D_80174F80[entity->enemyId]++;
+        }
+    }
+    // This IF will fire if we have enough hearts to use a subweapon crash.
+    // No idea what it's doing here.
+    if (func_8015FB84(&subwpn, 1, 0) >= 0) {
+        g_Player.unk0C |= 0x200000;
+    }
+    if (g_Player.unk0C & 0xC0000) {
+        FntPrint("dead player\n");
+        entity = &g_Entities[17]; // Weird code here. Set entity to #17 but...
+        entity -= 13; // then change to #4 before the for-loop starting with 4?
+        for (i = 4; i < 64; i++, entity++) {
+            entity->hitboxState = 0;
+        }
+    }
+}
+
+// Similar to the version in DRA but with some logic removed
+Entity* CreateEntFactoryFromEntity(
+    Entity* source, u32 factoryParams, s32 arg2) {
     /**
      * arg2 is unused, but needed to match other functions that call
      * this function, probably part of the code for a debug build
      */
-    Entity* entity = func_8015F8F8(8, 0x10);
+    Entity* entity = GetFreeEntity(8, 0x10);
 
     if (entity != NULL) {
         DestroyEntity(entity);
         entity->entityId = E_ENTITYFACTORY;
-        entity->ext.generic.unk8C.entityPtr = srcEntity;
-        entity->posX.val = srcEntity->posX.val;
-        entity->posY.val = srcEntity->posY.val;
-        entity->facingLeft = srcEntity->facingLeft;
-        entity->zPriority = srcEntity->zPriority;
-        entity->params = arg1 & 0xFFF;
-        entity->ext.generic.unkA0 = (arg1 >> 8) & 0xFF00;
+        entity->ext.generic.unk8C.entityPtr = source;
+        entity->posX.val = source->posX.val;
+        entity->posY.val = source->posY.val;
+        entity->facingLeft = source->facingLeft;
+        entity->zPriority = source->zPriority;
+        entity->params = factoryParams & 0xFFF;
+        entity->ext.generic.unkA0 = (factoryParams >> 8) & 0xFF00;
 
-        if (srcEntity->flags & FLAG_UNK_10000) {
+        if (source->flags & FLAG_UNK_10000) {
             entity->flags |= FLAG_UNK_10000;
         }
     } else {
@@ -374,7 +999,7 @@ void func_80161C2C(Entity* self) {
         if ((self->animFrameIdx == 8) && (self->unk4C != D_80154C80)) {
             self->blendMode = 0x10;
             if (!(params & 1) && (self->animFrameDuration == step)) {
-                func_801606BC(self, 0x40004, 0);
+                CreateEntFactoryFromEntity(self, 0x40004, 0);
             }
         }
 
@@ -404,7 +1029,7 @@ void func_80161EF8(Entity* self) {
     case 1:
         if ((self->animFrameIdx == 6) &&
             (self->animFrameDuration == self->step) && (rand() & 1)) {
-            func_801606BC(self, 4, 0);
+            CreateEntFactoryFromEntity(self, 4, 0);
         }
         self->posY.val += self->velocityY;
         if (self->animFrameDuration < 0) {

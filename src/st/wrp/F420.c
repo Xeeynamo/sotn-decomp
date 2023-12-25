@@ -1037,16 +1037,9 @@ void BottomCornerText(u8* str, u8 lower_left) {
 
 #include "../unk_prim_helper.h"
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/F420", func_80193658);
+#include "../update_animation.h"
 
-POLY_GT4* func_801937A8(POLY_GT4* poly) {
-    while (poly) {
-        if (poly->p3 == 0)
-            return poly;
-        poly = (POLY_GT4*)poly->tag;
-    }
-    return NULL;
-}
+#include "../find_first_unk_prim.h"
 
 POLY_GT4* func_801937D8(POLY_GT4* poly, u8 index) {
     if (poly) {

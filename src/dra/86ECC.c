@@ -918,7 +918,152 @@ s32 func_80128BBC(Unkstruct_80128BBC* arg0, u8 value) {
     return ret;
 }
 
-INCLUDE_ASM("dra/nonmatchings/86ECC", func_80128C2C);
+// ID #17. Created by factory blueprint #22. This is the blueprint for the
+// Agunea (lightning) subweapon.
+void func_80128C2C(Entity* self) {
+    Entity* ent;
+    Primitive* poly;
+    s32 heartCost;
+    u16 tempY;
+    u16 tempX;
+    u32 heartBroachesWorn;
+
+    if (g_Player.unk0C & 0x10007) {
+        DestroyEntity(self);
+        return;
+    }
+    switch (self->step) {
+    case 0:
+        self->primIndex = AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        } else {
+            self->flags =
+                FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+            self->facingLeft = PLAYER.facingLeft;
+            func_8011A290(self);
+            self->hitboxHeight = 4;
+            self->hitboxWidth = 4;
+            self->hitboxOffX = 4;
+            self->hitboxOffY = 0;
+            self->posY.i.hi = self->ext.et_80128C2C.unk82 =
+                PLAYER.posY.i.hi + PLAYER.hitboxOffY - 8;
+            self->posX.i.hi = self->ext.et_80128C2C.unk80 = PLAYER.posX.i.hi;
+            poly = &g_PrimBuf[self->primIndex];
+            poly->type = 2;
+            poly->priority = PLAYER.zPriority + 2;
+            poly->blendMode = 0x331;
+            poly->r1 = 0x60;
+            poly->g1 = 0;
+            poly->b1 = 0x80;
+            SetSpeedX(FIX(6));
+            PlaySfx(0x60C);
+            CreateEntFactoryFromEntity(self, FACTORY(0x5200, 44), 0);
+            g_Player.D_80072F14 = 4;
+            self->step++;
+        }
+        break;
+    case 1:
+        self->posX.val += self->velocityX;
+        if (self->posX.i.hi < -0x40 || self->posX.i.hi > 0x140 ||
+            self->posY.i.hi < -0x20 || self->posY.i.hi > 0x120) {
+            self->step = 2;
+        }
+        if (self->hitFlags != 0) {
+            self->step = 3;
+            self->ext.et_80128C2C.parent1 = self->ext.et_80128C2C.parent2;
+        }
+        break;
+    case 4:
+        self->posX.i.hi = self->ext.et_80128C2C.parent1->posX.i.hi;
+        self->posY.i.hi = self->ext.et_80128C2C.parent1->posY.i.hi;
+        if (++self->ext.et_80128C2C.unk7C >= 16) {
+            if (g_PrimBuf[self->primIndex].r1 < 5) {
+                DestroyEntity(self);
+                return;
+            }
+        }
+        break;
+    case 2:
+        if (g_PrimBuf[self->primIndex].r1 < 5) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    case 3:
+        if ((g_Player.padPressed & (PAD_UP + PAD_SQUARE)) !=
+            (PAD_UP + PAD_SQUARE)) {
+            self->step = 4;
+        }
+        ent = self->ext.et_80128C2C.parent1;
+        if (ent->entityId == 0 ||
+            self->ext.et_80128C2C.unk7C != 0 &&
+                (ent->hitPoints > 0x7000 || ent->hitPoints == 0 ||
+                 ent->flags & 0x100)) {
+            self->step = 2;
+            return;
+        }
+
+        tempX = self->posX.i.hi = self->ext.et_80128C2C.parent1->posX.i.hi;
+        tempY = self->posY.i.hi = self->ext.et_80128C2C.parent1->posY.i.hi;
+        if ((self->ext.et_80128C2C.unk7C % 12) == 0) {
+            self->posX.i.hi += ((rand() & 0xF) - 8);
+            self->posY.i.hi += ((rand() & 0xF) - 8);
+            if (self->ext.et_80128C2C.unk84 == 0) {
+                CreateEntFactoryFromEntity(self, FACTORY(0, 23), 0);
+                PlaySfx(0x665);
+                CreateEntFactoryFromEntity(self, FACTORY(0x200, 61), 0);
+                self->ext.et_80128C2C.unk84++;
+            } else {
+                heartCost = 5;
+                // 0x4d is the item ID for the heart broach.
+                heartBroachesWorn =
+                    CheckEquipmentItemCount(ITEM_HEART_BROACH, ACCESSORY_TYPE);
+                if (heartBroachesWorn == 1) {
+                    heartCost = 2;
+                }
+                if (heartBroachesWorn == 2) {
+                    heartCost /= 3;
+                }
+                if (heartCost <= 0) {
+                    heartCost = 1;
+                }
+                if (g_Status.hearts >= heartCost) {
+                    g_Status.hearts -= heartCost;
+                    CreateEntFactoryFromEntity(self, FACTORY(0, 23), 0);
+                    PlaySfx(0x665);
+                    CreateEntFactoryFromEntity(self, FACTORY(0x200, 61), 0);
+                } else {
+                    self->step = 4;
+                }
+            }
+        }
+        self->posX.i.hi = tempX;
+        self->posY.i.hi = tempY;
+        self->ext.et_80128C2C.unk7C++;
+        break;
+    }
+    poly = &g_PrimBuf[self->primIndex];
+    if (poly->r1 >= 4) {
+        poly->r1 -= 4;
+    }
+    if (poly->g1 >= 4) {
+        poly->g1 -= 4;
+    }
+    if (poly->b1 >= 4) {
+        poly->b1 -= 4;
+    }
+    tempX = poly->b1;
+    if (tempX < 5) {
+        poly->blendMode |= BLEND_VISIBLE;
+    }
+    poly->x0 = self->ext.et_80128C2C.unk80;
+    poly->y0 = self->ext.et_80128C2C.unk82;
+    poly->x1 = self->posX.i.hi;
+    poly->y1 = self->posY.i.hi;
+    return;
+}
 
 INCLUDE_ASM("dra/nonmatchings/86ECC", func_801291C4);
 
@@ -989,7 +1134,137 @@ void func_8012B78C(Entity* entity) {
 }
 
 // book rotates around player
-INCLUDE_ASM("dra/nonmatchings/86ECC", EntitySubwpnBible);
+void EntitySubwpnBible(Entity* self) {
+    Primitive* prim;
+    s16 left;
+    s16 top;
+    s16 bottom;
+    s16 right;
+
+    s32 sine;
+    s32 cosine;
+    s32 cos_s2;
+    s32 sin_s3;
+    s32 cos_s3;
+    s32 sin_s2;
+
+    s32 temp_a3;
+    s32 temp_s2;
+    s32 temp_s3;
+    s32 temp_a1;
+
+    s32 temp_v0;
+
+    s32 var_s4;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        prim = &g_PrimBuf[self->primIndex];
+        prim->tpage = 0x1E;
+        prim->clut = 0x17F;
+        prim->u0 = prim->u2 = 0x98;
+        prim->v0 = prim->v1 = 0xD8;
+        prim->u1 = prim->u3 = 0xA8;
+        prim->v2 = prim->v3 = 0xF0;
+        prim->priority = PLAYER.zPriority + 1;
+        prim->blendMode = 0x108;
+        self->ext.et_BibleSubwpn.unk84 = self->facingLeft ? 0x20 : -0x20;
+        func_8011A290(self);
+        self->hitboxWidth = 6;
+        self->hitboxHeight = 6;
+        self->step++;
+        break;
+    case 1:
+        prim = &g_PrimBuf[self->primIndex];
+        prim->blendMode &= ~BLEND_VISIBLE;
+        self->ext.et_BibleSubwpn.unk86++;
+        g_Player.D_80072F14 = 4;
+        self->step++;
+    case 2:
+        self->ext.et_BibleSubwpn.unk7C++;
+        if (++self->ext.et_BibleSubwpn.unk7E >= 0x30) {
+            self->step++;
+        }
+        break;
+    case 3:
+        if (++self->ext.et_BibleSubwpn.unk7C >= 0x12C) {
+            self->flags &= ~FLAG_UNK_04000000;
+            self->velocityX = self->facingLeft ? FIX(-12) : FIX(12);
+            self->velocityY = FIX(-12);
+            PlaySfx(0x6B2);
+            self->ext.et_BibleSubwpn.unk86++;
+            self->step++;
+        }
+        break;
+    }
+    switch (self->ext.et_BibleSubwpn.unk86) {
+    case 0:
+        break;
+    case 1:
+        // All this logic is a mess, could use a cleanup
+        sine = rsin(self->ext.et_BibleSubwpn.unk80);
+        cosine = rcos(self->ext.et_BibleSubwpn.unk80);
+        temp_s2 = (sine * self->ext.et_BibleSubwpn.unk7E) >> 0xC;
+        temp_s3 = (cosine * self->ext.et_BibleSubwpn.unk7E) >> 0xC;
+        cos_s2 = cosine * temp_s2;
+        sin_s3 = sine * temp_s3;
+        cos_s3 = cosine * temp_s3;
+        temp_a1 = cos_s2 + sin_s3;
+        sin_s2 = sine * temp_s2;
+        temp_s2 = temp_a1 >> 0xC;
+        temp_s3 = (cos_s3 - sin_s2) >> 0xC;
+        sine = rsin(self->ext.et_BibleSubwpn.unk82);
+        cosine = rcos(self->ext.et_BibleSubwpn.unk82);
+        temp_a1 = ((cosine * temp_s2) + (sine * var_s4)) >> 0xC;
+        temp_a3 = ((cosine * var_s4) - (sine * temp_s2)) >> 0xC;
+        if (self->facingLeft != 0) {
+            temp_a3 = ((cosine * temp_a3) + (sine * temp_s3)) >> 0xC;
+        } else {
+            temp_a3 = ((cosine * temp_a3) - (sine * temp_s3)) >> 0xC;
+        }
+
+        self->ext.et_BibleSubwpn.unk80 += (self->facingLeft ? 0x80 : -0x80);
+        self->ext.et_BibleSubwpn.unk80 &= 0xFFF;
+        self->ext.et_BibleSubwpn.unk82 += self->ext.et_BibleSubwpn.unk84;
+        if (ABS(self->ext.et_BibleSubwpn.unk82) >= 0x200) {
+            // temp_v0 needed because otherwise unk84 gets loaded with lhu
+            // instead of lh
+            temp_v0 = -self->ext.et_BibleSubwpn.unk84;
+            self->ext.et_BibleSubwpn.unk84 = temp_v0;
+        }
+        self->posX.i.hi = PLAYER.posX.i.hi + temp_a1;
+        self->posY.i.hi = PLAYER.posY.i.hi + temp_a3;
+        self->zPriority = PLAYER.zPriority + (temp_s3 < 0 ? 2 : -2);
+        break;
+    case 2:
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->velocityY += FIX(-2);
+        break;
+    }
+    if (self->ext.et_BibleSubwpn.unk86 != 0) {
+        prim = &g_PrimBuf[self->primIndex];
+        left = self->posX.i.hi - 8;
+        right = self->posX.i.hi + 8;
+        top = self->posY.i.hi - 12;
+        bottom = self->posY.i.hi + 12;
+        prim->x0 = prim->x2 = left;
+        prim->x1 = prim->x3 = right;
+        prim->y0 = prim->y1 = top;
+        prim->y2 = prim->y3 = bottom;
+        prim->priority = self->zPriority;
+        CreateEntFactoryFromEntity(self, FACTORY(0, 79), 0);
+        if (g_GameTimer % 10 == 0) {
+            PlaySfx(BIBLE_SUBWPN_SWOOSH);
+        }
+    }
+}
 
 // echo of bat effect
 INCLUDE_ASM("dra/nonmatchings/86ECC", EntityBatEcho);
@@ -1281,7 +1556,7 @@ void func_8012D28C(bool exitEarly) {
     // Start a routine where we look through this array for a value.
     bitNotFound = 0;
     for (i = 3; i < 7; i++) {
-        if ((g_Player.D_80072CF0[i][0] & 2)) {
+        if ((g_Player.colliders3[i].effects & EFFECT_UNK_0002)) {
             break;
         }
     }
@@ -1289,7 +1564,7 @@ void func_8012D28C(bool exitEarly) {
     // and keep searching.
     if (i == 7) {
         for (i = 10; i < 14; i++) {
-            if ((g_Player.D_80072CF0[i][0] & 2)) {
+            if ((g_Player.colliders3[i].effects & EFFECT_UNK_0002)) {
                 break;
             }
         }

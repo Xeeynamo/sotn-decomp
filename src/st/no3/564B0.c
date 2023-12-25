@@ -125,18 +125,9 @@ void EntityZombieSpawner(Entity* self) {
 
 #include "../unk_prim_helper.h"
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/564B0", func_801D6C68);
+#include "../update_animation.h"
 
-POLY_GT4* func_801D6DB8(POLY_GT4* poly) {
-    while (poly != NULL) {
-        if (poly->p3 != 0) {
-            poly = (POLY_GT4*)poly->tag;
-        } else {
-            return poly;
-        }
-    }
-    return NULL;
-}
+#include "../find_first_unk_prim.h"
 
 POLY_GT4* func_8019C43C(POLY_GT4* poly, u8 index) {
     if (poly) {

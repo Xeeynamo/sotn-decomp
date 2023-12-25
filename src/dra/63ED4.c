@@ -5,7 +5,6 @@
 // Note: Including this as part of the previous file (62D70.c) caused
 // four 00 bytes to be added to the rodata at 0x3CDC0; this indicates
 // that this function should be the start of this new file.
-
 void func_80103ED4(void) {
     char saveFile[32];
     s32 memCardClose;
@@ -15,7 +14,7 @@ void func_80103ED4(void) {
     switch (D_80137E4C) {
     case 0:
         MemcardInit();
-        D_80137E50 = 4;
+        g_MemCardRetryCount = 4;
         D_80137E4C++;
         return;
     case 1:
@@ -25,13 +24,13 @@ void func_80103ED4(void) {
             return;
         }
         if (case1_state == -1) {
-            if (--D_80137E50 == -1) {
+            if (--g_MemCardRetryCount == -1) {
                 D_80137E4C = 7;
             }
             return;
         }
         if (case1_state == -3) {
-            if (--D_80137E50 == -1) {
+            if (--g_MemCardRetryCount == -1) {
                 D_80137E4C = 8;
             }
             return;
@@ -45,7 +44,7 @@ void func_80103ED4(void) {
         return;
     case 2:
         if (MemcardParse(D_80097924, 0) >= 0) {
-            D_80137E50 = 10;
+            g_MemCardRetryCount = 10;
             if (D_8006C378 >= 0) {
                 i = 0;
                 if (D_80137E54 == 2) {
@@ -102,12 +101,12 @@ void func_80103ED4(void) {
         // in the save-select screen.
         StoreSaveData(g_Pix, D_8006C378, rand() & 0xF);
         if (MemcardWriteFile(D_80097924, 0, saveFile, g_Pix, 1, i) != 0) {
-            if (--D_80137E50 == -1) {
+            if (--g_MemCardRetryCount == -1) {
                 D_80137E4C = 0;
                 return;
             }
         } else {
-            D_80137E50 = 10;
+            g_MemCardRetryCount = 10;
             D_80137E4C++;
             return;
         }
@@ -118,7 +117,7 @@ void func_80103ED4(void) {
             return;
         }
         if (memCardClose == -3) {
-            if (--D_80137E50 != -1) {
+            if (--g_MemCardRetryCount != -1) {
                 D_80137E4C--;
                 return;
             }
@@ -140,9 +139,281 @@ void func_8010427C(void) {
 
 INCLUDE_ASM("dra/nonmatchings/63ED4", func_801042C4);
 
-INCLUDE_ASM("dra/nonmatchings/63ED4", func_80104790);
+void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
+#if defined(VERSION_US)
+    const s32 PRIORITY_SHIFT = 16;
+#elif defined(VERSION_HD)
+    const s32 PRIORITY_SHIFT = 8;
+#endif
+    VECTOR sp28;
+    SVECTOR pad;
+    SVECTOR sp40[3];
+    SVECTOR sp58[3];
+    u8 sp70[4];
+    s32 sp78;
+    s32 sp7C;
+    s32 sp80;
+    s32 spA0;
+    s32 spA8;
+    SVECTOR** spB0;
+    SVECTOR* var_s2;
+    VECTOR* var_s3;
+    Primitive* prim;
+    s32 temp_v0_5;
+    s32 var_a0;
+    s32 var_a1;
+    s32 var_a2_2;
+    s32 var_a3_2;
+    s32 i;
+    s32 var_v1;
+    s32 var_v1_2;
+    u8* var_s7;
 
-INCLUDE_ASM("dra/nonmatchings/63ED4", func_80105078);
+    sp70[2] = sp70[1] = sp70[0] = 0x80;
+    sp70[3] = 0;
+    RotMatrix(&D_801379C8, &D_80137E00); // types copied
+    RotMatrix(&D_801379C8, &D_80137E20); // types copied
+    SetColorMatrix(&D_800A37B8);         // types copied
+    SetLightMatrix(&D_80137E20);         // types copied
+    SetBackColor(0xC0, 0xC0, 0xC0);
+    prim = &g_PrimBuf[D_80137E40];
+
+    switch (arg0) {
+    case 0:
+        spB0 = &D_800A3210;
+        var_s3 = &D_801379E0;
+        var_s2 = &D_80137CA0;
+        spA8 = 0x14;
+        break;
+    case 1:
+    case 2:
+        spB0 = &D_800A33A0;
+        var_s3 = &D_80137B20;
+        var_s2 = &D_80137D40;
+        spA8 = 0x18;
+        break;
+    case 3:
+        spB0 = &D_800A3608;
+        var_s3 = &D_80137B20;
+        var_s2 = &D_80137D40;
+        spA8 = 0x18;
+        for (spA0 = 0; spA0 < 14; spA0++) {
+            D_80137E70[spA0].vx =
+                D_800A3598[spA0]->vx +
+                (((D_800A35D0[spA0]->vx - D_800A3598[spA0]->vx) * arg2) / 96);
+            D_80137E70[spA0].vy =
+                D_800A3598[spA0]->vy +
+                (((D_800A35D0[spA0]->vy - D_800A3598[spA0]->vy) * arg2) / 96);
+            D_80137E70[spA0].vz =
+                D_800A3598[spA0]->vz +
+                (((D_800A35D0[spA0]->vz - D_800A3598[spA0]->vz) * arg2) / 96);
+            D_80137E70[spA0].pad = 0;
+        }
+    }
+
+    var_s7 = &D_800A3728;
+    for (spA0 = 0; spA0 < 24; spA0++, prim = prim->next, spB0 += 3) {
+        if (spA0 >= spA8) {
+            prim->blendMode = 8;
+            continue;
+        }
+        TransMatrix(&D_80137E00, &D_801379D0); // types copied
+        SetRotMatrix(&D_80137E00);             // types copied
+        SetTransMatrix(&D_80137E00);           // types copied
+
+        var_a1 = 0;
+        var_a3_2 = 0;
+        var_a2_2 = 0;
+        var_a0 = arg2;
+        var_v1 = arg2;
+        sp7C = 0;
+        if (arg0 == 2) {
+            var_v1_2 = (spA0 * 4);
+            var_v1_2 -= 0x5C;
+            var_v1_2 += arg2;
+            if (var_v1_2 < 0) {
+                var_v1_2 = 0;
+            }
+            if (var_v1_2 >= 0x80) {
+                var_v1_2 = 0x7F;
+            }
+            var_a2_2 = var_v1_2 << 0xC;
+            var_a1 = var_a2_2;
+            var_a3_2 = -var_a2_2 * 4;
+            if (var_s2[spA0].vx < 0) {
+                do {
+                    var_a1 = -var_a1;
+                } while (0);
+            }
+            if (var_s2[spA0].vz < 0) {
+                var_a2_2 = -var_a2_2;
+            }
+            var_a0 = 0;
+            var_v1 = 0;
+        }
+        if (arg0 == 3) {
+            var_a0 = 0;
+            var_v1 = 0;
+        }
+        var_s3[spA0].vx = ((var_s2[spA0].vx * var_a0) + var_a1);
+        var_s3[spA0].vy = ((var_s2[spA0].vy * var_v1) + var_a3_2);
+        var_s3[spA0].vz = ((var_s2[spA0].vz * var_a0) + var_a2_2);
+        for (i = 0; i < 3; i++) {
+            sp28.vx = sp40[i].vx =
+                ((spB0[i]->vx * arg1) >> 8) + (var_s3[spA0].vx >> 0xC);
+            sp28.vy = sp40[i].vy =
+                ((spB0[i]->vy * arg1) >> 8) + (var_s3[spA0].vy >> 0xC);
+            sp28.vz = sp40[i].vz =
+                ((spB0[i]->vz * arg1) >> 8) + (var_s3[spA0].vz >> 0xC);
+            func_80017008(&sp28, &sp58[i]);
+        }
+        temp_v0_5 = RotAverageNclip3(
+            &sp40[0], &sp40[1], &sp40[2], (s32*)&prim->x0, (s32*)&prim->x1,
+            (s32*)&prim->x2, &sp78, &sp7C, &sp80);
+        if (temp_v0_5 < 0) {
+            RotAverageNclip3(
+                &sp40[0], &sp40[2], &sp40[1], (s32*)&prim->x0, (s32*)&prim->x2,
+                (s32*)&prim->x1, &sp78, &sp7C, &sp80);
+        }
+        func_801072DC(prim);
+        prim->type = 5;
+        if (sp7C >= 0xF0) {
+            continue;
+        }
+        if (temp_v0_5 >= 0) {
+            prim->priority =
+                (u16)g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 + 4;
+        } else {
+            prim->priority =
+                (u16)g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 4;
+        }
+        prim->blendMode = 4;
+        if (((D_80137E4C == 6) || (D_80137EE0 != 0)) &&
+            (((u32)(arg0 - 1) < 2U) || ((arg0 == 3) && (arg2 >= 0x40)))) {
+            prim->clut = (D_80137EE0 * 2) + 0x1F0;
+            prim->u0 = *var_s7++ + 0x80;
+            prim->v0 = *var_s7++ + 0x80;
+            prim->u1 = *var_s7++ + 0x80;
+            prim->v1 = *var_s7++ + 0x80;
+            prim->u2 = *var_s7++ + 0x80;
+            prim->v2 = *var_s7++ + 0x80;
+            if (temp_v0_5 < 0) {
+                prim->u0 = 0xD1;
+                prim->v0 = 0xF1;
+                prim->u1 = 0xDE;
+                prim->v1 = 0xFE;
+                prim->u2 = 0xD1;
+                prim->v2 = 0xFE;
+            }
+        } else {
+            prim->clut = D_80137EE0 + 0x1F1;
+            prim->u0 = 0xDB;
+            prim->v0 = 0xA8;
+            prim->u1 = 0xBC;
+            prim->v1 = 0xDE;
+            prim->u2 = 0xFA;
+            prim->v2 = 0xDE;
+        }
+
+        if ((arg0 == 0) && (arg2 < 0x10)) {
+            prim->priority -= PRIORITY_SHIFT;
+        }
+        if (arg0 == 3) {
+            if (arg2 < 0x30) {
+                prim->priority -= PRIORITY_SHIFT;
+            }
+            prim->blendMode = 4;
+        } else if ((arg0 != 2) && (arg2 >= 0x40)) {
+            // this i is a register reuse, not an iterator
+            i = 0x7F - arg2;
+            prim->r0 = ((prim->r0 * i) >> 6);
+            prim->g0 = ((prim->g0 * i) >> 6);
+            prim->b0 = ((prim->b0 * i) >> 6);
+            prim->r1 = ((prim->r1 * i) >> 6);
+            prim->g1 = ((prim->g1 * i) >> 6);
+            prim->b1 = ((prim->b1 * i) >> 6);
+            prim->r2 = ((prim->r2 * i) >> 6);
+            prim->g2 = ((prim->g2 * i) >> 6);
+            prim->b2 = ((prim->b2 * i) >> 6);
+            prim->blendMode = 0x35;
+        }
+    }
+}
+
+void func_80105078(s32 arg0, s32 arg1) {
+    VECTOR sp28;
+    SVECTOR pad;
+    SVECTOR sp40[3];
+    SVECTOR sp58[3];
+    u8 sp70[4];
+    s32 sp78;
+    s32 sp7C;
+    s32 sp80;
+    s32 sp88;
+    SVECTOR** sp90;
+    Primitive* prim;
+    s32 temp_v0_4;
+    s32 i;
+
+    sp70[2] = sp70[1] = sp70[0] = 0x80;
+    sp70[3] = 0;
+    RotMatrix(&D_801379C8, &D_80137E00);
+    RotMatrix(&D_801379C8, &D_80137E20);
+    SetColorMatrix(&D_800A37B8);
+    SetLightMatrix(&D_80137E20);
+    SetBackColor(0xC0, 0xC0, 0xC0);
+
+    sp90 = &D_800A34C0;
+    prim = &g_PrimBuf[D_80137E44];
+
+    for (sp88 = 0; sp88 < 18; sp88++, prim = prim->next, sp90 += 3) {
+        if (arg0 == 0) {
+            prim->blendMode = BLEND_VISIBLE;
+            continue;
+        }
+        TransMatrix(&D_80137E00, &D_801379D0);
+        SetRotMatrix(&D_80137E00);
+        SetTransMatrix(&D_80137E00);
+        sp7C = 0;
+        for (i = 0; i < 3; i++) {
+            sp28.vx = sp40[i].vx = (sp90[i]->vx * arg0) >> 8;
+            sp28.vy = sp40[i].vy = (sp90[i]->vy * arg0) >> 8;
+            sp28.vz = sp40[i].vz = (sp90[i]->vz * arg0) >> 8;
+            func_80017008(&sp28, &sp58[i]);
+        }
+        temp_v0_4 = RotAverageNclip3(
+            &sp40[0], &sp40[1], &sp40[2], (s32*)&prim->x0, (s32*)&prim->x1,
+            (s32*)&prim->x2, &sp78, &sp7C, &sp80);
+        if (temp_v0_4 < 0) {
+            RotAverage3(&sp40[0], &sp40[2], &sp40[1], (s32*)&prim->x0,
+                        (s32*)&prim->x2, (s32*)&prim->x1, &sp78, &sp80);
+        }
+        prim->type = 2;
+        if (sp7C < 0xF0) {
+            if (temp_v0_4 >= 0) {
+                prim->priority =
+                    g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 + 3;
+            } else {
+                prim->priority =
+                    g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 3;
+            }
+            if (arg1 != 0) {
+                if (arg1 & 0x80) {
+                    prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
+                        prim->b1 = arg1 & 0x7F;
+                } else if (arg1 < 0x11) {
+                    prim->r0 = prim->g0 = prim->b0 = (0x10 - arg1) * 8;
+                } else if (arg1 < 0x21) {
+                    prim->r1 = prim->g1 = prim->b1 = (0x20 - arg1) * 8;
+                } else {
+                    prim->blendMode = BLEND_VISIBLE;
+                    continue;
+                }
+            }
+            prim->blendMode = 0x35;
+        }
+    }
+}
 
 void func_80105408(void) {
     g_Player.D_80072EF4 = 0x1000;

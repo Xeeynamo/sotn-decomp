@@ -140,7 +140,7 @@ PfnEntityUpdate D_800AD0C4[] = {
     EntityTeleport,
     func_80124A8C,
     func_8011A4C8};
-
+// Corresponding RIC function is func_801603C4
 void func_8011A4D0(void) {
     Entity* entity;
     s32 temp_s2;
@@ -222,8 +222,12 @@ void func_8011A4D0(void) {
     // Appears to be a temporary debugging block that was left in.
     if ((g_Player.unk0C & 0xC0000) ||
         (PLAYER.step == 0x12 && PLAYER.step_s == 0)) {
-        // prints "atari nuki", Japanese for "without hit".
-        FntPrint(&aAtariNuki);
+#if defined(VERSION_US)
+        // Japanese for "without hit".
+        FntPrint("atari nuki\n");
+#elif defined(VERSION_HD)
+        FntPrint("dead player\n");
+#endif
         entity = &g_Entities[4];
         // Disable all hitboxes!
         for (i = 4; i < 64; i++, entity++) {
@@ -305,7 +309,7 @@ Entity* CreateEntFactoryFromEntity(
     // Weird thing needed for callers to match
     s16 arg2 = arg2_raw;
 
-    newFactory = GetFreeDraEntity(8, 16);
+    newFactory = GetFreeEntity(8, 16);
     if (newFactory == NULL) {
         return NULL;
     }
@@ -448,19 +452,19 @@ void EntityEntFactory(Entity* self) {
             newEntity = &g_Entities[startIndex];
             g_Player.unk48 = 0;
         } else if (self->ext.factory.unk9C == 0) {
-            newEntity = func_80118810(startIndex, endIndex + 1);
+            newEntity = GetFreeEntityReverse(startIndex, endIndex + 1);
         } else if (self->ext.factory.unk9C == 8) {
             if ((self->ext.factory.unkA6 % 3) == 0) {
-                newEntity = GetFreeDraEntity(17, 32);
+                newEntity = GetFreeEntity(17, 32);
             }
             if ((self->ext.factory.unkA6 % 3) == 1) {
-                newEntity = GetFreeDraEntity(32, 48);
+                newEntity = GetFreeEntity(32, 48);
             }
             if ((self->ext.factory.unkA6 % 3) == 2) {
-                newEntity = GetFreeDraEntity(48, 64);
+                newEntity = GetFreeEntity(48, 64);
             }
         } else {
-            newEntity = GetFreeDraEntity(startIndex, endIndex + 1);
+            newEntity = GetFreeEntity(startIndex, endIndex + 1);
         }
 
         if (newEntity == NULL) {

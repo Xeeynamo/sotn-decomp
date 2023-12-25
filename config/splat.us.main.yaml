@@ -30,6 +30,8 @@ segments:
     subsegments:
       - [0x800, rodata]
       - [0x874, rodata]
+      - [0xA10, .rodata, psxsdk/libgpu/sys]
+      - [0xB60, rodata]
       - [0xC94, rodata]
       - [0xEB4, rodata]
       - [0x15F4, asm, psxsdk/2mbyte]

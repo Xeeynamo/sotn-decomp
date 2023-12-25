@@ -1,4 +1,5 @@
 #include "sel.h"
+#include "memcard.h"
 
 typedef enum {
     Tips_Generic,

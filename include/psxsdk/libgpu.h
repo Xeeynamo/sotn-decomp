@@ -84,7 +84,14 @@
 #define catPrim(p0, p1) setaddr(p0, p1)
 #define termPrim(p) setaddr(p, 0xffffffff)
 
+#define setLineG2(p) setlen(p, 4), setcode(p, 0x50)
+#define setPolyGT3(p) setlen(p, 9), setcode(p, 0x34)
+#define setPolyG4(p) setlen(p, 8), setcode(p, 0x38)
+#define setPolyGT4(p) setlen(p, 12), setcode(p, 0x3c)
+#define setSprt(p) setlen(p, 4), setcode(p, 0x64)
 #define setSprt16(p) setlen(p, 3), setcode(p, 0x7c)
+#define setSprt8(p) setlen(p, 3), setcode(p, 0x74)
+#define setTile(p) setlen(p, 3), setcode(p, 0x60)
 
 #define setSemiTrans(p, abe)                                                   \
     ((abe) ? setcode(p, getcode(p) | 0x02) : setcode(p, getcode(p) & ~0x02))
@@ -113,11 +120,19 @@ typedef struct {
     /* 0x4 */ u_long code[15];
 } DR_ENV; /* Packed Drawing Environment, size = 0x40 */
 
+#ifndef VERSION_PC
 typedef struct {
     unsigned addr : 24;
     unsigned len : 8;
     u_char r0, g0, b0, code;
 } P_TAG;
+#else
+typedef struct {
+    void* addr;
+    s32 len;
+    u_char r0, g0, b0, code;
+} P_TAG;
+#endif
 
 typedef struct {
     u_char r0, g0, b0, code;
@@ -304,14 +319,27 @@ typedef struct {
     /* 0x04 */ u_long code[2];
 } DR_MODE; /* Drawing Mode, size = 0x0C */
 
+typedef struct {
+    u_long tag;
+    u_long code[2];
+} DR_TWIN;
+
+typedef struct {
+    u_long tag;
+    u_long code[2];
+} DR_AREA; // Drawing Area
+
+typedef struct {
+    u_long tag;
+    u_long code[2];
+} DR_OFFSET; // Drawing Offset
+
 typedef struct PixPattern {
     u8 w;
     u8 h;
     u8 x;
     u8 y;
 } PixPattern;
-
-// clang-format off
 
 /*
  * Loads a texture pattern from the memory area starting at the address pix into
@@ -320,16 +348,15 @@ typedef struct PixPattern {
  * represents the number of pixels, not the actual size of the transfer area in
  * the frame buffer.
  */
-extern u_short LoadTPage(u_long* pix,  // Pointer to texture pattern start address
-          int tp,       // Bit depth (0 = 4-bit; 1 = 8-bit; 2 = 16-bit)
-          int abr,      // Semitransparency rate
-          int x, int y, // Destination frame buffer address
-          int w, int h  // Texture pattern size
+extern u_short LoadTPage(
+    u_long* pix,  // Pointer to texture pattern start address
+    int tp,       // Bit depth (0 = 4-bit; 1 = 8-bit; 2 = 16-bit)
+    int abr,      // Semitransparency rate
+    int x, int y, // Destination frame buffer address
+    int w, int h  // Texture pattern size
 );
 
-extern u_short LoadClut2(u_long *clut, int x, int y);
-
-// clang-format on
+extern u_short LoadClut2(u_long* clut, int x, int y);
 
 /**
  * Calculates and returns the texture CLUT ID.
@@ -339,6 +366,7 @@ u_short GetClut(int x, // Horizontal frame buffer address of CLUT
                 int y  // Vertical frame buffer address of CLUT
 );
 
+u_short GetTPage(int tp, int abr, int x, int y);
 extern void AddPrim(void* ot, void* p);
 extern void SetShadeTex(void* p, int tge);
 extern void SetLineG2(LINE_G2* p);

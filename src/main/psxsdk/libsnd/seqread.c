@@ -6,7 +6,31 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsSeqPlay);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsGetSeqData);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsNoteOn);
+void SpuVmKeyOff(s16, s16, u8, s32);
+void SpuVmKeyOn(s16, s16, u8, s32, s32, s32);
+
+void _SsNoteOn(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
+    s32 temp_a0;
+    s32 temp_s1;
+    u8 temp_v1;
+    u8 pan;
+    struct SeqStruct* temp_s0;
+    temp_s0 = &_ss_score[arg0][arg1];
+    pan = arg3;
+    temp_v1 = temp_s0->channel;
+    temp_s1 = pan & 0xFF;
+    pan = temp_s0->panpot[temp_v1];
+    if ((!((temp_s0->padaa >> temp_v1) & 1)) && (temp_s0->unk74 != 0)) {
+        if (arg3 & 0xFF) {
+            SpuVmKeyOn(arg0 | (arg1 << 8), temp_s0->unk4c,
+                       temp_s0->programs[temp_v1], arg2 & 0xFF, temp_s1, pan);
+            temp_s0->padA6 = temp_s1;
+            return;
+        }
+        SpuVmKeyOff(arg0 | (arg1 << 8), temp_s0->unk4c,
+                    temp_s0->programs[temp_v1], arg2 & 0xFF);
+    }
+}
 
 s32 _SsReadDeltaValue(s16, s16);
 
@@ -25,7 +49,18 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContPortaTime);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContPortamento);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContResetAll);
+void _SsContResetAll(s16 arg0, s16 arg1) {
+    struct SeqStruct* temp_s0;
+    temp_s0 = &_ss_score[arg0][arg1];
+    func_80021F0C();
+    SpuVmDamperOff();
+    temp_s0->programs[temp_s0->channel] = temp_s0->channel;
+    temp_s0->unk13 = 0;
+    temp_s0->unk14 = 0;
+    temp_s0->vol[temp_s0->channel] = 0x7f;
+    temp_s0->panpot[temp_s0->channel] = 64;
+    temp_s0->delta_value = _SsReadDeltaValue(arg0, arg1);
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContNrpn1);
 

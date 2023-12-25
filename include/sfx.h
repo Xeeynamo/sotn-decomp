@@ -254,6 +254,8 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define NA_SE_VO_DR_HURT_4 0x85D
 #define NA_SE_PL_TELEPORT 0x8BA
 #define NA_SE_CS_BURNING_PHOTOGRAPH 0x8BE
+// plays every 10 frames while using bible subweapon
+#define BIBLE_SUBWPN_SWOOSH 0x8C3
 
 // STAGE DRE
 #define NA_SE_SU_SHOOT_PINKBALLS 0x62C

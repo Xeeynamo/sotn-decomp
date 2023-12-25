@@ -178,7 +178,7 @@ void EntityElevator(Entity* self) {
             if (temp != 0) {
                 g_api.func_8010DFF0(0, 1);
                 g_Entities[player].posY.i.hi--;
-                D_8009748E[0]--;
+                D_80097488.y.i.hi--;
             }
         } else {
             self->posY.i.hi = y;
@@ -198,7 +198,7 @@ void EntityElevator(Entity* self) {
         if (temp != 0) {
             g_api.func_8010DFF0(0, 1);
             g_Entities[player].posY.i.hi++;
-            D_8009748E[0]++;
+            D_80097488.y.i.hi++;
         }
         break;
     }
@@ -377,9 +377,9 @@ void func_801B77F8(u16 actorIndex, Entity* self) {
 }
 
 void func_801B797C(s32 arg0) {
-    D_801CB6C8 = arg0 + 0x100000;
-    D_801CB6C6 = 0;
-    D_801CB6C4 = 1;
+    g_Dialogue.unk40 = arg0 + 0x100000;
+    g_Dialogue.timer = 0;
+    g_Dialogue.unk3C = 1;
 }
 
 void func_801B79A8(void) {

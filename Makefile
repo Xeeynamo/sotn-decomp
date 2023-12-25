@@ -32,15 +32,19 @@ DISK_DIR        := $(BUILD_DIR)/${VERSION}/disk
 CONFIG_DIR      := config
 TOOLS_DIR       := tools
 
+PSXLIBS         := $(addprefix lib, c c2 api etc card gpu gs gte cd snd spu)
+
 # Files
-MAIN_ASM_DIRS   := $(ASM_DIR)/$(MAIN) $(ASM_DIR)/$(MAIN)/psxsdk $(ASM_DIR)/$(MAIN)/psxsdk/libc $(ASM_DIR)/$(MAIN)/psxsdk/libc2 $(ASM_DIR)/$(MAIN)/psxsdk/libapi $(ASM_DIR)/$(MAIN)/psxsdk/libetc $(ASM_DIR)/$(MAIN)/psxsdk/libcard $(ASM_DIR)/$(MAIN)/psxsdk/libgpu $(ASM_DIR)/$(MAIN)/psxsdk/libgs $(ASM_DIR)/$(MAIN)/psxsdk/libgte $(ASM_DIR)/$(MAIN)/psxsdk/libcd $(ASM_DIR)/$(MAIN)/psxsdk/libsnd $(ASM_DIR)/$(MAIN)/psxsdk/libspu $(ASM_DIR)/$(MAIN)/data
-MAIN_SRC_DIRS   := $(SRC_DIR)/$(MAIN) $(SRC_DIR)/$(MAIN)/psxsdk $(SRC_DIR)/$(MAIN)/psxsdk/libc $(SRC_DIR)/$(MAIN)/psxsdk/libc2 $(SRC_DIR)/$(MAIN)/psxsdk/libapi $(SRC_DIR)/$(MAIN)/psxsdk/libetc $(SRC_DIR)/$(MAIN)/psxsdk/libcard $(SRC_DIR)/$(MAIN)/psxsdk/libgpu $(SRC_DIR)/$(MAIN)/psxsdk/libgs $(SRC_DIR)/$(MAIN)/psxsdk/libgte $(SRC_DIR)/$(MAIN)/psxsdk/libcd $(SRC_DIR)/$(MAIN)/psxsdk/libsnd $(SRC_DIR)/$(MAIN)/psxsdk/libspu
-MAIN_S_FILES    := $(foreach dir,$(MAIN_ASM_DIRS),$(wildcard $(dir)/*.s)) \
-				$(foreach dir,$(MAIN_ASM_DIRS),$(wildcard $(dir)/**/*.s))
-MAIN_C_FILES    := $(foreach dir,$(MAIN_SRC_DIRS),$(wildcard $(dir)/*.c)) \
-				$(foreach dir,$(MAIN_SRC_DIRS),$(wildcard $(dir)/**/*.c))
-MAIN_O_FILES    := $(foreach file,$(MAIN_S_FILES),$(BUILD_DIR)/$(file).o) \
-				$(foreach file,$(MAIN_C_FILES),$(BUILD_DIR)/$(file).o)
+PSXLIB_DIRS     := $(addprefix psxsdk/, . $(PSXLIBS))
+MAIN_ASM_DIRS   := $(addprefix $(ASM_DIR)/$(MAIN)/,. $(PSXLIB_DIRS) data)
+MAIN_SRC_DIRS   := $(addprefix $(SRC_DIR)/$(MAIN)/,. $(PSXLIB_DIRS))
+
+MAIN_S_FILES    := $(wildcard $(addsuffix /*.s, $(MAIN_ASM_DIRS)))
+MAIN_C_FILES    := $(wildcard $(addsuffix /*.c, $(MAIN_SRC_DIRS)))
+MAIN_O_FILES    := $(patsubst %.s,%.s.o,$(MAIN_S_FILES))
+MAIN_O_FILES    += $(patsubst %.c,%.c.o,$(MAIN_C_FILES))
+MAIN_O_FILES    := $(addprefix $(BUILD_DIR)/,$(MAIN_O_FILES))
+
 MAIN_TARGET     := $(BUILD_DIR)/$(MAIN)
 
 # Tooling
@@ -59,12 +63,14 @@ M2C_ARGS        := -P 4
 SOTNSTR			:= $(PYTHON) $(TOOLS_DIR)/sotn-str.py process
 MASPSX_DIR      := $(TOOLS_DIR)/maspsx
 MASPSX_APP      := $(MASPSX_DIR)/maspsx.py
-MASPSX          := $(PYTHON) $(MASPSX_APP) --no-macro-inc --expand-div
+MASPSX          := $(PYTHON) $(MASPSX_APP) --no-macro-inc --expand-div --expand-li
 GO              := $(HOME)/go/bin/go
 GOPATH          := $(HOME)/go
 SOTNDISK        := $(GOPATH)/bin/sotn-disk
 GFXSTAGE        := $(PYTHON) $(TOOLS_DIR)/gfxstage.py
+PNG2S           := $(PYTHON) $(TOOLS_DIR)/png2s.py
 ICONV           := iconv --from-code=UTF-8 --to-code=Shift-JIS
+DIRT_PATCHER    := $(PYTHON) $(TOOLS_DIR)/dirt_patcher.py
 
 define list_src_files
 	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
@@ -110,8 +116,8 @@ clean:
 	git clean -fdx function_calls/
 	git clean -fdx sotn_calltree.txt
 format:
-	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c")
-	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.h")
+	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c" | grep -v 'src/pc/3rd')
+	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.h" | grep -v 'src/pc/3rd')
 	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name "*.h")
 	cargo run --release --manifest-path ./tools/lints/sotn-lint/Cargo.toml ./src
 	black tools/*.py
@@ -133,7 +139,9 @@ format:
 	./tools/symbols.py remove-orphans config/splat.us.strwrp.yaml
 	./tools/symbols.py remove-orphans config/splat.us.tt_000.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stmad.yaml
-check:
+patch:
+	$(DIRT_PATCHER) config/dirt.$(VERSION).json
+check: patch
 	sha1sum --check config/check.$(VERSION).sha
 expected: check
 	mkdir -p expected/build
@@ -316,18 +324,19 @@ force_extract:
 
 # Rewrites symbol list from a successful build
 force_symbols:
-	$(PYTHON) ./tools/symbols.py map build/us/dra.map > config/symbols.us.dra.txt --no-default
-	$(PYTHON) ./tools/symbols.py map build/us/stcen.map > config/symbols.us.stcen.txt --no-default
-	$(PYTHON) ./tools/symbols.py map build/us/stdre.map > config/symbols.us.stdre.txt --no-default
-	$(PYTHON) ./tools/symbols.py map build/us/stmad.map > config/symbols.us.stmad.txt --no-default
-	$(PYTHON) ./tools/symbols.py map build/us/stno3.map > config/symbols.us.stno3.txt --no-default
-	$(PYTHON) ./tools/symbols.py map build/us/stnp3.map > config/symbols.us.stnp3.txt --no-default
-	$(PYTHON) ./tools/symbols.py map build/us/stnz0.map > config/symbols.us.stnz0.txt --no-default
-	$(PYTHON) ./tools/symbols.py map build/us/stsel.map > config/symbols.us.stsel.txt --no-default
-	$(PYTHON) ./tools/symbols.py map build/us/stst0.map > config/symbols.us.stst0.txt --no-default
-	$(PYTHON) ./tools/symbols.py map build/us/stwrp.map > config/symbols.us.stwrp.txt --no-default
-	$(PYTHON) ./tools/symbols.py map build/us/strwrp.map > config/symbols.us.strwrp.txt --no-default
-	$(PYTHON) ./tools/symbols.py map build/us/tt_000.map > config/symbols.us.tt_000.txt --no-default
+	$(PYTHON) ./tools/symbols.py map build/us/dra.map --no-default > config/symbols.us.dra.txt
+	$(PYTHON) ./tools/symbols.py map build/us/ric.map --no-default > config/symbols.us.ric.txt
+	$(PYTHON) ./tools/symbols.py map build/us/stcen.map --no-default > config/symbols.us.stcen.txt
+	$(PYTHON) ./tools/symbols.py map build/us/stdre.map --no-default > config/symbols.us.stdre.txt
+	$(PYTHON) ./tools/symbols.py map build/us/stmad.map --no-default > config/symbols.us.stmad.txt
+	$(PYTHON) ./tools/symbols.py map build/us/stno3.map --no-default > config/symbols.us.stno3.txt
+	$(PYTHON) ./tools/symbols.py map build/us/stnp3.map --no-default > config/symbols.us.stnp3.txt
+	$(PYTHON) ./tools/symbols.py map build/us/stnz0.map --no-default > config/symbols.us.stnz0.txt
+	$(PYTHON) ./tools/symbols.py map build/us/stsel.map --no-default > config/symbols.us.stsel.txt
+	$(PYTHON) ./tools/symbols.py map build/us/stst0.map --no-default > config/symbols.us.stst0.txt
+	$(PYTHON) ./tools/symbols.py map build/us/stwrp.map --no-default > config/symbols.us.stwrp.txt
+	$(PYTHON) ./tools/symbols.py map build/us/strwrp.map --no-default > config/symbols.us.strwrp.txt
+	$(PYTHON) ./tools/symbols.py map build/us/tt_000.map --no-default > config/symbols.us.tt_000.txt
 
 context:
 	$(M2CTX) $(SOURCE)

@@ -174,7 +174,9 @@ typedef struct Primitive {
 #define WEAPON1_PTR 0x8017D000
 #define STAGE_PRG_PTR 0x80180000
 #define CASTLE_MAP_PTR 0x801E0000
+#ifndef DEMO_KEY_PTR
 #define DEMO_KEY_PTR 0x801E8000
+#endif
 #define SIM_CHR0 0x80280000
 #define SIM_CHR1 0x80284000
 #define SIM_PTR 0x80280000
@@ -231,6 +233,9 @@ typedef struct Primitive {
 #define _S(x) (x)
 #endif
 
+#define DEMO_KEY_LEN 3
+#define DEMO_MAX_LEN 0x2000
+
 #define FONT_W 8               // small font size used for dialogues and menu
 #define FONT_H 8               // small font size used for dialogues and menu
 #define FONT_GAP FONT_W        // gap between the beginning of two letters
@@ -241,6 +246,12 @@ typedef struct Primitive {
 
 #define SAVE_FLAG_CLEAR (1)
 #define SAVE_FLAG_REPLAY (2)
+
+#if defined(VERSION_US)
+#define MEMCARD_ID "BASLUS-00067DRAX00"
+#elif defined(VERSION_HD)
+#define MEMCARD_ID "BISLPM-86023DRAX00"
+#endif
 
 typedef enum {
     Game_Init,
@@ -455,15 +466,12 @@ struct Entity;
 
 typedef void (*PfnEntityUpdate)(struct Entity*);
 
-typedef union {
-    s32 val;
-    struct {
-        s16 lo;
-        s16 hi;
-    } i;
-} f32;
-
 #include "unkstruct.h"
+
+typedef struct {
+    f32 x;
+    f32 y;
+} Pos;
 
 typedef struct {
     f32 posX;
@@ -509,16 +517,6 @@ typedef struct {
     /* 0x1D */ u8 unk1D;
 } MenuContext; // size = 0x1E
 #define SIZEOF_MENUCONTEXT (0x1E)
-
-// Struct for table of values to intitialize MenuContext structs
-typedef struct {
-    /* 0x00 */ s16 cursorX;
-    /* 0x02 */ s16 cursorY;
-    /* 0x04 */ s16 cursorW;
-    /* 0x06 */ s16 cursorH;
-    /* 0x08 */ s16 otIdx;
-    /* 0x0A */ s16 padding;
-} MenuContextInit; // size = 0x1C
 
 typedef struct {
     /* 0x0 */ u8 tileLayoutId;
@@ -971,6 +969,9 @@ typedef enum {
     EFFECT_SOLID_FROM_ABOVE = 1 << 6,
     // Doesn't collide when falling on it but you cannot go back up.
     EFFECT_SOLID_FROM_BELOW = 1 << 7,
+    EFFECT_UNK_0100 = 1 << 8,
+    EFFECT_UNK_0200 = 1 << 9,
+    EFFECT_UNK_0400 = 1 << 10,
     EFFECT_UNK_0800 = 1 << 11,
     EFFECT_UNK_1000 = 1 << 12,
     EFFECT_UNK_2000 = 1 << 13,
@@ -983,7 +984,7 @@ typedef enum {
 } ColliderEffectFlags;
 
 typedef struct Collider {
-    /* 0x00 */ s32 effects;
+    /* 0x00 */ u32 effects;
     /* 0x04 */ s32 unk4;
     /* 0x08 */ s32 unk8;
     /* 0x0C */ s32 unkC;
@@ -1119,7 +1120,7 @@ typedef struct {
     /* 0x17 */ u8 unk17;                     // unknown
     /* 0x18 */ Primitive* prim[6];           // for dialogue graphics rendering
     /* 0x30 */ s32 primIndex[3];             // primIndices: unk, actorName, unk
-    /* 0x3C */ u16 unk3C;                    // unknown
+    /* 0x3C */ u16 unk3C;                    // maybe it is a begin flag?
     /* 0x3E */ u16 timer;                    // global timer
     /* 0x40 */ const char* unk40;            // dialogue settings, maybe?
 } Dialogue;                                  // size = 0x44
@@ -1132,7 +1133,7 @@ typedef struct {
     /* 8003C7C0 */ void (*func_80102CD8)(s32 arg0);
     /* 8003C7C4 */ void (*UpdateAnim)(FrameProperty* frameProps, s32* arg1);
     /* 8003C7C8 */ void (*SetSpeedX)(s32 value);
-    /* 8003C7CC */ Entity* (*GetFreeDraEntity)(s16 start, s16 end);
+    /* 8003C7CC */ Entity* (*GetFreeEntity)(s16 start, s16 end);
     /* 8003C7D0 */ void (*GetEquipProperties)(
         s32 handId, Equipment* res, s32 equipId);
     /* 8003C7D4 */ s32 (*func_800EA5E4)(u32);
@@ -1206,7 +1207,7 @@ extern void (*g_api_CheckCollision)(s32 x, s32 y, Collider* res, s32 unk);
 extern void (*g_api_func_80102CD8)(s32 arg0);
 extern void (*g_api_UpdateAnim)(FrameProperty* frameProps, s32* arg1);
 extern void (*g_api_SetSpeedX)(s32 value);
-extern Entity* (*g_api_GetFreeDraEntity)(s16 start, s16 end);
+extern Entity* (*g_api_GetFreeEntity)(s16 start, s16 end);
 extern void (*g_api_GetEquipProperties)(
     s32 handId, Equipment* res, s32 equipId);
 extern s32 (*g_api_func_800EA5E4)(u32);
@@ -1351,8 +1352,9 @@ typedef struct {
 } FgLayer; /* size=0x8 */
 
 typedef struct {
-    /* 80072BD0 */ Collider colliders[8];
-    /* 80072CF0 */ s32 D_80072CF0[14][9]; // Seems like another collider set
+    /* 80072BD0 */ Collider colliders[4];
+    /* 80072C60 */ Collider colliders2[4];
+    /* 80072CF0 */ Collider colliders3[14];
     /* 80072EE8 */ s32 padPressed;
     /* 80072EEC */ s32 padTapped;
     /* 80072EF0 */ s32 padHeld;
@@ -1439,6 +1441,13 @@ typedef struct {
     /* 0x26 */ u8 b3;
     /* 0x27 */ u8 unk27;
 } PlayerDraw; /* size = 0x28 */
+
+// Used to track the state of moves the player does with a sequence of buttons.
+// This includes spells, some of Richter's moves, etc.
+typedef struct {
+    s16 buttonsCorrect;
+    s16 timer;
+} ButtonComboState;
 
 extern s32 D_8003925C;
 extern s32 g_IsTimeAttackUnlocked;
@@ -1556,9 +1565,6 @@ extern s32 playerX;
 extern s32 playerY;
 extern u32 g_randomNext;
 extern s32 D_80096ED8[];
-extern u32 D_80097364;
-extern s32 D_800973B4;
-extern POLY_GT4 D_800973B8[];
 extern s8 D_80097B98;
 extern s8 D_80097B99;
 extern s32 D_800973EC; // flag to check if the menu is shown
@@ -1574,16 +1580,7 @@ extern s32 D_80097420[];
 extern s32 D_80097424;
 extern s32 D_80097448[]; // underwater physics. 7448 and 744C. Could be struct.
 extern s32 D_80097450;
-extern s32 D_80097488;
-// Overlapping data, worth further investigation
-extern u16 D_8009748A[];
-extern s32 D_8009748C;
-
-/*
- * Elevator moving, "underflowed" to 0xFF
- * when going up, 0x1 when going up
- */
-extern u16 D_8009748E[];
+extern Pos D_80097488;
 extern Pad g_pads[PAD_COUNT];
 extern Stages g_StageId;
 extern s32 D_800974A4; // map open

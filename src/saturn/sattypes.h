@@ -291,12 +291,6 @@ typedef struct {
     /* 0x24 */ s32 unk24;
 } EnemyDef; /* size=0x28 */
 
-typedef struct Unkstruct_800A2D98 {
-    /* 0x0 */ s32 equipTypeFilter;
-    /* 0x4 */ s32 unk4;
-    /* 0x8 */ s32 unk8;
-} Unkstruct_800A2D98;
-
 // layout is different
 typedef struct Unkstruct_800A7734 {
     /* 0x00 */ u16 unk00;
@@ -326,6 +320,15 @@ typedef enum {
     UNK_ENTITY_51 = 0x51,
     UNK_ENTITY_100 = 0x100
 } EntityTypes;
+
+typedef enum ItemTypes {
+    HAND_TYPE,
+    HEAD_TYPE,
+    ARMOR_TYPE,
+    CAPE_TYPE,
+    ACCESSORY_TYPE,
+    NUM_ITEM_TYPES,
+} ItemTypes;
 
 typedef enum {
     ITEM_S_SWORD,
@@ -377,7 +380,7 @@ extern s32 D_80137964;
 extern s32 D_80137968;
 extern s32 D_80139828[];
 extern s32 D_8013B5E8;
-extern Unkstruct_800A2D98 D_801375CC;
+extern ItemTypes D_801375CC;
 extern PlayerState g_Player;
 extern Entity* g_CurrentEntity;
 extern PlayerStatus g_Status;

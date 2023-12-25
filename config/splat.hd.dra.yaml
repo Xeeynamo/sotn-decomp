@@ -34,14 +34,57 @@ segments:
       - [0x160, .data, play]
       - [0x240, .data, loading]
       - [0x248, .data, 47BB8]
-      - [0x510, data]
+      - [0x510, .data, save_mgr_pre]
+      - [0x518, palette, memcard_0]
+      - [0x538, palette, memcard_1]
+      - [0x558, palette, memcard_2]
+      - [0x578, palette, memcard_3]
+      - [0x598, palette, memcard_4]
+      - [0x5B8, palette, memcard_5]
+      - [0x5D8, palette, memcard_6]
+      - [0x5F8, palette, memcard_7]
+      - [0x618, palette, memcard_8]
+      - [0x638, palette, memcard_9]
+      - [0x658, palette, memcard_10]
+      - [0x678, palette, memcard_11]
+      - [0x698, palette, memcard_12]
+      - [0x6B8, palette, memcard_13]
+      - [0x6D8, palette, memcard_14]
+      - [0x6F8, palette, memcard_15]
+      - [0x718, ci4, memcard_0, 16, 48]
+      - [0x898, ci4, memcard_1, 16, 48]
+      - [0xA18, ci4, memcard_2, 16, 48]
+      - [0xB98, ci4, memcard_3, 16, 48]
+      - [0xD18, ci4, memcard_4, 16, 48]
+      - [0xE98, ci4, memcard_5, 16, 48]
+      - [0x1018, ci4, memcard_6, 16, 48]
+      - [0x1198, ci4, memcard_7, 16, 48]
+      - [0x1318, ci4, memcard_8, 16, 48]
+      - [0x1498, ci4, memcard_9, 16, 48]
+      - [0x1618, ci4, memcard_10, 16, 48]
+      - [0x1798, ci4, memcard_11, 16, 48]
+      - [0x1918, ci4, memcard_12, 16, 48]
+      - [0x1A98, ci4, memcard_13, 16, 48]
+      - [0x1C18, ci4, memcard_14, 16, 48]
+      - [0x1D98, ci4, memcard_15, 16, 48]
       - [0x1F18, .data, save_mgr]
-      - [0x2178, data]
-      - [0x2CF4, .data, 5087C] # array of strings
-      - [0x2D1C, .data, 5087C] # HD exclusive array of strings
-      - [0x2D88, data]
-      - [0x2ED0, .data, 5D6C4]
-      - [0x2EF8, data]
+      - [0x2178, .data, 4A538] # D_800A21B8
+      - [0x23F8, .data, 4A538] # D_800A2438
+      - [0x23FC, .data, demo] # D_800A243C
+      - [0x241C, .data, 5087C] # D_800A245C
+      - [0x293C, .data, 5087C] # D_800A297C
+      - [0x2B6C, .data, 5087C] # D_800A2BC0
+      - [0x2BB8, .data, 5087C] # D_800A2C0C, D_800A2D44
+      - [0x2CF4, .data, menu] # array of strings
+      - [0x2D1C, .data, menu] # HD exclusive array of strings
+      - [0x2D88, .data, menu]
+      - [0x2ED0, .data, 5D6C4] # g_LevelHPIncrease
+      - [0x2EF8, .data, 5D6C4] # hud sprites def
+      - [0x2FCC, .data, 5D6C4] # g_CapePaletteDefs
+      - [0x301C, .data, 5D6C4] # g_CheatCodes
+      - [0x3024, .data, 5D6C4] # D_800A3014
+      - [0x3144, data, 627C4]
+      - [0x37E8, data, 63ED4]
       - [0xCFDC, .data, 6D59C]
       - [0xD010, data]
       - [0xD188, .data, 7A4D0] # D_800AD0C4
@@ -74,16 +117,16 @@ segments:
       - [0x3C488, .rodata, 5087C] # func_800F0940
       - [0x3C4A8, .rodata, 5087C]
       - [0x3C4D0, .rodata, 5087C] # func_800F298C
-      - [0x3C548, .rodata, 5087C] # strings
-      - [0x3C658, .rodata, 5087C] # HD exclusive array of strings
-      - [0x3C6F8, .rodata, 5087C] # DrawMenuFamiliars
-      - [0x3C718, .rodata, 5087C] # DrawMenu
-      - [0x3C758, .rodata, 5087C] # func_800F9F40
-      - [0x3C788, .rodata, 5087C] # MenuHandleCursorInput
-      - [0x3C7A0, .rodata, 5087C] # HandleMenu str
-      - [0x3C7C8, .rodata, 5087C] # HandleMenu jtbl
+      - [0x3C548, .rodata, menu] # strings
+      - [0x3C658, .rodata, menu] # HD exclusive array of strings
+      - [0x3C6F8, .rodata, menu] # MenuDrawFamiliars
+      - [0x3C718, .rodata, menu] # MenuDraw
+      - [0x3C758, .rodata, menu] # func_800F9F40
+      - [0x3C788, .rodata, menu] # MenuHandleCursorInput
+      - [0x3C7A0, .rodata, menu] # MenuHandle str
+      - [0x3C7C8, .rodata, menu] # MenuHandle jtbl
       - [0x3CC18, .rodata, 5D6C4]
-      - [0x3CC60, rodata]
+      - [0x3CC60, .rodata, 5D6C4] # g_CheatCodes
       - [0x3CC78, .rodata, 627C4] # jtbl_800DCC78
       - [0x3CC98, .rodata, 627C4] # jtbl_800DCC98
       - [0x3CCC0, .rodata, 627C4]
@@ -113,11 +156,11 @@ segments:
       - [0x41904, .rodata, 75F54] # jtbl_800E1904
       - [0x4191C, .rodata, 75F54] # jtbl_800E191C
       - [0x4193C, .rodata, 75F54] # jtbl_800E193C
-      - [0x41954, rodata]
+      - [0x41954, .rodata, 75F54] # "error step\n"
       - [0x41960, rodata] # jtbl_800E1960
       - [0x41990, rodata]
       - [0x419A0, rodata] # jtbl_800E19A0
-      - [0x419C0, rodata]
+      - [0x419C0, .rodata, 7A4D0] # "atari nuki\n"
       - [0x419D0, .rodata, 7A4D0] # jtbl_800E19D0
       - [0x419F0, .rodata, 7A4D0] # jtbl_800E19F0
       - [0x41A10, rodata] # jtbl_800E1A10
@@ -134,7 +177,7 @@ segments:
       - [0x41D50, rodata] # jtbl_800E1D50
       - [0x41D64, rodata]
       - [0x41D78, .rodata, 86ECC] # jtbl_800E1D78
-      - [0x41D98, rodata] # jtbl_800E1D98
+      - [0x41D98, .rodata, 86ECC] # jtbl_800E1D98
       - [0x41DAC, rodata] # jtbl_800E1DAC
       - [0x41DCC, .rodata, 8D3E8] # jtbl_800E1DCC
       - [0x41DE4, .rodata, 8D3E8] # jtbl_800E1DE4
@@ -158,11 +201,13 @@ segments:
       - [0x44EC8, c, play]
       - [0x463E4, c, loading]
       - [0x48250, c, 47BB8]
+      - [0x493BC, c, pads]
       - [0x4957C, c, save_mgr]
       - [0x4ABF0, c, 4A538]
       - [0x4FAE0, c, collider]
       - [0x5027C, c, demo]
       - [0x50F00, c, 5087C]
+      - [0x54E50, c, menu]
       - [0x5D678, c, 5D6C4]
       - [0x62654, c, 627C4]
       - [0x63D1C, c, 63ED4]

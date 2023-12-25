@@ -289,9 +289,9 @@ void func_801BE870(u16 actorIndex, Entity* self) {
 }
 
 void func_801BE9F4(s32 arg0) {
-    D_801D7D64 = arg0 + 0x100000;
-    D_801D7D62 = 0;
-    D_801D7D60 = 1;
+    g_Dialogue.unk40 = arg0 + 0x100000;
+    g_Dialogue.timer = 0;
+    g_Dialogue.unk3C = 1;
 }
 
 void func_801BEA20(void) {
@@ -347,31 +347,20 @@ void func_801BEA20(void) {
     }
 }
 
-void func_801BECCC(Entity* entity) {
-    /** TODO: !FAKE
-     * do while (0) fixed instruction reordering at
-     * entity->flags ^= FLAG_HAS_PRIMS;
-     * but intruduces a problem in PlaySfx, which is fixed
-     * by using gameApi pointer.
-     */
-    GameApi* gameApi;
-
-    if (g_pads[0].tapped == 0x800) {
+void func_801BECCC(Entity* self) {
+    if (g_pads[0].tapped == PAD_START) {
         D_801D7D20 = 1;
-        g_api.FreePrimitives(entity->primIndex);
-        do {
-            entity->flags ^= FLAG_HAS_PRIMS;
-        } while (0);
-        if (D_801D7D58 != -1) {
-            g_api.FreePrimitives(D_801D7D58);
+        g_api.FreePrimitives(self->primIndex);
+        self->flags ^= FLAG_HAS_PRIMS;
+        if (g_Dialogue.primIndex[1] != -1) {
+            g_api.FreePrimitives(g_Dialogue.primIndex[1]);
         }
-        if (D_801D7D54 != -1) {
-            g_api.FreePrimitives(D_801D7D54);
+        if (g_Dialogue.primIndex[0] != -1) {
+            g_api.FreePrimitives(g_Dialogue.primIndex[0]);
         }
-        gameApi = &g_api;
-        (*gameApi).PlaySfx(SET_STOP_MUSIC);
-        entity->step = 1;
-        entity->step_s = 0;
+        g_api.PlaySfx(SET_STOP_MUSIC);
+        self->step = 1;
+        self->step_s = 0;
     }
 }
 

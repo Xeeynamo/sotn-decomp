@@ -24,7 +24,6 @@ UnkEntityFunc0 = 0x8018E024;
 SetStep = 0x8018E1C0;
 InitializeEntity = 0x8018E290;
 EntityDummy = 0x8018E38C;
-ReplaceBreakableWithItemDrop = 0x8018E978;
 CollectGold = 0x8018EC90;
 CollectSubweapon = 0x8018ED6C;
 CollectLifeVessel = 0x8018EF28;

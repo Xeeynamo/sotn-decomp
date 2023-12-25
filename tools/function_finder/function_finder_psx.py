@@ -27,6 +27,14 @@ parser.add_argument(
     help="Disable fetching scratch links from decomp.me",
 )
 
+parser.add_argument(
+    "--keywords",
+    metavar="keyword",
+    type=str,
+    nargs="+",
+    help="Only match paths with these keywords",
+)
+
 
 # look in asm files, read in the text and check for branches and jump tables
 def get_asm_files(asm_path):
@@ -34,9 +42,6 @@ def get_asm_files(asm_path):
     for path in Path(asm_path).rglob("*.s"):
         # ignore data
         if not "nonmatchings" in str(path):
-            continue
-        # ignore main since it's just PSY-Q functions
-        if "asm/us/main" in str(path):
             continue
         f = open(f"{path}", "r")
         text = f.read()
@@ -122,6 +127,14 @@ if __name__ == "__main__":
     asm_files = sorted(asm_files, key=lambda x: (x["branches"]))
     asm_files = sorted(asm_files, key=lambda x: len(x["text"].split("\n")))
 
+    if args.keywords and len(args.keywords):
+        # filter based on keywords
+        asm_files = [
+            file
+            for file in asm_files
+            if any(keyword in str(file["name"]) for keyword in args.keywords)
+        ]
+
     output = []
 
     for f in asm_files:
@@ -141,13 +154,17 @@ if __name__ == "__main__":
                 # found a decomp.me WIP, get the URL
                 wip = c_file[2]
 
-        matches = re.search(r"\/(\w+)\/nonmatchings\/\w+\/(\w+)\.s", name)
-        if matches:
-            ovl_name = matches.group(1)
-            func_name = matches.group(2)
+        if "/psxsdk/" in name:
+            ovl_name = name.split("/")[5]  # grab library name
+            func_name = os.path.splitext(os.path.basename(name))[0]
         else:
-            ovl_name = ""
-            func_name = name
+            matches = re.search(r"\/(\w+)\/nonmatchings\/\w+\/(\w+)\.s", name)
+            if matches:
+                ovl_name = matches.group(1)
+                func_name = matches.group(2)
+            else:
+                ovl_name = ""
+                func_name = name
 
         wip = ""
         wip_percentage = ""
