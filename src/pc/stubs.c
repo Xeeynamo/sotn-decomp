@@ -119,7 +119,6 @@ s32 D_800987B4;
 u8 g_PadsRepeatTimer[BUTTON_COUNT * PAD_COUNT];
 s32 D_80136410;
 s32 D_80136414[];
-s32 D_8013B65C;
 
 // sound bss
 s16 g_SoundCommandRingBufferReadPos;
@@ -221,6 +220,7 @@ s16 D_8013B650[4];
 s32 g_CdCommandStatus;
 const char* D_80138784[0x800];
 s32 D_800C1ECC[];
+s32 D_8013B65C;
 
 // sound stubs
 void func_801327B4(int arg0, int arg1, int vabId, int prog, int tone, int note,
