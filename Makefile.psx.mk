@@ -11,6 +11,7 @@ PSX_HD_TARGETS	:= dra
 PSX_BASE_SYMS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
 
 extract_us: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_US_TARGETS)))
+	$(PNG2S) bdecode config/gfx.game.json disks/us assets/game
 extract_hd: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_HD_TARGETS)))
 
 extract_disk_us: extract_disk_psxus
