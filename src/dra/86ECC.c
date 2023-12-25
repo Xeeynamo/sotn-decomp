@@ -918,7 +918,153 @@ s32 func_80128BBC(Unkstruct_80128BBC* arg0, u8 value) {
     return ret;
 }
 
-INCLUDE_ASM("dra/nonmatchings/86ECC", func_80128C2C);
+// ID #17. Created by factory blueprint #22. No known uses of this factory
+// exist.
+void func_80128C2C(Entity* self) {
+    Entity* ent;
+    Primitive* poly;
+    s32 heartCost;
+    u16 tempY;
+    u16 tempX;
+    u32 heartBroachesWorn;
+
+    if (g_Player.unk0C & 0x10007) {
+        DestroyEntity(self);
+        return;
+    }
+    switch (self->step) {
+    case 0:
+        self->primIndex = AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        } else {
+            self->flags =
+                FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+            self->facingLeft = PLAYER.facingLeft;
+            func_8011A290(self);
+            self->hitboxHeight = 4;
+            self->hitboxWidth = 4;
+            self->hitboxOffX = 4;
+            self->hitboxOffY = 0;
+            self->posY.i.hi = self->ext.et_80128C2C.unk82 =
+                PLAYER.posY.i.hi + PLAYER.hitboxOffY - 8;
+            self->posX.i.hi = self->ext.et_80128C2C.unk80 = PLAYER.posX.i.hi;
+            poly = &g_PrimBuf[self->primIndex];
+            poly->type = 2;
+            poly->priority = PLAYER.zPriority + 2;
+            poly->blendMode = 0x331;
+            poly->r1 = 0x60;
+            poly->g1 = 0;
+            poly->b1 = 0x80;
+            SetSpeedX(FIX(6));
+            PlaySfx(0x60C);
+            CreateEntFactoryFromEntity(self, FACTORY(0x5200, 44), 0);
+            g_Player.D_80072F14 = 4;
+            self->step++;
+        }
+        break;
+    case 1:
+        self->posX.val += self->velocityX;
+        if (self->posX.i.hi < -0x40 || self->posX.i.hi > 0x140 ||
+            self->posY.i.hi < -0x20 || self->posY.i.hi > 0x120) {
+            self->step = 2;
+        }
+        if (self->hitFlags != 0) {
+            self->step = 3;
+            self->ext.et_80128C2C.parent1 = self->ext.et_80128C2C.parent2;
+        }
+        break;
+    case 4:
+        self->posX.i.hi = self->ext.et_80128C2C.parent1->posX.i.hi;
+        self->posY.i.hi = self->ext.et_80128C2C.parent1->posY.i.hi;
+        if (++self->ext.et_80128C2C.unk7C >= 16) {
+            if (g_PrimBuf[self->primIndex].r1 < 5) {
+                DestroyEntity(self);
+                return;
+            }
+        }
+        break;
+    case 2:
+        if (g_PrimBuf[self->primIndex].r1 < 5) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    case 3:
+        if ((g_Player.padPressed & (PAD_UP + PAD_SQUARE)) !=
+            (PAD_UP + PAD_SQUARE)) {
+            self->step = 4;
+        }
+        ent = self->ext.et_80128C2C.parent1;
+        if (ent->entityId == 0 ||
+            self->ext.et_80128C2C.unk7C != 0 &&
+                (ent->hitPoints > 0x7000 || ent->hitPoints == 0 ||
+                 ent->flags & 0x100)) {
+            self->step = 2;
+            return;
+        }
+
+        tempX = self->posX.i.hi =
+            self->ext.et_80128C2C.parent1->posX.i.hi;
+        tempY = self->posY.i.hi =
+            self->ext.et_80128C2C.parent1->posY.i.hi;
+        if ((self->ext.et_80128C2C.unk7C % 12) == 0) {
+            self->posX.i.hi += ((rand() & 0xF) - 8);
+            self->posY.i.hi += ((rand() & 0xF) - 8);
+            if (self->ext.et_80128C2C.unk84 == 0) {
+                CreateEntFactoryFromEntity(self, FACTORY(0, 23), 0);
+                PlaySfx(0x665);
+                CreateEntFactoryFromEntity(self, FACTORY(0x200, 61), 0);
+                self->ext.et_80128C2C.unk84++;
+            } else {
+                heartCost = 5;
+                // 0x4d is the item ID for the heart broach.
+                heartBroachesWorn = CheckEquipmentItemCount(0x4D, 4);
+                if (heartBroachesWorn == 1) {
+                    heartCost = 2;
+                }
+                if (heartBroachesWorn == 2) {
+                    heartCost /= 3;
+                }
+                if (heartCost <= 0) {
+                    heartCost = 1;
+                }
+                if (g_Status.hearts >= heartCost) {
+                    g_Status.hearts -= heartCost;
+                    CreateEntFactoryFromEntity(self, FACTORY(0, 23), 0);
+                    PlaySfx(0x665);
+                    CreateEntFactoryFromEntity(self, FACTORY(0x200, 61), 0);
+                } else {
+                    self->step = 4;
+                }
+            }
+        }
+        self->posX.i.hi = tempX;
+        self->posY.i.hi = tempY;
+        self->ext.et_80128C2C.unk7C++;
+        break;
+    }
+    poly = &g_PrimBuf[self->primIndex];
+    if (poly->r1 >= 4) {
+        poly->r1 -= 4;
+    }
+    if (poly->g1 >= 4) {
+        poly->g1 -= 4;
+    }
+    if (poly->b1 >= 4) {
+        poly->b1 -= 4;
+    }
+    tempX = poly->b1;
+    if (tempX < 5) {
+        poly->blendMode |= BLEND_VISIBLE;
+    }
+    poly->x0 = self->ext.et_80128C2C.unk80;
+    poly->y0 = self->ext.et_80128C2C.unk82;
+    poly->x1 = self->posX.i.hi;
+    poly->y1 = self->posY.i.hi;
+    return;
+}
 
 INCLUDE_ASM("dra/nonmatchings/86ECC", func_801291C4);
 
@@ -1114,7 +1260,7 @@ void EntitySubwpnBible(Entity* self) {
         prim->y0 = prim->y1 = top;
         prim->y2 = prim->y3 = bottom;
         prim->priority = self->zPriority;
-        CreateEntFactoryFromEntity(self, 0x4F, 0);
+        CreateEntFactoryFromEntity(self, FACTORY(0, 79), 0);
         if (g_GameTimer % 10 == 0) {
             PlaySfx(BIBLE_SUBWPN_SWOOSH);
         }

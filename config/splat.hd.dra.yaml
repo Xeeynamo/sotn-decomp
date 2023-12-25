@@ -177,7 +177,7 @@ segments:
       - [0x41D50, rodata] # jtbl_800E1D50
       - [0x41D64, rodata]
       - [0x41D78, .rodata, 86ECC] # jtbl_800E1D78
-      - [0x41D98, rodata] # jtbl_800E1D98
+      - [0x41D98, .rodata, 86ECC] # jtbl_800E1D98
       - [0x41DAC, rodata] # jtbl_800E1DAC
       - [0x41DCC, .rodata, 8D3E8] # jtbl_800E1DCC
       - [0x41DE4, .rodata, 8D3E8] # jtbl_800E1DE4
