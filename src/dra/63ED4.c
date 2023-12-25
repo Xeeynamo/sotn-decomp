@@ -455,7 +455,7 @@ void func_80105428(void) {
         timer_temp = gameTimer & 0x7F;
         D_801379C8.vy = temp_s3 + 6;
         if (timer_temp == 0) {
-            PlaySfx(0x64D);
+            PlaySfx(SE_SAVE_HEARTBEAT);
         }
         if (gameTimer & 0x40) {
             timer_temp = 0x7F - timer_temp;
@@ -476,6 +476,8 @@ void func_80105428(void) {
                 D_800978C4 = 0;
             }
             D_8013B5E8 = 0x10;
+            // When a save point is activated, the player's HP and MP
+            // are fully restored (regardless of whether they actually save)
             g_Status.hp = g_Status.hpMax;
             g_Status.mp = g_Status.mpMax;
             D_801379BC += 1;
@@ -708,7 +710,7 @@ void func_80105428(void) {
         if (HandleSaveMenu(2) != 0) {
             if (D_80137E6C == 0) {
                 D_8006C378 = -1;
-                PlaySfx(0x633);
+                PlaySfx(SE_UI_CONFIRM);
                 MemCardSetPort(D_80097924);
                 D_801379BC++;
             } else {
