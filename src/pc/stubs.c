@@ -322,58 +322,58 @@ s32 D_801397FC;
 JosephsCloak g_JosephsCloak;
 u8 g_Pix[4][128 * 128 / 2];
 const char dummy[] = "DUMMY\xFF";
-const char* c_strALUCARD[] = {"BLAHBLAH\xFF", "DUMMY\xFF"};
-const char* c_strGOLD[] = {"GOLD\xFF"};
-const char* c_strButtonRightHand[] = {
+const char* g_MenuStr[] = {"BLAHBLAH\xFF", "DUMMY\xFF"};
+const char* g_MenuStr_7_[] = {"GOLD\xFF"};
+const char* g_MenuStr_22_[] = {
     "X\xFF", "X\xFF", "X\xFF", "X\xFF", "X\xFF", "X\xFF", "X\xFF", "X\xFF"};
 const char* D_800A83AC[] = {
     "XX\xFF", "XX\xFF", "XX\xFF", "XX\xFF", "XX\xFF", "XX\xFF", "XX\xFF"};
-const char* c_strSTR[] = {dummy, dummy, dummy, dummy};
-const char* c_strCON = "XXX\xFF";
-const char* c_strINT = "XXX\xFF";
-const char* c_strLCK = "XXX\xFF";
-const char* c_strEXP = "EXP\xFF";
-const char* c_strNEXT = "NEXT\xFF";
-const char* c_strLEVEL = "LEVEL\xFF";
-const char* c_strTIME = "TIME\xFF";
-const char* c_strROOMS = "ROOMS\xFF";
-const char* c_strKILLS = "KILLS\xFF";
-const char* c_strHP = "HP\xFF";
-const char* c_strMP = "MP\xFF";
-const char* c_strHEART = dummy;
-const char* c_strSTATUS = dummy;
-const char* c_strButton = dummy;
-const char* c_strCloak = dummy;
-const char* c_strCloak2 = dummy;
-const char* c_strExterior = dummy;
-const char* c_strLining = dummy;
-const char* c_strButtonLeftHand = dummy;
-const char* c_strButtonJump = dummy;
-const char* c_strButtonSpecial = dummy;
-const char* c_strButtonWolf = dummy;
-const char* c_strButtonMist = dummy;
-const char* c_strButtonBat = dummy;
-const char* c_strNormal = dummy;
-const char* c_strReversal = dummy;
-const char* c_strSound = dummy;
-const char* c_strStereo = dummy;
-const char* c_strMono = dummy;
-const char* c_strWindow = dummy;
-const char* c_strTime = dummy;
-const char* c_strALUCART = dummy;
-const char* c_strSSword[] = {
+const char* g_MenuStr_1_[] = {dummy, dummy, dummy, dummy};
+const char* g_MenuStr_2_ = "XXX\xFF";
+const char* g_MenuStr_3_ = "XXX\xFF";
+const char* g_MenuStr_4_ = "XXX\xFF";
+const char* g_MenuStr_5_ = "EXP\xFF";
+const char* g_MenuStr_6_ = "NEXT\xFF";
+const char* g_MenuStr_8_ = "LEVEL\xFF";
+const char* g_MenuStr_9_ = "TIME\xFF";
+const char* g_MenuStr_10_ = "ROOMS\xFF";
+const char* g_MenuStr_11_ = "KILLS\xFF";
+const char* g_MenuStr_12_ = "HP\xFF";
+const char* g_MenuStr_13_ = "MP\xFF";
+const char* g_MenuStr_14_ = dummy;
+const char* g_MenuStr_15_ = dummy;
+const char* g_MenuStr_16_ = dummy;
+const char* g_MenuStr_17_ = dummy;
+const char* g_MenuStr_18_ = dummy;
+const char* g_MenuStr_20_ = dummy;
+const char* g_MenuStr_21_ = dummy;
+const char* g_MenuStr_23_ = dummy;
+const char* g_MenuStr_24_ = dummy;
+const char* g_MenuStr_25_ = dummy;
+const char* g_MenuStr_26_ = dummy;
+const char* g_MenuStr_27_ = dummy;
+const char* g_MenuStr_28_ = dummy;
+const char* g_MenuStr_30_ = dummy;
+const char* g_MenuStr_31_ = dummy;
+const char* g_MenuStr_32_ = dummy;
+const char* g_MenuStr_33_ = dummy;
+const char* g_MenuStr_34_ = dummy;
+const char* g_MenuStr_35_ = dummy;
+const char* g_MenuStr_36_ = dummy;
+const char* g_MenuStr_42_ = dummy;
+const char* g_MenuStr_99_[] = {
     dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
 };
 const char* g_WingSmashComboStr = "dummy";
-const char* c_strEquip = "EQUIP\xFF";
-const char* c_strSpells = "SPELLS\xFF";
-const char* c_strRelics = "RELICS\xFF";
-const char* c_strSystem = "SYSTEM\xFF";
-const char* c_strFamiliars = "FAMILIARS\xFF";
-const char* c_strFamiliar = "FAMILIAR\xFF";
-const char* c_strSpecial2 = "SPECIAL\xFF";
-u8* c_strTimeAttackHiddenEntry = "DOTSDOTS\xFF";
-const char* c_strTimeAttackEntries[] = {
+const char* g_MenuStr_92_ = "EQUIP\xFF";
+const char* g_MenuStr_93_ = "SPELLS\xFF";
+const char* g_MenuStr_94_ = "RELICS\xFF";
+const char* g_MenuStr_95_ = "SYSTEM\xFF";
+const char* g_MenuStr_96_ = "FAMILIARS\xFF";
+const char* g_MenuStr_97_ = "FAMILIAR\xFF";
+const char* g_MenuStr_98_ = "SPECIAL\xFF";
+const char* g_MenuStr_41_ = "DOTSDOTS\xFF";
+const char* g_MenuStr_53_[] = {
     dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
     dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
     dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
