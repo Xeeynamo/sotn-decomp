@@ -1005,10 +1005,8 @@ void func_80128C2C(Entity* self) {
             return;
         }
 
-        tempX = self->posX.i.hi =
-            self->ext.et_80128C2C.parent1->posX.i.hi;
-        tempY = self->posY.i.hi =
-            self->ext.et_80128C2C.parent1->posY.i.hi;
+        tempX = self->posX.i.hi = self->ext.et_80128C2C.parent1->posX.i.hi;
+        tempY = self->posY.i.hi = self->ext.et_80128C2C.parent1->posY.i.hi;
         if ((self->ext.et_80128C2C.unk7C % 12) == 0) {
             self->posX.i.hi += ((rand() & 0xF) - 8);
             self->posY.i.hi += ((rand() & 0xF) - 8);
