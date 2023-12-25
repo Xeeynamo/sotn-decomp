@@ -918,8 +918,8 @@ s32 func_80128BBC(Unkstruct_80128BBC* arg0, u8 value) {
     return ret;
 }
 
-// ID #17. Created by factory blueprint #22. No known uses of this factory
-// exist.
+// ID #17. Created by factory blueprint #22. This is the blueprint for the
+// Agunea (lightning) subweapon.
 void func_80128C2C(Entity* self) {
     Entity* ent;
     Primitive* poly;
@@ -1018,7 +1018,8 @@ void func_80128C2C(Entity* self) {
             } else {
                 heartCost = 5;
                 // 0x4d is the item ID for the heart broach.
-                heartBroachesWorn = CheckEquipmentItemCount(0x4D, 4);
+                heartBroachesWorn =
+                    CheckEquipmentItemCount(ITEM_HEART_BROACH, ACCESSORY_TYPE);
                 if (heartBroachesWorn == 1) {
                     heartCost = 2;
                 }
