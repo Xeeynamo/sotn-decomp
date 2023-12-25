@@ -181,7 +181,6 @@ segments:
       - [0x41E34, rodata] # EntitySubwpnCrashCross
       - [0x41E48, rodata]
       - [0x41E5C, .rodata, 86ECC] # EntityHellfireHandler
-      - [0x41E7C, rodata] # func_80128C2C
       - [0x41E90, rodata] # EntityStopWatch
       - [0x41EB0, .rodata, 8D3E8] # func_8012D3E8
       - [0x41EC8, .rodata, 8D3E8] # func_8012EF2C
