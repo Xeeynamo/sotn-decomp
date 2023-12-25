@@ -613,7 +613,25 @@ Entity* GetFreeEntityReverse(s16 start, s16 end) {
     return NULL;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015F9F0);
+void func_8015F9F0(Entity* entity) {
+    s32 i;
+    s32 enemyId;
+
+    if (entity < &g_Entities[32]) {
+        entity->enemyId = 1;
+        return;
+    }
+
+    for (i = 0;; ++i) {
+        for (enemyId = 2; enemyId < 11; ++enemyId) {
+            if (D_80174F80[enemyId] == i) {
+                ++D_80174F80[enemyId];
+                entity->enemyId = enemyId;
+                return;
+            }
+        }
+    }
+}
 
 void func_8015FA5C(s32 arg0) {
     D_80174FAC = D_80154674[arg0][0];
