@@ -23,6 +23,7 @@ s16 D_8003C710;
 s16 D_8003C712;
 s32 D_8003C728;
 s32 D_8003C730;
+s32 D_8003C8B8;
 s32 g_IsUsingCd;
 GpuUsage g_GpuUsage;
 PlayerStatus g_Status;
@@ -232,12 +233,19 @@ s32 g_ServantPrevious;
 s32 D_80137960;
 s32 D_80137964;
 s32 D_80137968;
+s32 D_801379B8;
+s32 D_801379BC;
 VECTOR D_801379E0;
 VECTOR D_80137B20;
 SVECTOR D_80137CA0;
 SVECTOR D_80137D40;
 SVECTOR D_80137E70[];
 s32 D_80137EE0;
+s32 D_80137EE4;
+s32 D_80137EE8;
+s32 D_80137EEC;
+s32 D_80137EF0;
+s32 D_80137EF4;
 s32 D_80139824;
 s32 D_80139828[];
 s32 D_8013982C;
@@ -564,6 +572,11 @@ void func_801083BC(void) { NOT_IMPLEMENTED; }
 void DrawRichterHudSubweapon(void) { NOT_IMPLEMENTED; }
 
 void func_8010A234(s32 arg0) { NOT_IMPLEMENTED; }
+
+s32 func_8010E334(s32 xStart, s32 xEnd) {
+    NOT_IMPLEMENTED;
+    return 0;
+}
 
 s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
     NOT_IMPLEMENTED;
