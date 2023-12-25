@@ -62,7 +62,7 @@ void func_80103ED4(void) {
                 D_80137E4C += 2;
                 return;
             } else {
-                D_80137E4C += 1;
+                D_80137E4C ++;
                 return;
             }
         }
@@ -282,10 +282,10 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
         }
         if (temp_v0_5 >= 0) {
             prim->priority =
-                (u16)g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 + 4;
+                g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 + 4;
         } else {
             prim->priority =
-                (u16)g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 4;
+                g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 4;
         }
         prim->blendMode = 4;
         if (((D_80137E4C == 6) || (D_80137EE0 != 0)) &&
@@ -480,7 +480,7 @@ void func_80105428(void) {
             // are fully restored (regardless of whether they actually save)
             g_Status.hp = g_Status.hpMax;
             g_Status.mp = g_Status.mpMax;
-            D_801379BC += 1;
+            D_801379BC ++;
         }
         break;
     case 0x1:
@@ -489,9 +489,9 @@ void func_80105428(void) {
             D_80137EE4 += 4;
         }
         func_80104790(0, D_80137EE4, 0);
-        if ((D_801379B8 < (((s32)(g_StageId & 0x20) >> 1) + 8)) &&
+        if ((D_801379B8 < (((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) >> 1) + 8)) &&
             (g_GameTimer != 0)) {
-            D_801379B8 += 1;
+            D_801379B8 ++;
         }
         if (PLAYER.posX.i.hi < 0x7F) {
             g_Player.D_80072EF4 = 0x2000;
@@ -499,7 +499,7 @@ void func_80105428(void) {
         } else if (PLAYER.posX.i.hi > 0x80) {
             g_Player.D_80072EF4 = 0x8000;
             g_Player.D_80072EFC = 1;
-        } else if (D_801379B8 == (((s32)(g_StageId & 0x20) >> 1) + 8)) {
+        } else if (D_801379B8 == (((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) >> 1) + 8)) {
             func_80105408();
             D_80137EE8 = 8;
             if (D_80137EE0 == 0) {
@@ -524,7 +524,7 @@ void func_80105428(void) {
         break;
     case 0x80:
         func_80105408();
-        D_801379C8.vy += (u16)D_80137EE8;
+        D_801379C8.vy += D_80137EE8;
         func_80104790(0, D_80137EE4, 0);
         if (HandleSaveMenu(3) != 0) {
             if (D_80137E6C == 0) {
@@ -539,7 +539,7 @@ void func_80105428(void) {
         break;
     case 0x81:
         func_80105408();
-        D_801379C8.vy += (u16)D_80137EE8;
+        D_801379C8.vy += D_80137EE8;
         func_80104790(0, D_80137EE4, 0);
 
         if (HandleSaveMenu(4) != 0) {
@@ -556,7 +556,7 @@ void func_80105428(void) {
         break;
     case 0x100:
         func_80105408();
-        D_801379C8.vy += (u16)D_80137EE8;
+        D_801379C8.vy += D_80137EE8;
         func_80104790(0, D_80137EE4, 0);
         temp_result = HandleSaveMenu(1);
         if (temp_result == 0) {
@@ -571,7 +571,7 @@ void func_80105428(void) {
     case 0xB:
         break;
     case 0x101:
-        D_801379C8.vy = temp_s3 + (u16)D_80137EE8;
+        D_801379C8.vy = temp_s3 + D_80137EE8;
         func_80104790(0, D_80137EE4, 0);
         if (g_pads[0].pressed & PAD_MASK) {
             g_Player.D_80072EF4 = 0;
@@ -587,7 +587,7 @@ void func_80105428(void) {
         break;
     case 0x2:
         func_80105408();
-        D_801379C8.vy += (u16)D_80137EE8;
+        D_801379C8.vy += D_80137EE8;
         D_80137EE4 += 4;
         if (D_80137EE4 >= 0x101) {
             D_80137EE4 = 0x100;
@@ -606,7 +606,7 @@ void func_80105428(void) {
         break;
     case 0x3:
         func_80105408();
-        D_801379C8.vy += (u16)D_80137EE8;
+        D_801379C8.vy += D_80137EE8;
         if (++D_80137EE8 >= 0x81) {
             D_80137EE8 = 0x80;
         }
@@ -619,7 +619,7 @@ void func_80105428(void) {
         break;
     case 0x4:
         func_80105408();
-        D_801379C8.vy += (u16)D_80137EE8;
+        D_801379C8.vy += D_80137EE8;
         D_80137EEC += 2;
         if (D_80137EEC >= 0x80) {
             D_80137EEC = 0x7F;
@@ -654,7 +654,7 @@ void func_80105428(void) {
         if (D_80137EE8 < 0x10) {
             D_80137EE8 = 0x10;
         }
-        D_801379C8.vy += (u16)D_80137EE8;
+        D_801379C8.vy += D_80137EE8;
         D_80137EEC -= 2;
         if (D_80137EEC < 0) {
             D_80137EEC = 0;
@@ -744,7 +744,7 @@ void func_80105428(void) {
         break;
     case 0x8:
         func_80105408();
-        D_801379C8.vy += (u16)D_80137EE8;
+        D_801379C8.vy += D_80137EE8;
         D_80137EE8 += 2;
         if (D_80137EE8 >= 0x41) {
             D_80137EE8 = 0x40;
@@ -777,7 +777,7 @@ void func_80105428(void) {
         func_80105408();
         break;
     case 0x9:
-        D_801379C8.vy = temp_s3 + (u16)D_80137EE8;
+        D_801379C8.vy = temp_s3 + D_80137EE8;
         if (++D_80137EEC >= 0x80) {
             D_80137EEC = 0x7F;
         }
@@ -797,7 +797,7 @@ void func_80105428(void) {
         }
         break;
     case 0xA:
-        D_801379C8.vy += (u16)D_80137EE8;
+        D_801379C8.vy += D_80137EE8;
         if (++D_80137EEC >= 0x23) {
             D_80137EEC = 0x22;
         }
@@ -919,8 +919,8 @@ void DrawEntitiesHitbox(s32 blendMode) {
             break;
         }
 
-        y = (u16)entity->posY.i.hi + (u16)g_backbufferY;
-        x = (u16)entity->posX.i.hi + (u16)g_backbufferX;
+        y = entity->posY.i.hi + g_backbufferY;
+        x = entity->posX.i.hi + g_backbufferX;
         if (entity->facingLeft) {
             x -= entity->hitboxOffX;
         } else {
@@ -953,8 +953,8 @@ void DrawEntitiesHitbox(s32 blendMode) {
             break;
         }
 
-        y = (u16)entity->posY.i.hi + (u16)g_backbufferY;
-        x = (u16)entity->posX.i.hi + (u16)g_backbufferX;
+        y = entity->posY.i.hi + g_backbufferY;
+        x = entity->posX.i.hi + g_backbufferX;
         if (entity->facingLeft) {
             x -= entity->hitboxOffX;
         } else {
