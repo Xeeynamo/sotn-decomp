@@ -11,6 +11,7 @@ PSX_HD_TARGETS	:= dra
 PSX_BASE_SYMS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
 
 extract_us: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_US_TARGETS)))
+	$(PNG2S) bdecode config/gfx.game.json disks/us assets/game
 extract_hd: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_HD_TARGETS)))
 
 extract_disk_us: extract_disk_psxus
@@ -51,7 +52,7 @@ $(BUILD_DIR)/weapon.ld: $(CONFIG_DIR)/splat.$(VERSION).weapon.yaml $(PSX_BASE_SY
 	rm $(CONFIG_DIR)/generated.symbols.$(VERSION).weapon.txt
 $(BUILD_DIR)/assets/dra/memcard_%.png.o: assets/dra/memcard_%.png
 	mkdir -p $(dir $@)
-	$(PNG2S) $< \
+	$(PNG2S) encode $< \
 		$(BUILD_DIR)/assets/dra/memcard_$*.png.s g_saveIcon$* \
 		$(BUILD_DIR)/assets/dra/memcard_$*.pal.s g_saveIconPal$*
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/assets/dra/memcard_$*.png.o $(BUILD_DIR)/assets/dra/memcard_$*.png.s
@@ -60,7 +61,7 @@ $(BUILD_DIR)/assets/dra/memcard_%.png.o: assets/dra/memcard_%.png
 	rm $(BUILD_DIR)/assets/dra/memcard_$*.pal.s
 $(BUILD_DIR)/assets/st/sel/memcard_%.png.o: assets/st/sel/memcard_%.png
 	mkdir -p $(dir $@)
-	$(PNG2S) $< \
+	$(PNG2S) encode $< \
 		$(BUILD_DIR)/assets/st/sel/memcard_$*.png.s g_saveIcon$* \
 		$(BUILD_DIR)/assets/st/sel/memcard_$*.pal.s g_saveIconPal$*
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/assets/st/sel/memcard_$*.png.o $(BUILD_DIR)/assets/st/sel/memcard_$*.png.s

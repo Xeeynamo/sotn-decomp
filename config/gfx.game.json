@@ -1,0 +1,354 @@
+{
+    "source": "BIN/F_GAME.BIN",
+    "clut": 262144,
+    "stride": 64,
+    "items": [
+        {
+            "name": "unk02",
+            "width": 128,
+            "height": 128,
+            "bpp": 4,
+            "offset": "0x2000"
+        },
+        {
+            "name": "unk04",
+            "width": 128,
+            "height": 128,
+            "bpp": 4,
+            "offset": "0x4000"
+        },
+        {
+            "name": "damage",
+            "x": 32,
+            "y": 64,
+            "width": 96,
+            "height": 64,
+            "bpp": 4,
+            "offset": "0x10000",
+            "palette": {
+                "offset": 178
+            }
+        },
+        {
+            "name": "expl",
+            "width": 128,
+            "height": 128,
+            "bpp": 4,
+            "offset": "0x10000",
+            "palette": {
+                "offset": 154
+            }
+        },
+        {
+            "name": "unk12",
+            "width": 128,
+            "height": 128,
+            "bpp": 4,
+            "offset": "0x12000"
+        },
+        {
+            "name": "unk14",
+            "width": 128,
+            "height": 128,
+            "bpp": 4,
+            "offset": "0x14000"
+        },
+        {
+            "name": "unk16",
+            "width": 128,
+            "height": 128,
+            "bpp": 4,
+            "offset": "0x16000"
+        },
+        {
+            "name": "unk1E",
+            "width": 128,
+            "height": 128,
+            "bpp": 4,
+            "offset": "0x1E000"
+        },
+        {
+            "name": "unk20",
+            "width": 128,
+            "height": 128,
+            "bpp": 4,
+            "offset": "0x20000"
+        },
+        {
+            "name": "alucard",
+            "width": 64,
+            "height": 128,
+            "bpp": 8,
+            "offset": "0x24000",
+            "palette": {
+                "offset": 80
+            }
+        },
+        {
+            "name": "logo1",
+            "width": 64,
+            "height": 128,
+            "bpp": 8,
+            "offset": "0x2C000",
+            "palette": {
+                "offset": 208
+            }
+        },
+        {
+            "name": "logo2",
+            "width": 64,
+            "height": 128,
+            "bpp": 8,
+            "offset": "0x2E000",
+            "palette": {
+                "offset": 208
+            }
+        },
+        {
+            "name": "font",
+            "width": 128,
+            "height": 128,
+            "bpp": 4,
+            "offset": "0x30000",
+            "palette": {
+                "offset": 150
+            }
+        },
+        {
+            "name": "unk32",
+            "width": 128,
+            "height": 128,
+            "bpp": 4,
+            "offset": "0x32000"
+        },
+        {
+            "name": "servant_000",
+            "x": 104,
+            "y": 1,
+            "width": 24,
+            "height": 30,
+            "bpp": 4,
+            "offset": "0x34000",
+            "palette": {
+                "alpha": true,
+                "source": "DRA.BIN",
+                "offset": "0x3B154"
+            }
+        },
+        {
+            "name": "servant_001",
+            "x": 32,
+            "y": 33,
+            "width": 40,
+            "height": 30,
+            "bpp": 4,
+            "offset": "0x34000",
+            "palette": {
+                "alpha": true,
+                "source": "DRA.BIN",
+                "offset": "0x3B134"
+            }
+        },
+        {
+            "name": "servant_002",
+            "x": 72,
+            "y": 1,
+            "width": 32,
+            "height": 30,
+            "bpp": 4,
+            "offset": "0x34000",
+            "palette": {
+                "alpha": true,
+                "source": "DRA.BIN",
+                "offset": "0x3B194"
+            }
+        },
+        {
+            "name": "servant_003",
+            "x": 0,
+            "y": 97,
+            "width": 32,
+            "height": 30,
+            "bpp": 4,
+            "offset": "0x34000",
+            "palette": {
+                "alpha": true,
+                "source": "DRA.BIN",
+                "offset": "0x3B1D4"
+            }
+        },
+        {
+            "name": "servant_004",
+            "x": 0,
+            "y": 1,
+            "width": 32,
+            "height": 54,
+            "bpp": 4,
+            "offset": "0x34000",
+            "palette": {
+                "alpha": true,
+                "source": "DRA.BIN",
+                "offset": "0x3B114"
+            }
+        },
+        {
+            "name": "servant_005",
+            "x": 32,
+            "y": 1,
+            "width": 40,
+            "height": 30,
+            "bpp": 4,
+            "offset": "0x34000",
+            "palette": {
+                "alpha": true,
+                "source": "DRA.BIN",
+                "offset": "0x3B174"
+            }
+        },
+        {
+            "name": "servant_006",
+            "x": 0,
+            "y": 57,
+            "width": 32,
+            "height": 38,
+            "bpp": 4,
+            "offset": "0x34000",
+            "palette": {
+                "alpha": true,
+                "source": "DRA.BIN",
+                "offset": "0x3B1B4"
+            }
+        },
+        {
+            "name": "unk36",
+            "width": 128,
+            "height": 128,
+            "bpp": 4,
+            "offset": "0x36000"
+        },
+        {
+            "name": "hud_00",
+            "x": 0,
+            "y": 32,
+            "width": 16,
+            "height": 16,
+            "bpp": 4,
+            "offset": "0x38000",
+            "palette": {
+                "offset": "0x73"
+            }
+        },
+        {
+            "name": "hud_01",
+            "x": 16,
+            "y": 32,
+            "width": 16,
+            "height": 16,
+            "bpp": 4,
+            "offset": "0x38000",
+            "palette": {
+                "offset": "0x75"
+            }
+        },
+        {
+            "name": "hud_02",
+            "x": 104,
+            "y": 0,
+            "width": 8,
+            "height": 8,
+            "bpp": 4,
+            "offset": "0x38000",
+            "palette": {
+                "offset": "0x70"
+            }
+        },
+        {
+            "name": "hud_03",
+            "x": 32,
+            "y": 0,
+            "width": 72,
+            "height": 24,
+            "bpp": 4,
+            "offset": "0x38000",
+            "palette": {
+                "offset": "0x72"
+            }
+        },
+        {
+            "name": "hud_04",
+            "x": 0,
+            "y": 0,
+            "width": 32,
+            "height": 32,
+            "bpp": 4,
+            "offset": "0x38000",
+            "palette": {
+                "offset": "0x71"
+            }
+        },
+        {
+            "name": "hud_05",
+            "x": 112,
+            "y": 0,
+            "width": 8,
+            "height": 56,
+            "bpp": 4,
+            "offset": "0x38000",
+            "palette": {
+                "offset": "0x74"
+            }
+        },
+        {
+            "name": "toggle_on",
+            "x": 0,
+            "y": 112,
+            "width": 48,
+            "height": 16,
+            "bpp": 4,
+            "offset": "0x38000",
+            "palette": {
+                "offset": "0x97"
+            }
+        },
+        {
+            "name": "toggle_off",
+            "x": 48,
+            "y": 112,
+            "width": 48,
+            "height": 16,
+            "bpp": 4,
+            "offset": "0x38000",
+            "palette": {
+                "offset": "0x97"
+            }
+        },
+        {
+            "name": "unk38",
+            "width": 128,
+            "height": 128,
+            "bpp": 4,
+            "offset": "0x38000"
+        },
+        {
+            "name": "unk3a",
+            "width": 128,
+            "height": 128,
+            "bpp": 4,
+            "offset": "0x3A000"
+        },
+        {
+            "name": "unk3c",
+            "width": 128,
+            "height": 128,
+            "bpp": 4,
+            "offset": "0x3c000"
+        },
+        {
+            "name": "unk3e",
+            "width": 128,
+            "height": 128,
+            "bpp": 4,
+            "offset": "0x3e000"
+        }
+    ]
+}
