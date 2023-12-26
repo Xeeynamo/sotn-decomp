@@ -321,19 +321,7 @@ s32 D_801397FC;
 
 JosephsCloak g_JosephsCloak;
 u8 g_Pix[4][128 * 128 / 2];
-const char dummy[] = "DUMMY\xFF";
-const char* g_MenuStr[] = {
-    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
-    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
-    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
-    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
-    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
-    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
-    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
-    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
-    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
-    dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
-};
+const char D_800DD18C[] = "\xFF";
 const char* D_800A83AC[] = {
     "XX\xFF", "XX\xFF", "XX\xFF", "XX\xFF", "XX\xFF", "XX\xFF", "XX\xFF"};
 const char* g_WingSmashComboStr = "dummy";

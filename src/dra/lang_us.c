@@ -1,6 +1,8 @@
-#include "game.h"
-
 extern const char D_800DD18C[];
+
+#ifndef _S
+#define _S(x) (x)
+#endif
 
 const char* g_MenuStr[] = {
     _S("ALUCARD"),

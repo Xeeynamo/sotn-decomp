@@ -391,7 +391,7 @@ extern s32 D_800A2438;
 
 extern RoomTeleport D_800A245C[];
 extern u32 D_800A2D24;
-extern const char* g_MenuStr[];
+extern const char* g_MenuStr[110];
 extern const char* D_800A83AC[];
 extern s32 D_800A3194[];
 extern SVECTOR* D_800A3210[];

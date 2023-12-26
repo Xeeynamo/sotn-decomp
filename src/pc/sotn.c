@@ -81,6 +81,7 @@ void MyDrawSyncCallback(int mode) {
 
 // called before MainGame
 bool InitPlatform(void);
+void InitStrings(void);
 void InitEquipDefs(void);
 void InitAccessoryDefs(void);
 void InitRelicDefs(void);
@@ -178,6 +179,7 @@ bool InitGame(void) {
     D_8017A000.LoadWeaponPalette = WeaponLoadPaletteStub;
     D_8017D000.LoadWeaponPalette = WeaponLoadPaletteStub;
 
+    InitStrings();
     InitEquipDefs();
     InitAccessoryDefs();
     InitRelicDefs();
@@ -234,8 +236,18 @@ void* AllocFileConent(const char* filename) {
     return content;
 }
 
-char g_MegaMenuStrBuffer[0x1000];
+char g_MegaMenuStrBuffer[0x1800];
 size_t g_MegaMenuStrIndex = 0;
+char MyEncodeChar(char ch) {
+    if (ch == '\0') {
+        return 0xFF;
+    }
+    if (ch >= ' ' && ch <= 'z') {
+        return ch - 0x20;
+    }
+
+    return ch;
+}
 const char* AnsiToSotnMenuString(const char* str) {
     DEBUGF("%s", str);
     size_t end = strlen(str) + 2 + g_MegaMenuStrIndex;
@@ -248,12 +260,18 @@ const char* AnsiToSotnMenuString(const char* str) {
     char* start = g_MegaMenuStrBuffer + g_MegaMenuStrIndex;
     char* dst = start;
     for (const char* ch = str; *ch != '\0'; ch++) {
-        *dst++ = MENUCHAR(*ch);
+        *dst++ = MyEncodeChar(*ch);
     }
-    *dst++ = '\xFF';
+    *dst++ = MyEncodeChar('\0');
     *dst++ = '\0';
     g_MegaMenuStrIndex = end;
     return start;
+}
+
+void InitStrings(void) {
+    for (int i = 0; i < LEN(g_MenuStr); i++) {
+        g_MenuStr[i] = AnsiToSotnMenuString(g_MenuStr[i]);
+    }
 }
 
 #define JITEM(x) cJSON_GetObjectItemCaseSensitive(jitem, x)
