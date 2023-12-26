@@ -45,6 +45,8 @@ jobs:
         7z x C:\temp-sdl2_image\SDL2_image-devel-2.8.1-VC.zip -oC:\temp-sdl2_image
         dir C:\temp-sdl2_image
         dir C:\temp-sdl2_image\SDL2_image-2.8.1
+        dir C:\temp-sdl2_image\SDL2_image-2.8.1\include
+        dir C:\temp-sdl2_image\SDL2_image-2.8.1\lib
     - name: Configure CMake
       run: cmake -B ${{github.workspace}}/cmake_build -DCMAKE_BUILD_TYPE=Release -DSDL2_DIR=C:\temp-sdl2\SDL2-2.28.5 -DSDL2IMAGEDIR=C:\temp-sdl2_image\SDL2_image-2.8.1\include
 
