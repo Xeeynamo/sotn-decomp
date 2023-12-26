@@ -63,7 +63,7 @@ int CdControl(u_char com, u_char* param, u_char* result) {
     switch (com) {
     case CdlSetloc:
         CdlLOC* pos = (CdlLOC*)param;
-        fseek(cd_fp, CdPosToInt(pos) * sector_size, SEEK_SET);
+        fseek(cd_fp, CdPosToInt(pos) * SECTOR_SIZE, SEEK_SET);
         break;
     case CdlReadN:
         reading = true;
