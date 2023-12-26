@@ -1152,7 +1152,7 @@ void func_80159CE4(s32 arg0, u32 arg1, s16 arg2) {
                         g_CurrentEntity, FACTORY(0x900, 4), 0);
                     PLAYER.posY.i.hi -= 20;
                     PLAYER.posX.i.hi -= xShift;
-                    g_api.PlaySfx(0x644);
+                    g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
                     g_api.func_80102CD8(2);
                     PLAYER.step_s = 1;
                     sp10.unk0 = 0;
@@ -1167,7 +1167,7 @@ void func_80159CE4(s32 arg0, u32 arg1, s16 arg2) {
                 }
             }
             D_80173B64 = 8;
-            g_api.PlaySfx(0x644);
+            g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
             PLAYER.velocityY = FIX(-2.5);
             g_api.func_80102CD8(2);
             PLAYER.step_s = 3;
