@@ -482,7 +482,11 @@ typedef struct {
     unsigned char width;
     unsigned char height;
     unsigned short unk2;
+    #ifdef _MSC_VER
     unsigned char* data;
+    #else
+    unsigned char data[0];
+    #endif
 } ImgSrc;
 
 typedef struct {
