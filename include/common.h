@@ -25,6 +25,10 @@
 #define LENU(x) ((u32)(sizeof(x) / sizeof(*(x))))
 #define STRCPY(dst, src) __builtin_memcpy(dst, src, sizeof(src))
 
+#ifdef _MSC_VER
+#define __builtin_memcpy memcpy
+#endif
+
 #define LOH(x) (*(s16*)&(x))
 #define LOHU(x) (*(u16*)&(x))
 #define LOW(x) (*(s32*)&(x))
