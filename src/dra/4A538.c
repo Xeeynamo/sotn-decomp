@@ -1,6 +1,6 @@
 #include "dra.h"
 
-// aaa
+// aaaa
 
 void func_800EA538(s32 arg0) {
     Unkstruct_8006C3C4* var_v0;

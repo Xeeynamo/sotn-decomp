@@ -46,7 +46,7 @@ jobs:
         dir C:\temp-sdl2_image
         dir C:\temp-sdl2_image\SDL2_image-2.8.1
     - name: Configure CMake
-      run: cmake -B ${{github.workspace}}/cmake_build -DCMAKE_BUILD_TYPE=Release -DSDL2_DIR=C:\temp-sdl2\SDL2-2.28.5 -DSDL2IMAGEDIR=C:\temp-sdl2_image\SDL2_image-2.8.1
+      run: cmake -B ${{github.workspace}}/cmake_build -DCMAKE_BUILD_TYPE=Release -DSDL2_DIR=C:\temp-sdl2\SDL2-2.28.5 -DSDL2IMAGEDIR=C:\temp-sdl2_image\SDL2_image-2.8.1\include
 
     - name: Build
       run: cmake --build ${{github.workspace}}/cmake_build --config Release
