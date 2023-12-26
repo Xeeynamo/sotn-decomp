@@ -881,6 +881,7 @@ extern u8 D_801EC000[];
 extern u8 D_8013B688[];
 extern struct Cmd14 D_8013B5F4[];
 
+void func_801072DC(POLY_GT4* poly);
 void InitializePads(void);
 void ReadPads(void);
 void ClearBackbuffer(void);
