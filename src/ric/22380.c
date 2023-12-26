@@ -737,7 +737,82 @@ s32 func_8015FDB0(POLY_GT4* poly, s16 posX, s16 posY) {
     return ret;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/22380", func_8015FEA8);
+extern s16_pair D_80174FBC[];
+
+void func_8015FEA8(Entity* entity) {
+    Primitive* prim;
+    s16 temp_xRand;
+    s32 temp_yRand;
+    s32 i;
+    s16 hitboxY;
+    s16 hitboxX;
+    s32 temp;
+
+    switch (entity->step) {
+    case 0:
+        entity->primIndex = (s16) g_api.AllocPrimitives(PRIM_GT4, 16);
+        if (entity->primIndex == -1) {
+            DestroyEntity(entity);
+            return;
+        }
+        entity->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
+        hitboxX = PLAYER.posX.i.hi + PLAYER.hitboxOffX;
+        hitboxY = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
+        prim = &g_PrimBuf[entity->primIndex];
+        for (i = 0; i < 16; i++) {
+            temp_xRand = hitboxX + rand() % 24 - 12;
+            temp_yRand = rand();
+            D_80174FBC[i].unk0 = temp_xRand;
+            D_80174FBC[i].unk2 = hitboxY + temp_yRand % 48 - 24;
+            prim->clut = 0x1B2;
+            prim->tpage = 0x1A;
+            prim->b0 = 0;
+            prim->b1 = 0;
+            prim->g0 = 0;
+            prim->g1 = (rand() & 7) + 1;
+            prim->g2 = 0;
+            prim->priority = PLAYER.zPriority + 4;
+            prim->blendMode = 0x11B;
+            if (rand() & 1) {
+                prim->blendMode = 0x17B;
+            }
+            prim = prim->next;
+        }
+        entity->step++;
+        break;
+
+    case 1:
+        if (!(g_Player.unk0C & 0x10000)) {
+            DestroyEntity(entity);
+            return;
+        }
+    }
+
+    prim = &g_PrimBuf[entity->primIndex];
+    for (i = 0; i < 16; i += 1) {
+        switch (prim->g0) {
+        case 0:
+            if (!(--prim->g1 & 0xFF)) {
+                prim->g0++;
+            }
+            break;
+        case 1:
+            hitboxY = D_80174FBC[i].unk0;
+            hitboxX = D_80174FBC[i].unk2;
+            temp = func_8015FDB0((POLY_GT4*)prim, hitboxY, hitboxX);
+            D_80174FBC[i].unk2--;
+            if (temp < 0) {
+                prim->blendMode |= BLEND_VISIBLE;
+                prim->g0++;
+            } else {
+                prim->blendMode &= ~BLEND_VISIBLE;
+            }
+            break;
+        }
+        prim = prim->next;
+    }
+    return;
+}
 
 // same as DRA/func_8011F074
 void func_801601DC(Entity* entity) {
