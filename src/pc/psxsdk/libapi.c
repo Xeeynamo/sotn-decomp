@@ -28,7 +28,7 @@ long OpenEvent(unsigned long a, long b, long c, long (*func)()) {
     NOT_IMPLEMENTED;
 }
 
-long EnableEvent(long) { NOT_IMPLEMENTED; }
+long EnableEvent(long a) { NOT_IMPLEMENTED; }
 
 long TestEvent(unsigned long event) { NOT_IMPLEMENTED; }
 
