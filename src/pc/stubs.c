@@ -195,7 +195,7 @@ ItemTypes D_801375CC;
 s32 D_801375D0;
 s32 D_801375D4;
 s32* D_801375D8;
-s32 D_801375DC[0];
+s32 D_801375DC[1];
 s32 D_801375E0[8];
 s32 D_801375FC;
 s32 D_80137608;
@@ -381,7 +381,7 @@ const char* c_strTimeAttackEntries[] = {
     dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
     dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
 };
-ImgSrc* g_imgUnk8013C200_impl = {
+ImgSrc g_imgUnk8013C200_impl[4] = {
     0,
     0,
     0,

@@ -616,7 +616,7 @@ extern ItemTypes D_801375CC;
 extern s32 D_801375D0;
 extern s32 D_801375D4;
 extern s32* D_801375D8;
-extern s32 D_801375DC[0];
+extern s32 D_801375DC[1];
 extern s32 D_801375E0[8];
 extern s32 D_801375FC;
 extern s32 D_80137608;
