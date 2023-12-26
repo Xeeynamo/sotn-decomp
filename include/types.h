@@ -21,7 +21,7 @@ typedef unsigned int size_t;
 #ifdef _MSC_VER
 typedef unsigned char u_char;
 typedef unsigned short u_short;
-typedef unsigned int u_long;
+typedef unsigned long long u_long;
 #endif
 
 typedef signed char s8;
