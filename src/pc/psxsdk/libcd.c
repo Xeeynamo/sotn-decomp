@@ -8,7 +8,7 @@
 
 extern FILE* cd_fp;
 bool reading = false;
-const int sector_size = 2352;
+#define SECTOR_SIZE 2352
 int current_file = 0;
 int current_channel = 0;
 
@@ -40,6 +40,7 @@ char* CdSyncModeToStr(int mode) {
     case CdlGetTD:
         return "CdlGetTD";
     default:
+        break;
     }
 
     return "";
@@ -87,8 +88,8 @@ int CdMix(CdlATV* vol) {
 
 void ExecCd() {
     if (reading) {
-        uint8_t sector[sector_size];
-        fread(sector, sizeof(uint8_t), sector_size, cd_fp);
+        uint8_t sector[SECTOR_SIZE];
+        fread(sector, sizeof(uint8_t), SECTOR_SIZE, cd_fp);
         XA_ProcessSector(sector, &AudioBuffer);
     }
 }
