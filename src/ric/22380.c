@@ -737,8 +737,7 @@ s32 func_8015FDB0(POLY_GT4* poly, s16 posX, s16 posY) {
     return ret;
 }
 
-extern s16_pair D_80174FBC[];
-
+// Corresponding DRA function is func_80119F70
 void func_8015FEA8(Entity* entity) {
     Primitive* prim;
     s16 temp_xRand;
