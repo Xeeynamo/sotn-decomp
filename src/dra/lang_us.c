@@ -1,141 +1,116 @@
-extern const char D_800DFF44[];
-extern const char D_800DFF3C[];
-extern const char D_800DFF34[];
-extern const char D_800DFF2C[];
-extern const char D_800DFF24[];
-extern const char D_800DFF1C[];
-extern const char D_800DFF14[];
-extern const char D_800DFF0C[];
-extern const char D_800DFF04[];
-extern const char D_800DFEFC[];
-extern const char D_800DFEF4[];
-extern const char m_menu_text_kills[];
-extern const char D_800DFEE8[];
-extern const char D_800DFEE4[];
-extern const char D_800DFEDC[];
-extern const char D_800DFED4[];
-extern const char aUtton[];
-extern const char D_800DFEB0[];
-extern const char D_800DFEA0[];
-extern const char D_800DFE98[];
-extern const char D_800DFE8C[];
-extern const char D_800DFE84[];
-extern const char a2ight[];
-extern const char D_800DFE6C[];
-extern const char D_800DFE64[];
-extern const char D_800DFE58[];
-extern const char D_800DFE50[];
-extern const char D_800DFE48[];
-extern const char D_800DFE40[];
-extern const char D_800DFE38[];
-extern const char D_800DFE30[];
-extern const char D_800DFE24[];
-extern const char D_800DFE1C[];
-extern const char D_800DFE14[];
-extern const char D_800DFE0C[];
-extern const char a7indow[];
-extern const char D_800DFDEC[];
-extern const char D_800DFDE4[];
-extern const char D_800DFDDC[];
-extern const char D_800DFDD4[];
-extern const char D_800DFDCC[];
-extern const char D_800DFDAC[];
-extern const char D_800DFDA0[];
-extern const char D_800DFD98[];
-extern const char D_800DFD90[];
-extern const char D_800DFD84[];
-extern const char D_800DFE40[];
-extern const char D_800DFD7C[];
-extern const char D_800DFD74[];
-extern const char D_800DFD6C[];
-extern const char D_800DFD64[];
-extern const char D_800DFD5C[];
-extern const char D_800DFD54[];
-extern const char a2ichter[];
-extern const char D_800DFD28[];
-extern const char D_800DFD10[];
-extern const char D_800DFCFC[];
-extern const char D_800DFCDC[];
-extern const char D_800DFCCC[];
-extern const char D_800DFCB0[];
-extern const char D_800DFC9C[];
-extern const char D_800DFC88[];
-extern const char D_800DFC74[];
-extern const char D_800DFC60[];
-extern const char D_800DFC40[];
-extern const char D_800DFC30[];
-extern const char D_800DFC1C[];
-extern const char D_800DFC04[];
-extern const char D_800DFBF4[];
-extern const char D_800DFBDC[];
-extern const char D_800DFBC4[];
-extern const char D_800DFBAC[];
-extern const char D_800DFB98[];
-extern const char D_800DFB80[];
-extern const char D_800DFB6C[];
-extern const char D_800DFB58[];
-extern const char D_800DFB44[];
-extern const char D_800DFB24[];
-extern const char D_800DFB04[];
-extern const char D_800DFAEC[];
+#include "game.h"
+
 extern const char D_800DD18C[];
-extern const char D_800DD18C[];
-extern const char D_800DD18C[];
-extern const char D_800DD18C[];
-extern const char D_800DD18C[];
-extern const char a2ight[];
-extern const char D_800DFAE0[];
-extern const char D_800DFAD4[];
-extern const char D_800DFAC8[];
-extern const char D_800DFABC[];
-extern const char D_800DFAB0[];
-extern const char D_800DFAB0[];
-extern const char D_800DFAA8[];
-extern const char D_800DFAA0[];
-extern const char D_800DFA98[];
-extern const char D_800DFA90[];
-extern const char D_800DFA84[];
-extern const char aAmiliar[];
-extern const char a3pecial[];
-extern const char D_800DFA54[];
-extern const char D_800DFD64[];
-extern const char D_800DFA48[];
-extern const char D_800DFA40[];
-extern const char D_800DFA38[];
-extern const char D_800DFA2C[];
-extern const char D_800DFA24[];
-extern const char D_800DFA1C[];
-extern const char D_800DFA10[];
-extern const char D_800DFA08[];
-extern const char D_800DF9FC[];
 
 const char* g_MenuStr[] = {
-    D_800DFF44, D_800DFF3C, D_800DFF34, D_800DFF2C,
-    D_800DFF24, D_800DFF1C, D_800DFF14, D_800DFF0C,
-    D_800DFF04, D_800DFEFC, D_800DFEF4, m_menu_text_kills,
-    D_800DFEE8, D_800DFEE4, D_800DFEDC, D_800DFED4,
-    aUtton,     D_800DFEB0, D_800DFEA0, D_800DFE98,
-    D_800DFE8C, D_800DFE84, a2ight,     D_800DFE6C,
-    D_800DFE64, D_800DFE58, D_800DFE50, D_800DFE48,
-    D_800DFE40, D_800DFE38, D_800DFE30, D_800DFE24,
-    D_800DFE1C, D_800DFE14, D_800DFE0C, a7indow,
-    D_800DFDEC, D_800DFDE4, D_800DFDDC, D_800DFDD4,
-    D_800DFDCC, D_800DFDAC, D_800DFDA0, D_800DFD98,
-    D_800DFD90, D_800DFD84, D_800DFE40, D_800DFD7C,
-    D_800DFD74, D_800DFD6C, D_800DFD64, D_800DFD5C,
-    D_800DFD54, a2ichter,   D_800DFD28, D_800DFD10,
-    D_800DFCFC, D_800DFCDC, D_800DFCCC, D_800DFCB0,
-    D_800DFC9C, D_800DFC88, D_800DFC74, D_800DFC60,
-    D_800DFC40, D_800DFC30, D_800DFC1C, D_800DFC04,
-    D_800DFBF4, D_800DFBDC, D_800DFBC4, D_800DFBAC,
-    D_800DFB98, D_800DFB80, D_800DFB6C, D_800DFB58,
-    D_800DFB44, D_800DFB24, D_800DFB04, D_800DFAEC,
-    D_800DD18C, D_800DD18C, D_800DD18C, D_800DD18C,
-    D_800DD18C, a2ight,     D_800DFAE0, D_800DFAD4,
-    D_800DFAC8, D_800DFABC, D_800DFAB0, D_800DFAB0,
-    D_800DFAA8, D_800DFAA0, D_800DFA98, D_800DFA90,
-    D_800DFA84, aAmiliar,   a3pecial,   D_800DFA54,
-    D_800DFD64, D_800DFA48, D_800DFA40, D_800DFA38,
-    D_800DFA2C, D_800DFA24, D_800DFA1C, D_800DFA10,
-    D_800DFA08, D_800DF9FC,
+    _S("ALUCARD"),
+    _S("STR"),
+    _S("CON"),
+    _S("INT"),
+    _S("LCK"),
+    _S("EXP"),
+    _S("NEXT"),
+    _S("GOLD"),
+    _S("LEVEL"),
+    _S("TIME"),
+    _S("ROOMS"),
+    _S("KILLS"),
+    _S("HP"),
+    _S("MP"),
+    _S("HEART"),
+    _S("STATUS"),
+    _S("Button settings"),
+    _S("Cloak lining"),
+    _S("Cloak color"),
+    "\x65\x65\x65\x65\x65\xFF", // locked menu option?
+    _S("Exterior"),
+    _S("Lining"),
+    _S("Right hand"),
+    _S("Left hand"),
+    _S("Jump"),
+    _S("Special"),
+    _S("Wolf"),
+    _S("Mist"),
+    _S("Bat"),
+    "\xB6\xB2\xCA\xC2\xFF", // debug in button config?
+    _S("Normal"),
+    _S("Reverse"),
+    _S("Sound"),
+    _S("Stereo"),
+    _S("Mono"),
+    _S("Window color"),
+    _S("Time attack"),
+    _S("GOOD"),
+    _S("POISON"),
+    _S("STONE"),
+    _S("CURSE"),
+    _S("------------------------------"),
+    _S("ALUCART"),
+    "\xDA\xCD\xFF\x9E\xD9\xFF",
+    "\xB9\xB2\xB9\xDD\xC1\xFF",
+    _S("alucart"),
+    _S("Bat"),
+    _S("Ghost"),
+    _S("Faerie"),
+    _S("Demon"),
+    _S("Sword"),
+    "\xD6\xB3\xBE\xB2\xFF",     // JP YOUSEI
+    "\xCA\xC5\xB1\xB8\xCF\xFF", // JP NOSE DEMON
+    _S("Richter defeats Dracula"),
+    _S("Defeat Olrox"),
+    _S("Defeat Doppleganger 10"),
+    _S("Defeat Granfaloon"),
+    _S("Defeat Minotaur and Werewolf"),
+    _S("Defeat Scylla"),
+    _S("Defeat Slogra and Gaibon"),
+    _S("Defeat Hippogryph"),
+    _S("Defeat Beelzebub"),
+    _S("Defeat Succubus"),
+    _S("Defeat Karasuman"),
+    _S("Defeat Ralph, Grant & Sypha"),
+    _S("Defeat Death"),
+    _S("Defeat Cerberus"),
+    _S("Save Richter Belmont"),
+    _S("Defeat Medusa"),
+    _S("Defeat the Creature"),
+    _S("Defeat Lesser Demon"),
+    _S("Defeat Doppleganger 40"),
+    _S("Defeat Akmodan II"),
+    _S("Defeat Darkwing Bat"),
+    _S("Defeat Galamoth"),
+    _S("Final Save point"),
+    _S("Meeting with Death"),
+    _S("Get Holy Glasses from Maria"),
+    _S("Meeting with Master Librarian"),
+    _S("First Maria meeting"),
+    D_800DD18C,
+    D_800DD18C,
+    D_800DD18C,
+    D_800DD18C,
+    D_800DD18C,
+    _S("Right hand"),
+    _S(" Left hand"),
+    _S("   Head"),
+    _S("   Body"),
+    _S("   Cloak"),
+    _S("   Other"),
+    _S("   Other"),
+    _S("Equip"),
+    _S("Spells"),
+    _S("Relics"),
+    _S("System"),
+    _S("Familiars"),
+    _S("Familiar List"),
+    _S("Special Moves List"),
+    _S("S.sword"),
+    _S("Sword"),
+    _S("Throw 1"),
+    _S("Fist"),
+    _S("Club"),
+    _S("Two-hand"),
+    _S("Food"),
+    _S("Bomb"),
+    _S("Throw 2"),
+    _S("Shield"),
+    _S("Medicine"),
 };
