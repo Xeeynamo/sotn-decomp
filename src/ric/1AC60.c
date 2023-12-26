@@ -922,8 +922,332 @@ void func_80159C04(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_80159CE4);
+void func_80159CE4(s32 arg0, u32 arg1, s16 arg2) {
+    Unkstruct_800FD5BC sp10;
+    s32 xShift;
+    s32 i;
+    bool step_s_zero = false;
 
+    if (D_80173B64 != 0) {
+        D_80173B64--;
+    }
+    switch (PLAYER.step_s) {
+    case 0:
+        step_s_zero = true;
+        func_80159BC8();
+        if (arg1 < 16) {
+            func_80159C04();
+        } else {
+            PLAYER.entityRoomIndex = PLAYER.facingLeft;
+        }
+        if (arg0 & 0x4000) {
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 48), 0);
+            PLAYER.velocityY = FIX(-4);
+            func_8015CAAC(FIX(-1.25));
+            PLAYER.step_s = 1;
+            PLAYER.unk4C = D_801556C4;
+            g_Player.unk40 = 0x8120;
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 48), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4600, 33), 0);
+            g_Player.D_80072F04 = 6;
+            g_api.PlaySfx(0x703);
+            break;
+        } else {
+            if (arg0 & 0x2000) {
+                arg1 = 3;
+            }
+            switch (arg1 - 2) {
+            case 0:
+                switch (arg2) {
+                case 0:
+                case 1:
+                    PLAYER.velocityY = 0;
+                    func_8015CAAC(FIX(-1.25));
+                    PLAYER.step_s = 6;
+                    PLAYER.unk4C = D_8015569C;
+                    g_api.PlaySfx(0x702);
+                    CreateEntFactoryFromEntity(
+                        g_CurrentEntity, FACTORY(0, 0), 0);
+                    break;
+                case 2:
+                    PLAYER.velocityY = 0;
+                    func_8015CAAC(FIX(-1.25));
+                    PLAYER.step_s = 7;
+                    PLAYER.unk4C = D_80155704;
+                    CreateEntFactoryFromEntity(
+                        g_CurrentEntity, FACTORY(0, 0), 0);
+                    g_api.PlaySfx(0x703);
+                    break;
+                case 3:
+                case 4:
+                    PLAYER.velocityY = FIX(-3);
+                    func_8015CAAC(FIX(-1.25));
+                    PLAYER.step_s = 1;
+                    PLAYER.unk4C = D_80155694;
+                    g_api.PlaySfx(0x702);
+                    break;
+                }
+                break;
+            case 2:
+            case 3:
+                PLAYER.velocityY = FIX(-0.5);
+                g_Player.unk5A = PLAYER.hitPoints;
+                PLAYER.posY.val -= 1;
+                func_8015CAAC(FIX(-8));
+                PLAYER.step_s = 2;
+                PLAYER.unk4C = D_80155694;
+                g_Player.D_80072F04 = 0x200;
+                PLAYER.facingLeft = PLAYER.entityRoomIndex;
+                break;
+            default:
+            case 1:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+            case 10:
+            case 11:
+            case 12:
+            case 13:
+            case 14:
+                switch (arg2) {
+                default:
+                case 0:
+                case 1:
+                    PLAYER.velocityY = FIX(-4);
+                    func_8015CAAC(FIX(-1.25));
+                    PLAYER.step_s = 1;
+                    PLAYER.unk4C = D_80155694;
+                    g_api.PlaySfx(0x702);
+                    break;
+                case 2:
+                    PLAYER.velocityY = 0;
+                    func_8015CAAC(FIX(-1.25));
+                    PLAYER.step_s = 7;
+                    PLAYER.unk4C = D_80155704;
+                    CreateEntFactoryFromEntity(
+                        g_CurrentEntity, FACTORY(0, 0), 0);
+                    g_api.PlaySfx(0x703);
+                    break;
+                case 3:
+                case 4:
+                    PLAYER.velocityY = FIX(-3);
+                    func_8015CAAC(FIX(-1.25));
+                    PLAYER.step_s = 1;
+                    PLAYER.unk4C = D_80155694;
+                    g_api.PlaySfx(0x702);
+                    break;
+                }
+                break;
+            }
+            g_Player.unk40 = 0x8166;
+            g_Player.D_80072F04 = 6;
+            if (arg0 & 0x8000) {
+                CreateEntFactoryFromEntity(
+                    g_CurrentEntity, FACTORY(0x100, 8), 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 9), 0);
+                CreateEntFactoryFromEntity(
+                    g_CurrentEntity, FACTORY(0x4300, 33), 0);
+                g_Player.unk40 = 0x8160;
+                g_Player.D_80072F04 = 0x10;
+                break;
+            } else if (arg0 & 0x40) {
+                CreateEntFactoryFromEntity(
+                    g_CurrentEntity, FACTORY(0x500, 46), 0);
+                CreateEntFactoryFromEntity(
+                    g_CurrentEntity, FACTORY(0x4400, 33), 0);
+                g_Player.unk40 = 0x8166;
+                g_Player.D_80072F04 = 0x10;
+                break;
+            } else if (arg0 & 0x2000) {
+                CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 47), 0);
+                g_Player.D_80072F04 = 0xC;
+                g_Player.unk40 = 0x8169;
+                break;
+            } else {
+                if (arg0 & 0x800) {
+                    CreateEntFactoryFromEntity(
+                        g_CurrentEntity, FACTORY(0, 70), 0);
+                    CreateEntFactoryFromEntity(
+                        g_CurrentEntity, FACTORY(0x5600, 33), 0);
+                    g_Player.D_80072F04 = 0x10;
+                    g_Player.unk40 = 0x8164;
+                }
+                if (arg0 & 0x1000) {
+                    CreateEntFactoryFromEntity(
+                        g_CurrentEntity, FACTORY(0, 71), 0);
+                    CreateEntFactoryFromEntity(
+                        g_CurrentEntity, FACTORY(0x5700, 33), 0);
+                    g_Player.D_80072F04 = 8;
+                    g_Player.unk40 = 0x8168;
+                }
+                if (!(arg0 & 0xF840)) {
+                    CreateEntFactoryFromEntity(
+                        g_CurrentEntity, FACTORY(0x5300, 33), 0);
+                }
+            }
+        }
+        break;
+    case 1:
+        if ((g_Player.pl_vram_flag & 2) && (PLAYER.velocityY < FIX(-1))) {
+            PLAYER.velocityY = FIX(-1);
+        }
+        if (func_8015DBB0(0x20280)) {
+            return;
+        }
+        break;
+    case 2:
+        if ((g_Player.unk04 & 0x8000) && !(g_Player.pl_vram_flag & 0x8000)) {
+            goto block_6dc;
+        }
+        if ((g_Player.pl_vram_flag & 0x8000) && !(g_GameTimer & 1)) {
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0xA00, 74), 0);
+        }
+        if (!(g_Player.pl_vram_flag & 0xE)) {
+            break;
+        }
+        if (g_Player.pl_vram_flag & 2) {
+            func_80158B04(1);
+            D_80173B64 = 0x18;
+            PLAYER.velocityX /= 2;
+            PLAYER.velocityY = 0;
+            PLAYER.step_s = 5;
+            sp10.unk0 = 0;
+            sp10.unk4 = 1;
+            sp10.unk8 = g_Player.unk5A;
+            if (g_api.func_800FD5BC(&sp10) != 0) {
+                SetPlayerStep(Player_Kill);
+                func_8015A9B0(0, 2, 10, 2);
+                return;
+            }
+            break;
+        } else {
+            if ((g_StageId != STAGE_BO6) && (g_StageId != STAGE_RBO6) &&
+                (g_StageId != STAGE_DRE)) {
+                for (i = 2; i < 7; i++) {
+                    if ((g_Player.colliders3[i].effects & 2)) {
+                        break;
+                    }
+                }
+                if (i == 7) {
+                    for (i = 9; i < 0xE; i++) {
+                        if ((g_Player.colliders3[i].effects & 2)) {
+                            break;
+                        }
+                    }
+                }
+                if (i == 14) {
+                block_6dc:
+                    PLAYER.velocityY = FIX(-4);
+                    func_8015CAAC(FIX(-1.25));
+                    xShift = -3;
+                    if (PLAYER.velocityX != 0) {
+                        xShift = 3;
+                    }
+                    PLAYER.posY.i.hi += 20;
+                    PLAYER.posX.i.hi = xShift + PLAYER.posX.i.hi;
+                    CreateEntFactoryFromEntity(
+                        g_CurrentEntity, FACTORY(0x900, 4), 0);
+                    PLAYER.posY.i.hi -= 20;
+                    PLAYER.posX.i.hi -= xShift;
+                    g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
+                    g_api.func_80102CD8(2);
+                    PLAYER.step_s = 1;
+                    sp10.unk0 = 0;
+                    sp10.unk4 = 1;
+                    sp10.unk8 = g_Player.unk5A;
+                    if (g_api.func_800FD5BC(&sp10) != 0) {
+                        SetPlayerStep(Player_Kill);
+                        func_8015A9B0(0, 2, 10, 2);
+                        return;
+                    }
+                    break;
+                }
+            }
+            D_80173B64 = 8;
+            g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
+            PLAYER.velocityY = FIX(-2.5);
+            g_api.func_80102CD8(2);
+            PLAYER.step_s = 3;
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x800, 75), 0);
+        }
+        sp10.unk0 = 0;
+        sp10.unk4 = 1;
+        sp10.unk8 = g_Player.unk5A;
+        if (g_api.func_800FD5BC(&sp10) != 0) {
+            SetPlayerStep(Player_Kill);
+            func_8015A9B0(0, 2, 10, 2);
+            return;
+        }
+        break;
+    case 3:
+        if (D_80173B64 == 0) {
+            SetSpeedX(FIX(0.75));
+            if (func_8015DBB0(0x20280)) {
+                return;
+            }
+        }
+        break;
+    case 5:
+        func_8015C93C(0x2000);
+        if (D_80173B64 != 0) {
+            if ((g_Player.pl_vram_flag & 2) && !(g_GameTimer & 3)) {
+                func_80158B04(0);
+            }
+            break;
+        } else if (g_Player.pl_vram_flag & 0xC) {
+            if (!(g_Player.pl_vram_flag & 0xFF03)) {
+                PLAYER.velocityY += FIX(12.0 / 128);
+                if (PLAYER.velocityY > FIX(7)) {
+                    PLAYER.velocityY = FIX(7);
+                }
+                if (!(g_GameTimer & 3)) {
+                    CreateEntFactoryFromEntity(
+                        g_CurrentEntity, FACTORY(0x400, 76), 0);
+                }
+                break;
+            }
+        }
+        PLAYER.step_s = 1;
+        PLAYER.animFrameIdx = 0;
+        PLAYER.animFrameDuration = 0;
+        break;
+    case 6:
+        func_8015C93C(0x2000);
+        if (!(g_Player.pl_vram_flag & 1)) {
+            func_8015CF08();
+        }
+        if (PLAYER.animFrameDuration < 0) {
+            if ((g_Player.unk5C == 0) || (g_Status.hp > 0)) {
+                func_8015CD98(PLAYER.velocityX);
+                break;
+            }
+            func_8015D9B4();
+            return;
+        }
+        break;
+    case 7:
+        func_8015C93C(0x2000);
+        if (!(g_Player.pl_vram_flag & 1)) {
+            func_8015CF08();
+        }
+        if (PLAYER.animFrameDuration < 0) {
+            if ((g_Player.unk5C != 0) && (g_Status.hp <= 0)) {
+                func_8015D9B4();
+                return;
+            }
+            func_8015CCC8(0, PLAYER.velocityX);
+        }
+        break;
+    }
+    if (step_s_zero && (g_Player.unk72 != 0)) {
+        PLAYER.velocityY = 0;
+    }
+}
+
+const s32 rodata_padding_1A784 = 0;
 // DECOMP_ME_WIP func_8015A7D0 https://decomp.me/scratch/1JWA0
 INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_8015A7D0);
 
