@@ -750,7 +750,7 @@ void func_8015FEA8(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->primIndex = (s16) g_api.AllocPrimitives(PRIM_GT4, 16);
+        entity->primIndex = (s16)g_api.AllocPrimitives(PRIM_GT4, 16);
         if (entity->primIndex == -1) {
             DestroyEntity(entity);
             return;
