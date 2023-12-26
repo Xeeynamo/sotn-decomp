@@ -98,6 +98,7 @@ extern u16 D_8015465C[4];
 extern u16 D_80154664[8];
 extern u8 D_80154674[][4];
 extern SubweaponDef D_80154688[];
+extern u8 D_801548F4[6][8];
 extern AnimationFrame* D_80154924;
 extern PfnEntityUpdate D_8015495C[];
 extern s32 D_80154ED4;
