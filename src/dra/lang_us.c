@@ -1,0 +1,141 @@
+extern const char D_800DFF44[];
+extern const char D_800DFF3C[];
+extern const char D_800DFF34[];
+extern const char D_800DFF2C[];
+extern const char D_800DFF24[];
+extern const char D_800DFF1C[];
+extern const char D_800DFF14[];
+extern const char D_800DFF0C[];
+extern const char D_800DFF04[];
+extern const char D_800DFEFC[];
+extern const char D_800DFEF4[];
+extern const char m_menu_text_kills[];
+extern const char D_800DFEE8[];
+extern const char D_800DFEE4[];
+extern const char D_800DFEDC[];
+extern const char D_800DFED4[];
+extern const char aUtton[];
+extern const char D_800DFEB0[];
+extern const char D_800DFEA0[];
+extern const char D_800DFE98[];
+extern const char D_800DFE8C[];
+extern const char D_800DFE84[];
+extern const char a2ight[];
+extern const char D_800DFE6C[];
+extern const char D_800DFE64[];
+extern const char D_800DFE58[];
+extern const char D_800DFE50[];
+extern const char D_800DFE48[];
+extern const char D_800DFE40[];
+extern const char D_800DFE38[];
+extern const char D_800DFE30[];
+extern const char D_800DFE24[];
+extern const char D_800DFE1C[];
+extern const char D_800DFE14[];
+extern const char D_800DFE0C[];
+extern const char a7indow[];
+extern const char D_800DFDEC[];
+extern const char D_800DFDE4[];
+extern const char D_800DFDDC[];
+extern const char D_800DFDD4[];
+extern const char D_800DFDCC[];
+extern const char D_800DFDAC[];
+extern const char D_800DFDA0[];
+extern const char D_800DFD98[];
+extern const char D_800DFD90[];
+extern const char D_800DFD84[];
+extern const char D_800DFE40[];
+extern const char D_800DFD7C[];
+extern const char D_800DFD74[];
+extern const char D_800DFD6C[];
+extern const char D_800DFD64[];
+extern const char D_800DFD5C[];
+extern const char D_800DFD54[];
+extern const char a2ichter[];
+extern const char D_800DFD28[];
+extern const char D_800DFD10[];
+extern const char D_800DFCFC[];
+extern const char D_800DFCDC[];
+extern const char D_800DFCCC[];
+extern const char D_800DFCB0[];
+extern const char D_800DFC9C[];
+extern const char D_800DFC88[];
+extern const char D_800DFC74[];
+extern const char D_800DFC60[];
+extern const char D_800DFC40[];
+extern const char D_800DFC30[];
+extern const char D_800DFC1C[];
+extern const char D_800DFC04[];
+extern const char D_800DFBF4[];
+extern const char D_800DFBDC[];
+extern const char D_800DFBC4[];
+extern const char D_800DFBAC[];
+extern const char D_800DFB98[];
+extern const char D_800DFB80[];
+extern const char D_800DFB6C[];
+extern const char D_800DFB58[];
+extern const char D_800DFB44[];
+extern const char D_800DFB24[];
+extern const char D_800DFB04[];
+extern const char D_800DFAEC[];
+extern const char D_800DD18C[];
+extern const char D_800DD18C[];
+extern const char D_800DD18C[];
+extern const char D_800DD18C[];
+extern const char D_800DD18C[];
+extern const char a2ight[];
+extern const char D_800DFAE0[];
+extern const char D_800DFAD4[];
+extern const char D_800DFAC8[];
+extern const char D_800DFABC[];
+extern const char D_800DFAB0[];
+extern const char D_800DFAB0[];
+extern const char D_800DFAA8[];
+extern const char D_800DFAA0[];
+extern const char D_800DFA98[];
+extern const char D_800DFA90[];
+extern const char D_800DFA84[];
+extern const char aAmiliar[];
+extern const char a3pecial[];
+extern const char D_800DFA54[];
+extern const char D_800DFD64[];
+extern const char D_800DFA48[];
+extern const char D_800DFA40[];
+extern const char D_800DFA38[];
+extern const char D_800DFA2C[];
+extern const char D_800DFA24[];
+extern const char D_800DFA1C[];
+extern const char D_800DFA10[];
+extern const char D_800DFA08[];
+extern const char D_800DF9FC[];
+
+const char* g_MenuStr[] = {
+    D_800DFF44, D_800DFF3C, D_800DFF34, D_800DFF2C,
+    D_800DFF24, D_800DFF1C, D_800DFF14, D_800DFF0C,
+    D_800DFF04, D_800DFEFC, D_800DFEF4, m_menu_text_kills,
+    D_800DFEE8, D_800DFEE4, D_800DFEDC, D_800DFED4,
+    aUtton,     D_800DFEB0, D_800DFEA0, D_800DFE98,
+    D_800DFE8C, D_800DFE84, a2ight,     D_800DFE6C,
+    D_800DFE64, D_800DFE58, D_800DFE50, D_800DFE48,
+    D_800DFE40, D_800DFE38, D_800DFE30, D_800DFE24,
+    D_800DFE1C, D_800DFE14, D_800DFE0C, a7indow,
+    D_800DFDEC, D_800DFDE4, D_800DFDDC, D_800DFDD4,
+    D_800DFDCC, D_800DFDAC, D_800DFDA0, D_800DFD98,
+    D_800DFD90, D_800DFD84, D_800DFE40, D_800DFD7C,
+    D_800DFD74, D_800DFD6C, D_800DFD64, D_800DFD5C,
+    D_800DFD54, a2ichter,   D_800DFD28, D_800DFD10,
+    D_800DFCFC, D_800DFCDC, D_800DFCCC, D_800DFCB0,
+    D_800DFC9C, D_800DFC88, D_800DFC74, D_800DFC60,
+    D_800DFC40, D_800DFC30, D_800DFC1C, D_800DFC04,
+    D_800DFBF4, D_800DFBDC, D_800DFBC4, D_800DFBAC,
+    D_800DFB98, D_800DFB80, D_800DFB6C, D_800DFB58,
+    D_800DFB44, D_800DFB24, D_800DFB04, D_800DFAEC,
+    D_800DD18C, D_800DD18C, D_800DD18C, D_800DD18C,
+    D_800DD18C, a2ight,     D_800DFAE0, D_800DFAD4,
+    D_800DFAC8, D_800DFABC, D_800DFAB0, D_800DFAB0,
+    D_800DFAA8, D_800DFAA0, D_800DFA98, D_800DFA90,
+    D_800DFA84, aAmiliar,   a3pecial,   D_800DFA54,
+    D_800DFD64, D_800DFA48, D_800DFA40, D_800DFA38,
+    D_800DFA2C, D_800DFA24, D_800DFA1C, D_800DFA10,
+    D_800DFA08, D_800DF9FC,
+};

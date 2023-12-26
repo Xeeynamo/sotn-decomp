@@ -1388,7 +1388,7 @@ void MenuDrawStats(s32 menuDialogue) {
         y = 120;
     } else {
 #if defined(VERSION_US)
-        MenuDrawStr(D_800A83AC[g_MenuNavigation.cursorEquip], 8, 40, ctx);
+        MenuDrawStr(g_MenuStr[85 + g_MenuNavigation.cursorEquip], 8, 40, ctx);
 #elif defined(VERSION_HD)
         func_800F66BC(
             D_800A2D68[g_MenuNavigation.cursorEquip + 0x12], 24, 40, ctx, true);
