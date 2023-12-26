@@ -1,8 +1,13 @@
 #include <common.h>
 #include <log.h>
 #include <game.h>
+#ifdef _MSC_VER
+#include <SDL.h>
+#include <SDL_image.h>
+#else
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#endif
 #include "pc.h"
 
 extern bool g_IsQuitRequested;

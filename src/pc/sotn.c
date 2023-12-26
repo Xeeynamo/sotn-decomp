@@ -2,7 +2,11 @@
 #include "dra.h"
 #include "servant.h"
 #include "sfx.h"
+#ifdef _MSC_VER
+#include <SDL.h>
+#else
 #include <SDL2/SDL.h>
+#endif
 #include <cJSON/cJSON.h>
 
 const char g_DummyName[] = "DUMMY\xFF";

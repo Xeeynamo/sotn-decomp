@@ -381,7 +381,7 @@ const char* c_strTimeAttackEntries[] = {
     dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
     dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy,
 };
-ImgSrc g_imgUnk8013C200_impl[4] = {
+ImgSrc g_imgUnk8013C200_impl = {
     0,
     0,
     0,
