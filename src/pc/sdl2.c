@@ -117,7 +117,7 @@ bool InitializeTexture(unsigned int textureIndex) {
     return false;
 }
 
-int MyResetGraph(int) { return 0; }
+int MyResetGraph(int arg0) { return 0; }
 
 void MyAudioCallback(void* data, Uint8* buffer, int length);
 void SDLAudioCallback(void* data, Uint8* buffer, int length) {

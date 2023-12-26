@@ -1,4 +1,6 @@
+#ifndef _MSC_VER
 #include <unistd.h>
+#endif
 #include <common.h>
 #include <log.h>
 #include <stdio.h>

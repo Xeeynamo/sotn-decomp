@@ -9,6 +9,8 @@
 #endif
 #include <cJSON/cJSON.h>
 
+#include <stdio.h>
+
 const char g_DummyName[] = "DUMMY\xFF";
 const char g_DummyDesc[] = "dummy description";
 RelicDesc g_RelicDummy = {g_DummyName, g_DummyDesc, 0, 0, 0};

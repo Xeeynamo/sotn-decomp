@@ -575,7 +575,7 @@ s16 D_800A21B8[] = {
     PL_SPRT(0x0101, 0x0101, false),
 };
 
-s16 unused_800A21FC[286] = {};
+s16 unused_800A21FC[286] = {0};
 
 void InitRenderer(void) {
     int i;
