@@ -20,6 +20,7 @@ typedef unsigned int size_t;
 
 #ifdef _MSC_VER
 typedef unsigned char u_char;
+typedef unsigned short u_short;
 #endif
 
 typedef signed char s8;
