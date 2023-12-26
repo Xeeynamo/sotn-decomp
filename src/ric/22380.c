@@ -692,33 +692,33 @@ s32 func_8015FB84(SubweaponDef* subwpn, s32 isItemCrash, s32 useHearts) {
 s32 func_8015FDB0(POLY_GT4* poly, s16 posX, s16 posY) {
     s16 offset;
     s32 ret = 0;
-    u8 *temp_a3 = D_801548F4;
-    
+    u8* temp_a3 = D_801548F4;
+
     if (poly->b0 >= 6) {
         poly->b0 = 0;
         ret = -1;
     }
-    
+
     temp_a3 = &temp_a3[poly->b0 * 8];
-    
+
     if (poly->b0 > 2) {
         offset = 4;
     } else {
         offset = 6;
     }
-        
+
     poly->x0 = posX - offset;
     poly->y0 = posY - offset;
-    
+
     poly->x1 = posX + offset;
     poly->y1 = posY - offset;
-    
+
     poly->x2 = posX - offset;
     poly->y2 = posY + offset;
-    
+
     poly->x3 = posX + offset;
     poly->y3 = posY + offset;
-    
+
     poly->u0 = *temp_a3++;
     poly->v0 = *temp_a3++;
     poly->u1 = *temp_a3++;
@@ -727,13 +727,13 @@ s32 func_8015FDB0(POLY_GT4* poly, s16 posX, s16 posY) {
     poly->v2 = *temp_a3++;
     poly->u3 = *temp_a3++;
     poly->v3 = *temp_a3++;
-    
+
     poly->b1++;
-    
+
     if ((poly->b1 & 1) == 0) {
         poly->b0++;
     }
-    
+
     return ret;
 }
 
