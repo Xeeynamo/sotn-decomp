@@ -1,10 +1,14 @@
+#ifndef _MSC_VER
 #include <unistd.h>
+#endif
 #include <common.h>
 #include <log.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifndef _MSC_VER
 #include <dirent.h>
+#endif
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <psxsdk/kernel.h>
@@ -14,15 +18,17 @@ int VSync(int mode) {
     return 0;
 }
 
-long SetRCnt(unsigned long, unsigned short, long) { NOT_IMPLEMENTED; }
+long SetRCnt(unsigned long a, unsigned short b, long c) { NOT_IMPLEMENTED; }
 
-void ChangeClearPAD(long) { NOT_IMPLEMENTED; }
+void ChangeClearPAD(long a) { NOT_IMPLEMENTED; }
 
 void _bu_init(void) { NOT_IMPLEMENTED; }
 
-long OpenEvent(unsigned long, long, long, long (*func)()) { NOT_IMPLEMENTED; }
+long OpenEvent(unsigned long a, long b, long c, long (*func)()) {
+    NOT_IMPLEMENTED;
+}
 
-long EnableEvent(long) { NOT_IMPLEMENTED; }
+long EnableEvent(long a) { NOT_IMPLEMENTED; }
 
 long TestEvent(unsigned long event) { NOT_IMPLEMENTED; }
 
@@ -31,12 +37,15 @@ void EnterCriticalSection(void) { NOT_IMPLEMENTED; }
 void ExitCriticalSection(void) { NOT_IMPLEMENTED; }
 
 void _adjust_path(char* dst, const char* src, int maxlen) {
+#ifndef _MSC_VER
     INFOF("TODO: adjust path '%s'", src);
     strncpy(dst, src, maxlen);
     dst[maxlen - 1] = '\0';
+#endif
 }
 
 void _populate_entry(struct DIRENTRY* dst, struct dirent* src) {
+#ifndef _MSC_VER
     struct stat fileStat;
     if (stat(src->d_name, &fileStat) == -1) {
         ERRORF("failed to stat '%s'", src->d_name);
@@ -55,9 +64,11 @@ void _populate_entry(struct DIRENTRY* dst, struct dirent* src) {
     dst->system[1] = 'S';
     dst->system[2] = '\0';
     dst->system[3] = '\0';
+#endif
 }
 
 struct DIRENTRY* firstfile(char* dirPath, struct DIRENTRY* firstEntry) {
+#ifndef _MSC_VER
     char adjPath[0x100];
     _adjust_path(adjPath, dirPath, sizeof(adjPath));
 
@@ -79,14 +90,17 @@ struct DIRENTRY* firstfile(char* dirPath, struct DIRENTRY* firstEntry) {
     _populate_entry(firstEntry, entry);
     firstEntry->next = (struct DIRENTRY*)dir;
 
-    // since libapi does not offer a 'closefile', the expectation is that the
-    // caller will consume 'nextfile' until a NULL is received, effectively
-    // calling 'closedir' and freeing the resource created here.
-    // If that does not happen, a memory leak will occur.
+// since libapi does not offer a 'closefile', the expectation is that the
+// caller will consume 'nextfile' until a NULL is received, effectively
+// calling 'closedir' and freeing the resource created here.
+// If that does not happen, a memory leak will occur.
+#endif
     return firstEntry;
 }
 
+// dirent not available on MSVC
 struct DIRENTRY* nextfile(struct DIRENTRY* outEntry) {
+#ifndef _MSC_VER
     if (!outEntry) {
         return NULL;
     }
@@ -111,16 +125,20 @@ struct DIRENTRY* nextfile(struct DIRENTRY* outEntry) {
     // Close the directory if there are no more entries
     closedir(dir);
     outEntry->next = NULL;
-
+#endif
     return NULL;
 }
 
 long erase(char* path) {
+#ifndef _MSC_VER
     char adjPath[0x100];
     _adjust_path(adjPath, path, sizeof(adjPath));
 
     DEBUGF("remove('%s')", adjPath);
     return remove(adjPath) == 0;
+#else
+    return 0;
+#endif
 }
 
 long format(char* fs) { NOT_IMPLEMENTED; }
