@@ -146,6 +146,10 @@ typedef struct Primitive {
 #define PAD_DOWN 0x4000
 #define PAD_LEFT 0x8000
 
+// Game Buttons unofficially refers to buttons used in playing the game.
+// Direction, action and shoulder buttons. Any button except start or select.
+#define GAMEBUTTONS (~(PAD_START | PAD_SELECT))
+
 #define MAX_PRIM_COUNT 0x500
 #define MAX_PRIM_ALLOC_COUNT 0x400
 #define MAX_BG_LAYER_COUNT 16

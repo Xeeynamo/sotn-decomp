@@ -61,9 +61,6 @@ void func_8015C2A8(void) {
     }
 }
 
-// Game Buttons unofficially refers to buttons used in playing the game.
-// Direction, action and shoulder buttons. Any button except start or select.
-#define GAMEBUTTONS (~(PAD_START | PAD_SELECT))
 // Same function in DRA is func_8010D59C
 void func_8015C4AC(void) {
     byte stackpad[40];
