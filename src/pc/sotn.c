@@ -369,7 +369,7 @@ bool ParseEquipDefs(const char* content) {
     cJSON_Delete(json);
     return true;
 }
-bool InitEquipDefs(FILE* f) { FileStringify(ParseEquipDefs, f); }
+bool InitEquipDefs(FILE* f) { return FileStringify(ParseEquipDefs, f); }
 void ParseAccessoryDefs(const char* content) {
     INFOF("load");
     cJSON* json = cJSON_Parse(content);
@@ -416,7 +416,7 @@ void ParseAccessoryDefs(const char* content) {
     cJSON_Delete(json);
     return true;
 }
-bool InitAccessoryDefs(FILE* f) { FileStringify(ParseAccessoryDefs, f); }
+bool InitAccessoryDefs(FILE* f) { return FileStringify(ParseAccessoryDefs, f); }
 void InitRelicDefs(void) {
     for (int i = 0; i < LEN(g_RelicDefs); i++) {
         memcpy(&g_RelicDefs[i], &g_RelicDummy, sizeof(g_RelicDummy));
