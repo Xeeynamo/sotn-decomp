@@ -17,7 +17,6 @@ set(SOURCE_FILES_PC
     src/pc/sotn.c
     src/pc/pc.c
     src/pc/sdl2.c
-    src/pc/plat_win.c
 )
 
 if(WIN32)
