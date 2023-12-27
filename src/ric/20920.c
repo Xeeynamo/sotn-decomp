@@ -74,11 +74,11 @@ void func_8015CAAC(s32 speed) {
 void func_8015CAD4(s32 arg0, s16 arg1) {
     if (arg0 == 0) {
         CreateEntFactoryFromEntity(g_CurrentEntity, 0x15002C, 0);
-        if (arg1 >= g_Player.D_80072F1A) {
-            g_Player.D_80072F1A = arg1;
+        if (arg1 >= g_Player.D_80072F00[13]) {
+            g_Player.D_80072F00[13] = arg1;
         }
-    } else if (g_Player.D_80072F1C <= arg1) {
-        g_Player.D_80072F1C = arg1;
+    } else if (g_Player.D_80072F00[14] <= arg1) {
+        g_Player.D_80072F00[14] = arg1;
     }
 }
 
@@ -101,7 +101,7 @@ void func_8015CB58(s32 arg0, s32 arg1) {
     g_Entities[UNK_ENTITY_1].ext.generic.unk7C.S8.unk0 = 1;
     g_Entities[UNK_ENTITY_1].ext.generic.unk7E.modeU8.unk0 = 0xA;
     if (arg1 != 0) {
-        g_Player.D_80072F1E = 4;
+        g_Player.D_80072F00[15] = 4;
     }
 }
 
@@ -156,14 +156,14 @@ void func_8015CD98(s32 velocityX) {
 }
 
 void func_8015CDE0(s32 arg0) {
-    if ((g_Player.D_80072F10 != 0) && (g_Player.unk7A == 0)) {
+    if ((g_Player.D_80072F00[8] != 0) && (g_Player.unk7A == 0)) {
         func_8015CE7C();
         return;
     } else {
-        g_Player.D_80072F02 = 8;
+        g_Player.D_80072F00[1] = 8;
     }
-    g_Player.D_80072F10 = 0xC;
-    g_Player.D_80072F02 = 0xC;
+    g_Player.D_80072F00[8] = 0xC;
+    g_Player.D_80072F00[1] = 0xC;
     g_Player.unk44 = 0;
     SetPlayerStep(1);
     func_8015C920(&D_80155488);
@@ -179,7 +179,7 @@ void func_8015CE7C(void) {
         SetPlayerStep(0x19);
         func_8015C920(&D_80155670);
         SetSpeedX(0x24000);
-        g_Player.D_80072F16 = 0x28;
+        g_Player.D_80072F00[11] = 0x28;
         PLAYER.velocityY = 0;
         CreateEntFactoryFromEntity(g_CurrentEntity, 0x50001, 0);
     }
@@ -206,13 +206,13 @@ block_6:
     }
     SetPlayerStep(3);
     PLAYER.velocityY = 0x20000;
-    g_Player.D_80072F0A = 8;
-    g_Player.D_80072F0C = 8;
-    g_Player.D_80072F02 = 0;
-    g_Player.D_80072F10 = 0;
+    g_Player.D_80072F00[5] = 8;
+    g_Player.D_80072F00[6] = 8;
+    g_Player.D_80072F00[1] = 0;
+    g_Player.D_80072F00[8] = 0;
     if (g_Player.unk50 == 0x17) {
-        g_Player.D_80072F0C = 0;
-        g_Player.D_80072F0A = 0;
+        g_Player.D_80072F00[6] = 0;
+        g_Player.D_80072F00[5] = 0;
         PLAYER.animFrameIdx = 2;
         PLAYER.animFrameDuration = 0x10;
         PLAYER.velocityX /= 2;
@@ -256,7 +256,7 @@ void DoHighJump(void) {
     func_8015CC28();
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 45), 0);
     g_api.PlaySfx(0x6FB);
-    g_Player.D_80072F18 = 4;
+    g_Player.D_80072F00[12] = 4;
     if (g_Player.unk72 != 0) {
         PLAYER.velocityY = 0;
     }

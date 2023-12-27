@@ -26,7 +26,7 @@ s32 func_8015D250(void) {
     }
 
     CreateEntFactoryFromEntity(g_CurrentEntity, subweapon.blueprintNum, 0);
-    g_Player.D_80072F14 = 4;
+    g_Player.D_80072F00[10] = 4;
 
     switch (PLAYER.step) {
     case 25:
@@ -50,7 +50,7 @@ s32 func_8015D250(void) {
     }
     g_Player.unk46 = 3;
     PLAYER.step_s = 0x42;
-    g_Player.D_80072F14 = 4;
+    g_Player.D_80072F00[10] = 4;
     return 0;
 }
 
@@ -69,7 +69,7 @@ void func_8015D9D4(void) {
     func_8015CC28();
     CreateEntFactoryFromEntity(g_CurrentEntity, 0x19, 0);
     g_api.PlaySfx(0x707);
-    g_Player.D_80072F18 = 4;
+    g_Player.D_80072F00[12] = 4;
 }
 
 void func_8015DA60(void) {
@@ -81,7 +81,7 @@ void func_8015DA60(void) {
     func_8015CC28();
     CreateEntFactoryFromEntity(g_CurrentEntity, 0x19, 0);
     g_api.PlaySfx(0x6FA);
-    g_Player.D_80072F18 = 4;
+    g_Player.D_80072F00[12] = 4;
     CreateEntFactoryFromEntity(g_CurrentEntity, 0x1F, 0);
 }
 
@@ -91,7 +91,7 @@ void DoBladeDash(void) {
     g_CurrentEntity->velocityY = 0;
     SetSpeedX(FIX(5.5));
     g_Player.unk46 = 5;
-    g_Player.D_80072F18 = 4;
+    g_Player.D_80072F00[12] = 4;
     CreateEntFactoryFromEntity(g_CurrentEntity, 0x1A, 0);
     func_8015CC28();
     g_api.PlaySfx(0x6FB);

@@ -165,7 +165,7 @@ void func_80112BB0(void) {
 }
 
 void func_80113148(void) {
-    if (g_Player.D_80072F0A != 0 && g_Player.padTapped & PAD_CROSS) {
+    if (g_Player.D_80072F00[5] != 0 && g_Player.padTapped & PAD_CROSS) {
         func_8010E83C(1);
     } else if (func_8010FDF8(0x9029) == 0) {
         DecelerateX(0x1000);
@@ -188,7 +188,7 @@ void func_801131C4(void) {
         if (g_Player.padPressed & PAD_DOWN) {
             for (i = 0; i < 4; i++) {
                 if ((g_Player.colliders[i].effects & EFFECT_SOLID_FROM_ABOVE)) {
-                    g_Player.D_80072F0E = 8;
+                    g_Player.D_80072F00[7] = 8;
                     return;
                 }
             }
@@ -544,7 +544,7 @@ s32 func_80113D7C(s16 damageAmount) {
     func_80118C84(damage.damageTaken, 0);
     func_800FE8F0();
     if (temp_s0 != 4) {
-        g_Player.D_80072F04 = 4;
+        g_Player.D_80072F00[2] = 4;
         g_Player.unk40 = 0x8166;
         sfx = D_800ACF8A[(rand() & 1)];
         PlaySfx(sfx);
@@ -646,9 +646,9 @@ void func_80114DF4(s32 arg0) {
         func_80113E68();
         PLAYER.palette = 0x8161;
         PlaySfx(0x6EC);
-        g_Player.D_80072F04 = 0;
-        g_Player.D_80072F00 = 0;
-        g_Player.D_80072F02 = 0;
+        g_Player.D_80072F00[2] = 0;
+        g_Player.D_80072F00[0] = 0;
+        g_Player.D_80072F00[1] = 0;
         g_Player.unk5E = GetStatusAilmentTimer(STATUS_AILMENT_PETRIFIED, 8);
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x300, 47), 0);
         func_8010E168(1, 4);

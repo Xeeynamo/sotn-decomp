@@ -75,7 +75,7 @@ void func_80116208(void) {
         func_80113EE0();
         if (g_Player.unk62 == 0) {
             PLAYER.ext.generic.unkAC = 0x37;
-            g_Player.D_80072F04 = 8;
+            g_Player.D_80072F00[2] = 8;
             g_Player.unk40 = 0x8166;
             PlaySfx(0x6EB);
         }
@@ -94,12 +94,12 @@ void func_80116208(void) {
                 return;
             }
             if (g_Player.unk62 == 0) {
-                g_Player.D_80072F04 = 4;
+                g_Player.D_80072F00[2] = 4;
                 g_Player.unk40 = 0x8166;
                 PlaySfx(0x6E7);
             }
             if (g_Player.unk62 == 2) {
-                g_Player.D_80072F04 = 4;
+                g_Player.D_80072F00[2] = 4;
                 g_Player.unk40 = 0x8161;
             }
             g_Player.unk60 = 2;
@@ -177,7 +177,7 @@ void PlayerStepHellfire(void) {
         break;
     case 4:
         if (PLAYER.animFrameIdx == 10 && PLAYER.animFrameDuration == 1) {
-            g_Player.D_80072F18 = 4;
+            g_Player.D_80072F00[12] = 4;
             // Make factory with blueprint 37. This creates entity with ID 28,
             // which is EntityExpandingCircle.
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 37), 0);
@@ -200,7 +200,7 @@ void func_801166A4(void) {
     case 0:
         func_80113EE0();
         g_Player.unk40 = 0x8166;
-        g_Player.D_80072F04 = 6;
+        g_Player.D_80072F00[2] = 6;
         PLAYER.velocityX = 0;
         PLAYER.velocityY = 0;
         PLAYER.ext.generic.unkAC = 0x33;
