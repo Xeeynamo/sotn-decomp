@@ -1248,8 +1248,51 @@ void func_80159CE4(s32 arg0, u32 arg1, s16 arg2) {
 }
 
 const s32 rodata_padding_1A784 = 0;
-// DECOMP_ME_WIP func_8015A7D0 https://decomp.me/scratch/1JWA0
-INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_8015A7D0);
+
+void func_8015A7D0(void) {
+    Unkstruct_800FD5BC sp10;
+    switch (g_CurrentEntity->step_s) {
+    case 0:
+        func_80159BC8();
+        if (g_Player.unk62 == 0) {
+            PLAYER.unk4C = D_80155694;
+            g_Player.D_80072F04 = 8;
+            g_Player.unk40 = 0x8166;
+            g_api.PlaySfx(0x702);
+        }
+        PLAYER.step_s = 1;
+        PLAYER.velocityX = PLAYER.velocityY = 0;
+        g_Player.unk60 = 2;
+        return;
+    case 1:
+        // Effectively a switch on g_Player.unk60
+        if (g_Player.unk60 == 3) {
+            sp10.unk0 = 0;
+            sp10.unk4 = 1;
+            sp10.unk8 = g_Player.unk5A;
+            if (g_api.func_800FD5BC(&sp10)) {
+                SetPlayerStep(Player_Kill);
+                func_8015A9B0(0, 2, 12, 1);
+                return;
+            }
+            if (g_Player.unk62 == 0) {
+                g_Player.D_80072F04 = 4;
+                g_Player.unk40 = 0x8166;
+                g_api.PlaySfx(0x703);
+            }
+            g_Player.unk60 = 2;
+        } else if (g_Player.unk60 == 4) { /* switch 1 */
+            PLAYER.step = Player_Hit;
+            PLAYER.step_s = 2;
+            g_Player.unk60 = 0;
+            g_Player.unk5A = g_Player.unk64;
+            g_api.PlaySfx(0x704);
+        } else if (g_Player.unk60 == 0) { /* switch 1 */
+            PLAYER.step = Player_Hit;
+            PLAYER.step_s = 1;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_8015A9B0);
 

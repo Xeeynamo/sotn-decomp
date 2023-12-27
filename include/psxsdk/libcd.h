@@ -1,3 +1,5 @@
+#include <types.h>
+
 /* Location */
 typedef struct {
     u_char minute;

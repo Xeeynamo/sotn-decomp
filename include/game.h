@@ -146,6 +146,10 @@ typedef struct Primitive {
 #define PAD_DOWN 0x4000
 #define PAD_LEFT 0x8000
 
+// Game Buttons unofficially refers to buttons used in playing the game.
+// Direction, action and shoulder buttons. Any button except start or select.
+#define GAMEBUTTONS (~(PAD_START | PAD_SELECT))
+
 #define MAX_PRIM_COUNT 0x500
 #define MAX_PRIM_ALLOC_COUNT 0x400
 #define MAX_BG_LAYER_COUNT 16
@@ -482,7 +486,11 @@ typedef struct {
     unsigned char width;
     unsigned char height;
     unsigned short unk2;
+#ifdef _MSC_VER
+    unsigned char* data;
+#else
     unsigned char data[0];
+#endif
 } ImgSrc;
 
 typedef struct {
@@ -1154,7 +1162,6 @@ typedef struct {
     /* 8003C808 */ EnemyDef* enemyDefs;
     /* 8003C80C */ Entity* (*func_80118970)(void);
     /* 8003C810 */ s32 (*func_80118B18)(Entity* ent1, Entity* ent2, s32 arg2);
-    ;
     /* 8003C814 */ s32 (*UpdateUnarmedAnim)(s8* frameProps, u16** frames);
     /* 8003C818 */ void (*func_8010DBFC)(s32*, s32*);
     /* 8003C81C */ void (*func_80118C28)(s32 arg0);
