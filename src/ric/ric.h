@@ -88,6 +88,8 @@ extern s16 D_801545A8;
 extern s16 D_801545AA;
 extern s16 D_801545AC;
 extern u8 D_801545B0[];
+extern u8 D_801545C4[16];
+extern u8 D_801545D4[16];
 // These appear to be a set of collision boxes
 extern s16_pair D_801545E4[4];
 extern s16_pair D_801545F4[4];
