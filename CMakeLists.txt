@@ -17,7 +17,14 @@ set(SOURCE_FILES_PC
     src/pc/sotn.c
     src/pc/pc.c
     src/pc/sdl2.c
+    src/pc/plat_win.c
 )
+
+if(WIN32)
+set(SOURCE_FILES_PC $(SOURCE_FILES_PC) src/pc/plat_win.c)
+else()
+set(SOURCE_FILES_PC $(SOURCE_FILES_PC) src/pc/plat_unix.c)
+endif()
 
 set(SOURCE_FILES_PSX_SDK
     src/main/psxsdk/libgpu/ext.c
