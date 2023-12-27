@@ -129,7 +129,67 @@ void func_8015B348(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/1F348", func_8015B898);
+void func_8015B898(void) {
+    s32 condition = 0;
+
+    if (!PLAYER.facingLeft) {
+        condition = (g_Player.pl_vram_flag & 4) != condition;
+    } else if (g_Player.pl_vram_flag & 8) {
+        condition = 1;
+    }
+    if ((PLAYER.posX.i.hi > (u8)-5) && (!PLAYER.facingLeft)) {
+        condition = 1;
+    }
+    if (PLAYER.posX.i.hi < 5 && (PLAYER.facingLeft)) {
+        condition = 1;
+    }
+    if ((!PLAYER.facingLeft &&
+         (g_Player.colliders[2].effects & EFFECT_UNK_8000)) ||
+        (PLAYER.facingLeft &&
+         (g_Player.colliders[3].effects & EFFECT_UNK_8000))) {
+        condition = 1;
+    }
+    if (condition && (PLAYER.animFrameIdx < 6)) {
+        PLAYER.animFrameIdx = 6;
+        if (PLAYER.velocityX > FIX(1)) {
+            PLAYER.velocityX = FIX(2);
+        }
+        if (PLAYER.velocityX < FIX(-1)) {
+            PLAYER.velocityX = FIX(-2);
+        }
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
+    }
+    if (PLAYER.animFrameIdx < 5) {
+        if (func_8015DBB0(0x44)) {
+            return;
+        }
+        if ((g_Player.unk72 == 0) && (g_Player.padTapped & PAD_CROSS)) {
+            PLAYER.posY.i.hi -= 4;
+            func_8015DA60();
+            return;
+        }
+    } else if (PLAYER.animFrameIdx < 7) {
+        if (func_8015DBB0(0x40044)) {
+            return;
+        }
+    } else if (func_8015DBB0(0x4004C)) {
+        return;
+    }
+
+    func_8015C93C(0x2000);
+    if (PLAYER.step_s == 0) {
+        if (!(g_GameTimer & 3) && (2 < PLAYER.animFrameIdx) &&
+            (PLAYER.animFrameIdx < 6)) {
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x200, 24), 0);
+        }
+        if (PLAYER.animFrameIdx == 6 && PLAYER.animFrameDuration == 1) {
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
+        }
+        if (PLAYER.animFrameDuration < 0) {
+            func_8015CCC8(0, PLAYER.velocityX);
+        }
+    }
+}
 
 // same as DRA/func_80115C50
 void func_8015BB80(void) {
