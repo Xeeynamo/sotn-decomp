@@ -20,9 +20,9 @@ set(SOURCE_FILES_PC
 )
 
 if(WIN32)
-set(SOURCE_FILES_PC $(SOURCE_FILES_PC) src/pc/plat_win.c)
+list(APPEND SOURCE_FILES_PC src/pc/plat_win.c)
 else()
-set(SOURCE_FILES_PC $(SOURCE_FILES_PC) src/pc/plat_unix.c)
+list(APPEND SOURCE_FILES_PC src/pc/plat_unix.c)
 endif()
 
 set(SOURCE_FILES_PSX_SDK
