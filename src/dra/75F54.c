@@ -1501,6 +1501,7 @@ s32 func_80119E78(Primitive* prim, s32 xCenter, s32 yCenter) {
 }
 // Entity ID 47. Created by blueprint 119.
 // No calls to FACTORY with 119 exist yet.
+// Corresponding RIC function is func_8015FEA8
 void func_80119F70(Entity* entity) {
     Primitive* prim;
     s16 temp_xRand;
