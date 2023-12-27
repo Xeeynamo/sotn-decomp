@@ -78,11 +78,11 @@ const char* D_800A2D68[] = {
     "\x0C\x0D\x0E\xFF",         //
     "\x0F\x10\x0E\xFF",         // D_800A83AC
     "\x09\x0A\x02\x16\x17\xFF", // D_800A2D24
-    "\x00\x01\xFF",             // c_strSpells
-    "\x09\x0A\x02\xFF",         // c_strFamiliars
-    "\x11\x12\x13\xFF",         // c_strEquip
-    "\x03\x04\x05\x06\xFF",     // c_strRelics
-    "\x07\x08\xFF",             // c_strSSword
+    "\x00\x01\xFF",             // g_MenuStr[93]
+    "\x09\x0A\x02\xFF",         // g_MenuStr[96]
+    "\x11\x12\x13\xFF",         // g_MenuStr[92]
+    "\x03\x04\x05\x06\xFF",     // g_MenuStr[94]
+    "\x07\x08\xFF",             // g_MenuStr[99]
     "\x08\xFF",                 //
     "\x20\x08\xFF",             //
     "\x14\xFF",                 //
@@ -100,7 +100,7 @@ const char* D_800A2D68[] = {
     "\x29\x2A\x2B\xFF",         //
     "\x2C\x2D\x2E\xFF",         //
     "\x2C\x2D\x2E\xFF",         //
-    "\x0B\x2F\x11\xFF",         // c_strSystem
+    "\x0B\x2F\x11\xFF",         // g_MenuStr[95]
     "\x0B\x2F\x11\x16\x17\xFF", // D_800A2D84
 };
 #endif
@@ -1033,7 +1033,7 @@ void MenuJosephsCloakDraw(MenuContext* context) {
     const s32 xRGBVal = 0xA0;
 #endif
     i = 0;
-    exteriorInterior = &c_strExterior;
+    exteriorInterior = &g_MenuStr[20];
     x_RGB = xRGBVal;
     chsRgb = g_ChRgb;
     row2Ypos = 0x4C;
@@ -1127,9 +1127,9 @@ void MenuTimeAttackDraw(MenuContext* ctx) {
         MenuDrawInt(entryIdx + 1, cursorX + 16, cursorY, ctx);
         seconds = g_TimeAttackEntryTimes[entryIdx];
         if (seconds == 1000000) {
-            MenuDrawStr(c_strTimeAttackHiddenEntry, cursorX + 29, cursorY, ctx);
+            MenuDrawStr(g_MenuStr[41], cursorX + 29, cursorY, ctx);
         } else {
-            MenuDrawStr(c_strTimeAttackEntries[c_strTimeAttackEntry[entryIdx]],
+            MenuDrawStr(g_MenuStr[53 + c_strTimeAttackEntry[entryIdx]],
                         cursorX + 29, cursorY, ctx);
             hours = seconds / 10000;
 #if defined(VERSION_HD)
@@ -1165,7 +1165,7 @@ void MenuButtonConfigDraw(MenuContext* ctx) {
     s32 cursorX = InitCursorX;
 
     for (i = 0, x = 0xC0; i < 7; i++) {
-        MenuDrawStr(c_strButtonRightHand[i], cursorX, 0x30 + (i * 0x10), ctx);
+        MenuDrawStr(g_MenuStr[22 + i], cursorX, 0x30 + (i * 0x10), ctx);
         buttonId = g_Settings.buttonConfig[i];
         btn1_x = (buttonId * 12) + 0x30;
         MenuDrawChar(
@@ -1191,8 +1191,8 @@ void MenuReverseCloakDraw(MenuContext* context) {
     const int ImgW = 40;
 #endif
 
-    MenuDrawStr(c_strNormal, StrX, 48, context);
-    MenuDrawStr(c_strReversal, StrX, 64, context);
+    MenuDrawStr(g_MenuStr[30], StrX, 48, context);
+    MenuDrawStr(g_MenuStr[31], StrX, 64, context);
     func_800F5E68(context, g_Settings.isCloakLiningReversed, StrX - 2, 46, ImgW,
                   12, 4, 1);
 }
@@ -1207,8 +1207,8 @@ void MenuSoundConfigDraw(MenuContext* context) {
     s16 cursorX = context->cursorX;
     s16 cursorY = context->cursorY;
     s32 subMenuX = cursorX + 4;
-    MenuDrawStr(c_strStereo, subMenuX, cursorY + 4, context);
-    MenuDrawStr(c_strMono, subMenuX, cursorY + 0x14, context);
+    MenuDrawStr(g_MenuStr[33], subMenuX, cursorY + 4, context);
+    MenuDrawStr(g_MenuStr[34], subMenuX, cursorY + 0x14, context);
     func_800F5E68(context, g_Settings.isSoundMono, cursorX + 2, cursorY + 2,
                   ImgW, 12, 4, 1);
 }
@@ -1270,7 +1270,7 @@ void MenuStatChangesDraw(void) {
     for (i = 0; i < 4; i++) {
         ycoord = 0x22 + i * 10;
         // Name of the stat
-        MenuDrawStr(c_strSTR[i], xcoord, ycoord, ctx);
+        MenuDrawStr(g_MenuStr[1 + i], xcoord, ycoord, ctx);
         // Current value for the stat
         MenuDrawInt(g_Status.statsBase[i] + g_Status.statsEquip[i],
                     xcoord + 0x2C, ycoord, ctx);
@@ -1298,31 +1298,30 @@ void MenuDrawStats(s32 menuDialogue) {
     func_800F53A4();
     if (menuDialogue == MENU_DG_BG) {
         MenuDrawAlucardPortrait(ctx);
-        MenuDrawStr(
-            IsAlucart() ? c_strALUCARD[42] : c_strALUCARD[0], 128, 40, ctx);
-        MenuDrawStr(c_strHP, 96, 56, ctx);
+        MenuDrawStr(IsAlucart() ? g_MenuStr[42] : g_MenuStr[0], 128, 40, ctx);
+        MenuDrawStr(g_MenuStr[12], 96, 56, ctx);
         MenuDrawInt(g_Status.hp, 168, 56, ctx);
         MenuDrawChar(CH('/'), 176, 56, ctx);
         MenuDrawInt(g_Status.hpMax, 208, 56, ctx);
-        MenuDrawStr(c_strMP, 96, 68, ctx);
+        MenuDrawStr(g_MenuStr[13], 96, 68, ctx);
         MenuDrawInt(g_Status.mp, 168, 68, ctx);
         MenuDrawChar(CH('/'), 176, 68, ctx);
         MenuDrawInt(g_Status.mpMax, 208, 68, ctx);
-        MenuDrawStr(c_strHEART, 96, 80, ctx);
+        MenuDrawStr(g_MenuStr[14], 96, 80, ctx);
         MenuDrawInt(g_Status.hearts, 168, 80, ctx);
         MenuDrawChar(CH('/'), 176, 80, ctx);
         MenuDrawInt(g_Status.heartsMax, 208, 80, ctx);
-        MenuDrawStr(c_strEXP, 32, 176, ctx);
+        MenuDrawStr(g_MenuStr[5], 32, 176, ctx);
         MenuDrawInt(g_Status.exp, 144, 176, ctx);
-        MenuDrawStr(c_strNEXT, 32, 188, ctx);
+        MenuDrawStr(g_MenuStr[6], 32, 188, ctx);
         MenuDrawInt(
             g_Status.level != 99 ? g_ExpNext[g_Status.level] - g_Status.exp : 0,
             144, 188, ctx);
-        MenuDrawStr(c_strGOLD[0], 32, 200, ctx);
+        MenuDrawStr(g_MenuStr[7], 32, 200, ctx);
         MenuDrawInt(g_Status.gold, 144, 200, ctx);
-        MenuDrawStr(c_strLEVEL, 248, 40, ctx);
+        MenuDrawStr(g_MenuStr[8], 248, 40, ctx);
         MenuDrawInt(g_Status.level, 304, 40, ctx);
-        MenuDrawStr(c_strSTATUS, 248, 56, ctx);
+        MenuDrawStr(g_MenuStr[15], 248, 56, ctx);
         i = 37;
         if (g_Player.unk0C & PLAYER_STATUS_CURSE) {
             i = 40;
@@ -1336,12 +1335,12 @@ void MenuDrawStats(s32 menuDialogue) {
         if (IsAlucart()) {
             i = 45;
         }
-        MenuDrawStr(c_strGOLD[i - 7], 260, 68, ctx);
-        MenuDrawStr(c_strROOMS, 240, 150, ctx);
+        MenuDrawStr(g_MenuStr[i], 260, 68, ctx);
+        MenuDrawStr(g_MenuStr[10], 240, 150, ctx);
         MenuDrawInt(g_RoomCount, 328, 150, ctx);
-        MenuDrawStr(c_strKILLS, 240, 164, ctx);
+        MenuDrawStr(g_MenuStr[11], 240, 164, ctx);
         MenuDrawInt(g_Status.killCount, 328, 164, ctx);
-        MenuDrawStr(c_strTIME, 208, 192, ctx);
+        MenuDrawStr(g_MenuStr[9], 208, 192, ctx);
         MenuDrawInt(g_Status.timerHours, 264, 192, ctx);
         MenuDrawChar(CH(':'), 272, 192, ctx);
         MenuDrawTime(g_Status.timerMinutes, 288, 192, ctx, 2);
@@ -1389,7 +1388,7 @@ void MenuDrawStats(s32 menuDialogue) {
         y = 120;
     } else {
 #if defined(VERSION_US)
-        MenuDrawStr(D_800A83AC[g_MenuNavigation.cursorEquip], 8, 40, ctx);
+        MenuDrawStr(g_MenuStr[85 + g_MenuNavigation.cursorEquip], 8, 40, ctx);
 #elif defined(VERSION_HD)
         func_800F66BC(
             D_800A2D68[g_MenuNavigation.cursorEquip + 0x12], 24, 40, ctx, true);
@@ -1400,7 +1399,7 @@ void MenuDrawStats(s32 menuDialogue) {
 
     for (i = 0, temp_y = y; i < 4; temp_y += 12, i++) {
         s32* statsBase = &g_Status.statsBase[i];
-        MenuDrawStr(c_strSTR[i], x, temp_y, ctx);
+        MenuDrawStr(g_MenuStr[1 + i], x, temp_y, ctx);
         MenuDrawInt(*statsBase, x + 44, temp_y, ctx);
         if (g_Status.statsEquip[i] != 0) {
             if (g_Status.statsEquip[i] > 0) {
@@ -1425,7 +1424,7 @@ void MenuSpellsDraw(MenuContext* ctx) {
     const u8* comboPointer;
 #if defined(VERSION_US)
     s32 startXCoord = 176;
-    MenuDrawStr(c_strSpecial2, 104, 40, ctx);
+    MenuDrawStr(g_MenuStr[98], 104, 40, ctx);
 #elif defined(VERSION_HD)
     const s32 startXCoord = 172;
     func_800F66BC(D_800A2D68[2], 136, 36, ctx, 1);
@@ -1493,7 +1492,7 @@ void MenuSpellsDraw(MenuContext* ctx) {
             MenuDrawChar(
                 CH('?'), startXCoord + 24 + (charNum * 8), yCoord, ctx);
         }
-        MenuDrawStr(c_strMP, 292, yCoord, ctx);
+        MenuDrawStr(g_MenuStr[13], 292, yCoord, ctx);
         MenuDrawInt(g_SpellDefs[spell].mpUsage, 316, yCoord, ctx);
     }
     for (i = 0; i < 8; i++) {
@@ -1528,7 +1527,7 @@ void MenuFamiliarsDraw(MenuContext* menu) {
     s32 new_var;
 
 #if defined(VERSION_US)
-    MenuDrawStr(c_strALUCARD[97], 120, 40, menu);
+    MenuDrawStr(g_MenuStr[97], 120, 40, menu);
 #elif defined(VERSION_HD)
     func_800F66BC(D_800A2D68[26], 136, 36, menu, 1);
 #endif
@@ -1544,20 +1543,20 @@ void MenuFamiliarsDraw(MenuContext* menu) {
             x = baseX + 220;
         }
         strId = i + 46;
-        MenuDrawStr(c_strALUCARD[strId], x, y + 68, menu);
+        MenuDrawStr(g_MenuStr[strId], x, y + 68, menu);
         strId = 43;
         if (i < FAM_STATS_YOUSEI) {
             if (1) {
                 strId = 8;
             }
         }
-        MenuDrawStr(c_strALUCARD[strId], x + 56, y + 68, menu);
+        MenuDrawStr(g_MenuStr[strId], x + 56, y + 68, menu);
         MenuDrawInt(g_Status.statsFamiliars[i].level, x + 112, y + 68, menu);
         strId = 44;
         if (i < FAM_STATS_YOUSEI) {
             strId = 5;
         }
-        MenuDrawStr(c_strALUCARD[strId], x + 56, y + 84, menu);
+        MenuDrawStr(g_MenuStr[strId], x + 56, y + 84, menu);
         MenuDrawInt(
             g_Status.statsFamiliars[i].exp % 100, x + 112, y + 84, menu);
         switch (i) {
@@ -1608,27 +1607,22 @@ void MenuSystemDraw(MenuContext* ctx) {
     const int Width = 80;
 #endif
 
-    const char** new_var;
     s32 strIdx;
-    s8** menuOptions;
-
     func_800F5E68(ctx, g_MenuNavigation.cursorSettings, 30, 46, Width, 12, 4,
                   g_MenuStep == 0x101);
 
-    new_var = &c_strButton;
-    MenuDrawStr(*new_var, 0x20, 0x30, ctx);
+    MenuDrawStr(g_MenuStr[16], 0x20, 0x30, ctx);
 
     strIdx = g_IsCloakLiningUnlocked ? 0x11 : 0x13;
-    menuOptions = (&c_strButton) - 0x10;
-    MenuDrawStr(menuOptions[strIdx], 32, 64, ctx);
+    MenuDrawStr(g_MenuStr[strIdx], 32, 64, ctx);
 
     strIdx = g_IsCloakColorUnlocked ? 0x12 : 0x13;
-    MenuDrawStr(menuOptions[strIdx], 32, 80, ctx);
-    MenuDrawStr(c_strWindow, 32, 96, ctx);
-    MenuDrawStr(c_strSound, 32, 112, ctx);
+    MenuDrawStr(g_MenuStr[strIdx], 32, 80, ctx);
+    MenuDrawStr(g_MenuStr[35], 32, 96, ctx);
+    MenuDrawStr(g_MenuStr[32], 32, 112, ctx);
 
     strIdx = g_IsTimeAttackUnlocked ? 0x24 : 0x13;
-    MenuDrawStr(menuOptions[strIdx], 32, 128, ctx);
+    MenuDrawStr(g_MenuStr[strIdx], 32, 128, ctx);
 }
 
 void func_800F84CC(void) {
@@ -1699,18 +1693,18 @@ void func_800F8754(MenuContext* menu, s32 x, s32 y) {
         D_8013784C = 1;
     }
 
-    MenuDrawStr(c_strSpells, x + 14, y + 20, menu);
+    MenuDrawStr(g_MenuStr[93], x + 14, y + 20, menu);
     if (D_801375FC == 0) {
         D_8013784C = 1;
     } else {
         D_8013784C = 0;
     }
 
-    MenuDrawStr(c_strFamiliars, x + 2, y + 68, menu);
+    MenuDrawStr(g_MenuStr[96], x + 2, y + 68, menu);
     D_8013784C = 0;
-    MenuDrawStr(c_strEquip, x + 18, y + 4, menu);
-    MenuDrawStr(c_strRelics, x + 14, y + 36, menu);
-    MenuDrawStr(c_strSystem, x + 14, y + 52, menu);
+    MenuDrawStr(g_MenuStr[92], x + 18, y + 4, menu);
+    MenuDrawStr(g_MenuStr[94], x + 14, y + 36, menu);
+    MenuDrawStr(g_MenuStr[95], x + 14, y + 52, menu);
 }
 #elif defined(VERSION_HD)
 void func_800F8754(MenuContext* menu, s32 x, s32 y) {
@@ -1732,7 +1726,7 @@ void MenuEquipSortDraw(MenuContext* context) {
 #endif
     s32 i = 0;
 #if defined(VERSION_US)
-    const char** pStrEquipTypes = c_strSSword;
+    const char** pStrEquipTypes = &g_MenuStr[99];
 #elif defined(VERSION_HD)
     const char** pStrEquipTypes = &D_800A2D68[7];
 #endif

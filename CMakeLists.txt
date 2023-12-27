@@ -50,6 +50,7 @@ set(SOURCE_FILES_DRA
     src/dra/4A538.c
     src/dra/collider.c
     src/dra/demo.c
+    src/dra/lang_us.c
     src/dra/menu.c
     src/dra/5D6C4.c 
     src/dra/627C4.c
