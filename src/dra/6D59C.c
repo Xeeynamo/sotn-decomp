@@ -8,7 +8,7 @@
 
 u8 g_D_800ACF18[] = {10, 8, 8, 6, 6, 4, 4,   4,   4, 4,
                      4,  4, 4, 4, 4, 4, 255, 255, 0, 0};
-
+// Same function in RIC is func_8015C4AC
 void func_8010D59C(void) {
     byte stackpad[40];
     Primitive* prim;
