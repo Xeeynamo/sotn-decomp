@@ -3,6 +3,7 @@
 #include <game.h>
 #include <stdlib.h>
 #ifdef _MSC_VER
+#define SDL_MAIN_HANDLED
 #include <SDL.h>
 #else
 #include <SDL2/SDL.h>
