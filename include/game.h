@@ -482,7 +482,11 @@ typedef struct {
     unsigned char width;
     unsigned char height;
     unsigned short unk2;
+#ifdef _MSC_VER
+    unsigned char* data;
+#else
     unsigned char data[0];
+#endif
 } ImgSrc;
 
 typedef struct {
@@ -1154,7 +1158,6 @@ typedef struct {
     /* 8003C808 */ EnemyDef* enemyDefs;
     /* 8003C80C */ Entity* (*func_80118970)(void);
     /* 8003C810 */ s32 (*func_80118B18)(Entity* ent1, Entity* ent2, s32 arg2);
-    ;
     /* 8003C814 */ s32 (*UpdateUnarmedAnim)(s8* frameProps, u16** frames);
     /* 8003C818 */ void (*func_8010DBFC)(s32*, s32*);
     /* 8003C81C */ void (*func_80118C28)(s32 arg0);

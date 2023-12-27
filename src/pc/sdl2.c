@@ -1,8 +1,13 @@
 #include <common.h>
 #include <log.h>
 #include <game.h>
+#ifdef _MSC_VER
+#include <SDL.h>
+#include <SDL_image.h>
+#else
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#endif
 #include "pc.h"
 
 extern bool g_IsQuitRequested;
@@ -112,7 +117,7 @@ bool InitializeTexture(unsigned int textureIndex) {
     return false;
 }
 
-int MyResetGraph(int) { return 0; }
+int MyResetGraph(int arg0) { return 0; }
 
 void MyAudioCallback(void* data, Uint8* buffer, int length);
 void SDLAudioCallback(void* data, Uint8* buffer, int length) {

@@ -169,6 +169,7 @@ extern u8 D_80174FAC;
 extern u8 D_80174FB0;
 extern u8 D_80174FB4;
 extern u8 D_80174FB8;
+extern s16_pair D_80174FBC[];
 extern s32 D_80174FFC;
 extern s32 D_80175080;
 extern s32 D_801758B0[];

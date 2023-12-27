@@ -1,4 +1,8 @@
+#ifdef _MSC_VER
+#include <SDL.h>
+#else
 #include <SDL2/SDL.h>
+#endif
 #include <common.h>
 #include <psxsdk/libcard.h>
 #include <log.h>

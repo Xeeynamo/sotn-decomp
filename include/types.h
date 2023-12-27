@@ -18,6 +18,12 @@ typedef unsigned int size_t;
 #include <sys/types.h>
 #endif
 
+#ifdef _MSC_VER
+typedef unsigned char u_char;
+typedef unsigned short u_short;
+typedef unsigned long long u_long;
+#endif
+
 typedef signed char s8;
 typedef signed short s16;
 typedef signed int s32;
