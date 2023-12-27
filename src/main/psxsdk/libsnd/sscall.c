@@ -1,6 +1,8 @@
 #include "common.h"
 #include "libsnd_internal.h"
 
+void _SsSndStop(s32, s32);
+
 void SsSeqCalledTbyT(void) {
     int i;
     int j;

@@ -254,7 +254,6 @@ void _SsSndDecrescendo(s16, s16);
 void _SsSndPause(s16, s16);
 void _SsSndPlay(s16, s16);
 void _SsSndReplay(s16, s16);
-void _SsSndStop(s32, s32);
 void _SsSndTempo(s16, s16);
 extern s32 _snd_ev_flag;
 extern s32 _snd_openflag;
