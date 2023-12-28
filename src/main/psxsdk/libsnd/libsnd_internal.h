@@ -258,4 +258,10 @@ void _SsSndTempo(s16, s16);
 extern s32 _snd_ev_flag;
 extern s32 _snd_openflag;
 
+short SsUtGetProgAtr(short vabId, short progNum, ProgAtr* progatrptr);
+short SsUtGetVagAtr(
+    short vabId, short progNum, short toneNum, VagAtr* vagatrptr);
+short SsUtSetVagAtr(
+    short vabId, short progNum, short toneNum, VagAtr* vagatrptr);
+
 #endif
