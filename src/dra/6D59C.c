@@ -70,7 +70,7 @@ u8 g_shadowOpacityReductionTable[] = {
     4, 4, 4, 4, 6, 6, 6, 6, 8, 8, 16, 16, 16, 16, 16, 16};
 u8 g_D_800ACF3C[] = {8,  12, 16, 20, 24, 28, 32, 32,
                      32, 32, 32, 32, 32, 32, 32, 32};
-
+// Equivalent in RIC is func_8015C6D4
 void func_8010D800(void) {
     byte pad[0x28];
     PlayerDraw* plDraw;
