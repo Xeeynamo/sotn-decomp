@@ -1368,22 +1368,9 @@ typedef struct {
     /* 80072EF4 */ s32 D_80072EF4;
     /* 80072EF8 */ s32 D_80072EF8;
     /* 80072EFC */ s32 D_80072EFC; // stun timer
-    /* 80072F00 */ s16 D_80072F00; // poison timer
-    /* 80072F02 */ s16 D_80072F02; // curse timer
-    /* 80072F04 */ s16 D_80072F04; // visual effect timer stoned/hit
-    /* 80072F06 */ s16 D_80072F06;
-    /* 80072F08 */ s16 D_80072F08;
-    /* 80072F0A */ s16 D_80072F0A;
-    /* 80072F0C */ s16 D_80072F0C;
-    /* 80072F0E */ s16 D_80072F0E;
-    /* 80072F10 */ s16 D_80072F10;
-    /* 80072F12 */ s16 D_80072F12;
-    /* 80072F14 */ s16 D_80072F14;
-    /* 80072F16 */ s16 D_80072F16;
-    /* 80072F18 */ s16 D_80072F18;
-    /* 80072F1A */ s16 D_80072F1A; // invincibility timer
-    /* 80072F1C */ s16 D_80072F1C; // invincibility timer from consumables
-    /* 80072F1E */ s16 D_80072F1E;
+    // Known timers: 0 = poison, 1 = curse, 2 = visual from stoned/hit,
+    //  13 = invincibility, 14 = invincibility from consumables
+    /* 80072F00 */ s16 D_80072F00[16]; // poison timer
     /* 80072F20 */ s32 pl_vram_flag;
     /* 80072F24 */ s32 unk04;
     /* 80072F28 */ s32 unk08;

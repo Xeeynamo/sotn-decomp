@@ -234,7 +234,7 @@ void EntityBatFireball(Entity* self) {
         func_8011A328(self, 9);
         self->hitboxWidth = 4;
         self->hitboxHeight = 8;
-        g_Player.D_80072F14 = 4;
+        g_Player.D_80072F00[10] = 4;
         self->step++;
         break;
     case 1:
@@ -531,7 +531,7 @@ void EntitySubwpnReboundStone(Entity* self) {
         func_8011A290(self);
         self->hitboxWidth = 4;
         self->hitboxHeight = 4;
-        g_Player.D_80072F14 = 4;
+        g_Player.D_80072F00[10] = 4;
         CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             self->ext.reboundStone.unk84 = 4;
@@ -817,7 +817,7 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
             fakeprim = fakeprim->next;
         }
         PlaySfx(SUBWPN_THROW);
-        g_Player.D_80072F14 = 4;
+        g_Player.D_80072F00[10] = 4;
         self->step++;
         break;
     case 1:
@@ -960,7 +960,7 @@ void func_80128C2C(Entity* self) {
             SetSpeedX(FIX(6));
             PlaySfx(0x60C);
             CreateEntFactoryFromEntity(self, FACTORY(0x5200, 44), 0);
-            g_Player.D_80072F14 = 4;
+            g_Player.D_80072F00[10] = 4;
             self->step++;
         }
         break;
@@ -1184,7 +1184,7 @@ void EntitySubwpnBible(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         prim->blendMode &= ~BLEND_VISIBLE;
         self->ext.et_BibleSubwpn.unk86++;
-        g_Player.D_80072F14 = 4;
+        g_Player.D_80072F00[10] = 4;
         self->step++;
     case 2:
         self->ext.et_BibleSubwpn.unk7C++;
@@ -1454,7 +1454,7 @@ void func_8012CED4(void) {
         }
     }
     PLAYER.step_s = 5;
-    g_Player.D_80072F0A = 8;
+    g_Player.D_80072F00[5] = 8;
     PLAYER.velocityY = 0;
     D_80138430 -= 0x100;
 }
@@ -1464,7 +1464,7 @@ void func_8012CFA8(void) {
     PLAYER.step_s = 6;
     D_800B0914 = 0;
     PLAYER.velocityX = 0;
-    g_Player.D_80072F0A = 8;
+    g_Player.D_80072F00[5] = 8;
 }
 
 void func_8012CFF0(void) {

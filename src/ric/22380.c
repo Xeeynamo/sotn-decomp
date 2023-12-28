@@ -644,7 +644,7 @@ void func_8015FAB8(Entity* entity) {
     u16 attack;
     SubweaponDef* subwpn = &D_80154688[entity->ext.generic.unkB0];
 
-    if ((g_Player.D_80072F1A) != NULL) {
+    if ((g_Player.D_80072F00[13]) != NULL) {
         attack = subwpn->attack * 2;
     } else {
         attack = subwpn->attack;

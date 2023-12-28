@@ -18,8 +18,8 @@ void func_80109328(void) {
         PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
     }
 
-    if (g_Player.D_80072F16 != 0) {
-        g_Player.D_80072F16 = 0;
+    if (g_Player.D_80072F00[11] != 0) {
+        g_Player.D_80072F00[11] = 0;
         func_801092E8(0);
     }
     PLAYER.blendMode = 0;
@@ -249,10 +249,10 @@ void func_8010A3F0(void) {
     s32 temp = 0x38;
 
     if (D_8017A000.GetWeaponId() == temp && D_8017D000.GetWeaponId() == temp) {
-        if (g_Player.D_80072F16 == 0) {
+        if (g_Player.D_80072F00[11] == 0) {
             func_801092E8(1);
         }
-        g_Player.D_80072F16 = 0x20;
+        g_Player.D_80072F00[11] = 0x20;
         temp = g_Player.unk10 != 0;
         if (temp && g_Status.D_80097C40 < -1) {
             g_Status.D_80097C40++;

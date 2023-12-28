@@ -820,7 +820,7 @@ void EntityHolyWater(Entity* entity) {
         func_8011A290(entity);
         entity->hitboxHeight = 4;
         entity->hitboxWidth = 4;
-        g_Player.D_80072F14 = 4;
+        g_Player.D_80072F00[10] = 4;
         entity->step++;
         break;
 
