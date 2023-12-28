@@ -533,7 +533,7 @@ void func_80158BFC(void) {
                 func_8015C9CC();
                 if (g_Player.padPressed & PAD_DOWN) {
                     PLAYER.step = 2;
-                    PLAYER.unk4C = &D_801555A8;
+                    PLAYER.unk4C = D_801555A8;
                     break;
                 }
             }

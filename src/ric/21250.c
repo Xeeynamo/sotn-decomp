@@ -1,6 +1,6 @@
 #include "ric.h"
 
-s32 func_8015D250(void) {
+s32 func_8015D250(s32 unused_arg) {
     SubweaponDef subweapon;
     s16 subweaponId;
 
@@ -54,7 +54,75 @@ s32 func_8015D250(void) {
     return 0;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/21250", func_8015D3CC);
+bool func_8015D3CC(void) {
+    s32 i;
+    s16 poisoned;
+    s32 temp_rand = rand();
+    s16 randOf6 = temp_rand % 6;
+
+    if (func_8015D250(temp_rand / 6) == 0) {
+        if (randOf6 == 0) {
+            g_api.PlaySfx(0x6F9);
+        }
+        if (randOf6 == 1) {
+            g_api.PlaySfx(0x6FA);
+        }
+        if (randOf6 == 2) {
+            g_api.PlaySfx(0x6FB);
+        }
+        return 1;
+    }
+    poisoned = g_Player.D_80072F00[0] != 0;
+    for (i = 16; i < 31; i++) {
+        DestroyEntity(&g_Entities[i]);
+    }
+    if (CreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(poisoned * 0x100, 10), 0) != NULL) {
+        if (poisoned) {
+            g_api.PlaySfx(0x6B5);
+        } else {
+            g_api.PlaySfx(0x706);
+        }
+        if (randOf6 == 0) {
+            g_api.PlaySfx(0x6F9);
+        }
+        if (randOf6 == 1) {
+            g_api.PlaySfx(0x6FA);
+        }
+        if (randOf6 == 2) {
+            g_api.PlaySfx(0x6FB);
+        }
+        switch (PLAYER.step) {
+        default:
+            return 0;
+        case Player_Stand:
+        case Player_Walk:
+            PLAYER.step = 0;
+            func_8015C920(D_80155588);
+            g_CurrentEntity->velocityX = 0;
+            break;
+        case Player_Unk25:
+            PLAYER.step = 0;
+            func_8015C920(D_80155588);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
+            break;
+        case Player_Crouch:
+            func_8015C920(D_801555A8);
+            g_CurrentEntity->velocityX = 0;
+            break;
+        case Player_Fall:
+        case Player_Jump:
+            PLAYER.step = 4;
+            func_8015C920(D_801555C8);
+            break;
+        }
+        g_Player.unk46 = 1;
+        PLAYER.step_s = 0x40;
+        g_Player.D_80072F00[9] = 4;
+        return 1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/21250", func_8015D678);
 
