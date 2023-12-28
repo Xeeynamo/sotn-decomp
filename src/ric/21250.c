@@ -124,7 +124,101 @@ bool func_8015D3CC(void) {
     return 0;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/21250", func_8015D678);
+bool func_8015D678(void) {
+    SubweaponDef subWpn;
+    Entity* subWpnEnt;
+    s16 subWpnID;
+
+    subWpnID = func_8015FB84(&subWpn, true, false);
+    if (subWpnID < 0) {
+        return 0;
+    }
+    if ((subWpnID == 3) && (g_Player.D_80072F00[3] != 0)) {
+        return 0;
+    }
+    if ((subWpnID == 6) && (D_800973FC != 0)) {
+        return 0;
+    }
+    if (subWpn.blueprintNum != 0) {
+        if (subWpnID == 1) {
+            subWpnEnt = CreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(0x100, subWpn.blueprintNum), 0);
+        } else {
+            subWpnEnt = CreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(0, subWpn.blueprintNum), 0);
+        }
+    }
+    if (subWpnEnt == NULL) {
+        return 0;
+    }
+    subWpnID = func_8015FB84(&subWpn, true, true);
+    g_Player.unk46 = 4;
+    g_Player.unk4E = 0;
+    PLAYER.velocityY = 0;
+    PLAYER.velocityX = 0;
+    switch (subWpnID) {
+    case SUBWPN_NONE:
+        SetPlayerStep(Player_FlameWhip);
+        func_8015C920(D_80155840);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x100, 36), 0);
+        g_api.PlaySfx(0x6FC);
+        break;
+    case SUBWPN_DAGGER:
+        SetPlayerStep(Player_ThousandBlades);
+        func_8015C920(D_80155608);
+        g_api.PlaySfx(0x6FC);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x200, 33), 0);
+        break;
+    case SUBWPN_AXE:
+        SetPlayerStep(Player_Teleport);
+        func_8015C920(D_80155658);
+        PLAYER.velocityY = FIX(-4.6875);
+        if (g_Player.unk72 != 0) {
+            PLAYER.velocityY = 0;
+        }
+        func_8015CC28();
+        g_api.PlaySfx(0x6FC);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x200, 33), 0);
+        break;
+    case SUBWPN_HOLYWATER:
+        SetPlayerStep(Player_Hydrostorm);
+        func_8015C920(D_801557AC);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4000, 33), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4700, 33), 0);
+        g_api.PlaySfx(0x700);
+        break;
+    case SUBWPN_REBNDSTONE:
+    case SUBWPN_VIBHUTI:
+    case SUBWPN_AGUNEA:
+        SetPlayerStep(Player_Unk27);
+        func_8015C920(D_801557AC);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4000, 33), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4700, 33), 0);
+        g_api.PlaySfx(0x6FC);
+        break;
+    case SUBWPN_BIBLE:
+    case SUBWPN_STOPWATCH:
+        SetPlayerStep(Player_Unk27);
+        func_8015C920(D_801558E4);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4000, 33), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4700, 33), 0);
+        g_api.PlaySfx(0x6FC);
+        break;
+    case SUBWPN_CROSS:
+        SetPlayerStep(Player_Teleport);
+        func_8015C920(D_80155658);
+        PLAYER.velocityY = FIX(-4.6875);
+        if (g_Player.unk72 != 0) {
+            PLAYER.velocityY = 0;
+        }
+        func_8015CC28();
+        g_api.PlaySfx(0x701);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x200, 33), 0);
+        break;
+    }
+    g_Player.D_80072F00[12] = 4;
+    return 1;
+}
 
 void func_8015D9B4() { SetPlayerStep(22); }
 
