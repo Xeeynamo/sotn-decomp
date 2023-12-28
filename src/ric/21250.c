@@ -1,6 +1,6 @@
 #include "ric.h"
 
-s32 func_8015D250(void) {
+s32 func_8015D250(s32 unused_arg) {
     SubweaponDef subweapon;
     s16 subweaponId;
 
