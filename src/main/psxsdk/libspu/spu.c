@@ -11,9 +11,10 @@ s32 _spu_reset(void) {
     volatile s32 sp0;
     volatile s32 sp4;
     u16 temp_a0;
+    volatile s16* spucnt = &_spu_RXX->rxx.spucnt;
 
     temp_a0 = _spu_RXX->rxx.spucnt;
-    _spu_RXX->rxx.spucnt = temp_a0 & 0x7FCF;
+    *spucnt = temp_a0 & 0x7FCF;
     WASTE_TIME();
     temp_a0 &= 0xFFCF;
     _spu_RXX->rxx.spucnt = temp_a0;
