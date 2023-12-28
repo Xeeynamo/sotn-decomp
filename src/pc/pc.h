@@ -15,7 +15,7 @@
 #define SCREEN_SCALE 2
 
 bool FileRead(bool (*cb)(FILE* file), const char* path);
-bool FileStringify(bool (*cb)(const char* content), FILE* f);
-bool FileUseContent(bool (*cb)(void* content), FILE* f);
+bool FileStringify(bool (*cb)(const char* content), const char* path);
+bool FileUseContent(bool (*cb)(void* content), const char* path);
 
 #endif

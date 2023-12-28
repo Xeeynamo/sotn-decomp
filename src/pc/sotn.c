@@ -88,8 +88,8 @@ void MyDrawSyncCallback(int mode) {
 // called before MainGame
 bool InitPlatform(void);
 void InitStrings(void);
-bool InitEquipDefs(FILE* f);
-bool InitAccessoryDefs(FILE* f);
+bool InitEquipDefs(const char* jsonContent);
+bool InitAccessoryDefs(const char* jsonContent);
 void InitRelicDefs(void);
 void InitEnemyDefs(void);
 void InitSubwpnDefs(void);
@@ -186,8 +186,12 @@ bool InitGame(void) {
     D_8017D000.LoadWeaponPalette = WeaponLoadPaletteStub;
 
     InitStrings();
-    FileRead(InitEquipDefs, "assets/dra/equipment.json");
-    FileRead(InitAccessoryDefs, "assets/dra/accessory.json");
+    if (!FileStringify(InitEquipDefs, "assets/dra/equipment.json")) {
+        WARNF("failed to init equipments");
+    }
+    if (!FileStringify(InitAccessoryDefs, "assets/dra/accessory.json")) {
+        WARNF("failed to init accessories");
+    }
     InitRelicDefs();
     InitEnemyDefs();
     InitSubwpnDefs();
@@ -222,20 +226,29 @@ bool FileRead(bool (*cb)(FILE* file), const char* path) {
     fclose(f);
     return r;
 }
-bool FileStringify(bool (*cb)(const char* content), FILE* f) {
+bool FileStringify(bool (*cb)(const char* content), const char* path) {
+    INFOF("open '%s'", path);
+    FILE* f = fopen(path, "rb");
+    if (f == NULL) {
+        ERRORF("unable to open '%s'", path);
+        return false;
+    }
+
     fseek(f, 0, SEEK_END);
     size_t len = ftell(f);
     fseek(f, 0, SEEK_SET);
 
     void* content = malloc(len + 1);
     if (!content) {
-        ERRORF("unable to allocate %d bytes", len);
+        ERRORF("unable to allocate %d bytes for '%s'", len, path);
+        fclose(f);
         return false;
     }
 
     size_t bytesread = fread(content, 1, len, f);
     if (bytesread != len) {
-        ERRORF("unable to read %d bytes", len);
+        ERRORF("unable to read %d bytes for '%s'", len, path);
+        fclose(f);
         free(content);
         return false;
     }
@@ -244,28 +257,39 @@ bool FileStringify(bool (*cb)(const char* content), FILE* f) {
 
     bool r = cb(content);
     free(content);
+    fclose(f);
     return r;
 }
-bool FileUseContent(bool (*cb)(void* content), FILE* f) {
+bool FileUseContent(bool (*cb)(void* content), const char* path) {
+    INFOF("open '%s'", path);
+    FILE* f = fopen(path, "rb");
+    if (f == NULL) {
+        ERRORF("unable to open '%s'", path);
+        return false;
+    }
+
     fseek(f, 0, SEEK_END);
     size_t len = ftell(f);
     fseek(f, 0, SEEK_SET);
 
     void* content = malloc(len);
     if (!content) {
-        ERRORF("unable to allocate %d bytes", len);
+        ERRORF("unable to allocate %d bytes for '%s'", len, path);
+        fclose(f);
         return false;
     }
 
     size_t bytesread = fread(content, 1, len, f);
     if (bytesread != len) {
-        ERRORF("unable to read %d bytes", len);
+        ERRORF("unable to read %d bytes for '%s'", len, path);
+        fclose(f);
         free(content);
         return false;
     }
 
     bool r = cb(content);
     free(content);
+    fclose(f);
     return r;
 }
 
@@ -308,7 +332,7 @@ void InitStrings(void) {
 }
 
 #define JITEM(x) cJSON_GetObjectItemCaseSensitive(jitem, x)
-bool ParseEquipDefs(const char* content) {
+bool InitEquipDefs(const char* content) {
     INFOF("load");
     cJSON* json = cJSON_Parse(content);
     if (!json) {
@@ -369,8 +393,7 @@ bool ParseEquipDefs(const char* content) {
     cJSON_Delete(json);
     return true;
 }
-bool InitEquipDefs(FILE* f) { return FileStringify(ParseEquipDefs, f); }
-void ParseAccessoryDefs(const char* content) {
+bool InitAccessoryDefs(const char* content) {
     INFOF("load");
     cJSON* json = cJSON_Parse(content);
     if (!json) {
@@ -416,7 +439,6 @@ void ParseAccessoryDefs(const char* content) {
     cJSON_Delete(json);
     return true;
 }
-bool InitAccessoryDefs(FILE* f) { return FileStringify(ParseAccessoryDefs, f); }
 void InitRelicDefs(void) {
     for (int i = 0; i < LEN(g_RelicDefs); i++) {
         memcpy(&g_RelicDefs[i], &g_RelicDummy, sizeof(g_RelicDummy));
