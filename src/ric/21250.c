@@ -95,23 +95,23 @@ bool func_8015D3CC(void) {
         switch (PLAYER.step) {
         default:
             return 0;
-        case 0:
-        case 1:
+        case Player_Stand:
+        case Player_Walk:
             PLAYER.step = 0;
             func_8015C920(D_80155588);
             g_CurrentEntity->velocityX = 0;
             break;
-        case 25:
+        case Player_Unk25:
             PLAYER.step = 0;
             func_8015C920(D_80155588);
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0U, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0,0), 0);
             break;
-        case 2:
+        case Player_Crouch:
             func_8015C920(D_801555A8);
             g_CurrentEntity->velocityX = 0;
             break;
-        case 3:
-        case 4:
+        case Player_Fall:
+        case Player_Jump:
             PLAYER.step = 4;
             func_8015C920(D_801555C8);
             break;
