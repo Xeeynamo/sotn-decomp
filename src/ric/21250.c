@@ -104,7 +104,7 @@ bool func_8015D3CC(void) {
         case Player_Unk25:
             PLAYER.step = 0;
             func_8015C920(D_80155588);
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0,0), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
             break;
         case Player_Crouch:
             func_8015C920(D_801555A8);
