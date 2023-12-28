@@ -1163,7 +1163,7 @@ typedef struct {
     /* 8003C80C */ Entity* (*func_80118970)(void);
     /* 8003C810 */ s32 (*func_80118B18)(Entity* ent1, Entity* ent2, s32 arg2);
     /* 8003C814 */ s32 (*UpdateUnarmedAnim)(s8* frameProps, u16** frames);
-    /* 8003C818 */ void (*func_8010DBFC)(s32*, s32*);
+    /* 8003C818 */ void (*func_8010DBFC)(s8*, s32*);
     /* 8003C81C */ void (*func_80118C28)(s32 arg0);
     /* 8003C820 */ void (*func_8010E168)(s32 arg0, s16 arg1);
     /* 8003C824 */ void (*func_8010DFF0)(s32 arg0, s32 arg1);
@@ -1231,7 +1231,7 @@ extern u16* (*g_api_func_80106A28)(u16 arg0, u16 kind);
 extern void (*g_api_func_80118894)(Entity*);
 extern EnemyDef* g_api_enemyDefs;
 extern u32 (*g_api_UpdateUnarmedAnim)(s8* frameProps, u16** frames);
-extern void (*g_api_func_8010DBFC)(s32*, s32*);
+extern void (*g_api_func_8010DBFC)(s8*, s32*);
 extern void (*g_api_func_8010E168)(s32 arg0, s16 arg1);
 extern void (*g_api_func_8010DFF0)(s32 arg0, s32 arg1);
 extern u16 (*g_api_DealDamage)(Entity* enemyEntity, Entity* attackerEntity);
