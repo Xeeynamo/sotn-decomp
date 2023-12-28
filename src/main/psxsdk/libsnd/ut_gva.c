@@ -6,7 +6,7 @@ short SsUtGetVagAtr(
     s16 temp_v1;
     if (svm_vab_used[vabId] == 1) {
         SpuVmVSetUp(vabId, progNum);
-        temp_v1 = toneNum + (D_800978CF * 0x10);
+        temp_v1 = toneNum + D_800978CF * 0x10;
         vagatrptr->prior = _svm_tn[temp_v1].prior;
         vagatrptr->mode = _svm_tn[temp_v1].mode;
         vagatrptr->vol = _svm_tn[temp_v1].vol;
