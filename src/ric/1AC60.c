@@ -533,7 +533,7 @@ void func_80158BFC(void) {
                 func_8015C9CC();
                 if (g_Player.padPressed & PAD_DOWN) {
                     PLAYER.step = 2;
-                    PLAYER.unk4C = &D_801555A8;
+                    PLAYER.unk4C = D_801555A8;
                     break;
                 }
             }
@@ -542,7 +542,7 @@ void func_80158BFC(void) {
                 if (g_Player.padPressed & PAD_SQUARE) {
                     g_Player.unk46 = 2;
                     PLAYER.step_s++;
-                    func_8015C920(&D_80155730);
+                    func_8015C920(D_80155730);
                     CreateEntFactoryFromEntity(g_CurrentEntity, 0x11, 0);
                     break;
                 }
