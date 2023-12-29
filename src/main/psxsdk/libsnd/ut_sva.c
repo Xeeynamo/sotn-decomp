@@ -1,7 +1,8 @@
 #include "common.h"
 #include "libsnd_internal.h"
 
-short SsUtSetVagAtr(short vabId, short progNum, s32 toneNum, VagAtr* pVagAttr) {
+short SsUtSetVagAtr(
+    short vabId, short progNum, short toneNum, VagAtr* pVagAttr) {
     s16 toneIndex;
     if (svm_vab_used[vabId] == 1) {
         SpuVmVSetUp(vabId, progNum);

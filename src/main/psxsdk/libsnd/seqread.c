@@ -43,9 +43,45 @@ void _SsSetProgramChange(s16 arg0, s16 arg1, s8 arg2) {
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsSetControlChange);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContModulation);
+void _SsContModulation(s16 arg0, s16 arg1, u8 arg2) {
+    ProgAtr sp10;
+    VagAtr sp20;
+    s32 toneNum;
+    struct SeqStruct* temp_s2;
+    u8 channel;
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContPortaTime);
+    temp_s2 = &_ss_score[arg0][arg1];
+    channel = temp_s2->channel;
+    SsUtGetProgAtr(temp_s2->unk4c, temp_s2->programs[channel], &sp10);
+    for (toneNum = 0; toneNum < sp10.tones; toneNum++) {
+        SsUtGetVagAtr(
+            temp_s2->unk4c, temp_s2->programs[channel], toneNum, &sp20);
+        sp20.vibW = arg2;
+        SsUtSetVagAtr(
+            temp_s2->unk4c, temp_s2->programs[channel], toneNum, &sp20);
+    }
+    temp_s2->delta_value = _SsReadDeltaValue(arg0, arg1);
+}
+
+void _SsContPortaTime(s16 arg0, s16 arg1, u8 arg2) {
+    ProgAtr sp10;
+    VagAtr sp20;
+    s32 toneNum;
+    struct SeqStruct* temp_s2;
+    u8 channel;
+
+    temp_s2 = &_ss_score[arg0][arg1];
+    channel = temp_s2->channel;
+    SsUtGetProgAtr(temp_s2->unk4c, temp_s2->programs[channel], &sp10);
+    for (toneNum = 0; toneNum < sp10.tones; toneNum++) {
+        SsUtGetVagAtr(
+            temp_s2->unk4c, temp_s2->programs[channel], toneNum, &sp20);
+        sp20.porT = arg2;
+        SsUtSetVagAtr(
+            temp_s2->unk4c, temp_s2->programs[channel], toneNum, &sp20);
+    }
+    temp_s2->delta_value = _SsReadDeltaValue(arg0, arg1);
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContPortamento);
 
