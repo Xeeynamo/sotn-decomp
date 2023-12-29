@@ -86,8 +86,36 @@ extern s16 _svm_stereo_mono;
 
 u8 SpuVmAlloc(u8);
 s32 vmNoiseOn2(u8, u16, u16, u16, u16);
-extern s8 D_800978D7;
-extern s16 D_800978E2;
+
+struct struct_svm {
+    char field_0_sep_sep_no_tonecount;
+    char field_1_vabId;
+    char field_2_note;
+    char field_0x3;
+    char field_4_voll;
+    char field_0x5;
+    char field_6_program;
+    char field_7_fake_program;
+    char field_8_unknown;
+    char field_0x9;
+    char field_A_mvol;
+    char field_B_mpan;
+    char field_C_vag_idx;
+    char field_D_vol;
+    char field_E_pan;
+    char field_F_prior;
+    char field_10_centre;
+    unsigned char field_11_shift;
+    char field_12_mode;
+    char field_0x13;
+    short field_14_seq_sep_no;
+    short field_16_vag_idx;
+    short field_18_voice_idx;
+    short field_0x1a;
+};
+
+extern struct struct_svm svm_cur;
+
 extern u8 spuVmMaxVoice;
 void SeAutoVol(s16, s16, s16, s16);
 void SeAutoPan(s16, s16, s16, s16);
@@ -218,7 +246,6 @@ struct SpuVoice {
 
 extern struct SpuVoice _svm_voice[24];
 u32 SpuVmVSetUp(s16, s16);
-extern u8 D_800978CF;
 
 typedef struct VagAtr { /* VAG Tone Headdings */
 

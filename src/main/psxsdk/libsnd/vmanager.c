@@ -35,11 +35,11 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmInit);
 void SpuVmNoiseOnWithAdsr(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s16 temp_v0;
 
-    D_800978D7 = 0x7F;
+    svm_cur.field_F_prior = 0x7F;
     temp_v0 = SpuVmAlloc(0xFF) & 0xFF;
-    D_800978E2 = temp_v0;
+    svm_cur.field_0x1a = temp_v0;
     if (temp_v0 < (s32)spuVmMaxVoice) {
-        vmNoiseOn2((u8)D_800978E2, arg0, arg1, arg2, arg3);
+        vmNoiseOn2((u8)svm_cur.field_0x1a, arg0, arg1, arg2, arg3);
     }
 }
 
@@ -57,10 +57,10 @@ void SpuVmNoiseOff(void) {
 }
 
 void SpuVmNoiseOn(s32 arg0, s32 arg1) {
-    D_800978D7 = 0x7F;
-    D_800978E2 = SpuVmAlloc(0xFF);
-    if (D_800978E2 < spuVmMaxVoice) {
-        vmNoiseOn2(D_800978E2, arg0, arg1, 0x80FF, 0x5FC8);
+    svm_cur.field_F_prior = 0x7F;
+    svm_cur.field_0x1a = SpuVmAlloc(0xFF);
+    if (svm_cur.field_0x1a < spuVmMaxVoice) {
+        vmNoiseOn2(svm_cur.field_0x1a, arg0, arg1, 0x80FF, 0x5FC8);
     }
 }
 
@@ -86,23 +86,17 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmSetSeqVol);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmGetSeqVol);
 
-extern s16 D_800978DE;
-
 s16 SpuVmGetSeqLVol(s16 arg0) {
     struct SeqStruct* new_var;
     new_var = _ss_score[arg0 & 0xFF];
-    do {
-    } while (0);
-    D_800978DE = arg0;
+    svm_cur.field_16_vag_idx = arg0;
     return new_var[((s32)(arg0 & 0xFF00)) >> 8].unk74;
 }
 
 s16 SpuVmGetSeqRVol(s16 arg0) {
     struct SeqStruct* new_var;
     new_var = _ss_score[arg0 & 0xFF];
-    do {
-    } while (0);
-    D_800978DE = arg0;
+    svm_cur.field_16_vag_idx = arg0;
     return new_var[((s32)(arg0 & 0xFF00)) >> 8].unk76;
 }
 
