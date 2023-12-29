@@ -725,6 +725,19 @@ typedef enum {
     ITEM_END,
 } ItemCategory;
 
+typedef enum {
+    SUBWPN_NONE,
+    SUBWPN_DAGGER,
+    SUBWPN_AXE,
+    SUBWPN_HOLYWATER,
+    SUBWPN_CROSS,
+    SUBWPN_BIBLE,
+    SUBWPN_STOPWATCH,
+    SUBWPN_REBNDSTONE,
+    SUBWPN_VIBHUTI,
+    SUBWPN_AGUNEA
+} SubWpnID;
+
 typedef enum { STAT_STR, STAT_CON, STAT_INT, STAT_LCK } Stats;
 typedef struct {
     s32 level;
