@@ -254,33 +254,6 @@ void BottomCornerText(u8* str, u8 lower_left) {
 
 #include "../find_first_unk_prim.h"
 
-POLY_GT4* func_8019C43C(POLY_GT4* poly, u8 index) {
-    if (poly) {
-        s32 index_ = index;
-    loop_2:
-        if (poly->p3 == 0) {
-            POLY_GT4* var_v0 = NULL;
-            POLY_GT4* firstPoly = poly;
-            s32 i = 1;
-            if (i < index_) {
-                do {
-                    poly = (POLY_GT4*)poly->tag;
-                    if (!poly)
-                        return NULL;
-                } while (poly->p3 == 0 && ++i < index);
-            }
-            var_v0 = firstPoly;
-            if (i == index_)
-                return var_v0;
-        }
-        poly = (POLY_GT4*)poly->tag;
-        if (poly) {
-            goto loop_2;
-        }
-    }
-    return NULL;
-}
-
 Primitive* func_8019C4B8(Primitive* prim, s32 count) {
     s32 i;
     u8 p3;
