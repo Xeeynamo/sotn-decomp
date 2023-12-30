@@ -180,7 +180,7 @@ void InitMainMenuGraphics(void) {
     y = 0;
     x = -0x20;
     prim = &g_PrimBuf[D_801BAF18[GFX_UNK_0][0]];
-    func_801B26A0(prim, 216, 16, 144, 72, 0, 0);
+    SetTexturedPrimRect(prim, 216, 16, 144, 72, 0, 0);
     func_801B1D88(prim);
     prim->tpage = 0xD;
     prim->clut = 0x201;
@@ -190,7 +190,7 @@ void InitMainMenuGraphics(void) {
     for (; i < NUM_MENU_OPTIONS; i++) {
         D_801BAF18[i + 1][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
         prim = &g_PrimBuf[D_801BAF18[i + 1][0]];
-        func_801B26A0(
+        SetTexturedPrimRect(
             prim, x, y, 127, 31, g_MenuHeadGfxU[i], g_MenuHeadGfxV[i]);
         func_801B1D88(prim);
         prim->tpage = 0xC;
@@ -207,7 +207,7 @@ void InitMainMenuGraphics(void) {
 
     D_801BAF18[6][0] = g_api.AllocPrimitives(PRIM_GT4, 4);
     prim = &g_PrimBuf[D_801BAF18[6][0]];
-    func_801B26A0(prim, 32, 176, 16, 16, 0xA0, 0x50);
+    SetTexturedPrimRect(prim, 32, 176, 16, 16, 0xA0, 0x50);
     func_801B1D88(prim);
     prim->tpage = 0xC;
     prim->clut = 0x200;
@@ -215,7 +215,7 @@ void InitMainMenuGraphics(void) {
     prim->blendMode = 0;
 
     prim = prim->next;
-    func_801B26A0(prim, 32, 176, 16, 16, 0xA0, 0x70);
+    SetTexturedPrimRect(prim, 32, 176, 16, 16, 0xA0, 0x70);
     func_801B1D88(prim);
     prim->tpage = 0xC;
     prim->clut = 0x200;
@@ -223,7 +223,7 @@ void InitMainMenuGraphics(void) {
     prim->blendMode = 0;
 
     prim = prim->next;
-    func_801B26A0(prim, 32, 176, 16, 16, 0xA0, 0x60);
+    SetTexturedPrimRect(prim, 32, 176, 16, 16, 0xA0, 0x60);
     func_801B1D88(prim);
     prim->tpage = 0xC;
     prim->clut = 0x202;
@@ -231,7 +231,7 @@ void InitMainMenuGraphics(void) {
     prim->blendMode = 0;
 
     prim = prim->next;
-    func_801B26A0(prim, 32, 176, 16, 16, 0xA0, 0x80);
+    SetTexturedPrimRect(prim, 32, 176, 16, 16, 0xA0, 0x80);
     func_801B1D88(prim);
     prim->tpage = 0xC;
     prim->clut = 0x200;
@@ -240,7 +240,7 @@ void InitMainMenuGraphics(void) {
 
     D_801BAF18[7][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
     prim = &g_PrimBuf[D_801BAF18[7][0]];
-    func_801B26A0(prim, 112, 48, 160, 48, 0, 0x50);
+    SetTexturedPrimRect(prim, 112, 48, 160, 48, 0, 0x50);
     func_801B1D88(prim);
     prim->tpage = 0xC;
     prim->clut = 0x202;
@@ -249,7 +249,7 @@ void InitMainMenuGraphics(void) {
 
     D_801BAF18[8][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
     prim = &g_PrimBuf[D_801BAF18[8][0]];
-    func_801B26A0(prim, 128, 72, 15, 15, 0xF0, 0xF0);
+    SetTexturedPrimRect(prim, 128, 72, 15, 15, 0xF0, 0xF0);
     func_801B1D88(prim);
     prim->tpage = 0xC;
     prim->clut = 0x200;
@@ -279,7 +279,7 @@ void InitMainMenuGraphics(void) {
 
     D_801BAF18[10][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
     prim = &g_PrimBuf[D_801BAF18[10][0]];
-    func_801B26A0(prim, 64, 104, 32, 32, 0, 0x48);
+    SetTexturedPrimRect(prim, 64, 104, 32, 32, 0, 0x48);
     func_801B1D88(prim);
     prim->tpage = 0xD;
     prim->clut = 0x204;
@@ -288,7 +288,7 @@ void InitMainMenuGraphics(void) {
 
     D_801BAF18[GFX_WND_SAVE_SUMMARY][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
     prim = &g_PrimBuf[D_801BAF18[11][0]];
-    func_801B26A0(prim, 104, 88, 176, 80, 0, 0);
+    SetTexturedPrimRect(prim, 104, 88, 176, 80, 0, 0);
     func_801B1D88(prim);
     prim->tpage = 0xC;
     prim->clut = 0x202;
@@ -370,14 +370,14 @@ void InitMainMenuGraphics(void) {
 
     D_801BAF18[18][0] = g_api.AllocPrimitives(PRIM_GT4, 2);
     prim = &g_PrimBuf[D_801BAF18[18][0]];
-    func_801B26A0(prim, 104, 48, 176, 80, 0, 0);
+    SetTexturedPrimRect(prim, 104, 48, 176, 80, 0, 0);
     func_801B1D88(prim);
     prim->tpage = 0xC;
     prim->clut = 0x202;
     prim->priority = 0x10;
     prim->blendMode = BLEND_VISIBLE;
     prim = prim->next;
-    func_801B26A0(prim, 168, 128, 48, 16, 0xB0, 0x80);
+    SetTexturedPrimRect(prim, 168, 128, 48, 16, 0xB0, 0x80);
     func_801B1D88(prim);
     prim->tpage = 0xC;
     prim->clut = 0x200;
@@ -427,7 +427,7 @@ void func_801ACC7C(void) {
     D_801BAFC0 = primIndex;
 
     for (i = 0; i < 3; i++) {
-        func_801B26A0(poly, i << 7, 0, 128, 240, 0, 0);
+        SetTexturedPrimRect(poly, i << 7, 0, 128, 240, 0, 0);
         func_801B1D88(poly);
         poly->tpage = i + 137;
         poly->clut = 0x210;

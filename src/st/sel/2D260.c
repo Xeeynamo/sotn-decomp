@@ -175,9 +175,9 @@ void func_801AD78C(void) {
     DrawString16x16(D_801A7770, 0x48, 0x88, 1);
     DrawString16x16(D_801A7780, 0x48, 0xA0, 1);
     DrawString16x16(D_801A7790, 0x48, 0xB8, 1);
-    func_801B26A0(&g_PrimBuf[D_801BAF58], (g_InputCursorPos * 0x10) + 0x80,
+    SetTexturedPrimRect(&g_PrimBuf[D_801BAF58], (g_InputCursorPos * 0x10) + 0x80,
                   0x48, 0x0F, 0x0F, 0xF0, 0xF0);
-    func_801B26A0(&g_PrimBuf[D_801BAF68], ((D_801BC3E0 & 7) << 5) + 0x40,
+    SetTexturedPrimRect(&g_PrimBuf[D_801BAF68], ((D_801BC3E0 & 7) << 5) + 0x40,
                   (D_801BC3E0 & 0x18) * 3 + 0x68, 0x20, 0x20, 0, 0x48);
     if (g_Timer & 8) {
         func_801ACBE4(8, 0);
@@ -300,7 +300,7 @@ void func_801AE6D0(void) {
     s = &g_SaveSummary[port];
     func_801ACBE4(0x12, 0x11);
     prim = g_PrimBuf[D_801BAF18[18][0]].next;
-    func_801B26A0(prim, 168, (D_801BAF08 % 3) + 127, 48, 16, 0xB0, 0x80);
+    SetTexturedPrimRect(prim, 168, (D_801BAF08 % 3) + 127, 48, 16, 0xB0, 0x80);
     prim->blendMode = 0;
     func_801ACBE4(0x13, 0);
     func_801ACBE4(0x14, 0);
@@ -331,7 +331,7 @@ void func_801AE9A8(void) {
 
     for (i = 1; i < NUM_MENU_OPTIONS; i++) {
         func_801ACBE4(i + 1, 4);
-        func_801B26A0(
+        SetTexturedPrimRect(
             &g_PrimBuf[D_801BAF18[i + 1][0]], (i * 64) - 32, (i * 5) * 8, 127,
             31, g_MenuHeadGfxU[i], g_MenuHeadGfxV[i]);
     }
