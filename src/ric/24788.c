@@ -257,7 +257,118 @@ void func_80160F0C(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/24788", func_80160FC4);
+void func_80160FC4(Entity* self) {
+    s16 posX;
+    s32 i;
+
+    s16 paramsLo = self->params & 0xFF;
+    s16 paramsHi = self->params >> 8;
+
+    if ((g_Player.unk0C & 0x20000) && (paramsHi != 9)) {
+        DestroyEntity(self);
+        return;
+    }
+    switch (self->step) {
+    case 0:
+        self->animSet = 5;
+        self->unk4C = D_80154C80;
+        self->zPriority = PLAYER.zPriority + 2;
+        self->flags = 0x08110000;
+        self->blendMode = 0x30;
+        self->drawFlags = 0xB;
+        self->unk6C = 0x60;
+        posX = D_80154C50[paramsLo];
+        if (paramsHi == 0) {
+            posX += 6;
+        }
+        if (paramsHi == 1) {
+            posX -= 8;
+        }
+        if (paramsHi == 2) {
+            posX -= 6;
+        }
+        if (paramsHi == 5) {
+            posX = -6;
+        }
+        if (paramsHi == 3) {
+            self->posY.i.hi -= 8;
+        }
+        if (paramsHi == 4) { /* switch 1; irregular */
+            for (i = paramsLo * 2; i < 14; i++) {
+                if (g_Player.colliders3[D_80154CE4[i]].effects & 3) {
+                    break;
+                }
+            }
+            if (i == 14) {
+                DestroyEntity(self);
+                return;
+            }
+            self->posX.i.hi = PLAYER.posX.i.hi + D_80154604[D_80154CE4[i]].unk0;
+            self->posY.i.hi = PLAYER.posY.i.hi + D_80154604[D_80154CE4[i]].unk2;
+            self->velocityY = FIX(-0.25);
+            self->rotY = self->rotX = D_80154C74[1] + 0x40;
+            self->step++;
+            return;
+        }
+        if (paramsHi == 8) {
+            for (i = paramsLo * 2; i < 10; i++) {
+                if (g_Player.colliders3[D_80154CF4[i]].effects & 3) {
+                    break;
+                }
+            }
+            if (i == 10) {
+                DestroyEntity(self);
+                return;
+            }
+            self->posX.i.hi = PLAYER.posX.i.hi + D_80154604[D_80154CF4[i]].unk0;
+            self->posY.i.hi = PLAYER.posY.i.hi + D_80154604[D_80154CF4[i]].unk2;
+            self->velocityY = D_80154C5C[paramsLo];
+            self->rotY = self->rotX = D_80154C74[paramsLo] + 0x20;
+            self->step++;
+            return;
+        }
+        if (paramsHi == 1) { /* switch 1 */
+            if (g_Player.pl_vram_flag & 0x8000) {
+                posX /= 2;
+            }
+        }
+        if (self->facingLeft != 0) {
+            posX = -posX;
+        }
+        self->posX.i.hi += posX;
+        self->posY.i.hi += 0x18;
+        self->rotX = D_80154C74[paramsLo] + 0x40;
+        self->velocityY = D_80154C5C[paramsLo];
+        if (paramsHi == 1) {
+            self->velocityY = FIX(-0.25);
+            SetSpeedX(-0x3000);
+            self->rotX = D_80154C74[1] + 0x40;
+        }
+        if (paramsHi == 5) {
+            self->velocityY = D_80154C5C[4 - paramsLo * 2];
+        }
+        if (paramsHi == 2) {
+            self->velocityY = FIX(-0.5);
+            SetSpeedX(-0x3000);
+            self->rotX = D_80154C74[1] + 0x40;
+        }
+        self->rotY = self->rotX;
+        if (paramsHi == 10) {
+            self->posY.i.hi -= 6;
+        }
+        self->step++;
+        return;
+    case 1:
+        self->unk6C += 0xFE;
+        self->posY.val += self->velocityY;
+        self->posX.val += self->velocityX;
+        if (self->animFrameDuration < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/24788", func_8016147C);
 
