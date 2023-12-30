@@ -9,7 +9,6 @@ extern s32 D_80033568[];
 extern s32 _spu_EVdma;
 extern s32 _spu_mem_mode_plus;
 extern s32 _spu_transMode;
-extern volatile s32 _spu_transferCallback;
 
 s32 SpuClearReverbWorkArea(s32 rev_mode) {
     volatile s32 callback;
