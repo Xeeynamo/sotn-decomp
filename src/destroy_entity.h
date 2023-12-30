@@ -1,6 +1,6 @@
 #ifdef USE_G_API
 #define G_API
-#else 
+#else
 #define G_API g_api.
 #endif
 
