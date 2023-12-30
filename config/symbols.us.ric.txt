@@ -9,7 +9,6 @@ SetPlayerStep = 0x8015C908;
 SetSpeedX = 0x8015CA84;
 CreateEntFactoryFromEntity = 0x801606BC;
 EntityEntFactory = 0x80160788;
-EntityStopWatchExpandingCircle = 0x80170F64;
 EntitySubwpnBible = 0x80172D00;
 EntityGiantSpinningCross = 0x8017328C;
 g_DebugWaitInfoTimer = 0x80174F7C;
