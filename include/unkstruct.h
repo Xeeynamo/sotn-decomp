@@ -256,3 +256,15 @@ typedef struct {
     u8 unk4;
     u8 unk5;
 } FactoryBlueprint;
+
+typedef struct {
+    s16 xOffset;
+    s16 yOffset;
+    s32 velocityX;
+    s32 velocityY;
+    s16 timerInit;
+    s16 tpage;
+    s16 clut;
+    u8 uBase;
+    u8 vBase;
+} unkStr80154E5C; // size = 0x14

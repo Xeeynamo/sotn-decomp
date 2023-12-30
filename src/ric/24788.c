@@ -708,7 +708,77 @@ void func_80161EF8(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/24788", func_80161FF0);
+void func_80161FF0(Entity* self) {
+    Primitive* prim;
+
+    u16 posX = self->posX.i.hi;
+    u16 posY = self->posY.i.hi;
+    unkStr80154E5C* temp_s2 = &D_80154E5C[(s16)self->params];
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        g_api.PlaySfx(0x881);
+        self->ext.et_80161FF0.unk7C = 0x100;
+        prim = &g_PrimBuf[self->primIndex];
+        prim->u0 = temp_s2->uBase;
+        prim->v0 = temp_s2->vBase;
+        prim->u1 = temp_s2->uBase + 0x7F;
+        prim->v1 = temp_s2->vBase;
+        prim->u2 = temp_s2->uBase;
+        prim->v2 = temp_s2->vBase + 0x6F;
+        prim->u3 = temp_s2->uBase + 0x7F;
+        prim->v3 = temp_s2->vBase + 0x6F;
+        prim->tpage = temp_s2->tpage;
+        prim->clut = temp_s2->clut;
+        prim->priority = PLAYER.zPriority + 8;
+        prim->blendMode = 0x31;
+        self->velocityX = temp_s2->velocityX;
+        self->velocityY = temp_s2->velocityY;
+        self->posX.i.hi += temp_s2->xOffset;
+        posX = self->posX.i.hi;
+        posY = self->posY.i.hi + temp_s2->yOffset;
+        self->posY.i.hi = posY;
+        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_10000;
+        self->step++;
+        break;
+    case 1:
+        self->ext.et_80161FF0.unk7C -= 8;
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        if (self->ext.et_80161FF0.unk7C < 25) {
+            self->ext.et_80161FF0.unk7E = temp_s2->timerInit;
+            self->step++;
+        }
+        break;
+    case 2:
+        if (--self->ext.et_80161FF0.unk7E == 0) {
+            self->step++;
+        }
+        break;
+    case 3:
+        self->ext.et_80161FF0.unk7C -= 2;
+        if (self->ext.et_80161FF0.unk7C < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    prim->x0 = posX + (((rcos(0x600) >> 4) * self->ext.et_80161FF0.unk7C) >> 8);
+    prim->y0 = posY - (((rsin(0x600) >> 4) * self->ext.et_80161FF0.unk7C) >> 8);
+    prim->x1 = posX + (((rcos(0x200) >> 4) * self->ext.et_80161FF0.unk7C) >> 8);
+    prim->y1 = posY - (((rsin(0x200) >> 4) * self->ext.et_80161FF0.unk7C) >> 8);
+    prim->x2 = posX + (((rcos(0xA00) >> 4) * self->ext.et_80161FF0.unk7C) >> 8);
+    prim->y2 = posY - (((rsin(0xA00) >> 4) * self->ext.et_80161FF0.unk7C) >> 8);
+    prim->x3 = posX + (((rcos(0xE00) >> 4) * self->ext.et_80161FF0.unk7C) >> 8);
+    prim->y3 = posY - (((rsin(0xE00) >> 4) * self->ext.et_80161FF0.unk7C) >> 8);
+    return;
+}
 
 void func_801623E0(Entity* entity) {
     POLY_GT4* poly;
