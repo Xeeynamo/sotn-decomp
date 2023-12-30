@@ -391,7 +391,8 @@ void func_8016147C(Entity* self) {
     temp_s5 = D_80154DA0[self->params >> 8];
     switch (selfstep) {
     case 0:
-        self->primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, temp_s5->count + 1);
+        self->primIndex =
+            g_api.func_800EDB58(PRIM_TILE_ALT, temp_s5->count + 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
