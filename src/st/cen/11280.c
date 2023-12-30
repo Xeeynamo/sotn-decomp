@@ -279,20 +279,7 @@ bool func_801935B4(Entity* self) {
 // Red door (ID 05)
 INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", EntityRedDoor);
 
-void DestroyEntity(Entity* entity) {
-    s32 i;
-    s32 length;
-    u32* ptr;
-
-    if (entity->flags & FLAG_HAS_PRIMS) {
-        g_api.FreePrimitives(entity->primIndex);
-    }
-
-    ptr = (u32*)entity;
-    length = sizeof(Entity) / sizeof(u32);
-    for (i = 0; i < length; i++)
-        *ptr++ = 0;
-}
+#include "../../destroy_entity.h"
 
 void func_801942D0(s16 index) {
     Entity* entity = &g_Entities[index];

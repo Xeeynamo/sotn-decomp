@@ -330,20 +330,7 @@ s32 func_801C3FB4(Entity* e) {
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/41C80", EntityRedDoor);
 
-void DestroyEntity(Entity* item) {
-    s32 i;
-    s32 length;
-    u32* ptr;
-
-    if (item->flags & FLAG_HAS_PRIMS) {
-        g_api.FreePrimitives(item->primIndex);
-    }
-
-    ptr = (u32*)item;
-    length = sizeof(Entity) / sizeof(s32);
-    for (i = 0; i < length; i++)
-        *ptr++ = 0;
-}
+#include "../../destroy_entity.h"
 
 void DestroyEntityFromIndex(s16 index) {
     Entity* entity = &g_Entities[index];

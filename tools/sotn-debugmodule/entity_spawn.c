@@ -405,17 +405,4 @@ Entity* AllocEntity(Entity* start, Entity* end) {
     return NULL;
 }
 
-void DestroyEntity(Entity* item) {
-    s32 i;
-    s32 length;
-    u32* ptr;
-
-    if (item->flags & 0x800000) {
-        g_api.FreePrimitives(item->primIndex);
-    }
-
-    ptr = (u32*)item;
-    length = sizeof(Entity) / sizeof(s32);
-    for (i = 0; i < length; i++)
-        *ptr++ = 0;
-}
+#include "../../src/destroy_entity.h"

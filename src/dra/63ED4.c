@@ -874,20 +874,9 @@ void func_80105428(void) {
     }
 }
 
-void DestroyEntity(Entity* entity) {
-    s32 i;
-    s32 length;
-    u32* ptr;
-
-    if (entity->flags & FLAG_HAS_PRIMS) {
-        FreePrimitives(entity->primIndex);
-    }
-
-    ptr = (u32*)entity;
-    length = sizeof(Entity) / sizeof(u32);
-    for (i = 0; i < length; i++)
-        *ptr++ = NULL;
-}
+#define USE_G_API
+#include "../destroy_entity.h"
+#undef USE_G_API
 
 void DestroyEntities(s16 startIndex) {
     Entity* pItem;
