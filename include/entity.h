@@ -581,9 +581,9 @@ typedef struct {
 } ET_80170F64;
 
 typedef struct {
-    s16 unk7C;
-    s16 unk7E;
-} ET_8017161C;
+    s16 timer;
+    s16 size;
+} ET_stopwatchCircle;
 
 typedef struct {
     s16 unk7C;
@@ -671,7 +671,7 @@ typedef union {
     /* 0x7C */ ET_80128C2C et_80128C2C;
     /* 0x7C */ ET_8017091C et_8017091C;
     /* 0x7C */ ET_80170F64 et_80170F64;
-    /* 0x7C */ ET_8017161C et_8017161C;
+    /* 0x7C */ ET_stopwatchCircle et_stopwatchCircle;
     /* 0x7C */ ET_80161FF0 et_80161FF0;
     /* 0x7C */ ET_80162870 et_80162870;
     /* 0x7C */ ET_801719A4 et_801719A4;
