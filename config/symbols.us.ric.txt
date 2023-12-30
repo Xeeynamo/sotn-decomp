@@ -1,4 +1,5 @@
 g_richter_spritesheet = 0x8013C020;
+g_RicFactoryBlueprints = 0x80154A6C;
 DestroyEntity = 0x80156C60;
 GetTeleportToOtherCastle = 0x80156CCC;
 CheckBladeDashInput = 0x80157894;
@@ -6,9 +7,8 @@ CheckHighJumpInput = 0x80157A50;
 UpdateEntityRichter = 0x80157BFC;
 SetPlayerStep = 0x8015C908;
 SetSpeedX = 0x8015CA84;
-GetFreeEntity = 0x8015F8F8;
-GetFreeEntityReverse = 0x8015F96C;
 CreateEntFactoryFromEntity = 0x801606BC;
+EntityEntFactory = 0x80160788;
 EntitySubwpnBible = 0x80172D00;
 EntityGiantSpinningCross = 0x8017328C;
 g_DebugWaitInfoTimer = 0x80174F7C;

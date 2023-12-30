@@ -107,6 +107,8 @@ extern PfnEntityUpdate D_8015495C[];
 extern s32 D_80154ED4;
 extern s32 D_80154EF8;
 extern s32 D_80155368[];
+extern FactoryBlueprint g_RicFactoryBlueprints[];
+extern u8 D_80154C40[];
 extern AnimationFrame D_80154C80[];
 extern AnimationFrame D_80154DC8[];
 extern AnimationFrame D_80154E04[];
