@@ -354,7 +354,6 @@ func_80128BBC = 0x80128848;
 func_801291C4 = 0x80128E50;
 func_80129864 = 0x801294F0;
 EntitySummonSpirit = 0x80129D30;
-EntityStopWatchExpandingCircle = 0x8012A1B4;
 EntityStopWatch = 0x8012A528;
 EntityBatEcho = 0x8012BB84;
 func_8012C600 = 0x8012C28C;

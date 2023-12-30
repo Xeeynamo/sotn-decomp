@@ -408,13 +408,15 @@ void func_8017161C(Entity* self) {
         cosine = rcos(i * 0x100);
         temp_s0_4 = self->ext.et_stopwatchCircle.size - 0x20;
         prim->x0 = xCoord + ((sine * self->ext.et_stopwatchCircle.size) >> 0xC);
-        prim->y0 = yCoord - ((cosine * self->ext.et_stopwatchCircle.size) >> 0xC);
+        prim->y0 =
+            yCoord - ((cosine * self->ext.et_stopwatchCircle.size) >> 0xC);
         prim->x2 = xCoord + ((sine * (temp_s0_4)) >> 0xC);
         prim->y2 = yCoord - ((cosine * temp_s0_4) >> 0xC);
         sine = rsin((i + 1) * 0x100);
         cosine = rcos((i + 1) * 0x100);
         prim->x1 = xCoord + ((sine * self->ext.et_stopwatchCircle.size) >> 0xC);
-        prim->y1 = yCoord - ((cosine * self->ext.et_stopwatchCircle.size) >> 0xC);
+        prim->y1 =
+            yCoord - ((cosine * self->ext.et_stopwatchCircle.size) >> 0xC);
         prim->x3 = xCoord + ((sine * temp_s0_4) >> 0xC);
         prim->y3 = yCoord - ((cosine * temp_s0_4) >> 0xC);
         prim = prim->next;
