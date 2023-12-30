@@ -1073,7 +1073,72 @@ INCLUDE_ASM("dra/nonmatchings/86ECC", func_80129864);
 INCLUDE_ASM("dra/nonmatchings/86ECC", EntitySummonSpirit);
 
 // expanding circle effect when activating stopwatch
-INCLUDE_ASM("dra/nonmatchings/86ECC", EntityStopWatchExpandingCircle);
+void EntityStopWatchExpandingCircle(Entity* self) {
+    Primitive* prim;
+    s32 sine;
+    s32 cosine;
+    s32 i;
+    u16 selfPosX;
+    u16 selfPosY;
+    s16 minus20;
+
+    
+    switch(self->step){
+    case 0:
+        self->primIndex = AllocPrimitives(PRIM_GT4, 16);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        prim = &g_PrimBuf[self->primIndex];
+        for(i = 0; i < 16; i++, prim = prim->next) {
+            prim->tpage = 0x1A;
+            prim->clut = 0x15F;
+            self->zPriority = 0xC2;
+            prim->priority = 0xC2;
+            prim->blendMode = 0x435;
+            prim->u0 =  ((rsin((s16)(i << 8)) << 5) >> 0xC) + 0x20;
+            prim->v0 = -((rcos((s16)(i << 8)) << 5) >> 0xC) - 0x21;
+            prim->u1 =  ((rsin((s16)(i+1 << 8)) << 5) >> 0xC) + 0x20;
+            prim->v1 = -((rcos((s16)(i+1 << 8)) << 5) >> 0xC) - 0x21;
+            prim->v2 = prim->v3 = 0xE0;
+            prim->u2 = prim->u3 = 0x20;
+            prim->r0 = prim->r1 = prim->g0 = prim->g1 = prim->b0 = prim->b1 = 0x40;
+            prim->r2 = prim->r3 = prim->g2 = prim->g3 = 0;
+            prim->b2 = prim->b3 = 0x20;
+            
+        }
+        self->ext.et_stopwatchCircle.size = 0x20;
+        self->step++;
+        break;
+    case 1:
+        self->ext.et_stopwatchCircle.size += 0x18;
+        if (++self->ext.et_stopwatchCircle.timer >= 0x1F) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    selfPosX = self->posX.i.hi;
+    selfPosY = self->posY.i.hi;
+    prim = &g_PrimBuf[self->primIndex];
+    for(i = 0; i < 16; i++, prim = prim->next) {
+        sine =   rsin(i << 8);
+        cosine = rcos(i << 8);
+        minus20 = self->ext.et_stopwatchCircle.size - 0x20;
+        prim->x0 = selfPosX + ((sine * self->ext.et_stopwatchCircle.size) >> 0xC);
+        prim->y0 = selfPosY - ((cosine * self->ext.et_stopwatchCircle.size) >> 0xC);
+        prim->x2 = selfPosX + ((sine * (minus20)) >> 0xC);
+        prim->y2 = selfPosY - ((cosine * minus20) >> 0xC);
+        sine =   rsin((i+1) << 8);
+        cosine = rcos((i+1) << 8);
+        prim->x1 = selfPosX + ((sine * self->ext.et_stopwatchCircle.size) >> 0xC);
+        prim->y1 = selfPosY - ((cosine * self->ext.et_stopwatchCircle.size) >> 0xC);
+        prim->x3 = selfPosX + ((sine * minus20) >> 0xC);
+        prim->y3 = selfPosY - ((cosine * minus20) >> 0xC);
+    }
+}
 
 // stopwatch subweapon effect. stops enemies (Dra Entity 0x2A)
 INCLUDE_ASM("dra/nonmatchings/86ECC", EntityStopWatch);
