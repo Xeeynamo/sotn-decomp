@@ -725,6 +725,19 @@ typedef enum {
     ITEM_END,
 } ItemCategory;
 
+typedef enum {
+    SUBWPN_NONE,
+    SUBWPN_DAGGER,
+    SUBWPN_AXE,
+    SUBWPN_HOLYWATER,
+    SUBWPN_CROSS,
+    SUBWPN_BIBLE,
+    SUBWPN_STOPWATCH,
+    SUBWPN_REBNDSTONE,
+    SUBWPN_VIBHUTI,
+    SUBWPN_AGUNEA
+} SubWpnID;
+
 typedef enum { STAT_STR, STAT_CON, STAT_INT, STAT_LCK } Stats;
 typedef struct {
     s32 level;
@@ -1163,7 +1176,7 @@ typedef struct {
     /* 8003C80C */ Entity* (*func_80118970)(void);
     /* 8003C810 */ s32 (*func_80118B18)(Entity* ent1, Entity* ent2, s32 arg2);
     /* 8003C814 */ s32 (*UpdateUnarmedAnim)(s8* frameProps, u16** frames);
-    /* 8003C818 */ void (*func_8010DBFC)(s32*, s32*);
+    /* 8003C818 */ void (*func_8010DBFC)(s8*, s32*);
     /* 8003C81C */ void (*func_80118C28)(s32 arg0);
     /* 8003C820 */ void (*func_8010E168)(s32 arg0, s16 arg1);
     /* 8003C824 */ void (*func_8010DFF0)(s32 arg0, s32 arg1);
@@ -1231,7 +1244,7 @@ extern u16* (*g_api_func_80106A28)(u16 arg0, u16 kind);
 extern void (*g_api_func_80118894)(Entity*);
 extern EnemyDef* g_api_enemyDefs;
 extern u32 (*g_api_UpdateUnarmedAnim)(s8* frameProps, u16** frames);
-extern void (*g_api_func_8010DBFC)(s32*, s32*);
+extern void (*g_api_func_8010DBFC)(s8*, s32*);
 extern void (*g_api_func_8010E168)(s32 arg0, s16 arg1);
 extern void (*g_api_func_8010DFF0)(s32 arg0, s32 arg1);
 extern u16 (*g_api_DealDamage)(Entity* enemyEntity, Entity* attackerEntity);
@@ -1368,22 +1381,9 @@ typedef struct {
     /* 80072EF4 */ s32 D_80072EF4;
     /* 80072EF8 */ s32 D_80072EF8;
     /* 80072EFC */ s32 D_80072EFC; // stun timer
-    /* 80072F00 */ s16 D_80072F00; // poison timer
-    /* 80072F02 */ s16 D_80072F02; // curse timer
-    /* 80072F04 */ s16 D_80072F04; // visual effect timer stoned/hit
-    /* 80072F06 */ s16 D_80072F06;
-    /* 80072F08 */ s16 D_80072F08;
-    /* 80072F0A */ s16 D_80072F0A;
-    /* 80072F0C */ s16 D_80072F0C;
-    /* 80072F0E */ s16 D_80072F0E;
-    /* 80072F10 */ s16 D_80072F10;
-    /* 80072F12 */ s16 D_80072F12;
-    /* 80072F14 */ s16 D_80072F14;
-    /* 80072F16 */ s16 D_80072F16;
-    /* 80072F18 */ s16 D_80072F18;
-    /* 80072F1A */ s16 D_80072F1A; // invincibility timer
-    /* 80072F1C */ s16 D_80072F1C; // invincibility timer from consumables
-    /* 80072F1E */ s16 D_80072F1E;
+    // Known timers: 0 = poison, 1 = curse, 2 = visual from stoned/hit,
+    //  13 = invincibility, 14 = invincibility from consumables
+    /* 80072F00 */ s16 D_80072F00[16]; // poison timer
     /* 80072F20 */ s32 pl_vram_flag;
     /* 80072F24 */ s32 unk04;
     /* 80072F28 */ s32 unk08;

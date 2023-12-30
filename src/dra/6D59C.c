@@ -70,7 +70,7 @@ u8 g_shadowOpacityReductionTable[] = {
     4, 4, 4, 4, 6, 6, 6, 6, 8, 8, 16, 16, 16, 16, 16, 16};
 u8 g_D_800ACF3C[] = {8,  12, 16, 20, 24, 28, 32, 32,
                      32, 32, 32, 32, 32, 32, 32, 32};
-
+// Equivalent in RIC is func_8015C6D4
 void func_8010D800(void) {
     byte pad[0x28];
     PlayerDraw* plDraw;
@@ -161,7 +161,51 @@ u32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
     return PLAYER.animFrameDuration >= 0 ? 0 : -1;
 }
 
-INCLUDE_ASM("dra/nonmatchings/6D59C", func_8010DBFC);
+void func_8010DBFC(s8* frameProps, s32* frames) {
+    AnimationFrame* animFrame;
+
+    animFrame = func_8010DA70(frames);
+    if (g_CurrentEntity->animFrameDuration != -1) {
+        if (g_CurrentEntity->animFrameDuration == 0) {
+            g_CurrentEntity->animFrameDuration = animFrame->duration;
+        } else if (--g_CurrentEntity->animFrameDuration == 0) {
+            g_CurrentEntity->animFrameIdx++;
+            animFrame = func_8010DA70(frames);
+            // Using a switch doesn't work
+            if (animFrame->duration == 0x0) {
+                g_CurrentEntity->animFrameIdx = animFrame->unk2;
+                animFrame = func_8010DA70(frames);
+                g_CurrentEntity->animFrameDuration = animFrame->duration;
+            } else if (animFrame->duration == 0xFFFF) {
+                g_CurrentEntity->animFrameIdx--;
+                g_CurrentEntity->animFrameDuration = -1;
+                animFrame = func_8010DA70(frames);
+            } else if (animFrame->duration == 0xFFFE) {
+                g_CurrentEntity->ext.generic.unkAC = animFrame->unk2;
+                g_CurrentEntity->animFrameIdx = animFrame->unk2 >> 8;
+                animFrame = func_8010DA70(frames);
+                g_CurrentEntity->animFrameDuration = animFrame->duration;
+            } else {
+                g_CurrentEntity->animFrameDuration = animFrame->duration;
+            }
+        }
+    }
+
+    if (frameProps != NULL) {
+        // This is ugly - theoretically the type for frameProps should be
+        // FrameProperty* but anything besides this where we assign this big
+        // expression fails.
+
+        // Please check function u32 UpdateAnim(s8* frameProps, s32* frames)
+        // down below
+        frameProps = &frameProps[animFrame->unk2 >> 9 << 2];
+        g_CurrentEntity->hitboxOffX = *frameProps++;
+        g_CurrentEntity->hitboxOffY = *frameProps++;
+        g_CurrentEntity->hitboxWidth = *frameProps++;
+        g_CurrentEntity->hitboxHeight = *frameProps++;
+    }
+    g_CurrentEntity->animCurFrame = animFrame->unk2 & 0x1FF;
+}
 
 u32 UpdateAnim(s8* frameProps, s32* frames) {
     AnimationFrame* animFrame;
@@ -250,9 +294,9 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
 
     if (arg1 != 0) {
         if (arg1 < 4) {
-            g_Player.D_80072F1E = 4;
+            g_Player.D_80072F00[15] = 4;
         } else {
-            g_Player.D_80072F1E = arg1;
+            g_Player.D_80072F00[15] = arg1;
         }
     }
 }
@@ -293,11 +337,11 @@ void func_8010E168(s32 arg0, s16 arg1) {
         // Create factory with unkA0 = 0x1500, blueprint #44.
         // Blueprint 44 is to make child entity #11, or EntityPlayerBlinkWhite
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1500, 44), 0);
-        if (arg1 >= g_Player.D_80072F1A) {
-            g_Player.D_80072F1A = arg1;
+        if (arg1 >= g_Player.D_80072F00[13]) {
+            g_Player.D_80072F00[13] = arg1;
         }
-    } else if (g_Player.D_80072F1C <= arg1) {
-        g_Player.D_80072F1C = arg1;
+    } else if (g_Player.D_80072F00[14] <= arg1) {
+        g_Player.D_80072F00[14] = arg1;
     }
 }
 
@@ -509,12 +553,12 @@ void func_8010E7AC(void) {
 
     PLAYER.velocityY = 0x20000;
     PLAYER.velocityX = 0;
-    g_Player.D_80072F0C = 8;
+    g_Player.D_80072F00[6] = 8;
 
     if (g_Player.unk04 & 1) {
-        g_Player.D_80072F0A = 8;
+        g_Player.D_80072F00[5] = 8;
     } else {
-        g_Player.D_80072F0A = 0;
+        g_Player.D_80072F00[5] = 0;
     }
 
     g_Player.unk44 = 0x10;
@@ -646,7 +690,7 @@ s32 func_8010EB5C(void) {
     }
     CreateEntFactoryFromEntity(
         g_CurrentEntity, FACTORY(0, subWpn.blueprintNum), subWpnId << 9);
-    g_Player.D_80072F14 = 4;
+    g_Player.D_80072F00[10] = 4;
     if (PLAYER.step_s < 64) {
         faker = subWpn.unkA;
         if (PLAYER.step == 0) {
@@ -854,7 +898,7 @@ block_45:
                 return 0;
             }
         } else {
-            if (g_Player.D_80072F02 != 0) {
+            if (g_Player.D_80072F00[1] != 0) {
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(0x100, 57), 0);
                 goto block_70;
@@ -995,7 +1039,7 @@ block_45:
         g_Player.unk46 = equipped_item->unk11 - 0x7FFF;
         g_Player.unk54 = equipped_item->lockDuration;
         PLAYER.step_s = equipped_item->unk11 + 0x40;
-        g_Player.D_80072F12 = 4;
+        g_Player.D_80072F00[9] = 4;
         break;
     case 24: // Unknown, not a direct equippable item (but there are 2 of them)
         if (2 < PLAYER.step && PLAYER.step < 5) {
@@ -1070,7 +1114,7 @@ block_45:
         g_Player.unk46 = equipped_item->unk11 - 0x7FFF;
         g_Player.unk54 = equipped_item->lockDuration;
         PLAYER.step_s = equipped_item->unk11 + 0x40;
-        g_Player.D_80072F12 = 4;
+        g_Player.D_80072F00[9] = 4;
         break;
     case 5: // Lots of unknown things
         step = PLAYER.step;
@@ -1140,7 +1184,7 @@ block_45:
         break;
     case 135: // Unknown
         PlaySfx(0x6F0);
-        g_Player.D_80072F12 = 4;
+        g_Player.D_80072F00[9] = 4;
         func_8010ED54(equipped_item->playerAnim);
         break;
     }
@@ -1168,7 +1212,7 @@ void func_8010FB68(void) { // Related to Dark Metamorphosis
     func_8010DA48(0xBA);
     PlaySfx(NA_SE_VO_AL_DARK_METAMORPHOSIS);
     PlaySfx(NA_SE_PL_MP_GAUGE);
-    g_Player.D_80072F16 =
+    g_Player.D_80072F00[11] =
         GetStatusAilmentTimer(STATUS_AILMENT_DARK_METAMORPHOSIS, 0x400);
     func_801092E8(1);
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1100, 40), 0);
@@ -1183,7 +1227,7 @@ void func_8010FBF4(void) { // Related to Soul Steal spell
     func_8010DA48(0xDA);
     PlaySfx(NA_SE_VO_AL_SOUL_STEAL);
     func_80118C28(0xC);
-    g_Player.D_80072F18 = 4;
+    g_Player.D_80072F00[12] = 4;
 }
 
 void func_8010FC50(void) {
@@ -1194,7 +1238,7 @@ void func_8010FC50(void) {
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 117), 0);
     func_8010DA48(0xF0);
     PlaySfx(NA_SE_VO_AL_PUNCH);
-    g_Player.D_80072F18 = 4;
+    g_Player.D_80072F00[12] = 4;
 }
 
 void func_8010FCB8(void) {
@@ -1205,7 +1249,7 @@ void func_8010FCB8(void) {
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x100, 117), 0);
     func_8010DA48(0xF1);
     PlaySfx(NA_SE_VO_AL_PUNCH);
-    g_Player.D_80072F18 = 4;
+    g_Player.D_80072F00[12] = 4;
 }
 
 void func_8010FD24(void) {
@@ -1215,7 +1259,7 @@ void func_8010FD24(void) {
     func_8010E3E0();
     func_8010DA48(0xF1);
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1700, 40), 0);
-    g_Player.D_80072F18 = 4;
+    g_Player.D_80072F00[12] = 4;
 }
 
 void func_8010FD88(void) {

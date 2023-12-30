@@ -9,7 +9,7 @@ CC_FLAGS_PC         += -I$(INCLUDE_DIR) -I$(SRC_DIR)/dra/ -I$(SRC_DIR)/pc/3rd
 LD_FLAGS_PC         := -fsanitize=address -lc -lm -lSDL2 -lSDL2_image
 
 C_FILES_PC          := main.c log.c stubs.c sotn.c
-C_FILES_PC          += pc.c sdl2.c
+C_FILES_PC          += pc.c sdl2.c plat_unix.c
 C_FILES_PSX_SDK     := libgpu/ext.c
 C_FILES_MOCK_SDK    := libapi.c libetc.c libgpu.c libgte.c libgs.c libcd.c libcard.c libspu.c libsnd.c cdc.c
 C_FILES_3RD         := cJSON/cJSON.c

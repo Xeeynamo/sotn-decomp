@@ -242,7 +242,7 @@ void func_801572A8(bool arg0) {
         argX = PLAYER.posX.i.hi + D_801545F4[i].unk0;
         argY = PLAYER.posY.i.hi + D_801545F4[i].unk2;
         g_api.CheckCollision(argX, argY, &g_Player.colliders[i], 0);
-        if ((g_Player.D_80072F0E != 0) &&
+        if ((g_Player.D_80072F00[7] != 0) &&
             (g_Player.colliders[i].effects & 0x40)) {
             g_api.CheckCollision(argX, argY + 0xC, &collider, 0);
             if (!(collider.effects & EFFECT_SOLID)) {
@@ -533,7 +533,7 @@ void func_80158BFC(void) {
                 func_8015C9CC();
                 if (g_Player.padPressed & PAD_DOWN) {
                     PLAYER.step = 2;
-                    PLAYER.unk4C = &D_801555A8;
+                    PLAYER.unk4C = D_801555A8;
                     break;
                 }
             }
@@ -542,7 +542,7 @@ void func_80158BFC(void) {
                 if (g_Player.padPressed & PAD_SQUARE) {
                     g_Player.unk46 = 2;
                     PLAYER.step_s++;
-                    func_8015C920(&D_80155730);
+                    func_8015C920(D_80155730);
                     CreateEntFactoryFromEntity(g_CurrentEntity, 0x11, 0);
                     break;
                 }
@@ -592,14 +592,14 @@ void func_80158FA4(void) {
         func_8015CDE0(0);
         return;
     }
-    g_Player.D_80072F10 = 8;
-    g_Player.D_80072F02 = 8;
+    g_Player.D_80072F00[8] = 8;
+    g_Player.D_80072F00[1] = 8;
 
     if (!func_8015DBB0(0x305C)) {
         func_8015C93C(0x2000);
         if (func_8015C9CC() == 0) {
             func_8015CD98(0);
-            if (g_Player.D_80072F16 == 0) {
+            if (g_Player.D_80072F00[11] == 0) {
                 if (!(g_Player.pl_vram_flag & 0xC)) {
                     func_8015C920(&D_8015539C);
                     CreateEntFactoryFromEntity(g_CurrentEntity, 0x0, 0);
@@ -746,7 +746,7 @@ void func_801595D8(void) {
     if (PLAYER.step_s != 0) {
         return;
     }
-    if (g_Player.D_80072F0A != 0 && g_Player.padTapped & PAD_CROSS) {
+    if (g_Player.D_80072F00[5] != 0 && g_Player.padTapped & PAD_CROSS) {
         func_8015D020();
     } else if (func_8015C9CC() != 0) {
         SetSpeedX(0xC000);
@@ -761,7 +761,7 @@ void func_80159670(void) {
         (g_Player.padPressed & PAD_DOWN)) {
         for (i = 0; i < 4; i++) {
             if ((g_Player.colliders[i].effects & EFFECT_SOLID_FROM_ABOVE)) {
-                g_Player.D_80072F0E = 8;
+                g_Player.D_80072F00[7] = 8;
                 return;
             }
         }
@@ -949,7 +949,7 @@ void func_80159CE4(s32 arg0, u32 arg1, s16 arg2) {
             g_Player.unk40 = 0x8120;
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 48), 0);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4600, 33), 0);
-            g_Player.D_80072F04 = 6;
+            g_Player.D_80072F00[2] = 6;
             g_api.PlaySfx(0x703);
             break;
         } else {
@@ -996,7 +996,7 @@ void func_80159CE4(s32 arg0, u32 arg1, s16 arg2) {
                 func_8015CAAC(FIX(-8));
                 PLAYER.step_s = 2;
                 PLAYER.unk4C = D_80155694;
-                g_Player.D_80072F04 = 0x200;
+                g_Player.D_80072F00[2] = 0x200;
                 PLAYER.facingLeft = PLAYER.entityRoomIndex;
                 break;
             default:
@@ -1043,7 +1043,7 @@ void func_80159CE4(s32 arg0, u32 arg1, s16 arg2) {
                 break;
             }
             g_Player.unk40 = 0x8166;
-            g_Player.D_80072F04 = 6;
+            g_Player.D_80072F00[2] = 6;
             if (arg0 & 0x8000) {
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(0x100, 8), 0);
@@ -1051,7 +1051,7 @@ void func_80159CE4(s32 arg0, u32 arg1, s16 arg2) {
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(0x4300, 33), 0);
                 g_Player.unk40 = 0x8160;
-                g_Player.D_80072F04 = 0x10;
+                g_Player.D_80072F00[2] = 0x10;
                 break;
             } else if (arg0 & 0x40) {
                 CreateEntFactoryFromEntity(
@@ -1059,11 +1059,11 @@ void func_80159CE4(s32 arg0, u32 arg1, s16 arg2) {
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(0x4400, 33), 0);
                 g_Player.unk40 = 0x8166;
-                g_Player.D_80072F04 = 0x10;
+                g_Player.D_80072F00[2] = 0x10;
                 break;
             } else if (arg0 & 0x2000) {
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 47), 0);
-                g_Player.D_80072F04 = 0xC;
+                g_Player.D_80072F00[2] = 0xC;
                 g_Player.unk40 = 0x8169;
                 break;
             } else {
@@ -1072,7 +1072,7 @@ void func_80159CE4(s32 arg0, u32 arg1, s16 arg2) {
                         g_CurrentEntity, FACTORY(0, 70), 0);
                     CreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0x5600, 33), 0);
-                    g_Player.D_80072F04 = 0x10;
+                    g_Player.D_80072F00[2] = 0x10;
                     g_Player.unk40 = 0x8164;
                 }
                 if (arg0 & 0x1000) {
@@ -1080,7 +1080,7 @@ void func_80159CE4(s32 arg0, u32 arg1, s16 arg2) {
                         g_CurrentEntity, FACTORY(0, 71), 0);
                     CreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0x5700, 33), 0);
-                    g_Player.D_80072F04 = 8;
+                    g_Player.D_80072F00[2] = 8;
                     g_Player.unk40 = 0x8168;
                 }
                 if (!(arg0 & 0xF840)) {
@@ -1256,7 +1256,7 @@ void func_8015A7D0(void) {
         func_80159BC8();
         if (g_Player.unk62 == 0) {
             PLAYER.unk4C = D_80155694;
-            g_Player.D_80072F04 = 8;
+            g_Player.D_80072F00[2] = 8;
             g_Player.unk40 = 0x8166;
             g_api.PlaySfx(0x702);
         }
@@ -1276,7 +1276,7 @@ void func_8015A7D0(void) {
                 return;
             }
             if (g_Player.unk62 == 0) {
-                g_Player.D_80072F04 = 4;
+                g_Player.D_80072F00[2] = 4;
                 g_Player.unk40 = 0x8166;
                 g_api.PlaySfx(0x703);
             }
@@ -1324,14 +1324,14 @@ void func_8015B098(void) {
         func_8015CD98(0);
         g_Player.unk46 = 0;
         CreateEntFactoryFromEntity(g_CurrentEntity, 0x450021, 0);
-        g_Player.D_80072F00 = 0x800;
+        g_Player.D_80072F00[0] = 0x800;
     }
 
     if (!(g_Player.pl_vram_flag & 1)) {
         func_8015CF08();
         g_Player.unk46 = 0;
         CreateEntFactoryFromEntity(g_CurrentEntity, 0x450021, 0);
-        g_Player.D_80072F00 = 0x800;
+        g_Player.D_80072F00[0] = 0x800;
     }
 }
 

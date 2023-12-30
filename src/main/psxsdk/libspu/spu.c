@@ -1,7 +1,25 @@
 #include "common.h"
 #include "libspu_internal.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libspu/spu", _spu_reset);
+#define WASTE_TIME()                                                           \
+    sp4 = 0xD;                                                                 \
+    for (sp0 = 0; sp0 < 0xF0; sp0++) {                                         \
+        sp4 *= 3;                                                              \
+    }
+
+s32 _spu_reset(void) {
+    volatile s32 sp0;
+    volatile s32 sp4;
+    u16 temp_a0;
+    volatile s16* spucnt = &_spu_RXX->rxx.spucnt;
+
+    temp_a0 = _spu_RXX->rxx.spucnt;
+    *spucnt = temp_a0 & 0x7FCF;
+    WASTE_TIME();
+    temp_a0 &= 0xFFCF;
+    _spu_RXX->rxx.spucnt = temp_a0;
+    return 0;
+}
 
 INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libspu/spu", _spu_init);
 
@@ -14,12 +32,6 @@ extern s32* D_8003350C;
 extern s32* D_80033510;
 extern s32* D_80033518;
 extern s32 D_80033550;
-
-#define WASTE_TIME()                                                           \
-    sp4 = 0xD;                                                                 \
-    for (sp0 = 0; sp0 < 0xF0; sp0++) {                                         \
-        sp4 *= 3;                                                              \
-    }
 
 void _spu_r_(s32 arg0, u16 arg1, s32 arg2) {
     volatile s32 sp0;

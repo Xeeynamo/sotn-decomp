@@ -19,6 +19,12 @@ set(SOURCE_FILES_PC
     src/pc/sdl2.c
 )
 
+if(WIN32)
+list(APPEND SOURCE_FILES_PC src/pc/plat_win.c)
+else()
+list(APPEND SOURCE_FILES_PC src/pc/plat_unix.c)
+endif()
+
 set(SOURCE_FILES_PSX_SDK
     src/main/psxsdk/libgpu/ext.c
 )
