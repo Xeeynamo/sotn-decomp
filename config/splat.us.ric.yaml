@@ -47,7 +47,6 @@ segments:
       - [0x1A80C, .rodata, 21250]
       - [0x1A904, .rodata, 22380]
       - [0x1A918, .rodata, 24788]
-      - [0x1A968, rodata]
       - [0x1A9D0, .rodata, 26C84]
       - [0x1A9E8, rodata]
       - [0x1AB04, rodata]

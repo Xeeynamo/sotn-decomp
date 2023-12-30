@@ -115,6 +115,7 @@ extern u16 D_80154C74[];
 extern AnimationFrame D_80154C80[];
 extern u8 D_80154CE4[];
 extern u8 D_80154CF4[];
+extern unkStr_8011E4BC* D_80154DA0[];
 extern AnimationFrame D_80154DC8[];
 extern AnimationFrame D_80154E04[];
 extern AnimationFrame* D_80154E38;

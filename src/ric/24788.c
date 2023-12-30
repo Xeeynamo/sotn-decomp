@@ -370,7 +370,242 @@ void func_80160FC4(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/24788", func_8016147C);
+// Corresponding DRA function is func_8011E4BC
+void func_8016147C(Entity* self) {
+    byte stackpad[0x28];
+    FakePrim* tilePrim;
+    s16 randVar;
+    s32 randAngleShift;
+    s32 i;
+    u16 selfYPos;
+    u16 selfXPos;
+    u32 upperParams;
+    unkStr_8011E4BC* temp_s5;
+    u8 thickness;
+    s32 var_a2;
+    s32 selfstep;
+
+    selfXPos = self->posX.i.hi;
+    selfstep = self->step;
+    selfYPos = self->posY.i.hi;
+    temp_s5 = D_80154DA0[self->params >> 8];
+    switch (selfstep) {
+    case 0:
+        self->primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, temp_s5->count + 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = temp_s5->flags;
+        switch ((s16)(temp_s5->unkA - 3)) {
+        case 5:
+            self->ext.et_8011E4BC.unk7C = 0x100;
+            break;
+        case 4:
+            self->ext.et_8011E4BC.unk7C = 0x3F;
+            break;
+        case 1:
+            self->ext.et_8011E4BC.unk7C = 0x2F;
+            break;
+        case 0:
+        case 3:
+            self->ext.et_8011E4BC.unk7C = 0x1F;
+            break;
+        }
+        i = 0;
+        tilePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
+        while (1) {
+            tilePrim->blendMode = temp_s5->blendMode;
+            tilePrim->priority = PLAYER.zPriority + temp_s5->priority;
+            if (tilePrim->next == NULL) {
+                tilePrim->w = 0;
+                tilePrim->x0 = 0;
+                tilePrim->y0 = 0;
+                tilePrim->blendMode &= ~BLEND_VISIBLE;
+                break;
+            }
+            tilePrim->posX.i.hi = selfXPos;
+            tilePrim->posY.i.hi = selfYPos;
+            tilePrim->posY.i.lo = 0;
+            tilePrim->posX.i.lo = 0;
+            switch (temp_s5->unkA) {
+            case 0:
+                randVar = rand();
+                randAngleShift = (randVar & 1) + 2;
+                tilePrim->velocityX.val = (rcos(randVar) << randAngleShift);
+                tilePrim->velocityY.val = -(rsin(randVar) << randAngleShift);
+                break;
+            case 1:
+            case 9:
+                tilePrim->velocityX.val = (((rand() & 0x1FF) - 0x100) << 8);
+                tilePrim->velocityY.val = (((rand() & 0x1FF) - 0x100) << 8);
+                break;
+            case 3:
+                tilePrim->posX.i.hi = ((selfXPos + (rand() & 0xF)) - 7);
+                tilePrim->posY.i.hi = selfYPos - (rand() & 0xF);
+                tilePrim->velocityY.val = (0xFFFF4000 - (rand() & 0x7FFF));
+                tilePrim->velocityX.val = self->ext.et_8011E4BC.unk8C->unk8;
+                tilePrim->delay = ((rand() & 0xF) + 0x10);
+                break;
+            case 4:
+                tilePrim->posX.i.hi = ((selfXPos + (rand() & 0x1F)) - 0x10);
+                tilePrim->posY.i.hi = (selfYPos + (rand() & 0x1F)) - 0x14;
+                randVar = rand() & 0x1F;
+                tilePrim->velocityX.val = D_80175958[randVar];
+                tilePrim->velocityY.val = D_801759D8[randVar];
+                break;
+            case 6:
+                tilePrim->posX.i.hi = ((self->posX.i.hi + (rand() & 0xF)) - 8);
+                tilePrim->posY.i.hi = (self->posY.i.hi + (rand() & 0xF)) - 4;
+                tilePrim->velocityY.val = (rand() + 0x8000);
+                tilePrim->delay = ((rand() & 0xF) + 0x10);
+                break;
+            case 7:
+                tilePrim->posX.i.hi = selfXPos;
+                tilePrim->posY.i.hi = selfYPos;
+                if (i < 0xA) {
+                    tilePrim->velocityY.val = -((i * i * 0x1800) + 0x2000);
+                } else {
+                    tilePrim->velocityY.val =
+                        ((i - 0xA) * (i - 0xA) * 0x1800) + 0x2000;
+                }
+                tilePrim->delay = 0x3F;
+                break;
+            case 8:
+                tilePrim->posX.i.hi = selfXPos;
+                tilePrim->posY.i.hi = selfYPos;
+                tilePrim->velocityX.val = ((rand() - 0x4000) >> 1);
+                tilePrim->velocityY.val = -((rand() & 0x1FFF) + 0x6000);
+                tilePrim->timer = (i * 4);
+                break;
+            }
+            tilePrim->x0 = tilePrim->posX.i.hi;
+            tilePrim->y0 = tilePrim->posY.i.hi;
+            tilePrim->r0 = temp_s5->r;
+            tilePrim->g0 = temp_s5->g;
+            tilePrim->b0 = temp_s5->b;
+            tilePrim->w = temp_s5->w;
+            tilePrim->h = temp_s5->h;
+            tilePrim = tilePrim->next;
+            i++;
+        }
+        self->step++;
+        break;
+    case 1:
+        switch (temp_s5->unkA) {
+        case 3:
+        case 6:
+        case 7:
+        case 8:
+            if (--self->ext.et_8011E4BC.unk7C == 0) {
+                DestroyEntity(self);
+                return;
+            }
+        case 4:
+            if (--self->ext.et_8011E4BC.unk7C == 0) {
+                DestroyEntity(self);
+                return;
+            }
+            var_a2 = self->ext.et_8011E4BC.unk7C;
+            thickness = 3;
+            if (var_a2 < 9) {
+                thickness = 2;
+            }
+            if (var_a2 < 4) {
+                thickness -= 1;
+            }
+        }
+        tilePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
+        while (1) {
+            if (tilePrim->next == NULL) {
+                tilePrim->w = 0;
+                tilePrim->x0 = 0;
+                tilePrim->y0 = 0;
+                tilePrim->blendMode &= 0xFFF7;
+                return;
+            }
+            tilePrim->posX.i.hi = tilePrim->x0;
+            tilePrim->posY.i.hi = tilePrim->y0;
+            switch (temp_s5->unkA) {
+            case 0:
+                tilePrim->posY.val += tilePrim->velocityY.val;
+                tilePrim->posX.val += tilePrim->velocityX.val;
+                tilePrim->r0 -= 6;
+                tilePrim->g0 -= 6;
+                tilePrim->b0 -= 6;
+                if (tilePrim->r0 < 8) {
+                    DestroyEntity(self);
+                    return;
+                }
+                break;
+            case 1:
+            case 9:
+                tilePrim->posY.val += tilePrim->velocityY.val;
+                tilePrim->posX.val += tilePrim->velocityX.val;
+                tilePrim->velocityY.val = (tilePrim->velocityY.val + 0x2800);
+                tilePrim->r0 -= 3;
+                tilePrim->g0 -= 3;
+                tilePrim->b0 -= 3;
+                if (tilePrim->r0 < 8) {
+                    DestroyEntity(self);
+                    return;
+                }
+                break;
+            case 3:
+            case 6:
+            case 7:
+                tilePrim->posY.val =
+                    (tilePrim->posY.val + tilePrim->velocityY.val);
+                if (--tilePrim->delay < 0) {
+                    tilePrim->blendMode |= 8;
+                }
+                break;
+            case 4:
+                tilePrim->posX.val += tilePrim->velocityX.val;
+                tilePrim->posY.val += tilePrim->velocityY.val;
+                // There is probably a clever way to write this
+                tilePrim->velocityY.val =
+                    (tilePrim->velocityY.val - (tilePrim->velocityY.val >> 5));
+                if (!(var_a2 & 7)) {
+                    tilePrim->velocityX.val = (tilePrim->velocityX.val >> 1);
+                    tilePrim->velocityY.val >>= 1;
+                    if (var_a2 & 0x20) {
+                        tilePrim->velocityY.val >>= 1;
+                    }
+                    if (var_a2 == 0x18) {
+                        tilePrim->blendMode = 2;
+                    }
+                }
+                tilePrim->h = thickness;
+                tilePrim->w = thickness;
+                break;
+            case 8:
+                if (tilePrim->timer == 0) {
+                    tilePrim->blendMode &= ~BLEND_VISIBLE;
+                    tilePrim->r0 += 0xFF;
+                    tilePrim->g0 += 0xFF;
+                    tilePrim->b0 += 0xFF;
+                    tilePrim->posY.val =
+                        (tilePrim->posY.val + tilePrim->velocityY.val);
+                    tilePrim->posX.val =
+                        (tilePrim->posX.val + tilePrim->velocityX.val);
+                    if ((*D_80097448 == 0) ||
+                        (((PLAYER.posY.i.hi - *D_80097448) + 0x19) >=
+                         tilePrim->posY.i.hi)) {
+                        tilePrim->blendMode |= BLEND_VISIBLE;
+                    }
+                } else {
+                    tilePrim->timer--;
+                }
+                break;
+            }
+
+            tilePrim->x0 = tilePrim->posX.i.hi;
+            tilePrim->y0 = tilePrim->posY.i.hi;
+            tilePrim = tilePrim->next;
+        }
+    }
+}
 
 void func_80161C2C(Entity* self) {
     u16 params = self->params;
