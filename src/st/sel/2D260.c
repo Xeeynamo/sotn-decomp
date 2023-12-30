@@ -22,37 +22,37 @@ void DrawNavigationTips(NavigationTips mode) {
 
     switch (mode) {
     case Tips_Generic:
-        func_801B2670(poly, 32, 176, 16, 16);
+        SetPrimRect(poly, 32, 176, 16, 16);
         poly->pad3 = 0;
         poly = poly->tag;
-        func_801B2670(poly, 32, 192, 16, 16);
+        SetPrimRect(poly, 32, 192, 16, 16);
         poly->pad3 = 0;
         poly = poly->tag;
-        func_801B2670(poly, 32, 208, 16, 16);
+        SetPrimRect(poly, 32, 208, 16, 16);
         poly->pad3 = 0;
         break;
 
     case Tips_Input:
-        func_801B2670(poly, 288, 32, 16, 16);
+        SetPrimRect(poly, 288, 32, 16, 16);
         poly->pad3 = 0;
         poly = poly->tag;
-        func_801B2670(poly, 288, 48, 16, 16);
+        SetPrimRect(poly, 288, 48, 16, 16);
         poly->pad3 = 0;
         poly = poly->tag;
-        func_801B2670(poly, 288, 64, 16, 16);
+        SetPrimRect(poly, 288, 64, 16, 16);
         poly->pad3 = 0;
         poly = poly->tag;
-        func_801B2670(poly, 288, 80, 16, 16);
+        SetPrimRect(poly, 288, 80, 16, 16);
         poly->pad3 = 0;
         break;
 
     case Tips_YesNo:
     case Tips_NoYes:
         poly = poly->tag;
-        func_801B2670(poly, 32, 192, 16, 16);
+        SetPrimRect(poly, 32, 192, 16, 16);
         poly->pad3 = 0;
         poly = (POLY_GT4*)poly->tag;
-        func_801B2670(poly, 32, 208, 16, 16);
+        SetPrimRect(poly, 32, 208, 16, 16);
         poly->pad3 = 0;
         if (mode == Tips_YesNo) {
             func_801AD1D0();
@@ -63,16 +63,16 @@ void DrawNavigationTips(NavigationTips mode) {
 
     case Tips_Confirm:
         poly = poly->tag;
-        func_801B2670(poly, 32, 192, 16, 16);
+        SetPrimRect(poly, 32, 192, 16, 16);
         poly->pad3 = 0;
         DrawImages8x8(*imgs, 52, 196, 1);
         break;
 
     case Tips_MenuNavigation:
-        func_801B2670(poly, 32, 184, 16, 16);
+        SetPrimRect(poly, 32, 184, 16, 16);
         poly->pad3 = 0;
         poly = (POLY_GT4*)poly->tag;
-        func_801B2670(poly, 32, 200, 16, 16);
+        SetPrimRect(poly, 32, 200, 16, 16);
         poly->pad3 = 0;
         break;
     }
@@ -352,10 +352,10 @@ void func_801AEA8C(s32 arg0) {
 
     if (arg0 == 0) {
         func_801ACBE4(1, 0);
-        func_801B2670(&g_PrimBuf[D_801BAF20], 24, 24, 127, 31);
+        SetPrimRect(&g_PrimBuf[D_801BAF20], 24, 24, 127, 31);
     } else {
         func_801ACBE4(3, 0);
-        func_801B2670(&g_PrimBuf[D_801BAF30], 24, 24, 127, 31);
+        SetPrimRect(&g_PrimBuf[D_801BAF30], 24, 24, 127, 31);
     }
 
     DrawNavigationTips(1);
@@ -391,7 +391,7 @@ void SelectMainMenuOption(MainMenuCursor cursor) {
 
     // Relocate the graphics at the top-left of the screen
     prim = &g_PrimBuf[D_801BAF18[gfxId][0]];
-    func_801B2670(prim, 16, 16, 127, 31);
+    SetPrimRect(prim, 16, 16, 127, 31);
     prim->clut = 0x200;
 }
 

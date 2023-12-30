@@ -1208,18 +1208,7 @@ void func_801B263C(const char* str, s32 id) {
     func_801B1FD8(str, id);
 }
 
-void func_801B2670(POLY_GT4* poly, s32 x, s32 y, s32 width, s32 height) {
-    poly->x0 = x;
-    poly->y0 = y;
-    poly->x1 = x + width;
-    poly->y1 = y;
-    poly->x2 = x;
-    poly->x3 = x + width;
-    poly->y2 = y + height;
-    poly->y3 = y + height;
-}
-
-#include "../../set_textured_prim_rect.h"
+#include "../../set_prim_rect.h"
 
 void func_801B2700(s32 tpage, s32 otIdx) {
     DR_MODE* drawMode = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
