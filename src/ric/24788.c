@@ -908,6 +908,89 @@ void func_80162604(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/24788", func_80162870);
+void func_80162870(Entity* self) {
+    Primitive* prim;
+    s16 params;
+
+    params = self->params;
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->unk5A = 0x66;
+        self->zPriority = PLAYER.zPriority - 12;
+        self->palette = params + 0x149;
+        self->animSet = ANIMSET_OVL(0x13);
+        self->animCurFrame = params + 0x19;
+        self->velocityX = D_80154EB4[params];
+        self->velocityY = D_80154EC4[params];
+        self->ext.et_80162870.unk7C = self->ext.et_80162870.unk7E =
+            self->ext.et_80162870.unk80 = 8;
+
+        prim = &g_PrimBuf[self->primIndex];
+        prim->u0 = prim->v0 = prim->v1 = prim->u2 = 0;
+        prim->u1 = prim->v2 = prim->u3 = prim->v3 = 0x1F;
+        prim->tpage = 0x1A;
+        prim->clut = D_80154EAC[params];
+        prim->priority = PLAYER.zPriority - 16;
+        prim->blendMode = 8;
+        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_10000;
+        if (params == 3) {
+            self->flags |= FLAG_UNK_04000000;
+        }
+        g_api.PlaySfx(0x881);
+        self->ext.et_80162870.unk82 = 12;
+        self->step++;
+        break;
+    case 1:
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        if (--self->ext.et_80162870.unk82 == 0) {
+            self->drawFlags = 3;
+            self->rotX = self->rotY = 0x100;
+            self->ext.et_80162870.unk82 = 0x10;
+            self->step++;
+            g_PrimBuf[self->primIndex].blendMode = 0x31;
+        }
+        break;
+    case 2:
+        self->rotX = self->rotY = self->ext.et_80162870.unk82 * 0x10;
+        if (--self->ext.et_80162870.unk82 == 0) {
+            self->animCurFrame = 0;
+            g_api.PlaySfx(0x69D);
+            self->velocityY = FIX(-9);
+            self->step++;
+        }
+        break;
+    case 3:
+        self->posY.val += self->velocityY;
+        if (self->ext.et_80162870.unk7C > 0 && !(g_Timer & 1)) {
+            self->ext.et_80162870.unk7C--;
+        }
+        if (!(g_Timer & 1)) {
+            self->ext.et_80162870.unk7E++;
+        }
+        self->ext.et_80162870.unk80 += 2;
+        if ((params == 3) && (self->posY.i.hi < -0x20)) {
+            D_801545AC = 8;
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    prim->x0 = self->posX.i.hi - self->ext.et_80162870.unk7C;
+    prim->y0 = self->posY.i.hi - self->ext.et_80162870.unk7E;
+    prim->x1 = self->posX.i.hi + self->ext.et_80162870.unk7C;
+    prim->y1 = self->posY.i.hi - self->ext.et_80162870.unk7E;
+    prim->x2 = self->posX.i.hi - self->ext.et_80162870.unk7C;
+    prim->y2 = self->posY.i.hi + self->ext.et_80162870.unk80;
+    prim->x3 = self->posX.i.hi + self->ext.et_80162870.unk7C;
+    prim->y3 = self->posY.i.hi + self->ext.et_80162870.unk80;
+    return;
+}
 
 void func_80162C7C(void) {}
