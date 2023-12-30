@@ -112,9 +112,21 @@ s32 SpuVmGetProgVol(s16 arg0, s16 arg1) {
     }
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmSetProgPan);
+s32 SpuVmSetProgPan(s16 arg0, s16 arg1, u8 pan) {
+    if (!SpuVmVSetUp(arg0, arg1)) {
+        D_8006C3B4[arg1].mpan = pan;
+        return D_8006C3B4[arg1].mpan;
+    }
+    return -1;
+}
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmGetProgPan);
+s32 SpuVmGetProgPan(s16 arg0, s16 arg1) {
+    if (!(SpuVmVSetUp(arg0, arg1))) {
+        return D_8006C3B4[arg1].mpan;
+    } else {
+        return -1;
+    }
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmSetVol);
 
