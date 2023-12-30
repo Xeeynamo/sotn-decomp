@@ -273,7 +273,7 @@ void func_80160FC4(Entity* self) {
         self->animSet = 5;
         self->unk4C = D_80154C80;
         self->zPriority = PLAYER.zPriority + 2;
-        self->flags = 0x08110000;
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000 | FLAG_UNK_10000;
         self->blendMode = 0x30;
         self->drawFlags = 0xB;
         self->unk6C = 0x60;
