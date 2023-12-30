@@ -293,7 +293,7 @@ void func_80160FC4(Entity* self) {
         if (paramsHi == 3) {
             self->posY.i.hi -= 8;
         }
-        if (paramsHi == 4) { /* switch 1; irregular */
+        if (paramsHi == 4) {
             for (i = paramsLo * 2; i < 14; i++) {
                 if (g_Player.colliders3[D_80154CE4[i]].effects & 3) {
                     break;
@@ -327,7 +327,7 @@ void func_80160FC4(Entity* self) {
             self->step++;
             return;
         }
-        if (paramsHi == 1) { /* switch 1 */
+        if (paramsHi == 1) {
             if (g_Player.pl_vram_flag & 0x8000) {
                 posX /= 2;
             }
