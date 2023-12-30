@@ -444,7 +444,7 @@ void func_8016147C(Entity* self) {
             case 3:
                 tilePrim->posX.i.hi = ((selfXPos + (rand() & 0xF)) - 7);
                 tilePrim->posY.i.hi = selfYPos - (rand() & 0xF);
-                tilePrim->velocityY.val = (0xFFFF4000 - (rand() & 0x7FFF));
+                tilePrim->velocityY.val = (FIX(-0.75) - (rand() & 0x7FFF));
                 tilePrim->velocityX.val = self->ext.et_8011E4BC.unk8C->unk8;
                 tilePrim->delay = ((rand() & 0xF) + 0x10);
                 break;
@@ -458,25 +458,26 @@ void func_8016147C(Entity* self) {
             case 6:
                 tilePrim->posX.i.hi = ((self->posX.i.hi + (rand() & 0xF)) - 8);
                 tilePrim->posY.i.hi = (self->posY.i.hi + (rand() & 0xF)) - 4;
-                tilePrim->velocityY.val = (rand() + 0x8000);
+                tilePrim->velocityY.val = (rand() + FIX(0.5));
                 tilePrim->delay = ((rand() & 0xF) + 0x10);
                 break;
             case 7:
                 tilePrim->posX.i.hi = selfXPos;
                 tilePrim->posY.i.hi = selfYPos;
-                if (i < 0xA) {
-                    tilePrim->velocityY.val = -((i * i * 0x1800) + 0x2000);
+                if (i < 10) {
+                    tilePrim->velocityY.val =
+                        -((i * i * FIX(0.09375)) + FIX(0.125));
                 } else {
                     tilePrim->velocityY.val =
-                        ((i - 0xA) * (i - 0xA) * 0x1800) + 0x2000;
+                        ((i - 10) * (i - 10) * FIX(0.09375)) + FIX(0.125);
                 }
                 tilePrim->delay = 0x3F;
                 break;
             case 8:
                 tilePrim->posX.i.hi = selfXPos;
                 tilePrim->posY.i.hi = selfYPos;
-                tilePrim->velocityX.val = ((rand() - 0x4000) >> 1);
-                tilePrim->velocityY.val = -((rand() & 0x1FFF) + 0x6000);
+                tilePrim->velocityX.val = ((rand() - FIX(0.25)) >> 1);
+                tilePrim->velocityY.val = -((rand() & 0x1FFF) + FIX(0.375));
                 tilePrim->timer = (i * 4);
                 break;
             }
@@ -522,7 +523,7 @@ void func_8016147C(Entity* self) {
                 tilePrim->w = 0;
                 tilePrim->x0 = 0;
                 tilePrim->y0 = 0;
-                tilePrim->blendMode &= 0xFFF7;
+                tilePrim->blendMode &= ~BLEND_VISIBLE;
                 return;
             }
             tilePrim->posX.i.hi = tilePrim->x0;
@@ -543,7 +544,8 @@ void func_8016147C(Entity* self) {
             case 9:
                 tilePrim->posY.val += tilePrim->velocityY.val;
                 tilePrim->posX.val += tilePrim->velocityX.val;
-                tilePrim->velocityY.val = (tilePrim->velocityY.val + 0x2800);
+                tilePrim->velocityY.val =
+                    (tilePrim->velocityY.val + FIX(0.15625));
                 tilePrim->r0 -= 3;
                 tilePrim->g0 -= 3;
                 tilePrim->b0 -= 3;
