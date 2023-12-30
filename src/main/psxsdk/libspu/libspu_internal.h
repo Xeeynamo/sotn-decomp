@@ -23,8 +23,9 @@ typedef struct tagSpuMalloc {
     u32 size;
 } SPU_MALLOC;
 
+extern s32 D_80033550;
+extern void (* volatile _spu_transferCallback)();
 extern s32 _spu_inTransfer;
-extern s32 _spu_transferCallback;
 
 void _SpuCallback(s32 arg0);
 extern void (*_spu_IRQCallback)();
