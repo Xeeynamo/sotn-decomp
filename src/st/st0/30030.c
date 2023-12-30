@@ -93,7 +93,19 @@ void func_801B0324(void) {
     g_GpuBuffers[0].disp.isrgb24 = 0;
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B0414);
+u16 func_801B0414(void) {
+    int ret;
+
+    if (!(g_pads[0].tapped & 0x800)) {
+        return 0;
+    }
+    ret = 1;
+    if (!(g_Settings.D_8003CB04 & 2) && (g_IsTimeAttackUnlocked == 0)) {
+        return 0;
+    }
+
+    return ret;
+}
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B0464);
 
