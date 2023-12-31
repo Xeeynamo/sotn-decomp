@@ -129,33 +129,6 @@ void EntityZombieSpawner(Entity* self) {
 
 #include "../find_first_unk_prim.h"
 
-POLY_GT4* func_8019C43C(POLY_GT4* poly, u8 index) {
-    if (poly) {
-        s32 index_ = index;
-    loop_2:
-        if (poly->p3 == 0) {
-            POLY_GT4* var_v0 = NULL;
-            POLY_GT4* firstPoly = poly;
-            s32 i = 1;
-            if (i < index_) {
-                do {
-                    poly = (POLY_GT4*)poly->tag;
-                    if (!poly)
-                        return NULL;
-                } while (poly->p3 == 0 && ++i < index);
-            }
-            var_v0 = firstPoly;
-            if (i == index_)
-                return var_v0;
-        }
-        poly = (POLY_GT4*)poly->tag;
-        if (poly) {
-            goto loop_2;
-        }
-    }
-    return NULL;
-}
-
 POLY_GT4* func_801D6E64(POLY_GT4* startPoly, s32 count) {
     POLY_GT4* poly;
     s8 unk;

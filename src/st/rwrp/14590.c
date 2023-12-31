@@ -118,8 +118,6 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", BottomCornerText);
 
 #include "../find_first_unk_prim.h"
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", func_80195758);
-
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", func_801957D4);
 
 void func_8019585C(Primitive* prim) {
