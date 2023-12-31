@@ -417,7 +417,6 @@ extern Accessory g_AccessoryDefs[];
 extern RelicDesc g_RelicDefs[];
 extern u32 D_800AC90C;
 extern u16 D_800AC958[];
-extern s32 D_800ACC64[]; // probably a struct
 extern Vram g_Vram;
 extern CdFile* D_800ACC74[];
 extern u8 D_800ACF54[];
