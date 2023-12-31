@@ -122,27 +122,27 @@ void func_801B1198(s16 arg0) {
 }
 
 u16* func_801B11E8(char ch) {
-    u16 var_a0;
+    u16 jCh;
 
     if (ch >= 'a') {
-        var_a0 = ch - 0x7DE0;
+        jCh = ('ａ' - 'a') + ch;
     } else if (ch >= 'A') {
-        var_a0 = ch - 0x7DE1;
+        jCh = ('Ａ' - 'A') + ch;
     } else if (ch == ',') {
-        var_a0 = 0x8143;
+        jCh = '，';
     } else if (ch == '.') {
-        var_a0 = 0x8144;
+        jCh = '．';
     } else if (ch == '\'') {
-        var_a0 = 0x8166;
+        jCh = '’';
     } else if (ch == ' ') {
         return NULL;
     } else {
-        var_a0 = ch + 0x821F;
+        jCh = ('Ａ' - 'A') + ch;
         if (ch >= 'a') {
-            ++var_a0;
+            ++jCh;
         }
     }
-    return g_api.func_80106A28(var_a0, 0);
+    return g_api.func_80106A28(jCh, 0);
 }
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B1298);
