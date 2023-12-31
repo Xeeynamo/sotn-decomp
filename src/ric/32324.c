@@ -268,7 +268,7 @@ void func_8016F198(Entity* self) {
         }
         self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
         prim = &g_PrimBuf[self->primIndex];
-        for(i = 0; i < 16; i++) {
+        for (i = 0; i < 16; i++) {
             prim->priority = 0xC2;
             prim->blendMode = 8;
             prim = prim->next;
@@ -278,7 +278,7 @@ void func_8016F198(Entity* self) {
     case 1:
         i = 0;
         prim = &g_PrimBuf[self->primIndex];
-        for(i = 0; i < 16; i++) {
+        for (i = 0; i < 16; i++) {
             prim->blendMode &= ~BLEND_VISIBLE;
             prim = prim->next;
         }
@@ -302,7 +302,7 @@ void func_8016F198(Entity* self) {
         tpage = 0x100;
     }
     prim = &g_PrimBuf[self->primIndex];
-    for(i = 0; i < 16; i++) {
+    for (i = 0; i < 16; i++) {
         sine = rsin(i << 8);
         cosine = rcos(i << 8);
         temp_a0 = self->ext.factory.unk7C;
@@ -311,10 +311,10 @@ void func_8016F198(Entity* self) {
         if (temp_a0 >= 4) {
             var_s0_2 = (temp_a0 - 4) * 8;
         }
-        temp_a1 =   ((cosine * (s16)(temp_a0 * 8)) >> 0xC) + 0x80;
+        temp_a1 = ((cosine * (s16)(temp_a0 * 8)) >> 0xC) + 0x80;
         temp_v1_3 = ((cosine * var_s0_2) >> 0xC) + 0x80;
         temp_a0_3 = ((sine * (s16)(temp_a0 * 8)) >> 0xC) + 0x78;
-        temp_a2 =   ((sine * var_s0_2) >> 0xC) + 0x78;
+        temp_a2 = ((sine * var_s0_2) >> 0xC) + 0x78;
         if (temp_a1 >= 0) {
             var_v0 = MIN(temp_a1, 0xFF);
         } else {
@@ -322,7 +322,6 @@ void func_8016F198(Entity* self) {
         }
         prim->x0 = var_v0;
 
-        
         if (temp_v1_3 >= 0) {
             var_v0_2 = MIN(temp_v1_3, 0xFF);
         } else {
@@ -330,7 +329,6 @@ void func_8016F198(Entity* self) {
         }
         prim->x2 = var_v0_2;
 
-        
         if (temp_a0_3 >= 0) {
             var_v0_3 = MIN(temp_a0_3, 0xF0);
         } else {
@@ -338,7 +336,6 @@ void func_8016F198(Entity* self) {
         }
         prim->y0 = var_v0_3;
 
-        
         if (temp_a2 >= 0) {
             var_v0_4 = MIN(temp_a2, 0xF0);
         } else {
@@ -346,14 +343,13 @@ void func_8016F198(Entity* self) {
         }
         prim->y2 = var_v0_4;
 
-        
         prim->u0 = ~prim->x0;
         prim->u2 = ~prim->x2;
         prim->v0 = -0x10 - prim->y0;
         prim->v2 = -0x10 - prim->y2;
-        
-        sine = rsin((i+1) << 8);
-        cosine = rcos((i+1) << 8);
+
+        sine = rsin((i + 1) << 8);
+        cosine = rcos((i + 1) << 8);
         temp_a1_2 = ((cosine * temp_s6) >> 0xC) + 0x80;
         temp_v1_4 = ((cosine * var_s0_2) >> 0xC) + 0x80;
         temp_a0_4 = ((sine * temp_s6) >> 0xC) + 0x78;
@@ -364,28 +360,28 @@ void func_8016F198(Entity* self) {
             var_v0_5 = 0;
         }
         prim->x1 = var_v0_5;
-        
+
         if (temp_v1_4 >= 0) {
             var_v0_6 = MIN(temp_v1_4, 0xFF);
         } else {
             var_v0_6 = 0;
         }
         prim->x3 = var_v0_6;
-        
+
         if (temp_a0_4 >= 0) {
             var_v0_7 = MIN(temp_a0_4, 0xF0);
         } else {
             var_v0_7 = 0;
         }
         prim->y1 = var_v0_7;
-        
+
         if (temp_a2_2 >= 0) {
             var_v0_8 = MIN(temp_a2_2, 0xF0);
         } else {
             var_v0_8 = 0;
         }
         prim->y3 = var_v0_8;
-        
+
         prim->tpage = tpage;
         prim->u1 = ~prim->x1;
         prim->u3 = ~prim->x3;
