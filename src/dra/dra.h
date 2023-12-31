@@ -819,7 +819,7 @@ extern u8 g_CdSoundCommand16;
 extern s8 D_8013B690;
 extern s32 D_8013B694;
 extern s32 D_8013B69C;
-extern s32 D_8016FCC0[];
+extern PfnEntityUpdate D_8016FCC0[];
 extern void (*D_8013C000)(void);
 extern void (*D_8013C004)(s32);
 extern void (*D_8013C008)(void);
