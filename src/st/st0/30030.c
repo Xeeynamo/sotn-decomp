@@ -96,7 +96,7 @@ void func_801B0324(void) {
 u16 func_801B0414(void) {
     int ret;
 
-    if (!(g_pads[0].tapped & 0x800)) {
+    if (!(g_pads[0].tapped & PAD_START)) {
         return 0;
     }
     ret = 1;
