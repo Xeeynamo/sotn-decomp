@@ -1070,20 +1070,7 @@ u32 UpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
     return ret;
 }
 
-void DestroyEntity(Entity* entity) {
-    s32 i;
-    s32 length;
-    u32* ptr;
-
-    if (entity->flags & FLAG_HAS_PRIMS) {
-        g_api.FreePrimitives(entity->primIndex);
-    }
-
-    ptr = (u32*)entity;
-    length = sizeof(Entity) / sizeof(u32);
-    for (i = 0; i < length; i++)
-        *ptr++ = 0;
-}
+#include "../../destroy_entity.h"
 
 s32 func_80173E78(s32 arg0, s32 arg1) {
     if (arg0 < 0) {
