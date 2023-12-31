@@ -754,8 +754,6 @@ void BottomCornerText(u8* str, u8 lower_left) {
 
 #include "../find_first_unk_prim.h"
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1E1C8", func_801A2580);
-
 // DECOMP_ME_WIP func_801A25FC https://decomp.me/scratch/IIvQX a0 -> v0 register
 // swap
 #ifndef NON_MATCHING
