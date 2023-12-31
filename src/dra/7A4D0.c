@@ -249,8 +249,7 @@ void func_8011A870(void) {
 
         if (entity->step == 0) {
             if (entity->entityId >= 0xD0 && entity->entityId < 0xE0) {
-                entity->pfnUpdate =
-                    (PfnEntityUpdate)D_8016FCC0[entity->entityId];
+                entity->pfnUpdate = D_8016FCC0[entity->entityId];
             } else {
                 continue;
             }
