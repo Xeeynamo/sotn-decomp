@@ -232,7 +232,168 @@ void func_8016E9E4(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_8016F198);
+void func_8016F198(Entity* self) {
+    Primitive* prim;
+    s16 temp_a0;
+    s16 temp_a0_3;
+    s16 temp_a0_4;
+    s16 temp_a1;
+    s16 temp_a1_2;
+    s16 temp_a2;
+    s16 temp_a2_2;
+    s16 temp_s6;
+    s16 temp_v1_3;
+    s16 temp_v1_4;
+    s16 var_s0_2;
+    s16 var_v0;
+    s16 var_v0_2;
+    s16 var_v0_3;
+    s16 var_v0_4;
+    s16 var_v0_5;
+    s16 var_v0_6;
+    s16 var_v0_7;
+    s16 var_v0_8;
+    s32 sine;
+    s32 cosine;
+    s32 i;
+    u16 tpage;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x10);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            g_Player.unk4E = 1;
+            return;
+        }
+        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        prim = &g_PrimBuf[self->primIndex];
+        for(i = 0; i < 16; i++) {
+            prim->priority = 0xC2;
+            prim->blendMode = 8;
+            prim = prim->next;
+        }
+        self->step++;
+        break;
+    case 1:
+        i = 0;
+        prim = &g_PrimBuf[self->primIndex];
+        for(i = 0; i < 16; i++) {
+            prim->blendMode &= ~BLEND_VISIBLE;
+            prim = prim->next;
+        }
+        self->step++;
+    case 2:
+        if (++self->ext.factory.unk7C >= 0x18) {
+            self->step++;
+        }
+        break;
+    case 3:
+        g_Player.unk4E = 1;
+        DestroyEntity(self);
+        return;
+    }
+    if (self->ext.factory.unk7C == 0) {
+        return;
+    }
+    if (g_CurrentBuffer == g_GpuBuffers) {
+        tpage = 0x104;
+    } else {
+        tpage = 0x100;
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    for(i = 0; i < 16; i++) {
+        sine = rsin(i << 8);
+        cosine = rcos(i << 8);
+        temp_a0 = self->ext.factory.unk7C;
+        var_s0_2 = 0;
+        temp_s6 = temp_a0 * 8;
+        if (temp_a0 >= 4) {
+            var_s0_2 = (temp_a0 - 4) * 8;
+        }
+        temp_a1 =   ((cosine * (s16)(temp_a0 * 8)) >> 0xC) + 0x80;
+        temp_v1_3 = ((cosine * var_s0_2) >> 0xC) + 0x80;
+        temp_a0_3 = ((sine * (s16)(temp_a0 * 8)) >> 0xC) + 0x78;
+        temp_a2 =   ((sine * var_s0_2) >> 0xC) + 0x78;
+        if (temp_a1 >= 0) {
+            var_v0 = MIN(temp_a1, 0xFF);
+        } else {
+            var_v0 = 0;
+        }
+        prim->x0 = var_v0;
+
+        
+        if (temp_v1_3 >= 0) {
+            var_v0_2 = MIN(temp_v1_3, 0xFF);
+        } else {
+            var_v0_2 = 0;
+        }
+        prim->x2 = var_v0_2;
+
+        
+        if (temp_a0_3 >= 0) {
+            var_v0_3 = MIN(temp_a0_3, 0xF0);
+        } else {
+            var_v0_3 = 0;
+        }
+        prim->y0 = var_v0_3;
+
+        
+        if (temp_a2 >= 0) {
+            var_v0_4 = MIN(temp_a2, 0xF0);
+        } else {
+            var_v0_4 = 0;
+        }
+        prim->y2 = var_v0_4;
+
+        
+        prim->u0 = ~prim->x0;
+        prim->u2 = ~prim->x2;
+        prim->v0 = -0x10 - prim->y0;
+        prim->v2 = -0x10 - prim->y2;
+        
+        sine = rsin((i+1) << 8);
+        cosine = rcos((i+1) << 8);
+        temp_a1_2 = ((cosine * temp_s6) >> 0xC) + 0x80;
+        temp_v1_4 = ((cosine * var_s0_2) >> 0xC) + 0x80;
+        temp_a0_4 = ((sine * temp_s6) >> 0xC) + 0x78;
+        temp_a2_2 = ((sine * var_s0_2) >> 0xC) + 0x78;
+        if (temp_a1_2 >= 0) {
+            var_v0_5 = MIN(temp_a1_2, 0xFF);
+        } else {
+            var_v0_5 = 0;
+        }
+        prim->x1 = var_v0_5;
+        
+        if (temp_v1_4 >= 0) {
+            var_v0_6 = MIN(temp_v1_4, 0xFF);
+        } else {
+            var_v0_6 = 0;
+        }
+        prim->x3 = var_v0_6;
+        
+        if (temp_a0_4 >= 0) {
+            var_v0_7 = MIN(temp_a0_4, 0xF0);
+        } else {
+            var_v0_7 = 0;
+        }
+        prim->y1 = var_v0_7;
+        
+        if (temp_a2_2 >= 0) {
+            var_v0_8 = MIN(temp_a2_2, 0xF0);
+        } else {
+            var_v0_8 = 0;
+        }
+        prim->y3 = var_v0_8;
+        
+        prim->tpage = tpage;
+        prim->u1 = ~prim->x1;
+        prim->u3 = ~prim->x3;
+        prim->v1 = -0x10 - prim->y1;
+        prim->v3 = -0x10 - prim->y3;
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_8016F6F0);
 
