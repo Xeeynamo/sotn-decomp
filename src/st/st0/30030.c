@@ -121,6 +121,28 @@ void func_801B1198(s16 arg0) {
     ClearImage(&rect, 0, 0, 0);
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B11E8);
+u16* func_801B11E8(char ch) {
+    u16 jCh;
+
+    if (ch >= 'a') {
+        jCh = ('ａ' - 'a') + ch;
+    } else if (ch >= 'A') {
+        jCh = ('Ａ' - 'A') + ch;
+    } else if (ch == ',') {
+        jCh = '，';
+    } else if (ch == '.') {
+        jCh = '．';
+    } else if (ch == '\'') {
+        jCh = '’';
+    } else if (ch == ' ') {
+        return NULL;
+    } else {
+        jCh = ('Ａ' - 'A') + ch;
+        if (ch >= 'a') {
+            ++jCh;
+        }
+    }
+    return g_api.func_80106A28(jCh, 0);
+}
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B1298);
