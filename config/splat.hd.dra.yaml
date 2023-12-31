@@ -86,7 +86,7 @@ segments:
       - [0x3144, data, 627C4]
       - [0x37E8, data]
       - [0xCA20, .data, cd]
-      - [0xCDC0, data]
+      - [0xCE48, data]
       - [0xCFDC, .data, 6D59C]
       - [0xD010, data]
       - [0xD188, .data, 7A4D0] # D_800AD0C4

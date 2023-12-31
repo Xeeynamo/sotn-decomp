@@ -161,13 +161,44 @@ CdFile* D_800ACC74[] = {
     &g_LbaBinDemokey,
 };
 
+#if defined(VERSION_US)
+CdFileSeq D_800ACCF8[] = {
+    {0x7D6A, 7859, 0x202},
+    {0x7C0C, 376, 0x204},
+};
+#elif defined(VERSION_HD)
+CdFileSeq D_800ACCF8[] = {
+    {0x7DA4, 7859, 0x202},
+    {0x7C48, 376, 0x204},
+};
+#endif
+
+const char* D_800ACD10[] = {
+    aPbav, aPbav_0, aPbav_1, aPbav_2, aPbav, NULL, aPqes_1,
+};
+
+void func_801080DC(void);
+void CopyStageOvlCallback(void);
+void CopyRicOvlCallback(void);
+void func_801078C4(void);
+void CopyMonsterPreviewCallback(void);
+void func_80107DB4(void);
+void func_80107C6C(void);
+void func_80107EF0(void);
+void (*g_CdCallbacks[])(void) = {
+    func_801080DC,        func_801080DC,        func_801080DC,
+    func_801080DC,        CopyStageOvlCallback, func_801080DC,
+    func_801080DC,        func_801080DC,        CopyStageOvlCallback,
+    CopyStageOvlCallback, CopyRicOvlCallback,   func_801080DC,
+    func_801078C4,        func_801078C4,        CopyMonsterPreviewCallback,
+    func_801078C4,        func_80107DB4,        func_80107C6C,
+    func_80107DB4,        func_80107EF0,
+};
+s32 D_800ACD7C = 0;
+
 extern u16 D_800A04CC[]; // palette?
 extern u32* D_801EE000;
 
-extern CdFileSeq D_800ACCF8[];
-extern s32 D_800ACD10[];
-extern void (*g_CdCallbacks[])(void);
-extern s32 D_800ACD7C;
 extern s32 g_VabAddrs[];
 extern u8 D_80137F96;
 extern s32 D_80137FA0;
