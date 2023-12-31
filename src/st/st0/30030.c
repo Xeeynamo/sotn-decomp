@@ -124,21 +124,21 @@ void func_801B1198(s16 arg0) {
 u16* func_801B11E8(char ch) {
     u16 var_a0;
 
-    if (ch >= 0x61) {
+    if (ch >= 'a') {
         var_a0 = ch - 0x7DE0;
-    } else if (ch >= 0x41) {
+    } else if (ch >= 'A') {
         var_a0 = ch - 0x7DE1;
-    } else if (ch == 0x2C) {
-        var_a0 = 0x8143;
-    } else if (ch == 0x2E) {
+    } else if (ch == ',') {
+        var_a0 = '，';
+    } else if (ch == '.') {
         var_a0 = 0x8144;
-    } else if (ch == 0x27) {
+    } else if (ch == '\'') {
         var_a0 = 0x8166;
-    } else if (ch == 0x20) {
+    } else if (ch == ' ') {
         return NULL;
     } else {
         var_a0 = ch + 0x821F;
-        if (ch >= 0x61) {
+        if (ch >= 'a') {
             ++var_a0;
         }
     }
