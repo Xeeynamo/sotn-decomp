@@ -129,7 +129,7 @@ u16* func_801B11E8(char ch) {
     } else if (ch >= 'A') {
         var_a0 = ch - 0x7DE1;
     } else if (ch == ',') {
-        var_a0 = '，';
+        var_a0 = 0x8143;
     } else if (ch == '.') {
         var_a0 = 0x8144;
     } else if (ch == '\'') {
