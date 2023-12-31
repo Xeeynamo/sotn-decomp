@@ -78,7 +78,7 @@ void func_8016E9E4(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         prim->tpage = 0x1E;
         prim->clut = 0x17F;
-        
+
         prim->u0 = prim->u2 = 0x98;
         prim->v0 = prim->v1 = 0xD8;
         prim->u1 = prim->u3 = 0xA8;
@@ -86,12 +86,12 @@ void func_8016E9E4(Entity* self) {
         prim->priority = 0xC2;
         prim->blendMode = 8;
         prim = prim->next;
-        for(i = 0; i < 6; i++) {
+        for (i = 0; i < 6; i++) {
             prim->tpage = 0x1C;
             prim->clut = 0x1AE;
             prim->u0 = prim->u2 = 0x20;
             prim->u1 = prim->u3 = 0x30;
-            prim->v0 =  prim->v1 = 0;
+            prim->v0 = prim->v1 = 0;
             prim->v2 = prim->v3 = 0x10;
             prim->priority = 0xC1;
             prim->blendMode = BLEND_VISIBLE;
@@ -121,7 +121,7 @@ void func_8016E9E4(Entity* self) {
             prim->clut = 0x19F;
             prim->blendMode |= 0x35;
             prim = prim->next;
-            for(i = 0; i < 6; i++){
+            for (i = 0; i < 6; i++) {
                 prim->blendMode &= ~BLEND_VISIBLE;
                 prim = prim->next;
             }
@@ -138,16 +138,18 @@ void func_8016E9E4(Entity* self) {
     case 5:
         prim = &g_PrimBuf[self->primIndex];
         prim->blendMode |= BLEND_VISIBLE;
-        self->step ++;
+        self->step++;
     case 6:
-        self->ext.et_8016E9E4.unk7C = (self->ext.et_8016E9E4.unk7C + 0x80) & 0xFFF;
+        self->ext.et_8016E9E4.unk7C =
+            (self->ext.et_8016E9E4.unk7C + 0x80) & 0xFFF;
         self->ext.et_8016E9E4.unk80 += 4;
         if (self->ext.et_8016E9E4.unk80 >= 0x30) {
             self->step++;
         }
         break;
     case 7:
-        self->ext.et_8016E9E4.unk7C = (self->ext.et_8016E9E4.unk7C + 0x80) & 0xFFF;
+        self->ext.et_8016E9E4.unk7C =
+            (self->ext.et_8016E9E4.unk7C + 0x80) & 0xFFF;
         if (++self->ext.et_8016E9E4.unk82 >= 0x1E) {
             CreateEntFactoryFromEntity(self, FACTORY(0, 60), 0);
             self->ext.et_8016E9E4.unk82 = 0;
@@ -155,14 +157,16 @@ void func_8016E9E4(Entity* self) {
         }
         break;
     case 8:
-        self->ext.et_8016E9E4.unk7C = (self->ext.et_8016E9E4.unk7C + 0x80) & 0xFFF;
+        self->ext.et_8016E9E4.unk7C =
+            (self->ext.et_8016E9E4.unk7C + 0x80) & 0xFFF;
         if (++self->ext.et_8016E9E4.unk82 >= 0x60) {
             g_Player.unk4E = 1;
             self->step++;
         }
         break;
     case 9:
-        self->ext.et_8016E9E4.unk7C = (self->ext.et_8016E9E4.unk7C + 0x80) & 0xFFF;
+        self->ext.et_8016E9E4.unk7C =
+            (self->ext.et_8016E9E4.unk7C + 0x80) & 0xFFF;
         self->ext.et_8016E9E4.unk80 -= 2;
         if (self->ext.et_8016E9E4.unk80 <= 0) {
             DestroyEntity(self);
@@ -172,9 +176,9 @@ void func_8016E9E4(Entity* self) {
     }
     // FAKE, needed for reg match
     temp_a1 = self->ext.et_8016E9E4.unk7C;
-    if ((self->ext.et_8016E9E4.unk7C == 0x100) || 
-        (self->ext.et_8016E9E4.unk7C == 0x500) || 
-        (self->ext.et_8016E9E4.unk7C == 0x900) ||  
+    if ((self->ext.et_8016E9E4.unk7C == 0x100) ||
+        (self->ext.et_8016E9E4.unk7C == 0x500) ||
+        (self->ext.et_8016E9E4.unk7C == 0x900) ||
         (self->ext.et_8016E9E4.unk7C == 0xD00)) {
         if (self->step < 9) {
             g_api.func_80134714(0x625, D_801758AC, 0);
@@ -186,7 +190,7 @@ void func_8016E9E4(Entity* self) {
             }
         }
     }
-    
+
     temp_a0 = self->posX.i.hi;
     temp_a1 = self->posY.i.hi;
     prim = &g_PrimBuf[self->primIndex];
@@ -194,16 +198,26 @@ void func_8016E9E4(Entity* self) {
     prim->x1 = prim->x3 = temp_a0 + 8;
     prim->y0 = prim->y1 = temp_a1 - 12;
     prim->y2 = prim->y3 = temp_a1 + 12;
-    prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = self->ext.et_8016E9E4.unk84;
+    prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = prim->r2 =
+        prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
+            self->ext.et_8016E9E4.unk84;
     prim = prim->next;
-    
+
     temp_s6 = rsin(self->ext.et_8016E9E4.unk7E);
     temp_s5 = rcos(self->ext.et_8016E9E4.unk7E);
-    for(i = 0; i < 6; i++) {
-        temp_s0_2 = (rsin(self->ext.et_8016E9E4.unk7C + D_80155EF0[i]) * self->ext.et_8016E9E4.unk80) >> 0xC;
-        temp_v0_4 = (rcos(self->ext.et_8016E9E4.unk7C + D_80155EF0[i]) * self->ext.et_8016E9E4.unk80) >> 0xC;
-        temp_a1_3 = self->posX.i.hi + ((((temp_s6 * temp_v0_4) >> 0xC) << 9) / (((temp_s5 * temp_v0_4) >> 0xC) + 0x200));
-        temp_v0_6 = self->posY.i.hi + ((temp_s0_2 << 9) / (((temp_s5 * temp_v0_4) >> 0xC) + 0x200));
+    for (i = 0; i < 6; i++) {
+        temp_s0_2 = (rsin(self->ext.et_8016E9E4.unk7C + D_80155EF0[i]) *
+                     self->ext.et_8016E9E4.unk80) >>
+                    0xC;
+        temp_v0_4 = (rcos(self->ext.et_8016E9E4.unk7C + D_80155EF0[i]) *
+                     self->ext.et_8016E9E4.unk80) >>
+                    0xC;
+        temp_a1_3 =
+            self->posX.i.hi + ((((temp_s6 * temp_v0_4) >> 0xC) << 9) /
+                               (((temp_s5 * temp_v0_4) >> 0xC) + 0x200));
+        temp_v0_6 =
+            self->posY.i.hi +
+            ((temp_s0_2 << 9) / (((temp_s5 * temp_v0_4) >> 0xC) + 0x200));
         temp_v0_5 = ((temp_s5 * temp_v0_4) >> 0xC) + 0x200;
         D_80175894[i].unk0 = temp_a1_3;
         D_80175894[i].unk2 = temp_v0_6;

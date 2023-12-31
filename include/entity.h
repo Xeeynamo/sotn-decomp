@@ -644,7 +644,7 @@ typedef struct {
     s16 unk82;
 } ET_80162870;
 
-typedef struct{
+typedef struct {
     s16 unk7C;
     s16 unk7E;
     s16 unk80;
