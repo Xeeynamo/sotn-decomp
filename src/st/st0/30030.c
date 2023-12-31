@@ -121,7 +121,7 @@ void func_801B1198(s16 arg0) {
     ClearImage(&rect, 0, 0, 0);
 }
 
-u16* func_801B11E8(u8 arg0) {
+u16* func_801B11E8(char ch) {
     u16 var_a0;
 
     if (arg0 >= 0x61) {
