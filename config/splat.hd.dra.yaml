@@ -85,7 +85,7 @@ segments:
       - [0x3024, .data, 5D6C4] # D_800A3014
       - [0x3144, data, 627C4]
       - [0x37E8, data]
-      - [0xCAA0, .data, cd]
+      - [0xCA20, .data, cd]
       - [0xCDC0, data]
       - [0xCFDC, .data, 6D59C]
       - [0xD010, data]
