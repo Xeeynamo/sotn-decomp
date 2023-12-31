@@ -569,8 +569,6 @@ INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_80198BC8);
 
 #include "../find_first_unk_prim.h"
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_80199508);
-
 POLY_GT4* func_80199584(POLY_GT4* startPoly, s32 count) {
     POLY_GT4* poly;
     s8 unk;

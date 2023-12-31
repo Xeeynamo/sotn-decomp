@@ -6,33 +6,6 @@
 
 #include "../find_first_unk_prim.h"
 
-Primitive* func_801C9E98(Primitive* prim, u8 index) {
-    if (prim) {
-        s32 index_ = index;
-    loop_2:
-        if (prim->p3 == 0) {
-            Primitive* var_v0 = NULL;
-            Primitive* firstPrim = prim;
-            s32 i = 1;
-            if (i < index_) {
-                do {
-                    prim = prim->next;
-                    if (!prim)
-                        return NULL;
-                } while (prim->p3 == 0 && ++i < index);
-            }
-            var_v0 = firstPrim;
-            if (i == index_)
-                return var_v0;
-        }
-        prim = prim->next;
-        if (prim) {
-            goto loop_2;
-        }
-    }
-    return NULL;
-}
-
 Primitive* func_801C9F14(Primitive* startPoly, s32 count) {
     Primitive* poly;
     s8 unk;
