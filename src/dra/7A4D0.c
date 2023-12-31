@@ -471,10 +471,9 @@ void EntityEntFactory(Entity* self) {
         newEntity->entityId =
             self->ext.factory.childId + self->ext.factory.unkA8;
         newEntity->params = self->ext.factory.unkA0;
-        // The child  (newEntity) is not an ent factory, but because the
-        // factory creates many entities, we can't pick a particular
-        // extension. But we're not allowed to use generic, so i'll just
-        // reuse entFactory.
+        // The child  (newEntity) is not an ent factory, but because the factory
+        // creates many entities, we can't pick a particular extension. But
+        // we're not allowed to use generic, so i'll just reuse entFactory.
         newEntity->ext.factory.parent = self->ext.factory.parent;
         newEntity->posX.val = self->posX.val;
         newEntity->posY.val = self->posY.val;
@@ -611,8 +610,7 @@ void EntityUnkId24(Entity* self) {
         self->animSet = 2;
         self->unk4C = D_800AD5FC;
 
-        // Weird thing here where we have to set flags to the same value
-        // twice
+        // Weird thing here where we have to set flags to the same value twice
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
