@@ -121,6 +121,28 @@ void func_801B1198(s16 arg0) {
     ClearImage(&rect, 0, 0, 0);
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B11E8);
+u16* func_801B11E8(u8 arg0) {
+    u16 var_a0;
+
+    if (arg0 >= 0x61) {
+        var_a0 = arg0 - 0x7DE0;
+    } else if (arg0 >= 0x41) {
+        var_a0 = arg0 - 0x7DE1;
+    } else if (arg0 == 0x2C) {
+        var_a0 = 0x8143;
+    } else if (arg0 == 0x2E) {
+        var_a0 = 0x8144;
+    } else if (arg0 == 0x27) {
+        var_a0 = 0x8166;
+    } else if (arg0 == 0x20) {
+        return NULL;
+    } else {
+        var_a0 = arg0 + 0x821F;
+        if (arg0 >= 0x61) {
+            ++var_a0;
+        }
+    }
+    return g_api.func_80106A28(var_a0, 0);
+}
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B1298);
