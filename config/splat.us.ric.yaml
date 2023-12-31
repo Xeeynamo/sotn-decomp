@@ -51,7 +51,7 @@ segments:
       - [0x1A9E8, rodata]
       - [0x1AB04, rodata]
       - [0x1AB68, .rodata, 32324]
-      - [0x1AB88, rodata]
+      - [0x1ABB0, rodata]
       - [0x1ABC8, .rodata, 345EC]
       - [0x1AC50, rodata]
       - [0x1AC60, c, 1AC60]
