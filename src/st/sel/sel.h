@@ -161,7 +161,7 @@ extern s32 D_801BAF18[][2];
 extern s32 D_801BAF48;
 extern s32 D_801BAFC0;
 extern s32 D_801BAFC4;
-extern u8* D_801BAFD0;
+extern u8* D_801BAFD0; // Pointer to texture pattern
 extern s32 D_801BAFD4;
 extern s32 D_801BAFD8;
 extern s32 D_801BAFDC;

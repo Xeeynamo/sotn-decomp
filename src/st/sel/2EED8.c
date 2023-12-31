@@ -1159,8 +1159,128 @@ void func_801B1FD8(u8* arg0, s32 arg1) {
     }
 }
 
-void func_801B2108(const char* str, s32 id);
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2EED8", func_801B2108);
+// Variant of func_800F99B8, with the third argument stripped
+void func_801B2108(const char* str, s32 arg1) {
+    // See src/st/blit_char.h
+    const u16 MINSCODE = 0x8140;
+    const u16 RIGHT_DOUBLE_QUOTATION_MARK = 0x8168;
+
+    const int FontWidth = 12;
+    const int FontHeight = 16;
+    const int FontStride = FontWidth / 2;
+
+    s32 var_a0;
+    u8* var_a2;
+    s32 var_a3;
+    u8 var_s0;
+    u8* var_s1;
+    s32 var_s2;
+    s32 var_s3;
+    s32 var_s4;
+    s32 var_s5;
+    s32 var_s6;
+    s32 i;
+    s32 j;
+    u8* dest_addr;
+
+    var_s1 = str;
+    var_s5 = arg1;
+    var_s4 = 0x90;
+    for (i = 0; i < var_s4 * FontHeight; i++) {
+        D_801BAFD0[i] = 0;
+    }
+    var_s6 = ((u32)var_s5 >> 2) & 0x40;
+    var_s3 = 0;
+    if (var_s5 & 0x200) {
+        var_s6 += 0x20;
+        var_s5 &= ~0x200;
+    }
+    var_s5 = func_801B1EF4(var_s5 & 0xFF) & 0xFF;
+    while (*var_s1 != 0) {
+        var_s2 = 0;
+        var_s0 = *var_s1++;
+        if ('a' <= var_s0 && var_s0 <= 'z') {
+            var_a0 = var_s0 + 0x8220;
+        } else if ('A' <= var_s0 && var_s0 <= 'Z') {
+            var_a0 = var_s0 + 0x821F;
+        } else if (var_s0 == ' ') {
+            var_a0 = MINSCODE;
+            var_s2 = 2;
+        } else {
+            // load var_a0 as a big-endian value corresponding with shift-jis
+            var_a0 = (var_s0 << 8);
+            var_a0 += *var_s1++;
+            if (var_a0 == RIGHT_DOUBLE_QUOTATION_MARK) {
+                var_s1 += 2;
+            }
+            if (var_a0 == MINSCODE) {
+                var_s0 = ' ';
+                var_s2 = 2;
+            }
+        }
+        var_a2 = g_api.func_80106A28(var_a0, 3);
+        while (1) {
+            if (var_s0 == ' ') {
+                break;
+            }
+            for (i = 0; i < FontHeight; i++) {
+                // probably fake, i think var_a2 is a 2d array like [6][??]
+                if (var_a2[i * FontStride] != 0) {
+                    break;
+                }
+            }
+            if (i != FontHeight) {
+                break;
+            }
+            for (i = 0; i < FontHeight; i++) {
+                dest_addr = &var_a2[i * FontStride];
+                // Effectively shift everything down an index
+                for (j = 0; j < 5; j++) {
+                    dest_addr[0] = dest_addr[1];
+                    dest_addr += 1;
+                }
+                // Set last index to 0
+                *dest_addr = 0;
+            }
+        }
+        for (i = 0, var_a3 = 0; i < FontHeight; i++) {
+            for (j = 0; j < FontStride; j++) {
+                // similar to above comment, this could be var_a2[i][j]
+                if ((var_a2[i * FontStride + j] != 0) && (var_a3 < j)) {
+                    var_a3 = j;
+                }
+            }
+        }
+        for (i = 0; i < FontHeight; i++) {
+            if ((var_a2[i * FontStride + var_a3] & 0xF0)) {
+                break;
+            }
+        }
+        if (i != FontHeight) {
+            var_a3 += 1;
+        }
+        if (var_a3 < FontStride) {
+            var_a3 += 1;
+        }
+        for (i = 0; i < FontHeight; i++) {
+            dest_addr = &D_801BAFD0[var_s3 + var_s4 * i];
+            *dest_addr++ = *var_a2++;
+            *dest_addr++ = *var_a2++;
+            *dest_addr++ = *var_a2++;
+            *dest_addr++ = *var_a2++;
+            *dest_addr++ = *var_a2++;
+            *dest_addr++ = *var_a2++;
+        }
+        var_s3 += var_a3 + var_s2;
+        if (var_s3 >= var_s4) {
+            break;
+        }
+    }
+
+    LoadTPage(D_801BAFD0, 0, 0, var_s6 + D_801BAFD4, var_s5 + D_801BAFD8,
+              var_s4 * 2, 0x10);
+    D_801BAFD0 += var_s4 * 0x10;
+}
 
 void func_801B248C(const char* str, s32 id) {
     if (D_801BC398[id] != str) {
