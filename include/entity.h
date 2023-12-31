@@ -481,7 +481,8 @@ typedef struct {
 } ET_SpittleBone;
 
 typedef struct {
-    char pad[0x30];
+    Primitive* prim;
+    char pad[0x2C];
     u8 unkAC;
 } ET_Player;
 

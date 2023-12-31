@@ -334,7 +334,39 @@ s32 AnimateEntity(const u8 frames[], Entity* entity) {
     return (u8)flag;
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/3410C", func_801B4C68);
+void func_801B4C68(void) {
+    Entity* player;
+    s16 primIndex;
+    Primitive* prim;
+
+    player = &PLAYER;
+    if (player->step != 0) {
+        return;
+    }
+
+    primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+    if (primIndex == -1) {
+        return;
+    }
+
+    PLAYER.primIndex = primIndex;
+    prim = &g_PrimBuf[primIndex];
+    PLAYER.ext.player.prim = prim;
+    PLAYER.flags |= FLAG_HAS_PRIMS;
+    prim->tpage = 0x8A;
+    prim->u1 = prim->u3 = 0xFF;
+    prim->v2 = prim->v3 = 0xE0;
+    prim->x1 = prim->x3 = 0xFF;
+    prim->y2 = prim->y3 = 0xE0;
+    prim->clut = 0;
+    prim->v0 = prim->v1 = 0;
+    prim->u0 = prim->u2 = 0;
+    prim->x0 = prim->x2 = 0;
+    prim->y0 = prim->y1 = 0;
+    prim->priority = 0x40;
+    prim->blendMode = 0;
+    PLAYER.step++;
+}
 
 void func_801B4D78(void) {
     Entity* e = &g_Entities[UNK_ENTITY_3];
