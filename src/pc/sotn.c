@@ -202,6 +202,20 @@ bool InitGame(void) {
 
     D_80137590 = g_DemoRecordingBuffer;
 
+    // forcing g_Vram values while waiting to import the data
+    g_Vram.D_800ACD98.x = 0x0380;
+    g_Vram.D_800ACD98.y = 0x0180;
+    g_Vram.D_800ACD98.w = 0x0010;
+    g_Vram.D_800ACD98.h = 0x0001;
+    g_Vram.D_800ACDA0.x = 0;
+    g_Vram.D_800ACDA0.y = 0;
+    g_Vram.D_800ACDA0.w = 0x0200;
+    g_Vram.D_800ACDA0.h = 0x0200;
+    g_Vram.D_800ACDA8.x = 0;
+    g_Vram.D_800ACDA8.y = 0x00F0;
+    g_Vram.D_800ACDA8.w = 0x0100;
+    g_Vram.D_800ACDA8.h = 0x0010;
+
     return true;
 }
 
@@ -473,7 +487,45 @@ int MyVSync(int mode) {
     return 0;
 }
 
+int MyClearImage(RECT* rect, u_char r, u_char g, u_char b) {
+    u16* vram = g_RawVram;
+    vram += rect->x + rect->y * VRAM_W;
+
+    for (int i = 0; i < rect->h; i++) {
+        for (int j = 0; j < rect->w; j++) {
+            vram[j] = (r >> 3 << 5) | (g >> 3 << 10) | (b >> 3 << 15) | 0x8000;
+        }
+        vram += VRAM_W;
+    }
+    return 0;
+}
+
 int MyLoadImage(RECT* rect, u_long* p) {
     DEBUGF("(%X, %X, %X, %X): %p", rect->x, rect->y, rect->w, rect->h, p);
+    u16* mem = (u16*)p;
+    u16* vram = g_RawVram;
+    vram += rect->x + rect->y * VRAM_W;
+
+    for (int i = 0; i < rect->h; i++) {
+        for (int j = 0; j < rect->w; j++) {
+            vram[j] = *mem++;
+        }
+        vram += VRAM_W;
+    }
+    return 0;
+}
+
+int MyStoreImage(RECT* rect, u_long* p) {
+    DEBUGF("(%X, %X, %X, %X): %p", rect->x, rect->y, rect->w, rect->h, p);
+    u16* mem = (u16*)p;
+    u16* vram = g_RawVram;
+    vram += rect->x + rect->y * VRAM_W;
+
+    for (int i = 0; i < rect->h; i++) {
+        for (int j = 0; j < rect->w; j++) {
+            *mem++ = vram[j];
+        }
+        vram += VRAM_W;
+    }
     return 0;
 }

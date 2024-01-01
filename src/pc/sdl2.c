@@ -341,7 +341,7 @@ SDL_Texture* GetVramTexture(int tpage, int clut) {
 
         u8* src = g_RawVram;
         src += (tpage & 0xF) * 128;
-        src += ((tpage >> 4) & 1) * VRAM_W * 512;
+        src += ((tpage >> 4) & 1) * VRAM_STRIDE * 256;
 
         u16* pal = g_RawVram;
         pal += clut * 0x10;

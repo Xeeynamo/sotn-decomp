@@ -65,7 +65,7 @@ SVECTOR* D_800A3608[1];
 u8 D_800A3728;
 MATRIX D_800A37B8;
 s16 D_80136308[1];
-u16 g_Clut[1];
+u16 g_Clut[0x3000];
 s32 D_8006C384;
 s32 D_8006C388;
 MenuNavigation g_MenuNavigation;

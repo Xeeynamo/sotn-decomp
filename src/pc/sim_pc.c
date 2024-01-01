@@ -235,9 +235,12 @@ bool LoadFilePc(void* content) {
     switch (g_SimFile->kind) { // slowly replacing the original func
     case SIM_1:
         LoadStageTileset(content, 0x100);
-        // LoadImage(&g_Vram.D_800ACD98, D_800A04CC);
-        // LoadImage(&g_Vram.D_800ACDA8, 0x801C0000);
-        // StoreImage(&g_Vram.D_800ACDA8, g_Clut + 0x1000);
+        LoadImage(&g_Vram.D_800ACD98, D_800A04CC);
+        LoadImage(&g_Vram.D_800ACDA8, (u8*)content + 0x40000);
+        StoreImage(&g_Vram.D_800ACDA8, g_Clut + 0x1000);
+        break;
+    case SIM_STAGE_CHR:
+        LoadStageTileset(content, 0);
         break;
     default:
         if (LoadFileSimToMem(g_SimFile->kind) < 0) {
@@ -339,7 +342,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
     snprintf(buf, sizeof(buf), "disks/us/%s", sim.path);
     INFOF("open %s", buf);
     g_SimFile = &sim;
-    if (!FileRead(LoadFilePc, buf)) {
+    if (!FileUseContent(LoadFilePc, buf)) {
         ERRORF("failed to load '%s'", buf);
         D_800A04EC = 0;
         return -1;
