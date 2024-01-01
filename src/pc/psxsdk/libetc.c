@@ -8,7 +8,7 @@ void PadInit(int mode) { MyPadInit(mode); }
 u_long MyPadRead(int id);
 u_long PadRead(int id) { return MyPadRead(id); }
 
-int VSyncCallback(void (*f)()) { NOT_IMPLEMENTED; }
+int VSyncCallback(void (*f)()) { return MyVSyncCallback(f); }
 
 int VSyncCallbacks(int ch, void (*f)()) { NOT_IMPLEMENTED; }
 
