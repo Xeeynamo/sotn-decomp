@@ -264,7 +264,6 @@ void func_8016F198(Entity* self) {
         self->step++;
         break;
     case 1:
-        i = 0;
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 16; i++) {
             prim->blendMode &= ~BLEND_VISIBLE;
