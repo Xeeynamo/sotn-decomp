@@ -232,7 +232,121 @@ void func_8016E9E4(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_8016F198);
+void func_8016F198(Entity* self) {
+    Primitive* prim;
+    s16 unk7C;
+    s16 temp_s6;
+    s16 temp_a0;
+    s16 temp_a1;
+    s16 temp_a2;
+    s16 temp_v1;
+    s16 var_s0_2;
+    s32 sine;
+    s32 cosine;
+    s32 i;
+    u16 tpage;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x10);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            g_Player.unk4E = 1;
+            return;
+        }
+        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 16; i++) {
+            prim->priority = 0xC2;
+            prim->blendMode = 8;
+            prim = prim->next;
+        }
+        self->step++;
+        break;
+    case 1:
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 16; i++) {
+            prim->blendMode &= ~BLEND_VISIBLE;
+            prim = prim->next;
+        }
+        self->step++;
+    case 2:
+        if (++self->ext.factory.unk7C >= 0x18) {
+            self->step++;
+        }
+        break;
+    case 3:
+        g_Player.unk4E = 1;
+        DestroyEntity(self);
+        return;
+    }
+    if (self->ext.factory.unk7C == 0) {
+        return;
+    }
+    if (g_CurrentBuffer == g_GpuBuffers) {
+        tpage = 0x104;
+    } else {
+        tpage = 0x100;
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 16; i++) {
+        sine = rsin(i << 8);
+        cosine = rcos(i << 8);
+        unk7C = self->ext.factory.unk7C;
+        var_s0_2 = 0;
+        temp_s6 = unk7C * 8;
+        if (unk7C >= 4) {
+            var_s0_2 = (unk7C - 4) * 8;
+        }
+        temp_a1 = ((cosine * (s16)(unk7C * 8)) >> 0xC) + 0x80;
+        temp_v1 = ((cosine * var_s0_2) >> 0xC) + 0x80;
+        temp_a0 = ((sine * (s16)(unk7C * 8)) >> 0xC) + 0x78;
+        temp_a2 = ((sine * var_s0_2) >> 0xC) + 0x78;
+
+        temp_a1 = temp_a1 >= 0 ? MIN(temp_a1, 0xFF) : 0;
+        prim->x0 = temp_a1;
+
+        temp_v1 = temp_v1 >= 0 ? MIN(temp_v1, 0xFF) : 0;
+        prim->x2 = temp_v1;
+
+        temp_a0 = temp_a0 >= 0 ? MIN(temp_a0, 0xF0) : 0;
+        prim->y0 = temp_a0;
+
+        temp_a2 = temp_a2 >= 0 ? MIN(temp_a2, 0xF0) : 0;
+        prim->y2 = temp_a2;
+
+        prim->u0 = ~prim->x0;
+        prim->u2 = ~prim->x2;
+        prim->v0 = -0x10 - prim->y0;
+        prim->v2 = -0x10 - prim->y2;
+
+        sine = rsin((i + 1) << 8);
+        cosine = rcos((i + 1) << 8);
+        temp_a1 = ((cosine * temp_s6) >> 0xC) + 0x80;
+        temp_v1 = ((cosine * var_s0_2) >> 0xC) + 0x80;
+        temp_a0 = ((sine * temp_s6) >> 0xC) + 0x78;
+        temp_a2 = ((sine * var_s0_2) >> 0xC) + 0x78;
+
+        temp_a1 = temp_a1 >= 0 ? MIN(temp_a1, 0xFF) : 0;
+        prim->x1 = temp_a1;
+
+        temp_v1 = temp_v1 >= 0 ? MIN(temp_v1, 0xFF) : 0;
+        prim->x3 = temp_v1;
+
+        temp_a0 = temp_a0 >= 0 ? MIN(temp_a0, 0xF0) : 0;
+        prim->y1 = temp_a0;
+
+        temp_a2 = temp_a2 >= 0 ? MIN(temp_a2, 0xF0) : 0;
+        prim->y3 = temp_a2;
+
+        prim->tpage = tpage;
+        prim->u1 = ~prim->x1;
+        prim->u3 = ~prim->x3;
+        prim->v1 = -0x10 - prim->y1;
+        prim->v3 = -0x10 - prim->y3;
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_8016F6F0);
 
