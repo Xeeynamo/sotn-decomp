@@ -85,7 +85,6 @@ void MyDrawSyncCallback(int mode) {
 
 // called before MainGame
 bool InitPlatform(void);
-bool InitVramDebug(FILE* f);
 void InitStrings(void);
 bool InitEquipDefs(const char* jsonContent);
 bool InitAccessoryDefs(const char* jsonContent);
@@ -184,10 +183,6 @@ bool InitGame(void) {
 
     D_8017A000.LoadWeaponPalette = WeaponLoadPaletteStub;
     D_8017D000.LoadWeaponPalette = WeaponLoadPaletteStub;
-
-    // dumped vram for testing
-    // obtained with PCSX Redux via http://localhost:8080/api/v1/gpu/vram/raw
-    FileRead(InitVramDebug, "disks/vram.bin");
 
     InitStrings();
     if (!FileStringify(InitEquipDefs, "assets/dra/equipment.json")) {
@@ -309,11 +304,6 @@ bool FileUseContent(bool (*cb)(void* content), const char* path) {
     free(content);
     fclose(f);
     return r;
-}
-
-bool InitVramDebug(FILE* f) {
-    fread(g_RawVram, sizeof(g_RawVram), 1, f);
-    return true;
 }
 
 char g_MegaMenuStrBuffer[0x1800];
