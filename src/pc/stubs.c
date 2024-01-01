@@ -330,8 +330,8 @@ s32 D_80139008;
 s32 D_801397FC;
 SimFile* g_SimFile;
 SimFile D_80136450;
-s16 D_80136460[];
-s16 D_80136C60[];
+s16 D_80136460[0x400];
+s16 D_80136C60[0x400];
 
 JosephsCloak g_JosephsCloak;
 u8 g_Pix[4][128 * 128 / 2];
