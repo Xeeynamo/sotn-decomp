@@ -403,20 +403,7 @@ s32 GetDistanceToPlayerY(void) {
     return yDistance;
 }
 
-/**
- * Returns the player's side position relative to g_CurrentEntity
- * 0 = Player is on the right side
- * 1 = Player is on the left side
- * 2 = Player is above
- */
-s16 GetSideToPlayer(void) {
-    s16 side = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
-
-    if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
-        side |= 2;
-    }
-    return side;
-}
+#include "../get_side_to_player.h"
 
 void MoveEntity(void) {
     g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;

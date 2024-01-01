@@ -219,7 +219,7 @@ s32 GetDistanceToPlayerY(void) {
     return var_v0;
 }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018D8F0);
+#include "../get_side_to_player.h"
 
 void MoveEntity() {
     g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;
