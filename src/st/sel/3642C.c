@@ -256,23 +256,23 @@ u16* func_801B78BC(char ch) {
     } else if (ch >= 'A') {
         jCh = ('Ａ' - 'A') + ch;
     } else if (ch == ',') {
-        jCh = '，', 0;
+        jCh = '，';
     } else if (ch == '/') {
-        jCh = 0x815E, 0;
+        jCh = '／';
     } else if (ch == '.') {
-        jCh = '．', 0;
+        jCh = '．';
     } else if (ch == '-') {
-        jCh = '−', 0;
+        jCh = '−';
     } else if (ch == '(') {
-        jCh = '（', 0;
+        jCh = '（';
     } else if (ch == ')') {
-        jCh = '）', 0;
+        jCh = '）';
     } else if (ch == '\'') {
-        jCh = '’', 0;
+        jCh = '’';
     } else if (ch == '&') {
-        jCh = '＆', 0;
+        jCh = '＆';
     } else if (ch == '"') {
-        jCh = '”', 0;
+        jCh = '”';
     } else if (ch == ' ') {
         return NULL;
     } else {
