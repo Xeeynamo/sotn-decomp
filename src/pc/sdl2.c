@@ -1,6 +1,7 @@
 #include <common.h>
 #include <log.h>
 #include <game.h>
+#include <stdlib.h>
 #ifdef _MSC_VER
 #include <SDL.h>
 #include <SDL_image.h>
@@ -15,11 +16,14 @@ SDL_Window* g_Window = NULL;
 SDL_Renderer* g_Renderer = NULL;
 SDL_AudioSpec g_SdlAudioSpecs = {0};
 SDL_AudioDeviceID g_SdlAudioDevice = {0};
-SDL_Surface* g_SdlVramSurfaces[0x20];
-SDL_Texture* g_SdlVramTextures[0x20];
+SDL_Surface* g_SdlVramSurfaces[0x20] = {0};
+SDL_Texture* g_SdlVramTextures[0x20] = {0};
 unsigned int g_Tpage = 0;
 
+void ResetPlatform(void);
 bool InitPlatform() {
+    atexit(ResetPlatform);
+
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
         ERRORF("SDL_Init: %s", SDL_GetError());
         return false;
@@ -53,12 +57,18 @@ bool InitPlatform() {
     return true;
 }
 
-void ResetPlatform() {
-    for (int i = 0; i < sizeof(g_SdlVramTextures); i++) {
-        SDL_DestroyTexture(g_SdlVramTextures[i]);
+void ResetPlatform(void) {
+    for (int i = 0; i < LEN(g_SdlVramTextures); i++) {
+        if (g_SdlVramTextures[i]) {
+            SDL_DestroyTexture(g_SdlVramTextures[i]);
+            g_SdlVramTextures[i] = NULL;
+        }
     }
-    for (int i = 0; i < sizeof(g_SdlVramSurfaces); i++) {
-        SDL_FreeSurface(g_SdlVramSurfaces[i]);
+    for (int i = 0; i < LEN(g_SdlVramSurfaces); i++) {
+        if (g_SdlVramSurfaces[i]) {
+            SDL_FreeSurface(g_SdlVramSurfaces[i]);
+            g_SdlVramSurfaces[i] = NULL;
+        }
     }
 
     if (g_Renderer) {
