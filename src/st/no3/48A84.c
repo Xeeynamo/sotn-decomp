@@ -607,7 +607,35 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", func_801CC5A4);
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", func_801CC6F8);
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", func_801CC820);
+void func_801CC820(Entity* entity) {
+    u16 distance;
+
+    if (entity->facingLeft == GetSideToPlayer()) {
+        if (entity->params == 0) {
+            SetStep(5);
+        } else {
+            SetStep(4);
+        }
+        return;
+    }
+    if (entity->ext.et_801CC820.unk86 == 0) {
+        func_801CC6F8(entity);
+        return;
+    }
+    distance = GetDistanceToPlayerX();
+    if ((distance < 0x48) && (entity->step != 4)) {
+        SetStep(4);
+        return;
+    }
+    SetStep(3);
+    if (distance < 0x60) {
+        entity->ext.et_801CC820.unk7C = 1;
+    } else {
+        entity->ext.et_801CC820.unk7C = 0;
+    }
+    entity->ext.et_801CC820.unk80 = 0;
+    entity->ext.et_801CC820.unk82 = 0x20;
+}
 
 void func_801CC90C(Entity* arg0) {
     s16 temp_v0_2;
