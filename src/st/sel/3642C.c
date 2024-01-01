@@ -248,6 +248,40 @@ void func_801B786C(s16 arg0) {
     ClearImage(&rect, 0, 0, 0);
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/3642C", func_801B78BC);
+u16* func_801B78BC(char ch) {
+    u16 jCh;
+
+    if (ch >= 'a') {
+        jCh = ('ａ' - 'a') + ch;
+    } else if (ch >= 'A') {
+        jCh = ('Ａ' - 'A') + ch;
+    } else if (ch == ',') {
+        jCh = '，', 0;
+    } else if (ch == '/') {
+        jCh = 0x815E, 0;
+    } else if (ch == '.') {
+        jCh = '．', 0;
+    } else if (ch == '-') {
+        jCh = '−', 0;
+    } else if (ch == '(') {
+        jCh = '（', 0;
+    } else if (ch == ')') {
+        jCh = '）', 0;
+    } else if (ch == '\'') {
+        jCh = '’', 0;
+    } else if (ch == '&') {
+        jCh = '＆', 0;
+    } else if (ch == '"') {
+        jCh = '”', 0;
+    } else if (ch == ' ') {
+        return NULL;
+    } else {
+        jCh = ('Ａ' - 'A') + ch;
+        if (ch >= 'a') {
+            ++jCh;
+        }
+    }
+    return g_api.func_80106A28(jCh, 0);
+}
 
 INCLUDE_ASM("asm/us/st/sel/nonmatchings/3642C", func_801B79D4);
