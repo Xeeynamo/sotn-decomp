@@ -237,46 +237,38 @@ void func_8011A4D0(void) {
 }
 
 void func_8011A870(void) {
-    Entity* entity = g_CurrentEntity = &g_Entities[UNK_ENTITY_4];
-    u16 entityId;
-    s32 i = 4;
+    Entity* entity;
+    s32 i;
 
-loop_1: // !FAKE: this should be a for loop
-    entityId = entity->entityId;
+    g_CurrentEntity = &g_Entities[UNK_ENTITY_4];
+    entity = g_CurrentEntity;
+    for (i = UNK_ENTITY_4; i < UNK_ENTITY_8; i++, g_CurrentEntity++, entity++) {
+        if (entity->entityId == 0) {
+            continue;
+        }
 
-    if (entityId != 0) {
         if (entity->step == 0) {
-            if ((u32)(entity->entityId - 0xD0) < 0x10) {
-                entity->pfnUpdate = (PfnEntityUpdate)D_8016FCC0[entityId];
+            if (entity->entityId >= 0xD0 && entity->entityId < 0xE0) {
+                entity->pfnUpdate = D_8016FCC0[entity->entityId];
             } else {
-                goto label;
+                continue;
             }
         }
 
-        if (entity->pfnUpdate != NULL) {
+        if (entity->pfnUpdate) {
             entity->pfnUpdate(entity);
             entity = g_CurrentEntity;
             if (entity->entityId != 0) {
-                if ((!(entity->flags & FLAG_UNK_04000000)) &&
-                    (((u32)((((u16)entity->posX.i.hi) + 0x20) & 0xFFFF) >=
-                      0x141) ||
-                     ((u32)((((u16)entity->posY.i.hi) + 0x10) & 0xFFFF) >=
-                      0x111))) {
+                if (!(entity->flags & FLAG_UNK_04000000) &&
+                    (entity->posX.i.hi < -0x20 || entity->posX.i.hi > 0x120 ||
+                     entity->posY.i.hi < -0x10 || entity->posY.i.hi > 0x100)) {
                     DestroyEntity(entity);
-                    goto label;
                 } else if (entity->flags & FLAG_UNK_100000) {
                     UpdateAnim(NULL, D_800ACFB4);
                 }
             }
         }
     }
-label:
-    i++;
-    g_CurrentEntity++;
-    entity++;
-
-    if (i < 8)
-        goto loop_1;
 }
 
 void func_8011A9D8(void) {
@@ -478,9 +470,9 @@ void EntityEntFactory(Entity* self) {
         newEntity->entityId =
             self->ext.factory.childId + self->ext.factory.unkA8;
         newEntity->params = self->ext.factory.unkA0;
-        // The child  (newEntity) is not an ent factory, but because the
-        // factory creates many entities, we can't pick a particular extension.
-        // But we're not allowed to use generic, so i'll just reuse entFactory.
+        // The child  (newEntity) is not an ent factory, but because the factory
+        // creates many entities, we can't pick a particular extension. But
+        // we're not allowed to use generic, so i'll just reuse entFactory.
         newEntity->ext.factory.parent = self->ext.factory.parent;
         newEntity->posX.val = self->posX.val;
         newEntity->posY.val = self->posY.val;
