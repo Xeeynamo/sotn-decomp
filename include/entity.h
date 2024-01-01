@@ -655,6 +655,15 @@ typedef struct {
     s32 unk88;
 } ET_8016E9E4;
 
+typedef struct {
+    u8 unk7C;
+    u8 unk7D[3];
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+    s16 unk86;
+} ET_801CC820;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_EntFactory factory;
@@ -717,5 +726,6 @@ typedef union {
     /* 0x7C */ ET_Death death;
     /* 0x7C */ ET_SpittleBone spittleBone;
     /* 0x7C */ ET_Player player;
+    /* 0x7C */ ET_801CC820 et_801CC820;
     /* 0x7C */ char stub[0x40];
 } Ext;
