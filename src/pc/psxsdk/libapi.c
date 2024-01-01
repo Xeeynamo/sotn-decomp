@@ -2,10 +2,8 @@
 #include <log.h>
 #include <psxsdk/kernel.h>
 
-int VSync(int mode) {
-    DEBUGF("dummy");
-    return 0;
-}
+int MyVSync(int mode);
+int VSync(int mode) { return MyVSync(mode); }
 
 long SetRCnt(unsigned long a, unsigned short b, long c) { NOT_IMPLEMENTED; }
 

@@ -4,21 +4,28 @@
 #include <stdlib.h>
 #ifdef _MSC_VER
 #include <SDL.h>
-#include <SDL_image.h>
 #else
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #endif
 #include "pc.h"
 
+typedef enum {
+    DEBUG_SDL_NONE,
+    DEBUG_SDL_SHOW_VRAM_16bpp,
+    DEBUG_SDL_SHOW_VRAM_8bpp,
+    DEBUG_SDL_SHOW_VRAM_4bpp,
+} DebugSdl;
+
 extern bool g_IsQuitRequested;
+extern u16 g_RawVram[VRAM_W * VRAM_H];
 SDL_Window* g_Window = NULL;
 SDL_Renderer* g_Renderer = NULL;
 SDL_AudioSpec g_SdlAudioSpecs = {0};
 SDL_AudioDeviceID g_SdlAudioDevice = {0};
-SDL_Surface* g_SdlVramSurfaces[0x20] = {0};
-SDL_Texture* g_SdlVramTextures[0x20] = {0};
+DebugSdl g_DebugSdl = DEBUG_SDL_NONE;
 unsigned int g_Tpage = 0;
+static SDL_Texture* g_VramTex = NULL;
+static int g_LastVramTexTpage = -1;
 
 void ResetPlatform(void);
 bool InitPlatform() {
@@ -26,11 +33,6 @@ bool InitPlatform() {
 
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
         ERRORF("SDL_Init: %s", SDL_GetError());
-        return false;
-    }
-
-    if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
-        ERRORF("IMG_Init: %s", SDL_GetError());
         return false;
     }
 
@@ -49,26 +51,26 @@ bool InitPlatform() {
         ERRORF("SDL_CreateRenderer: %s", SDL_GetError());
         return false;
     }
+    SDL_SetRenderDrawBlendMode(g_Renderer, SDL_BLENDMODE_BLEND);
 
-    memset(g_SdlVramSurfaces, 0, sizeof(g_SdlVramSurfaces));
-    memset(g_SdlVramTextures, 0, sizeof(g_SdlVramTextures));
+    g_VramTex = SDL_CreateTexture(g_Renderer, SDL_PIXELFORMAT_ABGR1555,
+                                  SDL_TEXTUREACCESS_STREAMING, 256, 256);
+    if (!g_VramTex) {
+        ERRORF("unable to create VRAM texture: %s", SDL_GetError());
+        return false;
+    }
+    SDL_SetTextureBlendMode(g_VramTex, SDL_BLENDMODE_BLEND);
+
     g_Tpage = 0;
-
     return true;
 }
 
 void ResetPlatform(void) {
-    for (int i = 0; i < LEN(g_SdlVramTextures); i++) {
-        if (g_SdlVramTextures[i]) {
-            SDL_DestroyTexture(g_SdlVramTextures[i]);
-            g_SdlVramTextures[i] = NULL;
-        }
-    }
-    for (int i = 0; i < LEN(g_SdlVramSurfaces); i++) {
-        if (g_SdlVramSurfaces[i]) {
-            SDL_FreeSurface(g_SdlVramSurfaces[i]);
-            g_SdlVramSurfaces[i] = NULL;
-        }
+    g_Tpage = 0;
+    g_LastVramTexTpage = -1;
+    if (g_VramTex) {
+        SDL_DestroyTexture(g_VramTex);
+        g_VramTex = NULL;
     }
 
     if (g_Renderer) {
@@ -81,50 +83,7 @@ void ResetPlatform(void) {
         g_Window = NULL;
     }
 
-    IMG_Quit();
     SDL_Quit();
-}
-
-bool LoadPngToTexture(const char* pngPath, unsigned int textureIndex) {
-    INFOF("loading '%s' into %d", pngPath, textureIndex);
-    if (textureIndex >= LEN(g_SdlVramTextures)) {
-        ERRORF("textureIndex %d out of bound for '%s'", textureIndex, pngPath);
-        return false;
-    }
-
-    g_SdlVramSurfaces[textureIndex] = IMG_Load(pngPath);
-    if (!g_SdlVramSurfaces[textureIndex]) {
-        ERRORF("IMG_Load error: %s", SDL_GetError());
-        return false;
-    }
-
-    g_SdlVramTextures[textureIndex] = SDL_CreateTextureFromSurface(
-        g_Renderer, g_SdlVramSurfaces[textureIndex]);
-    return true;
-}
-
-bool InitializeTexture(unsigned int textureIndex) {
-    if (textureIndex >= LEN(g_SdlVramTextures)) {
-        ERRORF("textureIndex %d out of bound", textureIndex);
-        return false;
-    }
-
-    if (g_SdlVramSurfaces[textureIndex] || g_SdlVramTextures[textureIndex]) {
-        ERRORF("textureIndex %d previously initialized, now replacing it",
-               textureIndex);
-        if (g_SdlVramTextures[textureIndex]) {
-            SDL_DestroyTexture(g_SdlVramTextures[textureIndex]);
-        }
-        if (g_SdlVramSurfaces[textureIndex]) {
-            SDL_FreeSurface(g_SdlVramSurfaces[textureIndex]);
-        }
-    }
-
-    switch (textureIndex) {
-    case 0x1E:
-        return LoadPngToTexture("assets/game/font.png", textureIndex);
-    }
-    return false;
 }
 
 int MyResetGraph(int arg0) { return 0; }
@@ -200,14 +159,141 @@ u_long MyPadRead(int id) {
         if (keyb[SDL_SCANCODE_R]) {
             pressed |= PAD_R1;
         }
+
+        g_DebugSdl = DEBUG_SDL_NONE;
+        if (keyb[SDL_SCANCODE_F5]) {
+            g_DebugSdl = DEBUG_SDL_SHOW_VRAM_16bpp;
+        }
+        if (keyb[SDL_SCANCODE_F6]) {
+            g_DebugSdl = DEBUG_SDL_SHOW_VRAM_8bpp;
+        }
+        if (keyb[SDL_SCANCODE_F7]) {
+            g_DebugSdl = DEBUG_SDL_SHOW_VRAM_4bpp;
+        }
         break;
     }
 
     return pressed;
 }
 
+void ShowVram16bpp(void) {
+    SDL_Texture* t =
+        SDL_CreateTexture(g_Renderer, SDL_PIXELFORMAT_ABGR1555,
+                          SDL_TEXTUREACCESS_STREAMING, VRAM_W, VRAM_H);
+
+    u16* pixels;
+    int pitch = VRAM_STRIDE;
+    SDL_LockTexture(t, NULL, (void**)&pixels, &pitch);
+    if (pitch == VRAM_STRIDE) {
+        memcpy(pixels, g_RawVram, sizeof(g_RawVram));
+    } else {
+        u16* dst = pixels;
+        u16* src = g_RawVram;
+        for (int i = 0; i < VRAM_H; i++) {
+            memcpy(dst, src, VRAM_STRIDE);
+            dst += pitch >> 1;
+            src += VRAM_STRIDE >> 1;
+        }
+    }
+    SDL_UnlockTexture(t);
+
+    SDL_Rect rsrc = {512, 0, 512, 256};
+    SDL_Rect rdst = {0, 0, 256, 128};
+    SDL_RenderCopy(g_Renderer, t, &rsrc, &rdst);
+
+    rsrc.y += 256;
+    rdst.y += 128;
+    SDL_RenderCopy(g_Renderer, t, &rsrc, &rdst);
+
+    SDL_DestroyTexture(t);
+}
+
+void ShowVram8bpp(void) {
+    SDL_Texture* t =
+        SDL_CreateTexture(g_Renderer, SDL_PIXELFORMAT_RGBA32,
+                          SDL_TEXTUREACCESS_STREAMING, VRAM_W, VRAM_H);
+
+    u8* pixels;
+    int pitch = VRAM_STRIDE;
+    SDL_LockTexture(t, NULL, (void**)&pixels, &pitch);
+
+    u16* src = g_RawVram;
+    for (int i = 0; i < VRAM_H; i++) {
+        for (int j = 0; j < VRAM_W; j++) {
+            u8 ch = src[j];
+            pixels[j * 4 + 0] = ch;
+            pixels[j * 4 + 1] = ch;
+            pixels[j * 4 + 2] = ch;
+            pixels[j * 4 + 3] = 0xFF;
+        }
+        src += VRAM_W;
+        pixels += pitch;
+    }
+    SDL_UnlockTexture(t);
+
+    SDL_Rect rsrc = {512, 0, 512, 256};
+    SDL_Rect rdst = {0, 0, 256, 128};
+    SDL_RenderCopy(g_Renderer, t, &rsrc, &rdst);
+
+    rsrc.y += 256;
+    rdst.y += 128;
+    SDL_RenderCopy(g_Renderer, t, &rsrc, &rdst);
+
+    SDL_DestroyTexture(t);
+}
+
+void ShowVram4bpp(void) {
+    SDL_Texture* t =
+        SDL_CreateTexture(g_Renderer, SDL_PIXELFORMAT_RGBA32,
+                          SDL_TEXTUREACCESS_STREAMING, VRAM_W * 2, VRAM_H);
+
+    u8* pixels;
+    int pitch = VRAM_STRIDE;
+    SDL_LockTexture(t, NULL, (void**)&pixels, &pitch);
+
+    u16* src = g_RawVram;
+    for (int i = 0; i < VRAM_H; i++) {
+        for (int j = 0; j < VRAM_W; j++) {
+            u8 ch = src[j];
+            pixels[j * 8 + 0] = (ch & 0xF) << 4;
+            pixels[j * 8 + 1] = (ch & 0xF) << 4;
+            pixels[j * 8 + 2] = (ch & 0xF) << 4;
+            pixels[j * 8 + 3] = 0xFF;
+            pixels[j * 8 + 4] = ch & 0xF0;
+            pixels[j * 8 + 5] = ch & 0xF0;
+            pixels[j * 8 + 6] = ch & 0xF0;
+            pixels[j * 8 + 7] = 0xFF;
+        }
+        src += VRAM_W;
+        pixels += pitch;
+    }
+    SDL_UnlockTexture(t);
+
+    SDL_Rect rsrc = {1024, 0, 1024, 256};
+    SDL_Rect rdst = {0, 0, 256, 128};
+    SDL_RenderCopy(g_Renderer, t, &rsrc, &rdst);
+
+    rsrc.y += 256;
+    rdst.y += 128;
+    SDL_RenderCopy(g_Renderer, t, &rsrc, &rdst);
+
+    SDL_DestroyTexture(t);
+}
+
 void MyDrawSyncCallback();
 int MyDrawSync(int mode) {
+    switch (g_DebugSdl) {
+    case DEBUG_SDL_SHOW_VRAM_16bpp:
+        ShowVram16bpp();
+        break;
+    case DEBUG_SDL_SHOW_VRAM_8bpp:
+        ShowVram8bpp();
+        break;
+    case DEBUG_SDL_SHOW_VRAM_4bpp:
+        ShowVram4bpp();
+        break;
+    }
+
     SDL_RenderPresent(g_Renderer);
     SDL_RenderSetScale(g_Renderer, SCREEN_SCALE, SCREEN_SCALE);
 
@@ -246,19 +332,63 @@ DISPENV* MyPutDispEnv(DISPENV* env) {
 }
 
 void MySetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw) {
-    if (tpage >= LEN(g_SdlVramTextures)) {
-        DEBUGF("tpage %d, how to handle?", tpage);
-        return false;
-    }
-    if (!g_SdlVramTextures[tpage] && !InitializeTexture(tpage)) {
-        return;
-    }
-
     g_Tpage = tpage;
 }
 
-#define PSX_TEX_U(x) ((float)(x) / 128.0f)
-#define PSX_TEX_V(x) ((float)(x) / 128.0f)
+SDL_Texture* GetVramTexture(int tpage, int clut) {
+    if (g_LastVramTexTpage != tpage) {
+        g_LastVramTexTpage = tpage;
+
+        u8* src = g_RawVram;
+        src += (tpage & 0xF) * 128;
+        src += ((tpage >> 4) & 1) * VRAM_W * 512;
+
+        u16* pal = g_RawVram;
+        pal += clut * 0x10;
+        // Hack that rewrites the VRAM to adjust transparent palette colors
+        pal[0] &= ~0x8000; // first color always transparent?
+        for (int i = 1; i < 256; i++) {
+            pal[i] |= 0x8000;
+        }
+
+        u16* pixels;
+        int pitch;
+        SDL_LockTexture(g_VramTex, NULL, (void**)&pixels, &pitch);
+
+        int bpp = tpage >> 7;
+        switch (bpp) {
+        case 0: // 4bpp
+            for (int i = 0; i < 256; i++) {
+                for (int j = 0; j < 128; j++) {
+                    u8 ch = src[j];
+                    pixels[j * 2 + 0] = pal[ch & 0xF];
+                    pixels[j * 2 + 1] = pal[ch >> 4];
+                }
+                pixels += pitch >> 1;
+                src += VRAM_STRIDE;
+            }
+            break;
+        case 1: // 8 bpp
+            for (int i = 0; i < 256; i++) {
+                for (int j = 0; j < 256; j++) {
+                    pixels[j] = pal[src[j]];
+                }
+                pixels += pitch >> 1;
+                src += VRAM_STRIDE;
+            }
+            break;
+        default:
+            WARNF("bpp %d not supported", bpp);
+            break;
+        }
+        SDL_UnlockTexture(g_VramTex);
+    }
+
+    return g_VramTex;
+}
+
+#define PSX_TEX_U(x) ((float)(x) / 256.0f)
+#define PSX_TEX_V(x) ((float)(x) / 256.0f)
 void SetSdlVertexSprite(SDL_Vertex* v, SPRT* sprt) {
     sprt->r0 = 255;
     sprt->g0 = 255;
@@ -327,6 +457,7 @@ void SetSdlVertexG4(SDL_Vertex* v, POLY_G4* poly) {
     v[3] = v[1];
     v[5] = v[2];
 }
+
 void SetSdlVertexGT4(SDL_Vertex* v, POLY_GT4* poly) {
     v[0].position.x = poly->x0;
     v[0].position.y = poly->y0;
@@ -403,6 +534,7 @@ void SetSdlVertexPrim(SDL_Vertex* v, Primitive* prim) {
 
 void MyRenderPrimitives(void) {
     SDL_Vertex v[6];
+    SDL_Texture* t = NULL;
 
     for (int i = 0; i < LEN(g_PrimBuf); i++) {
         Primitive* prim = &g_PrimBuf[i];
@@ -417,8 +549,8 @@ void MyRenderPrimitives(void) {
             break;
         case PRIM_GT4:
             SetSdlVertexPrim(v, prim);
-            SDL_RenderGeometry(
-                g_Renderer, g_SdlVramTextures[g_Tpage], v, 6, NULL, 0);
+            t = GetVramTexture(prim->tpage, prim->clut);
+            SDL_RenderGeometry(g_Renderer, t, v, 6, NULL, 0);
             break;
         case PRIM_LINE_G2:
             SDL_SetRenderDrawColor(
@@ -428,14 +560,21 @@ void MyRenderPrimitives(void) {
             break;
         }
     }
-    for (int i = 0; i < g_GpuUsage.g4; i++) {
+    for (int i = 0; i < g_GpuUsage.gt4; i++) {
         SetSdlVertexG4(v, &g_CurrentBuffer->polyG4[i]);
         SDL_RenderGeometry(g_Renderer, NULL, v, 6, NULL, 0);
     }
+    for (int i = 0; i < g_GpuUsage.gt4; i++) {
+        POLY_GT4* poly = &g_CurrentBuffer->polyGT4[i];
+        SetSdlVertexGT4(v, poly);
+        t = GetVramTexture(poly->tpage, poly->clut);
+        SDL_RenderGeometry(g_Renderer, t, v, 6, NULL, 0);
+    }
     for (int i = 0; i < g_GpuUsage.sp; i++) {
-        SetSdlVertexSprite(v, &g_CurrentBuffer->sprite[i]);
-        SDL_RenderGeometry(
-            g_Renderer, g_SdlVramTextures[g_Tpage], v, 6, NULL, 0);
+        SPRT* sp = &g_CurrentBuffer->sprite[i];
+        SetSdlVertexSprite(v, sp);
+        t = GetVramTexture(g_Tpage, sp->clut);
+        SDL_RenderGeometry(g_Renderer, t, v, 6, NULL, 0);
     }
     for (int i = 0; i < g_GpuUsage.line; i++) {
         LINE_G2* poly = &g_CurrentBuffer->lineG2[i];

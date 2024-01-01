@@ -5,11 +5,14 @@
 #include <cJSON/cJSON.h>
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 const char g_DummyName[] = "DUMMY\xFF";
 const char g_DummyDesc[] = "dummy description";
 RelicDesc g_RelicDummy = {g_DummyName, g_DummyDesc, 0, 0, 0};
 
+u16 g_RawVram[VRAM_W * VRAM_H];
 GameApi g_ApiInit = {0};
 Equipment g_EquipDefs[0x100] = {0};
 Accessory g_AccessoryDefs[0x100] = {0};
@@ -82,6 +85,7 @@ void MyDrawSyncCallback(int mode) {
 
 // called before MainGame
 bool InitPlatform(void);
+bool InitVramDebug(FILE* f);
 void InitStrings(void);
 bool InitEquipDefs(const char* jsonContent);
 bool InitAccessoryDefs(const char* jsonContent);
@@ -161,6 +165,7 @@ bool InitGame(void) {
     api.unused13C = NULL;
     api.o.Update = NULL;
     api.o.TestCollisions = StageOvlCb;
+    api.o.InitRoomEntities = StageOvlCb;
     api.o.unk08 = NULL;
     api.o.InitRoomEntities = StageOvlCb;
     api.o.rooms = NULL;
@@ -179,6 +184,10 @@ bool InitGame(void) {
 
     D_8017A000.LoadWeaponPalette = WeaponLoadPaletteStub;
     D_8017D000.LoadWeaponPalette = WeaponLoadPaletteStub;
+
+    // dumped vram for testing
+    // obtained with PCSX Redux via http://localhost:8080/api/v1/gpu/vram/raw
+    FileRead(InitVramDebug, "disks/vram.bin");
 
     InitStrings();
     if (!FileStringify(InitEquipDefs, "assets/dra/equipment.json")) {
@@ -201,11 +210,11 @@ void ResetGame(void) { ResetPlatform(); }
 
 MyRenderPrimitives();
 void RenderPrimitives(void) {
-    INFOF("dr  :%03x, gt4 :%03x", g_GpuUsage.drawModes, g_GpuUsage.gt4);
-    INFOF("g4  :%03x, gt3 :%03x", g_GpuUsage.g4, g_GpuUsage.gt3);
-    INFOF("line:%03x, sp16:%03x", g_GpuUsage.line, g_GpuUsage.sp16);
-    INFOF("sp  :%03x, tile:%03x", g_GpuUsage.sp, g_GpuUsage.tile);
-    INFOF("env :%03x, prim :%03x", g_GpuUsage.env, g_GpuUsage.env);
+    // DEBUGF("dr  :%03x, gt4 :%03x", g_GpuUsage.drawModes, g_GpuUsage.gt4);
+    // DEBUGF("g4  :%03x, gt3 :%03x", g_GpuUsage.g4, g_GpuUsage.gt3);
+    // DEBUGF("line:%03x, sp16:%03x", g_GpuUsage.line, g_GpuUsage.sp16);
+    // DEBUGF("sp  :%03x, tile:%03x", g_GpuUsage.sp, g_GpuUsage.tile);
+    // DEBUGF("env :%03x, prim :%03x", g_GpuUsage.env, g_GpuUsage.env);
     MyRenderPrimitives();
 }
 
@@ -288,6 +297,11 @@ bool FileUseContent(bool (*cb)(void* content), const char* path) {
     return r;
 }
 
+bool InitVramDebug(FILE* f) {
+    fread(g_RawVram, sizeof(g_RawVram), 1, f);
+    return true;
+}
+
 char g_MegaMenuStrBuffer[0x1800];
 size_t g_MegaMenuStrIndex = 0;
 char MyEncodeChar(char ch) {
@@ -301,7 +315,6 @@ char MyEncodeChar(char ch) {
     return ch;
 }
 const char* AnsiToSotnMenuString(const char* str) {
-    DEBUGF("%s", str);
     size_t end = strlen(str) + 2 + g_MegaMenuStrIndex;
     if (end >= LEN(g_MegaMenuStrBuffer)) {
         ERRORF(
@@ -448,4 +461,19 @@ void InitEnemyDefs(void) {
 }
 void InitSubwpnDefs(void) {
     //
+}
+
+void (*g_VsyncCallback)() = NULL;
+int MyVSyncCallback(void (*f)()) { g_VsyncCallback = f; }
+
+int MyVSync(int mode) {
+    if (g_VsyncCallback) {
+        g_VsyncCallback();
+    }
+    return 0;
+}
+
+int MyLoadImage(RECT* rect, u_long* p) {
+    DEBUGF("(%X, %X, %X, %X): %p", rect->x, rect->y, rect->w, rect->h, p);
+    return 0;
 }

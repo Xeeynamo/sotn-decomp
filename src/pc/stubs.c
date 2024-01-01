@@ -17,7 +17,6 @@ GameState g_GameState;
 Entity g_Entities[TOTAL_ENTITY_COUNT];
 unkGraphicsStruct g_unkGraphicsStruct;
 Primitive g_PrimBuf[MAX_PRIM_COUNT];
-Lba g_StagesLba[0x50];
 FgLayer D_8003C708;
 s16 D_8003C710;
 s16 D_8003C712;
@@ -57,7 +56,6 @@ s32 D_80097928;
 s32 D_8006C3AC;
 s32 D_800978C4;
 s32 D_80097C98;
-u32 D_800A04F8;
 SVECTOR* D_800A3210[1];
 SVECTOR* D_800A33A0[1];
 SVECTOR* D_800A34C0[18][3];
@@ -149,6 +147,18 @@ PixPattern* D_800C52F8[] = {
 };
 
 // dra.h
+u16 D_800AC958[] = {
+    0x0200, 0x0220, 0x0200, 0x0220, 0x0240, 0x0260, 0x0240, 0x0260,
+    0x0280, 0x02A0, 0x0280, 0x02A0, 0x02C0, 0x02E0, 0x02C0, 0x02E0,
+    0x0300, 0x0320, 0x0300, 0x0320, 0x0340, 0x0360, 0x0340, 0x0360,
+    0x0380, 0x03A0, 0x0380, 0x03A0, 0x03C0, 0x03E0, 0x03C0, 0x03E0,
+};
+s16 D_800AC998[] = {
+    0x0200, 0x0220, 0x0200, 0x0220, 0x0240, 0x0260, 0x0240, 0x0260,
+    0x0280, 0x02A0, 0x0280, 0x02A0, 0x02C0, 0x02E0, 0x02C0, 0x02E0,
+    0x0300, 0x0320, 0x0300, 0x0320, 0x0340, 0x0360, 0x0340, 0x0360,
+    0x0380, 0x03A0, 0x0380, 0x03A0, 0x03C0, 0x03E0, 0x03C0, 0x03E0,
+};
 GpuUsage g_GpuMaxUsage;
 GpuBuffer* g_BackBuffer;
 s32 g_DebugFreeze;
@@ -318,6 +328,10 @@ s32 D_8013B5E8;
 s32 D_80137994;
 s32 D_80139008;
 s32 D_801397FC;
+SimFile* g_SimFile;
+SimFile D_80136450;
+s16 D_80136460[];
+s16 D_80136C60[];
 
 JosephsCloak g_JosephsCloak;
 u8 g_Pix[4][128 * 128 / 2];
@@ -481,14 +495,7 @@ void func_8013572C(int sndId, int unk02, int unk04) { NOT_IMPLEMENTED; }
 
 void func_801073C0(void) { NOT_IMPLEMENTED; }
 
-s32 LoadFileSim(s32 fileId, SimFileType type) {
-    NOT_IMPLEMENTED;
-    return 0;
-}
-
 void func_800EA7CC(void) { NOT_IMPLEMENTED; }
-
-void VSyncHandler(void) { NOT_IMPLEMENTED; }
 
 void RenderEntities(void) { NOT_IMPLEMENTED; }
 

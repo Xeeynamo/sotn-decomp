@@ -26,7 +26,7 @@ void SetDumpFnt(int id) { NOT_IMPLEMENTED; }
 void SetDispMask(int mask) { NOT_IMPLEMENTED; }
 
 int ClearImage(RECT* rect, u_char r, u_char g, u_char b) { NOT_IMPLEMENTED; }
-int LoadImage(RECT* rect, u_long* p) { NOT_IMPLEMENTED; }
+int LoadImage(RECT* rect, u_long* p) { return MyLoadImage(rect, p); }
 int StoreImage(RECT* rect, u_long* p) { NOT_IMPLEMENTED; }
 int MoveImage(RECT* rect, int x, int y) { NOT_IMPLEMENTED; }
 
