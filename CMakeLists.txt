@@ -16,6 +16,7 @@ set(SOURCE_FILES_PC
     src/pc/sotn.c
     src/pc/pc.c
     src/pc/sdl2.c
+    src/pc/sim_pc.c
 )
 
 if(WIN32)
@@ -50,6 +51,7 @@ set(SOURCE_FILES_DRA
     src/dra/play.c
     src/dra/loading.c
     src/dra/pads.c
+    src/dra/lba_stage.c
     src/dra/save_mgr_pre.c
     src/dra/save_mgr.c
     src/dra/4A538.c
