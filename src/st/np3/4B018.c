@@ -210,7 +210,25 @@ void func_801CDE88(s16* arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CDF1C);
+void func_801CDF1C(s16 entIndices[], s16 arg1[][4], s32 arg2) {
+
+    arg1 += (u16)g_CurrentEntity->ext.GH_Props.unkB0[arg2];
+
+    if (g_CurrentEntity->ext.GH_Props.unkB0[arg2 + 2] == 0u) {
+        func_801CDD80(entIndices, arg1);
+        *(arg2 + 2 + g_CurrentEntity->ext.GH_Props.unkB0) = arg1[0][0];
+    }
+
+    --*(arg2 + 2 + g_CurrentEntity->ext.GH_Props.unkB0);
+
+    if (!(g_CurrentEntity->ext.GH_Props.unkB0[arg2 + 2] & 0xFFFF)) {
+        if (arg1[1][0] == 0) {
+            g_CurrentEntity->ext.GH_Props.unkB0[arg2] = 0;
+        } else {
+            ++g_CurrentEntity->ext.GH_Props.unkB0[arg2];
+        }
+    }
+}
 
 void func_801CDFD8(Entity* self, s32 arg1) {
     if (self->ext.et_801CDFD8.unkB4 == 0) {
