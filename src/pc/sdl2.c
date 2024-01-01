@@ -26,6 +26,7 @@ DebugSdl g_DebugSdl = DEBUG_SDL_NONE;
 unsigned int g_Tpage = 0;
 static SDL_Texture* g_VramTex = NULL;
 static int g_LastVramTexTpage = -1;
+static int g_LastVramTexClut = -1;
 
 void ResetPlatform(void);
 bool InitPlatform() {
@@ -68,6 +69,7 @@ bool InitPlatform() {
 void ResetPlatform(void) {
     g_Tpage = 0;
     g_LastVramTexTpage = -1;
+    g_LastVramTexClut = -1;
     if (g_VramTex) {
         SDL_DestroyTexture(g_VramTex);
         g_VramTex = NULL;
@@ -336,20 +338,17 @@ void MySetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw) {
 }
 
 SDL_Texture* GetVramTexture(int tpage, int clut) {
-    if (g_LastVramTexTpage != tpage) {
+    u16 pal[256];
+    if (g_LastVramTexTpage != tpage || g_LastVramTexClut != clut) {
         g_LastVramTexTpage = tpage;
+        g_LastVramTexClut = clut;
 
         u8* src = g_RawVram;
         src += (tpage & 0xF) * 128;
         src += ((tpage >> 4) & 1) * VRAM_STRIDE * 256;
 
-        u16* pal = g_RawVram;
-        pal += clut * 0x10;
-        // Hack that rewrites the VRAM to adjust transparent palette colors
-        pal[0] &= ~0x8000; // first color always transparent?
-        for (int i = 1; i < 256; i++) {
-            pal[i] |= 0x8000;
-        }
+        u16* sourcepal = g_RawVram;
+        sourcepal += clut * 0x10;
 
         u16* pixels;
         int pitch;
@@ -358,6 +357,12 @@ SDL_Texture* GetVramTexture(int tpage, int clut) {
         int bpp = tpage >> 7;
         switch (bpp) {
         case 0: // 4bpp
+            // Hack that rewrites the VRAM to adjust transparent palette colors
+            memcpy(pal, sourcepal, 0x20);
+            pal[0] &= ~0x8000; // first color always transparent?
+            for (int i = 1; i < 16; i++) {
+                pal[i] |= 0x8000;
+            }
             for (int i = 0; i < 256; i++) {
                 for (int j = 0; j < 128; j++) {
                     u8 ch = src[j];
@@ -369,6 +374,12 @@ SDL_Texture* GetVramTexture(int tpage, int clut) {
             }
             break;
         case 1: // 8 bpp
+            // Hack that rewrites the VRAM to adjust transparent palette colors
+            memcpy(pal, sourcepal, 0x200);
+            pal[0] &= ~0x8000; // first color always transparent?
+            for (int i = 1; i < 256; i++) {
+                pal[i] |= 0x8000;
+            }
             for (int i = 0; i < 256; i++) {
                 for (int j = 0; j < 256; j++) {
                     pixels[j] = pal[src[j]];
@@ -390,9 +401,10 @@ SDL_Texture* GetVramTexture(int tpage, int clut) {
 #define PSX_TEX_U(x) ((float)(x) / 256.0f)
 #define PSX_TEX_V(x) ((float)(x) / 256.0f)
 void SetSdlVertexSprite(SDL_Vertex* v, SPRT* sprt) {
-    sprt->r0 = 255;
-    sprt->g0 = 255;
-    sprt->b0 = 255;
+    // u8 blend = sprt->code & 1 ? 0xFF : 0x00;
+    sprt->r0 |= 255;
+    sprt->g0 |= 255;
+    sprt->b0 |= 255;
     v[0].position.x = sprt->x0;
     v[0].position.y = sprt->y0;
     v[0].tex_coord.x = PSX_TEX_U(sprt->u0);
@@ -459,37 +471,38 @@ void SetSdlVertexG4(SDL_Vertex* v, POLY_G4* poly) {
 }
 
 void SetSdlVertexGT4(SDL_Vertex* v, POLY_GT4* poly) {
+    u8 blend = poly->code & 1 ? 0xFF : 0x00;
     v[0].position.x = poly->x0;
     v[0].position.y = poly->y0;
     v[0].tex_coord.x = PSX_TEX_U(poly->u0);
     v[0].tex_coord.y = PSX_TEX_V(poly->v0);
-    v[0].color.r = poly->r0;
-    v[0].color.g = poly->g0;
-    v[0].color.b = poly->b0;
+    v[0].color.r = poly->r0 | blend;
+    v[0].color.g = poly->g0 | blend;
+    v[0].color.b = poly->b0 | blend;
     v[0].color.a = 0xFF;
     v[1].position.x = poly->x1;
     v[1].position.y = poly->y1;
     v[1].tex_coord.x = PSX_TEX_U(poly->u1);
     v[1].tex_coord.y = PSX_TEX_V(poly->v1);
-    v[1].color.r = poly->r1;
-    v[1].color.g = poly->g1;
-    v[1].color.b = poly->b1;
+    v[1].color.r = poly->r1 | blend;
+    v[1].color.g = poly->g1 | blend;
+    v[1].color.b = poly->b1 | blend;
     v[1].color.a = 0xFF;
     v[2].position.x = poly->x2;
     v[2].position.y = poly->y2;
     v[2].tex_coord.x = PSX_TEX_U(poly->u2);
     v[2].tex_coord.y = PSX_TEX_V(poly->v2);
-    v[2].color.r = poly->r2;
-    v[2].color.g = poly->g2;
-    v[2].color.b = poly->b2;
+    v[2].color.r = poly->r2 | blend;
+    v[2].color.g = poly->g2 | blend;
+    v[2].color.b = poly->b2 | blend;
     v[2].color.a = 0xFF;
     v[4].position.x = poly->x3;
     v[4].position.y = poly->y3;
     v[4].tex_coord.x = PSX_TEX_U(poly->u3);
     v[4].tex_coord.y = PSX_TEX_V(poly->v3);
-    v[4].color.r = poly->r3;
-    v[4].color.g = poly->g3;
-    v[4].color.b = poly->b3;
+    v[4].color.r = poly->r3 | blend;
+    v[4].color.g = poly->g3 | blend;
+    v[4].color.b = poly->b3 | blend;
     v[4].color.a = 0xFF;
     v[3] = v[1];
     v[5] = v[2];
@@ -549,7 +562,7 @@ void MyRenderPrimitives(void) {
             break;
         case PRIM_GT4:
             SetSdlVertexPrim(v, prim);
-            t = GetVramTexture(prim->tpage, prim->clut);
+            t = GetVramTexture(prim->tpage, D_8003C104[prim->clut]);
             SDL_RenderGeometry(g_Renderer, t, v, 6, NULL, 0);
             break;
         case PRIM_LINE_G2:
