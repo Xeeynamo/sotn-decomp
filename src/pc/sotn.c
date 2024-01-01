@@ -210,11 +210,11 @@ void ResetGame(void) { ResetPlatform(); }
 
 MyRenderPrimitives();
 void RenderPrimitives(void) {
-    // DEBUGF("dr  :%03x, gt4 :%03x", g_GpuUsage.drawModes, g_GpuUsage.gt4);
-    // DEBUGF("g4  :%03x, gt3 :%03x", g_GpuUsage.g4, g_GpuUsage.gt3);
-    // DEBUGF("line:%03x, sp16:%03x", g_GpuUsage.line, g_GpuUsage.sp16);
-    // DEBUGF("sp  :%03x, tile:%03x", g_GpuUsage.sp, g_GpuUsage.tile);
-    // DEBUGF("env :%03x, prim :%03x", g_GpuUsage.env, g_GpuUsage.env);
+    DEBUGF("dr  :%03x, gt4 :%03x", g_GpuUsage.drawModes, g_GpuUsage.gt4);
+    DEBUGF("g4  :%03x, gt3 :%03x", g_GpuUsage.g4, g_GpuUsage.gt3);
+    DEBUGF("line:%03x, sp16:%03x", g_GpuUsage.line, g_GpuUsage.sp16);
+    DEBUGF("sp  :%03x, tile:%03x", g_GpuUsage.sp, g_GpuUsage.tile);
+    DEBUGF("env :%03x, prim :%03x", g_GpuUsage.env, g_GpuUsage.env);
     MyRenderPrimitives();
 }
 
