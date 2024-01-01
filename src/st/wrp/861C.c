@@ -419,14 +419,7 @@ s32 GetDistanceToPlayerY(void) {
     return yDistance;
 }
 
-s32 GetSideToPlayer(void) {
-    s16 arg0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
-
-    if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
-        arg0 |= 2;
-    }
-    return arg0;
-}
+#include "../get_side_to_player.h"
 
 void MoveEntity(void) {
     g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;

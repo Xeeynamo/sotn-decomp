@@ -17,6 +17,7 @@ CreateEntityFromEntity = 0x8018C854;
 DestroyEntity = 0x8018D580;
 PreventEntityFromRespawning = 0x8018D668;
 GetDistanceToPlayerX = 0x8018D880;
+GetSideToPlayer = 0x8018D8F0;
 MoveEntity = 0x8018D934;
 FallEntity = 0x8018D964;
 AllocEntity = 0x8018DDF0;
