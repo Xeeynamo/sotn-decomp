@@ -560,7 +560,7 @@ void MyRenderPrimitives(void) {
             break;
         }
     }
-    for (int i = 0; i < g_GpuUsage.gt4; i++) {
+    for (int i = 0; i < g_GpuUsage.g4; i++) {
         SetSdlVertexG4(v, &g_CurrentBuffer->polyG4[i]);
         SDL_RenderGeometry(g_Renderer, NULL, v, 6, NULL, 0);
     }
