@@ -8,7 +8,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
 find_package(SDL2 REQUIRED)
-find_package(SDL2_image REQUIRED)
 
 set(SOURCE_FILES_PC
     src/pc/main.c
@@ -79,7 +78,6 @@ add_executable(${PROJECT_NAME}
 
 target_include_directories(${PROJECT_NAME} PRIVATE 
     ${SDL2_INCLUDE_DIRS}
-    ${SDL2_IMAGE_INCLUDE_DIRS}
     include
     src/dra
     src/pc/3rd
@@ -87,7 +85,6 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 
 target_link_libraries(${PROJECT_NAME} PRIVATE 
     ${SDL2_LIBRARIES}
-    ${SDL2_IMAGE_LIBRARIES}
     )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE 
