@@ -62,6 +62,7 @@ typedef enum EntityIDs {
     /* 0x10 */ E_DUMMY_10,
 
     /* 0x11 */ E_ID_11 = 0x11,
+    /* 0x14 */ E_ID_14 = 0x14,
     /* 0x15 */ E_ID_15 = 0x15,
     /* 0x17 */ E_ID_17 = 0x17,
     /* 0x27 */ E_FALLING_ROCK_2 = 0x27,
@@ -86,6 +87,8 @@ extern Primitive* FindFirstUnkPrim(Primitive* poly);
 extern LayoutEntity* D_80180850[];
 extern u16 g_InitializeData0[];
 extern u16 g_InitializeEntityData0[];
+extern s16 D_80182A38[];
+extern u8 D_80182A48[];
 extern u16 D_80180AD0[];
 extern u16 D_80180ADC[];
 extern u16 D_80180AE8[];
@@ -173,6 +176,8 @@ extern u8 D_80181B4C[];
 extern Unkstruct_80180FE0 D_80181C5C[];
 extern u16 D_80181C8C[];
 extern s16 D_801820C4[];
+extern s16 D_801832D8[];
+extern u8 D_801832E8[];
 extern u16 D_801823F4[];
 extern u8* D_80182438[];
 extern u16 D_80182424[];
