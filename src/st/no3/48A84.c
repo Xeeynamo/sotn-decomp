@@ -612,7 +612,7 @@ void func_801CC5A4(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,
     for (i = 0; i < count; ++i) {
         Entity* newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (newEnt != NULL) {
-            newEnt->entityId = 0x14;
+            newEnt->entityId = E_ID_14;
             newEnt->pfnUpdate = EntityUnkId14;
             newEnt->params = params;
             newEnt->posX.i.hi = x + i * xOfst;
@@ -743,7 +743,7 @@ void func_801CF438(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,
     for (i = 0; i < count; ++i) {
         Entity* newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (newEnt != NULL) {
-            newEnt->entityId = 0x14;
+            newEnt->entityId = E_ID_14;
             newEnt->pfnUpdate = EntityUnkId14;
             newEnt->params = params;
             newEnt->posX.i.hi = x + i * xOfst;
