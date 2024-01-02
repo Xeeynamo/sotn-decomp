@@ -328,7 +328,7 @@ s32 func_8018DF84(s32 arg0, s32 arg1) {
     return func_8018DF04(x, y);
 }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018DFCC);
+#include "../adjust_value_within_threshold.h"
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", UnkEntityFunc0);
 

@@ -562,28 +562,7 @@ u8 func_801C5668(s32 arg0, s32 arg1) {
     return func_801C55E8(a, b);
 }
 
-u8 func_801C56B0(u8 arg0, u8 arg1, u8 arg2) {
-    u8 var_v0;
-    s8 temp_a2 = arg2 - arg1;
-
-    if (temp_a2 < 0) {
-        var_v0 = -temp_a2;
-    } else {
-        var_v0 = temp_a2;
-    }
-
-    if (var_v0 > arg0) {
-        if (temp_a2 < 0) {
-            var_v0 = arg1 - arg0;
-        } else {
-            var_v0 = arg1 + arg0;
-        }
-
-        return var_v0;
-    }
-
-    return arg2;
-}
+#include "../adjust_value_within_threshold.h"
 
 // Duplicate
 void UnkEntityFunc0(u16 slope, s16 speed) {

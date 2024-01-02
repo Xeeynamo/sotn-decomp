@@ -56,6 +56,7 @@ GetDistanceToPlayerY = 0x801BC810;
 GetSideToPlayer = 0x801BC844;
 MoveEntity = 0x801BC888;
 AllocEntity = 0x801BCD44;
+AdjustValueWithinThreshold = 0x801BCF20;
 SetStep = 0x801BD114;
 SetSubStep = 0x801BD134;
 InitializeEntity = 0x801BD1E4;
