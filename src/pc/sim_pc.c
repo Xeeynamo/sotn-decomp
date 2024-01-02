@@ -129,6 +129,7 @@ void LoadStageTileset(u8* pTilesetData, s32 y) {
     }
 }
 
+void InitStageDummy(Overlay* o);
 s32 LoadFileSimToMem(SimKind kind) {
     char pad[0x20];
     s32 i;
@@ -137,9 +138,6 @@ s32 LoadFileSimToMem(SimKind kind) {
     u16* clutAddr;
 
     switch (kind) {
-    case SIM_STAGE_PRG:
-        WARNF("TODO: bind g_Api.o to stage %02X", g_StageId);
-        break;
     case SIM_FAMILIAR_CHR:
         LoadTPage(SIM_CHR0, 0, 0, 0x2C0, 0x100, 0x100, 0x80);
         LoadTPage(SIM_CHR1, 0, 0, 0x2C0, 0x180, 0x80, 0x80);
@@ -278,6 +276,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         }
         break;
     case SimFileType_StagePrg:
+        InitStageDummy(&g_api.o);
         INFOF("TODO: will load stage '%s'", g_StagesLba[g_StageId].ovlName);
         return 0;
     case SimFileType_Vh:

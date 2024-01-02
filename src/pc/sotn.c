@@ -1,7 +1,6 @@
 #include "pc.h"
 #include "dra.h"
 #include "servant.h"
-#include "sfx.h"
 #include <cJSON/cJSON.h>
 
 #include <stdio.h>
@@ -47,10 +46,7 @@ GfxBank** g_GfxStageBank[0x40] = {
 };
 extern UnkStructClut* D_800A3BB8[];
 
-void StageOvlCb() {
-    SetGameState(Game_NowLoading);
-    g_GameStep = NowLoading_2;
-}
+void StageOvlCb() {}
 
 void WeaponLoadPaletteStub(s32 arg0) { NOT_IMPLEMENTED; }
 
@@ -66,14 +62,6 @@ void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index);
 void AddToInventory(u16 itemId, s32 itemCategory);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void DebugInputWait(const char* msg);
-
-// stub to the original UpdateGame
-void MenuHandle(void);
-void func_800F298C() {
-    g_PrimBuf[D_8013799C].clut = 1;
-    MenuHandle();
-    PlaySfx(MU_REQUIEM_FOR_THE_GODS);
-}
 
 int g_Frame = 0;
 void MyDrawSyncCallback(int mode) {
