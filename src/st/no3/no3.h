@@ -62,7 +62,7 @@ typedef enum EntityIDs {
     /* 0x10 */ E_DUMMY_10,
 
     /* 0x11 */ E_ID_11 = 0x11,
-    /* 0x15 */ E_ID_14 = 0x14,
+    /* 0x14 */ E_ID_14 = 0x14,
     /* 0x15 */ E_ID_15 = 0x15,
     /* 0x17 */ E_ID_17 = 0x17,
     /* 0x27 */ E_FALLING_ROCK_2 = 0x27,
