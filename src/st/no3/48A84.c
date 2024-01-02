@@ -603,7 +603,27 @@ void EntityRoomForeground(Entity* entity) {
     AnimateEntity(objInit->unk10, entity);
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", func_801CC5A4);
+void func_801CC5A4(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,
+                   u8 arg5, s16 xOfst) {
+    s32 i;
+    s16 y = entity->posY.i.hi + yDist;
+    s16 x = entity->posX.i.hi + xDist;
+
+    for (i = 0; i < count; ++i) {
+        Entity* newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        if (newEnt != NULL) {
+            newEnt->entityId = 0x14;
+            newEnt->pfnUpdate = EntityUnkId14;
+            newEnt->params = params;
+            newEnt->posX.i.hi = x + i * xOfst;
+            newEnt->posY.i.hi = y;
+            newEnt->ext.generic.unk94 = D_80182A48[i];
+            newEnt->rotY = newEnt->rotX = D_80182A38[D_80182A48[i] + arg5];
+            newEnt->drawFlags = 3;
+            newEnt->zPriority = entity->zPriority + 1;
+        }
+    }
+}
 
 void func_801CC6F8(Entity* entity) {
     u16 distance = GetDistanceToPlayerX();

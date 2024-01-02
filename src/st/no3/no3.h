@@ -86,6 +86,8 @@ extern Primitive* FindFirstUnkPrim(Primitive* poly);
 extern LayoutEntity* D_80180850[];
 extern u16 g_InitializeData0[];
 extern u16 g_InitializeEntityData0[];
+extern s16 D_80182A38[];
+extern u8 D_80182A48[];
 extern u16 D_80180AD0[];
 extern u16 D_80180ADC[];
 extern u16 D_80180AE8[];
