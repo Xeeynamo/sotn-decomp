@@ -55,6 +55,7 @@ extern void func_801CD658();
 extern void EntityPrizeDrop(Entity* entity);
 extern void EntityEquipItemDrop(Entity* entity);
 extern Primitive* func_801D2470(Primitive* poly);
+void EntityUnkId15(Entity* entity);
 extern u16 g_eBreakableInit[];
 extern u8* g_eBreakableAnimations[8];
 extern u8 g_eBreakableHitboxes[];

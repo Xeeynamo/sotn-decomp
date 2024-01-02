@@ -19,7 +19,8 @@ typedef enum {
     /* 0x0F */ E_DUMMY_0F,
     /* 0x10 */ E_DUMMY_10,
 
-    /* 0x14 */ E_ID14 = 0x14,
+    /* 0x14 */ E_ID_14 = 0x14,
+    /* 0x15 */ E_ID_15,
     /* 0x28 */ E_BONE_SCIMITAR_HEAD = 0x28,
     /* 0x2A */ E_AXE_KNIGHT_AXE = 0x2A,
     /* 0x31 */ E_SPITTLEBONE = 0x31,
@@ -34,7 +35,6 @@ typedef enum {
 } EntityIDs;
 
 void DestroyEntity(Entity* item);
-void func_8018F928(Entity*);
 void func_8019B858(void);
 void func_801BDD9C(void);
 s32 func_801BD720(u16* hitSensors, s16 sensorCount);
@@ -42,7 +42,7 @@ s32 func_801BD9A0(Entity* entity, s32 arg1, s32 arg2, s32 arg3);
 void EntityExplosion(Entity*);
 void func_801C33D8(const u32*, s32);
 void func_801C0B24(Entity* entity);
-void func_801C0C14(Entity* entity);
+void EntityUnkId15(Entity* entity);
 void func_801C4CC0(void);
 
 extern u8 D_8003BE6F[];

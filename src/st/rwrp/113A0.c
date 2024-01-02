@@ -6,11 +6,11 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_80191490);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_801915A0);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_801916D0);
+#include "../entity_unkId15_spawner.h"
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_801917B8);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_801918A8);
+INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", EntityUnkId15);
 
 INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_8019199C);
 

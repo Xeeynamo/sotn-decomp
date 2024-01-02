@@ -32,7 +32,7 @@ void EntityUnkId13(Entity* entity) {
 // DECOMP_ME_WIP func_8019E3C8 https://decomp.me/scratch/lcx4I
 INCLUDE_ASM("asm/us/st/dre/nonmatchings/1E1C8", func_8019E3C8);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/1E1C8", func_8019E4F8);
+#include "../entity_unkId15_spawner.h"
 
 // an explosion animation ID 0x14
 void EntityExplosion14(Entity* entity) {

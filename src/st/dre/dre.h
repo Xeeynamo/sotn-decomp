@@ -19,7 +19,7 @@ typedef enum {
     /* 0x0E */ E_SAVE_GAME_POPUP,
     /* 0x0F */ E_DUMMY_0F,
     /* 0x10 */ E_DUMMY_10,
-
+    /* 0x15 */ E_ID_15 = 0x15,
     /* 0x1A */ E_SUCCUBUS_PETAL = 0x1A,
     /* 0x1B */ E_SUCCUBUS_WING_OVERLAY,
     /* 0x1C */ E_SUCCUBUS_CLONE,
@@ -44,6 +44,7 @@ Entity* AllocEntity(Entity*, Entity*);
 void func_8019A78C(void);
 Entity* func_8019AC18(Entity*, Entity*);
 void func_8019E5E0(Entity* entity);
+void EntityUnkId15(Entity* entity);
 
 extern LayoutEntity* D_80180220[];
 extern LayoutEntity* D_801802F4[];

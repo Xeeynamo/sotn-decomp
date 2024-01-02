@@ -72,7 +72,7 @@ void func_801C04F4(
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/402F4", func_801C0624);
+#include "../entity_unkId15_spawner.h"
 
 void func_801C070C(Entity* entity) {
     if (entity->step == 0) {
@@ -97,7 +97,7 @@ void func_801C070C(Entity* entity) {
     }
 }
 
-void func_801C07FC(Entity* entity) {
+void EntityUnkId15(Entity* entity) {
     u16 temp_v0;
     u32 temp2;
 

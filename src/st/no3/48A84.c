@@ -49,7 +49,8 @@ void EntityUnkId13(Entity* entity) {
     }
 }
 
-void func_801C8C84( Entity* self, u8 count, u8 params, s32 x, s32 y, u8 arg5, s16 xGap) {
+void func_801C8C84(
+    Entity* self, u8 count, u8 params, s32 x, s32 y, u8 arg5, s16 xGap) {
     Entity* newEntity;
     s32 i;
     s16 newX = self->posX.i.hi + x;
@@ -71,7 +72,7 @@ void func_801C8C84( Entity* self, u8 count, u8 params, s32 x, s32 y, u8 arg5, s1
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", func_801C8DB4);
+#include "../entity_unkId15_spawner.h"
 
 void EntityUnkId14(Entity* entity) {
     if (entity->step == 0) {

@@ -61,7 +61,7 @@ void func_801C090C(
         if (newEntity != NULL) {
             newEntity->posX.i.hi = newX + xGap * i;
             newEntity->posY.i.hi = newY;
-            newEntity->entityId = E_ID14;
+            newEntity->entityId = E_ID_14;
             newEntity->pfnUpdate = func_801C0B24;
             newEntity->params = params;
             newEntity->ext.generic.unk94 = arg5 + i;
@@ -72,26 +72,7 @@ void func_801C090C(
     }
 }
 
-void func_801C0A3C(
-    Entity* self, u8 count, u8 params, s32 x, s32 y, u8 arg5, s16 xGap) {
-
-    Entity* newEntity;
-    s32 i;
-    s16 newX = self->posX.i.hi + x;
-    s16 newY = self->posY.i.hi + y;
-
-    for (i = 0; i < count; i++) {
-        newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-        if (newEntity != NULL) {
-            newEntity->entityId = 0x15;
-            newEntity->pfnUpdate = func_801C0C14;
-            newEntity->posX.i.hi = newX + xGap * i;
-            newEntity->posY.i.hi = newY;
-            newEntity->params = i;
-            newEntity->zPriority = self->zPriority + 1;
-        }
-    }
-}
+#include "../entity_unkId15_spawner.h"
 
 void func_801C0B24(Entity* entity) {
     if (entity->step == 0) {
@@ -116,7 +97,7 @@ void func_801C0B24(Entity* entity) {
     }
 }
 
-void func_801C0C14(Entity* entity) {
+void EntityUnkId15(Entity* entity) {
     u16 temp_v0;
     u32 temp2;
 

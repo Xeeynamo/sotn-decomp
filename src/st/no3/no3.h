@@ -43,6 +43,7 @@
 #define SE_WATER_SPLASH 0x7C2
 
 void EntityUnkId14(Entity* entity);
+void EntityUnkId15(Entity* entity);
 
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,
