@@ -529,7 +529,37 @@ void func_800EA7CC(void) { NOT_IMPLEMENTED; }
 
 void RenderEntities(void) { NOT_IMPLEMENTED; }
 
-void RenderTilemap(void) { NOT_IMPLEMENTED; }
+void RenderTilemap(void) {
+    u16* layout = g_Tilemap.fg;
+    if (!layout) {
+        return;
+    }
+
+    for (int i = 0; i < 16; i++) {
+        for (int j = 0; j < 17; j++) {
+            u16 tile = layout[j];
+            if (tile == 0) {
+                continue;
+            }
+            SPRT_16* sprt = &g_CurrentBuffer->sprite16[g_GpuUsage.sp16++];
+            u16 gfxPage = g_Tilemap.D_80073088->gfxPage[tile];
+            u16 gfxIndex = g_Tilemap.D_80073088->gfxIndex[tile];
+            u16 clut = D_8003C104[g_Tilemap.D_80073088->clut[tile]];
+            gfxPage += 0x8;
+
+            sprt->clut = clut;
+            sprt->code = gfxPage; // TODO: bad hack
+            sprt->x0 = j * 16;
+            sprt->y0 = i * 16;
+            sprt->u0 = gfxIndex * 16;
+            sprt->v0 = gfxIndex & ~TILE_MASK;
+            sprt->r0 = 0xFF;
+            sprt->g0 = 0xFF;
+            sprt->b0 = 0xFF;
+        }
+        layout += g_Tilemap.hSize * 16;
+    }
+}
 
 void UpdateCd(void) { NOT_IMPLEMENTED; }
 

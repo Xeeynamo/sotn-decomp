@@ -441,6 +441,46 @@ void SetSdlVertexSprite(SDL_Vertex* v, SPRT* sprt) {
     v[5] = v[2];
 }
 
+void SetSdlVertexSprite16(SDL_Vertex* v, SPRT_16* sprt) {
+    sprt->r0 |= 255;
+    sprt->g0 |= 255;
+    sprt->b0 |= 255;
+    v[0].position.x = sprt->x0;
+    v[0].position.y = sprt->y0;
+    v[0].tex_coord.x = PSX_TEX_U(sprt->u0);
+    v[0].tex_coord.y = PSX_TEX_V(sprt->v0);
+    v[0].color.r = sprt->r0;
+    v[0].color.g = sprt->g0;
+    v[0].color.b = sprt->b0;
+    v[0].color.a = 0xFF;
+    v[1].position.x = sprt->x0 + 16;
+    v[1].position.y = sprt->y0;
+    v[1].tex_coord.x = PSX_TEX_U(sprt->u0 + 16);
+    v[1].tex_coord.y = PSX_TEX_V(sprt->v0);
+    v[1].color.r = sprt->r0;
+    v[1].color.g = sprt->g0;
+    v[1].color.b = sprt->b0;
+    v[1].color.a = 0xFF;
+    v[2].position.x = sprt->x0;
+    v[2].position.y = sprt->y0 + 16;
+    v[2].tex_coord.x = PSX_TEX_U(sprt->u0);
+    v[2].tex_coord.y = PSX_TEX_V(sprt->v0 + 16);
+    v[2].color.r = sprt->r0;
+    v[2].color.g = sprt->g0;
+    v[2].color.b = sprt->b0;
+    v[2].color.a = 0xFF;
+    v[4].position.x = sprt->x0 + 16;
+    v[4].position.y = sprt->y0 + 16;
+    v[4].tex_coord.x = PSX_TEX_U(sprt->u0 + 16);
+    v[4].tex_coord.y = PSX_TEX_V(sprt->v0 + 16);
+    v[4].color.r = sprt->r0;
+    v[4].color.g = sprt->g0;
+    v[4].color.b = sprt->b0;
+    v[4].color.a = 0xFF;
+    v[3] = v[1];
+    v[5] = v[2];
+}
+
 void SetSdlVertexG4(SDL_Vertex* v, POLY_G4* poly) {
     v[0].position.x = poly->x0;
     v[0].position.y = poly->y0;
@@ -593,5 +633,11 @@ void MyRenderPrimitives(void) {
         LINE_G2* poly = &g_CurrentBuffer->lineG2[i];
         SDL_SetRenderDrawColor(g_Renderer, poly->r0, poly->g0, poly->b0, 255);
         SDL_RenderDrawLine(g_Renderer, poly->x0, poly->y0, poly->x1, poly->y1);
+    }
+    for (int i = 0; i < g_GpuUsage.sp16; i++) {
+        SPRT_16* sp = &g_CurrentBuffer->sprite16[i];
+        SetSdlVertexSprite16(v, sp);
+        t = GetVramTexture(sp->code, sp->clut); // TODO sp->code is a bad hack
+        SDL_RenderGeometry(g_Renderer, t, v, 6, NULL, 0);
     }
 }
