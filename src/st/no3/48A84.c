@@ -605,7 +605,43 @@ void EntityRoomForeground(Entity* entity) {
 
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", func_801CC5A4);
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", func_801CC6F8);
+void func_801CC6F8(Entity* entity) {
+    u16 distance = GetDistanceToPlayerX();
+    bool var_s1;
+
+    entity->ext.et_801CC820.unk86 = 0x100;
+    entity->velocityX = 0;
+
+    if (entity->params != 0) {
+        SetStep(0xC);
+        return;
+    }
+
+    var_s1 = 0;
+
+    if (entity->facingLeft != 0) {
+        var_s1 = entity->posX.i.hi >= 0x71;
+    } else if (entity->posX.i.hi < 0x90) {
+        var_s1 = 1;
+    }
+
+    if (distance < 0x70) {
+        if (!(Random() & 3) && !var_s1) {
+            SetStep(9);
+            return;
+        }
+    } else if ((Random() & 3) && !var_s1) {
+        SetStep(9);
+        if (!(Random() & 3)) {
+            entity->ext.et_801CC820.unk86 = 0;
+        }
+        return;
+    }
+
+    SetStep(6);
+    func_801CAD28(0x783);
+    entity->ext.et_801CC820.unk80 = 0x20;
+}
 
 void func_801CC820(Entity* entity) {
     u16 distance;
