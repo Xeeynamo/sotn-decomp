@@ -734,7 +734,8 @@ INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", EntityUnkId2F);
 // beams that go up when strong warg dies
 INCLUDE_ASM("asm/us/st/no3/nonmatchings/48A84", EntityStrongWargDeathBeams);
 
-void func_801CF438(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist, u8 arg5, s16 xOfst) {
+void func_801CF438(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,
+                   u8 arg5, s16 xOfst) {
     s32 i;
     s16 y = entity->posY.i.hi + yDist;
     s16 x = entity->posX.i.hi + xDist;
