@@ -42,6 +42,9 @@
 #define SE_CASTLE_GATE_MOVE 0x7A5
 #define SE_WATER_SPLASH 0x7C2
 
+void EntityUnkId14(Entity* entity);
+void EntityUnkId15(Entity* entity);
+
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,
@@ -176,6 +179,7 @@ extern u8 D_80181B4C[];
 extern Unkstruct_80180FE0 D_80181C5C[];
 extern u16 D_80181C8C[];
 extern s16 D_801820C4[];
+extern s16 D_80182618[];
 extern s16 D_801832D8[];
 extern u8 D_801832E8[];
 extern u16 D_801823F4[];

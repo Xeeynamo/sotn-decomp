@@ -27,6 +27,7 @@ typedef enum {
     E_DUMMY_0E,
     E_DUMMY_0F,
     E_DUMMY_10,
+    E_ID_15 = 0x15
 } EntityIDs;
 
 void func_801908DC(s16);
@@ -39,6 +40,7 @@ void ReplaceBreakableWithItemDrop(Entity*);
 void CreateEntityFromEntity(u16 entityId, Entity* ent1, Entity* ent2);
 void func_80198BC8(void* const, s32);
 void func_8019344C(void);
+void EntityUnkId15(Entity* entity);
 
 // OFFSET FIXED
 extern u8 D_8003BEE8[];

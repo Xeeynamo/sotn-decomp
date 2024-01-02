@@ -11,7 +11,7 @@
 
 typedef enum {
     /* 0x00 */ E_NONE,
-    /* 0x01 */ E_ID01,
+    /* 0x01 */ E_ID_01,
     /* 0x02 */ E_EXPLOSION,
     /* 0x03 */ E_PRIZE_DROP,
     /* 0x04 */ E_NUMERIC_DAMAGE,
@@ -28,22 +28,23 @@ typedef enum {
     /* 0x0F */ E_DUMMY_0F,
     /* 0x10 */ E_DUMMY_10,
     /* 0x11 */ E_BACKGROUND_BLOCK,
-    /* 0x12 */ E_ID12,
-    /* 0x13 */ E_ID13,
+    /* 0x12 */ E_ID_12,
+    /* 0x13 */ E_ID_13,
     /* 0x14 */ E_ENTITY_EXPLOSION_14,
-    /* 0x15 */ E_ID15,
-    /* 0x16 */ E_ID16,
+    /* 0x15 */ E_ID_15,
+    /* 0x16 */ E_ID_16,
     /* 0x17 */ E_PLATFORM,
     /* 0x18 */ E_MARIA,
     /* 0x19 */ E_ROOM_DARKNESS,
     /* 0x1A */ E_ELEVATOR_STATIONARY,
-    /* 0x1B */ E_ID1B,
+    /* 0x1B */ E_ID_1B,
     /* 0x1C */ E_MOVING_ELEVATOR,
 } EntityIDs;
 
 void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity);
 void CreateEntityFromLayout(Entity*, LayoutEntity*);
 extern u16 func_80194E44(u16 arg0, u16 arg1, u16 arg2);
+void EntityUnkId15(Entity* entity);
 
 extern LayoutEntity* D_801801EC[];
 extern LayoutEntity* D_801802C0[];

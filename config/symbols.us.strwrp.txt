@@ -35,6 +35,7 @@ EntityEquipItemDrop = 0x8018F9B4;
 EntityRelicOrb = 0x8019024C;
 EntityHeartDrop = 0x80190D1C;
 EntityMessageBox = 0x80190E44;
+EntityUnkId15 = 0x801918A8;
 EntityIntenseExplosion = 0x80192248;
 EntitySoulStealOrb = 0x80194590;
 EntityEnemyBlood = 0x80194924;

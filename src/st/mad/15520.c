@@ -81,8 +81,7 @@ void func_8019572C(Entity* entity) {
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_8019583C);
 
-// DECOMP_ME_WIP func_8019596C https://decomp.me/scratch/3IMus
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_8019596C);
+#include "../entity_unkId15_spawner.h"
 
 void func_80195A54(Entity* entity) {
     if (entity->step == 0) {
@@ -108,7 +107,7 @@ void func_80195A54(Entity* entity) {
     }
 }
 
-void func_80195B44(Entity* entity) {
+void EntityUnkId15(Entity* entity) {
     u16 temp_v0;
 
     if (entity->step == 0) {

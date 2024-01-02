@@ -26,7 +26,7 @@ typedef enum {
     E_UNK_12,
     E_UNK_13,
     E_UNK_14,
-    E_UNK_15,
+    E_ID_15,
 } EntityIDs;
 
 // *** EntitySoulStealOrb properties START ***
@@ -43,3 +43,4 @@ extern u32 D_80181110[];
 // *** EntitySoulStealOrb properties END ***
 
 void func_8018F838(Entity*);
+void EntityUnkId15(Entity* entity);

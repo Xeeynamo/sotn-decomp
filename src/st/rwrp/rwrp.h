@@ -33,6 +33,7 @@ extern u8* D_80180E08[];
 extern u16 g_InitializeEntityData0[];
 
 void InitializeEntity(u16 arg0[]);
+void EntityUnkId15(Entity* entity);
 
 typedef enum {
     E_NONE,
@@ -56,7 +57,7 @@ typedef enum {
     E_UNK_12,
     E_UNK_13,
     E_UNK_14,
-    E_UNK_15,
+    E_ID_15,
 } EntityIDs;
 
 #endif

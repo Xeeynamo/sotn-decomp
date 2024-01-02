@@ -318,7 +318,7 @@ void func_801B7BFC(Entity* entity) {
 
 INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", func_801B7D0C);
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", func_801B7E3C);
+#include "../entity_unkId15_spawner.h"
 
 void func_801B7F24(Entity* entity) {
     if (entity->step == 0) {
@@ -343,7 +343,7 @@ void func_801B7F24(Entity* entity) {
     }
 }
 
-void func_801B8014(Entity* entity) {
+void EntityUnkId15(Entity* entity) {
     u16 temp_v0;
     u32 temp2;
 

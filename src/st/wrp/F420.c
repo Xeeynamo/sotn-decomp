@@ -85,34 +85,7 @@ void func_8018F620(
     }
 }
 
-// DECOMP_ME_WIP func_8018F750 https://decomp.me/scratch/peM5t by stuckpixel
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/F420", func_8018F750);
-#else
-extern void func_8018F928(Entity*);
-void func_8018F750(
-    Entity* source, s8 count, u16 xOffset, u16 yOffset, s16 xDistance) {
-    Entity* entity;
-    s32 x, y;
-    u8 i;
-
-    x = (u16)source->posX.i.hi + xOffset;
-    y = (u16)source->posY.i.hi + yOffset;
-
-    for (i = 0; i < count; i++) {
-        entity = AllocEntity(D_8007A958, &D_8007A958[MaxEntityCount]);
-        if (entity != NULL) {
-            entity->entityId = E_UNK_15;
-            entity->pfnUpdate = func_8018F928;
-            entity->posX.i.hi = x;
-            entity->posY.i.hi = y;
-            entity->params = i;
-            entity->zPriority = source->zPriority + 1;
-        }
-        x += xDistance;
-    }
-}
-#endif
+#include "../entity_unkId15_spawner.h"
 
 u16 D_80180FF8[] = {
     /* FF8 */ 0x0030,
@@ -179,7 +152,7 @@ void func_8018F838(Entity* entity) {
     }
 }
 
-void func_8018F928(Entity* self) {
+void EntityUnkId15(Entity* self) {
     if (self->step == 0) {
         self->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         self->palette = 0x8195;
