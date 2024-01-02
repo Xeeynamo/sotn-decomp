@@ -35,9 +35,9 @@ Overlay g_StageDummy = {
     NULL,
 };
 
-RoomHeader g_Rooms[0];
-s16** g_SpriteBanks[0];
-RoomDef g_TileLayers[0x100];
+RoomHeader g_Rooms[1] = {0};
+s16** g_SpriteBanks[1] = {0};
+RoomDef g_TileLayers[0x100] = {0};
 
 u32* D_801801B8[] = {
     (u32*)0x00000000, (u32*)0x00000000, (u32*)0x00000000,
