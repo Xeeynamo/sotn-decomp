@@ -17,6 +17,7 @@ set(SOURCE_FILES_PC
     src/pc/pc.c
     src/pc/sdl2.c
     src/pc/sim_pc.c
+    src/pc/stage_dummy.c
 )
 
 if(WIN32)
@@ -57,6 +58,7 @@ set(SOURCE_FILES_DRA
     src/dra/4A538.c
     src/dra/collider.c
     src/dra/demo.c
+    src/dra/5087C.c
     src/dra/lang_us.c
     src/dra/menu.c
     src/dra/5D6C4.c 

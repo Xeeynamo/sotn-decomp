@@ -12,6 +12,7 @@ u32 g_MenuStep;
 DemoMode g_DemoMode;
 s32 g_LoadOvlIdx;
 s32 g_LoadFile;
+s32 D_8006BB00;
 u32 g_CdStep;
 GameState g_GameState;
 Entity g_Entities[TOTAL_ENTITY_COUNT];
@@ -27,6 +28,8 @@ s32 g_IsUsingCd;
 GpuUsage g_GpuUsage;
 PlayerStatus g_Status;
 u32 g_randomNext;
+s32 playerX;
+s32 playerY;
 PlayerState g_Player;
 u32 g_GameTimer;
 GpuBuffer g_GpuBuffers[2];
@@ -134,6 +137,19 @@ PlayerDraw g_PlayerDraw[0x10];
 s32 D_8013AED0;
 DR_ENV D_800974AC;
 u32 D_8003C744 = 0;
+s32 D_800973F8;
+s32 D_800973FC;
+s32 D_80097400[3];
+s32 D_8009740C[3];
+s32 g_BottomCornerTextTimer;
+s32 g_BottomCornerTextPrims;
+s32 D_80097418;
+s32 D_8009741C;
+s32 D_80097420[1];
+s32 D_80097424;
+s32 D_80097448[2];
+s32 D_80097450;
+Pos D_80097488;
 u32 mocked_800C52F8[0x200] = {0};
 PixPattern* D_800C52F8[] = {
     mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
@@ -166,7 +182,6 @@ s32 g_DebugHitboxViewMode;
 u32 D_801362B4;
 u32 g_DebugCurPal;
 s32 D_801362D4;
-RoomTeleport D_800A245C[1];
 s32 D_8013640C;
 s32 D_800974A4;
 u32* g_CurrentOT;
@@ -198,9 +213,6 @@ s32 D_800987B4;
 u8 g_PadsRepeatTimer[BUTTON_COUNT * PAD_COUNT];
 s32 D_80136410;
 s32 D_80136414[1];
-s32 D_801375C0;
-s32 D_801375C4;
-s32 D_801375C8;
 ItemTypes D_801375CC;
 s32 D_801375D0;
 s32 D_801375D4;
@@ -309,8 +321,6 @@ u16 D_80137478[0x20];
 u16 D_801374B8[0x20];
 u16 D_801374F8[0x20];
 u16 D_80137538[0x20];
-u8* D_80137590;
-s32 D_80137594;
 u32 g_DisplayHP[1];
 s32 D_80137970;
 s32 D_80137974;
@@ -375,6 +385,26 @@ s32 g_MemCardRStep;
 s32 g_MemCardRStepSub;
 s32 D_80137E6C;
 s32 D_80137F6C;
+u8* D_80137590;
+s32 D_80137594;
+s32 D_80137598;
+s32 D_8013759C;
+s32 D_801375A0;
+s32 D_801375A4;
+s16 D_801375A6;
+s32 D_801375A8;
+s16 D_801375AA;
+s32 D_801375AC;
+s32 D_801375B0;
+s32 D_801375B4;
+s32 D_801375B8;
+RoomLoadDefHolder D_801375BC;
+s32 D_801375C0;
+s32 D_801375C4;
+s32 D_801375C8;
+void (*D_8013C000)(void);
+void (*D_8013C004)(s32);
+void (*D_8013C008)(void);
 
 // sound bss
 s16 g_SoundCommandRingBufferReadPos;
@@ -499,7 +529,37 @@ void func_800EA7CC(void) { NOT_IMPLEMENTED; }
 
 void RenderEntities(void) { NOT_IMPLEMENTED; }
 
-void RenderTilemap(void) { NOT_IMPLEMENTED; }
+void RenderTilemap(void) {
+    u16* layout = g_Tilemap.fg;
+    if (!layout) {
+        return;
+    }
+
+    for (int i = 0; i < 16; i++) {
+        for (int j = 0; j < 17; j++) {
+            u16 tile = layout[j];
+            if (tile == 0) {
+                continue;
+            }
+            SPRT_16* sprt = &g_CurrentBuffer->sprite16[g_GpuUsage.sp16++];
+            u16 gfxPage = g_Tilemap.D_80073088->gfxPage[tile];
+            u16 gfxIndex = g_Tilemap.D_80073088->gfxIndex[tile];
+            u16 clut = D_8003C104[g_Tilemap.D_80073088->clut[tile]];
+            gfxPage += 0x8;
+
+            sprt->clut = clut;
+            sprt->code = gfxPage; // TODO: bad hack
+            sprt->x0 = j * 16;
+            sprt->y0 = i * 16;
+            sprt->u0 = gfxIndex * 16;
+            sprt->v0 = gfxIndex & ~TILE_MASK;
+            sprt->r0 = 0xFF;
+            sprt->g0 = 0xFF;
+            sprt->b0 = 0xFF;
+        }
+        layout += g_Tilemap.hSize * 16;
+    }
+}
 
 void UpdateCd(void) { NOT_IMPLEMENTED; }
 
@@ -510,10 +570,6 @@ int CdInit(void) {
 
 void func_8010DFF0(s32 arg0, s32 arg1) { NOT_IMPLEMENTED; }
 
-void func_800F2120(void) { NOT_IMPLEMENTED; }
-
-s32 func_800F16D0(void) { NOT_IMPLEMENTED; }
-
 void func_800E5D30(void* arg0, u16 arg1, u16 arg2, s32 arg3) {
     NOT_IMPLEMENTED;
 }
@@ -523,6 +579,39 @@ void func_801083BC(void) { NOT_IMPLEMENTED; }
 void DrawRichterHudSubweapon(void) { NOT_IMPLEMENTED; }
 
 void func_8010A234(s32 arg0) { NOT_IMPLEMENTED; }
+
+void func_80109594(void) { NOT_IMPLEMENTED; }
+
+void func_800F24F4(void) { NOT_IMPLEMENTED; }
+
+void func_8011A4D0(void) { NOT_IMPLEMENTED; }
+
+void func_800F2658(void) { NOT_IMPLEMENTED; }
+
+void func_8011A9D8(void) { NOT_IMPLEMENTED; }
+
+void func_8010BFFC(void) { NOT_IMPLEMENTED; }
+
+void func_8011A870(void) { NOT_IMPLEMENTED; }
+
+void func_8010DF70(void) { NOT_IMPLEMENTED; }
+
+void func_8010E0D0(s32 arg0) { NOT_IMPLEMENTED; }
+
+void func_80121F14(s32 arg0, s32 arg1) { NOT_IMPLEMENTED; }
+
+void func_8010E168(s32 arg0, s16 arg1) { NOT_IMPLEMENTED; }
+
+void func_800F1D54(s32 arg0, s32 arg1, s32 arg2, s32 arg3) { NOT_IMPLEMENTED; }
+
+void func_800F1B08(s32 arg0, s32 arg1, s32 arg2) { NOT_IMPLEMENTED; }
+
+void EntityAlucard(Entity* self) { NOT_IMPLEMENTED; }
+
+s32 func_800F0CD8(s32 arg0) {
+    NOT_IMPLEMENTED;
+    return 0;
+}
 
 s32 func_8010E334(s32 xStart, s32 xEnd) {
     NOT_IMPLEMENTED;

@@ -1,7 +1,6 @@
 #include "pc.h"
 #include "dra.h"
 #include "servant.h"
-#include "sfx.h"
 #include <cJSON/cJSON.h>
 
 #include <stdio.h>
@@ -47,11 +46,6 @@ GfxBank** g_GfxStageBank[0x40] = {
 };
 extern UnkStructClut* D_800A3BB8[];
 
-void StageOvlCb() {
-    SetGameState(Game_NowLoading);
-    g_GameStep = NowLoading_2;
-}
-
 void WeaponLoadPaletteStub(s32 arg0) { NOT_IMPLEMENTED; }
 
 // list of exposed API
@@ -66,14 +60,6 @@ void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index);
 void AddToInventory(u16 itemId, s32 itemCategory);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void DebugInputWait(const char* msg);
-
-// stub to the original UpdateGame
-void MenuHandle(void);
-void func_800F298C() {
-    g_PrimBuf[D_8013799C].clut = 1;
-    MenuHandle();
-    PlaySfx(MU_REQUIEM_FOR_THE_GODS);
-}
 
 int g_Frame = 0;
 void MyDrawSyncCallback(int mode) {
@@ -162,23 +148,8 @@ bool InitGame(void) {
     api.unused134 = NULL;
     api.unused138 = NULL;
     api.unused13C = NULL;
-    api.o.Update = NULL;
-    api.o.TestCollisions = StageOvlCb;
-    api.o.InitRoomEntities = StageOvlCb;
-    api.o.unk08 = NULL;
-    api.o.InitRoomEntities = StageOvlCb;
-    api.o.rooms = NULL;
-    api.o.spriteBanks = NULL;
-    api.o.cluts = D_800A3BB8;
-    api.o.unk1C = NULL;
-    api.o.tileLayers = NULL;
-    api.o.gfxBanks = g_GfxStageBank;
-    api.o.unk28 = NULL;
-    api.o.unk2c = NULL;
-    api.o.unk30 = NULL;
-    api.o.unk34 = NULL;
-    api.o.unk38 = NULL;
-    api.o.unk3C = NULL;
+    memset(&g_ApiInit.o, 0, sizeof(Overlay));
+
     memcpy(&g_ApiInit, &api, sizeof(g_ApiInit));
 
     D_8017A000.LoadWeaponPalette = WeaponLoadPaletteStub;

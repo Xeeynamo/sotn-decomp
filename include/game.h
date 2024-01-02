@@ -933,10 +933,10 @@ typedef struct {
 } SaveData; /* size = 0x11CC */
 
 typedef struct {
-    /* 0x00 */ const u8* gfxPage;
-    /* 0x04 */ const u8* gfxIndex;
-    /* 0x08 */ const u8* clut;
-    /* 0x0C */ const u8* collision;
+    /* 0x00 */ u8* gfxPage;
+    /* 0x04 */ u8* gfxIndex;
+    /* 0x08 */ u8* clut;
+    /* 0x0C */ u8* collision;
 } TileDefinition; // size = 0x10
 
 typedef struct {
@@ -948,11 +948,11 @@ typedef struct {
 } LayoutRect; // size = 0x14
 
 typedef struct {
-    /* 0x00 */ const u16* layout;
-    /* 0x04 */ const TileDefinition* tileDef;
-    /* 0x08 */ const LayoutRect rect;
-    /* 0x0C */ const u16 zPriority;
-    /* 0x0E */ const u16 flags;
+    /* 0x00 */ u16* layout;
+    /* 0x04 */ TileDefinition* tileDef;
+    /* 0x08 */ LayoutRect rect;
+    /* 0x0C */ u16 zPriority;
+    /* 0x0E */ u16 flags;
 } LayerDef; // size = 0x10
 
 typedef struct {
