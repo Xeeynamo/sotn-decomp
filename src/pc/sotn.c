@@ -46,8 +46,6 @@ GfxBank** g_GfxStageBank[0x40] = {
 };
 extern UnkStructClut* D_800A3BB8[];
 
-void StageOvlCb() {}
-
 void WeaponLoadPaletteStub(s32 arg0) { NOT_IMPLEMENTED; }
 
 // list of exposed API
@@ -150,23 +148,8 @@ bool InitGame(void) {
     api.unused134 = NULL;
     api.unused138 = NULL;
     api.unused13C = NULL;
-    api.o.Update = NULL;
-    api.o.TestCollisions = StageOvlCb;
-    api.o.InitRoomEntities = StageOvlCb;
-    api.o.unk08 = NULL;
-    api.o.InitRoomEntities = StageOvlCb;
-    api.o.rooms = NULL;
-    api.o.spriteBanks = NULL;
-    api.o.cluts = D_800A3BB8;
-    api.o.unk1C = NULL;
-    api.o.tileLayers = NULL;
-    api.o.gfxBanks = g_GfxStageBank;
-    api.o.unk28 = NULL;
-    api.o.unk2c = NULL;
-    api.o.unk30 = NULL;
-    api.o.unk34 = NULL;
-    api.o.unk38 = NULL;
-    api.o.unk3C = NULL;
+    memset(&g_ApiInit.o, 0, sizeof(Overlay));
+
     memcpy(&g_ApiInit, &api, sizeof(g_ApiInit));
 
     D_8017A000.LoadWeaponPalette = WeaponLoadPaletteStub;
