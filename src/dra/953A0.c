@@ -130,7 +130,67 @@ void ExecSfx(void) {
 INCLUDE_ASM("dra/nonmatchings/953A0", func_80135D8C);
 void func_80135D8C();
 
-INCLUDE_ASM("dra/nonmatchings/953A0", func_80136010);
+void func_80136010(void) {
+    s16* var_t4;
+    s32 i;
+    s8* var_a0;
+    s8* var_a2;
+
+    s8* var_t0;
+    s8* var_t1;
+    s8* var_t2;
+    s8* var_t3;
+
+    s8 sum;
+    s8* new_var;
+    s16* fakeptr;
+
+    SpuGetAllKeysStatus(&D_80138F64);
+    if (D_801390C4 == 0) {
+        var_a0 = &D_80138F64[12];
+        var_a2 = &D_80138F64[13];
+        for (i = 0; i < 4; i++) {
+            sum = var_a0[i * 2] + var_a2[i * 2];
+            if (sum == 0) {
+                D_8013B650[i] = 0;
+                D_8013AED4[i] = 0;
+            }
+        }
+    } else if ((s8)(D_80138F64[18] + D_80138F64[19]) == 0) {
+        D_8013B650[3] = 0;
+        D_8013AED4[3] = 0;
+    }
+    if (D_801390C4 == 0) {
+        var_t4 = D_8013B648;
+        new_var = &D_80138F64;
+        var_t3 = &D_80138F64[3];
+        var_t2 = &D_80138F64[2];
+        var_t1 = &D_80138F64[1];
+        var_t0 = new_var;
+
+        for (i = 0; i < 3; i++) {
+            if (g_UnkChannelSetting2[i] == 0) {
+                if ((s8)(*var_t0 + *var_t1 + *var_t2 + *var_t3) == 0) {
+                    *var_t4 = 0;
+                    fakeptr = D_8013AEA0;
+                    D_8013AEA0[i] = 0;
+                }
+            }
+            fakeptr++;
+            var_t4 += 1;
+            var_t3 += 4;
+            var_t2 += 4;
+            var_t1 += 4;
+            var_t0 += 4;
+        }
+        return;
+    }
+    if ((D_8013AE8A == 0) && ((s8)(D_80138F64[14] + D_80138F64[15] +
+                                   D_80138F64[16] + D_80138F64[17]) == 0)) {
+        D_8013B64E = 0;
+        D_8013AEA6 = 0;
+    }
+}
 
 void func_801361F8(void) {
     if (g_SoundInitialized != 0) {
