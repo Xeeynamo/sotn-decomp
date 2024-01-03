@@ -162,6 +162,11 @@ extern const char* D_801A7760[]; // "a b c d e f g h"
 extern const char* D_801A7770[]; // "i j k l m n o p"
 extern const char* D_801A7780[]; // "q r s t u v w x"
 extern const char* D_801A7790[]; // "y z & ! - . '  "
+extern const char D_801A77A0[];
+extern const char D_801A77AC[];
+extern const char D_801A77B4[];
+extern const char D_801A77BC[];
+extern const char D_801A77C0[];
 /* BSS */
 extern s32 D_801BAF58;
 extern s32 D_801BAF68;
@@ -285,7 +290,133 @@ void UpdateFileSelect(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/2D260", func_801ADF94);
+void func_801ADF94(s32 flags, bool yOffset) {
+    s32 saveDescriptorString = flags & 0x7F;
+    bool hideButtons = flags & 0x80;
+    s32 port = D_801D6B04 / 15;
+    s32 slot = D_801D6B04 % 15;
+    s32 y = yOffset * 56;
+    s32 icon;
+    Primitive* p = g_PrimBuf + D_801BAF18[11][0];
+
+    SetTexturedPrimRect(p, 104, 88 + y, 176, 80, 0, 0);
+
+    if (saveDescriptorString > 0) {
+        if (g_SaveSummary[port].padding == -3 || saveDescriptorString == 3) {
+            func_801ACBE4(12, 8);
+            func_801ACBE4(16, 8);
+            DrawString16x16(D_801A77A0, 128, 120 + y, 1);
+        } else {
+            icon = g_SaveSummary[port].icon[slot];
+            if (icon >= 0) {
+                s32 percLo;
+                s32 percHi;
+                func_801AC084(12, y);
+                func_801ACBE4(12, 0);
+                func_801ACBE4(16, 0);
+                p = g_PrimBuf + D_801BAF18[16][0];
+                p->y0 = 96 + y;
+                func_801ACFBC(port, slot, 6);
+                PrintFileSelectPlaceName(port, slot, 112 + y);
+                func_801B2BD4(g_SaveSummary[port].level[slot], 148, 144 + y, 1);
+                func_801B2BD4(
+                    g_SaveSummary[port].playHours[slot], 200, 144 + y, 1);
+                func_801B2C70(
+                    g_SaveSummary[port].playMinutes[slot], 224, 144 + y, 1);
+                func_801B2C70(
+                    g_SaveSummary[port].playSeconds[slot], 248, 144 + y, 1);
+                func_801B2BD4(g_SaveSummary[port].gold[slot], 180, 152 + y, 1);
+                percHi = g_SaveSummary[port].nRoomsExplored[slot];
+                percHi = (percHi * 1000) / 942;
+                percLo = percHi % 10;
+                percHi = percHi / 10;
+                func_801B2BD4(percHi, 232, 152 + y, 1);
+                func_801B27A8(
+                    240, 156 + y, 8, 4, 0xE0, 0x8C, 0x200, 0xC, 1, 0x80);
+                func_801B2BD4(percLo, 248, 152 + y, 1);
+            } else {
+                func_801ACBE4(12, 8);
+                func_801ACBE4(16, 8);
+                if (icon == -2) {
+                    DrawString16x16(D_801A77AC, 160, 120 + y, 1);
+                } else if (saveDescriptorString == 2) {
+                    DrawString16x16(D_801A77B4, 136, 120 + y, 1);
+                } else {
+                    DrawString16x16(D_801A77A0, 128, 120 + y, 1);
+                }
+            }
+        }
+    }
+
+    if (!hideButtons) {
+        DrawImages8x8(D_801803A8, 52, 180, 1);
+        DrawImages8x8(D_801803AC, 52, 196, 1);
+        DrawImages8x8(D_801803B0, 52, 212, 1);
+    }
+
+    for (port = 0; port < PORT_COUNT; ++port) {
+        switch (g_SaveSummary[port].padding) {
+        case -1:
+            DrawString16x16(D_801A77BC, 48 + port * 256, 88, 1);
+            DrawString16x16(D_801A77C0, 32 + port * 256, 104, 1);
+            break;
+        case -2:
+            DrawImages8x8(D_801803B8, 30 + port * 256, 108, 1);
+            DrawImages8x8(D_801803CC, 30 + port * 256, 116, 1);
+            break;
+        case -3:
+            DrawImages8x8(D_801803C8, 54 + port * 256, 108, 1);
+            break;
+        default: {
+            s32 slot;
+            for (slot = 0; slot < BLOCK_PER_CARD; ++slot) {
+                s32 x;
+                s32 color;
+                s32 tge;
+                s32 nRow;
+                s32 nCol;
+                icon = g_SaveSummary[port].icon[slot];
+                nRow = slot / 3;
+                nCol = slot % 3;
+                x = nCol * 24 + 32 + port * 256;
+                y = 0x90 - nRow * 16;
+
+                if (nCol + port * 3 == g_MemCardSelectorX &&
+                    saveDescriptorString != 3 && nRow == g_MemCardSelectorY &&
+                    saveDescriptorString > 0 && D_801BAF10 == 0) {
+                    tge = 0;
+                    color = 0x40;
+
+                    if (g_Timer & 0x10) {
+                        color = g_Timer & 0xF;
+                    } else {
+                        color = 0xF - (g_Timer & 0xF);
+                    }
+                    color = color * 8 + 0x80;
+
+                } else {
+                    tge = 0;
+                    color = 0x40;
+                }
+                if (icon == -2) {
+                    func_801B27A8(
+                        x, y, 16, 16, 0x90, 0x80, 0x200, 0xC, tge, color);
+                }
+                if (icon == -3) {
+                    func_801B27A8(
+                        x, y, 16, 16, 0x80, 0x80, 0x200, 0xC, tge, color);
+                }
+                if (icon >= 0) {
+                    func_801B27A8(
+                        x, y, 16, 16, icon * 0x10, (D_801BAF08 % 3) * 0x10,
+                        icon + 0x220, 0x16, tge, color);
+                }
+            }
+            break;
+        }
+        }
+    }
+}
 
 void func_801AE6D0(void) {
     Primitive* prim;
