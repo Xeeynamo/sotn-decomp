@@ -78,7 +78,7 @@ segments:
       - [0x277C8, .rodata, 2EED8] # Update function
       - [0x27AE4, .rodata, 2EED8] # "BASLUS-00067DRAX00"
       - [0x27AF8, .rodata, 2EED8] # FntPrint strings
-      - [0x27B14, .rodata, 33164] # func_801B3164, func_801B3A94
+      - [0x27B14, .rodata, 33164] # func_801B3164
       - [0x27B60, .rodata, 3410C] # E3 selection strings
       - [0x27B98, .rodata, 3410C] # TestCollision
       - [0x27BD8, .rodata, 3410C] # func_801B55C8
