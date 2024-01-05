@@ -74,10 +74,10 @@ segments:
       - [0x276C0, .rodata, 2D260]
       - [0x276F0, rodata]
       - [0x277C8, .rodata, 2EED8] # Update function
-      - [0x27AE4, rodata] # func_801B2E5C, func_801B3164, func_801B3A94
-      - [0x27B14, .rodata, 33164] # func_801B3164
-      - [0x27B34, rodata] # func_801B3A94
-      - [0x27B4C, rodata] # func_801B3A94, TestCollision
+      - [0x27AE4, .rodata, 2EED8] # "BASLUS-00067DRAX00"
+      - [0x27AF8, rodata] # func_801B2E5C, func_801B3164, func_801B3A94
+      - [0x27B14, .rodata, 33164] # func_801B3164, func_801B3A94
+      - [0x27B60, rodata] # strings for 3410C
       - [0x27B98, .rodata, 3410C] # TestCollision
       - [0x27BD8, .rodata, 3410C] # func_801B55C8
       - [0x27BF8, .rodata, 3585C]
@@ -90,7 +90,6 @@ segments:
       - [0x2D260, c, 2D260]
       - [0x2EED8, c, 2EED8]
       - [0x33164, c, 33164]
-      - [0x3367C, c, 3367C]
       - [0x3410C, c, 3410C]
       - [0x3585C, c, 3585C]
       - [0x3642C, c, 3642C]

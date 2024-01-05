@@ -1487,7 +1487,6 @@ void func_801B2DF4(void) {
     func_801B2DEC();
 }
 
-extern const char D_801A7AE4[19] ALIGNED4; // "BASLUS-00067DRAX00"
 s32 func_801B2E5C(s32 port) {
     char cardName[32];
     struct DIRENTRY* dirent;
@@ -1496,7 +1495,7 @@ s32 func_801B2E5C(s32 port) {
     s32 totalSize;
     s32 nBlockUsed;
 
-    STRCPY(cardName, D_801A7AE4);
+    STRCPY(cardName, "BASLUS-00067DRAX00");
     totalSize = 0;
     nBlockUsed = g_MemcardInfo[port].nBlockUsed;
     dirent = &g_MemcardInfo[port].entries;
