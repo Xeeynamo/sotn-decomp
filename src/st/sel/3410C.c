@@ -1,5 +1,11 @@
 #include "sel.h"
 
+const char* D_801804D8[] = {
+    "NORMAL      ",
+    "SPECIAL     ",
+};
+const char D_801A7B80[] = "SELECT ！！";
+
 void HandleMainMenu(void) {
     Primitive* prim;
     Primitive* prim15;
@@ -264,7 +270,7 @@ void HandleMainMenu(void) {
         func_801B19F4();
         func_801B1DA8();
         g_api.FreePrimitives(D_801BB010);
-        STRCPY(g_Status.saveName, D_801A7B8C);
+        STRCPY(g_Status.saveName, "alucard");
         if (g_StageId == STAGE_ST0) {
             SetGameState(Game_VideoPlayback);
         } else if (g_StageId == STAGE_MEMORYCARD) {
