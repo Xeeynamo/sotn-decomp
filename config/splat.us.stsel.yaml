@@ -73,11 +73,16 @@ segments:
       - [0xD5D4, .data, D5D4]
       - [0xDBD4, data]
       - [0x176C0, rodata]
-      - [0x27438, .rodata, 2C048]
-      - [0x276A4, .rodata, 2C048] # strings used in func_801ACFBC
-      - [0x276C0, .rodata, 2C048]
-      - [0x276F0, .rodata, 2C048]
-      - [0x277C8, .rodata, 2C048] # Update function
+      - [0x27438, .rodata, 2C048] # strings in D_80180128
+      - [0x27620, .rodata, 2C048] # strings in D_801803D0
+      - [0x276A4, .rodata, 2C048] # strings func_801ACFBC
+      - [0x276C0, .rodata, 2C048] # DrawNavigationTips jtbl
+      - [0x276D8, .rodata, 2C048] # strings in func_801AD490
+      - [0x276F0, .rodata, 2C048] # strings in D_80180454
+      - [0x27748, .rodata, 2C048] # strings in func_801AD66C
+      - [0x27760, .rodata, 2C048] # strings in func_801AD78C
+      - [0x277A0, .rodata, 2C048] # strings in func_801ADF94
+      - [0x277C8, .rodata, 2C048] # Update strings and jtbl
       - [0x27AE4, .rodata, 2C048] # "BASLUS-00067DRAX00"
       - [0x27AF8, .rodata, 2C048] # FntPrint strings
       - [0x27B14, .rodata, 33164] # func_801B3164
