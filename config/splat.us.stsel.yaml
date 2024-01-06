@@ -31,8 +31,8 @@ segments:
     subsegments:
       - [0x0, .data, 2C048]
       - [0x3A8, .data, 2C048]
-      - [0x454, .data, 2D1D0]
-      - [0x46C, .data, 2EED8]
+      - [0x454, .data, 2C048]
+      - [0x46C, .data, 2C048]
       - [0x4D0, .data, 3410C]
       - [0x4E0, data]
       - [0x8DC, .data, save_mgr_pre]
@@ -74,12 +74,12 @@ segments:
       - [0xDBD4, data]
       - [0x176C0, rodata]
       - [0x27438, .rodata, 2C048]
-      - [0x276A4, rodata] # strings used in 2C048
-      - [0x276C0, .rodata, 2D1D0]
-      - [0x276F0, .rodata, 2D1D0]
-      - [0x277C8, .rodata, 2EED8] # Update function
-      - [0x27AE4, .rodata, 2EED8] # "BASLUS-00067DRAX00"
-      - [0x27AF8, .rodata, 2EED8] # FntPrint strings
+      - [0x276A4, .rodata, 2C048] # strings used in func_801ACFBC
+      - [0x276C0, .rodata, 2C048]
+      - [0x276F0, .rodata, 2C048]
+      - [0x277C8, .rodata, 2C048] # Update function
+      - [0x27AE4, .rodata, 2C048] # "BASLUS-00067DRAX00"
+      - [0x27AF8, .rodata, 2C048] # FntPrint strings
       - [0x27B14, .rodata, 33164] # func_801B3164
       - [0x27B60, .rodata, 3410C] # E3 selection strings
       - [0x27B98, .rodata, 3410C] # TestCollision
@@ -91,8 +91,7 @@ segments:
       - [0x28040, rodata]
       - [0x2BF9C, .rodata, stream]
       - [0x2C048, c, 2C048]
-      - [0x2D1D0, c, 2D1D0]
-      - [0x2EED8, c, 2EED8]
+      - [0x2C048, c, 2C048]
       - [0x33164, c, 33164]
       - [0x3410C, c, 3410C]
       - [0x3585C, c, 3585C]
