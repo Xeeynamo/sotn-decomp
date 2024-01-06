@@ -130,8 +130,8 @@ extern volatile u32* D_80196410;
 extern volatile u32* D_8019642C;
 extern volatile u32* D_80196430;
 extern volatile u32* D_80196434;
-extern const char D_801A7748[];          // string "richter "
-extern const u8 D_801A7754[12] ALIGNED4; // string "alucard "
+extern const char D_801A7748[];           // string "richter "
+extern const char D_801A7754[9] ALIGNED4; // string "alucard "
 extern const char D_801A75A0[];
 extern const char D_801A75C0[];
 extern const char D_801A7AF8[];           // rstep:%d,%d

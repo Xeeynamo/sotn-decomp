@@ -117,6 +117,10 @@ void func_801AD490(void) {
     }
 }
 
+const char* D_80180454[] = {
+    "−＊＊＊＊＊−",  "− New Game −",   "− Change Name −",
+    "− Copy File −", "− Erase File −",
+};
 void func_801AD590(void) {
     if (g_pads[0].tapped & (PAD_RIGHT + PAD_DOWN)) {
         g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
@@ -133,6 +137,9 @@ void func_801AD590(void) {
     func_801B2608(D_80180454[D_801D6B0C], 9);
 }
 
+const char* D_80180468[] = {
+    "richter ",
+};
 void func_801AD66C(void) {
     s32 i;
     s32 nSpaces;
@@ -148,7 +155,7 @@ void func_801AD66C(void) {
 
     // if it only contain spaces, set a default name
     if (nSpaces == 8) {
-        __builtin_memcpy(g_SaveName, D_801A7754, 9);
+        STRCPY(g_SaveName, "alucard ");
     }
 
     D_80097B98 = 0;
@@ -161,28 +168,18 @@ void func_801AD66C(void) {
         }
     }
 
-    if (g_IsTimeAttackUnlocked != false) {
-        g_IsTimeAttackUnlocked = 2;
+    if (g_IsTimeAttackUnlocked != SAVE_FLAG_NORMAL) {
+        g_IsTimeAttackUnlocked = SAVE_FLAG_REPLAY;
     }
 
     // play as Richter only if the game was previously cleared
-    if (i == 8 && g_IsTimeAttackUnlocked != false) {
+    if (i == 8 && g_IsTimeAttackUnlocked != SAVE_FLAG_NORMAL) {
         g_PlayableCharacter = PLAYER_RICHTER;
     } else {
         g_PlayableCharacter = PLAYER_ALUCARD;
     }
 }
 
-/* RODATA */
-extern const char* D_801A7760[]; // "a b c d e f g h"
-extern const char* D_801A7770[]; // "i j k l m n o p"
-extern const char* D_801A7780[]; // "q r s t u v w x"
-extern const char* D_801A7790[]; // "y z & ! - . '  "
-extern const char D_801A77A0[];
-extern const char D_801A77AC[];
-extern const char D_801A77B4[];
-extern const char D_801A77BC[];
-extern const char D_801A77C0[];
 /* BSS */
 extern s32 D_801BAF58;
 extern s32 D_801BAF68;
@@ -192,10 +189,10 @@ void func_801AD78C(void) {
     DrawImages8x8(STR_INPUT, 0x134, 0x34, 1);
     DrawImages8x8(STR_CANCEL, 0x134, 0x44, 1);
     DrawImages8x8(STR_DECIDE, 0x134, 0x54, 1);
-    DrawString16x16(D_801A7760, 0x48, 0x70, 1);
-    DrawString16x16(D_801A7770, 0x48, 0x88, 1);
-    DrawString16x16(D_801A7780, 0x48, 0xA0, 1);
-    DrawString16x16(D_801A7790, 0x48, 0xB8, 1);
+    DrawString16x16("a b c d e f g h", 0x48, 0x70, 1);
+    DrawString16x16("i j k l m n o p", 0x48, 0x88, 1);
+    DrawString16x16("q r s t u v w x", 0x48, 0xA0, 1);
+    DrawString16x16("y z & ! - . '  ", 0x48, 0xB8, 1);
     SetTexturedPrimRect(
         &g_PrimBuf[D_801BAF58], (g_InputCursorPos * 0x10) + 0x80, 0x48, 0x0F,
         0x0F, 0xF0, 0xF0);
@@ -321,7 +318,7 @@ void func_801ADF94(s32 flags, bool yOffset) {
         if (g_SaveSummary[port].padding == -3 || saveDescriptorString == 3) {
             func_801ACBE4(12, 8);
             func_801ACBE4(16, 8);
-            DrawString16x16(D_801A77A0, 128, 120 + y, 1);
+            DrawString16x16("new game", 128, 120 + y, 1);
         } else {
             icon = g_SaveSummary[port].icon[slot];
             if (icon >= 0) {
@@ -354,11 +351,11 @@ void func_801ADF94(s32 flags, bool yOffset) {
                 func_801ACBE4(12, 8);
                 func_801ACBE4(16, 8);
                 if (icon == -2) {
-                    DrawString16x16(D_801A77AC, 160, 120 + y, 1);
+                    DrawString16x16("used", 160, 120 + y, 1);
                 } else if (saveDescriptorString == 2) {
-                    DrawString16x16(D_801A77B4, 136, 120 + y, 1);
+                    DrawString16x16("no data", 136, 120 + y, 1);
                 } else {
-                    DrawString16x16(D_801A77A0, 128, 120 + y, 1);
+                    DrawString16x16("new game", 128, 120 + y, 1);
                 }
             }
         }
@@ -373,8 +370,8 @@ void func_801ADF94(s32 flags, bool yOffset) {
     for (port = 0; port < PORT_COUNT; ++port) {
         switch (g_SaveSummary[port].padding) {
         case -1:
-            DrawString16x16(D_801A77BC, 48 + port * 256, 88, 1);
-            DrawString16x16(D_801A77C0, 32 + port * 256, 104, 1);
+            DrawString16x16("no", 48 + port * 256, 88, 1);
+            DrawString16x16("card", 32 + port * 256, 104, 1);
             break;
         case -2:
             DrawImages8x8(STR_NOTFOR, 30 + port * 256, 108, 1);

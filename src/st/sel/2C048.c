@@ -499,11 +499,22 @@ s32 func_801ACEC0(void) {
 
 void func_801ACF7C(void) {
     func_801B1ED0();
-    func_801B25D4(D_801A75A0, 0);
-    func_801B25D4(D_801A75C0, 1);
+    func_801B25D4("…選択決定取消入力未初期化確認", 0);
+    func_801B25D4("はいえ不良", 1);
 }
 
-extern const char D_801A7620[]; // ""
+const char* D_801803A8[] = {
+    _S("Select"), _S("Decide"), _S("Cancel"),  _S("Input"), _S("Not for-"),
+    _S("Yes"),    _S("No"),     _S("Confirm"), _S("Error"), _S("matted"),
+};
+
+const char D_801A7620[] = "　";
+const char* D_801803D0[] = {
+    "Ａ", "Ｂ", "Ｃ", "Ｄ", "Ｅ", "Ｆ", "Ｇ", "Ｈ", "Ｉ", "Ｊ", "Ｋ",
+    "Ｌ", "Ｍ", "Ｎ", "Ｏ", "Ｐ", "Ｑ", "Ｒ", "Ｓ", "Ｔ", "Ｕ", "Ｖ",
+    "Ｗ", "Ｘ", "Ｙ", "Ｚ", "＆", "！", "−",  "．", "’",  "？", D_801A7620,
+};
+
 extern const char D_801A76A4[]; // "Richter"
 extern const char D_801A76AC[]; // "Clear"
 extern const char D_801A76B4[]; // "Replay"
