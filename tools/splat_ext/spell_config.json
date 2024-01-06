@@ -1,0 +1,17 @@
+{
+    "struct": {
+        "name": "str",
+        "combo": "str",
+        "desc": "str",
+        "mpUsage": "u8",
+        "nFramesInvincibility": "s8",
+        "stunFrames": "s16",
+        "hitboxState": "s16",
+        "hitEffect": "s16",
+        "entityRoomIndex": "s16",
+        "attackElement": "u16",
+        "attack": "s16",
+        "unk1A": "s16"
+    },
+    "fields": {}
+}

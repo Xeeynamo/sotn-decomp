@@ -28,6 +28,10 @@ import utils
 
 def get_serializer(dataType: str):
     match dataType:
+        case "str":
+            return None
+        case "sstr":
+            return None
         case "str_ptr":
             return utils.from_ptr_str
         case "bool":
@@ -50,6 +54,12 @@ def get_serializer(dataType: str):
 
 def get_parser_and_size(dataType: str):
     match dataType:
+        case "str":
+            return (None, 4)
+        case "sstr":
+            return (None, 4)
+        case "str_ptr":
+            return (utils.to_ptr_str, 4)
         case "str_ptr":
             return (utils.to_ptr_str, 4)
         case "bool":
@@ -70,15 +80,20 @@ def get_parser_and_size(dataType: str):
             print(f"Failed to find parser for {dataType}")
 
 
-def serialize_asset(content: str, asset_config: str) -> bytearray:
+def serialize_asset(content: str, asset_config: str) -> str:
     raw_json_data = json.loads(content)
     config = json.loads(asset_config)
+    asset_type = raw_json_data["type"]
     symbol_name = raw_json_data["symbol_name"]
     asset_data = raw_json_data["asset_data"]
     item_count = len(asset_data)
     serialized_data = bytearray()
+
+    output = f"#include <game.h>\n\n// clang-format off\n"
+    output += f"{asset_type} {symbol_name}[] = {{\n"
     for i in range(0, item_count):
         item = asset_data[i]
+        row_values = []
         for entry, entryType in config["struct"].items():
             serializer = get_serializer(entryType)
             json_value = item[entry]
@@ -114,17 +129,20 @@ def serialize_asset(content: str, asset_config: str) -> bytearray:
                         bit_index += field_bitsize
                 packed_value = int(packed_bitstring, 2)
                 serialized_data += serializer(packed_value)
-            # Anything else can go straight to serializer
+            elif type(json_value) is str:
+                if entryType == "sstr":
+                    row_values.append(f'_S("{json_value}")')
+                else:
+                    row_values.append(f'"{json_value}"')
+            elif type(json_value) is int:
+                row_values.append(str(json_value))
+            elif type(json_value) is bool:
+                row_values.append("true" if json_value == True else "false")
             else:
-                serialized_data += serializer(item[entry])
-    # Take serialized data (raw bytes) and turn into asm file
-    asm_output = ""
-    asm_output += ".section .data\n\n"
-    asm_output += f".global {symbol_name}\n\n"
-    asm_output += f"{symbol_name}:\n"
-    for databyte in serialized_data:
-        asm_output += f".byte {int(databyte)}\n"
-    return asm_output
+                raise Exception(f"unhandled type '{type(json_value)}")
+        output += "    {" + ", ".join(row_values) + "},\n"
+    output += "};\n"
+    return output
 
 
 class PSXSegAssets(N64Segment):
@@ -143,7 +161,8 @@ class PSXSegAssets(N64Segment):
 
         data = self.parse_asset(rom_bytes[self.rom_start : self.rom_end], rom_bytes)
         json_output = {}
-        json_output["symbol_name"] = self.args[0]
+        json_output["type"] = self.args[0]
+        json_output["symbol_name"] = self.args[1]
         json_output["asset_data"] = data
         with open(path, "w") as f:
             f.write(json.dumps(json_output, indent=4))
@@ -181,8 +200,19 @@ class PSXSegAssets(N64Segment):
                 )
             data_pointer = 0
             for entry, entryType in config["struct"].items():
-                parser, dataSizeBytes = get_parser_and_size(entryType)
-                parsed_value = parser(item_data[data_pointer:])
+                if entryType == "str":
+                    dataSizeBytes = 4
+                    parsed_value = utils.sotn_menu_desc_to_str(
+                        get_ptr_data(item_data[data_pointer:])
+                    )
+                elif entryType == "sstr":
+                    dataSizeBytes = 4
+                    parsed_value = utils.sotn_menu_name_to_str(
+                        get_ptr_data(item_data[data_pointer:])
+                    )
+                else:
+                    parser, dataSizeBytes = get_parser_and_size(entryType)
+                    parsed_value = parser(item_data[data_pointer:])
                 if entry in config["fields"]:
                     field_def = config["fields"][entry]
                     if type(field_def) == list:
@@ -230,13 +260,10 @@ class PSXSegAssets(N64Segment):
 
 if __name__ == "__main__":
     input_file_name = sys.argv[1]
-    output_file_name = sys.argv[2]
     config_file_name = input_file_name.replace(".json", "_config.json")
     config_file_name = config_file_name.replace("assets/dra", "tools/splat_ext")
     with open(config_file_name, "r") as config_in:
         config_json = config_in.read()
 
     with open(input_file_name, "r") as f_in:
-        data = serialize_asset(f_in.read(), config_json)
-        with open(output_file_name, "w") as f_out:
-            f_out.write(data)
+        print(serialize_asset(f_in.read(), config_json))

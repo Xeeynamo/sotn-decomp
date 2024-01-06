@@ -1,6 +1,6 @@
     {
         "struct": {
-            "name_addr": "str_ptr",
+            "name_addr": "sstr",
             "hitPoints": "s16",
             "attack": "u16",
             "attackElement": "u16",
