@@ -17,7 +17,7 @@ void DrawNavigationTips(NavigationTips mode) {
     POLY_GT4* poly;
 
     func_801ACBE4(6, 8);
-    imgs = &D_801803C4;
+    imgs = &D_801803A8[7];
     poly = &g_PrimBuf[D_801BAF48];
 
     switch (mode) {
@@ -82,8 +82,8 @@ void func_801AD490(void) {
     s32 i;
 
     DrawNavigationTips(Tips_MenuNavigation);
-    DrawImages8x8(D_801803A8 /* "select" */, 52, 188, 1);
-    DrawImages8x8(D_801803AC /* "start" */, 52, 204, 1);
+    DrawImages8x8(D_801803A8[0] /* "select" */, 52, 188, 1);
+    DrawImages8x8(D_801803A8[1] /* "start" */, 52, 204, 1);
     DrawString16x16("select", 240, 32, 1);
     DrawString16x16("your", 256, 48, 1);
     DrawString16x16("destiny", 232, 64, 1);
@@ -136,7 +136,7 @@ void func_801AD66C(void) {
     D_80097B99 = 0;
 
     // check if the name is Richter
-    for (strRichter = D_80180468, i = 0; i < 8; i++) {
+    for (strRichter = D_80180468[0], i = 0; i < 8; i++) {
         if (g_SaveName[i] != *strRichter++) {
             break;
         }
@@ -154,9 +154,6 @@ void func_801AD66C(void) {
     }
 }
 
-/* DATA */
-extern u8* D_801803B0;
-extern u8* D_801803B4;
 /* RODATA */
 extern const char* D_801A7760[]; // "a b c d e f g h"
 extern const char* D_801A7770[]; // "i j k l m n o p"
@@ -172,10 +169,10 @@ extern s32 D_801BAF58;
 extern s32 D_801BAF68;
 
 void func_801AD78C(void) {
-    DrawImages8x8(D_801803A8, 0x134, 0x24, 1);
-    DrawImages8x8(D_801803B4, 0x134, 0x34, 1);
-    DrawImages8x8(D_801803B0, 0x134, 0x44, 1);
-    DrawImages8x8(D_801803AC, 0x134, 0x54, 1);
+    DrawImages8x8(D_801803A8[0], 0x134, 0x24, 1);
+    DrawImages8x8(D_801803A8[3], 0x134, 0x34, 1);
+    DrawImages8x8(D_801803A8[2], 0x134, 0x44, 1);
+    DrawImages8x8(D_801803A8[1], 0x134, 0x54, 1);
     DrawString16x16(D_801A7760, 0x48, 0x70, 1);
     DrawString16x16(D_801A7770, 0x48, 0x88, 1);
     DrawString16x16(D_801A7780, 0x48, 0xA0, 1);
@@ -349,9 +346,9 @@ void func_801ADF94(s32 flags, bool yOffset) {
     }
 
     if (!hideButtons) {
-        DrawImages8x8(D_801803A8, 52, 180, 1);
-        DrawImages8x8(D_801803AC, 52, 196, 1);
-        DrawImages8x8(D_801803B0, 52, 212, 1);
+        DrawImages8x8(D_801803A8[0], 52, 180, 1);
+        DrawImages8x8(D_801803A8[1], 52, 196, 1);
+        DrawImages8x8(D_801803A8[2], 52, 212, 1);
     }
 
     for (port = 0; port < PORT_COUNT; ++port) {
@@ -361,11 +358,11 @@ void func_801ADF94(s32 flags, bool yOffset) {
             DrawString16x16(D_801A77C0, 32 + port * 256, 104, 1);
             break;
         case -2:
-            DrawImages8x8(D_801803B8, 30 + port * 256, 108, 1);
-            DrawImages8x8(D_801803CC, 30 + port * 256, 116, 1);
+            DrawImages8x8(D_801803A8[4], 30 + port * 256, 108, 1);
+            DrawImages8x8(D_801803A8[9], 30 + port * 256, 116, 1);
             break;
         case -3:
-            DrawImages8x8(D_801803C8, 54 + port * 256, 108, 1);
+            DrawImages8x8(D_801803A8[8], 54 + port * 256, 108, 1);
             break;
         default: {
             s32 slot;

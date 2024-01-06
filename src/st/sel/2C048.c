@@ -548,11 +548,11 @@ void PrintFileSelectPlaceName(s32 port, s32 slot, s32 y) {
 }
 
 void func_801AD1D0(void) {
-    DrawImages8x8(D_801803BC, 52, 196, 1);
-    DrawImages8x8(D_801803C0, 52, 212, 1);
+    DrawImages8x8(D_801803A8[5], 52, 196, 1);
+    DrawImages8x8(D_801803A8[6], 52, 212, 1);
 }
 
 void func_801AD218(void) {
-    DrawImages8x8(D_801803C0, 52, 196, 1);
-    DrawImages8x8(D_801803BC, 52, 212, 1);
+    DrawImages8x8(D_801803A8[6], 52, 196, 1);
+    DrawImages8x8(D_801803A8[5], 52, 212, 1);
 }
