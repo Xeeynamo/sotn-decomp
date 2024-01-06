@@ -1556,3 +1556,6 @@ void func_801B3120(void) {
         var_v1++;
     }
 }
+
+const char D_801A7AF8[] = "\nrstep:%d,%d\n";
+const char D_801A7B08[] = "retry:%d\n";

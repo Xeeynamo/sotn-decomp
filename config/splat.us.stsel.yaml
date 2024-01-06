@@ -77,14 +77,14 @@ segments:
       - [0x276F0, rodata]
       - [0x277C8, .rodata, 2EED8] # Update function
       - [0x27AE4, .rodata, 2EED8] # "BASLUS-00067DRAX00"
-      - [0x27AF8, rodata] # func_801B2E5C, func_801B3164, func_801B3A94
+      - [0x27AF8, .rodata, 2EED8] # FntPrint strings
       - [0x27B14, .rodata, 33164] # func_801B3164, func_801B3A94
       - [0x27B60, .rodata, 3410C] # E3 selection strings
       - [0x27B98, .rodata, 3410C] # TestCollision
       - [0x27BD8, .rodata, 3410C] # func_801B55C8
       - [0x27BF8, .rodata, 3585C]
-      - [0x27CD4, rodata] # func_801B675C
-      - [0x27CF4, rodata] # func_801B69F8
+      - [0x27CD4, rodata] # D_801808D0 strings
+      - [0x27CF4, rodata] # func_801B69F8 jtbl
       - [0x27D78, .rodata, save_mgr]
       - [0x28040, rodata]
       - [0x2BF9C, .rodata, stream]
