@@ -102,28 +102,15 @@ extern u8 g_InputSaveName[9];
 
 extern s32 D_80180040[];
 extern s32 D_80180054[];
-extern u8* D_801803A8;
-extern u8* D_801803AC;
-extern u8* D_801803B0;
-extern u8* D_801803B4;
-extern u8* D_801803B8;
-extern u8* D_801803BC;
-extern u8* D_801803C0;
-extern u8* D_801803C4; // images
-extern u8* D_801803C8;
-extern u8* D_801803CC;
-extern u8* D_801803D0[];
-extern s32 D_80180454[];
-extern const u8* D_80180468; // pointer to D_801A7748 (string "richter ")
-extern u8 D_8018046C[0x20 * 3];
-extern s32 D_801804D0;
-extern u8 D_801804D4[];
+extern const char* D_801803A8[];
+extern const char* D_801803D0[];
+extern const char* D_80180454[];
+extern const char* D_80180468[];
 extern u8 D_80180504[];
 extern u8 D_80180528[];
 extern u8 D_80180564[];
 extern u8 D_80180578[];
 extern u8 D_80180580[];
-extern const char* D_801808D0[];
 extern s8 D_801823A0[]; // on-screen keyboard
 extern RECT D_80182584;
 extern RECT D_8018258C;
@@ -142,10 +129,10 @@ extern volatile u32* D_80196410;
 extern volatile u32* D_8019642C;
 extern volatile u32* D_80196430;
 extern volatile u32* D_80196434;
-extern const u8 D_801A7748[];            // string "richter "
-extern const u8 D_801A7754[12] ALIGNED4; // string "alucard "
-extern s32 D_801A75A0[];
-extern s32 D_801A75C0[];
+extern const char D_801A7748[];           // string "richter "
+extern const char D_801A7754[9] ALIGNED4; // string "alucard "
+extern const char D_801A75A0[];
+extern const char D_801A75C0[];
 extern const char D_801A7AF8[];           // rstep:%d,%d
 extern const char D_801A7B08[];           // retry:%d
 extern const char g_strMemcardRootPath[]; // "bu%1d%1d:"

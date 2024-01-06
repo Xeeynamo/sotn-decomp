@@ -499,14 +499,21 @@ s32 func_801ACEC0(void) {
 
 void func_801ACF7C(void) {
     func_801B1ED0();
-    func_801B25D4(D_801A75A0, 0);
-    func_801B25D4(D_801A75C0, 1);
+    func_801B25D4("…選択決定取消入力未初期化確認", 0);
+    func_801B25D4("はいえ不良", 1);
 }
 
-extern const char D_801A7620[]; // ""
-extern const char D_801A76A4[]; // "Richter"
-extern const char D_801A76AC[]; // "Clear"
-extern const char D_801A76B4[]; // "Replay"
+const char* D_801803A8[] = {
+    _S("Select"), _S("Decide"), _S("Cancel"),  _S("Input"), _S("Not for-"),
+    _S("Yes"),    _S("No"),     _S("Confirm"), _S("Error"), _S("matted"),
+};
+
+const char* D_801803D0[] = {
+    "Ａ", "Ｂ", "Ｃ", "Ｄ", "Ｅ", "Ｆ", "Ｇ", "Ｈ", "Ｉ", "Ｊ", "Ｋ",
+    "Ｌ", "Ｍ", "Ｎ", "Ｏ", "Ｐ", "Ｑ", "Ｒ", "Ｓ", "Ｔ", "Ｕ", "Ｖ",
+    "Ｗ", "Ｘ", "Ｙ", "Ｚ", "＆", "！", "−",  "．", "’",  "？", "　",
+};
+
 void func_801ACFBC(s32 port, s32 slot, s32 textId) {
     char playerName[0x20];
     const char* strSaveKind;
@@ -521,16 +528,16 @@ void func_801ACFBC(s32 port, s32 slot, s32 textId) {
 
     do {
         func_801B263C(playerName, textId);
-        func_801B25D4(D_801A7620, textId + 1);
+        func_801B25D4("　", textId + 1);
     } while (0);
     if (g_SaveSummary[port].character[slot]) {
-        strSaveKind = D_801A76A4;
+        strSaveKind = "Richter";
     } else if (g_SaveSummary[port].kind[slot] & SAVE_FLAG_CLEAR) {
-        strSaveKind = D_801A76AC;
+        strSaveKind = "Clear";
     } else if (g_SaveSummary[port].kind[slot] & SAVE_FLAG_REPLAY) {
-        strSaveKind = D_801A76B4;
+        strSaveKind = "Replay";
     } else {
-        strSaveKind = D_801A7620;
+        strSaveKind = "　";
     }
     func_801B2608(strSaveKind, textId + 2);
 }
@@ -547,12 +554,2173 @@ void PrintFileSelectPlaceName(s32 port, s32 slot, s32 y) {
     DrawImages8x8(D_80180128[stage].line2, x, y + row2y, tge);
 }
 
+#define STR_SELECT D_801803A8[0]
+#define STR_DECIDE D_801803A8[1]
+#define STR_CANCEL D_801803A8[2]
+#define STR_INPUT D_801803A8[3]
+#define STR_NOTFOR D_801803A8[4]
+#define STR_YES D_801803A8[5]
+#define STR_NO D_801803A8[6]
+#define STR_CONFIRM D_801803A8[7]
+#define STR_ERROR D_801803A8[8]
+#define STR_MATTED D_801803A8[9]
+
+typedef enum {
+    Tips_Generic,
+    Tips_Input,
+    Tips_YesNo,
+    Tips_Confirm,
+    Tips_MenuNavigation,
+    Tips_NoYes,
+} NavigationTips;
+
+extern char g_AsciiSet[];
+
 void func_801AD1D0(void) {
-    DrawImages8x8(D_801803BC, 52, 196, 1);
-    DrawImages8x8(D_801803C0, 52, 212, 1);
+    DrawImages8x8(STR_YES, 52, 196, 1);
+    DrawImages8x8(STR_NO, 52, 212, 1);
 }
 
 void func_801AD218(void) {
-    DrawImages8x8(D_801803C0, 52, 196, 1);
-    DrawImages8x8(D_801803BC, 52, 212, 1);
+    DrawImages8x8(STR_NO, 52, 196, 1);
+    DrawImages8x8(STR_YES, 52, 212, 1);
 }
+
+void DrawNavigationTips(NavigationTips mode) {
+    POLY_GT4* poly;
+
+    func_801ACBE4(6, 8);
+    poly = &g_PrimBuf[D_801BAF48];
+
+    switch (mode) {
+    case Tips_Generic:
+        SetPrimRect(poly, 32, 176, 16, 16);
+        poly->pad3 = 0;
+        poly = poly->tag;
+        SetPrimRect(poly, 32, 192, 16, 16);
+        poly->pad3 = 0;
+        poly = poly->tag;
+        SetPrimRect(poly, 32, 208, 16, 16);
+        poly->pad3 = 0;
+        break;
+
+    case Tips_Input:
+        SetPrimRect(poly, 288, 32, 16, 16);
+        poly->pad3 = 0;
+        poly = poly->tag;
+        SetPrimRect(poly, 288, 48, 16, 16);
+        poly->pad3 = 0;
+        poly = poly->tag;
+        SetPrimRect(poly, 288, 64, 16, 16);
+        poly->pad3 = 0;
+        poly = poly->tag;
+        SetPrimRect(poly, 288, 80, 16, 16);
+        poly->pad3 = 0;
+        break;
+
+    case Tips_YesNo:
+    case Tips_NoYes:
+        poly = poly->tag;
+        SetPrimRect(poly, 32, 192, 16, 16);
+        poly->pad3 = 0;
+        poly = (POLY_GT4*)poly->tag;
+        SetPrimRect(poly, 32, 208, 16, 16);
+        poly->pad3 = 0;
+        if (mode == Tips_YesNo) {
+            func_801AD1D0();
+        } else {
+            func_801AD218();
+        }
+        break;
+
+    case Tips_Confirm:
+        poly = poly->tag;
+        SetPrimRect(poly, 32, 192, 16, 16);
+        poly->pad3 = 0;
+        DrawImages8x8(STR_CONFIRM, 52, 196, 1);
+        break;
+
+    case Tips_MenuNavigation:
+        SetPrimRect(poly, 32, 184, 16, 16);
+        poly->pad3 = 0;
+        poly = (POLY_GT4*)poly->tag;
+        SetPrimRect(poly, 32, 200, 16, 16);
+        poly->pad3 = 0;
+        break;
+    }
+}
+
+void func_801AD490(void) {
+    s32 i;
+
+    DrawNavigationTips(Tips_MenuNavigation);
+    DrawImages8x8(STR_SELECT /* "select" */, 52, 188, 1);
+    DrawImages8x8(STR_DECIDE /* "start" */, 52, 204, 1);
+    DrawString16x16("select", 240, 32, 1);
+    DrawString16x16("your", 256, 48, 1);
+    DrawString16x16("destiny", 232, 64, 1);
+
+    for (i = 0; i < NUM_MENU_OPTIONS; i++) {
+        POLY_GT4* poly = &g_PrimBuf[D_801BAF18[i + 1][0]];
+        if (i == D_801D6B0C) {
+            poly->clut = 0x203;
+        } else {
+            poly->clut = 0x200;
+        }
+    }
+}
+
+const char* D_80180454[] = {
+    "−＊＊＊＊＊−",  "− New Game −",   "− Change Name −",
+    "− Copy File −", "− Erase File −",
+};
+void func_801AD590(void) {
+    if (g_pads[0].tapped & (PAD_RIGHT + PAD_DOWN)) {
+        g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
+        if (++D_801D6B0C == 5) {
+            D_801D6B0C = 1;
+        }
+    }
+    if (g_pads[0].tapped & (PAD_LEFT + PAD_UP)) {
+        g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
+        if (--D_801D6B0C == 0) {
+            D_801D6B0C = 4;
+        }
+    }
+    func_801B2608(D_80180454[D_801D6B0C], 9);
+}
+
+const char* D_80180468[] = {
+    "richter ",
+};
+void func_801AD66C(void) {
+    s32 i;
+    s32 nSpaces;
+    char* strRichter;
+
+    // check if the name only contain spaces
+    for (nSpaces = 0, i = 0; i < 8; i++) {
+        g_SaveName[i] = g_InputSaveName[i];
+        if (g_InputSaveName[i] == ' ') {
+            nSpaces++;
+        }
+    }
+
+    // if it only contain spaces, set a default name
+    if (nSpaces == 8) {
+        STRCPY(g_SaveName, "alucard ");
+    }
+
+    D_80097B98 = 0;
+    D_80097B99 = 0;
+
+    // check if the name is Richter
+    for (strRichter = D_80180468[0], i = 0; i < 8; i++) {
+        if (g_SaveName[i] != *strRichter++) {
+            break;
+        }
+    }
+
+    if (g_IsTimeAttackUnlocked != SAVE_FLAG_NORMAL) {
+        g_IsTimeAttackUnlocked = SAVE_FLAG_REPLAY;
+    }
+
+    // play as Richter only if the game was previously cleared
+    if (i == 8 && g_IsTimeAttackUnlocked != SAVE_FLAG_NORMAL) {
+        g_PlayableCharacter = PLAYER_RICHTER;
+    } else {
+        g_PlayableCharacter = PLAYER_ALUCARD;
+    }
+}
+
+/* BSS */
+extern s32 D_801BAF58;
+extern s32 D_801BAF68;
+
+void func_801AD78C(void) {
+    DrawImages8x8(STR_SELECT, 0x134, 0x24, 1);
+    DrawImages8x8(STR_INPUT, 0x134, 0x34, 1);
+    DrawImages8x8(STR_CANCEL, 0x134, 0x44, 1);
+    DrawImages8x8(STR_DECIDE, 0x134, 0x54, 1);
+    DrawString16x16("a b c d e f g h", 0x48, 0x70, 1);
+    DrawString16x16("i j k l m n o p", 0x48, 0x88, 1);
+    DrawString16x16("q r s t u v w x", 0x48, 0xA0, 1);
+    DrawString16x16("y z & ! - . '  ", 0x48, 0xB8, 1);
+    SetTexturedPrimRect(
+        &g_PrimBuf[D_801BAF58], (g_InputCursorPos * 0x10) + 0x80, 0x48, 0x0F,
+        0x0F, 0xF0, 0xF0);
+    SetTexturedPrimRect(&g_PrimBuf[D_801BAF68], ((D_801BC3E0 & 7) << 5) + 0x40,
+                        (D_801BC3E0 & 0x18) * 3 + 0x68, 0x20, 0x20, 0, 0x48);
+    if (g_Timer & 8) {
+        func_801ACBE4(8, 0);
+    } else {
+        func_801ACBE4(8, 8);
+    }
+    DrawString16x16(g_InputSaveName, 0x80, 0x48, 1);
+}
+
+void UpdateNameEntry(void) {
+    if (g_pads[0].repeat & PAD_RIGHT) {
+        g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
+        D_801BC3E0 = (D_801BC3E0 & 0x18) | ((D_801BC3E0 + 1) & 7);
+    }
+
+    if (g_pads[0].repeat & PAD_DOWN) {
+        g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
+        D_801BC3E0 = ((D_801BC3E0 + 8) & 0x18) | (D_801BC3E0 & 7);
+    }
+
+    if (g_pads[0].repeat & PAD_LEFT) {
+        g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
+        D_801BC3E0 = (D_801BC3E0 & 0x18) | ((D_801BC3E0 - 1) & 7);
+    }
+
+    if (g_pads[0].repeat & PAD_UP) {
+        g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
+        D_801BC3E0 = ((D_801BC3E0 - 8) & 0x18) | (D_801BC3E0 & 7);
+    }
+
+    if (g_pads[0].tapped & (PAD_R1 + PAD_R2)) {
+        g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
+        if (++g_InputCursorPos == 8) {
+            g_InputCursorPos = 0;
+        }
+    }
+
+    if (g_pads[0].tapped & (PAD_L1 + PAD_L2)) {
+        g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
+        if (--g_InputCursorPos == -1) {
+            g_InputCursorPos = 7;
+        }
+    }
+
+    if (g_pads[0].tapped & PAD_CROSS) { // Input Character
+        g_api.PlaySfx(0x8CD);
+        g_InputSaveName[g_InputCursorPos] = g_AsciiSet[D_801BC3E0];
+        if (++g_InputCursorPos == 8) {
+            g_InputCursorPos = 0;
+        }
+    }
+
+    if (g_pads[0].tapped & PAD_TRIANGLE) { // Backspace
+        if (--g_InputCursorPos == -1) {
+            g_InputCursorPos = 7;
+        }
+        g_InputSaveName[g_InputCursorPos] = ' ';
+    }
+}
+
+void UpdateFileSelect(void) {
+    if (g_SaveSummary[0].padding >= 0 || g_SaveSummary[1].padding >= 0) {
+        if (g_pads[0].repeat & PAD_RIGHT) { // move selector to the right
+            g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
+            // clamp selector inside the 6 possible X coord positions
+            g_MemCardSelectorX = (g_MemCardSelectorX + 1) % 6;
+        }
+
+        if (g_pads[0].repeat & PAD_DOWN) { // move selector down
+            g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
+            // clamp selector inside the 5 possible Y coord positions
+            g_MemCardSelectorY = (g_MemCardSelectorY + 4) % 5;
+        }
+
+        if (g_pads[0].repeat & PAD_LEFT) { // move selector to the left
+            g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
+            // clamp selector inside the 6 possible X coord positions
+            g_MemCardSelectorX = (g_MemCardSelectorX + 5) % 6;
+        }
+
+        if (g_pads[0].repeat & PAD_UP) { // move selector up
+            g_api.PlaySfx(NA_SE_SY_MOVE_MENU_CURSOR);
+            // clamp selector inside the 5 possible Y coord positions
+            g_MemCardSelectorY = (g_MemCardSelectorY + 1) % 5;
+        }
+
+        if (g_SaveSummary[0].padding > 0 && g_SaveSummary[1].padding > 0 &&
+            (g_pads[0].tapped & (PAD_L2 + PAD_R2 + PAD_L1 + PAD_R1))) {
+            g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
+            // clamp selector inside the 6 possible X coord positions
+            g_MemCardSelectorX = (g_MemCardSelectorX + 3) % 6;
+        }
+
+        if (g_SaveSummary[0].padding < 0) {
+            g_MemCardSelectorX = (g_MemCardSelectorX % 3) + 3;
+        }
+
+        if (g_SaveSummary[1].padding < 0) {
+            g_MemCardSelectorX %= 3;
+        }
+
+        D_801D6B04 = (g_MemCardSelectorX % 3) + (g_MemCardSelectorY * 3) +
+                     ((g_MemCardSelectorX / 3) * 0xF);
+    }
+}
+
+void func_801ADF94(s32 flags, bool yOffset) {
+    s32 saveDescriptorString = flags & 0x7F;
+    bool hideButtons = flags & 0x80;
+    s32 port = D_801D6B04 / 15;
+    s32 slot = D_801D6B04 % 15;
+    s32 y = yOffset * 56;
+    s32 icon;
+    Primitive* p = g_PrimBuf + D_801BAF18[11][0];
+
+    SetTexturedPrimRect(p, 104, 88 + y, 176, 80, 0, 0);
+
+    if (saveDescriptorString > 0) {
+        if (g_SaveSummary[port].padding == -3 || saveDescriptorString == 3) {
+            func_801ACBE4(12, 8);
+            func_801ACBE4(16, 8);
+            DrawString16x16("new game", 128, 120 + y, 1);
+        } else {
+            icon = g_SaveSummary[port].icon[slot];
+            if (icon >= 0) {
+                s32 percLo;
+                s32 percHi;
+                func_801AC084(12, y);
+                func_801ACBE4(12, 0);
+                func_801ACBE4(16, 0);
+                p = g_PrimBuf + D_801BAF18[16][0];
+                p->y0 = 96 + y;
+                func_801ACFBC(port, slot, 6);
+                PrintFileSelectPlaceName(port, slot, 112 + y);
+                func_801B2BD4(g_SaveSummary[port].level[slot], 148, 144 + y, 1);
+                func_801B2BD4(
+                    g_SaveSummary[port].playHours[slot], 200, 144 + y, 1);
+                func_801B2C70(
+                    g_SaveSummary[port].playMinutes[slot], 224, 144 + y, 1);
+                func_801B2C70(
+                    g_SaveSummary[port].playSeconds[slot], 248, 144 + y, 1);
+                func_801B2BD4(g_SaveSummary[port].gold[slot], 180, 152 + y, 1);
+                percHi = g_SaveSummary[port].nRoomsExplored[slot];
+                percHi = (percHi * 1000) / 942;
+                percLo = percHi % 10;
+                percHi = percHi / 10;
+                func_801B2BD4(percHi, 232, 152 + y, 1);
+                func_801B27A8(
+                    240, 156 + y, 8, 4, 0xE0, 0x8C, 0x200, 0xC, 1, 0x80);
+                func_801B2BD4(percLo, 248, 152 + y, 1);
+            } else {
+                func_801ACBE4(12, 8);
+                func_801ACBE4(16, 8);
+                if (icon == -2) {
+                    DrawString16x16("used", 160, 120 + y, 1);
+                } else if (saveDescriptorString == 2) {
+                    DrawString16x16("no data", 136, 120 + y, 1);
+                } else {
+                    DrawString16x16("new game", 128, 120 + y, 1);
+                }
+            }
+        }
+    }
+
+    if (!hideButtons) {
+        DrawImages8x8(STR_SELECT, 52, 180, 1);
+        DrawImages8x8(STR_DECIDE, 52, 196, 1);
+        DrawImages8x8(STR_CANCEL, 52, 212, 1);
+    }
+
+    for (port = 0; port < PORT_COUNT; ++port) {
+        switch (g_SaveSummary[port].padding) {
+        case -1:
+            DrawString16x16("no", 48 + port * 256, 88, 1);
+            DrawString16x16("card", 32 + port * 256, 104, 1);
+            break;
+        case -2:
+            DrawImages8x8(STR_NOTFOR, 30 + port * 256, 108, 1);
+            DrawImages8x8(STR_MATTED, 30 + port * 256, 116, 1);
+            break;
+        case -3:
+            DrawImages8x8(STR_ERROR, 54 + port * 256, 108, 1);
+            break;
+        default: {
+            s32 slot;
+            for (slot = 0; slot < BLOCK_PER_CARD; ++slot) {
+                s32 x;
+                s32 color;
+                s32 tge;
+                s32 nRow;
+                s32 nCol;
+                icon = g_SaveSummary[port].icon[slot];
+                nRow = slot / 3;
+                nCol = slot % 3;
+                x = nCol * 24 + 32 + port * 256;
+                y = 0x90 - nRow * 16;
+
+                if (nCol + port * 3 == g_MemCardSelectorX &&
+                    saveDescriptorString != 3 && nRow == g_MemCardSelectorY &&
+                    saveDescriptorString > 0 && D_801BAF10 == 0) {
+                    tge = 0;
+                    color = 0x40;
+
+                    if (g_Timer & 0x10) {
+                        color = g_Timer & 0xF;
+                    } else {
+                        color = 0xF - (g_Timer & 0xF);
+                    }
+                    color = color * 8 + 0x80;
+
+                } else {
+                    tge = 0;
+                    color = 0x40;
+                }
+                if (icon == -2) {
+                    func_801B27A8(
+                        x, y, 16, 16, 0x90, 0x80, 0x200, 0xC, tge, color);
+                }
+                if (icon == -3) {
+                    func_801B27A8(
+                        x, y, 16, 16, 0x80, 0x80, 0x200, 0xC, tge, color);
+                }
+                if (icon >= 0) {
+                    func_801B27A8(
+                        x, y, 16, 16, icon * 0x10, (D_801BAF08 % 3) * 0x10,
+                        icon + 0x220, 0x16, tge, color);
+                }
+            }
+            break;
+        }
+        }
+    }
+}
+
+void func_801AE6D0(void) {
+    Primitive* prim;
+    SaveSummary* s;
+    s32 port;
+    s32 slot;
+    s32 percentage;
+    s32 percentageDecimal;
+    s32 level;
+
+    port = D_801BC3EC / 15;
+    slot = D_801BC3EC % 15;
+    s = &g_SaveSummary[port];
+    func_801ACBE4(0x12, 0x11);
+    prim = g_PrimBuf[D_801BAF18[18][0]].next;
+    SetTexturedPrimRect(prim, 168, (D_801BAF08 % 3) + 127, 48, 16, 0xB0, 0x80);
+    prim->blendMode = 0;
+    func_801ACBE4(0x13, 0);
+    func_801ACBE4(0x14, 0);
+    func_801ACFBC(port, slot, 10);
+    PrintFileSelectPlaceName(port, slot, 72);
+
+    level = (g_SaveSummary + port)->level[slot]; // FAKE
+    func_801B2BD4(g_SaveSummary[port].level[slot], 148, 104, 1);
+    func_801B2BD4(g_SaveSummary[port].playHours[slot], 200, 104, 1);
+    func_801B2C70(g_SaveSummary[port].playMinutes[slot], 224, 104, 1);
+    func_801B2C70(g_SaveSummary[port].playSeconds[slot], 248, 104, 1);
+    func_801B2BD4(g_SaveSummary[port].gold[slot], 180, 112, 1);
+    percentage = g_SaveSummary[port].nRoomsExplored[slot];
+    percentage = percentage * 1000 / 942;
+    percentageDecimal = percentage % 10;
+    func_801B2BD4(percentage / 10, 232, 112, 1);
+    func_801B27A8(240, 116, 8, 4, 0xE0, 0x8C, 0x200, 12, 1, 128);
+    func_801B2BD4(percentageDecimal, 248, 112, 1);
+}
+
+extern s32 g_MenuHeadGfxU[];
+extern s32 g_MenuHeadGfxV[];
+void func_801AE9A8(void) {
+    s32 i;
+
+    MenuHideAllGfx();
+    func_801ACBE4(0, 0);
+
+    for (i = 1; i < NUM_MENU_OPTIONS; i++) {
+        func_801ACBE4(i + 1, 4);
+        SetTexturedPrimRect(
+            &g_PrimBuf[D_801BAF18[i + 1][0]], (i * 64) - 32, (i * 5) * 8, 127,
+            31, g_MenuHeadGfxU[i], g_MenuHeadGfxV[i]);
+    }
+
+    DrawNavigationTips(0);
+    func_801ACBE4(0x11, 0);
+}
+
+void func_801AEA8C(s32 arg0) {
+    g_InputCursorPos = 0;
+    D_801BC3E0 = 0;
+    MenuHideAllGfx();
+    func_801ACBE4(7, 0x11);
+    func_801ACBE4(8, 0);
+    func_801ACBE4(9, 0x11);
+    func_801ACBE4(10, 0);
+
+    if (arg0 == 0) {
+        func_801ACBE4(1, 0);
+        SetPrimRect(&g_PrimBuf[D_801BAF20], 24, 24, 127, 31);
+    } else {
+        func_801ACBE4(3, 0);
+        SetPrimRect(&g_PrimBuf[D_801BAF30], 24, 24, 127, 31);
+    }
+
+    DrawNavigationTips(1);
+}
+
+void SelectMainMenuOption(MainMenuCursor cursor) {
+    Primitive* prim;
+    s32 gfxId;
+
+    g_SaveSummary[0].padding = 0;
+    g_SaveSummary[1].padding = 0;
+    MenuHideAllGfx();
+    func_801ACBE4(GFX_WND_SAVE_SUMMARY, 0x11);
+    func_801ACBE4(GFX_WND_CARD_1, 0x11);
+    func_801ACBE4(GFX_WND_CARD_2, 0x11);
+    func_801ACBE4(15, 0);
+
+    switch (cursor) {
+    case MAIN_MENU_CURSOR_FILE_SELECT:
+        gfxId = GFX_FILE_SELECT;
+        break;
+    case MAIN_MENU_CURSOR_NAME_CHANGE:
+        gfxId = GFX_NAME_CHANGE;
+        break;
+    case MAIN_MENU_CURSOR_FILE_COPY:
+        gfxId = GFX_FILE_COPY;
+        break;
+    case MAIN_MENU_CURSOR_FILE_DELETE:
+        gfxId = GFX_FILE_DELETE;
+        break;
+    }
+    func_801ACBE4(gfxId, 0);
+
+    // Relocate the graphics at the top-left of the screen
+    prim = &g_PrimBuf[D_801BAF18[gfxId][0]];
+    SetPrimRect(prim, 16, 16, 127, 31);
+    prim->clut = 0x200;
+}
+
+void func_801AECA0(void) {
+    s32 i = 0;
+    s32 x;
+    s32 y = 256;
+    s32 w = 16;
+    s32 h = 48;
+    s32 xnext = 384;
+    u32* pix = g_saveIconTexture;
+
+    for (; i < 16; i++) {
+        s32 tmp = 4;
+        x = xnext;
+        xnext += tmp;
+        LoadTPage(*pix++, 0, 0, x, y, w, tmp = 0x30);
+        x = xnext;
+    }
+
+    g_api.func_800EA5E4(0x8004);
+}
+
+void CheckIfMemcardsCanBeUsed(void) {
+    s32 isCard0Full;
+    s32 isCard1Full;
+    s32 i;
+
+    isCard0Full = true;
+    isCard1Full = true;
+    for (i = 0; i < BLOCK_PER_CARD; i++) {
+        if (g_SaveSummary[0].icon[i] != -2) {
+            isCard0Full = false;
+        }
+        if (g_SaveSummary[1].icon[i] != -2) {
+            isCard1Full = false;
+        }
+    }
+
+    D_801BAF10 = 0;
+    if ((g_SaveSummary[0].padding < 0 || isCard0Full) &&
+        (g_SaveSummary[1].padding < 0 || isCard1Full)) {
+        D_801BAF10 = 1;
+    }
+
+    D_801BAF14 = 0;
+    for (i = 0; i < BLOCK_PER_CARD; i++) {
+        if ((g_SaveSummary[0].padding > 0 && g_SaveSummary[0].icon[i] == -3) ||
+            (g_SaveSummary[1].padding > 0 && g_SaveSummary[1].icon[i] == -3)) {
+            break;
+        }
+    }
+    if (i == BLOCK_PER_CARD) {
+        D_801BAF14 = 1;
+    }
+}
+
+void func_801AEE74(void) {
+    s32 i = 0;
+    SaveSummary* saveMenuInfo = g_SaveSummary;
+    s32* iconsPort1 = saveMenuInfo[1].icon;
+    s32* iconsPort0 = saveMenuInfo[0].icon;
+
+    for (; i < BLOCK_PER_CARD; i++) {
+        if (*iconsPort0 >= 0 || *iconsPort1 >= 0)
+            break;
+        iconsPort1++;
+        iconsPort0++;
+    }
+
+    if (i == BLOCK_PER_CARD) {
+        D_801BAF10 = 1;
+    }
+}
+
+extern s32 D_801BAF0C;
+extern s32 D_801BAFC8;
+extern s32 D_801BAFCC;
+
+void Update(void) {
+    s32 temp_v0;
+    s32 var_a0_2;
+    s32 i;
+    s32 port;
+    s32 slot;
+    s32 icon;
+
+    func_801B1F34();
+    switch (D_8003C9A4) {
+    case 0:
+        func_801B18F4();
+        func_801B1B88();
+        D_8003C9A4--;
+        break;
+    case -1:
+        g_api.PlaySfx(MU_PRAYER);
+        g_GameTimer = 0;
+        D_801BAF08 = 0;
+        func_801B2D6C();
+        g_api.func_800EA5E4(0);
+        g_api.func_800EA5E4(0x8000);
+        g_api.func_800EA5E4(0x8001);
+        g_api.func_800EA5E4(0x8002);
+        g_api.func_800EA5E4(0x8003);
+        g_api.func_800EA5E4(0x8006);
+        SetupFileChoose();
+        func_801ACC7C();
+        InitMainMenuGraphics();
+        func_801ACF7C();
+        func_801AECA0();
+        func_801B1F4C(9);
+        func_801AD490();
+        D_8003C9A4 += 2;
+        break;
+    case 1:
+        func_801AD590();
+        func_801AD490();
+        if (func_801ACDFC() != 0) {
+            D_8003C9A4++;
+        }
+        break;
+    case 2:
+        func_801AD590();
+        func_801AD490();
+        if (g_pads[0].tapped & PAD_CROSS) {
+            switch (D_801D6B0C) {
+            case 0:
+                g_api.PlaySfx(0x633);
+                D_8003C9A4 = 0x10;
+                break;
+            case 1:
+                g_api.PlaySfx(0x633);
+                D_8003C9A4 = 0x30;
+                break;
+            case 2:
+                g_api.PlaySfx(0x633);
+                D_8003C9A4 = 0x90;
+                break;
+            case 3:
+                g_api.PlaySfx(0x633);
+                D_8003C9A4 = 0x50;
+                break;
+            case 4:
+                g_api.PlaySfx(0x633);
+                D_8003C9A4 = 0x70;
+                break;
+            default:
+                g_api.PlaySfx(0x686);
+                break;
+            }
+        }
+        break;
+    case 3:
+        func_801AD590();
+        func_801AD490();
+        if (func_801ACEC0()) {
+            SetGameState(Game_Title);
+        }
+        break;
+    case 16:
+        STRCPY(g_InputSaveName, "        ");
+        func_801AEA8C(0);
+        D_8003C9A4++;
+        // fallthrough
+    case 17:
+        for (i = 0; i < 8; i++) {
+            if (g_InputSaveName[i] != ' ') {
+                break;
+            }
+        }
+        if (!(g_pads[0].tapped & PAD_SELECT) &&
+            (!(g_pads[0].tapped & PAD_TRIANGLE) || i != 8 ||
+             g_InputCursorPos != 0)) {
+            UpdateNameEntry();
+            func_801AD78C();
+            if (g_pads[0].tapped & PAD_START) {
+                g_api.PlaySfx(0x633);
+                func_801AD66C();
+                if (g_PlayableCharacter == 0) {
+                    g_StageId = STAGE_ST0;
+                } else {
+                    g_StageId = STAGE_NO3;
+                }
+                D_8003C730 = 0;
+                D_8006C378 = -1;
+                if (D_801BAF10) {
+                    D_80097924 = -1;
+                } else {
+                    D_80097924 = D_801D6B04 / 15;
+                }
+                g_api.PlaySfx(0x80);
+                D_8003C9A4++;
+            }
+        } else {
+            D_8003C9A4 = 0x30;
+        }
+        break;
+    case 18:
+        func_801AD78C();
+        if (func_801ACEC0()) {
+            func_801B18F4();
+            func_801B19F4();
+            func_801B1DA8();
+            func_801B2D1C();
+            g_api.func_800EA538(0);
+            if (g_PlayableCharacter == 0) {
+                SetGameState(Game_VideoPlayback);
+            } else {
+                g_GameStep++;
+            }
+        }
+        break;
+    case 48:
+        SelectMainMenuOption(MAIN_MENU_CURSOR_FILE_SELECT);
+        func_801B2608("Checking Memory Card．", 4);
+        func_801B2608("Do not remove Memory Card．", 5);
+        func_801B3120();
+        D_8003C9A4++;
+        // fallthrough
+    case 49:
+        func_801ADF94(0x80, 0);
+        D_800978C4 = 0;
+        if (func_801B3164()) {
+            D_800978C4 = 1;
+            D_8003C9A4++;
+            CheckIfMemcardsCanBeUsed();
+            if (g_SaveSummary[0].padding == -2 ||
+                g_SaveSummary[1].padding == -2) {
+                D_801BAFC8 = 0x30;
+                D_801BAFCC = 0x32;
+                D_8003C9A4 = 0x200;
+            }
+        }
+        break;
+    case 50:
+        if (g_IsTimeAttackUnlocked == 0) {
+            D_801BAF0C = 0xFF;
+        } else {
+            D_801BAF0C = 0x2FF;
+        }
+        if (g_SaveSummary[0].padding < 0) {
+            g_MemCardSelectorX = (g_MemCardSelectorX % 3) + 3;
+        }
+        if (g_SaveSummary[1].padding < 0) {
+            g_MemCardSelectorX %= 3;
+        }
+        if (D_801BAF10) {
+            func_801B2608("You won’t be able to save", 4);
+            func_801B2608("your game． Is that OK？", 5);
+            func_801ADF94(0x83, 0);
+            DrawNavigationTips(Tips_YesNo);
+            D_8003C9A4 = 0x40;
+        } else {
+            DrawNavigationTips(Tips_Generic);
+            func_801ADF94(1, 0);
+            func_801B25D4("　", 4);
+            func_801B25D4("　", 5);
+            D_8003C9A4++;
+        }
+        break;
+    case 64:
+        func_801ADF94(0x81, 0);
+        DrawNavigationTips(Tips_YesNo);
+        if (g_pads[0].tapped & PAD_TRIANGLE) {
+            func_801AE9A8();
+            func_801AD490();
+            D_8003C9A4 = 2;
+        } else if (g_pads[0].tapped & PAD_CROSS) {
+            g_api.PlaySfx(0x633);
+            D_8003C9A4 = 0x10;
+        }
+        break;
+    case 65:
+        func_801ADF94(0x83, 0);
+        DrawNavigationTips(Tips_YesNo);
+        if (g_pads[0].tapped & PAD_TRIANGLE) {
+            D_801BAF0C = 0xFF;
+            DrawNavigationTips(Tips_Generic);
+            func_801B2608("Select file to be loaded．", 4);
+            func_801B2608("", 5);
+            D_8003C9A4 = 0x33;
+        } else if (g_pads[0].tapped & PAD_CROSS) {
+            g_api.PlaySfx(0x633);
+            D_8003C9A4 = 0x10;
+        }
+        break;
+    case 51:
+        if (g_pads[0].tapped & PAD_TRIANGLE) {
+            func_801AE9A8();
+            func_801AD490();
+            D_8003C9A4 = 2;
+            break;
+        }
+
+        UpdateFileSelect();
+        func_801ADF94(1, 0);
+        if (++D_801BAF0C == 0x100) {
+            func_801B2608("Select file to be loaded．", 4);
+            func_801B2608("", 5);
+        }
+        if (D_801BAF0C == 0x200) {
+            if (D_801BAF14 != 0) {
+                func_801B2608("Press Start button", 4);
+                func_801B2608("to begin new game．", 5);
+            } else {
+                func_801B2608("Select New Game", 4);
+                func_801B2608("to start from beginning．", 5);
+            }
+            if (g_IsTimeAttackUnlocked == 0) {
+                D_801BAF0C = 0;
+            }
+        }
+        if (D_801BAF0C == 0x300) {
+            func_801B2608("Input ””RICHTER”” to play", 4);
+            func_801B2608("as Richter Belmont．", 5);
+            D_801BAF0C = 0;
+        }
+        if ((g_pads[0].tapped & PAD_START) && D_801BAF14 != 0) {
+            g_api.PlaySfx(0x633);
+            func_801B2608("You won’t be able to save", 4);
+            func_801B2608("your game． Is that OK？", 5);
+            func_801ADF94(0x81, 0);
+            DrawNavigationTips(Tips_YesNo);
+            D_8003C9A4 = 0x41;
+        } else if (g_pads[0].tapped & PAD_CROSS) {
+            port = D_801D6B04 / 15;
+            slot = D_801D6B04 % 15;
+            icon = g_SaveSummary[port].icon[slot];
+            if (icon >= 0) {
+                g_api.PlaySfx(0x633);
+                D_8003C9A4 = 0x100;
+            } else if (icon == -3) {
+                g_api.PlaySfx(0x633);
+                D_8003C9A4 = 0x10;
+            } else {
+                g_api.PlaySfx(0x686);
+            }
+        }
+        break;
+    case 144:
+        SelectMainMenuOption(MAIN_MENU_CURSOR_FILE_DELETE);
+        func_801ACBE4(GFX_UNK_15, 0);
+        func_801B2608("Checking Memory Card．", 4);
+        func_801B2608("Do not remove Memory Card．", 5);
+        func_801B3120();
+        D_8003C9A4++;
+        // fallthrough
+    case 145:
+        func_801ADF94(0x80, 0);
+        D_800978C4 = 0;
+        if (func_801B3164()) {
+            D_800978C4 = 1;
+            D_8003C9A4++;
+            CheckIfMemcardsCanBeUsed();
+            if (g_SaveSummary[0].padding == -2 ||
+                g_SaveSummary[1].padding == -2) {
+                D_801BAFC8 = 0x90;
+                D_801BAFCC = 146;
+                D_8003C9A4 = 0x200;
+            }
+        }
+        break;
+    case 146:
+        func_801ACBE4(GFX_UNK_15, 0);
+        if (g_SaveSummary[0].padding < 0) {
+            g_MemCardSelectorX = (g_MemCardSelectorX % 3) + 3;
+        }
+        if (g_SaveSummary[1].padding < 0) {
+            g_MemCardSelectorX %= 3;
+        }
+        func_801AEE74();
+        if (D_801BAF10) {
+            func_801B2608("No data found", 4);
+            func_801B2608("on this Memory Card．", 5);
+            func_801ADF94(0x82, 0);
+            DrawNavigationTips(Tips_Confirm);
+            D_8003C9A4 = 0xA0;
+        } else {
+            DrawNavigationTips(Tips_Generic);
+            func_801ADF94(2, 0);
+            func_801B2608("Select the file", 4);
+            func_801B2608("you wish to rename．", 5);
+            D_8003C9A4++;
+        }
+        break;
+    case 160:
+        DrawNavigationTips(Tips_Confirm);
+        func_801ADF94(0x82, 0);
+        if (g_pads[0].tapped & PAD_CROSS) {
+            g_api.PlaySfx(0x633);
+            func_801AE9A8();
+            func_801AD490();
+            D_8003C9A4 = 2;
+        }
+        break;
+    case 147:
+        if (g_pads[0].tapped & PAD_TRIANGLE) {
+            func_801AE9A8();
+            func_801AD490();
+            D_8003C9A4 = 2;
+        } else {
+            UpdateFileSelect();
+            func_801ADF94(2, 0);
+            if (g_pads[0].tapped & PAD_CROSS) {
+                port = D_801D6B04 / 15;
+                slot = D_801D6B04 % 15;
+                if (g_SaveSummary[port].icon[slot] >= 0) {
+                    g_api.PlaySfx(0x633);
+                    D_8003C9A4++;
+                } else {
+                    g_api.PlaySfx(0x686);
+                }
+            }
+        }
+        break;
+    case 148:
+        STRCPY(g_InputSaveName, "        ");
+        func_801AEA8C(1);
+        D_8003C9A4++;
+        // fallthrough
+    case 149:
+        for (i = 0; i < 8; i++) {
+            if (g_InputSaveName[i] != ' ') {
+                break;
+            }
+        }
+        if (g_pads[0].tapped & PAD_SELECT ||
+            (g_pads[0].tapped & PAD_TRIANGLE && i == 8 &&
+             g_InputCursorPos == 0)) {
+            SelectMainMenuOption(MAIN_MENU_CURSOR_FILE_DELETE);
+            D_8003C9A4 = 146;
+        } else {
+            UpdateNameEntry();
+            func_801AD78C();
+            if (g_pads[0].tapped & PAD_START) {
+                SelectMainMenuOption(MAIN_MENU_CURSOR_FILE_DELETE);
+                var_a0_2 = 0;
+                for (i = 0; i < 8; i++) {
+                    if (g_InputSaveName[i] == ' ') {
+                        var_a0_2++;
+                    }
+                }
+                if (var_a0_2 == 8) {
+                    D_8003C9A4 = 146;
+                } else {
+                    func_801ACBE4(GFX_UNK_15, 0);
+                    func_801B2608("Changing Name．", 4);
+                    func_801B2608("Do not remove Memory Card．", 5);
+                    g_api.PlaySfx(0x633);
+                    D_8003C9A4++;
+                }
+            }
+        }
+        break;
+    case 150:
+        func_801ACBE4(GFX_UNK_6, 8);
+        func_801ADF94(0x82, 0);
+        func_801B38B4(D_801D6B04, D_801D6B04);
+        D_8003C9A4++;
+        break;
+    case 151:
+        func_801ADF94(0x82, 0);
+        D_800978C4 = 0;
+        temp_v0 = func_801B3A94(g_InputSaveName);
+        if (temp_v0 != 0) {
+            D_800978C4 = 1;
+        }
+        if (temp_v0 == 1) {
+            func_801B1F4C(5);
+            func_801B2608("Name changed．", 4);
+            func_801ACBE4(GFX_UNK_15, 0);
+            D_8003C9A4 += 2;
+        }
+        if (temp_v0 == -1) {
+            func_801B1F4C(5);
+            func_801B2608("Loading error．", 4);
+            func_801ACBE4(GFX_UNK_15, 0);
+            D_8003C9A4++;
+        }
+        if (temp_v0 == -3) {
+            func_801B1F4C(5);
+            func_801B2608("Save error．", 4);
+            func_801ACBE4(GFX_UNK_15, 0);
+            D_8003C9A4++;
+        }
+        break;
+    case 152:
+        DrawNavigationTips(Tips_Confirm);
+        func_801ADF94(0x82, 0);
+        if (g_pads[0].tapped & PAD_CROSS) {
+            g_api.PlaySfx(0x633);
+            func_801ACBE4(GFX_UNK_15, 8);
+            D_8003C9A4 = 0x90;
+        }
+        break;
+    case 153:
+        DrawNavigationTips(Tips_Confirm);
+        func_801ADF94(0x82, 0);
+        if (g_pads[0].tapped & PAD_CROSS) {
+            g_api.PlaySfx(0x633);
+            D_8003C9A4 = 146;
+        }
+        break;
+    case 80:
+        SelectMainMenuOption(MAIN_MENU_CURSOR_NAME_CHANGE);
+        func_801B2608("Checking Memory Card．", 4);
+        func_801B2608("Do not remove Memory Card．", 5);
+        func_801B3120();
+        D_8003C9A4++;
+        // fallthrough
+    case 81:
+        func_801ADF94(0x80, 0);
+        D_800978C4 = 0;
+        if (func_801B3164()) {
+            D_800978C4 = 1;
+            D_8003C9A4++;
+            CheckIfMemcardsCanBeUsed();
+            if (g_SaveSummary[0].padding == -2 ||
+                g_SaveSummary[1].padding == -2) {
+                D_801BAFC8 = 0x50;
+                D_801BAFCC = 0x52;
+                D_8003C9A4 = 0x200;
+            }
+        }
+        break;
+    case 82:
+        if (g_SaveSummary[0].padding < 0) {
+            g_MemCardSelectorX = (g_MemCardSelectorX % 3) + 3;
+        }
+        if (g_SaveSummary[1].padding < 0) {
+            g_MemCardSelectorX %= 3;
+        }
+        func_801AEE74();
+        if (D_801BAF10) {
+            func_801B2608("No data found", 4);
+            func_801B2608("on this Memory Card．", 5);
+            func_801ADF94(0x82, 0);
+            DrawNavigationTips(Tips_Confirm);
+            D_8003C9A4 = 0x60;
+        } else {
+            DrawNavigationTips(Tips_Generic);
+            func_801ADF94(2, 0);
+            func_801B2608("Select file", 4);
+            func_801B2608("to be copied．", 5);
+            D_8003C9A4++;
+        }
+        break;
+    case 96:
+        DrawNavigationTips(Tips_Confirm);
+        func_801ADF94(0x82, 0);
+        if (g_pads[0].tapped & PAD_CROSS) {
+            g_api.PlaySfx(0x633);
+            func_801AE9A8();
+            func_801AD490();
+            D_8003C9A4 = 2;
+        }
+        break;
+    case 83:
+        if (g_pads[0].tapped & PAD_TRIANGLE) {
+            func_801AE9A8();
+            func_801AD490();
+            D_8003C9A4 = 2;
+        } else {
+            UpdateFileSelect();
+            func_801ADF94(2, 0);
+            if (g_pads[0].tapped & PAD_CROSS) {
+                port = D_801D6B04 / 15;
+                slot = D_801D6B04 % 15;
+                if (g_SaveSummary[port].icon[slot] >= 0) {
+                    func_801B2608("Where do you want", 4);
+                    func_801B2608("to copy to？", 5);
+                    D_801BC3EC = D_801D6B04;
+                    g_api.PlaySfx(0x633);
+                    D_8003C9A4++;
+                } else {
+                    g_api.PlaySfx(0x686);
+                }
+            }
+        }
+        break;
+    case 84:
+        UpdateFileSelect();
+        func_801ADF94(2, 1);
+        func_801AE6D0();
+        if (g_pads[0].tapped & PAD_TRIANGLE) {
+            func_801ACBE4(GFX_UNK_18, 8);
+            func_801ACBE4(GFX_UNK_19, 8);
+            func_801ACBE4(GFX_UNK_20, 8);
+            func_801B2608("Select file", 4);
+            func_801B2608("to be copied．", 5);
+            D_8003C9A4--;
+        } else {
+            if (g_pads[0].tapped & PAD_CROSS) {
+                port = D_801D6B04 / 15;
+                slot = D_801D6B04 % 15;
+                if (D_801BC3EC != D_801D6B04) {
+                    icon = g_SaveSummary[port].icon[slot];
+                    if (icon >= 0) {
+                        func_801B1F4C(5);
+                        func_801B2608("OK to overwrite data？", 4);
+                        g_api.PlaySfx(0x633);
+                        D_8003C9A4 = 0x59;
+                    } else if (icon != -2) {
+                        func_801B2608("Copying data．", 4);
+                        func_801B2608("Do not remove Memory Card．", 5);
+                        g_api.PlaySfx(0x633);
+                        D_8003C9A4++;
+                    }
+                } else {
+                    g_api.PlaySfx(0x686);
+                }
+            }
+        }
+        break;
+    case 85:
+        func_801ACBE4(GFX_UNK_6, 8);
+        func_801ADF94(0x82, 1);
+        func_801AE6D0();
+        func_801B38B4(D_801BC3EC, D_801D6B04);
+        D_8003C9A4++;
+        break;
+    case 86:
+        func_801ADF94(0x82, 1);
+        func_801AE6D0();
+        D_800978C4 = 0;
+        temp_v0 = func_801B3A94(0);
+        if (temp_v0 != 0) {
+            D_800978C4 = 1;
+        }
+        if (temp_v0 == 1) {
+            func_801B1F4C(5);
+            func_801B2608("File copied．", 4);
+            func_801ACBE4(GFX_UNK_15, 0);
+            D_8003C9A4 += 2;
+        }
+        if (temp_v0 == -1) {
+            func_801B1F4C(5);
+            func_801B2608("Loading error．", 4);
+            func_801ACBE4(GFX_UNK_15, 0);
+            D_8003C9A4++;
+        }
+        if (temp_v0 == -3) {
+            func_801B1F4C(5);
+            func_801B2608("Save error．", 4);
+            func_801ACBE4(GFX_UNK_15, 0);
+            D_8003C9A4++;
+        }
+        break;
+    case 87:
+        DrawNavigationTips(Tips_Confirm);
+        func_801ADF94(0x82, 1);
+        func_801AE6D0();
+        if (g_pads[0].tapped & PAD_CROSS) {
+            g_api.PlaySfx(0x633);
+            func_801ACBE4(GFX_UNK_15, 8);
+            D_8003C9A4 = 0x50;
+        }
+        break;
+    case 88:
+        DrawNavigationTips(Tips_Confirm);
+        func_801ADF94(0x82, 1);
+        func_801AE6D0();
+        if (g_pads[0].tapped & PAD_CROSS) {
+            g_api.PlaySfx(0x633);
+            func_801ACBE4(GFX_UNK_18, 8);
+            func_801ACBE4(GFX_UNK_19, 8);
+            func_801ACBE4(GFX_UNK_20, 8);
+            D_8003C9A4 = 0x52;
+        }
+        break;
+    case 89:
+        DrawNavigationTips(Tips_YesNo);
+        func_801ADF94(0x82, 1);
+        func_801AE6D0();
+        if (g_pads[0].tapped & PAD_CROSS) {
+            g_api.PlaySfx(0x633);
+            func_801B2608("Copying data．", 4);
+            func_801B2608("Do not remove Memory Card．", 5);
+            D_8003C9A4 = 0x55;
+        } else {
+            if (g_pads[0].tapped & PAD_TRIANGLE) {
+                func_801B1F4C(5);
+                func_801B25D4("どこにコピーしますか？", 4);
+                DrawNavigationTips(Tips_Generic);
+                D_8003C9A4 = 0x54;
+            }
+            func_801AD1D0();
+        }
+        break;
+    case 112:
+        SelectMainMenuOption(MAIN_MENU_CURSOR_FILE_COPY);
+        func_801B2608("Checking Memory Card．", 4);
+        func_801B2608("Do not remove Memory Card．", 5);
+        func_801B3120();
+        D_8003C9A4++;
+        // fallthrough
+    case 113:
+        func_801ADF94(0x80, 0);
+        D_800978C4 = 0;
+        if (func_801B3164()) {
+            D_800978C4 = 1;
+            D_8003C9A4++;
+            CheckIfMemcardsCanBeUsed();
+            if (g_SaveSummary[0].padding == -2 ||
+                g_SaveSummary[1].padding == -2) {
+                D_801BAFC8 = 0x70;
+                D_801BAFCC = 0x72;
+                D_8003C9A4 = 0x200;
+            }
+        }
+        break;
+    case 114:
+        if (g_SaveSummary[0].padding < 0) {
+            g_MemCardSelectorX = (g_MemCardSelectorX % 3) + 3;
+        }
+        if (g_SaveSummary[1].padding < 0) {
+            g_MemCardSelectorX %= 3;
+        }
+        func_801AEE74();
+        if (D_801BAF10) {
+            func_801B2608("No data found", 4);
+            func_801B2608("on this Memory Card．", 5);
+            func_801ADF94(0x82, 0);
+            DrawNavigationTips(Tips_Confirm);
+            D_8003C9A4 = 0x80;
+        } else {
+            DrawNavigationTips(Tips_Generic);
+            func_801ADF94(2, 0);
+            func_801B2608("Select file", 4);
+            func_801B2608("to be erased．", 5);
+            D_8003C9A4++;
+        }
+        break;
+    case 128:
+        DrawNavigationTips(Tips_Confirm);
+        func_801ADF94(0x82, 0);
+        if (g_pads[0].tapped & PAD_CROSS) {
+            g_api.PlaySfx(0x633);
+            func_801AE9A8();
+            func_801AD490();
+            D_8003C9A4 = 2;
+        }
+        break;
+    case 115:
+        if (g_pads[0].tapped & PAD_TRIANGLE) {
+            func_801AE9A8();
+            func_801AD490();
+            D_8003C9A4 = 2;
+        } else {
+            UpdateFileSelect();
+            func_801ADF94(2, 0);
+            DrawNavigationTips(Tips_Generic);
+            if (g_pads[0].tapped & PAD_CROSS) {
+                port = D_801D6B04 / 15;
+                slot = D_801D6B04 % 15;
+                if (g_SaveSummary[port].icon[slot] >= 0) {
+                    func_801B1F4C(5);
+                    func_801B2608("Is it OK to erase file？", 4);
+                    g_api.PlaySfx(0x633);
+                    D_8003C9A4++;
+                } else {
+                    g_api.PlaySfx(0x686);
+                }
+            }
+        }
+        break;
+    case 116:
+        DrawNavigationTips(Tips_YesNo);
+        func_801ADF94(0x82, 0);
+        if (g_pads[0].tapped & PAD_TRIANGLE) {
+            func_801B2608("Select file", 4);
+            func_801B2608("to be erased．", 5);
+            D_8003C9A4--;
+        } else if (g_pads[0].tapped & PAD_CROSS) {
+            func_801ACBE4(GFX_UNK_15, 8);
+            g_api.PlaySfx(0x633);
+            D_8003C9A4++;
+        }
+        break;
+    case 117:
+        func_801ACBE4(GFX_UNK_6, 8);
+        func_801ADF94(0x82, 0);
+        func_801B3E14(D_801D6B04);
+        D_8003C9A4++;
+        break;
+    case 118:
+        func_801ADF94(0x82, 0);
+        D_800978C4 = 0;
+        temp_v0 = func_801B3E2C();
+        if (temp_v0 != 0) {
+            D_800978C4 = 1;
+        }
+        if (temp_v0 == 1) {
+            func_801B1F4C(5);
+            func_801B2608("File erased．", 4);
+            func_801ACBE4(GFX_UNK_15, 0);
+            D_8003C9A4 += 2;
+        }
+        if (temp_v0 == -1) {
+            func_801B1F4C(5);
+            func_801B2608("Delete error．", 4);
+            func_801ACBE4(GFX_UNK_15, 0);
+            D_8003C9A4++;
+        }
+        break;
+    case 119:
+        DrawNavigationTips(Tips_Confirm);
+        func_801ADF94(0x82, 0);
+        if (g_pads[0].tapped & PAD_CROSS) {
+            g_api.PlaySfx(0x633);
+            func_801ACBE4(GFX_UNK_15, 8);
+            D_8003C9A4 = 0x70;
+        }
+        break;
+    case 120:
+        DrawNavigationTips(Tips_Confirm);
+        func_801ADF94(0x82, 0);
+        if (g_pads[0].tapped & PAD_CROSS) {
+            g_api.PlaySfx(0x633);
+            D_8003C9A4 = 0x72;
+        }
+        break;
+    case 256:
+        func_801ACBE4(GFX_UNK_6, 8);
+        func_801ADF94(0x81, 0);
+        func_801B2608("Loading Memory Card．", 4);
+        func_801B2608("Do not remove Memory Card．", 5);
+        func_801ACBE4(GFX_UNK_15, 0);
+        func_801B367C(D_801D6B04);
+        D_8003C9A4++;
+        break;
+    case 257:
+        func_801ADF94(0x81, 0);
+        D_800978C4 = 0;
+        temp_v0 = TryLoadSaveData();
+        if (temp_v0 != 0) {
+            D_800978C4 = 1;
+        }
+        if (temp_v0 == 1) {
+            D_8003C730 = 1;
+            D_80097924 = D_801D6B04 / 15;
+            D_8006C378 = g_SaveSummary[D_80097924].slot[D_801D6B04 % 15];
+            g_api.PlaySfx(0x80);
+            D_8003C9A4 = 0x104;
+        }
+        if (temp_v0 == -1) {
+            func_801B1F4C(5);
+            func_801B2608("Loading error．", 4);
+            func_801ACBE4(GFX_UNK_15, 0);
+            D_8003C9A4++;
+        }
+        if (temp_v0 == -2) {
+            func_801B1F4C(5);
+            func_801B2608("Version error．", 4);
+            func_801ACBE4(GFX_UNK_15, 0);
+            D_8003C9A4++;
+        }
+        break;
+    case 258:
+        func_801ADF94(0x81, 0);
+        if (g_pads[0].tapped) {
+            func_801ACBE4(GFX_UNK_15, 8);
+            D_8003C9A4 = 0x30;
+        }
+        break;
+    case 260:
+        func_801ADF94(0x81, 0);
+        if (func_801ACEC0()) {
+            g_GameStep++;
+        }
+        break;
+    case 512:
+        DrawNavigationTips(Tips_NoYes);
+        func_801ADF94(0x80, 0);
+        if (g_SaveSummary[0].padding != -2) {
+            D_8003C9A4 = 0x210;
+        } else {
+            func_801B2608("Format Memory Card", 4);
+            func_801B2608("in slot １？", 5);
+            D_8003C9A4++;
+        }
+        break;
+    case 513:
+        func_801ADF94(0x80, 0);
+        if (g_pads[0].tapped & PAD_TRIANGLE) {
+            g_api.PlaySfx(0x633);
+            func_801ACBE4(GFX_UNK_6, 8);
+            MemCardSetPort(0);
+            D_8003C9A4++;
+        } else {
+            if (g_pads[0].tapped & PAD_CROSS) {
+                D_8003C9A4 = 0x210;
+            }
+            func_801AD218();
+        }
+        break;
+    case 514:
+        func_801ADF94(0x80, 0);
+        D_800978C4 = 0;
+        temp_v0 = MemCardInitAndFormat();
+        if (temp_v0 != 0) {
+            D_800978C4 = 1;
+        }
+        if (temp_v0 == 1) {
+            func_801B1F4C(5);
+            func_801B2608("Formatting completed．", 4);
+            func_801ACBE4(GFX_UNK_15, 0);
+            D_8003C9A4 += 2;
+        }
+        if (temp_v0 == -1) {
+            func_801B1F4C(5);
+            func_801B2608("Formatting error．", 4);
+            func_801ACBE4(GFX_UNK_15, 0);
+            D_8003C9A4++;
+        }
+        break;
+    case 515:
+        DrawNavigationTips(Tips_Confirm);
+        func_801ADF94(0x80, 0);
+        if (g_pads[0].tapped & PAD_CROSS) {
+            g_api.PlaySfx(0x633);
+            func_801ACBE4(GFX_UNK_15, 8);
+            D_8003C9A4 = D_801BAFC8;
+        }
+        break;
+    case 516:
+        DrawNavigationTips(Tips_Confirm);
+        func_801ADF94(0x80, 0);
+        if (g_pads[0].tapped & PAD_CROSS) {
+            g_api.PlaySfx(0x633);
+            D_8003C9A4 = D_801BAFC8;
+        }
+        break;
+    case 528:
+        func_801ADF94(0x80, 0);
+        func_801AD218();
+        if (g_SaveSummary[1].padding != -2) {
+            D_8003C9A4 = 0x220;
+        } else {
+            func_801B2608("Format Memory Card", 4);
+            func_801B2608("in slot １？", 5);
+            D_8003C9A4++;
+        }
+        break;
+    case 529:
+        func_801ADF94(0x80, 0);
+        if (g_pads[0].tapped & PAD_TRIANGLE) {
+            g_api.PlaySfx(0x633);
+            func_801ACBE4(GFX_UNK_6, 8);
+            MemCardSetPort(1);
+            D_8003C9A4++;
+        } else {
+            if (g_pads[0].tapped & 0x40) {
+                D_8003C9A4 = 0x220;
+            }
+            func_801AD218();
+        }
+        break;
+    case 530:
+        func_801ADF94(0x80, 0);
+        D_800978C4 = 0;
+        temp_v0 = MemCardInitAndFormat();
+        if (temp_v0 != 0) {
+            D_800978C4 = 1;
+        }
+        if (temp_v0 == 1) {
+            func_801B1F4C(5);
+            func_801B2608("Formatting completed．", 4);
+            func_801ACBE4(GFX_UNK_15, 0);
+            D_8003C9A4 += 2;
+        }
+        if (temp_v0 == -1) {
+            func_801B1F4C(5);
+            func_801B2608("Formatting error．", 4);
+            func_801ACBE4(GFX_UNK_15, 0);
+            D_8003C9A4++;
+        }
+        break;
+    case 531:
+        DrawNavigationTips(Tips_Confirm);
+        func_801ADF94(0x80, 0);
+        if (g_pads[0].tapped & PAD_CROSS) {
+            g_api.PlaySfx(0x633);
+            func_801ACBE4(GFX_UNK_15, 8);
+            D_8003C9A4 = D_801BAFC8;
+        }
+        break;
+    case 532:
+        DrawNavigationTips(Tips_Confirm);
+        func_801ADF94(0x80, 0);
+        if (g_pads[0].tapped & PAD_CROSS) {
+            g_api.PlaySfx(0x633);
+            D_8003C9A4 = D_801BAFC8;
+        }
+        break;
+    case 544:
+        func_801ADF94(0x80, 0);
+        if (D_801BAF10) {
+            DrawNavigationTips(Tips_YesNo);
+        }
+        D_8003C9A4 = D_801BAFCC;
+        break;
+    }
+    if (++g_GameTimer == 10) {
+        g_GameTimer = 0;
+        D_801BAF08 = (D_801BAF08 + 1) % 3;
+    }
+}
+
+void func_801B17C8(void) {
+    switch (g_MenuStep) {
+    case 0:
+        if (D_80097924 == -1 || D_8006C378 == -1) {
+            g_GameStep++;
+        } else {
+            D_800978C4 = 0;
+            g_MenuStep++;
+        }
+        break;
+
+    case 1:
+        func_801B3A54(D_80097924, D_8006C378);
+        g_MenuStep++;
+        break;
+
+    case 2:
+        D_800978C4 = 0;
+        if (func_801B3A94(1) != 0) {
+            D_800978C4 = 1;
+            g_GameStep++;
+        }
+        break;
+    }
+}
+
+void SetGameState(GameState gameState) {
+    g_GameState = gameState;
+    g_GameStep = 0;
+    g_backbufferX = 0;
+    g_backbufferY = 0;
+}
+
+void func_801B18F4(void) { ClearImage(&D_801825A4, 0, 0, 0); }
+
+void func_801B1924(void) {
+    g_GpuBuffers[0].draw.r0 = 0;
+    g_GpuBuffers[0].draw.g0 = 0;
+    g_GpuBuffers[0].draw.b0 = 0;
+    g_GpuBuffers[1].draw.r0 = 0;
+    g_GpuBuffers[1].draw.g0 = 0;
+    g_GpuBuffers[1].draw.b0 = 0;
+}
+
+void func_801B195C(s32 arg0) {
+    g_GpuBuffers[0].draw.clip.y = 20;
+    g_GpuBuffers[0].draw.clip.h = 207;
+    if (arg0 == 0) {
+        g_GpuBuffers[1].draw.clip.y = 20;
+    } else {
+        g_GpuBuffers[1].draw.clip.y = 276;
+    }
+    g_GpuBuffers[1].draw.clip.h = 207;
+    g_GpuBuffers[1].draw.isbg = 1;
+    g_GpuBuffers[0].draw.isbg = 1;
+    func_801B1924();
+    g_GpuBuffers[1].draw.dtd = 0;
+    g_GpuBuffers[0].draw.dtd = 0;
+    g_GpuBuffers[1].disp.isrgb24 = 0;
+    g_GpuBuffers[0].disp.isrgb24 = 0;
+}
+
+void func_801B19F4(void) {
+    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDrawEnv(
+        &g_GpuBuffers[1].draw, DISP_STAGE_W, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDispEnv(
+        &g_GpuBuffers[0].disp, DISP_STAGE_W, 0, DISP_STAGE_W, DISP_STAGE_H);
+    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_STAGE_W, DISP_STAGE_H);
+    func_801B195C(0);
+}
+
+void func_801B1A98(void) {
+    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_W, DISP_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, DISP_W, DISP_H);
+    SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, DISP_W, DISP_H);
+    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_W, DISP_H);
+    g_GpuBuffers[1].draw.clip.y = DISP_W / 2;
+    g_GpuBuffers[1].draw.clip.h = DISP_H;
+    g_GpuBuffers[0].draw.clip.h = DISP_H;
+    g_GpuBuffers[0].draw.clip.y = 0;
+    g_GpuBuffers[1].draw.isbg = 1;
+    g_GpuBuffers[0].draw.isbg = 1;
+    func_801B1924();
+    g_GpuBuffers[1].disp.isrgb24 = 0;
+    g_GpuBuffers[0].disp.isrgb24 = 0;
+}
+
+void func_801B1B88(void) {
+    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, 384, DISP_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, 384, DISP_H);
+    SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, 384, DISP_H);
+    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, 384, DISP_H);
+    g_GpuBuffers[1].draw.clip.y = 256;
+    g_GpuBuffers[1].draw.clip.h = DISP_H;
+    g_GpuBuffers[0].draw.clip.h = DISP_H;
+    g_GpuBuffers[0].draw.clip.y = 0;
+    g_GpuBuffers[1].draw.isbg = 1;
+    g_GpuBuffers[0].draw.isbg = 1;
+    func_801B1924();
+    g_GpuBuffers[1].disp.isrgb24 = 0;
+    g_GpuBuffers[0].disp.isrgb24 = 0;
+}
+
+void func_801B1C78(POLY_GT4* poly, u8 colorIntensity, s32 vertexIndex) {
+    switch (vertexIndex) {
+    case 0:
+        poly->r0 = poly->g0 = poly->b0 = colorIntensity;
+        break;
+    case 1:
+        poly->r1 = poly->g1 = poly->b1 = colorIntensity;
+        break;
+    case 2:
+        poly->r2 = poly->g2 = poly->b2 = colorIntensity;
+        break;
+    case 3:
+        poly->r3 = poly->g3 = poly->b3 = colorIntensity;
+        break;
+    }
+}
+
+void func_801B1CFC(POLY_GT4* poly, s32 colorIntensity) {
+    func_801B1C78(poly, colorIntensity, 0);
+    func_801B1C78(poly, colorIntensity, 1);
+    func_801B1C78(poly, colorIntensity, 2);
+    func_801B1C78(poly, colorIntensity, 3);
+}
+
+void func_801B1D68(POLY_GT4* poly) { func_801B1CFC(poly, 0); }
+
+void func_801B1D88(POLY_GT4* arg0) { func_801B1CFC(arg0, 0x80); }
+
+void func_801B1DA8(void) {
+    s32 index = 0;
+    s32 i, j;
+
+    for (i = 0xF0; i < 0x100; i++) {
+        for (j = 0x200; j < 0x300; j += 0x10) {
+            D_8003C104[index++] = GetClut(j, i);
+        }
+    }
+
+    for (i = 0xF0; i < 0x100; i++) {
+        for (j = 0; j < 0x100; j += 0x10) {
+            D_8003C104[index++] = GetClut(j, i);
+        }
+    }
+
+    for (i = 0xF0; i < 0x100; i++) {
+        for (j = 0x100; j < 0x200; j += 0x10) {
+            D_8003C104[index++] = GetClut(j, i);
+        }
+    }
+}
+
+void func_801B1ED0(void) {
+    s32 var_v1 = 0xF;
+    s32* var_v0 = D_801BC3D4;
+
+    do {
+        *var_v0-- = 0;
+    } while (--var_v1 >= 0);
+}
+
+u8 func_801B1EF4(u8 arg0) {
+    if (arg0 & 0x80) {
+        return func_801B1EF4((arg0 & 0x7F) + 3);
+    } else {
+        return (arg0 * 0x10) & 0xF0;
+    }
+}
+
+void func_801B1F34(void) { D_801BAFD0 = g_Pix[1]; }
+
+void func_801B1F4C(s32 arg0) {
+    const s32 count = 0x200;
+    u8* pix;
+    s32 i;
+
+    D_801BC398[arg0] = 0;
+    arg0 = func_801B1EF4(arg0);
+    pix = D_801BAFD0;
+    for (i = 0; i < count * 4; i++) {
+        *D_801BAFD0++ = 0;
+    }
+
+    LoadTPage(pix, 0, 0, 0x180, arg0, 0x100, 0x10);
+}
+
+void func_801B1FD8(u8* arg0, s32 arg1) {
+    const int W = 12;
+    const int H = 16;
+    const int LEN = W * H / 2;
+    s32 y;
+    s32 i;
+    s32 x;
+    u8* srcPix;
+    s32 param;
+
+    y = func_801B1EF4(arg1);
+    x = 0;
+    while (*arg0 != 0 && D_801BAFD0 < g_Pix[4]) {
+        param = *arg0++ << 8;
+        param += *arg0++;
+        srcPix = g_api.func_80106A28(param, 3);
+        for (i = 0; i < LEN; i++) {
+            D_801BAFD0[i] = *srcPix++;
+        }
+        LoadTPage(D_801BAFD0, 0, 0, D_801BAFD4 + x, D_801BAFD8 + y, W, H);
+        D_801BAFD0 += LEN;
+        x += 3;
+    }
+}
+
+// Variant of func_800F99B8, with the third argument stripped
+void func_801B2108(const char* str, s32 arg1) {
+    // See src/st/blit_char.h
+    const u16 MINSCODE = 0x8140;
+    const u16 RIGHT_DOUBLE_QUOTATION_MARK = 0x8168;
+
+    const int FontWidth = 12;
+    const int FontHeight = 16;
+    const int FontStride = FontWidth / 2;
+
+    s32 var_a0;
+    u8* var_a2;
+    s32 var_a3;
+    u8 var_s0;
+    u8* var_s1;
+    s32 var_s2;
+    s32 var_s3;
+    s32 var_s4;
+    s32 var_s5;
+    s32 var_s6;
+    s32 i;
+    s32 j;
+    u8* dest_addr;
+
+    var_s1 = str;
+    var_s5 = arg1;
+    var_s4 = 0x90;
+    for (i = 0; i < var_s4 * FontHeight; i++) {
+        D_801BAFD0[i] = 0;
+    }
+    var_s6 = ((u32)var_s5 >> 2) & 0x40;
+    var_s3 = 0;
+    if (var_s5 & 0x200) {
+        var_s6 += 0x20;
+        var_s5 &= ~0x200;
+    }
+    var_s5 = func_801B1EF4(var_s5 & 0xFF) & 0xFF;
+    while (*var_s1 != 0) {
+        var_s2 = 0;
+        var_s0 = *var_s1++;
+        if ('a' <= var_s0 && var_s0 <= 'z') {
+            var_a0 = var_s0 + 0x8220;
+        } else if ('A' <= var_s0 && var_s0 <= 'Z') {
+            var_a0 = var_s0 + 0x821F;
+        } else if (var_s0 == ' ') {
+            var_a0 = MINSCODE;
+            var_s2 = 2;
+        } else {
+            // load var_a0 as a big-endian value corresponding with shift-jis
+            var_a0 = (var_s0 << 8);
+            var_a0 += *var_s1++;
+            if (var_a0 == RIGHT_DOUBLE_QUOTATION_MARK) {
+                var_s1 += 2;
+            }
+            if (var_a0 == MINSCODE) {
+                var_s0 = ' ';
+                var_s2 = 2;
+            }
+        }
+        var_a2 = g_api.func_80106A28(var_a0, 3);
+        while (1) {
+            if (var_s0 == ' ') {
+                break;
+            }
+            for (i = 0; i < FontHeight; i++) {
+                // probably fake, i think var_a2 is a 2d array like [6][??]
+                if (var_a2[i * FontStride] != 0) {
+                    break;
+                }
+            }
+            if (i != FontHeight) {
+                break;
+            }
+            for (i = 0; i < FontHeight; i++) {
+                dest_addr = &var_a2[i * FontStride];
+                // Effectively shift everything down an index
+                for (j = 0; j < 5; j++) {
+                    dest_addr[0] = dest_addr[1];
+                    dest_addr += 1;
+                }
+                // Set last index to 0
+                *dest_addr = 0;
+            }
+        }
+        for (i = 0, var_a3 = 0; i < FontHeight; i++) {
+            for (j = 0; j < FontStride; j++) {
+                // similar to above comment, this could be var_a2[i][j]
+                if ((var_a2[i * FontStride + j] != 0) && (var_a3 < j)) {
+                    var_a3 = j;
+                }
+            }
+        }
+        for (i = 0; i < FontHeight; i++) {
+            if ((var_a2[i * FontStride + var_a3] & 0xF0)) {
+                break;
+            }
+        }
+        if (i != FontHeight) {
+            var_a3 += 1;
+        }
+        if (var_a3 < FontStride) {
+            var_a3 += 1;
+        }
+        for (i = 0; i < FontHeight; i++) {
+            dest_addr = &D_801BAFD0[var_s3 + var_s4 * i];
+            *dest_addr++ = *var_a2++;
+            *dest_addr++ = *var_a2++;
+            *dest_addr++ = *var_a2++;
+            *dest_addr++ = *var_a2++;
+            *dest_addr++ = *var_a2++;
+            *dest_addr++ = *var_a2++;
+        }
+        var_s3 += var_a3 + var_s2;
+        if (var_s3 >= var_s4) {
+            break;
+        }
+    }
+
+    LoadTPage(D_801BAFD0, 0, 0, var_s6 + D_801BAFD4, var_s5 + D_801BAFD8,
+              var_s4 * 2, 0x10);
+    D_801BAFD0 += var_s4 * 0x10;
+}
+
+void func_801B248C(const char* str, s32 id) {
+    if (D_801BC398[id] != str) {
+        func_801B1F4C(id);
+        D_801BC398[id] = str;
+        func_801B1FD8(str, id);
+    }
+}
+
+void func_801B24F8(const char* str, s32 id) {
+    if (D_801BC398[id] != str) {
+        func_801B1F4C(id);
+        D_801BC398[id] = str;
+        func_801B2108(str, id);
+    }
+}
+
+void func_801B2564(const char* str, s32 id) {
+    D_801BAFD4 = 0x3C0;
+    D_801BAFD8 = 0x100;
+    func_801B248C(str, id);
+}
+
+void func_801B259C(const char* str, s32 id) {
+    D_801BAFD4 = 0x3C0;
+    D_801BAFD8 = 0x100;
+    func_801B24F8(str, id);
+}
+
+void func_801B25D4(const char* str, s32 id) {
+    D_801BAFD4 = 0x180;
+    D_801BAFD8 = 0;
+    func_801B248C(str, id);
+}
+
+void func_801B2608(const char* str, s32 id) {
+    D_801BAFD4 = 0x180;
+    D_801BAFD8 = 0;
+    func_801B24F8(str, id);
+}
+
+void func_801B263C(const char* str, s32 id) {
+    D_801BAFD4 = 0x180;
+    D_801BAFD8 = 0;
+    func_801B1FD8(str, id);
+}
+
+#include "../../set_prim_rect.h"
+
+void func_801B2700(s32 tpage, s32 otIdx) {
+    DR_MODE* drawMode = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
+    u_long* ot = g_CurrentBuffer->ot;
+
+    SetDrawMode(drawMode, 0, 0, tpage, &D_80182584);
+    AddPrim(&ot[otIdx], drawMode);
+    g_GpuUsage.drawModes++;
+}
+
+void func_801B27A8(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 clut, s32 arg7,
+                   s32 tge, s32 c) {
+    SPRT* sprite = &g_CurrentBuffer->sprite[g_GpuUsage.sp];
+    GpuBuffer* temp_s4 = g_CurrentBuffer;
+
+    SetSemiTrans(sprite, 0);
+    SetShadeTex(sprite, tge);
+    sprite->x0 = x;
+    sprite->y0 = y;
+    sprite->w = w;
+    sprite->h = h;
+    sprite->u0 = u;
+    sprite->v0 = v;
+    sprite->r0 = c;
+    sprite->g0 = c;
+    sprite->b0 = c;
+    sprite->clut = D_8003C104[clut];
+    AddPrim(&temp_s4->ot[0x20], sprite);
+    g_GpuUsage.sp++;
+    func_801B2700(arg7, 0x20);
+}
+
+void func_801B28D4(u8* str, s32 x, s32 y, s32 tge) {
+    const int w = 12;
+    const int h = 16;
+    u8 ch;
+
+loop_1:
+    ch = *str++;
+    if (ch != 0xFF) {
+        s32 u = (ch & 0xF) * w;
+        s32 v = ch & 0xF0;
+        func_801B27A8(x, y, w, h, u, v, 0x1A1, 6, tge, 0x40);
+        x += w;
+        goto loop_1;
+    }
+}
+
+u8 D_8018046C[] = {
+    'a', 0x80, 0xB0, 'b',  0x90, 0xB0, 'c',  0xA0, 0xB0, 'd', 0xB0, 0xB0,
+    'e', 0xC0, 0xB0, 'f',  0xD0, 0xB0, 'g',  0xE0, 0xB0, 'h', 0xF0, 0xB0,
+    'i', 0x80, 0xC0, 'j',  0x90, 0xC0, 'k',  0xA0, 0xC0, 'l', 0xB0, 0xC0,
+    'm', 0xC0, 0xC0, 'n',  0xD0, 0xC0, 'o',  0xE0, 0xC0, 'p', 0xF0, 0xC0,
+    'q', 0x80, 0xD0, 'r',  0x90, 0xD0, 's',  0xA0, 0xD0, 't', 0xB0, 0xD0,
+    'u', 0xC0, 0xD0, 'v',  0xD0, 0xD0, 'w',  0xE0, 0xD0, 'x', 0xF0, 0xD0,
+    'y', 0x80, 0xE0, 'z',  0x90, 0xE0, '&',  0xA0, 0xE0, '!', 0xB0, 0xE0,
+    '-', 0xC0, 0xE0, '.',  0xD0, 0xE0, '\'', 0xE0, 0xE0, '?', 0xF0, 0xE0,
+    ' ', 0xE0, 0xF0, 0x00,
+};
+
+s32 func_801B2984(u8 ch) {
+    s32 i;
+    for (i = 0; i < 0x20; i++) {
+        if (D_8018046C[i * 3] == ch)
+            return i;
+    }
+    return 0x20;
+}
+
+void DrawString16x16(const char* str, s32 x, s32 y, s32 tga) {
+    const int W = 16;
+    const int H = 16;
+    char ch;
+    s32 uvIndex;
+
+    while (true) {
+        ch = *str++;
+        if (ch == 0) {
+            break;
+        }
+
+        uvIndex = func_801B2984(ch);
+        func_801B27A8(x, y, W, H, D_8018046C[uvIndex * 3 + 1],
+                      D_8018046C[uvIndex * 3 + 2], 0x200, 12, tga, 0x40);
+        x += W;
+    }
+}
+
+void func_801B2A9C(s32 img, s32 x, s32 y, s32 tge) {
+    func_801B27A8(
+        x, y, 8, 8, (img & 0xF) * 8, (img & 0xF0) / 2, 0x196, 0x1E, tge, 0x80);
+}
+
+void DrawImages8x8(u8* imgs, s32 x, s32 y, s32 tge) {
+    while (true) {
+        if (*imgs == 0xFF)
+            break;
+        func_801B2A9C(*imgs, x, y, tge);
+        x += 8;
+        imgs++;
+    }
+}
+
+void func_801B2B78(s32 icon, s32 x, s32 y, s32 tge) {
+    func_801B27A8(x, y, 8, 8, icon * 8 + 176, 120, 0x200, 0xC, tge, 0x40);
+}
+
+void func_801B2BD4(s32 digit, s32 x, s32 y, s32 tge) {
+    do {
+        func_801B2B78(digit % 10, x, y, tge);
+        digit /= 10;
+        x -= 8;
+    } while (digit != 0);
+}
+
+void func_801B2C70(s32 digit, s32 x, s32 y, s32 tge) {
+    func_801B2B78(digit % 10, x, y, tge);
+    func_801B2B78(digit / 10, x - 8, y, tge);
+}
+
+void func_801B2CF8(POLY_GT4* poly) {
+    u32* data = poly;
+    s32 n = sizeof(POLY_GT4) / sizeof(*data);
+    s32 i;
+
+    for (i = 0; i < n; i++) {
+        *data++ = 0;
+    }
+}
+
+void func_801B2D1C(void) {
+    s32 i;
+    Primitive* prim;
+
+    for (i = 0, prim = g_PrimBuf; i < MAX_PRIM_COUNT; i++) {
+        func_801B2CF8((s32*)prim);
+        prim->type = PRIM_NONE;
+        prim++;
+    }
+}
+
+void func_801B2D6C(void) {
+    MemcardInit();
+    D_801BAFDC = 0;
+    D_801BAFE0 = 0;
+    D_801BAFE4 = 0;
+    D_801BAFE8 = 0;
+}
+
+s32 func_801B2DAC(void) { return D_801BAFE4 < 2 || D_801BAFE4 == 2; }
+
+void func_801B2DDC(void) {}
+
+void func_801B2DE4(void) {}
+
+void func_801B2DEC(void) {}
+
+void func_801B2DF4(void) {
+    if (func_801B2DAC() != 0) {
+        D_801BAFDC = func_800E9880(D_801BAFE8, 0);
+        if (D_801BAFDC != 0) {
+            D_801BAFE0 = D_801BAFDC;
+        }
+    }
+
+    func_801B2DDC();
+    func_801B2DE4();
+    func_801B2DEC();
+}
+
+s32 func_801B2E5C(s32 port) {
+    char cardName[32];
+    struct DIRENTRY* dirent;
+    s32 i;
+    s32 j;
+    s32 totalSize;
+    s32 nBlockUsed;
+
+    STRCPY(cardName, "BASLUS-00067DRAX00");
+    totalSize = 0;
+    nBlockUsed = g_MemcardInfo[port].nBlockUsed;
+    dirent = &g_MemcardInfo[port].entries;
+    for (i = 0; i < nBlockUsed; i++) {
+        for (j = 0; j < 16; j++) {
+            if (cardName[j] != dirent[i].name[j]) {
+                break;
+            }
+        }
+        if (j != 16) {
+            totalSize += dirent[i].size;
+        }
+    }
+
+    totalSize /= CARD_BLOCK_SIZE;
+    return totalSize;
+}
+
+void HydrateSaveSummaryEntry(s32 port, s32 slot, s32 slotValue) {
+    SaveData* save = (SaveData*)g_Pix;
+    g_SaveSummary[port].slot[slot] = slotValue;
+    g_SaveSummary[port].icon[slot] = save->info.cardIcon;
+    g_SaveSummary[port].stage[slot] = save->info.stage;
+    g_SaveSummary[port].roomX[slot] = save->info.roomX;
+    g_SaveSummary[port].roomY[slot] = save->info.roomY;
+    g_SaveSummary[port].nRoomsExplored[slot] = save->info.nRoomsExplored;
+    g_SaveSummary[port].level[slot] = save->info.level;
+    g_SaveSummary[port].gold[slot] = save->info.gold;
+    g_SaveSummary[port].playHours[slot] = save->info.playHours;
+    g_SaveSummary[port].playSeconds[slot] = save->info.playSeconds;
+    g_SaveSummary[port].playMinutes[slot] = save->info.playMinutes;
+    if (save->info.saveSize != sizeof(SaveData)) {
+        save->info.endGameFlags = 0;
+    }
+    g_SaveSummary[port].kind[slot] = save->info.endGameFlags;
+    g_SaveSummary[port].character[slot] = save->info.character;
+    strcpy(g_SaveSummary[port].name[slot], save->info.name);
+    g_IsTimeAttackUnlocked |= save->info.endGameFlags;
+}
+
+void func_801B3120(void) {
+    s32* var_a0;
+    s32* var_v0;
+    s32* var_v1;
+    s32 i;
+    s32 n;
+
+    g_MemCardRStep = 0;
+    i = 0;
+    n = -1;
+    var_v0 = g_SaveSummary;
+    var_a0 = var_v0 + 0xEA;
+    var_v1 = var_v0;
+    for (; i < 0xF; i++) {
+        *var_v1 = n;
+        *var_a0 = n;
+        var_a0++;
+        var_v1++;
+    }
+}
+
+const char D_801A7AF8[] = "\nrstep:%d,%d\n";
+const char D_801A7B08[] = "retry:%d\n";

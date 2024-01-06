@@ -248,6 +248,7 @@ typedef struct Primitive {
 #define DIAG_EOL 0xFF          // end of line
 #define DIAG_EOS 0x00          // end of string
 
+#define SAVE_FLAG_NORMAL (0)
 #define SAVE_FLAG_CLEAR (1)
 #define SAVE_FLAG_REPLAY (2)
 
