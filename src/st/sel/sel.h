@@ -132,8 +132,8 @@ extern volatile u32* D_80196430;
 extern volatile u32* D_80196434;
 extern const char D_801A7748[];          // string "richter "
 extern const u8 D_801A7754[12] ALIGNED4; // string "alucard "
-extern s32 D_801A75A0[];
-extern s32 D_801A75C0[];
+extern const char D_801A75A0[];
+extern const char D_801A75C0[];
 extern const char D_801A7AF8[];           // rstep:%d,%d
 extern const char D_801A7B08[];           // retry:%d
 extern const char g_strMemcardRootPath[]; // "bu%1d%1d:"

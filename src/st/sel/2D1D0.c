@@ -1,6 +1,17 @@
 #include "sel.h"
 #include "memcard.h"
 
+#define STR_SELECT D_801803A8[0]
+#define STR_DECIDE D_801803A8[1]
+#define STR_CANCEL D_801803A8[2]
+#define STR_INPUT D_801803A8[3]
+#define STR_NOTFOR D_801803A8[4]
+#define STR_YES D_801803A8[5]
+#define STR_NO D_801803A8[6]
+#define STR_CONFIRM D_801803A8[7]
+#define STR_ERROR D_801803A8[8]
+#define STR_MATTED D_801803A8[9]
+
 typedef enum {
     Tips_Generic,
     Tips_Input,
@@ -12,12 +23,20 @@ typedef enum {
 
 extern char g_AsciiSet[];
 
+void func_801AD1D0(void) {
+    DrawImages8x8(STR_YES, 52, 196, 1);
+    DrawImages8x8(STR_NO, 52, 212, 1);
+}
+
+void func_801AD218(void) {
+    DrawImages8x8(STR_NO, 52, 196, 1);
+    DrawImages8x8(STR_YES, 52, 212, 1);
+}
+
 void DrawNavigationTips(NavigationTips mode) {
-    u8** imgs;
     POLY_GT4* poly;
 
     func_801ACBE4(6, 8);
-    imgs = &D_801803A8[7];
     poly = &g_PrimBuf[D_801BAF48];
 
     switch (mode) {
@@ -65,7 +84,7 @@ void DrawNavigationTips(NavigationTips mode) {
         poly = poly->tag;
         SetPrimRect(poly, 32, 192, 16, 16);
         poly->pad3 = 0;
-        DrawImages8x8(*imgs, 52, 196, 1);
+        DrawImages8x8(STR_CONFIRM, 52, 196, 1);
         break;
 
     case Tips_MenuNavigation:
@@ -82,8 +101,8 @@ void func_801AD490(void) {
     s32 i;
 
     DrawNavigationTips(Tips_MenuNavigation);
-    DrawImages8x8(D_801803A8[0] /* "select" */, 52, 188, 1);
-    DrawImages8x8(D_801803A8[1] /* "start" */, 52, 204, 1);
+    DrawImages8x8(STR_SELECT /* "select" */, 52, 188, 1);
+    DrawImages8x8(STR_DECIDE /* "start" */, 52, 204, 1);
     DrawString16x16("select", 240, 32, 1);
     DrawString16x16("your", 256, 48, 1);
     DrawString16x16("destiny", 232, 64, 1);
@@ -169,10 +188,10 @@ extern s32 D_801BAF58;
 extern s32 D_801BAF68;
 
 void func_801AD78C(void) {
-    DrawImages8x8(D_801803A8[0], 0x134, 0x24, 1);
-    DrawImages8x8(D_801803A8[3], 0x134, 0x34, 1);
-    DrawImages8x8(D_801803A8[2], 0x134, 0x44, 1);
-    DrawImages8x8(D_801803A8[1], 0x134, 0x54, 1);
+    DrawImages8x8(STR_SELECT, 0x134, 0x24, 1);
+    DrawImages8x8(STR_INPUT, 0x134, 0x34, 1);
+    DrawImages8x8(STR_CANCEL, 0x134, 0x44, 1);
+    DrawImages8x8(STR_DECIDE, 0x134, 0x54, 1);
     DrawString16x16(D_801A7760, 0x48, 0x70, 1);
     DrawString16x16(D_801A7770, 0x48, 0x88, 1);
     DrawString16x16(D_801A7780, 0x48, 0xA0, 1);
@@ -346,9 +365,9 @@ void func_801ADF94(s32 flags, bool yOffset) {
     }
 
     if (!hideButtons) {
-        DrawImages8x8(D_801803A8[0], 52, 180, 1);
-        DrawImages8x8(D_801803A8[1], 52, 196, 1);
-        DrawImages8x8(D_801803A8[2], 52, 212, 1);
+        DrawImages8x8(STR_SELECT, 52, 180, 1);
+        DrawImages8x8(STR_DECIDE, 52, 196, 1);
+        DrawImages8x8(STR_CANCEL, 52, 212, 1);
     }
 
     for (port = 0; port < PORT_COUNT; ++port) {
@@ -358,11 +377,11 @@ void func_801ADF94(s32 flags, bool yOffset) {
             DrawString16x16(D_801A77C0, 32 + port * 256, 104, 1);
             break;
         case -2:
-            DrawImages8x8(D_801803A8[4], 30 + port * 256, 108, 1);
-            DrawImages8x8(D_801803A8[9], 30 + port * 256, 116, 1);
+            DrawImages8x8(STR_NOTFOR, 30 + port * 256, 108, 1);
+            DrawImages8x8(STR_MATTED, 30 + port * 256, 116, 1);
             break;
         case -3:
-            DrawImages8x8(D_801803A8[8], 54 + port * 256, 108, 1);
+            DrawImages8x8(STR_ERROR, 54 + port * 256, 108, 1);
             break;
         default: {
             s32 slot;

@@ -76,7 +76,7 @@ segments:
       - [0x275A0, rodata]
       - [0x27620, rodata]
       - [0x276A4, rodata]
-      - [0x276C0, .rodata, 2D260]
+      - [0x276C0, .rodata, 2D1D0]
       - [0x276F0, .rodata, lang_en]
       - [0x27754, rodata]
       - [0x277C8, .rodata, 2EED8] # Update function
@@ -93,7 +93,7 @@ segments:
       - [0x28040, rodata]
       - [0x2BF9C, .rodata, stream]
       - [0x2C048, c, 2C048]
-      - [0x2D260, c, 2D260]
+      - [0x2D1D0, c, 2D1D0]
       - [0x2EED8, c, 2EED8]
       - [0x33164, c, 33164]
       - [0x3410C, c, 3410C]

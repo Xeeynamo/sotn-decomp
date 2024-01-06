@@ -1,15 +1,18 @@
 #include "sel.h"
 
-extern const char D_801A7618[];
-extern const char D_801A7610[];
-extern const char D_801A7608[];
-extern const char D_801A7600[];
-extern const char D_801A75F4[];
-extern const char D_801A75EC[];
-extern const char D_801A75E8[];
-extern const char D_801A75DC[];
-extern const char D_801A75D4[];
-extern const char D_801A75CC[];
+extern const char D_801A75A0[]; // "…選択決定取消入力未初期化確認"
+extern const char D_801A75C0[]; // "はいえ不良"
+
+extern const char D_801A7618[]; // _S("Select")
+extern const char D_801A7610[]; // _S("Decide")
+extern const char D_801A7608[]; // _S("Cancel")
+extern const char D_801A7600[]; // _S("Input")
+extern const char D_801A75F4[]; // _S("Not for-")
+extern const char D_801A75EC[]; // _S("Yes")
+extern const char D_801A75E8[]; // _S("No")
+extern const char D_801A75DC[]; // _S("Confirm")
+extern const char D_801A75D4[]; // _S("Error")
+extern const char D_801A75CC[]; // _S("matted")
 const char* D_801803A8[] = {
     D_801A7618, D_801A7610, D_801A7608, D_801A7600, D_801A75F4,
     D_801A75EC, D_801A75E8, D_801A75DC, D_801A75D4, D_801A75CC,
