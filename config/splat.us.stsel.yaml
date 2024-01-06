@@ -35,6 +35,7 @@ segments:
       - [0x46C, .data, 2C048]
       - [0x4D0, .data, 3410C]
       - [0x4E0, data]
+      - [0x824, .data, 3642C]
       - [0x8DC, .data, save_mgr_pre]
       - [0x8E4, palette, memcard_0]
       - [0x904, palette, memcard_1]
@@ -90,7 +91,7 @@ segments:
       - [0x27B98, .rodata, 3410C] # TestCollision
       - [0x27BD8, .rodata, 3410C] # func_801B55C8
       - [0x27BF8, .rodata, 3585C]
-      - [0x27CD4, rodata] # D_801808D0 strings
+      - [0x27CD4, .rodata, 3642C] # g_DiagActors strings
       - [0x27CF4, rodata] # func_801B69F8 jtbl
       - [0x27D78, .rodata, save_mgr]
       - [0x28040, rodata]

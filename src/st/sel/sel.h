@@ -111,7 +111,6 @@ extern u8 D_80180528[];
 extern u8 D_80180564[];
 extern u8 D_80180578[];
 extern u8 D_80180580[];
-extern const char* D_801808D0[];
 extern s8 D_801823A0[]; // on-screen keyboard
 extern RECT D_80182584;
 extern RECT D_8018258C;
