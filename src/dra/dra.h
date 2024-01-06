@@ -288,21 +288,6 @@ typedef struct {
 } Vram;
 
 typedef struct {
-    /* 0x00 */ const char* name;
-    /* 0x04 */ const char* combo;
-    /* 0x08 */ const char* description;
-    /* 0x0C */ u8 mpUsage;
-    /* 0x0D */ s8 nFramesInvincibility;
-    /* 0x0E */ s16 stunFrames;
-    /* 0x10 */ s16 hitboxState;
-    /* 0x12 */ s16 hitEffect;
-    /* 0x14 */ s16 entityRoomIndex;
-    /* 0x16 */ u16 attackElement;
-    /* 0x18 */ s16 attack;
-    /* 0x1A */ s16 unk1A;
-} SpellDef;
-
-typedef struct {
     u32 unk0;
     u32 damageKind;
     s32 damageTaken;
@@ -351,17 +336,6 @@ struct SeqData {
             u8 vab_id : 4;
         } info;
     } unk2;
-};
-
-struct XaMusicConfig {
-    u32 cd_addr;
-    s32 unk228;
-    u8 filter_file;
-    u8 filter_channel_id;
-    u8 volume;
-    u8 unk22f;
-    u8 unk230;
-    u8 pad[3];
 };
 
 struct Cmd14 {

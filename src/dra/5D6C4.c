@@ -415,8 +415,8 @@ s32 func_800FE044(s32 amount, s32 type) {
             }
         }
         g_Status.exp += playerXPBoost;
-        if (g_Status.exp >= D_800AC90C) {
-            g_Status.exp = D_800AC90C;
+        if (g_Status.exp >= g_ExpNext[98]) {
+            g_Status.exp = g_ExpNext[98];
         }
 
         activeFamiliar = g_Servant - 1;
