@@ -31,7 +31,8 @@ segments:
     subsegments:
       - [0x0, .data, 2C048]
       - [0x3A8, data]
-      - [0x4D8, .data, 3410C]
+      - [0x46C, .data, 2EED8]
+      - [0x4D0, .data, 3410C]
       - [0x4E0, data]
       - [0x8DC, .data, save_mgr_pre]
       - [0x8E4, palette, memcard_0]

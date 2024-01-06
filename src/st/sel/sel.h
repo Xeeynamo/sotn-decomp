@@ -115,9 +115,6 @@ extern u8* D_801803CC;
 extern u8* D_801803D0[];
 extern s32 D_80180454[];
 extern const u8* D_80180468; // pointer to D_801A7748 (string "richter ")
-extern u8 D_8018046C[0x20 * 3];
-extern s32 D_801804D0;
-extern u8 D_801804D4[];
 extern u8 D_80180504[];
 extern u8 D_80180528[];
 extern u8 D_80180564[];

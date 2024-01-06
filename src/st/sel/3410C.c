@@ -1,5 +1,7 @@
 #include "sel.h"
 
+s32 D_801804D0 = 0;
+u8 D_801804D4[] = {STAGE_MEMORYCARD, STAGE_CAT};
 const char* D_801804D8[] = {
     "NORMAL      ",
     "SPECIAL     ",
