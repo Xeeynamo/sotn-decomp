@@ -519,19 +519,13 @@ void func_801B519C(void) {
         uvOfst = 0;
         while (prim) {
             s32 v01 = 0x38 + uvOfst;
-            s16 v23;
             ++uvOfst;
-            v23 = 0x38 + uvOfst;
             prim->tpage = 8;
             prim->clut = 0x201;
-            prim->u2 = 0x38;
-            prim->u0 = 0x38;
-            prim->u3 = 0x80;
-            prim->u1 = 0x80;
-            prim->v1 = v01;
-            prim->v0 = v01;
-            prim->v3 = v23;
-            prim->v2 = v23;
+            prim->u0 = prim->u2 = 0x38;
+            prim->u1 = prim->u3 = 0x80;
+            prim->v0 = prim->v1 = v01;
+            prim->v2 = prim->v3 = 0x38 + uvOfst;
             prim->priority = 0x41;
             prim->blendMode = 0x71;
             prim = prim->next;
@@ -544,8 +538,6 @@ void func_801B519C(void) {
     angle2 = angle;
     ent->ext.generic.unk88.S16.unk0 = angle2;
     while (prim) {
-        s16 x02;
-        s16 x13;
         s16 xBase;
         s32 sin;
         angle &= 0xFFF;
@@ -554,17 +546,11 @@ void func_801B519C(void) {
             sin += 0x7FF;
         }
         xBase = sin >> 0xB;
-        x02 = xBase + 0x40;
-        x13 = xBase + 0x88;
-        prim->y1 = y;
-        prim->y0 = y;
-        prim->x2 = x02;
-        prim->x0 = x02;
-        prim->x3 = x13;
-        prim->x1 = x13;
+        prim->x0 = prim->x2 = xBase + 0x40;
+        prim->x1 = prim->x3 = xBase + 0x88;
+        prim->y0 = prim->y1 = y;
         ++y;
-        prim->y3 = y;
-        prim->y2 = y;
+        prim->y2 = prim->y3 = y;
         prim = prim->next;
         angle += 0x100;
     }
