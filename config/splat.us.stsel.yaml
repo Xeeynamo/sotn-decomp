@@ -78,7 +78,7 @@ segments:
       - [0x600C, .data, config_us] # spells
       - [0x631C, .data, config_us] # relics
       - [0x64FC, .data, config_us] # enemies
-      - [0xA37C, data, config_us] # ????
+      - [0xA37C, .data, config_us] # exp table
       - [0xA50C, .data, lba_stage]
       - [0xB2CC, data]
       - [0xD5D4, .data, D5D4]

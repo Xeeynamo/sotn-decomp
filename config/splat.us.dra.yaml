@@ -92,7 +92,8 @@ segments:
       - [0x8410, .data, config_us] # spells
       - [0x8720, .data, config_us] # relics
       - [0x8900, .data, config_us] # enemies
-      - [0xC780, data] # exp table and other stuff
+      - [0xC780, .data, config_us] # exp table
+      - [0xC910, data] # exp table and other stuff
       - [0xC958, .data, cd]
       - [0xCD80, data]
       - [0xCEB0, data]

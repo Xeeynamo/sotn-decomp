@@ -388,7 +388,6 @@ extern SpellDef g_SpellDefs[28];
 extern RelicDesc g_RelicDefs[30];
 extern EnemyDef g_EnemyDefs[400];
 extern s32 g_ExpNext[];
-extern u32 D_800AC90C;
 extern u16 D_800AC958[];
 extern Vram g_Vram;
 extern CdFile* D_800ACC74[];
