@@ -1125,6 +1125,7 @@ _snd_seq_s_max = 0x8009879C;
 _snd_seq_t_max = 0x800987A4;
 _svm_vab_count = 0x8009880C;
 g_DebugPlayer = 0x80098850;
+D_800A7734 = 0x800A7734;
 g_MainGame = 0x800A0000;
 D_8017A000 = 0x8017A000;
 D_8017D000 = 0x8017D000;
