@@ -34,7 +34,8 @@ segments:
       - [0x454, .data, 2C048]
       - [0x46C, .data, 2C048]
       - [0x4D0, .data, 3410C]
-      - [0x4E0, data]
+      - [0x4E0, .data, banks]
+      - [0x728, data]
       - [0x824, .data, 3642C]
       - [0x8DC, .data, save_mgr_pre]
       - [0x8E4, palette, memcard_0]
@@ -112,7 +113,6 @@ segments:
       - [0x2B490, .rodata, config_us] # enemies strings
       - [0x2BBF0, .rodata, lba_stage]
       - [0x2BF9C, .rodata, stream]
-      - [0x2C048, c, 2C048]
       - [0x2C048, c, 2C048]
       - [0x33164, c, 33164]
       - [0x3410C, c, 3410C]

@@ -496,7 +496,7 @@ void HandlePrologueEnd(void) {
     g_api.o.unk3C();
 }
 
-void HandleMainMenu(void) {
+void MainMenuHandler(void) {
     s32 pad[0x40];
 
     switch (g_GameStep) {
@@ -714,7 +714,7 @@ void UpdateGame(void) {
         HandlePrologueEnd();
         break;
     case Game_MainMenu:
-        HandleMainMenu();
+        MainMenuHandler();
         break;
     case Game_Ending:
         HandleEnding();

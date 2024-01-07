@@ -12,7 +12,7 @@ typedef unsigned int uint32_t;
 typedef unsigned long long uint64_t;
 typedef unsigned char u_char;
 typedef unsigned short u_short;
-typedef unsigned int u_long;
+typedef unsigned long u_long;
 typedef unsigned int size_t;
 #else
 #include <sys/types.h>

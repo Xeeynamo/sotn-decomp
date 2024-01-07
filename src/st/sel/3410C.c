@@ -13,7 +13,6 @@ void HandleMainMenu(void) {
     Primitive* prim15;
     s16 primIndex;
     s32 i;
-    s32 scaled_b014;
 
     func_801B1F34();
     switch (D_8003C9A4) {
@@ -106,27 +105,12 @@ void HandleMainMenu(void) {
              prim = prim->next, i++) {
             prim->blendMode = 4;
             func_801B1CFC((POLY_GT4*)prim, D_801BB014);
-            if (((u32)(i - 7) < 2U) || (((u32)(i - 9) < 2U) != 0)) {
-
-                scaled_b014 = D_801BB014 * 3;
-                if (scaled_b014 < 0) {
-                    scaled_b014 += 3;
-                }
-                prim->r0 = (u8)(scaled_b014 >> 2);
-
-                scaled_b014 = D_801BB014 * 7;
-                if (scaled_b014 < 0) {
-                    scaled_b014 += 7;
-                }
-                prim->g0 = (u8)(scaled_b014 >> 3);
-
-                scaled_b014 = D_801BB014 * 3;
-                if (scaled_b014 < 0) {
-                    scaled_b014 += 3;
-                }
-                prim->b0 = (u8)(scaled_b014 >> 2);
+            if (i == 7 || i == 8 || i == 9 || i == 10) {
+                prim->r0 = D_801BB014 * 3 / 4;
+                prim->g0 = D_801BB014 * 7 / 8;
+                prim->b0 = D_801BB014 * 3 / 4;
             }
-            if (i - 0xF < 2U) {
+            if (i == 15 || i == 16) {
                 prim->blendMode = 0x15;
             }
         }
@@ -288,7 +272,7 @@ void HandleMainMenu(void) {
              prim = prim->next, i++) {
             prim->blendMode = 4;
             func_801B1CFC((POLY_GT4*)prim, D_801BB014);
-            if ((u32)(i - 0xF) < 2U) {
+            if (i == 15 || i == 16) {
                 prim->blendMode = 0x15;
             }
         }
