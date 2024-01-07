@@ -345,10 +345,6 @@ s16 D_80136C60[0x400];
 
 JosephsCloak g_JosephsCloak;
 u8 g_Pix[4][128 * 128 / 2];
-const char D_800DD18C[] = "\xFF";
-const char* D_800A83AC[] = {
-    "XX\xFF", "XX\xFF", "XX\xFF", "XX\xFF", "XX\xFF", "XX\xFF", "XX\xFF"};
-const char* g_WingSmashComboStr = "dummy";
 ImgSrc g_imgUnk8013C200_impl = {
     0,
     0,

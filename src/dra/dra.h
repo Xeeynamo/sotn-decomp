@@ -288,21 +288,6 @@ typedef struct {
 } Vram;
 
 typedef struct {
-    /* 0x00 */ const char* name;
-    /* 0x04 */ const char* combo;
-    /* 0x08 */ const char* description;
-    /* 0x0C */ u8 mpUsage;
-    /* 0x0D */ s8 nFramesInvincibility;
-    /* 0x0E */ s16 stunFrames;
-    /* 0x10 */ s16 hitboxState;
-    /* 0x12 */ s16 hitEffect;
-    /* 0x14 */ s16 entityRoomIndex;
-    /* 0x16 */ u16 attackElement;
-    /* 0x18 */ s16 attack;
-    /* 0x1A */ s16 unk1A;
-} SpellDef;
-
-typedef struct {
     u32 unk0;
     u32 damageKind;
     s32 damageTaken;
@@ -353,17 +338,6 @@ struct SeqData {
     } unk2;
 };
 
-struct XaMusicConfig {
-    u32 cd_addr;
-    s32 unk228;
-    u8 filter_file;
-    u8 filter_channel_id;
-    u8 volume;
-    u8 unk22f;
-    u8 unk230;
-    u8 pad[3];
-};
-
 struct Cmd14 {
     u8 unk0[8];
     s32 unk8;
@@ -391,7 +365,6 @@ extern s32 D_800A2438;
 
 extern RoomTeleport D_800A245C[];
 extern u32 D_800A2D24;
-extern const char* g_MenuStr[110];
 extern const char* D_800A83AC[];
 extern s32 D_800A3194[];
 extern SVECTOR* D_800A3210[];
@@ -404,17 +377,17 @@ extern u8 D_800A3728;
 extern MATRIX D_800A37B8;
 extern Unkstruct_801092E8 D_800A37D8;
 extern JosephsCloak g_JosephsCloak;
-extern Lba g_StagesLba[];
 extern GfxBank** g_GfxSharedBank[];
 extern UnkStructClut* D_800A3BB8[];
-extern SubweaponDef g_SubwpnDefs[];
-extern SpellDef g_SpellDefs[];
-extern const char* g_WingSmashComboStr;
-extern EnemyDef g_EnemyDefs[];
+extern Lba g_StagesLba[80];
+extern SubweaponDef g_SubwpnDefs[13];
+extern Equipment g_EquipDefs[217];
+extern Accessory g_AccessoryDefs[90];
+extern const char* g_MenuStr[110];
+extern SpellDef g_SpellDefs[28];
+extern RelicDesc g_RelicDefs[30];
+extern EnemyDef g_EnemyDefs[400];
 extern s32 g_ExpNext[];
-extern Equipment g_EquipDefs[];
-extern Accessory g_AccessoryDefs[];
-extern RelicDesc g_RelicDefs[];
 extern u32 D_800AC90C;
 extern u16 D_800AC958[];
 extern Vram g_Vram;

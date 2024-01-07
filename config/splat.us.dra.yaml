@@ -84,14 +84,15 @@ segments:
       - [0x3134, data, 627C4]
       - [0x31B0, data, 63ED4]
       - [0x37D8, data]
-      - [0x3C40, .data, lba_stage]
-      - [0x4A00, assets, subweapondefs, g_SubwpnDefs]
-      - [0x4B04, assets, equipment, g_EquipDefs]
-      - [0x7718, assets, accessory, g_AccessoryDefs]
-      - [0x8258, .data, lang_us]
-      - [0x8410, data]
-      - [0x8900, assets, enemydefs, g_EnemyDefs]
-      - [0xC780, data]
+      - [0x3C40, .data, config_us] # stage lba
+      - [0x4A00, .data, config_us] # subweapons
+      - [0x4B04, .data, config_us] # equipments
+      - [0x7718, .data, config_us] # accessories
+      - [0x8258, .data, config_us] # menu
+      - [0x8410, .data, config_us] # spells
+      - [0x8720, .data, config_us] # relics
+      - [0x8900, .data, config_us] # enemies
+      - [0xC780, data] # exp table and other stuff
       - [0xC958, .data, cd]
       - [0xCD80, data]
       - [0xCEB0, data]
@@ -106,8 +107,8 @@ segments:
       - [0x1D1C4, .data, 91EBC] # D_800BD1C4
       - [0x1D1C8, .data, 91EBC] # g_VabAddrs
       - [0x1D1E0, .data, 91EBC] # g_SeqInfo
-      - [0x1D224, assets, music_xa, g_XaMusicConfigs] # g_XaMusicConfigs
-      - [0x1F554, assets, sfx, g_SfxData] # g_SfxData
+      - [0x1D224, assets, music_xa, g_XaMusicConfigs]
+      - [0x1F554, assets, sfx, g_SfxData]
       - [0x2097C, data] # D_800C097C (not sure where sfx ends)
       - [0x2217C, data]
       - [0x227B0, data]
@@ -143,10 +144,12 @@ segments:
       - [0x3CC54, .rodata, 627C4] # func_80102D70
       - [0x3CC70, .rodata, 627C4] # HandleSaveMenu, all the strings
       - [0x3CDC0, .rodata, 63ED4] # func_80103ED4
-      - [0x3CDDC, .rodata, lba_stage]
-      - [0x3D188, rodata]
-      - [0x3F9FC, .rodata, lang_us]
-      - [0x3FF50, rodata]
+      - [0x3CDDC, .rodata, config_us] # stage lba
+      - [0x3D188, .rodata, config_us] # equipments
+      - [0x3EC60, .rodata, config_us] # accessories
+      - [0x3F9FC, .rodata, config_us] # menu
+      - [0x3FF50, .rodata, config_us] # relics
+      - [0x405D8, .rodata, config_us] # enemies
       - [0x40D38, .rodata, cd] # To be merged with 40D38
       - [0x40E28, rodata]
       - [0x40E48, rodata] # EntityAlucard jump table

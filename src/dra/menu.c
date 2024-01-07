@@ -1486,7 +1486,7 @@ void MenuSpellsDraw(MenuContext* ctx) {
         } else {
             MenuDrawChar(CH('?'), startXCoord, yCoord, ctx);
             MenuDrawChar(CH('+'), startXCoord + 8, yCoord, ctx);
-            MenuDrawStr(g_WingSmashComboStr, startXCoord + 16, yCoord, ctx);
+            MenuDrawStr(g_SpellDefs[6].combo, startXCoord + 16, yCoord, ctx);
             MenuDrawChar(
                 CH('+'), startXCoord + 16 + (charNum * 8), yCoord, ctx);
             MenuDrawChar(
