@@ -58,6 +58,7 @@ set(SOURCE_FILES_DRA
     src/dra/collider.c
     src/dra/demo.c
     src/dra/5087C.c
+    src/dra/lba_stage.c
     src/dra/config_us.c
     src/dra/menu.c
     src/dra/5D6C4.c 

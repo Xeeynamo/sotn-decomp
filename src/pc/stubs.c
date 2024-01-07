@@ -331,7 +331,6 @@ s32 D_80137984;
 u32 D_80137988;
 u32 D_8013798C;
 Unkstruct_80137990 D_80137990;
-u32 D_800AC90C = 0x000F423F;
 s32 D_8013B5E8;
 s32 g_HealingMailTimer[1] = {0};
 s32 D_8013B5E8;
@@ -353,7 +352,6 @@ ImgSrc g_imgUnk8013C200_impl = {
 };
 ImgSrc* g_imgUnk8013C200 = &g_imgUnk8013C200_impl;
 ImgSrc* g_imgUnk8013C270 = &g_imgUnk8013C200_impl;
-s32 g_ExpNext[100] = {0};
 s32 g_PrevEquippedWeapons[2];
 s32 D_8013AEE4;
 s32 D_800A3194[1];

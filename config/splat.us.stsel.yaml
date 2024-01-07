@@ -71,6 +71,14 @@ segments:
       - [0x2164, ci4, memcard_15, 16, 48]
       - [0x22E4, .data, save_mgr]
       - [0x2584, data]
+      - [0x25FC, .data, config_us] # subweapons
+      - [0x2700, .data, config_us] # equip
+      - [0x5314, .data, config_us] # accessories
+      - [0x5E54, .data, config_us] # menu
+      - [0x600C, .data, config_us] # spells
+      - [0x631C, .data, config_us] # relics
+      - [0x64FC, .data, config_us] # enemies
+      - [0xA37C, .data, config_us] # exp table
       - [0xA50C, .data, lba_stage]
       - [0xB2CC, data]
       - [0xD5D4, .data, D5D4]
@@ -96,7 +104,12 @@ segments:
       - [0x27CD4, .rodata, 3642C] # g_DiagActors strings
       - [0x27CF4, rodata] # func_801B69F8 jtbl
       - [0x27D78, .rodata, save_mgr]
-      - [0x28040, rodata]
+      - [0x28040, .rodata, config_us] # equip strings
+      - [0x29B18, .rodata, config_us] # accessories strings
+      - [0x2A8B4, .rodata, config_us] # menu strings
+      - [0x2AE08, .rodata, config_us] # spells strings
+      - [0x2AFA0, .rodata, config_us] # relics strings
+      - [0x2B490, .rodata, config_us] # enemies strings
       - [0x2BBF0, .rodata, lba_stage]
       - [0x2BF9C, .rodata, stream]
       - [0x2C048, c, 2C048]
