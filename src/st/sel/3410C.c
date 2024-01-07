@@ -493,7 +493,82 @@ void func_801B4FFC(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/3410C", func_801B519C);
+void func_801B519C(void) {
+    Primitive* prim;
+    s16 angle;
+    s16 y;
+    s32 angle2;
+    Entity* ent = &g_Entities[1];
+
+    if (D_800734C0 != 0) {
+        if (D_800734C0 != 1) {
+            do {
+            } while (0);
+            return;
+        }
+    } else {
+        s32 uvOfst;
+        s16 primBufIndex = g_api.AllocPrimitives(PRIM_GT4, 0x18);
+        if (primBufIndex == -1) {
+            return;
+        }
+        prim = &g_PrimBuf[primBufIndex];
+        g_Entities[1].primIndex = primBufIndex;
+        g_Entities[1].ext.prim = prim;
+        g_Entities[1].flags |= 0x800000;
+        uvOfst = 0;
+        while (prim) {
+            s32 v01 = 0x38 + uvOfst;
+            s16 v23;
+            ++uvOfst;
+            v23 = 0x38 + uvOfst;
+            prim->tpage = 8;
+            prim->clut = 0x201;
+            prim->u2 = 0x38;
+            prim->u0 = 0x38;
+            prim->u3 = 0x80;
+            prim->u1 = 0x80;
+            prim->v1 = v01;
+            prim->v0 = v01;
+            prim->v3 = v23;
+            prim->v2 = v23;
+            prim->priority = 0x41;
+            prim->blendMode = 0x71;
+            prim = prim->next;
+        }
+        ++ent->step;
+    }
+    y = 0xA2;
+    prim = ent->ext.prim;
+    angle = ent->ext.generic.unk88.unk + 0x40;
+    angle2 = angle;
+    ent->ext.generic.unk88.S16.unk0 = angle2;
+    while (prim) {
+        s16 x02;
+        s16 x13;
+        s16 xBase;
+        s32 sin;
+        angle &= 0xFFF;
+        sin = rsin(angle);
+        if (sin < 0) {
+            sin += 0x7FF;
+        }
+        xBase = sin >> 0xB;
+        x02 = xBase + 0x40;
+        x13 = xBase + 0x88;
+        prim->y1 = y;
+        prim->y0 = y;
+        prim->x2 = x02;
+        prim->x0 = x02;
+        prim->x3 = x13;
+        prim->x1 = x13;
+        ++y;
+        prim->y3 = y;
+        prim->y2 = y;
+        prim = prim->next;
+        angle += 0x100;
+    }
+}
 
 void func_801B5350(void) {
     Entity* entity = &g_Entities[UNK_ENTITY_5];
