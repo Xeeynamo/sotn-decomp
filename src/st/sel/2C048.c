@@ -748,7 +748,7 @@ void func_801AD78C(void) {
         0x48, 0x0F, 0x0F, 0xF0, 0xF0);
     SetTexturedPrimRect(
         &g_PrimBuf[D_801BAF18[GFX_UNK_10][0]], ((D_801BC3E0 & 7) << 5) + 0x40,
-                        (D_801BC3E0 & 0x18) * 3 + 0x68, 0x20, 0x20, 0, 0x48);
+        (D_801BC3E0 & 0x18) * 3 + 0x68, 0x20, 0x20, 0, 0x48);
     if (g_Timer & 8) {
         func_801ACBE4(8, 0);
     } else {
