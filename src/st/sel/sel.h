@@ -94,7 +94,7 @@ extern const s32 D_801A7B8C[2];
 extern void* g_Cluts[];
 extern void* g_EntityGfxs[];
 extern s16** g_SpriteBanks[]; // g_SpriteBanks
-extern void* D_8018C404;      // unknown type
+extern void* D_8018C404[];    // unknown type
 
 extern s32 D_80180040[];
 extern s32 D_80180054[];
