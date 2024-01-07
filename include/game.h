@@ -1572,6 +1572,8 @@ extern Tilemap g_Tilemap;
 // Beginning of Player Character offset = 0x800733D8
 extern Entity g_Entities[TOTAL_ENTITY_COUNT];
 
+extern u16 D_800734C0;
+
 // D_800736C8 g_Entities[4]
 // D_80073784 g_Entities[5]
 // D_800739B8 g_Entities[8]
