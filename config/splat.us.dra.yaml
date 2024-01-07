@@ -99,7 +99,7 @@ segments:
       - [0xCF18, .data, 6D59C]
       - [0xCF4C, data]
       - [0xD0C4, .data, 7A4D0]
-      - [0xD1D4, assets, factory_blueprint, FactoryBlueprint, g_FactoryBlueprints]
+      - [0xD1D4, assets, factory_blueprint, g_FactoryBlueprints]
       - [0xD4B8, data]
       - [0x1D07C, .data, 91EBC] # g_CdVolumeTable
       - [0x1D19C, .data, 91EBC] # g_VolumeTable
@@ -107,8 +107,8 @@ segments:
       - [0x1D1C4, .data, 91EBC] # D_800BD1C4
       - [0x1D1C8, .data, 91EBC] # g_VabAddrs
       - [0x1D1E0, .data, 91EBC] # g_SeqInfo
-      - [0x1D224, assets, music_xa, XaMusicConfig, g_XaMusicConfigs]
-      - [0x1F554, assets, sfx, Unkstruct_800BF554, g_SfxData]
+      - [0x1D224, assets, music_xa, g_XaMusicConfigs]
+      - [0x1F554, assets, sfx, g_SfxData]
       - [0x2097C, data] # D_800C097C (not sure where sfx ends)
       - [0x2217C, data]
       - [0x227B0, data]
