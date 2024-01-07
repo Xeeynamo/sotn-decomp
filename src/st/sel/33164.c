@@ -366,7 +366,7 @@ s32 MemCardInitAndFormat(void) {
     return 0;
 }
 
-void InitRoomEntities(s32 objLayoutId) {
+void SEL_Init(s32 objLayoutId) {
     switch (D_8003C9A4) {
     case 0:
         if (g_IsUsingCd) {

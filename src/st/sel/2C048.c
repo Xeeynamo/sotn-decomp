@@ -7,22 +7,22 @@
 #include "sel.h"
 #include "memcard.h"
 
-Overlay g_StageOverlay = {
-    /* 0x00 */ Update,
+Overlay g_StageSel = {
+    /* 0x00 */ SEL_Update,
     /* 0x04 */ HandleMainMenu,
     /* 0x08 */ func_801B9C80,
-    /* 0x0C */ InitRoomEntities,
+    /* 0x0C */ SEL_Init,
     /* 0x10 */ NULL,
     /* 0x14 */ g_SpriteBanks,
     /* 0x18 */ g_Cluts,
-    /* 0x1C */ 0x00000000,
-    /* 0x20 */ 0x00000000,
+    /* 0x1C */ NULL,
+    /* 0x20 */ NULL,
     /* 0x24 */ g_EntityGfxs,
     /* 0x28 */ func_801B60D4,
-    /* 0x2C */ 0x00000000,
+    /* 0x2C */ NULL,
     /* 0x30 */ &D_8018C404,
-    /* 0x34 */ 0x00000000,
-    /* 0x38 */ 0x00000000,
+    /* 0x34 */ NULL,
+    /* 0x38 */ NULL,
     /* 0x3C */ func_801B17C8,
 };
 
@@ -1167,7 +1167,7 @@ extern s32 D_801BAF0C;
 extern s32 D_801BAFC8;
 extern s32 D_801BAFCC;
 
-void Update(void) {
+void SEL_Update(void) {
     s32 temp_v0;
     s32 var_a0_2;
     s32 i;
