@@ -3,7 +3,6 @@ g_Cluts = 0x8018070C;
 g_EntityGfxs = 0x80180760;
 g_StreamWidth = 0x8018B2FC;
 g_StreamHeight = 0x8018B300;
-Update = 0x801AEED8;
 StreamNextVlc = 0x801B988C;
 func_801BAB70 = 0x801BAB70;
 DecDCTvlc = 0x801BABA4;

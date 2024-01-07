@@ -419,56 +419,56 @@ void MenuHideAllGfx(void) {
 
 void func_801ACC7C(void) {
     s16 primIndex;
-    POLY_GT4* poly;
+    Primitive* prim;
     s32 i;
 
     primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
-    poly = &g_PrimBuf[primIndex];
+    prim = &g_PrimBuf[primIndex];
     D_801BAFC0 = primIndex;
 
     for (i = 0; i < 3; i++) {
-        SetTexturedPrimRect(poly, i << 7, 0, 128, 240, 0, 0);
-        func_801B1D88(poly);
-        poly->tpage = i + 137;
-        poly->clut = 0x210;
-        poly->pad3 = 4;
-        poly = (POLY_GT4*)poly->tag;
+        SetTexturedPrimRect(prim, i << 7, 0, 128, 240, 0, 0);
+        func_801B1D88(prim);
+        prim->tpage = i + 137;
+        prim->clut = 0x210;
+        prim->blendMode = 4;
+        prim = prim->next;
     }
 
     primIndex = g_api.AllocPrimitives(PRIM_TILE, 2);
-    poly = &g_PrimBuf[primIndex];
+    prim = &g_PrimBuf[primIndex];
     D_801BAFC4 = primIndex;
 
-    for (i = 0; poly != NULL; i++) {
-        poly->x0 = (i & 1) * 192;
-        poly->u0 = 192;
-        poly->v0 = 240;
-        func_801B1CFC(poly, 255);
-        poly->pad2 = 0x1FD;
-        poly->pad3 = 0x51;
-        poly = (POLY_GT4*)poly->tag;
+    for (i = 0; prim != NULL; i++) {
+        prim->x0 = (i & 1) * 192;
+        prim->u0 = 192;
+        prim->v0 = 240;
+        func_801B1CFC(prim, 255);
+        prim->priority = 0x1FD;
+        prim->blendMode = 0x51;
+        prim = prim->next;
     }
 }
 
 s32 func_801ACDFC(void) {
-    POLY_GT4* poly = &g_PrimBuf[D_801BAFC4];
-    s32 var_s1 = poly->r0;
+    Primitive* prim = &g_PrimBuf[D_801BAFC4];
+    s32 var_s1 = prim->r0;
 
     var_s1 -= 16;
     if (var_s1 < 0) {
         var_s1 = 0;
     }
 
-    func_801B1CFC(poly, var_s1);
-    func_801B1CFC(poly->tag, var_s1);
+    func_801B1CFC(prim, var_s1);
+    func_801B1CFC(prim->next, var_s1);
 
     if (var_s1 == 0) {
         do {
-            poly = &g_PrimBuf[D_801BAFC4];
-            poly->pad3 = 8;
+            prim = &g_PrimBuf[D_801BAFC4];
+            prim->blendMode = 8;
         } while (0);
-        poly = (POLY_GT4*)poly->tag;
-        poly->pad3 = 8;
+        prim = prim->next;
+        prim->blendMode = 8;
     } else {
         return 0;
     }
@@ -514,6 +514,7 @@ const char* D_801803D0[] = {
     "Ｗ", "Ｘ", "Ｙ", "Ｚ", "＆", "！", "−",  "．", "’",  "？", "　",
 };
 
+s32 func_801B2984(char ch);
 void func_801ACFBC(s32 port, s32 slot, s32 textId) {
     char playerName[0x20];
     const char* strSaveKind;
@@ -587,45 +588,45 @@ void func_801AD218(void) {
 }
 
 void DrawNavigationTips(NavigationTips mode) {
-    POLY_GT4* poly;
+    Primitive* prim;
 
     func_801ACBE4(6, 8);
-    poly = &g_PrimBuf[D_801BAF48];
+    prim = &g_PrimBuf[D_801BAF18[GFX_UNK_6][0]];
 
     switch (mode) {
     case Tips_Generic:
-        SetPrimRect(poly, 32, 176, 16, 16);
-        poly->pad3 = 0;
-        poly = poly->tag;
-        SetPrimRect(poly, 32, 192, 16, 16);
-        poly->pad3 = 0;
-        poly = poly->tag;
-        SetPrimRect(poly, 32, 208, 16, 16);
-        poly->pad3 = 0;
+        SetPrimRect(prim, 32, 176, 16, 16);
+        prim->blendMode = 0;
+        prim = prim->next;
+        SetPrimRect(prim, 32, 192, 16, 16);
+        prim->blendMode = 0;
+        prim = prim->next;
+        SetPrimRect(prim, 32, 208, 16, 16);
+        prim->blendMode = 0;
         break;
 
     case Tips_Input:
-        SetPrimRect(poly, 288, 32, 16, 16);
-        poly->pad3 = 0;
-        poly = poly->tag;
-        SetPrimRect(poly, 288, 48, 16, 16);
-        poly->pad3 = 0;
-        poly = poly->tag;
-        SetPrimRect(poly, 288, 64, 16, 16);
-        poly->pad3 = 0;
-        poly = poly->tag;
-        SetPrimRect(poly, 288, 80, 16, 16);
-        poly->pad3 = 0;
+        SetPrimRect(prim, 288, 32, 16, 16);
+        prim->blendMode = 0;
+        prim = prim->next;
+        SetPrimRect(prim, 288, 48, 16, 16);
+        prim->blendMode = 0;
+        prim = prim->next;
+        SetPrimRect(prim, 288, 64, 16, 16);
+        prim->blendMode = 0;
+        prim = prim->next;
+        SetPrimRect(prim, 288, 80, 16, 16);
+        prim->blendMode = 0;
         break;
 
     case Tips_YesNo:
     case Tips_NoYes:
-        poly = poly->tag;
-        SetPrimRect(poly, 32, 192, 16, 16);
-        poly->pad3 = 0;
-        poly = (POLY_GT4*)poly->tag;
-        SetPrimRect(poly, 32, 208, 16, 16);
-        poly->pad3 = 0;
+        prim = prim->next;
+        SetPrimRect(prim, 32, 192, 16, 16);
+        prim->blendMode = 0;
+        prim = prim->next;
+        SetPrimRect(prim, 32, 208, 16, 16);
+        prim->blendMode = 0;
         if (mode == Tips_YesNo) {
             func_801AD1D0();
         } else {
@@ -634,18 +635,18 @@ void DrawNavigationTips(NavigationTips mode) {
         break;
 
     case Tips_Confirm:
-        poly = poly->tag;
-        SetPrimRect(poly, 32, 192, 16, 16);
-        poly->pad3 = 0;
+        prim = prim->next;
+        SetPrimRect(prim, 32, 192, 16, 16);
+        prim->blendMode = 0;
         DrawImages8x8(STR_CONFIRM, 52, 196, 1);
         break;
 
     case Tips_MenuNavigation:
-        SetPrimRect(poly, 32, 184, 16, 16);
-        poly->pad3 = 0;
-        poly = (POLY_GT4*)poly->tag;
-        SetPrimRect(poly, 32, 200, 16, 16);
-        poly->pad3 = 0;
+        SetPrimRect(prim, 32, 184, 16, 16);
+        prim->blendMode = 0;
+        prim = prim->next;
+        SetPrimRect(prim, 32, 200, 16, 16);
+        prim->blendMode = 0;
         break;
     }
 }
@@ -661,11 +662,11 @@ void func_801AD490(void) {
     DrawString16x16("destiny", 232, 64, 1);
 
     for (i = 0; i < NUM_MENU_OPTIONS; i++) {
-        POLY_GT4* poly = &g_PrimBuf[D_801BAF18[i + 1][0]];
+        Primitive* prim = &g_PrimBuf[D_801BAF18[i + 1][0]];
         if (i == D_801D6B0C) {
-            poly->clut = 0x203;
+            prim->clut = 0x203;
         } else {
-            poly->clut = 0x200;
+            prim->clut = 0x200;
         }
     }
 }
@@ -733,10 +734,6 @@ void func_801AD66C(void) {
     }
 }
 
-/* BSS */
-extern s32 D_801BAF58;
-extern s32 D_801BAF68;
-
 void func_801AD78C(void) {
     DrawImages8x8(STR_SELECT, 0x134, 0x24, 1);
     DrawImages8x8(STR_INPUT, 0x134, 0x34, 1);
@@ -747,9 +744,10 @@ void func_801AD78C(void) {
     DrawString16x16("q r s t u v w x", 0x48, 0xA0, 1);
     DrawString16x16("y z & ! - . '  ", 0x48, 0xB8, 1);
     SetTexturedPrimRect(
-        &g_PrimBuf[D_801BAF58], (g_InputCursorPos * 0x10) + 0x80, 0x48, 0x0F,
-        0x0F, 0xF0, 0xF0);
-    SetTexturedPrimRect(&g_PrimBuf[D_801BAF68], ((D_801BC3E0 & 7) << 5) + 0x40,
+        &g_PrimBuf[D_801BAF18[GFX_UNK_8][0]], (g_InputCursorPos * 0x10) + 0x80,
+        0x48, 0x0F, 0x0F, 0xF0, 0xF0);
+    SetTexturedPrimRect(
+        &g_PrimBuf[D_801BAF18[GFX_UNK_10][0]], ((D_801BC3E0 & 7) << 5) + 0x40,
                         (D_801BC3E0 & 0x18) * 3 + 0x68, 0x20, 0x20, 0, 0x48);
     if (g_Timer & 8) {
         func_801ACBE4(8, 0);
@@ -1049,10 +1047,11 @@ void func_801AEA8C(s32 arg0) {
 
     if (arg0 == 0) {
         func_801ACBE4(1, 0);
-        SetPrimRect(&g_PrimBuf[D_801BAF20], 24, 24, 127, 31);
+        SetPrimRect(&g_PrimBuf[D_801BAF18[GFX_UNK_1][0]], 24, 24, 127, 31);
     } else {
         func_801ACBE4(3, 0);
-        SetPrimRect(&g_PrimBuf[D_801BAF30], 24, 24, 127, 31);
+        SetPrimRect(
+            &g_PrimBuf[D_801BAF18[GFX_FILE_DELETE][0]], 24, 24, 127, 31);
     }
 
     DrawNavigationTips(1);
@@ -2254,12 +2253,11 @@ void func_801B1DA8(void) {
 }
 
 void func_801B1ED0(void) {
-    s32 var_v1 = 0xF;
-    s32* var_v0 = D_801BC3D4;
+    s32 i;
 
-    do {
-        *var_v0-- = 0;
-    } while (--var_v1 >= 0);
+    for (i = 0; i < LEN(D_801BC398); i++) {
+        D_801BC398[i] = 0;
+    }
 }
 
 u8 func_801B1EF4(u8 arg0) {
@@ -2542,7 +2540,7 @@ u8 D_8018046C[] = {
     ' ', 0xE0, 0xF0, 0x00,
 };
 
-s32 func_801B2984(u8 ch) {
+s32 func_801B2984(char ch) {
     s32 i;
     for (i = 0; i < 0x20; i++) {
         if (D_8018046C[i * 3] == ch)

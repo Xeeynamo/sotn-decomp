@@ -26,8 +26,11 @@ typedef enum {
     GFX_NAME_CHANGE,
     GFX_FILE_COPY,
     GFX_UNK_6,
-
-    GFX_WND_SAVE_SUMMARY = 11,
+    GFX_UNK_7,
+    GFX_UNK_8,
+    GFX_UNK_9,
+    GFX_UNK_10,
+    GFX_WND_SAVE_SUMMARY,
     GFX_UNK_12,
     GFX_WND_CARD_1,
     GFX_WND_CARD_2,
@@ -84,21 +87,14 @@ typedef struct {
     /* 801BCB74 */ u32 kind[BLOCK_PER_CARD]; // 0: play, 1: clear, 2: replay
     /* 801BCBB0 */ u32 character[BLOCK_PER_CARD];
     /* 801BCBEC */ char name[BLOCK_PER_CARD][10];
-    s32 padding;
-} SaveSummary; /* size=0x3A4 */
+    s32 padding; // not really padding, it's a memory card status
+} SaveSummary;   // size=0x3A8
 
 extern const s32 D_801A7B8C[2];
-extern s32 D_801BAF08; // block icon animation index
-extern s32 D_801BAF20;
-extern s32 D_801BAF30;
-extern s32 D_801BB010;
-extern s32 D_801BB014;
-extern s32 g_InputCursorPos; // cursor Position
 extern void* g_Cluts[];
 extern void* g_EntityGfxs[];
 extern s16** g_SpriteBanks[]; // g_SpriteBanks
 extern void* D_8018C404;      // unknown type
-extern u8 g_InputSaveName[9];
 
 extern s32 D_80180040[];
 extern s32 D_80180054[];
@@ -115,6 +111,8 @@ extern s8 D_801823A0[]; // on-screen keyboard
 extern RECT D_80182584;
 extern RECT D_8018258C;
 extern RECT D_801825A4;
+extern s32 g_StreamWidth;
+extern int g_StreamHeight;
 extern s32 D_801962F4;
 extern s32 D_801962F8[16];
 extern s32 D_80196338[16];
@@ -129,27 +127,25 @@ extern volatile u32* D_80196410;
 extern volatile u32* D_8019642C;
 extern volatile u32* D_80196430;
 extern volatile u32* D_80196434;
-extern const char D_801A7748[];           // string "richter "
-extern const char D_801A7754[9] ALIGNED4; // string "alucard "
-extern const char D_801A75A0[];
-extern const char D_801A75C0[];
-extern const char D_801A7AF8[];           // rstep:%d,%d
-extern const char D_801A7B08[];           // retry:%d
-extern const char g_strMemcardRootPath[]; // "bu%1d%1d:"
-extern const char g_MemcardSavePath[];    // "bu%1d%1d:%s"
-extern const char D_801A802C[19];         // "BASLUS-00067DRAX00"
-extern const char D_801ABF9C[];           // "MDEC_rest:bad option(%d)\n"
-extern const char D_801ABFB8[];           // MDEC_in_sync
-extern const char D_801ABFC8[];           // MDEC_out_sync
-extern const char D_801ABFD8[];           // DMA=(%d,%d), ADDR=(0x%08x->0x%08x)
-extern const char D_801AC000[];           // FIFO
-extern const char D_801AC038[];           // "%s timeout:\n"
+
+extern const char D_801A7AF8[]; // rstep:%d,%d
+extern const char D_801A7B08[]; // retry:%d
+extern const char D_801ABF9C[]; // "MDEC_rest:bad option(%d)\n"
+extern const char D_801ABFB8[]; // MDEC_in_sync
+extern const char D_801ABFC8[]; // MDEC_out_sync
+extern const char D_801ABFD8[]; // DMA=(%d,%d), ADDR=(0x%08x->0x%08x)
+extern const char D_801AC000[]; // FIFO
+extern const char D_801AC038[]; // "%s timeout:\n"
+extern s32 D_801BAEE4[9];
+extern s32 D_801BAF08; // block icon animation index
+extern s32 D_801BAF0C;
 extern s32 D_801BAF10;
 extern s32 D_801BAF14;
-extern s32 D_801BAF18[][2];
-extern s32 D_801BAF48;
+extern s32 D_801BAF18[NUM_GFX][2];
 extern s32 D_801BAFC0;
 extern s32 D_801BAFC4;
+extern s32 D_801BAFC8;
+extern s32 D_801BAFCC;
 extern u8* D_801BAFD0; // Pointer to texture pattern
 extern s32 D_801BAFD4;
 extern s32 D_801BAFD8;
@@ -159,19 +155,25 @@ extern u32 D_801BAFE4;
 extern s32 D_801BAFE8;
 extern s32 g_MemCardRStep;
 extern s32 g_MemCardRStepSub; // rstep sub
-extern s32 g_MemCardRetryCount;
 extern s32 D_801BAFF4;
+extern s32 g_MemCardRetryCount;
 extern s32 D_801BAFFC;
 extern s32 D_801BB000;
 extern s32 D_801BB004;
 extern s32 D_801BB008;
 extern s32 D_801BB00C;
+extern s32 D_801BB010;
+extern s32 D_801BB014;
+extern u16 D_801BB0F8[0x900];
 extern s32 g_MemcardRetryCount;
 extern s32 g_MemcardFd;
 extern s32 D_801BC340;
 extern s32 D_801BC344;
-extern u32 D_801BC398[];
-extern s32 D_801BC3D4[];
+extern s32 D_801BC348;
+extern s32 D_801BC34C;
+extern s32 D_801BC350;
+extern Dialogue g_Dialogue;
+extern u32 D_801BC398[16];
 extern s32 g_MemCardSelectorX;
 extern s32 g_MemCardSelectorY;
 extern s32 D_801BC3E0; // on-screen keyboard key position
@@ -179,19 +181,21 @@ extern s32 D_801BC3E4;
 extern s32 D_801BC3E8;
 extern s32 D_801BC3EC; // selected memory card block
 extern s32 D_801BC650;
-extern s32 D_801BC8C8;
 extern SaveSummary g_SaveSummary[PORT_COUNT];
-extern s32 D_801BCC84[];
-extern s32 D_801BD02C;
 extern u32 D_801BD030;
+extern u32 g_StreamEndFrame;
+extern u32 g_StreamIsRGB24;
+extern u32 D_801BD03C;
+extern u32 D_801BD040;
+extern s32 g_StreamRewindSwitch[0x5001];
+extern s32 D_801D104C[0x1680];
 extern s32 D_801D6B04;
-extern s32 D_801D6B08;
+extern s32 g_InputCursorPos;
 extern s32 D_801D6B0C;
 extern s32 g_MemcardBlockRead;
+extern char g_InputSaveName[12];
 extern s32 g_MemcardStep;
 extern s32 D_801D6B24;
-
-extern Dialogue g_Dialogue;
 
 void Update(void);
 void HandleMainMenu(void);
