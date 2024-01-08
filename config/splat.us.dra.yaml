@@ -124,7 +124,7 @@ segments:
       - [0x3BDE0, .rodata, 47BB8] # LoadFileSim
       - [0x3BEE0, .rodata, save_mgr]
       - [0x3C1A8, rodata] # func_800EA7CC
-      - [0x3C1E8, rodata] # DecompressData
+      - [0x3C1E8, .rodata, 4A538] # DecompressData
       - [0x3C228, .rodata, 4A538]
       - [0x3C238, rodata] # RenderPrimitives
       - [0x3C290, .rodata, collider]

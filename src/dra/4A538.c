@@ -221,7 +221,7 @@ void DecompressWriteNibble(s32 ch) {
     }
 }
 
-u32 DecompressReadNibble(void) {
+u8 DecompressReadNibble(void) {
     u8 ret;
 
     if (g_DecReadNibbleFlag != 0) {
@@ -236,56 +236,41 @@ u32 DecompressReadNibble(void) {
     }
 }
 
-// reg swap + fake stuff
-#ifndef NON_MATCHING
-INCLUDE_ASM("dra/nonmatchings/4A538", DecompressData);
-#else
 s32 DecompressData(u8* dst, u8* src) {
     u32 buf[8];
-    s32 temp_s0;
-    s32 ch;
-    s32 temp_s1_3;
-    s32 temp_s2;
-    s32 temp_s2_2;
-    s32 temp_s2_3;
-    s32 temp_s2_4;
+    u8 ch;
+    s32 len;
     s32 count;
     s32 i;
     s32 var_v1;
-    s32* var_a0;
-    u8* new_var;
-    u8* srcptr;
-    s32 op;
-    srcptr = src;
-    var_a0 = &buf;
+    u32* var_a0;
+    u32 op;
 
-    for (var_v1 = 0; var_v1 < 8; var_v1++) {
-        *var_a0++ = *srcptr++;
+    var_a0 = buf;
+    for (var_v1 = 0; var_v1 < LEN(buf); var_v1++) {
+        *var_a0++ = *src++;
     }
 
     g_DecReadNibbleFlag = 0;
     g_DecWriteNibbleFlag = 0;
-    g_DecSrcPtr = srcptr;
+    g_DecSrcPtr = src;
     g_DecDstPtr = dst;
-    while (count = true /*fake??*/) {
+
+    while (count = 1) {
         op = DecompressReadNibble();
         switch (op) {
         case 0:
-            do {
-                temp_s2 = DecompressReadNibble();
-                temp_s2_2 = DecompressReadNibble();
-            } while (0);
-            temp_s2_4 = temp_s2;
-            temp_s2_3 = temp_s2_2;
-            temp_s2_3 = temp_s2_4 * 0x10 + temp_s2_3 + 0x13;
-            for (i = 0; i < temp_s2_3; i++) {
+            len = DecompressReadNibble();
+            op = DecompressReadNibble();
+            count = len * 0x10 + op + 0x13;
+            for (i = 0; i < count; i++) {
                 DecompressWriteNibble(0);
             }
             break;
         case 2:
-            temp_s0 = DecompressReadNibble();
-            DecompressWriteNibble(temp_s0);
-            DecompressWriteNibble(temp_s0);
+            ch = DecompressReadNibble();
+            DecompressWriteNibble(ch);
+            DecompressWriteNibble(ch);
             break;
         case 4:
             DecompressWriteNibble(DecompressReadNibble());
@@ -295,16 +280,17 @@ s32 DecompressData(u8* dst, u8* src) {
             DecompressWriteNibble(DecompressReadNibble());
             break;
         case 5:
-            temp_s1_3 = (ch = DecompressReadNibble());
-            count = (op = DecompressReadNibble()) + 3;
+            len = DecompressReadNibble();
+            op = DecompressReadNibble();
+            count = op + 3;
+            ch = len;
             for (i = 0; i < count; i++) {
-                temp_s2 = ch;
-                DecompressWriteNibble(temp_s2 & 0xFF);
+                DecompressWriteNibble(ch);
             }
             break;
         case 6:
-            temp_s2 = DecompressReadNibble();
-            count = temp_s2 + 3;
+            len = DecompressReadNibble();
+            count = len + 3;
             for (i = 0; i < count; i++) {
                 DecompressWriteNibble(0);
             }
@@ -316,32 +302,31 @@ s32 DecompressData(u8* dst, u8* src) {
         case 11:
         case 12:
         case 13:
-        case 14:
-            temp_s1_3 = (buf + op)[-7];
-            switch (temp_s1_3 & 0xF0) {
+        case 14: {
+            len = buf[op - 7];
+            switch (len & 0xF0) {
             case 0x20:
-                DecompressWriteNibble(temp_s1_3 & 0xF);
+                DecompressWriteNibble(len & 0xF);
             case 0x10:
-                DecompressWriteNibble(temp_s1_3 & 0xF);
+                DecompressWriteNibble(len & 0xF);
                 break;
             case 0x60:
-                count = (temp_s1_3 & 0xF) + 3;
+                count = (len & 0xF) + 3;
                 for (i = 0; i < count; i++) {
                     DecompressWriteNibble(0);
                 }
                 break;
             }
             break;
+        }
         case 15:
-            if ((dst + 0x2000) >= ((u32)g_DecDstPtr)) {
+            if (dst + 0x2000 >= g_DecDstPtr) {
                 return 0;
             }
-            new_var = dst;
-            return (g_DecDstPtr - new_var) + 0x2000;
+            return g_DecDstPtr - dst + 0x2000;
         }
     }
 }
-#endif
 
 void LoadPendingGfx(void) {
     // Called every frame, it continuously checks if there is any new graphics
