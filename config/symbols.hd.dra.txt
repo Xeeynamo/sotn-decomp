@@ -141,7 +141,6 @@ func_800EA720 = 0x800EADD8;
 func_800EA7CC = 0x800EAE84;
 func_800EAD7C = 0x800EB434;
 ResetPendingGfxLoad = 0x800EB5A4;
-DecompressData = 0x800EB750;
 func_800EB758 = 0x800EBE10;
 RenderEntities = 0x800EC264;
 HideAllBackgroundLayers = 0x800ED4B0;
