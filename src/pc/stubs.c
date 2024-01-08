@@ -472,7 +472,11 @@ struct XaMusicConfig g_XaMusicConfigs[6] = {
     {41128, 3987, 10, 0, 64, 0, 0, 0, 0, 0},
     {51096, 7692, 20, 0, 84, 0, 1, 0, 0, 0}};
 
-s8 D_801390C4;
+s8 D_80138F64[20];
+u8 D_801390C4;
+s16 D_8013AE8A;
+s16 D_8013AEA6;
+s16 D_8013B64E;
 u8 g_SeqPlayingId;
 s16 g_SeqAccessNum;
 volatile s16 g_CdSoundCommandQueuePos;
@@ -516,12 +520,9 @@ void func_801327B4(int arg0, int arg1, int vabId, int prog, int tone, int note,
 
 void func_80135D8C() { NOT_IMPLEMENTED; }
 
-s32 func_80136010(void) {
-    NOT_IMPLEMENTED;
-    return 0;
-}
-
 void func_8013572C(int sndId, int unk02, int unk04) { NOT_IMPLEMENTED; }
+
+void SpuGetAllKeysStatus(char* status) { NOT_IMPLEMENTED; }
 
 void func_801073C0(void) { NOT_IMPLEMENTED; }
 

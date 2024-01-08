@@ -734,7 +734,7 @@ extern s16 D_801390A4;
 extern u8 D_801390A8;
 extern s16 D_801390AC[];
 extern s32 D_801390B4[];
-extern s8 D_801390C4;
+extern u8 D_801390C4;
 extern GpuBuffer* g_BackBuffer;
 extern u8 D_801390D8;
 extern SfxRingBufferItem g_SfxRingBuffer[MAX_SND_COUNT];
