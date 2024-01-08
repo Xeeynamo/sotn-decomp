@@ -52,14 +52,14 @@ set(SOURCE_FILES_DRA
     src/dra/play.c
     src/dra/loading.c
     src/dra/pads.c
-    src/dra/lba_stage.c
     src/dra/save_mgr_pre.c
     src/dra/save_mgr.c
     src/dra/4A538.c
     src/dra/collider.c
     src/dra/demo.c
     src/dra/5087C.c
-    src/dra/lang_us.c
+    src/dra/lba_stage.c
+    src/dra/config_us.c
     src/dra/menu.c
     src/dra/5D6C4.c 
     src/dra/627C4.c

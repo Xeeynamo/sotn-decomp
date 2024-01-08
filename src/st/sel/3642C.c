@@ -100,6 +100,49 @@ void func_801B66A4(void) {
     prim->blendMode = 0;
 }
 
+u8 D_80180824[] = {
+    0x00,
+    0x40,
+    0x00,
+    0x00,
+};
+
+u8 D_80180828[] = {
+    0x00,
+    0x00,
+    0x00,
+    0x00,
+};
+
+u16 D_8018082C[] = {
+    0x0240,
+    0x0248,
+    0x0250,
+};
+
+u16 D_80180834[] = {
+    0x0000,
+    0x0020,
+};
+
+u16 D_80180838[] = {
+    0x01A1, 0x01A1, 0x01A1, 0x0000, 0x0008, 0x0013, 0x0011, 0x0031, 0x004F,
+    0x0026, 0x0036, 0x001D, 0x001B, 0x0033, 0x002C, 0x0021, 0x0019, 0x000A,
+    0x0033, 0x001F, 0x0048, 0x002F, 0x0013, 0x0019, 0x004D, 0x004B, 0x0017,
+    0x001D, 0x0012, 0x0002, 0x001B, 0x002A, 0x0050, 0x0045, 0x0032, 0x000D,
+    0x002A, 0x004D, 0x0006, 0x0027, 0x0007, 0x0048, 0x002F, 0x001B, 0x0036,
+    0x0022, 0x0039, 0x0014, 0x0039, 0x001D, 0x000A, 0x0035, 0x0010, 0x001B,
+    0x003D, 0x0017, 0x002E, 0x000B, 0x0049, 0x0042, 0x003D, 0x002A, 0x0001,
+    0x000C, 0x001B, 0x0034, 0x0041, 0x0035, 0x0008, 0x000E, 0x004D, 0x0011,
+    0x0034, 0x0041, 0x0029, 0x0048,
+};
+
+const char* g_DiagActors[] = {
+    _S("Alucard"),
+    _S("Maria"),
+    _S("Richter"),
+};
+
 // Creates primitives for the actor name at the head of the dialogue
 void func_801B675C(u16 actorIndex, Entity* self) {
     Primitive* prim;
@@ -109,7 +152,7 @@ void func_801B675C(u16 actorIndex, Entity* self) {
     const char* actorName;
     char ch;
 
-    actorName = D_801808D0[actorIndex];
+    actorName = g_DiagActors[actorIndex];
     chCount = 0;
     while (true) {
         ch = *actorName++;
@@ -135,7 +178,7 @@ void func_801B675C(u16 actorIndex, Entity* self) {
     // Fill prims to render the actor name on screen
     prim = &g_PrimBuf[primIndex];
     g_Dialogue.primIndex[1] = primIndex;
-    actorName = D_801808D0[actorIndex];
+    actorName = g_DiagActors[actorIndex];
     x = 0x38;
     while (prim != NULL) {
         ch = *actorName++;

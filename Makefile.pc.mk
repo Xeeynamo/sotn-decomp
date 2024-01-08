@@ -13,9 +13,9 @@ C_FILES_PC          += pc.c sdl2.c plat_unix.c stage_dummy.c
 C_FILES_PSX_SDK     := libgpu/ext.c
 C_FILES_MOCK_SDK    := libapi.c libetc.c libgpu.c libgte.c libgs.c libcd.c libcard.c libspu.c libsnd.c cdc.c
 C_FILES_3RD         := cJSON/cJSON.c
-C_FILES_DRA         := 42398.c play.c loading.c pads.c lba_stage.c
+C_FILES_DRA         := 42398.c play.c loading.c pads.c
 C_FILES_DRA         += save_mgr_pre.c save_mgr.c 4A538.c collider.c demo.c 5087C.c
-C_FILES_DRA         += lang_us.c menu.c 5D6C4.c 627C4.c 63ED4.c
+C_FILES_DRA         += lba_stage.c config_us.c menu.c 5D6C4.c 627C4.c 63ED4.c
 C_FILES_DRA         += 91EBC.c 92F60.c 93290.c 93BDC.c 94F50.c 953A0.c
 
 OBJS                := $(C_FILES_PC:%.c=$(PC_BUILD_DIR)/src/pc/%.o)

@@ -1,24 +1,15 @@
 #include "pc.h"
 #include "dra.h"
 #include "servant.h"
-#include <cJSON/cJSON.h>
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 const char g_DummyName[] = "DUMMY\xFF";
-const char g_DummyDesc[] = "dummy description";
-RelicDesc g_RelicDummy = {g_DummyName, g_DummyDesc, 0, 0, 0};
 
 u16 g_RawVram[VRAM_W * VRAM_H];
 GameApi g_ApiInit = {0};
-Equipment g_EquipDefs[0x100] = {0};
-Accessory g_AccessoryDefs[0x100] = {0};
-RelicDesc g_RelicDefs[NUM_RELICS] = {0};
-SpellDef g_SpellDefs[0x100] = {0};
-SubweaponDef g_SubwpnDefs[0x10] = {0};
-EnemyDef g_EnemyDefs[0x100] = {0};
 void (*D_80170000)(s32 arg0); // ServantDesc D_80170000 = {0};
 Weapon D_8017A000 = {0};
 Weapon D_8017D000 = {0};
@@ -156,15 +147,6 @@ bool InitGame(void) {
     D_8017D000.LoadWeaponPalette = WeaponLoadPaletteStub;
 
     InitStrings();
-    if (!FileStringify(InitEquipDefs, "assets/dra/equipment.json")) {
-        WARNF("failed to init equipments");
-    }
-    if (!FileStringify(InitAccessoryDefs, "assets/dra/accessory.json")) {
-        WARNF("failed to init accessories");
-    }
-    InitRelicDefs();
-    InitEnemyDefs();
-    InitSubwpnDefs();
 
     D_80137590 = g_DemoRecordingBuffer;
 
@@ -289,6 +271,7 @@ char MyEncodeChar(char ch) {
 
     return ch;
 }
+
 const char* AnsiToSotnMenuString(const char* str) {
     size_t end = strlen(str) + 2 + g_MegaMenuStrIndex;
     if (end >= LEN(g_MegaMenuStrBuffer)) {
@@ -309,133 +292,18 @@ const char* AnsiToSotnMenuString(const char* str) {
 }
 
 void InitStrings(void) {
+    for (int i = 0; i < LEN(g_EquipDefs); i++) {
+        g_EquipDefs[i].name = AnsiToSotnMenuString(g_EquipDefs[i].name);
+    }
+    for (int i = 0; i < LEN(g_AccessoryDefs); i++) {
+        g_AccessoryDefs[i].name = AnsiToSotnMenuString(g_AccessoryDefs[i].name);
+    }
     for (int i = 0; i < LEN(g_MenuStr); i++) {
         g_MenuStr[i] = AnsiToSotnMenuString(g_MenuStr[i]);
     }
-}
-
-#define JITEM(x) cJSON_GetObjectItemCaseSensitive(jitem, x)
-bool InitEquipDefs(const char* content) {
-    INFOF("load");
-    cJSON* json = cJSON_Parse(content);
-    if (!json) {
-        ERRORF("json error: %s", cJSON_GetErrorPtr());
-        WARNF("failed to parse, will use dummy data");
-        for (int i = 0; i < LEN(g_EquipDefs); i++) {
-            Equipment item = {g_DummyName, g_DummyDesc};
-            memcpy(&g_EquipDefs[i], &item, sizeof(item));
-        }
-        return false;
-    }
-
-    // from here, assume the JSON is valid and well structured
-    cJSON* array = cJSON_GetObjectItemCaseSensitive(json, "asset_data");
-    if (cJSON_IsArray(array)) {
-        int len = cJSON_GetArraySize(array);
-        if (len > LEN(g_EquipDefs)) {
-            WARNF("data too big, will truncate (cur: %d, max: %d)", len,
-                  LEN(g_EquipDefs));
-            len = LEN(g_EquipDefs);
-        }
-        for (int i = 0; i < len; i++) {
-            Equipment* item = &g_EquipDefs[i];
-            cJSON* jitem = cJSON_GetArrayItem(array, i);
-            item->name = JITEM("name_resolved")->valuestring;
-            item->description = JITEM("desc_resolved")->valuestring;
-            item->attack = JITEM("attack")->valueint;
-            item->defense = JITEM("defense")->valueint;
-            item->element = JITEM("element")->valueint;
-            item->itemCategory = JITEM("itemCategory")->valueint;
-            item->weaponId = JITEM("weaponId")->valueint;
-            item->palette = JITEM("palette")->valueint;
-            item->unk11 = JITEM("unk11")->valueint;
-            item->playerAnim = JITEM("playerAnim")->valueint;
-            item->unk13 = JITEM("unk13")->valueint;
-            item->unk14 = JITEM("unk14")->valueint;
-            item->lockDuration = JITEM("lockDuration")->valueint;
-            item->chainLimit = JITEM("chainLimit")->valueint;
-            item->unk17 = JITEM("unk17")->valueint;
-            item->specialMove = JITEM("specialMove")->valueint;
-            item->isConsumable = JITEM("isConsumable")->valueint;
-            item->enemyInvincibilityFrames =
-                JITEM("enemyInvincibilityFrames")->valueint;
-            item->unk1B = JITEM("unk1B")->valueint;
-            item->comboSub = JITEM("comboSub")->valueint;
-            item->comboMain = JITEM("comboMain")->valueint;
-            item->mpUsage = JITEM("mpUsage")->valueint;
-            item->stunFrames = JITEM("stunFrames")->valueint;
-            item->hitType = JITEM("hitType")->valueint;
-            item->hitEffect = JITEM("hitEffect")->valueint;
-            item->icon = JITEM("icon")->valueint;
-            item->iconPalette = JITEM("iconPalette")->valueint;
-            item->criticalRate = JITEM("criticalRate")->valueint;
-            item->unk32 = JITEM("unk32")->valueint;
-            item->name = AnsiToSotnMenuString(item->name);
-        }
-    }
-    cJSON_Delete(json);
-    return true;
-}
-bool InitAccessoryDefs(const char* content) {
-    INFOF("load");
-    cJSON* json = cJSON_Parse(content);
-    if (!json) {
-        ERRORF("json error: %s", cJSON_GetErrorPtr());
-        WARNF("failed to parse, will use dummy data");
-        for (int i = 0; i < LEN(g_AccessoryDefs); i++) {
-            Accessory dummy = {0};
-            dummy.name = g_RelicDummy.name;
-            dummy.description = g_RelicDummy.desc;
-            memcpy(&g_AccessoryDefs[i], &dummy, sizeof(dummy));
-        }
-        return false;
-    }
-
-    // from here, assume the JSON is valid and well structured
-    cJSON* array = cJSON_GetObjectItemCaseSensitive(json, "asset_data");
-    if (cJSON_IsArray(array)) {
-        int len = cJSON_GetArraySize(array);
-        if (len > LEN(g_AccessoryDefs)) {
-            WARNF("data too big, will truncate (cur: %d, max: %d)", len,
-                  LEN(g_AccessoryDefs));
-            len = LEN(g_AccessoryDefs);
-        }
-        for (int i = 0; i < len; i++) {
-            Accessory* item = &g_AccessoryDefs[i];
-            cJSON* jitem = cJSON_GetArrayItem(array, i);
-            item->name = JITEM("name_resolved")->valuestring;
-            item->description = JITEM("desc_resolved")->valuestring;
-            item->attBonus = JITEM("attBonus")->valueint;
-            item->defBonus = JITEM("defBonus")->valueint;
-            item->statsBonus[0] = JITEM("strBonus")->valueint;
-            item->statsBonus[1] = JITEM("conBonus")->valueint;
-            item->statsBonus[2] = JITEM("intBonus")->valueint;
-            item->statsBonus[3] = JITEM("lckBonus")->valueint;
-            item->unk10 = JITEM("unk10")->valueint;
-            item->unk14 = JITEM("unk14")->valueint;
-            item->icon = JITEM("icon")->valueint;
-            item->iconPalette = JITEM("iconPalette")->valueint;
-            item->equipType = JITEM("equipType")->valueint;
-            item->name = AnsiToSotnMenuString(item->name);
-        }
-    }
-    cJSON_Delete(json);
-    return true;
-}
-void InitRelicDefs(void) {
-    for (int i = 0; i < LEN(g_RelicDefs); i++) {
-        memcpy(&g_RelicDefs[i], &g_RelicDummy, sizeof(g_RelicDummy));
-    }
-}
-void InitEnemyDefs(void) {
     for (int i = 0; i < LEN(g_EnemyDefs); i++) {
-        EnemyDef dummy = {0};
-        dummy.name = g_RelicDummy.name;
-        memcpy(&g_EnemyDefs[i], &dummy, sizeof(dummy));
+        g_EnemyDefs[i].name = AnsiToSotnMenuString(g_EnemyDefs[i].name);
     }
-}
-void InitSubwpnDefs(void) {
-    //
 }
 
 void (*g_VsyncCallback)() = NULL;

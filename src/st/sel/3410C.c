@@ -1,11 +1,18 @@
 #include "sel.h"
 
+s32 D_801804D0 = 0;
+u8 D_801804D4[] = {STAGE_MEMORYCARD, STAGE_CAT};
+const char* D_801804D8[] = {
+    "NORMAL      ",
+    "SPECIAL     ",
+};
+const char D_801A7B80[] = "SELECT ！！";
+
 void HandleMainMenu(void) {
     Primitive* prim;
     Primitive* prim15;
     s16 primIndex;
     s32 i;
-    s32 scaled_b014;
 
     func_801B1F34();
     switch (D_8003C9A4) {
@@ -98,27 +105,12 @@ void HandleMainMenu(void) {
              prim = prim->next, i++) {
             prim->blendMode = 4;
             func_801B1CFC((POLY_GT4*)prim, D_801BB014);
-            if (((u32)(i - 7) < 2U) || (((u32)(i - 9) < 2U) != 0)) {
-
-                scaled_b014 = D_801BB014 * 3;
-                if (scaled_b014 < 0) {
-                    scaled_b014 += 3;
-                }
-                prim->r0 = (u8)(scaled_b014 >> 2);
-
-                scaled_b014 = D_801BB014 * 7;
-                if (scaled_b014 < 0) {
-                    scaled_b014 += 7;
-                }
-                prim->g0 = (u8)(scaled_b014 >> 3);
-
-                scaled_b014 = D_801BB014 * 3;
-                if (scaled_b014 < 0) {
-                    scaled_b014 += 3;
-                }
-                prim->b0 = (u8)(scaled_b014 >> 2);
+            if (i == 7 || i == 8 || i == 9 || i == 10) {
+                prim->r0 = D_801BB014 * 3 / 4;
+                prim->g0 = D_801BB014 * 7 / 8;
+                prim->b0 = D_801BB014 * 3 / 4;
             }
-            if (i - 0xF < 2U) {
+            if (i == 15 || i == 16) {
                 prim->blendMode = 0x15;
             }
         }
@@ -264,7 +256,7 @@ void HandleMainMenu(void) {
         func_801B19F4();
         func_801B1DA8();
         g_api.FreePrimitives(D_801BB010);
-        STRCPY(g_Status.saveName, D_801A7B8C);
+        STRCPY(g_Status.saveName, "alucard");
         if (g_StageId == STAGE_ST0) {
             SetGameState(Game_VideoPlayback);
         } else if (g_StageId == STAGE_MEMORYCARD) {
@@ -280,7 +272,7 @@ void HandleMainMenu(void) {
              prim = prim->next, i++) {
             prim->blendMode = 4;
             func_801B1CFC((POLY_GT4*)prim, D_801BB014);
-            if ((u32)(i - 0xF) < 2U) {
+            if (i == 15 || i == 16) {
                 prim->blendMode = 0x15;
             }
         }
@@ -485,7 +477,68 @@ void func_801B4FFC(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/3410C", func_801B519C);
+void func_801B519C(void) {
+    Primitive* prim;
+    s16 angle;
+    s16 y;
+    s32 angle2;
+    Entity* ent = &g_Entities[1];
+
+    if (D_800734C0 != 0) {
+        if (D_800734C0 != 1) {
+            do {
+            } while (0);
+            return;
+        }
+    } else {
+        s32 uvOfst;
+        s16 primBufIndex = g_api.AllocPrimitives(PRIM_GT4, 0x18);
+        if (primBufIndex == -1) {
+            return;
+        }
+        prim = &g_PrimBuf[primBufIndex];
+        g_Entities[1].primIndex = primBufIndex;
+        g_Entities[1].ext.prim = prim;
+        g_Entities[1].flags |= 0x800000;
+        uvOfst = 0;
+        while (prim) {
+            s32 v01 = 0x38 + uvOfst;
+            ++uvOfst;
+            prim->tpage = 8;
+            prim->clut = 0x201;
+            prim->u0 = prim->u2 = 0x38;
+            prim->u1 = prim->u3 = 0x80;
+            prim->v0 = prim->v1 = v01;
+            prim->v2 = prim->v3 = 0x38 + uvOfst;
+            prim->priority = 0x41;
+            prim->blendMode = 0x71;
+            prim = prim->next;
+        }
+        ++ent->step;
+    }
+    y = 0xA2;
+    prim = ent->ext.prim;
+    angle = ent->ext.generic.unk88.unk + 0x40;
+    angle2 = angle;
+    ent->ext.generic.unk88.S16.unk0 = angle2;
+    while (prim) {
+        s16 xBase;
+        s32 sin;
+        angle &= 0xFFF;
+        sin = rsin(angle);
+        if (sin < 0) {
+            sin += 0x7FF;
+        }
+        xBase = sin >> 0xB;
+        prim->x0 = prim->x2 = xBase + 0x40;
+        prim->x1 = prim->x3 = xBase + 0x88;
+        prim->y0 = prim->y1 = y;
+        ++y;
+        prim->y2 = prim->y3 = y;
+        prim = prim->next;
+        angle += 0x100;
+    }
+}
 
 void func_801B5350(void) {
     Entity* entity = &g_Entities[UNK_ENTITY_5];

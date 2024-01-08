@@ -294,7 +294,7 @@ u32 CheckAndDoLevelUp(void) {
     if (g_Status.level == 99) {
         return 0;
     }
-    if (g_ExpNext[g_Status.level] <= g_Status.exp) {
+    if (g_ExpNext[g_Status.level + 1] <= g_Status.exp) {
         g_Status.level++;
         statsGained = 0;
         g_Status.mpMax += 4 + (rand() & 1);
@@ -415,8 +415,8 @@ s32 func_800FE044(s32 amount, s32 type) {
             }
         }
         g_Status.exp += playerXPBoost;
-        if (g_Status.exp >= D_800AC90C) {
-            g_Status.exp = D_800AC90C;
+        if (g_Status.exp >= g_ExpNext[99]) {
+            g_Status.exp = g_ExpNext[99];
         }
 
         activeFamiliar = g_Servant - 1;

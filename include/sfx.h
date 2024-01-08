@@ -1,3 +1,6 @@
+#ifndef SFX_H
+#define SFX_H
+
 /**
  * File: sfx.h
  * Description: SOTN Sound Effects
@@ -331,3 +334,5 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SE_UNK_TE2_6B6 0x6B6
 #define SE_UNK_TE3_6B8 0x6B8
 #define NA_VO_MAR_AIM_HEAD 0x87F
+
+#endif

@@ -1314,9 +1314,10 @@ void MenuDrawStats(s32 menuDialogue) {
         MenuDrawStr(g_MenuStr[5], 32, 176, ctx);
         MenuDrawInt(g_Status.exp, 144, 176, ctx);
         MenuDrawStr(g_MenuStr[6], 32, 188, ctx);
-        MenuDrawInt(
-            g_Status.level != 99 ? g_ExpNext[g_Status.level] - g_Status.exp : 0,
-            144, 188, ctx);
+        MenuDrawInt(g_Status.level != 99
+                        ? g_ExpNext[g_Status.level + 1] - g_Status.exp
+                        : 0,
+                    144, 188, ctx);
         MenuDrawStr(g_MenuStr[7], 32, 200, ctx);
         MenuDrawInt(g_Status.gold, 144, 200, ctx);
         MenuDrawStr(g_MenuStr[8], 248, 40, ctx);
@@ -1486,7 +1487,7 @@ void MenuSpellsDraw(MenuContext* ctx) {
         } else {
             MenuDrawChar(CH('?'), startXCoord, yCoord, ctx);
             MenuDrawChar(CH('+'), startXCoord + 8, yCoord, ctx);
-            MenuDrawStr(g_WingSmashComboStr, startXCoord + 16, yCoord, ctx);
+            MenuDrawStr(g_SpellDefs[6].combo, startXCoord + 16, yCoord, ctx);
             MenuDrawChar(
                 CH('+'), startXCoord + 16 + (charNum * 8), yCoord, ctx);
             MenuDrawChar(

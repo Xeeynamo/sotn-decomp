@@ -248,6 +248,7 @@ typedef struct Primitive {
 #define DIAG_EOL 0xFF          // end of line
 #define DIAG_EOS 0x00          // end of string
 
+#define SAVE_FLAG_NORMAL (0)
 #define SAVE_FLAG_CLEAR (1)
 #define SAVE_FLAG_REPLAY (2)
 
@@ -1016,6 +1017,17 @@ typedef struct Collider {
     /* 0x20 */ s32 unk20;
 } Collider; /* size=0x24 */
 
+typedef struct XaMusicConfig {
+    u32 cd_addr;
+    s32 unk228;
+    u8 filter_file;
+    u8 filter_channel_id;
+    u8 volume;
+    u8 unk22f;
+    u8 unk230;
+    u8 pad[3];
+} XaMusicConfig;
+
 typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ s16 hitPoints;
@@ -1106,6 +1118,21 @@ typedef struct {
     /* 1C */ u16 equipType;
     /* 1E */ u16 unk1E;
 } Accessory; /* size=0x20 */
+
+typedef struct {
+    /* 0x00 */ const char* name;
+    /* 0x04 */ const char* combo;
+    /* 0x08 */ const char* description;
+    /* 0x0C */ u8 mpUsage;
+    /* 0x0D */ s8 nFramesInvincibility;
+    /* 0x0E */ s16 stunFrames;
+    /* 0x10 */ s16 hitboxState;
+    /* 0x12 */ s16 hitEffect;
+    /* 0x14 */ s16 entityRoomIndex;
+    /* 0x16 */ u16 attackElement;
+    /* 0x18 */ s16 attack;
+    /* 0x1A */ s16 unk1A;
+} SpellDef;
 
 typedef struct {
     /* 0x00 */ const char* name;
@@ -1544,6 +1571,8 @@ extern Tilemap g_Tilemap;
 
 // Beginning of Player Character offset = 0x800733D8
 extern Entity g_Entities[TOTAL_ENTITY_COUNT];
+
+extern u16 D_800734C0;
 
 // D_800736C8 g_Entities[4]
 // D_80073784 g_Entities[5]
