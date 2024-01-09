@@ -483,6 +483,7 @@ u8 D_8013B640[3];
 s32 g_CurCdPos;
 s16 g_CurrentXaConfigId;
 s16 g_CdSoundCommandQueue[MAX_SND_COUNT];
+u8 D_8013AEDC;
 s8 D_8013AEE8;
 u8 D_801390D8;
 char g_SeqTable[SS_SEQ_TABSIZ * SEQ_TABLE_S_MAX * SEQ_TABLE_T_MAX];
