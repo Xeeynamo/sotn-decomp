@@ -259,20 +259,17 @@ void MuteSound(void) {
 
 void func_801327B4(s32 minVoice, s32 maxVoice, s16 vabId, s16 prog, s16 tone,
                    s16 note, s16 voll, s16 volr) {
-    s32 sp58;
-    s32 i;
+    s32 i = minVoice;
+    s32 didStuff = 0;
 
-    i = minVoice;
-    sp58 = 0;
     if (i < maxVoice) {
         for (; i < maxVoice; i += 2) {
             if (D_80138F64[i] != 0) {
                 continue;
             }
             SsUtKeyOnV(i, vabId, prog, tone, note, 0, voll, volr);
-            SsUtKeyOnV(
-                (s16)(i + 1), vabId, prog, tone + 1, note, 0, voll, volr);
-            sp58++;
+            SsUtKeyOnV(i + 1, vabId, prog, tone + 1, note, 0, voll, volr);
+            didStuff++;
             if (i == (maxVoice - 2)) {
                 D_8013AEDC = minVoice;
             } else {
@@ -281,7 +278,7 @@ void func_801327B4(s32 minVoice, s32 maxVoice, s16 vabId, s16 prog, s16 tone,
             break;
         }
     }
-    if (sp58 == 0) {
+    if (!didStuff) {
         SsUtKeyOnV(D_8013AEDC, vabId, prog, tone, note, 0, voll, volr);
         // FAKE, needed to match registers
         i = voll;
