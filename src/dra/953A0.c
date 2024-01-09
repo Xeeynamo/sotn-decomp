@@ -235,8 +235,85 @@ void ExecSfx(void) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/953A0", func_80135D8C);
-void func_80135D8C();
+void func_80135D8C(void) {
+    s32 voice;
+    s32 i;
+    s8* temp_t2;
+    s8** temp_t2_2;
+    s8* temp_v1;
+    s8** temp_t3;
+    s8** temp_v1_2;
+
+    s16 vab;
+    s16 prog;
+    s16 note;
+    s16 tone;
+    u32 volume;
+    s8 distance;
+    s8 distance2;
+
+    if (D_801390C4 == 0) {
+        for (i = 0, voice = 30; i < 3; i++, voice++) {
+            if (g_UnkChannelSetting2[i] != 0) {
+                if (D_8013B66C[i] == 0) {
+                    // FAKE, should just be &D_8013B628[i]
+                    temp_v1_2 = &D_8013B628;
+                    temp_t3 = i + temp_v1_2;
+
+                    temp_t2 = *temp_t3;
+                    *temp_t3 = temp_t2 + 1;
+                    vab = temp_t2[0];
+                    if (vab == -1) {
+                        g_UnkChannelSetting2[i] = 0;
+                        continue;
+                    }
+                    *temp_t3 = temp_t2 + 2;
+                    prog = temp_t2[1];
+                    *temp_t3 = temp_t2 + 3;
+                    note = temp_t2[2];
+                    *temp_t3 = temp_t2 + 4;
+                    tone = temp_t2[3];
+                    *temp_t3 = temp_t2 + 5;
+                    volume = g_ChannelGroupVolume[i] * temp_t2[4];
+                    *temp_t3 = temp_t2 + 6;
+                    D_8013B66C[i] = temp_t2[5];
+                    distance = D_8013B5F6[voice];
+                    func_80132A04(
+                        voice, vab, prog, tone, note, volume >> 7, distance);
+                } else {
+                    D_8013B66C[i]--;
+                }
+            }
+        }
+    } else if (D_8013AE8A[0] != 0) {
+        if (D_8013B672[0] == 0) {
+            temp_t2_2 = &D_8013B628[3];
+            temp_v1 = *temp_t2_2;
+            *temp_t2_2 = temp_v1 + 1;
+            vab = temp_v1[0];
+            if (vab == -1) {
+                D_8013AE8A[0] = 0;
+                return;
+            }
+            *temp_t2_2 = temp_v1 + 2;
+            prog = temp_v1[1];
+            *temp_t2_2 = temp_v1 + 3;
+            note = temp_v1[2];
+            *temp_t2_2 = temp_v1 + 4;
+            tone = temp_v1[3];
+            distance2 = g_UnkChannelSetting1[3];
+            *temp_t2_2 = temp_v1 + 5;
+            volume = D_8013B626 * temp_v1[4];
+            *temp_t2_2 = temp_v1 + 6;
+            D_8013B672[0] = temp_v1[5];
+            distance = distance2;
+            func_80132A04(33, vab, prog, tone, note, volume >> 7, distance);
+
+        } else {
+            D_8013B672[0]--;
+        }
+    }
+}
 
 void func_80136010(void) {
     s16* var_t4;
@@ -293,8 +370,8 @@ void func_80136010(void) {
         }
         return;
     }
-    if ((D_8013AE8A == 0) && ((s8)(D_80138F64[14] + D_80138F64[15] +
-                                   D_80138F64[16] + D_80138F64[17]) == 0)) {
+    if ((D_8013AE8A[0] == 0) && ((s8)(D_80138F64[14] + D_80138F64[15] +
+                                      D_80138F64[16] + D_80138F64[17]) == 0)) {
         D_8013B64E = 0;
         D_8013AEA6 = 0;
     }
