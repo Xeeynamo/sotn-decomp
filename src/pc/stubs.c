@@ -516,8 +516,6 @@ void func_801327B4(int arg0, int arg1, int vabId, int prog, int tone, int note,
 
 void func_80135D8C() { NOT_IMPLEMENTED; }
 
-void func_8013572C(int sndId, int unk02, int unk04) { NOT_IMPLEMENTED; }
-
 void SpuGetAllKeysStatus(char* status) { NOT_IMPLEMENTED; }
 
 void func_801073C0(void) { NOT_IMPLEMENTED; }
