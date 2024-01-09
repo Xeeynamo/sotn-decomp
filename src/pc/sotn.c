@@ -386,8 +386,7 @@ void ReadToArray(const char* path, char* content) {
     fclose(f);
 }
 
-void InitVbVh()
-{
+void InitVbVh() {
     ReadToArray("assets/dra/vh_0.bin", aPbav);
     ReadToArray("assets/dra/vh_1.bin", aPbav_0);
     ReadToArray("assets/dra/vh_2.bin", aPbav_2);
