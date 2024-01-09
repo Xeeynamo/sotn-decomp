@@ -421,11 +421,14 @@ s8 D_8013B690;
 s16 D_8013B678[1];
 s16 D_8013B648[4];
 s16 D_8013AEA0[4];
-s32 D_8013B628[4];
+u16 D_8013B626;
+s8* D_8013B628[4];
 u8 D_8013B5EC[4];
+u8 D_8013B5F6[32];
 s16 D_8013B66C[4];
+s16 D_8013B672[1];
 s8 g_UnkChannelSetting1[4];
-s16 g_ChannelGroupVolume[4];
+u16 g_ChannelGroupVolume[4];
 s16 g_UnkChannelSetting2[4];
 s32 D_801390B4[1];
 s8 D_80139018[1];
@@ -468,7 +471,7 @@ struct XaMusicConfig g_XaMusicConfigs[6] = {
 
 s8 D_80138F64[20];
 u8 D_801390C4;
-s16 D_8013AE8A;
+s16 D_8013AE8A[1];
 s16 D_8013AEA6;
 s16 D_8013B64E;
 u8 g_SeqPlayingId;
@@ -510,8 +513,6 @@ s32 D_800C1ECC[1];
 s32 D_8013B65C;
 
 // sound stubs
-
-void func_80135D8C() { NOT_IMPLEMENTED; }
 
 void SpuGetAllKeysStatus(char* status) { NOT_IMPLEMENTED; }
 
