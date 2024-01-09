@@ -674,6 +674,7 @@ extern s32 g_CurCdPos;
 extern u8 g_CdMode[];
 extern u8 g_CdCommandResult[];
 extern s32 g_KeyOffChannels;
+// These overlap, need to split out
 extern s8 D_80138F64[20];
 extern s32 D_80138F7C;
 extern s16 D_80138F80;
@@ -760,6 +761,7 @@ extern s32 D_8013AE9C;
 extern s32 D_8013AECC;
 extern s32 D_8013AED0;
 extern s16 D_8013AED4[4];
+extern u8 D_8013AEDC;
 extern s32 D_8013AEE4;
 extern s16 g_volumeL;
 extern s16 g_volumeR;
