@@ -510,10 +510,6 @@ s32 D_800C1ECC[1];
 s32 D_8013B65C;
 
 // sound stubs
-void func_801327B4(int arg0, int arg1, int vabId, int prog, int tone, int note,
-                   int g_VolL, int g_VolR) {
-    NOT_IMPLEMENTED;
-}
 
 void func_80135D8C() { NOT_IMPLEMENTED; }
 
