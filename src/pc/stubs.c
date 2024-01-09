@@ -499,6 +499,8 @@ s32 D_8013B69C;
 s16 D_80139A74;
 s16 g_SfxRingBufferReadPos;
 s32 D_80138454;
+s16 D_801396DC;
+u16 D_801397F8;
 s16 D_8013AED4[4];
 s16 D_8013B650[4];
 s32 g_CdCommandStatus;
@@ -513,8 +515,6 @@ void func_801327B4(int arg0, int arg1, int vabId, int prog, int tone, int note,
 }
 
 void func_80135D8C() { NOT_IMPLEMENTED; }
-
-void func_8013572C(int sndId, int unk02, int unk04) { NOT_IMPLEMENTED; }
 
 void SpuGetAllKeysStatus(char* status) { NOT_IMPLEMENTED; }
 

@@ -40,12 +40,12 @@ void ExecCdSoundCommands(void) {
 }
 
 void ApplyQuadChannelSetting(
-    s16 arg0, s32 channel_group, s32 do_key_off, s32 volume, u16 arg4) {
+    s16 arg0, s32 channel_group, bool do_key_off, u16 volume, s16 distance) {
     u16 volumeMod;
     u16 calcVolume;
     s32 progId;
 
-    if (do_key_off != 0) {
+    if (do_key_off) {
         // do key off for 4 consecutive channels
         // channel_group 0 -> 0,1,2,3 etc.
         g_KeyOffChannels |=
@@ -61,7 +61,7 @@ void ApplyQuadChannelSetting(
     } else {
         calcVolume = (D_8013AE7C * g_SfxData[arg0].volume) >> 7;
         g_ChannelGroupVolume[channel_group] = (calcVolume * volumeMod) >> 7;
-        g_UnkChannelSetting1[channel_group] = arg4;
+        g_UnkChannelSetting1[channel_group] = distance;
     }
     g_UnkChannelSetting2[channel_group] = arg0;
     D_8013B5EC[channel_group] = g_SfxData[arg0].unk4;
@@ -73,8 +73,8 @@ void ApplyQuadChannelSetting(
 }
 
 void func_80135624(
-    s16 arg0, s32 channel_group, s32 should_key_off, s16 volume, s16 distance) {
-    if (should_key_off != 0) {
+    s16 arg0, s32 channel_group, bool do_key_off, u16 volume, s16 distance) {
+    if (do_key_off) {
         // do key off for two channels
         // channel_group 0 -> 12, 13 etc.
         g_KeyOffChannels |= (1 << ((channel_group + 6) * 2)) +
@@ -87,7 +87,115 @@ void func_80135624(
     D_8013AED4[channel_group] = g_SfxData[arg0].unk6;
 }
 
-INCLUDE_ASM("dra/nonmatchings/953A0", func_8013572C);
+void func_8013572C(s16 arg0, u16 volume, s16 distance) {
+    s32 i;
+
+    if (arg0 == 0) {
+        return;
+    }
+    if (g_SfxData[arg0].vabid == 9) {
+        if (D_801390C4 == 0) {
+            for (i = 0; i < 3; i++) {
+                if (arg0 == D_8013B648[i]) {
+                    ApplyQuadChannelSetting(arg0, i, true, volume, distance);
+                    return;
+                }
+            }
+            for (i = 0; i < 3; i++) {
+                if (D_8013B648[i] == 0) {
+                    ApplyQuadChannelSetting(arg0, i, false, volume, distance);
+                    return;
+                }
+            }
+            for (i = 0; i < 3; i++) {
+                if (D_8013AEA0[i] < g_SfxData[arg0].unk6) {
+                    ApplyQuadChannelSetting(arg0, i, true, volume, distance);
+                    return;
+                }
+            }
+            for (i = 0; i < 3; i++) {
+                if (g_SfxData[arg0].unk6 == D_8013AEA0[i]) {
+                    ApplyQuadChannelSetting(arg0, i, true, volume, distance);
+                    return;
+                }
+            }
+            return;
+        }
+        if (g_SfxData[arg0].unk6 >= D_8013AEA6) {
+            ApplyQuadChannelSetting(arg0, 3, true, volume, distance);
+        }
+    } else {
+        switch (g_SfxData[arg0].unk4) {
+        case 1:
+            D_80139804 = arg0;
+            if (volume == 0xFFFF) {
+                D_8013AEE0 = 0x7F;
+            } else {
+                D_8013AEE0 = volume;
+            }
+            D_8013AE94 = distance;
+            func_80134D14();
+            return;
+        case 3:
+            D_8013B664 = arg0;
+            if (volume == 0xFFFF) {
+                D_801390A4 = 0x7F;
+            } else {
+                D_801390A4 = volume;
+            }
+            D_80139010 = distance;
+            func_80134C60();
+            return;
+        case 2:
+            SetReleaseRate6();
+            D_80139804 = 0;
+            return;
+        case 0:
+            D_801397F8 = (D_8013AE7C * g_SfxData[arg0].volume) >> 7;
+            if (volume == 0xFFFF) {
+                D_801396DC = 0;
+            } else {
+                D_801396DC = distance;
+                D_801397F8 = (D_801397F8 * volume) >> 7;
+            }
+            if (D_801390C4 == 0) {
+                for (i = 0; i < 4; i++) {
+                    if (arg0 == D_8013B650[i]) {
+                        func_80135624(arg0, i, true, D_801397F8, D_801396DC);
+                        return;
+                    }
+                }
+                for (i = 0; i < 4; i++) {
+                    if (D_8013B650[i] == 0) {
+                        func_80135624(arg0, i, false, D_801397F8, D_801396DC);
+                        return;
+                    }
+                }
+                for (i = 0; i < 4; i++) {
+                    if (D_8013AED4[i] < g_SfxData[arg0].unk6) {
+                        func_80135624(arg0, i, true, D_801397F8, D_801396DC);
+                        return;
+                    }
+                }
+                for (i = 0; i < 3; i++) {
+                    if (g_SfxData[arg0].unk6 == D_8013AED4[i]) {
+                        func_80135624(arg0, i, true, D_801397F8, D_801396DC);
+                        return;
+                    }
+                }
+                return;
+            }
+            if (D_8013B650[3] == 0) {
+                func_80135624(arg0, 3, false, D_801397F8, D_801396DC);
+                return;
+            }
+            if (g_SfxData[arg0].unk6 >= D_8013AED4[3]) {
+                func_80135624(arg0, 3, true, D_801397F8, D_801396DC);
+            }
+            break;
+        }
+    }
+}
 
 s16 IncrementRingBufferPos(s16 arg0) {
     arg0++;
