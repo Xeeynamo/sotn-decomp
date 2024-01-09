@@ -421,11 +421,14 @@ s8 D_8013B690;
 s16 D_8013B678[1];
 s16 D_8013B648[4];
 s16 D_8013AEA0[4];
-s32 D_8013B628[4];
+u16 D_8013B626;
+s8* D_8013B628[4];
 u8 D_8013B5EC[4];
+u8 D_8013B5F6[32];
 s16 D_8013B66C[4];
+s16 D_8013B672[1];
 s8 g_UnkChannelSetting1[4];
-s16 g_ChannelGroupVolume[4];
+u16 g_ChannelGroupVolume[4];
 s16 g_UnkChannelSetting2[4];
 s32 D_801390B4[1];
 s8 D_80139018[1];
@@ -468,7 +471,7 @@ struct XaMusicConfig g_XaMusicConfigs[6] = {
 
 s8 D_80138F64[20];
 u8 D_801390C4;
-s16 D_8013AE8A;
+s16 D_8013AE8A[1];
 s16 D_8013AEA6;
 s16 D_8013B64E;
 u8 g_SeqPlayingId;
@@ -483,6 +486,7 @@ u8 D_8013B640[3];
 s32 g_CurCdPos;
 s16 g_CurrentXaConfigId;
 s16 g_CdSoundCommandQueue[MAX_SND_COUNT];
+u8 D_8013AEDC;
 s8 D_8013AEE8;
 u8 D_801390D8;
 char g_SeqTable[SS_SEQ_TABSIZ * SEQ_TABLE_S_MAX * SEQ_TABLE_T_MAX];
@@ -509,12 +513,6 @@ s32 D_800C1ECC[1];
 s32 D_8013B65C;
 
 // sound stubs
-void func_801327B4(int arg0, int arg1, int vabId, int prog, int tone, int note,
-                   int g_VolL, int g_VolR) {
-    NOT_IMPLEMENTED;
-}
-
-void func_80135D8C() { NOT_IMPLEMENTED; }
 
 void SpuGetAllKeysStatus(char* status) { NOT_IMPLEMENTED; }
 

@@ -257,7 +257,32 @@ void MuteSound(void) {
     InitSoundVars1();
 }
 
-INCLUDE_ASM("dra/nonmatchings/91EBC", func_801327B4);
+void func_801327B4(s32 minVoice, s32 maxVoice, s16 vabId, s16 prog, s16 tone,
+                   s16 note, s16 voll, s16 volr) {
+    s32 i = minVoice;
+    s32 didStuff = 0;
+
+    for (; i < maxVoice; i += 2) {
+        if (D_80138F64[i] != 0) {
+            continue;
+        }
+        SsUtKeyOnV(i, vabId, prog, tone, note, 0, voll, volr);
+        SsUtKeyOnV(i + 1, vabId, prog, tone + 1, note, 0, voll, volr);
+        didStuff++;
+        if (i == (maxVoice - 2)) {
+            D_8013AEDC = minVoice;
+        } else {
+            D_8013AEDC = i + 2;
+        }
+        break;
+    }
+    if (!didStuff) {
+        SsUtKeyOnV(D_8013AEDC, vabId, prog, tone, note, 0, voll, volr);
+        // FAKE, needed to match registers
+        i = voll;
+        SsUtKeyOnV(D_8013AEDC + 1, vabId, prog, tone + 1, note, 0, voll, volr);
+    }
+}
 
 // last entries seem like a different table
 s16 g_CdVolumeTable[] = {
