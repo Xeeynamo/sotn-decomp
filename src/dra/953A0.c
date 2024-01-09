@@ -236,7 +236,6 @@ void ExecSfx(void) {
 }
 
 void func_80135D8C(void) {
-    s32 voice;
     s32 i;
     s8* temp_t2;
     s8** temp_t2_2;
@@ -253,7 +252,7 @@ void func_80135D8C(void) {
     s8 distance2;
 
     if (D_801390C4 == 0) {
-        for (i = 0, voice = 30; i < 3; i++, voice++) {
+        for (i = 0; i < 3; i++) {
             if (g_UnkChannelSetting2[i] != 0) {
                 if (D_8013B66C[i] == 0) {
                     // FAKE, should just be &D_8013B628[i]
@@ -277,9 +276,9 @@ void func_80135D8C(void) {
                     volume = g_ChannelGroupVolume[i] * temp_t2[4];
                     *temp_t3 = temp_t2 + 6;
                     D_8013B66C[i] = temp_t2[5];
-                    distance = D_8013B5F6[voice];
+                    distance = D_8013B5F6[30 + i];
                     func_80132A04(
-                        voice, vab, prog, tone, note, volume >> 7, distance);
+                        30 + i, vab, prog, tone, note, volume >> 7, distance);
                 } else {
                     D_8013B66C[i]--;
                 }
