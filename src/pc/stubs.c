@@ -483,6 +483,7 @@ u8 D_8013B640[3];
 s32 g_CurCdPos;
 s16 g_CurrentXaConfigId;
 s16 g_CdSoundCommandQueue[MAX_SND_COUNT];
+u8 D_8013AEDC;
 s8 D_8013AEE8;
 u8 D_801390D8;
 char g_SeqTable[SS_SEQ_TABSIZ * SEQ_TABLE_S_MAX * SEQ_TABLE_T_MAX];
@@ -509,10 +510,6 @@ s32 D_800C1ECC[1];
 s32 D_8013B65C;
 
 // sound stubs
-void func_801327B4(int arg0, int arg1, int vabId, int prog, int tone, int note,
-                   int g_VolL, int g_VolR) {
-    NOT_IMPLEMENTED;
-}
 
 void func_80135D8C() { NOT_IMPLEMENTED; }
 

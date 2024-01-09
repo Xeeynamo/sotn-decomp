@@ -760,6 +760,7 @@ extern s32 D_8013AE9C;
 extern s32 D_8013AECC;
 extern s32 D_8013AED0;
 extern s16 D_8013AED4[4];
+extern u8 D_8013AEDC;
 extern s32 D_8013AEE4;
 extern s16 g_volumeL;
 extern s16 g_volumeR;
