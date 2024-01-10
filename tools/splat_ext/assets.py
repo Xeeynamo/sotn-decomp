@@ -231,8 +231,10 @@ class PSXSegAssets(N64Segment):
 if __name__ == "__main__":
     input_file_name = sys.argv[1]
     output_file_name = sys.argv[2]
-    config_file_name = input_file_name.replace(".json", "_config.json")
-    config_file_name = config_file_name.replace("assets/dra", "tools/splat_ext")
+
+    pathless_input_filename = input_file_name.split("/")[-1]
+    config_file_name = pathless_input_filename.replace(".json", "_config.json")
+    config_file_name = "tools/splat_ext/" + config_file_name
     with open(config_file_name, "r") as config_in:
         config_json = config_in.read()
 
