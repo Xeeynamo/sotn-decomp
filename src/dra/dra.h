@@ -160,7 +160,7 @@ typedef enum {
 typedef enum {
     CdCallback_0,        // func_801080DC
     CdCallback_1,        // func_801080DC
-    CdCallback_2,        // func_801080DC
+    CdCallback_StageChr, // func_801080DC
     CdCallback_3,        // func_801080DC
     CdCallback_4,        // CopyStageOvlCallback
     CdCallback_5,        // func_801080DC
