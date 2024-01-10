@@ -52,12 +52,7 @@ s32 g_MenuUnk084V1[NUM_MENU_UNK_084] = {
     16, 16, 8, 8, 8, 8, 8, 8,
 };
 
-typedef struct {
-    const char* line1;
-    const char* line2;
-} StageName;
-
-StageName D_80180128[] = {
+StageName D_80180128[80] = {
     {_S("Marble"), _S("Gallery")},
     {_S("Outer"), _S("Wall")},
     {_S("Long"), _S("Library")},
@@ -503,7 +498,7 @@ void func_801ACF7C(void) {
     func_801B25D4("はいえ不良", 1);
 }
 
-const char* D_801803A8[] = {
+const char* D_801803A8[10] = {
     _S("Select"), _S("Decide"), _S("Cancel"),  _S("Input"), _S("Not for-"),
     _S("Yes"),    _S("No"),     _S("Confirm"), _S("Error"), _S("matted"),
 };
