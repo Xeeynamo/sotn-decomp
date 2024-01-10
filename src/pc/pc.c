@@ -15,6 +15,8 @@ void OpenCd(char* filename) {
     }
 }
 
+int CdReading();
+void ExecCd();
 void MyAudioCallback(void* data, u8* buffer, int length) {
     int i = 0;
     while (i * 4 < length) {

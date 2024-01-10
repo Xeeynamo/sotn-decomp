@@ -41,7 +41,9 @@
 #define ALIGNED4
 #endif
 
+#ifndef __clang__
 int sprintf(char* dst, const char* fmt, ...);
+#endif
 
 #define FIX(x) ((s32)((x)*65536.0))
 #define FIX_TO_I(x) ((s32)((x) >> 16))
