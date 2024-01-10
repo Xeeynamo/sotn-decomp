@@ -199,7 +199,7 @@ void ShowVram16bpp(void) {
     }
     SDL_UnlockTexture(t);
 
-    SDL_Rect rsrc = {512, 0, 512, 256};
+    SDL_Rect rsrc = {0, 0, 512, 256};
     SDL_Rect rdst = {0, 0, 256, 128};
     SDL_RenderCopy(g_Renderer, t, &rsrc, &rdst);
 
