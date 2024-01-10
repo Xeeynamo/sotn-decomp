@@ -32,15 +32,28 @@ typedef struct {
     /* 0x00 */ s32 unk0;
 } Unkstruct_80137990;
 
+#define MAKE_PAL_OP(kind, freq) ((kind) | ((freq) << 0x10))
+#define GET_PAL_OP_KIND(x) (LOH(x))
+#define GET_PAL_OP_FREQ(x) (HIH(x))
+
+#define PAL_GLOW_ANIM 4
+#define PAL_GLOW_INFO(dst, n) (u_long*)(dst), (u_long*)(n)
+#define PAL_GLOW_DATA(data) (u_long*)(data)
+
+#define PAL_BULK_COPY 5
+#define PAL_BULK(dst, n, data) (u_long*)(dst), (u_long*)(n), (u_long*)(data)
+
+#define PAL_TERMINATE() ((u_long*)-1)
+
 typedef struct {
-    struct UnkStructClut* struct1;
-    struct UnkStructClut* struct2;
-    u16 unk8;
-    u16 unkA;
-    u16 unkC;
-    u16 unkE;
-    u8 unkArray[0x30];
-} Unkstruct_8006C3C4; // size = 0x40
+    /* 0x00 */ u_long* desc;
+    /* 0x04 */ u_long* data;
+    /* 0x08 */ u16 unk8; // anim mode?
+    /* 0x0A */ u16 index;
+    /* 0x0C */ u16 unkC;
+    /* 0x0E */ u16 unkE;
+    /* 0x10 */ u8 unkArray[0x30]; // color buffer
+} Unkstruct_8006C3C4;             // size = 0x40
 
 typedef struct {
     s16 unk0;
@@ -171,14 +184,6 @@ typedef struct {
     /* 0x7 */ char pad_7;
     /* 0x8 */ s32 unk8;
 } Unkstruct_80180FE0;
-
-typedef struct {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
-    s32 unkC;
-    s32 unk10;
-} UnkStructClut;
 
 typedef struct Unkstruct_801C7954 {
     /* 0x00 */ u16 x1;
