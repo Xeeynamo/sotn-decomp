@@ -261,7 +261,7 @@ bool FileUseContent(bool (*cb)(void* content), const char* path) {
     return r;
 }
 
-char g_MegaMenuStrBuffer[0x1800];
+char g_MegaMenuStrBuffer[0x3000];
 size_t g_MegaMenuStrIndex = 0;
 char MyEncodeChar(char ch) {
     if (ch == '\0') {
