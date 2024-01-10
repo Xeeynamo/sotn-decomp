@@ -22,4 +22,6 @@ bool FileRead(bool (*cb)(FILE* file), const char* path);
 bool FileStringify(bool (*cb)(const char* content), const char* path);
 bool FileUseContent(bool (*cb)(void* content), const char* path);
 
+const char* AnsiToSotnMenuString(const char* str);
+
 #endif

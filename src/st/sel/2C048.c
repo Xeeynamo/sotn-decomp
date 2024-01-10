@@ -2118,12 +2118,14 @@ void func_801B17C8(void) {
     }
 }
 
+#ifndef HARD_LINK
 void SetGameState(GameState gameState) {
     g_GameState = gameState;
     g_GameStep = 0;
     g_backbufferX = 0;
     g_backbufferY = 0;
 }
+#endif
 
 void func_801B18F4(void) { ClearImage(&D_801825A4, 0, 0, 0); }
 
@@ -2474,7 +2476,9 @@ void func_801B263C(const char* str, s32 id) {
     func_801B1FD8(str, id);
 }
 
+#ifndef HARD_LINK
 #include "../../set_prim_rect.h"
+#endif
 
 void func_801B2700(s32 tpage, s32 otIdx) {
     DR_MODE* drawMode = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];

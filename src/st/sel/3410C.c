@@ -284,7 +284,9 @@ void HandleMainMenu(void) {
     }
 }
 
+#ifndef HARD_LINK
 #include "../../destroy_entity.h"
+#endif
 
 void func_801B4B9C(Entity* entity, s16 step) {
     entity->step = step;
