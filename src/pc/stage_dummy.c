@@ -11,7 +11,7 @@ static void InitRoomEntities(s32 objLayoutId);
 
 static RoomHeader g_Rooms[1];
 static s16** g_SpriteBanks[1];
-static u16* g_Cluts[];
+static u16* g_Cluts[1];
 static RoomDef g_TileLayers[0x100];
 void* g_EntityGfxs[17];
 static void UpdateStageEntities(void);
