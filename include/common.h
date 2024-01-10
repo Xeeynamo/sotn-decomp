@@ -30,6 +30,7 @@
 #endif
 
 #define LOH(x) (*(s16*)&(x))
+#define HIH(x) (((s16*)&(x))[1])
 #define LOHU(x) (*(u16*)&(x))
 #define LOW(x) (*(s32*)&(x))
 #define LOWU(x) (*(u32*)&(x))
