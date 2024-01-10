@@ -1,0 +1,10 @@
+{
+    "struct": {
+        "name": "str",
+        "desc": "str",
+        "unk08": "u16",
+        "unk0A": "u16",
+        "unk0C": "s32"
+    },
+    "fields": {}
+}

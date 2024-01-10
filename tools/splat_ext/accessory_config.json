@@ -1,7 +1,7 @@
 {
     "struct": {
-        "name_addr": "str_ptr",
-        "desc_addr": "str_ptr",
+        "name": "sstr",
+        "desc": "str",
         "attBonus": "s16",
         "defBonus": "s16",
         "strBonus": "s8",
