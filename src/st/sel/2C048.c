@@ -135,6 +135,24 @@ StageName D_80180128[80] = {
     {_S(""), _S("")},
 };
 
+void func_801B18F4(void);
+void func_801B19F4(void);
+void func_801B1B88(void);
+void func_801B1D88(POLY_GT4* arg0);
+void func_801B1DA8(void);
+void func_801B1F34(void);
+void func_801B1F4C(s32 arg0);
+void func_801B25D4(const char* str, s32 id);
+void func_801B2608(const char* str, s32 id);
+void func_801B263C(const char* str, s32 id);
+void func_801B27A8(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 clut, s32 arg7,
+                   s32 tge, s32 c);
+void func_801B2BD4(s32 digit, s32 x, s32 y, s32 tge);
+void func_801B2C70(s32 digit, s32 x, s32 y, s32 tge);
+void func_801B2D1C(void);
+void func_801B2D6C(void);
+void func_801B3120(void);
+
 void SetupFileChoose(void) {
     D_801D6B0C = 1;
     g_InputCursorPos = 0;

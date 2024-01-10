@@ -9,11 +9,11 @@ static void TestCollisions(void);
 static void func_8018A7AC(void);
 static void InitRoomEntities(s32 objLayoutId);
 
-static RoomHeader g_Rooms[];
-static s16** g_SpriteBanks[];
+static RoomHeader g_Rooms[1];
+static s16** g_SpriteBanks[1];
 static u16* g_Cluts[];
-static RoomDef g_TileLayers[];
-void* g_EntityGfxs[];
+static RoomDef g_TileLayers[0x100];
+void* g_EntityGfxs[17];
 static void UpdateStageEntities(void);
 
 static Overlay g_StageDummy = {
@@ -43,7 +43,7 @@ static u32* D_801801B8[] = {
     (u32*)0x00000000, (u32*)0x00000000, (u32*)0x00000000,
     (u32*)0x00000000, (u32*)0xFFFFFFFF,
 };
-void* g_EntityGfxs[1] = {
+void* g_EntityGfxs[] = {
     NULL,       D_801801B8, D_801801B8, D_801801B8, D_801801B8, D_801801B8,
     D_801801B8, D_801801B8, D_801801B8, D_801801B8, D_801801B8, D_801801B8,
     D_801801B8, D_801801B8, D_801801B8, D_801801B8, NULL,
