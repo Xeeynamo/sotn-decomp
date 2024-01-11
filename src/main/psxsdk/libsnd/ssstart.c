@@ -1,7 +1,7 @@
 #include "common.h"
 #include "libsnd_internal.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libsnd/ssstart", _SsStart);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/ssstart", _SsStart);
 
 void SsStart(void) { _SsStart(1); }
 

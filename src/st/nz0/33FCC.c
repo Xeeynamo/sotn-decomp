@@ -125,7 +125,7 @@ typedef enum {
 // DECOMP_ME_WIP EntityCloseBossRoom https://decomp.me/scratch/bqgN9 95.04 %
 // figuring out D_80181014 struct might help
 // trigger to stop music and close slogra/gaibon room
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/33FCC", EntityCloseBossRoom);
+INCLUDE_ASM("st/nz0/nonmatchings/33FCC", EntityCloseBossRoom);
 
 // blocks that move to close slogra/gaibon room
 void EntityBossRoomBlock(Entity* self) {
@@ -684,7 +684,7 @@ void EntitySlograSpearProjectile(Entity* self) {
 // Mostly regalloc, instruction reordering
 // https://decomp.me/scratch/QGtpG
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/33FCC", EntityGaibon);
+INCLUDE_ASM("st/nz0/nonmatchings/33FCC", EntityGaibon);
 #else
 void EntityGaibon(Entity* self) {
     s32 slograGaibonDistX;

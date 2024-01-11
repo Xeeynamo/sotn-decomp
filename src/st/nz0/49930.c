@@ -75,4 +75,4 @@ void func_801CA07C(Primitive* poly) {
 
 // particle effect that spawns life up item
 // Probably it's own file
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/49930", EntityLifeUpSpawn);
+INCLUDE_ASM("st/nz0/nonmatchings/49930", EntityLifeUpSpawn);

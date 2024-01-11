@@ -578,7 +578,7 @@ void EntitySlograSpearProjectile(Entity* self) {
 }
 
 #ifndef NONMATCHING
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/36990", EntityGaibon);
+INCLUDE_ASM("st/np3/nonmatchings/36990", EntityGaibon);
 #else
 void EntityGaibon(Entity* self) {
     const int RetreatedInEntrance = 57;

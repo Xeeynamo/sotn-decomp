@@ -1,6 +1,6 @@
 #include "cen.h"
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/18084", func_80198084);
+INCLUDE_ASM("st/cen/nonmatchings/18084", func_80198084);
 
 extern u16 D_80180440[];
 void EntityUnkId13(Entity* entity) {
@@ -30,18 +30,18 @@ void EntityUnkId13(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/18084", func_80198284);
+INCLUDE_ASM("st/cen/nonmatchings/18084", func_80198284);
 
 #include "../entity_unkId15_spawner.h"
 
 // ID 14
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/18084", EntityExplosion14);
+INCLUDE_ASM("st/cen/nonmatchings/18084", EntityExplosion14);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/18084", EntityUnkId15);
+INCLUDE_ASM("st/cen/nonmatchings/18084", EntityUnkId15);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/18084", func_80198680);
+INCLUDE_ASM("st/cen/nonmatchings/18084", func_80198680);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/18084", func_801988B0);
+INCLUDE_ASM("st/cen/nonmatchings/18084", func_801988B0);
 
 u8 func_801989AC(s32 arg0) {
     Collider collider;
@@ -218,9 +218,9 @@ u8 func_801989AC(s32 arg0) {
 // ID 06
 #include "../entity_intense_explosion.h"
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/18084", func_8019902C);
+INCLUDE_ASM("st/cen/nonmatchings/18084", func_8019902C);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/18084", func_801990F8);
+INCLUDE_ASM("st/cen/nonmatchings/18084", func_801990F8);
 
 void func_801991C0(void) {
     Entity* entity;
@@ -239,11 +239,11 @@ void func_801991C0(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/18084", func_80199278);
+INCLUDE_ASM("st/cen/nonmatchings/18084", func_80199278);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/18084", func_80199450);
+INCLUDE_ASM("st/cen/nonmatchings/18084", func_80199450);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/18084", func_80199A30);
+INCLUDE_ASM("st/cen/nonmatchings/18084", func_80199A30);
 
 void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     u16 buf[COLORS_PER_PAL];
@@ -369,4 +369,4 @@ void func_8019A420(Primitive* prim) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/18084", EntityStageNamePopup);
+INCLUDE_ASM("st/cen/nonmatchings/18084", EntityStageNamePopup);

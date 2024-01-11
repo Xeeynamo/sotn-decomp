@@ -21,4 +21,4 @@ s32 func_801C7CF0(Entity* e) {
 }
 
 // sealed door that displays "Magically Sealed" prompt
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/47CF0", EntityMagicallySealedDoor);
+INCLUDE_ASM("st/nz0/nonmatchings/47CF0", EntityMagicallySealedDoor);

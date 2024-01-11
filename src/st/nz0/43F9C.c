@@ -49,7 +49,7 @@ void func_801C3F9C(Unkstruct_801C3F9C** self) {
 }
 
 // Called by EntityAxeKnight
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/43F9C", func_801C4198);
+INCLUDE_ASM("st/nz0/nonmatchings/43F9C", func_801C4198);
 
 void func_801C4550(void) {
     if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 > 0) {

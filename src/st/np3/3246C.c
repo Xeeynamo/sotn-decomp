@@ -127,7 +127,7 @@ void func_801B2830(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B28E4);
+INCLUDE_ASM("st/np3/nonmatchings/3246C", func_801B28E4);
 
 void EntityShuttingWindow(Entity* self) {
     Primitive* prim;
@@ -326,7 +326,7 @@ void EntityCastleDoor(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B32A8);
+INCLUDE_ASM("st/np3/nonmatchings/3246C", func_801B32A8);
 
 void func_801B3704(Entity* self, s16 primIndex) {
     volatile char pad[8]; //! FAKE
@@ -507,7 +507,7 @@ void EntityTransparentWater(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/3246C", func_801B3D24);
+INCLUDE_ASM("st/np3/nonmatchings/3246C", func_801B3D24);
 
 void EntityCavernDoorLever(Entity* entity) {
     s32 posX;

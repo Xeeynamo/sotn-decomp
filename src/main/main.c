@@ -1,3 +1,3 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/main", main);
+INCLUDE_ASM("main/nonmatchings/main", main);

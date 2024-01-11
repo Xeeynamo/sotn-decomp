@@ -1,3 +1,3 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgs/gs_009", GsClearVcount);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgs/gs_009", GsClearVcount);

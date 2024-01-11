@@ -1,12 +1,12 @@
 #include "np3.h"
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", EntityHammer);
+INCLUDE_ASM("st/np3/nonmatchings/4E69C", EntityHammer);
 
 // DECOMP_ME_WIP func_801CF254 https://decomp.me/scratch/EpZEL
 // minor regalloc
 // has jumptable
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", EntityGurkhaBodyParts);
+INCLUDE_ASM("st/np3/nonmatchings/4E69C", EntityGurkhaBodyParts);
 #else
 extern u16 D_80180B8C[];
 extern u16 D_80180BA4[];
@@ -235,7 +235,7 @@ int func_801CF7A0(Entity* ent) {
 }
 
 // DECOMP_ME_WIP EntityGurkha https://decomp.me/scratch/51iIJ
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", EntityGurkha);
+INCLUDE_ASM("st/np3/nonmatchings/4E69C", EntityGurkha);
 
 void EntityGurkhaSword(Entity* self) {
     s16 angle;
@@ -416,7 +416,7 @@ s32 func_801D0B78(void) {
     return ret;
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4E69C", EntityBlade);
+INCLUDE_ASM("st/np3/nonmatchings/4E69C", EntityBlade);
 
 void EntityBladeSword(Entity* self) {
     Primitive *prim, *prim2;

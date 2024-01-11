@@ -1,3 +1,3 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libcd/c_007", StFreeRing);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/c_007", StFreeRing);

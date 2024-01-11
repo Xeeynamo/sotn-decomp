@@ -1,3 +1,3 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgte/smp_02", RotTransPers);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgte/smp_02", RotTransPers);

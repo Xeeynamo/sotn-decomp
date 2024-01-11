@@ -6,6 +6,7 @@
 #undef _internal_version_us
 #define _internal_version_beta
 #define VERSION_BETA
+#define INCLUDE_ASM_OLD
 
 #include "stage.h"
 
