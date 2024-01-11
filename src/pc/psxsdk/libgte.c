@@ -4,13 +4,9 @@
 
 void InitGeom() { NOT_IMPLEMENTED; }
 
-void SetGeomOffset(long ofx, long ofy) {
-    NOT_IMPLEMENTED;
-}
+void SetGeomOffset(long ofx, long ofy) { NOT_IMPLEMENTED; }
 
-void SetGeomScreen(long h) {
-    NOT_IMPLEMENTED;
-}
+void SetGeomScreen(long h) { NOT_IMPLEMENTED; }
 
 int rsin(int x) {
     NOT_IMPLEMENTED;
@@ -47,29 +43,17 @@ MATRIX* TransMatrix(MATRIX* m, VECTOR* v) {
     return 0;
 }
 
-void SetRotMatrix(MATRIX* m) {
-    NOT_IMPLEMENTED;
-}
+void SetRotMatrix(MATRIX* m) { NOT_IMPLEMENTED; }
 
-void SetLightMatrix(MATRIX* m) {
-    NOT_IMPLEMENTED;
-}
+void SetLightMatrix(MATRIX* m) { NOT_IMPLEMENTED; }
 
-void SetColorMatrix(MATRIX* m) {
-    NOT_IMPLEMENTED;
-}
+void SetColorMatrix(MATRIX* m) { NOT_IMPLEMENTED; }
 
-void SetTransMatrix(MATRIX* m) {
-    NOT_IMPLEMENTED;
-}
+void SetTransMatrix(MATRIX* m) { NOT_IMPLEMENTED; }
 
-void SetBackColor(long rbk, long gbk, long bbk) {
-    NOT_IMPLEMENTED;
-}
+void SetBackColor(long rbk, long gbk, long bbk) { NOT_IMPLEMENTED; }
 
-void func_80017008(VECTOR* v, long* l) {
-    NOT_IMPLEMENTED;
-}
+void func_80017008(VECTOR* v, long* l) { NOT_IMPLEMENTED; }
 
 long RotAverageNclip3(SVECTOR* v0, SVECTOR* v1, SVECTOR* v2, long* sxy0,
                       long* sxy1, long* sxy2, long* p, long* otz, long* flag) {
