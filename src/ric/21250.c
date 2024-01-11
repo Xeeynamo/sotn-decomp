@@ -1387,7 +1387,7 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     func_8016D920,
     func_801601DC,
     func_8015FEA8,
-    func_8016F6F0,
+    StopwatchCrashDoneSparkle,
     func_80170548,
     func_80166060,
     func_801603B4};

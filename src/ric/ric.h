@@ -140,7 +140,7 @@ void func_8017091C(Entity* self);
 void func_8016D920(Entity* self);
 void func_801601DC(Entity* self);
 void func_8015FEA8(Entity* self);
-void func_8016F6F0(Entity* self);
+void StopwatchCrashDoneSparkle(Entity* self);
 void func_80170548(Entity* self);
 void func_80166060(Entity* self);
 
