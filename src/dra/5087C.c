@@ -583,6 +583,8 @@ u8 func_800F17C8(s8 arg0[], s32 arg1, s32 arg2) {
 }
 
 void func_800F180C(s32 x, s32 y, u8* dst) {
+// TODO fix CASTLE_MAP_PTR
+#ifndef VERSION_PC
     s32 i, j;
     u8 *start, *curSrc, *src;
 
@@ -597,9 +599,12 @@ void func_800F180C(s32 x, s32 y, u8* dst) {
             dst[4 * i + j] = curSrc[j];
         }
     }
+#endif
 }
 
 void func_800F1868(s32 x, s32 y, u8* src) {
+// TODO fix CASTLE_MAP_PTR
+#ifndef VERSION_PC
     s32 i;
     s32 j;
     u8* dst;
@@ -617,6 +622,7 @@ void func_800F1868(s32 x, s32 y, u8* src) {
             curDst[j] = src[4 * i + j];
         }
     }
+#endif
 }
 
 void func_800F18C4(s32 arg0, s32 arg1) {
