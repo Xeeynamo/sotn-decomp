@@ -79,13 +79,25 @@ set(SOURCE_FILES_DRA
     src/dra/953A0.c
 )
 
+set(SOURCE_FILES_STAGE_SEL
+    src/pc/stage_sel.c
+    src/st/sel/banks.c
+    src/st/sel/CD54.c
+    src/st/sel/2C048.c
+    src/st/sel/33164.c
+    src/st/sel/3410C.c
+    src/st/sel/3585C.c
+    src/st/sel/3642C.c
+)
+
 add_executable(${PROJECT_NAME} 
     ${SOURCE_FILES_PC}
     ${SOURCE_FILES_PSX_SDK}
     ${SOURCE_FILES_MOCK_SDK}
     ${SOURCE_FILES_3RD}
     ${SOURCE_FILES_DRA}
-    )
+    ${SOURCE_FILES_STAGE_SEL}
+)
 
 target_include_directories(${PROJECT_NAME} PRIVATE 
     ${SDL2_INCLUDE_DIRS}
@@ -102,6 +114,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
     VERSION_PC
     PERMUTER
     NON_MATCHING
+    HARD_LINK
     DEMO_KEY_PTR=0
     _internal_version_us
     )

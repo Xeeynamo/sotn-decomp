@@ -52,12 +52,7 @@ s32 g_MenuUnk084V1[NUM_MENU_UNK_084] = {
     16, 16, 8, 8, 8, 8, 8, 8,
 };
 
-typedef struct {
-    const char* line1;
-    const char* line2;
-} StageName;
-
-StageName D_80180128[] = {
+StageName D_80180128[80] = {
     {_S("Marble"), _S("Gallery")},
     {_S("Outer"), _S("Wall")},
     {_S("Long"), _S("Library")},
@@ -139,6 +134,24 @@ StageName D_80180128[] = {
     {_S(""), _S("")},
     {_S(""), _S("")},
 };
+
+void func_801B18F4(void);
+void func_801B19F4(void);
+void func_801B1B88(void);
+void func_801B1D88(POLY_GT4* arg0);
+void func_801B1DA8(void);
+void func_801B1F34(void);
+void func_801B1F4C(s32 arg0);
+void func_801B25D4(const char* str, s32 id);
+void func_801B2608(const char* str, s32 id);
+void func_801B263C(const char* str, s32 id);
+void func_801B27A8(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 clut, s32 arg7,
+                   s32 tge, s32 c);
+void func_801B2BD4(s32 digit, s32 x, s32 y, s32 tge);
+void func_801B2C70(s32 digit, s32 x, s32 y, s32 tge);
+void func_801B2D1C(void);
+void func_801B2D6C(void);
+void func_801B3120(void);
 
 void SetupFileChoose(void) {
     D_801D6B0C = 1;
@@ -503,7 +516,7 @@ void func_801ACF7C(void) {
     func_801B25D4("はいえ不良", 1);
 }
 
-const char* D_801803A8[] = {
+const char* D_801803A8[10] = {
     _S("Select"), _S("Decide"), _S("Cancel"),  _S("Input"), _S("Not for-"),
     _S("Yes"),    _S("No"),     _S("Confirm"), _S("Error"), _S("matted"),
 };
@@ -2123,12 +2136,14 @@ void func_801B17C8(void) {
     }
 }
 
+#ifndef HARD_LINK
 void SetGameState(GameState gameState) {
     g_GameState = gameState;
     g_GameStep = 0;
     g_backbufferX = 0;
     g_backbufferY = 0;
 }
+#endif
 
 void func_801B18F4(void) { ClearImage(&D_801825A4, 0, 0, 0); }
 
@@ -2479,7 +2494,9 @@ void func_801B263C(const char* str, s32 id) {
     func_801B1FD8(str, id);
 }
 
+#ifndef HARD_LINK
 #include "../../set_prim_rect.h"
+#endif
 
 void func_801B2700(s32 tpage, s32 otIdx) {
     DR_MODE* drawMode = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];

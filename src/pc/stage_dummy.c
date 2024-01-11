@@ -9,14 +9,14 @@ static void TestCollisions(void);
 static void func_8018A7AC(void);
 static void InitRoomEntities(s32 objLayoutId);
 
-extern RoomHeader g_Rooms[];
-extern s16** g_SpriteBanks[];
-extern u16* g_Cluts[];
-extern RoomDef g_TileLayers[];
-extern void* g_EntityGfxs[];
+static RoomHeader g_Rooms[1];
+static s16** g_SpriteBanks[1];
+static u16* g_Cluts[1];
+static RoomDef g_TileLayers[0x100];
+void* g_EntityGfxs[17];
 static void UpdateStageEntities(void);
 
-Overlay g_StageDummy = {
+static Overlay g_StageDummy = {
     Update,
     TestCollisions,
     func_8018A7AC,
@@ -35,24 +35,26 @@ Overlay g_StageDummy = {
     NULL,
 };
 
-RoomHeader g_Rooms[1] = {0};
-s16** g_SpriteBanks[1] = {0};
-RoomDef g_TileLayers[0x100] = {0};
+static RoomHeader g_Rooms[1] = {0};
+static s16** g_SpriteBanks[1] = {0};
+static RoomDef g_TileLayers[0x100] = {0};
 
-u32* D_801801B8[] = {
+static u32* D_801801B8[] = {
     (u32*)0x00000000, (u32*)0x00000000, (u32*)0x00000000,
     (u32*)0x00000000, (u32*)0xFFFFFFFF,
 };
-void* g_EntityGfxs[1] = {
-    D_801801B8,
+void* g_EntityGfxs[] = {
+    D_801801B8, D_801801B8, D_801801B8, D_801801B8, D_801801B8, D_801801B8,
+    D_801801B8, D_801801B8, D_801801B8, D_801801B8, D_801801B8, D_801801B8,
+    D_801801B8, D_801801B8, D_801801B8, D_801801B8, NULL,
 };
 
-u8 D_80181D08[0x2000];
-u32* D_801800A0[] = {
+static u8 D_80181D08[0x2000];
+static u32* D_801800A0[] = {
     (u32*)0x00000005, (u32*)0x00002000, (u32*)0x00000010,
     (u32*)D_80181D08, (u32*)0xFFFFFFFF,
 };
-u16* g_Cluts[] = {
+static u16* g_Cluts[] = {
     D_801800A0,
 };
 

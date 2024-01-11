@@ -358,7 +358,7 @@ void DebugEditColorChannel(s32 colorAdd) {
 }
 
 s32 DebugUpdate(void) {
-#if defined(VERSION_HD)
+#if defined(VERSION_HD) || defined(VERSION_PC)
     DebugCaptureScreen();
     DebugCaptureVideo();
     if (g_DebugEnabled) {

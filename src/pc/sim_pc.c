@@ -129,6 +129,7 @@ void LoadStageTileset(u8* pTilesetData, s32 y) {
 }
 
 void InitStageDummy(Overlay* o);
+void InitStageSel(Overlay* o);
 void func_80131EBC(const char* str, s16 arg1);
 s32 LoadFileSimToMem(SimKind kind) {
     char pad[0x20];
@@ -240,6 +241,12 @@ bool LoadFilePc(void* content) {
     case SIM_STAGE_CHR:
         LoadStageTileset(content, 0);
         break;
+    case SIM_12:
+        LoadStageTileset(content, 0x100);
+    case SIM_13:
+        LoadStageTileset(content, 0x100);
+        LoadImage(&g_Vram.D_800ACD98, D_800A04CC);
+        break;
     default:
         if (LoadFileSimToMem(g_SimFile->kind) < 0) {
             return false;
@@ -259,6 +266,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         switch (fileId) {
         case 0:
             sim.path = "BIN/F_TITLE1.BIN";
+            sim.kind = SIM_13;
             break;
         case 1:
             sim.path = "BIN/F_GAME.BIN";
@@ -266,9 +274,14 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             break;
         case 2:
             sim.path = "BIN/F_TITLE0.BIN";
+            sim.kind = SIM_STAGE_CHR;
             break;
         case 4:
             sim.path = "BIN/ARC_F.BIN";
+            break;
+        case 12:
+            sim.path = "ST/SEL/F_SEL.BIN";
+            sim.kind = SIM_STAGE_CHR;
             break;
         default:
             WARNF("not implemented for ID %d: %s", fileId, D_800A024C[fileId]);
@@ -276,8 +289,15 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         }
         break;
     case SimFileType_StagePrg:
-        InitStageDummy(&g_api.o);
-        INFOF("TODO: will load stage '%s'", g_StagesLba[g_StageId].ovlName);
+        switch (g_StageId) {
+        case STAGE_SEL:
+            InitStageSel(&g_api.o);
+            break;
+        default:
+            InitStageDummy(&g_api.o);
+            INFOF("TODO: will load stage '%s'", g_StagesLba[g_StageId].ovlName);
+            break;
+        }
         return 0;
     case SimFileType_Vh:
     case SimFileType_Vb:

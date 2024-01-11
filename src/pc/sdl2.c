@@ -199,7 +199,7 @@ void ShowVram16bpp(void) {
     }
     SDL_UnlockTexture(t);
 
-    SDL_Rect rsrc = {512, 0, 512, 256};
+    SDL_Rect rsrc = {0, 0, 512, 256};
     SDL_Rect rdst = {0, 0, 256, 128};
     SDL_RenderCopy(g_Renderer, t, &rsrc, &rdst);
 
@@ -584,11 +584,52 @@ void SetSdlVertexPrim(SDL_Vertex* v, Primitive* prim) {
     v[3] = v[1];
     v[5] = v[2];
 }
+void SetSdlVertexPrimSprt(SDL_Vertex* v, Primitive* prim) {
+    v[0].position.x = prim->x0;
+    v[0].position.y = prim->y0;
+    v[0].tex_coord.x = PSX_TEX_U(prim->u0);
+    v[0].tex_coord.y = PSX_TEX_V(prim->v0);
+    v[0].color.r = 0xFF;
+    v[0].color.g = 0xFF;
+    v[0].color.b = 0xFF;
+    v[0].color.a = 0xFF;
+    v[1].position.x = prim->x0 + prim->u1;
+    v[1].position.y = prim->y0;
+    v[1].tex_coord.x = PSX_TEX_U(prim->u0 + prim->u1);
+    v[1].tex_coord.y = PSX_TEX_V(prim->v0);
+    v[1].color.r = 0xFF;
+    v[1].color.g = 0xFF;
+    v[1].color.b = 0xFF;
+    v[1].color.a = 0xFF;
+    v[2].position.x = prim->x0;
+    v[2].position.y = prim->y0 + prim->v1;
+    v[2].tex_coord.x = PSX_TEX_U(prim->u0);
+    v[2].tex_coord.y = PSX_TEX_V(prim->v0 + prim->v1);
+    v[2].color.r = 0xFF;
+    v[2].color.g = 0xFF;
+    v[2].color.b = 0xFF;
+    v[2].color.a = 0xFF;
+    v[4].position.x = prim->x0 + prim->u1;
+    v[4].position.y = prim->y0 + prim->v1;
+    v[4].tex_coord.x = PSX_TEX_U(prim->u0 + prim->u1);
+    v[4].tex_coord.y = PSX_TEX_V(prim->v0 + prim->v1);
+    v[4].color.r = 0xFF;
+    v[4].color.g = 0xFF;
+    v[4].color.b = 0xFF;
+    v[4].color.a = 0xFF;
+    v[3] = v[1];
+    v[5] = v[2];
+}
 
 void MyRenderPrimitives(void) {
     SDL_Vertex v[6];
     SDL_Texture* t = NULL;
 
+    int pg4 = 0;
+    int pgt4 = 0;
+    int plg2 = 0;
+    int ptile = 0;
+    int psprt = 0;
     for (int i = 0; i < LEN(g_PrimBuf); i++) {
         Primitive* prim = &g_PrimBuf[i];
         if (prim->blendMode & 8) {
@@ -596,23 +637,42 @@ void MyRenderPrimitives(void) {
         }
 
         switch (prim->type) {
+        case PRIM_NONE:
+            break;
         case PRIM_G4:
             SetSdlVertexPrim(v, prim);
             SDL_RenderGeometry(g_Renderer, NULL, v, 6, NULL, 0);
+            pg4++;
             break;
         case PRIM_GT4:
             SetSdlVertexPrim(v, prim);
             t = GetVramTexture(prim->tpage, D_8003C104[prim->clut]);
             SDL_RenderGeometry(g_Renderer, t, v, 6, NULL, 0);
+            pgt4++;
             break;
         case PRIM_LINE_G2:
             SDL_SetRenderDrawColor(
                 g_Renderer, prim->r0, prim->g0, prim->b0, 255);
             SDL_RenderDrawLine(
                 g_Renderer, prim->x0, prim->y0, prim->x1, prim->y1);
+            plg2++;
+            break;
+        case PRIM_SPRT:
+            SetSdlVertexPrimSprt(v, prim);
+            t = GetVramTexture(prim->tpage, D_8003C104[prim->clut]);
+            SDL_RenderGeometry(g_Renderer, t, v, 6, NULL, 0);
+            psprt++;
+            break;
+        default:
+            WARNF("unhandled prim type %d", prim->type);
             break;
         }
     }
+
+    DEBUGF("PG4   %03X, PGT4  %03X", pg4, pgt4);
+    DEBUGF("PLG2  %03X, PSPRT %03X", plg2, psprt);
+    DEBUGF("PTILE %03X            ", plg2, ptile);
+
     for (int i = 0; i < g_GpuUsage.g4; i++) {
         SetSdlVertexG4(v, &g_CurrentBuffer->polyG4[i]);
         SDL_RenderGeometry(g_Renderer, NULL, v, 6, NULL, 0);

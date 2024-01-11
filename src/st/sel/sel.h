@@ -90,6 +90,14 @@ typedef struct {
     s32 padding; // not really padding, it's a memory card status
 } SaveSummary;   // size=0x3A8
 
+typedef struct {
+    const char* line1;
+    const char* line2;
+} StageName;
+
+extern const char* D_801803A8[10];
+extern StageName D_80180128[80];
+
 extern const s32 D_801A7B8C[2];
 extern void* g_Cluts[];
 extern void* g_EntityGfxs[];

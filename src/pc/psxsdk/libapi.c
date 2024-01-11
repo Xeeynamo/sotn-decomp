@@ -13,11 +13,19 @@ void _bu_init(void) { NOT_IMPLEMENTED; }
 
 long OpenEvent(unsigned long a, long b, long c, long (*func)()) {
     NOT_IMPLEMENTED;
+    return -1;
 }
 
-long EnableEvent(long a) { NOT_IMPLEMENTED; }
+long EnableEvent(long a) {
+    NOT_IMPLEMENTED;
+    return -1;
+}
 
-long TestEvent(unsigned long event) { NOT_IMPLEMENTED; }
+long TestEvent(unsigned long event) {
+    // until OpenEvent is implemented, this will remain hardcoded to
+    // always return 1.
+    return 1;
+}
 
 void EnterCriticalSection(void) { NOT_IMPLEMENTED; }
 

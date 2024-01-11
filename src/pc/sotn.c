@@ -45,7 +45,9 @@ void FreePrimitives(s32 index);
 s32 AllocPrimitives(u8 primType, s32 count);
 s32 func_800EA5E4(u32);
 void LoadGfxAsync(s32 gfxId);
+void PlaySfx(s16 sfxId);
 void func_800EA538(s32 arg0);
+bool func_80131F68(void);
 u16* func_80106A28(u32 arg0, u16 kind);
 void func_8010DFF0(s32 arg0, s32 arg1);
 void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index);
@@ -88,14 +90,14 @@ bool InitGame(void) {
     api.GetEquipProperties = NULL;
     api.func_800EA5E4 = func_800EA5E4;
     api.LoadGfxAsync = LoadGfxAsync;
-    api.PlaySfx = NULL;
+    api.PlaySfx = PlaySfx;
     api.func_800EDB58 = NULL;
     api.func_800EA538 = func_800EA538;
     api.g_pfn_800EA5AC = NULL;
     api.func_801027C4 = NULL;
     api.func_800EB758 = NULL;
     api.CreateEntFactoryFromEntity = NULL;
-    api.func_80131F68 = NULL;
+    api.func_80131F68 = func_80131F68;
     api.func_800EDB08 = NULL;
     api.func_80106A28 = func_80106A28;
     api.func_80118894 = NULL;
@@ -268,7 +270,7 @@ bool FileUseContent(bool (*cb)(void* content), const char* path) {
     return r;
 }
 
-char g_MegaMenuStrBuffer[0x1800];
+char g_MegaMenuStrBuffer[0x3000];
 size_t g_MegaMenuStrIndex = 0;
 char MyEncodeChar(char ch) {
     if (ch == '\0') {

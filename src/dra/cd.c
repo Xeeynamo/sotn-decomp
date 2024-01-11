@@ -29,7 +29,7 @@ s16 D_800AC998[] = {
 CdFile g_LbaBinTitle = {0x63D6, 0, 0x80000, 0, 0, 0xFF, 0};
 CdFile g_LbaBinProlo = {0x62D6, 6, 0x80000, 0, 0, 0xFF, 0};
 CdFile g_LbaBinGame = {0x0000, 1, 0x42000, 0, 0, 0x13, 0};
-CdFile g_LbaStageNO0 = {0x7E5D, 2, 0x40000, 0, 0, 0xFF, 0};
+CdFile g_LbaStageChr = {0x7E5D, 2, 0x40000, 0, 0, 0xFF, 0};
 CdFile g_LbaSdAlkVh = {0x610D, 19, 0x01020, 1, 1, 0xFF, 7};
 CdFile g_LbaSdAlkVb = {0x6110, 17, 0x0E160, 1, 1, 0xFF, 0};
 CdFile g_LbaSdRihVh = {0x612D, 19, 0x01020, 1, 1, 0x16, 21};
@@ -90,7 +90,7 @@ CdFile D_800ACC64 = {0x0000, 3, 0x00000, 0, 0, 0xFF, 0};
 CdFile g_LbaBinTitle = {0x6424, 0, 0x80000, 0, 0, 0xFF, 0};
 CdFile g_LbaBinProlo = {0x6324, 6, 0x80000, 0, 0, 0xFF, 0};
 CdFile g_LbaBinGame = {0x0000, 1, 0x42000, 0, 0, 0x13, 0};
-CdFile g_LbaStageNO0 = {0x7E97, 2, 0x40000, 0, 0, 0xFF, 0};
+CdFile g_LbaStageChr = {0x7E97, 2, 0x40000, 0, 0, 0xFF, 0};
 CdFile g_LbaSdAlkVh = {0x615B, 19, 0x01020, 1, 1, 0xFF, 7};
 CdFile g_LbaSdAlkVb = {0x615E, 17, 0x0E1D0, 1, 1, 0xFF, 0};
 CdFile g_LbaSdRihVh = {0x617B, 19, 0x01020, 1, 1, 0x16, 21};
@@ -150,7 +150,7 @@ CdFile D_800ACC64 = {0x0000, 3, 0x00000, 0, 0, 0xFF, 0};
 #endif
 
 CdFile* D_800ACC74[] = {
-    &g_LbaBinTitle,    &g_LbaBinTitle,    &g_LbaBinGame,     &g_LbaStageNO0,
+    &g_LbaBinTitle,    &g_LbaBinTitle,    &g_LbaBinGame,     &g_LbaStageChr,
     &g_LbaSdAlkVh,     &g_LbaBinRichter,  &g_LbaBinProlo,    &g_LbaSdAlkVb,
     &g_LbaSdJ010_1_Vh, &g_LbaSdJ010_1_Vb, &g_LbaSdJ010_2_Vh, &g_LbaSdJ010_2_Vb,
     &g_LbaStageSeq,    &g_LbaStageVh,     &g_LbaStageVb,     &g_LbaSdJ010_3_Vh,
@@ -577,7 +577,7 @@ void func_801080DC(void) {
             }
             break;
         case CdCallback_0:
-        case CdCallback_2:
+        case CdCallback_StageChr:
         case CdCallback_6:
             g_Cd.dstRect.x = D_800AC998[g_Cd.D_80137F74 & 0x1F];
             new_var = g_Cd.D_80137F74;
@@ -916,7 +916,7 @@ void UpdateCd(void) {
         case CdCallback_1:
             StoreImage(&g_Vram.D_800ACDA8, &D_8006EBCC);
             break;
-        case CdCallback_2:
+        case CdCallback_StageChr:
             StoreImage(&g_Vram.D_800ACDB8, g_Clut);
             break;
         case CdCallback_16:

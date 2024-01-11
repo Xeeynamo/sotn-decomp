@@ -335,6 +335,7 @@ s32 func_801B3E2C(void) {
     return 0;
 }
 
+#ifndef HARD_LINK
 void MemCardSetPort(s32 port) {
     g_MemCardRStep = 0;
     g_MemCardRStepSub = port;
@@ -365,6 +366,7 @@ s32 MemCardInitAndFormat(void) {
 
     return 0;
 }
+#endif
 
 void SEL_Init(s32 objLayoutId) {
     switch (D_8003C9A4) {
@@ -380,9 +382,11 @@ void SEL_Init(s32 objLayoutId) {
 
     case 1:
         func_801B9C80();
+#ifndef VERSION_PC // skip Konami logo
         if (D_8003C728) {
             break;
         }
+#endif
         g_IsTimeAttackUnlocked = false;
         D_8003C100 = 0;
         func_801B18F4();
