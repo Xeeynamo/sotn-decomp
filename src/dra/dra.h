@@ -349,13 +349,13 @@ struct Cmd14 {
 #define COMBO_COMPLETE 0xFF
 
 // File list:
-extern u8 aPqes[];   // TODO: extract file
-extern u8 aPqes_0[]; // TODO: extract file
-extern u8 aPqes_1[]; // TODO: extract file
-extern u8 aPbav[];   // TODO: extract file
-extern u8 aPbav_0[]; // TODO: extract file
-extern u8 aPbav_1[]; // TODO: extract file
-extern u8 aPbav_2[]; // TODO: extract file
+extern u8 aPqes[];         // TODO: extract file
+extern u8 aPqes_0[];       // TODO: extract file
+extern u8 aPqes_1[];       // TODO: extract file
+extern u8 aPbav[0x3000];   // TODO: extract file
+extern u8 aPbav_0[0x2000]; // TODO: extract file
+extern u8 aPbav_1[0x2000]; // TODO: extract file
+extern u8 aPbav_2[0x2000]; // TODO: extract file
 
 extern u16 g_ButtonMask[];
 extern u8 g_StageSelectOrder[];
@@ -477,7 +477,7 @@ extern const char aRgb02x02x02x;
 extern const char aSp03x;
 extern const char aSp1603x;
 extern const char aTile03x;
-extern Unkstruct_800BF554 g_SfxData[];
+extern Unkstruct_800BF554 g_SfxData[737];
 
 extern char* aLightTimer02x;
 extern SVECTOR D_800E2024;
@@ -769,10 +769,10 @@ extern s16 D_8013B64E;
 extern s16 D_8013B650[4];
 extern s16 D_8013B678[];
 extern s16 D_8013B698;
-extern u8 D_8013B6A0[]; // VAB file
-extern u8 D_8017D350[]; // VAB file
-extern u8 D_8018B4E0[]; // VAB file
-extern u8 D_801A9C80[]; // VAB file
+extern u8 D_8013B6A0[269488]; // VAB file
+extern u8 D_8017D350[57744];  // VAB file
+extern u8 D_8018B4E0[64496];  // VAB file
+extern u8 D_801A9C80[108048]; // VAB file
 extern u16 D_8013AEE0;
 extern s8 D_8013AEE8;
 extern u8 g_SoundInitialized;

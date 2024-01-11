@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <cJSON/cJSON.h>
 
 const char g_DummyName[] = "DUMMY\xFF";
 
@@ -68,6 +69,8 @@ bool InitAccessoryDefs(const char* jsonContent);
 void InitRelicDefs(void);
 void InitEnemyDefs(void);
 void InitSubwpnDefs(void);
+void InitVbVh(void);
+bool InitSfxData(const char* content);
 bool InitGame(void) {
     if (!InitPlatform()) {
         return false;
@@ -163,6 +166,12 @@ bool InitGame(void) {
     g_Vram.D_800ACDA8.y = 0x00F0;
     g_Vram.D_800ACDA8.w = 0x0100;
     g_Vram.D_800ACDA8.h = 0x0010;
+
+    InitVbVh();
+
+    if (!FileStringify(InitSfxData, "assets/dra/sfx.json")) {
+        WARNF("failed to init sfx");
+    }
 
     return true;
 }
@@ -357,4 +366,84 @@ int MyStoreImage(RECT* rect, u_long* p) {
         vram += VRAM_W;
     }
     return 0;
+}
+
+void ReadToArray(const char* path, char* content, size_t maxlen) {
+    INFOF("open '%s'", path);
+    FILE* f = fopen(path, "rb");
+    if (f == NULL) {
+        ERRORF("unable to open '%s'", path);
+        exit(0);
+    }
+
+    fseek(f, 0, SEEK_END);
+    size_t len = ftell(f);
+
+    if (len > maxlen) {
+        ERRORF("file read for '%s' failed (%d/%d)", path, maxlen, len);
+        fclose(f);
+        exit(0);
+    }
+
+    fseek(f, 0, SEEK_SET);
+
+    printf("len %d\n", len);
+
+    size_t bytesread = fread(content, 1, len, f);
+    if (bytesread != len) {
+        ERRORF("unable to read %d bytes for '%s'", len, path);
+        fclose(f);
+        exit(0);
+    }
+
+    fclose(f);
+}
+
+void InitVbVh() {
+    ReadToArray("assets/dra/vh_0.bin", aPbav, LEN(aPbav));
+    ReadToArray("assets/dra/vh_1.bin", aPbav_0, LEN(aPbav_0));
+    ReadToArray("assets/dra/vh_2.bin", aPbav_2, LEN(aPbav_2));
+    ReadToArray("assets/dra/vh_3.bin", aPbav_1, LEN(aPbav_1));
+
+    ReadToArray("assets/dra/vb_0.bin", D_8013B6A0, LEN(D_8013B6A0));
+    ReadToArray("assets/dra/vb_1.bin", D_8017D350, LEN(D_8017D350));
+    ReadToArray("assets/dra/vb_2.bin", D_8018B4E0, LEN(D_8018B4E0));
+    ReadToArray("assets/dra/vb_3.bin", D_801A9C80, LEN(D_801A9C80));
+}
+
+#define DO_ITEM(field_str, jitem, item, to_set)                                \
+    {                                                                          \
+        cJSON* field = NULL;                                                   \
+        field = cJSON_GetObjectItemCaseSensitive(jitem, field_str);            \
+                                                                               \
+        if (cJSON_IsNumber(field)) {                                           \
+            to_set = field->valueint;                                          \
+        } else {                                                               \
+            ERRORF("Wrong field %s", field_str);                               \
+            exit(1);                                                           \
+        }                                                                      \
+    }
+
+bool InitSfxData(const char* content) {
+    cJSON* json = cJSON_Parse(content);
+    cJSON* array = cJSON_GetObjectItemCaseSensitive(json, "asset_data");
+    if (cJSON_IsArray(array)) {
+        int len = cJSON_GetArraySize(array);
+        for (int i = 0; i < len; i++) {
+            Unkstruct_800BF554* item = &g_SfxData[i];
+            cJSON* jitem = cJSON_GetArrayItem(array, i);
+            DO_ITEM("vabid", jitem, item, item->vabid);
+            DO_ITEM("prog", jitem, item, item->prog);
+            DO_ITEM("note", jitem, item, item->note);
+            DO_ITEM("volume", jitem, item, item->volume);
+            DO_ITEM("unk4", jitem, item, item->unk4);
+            DO_ITEM("tone", jitem, item, item->tone);
+            DO_ITEM("unk6", jitem, item, item->unk6);
+        }
+    } else {
+        ERRORF("Error loading sfx.");
+        exit(1);
+    }
+    cJSON_Delete(json);
+    return true;
 }

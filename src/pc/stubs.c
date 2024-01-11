@@ -135,11 +135,11 @@ GfxLoad g_GfxLoad[0x10] = {0};
 s16 D_800705CC[0x100];
 PlayerDraw g_PlayerDraw[0x10];
 s32 D_8013AED0;
-DR_ENV D_800974AC;
+DR_ENV D_800974AC[16];
 u32 D_8003C744 = 0;
 s32 D_800973F8;
 s32 D_800973FC;
-s32 D_80097400[3];
+s32 D_80097400[18];
 s32 D_8009740C[3];
 s32 g_BottomCornerTextTimer;
 s32 g_BottomCornerTextPrims;
@@ -197,17 +197,17 @@ u32 D_801362C8;
 s32 g_DebugIsRecordingVideo;
 s32 g_DebugWaitInfoTimer;
 s32 g_DebugRecordVideoFid;
-u8 D_8013B6A0[] = {0}; // VAB file
-u8 D_8017D350[] = {0}; // VAB file
-u8 D_8018B4E0[] = {0}; // VAB file
-u8 D_801A9C80[] = {0}; // VAB file
-u8 aPbav[] = {0};      // VAB file?
-u8 aPbav_0[] = {0};    // VAB file?
-u8 aPbav_1[] = {0};    // VAB file?
-u8 aPbav_2[] = {0};    // VAB file?
-u8 aPqes[] = {0};      // SEQ file
-u8 aPqes_0[] = {0};    // SEQ file
-u8 aPqes_1[] = {0};    // SEQ file
+u8 D_8013B6A0[269488] = {0}; // VB file
+u8 D_8017D350[57744] = {0};  // VB file
+u8 D_8018B4E0[64496] = {0};  // VB file
+u8 D_801A9C80[108048] = {0}; // VB file
+u8 aPbav[0x3000] = {0};      // VH file
+u8 aPbav_0[0x2000] = {0};    // VH file
+u8 aPbav_1[0x2000] = {0};    // VH file
+u8 aPbav_2[0x2000] = {0};    // VH file
+u8 aPqes[] = {0};            // SEQ file
+u8 aPqes_0[] = {0};          // SEQ file
+u8 aPqes_1[] = {0};          // SEQ file
 s32 D_801362D0[1];
 s32 D_800987B4;
 u8 g_PadsRepeatTimer[BUTTON_COUNT * PAD_COUNT];
@@ -269,9 +269,9 @@ s32 D_80137EEC;
 s32 D_80137EF0;
 s32 D_80137EF4;
 s32 D_80139824;
-s32 D_80139828[1];
+s32 D_80139828[0x10];
 s32 D_8013982C;
-s32 D_80139830[1];
+s32 D_80139830[3];
 s32 D_8013983C;
 s32 D_80139840;
 s32 D_80139844;
@@ -412,7 +412,7 @@ s16 g_VolL;
 s16 g_VolR;
 s16 D_8013AE94;
 u16 D_8013AEE0;
-Unkstruct_800BF554 g_SfxData[1];
+Unkstruct_800BF554 g_SfxData[737];
 u16 D_8013AE7C;
 s16 D_801390A4;
 s16 D_80139010;
