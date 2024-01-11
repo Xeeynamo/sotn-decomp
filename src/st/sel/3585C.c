@@ -1,8 +1,6 @@
 #include "sel.h"
 
 void func_801B4B9C(Entity* entity, s16 step);
-extern u16 D_800737B0;  // g_Entities[5].step
-extern u16 D_800737D4;  // g_Entities[5].animFrameIdx
 extern u8 D_80180538[]; // animation frames
 extern u8 D_80180554[]; // more animation frames
 extern s32 D_801BC3E8;
@@ -108,10 +106,8 @@ void func_801B5A7C(void) {
             break;
 
         case 3:
-            do {
-                D_800737B0 = 2;
-                D_800737D4 = 0;
-            } while (0);
+            g_Entities[5].step = 2;
+            g_Entities[5].animFrameIdx = 0;
             g_Entities[5].animFrameDuration = 0;
             g_Entities[5].facingLeft = 1;
             e->step++;
