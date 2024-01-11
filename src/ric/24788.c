@@ -993,4 +993,4 @@ void func_80162870(Entity* self) {
     return;
 }
 
-void func_80162C7C(void) {}
+void func_80162C7C(Entity* self) {}
