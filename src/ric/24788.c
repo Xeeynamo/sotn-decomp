@@ -668,7 +668,7 @@ void func_80161C2C(Entity* self) {
         if ((self->animFrameIdx == 8) && (self->unk4C != D_80154C80)) {
             self->blendMode = 0x10;
             if (!(params & 1) && (self->animFrameDuration == step)) {
-                CreateEntFactoryFromEntity(self, 0x40004, 0);
+                CreateEntFactoryFromEntity(self, FACTORY(0x400, 4), 0);
             }
         }
 
@@ -698,7 +698,7 @@ void func_80161EF8(Entity* self) {
     case 1:
         if ((self->animFrameIdx == 6) &&
             (self->animFrameDuration == self->step) && (rand() & 1)) {
-            CreateEntFactoryFromEntity(self, 4, 0);
+            CreateEntFactoryFromEntity(self, FACTORY(0, 4), 0);
         }
         self->posY.val += self->velocityY;
         if (self->animFrameDuration < 0) {

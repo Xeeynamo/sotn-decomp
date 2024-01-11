@@ -12,7 +12,7 @@ void func_8016E324(Entity* entity) {
         if ((entity->ext.generic.unk7C.s) == 0) {
         case 3:
         case 5:
-            CreateEntFactoryFromEntity(entity, 0x39, 0);
+            CreateEntFactoryFromEntity(entity, FACTORY(0, 57), 0);
             entity->step++;
         case 2:
         case 4:
@@ -22,7 +22,7 @@ void func_8016E324(Entity* entity) {
                 entity->ext.generic.unk7C.s = 0;
                 entity->posX.val = FIX(128.0);
                 entity->posY.val = 0;
-                CreateEntFactoryFromEntity(entity, 0x10004, 0);
+                CreateEntFactoryFromEntity(entity, FACTORY(0x100, 4), 0);
                 entity->step++;
             }
         }
@@ -33,7 +33,7 @@ void func_8016E324(Entity* entity) {
         if (entity->ext.generic.unk7C.s >= 16) {
             DestroyEntity(entity);
             g_Player.unk4E = 1;
-            CreateEntFactoryFromEntity(entity, 0x3A, 0);
+            CreateEntFactoryFromEntity(entity, FACTORY(0, 58), 0);
         }
         break;
     }
@@ -348,7 +348,7 @@ void func_8016F198(Entity* self) {
     }
 }
 
-// Entity ID #64, created by blueprint #72.
+// Entity ID #64, created by blueprint #72. This call is in func_801719A4.
 // When Richter has the stopwatch weapon, and uses it as a crash, it makes
 // 4 floating stopwatches. When they are done they disappear in a spinning
 // sparkle. This entity represents that sparkle. 4 copies of this entity
@@ -722,7 +722,7 @@ void func_801705EC(Entity* entity) {
     case 7:
         temp = entity->ext.generic.unk7E.modeU16 + 1;
         entity->ext.generic.unk7E.modeU16 = temp;
-        CreateEntFactoryFromEntity(entity, (temp << 0x10) | 0x3F, 0);
+        CreateEntFactoryFromEntity(entity, FACTORY(temp * 0x100, 63), 0);
         entity->ext.generic.unk7C.s = 0;
         entity->step++;
         break;
@@ -1200,7 +1200,7 @@ void func_801719A4(Entity* self) {
         prim->priority = PLAYER.zPriority + 3;
         prim->blendMode = 0x10A;
         if (self->params & 0xFF00) {
-            CreateEntFactoryFromEntity(self, 0x42U, 0);
+            CreateEntFactoryFromEntity(self, FACTORY(0, 66), 0);
             D_801758D0 = self->ext.et_801719A4.unk94 = self->params >> 8;
             if (self->ext.et_801719A4.unk94 < 4) {
                 (&D_801758D0)[self->ext.et_801719A4.unk94] = (u32)self;
@@ -1210,7 +1210,7 @@ void func_801719A4(Entity* self) {
                     D_801758CC[self->ext.et_801719A4.unk94];
             }
         } else {
-            CreateEntFactoryFromEntity(self, 0x40U, 0);
+            CreateEntFactoryFromEntity(self, FACTORY(0, 64), 0);
             self->ext.et_801719A4.unk94 = 0;
         }
         self->ext.et_801719A4.unkB0 = 6;
@@ -1289,7 +1289,7 @@ void func_801719A4(Entity* self) {
         self->ext.et_801719A4.unk7C = 0;
         if (self->ext.et_801719A4.unk94 != 0) {
             self->step = 7;
-            CreateEntFactoryFromEntity(self, 0x48U, 0);
+            CreateEntFactoryFromEntity(self, FACTORY(0, 72), 0);
         } else {
             self->step++;
         }
@@ -1308,7 +1308,7 @@ void func_801719A4(Entity* self) {
         break;
     case 6:
         if (++self->ext.et_801719A4.unk7C >= 0xF) {
-            CreateEntFactoryFromEntity(self, 0x70004U, 0);
+            CreateEntFactoryFromEntity(self, FACTORY(0x700, 4), 0);
             self->step++;
         }
         break;
@@ -1743,7 +1743,7 @@ void EntitySubwpnBible(Entity* self) {
         prim->y0 = prim->y1 = top;
         prim->y2 = prim->y3 = bottom;
         prim->priority = self->zPriority;
-        CreateEntFactoryFromEntity(self, 0x3E, 0);
+        CreateEntFactoryFromEntity(self, FACTORY(0, 62), 0);
         if (g_GameTimer % 10 == 0) {
             g_api.PlaySfx(BIBLE_SUBWPN_SWOOSH);
         }

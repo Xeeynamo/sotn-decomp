@@ -147,15 +147,15 @@ void func_80156F40(s16 arg0) {
         prim->blendMode = 0x102 | BLEND_VISIBLE;
     }
     if (D_80097C98 == 6) {
-        CreateEntFactoryFromEntity(playerPtr, 0x1004D, 0);
+        CreateEntFactoryFromEntity(playerPtr, FACTORY(0x100, 77), 0);
         func_8015CC70(1);
     }
     if (D_80097C98 == 4) {
-        CreateEntFactoryFromEntity(playerPtr, 0x3004D, 0);
+        CreateEntFactoryFromEntity(playerPtr, FACTORY(0x300, 77), 0);
         func_8015CC70(3);
     }
     if (D_80097C98 == 5) {
-        CreateEntFactoryFromEntity(playerPtr, 0x5004D, 0);
+        CreateEntFactoryFromEntity(playerPtr, FACTORY(0x500, 77), 0);
         func_8015CC70(5);
     }
 }
@@ -452,7 +452,7 @@ void func_80158B04(s32 arg0) {
 
     PLAYER.posY.i.hi -= 16;
     PLAYER.posX.i.hi = var_s0 + PLAYER.posX.i.hi;
-    CreateEntFactoryFromEntity(g_CurrentEntity, 0x10004, 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x100, 4), 0);
     PLAYER.posY.i.hi += 16;
     PLAYER.posX.i.hi = PLAYER.posX.i.hi - var_s0;
 
@@ -481,7 +481,7 @@ void func_80158BFC(void) {
             }
             PLAYER.posX.i.hi = var_s0 + PLAYER.posX.i.hi;
             PLAYER.posY.i.hi -= 16;
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0x80004, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x800, 4), 0);
             D_8015459C = 0x60;
             PLAYER.posY.i.hi += 16;
             PLAYER.posX.i.hi = PLAYER.posX.i.hi - var_s0;
@@ -530,7 +530,8 @@ void func_80158BFC(void) {
                     g_Player.unk46 = 2;
                     PLAYER.step_s++;
                     func_8015C920(D_80155730);
-                    CreateEntFactoryFromEntity(g_CurrentEntity, 0x11, 0);
+                    CreateEntFactoryFromEntity(
+                        g_CurrentEntity, FACTORY(0, 17), 0);
                     break;
                 }
                 g_Player.unk46 = 0;
@@ -589,7 +590,8 @@ void func_80158FA4(void) {
             if (g_Player.D_80072F00[11] == 0) {
                 if (!(g_Player.pl_vram_flag & 0xC)) {
                     func_8015C920(&D_8015539C);
-                    CreateEntFactoryFromEntity(g_CurrentEntity, 0x0, 0);
+                    CreateEntFactoryFromEntity(
+                        g_CurrentEntity, FACTORY(0, 0), 0);
                 }
             } else {
                 PLAYER.velocityX = 0;
@@ -674,7 +676,7 @@ void func_801590A0(void) {
                 g_Player.unk46 = 2;
                 PLAYER.step_s += 1;
                 func_8015C920(D_80155740);
-                CreateEntFactoryFromEntity(g_CurrentEntity, 0x11U, 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 17), 0);
             } else {
                 g_Player.unk46 = 0;
                 PLAYER.step_s = 0;
@@ -777,7 +779,7 @@ void func_80159670(void) {
             }
             PLAYER.posX.i.hi += xShift;
             PLAYER.posY.i.hi += 2;
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0x80004U, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x800, 4), 0);
             D_8015459C = 0x60;
             PLAYER.posY.i.hi -= 2;
             PLAYER.posX.i.hi -= xShift;
@@ -843,7 +845,7 @@ void func_80159670(void) {
                 g_Player.unk46 = 2;
                 PLAYER.step_s++;
                 func_8015C920(D_80155738);
-                CreateEntFactoryFromEntity(g_CurrentEntity, 0x11U, 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 17), 0);
                 return;
             }
             g_Player.unk46 = 0;
@@ -1303,21 +1305,21 @@ void func_8015AFE0(void) {
 
 void func_8015B098(void) {
     if ((PLAYER.animCurFrame == 0xB5) && (PLAYER.animFrameDuration == 1)) {
-        CreateEntFactoryFromEntity(g_CurrentEntity, 0x23, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 35), 0);
         g_api.PlaySfx(NA_SE_UNK_62F);
     }
 
     if (PLAYER.animFrameDuration < 0) {
         func_8015CD98(0);
         g_Player.unk46 = 0;
-        CreateEntFactoryFromEntity(g_CurrentEntity, 0x450021, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4500, 33), 0);
         g_Player.D_80072F00[0] = 0x800;
     }
 
     if (!(g_Player.pl_vram_flag & 1)) {
         func_8015CF08();
         g_Player.unk46 = 0;
-        CreateEntFactoryFromEntity(g_CurrentEntity, 0x450021, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4500, 33), 0);
         g_Player.D_80072F00[0] = 0x800;
     }
 }
