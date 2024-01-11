@@ -1,20 +1,20 @@
 #include "rwrp.h"
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_801913A0);
+INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_801913A0);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_80191490);
+INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_80191490);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_801915A0);
+INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_801915A0);
 
 #include "../entity_unkId15_spawner.h"
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_801917B8);
+INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_801917B8);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", EntityUnkId15);
+INCLUDE_ASM("st/rwrp/nonmatchings/113A0", EntityUnkId15);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_8019199C);
+INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_8019199C);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_80191BCC);
+INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_80191BCC);
 
 u8 func_80191CC8(s32 arg0) {
     Collider collider;
@@ -190,9 +190,9 @@ u8 func_80191CC8(s32 arg0) {
 
 #include "../entity_intense_explosion.h"
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_80192348);
+INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_80192348);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_80192414);
+INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_80192414);
 
 void func_801924DC(void) {
     Entity* entity;
@@ -210,11 +210,11 @@ void func_801924DC(void) {
         }
     }
 }
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_80192594);
+INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_80192594);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_8019276C);
+INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_8019276C);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_80192D4C);
+INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_80192D4C);
 
 void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     u16 buf[COLORS_PER_PAL];
@@ -253,8 +253,8 @@ void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_80193644);
+INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_80193644);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_8019373C);
+INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_8019373C);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/113A0", func_8019390C);
+INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_8019390C);

@@ -1,3 +1,3 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libcd/cdrom", StSetRing);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/cdrom", StSetRing);

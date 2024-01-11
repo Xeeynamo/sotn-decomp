@@ -56,4 +56,4 @@ void func_801C8ADC(Primitive* prim) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/48ADC", EntityStageNamePopup);
+INCLUDE_ASM("st/nz0/nonmatchings/48ADC", EntityStageNamePopup);

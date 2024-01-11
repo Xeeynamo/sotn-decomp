@@ -73,7 +73,7 @@ void func_8015CAAC(s32 speed) {
 
 void func_8015CAD4(s32 arg0, s16 arg1) {
     if (arg0 == 0) {
-        CreateEntFactoryFromEntity(g_CurrentEntity, 0x15002C, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1500, 44), 0);
         if (arg1 >= g_Player.D_80072F00[13]) {
             g_Player.D_80072F00[13] = arg1;
         }
@@ -181,7 +181,7 @@ void func_8015CE7C(void) {
         SetSpeedX(0x24000);
         g_Player.D_80072F00[11] = 0x28;
         PLAYER.velocityY = 0;
-        CreateEntFactoryFromEntity(g_CurrentEntity, 0x50001, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x500, 1), 0);
     }
 }
 

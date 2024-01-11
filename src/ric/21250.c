@@ -25,13 +25,14 @@ s32 func_8015D250(s32 unused_arg) {
         return 5;
     }
 
-    CreateEntFactoryFromEntity(g_CurrentEntity, subweapon.blueprintNum, 0);
+    CreateEntFactoryFromEntity(
+        g_CurrentEntity, FACTORY(0, subweapon.blueprintNum), 0);
     g_Player.D_80072F00[10] = 4;
 
     switch (PLAYER.step) {
     case 25:
         PLAYER.step = 0;
-        CreateEntFactoryFromEntity(g_CurrentEntity, 0x0, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
         func_8015C920(D_801555E8);
         break;
 
@@ -229,7 +230,7 @@ void func_8015D9D4(void) {
     g_CurrentEntity->velocityY = 0;
     SetSpeedX(0x58000);
     func_8015CC28();
-    CreateEntFactoryFromEntity(g_CurrentEntity, 0x19, 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 25), 0);
     g_api.PlaySfx(0x707);
     g_Player.D_80072F00[12] = 4;
 }
@@ -241,10 +242,10 @@ void func_8015DA60(void) {
     g_CurrentEntity->velocityY = FIX(-2);
     SetSpeedX(0x58000);
     func_8015CC28();
-    CreateEntFactoryFromEntity(g_CurrentEntity, 0x19, 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 25), 0);
     g_api.PlaySfx(0x6FA);
     g_Player.D_80072F00[12] = 4;
-    CreateEntFactoryFromEntity(g_CurrentEntity, 0x1F, 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 31), 0);
 }
 
 void DoBladeDash(void) {
@@ -254,7 +255,7 @@ void DoBladeDash(void) {
     SetSpeedX(FIX(5.5));
     g_Player.unk46 = 5;
     g_Player.D_80072F00[12] = 4;
-    CreateEntFactoryFromEntity(g_CurrentEntity, 0x1A, 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 26), 0);
     func_8015CC28();
     g_api.PlaySfx(0x6FB);
     g_api.PlaySfx(0x707);
@@ -1387,7 +1388,7 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     func_8016D920,
     func_801601DC,
     func_8015FEA8,
-    func_8016F6F0,
+    StopwatchCrashDoneSparkle,
     func_80170548,
     func_80166060,
     func_801603B4};

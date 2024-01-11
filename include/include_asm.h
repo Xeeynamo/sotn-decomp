@@ -8,7 +8,7 @@
 
 #ifndef INCLUDE_ASM
 
-#ifdef INCLUDE_ASM_NEW
+#ifndef INCLUDE_ASM_OLD
 #define INCLUDE_ASM(FOLDER, NAME)                                              \
     __asm__(".section .text\n"                                                 \
             "\t.align\t2\n"                                                    \

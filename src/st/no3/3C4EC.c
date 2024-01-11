@@ -265,7 +265,7 @@ void EntityUnkId50(Entity* self) {
 }
 
 // part of parallax background with pine trees
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityBackgroundPineTrees);
+INCLUDE_ASM("st/no3/nonmatchings/3C4EC", EntityBackgroundPineTrees);
 
 void EntityUnkId52(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
@@ -324,7 +324,7 @@ void EntityUnkId52(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3C4EC", EntityCastleBridge);
+INCLUDE_ASM("st/no3/nonmatchings/3C4EC", EntityCastleBridge);
 
 // ID 0x55
 void EntityBackgroundTrees(Entity* self) {

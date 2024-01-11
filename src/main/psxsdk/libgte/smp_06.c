@@ -1,3 +1,3 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgte/smp_06", NormalClipS);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgte/smp_06", NormalClipS);

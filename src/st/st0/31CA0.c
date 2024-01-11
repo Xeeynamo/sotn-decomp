@@ -1,7 +1,7 @@
 #include "st0.h"
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/31CA0", TestCollisions);
+INCLUDE_ASM("st/st0/nonmatchings/31CA0", TestCollisions);
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/31CA0", EntityNumericDamage);
+INCLUDE_ASM("st/st0/nonmatchings/31CA0", EntityNumericDamage);
 
 #include "../create_entity_from_layout.h"
 
@@ -322,7 +322,7 @@ s32 func_801B3C58(Entity* e) {
     return diff;
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/31CA0", EntityRedDoor);
+INCLUDE_ASM("st/st0/nonmatchings/31CA0", EntityRedDoor);
 
 #include "../../destroy_entity.h"
 
@@ -486,9 +486,9 @@ s32 func_801B4D5C(u16* sensors) {
     return 0;
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/31CA0", func_801B4FD4);
+INCLUDE_ASM("st/st0/nonmatchings/31CA0", func_801B4FD4);
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/31CA0", func_801B51E4);
+INCLUDE_ASM("st/st0/nonmatchings/31CA0", func_801B51E4);
 
 Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
@@ -720,7 +720,7 @@ void func_801B5A98(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/31CA0", func_801B5BF0);
+INCLUDE_ASM("st/st0/nonmatchings/31CA0", func_801B5BF0);
 
 #include "../replace_breakable_with_item_drop.h"
 

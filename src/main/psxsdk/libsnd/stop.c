@@ -3,7 +3,7 @@
 
 s32 SpuVmSeqKeyOff(s32, s32, struct SeqStruct*, s32);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libsnd/stop", _SsSndStop);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/stop", _SsSndStop);
 
 void _SsSndStop(s16, s16);
 

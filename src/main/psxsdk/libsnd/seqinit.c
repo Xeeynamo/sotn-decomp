@@ -1,5 +1,5 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libsnd/seqinit", _SsInitSoundSeq);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqinit", _SsInitSoundSeq);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libsnd/seqinit", SsSeqOpen);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqinit", SsSeqOpen);

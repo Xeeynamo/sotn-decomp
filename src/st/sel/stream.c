@@ -98,11 +98,11 @@ void func_801B994C(DECENV* dec) {
 }
 
 void func_801B99E4(void);
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", func_801B99E4);
+INCLUDE_ASM("st/sel/nonmatchings/stream", func_801B99E4);
 
 // func_801B9B7C(Unkstruct_801B9B7C* arg0, s16 arg1, s16 arg2, s16 arg3, s32
 // arg4);
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", func_801B9B7C);
+INCLUDE_ASM("st/sel/nonmatchings/stream", func_801B9B7C);
 
 void func_801B9C18(s32 unused, void (*callback)()) {
     const int START_FRAME = 1;
@@ -115,7 +115,7 @@ void func_801B9C18(s32 unused, void (*callback)()) {
     StSetStream(g_StreamIsRGB24, START_FRAME, -1, NULL, NULL);
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", func_801B9C80);
+INCLUDE_ASM("st/sel/nonmatchings/stream", func_801B9C80);
 
 void func_801BA460(s32 option) {
     if (option == 0) {
@@ -310,6 +310,6 @@ int MDEC_print_error(const char* funcName) {
     return 0;
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", func_801BAB70);
+INCLUDE_ASM("st/sel/nonmatchings/stream", func_801BAB70);
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/stream", DecDCTvlc);
+INCLUDE_ASM("st/sel/nonmatchings/stream", DecDCTvlc);

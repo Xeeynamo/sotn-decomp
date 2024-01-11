@@ -1,7 +1,7 @@
 #include "rwrp.h"
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", TestCollisions);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", TestCollisions);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018B6B4);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018B6B4);
 
 #include "../create_entity_from_layout.h"
 
@@ -104,9 +104,9 @@ void func_8018C098(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018C0F0);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018C0F0);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018C1EC);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018C1EC);
 
 void func_8018C300(s16 arg0) {
     while (true) {
@@ -127,13 +127,13 @@ void func_8018C34C(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018C3A4);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018C3A4);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018C4A0);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018C4A0);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018C5B4);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018C5B4);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018C72C);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018C72C);
 
 void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity) {
     DestroyEntity(entity);
@@ -151,13 +151,13 @@ void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity) {
     entity->posY.i.hi = source->posY.i.hi;
 }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018C8D0);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018C8D0);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018C948);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018C948);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", DestroyEntity);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", DestroyEntity);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018D5EC);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018D5EC);
 
 void PreventEntityFromRespawning(Entity* entity) {
     if (entity->entityRoomIndex) {
@@ -168,7 +168,7 @@ void PreventEntityFromRespawning(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018D6B0);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018D6B0);
 
 u8 func_8018D768(u8 frames[], Entity* self, u8 arg2) {
     u16 animFrameStart = self->animFrameIdx * 2;
@@ -231,7 +231,7 @@ void FallEntity(void) {
         g_CurrentEntity->velocityY += FALL_GRAVITY;
     }
 }
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018D990);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018D990);
 
 s32 func_8018DC08(s16* posX) {
     Collider collider;
@@ -330,7 +330,7 @@ s32 func_8018DF84(s32 arg0, s32 arg1) {
 
 #include "../adjust_value_within_threshold.h"
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", UnkEntityFunc0);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", UnkEntityFunc0);
 
 u16 func_8018E0B0(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
@@ -382,9 +382,9 @@ void SetSubStep(u8 step_s) {
     g_CurrentEntity->animFrameDuration = 0;
 }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E1FC);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018E1FC);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", InitializeEntity);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", InitializeEntity);
 
 void EntityDummy(Entity* entity) {
     if (entity->step == 0) {
@@ -392,11 +392,11 @@ void EntityDummy(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E3B4);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018E3B4);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E4DC);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018E4DC);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018E634);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018E634);
 
 #include "../replace_breakable_with_item_drop.h"
 
@@ -422,9 +422,9 @@ void func_8018EA30(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018EAB4);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018EAB4);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018EC10);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018EC10);
 
 void CollectGold(u16 goldSize) {
     s32 *gold, *unk;
@@ -481,7 +481,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
     DestroyEntity(g_CurrentEntity);
 }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018EE84);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018EE84);
 
 void CollectLifeVessel(void) {
     g_api_PlaySfx(NA_SE_PL_COLLECT_HEART);
@@ -491,12 +491,12 @@ void CollectLifeVessel(void) {
 
 void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", EntityPrizeDrop);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", EntityPrizeDrop);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", func_8018F814);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018F814);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", BlinkItem);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", BlinkItem);
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/A59C", EntityEquipItemDrop);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", EntityEquipItemDrop);
 
 #include "../blit_char.h"

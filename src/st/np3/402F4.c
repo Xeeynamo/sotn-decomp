@@ -504,9 +504,9 @@ void func_801C14E8(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/402F4", func_801C16C0);
+INCLUDE_ASM("st/np3/nonmatchings/402F4", func_801C16C0);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/402F4", func_801C1CA0);
+INCLUDE_ASM("st/np3/nonmatchings/402F4", func_801C1CA0);
 
 void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     u16 buf[COLORS_PER_PAL];
@@ -632,7 +632,7 @@ void func_801C2690(Primitive* prim) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/402F4", EntityStageNamePopup);
+INCLUDE_ASM("st/np3/nonmatchings/402F4", EntityStageNamePopup);
 
 // The white flying orbs of energy that Alucard summons as part of the Soul
 // Steal spell
@@ -884,7 +884,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
     g_BottomCornerTextTimer = 0x130;
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/402F4", func_801C4144);
+INCLUDE_ASM("st/np3/nonmatchings/402F4", func_801C4144);
 
 // ID 0x2C
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/402F4", func_801C424C);
+INCLUDE_ASM("st/np3/nonmatchings/402F4", func_801C424C);

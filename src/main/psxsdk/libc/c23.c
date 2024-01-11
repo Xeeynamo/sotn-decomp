@@ -1,3 +1,3 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libc/c23", strcmp);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libc/c23", strcmp);
