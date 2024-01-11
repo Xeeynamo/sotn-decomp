@@ -4,7 +4,10 @@
 
 void SpuSetVoiceAttr(SpuVoiceAttr* arg) { DEBUGF("SpuSetVoiceAttr"); }
 
-long SpuMallocWithStartAddr(unsigned long addr, long size) { NOT_IMPLEMENTED; }
+long SpuMallocWithStartAddr(unsigned long addr, long size) {
+    NOT_IMPLEMENTED;
+    return -1;
+}
 
 SpuIRQCallbackProc SpuSetIRQCallback(SpuIRQCallbackProc in) {
     NOT_IMPLEMENTED;
