@@ -315,11 +315,11 @@ void func_80167964(Entity* entity) {
     }
 }
 
-void func_80167A58(void) {}
+void func_80167A58(Entity* self) {}
 
-void func_80167A60(void) {}
+void func_80167A60(Entity* self) {}
 
-void func_80167A68(void) {}
+void func_80167A68(Entity* self) {}
 
 INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_80167A70);
 

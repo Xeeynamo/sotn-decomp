@@ -2,76 +2,7 @@
 #include "objects.h"
 #include "sfx.h"
 
-void func_8011A4C8(struct Entity*);
-void EntityEntFactory(struct Entity*);
-void func_8011B5A4(struct Entity*);
-void EntityGravityBootBeam(struct Entity*);
-void EntitySubwpnThrownDagger(struct Entity*);
-void func_8011E4BC(struct Entity*);
-void func_8011B334(struct Entity*);
-void EntityGiantSpinningCross(struct Entity*);
-void EntitySubwpnCrashCross(struct Entity*);
-void EntitySubwpnCrashCrossParticles(struct Entity*);
-void EntitySubwpnThrownAxe(struct Entity*);
-void EntityPlayerBlinkWhite(struct Entity*);
-void EntitySubwpnThrownVibhuti(struct Entity*);
-void func_8011E0E4(struct Entity*);
-void func_8011EDA0(struct Entity*);
-void EntityUnarmedAttack(struct Entity*);
-void func_8011EDA8(struct Entity*);
-void func_80128C2C(struct Entity*);
-void func_801291C4(struct Entity*);
-void EntityNumberMovesToHpMeter(struct Entity*);
-void EntitySubwpnReboundStone(struct Entity*);
-void EntityLevelUpAnimation(struct Entity*);
-void EntityHolyWater(struct Entity*);
-void EntityHolyWaterFlame(struct Entity*);
-void EntityUnkId24(struct Entity*);
-void EntityHellfireHandler(struct Entity*);
-void func_801274DC(struct Entity*);
-void func_80127840(struct Entity*);
-void EntityExpandingCircle(struct Entity*);
-void func_80127CC8(struct Entity*);
-void EntityHitByLightning(struct Entity*);
-void EntityMpReplenished(struct Entity*);
-void EntityPlayerDissolves(struct Entity*);
-void EntityHitByIce(struct Entity*);
-void EntityMist(struct Entity*);
-void EntityWingSmashTrail(struct Entity*);
-void func_8011B480(struct Entity*);
-void EntityGuardText(struct Entity*);
-void EntityTransparentWhiteCircle(struct Entity*);
-void EntityPlayerPinkEffect(struct Entity*);
-void EntityHolyWaterBreakGlass(struct Entity*);
-void EntityStopWatch(struct Entity*);
-void EntityStopWatchExpandingCircle(struct Entity*);
-void EntitySubwpnBible(struct Entity*);
-void func_8012B78C(struct Entity*);
-void func_8012768C(struct Entity*);
-void func_80123B40(struct Entity*);
-void func_80119F70(struct Entity*);
-void UnknownEntId48(struct Entity*);
-void UnknownEntId49(struct Entity*);
-void func_80123A60(struct Entity*);
-void func_80119D3C(struct Entity*);
-void EntityBatEcho(struct Entity*);
-void func_8011B530(struct Entity*);
-void func_8011F074(struct Entity*);
-void func_80130264(struct Entity*);
-void func_8012F894(struct Entity*);
-void func_80130618(struct Entity*);
-void func_801309B4(struct Entity*);
-void func_80130E94(struct Entity*);
-void func_8013136C(struct Entity*);
-void func_80129864(struct Entity*);
-void func_8011A4C8(struct Entity*);
-void EntitySummonSpirit(struct Entity*);
-void func_80123F78(struct Entity*);
-void EntityTeleport(struct Entity*);
-void func_80124A8C(struct Entity*);
-void func_8011A4C8(struct Entity*);
-
-PfnEntityUpdate D_800AD0C4[] = {
+PfnEntityUpdate g_DraEntityTbl[] = {
     func_8011A4C8,
     EntityEntFactory,
     func_8011B5A4,
@@ -140,6 +71,7 @@ PfnEntityUpdate D_800AD0C4[] = {
     EntityTeleport,
     func_80124A8C,
     func_8011A4C8};
+
 // Corresponding RIC function is func_801603C4
 void func_8011A4D0(void) {
     Entity* entity;
@@ -164,15 +96,15 @@ void func_8011A4D0(void) {
             entityId = entity->entityId;
             if (entityId < 0xD0) {
                 // Objects 00-CF
-                entity->pfnUpdate = D_800AD0C4[entityId];
+                entity->pfnUpdate = g_DraEntityTbl[entityId];
             } else if (entityId < 0xE0) {
                 // Objects D0-DF
                 entity->pfnUpdate = D_8016FCC0[entityId];
             } else if (entityId == 0xEF || entityId == 0xFF ||
                        entityId == 0xED || entityId == 0xFD) {
-                entity->pfnUpdate = D_800AD0C4[1];
+                entity->pfnUpdate = g_DraEntityTbl[1];
             } else if (entityId == 0xEE || entityId == 0xFE) {
-                entity->pfnUpdate = D_800AD0C4[15];
+                entity->pfnUpdate = g_DraEntityTbl[15];
             } else if (entityId >= 0xF0) {
                 // Objects F0-FC
                 entity->pfnUpdate = D_8017CC40[entityId];
