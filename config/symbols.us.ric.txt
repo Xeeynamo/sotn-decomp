@@ -1,5 +1,4 @@
 g_richter_spritesheet = 0x8013C020;
-g_RicEntityTbl = 0x8015495C;
 g_RicFactoryBlueprints = 0x80154A6C;
 DestroyEntity = 0x80156C60;
 GetTeleportToOtherCastle = 0x80156CCC;

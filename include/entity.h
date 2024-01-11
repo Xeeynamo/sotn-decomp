@@ -664,6 +664,21 @@ typedef struct {
     s16 unk86;
 } ET_801CC820;
 
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+    s16 unk86;
+    struct Primitive* unk88;
+    s16 unk8C;
+    s16 unk8E;
+    s16 unk90;
+    s16 unk92;
+    s16 unk94;
+} ET_stopwatchSparkle;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_EntFactory factory;
@@ -692,6 +707,7 @@ typedef union {
     /* 0x7C */ ET_8017091C et_8017091C;
     /* 0x7C */ ET_80170F64 et_80170F64;
     /* 0x7C */ ET_stopwatchCircle et_stopwatchCircle;
+    /* 0x7C */ ET_stopwatchSparkle et_stopWatchSparkle;
     /* 0x7C */ ET_80161FF0 et_80161FF0;
     /* 0x7C */ ET_80162870 et_80162870;
     /* 0x7C */ ET_8016E9E4 et_8016E9E4;
