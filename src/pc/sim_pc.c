@@ -57,7 +57,6 @@ void VSyncHandler(void) {
 
     D_800A04F4++;
     D_800A04F8 = (D_800A04F4 / 4) % 32;
-    nullsub_10();
     if (D_800A04F0) {
         return;
     }
@@ -131,6 +130,7 @@ void LoadStageTileset(u8* pTilesetData, s32 y) {
 
 void InitStageDummy(Overlay* o);
 void InitStageSel(Overlay* o);
+void func_80131EBC(const char* str, s16 arg1);
 s32 LoadFileSimToMem(SimKind kind) {
     char pad[0x20];
     s32 i;

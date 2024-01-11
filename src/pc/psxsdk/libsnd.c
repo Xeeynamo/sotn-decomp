@@ -70,10 +70,12 @@ s32 SsVabTransCompleted(short immediateFlag) {
 
 s32 SsVabOpenHeadSticky(u_char* addr, u_long vabid, u_long sbaddr) {
     NOT_IMPLEMENTED;
+    return 0;
 }
 
 s32 SsVabTransBodyPartly(u_char* addr, u_long bufsize, u_long vabid) {
     NOT_IMPLEMENTED;
+    return 0;
 }
 
 void SsVabClose(short vab_id) { NOT_IMPLEMENTED; }

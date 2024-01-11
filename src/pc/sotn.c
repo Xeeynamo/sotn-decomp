@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <cJSON/cJSON.h>
 
 const char g_DummyName[] = "DUMMY\xFF";
 
@@ -71,6 +72,7 @@ void InitRelicDefs(void);
 void InitEnemyDefs(void);
 void InitSubwpnDefs(void);
 void InitVbVh(void);
+bool InitSfxData(const char* content);
 bool InitGame(void) {
     if (!InitPlatform()) {
         return false;
@@ -168,6 +170,10 @@ bool InitGame(void) {
     g_Vram.D_800ACDA8.h = 0x0010;
 
     InitVbVh();
+
+    if (!FileStringify(InitSfxData, "assets/dra/sfx.json")) {
+        WARNF("failed to init sfx");
+    }
 
     return true;
 }
@@ -405,4 +411,41 @@ void InitVbVh() {
     ReadToArray("assets/dra/vb_1.bin", D_8017D350, LEN(D_8017D350));
     ReadToArray("assets/dra/vb_2.bin", D_8018B4E0, LEN(D_8018B4E0));
     ReadToArray("assets/dra/vb_3.bin", D_801A9C80, LEN(D_801A9C80));
+}
+
+#define DO_ITEM(field_str, jitem, item, to_set)                                \
+    {                                                                          \
+        cJSON* field = NULL;                                                   \
+        field = cJSON_GetObjectItemCaseSensitive(jitem, field_str);            \
+                                                                               \
+        if (cJSON_IsNumber(field)) {                                           \
+            to_set = field->valueint;                                          \
+        } else {                                                               \
+            ERRORF("Wrong field %s", field_str);                               \
+            exit(1);                                                           \
+        }                                                                      \
+    }
+
+bool InitSfxData(const char* content) {
+    cJSON* json = cJSON_Parse(content);
+    cJSON* array = cJSON_GetObjectItemCaseSensitive(json, "asset_data");
+    if (cJSON_IsArray(array)) {
+        int len = cJSON_GetArraySize(array);
+        for (int i = 0; i < len; i++) {
+            Unkstruct_800BF554* item = &g_SfxData[i];
+            cJSON* jitem = cJSON_GetArrayItem(array, i);
+            DO_ITEM("vabid", jitem, item, item->vabid);
+            DO_ITEM("prog", jitem, item, item->prog);
+            DO_ITEM("note", jitem, item, item->note);
+            DO_ITEM("volume", jitem, item, item->volume);
+            DO_ITEM("unk4", jitem, item, item->unk4);
+            DO_ITEM("tone", jitem, item, item->tone);
+            DO_ITEM("unk6", jitem, item, item->unk6);
+        }
+    } else {
+        ERRORF("Error loading sfx.");
+        exit(1);
+    }
+    cJSON_Delete(json);
+    return true;
 }
