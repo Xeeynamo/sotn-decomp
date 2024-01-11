@@ -263,9 +263,9 @@ void func_801B6C5C(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", EntityEquipItemDrop);
+INCLUDE_ASM("st/st0/nonmatchings/36358", EntityEquipItemDrop);
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", func_801B7308);
+INCLUDE_ASM("st/st0/nonmatchings/36358", func_801B7308);
 
 u8 func_801B7B0C(s16* arg0, u8 facing) {
     u8 ret = 0;
@@ -316,7 +316,7 @@ void func_801B7BFC(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", func_801B7D0C);
+INCLUDE_ASM("st/st0/nonmatchings/36358", func_801B7D0C);
 
 #include "../entity_unkId15_spawner.h"
 
@@ -374,7 +374,7 @@ void EntityUnkId15(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", func_801B8108);
+INCLUDE_ASM("st/st0/nonmatchings/36358", func_801B8108);
 
 bool func_801B8338(Point16* unk) {
     Collider collider;
@@ -693,9 +693,9 @@ void func_801B8D00(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", func_801B8ED8);
+INCLUDE_ASM("st/st0/nonmatchings/36358", func_801B8ED8);
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", func_801B94B8);
+INCLUDE_ASM("st/st0/nonmatchings/36358", func_801B94B8);
 
 void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     u16 buf[COLORS_PER_PAL];
@@ -1019,11 +1019,11 @@ void BottomCornerText(u8* str, u8 lower_left) {
     g_BottomCornerTextTimer = 0x130;
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", EntityClouds);
+INCLUDE_ASM("st/st0/nonmatchings/36358", EntityClouds);
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", EntityClockTower3D);
+INCLUDE_ASM("st/st0/nonmatchings/36358", EntityClockTower3D);
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", EntityCutscenePhotograph);
+INCLUDE_ASM("st/st0/nonmatchings/36358", EntityCutscenePhotograph);
 
 void EntityCutscenePhotographFire(Entity* entity) {
     switch (entity->step) {
@@ -1052,7 +1052,7 @@ void EntityCutscenePhotographFire(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", func_801BC5C0);
+INCLUDE_ASM("st/st0/nonmatchings/36358", func_801BC5C0);
 
 #include "../unk_prim_helper.h"
 
@@ -1126,6 +1126,6 @@ void func_801BD80C(POLY_GT4* arg0) {
 
 #include "../unk_loop_func.h"
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", func_801BD8F0);
+INCLUDE_ASM("st/st0/nonmatchings/36358", func_801BD8F0);
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/36358", EntityBackgroundVortex);
+INCLUDE_ASM("st/st0/nonmatchings/36358", EntityBackgroundVortex);

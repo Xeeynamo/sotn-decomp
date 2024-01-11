@@ -1,6 +1,5 @@
 #ifndef DRA_H
 #define DRA_H
-#define INCLUDE_ASM_NEW
 
 #include "game.h"
 #include "weapon.h"

@@ -381,7 +381,7 @@ void EntityStageTitleCard(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/2B0C8", func_801ABBBC);
+INCLUDE_ASM("st/st0/nonmatchings/2B0C8", func_801ABBBC);
 
 s32 func_801AC458(s16 arg0) {
     s32 ret = arg0;

@@ -33,7 +33,7 @@ bool func_801A7E2C(Entity* self) {
 }
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/27D64", EntityLockCamera);
+INCLUDE_ASM("st/st0/nonmatchings/27D64", EntityLockCamera);
 #else
 extern u16 D_801805B0[];
 extern u8 D_8018065C[];

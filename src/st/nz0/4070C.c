@@ -539,9 +539,9 @@ void func_801C1900(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/4070C", func_801C1AD8);
+INCLUDE_ASM("st/nz0/nonmatchings/4070C", func_801C1AD8);
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/4070C", func_801C20B8);
+INCLUDE_ASM("st/nz0/nonmatchings/4070C", func_801C20B8);
 
 void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     u16 buf[COLORS_PER_PAL];

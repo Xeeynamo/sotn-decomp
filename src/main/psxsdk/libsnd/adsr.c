@@ -13,4 +13,4 @@ void _SsUtResolveADSR(u16 arg0, u16 arg1, struct Unk* arg2) {
     arg2->unk8 = arg1 & 0x1F;
 }
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libsnd/adsr", _SsUtBuildADSR);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/adsr", _SsUtBuildADSR);

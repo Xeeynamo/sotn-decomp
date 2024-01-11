@@ -266,7 +266,7 @@ void func_80194FF4(u8 ySteps) {
 }
 
 // dialogue with mother opens as alucard walks right ID 20
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", EntitySuccubusCutscene);
+INCLUDE_ASM("st/dre/nonmatchings/14774", EntitySuccubusCutscene);
 
 void func_801961DC(s16 arg0) {
     s16 temp_v0 = arg0 - *(s16*)D_8009740C;
@@ -280,7 +280,7 @@ void func_801961DC(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", EntityUnkId21);
+INCLUDE_ASM("st/dre/nonmatchings/14774", EntityUnkId21);
 
 // appears to load from the CD and freeze the game
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/14774", EntityUnkId23);
+INCLUDE_ASM("st/dre/nonmatchings/14774", EntityUnkId23);

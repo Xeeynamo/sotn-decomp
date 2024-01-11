@@ -703,10 +703,10 @@ bool func_801ADAC8(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/2C564", func_801ADB10);
+INCLUDE_ASM("st/st0/nonmatchings/2C564", func_801ADB10);
 
 // DECOMP_ME_WIP EntityDraculaFinalForm https://decomp.me/scratch/kUpoj
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/2C564", EntityDraculaFinalForm);
+INCLUDE_ASM("st/st0/nonmatchings/2C564", EntityDraculaFinalForm);
 
 void EntityDraculaMegaFireball(Entity* self) {
     s16 angle;
@@ -811,8 +811,8 @@ void EntityDraculaRainAttack(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/2C564", func_801AF380);
+INCLUDE_ASM("st/st0/nonmatchings/2C564", func_801AF380);
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/2C564", func_801AF6D0);
+INCLUDE_ASM("st/st0/nonmatchings/2C564", func_801AF6D0);
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/2C564", func_801AF774);
+INCLUDE_ASM("st/st0/nonmatchings/2C564", func_801AF774);

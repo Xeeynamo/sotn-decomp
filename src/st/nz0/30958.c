@@ -37,7 +37,7 @@ bool func_801B0A20(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/30958", func_801B0AA4);
+INCLUDE_ASM("st/nz0/nonmatchings/30958", func_801B0AA4);
 
 void EntityBreakable(Entity* self) {
     u16 params = self->params >> 0xC;

@@ -110,7 +110,7 @@ void func_80194DD4(Entity* entity) {
     func_8018D6B0(objInit->unk10, entity);
 }
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", BottomCornerText);
+INCLUDE_ASM("st/rwrp/nonmatchings/14590", BottomCornerText);
 
 #include "../unk_prim_helper.h"
 
@@ -118,7 +118,7 @@ INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", BottomCornerText);
 
 #include "../find_first_unk_prim.h"
 
-INCLUDE_ASM("asm/us/st/rwrp/nonmatchings/14590", func_801957D4);
+INCLUDE_ASM("st/rwrp/nonmatchings/14590", func_801957D4);
 
 void func_8019585C(Primitive* prim) {
     prim->p1 = 0;

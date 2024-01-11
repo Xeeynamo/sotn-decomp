@@ -43,7 +43,7 @@ u_long get_cs(short, short);
 u_long get_tw(RECT* tw);
 u_long get_ofs(short, short);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", ResetGraph);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", ResetGraph);
 
 int SetGraphReverse(int mode) {
     unsigned int var_a0;
@@ -190,7 +190,7 @@ u_long* ClearOTagR(u_long* ot, int n) {
     return ot;
 }
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", func_80012DBC);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", func_80012DBC);
 
 void DrawOTag(u_long* p) {
     if (D_8002C268 >= 2) {
@@ -217,7 +217,7 @@ DRAWENV* GetDrawEnv(DRAWENV* env) {
     return env;
 }
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", PutDispEnv);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", PutDispEnv);
 
 DISPENV* GetDispEnv(DISPENV* env) {
     __builtin_memcpy(env, &D_80037EBC, sizeof(DISPENV));
@@ -245,7 +245,7 @@ void SetDrawOffset(DR_OFFSET* p, u_short* ofs) {
     p->code[1] = 0;
 }
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", SetPriority);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", SetPriority);
 
 extern void SetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw) {
     setlen(p, 2);
@@ -254,52 +254,52 @@ extern void SetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw) {
 }
 
 extern void SetDrawEnv(DR_ENV* dr_env, DRAWENV* env);
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", SetDrawEnv);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", SetDrawEnv);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", get_mode);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_mode);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", get_cs);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_cs);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", get_ce);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_ce);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", get_ofs);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_ofs);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", get_tw);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_tw);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", get_dx);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_dx);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", _status);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _status);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", _otc);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _otc);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", _clr);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _clr);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", _dws);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _dws);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", _drs);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _drs);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", _ctl);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _ctl);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", _getctl);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _getctl);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", _cwb);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _cwb);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", _cwc);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _cwc);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", _param);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _param);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", _addque);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _addque);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", _addque2);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _addque2);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", _exeque);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _exeque);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", _reset);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _reset);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", _sync);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _sync);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", set_alarm);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", set_alarm);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", get_alarm);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_alarm);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgpu/sys", GPU_memset);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", GPU_memset);

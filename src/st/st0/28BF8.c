@@ -170,7 +170,7 @@ void func_801A910C(u8 ySteps) {
     g_Dialogue.portraitAnimTimer++;
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/28BF8", EntityDialogue);
+INCLUDE_ASM("st/st0/nonmatchings/28BF8", EntityDialogue);
 
 void func_801AA218(s16 arg0) {
     s16 temp_a1 = ((0xE0 - arg0) / 2) + 0x80;

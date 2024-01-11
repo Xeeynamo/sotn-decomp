@@ -1,7 +1,7 @@
 #include "np3.h"
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/394F0", TestCollisions);
+INCLUDE_ASM("st/np3/nonmatchings/394F0", TestCollisions);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/394F0", EntityNumericDamage);
+INCLUDE_ASM("st/np3/nonmatchings/394F0", EntityNumericDamage);
 
 #include "../create_entity_from_layout.h"
 
@@ -315,7 +315,7 @@ s32 func_801BB824(Entity* e) {
     return diff;
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/394F0", EntityRedDoor);
+INCLUDE_ASM("st/np3/nonmatchings/394F0", EntityRedDoor);
 
 void DestroyEntity(Entity* item) {
     s32 i;
@@ -752,7 +752,7 @@ void func_801BD430(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/394F0", func_801BD588);
+INCLUDE_ASM("st/np3/nonmatchings/394F0", func_801BD588);
 
 #include "../replace_breakable_with_item_drop.h"
 

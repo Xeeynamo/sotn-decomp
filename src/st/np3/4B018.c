@@ -1,10 +1,10 @@
 #include "np3.h"
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", EntityOwl);
+INCLUDE_ASM("st/np3/nonmatchings/4B018", EntityOwl);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CBF18);
+INCLUDE_ASM("st/np3/nonmatchings/4B018", func_801CBF18);
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", EntityOwlKnight);
+INCLUDE_ASM("st/np3/nonmatchings/4B018", EntityOwlKnight);
 
 void func_801CD540(Entity* self) {
     s8* hitbox;
@@ -132,7 +132,7 @@ void func_801CDA6C(Entity* self, s32 arg1) {
                   temp_s0->ext.GH_Props.unk9C, arg1);
 }
 
-INCLUDE_ASM("asm/us/st/np3/nonmatchings/4B018", func_801CDAC8);
+INCLUDE_ASM("st/np3/nonmatchings/4B018", func_801CDAC8);
 
 bool func_801CDC80(s16* arg0, s16 arg1, s16 arg2) {
     s32 var_v1 = *arg0 - arg1;

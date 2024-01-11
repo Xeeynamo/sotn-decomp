@@ -364,6 +364,6 @@ void func_801BECCC(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", func_801BEDAC);
+INCLUDE_ASM("st/no3/nonmatchings/3E134", func_801BEDAC);
 // seems to cause a room transition
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/3E134", EntityRoomTransition1);
+INCLUDE_ASM("st/no3/nonmatchings/3E134", EntityRoomTransition1);

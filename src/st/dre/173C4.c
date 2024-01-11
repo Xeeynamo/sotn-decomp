@@ -1,7 +1,7 @@
 #include "dre.h"
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/173C4", TestCollisions);
+INCLUDE_ASM("st/dre/nonmatchings/173C4", TestCollisions);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/173C4", EntityNumericDamage);
+INCLUDE_ASM("st/dre/nonmatchings/173C4", EntityNumericDamage);
 
 #include "../create_entity_from_layout.h"
 
@@ -105,9 +105,9 @@ void func_80198EC0(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/173C4", func_80198F18);
+INCLUDE_ASM("st/dre/nonmatchings/173C4", func_80198F18);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/173C4", func_80199014);
+INCLUDE_ASM("st/dre/nonmatchings/173C4", func_80199014);
 
 void func_80199128(s16 arg0) {
     while (1) {
@@ -129,9 +129,9 @@ void func_80199174(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/173C4", func_801991CC);
+INCLUDE_ASM("st/dre/nonmatchings/173C4", func_801991CC);
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/173C4", func_801992C8);
+INCLUDE_ASM("st/dre/nonmatchings/173C4", func_801992C8);
 
 void InitRoomEntities(s32 objLayoutId) {
     u16* pObjLayoutStart = D_80180220[objLayoutId];
@@ -229,7 +229,7 @@ s32 func_801996F8(Entity* e) {
     return diff;
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/173C4", EntityRedDoor);
+INCLUDE_ASM("st/dre/nonmatchings/173C4", EntityRedDoor);
 
 #include "../../destroy_entity.h"
 
@@ -712,7 +712,7 @@ void func_8019B304(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/173C4", func_8019B45C);
+INCLUDE_ASM("st/dre/nonmatchings/173C4", func_8019B45C);
 
 #include "../replace_breakable_with_item_drop.h"
 
@@ -869,7 +869,7 @@ void CollectLifeVessel(void) {
 
 void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
-INCLUDE_ASM("asm/us/st/dre/nonmatchings/173C4", EntityPrizeDrop);
+INCLUDE_ASM("st/dre/nonmatchings/173C4", EntityPrizeDrop);
 
 void EntityExplosion(Entity* entity) {
     u32 temp_v0;

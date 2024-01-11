@@ -1,6 +1,6 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libetc/pad", PadInit);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libetc/pad", PadInit);
 // void PadInit(s32 arg0) {
 //     D_80073080 = arg0;
 //     D_8003925C = -1;
@@ -9,6 +9,6 @@ INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libetc/pad", PadInit);
 //     ChangeClearPAD(0);
 // }
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libetc/pad", PadRead);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libetc/pad", PadRead);
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libetc/pad", PadStop);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libetc/pad", PadStop);

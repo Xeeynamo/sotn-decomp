@@ -1,7 +1,6 @@
 #ifndef WEAPON_PRIVATE_H
 #define WEAPON_PRIVATE_H
 
-#define INCLUDE_ASM_NEW
 #include <weapon.h>
 
 #define WEAPON0 // forces WEAPON0 for the time being

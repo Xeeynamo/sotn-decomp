@@ -107,9 +107,9 @@ u16 func_801B0414(void) {
     return ret;
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B0464);
+INCLUDE_ASM("st/st0/nonmatchings/30030", func_801B0464);
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B101C);
+INCLUDE_ASM("st/st0/nonmatchings/30030", func_801B101C);
 
 void func_801B1198(s16 arg0) {
     RECT rect;
@@ -145,4 +145,4 @@ u16* func_801B11E8(char ch) {
     return g_api.func_80106A28(jCh, 0);
 }
 
-INCLUDE_ASM("asm/us/st/st0/nonmatchings/30030", func_801B1298);
+INCLUDE_ASM("st/st0/nonmatchings/30030", func_801B1298);

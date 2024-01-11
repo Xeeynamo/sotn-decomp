@@ -1,3 +1,3 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libgte/fgo_06", RotMatrixZ);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libgte/fgo_06", RotMatrixZ);
