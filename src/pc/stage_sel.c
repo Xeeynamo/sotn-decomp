@@ -8,8 +8,6 @@ RECT D_80182584 = {0};
 RECT D_8018258C = {0};
 RECT D_801825A4 = {0};
 void* D_8018C404[100] = {NULL};
-u16 D_800737B0; // g_Entities[5].step
-u16 D_800737D4; // g_Entities[5].animFrameIdx
 s8 D_8018BC4A = 0;
 s8 D_8018BC50 = 0;
 
@@ -105,7 +103,8 @@ s32 g_StreamRewindSwitch[0x5001];
 s32 D_801D104C[0x1680];
 s32 D_801D6B04;
 s32 g_InputCursorPos;
-s32 D_801D6B0C char g_InputSaveName[12];
+s32 D_801D6B0C;
+char g_InputSaveName[12];
 s32 D_801D6B24;
 
 extern Overlay g_StageSel;
