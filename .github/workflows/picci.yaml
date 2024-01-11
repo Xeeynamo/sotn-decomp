@@ -7,16 +7,18 @@ on:
     paths:
       - 'include/**'
       - 'src/**'
-      - 'Makefile*'
+      - 'cmake/**'
+      - 'CMakeLists*'
   pull_request:
     paths:
       - 'include/**'
       - 'src/**'
-      - 'Makefile*'
+      - 'cmake/**'
+      - 'CMakeLists*'
   workflow_dispatch:
 
 jobs:
-  build:
+  build-linux:
     runs-on: ubuntu-latest
     steps:
       - name: Install requirements
@@ -26,22 +28,37 @@ jobs:
         with:
           ref: ${{ github.ref }}
           submodules: false
-      - name: build
-        run: make build_pc
+      - name: Build
+        run: |
+          cmake -B ${{github.workspace}}/pc
+          cmake --build ${{github.workspace}}/pc --config Release
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - name: Install requirements
+        run: brew install SDL2
+      - name: Clone repo
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+          submodules: false
+      - name: Build
+        run: |
+          cmake -B ${{github.workspace}}/pc
+          cmake --build ${{github.workspace}}/pc --config Release
 
   build-windows:
     runs-on: windows-latest
-
     steps:
-    - uses: actions/checkout@v3
-
-    - name: Dependencies
+    - name: Install requirements
       run: |
         mkdir C:\temp-sdl2
         powershell Invoke-WebRequest 'https://github.com/libsdl-org/SDL/releases/download/release-2.28.5/SDL2-devel-2.28.5-VC.zip' -OutFile C:\temp-sdl2\SDL2-devel-2.28.5-VC.zip
         7z x C:\temp-sdl2\SDL2-devel-2.28.5-VC.zip -oC:\temp-sdl2
-    - name: Configure CMake
-      run: cmake -B ${{github.workspace}}/cmake_build -DCMAKE_BUILD_TYPE=Release -DSDL2_PATH=C:\temp-sdl2\SDL2-2.28.5 -DSDL2_IMAGE_PATH=C:\temp-sdl2_image\SDL2_image-2.8.1
-
+    - name: Clone repo
+      uses: actions/checkout@v3
     - name: Build
-      run: cmake --build ${{github.workspace}}/cmake_build --config Release
+      run: |
+        cmake -B ${{github.workspace}}/pc -DCMAKE_BUILD_TYPE=Release -DSDL2_PATH=C:\temp-sdl2\SDL2-2.28.5 -DSDL2_IMAGE_PATH=C:\temp-sdl2_image\SDL2_image-2.8.1
+        cmake --build ${{github.workspace}}/pc --config Release
