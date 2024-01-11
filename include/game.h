@@ -1620,7 +1620,7 @@ extern Pos D_80097488;
 extern Pad g_pads[PAD_COUNT];
 extern Stages g_StageId;
 extern s32 D_800974A4; // map open
-extern DR_ENV D_800974AC;
+extern DR_ENV D_800974AC[16];
 extern s32 g_UseDisk;
 extern s32 D_800978B4;
 extern s32 D_800978C4;
