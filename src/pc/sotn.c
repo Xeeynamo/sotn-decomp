@@ -362,7 +362,7 @@ int MyStoreImage(RECT* rect, u_long* p) {
     return 0;
 }
 
-void ReadToArray(const char* path, char* content) {
+void ReadToArray(const char* path, char* content, size_t maxlen) {
     INFOF("open '%s'", path);
     FILE* f = fopen(path, "rb");
     if (f == NULL) {
@@ -372,6 +372,13 @@ void ReadToArray(const char* path, char* content) {
 
     fseek(f, 0, SEEK_END);
     size_t len = ftell(f);
+
+    if (len > maxlen) {
+        ERRORF("file read for '%s' failed (%d/%d)", path, maxlen, len);
+        fclose(f);
+        exit(0);
+    }
+
     fseek(f, 0, SEEK_SET);
 
     printf("len %d\n", len);
@@ -387,13 +394,13 @@ void ReadToArray(const char* path, char* content) {
 }
 
 void InitVbVh() {
-    ReadToArray("assets/dra/vh_0.bin", aPbav);
-    ReadToArray("assets/dra/vh_1.bin", aPbav_0);
-    ReadToArray("assets/dra/vh_2.bin", aPbav_2);
-    ReadToArray("assets/dra/vh_3.bin", aPbav_1);
+    ReadToArray("assets/dra/vh_0.bin", aPbav, LEN(aPbav));
+    ReadToArray("assets/dra/vh_1.bin", aPbav_0, LEN(aPbav_0));
+    ReadToArray("assets/dra/vh_2.bin", aPbav_2, LEN(aPbav_2));
+    ReadToArray("assets/dra/vh_3.bin", aPbav_1, LEN(aPbav_1));
 
-    ReadToArray("assets/dra/vb_0.bin", D_8013B6A0);
-    ReadToArray("assets/dra/vb_1.bin", D_8017D350);
-    ReadToArray("assets/dra/vb_2.bin", D_8018B4E0);
-    ReadToArray("assets/dra/vb_3.bin", D_801A9C80);
+    ReadToArray("assets/dra/vb_0.bin", D_8013B6A0, LEN(D_8013B6A0));
+    ReadToArray("assets/dra/vb_1.bin", D_8017D350, LEN(D_8017D350));
+    ReadToArray("assets/dra/vb_2.bin", D_8018B4E0, LEN(D_8018B4E0));
+    ReadToArray("assets/dra/vb_3.bin", D_801A9C80, LEN(D_801A9C80));
 }
