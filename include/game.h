@@ -968,7 +968,7 @@ typedef struct {
     /* 8003C780 */ void (*InitRoomEntities)(s32 layoutId);
     /* 8003C784 */ RoomHeader* rooms;
     /* 8003C788 */ s16** spriteBanks;
-    /* 8003C78C */ UnkStructClut** cluts;
+    /* 8003C78C */ u_long** cluts;
     /* 8003C790 */ void* unk1C; // related to entity layout
     /* 8003C794 */ RoomDef* tileLayers;
     /* 8003C798 */ GfxBank** gfxBanks;
@@ -1545,7 +1545,7 @@ extern s32 g_IsUsingCd;
 extern Entity* g_CurrentEntity;
 extern Unkstruct_8006C3C4 D_8006C3C4[32];
 extern s32 g_Servant; // Currently selected familiar in the menu
-extern u16 g_Clut[];
+extern u16 g_Clut[0x3000];
 extern u32 D_8006EBCC;
 extern u16 D_8006EBE0;
 extern u16 D_8006F3CC[];

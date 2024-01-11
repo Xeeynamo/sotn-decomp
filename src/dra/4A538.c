@@ -11,7 +11,7 @@ void func_800EA538(s32 arg0) {
     v1 = (temp >> (arg0 - 1));
 
     if (arg0 != 0) {
-        for (i = 0; i < 32; i++) {
+        for (i = 0; i < LEN(D_8006C3C4); i++) {
             if (v1 & D_8006C3C4[i].unk8) {
                 D_8006C3C4[i].unk8 = 0;
             }
@@ -22,7 +22,7 @@ void func_800EA538(s32 arg0) {
     D_8003C0F8 = 0;
     var_v0 = &D_8006C3C4;
 
-    for (i = 0; i < 32; i++) {
+    for (i = 0; i < LEN(D_8006C3C4); i++) {
         var_v0->unk8 = 0;
         var_v0++;
     }
@@ -39,10 +39,10 @@ s32 func_800EA5E4(u32 arg0) {
     u16 temp_v0;
     s32 i;
     s32 j;
-    u32 ones_start;
-    u32 ones_end;
-    UnkStructClut* clut;
-    Unkstruct_8006C3C4* unkStruct;
+    u32 start;
+    u32 count;
+    u_long* clut;
+    Unkstruct_8006C3C4* clutAnim;
 
     temp_v0 = arg0 & 0xFF00;
     arg0 = arg0 & 0xFF;
@@ -53,38 +53,39 @@ s32 func_800EA5E4(u32 arg0) {
         clut = D_800A3BB8[arg0];
     }
 
-    if (clut->unk0 == 0) {
+    if (clut[0] == 0) {
         return 1;
     }
-    if (clut->unk0 == -1) {
+    if (clut[0] == -1) {
         return 1;
     }
-    unkStruct = &D_8006C3C4;
-    for (j = 0; j < LEN(D_8006C3C4); unkStruct++) {
+
+    clutAnim = &D_8006C3C4;
+    for (j = 0; j < LEN(D_8006C3C4); clutAnim++) {
         j++;
-        if (unkStruct->unk8 != 0) {
+        if (clutAnim->unk8 != 0) {
             continue;
         }
-        unkStruct->struct1 = clut;
-        unkStruct->struct2 = &clut->unkC;
-        unkStruct->unk8 = (temp_v0 | clut->unk0);
-        unkStruct->unkA = 0;
-        unkStruct->unkC = 0;
+        clutAnim->desc = clut;
+        clutAnim->data = clut + 3;
+        clutAnim->unk8 = (temp_v0 | GET_PAL_OP_KIND(clut[0]));
+        clutAnim->index = 0;
+        clutAnim->unkC = 0;
 
         // Set unkStruct's array to all zeros, except within this range
-        ones_start = clut->unk4;
-        ones_end = (clut->unk4 + clut->unk8) - 1;
-        ones_start >>= 8;
-        ones_end >>= 8;
-        for (i = 0; i < LEN(unkStruct->unkArray); i++) {
-            unkStruct->unkArray[i] = 0;
+        start = clut[1];
+        count = clut[1] + clut[2] - 1;
+        start >>= 8;
+        count >>= 8;
+        for (i = 0; i < LEN(clutAnim->unkArray); i++) {
+            clutAnim->unkArray[i] = 0;
         }
-        for (i = ones_start; ones_end >= i; i++) {
-            unkStruct->unkArray[i] = 1;
+        for (i = start; count >= i; i++) {
+            clutAnim->unkArray[i] = 1;
         }
 
-        if ((u8)unkStruct->unk8 == 2 || (u8)unkStruct->unk8 == 16) {
-            unkStruct->unkE = 0x1F;
+        if ((u8)clutAnim->unk8 == 2 || (u8)clutAnim->unk8 == 16) {
+            clutAnim->unkE = 0x1F;
         }
         return 0;
     }

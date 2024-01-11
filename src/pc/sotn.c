@@ -35,7 +35,7 @@ GfxBank** g_GfxStageBank[0x40] = {
     &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
     &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
 };
-extern UnkStructClut* D_800A3BB8[];
+extern u_long* D_800A3BB8[];
 
 void WeaponLoadPaletteStub(s32 arg0) { NOT_IMPLEMENTED; }
 

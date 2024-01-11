@@ -305,8 +305,8 @@ s32 g_DecReadNibbleFlag = 0;
 s32 g_DecWriteNibbleFlag = 0;
 u8 g_GfxEquipIcon[32][16 * 16 / 2] = {0};
 s16 g_PalEquipIcon[32] = {0};
-UnkStructClut g_FakeUnkStruct = {0};
-UnkStructClut* D_800A3BB8[] = {
+u_long g_FakeUnkStruct = {MAKE_PAL_OP(0, 0)};
+u_long* D_800A3BB8[] = {
     &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct,
     &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct,
     &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct,
