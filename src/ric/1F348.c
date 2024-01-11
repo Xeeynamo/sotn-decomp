@@ -10,8 +10,8 @@ void func_8015B348(void) {
         if (PLAYER.velocityX == 0) {
             func_8015C920(&D_80155748);
             g_Player.D_80072F00[13] = 4;
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0x1D, 0);
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0x90021, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 29), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x900, 33), 0);
             D_801545AC = 0;
             PLAYER.step_s++;
         }
@@ -27,7 +27,7 @@ void func_8015B348(void) {
             if ((D_801545AC) == 0) {
                 PLAYER.drawFlags = 0;
                 PLAYER.rotY = 0x100;
-                CreateEntFactoryFromEntity(g_CurrentEntity, 0x17, 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 23), 0);
                 D_801545A8 = 0x90;
                 PLAYER.step_s++;
             }
@@ -40,7 +40,7 @@ void func_8015B348(void) {
             func_8015C920(&D_801558B4);
             PLAYER.palette = 0x814E;
             g_CurrentEntity->velocityY = FIX(-1);
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0x16, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 22), 0);
             D_801545A8 = 0x30;
             g_api.PlaySfx(0x6E2);
             D_80174F78 = 0xA0;
@@ -53,10 +53,10 @@ void func_8015B348(void) {
         if ((D_801545A8) == 0) {
             PLAYER.velocityY = 0;
             D_801545A8 = 0xC0;
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0x24, 0);
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0x20025, 0);
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0x30026, 0);
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0x40027, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 36), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x200, 37), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x300, 38), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x400, 39), 0);
             PLAYER.palette = 0x813D;
             g_Player.D_80072F00[13] = 0;
             PLAYER.step_s++;
@@ -67,7 +67,7 @@ void func_8015B348(void) {
         }
 
         D_80174F78--;
-        if ((D_80174F78 >= 0) && (D_80174F78 == (((D_80174F78) / 20) * 0x14))) {
+        if ((D_80174F78 >= 0) && (D_80174F78 % 20 == 0)) {
             g_api.PlaySfx(NA_SE_PL_RIC_UNK_6E2);
         }
         break;
@@ -84,7 +84,7 @@ void func_8015B348(void) {
         }
 
         D_80174F78--;
-        if ((D_80174F78 >= 0) && (D_80174F78 == (((D_80174F78) / 20) * 0x14))) {
+        if ((D_80174F78 >= 0) && (D_80174F78 % 20 == 0)) {
             g_api.PlaySfx(NA_SE_PL_RIC_UNK_6E2);
         }
         break;
@@ -93,13 +93,13 @@ void func_8015B348(void) {
         if (D_801545A8 == 5) {
             PLAYER.animFrameIdx = 6;
             PLAYER.palette = 0x8120;
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0x1C, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 28), 0);
         }
         D_801545A8--;
         if (D_801545A8 == 0) {
             func_8015C920(&D_801558D4);
             g_api.PlaySfx(NA_SE_UNK_62F);
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0x1B, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 27), 0);
             PLAYER.step_s++;
             break;
         }
@@ -123,7 +123,7 @@ void func_8015B348(void) {
             func_8015CF08();
             func_8015C920(&D_801558DC);
             g_Player.D_80072F00[13] = 4;
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0x90021, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x900, 33), 0);
         }
         break;
     }
