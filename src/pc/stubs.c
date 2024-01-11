@@ -413,7 +413,7 @@ s16 g_VolL;
 s16 g_VolR;
 s16 D_8013AE94;
 u16 D_8013AEE0;
-Unkstruct_800BF554 g_SfxData[1];
+Unkstruct_800BF554 g_SfxData[737];
 u16 D_8013AE7C;
 s16 D_801390A4;
 s16 D_80139010;
