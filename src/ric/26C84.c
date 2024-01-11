@@ -79,7 +79,7 @@ bool func_80162E9C(Entity* entity) {
     return false;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_80162EF8);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_80162EF8);
 
 void func_801641A0(Entity* entity) {
     POLY_GT4* poly;
@@ -141,11 +141,11 @@ void func_801641A0(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_80164444);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_80164444);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_80164DF8);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_80164DF8);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_801656B0);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_801656B0);
 
 void func_80165DD8(
     POLY_GT4* poly, s32 colorIntensity, s32 y, s32 radius, bool arg4) {
@@ -244,9 +244,9 @@ void func_80166044() {
     PLAYER.blendMode = 0;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_80166060);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_80166060);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_80166784);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_80166784);
 
 void func_8016779C(Entity* entity) {
     if (g_Player.unk46 == 0) {
@@ -321,11 +321,11 @@ void func_80167A60(Entity* self) {}
 
 void func_80167A68(Entity* self) {}
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_80167A70);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_80167A70);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_80167EC4);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_80167EC4);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_801682B4);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_801682B4);
 
 s32 func_8016840C(s16 x, s16 y) {
     Collider collider;
@@ -350,15 +350,15 @@ s32 func_8016840C(s16 x, s16 y) {
     return 2;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_801684D8);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_801684D8);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_80168A20);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_80168A20);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_8016902C);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_8016902C);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_80169470);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_80169470);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_80169704);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_80169704);
 
 void func_80169C10(Entity* entity) {
     POLY_GT4* poly;
@@ -448,13 +448,13 @@ void func_80169D74(Entity* entity) {
         (entity->ext.generic.unk80.modeS16.unk0 + 1) & 0x3F;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_80169F04);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_80169F04);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_8016A26C);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_8016A26C);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_8016A974);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_8016A974);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_8016B0C0);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_8016B0C0);
 
 void func_8016B8E8(s32 arg0) {
     g_CurrentEntity->ext.generic.unk7C.s =
@@ -474,9 +474,9 @@ void func_8016B92C(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_8016B97C);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_8016B97C);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_8016C1BC);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_8016C1BC);
 
 s32 func_8016C6C4(Unkstruct_80128BBC* arg0, u8 value) {
     u8 ret = 0;
@@ -498,9 +498,9 @@ s32 func_8016C6C4(Unkstruct_80128BBC* arg0, u8 value) {
     return ret;
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_8016C734);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_8016C734);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_8016CC74);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_8016CC74);
 
 void func_8016D328(Entity* entity) {
     s16 primIndex;
@@ -550,7 +550,7 @@ void func_8016D328(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_8016D4D8);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_8016D4D8);
 
 void func_8016D920(Entity* entity) {
     switch (entity->step) {
@@ -571,6 +571,6 @@ void func_8016D920(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_8016D9C4);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_8016D9C4);
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/26C84", func_8016DF74);
+INCLUDE_ASM("ric/nonmatchings/26C84", func_8016DF74);

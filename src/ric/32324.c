@@ -39,7 +39,7 @@ void func_8016E324(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/32324", func_8016E46C);
+INCLUDE_ASM("ric/nonmatchings/32324", func_8016E46C);
 
 void func_8016E9E4(Entity* self) {
     Primitive* prim;

@@ -465,7 +465,7 @@ void func_801B7C54(u8 ySteps) {
 }
 
 // cutscene where alucard and maria discuss castle changing
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/36DE4", EntityMariaCutscene);
+INCLUDE_ASM("st/nz0/nonmatchings/36DE4", EntityMariaCutscene);
 
 void func_801B8E0C(Entity* self) {
     switch (self->step) {
@@ -511,4 +511,4 @@ void func_801B8E0C(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/nz0/nonmatchings/36DE4", func_801B8F94);
+INCLUDE_ASM("st/nz0/nonmatchings/36DE4", func_801B8F94);

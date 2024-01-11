@@ -201,7 +201,7 @@ s32 TryLoadSaveData(void) {
     return 0;
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/33164", func_801B38B4);
+INCLUDE_ASM("st/sel/nonmatchings/33164", func_801B38B4);
 
 void func_801B3A54(s32 arg0, s32 arg1) {
     char pad[0x20];

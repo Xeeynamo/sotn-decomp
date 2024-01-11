@@ -1,3 +1,3 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libsnd/pause", _SsSndPause);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/pause", _SsSndPause);

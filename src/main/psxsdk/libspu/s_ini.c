@@ -1,7 +1,7 @@
 #include "common.h"
 #include "libspu_internal.h"
 
-INCLUDE_ASM("asm/us/main/nonmatchings/psxsdk/libspu/s_ini", _SpuInit);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libspu/s_ini", _SpuInit);
 
 void SpuStart(void) {
     s32 temp_v0;

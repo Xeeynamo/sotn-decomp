@@ -360,7 +360,7 @@ void CheckHighJumpInput(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", UpdateEntityRichter);
+INCLUDE_ASM("ric/nonmatchings/1AC60", UpdateEntityRichter);
 
 void func_801587C0() { D_80175956 = 0; }
 
@@ -1283,7 +1283,7 @@ void func_8015A7D0(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/ric/nonmatchings/1AC60", func_8015A9B0);
+INCLUDE_ASM("ric/nonmatchings/1AC60", func_8015A9B0);
 
 void func_8015AFE0(void) {
     if (PLAYER.step_s == 0) {

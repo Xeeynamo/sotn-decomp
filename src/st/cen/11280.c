@@ -1,7 +1,7 @@
 #include "cen.h"
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", TestCollisions);
+INCLUDE_ASM("st/cen/nonmatchings/11280", TestCollisions);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", EntityNumericDamage);
+INCLUDE_ASM("st/cen/nonmatchings/11280", EntityNumericDamage);
 
 #include "../create_entity_from_layout.h"
 
@@ -201,7 +201,7 @@ void func_80193088(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", func_80193184);
+INCLUDE_ASM("st/cen/nonmatchings/11280", func_80193184);
 
 void InitRoomEntities(s32 objLayoutId) {
     u16* pObjLayoutStart = D_801801EC[objLayoutId];
@@ -244,7 +244,7 @@ void InitRoomEntities(s32 objLayoutId) {
     func_80192FE4(tilemap->cameraY.i.hi + 0x120);
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", func_80193410);
+INCLUDE_ASM("st/cen/nonmatchings/11280", func_80193410);
 
 void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity) {
     DestroyEntity(entity);
@@ -277,7 +277,7 @@ bool func_801935B4(Entity* self) {
 }
 
 // Red door (ID 05)
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", EntityRedDoor);
+INCLUDE_ASM("st/cen/nonmatchings/11280", EntityRedDoor);
 
 #include "../../destroy_entity.h"
 
@@ -299,7 +299,7 @@ void PreventEntityFromRespawning(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", func_80194394);
+INCLUDE_ASM("st/cen/nonmatchings/11280", func_80194394);
 
 u8 func_8019444C(u8 frames[], Entity* self, u8 arg2) {
     u16 animFrameStart = self->animFrameIdx * 2;
@@ -615,7 +615,7 @@ void func_80194EE0(u16 arg0, u16 arg1) {
     g_CurrentEntity->step_s = 0;
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", InitializeEntity);
+INCLUDE_ASM("st/cen/nonmatchings/11280", InitializeEntity);
 
 void func_80195070(Entity* entity) {
     if (entity->step == 0) {
@@ -688,7 +688,7 @@ void func_801951C0(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", func_80195318);
+INCLUDE_ASM("st/cen/nonmatchings/11280", func_80195318);
 
 #include "../replace_breakable_with_item_drop.h"
 
@@ -714,7 +714,7 @@ void func_80195714(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", func_80195798);
+INCLUDE_ASM("st/cen/nonmatchings/11280", func_80195798);
 
 void CollectHeart(u16 index) {
     g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
@@ -780,7 +780,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
     DestroyEntity(g_CurrentEntity);
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", func_80195B68);
+INCLUDE_ASM("st/cen/nonmatchings/11280", func_80195B68);
 
 void func_80195C0C(void) {
     g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
@@ -790,12 +790,12 @@ void func_80195C0C(void) {
 
 void func_80195C5C(void) { DestroyEntity(g_CurrentEntity); }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", EntityPrizeDrop);
+INCLUDE_ASM("st/cen/nonmatchings/11280", EntityPrizeDrop);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", EntityExplosion);
+INCLUDE_ASM("st/cen/nonmatchings/11280", EntityExplosion);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", BlinkItem);
+INCLUDE_ASM("st/cen/nonmatchings/11280", BlinkItem);
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/11280", EntityEquipItemDrop);
+INCLUDE_ASM("st/cen/nonmatchings/11280", EntityEquipItemDrop);
 
 #include "../blit_char.h"

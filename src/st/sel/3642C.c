@@ -236,7 +236,7 @@ void func_801B690C(u8 ySteps, Entity* self) {
     g_Dialogue.portraitAnimTimer++;
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/3642C", func_801B69F8);
+INCLUDE_ASM("st/sel/nonmatchings/3642C", func_801B69F8);
 
 s32 func_801B76F0(const char* msg) {
     const int PRIM = -5;
@@ -327,4 +327,4 @@ u16* func_801B78BC(char ch) {
     return g_api.func_80106A28(jCh, 0);
 }
 
-INCLUDE_ASM("asm/us/st/sel/nonmatchings/3642C", func_801B79D4);
+INCLUDE_ASM("st/sel/nonmatchings/3642C", func_801B79D4);

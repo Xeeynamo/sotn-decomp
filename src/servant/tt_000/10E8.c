@@ -1213,7 +1213,7 @@ void func_80174038(Entity* entity) {
 }
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/servant/tt_000/nonmatchings/10E8", func_80174210);
+INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80174210);
 #else
 typedef struct {
     u32 unk0;

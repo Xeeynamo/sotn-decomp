@@ -32,7 +32,7 @@ void EntityBackgroundBlock(Entity* self) {
     func_80194394(obj->unk10, self);
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId12);
+INCLUDE_ASM("st/cen/nonmatchings/D600", EntityUnkId12);
 
 void EntityUnkId01(Entity* self) {
     Entity* newEntity;
@@ -462,7 +462,7 @@ void func_8018E6C4(u8 ySteps) {
     g_Dialogue.portraitAnimTimer++;
 }
 
-INCLUDE_ASM("asm/us/st/cen/nonmatchings/D600", EntityUnkId16);
+INCLUDE_ASM("st/cen/nonmatchings/D600", EntityUnkId16);
 
 void func_8018F890(s16 arg0) {
     s16 temp_v0 = arg0 - g_Tilemap.height;

@@ -17,10 +17,10 @@ extern u8 D_80193ABC;
 extern LayoutEntity* g_pStObjLayout[];
 
 // DECOMP_ME_WIP TestCollisions https://decomp.me/scratch/Nq66t
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/861C", TestCollisions);
+INCLUDE_ASM("st/wrp/nonmatchings/861C", TestCollisions);
 
 // DECOMP_ME_WIP EntityNumericDamage https://decomp.me/scratch/m0PKE
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/861C", EntityNumericDamage);
+INCLUDE_ASM("st/wrp/nonmatchings/861C", EntityNumericDamage);
 
 #include "../create_entity_from_layout.h"
 
@@ -344,7 +344,7 @@ s32 func_8018A950(Entity* e) {
     return diff;
 }
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/861C", EntityRedDoor);
+INCLUDE_ASM("st/wrp/nonmatchings/861C", EntityRedDoor);
 
 #include "../../destroy_entity.h"
 
@@ -770,7 +770,7 @@ void func_8018C55C(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/861C", func_8018C6B4);
+INCLUDE_ASM("st/wrp/nonmatchings/861C", func_8018C6B4);
 
 #include "../replace_breakable_with_item_drop.h"
 

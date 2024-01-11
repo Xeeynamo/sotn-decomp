@@ -1181,7 +1181,7 @@ void EntityBreakable(Entity* entity) {
 }
 
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", EntityWarpRoom);
+INCLUDE_ASM("st/wrp/nonmatchings/6FD0", EntityWarpRoom);
 #else
 extern u8 D_8003BEBC[];
 extern s32 D_8003C8B8;
@@ -1456,7 +1456,7 @@ void EntityWarpRoom(Entity* self) {
 // TODO this is matching, but EntityWarpRoom needs to match first due to the
 // jump table.
 #ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/6FD0", EntityWarpSmallRocks);
+INCLUDE_ASM("st/wrp/nonmatchings/6FD0", EntityWarpSmallRocks);
 #else
 
 void EntityWarpSmallRocks(Entity* entity) {

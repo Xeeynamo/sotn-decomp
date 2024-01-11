@@ -134,7 +134,7 @@ void EntityUnkId16(Entity* self) {
 }
 
 // lightning and sound for background
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityBackgroundLightning);
+INCLUDE_ASM("st/no3/nonmatchings/377D4", EntityBackgroundLightning);
 
 // window that opens and shuts in the background
 void EntityShuttingWindow(Entity* self) {
@@ -388,7 +388,7 @@ void EntityCastleDoor(Entity* self) {
 }
 
 // bushes in parallax background
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", EntityBackgroundBushes);
+INCLUDE_ASM("st/no3/nonmatchings/377D4", EntityBackgroundBushes);
 
 void EntityUnkId1C(Entity* self, s16 primIndex) {
     volatile char pad[8]; //! FAKE
@@ -570,7 +570,7 @@ void EntityTransparentWater(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", func_801B94F0);
+INCLUDE_ASM("st/no3/nonmatchings/377D4", func_801B94F0);
 
 // lever and platform to open caverns door
 void EntityCavernDoorLever(Entity* entity) {
@@ -1492,7 +1492,7 @@ void EntityFallingRock(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/no3/nonmatchings/377D4", func_801BB548);
+INCLUDE_ASM("st/no3/nonmatchings/377D4", func_801BB548);
 
 // sky animation during death cutscene
 void EntityDeathSkySwirl(Entity* self) {

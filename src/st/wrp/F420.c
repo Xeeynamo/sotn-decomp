@@ -590,10 +590,10 @@ void func_80190614(Entity* self) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/F420", func_801907EC);
+INCLUDE_ASM("st/wrp/nonmatchings/F420", func_801907EC);
 
 u16 D_8018107C[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8, 0, 0};
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/F420", func_80190DCC);
+INCLUDE_ASM("st/wrp/nonmatchings/F420", func_80190DCC);
 
 void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     u16 buf[COLORS_PER_PAL];
@@ -719,7 +719,7 @@ void func_801917BC(Primitive* prim) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/wrp/nonmatchings/F420", EntityStageNamePopup);
+INCLUDE_ASM("st/wrp/nonmatchings/F420", EntityStageNamePopup);
 
 u16 D_801810A0[] = {
     /* 10A0 */ 0x0820,
