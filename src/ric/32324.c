@@ -369,7 +369,6 @@ void StopwatchCrashDoneSparkle(Entity* self) {
     s32 var_a1;
     s32 i;
     s32 var_v1;
-    u8 temp_3F;
 
     switch (self->step) {
     case 0:
