@@ -150,7 +150,7 @@ s32 D_80097424;
 s32 D_80097448[2];
 s32 D_80097450;
 Pos D_80097488;
-u32 mocked_800C52F8[0x200] = {0};
+PixPattern* mocked_800C52F8[0x200] = {NULL};
 PixPattern* D_800C52F8[] = {
     mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
     mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
@@ -280,7 +280,7 @@ s32 D_8013984C;
 s32 D_80139850;
 s32 D_80139854;
 u16 D_80137538[32];
-GfxBank g_FakeGfxBank = {0};
+GfxBank* g_FakeGfxBank = {NULL};
 GfxBank** g_GfxSharedBank[] = {
     &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
     &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
@@ -348,7 +348,6 @@ ImgSrc g_imgUnk8013C200_impl = {
     0,
     0,
     0,
-    NULL,
 };
 ImgSrc* g_imgUnk8013C200 = &g_imgUnk8013C200_impl;
 ImgSrc* g_imgUnk8013C270 = &g_imgUnk8013C200_impl;
