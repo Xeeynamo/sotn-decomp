@@ -293,6 +293,7 @@ void func_801B786C(s16 arg0) {
 
 u16* func_801B78BC(char ch) {
     u16 jCh;
+#ifndef VERSION_PC
 
     if (ch >= 'a') {
         jCh = ('ａ' - 'a') + ch;
@@ -324,6 +325,10 @@ u16* func_801B78BC(char ch) {
             ++jCh;
         }
     }
+#else
+    jCh = 'A';
+#endif
+
     return g_api.func_80106A28(jCh, 0);
 }
 

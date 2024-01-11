@@ -21,6 +21,7 @@
 
 #include <common.h>
 #include <inttypes.h>
+#include <string.h>
 #include "cdc.h"
 
 //
