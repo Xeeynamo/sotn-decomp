@@ -1318,9 +1318,79 @@ void func_801601DC(Entity* entity) {
     }
 }
 
-void func_801603B4(void) {}
+void func_801603B4(Entity* self) {}
 
 void func_801603BC(void) {}
+
+PfnEntityUpdate g_RicEntityTbl[] = {
+    func_801603B4,
+    EntityEntFactory,
+    func_80160FC4,
+    func_80169704,
+    func_80169C10,
+    func_8016147C,
+    func_80169D74,
+    func_801684D8,
+    func_80168A20,
+    func_80161C2C,
+    func_80166784,
+    func_80167EC4,
+    EntityGiantSpinningCross,
+    func_8016902C,
+    func_80167A58,
+    func_80167A60,
+    func_8016779C,
+    func_80167964,
+    func_801603B4,
+    func_80161EF8,
+    func_80167A68,
+    func_80169470,
+    func_80161FF0,
+    func_80160C38,
+    func_80160E4C,
+    func_801623E0,
+    func_80162604,
+    func_80162C84,
+    func_80162870,
+    func_80160F0C,
+    func_80162C7C,
+    func_80162EF8,
+    func_80169F04,
+    func_801641A0,
+    func_80164444,
+    func_80167A70,
+    func_8016A26C,
+    func_8016A974,
+    func_8016B0C0,
+    func_80160D2C,
+    func_80164DF8,
+    func_801656B0,
+    func_8016B97C,
+    func_8016C1BC,
+    func_8016C734,
+    func_8016CC74,
+    func_8016D4D8,
+    func_8016D328,
+    func_8016E324,
+    func_8016D9C4,
+    func_8016DF74,
+    func_8016E9E4,
+    func_8016E46C,
+    EntitySubwpnBible,
+    func_80172AE8,
+    func_801719A4,
+    func_8017161C,
+    func_801705EC,
+    func_8016F198,
+    EntityStopWatchExpandingCircle,
+    func_8017091C,
+    func_8016D920,
+    func_801601DC,
+    func_8015FEA8,
+    func_8016F6F0,
+    func_80170548,
+    func_80166060,
+    func_801603B4};
 
 // Corresponding DRA function is func_8011A4D0
 void func_801603C4(void) {
@@ -1338,7 +1408,7 @@ void func_801603C4(void) {
     for (i = 4; i < 0x40; i++, g_CurrentEntity++, entity++) {
         if (entity->entityId != 0) {
             if (entity->step == 0) {
-                entity->pfnUpdate = D_8015495C[entity->entityId];
+                entity->pfnUpdate = g_RicEntityTbl[entity->entityId];
             }
             if ((temp_s2 == 0) || (entity->flags & 0x10000)) {
                 entity->pfnUpdate(entity);
