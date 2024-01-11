@@ -5,13 +5,20 @@ project(Sound)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+if (WIN32)
+  set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+endif()
 
-if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
   set(CMAKE_BUILD_TYPE Debug)
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
   set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fsanitize=address")
+endif()
+
+if (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-implicit-function-declaration")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-return-type")
 endif()
 
 find_package(SDL2 REQUIRED)

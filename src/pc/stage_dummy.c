@@ -1,5 +1,7 @@
 #include <game.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <cJSON/cJSON.h>
 #include "pc.h"
 #include "sfx.h"
@@ -235,6 +237,8 @@ static void TestCollisions(void) { NOT_IMPLEMENTED; }
 
 static void func_8018A7AC(void) { NOT_IMPLEMENTED; }
 
+void SetGameState(GameState gameState);
+void PlaySfx(s32 sfxId);
 static void InitRoomEntities(s32 objLayoutId) {
     if (g_StageId == STAGE_SEL) {
         SetGameState(Game_NowLoading);

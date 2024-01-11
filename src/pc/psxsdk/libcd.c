@@ -55,6 +55,7 @@ int CdPosToInt(CdlLOC* p) {
 
 int CdControl(u_char com, u_char* param, u_char* result) {
     DEBUGF("com %d %s", com, CdSyncModeToStr(com));
+    CdlLOC* pos;
 
     if (!cd_fp) {
         DEBUGF("Cd not open.\n");
@@ -62,7 +63,7 @@ int CdControl(u_char com, u_char* param, u_char* result) {
 
     switch (com) {
     case CdlSetloc:
-        CdlLOC* pos = (CdlLOC*)param;
+        pos = (CdlLOC*)param;
         fseek(cd_fp, CdPosToInt(pos) * SECTOR_SIZE, SEEK_SET);
         break;
     case CdlReadN:

@@ -1,5 +1,6 @@
 #include <common.h>
 #include <log.h>
+#include <stdio.h>
 #include <string.h>
 #include <dirent.h>
 #include <sys/stat.h>
