@@ -122,8 +122,8 @@ void func_801B1198(s16 arg0) {
 }
 
 u16* func_801B11E8(char ch) {
-#ifndef VERSION_PC
     u16 jCh;
+#ifndef VERSION_PC
 
     if (ch >= 'a') {
         jCh = ('ａ' - 'a') + ch;
