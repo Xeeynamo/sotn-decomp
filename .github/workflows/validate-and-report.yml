@@ -71,7 +71,7 @@ jobs:
           key: sotn-${{ matrix.dependency }}-deps
       - name: Setting up dependencies
         working-directory: disks
-        run: cat dependencies/* | tar -xf -
+        run: cat dependencies/* | tar -xfz -
       - name: Extract dependencies
         run: make extract_disk
       - name: Split game data
@@ -123,7 +123,7 @@ jobs:
           key: sotn-${{ matrix.dependency }}-deps
       - name: Setting up dependencies
         working-directory: disks
-        run: cat dependencies/* | tar -xf -
+        run: cat dependencies/* | tar -xfz -
       - name: Extract dependencies
         run: make extract_disk
       - name: Split game data
@@ -160,7 +160,7 @@ jobs:
           key: sotn-${{ matrix.dependency }}-deps
       - name: Setting up dependencies
         working-directory: disks
-        run: cat dependencies/* | tar -xf -
+        run: cat dependencies/* | tar -xfz -
       - name: Extract dependencies
         run: make extract_disk
       - name: Obtain built binaries
