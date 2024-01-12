@@ -58,6 +58,9 @@ jobs:
         7z x C:\temp-sdl2\SDL2-devel-2.28.5-VC.zip -oC:\temp-sdl2
     - name: Clone repo
       uses: actions/checkout@v3
+      with:
+        ref: ${{ github.ref }}
+        submodules: true
     - name: Build
       run: |
         cmake -B ${{github.workspace}}/pc -DCMAKE_BUILD_TYPE=Release -DSDL2_PATH=C:\temp-sdl2\SDL2-2.28.5 -DSDL2_IMAGE_PATH=C:\temp-sdl2_image\SDL2_image-2.8.1
