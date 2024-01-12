@@ -116,8 +116,8 @@ clean:
 	git clean -fdx function_calls/
 	git clean -fdx sotn_calltree.txt
 format:
-	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c" | grep -v 'src/pc/3rd')
-	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.h" | grep -v 'src/pc/3rd')
+	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c" | grep -v 'src/pc/3rd' | grep -v 'src/pc/psxsdk/sound_rev')
+	clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.h" | grep -v 'src/pc/3rd' | grep -v 'src/pc/psxsdk/sound_rev')
 	clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name "*.h")
 	cargo run --release --manifest-path ./tools/lints/sotn-lint/Cargo.toml ./src
 	black tools/*.py

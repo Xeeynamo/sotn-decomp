@@ -668,7 +668,8 @@ extern s32 D_80138438;
 extern s32 D_80138440;
 extern s32 D_80138444;
 extern s32 D_80138454;
-// sound rev is a different version of psy-q where SeqStruct is a different size (200)
+// sound rev is a different version of psy-q where SeqStruct is a different size
+// (200)
 #ifdef HAVE_SOUND_REV
 extern char g_SeqTable[200 * SEQ_TABLE_S_MAX * SEQ_TABLE_T_MAX];
 #else
@@ -775,8 +776,8 @@ extern s16 D_8013B650[4];
 extern s16 D_8013B678[];
 extern s16 D_8013B698;
 extern u8 D_8013B6A0[vab0Len]; // VAB file
-extern u8 D_8017D350[vab1Len];  // VAB file
-extern u8 D_8018B4E0[vab3Len];  // VAB file
+extern u8 D_8017D350[vab1Len]; // VAB file
+extern u8 D_8018B4E0[vab3Len]; // VAB file
 extern u8 D_801A9C80[vab2Len]; // VAB file
 extern u16 D_8013AEE0;
 extern s8 D_8013AEE8;
