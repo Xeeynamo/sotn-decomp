@@ -169,6 +169,8 @@ bool InitGame(void) {
     g_Vram.D_800ACDA8.w = 0x0100;
     g_Vram.D_800ACDA8.h = 0x0010;
 
+    InitSoundRev();
+
     InitVbVh();
 
     if (!FileStringify(InitSfxData, "assets/dra/sfx.json")) {
@@ -401,6 +403,8 @@ void ReadToArray(const char* path, char* content, size_t maxlen) {
     fclose(f);
 }
 
+u8 lib_seq[7859];
+
 void InitVbVh() {
     ReadToArray("assets/dra/vh_0.bin", aPbav, LEN(aPbav));
     ReadToArray("assets/dra/vh_1.bin", aPbav_0, LEN(aPbav_0));
@@ -411,6 +415,8 @@ void InitVbVh() {
     ReadToArray("assets/dra/vb_1.bin", D_8017D350, LEN(D_8017D350));
     ReadToArray("assets/dra/vb_2.bin", D_8018B4E0, LEN(D_8018B4E0));
     ReadToArray("assets/dra/vb_3.bin", D_801A9C80, LEN(D_801A9C80));
+
+    ReadToArray("disks/us/ST/LIB/SEQ_LIB.SEQ", lib_seq, 7859);
 }
 
 #define DO_ITEM(field_str, jitem, item, to_set)                                \

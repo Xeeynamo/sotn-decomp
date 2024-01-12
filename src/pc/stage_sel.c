@@ -113,6 +113,7 @@ s32 LoadFileSim(s32 fileId, s32 type);
 
 static bool g_WereStringsInitialised = false;
 void InitStageSel(Overlay* o) {
+    PlaySoundRev();
     memcpy(o, &g_StageSel, sizeof(Overlay));
     if (!g_WereStringsInitialised) {
         g_WereStringsInitialised = true;

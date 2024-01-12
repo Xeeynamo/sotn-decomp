@@ -14,6 +14,10 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
   set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fsanitize=address")
+
+  # sound_rev issues
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fpermissive")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-narrowing")
 endif()
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
@@ -97,6 +101,17 @@ set(SOURCE_FILES_STAGE_SEL
     src/st/sel/3642C.c
 )
 
+set(SOURCE_FILES_SOUND_REV
+    src/pc/psxsdk/sound_rev/mednafen/dma.cpp
+    src/pc/psxsdk/sound_rev/mednafen/spu.cpp
+    src/pc/psxsdk/sound_rev/psyq_rev/psyq_spu.cpp
+    src/pc/psxsdk/sound_rev/psx_seq_player/lib_snd.cpp
+    src/pc/psxsdk/sound_rev/psx_seq_player/lib_spu.cpp
+    src/pc/psxsdk/sound_rev/psx_seq_player/vs_vt.c
+    src/pc/psxsdk/sound_rev/psx_seq_player/vs_vtc.c
+    src/pc/psxsdk/sound_rev/psx_seq_player/main.cpp
+)
+
 add_executable(${PROJECT_NAME} 
     ${SOURCE_FILES_PC}
     ${SOURCE_FILES_PSX_SDK}
@@ -104,6 +119,7 @@ add_executable(${PROJECT_NAME}
     ${SOURCE_FILES_3RD}
     ${SOURCE_FILES_DRA}
     ${SOURCE_FILES_STAGE_SEL}
+    ${SOURCE_FILES_SOUND_REV}
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE 
@@ -124,4 +140,5 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
     HARD_LINK
     DEMO_KEY_PTR=0
     _internal_version_us
+    HAVE_SOUND_REV
     )

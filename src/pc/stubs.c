@@ -201,17 +201,17 @@ u32 D_801362C8;
 s32 g_DebugIsRecordingVideo;
 s32 g_DebugWaitInfoTimer;
 s32 g_DebugRecordVideoFid;
-u8 D_8013B6A0[269488] = {0}; // VB file
-u8 D_8017D350[57744] = {0};  // VB file
-u8 D_8018B4E0[64496] = {0};  // VB file
-u8 D_801A9C80[108048] = {0}; // VB file
-u8 aPbav[0x3000] = {0};      // VH file
-u8 aPbav_0[0x2000] = {0};    // VH file
-u8 aPbav_1[0x2000] = {0};    // VH file
-u8 aPbav_2[0x2000] = {0};    // VH file
-u8 aPqes[] = {0};            // SEQ file
-u8 aPqes_0[] = {0};          // SEQ file
-u8 aPqes_1[] = {0};          // SEQ file
+u8 D_8013B6A0[vab0Len] = {0}; // VB file
+u8 D_8017D350[vab1Len] = {0}; // VB file
+u8 D_8018B4E0[vab3Len] = {0}; // VB file
+u8 D_801A9C80[vab2Len] = {0}; // VB file
+u8 aPbav[0x3000] = {0};       // VH file
+u8 aPbav_0[0x2000] = {0};     // VH file
+u8 aPbav_1[0x2000] = {0};     // VH file
+u8 aPbav_2[0x2000] = {0};     // VH file
+u8 aPqes[] = {0};             // SEQ file
+u8 aPqes_0[] = {0};           // SEQ file
+u8 aPqes_1[] = {0};           // SEQ file
 s32 D_801362D0[1];
 s32 D_800987B4;
 u8 g_PadsRepeatTimer[BUTTON_COUNT * PAD_COUNT];
@@ -492,7 +492,13 @@ s16 g_CdSoundCommandQueue[MAX_SND_COUNT];
 u8 D_8013AEDC;
 s8 D_8013AEE8;
 u8 D_801390D8;
+// sound rev is a different version of psy-q where SeqStruct is a different size
+// (200)
+#ifdef HAVE_SOUND_REV
+char g_SeqTable[200 * SEQ_TABLE_S_MAX * SEQ_TABLE_T_MAX];
+#else
 char g_SeqTable[SS_SEQ_TABSIZ * SEQ_TABLE_S_MAX * SEQ_TABLE_T_MAX];
+#endif
 u8 D_801390A8;
 s32 D_8013B694;
 u8 g_MuteCd;

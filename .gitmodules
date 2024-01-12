@@ -13,3 +13,7 @@
 [submodule "tools/maspsx"]
 	path = tools/maspsx
 	url = https://github.com/mkst/maspsx.git
+[submodule "src/pc/psxsdk/sound_rev"]
+	path = src/pc/psxsdk/sound_rev
+	url = https://github.com/sozud/sound_rev.git
+	branch = sotn
