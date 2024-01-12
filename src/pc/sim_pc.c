@@ -106,14 +106,16 @@ void func_800E7D08(void) {
     D_800A04EC = 1;
 }
 
-void LoadStageTileset(u8* pTilesetData, s32 y) {
+void LoadStageTileset(u8* pTilesetData, size_t len, s32 y) {
     RECT rect;
     u8* pTilesetDataSrc;
-    s32 i;
+    u32 i;
+    u32 blockCount;
 
     rect.w = 0x20;
     rect.h = 0x80;
-    for (i = 0; i < 0x20; i++) {
+    blockCount = CLAMP_MAX(len >> 13, 0x20);
+    for (i = 0; i < blockCount; i++) {
         pTilesetDataSrc = pTilesetData + 0x2000 * i;
         rect.x = D_800AC958[i];
         if (i & 2) {
@@ -153,7 +155,7 @@ s32 LoadFileSimToMem(SimKind kind) {
         LoadTPage(SIM_CHR0, 2, 0, 0x20, 0x100, 0x60, 0x70);
         break;
     case SIM_1:
-        LoadStageTileset(STAGE_PRG_PTR, 0x100);
+        LoadStageTileset(STAGE_PRG_PTR, 0, 0x100);
         DrawSync(0);
         LoadImage(&g_Vram.D_800ACD98, D_800A04CC);
         LoadImage(&g_Vram.D_800ACDA8, 0x801C0000);
@@ -163,7 +165,7 @@ s32 LoadFileSimToMem(SimKind kind) {
         break;
     case SIM_STAGE_CHR:
     case SIM_11:
-        LoadStageTileset(SIM_CHR0, 0);
+        LoadStageTileset(SIM_CHR0, 0, 0);
         DrawSync(0);
         clutAddr = g_Clut;
         StoreImage(&g_Vram.D_800ACDB8, clutAddr);
@@ -176,7 +178,7 @@ s32 LoadFileSimToMem(SimKind kind) {
         break;
     case SIM_12:
     case SIM_13:
-        LoadStageTileset(SIM_CHR0, 0x100);
+        LoadStageTileset(SIM_CHR0, 0, 0x100);
         if (kind == 13) {
             LoadImage(&g_Vram.D_800ACD98, D_800A04CC);
         }
@@ -229,22 +231,26 @@ s32 LoadFileSimToMem(SimKind kind) {
     return 0;
 }
 
-bool LoadFilePc(void* content) {
+bool LoadFilePc(void* content, size_t len) {
     g_SimFile->addr = content;
     switch (g_SimFile->kind) { // slowly replacing the original func
     case SIM_1:
-        LoadStageTileset(content, 0x100);
+        DEBUGF("************ %p", content);
+        LoadStageTileset(content, len, 0x100);
         LoadImage(&g_Vram.D_800ACD98, D_800A04CC);
         LoadImage(&g_Vram.D_800ACDA8, (u8*)content + 0x40000);
         StoreImage(&g_Vram.D_800ACDA8, g_Clut + 0x1000);
         break;
     case SIM_STAGE_CHR:
-        LoadStageTileset(content, 0);
+        DEBUGF("############# %p, %d", content, len);
+        LoadStageTileset(content, len, 0);
         break;
     case SIM_12:
-        LoadStageTileset(content, 0x100);
+        DEBUGF(">>>>>>>>>>>>> %p", content);
+        LoadStageTileset(content, len, 0x100);
     case SIM_13:
-        LoadStageTileset(content, 0x100);
+        DEBUGF("============= %p", content);
+        LoadStageTileset(content, len, 0x100);
         LoadImage(&g_Vram.D_800ACD98, D_800A04CC);
         break;
     default:
