@@ -140,7 +140,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     sound_rev
     )
 
-    
 target_compile_definitions(${PROJECT_NAME} PRIVATE 
     VERSION_PC
     PERMUTER
