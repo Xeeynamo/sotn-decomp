@@ -679,6 +679,17 @@ typedef struct {
     s16 unk94;
 } ET_stopwatchSparkle;
 
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+    s16 unk86;
+    s16 unk88;
+    s16 unk8A;
+} ET_RichterPowerUpRing;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_EntFactory factory;
@@ -710,6 +721,7 @@ typedef union {
     /* 0x7C */ ET_stopwatchSparkle et_stopWatchSparkle;
     /* 0x7C */ ET_80161FF0 et_80161FF0;
     /* 0x7C */ ET_80162870 et_80162870;
+    /* 0x7C */ ET_RichterPowerUpRing ricPowerRing;
     /* 0x7C */ ET_8016E9E4 et_8016E9E4;
     /* 0x7C */ ET_801719A4 et_801719A4;
     /* 0x7C */ ET_BibleSubwpn et_BibleSubwpn;
