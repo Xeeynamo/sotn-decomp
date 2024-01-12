@@ -37,7 +37,7 @@ void func_8015B348(void) {
         break;
 
     case 2:
-        // In this step, Richter rises into the air, similar to whne he uses the
+        // In this step, Richter rises into the air, similar to when he uses the
         // Cross subweapon crash.
         D_801545A8--;
         if ((D_801545A8) == 0) {
