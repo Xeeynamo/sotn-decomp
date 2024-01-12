@@ -14,10 +14,6 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
   set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fsanitize=address")
-
-  # sound_rev issues
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fpermissive")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-narrowing")
 endif()
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
@@ -112,6 +108,17 @@ set(SOURCE_FILES_SOUND_REV
     src/pc/psxsdk/sound_rev/psx_seq_player/main.cpp
 )
 
+add_library(sound_rev ${SOURCE_FILES_SOUND_REV})
+
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
+  # sound_rev issues
+  target_compile_options(sound_rev PRIVATE -fpermissive -Wno-narrowing)
+endif()
+
+target_include_directories(sound_rev PRIVATE
+    ${SDL2_INCLUDE_DIRS}
+    )
+
 add_executable(${PROJECT_NAME} 
     ${SOURCE_FILES_PC}
     ${SOURCE_FILES_PSX_SDK}
@@ -119,7 +126,6 @@ add_executable(${PROJECT_NAME}
     ${SOURCE_FILES_3RD}
     ${SOURCE_FILES_DRA}
     ${SOURCE_FILES_STAGE_SEL}
-    ${SOURCE_FILES_SOUND_REV}
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE 
@@ -131,6 +137,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 
 target_link_libraries(${PROJECT_NAME} PRIVATE 
     ${SDL2_LIBRARIES}
+    sound_rev
     )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE 
