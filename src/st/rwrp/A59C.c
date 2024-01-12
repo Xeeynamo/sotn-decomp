@@ -155,7 +155,7 @@ INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018C8D0);
 
 INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018C948);
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", DestroyEntity);
+#include "../../destroy_entity.h"
 
 INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018D5EC);
 
