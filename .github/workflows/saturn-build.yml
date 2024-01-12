@@ -41,11 +41,7 @@ jobs:
           path: 'disks/dependencies'
       - name: Setting up dependencies
         working-directory: disks
-        run: |
-          cat dependencies/* > dependencies.tar.gz
-          tar -xf dependencies.tar.gz
-          mv *.cue sotn.saturn.cue
-          mv *.bin sotn.saturn.bin
+        run: cat dependencies/* | tar -zxf -
       - name: Install bchunk 7zip
         run: |
           sudo apt-get install p7zip-full bchunk binutils-sh-elf
@@ -92,11 +88,7 @@ jobs:
           path: 'disks/dependencies'
       - name: Setting up dependencies
         working-directory: disks
-        run: |
-          cat dependencies/* > dependencies.tar.gz
-          tar -xf dependencies.tar.gz
-          mv *.cue sotn.saturn.cue
-          mv *.bin sotn.saturn.bin
+        run: cat dependencies/* | tar -zxf -
       - name: Install bchunk 7zip
         run: |
           sudo apt-get install p7zip-full bchunk binutils-sh-elf
