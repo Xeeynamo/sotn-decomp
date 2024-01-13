@@ -151,7 +151,7 @@ void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity) {
     entity->posY.i.hi = source->posY.i.hi;
 }
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018C8D0);
+#include "../entity_is_near_player.h"
 
 INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018C948);
 

@@ -14,6 +14,7 @@ TestCollisions = 0x8018A59C;
 CreateEntityWhenInVerticalRange = 0x8018BE1C;
 CreateEntityWhenInHorizontalRange = 0x8018BF34;
 CreateEntityFromEntity = 0x8018C854;
+EntityIsNearPlayer = 0x8018C8D0;
 DestroyEntity = 0x8018D580;
 PreventEntityFromRespawning = 0x8018D668;
 GetDistanceToPlayerX = 0x8018D880;

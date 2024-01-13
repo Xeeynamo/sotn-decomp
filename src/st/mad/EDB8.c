@@ -233,22 +233,7 @@ void CreateEntityFromEntity(u16 entityId, Entity* ent1, Entity* ent2) {
     ent2->posY.i.hi = (s16)ent1->posY.i.hi;
 }
 
-s32 func_801910A8(Entity* e) {
-    s16 diff;
-
-    diff = PLAYER.posX.i.hi - e->posX.i.hi;
-    diff = ABS(diff);
-
-    if (diff >= 17) {
-        diff = 0;
-    } else {
-        diff = PLAYER.posY.i.hi - e->posY.i.hi;
-        diff = ABS(diff);
-        diff = diff < 33;
-    }
-
-    return diff;
-}
+#include "../entity_is_near_player.h"
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/EDB8", EntityRedDoor);
 

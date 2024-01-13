@@ -69,6 +69,7 @@ EntityNumericDamage = 0x801C2D98;
 InitRoomEntities = 0x801C3C98;
 CreateEntityFromCurrentEntity = 0x801C3EC4;
 CreateEntityFromEntity = 0x801C3F38;
+EntityIsNearPlayer = 0x801C3FB4;
 EntityRedDoor = 0x801C402C;
 DestroyEntity = 0x801C4C64;
 PreventEntityFromRespawning = 0x801C4D4C;
