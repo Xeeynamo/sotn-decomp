@@ -25,7 +25,7 @@ void Update(void);
 void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
 void CreateEntityFromLayout(Entity* entity, LayoutEntity* initDesc);
 void DestroyEntity(Entity*);
-void DestroyEntityFromIndex(s16 index);
+void DestroyEntitiesFromIndex(s16 index);
 s32 AnimateEntity(const u8 frames[], Entity* entity);
 void MoveEntity();
 void FallEntity(void);

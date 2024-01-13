@@ -311,14 +311,7 @@ INCLUDE_ASM("st/st0/nonmatchings/31CA0", EntityRedDoor);
 
 #include "../../destroy_entity.h"
 
-void DestroyEntityFromIndex(s16 index) {
-    Entity* entity = &g_Entities[index];
-
-    while (entity < &D_8007EF1C) {
-        DestroyEntity(entity);
-        entity++;
-    }
-}
+#include "../../destroy_entities_from_index.h"
 
 void PreventEntityFromRespawning(Entity* entity) {
     if (entity->entityRoomIndex) {

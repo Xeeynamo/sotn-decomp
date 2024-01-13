@@ -63,7 +63,7 @@ void func_800E4970(void) {
     ClearBackbuffer();
     SetStageDisplayBuffer();
     func_800EAD7C();
-    DestroyEntities(0);
+    DestroyEntitiesFromIndex(0);
     DestroyAllPrimitives();
     func_800EA538(0);
     HideAllBackgroundLayers();
@@ -173,7 +173,7 @@ void HandlePlay(void) {
         HideAllBackgroundLayers();
         func_800EA538(1);
         ResetPendingGfxLoad();
-        DestroyEntities(0);
+        DestroyEntitiesFromIndex(0);
         DestroyAllPrimitives();
         func_800EDAE4();
         func_801024DC();
@@ -411,7 +411,7 @@ void HandleGameOver(void) {
             g_GpuBuffers[1].draw.isbg = 0;
             g_GpuBuffers[0].draw.isbg = 0;
         }
-        DestroyEntities(0);
+        DestroyEntitiesFromIndex(0);
         func_800EA538(0);
         ResetPendingGfxLoad();
         DestroyAllPrimitives();

@@ -157,7 +157,7 @@ INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018C948);
 
 #include "../../destroy_entity.h"
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018D5EC);
+#include "../../destroy_entities_from_index.h"
 
 void PreventEntityFromRespawning(Entity* entity) {
     if (entity->entityRoomIndex) {

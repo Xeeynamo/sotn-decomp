@@ -983,7 +983,7 @@ void func_800F298C(void) {
         D_801375C8 = 0;
         D_8003C8B8 = 1;
         g_StageId = func_800F16D0();
-        DestroyEntities(0);
+        DestroyEntitiesFromIndex(0);
         DestroyAllPrimitives();
         func_800EDAE4();
         func_800EAD7C();
@@ -1506,7 +1506,7 @@ void func_800F298C(void) {
                 playerY = PLAYER.posY.i.hi + g_Tilemap.cameraY.i.hi;
                 func_800F0CD8(0);
                 if (g_StageId == STAGE_RTOP) {
-                    DestroyEntities(0x40);
+                    DestroyEntitiesFromIndex(0x40);
                     for (i = 0; i < LEN(g_unkGraphicsStruct.D_8009742C); i++) {
                         g_unkGraphicsStruct.D_8009742C[i] = 0;
                     }
@@ -1516,7 +1516,7 @@ void func_800F298C(void) {
                     g_api.o.Update();
                     func_800F0CD8(0);
                     func_800F0CD8(0);
-                    DestroyEntities(0x40);
+                    DestroyEntitiesFromIndex(0x40);
                     for (i = 0; i < LEN(g_unkGraphicsStruct.D_8009742C); i++) {
                         g_unkGraphicsStruct.D_8009742C[i] = 0;
                     }
@@ -1559,7 +1559,7 @@ void func_800F298C(void) {
                     }
                 }
                 if (g_StageId != STAGE_RTOP) {
-                    DestroyEntities(0x40);
+                    DestroyEntitiesFromIndex(0x40);
                     for (i = 0; i < LEN(g_unkGraphicsStruct.D_8009742C); i++) {
                         g_unkGraphicsStruct.D_8009742C[i] = 0;
                     }
@@ -1569,7 +1569,7 @@ void func_800F298C(void) {
                     g_api.o.Update();
                     func_800F0CD8(0);
                     func_800F0CD8(0);
-                    DestroyEntities(0x40);
+                    DestroyEntitiesFromIndex(0x40);
                     for (i = 0; i < LEN(g_unkGraphicsStruct.D_8009742C); i++) {
                         g_unkGraphicsStruct.D_8009742C[i] = 0;
                     }
@@ -1666,7 +1666,7 @@ void func_800F298C(void) {
                     SetGameState(Game_GameOver);
                     ClearImage(&g_Vram.D_800ACDA0, 0xFF, 0xFF, 0xFF);
                     func_800E34A4(-1);
-                    DestroyEntities(0);
+                    DestroyEntitiesFromIndex(0);
                     DestroyAllPrimitives();
                     func_800EDAE4();
                     return;
