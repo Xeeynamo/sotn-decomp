@@ -51,6 +51,7 @@ TestCollisions = 0x8018861C;
 EntityNumericDamage = 0x80189734;
 CreateEntityFromCurrentEntity = 0x8018A860;
 CreateEntityFromEntity = 0x8018A8D4;
+EntityIsNearPlayer = 0x8018A950;
 EntityRedDoor = 0x8018A9C8;
 DestroyEntity = 0x8018B600;
 PreventEntityFromRespawning = 0x8018B6E8;

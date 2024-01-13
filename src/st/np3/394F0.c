@@ -298,48 +298,13 @@ void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity) {
     entity->posY.i.hi = source->posY.i.hi;
 }
 
-s32 func_801BB824(Entity* e) {
-    s16 diff;
-
-    diff = PLAYER.posX.i.hi - e->posX.i.hi;
-    diff = ABS(diff);
-
-    if (diff >= 17) {
-        diff = 0;
-    } else {
-        diff = PLAYER.posY.i.hi - e->posY.i.hi;
-        diff = ABS(diff);
-        diff = diff < 33;
-    }
-
-    return diff;
-}
+#include "../entity_is_near_player.h"
 
 INCLUDE_ASM("st/np3/nonmatchings/394F0", EntityRedDoor);
 
-void DestroyEntity(Entity* item) {
-    s32 i;
-    s32 length;
-    u32* ptr;
+#include "../../destroy_entity.h"
 
-    if (item->flags & FLAG_HAS_PRIMS) {
-        g_api.FreePrimitives(item->primIndex);
-    }
-
-    ptr = (u32*)item;
-    length = sizeof(Entity) / sizeof(s32);
-    for (i = 0; i < length; i++)
-        *ptr++ = 0;
-}
-
-void DestroyEntityFromIndex(s16 index) {
-    Entity* entity = &g_Entities[index];
-
-    while (entity < &D_8007EF1C) {
-        DestroyEntity(entity);
-        entity++;
-    }
-}
+#include "../../destroy_entities_from_index.h"
 
 void PreventEntityFromRespawning(Entity* entity) {
     if (entity->entityRoomIndex) {
@@ -562,25 +527,7 @@ u8 func_801BCED8(s32 x, s32 y) {
 
 #include "../adjust_value_within_threshold.h"
 
-void UnkEntityFunc0(u16 slope, s16 speed) {
-    Entity* entity;
-    s32 moveX;
-    s32 moveY;
-
-    moveX = rcos(slope) * speed;
-    entity = g_CurrentEntity;
-    if (moveX < 0) {
-        moveX += 15;
-    }
-    entity->velocityX = moveX >> 4;
-
-    moveY = rsin(slope) * speed;
-    entity = g_CurrentEntity;
-    if (moveY < 0) {
-        moveY += 15;
-    }
-    entity->velocityY = moveY >> 4;
-}
+#include "../unk_entity_func0.h"
 
 u16 func_801BD004(s16 x, s16 y) { return ratan2(y, x); }
 
@@ -633,7 +580,7 @@ void SetSubStep(u8 step_s) {
     g_CurrentEntity->animFrameDuration = 0;
 }
 
-void func_801BD150(u16 arg0, u16 sfxId) {
+void EntityExplosionSpawn(u16 arg0, u16 sfxId) {
     if (sfxId != 0) {
         func_801C2598(sfxId);
     }
@@ -815,19 +762,7 @@ void func_801BDA08(u16 arg0) {
     }
 }
 
-void CollectHeart(u16 heartSize) {
-    s32* hearts;
-
-    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
-    hearts = &g_Status.hearts;
-    *hearts += c_HeartPrizes[heartSize];
-
-    if (g_Status.heartsMax < *hearts) {
-        *hearts = g_Status.heartsMax;
-    }
-
-    DestroyEntity(g_CurrentEntity);
-}
+#include "../collect_heart.h"
 
 void CollectGold(u16 goldSize) {
     s32 *gold, *unk;
