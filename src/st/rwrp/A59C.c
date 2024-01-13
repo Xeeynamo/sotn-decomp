@@ -382,7 +382,24 @@ void SetSubStep(u8 step_s) {
     g_CurrentEntity->animFrameDuration = 0;
 }
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018E1FC);
+void EntityExplosionSpawn(u16 arg0, u16 sfxId) {
+    if (sfxId != 0) {
+        func_80193644(sfxId);
+    }
+
+    if (arg0 == 0xFF) {
+        DestroyEntity(g_CurrentEntity);
+        return;
+    }
+
+    g_CurrentEntity->entityId = E_EXPLOSION;
+    g_CurrentEntity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
+    g_CurrentEntity->params = arg0;
+    g_CurrentEntity->animCurFrame = 0;
+    g_CurrentEntity->drawFlags = 0;
+    g_CurrentEntity->step = 0;
+    g_CurrentEntity->step_s = 0;
+}
 
 INCLUDE_ASM("st/rwrp/nonmatchings/A59C", InitializeEntity);
 
@@ -493,7 +510,7 @@ void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
 INCLUDE_ASM("st/rwrp/nonmatchings/A59C", EntityPrizeDrop);
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018F814);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", EntityExplosion);
 
 INCLUDE_ASM("st/rwrp/nonmatchings/A59C", BlinkItem);
 

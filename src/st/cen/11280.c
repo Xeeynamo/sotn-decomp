@@ -554,7 +554,7 @@ void func_80194EC4(u8 arg0) {
     entity->animFrameDuration = 0;
 }
 
-void func_80194EE0(u16 arg0, u16 arg1) {
+void EntityExplosionSpawn(u16 arg0, u16 arg1) {
     Entity* entity;
 
     if (arg1 != 0) {

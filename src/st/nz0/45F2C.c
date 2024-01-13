@@ -205,7 +205,7 @@ void func_801C6574(Entity* entity) { // Bone Projectile from Skeleton
 
     if (entity->step) {
         if (entity->flags & 0x100) {
-            func_801BD568(0, 0);
+            EntityExplosionSpawn(0, 0);
             return;
         }
 

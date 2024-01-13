@@ -546,7 +546,7 @@ void SetSubStep(u8 step_s) {
     entity->animFrameDuration = 0;
 }
 
-void func_8019B024(u16 arg0, u16 arg1) {
+void EntityExplosionSpawn(u16 arg0, u16 arg1) {
     Entity* entity;
 
     if (arg1 != 0) {

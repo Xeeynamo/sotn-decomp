@@ -595,7 +595,7 @@ void func_801C58C4(u8 step_s) {
     g_CurrentEntity->animFrameDuration = 0;
 }
 
-void func_801C58E0(u16 arg0, u16 arg1) {
+void EntityExplosionSpawn(u16 arg0, u16 arg1) {
     Entity* entity;
 
     if (arg1 != 0) {

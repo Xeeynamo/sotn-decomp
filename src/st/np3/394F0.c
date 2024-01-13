@@ -580,7 +580,7 @@ void SetSubStep(u8 step_s) {
     g_CurrentEntity->animFrameDuration = 0;
 }
 
-void func_801BD150(u16 arg0, u16 sfxId) {
+void EntityExplosionSpawn(u16 arg0, u16 sfxId) {
     if (sfxId != 0) {
         func_801C2598(sfxId);
     }

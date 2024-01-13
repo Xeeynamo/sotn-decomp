@@ -30,6 +30,7 @@ CollectSubweapon = 0x8018ED6C;
 CollectLifeVessel = 0x8018EF28;
 DestroyCurrentEntity = 0x8018EF78;
 EntityPrizeDrop = 0x8018EFA0;
+EntityExplosion = 0x8018F814;
 BlinkItem = 0x8018F910;
 EntityEquipItemDrop = 0x8018F9B4;
 EntityRelicOrb = 0x8019024C;

@@ -532,7 +532,7 @@ void func_80192BF0(s32 arg0) {
     g_CurrentEntity->animFrameDuration = 0;
 }
 
-void func_80192C0C(u16 arg0, u16 arg1) {
+void EntityExplosionSpawn(u16 arg0, u16 arg1) {
     Entity* entity;
 
     if (arg1 != 0) {
