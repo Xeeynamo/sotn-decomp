@@ -115,12 +115,15 @@ void LoadStageTileset(u8* pTilesetData, size_t len, s32 y) {
 
     rect.w = 0x20;
     rect.h = 0x80;
+
+    // different behaviour from PSX as F_SEL is 192KB long, not 256KB
     blockCount = len >> 13;
     if (blockCount > MaxBlockCount) {
         WARNF("tileset too large (%d > %d): it wil not be fully read",
               blockCount, MaxBlockCount);
         blockCount = MaxBlockCount;
     }
+
     for (i = 0; i < blockCount; i++) {
         pTilesetDataSrc = pTilesetData + 0x2000 * i;
         rect.x = D_800AC958[i];
