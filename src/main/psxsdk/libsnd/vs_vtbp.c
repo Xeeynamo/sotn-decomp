@@ -5,7 +5,7 @@ s16 SsVabTransBodyPartly(u8* addr, u32 bufsize, s16 vabid) {
     s16 new_vabid;
     s32 buff_diff;
     u32 new_bufsize;
-    if (!(((vabid >= 0) && (vabid <= 16)) && (svm_vab_used[vabid] == 2))) {
+    if (vabid < 0 || vabid > 16 || svm_vab_used[vabid] != 2) {
         _spu_setInTransfer(0);
         return -1;
     }
