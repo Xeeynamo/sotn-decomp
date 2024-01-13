@@ -120,5 +120,7 @@ segments:
       - [0x3642C, c, 3642C]
       - [0x380F0, c, save_mgr]
       - [0x39744, c, stream]
+      - [0x3AB70, asm]
+      - [0x3ABA4, asm]
       - [0x3AEE4, sbss]
   - [0x56B28]
