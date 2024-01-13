@@ -39,6 +39,7 @@ CreateEntityWhenInHorizontalRange = 0x80198D5C;
 InitRoomEntities = 0x801993DC;
 CreateEntityFromCurrentEntity = 0x80199608;
 CreateEntityFromEntity = 0x8019967C;
+EntityIsNearPlayer = 0x801996F8;
 EntityRedDoor = 0x80199770;
 DestroyEntity = 0x8019A3A8;
 PreventEntityFromRespawning = 0x8019A490;

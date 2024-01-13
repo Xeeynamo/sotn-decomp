@@ -889,7 +889,7 @@ void DestroyEntity(Entity* entity) {
         *ptr++ = NULL;
 }
 
-void DestroyEntities(s16 startIndex) {
+void DestroyEntitiesFromIndex(s16 startIndex) {
     Entity* pItem;
 
     for (pItem = &g_Entities[startIndex];

@@ -829,7 +829,7 @@ loop_5:
     HideAllBackgroundLayers();
     DestroyAllPrimitives();
     func_800EDAE4();
-    DestroyEntities(0);
+    DestroyEntitiesFromIndex(0);
     func_800EA538(0);
     ResetPendingGfxLoad();
     D_801362B4 = 0x20;
@@ -1113,7 +1113,7 @@ void HandleTitle(void) {
         DestroyAllPrimitives();
         func_800EDAE4();
         ResetEntityArray();
-        DestroyEntities(0);
+        DestroyEntitiesFromIndex(0);
         func_800EA538(0);
         ResetPendingGfxLoad();
         SetStageDisplayBuffer();

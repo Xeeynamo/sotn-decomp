@@ -34,6 +34,7 @@ extern u16 g_InitializeEntityData0[];
 
 void InitializeEntity(u16 arg0[]);
 void EntityUnkId15(Entity* entity);
+void EntityExplosion(Entity* entity);
 
 typedef enum {
     E_NONE,

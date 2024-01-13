@@ -212,35 +212,13 @@ void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity) {
     entity->posY.i.hi = source->posY.i.hi;
 }
 
-s32 func_801996F8(Entity* e) {
-    s16 diff;
-
-    diff = PLAYER.posX.i.hi - e->posX.i.hi;
-    diff = ABS(diff);
-
-    if (diff >= 17) {
-        diff = 0;
-    } else {
-        diff = PLAYER.posY.i.hi - e->posY.i.hi;
-        diff = ABS(diff);
-        diff = diff < 33;
-    }
-
-    return diff;
-}
+#include "../entity_is_near_player.h"
 
 INCLUDE_ASM("st/dre/nonmatchings/173C4", EntityRedDoor);
 
 #include "../../destroy_entity.h"
 
-void DestroyEntityFromIndex(s16 index) {
-    Entity* entity = &g_Entities[index];
-
-    while (entity < &D_8007EF1C) {
-        DestroyEntity(entity);
-        entity++;
-    }
-}
+#include "../../destroy_entities_from_index.h"
 
 void PreventEntityFromRespawning(Entity* entity) {
     if (entity->entityRoomIndex) {
@@ -509,29 +487,7 @@ u8 func_8019ADAC(s16 arg0, s16 arg1) {
 
 #include "../adjust_value_within_threshold.h"
 
-void UnkEntityFunc0(u16 slope, s16 speed) {
-    Entity* entity;
-    s32 moveX;
-    s32 moveY;
-
-    moveX = rcos(slope) * speed;
-    entity = g_CurrentEntity;
-
-    if (moveX < 0) {
-        moveX += 15;
-    }
-
-    entity->velocityX = moveX >> 4;
-
-    moveY = rsin(slope) * speed;
-    entity = g_CurrentEntity;
-
-    if (moveY < 0) {
-        moveY += 15;
-    }
-
-    entity->velocityY = moveY >> 4;
-}
+#include "../unk_entity_func0.h"
 
 u16 func_8019AED8(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
@@ -590,7 +546,7 @@ void SetSubStep(u8 step_s) {
     entity->animFrameDuration = 0;
 }
 
-void func_8019B024(u16 arg0, u16 arg1) {
+void EntityExplosionSpawn(u16 arg0, u16 arg1) {
     Entity* entity;
 
     if (arg1 != 0) {
