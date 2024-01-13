@@ -497,29 +497,7 @@ u16 func_80194C68(s16 x, s16 y) {
 
 #include "../adjust_value_within_threshold.h"
 
-void UnkEntityFunc0(s32 slope, s16 speed) {
-    Entity* entity;
-    s32 moveX;
-    s32 moveY;
-
-    moveX = rcos((u16)slope) * speed;
-    entity = g_CurrentEntity;
-
-    if (moveX < 0) {
-        moveX += 15;
-    }
-
-    entity->velocityX = moveX >> 4;
-
-    moveY = rsin((u16)slope) * speed;
-    entity = g_CurrentEntity;
-
-    if (moveY < 0) {
-        moveY += 15;
-    }
-
-    entity->velocityY = moveY >> 4;
-}
+#include "../unk_entity_func0.h"
 
 u16 func_80194D94(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 

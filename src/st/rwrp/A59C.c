@@ -330,7 +330,7 @@ s32 func_8018DF84(s32 arg0, s32 arg1) {
 
 #include "../adjust_value_within_threshold.h"
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", UnkEntityFunc0);
+#include "../unk_entity_func0.h"
 
 u16 func_8018E0B0(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
