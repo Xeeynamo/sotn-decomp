@@ -697,14 +697,7 @@ void func_80195714(void) {
 
 INCLUDE_ASM("st/cen/nonmatchings/11280", func_80195798);
 
-void CollectHeart(u16 index) {
-    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
-    g_Status.hearts = D_80180FE8[index] + g_Status.hearts;
-    if (g_Status.heartsMax < g_Status.hearts) {
-        g_Status.hearts = g_Status.heartsMax;
-    }
-    DestroyEntity(g_CurrentEntity);
-}
+#include "../collect_heart.h"
 
 void CollectGold(u16 goldSize) {
     s32 *gold, *unk;

@@ -763,6 +763,7 @@ void func_801B5F4C(u16 arg0) {
     }
 }
 
+// Can't be deduped with the other instances due to the extra memcpy
 void CollectHeart(u16 index) {
     s8 hearts[10];
 

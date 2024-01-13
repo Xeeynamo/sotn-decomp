@@ -813,19 +813,7 @@ void func_8018CB34(u16 arg0) {
     }
 }
 
-void CollectHeart(u16 heartSize) {
-    s32* hearts;
-
-    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
-    hearts = &g_Status.hearts;
-    *hearts += c_HeartPrizes[heartSize];
-
-    if (g_Status.heartsMax < *hearts) {
-        *hearts = g_Status.heartsMax;
-    }
-
-    DestroyEntity(g_CurrentEntity);
-}
+#include "../collect_heart.h"
 
 void CollectGold(u16 goldSize) {
     s32 *gold, *unk;
