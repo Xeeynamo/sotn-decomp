@@ -166,6 +166,17 @@ def get_gapi_funcs():
     found_functions.append("g_api.o.Update")
     return found_functions
 
+# Functions which have been identified as handwritten. These will be in splat
+# with something like: - [0x3ABA4, asm, handwritten/DecDCTvlc]
+def get_handwritten_funcs():
+    handwritten = [s.stem
+        for s in Path("asm").rglob("*.s")
+        if "handwritten" in str(s)
+    ]
+    print("Getting handwritten funcs")
+    print(handwritten)
+    return handwritten
+
 
 def is_decompiled(srcfile, fname):
     with open(srcfile) as f:
@@ -415,6 +426,8 @@ if __name__ == "__main__":
         function_lookup[f] = "MAIN"
     for f in get_gapi_funcs():
         function_lookup[f] = "GAPI"
+    for f in get_handwritten_funcs():
+        function_lookup[f] = "HANDWRITTEN"
     print(f"Created function lookup table in {time.perf_counter() - timer} seconds")
     # 2: For each function, find what it calls. When finding a callee, also add itself as caller.
     for function in functions:
