@@ -76,11 +76,11 @@ segments:
       - [0x2BC0, .data, 5087C] # D_800A2BC0
       - [0x2C0C, .data, 5087C] # D_800A2C0C, D_800A2D44
       - [0x2D48, .data, menu]
-      - [0x2EC0, .data, 5D6C4] # g_LevelHPIncrease
-      - [0x2EE8, .data, 5D6C4] # hud sprites def
-      - [0x2FBC, .data, 5D6C4] # g_CapePaletteDefs
-      - [0x300C, .data, 5D6C4] # g_CheatCodes
-      - [0x3014, .data, 5D6C4] # D_800A3014
+      - [0x2EC0, .data, 5D5BC] # g_LevelHPIncrease
+      - [0x2EE8, .data, 5D5BC] # hud sprites def
+      - [0x2FBC, .data, 5D5BC] # g_CapePaletteDefs
+      - [0x300C, .data, 5D5BC] # g_CheatCodes
+      - [0x3014, .data, 5D5BC] # D_800A3014
       - [0x3134, data, 627C4]
       - [0x31B0, data, 63ED4]
       - [0x37D8, data]
@@ -143,8 +143,8 @@ segments:
       - [0x3C71C, .rodata, menu] # MenuHandleCursorInput
       - [0x3C734, .rodata, menu] # MenuHandle str
       - [0x3C75C, .rodata, menu] # MenuHandle jtbl
-      - [0x3CBAC, .rodata, 5D6C4] # func_800FD6C4
-      - [0x3CBF4, .rodata, 5D6C4] # g_CheatCodes
+      - [0x3CBAC, .rodata, 5D5BC] # func_800FD6C4
+      - [0x3CBF4, .rodata, 5D5BC] # g_CheatCodes
       - [0x3CC0C, .rodata, 627C4]
       - [0x3CC2C, .rodata, 627C4] # func_801028AC
       - [0x3CC54, .rodata, 627C4] # func_80102D70
@@ -226,7 +226,7 @@ segments:
       - [0x4FBF8, c, demo]
       - [0x5087C, c, 5087C]
       - [0x5483C, c, menu]
-      - [0x5D6C4, c, 5D6C4]
+      - [0x5D5BC, c, 5D5BC]
       - [0x627C4, c, 627C4]
       - [0x63ED4, c, 63ED4]
       - [0x673C0, c, cd]
