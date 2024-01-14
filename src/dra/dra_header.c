@@ -61,7 +61,7 @@ bool func_80133950(void);
 bool func_800F27F4(s32 arg0);
 s32 func_800FF110(s32 arg0);
 s32 func_800FD664(s32 arg0);
-bool func_800FD5BC(Unkstruct_800FD5BC* arg0);
+bool func_800FD5BC(DamageParam* arg0);
 void LearnSpell(s32 spellId);
 void DebugInputWait(const char* msg);
 

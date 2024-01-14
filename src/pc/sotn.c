@@ -238,7 +238,7 @@ bool FileStringify(bool (*cb)(const char* content), const char* path) {
     fclose(f);
     return r;
 }
-bool FileUseContent(bool (*cb)(void* content), const char* path) {
+bool FileUseContent(bool (*cb)(void* content, size_t len), const char* path) {
     INFOF("open '%s'", path);
     FILE* f = fopen(path, "rb");
     if (f == NULL) {
@@ -265,7 +265,7 @@ bool FileUseContent(bool (*cb)(void* content), const char* path) {
         return false;
     }
 
-    bool r = cb(content);
+    bool r = cb(content, bytesread);
     free(content);
     fclose(f);
     return r;
