@@ -166,6 +166,7 @@ def get_gapi_funcs():
     found_functions.append("g_api.o.Update")
     return found_functions
 
+
 # Functions which have been identified as handwritten. These will be in splat
 # with something like: - [0x3ABA4, asm, handwritten/DecDCTvlc]
 def get_handwritten_funcs():
@@ -433,7 +434,7 @@ if __name__ == "__main__":
         function_lookup[f] = "MAIN"
     for f in get_gapi_funcs():
         function_lookup[f] = "GAPI"
-    
+
     print(f"Created function lookup table in {time.perf_counter() - timer} seconds")
     # 2: For each function, find what it calls. When finding a callee, also add itself as caller.
     for function in functions:
