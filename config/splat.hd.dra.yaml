@@ -86,7 +86,8 @@ segments:
       - [0x3144, data, 627C4]
       - [0x37E8, data]
       - [0x3C50, .data, lba_stage]
-      - [0x4A10, data]
+      - [0x4A10, .data, config_jp]
+      - [0xC72C, data]
       - [0xCA20, .data, cd]
       - [0xCE48, data]
       - [0xCFDC, .data, 6D59C]
@@ -138,7 +139,7 @@ segments:
       - [0x3CCC0, .rodata, 627C4] # HandleSaveMenu, all the strings
       - [0x3CED4, .rodata, 63ED4] # jtbl_800DCED4
       - [0x3CEF0, .rodata, lba_stage]
-      - [0x3D29C, rodata]
+      - [0x3D29C, .rodata, config_jp]
       - [0x40C74, .rodata, cd]
       - [0x40D64, rodata] # jtbl_800E0D64
       - [0x40D64, rodata] # jtbl_800E0D64
