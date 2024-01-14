@@ -53,6 +53,32 @@ s32 g_CapePaletteDefs[] = {
     ITEM_TWILIGHT_CLOAK, 0x40A, CAPE_PAL_TERMINATOR, 0x409,
 };
 
+bool func_800FD5BC(DamageParam* arg0) {
+    if (arg0->damageKind != 5) {
+        if (arg0->damageKind >= 16) {
+            arg0->damageTaken = g_Status.hpMax / 8;
+        } else if (g_Status.hpMax >= (arg0->damageTaken * 20)) {
+            arg0->damageKind = 3;
+        } else {
+            arg0->damageKind = 2;
+        }
+    }
+    if (g_Status.hp <= arg0->damageTaken) {
+        g_Status.hp = 0;
+        return true;
+    }
+    g_Status.hp -= arg0->damageTaken;
+    return false;
+}
+
+s32 func_800FD664(s32 arg0) {
+    return g_StageId & STAGE_INVERTEDCASTLE_FLAG ? arg0 << 1 : arg0;
+}
+
+ItemCategory GetEquipItemCategory(s32 equipId) {
+    return g_EquipDefs[g_Status.equipment[equipId]].itemCategory;
+}
+
 s32 func_800FD6C4(s32 equipTypeFilter) {
     s32 itemCount;
     s32 equipType;
@@ -83,22 +109,22 @@ s32 func_800FD6C4(s32 equipTypeFilter) {
     return itemCount;
 }
 
-u8* GetEquipOrder(s32 equipTypeFilter) {
-    if (equipTypeFilter == 0) {
+u8* GetEquipOrder(ItemTypes kind) {
+    if (kind == HAND_TYPE) {
         return g_Status.equipHandOrder;
     }
     return g_Status.equipBodyOrder;
 }
 
-u8* GetEquipCount(s32 equipTypeFilter) {
-    if (equipTypeFilter == 0) {
+u8* GetEquipCount(ItemTypes kind) {
+    if (kind == HAND_TYPE) {
         return g_Status.equipHandCount;
     }
     return g_Status.equipBodyCount;
 }
 
-const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId) {
-    if (!equipTypeFilter) {
+const char* GetEquipmentName(ItemTypes kind, s32 equipId) {
+    if (kind == HAND_TYPE) {
         return g_EquipDefs[equipId].name;
     } else {
         return g_AccessoryDefs[equipId].name;
@@ -125,55 +151,58 @@ u32 CheckEquipmentItemCount(u32 itemId, u32 equipType) {
     // seems to require missing return
 }
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("dra/nonmatchings/5D6C4", AddToInventory);
-#else
-void AddToInventory(u16 itemId, s32 itemCategory) {
-    u8 temp_a1;
-    s32 new_var2;
-    u8* phi_a0;
-    u8* phi_a0_2;
-    long i;
-    s32 phi_a1;
-    s32 phi_a1_2;
-    u8* cursorY = GetEquipOrder(itemCategory);
-    u8* itemArray = GetEquipCount(itemCategory);
-    if (itemArray[itemId] < 99) {
-        temp_a1 = itemArray[itemId];
-        itemArray[itemId]++;
-        if (itemArray[itemId] == 1) {
-            itemArray[itemId] = temp_a1;
-            phi_a1_2 = itemCategory;
-            if (phi_a1_2 != 0) {
-                i = g_AccessoryDefs[itemId].equipType;
-            }
-            phi_a0 = cursorY;
-            for (phi_a1_2 = 0; true; phi_a1_2++) {
-                if (phi_a0[phi_a1_2] == itemId) {
-                    break;
-                }
-            }
+void AddToInventory(u16 id, ItemTypes kind) {
+    s32 i;
+    ItemTypes found;
+    u8 prevAmount;
+    u8* order;
+    u8* count;
+    u8* pOrder;
+    s32 existingItemSlot;
+    s32 emptySlot;
 
-            phi_a0_2++;
-            phi_a0_2 = cursorY;
-            for (phi_a1 = 0; true; phi_a1++) {
-                if (((!itemArray[*phi_a0_2]) && phi_a1_2) &&
-                    (i == g_AccessoryDefs[*phi_a0_2].equipType)) {
-                    new_var2 = phi_a1;
-                    cursorY[new_var2] = itemId;
-                    break;
-                }
-            }
+    order = GetEquipOrder(kind);
+    count = GetEquipCount(kind);
+    if (count[id] >= 99) {
+        return;
+    }
 
-            itemArray[itemId]++;
-            if (new_var2 < phi_a1_2) {
-                cursorY[phi_a1_2] = cursorY[new_var2];
-                cursorY[new_var2] = itemId;
-            }
+    prevAmount = count[id];
+    count[id] = prevAmount + 1;
+    if (count[id] != 1) {
+        return;
+    }
+    count[id] = prevAmount;
+
+    if (kind != HAND_TYPE) {
+        found = g_AccessoryDefs[id].equipType;
+    }
+
+    pOrder = order;
+    for (i = 0; true; i++) {
+        if (*pOrder++ == id) {
+            existingItemSlot = i;
+            break;
         }
     }
+
+    pOrder = order;
+    for (i = 0; true; i++, pOrder++) {
+        if (count[*pOrder] > 0) {
+            continue;
+        }
+        if (kind == HAND_TYPE || found == g_AccessoryDefs[*pOrder].equipType) {
+            emptySlot = i;
+            break;
+        }
+    }
+
+    count[id]++;
+    if (emptySlot < existingItemSlot) {
+        order[existingItemSlot] = order[emptySlot];
+        order[emptySlot] = id;
+    }
 }
-#endif
 
 void func_800FD9D4(SpellDef* spell, s32 id) {
     *spell = g_SpellDefs[id];
@@ -1595,7 +1624,7 @@ s32 D_800A3014[] = {
     0x018, 0x018, 0x080, 0x0D8, 0x01E, 0x17F,
 };
 
-INCLUDE_ASM("dra/nonmatchings/5D6C4", DrawRichterHudSubweapon);
+INCLUDE_ASM("dra/nonmatchings/5D5BC", DrawRichterHudSubweapon);
 
 extern Unkstruct_80137990 D_80137990;
 

@@ -221,9 +221,8 @@ ItemTypes D_801375CC;
 s32 D_801375D0;
 s32 D_801375D4;
 s32* D_801375D8;
-s32 D_801375DC[1];
-s32 D_801375E0[8];
-s32 D_801375FC;
+s32 D_801375DC;
+s32 D_801375E0[NUM_FAMILIARS + 1];
 s32 D_80137608;
 s32 g_IsCloakLiningUnlocked;
 s32 g_IsCloakColorUnlocked;
@@ -460,7 +459,7 @@ struct Cmd14 D_8013B5F4[1];
 s32 D_8013AE90;
 s32 D_8013AEF4;
 u8 g_CdCommandResult[1];
-u8 D_8013B688[1];
+u8 D_8013B688[8];
 u8 g_CdMode[3];
 
 // TODO
@@ -512,7 +511,6 @@ s16 D_8013AED4[4];
 s16 D_8013B650[4];
 s32 g_CdCommandStatus;
 const char* D_80138784[0x800];
-s32 D_800C1ECC[1];
 s32 D_8013B65C;
 
 // sound stubs
@@ -618,8 +616,6 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
     NOT_IMPLEMENTED;
     return 0;
 }
-
-void AddToInventory(u16 itemId, s32 itemCategory) { NOT_IMPLEMENTED; }
 
 Entity* GetFreeEntity(s16 start, s16 end);
 Entity* CreateEntFactoryFromEntity(

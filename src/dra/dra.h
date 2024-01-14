@@ -287,13 +287,6 @@ typedef struct {
 } Vram;
 
 typedef struct {
-    u32 unk0;
-    u32 damageKind;
-    s32 damageTaken;
-    s32 unkC;
-} DamageParam;
-
-typedef struct {
     /* 8013761C */ MenuContext menus[NUM_MENU]; // 761C, 763A, 7658, 7676
 } MenuData;
 
@@ -453,7 +446,7 @@ extern s32 g_DebugEnabled;
 extern s32 D_800BD1C4;
 extern s16 g_CurrentXaSoundId;
 extern s32 g_VabAddrs[6];
-extern s32 D_800C1ECC[];
+extern u8* D_800C1ECC[172];
 extern PixPattern* D_800C52F8[];
 extern const char D_800DB524[];
 extern const char a0104x04x;
@@ -541,9 +534,8 @@ extern ItemTypes D_801375CC;
 extern s32 D_801375D0;
 extern s32 D_801375D4;
 extern s32* D_801375D8;
-extern s32 D_801375DC[1];
-extern s32 D_801375E0[8];
-extern s32 D_801375FC;
+extern s32 D_801375DC;
+extern s32 D_801375E0[NUM_FAMILIARS + 1];
 extern s32 D_80137608;
 extern s32 g_IsCloakLiningUnlocked;
 extern s32 g_IsCloakColorUnlocked;
@@ -814,7 +806,7 @@ extern void (*D_80170000)(s32 arg0);
 extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
 extern u8 D_801EC000[];
-extern u8 D_8013B688[];
+extern u8 D_8013B688[8];
 extern struct Cmd14 D_8013B5F4[];
 
 void func_801072DC(POLY_GT4* poly);
@@ -885,11 +877,10 @@ void InitStatsAndGear(bool isDeathTakingItems);
 s32 TimeAttackController(TimeAttackEvents eventId, TimeAttackActions action);
 s32 func_800FD664(s32 arg0);
 s32 func_800FD6C4(s32 equipTypeFilter);
-u8* GetEquipOrder(s32 equipTypeFilter);
-u8* GetEquipCount(s32 equipTypeFilter);
-const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId);
+u8* GetEquipOrder(ItemTypes kind);
+u8* GetEquipCount(ItemTypes kind);
+const char* GetEquipmentName(ItemTypes kind, s32 equipId);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
-void AddToInventory(u16 itemId, s32 itemCategory);
 void func_800FD9D4(SpellDef* spell, s32 id);
 s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer);
 void LearnSpell(s32 spellId);
