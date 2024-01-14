@@ -389,7 +389,7 @@ extern u8 D_800ACFB4[][4];
 extern s32 D_800ACEDC_hd;
 #endif
 extern s32 D_800ACE44;
-extern s32 D_800ACE48[];
+extern s32 D_800ACE48[12]; // size guessed
 extern RECT D_800ACE60;
 extern s16 D_800ACE88[];
 extern s16 D_800ACE90[];
@@ -403,7 +403,7 @@ extern s16 D_800ACF8A[]; // collection of sounds?
 extern s16 D_800ACF60[]; // collection of sounds?
 extern s16 D_800ACF6C[];
 extern s16 D_800ACF94[];
-extern u8 D_800AD094[];
+extern u8 D_800AD094[0x30];
 extern PfnEntityUpdate D_800AD0C4[];
 extern FactoryBlueprint g_FactoryBlueprints[];
 extern u8 D_800AD4B8[];

@@ -25,6 +25,7 @@ s32 D_8003C728;
 s32 D_8003C730;
 s32 D_8003C8B8;
 s32 g_IsUsingCd;
+Entity* g_CurrentEntity;
 GpuUsage g_GpuUsage;
 PlayerStatus g_Status;
 u32 g_randomNext;
@@ -69,8 +70,11 @@ SVECTOR* D_800A35D0[1];
 SVECTOR* D_800A3608[1];
 u8 D_800A3728;
 MATRIX D_800A37B8;
+u8 D_800B0608[0xC0]; // size guessed
 s16 D_80136308[1];
 u16 g_Clut[0x3000];
+u32 D_8006EBCC;
+u16 D_8006EBE0;
 s32 D_8006C384;
 s32 D_8006C388;
 MenuNavigation g_MenuNavigation;
@@ -148,7 +152,7 @@ s32 D_8009740C[3];
 s32 g_BottomCornerTextTimer;
 s32 g_BottomCornerTextPrims;
 s32 D_80097418;
-s32 D_8009741C;
+s32 D_8009741C[1];
 s32 D_80097420[1];
 s32 D_80097424;
 s32 D_80097448[2];
@@ -179,6 +183,22 @@ s16 D_800AC998[] = {
     0x0300, 0x0320, 0x0300, 0x0320, 0x0340, 0x0360, 0x0340, 0x0360,
     0x0380, 0x03A0, 0x0380, 0x03A0, 0x03C0, 0x03E0, 0x03C0, 0x03E0,
 };
+Unkstruct_801092E8 D_800A37D8;
+s32 D_800ACE44;
+s32 D_800ACE48[12]; // size guessed
+RECT D_800ACE60;
+s16_pair D_800ACEC0[4];
+Unkstruct_800ACED0 D_800ACED0;
+u8 D_800ACF4C[0x200];                 // random size just to play safe
+u8 D_800ACF54[0x200];                 // random size just to play safe
+s32 D_800ACF74;                       // These two might...
+s32 D_800ACF78;                       // ...be an array
+unkstruct_800ACF7C D_800ACF7C[0x200]; // random size just to play safe
+s16 D_800ACF60[6];                    // guessed size
+s16 D_800ACF6C[4];                    // guessed size
+s16 D_800ACF8A[5];                    // guessed size
+s16 D_800ACF94[16];                   // guessed size
+u8 D_800AD094[0x30];
 GpuUsage g_GpuMaxUsage;
 GpuBuffer* g_BackBuffer;
 s32 g_DebugFreeze;
@@ -381,6 +401,33 @@ s32 g_MemCardRStep;
 s32 g_MemCardRStepSub;
 s32 D_80137E6C;
 s32 D_80137F6C;
+s32 D_80137F9C;
+s32 D_80137FB4;
+s32 D_80137FB8;
+s32 D_80137FBC;
+s16 g_WasFacingLeft;  // for QCF to tell what's "forward"
+s16 g_WasFacingLeft2; // for BF to tell what's "forward"
+s32 g_WasFacingLeft3; // for dark metamorphosis "" ""
+s32 g_WasFacingLeft4; // for summon spirit "" ""
+s16 g_WasFacingLeft5; // for hellfire "" ""
+s32 g_WasFacingLeft6; // for tetra spirit "" ""
+s32 g_WasFacingLeft7; // for soul steal "" ""
+s32 D_80137FDC;
+s32 D_80137FE0;
+s32 D_80137FE4;
+s32 D_80137FE8;
+u32 g_WingSmashButtonCounter;
+s32 g_WingSmashButtonTimer;
+s32 g_WingSmashTimer;
+s32 g_BatScreechDone;
+s32 g_MistTimer;
+s32 D_80138008;
+s32 D_8013800C[1]; // unknown size
+s32 D_80138038;
+u8 D_8013803C;
+u8 D_80138040;
+u8 D_80138044;
+u8 D_80138048;
 u8* D_80137590;
 s32 D_80137594;
 s32 D_80137598;
@@ -401,6 +448,7 @@ s32 D_801375C8;
 void (*D_8013C000)(void);
 void (*D_8013C004)(s32);
 void (*D_8013C008)(void);
+void (*D_8013C00C)(void);
 
 // sound bss
 s16 g_SoundCommandRingBufferReadPos;
@@ -444,8 +492,11 @@ SfxRingBufferItem g_SfxRingBuffer[MAX_SND_COUNT];
 u8 g_SoundInitialized;
 s32 g_KeyOffChannels;
 SpuVoiceAttr* D_80138FB4;
+s16 D_80138FC8;
+s16 D_80138FCA;
 SpuVoiceAttr* D_801390C8;
 SpuVoiceAttr* D_801390CC;
+ButtonComboState g_ButtonCombo[16];
 u8 D_801390A0;
 volatile unsigned char g_CdSoundCommandStep;
 s16 g_CdVolume;
@@ -471,6 +522,8 @@ struct XaMusicConfig g_XaMusicConfigs[6] = {
     {41128, 3987, 10, 0, 64, 0, 0, 0, 0, 0},
     {51096, 7692, 20, 0, 84, 0, 1, 0, 0, 0}};
 
+s32 D_800B0130[] = {0, -1, 0, -1}; // dummy data
+s32 D_800B01B8[] = {0, -1, 0, -1}; // dummy data
 s8 D_80138F64[20];
 u8 D_801390C4;
 s16 D_8013AE8A[1];
@@ -479,6 +532,8 @@ s16 D_8013B64E;
 u8 g_SeqPlayingId;
 s16 g_SeqAccessNum;
 volatile s16 g_CdSoundCommandQueuePos;
+s32 D_801396F8[0x20];
+s32 D_80139778[0x20];
 s16 g_SeqVolume1;
 s16 g_SeqVolume2;
 u8 g_ReverbDepth;
@@ -506,6 +561,14 @@ s16 D_80139A74;
 s16 g_SfxRingBufferReadPos;
 s32 D_80138454;
 s16 D_801396DC;
+u16 D_801396E0;
+u16 D_801396E4;
+Multi D_801396E6;
+u16 D_801396E8;
+s16 D_801396EA;
+u16 D_801396EC;
+s32 g_CdCommandStatus;
+volatile s16 g_CdSoundCommandQueuePos;
 u16 D_801397F8;
 s16 D_8013AED4[4];
 s16 D_8013B650[4];
@@ -562,8 +625,6 @@ int CdInit(void) {
     return 0;
 }
 
-void func_8010DFF0(s32 arg0, s32 arg1) { NOT_IMPLEMENTED; }
-
 void func_800E5D30(void* arg0, u16 arg1, u16 arg2, s32 arg3) {
     NOT_IMPLEMENTED;
 }
@@ -571,10 +632,6 @@ void func_800E5D30(void* arg0, u16 arg1, u16 arg2, s32 arg3) {
 void func_801083BC(void) { NOT_IMPLEMENTED; }
 
 void DrawRichterHudSubweapon(void) { NOT_IMPLEMENTED; }
-
-void func_8010A234(s32 arg0) { NOT_IMPLEMENTED; }
-
-void func_80109594(void) { NOT_IMPLEMENTED; }
 
 void func_800F24F4(void) { NOT_IMPLEMENTED; }
 
@@ -584,17 +641,9 @@ void func_800F2658(void) { NOT_IMPLEMENTED; }
 
 void func_8011A9D8(void) { NOT_IMPLEMENTED; }
 
-void func_8010BFFC(void) { NOT_IMPLEMENTED; }
-
 void func_8011A870(void) { NOT_IMPLEMENTED; }
 
-void func_8010DF70(void) { NOT_IMPLEMENTED; }
-
-void func_8010E0D0(s32 arg0) { NOT_IMPLEMENTED; }
-
 void func_80121F14(s32 arg0, s32 arg1) { NOT_IMPLEMENTED; }
-
-void func_8010E168(s32 arg0, s16 arg1) { NOT_IMPLEMENTED; }
 
 void func_800F1D54(s32 arg0, s32 arg1, s32 arg2, s32 arg3) { NOT_IMPLEMENTED; }
 
@@ -607,10 +656,30 @@ s32 func_800F0CD8(s32 arg0) {
     return 0;
 }
 
-s32 func_8010E334(s32 xStart, s32 xEnd) {
+void func_80118C28(s32 arg0) { NOT_IMPLEMENTED; }
+
+void func_80115C50(void) { NOT_IMPLEMENTED; }
+
+AnimationFrame frame = {0};
+AnimationFrame* func_8010DA70(s32* frames) {
+    NOT_IMPLEMENTED;
+    return &frame;
+}
+
+void EntityWeaponAttack(Entity* self) { NOT_IMPLEMENTED; }
+void func_ptr_80170004(Entity* self) { NOT_IMPLEMENTED; }
+void func_ptr_80170008(Entity* self) { NOT_IMPLEMENTED; }
+void func_ptr_8017000C(Entity* self) { NOT_IMPLEMENTED; }
+void func_ptr_80170010(Entity* self) { NOT_IMPLEMENTED; }
+void func_ptr_80170014(Entity* self) { NOT_IMPLEMENTED; }
+int GetWeaponId(void) {
     NOT_IMPLEMENTED;
     return 0;
 }
+void LoadWeaponPalette(s32 clutIndex) { NOT_IMPLEMENTED; }
+void EntityWeaponShieldSpell(Entity* self) { NOT_IMPLEMENTED; }
+void func_ptr_80170024(Entity* self) { NOT_IMPLEMENTED; }
+void func_ptr_80170028(Entity* self) { NOT_IMPLEMENTED; }
 
 s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
     NOT_IMPLEMENTED;

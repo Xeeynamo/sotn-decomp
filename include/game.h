@@ -1413,7 +1413,7 @@ typedef struct {
     /* 80072EE8 */ s32 padPressed;
     /* 80072EEC */ s32 padTapped;
     /* 80072EF0 */ s32 padHeld;
-    /* 80072EF4 */ s32 D_80072EF4;
+    /* 80072EF4 */ u32 D_80072EF4;
     /* 80072EF8 */ s32 D_80072EF8;
     /* 80072EFC */ s32 D_80072EFC; // stun timer
     // Known timers: 0 = poison, 1 = curse, 2 = visual from stoned/hit,
@@ -1619,7 +1619,7 @@ extern s32 D_8009740C[];
 extern s32 g_BottomCornerTextTimer;
 extern s32 g_BottomCornerTextPrims;
 extern s32 D_80097418;
-extern s32 D_8009741C;
+extern s32 D_8009741C[];
 extern s32 D_80097420[];
 extern s32 D_80097424;
 extern s32 D_80097448[]; // underwater physics. 7448 and 744C. Could be struct.
@@ -1653,20 +1653,6 @@ extern Unkstruct_8011A3AC D_80097C38[];
 extern u32 D_80097C40[];
 extern s32 D_80097C98;
 extern PlayerDraw g_PlayerDraw[0x10];
-extern s8 D_80097D37;
-extern u8 D_80097F3C;
-extern u8 D_80097F3D;
-extern u8 D_80097F3E;
-extern s8 D_80097F3F;
-extern u8 D_80097F40;
-extern u8 D_80097F41;
-extern u8 D_80097F42;
-extern u8 D_80097F44;
-extern u8 D_80097F45;
-extern u8 D_80097F46;
-extern u8 D_80097F48;
-extern u8 D_80097F49;
-extern u8 D_80097F4A;
 extern s32 D_800987B4;
 extern s32 D_800987C8;
 extern s32 g_DebugPlayer;

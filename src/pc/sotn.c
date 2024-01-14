@@ -12,10 +12,32 @@ const char g_DummyName[] = "DUMMY\xFF";
 u16 g_RawVram[VRAM_W * VRAM_H];
 GameApi g_ApiInit = {0};
 void (*D_80170000)(s32 arg0); // ServantDesc D_80170000 = {0};
-Weapon D_8017A000 = {0};
-Weapon D_8017D000 = {0};
 u8 g_DemoRecordingBuffer[DEMO_MAX_LEN];
 extern bool g_IsQuitRequested;
+
+void EntityWeaponAttack(Entity* self);
+void func_ptr_80170004(Entity* self);
+void func_ptr_80170008(Entity* self);
+void func_ptr_8017000C(Entity* self);
+void func_ptr_80170010(Entity* self);
+void func_ptr_80170014(Entity* self);
+int GetWeaponId(void);
+void LoadWeaponPalette(s32 clutIndex);
+void EntityWeaponShieldSpell(Entity* self);
+void func_ptr_80170024(Entity* self);
+void func_ptr_80170028(Entity* self);
+Weapon D_8017A000 = {
+    EntityWeaponAttack, func_ptr_80170004, func_ptr_80170008,
+    func_ptr_8017000C,  func_ptr_80170010, func_ptr_80170014,
+    GetWeaponId,        LoadWeaponPalette, EntityWeaponShieldSpell,
+    func_ptr_80170024,  func_ptr_80170028,
+};
+Weapon D_8017D000 = {
+    EntityWeaponAttack, func_ptr_80170004, func_ptr_80170008,
+    func_ptr_8017000C,  func_ptr_80170010, func_ptr_80170014,
+    GetWeaponId,        LoadWeaponPalette, EntityWeaponShieldSpell,
+    func_ptr_80170024,  func_ptr_80170028,
+};
 
 extern GfxBank g_FakeGfxBank;
 GfxBank** g_GfxStageBank[0x40] = {
