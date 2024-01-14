@@ -78,6 +78,11 @@ set(SOURCE_FILES_DRA
     src/dra/5D5BC.c 
     src/dra/627C4.c
     src/dra/63ED4.c
+    src/dra/692E8.c
+    src/dra/6D59C.c
+    src/dra/704D0.c
+    src/dra/71830.c
+    src/dra/75DA0.c
     src/dra/91EBC.c
     src/dra/92F60.c
     src/dra/93290.c

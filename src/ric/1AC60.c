@@ -116,7 +116,7 @@ void func_80156F40(s16 arg0) {
     } else {
         D_80154570 = 0;
     }
-    D_80097D37 = 0;
+    g_PlayerDraw->enableColorBlend = 0;
     func_801587C0();
     for (i = 0; i < 0x20; i++) {
         radius = (rand() & 0x3FF) + 0x100;

@@ -866,7 +866,7 @@ void func_800F2404(s32 arg0) {
     *temp = 0;
     D_8003C704 = 0;
     D_80097418 = 0;
-    D_8009741C = 0;
+    D_8009741C[0] = 0;
     D_8009740C[0] = 0x80;
 
     if (g_BottomCornerTextTimer != 0) {

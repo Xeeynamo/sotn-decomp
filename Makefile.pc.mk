@@ -16,6 +16,7 @@ C_FILES_3RD         := cJSON/cJSON.c
 C_FILES_DRA         := 42398.c play.c loading.c pads.c
 C_FILES_DRA         += save_mgr_pre.c save_mgr.c 4A538.c collider.c demo.c 5087C.c
 C_FILES_DRA         += lba_stage.c config_us.c menu.c 5D5BC.c 627C4.c 63ED4.c
+C_FILES_DRA         += 692E8.c 6D59C.c 704D0.c 71830.c 75DA0.c
 C_FILES_DRA         += 91EBC.c 92F60.c 93290.c 93BDC.c 94F50.c 953A0.c
 C_FILES_ST_SEL		:= banks.c CD54.c 2C048.c 33164.c 3410C.c 3585C.c 3642C.c
 

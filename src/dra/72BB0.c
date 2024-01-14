@@ -798,7 +798,7 @@ void func_80115BB0(void) {
             func_8010E7AC();
         }
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4a00, 44), 0);
-        D_80097D37 = 0;
+        g_PlayerDraw->enableColorBlend = 0;
     }
 }
 

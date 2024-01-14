@@ -65,6 +65,8 @@ u_short GetTPage(int tp, int abr, int x, int y) {
     return 0;
 }
 
+void SetDrawEnv(DR_ENV* dr_env, DRAWENV* env) { NOT_IMPLEMENTED; }
+
 u_short GetClut(int x, int y) { return getClut(x, y); }
 void AddPrim(void* ot, void* p) { addPrim(ot, p); }
 void SetShadeTex(void* p, int tge) { setShadeTex(p, tge); }

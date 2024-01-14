@@ -143,7 +143,7 @@ void func_80109594(void) {
     } else {
         D_80137FB4 = 1;
     }
-    D_80097D37 = 0;
+    g_PlayerDraw->enableColorBlend = 0;
     func_800EA5E4(0x16);
     func_801092E8(0);
     for (i = 0; i < 0x20; i++) {
