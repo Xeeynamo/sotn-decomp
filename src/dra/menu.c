@@ -105,8 +105,8 @@ const char* D_800A2D68[] = {
 };
 #endif
 
-u8 g_ChActionButtons[] = {0xEA, 0xE8, 0xE9, 0xEB};
-u8 g_ChShoulderButtons[] = {0x32, 0x2C, 0x32, 0x2C, 0x12, 0x11, 0x11, 0x12};
+u8 g_ChButtons[] = {0xEA, 0xE8, 0xE9, 0xEB, 0x32, 0x2C,
+                    0x32, 0x2C, 0x12, 0x11, 0x11, 0x12};
 u8 g_ChRgb[] = {MENUCHAR('R'), MENUCHAR('G'), MENUCHAR('B')};
 u8 D_800A2D80[] = {0x00, 0x20, 0x30, 0x40, 0x50, 0x60, 0x69, 0x70,
                    0x75, 0x78, 0x7A, 0x7C, 0x7D, 0x7E, 0x7F, 0x80};
@@ -1169,10 +1169,10 @@ void MenuButtonConfigDraw(MenuContext* ctx) {
         buttonId = g_Settings.buttonConfig[i];
         btn1_x = (buttonId * 12) + 0x30;
         MenuDrawChar(
-            g_ChActionButtons[buttonId], XVAR + btn1_x, 0x30 + (i * 0x10), ctx);
+            g_ChButtons[buttonId], XVAR + btn1_x, 0x30 + (i * 0x10), ctx);
         if (buttonId >= 4) {
             btn2_x = btn1_x + 8;
-            MenuDrawChar(g_ChShoulderButtons[buttonId], XVAR + btn2_x,
+            MenuDrawChar(g_ChButtons[4 + buttonId], XVAR + btn2_x,
                          0x30 + (i * 0x10), ctx);
         }
     }
@@ -1361,20 +1361,20 @@ void MenuDrawStats(s32 menuDialogue) {
     temp_var = g_Settings.buttonConfig[0];
     temp_s1 = temp_var;
     if (temp_s1 < 4) {
-        MenuDrawChar(g_ChActionButtons[temp_s1], x + 44, y, ctx);
+        MenuDrawChar(g_ChButtons[temp_s1], x + 44, y, ctx);
     } else {
-        MenuDrawChar(g_ChActionButtons[temp_s1], x + 40, y, ctx);
-        MenuDrawChar(g_ChShoulderButtons[temp_s1], x + 48, y, ctx);
+        MenuDrawChar(g_ChButtons[temp_s1], x + 40, y, ctx);
+        MenuDrawChar(g_ChButtons[4 + temp_s1], x + 48, y, ctx);
     }
     MenuDrawInt(g_Status.attackHands[0], x + 76, y, ctx);
 
     temp_var = g_Settings.buttonConfig[1];
     temp_s1 = temp_var;
     if (temp_s1 < 4) {
-        MenuDrawChar(g_ChActionButtons[temp_s1], x + 44, y + 10, ctx);
+        MenuDrawChar(g_ChButtons[temp_s1], x + 44, y + 10, ctx);
     } else {
-        MenuDrawChar(g_ChActionButtons[temp_s1], x + 40, y + 10, ctx);
-        MenuDrawChar(g_ChShoulderButtons[temp_s1], x + 48, y + 10, ctx);
+        MenuDrawChar(g_ChButtons[temp_s1], x + 40, y + 10, ctx);
+        MenuDrawChar(g_ChButtons[4 + temp_s1], x + 48, y + 10, ctx);
     }
 
     MenuDrawInt(g_Status.attackHands[1], x + 76, y + 10, ctx);
@@ -1457,13 +1457,13 @@ void MenuSpellsDraw(MenuContext* ctx) {
             buttonCFG = g_Settings.buttonConfig[0];
             charNum++;
             if (buttonCFG < 4) {
-                MenuDrawChar(g_ChActionButtons[buttonCFG],
+                MenuDrawChar(g_ChButtons[buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
             } else {
-                MenuDrawChar(g_ChActionButtons[buttonCFG],
+                MenuDrawChar(g_ChButtons[buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
                 charNum++;
-                MenuDrawChar(g_ChShoulderButtons[buttonCFG],
+                MenuDrawChar(g_ChButtons[4 + buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
             }
             // This writes the word "or", because spells say '{Square} or
@@ -1475,13 +1475,13 @@ void MenuSpellsDraw(MenuContext* ctx) {
             buttonCFG = g_Settings.buttonConfig[1];
             charNum++;
             if (buttonCFG < 4) {
-                MenuDrawChar(g_ChActionButtons[buttonCFG],
+                MenuDrawChar(g_ChButtons[buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
             } else {
-                MenuDrawChar(g_ChActionButtons[buttonCFG],
+                MenuDrawChar(g_ChButtons[buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
                 charNum++;
-                MenuDrawChar(g_ChShoulderButtons[buttonCFG],
+                MenuDrawChar(g_ChButtons[4 + buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
             }
         } else {
@@ -1690,12 +1690,12 @@ void func_800F86E4(void) {
 
 #if defined(VERSION_US)
 void func_800F8754(MenuContext* menu, s32 x, s32 y) {
-    if (D_801375DC[0] == 0) {
+    if (D_801375DC == 0) {
         D_8013784C = 1;
     }
 
     MenuDrawStr(g_MenuStr[93], x + 14, y + 20, menu);
-    if (D_801375FC == 0) {
+    if (D_801375E0[NUM_FAMILIARS] == 0) {
         D_8013784C = 1;
     } else {
         D_8013784C = 0;
@@ -1710,10 +1710,11 @@ void func_800F8754(MenuContext* menu, s32 x, s32 y) {
 #elif defined(VERSION_HD)
 void func_800F8754(MenuContext* menu, s32 x, s32 y) {
     func_800F66BC(D_800A2D68[3], x + 0xC, y, menu, true);
-    func_800F66BC(D_800A2D68[4], x + 6, y + 0x10, menu, D_801375DC[0] != 0);
+    func_800F66BC(D_800A2D68[4], x + 6, y + 0x10, menu, D_801375DC != 0);
     func_800F66BC(D_800A2D68[5], x + 6, y + 0x20, menu, true);
     func_800F66BC(D_800A2D68[6], x, y + 0x30, menu, true);
-    func_800F66BC(D_800A2D68[25], x + 6, y + 0x40, menu, D_801375FC != 0);
+    func_800F66BC(
+        D_800A2D68[25], x + 6, y + 0x40, menu, D_801375E0[NUM_FAMILIARS] != 0);
 }
 #endif
 
@@ -3134,7 +3135,7 @@ block_4:
                 break;
             }
         }
-        D_801375DC[0] = i;
+        D_801375DC = i;
         for (i = 0; i < LEN(D_801375E0); i++) {
             D_801375E0[i] = 0;
         }
@@ -3145,8 +3146,8 @@ block_4:
             if (g_RelicDefs[i].unk0C == 0) {
                 continue;
             }
-            D_801375DC[g_RelicDefs[i].unk0C] = 1;
-            D_801375DC[8] = 1;
+            D_801375E0[g_RelicDefs[i].unk0C - 1] = 1;
+            D_801375E0[NUM_FAMILIARS] = 1;
         }
         g_IsCloakLiningUnlocked =
             g_Status.equipBodyCount[ITEM_REVERSE_CLOAK] |
@@ -3345,7 +3346,7 @@ block_4:
                 g_MenuStep = MENU_STEP_EQUIP;
                 break;
             case 1:
-                if (D_801375DC[0]) {
+                if (D_801375DC) {
                     g_MenuStep = MENU_STEP_SPELL_INIT;
                 }
                 break;
@@ -3357,7 +3358,7 @@ block_4:
                 g_MenuStep = MENU_STEP_SYSTEM_INIT;
                 break;
             case 4:
-                if (D_801375FC) {
+                if (D_801375E0[NUM_FAMILIARS]) {
                     g_MenuStep = MENU_STEP_FAMILIAR_INIT;
                 }
                 break;
@@ -3632,7 +3633,7 @@ block_4:
         break;
     case MENU_STEP_SPELL:
         temp_s1 = g_MenuNavigation.cursorSpells;
-        MenuHandleCursorInput(&g_MenuNavigation.cursorSpells, D_801375DC[0], 3);
+        MenuHandleCursorInput(&g_MenuNavigation.cursorSpells, D_801375DC, 3);
 #if defined(VERSION_US)
         if (temp_s1 != g_MenuNavigation.cursorSpells) {
 #elif defined(VERSION_HD)
@@ -3869,37 +3870,4 @@ s32 TimeAttackController(TimeAttackEvents eventId, TimeAttackActions action) {
         // not exactly sure yet why this flag is needed
         g_Settings.D_8003CB00 |= 1 << eventId;
     }
-}
-
-bool func_800FD5BC(Unkstruct_800FD5BC* arg0) {
-    s32 temp;
-
-    if (arg0->unk4 != 5) {
-        if (((u32)arg0->unk4) >= 0x10U) {
-            temp = g_Status.hpMax;
-            if (g_Status.hpMax < 0) {
-                temp += 7;
-            }
-            arg0->unk8 = temp >> 3;
-        } else if (g_Status.hpMax >= (arg0->unk8 * 0x14)) {
-            arg0->unk4 = 3;
-        } else {
-            arg0->unk4 = 2;
-        }
-    }
-    if (g_Status.hp <= arg0->unk8) {
-        g_Status.hp = 0;
-        return true;
-    } else {
-        g_Status.hp -= arg0->unk8;
-        return false;
-    }
-}
-
-s32 func_800FD664(s32 arg0) {
-    return g_StageId & STAGE_INVERTEDCASTLE_FLAG ? arg0 << 1 : arg0;
-}
-
-ItemCategory GetEquipItemCategory(s32 equipId) {
-    return g_EquipDefs[g_Status.equipment[equipId]].itemCategory;
 }

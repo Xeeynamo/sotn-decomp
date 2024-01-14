@@ -78,15 +78,16 @@ segments:
       - [0x2CF4, .data, menu] # array of strings
       - [0x2D1C, .data, menu] # HD exclusive array of strings
       - [0x2D88, .data, menu]
-      - [0x2ED0, .data, 5D6C4] # g_LevelHPIncrease
-      - [0x2EF8, .data, 5D6C4] # hud sprites def
-      - [0x2FCC, .data, 5D6C4] # g_CapePaletteDefs
-      - [0x301C, .data, 5D6C4] # g_CheatCodes
-      - [0x3024, .data, 5D6C4] # D_800A3014
+      - [0x2ED0, .data, 5D5BC] # g_LevelHPIncrease
+      - [0x2EF8, .data, 5D5BC] # hud sprites def
+      - [0x2FCC, .data, 5D5BC] # g_CapePaletteDefs
+      - [0x301C, .data, 5D5BC] # g_CheatCodes
+      - [0x3024, .data, 5D5BC] # D_800A3014
       - [0x3144, data, 627C4]
       - [0x37E8, data]
       - [0x3C50, .data, lba_stage]
-      - [0x4A10, data]
+      - [0x4A10, .data, config_jp]
+      - [0xC72C, data]
       - [0xCA20, .data, cd]
       - [0xCE48, data]
       - [0xCFDC, .data, 6D59C]
@@ -101,7 +102,8 @@ segments:
       - [0x1D2A4, .data, 91EBC] # g_SeqInfo
       - [0x1D2E8, data, assets, music_xa, g_XaMusicConfigs] # g_XaMusicConfigs
       - [0x1F5F8, assets, sfx, g_SfxData] # g_SfxData
-      - [0x20A20, data]
+      - [0x20A20, .data, 953A0]
+      - [0x22220, data]
       - [0x3B458, .rodata, 42398]
       - [0x3B618, .rodata, play]
       - [0x3B648, rodata, play] # jtbl_800DB648
@@ -129,15 +131,15 @@ segments:
       - [0x3C788, .rodata, menu] # MenuHandleCursorInput
       - [0x3C7A0, .rodata, menu] # MenuHandle str
       - [0x3C7C8, .rodata, menu] # MenuHandle jtbl
-      - [0x3CC18, .rodata, 5D6C4]
-      - [0x3CC60, .rodata, 5D6C4] # g_CheatCodes
+      - [0x3CC18, .rodata, 5D5BC]
+      - [0x3CC60, .rodata, 5D5BC] # g_CheatCodes
       - [0x3CC78, .rodata, 627C4] # jtbl_800DCC78
       - [0x3CC98, .rodata, 627C4] # jtbl_800DCC98
       - [0x3CCC0, .rodata, 627C4]
       - [0x3CCC0, .rodata, 627C4] # HandleSaveMenu, all the strings
       - [0x3CED4, .rodata, 63ED4] # jtbl_800DCED4
       - [0x3CEF0, .rodata, lba_stage]
-      - [0x3D29C, rodata]
+      - [0x3D29C, .rodata, config_jp]
       - [0x40C74, .rodata, cd]
       - [0x40D64, rodata] # jtbl_800E0D64
       - [0x40D64, rodata] # jtbl_800E0D64
@@ -213,7 +215,7 @@ segments:
       - [0x5027C, c, demo]
       - [0x50F00, c, 5087C]
       - [0x54E50, c, menu]
-      - [0x5D678, c, 5D6C4]
+      - [0x5D570, c, 5D5BC]
       - [0x62654, c, 627C4]
       - [0x63D1C, c, 63ED4]
       - [0x67200, c, cd]

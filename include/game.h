@@ -1174,6 +1174,13 @@ typedef struct {
 } Dialogue;                                  // size = 0x44
 
 typedef struct {
+    u32 unk0;
+    u32 damageKind;
+    s32 damageTaken;
+    s32 unkC;
+} DamageParam;
+
+typedef struct {
     /* 8003C774 */ Overlay o;
     /* 8003C7B4 */ void (*FreePrimitives)(s32);
     /* 8003C7B8 */ s16 (*AllocPrimitives)(PrimitiveType type, s32 count);
@@ -1218,7 +1225,7 @@ typedef struct {
         TimeAttackEvents eventId, TimeAttackActions action);
     /* 8003C844 */ void* (*func_8010E0A8)(void);
     /* 8003C848 */ void (*func_800FE044)(s32, s32);
-    /* 8003C84C */ void (*AddToInventory)(u16 itemId, s32 itemCategory);
+    /* 8003C84C */ void (*AddToInventory)(u16 id, ItemTypes kind);
     /* 8003C850 */ RelicOrb* relicDefs;
     /* 8003C854 */ void (*InitStatsAndGear)(bool debugMode);
     /* 8003C858 */ s32 (*func_80134714)(s32 arg0, s32 arg1, s32 arg2);
@@ -1227,7 +1234,7 @@ typedef struct {
     /* 8003C864 */ u32 (*CheckEquipmentItemCount)(u32 itemId, u32 equipType);
     /* 8003C868 */ void (*func_8010BF64)(Unkstruct_8010BF64* arg0);
     /* 8003C86C */ void (*func_800F1FC4)(s32 arg0);
-    /* 8003C870 */ void* func_800F2288;
+    /* 8003C870 */ void (*func_800F2288)(s32 arg0);
     /* 8003C874 */ void (*func_8011A3AC)(
         Entity* entity, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3);
     /* 8003C878 */ s32 (*func_800FF460)(s32 arg0);
@@ -1237,7 +1244,7 @@ typedef struct {
     /* 8003C888 */ bool (*func_800F27F4)(s32 arg0);
     /* 8003C88C */ s32 (*func_800FF110)(s32 arg0);
     /* 8003C890 */ s32 (*func_800FD664)(s32 arg0);
-    /* 8003C894 */ s32 (*func_800FD5BC)(Unkstruct_800FD5BC* arg0);
+    /* 8003C894 */ s32 (*func_800FD5BC)(DamageParam* arg0);
     /* 8003C898 */ void (*LearnSpell)(s32 spellId);
     /* 8003C89C */ void (*DebugInputWait)(const char* str);
     /* 8003C8A0 */ void* unused12C;
@@ -1283,7 +1290,7 @@ extern s32 (*g_api_TimeAttackController)(
     TimeAttackEvents eventId, TimeAttackActions action);
 extern void* (*g_api_func_8010E0A8)(void);
 extern void (*g_api_func_800FE044)(s32, s32);
-extern void (*g_api_AddToInventory)(u16 itemId, s32 itemCategory);
+extern void (*g_api_AddToInventory)(u16 id, ItemTypes kind);
 extern RelicOrb* g_api_relicDefs;
 extern s32 (*g_api_func_80134714)(s32 arg0, s32 arg1, s32 arg2);
 extern s32 (*g_api_func_80134678)(s16 arg0, u16 arg1);
@@ -1291,6 +1298,7 @@ extern void (*g_api_func_800F53A4)(void);
 extern u32 (*g_api_CheckEquipmentItemCount)(u32 itemId, u32 equipType);
 extern void (*g_api_func_8010BF64)(Unkstruct_8010BF64* arg0);
 extern void (*g_api_func_800F1FC4)(s32 arg0);
+extern void (*g_api_func_800F2288)(s32 arg0);
 extern void (*g_api_func_8011A3AC)(
     Entity* entity, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3);
 extern s32 (*g_api_func_800FF460)(s32 arg0);
@@ -1300,7 +1308,7 @@ extern bool (*g_api_func_80133950)(void);
 extern bool (*g_api_func_800F27F4)(s32 arg0);
 extern s32 (*g_api_func_800FF110)(s32 arg0);
 extern s32 (*g_api_func_800FD664)(s32 arg0);
-extern s32 (*g_api_func_800FD5BC)(Unkstruct_800FD5BC* arg0);
+extern s32 (*g_api_func_800FD5BC)(DamageParam* arg0);
 extern void (*g_api_LearnSpell)(s32 spellId);
 extern void (*g_api_func_800E2438)(const char* str);
 /***************************/
