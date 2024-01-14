@@ -251,6 +251,8 @@ void func_801120B4(void) {
         }
     }
     switch (PLAYER.step_s) {
+    case 0:
+        break;
     case 1:
         local_flags = 1;
         if (g_Player.unk14 != 0) {
@@ -474,8 +476,6 @@ void func_801120B4(void) {
         // Probably some way to do this besides bit shifts but I couldn't get it
         local_flags = (((u16)PLAYER.animFrameDuration << 0x10) >> 0x1F) & 0xF;
         break;
-    // Switch misbehaves without this
-    case 0:
     }
 
     if (local_flags & 4) {
