@@ -309,3 +309,7 @@ int MDEC_print_error(const char* funcName) {
 
     return 0;
 }
+
+INCLUDE_ASM("st/sel/nonmatchings/stream", func_801BAB70);
+
+INCLUDE_ASM("st/sel/nonmatchings/stream", DecDCTvlc);
