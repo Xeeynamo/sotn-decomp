@@ -3871,36 +3871,3 @@ s32 TimeAttackController(TimeAttackEvents eventId, TimeAttackActions action) {
         g_Settings.D_8003CB00 |= 1 << eventId;
     }
 }
-
-bool func_800FD5BC(Unkstruct_800FD5BC* arg0) {
-    s32 temp;
-
-    if (arg0->unk4 != 5) {
-        if (((u32)arg0->unk4) >= 0x10U) {
-            temp = g_Status.hpMax;
-            if (g_Status.hpMax < 0) {
-                temp += 7;
-            }
-            arg0->unk8 = temp >> 3;
-        } else if (g_Status.hpMax >= (arg0->unk8 * 0x14)) {
-            arg0->unk4 = 3;
-        } else {
-            arg0->unk4 = 2;
-        }
-    }
-    if (g_Status.hp <= arg0->unk8) {
-        g_Status.hp = 0;
-        return true;
-    } else {
-        g_Status.hp -= arg0->unk8;
-        return false;
-    }
-}
-
-s32 func_800FD664(s32 arg0) {
-    return g_StageId & STAGE_INVERTEDCASTLE_FLAG ? arg0 << 1 : arg0;
-}
-
-ItemCategory GetEquipItemCategory(s32 equipId) {
-    return g_EquipDefs[g_Status.equipment[equipId]].itemCategory;
-}

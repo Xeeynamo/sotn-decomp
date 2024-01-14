@@ -1174,6 +1174,13 @@ typedef struct {
 } Dialogue;                                  // size = 0x44
 
 typedef struct {
+    u32 unk0;
+    u32 damageKind;
+    s32 damageTaken;
+    s32 unkC;
+} DamageParam;
+
+typedef struct {
     /* 8003C774 */ Overlay o;
     /* 8003C7B4 */ void (*FreePrimitives)(s32);
     /* 8003C7B8 */ s16 (*AllocPrimitives)(PrimitiveType type, s32 count);
@@ -1237,7 +1244,7 @@ typedef struct {
     /* 8003C888 */ bool (*func_800F27F4)(s32 arg0);
     /* 8003C88C */ s32 (*func_800FF110)(s32 arg0);
     /* 8003C890 */ s32 (*func_800FD664)(s32 arg0);
-    /* 8003C894 */ s32 (*func_800FD5BC)(Unkstruct_800FD5BC* arg0);
+    /* 8003C894 */ s32 (*func_800FD5BC)(DamageParam* arg0);
     /* 8003C898 */ void (*LearnSpell)(s32 spellId);
     /* 8003C89C */ void (*DebugInputWait)(const char* str);
     /* 8003C8A0 */ void* unused12C;
@@ -1300,7 +1307,7 @@ extern bool (*g_api_func_80133950)(void);
 extern bool (*g_api_func_800F27F4)(s32 arg0);
 extern s32 (*g_api_func_800FF110)(s32 arg0);
 extern s32 (*g_api_func_800FD664)(s32 arg0);
-extern s32 (*g_api_func_800FD5BC)(Unkstruct_800FD5BC* arg0);
+extern s32 (*g_api_func_800FD5BC)(DamageParam* arg0);
 extern void (*g_api_LearnSpell)(s32 spellId);
 extern void (*g_api_func_800E2438)(const char* str);
 /***************************/
