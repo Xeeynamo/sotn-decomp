@@ -566,7 +566,7 @@ void HandleEnding(void) {
 
     switch (g_GameStep) {
     case 0:
-        DestroyEntities(0);
+        DestroyEntitiesFromIndex(0);
         func_800EA538(0);
         ResetPendingGfxLoad();
         DestroyAllPrimitives();

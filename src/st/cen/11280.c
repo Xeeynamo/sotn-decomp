@@ -262,33 +262,14 @@ void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity) {
     entity->posY.i.hi = source->posY.i.hi;
 }
 
-bool func_801935B4(Entity* self) {
-    s16 posX = PLAYER.posX.i.hi - self->posX.i.hi;
-    s16 posY;
-
-    posX = ABS(posX);
-
-    if (posX < 17) {
-        posY = PLAYER.posY.i.hi - self->posY.i.hi;
-        posY = ABS(posY);
-        return posY < 33;
-    }
-    return 0;
-}
+#include "../entity_is_near_player.h"
 
 // Red door (ID 05)
 INCLUDE_ASM("st/cen/nonmatchings/11280", EntityRedDoor);
 
 #include "../../destroy_entity.h"
 
-void func_801942D0(s16 index) {
-    Entity* entity = &g_Entities[index];
-
-    while (entity < &D_8007EF1C) {
-        DestroyEntity(entity);
-        entity++;
-    }
-}
+#include "../../destroy_entities_from_index.h"
 
 void PreventEntityFromRespawning(Entity* entity) {
     if (entity->entityRoomIndex) {
@@ -516,29 +497,7 @@ u16 func_80194C68(s16 x, s16 y) {
 
 #include "../adjust_value_within_threshold.h"
 
-void UnkEntityFunc0(s32 slope, s16 speed) {
-    Entity* entity;
-    s32 moveX;
-    s32 moveY;
-
-    moveX = rcos((u16)slope) * speed;
-    entity = g_CurrentEntity;
-
-    if (moveX < 0) {
-        moveX += 15;
-    }
-
-    entity->velocityX = moveX >> 4;
-
-    moveY = rsin((u16)slope) * speed;
-    entity = g_CurrentEntity;
-
-    if (moveY < 0) {
-        moveY += 15;
-    }
-
-    entity->velocityY = moveY >> 4;
-}
+#include "../unk_entity_func0.h"
 
 u16 func_80194D94(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
@@ -595,7 +554,7 @@ void func_80194EC4(u8 arg0) {
     entity->animFrameDuration = 0;
 }
 
-void func_80194EE0(u16 arg0, u16 arg1) {
+void EntityExplosionSpawn(u16 arg0, u16 arg1) {
     Entity* entity;
 
     if (arg1 != 0) {
@@ -716,14 +675,7 @@ void func_80195714(void) {
 
 INCLUDE_ASM("st/cen/nonmatchings/11280", func_80195798);
 
-void CollectHeart(u16 index) {
-    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
-    g_Status.hearts = D_80180FE8[index] + g_Status.hearts;
-    if (g_Status.heartsMax < g_Status.hearts) {
-        g_Status.hearts = g_Status.heartsMax;
-    }
-    DestroyEntity(g_CurrentEntity);
-}
+#include "../collect_heart.h"
 
 void CollectGold(u16 goldSize) {
     s32 *gold, *unk;

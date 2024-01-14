@@ -187,6 +187,7 @@ extern u8* D_80182438[];
 extern u16 D_80182424[];
 extern u8* D_80182488[];
 extern u16 D_801824E8[];
+extern s8 c_HeartPrizes[];
 extern s32 D_801824F4[];
 extern u8* D_801825A0[];
 extern u16 D_80182628[];

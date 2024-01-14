@@ -47,17 +47,14 @@ s32 SpuVmGetSeqVol(s16, s16*, s16*);
 s16 SpuIsTransferCompleted(s16);
 
 void _spu_setInTransfer(s32);
-void SpuSetTransferStartAddr(s32);
+u32 SpuSetTransferStartAddr(u32);
 extern s32 D_800987CC[];
 extern s32 D_80098810[];
 extern u8 svm_vab_used[];
 
 s16 SsVabOpenHeadWithMode(u8* addr, s16 vabid, s32 arg2, u32 sbaddr);
 
-void _spu_setInTransfer(s32);
-
 void SpuFree(s32);
-extern s32 D_80098810[];
 extern u16 _svm_vab_count;
 
 typedef struct VabHdr {
@@ -290,5 +287,11 @@ short SsUtGetVagAtr(
     short vabId, short progNum, short toneNum, VagAtr* vagatrptr);
 short SsUtSetVagAtr(
     short vabId, short progNum, short toneNum, VagAtr* vagatrptr);
+
+s16 SsVabTransBodyPartly(u8* addr, u32 bufsize, s16 vabid);
+u32 SpuWritePartly(u8*, u32);
+
+extern s32 D_80032F08;
+extern s16 D_80032F0C;
 
 #endif

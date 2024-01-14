@@ -151,13 +151,13 @@ void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity) {
     entity->posY.i.hi = source->posY.i.hi;
 }
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018C8D0);
+#include "../entity_is_near_player.h"
 
 INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018C948);
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", DestroyEntity);
+#include "../../destroy_entity.h"
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018D5EC);
+#include "../../destroy_entities_from_index.h"
 
 void PreventEntityFromRespawning(Entity* entity) {
     if (entity->entityRoomIndex) {
@@ -330,7 +330,7 @@ s32 func_8018DF84(s32 arg0, s32 arg1) {
 
 #include "../adjust_value_within_threshold.h"
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", UnkEntityFunc0);
+#include "../unk_entity_func0.h"
 
 u16 func_8018E0B0(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
@@ -382,7 +382,24 @@ void SetSubStep(u8 step_s) {
     g_CurrentEntity->animFrameDuration = 0;
 }
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018E1FC);
+void EntityExplosionSpawn(u16 arg0, u16 sfxId) {
+    if (sfxId != 0) {
+        func_80193644(sfxId);
+    }
+
+    if (arg0 == 0xFF) {
+        DestroyEntity(g_CurrentEntity);
+        return;
+    }
+
+    g_CurrentEntity->entityId = E_EXPLOSION;
+    g_CurrentEntity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
+    g_CurrentEntity->params = arg0;
+    g_CurrentEntity->animCurFrame = 0;
+    g_CurrentEntity->drawFlags = 0;
+    g_CurrentEntity->step = 0;
+    g_CurrentEntity->step_s = 0;
+}
 
 INCLUDE_ASM("st/rwrp/nonmatchings/A59C", InitializeEntity);
 
@@ -493,7 +510,7 @@ void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
 INCLUDE_ASM("st/rwrp/nonmatchings/A59C", EntityPrizeDrop);
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018F814);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", EntityExplosion);
 
 INCLUDE_ASM("st/rwrp/nonmatchings/A59C", BlinkItem);
 
