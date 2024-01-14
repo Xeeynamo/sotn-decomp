@@ -453,7 +453,7 @@ extern s32 g_DebugEnabled;
 extern s32 D_800BD1C4;
 extern s16 g_CurrentXaSoundId;
 extern s32 g_VabAddrs[6];
-extern s32 D_800C1ECC[];
+extern u8* D_800C1ECC[172];
 extern PixPattern* D_800C52F8[];
 extern const char D_800DB524[];
 extern const char a0104x04x;
@@ -813,7 +813,7 @@ extern void (*D_80170000)(s32 arg0);
 extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
 extern u8 D_801EC000[];
-extern u8 D_8013B688[];
+extern u8 D_8013B688[8];
 extern struct Cmd14 D_8013B5F4[];
 
 void func_801072DC(POLY_GT4* poly);

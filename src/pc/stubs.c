@@ -459,7 +459,7 @@ struct Cmd14 D_8013B5F4[1];
 s32 D_8013AE90;
 s32 D_8013AEF4;
 u8 g_CdCommandResult[1];
-u8 D_8013B688[1];
+u8 D_8013B688[8];
 u8 g_CdMode[3];
 
 // TODO
@@ -511,7 +511,6 @@ s16 D_8013AED4[4];
 s16 D_8013B650[4];
 s32 g_CdCommandStatus;
 const char* D_80138784[0x800];
-s32 D_800C1ECC[1];
 s32 D_8013B65C;
 
 // sound stubs
