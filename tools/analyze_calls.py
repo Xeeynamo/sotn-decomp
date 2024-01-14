@@ -167,6 +167,17 @@ def get_gapi_funcs():
     return found_functions
 
 
+# Functions which have been identified as handwritten. These will be in splat
+# with something like: - [0x3ABA4, asm, handwritten/DecDCTvlc]
+def get_handwritten_funcs():
+    handwritten = [
+        sotn_function(s.stem, str(s))
+        for s in Path("asm").rglob("*.s")
+        if "handwritten" in str(s)
+    ]
+    return handwritten
+
+
 def is_decompiled(srcfile, fname):
     with open(srcfile) as f:
         srclines = f.readlines()
@@ -309,8 +320,11 @@ class sotn_function:
         self.name = name
         self.asm_filename = asm_filename
         # From the asm filename, get the C filename
-        self.c_filename = get_c_filename(self.asm_filename)
-        self.decompile_status = str(is_decompiled(self.c_filename, self.name))
+        if "handwritten" in self.asm_filename:
+            self.decompile_status = "N/A"
+        else:
+            self.c_filename = get_c_filename(self.asm_filename)
+            self.decompile_status = str(is_decompiled(self.c_filename, self.name))
         self.callers = {}
         self.callees = {}
 
@@ -407,6 +421,11 @@ if __name__ == "__main__":
             function_lookup[f.name] = [f]
         else:
             function_lookup[f.name].append(f)
+    for f in get_handwritten_funcs():
+        if f.name not in function_lookup:
+            function_lookup[f.name] = [f]
+        else:
+            function_lookup[f.name].append(f)
     # Add SDK functions (which don't exist in ASM or C form) as bare entries
     for f in get_sdk_funcs():
         function_lookup[f] = "SDK"
@@ -415,6 +434,7 @@ if __name__ == "__main__":
         function_lookup[f] = "MAIN"
     for f in get_gapi_funcs():
         function_lookup[f] = "GAPI"
+
     print(f"Created function lookup table in {time.perf_counter() - timer} seconds")
     # 2: For each function, find what it calls. When finding a callee, also add itself as caller.
     for function in functions:
