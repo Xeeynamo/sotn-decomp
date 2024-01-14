@@ -3871,29 +3871,22 @@ s32 TimeAttackController(TimeAttackEvents eventId, TimeAttackActions action) {
     }
 }
 
-bool func_800FD5BC(Unkstruct_800FD5BC* arg0) {
-    s32 temp;
-
-    if (arg0->unk4 != 5) {
-        if (((u32)arg0->unk4) >= 0x10U) {
-            temp = g_Status.hpMax;
-            if (g_Status.hpMax < 0) {
-                temp += 7;
-            }
-            arg0->unk8 = temp >> 3;
-        } else if (g_Status.hpMax >= (arg0->unk8 * 0x14)) {
-            arg0->unk4 = 3;
+bool func_800FD5BC(DamageParam* arg0) {
+    if (arg0->damageKind != 5) {
+        if (arg0->damageKind >= 16) {
+            arg0->damageTaken = g_Status.hpMax / 8;
+        } else if (g_Status.hpMax >= (arg0->damageTaken * 20)) {
+            arg0->damageKind = 3;
         } else {
-            arg0->unk4 = 2;
+            arg0->damageKind = 2;
         }
     }
-    if (g_Status.hp <= arg0->unk8) {
+    if (g_Status.hp <= arg0->damageTaken) {
         g_Status.hp = 0;
         return true;
-    } else {
-        g_Status.hp -= arg0->unk8;
-        return false;
     }
+    g_Status.hp -= arg0->damageTaken;
+    return false;
 }
 
 s32 func_800FD664(s32 arg0) {
