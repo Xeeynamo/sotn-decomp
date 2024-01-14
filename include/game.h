@@ -1227,7 +1227,7 @@ typedef struct {
     /* 8003C864 */ u32 (*CheckEquipmentItemCount)(u32 itemId, u32 equipType);
     /* 8003C868 */ void (*func_8010BF64)(Unkstruct_8010BF64* arg0);
     /* 8003C86C */ void (*func_800F1FC4)(s32 arg0);
-    /* 8003C870 */ void* func_800F2288;
+    /* 8003C870 */ void (*func_800F2288)(s32 arg0);
     /* 8003C874 */ void (*func_8011A3AC)(
         Entity* entity, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3);
     /* 8003C878 */ s32 (*func_800FF460)(s32 arg0);
@@ -1291,6 +1291,7 @@ extern void (*g_api_func_800F53A4)(void);
 extern u32 (*g_api_CheckEquipmentItemCount)(u32 itemId, u32 equipType);
 extern void (*g_api_func_8010BF64)(Unkstruct_8010BF64* arg0);
 extern void (*g_api_func_800F1FC4)(s32 arg0);
+extern void (*g_api_func_800F2288)(s32 arg0);
 extern void (*g_api_func_8011A3AC)(
     Entity* entity, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3);
 extern s32 (*g_api_func_800FF460)(s32 arg0);

@@ -53,6 +53,7 @@ void func_8010DFF0(s32 arg0, s32 arg1);
 void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index);
 void AddToInventory(u16 itemId, s32 itemCategory);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
+void func_800F2288(s32 arg0);
 void DebugInputWait(const char* msg);
 
 int g_Frame = 0;
@@ -127,7 +128,7 @@ bool InitGame(void) {
     api.CheckEquipmentItemCount = CheckEquipmentItemCount;
     api.func_8010BF64 = NULL;
     api.func_800F1FC4 = NULL;
-    api.func_800F2288 = NULL;
+    api.func_800F2288 = func_800F2288;
     api.func_8011A3AC = NULL;
     api.func_800FF460 = NULL;
     api.func_800FF494 = NULL;
