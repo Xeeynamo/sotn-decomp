@@ -53,6 +53,32 @@ s32 g_CapePaletteDefs[] = {
     ITEM_TWILIGHT_CLOAK, 0x40A, CAPE_PAL_TERMINATOR, 0x409,
 };
 
+bool func_800FD5BC(DamageParam* arg0) {
+    if (arg0->damageKind != 5) {
+        if (arg0->damageKind >= 16) {
+            arg0->damageTaken = g_Status.hpMax / 8;
+        } else if (g_Status.hpMax >= (arg0->damageTaken * 20)) {
+            arg0->damageKind = 3;
+        } else {
+            arg0->damageKind = 2;
+        }
+    }
+    if (g_Status.hp <= arg0->damageTaken) {
+        g_Status.hp = 0;
+        return true;
+    }
+    g_Status.hp -= arg0->damageTaken;
+    return false;
+}
+
+s32 func_800FD664(s32 arg0) {
+    return g_StageId & STAGE_INVERTEDCASTLE_FLAG ? arg0 << 1 : arg0;
+}
+
+ItemCategory GetEquipItemCategory(s32 equipId) {
+    return g_EquipDefs[g_Status.equipment[equipId]].itemCategory;
+}
+
 s32 func_800FD6C4(s32 equipTypeFilter) {
     s32 itemCount;
     s32 equipType;
@@ -126,7 +152,7 @@ u32 CheckEquipmentItemCount(u32 itemId, u32 equipType) {
 }
 
 #ifndef NON_EQUIVALENT
-INCLUDE_ASM("dra/nonmatchings/5D6C4", AddToInventory);
+INCLUDE_ASM("dra/nonmatchings/5D5BC", AddToInventory);
 #else
 void AddToInventory(u16 itemId, s32 itemCategory) {
     u8 temp_a1;
@@ -1595,7 +1621,7 @@ s32 D_800A3014[] = {
     0x018, 0x018, 0x080, 0x0D8, 0x01E, 0x17F,
 };
 
-INCLUDE_ASM("dra/nonmatchings/5D6C4", DrawRichterHudSubweapon);
+INCLUDE_ASM("dra/nonmatchings/5D5BC", DrawRichterHudSubweapon);
 
 extern Unkstruct_80137990 D_80137990;
 

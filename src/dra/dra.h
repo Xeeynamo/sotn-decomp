@@ -287,13 +287,6 @@ typedef struct {
 } Vram;
 
 typedef struct {
-    u32 unk0;
-    u32 damageKind;
-    s32 damageTaken;
-    s32 unkC;
-} DamageParam;
-
-typedef struct {
     /* 8013761C */ MenuContext menus[NUM_MENU]; // 761C, 763A, 7658, 7676
 } MenuData;
 
