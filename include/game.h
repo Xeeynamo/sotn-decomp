@@ -1225,7 +1225,7 @@ typedef struct {
         TimeAttackEvents eventId, TimeAttackActions action);
     /* 8003C844 */ void* (*func_8010E0A8)(void);
     /* 8003C848 */ void (*func_800FE044)(s32, s32);
-    /* 8003C84C */ void (*AddToInventory)(u16 itemId, s32 itemCategory);
+    /* 8003C84C */ void (*AddToInventory)(u16 id, ItemTypes kind);
     /* 8003C850 */ RelicOrb* relicDefs;
     /* 8003C854 */ void (*InitStatsAndGear)(bool debugMode);
     /* 8003C858 */ s32 (*func_80134714)(s32 arg0, s32 arg1, s32 arg2);
@@ -1290,7 +1290,7 @@ extern s32 (*g_api_TimeAttackController)(
     TimeAttackEvents eventId, TimeAttackActions action);
 extern void* (*g_api_func_8010E0A8)(void);
 extern void (*g_api_func_800FE044)(s32, s32);
-extern void (*g_api_AddToInventory)(u16 itemId, s32 itemCategory);
+extern void (*g_api_AddToInventory)(u16 id, ItemTypes kind);
 extern RelicOrb* g_api_relicDefs;
 extern s32 (*g_api_func_80134714)(s32 arg0, s32 arg1, s32 arg2);
 extern s32 (*g_api_func_80134678)(s16 arg0, u16 arg1);
