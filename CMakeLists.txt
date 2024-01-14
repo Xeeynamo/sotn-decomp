@@ -75,7 +75,7 @@ set(SOURCE_FILES_DRA
     src/dra/lba_stage.c
     src/dra/config_us.c
     src/dra/menu.c
-    src/dra/5D6C4.c 
+    src/dra/5D5BC.c 
     src/dra/627C4.c
     src/dra/63ED4.c
     src/dra/91EBC.c
