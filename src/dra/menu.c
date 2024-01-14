@@ -105,8 +105,8 @@ const char* D_800A2D68[] = {
 };
 #endif
 
-u8 g_ChActionButtons[] = {0xEA, 0xE8, 0xE9, 0xEB};
-u8 g_ChShoulderButtons[] = {0x32, 0x2C, 0x32, 0x2C, 0x12, 0x11, 0x11, 0x12};
+u8 g_ChButtons[] = {0xEA, 0xE8, 0xE9, 0xEB, 0x32, 0x2C,
+                    0x32, 0x2C, 0x12, 0x11, 0x11, 0x12};
 u8 g_ChRgb[] = {MENUCHAR('R'), MENUCHAR('G'), MENUCHAR('B')};
 u8 D_800A2D80[] = {0x00, 0x20, 0x30, 0x40, 0x50, 0x60, 0x69, 0x70,
                    0x75, 0x78, 0x7A, 0x7C, 0x7D, 0x7E, 0x7F, 0x80};
@@ -1169,10 +1169,10 @@ void MenuButtonConfigDraw(MenuContext* ctx) {
         buttonId = g_Settings.buttonConfig[i];
         btn1_x = (buttonId * 12) + 0x30;
         MenuDrawChar(
-            g_ChActionButtons[buttonId], XVAR + btn1_x, 0x30 + (i * 0x10), ctx);
+            g_ChButtons[buttonId], XVAR + btn1_x, 0x30 + (i * 0x10), ctx);
         if (buttonId >= 4) {
             btn2_x = btn1_x + 8;
-            MenuDrawChar(g_ChShoulderButtons[buttonId], XVAR + btn2_x,
+            MenuDrawChar(g_ChButtons[4 + buttonId], XVAR + btn2_x,
                          0x30 + (i * 0x10), ctx);
         }
     }
@@ -1361,20 +1361,20 @@ void MenuDrawStats(s32 menuDialogue) {
     temp_var = g_Settings.buttonConfig[0];
     temp_s1 = temp_var;
     if (temp_s1 < 4) {
-        MenuDrawChar(g_ChActionButtons[temp_s1], x + 44, y, ctx);
+        MenuDrawChar(g_ChButtons[temp_s1], x + 44, y, ctx);
     } else {
-        MenuDrawChar(g_ChActionButtons[temp_s1], x + 40, y, ctx);
-        MenuDrawChar(g_ChShoulderButtons[temp_s1], x + 48, y, ctx);
+        MenuDrawChar(g_ChButtons[temp_s1], x + 40, y, ctx);
+        MenuDrawChar(g_ChButtons[4 + temp_s1], x + 48, y, ctx);
     }
     MenuDrawInt(g_Status.attackHands[0], x + 76, y, ctx);
 
     temp_var = g_Settings.buttonConfig[1];
     temp_s1 = temp_var;
     if (temp_s1 < 4) {
-        MenuDrawChar(g_ChActionButtons[temp_s1], x + 44, y + 10, ctx);
+        MenuDrawChar(g_ChButtons[temp_s1], x + 44, y + 10, ctx);
     } else {
-        MenuDrawChar(g_ChActionButtons[temp_s1], x + 40, y + 10, ctx);
-        MenuDrawChar(g_ChShoulderButtons[temp_s1], x + 48, y + 10, ctx);
+        MenuDrawChar(g_ChButtons[temp_s1], x + 40, y + 10, ctx);
+        MenuDrawChar(g_ChButtons[4 + temp_s1], x + 48, y + 10, ctx);
     }
 
     MenuDrawInt(g_Status.attackHands[1], x + 76, y + 10, ctx);
@@ -1457,13 +1457,13 @@ void MenuSpellsDraw(MenuContext* ctx) {
             buttonCFG = g_Settings.buttonConfig[0];
             charNum++;
             if (buttonCFG < 4) {
-                MenuDrawChar(g_ChActionButtons[buttonCFG],
+                MenuDrawChar(g_ChButtons[buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
             } else {
-                MenuDrawChar(g_ChActionButtons[buttonCFG],
+                MenuDrawChar(g_ChButtons[buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
                 charNum++;
-                MenuDrawChar(g_ChShoulderButtons[buttonCFG],
+                MenuDrawChar(g_ChButtons[4 + buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
             }
             // This writes the word "or", because spells say '{Square} or
@@ -1475,13 +1475,13 @@ void MenuSpellsDraw(MenuContext* ctx) {
             buttonCFG = g_Settings.buttonConfig[1];
             charNum++;
             if (buttonCFG < 4) {
-                MenuDrawChar(g_ChActionButtons[buttonCFG],
+                MenuDrawChar(g_ChButtons[buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
             } else {
-                MenuDrawChar(g_ChActionButtons[buttonCFG],
+                MenuDrawChar(g_ChButtons[buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
                 charNum++;
-                MenuDrawChar(g_ChShoulderButtons[buttonCFG],
+                MenuDrawChar(g_ChButtons[4 + buttonCFG],
                              startXCoord + (charNum * 8), yCoord, ctx);
             }
         } else {
