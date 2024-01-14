@@ -617,8 +617,6 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
     return 0;
 }
 
-void AddToInventory(u16 itemId, s32 itemCategory) { NOT_IMPLEMENTED; }
-
 Entity* GetFreeEntity(s16 start, s16 end);
 Entity* CreateEntFactoryFromEntity(
     Entity* source, u32 factoryParams, s32 arg2_raw) {
