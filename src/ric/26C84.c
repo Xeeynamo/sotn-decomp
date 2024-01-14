@@ -330,7 +330,9 @@ void EntityShrinkingPowerUpRing(Entity* self) {
     }
 }
 
-// Entity ID #40. Created by blueprint 47. 
+// Entity ID #40. Created by blueprint 47. That factory comes from
+// func_80159CE4, which runs when UpdateEntityRichter happens with
+// PLAYER.step set to 10, for PlayerHit.
 
 void func_80164DF8(Entity* self) {
     s32 i;
