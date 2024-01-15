@@ -96,6 +96,7 @@ void InitEnemyDefs(void);
 void InitSubwpnDefs(void);
 void InitVbVh(void);
 bool InitSfxData(const char* content);
+bool InitXaData(const char* content);
 bool InitGame(void) {
     if (!InitPlatform()) {
         return false;
@@ -196,6 +197,10 @@ bool InitGame(void) {
 
     if (!FileStringify(InitSfxData, "assets/dra/sfx.json")) {
         WARNF("failed to init sfx");
+    }
+
+    if (!FileStringify(InitXaData, "assets/dra/music_xa.json")) {
+        WARNF("failed to init xa data");
     }
 
     return true;
@@ -412,8 +417,6 @@ void ReadToArray(const char* path, char* content, size_t maxlen) {
 
     fseek(f, 0, SEEK_SET);
 
-    printf("len %d\n", len);
-
     size_t bytesread = fread(content, 1, len, f);
     if (bytesread != len) {
         ERRORF("unable to read %d bytes for '%s'", len, path);
@@ -464,6 +467,31 @@ bool InitSfxData(const char* content) {
             DO_ITEM("unk4", jitem, item, item->unk4);
             DO_ITEM("tone", jitem, item, item->tone);
             DO_ITEM("unk6", jitem, item, item->unk6);
+        }
+    } else {
+        ERRORF("Error loading sfx.");
+        exit(1);
+    }
+    cJSON_Delete(json);
+    return true;
+}
+
+bool InitXaData(const char* content) {
+    cJSON* json = cJSON_Parse(content);
+    cJSON* array = cJSON_GetObjectItemCaseSensitive(json, "asset_data");
+    if (cJSON_IsArray(array)) {
+        int len = cJSON_GetArraySize(array);
+        for (int i = 0; i < len; i++) {
+            struct XaMusicConfig* item = &g_XaMusicConfigs[i];
+            cJSON* jitem = cJSON_GetArrayItem(array, i);
+            DO_ITEM("cd_addr", jitem, item, item->cd_addr);
+            DO_ITEM("unk228", jitem, item, item->unk228);
+            DO_ITEM("filter_file", jitem, item, item->filter_file);
+            DO_ITEM("filter_channel_id", jitem, item, item->filter_channel_id);
+            DO_ITEM("volume", jitem, item, item->volume);
+            DO_ITEM("unk22f", jitem, item, item->unk22f);
+            DO_ITEM("unk230", jitem, item, item->unk230);
+            // ignore pad for now
         }
     } else {
         ERRORF("Error loading sfx.");
