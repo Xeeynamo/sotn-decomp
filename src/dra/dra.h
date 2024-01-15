@@ -383,11 +383,6 @@ extern s32 g_ExpNext[];
 extern u16 D_800AC958[];
 extern Vram g_Vram;
 extern CdFile* D_800ACC74[];
-extern u8 D_800ACF54[];
-extern u8 D_800ACFB4[][4];
-#if defined(VERSION_HD)
-extern s32 D_800ACEDC_hd;
-#endif
 extern s32 D_800ACE44;
 extern s32 D_800ACE48[12]; // size guessed
 extern RECT D_800ACE60;
@@ -395,15 +390,20 @@ extern s16 D_800ACE88[];
 extern s16 D_800ACE90[];
 extern s16_pair D_800ACEC0[4];
 extern Unkstruct_800ACED0 D_800ACED0;
+#if defined(VERSION_HD)
+extern s32 D_800ACEDC_hd;
+#endif
 extern u8 D_800ACF4C[];
+extern u8 D_800ACF54[];
+extern s16 D_800ACF60[]; // collection of sounds?
+extern s16 D_800ACF6C[];
 extern s32 D_800ACF74; // These two might...
 extern s32 D_800ACF78; // ...be an array
 extern unkstruct_800ACF7C D_800ACF7C[];
-extern s16 D_800ACF8A[]; // collection of sounds?
-extern s16 D_800ACF60[]; // collection of sounds?
-extern s16 D_800ACF6C[];
+extern s16 D_800ACF84[8]; // collection of sounds
 extern s16 D_800ACF94[];
 extern u8 D_800AD094[0x30];
+extern u8 D_800ACFB4[][4];
 extern PfnEntityUpdate D_800AD0C4[];
 extern FactoryBlueprint g_FactoryBlueprints[];
 extern u8 D_800AD4B8[];
