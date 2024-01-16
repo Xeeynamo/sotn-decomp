@@ -73,7 +73,7 @@ def dakuten(chr, prev):
         if prev == "く":
             return "ぐ"
         print(chr, prev)
-        assert(False)
+        assert False
     if chr == ".":
         if prev == "フ":
             return "プ"
@@ -84,11 +84,12 @@ def dakuten(chr, prev):
         if prev == "ヘ":
             return "ペ"
         if prev == "ホ":
-            return "ポ"        
+            return "ポ"
         print(chr, prev)
-        assert(False)
+        assert False
     print(chr, prev)
-    assert(False)
+    assert False
+
 
 table = [
     # fmt: off
@@ -118,8 +119,10 @@ utf8_to_index = {}
 for index, value in enumerate(table):
     utf8_to_index[value] = index
 
+
 def get_chr(chr):
-   return table[chr]
+    return table[chr]
+
 
 def convert_j(f):
     pos = 0
@@ -130,12 +133,12 @@ def convert_j(f):
         ch = f[pos]
         prev_prev = prev
         prev = ch
-        pos+=1
+        pos += 1
         if int(ch) == 0xFF:
             ch = f[pos]
             pos += 1
 
-            if (ch == 0):
+            if ch == 0:
                 break
 
             if ch != 0xFF:
@@ -146,17 +149,19 @@ def convert_j(f):
             str += get_chr(ch)
     return str
 
+
 def parse_string_to_int_array(input_str):
     # Remove "_SJ(" and ")" from the input string
     clean_str = input_str.replace("_SJ(", "").replace(")", "")
-    
+
     # Parse each byte and convert to integer
     int_array = [int(byte, 16) for byte in clean_str.split("\\x")[1:]]
 
     # null termination
     int_array.append(0)
-    
+
     return int_array
+
 
 # ten ten
 def has_dakuten(utf8_char):
@@ -172,7 +177,8 @@ def has_dakuten(utf8_char):
         "バ", "ビ", "ブ", "ベ", "ボ"]
     # fmt: on
     return utf8_char in chars
-    
+
+
 # maru
 def has_handakuten(utf8_char):
     # fmt: off
@@ -182,62 +188,64 @@ def has_handakuten(utf8_char):
     ]
     # fmt: on
     return utf8_char in chars
-    
+
+
 def remove_dakuten_handakuten(utf8_char):
     table = {
-        "が" : "か", 
-        "ぎ" : "ぎ", 
-        "ぐ" : "く",
+        "が": "か",
+        "ぎ": "ぎ",
+        "ぐ": "く",
         "げ": "け",
         "ご": "こ",
-	    "ざ": "さ", 
+        "ざ": "さ",
         "じ": "し",
-        "ず": "す", 
-        "ぜ": "せ", 
+        "ず": "す",
+        "ぜ": "せ",
         "ぞ": "そ",
-	    "だ": "た", 
-        "ぢ": "ち", 
-        "づ": "つ", 
-        "で": "て",	
+        "だ": "た",
+        "ぢ": "ち",
+        "づ": "つ",
+        "で": "て",
         "ど": "と",
-        "ば": "は", 
-        "び": "ひ", 
-        "ぶ": "ふ", 
-        "べ": "へ", 
+        "ば": "は",
+        "び": "ひ",
+        "ぶ": "ふ",
+        "べ": "へ",
         "ぼ": "ほ",
-        "ぱ": "は", 
-        "ぴ": "ひ", 
-        "ぷ": "ふ", 
-        "ぺ": "へ", 
+        "ぱ": "は",
+        "ぴ": "ひ",
+        "ぷ": "ふ",
+        "ぺ": "へ",
         "ぽ": "ほ",
-        "ガ": "カ", 
-        "ギ": "キ", 
-        "グ": "ク", 
-        "ゲ": "ケ", 
+        "ガ": "カ",
+        "ギ": "キ",
+        "グ": "ク",
+        "ゲ": "ケ",
         "ゴ": "コ",
-	    "ザ": "サ", 
-        "ジ": "シ", 
-        "ズ": "ス", 
-        "ゼ": "セ", 
+        "ザ": "サ",
+        "ジ": "シ",
+        "ズ": "ス",
+        "ゼ": "セ",
         "ゾ": "ソ",
-	    "ダ": "タ", 
-        "ヂ": "チ", 
-        "ヅ": "ツ", 
-        "デ": "テ", 
+        "ダ": "タ",
+        "ヂ": "チ",
+        "ヅ": "ツ",
+        "デ": "テ",
         "ド": "ト",
-        "バ": "ハ", 
-        "ビ": "ヒ", 
-        "ブ": "フ", 
-        "ベ": "ヘ", 
+        "バ": "ハ",
+        "ビ": "ヒ",
+        "ブ": "フ",
+        "ベ": "ヘ",
         "ボ": "ホ",
-	    "パ": "ハ", 
-        "ピ": "ヒ", 
-        "プ": "フ", 
-        "ペ": "ヘ", 
-        "ポ": "ホ"
+        "パ": "ハ",
+        "ピ": "ヒ",
+        "プ": "フ",
+        "ペ": "ヘ",
+        "ポ": "ホ",
     }
     return table[utf8_char]
-    
+
+
 def dakuten_to_bytes(input_chr):
     no_dakuten = remove_dakuten_handakuten(input_chr)
     no_dakuten_bytes = utf8_to_index[no_dakuten]
@@ -245,7 +253,8 @@ def dakuten_to_bytes(input_chr):
     if has_handakuten(input_chr):
         byte = 159
 
-    return [no_dakuten_bytes, 0xff, byte]
+    return [no_dakuten_bytes, 0xFF, byte]
+
 
 def utf8_to_byte_literals(input_str):
     clean_str = input_str.replace("_SJ(", "").replace(")", "")
@@ -255,13 +264,14 @@ def utf8_to_byte_literals(input_str):
             bytes += dakuten_to_bytes(char)
         else:
             bytes.append(utf8_to_index[char])
-    bytes.append(0xff)
+    bytes.append(0xFF)
     hex_list = [hex(num) for num in bytes]
     return bytes
+
 
 def utf8_to_byte_literals_wrapped(input):
     out = utf8_to_byte_literals(input)
     str = f"_SJ()"
-    escaped_string = ''.join([f'\\x{val:02X}' for val in out])
+    escaped_string = "".join([f"\\x{val:02X}" for val in out])
     out = f"_SJ({escaped_string})"
     return out
