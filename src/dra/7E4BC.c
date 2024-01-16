@@ -463,12 +463,12 @@ void EntityHitByIce(Entity* self) {
             prim = prim->next;
         }
         if (PLAYER.velocityY != 0) {
-            self->ext.factory.unk7E = 1;
+            self->ext.hitbyice.unk7E = 1;
         }
         if (PLAYER.step == 0x10) {
-            self->ext.factory.unk80 = 1;
-            self->ext.factory.unk82 = 0x14;
-            self->ext.factory.unk7E = 0;
+            self->ext.hitbyice.unk80 = 1;
+            self->ext.hitbyice.unk82 = 0x14;
+            self->ext.hitbyice.unk7E = 0;
         }
         if (PLAYER.velocityY != 0) {
             if (PLAYER.facingLeft == 0) {
@@ -487,27 +487,28 @@ void EntityHitByIce(Entity* self) {
         self->step++;
         break;
     case 1:
-        if (self->ext.factory.unk80 != 0) {
-            if (--self->ext.factory.unk82 == 0) {
-                sp18 = true;
-            }
+        if (self->ext.hitbyice.unk80 != 0 && --self->ext.hitbyice.unk82 == 0) {
+            sp18 = true;
         }
-        if (self->ext.factory.unk7E != 0) {
+        // Could rewrite as a series of && and || but that would probably reduce readability
+        if (self->ext.hitbyice.unk7E != 0) {
             if (g_Player.pl_vram_flag & 0xC) {
                 sp18 = true;
             }
-            if (PLAYER.step == 10 && PLAYER.step_s == 5) {
+            // Checking PLAYER.step is pointless here, this function only runs
+            // for Player_Hit.
+            if (PLAYER.step == Player_Hit && PLAYER.step_s == 5) {
                 sp18 = true;
             }
         }
         if (sp18) {
-            self->ext.factory.unk7C = 0x40;
+            self->ext.hitbyice.unk7C = 0x40;
             PlaySfx(0x61A);
             self->step++;
         }
         break;
     case 2:
-        if (--self->ext.factory.unk7C == 0) {
+        if (--self->ext.hitbyice.unk7C == 0) {
             DestroyEntity(self);
             return;
         }

@@ -690,6 +690,13 @@ typedef struct {
     s16 unk8A;
 } ET_RichterPowerUpRing;
 
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+} ET_HitByIce;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_EntFactory factory;
@@ -707,6 +714,7 @@ typedef union {
     /* 0x7C */ ET_MessageBox messageBox;
     /* 0x7C */ ET_Weapon weapon;
     /* 0x7C */ ET_Weapon29 weapon29;
+    /* 0x7C */ ET_HitByIce hitbyice;
     /* 0x7C */ ET_Bat bat;
     /* 0x7C */ ET_SoulStealOrb soulStealOrb;
     /* 0x7C */ ET_GaibonSlogra GS_Props;

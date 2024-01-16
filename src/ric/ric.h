@@ -116,7 +116,7 @@ void func_8016A26C(Entity* self);
 void func_8016A974(Entity* self);
 void func_8016B0C0(Entity* self);
 void func_80160D2C(Entity* self);
-void func_80164DF8(Entity* self);
+void EntityHitByIce(Entity* self);
 void func_801656B0(Entity* self);
 void func_8016B97C(Entity* self);
 void func_8016C1BC(Entity* self);

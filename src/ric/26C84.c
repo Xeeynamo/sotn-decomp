@@ -336,7 +336,7 @@ void EntityShrinkingPowerUpRing(Entity* self) {
 // Same spot in AlucardHandleDamage creates DRA blueprint 46.
 // That creates DRA child ID 33, which is EntityHitByIce.
 
-void func_80164DF8(Entity* self) {
+void EntityHitByIce(Entity* self) {
     s32 i;
     Primitive* prim;
     s16 angle;
@@ -382,7 +382,7 @@ void func_80164DF8(Entity* self) {
         }
         // Weird repeated conditional
         if (PLAYER.velocityY != 0) {
-            self->ext.factory.unk7E = 1;
+            self->ext.hitbyice.unk7E = 1;
         }
         if (PLAYER.velocityY != 0) {
             if (PLAYER.facingLeft == 0) {
@@ -403,12 +403,12 @@ void func_80164DF8(Entity* self) {
             } else {
                 self->rotZ = 0x180;
             }
-            self->ext.factory.unk80 = 1;
-            self->ext.factory.unk82 = 0x3C;
+            self->ext.hitbyice.unk80 = 1;
+            self->ext.hitbyice.unk82 = 0x3C;
             if (self->params & 0x7F00) {
-                self->ext.factory.unk82 = 0x14;
+                self->ext.hitbyice.unk82 = 0x14;
             }
-            self->ext.factory.unk7E = 0;
+            self->ext.hitbyice.unk7E = 0;
         }
         self->step++;
         break;
@@ -436,22 +436,22 @@ void func_80164DF8(Entity* self) {
                 }
             }
         }
-        if (self->ext.factory.unk80 != 0 && --self->ext.factory.unk82 == 0) {
+        if (self->ext.hitbyice.unk80 != 0 && --self->ext.hitbyice.unk82 == 0) {
             sp18 = true;
         }
-        if ((self->ext.factory.unk7E != 0) && (g_Player.pl_vram_flag & 0xC)) {
+        if ((self->ext.hitbyice.unk7E != 0) && (g_Player.pl_vram_flag & 0xC)) {
             sp18 = true;
         }
         if (sp18) {
-            self->ext.factory.unk7C = 0x40;
-            if (self->ext.factory.unk80 != 0) {
-                self->ext.factory.unk7C = 0x80;
+            self->ext.hitbyice.unk7C = 0x40;
+            if (self->ext.hitbyice.unk80 != 0) {
+                self->ext.hitbyice.unk7C = 0x80;
             }
             self->step++;
         }
         break;
     case 2:
-        if (--self->ext.factory.unk7C == 0) {
+        if (--self->ext.hitbyice.unk7C == 0) {
             DestroyEntity(self);
             return;
         }
@@ -496,7 +496,7 @@ void func_80164DF8(Entity* self) {
         if ((prim->u0 == 0) && (sp18 != 0)) {
             prim->u0++;
             prim->v0 = (rand() & 15) + 1;
-            if (self->ext.factory.unk80 != 0) {
+            if (self->ext.hitbyice.unk80 != 0) {
                 prim->v0 = (rand() % 60) + 1;
             }
         }
@@ -505,7 +505,7 @@ void func_80164DF8(Entity* self) {
                 prim->v0 = 0x20;
                 prim->u2 = 0xF0;
                 prim->u0++;
-                if (self->ext.factory.unk80 != 0) {
+                if (self->ext.hitbyice.unk80 != 0) {
                     prim->v0 = (rand() & 31) + 0x28;
                 }
             }
@@ -515,7 +515,7 @@ void func_80164DF8(Entity* self) {
                 prim->u2 += 4;
             }
             primYshift = (s8)prim->u2 >> 4;
-            if (self->ext.factory.unk80 != 0) {
+            if (self->ext.hitbyice.unk80 != 0) {
                 primYshift /= 2;
             }
             prim->y0 = primYshift + prim->y0;
