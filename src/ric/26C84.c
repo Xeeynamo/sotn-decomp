@@ -381,7 +381,7 @@ void func_80164DF8(Entity* self) {
             prim = prim->next;
         }
         // Weird repeated conditional
-        if (PLAYER.velocityY != 0){
+        if (PLAYER.velocityY != 0) {
             self->ext.factory.unk7E = 1;
         }
         if (PLAYER.velocityY != 0) {
@@ -465,7 +465,8 @@ void func_80164DF8(Entity* self) {
         offset = D_80155244[i * 3];
         if (prim->u0 < 2) {
             size = SquareRoot12(
-                ((offset->unk0 * offset->unk0) + (offset->unk2 * offset->unk2)) << 0xC);
+                ((offset->unk0 * offset->unk0) + (offset->unk2 * offset->unk2))
+                << 0xC);
             angle = self->rotZ + ratan2(offset->unk2, offset->unk0);
             xShift1 = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
             yShift1 = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
@@ -474,7 +475,8 @@ void func_80164DF8(Entity* self) {
 
             offset = D_80155244[i * 3 + 1];
             size = SquareRoot12(
-                ((offset->unk0 * offset->unk0) + (offset->unk2 * offset->unk2)) << 0xC);
+                ((offset->unk0 * offset->unk0) + (offset->unk2 * offset->unk2))
+                << 0xC);
             angle = self->rotZ + ratan2(offset->unk2, offset->unk0);
             xShift2 = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
             yShift2 = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
@@ -483,7 +485,8 @@ void func_80164DF8(Entity* self) {
 
             offset = D_80155244[i * 3 + 2];
             size = SquareRoot12(
-                ((offset->unk0 * offset->unk0) + (offset->unk2 * offset->unk2)) << 0xC);
+                ((offset->unk0 * offset->unk0) + (offset->unk2 * offset->unk2))
+                << 0xC);
             angle = self->rotZ + ratan2(offset->unk2, offset->unk0);
             xShift3 = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
             yShift3 = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
