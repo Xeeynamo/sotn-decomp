@@ -465,7 +465,7 @@ void EntityHitByIce(Entity* self) {
         if (PLAYER.velocityY != 0) {
             self->ext.hitbyice.unk7E = 1;
         }
-        if (PLAYER.step == 0x10) {
+        if (PLAYER.step == Player_Kill) {
             self->ext.hitbyice.unk80 = 1;
             self->ext.hitbyice.unk82 = 0x14;
             self->ext.hitbyice.unk7E = 0;
@@ -495,8 +495,6 @@ void EntityHitByIce(Entity* self) {
             if (g_Player.pl_vram_flag & 0xC) {
                 sp18 = true;
             }
-            // Checking PLAYER.step is pointless here, this function only runs
-            // for Player_Hit.
             if (PLAYER.step == Player_Hit && PLAYER.step_s == 5) {
                 sp18 = true;
             }
