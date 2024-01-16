@@ -911,7 +911,8 @@ void func_80159C04(void) {
     }
 }
 
-void func_80159CE4(s32 arg0, u32 arg1, s16 arg2) {
+
+void RichterHandleDamage(s32 arg0, u32 arg1, s16 arg2) {
     DamageParam damage;
     s32 xShift;
     s32 i;
@@ -1051,6 +1052,7 @@ void func_80159CE4(s32 arg0, u32 arg1, s16 arg2) {
                 g_Player.D_80072F00[2] = 0x10;
                 break;
             } else if (arg0 & 0x2000) {
+                // Creates EntityHitByIce
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 47), 0);
                 g_Player.D_80072F00[2] = 0xC;
                 g_Player.unk40 = 0x8169;
