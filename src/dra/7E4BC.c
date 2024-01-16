@@ -440,9 +440,9 @@ void EntityHitByIce(Entity* self) {
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = PLAYER.posY.i.hi;
     sp18 = (g_Player.unk0C & 0x10000) == sp18;
-    switch (self->step) { /* irregular */
+    switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimitives(5U, 0x18);
+        self->primIndex = AllocPrimitives(PRIM_GT3, 24);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
