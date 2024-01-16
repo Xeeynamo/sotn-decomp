@@ -166,11 +166,8 @@ segments:
       - [0x41750, .rodata, 72BB0] # func_801131C4
       - [0x418C8, .rodata, 72BB0] # func_801131C4
       - [0x418E0, .rodata, 72BB0]
-      - [0x418F4, .rodata, 72BB0]
-      - [0x41908, .rodata, 72BB0] # AlucardHandleDamage
-      - [0x41948, .rodata, 72BB0] # AlucardHandleDamage
-      - [0x41990, .rodata, 72BB0] # AlucardHandleDamage
-      - [0x419B0, .rodata, 72BB0] # AlucardHandleDamage
+      - [0x418F4, .rodata, 72BB0] # AlucardHandleDamage string
+      - [0x41908, .rodata, 72BB0] # AlucardHandleDamage jumptables
       - [0x419D0, .rodata, 72BB0]
       - [0x419E8, .rodata, 75F54] # PlayerStepHellfire
       - [0x41A00, .rodata, 75F54] # func_80116994

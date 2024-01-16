@@ -599,22 +599,22 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     s32 itemCount;
 
     func_800F53A4();
-    damage->unk0 = arg1 & ~0x1F;
+    damage->effects = arg1 & ~0x1F;
     damage->damageKind = arg1 & 0x1F;
-    if (g_Status.defenseElement & damage->unk0) {
+    if (g_Status.defenseElement & damage->effects) {
         amount *= 2;
     }
-    if (g_Status.D_80097C2A & damage->unk0) {
+    if (g_Status.D_80097C2A & damage->effects) {
         amount /= 2;
     }
-    if (g_Status.D_80097C2C & damage->unk0) {
-        if (!(g_Status.D_80097C2C & damage->unk0 & 0x200)) {
+    if (g_Status.D_80097C2C & damage->effects) {
+        if (!(g_Status.D_80097C2C & damage->effects & 0x200)) {
             return 0;
         }
-        damage->unk0 &= ~0x200;
+        damage->effects &= ~0x200;
     }
 
-    if (g_Status.D_80097C2E & damage->unk0) {
+    if (g_Status.D_80097C2E & damage->effects) {
         if (amount < 1) {
             amount = 1;
         }
@@ -652,7 +652,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     // have special behavior. Also, not possible to equip two. This may be
     // a new discovery of a property of the item. Worth further analysis.
     itemCount = CheckEquipmentItemCount(ITEM_BALLROOM_MASK, HEAD_TYPE);
-    if (itemCount != 0 && (damage->unk0 & 0xF980)) {
+    if (itemCount != 0 && (damage->effects & 0xF980)) {
         if (itemCount == 1) {
             amount -= amount / 5;
         }
@@ -663,7 +663,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     if (g_Player.unk0C & 0x80) {
         damage->damageTaken = g_Status.hpMax / 8;
         ret = 8;
-    } else if (damage->unk0 & 0x200) {
+    } else if (damage->effects & 0x200) {
         damage->damageTaken = amount - (g_Status.defenseEquip * 2);
         if (damage->damageTaken <= 0) {
             damage->damageTaken = 0;
@@ -704,7 +704,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
             }
             ret = 3;
         } else {
-            if (g_Status.defenseEquip > 99 && !(damage->unk0 & 0x180) &&
+            if (g_Status.defenseEquip > 99 && !(damage->effects & 0x180) &&
                 !(g_Player.unk0C & 0x80)) {
                 damage->damageKind = 0;
                 ret = 1;

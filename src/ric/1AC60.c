@@ -912,7 +912,7 @@ void func_80159C04(void) {
 }
 
 void func_80159CE4(s32 arg0, u32 arg1, s16 arg2) {
-    DamageParam sp10;
+    DamageParam damage;
     s32 xShift;
     s32 i;
     bool step_s_zero = false;
@@ -980,7 +980,7 @@ void func_80159CE4(s32 arg0, u32 arg1, s16 arg2) {
             case 2:
             case 3:
                 PLAYER.velocityY = FIX(-0.5);
-                g_Player.unk5A = PLAYER.hitPoints;
+                g_Player.damageTaken = PLAYER.hitPoints;
                 PLAYER.posY.val -= 1;
                 func_8015CAAC(FIX(-8));
                 PLAYER.step_s = 2;
@@ -1103,10 +1103,10 @@ void func_80159CE4(s32 arg0, u32 arg1, s16 arg2) {
             PLAYER.velocityX /= 2;
             PLAYER.velocityY = 0;
             PLAYER.step_s = 5;
-            sp10.unk0 = 0;
-            sp10.damageKind = 1;
-            sp10.damageTaken = g_Player.unk5A;
-            if (g_api.func_800FD5BC(&sp10) != 0) {
+            damage.effects = 0;
+            damage.damageKind = 1;
+            damage.damageTaken = g_Player.damageTaken;
+            if (g_api.func_800FD5BC(&damage) != 0) {
                 SetPlayerStep(Player_Kill);
                 func_8015A9B0(0, 2, 10, 2);
                 return;
@@ -1144,10 +1144,10 @@ void func_80159CE4(s32 arg0, u32 arg1, s16 arg2) {
                     g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
                     g_api.func_80102CD8(2);
                     PLAYER.step_s = 1;
-                    sp10.unk0 = 0;
-                    sp10.damageKind = 1;
-                    sp10.damageTaken = g_Player.unk5A;
-                    if (g_api.func_800FD5BC(&sp10) != 0) {
+                    damage.effects = 0;
+                    damage.damageKind = 1;
+                    damage.damageTaken = g_Player.damageTaken;
+                    if (g_api.func_800FD5BC(&damage) != 0) {
                         SetPlayerStep(Player_Kill);
                         func_8015A9B0(0, 2, 10, 2);
                         return;
@@ -1162,10 +1162,10 @@ void func_80159CE4(s32 arg0, u32 arg1, s16 arg2) {
             PLAYER.step_s = 3;
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x800, 75), 0);
         }
-        sp10.unk0 = 0;
-        sp10.damageKind = 1;
-        sp10.damageTaken = g_Player.unk5A;
-        if (g_api.func_800FD5BC(&sp10) != 0) {
+        damage.effects = 0;
+        damage.damageKind = 1;
+        damage.damageTaken = g_Player.damageTaken;
+        if (g_api.func_800FD5BC(&damage) != 0) {
             SetPlayerStep(Player_Kill);
             func_8015A9B0(0, 2, 10, 2);
             return;
@@ -1239,7 +1239,7 @@ void func_80159CE4(s32 arg0, u32 arg1, s16 arg2) {
 const s32 rodata_padding_1A784 = 0;
 
 void func_8015A7D0(void) {
-    DamageParam sp10;
+    DamageParam damage;
     switch (g_CurrentEntity->step_s) {
     case 0:
         func_80159BC8();
@@ -1256,10 +1256,10 @@ void func_8015A7D0(void) {
     case 1:
         // Effectively a switch on g_Player.unk60
         if (g_Player.unk60 == 3) {
-            sp10.unk0 = 0;
-            sp10.damageKind = 1;
-            sp10.damageTaken = g_Player.unk5A;
-            if (g_api.func_800FD5BC(&sp10)) {
+            damage.effects = 0;
+            damage.damageKind = 1;
+            damage.damageTaken = g_Player.damageTaken;
+            if (g_api.func_800FD5BC(&damage)) {
                 SetPlayerStep(Player_Kill);
                 func_8015A9B0(0, 2, 12, 1);
                 return;
@@ -1274,7 +1274,7 @@ void func_8015A7D0(void) {
             PLAYER.step = Player_Hit;
             PLAYER.step_s = 2;
             g_Player.unk60 = 0;
-            g_Player.unk5A = g_Player.unk64;
+            g_Player.damageTaken = g_Player.unk64;
             g_api.PlaySfx(0x704);
         } else if (g_Player.unk60 == 0) { /* switch 1 */
             PLAYER.step = Player_Hit;

@@ -154,11 +154,8 @@ segments:
       - [0x4166C, .rodata, 72BB0] # jtbl_800E166C
       - [0x417E4, .rodata, 72BB0] # jtbl_800E17E4
       - [0x417FC, .rodata, 72BB0]
-      - [0x41810, .rodata, 72BB0]
-      - [0x41824, .rodata, 72BB0] # jtbl_800E1824
-      - [0x41864, .rodata, 72BB0] # jtbl_800E1864
-      - [0x418AC, .rodata, 72BB0] # jtbl_800E18AC
-      - [0x418CC, .rodata, 72BB0] # jtbl_800E18CC
+      - [0x41810, .rodata, 72BB0] # AlucardHandleDamage string
+      - [0x41824, .rodata, 72BB0] # AlucardHandleDamage jumptables
       - [0x418EC, .rodata, 72BB0]
       - [0x41904, .rodata, 75F54] # jtbl_800E1904
       - [0x4191C, .rodata, 75F54] # jtbl_800E191C

@@ -1175,7 +1175,7 @@ typedef struct {
 } Dialogue;                                  // size = 0x44
 
 typedef struct {
-    u32 unk0;
+    u32 effects; // Curse, poison, etc; needs an enum.
     u32 damageKind;
     s32 damageTaken;
     s32 unkC;
@@ -1442,7 +1442,7 @@ typedef struct {
     /* 80072F74 */ u16 unk54;
     /* 80072F76 */ u16 unk56;
     /* 80072F78 */ u16 unk58;
-    /* 80072F7A */ u16 unk5A;
+    /* 80072F7A */ u16 damageTaken;
     /* 80072F7C */ u16 unk5C;
     /* 80072F7E */ u16 unk5E; // status ailment timer
     /* 80072F80 */ u16 unk60;

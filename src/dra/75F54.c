@@ -110,7 +110,7 @@ void func_80116208(void) {
             PLAYER.step_s = 0xF;
             g_Player.unk60 = 0;
             func_8010DA48(0x2E);
-            g_Player.unk5A = g_Player.unk64;
+            g_Player.damageTaken = g_Player.unk64;
             PlaySfx(0x6ED);
             return;
         }
