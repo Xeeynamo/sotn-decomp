@@ -333,6 +333,8 @@ void EntityShrinkingPowerUpRing(Entity* self) {
 // Entity ID #40. Created by blueprint 47. That factory comes from
 // func_80159CE4, which runs when UpdateEntityRichter happens with
 // PLAYER.step set to 10, for PlayerHit.
+// Same spot in AlucardHandleDamage creates DRA blueprint 46.
+// That creates DRA child ID 33, which is EntityHitByIce.
 
 void func_80164DF8(Entity* self) {
     s32 i;
@@ -378,8 +380,11 @@ void func_80164DF8(Entity* self) {
             prim->priority = PLAYER.zPriority + 2;
             prim = prim->next;
         }
-        if ((PLAYER.velocityY != 0) &&
-            (self->ext.factory.unk7E = 1, (PLAYER.velocityY != 0))) {
+        // Weird repeated conditional
+        if (PLAYER.velocityY != 0){
+            self->ext.factory.unk7E = 1;
+        }
+        if (PLAYER.velocityY != 0) {
             if (PLAYER.facingLeft == 0) {
                 self->rotZ = -0x100;
             } else {
