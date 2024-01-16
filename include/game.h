@@ -224,6 +224,7 @@ typedef struct Primitive {
 #define PLAYER_STATUS_STONE 0x00000080
 #define PLAYER_STATUS_POISON 0x00004000
 #define PLAYER_STATUS_CURSE 0x00008000
+#define PLAYER_STATUS_AXEARMOR 0x01000000
 
 #define ANIMSET_OVL_FLAG 0x8000
 #define ANIMSET_DRA(x) (x)
@@ -1174,7 +1175,7 @@ typedef struct {
 } Dialogue;                                  // size = 0x44
 
 typedef struct {
-    u32 unk0;
+    u32 effects; // Curse, poison, etc; needs an enum.
     u32 damageKind;
     s32 damageTaken;
     s32 unkC;
@@ -1441,7 +1442,7 @@ typedef struct {
     /* 80072F74 */ u16 unk54;
     /* 80072F76 */ u16 unk56;
     /* 80072F78 */ u16 unk58;
-    /* 80072F7A */ u16 unk5A;
+    /* 80072F7A */ u16 damageTaken;
     /* 80072F7C */ u16 unk5C;
     /* 80072F7E */ u16 unk5E; // status ailment timer
     /* 80072F80 */ u16 unk60;

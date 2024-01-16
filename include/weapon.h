@@ -8,7 +8,7 @@ typedef struct {
     /* 0x04 */ void (*func_ptr_80170004)(Entity* self);
     /* 0x08 */ void (*func_ptr_80170008)(Entity* self);
     /* 0x0C */ void (*func_ptr_8017000C)(Entity* self);
-    /* 0x10 */ void (*func_ptr_80170010)(Entity* self);
+    /* 0x10 */ void (*func_ptr_80170010)(void);
     /* 0x14 */ void (*func_ptr_80170014)(Entity* self);
     /* 0x18 */ int (*GetWeaponId)(void);
     /* 0x1C */ void (*LoadWeaponPalette)(s32 clutIndex);
