@@ -32,6 +32,23 @@ class TestingJp(unittest.TestCase):
         out = utf8_to_byte_literals_wrapped(input)
         assert out == "_SJ(\\xB1\\xB6\\xC2\\xB7\\xC9\\x3C\\xFF)"
 
+    def check_sei():
+        assert(utf8_to_index['聖'] == 222)
+
+    def check_glasses():
+        input = "_SJ(\"聖血なるめがね\")"
+        out = utf8_to_byte_literals_wrapped(input)
+        assert out == "_SJ(\\xEE\\xC5\\xD9\\xD2\\xB6\\xFF\\x9E\\xC8\\xFF)"
+
+    def check_moon():
+        input = "_SJ(\"バルザイのえん月刀\")"
+        out = utf8_to_byte_literals_wrapped(input)
+        assert out == "_SJ(\\x8A\\xFF\\x9E\\x99\\x7B\\xFF\\x9E\\x72\\xC9\\xB4\\xDD\\xFF\\xFF\\xED\\xFF)"
+
+    def check_empty():
+        input = "_SJ(\"\")"
+        out = utf8_to_byte_literals_wrapped(input)
+        assert out == "_SJ(\\xFF)"
 
 class TestingSotnStr(unittest.TestCase):
     def test_do_sub_jp(self):
@@ -40,6 +57,13 @@ class TestingSotnStr(unittest.TestCase):
         expected = '{"\\xBD\\xC3\\xFF\\x9E\\xFF", "装備なし（素手）", 0, 0, 0, 3, 255, 0, 0, 36, 42, 0, 5, 128, 0, 0, false, 8, 0, 0, 0, 0, 4, 2, 1, 1, 1, 1, 0},'
         print(out)
         print(expected)
+        assert out == expected
+
+    def test_jp_empty(self):
+        line = "_SJ(\"\")"
+        out = do_sub(line)
+        expected = '\"\\xFF\"'
+        print(out, expected)
         assert out == expected
 
 

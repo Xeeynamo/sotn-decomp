@@ -40,6 +40,7 @@ def do_sub(line):
     english_str_processed = re.sub(pattern, process_string, line)
     pattern_jp = r'_SJ\("([^"]+)"\)'
     jp_str_processed = re.sub(pattern_jp, process_string_jp, english_str_processed)
+    jp_str_processed = jp_str_processed.replace("_SJ(\"\")", "\"\\xFF\"")
     return jp_str_processed
 
 
