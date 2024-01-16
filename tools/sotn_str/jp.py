@@ -264,6 +264,8 @@ def utf8_to_byte_literals(input_str):
     for char in clean_str:
         if has_dakuten(char) or has_handakuten(char):
             bytes += dakuten_to_bytes(char)
+        elif char == '月':
+            bytes += [0xff, 0xff]
         else:
             bytes.append(utf8_to_index[char])
     bytes.append(0xFF)
