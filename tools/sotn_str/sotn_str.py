@@ -5,6 +5,7 @@ import re
 import sys
 from jp import utf8_to_byte_literals
 
+
 def parse(filename, str_offset):
     r = ""
     offset = int(str_offset, 16)
@@ -26,11 +27,13 @@ def process_string(match: re.Match[str]):
         r += f"\\x{ch - 0x20:02X}"
     return f'"{r}\\xFF"'
 
+
 def process_string_jp(match: re.Match[str]):
     s = match.group(1)
     out = utf8_to_byte_literals(s)
-    escaped =  ''.join([f'\\x{val:02X}' for val in out])
-    return f"\"{escaped}\""
+    escaped = "".join([f"\\x{val:02X}" for val in out])
+    return f'"{escaped}"'
+
 
 def do_sub(line):
     pattern = r'_S\("([^"]*)"\)'
@@ -38,6 +41,7 @@ def do_sub(line):
     pattern_jp = r'_SJ\("([^"]+)"\)'
     jp_str_processed = re.sub(pattern_jp, process_string_jp, english_str_processed)
     return jp_str_processed
+
 
 def process(filename):
     if not filename or filename == "-":

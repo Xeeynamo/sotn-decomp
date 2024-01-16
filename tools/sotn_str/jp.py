@@ -91,6 +91,7 @@ def dakuten(chr, prev):
     assert(False)
 
 table = [
+    # fmt: off
     # 0      1      2      3      4      5      6      7      8      9      A      B      C      D      E      F
     " ",     "!",  "\"", "#",   "$",   "%", "&", "'", "(", ")", "男", "+", ",", "-", ".", "/",
     "0",     "1",   "2",   "3",   "4", "5", "6", "7", "8", "9", ":", "人", "手", "=", "玉", "?",
@@ -111,6 +112,7 @@ table = [
     # off by one somewhere for バルザイのえん月刀
     "???"
 ]
+# fmt: on
 
 utf8_to_index = {}
 for index, value in enumerate(table):
@@ -158,6 +160,7 @@ def parse_string_to_int_array(input_str):
 
 # ten ten
 def has_dakuten(utf8_char):
+    # fmt: off
     chars = [
         "が", "ぎ", "ぐ", "げ", "ご",
 	    "ざ", "じ",	"ず", "ぜ", "ぞ",
@@ -167,14 +170,17 @@ def has_dakuten(utf8_char):
 	    "ザ", "ジ", "ズ", "ゼ", "ゾ",
 	    "ダ", "ヂ", "ヅ", "デ", "ド",
         "バ", "ビ", "ブ", "ベ", "ボ"]
+    # fmt: on
     return utf8_char in chars
     
 # maru
 def has_handakuten(utf8_char):
+    # fmt: off
     chars = [
         "ぱ", "ぴ", "ぷ", "ぺ", "ぽ",
         "パ", "ピ", "プ", "ペ", "ポ"
     ]
+    # fmt: on
     return utf8_char in chars
     
 def remove_dakuten_handakuten(utf8_char):
