@@ -697,6 +697,19 @@ typedef struct {
     s16 unk82;
 } ET_HitByIce;
 
+typedef struct {
+    s16 unk7C;
+    s16 pad7E;
+    s16 unk80;
+    s16 unk82;
+    byte pad84[12];
+    s16 unk90;
+    s16 unk92;
+    s16 unk94;
+    s16 pad96[3];
+    s16 unk9C;
+} ET_HitByLightning;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_EntFactory factory;
@@ -715,6 +728,7 @@ typedef union {
     /* 0x7C */ ET_Weapon weapon;
     /* 0x7C */ ET_Weapon29 weapon29;
     /* 0x7C */ ET_HitByIce hitbyice;
+    /* 0x7C */ ET_HitByLightning hitbylightning;
     /* 0x7C */ ET_Bat bat;
     /* 0x7C */ ET_SoulStealOrb soulStealOrb;
     /* 0x7C */ ET_GaibonSlogra GS_Props;

@@ -413,6 +413,7 @@ extern AnimationFrame D_800AD5FC[];
 extern AnimationFrame D_800ADBD4[];
 extern AnimationFrame D_800ADC10[];
 extern s32 D_800ADC44;
+extern s16 D_800ADC7C[];
 extern s16_pair* D_800ADCC8[72];
 extern RECT D_800AE130;
 extern s32 D_800AE270[];
