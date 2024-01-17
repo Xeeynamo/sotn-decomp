@@ -330,7 +330,216 @@ void EntityShrinkingPowerUpRing(Entity* self) {
     }
 }
 
-INCLUDE_ASM("ric/nonmatchings/26C84", func_80164DF8);
+// Entity ID #40. Created by blueprint 47. That factory comes from
+// RichterHandleDamage.
+
+void EntityHitByIce(Entity* self) {
+    s32 i;
+    Primitive* prim;
+    s16 angle;
+    s32 xShift1;
+    s32 xShift2;
+    s32 xShift3;
+    s32 yShift1;
+    s32 yShift2;
+    s32 yShift3;
+    s32 size;
+    u32 primYshift;
+    u16 selfX;
+    u16 selfY;
+    s16_pair* offset;
+    bool sp18 = false;
+
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    self->posY.i.hi = PLAYER.posY.i.hi;
+    // This is badly written but it checks if 0x10000 is unset.
+    sp18 = ((g_Player.unk0C & 0x10000) == sp18);
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT3, 24);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_40000 | FLAG_UNK_20000;
+        prim = &g_PrimBuf[self->primIndex];
+        while (prim != NULL) {
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = (rand() & 0xF) + 0x30;
+            prim->b0 = prim->b1 = prim->b2 = prim->b3 = rand() | 0x80;
+            prim->g0 = prim->g1 = prim->g2 = prim->g3 = (rand() & 0x1F) + 0x30;
+            if (rand() & 1) {
+                prim->blendMode = 0x335;
+            } else {
+                prim->blendMode = 0x315;
+            }
+            prim->type = 3;
+            prim->priority = PLAYER.zPriority + 2;
+            prim = prim->next;
+        }
+        // Weird repeated conditional
+        if (PLAYER.velocityY != 0) {
+            self->ext.hitbyice.unk7E = 1;
+        }
+        if (PLAYER.velocityY != 0) {
+            if (PLAYER.facingLeft == 0) {
+                self->rotZ = -0x100;
+            } else {
+                self->rotZ = 0x100;
+            }
+        } else {
+            if (PLAYER.velocityX <= 0) {
+                self->rotZ = 0xF80;
+            } else {
+                self->rotZ = 0x80;
+            }
+        }
+        if (PLAYER.step == 0x10) {
+            if (PLAYER.facingLeft == 0) {
+                self->rotZ = -0x180;
+            } else {
+                self->rotZ = 0x180;
+            }
+            self->ext.hitbyice.unk80 = 1;
+            self->ext.hitbyice.unk82 = 0x3C;
+            if (self->params & 0x7F00) {
+                self->ext.hitbyice.unk82 = 0x14;
+            }
+            self->ext.hitbyice.unk7E = 0;
+        }
+        self->step++;
+        break;
+    case 1:
+        if (PLAYER.step == 0x10) {
+            if ((PLAYER.animCurFrame & 0x7FFF) == 0x21) {
+                if (PLAYER.facingLeft == 0) {
+                    self->rotZ = -0x280;
+                } else {
+                    self->rotZ = 0x280;
+                }
+            }
+            if ((PLAYER.animCurFrame & 0x7FFF) == 0x22) {
+                if (PLAYER.facingLeft == 0) {
+                    self->rotZ = -0x380;
+                } else {
+                    self->rotZ = 0x380;
+                }
+            }
+            if ((PLAYER.animCurFrame & 0x7FFF) == 0x20) {
+                if (PLAYER.facingLeft == 0) {
+                    self->rotZ = -0x180;
+                } else {
+                    self->rotZ = 0x180;
+                }
+            }
+        }
+        if (self->ext.hitbyice.unk80 != 0 && --self->ext.hitbyice.unk82 == 0) {
+            sp18 = true;
+        }
+        if ((self->ext.hitbyice.unk7E != 0) && (g_Player.pl_vram_flag & 0xC)) {
+            sp18 = true;
+        }
+        if (sp18) {
+            self->ext.hitbyice.unk7C = 0x40;
+            if (self->ext.hitbyice.unk80 != 0) {
+                self->ext.hitbyice.unk7C = 0x80;
+            }
+            self->step++;
+        }
+        break;
+    case 2:
+        if (--self->ext.hitbyice.unk7C == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    selfX = self->posX.i.hi;
+    selfY = self->posY.i.hi;
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 24; i++) {
+        offset = D_80155244[i * 3];
+        if (prim->u0 < 2) {
+            size = SquareRoot12(
+                ((offset->unk0 * offset->unk0) + (offset->unk2 * offset->unk2))
+                << 0xC);
+            angle = self->rotZ + ratan2(offset->unk2, offset->unk0);
+            xShift1 = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
+            yShift1 = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
+            prim->x0 = selfX + xShift1;
+            prim->y0 = selfY + yShift1;
+
+            offset = D_80155244[i * 3 + 1];
+            size = SquareRoot12(
+                ((offset->unk0 * offset->unk0) + (offset->unk2 * offset->unk2))
+                << 0xC);
+            angle = self->rotZ + ratan2(offset->unk2, offset->unk0);
+            xShift2 = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
+            yShift2 = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
+            prim->x1 = selfX + xShift2;
+            prim->y1 = selfY + yShift2;
+
+            offset = D_80155244[i * 3 + 2];
+            size = SquareRoot12(
+                ((offset->unk0 * offset->unk0) + (offset->unk2 * offset->unk2))
+                << 0xC);
+            angle = self->rotZ + ratan2(offset->unk2, offset->unk0);
+            xShift3 = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
+            yShift3 = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
+            prim->x2 = prim->x3 = selfX + xShift3;
+            prim->y2 = prim->y3 = selfY + yShift3;
+        }
+        if ((prim->u0 == 0) && (sp18 != 0)) {
+            prim->u0++;
+            prim->v0 = (rand() & 15) + 1;
+            if (self->ext.hitbyice.unk80 != 0) {
+                prim->v0 = (rand() % 60) + 1;
+            }
+        }
+        if (prim->u0 == 1) {
+            if (--prim->v0 == 0) {
+                prim->v0 = 0x20;
+                prim->u2 = 0xF0;
+                prim->u0++;
+                if (self->ext.hitbyice.unk80 != 0) {
+                    prim->v0 = (rand() & 31) + 0x28;
+                }
+            }
+        }
+        if (prim->u0 == 2) {
+            if ((prim->u2 < 0x70) || (prim->u2 > 0xD0)) {
+                prim->u2 += 4;
+            }
+            primYshift = (s8)prim->u2 >> 4;
+            if (self->ext.hitbyice.unk80 != 0) {
+                primYshift /= 2;
+            }
+            prim->y0 = primYshift + prim->y0;
+            prim->y1 = primYshift + prim->y1;
+            prim->y2 = primYshift + prim->y2;
+            prim->y3 = primYshift + prim->y3;
+            if (prim->r3 < 4) {
+                prim->r3 -= 4;
+            }
+            if (prim->g3 < 4) {
+                prim->g3 -= 4;
+            }
+            if (prim->b3 < 4) {
+                prim->b3 -= 4;
+            }
+            prim->r0 = prim->r1 = prim->r2 = prim->r3;
+            prim->b0 = prim->b1 = prim->b2 = prim->b3;
+            prim->g0 = prim->g1 = prim->g2 = prim->g3;
+            prim->blendMode |= 2;
+            prim->blendMode &= ~0x300;
+            if (--prim->v0 == 0) {
+                prim->blendMode |= 8;
+            }
+        }
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("ric/nonmatchings/26C84", func_801656B0);
 
