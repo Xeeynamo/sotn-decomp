@@ -45,6 +45,11 @@ class TestingJp(unittest.TestCase):
         out = utf8_to_byte_literals_wrapped(input)
         assert out == "_SJ(\\x8A\\xFF\\x9E\\x99\\x7B\\xFF\\x9E\\x72\\xC9\\xB4\\xDD\\xFF\\xFF\\xED\\xFF)"
 
+    def test_str_potion(self):
+        input = "Str. potion"
+        out = utf8_to_byte_literals_escaped(input)
+        assert out == "\\x33\\x54\\x52\\x0E\\x00\\x50\\x4F\\x54\\x49\\x4F\\x4E\\xFF"
+
 class TestingSotnStr(unittest.TestCase):
     def test_do_sub_jp(self):
         line = '{_SJ("すで"), "装備なし（素手）", 0, 0, 0, 3, 255, 0, 0, 36, 42, 0, 5, 128, 0, 0, false, 8, 0, 0, 0, 0, 4, 2, 1, 1, 1, 1, 0},'

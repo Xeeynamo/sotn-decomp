@@ -1,5 +1,5 @@
 def dakuten(chr, prev):
-    if chr == "..":
+    if chr == "ﾞ":
         if prev == "シ":
             return "ジ"
         if prev == "ク":
@@ -74,7 +74,7 @@ def dakuten(chr, prev):
             return "ぐ"
         print(chr, prev)
         assert False
-    if chr == ".":
+    if chr == "ﾟ":
         if prev == "フ":
             return "プ"
         if prev == "ヒ":
@@ -103,7 +103,7 @@ table = [
     "力",    "。",   "「",   "」", "、", "・", "ヲ", "ァ", "ィ", "ゥ", "ェ", "ォ", "ャ", "ュ", "ョ", "ッ",
     "ー",    "ア",   "イ",   "ウ", "エ", "オ", "カ", "キ", "ク", "ケ", "コ", "サ", "シ", "ス", "セ", "ソ",
     "タ",    "チ",   "ツ",   "テ", "ト", "ナ", "ニ", "ヌ", "ネ", "ノ", "ハ", "ヒ", "フ", "ヘ", "ホ", "マ",
-    "ミ",    "ム",   "メ",   "モ", "ヤ", "ユ", "ヨ", "ラ", "リ", "ル", "レ", "ロ", "ワ", "ン", "..", ".", # fixme punctuation .. , .
+    "ミ",    "ム",   "メ",   "モ", "ヤ", "ユ", "ヨ", "ラ", "リ", "ル", "レ", "ロ", "ワ", "ン", "ﾞ", "ﾟ", # dakuten and handakuten are lower in the graphic than seen here and get shifted by the code upwards when printing
     "子",    "悪",   "魔",   "人", "妖", "精", "を","ぁ", "ぃ", "ぅ", "ぇ", "ぉ", "ゃ", "ゅ", "ょ", "っ",
     "金",    "あ",   "い",   "う", "え", "お", "か", "き", "く", "け", "こ", "さ", "し", "す", "せ", "そ",
     "た",    "ち",   "つ",  "て",  "と", "な", "に", "ぬ", "ね", "の", "は", "ひ", "ふ", "へ", "ほ", "ま",
@@ -279,3 +279,8 @@ def utf8_to_byte_literals_wrapped(input):
     escaped_string = "".join([f"\\x{val:02X}" for val in out])
     out = f"_SJ({escaped_string})"
     return out
+
+def utf8_to_byte_literals_escaped(input):
+    out = utf8_to_byte_literals(input)
+    escaped_string = "".join([f"\\x{val:02X}" for val in out])
+    return escaped_string
