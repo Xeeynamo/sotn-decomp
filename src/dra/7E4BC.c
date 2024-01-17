@@ -490,7 +490,8 @@ void EntityHitByIce(Entity* self) {
         if (self->ext.hitbyice.unk80 != 0 && --self->ext.hitbyice.unk82 == 0) {
             sp18 = true;
         }
-        // Could rewrite as a series of && and || but that would probably reduce readability
+        // Could rewrite as a series of && and || but that would probably reduce
+        // readability
         if (self->ext.hitbyice.unk7E != 0) {
             if (g_Player.pl_vram_flag & 0xC) {
                 sp18 = true;

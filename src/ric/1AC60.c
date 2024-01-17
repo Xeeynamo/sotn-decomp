@@ -911,7 +911,6 @@ void func_80159C04(void) {
     }
 }
 
-
 void RichterHandleDamage(s32 arg0, u32 arg1, s16 arg2) {
     DamageParam damage;
     s32 xShift;
