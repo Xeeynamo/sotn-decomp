@@ -235,8 +235,6 @@ typedef struct Primitive {
 // character is offseted by 0x20. This is only for strings that use the 8x8
 // font. e.g. _S("I am a Symphony of the Night encoded string")
 #define _S(x) (x)
-// Japanese version
-#define _SJ(x) (x)
 #endif
 
 #define DEMO_KEY_LEN 3
