@@ -856,8 +856,8 @@ void func_80167A60(Entity* self) {}
 
 void func_80167A68(Entity* self) {}
 
-// Entity ID #35. Created by blueprint 40. No known FACTORY calls with blueprint 40.
-// No known DRA match.
+// Entity ID #35. Created by blueprint 40. No known FACTORY calls with
+// blueprint 40. No known DRA match.
 void func_80167A70(Entity* self) {
     s16_pair sp10[8];
     Primitive* prim;
@@ -868,7 +868,7 @@ void func_80167A70(Entity* self) {
     u16 posX;
     u8 arrIndex;
     u8 randbit;
-    
+
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
@@ -888,7 +888,7 @@ void func_80167A70(Entity* self) {
                 fakeprim->y0 = posY;
                 fakeprim->posY.i.hi = posY;
                 sp10[i].unk2 = posY;
-                //Random velocity from 0.25 to 0.5
+                // Random velocity from 0.25 to 0.5
                 velX = (rand() & 0x3FFF) + FIX(0.25);
                 fakeprim->velocityX = velX;
                 if (i & 1) {
@@ -898,13 +898,15 @@ void func_80167A70(Entity* self) {
                 fakeprim->blendMode = 0xA;
                 fakeprim->type = 1;
             } else {
-                prim->r0 = prim->r1 = prim->r2 = prim->r3 = (rand() & 0xF) | 0x30;
+                prim->r0 = prim->r1 = prim->r2 = prim->r3 =
+                    (rand() & 0xF) | 0x30;
                 prim->b0 = prim->b1 = prim->b2 = prim->b3 = rand() | 0x80;
-                prim->g0 = prim->g1 = prim->g2 = prim->g3 = (rand() & 0x1F) + 0x30;
+                prim->g0 = prim->g1 = prim->g2 = prim->g3 =
+                    (rand() & 0x1F) + 0x30;
                 randbit = rand() & 1;
                 prim->blendMode = !(randbit) ? 6 : 0x37;
-                posX = sp10[i-8].unk0;
-                posY = sp10[i-8].unk2;
+                posX = sp10[i - 8].unk0;
+                posY = sp10[i - 8].unk2;
                 arrIndex = i & 3;
                 prim->u0 = arrIndex;
                 prim->x0 = posX + D_80155D64[arrIndex][0];
@@ -918,12 +920,12 @@ void func_80167A70(Entity* self) {
             }
         }
         self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
-        self->ext.factory.unk7C = 20;
+        self->ext.timer.t = 20;
         self->step++;
         return;
 
     case 1:
-        if (--self->ext.factory.unk7C == 0) {
+        if (--self->ext.timer.t == 0) {
             DestroyEntity(self);
             return;
         }
@@ -935,14 +937,14 @@ void func_80167A70(Entity* self) {
                 fakeprim->posY.i.hi = fakeprim->y0;
                 fakeprim->posX.val += fakeprim->velocityX.val;
                 fakeprim->posY.val += fakeprim->velocityY.val;
-                fakeprim->velocityY.val += FIX(36.0/128);
+                fakeprim->velocityY.val += FIX(36.0 / 128);
                 sp10[i].unk0 = fakeprim->posX.i.hi;
                 sp10[i].unk2 = fakeprim->posY.i.hi;
                 fakeprim->x0 = fakeprim->posX.i.hi;
                 fakeprim->y0 = fakeprim->posY.i.hi;
             } else {
-                posX = sp10[i-8].unk0;
-                posY = sp10[i-8].unk2;
+                posX = sp10[i - 8].unk0;
+                posY = sp10[i - 8].unk2;
                 arrIndex = prim->u0;
                 prim->x0 = posX + D_80155D64[arrIndex][0];
                 prim->y0 = posY + D_80155D64[arrIndex][1];
