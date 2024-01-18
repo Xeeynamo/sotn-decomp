@@ -733,7 +733,7 @@ void EntityGravityBootBeam(Entity* self) {
     switch (self->step) {
     case 0:
         self->posY.i.hi = PLAYER.posY.i.hi + 37;
-        self->ext.bootBeam.timer = 1536;
+        self->ext.timer.t = 1536;
         self->primIndex = func_800EDB58(PRIM_G4_ALT, 4);
         if (self->primIndex == -1) {
             DestroyEntity(self);
@@ -766,10 +766,10 @@ void EntityGravityBootBeam(Entity* self) {
         break;
     case 3:
         // note that with the fallthrough these decrements stack
-        self->ext.bootBeam.timer -= 160;
+        self->ext.timer.t -= 160;
     case 2:
-        self->ext.bootBeam.timer -= 96;
-        if (self->ext.bootBeam.timer < 0) {
+        self->ext.timer.t -= 96;
+        if (self->ext.timer.t < 0) {
             DestroyEntity(self);
             return;
         }
@@ -778,7 +778,7 @@ void EntityGravityBootBeam(Entity* self) {
     for (i = 0, prim = &g_PrimBuf[self->primIndex]; prim != NULL; i++,
         prim = prim->next) {
         // As timer counts down, beam gets narrower.
-        halfWidth = (self->ext.bootBeam.timer >> 8) - i;
+        halfWidth = (self->ext.timer.t >> 8) - i;
         if (halfWidth << 16 < 0) {
             halfWidth = 0;
         }
