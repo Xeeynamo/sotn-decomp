@@ -56,7 +56,6 @@ EntityRedDoor = 0x8018A9C8;
 DestroyEntity = 0x8018B600;
 PreventEntityFromRespawning = 0x8018B6E8;
 GetSideToPlayer = 0x8018B970;
-MoveEntity = 0x8018B9B4;
 AllocEntity = 0x8018BE70;
 InitializeEntity = 0x8018C310;
 CollectGold = 0x8018CD10;
