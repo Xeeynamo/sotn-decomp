@@ -781,7 +781,7 @@ void func_80161FF0(Entity* self) {
 }
 
 void func_801623E0(Entity* entity) {
-    POLY_GT4* poly;
+    Primitive* prim;
     s16 primIndex;
 
     entity->posX.val = g_Entities->posX.val;
@@ -796,19 +796,19 @@ void func_801623E0(Entity* entity) {
         }
         entity->ext.generic.unk7E.modeU16 = 32;
         entity->ext.generic.unk7C.s = 32;
-        poly = &g_PrimBuf[entity->primIndex];
-        poly->u2 = 64;
-        poly->u0 = 64;
-        poly->v1 = 192;
-        poly->v0 = 192;
-        poly->u3 = 127;
-        poly->u1 = 127;
-        poly->v3 = 255;
-        poly->v2 = 255;
-        poly->tpage = 0x1A;
-        poly->clut = 0x13E;
-        poly->pad2 = PLAYER.zPriority + 8;
-        poly->pad3 = 0;
+        prim = &g_PrimBuf[entity->primIndex];
+        prim->u2 = 64;
+        prim->u0 = 64;
+        prim->v1 = 192;
+        prim->v0 = 192;
+        prim->u3 = 127;
+        prim->u1 = 127;
+        prim->v3 = 255;
+        prim->v2 = 255;
+        prim->tpage = 0x1A;
+        prim->clut = 0x13E;
+        prim->priority = PLAYER.zPriority + 8;
+        prim->blendMode = 0;
         entity->flags = FLAG_UNK_10000 | FLAG_UNK_40000 | FLAG_UNK_04000000 |
                         FLAG_HAS_PRIMS;
         entity->step++;
@@ -824,20 +824,20 @@ void func_801623E0(Entity* entity) {
         break;
     }
 
-    poly = &g_PrimBuf[entity->primIndex];
-    poly->x0 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
-    poly->y0 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
-    poly->x1 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
-    poly->y1 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
-    poly->x2 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
-    poly->y2 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
-    poly->x3 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
-    poly->y3 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
-    poly->clut = (LOH(g_Timer) & 1) + 0x13E;
+    prim = &g_PrimBuf[entity->primIndex];
+    prim->x0 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
+    prim->y0 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
+    prim->x1 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
+    prim->y1 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
+    prim->x2 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
+    prim->y2 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
+    prim->x3 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
+    prim->y3 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
+    prim->clut = (LOH(g_Timer) & 1) + 0x13E;
 }
 
 void func_80162604(Entity* entity) {
-    POLY_GT4* poly;
+    Primitive* prim;
     s16 primIndex;
 
     entity->posX.val = g_Entities->posX.val;
@@ -849,19 +849,19 @@ void func_80162604(Entity* entity) {
         if (primIndex != -1) {
             entity->ext.generic.unk7E.modeU16 = 0;
             entity->ext.generic.unk7C.s = 0;
-            poly = &g_PrimBuf[entity->primIndex];
-            poly->v1 = 192;
-            poly->v0 = 192;
-            poly->u3 = 63;
-            poly->u1 = 63;
-            poly->v3 = 255;
-            poly->v2 = 255;
-            poly->tpage = 0x1A;
-            poly->u2 = 0;
-            poly->u0 = 0;
-            poly->clut = 0x162;
-            poly->pad2 = PLAYER.zPriority - 4;
-            poly->pad3 = 0;
+            prim = &g_PrimBuf[entity->primIndex];
+            prim->v1 = 192;
+            prim->v0 = 192;
+            prim->u3 = 63;
+            prim->u1 = 63;
+            prim->v3 = 255;
+            prim->v2 = 255;
+            prim->tpage = 0x1A;
+            prim->u2 = 0;
+            prim->u0 = 0;
+            prim->clut = 0x162;
+            prim->priority = PLAYER.zPriority - 4;
+            prim->blendMode = 0;
             entity->flags = FLAG_UNK_10000 | FLAG_UNK_40000 |
                             FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
             entity->step++;
@@ -895,15 +895,15 @@ void func_80162604(Entity* entity) {
 
     def:
     default:
-        poly = &g_PrimBuf[entity->primIndex];
-        poly->x0 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
-        poly->y0 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
-        poly->x1 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
-        poly->y1 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
-        poly->x2 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
-        poly->y2 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
-        poly->x3 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
-        poly->y3 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
+        prim = &g_PrimBuf[entity->primIndex];
+        prim->x0 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
+        prim->y0 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
+        prim->x1 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
+        prim->y1 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
+        prim->x2 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
+        prim->y2 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
+        prim->x3 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
+        prim->y3 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
         break;
     }
 }

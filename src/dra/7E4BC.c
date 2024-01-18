@@ -1197,7 +1197,7 @@ INCLUDE_ASM("dra/nonmatchings/7E4BC", EntitySubwpnCrashCross);
 
 // rising blue particles from cross crash
 void EntitySubwpnCrashCrossParticles(Entity* self) {
-    Primitive* poly;
+    Primitive* prim;
     u16 rand63;
 
     if (self->step == 0) {
@@ -1222,41 +1222,41 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
     if ((self->ext.generic.unk7C.s >= 9) && !(self->ext.generic.unk7C.s & 3)) {
         // iterate through primtives until we find one where r0 == 0, and set to
         // 1
-        for (poly = &g_PrimBuf[self->primIndex]; poly != NULL;
-             poly = poly->next) {
-            if (poly->r0 == 0) {
-                poly->r0 = 1;
-                poly->r1 = 0;
+        for (prim = &g_PrimBuf[self->primIndex]; prim != NULL;
+             prim = prim->next) {
+            if (prim->r0 == 0) {
+                prim->r0 = 1;
+                prim->r1 = 0;
                 break;
             }
         }
     }
 
-    for (poly = &g_PrimBuf[self->primIndex]; poly != NULL; poly = poly->next) {
+    for (prim = &g_PrimBuf[self->primIndex]; prim != NULL; prim = prim->next) {
         // for any of those prims with nonzero r0 values,
-        if (poly->r0 != 0) {
+        if (prim->r0 != 0) {
             // r1 acts as a flag to show whether this has happened.
-            if (poly->r1 == 0) {
+            if (prim->r1 == 0) {
                 rand63 = rand() & 0x3F; // random integer 0-63
-                poly->g0 = (rand() % 237) + 9;
-                poly->g1 = -0x10 - (rand() & 0x20);
-                poly->clut = 0x1B0;
-                poly->tpage = 0x1A;
-                poly->b0 = 0;
-                poly->b1 = 0;
-                poly->priority = (rand63 + PLAYER.zPriority) - 0x20;
-                poly->blendMode = 0;
-                poly->g3 = (rand63 >> 2) + 4; // rand15 + 4 means 4 to 19
-                poly->r1++;
+                prim->g0 = (rand() % 237) + 9;
+                prim->g1 = -0x10 - (rand() & 0x20);
+                prim->clut = 0x1B0;
+                prim->tpage = 0x1A;
+                prim->b0 = 0;
+                prim->b1 = 0;
+                prim->priority = (rand63 + PLAYER.zPriority) - 0x20;
+                prim->blendMode = 0;
+                prim->g3 = (rand63 >> 2) + 4; // rand15 + 4 means 4 to 19
+                prim->r1++;
             } else {
-                poly->g1 -= poly->g3;
-                if (((u8)poly->b0 >= 6U) || ((u8)poly->g1 < 0x18U)) {
-                    poly->blendMode = BLEND_VISIBLE;
-                    poly->r0 = 0;
+                prim->g1 -= prim->g3;
+                if (((u8)prim->b0 >= 6U) || ((u8)prim->g1 < 0x18U)) {
+                    prim->blendMode = BLEND_VISIBLE;
+                    prim->r0 = 0;
                 }
             }
-            if (poly->r0 != 0) {
-                func_80119E78(poly, poly->g0, poly->g1);
+            if (prim->r0 != 0) {
+                func_80119E78(prim, prim->g0, prim->g1);
             }
         }
     }

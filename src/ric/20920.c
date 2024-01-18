@@ -83,7 +83,7 @@ void func_8015CAD4(s32 arg0, s16 arg1) {
 }
 
 void func_8015CB58(s32 arg0, s32 arg1) {
-    POLY_GT4* poly;
+    Primitive* prim;
 
     FntPrint("op disable\n");
     if (arg0 != 0) {
@@ -92,10 +92,10 @@ void func_8015CB58(s32 arg0, s32 arg1) {
         g_Entities[UNK_ENTITY_2].animCurFrame = 0;
         g_Entities[UNK_ENTITY_1].animCurFrame = 0;
 
-        poly = &g_PrimBuf[g_Entities[UNK_ENTITY_1].primIndex];
-        while (poly != NULL) {
-            poly->x1 = 0;
-            poly = (POLY_GT4*)poly->tag;
+        prim = &g_PrimBuf[g_Entities[UNK_ENTITY_1].primIndex];
+        while (prim != NULL) {
+            prim->x1 = 0;
+            prim = prim->next;
         }
     }
     g_Entities[UNK_ENTITY_1].ext.generic.unk7C.S8.unk0 = 1;

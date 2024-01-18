@@ -7,19 +7,19 @@ extern s32 D_801379A4;
 extern s32 D_801379A8;
 
 void func_801027C4(u32 arg0) {
-    POLY_GT4* poly1;
-    POLY_GT4* poly2;
+    Primitive* prim1;
+    Primitive* prim2;
 
-    poly1 = &g_PrimBuf[D_8013799C];
-    poly2 = poly1->tag;
+    prim1 = &g_PrimBuf[D_8013799C];
+    prim2 = prim1->next;
     switch (arg0) {
     case 0:
     case 3:
-        poly1 = (POLY_GT4*)poly1->tag;
+        prim1 = prim1->next;
         do {
-            poly1 = (POLY_GT4*)poly1->tag;
-            poly1->x1 = 0;
-            poly1->clut = 0;
+            prim1 = prim1->next;
+            prim1->x1 = 0;
+            prim1->clut = 0;
             D_801379A8 = arg0 + 1;
             return;
         } while (0);
@@ -28,19 +28,19 @@ void func_801027C4(u32 arg0) {
     case 5:
     case 6:
     case 7:
-        poly1->x1 = 0;
-        poly1->clut = 0;
+        prim1->x1 = 0;
+        prim1->clut = 0;
         D_801379A4 = 1;
         D_801379A4 = arg0 + D_801379A4;
         break;
     case 4:
-        poly1->x1 = 0xFF;
-        poly1->clut = 1;
+        prim1->x1 = 0xFF;
+        prim1->clut = 1;
         D_801379A4 = 2;
         do {
-            poly1->r0 = poly1->g0 = poly1->b0 = poly2->r0 = poly2->g0 =
-                poly2->b0 = poly1->x1;
-            poly1->pad3 = poly2->pad3 = 0xD1;
+            prim1->r0 = prim1->g0 = prim1->b0 = prim2->r0 = prim2->g0 =
+                prim2->b0 = prim1->x1;
+            prim1->blendMode = prim2->blendMode = 0xD1;
         } while (0);
     default:
         break;

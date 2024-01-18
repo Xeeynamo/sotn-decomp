@@ -82,7 +82,7 @@ bool func_80162E9C(Entity* entity) {
 INCLUDE_ASM("ric/nonmatchings/26C84", func_80162EF8);
 
 void func_801641A0(Entity* entity) {
-    POLY_GT4* poly;
+    Primitive* prim;
     s16 primIndex;
 
     entity->posX.i.hi = PLAYER.posX.i.hi;
@@ -94,18 +94,18 @@ void func_801641A0(Entity* entity) {
         if (primIndex != -1) {
             entity->ext.generic.unk7C.s = 16;
             entity->ext.generic.unk7E.modeU16 = 12;
-            poly = &g_PrimBuf[entity->primIndex];
-            poly->u0 = poly->u2 = 64;
-            poly->v0 = poly->v1 = 192;
-            poly->u1 = poly->u3 = 127;
-            poly->v2 = poly->v3 = 255;
-            poly->r0 = poly->g0 = poly->b0 = poly->r1 = poly->g1 = poly->b1 =
-                poly->r2 = poly->g2 = poly->b2 = poly->r3 = poly->g3 =
-                    poly->b3 = 128;
-            poly->tpage = 0x1A;
-            poly->clut = 0x160;
-            poly->pad2 = PLAYER.zPriority + 8;
-            poly->pad3 = 0x35;
+            prim = &g_PrimBuf[entity->primIndex];
+            prim->u0 = prim->u2 = 64;
+            prim->v0 = prim->v1 = 192;
+            prim->u1 = prim->u3 = 127;
+            prim->v2 = prim->v3 = 255;
+            prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
+                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
+                    prim->b3 = 128;
+            prim->tpage = 0x1A;
+            prim->clut = 0x160;
+            prim->priority = PLAYER.zPriority + 8;
+            prim->blendMode = 0x35;
             entity->flags = FLAG_UNK_40000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
             entity->step++;
             goto def;
@@ -124,20 +124,20 @@ void func_801641A0(Entity* entity) {
 
     default:
     def:
-        poly = &g_PrimBuf[entity->primIndex];
-        poly->x0 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
-        poly->y0 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
-        poly->x1 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
-        poly->y1 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
-        poly->x2 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
-        poly->y2 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
-        poly->x3 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
-        poly->y3 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
-        if (poly->b3 >= 12) {
-            poly->b3 += 244;
+        prim = &g_PrimBuf[entity->primIndex];
+        prim->x0 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
+        prim->y0 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
+        prim->x1 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
+        prim->y1 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
+        prim->x2 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
+        prim->y2 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
+        prim->x3 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
+        prim->y3 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
+        if (prim->b3 >= 12) {
+            prim->b3 += 244;
         }
-        poly->r0 = poly->g0 = poly->b0 = poly->r1 = poly->g1 = poly->b1 =
-            poly->r2 = poly->g2 = poly->b2 = poly->r3 = poly->g3 = poly->b3;
+        prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
+            prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
     }
 }
 
@@ -896,7 +896,7 @@ INCLUDE_ASM("ric/nonmatchings/26C84", func_80169470);
 INCLUDE_ASM("ric/nonmatchings/26C84", func_80169704);
 
 void func_80169C10(Entity* entity) {
-    POLY_GT4* poly;
+    Primitive* prim;
     s16 primIndex;
     s32 PosX = 8;
     s32 PosY = 4;
@@ -912,15 +912,15 @@ void func_80169C10(Entity* entity) {
                 ((u16)entity->posX.i.hi - PosX) + (rand() & 0xF);
             entity->posY.i.hi =
                 ((u16)entity->posY.i.hi - PosY) + (rand() & 0xF);
-            poly = &g_PrimBuf[entity->primIndex];
-            poly->clut = 0x1B0;
-            poly->tpage = 0x1A;
-            poly->b0 = 0;
-            poly->b1 = 0;
-            poly->pad2 = entity->zPriority;
-            poly->pad2 = poly->pad2 + 4;
-            poly->pad3 = 0x31;
-            func_8015FDB0(poly, entity->posX.i.hi, entity->posY.i.hi);
+            prim = &g_PrimBuf[entity->primIndex];
+            prim->clut = 0x1B0;
+            prim->tpage = 0x1A;
+            prim->b0 = 0;
+            prim->b1 = 0;
+            prim->priority = entity->zPriority;
+            prim->priority = prim->priority + 4;
+            prim->blendMode = 0x31;
+            func_8015FDB0(prim, entity->posX.i.hi, entity->posY.i.hi);
             entity->step++;
         } else {
             DestroyEntity(entity);
@@ -929,8 +929,8 @@ void func_80169C10(Entity* entity) {
 
     default:
         entity->posY.val += entity->velocityY;
-        poly = &g_PrimBuf[entity->primIndex];
-        if (func_8015FDB0(poly, entity->posX.i.hi, entity->posY.i.hi) != 0) {
+        prim = &g_PrimBuf[entity->primIndex];
+        if (func_8015FDB0(prim, entity->posX.i.hi, entity->posY.i.hi) != 0) {
             DestroyEntity(entity);
         }
         break;

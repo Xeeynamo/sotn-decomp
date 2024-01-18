@@ -1563,7 +1563,7 @@ void func_801719A4(Entity* self) {
 }
 
 void func_80172AE8(Entity* entity) {
-    POLY_GT4* poly;
+    Primitive* prim;
     s32 ret;
 
     switch (entity->step) {
@@ -1572,23 +1572,23 @@ void func_80172AE8(Entity* entity) {
         entity->primIndex = ret;
         if (entity->primIndex != -1) {
             entity->flags = FLAG_UNK_20000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
-            poly = &g_PrimBuf[entity->primIndex];
-            poly->tpage = 0x1C;
-            poly->clut = 0x19D;
-            poly->u2 = 0x20;
-            poly->u0 = 0x20;
-            poly->u3 = 0x30;
-            poly->u1 = 0x30;
-            poly->v1 = 0;
-            poly->v0 = 0;
-            poly->v3 = 0x10;
-            poly->v2 = 0x10;
-            poly->x0 = poly->x2 = entity->posX.i.hi - 8;
-            poly->x1 = poly->x3 = entity->posX.i.hi + 8;
-            poly->y0 = poly->y1 = entity->posY.i.hi - 8;
-            poly->y2 = poly->y3 = entity->posY.i.hi + 8;
-            poly->pad2 = entity->zPriority;
-            poly->pad3 = 0x115;
+            prim = &g_PrimBuf[entity->primIndex];
+            prim->tpage = 0x1C;
+            prim->clut = 0x19D;
+            prim->u2 = 0x20;
+            prim->u0 = 0x20;
+            prim->u3 = 0x30;
+            prim->u1 = 0x30;
+            prim->v1 = 0;
+            prim->v0 = 0;
+            prim->v3 = 0x10;
+            prim->v2 = 0x10;
+            prim->x0 = prim->x2 = entity->posX.i.hi - 8;
+            prim->x1 = prim->x3 = entity->posX.i.hi + 8;
+            prim->y0 = prim->y1 = entity->posY.i.hi - 8;
+            prim->y2 = prim->y3 = entity->posY.i.hi + 8;
+            prim->priority = entity->zPriority;
+            prim->blendMode = 0x115;
             entity->ext.generic.unk7E.modeU16 = 0x60U;
             entity->step++;
         } else {
@@ -1611,9 +1611,9 @@ void func_80172AE8(Entity* entity) {
     default:
         break;
     }
-    poly = &g_PrimBuf[entity->primIndex];
-    poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
-        poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
+    prim = &g_PrimBuf[entity->primIndex];
+    prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 = prim->g2 =
+        prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 =
             entity->ext.generic.unk7E.modeU8.unk0;
 }
 
