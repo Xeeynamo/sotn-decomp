@@ -18,6 +18,8 @@ void OpenCd(char* filename) {
 int CdReading();
 void ExecCd();
 void MyAudioCallback(void* data, u8* buffer, int length) {
+// swap to enable XA audio
+#ifndef HAVE_SOUND_REV
     int i = 0;
     while (i * 4 < length) {
         if (AudioBuffer.ReadPos < AudioBuffer.Size) {
@@ -38,6 +40,9 @@ void MyAudioCallback(void* data, u8* buffer, int length) {
             ExecCd();
         }
     }
+#else
+    SoundRevCallback(data, buffer, length);
+#endif
 }
 
 int MyFntPrint(const char* fmt, va_list arg) {

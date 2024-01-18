@@ -101,6 +101,28 @@ set(SOURCE_FILES_STAGE_SEL
     src/st/sel/3642C.c
 )
 
+set(SOURCE_FILES_SOUND_REV
+    src/pc/psxsdk/sound_rev/mednafen/dma.cpp
+    src/pc/psxsdk/sound_rev/mednafen/spu.cpp
+    src/pc/psxsdk/sound_rev/psyq_rev/psyq_spu.cpp
+    src/pc/psxsdk/sound_rev/psx_seq_player/lib_snd.cpp
+    src/pc/psxsdk/sound_rev/psx_seq_player/lib_spu.cpp
+    src/pc/psxsdk/sound_rev/psx_seq_player/vs_vt.c
+    src/pc/psxsdk/sound_rev/psx_seq_player/vs_vtc.c
+    src/pc/psxsdk/sound_rev/psx_seq_player/main.cpp
+)
+
+add_library(sound_rev ${SOURCE_FILES_SOUND_REV})
+
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
+  # sound_rev issues
+  target_compile_options(sound_rev PRIVATE -fpermissive -Wno-narrowing)
+endif()
+
+target_include_directories(sound_rev PRIVATE
+    ${SDL2_INCLUDE_DIRS}
+    )
+
 add_executable(${PROJECT_NAME} 
     ${SOURCE_FILES_PC}
     ${SOURCE_FILES_PSX_SDK}
@@ -119,6 +141,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 
 target_link_libraries(${PROJECT_NAME} PRIVATE 
     ${SDL2_LIBRARIES}
+    sound_rev
     )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE 
@@ -128,4 +151,5 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
     HARD_LINK
     DEMO_KEY_PTR=0
     _internal_version_us
+    HAVE_SOUND_REV
     )
