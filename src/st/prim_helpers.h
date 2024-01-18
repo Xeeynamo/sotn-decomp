@@ -1,5 +1,281 @@
-#include "unk_prim_helper.h"
-#include "update_animation.h"
-#include "find_first_unk_prim.h"
-#include "unk_poly_func_0.h"
-#include "unk_loop_func.h"
+#include "game.h"
+
+extern SVECTOR g_UnkPrimHelperRot;
+void UnkPrimHelper(Primitive* prim) {
+    SVECTOR sp10; // FAKE, not really an svector
+    SVECTOR stackpad;
+    SVECTOR sp20;
+    VECTOR trans1;
+    SVECTOR sp38;
+    SVECTOR sp40;
+    SVECTOR sp48;
+    SVECTOR sp50;
+    MATRIX m;
+    SVECTOR rot;
+    u8 temp_v1_2;
+
+    rot = g_UnkPrimHelperRot;
+    if (prim->p3 & 8) {
+        // Fake logic here, sp10 is not an SVECTOR but it matches.
+        // tried using an f32 but couldn't get it to work.
+        sp10.vy = prim->next->x1;
+        sp10.vx = prim->next->y1;
+        LOW(sp10.vx) += LOW(prim->next->u0);
+        prim->next->x1 = sp10.vy;
+        prim->next->y1 = sp10.vx;
+        LOW(prim->next->x0) += LOW(prim->next->r1);
+    }
+    temp_v1_2 = prim->next->b3;
+    LOH(prim->r0) = LOH(prim->r1) = LOH(prim->r2) = LOH(prim->r3) =
+        temp_v1_2 | (temp_v1_2 << 8);
+    prim->b0 = prim->b1 = prim->b2 = prim->b3 = temp_v1_2;
+    trans1.vx = 0;
+    trans1.vy = 0;
+    trans1.vz = 0x400 - LOH(prim->next->u1);
+    RotMatrix(&rot, &m);
+    if (prim->p3 & 0x20) {
+        sp20.vx = prim->next->x3;
+        sp20.vy = prim->next->y3;
+        RotMatrixX(sp20.vx, &m);
+        RotMatrixY(sp20.vy, &m);
+    }
+    sp20.vz = prim->next->tpage;
+    RotMatrixZ(sp20.vz, &m);
+    TransMatrix(&m, &trans1);
+    if (prim->p3 & 0x10) {
+        trans1.vx = prim->next->x2;
+        trans1.vy = prim->next->y2;
+        trans1.vz = 0x1000;
+        ScaleMatrix(&m, &trans1);
+    }
+    SetRotMatrix(&m);
+    SetTransMatrix(&m);
+    SetGeomScreen(0x400);
+    SetGeomOffset(prim->next->x1, prim->next->y0);
+    sp38.vx = -LOH(prim->next->r2) / 2;
+    sp38.vy = -LOH(prim->next->b2) / 2;
+    sp38.vz = 0;
+    sp40.vx = LOH(prim->next->r2) / 2;
+    sp40.vy = -LOH(prim->next->b2) / 2;
+    sp40.vz = 0;
+    sp48.vx = -LOH(prim->next->r2) / 2;
+    sp48.vy = LOH(prim->next->b2) / 2;
+    sp48.vz = 0;
+    sp50.vx = LOH(prim->next->r2) / 2;
+    sp50.vy = LOH(prim->next->b2) / 2;
+    sp50.vz = 0;
+    gte_ldv0(&sp38);
+    gte_rtps();
+    gte_stsxy(&prim->x0);
+    gte_ldv0(&sp40);
+    gte_rtps();
+    gte_stsxy(&prim->x1);
+    gte_ldv0(&sp48);
+    gte_rtps();
+    gte_stsxy(&prim->x2);
+    gte_ldv0(&sp50);
+    gte_rtps();
+    gte_stsxy(&prim->x3);
+}
+
+s32 UpdateAnimation(u8* texAnimations, Primitive* prim) {
+    s16 sp0;
+    s16 tempUv;
+    u8 new_var;
+    u8* nextAnimation = texAnimations + ((prim->p1 * 5) & 0xFF);
+    u8 new_var2;
+    s32 retVal = 0;
+
+    if (prim->p2 == 0) {
+        if (*nextAnimation) {
+            if (*nextAnimation == 0xFF) {
+                return 0;
+            }
+            retVal = 0x80;
+            prim->p2 = nextAnimation[0];
+            ++nextAnimation;
+            tempUv = nextAnimation[0] + (nextAnimation[1] << 8);
+            nextAnimation += 2;
+            sp0 = nextAnimation[0] + (nextAnimation[1] << 8);
+            LOH(prim->u0) = tempUv;
+            LOH(prim->u1) = tempUv + *((u8*)(&sp0));
+            new_var = *((u8*)&sp0 + 1);
+            LOH(prim->u3) = tempUv + sp0;
+            LOH(prim->u2) = tempUv + (new_var << 8);
+            ++prim->p1;
+        } else {
+            prim->p1 = 0;
+            prim->p2 = 0;
+            prim->p2 = texAnimations[0];
+            tempUv = texAnimations[1] + (texAnimations[2] << 8);
+            sp0 = texAnimations[3] + (texAnimations[4] << 8);
+            LOH(prim->u0) = tempUv;
+            LOH(prim->u1) = tempUv + (*(u8*)&sp0);
+            new_var2 = *((u8*)&sp0 + 1);
+            LOH(prim->u3) = tempUv + sp0;
+            LOH(prim->u2) = tempUv + (new_var2 << 8);
+            ++prim->p1;
+            return 0;
+        }
+    }
+
+    retVal |= 1;
+    --prim->p2;
+    return (retVal | 1) & 0xFF;
+}
+
+Primitive* FindFirstUnkPrim(Primitive* poly) {
+    while (poly != NULL) {
+        if (poly->p3 != 0) {
+            poly = poly->next;
+        } else {
+            return poly;
+        }
+    }
+    return NULL;
+}
+
+// Similar to FindFirstUnkPrim, but returns the first prim with
+// p3 == 0 if there is a prim with p3 == 0 at index positions after
+Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index) {
+
+    Primitive* ret;
+    int i;
+
+    for (; prim; prim = prim->next) {
+        if (!prim->p3) {
+            ret = prim;
+            for (i = 1; i < index; ++i) {
+                prim = prim->next;
+                if (!prim) {
+                    return NULL;
+                }
+                if (prim->p3) {
+                    break;
+                }
+            }
+            if (i == index) {
+                return ret;
+            }
+        }
+    }
+    return NULL;
+}
+
+Primitive* PrimToggleVisibility(Primitive* firstPrim, s32 count) {
+    Primitive* prim;
+    s8 isVisible;
+    s32 i;
+
+    if (firstPrim->p3) {
+        firstPrim->p3 = 0;
+    } else {
+        firstPrim->p3 = 1;
+    }
+
+    prim = firstPrim;
+    for (i = 0; i < count; i++) {
+        if (prim->p3) {
+            prim->blendMode &= ~BLEND_VISIBLE;
+            isVisible = false;
+        } else {
+            prim->blendMode |= BLEND_VISIBLE;
+            isVisible = true;
+        }
+
+        prim = prim->next;
+        if (prim == NULL)
+            return 0;
+        prim->p3 = isVisible;
+    }
+
+    return prim;
+}
+
+void PrimResetNext(Primitive* prim) {
+    prim->p1 = 0;
+    prim->p2 = 0;
+    prim->p3 = 0;
+    prim->next->x1 = 0;
+    prim->next->y1 = 0;
+    prim->next->y0 = 0;
+    prim->next->x0 = 0;
+    prim->next->clut = 0;
+    LOHU(prim->next->u0) = 0;
+    LOHU(prim->next->b1) = 0;
+    LOHU(prim->next->r1) = 0;
+    LOHU(prim->next->u1) = 0;
+    prim->next->tpage = 0;
+    LOHU(prim->next->r2) = 0;
+    LOHU(prim->next->b2) = 0;
+    prim->next->u2 = 0;
+    prim->next->v2 = 0;
+    prim->next->r3 = 0;
+    prim->next->b3 = 0;
+    prim->next->x2 = 0;
+    prim->next->y2 = 0;
+}
+
+void UnkPolyFunc2(Primitive* prim) {
+    PrimResetNext(prim);
+    prim->p3 = 8;
+    prim->next->p3 = 1;
+    prim->next->type = PRIM_LINE_G2;
+    prim->next->blendMode = 0xA;
+}
+
+void UnkPolyFunc0(Primitive* prim) {
+    prim->p3 = 0;
+    prim->blendMode = BLEND_VISIBLE;
+    prim->next->p3 = 0;
+    prim->next->type = PRIM_GT4;
+    prim->next->blendMode = BLEND_VISIBLE;
+}
+
+#if !defined(VERSION_BETA)
+s32 UnkLoopFunc(s32 arg0, u8 arg1) {
+    s32 var_v0;
+    s32 ret = 0;
+    s32 j = arg0 + 4;
+    u8* var_v1;
+    s32 i;
+
+    for (i = 0; i < 4; i++, j += 12) {
+        var_v1 = (u8*)j;
+        do {
+            var_v0 = *var_v1 - arg1;
+
+            if (var_v0 < 0) {
+                var_v0 = 0;
+            } else {
+                ret |= 1;
+            }
+
+            *var_v1 = var_v0;
+            var_v1++;
+        } while ((s32)var_v1 < (s32)j + 3);
+    }
+
+    return ret;
+}
+#else
+s32 UnkLoopFunc(Unkstruct_80128BBC* arg0, u8 value) {
+    u8 ret = 0;
+    s32 i;
+    s32 j;
+    Unkstruct_80128BBC_Sub* temp = arg0->unk04;
+
+    for (i = 0; i < 4; i++, temp++) {
+        for (j = 0; j < 3; j++) {
+            temp->unk00[j] -= value;
+
+            if (temp->unk00[j] > 248) {
+                temp->unk00[j] = 0;
+            } else {
+                ret |= 1;
+            }
+        }
+    }
+    return ret;
+}
+#endif
