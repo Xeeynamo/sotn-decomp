@@ -199,7 +199,7 @@ void func_801A8328(Entity* self) {
             self->primIndex = firstPrimIndex;
             LOW(self->ext.generic.unk7C.s) = prim;
             self->flags |= FLAG_HAS_PRIMS;
-            func_801BD80C(prim, firstPrimIndex);
+            UnkPolyFunc2(prim);
             prim->tpage = 0x16;
             prim->clut = 0x216;
             prim->u0 = prim->u2 = 0x98;

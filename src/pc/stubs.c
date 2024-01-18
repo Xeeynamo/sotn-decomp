@@ -139,7 +139,7 @@ u16 g_saveIconPal0[0x10][0x10];
 s32 D_8003C0EC[4] = {0};
 Unkstruct_8006C3C4 D_8006C3C4[32] = {0};
 GfxLoad g_GfxLoad[0x10] = {0};
-s16 D_800705CC[0x100];
+s16 D_800705CC[0x200];
 s32 D_8007F208 = 0;
 PlayerDraw g_PlayerDraw[0x10];
 s32 D_8013AED0;
@@ -326,8 +326,8 @@ u8* g_DecSrcPtr = NULL;
 u8* g_DecDstPtr = NULL;
 s32 g_DecReadNibbleFlag = 0;
 s32 g_DecWriteNibbleFlag = 0;
-u8 g_GfxEquipIcon[32][16 * 16 / 2] = {0};
-s16 g_PalEquipIcon[32] = {0};
+u8 g_GfxEquipIcon[320][16 * 16 / 2];
+s16 g_PalEquipIcon[320 * 16];
 u_long g_FakeUnkStruct = {MAKE_PAL_OP(0, 0)};
 u_long* D_800A3BB8[] = {
     &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct,

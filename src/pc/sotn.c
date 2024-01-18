@@ -94,6 +94,8 @@ bool InitAccessoryDefs(const char* jsonContent);
 void InitRelicDefs(void);
 void InitEnemyDefs(void);
 void InitSubwpnDefs(void);
+void InitGfxEquipIcons(FILE* f);
+void InitPalEquipIcons(FILE* f);
 void InitVbVh(void);
 bool InitSfxData(const char* content);
 bool InitXaData(const char* content);
@@ -193,6 +195,8 @@ bool InitGame(void) {
     g_Vram.D_800ACDA8.w = 0x0100;
     g_Vram.D_800ACDA8.h = 0x0010;
 
+    FileRead("assets/dra/g_GfxEquipIcon.bin", InitGfxEquipIcons);
+    FileRead("assets/dra/g_PalEquipIcon.bin", InitPalEquipIcons);
     InitVbVh();
 
     if (!FileStringify(InitSfxData, "assets/dra/sfx.json")) {
@@ -425,6 +429,20 @@ void ReadToArray(const char* path, char* content, size_t maxlen) {
     }
 
     fclose(f);
+}
+
+void InitGfxEquipIcons(FILE* f) {
+    size_t n = fread(g_GfxEquipIcon, 1, sizeof(g_GfxEquipIcon), f);
+    if (n != sizeof(g_GfxEquipIcon)) {
+        WARNF("unable to read all bytes: %d/%d", n, sizeof(g_GfxEquipIcon));
+    }
+}
+
+void InitPalEquipIcons(FILE* f) {
+    size_t n = fread(g_PalEquipIcon, 1, sizeof(g_PalEquipIcon), f);
+    if (n != sizeof(g_PalEquipIcon)) {
+        WARNF("unable to read all bytes: %d/%d", n, sizeof(g_PalEquipIcon));
+    }
 }
 
 void InitVbVh() {

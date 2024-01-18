@@ -51,5 +51,6 @@ segments:
       - [0x10E44, c, entity_message_box]
       - [0x113A0, c]
       - [0x14590, c]
+      - [0x151F0, c, prim_helpers]
       - [0x15A20, sbss]
   - [0x166E8]

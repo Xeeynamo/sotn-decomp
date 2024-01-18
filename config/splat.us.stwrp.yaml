@@ -90,5 +90,6 @@ segments:
       - [0xED9C, c, entity_heart_drop]
       - [0xEEC4, c, entity_message_box]
       - [0xF420, c]
+      - [0x13270, c, prim_helpers]
       - [0x13AA0, sbss] # bss?
   - [0x14768]

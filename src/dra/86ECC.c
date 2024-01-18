@@ -308,7 +308,7 @@ void func_80127840(Entity* entity) {
 
 // circle expands out of player
 void EntityExpandingCircle(Entity* entity) {
-    POLY_GT4* poly;
+    Primitive* prim;
     s32 primIndex;
 
     if (PLAYER.facingLeft == 0) {
@@ -325,31 +325,31 @@ void EntityExpandingCircle(Entity* entity) {
         if (primIndex != -1) {
             entity->ext.generic.unk7C.s = 22;
             entity->ext.generic.unk7E.modeU16 = 26;
-            poly = &g_PrimBuf[entity->primIndex];
-            poly->u2 = 64;
-            poly->u3 = 127;
-            poly->u1 = 127;
-            poly->v1 = 192;
-            poly->v0 = 192;
-            poly->v3 = 255;
-            poly->v2 = 255;
-            poly->r3 = 128;
-            poly->r2 = 128;
-            poly->r1 = 128;
-            poly->r0 = 128;
-            poly->g3 = 128;
-            poly->g2 = 128;
-            poly->g1 = 128;
-            poly->g0 = 128;
-            poly->u0 = 64;
-            poly->b3 = 64;
-            poly->b2 = 64;
-            poly->b1 = 64;
-            poly->b0 = 64;
-            poly->tpage = 0x1A;
-            poly->clut = 0x15F;
-            poly->pad2 = PLAYER.zPriority + 1;
-            poly->pad3 = 0x35;
+            prim = &g_PrimBuf[entity->primIndex];
+            prim->u2 = 64;
+            prim->u3 = 127;
+            prim->u1 = 127;
+            prim->v1 = 192;
+            prim->v0 = 192;
+            prim->v3 = 255;
+            prim->v2 = 255;
+            prim->r3 = 128;
+            prim->r2 = 128;
+            prim->r1 = 128;
+            prim->r0 = 128;
+            prim->g3 = 128;
+            prim->g2 = 128;
+            prim->g1 = 128;
+            prim->g0 = 128;
+            prim->u0 = 64;
+            prim->b3 = 64;
+            prim->b2 = 64;
+            prim->b1 = 64;
+            prim->b0 = 64;
+            prim->tpage = 0x1A;
+            prim->clut = 0x15F;
+            prim->priority = PLAYER.zPriority + 1;
+            prim->blendMode = 0x35;
             entity->flags = FLAG_UNK_40000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
             entity->step++;
             break;
@@ -370,28 +370,28 @@ void EntityExpandingCircle(Entity* entity) {
         break;
     }
 
-    poly = &g_PrimBuf[entity->primIndex];
-    poly->x0 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
-    poly->y0 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
-    poly->x1 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
-    poly->y1 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
-    poly->x2 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
-    poly->y2 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
-    poly->x3 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
-    poly->y3 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
+    prim = &g_PrimBuf[entity->primIndex];
+    prim->x0 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
+    prim->y0 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
+    prim->x1 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
+    prim->y1 = entity->posY.i.hi - entity->ext.generic.unk7E.modeU16;
+    prim->x2 = entity->posX.i.hi - entity->ext.generic.unk7C.s;
+    prim->y2 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
+    prim->x3 = entity->posX.i.hi + entity->ext.generic.unk7C.s;
+    prim->y3 = entity->posY.i.hi + entity->ext.generic.unk7E.modeU16;
 
     if (entity->ext.generic.unk7C.s >= 0x29) {
-        poly->r3 += 244;
-        poly->g3 += 244;
-        poly->b3 += 250;
-        poly->r0 = poly->r1 = poly->r2 = poly->r3;
-        poly->g0 = poly->g1 = poly->g2 = poly->g3;
-        poly->b0 = poly->b1 = poly->b2 = poly->b3;
+        prim->r3 += 244;
+        prim->g3 += 244;
+        prim->b3 += 250;
+        prim->r0 = prim->r1 = prim->r2 = prim->r3;
+        prim->g0 = prim->g1 = prim->g2 = prim->g3;
+        prim->b0 = prim->b1 = prim->b2 = prim->b3;
     }
 }
 
 void func_80127CC8(Entity* entity) {
-    POLY_GT4* poly;
+    Primitive* prim;
     s32 ret;
 
     if (PLAYER.step != 34) {
@@ -414,22 +414,22 @@ void func_80127CC8(Entity* entity) {
 
         entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000 |
                         FLAG_HAS_PRIMS;
-        poly = &g_PrimBuf[entity->primIndex];
-        poly->r3 = 192;
-        poly->r2 = 192;
-        poly->r1 = 192;
-        poly->r0 = 192;
-        poly->g3 = 64;
-        poly->g2 = 64;
-        poly->g1 = 64;
-        poly->g0 = 64;
-        poly->b3 = 64;
-        poly->b2 = 64;
-        poly->b1 = 64;
-        poly->b0 = 64;
-        poly->pad3 = 0x315;
+        prim = &g_PrimBuf[entity->primIndex];
+        prim->r3 = 192;
+        prim->r2 = 192;
+        prim->r1 = 192;
+        prim->r0 = 192;
+        prim->g3 = 64;
+        prim->g2 = 64;
+        prim->g1 = 64;
+        prim->g0 = 64;
+        prim->b3 = 64;
+        prim->b2 = 64;
+        prim->b1 = 64;
+        prim->b0 = 64;
+        prim->blendMode = 0x315;
         entity->zPriority = 0x1C0;
-        poly->pad2 = 0x1C0;
+        prim->priority = 0x1C0;
         entity->step++;
         break;
 
@@ -442,18 +442,18 @@ void func_80127CC8(Entity* entity) {
     default:
         break;
     }
-    poly = &g_PrimBuf[entity->primIndex];
-    poly->x0 = poly->x2 = entity->posX.i.hi - 3;
-    poly->y0 = 0;
-    poly->y1 = 0;
-    poly->x1 = poly->x3 = entity->posX.i.hi + 3;
-    poly->y3 = 240;
-    poly->y2 = 240;
+    prim = &g_PrimBuf[entity->primIndex];
+    prim->x0 = prim->x2 = entity->posX.i.hi - 3;
+    prim->y0 = 0;
+    prim->y1 = 0;
+    prim->x1 = prim->x3 = entity->posX.i.hi + 3;
+    prim->y3 = 240;
+    prim->y2 = 240;
 
     if (g_GameTimer & 1) {
-        poly->pad3 = poly->pad3 | 8;
+        prim->blendMode = prim->blendMode | BLEND_VISIBLE;
     } else {
-        poly->pad3 = poly->pad3 & 0xFFF7;
+        prim->blendMode = prim->blendMode & ~BLEND_VISIBLE;
     }
 }
 
@@ -922,7 +922,7 @@ s32 func_80128BBC(Unkstruct_80128BBC* arg0, u8 value) {
 // Agunea (lightning) subweapon.
 void func_80128C2C(Entity* self) {
     Entity* ent;
-    Primitive* poly;
+    Primitive* prim;
     s32 heartCost;
     u16 tempY;
     u16 tempX;
@@ -950,13 +950,13 @@ void func_80128C2C(Entity* self) {
             self->posY.i.hi = self->ext.et_80128C2C.unk82 =
                 PLAYER.posY.i.hi + PLAYER.hitboxOffY - 8;
             self->posX.i.hi = self->ext.et_80128C2C.unk80 = PLAYER.posX.i.hi;
-            poly = &g_PrimBuf[self->primIndex];
-            poly->type = 2;
-            poly->priority = PLAYER.zPriority + 2;
-            poly->blendMode = 0x331;
-            poly->r1 = 0x60;
-            poly->g1 = 0;
-            poly->b1 = 0x80;
+            prim = &g_PrimBuf[self->primIndex];
+            prim->type = 2;
+            prim->priority = PLAYER.zPriority + 2;
+            prim->blendMode = 0x331;
+            prim->r1 = 0x60;
+            prim->g1 = 0;
+            prim->b1 = 0x80;
             SetSpeedX(FIX(6));
             PlaySfx(0x60C);
             CreateEntFactoryFromEntity(self, FACTORY(0x5200, 44), 0);
@@ -1044,24 +1044,24 @@ void func_80128C2C(Entity* self) {
         self->ext.et_80128C2C.unk7C++;
         break;
     }
-    poly = &g_PrimBuf[self->primIndex];
-    if (poly->r1 >= 4) {
-        poly->r1 -= 4;
+    prim = &g_PrimBuf[self->primIndex];
+    if (prim->r1 >= 4) {
+        prim->r1 -= 4;
     }
-    if (poly->g1 >= 4) {
-        poly->g1 -= 4;
+    if (prim->g1 >= 4) {
+        prim->g1 -= 4;
     }
-    if (poly->b1 >= 4) {
-        poly->b1 -= 4;
+    if (prim->b1 >= 4) {
+        prim->b1 -= 4;
     }
-    tempX = poly->b1;
+    tempX = prim->b1;
     if (tempX < 5) {
-        poly->blendMode |= BLEND_VISIBLE;
+        prim->blendMode |= BLEND_VISIBLE;
     }
-    poly->x0 = self->ext.et_80128C2C.unk80;
-    poly->y0 = self->ext.et_80128C2C.unk82;
-    poly->x1 = self->posX.i.hi;
-    poly->y1 = self->posY.i.hi;
+    prim->x0 = self->ext.et_80128C2C.unk80;
+    prim->y0 = self->ext.et_80128C2C.unk82;
+    prim->x1 = self->posX.i.hi;
+    prim->y1 = self->posY.i.hi;
     return;
 }
 
@@ -1148,7 +1148,7 @@ void EntityStopWatchExpandingCircle(Entity* self) {
 INCLUDE_ASM("dra/nonmatchings/86ECC", EntityStopWatch);
 
 void func_8012B78C(Entity* entity) {
-    POLY_GT4* poly;
+    Primitive* prim;
     s32 ret;
 
     switch (entity->step) {
@@ -1157,23 +1157,23 @@ void func_8012B78C(Entity* entity) {
         entity->primIndex = ret;
         if (entity->primIndex != -1) {
             entity->flags = FLAG_UNK_20000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
-            poly = &g_PrimBuf[entity->primIndex];
-            poly->tpage = 0x1C;
-            poly->clut = 0x19D;
-            poly->u2 = 32;
-            poly->u0 = 32;
-            poly->u3 = 48;
-            poly->u1 = 48;
-            poly->v1 = 0;
-            poly->v0 = 0;
-            poly->v3 = 16;
-            poly->v2 = 16;
-            poly->x0 = poly->x2 = entity->posX.i.hi - 8;
-            poly->x1 = poly->x3 = entity->posX.i.hi + 8;
-            poly->y0 = poly->y1 = entity->posY.i.hi - 8;
-            poly->y2 = poly->y3 = entity->posY.i.hi + 8;
-            poly->pad2 = entity->zPriority;
-            poly->pad3 = 0x115;
+            prim = &g_PrimBuf[entity->primIndex];
+            prim->tpage = 0x1C;
+            prim->clut = 0x19D;
+            prim->u2 = 32;
+            prim->u0 = 32;
+            prim->u3 = 48;
+            prim->u1 = 48;
+            prim->v1 = 0;
+            prim->v0 = 0;
+            prim->v3 = 16;
+            prim->v2 = 16;
+            prim->x0 = prim->x2 = entity->posX.i.hi - 8;
+            prim->x1 = prim->x3 = entity->posX.i.hi + 8;
+            prim->y0 = prim->y1 = entity->posY.i.hi - 8;
+            prim->y2 = prim->y3 = entity->posY.i.hi + 8;
+            prim->priority = entity->zPriority;
+            prim->blendMode = 0x115;
             entity->ext.generic.unk7E.modeU16 = 96;
             entity->step++;
         } else {
@@ -1196,9 +1196,9 @@ void func_8012B78C(Entity* entity) {
     default:
         break;
     }
-    poly = &g_PrimBuf[entity->primIndex];
-    poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 = poly->g1 = poly->g2 =
-        poly->g3 = poly->b0 = poly->b1 = poly->b2 = poly->b3 =
+    prim = &g_PrimBuf[entity->primIndex];
+    prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 = prim->g2 =
+        prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 =
             entity->ext.generic.unk7E.modeU8.unk0;
 }
 
