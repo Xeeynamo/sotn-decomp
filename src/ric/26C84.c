@@ -541,7 +541,146 @@ void EntityHitByIce(Entity* self) {
     }
 }
 
-INCLUDE_ASM("ric/nonmatchings/26C84", func_801656B0);
+void EntityHitByLightning(Entity* self) {
+    Primitive* prevPrim;
+    Primitive* prim;
+    s16 temp_s0;
+    s32 temp_s2;
+    s16 xBase;
+    s16 yBase;
+
+    s16 tempAngle;
+    s32 i;
+    s16 temp_s1_2;
+    s32 xOffset;
+    s32 yOffset;
+    bool var_s0 = false;
+
+    if ((self->params & 0xFF00) == 0x100) {
+        var_s0 = (++self->ext.hitbylightning.unk9C) > 0xA8;
+    } else if ((self->params & 0xFF00) == 0x200) {
+        if (++self->ext.hitbylightning.unk9C >= 0x91) {
+            var_s0 = true;
+        }
+    } else if (PLAYER.step != 10) {
+        var_s0 = true;
+    }
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 6);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        self->ext.hitbylightning.unk7C =
+            ((self->params & 0xF) << 9) + (rand() & 0x3F);
+        self->ext.hitbylightning.unk80 = rand();
+        self->ext.hitbylightning.unk82 = (rand() & 0x1FF) + 0x100;
+        prim = &g_PrimBuf[self->primIndex];
+        while (prim != NULL) {
+            prim->x0 = prim->x1 = prim->x2 = prim->x3 = self->posX.i.hi;
+            prim->y0 = prim->y1 = prim->y2 = prim->y3 = self->posY.i.hi;
+            prim->tpage = 0x1A;
+            prim->clut = D_80155364[rand() & 1];
+            prim->priority = PLAYER.zPriority - 2;
+            prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
+                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
+                    prim->b3 = 0x80;
+            prim->blendMode = 0x133;
+            prim = prim->next;
+        }
+        if ((PLAYER.velocityY != 0) && (PLAYER.step != 0x10)) {
+            self->ext.hitbylightning.unk92 = 1;
+        }
+        self->ext.hitbylightning.unk94 = 0x10;
+        self->step++;
+        break;
+    case 1:
+        self->ext.hitbylightning.unk7C =
+            ((self->params & 0xF) << 9) + (rand() & 0x1FF);
+        temp_s2 = rsin(self->ext.hitbylightning.unk80);
+        self->ext.hitbylightning.unk80 += self->ext.hitbylightning.unk82;
+        xOffset = ((rcos(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) * 12;
+        yOffset =
+            ((rsin(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) * -7 << 1;
+        self->posX.val = xOffset + PLAYER.posX.val;
+        self->posY.val = yOffset + PLAYER.posY.val;
+        if ((self->ext.hitbylightning.unk92 != 0) &&
+            (g_Player.pl_vram_flag & 0xE)) {
+            var_s0 = true;
+        }
+        if (var_s0) {
+            self->ext.hitbylightning.unk90 = (rand() & 0xF) + 0x10;
+            self->step++;
+        }
+        break;
+    case 2:
+        if (--self->ext.hitbylightning.unk90 == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        if (self->ext.hitbylightning.unk94 > 0) {
+            self->ext.hitbylightning.unk94--;
+        }
+        self->ext.hitbylightning.unk7C =
+            ((self->params & 0xF) << 9) + (rand() & 0xFF);
+        temp_s2 = rsin(self->ext.hitbylightning.unk80);
+        self->ext.hitbylightning.unk80 += self->ext.hitbylightning.unk82;
+        xOffset = (((rcos(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) *
+                   ((rand() % 8) + 8));
+        yOffset = (-((rsin(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) *
+                   ((rand() % 8) + 0xA)) +
+                  self->ext.generic.unk98;
+        self->posX.val = xOffset + PLAYER.posX.val;
+        self->posY.val = yOffset + PLAYER.posY.val;
+        self->ext.generic.unk98 -= 0x8000;
+
+        break;
+    }
+
+    xBase = (self->posX.i.hi + (rand() & 7)) - 4;
+    yBase = (self->posY.i.hi + (rand() & 0x1F)) - 0x18;
+    temp_s1_2 = self->ext.hitbylightning.unk94;
+    temp_s1_2 = (temp_s1_2 * rsin(self->ext.hitbylightning.unk80)) >> 0xC;
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 5; i++) {
+        prevPrim = prim;
+        prim = prim->next;
+        *prevPrim = *prim;
+        prevPrim->next = prim;
+        prevPrim->u0 = prevPrim->u2 = (i * 0x10) - 0x70;
+        prevPrim->u1 = prevPrim->u3 = ((i + 1) * 0x10) - 0x70;
+        prevPrim->v0 = prevPrim->v1 = 0xC0;
+        prevPrim->v2 = prevPrim->v3 = 0xCF;
+    }
+    prim->x0 = prim->x1;
+    prim->y0 = prim->y1;
+    prim->x2 = prim->x3;
+    prim->y2 = prim->y3;
+    temp_s0 = self->ext.hitbylightning.unk7C + 0x400;
+    prim->x1 = xBase + (((rcos(temp_s0) >> 4) * temp_s1_2) >> 8);
+    prim->y1 = yBase - (((rsin(temp_s0) >> 4) * temp_s1_2) >> 8);
+    temp_s0 = self->ext.hitbylightning.unk7C - 0x400;
+    prim->x3 = xBase + (((rcos(temp_s0) >> 4) * temp_s1_2) >> 8);
+    prim->y3 = yBase - (((rsin(temp_s0) >> 4) * temp_s1_2) >> 8);
+
+    // FAKE: Annoying repeat of the access and bitmask
+    tempAngle = self->ext.hitbylightning.unk80 & 0xFFF;
+    if (((tempAngle) >= 0x400) &&
+        ((self->ext.hitbylightning.unk80 & 0xFFF) < 0xC00)) {
+        prim->priority = PLAYER.zPriority - 2;
+    } else {
+        prim->priority = PLAYER.zPriority + 2;
+    }
+    prim->u0 = prim->u2 = (i << 4) - 0x70;
+    prim->v0 = prim->v1 = 0xC0;
+    // FAKE but needed to duplicate the sll 4 instruction
+    tempAngle = i;
+    prim->u1 = prim->u3 = (tempAngle << 4) - 0x60;
+    prim->v2 = prim->v3 = 0xCF;
+}
 
 void func_80165DD8(
     POLY_GT4* poly, s32 colorIntensity, s32 y, s32 radius, bool arg4) {

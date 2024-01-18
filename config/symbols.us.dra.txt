@@ -86,7 +86,6 @@ CreateEntFactoryFromEntity = 0x8011AAFC;
 EntityEntFactory = 0x8011AC3C;
 EntityPlayerBlinkWhite = 0x8011BDA4;
 EntityMpReplenished = 0x8011D9F8;
-EntityHitByLightning = 0x8011F24C;
 EntityTransparentWhiteCircle = 0x801200AC;
 EntityPlayerPinkEffect = 0x80120AF8;
 EntityPlayerDissolves = 0x80120DD0;
