@@ -856,7 +856,104 @@ void func_80167A60(Entity* self) {}
 
 void func_80167A68(Entity* self) {}
 
-INCLUDE_ASM("ric/nonmatchings/26C84", func_80167A70);
+// Entity ID #35. Created by blueprint 40. No known FACTORY calls with blueprint 40.
+// No known DRA match.
+void func_80167A70(Entity* self) {
+    s16_pair sp10[8];
+    Primitive* prim;
+    FakePrim* fakeprim;
+    s32 velX;
+    s32 i;
+    u16 posY;
+    u16 posX;
+    u8 arrIndex;
+    u8 randbit;
+    
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        posX = self->posX.i.hi;
+        posY = self->posY.i.hi;
+        for (i = 0; prim != NULL; i++, prim = prim->next) {
+            if (i < 8) {
+                fakeprim = (FakePrim*)prim;
+                fakeprim->x0 = posX;
+                fakeprim->posX.i.hi = posX;
+                sp10[i].unk0 = posX;
+                fakeprim->y0 = posY;
+                fakeprim->posY.i.hi = posY;
+                sp10[i].unk2 = posY;
+                //Random velocity from 0.25 to 0.5
+                velX = (rand() & 0x3FFF) + FIX(0.25);
+                fakeprim->velocityX = velX;
+                if (i & 1) {
+                    fakeprim->velocityX = -velX;
+                }
+                fakeprim->velocityY = -((rand() * 2) + FIX(2.5));
+                fakeprim->blendMode = 0xA;
+                fakeprim->type = 1;
+            } else {
+                prim->r0 = prim->r1 = prim->r2 = prim->r3 = (rand() & 0xF) | 0x30;
+                prim->b0 = prim->b1 = prim->b2 = prim->b3 = rand() | 0x80;
+                prim->g0 = prim->g1 = prim->g2 = prim->g3 = (rand() & 0x1F) + 0x30;
+                randbit = rand() & 1;
+                prim->blendMode = !(randbit) ? 6 : 0x37;
+                posX = sp10[i-8].unk0;
+                posY = sp10[i-8].unk2;
+                arrIndex = i & 3;
+                prim->u0 = arrIndex;
+                prim->x0 = posX + D_80155D64[arrIndex][0];
+                prim->y0 = posY + D_80155D64[arrIndex][1];
+                prim->x1 = posX + D_80155D64[arrIndex][2];
+                prim->y1 = posY + D_80155D64[arrIndex][3];
+                prim->x3 = prim->x2 = posX + D_80155D64[arrIndex][4];
+                prim->y3 = prim->y2 = posY + D_80155D64[arrIndex][5];
+                prim->type = 3;
+                prim->priority = PLAYER.zPriority + 2;
+            }
+        }
+        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        self->ext.factory.unk7C = 20;
+        self->step++;
+        return;
+
+    case 1:
+        if (--self->ext.factory.unk7C == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; prim != NULL; i++, prim = prim->next) {
+            if (i < 8) {
+                fakeprim = (FakePrim*)prim;
+                fakeprim->posX.i.hi = fakeprim->x0;
+                fakeprim->posY.i.hi = fakeprim->y0;
+                fakeprim->posX.val += fakeprim->velocityX.val;
+                fakeprim->posY.val += fakeprim->velocityY.val;
+                fakeprim->velocityY.val += FIX(36.0/128);
+                sp10[i].unk0 = fakeprim->posX.i.hi;
+                sp10[i].unk2 = fakeprim->posY.i.hi;
+                fakeprim->x0 = fakeprim->posX.i.hi;
+                fakeprim->y0 = fakeprim->posY.i.hi;
+            } else {
+                posX = sp10[i-8].unk0;
+                posY = sp10[i-8].unk2;
+                arrIndex = prim->u0;
+                prim->x0 = posX + D_80155D64[arrIndex][0];
+                prim->y0 = posY + D_80155D64[arrIndex][1];
+                prim->x1 = posX + D_80155D64[arrIndex][2];
+                prim->y1 = posY + D_80155D64[arrIndex][3];
+                prim->x3 = prim->x2 = posX + D_80155D64[arrIndex][4];
+                prim->y3 = prim->y2 = posY + D_80155D64[arrIndex][5];
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("ric/nonmatchings/26C84", func_80167EC4);
 
