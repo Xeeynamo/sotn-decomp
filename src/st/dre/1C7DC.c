@@ -4,7 +4,7 @@ void EntityEquipItemDrop(Entity* self) {
     u16 itemId = self->params & 0x7FFF;
     s32 primIndex;
     Collider collider;
-    POLY_GT4* poly;
+    Primitive* prim;
     s32* itemName;
     s16 index;
     s32 vramX;
@@ -77,7 +77,7 @@ void EntityEquipItemDrop(Entity* self) {
                     g_api.accessoryDefs[itemId].iconPalette, index);
             }
 
-            poly = &g_PrimBuf[primIndex];
+            prim = &g_PrimBuf[primIndex];
             vramX = ((temp_v0_6 = index) & 7) * 0x10;
             vramY = (temp_v0_6 & 0x18) * 2;
 
@@ -87,16 +87,16 @@ void EntityEquipItemDrop(Entity* self) {
             top = vramY | top;
             bottom = vramY | 0x8F;
 
-            poly->tpage = 0x1A;
-            poly->v3 = bottom;
-            poly->clut = index + 464;
-            poly->u0 = poly->u2 = left;
-            poly->u1 = poly->u3 = right;
-            poly->v1 = top;
-            poly->v2 = bottom;
-            poly->v0 = top;
-            poly->pad2 = 0x80;
-            poly->pad3 = 6;
+            prim->tpage = 0x1A;
+            prim->v3 = bottom;
+            prim->clut = index + 464;
+            prim->u0 = prim->u2 = left;
+            prim->u1 = prim->u3 = right;
+            prim->v1 = top;
+            prim->v2 = bottom;
+            prim->v0 = top;
+            prim->priority = 0x80;
+            prim->blendMode = 6;
 
             self->ext.generic.unk7C.s = 128;
             self->step++;
@@ -147,11 +147,11 @@ void EntityEquipItemDrop(Entity* self) {
     case 4:
         func_8019B8DC(1);
         if (self->ext.generic.unk80.modeS8.unk0 += 255) {
-            poly = &g_PrimBuf[self->primIndex];
+            prim = &g_PrimBuf[self->primIndex];
             if (self->ext.generic.unk80.modeS8.unk0 & 2) {
-                poly->pad3 = 8;
+                prim->blendMode = BLEND_VISIBLE;
             } else {
-                poly->pad3 = 2;
+                prim->blendMode = 2;
             }
         } else {
             DestroyEntity(self);

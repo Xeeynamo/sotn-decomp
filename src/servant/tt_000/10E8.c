@@ -254,15 +254,15 @@ void func_8017160C(s32 amount, s32 entityId) {
 }
 
 void func_8017170C(Entity* entity, s32 frameIndex) {
-    POLY_GT4* poly;
+    Primitive* prim;
     s32 tpage;
     s32 x;
     s32 y;
     s32 index;
 
-    poly = &g_PrimBuf[entity->primIndex];
+    prim = &g_PrimBuf[entity->primIndex];
     if (frameIndex == 0) {
-        poly->pad3 = 8;
+        prim->blendMode = BLEND_VISIBLE;
         return;
     }
     index = frameIndex - 1;
@@ -273,26 +273,26 @@ void func_8017170C(Entity* entity, s32 frameIndex) {
     }
     y = entity->posY.i.hi - 16;
 
-    poly->x0 = poly->x2 = x - D_80170608[index].x;
-    poly->y0 = poly->y1 = y - D_80170608[index].y;
-    poly->x1 = poly->x3 = poly->x0 + D_80170608[index].width;
-    poly->y2 = poly->y3 = poly->y0 + D_80170608[index].height;
-    poly->clut = D_80170608[index].clut;
+    prim->x0 = prim->x2 = x - D_80170608[index].x;
+    prim->y0 = prim->y1 = y - D_80170608[index].y;
+    prim->x1 = prim->x3 = prim->x0 + D_80170608[index].width;
+    prim->y2 = prim->y3 = prim->y0 + D_80170608[index].height;
+    prim->clut = D_80170608[index].clut;
     tpage = D_80170608[index].tpage;
     if (tpage < 0) {
         tpage += 3;
     }
-    poly->tpage = tpage >> 2;
-    poly->u0 = poly->u2 = D_80170608[index].texLeft;
-    poly->v0 = poly->v1 = D_80170608[index].texTop;
-    poly->u1 = poly->u3 = D_80170608[index].texRight;
-    poly->v2 = poly->v3 = D_80170608[index].texBottom;
-    poly->pad2 = entity->zPriority + 1;
-    poly->pad3 = 0x102;
+    prim->tpage = tpage >> 2;
+    prim->u0 = prim->u2 = D_80170608[index].texLeft;
+    prim->v0 = prim->v1 = D_80170608[index].texTop;
+    prim->u1 = prim->u3 = D_80170608[index].texRight;
+    prim->v2 = prim->v3 = D_80170608[index].texBottom;
+    prim->priority = entity->zPriority + 1;
+    prim->blendMode = 0x102;
 }
 
 void func_801718A0(Entity* entity) {
-    POLY_GT4* poly;
+    Primitive* prim;
     s32 frame;
     s32 y;
     s32 x;
@@ -308,11 +308,11 @@ void func_801718A0(Entity* entity) {
     x += (rsin(entity->ext.bat.unk8C << 7) * 8) >> 12;
     y -= entity->ext.bat.unk8C / 2;
 
-    poly = &g_PrimBuf[entity->primIndex];
-    poly->x0 = poly->x2 = x - D_80170608[frame].x;
-    poly->y0 = poly->y1 = y - D_80170608[frame].y;
-    poly->x1 = poly->x3 = poly->x0 + D_80170608[frame].width;
-    poly->y2 = poly->y3 = poly->y0 + D_80170608[frame].height;
+    prim = &g_PrimBuf[entity->primIndex];
+    prim->x0 = prim->x2 = x - D_80170608[frame].x;
+    prim->y0 = prim->y1 = y - D_80170608[frame].y;
+    prim->x1 = prim->x3 = prim->x0 + D_80170608[frame].width;
+    prim->y2 = prim->y3 = prim->y0 + D_80170608[frame].height;
 }
 
 void func_801719E0(Entity* self) {

@@ -66,5 +66,7 @@ segments:
       - [0x1DB44, c, entity_heart_drop]
       - [0x1DC6C, c, entity_message_box]
       - [0x1E1C8, c]
+      - [0x22018, c, prim_helpers]
+      - [0x22848, c]
       - [0x23260, sbss]
   - [0x23FCC]

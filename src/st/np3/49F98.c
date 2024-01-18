@@ -42,7 +42,7 @@ void EntityBloodSplatter(Entity* self) {
         prim = FindFirstUnkPrim2(*(s32*)&self->ext.generic.unk7C, 2);
         if (prim != NULL) {
             self->ext.generic.unk8C.primPtr = prim;
-            func_801D2684(prim);
+            UnkPolyFunc2(prim);
             prim->v0 = 0x30;
             prim->tpage = 0x1A;
             prim->v2 = 0x30;
@@ -76,7 +76,7 @@ void EntityBloodSplatter(Entity* self) {
         prim = FindFirstUnkPrim2(*(s32*)&self->ext.generic.unk7C, 2);
         if (prim != NULL) {
             *(s32*)&self->ext.generic.unk90 = prim;
-            func_801D2684(prim);
+            UnkPolyFunc2(prim);
             prim->v1 = 0x40;
             prim->tpage = 0x1A;
             prim->v3 = 0x40U;
@@ -377,7 +377,7 @@ void EntityBloodyZombie(Entity* self) {
             if (!(g_Timer & 3)) {
                 prim = FindFirstUnkPrim2(*(s32*)&self->ext.generic.unk7C, 2);
                 if (prim != NULL) {
-                    func_801D2684(prim);
+                    UnkPolyFunc2(prim);
                     prim->next->r3 = self->ext.generic.unk84.U8.unk0;
                 }
                 self->ext.generic.unk84.U8.unk0 ^= 1;

@@ -512,7 +512,7 @@ INCLUDE_ASM("st/rwrp/nonmatchings/A59C", EntityPrizeDrop);
 
 INCLUDE_ASM("st/rwrp/nonmatchings/A59C", EntityExplosion);
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", BlinkItem);
+#include "../blink_item.h"
 
 INCLUDE_ASM("st/rwrp/nonmatchings/A59C", EntityEquipItemDrop);
 
