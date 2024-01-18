@@ -257,6 +257,9 @@ void func_80160F0C(Entity* self) {
     }
 }
 
+// Entity ID #2. Created by 6 blueprints:
+// 0, 1, 24, 74, 75, 76.
+// Matches DRA func_8011B5A4
 void func_80160FC4(Entity* self) {
     s16 posX;
     s32 i;

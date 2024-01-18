@@ -731,6 +731,7 @@ void EntityHitByIce(Entity* self) {
 }
 
 // Transparent white circle closes over player
+// Entity ID #38. Created by blueprint 53. No known callers.
 INCLUDE_ASM("dra/nonmatchings/7E4BC", EntityTransparentWhiteCircle);
 
 // pink effect on player
