@@ -69,3 +69,5 @@ g_UnkPrimHelperRot = 0x8018D8C0;
 UnkPrimHelper = 0x80198FA0;
 EntityUnkId15 = 0x80195B44;
 EntityIsNearPlayer = 0x801910A8;
+UnkPolyFunc2 = 0x801996EC;
+UnkLoopFunc = 0x8019976C;

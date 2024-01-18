@@ -2142,27 +2142,27 @@ void MenuDraw(void) {
 }
 
 void func_800F9690(void) {
-    POLY_GT4* poly = &g_PrimBuf[D_8013783C];
+    Primitive* prim = &g_PrimBuf[D_8013783C];
 
     if (D_80137608 != 0) {
-        poly->pad3 = 0x80;
+        prim->blendMode = 0x80;
     } else {
-        poly->pad3 = 0x8;
+        prim->blendMode = BLEND_VISIBLE;
     }
     if (D_801376B0 != 0) {
-        poly->pad3 = 0x8;
+        prim->blendMode = BLEND_VISIBLE;
     }
 }
 
 void func_800F96F4(void) { // !Fake:
     s32 new_var2;
-    POLY_GT4* poly;
+    Primitive* prim;
     s32 temp_a2;
     s32* temp;
     s32* new_var;
 
     new_var = D_80137848;
-    poly = &g_PrimBuf[D_80137840];
+    prim = &g_PrimBuf[D_80137840];
     temp_a2 = g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk1C == 0;
     temp = D_80137844;
 
@@ -2175,26 +2175,26 @@ void func_800F96F4(void) { // !Fake:
             (&g_PrimBuf[D_80137840])->clut = 0x181;
         }
     } else {
-        poly->pad3 = 0x8;
+        prim->blendMode = 0x8;
     }
 
-    poly = (POLY_GT4*)poly->tag;
+    prim = prim->next;
     temp = new_var;
 
     if (((*temp) != 0) && (temp_a2 != 0)) {
-        poly->pad3 = 0x80;
+        prim->blendMode = 0x80;
         new_var2 = *temp;
         if (new_var2 == 1) {
             do {
-                poly->clut = 0x188;
+                prim->clut = 0x188;
             } while (0);
             return;
         }
         *temp -= 1;
-        poly->clut = 0x181;
+        prim->clut = 0x181;
         return;
     }
-    poly->pad3 = 8;
+    prim->blendMode = 8;
 }
 
 void func_800F97DC(void) {

@@ -390,6 +390,7 @@ extern s16 D_800ACE88[];
 extern s16 D_800ACE90[];
 extern s16_pair D_800ACEC0[4];
 extern Unkstruct_800ACED0 D_800ACED0;
+extern s16_pair D_800ACEE0[12];
 #if defined(VERSION_HD)
 extern s32 D_800ACEDC_hd;
 #endif
@@ -408,7 +409,12 @@ extern PfnEntityUpdate D_800AD0C4[];
 extern FactoryBlueprint g_FactoryBlueprints[];
 extern u8 D_800AD4B8[];
 extern AnimSoundEvent* D_800AD53C[];
+extern u16 D_800AD54C[6];
+extern s32 D_800AD558[6];
+extern u16 D_800AD570[6];
 extern AnimationFrame D_800AD57C[];
+extern u8 D_800AD5E0[14];
+extern u8 D_800AD5F0[10];
 extern AnimationFrame D_800AD5FC[];
 extern AnimationFrame D_800ADBD4[];
 extern AnimationFrame D_800ADC10[];

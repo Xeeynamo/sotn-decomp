@@ -488,20 +488,20 @@ s32 func_801ACDFC(void) {
 }
 
 s32 func_801ACEC0(void) {
-    POLY_GT4* poly = &g_PrimBuf[D_801BAFC4];
-    s32 var_s0 = poly->r0;
+    Primitive* prim = &g_PrimBuf[D_801BAFC4];
+    s32 var_s0 = prim->r0;
 
     var_s0 += 0x10;
-    poly->pad3 = 0x51;
+    prim->blendMode = 0x51;
 
     if (var_s0 > 255) {
         var_s0 = 255;
     }
 
-    func_801B1CFC(poly, var_s0);
-    poly = (POLY_GT4*)poly->tag;
-    poly->pad3 = 0x51;
-    func_801B1CFC(poly, var_s0);
+    func_801B1CFC(prim, var_s0);
+    prim = prim->next;
+    prim->blendMode = 0x51;
+    func_801B1CFC(prim, var_s0);
 
     if (g_api.func_80131F68()) {
         return 0;

@@ -746,7 +746,7 @@ INCLUDE_ASM("st/cen/nonmatchings/11280", EntityPrizeDrop);
 
 INCLUDE_ASM("st/cen/nonmatchings/11280", EntityExplosion);
 
-INCLUDE_ASM("st/cen/nonmatchings/11280", BlinkItem);
+#include "../blink_item.h"
 
 INCLUDE_ASM("st/cen/nonmatchings/11280", EntityEquipItemDrop);
 

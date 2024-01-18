@@ -343,30 +343,30 @@ void HandlePlay(void) {
 
 // Game over melting effect
 void func_800E5358(void) {
-    Primitive* poly = &g_PrimBuf[D_8013640C];
+    Primitive* prim = &g_PrimBuf[D_8013640C];
     s32 i;
 
-    for (i = -3; i < 256; i++, poly = poly->next) {
+    for (i = -3; i < 256; i++, prim = prim->next) {
         if (i < 0)
             continue;
-        if (poly->y0 > 256)
+        if (prim->y0 > 256)
             continue;
-        if (poly->p1 != 0) {
-            poly->p1--;
+        if (prim->p1 != 0) {
+            prim->p1--;
             continue;
         }
-        if (poly->p2 < 10 && (rand() & 1)) {
-            poly->p2++;
+        if (prim->p2 < 10 && (rand() & 1)) {
+            prim->p2++;
         } else {
             if (!(rand() & 3)) {
-                poly->y0++;
-                poly->y1++;
+                prim->y0++;
+                prim->y1++;
             }
-            poly->y0++;
-            poly->y1++;
+            prim->y0++;
+            prim->y1++;
         }
-        poly->y2++;
-        poly->y3++;
+        prim->y2++;
+        prim->y3++;
     }
 }
 

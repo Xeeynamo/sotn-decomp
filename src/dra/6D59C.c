@@ -273,7 +273,7 @@ void func_8010DF70(void) {
 }
 
 void func_8010DFF0(s32 arg0, s32 arg1) {
-    POLY_GT4* poly;
+    Primitive* prim;
     s32 i;
 
     if (arg0 != 0) {
@@ -281,11 +281,11 @@ void func_8010DFF0(s32 arg0, s32 arg1) {
         g_Entities[UNK_ENTITY_3].animCurFrame = 0;
         g_Entities[UNK_ENTITY_2].animCurFrame = 0;
         g_Entities[UNK_ENTITY_1].animCurFrame = 0;
-        poly = &g_PrimBuf[g_Entities[UNK_ENTITY_1].primIndex];
+        prim = &g_PrimBuf[g_Entities[UNK_ENTITY_1].primIndex];
 
         for (i = 0; i < 6; i++) {
-            poly->x1 = 0;
-            poly = (POLY_GT4*)poly->tag;
+            prim->x1 = 0;
+            prim = prim->next;
         }
     }
 

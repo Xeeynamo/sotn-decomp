@@ -499,8 +499,8 @@ typedef struct {
 } ET_Entity16;
 
 typedef struct {
-    s16 timer;
-} ET_GravBootsBeam;
+    s16 t;
+} ET_TimerOnly;
 
 typedef struct {
     /* 0x7C */ s16 unk7C;
@@ -712,11 +712,11 @@ typedef struct {
 
 typedef union {
     /* 0x7C */ struct Primitive* prim;
+    /* 0x7C */ ET_TimerOnly timer;
     /* 0x7C */ ET_EntFactory factory;
     /* 0x7C */ ET_Generic generic;
     /* 0x7C */ ET_EntitySlot1 entSlot1; // g_Entities[1], not entityID 1
     /* 0x7C */ ET_Entity16 ent16;
-    /* 0x7C */ ET_GravBootsBeam bootBeam;
     /* 0x7C */ ET_8011E4BC et_8011E4BC;
     /* 0x7C */ ET_HellfireHandler hellfireHandler;
     /* 0x7C */ ET_ReboundStone reboundStone;
