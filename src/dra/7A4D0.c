@@ -543,6 +543,7 @@ void func_8011B5A4(Entity* self) {
 
     switch (self->step) {
     case 0:
+        // Note that paramsHi is uninitialized here - possible bug?
         if ((g_Player.unk0C & 0x20000) && (paramsHi != 9)) {
             DestroyEntity(self);
             return;
