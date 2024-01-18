@@ -552,7 +552,7 @@ void func_8011B5A4(Entity* self) {
         self->animSet = 5;
         self->unk4C = D_800AD57C;
         self->zPriority = PLAYER.zPriority + 2;
-        self->flags = 0x08110000;
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000 | FLAG_UNK_10000;
         self->palette = 0x8195;
         paramsHi = self->params >> 8;
         paramsLo = self->params & 0xFF;
