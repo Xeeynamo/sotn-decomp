@@ -1380,7 +1380,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
         self->primIndex = primIndex;
         self->ext.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
-        func_801D6FCC(prim, primIndex);
+        UnkPolyFunc2(prim);
         v1 = g_Tilemap.D_80073088->gfxIndex[0x409];
         arg1 = v1;
         temp = g_Tilemap.D_80073088->gfxPage[0x409];

@@ -1,0 +1,5 @@
+#include "unk_prim_helper.h"
+#include "update_animation.h"
+#include "find_first_unk_prim.h"
+#include "unk_poly_func_0.h"
+#include "unk_loop_func.h"

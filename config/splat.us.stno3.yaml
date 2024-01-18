@@ -87,5 +87,6 @@ segments:
       - [0x48A84, c]
       - [0x56264, c]
       - [0x564B0, c]
+      - [0x56880, c, prim_helpers]
       - [0x570B0, sbss]
   - [0x57E18]

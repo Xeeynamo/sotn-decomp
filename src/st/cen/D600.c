@@ -154,7 +154,7 @@ void func_8018DB18(Entity* self) {
                 prim = &g_PrimBuf[primIndex];
                 self->primIndex = primIndex;
                 self->flags |= FLAG_HAS_PRIMS;
-                func_8019C620(prim, primIndex);
+                UnkPolyFunc2(prim);
                 prim->tpage = 0x1A;
                 prim->clut = 0x159;
                 prim->u0 = prim->u2 = 0x40;

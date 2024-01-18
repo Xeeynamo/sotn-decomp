@@ -1643,7 +1643,7 @@ INCLUDE_ASM("st/no3/nonmatchings/48A84", EntityMerman3);
 
 // some sort of explosion
 void EntityExplosion2(Entity* entity, s32 arg1) {
-    POLY_GT4* poly;
+    Primitive* prim;
     s16 primIndex;
 
     if (entity->step == 0) {
@@ -1657,37 +1657,37 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
                 DestroyEntity(entity);
                 return;
             }
-            poly = &g_PrimBuf[primIndex];
+            prim = &g_PrimBuf[primIndex];
             entity->primIndex = primIndex;
-            *(s32*)&entity->ext.generic.unk7C.s = poly;
+            *(s32*)&entity->ext.generic.unk7C.s = prim;
             entity->flags |= FLAG_HAS_PRIMS;
-            func_801D6FCC(poly, primIndex);
-            poly->u0 = 0;
-            poly->u1 = 0x20;
-            poly->tpage = 0x1A;
-            poly->clut = 0x1FF;
-            poly->v3 = poly->v2 = 0x20;
-            poly->v1 = poly->v0 = 0;
-            poly->u2 = poly->u0;
-            poly->u3 = poly->u1;
-            LOH(((POLY_GT4*)poly->tag)->r2) = 0x40;
-            LOH(((POLY_GT4*)poly->tag)->b2) = 0x40;
-            LOH(((POLY_GT4*)poly->tag)->u1) = 0;
-            ((POLY_GT4*)poly->tag)->b3 = 0x60;
-            ((POLY_GT4*)poly->tag)->x1 = (u16)entity->posX.i.hi;
-            ((POLY_GT4*)poly->tag)->y0 = (u16)entity->posY.i.hi;
-            poly->pad2 = entity->zPriority - 4;
-            poly->pad3 = 6;
+            UnkPolyFunc2(prim);
+            prim->u0 = 0;
+            prim->u1 = 0x20;
+            prim->tpage = 0x1A;
+            prim->clut = 0x1FF;
+            prim->v3 = prim->v2 = 0x20;
+            prim->v1 = prim->v0 = 0;
+            prim->u2 = prim->u0;
+            prim->u3 = prim->u1;
+            LOH(prim->next->r2) = 0x40;
+            LOH(prim->next->b2) = 0x40;
+            LOH(prim->next->u1) = 0;
+            prim->next->b3 = 0x60;
+            prim->next->x1 = (u16)entity->posX.i.hi;
+            prim->next->y0 = (u16)entity->posY.i.hi;
+            prim->priority = entity->zPriority - 4;
+            prim->blendMode = 6;
         }
     }
 
     if (entity->params != 0) {
-        poly = *(s32*)&entity->ext.generic.unk7C.s;
-        UnkPrimHelper(poly);
-        ((POLY_GT4*)poly->tag)->b3 += 252;
-        LOH(((POLY_GT4*)poly->tag)->u1) -= 128;
-        if (((POLY_GT4*)poly->tag)->b3 < 16) {
-            poly->pad3 = 8;
+        prim = *(s32*)&entity->ext.generic.unk7C.s;
+        UnkPrimHelper(prim);
+        prim->next->b3 += 252;
+        LOH(prim->next->u1) -= 128;
+        if (prim->next->b3 < 16) {
+            prim->blendMode = 8;
         }
     }
 
