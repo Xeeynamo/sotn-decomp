@@ -308,7 +308,6 @@ void EntityStageNamePopup(Entity* self) {
         case 4:
             prim = self->ext.stpopup.unk88;
             prim->blendMode = 8;
-            // self->ext.stpopup.unk88 = 8;
             self->ext.stpopup.unk80 = 0x40;
             self->step = 2;
             self->step_s = 0;
