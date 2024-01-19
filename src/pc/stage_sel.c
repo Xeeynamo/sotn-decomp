@@ -107,8 +107,6 @@ s32 D_801D6B0C;
 char g_InputSaveName[12];
 s32 D_801D6B24;
 
-Overlay g_StageSel;
-
 s32 LoadFileSim(s32 fileId, s32 type);
 
 static bool g_WereStringsInitialised = false;
@@ -116,19 +114,23 @@ static bool g_WereStringsInitialised = false;
 #include <dlfcn.h>
 
 void InitStageSel(Overlay* o) {
-    void *handle = dlopen("cmake_build/libsel.dylib", RTLD_NOW);
+#ifdef __APPLE__
+    void* handle = dlopen("cmake_build/libsel.dylib", RTLD_NOW);
+#else
+    void* handle = dlopen("cmake_build/libsel.so", RTLD_NOW);
+#endif
     if (!handle) {
         fprintf(stderr, "Error loading libsel: %s\n", dlerror());
         exit(1);
     }
 
-    g_StageSel = *(Overlay *)dlsym(handle, "g_StageSel");
+    Overlay g_StageSel = *(Overlay*)dlsym(handle, "g_StageSel");
 
     memcpy(o, &g_StageSel, sizeof(Overlay));
 
-    StageName *D_80180128 = (StageName *)dlsym(handle, "D_80180128");
+    StageName* D_80180128 = (StageName*)dlsym(handle, "D_80180128");
 
-    char ** D_801803A8  = (const char *)dlsym(handle, "D_801803A8");
+    char** D_801803A8 = (const char*)dlsym(handle, "D_801803A8");
 
     if (!g_WereStringsInitialised) {
         g_WereStringsInitialised = true;

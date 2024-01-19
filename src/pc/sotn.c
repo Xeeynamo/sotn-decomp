@@ -211,7 +211,6 @@ bool InitGame(void) {
     return true;
 }
 
-
 void (*ResetPlatform)(void);
 
 void ResetGame(void) { ResetPlatform(); }
