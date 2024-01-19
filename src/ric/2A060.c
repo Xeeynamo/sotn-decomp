@@ -465,7 +465,7 @@ void func_80169C10(Entity* entity) {
             prim->b1 = 0;
             prim->priority = entity->zPriority;
             prim->priority = prim->priority + 4;
-            prim->pad3 = 0x31;
+            prim->blendMode = 0x31;
             func_8015FDB0(prim, entity->posX.i.hi, entity->posY.i.hi);
             entity->step++;
         } else {
@@ -559,24 +559,26 @@ INCLUDE_ASM("ric/nonmatchings/2A060", func_8016B97C);
 
 INCLUDE_ASM("ric/nonmatchings/2A060", func_8016C1BC);
 
-s32 func_8016C6C4(Unkstruct_80128BBC* arg0, u8 value) {
-    u8 ret = 0;
+s32 RicPrimDecreaseBrightness(Primitive* prim, u8 amount) {
+    u8 isEnd;
     s32 i;
     s32 j;
-    Unkstruct_80128BBC_Sub* temp = arg0->unk04;
+    u8* pColor;
 
-    for (i = 0; i < 4; i++, temp++) {
+    isEnd = 0;
+    pColor = &prim->r0;
+    for (i = 0; i < 4; i++, pColor += OFF(Primitive, r1) - OFF(Primitive, r0)) {
         for (j = 0; j < 3; j++) {
-            temp->unk00[j] -= value;
+            pColor[j] -= amount;
 
-            if (temp->unk00[j] < 16) {
-                temp->unk00[j] = 16;
+            if (pColor[j] < 16) {
+                pColor[j] = 16;
             } else {
-                ret |= 1;
+                isEnd |= 1;
             }
         }
     }
-    return ret;
+    return isEnd;
 }
 
 INCLUDE_ASM("ric/nonmatchings/2A060", func_8016C734);
