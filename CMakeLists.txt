@@ -24,7 +24,6 @@ endif()
 find_package(SDL2 REQUIRED)
 
 set(SOURCE_FILES_PC
-    src/pc/main.c
     src/pc/log.c
     src/pc/stubs.c
     src/pc/sotn.c

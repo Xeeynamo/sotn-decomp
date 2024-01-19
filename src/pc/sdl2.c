@@ -702,3 +702,19 @@ void MyRenderPrimitives(void) {
         SDL_RenderGeometry(g_Renderer, t, v, 6, NULL, 0);
     }
 }
+
+int main(int argc, char* argv[]) {
+    const char* filename;
+
+    if (argc < 2) {
+        filename = "disks/sotn.us.bin";
+    } else {
+        filename = argv[1];
+    }
+    OpenCd(filename);
+
+    if (InitGame()) {
+        MainGame();
+    }
+    ResetGame();
+}

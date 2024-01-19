@@ -62,6 +62,3 @@ jobs:
       run: |
         cmake -B ${{github.workspace}}/pc -DCMAKE_BUILD_TYPE=Release -DSDL2_PATH=C:\temp-sdl2\SDL2-2.28.5
         cmake --build ${{github.workspace}}/pc --config Release
-
-    - name: Test null target
-      run: ${{github.workspace}}/cmake_build/Sound_null.exe

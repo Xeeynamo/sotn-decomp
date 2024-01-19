@@ -28,3 +28,19 @@ void MySetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw) {}
 int MyResetGraph(int arg0) { return 0; }
 
 void MySsInitHot(void) {}
+
+int main(int argc, char* argv[]) {
+    const char* filename;
+
+    if (argc < 2) {
+        filename = "disks/sotn.us.bin";
+    } else {
+        filename = argv[1];
+    }
+    OpenCd(filename);
+
+    if (InitGame()) {
+        MainGame();
+    }
+    ResetGame();
+}
