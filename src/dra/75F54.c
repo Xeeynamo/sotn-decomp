@@ -1457,6 +1457,7 @@ void func_80119D3C(Entity* entity) {
     }
 }
 
+// Corresponding RIC function is func_8015FDB0
 s32 func_80119E78(Primitive* prim, s32 xCenter, s32 yCenter) {
     s16 left;
     s16 top;

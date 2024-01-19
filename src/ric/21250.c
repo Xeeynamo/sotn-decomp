@@ -1148,6 +1148,7 @@ s32 func_8015FB84(SubweaponDef* subwpn, s32 isItemCrash, s32 useHearts) {
     return -1;
 }
 
+// Corresponding DRA function is func_80119E78
 s32 func_8015FDB0(POLY_GT4* poly, s16 posX, s16 posY) {
     s16 offset;
     s32 ret = 0;
@@ -1390,7 +1391,7 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     func_8015FEA8,
     StopwatchCrashDoneSparkle,
     func_80170548,
-    func_80166060,
+    EntityTeleport,
     func_801603B4};
 
 // Corresponding DRA function is func_8011A4D0

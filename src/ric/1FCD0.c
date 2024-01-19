@@ -1,5 +1,6 @@
 #include "ric.h"
 
+// Corresponding DRA function is func_80115DA0
 void func_8015BCD0(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;

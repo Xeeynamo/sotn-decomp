@@ -720,6 +720,15 @@ typedef struct {
     s16 unk9C;
 } ET_HitByLightning;
 
+typedef struct {
+    s32 unk7C;
+    s32 unk80;
+    s32 unk84;
+    s32 unk88;
+    s32 unk8C;
+    s32 unk90;
+} ET_Teleport;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_TimerOnly timer;
@@ -744,6 +753,7 @@ typedef union {
     /* 0x7C */ ET_SoulStealOrb soulStealOrb;
     /* 0x7C */ ET_GaibonSlogra GS_Props;
     /* 0x7C */ ET_WarpRoom warpRoom;
+    /* 0x7C */ ET_Teleport teleport;
     /* 0x7C */ ET_Merman merman;
     /* 0x7C */ ET_Merman_2 merman2;
     /* 0x7C */ ET_MermanWaterSplash mermanWaterSplash;

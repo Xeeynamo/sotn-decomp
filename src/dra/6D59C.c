@@ -471,6 +471,7 @@ void func_8010E4D0(void) {
     func_8010E470(0, 0);
 }
 
+// Corresponding RIC function is func_8015CD98 (much simpler)
 void func_8010E570(s32 arg0) {
     s32 var_a0;
     bool condition = false;
