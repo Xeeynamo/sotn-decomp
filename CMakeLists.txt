@@ -150,6 +150,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 target_link_libraries(${PROJECT_NAME} PRIVATE 
     ${SDL2_LIBRARIES}
     core
+    m
     )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE 
@@ -175,6 +176,7 @@ target_include_directories(${PROJECT_NAME}_null PRIVATE
 
 target_link_libraries(${PROJECT_NAME}_null PRIVATE 
     core
+    m
     )
 
 target_compile_definitions(${PROJECT_NAME}_null PRIVATE 
