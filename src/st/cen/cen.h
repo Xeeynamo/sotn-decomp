@@ -4,6 +4,8 @@
 #include "common.h"
 #include "stage.h"
 
+#define CASTLE_FLAG_BANK 0x00
+
 // CEN Sound IDs
 #define SE_CEN_ELEVATOR_MOVE 0x60D
 #define SE_CEN_PLATFORM_STOP 0x64F
@@ -54,7 +56,7 @@ extern PfnEntityUpdate PfnEntityUpdates[];
 extern u16 D_80180404[];
 extern u16 g_InitializeData0[];
 extern u16 D_80180428[];
-extern u16 D_80180434[]; // EntityPlatform
+extern u16 g_EInitGeneric[];
 extern u16 D_80180458[];
 extern u16 D_8018047C[]; // EntityElevator
 
