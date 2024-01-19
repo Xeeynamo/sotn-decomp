@@ -96,6 +96,7 @@ EntityHolyWaterBreakGlass = 0x80125E68;
 EntityHolyWaterFlame = 0x801262AC;
 EntitySubwpnCrashCross = 0x801267B0;
 EntityHellfireHandler = 0x80126ECC;
+DraPrimDecreaseBrightness = 0x80128BBC;
 EntitySummonSpirit = 0x8012A0A4;
 EntityStopWatch = 0x8012A89C;
 EntityBatEcho = 0x8012BEF8;

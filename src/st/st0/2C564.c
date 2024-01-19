@@ -438,7 +438,7 @@ void EntityDracula(Entity* self) {
             break;
 
         case 7:
-            if (UnkLoopFunc(self->ext.dracula.prim, 7) == 0) {
+            if (PrimDecreaseBrightness(self->ext.dracula.prim, 7) == 0) {
                 self->step_s++;
             }
             break;

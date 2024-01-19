@@ -62,8 +62,7 @@ segments:
       - [0x31F68, .rodata, 3DEF4]
       - [0x31FA0, .rodata, entity_relic_orb]
       - [0x31FD8, .rodata, entity_message_box]
-      - [0x31FEC, rodata]
-      - [0x3200C, rodata] # EntityStageNamePopup .rodata,
+      - [0x31FEC, .rodata, 402F4] # EntityStageNamePopup
       - [0x32020, .rodata, 44DCC] # EntityMerman2
       - [0x32044, .rodata, 48238] # EntityMerman
       - [0x3206C, .rodata, 490E8] # EntityBoneScimitar data

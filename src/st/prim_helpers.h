@@ -233,49 +233,51 @@ void UnkPolyFunc0(Primitive* prim) {
 }
 
 #if !defined(VERSION_BETA)
-s32 UnkLoopFunc(s32 arg0, u8 arg1) {
-    s32 var_v0;
-    s32 ret = 0;
-    s32 j = arg0 + 4;
-    u8* var_v1;
-    s32 i;
+s32 PrimDecreaseBrightness(Primitive* prim, u8 amount) {
+    s32 diff;
+    s32 isEnd;
+    s32 i, j;
+    u8* pColor;
 
-    for (i = 0; i < 4; i++, j += 12) {
-        var_v1 = (u8*)j;
-        do {
-            var_v0 = *var_v1 - arg1;
+    isEnd = 0;
+    pColor = &prim->r0;
+    for (i = 0; i < 4; i++, pColor += OFF(Primitive, r1) - OFF(Primitive, r0)) {
+        for (j = 0; j < 3; j++) {
+            diff = pColor[j] - amount;
 
-            if (var_v0 < 0) {
-                var_v0 = 0;
+            if (diff < 0) {
+                diff = 0;
             } else {
-                ret |= 1;
+                isEnd |= 1;
             }
 
-            *var_v1 = var_v0;
-            var_v1++;
-        } while ((s32)var_v1 < (s32)j + 3);
+            pColor[j] = diff;
+        }
     }
 
-    return ret;
+    return isEnd;
 }
+
 #else
-s32 UnkLoopFunc(Unkstruct_80128BBC* arg0, u8 value) {
-    u8 ret = 0;
+s32 PrimDecreaseBrightness(Primitive* prim, u8 amount) {
+    u8 isEnd;
     s32 i;
     s32 j;
-    Unkstruct_80128BBC_Sub* temp = arg0->unk04;
+    u8* pColor;
 
-    for (i = 0; i < 4; i++, temp++) {
+    isEnd = 0;
+    pColor = &prim->r0;
+    for (i = 0; i < 4; i++, pColor += OFF(Primitive, r1) - OFF(Primitive, r0)) {
         for (j = 0; j < 3; j++) {
-            temp->unk00[j] -= value;
+            pColor[j] -= amount;
 
-            if (temp->unk00[j] > 248) {
-                temp->unk00[j] = 0;
+            if (pColor[j] > 248) {
+                pColor[j] = 0;
             } else {
-                ret |= 1;
+                isEnd |= 1;
             }
         }
     }
-    return ret;
+    return isEnd;
 }
 #endif

@@ -97,6 +97,8 @@ segments:
       - [0x308C8, .rodata, 47048] # EntitySubWeaponContainer
       - [0x308D4, .rodata, 47958] # EntityBloodSkeleton
       - [0x308E8, rodata]
+      - [0x30900, .rodata, 48ADC] # EntityStageNamePopup
+      - [0x30934, rodata]
       - [0x30958, c]
       - [0x33FCC, c] # Slogra & Gaibon Boss
       - [0x36DE4, c]

@@ -78,7 +78,8 @@ segments:
       - [0x6F30, .rodata, D020] # EntityEquipItemDrop
       - [0x6F48, .rodata, entity_relic_orb]
       - [0x6F80, .rodata, entity_message_box]
-      - [0x6F94, rodata] # EntityStageNamePopup
+      - [0x6F94, .rodata, F420] # EntityStageNamePopup
+      - [0x6FC8, rodata]
       - [0x6FD0, c]
       - [0x73A0, c]
       - [0x81E8, c, random]

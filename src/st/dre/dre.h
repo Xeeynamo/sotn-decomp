@@ -1,6 +1,8 @@
 #include "stage.h"
 #define STAGE_DRE_H
 
+#define CASTLE_FLAG_BANK 0xD3
+
 typedef enum {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,
@@ -52,7 +54,7 @@ extern LayoutEntity* D_801802F4[];
 /* *** Initializers *** */
 extern u16 g_InitializeData0[];
 extern u16 D_8018047C[];
-extern u16 D_80180488[]; // EntityBackgroundClouds
+extern u16 g_EInitGeneric[];
 extern u16 D_80180494[];
 extern u16 D_801804A0[];
 extern u16 D_801804D0[]; // EntitySuccubus

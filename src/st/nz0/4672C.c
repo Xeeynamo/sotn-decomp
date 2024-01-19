@@ -123,7 +123,7 @@ void EntityRotateSpittlebone(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BF8);
+        InitializeEntity(g_EInitGeneric);
         self->flags &= ~0x2200;
         break;
 

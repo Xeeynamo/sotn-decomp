@@ -255,6 +255,4 @@ void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
 
 INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_80193644);
 
-INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_8019373C);
-
-INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_8019390C);
+#include "../entity_stage_name_popup.h"

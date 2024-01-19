@@ -4,6 +4,8 @@
 #include "common.h"
 #include "stage.h"
 
+#define CASTLE_FLAG_BANK 0x00
+
 // RWRP Sound IDs
 #define SE_RWRP_ENTER 0x636
 #define SE_RWRP_DEBRIS 0x644 // unused?

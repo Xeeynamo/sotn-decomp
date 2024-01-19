@@ -1,5 +1,7 @@
 #include "stage.h"
 
+#define CASTLE_FLAG_BANK 0x00
+
 // WRP Sound IDs
 #define SE_WARP_ENTER 0x636
 #define SE_WARP_DEBRIS 0x644
