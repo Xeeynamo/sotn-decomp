@@ -7,7 +7,7 @@
 #include "sel.h"
 #include "memcard.h"
 
-// void SetGameState(GameState gameState);
+void SetGameState(GameState gameState);
 
 Overlay g_StageSel = {
     /* 0x00 */ SEL_Update,
