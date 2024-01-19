@@ -3,6 +3,7 @@
 #include <game.h>
 #include <stdlib.h>
 #ifdef _MSC_VER
+#define SDL_MAIN_HANDLED
 #include <SDL.h>
 #else
 #include <SDL2/SDL.h>
@@ -700,4 +701,20 @@ void MyRenderPrimitives(void) {
         t = GetVramTexture(sp->code, sp->clut); // TODO sp->code is a bad hack
         SDL_RenderGeometry(g_Renderer, t, v, 6, NULL, 0);
     }
+}
+
+int main(int argc, char* argv[]) {
+    const char* filename;
+
+    if (argc < 2) {
+        filename = "disks/sotn.us.bin";
+    } else {
+        filename = argv[1];
+    }
+    OpenCd(filename);
+
+    if (InitGame()) {
+        MainGame();
+    }
+    ResetGame();
 }

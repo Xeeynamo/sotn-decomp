@@ -99,6 +99,7 @@ void InitPalEquipIcons(FILE* f);
 void InitVbVh(void);
 bool InitSfxData(const char* content);
 bool InitXaData(const char* content);
+
 bool InitGame(void) {
     if (!InitPlatform()) {
         return false;
@@ -195,8 +196,8 @@ bool InitGame(void) {
     g_Vram.D_800ACDA8.w = 0x0100;
     g_Vram.D_800ACDA8.h = 0x0010;
 
-    FileRead("assets/dra/g_GfxEquipIcon.bin", InitGfxEquipIcons);
-    FileRead("assets/dra/g_PalEquipIcon.bin", InitPalEquipIcons);
+    FileRead(InitGfxEquipIcons, "assets/dra/g_GfxEquipIcon.bin");
+    FileRead(InitPalEquipIcons, "assets/dra/g_PalEquipIcon.bin");
     InitVbVh();
 
     if (!FileStringify(InitSfxData, "assets/dra/sfx.json")) {

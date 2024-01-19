@@ -24,12 +24,10 @@ endif()
 find_package(SDL2 REQUIRED)
 
 set(SOURCE_FILES_PC
-    src/pc/main.c
     src/pc/log.c
     src/pc/stubs.c
     src/pc/sotn.c
     src/pc/pc.c
-    src/pc/sdl2.c
     src/pc/sim_pc.c
     src/pc/stage_dummy.c
 )
@@ -101,7 +99,16 @@ set(SOURCE_FILES_STAGE_SEL
     src/st/sel/3642C.c
 )
 
-add_executable(${PROJECT_NAME} 
+# organization is:
+# two executables, sdl2 and null, plus a shared library "core"
+# any executable links core (which is pc shared code + sotn psx code)
+# the null backend is present to try and help with developing a backend-agnostic interface
+# and for a basic "does it segfault" check in CI
+
+# core library
+
+set(SOURCE_FILES_CORE
+    ${SOURCE_FILES_DRA}
     ${SOURCE_FILES_PC}
     ${SOURCE_FILES_PSX_SDK}
     ${SOURCE_FILES_MOCK_SDK}
@@ -110,7 +117,30 @@ add_executable(${PROJECT_NAME}
     ${SOURCE_FILES_STAGE_SEL}
 )
 
-target_include_directories(${PROJECT_NAME} PRIVATE 
+add_library(core ${SOURCE_FILES_CORE})
+
+target_include_directories(core PRIVATE
+    include
+    src/dra
+    src/pc/3rd
+    )
+
+target_compile_definitions(core PRIVATE 
+    VERSION_PC
+    PERMUTER
+    NON_MATCHING
+    HARD_LINK
+    DEMO_KEY_PTR=0
+    _internal_version_us
+    )
+
+# sdl2 target
+
+add_executable(${PROJECT_NAME}
+    src/pc/sdl2.c
+    )
+
+target_include_directories(${PROJECT_NAME} PRIVATE
     ${SDL2_INCLUDE_DIRS}
     include
     src/dra
@@ -119,9 +149,35 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 
 target_link_libraries(${PROJECT_NAME} PRIVATE 
     ${SDL2_LIBRARIES}
+    core
     )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE 
+    VERSION_PC
+    PERMUTER
+    NON_MATCHING
+    HARD_LINK
+    DEMO_KEY_PTR=0
+    _internal_version_us
+    )
+
+# null target
+
+add_executable(${PROJECT_NAME}_null
+    src/pc/null.c
+    )
+
+target_include_directories(${PROJECT_NAME}_null PRIVATE
+    include
+    src/dra
+    src/pc/3rd
+    )
+
+target_link_libraries(${PROJECT_NAME}_null PRIVATE 
+    core
+    )
+
+target_compile_definitions(${PROJECT_NAME}_null PRIVATE 
     VERSION_PC
     PERMUTER
     NON_MATCHING
