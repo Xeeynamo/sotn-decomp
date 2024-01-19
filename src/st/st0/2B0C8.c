@@ -368,8 +368,8 @@ void EntityStageTitleCard(Entity* self) {
             v++;
         }
 
-        UnkLoopFunc(prim, 4);
-        if (UnkLoopFunc(prim->next, 3) == 0) {
+        PrimDecreaseBrightness(prim, 4);
+        if (PrimDecreaseBrightness(prim->next, 3) == 0) {
             PreventEntityFromRespawning(fakeEntity);
             D_8003C8B8 = 1;
             DestroyEntity(fakeEntity);

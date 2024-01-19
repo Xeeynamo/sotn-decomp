@@ -23,6 +23,7 @@
 
 #define LEN(x) ((s32)(sizeof(x) / sizeof(*(x))))
 #define LENU(x) ((u32)(sizeof(x) / sizeof(*(x))))
+#define OFF(type, field) ((size_t)(&((type*)0)->field))
 #define STRCPY(dst, src) __builtin_memcpy(dst, src, sizeof(src))
 
 #ifdef _MSC_VER

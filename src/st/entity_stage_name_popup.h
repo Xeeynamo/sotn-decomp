@@ -4,7 +4,7 @@
 #define CASTLE_FLAG_BANK 0
 #endif
 
-s32 UnkLoopFunc(Primitive* prim, u8 arg1);
+s32 PrimDecreaseBrightness(Primitive* prim, u8 arg1);
 void StageNamePopupHelper(Primitive* prim) {
     u8 xPos;
     s32 i;
@@ -41,7 +41,7 @@ void StageNamePopupHelper(Primitive* prim) {
         prim->x2 = prim->x0 = prim->x0 + xPos;
         prim->x1 = prim->x1 + xPos;
         prim->x3 = prim->x0;
-        UnkLoopFunc(prim, 4);
+        PrimDecreaseBrightness(prim, 4);
         break;
     case 2:
         if (prim->p2 < 0x14) {
@@ -51,7 +51,7 @@ void StageNamePopupHelper(Primitive* prim) {
         prim->x2 = prim->x0 = prim->x0 - xPos;
         prim->x1 = prim->x1 - xPos;
         prim->x3 = prim->x0;
-        UnkLoopFunc(prim, 4);
+        PrimDecreaseBrightness(prim, 4);
         break;
     }
 }

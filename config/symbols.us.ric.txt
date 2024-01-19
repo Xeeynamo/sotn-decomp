@@ -9,4 +9,5 @@ RichterHandleDamage = 0x80159CE4;
 SetPlayerStep = 0x8015C908;
 SetSpeedX = 0x8015CA84;
 CreateEntFactoryFromEntity = 0x801606BC;
+RicPrimDecreaseBrightness = 0x8016C6C4;
 g_DebugWaitInfoTimer = 0x80174F7C;
