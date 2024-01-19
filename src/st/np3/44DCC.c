@@ -1262,7 +1262,7 @@ void EntityMermanWaterSplash(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180A6C);
+        InitializeEntity(g_EInitGeneric);
         break;
 
     case 1:

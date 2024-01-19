@@ -245,7 +245,7 @@ void EntityCastleDoor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180A6C);
+        InitializeEntity(g_EInitGeneric);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -424,7 +424,7 @@ void EntityTransparentWater(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180A6C);
+        InitializeEntity(g_EInitGeneric);
         self->ext.transparentWater.unk80 = 4;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
         if (primIndex == -1) {
@@ -973,7 +973,7 @@ void EntityMermanRockLeftSide(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180A6C);
+        InitializeEntity(g_EInitGeneric);
         self->hitboxState = 2;
         self->hitboxWidth = 16;
         self->hitboxHeight = 24;
@@ -1072,7 +1072,7 @@ void EntityMermanRockRightSide(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180A6C);
+        InitializeEntity(g_EInitGeneric);
         self->hitboxState = 2;
         self->hitboxWidth = 16;
         self->hitboxHeight = 24;
@@ -1162,7 +1162,7 @@ void func_801B5488(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180A6C);
+        InitializeEntity(g_EInitGeneric);
         if (g_CastleFlags[58] != 0) {
             self->step = 2;
         }
@@ -1265,7 +1265,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180A6C);
+        InitializeEntity(g_EInitGeneric);
         self->hitboxWidth = 8;
         self->hitboxHeight = 8;
         self->posX.i.hi = 1432 - g_Tilemap.cameraX.i.hi;
@@ -1614,7 +1614,7 @@ void EntityUnkId49(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180A6C);
+        InitializeEntity(g_EInitGeneric);
         break;
     case 1:
         temp = g_Tilemap.fg[0x12 / 2];

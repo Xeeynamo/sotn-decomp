@@ -1,5 +1,7 @@
 #include "stage.h"
 
+#define CASTLE_FLAG_BANK 0x34
+
 typedef enum {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,
@@ -67,7 +69,7 @@ extern u16 g_InitializeEntityData0[];
 extern LayoutEntity* g_pStObjLayout[];
 extern LayoutEntity* D_801807FC[];
 extern u16 D_80180A60[];
-extern u16 D_80180A6C[];
+extern u16 g_EInitGeneric[];
 extern u16 D_80180A78[];
 extern u16 D_80180A84[];
 extern u16 D_80180A90[];
