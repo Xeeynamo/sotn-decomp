@@ -147,6 +147,7 @@ void func_8015CCC8(s32 arg0, s32 velocityX) {
     }
 }
 
+// Corresponding DRA function is func_8010E570 (much more complex)
 void func_8015CD98(s32 velocityX) {
     PLAYER.velocityX = velocityX;
     PLAYER.velocityY = 0;
