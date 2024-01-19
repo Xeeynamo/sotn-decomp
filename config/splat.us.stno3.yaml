@@ -67,7 +67,8 @@ segments:
       - [0x37600, .rodata, 46684] # EntityEquipItemDrop
       - [0x37618, .rodata, entity_relic_orb]
       - [0x37650, .rodata, entity_message_box]
-      - [0x37664, rodata]
+      - [0x37664, .rodata, 48A84] # EntityStageNamePopup
+      - [0x37698, rodata]
       - [0x376E8, rodata]
       - [0x377A4, .rodata, 56264] # EntityBat
       - [0x377B8, .rodata, 564B0] # EntityZombie
