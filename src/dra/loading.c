@@ -1,9 +1,126 @@
 #include "dra.h"
 
-u32 D_800A0240[] = {0x01800340, 0x00400040};
+RECT D_800A0240 = {0x0340, 0x0180, 64, 64};
+void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, s32 isDone) {
+    Primitive* prim;
+    s32 i;
+    s16 posX;
+    s16 posY;
+    s16 angle;
+    s16 verticalWave;
+    s16 horizontalWave;
+    s16 baseY;
+    s16 sx;
+    s16 sy;
+    s16 ex;
+    s16 ey;
 
-void func_800E5D30(void* arg0, u16 arg1, u16 arg2, s32 arg3);
-INCLUDE_ASM("dra/nonmatchings/loading", func_800E5D30);
+    switch (self->step) {
+    case 0:
+        self->primIndex = AllocPrimitives(PRIM_GT4, NOW_LOADING_PRIM_COUNT + 1);
+        if (self->primIndex == -1) {
+            return;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < NOW_LOADING_PRIM_COUNT; i++) {
+            self->waveTable[i] = i << 8;
+            prim->u0 = (i * NOW_LOADING_PRIM_COUNT / 2) - 128;
+            prim->v0 = prim->v1 = 232;
+            prim->v2 = prim->v3 = 255;
+            prim->u1 = (i + 1) * NOW_LOADING_PRIM_COUNT / 2 - 128;
+            if (i == 15) {
+                prim->u1 = 255;
+            }
+            prim->tpage = 0x1A;
+            prim->clut = 0x19F;
+            prim->priority = 0x1FE;
+            prim->blendMode = 0x31;
+            prim->u2 = prim->u0;
+            prim->u3 = prim->u1;
+            prim = prim->next;
+        }
+        prim->v0 = prim->v1 = 128;
+        prim->v2 = prim->v3 = 191;
+        prim->u3 = prim->u1 = 127;
+        prim->y0 = prim->y1 = 160;
+        prim->y2 = prim->y3 = 223;
+        prim->x2 = prim->x0 = 112;
+        prim->x3 = prim->x1 = 239;
+        prim->tpage = 0x9D;
+        prim->clut = 0x1D0;
+        prim->priority = 0x1FE;
+        prim->u2 = prim->u0 = 0;
+        prim->blendMode = 0;
+        self->verticalWave = 4;
+        self->horizontalWave = 4;
+        self->x = x;
+        self->y = y;
+        self->unkC = 0;
+        self->unk12 = 0;
+        self->speed = 32;
+        self->step++;
+        break;
+    case 1:
+        if (isDone) {
+            FreePrimitives(self->primIndex);
+            self->step = 0;
+            ClearImage(&D_800A0240, 0, 0, 0);
+            return;
+        }
+        if (g_pads->pressed & PAD_UP) {
+            self->verticalWave++;
+            if (self->verticalWave > 0x40) {
+                self->verticalWave = 0x40;
+            }
+        }
+        if (g_pads->pressed & PAD_DOWN) {
+            self->verticalWave--;
+            if (self->verticalWave < -0x40) {
+                self->verticalWave = -0x40;
+            }
+        }
+        if (g_pads->pressed & PAD_RIGHT) {
+            self->horizontalWave++;
+            if (self->horizontalWave > 0x40) {
+                self->horizontalWave = 0x40;
+            }
+        }
+        if (g_pads->pressed & PAD_LEFT) {
+            self->horizontalWave--;
+            if (self->horizontalWave < -0x40) {
+                self->horizontalWave = -0x40;
+            }
+        }
+        break;
+    case 2:
+        break;
+    }
+
+    posX = self->x;
+    posY = self->y;
+    verticalWave = self->verticalWave;
+    horizontalWave = self->horizontalWave;
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < NOW_LOADING_PRIM_COUNT; i++) {
+        angle = self->waveTable[i];
+        sy = -(rsin(angle) >> 5) * verticalWave / 256;
+        sx = (rcos(angle) >> 5) * horizontalWave / 256;
+        angle = self->waveTable[(i + 1) % NOW_LOADING_PRIM_COUNT];
+        ey = -(rsin(angle) >> 5) * verticalWave / 256;
+        ex = (rcos(angle) >> 5) * horizontalWave / 256;
+        prim->y0 = posY + sy;
+        prim->y1 = posY + ey;
+        baseY = 0x18;
+        prim->y2 = posY + (sy + baseY);
+        prim->y3 = posY + (ey + baseY);
+        prim->x0 = sx + (posX + prim->u0) - 0x80;
+        prim->x1 = ex + (posX + prim->u1) - 0x80;
+        prim->x2 = sx + (posX + prim->u2) - 0x80;
+        prim->x3 = ex + (posX + prim->u3) - 0x80;
+        self->waveTable[i] += self->speed;
+        prim = prim->next;
+    }
+}
 
 void func_800E6218(s32 arg0) {
     if (g_Servant != 0) {
@@ -40,11 +157,11 @@ void HandleNowLoading(void) {
     void (*pfnWeapon)(u8);
     s8 var_a0;
     s32 var_s0;
-    s32* var_s1;
+    NowLoadingModel* nowLoadingModel;
 
-    var_s1 = D_80136414;
+    nowLoadingModel = &g_NowLoadingModel;
     if (g_GameStep >= 3 && g_GameStep < 16) {
-        func_800E5D30(var_s1, 0x40, 0x70, 0);
+        AnimateNowLoading(nowLoadingModel, 64, 112, false);
     }
     switch (g_GameStep) {
     case 0:
@@ -164,8 +281,8 @@ void HandleNowLoading(void) {
                 }
             }
         }
-        var_s1[0] = 0;
-        func_800E5D30(var_s1, 0x40, 0x70, 0);
+        nowLoadingModel->step = 0;
+        AnimateNowLoading(nowLoadingModel, 64, 112, false);
         g_GameStep++;
         break;
     case 3:
@@ -361,7 +478,7 @@ void HandleNowLoading(void) {
         g_GameStep++;
         break;
     case 16:
-        func_800E5D30(var_s1, 0x40, 0x70, 1);
+        AnimateNowLoading(nowLoadingModel, 64, 112, true);
         if (((s32)g_StageId) >= STAGE_RNZ1_DEMO) {
             D_8006C374 = g_StagesLba[g_StageId].unk28;
         } else {

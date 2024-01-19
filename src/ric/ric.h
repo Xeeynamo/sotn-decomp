@@ -142,7 +142,7 @@ void func_801601DC(Entity* self);
 void func_8015FEA8(Entity* self);
 void StopwatchCrashDoneSparkle(Entity* self);
 void func_80170548(Entity* self);
-void func_80166060(Entity* self);
+void EntityTeleport(Entity* self);
 
 extern s32 func_8016840C(s16 x, s16 y);
 
@@ -248,6 +248,7 @@ extern s16 D_80155E68[];
 extern AnimationFrame* D_80155EA8;
 extern s16 D_80155EF0[];
 extern SVECTOR* D_8015607C[][4];
+extern s8 D_80156A28;
 extern u8 D_8015635C[][5];
 extern s8 D_80156904;
 extern SVECTOR D_80156C50;
@@ -263,6 +264,7 @@ extern u8 D_80174FB4;
 extern u8 D_80174FB8;
 extern s16_pair D_80174FBC[];
 extern s32 D_80174FFC;
+extern s16_pair D_80175000[32];
 extern s32 D_80175080;
 extern s16_pair D_80175894[];
 extern s32 D_801758AC;

@@ -236,7 +236,7 @@ s32 D_801362D0[1];
 s32 D_800987B4;
 u8 g_PadsRepeatTimer[BUTTON_COUNT * PAD_COUNT];
 s32 D_80136410;
-s32 D_80136414[1];
+NowLoadingModel g_NowLoadingModel;
 ItemTypes D_801375CC;
 s32 D_801375D0;
 s32 D_801375D4;
@@ -616,10 +616,6 @@ void UpdateCd(void) { NOT_IMPLEMENTED; }
 int CdInit(void) {
     NOT_IMPLEMENTED;
     return 0;
-}
-
-void func_800E5D30(void* arg0, u16 arg1, u16 arg2, s32 arg3) {
-    NOT_IMPLEMENTED;
 }
 
 void func_801083BC(void) { NOT_IMPLEMENTED; }

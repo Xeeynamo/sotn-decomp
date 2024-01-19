@@ -286,6 +286,20 @@ typedef struct {
     RECT D_800ACDF0;
 } Vram;
 
+#define NOW_LOADING_PRIM_COUNT 16
+typedef struct {
+    /* 0x00 */ s32 step;
+    /* 0x04 */ s32 primIndex;
+    /* 0x08 */ s16 x;
+    /* 0x0A */ s16 y;
+    /* 0x0C */ s16 unkC; // unused
+    /* 0x0E */ s16 verticalWave;
+    /* 0x10 */ s16 horizontalWave;
+    /* 0x12 */ u16 unk12; // unused
+    /* 0x14 */ u16 speed;
+    /* 0x16 */ s16 waveTable[NOW_LOADING_PRIM_COUNT];
+} NowLoadingModel; // size=0x36
+
 typedef struct {
     /* 8013761C */ MenuContext menus[NUM_MENU]; // 761C, 763A, 7658, 7676
 } MenuData;
@@ -501,7 +515,7 @@ extern s32 g_DebugRecordVideoFid;
 extern s16 D_80136308[];
 extern s32 D_8013640C;
 extern s32 D_80136410;
-extern s32 D_80136414[];
+extern NowLoadingModel g_NowLoadingModel;
 extern SimFile* g_SimFile;
 extern SimFile D_80136450;
 extern s16 D_80136460[];
@@ -660,6 +674,7 @@ extern u8 D_80138048;
 extern s16_pair D_8013804C[];
 extern s32 D_8013808C;
 extern Unkstruct_80138094 D_80138094[];
+extern s16_pair D_8013839C[];
 extern s32 D_8013841C;
 extern s32 D_8013842C;
 extern s32 D_80138430;
