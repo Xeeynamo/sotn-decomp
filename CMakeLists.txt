@@ -89,7 +89,6 @@ set(SOURCE_FILES_DRA
 )
 
 set(SOURCE_FILES_STAGE_SEL
-    src/pc/stage_sel.c
     src/st/sel/banks.c
     src/st/sel/CD54.c
     src/st/sel/2C048.c
@@ -114,10 +113,28 @@ set(SOURCE_FILES_CORE
     ${SOURCE_FILES_MOCK_SDK}
     ${SOURCE_FILES_3RD}
     ${SOURCE_FILES_DRA}
-    ${SOURCE_FILES_STAGE_SEL}
+    src/pc/stage_sel.c
 )
 
-add_library(core ${SOURCE_FILES_CORE})
+    
+add_library(sel SHARED ${SOURCE_FILES_STAGE_SEL})
+target_include_directories(sel PRIVATE
+    include
+    src/dra
+    )
+target_compile_definitions(sel PRIVATE 
+    VERSION_PC
+    PERMUTER
+    NON_MATCHING
+    DEMO_KEY_PTR=0
+    _internal_version_us
+    )
+target_link_libraries(sel PRIVATE 
+    core
+    )
+
+
+add_library(core SHARED ${SOURCE_FILES_CORE})
 
 target_include_directories(core PRIVATE
     include
@@ -129,7 +146,6 @@ target_compile_definitions(core PRIVATE
     VERSION_PC
     PERMUTER
     NON_MATCHING
-    HARD_LINK
     DEMO_KEY_PTR=0
     _internal_version_us
     )
@@ -156,7 +172,6 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
     VERSION_PC
     PERMUTER
     NON_MATCHING
-    HARD_LINK
     DEMO_KEY_PTR=0
     _internal_version_us
     )

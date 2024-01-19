@@ -86,8 +86,8 @@ void MyDrawSyncCallback(int mode) {
     g_Frame++;
 }
 
-// called before MainGame
-bool InitPlatform(void);
+bool (*InitPlatform)();
+
 void InitStrings(void);
 bool InitEquipDefs(const char* jsonContent);
 bool InitAccessoryDefs(const char* jsonContent);
@@ -211,10 +211,12 @@ bool InitGame(void) {
     return true;
 }
 
-void ResetPlatform(void);
+
+void (*ResetPlatform)(void);
+
 void ResetGame(void) { ResetPlatform(); }
 
-MyRenderPrimitives();
+void (*MyRenderPrimitives)(void);
 void RenderPrimitives(void) {
     DEBUGF("dr  :%03x, gt4 :%03x", g_GpuUsage.drawModes, g_GpuUsage.gt4);
     DEBUGF("g4  :%03x, gt3 :%03x", g_GpuUsage.g4, g_GpuUsage.gt3);

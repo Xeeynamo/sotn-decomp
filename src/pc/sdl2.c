@@ -29,8 +29,18 @@ static SDL_Texture* g_VramTex = NULL;
 static int g_LastVramTexTpage = -1;
 static int g_LastVramTexClut = -1;
 
-void ResetPlatform(void);
-bool InitPlatform() {
+extern bool (*InitPlatform)();
+extern void (*ResetPlatform)(void);
+extern void (*MyRenderPrimitives)(void);
+extern void (*MyPadInit)(int mode);
+extern u_long (*MyPadRead)(int id);
+extern int (*MyDrawSync)(int mode);
+extern DISPENV* (*MyPutDispEnv)(DISPENV* env);
+extern void (*MySetDrawMode)(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw);
+extern int (*MyResetGraph)(int mode);
+extern void (*MySsInitHot)();
+
+bool SdlInitPlatform() {
     atexit(ResetPlatform);
 
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
@@ -67,7 +77,7 @@ bool InitPlatform() {
     return true;
 }
 
-void ResetPlatform(void) {
+void SdlResetPlatform(void) {
     g_Tpage = 0;
     g_LastVramTexTpage = -1;
     g_LastVramTexClut = -1;
@@ -89,14 +99,14 @@ void ResetPlatform(void) {
     SDL_Quit();
 }
 
-int MyResetGraph(int arg0) { return 0; }
+int SdlMyResetGraph(int arg0) { return 0; }
 
 void MyAudioCallback(void* data, Uint8* buffer, int length);
 void SDLAudioCallback(void* data, Uint8* buffer, int length) {
     MyAudioCallback(data, buffer, length);
 }
 
-void MySsInitHot(void) {
+void SdlMySsInitHot(void) {
     SDL_AudioSpec specs = {0};
     specs.freq = 44100;
     specs.format = AUDIO_S16;
@@ -115,9 +125,9 @@ void MySsInitHot(void) {
     SDL_PauseAudioDevice(g_SdlAudioDevice, 0);
 }
 
-void MyPadInit(int mode) { INFOF("use keyboard"); }
+void SdlMyPadInit(int mode) { INFOF("use keyboard"); }
 
-u_long MyPadRead(int id) {
+u_long SdlMyPadRead(int id) {
     const u8* keyb = SDL_GetKeyboardState(NULL);
     u_long pressed = 0;
 
@@ -284,7 +294,7 @@ void ShowVram4bpp(void) {
 }
 
 void MyDrawSyncCallback();
-int MyDrawSync(int mode) {
+int SdlMyDrawSync(int mode) {
     switch (g_DebugSdl) {
     case DEBUG_SDL_SHOW_VRAM_16bpp:
         ShowVram16bpp();
@@ -321,7 +331,7 @@ int MyDrawSync(int mode) {
 
 int g_WndWidth = -1;
 int g_WndHeight = -1;
-DISPENV* MyPutDispEnv(DISPENV* env) {
+DISPENV* SdlMyPutDispEnv(DISPENV* env) {
     int w = env->disp.w * SCREEN_SCALE;
     int h = env->disp.h * SCREEN_SCALE;
     if (g_WndWidth == w && g_WndHeight == h) {
@@ -334,7 +344,7 @@ DISPENV* MyPutDispEnv(DISPENV* env) {
     return env;
 }
 
-void MySetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw) {
+void SdlMySetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw) {
     g_Tpage = tpage;
 }
 
@@ -622,7 +632,7 @@ void SetSdlVertexPrimSprt(SDL_Vertex* v, Primitive* prim) {
     v[5] = v[2];
 }
 
-void MyRenderPrimitives(void) {
+void SdlMyRenderPrimitives(void) {
     SDL_Vertex v[6];
     SDL_Texture* t = NULL;
 
@@ -705,6 +715,16 @@ void MyRenderPrimitives(void) {
 
 int main(int argc, char* argv[]) {
     const char* filename;
+
+    InitPlatform = SdlInitPlatform;
+    ResetPlatform = SdlResetPlatform;
+    MyRenderPrimitives = SdlMyRenderPrimitives;
+    MyPadInit = SdlMyPadInit;
+    MyPadRead = SdlMyPadRead;
+    MyDrawSync = SdlMyDrawSync;
+    MyPutDispEnv = SdlMyPutDispEnv;
+    MyResetGraph = SdlMyResetGraph;
+    MySsInitHot = SdlMySsInitHot;
 
     if (argc < 2) {
         filename = "disks/sotn.us.bin";

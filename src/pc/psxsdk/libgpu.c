@@ -38,22 +38,25 @@ int StoreImage(RECT* rect, u_long* p) { return MyStoreImage(rect, p); }
 
 int MoveImage(RECT* rect, int x, int y) { NOT_IMPLEMENTED; }
 
-int MyDrawSync(int mode);
+int (*MyDrawSync)(int mode);
+
 int DrawSync(int mode) { return MyDrawSync(mode); }
 
 DRAWENV* PutDrawEnv(DRAWENV* env) { NOT_IMPLEMENTED; }
 
-DISPENV* MyPutDispEnv(DISPENV* env);
+DISPENV* (*MyPutDispEnv)(DISPENV* env);
 DISPENV* PutDispEnv(DISPENV* env) { MyPutDispEnv(env); }
 
 void DrawOTag(u_long* p) { NOT_IMPLEMENTED; }
 
-void MySetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw);
+void (*MySetDrawMode)(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw);
+
 void SetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw) {
     MySetDrawMode(p, dfe, dtd, tpage, tw);
 }
 
-int MyResetGraph(int mode);
+int (*MyResetGraph)(int mode);
+
 int ResetGraph(int mode) { return MyResetGraph(mode); }
 
 int SetGraphDebug(int level) { NOT_IMPLEMENTED; }

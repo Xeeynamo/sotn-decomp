@@ -107,20 +107,36 @@ s32 D_801D6B0C;
 char g_InputSaveName[12];
 s32 D_801D6B24;
 
-extern Overlay g_StageSel;
+Overlay g_StageSel;
 
 s32 LoadFileSim(s32 fileId, s32 type);
 
 static bool g_WereStringsInitialised = false;
+
+#include <dlfcn.h>
+
 void InitStageSel(Overlay* o) {
+    void *handle = dlopen("cmake_build/libsel.dylib", RTLD_NOW);
+    if (!handle) {
+        fprintf(stderr, "Error loading libsel: %s\n", dlerror());
+        exit(1);
+    }
+
+    g_StageSel = *(Overlay *)dlsym(handle, "g_StageSel");
+
     memcpy(o, &g_StageSel, sizeof(Overlay));
+
+    StageName *D_80180128 = (StageName *)dlsym(handle, "D_80180128");
+
+    char ** D_801803A8  = (const char *)dlsym(handle, "D_801803A8");
+
     if (!g_WereStringsInitialised) {
         g_WereStringsInitialised = true;
-        for (int i = 0; i < LEN(D_80180128); i++) {
+        for (int i = 0; i < 80; i++) {
             D_80180128[i].line1 = AnsiToSotnMenuString(D_80180128[i].line1);
             D_80180128[i].line2 = AnsiToSotnMenuString(D_80180128[i].line2);
         }
-        for (int i = 0; i < LEN(D_801803A8); i++) {
+        for (int i = 0; i < 1; i++) {
             D_801803A8[i] = AnsiToSotnMenuString(D_801803A8[i]);
         }
     }

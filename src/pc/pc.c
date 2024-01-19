@@ -52,3 +52,4 @@ u_long* MyFntFlush(int id) {
     fflush(stderr);
     return 0;
 }
+

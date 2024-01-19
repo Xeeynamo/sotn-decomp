@@ -2,10 +2,10 @@
 #include <psxsdk/libetc.h>
 #include <log.h>
 
-void MyPadInit(int mode);
+void (*MyPadInit)(int mode);
 void PadInit(int mode) { MyPadInit(mode); }
 
-u_long MyPadRead(int id);
+u_long (*MyPadRead)(int id);
 u_long PadRead(int id) { return MyPadRead(id); }
 
 int MyVSyncCallback(void (*f)());
