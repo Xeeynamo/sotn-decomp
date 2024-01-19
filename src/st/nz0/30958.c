@@ -150,7 +150,7 @@ void EntityPurpleBrickScrollingBackground(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BF8);
+        InitializeEntity(g_EInitGeneric);
         self->posX.i.hi = 0;
         self->posY.i.hi = 0;
         self->unk68 = 0x80;
@@ -210,7 +210,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
 
     switch (self->step) {
     case LEFT_SECRET_ROOM_WALL_INIT:
-        InitializeEntity(D_80180BF8);
+        InitializeEntity(g_EInitGeneric);
         self->hitboxWidth = 16;
         self->hitboxHeight = 32;
         self->hitboxState = 2;
@@ -290,7 +290,7 @@ void EntityBottomSecretRoomFloor(
 
     switch (self->step) {
     case BOTTOM_SECRET_ROOM_FLOOR_INIT:
-        InitializeEntity(D_80180BF8);
+        InitializeEntity(g_EInitGeneric);
         self->hitboxWidth = 16;
         self->hitboxHeight = 16;
         self->hitboxState = 2;
@@ -434,7 +434,7 @@ void func_801B1C18(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BF8);
+        InitializeEntity(g_EInitGeneric);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -495,7 +495,7 @@ void func_801B1E54(Entity* self, s16 primIndex) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BF8);
+        InitializeEntity(g_EInitGeneric);
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
         self->attackElement = 1;
@@ -574,7 +574,7 @@ void EntityMoveableBox(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BF8);
+        InitializeEntity(g_EInitGeneric);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -660,7 +660,7 @@ void EntityCannonLever(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BF8);
+        InitializeEntity(g_EInitGeneric);
         self->hitboxWidth = 4;
         self->hitboxHeight = 20;
         self->hitboxState = 2;
@@ -736,7 +736,7 @@ void EntityCannon(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BF8);
+        InitializeEntity(g_EInitGeneric);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -824,7 +824,7 @@ void EntityCannonShot(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BF8);
+        InitializeEntity(g_EInitGeneric);
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = 1;
         self->palette = 0x81AF;
@@ -855,7 +855,7 @@ void EntityCannonWall(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BF8);
+        InitializeEntity(g_EInitGeneric);
 
         cond = g_CastleFlags[131] != 0;
         tileLayoutPtr = (-cond & 6) + &D_80180ED4[0];
@@ -897,7 +897,7 @@ void func_801B2AD8(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BF8);
+        InitializeEntity(g_EInitGeneric);
         self->hitboxHeight = 8;
         self->hitboxOffY = -22;
         self->hitboxWidth = 6;
@@ -966,7 +966,7 @@ void EntityElevator2(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BF8);
+        InitializeEntity(g_EInitGeneric);
         self->hitboxOffX = 0;
         self->hitboxOffY = 68;
         g_CallElevator = false;
@@ -1050,7 +1050,7 @@ void func_801B2FD8(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BF8);
+        InitializeEntity(g_EInitGeneric);
         self->ext.generic.unk80.modeS32 =
             self->posY.i.hi + g_Tilemap.cameraY.i.hi;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
@@ -1132,7 +1132,7 @@ void EntityFloorSpikes(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BF8);
+        InitializeEntity(g_EInitGeneric);
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
         self->attackElement = 1;
