@@ -193,7 +193,7 @@ segments:
       - [0x41D84, rodata] # EntityPlayerPinkEffect
       - [0x41DA4, rodata] # EntityPlayerDissolves
       - [0x41DBC, rodata] # EntityMist
-      - [0x41DD4, rodata] # EntityTeleport
+      - [0x41DD4, .rodata, 843B0] # EntityTeleport
       - [0x41E34, rodata] # EntitySubwpnCrashCross
       - [0x41E48, rodata]
       - [0x41E5C, .rodata, 86ECC] # EntityHellfireHandler
@@ -239,6 +239,7 @@ segments:
       - [0x75F54, c, 75F54]
       - [0x7A4D0, c, 7A4D0]
       - [0x7E4BC, c, 7E4BC]
+      - [0x843B0, c, 843B0]
       - [0x86ECC, c, 86ECC]
       - [0x8D3E8, c, 8D3E8]
       - [0x91EBC, c, 91EBC]

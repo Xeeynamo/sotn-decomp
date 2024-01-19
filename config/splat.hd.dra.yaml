@@ -181,7 +181,7 @@ segments:
       - [0x41CA0, rodata] # jtbl_800E1CA0
       - [0x41CC0, rodata] # jtbl_800E1CC0
       - [0x41CD8, rodata] # jtbl_800E1CD8
-      - [0x41CF0, rodata] # jtbl_800E1CF0
+      - [0x41CF0, .rodata, 843B0] # EntityTeleport
       - [0x41D50, rodata] # jtbl_800E1D50
       - [0x41D64, rodata]
       - [0x41D78, .rodata, 86ECC] # jtbl_800E1D78
@@ -228,6 +228,7 @@ segments:
       - [0x75C44, c, 75F54]
       - [0x7A1C8, c, 7A4D0]
       - [0x7E168, c, 7E4BC]
+      - [0x8403C, c, 843B0]
       - [0x86B58, c, 86ECC]
       - [0x8D050, c, 8D3E8]
       - [0x91A98, c, 91EBC]

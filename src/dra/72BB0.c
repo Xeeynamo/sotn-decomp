@@ -1222,6 +1222,7 @@ void func_80115C50(void) {
     }
 }
 
+// Corresponding RIC function is func_8015BCD0
 void func_80115DA0(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
