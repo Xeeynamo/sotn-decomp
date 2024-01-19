@@ -752,8 +752,11 @@ void func_800E38CC(void) {
 }
 
 #if defined(VERSION_PC)
-#define IS_QUIT_REQUESTED g_IsQuitRequested
+#define IS_QUIT_REQUESTED                                                      \
+    (g_IsQuitRequested || (g_TimedExit && g_Timer >= g_TimeLimit))
 extern bool g_IsQuitRequested;
+extern bool g_TimedExit;
+extern int g_TimeLimit;
 #else
 #define IS_QUIT_REQUESTED (false)
 #endif

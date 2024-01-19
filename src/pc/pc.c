@@ -4,7 +4,9 @@
 #include <log.h>
 #include "psxsdk/cdc.h"
 
-bool g_IsQuitRequested; // controls whenever MainGame should quit
+bool g_IsQuitRequested;   // controls whenever MainGame should quit
+bool g_TimedExit = false; // should we exit after some time?
+int g_TimeLimit = 0;      // number of frames before exiting
 
 FILE* cd_fp = NULL;
 void OpenCd(char* filename) {

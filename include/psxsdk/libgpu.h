@@ -1,6 +1,5 @@
 #ifndef LIBGPU_H
 #define LIBGPU_H
-#include <types.h>
 
 /*
  *	Set Primitive Attributes
