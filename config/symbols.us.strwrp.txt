@@ -43,3 +43,5 @@ EntityEnemyBlood = 0x80194924;
 BottomCornerText = 0x80194EC0;
 UnkLoopFunc = 0x801959BC;
 g_ItemIconSlots = 0x801966A8;
+EntityStageNamePopup = 0x8019390C;
+g_EInitGeneric = 0x80180470;
