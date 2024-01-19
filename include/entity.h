@@ -135,6 +135,16 @@ typedef struct {
 } ET_RelicOrb;
 
 typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s32 unk80;
+    /* 0x84 */ struct Primitive* unk84;
+    /* 0x88 */ struct Primitive* unk88;
+    /* 0x88 */ struct Primitive* unk8C;
+    /* 0x90 */ s16 unk90;
+    /* 0x92 */ s16 unk92;
+} ET_StagePopup;
+
+typedef struct {
     /* 0x7C */ u8* label;
     /* 0x80 */ u16 width;
     /* 0x82 */ u16 height;
@@ -724,6 +734,7 @@ typedef union {
     /* 0x7C */ ET_GiantSpinningCross giantcross;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
     /* 0x7C */ ET_RelicOrb relicOrb;
+    /* 0x7C */ ET_StagePopup stpopup;
     /* 0x7C */ ET_MessageBox messageBox;
     /* 0x7C */ ET_Weapon weapon;
     /* 0x7C */ ET_Weapon29 weapon29;
