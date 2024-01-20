@@ -733,7 +733,7 @@ void func_80114DF4(s32 arg0) { NOT_IMPLEMENTED; }
 
 void func_80116208(void) { NOT_IMPLEMENTED; }
 
-void func_80115394(s32*, s16, s16) { NOT_IMPLEMENTED; }
+void func_80115394(s32* arg0, s16 arg1, s16 arg2) { NOT_IMPLEMENTED; }
 
 void func_80115BB0(void) { NOT_IMPLEMENTED; }
 
@@ -755,6 +755,6 @@ void func_80115F54(void) { NOT_IMPLEMENTED; }
 
 void func_80117AC0(void) { NOT_IMPLEMENTED; }
 
-void func_80109A44(s32) { NOT_IMPLEMENTED; }
+void func_80109A44(s32 arg0) { NOT_IMPLEMENTED; }
 
 void func_80115DA0(void) { NOT_IMPLEMENTED; }
