@@ -304,7 +304,753 @@ TeleportCheck GetTeleportToOtherCastle(void) {
     return TELEPORT_CHECK_NONE;
 }
 
-INCLUDE_ASM("dra/nonmatchings/692E8", EntityAlucard);
+void EntityAlucard(void) {
+    DamageParam damage;
+    s32 (*weapon_func)(void);
+    s32 var_fp;
+    PlayerDraw* draw;
+
+    s32 temp_v0;
+    u16 temp_v0_2;
+    s32 temp_s1;
+    s32 temp_a0;
+    s32 temp_v1;
+    s32 var_s0;
+    u16 var_s6;
+    u16 var_s7;
+
+    g_CurrentEntity = &PLAYER;
+    if (D_800ACE44 != 0) {
+        D_800ACE44--;
+    }
+    if (D_800973FC != 0 && D_80137FB8 == 0) {
+        CreateEntFactoryFromEntity(g_Entities, 0x78U, 0);
+    }
+    var_fp = 0;
+    var_s6 = 0;
+    g_Player.unk70 = g_Player.unk18 = PLAYER.drawFlags = g_Player.unk4C = 0;
+    D_80137FB8 = D_800973FC;
+    var_s7 = 0;
+    g_Player.unk72 = func_80110394();
+    if (!(g_Player.unk0C & 0x40000)) {
+        var_s0 = GetTeleportToOtherCastle();
+        if (var_s0 != 0) {
+            func_8010E42C(var_s0);
+        }
+        if (PLAYER.step != 0x12) {
+            func_8010A234(0);
+            func_8010A3F0();
+            func_80109990();
+            if (g_Player.unk56 != 0) {
+                g_Status.hp += g_Player.unk58;
+                func_800FE8F0();
+                func_80118C84(g_Player.unk58, 1);
+                if (g_Player.unk56 == 1) {
+                    PlaySfx(0x68E);
+                    if (!(g_Player.unk0C & 0x80)) {
+                        CreateEntFactoryFromEntity(
+                            g_CurrentEntity, 0x48002CU, 0);
+                        CreateEntFactoryFromEntity(
+                            g_CurrentEntity, 0x44002CU, 0);
+                    }
+                }
+                if ((g_Player.unk56 == 2) && !(g_Player.unk0C & 0x80)) {
+                    CreateEntFactoryFromEntity(g_CurrentEntity, 0x48002CU, 0);
+                }
+                if (g_Status.hpMax < g_Status.hp) {
+                    g_Status.hp = g_Status.hpMax;
+                }
+                g_Player.unk56 = 0;
+            }
+            var_s0 = CheckAndDoLevelUp();
+            if (var_s0 != 0) {
+                CreateEntFactoryFromEntity(
+                    g_CurrentEntity, ((var_s0 - 1) << 0x10) | 0x19, 0);
+            }
+            for (var_s0 = 0; var_s0 < 16; var_s0++) {
+                if (g_Player.D_80072F00[var_s0] != 0) {
+                    switch (var_s0) {
+                    case 2:
+                        PLAYER.palette = g_Player.unk40;
+                        break;
+                    case 3:
+                        PLAYER.palette = g_Player.pl_high_jump_timer;
+                        g_Player.D_80072F00[15] = 12;
+                        break;
+                    case 4: {
+                        s32 temp_s1 = ((g_GameTimer & 0xF) << 8);
+                        draw = g_PlayerDraw;
+                        draw->r0 = draw->b0 = draw->g0 =
+                            (rsin((s16)temp_s1) + 0x1000) / 64 + 0x60;
+                        draw->r1 = draw->b1 = draw->g1 =
+                            (rsin(temp_s1 + 0x200) + 0x1000) / 64 + 0x60;
+                        draw->r3 = draw->b3 = draw->g3 =
+                            (rsin(temp_s1 + 0x400) + 0x1000) / 64 + 0x60;
+                        draw->r2 = draw->b2 = draw->g2 =
+                            (rsin(temp_s1 + 0x600) + 0x1000) / 64 + 0x60;
+                        draw->enableColorBlend = 1;
+                        break;
+                    }
+                    case 15:
+                        func_8010DFF0(0, 0);
+                        break;
+                    case 11:
+                        if (D_800ACDF8 == 0) {
+                            func_801092E8(1);
+                        }
+                        break;
+                    case 0:
+                        break;
+                    }
+                    if (--g_Player.D_80072F00[var_s0] == 0) {
+                        switch (var_s0) {
+                        case 0:
+                            if (!(g_Player.unk0C & 0x8080)) {
+                                g_Player.D_80072F00[4] = 0xC;
+                                g_Player.D_80072F00[15] = 0xC;
+                                func_8010E168(1, 0xC);
+                            }
+                            continue;
+                        case 1:
+                            if (!(g_Player.unk0C & 0x8080)) {
+                                g_Player.D_80072F00[4] = 0xC;
+                                g_Player.D_80072F00[15] = 0xC;
+                                func_8010E168(1, 0xC);
+                            }
+                            continue;
+                        case 2:
+                            PLAYER.palette = 0x8100;
+                            continue;
+                        case 3:
+                            PLAYER.palette = 0x8100;
+                            if (!(g_Player.unk0C & 0xC080)) {
+                                g_Player.D_80072F00[4] = 0xC;
+                                g_Player.D_80072F00[15] = 0xC;
+                                func_8010E168(1, 0xC);
+                            }
+                            continue;
+                        case 4:
+                            draw->enableColorBlend = 0;
+                            continue;
+                        case 6:
+                            if ((PLAYER.step == 3) &&
+                                (PLAYER.ext.player.unkAC != 0x1C)) {
+                                func_8010DA48(0x1C);
+                                g_Player.unk44 &= 0xFFEF;
+                            }
+                            continue;
+                        case 13:
+                            func_8010E168(1, 0x10);
+                            continue;
+                        case 15:
+                            func_8010E0B8();
+                            continue;
+                        case 11:
+                            func_801092E8(0);
+                            continue;
+                        }
+                    }
+                }
+            }
+            if (D_800ACDFC != 0) {
+                D_800ACDFC--;
+            }
+            g_Player.padHeld = g_Player.padPressed;
+            if (g_Player.D_80072EFC != 0) {
+                g_Player.D_80072EFC--;
+#ifdef VERSION_US
+                if (g_Player.D_80072EFC == 0) {
+                    D_80137FBC = 1;
+                }
+#endif
+                g_Player.padPressed = g_Player.D_80072EF4 & 0xFFFF;
+                switch (g_Player.D_80072EF4 >> 0x10) { /* switch 6; irregular */
+                case 1:                                /* switch 6 */
+                    if (PLAYER.step != 0x30) {
+                        func_8010E168(1, 4);
+                        SetPlayerStep(0x30);
+                        *D_80097400 = 1;
+                    }
+                    break;
+                case 2: /* switch 6 */
+                    func_8010E168(1, 4);
+                    if (g_Player.unk0C & 0x01000000) {
+                        SetPlayerStep(0x32);
+                    } else {
+                        SetPlayerStep(0x31);
+                    }
+                    *D_80097400 = 1;
+                    break;
+                }
+            } else {
+                g_Player.padPressed = g_pads->pressed;
+                g_Player.padPressed = g_Player.padPressed & 0xFF00;
+                for (var_s0 = 0; var_s0 < 8; var_s0++) {
+                    if (g_pads->pressed & g_Settings.buttonMask[var_s0]) {
+                        g_Player.padPressed |= D_800ACE00[var_s0];
+                    }
+                }
+#ifdef VERSION_US
+                if (D_80137FBC != 0) {
+                    D_80137FBC = 0;
+                    g_Player.padHeld = g_Player.padPressed;
+                }
+#endif
+            }
+            g_Player.padTapped =
+                (g_Player.padHeld ^ g_Player.padPressed) & g_Player.padPressed;
+            if (g_Player.unk0C & 8) {
+                g_Player.padTapped &= ~(PAD_SQUARE | PAD_CIRCLE);
+                g_Player.padPressed &= ~(PAD_SQUARE | PAD_CIRCLE);
+            }
+            if ((g_DebugPlayer != 0) && (func_801119C4() != 0)) {
+#ifdef VERSION_US
+                FntPrint("step:%04x\n", PLAYER.step);
+                FntPrint("bat_i_step:%04x\n", g_Player.unk66);
+#endif
+                return;
+            }
+            if ((D_80097448[1] != 0) &&
+                (IsRelicActive(RELIC_HOLY_SYMBOL) == 0) &&
+                !(PLAYER.unk44 & 0x1F)) {
+                PLAYER.unk44 = 6;
+            }
+
+// HD and US test this in slightly different places leading to this and the
+// following ifdef.
+#if defined(VERSION_HD)
+            if ((g_Player.D_80072F00[13] | g_Player.D_80072F00[14]) != 0) {
+                goto specialmove;
+            }
+#endif
+            if (g_Player.unk60 < 2) {
+                if (g_Player.unk60 == 1) {
+                    var_s6 = PLAYER.step;
+                    var_s7 = PLAYER.step_s;
+                    SetPlayerStep(Player_BossGrab);
+                } else {
+#if defined(VERSION_US)
+                    if ((g_Player.D_80072F00[13] | g_Player.D_80072F00[14]) ==
+                        0) {
+#elif defined(VERSION_HD)
+                    if (1) { // to make curly braces match
+#endif
+                        if (PLAYER.unk44) {
+                            var_s6 = PLAYER.step;
+                            var_s7 = PLAYER.step_s;
+                            var_s0 = HandleDamage(
+                                &damage, PLAYER.unk44, PLAYER.hitPoints, 0);
+                            if ((g_Player.unk0C & 0x01000000) &&
+                                ((var_s0 == 1) || (var_s0 == 7) ||
+                                 (var_s0 == 8))) {
+                                var_s0 = 3;
+                                damage.damageKind = 1;
+                            }
+                            switch (var_s0) {
+                            case 0:
+                                CreateEntFactoryFromEntity(
+                                    g_CurrentEntity, 0x2FU, 0);
+                                CreateEntFactoryFromEntity(
+                                    g_CurrentEntity, 0x43002CU, 0);
+                                CreateEntFactoryFromEntity(
+                                    g_CurrentEntity, 0x51002CU, 0);
+                                func_80118C84(0, 0);
+                                func_8010E168(1, 0xC);
+                                break;
+                            case 1:
+                                g_Player.pl_high_jump_timer = 0x8166;
+                                g_Player.unk18 = damage.effects;
+                                func_8010E168(1, 0xC);
+                                g_Player.D_80072F00[3] = 6;
+                                PlaySfx(0x6E7);
+                                func_80118C84(1, 0);
+                                break;
+                            case 2:
+                                g_Player.unk18 = damage.effects;
+                                CreateEntFactoryFromEntity(
+                                    g_CurrentEntity, 0x73U, 0);
+                                CreateEntFactoryFromEntity(
+                                    g_CurrentEntity, 0x58002CU, 0);
+                                g_Player.pl_high_jump_timer = 0x8166;
+                                func_8010E168(1, 0xC);
+                                g_Player.D_80072F00[3] = 6;
+                                break;
+                            case 3:
+                                g_Player.unk18 = damage.effects;
+                                SetPlayerStep(Player_Hit);
+                                func_80118C84(damage.damageTaken, 0);
+                                break;
+                            case 4:
+                                func_80118C84(damage.damageTaken, 0);
+                                SetPlayerStep(Player_Kill);
+                                break;
+                            case 5:
+                                CreateEntFactoryFromEntity(
+                                    g_CurrentEntity, 0x44002CU, 0);
+                                CreateEntFactoryFromEntity(
+                                    g_CurrentEntity, 0x48002CU, 0);
+                                func_80118C84(damage.unkC, 1);
+                                func_8010E168(1, 0xC);
+                                break;
+                            case 6:
+                                SetPlayerStep(Player_KillWater);
+                                break;
+                            case 7:
+                                g_Player.unk18 = damage.effects;
+                                SetPlayerStep(Player_StatusStone);
+                                func_80118C84(damage.damageTaken, 0);
+                                break;
+                            case 8:
+                                g_Player.unk18 = damage.effects;
+                                func_80118C84(damage.damageTaken, 0);
+                                var_fp = 1;
+                                break;
+                            case 9:
+                                CreateEntFactoryFromEntity(
+                                    g_CurrentEntity, 0x4E002CU, 0);
+                                if (D_800ACDFC == 0) {
+                                    PlaySfx(0x6EB);
+                                }
+                                D_800ACDFC = 0x20;
+                                if (damage.damageTaken != 0) {
+                                    PlaySfx(0x6A3);
+                                }
+                                break;
+                            }
+                        }
+                    }
+                specialmove:
+                    CheckSpecialMoveInputs();
+#if defined(VERSION_US)
+                    if (g_Player.unk20[0] == 0 || --g_Player.unk20[0] == 0) {
+#elif defined(VERSION_HD)
+                    if (D_800ACEDC_hd == 0 || --D_800ACEDC_hd == 0) {
+#endif
+                        if (D_80097448[1] == 0) {
+                            if ((g_Player.padTapped & PAD_L1) &&
+                                (HandleTransformationMP(
+                                     FORM_MIST, CHECK_ONLY) == 0) &&
+                                ((PLAYER.step == 0) || (PLAYER.step == 1) ||
+                                 (PLAYER.step == 2) || (PLAYER.step == 3) ||
+                                 (PLAYER.step == 4) || (PLAYER.step == 6) ||
+                                 (PLAYER.step == 8) ||
+                                 ((PLAYER.step == 5) && (PLAYER.step_s != 0)) ||
+                                 ((PLAYER.step == 0x18) &&
+                                  (PLAYER.step_s != 0) &&
+                                  (PLAYER.step_s != 8)))) {
+                                func_80109328();
+                                SetPlayerStep(Player_MorphMist);
+                                PlaySfx(0x6A0);
+                                goto block_159;
+                            }
+                            if ((g_Player.padTapped & PAD_R1) &&
+                                (HandleTransformationMP(FORM_BAT, CHECK_ONLY) ==
+                                 0)) {
+                                if (PLAYER.step == 0 || (PLAYER.step == 1) ||
+                                    (PLAYER.step == 2) || (PLAYER.step == 3) ||
+                                    (PLAYER.step == 4) || (PLAYER.step == 6)) {
+                                    goto block_62check;
+                                }
+                                if ((PLAYER.step == 7) || (PLAYER.step == 8) ||
+                                    (PLAYER.step == 24 &&
+                                     (PLAYER.step_s != 0 &&
+                                      PLAYER.step_s != 8))) {
+                                block_62check:
+                                    if (PLAYER.step == 6 || PLAYER.step == 2) {
+                                        D_8013AECC = 0xC;
+                                    }
+                                    func_80109328();
+                                    SetPlayerStep(Player_MorphBat);
+                                    PlaySfx(0x6A0);
+                                    goto block_160;
+                                }
+                            }
+                        }
+                        if ((g_Player.padTapped & PAD_R2) &&
+                            (HandleTransformationMP(FORM_WOLF, CHECK_ONLY) ==
+                             0) &&
+                            ((D_80097448[1] == 0) ||
+                             IsRelicActive(RELIC_HOLY_SYMBOL)) &&
+                            (PLAYER.step == 0 || (PLAYER.step == 1) ||
+                             (PLAYER.step == 2) || (PLAYER.step == 3) ||
+                             (PLAYER.step == 4) || (PLAYER.step == 6) ||
+                             ((PLAYER.step == 7) || (PLAYER.step == 8)) ||
+                             ((PLAYER.step == 5) && (PLAYER.step_s != 0)))) {
+                            func_80109328();
+                            SetPlayerStep(0x18);
+                            PlaySfx(0x668);
+                        }
+                    }
+                }
+            }
+        }
+    }
+block_159:
+block_160:
+    g_Player.unk50 = PLAYER.step;
+    g_Player.unk52 = PLAYER.step_s;
+    D_800ACDF8 = (s32)g_Player.D_80072F00[11];
+    switch (PLAYER.step) {
+    case 0:
+        func_801120B4();
+        break;
+    case 1:
+        func_80112B64();
+        break;
+    case 2:
+        func_801131C4();
+        break;
+    case 3:
+        func_80113148();
+        break;
+    case 4:
+        func_80112BB0();
+        break;
+    case 5:
+        ControlBatForm();
+        break;
+    case 9:
+        func_801177A0();
+        break;
+    case 7:
+        ControlMistForm();
+        break;
+    case 14:
+        func_801182F8();
+        break;
+    case 24:
+        func_8012EF2C();
+        break;
+    case 25:
+        func_8012EAD0();
+        break;
+    case 8:
+        func_80113AAC();
+        break;
+    case 15:
+        func_801186EC();
+        break;
+    case 10:
+        AlucardHandleDamage(&damage, (s16)var_s6, (s16)var_s7);
+        break;
+    case 11:
+        func_80114DF4(var_fp);
+        break;
+    case 12:
+        func_80116208();
+        break;
+    case 16:
+        func_80115394(&damage, (s16)var_s6, (s16)var_s7);
+        break;
+    case 17:
+        func_80115BB0();
+        break;
+    case 18:
+        func_80115DA0();
+        break;
+    case 32:
+        func_80118614();
+        break;
+    case 34:
+        PlayerStepHellfire();
+        break;
+    case 37:
+        func_80118670();
+        break;
+    case 33:
+    case 35:
+    case 39:
+        func_80118640();
+        break;
+    case 48:
+        func_801166A4();
+        break;
+    case 49:
+        func_8011678C();
+        break;
+    case 50:
+        func_801167D0();
+        break;
+    case 13:
+        func_80115F54();
+        break;
+    case 6:
+        func_80117AC0();
+        break;
+    case 40:
+        weapon_func = D_8017A000.func_ptr_80170004;
+        goto runweapon;
+    case 41:
+        weapon_func = D_8017A000.func_ptr_80170008;
+        goto runweapon;
+    case 42:
+        weapon_func = D_8017A000.func_ptr_8017000C;
+        goto runweapon;
+    case 43:
+        weapon_func = D_8017A000.func_ptr_80170010;
+    runweapon:
+        weapon_func();
+    }
+    var_s0 = 0;
+    D_8009741C[0] &= ~2;
+    g_Player.unk0C &= ~8;
+    g_Player.unk08 = g_Player.unk0C;
+    g_Status.D_80097BF8 &= ~1;
+    switch (PLAYER.step) { /* switch 5 */
+    case 2:                /* switch 5 */
+        if (PLAYER.step_s != 2) {
+            var_s0 = 0x20;
+        }
+        var_s0 |= 0x10000000;
+        break;
+    case 1: /* switch 5 */
+        var_s0 = 0x04000000;
+        /* fallthrough */
+    case 0: /* switch 5 */
+        var_s0 |= 0x10000000;
+        if (PLAYER.step_s == 4) {
+            var_s0 |= 0x08100000;
+        }
+        break;
+    case 3: /* switch 5 */
+    case 4: /* switch 5 */
+        var_s0 = 0x10002000;
+        break;
+    case 5: /* switch 5 */
+        if (PLAYER.step_s == 3) {
+            func_8010E168(1, 4);
+            D_8009741C[0] |= 2;
+        }
+        var_s0 = 0x28100001;
+        break;
+    case 7: /* switch 5 */
+        func_8010E168(1, 4);
+        var_s0 = 0x28100002;
+        PLAYER.palette = 0x810D;
+        break;
+    case 14:
+        var_s0 = 0x28900002;
+        PLAYER.palette = 0x810D;
+        func_8010E168(1, 4);
+        break;
+    case 6: /* switch 5 */
+        func_8010E168(1, 4);
+        var_s0 = 0x18100030;
+        break;
+    case 9: /* switch 5 */
+        var_s0 = 0x28500001;
+        if (PLAYER.step_s == 0) {
+            PLAYER.animSet = 0xD;
+            PLAYER.unk5A = 0;
+        }
+        func_8010E168(1, 4);
+        break;
+    case 8: /* switch 5 */
+        func_8010E168(1, 4);
+        var_s0 = 0x38000000;
+        break;
+    case 10: /* switch 5 */
+    case 48: /* switch 5 */
+    case 49: /* switch 5 */
+        var_s0 = 0x38110000;
+        func_8010E168(1, 12);
+        break;
+    case 11: /* switch 5 */
+        var_s0 = 0x38110080;
+        break;
+    case 12: /* switch 5 */
+        var_s0 = 0x38110040;
+        func_8010E168(1, 12);
+        break;
+    case 13: /* switch 5 */
+    case 16: /* switch 5 */
+        var_s0 = 0x18150000;
+        if (PLAYER.step_s == 0x80) {
+            var_s0 = 0x181D0000;
+        }
+        func_8010E168(1, 12);
+        break;
+    case 17: /* switch 5 */
+        var_s0 = 0x18150000;
+        func_8010E168(1, 12);
+        break;
+    case 18: /* switch 5 */
+        var_s0 = 0x18100000;
+        func_8010E168(1, 12);
+        break;
+    case 33: /* switch 5 */
+    case 35: /* switch 5 */
+    case 39: /* switch 5 */
+        func_8010E168(1, 0x10);
+        var_s0 = 0x38000220;
+        break;
+    case 32: /* switch 5 */
+    case 34: /* switch 5 */
+    case 37: /* switch 5 */
+        func_8010E168(1, 0x10);
+        var_s0 = 0x38000200;
+        break;
+    case 43: /* switch 5 */
+        func_8010E168(1, 0x14);
+        /* fallthrough */
+    case 40: /* switch 5 */
+    case 41: /* switch 5 */
+    case 42: /* switch 5 */
+    case 50: /* switch 5 */
+        PLAYER.unk5A = 0x64;
+        var_s0 = 0x29100000;
+        break;
+    case 15: /* switch 5 */
+        var_s0 = 0x18100000;
+        func_8010E168(4, 0xC);
+        PLAYER.palette = 0x810D;
+        break;
+    case 24: /* switch 5 */
+        D_8009741C[0] |= 2;
+        if (ABS(PLAYER.velocityX) > FIX(3)) {
+            func_8010E168(1, 4);
+        }
+        var_s0 = 0x2C100204;
+        if ((PLAYER.step_s == 0) || (PLAYER.step_s == 8)) {
+            var_s0 = 0x6C100204;
+        }
+        if (PLAYER.step_s == 3) {
+            var_s0 |= 0x20;
+        }
+        break;
+    case 25: /* switch 5 */
+        var_s0 = 0x68100000;
+        func_8010E168(1, 4);
+        break;
+    }
+    if (g_Player.D_80072F00[9] != 0) {
+        var_s0 |= 0x400;
+    }
+    if (g_Player.D_80072F00[10] != 0) {
+        var_s0 |= 0x800;
+    }
+    if (g_Player.D_80072F00[12] != 0) {
+        var_s0 |= 0x1000;
+    }
+    if (g_Player.D_80072F00[0] != 0) {
+        var_s0 |= 0x28104000;
+    }
+    if (g_Player.D_80072F00[1] != 0) {
+        var_s0 |= 0x28108000;
+    }
+    if (*D_80097448 != 0) {
+        var_s0 |= 0x08020000;
+    }
+    if (g_Player.D_80072F00[11] != 0) {
+        var_s0 |= 0x02000000;
+    }
+    g_Player.unk0C = var_s0;
+    if ((var_s0 & 0x08000000) || (D_800973FC != 0)) {
+        func_8010DFF0(1, 1);
+    }
+    if (var_s0 & 0x10000000) {
+        PLAYER.animSet = 1;
+        PLAYER.unk5A = 0;
+    }
+    if (var_s0 & 0x20000000) {
+        g_Status.D_80097BF8 |= 1;
+    }
+    if ((g_Player.D_80072F00[13] | g_Player.D_80072F00[14]) != 0) {
+        g_Player.unk0C |= 0x100;
+    }
+    if ((g_Player.unk08 & 0x10000) && !(g_Player.unk0C & 0x50000)) {
+        func_8010E168(1, 0xC);
+        if (!(g_Player.unk0C & 0xC000)) {
+            g_Player.D_80072F00[4] = 0xC;
+            g_Player.D_80072F00[15] = 4;
+            PLAYER.palette = 0x8100;
+        }
+    }
+    func_8010DBFC(D_800B0130, D_800B01B8);
+    if (g_Player.unk0C & 0x40000) {
+        if (PLAYER.animFrameDuration < 0) {
+            PLAYER.animCurFrame |= 0x8000;
+        }
+        PLAYER.unk44 = 0;
+        PLAYER.hitboxState = 0;
+    } else {
+        PLAYER.hitboxState = 1;
+        PLAYER.unk44 = 0;
+        PLAYER.hitPoints = 0;
+    }
+    g_Player.unk14 = 0;
+    g_Player.unk7A = 0;
+    func_801093C4();
+    if (!(g_Player.unk0C & 0x50)) {
+        if ((CheckEquipmentItemCount(0x58U, 4U) != 0) &&
+            !(g_Player.unk0C & 0x01050017) && !(PLAYER.drawFlags & 6)) {
+            PLAYER.drawFlags |= 2;
+            PLAYER.rotY = 0x110;
+            PLAYER.rotPivotY = 0x18;
+        }
+        func_8010D59C();
+        if ((*D_80097448 >= 0x29 ||
+             ((g_Player.unk0C & 4) && *D_80097448 >= 0xD)) &&
+            (g_CurrentEntity->nFramesInvincibility == 0)) {
+            PLAYER.velocityY = PLAYER.velocityY * 3 / 4;
+            PLAYER.velocityX = PLAYER.velocityX * 3 / 4;
+        }
+        temp_s1 = g_Player.pl_vram_flag;
+        if (!(g_Player.unk0C & (0x40400000 | 5))) {
+            if ((ABS(PLAYER.velocityX) >= FIX(2)) || (PLAYER.step == 8)) {
+                goto block_293;
+            } else {
+                goto oddblock;
+            }
+        } else {
+        block_293:
+            PLAYER.velocityX = PLAYER.velocityX >> 3;
+            PLAYER.velocityY = PLAYER.velocityY >> 3;
+            if (PLAYER.posY.i.hi >= 0) {
+                if (g_Player.unk0C & 0x40400000) {
+                    func_80109A44(0);
+                } else {
+                    func_80109A44(1);
+                }
+            }
+            for (var_s0 = 0; var_s0 < 7; var_s0++) {
+                if (PLAYER.posY.i.hi >= 0) {
+                    func_80109A44(0);
+                }
+            }
+            if (PLAYER.posY.i.hi < 0) {
+                PLAYER.posY.val = FIX(-1);
+            }
+            PLAYER.velocityX *= 8;
+            PLAYER.velocityY *= 8;
+            goto post_oddblock;
+        oddblock:
+            if (g_Player.unk0C & 0x800000) {
+                func_80109A44(0);
+            } else {
+                func_80109A44(1);
+            }
+        }
+    post_oddblock:
+        g_Player.unk04 = temp_s1;
+        if (((*D_80097448 >= 0x29) ||
+             ((g_Player.unk0C & 4) && (*D_80097448 >= 0xD))) &&
+            (g_CurrentEntity->nFramesInvincibility == 0)) {
+            PLAYER.velocityY = PLAYER.velocityY * 4 / 3;
+            PLAYER.velocityX = PLAYER.velocityX * 4 / 3;
+        }
+        g_CurrentEntity->nFramesInvincibility = 0;
+        func_8010D800();
+        if (PLAYER.animSet == 0xD) {
+            D_800CFE48[PLAYER.animCurFrame & 0x7FFF]->unk4 =
+                D_8013AECC + D_800ACE20[(s16)PLAYER.animCurFrame];
+        }
+#ifdef VERSION_US
+        FntPrint("step:%04x\n", PLAYER.step);
+        FntPrint("bat_i_step:%04x\n", g_Player.unk66);
+#endif
+    }
+}
 
 void func_8010BF64(Unkstruct_8010BF64* arg0) {
     if (g_PlayableCharacter == PLAYER_ALUCARD) {

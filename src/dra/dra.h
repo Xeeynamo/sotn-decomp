@@ -395,8 +395,12 @@ extern RelicDesc g_RelicDefs[30];
 extern EnemyDef g_EnemyDefs[400];
 extern s32 g_ExpNext[];
 extern u16 D_800AC958[];
-extern Vram g_Vram;
 extern CdFile* D_800ACC74[];
+extern Vram g_Vram;
+extern s32 D_800ACDF8;
+extern s32 D_800ACDFC;
+extern s32 D_800ACE00[8];
+extern u16 D_800ACE20[18]; // size guessed up to next symbol
 extern s32 D_800ACE44;
 extern s32 D_800ACE48[12]; // size guessed
 extern RECT D_800ACE60;
@@ -419,6 +423,7 @@ extern s16 D_800ACF84[8]; // collection of sounds
 extern s16 D_800ACF94[];
 extern u8 D_800AD094[0x30];
 extern u8 D_800ACFB4[][4];
+extern unkstr_800cfe48* D_800CFE48[];
 extern PfnEntityUpdate D_800AD0C4[];
 extern FactoryBlueprint g_FactoryBlueprints[];
 extern u8 D_800AD4B8[];
