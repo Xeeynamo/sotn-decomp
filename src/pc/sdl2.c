@@ -61,7 +61,7 @@ bool InitPlatform() {
         ERRORF("unable to create VRAM texture: %s", SDL_GetError());
         return false;
     }
-    SDL_SetRenderDrawBlendMode(g_VramTex, SDL_BLENDMODE_BLEND);
+    SDL_SetTextureBlendMode(g_VramTex, SDL_BLENDMODE_BLEND);
 
     g_Tpage = 0;
     return true;
