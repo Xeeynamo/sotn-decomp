@@ -62,7 +62,7 @@ void EntityWarpRoom(Entity* self) {
             prim->tpage = 0x1A;
             prim->clut = 0x15F;
             prim->priority = 0x40;
-            prim->blendMode = 0x406;
+            prim->drawMode = 0x406;
             prim = prim->next;
         }
 
@@ -74,7 +74,7 @@ void EntityWarpRoom(Entity* self) {
         prim->y0 = 112;
         prim->r0 = prim->g0 = prim->b0 = 0;
         prim->priority = 0x60;
-        prim->blendMode = 0xA;
+        prim->drawMode = 0xA;
         prim = prim->next;
         prim->type = PRIM_G4;
         prim->r0 = prim->g0 = prim->b0 = 0;
@@ -83,7 +83,7 @@ void EntityWarpRoom(Entity* self) {
         prim->y0 = prim->y1 = 16;
         prim->y2 = prim->y3 = 240;
         prim->priority = 0x1F0;
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
@@ -136,7 +136,7 @@ void EntityWarpRoom(Entity* self) {
         D_8003C8B8 = 0;
         prim = self->ext.warpRoom.primFade;
         prim->g0 = prim->b0 = prim->r0 = prim->r0 + 2;
-        prim->blendMode = 0x31;
+        prim->drawMode = 0x31;
         if (prim->r0 > 96) {
             D_80180648 = 1;
             g_api.PlaySfx(SE_WARP_ENTER);
@@ -152,12 +152,12 @@ void EntityWarpRoom(Entity* self) {
         g_unkGraphicsStruct.g_zEntityCenter.unk = 0x5C;
         D_8003C8B8 = 0;
         prim = self->ext.warpRoom.primFade;
-        prim->blendMode = 0x31;
+        prim->drawMode = 0x31;
         if (prim->r0 < 0xF0) {
             prim->g0 = prim->b0 = prim->r0 = prim->r0 + 2;
         }
         prim = prim->next;
-        prim->blendMode = 0x31;
+        prim->drawMode = 0x31;
         if (prim->r0 < 0xF8) {
             prim->g0 = prim->b0 = prim->r0 = prim->r0 + 2;
         } else {
@@ -199,13 +199,13 @@ void EntityWarpRoom(Entity* self) {
         g_Player.D_80072EFC = 0x10;
         D_8003C8B8 = 0;
         prim = self->ext.warpRoom.primFade;
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
         prim->r0 = 0;
         prim->b0 = 0;
         prim->g0 = 0;
         prim = prim->next;
         prim->r0 = prim->g0 = prim->b0 = 0xF8;
-        prim->blendMode = 0x31;
+        prim->drawMode = 0x31;
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
@@ -223,7 +223,7 @@ void EntityWarpRoom(Entity* self) {
         move_room -= 4;
         if (move_room < 0) {
             move_room = 0;
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
             D_8003C8B8 = 1;
             self->step = 1;
         }

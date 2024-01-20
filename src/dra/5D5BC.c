@@ -30,8 +30,8 @@ u16 g_HudSpriteClut[HUD_NUM_SPRITES] = {
     0x0171, 0x0171, 0x0171, 0x0196, 0x0196, 0x0196, 0x0196,
 };
 u16 g_HudSpriteBlend[HUD_NUM_SPRITES] = {
-    BLEND_VISIBLE, BLEND_VISIBLE, BLEND_VISIBLE, 0x2000, 0x2000, 0x2000, 0x2000,
-    0x2000,        0x2000,        0x2000,        0x2000, 0x2000, 0x2000, 0x2000,
+    DRAW_HIDE, DRAW_HIDE, DRAW_HIDE, 0x2000, 0x2000, 0x2000, 0x2000,
+    0x2000,    0x2000,    0x2000,    0x2000, 0x2000, 0x2000, 0x2000,
 };
 s16 g_HudSubwpnSpriteClut[HUD_NUM_SPRITES] = {
     0x0175, 0x0176, 0x0175, 0x0176, 0x0175, 0x0176, 0x0175,
@@ -1533,28 +1533,28 @@ void DrawRichterHud(void) {
     prim->tpage = 0x1B;
     prim->clut = 0x101;
     prim->priority = 0x1EF;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
     prim = prim->next;
 
     SetTexturedPrimRect(prim, D_80137980 + 216, 22, 32, 96, 32, 0);
     prim->tpage = 0x1B;
     prim->clut = 0x100;
     prim->priority = 0x1EF;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
     prim = prim->next;
 
     SetTexturedPrimRect(prim, 4, 112, 9, 3, 64, 89);
     prim->tpage = 0x1B;
     prim->clut = 0x105;
     prim->priority = 0x1F0;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
     prim = prim->next;
 
     SetTexturedPrimRect(prim, D_80137980 + 228, 112, 9, 3, 64, 89);
     prim->tpage = 0x1B;
     prim->clut = 0x103;
     prim->priority = 0x1F0;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
     prim->p1 = 0;
     prim->p2 = 6;
     prim = prim->next;
@@ -1563,35 +1563,35 @@ void DrawRichterHud(void) {
     prim->tpage = 0x1B;
     prim->clut = 0x103;
     prim->priority = 0x1F0;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
     prim = prim->next;
 
     SetTexturedPrimRect(prim, 14, 27, 8, 8, 0, 96);
     prim->tpage = 0x1B;
     prim->clut = 0x103;
     prim->priority = 0x1F0;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
     prim = prim->next;
 
     SetTexturedPrimRect(prim, 22, 27, 8, 8, 0, 96);
     prim->tpage = 0x1B;
     prim->clut = 0x103;
     prim->priority = 0x1F0;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
     prim = prim->next;
 
     SetTexturedPrimRect(prim, 18, 38, 8, 8, 0, 0);
     prim->tpage = 0x1B;
     prim->clut = 0x102;
     prim->priority = 0x1F0;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
     prim = prim->next;
 
     SetTexturedPrimRect(prim, 33, 20, 64, 24, 64, 40);
     prim->tpage = 0x1B;
     prim->clut = 0x103;
     prim->priority = 0x1EF;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
 
     D_80137974 = func_800EDD9C(4, 16);
     prim = &g_PrimBuf[D_80137974];
@@ -1604,7 +1604,7 @@ void DrawRichterHud(void) {
             prim->tpage = 0x1B;
             prim->clut = 0x100;
             prim->priority = 0x1EE;
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
             prim->p1 = (rand() & 0x3F) + 1;
             prim->p2 = 0;
             prim = prim->next;
@@ -1671,7 +1671,7 @@ void DrawHud(void) {
         prim->tpage = 0x1F;
         prim->clut = g_HudSpriteClut[i];
         prim->priority = 0x1F0;
-        prim->blendMode = g_HudSpriteBlend[i];
+        prim->drawMode = g_HudSpriteBlend[i];
 
         if (i == 5) {
             SetPrimRect(prim, g_HudSpriteX[i], g_HudSpriteY[i], g_HudSpriteH[i],
@@ -1711,8 +1711,8 @@ void DrawHudSubweapon() {
     func_800EB4F8(D_800C52F8[g_Status.subWeapon], 0, 0x3C0, 0x120);
     prim = &g_PrimBuf[D_80137970];
     if (g_Status.subWeapon != 0) {
-        // This is 0x2031. Since blendMode is probably bits, write it this way.
-        prim->blendMode = 0x2000 | 0x0020 | 0x0010 | 0x0001;
+        // This is 0x2031. Since drawMode is probably bits, write it this way.
+        prim->drawMode = DRAW_ABSPOS | 0x0020 | 0x0010 | 0x0001;
         prim = prim->next;
         prim->p2--;
         if (prim->p2 == 0) {
@@ -1741,18 +1741,18 @@ void DrawHudSubweapon() {
             }
         }
         if (prim->p1 != 0) {
-            prim->blendMode = 0x2000;
+            prim->drawMode = DRAW_ABSPOS;
         } else {
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
         }
         prim = prim->next;
-        prim->blendMode = 0x2000;
+        prim->drawMode = DRAW_ABSPOS;
     } else {
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
     }
 
     // Want to use prim = prim->next->next->next but that uses wrong register
@@ -1848,11 +1848,11 @@ void DrawHudSubweapon() {
     prim->u3 = prim->u1 = prim->u0 + 8;
     prim->x0 = prim->x2 = statXPos;
     prim->x1 = prim->x3 = statXPos + 8;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
 
     if (leading_zeros != 0) {
         leading_zeros--;
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
     }
     // Hundreds digit of HP
     prim = prim->next;
@@ -1860,10 +1860,10 @@ void DrawHudSubweapon() {
     prim->u3 = prim->u1 = prim->u0 + 8;
     prim->x0 = prim->x2 = statXPos + digitSpacing;
     prim->x1 = prim->x3 = statXPos + digitSpacing + 8;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
     if (leading_zeros != 0) {
         leading_zeros--;
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
     }
     // Tens digit of HP
     prim = prim->next;
@@ -1871,10 +1871,10 @@ void DrawHudSubweapon() {
     prim->u3 = prim->u1 = prim->u0 + 8;
     prim->x0 = prim->x2 = statXPos + (digitSpacing * 2);
     prim->x1 = prim->x3 = statXPos + (digitSpacing * 2) + 8;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
 
     if (leading_zeros != 0) {
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
     }
     // Ones digit of HP
     prim = prim->next;
@@ -1913,11 +1913,11 @@ void DrawHudSubweapon() {
     prim->u3 = prim->u1 = prim->u0 + 8;
     prim->x0 = prim->x2 = statXPos;
     prim->x1 = prim->x3 = statXPos + 8;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
     prim->clut = clut;
     if (leading_zeros != 0) {
         leading_zeros--;
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
     }
     // Hundreds digit of hearts
     prim = prim->next;
@@ -1925,11 +1925,11 @@ void DrawHudSubweapon() {
     prim->u3 = prim->u1 = prim->u0 + 8;
     prim->x0 = prim->x2 = statXPos + 4;
     prim->x1 = prim->x3 = statXPos + 0xC;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
     prim->clut = clut;
     if (leading_zeros != 0) {
         leading_zeros--;
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
     }
     // Tens digit of hearts
     prim = prim->next;
@@ -1937,10 +1937,10 @@ void DrawHudSubweapon() {
     prim->u3 = prim->u1 = prim->u0 + 8;
     prim->x0 = prim->x2 = statXPos + 8;
     prim->x1 = prim->x3 = statXPos + 0x10;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
     prim->clut = clut;
     if (leading_zeros != 0) {
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
     }
     // Ones digit of hearts
     prim = prim->next;
@@ -1963,7 +1963,7 @@ void func_801024DC(void) {
         prim->u0 = 0x80;
         prim->v0 = 0xF0;
         prim->priority = 0x1FD;
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
     }
     D_801379A8 = 0;
@@ -1983,7 +1983,7 @@ void func_801024DC(void) {
     prim = prim2;
     prim->v1 = 0;
     prim->u2 = 0;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
 }
 
 s32 func_801025F4(void) { return g_PrimBuf[D_8013799C].clut; }
@@ -2001,7 +2001,7 @@ void func_80102628(s32 arg0) {
         prim->g0 = 0;
         prim->r0 = 0;
         prim->priority = 0x1FD;
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
         prim->x0 = arg0 / 2 * (i & 1);
         prim = prim->next;
     }
@@ -2011,7 +2011,7 @@ void func_801026BC(s32 arg0) {
     Primitive* prim = &g_PrimBuf[D_801379A0];
 
     if (arg0 == 0) {
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
         return;
     } else if (!(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
         SetPrimRect(prim, 0, 1, 255, 255);
@@ -2029,9 +2029,9 @@ void func_801026BC(s32 arg0) {
     func_80107250(prim, arg0 * 2);
 
     if (arg0 == 0x40) {
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
     } else {
-        prim->blendMode = 0x35;
+        prim->drawMode = 0x35;
     }
 }
 

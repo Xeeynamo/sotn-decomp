@@ -17,7 +17,7 @@ void EntityUnkId11(Entity* entity) {
         entity->unk5A = obj->unk4.s;
         entity->palette = obj->palette;
         entity->drawFlags = obj->drawFlags;
-        entity->blendMode = obj->blendMode;
+        entity->drawMode = obj->drawMode;
 
         if (obj->unkC != 0) {
             entity->flags = obj->unkC;
@@ -93,7 +93,7 @@ extern u8* g_eBreakableAnimations[];
 extern u8 g_eBreakableHitboxes[];
 extern u8 g_eBreakableExplosionTypes[];
 extern u16 g_eBreakableanimSets[];
-extern u8 g_eBreakableBlendModes[];
+extern u8 g_eBreakableDrawModes[];
 void EntityBreakable(Entity* entity) {
     Entity* temp_v0;
     u16 temp_s0 = entity->params >> 0xC;
@@ -112,7 +112,7 @@ void EntityBreakable(Entity* entity) {
     } else {
         InitializeEntity(g_eBreakableInit);
         entity->zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 20;
-        entity->blendMode = g_eBreakableBlendModes[temp_s0];
+        entity->drawMode = g_eBreakableDrawModes[temp_s0];
         entity->hitboxHeight = g_eBreakableHitboxes[temp_s0];
         entity->animSet = g_eBreakableanimSets[temp_s0];
     }
@@ -143,7 +143,7 @@ void EntityBackgroundClouds(Entity* self) {
         prim->y2 = prim->y3 = 0xF0;
         setRGB0(prim, 16, 16, 16);
         prim->priority = 0x20;
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
@@ -163,7 +163,7 @@ void EntityBackgroundClouds(Entity* self) {
             prim->y0 = prim->y1 = camY;
             prim->y2 = prim->y3 = camY + 0x4E;
             prim->priority = 0x20;
-            prim->blendMode = 0;
+            prim->drawMode = DRAW_DEFAULT;
             prim = prim->next;
         }
         break;

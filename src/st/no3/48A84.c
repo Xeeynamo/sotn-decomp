@@ -81,7 +81,7 @@ void EntityUnkId14(Entity* entity) {
         entity->palette = 0x8195;
         entity->animSet = ANIMSET_DRA(2);
         entity->animCurFrame = D_80182668[entity->params];
-        entity->blendMode = 0x10;
+        entity->drawMode = DRAW_TPAGE;
         entity->step++;
     } else {
         entity->animFrameDuration++;
@@ -103,7 +103,7 @@ void EntityUnkId15(Entity* arg0) {
         arg0->palette = 0x8195;
         arg0->animSet = ANIMSET_DRA(5);
         arg0->animCurFrame = 1;
-        arg0->blendMode = 0x10;
+        arg0->drawMode = DRAW_TPAGE;
         arg0->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
         arg0->rotY = arg0->rotX = D_80182628[arg0->params];
         arg0->velocityY = D_80182638[arg0->params];
@@ -480,7 +480,7 @@ void EntitySoulStealOrb(Entity* self) {
             return;
         }
         InitializeEntity(g_InitializeData0);
-        g_PrimBuf[primIndex].blendMode = BLEND_VISIBLE;
+        g_PrimBuf[primIndex].drawMode = DRAW_HIDE;
         self->primIndex = primIndex;
         self->animSet = ANIMSET_DRA(0);
         self->flags |= FLAG_HAS_PRIMS;
@@ -544,7 +544,7 @@ void EntitySoulStealOrb(Entity* self) {
         prim->u1 = (prim->u3 = *(temp_d++));
         prim->v2 = (prim->v3 = *(temp_d++));
         prim->priority = self->zPriority;
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         break;
     }
 }
@@ -561,7 +561,7 @@ void EntityRoomForeground(Entity* entity) {
         entity->unk5A = objInit->unk4.s;
         entity->palette = objInit->palette;
         entity->drawFlags = objInit->drawFlags;
-        entity->blendMode = objInit->blendMode;
+        entity->drawMode = objInit->drawMode;
         if (objInit->unkC != 0) {
             entity->flags = objInit->unkC;
         }
@@ -807,7 +807,7 @@ void EntityWargExplosionPuffTransparent(Entity* entity) {
         entity->animSet = ANIMSET_DRA(14);
         entity->unk5A = 0x79;
         entity->palette = 0xD0;
-        entity->blendMode = 0x30;
+        entity->drawMode = 0x30;
         entity->drawFlags = FLAG_DRAW_UNK8;
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;
@@ -895,7 +895,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
     prim->y0 = prim->y1 = 0xD0;
     prim->y2 = prim->y3 = 0xDF;
     prim->priority = 0x1EE;
-    prim->blendMode = 0x11;
+    prim->drawMode = 0x11;
     prim = prim->next;
 
     prim->tpage = 0x1F;
@@ -907,7 +907,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
     prim->u1 = 0x10;
     prim->v1 = 0x18;
     prim->priority = 0x1EF;
-    prim->blendMode = 0;
+    prim->drawMode = DRAW_DEFAULT;
     prim = prim->next;
 
     prim->tpage = 0x1F;
@@ -919,7 +919,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
     prim->u1 = 0x10;
     prim->v1 = 0x18;
     prim->priority = 0x1EF;
-    prim->blendMode = 0;
+    prim->drawMode = DRAW_DEFAULT;
     prim = prim->next;
 
     prim->type = 4;
@@ -934,7 +934,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
     prim->x1 = prim->x3 = xpos + textWidth + 0x18;
     prim->v2 = prim->v3 = 0x16;
     prim->priority = 0x1EF;
-    prim->blendMode = 0;
+    prim->drawMode = DRAW_DEFAULT;
 
     xpos += 0x10;
 
@@ -951,7 +951,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
             prim->v1 = 8;
             prim->u1 = 8;
             prim->priority = 0x1F0;
-            prim->blendMode = 0;
+            prim->drawMode = DRAW_DEFAULT;
             prim->y0 = 0xD4;
             prim = prim->next;
             xpos += 8;
@@ -1085,14 +1085,14 @@ void EntitySplashWater(Entity* self) {
                 prim->clut = 0x162;
                 prim->tpage = 0x1A;
                 prim->priority = self->zPriority + 2;
-                prim->blendMode = 0x77;
+                prim->drawMode = 0x77;
                 if (i % 2) {
                     prim->clut = 0x15F;
                     prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
                         prim->b1 = 0;
                     prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
                         prim->b3 = 96;
-                    prim->blendMode = 0x37;
+                    prim->drawMode = 0x37;
                     prim->priority += 2;
                 }
                 prim2 = prim;
@@ -1232,11 +1232,11 @@ void EntitySurfacingWater(Entity* self) {
                 128;
             prim->tpage = 0x1A;
             prim->priority = self->zPriority + 2;
-            prim->blendMode = 0x77;
+            prim->drawMode = 0x77;
             if (i != 0) {
                 prim->clut = 0x161;
                 prim->priority = self->zPriority + 4;
-                prim->blendMode = 0x77;
+                prim->drawMode = 0x77;
             }
             prim = prim->next;
         }
@@ -1348,7 +1348,7 @@ void EntitySideWaterSplash(Entity* self) {
                         prim->g1 = prim->b1 = 128;
                 prim->p1 = 0;
                 prim->priority = self->zPriority + 2;
-                prim->blendMode = 0x37;
+                prim->drawMode = 0x37;
                 prim = prim->next;
             }
             params = self->params;
@@ -1446,7 +1446,7 @@ void EntitySmallWaterDrop(Entity* self) {
             prim->g0 = 96;
             prim->b0 = 128;
             prim->priority = self->zPriority + 2;
-            prim->blendMode = 0x33;
+            prim->drawMode = 0x33;
             prim = prim->next;
         }
         var_v1 = D_801838F4[params * 2];
@@ -1499,14 +1499,14 @@ void EntityWaterDrop(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
 
         while (1) {
-            prim->blendMode = 0x73;
+            prim->drawMode = 0x73;
             prim->priority = self->zPriority + 2;
 
             if (prim->next == NULL) {
                 prim->u0 = 0;
                 prim->x0 = 0;
                 prim->y0 = 0;
-                prim->blendMode &= ~BLEND_VISIBLE;
+                prim->drawMode &= ~DRAW_HIDE;
                 break;
             }
 
@@ -1537,14 +1537,14 @@ void EntityWaterDrop(Entity* self) {
                 prim->u0 = 0;
                 prim->x0 = 0;
                 prim->y0 = 0;
-                prim->blendMode &= ~BLEND_VISIBLE;
+                prim->drawMode &= ~DRAW_HIDE;
                 return;
             }
             LOH(prim->b1) = prim->x0;
             prim->y1 = prim->y0;
             LOH(prim->u2)--;
             if (LOH(prim->u2) == 0) {
-                prim->blendMode |= BLEND_VISIBLE;
+                prim->drawMode |= DRAW_HIDE;
             }
             LOW(prim->x1) += LOW(prim->r2);
             if (LOW(prim->r2) > 0x8000) {
@@ -1626,7 +1626,7 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
             prim->next->x1 = (u16)entity->posX.i.hi;
             prim->next->y0 = (u16)entity->posY.i.hi;
             prim->priority = entity->zPriority - 4;
-            prim->blendMode = 6;
+            prim->drawMode = 6;
         }
     }
 
@@ -1636,7 +1636,7 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
         prim->next->b3 += 252;
         LOH(prim->next->u1) -= 128;
         if (prim->next->b3 < 16) {
-            prim->blendMode = 8;
+            prim->drawMode = 8;
         }
     }
 
@@ -1719,7 +1719,7 @@ void EntityMermanWaterSplash(Entity* self) {
             prim->p3 = 1;
             prim->p2 = i % 2;
             prim->priority = self->zPriority + 2;
-            prim->blendMode = 0x33;
+            prim->drawMode = 0x33;
             prim = prim->next;
         }
 
@@ -1768,7 +1768,7 @@ void EntityMermanWaterSplash(Entity* self) {
                 }
                 if (prim->y0 & 0xFF00) {
                     prim->p1 = 1;
-                    prim->blendMode |= 8;
+                    prim->drawMode |= 8;
                 }
                 prim->x0 = sp.x0;
                 prim->x1 = sp.x1;
@@ -1814,9 +1814,9 @@ void EntityUnkId3D(Entity* self) {
         self->animSet = ANIMSET_DRA(2);
         self->velocityY = FIX(-5);
         self->palette = 0x8162;
-        self->blendMode = 0x10;
+        self->drawMode = DRAW_TPAGE;
         self->palette = 0x8018;
-        self->blendMode = 0x30;
+        self->drawMode = 0x30;
         self->unk6C = 0xA0;
         self->rotX = 0x100;
         self->rotY = 0x1A0;

@@ -11,7 +11,7 @@ void func_801A7D64(Entity* self) {
         self->unk5A = obj->unk4.s;
         self->palette = obj->palette;
         self->drawFlags = obj->drawFlags;
-        self->blendMode = obj->blendMode;
+        self->drawMode = obj->drawMode;
         if (obj->unkC != 0) {
             self->flags = obj->unkC;
         }
@@ -161,7 +161,7 @@ void func_801A805C(Entity* self) {
     } else {
         InitializeEntity(D_80180574);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 0x14;
-        self->blendMode = D_8018074C[params];
+        self->drawMode = D_8018074C[params];
         self->hitboxHeight = D_801806F8[params];
         self->animSet = D_80180724[params];
         self->unk5A = D_80180738[params];
@@ -213,7 +213,7 @@ void func_801A8328(Entity* self) {
             LOH(prim->next->b2) = 0x10;
             prim->next->b3 = 0x80;
             prim->priority = self->zPriority;
-            prim->blendMode = 2;
+            prim->drawMode = 2;
             velX = ((Random() & 7) << 0xC) + 0x8000;
             self->velocityX = velX;
             if (self->facingLeft == 0) {
@@ -408,23 +408,23 @@ s32 func_801A89D8(const char* textDialogue) {
 
     prim = g_Dialogue.prim[0] = &g_PrimBuf[g_Dialogue.primIndex[2]];
 
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     prim = g_Dialogue.prim[1] = prim->next;
 
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     prim = g_Dialogue.prim[2] = prim->next;
 
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     prim = g_Dialogue.prim[3] = prim->next;
 
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     prim = g_Dialogue.prim[4] = prim->next;
 
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     prim = g_Dialogue.prim[5] = prim->next;
 
     prim->type = 4;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
 
     prim = prim->next;
     prim->type = 3;
@@ -434,7 +434,7 @@ s32 func_801A89D8(const char* textDialogue) {
     prim->x0 = prim->x2 = 4;
     prim->x1 = prim->x3 = 0xF8;
     prim->priority = 0x1FD;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
 
     prim = prim->next;
     prim->type = 1;
@@ -443,7 +443,7 @@ s32 func_801A89D8(const char* textDialogue) {
     prim->v0 = 0x4A;
     prim->r0 = prim->g0 = prim->b0 = 0xFF;
     prim->priority = 0x1FC;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     return 1;
 }
 

@@ -399,7 +399,7 @@ u16 g_eBreakableanimSets[] = {
     /* 5F4 */ 0,
     /* 5F6 */ 0,
 };
-u8 g_eBreakableBlendModes[] = {
+u8 g_eBreakableDrawModes[] = {
     /* 5F8 */ 0x70,
     /* 5F9 */ 0x30,
     /* 5FA */ 0x00,
@@ -1083,7 +1083,7 @@ void func_80186FD0(Entity* arg0) {
         arg0->unk5A = objInit->unk4.s;
         arg0->palette = objInit->palette;
         arg0->drawFlags = objInit->drawFlags;
-        arg0->blendMode = objInit->blendMode;
+        arg0->drawMode = objInit->drawMode;
 
         if (objInit->unkC != 0) {
             arg0->flags = objInit->unkC;
@@ -1173,7 +1173,7 @@ void EntityBreakable(Entity* entity) {
     } else {
         InitializeEntity(g_eBreakableInit);
         entity->zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 0x14;
-        entity->blendMode = g_eBreakableBlendModes[breakableType];
+        entity->drawMode = g_eBreakableDrawModes[breakableType];
         entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
         entity->animSet = g_eBreakableanimSets[breakableType];
     }

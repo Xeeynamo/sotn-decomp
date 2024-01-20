@@ -30,7 +30,7 @@ void EntityMessageBox(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
 
         while (prim != NULL) {
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
 
@@ -60,7 +60,7 @@ void EntityMessageBox(Entity* self) {
                 prim->v1 = self->ext.messageBox.height;
                 prim->clut = 0x1A1;
                 prim->priority = 0x1FD;
-                prim->blendMode = BLEND_VISIBLE;
+                prim->drawMode = DRAW_HIDE;
             } else {
                 prim->type = PRIM_G4;
                 prim->x0 = prim->x2 =
@@ -80,7 +80,7 @@ void EntityMessageBox(Entity* self) {
                     prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;
                 }
                 prim->priority = 0x1FC;
-                prim->blendMode = 0x11;
+                prim->drawMode = 0x11;
             }
         }
 
@@ -142,7 +142,7 @@ void EntityMessageBox(Entity* self) {
         break;
 
     case 4:
-        g_PrimBuf[self->primIndex].blendMode = 0;
+        g_PrimBuf[self->primIndex].drawMode = 0;
         self->ext.messageBox.duration++;
         if (self->ext.messageBox.duration > self->params) {
             DestroyEntity(self);

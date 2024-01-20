@@ -16,7 +16,7 @@ void func_801B0958(Entity* self) {
         self->unk5A = temp_s0->unk4.u;
         self->palette = temp_s0->palette;
         self->drawFlags = temp_s0->drawFlags;
-        self->blendMode = temp_s0->blendMode;
+        self->drawMode = temp_s0->drawMode;
         if (temp_s0->unkC != 0) {
             self->flags = temp_s0->unkC;
         }
@@ -72,7 +72,7 @@ void EntityBreakable(Entity* self) {
     } else {
         InitializeEntity(D_80180BC8);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 20;
-        self->blendMode = D_80180E44[params];
+        self->drawMode = D_80180E44[params];
         self->hitboxHeight = D_80180E24[params];
         self->animSet = D_80180E34[params];
         if (params == 2) {
@@ -99,7 +99,7 @@ void EntityBreakable(Entity* self) {
             prim->y0 = prim->y1 = top;
             prim->y2 = prim->y3 = bottom;
             prim->priority = self->zPriority;
-            prim->blendMode = 0x73;
+            prim->drawMode = 0x73;
         }
     }
 }
@@ -172,7 +172,7 @@ void EntityPurpleBrickScrollingBackground(Entity* self) {
             prim->v0 = prim->v1 = 0x80;
             prim->v2 = prim->v3 = 0xBF;
             prim->priority = 0x20;
-            prim->blendMode = 2;
+            prim->drawMode = 2;
             prim = prim->next;
         }
 
@@ -191,13 +191,13 @@ void EntityPurpleBrickScrollingBackground(Entity* self) {
                 prim->x1 = prim->x3 = prim->x0 + 0x80;
                 prim->y0 = prim->y1 = tempPosY + (y * 0x40);
                 prim->y2 = prim->y3 = prim->y0 + 0x40;
-                prim->blendMode = 0;
+                prim->drawMode = DRAW_DEFAULT;
                 prim = prim->next;
             }
         }
 
         while (prim != NULL) {
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
     }
@@ -755,7 +755,7 @@ void EntityCannon(Entity* self) {
         prim->u1 = 0x38;
         prim->v1 = 0x20;
         prim->priority = 0x70;
-        prim->blendMode = 2;
+        prim->drawMode = 2;
 
         prim = prim->next;
         prim->type = PRIM_SPRT;
@@ -768,7 +768,7 @@ void EntityCannon(Entity* self) {
         prim->x0 = self->posX.i.hi - 8;
         prim->y0 = 120 - g_Tilemap.cameraY.i.hi;
         prim->priority = 0x78;
-        prim->blendMode = 2;
+        prim->drawMode = 2;
 
         if (D_8003BE6F[0] != 0) {
             self->step = 3;
@@ -988,7 +988,7 @@ void EntityElevator2(Entity* self) {
         prim->u1 = 0x20;
         prim->v1 = 0x48;
         prim->priority = 0x72;
-        prim->blendMode = 2;
+        prim->drawMode = 2;
 
         prim = prim->next;
         for (i = 0; i < 2; i++) {
@@ -1000,7 +1000,7 @@ void EntityElevator2(Entity* self) {
             prim->u1 = 8;
             prim->v1 = 0x40;
             prim->priority = 0x5F;
-            prim->blendMode = 2;
+            prim->drawMode = 2;
             prim = prim->next;
         }
 
@@ -1069,7 +1069,7 @@ void func_801B2FD8(Entity* self) {
         prim->v0 = 0xC8;
         prim->v1 = prim->u1 = 0x10;
         prim->priority = 0x5F;
-        prim->blendMode = 2;
+        prim->drawMode = 2;
 
         posX = self->posX.i.hi;
         posX += g_Tilemap.cameraX.i.hi;
@@ -1165,7 +1165,7 @@ void EntityFloorSpikes(Entity* self) {
         prim->v0 = 0xC8;
         prim->v1 = prim->u1 = 0x20;
         prim->priority = 0x5F;
-        prim->blendMode = 2;
+        prim->drawMode = 2;
         self->posY.i.hi -= 28;
 
     case 1:
@@ -1276,7 +1276,7 @@ void func_801B37C0(Entity* self) {
     case 0:
         InitializeEntity(D_80180CDC);
         if (self->params & 0x100) {
-            self->blendMode = 0x30;
+            self->drawMode = 0x30;
         } else {
             self->zPriority = 0x6A;
             self->hitboxWidth = 8;
@@ -1414,7 +1414,7 @@ void func_801B3C38(Entity* self) {
         params = self->params & 0xF;
         obj = &D_80180FE0[params];
         self->palette = obj->palette + 0x2E0;
-        self->blendMode = obj->blendMode;
+        self->drawMode = obj->drawMode;
         self->animSet = obj->animSet;
         self->unk5A = obj->unk2;
         self->ext.et38.unk80 = obj->unk8;
@@ -1427,7 +1427,7 @@ void func_801B3C38(Entity* self) {
 
         if (self->params & 0xF0) {
             self->palette = 0x819F;
-            self->blendMode = 0x10;
+            self->drawMode = DRAW_TPAGE;
             self->facingLeft = 1;
         }
         break;

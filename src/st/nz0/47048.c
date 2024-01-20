@@ -21,7 +21,7 @@ void EntitySubWeaponContainer(Entity* self) {
     switch (self->step) {
     case SUBWPNCONT_INIT:
         InitializeEntity(D_80180CE8);
-        self->blendMode = 0x10;
+        self->drawMode = DRAW_TPAGE;
         self->animCurFrame = 1;
         self->zPriority = 0x70;
         self->hitboxWidth = 14;
@@ -46,7 +46,7 @@ void EntitySubWeaponContainer(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         while (prim != NULL) {
             prim->priority = self->zPriority + 0xFFFF;
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
         break;
@@ -192,7 +192,7 @@ void func_801C7654(Entity* entity) {
         InitializeEntity(g_InitializeEntityData0);
         entity->animSet = ANIMSET_DRA(2);
         entity->palette = 0x816D;
-        entity->blendMode = 0x70;
+        entity->drawMode = 0x70;
         entity->velocityX = rcos(entity->rotZ) * 0x10;
         entity->velocityY = rsin(entity->rotZ) * 0x10;
         break;

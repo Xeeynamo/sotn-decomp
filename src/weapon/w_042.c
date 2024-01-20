@@ -96,7 +96,7 @@ void EntityWeaponAttack(Entity* self) {
             self->unk4C = D_12A000_8017A684;
             self->animFrameDuration = 0;
             self->animFrameIdx = 0;
-            self->blendMode = 0x30;
+            self->drawMode = 0x30;
             g_api.func_80134714(0x619, 0x50, 0);
             // TODO: FACTORY()
             g_api.CreateEntFactoryFromEntity(
@@ -283,7 +283,7 @@ void func_ptr_8017000C(Entity* self) {
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
         self->zPriority = self->ext.weapon.parent->zPriority + 2;
         self->unk4C = D_12A000_8017A684;
-        self->blendMode = 0x30;
+        self->drawMode = 0x30;
         self->posY.i.hi += 0x10;
         self->step++;
     } else if (self->animFrameDuration < 0) {

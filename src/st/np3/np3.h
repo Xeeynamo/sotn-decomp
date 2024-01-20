@@ -63,7 +63,7 @@ extern u8* g_eBreakableAnimations[8];
 extern u8 g_eBreakableHitboxes[];
 extern u8 g_eBreakableExplosionTypes[];
 extern u16 g_eBreakableanimSets[];
-extern u8 g_eBreakableBlendModes[];
+extern u8 g_eBreakableDrawModes[];
 extern u16 g_InitializeData0[];
 extern u16 g_InitializeEntityData0[];
 extern LayoutEntity* g_pStObjLayout[];

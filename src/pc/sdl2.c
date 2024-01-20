@@ -53,7 +53,7 @@ bool InitPlatform() {
         ERRORF("SDL_CreateRenderer: %s", SDL_GetError());
         return false;
     }
-    SDL_SetRenderDrawBlendMode(g_Renderer, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawDrawMode(g_Renderer, SDL_BLENDMODE_BLEND);
 
     g_VramTex = SDL_CreateTexture(g_Renderer, SDL_PIXELFORMAT_ABGR1555,
                                   SDL_TEXTUREACCESS_STREAMING, 256, 256);
@@ -61,7 +61,7 @@ bool InitPlatform() {
         ERRORF("unable to create VRAM texture: %s", SDL_GetError());
         return false;
     }
-    SDL_SetTextureBlendMode(g_VramTex, SDL_BLENDMODE_BLEND);
+    SDL_SetTextureDrawMode(g_VramTex, SDL_BLENDMODE_BLEND);
 
     g_Tpage = 0;
     return true;
@@ -633,7 +633,7 @@ void MyRenderPrimitives(void) {
     int psprt = 0;
     for (int i = 0; i < LEN(g_PrimBuf); i++) {
         Primitive* prim = &g_PrimBuf[i];
-        if (prim->blendMode & 8) {
+        if (prim->drawMode & 8) {
             continue;
         }
 

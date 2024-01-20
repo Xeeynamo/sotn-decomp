@@ -246,7 +246,7 @@ void EntityWeaponShieldSpell(Entity* self) {
             prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
                 0x80;
         prim->priority = self->zPriority - 4;
-        prim->blendMode = 0x75;
+        prim->drawMode = 0x75;
         SetSpeedX(FIX(-2));
         self->velocityY = 0;
         DestroyEntityWeapon(1);
@@ -313,7 +313,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
             prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
         if (--self->ext.weapon.unk80 == 0) {
-            prim->blendMode |= 8;
+            prim->drawMode |= 8;
             g_api.PlaySfx(0x660);
             // TODO: FACTORY()
             g_api.CreateEntFactoryFromEntity(
@@ -398,7 +398,7 @@ void func_ptr_80170024(Entity* self) {
             prim->tpage = 0x19;
             prim->clut = self->ext.weapon.childPalette;
             prim->priority = 0x1BC;
-            prim->blendMode = 0;
+            prim->drawMode = DRAW_DEFAULT;
             prim->u0 = prim->u2 = 0x50;
             prim->v0 = prim->v1 = self->ext.weapon29.unk7D + 8;
             prim->u1 = prim->u3 = 0x7F;

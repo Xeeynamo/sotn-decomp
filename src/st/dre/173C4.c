@@ -836,11 +836,11 @@ void EntityExplosion(Entity* entity) {
         entity->animSet = ANIMSET_DRA(2);
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;
-        entity->blendMode = 0x30;
+        entity->drawMode = 0x30;
 
         if (entity->params & 0xF0) {
             entity->palette = 0x8195;
-            entity->blendMode = 0x10;
+            entity->drawMode = DRAW_TPAGE;
         }
 
         temp_v0 = entity->params & 0xFF00;

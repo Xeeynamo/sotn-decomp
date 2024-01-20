@@ -60,7 +60,7 @@ void EntityDracula(Entity* self) {
         self->ext.dracula.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
         while (prim != NULL) {
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
         SetStep(2);
@@ -277,7 +277,7 @@ void EntityDracula(Entity* self) {
             self->hitboxState = 0;
             g_isDraculaFirstFormDefeated = 1;
             while (prim != NULL) {
-                prim->blendMode = BLEND_VISIBLE;
+                prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
             g_api.PlaySfx(NA_SE_VO_DR_PLAYTIME_IS_OVER);
@@ -314,7 +314,7 @@ void EntityDracula(Entity* self) {
             prim->y2 = prim->y3 = 0x100;
             prim->r0 = prim->g0 = prim->b0 = self->ext.dracula.unk94;
             prim->priority = 0xC0;
-            prim->blendMode = 0x31;
+            prim->drawMode = 0x31;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r0);
@@ -327,7 +327,7 @@ void EntityDracula(Entity* self) {
             LOW(prim->r2) = LOW(prim->r0);
             prim->r1 = prim->g1 = prim->b1 = self->ext.dracula.unk94;
             prim->priority = 0xC0;
-            prim->blendMode = 0x31;
+            prim->drawMode = 0x31;
             LOW(prim->r3) = LOW(prim->r1);
             prim = prim->next;
             prim->type = PRIM_G4;
@@ -338,7 +338,7 @@ void EntityDracula(Entity* self) {
             prim->r0 = prim->g0 = prim->b0 = self->ext.dracula.unk94;
             prim->r1 = prim->g1 = prim->b1 = 0;
             prim->priority = 0xC0;
-            prim->blendMode = 0x31;
+            prim->drawMode = 0x31;
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r1);
             self->ext.dracula.unk8C = 0x20;
@@ -426,7 +426,7 @@ void EntityDracula(Entity* self) {
             prim = self->ext.dracula.prim;
             prim = prim->next;
             while (prim != NULL) {
-                prim->blendMode = BLEND_VISIBLE;
+                prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
             CreateEntityFromCurrentEntity(0x2B, &self[2]);

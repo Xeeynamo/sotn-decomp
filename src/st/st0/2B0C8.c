@@ -22,7 +22,7 @@ void EntityStageTitleFadeout(Entity* self) {
             self->ext.stageTitleCard.prim = prim;
             self->flags |= FLAG_HAS_PRIMS;
             while (prim != NULL) {
-                prim->blendMode = BLEND_VISIBLE;
+                prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
             prim = self->ext.stageTitleCard.prim;
@@ -31,7 +31,7 @@ void EntityStageTitleFadeout(Entity* self) {
             prim->y2 = prim->y3 = 0xF0;
             prim->priority = 0x1FD;
             prim->y0 = prim->y1 = prim->x0 = prim->x2 = 0;
-            prim->blendMode = 0;
+            prim->drawMode = DRAW_DEFAULT;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r0);
@@ -45,7 +45,7 @@ void EntityStageTitleFadeout(Entity* self) {
         if (D_80180908 != 0) {
             prim = self->ext.stageTitleCard.prim;
             prim->r0 = prim->g0 = prim->b0 = 247;
-            prim->blendMode = 0x51;
+            prim->drawMode = 0x51;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r0);
@@ -60,7 +60,7 @@ void EntityStageTitleFadeout(Entity* self) {
         prim->priority = 0xC0;
         prim->x1 = prim->x3 = 0x100;
         prim->y2 = prim->y3 = 0xF0;
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         prim->y0 = prim->y1 = prim->x0 = prim->x2 = 0;
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
@@ -74,9 +74,9 @@ void EntityStageTitleFadeout(Entity* self) {
         prim->r0 += 248;
         if (prim->r0 > 248) {
             prim->r0 = 0;
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
-            prim->blendMode = 0;
+            prim->drawMode = DRAW_DEFAULT;
             self->step = 5;
             break;
         }
@@ -93,7 +93,7 @@ void EntityStageTitleFadeout(Entity* self) {
         prim->r0 += 248;
         if (prim->r0 > 248) {
             prim->r0 = 0;
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
             PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0;
             self->step = 1;
         }
@@ -109,7 +109,7 @@ void EntityStageTitleFadeout(Entity* self) {
             prim->y0 = prim->y1 = 0;
             prim->y2 = prim->y3 = 0xF0;
             prim->priority = 0xB0;
-            prim->blendMode = 0x55;
+            prim->drawMode = 0x55;
             prim->r0 = prim->g0 = prim->b0 = 255;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
@@ -170,7 +170,7 @@ void EntityStageTitleFadeout(Entity* self) {
 
             for (prim = self->ext.stageTitleCard.prim; prim != NULL;
                  prim = prim->next) {
-                prim->blendMode = BLEND_VISIBLE;
+                prim->drawMode = DRAW_HIDE;
             }
             PreventEntityFromRespawning(self);
             DestroyEntity(self);
@@ -216,7 +216,7 @@ void EntityStageTitleCard(Entity* self) {
             prim->b0 = 0x60;
             prim->priority = 0x1FE;
             prim->v0 = prim->v1 = prim->u0 = prim->u2 = 0x10;
-            prim->blendMode = 4;
+            prim->drawMode = DRAW_COLORS;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
 
@@ -229,7 +229,7 @@ void EntityStageTitleCard(Entity* self) {
             prim->x0 = prim->x2 = -0x6F;
             prim->y0 = prim->y1 = 0x70;
             prim->priority = 0x1FF;
-            prim->blendMode = 0;
+            prim->drawMode = DRAW_DEFAULT;
             prim->x1 = prim->x3 = 0;
             prim->y2 = prim->y3 = 0x7F;
 
@@ -244,12 +244,12 @@ void EntityStageTitleCard(Entity* self) {
             prim->u0 = prim->u2 = 0;
             prim->v0 = prim->v1 = 0x10;
             prim->priority = 0x1FF;
-            prim->blendMode = 0;
+            prim->drawMode = DRAW_DEFAULT;
             prim->y2 = prim->y3 = 0x9A;
 
             prim = prim->next;
             while (prim != NULL) {
-                prim->blendMode = BLEND_VISIBLE;
+                prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
             D_8003C8B8 = 0;
@@ -316,7 +316,7 @@ void EntityStageTitleCard(Entity* self) {
 
     case 3:
         prim = self->ext.stageTitleCard.prim;
-        prim->blendMode |= 0x31;
+        prim->drawMode |= 0x31;
 
         prim = prim->next;
         prim->u1 = prim->u3 = 0x7F;
@@ -327,13 +327,13 @@ void EntityStageTitleCard(Entity* self) {
         prim->y2 = prim->y3 = 0x9A;
         prim->r0 = prim->g0 = prim->b0 = 0x80;
         prim->v0 = prim->v1 = prim->u0 = prim->u2 = 0;
-        prim->blendMode = 0x35;
+        prim->drawMode = 0x35;
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
 
         for (prim = prim->next; prim != NULL; prim = prim->next) {
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
         }
         self->ext.stageTitleCard.unk88 = 0x20;
         self->step++;

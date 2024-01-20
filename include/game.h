@@ -72,6 +72,7 @@ typedef struct Prim {
     struct Vertex v[4];
 } Prim;
 
+#define blendMode drawMode // maintained to easily migrate existing scratches
 typedef struct Primitive {
     /* 0x00 */ struct Primitive* next;
     /* 0x04 */ u8 r0;
@@ -109,10 +110,16 @@ typedef struct Primitive {
     /* 0x2E */ s16 y3;
     /* 0x30 */ u8 u3; // TODO not verified
     /* 0x31 */ u8 v3; // TODO not verified
-    /* 0x32 */ u16 blendMode;
+    /* 0x32 */ u16 drawMode;
 } Primitive; /* size=0x34 */
 
-#define BLEND_VISIBLE 8 // if unset, the primitive will not be rendered
+#define DRAW_DEFAULT 0x00
+#define DRAW_TRANSP 0x01   // make it semi transparent
+#define DRAW_COLORS 0x04   // use color blending
+#define DRAW_HIDE 0x08     // do not render the primitive
+#define DRAW_TPAGE 0x10    // use custom tpage
+#define DRAW_NOMENU 0x80   // do not render if D_800973EC is set
+#define DRAW_ABSPOS 0x2000 // use absolute coordinates with DRAW_NOMENU
 
 #include "entity.h"
 
@@ -596,7 +603,7 @@ typedef struct Entity {
     /* 0x12 */ s16 hitboxOffY;
     /* 0x14 */ u16 facingLeft;
     /* 0x16 */ u16 palette;
-    /* 0x18 */ s8 blendMode;
+    /* 0x18 */ s8 drawMode;
     /* 0x19 */ u8 drawFlags;
     /* 0x1A */ s16 rotX;
     /* 0x1C */ s16 rotY;
@@ -648,7 +655,7 @@ typedef struct {
     /* 0x06 */ u16 palette;
     /* 0x08 */ u8 drawFlags;
     /* 0x09 */ u8 unk9;
-    /* 0x0A */ u8 blendMode;
+    /* 0x0A */ u8 drawMode;
     /* 0x0B */ u8 unkB;
     /* 0x0C */ u32 unkC;
     /* 0x10 */ const u8* unk10;

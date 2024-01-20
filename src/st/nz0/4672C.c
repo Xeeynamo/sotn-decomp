@@ -173,7 +173,7 @@ void EntitySpittleBoneSpit(Entity* self) {
     s16 primIndex;
     Primitive* prim;
     Entity* entity;
-    s32 u0, v0, r0, b0, blendMode;
+    s32 u0, v0, r0, b0, drawMode;
     s32 i;
 
     switch (self->step) {
@@ -231,7 +231,7 @@ void EntitySpittleBoneSpit(Entity* self) {
         self->ext.spittleBone.unk84 = prim;
         self->flags |= FLAG_HAS_PRIMS;
         if (prim != NULL) {
-            for (u0 = 1, v0 = 2, r0 = 0x20, b0 = 0xc0, blendMode = 0x33, i = 0;
+            for (u0 = 1, v0 = 2, r0 = 0x20, b0 = 0xc0, drawMode = 0x33, i = 0;
                  prim != NULL; i += 8) {
                 prim->u0 = u0;
                 prim->v0 = v0;
@@ -243,7 +243,7 @@ void EntitySpittleBoneSpit(Entity* self) {
                 LOW(prim->x2) = LOW(D_8018253C[i]);
                 LOW(prim->x3) = LOW(D_80182540[i]);
                 prim->priority = self->zPriority;
-                prim->blendMode = blendMode;
+                prim->drawMode = drawMode;
                 prim = prim->next;
             }
         }
@@ -274,7 +274,7 @@ void EntitySpittleBoneSpit(Entity* self) {
                 g_api.CheckCollision(
                     prim->x0, (s16)(prim->y0 + 16), &collider, 0);
                 if (collider.effects != 0) {
-                    prim->blendMode = BLEND_VISIBLE;
+                    prim->drawMode = DRAW_HIDE;
                 }
             }
             prim = prim->next;

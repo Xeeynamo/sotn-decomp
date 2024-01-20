@@ -36,13 +36,13 @@ void EntityTeleport(Entity* self) {
             prim->v0 = 0xF0;
             prim->type = 1;
             prim->priority = 0x1FD;
-            prim->blendMode = 0x39;
+            prim->drawMode = 0x39;
             prim = prim->next;
         }
         for (i = 0; i < 2; i++) {
             prim->type = 3;
             prim->priority = 0x1F8;
-            prim->blendMode = 0x31;
+            prim->drawMode = 0x31;
             prim = prim->next;
         }
         for (i = 0; i < 32; i++) {
@@ -58,7 +58,7 @@ void EntityTeleport(Entity* self) {
             prim->g0 = 0;
             prim->g1 = (rand() & 0x1F) + 1;
             prim->priority = 0x1F0;
-            prim->blendMode = 8;
+            prim->drawMode = 8;
             prim->g2 = 0;
             prim = prim->next;
         }
@@ -181,9 +181,9 @@ void EntityTeleport(Entity* self) {
     yVar = PLAYER.posY.i.hi;
     for (i = 0; i < 2; i++) {
         prim->r0 = prim->b0 = prim->g0 = self->ext.teleport.unk90;
-        prim->blendMode |= BLEND_VISIBLE;
+        prim->drawMode |= DRAW_HIDE;
         if (var_s5) {
-            prim->blendMode &= ~BLEND_VISIBLE;
+            prim->drawMode &= ~DRAW_HIDE;
         }
         prim = prim->next;
     }
@@ -208,10 +208,10 @@ void EntityTeleport(Entity* self) {
                     func_80119E78(prim, D_8013839C[i].unk0, D_8013839C[i].unk2);
                 D_8013839C[i].unk2 -= 16;
                 if (result < 0) {
-                    prim->blendMode |= BLEND_VISIBLE;
+                    prim->drawMode |= DRAW_HIDE;
                     prim->g0++;
                 } else {
-                    prim->blendMode &= ~BLEND_VISIBLE;
+                    prim->drawMode &= ~DRAW_HIDE;
                 }
                 break;
             }
@@ -222,7 +222,7 @@ void EntityTeleport(Entity* self) {
 
     // Potential bug? Should probably be doing prim = prim->next, right?
     for (i = 0; i < 32; i++) {
-        prim->blendMode |= BLEND_VISIBLE;
+        prim->drawMode |= DRAW_HIDE;
     }
 }
 
@@ -460,13 +460,13 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
                 prim->b0 = 0;
                 prim->b1 = 0;
                 prim->priority = (rand63 + PLAYER.zPriority) - 0x20;
-                prim->blendMode = 0;
+                prim->drawMode = DRAW_DEFAULT;
                 prim->g3 = (rand63 >> 2) + 4; // rand15 + 4 means 4 to 19
                 prim->r1++;
             } else {
                 prim->g1 -= prim->g3;
                 if (((u8)prim->b0 >= 6U) || ((u8)prim->g1 < 0x18U)) {
-                    prim->blendMode = BLEND_VISIBLE;
+                    prim->drawMode = DRAW_HIDE;
                     prim->r0 = 0;
                 }
             }

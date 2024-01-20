@@ -461,7 +461,7 @@ void EntityBladeSword(Entity* self) {
             LOW(prim->x2) = LOW(prim->x0);
             LOW(prim->x3) = LOW(prim->x0);
             prim->priority = self->zPriority;
-            prim->blendMode = 0x33;
+            prim->drawMode = 0x33;
         }
 
     case 1:
@@ -496,9 +496,9 @@ void EntityBladeSword(Entity* self) {
             LOW(prim->x2) = LOW(prim2->x2);
             LOW(prim->x3) = LOW(prim2->x3);
             if (self->ext.et_801D1BB8.unk8D) {
-                prim->blendMode = 0x33;
+                prim->drawMode = 0x33;
             } else {
-                prim->blendMode = 0xA;
+                prim->drawMode = 0xA;
             }
             prim = prim2;
         }
@@ -523,8 +523,8 @@ void EntityBladeSword(Entity* self) {
     prim->x1 = x1;
 
     if (self->ext.et_801D1BB8.unk8D) {
-        prim->blendMode = 0x33;
+        prim->drawMode = 0x33;
     } else {
-        prim->blendMode = 0xA;
+        prim->drawMode = 0xA;
     }
 }

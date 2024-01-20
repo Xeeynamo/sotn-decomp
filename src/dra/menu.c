@@ -1634,7 +1634,7 @@ void func_800F84CC(void) {
     for (i = 0; i < NUM_MENU; i++) {
         D_801377FC[i] = func_800EDD9C(PRIM_G4, 1);
         prim = &g_PrimBuf[D_801377FC[i]];
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
     }
 
     D_8013783C = func_800EDD9C(PRIM_GT4, 1);
@@ -1651,7 +1651,7 @@ void func_800F84CC(void) {
     prim->tpage = 0x1A;
     prim->clut = 0x1EF;
     prim->priority = 0x40;
-    prim->blendMode = 0x80 | BLEND_VISIBLE;
+    prim->drawMode = 0x80 | DRAW_HIDE;
 
     D_80137840 = func_800EDD9C(PRIM_GT4, 2);
     prim = &g_PrimBuf[D_80137840];
@@ -1672,7 +1672,7 @@ void func_800F84CC(void) {
         func_80107250(prim, 64);
         prim->tpage = 0x1A;
         prim->priority = 0x40;
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
     }
 }
@@ -1934,7 +1934,7 @@ void MenuDraw(void) {
         prim = &g_PrimBuf[D_801377FC[i]];
         menu = &g_MenuData.menus[i];
         if (menu->unk1C == 2) {
-            prim->blendMode = 8;
+            prim->drawMode = 8;
             continue;
         }
         cx = menu->cursorX;
@@ -1968,7 +1968,7 @@ void MenuDraw(void) {
             j = menu->unk1D; // FAKE?
             if (menu->unk1D == 16) {
                 menu->unk1C = 2;
-                prim->blendMode = 8;
+                prim->drawMode = 8;
                 continue;
             }
             cy += ch / 16 * menu->unk1D;
@@ -2048,7 +2048,7 @@ void MenuDraw(void) {
         prim->g3 = g1;
         prim->b3 = b1;
         prim->priority = menu->otIdx;
-        prim->blendMode = 0x480;
+        prim->drawMode = 0x480;
 
         // draw the white window border
         MenuDrawLine(cx, cy, cx, cy + ch - 1, i + 1);
@@ -2145,12 +2145,12 @@ void func_800F9690(void) {
     Primitive* prim = &g_PrimBuf[D_8013783C];
 
     if (D_80137608 != 0) {
-        prim->blendMode = 0x80;
+        prim->drawMode = 0x80;
     } else {
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
     }
     if (D_801376B0 != 0) {
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
     }
 }
 
@@ -2167,7 +2167,7 @@ void func_800F96F4(void) { // !Fake:
     temp = D_80137844;
 
     if ((D_80137844[0] != 0) && (temp_a2 != 0)) {
-        (&g_PrimBuf[D_80137840])->blendMode = 0x80;
+        (&g_PrimBuf[D_80137840])->drawMode = 0x80;
         if (D_80137844[0] == 1) {
             (&g_PrimBuf[D_80137840])->clut = 0x188;
         } else {
@@ -2175,14 +2175,14 @@ void func_800F96F4(void) { // !Fake:
             (&g_PrimBuf[D_80137840])->clut = 0x181;
         }
     } else {
-        prim->blendMode = 0x8;
+        prim->drawMode = 0x8;
     }
 
     prim = prim->next;
     temp = new_var;
 
     if (((*temp) != 0) && (temp_a2 != 0)) {
-        prim->blendMode = 0x80;
+        prim->drawMode = 0x80;
         new_var2 = *temp;
         if (new_var2 == 1) {
             do {
@@ -2194,7 +2194,7 @@ void func_800F96F4(void) { // !Fake:
         prim->clut = 0x181;
         return;
     }
-    prim->blendMode = 8;
+    prim->drawMode = 8;
 }
 
 void func_800F97DC(void) {

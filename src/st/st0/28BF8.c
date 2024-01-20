@@ -20,7 +20,7 @@ void func_801A8BF8(void) {
     prim->u1 = 0xC0;
     prim->v1 = 0xC;
     prim->priority = 0x1FF;
-    prim->blendMode = 0;
+    prim->drawMode = DRAW_DEFAULT;
 }
 
 // Creates primitives for the actor name at the head of the dialogue
@@ -73,7 +73,7 @@ void func_801A8CB0(u16 actorIndex, Entity* self) {
             prim->v1 = FONT_H;
             prim->u1 = FONT_W;
             prim->priority = 0x1FF;
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
             prim->x0 = x;
             prim->y0 = g_Dialogue.startY + 6;
             prim = prim->next;
@@ -157,7 +157,7 @@ void func_801A910C(u8 ySteps) {
         prim->v0 += ySteps;
         if (prim->v1 == 0) {
             g_CurrentEntity->step_s++;
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
         }
     }
 

@@ -104,7 +104,7 @@ void EntityRelicOrb(Entity* self) {
             texSrcY = ((u8)iconSlot & 0x18) * 0x02;
             for (i = 0; prim != NULL; i++) {
                 if (i != 0) {
-                    prim->blendMode = BLEND_VISIBLE;
+                    prim->drawMode = DRAW_HIDE;
                 } else {
                     prim->tpage = 0x1A;
                     prim->clut = iconSlot + 0x1D0;
@@ -112,7 +112,7 @@ void EntityRelicOrb(Entity* self) {
                     prim->u1 = prim->u3 = texSrcX | 0x0F;
                     prim->v0 = prim->v1 = texSrcY | 0x81;
                     prim->v2 = prim->v3 = texSrcY | 0x8F;
-                    prim->blendMode = 6;
+                    prim->drawMode = 6;
                 }
                 prim->priority = 0x7E;
                 prim = prim->next;
@@ -165,7 +165,7 @@ void EntityRelicOrb(Entity* self) {
                 prim->u0 = 0;
                 prim->v0 = 0;
                 prim->v1 = 0x10;
-                prim->blendMode = BLEND_VISIBLE;
+                prim->drawMode = DRAW_HIDE;
             } else {
                 prim->type = PRIM_G4;
                 prim->x0 = prim->x1 = prim->x2 = prim->x3 = 0x80;
@@ -180,7 +180,7 @@ void EntityRelicOrb(Entity* self) {
                     prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;
                 }
                 prim->priority = 0x1FD;
-                prim->blendMode = 0x11;
+                prim->drawMode = 0x11;
             }
             prim = prim->next;
         }
@@ -312,7 +312,7 @@ void EntityRelicOrb(Entity* self) {
 #elif defined(VERSION_BETA)
         prim->x0 = 0x80 - self->ext.relicOrb.unk7E * 6;
 #endif
-        prim->blendMode = 0;
+        prim->drawMode = 0;
         self->ext.relicOrb.unk7C++;
         if (self->ext.relicOrb.unk7C > 0x60) {
             DestroyEntity(self);
@@ -361,7 +361,7 @@ void EntityRelicOrb(Entity* self) {
 
         if (self->ext.relicOrb.sparkleCycle == 0) {
             for (i = 0; i < 4; i++) {
-                if (prim->blendMode == BLEND_VISIBLE) {
+                if (prim->drawMode == DRAW_HIDE) {
                     prim->tpage = 0x1A;
                     prim->clut = 0x1B1;
                     prim->u3 = 0x10;
@@ -389,7 +389,7 @@ void EntityRelicOrb(Entity* self) {
                     prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
                     prim->p1 = 0;
                     prim->priority = 0x7F;
-                    prim->blendMode = 0x37;
+                    prim->drawMode = 0x37;
                     break;
                 }
                 prim = prim->next;
@@ -408,7 +408,7 @@ void EntityRelicOrb(Entity* self) {
     }
 
     for (; prim != NULL; prim = prim->next) {
-        if (prim->blendMode != BLEND_VISIBLE) {
+        if (prim->drawMode != DRAW_HIDE) {
             if (prim->p1 & 3) {
                 new_var10 = prim->y1;
                 temp_v1_6 = prim->y3;
@@ -430,7 +430,7 @@ void EntityRelicOrb(Entity* self) {
             prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->b3 - 6;
             prim->p1++;
             if (prim->p1 > 0x10) {
-                prim->blendMode = BLEND_VISIBLE;
+                prim->drawMode = DRAW_HIDE;
             }
         }
     }

@@ -144,7 +144,7 @@ void func_80156F40(s16 arg0) {
     g_Entities[1].primIndex = primIndex;
     g_Entities[1].flags |= FLAG_HAS_PRIMS;
     for (prim = &g_PrimBuf[primIndex]; prim != NULL; prim = prim->next) {
-        prim->blendMode = 0x102 | BLEND_VISIBLE;
+        prim->drawMode = 0x102 | DRAW_HIDE;
     }
     if (D_80097C98 == 6) {
         CreateEntFactoryFromEntity(playerPtr, FACTORY(0x100, 77), 0);

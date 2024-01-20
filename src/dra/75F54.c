@@ -25,7 +25,7 @@ void func_80115F54(void) {
         func_80113EE0();
         PLAYER.velocityY = -0x1A000;
         PLAYER.ext.generic.unkAC = 0xC1;
-        PLAYER.blendMode = 0x30;
+        PLAYER.drawMode = 0x30;
         PLAYER.rotZ = 0x200;
         func_80118C28(1);
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x5900, 44), 0);
@@ -1536,9 +1536,9 @@ void func_80119F70(Entity* entity) {
             prim->g1 = (rand() & 7) + 1;
             prim->g2 = 0;
             prim->priority = PLAYER.zPriority + 4;
-            prim->blendMode = 0x11B;
+            prim->drawMode = 0x11B;
             if (rand() & 1) {
-                prim->blendMode = 0x17B;
+                prim->drawMode = 0x17B;
             }
             prim = prim->next;
         }
@@ -1566,10 +1566,10 @@ void func_80119F70(Entity* entity) {
             temp = func_80119E78(prim, hitboxY, hitboxX);
             D_8013804C[i].unk2--;
             if (temp < 0) {
-                prim->blendMode |= BLEND_VISIBLE;
+                prim->drawMode |= DRAW_HIDE;
                 prim->g0++;
             } else {
-                prim->blendMode &= ~BLEND_VISIBLE;
+                prim->drawMode &= ~DRAW_HIDE;
             }
             break;
         }

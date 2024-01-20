@@ -84,7 +84,7 @@ void func_8016E9E4(Entity* self) {
         prim->u1 = prim->u3 = 0xA8;
         prim->v2 = prim->v3 = 0xF0;
         prim->priority = 0xC2;
-        prim->blendMode = 8;
+        prim->drawMode = 8;
         prim = prim->next;
         for (i = 0; i < 6; i++) {
             prim->tpage = 0x1C;
@@ -94,7 +94,7 @@ void func_8016E9E4(Entity* self) {
             prim->v0 = prim->v1 = 0;
             prim->v2 = prim->v3 = 0x10;
             prim->priority = 0xC1;
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
         self->ext.et_8016E9E4.unk84 = 0x40;
@@ -103,7 +103,7 @@ void func_8016E9E4(Entity* self) {
         break;
     case 1:
         prim = &g_PrimBuf[self->primIndex];
-        prim->blendMode &= ~BLEND_VISIBLE;
+        prim->drawMode &= ~DRAW_HIDE;
         self->step++;
     case 2:
         self->posX.val += self->velocityX;
@@ -119,10 +119,10 @@ void func_8016E9E4(Entity* self) {
         if (++self->ext.et_8016E9E4.unk82 >= 6) {
             prim = &g_PrimBuf[self->primIndex];
             prim->clut = 0x19F;
-            prim->blendMode |= 0x35;
+            prim->drawMode |= 0x35;
             prim = prim->next;
             for (i = 0; i < 6; i++) {
-                prim->blendMode &= ~BLEND_VISIBLE;
+                prim->drawMode &= ~DRAW_HIDE;
                 prim = prim->next;
             }
             self->ext.et_8016E9E4.unk82 = 0;
@@ -137,7 +137,7 @@ void func_8016E9E4(Entity* self) {
         break;
     case 5:
         prim = &g_PrimBuf[self->primIndex];
-        prim->blendMode |= BLEND_VISIBLE;
+        prim->drawMode |= DRAW_HIDE;
         self->step++;
     case 6:
         self->ext.et_8016E9E4.unk7C =
@@ -258,7 +258,7 @@ void func_8016F198(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 16; i++) {
             prim->priority = 0xC2;
-            prim->blendMode = 8;
+            prim->drawMode = 8;
             prim = prim->next;
         }
         self->step++;
@@ -266,7 +266,7 @@ void func_8016F198(Entity* self) {
     case 1:
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 16; i++) {
-            prim->blendMode &= ~BLEND_VISIBLE;
+            prim->drawMode &= ~DRAW_HIDE;
             prim = prim->next;
         }
         self->step++;
@@ -380,7 +380,7 @@ void StopwatchCrashDoneSparkle(Entity* self) {
         self->flags = FLAG_UNK_04000000 | FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
 
         prim = &g_PrimBuf[self->primIndex];
-        prim->blendMode = 0x37;
+        prim->drawMode = 0x37;
         prim->priority = 0xC2;
         prim->u1 = prim->u3 = 0x3F;
         prim->tpage = 0x1A;
@@ -393,7 +393,7 @@ void StopwatchCrashDoneSparkle(Entity* self) {
         prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
 
         prim = prim->next;
-        prim->blendMode = 0x3F;
+        prim->drawMode = 0x3F;
         prim->priority = 0xC2;
         prim->tpage = 0x1A;
         prim->clut = 0x19F;
@@ -407,7 +407,7 @@ void StopwatchCrashDoneSparkle(Entity* self) {
 
         prim = prim->next;
         prim->priority = 0xC2;
-        prim->blendMode = 0x47F;
+        prim->drawMode = 0x47F;
         prim->tpage = 0x1A;
         prim->clut = 0x19F;
         prim->u0 = prim->u2 = 0xB;
@@ -420,7 +420,7 @@ void StopwatchCrashDoneSparkle(Entity* self) {
 
         prim = prim->next;
         prim->priority = 0xC2;
-        prim->blendMode = 0x47F;
+        prim->drawMode = 0x47F;
         prim->tpage = 0x1A;
         prim->clut = 0x19F;
         prim->u0 = prim->u2 = 0xB;
@@ -435,7 +435,7 @@ void StopwatchCrashDoneSparkle(Entity* self) {
         for (i = 0; i < 16; i++) {
             prim = prim->next;
             prim->priority = PLAYER.zPriority + 3;
-            prim->blendMode = 0x3F;
+            prim->drawMode = 0x3F;
             prim->tpage = 0x1A;
             prim->clut = 0x194;
             rand_uCoord = rand() % 5 * 0x10;
@@ -458,11 +458,11 @@ void StopwatchCrashDoneSparkle(Entity* self) {
         if (++self->ext.et_stopWatchSparkle.unk7C >= 0x10) {
             self->ext.et_stopWatchSparkle.unk7E = 4;
             prim = g_PrimBuf[self->primIndex].next;
-            prim->blendMode &= ~BLEND_VISIBLE;
+            prim->drawMode &= ~DRAW_HIDE;
             prim = prim->next;
-            prim->blendMode &= ~BLEND_VISIBLE;
+            prim->drawMode &= ~DRAW_HIDE;
             prim = prim->next;
-            prim->blendMode &= ~BLEND_VISIBLE;
+            prim->drawMode &= ~DRAW_HIDE;
             self->ext.et_stopWatchSparkle.unk80 = 0x10;
             self->ext.et_stopWatchSparkle.unk82 = 0;
             g_api.PlaySfx(0x614);
@@ -472,9 +472,9 @@ void StopwatchCrashDoneSparkle(Entity* self) {
     case 2:
         if (--self->ext.et_stopWatchSparkle.unk7C <= 0) {
             prim = &g_PrimBuf[self->primIndex];
-            prim->blendMode |= BLEND_VISIBLE;
+            prim->drawMode |= DRAW_HIDE;
             prim = prim->next;
-            prim->blendMode |= BLEND_VISIBLE;
+            prim->drawMode |= DRAW_HIDE;
             self->ext.et_stopWatchSparkle.unk84 = 0xFF;
             self->ext.et_stopWatchSparkle.unk8E = 1;
             self->ext.et_stopWatchSparkle.unk86 =
@@ -496,9 +496,9 @@ void StopwatchCrashDoneSparkle(Entity* self) {
             prim = &g_PrimBuf[self->primIndex];
             prim = prim->next;
             prim = prim->next;
-            prim->blendMode |= BLEND_VISIBLE;
+            prim->drawMode |= DRAW_HIDE;
             prim = prim->next;
-            prim->blendMode |= BLEND_VISIBLE;
+            prim->drawMode |= DRAW_HIDE;
             self->step++;
         }
         self->ext.et_stopWatchSparkle.unk82 =
@@ -617,7 +617,7 @@ void StopwatchCrashDoneSparkle(Entity* self) {
                     (self->ext.et_stopWatchSparkle.unk92 > -0x20 &&
                      self->ext.et_stopWatchSparkle.unk92 < 0x120)) {
                     prim->r0 = 0x80;
-                    prim->blendMode &= ~BLEND_VISIBLE;
+                    prim->drawMode &= ~DRAW_HIDE;
                     if (!(i & 3)) {
                         var_a1 = rand() % 0x200 + 0x200;
                     } else {
@@ -668,18 +668,18 @@ void StopwatchCrashDoneSparkle(Entity* self) {
                     self->posX.i.hi = selfX;
                     self->posY.i.hi = selfY;
                 } else {
-                    prim->blendMode |= BLEND_VISIBLE;
+                    prim->drawMode |= DRAW_HIDE;
                 }
             } else {
                 prim->r0 -= 8;
                 if (prim->r0 < 0x20U) {
-                    prim->blendMode |= BLEND_VISIBLE;
+                    prim->drawMode |= DRAW_HIDE;
                 }
             }
             prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 = prim->g2 =
                 prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->r0;
             self->ext.et_stopWatchSparkle.unk8E |=
-                ((prim->blendMode & BLEND_VISIBLE) ? 0 : 1);
+                ((prim->drawMode & DRAW_HIDE) ? 0 : 1);
             prim = prim->next;
         }
         if (++self->ext.et_stopWatchSparkle.unk8C >= 0x10) {
@@ -818,7 +818,7 @@ void func_8017091C(Entity* self) {
                 prim->v2 = prim->v3 = 0xD0;
             }
             prim->priority = 0xC1;
-            prim->blendMode = 0x20C;
+            prim->drawMode = 0x20C;
             prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
                 prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
                     prim->b3 = 0x80;
@@ -860,7 +860,7 @@ void func_8017091C(Entity* self) {
     case 1:
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 15; i++) {
-            prim->blendMode &= ~BLEND_VISIBLE;
+            prim->drawMode &= ~DRAW_HIDE;
             prim = prim->next;
         }
         self->step++;
@@ -968,7 +968,7 @@ void EntityStopWatchExpandingCircle(Entity* self) {
                 prim->v2 = prim->v3 = 0xD0;
             }
             prim->priority = 0xC2;
-            prim->blendMode = 0x200 | BLEND_VISIBLE;
+            prim->drawMode = 0x200 | DRAW_HIDE;
             prim = prim->next;
         }
         self->ext.et_80170F64.unkB0 = 0x1A;
@@ -980,7 +980,7 @@ void EntityStopWatchExpandingCircle(Entity* self) {
         for (i = 0; i < self->ext.et_80170F64.unk7C; i++) {
             prim = prim->next;
         }
-        prim->blendMode &= ~BLEND_VISIBLE;
+        prim->drawMode &= ~DRAW_HIDE;
         if (++self->ext.et_80170F64.unk7C >= 4) {
             self->ext.et_80170F64.unk7C = 0;
             self->step++;
@@ -992,7 +992,7 @@ void EntityStopWatchExpandingCircle(Entity* self) {
             prim = prim->next;
         }
         if (self->ext.et_80170F64.unk7C == 0) {
-            prim->blendMode = 0x235;
+            prim->drawMode = 0x235;
             prim->tpage = 0x1A;
             prim->clut = 0x19F;
             prim->u0 = prim->u2 = 0;
@@ -1007,7 +1007,7 @@ void EntityStopWatchExpandingCircle(Entity* self) {
             self->ext.et_80170F64.unk82 = 0x64;
         } else {
             self->ext.et_80170F64.unk80 += 2;
-            prim->blendMode |= BLEND_VISIBLE;
+            prim->drawMode |= DRAW_HIDE;
         }
         if (++self->ext.et_80170F64.unk7C >= 4) {
             // think this loop has to count down since we assign to i
@@ -1084,7 +1084,7 @@ void func_8017161C(Entity* self) {
             prim->tpage = 0x1A;
             prim->clut = 0x15F;
             prim->priority = self->zPriority = 0xC2;
-            prim->blendMode = 0x435;
+            prim->drawMode = 0x435;
             prim->u0 = ((rsin((s16)(i * 0x100)) << 5) >> 0xC) + 0x20;
             prim->v0 = -((rcos((s16)(i * 0x100)) << 5) >> 0xC) - 0x21;
             prim->u1 = ((rsin((s16)((i + 1) * 0x100)) << 5) >> 0xC) + 0x20;
@@ -1185,20 +1185,20 @@ void func_801719A4(Entity* self) {
             prim->u1 = prim->u3 = 0x98;
         }
         prim->priority = PLAYER.zPriority + 1;
-        prim->blendMode = 0x10A;
+        prim->drawMode = 0x10A;
         prim = prim->next;
 
         prim->tpage = 0x1A;
         prim->clut = 0x186;
         prim->priority = PLAYER.zPriority + 3;
-        prim->blendMode = 0x10A;
+        prim->drawMode = 0x10A;
 
         prim = prim->next;
 
         prim->tpage = 0x1A;
         prim->clut = 0x186;
         prim->priority = PLAYER.zPriority + 3;
-        prim->blendMode = 0x10A;
+        prim->drawMode = 0x10A;
         if (self->params & 0xFF00) {
             CreateEntFactoryFromEntity(self, FACTORY(0, 66), 0);
             D_801758D0 = self->ext.et_801719A4.unk94 = self->params >> 8;
@@ -1223,7 +1223,7 @@ void func_801719A4(Entity* self) {
         break;
     case 1:
         prim = &g_PrimBuf[self->primIndex];
-        prim->blendMode &= ~BLEND_VISIBLE;
+        prim->drawMode &= ~DRAW_HIDE;
         self->ext.et_801719A4.unk84.val += 0x18000;
         if (self->ext.et_801719A4.unk84.val > 0x19FFFF) {
             self->step++;
@@ -1258,7 +1258,7 @@ void func_801719A4(Entity* self) {
                 prim->u1 = prim->u3 = var_s4 + 0x1E;
                 prim->v0 = prim->v1 = 0x40;
                 prim->v2 = prim->v3 = 0x49;
-                prim->blendMode &= ~BLEND_VISIBLE;
+                prim->drawMode &= ~DRAW_HIDE;
                 prim = prim->next;
             } else {
                 self->ext.et_801719A4.unk92 = 0;
@@ -1271,18 +1271,18 @@ void func_801719A4(Entity* self) {
             prim->u1 = prim->u3 = var_s4 + 0x1E;
             prim->v0 = prim->v1 = 0x40;
             prim->v2 = prim->v3 = 0x49;
-            prim->blendMode &= ~BLEND_VISIBLE;
+            prim->drawMode &= ~DRAW_HIDE;
         }
         break;
     case 4:
         prim = &g_PrimBuf[self->primIndex];
         self->flags &= ~FLAG_UNK_40000;
         prim->priority = 0xC2;
-        prim->blendMode &= ~0x200;
+        prim->drawMode &= ~0x200;
         prim = prim->next;
-        prim->blendMode |= BLEND_VISIBLE;
+        prim->drawMode |= DRAW_HIDE;
         prim = prim->next;
-        prim->blendMode |= BLEND_VISIBLE;
+        prim->drawMode |= DRAW_HIDE;
         self->posX.i.hi += self->facingLeft ? 6 : -6;
         ySub = self->ext.et_801719A4.unk84.i.hi;
         self->posY.i.hi -= ySub;
@@ -1301,7 +1301,7 @@ void func_801719A4(Entity* self) {
             prim->g0 = prim->g1 = prim->g2 = prim->g3 = prim->r0 = prim->r1 =
                 prim->r2 = prim->r3 = 0x40;
             prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x60;
-            prim->blendMode |= 4;
+            prim->drawMode |= 4;
             g_api.PlaySfx(0x6A4);
             self->step++;
         }
@@ -1588,7 +1588,7 @@ void func_80172AE8(Entity* entity) {
             prim->y0 = prim->y1 = entity->posY.i.hi - 8;
             prim->y2 = prim->y3 = entity->posY.i.hi + 8;
             prim->priority = entity->zPriority;
-            prim->blendMode = 0x115;
+            prim->drawMode = 0x115;
             entity->ext.generic.unk7E.modeU16 = 0x60U;
             entity->step++;
         } else {
@@ -1657,7 +1657,7 @@ void EntitySubwpnBible(Entity* self) {
         prim->u1 = prim->u3 = 0xA8;
         prim->v2 = prim->v3 = 0xF0;
         prim->priority = PLAYER.zPriority + 1;
-        prim->blendMode = 0x108;
+        prim->drawMode = 0x108;
         self->ext.et_BibleSubwpn.unk84 = self->facingLeft ? 0x20 : -0x20;
         self->ext.et_BibleSubwpn.unkB0 = 5;
         func_8015FAB8(self);
@@ -1667,7 +1667,7 @@ void EntitySubwpnBible(Entity* self) {
         break;
     case 1:
         prim = &g_PrimBuf[self->primIndex];
-        prim->blendMode &= ~BLEND_VISIBLE;
+        prim->drawMode &= ~DRAW_HIDE;
         self->ext.et_BibleSubwpn.unk86++;
         self->step++;
     case 2:
@@ -1777,7 +1777,7 @@ void EntityGiantSpinningCross(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         while (prim != NULL) {
             prim->tpage = 0x1C;
-            prim->blendMode = 0x100 | BLEND_VISIBLE;
+            prim->drawMode = 0x100 | DRAW_HIDE;
             prim = prim->next;
         }
         self->ext.giantcross.unkB0 = 0xD;
@@ -1918,7 +1918,7 @@ void EntityGiantSpinningCross(Entity* self) {
         temp_a3 = vectors_ptr[2];
         prim->type = 4;
         gte_nclip();
-        prim->blendMode = 8;
+        prim->drawMode = 8;
         gte_stopz(&nclip);
         if (nclip < 0) {
             continue;
@@ -1926,7 +1926,7 @@ void EntityGiantSpinningCross(Entity* self) {
         gte_stsxy3(&prim->x0, &prim->x1, &prim->x2);
         gte_ldv0(temp_a3);
         gte_rtps();
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         if (z < 16) {
             priority = 0x1F6;
         } else if (z >= 999) {

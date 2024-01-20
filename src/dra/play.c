@@ -434,7 +434,7 @@ void HandleGameOver(void) {
             SetTexturedPrimRect(prim, 0, 96, 0xFF, 0x20, 0, 0);
             func_801072BC(prim);
             prim->tpage = 8;
-            prim->blendMode = 0x75;
+            prim->drawMode = 0x75;
             prim->p1 = 0x60;
             prim = prim->next;
 
@@ -442,21 +442,21 @@ void HandleGameOver(void) {
             func_801072DC(prim);
             prim->tpage = 0x8A;
             prim->clut = 0x100;
-            prim->blendMode = 4;
+            prim->drawMode = DRAW_COLORS;
             prim = prim->next;
 
             SetTexturedPrimRect(prim, 128, 0, 128, 240, 0, 0);
             func_801072DC(prim);
             prim->tpage = 0x8B;
             prim->clut = 0x100;
-            prim->blendMode = 4;
+            prim->drawMode = DRAW_COLORS;
             prim = prim->next;
 
             for (i = 0; i < 256; i++) {
                 SetTexturedPrimRect(prim, i, 0, 1, 240, i & 63, 0);
                 prim->tpage = i / 64 + 0x10C;
                 prim->priority = 0x1FF;
-                prim->blendMode = 0;
+                prim->drawMode = DRAW_DEFAULT;
                 prim->p1 = (rand() & 0x1F) + 1;
                 prim = prim->next;
             }
@@ -586,7 +586,7 @@ void HandleGameOver(void) {
         }
 
         prim->p1 = 4;
-        prim->blendMode = 0x31;
+        prim->drawMode = 0x31;
         g_GameStep++;
         break;
     case Gameover_7:
@@ -598,7 +598,7 @@ void HandleGameOver(void) {
         prim->p1 = 4;
         yScroll = prim->v0;
         if (yScroll == 0x60) {
-            prim->blendMode = 4;
+            prim->drawMode = DRAW_COLORS;
             prim->p1 = 0;
             prim->next->p1 = 1;
             yScroll = 0x40;

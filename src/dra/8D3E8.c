@@ -686,7 +686,7 @@ void func_8012EF2C(void) {
     s32 i;
 
     PLAYER.palette = 0x104;
-    PLAYER.blendMode = 0;
+    PLAYER.drawMode = DRAW_DEFAULT;
 // HD version lacks this line!
 #if defined(VERSION_US)
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 2;
@@ -900,7 +900,7 @@ void EntityGiantSpinningCross(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         while (prim != NULL) {
             prim->tpage = 0x1C;
-            prim->blendMode = 0x100 | BLEND_VISIBLE;
+            prim->drawMode = 0x100 | DRAW_HIDE;
             prim = prim->next;
         }
         func_8011A290(self);
@@ -1040,7 +1040,7 @@ void EntityGiantSpinningCross(Entity* self) {
         temp_a3 = vectors_ptr[2];
         prim->type = 4;
         gte_nclip();
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
         gte_stopz(&nclip);
         if (nclip < 0) {
             continue;
@@ -1048,7 +1048,7 @@ void EntityGiantSpinningCross(Entity* self) {
         gte_stsxy3(&prim->x0, &prim->x1, &prim->x2);
         gte_ldv0(temp_a3);
         gte_rtps();
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         if (z < 16) {
             priority = 0x1B6;
         } else if (z >= 999) {

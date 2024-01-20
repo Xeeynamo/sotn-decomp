@@ -217,7 +217,7 @@ void EntityWeaponAttack(Entity* self) {
         self->palette += sndEvent->unk8;
         self->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
         self->zPriority = PLAYER.zPriority - 2;
-        self->blendMode = 0x30;
+        self->drawMode = 0x30;
         SetWeaponProperties(self, 0);
         self->step++;
     }

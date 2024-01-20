@@ -277,7 +277,7 @@ void func_80160FC4(Entity* self) {
         self->unk4C = D_80154C80;
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000 | FLAG_UNK_10000;
-        self->blendMode = 0x30;
+        self->drawMode = 0x30;
         self->drawFlags = 0xB;
         self->unk6C = 0x60;
         posX = D_80154C50[paramsLo];
@@ -419,13 +419,13 @@ void func_8016147C(Entity* self) {
         i = 0;
         tilePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
         while (1) {
-            tilePrim->blendMode = temp_s5->blendMode;
+            tilePrim->drawMode = temp_s5->drawMode;
             tilePrim->priority = PLAYER.zPriority + temp_s5->priority;
             if (tilePrim->next == NULL) {
                 tilePrim->w = 0;
                 tilePrim->x0 = 0;
                 tilePrim->y0 = 0;
-                tilePrim->blendMode &= ~BLEND_VISIBLE;
+                tilePrim->drawMode &= ~DRAW_HIDE;
                 break;
             }
             tilePrim->posX.i.hi = selfXPos;
@@ -526,7 +526,7 @@ void func_8016147C(Entity* self) {
                 tilePrim->w = 0;
                 tilePrim->x0 = 0;
                 tilePrim->y0 = 0;
-                tilePrim->blendMode &= ~BLEND_VISIBLE;
+                tilePrim->drawMode &= ~DRAW_HIDE;
                 return;
             }
             tilePrim->posX.i.hi = tilePrim->x0;
@@ -563,7 +563,7 @@ void func_8016147C(Entity* self) {
                 tilePrim->posY.val =
                     (tilePrim->posY.val + tilePrim->velocityY.val);
                 if (--tilePrim->delay < 0) {
-                    tilePrim->blendMode |= 8;
+                    tilePrim->drawMode |= 8;
                 }
                 break;
             case 4:
@@ -579,7 +579,7 @@ void func_8016147C(Entity* self) {
                         tilePrim->velocityY.val >>= 1;
                     }
                     if (var_a2 == 0x18) {
-                        tilePrim->blendMode = 2;
+                        tilePrim->drawMode = 2;
                     }
                 }
                 tilePrim->h = thickness;
@@ -587,7 +587,7 @@ void func_8016147C(Entity* self) {
                 break;
             case 8:
                 if (tilePrim->timer == 0) {
-                    tilePrim->blendMode &= ~BLEND_VISIBLE;
+                    tilePrim->drawMode &= ~DRAW_HIDE;
                     tilePrim->r0 += 0xFF;
                     tilePrim->g0 += 0xFF;
                     tilePrim->b0 += 0xFF;
@@ -598,7 +598,7 @@ void func_8016147C(Entity* self) {
                     if ((*D_80097448 == 0) ||
                         (((PLAYER.posY.i.hi - *D_80097448) + 0x19) >=
                          tilePrim->posY.i.hi)) {
-                        tilePrim->blendMode |= BLEND_VISIBLE;
+                        tilePrim->drawMode |= DRAW_HIDE;
                     }
                 } else {
                     tilePrim->timer--;
@@ -669,14 +669,14 @@ void func_80161C2C(Entity* self) {
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         if ((self->animFrameIdx == 8) && (self->unk4C != D_80154C80)) {
-            self->blendMode = 0x10;
+            self->drawMode = DRAW_TPAGE;
             if (!(params & 1) && (self->animFrameDuration == step)) {
                 CreateEntFactoryFromEntity(self, FACTORY(0x400, 4), 0);
             }
         }
 
         if ((self->animFrameIdx == 16) && (self->unk4C == D_80154C80)) {
-            self->blendMode = 0x10;
+            self->drawMode = DRAW_TPAGE;
         }
 
         if (self->animFrameDuration < 0) {
@@ -739,7 +739,7 @@ void func_80161FF0(Entity* self) {
         prim->tpage = temp_s2->tpage;
         prim->clut = temp_s2->clut;
         prim->priority = PLAYER.zPriority + 8;
-        prim->blendMode = 0x31;
+        prim->drawMode = 0x31;
         self->velocityX = temp_s2->velocityX;
         self->velocityY = temp_s2->velocityY;
         self->posX.i.hi += temp_s2->xOffset;
@@ -811,7 +811,7 @@ void func_801623E0(Entity* entity) {
         prim->tpage = 0x1A;
         prim->clut = 0x13E;
         prim->priority = PLAYER.zPriority + 8;
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         entity->flags = FLAG_UNK_10000 | FLAG_UNK_40000 | FLAG_UNK_04000000 |
                         FLAG_HAS_PRIMS;
         entity->step++;
@@ -864,7 +864,7 @@ void func_80162604(Entity* entity) {
             prim->u0 = 0;
             prim->clut = 0x162;
             prim->priority = PLAYER.zPriority - 4;
-            prim->blendMode = 0;
+            prim->drawMode = DRAW_DEFAULT;
             entity->flags = FLAG_UNK_10000 | FLAG_UNK_40000 |
                             FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
             entity->step++;
@@ -939,7 +939,7 @@ void func_80162870(Entity* self) {
         prim->tpage = 0x1A;
         prim->clut = D_80154EAC[params];
         prim->priority = PLAYER.zPriority - 16;
-        prim->blendMode = 8;
+        prim->drawMode = 8;
         self->flags = FLAG_HAS_PRIMS | FLAG_UNK_10000;
         if (params == 3) {
             self->flags |= FLAG_UNK_04000000;
@@ -956,7 +956,7 @@ void func_80162870(Entity* self) {
             self->rotX = self->rotY = 0x100;
             self->ext.et_80162870.unk82 = 0x10;
             self->step++;
-            g_PrimBuf[self->primIndex].blendMode = 0x31;
+            g_PrimBuf[self->primIndex].drawMode = 0x31;
         }
         break;
     case 2:

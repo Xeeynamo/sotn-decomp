@@ -81,7 +81,7 @@ void func_801C0B24(Entity* entity) {
         entity->palette = 0x8195;
         entity->animSet = ANIMSET_DRA(2);
         entity->animCurFrame = D_80181F1C[entity->params];
-        entity->blendMode = 0x10;
+        entity->drawMode = DRAW_TPAGE;
         entity->step++;
     } else {
         entity->animFrameDuration++;
@@ -106,7 +106,7 @@ void EntityUnkId15(Entity* entity) {
         entity->palette = 0x8195;
         entity->animSet = ANIMSET_DRA(5);
         entity->animCurFrame = 1;
-        entity->blendMode = 0x10;
+        entity->drawMode = DRAW_TPAGE;
         entity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
         temp_v0 = D_80181EDC[entity->params];
         entity->rotX = temp_v0;
@@ -154,7 +154,7 @@ void func_801C0D08(Entity* self) {
             prim->b0 = 255;
             prim->b1 = 16;
             prim->priority = self->zPriority + 1;
-            prim->blendMode |= 0x37;
+            prim->drawMode |= 0x37;
             prim = prim->next;
         }
         break;
@@ -391,11 +391,11 @@ void EntityIntenseExplosion(Entity* entity) {
         entity->palette = 0x8170;
         entity->animSet = ANIMSET_DRA(5);
         entity->animCurFrame = 1;
-        entity->blendMode = 0x30;
+        entity->drawMode = 0x30;
 
         if (entity->params & 0xF0) {
             entity->palette = 0x8195;
-            entity->blendMode = 0x10;
+            entity->drawMode = DRAW_TPAGE;
         }
 
         temp_v0 = entity->params & 0xFF00;
@@ -496,7 +496,7 @@ void func_801C1900(Entity* self) {
         self->unk6C = 0x70;
         self->zPriority = 192;
         self->drawFlags |= 0xC;
-        self->blendMode |= 0x30;
+        self->drawMode |= 0x30;
 
         switch (self->ext.generic.unk84.U8.unk0) {
         case 1:
@@ -635,7 +635,7 @@ void EntitySoulStealOrb(Entity* self) {
             return;
         }
         InitializeEntity(g_InitializeData0);
-        g_PrimBuf[primIndex].blendMode = BLEND_VISIBLE;
+        g_PrimBuf[primIndex].drawMode = DRAW_HIDE;
         self->primIndex = primIndex;
         self->animSet = ANIMSET_DRA(0);
         self->flags |= FLAG_HAS_PRIMS;
@@ -699,7 +699,7 @@ void EntitySoulStealOrb(Entity* self) {
         prim->u1 = prim->u3 = *(temp_d++);
         prim->v2 = prim->v3 = *(temp_d++);
         prim->priority = self->zPriority;
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         break;
     }
 }
@@ -716,7 +716,7 @@ void EntityRoomForeground(Entity* entity) {
         entity->unk5A = objInit->unk4.s;
         entity->palette = objInit->palette;
         entity->drawFlags = objInit->drawFlags;
-        entity->blendMode = objInit->blendMode;
+        entity->drawMode = objInit->drawMode;
 
         if (objInit->unkC != 0) {
             entity->flags = objInit->unkC;
@@ -800,7 +800,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
     prim->y0 = prim->y1 = 0xD0;
     prim->y2 = prim->y3 = 0xDF;
     prim->priority = 0x1EE;
-    prim->blendMode = 0x11;
+    prim->drawMode = 0x11;
     prim = prim->next;
 
     prim->tpage = 0x1F;
@@ -812,7 +812,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
     prim->u1 = 0x10;
     prim->v1 = 0x18;
     prim->priority = 0x1EF;
-    prim->blendMode = 0;
+    prim->drawMode = DRAW_DEFAULT;
     prim = prim->next;
 
     prim->tpage = 0x1F;
@@ -824,7 +824,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
     prim->u1 = 0x10;
     prim->v1 = 0x18;
     prim->priority = 0x1EF;
-    prim->blendMode = 0;
+    prim->drawMode = DRAW_DEFAULT;
     prim = prim->next;
 
     prim->type = 4;
@@ -839,7 +839,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
     prim->x1 = prim->x3 = xpos + textWidth + 0x18;
     prim->v2 = prim->v3 = 0x16;
     prim->priority = 0x1EF;
-    prim->blendMode = 0;
+    prim->drawMode = DRAW_DEFAULT;
 
     xpos += 0x10;
 
@@ -856,7 +856,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
             prim->v1 = 8;
             prim->u1 = 8;
             prim->priority = 0x1F0;
-            prim->blendMode = 0;
+            prim->drawMode = DRAW_DEFAULT;
             prim->y0 = 0xD4;
             prim = prim->next;
             xpos += 8;

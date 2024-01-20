@@ -56,7 +56,7 @@ void EntityEnemyBlood(Entity* self) {
                 prim->b0 = 16;
                 prim->g0 = 0;
                 prim->priority = self->zPriority;
-                prim->blendMode = 2;
+                prim->drawMode = 2;
                 i--;
                 if (i != 0) {
                     prim++;

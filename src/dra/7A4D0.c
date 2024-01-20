@@ -556,7 +556,7 @@ void func_8011B5A4(Entity* self) {
         self->palette = 0x8195;
         paramsHi = self->params >> 8;
         paramsLo = self->params & 0xFF;
-        self->blendMode = 0x10;
+        self->drawMode = DRAW_TPAGE;
         self->drawFlags = 3;
 
         posX = D_800AD54C[paramsLo];
@@ -682,7 +682,7 @@ void EntityUnkId24(Entity* self) {
         if (upperparams == 0) {
             self->posX.i.hi -= 32 - (rand() & 63);
             self->posY.i.hi -= 48 - (rand() & 63);
-            self->blendMode = 0x10;
+            self->drawMode = DRAW_TPAGE;
             self->palette = 0x8195;
         } else {
             self->posY.i.hi -= 12 - rand() % 24;
@@ -750,7 +750,7 @@ void EntityGravityBootBeam(Entity* self) {
             prim->b3 = prim->g3 = prim->r3 = prim->b2 = prim->g2 = prim->r2 =
                 0x40;
             prim->priority = PLAYER.zPriority - 2;
-            prim->blendMode = 0x537;
+            prim->drawMode = 0x537;
         }
         self->step++;
         break;
@@ -805,7 +805,7 @@ void EntityWingSmashTrail(Entity* entity) {
         entity->zPriority = PLAYER.zPriority - 2;
         entity->drawFlags = PLAYER.drawFlags | 0xB;
         entity->unk6C = 0x80; // a lifetime counter
-        entity->blendMode = 0x30;
+        entity->drawMode = 0x30;
         entity->rotZ = PLAYER.rotZ;
         entity->facingLeft = PLAYER.facingLeft;
         entity->palette = 0x8102;

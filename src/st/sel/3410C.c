@@ -39,7 +39,7 @@ void HandleMainMenu(void) {
             prim->tpage = 0x18;
             prim->clut = 0x20;
             prim->priority = 1;
-            prim->blendMode = 8;
+            prim->drawMode = 8;
             prim = prim->next;
         }
         for (i = 0; i < 4; i++) {
@@ -55,7 +55,7 @@ void HandleMainMenu(void) {
             prim->tpage = 0x18;
             prim->clut = 0x21;
             prim->priority = 1;
-            prim->blendMode = 8;
+            prim->drawMode = 8;
             prim = prim->next;
         }
         for (i = 0; i < 4; i++) {
@@ -64,7 +64,7 @@ void HandleMainMenu(void) {
             prim->v1 = 0xF0;
             prim->tpage = i + 0x88;
             prim->clut = 0x10;
-            prim->blendMode = 8;
+            prim->drawMode = 8;
             prim = prim->next;
         }
         for (i = 0; i < 4; i++) {
@@ -74,7 +74,7 @@ void HandleMainMenu(void) {
             prim->v1 = 0x88;
             prim->tpage = i + 0x8C;
             prim->priority = 2;
-            prim->blendMode = 8;
+            prim->drawMode = 8;
             prim = prim->next;
         }
         prim->x0 = 0x101;
@@ -84,7 +84,7 @@ void HandleMainMenu(void) {
         prim->tpage = 0x18;
         prim->clut = 0x22;
         prim->priority = 1;
-        prim->blendMode = 8;
+        prim->drawMode = 8;
         prim = prim->next;
 
         prim->v0 = 0x90;
@@ -93,7 +93,7 @@ void HandleMainMenu(void) {
         prim->tpage = 0x18;
         prim->clut = 0x22;
         prim->priority = 1;
-        prim->blendMode = 8;
+        prim->drawMode = 8;
         func_801B18F4();
         D_801BB014 = 0;
         D_8003C9A4++;
@@ -103,7 +103,7 @@ void HandleMainMenu(void) {
         D_801BB014 += 8;
         for (i = 0, prim = &g_PrimBuf[D_801BB010]; prim != NULL;
              prim = prim->next, i++) {
-            prim->blendMode = 4;
+            prim->drawMode = DRAW_COLORS;
             func_801B1CFC((POLY_GT4*)prim, D_801BB014);
             if (i == 7 || i == 8 || i == 9 || i == 10) {
                 prim->r0 = D_801BB014 * 3 / 4;
@@ -111,7 +111,7 @@ void HandleMainMenu(void) {
                 prim->b0 = D_801BB014 * 3 / 4;
             }
             if (i == 15 || i == 16) {
-                prim->blendMode = 0x15;
+                prim->drawMode = 0x15;
             }
         }
         if (D_801BB014 == 0x80) {
@@ -123,9 +123,9 @@ void HandleMainMenu(void) {
         for (i = 0, prim = &g_PrimBuf[D_801BB010]; prim != NULL;
              prim = prim->next, i++) {
             if (i < 3) {
-                prim->blendMode = 8;
+                prim->drawMode = 8;
                 if (g_Timer & 0x30) {
-                    prim->blendMode = 0;
+                    prim->drawMode = DRAW_DEFAULT;
                 }
             }
             if (i < 15 || i > 16) {
@@ -239,9 +239,9 @@ void HandleMainMenu(void) {
         }
         prim = &g_PrimBuf[D_801BB010];
         if (g_Timer & 0x1C) {
-            prim->blendMode = 0;
+            prim->drawMode = DRAW_DEFAULT;
         } else {
-            prim->blendMode = 8;
+            prim->drawMode = 8;
         }
         g_StageId = D_801804D4[D_800987B4];
         func_801B1F4C(1);
@@ -270,10 +270,10 @@ void HandleMainMenu(void) {
         D_801BB014 -= 8;
         for (i = 0, prim = &g_PrimBuf[D_801BB010]; prim != NULL;
              prim = prim->next, i++) {
-            prim->blendMode = 4;
+            prim->drawMode = DRAW_COLORS;
             func_801B1CFC((POLY_GT4*)prim, D_801BB014);
             if (i == 15 || i == 16) {
-                prim->blendMode = 0x15;
+                prim->drawMode = 0x15;
             }
         }
         if (D_801BB014 == 0) {
@@ -358,7 +358,7 @@ void func_801B4C68(void) {
     prim->x0 = prim->x2 = 0;
     prim->y0 = prim->y1 = 0;
     prim->priority = 0x40;
-    prim->blendMode = 0;
+    prim->drawMode = DRAW_DEFAULT;
     PLAYER.step++;
 }
 
@@ -513,7 +513,7 @@ void func_801B519C(void) {
             prim->v0 = prim->v1 = v01;
             prim->v2 = prim->v3 = 0x38 + uvOfst;
             prim->priority = 0x41;
-            prim->blendMode = 0x71;
+            prim->drawMode = 0x71;
             prim = prim->next;
         }
         ++ent->step;

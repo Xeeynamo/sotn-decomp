@@ -176,7 +176,7 @@ void func_801AC084(s32 arg0, s32 ypos) {
         prim->tpage = 0xC;
         prim->clut = 0x200;
         prim->priority = 0x11;
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
     }
 }
@@ -198,7 +198,7 @@ void InitMainMenuGraphics(void) {
     prim->tpage = 0xD;
     prim->clut = 0x201;
     prim->priority = 0x10;
-    prim->blendMode = 0;
+    prim->drawMode = DRAW_DEFAULT;
 
     for (; i < NUM_MENU_OPTIONS; i++) {
         D_801BAF18[i + 1][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
@@ -210,9 +210,9 @@ void InitMainMenuGraphics(void) {
         prim->clut = 0x200;
         prim->priority = 0x10;
         if (i == 0) {
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
         } else {
-            prim->blendMode = 4;
+            prim->drawMode = DRAW_COLORS;
         }
         y += 40;
         x += 64;
@@ -225,7 +225,7 @@ void InitMainMenuGraphics(void) {
     prim->tpage = 0xC;
     prim->clut = 0x200;
     prim->priority = 0x10;
-    prim->blendMode = 0;
+    prim->drawMode = DRAW_DEFAULT;
 
     prim = prim->next;
     SetTexturedPrimRect(prim, 32, 176, 16, 16, 0xA0, 0x70);
@@ -233,7 +233,7 @@ void InitMainMenuGraphics(void) {
     prim->tpage = 0xC;
     prim->clut = 0x200;
     prim->priority = 0x10;
-    prim->blendMode = 0;
+    prim->drawMode = DRAW_DEFAULT;
 
     prim = prim->next;
     SetTexturedPrimRect(prim, 32, 176, 16, 16, 0xA0, 0x60);
@@ -241,7 +241,7 @@ void InitMainMenuGraphics(void) {
     prim->tpage = 0xC;
     prim->clut = 0x202;
     prim->priority = 0x10;
-    prim->blendMode = 0;
+    prim->drawMode = DRAW_DEFAULT;
 
     prim = prim->next;
     SetTexturedPrimRect(prim, 32, 176, 16, 16, 0xA0, 0x80);
@@ -249,7 +249,7 @@ void InitMainMenuGraphics(void) {
     prim->tpage = 0xC;
     prim->clut = 0x200;
     prim->priority = 0x10;
-    prim->blendMode = 0;
+    prim->drawMode = DRAW_DEFAULT;
 
     D_801BAF18[7][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
     prim = &g_PrimBuf[D_801BAF18[7][0]];
@@ -258,7 +258,7 @@ void InitMainMenuGraphics(void) {
     prim->tpage = 0xC;
     prim->clut = 0x202;
     prim->priority = 0x10;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
 
     D_801BAF18[8][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
     prim = &g_PrimBuf[D_801BAF18[8][0]];
@@ -267,7 +267,7 @@ void InitMainMenuGraphics(void) {
     prim->tpage = 0xC;
     prim->clut = 0x200;
     prim->priority = 0x30;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
 
     D_801BAF18[9][0] = g_api.AllocPrimitives(PRIM_SPRT, 3);
     prim = &g_PrimBuf[D_801BAF18[9][0]];
@@ -286,7 +286,7 @@ void InitMainMenuGraphics(void) {
         prim->tpage = 0xD;
         prim->clut = 0x202;
         prim->priority = 0x10;
-        prim->blendMode = 8;
+        prim->drawMode = 8;
         prim = prim->next;
     }
 
@@ -297,7 +297,7 @@ void InitMainMenuGraphics(void) {
     prim->tpage = 0xD;
     prim->clut = 0x204;
     prim->priority = 0x30;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
 
     D_801BAF18[GFX_WND_SAVE_SUMMARY][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
     prim = &g_PrimBuf[D_801BAF18[11][0]];
@@ -306,7 +306,7 @@ void InitMainMenuGraphics(void) {
     prim->tpage = 0xC;
     prim->clut = 0x202;
     prim->priority = 0x10;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
 
     D_801BAF18[GFX_UNK_12][0] = g_api.AllocPrimitives(PRIM_SPRT, 8);
     func_801AC084(0xC, 0);
@@ -323,7 +323,7 @@ void InitMainMenuGraphics(void) {
     prim->tpage = 0xC;
     prim->clut = 0x202;
     prim->priority = 0x10;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
 
     D_801BAF18[GFX_WND_CARD_2][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
     prim = &g_PrimBuf[D_801BAF18[14][0]];
@@ -337,7 +337,7 @@ void InitMainMenuGraphics(void) {
     prim->tpage = 0xD;
     prim->clut = 0x202;
     prim->priority = 0x10;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
 
     D_801BAF18[15][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
     prim = &g_PrimBuf[D_801BAF18[15][0]];
@@ -351,7 +351,7 @@ void InitMainMenuGraphics(void) {
     prim->tpage = 6;
     prim->clut = 0x1A1;
     prim->priority = 0x10;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
 
     D_801BAF18[16][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
     prim = &g_PrimBuf[D_801BAF18[16][0]];
@@ -365,7 +365,7 @@ void InitMainMenuGraphics(void) {
     prim->tpage = 6;
     prim->clut = 0x1A1;
     prim->priority = 0x20;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
 
     D_801BAF18[17][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
     prim = &g_PrimBuf[D_801BAF18[17][0]];
@@ -379,7 +379,7 @@ void InitMainMenuGraphics(void) {
     prim->tpage = 6;
     prim->clut = 0x1A1;
     prim->priority = 0x20;
-    prim->blendMode = 0;
+    prim->drawMode = DRAW_DEFAULT;
 
     D_801BAF18[18][0] = g_api.AllocPrimitives(PRIM_GT4, 2);
     prim = &g_PrimBuf[D_801BAF18[18][0]];
@@ -388,14 +388,14 @@ void InitMainMenuGraphics(void) {
     prim->tpage = 0xC;
     prim->clut = 0x202;
     prim->priority = 0x10;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     prim = prim->next;
     SetTexturedPrimRect(prim, 168, 128, 48, 16, 0xB0, 0x80);
     func_801B1D88(prim);
     prim->tpage = 0xC;
     prim->clut = 0x200;
     prim->priority = 0x10;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
 
     D_801BAF18[19][0] = g_api.AllocPrimitives(PRIM_SPRT, 8);
     func_801AC084(0x13, -0x28);
@@ -412,13 +412,13 @@ void InitMainMenuGraphics(void) {
     prim->tpage = 6;
     prim->clut = 0x1A1;
     prim->priority = 0x20;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
 }
 
-void func_801ACBE4(s32 gfxId, u16 blendMode) {
+void func_801ACBE4(s32 gfxId, u16 drawMode) {
     Primitive* prim = &g_PrimBuf[D_801BAF18[gfxId][0]];
     while (prim != NULL) {
-        prim->blendMode = blendMode;
+        prim->drawMode = drawMode;
         prim = prim->next;
     }
 }
@@ -444,7 +444,7 @@ void func_801ACC7C(void) {
         func_801B1D88(prim);
         prim->tpage = i + 137;
         prim->clut = 0x210;
-        prim->blendMode = 4;
+        prim->drawMode = DRAW_COLORS;
         prim = prim->next;
     }
 
@@ -458,7 +458,7 @@ void func_801ACC7C(void) {
         prim->v0 = 240;
         func_801B1CFC(prim, 255);
         prim->priority = 0x1FD;
-        prim->blendMode = 0x51;
+        prim->drawMode = 0x51;
         prim = prim->next;
     }
 }
@@ -478,10 +478,10 @@ s32 func_801ACDFC(void) {
     if (var_s1 == 0) {
         do {
             prim = &g_PrimBuf[D_801BAFC4];
-            prim->blendMode = 8;
+            prim->drawMode = 8;
         } while (0);
         prim = prim->next;
-        prim->blendMode = 8;
+        prim->drawMode = 8;
     } else {
         return 0;
     }
@@ -492,7 +492,7 @@ s32 func_801ACEC0(void) {
     s32 var_s0 = prim->r0;
 
     var_s0 += 0x10;
-    prim->blendMode = 0x51;
+    prim->drawMode = 0x51;
 
     if (var_s0 > 255) {
         var_s0 = 255;
@@ -500,7 +500,7 @@ s32 func_801ACEC0(void) {
 
     func_801B1CFC(prim, var_s0);
     prim = prim->next;
-    prim->blendMode = 0x51;
+    prim->drawMode = 0x51;
     func_801B1CFC(prim, var_s0);
 
     if (g_api.func_80131F68()) {
@@ -609,37 +609,37 @@ void DrawNavigationTips(NavigationTips mode) {
     switch (mode) {
     case Tips_Generic:
         SetPrimRect(prim, 32, 176, 16, 16);
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         prim = prim->next;
         SetPrimRect(prim, 32, 192, 16, 16);
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         prim = prim->next;
         SetPrimRect(prim, 32, 208, 16, 16);
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         break;
 
     case Tips_Input:
         SetPrimRect(prim, 288, 32, 16, 16);
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         prim = prim->next;
         SetPrimRect(prim, 288, 48, 16, 16);
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         prim = prim->next;
         SetPrimRect(prim, 288, 64, 16, 16);
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         prim = prim->next;
         SetPrimRect(prim, 288, 80, 16, 16);
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         break;
 
     case Tips_YesNo:
     case Tips_NoYes:
         prim = prim->next;
         SetPrimRect(prim, 32, 192, 16, 16);
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         prim = prim->next;
         SetPrimRect(prim, 32, 208, 16, 16);
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         if (mode == Tips_YesNo) {
             func_801AD1D0();
         } else {
@@ -650,16 +650,16 @@ void DrawNavigationTips(NavigationTips mode) {
     case Tips_Confirm:
         prim = prim->next;
         SetPrimRect(prim, 32, 192, 16, 16);
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         DrawImages8x8(STR_CONFIRM, 52, 196, 1);
         break;
 
     case Tips_MenuNavigation:
         SetPrimRect(prim, 32, 184, 16, 16);
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         prim = prim->next;
         SetPrimRect(prim, 32, 200, 16, 16);
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         break;
     }
 }
@@ -1010,7 +1010,7 @@ void func_801AE6D0(void) {
     func_801ACBE4(0x12, 0x11);
     prim = g_PrimBuf[D_801BAF18[18][0]].next;
     SetTexturedPrimRect(prim, 168, (D_801BAF08 % 3) + 127, 48, 16, 0xB0, 0x80);
-    prim->blendMode = 0;
+    prim->drawMode = DRAW_DEFAULT;
     func_801ACBE4(0x13, 0);
     func_801ACBE4(0x14, 0);
     func_801ACFBC(port, slot, 10);

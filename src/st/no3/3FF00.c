@@ -69,7 +69,7 @@ void EntityRoomTransition2(Entity* self) {
                 prim->x0 = 0;
                 prim->y0 = 0;
                 prim->r0 = prim->b0 = prim->g0 = 0;
-                prim->blendMode = 0x35;
+                prim->drawMode = 0x35;
                 self->step++;
             } else {
                 self->ext.roomTransition2.timer++;
@@ -160,7 +160,7 @@ void EntityDeathStolenItem(Entity* self) {
         prim->u1 = prim->u3 = (params & 7) << 4 | 0xF;
         prim->v0 = prim->v1 = (params & 0x18) << 1 | 0x81;
         prim->v2 = prim->v3 = (params & 0x18) << 1 | 0x8F;
-        prim->blendMode = 8;
+        prim->drawMode = 8;
         self->step++;
         break;
 
@@ -182,7 +182,7 @@ void EntityDeathStolenItem(Entity* self) {
         temp1 = temp8 >> 4;
         prim->x0 = prim->x2 = self->posX.i.hi - temp1;
         prim->y0 = prim->y1 = self->posY.i.hi - temp1;
-        prim->blendMode = 6;
+        prim->drawMode = 6;
         temp2 = temp1 << 1;
         prim->x1 = prim->x3 = prim->x0 + temp2;
         prim->y2 = prim->y3 = prim->y0 + temp2;
@@ -304,10 +304,10 @@ void EntityDeath(Entity* self) {
                 for (i = 0; prim != NULL; i++) {
                     if (i != 0) {
                         prim->clut = self->palette;
-                        prim->blendMode = 0x35;
+                        prim->drawMode = 0x35;
                     } else {
                         prim->clut = 0x15F;
-                        prim->blendMode = 0x55;
+                        prim->drawMode = 0x55;
                     }
                     prim->tpage = self->unk5A >> 2;
                     prim->u0 = prim->u2 = 0x10;
@@ -385,7 +385,7 @@ void EntityDeath(Entity* self) {
 
         if (self->ext.death.unk7C == 128) {
             while (prim != NULL) {
-                prim->blendMode = 8;
+                prim->drawMode = 8;
                 prim = prim->next;
             }
             self->animCurFrame = 16;
@@ -618,7 +618,7 @@ void EntityUnkId5E(Entity* entity) {
             entity->ext.generic.unk84.U16.unk0 = 0x20;
         }
         entity->unk6C = 0x40;
-        entity->blendMode = 0x30;
+        entity->drawMode = 0x30;
         break;
 
     case 1:
@@ -674,7 +674,7 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
         params = self->params & 0xF;
         obj = &D_80181C5C[params];
         self->palette = obj->palette + 0xD0;
-        self->blendMode = obj->blendMode;
+        self->drawMode = obj->drawMode;
         self->animSet = obj->animSet;
         self->unk5A = obj->unk2;
         self->ext.et38.unk80 = obj->unk8;
@@ -687,7 +687,7 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
 
         if (self->params & 0xF0) {
             self->palette = 0x819F;
-            self->blendMode = 0x10;
+            self->drawMode = DRAW_TPAGE;
             self->facingLeft = 1;
         }
         break;

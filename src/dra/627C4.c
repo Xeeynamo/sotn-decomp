@@ -40,7 +40,7 @@ void func_801027C4(u32 arg0) {
         do {
             prim1->r0 = prim1->g0 = prim1->b0 = prim2->r0 = prim2->g0 =
                 prim2->b0 = prim1->x1;
-            prim1->blendMode = prim2->blendMode = 0xD1;
+            prim1->drawMode = prim2->drawMode = 0xD1;
         } while (0);
     default:
         break;
@@ -58,7 +58,7 @@ void func_801028AC(s32 arg0) {
     prim1clut = prim1->clut;
     switch (D_801379A4) {
     case 0:
-        prim2->blendMode = prim1->blendMode = BLEND_VISIBLE;
+        prim2->drawMode = prim1->drawMode = DRAW_HIDE;
         break;
     case 2:
     case 6:
@@ -86,7 +86,7 @@ void func_801028AC(s32 arg0) {
                 }
             }
         }
-        prim1->blendMode = prim2->blendMode = 0xD1;
+        prim1->drawMode = prim2->drawMode = 0xD1;
         break;
     case 8:
         prim1->r0 = prim1->g0 = prim1->b0 = prim2->r0 = prim2->g0 = prim2->b0 =
@@ -102,7 +102,7 @@ void func_801028AC(s32 arg0) {
             func_801026BC(0);
             D_801379A4 = 0;
         }
-        prim1->blendMode = prim2->blendMode = 0xD1;
+        prim1->drawMode = prim2->drawMode = 0xD1;
         break;
     case 3:
         prim1->r0 = prim1->g0 = prim1->b0 = prim2->r0 = prim2->g0 = prim2->b0 =
@@ -116,7 +116,7 @@ void func_801028AC(s32 arg0) {
         } else {
             D_801379A4 = 0;
         }
-        prim1->blendMode = prim2->blendMode = 0xD1;
+        prim1->drawMode = prim2->drawMode = 0xD1;
         break;
     }
     if (arg0 != 0) {
@@ -129,7 +129,7 @@ void func_801028AC(s32 arg0) {
     D_801379A8_ptr = &D_801379A8;
     switch (*D_801379A8_ptr - 1) {
     case -1:
-        prim2->blendMode = prim1->blendMode = BLEND_VISIBLE;
+        prim2->drawMode = prim1->drawMode = DRAW_HIDE;
         return;
     case 0:
         prim1->r0 = prim1->g0 = prim1->b0 = prim2->r0 = prim2->g0 = prim2->b0 =
@@ -141,11 +141,11 @@ void func_801028AC(s32 arg0) {
                 prim1->clut++;
                 prim1->x1 -= 8;
             }
-            prim1->blendMode = prim2->blendMode = 0x2031;
+            prim1->drawMode = prim2->drawMode = 0x2031;
         } else if (prim1clut != 1) {
             prim1->x1 -= 4;
             if (prim1->x1 < 0) {
-                prim1->blendMode = prim2->blendMode = BLEND_VISIBLE;
+                prim1->drawMode = prim2->drawMode = DRAW_HIDE;
                 *D_801379A8_ptr = 0;
             }
         } else {
@@ -163,13 +163,13 @@ void func_801028AC(s32 arg0) {
                 prim1->clut++;
                 prim1->x1--;
             }
-            prim1->blendMode = prim2->blendMode = 0x2051;
+            prim1->drawMode = prim2->drawMode = 0x2051;
         } else if (prim1clut == 1) {
             if (--prim1->y1 == -1) {
                 prim1->clut++;
             }
         } else if (--prim1->x1 < 0) {
-            prim1->blendMode = prim2->blendMode = BLEND_VISIBLE;
+            prim1->drawMode = prim2->drawMode = DRAW_HIDE;
             *D_801379A8_ptr = 0;
         }
     }
@@ -257,7 +257,7 @@ void func_80102EB8(void) {
         poly1->tpage = 0x10;
         poly1->clut = 0x1A1;
         poly1->priority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 + 32;
-        poly1->blendMode = BLEND_VISIBLE;
+        poly1->drawMode = DRAW_HIDE;
         poly1->p1 = 0;
         SetPrimRect(poly2, 80, 79, 96, 0);
         func_801072DC(poly2);
@@ -267,7 +267,7 @@ void func_80102EB8(void) {
             poly2->r2 = poly2->r3 = 0;
         poly2->tpage = 0x1F;
         poly2->priority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 + 31;
-        poly2->blendMode = BLEND_VISIBLE;
+        poly2->drawMode = DRAW_HIDE;
         poly1 = poly1->next;
         poly2 = poly2->next;
     }
@@ -275,7 +275,7 @@ void func_80102EB8(void) {
     for (i = 0; i < 12; i++) {
         func_80107250(poly3, 255);
         poly3->priority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 + 32;
-        poly3->blendMode = BLEND_VISIBLE;
+        poly3->drawMode = DRAW_HIDE;
         poly3 = poly3->next;
     }
 }
@@ -356,8 +356,8 @@ s32 HandleSaveMenu(s32 arg0) {
     prim3 = &g_PrimBuf[D_80137E60];
     if (arg0 == 0) {
         if (temp_t0 == 0) {
-            prim2->blendMode = 0;
-            prim1->blendMode = 0x404;
+            prim2->drawMode = DRAW_DEFAULT;
+            prim1->drawMode = 0x404;
             if (D_80137E4C == 6) {
                 PlaySfx(SE_UI_START);
             } else {
@@ -507,15 +507,15 @@ s32 HandleSaveMenu(s32 arg0) {
             func_800F9D40("スロット２　", 2, 0);
 #endif
             SetTexturedPrimRect(prim2, 56, 79, 144, 0, 0, 0);
-            prim2->blendMode = 0;
-            prim1->blendMode = 0x404;
+            prim2->drawMode = DRAW_DEFAULT;
+            prim1->drawMode = 0x404;
             prim2 = prim2->next;
             prim1 = prim1->next;
-            prim2->blendMode = 0;
+            prim2->drawMode = DRAW_DEFAULT;
             func_801030B4(0, prim1, D_80097924);
             prim2 = prim2->next;
             prim1 = prim1->next;
-            prim2->blendMode = 0;
+            prim2->drawMode = DRAW_DEFAULT;
             func_801030B4(1, prim1, D_80097924);
         } else if (temp_t0 < 17) {
             prim2->p1 += 2;
@@ -608,15 +608,15 @@ s32 HandleSaveMenu(s32 arg0) {
 #endif
 
             SetTexturedPrimRect(prim2, 56, 79, 144, 0, 0, 0);
-            prim2->blendMode = 0;
-            prim1->blendMode = 0x404;
+            prim2->drawMode = DRAW_DEFAULT;
+            prim1->drawMode = 0x404;
             prim2 = prim2->next;
             prim1 = prim1->next;
-            prim2->blendMode = 0;
+            prim2->drawMode = DRAW_DEFAULT;
             func_801030B4(0, prim1, D_80137E6C);
             prim2 = prim2->next;
             prim1 = prim1->next;
-            prim2->blendMode = 0;
+            prim2->drawMode = DRAW_DEFAULT;
             func_801030B4(1, prim1, D_80137E6C);
         } else if (temp_t0 < 17) {
             prim2->p1 += 2;

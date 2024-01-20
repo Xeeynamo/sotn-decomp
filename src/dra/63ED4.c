@@ -214,7 +214,7 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
     var_s7 = &D_800A3728;
     for (spA0 = 0; spA0 < 24; spA0++, prim = prim->next, spB0 += 3) {
         if (spA0 >= spA8) {
-            prim->blendMode = 8;
+            prim->drawMode = 8;
             continue;
         }
         TransMatrix(&D_80137E00, &D_801379D0); // types copied
@@ -285,7 +285,7 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
         } else {
             prim->priority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 4;
         }
-        prim->blendMode = 4;
+        prim->drawMode = DRAW_COLORS;
         if (((D_80137E4C == 6) || (D_80137EE0 != 0)) &&
             (((u32)(arg0 - 1) < 2U) || ((arg0 == 3) && (arg2 >= 0x40)))) {
             prim->clut = (D_80137EE0 * 2) + 0x1F0;
@@ -320,7 +320,7 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
             if (arg2 < 0x30) {
                 prim->priority -= PRIORITY_SHIFT;
             }
-            prim->blendMode = 4;
+            prim->drawMode = DRAW_COLORS;
         } else if ((arg0 != 2) && (arg2 >= 0x40)) {
             // this i is a register reuse, not an iterator
             i = 0x7F - arg2;
@@ -333,7 +333,7 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
             prim->r2 = ((prim->r2 * i) >> 6);
             prim->g2 = ((prim->g2 * i) >> 6);
             prim->b2 = ((prim->b2 * i) >> 6);
-            prim->blendMode = 0x35;
+            prim->drawMode = 0x35;
         }
     }
 }
@@ -366,7 +366,7 @@ void func_80105078(s32 arg0, s32 arg1) {
 
     for (sp88 = 0; sp88 < 18; sp88++, prim = prim->next, sp90 += 3) {
         if (arg0 == 0) {
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
             continue;
         }
         TransMatrix(&D_80137E00, &D_801379D0);
@@ -404,11 +404,11 @@ void func_80105078(s32 arg0, s32 arg1) {
                 } else if (arg1 < 0x21) {
                     prim->r1 = prim->g1 = prim->b1 = (0x20 - arg1) * 8;
                 } else {
-                    prim->blendMode = BLEND_VISIBLE;
+                    prim->drawMode = DRAW_HIDE;
                     continue;
                 }
             }
-            prim->blendMode = 0x35;
+            prim->drawMode = 0x35;
         }
     }
 }
@@ -897,8 +897,8 @@ void DestroyEntitiesFromIndex(s16 startIndex) {
         DestroyEntity(pItem);
 }
 
-void DrawEntitiesHitbox(s32 blendMode) {
-    DR_MODE* drawMode;
+void DrawEntitiesHitbox(s32 drawMode) {
+    DR_MODE* drMode;
     s32 polyCount;
     s32* ot;
     Entity* entity;
@@ -909,7 +909,7 @@ void DrawEntitiesHitbox(s32 blendMode) {
 
     ot = g_CurrentBuffer->ot;
     tile = &g_CurrentBuffer->tiles[g_GpuUsage.tile];
-    drawMode = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
+    drMode = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
     otIdx = 0x1F0;
     for (polyCount = 0, entity = g_Entities; polyCount < 0x40; polyCount++,
         entity++) {
@@ -991,8 +991,8 @@ void DrawEntitiesHitbox(s32 blendMode) {
     }
 
     if (g_GpuUsage.drawModes < MAX_DRAW_MODES) {
-        SetDrawMode(drawMode, 0, 0, (blendMode - 1) << 5, &g_Vram.D_800ACD80);
-        AddPrim(&ot[otIdx], drawMode);
+        SetDrawMode(drMode, 0, 0, (drawMode - 1) << 5, &g_Vram.D_800ACD80);
+        AddPrim(&ot[otIdx], drMode);
         g_GpuUsage.drawModes++;
     }
 }

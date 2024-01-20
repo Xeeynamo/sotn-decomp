@@ -18,7 +18,7 @@ void EntityBackgroundBlock(Entity* self) {
         self->unk5A = obj->unk4.s;
         self->palette = obj->palette;
         self->drawFlags = obj->drawFlags;
-        self->blendMode = obj->blendMode;
+        self->drawMode = obj->drawMode;
 
         if (obj->unkC != 0) {
             self->flags = obj->unkC;
@@ -44,7 +44,7 @@ void EntityUnkId01(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_80180404);
         self->zPriority = 0xB0;
-        self->blendMode = D_801805B4[params];
+        self->drawMode = D_801805B4[params];
         newEntity = &self[1];
         self->hitboxHeight = D_80180594[params];
         self->animSet = D_801805A4[params];
@@ -167,7 +167,7 @@ void func_8018DB18(Entity* self) {
                 LOH(prim->next->b2) = facing;
                 prim->next->b3 = 16;
                 prim->priority = 0xB2;
-                prim->blendMode = 0x37;
+                prim->drawMode = 0x37;
             }
         }
         break;
@@ -243,23 +243,23 @@ s32 func_8018DF60(s32 textDialogue) {
 
     prim = g_Dialogue.prim[0] = &g_PrimBuf[g_Dialogue.primIndex[2]];
 
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     prim = g_Dialogue.prim[1] = prim->next;
 
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     prim = g_Dialogue.prim[2] = prim->next;
 
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     prim = g_Dialogue.prim[3] = prim->next;
 
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     prim = g_Dialogue.prim[4] = prim->next;
 
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     prim = g_Dialogue.prim[5] = prim->next;
 
     prim->type = 4;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
 
     prim = prim->next;
     prim->type = 3;
@@ -269,7 +269,7 @@ s32 func_8018DF60(s32 textDialogue) {
     prim->x0 = prim->x2 = 4;
     prim->x1 = prim->x3 = 0xF8;
     prim->priority = 0x1FD;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
 
     prim = prim->next;
     prim->type = 1;
@@ -278,7 +278,7 @@ s32 func_8018DF60(s32 textDialogue) {
     prim->v0 = 0x4A;
     prim->r0 = prim->g0 = prim->b0 = 0xFF;
     prim->priority = 0x1FC;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     return 1;
 }
 
@@ -307,7 +307,7 @@ void func_8018E180(void) {
     prim->u1 = 0xC0;
     prim->v1 = 0xC;
     prim->priority = 0x1FF;
-    prim->blendMode = 0;
+    prim->drawMode = DRAW_DEFAULT;
 }
 
 // Creates primitives for the actor name at the head of the dialogue
@@ -360,7 +360,7 @@ void func_8018E238(u16 actorIndex, Entity* self) {
             prim->v1 = FONT_H;
             prim->u1 = FONT_W;
             prim->priority = 0x1FF;
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
             prim->x0 = x;
             prim->y0 = g_Dialogue.startY + 6;
             prim = prim->next;
@@ -449,7 +449,7 @@ void func_8018E6C4(u8 ySteps) {
         prim->v0 += ySteps;
         if (prim->v1 == 0) {
             g_CurrentEntity->step_s++;
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
         }
     }
 
@@ -534,7 +534,7 @@ void EntityPlatform(Entity* self) {
             prim->v0 = prim->v1 = 0xA1;
             prim->v2 = prim->v3 = 0xA7;
             prim->priority = 0x7F;
-            prim->blendMode = 2;
+            prim->drawMode = 2;
         }
         break;
 
@@ -732,7 +732,7 @@ void EntityRoomDarkness(Entity* self) {
                 prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
                     prim->b3 = 255;
             prim->priority = 0x88;
-            prim->blendMode = 0x57;
+            prim->drawMode = 0x57;
             prim = prim->next;
             prim->x0 = prim->x2 = temp_t0;
             prim->x1 = prim->x3 = temp_a0;
@@ -742,7 +742,7 @@ void EntityRoomDarkness(Entity* self) {
                 255;
             prim->r2 = prim->r3 = prim->g2 = prim->g3 = prim->b2 = prim->b3 = 0;
             prim->priority = 0x88;
-            prim->blendMode = 0x57;
+            prim->drawMode = 0x57;
         }
         break;
 
@@ -763,9 +763,9 @@ void EntityRoomDarkness(Entity* self) {
 
     case 2:
         prim = &g_PrimBuf[self->primIndex];
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
         self->step++;
         break;
     }
@@ -795,7 +795,7 @@ s16 func_8019040C(Primitive* prim, s16 arg1) {
     prim->x2 = arg1;
     prim->x0 = arg1;
     ret += 0x20;
-    prim->blendMode = 2;
+    prim->drawMode = 2;
     prim->v0 = prim->v1 = 0x50;
     prim->v2 = prim->v3 = 0x60;
     prim->y0 = prim->y1 = 0x2C;
@@ -817,7 +817,7 @@ s16 func_8019040C(Primitive* prim, s16 arg1) {
 s16 func_801904B8(Primitive* prim, s16 arg1) {
     prim->u0 = prim->u2 = 0x50;
     prim->u1 = prim->u3 = 0x60;
-    prim->blendMode = 2;
+    prim->drawMode = 2;
     prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi - 8;
     prim->x1 = prim->x3 = g_CurrentEntity->posX.i.hi + 8;
     prim->y2 = prim->y3 = arg1;
@@ -860,14 +860,14 @@ void EntityElevatorStationary(Entity* self) {
         prim->v2 = prim->v3 = prim->u1 = prim->u3 = 0x38;
         prim->v0 = temp;
         prim->priority = 0x6B;
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
 
         while (prim != NULL) {
             prim->tpage = 0x12;
             prim->clut = 0x223;
             prim->priority = 0x6A;
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
 
@@ -964,7 +964,7 @@ void EntityElevatorStationary(Entity* self) {
     prim->x0 = prim->x2 = self->posX.i.hi - 8;
     prim->x1 = prim->x3 = self->posX.i.hi + 8;
     temp = self->posY.i.hi;
-    prim->blendMode = 2;
+    prim->drawMode = 2;
     prim->y2 = prim->y3 = temp - 0x1F;
     prim->y0 = prim->y1 = temp - 0x2F;
     prim = prim->next;
@@ -979,7 +979,7 @@ void EntityElevatorStationary(Entity* self) {
     }
 
     while (prim != NULL) {
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
     }
 
@@ -1048,7 +1048,7 @@ void EntityMovingElevator(Entity* self) {
             prim->v2 = prim->v3 = 0x26;
             prim->clut = 0x223;
             prim->priority = 0x6A;
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
 
@@ -1087,7 +1087,7 @@ void EntityMovingElevator(Entity* self) {
     prim->x0 = prim->x2 = self->posX.i.hi - 8;
     prim->x1 = prim->x3 = self->posX.i.hi + 8;
     temp = self->posY.i.hi;
-    prim->blendMode = 2;
+    prim->drawMode = 2;
     prim->y2 = prim->y3 = temp - 0x1F;
     prim->y0 = prim->y1 = temp - 0x2F;
     prim = prim->next;
@@ -1104,7 +1104,7 @@ void EntityMovingElevator(Entity* self) {
     }
 
     while (prim != NULL) {
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
     }
 

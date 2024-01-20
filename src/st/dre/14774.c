@@ -31,23 +31,23 @@ s32 func_801947C8(s32 textDialogue) {
 
     prim = g_Dialogue.prim[0] = &g_PrimBuf[g_Dialogue.primIndex[2]];
 
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     prim = g_Dialogue.prim[1] = prim->next;
 
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     prim = g_Dialogue.prim[2] = prim->next;
 
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     prim = g_Dialogue.prim[3] = prim->next;
 
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     prim = g_Dialogue.prim[4] = prim->next;
 
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     prim = g_Dialogue.prim[5] = prim->next;
 
     prim->type = 4;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
 
     prim = prim->next;
     prim->type = 3;
@@ -57,7 +57,7 @@ s32 func_801947C8(s32 textDialogue) {
     prim->x0 = prim->x2 = 4;
     prim->x1 = prim->x3 = 0xF8;
     prim->priority = 0x1FD;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
 
     prim = prim->next;
     prim->type = 1;
@@ -66,7 +66,7 @@ s32 func_801947C8(s32 textDialogue) {
     prim->v0 = 0x4A;
     prim->r0 = prim->g0 = prim->b0 = 0xFF;
     prim->priority = 0x1FC;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     return 1;
 }
 
@@ -95,7 +95,7 @@ void func_801949E8(void) {
     prim->u1 = 0xC0;
     prim->v1 = 0xC;
     prim->priority = 0x1FF;
-    prim->blendMode = 0;
+    prim->drawMode = DRAW_DEFAULT;
 }
 
 // Creates primitives for the actor name at the head of the dialogue
@@ -148,7 +148,7 @@ void func_80194AA0(u16 actorIndex, Entity* self) {
             prim->v1 = FONT_H;
             prim->u1 = FONT_W;
             prim->priority = 0x1FF;
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
             prim->x0 = x;
             prim->y0 = g_Dialogue.startY + 6;
             prim = prim->next;
@@ -252,7 +252,7 @@ void func_80194FF4(u8 ySteps) {
         prim->v0 += ySteps;
         if (prim->v1 == 0) {
             g_CurrentEntity->step_s++;
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
         }
     }
 
