@@ -161,8 +161,7 @@ segments:
       - [0x3FF50, .rodata, config_us] # relics
       - [0x405D8, .rodata, config_us] # enemies
       - [0x40D38, .rodata, cd] # To be merged with 40D38
-      - [0x40E28, rodata]
-      - [0x40E48, rodata] # EntityAlucard jump table
+      - [0x40E28, .rodata, 692E8] # EntityAlucard strings and jump table 
       - [0x4108C, .rodata, 6D59C] # func_8010EDB8
       - [0x41308, .rodata, 704D0] # func_80110968
       - [0x41410, .rodata, 71830] # func_801120B4
