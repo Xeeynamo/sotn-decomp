@@ -67,6 +67,7 @@ extern int rcos(int a);
 extern int rsin(int a);
 extern long ratan2(long y, long x);
 
+#ifndef VERSION_PC
 #define gte_SetRotMatrix(r0)                                                   \
     __asm__ volatile(                                                          \
         "lw	$12, 0( %0 );"                                                     \
@@ -153,5 +154,23 @@ extern long ratan2(long y, long x);
     __asm__ volatile("swc2	$14, 0( %0 )" : : "r"(r0) : "memory")
 
 #define gte_SetGeomScreen(r0) __asm__ volatile("ctc2	%0, $26" : : "r"(r0))
+
+#else
+
+#define gte_SetRotMatrix(r0)
+#define gte_SetTransMatrix(r0)
+#define gte_ldv0(r0)
+#define gte_rtps()
+#define gte_rtpt()
+#define gte_nclip()
+#define gte_stsxy2(r0)
+#define gte_stszotz(r0)
+#define gte_ldv3(r0, r1, r2)
+#define gte_stopz(r0)
+#define gte_stsxy3(r0, r1, r2)
+#define gte_stsxy(r0)
+#define gte_SetGeomScreen(r0)
+
+#endif
 
 #endif

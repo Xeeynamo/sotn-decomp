@@ -80,6 +80,13 @@ set(SOURCE_FILES_DRA
     src/dra/6D59C.c
     src/dra/704D0.c
     src/dra/71830.c
+    src/dra/72BB0.c
+    #src/dra/75F54.c # unable to link it, the file needs to be splitted
+    #src/dra/7A4D0.c # loads of unimplemented calls and symbols
+    src/dra/7E4BC.c
+    src/dra/843B0.c
+    src/dra/86ECC.c
+    #src/dra/8D3E8.c # countless unimplemented symbols
     src/dra/91EBC.c
     src/dra/92F60.c
     src/dra/93290.c
