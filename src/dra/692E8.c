@@ -510,7 +510,8 @@ void EntityAlucard(void) {
 #endif
                 return;
             }
-            if ((D_80097448[1] != 0) && (IsRelicActive(RELIC_HOLY_SYMBOL) == 0) &&
+            if ((D_80097448[1] != 0) &&
+                (IsRelicActive(RELIC_HOLY_SYMBOL) == 0) &&
                 !(PLAYER.unk44 & 0x1F)) {
                 PLAYER.unk44 = 6;
             }
