@@ -337,32 +337,31 @@ void func_801131C4(void) {
         if ((PLAYER.animFrameIdx == 6) &&
             (g_Player.padPressed & g_Player.D_80072EF8)) {
             PLAYER.animFrameDuration = 2;
-        case 0x41:
-        case 0x42:
-        case 0x43:
-        case 0x44:
-        case 0x45:
-        case 0x46:
-        case 0x48:
-        case 0x4A:
-        case 0x4B:
-        case 0x4C:
-        case 0x4D:
-        case 0x4E:
-        case 0x4F:
-        case 0x50:
-        case 0x53:
-        case 0x54:
-        case 0x55:
-        case 0x56:
-        case 0x57:
-        case 0x58:
-        case 0x5A:
-        case 0x5B:
-        case 0x5C:
-        case 0x5D:
-            break;
         }
+    case 0x41:
+    case 0x42:
+    case 0x43:
+    case 0x44:
+    case 0x45:
+    case 0x46:
+    case 0x48:
+    case 0x4A:
+    case 0x4B:
+    case 0x4C:
+    case 0x4D:
+    case 0x4E:
+    case 0x4F:
+    case 0x50:
+    case 0x53:
+    case 0x54:
+    case 0x55:
+    case 0x56:
+    case 0x57:
+    case 0x58:
+    case 0x5A:
+    case 0x5B:
+    case 0x5C:
+    case 0x5D:
         func_8010DFF0(1, 1);
         if (PLAYER.animFrameIdx < g_Player.unk54) {
             if (PLAYER.animFrameIdx < 3) {
