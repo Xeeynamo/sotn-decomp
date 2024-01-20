@@ -184,6 +184,10 @@ s16 D_800AC998[] = {
     0x0380, 0x03A0, 0x0380, 0x03A0, 0x03C0, 0x03E0, 0x03C0, 0x03E0,
 };
 Unkstruct_801092E8 D_800A37D8;
+s32 D_800ACDF8;
+s32 D_800ACDFC;
+s32 D_800ACE00[8];
+u16 D_800ACE20[18]; // size guessed up to next symbol
 s32 D_800ACE44;
 s32 D_800ACE48[12]; // size guessed
 RECT D_800ACE60;
@@ -199,6 +203,7 @@ s16 D_800ACF6C[4];                    // guessed size
 s16 D_800ACF8A[5];                    // guessed size
 s16 D_800ACF94[16];                   // guessed size
 u8 D_800AD094[0x30];
+unkstr_800cfe48* D_800CFE48[18]; // guessed size
 GpuUsage g_GpuMaxUsage;
 GpuBuffer* g_BackBuffer;
 s32 g_DebugFreeze;
@@ -462,6 +467,7 @@ s16 g_SoundCommandRingBuffer[MAX_SND_COUNT];
 s16 g_VolL;
 s16 g_VolR;
 s16 D_8013AE94;
+s32 D_8013AECC;
 u16 D_8013AEE0;
 Unkstruct_800BF554 g_SfxData[737];
 u16 D_8013AE7C;
@@ -638,8 +644,6 @@ void func_800F1D54(s32 arg0, s32 arg1, s32 arg2, s32 arg3) { NOT_IMPLEMENTED; }
 
 void func_800F1B08(s32 arg0, s32 arg1, s32 arg2) { NOT_IMPLEMENTED; }
 
-void EntityAlucard(Entity* self) { NOT_IMPLEMENTED; }
-
 s32 func_800F0CD8(s32 arg0) {
     NOT_IMPLEMENTED;
     return 0;
@@ -699,3 +703,58 @@ Entity* GetFreeEntity(s16 start, s16 end) {
     }
     return NULL;
 }
+s32 func_80118C84(s16 arg0, s16 arg1) { NOT_IMPLEMENTED; }
+
+void func_801131C4(void) { NOT_IMPLEMENTED; }
+
+void func_80113148(void) { NOT_IMPLEMENTED; }
+
+void func_80112BB0(void) { NOT_IMPLEMENTED; }
+
+void ControlBatForm(void) { NOT_IMPLEMENTED; }
+
+void func_801177A0(void) { NOT_IMPLEMENTED; }
+
+void ControlMistForm(void) { NOT_IMPLEMENTED; }
+
+void func_801182F8(void) { NOT_IMPLEMENTED; }
+
+void func_8012EF2C(void) { NOT_IMPLEMENTED; }
+
+void func_8012EAD0(void) { NOT_IMPLEMENTED; }
+
+void func_80113AAC(void) { NOT_IMPLEMENTED; }
+
+void func_801186EC(void) { NOT_IMPLEMENTED; }
+
+void AlucardHandleDamage(DamageParam* damage, s16 arg1) { NOT_IMPLEMENTED; }
+
+void func_80114DF4(s32 arg0) { NOT_IMPLEMENTED; }
+
+void func_80116208(void) { NOT_IMPLEMENTED; }
+
+void func_80115394(s32* arg0, s16 arg1, s16 arg2) { NOT_IMPLEMENTED; }
+
+void func_80115BB0(void) { NOT_IMPLEMENTED; }
+
+void func_80118614(void) { NOT_IMPLEMENTED; }
+
+void PlayerStepHellfire(void) { NOT_IMPLEMENTED; }
+
+void func_80118670(void) { NOT_IMPLEMENTED; }
+
+void func_80118640(void) { NOT_IMPLEMENTED; }
+
+void func_801166A4(void) { NOT_IMPLEMENTED; }
+
+void func_8011678C(void) { NOT_IMPLEMENTED; }
+
+void func_801167D0(void) { NOT_IMPLEMENTED; }
+
+void func_80115F54(void) { NOT_IMPLEMENTED; }
+
+void func_80117AC0(void) { NOT_IMPLEMENTED; }
+
+void func_80109A44(s32 arg0) { NOT_IMPLEMENTED; }
+
+void func_80115DA0(void) { NOT_IMPLEMENTED; }

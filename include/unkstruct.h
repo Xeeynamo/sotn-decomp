@@ -257,3 +257,8 @@ typedef struct {
     u8 uBase;
     u8 vBase;
 } unkStr80154E5C; // size = 0x14
+
+typedef struct {
+    s32 unk0;
+    s16 unk4;
+} unkstr_800cfe48; // for EntityAlucard

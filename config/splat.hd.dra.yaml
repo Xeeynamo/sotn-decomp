@@ -145,12 +145,7 @@ segments:
       - [0x3CEF0, .rodata, lba_stage]
       - [0x3D29C, .rodata, config_jp]
       - [0x40C74, .rodata, cd]
-      - [0x40D64, rodata] # jtbl_800E0D64
-      - [0x40D64, rodata] # jtbl_800E0D64
-      - [0x40DA4, rodata] # jtbl_800E0DA4
-      - [0x40DE4, rodata] # jtbl_800E0DE4
-      - [0x40E0C, rodata] # jtbl_800E0E0C
-      - [0x40EDC, rodata] # jtbl_800E0EDC
+      - [0x40D64, .rodata, 692E8] # EntityAlucard
       - [0x40FA8, .rodata, 6D59C] # func_8010EDB8
       - [0x41224, .rodata, 704D0] # jtbl_800E1224
       - [0x4132C, .rodata, 71830] # jtbl_800E132C
