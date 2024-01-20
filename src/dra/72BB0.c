@@ -361,6 +361,7 @@ void func_801131C4(void) {
         case 0x5B:
         case 0x5C:
         case 0x5D:
+            break;
         }
         func_8010DFF0(1, 1);
         if (PLAYER.animFrameIdx < g_Player.unk54) {
