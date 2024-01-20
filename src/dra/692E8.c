@@ -173,7 +173,7 @@ void func_80109594(void) {
     if (weapon() != 0x2D) {
         return;
     }
-    if (CheckEquipmentItemCount(ITEM_AXE_LORD_ARMOR, ARMOR_TYPE) == 0) {
+    if (CheckEquipmentItemCount(ITEM_AXE_LORD_ARMOR, EQUIP_ARMOR) == 0) {
         return;
     }
     func_8010FAF4();
@@ -207,7 +207,7 @@ void func_8010A234(s32 arg0) {
     weapon = D_8017A000.GetWeaponId;
     // Wearing Axe Lord Armor! This is probably when you initially put it on.
     if ((weapon() == 0x2D) &&
-        CheckEquipmentItemCount(ITEM_AXE_LORD_ARMOR, ARMOR_TYPE)) {
+        CheckEquipmentItemCount(ITEM_AXE_LORD_ARMOR, EQUIP_ARMOR)) {
         if (!(g_Player.unk0C & 0x01000000)) {
             // Alucard says "WHAT?!" when first putting on Axe Lord Armor
             PlaySfx(NA_SE_VO_AL_WHAT);

@@ -413,11 +413,11 @@ void EntityEquipItemDrop(Entity* self) {
 
         if (itemId < NUM_HAND_ITEMS) {
             itemName = g_api.equipDefs[itemId].name;
-            g_api.AddToInventory(itemId, HAND_TYPE);
+            g_api.AddToInventory(itemId, EQUIP_HAND);
         } else {
             itemId -= NUM_HAND_ITEMS;
             itemName = g_api.accessoryDefs[itemId].name;
-            g_api.AddToInventory(itemId, ARMOR_TYPE);
+            g_api.AddToInventory(itemId, EQUIP_ARMOR);
         }
 
         BottomCornerText(itemName, 1);

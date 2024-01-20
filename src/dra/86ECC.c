@@ -1021,7 +1021,7 @@ void func_80128C2C(Entity* self) {
                 heartCost = 5;
                 // 0x4d is the item ID for the heart broach.
                 heartBroachesWorn =
-                    CheckEquipmentItemCount(ITEM_HEART_BROACH, ACCESSORY_TYPE);
+                    CheckEquipmentItemCount(ITEM_HEART_BROACH, EQUIP_ACCESSORY);
                 if (heartBroachesWorn == 1) {
                     heartCost = 2;
                 }

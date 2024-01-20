@@ -321,14 +321,14 @@ typedef enum {
     UNK_ENTITY_100 = 0x100
 } EntityTypes;
 
-typedef enum ItemTypes {
-    HAND_TYPE,
-    HEAD_TYPE,
-    ARMOR_TYPE,
-    CAPE_TYPE,
-    ACCESSORY_TYPE,
-    NUM_ITEM_TYPES,
-} ItemTypes;
+typedef enum EquipKind {
+    EQUIP_HAND,
+    EQUIP_HEAD,
+    EQUIP_ARMOR,
+    EQUIP_CAPE,
+    EQUIP_ACCESSORY,
+    NUM_EQUIP_KINDS,
+} EquipKind;
 
 typedef enum {
     ITEM_S_SWORD,
@@ -380,7 +380,7 @@ extern s32 D_80137964;
 extern s32 D_80137968;
 extern s32 D_80139828[];
 extern s32 D_8013B5E8;
-extern ItemTypes D_801375CC;
+extern EquipKind D_801375CC;
 extern PlayerState g_Player;
 extern Entity* g_CurrentEntity;
 extern PlayerStatus g_Status;

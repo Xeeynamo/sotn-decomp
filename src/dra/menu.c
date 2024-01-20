@@ -116,13 +116,13 @@ RECT D_800A2D90 = {0x180, 0x30, 0x80, 0x80};
 #endif
 
 EquipMenuHelper g_EquipMenuHelper[] = {
-    {HAND_TYPE, 0, false},     // LEFT_HAND_SLOT
-    {HAND_TYPE, 0, false},     // RIGHT_HAND_SLOT
-    {HEAD_TYPE, 0, true},      // HEAD_SLOT
-    {ARMOR_TYPE, 1, true},     // ARMOR_SLOT
-    {CAPE_TYPE, 2, true},      // CAPE_SLOT
-    {ACCESSORY_TYPE, 3, true}, // ACCESSORY_1_SLOT
-    {ACCESSORY_TYPE, 3, true}, // ACCESSORY_2_SLOT
+    {EQUIP_HAND, 0, false},     // LEFT_HAND_SLOT
+    {EQUIP_HAND, 0, false},     // RIGHT_HAND_SLOT
+    {EQUIP_HEAD, 0, true},      // HEAD_SLOT
+    {EQUIP_ARMOR, 1, true},     // ARMOR_SLOT
+    {EQUIP_CAPE, 2, true},      // CAPE_SLOT
+    {EQUIP_ACCESSORY, 3, true}, // ACCESSORY_1_SLOT
+    {EQUIP_ACCESSORY, 3, true}, // ACCESSORY_2_SLOT
 };
 
 s32 D_800A2DEC[] = {
@@ -204,9 +204,9 @@ bool CheckIfAllButtonsAreAssigned(void) {
 }
 
 bool IsAlucart(void) {
-    if (CheckEquipmentItemCount(ITEM_ALUCART_SWORD, HAND_TYPE) &&
-        CheckEquipmentItemCount(ITEM_ALUCART_SHIELD, HAND_TYPE) &&
-        CheckEquipmentItemCount(ITEM_ALUCART_MAIL, ARMOR_TYPE))
+    if (CheckEquipmentItemCount(ITEM_ALUCART_SWORD, EQUIP_HAND) &&
+        CheckEquipmentItemCount(ITEM_ALUCART_SHIELD, EQUIP_HAND) &&
+        CheckEquipmentItemCount(ITEM_ALUCART_MAIL, EQUIP_ARMOR))
         return true;
     return false;
 }
@@ -240,7 +240,7 @@ void func_800F4994(void) {
     if (6 <= hourOfDay && hourOfDay < 18) {
         // Sunstone check
         correctStonesEquipped =
-            CheckEquipmentItemCount(ITEM_SUNSTONE, ACCESSORY_TYPE);
+            CheckEquipmentItemCount(ITEM_SUNSTONE, EQUIP_ACCESSORY);
         statsPtr = &g_Status.statsEquip;
         for (i = 0; i < 4; i++, statsPtr++) {
             *statsPtr += correctStonesEquipped * 5;
@@ -248,7 +248,7 @@ void func_800F4994(void) {
     } else {
         // Moonstone check
         correctStonesEquipped =
-            CheckEquipmentItemCount(ITEM_MOONSTONE, ACCESSORY_TYPE);
+            CheckEquipmentItemCount(ITEM_MOONSTONE, EQUIP_ACCESSORY);
         statsPtr = &g_Status.statsEquip;
         for (i = 0; i < 4; i++, statsPtr++) {
             *statsPtr += correctStonesEquipped * 5;
@@ -399,10 +399,10 @@ void CalcDefense(void) {
         g_Status.D_80097C2E |= acc->unk16;
     }
 
-    if (CheckEquipmentItemCount(ITEM_MIRROR_CUIRASS, HAND_TYPE) != 0) {
+    if (CheckEquipmentItemCount(ITEM_MIRROR_CUIRASS, EQUIP_HAND) != 0) {
         g_Status.D_80097C2C |= 0x200;
     }
-    if (CheckEquipmentItemCount(ITEM_ALUCARD_MAIL, HAND_TYPE) != 0) {
+    if (CheckEquipmentItemCount(ITEM_ALUCARD_MAIL, EQUIP_HAND) != 0) {
         g_Status.D_80097C2C |= 0x8000;
     }
     if (g_Status.relics[RELIC_HEART_OF_VLAD] & 2) {
@@ -436,7 +436,7 @@ void CalcDefense(void) {
 
     totalDefense += (SquareRoot0(g_Status.statsTotal[STAT_CON]) - 2);
 
-    if (CheckEquipmentItemCount(ITEM_WALK_ARMOR, ARMOR_TYPE) != 0) {
+    if (CheckEquipmentItemCount(ITEM_WALK_ARMOR, EQUIP_ARMOR) != 0) {
         totalDefense += g_RoomCount / 60;
     }
 
@@ -2631,9 +2631,9 @@ void func_800FA3C4(s32 cursorIndex, s32 arg1, s32 arg2) {
     }
 
     if (D_801375CC == 0) {
-        g_MenuNavigation.scrollEquipType[HAND_TYPE] = menu->unk16;
+        g_MenuNavigation.scrollEquipType[EQUIP_HAND] = menu->unk16;
     } else {
-        g_MenuNavigation.scrollEquipType[HEAD_TYPE + D_801375D4] = menu->unk16;
+        g_MenuNavigation.scrollEquipType[EQUIP_HEAD + D_801375D4] = menu->unk16;
     }
     if (arg2 != 0) {
         if (arg1 == 0) {
@@ -2657,9 +2657,10 @@ void MenuEquipHandlePageScroll(s32 arg0) {
     MenuContext* menu = &g_MenuData.menus[MENU_DG_EQUIP_SELECTOR];
 
     if (D_801375CC == 0) {
-        cursorIndex = &g_MenuNavigation.cursorEquipType[HAND_TYPE];
+        cursorIndex = &g_MenuNavigation.cursorEquipType[EQUIP_HAND];
     } else {
-        cursorIndex = &g_MenuNavigation.cursorEquipType[HEAD_TYPE + D_801375D4];
+        cursorIndex =
+            &g_MenuNavigation.cursorEquipType[EQUIP_HEAD + D_801375D4];
     }
 
     nItems = func_800FD6C4(D_801375CC);
@@ -2934,11 +2935,11 @@ void func_800FAF44(s32 isAccessory) {
 
         g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h =
             g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 =
-                g_MenuNavigation.scrollEquipType[HAND_TYPE];
+                g_MenuNavigation.scrollEquipType[EQUIP_HAND];
     } else {
         g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h =
             g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 =
-                g_MenuNavigation.scrollEquipType[HEAD_TYPE + D_801375D4];
+                g_MenuNavigation.scrollEquipType[EQUIP_HEAD + D_801375D4];
         for (i = 0; i < 90; i++) {
             if (g_AccessoryDefs[i].equipType == D_801375D4) {
                 *var_a1 = i;
@@ -2994,7 +2995,7 @@ void func_800FB160(s32 arg0, s32 arg1, s32 equipType) {
 }
 
 bool func_800FB1EC(s32 arg0) {
-    if (D_801375CC == HAND_TYPE) {
+    if (D_801375CC == EQUIP_HAND) {
         if (arg0 == 0) {
             return true;
         }

@@ -237,7 +237,7 @@ s32 D_800987B4;
 u8 g_PadsRepeatTimer[BUTTON_COUNT * PAD_COUNT];
 s32 D_80136410;
 NowLoadingModel g_NowLoadingModel;
-ItemTypes D_801375CC;
+EquipKind D_801375CC;
 s32 D_801375D0;
 s32 D_801375D4;
 s32* D_801375D8;
