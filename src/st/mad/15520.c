@@ -90,7 +90,7 @@ void func_80195A54(Entity* entity) {
         entity->palette = 0x8195;
         entity->animSet = ANIMSET_DRA(2);
         entity->animCurFrame = D_80180FFC[entity->params];
-        entity->blendMode = 0x10;
+        entity->drawMode = DRAW_TPAGE;
         entity->step++;
         return;
     }
@@ -115,7 +115,7 @@ void EntityUnkId15(Entity* entity) {
         entity->palette = 0x8195;
         entity->animSet = ANIMSET_DRA(5);
         entity->animCurFrame = 1;
-        entity->blendMode = 0x10;
+        entity->drawMode = DRAW_TPAGE;
         entity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
         temp_v0 = D_80180FBC[entity->params];
         entity->rotX = temp_v0;
@@ -471,7 +471,7 @@ void EntitySoulStealOrb(Entity* self) {
             return;
         }
         InitializeEntity(g_InitializeData0);
-        g_PrimBuf[primIndex].blendMode = BLEND_VISIBLE;
+        g_PrimBuf[primIndex].drawMode = DRAW_HIDE;
         self->primIndex = primIndex;
         self->animSet = ANIMSET_DRA(0);
         self->flags |= FLAG_HAS_PRIMS;
@@ -535,7 +535,7 @@ void EntitySoulStealOrb(Entity* self) {
         prim->u1 = prim->u3 = *(temp_d++);
         prim->v2 = prim->v3 = *(temp_d++);
         prim->priority = self->zPriority;
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         break;
     }
 }
@@ -552,7 +552,7 @@ void EntityRoomForeground(Entity* entity) {
         entity->unk5A = obj->unk4.s;
         entity->palette = obj->palette;
         entity->drawFlags = obj->drawFlags;
-        entity->blendMode = obj->blendMode;
+        entity->drawMode = obj->drawMode;
         if (obj->unkC != 0) {
             entity->flags = obj->unkC;
         }

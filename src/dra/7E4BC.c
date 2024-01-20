@@ -56,13 +56,13 @@ void func_8011E4BC(Entity* self) {
         i = 0;
         tilePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
         while (1) {
-            tilePrim->blendMode = temp_s5->blendMode;
+            tilePrim->drawMode = temp_s5->drawMode;
             tilePrim->priority = PLAYER.zPriority + temp_s5->priority;
             if (tilePrim->next == NULL) {
                 tilePrim->w = 0;
                 tilePrim->x0 = 0;
                 tilePrim->y0 = 0;
-                tilePrim->blendMode &= ~BLEND_VISIBLE;
+                tilePrim->drawMode &= ~DRAW_HIDE;
                 break;
             }
             tilePrim->posX.i.hi = selfXPos;
@@ -201,7 +201,7 @@ void func_8011E4BC(Entity* self) {
                 tilePrim->w = 0;
                 tilePrim->x0 = 0;
                 tilePrim->y0 = 0;
-                tilePrim->blendMode &= ~BLEND_VISIBLE;
+                tilePrim->drawMode &= ~DRAW_HIDE;
                 return;
             }
 
@@ -235,7 +235,7 @@ void func_8011E4BC(Entity* self) {
             case 2:
             case 8:
                 if (--tilePrim->delay == 0) {
-                    tilePrim->blendMode |= BLEND_VISIBLE;
+                    tilePrim->drawMode |= DRAW_HIDE;
                 }
                 tilePrim->posX.val += tilePrim->velocityX.val;
                 tilePrim->posY.val += tilePrim->velocityY.val;
@@ -246,7 +246,7 @@ void func_8011E4BC(Entity* self) {
             case 12:
                 tilePrim->posY.val += tilePrim->velocityY.val;
                 if (--tilePrim->delay < 0) {
-                    tilePrim->blendMode |= BLEND_VISIBLE;
+                    tilePrim->drawMode |= DRAW_HIDE;
                 }
                 break;
             case 4:
@@ -262,7 +262,7 @@ void func_8011E4BC(Entity* self) {
                         tilePrim->velocityY.val >>= 1;
                     }
                     if (var_a2 == 0x18) {
-                        tilePrim->blendMode = 2;
+                        tilePrim->drawMode = 2;
                     }
                 }
                 tilePrim->h = thickness;
@@ -270,7 +270,7 @@ void func_8011E4BC(Entity* self) {
                 break;
             case 13:
                 if (tilePrim->timer == 0) {
-                    tilePrim->blendMode &= ~BLEND_VISIBLE;
+                    tilePrim->drawMode &= ~DRAW_HIDE;
                     tilePrim->r0 -= 1;
                     tilePrim->g0 -= 1;
                     tilePrim->b0 -= 1;
@@ -279,7 +279,7 @@ void func_8011E4BC(Entity* self) {
                     if ((*D_80097448 == 0) ||
                         (((PLAYER.posY.i.hi - *D_80097448) + 0x19) >=
                          tilePrim->posY.i.hi)) {
-                        tilePrim->blendMode |= BLEND_VISIBLE;
+                        tilePrim->drawMode |= DRAW_HIDE;
                     }
                 } else {
                     tilePrim->timer--;
@@ -352,14 +352,14 @@ void func_8011EDA8(Entity* self) {
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         if ((self->animFrameIdx == 8) && (self->unk4C != D_800AD57C)) {
-            self->blendMode = 0x10;
+            self->drawMode = DRAW_TPAGE;
             if (!(params & 1) && (self->animFrameDuration == step)) {
                 CreateEntFactoryFromEntity(self, FACTORY(0x400, 4), 0);
             }
         }
 
         if ((self->animFrameIdx == 16) && (self->unk4C == D_800AD57C)) {
-            self->blendMode = 0x10;
+            self->drawMode = DRAW_TPAGE;
         }
 
         if (self->animFrameDuration < 0) {
@@ -383,9 +383,9 @@ void func_8011F074(Entity* entity) {
         entity->palette = 0x819F;
 
         if (D_8013808C & 1) {
-            entity->blendMode = 0x70;
+            entity->drawMode = 0x70;
         } else {
-            entity->blendMode = 0x10;
+            entity->drawMode = DRAW_TPAGE;
         }
         entity->rotY = 0x40;
         entity->rotX = 0x40;
@@ -461,7 +461,7 @@ void EntityHitByLightning(Entity* self) {
             prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
                 prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
                     prim->b3 = 0x80;
-            prim->blendMode = 0x133;
+            prim->drawMode = 0x133;
             prim = prim->next;
         }
         if ((PLAYER.velocityY != 0) && (PLAYER.step != 0x10)) {
@@ -592,9 +592,9 @@ void EntityHitByIce(Entity* self) {
             prim->b0 = prim->b1 = prim->b2 = prim->b3 = rand() | 0x80;
             prim->g0 = prim->g1 = prim->g2 = prim->g3 = (rand() & 0x1F) + 0x30;
             if (rand() & 1) {
-                prim->blendMode = 0x335;
+                prim->drawMode = 0x335;
             } else {
-                prim->blendMode = 0x315;
+                prim->drawMode = 0x315;
             }
             prim->type = 3;
             prim->priority = PLAYER.zPriority + 2;
@@ -718,12 +718,12 @@ void EntityHitByIce(Entity* self) {
             prim->r0 = prim->r1 = prim->r2 = prim->r3;
             prim->b0 = prim->b1 = prim->b2 = prim->b3;
             prim->g0 = prim->g1 = prim->g2 = prim->g3;
-            prim->blendMode |= 2;
-            prim->blendMode &= ~0x300;
+            prim->drawMode |= 2;
+            prim->drawMode &= ~0x300;
             self->flags |= FLAG_UNK_08000000;
             self->flags &= ~(FLAG_UNK_20000 | FLAG_UNK_40000);
             if (--prim->v0 == 0) {
-                prim->blendMode |= 8;
+                prim->drawMode |= 8;
             }
         }
         prim = prim->next;
@@ -880,7 +880,7 @@ void func_80123F78(Entity* entity) {
         entity->animCurFrame = PLAYER.animCurFrame;
         entity->unk5A = 0xD;
         entity->drawFlags = PLAYER.drawFlags;
-        entity->blendMode = 0x30;
+        entity->drawMode = 0x30;
         entity->palette = 0x815F;
         entity->zPriority = PLAYER.zPriority - 2;
         entity->facingLeft = PLAYER.facingLeft;

@@ -176,10 +176,10 @@ Primitive* PrimToggleVisibility(Primitive* firstPrim, s32 count) {
     prim = firstPrim;
     for (i = 0; i < count; i++) {
         if (prim->p3) {
-            prim->blendMode &= ~BLEND_VISIBLE;
+            prim->drawMode &= ~DRAW_HIDE;
             isVisible = false;
         } else {
-            prim->blendMode |= BLEND_VISIBLE;
+            prim->drawMode |= DRAW_HIDE;
             isVisible = true;
         }
 
@@ -221,15 +221,15 @@ void UnkPolyFunc2(Primitive* prim) {
     prim->p3 = 8;
     prim->next->p3 = 1;
     prim->next->type = PRIM_LINE_G2;
-    prim->next->blendMode = 0xA;
+    prim->next->drawMode = 0xA;
 }
 
 void UnkPolyFunc0(Primitive* prim) {
     prim->p3 = 0;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     prim->next->p3 = 0;
     prim->next->type = PRIM_GT4;
-    prim->next->blendMode = BLEND_VISIBLE;
+    prim->next->drawMode = DRAW_HIDE;
 }
 
 #if !defined(VERSION_BETA)

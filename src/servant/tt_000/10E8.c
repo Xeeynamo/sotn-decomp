@@ -262,7 +262,7 @@ void func_8017170C(Entity* entity, s32 frameIndex) {
 
     prim = &g_PrimBuf[entity->primIndex];
     if (frameIndex == 0) {
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
         return;
     }
     index = frameIndex - 1;
@@ -288,7 +288,7 @@ void func_8017170C(Entity* entity, s32 frameIndex) {
     prim->u1 = prim->u3 = D_80170608[index].texRight;
     prim->v2 = prim->v3 = D_80170608[index].texBottom;
     prim->priority = entity->zPriority + 1;
-    prim->blendMode = 0x102;
+    prim->drawMode = 0x102;
 }
 
 void func_801718A0(Entity* entity) {
@@ -904,7 +904,7 @@ void func_801733D4(Entity* self) {
                 D_80174B48->u1 = D_80174B48->u3 = 88;
                 D_80174B48->v2 = D_80174B48->v3 = 32;
                 D_80174B48->priority = self->zPriority;
-                D_80174B48->blendMode = 0x15 | BLEND_VISIBLE;
+                D_80174B48->drawMode = 0x15 | DRAW_HIDE;
                 D_80174B48 = D_80174B48->next;
                 D_80174B4C[i] = 0;
             }
@@ -950,10 +950,10 @@ void func_801733D4(Entity* self) {
                 D_80174BEC[i] -= 8;
                 D_80174C0C[i] -= 8;
                 if (D_80174C0C[i] < 81) {
-                    D_80174B48->blendMode |= BLEND_VISIBLE;
+                    D_80174B48->drawMode |= DRAW_HIDE;
                     D_80174B4C[i] = 0;
                 } else {
-                    D_80174B48->blendMode ^= BLEND_VISIBLE;
+                    D_80174B48->drawMode ^= DRAW_HIDE;
                 }
             }
             D_80174B48 = D_80174B48->next;
@@ -992,10 +992,10 @@ void func_801733D4(Entity* self) {
                 D_80174BEC[i] -= 8;
                 D_80174C0C[i] -= 8;
                 if (D_80174C0C[i] < 81) {
-                    D_80174B48->blendMode |= BLEND_VISIBLE;
+                    D_80174B48->drawMode |= DRAW_HIDE;
                     D_80174B4C[i] = 0;
                 } else {
-                    D_80174B48->blendMode ^= BLEND_VISIBLE;
+                    D_80174B48->drawMode ^= DRAW_HIDE;
                 }
             }
             isEntityAlive |= D_80174B4C[i];

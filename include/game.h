@@ -72,6 +72,7 @@ typedef struct Prim {
     struct Vertex v[4];
 } Prim;
 
+#define blendMode drawMode // maintained to easily migrate existing scratches
 typedef struct Primitive {
     /* 0x00 */ struct Primitive* next;
     /* 0x04 */ u8 r0;
@@ -109,10 +110,16 @@ typedef struct Primitive {
     /* 0x2E */ s16 y3;
     /* 0x30 */ u8 u3; // TODO not verified
     /* 0x31 */ u8 v3; // TODO not verified
-    /* 0x32 */ u16 blendMode;
+    /* 0x32 */ u16 drawMode;
 } Primitive; /* size=0x34 */
 
-#define BLEND_VISIBLE 8 // if unset, the primitive will not be rendered
+#define DRAW_DEFAULT 0x00
+#define DRAW_TRANSP 0x01   // make it semi transparent
+#define DRAW_COLORS 0x04   // use color blending
+#define DRAW_HIDE 0x08     // do not render the primitive
+#define DRAW_TPAGE 0x10    // use custom tpage
+#define DRAW_NOMENU 0x80   // do not render if D_800973EC is set
+#define DRAW_ABSPOS 0x2000 // use absolute coordinates with DRAW_NOMENU
 
 #include "entity.h"
 
@@ -596,7 +603,7 @@ typedef struct Entity {
     /* 0x12 */ s16 hitboxOffY;
     /* 0x14 */ u16 facingLeft;
     /* 0x16 */ u16 palette;
-    /* 0x18 */ s8 blendMode;
+    /* 0x18 */ s8 drawMode;
     /* 0x19 */ u8 drawFlags;
     /* 0x1A */ s16 rotX;
     /* 0x1C */ s16 rotY;
@@ -648,7 +655,7 @@ typedef struct {
     /* 0x06 */ u16 palette;
     /* 0x08 */ u8 drawFlags;
     /* 0x09 */ u8 unk9;
-    /* 0x0A */ u8 blendMode;
+    /* 0x0A */ u8 drawMode;
     /* 0x0B */ u8 unkB;
     /* 0x0C */ u32 unkC;
     /* 0x10 */ const u8* unk10;
@@ -703,14 +710,14 @@ typedef struct {
     /* 0xA */ s16 unkA;
 } GfxLoad; // size=0xC
 
-typedef enum ItemTypes {
-    HAND_TYPE,
-    HEAD_TYPE,
-    ARMOR_TYPE,
-    CAPE_TYPE,
-    ACCESSORY_TYPE,
-    NUM_ITEM_TYPES,
-} ItemTypes;
+typedef enum EquipKind {
+    EQUIP_HAND,
+    EQUIP_HEAD,
+    EQUIP_ARMOR,
+    EQUIP_CAPE,
+    EQUIP_ACCESSORY,
+    NUM_EQUIP_KINDS,
+} EquipKind;
 
 typedef enum {
     ITEM_S_SWORD,
@@ -873,8 +880,8 @@ typedef struct {
     /* 0x00, 8003C9A8 */ s32 cursorMain;
     /* 0x04, 8003C9AC */ s32 cursorRelic;
     /* 0x08, 8003C9B0 */ s32 cursorEquip;
-    /* 0x0C, 8003C9B4 */ s32 cursorEquipType[NUM_ITEM_TYPES];
-    /* 0x20, 8003C9C8 */ s32 scrollEquipType[NUM_ITEM_TYPES];
+    /* 0x0C, 8003C9B4 */ s32 cursorEquipType[NUM_EQUIP_KINDS];
+    /* 0x20, 8003C9C8 */ s32 scrollEquipType[NUM_EQUIP_KINDS];
     /* 0x34, 8003C9DC */ s32 cursorSpells;
     /* 0x38, 8003C9E0 */ s32 cursorSettings;
     /* 0x3C, 8003C9E4 */ s32 cursorCloak;
@@ -1226,7 +1233,7 @@ typedef struct {
         TimeAttackEvents eventId, TimeAttackActions action);
     /* 8003C844 */ void* (*func_8010E0A8)(void);
     /* 8003C848 */ void (*func_800FE044)(s32, s32);
-    /* 8003C84C */ void (*AddToInventory)(u16 id, ItemTypes kind);
+    /* 8003C84C */ void (*AddToInventory)(u16 id, EquipKind kind);
     /* 8003C850 */ RelicOrb* relicDefs;
     /* 8003C854 */ void (*InitStatsAndGear)(bool debugMode);
     /* 8003C858 */ s32 (*func_80134714)(s32 arg0, s32 arg1, s32 arg2);
@@ -1291,7 +1298,7 @@ extern s32 (*g_api_TimeAttackController)(
     TimeAttackEvents eventId, TimeAttackActions action);
 extern void* (*g_api_func_8010E0A8)(void);
 extern void (*g_api_func_800FE044)(s32, s32);
-extern void (*g_api_AddToInventory)(u16 id, ItemTypes kind);
+extern void (*g_api_AddToInventory)(u16 id, EquipKind kind);
 extern RelicOrb* g_api_relicDefs;
 extern s32 (*g_api_func_80134714)(s32 arg0, s32 arg1, s32 arg2);
 extern s32 (*g_api_func_80134678)(s16 arg0, u16 arg1);

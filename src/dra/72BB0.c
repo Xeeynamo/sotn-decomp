@@ -573,7 +573,7 @@ void func_80113EE0(void) {
     PLAYER.animFrameDuration = 0;
     PLAYER.animFrameIdx = 0;
     PLAYER.entityId = 0;
-    PLAYER.blendMode = 0;
+    PLAYER.drawMode = DRAW_DEFAULT;
     g_Player.unk44 = 0;
     g_Player.unk46 = 0;
     PLAYER.rotZ = 0;

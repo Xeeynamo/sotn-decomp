@@ -32,23 +32,23 @@ bool func_801B6480(s32 textDialogue) {
 
     prim = g_Dialogue.prim[0] = &g_PrimBuf[g_Dialogue.primIndex[2]];
 
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     prim = g_Dialogue.prim[1] = prim->next;
 
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     prim = g_Dialogue.prim[2] = prim->next;
 
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     prim = g_Dialogue.prim[3] = prim->next;
 
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     prim = g_Dialogue.prim[4] = prim->next;
 
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     prim = g_Dialogue.prim[5] = prim->next;
 
     prim->type = PRIM_GT4;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
 
     prim = prim->next;
     prim->type = PRIM_G4;
@@ -59,7 +59,7 @@ bool func_801B6480(s32 textDialogue) {
     prim->x0 = prim->x2 = 4;
     prim->x1 = prim->x3 = 0xF8;
     prim->priority = 0x1FD;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
 
     prim = prim->next;
     prim->type = PRIM_TILE;
@@ -68,7 +68,7 @@ bool func_801B6480(s32 textDialogue) {
     prim->y0 = 0x2F;
     prim->v0 = 0x4A;
     prim->priority = 0x1FC;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
     return true;
 }
 
@@ -97,7 +97,7 @@ void func_801B66A4(void) {
     prim->u1 = 0xC0;
     prim->v1 = 0xC;
     prim->priority = 0x1FF;
-    prim->blendMode = 0;
+    prim->drawMode = DRAW_DEFAULT;
 }
 
 u8 D_80180824[] = {
@@ -193,7 +193,7 @@ void func_801B675C(u16 actorIndex, Entity* self) {
             prim->v1 = FONT_H;
             prim->u1 = FONT_W;
             prim->priority = 0x1FF;
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
             prim->x0 = x;
             prim->y0 = g_Dialogue.startY + 6;
             prim = prim->next;
@@ -223,7 +223,7 @@ void func_801B690C(u8 ySteps, Entity* self) {
         prim->v0 = ySteps + prim->v0;
         if (prim->v1 == 0) {
             self->step_s++;
-            prim->blendMode = 8;
+            prim->drawMode = 8;
         }
     }
 
@@ -271,7 +271,7 @@ s32 func_801B76F0(const char* msg) {
             prim->y0 = (i >> 1) * 0x13 + 0xF0;
             prim->clut = 0x1A1;
             prim->priority = 3;
-            prim->blendMode = 0;
+            prim->drawMode = DRAW_DEFAULT;
             prim = prim->next;
         }
 

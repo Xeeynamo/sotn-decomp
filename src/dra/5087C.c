@@ -1166,7 +1166,7 @@ void func_800F298C(void) {
             while (prim != NULL) {
                 prim->tpage = 0x1A;
                 prim->clut = 0x120;
-                prim->blendMode = BLEND_VISIBLE;
+                prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
         }
@@ -1312,7 +1312,7 @@ void func_800F298C(void) {
             D_801375A8 = D_801375AA;
             // Note: g_PrimBuf is MAX_PRIM_COUNT=1280 total in size.
             for (i = 0, prim = &g_PrimBuf[0]; i < 1024; i++, prim++) {
-                if (prim->blendMode & 2) {
+                if (prim->drawMode & 2) {
                     switch (prim->type & 0xf) {
                     case PRIM_G4:
                     case PRIM_GT4:
@@ -1332,7 +1332,7 @@ void func_800F298C(void) {
                     case PRIM_ENV:
                         break;
                     }
-                } else if (prim->blendMode & 0x200) {
+                } else if (prim->drawMode & 0x200) {
                     switch (prim->type & 0xf) {
                     case PRIM_G4:
                     case PRIM_GT4:
@@ -1596,7 +1596,7 @@ void func_800F298C(void) {
                 D_801375A8 = D_801375AA;
                 // Note: g_PrimBuf is MAX_PRIM_COUNT=1280 total in size.
                 for (i = 0, prim = &g_PrimBuf[0]; i < 1024; i++, prim++) {
-                    if (prim->blendMode & 0x100) {
+                    if (prim->drawMode & 0x100) {
                         switch (prim->type & 0xf) {
                         case PRIM_G4:
                         case PRIM_GT4:

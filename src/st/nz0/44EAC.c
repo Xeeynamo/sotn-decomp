@@ -70,7 +70,7 @@ void EntityBloodSplatter(Entity* self) {
                 prim->next->x1 = prim->next->x1 - 4;
             }
             prim->priority = self->zPriority + 2;
-            prim->blendMode = 6;
+            prim->drawMode = 6;
         }
 
         prim = FindFirstUnkPrim2(*(s32*)&self->ext.generic.unk7C, 2);
@@ -101,7 +101,7 @@ void EntityBloodSplatter(Entity* self) {
                 *(s16*)&prim->next->tpage = -0x200;
             }
             prim->priority = self->zPriority + 2;
-            prim->blendMode = 6;
+            prim->drawMode = 6;
         }
         self->step++;
         break;
@@ -193,7 +193,7 @@ void func_801C53AC(Primitive* prim) {
         *(s32*)&prim->next->r1 = -0x20000;
         prim->next->b3 = 0x80;
         prim->priority = g_CurrentEntity->zPriority + 1;
-        prim->blendMode = 2;
+        prim->drawMode = 2;
         prim->next->u2 = 1;
         break;
 
@@ -467,7 +467,7 @@ void func_801C5D20(Entity* self) { // BloodDrips
                 prim->b0 = 48;
                 prim->b1 = 16;
                 prim->priority = self->zPriority + 1;
-                prim->blendMode |= 0x37;
+                prim->drawMode |= 0x37;
                 prim = prim->next;
             }
         } else {

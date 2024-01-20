@@ -17,7 +17,7 @@ void func_801B65FC(Entity* self) {
         params = self->params & 0xF;
         obj = &D_8018129C[params];
         self->palette = obj->palette + 0xD0;
-        self->blendMode = obj->blendMode;
+        self->drawMode = obj->drawMode;
         self->animSet = obj->animSet;
         self->unk5A = obj->unk2;
         self->ext.et38.unk80 = obj->unk8;
@@ -30,7 +30,7 @@ void func_801B65FC(Entity* self) {
 
         if (self->params & 0xF0) {
             self->palette = 0x819F;
-            self->blendMode = 0x10;
+            self->drawMode = DRAW_TPAGE;
             self->facingLeft = 1;
         }
         break;

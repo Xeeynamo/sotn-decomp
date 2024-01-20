@@ -362,7 +362,7 @@ void EntityBackgroundTrees(Entity* self) {
                 prim->y0 = prim->y1 = 0xC0;
                 prim->y2 = prim->y3 = 0xE3;
                 prim->priority = 0x40;
-                prim->blendMode = 0;
+                prim->drawMode = DRAW_DEFAULT;
                 prim = prim->next;
             }
             break;

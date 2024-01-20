@@ -17,7 +17,7 @@ void EntitySoulStealOrb(Entity* self) {
             return;
         }
         InitializeEntity(g_InitializeData0);
-        g_PrimBuf[primIndex].blendMode = BLEND_VISIBLE;
+        g_PrimBuf[primIndex].drawMode = DRAW_HIDE;
         self->primIndex = primIndex;
         self->animSet = ANIMSET_DRA(0);
         self->flags |= FLAG_HAS_PRIMS;
@@ -81,7 +81,7 @@ void EntitySoulStealOrb(Entity* self) {
         prim->u1 = prim->u3 = *(temp_d++);
         prim->v2 = prim->v3 = *(temp_d++);
         prim->priority = self->zPriority;
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         break;
     }
 }
@@ -98,7 +98,7 @@ void func_80194DD4(Entity* entity) {
         entity->unk5A = objInit->unk4.s;
         entity->palette = objInit->palette;
         entity->drawFlags = objInit->drawFlags;
-        entity->blendMode = objInit->blendMode;
+        entity->drawMode = objInit->drawMode;
         if (objInit->unkC != 0) {
             entity->flags = objInit->unkC;
         }

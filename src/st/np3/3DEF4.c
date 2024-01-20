@@ -28,7 +28,7 @@ void EntityPrizeDrop(Entity* self) {
     case 0:
         InitializeEntity(g_InitializeData0);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 0x14;
-        self->blendMode = 0;
+        self->drawMode = DRAW_DEFAULT;
         if (itemId >= 0x18) {
             self->params = 0;
             itemId = 0;
@@ -157,7 +157,7 @@ void EntityPrizeDrop(Entity* self) {
                 prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
                 prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;
                 prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x80;
-                prim->blendMode = BLEND_VISIBLE;
+                prim->drawMode = DRAW_HIDE;
                 prim->priority = self->zPriority + 1;
                 self->step_s++;
             }
@@ -185,7 +185,7 @@ void EntityPrizeDrop(Entity* self) {
                 prim->x1 = prim->x3 = self->posX.i.hi + 1;
                 prim->y0 = prim->y1 = self->posY.i.hi - 1;
                 prim->y2 = prim->y3 = self->posY.i.hi + 1;
-                prim->blendMode = 0x37;
+                prim->drawMode = 0x37;
             }
             break;
 
@@ -228,11 +228,11 @@ void EntityExplosion(Entity* entity) {
         entity->animSet = ANIMSET_DRA(2);
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;
-        entity->blendMode = 0x30;
+        entity->drawMode = 0x30;
 
         if (entity->params & 0xF0) {
             entity->palette = 0x8195;
-            entity->blendMode = 0x10;
+            entity->drawMode = DRAW_TPAGE;
         }
 
         temp_v0 = entity->params & 0xFF00;
@@ -422,11 +422,11 @@ void EntityEquipItemDrop(Entity* self) {
 
         if (itemId < NUM_HAND_ITEMS) {
             itemName = g_api.equipDefs[itemId].name;
-            g_api.AddToInventory(itemId, HAND_TYPE);
+            g_api.AddToInventory(itemId, EQUIP_HAND);
         } else {
             itemId -= NUM_HAND_ITEMS;
             itemName = g_api.accessoryDefs[itemId].name;
-            g_api.AddToInventory(itemId, ARMOR_TYPE);
+            g_api.AddToInventory(itemId, EQUIP_ARMOR);
         }
 
         BottomCornerText(itemName, 1);

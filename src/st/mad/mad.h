@@ -92,7 +92,7 @@ extern u8* g_eBreakableAnimations[8];
 extern u8 g_eBreakableHitboxes[];
 extern u8 g_eBreakableExplosionTypes[];
 extern u16 g_eBreakableanimSets[];
-extern u8 g_eBreakableBlendModes[];
+extern u8 g_eBreakableDrawModes[];
 
 // *** EntitySoulStealOrb properties START ***
 

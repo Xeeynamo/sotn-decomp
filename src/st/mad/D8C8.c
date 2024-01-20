@@ -115,7 +115,7 @@ void func_8018E5AC(Entity* self) {
         self->unk5A = objInit->unk4.s;
         self->palette = objInit->palette;
         self->drawFlags = objInit->drawFlags;
-        self->blendMode = objInit->blendMode;
+        self->drawMode = objInit->drawMode;
         temp_v0 = objInit->unkC;
         if (temp_v0 != 0) {
             self->flags = temp_v0;
@@ -144,7 +144,7 @@ void EntityBreakable(Entity* entity) {
     } else {
         InitializeEntity(g_eBreakableInit);
         entity->zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 0x14;
-        entity->blendMode = g_eBreakableBlendModes[breakableType];
+        entity->drawMode = g_eBreakableDrawModes[breakableType];
         entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
         entity->animSet = g_eBreakableanimSets[breakableType];
     }

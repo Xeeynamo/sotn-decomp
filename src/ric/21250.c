@@ -1231,9 +1231,9 @@ void func_8015FEA8(Entity* entity) {
             prim->g1 = (rand() & 7) + 1;
             prim->g2 = 0;
             prim->priority = PLAYER.zPriority + 4;
-            prim->blendMode = 0x11B;
+            prim->drawMode = 0x11B;
             if (rand() & 1) {
-                prim->blendMode = 0x17B;
+                prim->drawMode = 0x17B;
             }
             prim = prim->next;
         }
@@ -1261,10 +1261,10 @@ void func_8015FEA8(Entity* entity) {
             temp = func_8015FDB0((POLY_GT4*)prim, hitboxY, hitboxX);
             D_80174FBC[i].unk2--;
             if (temp < 0) {
-                prim->blendMode |= BLEND_VISIBLE;
+                prim->drawMode |= DRAW_HIDE;
                 prim->g0++;
             } else {
-                prim->blendMode &= ~BLEND_VISIBLE;
+                prim->drawMode &= ~DRAW_HIDE;
             }
             break;
         }
@@ -1287,9 +1287,9 @@ void func_801601DC(Entity* entity) {
         entity->palette = 0x819F;
 
         if (D_80174FFC & 1) {
-            entity->blendMode = 0x70;
+            entity->drawMode = 0x70;
         } else {
-            entity->blendMode = 0x10;
+            entity->drawMode = DRAW_TPAGE;
         }
         entity->rotY = 0x40;
         entity->rotX = 0x40;

@@ -29,7 +29,7 @@ void RenderEntities(void);
 void InitRenderer(void);
 void RenderTilemap(void);
 void RenderPrimitives(void);
-void DrawEntitiesHitbox(s32 blendMode);
+void DrawEntitiesHitbox(s32 drawMode);
 void UpdateCd(void);
 void SoundInit(void);
 

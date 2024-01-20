@@ -105,7 +105,7 @@ void func_801641A0(Entity* entity) {
             prim->tpage = 0x1A;
             prim->clut = 0x160;
             prim->priority = PLAYER.zPriority + 8;
-            prim->blendMode = 0x35;
+            prim->drawMode = 0x35;
             entity->flags = FLAG_UNK_40000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
             entity->step++;
             goto def;
@@ -202,7 +202,7 @@ void EntityShrinkingPowerUpRing(Entity* self) {
             prim1->tpage = prim2->tpage = 0x1A;
             prim1->clut = prim2->clut = 0x15F;
             prim1->priority = prim2->priority = PLAYER.zPriority + 2;
-            prim1->blendMode = prim2->blendMode = 0x235;
+            prim1->drawMode = prim2->drawMode = 0x235;
             prim2 = prim2->next;
             prim1 = prim1->next;
         }
@@ -369,9 +369,9 @@ void EntityHitByIce(Entity* self) {
             prim->b0 = prim->b1 = prim->b2 = prim->b3 = rand() | 0x80;
             prim->g0 = prim->g1 = prim->g2 = prim->g3 = (rand() & 0x1F) + 0x30;
             if (rand() & 1) {
-                prim->blendMode = 0x335;
+                prim->drawMode = 0x335;
             } else {
-                prim->blendMode = 0x315;
+                prim->drawMode = 0x315;
             }
             prim->type = 3;
             prim->priority = PLAYER.zPriority + 2;
@@ -531,10 +531,10 @@ void EntityHitByIce(Entity* self) {
             prim->r0 = prim->r1 = prim->r2 = prim->r3;
             prim->b0 = prim->b1 = prim->b2 = prim->b3;
             prim->g0 = prim->g1 = prim->g2 = prim->g3;
-            prim->blendMode |= 2;
-            prim->blendMode &= ~0x300;
+            prim->drawMode |= 2;
+            prim->drawMode &= ~0x300;
             if (--prim->v0 == 0) {
-                prim->blendMode |= 8;
+                prim->drawMode |= 8;
             }
         }
         prim = prim->next;
@@ -588,7 +588,7 @@ void EntityHitByLightning(Entity* self) {
             prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
                 prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
                     prim->b3 = 0x80;
-            prim->blendMode = 0x133;
+            prim->drawMode = 0x133;
             prim = prim->next;
         }
         if ((PLAYER.velocityY != 0) && (PLAYER.step != 0x10)) {
@@ -772,10 +772,10 @@ void func_80165DD8(
 
 void func_80166024() {
     PLAYER.palette = 0x815E;
-    PLAYER.blendMode = 0x70;
+    PLAYER.drawMode = 0x70;
 }
 
 void func_80166044() {
     PLAYER.palette = 0x8120;
-    PLAYER.blendMode = 0;
+    PLAYER.drawMode = DRAW_DEFAULT;
 }

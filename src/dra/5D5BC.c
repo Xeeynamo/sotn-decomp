@@ -30,8 +30,8 @@ u16 g_HudSpriteClut[HUD_NUM_SPRITES] = {
     0x0171, 0x0171, 0x0171, 0x0196, 0x0196, 0x0196, 0x0196,
 };
 u16 g_HudSpriteBlend[HUD_NUM_SPRITES] = {
-    BLEND_VISIBLE, BLEND_VISIBLE, BLEND_VISIBLE, 0x2000, 0x2000, 0x2000, 0x2000,
-    0x2000,        0x2000,        0x2000,        0x2000, 0x2000, 0x2000, 0x2000,
+    DRAW_HIDE, DRAW_HIDE, DRAW_HIDE, 0x2000, 0x2000, 0x2000, 0x2000,
+    0x2000,    0x2000,    0x2000,    0x2000, 0x2000, 0x2000, 0x2000,
 };
 s16 g_HudSubwpnSpriteClut[HUD_NUM_SPRITES] = {
     0x0175, 0x0176, 0x0175, 0x0176, 0x0175, 0x0176, 0x0175,
@@ -85,19 +85,19 @@ s32 func_800FD6C4(s32 equipTypeFilter) {
     s32 i;
 
     switch (equipTypeFilter) {
-    case HAND_TYPE:
+    case EQUIP_HAND:
         return NUM_HAND_ITEMS;
-    case HEAD_TYPE:
-        equipType = HEAD_TYPE - 1;
+    case EQUIP_HEAD:
+        equipType = EQUIP_HEAD - 1;
         break;
-    case ARMOR_TYPE:
-        equipType = ARMOR_TYPE - 1;
+    case EQUIP_ARMOR:
+        equipType = EQUIP_ARMOR - 1;
         break;
-    case CAPE_TYPE:
-        equipType = CAPE_TYPE - 1;
+    case EQUIP_CAPE:
+        equipType = EQUIP_CAPE - 1;
         break;
-    case ACCESSORY_TYPE:
-        equipType = ACCESSORY_TYPE - 1;
+    case EQUIP_ACCESSORY:
+        equipType = EQUIP_ACCESSORY - 1;
         break;
     }
 
@@ -109,22 +109,22 @@ s32 func_800FD6C4(s32 equipTypeFilter) {
     return itemCount;
 }
 
-u8* GetEquipOrder(ItemTypes kind) {
-    if (kind == HAND_TYPE) {
+u8* GetEquipOrder(EquipKind kind) {
+    if (kind == EQUIP_HAND) {
         return g_Status.equipHandOrder;
     }
     return g_Status.equipBodyOrder;
 }
 
-u8* GetEquipCount(ItemTypes kind) {
-    if (kind == HAND_TYPE) {
+u8* GetEquipCount(EquipKind kind) {
+    if (kind == EQUIP_HAND) {
         return g_Status.equipHandCount;
     }
     return g_Status.equipBodyCount;
 }
 
-const char* GetEquipmentName(ItemTypes kind, s32 equipId) {
-    if (kind == HAND_TYPE) {
+const char* GetEquipmentName(EquipKind kind, s32 equipId) {
+    if (kind == EQUIP_HAND) {
         return g_EquipDefs[equipId].name;
     } else {
         return g_AccessoryDefs[equipId].name;
@@ -151,9 +151,9 @@ u32 CheckEquipmentItemCount(u32 itemId, u32 equipType) {
     // seems to require missing return
 }
 
-void AddToInventory(u16 id, ItemTypes kind) {
+void AddToInventory(u16 id, EquipKind kind) {
     s32 i;
-    ItemTypes found;
+    EquipKind found;
     u8 prevAmount;
     u8* order;
     u8* count;
@@ -174,7 +174,7 @@ void AddToInventory(u16 id, ItemTypes kind) {
     }
     count[id] = prevAmount;
 
-    if (kind != HAND_TYPE) {
+    if (kind != EQUIP_HAND) {
         found = g_AccessoryDefs[id].equipType;
     }
 
@@ -191,7 +191,7 @@ void AddToInventory(u16 id, ItemTypes kind) {
         if (count[*pOrder] > 0) {
             continue;
         }
-        if (kind == HAND_TYPE || found == g_AccessoryDefs[*pOrder].equipType) {
+        if (kind == EQUIP_HAND || found == g_AccessoryDefs[*pOrder].equipType) {
             emptySlot = i;
             break;
         }
@@ -207,7 +207,7 @@ void AddToInventory(u16 id, ItemTypes kind) {
 void func_800FD9D4(SpellDef* spell, s32 id) {
     *spell = g_SpellDefs[id];
     spell->attack += (g_Status.statsTotal[2] * 2 + (rand() % 12)) / 10;
-    if (CheckEquipmentItemCount(ITEM_MOJO_MAIL, ARMOR_TYPE) != 0) {
+    if (CheckEquipmentItemCount(ITEM_MOJO_MAIL, EQUIP_ARMOR) != 0) {
         spell->attack += spell->attack / 2;
     }
 }
@@ -246,7 +246,7 @@ s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer) {
     case STATUS_AILMENT_UNK04:
     case STATUS_AILMENT_UNK05:
         ret = timer;
-        if (CheckEquipmentItemCount(ITEM_BWAKA_KNIFE, ACCESSORY_TYPE) != 0) {
+        if (CheckEquipmentItemCount(ITEM_BWAKA_KNIFE, EQUIP_ACCESSORY) != 0) {
             ret += ret / 2;
         }
         break;
@@ -284,7 +284,7 @@ bool func_800FDD44(s32 itemType) {
     s32 equippedItem = g_Status.equipment[itemType];
     bool isConsumable = g_EquipDefs[equippedItem].isConsumable;
 
-    if (CheckEquipmentItemCount(ITEM_DUPLICATOR, ACCESSORY_TYPE) == 0) {
+    if (CheckEquipmentItemCount(ITEM_DUPLICATOR, EQUIP_ACCESSORY) == 0) {
         if (isConsumable) {
             if (g_Status.equipHandCount[equippedItem] == 0) {
                 g_Status.equipment[itemType] = ITEM_EMPTY_HAND;
@@ -490,7 +490,7 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
     if (subweaponId == 0) {
         *subwpn = g_SubwpnDefs[g_Status.subWeapon];
         accessoryCount =
-            CheckEquipmentItemCount(ITEM_HEART_BROACH, ACCESSORY_TYPE);
+            CheckEquipmentItemCount(ITEM_HEART_BROACH, EQUIP_ACCESSORY);
         if (accessoryCount == 1) {
             subwpn->heartCost = subwpn->heartCost / 2;
         }
@@ -510,7 +510,7 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
         }
     } else {
         *subwpn = g_SubwpnDefs[subweaponId];
-        if (CheckEquipmentItemCount(ITEM_BRILLIANT_MAIL, ARMOR_TYPE) != 0) {
+        if (CheckEquipmentItemCount(ITEM_BRILLIANT_MAIL, EQUIP_ARMOR) != 0) {
             subwpn->attack += 10;
         }
 #if defined(VERSION_US)
@@ -519,7 +519,7 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
         if (subweaponId == 4) {
 #endif
             accessoryCount =
-                CheckEquipmentItemCount(ITEM_STAUROLITE, ACCESSORY_TYPE);
+                CheckEquipmentItemCount(ITEM_STAUROLITE, EQUIP_ACCESSORY);
             if (accessoryCount == 1) {
                 subwpn->attack *= 2;
             }
@@ -631,7 +631,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     // Player wearing cat-eye circlet. Same as above if-statement but
     //  with arg2 doubled. Item description says "Big HP restore" so makes
     //  sense
-    if (CheckEquipmentItemCount(ITEM_CAT_EYE_CIRCLET, HEAD_TYPE) != 0 &&
+    if (CheckEquipmentItemCount(ITEM_CAT_EYE_CIRCLET, EQUIP_HEAD) != 0 &&
         damage->damageKind == 7) {
         amount *= 2;
         if (amount < 1) {
@@ -651,7 +651,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     // Very strange to have ballroom mask check. This item is not known to
     // have special behavior. Also, not possible to equip two. This may be
     // a new discovery of a property of the item. Worth further analysis.
-    itemCount = CheckEquipmentItemCount(ITEM_BALLROOM_MASK, HEAD_TYPE);
+    itemCount = CheckEquipmentItemCount(ITEM_BALLROOM_MASK, EQUIP_HEAD);
     if (itemCount != 0 && (damage->effects & 0xF980)) {
         if (itemCount == 1) {
             amount -= amount / 5;
@@ -686,7 +686,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
             damage->damageTaken *= 2;
         }
         // Check for player wearing a Talisman (chance to dodge attack)
-        itemCount = CheckEquipmentItemCount(ITEM_TALISMAN, ACCESSORY_TYPE);
+        itemCount = CheckEquipmentItemCount(ITEM_TALISMAN, EQUIP_ACCESSORY);
         if (itemCount != 0) {
             if (itemCount * g_Status.statsTotal[STAT_LCK] >= (rand() & 511)) {
                 return 2;
@@ -734,13 +734,13 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
         // Here is where we actually take the damage away.
         g_Status.hp -= damage->damageTaken;
         // Blood cloak gives hearts when damage is taken
-        if ((CheckEquipmentItemCount(ITEM_BLOOD_CLOAK, CAPE_TYPE) != 0) &&
+        if ((CheckEquipmentItemCount(ITEM_BLOOD_CLOAK, EQUIP_CAPE) != 0) &&
             (ret != 9)) {
             AddHearts(damage->damageTaken);
         }
         // Fury Plate "DEF goes up when damage taken", that logic is not here
         // though.
-        if (CheckEquipmentItemCount(ITEM_FURY_PLATE, ARMOR_TYPE) != 0) {
+        if (CheckEquipmentItemCount(ITEM_FURY_PLATE, EQUIP_ARMOR) != 0) {
             if (*D_80139828 < 0x200) {
                 *D_80139828 = 0x200;
             }
@@ -858,7 +858,7 @@ u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity) {
 
     enemy = &sp20;
     sp20 = g_EnemyDefs[enemyEntity->enemyId];
-    if (CheckEquipmentItemCount(ITEM_DRAGON_HELM, HEAD_TYPE) != 0) {
+    if (CheckEquipmentItemCount(ITEM_DRAGON_HELM, EQUIP_HEAD) != 0) {
         enemy->defense /= 2;
     }
 
@@ -954,7 +954,7 @@ s32 func_800FF494(EnemyDef* arg0) {
      * enemy item drop rates when equipped
      */
     s32 ringOfArcanaCount =
-        CheckEquipmentItemCount(ITEM_RING_OF_ARCANA, ACCESSORY_TYPE);
+        CheckEquipmentItemCount(ITEM_RING_OF_ARCANA, EQUIP_ACCESSORY);
     s32 rnd = rand() & 0xFF;
 
     rnd -= ((rand() & 0x1F) + g_Status.statsTotal[3]) / 20;
@@ -1219,7 +1219,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
 
                 // If we died in prologue and needed Maria's rescue
                 if (D_801397FC != 0) {
-                    AddToInventory(ITEM_POTION, HAND_TYPE);
+                    AddToInventory(ITEM_POTION, EQUIP_HAND);
                     prologueBonusState = 3;
                     // If no damage was taken as Richter, bonus to each stat
                 } else if (g_Status.hp == g_Status.hpMax) {
@@ -1240,7 +1240,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
 
                 // If we ran out of hearts and didn't die, give heart refresh
                 if ((g_Status.hearts == 0) && (prologueBonusState < 3)) {
-                    AddToInventory(ITEM_HEART_REFRESH, HAND_TYPE);
+                    AddToInventory(ITEM_HEART_REFRESH, EQUIP_HAND);
                 }
 
                 // Set initial max HP to 70, unless we took no damage, then 75.
@@ -1254,7 +1254,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
 
                 // If we had more than 41 hearts in prologue, give neutron bomb
                 if (D_80139008 >= 41) {
-                    AddToInventory(ITEM_NEUTRON_BOMB, HAND_TYPE);
+                    AddToInventory(ITEM_NEUTRON_BOMB, EQUIP_HAND);
                     g_Status.statsBase[STAT_INT]++;
                 } else {
                     g_Status.statsBase[STAT_STR]++;
@@ -1351,7 +1351,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
                         }
                     }
                     if (i == 8) {
-                        AddToInventory(ITEM_AXE_LORD_ARMOR, ARMOR_TYPE);
+                        AddToInventory(ITEM_AXE_LORD_ARMOR, EQUIP_ARMOR);
                     }
                 }
             } else {
@@ -1424,52 +1424,52 @@ void InitStatsAndGear(bool isDeathTakingItems) {
                 g_Status.relics[RELIC_GRAVITY_BOOTS] = 3;
                 g_Status.relics[RELIC_LEAP_STONE] = 3;
 
-                AddToInventory(ITEM_FIREBRAND, HAND_TYPE);
-                AddToInventory(ITEM_THUNDERBRAND, HAND_TYPE);
-                AddToInventory(ITEM_ICEBRAND, HAND_TYPE);
-                AddToInventory(ITEM_CLAYMORE, HAND_TYPE);
-                AddToInventory(ITEM_MACE, HAND_TYPE);
-                AddToInventory(ITEM_KATANA, HAND_TYPE);
-                AddToInventory(ITEM_KNIGHT_SHIELD, HAND_TYPE);
-                AddToInventory(ITEM_IRON_SHIELD, HAND_TYPE);
-                AddToInventory(ITEM_BASILARD, HAND_TYPE);
-                AddToInventory(ITEM_RAPIER, HAND_TYPE);
-                AddToInventory(ITEM_KNUCKLE_DUSTER, HAND_TYPE);
-                AddToInventory(ITEM_CUTLASS, HAND_TYPE);
+                AddToInventory(ITEM_FIREBRAND, EQUIP_HAND);
+                AddToInventory(ITEM_THUNDERBRAND, EQUIP_HAND);
+                AddToInventory(ITEM_ICEBRAND, EQUIP_HAND);
+                AddToInventory(ITEM_CLAYMORE, EQUIP_HAND);
+                AddToInventory(ITEM_MACE, EQUIP_HAND);
+                AddToInventory(ITEM_KATANA, EQUIP_HAND);
+                AddToInventory(ITEM_KNIGHT_SHIELD, EQUIP_HAND);
+                AddToInventory(ITEM_IRON_SHIELD, EQUIP_HAND);
+                AddToInventory(ITEM_BASILARD, EQUIP_HAND);
+                AddToInventory(ITEM_RAPIER, EQUIP_HAND);
+                AddToInventory(ITEM_KNUCKLE_DUSTER, EQUIP_HAND);
+                AddToInventory(ITEM_CUTLASS, EQUIP_HAND);
 
-                AddToInventory(ITEM_CLOTH_TUNIC, ARMOR_TYPE);
-                AddToInventory(ITEM_BRONZE_CUIRASS, ARMOR_TYPE);
-                AddToInventory(ITEM_IRON_CUIRASS, ARMOR_TYPE);
-                AddToInventory(ITEM_STEEL_CUIRASS, ARMOR_TYPE);
-                AddToInventory(ITEM_SILVER_PLATE, ARMOR_TYPE);
-                AddToInventory(ITEM_GOLD_PLATE, ARMOR_TYPE);
-                AddToInventory(ITEM_FIRE_MAIL, ARMOR_TYPE);
-                AddToInventory(ITEM_MIRROR_CUIRASS, ARMOR_TYPE);
+                AddToInventory(ITEM_CLOTH_TUNIC, EQUIP_ARMOR);
+                AddToInventory(ITEM_BRONZE_CUIRASS, EQUIP_ARMOR);
+                AddToInventory(ITEM_IRON_CUIRASS, EQUIP_ARMOR);
+                AddToInventory(ITEM_STEEL_CUIRASS, EQUIP_ARMOR);
+                AddToInventory(ITEM_SILVER_PLATE, EQUIP_ARMOR);
+                AddToInventory(ITEM_GOLD_PLATE, EQUIP_ARMOR);
+                AddToInventory(ITEM_FIRE_MAIL, EQUIP_ARMOR);
+                AddToInventory(ITEM_MIRROR_CUIRASS, EQUIP_ARMOR);
 
-                AddToInventory(ITEM_VELVET_HAT, HEAD_TYPE);
-                AddToInventory(ITEM_LEATHER_HAT, HEAD_TYPE);
-                AddToInventory(ITEM_STEEL_HELM, HEAD_TYPE);
+                AddToInventory(ITEM_VELVET_HAT, EQUIP_HEAD);
+                AddToInventory(ITEM_LEATHER_HAT, EQUIP_HEAD);
+                AddToInventory(ITEM_STEEL_HELM, EQUIP_HEAD);
 
-                AddToInventory(ITEM_CLOTH_CAPE, CAPE_TYPE);
-                AddToInventory(ITEM_ELVEN_CLOAK, CAPE_TYPE);
-                AddToInventory(ITEM_ROYAL_CLOAK, CAPE_TYPE);
-                AddToInventory(ITEM_REVERSE_CLOAK, CAPE_TYPE);
+                AddToInventory(ITEM_CLOTH_CAPE, EQUIP_CAPE);
+                AddToInventory(ITEM_ELVEN_CLOAK, EQUIP_CAPE);
+                AddToInventory(ITEM_ROYAL_CLOAK, EQUIP_CAPE);
+                AddToInventory(ITEM_REVERSE_CLOAK, EQUIP_CAPE);
 
-                AddToInventory(ITEM_MEDAL, ACCESSORY_TYPE);
-                AddToInventory(ITEM_GAUNTLET, ACCESSORY_TYPE);
+                AddToInventory(ITEM_MEDAL, EQUIP_ACCESSORY);
+                AddToInventory(ITEM_GAUNTLET, EQUIP_ACCESSORY);
 
                 for (i = 0; i < 80; i++) {
-                    AddToInventory(ITEM_POTION, HAND_TYPE);
+                    AddToInventory(ITEM_POTION, EQUIP_HAND);
                 }
 
                 for (i = 0; i < 10; i++) {
-                    AddToInventory(ITEM_MAGIC_MISSILE, HAND_TYPE);
-                    AddToInventory(ITEM_TURKEY, HAND_TYPE);
-                    AddToInventory(ITEM_POT_ROAST, HAND_TYPE);
-                    AddToInventory(ITEM_ANTIVENOM, HAND_TYPE);
-                    AddToInventory(ITEM_BOOMERANG, HAND_TYPE);
-                    AddToInventory(ITEM_JAVELIN, HAND_TYPE);
-                    AddToInventory(ITEM_PENTAGRAM, HAND_TYPE);
+                    AddToInventory(ITEM_MAGIC_MISSILE, EQUIP_HAND);
+                    AddToInventory(ITEM_TURKEY, EQUIP_HAND);
+                    AddToInventory(ITEM_POT_ROAST, EQUIP_HAND);
+                    AddToInventory(ITEM_ANTIVENOM, EQUIP_HAND);
+                    AddToInventory(ITEM_BOOMERANG, EQUIP_HAND);
+                    AddToInventory(ITEM_JAVELIN, EQUIP_HAND);
+                    AddToInventory(ITEM_PENTAGRAM, EQUIP_HAND);
                 }
 #elif defined(VERSION_HD)
                 g_Status.timerHours = 0;
@@ -1533,28 +1533,28 @@ void DrawRichterHud(void) {
     prim->tpage = 0x1B;
     prim->clut = 0x101;
     prim->priority = 0x1EF;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
     prim = prim->next;
 
     SetTexturedPrimRect(prim, D_80137980 + 216, 22, 32, 96, 32, 0);
     prim->tpage = 0x1B;
     prim->clut = 0x100;
     prim->priority = 0x1EF;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
     prim = prim->next;
 
     SetTexturedPrimRect(prim, 4, 112, 9, 3, 64, 89);
     prim->tpage = 0x1B;
     prim->clut = 0x105;
     prim->priority = 0x1F0;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
     prim = prim->next;
 
     SetTexturedPrimRect(prim, D_80137980 + 228, 112, 9, 3, 64, 89);
     prim->tpage = 0x1B;
     prim->clut = 0x103;
     prim->priority = 0x1F0;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
     prim->p1 = 0;
     prim->p2 = 6;
     prim = prim->next;
@@ -1563,35 +1563,35 @@ void DrawRichterHud(void) {
     prim->tpage = 0x1B;
     prim->clut = 0x103;
     prim->priority = 0x1F0;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
     prim = prim->next;
 
     SetTexturedPrimRect(prim, 14, 27, 8, 8, 0, 96);
     prim->tpage = 0x1B;
     prim->clut = 0x103;
     prim->priority = 0x1F0;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
     prim = prim->next;
 
     SetTexturedPrimRect(prim, 22, 27, 8, 8, 0, 96);
     prim->tpage = 0x1B;
     prim->clut = 0x103;
     prim->priority = 0x1F0;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
     prim = prim->next;
 
     SetTexturedPrimRect(prim, 18, 38, 8, 8, 0, 0);
     prim->tpage = 0x1B;
     prim->clut = 0x102;
     prim->priority = 0x1F0;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
     prim = prim->next;
 
     SetTexturedPrimRect(prim, 33, 20, 64, 24, 64, 40);
     prim->tpage = 0x1B;
     prim->clut = 0x103;
     prim->priority = 0x1EF;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
 
     D_80137974 = func_800EDD9C(4, 16);
     prim = &g_PrimBuf[D_80137974];
@@ -1604,7 +1604,7 @@ void DrawRichterHud(void) {
             prim->tpage = 0x1B;
             prim->clut = 0x100;
             prim->priority = 0x1EE;
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
             prim->p1 = (rand() & 0x3F) + 1;
             prim->p2 = 0;
             prim = prim->next;
@@ -1671,7 +1671,7 @@ void DrawHud(void) {
         prim->tpage = 0x1F;
         prim->clut = g_HudSpriteClut[i];
         prim->priority = 0x1F0;
-        prim->blendMode = g_HudSpriteBlend[i];
+        prim->drawMode = g_HudSpriteBlend[i];
 
         if (i == 5) {
             SetPrimRect(prim, g_HudSpriteX[i], g_HudSpriteY[i], g_HudSpriteH[i],
@@ -1711,8 +1711,8 @@ void DrawHudSubweapon() {
     func_800EB4F8(D_800C52F8[g_Status.subWeapon], 0, 0x3C0, 0x120);
     prim = &g_PrimBuf[D_80137970];
     if (g_Status.subWeapon != 0) {
-        // This is 0x2031. Since blendMode is probably bits, write it this way.
-        prim->blendMode = 0x2000 | 0x0020 | 0x0010 | 0x0001;
+        // This is 0x2031. Since drawMode is probably bits, write it this way.
+        prim->drawMode = DRAW_ABSPOS | 0x0020 | DRAW_TPAGE | DRAW_TRANSP;
         prim = prim->next;
         prim->p2--;
         if (prim->p2 == 0) {
@@ -1741,18 +1741,18 @@ void DrawHudSubweapon() {
             }
         }
         if (prim->p1 != 0) {
-            prim->blendMode = 0x2000;
+            prim->drawMode = DRAW_ABSPOS;
         } else {
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
         }
         prim = prim->next;
-        prim->blendMode = 0x2000;
+        prim->drawMode = DRAW_ABSPOS;
     } else {
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
     }
 
     // Want to use prim = prim->next->next->next but that uses wrong register
@@ -1769,7 +1769,7 @@ void DrawHudSubweapon() {
         if (!(g_GameTimer & 0x3F)) {
             g_Status.mp++;
         }
-        if ((CheckEquipmentItemCount(ITEM_MYSTIC_PENDANT, ACCESSORY_TYPE) !=
+        if ((CheckEquipmentItemCount(ITEM_MYSTIC_PENDANT, EQUIP_ACCESSORY) !=
              0) &&
             ((g_GameTimer & 0x3F) == 0x1F)) {
             g_Status.mp++;
@@ -1779,7 +1779,7 @@ void DrawHudSubweapon() {
         }
     }
 
-    if ((CheckEquipmentItemCount(ITEM_HEALING_MAIL, ARMOR_TYPE)) &&
+    if ((CheckEquipmentItemCount(ITEM_HEALING_MAIL, EQUIP_ARMOR)) &&
         ((g_Player.unk0C & 0x04000007) == 0x04000000)) {
         g_HealingMailTimer[0]++;
         if (g_HealingMailTimer[0] >= 128) {
@@ -1848,11 +1848,11 @@ void DrawHudSubweapon() {
     prim->u3 = prim->u1 = prim->u0 + 8;
     prim->x0 = prim->x2 = statXPos;
     prim->x1 = prim->x3 = statXPos + 8;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
 
     if (leading_zeros != 0) {
         leading_zeros--;
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
     }
     // Hundreds digit of HP
     prim = prim->next;
@@ -1860,10 +1860,10 @@ void DrawHudSubweapon() {
     prim->u3 = prim->u1 = prim->u0 + 8;
     prim->x0 = prim->x2 = statXPos + digitSpacing;
     prim->x1 = prim->x3 = statXPos + digitSpacing + 8;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
     if (leading_zeros != 0) {
         leading_zeros--;
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
     }
     // Tens digit of HP
     prim = prim->next;
@@ -1871,10 +1871,10 @@ void DrawHudSubweapon() {
     prim->u3 = prim->u1 = prim->u0 + 8;
     prim->x0 = prim->x2 = statXPos + (digitSpacing * 2);
     prim->x1 = prim->x3 = statXPos + (digitSpacing * 2) + 8;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
 
     if (leading_zeros != 0) {
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
     }
     // Ones digit of HP
     prim = prim->next;
@@ -1913,11 +1913,11 @@ void DrawHudSubweapon() {
     prim->u3 = prim->u1 = prim->u0 + 8;
     prim->x0 = prim->x2 = statXPos;
     prim->x1 = prim->x3 = statXPos + 8;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
     prim->clut = clut;
     if (leading_zeros != 0) {
         leading_zeros--;
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
     }
     // Hundreds digit of hearts
     prim = prim->next;
@@ -1925,11 +1925,11 @@ void DrawHudSubweapon() {
     prim->u3 = prim->u1 = prim->u0 + 8;
     prim->x0 = prim->x2 = statXPos + 4;
     prim->x1 = prim->x3 = statXPos + 0xC;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
     prim->clut = clut;
     if (leading_zeros != 0) {
         leading_zeros--;
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
     }
     // Tens digit of hearts
     prim = prim->next;
@@ -1937,10 +1937,10 @@ void DrawHudSubweapon() {
     prim->u3 = prim->u1 = prim->u0 + 8;
     prim->x0 = prim->x2 = statXPos + 8;
     prim->x1 = prim->x3 = statXPos + 0x10;
-    prim->blendMode = 0x2000;
+    prim->drawMode = DRAW_ABSPOS;
     prim->clut = clut;
     if (leading_zeros != 0) {
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
     }
     // Ones digit of hearts
     prim = prim->next;
@@ -1963,7 +1963,7 @@ void func_801024DC(void) {
         prim->u0 = 0x80;
         prim->v0 = 0xF0;
         prim->priority = 0x1FD;
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
     }
     D_801379A8 = 0;
@@ -1983,7 +1983,7 @@ void func_801024DC(void) {
     prim = prim2;
     prim->v1 = 0;
     prim->u2 = 0;
-    prim->blendMode = BLEND_VISIBLE;
+    prim->drawMode = DRAW_HIDE;
 }
 
 s32 func_801025F4(void) { return g_PrimBuf[D_8013799C].clut; }
@@ -2001,7 +2001,7 @@ void func_80102628(s32 arg0) {
         prim->g0 = 0;
         prim->r0 = 0;
         prim->priority = 0x1FD;
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
         prim->x0 = arg0 / 2 * (i & 1);
         prim = prim->next;
     }
@@ -2011,7 +2011,7 @@ void func_801026BC(s32 arg0) {
     Primitive* prim = &g_PrimBuf[D_801379A0];
 
     if (arg0 == 0) {
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
         return;
     } else if (!(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
         SetPrimRect(prim, 0, 1, 255, 255);
@@ -2029,9 +2029,9 @@ void func_801026BC(s32 arg0) {
     func_80107250(prim, arg0 * 2);
 
     if (arg0 == 0x40) {
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
     } else {
-        prim->blendMode = 0x35;
+        prim->drawMode = 0x35;
     }
 }
 

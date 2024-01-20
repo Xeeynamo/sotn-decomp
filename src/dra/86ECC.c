@@ -42,7 +42,7 @@ void EntityHellfireHandler(Entity* self) {
         prim->u1 = prim->u3 = 0x30;
         prim->b3 = 0x80;
         prim->tpage = 0x11C;
-        prim->blendMode = 0x331;
+        prim->drawMode = 0x331;
         prim->priority = self->zPriority = 0x1C0;
         PlaySfx(NA_SE_PL_WARP);
         self->step++;
@@ -73,7 +73,7 @@ void EntityHellfireHandler(Entity* self) {
             self->ext.hellfireHandler.unk80 = 0x2A;
             self->step++;
             prim = &g_PrimBuf[self->primIndex];
-            prim->blendMode |= 8;
+            prim->drawMode |= 8;
             g_Player.unk5C = 1;
         }
         break;
@@ -86,7 +86,7 @@ void EntityHellfireHandler(Entity* self) {
             self->ext.hellfireHandler.unk7C = 0;
             self->step++;
             prim = &g_PrimBuf[self->primIndex];
-            prim->blendMode &= ~BLEND_VISIBLE;
+            prim->drawMode &= ~DRAW_HIDE;
         }
         if (self->ext.hellfireHandler.unk80 == 2) {
             g_Player.unk5C = 2;
@@ -349,7 +349,7 @@ void EntityExpandingCircle(Entity* entity) {
             prim->tpage = 0x1A;
             prim->clut = 0x15F;
             prim->priority = PLAYER.zPriority + 1;
-            prim->blendMode = 0x35;
+            prim->drawMode = 0x35;
             entity->flags = FLAG_UNK_40000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
             entity->step++;
             break;
@@ -427,7 +427,7 @@ void func_80127CC8(Entity* entity) {
         prim->b2 = 64;
         prim->b1 = 64;
         prim->b0 = 64;
-        prim->blendMode = 0x315;
+        prim->drawMode = 0x315;
         entity->zPriority = 0x1C0;
         prim->priority = 0x1C0;
         entity->step++;
@@ -451,9 +451,9 @@ void func_80127CC8(Entity* entity) {
     prim->y2 = 240;
 
     if (g_GameTimer & 1) {
-        prim->blendMode = prim->blendMode | BLEND_VISIBLE;
+        prim->drawMode = prim->drawMode | DRAW_HIDE;
     } else {
-        prim->blendMode = prim->blendMode & ~BLEND_VISIBLE;
+        prim->drawMode = prim->drawMode & ~DRAW_HIDE;
     }
 }
 
@@ -512,9 +512,9 @@ void EntitySubwpnReboundStone(Entity* self) {
             prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
                 0xFF;
             prim->priority = PLAYER.zPriority + 2;
-            prim->blendMode = 0x33;
+            prim->drawMode = 0x33;
             if (i != 0) {
-                prim->blendMode |= BLEND_VISIBLE;
+                prim->drawMode |= DRAW_HIDE;
             }
             prim->x0 = prim->x1 = playerX;
             prim->y0 = prim->y1 = playerY;
@@ -735,7 +735,7 @@ void EntitySubwpnReboundStone(Entity* self) {
             if (i == self->ext.reboundStone.unk80) {
                 prim->x0 = playerX;
                 prim->y0 = playerY;
-                prim->blendMode &= ~BLEND_VISIBLE;
+                prim->drawMode &= ~DRAW_HIDE;
                 // unusual nesting of the same condition
                 if (i == self->ext.reboundStone.unk80) {
                     prim->x1 = self->posX.i.hi;
@@ -746,7 +746,7 @@ void EntitySubwpnReboundStone(Entity* self) {
             prim->x1 = self->posX.i.hi;
             prim->y1 = self->posY.i.hi;
         }
-        if (!(prim->blendMode & BLEND_VISIBLE)) {
+        if (!(prim->drawMode & DRAW_HIDE)) {
             if (LOH(prim->u3) != 0) {
                 LOH(prim->u3)--;
             } else {
@@ -788,11 +788,11 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
         fakeprim = (FakePrim*)&g_PrimBuf[self->primIndex];
         fakeprimY = selfY - 8;
         while (1) {
-            fakeprim->blendMode = 2;
+            fakeprim->drawMode = 2;
             fakeprim->priority = PLAYER.zPriority + 2;
             if (fakeprim->next == NULL) {
                 fakeprim->y0 = fakeprim->x0 = fakeprim->w = 0;
-                fakeprim->blendMode &= ~BLEND_VISIBLE;
+                fakeprim->drawMode &= ~DRAW_HIDE;
                 break;
             }
             fakeprim->posX.i.hi = selfX;
@@ -836,7 +836,7 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
         while (1) {
             if (fakeprim->next == NULL) {
                 fakeprim->y0 = fakeprim->x0 = fakeprim->w = 0;
-                fakeprim->blendMode &= ~BLEND_VISIBLE;
+                fakeprim->drawMode &= ~DRAW_HIDE;
                 break;
             }
             fakeprim->posX.i.hi = fakeprim->x0;
@@ -869,7 +869,7 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
             if ((self->ext.vibhuti.timer & 7) == i) {
                 self->posX.i.hi = fakeprim->posX.i.hi;
                 self->posY.i.hi = fakeprim->posY.i.hi;
-                if (fakeprim->blendMode & BLEND_VISIBLE) {
+                if (fakeprim->drawMode & DRAW_HIDE) {
                     self->hitboxHeight = 0;
                     self->hitboxWidth = 0;
                 } else {
@@ -883,10 +883,10 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
             }
             if ((self->hitFlags != 0) &&
                 (((self->ext.vibhuti.timer + 1) & 7) == i)) {
-                fakeprim->blendMode = BLEND_VISIBLE;
+                fakeprim->drawMode = DRAW_HIDE;
             }
             if ((self->ext.vibhuti.timer - 1) == i) {
-                fakeprim->blendMode = BLEND_VISIBLE;
+                fakeprim->drawMode = DRAW_HIDE;
             }
             fakeprim->x0 = fakeprim->posX.i.hi;
             fakeprim->y0 = fakeprim->posY.i.hi;
@@ -955,7 +955,7 @@ void func_80128C2C(Entity* self) {
             prim = &g_PrimBuf[self->primIndex];
             prim->type = 2;
             prim->priority = PLAYER.zPriority + 2;
-            prim->blendMode = 0x331;
+            prim->drawMode = 0x331;
             prim->r1 = 0x60;
             prim->g1 = 0;
             prim->b1 = 0x80;
@@ -1021,7 +1021,7 @@ void func_80128C2C(Entity* self) {
                 heartCost = 5;
                 // 0x4d is the item ID for the heart broach.
                 heartBroachesWorn =
-                    CheckEquipmentItemCount(ITEM_HEART_BROACH, ACCESSORY_TYPE);
+                    CheckEquipmentItemCount(ITEM_HEART_BROACH, EQUIP_ACCESSORY);
                 if (heartBroachesWorn == 1) {
                     heartCost = 2;
                 }
@@ -1058,7 +1058,7 @@ void func_80128C2C(Entity* self) {
     }
     tempX = prim->b1;
     if (tempX < 5) {
-        prim->blendMode |= BLEND_VISIBLE;
+        prim->drawMode |= DRAW_HIDE;
     }
     prim->x0 = self->ext.et_80128C2C.unk80;
     prim->y0 = self->ext.et_80128C2C.unk82;
@@ -1099,7 +1099,7 @@ void EntityStopWatchExpandingCircle(Entity* self) {
             prim->clut = 0x15F;
             self->zPriority = 0xC2;
             prim->priority = 0xC2;
-            prim->blendMode = 0x435;
+            prim->drawMode = 0x435;
             prim->u0 = ((rsin((s16)(i << 8)) << 5) >> 0xC) + 0x20;
             prim->v0 = -((rcos((s16)(i << 8)) << 5) >> 0xC) - 0x21;
             prim->u1 = ((rsin((s16)(i + 1 << 8)) << 5) >> 0xC) + 0x20;
@@ -1175,7 +1175,7 @@ void func_8012B78C(Entity* entity) {
             prim->y0 = prim->y1 = entity->posY.i.hi - 8;
             prim->y2 = prim->y3 = entity->posY.i.hi + 8;
             prim->priority = entity->zPriority;
-            prim->blendMode = 0x115;
+            prim->drawMode = 0x115;
             entity->ext.generic.unk7E.modeU16 = 96;
             entity->step++;
         } else {
@@ -1244,7 +1244,7 @@ void EntitySubwpnBible(Entity* self) {
         prim->u1 = prim->u3 = 0xA8;
         prim->v2 = prim->v3 = 0xF0;
         prim->priority = PLAYER.zPriority + 1;
-        prim->blendMode = 0x108;
+        prim->drawMode = 0x108;
         self->ext.et_BibleSubwpn.unk84 = self->facingLeft ? 0x20 : -0x20;
         func_8011A290(self);
         self->hitboxWidth = 6;
@@ -1253,7 +1253,7 @@ void EntitySubwpnBible(Entity* self) {
         break;
     case 1:
         prim = &g_PrimBuf[self->primIndex];
-        prim->blendMode &= ~BLEND_VISIBLE;
+        prim->drawMode &= ~DRAW_HIDE;
         self->ext.et_BibleSubwpn.unk86++;
         g_Player.D_80072F00[10] = 4;
         self->step++;

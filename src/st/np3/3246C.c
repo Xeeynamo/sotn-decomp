@@ -17,7 +17,7 @@ void func_801B246C(Entity* self) {
         self->unk5A = temp_s0->unk4.U8.unk1;
         self->palette = temp_s0->palette;
         self->drawFlags = temp_s0->drawFlags;
-        self->blendMode = temp_s0->blendMode;
+        self->drawMode = temp_s0->drawMode;
         if (temp_s0->unkC != 0) {
             self->flags = temp_s0->unkC;
         }
@@ -102,7 +102,7 @@ void EntityBreakable(Entity* entity) {
     } else {
         InitializeEntity(g_eBreakableInit);
         entity->zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 0x14;
-        entity->blendMode = g_eBreakableBlendModes[breakableType];
+        entity->drawMode = g_eBreakableDrawModes[breakableType];
         entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
         entity->animSet = g_eBreakableanimSets[breakableType];
     }
@@ -161,7 +161,7 @@ void EntityShuttingWindow(Entity* self) {
             prim->v0 = 4;
             prim->v2 = prim->v3 = 0x7C;
             prim->priority = 0x5F;
-            prim->blendMode = 2;
+            prim->drawMode = 2;
             prim = prim->next;
         }
 
@@ -261,7 +261,7 @@ void EntityCastleDoor(Entity* self) {
             prim->tpage = 0xF;
             prim->clut = 0x41;
             prim->priority = 0x6A;
-            prim->blendMode = 2;
+            prim->drawMode = 2;
             prim->u0 = prim->u2 = *temp_a0++;
             prim->u1 = prim->u3 = *temp_a0;
             prim->v0 = prim->v1 = 1;
@@ -318,9 +318,9 @@ void EntityCastleDoor(Entity* self) {
         }
 
         if (temp_s3 > 0) {
-            prim->blendMode = 6;
+            prim->drawMode = 6;
         } else {
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
         }
         prim = prim->next;
     }
@@ -360,7 +360,7 @@ void func_801B3704(Entity* self, s16 primIndex) {
             prim->v0 = prim->v1 = 0x80;
             prim->v2 = prim->v3 = 0xB8;
             prim->priority = 0x5A;
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
     }
@@ -400,13 +400,13 @@ void func_801B3704(Entity* self, s16 primIndex) {
         prim->x0 = prim->x2 = temp_a1;
         prim->y0 = prim->y1 = temp_a2 - 56;
         prim->y2 = prim->y3 = temp_a2;
-        prim->blendMode = 2;
+        prim->drawMode = 2;
         prim = prim->next;
         temp_a1 += 64;
     }
 
     while (prim != NULL) {
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
     }
 }
@@ -439,7 +439,7 @@ void EntityTransparentWater(Entity* self) {
             prim->tpage = 0xF;
             prim->clut = 0x18;
             prim->priority = 0xB0;
-            prim->blendMode = 8;
+            prim->drawMode = 8;
             prim = prim->next;
         }
         break;
@@ -497,12 +497,12 @@ void EntityTransparentWater(Entity* self) {
         prim->v2 = prim->v3 = temp_t1;
         prim->y0 = prim->y1 = temp_a0;
         prim->y2 = prim->y3 = temp_a0 + 0x3E;
-        prim->blendMode = 0x33;
+        prim->drawMode = 0x33;
         prim = prim->next;
     }
 
     while (prim != NULL) {
-        prim->blendMode = 8;
+        prim->drawMode = 8;
         prim = prim->next;
     }
 }
@@ -720,13 +720,13 @@ void func_801B44B4(WeightSelect weight) {
         prim->x1 = prim->x3 = posX + 8;
         posY -= 32;
         prim->y0 = prim->y1 = posY;
-        prim->blendMode = 2;
+        prim->drawMode = 2;
         prim = prim->next;
     }
     posY -= 32;
 
     while (prim != 0) {
-        prim->blendMode = BLEND_VISIBLE;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
     }
 }
@@ -1344,7 +1344,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
         LOH(prim->next->r2) = 16;
         LOH(prim->next->b2) = 16;
         prim->priority = self->zPriority;
-        prim->blendMode = 2;
+        prim->drawMode = 2;
         self->step++;
 
     case 3:
@@ -1533,7 +1533,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
             prim->b0 = 128;
             prim->g0 = 96;
             prim->priority = self->zPriority + 0x18;
-            prim->blendMode = 8;
+            prim->drawMode = 8;
             prim->p3 = 0;
             prim = prim->next;
         }

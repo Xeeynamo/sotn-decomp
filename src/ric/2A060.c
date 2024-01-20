@@ -37,13 +37,13 @@ void EntityTeleport(Entity* self) {
             prim->v0 = 0xF0;
             prim->type = 1;
             prim->priority = 0x1FD;
-            prim->blendMode = 0x39;
+            prim->drawMode = 0x39;
             prim = prim->next;
         }
         for (i = 0; i < 2; i++) {
             prim->type = 3;
             prim->priority = 0x1F8;
-            prim->blendMode = 0x31;
+            prim->drawMode = 0x31;
             prim = prim->next;
         }
         for (i = 0; i < 32; i++) {
@@ -59,7 +59,7 @@ void EntityTeleport(Entity* self) {
             prim->g0 = 0;
             prim->g1 = (rand() & 0x1F) + 1;
             prim->priority = 0x1F0;
-            prim->blendMode = 8;
+            prim->drawMode = 8;
             prim->g2 = 0;
             prim = prim->next;
         }
@@ -182,9 +182,9 @@ void EntityTeleport(Entity* self) {
     yVar = PLAYER.posY.i.hi;
     for (i = 0; i < 2; i++) {
         prim->r0 = prim->b0 = prim->g0 = self->ext.teleport.unk90;
-        prim->blendMode |= BLEND_VISIBLE;
+        prim->drawMode |= DRAW_HIDE;
         if (var_s5) {
-            prim->blendMode &= ~BLEND_VISIBLE;
+            prim->drawMode &= ~DRAW_HIDE;
         }
         prim = prim->next;
     }
@@ -209,10 +209,10 @@ void EntityTeleport(Entity* self) {
                     func_8015FDB0(prim, D_80175000[i].unk0, D_80175000[i].unk2);
                 D_80175000[i].unk2 -= 16;
                 if (result < 0) {
-                    prim->blendMode |= BLEND_VISIBLE;
+                    prim->drawMode |= DRAW_HIDE;
                     prim->g0++;
                 } else {
-                    prim->blendMode &= ~BLEND_VISIBLE;
+                    prim->drawMode &= ~DRAW_HIDE;
                 }
                 break;
             }
@@ -223,7 +223,7 @@ void EntityTeleport(Entity* self) {
 
     // Potential bug? Should probably be doing prim = prim->next, right?
     for (i = 0; i < 32; i++) {
-        prim->blendMode |= BLEND_VISIBLE;
+        prim->drawMode |= DRAW_HIDE;
     }
 }
 
@@ -341,7 +341,7 @@ void func_80167A70(Entity* self) {
                     fakeprim->velocityX = -velX;
                 }
                 fakeprim->velocityY = -((rand() * 2) + FIX(2.5));
-                fakeprim->blendMode = 0xA;
+                fakeprim->drawMode = 0xA;
                 fakeprim->type = 1;
             } else {
                 prim->r0 = prim->r1 = prim->r2 = prim->r3 =
@@ -350,7 +350,7 @@ void func_80167A70(Entity* self) {
                 prim->g0 = prim->g1 = prim->g2 = prim->g3 =
                     (rand() & 0x1F) + 0x30;
                 randbit = rand() & 1;
-                prim->blendMode = !(randbit) ? 6 : 0x37;
+                prim->drawMode = !(randbit) ? 6 : 0x37;
                 posX = sp10[i - 8].unk0;
                 posY = sp10[i - 8].unk2;
                 arrIndex = i & 3;
@@ -465,7 +465,7 @@ void func_80169C10(Entity* entity) {
             prim->b1 = 0;
             prim->priority = entity->zPriority;
             prim->priority = prim->priority + 4;
-            prim->blendMode = 0x31;
+            prim->drawMode = 0x31;
             func_8015FDB0(prim, entity->posX.i.hi, entity->posY.i.hi);
             entity->step++;
         } else {
@@ -496,7 +496,7 @@ void func_80169D74(Entity* entity) {
         entity->animCurFrame = D_80155E68[entity->params];
         entity->unk5A = 0x66;
         entity->palette = 0x81B0;
-        entity->blendMode = 0x10;
+        entity->drawMode = DRAW_TPAGE;
         entity->facingLeft = PLAYER.facingLeft;
         entity->zPriority = PLAYER.zPriority;
         entity->drawFlags = FLAG_DRAW_ROTZ;
@@ -607,7 +607,7 @@ void func_8016D328(Entity* entity) {
             entity->animSet = ANIMSET_DRA(14);
             entity->palette = 0x819E;
             entity->unk4C = &D_80155EA8;
-            entity->blendMode = 0x30;
+            entity->drawMode = 0x30;
             entity->drawFlags = FLAG_DRAW_UNK8;
             entity->unk6C = 0x60;
             entity->hitboxWidth = 8;

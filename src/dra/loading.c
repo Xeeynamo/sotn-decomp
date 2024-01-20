@@ -34,7 +34,7 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, s32 isDone) {
             prim->tpage = 0x1A;
             prim->clut = 0x19F;
             prim->priority = 0x1FE;
-            prim->blendMode = 0x31;
+            prim->drawMode = 0x31;
             prim->u2 = prim->u0;
             prim->u3 = prim->u1;
             prim = prim->next;
@@ -50,7 +50,7 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, s32 isDone) {
         prim->clut = 0x1D0;
         prim->priority = 0x1FE;
         prim->u2 = prim->u0 = 0;
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         self->verticalWave = 4;
         self->horizontalWave = 4;
         self->x = x;
@@ -514,13 +514,13 @@ void HandleVideoPlayback(void) {
                 SetTexturedPrimRect(prim, 44, 96, 232, 32, 0, 0);
                 func_801072BC(prim);
                 prim->tpage = 0x1C;
-                prim->blendMode = 4;
+                prim->drawMode = DRAW_COLORS;
                 prim->p1 = 0x40;
                 prim = prim->next;
                 SetTexturedPrimRect(prim, 60, 208, 192, 16, 0, 32);
                 func_801072DC(prim);
                 prim->tpage = 0x1C;
-                prim->blendMode = BLEND_VISIBLE;
+                prim->drawMode = DRAW_HIDE;
                 g_GameStep++;
                 return;
             }
@@ -542,9 +542,9 @@ void HandleVideoPlayback(void) {
             if (temp == 96) {
                 temp2 = prim->next;
 #if defined(VERSION_US)
-                ((Primitive*)temp2)->blendMode = BLEND_VISIBLE;
+                ((Primitive*)temp2)->drawMode = DRAW_HIDE;
 #elif defined(VERSION_HD)
-                ((Primitive*)temp2)->blendMode = 0;
+                ((Primitive*)temp2)->drawMode = DRAW_DEFAULT;
 #endif
             }
             if (temp == 128) {
@@ -566,7 +566,7 @@ void HandleVideoPlayback(void) {
             temp = prim->r0 - 1;
             func_80107250(prim, temp);
             if (temp == 64) {
-                ((Primitive*)prim->next)->blendMode = BLEND_VISIBLE;
+                ((Primitive*)prim->next)->drawMode = DRAW_HIDE;
             }
             if (temp == 0) {
                 FreePrimitives(D_8013640C);

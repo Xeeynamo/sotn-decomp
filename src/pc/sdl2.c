@@ -639,7 +639,7 @@ void MyRenderPrimitives(void) {
     int psprt = 0;
     for (int i = 0; i < LEN(g_PrimBuf); i++) {
         Primitive* prim = &g_PrimBuf[i];
-        if (prim->blendMode & 8) {
+        if (prim->drawMode & 8) {
             continue;
         }
 

@@ -111,7 +111,7 @@ void func_8010D800(void) {
         g_Entities[entNum].posX.i.hi = prim->x0;
         g_Entities[entNum].posY.i.hi = prim->y0;
         g_Entities[entNum].animCurFrame = prim->x1;
-        g_Entities[entNum].blendMode = prim->y1;
+        g_Entities[entNum].drawMode = prim->y1;
         g_Entities[entNum].facingLeft = prim->x2;
         g_Entities[entNum].palette = prim->y2;
         g_Entities[entNum].zPriority = PLAYER.zPriority - 2;

@@ -164,7 +164,7 @@ typedef struct {
     /* 0x0 */ s16 animSet;
     /* 0x2 */ s16 unk2; // Entity::unk5A
     /* 0x4 */ u16 palette;
-    /* 0x6 */ s8 blendMode;
+    /* 0x6 */ s8 drawMode;
     /* 0x7 */ char pad_7;
     /* 0x8 */ s32 unk8;
 } Unkstruct_80180FE0;
@@ -200,7 +200,7 @@ typedef struct {
     u8 w;
     u8 h;
     u16 priority;
-    u16 blendMode;
+    u16 drawMode;
     s16 unkA;
     u32 flags;
     s16 unk10;
@@ -234,7 +234,7 @@ typedef struct FakePrim {
     /* 0x28 */ f32 accelerationX;
     /* 0x2C */ f32 accelerationY;
     s16 timer;
-    /* 0x32 */ u16 blendMode;
+    /* 0x32 */ u16 drawMode;
 } FakePrim;
 
 typedef struct {

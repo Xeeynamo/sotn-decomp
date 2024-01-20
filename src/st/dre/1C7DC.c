@@ -96,7 +96,7 @@ void EntityEquipItemDrop(Entity* self) {
             prim->v2 = bottom;
             prim->v0 = top;
             prim->priority = 0x80;
-            prim->blendMode = 6;
+            prim->drawMode = 6;
 
             self->ext.generic.unk7C.s = 128;
             self->step++;
@@ -149,9 +149,9 @@ void EntityEquipItemDrop(Entity* self) {
         if (self->ext.generic.unk80.modeS8.unk0 += 255) {
             prim = &g_PrimBuf[self->primIndex];
             if (self->ext.generic.unk80.modeS8.unk0 & 2) {
-                prim->blendMode = BLEND_VISIBLE;
+                prim->drawMode = DRAW_HIDE;
             } else {
-                prim->blendMode = 2;
+                prim->drawMode = 2;
             }
         } else {
             DestroyEntity(self);
@@ -169,11 +169,11 @@ void EntityEquipItemDrop(Entity* self) {
 
         if (itemId < NUM_HAND_ITEMS) {
             itemName = g_api.equipDefs[itemId].name;
-            g_api.AddToInventory(itemId, HAND_TYPE);
+            g_api.AddToInventory(itemId, EQUIP_HAND);
         } else {
             itemId -= NUM_HAND_ITEMS;
             itemName = g_api.accessoryDefs[itemId].name;
-            g_api.AddToInventory(itemId, ARMOR_TYPE);
+            g_api.AddToInventory(itemId, EQUIP_ARMOR);
         }
 
         BottomCornerText(itemName, 1);

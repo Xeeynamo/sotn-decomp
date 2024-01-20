@@ -150,14 +150,14 @@ void EntitySplashWater(Entity* self) {
                 prim->clut = 0x162;
                 prim->tpage = 0x1A;
                 prim->priority = self->zPriority + 2;
-                prim->blendMode = 0x77;
+                prim->drawMode = 0x77;
                 if (i % 2) {
                     prim->clut = 0x15F;
                     prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
                         prim->b1 = 0;
                     prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
                         prim->b3 = 96;
-                    prim->blendMode = 0x37;
+                    prim->drawMode = 0x37;
                     prim->priority += 2;
                 }
                 prim2 = prim;
@@ -297,11 +297,11 @@ void EntitySurfacingWater(Entity* self) {
                 128;
             prim->tpage = 0x1A;
             prim->priority = self->zPriority + 2;
-            prim->blendMode = 0x77;
+            prim->drawMode = 0x77;
             if (i != 0) {
                 prim->clut = 0x161;
                 prim->priority = self->zPriority + 4;
-                prim->blendMode = 0x77;
+                prim->drawMode = 0x77;
             }
             prim = prim->next;
         }
@@ -413,7 +413,7 @@ void EntitySideWaterSplash(Entity* self) {
                         prim->g1 = prim->b1 = 128;
                 prim->p1 = 0;
                 prim->priority = self->zPriority + 2;
-                prim->blendMode = 0x37;
+                prim->drawMode = 0x37;
                 prim = prim->next;
             }
             params = self->params;
@@ -511,7 +511,7 @@ void EntitySmallWaterDrop(Entity* self) {
             prim->g0 = 96;
             prim->b0 = 128;
             prim->priority = self->zPriority + 2;
-            prim->blendMode = 0x33;
+            prim->drawMode = 0x33;
             prim = prim->next;
         }
         var_v1 = D_80182204[params * 2];
@@ -564,14 +564,14 @@ void EntityWaterDrop(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
 
         while (1) {
-            prim->blendMode = 0x73;
+            prim->drawMode = 0x73;
             prim->priority = self->zPriority + 2;
 
             if (prim->next == NULL) {
                 prim->u0 = 0;
                 prim->x0 = 0;
                 prim->y0 = 0;
-                prim->blendMode &= ~BLEND_VISIBLE;
+                prim->drawMode &= ~DRAW_HIDE;
                 break;
             }
 
@@ -602,14 +602,14 @@ void EntityWaterDrop(Entity* self) {
                 prim->u0 = 0;
                 prim->x0 = 0;
                 prim->y0 = 0;
-                prim->blendMode &= ~BLEND_VISIBLE;
+                prim->drawMode &= ~DRAW_HIDE;
                 return;
             }
             LOH(prim->b1) = prim->x0;
             prim->y1 = prim->y0;
             LOH(prim->u2)--;
             if (LOH(prim->u2) == 0) {
-                prim->blendMode |= BLEND_VISIBLE;
+                prim->drawMode |= DRAW_HIDE;
             }
             LOW(prim->x1) += LOW(prim->r2);
             if (LOW(prim->r2) > 0x8000) {
@@ -794,7 +794,7 @@ void EntityMerman2(Entity* self) {
 
                 prim->y3 = prim->y2 = prim->y0 + 0x38;
                 prim->priority = self->zPriority;
-                prim->blendMode = 6;
+                prim->drawMode = 6;
                 return;
             }
             self->animCurFrame = 17;
@@ -825,7 +825,7 @@ void EntityMerman2(Entity* self) {
         case MERMAN2_JUMPING_IN_AIR:
             prim = self->ext.merman2.prim;
             if (self->velocityY > ~0xBFFF) {
-                prim->blendMode = BLEND_VISIBLE;
+                prim->drawMode = DRAW_HIDE;
                 self->animCurFrame = 18;
                 self->hitboxHeight = 8;
                 self->rotZ -= 0x80;
@@ -1113,7 +1113,7 @@ void EntityMerman2(Entity* self) {
                 prim->v3 = v0;
 
                 prim->priority = self->zPriority + 1;
-                prim->blendMode = 2;
+                prim->drawMode = 2;
                 *(s16*)&prim->next->r2 = 0x28;
                 *(s16*)&prim->next->b2 = 0x30;
                 prim->next->b3 = 0x80;
@@ -1141,7 +1141,7 @@ void EntityMerman2(Entity* self) {
             if (!(g_Timer % 10)) {
                 prim->clut += 2;
                 if (prim->clut >= 0x2A0) {
-                    prim->blendMode = BLEND_VISIBLE;
+                    prim->drawMode = DRAW_HIDE;
                     self->step_s++;
                 } else {
                     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -1201,7 +1201,7 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
             prim->next->x1 = entity->posX.i.hi;
             prim->next->y0 = entity->posY.i.hi;
             prim->priority = entity->zPriority - 4;
-            prim->blendMode = 6;
+            prim->drawMode = 6;
         }
     }
 
@@ -1211,7 +1211,7 @@ void EntityExplosion2(Entity* entity, s32 arg1) {
         prim->next->b3 += 252;
         LOH(prim->next->u1) -= 128;
         if (prim->next->b3 < 16) {
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
         }
     }
 
@@ -1292,7 +1292,7 @@ void EntityMermanWaterSplash(Entity* self) {
             prim->p3 = 1;
             prim->p2 = i % 2;
             prim->priority = self->zPriority + 2;
-            prim->blendMode = 0x33;
+            prim->drawMode = 0x33;
             prim = prim->next;
         }
 
@@ -1341,7 +1341,7 @@ void EntityMermanWaterSplash(Entity* self) {
                 }
                 if (prim->y0 & 0xFF00) {
                     prim->p1 = 1;
-                    prim->blendMode |= 8;
+                    prim->drawMode |= 8;
                 }
                 prim->x0 = sp.x0;
                 prim->x1 = sp.x1;
@@ -1387,9 +1387,9 @@ void func_801C7E18(Entity* self) {
         self->animSet = ANIMSET_DRA(2);
         self->velocityY = FIX(-5);
         self->palette = 0x8162;
-        self->blendMode = 0x10;
+        self->drawMode = DRAW_TPAGE;
         self->palette = 0x8018;
-        self->blendMode = 0x30;
+        self->drawMode = 0x30;
         self->unk6C = 0xA0;
         self->rotX = 0x100;
         self->rotY = 0x1A0;

@@ -19,13 +19,13 @@ void EntityFadeToWhite1(Entity* self) {
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
                 prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
                     prim->b3 = prim->y0 = prim->y1 = prim->x0 = prim->x2 = 0;
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
         }
         break;
 
     case 1:
         if (D_801A3F84 & 0x10) {
-            g_PrimBuf[self->primIndex].blendMode = 0x35;
+            g_PrimBuf[self->primIndex].drawMode = 0x35;
             g_api.PlaySfx(SE_DRE_FADE_TO_WHITE);
             self->step++;
         }
@@ -52,7 +52,7 @@ void EntityFadeToWhite1(Entity* self) {
             prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->r0 =
                 prim->b3 - 2;
         if (prim->r0 < 4) {
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
             self->step++;
         }
         break;
@@ -97,7 +97,7 @@ void EntityFadeToWhite2(Entity* self) {
                     prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
                         prim->b2 = prim->b3 = 0;
                 prim->priority = i + 192;
-                prim->blendMode = BLEND_VISIBLE;
+                prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
         }
@@ -105,7 +105,7 @@ void EntityFadeToWhite2(Entity* self) {
 
     case 1:
         if (D_801A3F84 & 0x10) {
-            g_PrimBuf[self->primIndex].blendMode = 0x35;
+            g_PrimBuf[self->primIndex].drawMode = 0x35;
             self->step++;
         }
         break;
@@ -116,9 +116,9 @@ void EntityFadeToWhite2(Entity* self) {
             prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->r0 =
                 prim->b3 + 2;
         if (prim->r0 > 252) {
-            prim->blendMode = 0;
+            prim->drawMode = DRAW_DEFAULT;
             prim = prim->next;
-            prim->blendMode = 0x55;
+            prim->drawMode = 0x55;
             self->step++;
         }
         break;

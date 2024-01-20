@@ -22,7 +22,7 @@ void func_80109328(void) {
         g_Player.D_80072F00[11] = 0;
         func_801092E8(0);
     }
-    PLAYER.blendMode = 0;
+    PLAYER.drawMode = DRAW_DEFAULT;
 }
 
 void func_801093C4(void) {
@@ -38,12 +38,12 @@ void func_801093C4(void) {
     case 0:
         if (func_800EDB08(prim) != 0) {
             prim->type = 7;
-            prim->blendMode = BLEND_VISIBLE;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
             func_800EDB08(prim);
             if (prim != NULL) {
                 prim->type = 7;
-                prim->blendMode = BLEND_VISIBLE;
+                prim->drawMode = DRAW_HIDE;
                 g_Player.unk6A++;
             }
         }
@@ -63,10 +63,10 @@ void func_801093C4(void) {
         sp10.ofs[1] = 0x1C0;
         SetDrawEnv(*(s32*)&prim->r1, &sp10);
         prim->priority = 0x190;
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         prim = prim->next;
         prim->priority = 0x1B0;
-        prim->blendMode = 0x800;
+        prim->drawMode = 0x800;
     }
 }
 
@@ -123,7 +123,7 @@ void func_80109594(void) {
     g_Entities[1].primIndex = primIndex;
     g_Entities[1].flags |= 0x800000;
     for (i = 0; i < 6; i++) {
-        prim->blendMode = 0x10A;
+        prim->drawMode = 0x10A;
         prim = prim->next;
     }
     func_801093C4();
@@ -173,7 +173,7 @@ void func_80109594(void) {
     if (weapon() != 0x2D) {
         return;
     }
-    if (CheckEquipmentItemCount(ITEM_AXE_LORD_ARMOR, ARMOR_TYPE) == 0) {
+    if (CheckEquipmentItemCount(ITEM_AXE_LORD_ARMOR, EQUIP_ARMOR) == 0) {
         return;
     }
     func_8010FAF4();
@@ -207,7 +207,7 @@ void func_8010A234(s32 arg0) {
     weapon = D_8017A000.GetWeaponId;
     // Wearing Axe Lord Armor! This is probably when you initially put it on.
     if ((weapon() == 0x2D) &&
-        CheckEquipmentItemCount(ITEM_AXE_LORD_ARMOR, ARMOR_TYPE)) {
+        CheckEquipmentItemCount(ITEM_AXE_LORD_ARMOR, EQUIP_ARMOR)) {
         if (!(g_Player.unk0C & 0x01000000)) {
             // Alucard says "WHAT?!" when first putting on Axe Lord Armor
             PlaySfx(NA_SE_VO_AL_WHAT);

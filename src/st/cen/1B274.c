@@ -17,7 +17,7 @@ void EntitySoulStealOrb(Entity* self) {
             return;
         }
         InitializeEntity(g_InitializeData0);
-        g_PrimBuf[primIndex].blendMode = BLEND_VISIBLE;
+        g_PrimBuf[primIndex].drawMode = DRAW_HIDE;
         self->primIndex = primIndex;
         self->animSet = ANIMSET_DRA(0);
         self->flags |= FLAG_HAS_PRIMS;
@@ -81,7 +81,7 @@ void EntitySoulStealOrb(Entity* self) {
         prim->u1 = prim->u3 = *(temp_d++);
         prim->v2 = prim->v3 = *(temp_d++);
         prim->priority = self->zPriority;
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         break;
     }
 }
@@ -98,7 +98,7 @@ void EntityUnkId08(Entity* entity) {
         entity->unk5A = objInit->unk4.s;
         entity->palette = objInit->palette;
         entity->drawFlags = objInit->drawFlags;
-        entity->blendMode = objInit->blendMode;
+        entity->drawMode = objInit->drawMode;
         if (objInit->unkC != 0) {
             entity->flags = objInit->unkC;
         }
@@ -180,7 +180,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
     prim->y0 = prim->y1 = 0xD0;
     prim->y2 = prim->y3 = 0xDF;
     prim->priority = 0x1EE;
-    prim->blendMode = 0x11;
+    prim->drawMode = 0x11;
     prim = prim->next;
 
     prim->tpage = 0x1F;
@@ -192,7 +192,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
     prim->u1 = 0x10;
     prim->v1 = 0x18;
     prim->priority = 0x1EF;
-    prim->blendMode = 0;
+    prim->drawMode = DRAW_DEFAULT;
     prim = prim->next;
 
     prim->tpage = 0x1F;
@@ -204,7 +204,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
     prim->u1 = 0x10;
     prim->v1 = 0x18;
     prim->priority = 0x1EF;
-    prim->blendMode = 0;
+    prim->drawMode = DRAW_DEFAULT;
     prim = prim->next;
 
     prim->type = 4;
@@ -219,7 +219,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
     prim->x1 = prim->x3 = xpos + textWidth + 0x18;
     prim->v2 = prim->v3 = 0x16;
     prim->priority = 0x1EF;
-    prim->blendMode = 0;
+    prim->drawMode = DRAW_DEFAULT;
 
     xpos += 0x10;
 
@@ -236,7 +236,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
             prim->v1 = 8;
             prim->u1 = 8;
             prim->priority = 0x1F0;
-            prim->blendMode = 0;
+            prim->drawMode = DRAW_DEFAULT;
             prim->y0 = 0xD4;
             prim = prim->next;
             xpos += 8;

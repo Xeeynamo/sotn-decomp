@@ -76,7 +76,7 @@ extern u8 D_80180704[];  // params
 extern u16 D_80180710[]; // palette
 extern s16 D_80180724[]; // animSet
 extern s16 D_80180738[]; // unk5A
-extern s8 D_8018074C[];  // blendMode
+extern s8 D_8018074C[];  // drawMode
 extern s16 D_80180758[]; // hitboxOffY
 extern u8 D_80180770[];  // params
 
