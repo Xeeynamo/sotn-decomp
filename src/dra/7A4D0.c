@@ -320,28 +320,28 @@ void EntityEntFactory(Entity* self) {
         case 0:
             break;
         case 2:
-            self->posX = PLAYER.posX.val;
-            self->posY = PLAYER.posY.val;
+            self->posX.val = PLAYER.posX.val;
+            self->posY.val = PLAYER.posY.val;
             break;
         case 4:
-            self->posX = PLAYER.posX.val;
-            self->posY = PLAYER.posY.val;
+            self->posX.val = PLAYER.posX.val;
+            self->posY.val = PLAYER.posY.val;
             if (PLAYER.step != Player_Walk) {
                 self->entityId = 0;
                 return;
             }
             break;
         case 5:
-            self->posX = PLAYER.posX.val;
-            self->posY = PLAYER.posY.val;
+            self->posX.val = PLAYER.posX.val;
+            self->posY.val = PLAYER.posY.val;
             if (PLAYER.step_s != 0x70) {
                 self->entityId = 0;
                 return;
             }
             break;
         case 7:
-            self->posX = PLAYER.posX.val;
-            self->posY = PLAYER.posY.val;
+            self->posX.val = PLAYER.posX.val;
+            self->posY.val = PLAYER.posY.val;
             if (PLAYER.step != Player_Hit) {
             setIdZeroAndReturn:
                 self->entityId = 0;
