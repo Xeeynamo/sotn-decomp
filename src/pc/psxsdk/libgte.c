@@ -1,6 +1,7 @@
 #include <common.h>
 #include <psxsdk/libgte.h>
 #include <log.h>
+#include <math.h>
 
 void InitGeom() { NOT_IMPLEMENTED; }
 
@@ -8,14 +9,14 @@ void SetGeomOffset(long ofx, long ofy) { NOT_IMPLEMENTED; }
 
 void SetGeomScreen(long h) { NOT_IMPLEMENTED; }
 
-int rsin(int x) {
-    NOT_IMPLEMENTED;
-    return 0;
+int rsin(int a) {
+    float x = (s16)a / 4096.f * M_PI * 2;
+    return sin(x) * 4096.f;
 }
 
-int rcos(int x) {
-    NOT_IMPLEMENTED;
-    return 0;
+int rcos(int a) {
+    float x = (s16)a / 4096.f * M_PI * 2;
+    return cos(x) * 4096.f;
 }
 
 long ratan2(long y, long x) {

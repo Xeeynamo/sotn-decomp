@@ -133,6 +133,7 @@ target_include_directories(core PRIVATE
     )
 
 target_compile_definitions(core PRIVATE 
+    _USE_MATH_DEFINES # needed for msvc
     VERSION_PC
     PERMUTER
     NON_MATCHING
@@ -154,12 +155,16 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     src/pc/3rd
     )
 
+if (WIN32)
 target_link_libraries(${PROJECT_NAME} PRIVATE 
-    ${SDL2_LIBRARIES}
-    core
-    )
+    ${SDL2_LIBRARIES} core)
+else()
+target_link_libraries(${PROJECT_NAME} PRIVATE 
+    ${SDL2_LIBRARIES} core m)
+endif()
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE 
+    _USE_MATH_DEFINES # needed for msvc
     VERSION_PC
     PERMUTER
     NON_MATCHING
@@ -180,11 +185,16 @@ target_include_directories(${PROJECT_NAME}_null PRIVATE
     src/pc/3rd
     )
 
+if (WIN32)
 target_link_libraries(${PROJECT_NAME}_null PRIVATE 
-    core
-    )
+    core)
+else()
+target_link_libraries(${PROJECT_NAME}_null PRIVATE 
+    core m)
+endif()
 
 target_compile_definitions(${PROJECT_NAME}_null PRIVATE 
+    _USE_MATH_DEFINES # needed for msvc
     VERSION_PC
     PERMUTER
     NON_MATCHING
