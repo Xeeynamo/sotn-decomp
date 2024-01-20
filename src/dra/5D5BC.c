@@ -1712,7 +1712,7 @@ void DrawHudSubweapon() {
     prim = &g_PrimBuf[D_80137970];
     if (g_Status.subWeapon != 0) {
         // This is 0x2031. Since drawMode is probably bits, write it this way.
-        prim->drawMode = DRAW_ABSPOS | 0x0020 | 0x0010 | 0x0001;
+        prim->drawMode = DRAW_ABSPOS | 0x0020 | DRAW_TPAGE | DRAW_TRANSP;
         prim = prim->next;
         prim->p2--;
         if (prim->p2 == 0) {
