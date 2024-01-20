@@ -304,17 +304,6 @@ TeleportCheck GetTeleportToOtherCastle(void) {
     return TELEPORT_CHECK_NONE;
 }
 
-typedef struct {
-    s32 unk0;
-    s16 unk4;
-} unkstr_800cfe48;
-extern s32 D_8009744C;
-extern s32 D_800ACDF8;
-extern s32 D_800ACDFC;
-extern s32 D_800ACE00[];
-extern u16 D_800ACE20[];
-extern unkstr_800cfe48* D_800CFE48[];
-
 void EntityAlucard(void) {
     DamageParam damage;
     s32 (*weapon_func)(void);
@@ -521,7 +510,7 @@ void EntityAlucard(void) {
 #endif
                 return;
             }
-            if ((D_8009744C != 0) && (IsRelicActive(RELIC_HOLY_SYMBOL) == 0) &&
+            if ((D_80097448[1] != 0) && (IsRelicActive(RELIC_HOLY_SYMBOL) == 0) &&
                 !(PLAYER.unk44 & 0x1F)) {
                 PLAYER.unk44 = 6;
             }
@@ -636,7 +625,7 @@ void EntityAlucard(void) {
 #elif defined(VERSION_HD)
                     if (D_800ACEDC_hd == 0 || --D_800ACEDC_hd == 0) {
 #endif
-                        if (D_8009744C == 0) {
+                        if (D_80097448[1] == 0) {
                             if ((g_Player.padTapped & PAD_L1) &&
                                 (HandleTransformationMP(
                                      FORM_MIST, CHECK_ONLY) == 0) &&
@@ -679,7 +668,7 @@ void EntityAlucard(void) {
                         if ((g_Player.padTapped & PAD_R2) &&
                             (HandleTransformationMP(FORM_WOLF, CHECK_ONLY) ==
                              0) &&
-                            ((D_8009744C == 0) ||
+                            ((D_80097448[1] == 0) ||
                              IsRelicActive(RELIC_HOLY_SYMBOL)) &&
                             (PLAYER.step == 0 || (PLAYER.step == 1) ||
                              (PLAYER.step == 2) || (PLAYER.step == 3) ||
