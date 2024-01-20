@@ -203,7 +203,7 @@ s16 D_800ACF6C[4];                    // guessed size
 s16 D_800ACF8A[5];                    // guessed size
 s16 D_800ACF94[16];                   // guessed size
 u8 D_800AD094[0x30];
-unkstr_800cfe48* D_800CFE48[12];
+unkstr_800cfe48* D_800CFE48[18]; // guessed size
 GpuUsage g_GpuMaxUsage;
 GpuBuffer* g_BackBuffer;
 s32 g_DebugFreeze;
