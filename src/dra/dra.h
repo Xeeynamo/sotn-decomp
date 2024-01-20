@@ -399,7 +399,7 @@ extern CdFile* D_800ACC74[];
 extern Vram g_Vram;
 extern s32 D_800ACDF8;
 extern s32 D_800ACDFC;
-extern s32 D_800ACE00[];
+extern s32 D_800ACE00[8];
 extern u16 D_800ACE20[];
 extern s32 D_800ACE44;
 extern s32 D_800ACE48[12]; // size guessed
