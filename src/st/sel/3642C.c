@@ -10,7 +10,7 @@ void func_801B642C(void) {
     g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
 }
 
-bool func_801B6480(s32 textDialogue) {
+u8 func_801B6480(char const* textDialogue) {
     Primitive* prim;
     s16 firstPrimIndex;
 
