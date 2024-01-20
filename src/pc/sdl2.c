@@ -550,37 +550,43 @@ void SetSdlVertexGT4(SDL_Vertex* v, POLY_GT4* poly) {
 }
 
 void SetSdlVertexPrim(SDL_Vertex* v, Primitive* prim) {
+    u8 colorBase = 0x00;
+    // TODO assumption where 1 ignores color blend
+    if (prim->blendMode & 1) {
+        colorBase = 0xFF;
+    }
+
     v[0].position.x = prim->x0;
     v[0].position.y = prim->y0;
     v[0].tex_coord.x = PSX_TEX_U(prim->u0);
     v[0].tex_coord.y = PSX_TEX_V(prim->v0);
-    v[0].color.r = prim->r0;
-    v[0].color.g = prim->g0;
-    v[0].color.b = prim->b0;
+    v[0].color.r = prim->r0 | colorBase;
+    v[0].color.g = prim->g0 | colorBase;
+    v[0].color.b = prim->b0 | colorBase;
     v[0].color.a = 0xFF;
     v[1].position.x = prim->x1;
     v[1].position.y = prim->y1;
     v[1].tex_coord.x = PSX_TEX_U(prim->u1);
     v[1].tex_coord.y = PSX_TEX_V(prim->v1);
-    v[1].color.r = prim->r1;
-    v[1].color.g = prim->g1;
-    v[1].color.b = prim->b1;
+    v[1].color.r = prim->r1 | colorBase;
+    v[1].color.g = prim->g1 | colorBase;
+    v[1].color.b = prim->b1 | colorBase;
     v[1].color.a = 0xFF;
     v[2].position.x = prim->x2;
     v[2].position.y = prim->y2;
     v[2].tex_coord.x = PSX_TEX_U(prim->u2);
     v[2].tex_coord.y = PSX_TEX_V(prim->v2);
-    v[2].color.r = prim->r2;
-    v[2].color.g = prim->g2;
-    v[2].color.b = prim->b2;
+    v[2].color.r = prim->r2 | colorBase;
+    v[2].color.g = prim->g2 | colorBase;
+    v[2].color.b = prim->b2 | colorBase;
     v[2].color.a = 0xFF;
     v[4].position.x = prim->x3;
     v[4].position.y = prim->y3;
     v[4].tex_coord.x = PSX_TEX_U(prim->u3);
     v[4].tex_coord.y = PSX_TEX_V(prim->v3);
-    v[4].color.r = prim->r3;
-    v[4].color.g = prim->g3;
-    v[4].color.b = prim->b3;
+    v[4].color.r = prim->r3 | colorBase;
+    v[4].color.g = prim->g3 | colorBase;
+    v[4].color.b = prim->b3 | colorBase;
     v[4].color.a = 0xFF;
     v[3] = v[1];
     v[5] = v[2];
