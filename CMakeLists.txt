@@ -148,11 +148,13 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     src/pc/3rd
     )
 
+if (WIN32)
 target_link_libraries(${PROJECT_NAME} PRIVATE 
-    ${SDL2_LIBRARIES}
-    core
-    m
-    )
+    ${SDL2_LIBRARIES} core)
+else()
+target_link_libraries(${PROJECT_NAME} PRIVATE 
+    ${SDL2_LIBRARIES} core m)
+endif()
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE 
     _USE_MATH_DEFINES # needed for msvc
@@ -176,10 +178,13 @@ target_include_directories(${PROJECT_NAME}_null PRIVATE
     src/pc/3rd
     )
 
+if (WIN32)
 target_link_libraries(${PROJECT_NAME}_null PRIVATE 
-    core
-    m
-    )
+    core)
+else()
+target_link_libraries(${PROJECT_NAME}_null PRIVATE 
+    core m)
+endif()
 
 target_compile_definitions(${PROJECT_NAME}_null PRIVATE 
     _USE_MATH_DEFINES # needed for msvc
