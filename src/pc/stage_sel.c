@@ -90,7 +90,7 @@ s32 g_MemCardSelectorX;
 s32 g_MemCardSelectorY;
 s32 D_801BC3E0; // on-screen keyboard key position
 s32 D_801BC3E4;
-s32 D_801BC3E8;
+u32 D_801BC3E8;
 s32 D_801BC3EC; // selected memory card block
 s32 D_801BC650;
 SaveSummary g_SaveSummary[PORT_COUNT];

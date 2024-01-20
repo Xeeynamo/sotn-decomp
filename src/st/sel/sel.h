@@ -186,7 +186,7 @@ extern s32 g_MemCardSelectorX;
 extern s32 g_MemCardSelectorY;
 extern s32 D_801BC3E0; // on-screen keyboard key position
 extern s32 D_801BC3E4;
-extern s32 D_801BC3E8;
+extern u32 D_801BC3E8;
 extern s32 D_801BC3EC; // selected memory card block
 extern s32 D_801BC650;
 extern SaveSummary g_SaveSummary[PORT_COUNT];
