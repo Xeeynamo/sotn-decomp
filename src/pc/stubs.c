@@ -758,3 +758,5 @@ void func_80115F54(void) { NOT_IMPLEMENTED; }
 void func_80117AC0(void) { NOT_IMPLEMENTED; }
 
 void func_80109A44(s32) { NOT_IMPLEMENTED; }
+
+void func_80115DA0(void) { NOT_IMPLEMENTED; }
