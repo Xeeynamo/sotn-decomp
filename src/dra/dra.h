@@ -400,7 +400,7 @@ extern Vram g_Vram;
 extern s32 D_800ACDF8;
 extern s32 D_800ACDFC;
 extern s32 D_800ACE00[8];
-extern u16 D_800ACE20[];
+extern u16 D_800ACE20[18]; // size guessed up to next symbol
 extern s32 D_800ACE44;
 extern s32 D_800ACE48[12]; // size guessed
 extern RECT D_800ACE60;

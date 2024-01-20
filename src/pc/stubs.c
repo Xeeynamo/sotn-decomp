@@ -187,6 +187,7 @@ Unkstruct_801092E8 D_800A37D8;
 s32 D_800ACDF8;
 s32 D_800ACDFC;
 s32 D_800ACE00[8];
+u16 D_800ACE20[18]; // size guessed up to next symbol
 s32 D_800ACE44;
 s32 D_800ACE48[12]; // size guessed
 RECT D_800ACE60;
@@ -202,6 +203,7 @@ s16 D_800ACF6C[4];                    // guessed size
 s16 D_800ACF8A[5];                    // guessed size
 s16 D_800ACF94[16];                   // guessed size
 u8 D_800AD094[0x30];
+unkstr_800cfe48* D_800CFE48[12];
 GpuUsage g_GpuMaxUsage;
 GpuBuffer* g_BackBuffer;
 s32 g_DebugFreeze;
