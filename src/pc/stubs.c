@@ -3058,4 +3058,4 @@ void func_80117AC0(void) {
     }
 }
 
-void func_80115394(s32) { NOT_IMPLEMENTED; }
+void func_80109A44(s32) { NOT_IMPLEMENTED; }
