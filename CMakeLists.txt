@@ -126,6 +126,7 @@ target_include_directories(core PRIVATE
     )
 
 target_compile_definitions(core PRIVATE 
+    _USE_MATH_DEFINES # needed for msvc
     VERSION_PC
     PERMUTER
     NON_MATCHING
@@ -154,6 +155,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE 
+    _USE_MATH_DEFINES # needed for msvc
     VERSION_PC
     PERMUTER
     NON_MATCHING
@@ -180,6 +182,7 @@ target_link_libraries(${PROJECT_NAME}_null PRIVATE
     )
 
 target_compile_definitions(${PROJECT_NAME}_null PRIVATE 
+    _USE_MATH_DEFINES # needed for msvc
     VERSION_PC
     PERMUTER
     NON_MATCHING
