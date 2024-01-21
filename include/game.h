@@ -118,8 +118,8 @@ typedef struct Primitive {
 #define DRAW_COLORS 0x04   // use color blending
 #define DRAW_HIDE 0x08     // do not render the primitive
 #define DRAW_TPAGE 0x10    // use custom tpage
-#define DRAW_NOMENU 0x80   // do not render if D_800973EC is set
-#define DRAW_ABSPOS 0x2000 // use absolute coordinates with DRAW_NOMENU
+#define DRAW_MENU 0x80     // render only if D_800973EC is set
+#define DRAW_ABSPOS 0x2000 // use absolute coordinates with DRAW_MENU
 
 #include "entity.h"
 

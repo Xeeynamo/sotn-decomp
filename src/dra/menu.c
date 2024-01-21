@@ -667,7 +667,7 @@ void func_800F5AE4(MenuContext* menu) {
 }
 void MenuDrawSprite(
     MenuContext* context, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v,
-    s32 clut, s32 tpage, s32 arg9, s32 colorIntensity, s32 argB) {
+    s32 clut, s32 tpage, s32 isAlpha, s32 colorIntensity, s32 fade) {
     u32* ot = g_CurrentBuffer->ot;
     POLY_GT4* poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
     s32 otIdx = context->otIdx + 2;
@@ -680,7 +680,7 @@ void MenuDrawSprite(
 
     poly->code &= 0xFD;
 
-    if (arg9 != 0) {
+    if (isAlpha) {
         poly->code |= 1;
     } else {
         poly->code &= 0xFC;
@@ -692,12 +692,12 @@ void MenuDrawSprite(
         poly->tpage = tpage;
         poly->clut = D_8003C104[clut];
         func_80107250(poly, colorIntensity);
-        if (argB == 1) {
+        if (fade == 1) {
             polyColorIntensity = (poly->y2 - poly->y0) * 4;
             func_801071CC(poly, polyColorIntensity, 0);
             func_801071CC(poly, polyColorIntensity, 1);
         }
-        if (argB == 2) {
+        if (fade == 2) {
             temp_polyx0 = poly->x0;
             poly->x0 = poly->x2 = poly->x1;
             poly->x1 = poly->x3 = temp_polyx0;
@@ -1651,7 +1651,7 @@ void func_800F84CC(void) {
     prim->tpage = 0x1A;
     prim->clut = 0x1EF;
     prim->priority = 0x40;
-    prim->drawMode = 0x80 | DRAW_HIDE;
+    prim->drawMode = DRAW_MENU | DRAW_HIDE;
 
     D_80137840 = func_800EDD9C(PRIM_GT4, 2);
     prim = &g_PrimBuf[D_80137840];
@@ -1934,7 +1934,7 @@ void MenuDraw(void) {
         prim = &g_PrimBuf[D_801377FC[i]];
         menu = &g_MenuData.menus[i];
         if (menu->unk1C == 2) {
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             continue;
         }
         cx = menu->cursorX;
@@ -1968,7 +1968,7 @@ void MenuDraw(void) {
             j = menu->unk1D; // FAKE?
             if (menu->unk1D == 16) {
                 menu->unk1C = 2;
-                prim->drawMode = 8;
+                prim->drawMode = DRAW_HIDE;
                 continue;
             }
             cy += ch / 16 * menu->unk1D;
@@ -2048,7 +2048,7 @@ void MenuDraw(void) {
         prim->g3 = g1;
         prim->b3 = b1;
         prim->priority = menu->otIdx;
-        prim->drawMode = 0x480;
+        prim->drawMode = DRAW_MENU | 0x400;
 
         // draw the white window border
         MenuDrawLine(cx, cy, cx, cy + ch - 1, i + 1);
@@ -2145,7 +2145,7 @@ void func_800F9690(void) {
     Primitive* prim = &g_PrimBuf[D_8013783C];
 
     if (D_80137608 != 0) {
-        prim->drawMode = 0x80;
+        prim->drawMode = DRAW_MENU;
     } else {
         prim->drawMode = DRAW_HIDE;
     }
@@ -2167,7 +2167,7 @@ void func_800F96F4(void) { // !Fake:
     temp = D_80137844;
 
     if ((D_80137844[0] != 0) && (temp_a2 != 0)) {
-        (&g_PrimBuf[D_80137840])->drawMode = 0x80;
+        (&g_PrimBuf[D_80137840])->drawMode = DRAW_MENU;
         if (D_80137844[0] == 1) {
             (&g_PrimBuf[D_80137840])->clut = 0x188;
         } else {
@@ -2175,14 +2175,14 @@ void func_800F96F4(void) { // !Fake:
             (&g_PrimBuf[D_80137840])->clut = 0x181;
         }
     } else {
-        prim->drawMode = 0x8;
+        prim->drawMode = DRAW_HIDE;
     }
 
     prim = prim->next;
     temp = new_var;
 
     if (((*temp) != 0) && (temp_a2 != 0)) {
-        prim->drawMode = 0x80;
+        prim->drawMode = DRAW_MENU;
         new_var2 = *temp;
         if (new_var2 == 1) {
             do {
@@ -2194,7 +2194,7 @@ void func_800F96F4(void) { // !Fake:
         prim->clut = 0x181;
         return;
     }
-    prim->drawMode = 8;
+    prim->drawMode = DRAW_HIDE;
 }
 
 void func_800F97DC(void) {
