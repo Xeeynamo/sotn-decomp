@@ -2,6 +2,7 @@
 // _card_load
 extern void InitCARD(long val);
 extern long StartCARD(void);
-// _card_clear
+long _card_clear(long chan);
+
 // _card_write
 // _new_card

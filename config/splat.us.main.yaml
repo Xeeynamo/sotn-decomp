@@ -30,7 +30,8 @@ segments:
     subsegments:
       - [0x800, rodata]
       - [0x874, rodata] # jpt_80011B20
-      - [0x8F8, rodata]
+      - [0x8F8, .rodata, psxsdk/libgpu/prim]
+      - [0x9C8, rodata]
       - [0xA10, .rodata, psxsdk/libgpu/sys]
       - [0xB60, rodata]
       - [0xC94, rodata] # jpt_800163F4

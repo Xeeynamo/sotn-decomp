@@ -1,14 +1,20 @@
 #include "common.h"
+#include <libetc.h>
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libetc/pad", PadInit);
-// void PadInit(s32 arg0) {
-//     D_80073080 = arg0;
-//     D_8003925C = -1;
-//     ResetCallback();
-//     PAD_init(0x20000001, &D_8003925C);
-//     ChangeClearPAD(0);
-// }
+extern int PadIdentifier;
+extern int pad_buf;
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libetc/pad", PadRead);
+void PadInit(int mode) {
+    PadIdentifier = mode;
+    pad_buf = -1;
+    ResetCallback();
+    PAD_init(0x20000001, &pad_buf);
+    ChangeClearPAD(0);
+}
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libetc/pad", PadStop);
+u_long PadRead(int id) {
+    PAD_dr();
+    return ~pad_buf;
+}
+
+void PadStop(void) { StopPAD(); }
