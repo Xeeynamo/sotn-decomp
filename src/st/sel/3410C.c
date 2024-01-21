@@ -39,7 +39,7 @@ void HandleMainMenu(void) {
             prim->tpage = 0x18;
             prim->clut = 0x20;
             prim->priority = 1;
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
         for (i = 0; i < 4; i++) {
@@ -55,7 +55,7 @@ void HandleMainMenu(void) {
             prim->tpage = 0x18;
             prim->clut = 0x21;
             prim->priority = 1;
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
         for (i = 0; i < 4; i++) {
@@ -64,7 +64,7 @@ void HandleMainMenu(void) {
             prim->v1 = 0xF0;
             prim->tpage = i + 0x88;
             prim->clut = 0x10;
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
         for (i = 0; i < 4; i++) {
@@ -74,7 +74,7 @@ void HandleMainMenu(void) {
             prim->v1 = 0x88;
             prim->tpage = i + 0x8C;
             prim->priority = 2;
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
         prim->x0 = 0x101;
@@ -84,7 +84,7 @@ void HandleMainMenu(void) {
         prim->tpage = 0x18;
         prim->clut = 0x22;
         prim->priority = 1;
-        prim->drawMode = 8;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
 
         prim->v0 = 0x90;
@@ -93,7 +93,7 @@ void HandleMainMenu(void) {
         prim->tpage = 0x18;
         prim->clut = 0x22;
         prim->priority = 1;
-        prim->drawMode = 8;
+        prim->drawMode = DRAW_HIDE;
         func_801B18F4();
         D_801BB014 = 0;
         D_8003C9A4++;
@@ -104,7 +104,7 @@ void HandleMainMenu(void) {
         for (i = 0, prim = &g_PrimBuf[D_801BB010]; prim != NULL;
              prim = prim->next, i++) {
             prim->drawMode = DRAW_COLORS;
-            func_801B1CFC((POLY_GT4*)prim, D_801BB014);
+            func_801B1CFC(prim, D_801BB014);
             if (i == 7 || i == 8 || i == 9 || i == 10) {
                 prim->r0 = D_801BB014 * 3 / 4;
                 prim->g0 = D_801BB014 * 7 / 8;
@@ -123,7 +123,7 @@ void HandleMainMenu(void) {
         for (i = 0, prim = &g_PrimBuf[D_801BB010]; prim != NULL;
              prim = prim->next, i++) {
             if (i < 3) {
-                prim->drawMode = 8;
+                prim->drawMode = DRAW_HIDE;
                 if (g_Timer & 0x30) {
                     prim->drawMode = DRAW_DEFAULT;
                 }

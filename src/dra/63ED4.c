@@ -900,7 +900,7 @@ void DestroyEntitiesFromIndex(s16 startIndex) {
 void DrawEntitiesHitbox(s32 drawMode) {
     DR_MODE* drMode;
     s32 polyCount;
-    s32* ot;
+    OT_TYPE* ot;
     Entity* entity;
     TILE* tile;
     u32 otIdx;

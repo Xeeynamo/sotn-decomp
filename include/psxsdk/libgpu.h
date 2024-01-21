@@ -129,10 +129,17 @@ typedef struct {
     /* 0x6 */ short h; /* height */
 } RECT;                /* size = 0x8 */
 
+#ifdef VERSION_PC
+#define O_TAG                                                                  \
+    u_long tag;                                                                \
+    u_long len
 typedef struct {
-    /* 0x0 */ u_long tag;
-    /* 0x4 */ u_long code[15];
-} DR_ENV; /* Packed Drawing Environment, size = 0x40 */
+    O_TAG
+} OT_TYPE;
+#else
+#define O_TAG u_long tag
+#define OT_TYPE u_long
+#endif
 
 #ifndef VERSION_PC
 typedef struct {
@@ -143,7 +150,7 @@ typedef struct {
 #else
 typedef struct {
     void* addr;
-    s32 len;
+    u_long len;
     u_char r0, g0, b0, code;
 } P_TAG;
 #endif
@@ -153,7 +160,12 @@ typedef struct {
 } P_CODE;
 
 typedef struct {
-    u_long tag;
+    O_TAG;
+    /* 0x4 */ u_long code[15];
+} DR_ENV; /* Packed Drawing Environment, size = 0x40 */
+
+typedef struct {
+    O_TAG;
     u_char r0, g0, b0, code;
     short x0, y0;
     short x1, y1;
@@ -161,7 +173,7 @@ typedef struct {
 } POLY_F3;
 
 typedef struct {
-    u_long tag;
+    O_TAG;
     u_char r0, g0, b0, code;
     short x0, y0;
     short x1, y1;
@@ -170,7 +182,7 @@ typedef struct {
 } POLY_F4;
 
 typedef struct {
-    u_long tag;
+    O_TAG;
     u_char r0, g0, b0, code;
     short x0, y0;
     u_char u0, v0;
@@ -184,7 +196,7 @@ typedef struct {
 } POLY_FT3;
 
 typedef struct {
-    u_long tag;
+    O_TAG;
     u_char r0, g0, b0, code;
     short x0, y0;
     u_char u0, v0;
@@ -201,7 +213,7 @@ typedef struct {
 } POLY_FT4;
 
 typedef struct {
-    u_long tag;
+    O_TAG;
     u_char r0, g0, b0, code;
     short x0, y0;
     u_char r1, g1, b1, pad1;
@@ -211,7 +223,7 @@ typedef struct {
 } POLY_G3;
 
 typedef struct {
-    /* 0x00 */ u_long tag;
+    /* 0x00 */ O_TAG;
     /* 0x04 */ u_char r0;
     /* 0x05 */ u_char g0;
     /* 0x06 */ u_char b0;
@@ -242,7 +254,7 @@ typedef struct {
 } POLY_GT3; /* Gouraud Textured Triangle, size = 0x28 */
 
 typedef struct {
-    /* 0x00 */ u_long tag;
+    /* 0x00 */ O_TAG;
     /* 0x04 */ u_char r0;
     /* 0x05 */ u_char g0;
     /* 0x06 */ u_char b0;
@@ -270,7 +282,7 @@ typedef struct {
 } POLY_G4; /* Gouraud Quadrangle, size = 0x24 */
 
 typedef struct {
-    /* 0x00 */ u_long tag;
+    /* 0x00 */ O_TAG;
     /* 0x04 */ u_char r0;
     /* 0x05 */ u_char g0;
     /* 0x06 */ u_char b0;
@@ -310,14 +322,14 @@ typedef struct {
 } POLY_GT4; /* Gouraud Textured Quadrangle, size = 0x34*/
 
 typedef struct {
-    u_long tag;
+    O_TAG;
     u_char r0, g0, b0, code;
     short x0, y0;
     short x1, y1;
 } LINE_F2;
 
 typedef struct {
-    u_long tag;
+    O_TAG;
     u_char r0, g0, b0, code;
     short x0, y0;
     u_char r1, g1, b1, p1;
@@ -325,7 +337,7 @@ typedef struct {
 } LINE_G2;
 
 typedef struct {
-    u_long tag;
+    O_TAG;
     u_char r0, g0, b0, code;
     short x0, y0;
     short x1, y1;
@@ -334,7 +346,7 @@ typedef struct {
 } LINE_F3;
 
 typedef struct {
-    u_long tag;
+    O_TAG;
     u_char r0, g0, b0, code;
     short x0, y0;
     u_char r1, g1, b1, p1;
@@ -345,7 +357,7 @@ typedef struct {
 } LINE_G3;
 
 typedef struct {
-    u_long tag;
+    O_TAG;
     u_char r0, g0, b0, code;
     short x0, y0;
     short x1, y1;
@@ -355,7 +367,7 @@ typedef struct {
 } LINE_F4;
 
 typedef struct {
-    u_long tag;
+    O_TAG;
     u_char r0, g0, b0, code;
     short x0, y0;
     u_char r1, g1, b1, p1;
@@ -368,7 +380,7 @@ typedef struct {
 } LINE_G4;
 
 typedef struct {
-    /* 0x00 */ u_long tag;
+    /* 0x00 */ O_TAG;
     /* 0x04 */ u_char r0;
     /* 0x05 */ u_char g0;
     /* 0x06 */ u_char b0;
@@ -383,7 +395,7 @@ typedef struct {
 } SPRT; /* free size Sprite, size = 0x14 */
 
 typedef struct {
-    /* 0x00 */ u_long tag;
+    /* 0x00 */ O_TAG;
     /* 0x04 */ u_char r0;
     /* 0x05 */ u_char g0;
     /* 0x06 */ u_char b0;
@@ -396,7 +408,7 @@ typedef struct {
 } SPRT_16; /* 16x16 Sprite, size = 0x10 */
 
 typedef struct {
-    /* 0x00 */ u_long tag;
+    /* 0x00 */ O_TAG;
     /* 0x04 */ u_char r0;
     /* 0x05 */ u_char g0;
     /* 0x06 */ u_char b0;
@@ -409,26 +421,26 @@ typedef struct {
 } SPRT_8; /* 8x8 Sprite, size = 0x10 */
 
 typedef struct {
-    u_long tag;
+    O_TAG;
     u_char r0, g0, b0, code;
     short x0, y0;
     short w, h;
 } TILE;
 
 typedef struct {
-    u_long tag;
+    O_TAG;
     u_char r0, g0, b0, code;
     short x0, y0;
 } TILE_16;
 
 typedef struct {
-    u_long tag;
+    O_TAG;
     u_char r0, g0, b0, code;
     short x0, y0;
 } TILE_8;
 
 typedef struct {
-    u_long tag;
+    O_TAG;
     u_char r0, g0, b0, code;
     short x0, y0;
 } TILE_1;
@@ -455,22 +467,22 @@ typedef struct {
 } DISPENV;                     /* size = 0x14 */
 
 typedef struct {
-    /* 0x00 */ u_long tag;
+    /* 0x00 */ O_TAG;
     /* 0x04 */ u_long code[2];
 } DR_MODE; /* Drawing Mode, size = 0x0C */
 
 typedef struct {
-    u_long tag;
+    O_TAG;
     u_long code[2];
 } DR_TWIN;
 
 typedef struct {
-    u_long tag;
+    O_TAG;
     u_long code[2];
 } DR_AREA; // Drawing Area
 
 typedef struct {
-    u_long tag;
+    O_TAG;
     u_long code[2];
 } DR_OFFSET; // Drawing Offset
 
@@ -538,9 +550,9 @@ extern u_long* FntFlush(int id);
 extern int LoadImage(RECT* rect, u_long* p);
 extern int StoreImage(RECT* rect, u_long* p);
 extern int MoveImage(RECT* rect, int x, int y);
-extern u_long* ClearOTag(u_long* ot, int n);
-extern u_long* ClearOTagR(u_long* ot, int n);
-extern void DrawOTag(u_long* p);
+extern OT_TYPE* ClearOTag(OT_TYPE* ot, int n);
+extern OT_TYPE* ClearOTagR(OT_TYPE* ot, int n);
+extern void DrawOTag(OT_TYPE* p);
 extern DRAWENV* PutDrawEnv(DRAWENV* env);
 extern DISPENV* PutDispEnv(DISPENV* env);
 extern DISPENV* SetDefDispEnv(DISPENV* env, int x, int y, int w, int h);

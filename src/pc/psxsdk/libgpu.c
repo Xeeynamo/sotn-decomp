@@ -48,11 +48,14 @@ DRAWENV* PutDrawEnv(DRAWENV* env) { NOT_IMPLEMENTED; }
 DISPENV* MyPutDispEnv(DISPENV* env);
 DISPENV* PutDispEnv(DISPENV* env) { MyPutDispEnv(env); }
 
-void DrawOTag(u_long* p) { NOT_IMPLEMENTED; }
+void MyDrawOTag(OT_TYPE* p);
+void DrawOTag(OT_TYPE* p) { MyDrawOTag(p); }
 
-void MySetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw);
 void SetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw) {
-    MySetDrawMode(p, dfe, dtd, tpage, tw);
+    setlen(p, 2);
+    p->code[0] =
+        (dtd ? 0xE1000200 : 0xE1000000) | (dfe ? 0x400 : 0) | (tpage & 0x1FF);
+    p->code[1] = 0; // TODO get_tw(tw)
 }
 
 int MyResetGraph(int mode);
@@ -60,7 +63,18 @@ int ResetGraph(int mode) { return MyResetGraph(mode); }
 
 int SetGraphDebug(int level) { NOT_IMPLEMENTED; }
 
-u_long* ClearOTag(u_long* ot, int n) { NOT_IMPLEMENTED; }
+OT_TYPE* ClearOTag(OT_TYPE* ot, int n) {
+    n--;
+    while (n) {
+        setlen(ot, 0);
+        setaddr(ot, ot + 1);
+        n--;
+        ot++;
+    }
+
+    ot->tag = 0xffffff;
+    return ot;
+}
 
 void SetDrawEnv(DR_ENV* dr_env, DRAWENV* env) { NOT_IMPLEMENTED; }
 

@@ -459,7 +459,7 @@ void func_800F53A4(void) {
 }
 
 void func_800F53D4(s32 tpage, s32 otIdx) {
-    u32* ot = g_CurrentBuffer->ot;
+    OT_TYPE* ot = g_CurrentBuffer->ot;
     DR_MODE* drawMode = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
 
     if (D_80137614 != 0) {
@@ -618,7 +618,7 @@ void MenuDrawImg(MenuContext* menu, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
                  s32 clut, s32 tpage, bool disableTexShade, s32 c) {
     SPRT* sp;
     s32 otIdx;
-    u32* ot;
+    OT_TYPE* ot;
 
     ot = g_CurrentBuffer->ot;
     sp = &g_CurrentBuffer->sprite[g_GpuUsage.sp];
@@ -668,7 +668,7 @@ void func_800F5AE4(MenuContext* menu) {
 void MenuDrawSprite(
     MenuContext* context, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v,
     s32 clut, s32 tpage, s32 isAlpha, s32 colorIntensity, s32 fade) {
-    u32* ot = g_CurrentBuffer->ot;
+    OT_TYPE* ot = g_CurrentBuffer->ot;
     POLY_GT4* poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
     s32 otIdx = context->otIdx + 2;
     u32 polyColorIntensity;
@@ -711,7 +711,7 @@ void MenuDrawSprite(
 // NOTE: used to draw the menu cursor
 void MenuDrawRect(MenuContext* context, s32 posX, s32 posY, s32 width,
                   s32 height, s32 r, s32 g, s32 b) {
-    u32* ot = g_CurrentBuffer->ot;
+    OT_TYPE* ot = g_CurrentBuffer->ot;
     POLY_G4* poly = &g_CurrentBuffer->polyG4[g_GpuUsage.g4];
     s32 otIdx = context->otIdx + 1;
     u32 temp;
@@ -1827,7 +1827,7 @@ void MenuDrawLine(s32 x0, s32 y0, s32 x1, s32 y1, s32 isColorStatic) {
     s32 z;
     u8 color;
 
-    u32* ot = g_CurrentBuffer->ot;
+    OT_TYPE* ot = g_CurrentBuffer->ot;
     LINE_G2* line = &g_CurrentBuffer->lineG2[g_GpuUsage.line];
 
     if (isColorStatic) {

@@ -19,7 +19,7 @@
 extern void* g_ApiInit[sizeof(GameApi) / sizeof(void*)];
 
 s32 LoadVabData(void);
-void func_800E385C(u_long*);
+void func_800E385C(OT_TYPE* ot);
 void UpdateGame(void);
 void VSyncHandler(void);
 void SetupEvents(void);
@@ -714,10 +714,10 @@ void SetTitleDisplayBuffer(void) {
     g_GpuBuffers[0].disp.isrgb24 = 0;
 }
 
-void func_800E385C(u_long* ot) {
+void func_800E385C(OT_TYPE* ot) {
     s32 i;
     s32 var_t0;
-    u_long* var_t1;
+    OT_TYPE* var_t1;
 
     var_t0 = false;
     for (i = 0; i < OTSIZE; i++, ot++) {
@@ -728,7 +728,7 @@ void func_800E385C(u_long* ot) {
             }
         } else {
             if (getaddr(ot) != ((u_long)ot & 0xffffff) + 4) {
-                *var_t1 = (u_long)ot & 0xffffff;
+                *(u_long*)var_t1 = (u_long)ot & 0xffffff;
                 var_t0 = false;
             }
         }

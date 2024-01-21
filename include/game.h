@@ -75,6 +75,9 @@ typedef struct Prim {
 #define blendMode drawMode // maintained to easily migrate existing scratches
 typedef struct Primitive {
     /* 0x00 */ struct Primitive* next;
+#ifdef VERSION_PC
+    u_long dummy;
+#endif
     /* 0x04 */ u8 r0;
     /* 0x05 */ u8 g0;
     /* 0x06 */ u8 b0;
@@ -668,7 +671,7 @@ typedef struct GpuBuffer { // also called 'DB' in the PSY-Q samples
     /* 0x00004 */ DRAWENV draw;           // drawing environment
     /* 0x0005C */ DISPENV disp;           // display environment
     /* 0x00074 */ DR_ENV env[0x10];       // packed drawing environment
-    /* 0x00474 */ u_long ot[OTSIZE];      // ordering table
+    /* 0x00474 */ OT_TYPE ot[OTSIZE];     // ordering table
     /* 0x00474 */ DR_MODE drawModes[MAX_DRAW_MODES]; // draw modes
     /* 0x03C74 */ POLY_GT4 polyGT4[0x300];           // textured quads
     /* 0x0D874 */ POLY_G4 polyG4[0x100];             // untextured quads

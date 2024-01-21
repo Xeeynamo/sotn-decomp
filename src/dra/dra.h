@@ -509,7 +509,7 @@ extern s32 D_801362BC;
 extern s32 g_DebugPalIdx;
 extern DebugColorChannel g_DebugColorChannel;
 extern u32 D_801362C8;
-extern u32* g_CurrentOT;
+extern OT_TYPE* g_CurrentOT;
 extern s32 D_801362D0[];
 extern s32 D_801362D4;
 extern s32 g_DebugIsRecordingVideo;
