@@ -12,7 +12,7 @@
 <!-- main.SetVideoMode -->
 <g id="node1" class="node">
 <title>main.SetVideoMode</title>
-<ellipse fill="red" stroke="black" cx="103.99" cy="-18" rx="103.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="103.99" cy="-18" rx="103.98" ry="18"/>
 <text text-anchor="middle" x="103.99" y="-14.3" font-family="Times,serif" font-size="14.00">main.SetVideoMode</text>
 </g>
 </g>

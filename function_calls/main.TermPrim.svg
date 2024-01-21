@@ -12,7 +12,7 @@
 <!-- main.TermPrim -->
 <g id="node1" class="node">
 <title>main.TermPrim</title>
-<ellipse fill="red" stroke="black" cx="83.19" cy="-18" rx="83.39" ry="18"/>
+<ellipse fill="green" stroke="black" cx="83.19" cy="-18" rx="83.39" ry="18"/>
 <text text-anchor="middle" x="83.19" y="-14.3" font-family="Times,serif" font-size="14.00">main.TermPrim</text>
 </g>
 </g>

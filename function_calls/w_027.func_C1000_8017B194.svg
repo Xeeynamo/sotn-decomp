@@ -19,7 +19,7 @@
 <g id="node2" class="node">
 <title>main.PadRead</title>
 <g id="a_node2"><a xlink:href="main.PadRead.svg" xlink:title="main.PadRead">
-<ellipse fill="red" stroke="black" cx="77.34" cy="-18" rx="77.19" ry="18"/>
+<ellipse fill="green" stroke="black" cx="77.34" cy="-18" rx="77.19" ry="18"/>
 <text text-anchor="middle" x="77.34" y="-14.3" font-family="Times,serif" font-size="14.00">main.PadRead</text>
 </a>
 </g>
