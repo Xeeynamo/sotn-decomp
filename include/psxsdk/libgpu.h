@@ -83,14 +83,29 @@
 #define catPrim(p0, p1) setaddr(p0, p1)
 #define termPrim(p) setaddr(p, 0xffffffff)
 
-#define setLineG2(p) setlen(p, 4), setcode(p, 0x50)
+#define setPolyF3(p) setlen(p, 4), setcode(p, 0x20)
+#define setPolyFT3(p) setlen(p, 7), setcode(p, 0x24)
+#define setPolyG3(p) setlen(p, 6), setcode(p, 0x30)
 #define setPolyGT3(p) setlen(p, 9), setcode(p, 0x34)
+#define setPolyF4(p) setlen(p, 5), setcode(p, 0x28)
+#define setPolyFT4(p) setlen(p, 9), setcode(p, 0x2c)
 #define setPolyG4(p) setlen(p, 8), setcode(p, 0x38)
 #define setPolyGT4(p) setlen(p, 12), setcode(p, 0x3c)
-#define setSprt(p) setlen(p, 4), setcode(p, 0x64)
-#define setSprt16(p) setlen(p, 3), setcode(p, 0x7c)
+
 #define setSprt8(p) setlen(p, 3), setcode(p, 0x74)
+#define setSprt16(p) setlen(p, 3), setcode(p, 0x7c)
+#define setSprt(p) setlen(p, 4), setcode(p, 0x64)
+
+#define setTile1(p) setlen(p, 2), setcode(p, 0x68)
+#define setTile8(p) setlen(p, 2), setcode(p, 0x70)
+#define setTile16(p) setlen(p, 2), setcode(p, 0x78)
 #define setTile(p) setlen(p, 3), setcode(p, 0x60)
+#define setLineF2(p) setlen(p, 3), setcode(p, 0x40)
+#define setLineG2(p) setlen(p, 4), setcode(p, 0x50)
+#define setLineF3(p) setlen(p, 5), setcode(p, 0x48), (p)->pad = 0x55555555
+#define setLineG3(p) setlen(p, 7), setcode(p, 0x58), (p)->pad = 0x55555555
+#define setLineF4(p) setlen(p, 6), setcode(p, 0x4c), (p)->pad = 0x55555555
+#define setLineG4(p) setlen(p, 9), setcode(p, 0x5c), (p)->pad = 0x55555555
 
 #define setSemiTrans(p, abe)                                                   \
     ((abe) ? setcode(p, getcode(p) | 0x02) : setcode(p, getcode(p) & ~0x02))
@@ -138,12 +153,62 @@ typedef struct {
 } P_CODE;
 
 typedef struct {
-    /* 0x00 */ u_long tag;
-    /* 0x04 */ u_char r0, g0, b0, code;
-    /* 0x08 */ short x0, y0;
-    /* 0x0C */ u_char r1, g1, b1, p1;
-    /* 0x10 */ short x1, y1;
-} LINE_G2; /* size = 0x14 */
+    u_long tag;
+    u_char r0, g0, b0, code;
+    short x0, y0;
+    short x1, y1;
+    short x2, y2;
+} POLY_F3;
+
+typedef struct {
+    u_long tag;
+    u_char r0, g0, b0, code;
+    short x0, y0;
+    short x1, y1;
+    short x2, y2;
+    short x3, y3;
+} POLY_F4;
+
+typedef struct {
+    u_long tag;
+    u_char r0, g0, b0, code;
+    short x0, y0;
+    u_char u0, v0;
+    u_short clut;
+    short x1, y1;
+    u_char u1, v1;
+    u_short tpage;
+    short x2, y2;
+    u_char u2, v2;
+    u_short pad1;
+} POLY_FT3;
+
+typedef struct {
+    u_long tag;
+    u_char r0, g0, b0, code;
+    short x0, y0;
+    u_char u0, v0;
+    u_short clut;
+    short x1, y1;
+    u_char u1, v1;
+    u_short tpage;
+    short x2, y2;
+    u_char u2, v2;
+    u_short pad1;
+    short x3, y3;
+    u_char u3, v3;
+    u_short pad2;
+} POLY_FT4;
+
+typedef struct {
+    u_long tag;
+    u_char r0, g0, b0, code;
+    short x0, y0;
+    u_char r1, g1, b1, pad1;
+    short x1, y1;
+    u_char r2, g2, b2, pad2;
+    short x2, y2;
+} POLY_G3;
 
 typedef struct {
     /* 0x00 */ u_long tag;
@@ -245,6 +310,64 @@ typedef struct {
 } POLY_GT4; /* Gouraud Textured Quadrangle, size = 0x34*/
 
 typedef struct {
+    u_long tag;
+    u_char r0, g0, b0, code;
+    short x0, y0;
+    short x1, y1;
+} LINE_F2;
+
+typedef struct {
+    u_long tag;
+    u_char r0, g0, b0, code;
+    short x0, y0;
+    u_char r1, g1, b1, p1;
+    short x1, y1;
+} LINE_G2;
+
+typedef struct {
+    u_long tag;
+    u_char r0, g0, b0, code;
+    short x0, y0;
+    short x1, y1;
+    short x2, y2;
+    u_long pad;
+} LINE_F3;
+
+typedef struct {
+    u_long tag;
+    u_char r0, g0, b0, code;
+    short x0, y0;
+    u_char r1, g1, b1, p1;
+    short x1, y1;
+    u_char r2, g2, b2, p2;
+    short x2, y2;
+    u_long pad;
+} LINE_G3;
+
+typedef struct {
+    u_long tag;
+    u_char r0, g0, b0, code;
+    short x0, y0;
+    short x1, y1;
+    short x2, y2;
+    short x3, y3;
+    u_long pad;
+} LINE_F4;
+
+typedef struct {
+    u_long tag;
+    u_char r0, g0, b0, code;
+    short x0, y0;
+    u_char r1, g1, b1, p1;
+    short x1, y1;
+    u_char r2, g2, b2, p2;
+    short x2, y2;
+    u_char r3, g3, b3, p3;
+    short x3, y3;
+    u_long pad;
+} LINE_G4;
+
+typedef struct {
     /* 0x00 */ u_long tag;
     /* 0x04 */ u_char r0;
     /* 0x05 */ u_char g0;
@@ -286,11 +409,29 @@ typedef struct {
 } SPRT_8; /* 8x8 Sprite, size = 0x10 */
 
 typedef struct {
-    /* 0x00 */ u_long tag;
-    /* 0x04 */ u_char r0, g0, b0, code;
-    /* 0x08 */ short x0, y0;
-    /* 0x0C */ short w, h;
-} TILE; /* free size Tile, size = 0x10 */
+    u_long tag;
+    u_char r0, g0, b0, code;
+    short x0, y0;
+    short w, h;
+} TILE;
+
+typedef struct {
+    u_long tag;
+    u_char r0, g0, b0, code;
+    short x0, y0;
+} TILE_16;
+
+typedef struct {
+    u_long tag;
+    u_char r0, g0, b0, code;
+    short x0, y0;
+} TILE_8;
+
+typedef struct {
+    u_long tag;
+    u_char r0, g0, b0, code;
+    short x0, y0;
+} TILE_1;
 
 typedef struct {
     /* 0x00 */ RECT clip;     /* clip area */
@@ -366,6 +507,9 @@ u_short GetClut(int x, // Horizontal frame buffer address of CLUT
 );
 
 u_short GetTPage(int tp, int abr, int x, int y);
+void DumpTPage(u_short tpage);
+void DumpClut(u_short clut);
+
 extern void AddPrim(void* ot, void* p);
 extern void SetShadeTex(void* p, int tge);
 extern void SetLineG2(LINE_G2* p);
