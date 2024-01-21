@@ -129,6 +129,14 @@ typedef struct {
     /* 0x6 */ short h; /* height */
 } RECT;                /* size = 0x8 */
 
+// On PlayStation 1 hardware a packet header is a 32-bit value where the first
+// 24-bits store the address of the next packet in the list that will be
+// processed by the GPU. The other 8-bit describes how many 32-bit packets there
+// are in a packet. This approach cannot easily work on any other platforms
+// without creating virtual memory areas. The new type OT_TYPE gives more space
+// for different platforms to safely store the pointer to the next primitive and
+// separately the packet length. On 64-bit builds the packet header is now
+// 128-bit long.
 #ifdef VERSION_PC
 #define O_TAG                                                                  \
     u_long tag;                                                                \
