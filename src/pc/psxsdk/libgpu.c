@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <log.h>
 
+int (*GPU_printf)(const char*, ...) = FntPrint;
+
 int FntOpen(int x, int y, int w, int h, int isbg, int n) { NOT_IMPLEMENTED; }
 
 void FntLoad(int tx, int ty) { NOT_IMPLEMENTED; }
@@ -60,22 +62,9 @@ int SetGraphDebug(int level) { NOT_IMPLEMENTED; }
 
 u_long* ClearOTag(u_long* ot, int n) { NOT_IMPLEMENTED; }
 
-u_short GetTPage(int tp, int abr, int x, int y) {
-    NOT_IMPLEMENTED;
-    return 0;
-}
-
 void SetDrawEnv(DR_ENV* dr_env, DRAWENV* env) { NOT_IMPLEMENTED; }
 
-u_short GetClut(int x, int y) { return getClut(x, y); }
-void AddPrim(void* ot, void* p) { addPrim(ot, p); }
-void SetShadeTex(void* p, int tge) { setShadeTex(p, tge); }
-void SetLineG2(LINE_G2* p) { setLineG2(p); }
-void SetPolyGT3(POLY_GT3* p) { setPolyGT3(p); }
-void SetPolyG4(POLY_G4* p) { setPolyG4(p); }
-void SetPolyGT4(POLY_GT4* p) { setPolyGT4(p); }
-void SetSemiTrans(void* p, int abe) { setSemiTrans(p, abe); }
-void SetSprt(SPRT* p) { setSprt(p); }
-void SetSprt16(SPRT_16* p) { setSprt16(p); }
-void SetSprt8(SPRT_8* p) { setSprt8(p); }
-void SetTile(TILE* p) { setTile(p); }
+int GetGraphType(void) {
+    // always 0 in SOTN
+    return 0;
+}

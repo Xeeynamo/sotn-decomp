@@ -1,5 +1,14 @@
 #include "common.h"
+#include <libetc.h>
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libetc/vmode", SetVideoMode);
+extern long D_8002D3A4;
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libetc/vmode", GetVideoMode);
+long SetVideoMode(long mode) {
+    long prev;
+
+    prev = D_8002D3A4;
+    D_8002D3A4 = mode;
+    return prev;
+}
+
+long GetVideoMode(void) { return D_8002D3A4; }

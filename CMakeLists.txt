@@ -40,6 +40,7 @@ endif()
 
 set(SOURCE_FILES_PSX_SDK
     src/main/psxsdk/libgpu/ext.c
+    src/main/psxsdk/libgpu/prim.c
 )
 
 set(SOURCE_FILES_MOCK_SDK

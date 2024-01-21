@@ -22,7 +22,7 @@ int StopCallback(void) { return D_8002D340->StopCallback(); }
 
 int RestartCallback(void) { return D_8002D340->RestartCallback(); }
 
-u16 CheckCallback(void) { return D_8002C2BA; }
+int CheckCallback(void) { return D_8002C2BA; }
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libapi/l10", GetIntrMask);
 
