@@ -399,6 +399,12 @@ SDL_Texture* GetVramTexture(int tpage, int clut) {
     return g_VramTex;
 }
 
+// On PSX, color blending at 0x80 retains the original color, while on PC
+// that is half brightness. A value of 0xFF on PSX is double the brightness.
+// Higher values than 0x80 on PC are for now ignored without a GPU shader.
+// NOTE: For some reason it only works well on sprite primitives?
+#define PSX_COL(x) MIN(0xFF, ((unsigned int)(x)*2 - 1))
+
 #define PSX_TEX_U(x) ((float)(x) / 256.0f)
 #define PSX_TEX_V(x) ((float)(x) / 256.0f)
 void SetSdlVertexSprite(SDL_Vertex* v, SPRT* sprt) {
@@ -549,12 +555,13 @@ void SetSdlVertexGT4(SDL_Vertex* v, POLY_GT4* poly) {
     v[5] = v[2];
 }
 
+u8 g_PrimColorBlend[] = {
+    0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+};
 void SetSdlVertexPrim(SDL_Vertex* v, Primitive* prim) {
-    u8 colorBase = 0x00;
-    // TODO assumption where 1 ignores color blend
-    if (prim->blendMode & 1) {
-        colorBase = 0xFF;
-    }
+    u8 a = 0xFF;
+    u8 colorBase = g_PrimColorBlend[prim->type & 0xF];
 
     v[0].position.x = prim->x0;
     v[0].position.y = prim->y0;
@@ -563,7 +570,7 @@ void SetSdlVertexPrim(SDL_Vertex* v, Primitive* prim) {
     v[0].color.r = prim->r0 | colorBase;
     v[0].color.g = prim->g0 | colorBase;
     v[0].color.b = prim->b0 | colorBase;
-    v[0].color.a = 0xFF;
+    v[0].color.a = a;
     v[1].position.x = prim->x1;
     v[1].position.y = prim->y1;
     v[1].tex_coord.x = PSX_TEX_U(prim->u1);
@@ -571,7 +578,7 @@ void SetSdlVertexPrim(SDL_Vertex* v, Primitive* prim) {
     v[1].color.r = prim->r1 | colorBase;
     v[1].color.g = prim->g1 | colorBase;
     v[1].color.b = prim->b1 | colorBase;
-    v[1].color.a = 0xFF;
+    v[1].color.a = a;
     v[2].position.x = prim->x2;
     v[2].position.y = prim->y2;
     v[2].tex_coord.x = PSX_TEX_U(prim->u2);
@@ -579,7 +586,7 @@ void SetSdlVertexPrim(SDL_Vertex* v, Primitive* prim) {
     v[2].color.r = prim->r2 | colorBase;
     v[2].color.g = prim->g2 | colorBase;
     v[2].color.b = prim->b2 | colorBase;
-    v[2].color.a = 0xFF;
+    v[2].color.a = a;
     v[4].position.x = prim->x3;
     v[4].position.y = prim->y3;
     v[4].tex_coord.x = PSX_TEX_U(prim->u3);
@@ -587,43 +594,46 @@ void SetSdlVertexPrim(SDL_Vertex* v, Primitive* prim) {
     v[4].color.r = prim->r3 | colorBase;
     v[4].color.g = prim->g3 | colorBase;
     v[4].color.b = prim->b3 | colorBase;
-    v[4].color.a = 0xFF;
+    v[4].color.a = a;
     v[3] = v[1];
     v[5] = v[2];
 }
 void SetSdlVertexPrimSprt(SDL_Vertex* v, Primitive* prim) {
+    u8 a = prim->drawMode & DRAW_TRANSP ? 0x80 : 0xFF;
+    u8 colorBlend = prim->drawMode & DRAW_COLORS ? 0x00 : 0xFF;
+
     v[0].position.x = prim->x0;
     v[0].position.y = prim->y0;
     v[0].tex_coord.x = PSX_TEX_U(prim->u0);
     v[0].tex_coord.y = PSX_TEX_V(prim->v0);
-    v[0].color.r = 0xFF;
-    v[0].color.g = 0xFF;
-    v[0].color.b = 0xFF;
-    v[0].color.a = 0xFF;
+    v[0].color.r = PSX_COL(prim->r0) | colorBlend;
+    v[0].color.g = PSX_COL(prim->g0) | colorBlend;
+    v[0].color.b = PSX_COL(prim->b0) | colorBlend;
+    v[0].color.a = a;
     v[1].position.x = prim->x0 + prim->u1;
     v[1].position.y = prim->y0;
     v[1].tex_coord.x = PSX_TEX_U(prim->u0 + prim->u1);
     v[1].tex_coord.y = PSX_TEX_V(prim->v0);
-    v[1].color.r = 0xFF;
-    v[1].color.g = 0xFF;
-    v[1].color.b = 0xFF;
-    v[1].color.a = 0xFF;
+    v[1].color.r = PSX_COL(prim->r1) | colorBlend;
+    v[1].color.g = PSX_COL(prim->g1) | colorBlend;
+    v[1].color.b = PSX_COL(prim->b1) | colorBlend;
+    v[1].color.a = a;
     v[2].position.x = prim->x0;
     v[2].position.y = prim->y0 + prim->v1;
     v[2].tex_coord.x = PSX_TEX_U(prim->u0);
     v[2].tex_coord.y = PSX_TEX_V(prim->v0 + prim->v1);
-    v[2].color.r = 0xFF;
-    v[2].color.g = 0xFF;
-    v[2].color.b = 0xFF;
-    v[2].color.a = 0xFF;
+    v[2].color.r = PSX_COL(prim->r1) | colorBlend;
+    v[2].color.g = PSX_COL(prim->g1) | colorBlend;
+    v[2].color.b = PSX_COL(prim->b1) | colorBlend;
+    v[2].color.a = a;
     v[4].position.x = prim->x0 + prim->u1;
     v[4].position.y = prim->y0 + prim->v1;
     v[4].tex_coord.x = PSX_TEX_U(prim->u0 + prim->u1);
     v[4].tex_coord.y = PSX_TEX_V(prim->v0 + prim->v1);
-    v[4].color.r = 0xFF;
-    v[4].color.g = 0xFF;
-    v[4].color.b = 0xFF;
-    v[4].color.a = 0xFF;
+    v[4].color.r = PSX_COL(prim->r1) | colorBlend;
+    v[4].color.g = PSX_COL(prim->g1) | colorBlend;
+    v[4].color.b = PSX_COL(prim->b1) | colorBlend;
+    v[4].color.a = a;
     v[3] = v[1];
     v[5] = v[2];
 }
@@ -632,6 +642,13 @@ void MyRenderPrimitives(void) {
     SDL_Vertex v[6];
     SDL_Texture* t = NULL;
 
+    for (int i = 0; i < g_GpuUsage.sp16; i++) {
+        SPRT_16* sp = &g_CurrentBuffer->sprite16[i];
+        SetSdlVertexSprite16(v, sp);
+        t = GetVramTexture(sp->code, sp->clut); // TODO sp->code is a bad hack
+        SDL_RenderGeometry(g_Renderer, t, v, 6, NULL, 0);
+    }
+
     int pg4 = 0;
     int pgt4 = 0;
     int plg2 = 0;
@@ -639,7 +656,10 @@ void MyRenderPrimitives(void) {
     int psprt = 0;
     for (int i = 0; i < LEN(g_PrimBuf); i++) {
         Primitive* prim = &g_PrimBuf[i];
-        if (prim->drawMode & 8) {
+        if (prim->drawMode & DRAW_HIDE) {
+            continue;
+        }
+        if (D_800973EC && !(prim->drawMode & DRAW_MENU)) {
             continue;
         }
 
@@ -700,12 +720,6 @@ void MyRenderPrimitives(void) {
         LINE_G2* poly = &g_CurrentBuffer->lineG2[i];
         SDL_SetRenderDrawColor(g_Renderer, poly->r0, poly->g0, poly->b0, 255);
         SDL_RenderDrawLine(g_Renderer, poly->x0, poly->y0, poly->x1, poly->y1);
-    }
-    for (int i = 0; i < g_GpuUsage.sp16; i++) {
-        SPRT_16* sp = &g_CurrentBuffer->sprite16[i];
-        SetSdlVertexSprite16(v, sp);
-        t = GetVramTexture(sp->code, sp->clut); // TODO sp->code is a bad hack
-        SDL_RenderGeometry(g_Renderer, t, v, 6, NULL, 0);
     }
 }
 

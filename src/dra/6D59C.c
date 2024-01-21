@@ -140,6 +140,7 @@ void func_8010DA48(u32 arg0) {
     g_CurrentEntity->animFrameIdx = 0;
 }
 
+AnimationFrame* func_8010DA70(s32* frames);
 INCLUDE_ASM("dra/nonmatchings/6D59C", func_8010DA70);
 
 u32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
