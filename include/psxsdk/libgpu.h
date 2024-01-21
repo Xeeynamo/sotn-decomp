@@ -74,7 +74,7 @@
 #define getcode(p) (u_char)(((P_TAG*)(p))->code)
 #define getaddr(p) (u_long)(((P_TAG*)(p))->addr)
 
-#define nextPrim(p) (void*)((((P_TAG*)(p))->addr) | 0x80000000)
+#define nextPrim(p) (void*)((u_long)(((P_TAG*)(p))->addr) | 0x80000000)
 #define isendprim(p) ((((P_TAG*)(p))->addr) == 0xffffff)
 
 #define addPrim(ot, p) setaddr(p, getaddr(ot)), setaddr(ot, p)
