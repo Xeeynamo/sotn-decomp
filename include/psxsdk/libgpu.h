@@ -134,7 +134,7 @@ typedef struct {
     u_long tag;                                                                \
     u_long len
 typedef struct {
-    O_TAG
+    O_TAG;
 } OT_TYPE;
 #else
 #define O_TAG u_long tag

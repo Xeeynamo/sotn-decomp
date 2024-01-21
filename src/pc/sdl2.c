@@ -562,6 +562,7 @@ void MyRenderPrimitives(void) {
     bool prevDfe = false;
     bool dtd;
     bool dfe;
+    u8 colorBlend;
     RECT r = {0, 0, 0, 0};
     for (int i = 0; i < LEN(g_PrimBuf); i++) {
         Primitive* prim = &g_PrimBuf[i];
@@ -657,8 +658,7 @@ void MyRenderPrimitives(void) {
             }
             break;
         case PRIM_SPRT:
-            u8 colorBlend = prim->drawMode & DRAW_COLORS ? 0x00 : 0xFF;
-            colorBlend = 0xFF;
+            colorBlend = prim->drawMode & DRAW_COLORS ? 0x00 : 0xFF;
             sp = &g_CurrentBuffer->sprite[g_GpuUsage.sp++];
             sp->r0 = PSX_COL(prim->r0) | colorBlend;
             sp->g0 = PSX_COL(prim->g0) | colorBlend;
