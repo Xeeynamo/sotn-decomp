@@ -12,6 +12,9 @@ void PadInit(int mode) {
     ChangeClearPAD(0);
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libetc/pad", PadRead);
+u_long PadRead(int id) {
+    PAD_dr();
+    return ~pad_buf;
+}
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libetc/pad", PadStop);
+void PadStop(void) { StopPAD(); }
