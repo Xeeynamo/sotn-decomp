@@ -350,7 +350,7 @@ const char* g_MenuStr[] = {
     _S("Button settings"),
     _S("Cloak lining"),
     _S("Cloak color"),
-    _S("uuuuu"),
+    _S("・・・・・"),
     _S("Exterior"),
     _S("Lining"),
     _S("Right hand"),
