@@ -1343,7 +1343,7 @@
 - [❌ get_ce](function_calls/main.get_ce.svg?raw=1)
 - [❌ get_cs](function_calls/main.get_cs.svg?raw=1)
 - [❌ get_dx](function_calls/main.get_dx.svg?raw=1)
-- [❌ get_mode](function_calls/main.get_mode.svg?raw=1)
+- [✅ get_mode](function_calls/main.get_mode.svg?raw=1)
 - [❌ get_ofs](function_calls/main.get_ofs.svg?raw=1)
 - [❌ get_tw](function_calls/main.get_tw.svg?raw=1)
 - [❌ getintr](function_calls/main.getintr.svg?raw=1)
