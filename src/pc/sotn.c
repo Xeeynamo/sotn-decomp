@@ -7,8 +7,6 @@
 #include <string.h>
 #include <cJSON/cJSON.h>
 
-const char g_DummyName[] = "DUMMY\xFF";
-
 u16 g_RawVram[VRAM_W * VRAM_H];
 GameApi g_ApiInit = {0};
 void (*D_80170000)(s32 arg0); // ServantDesc D_80170000 = {0};
@@ -303,39 +301,9 @@ bool FileUseContent(bool (*cb)(void* content, size_t len), const char* path) {
     return r;
 }
 
-char g_MegaMenuStrBuffer[0x3000];
-size_t g_MegaMenuStrIndex = 0;
-char MyEncodeChar(char ch) {
-    if (ch == '\0') {
-        return 0xFF;
-    }
-    if (ch >= ' ' && ch <= 'z') {
-        return ch - 0x20;
-    }
-
-    return ch;
-}
-
-const char* AnsiToSotnMenuString(const char* str) {
-    size_t end = strlen(str) + 2 + g_MegaMenuStrIndex;
-    if (end >= LEN(g_MegaMenuStrBuffer)) {
-        ERRORF(
-            "buffer full for '%s' (%d/%d)", str, end, LEN(g_MegaMenuStrBuffer));
-        return g_DummyName;
-    }
-
-    char* start = g_MegaMenuStrBuffer + g_MegaMenuStrIndex;
-    char* dst = start;
-    for (const char* ch = str; *ch != '\0'; ch++) {
-        *dst++ = MyEncodeChar(*ch);
-    }
-    *dst++ = MyEncodeChar('\0');
-    *dst++ = '\0';
-    g_MegaMenuStrIndex = end;
-    return start;
-}
-
+void InitSotnMenuTable(void);
 void InitStrings(void) {
+    InitSotnMenuTable();
     for (int i = 0; i < LEN(g_EquipDefs); i++) {
         g_EquipDefs[i].name = AnsiToSotnMenuString(g_EquipDefs[i].name);
     }
