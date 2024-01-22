@@ -24,7 +24,6 @@ SDL_Renderer* g_Renderer = NULL;
 SDL_AudioSpec g_SdlAudioSpecs = {0};
 SDL_AudioDeviceID g_SdlAudioDevice = {0};
 DebugSdl g_DebugSdl = DEBUG_SDL_NONE;
-unsigned int g_Tpage = 0;
 static SDL_Texture* g_VramTex = NULL;
 static int g_LastVramTexTpage = -1;
 static int g_LastVramTexClut = -1;
@@ -63,12 +62,10 @@ bool InitPlatform() {
     }
     SDL_SetTextureBlendMode(g_VramTex, SDL_BLENDMODE_BLEND);
 
-    g_Tpage = 0;
     return true;
 }
 
 void ResetPlatform(void) {
-    g_Tpage = 0;
     g_LastVramTexTpage = -1;
     g_LastVramTexClut = -1;
     if (g_VramTex) {
@@ -334,10 +331,6 @@ DISPENV* MyPutDispEnv(DISPENV* env) {
     return env;
 }
 
-void MySetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw) {
-    g_Tpage = tpage;
-}
-
 SDL_Texture* GetVramTexture(int tpage, int clut) {
     u16 pal[256];
     if (g_LastVramTexTpage != tpage || g_LastVramTexClut != clut) {
@@ -407,8 +400,8 @@ SDL_Texture* GetVramTexture(int tpage, int clut) {
 
 #define PSX_TEX_U(x) ((float)(x) / 256.0f)
 #define PSX_TEX_V(x) ((float)(x) / 256.0f)
-void SetSdlVertexSprite(SDL_Vertex* v, SPRT* sprt) {
-    // u8 blend = sprt->code & 1 ? 0xFF : 0x00;
+void SetSdlVertexSprite(SDL_Vertex* v, SPRT* sprt, bool isSemiTransp) {
+    u8 a = isSemiTransp ? 0x80 : 0xFF;
     sprt->r0 |= 255;
     sprt->g0 |= 255;
     sprt->b0 |= 255;
@@ -419,7 +412,7 @@ void SetSdlVertexSprite(SDL_Vertex* v, SPRT* sprt) {
     v[0].color.r = sprt->r0;
     v[0].color.g = sprt->g0;
     v[0].color.b = sprt->b0;
-    v[0].color.a = 0xFF;
+    v[0].color.a = a;
     v[1].position.x = sprt->x0 + sprt->w;
     v[1].position.y = sprt->y0;
     v[1].tex_coord.x = PSX_TEX_U(sprt->u0 + sprt->w);
@@ -427,7 +420,7 @@ void SetSdlVertexSprite(SDL_Vertex* v, SPRT* sprt) {
     v[1].color.r = sprt->r0;
     v[1].color.g = sprt->g0;
     v[1].color.b = sprt->b0;
-    v[1].color.a = 0xFF;
+    v[1].color.a = a;
     v[2].position.x = sprt->x0;
     v[2].position.y = sprt->y0 + sprt->h;
     v[2].tex_coord.x = PSX_TEX_U(sprt->u0);
@@ -435,7 +428,7 @@ void SetSdlVertexSprite(SDL_Vertex* v, SPRT* sprt) {
     v[2].color.r = sprt->r0;
     v[2].color.g = sprt->g0;
     v[2].color.b = sprt->b0;
-    v[2].color.a = 0xFF;
+    v[2].color.a = a;
     v[4].position.x = sprt->x0 + sprt->w;
     v[4].position.y = sprt->y0 + sprt->h;
     v[4].tex_coord.x = PSX_TEX_U(sprt->u0 + sprt->w);
@@ -443,7 +436,7 @@ void SetSdlVertexSprite(SDL_Vertex* v, SPRT* sprt) {
     v[4].color.r = sprt->r0;
     v[4].color.g = sprt->g0;
     v[4].color.b = sprt->b0;
-    v[4].color.a = 0xFF;
+    v[4].color.a = a;
     v[3] = v[1];
     v[5] = v[2];
 }
@@ -488,37 +481,39 @@ void SetSdlVertexSprite16(SDL_Vertex* v, SPRT_16* sprt) {
     v[5] = v[2];
 }
 
-void SetSdlVertexG4(SDL_Vertex* v, POLY_G4* poly) {
+void SetSdlVertexG4(SDL_Vertex* v, POLY_G4* poly, bool isSemiTransp) {
+    u8 a = isSemiTransp ? 0x80 : 0xFF;
     v[0].position.x = poly->x0;
     v[0].position.y = poly->y0;
     v[0].color.r = poly->r0;
     v[0].color.g = poly->g0;
     v[0].color.b = poly->b0;
-    v[0].color.a = 0xFF;
+    v[0].color.a = a;
     v[1].position.x = poly->x1;
     v[1].position.y = poly->y1;
     v[1].color.r = poly->r1;
     v[1].color.g = poly->g1;
     v[1].color.b = poly->b1;
-    v[1].color.a = 0xFF;
+    v[1].color.a = a;
     v[2].position.x = poly->x2;
     v[2].position.y = poly->y2;
     v[2].color.r = poly->r2;
     v[2].color.g = poly->g2;
     v[2].color.b = poly->b2;
-    v[2].color.a = 0xFF;
+    v[2].color.a = a;
     v[4].position.x = poly->x3;
     v[4].position.y = poly->y3;
     v[4].color.r = poly->r3;
     v[4].color.g = poly->g3;
     v[4].color.b = poly->b3;
-    v[4].color.a = 0xFF;
+    v[4].color.a = a;
     v[3] = v[1];
     v[5] = v[2];
 }
 
-void SetSdlVertexGT4(SDL_Vertex* v, POLY_GT4* poly) {
+void SetSdlVertexGT4(SDL_Vertex* v, POLY_GT4* poly, bool isSemiTransp) {
     u8 blend = poly->code & 1 ? 0xFF : 0x00;
+    u8 a = isSemiTransp ? 0x80 : 0xFF;
     v[0].position.x = poly->x0;
     v[0].position.y = poly->y0;
     v[0].tex_coord.x = PSX_TEX_U(poly->u0);
@@ -526,7 +521,7 @@ void SetSdlVertexGT4(SDL_Vertex* v, POLY_GT4* poly) {
     v[0].color.r = poly->r0 | blend;
     v[0].color.g = poly->g0 | blend;
     v[0].color.b = poly->b0 | blend;
-    v[0].color.a = 0xFF;
+    v[0].color.a = a;
     v[1].position.x = poly->x1;
     v[1].position.y = poly->y1;
     v[1].tex_coord.x = PSX_TEX_U(poly->u1);
@@ -534,7 +529,7 @@ void SetSdlVertexGT4(SDL_Vertex* v, POLY_GT4* poly) {
     v[1].color.r = poly->r1 | blend;
     v[1].color.g = poly->g1 | blend;
     v[1].color.b = poly->b1 | blend;
-    v[1].color.a = 0xFF;
+    v[1].color.a = a;
     v[2].position.x = poly->x2;
     v[2].position.y = poly->y2;
     v[2].tex_coord.x = PSX_TEX_U(poly->u2);
@@ -542,7 +537,7 @@ void SetSdlVertexGT4(SDL_Vertex* v, POLY_GT4* poly) {
     v[2].color.r = poly->r2 | blend;
     v[2].color.g = poly->g2 | blend;
     v[2].color.b = poly->b2 | blend;
-    v[2].color.a = 0xFF;
+    v[2].color.a = a;
     v[4].position.x = poly->x3;
     v[4].position.y = poly->y3;
     v[4].tex_coord.x = PSX_TEX_U(poly->u3);
@@ -550,110 +545,25 @@ void SetSdlVertexGT4(SDL_Vertex* v, POLY_GT4* poly) {
     v[4].color.r = poly->r3 | blend;
     v[4].color.g = poly->g3 | blend;
     v[4].color.b = poly->b3 | blend;
-    v[4].color.a = 0xFF;
-    v[3] = v[1];
-    v[5] = v[2];
-}
-
-u8 g_PrimColorBlend[] = {
-    0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-};
-void SetSdlVertexPrim(SDL_Vertex* v, Primitive* prim) {
-    u8 a = 0xFF;
-    u8 colorBase = g_PrimColorBlend[prim->type & 0xF];
-
-    v[0].position.x = prim->x0;
-    v[0].position.y = prim->y0;
-    v[0].tex_coord.x = PSX_TEX_U(prim->u0);
-    v[0].tex_coord.y = PSX_TEX_V(prim->v0);
-    v[0].color.r = prim->r0 | colorBase;
-    v[0].color.g = prim->g0 | colorBase;
-    v[0].color.b = prim->b0 | colorBase;
-    v[0].color.a = a;
-    v[1].position.x = prim->x1;
-    v[1].position.y = prim->y1;
-    v[1].tex_coord.x = PSX_TEX_U(prim->u1);
-    v[1].tex_coord.y = PSX_TEX_V(prim->v1);
-    v[1].color.r = prim->r1 | colorBase;
-    v[1].color.g = prim->g1 | colorBase;
-    v[1].color.b = prim->b1 | colorBase;
-    v[1].color.a = a;
-    v[2].position.x = prim->x2;
-    v[2].position.y = prim->y2;
-    v[2].tex_coord.x = PSX_TEX_U(prim->u2);
-    v[2].tex_coord.y = PSX_TEX_V(prim->v2);
-    v[2].color.r = prim->r2 | colorBase;
-    v[2].color.g = prim->g2 | colorBase;
-    v[2].color.b = prim->b2 | colorBase;
-    v[2].color.a = a;
-    v[4].position.x = prim->x3;
-    v[4].position.y = prim->y3;
-    v[4].tex_coord.x = PSX_TEX_U(prim->u3);
-    v[4].tex_coord.y = PSX_TEX_V(prim->v3);
-    v[4].color.r = prim->r3 | colorBase;
-    v[4].color.g = prim->g3 | colorBase;
-    v[4].color.b = prim->b3 | colorBase;
-    v[4].color.a = a;
-    v[3] = v[1];
-    v[5] = v[2];
-}
-void SetSdlVertexPrimSprt(SDL_Vertex* v, Primitive* prim) {
-    u8 a = prim->drawMode & DRAW_TRANSP ? 0x80 : 0xFF;
-    u8 colorBlend = prim->drawMode & DRAW_COLORS ? 0x00 : 0xFF;
-
-    v[0].position.x = prim->x0;
-    v[0].position.y = prim->y0;
-    v[0].tex_coord.x = PSX_TEX_U(prim->u0);
-    v[0].tex_coord.y = PSX_TEX_V(prim->v0);
-    v[0].color.r = PSX_COL(prim->r0) | colorBlend;
-    v[0].color.g = PSX_COL(prim->g0) | colorBlend;
-    v[0].color.b = PSX_COL(prim->b0) | colorBlend;
-    v[0].color.a = a;
-    v[1].position.x = prim->x0 + prim->u1;
-    v[1].position.y = prim->y0;
-    v[1].tex_coord.x = PSX_TEX_U(prim->u0 + prim->u1);
-    v[1].tex_coord.y = PSX_TEX_V(prim->v0);
-    v[1].color.r = PSX_COL(prim->r1) | colorBlend;
-    v[1].color.g = PSX_COL(prim->g1) | colorBlend;
-    v[1].color.b = PSX_COL(prim->b1) | colorBlend;
-    v[1].color.a = a;
-    v[2].position.x = prim->x0;
-    v[2].position.y = prim->y0 + prim->v1;
-    v[2].tex_coord.x = PSX_TEX_U(prim->u0);
-    v[2].tex_coord.y = PSX_TEX_V(prim->v0 + prim->v1);
-    v[2].color.r = PSX_COL(prim->r1) | colorBlend;
-    v[2].color.g = PSX_COL(prim->g1) | colorBlend;
-    v[2].color.b = PSX_COL(prim->b1) | colorBlend;
-    v[2].color.a = a;
-    v[4].position.x = prim->x0 + prim->u1;
-    v[4].position.y = prim->y0 + prim->v1;
-    v[4].tex_coord.x = PSX_TEX_U(prim->u0 + prim->u1);
-    v[4].tex_coord.y = PSX_TEX_V(prim->v0 + prim->v1);
-    v[4].color.r = PSX_COL(prim->r1) | colorBlend;
-    v[4].color.g = PSX_COL(prim->g1) | colorBlend;
-    v[4].color.b = PSX_COL(prim->b1) | colorBlend;
     v[4].color.a = a;
     v[3] = v[1];
     v[5] = v[2];
 }
 
 void MyRenderPrimitives(void) {
-    SDL_Vertex v[6];
-    SDL_Texture* t = NULL;
+    POLY_G4* g4;
+    POLY_GT4* gt4;
+    LINE_G2* lg2;
+    SPRT* sp;
+    SPRT_16* sp16;
+    DR_MODE* dr;
 
-    for (int i = 0; i < g_GpuUsage.sp16; i++) {
-        SPRT_16* sp = &g_CurrentBuffer->sprite16[i];
-        SetSdlVertexSprite16(v, sp);
-        t = GetVramTexture(sp->code, sp->clut); // TODO sp->code is a bad hack
-        SDL_RenderGeometry(g_Renderer, t, v, 6, NULL, 0);
-    }
-
-    int pg4 = 0;
-    int pgt4 = 0;
-    int plg2 = 0;
-    int ptile = 0;
-    int psprt = 0;
+    bool prevDtd = false;
+    bool prevDfe = false;
+    bool dtd;
+    bool dfe;
+    u8 colorBlend;
+    RECT r = {0, 0, 0, 0};
     for (int i = 0; i < LEN(g_PrimBuf); i++) {
         Primitive* prim = &g_PrimBuf[i];
         if (prim->drawMode & DRAW_HIDE) {
@@ -667,59 +577,181 @@ void MyRenderPrimitives(void) {
         case PRIM_NONE:
             break;
         case PRIM_G4:
-            SetSdlVertexPrim(v, prim);
-            SDL_RenderGeometry(g_Renderer, NULL, v, 6, NULL, 0);
-            pg4++;
+            g4 = &g_CurrentBuffer->polyG4[g_GpuUsage.g4++];
+            g4->r0 = prim->r0;
+            g4->g0 = prim->g0;
+            g4->b0 = prim->b0;
+            g4->x0 = prim->x0;
+            g4->y0 = prim->y0;
+            g4->r1 = prim->r1;
+            g4->g1 = prim->g1;
+            g4->b1 = prim->b1;
+            g4->x1 = prim->x1;
+            g4->y1 = prim->y1;
+            g4->r2 = prim->r2;
+            g4->g2 = prim->g2;
+            g4->b2 = prim->b2;
+            g4->x2 = prim->x2;
+            g4->y2 = prim->y2;
+            g4->r3 = prim->r3;
+            g4->g3 = prim->g3;
+            g4->b3 = prim->b3;
+            g4->x3 = prim->x3;
+            g4->y3 = prim->y3;
+            dtd = false;
+            dfe = false;
+
+            SetPolyG4(g4);
+            SetSemiTrans(g4, !!(prim->drawMode & DRAW_TRANSP));
+            AddPrim(&g_CurrentBuffer->ot[prim->priority], g4);
             break;
         case PRIM_GT4:
-            SetSdlVertexPrim(v, prim);
-            t = GetVramTexture(prim->tpage, D_8003C104[prim->clut]);
-            SDL_RenderGeometry(g_Renderer, t, v, 6, NULL, 0);
-            pgt4++;
-            break;
-        case PRIM_LINE_G2:
-            SDL_SetRenderDrawColor(
-                g_Renderer, prim->r0, prim->g0, prim->b0, 255);
-            SDL_RenderDrawLine(
-                g_Renderer, prim->x0, prim->y0, prim->x1, prim->y1);
-            plg2++;
+            gt4 = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4++];
+            gt4->r0 = prim->r0 | 0xFF;
+            gt4->g0 = prim->g0 | 0xFF;
+            gt4->b0 = prim->b0 | 0xFF;
+            gt4->x0 = prim->x0;
+            gt4->y0 = prim->y0;
+            gt4->u0 = prim->u0;
+            gt4->v0 = prim->v0;
+            gt4->clut = D_8003C104[prim->clut];
+            gt4->r1 = prim->r1 | 0xFF;
+            gt4->g1 = prim->g1 | 0xFF;
+            gt4->b1 = prim->b1 | 0xFF;
+            gt4->p1 = prim->p1;
+            gt4->x1 = prim->x1;
+            gt4->y1 = prim->y1;
+            gt4->u1 = prim->u1;
+            gt4->v1 = prim->v1;
+            gt4->tpage = prim->tpage;
+            gt4->r2 = prim->r2 | 0xFF;
+            gt4->g2 = prim->g2 | 0xFF;
+            gt4->b2 = prim->b2 | 0xFF;
+            gt4->p2 = prim->p2;
+            gt4->x2 = prim->x2;
+            gt4->y2 = prim->y2;
+            gt4->u2 = prim->u2;
+            gt4->v2 = prim->v2;
+            gt4->r3 = prim->r3 | 0xFF;
+            gt4->g3 = prim->g3 | 0xFF;
+            gt4->b3 = prim->b3 | 0xFF;
+            gt4->p3 = prim->p3;
+            gt4->x3 = prim->x3;
+            gt4->y3 = prim->y3;
+            gt4->u3 = prim->u3;
+            gt4->v3 = prim->v3;
+            dtd = false;
+            dfe = false;
+
+            SetPolyGT4(gt4);
+            SetSemiTrans(gt4, !!(prim->drawMode & DRAW_TRANSP));
+            AddPrim(&g_CurrentBuffer->ot[prim->priority], gt4);
+
+            if (prevDtd != dtd || prevDfe != dfe) {
+                if (g_GpuUsage.drawModes < MAX_DRAW_MODES) {
+                    dr = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes++];
+                    SetDrawMode(dr, dtd, dfe, 0, &r);
+                    AddPrim(&g_CurrentBuffer->ot[prim->priority], dr);
+                } else {
+                    WARNF("draw mode buffer out of limit");
+                }
+            }
             break;
         case PRIM_SPRT:
-            SetSdlVertexPrimSprt(v, prim);
-            t = GetVramTexture(prim->tpage, D_8003C104[prim->clut]);
-            SDL_RenderGeometry(g_Renderer, t, v, 6, NULL, 0);
-            psprt++;
+            colorBlend = prim->drawMode & DRAW_COLORS ? 0x00 : 0xFF;
+            sp = &g_CurrentBuffer->sprite[g_GpuUsage.sp++];
+            sp->r0 = PSX_COL(prim->r0) | colorBlend;
+            sp->g0 = PSX_COL(prim->g0) | colorBlend;
+            sp->b0 = PSX_COL(prim->b0) | colorBlend;
+            sp->x0 = prim->x0;
+            sp->y0 = prim->y0;
+            sp->u0 = prim->u0;
+            sp->v0 = prim->v0;
+            sp->clut = D_8003C104[prim->clut];
+            sp->w = prim->u1;
+            sp->h = prim->v1;
+
+            SetSprt(sp);
+            SetSemiTrans(sp, !!(prim->drawMode & DRAW_TRANSP));
+            AddPrim(&g_CurrentBuffer->ot[prim->priority], sp);
+
+            dr = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes++];
+            SetDrawMode(dr, dtd, dfe, prim->tpage, &r);
+            AddPrim(&g_CurrentBuffer->ot[prim->priority], dr);
             break;
         default:
             WARNF("unhandled prim type %d", prim->type);
             break;
         }
     }
+}
 
-    DEBUGF("PG4   %03X, PGT4  %03X", pg4, pgt4);
-    DEBUGF("PLG2  %03X, PSPRT %03X", plg2, psprt);
-    DEBUGF("PTILE %03X            ", plg2, ptile);
+void MyDrawOTag(OT_TYPE* p) {
+    POLY_G4* g4;
+    POLY_GT4* gt4;
+    LINE_G2* lg2;
+    SPRT* sp;
+    SPRT_16* sp16;
+    DR_MODE* drMode;
 
-    for (int i = 0; i < g_GpuUsage.g4; i++) {
-        SetSdlVertexG4(v, &g_CurrentBuffer->polyG4[i]);
-        SDL_RenderGeometry(g_Renderer, NULL, v, 6, NULL, 0);
-    }
-    for (int i = 0; i < g_GpuUsage.gt4; i++) {
-        POLY_GT4* poly = &g_CurrentBuffer->polyGT4[i];
-        SetSdlVertexGT4(v, poly);
-        t = GetVramTexture(poly->tpage, poly->clut);
-        SDL_RenderGeometry(g_Renderer, t, v, 6, NULL, 0);
-    }
-    for (int i = 0; i < g_GpuUsage.sp; i++) {
-        SPRT* sp = &g_CurrentBuffer->sprite[i];
-        SetSdlVertexSprite(v, sp);
-        t = GetVramTexture(g_Tpage, sp->clut);
-        SDL_RenderGeometry(g_Renderer, t, v, 6, NULL, 0);
-    }
-    for (int i = 0; i < g_GpuUsage.line; i++) {
-        LINE_G2* poly = &g_CurrentBuffer->lineG2[i];
-        SDL_SetRenderDrawColor(g_Renderer, poly->r0, poly->g0, poly->b0, 255);
-        SDL_RenderDrawLine(g_Renderer, poly->x0, poly->y0, poly->x1, poly->y1);
+    SDL_Vertex v[6];
+    SDL_Texture* t = NULL;
+    int tpage = 0;
+    bool dfe = false;
+    bool dtd = false;
+    size_t n = 0;
+
+    for (size_t n = 0; p->tag != 0xffffff; n++, p = (OT_TYPE*)p->tag) {
+        P_TAG* tag = (P_TAG*)p;
+        if (tag->len == 0) {
+            continue;
+        }
+
+        u8 code = tag->code & ~3;
+        u8 isSemiTrans = tag->code & 2;
+        u8 isShadeTex = tag->code & 1;
+        u8 isUnk = tag->code & 0x80;
+        switch (code) {
+        case 0x00:
+            break;
+        case 0x38:
+            g4 = (POLY_G4*)tag;
+            SetSdlVertexG4(v, g4, isSemiTrans);
+            SDL_RenderGeometry(g_Renderer, NULL, v, 6, NULL, 0);
+            break;
+        case 0x3C:
+            gt4 = (POLY_GT4*)tag;
+            SetSdlVertexGT4(v, gt4, isSemiTrans);
+            t = GetVramTexture(gt4->tpage, gt4->clut);
+            SDL_RenderGeometry(g_Renderer, t, v, 6, NULL, 0);
+            break;
+        case 0x50:
+            lg2 = (LINE_G2*)tag;
+            SDL_SetRenderDrawColor(g_Renderer, lg2->r0, lg2->g0, lg2->b0, 255);
+            SDL_RenderDrawLine(g_Renderer, lg2->x0, lg2->y0, lg2->x1, lg2->y1);
+            break;
+        case 0x64:
+            sp = (SPRT*)tag;
+            SetSdlVertexSprite(v, sp, isSemiTrans);
+            t = GetVramTexture(tpage, sp->clut);
+            SDL_RenderGeometry(g_Renderer, t, v, 6, NULL, 0);
+            break;
+        case 0x7C:
+            sp16 = (SPRT_16*)tag;
+            SetSdlVertexSprite16(v, sp16);
+            t = GetVramTexture(8, sp16->clut); // TODO hack: tpage hardcoded
+            SDL_RenderGeometry(g_Renderer, t, v, 6, NULL, 0);
+            break;
+        case 0xE0:
+            drMode = (DR_MODE*)tag;
+            tpage = drMode->code[0] & 0x1FF;
+            dtd = !!(drMode->code[0] & 0x200);
+            dfe = !!(drMode->code[0] & 0x400);
+            break;
+        default:
+            WARNF("code %02X not supported", code);
+            break;
+        }
     }
 }
 

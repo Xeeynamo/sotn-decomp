@@ -138,7 +138,7 @@ StageName D_80180128[80] = {
 void func_801B18F4(void);
 void func_801B19F4(void);
 void func_801B1B88(void);
-void func_801B1D88(POLY_GT4* arg0);
+void func_801B1D88(Primitive* prim);
 void func_801B1DA8(void);
 void func_801B1F34(void);
 void func_801B1F4C(s32 arg0);
@@ -2216,33 +2216,33 @@ void func_801B1B88(void) {
     g_GpuBuffers[0].disp.isrgb24 = 0;
 }
 
-void func_801B1C78(POLY_GT4* poly, u8 colorIntensity, s32 vertexIndex) {
+void func_801B1C78(Primitive* prim, u8 colorIntensity, s32 vertexIndex) {
     switch (vertexIndex) {
     case 0:
-        poly->r0 = poly->g0 = poly->b0 = colorIntensity;
+        prim->r0 = prim->g0 = prim->b0 = colorIntensity;
         break;
     case 1:
-        poly->r1 = poly->g1 = poly->b1 = colorIntensity;
+        prim->r1 = prim->g1 = prim->b1 = colorIntensity;
         break;
     case 2:
-        poly->r2 = poly->g2 = poly->b2 = colorIntensity;
+        prim->r2 = prim->g2 = prim->b2 = colorIntensity;
         break;
     case 3:
-        poly->r3 = poly->g3 = poly->b3 = colorIntensity;
+        prim->r3 = prim->g3 = prim->b3 = colorIntensity;
         break;
     }
 }
 
-void func_801B1CFC(POLY_GT4* poly, s32 colorIntensity) {
-    func_801B1C78(poly, colorIntensity, 0);
-    func_801B1C78(poly, colorIntensity, 1);
-    func_801B1C78(poly, colorIntensity, 2);
-    func_801B1C78(poly, colorIntensity, 3);
+void func_801B1CFC(Primitive* prim, s32 colorIntensity) {
+    func_801B1C78(prim, colorIntensity, 0);
+    func_801B1C78(prim, colorIntensity, 1);
+    func_801B1C78(prim, colorIntensity, 2);
+    func_801B1C78(prim, colorIntensity, 3);
 }
 
-void func_801B1D68(POLY_GT4* poly) { func_801B1CFC(poly, 0); }
+void func_801B1D68(Primitive* prim) { func_801B1CFC(prim, 0); }
 
-void func_801B1D88(POLY_GT4* arg0) { func_801B1CFC(arg0, 0x80); }
+void func_801B1D88(Primitive* prim) { func_801B1CFC(prim, 0x80); }
 
 void func_801B1DA8(void) {
     s32 index = 0;

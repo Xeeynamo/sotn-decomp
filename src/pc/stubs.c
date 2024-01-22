@@ -250,7 +250,7 @@ u32 g_DebugCurPal;
 s32 D_801362D4;
 s32 D_8013640C;
 s32 D_800974A4;
-u32* g_CurrentOT;
+OT_TYPE* g_CurrentOT;
 s32 D_801362B8;
 s32 D_801362BC;
 s32 g_DebugPlayer;
@@ -515,7 +515,7 @@ u16 D_8013AE7C;
 s16 D_801390A4;
 s16 D_80139010;
 s8 D_8013B690;
-s16 D_8013B678[1];
+s16 D_8013B678[4];
 s16 D_8013B648[4];
 s16 D_8013AEA0[4];
 u16 D_8013B626;
@@ -632,20 +632,35 @@ void RenderTilemap(void) {
         return;
     }
 
+    u16 prevTpage = -1;
+    u16 n = 0;
     for (int i = 0; i < 16; i++) {
         for (int j = 0; j < 17; j++) {
             u16 tile = layout[j];
             if (tile == 0) {
                 continue;
             }
+            if (g_GpuUsage.sp16 >= MAXSPRT16) {
+                WARNF("sprt16 out of memory");
+                continue;
+            }
+
             SPRT_16* sprt = &g_CurrentBuffer->sprite16[g_GpuUsage.sp16++];
             u16 gfxPage = g_Tilemap.D_80073088->gfxPage[tile];
             u16 gfxIndex = g_Tilemap.D_80073088->gfxIndex[tile];
             u16 clut = D_8003C104[g_Tilemap.D_80073088->clut[tile]];
             gfxPage += 0x8;
 
+            if (gfxPage != prevTpage) {
+                RECT r = {0, 0, 0, 0};
+                DR_MODE* drawMode =
+                    &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes++];
+                SetDrawMode(drawMode, 0, 0, gfxPage, &r);
+                AddPrim(g_CurrentBuffer->ot, drawMode);
+                prevTpage = gfxPage;
+            }
+
             sprt->clut = clut;
-            sprt->code = gfxPage; // TODO: bad hack
             sprt->x0 = j * 16;
             sprt->y0 = i * 16;
             sprt->u0 = gfxIndex * 16;
@@ -653,6 +668,8 @@ void RenderTilemap(void) {
             sprt->r0 = 0xFF;
             sprt->g0 = 0xFF;
             sprt->b0 = 0xFF;
+            SetSprt16(sprt);
+            AddPrim(g_CurrentBuffer->ot + 1, sprt);
         }
         layout += g_Tilemap.hSize * 16;
     }

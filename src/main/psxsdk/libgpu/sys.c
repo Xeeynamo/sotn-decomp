@@ -164,7 +164,7 @@ int MoveImage(RECT* rect, int x, int y) {
     return D_8002C260->addque2(D_8002C260->cwc, param, sizeof(param), 0);
 }
 
-u_long* ClearOTag(u_long* ot, int n) {
+OT_TYPE* ClearOTag(OT_TYPE* ot, int n) {
     if (D_8002C268 >= 2) {
         GPU_printf("ClearOTag(%08x,%d)...\n", ot, n);
     }
@@ -181,7 +181,7 @@ u_long* ClearOTag(u_long* ot, int n) {
     return ot;
 }
 
-u_long* ClearOTagR(u_long* ot, int n) {
+OT_TYPE* ClearOTagR(OT_TYPE* ot, int n) {
     if (D_8002C268 >= 2) {
         GPU_printf("ClearOTagR(%08x,%d)...\n", ot, n);
     }
@@ -192,7 +192,7 @@ u_long* ClearOTagR(u_long* ot, int n) {
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", func_80012DBC);
 
-void DrawOTag(u_long* p) {
+void DrawOTag(OT_TYPE* p) {
     if (D_8002C268 >= 2) {
         GPU_printf("DrawOTag(%08x)...\n", p);
     }
@@ -256,7 +256,15 @@ extern void SetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw) {
 extern void SetDrawEnv(DR_ENV* dr_env, DRAWENV* env);
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", SetDrawEnv);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_mode);
+int get_mode(int dfe, int dtd, int tpage) {
+    if (D_8002C26C) {
+        return (dtd ? 0xE1000800 : 0xE1000000) | (dfe ? 0x1000 : 0) |
+               (tpage & 0x27FF);
+    } else {
+        return (dtd ? 0xE1000200 : 0xE1000000) | (dfe ? 0x400 : 0) |
+               (tpage & 0x1FF);
+    }
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_cs);
 
