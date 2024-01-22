@@ -28,6 +28,7 @@ set(SOURCE_FILES_PC
     src/pc/stubs.c
     src/pc/sotn.c
     src/pc/pc.c
+    src/pc/str.c
     src/pc/sim_pc.c
     src/pc/stage_dummy.c
 )

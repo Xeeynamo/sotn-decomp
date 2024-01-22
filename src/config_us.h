@@ -350,7 +350,7 @@ const char* g_MenuStr[] = {
     _S("Button settings"),
     _S("Cloak lining"),
     _S("Cloak color"),
-    "\x65\x65\x65\x65\x65\xFF", // locked menu option?
+    _S("uuuuu"),
     _S("Exterior"),
     _S("Lining"),
     _S("Right hand"),
@@ -360,7 +360,7 @@ const char* g_MenuStr[] = {
     _S("Wolf"),
     _S("Mist"),
     _S("Bat"),
-    "\xB6\xB2\xCA\xC2\xFF", // debug in button config?
+    _S("かいはつ"),
     _S("Normal"),
     _S("Reverse"),
     _S("Sound"),
@@ -374,16 +374,16 @@ const char* g_MenuStr[] = {
     _S("CURSE"),
     _S("------------------------------"),
     _S("ALUCART"),
-    "\xDA\xCD\xFF\x9E\xD9\xFF",
-    "\xB9\xB2\xB9\xDD\xC1\xFF",
+    _S("れべる"),
+    _S("けいけんち"),
     _S("alucart"),
     _S("Bat"),
     _S("Ghost"),
     _S("Faerie"),
     _S("Demon"),
     _S("Sword"),
-    "\xD6\xB3\xBE\xB2\xFF",     // PIXIE
-    "\xCA\xC5\xB1\xB8\xCF\xFF", // NOSE DEMON
+    _S("ようせい"),
+    _S("はなあくま"),
     _S("Richter defeats Dracula"),
     _S("Defeat Olrox"),
     _S("Defeat Doppleganger 10"),
