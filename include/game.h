@@ -19,6 +19,8 @@
 #include <psxsdk/libsnd.h>
 #include <psxsdk/romio.h>
 
+#define SPAD(x) ((long*)0x1F800000 + x)
+
 typedef long Event;
 
 typedef enum {
@@ -115,6 +117,7 @@ typedef struct Primitive {
 
 #define DRAW_DEFAULT 0x00
 #define DRAW_TRANSP 0x01   // make it semi transparent
+#define DRAW_UNK02 0x02    // unknown
 #define DRAW_COLORS 0x04   // use color blending
 #define DRAW_HIDE 0x08     // do not render the primitive
 #define DRAW_TPAGE 0x10    // use custom tpage
