@@ -206,11 +206,14 @@ const char* AnsiToSotnMenuString(const char* str) {
         SotnMenuPair* pair = ReadCharacterInfo(&src);
         if (pair) {
             *dst++ = pair->value;
+            if (pair->value == 0xFF) {
+                *dst++ = 0xFF;
+            }
             if (pair->hasDakuten) {
                 *dst++ = 0xFF;
                 *dst++ = 0x9E;
             }
-            if (pair->hasDakuten) {
+            if (pair->hasHandakuten) {
                 *dst++ = 0xFF;
                 *dst++ = 0x9F;
             }
