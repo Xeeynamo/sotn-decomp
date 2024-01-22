@@ -69,5 +69,5 @@ segments:
       - [0x1E1C8, c]
       - [0x22018, c, prim_helpers]
       - [0x22848, c]
-      - [0x23260, sbss]
+      - [0x23270, sbss]
   - [0x23FCC]
