@@ -56,8 +56,8 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
     u32 var_v0;
     u8 colType;
 
-    absX = x + g_Tilemap.cameraX.i.hi;
-    absY = y + g_Tilemap.cameraY.i.hi;
+    absX = x + g_Tilemap.scrollX.i.hi;
+    absY = y + g_Tilemap.scrollY.i.hi;
     new_var = 0x10;
     if (absX < 0 || (u32)absX >= g_Tilemap.hSize << 8 || absY < 0 ||
         (u32)absY >= g_Tilemap.vSize << 8) {
@@ -65,7 +65,7 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
     } else {
         u16 colTile =
             g_Tilemap.fg[(absX >> 4) + (absY >> 4) * g_Tilemap.hSize * new_var];
-        colType = g_Tilemap.D_80073088->collision[colTile];
+        colType = g_Tilemap.tileDef->collision[colTile];
     }
     res->effects = 0;
     res->unk4 = res->unk14 = -(absX & 0xF);

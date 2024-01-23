@@ -92,7 +92,7 @@ void EntityWarpRoom(Entity* self) {
             newEntity = AllocEntity(&g_Entities[0xA0], &g_Entities[0x100]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(0x17, newEntity);
-                newEntity->posY.i.hi = 0xCC - g_Tilemap.cameraY.i.hi;
+                newEntity->posY.i.hi = 0xCC - g_Tilemap.scrollY.i.hi;
                 newEntity->posX.i.hi = (Random() & 0x7F) + 0x40;
             }
         }
@@ -104,7 +104,7 @@ void EntityWarpRoom(Entity* self) {
         D_80180648 = 0;
         *D_8003BEBC |= 1;
         *D_8003BEBC |= 1 << self->params;
-        moveX = g_Tilemap.cameraX.i.hi + (&PLAYER)->posX.i.hi;
+        moveX = g_Tilemap.scrollX.i.hi + (&PLAYER)->posX.i.hi;
         if (moveX > 0x60 && moveX < 0xA0) {
             g_Player.D_80072EFC = 0x10;
             g_Player.D_80072EF4 = 0;
@@ -345,7 +345,7 @@ void EntityWarpSmallRocks(Entity* entity) {
         }
         break;
     case 5:
-        y_unk = &g_Tilemap.cameraY.i.hi;
+        y_unk = &g_Tilemap.scrollY.i.hi;
         *(u32*)&entity->ext.generic.unk88 =
             *(u32*)&entity->ext.generic.unk88 - 1;
         if (*(u32*)&entity->ext.generic.unk88 == 0) {

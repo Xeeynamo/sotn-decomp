@@ -69,7 +69,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
             }
         }
         MoveEntity();
-        if ((entity->params == 0) && (tilemap->cameraX.i.hi > 0xD80)) {
+        if ((entity->params == 0) && (tilemap->scrollX.i.hi > 0xD80)) {
             entity->step++;
         }
         if (entity->posX.i.hi > 288) {

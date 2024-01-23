@@ -16,7 +16,28 @@ extern LayoutEntity* D_80180310[];
 extern u8 D_80193ABC;
 extern LayoutEntity* g_pStObjLayout[];
 
-// DECOMP_ME_WIP TestCollisions https://decomp.me/scratch/Nq66t
+void BottomCornerText(u8* str, u8 lower_left);
+extern s32 D_8003BF7C;
+extern u16 D_80073412;     // PLAYER.enemyId ???
+extern s16 D_80073416;     // PLAYER.hitPoints ???
+extern u8 D_80073420;      // PLAYER.hitFlags
+extern Entity* D_80073490; // PLAYER.ext.player.unkB8
+extern Entity* D_80075718; // &g_Entities[0x30]
+extern Entity* D_8007D858; // &g_Entities[0xE0]
+extern u16 D_801806BC[];
+extern u8 D_801809DC[];
+extern u8 D_801809E0[];
+extern u8 D_801809E8[];
+extern u16 D_801809F0[];
+extern u8 D_80180A04[];
+extern u16 D_80180A10[];
+extern u16 D_80180A50[];
+extern Entity* g_Entities_1;
+extern Entity* g_Entities_STAGE_ENTITY_START;
+extern s32 g_Status_killCount;
+extern u8 g_Status_relics_11;
+extern u8 g_Status_relics_15;
+
 INCLUDE_ASM("st/wrp/nonmatchings/861C", TestCollisions);
 
 // DECOMP_ME_WIP EntityNumericDamage https://decomp.me/scratch/m0PKE
@@ -30,7 +51,7 @@ void CreateEntityWhenInVerticalRange(LayoutEntity* layoutObj) {
     s16 posY;
     Entity* entity;
 
-    posY = g_Tilemap.cameraY.i.hi;
+    posY = g_Tilemap.scrollY.i.hi;
     yClose = posY - 0x40;
     yFar = posY + 0x120;
     if (yClose < 0) {
@@ -70,7 +91,7 @@ void CreateEntityWhenInHorizontalRange(LayoutEntity* layoutObj) {
     s16 posX;
     Entity* entity;
 
-    posX = g_Tilemap.cameraX.i.hi;
+    posX = g_Tilemap.scrollX.i.hi;
     xClose = posX - 0x40;
     xFar = posX + 0x140;
     if (xClose < 0) {
@@ -277,7 +298,7 @@ void InitRoomEntities(s32 objLayoutId) {
         D_80193AB4 += i * 2 + 2;
         D_80193AB4 = (D_80193AB4[1] << 0x10) + D_80193AB4[0];
     }
-    arg0 = tilemap->cameraX.i.hi;
+    arg0 = tilemap->scrollX.i.hi;
     temp_s0 = arg0 + 0x140;
     i = arg0 - 0x40;
     if (i < 0) {
@@ -288,14 +309,14 @@ void InitRoomEntities(s32 objLayoutId) {
     D_80193ABC = 0;
     func_8018A0CC(i);
     func_8018A170(temp_s0);
-    func_8018A380(tilemap->cameraY.i.hi + 0x120);
+    func_8018A380(tilemap->scrollY.i.hi + 0x120);
 }
 
 void func_8018A7AC(void) {
     Tilemap* tilemap = &g_Tilemap;
 
     if (D_80097908 != 0) {
-        s16 tmp = tilemap->cameraX.i.hi;
+        s16 tmp = tilemap->scrollX.i.hi;
         if (D_80097908 > 0)
             func_8018A170(tmp + 0x140);
         else
@@ -303,9 +324,9 @@ void func_8018A7AC(void) {
     }
 
     if (D_8009790C != 0) {
-        s16 tmp = tilemap->cameraY.i.hi;
+        s16 tmp = tilemap->scrollY.i.hi;
         if (D_8009790C > 0)
-            func_8018A424(tilemap->cameraY.i.hi + 0x120);
+            func_8018A424(tilemap->scrollY.i.hi + 0x120);
         else
             func_8018A520(tmp - 0x40);
     }

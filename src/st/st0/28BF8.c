@@ -210,7 +210,7 @@ void EntityCutscene(Entity* self) {
     case 1:
         if (self->step_s != 0) {
             if ((player->step < 3) || (player->step == 25)) {
-                posX = player->posX.i.hi + tilemap->cameraX.i.hi;
+                posX = player->posX.i.hi + tilemap->scrollX.i.hi;
                 if (posX > 0x8000) {
                     posX = 0;
                 }
@@ -225,7 +225,7 @@ void EntityCutscene(Entity* self) {
                 SetStep(2);
             }
         } else {
-            if ((player->posX.i.hi + tilemap->cameraX.i.hi) < 0xE1) {
+            if ((player->posX.i.hi + tilemap->scrollX.i.hi) < 0xE1) {
                 D_8003C8B8 = 0;
                 self->step_s++;
             }
@@ -233,7 +233,7 @@ void EntityCutscene(Entity* self) {
         break;
 
     case 2:
-        posX = player->posX.i.hi + tilemap->cameraX.i.hi;
+        posX = player->posX.i.hi + tilemap->scrollX.i.hi;
         if (posX > 0x8000) {
             posX = 0;
         }
@@ -250,7 +250,7 @@ void EntityCutscene(Entity* self) {
         break;
 
     case 3:
-        posX = player->posX.i.hi + tilemap->cameraX.i.hi;
+        posX = player->posX.i.hi + tilemap->scrollX.i.hi;
         if (posX > 0x8000) {
             posX = 0;
         }

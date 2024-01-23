@@ -1373,33 +1373,40 @@ typedef struct {
 #define N_HORIZ_TILES 17
 #define N_VERTI_TILES 16
 
+#define LAYER_SHOW 1
+#define LAYER_TPAGE_ID (0x20 | 0x40)
+#define LAYER_SEMI_TRANS 0x80
+#define LAYER_TPAGE_ALT 0x100
+#define LAYER_CLUT_ALT 0x200
+#define LAYER_WRAP_BG 0x1000
+
 typedef struct {
     /* 800730D8 0x00 */ u16* layout;
     /* 800730DC 0x04 */ TileDefinition* tileDef;
     /* 800730E0 0x08 */ f32 scrollX;
     /* 800730E4 0x0C */ f32 scrollY;
-    /* 800730E8 0x10 */ u32 D_800730E8;
-    /* 800730EC 0x14 */ u32 D_800730EC;
-    /* 800730F0 0x18 */ u32 zPriority;
+    /* 800730E8 0x10 */ u32 unused10;
+    /* 800730EC 0x14 */ u32 unused14;
+    /* 800730F0 0x18 */ u32 order;
     /* 800730F4 0x1C */ u32 flags;
     /* 800730F8 0x20 */ u32 w;
     /* 800730FC 0x24 */ u32 h;
-    /* 80073100 0x28 */ u32 D_80073100;
+    /* 80073100 0x28 */ u32 hideTimer;
     /* 80073104 0x2C */ u32 scrollKind;
 } BgLayer; /* size=0x30 */
 
 typedef struct {
     /* 80073084 */ u16* fg;
-    /* 80073088 */ TileDefinition* D_80073088;
-    /* 8007308C */ f32 cameraX;
-    /* 80073090 */ f32 cameraY;
-    /* 80073094 */ s32 D_80073094;
-    /* 80073098 */ s32 D_80073098;
-    /* 8007309C */ s32 zPriority;
-    /* 800730A0 */ s32 flags;
+    /* 80073088 */ TileDefinition* tileDef;
+    /* 8007308C */ f32 scrollX;
+    /* 80073090 */ f32 scrollY;
+    /* 80073094 */ s32 unused10;
+    /* 80073098 */ s32 unused14;
+    /* 8007309C */ s32 order;
+    /* 800730A0 */ u32 flags;
     /* 800730A4 */ s32 hSize;
     /* 800730A8 */ s32 vSize;
-    /* 800730AC */ u32 unk8;
+    /* 800730AC */ u32 hideTimer;
     /* 800730B0 */ s32 left;
     /* 800730B4 */ s32 top;
     /* 800730B8 */ s32 right;
