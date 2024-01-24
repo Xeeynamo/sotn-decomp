@@ -10,7 +10,7 @@ void func_801B642C(void) {
     g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
 }
 
-u8 func_801B6480(char const* textDialogue) {
+u8 func_801B6480(const char* textDialogue) {
     Primitive* prim;
     s16 firstPrimIndex;
 
@@ -236,7 +236,368 @@ void func_801B690C(u8 ySteps, Entity* self) {
     g_Dialogue.portraitAnimTimer++;
 }
 
-INCLUDE_ASM("st/sel/nonmatchings/3642C", func_801B69F8);
+void func_801B69F8(Entity* entity) {
+    Primitive* prim;
+    s32 i;
+    s32 j;
+    s16 y;
+    u16 nextChar;
+    s32 nextChar2;
+    RECT* rect;
+
+    switch (entity->step) {
+    case 0:
+        if (func_801B6480(D_8018B304)) {
+            D_801BC350 = D_801D6B00 = D_801BC3E8 = 0;
+            D_8003C704 = 1;
+            entity->flags |= FLAG_UNK_800000 | FLAG_UNK_2000;
+            entity->primIndex = g_Dialogue.primIndex[2];
+            ++entity->step;
+        }
+        break;
+    case 1:
+        while (1) {
+            if ((g_Dialogue.nextCharTimer != 0) && (D_801BC350 == 0)) {
+                --g_Dialogue.nextCharTimer;
+                return;
+            }
+            nextChar = g_Dialogue.nextCharDialogue++[0];
+            switch (nextChar) {
+            case 0:
+                entity->step = 7;
+                return;
+            case 1:
+                if (D_801BC350 != 0) {
+                    continue;
+                }
+                g_Dialogue.nextCharX = g_Dialogue.nextLineX;
+                if (!(g_Dialogue.unk12 & 1)) {
+                    g_Dialogue.nextLineY += 0xC;
+                }
+                if (++g_Dialogue.nextCharY >= 5) {
+                    g_Dialogue.nextCharY = 0;
+                }
+                func_801B66A4();
+                if (!(g_Dialogue.unk12 & 1)) {
+                    if (g_Dialogue.nextCharY < 4) {
+                        continue;
+                    }
+                    g_Dialogue.unk12 |= 1;
+                }
+                g_Dialogue.portraitAnimTimer = 0;
+                entity->step_s = 0;
+                ++entity->step;
+                return;
+            case 2:
+                g_Dialogue.unk17 = g_Dialogue.nextCharDialogue++[0];
+                continue;
+            case 3:
+                g_Dialogue.nextCharTimer = g_Dialogue.nextCharDialogue++[0];
+                if (D_801BC350 != 0) {
+                    continue;
+                }
+                return;
+            case 4: {
+                if (D_801BC350 != 0) {
+                    continue;
+                }
+                prim = g_Dialogue.prim[0];
+                for (j = 0; j < 5; ++j) {
+                    prim->blendMode = 8;
+                    prim = prim->next;
+                }
+                return;
+            }
+            case 5: {
+                s16 temp_a0;
+                s16 temp_a1;
+                if (D_801BC350 != 0) {
+                    g_Dialogue.nextCharDialogue += 2;
+                    continue;
+                }
+                j = g_Dialogue.nextCharDialogue++[0];
+                nextChar2 = g_Dialogue.nextCharDialogue++[0];
+                prim = g_Dialogue.prim[5];
+                temp_a0 = D_80180824[nextChar2 & 1];
+                temp_a1 = D_80180828[nextChar2 & 1];
+                prim->clut = D_8018082C[j];
+                prim->tpage = 0x90;
+                if (nextChar2 & 0x80) {
+                    prim->u0 = prim->u2 = temp_a0 + 0x2F;
+                    prim->u1 = prim->u3 = temp_a0;
+                } else {
+                    prim->u0 = prim->u2 = temp_a0;
+                    prim->u1 = prim->u3 = temp_a0 + 0x2F;
+                }
+                prim->v0 = prim->v1 = temp_a1;
+                prim->v2 = prim->v3 = temp_a1 + 0x48;
+                prim->x0 = prim->x1 = prim->x2 = prim->x3 =
+                    g_Dialogue.startX - 0x1E;
+                prim->y0 = prim->y1 = prim->y2 = prim->y3 =
+                    g_Dialogue.startY + 0x24;
+                g_Dialogue.clutIndex = D_80180838[j];
+                func_801B642C();
+                func_801B66A4();
+                prim->priority = 0x1FE;
+                prim->blendMode = 0;
+                func_801B675C(j, entity);
+                g_Dialogue.portraitAnimTimer = 6;
+                entity->step = 3;
+                return;
+            }
+            case 6:
+                if (D_801BC350 != 0) {
+                    continue;
+                }
+                prim = g_Dialogue.prim[0];
+                for (j = 0; j < 5; ++j) {
+                    prim->blendMode = 8;
+                    prim = prim->next;
+                };
+                g_api.FreePrimitives(g_Dialogue.primIndex[1]);
+                g_Dialogue.primIndex[1] = -1;
+                g_Dialogue.portraitAnimTimer = 6;
+                entity->step = 4;
+                return;
+            case 7:
+                if (D_801BC350 != 0) {
+                    g_Dialogue.nextCharDialogue += 2;
+                    continue;
+                }
+                g_Dialogue.startX = g_Dialogue.nextCharDialogue++[0];
+                g_Dialogue.startY = g_Dialogue.nextCharDialogue++[0];
+                prim = g_Dialogue.prim[5];
+                prim = prim->next;
+                prim->y0 = prim->y1 = prim->y2 = prim->y3 = g_Dialogue.startY;
+                prim->blendMode = 17;
+                prim = prim->next;
+                prim->y0 = g_Dialogue.startY - 1;
+                prim->blendMode = 81;
+                prim->u0 = 0;
+                g_Dialogue.portraitAnimTimer = 24;
+                entity->step = 5;
+                entity->step_s = 0;
+                return;
+            case 8:
+                if (D_801BC350 != 0) {
+                    continue;
+                }
+                g_Dialogue.portraitAnimTimer = 0x18;
+                entity->step = 6;
+                return;
+            case 9:
+                if (D_801BC350 != 0) {
+                    g_Dialogue.nextCharDialogue += 2;
+                    continue;
+                }
+                nextChar = g_Dialogue.nextCharDialogue++[0];
+                g_api.PlaySfx(
+                    g_Dialogue.nextCharDialogue++[0] | (nextChar << 4));
+                continue;
+            case 10:
+                if (D_801BC350 != 0 || g_api.func_80131F68() != false) {
+                    continue;
+                }
+                --g_Dialogue.nextCharDialogue;
+                return;
+            case 11:
+                if (D_801BC350 != 0 || g_api.func_80131F68() != true) {
+                    continue;
+                }
+                --g_Dialogue.nextCharDialogue;
+                return;
+            case 12:
+                i = g_Dialogue.nextCharDialogue++[0];
+                i <<= 4;
+                i |= g_Dialogue.nextCharDialogue++[0];
+                i <<= 4;
+                i |= g_Dialogue.nextCharDialogue++[0];
+                i <<= 4;
+                i |= g_Dialogue.nextCharDialogue++[0];
+                func_801B68E0(i);
+                continue;
+            case 13:
+                continue;
+            case 14:
+                i = g_Dialogue.nextCharDialogue++[0];
+                i <<= 4;
+                i |= g_Dialogue.nextCharDialogue++[0];
+                i <<= 4;
+                i |= g_Dialogue.nextCharDialogue++[0];
+                i <<= 4;
+                i |= g_Dialogue.nextCharDialogue++[0];
+                g_Dialogue.nextCharDialogue +=
+                    ((const char*)i + 0x100000)[0] * 4;
+                i = g_Dialogue.nextCharDialogue++[0];
+                i <<= 4;
+                i |= g_Dialogue.nextCharDialogue++[0];
+                i <<= 4;
+                i |= g_Dialogue.nextCharDialogue++[0];
+                i <<= 4;
+                i |= g_Dialogue.nextCharDialogue[0];
+                g_Dialogue.nextCharDialogue = (const char*)(i + 0x100000);
+                continue;
+            case 15:
+                i = g_Dialogue.nextCharDialogue++[0];
+                i <<= 4;
+                i |= g_Dialogue.nextCharDialogue++[0];
+                i <<= 4;
+                i |= g_Dialogue.nextCharDialogue++[0];
+                i <<= 4;
+                i |= g_Dialogue.nextCharDialogue[0];
+                g_Dialogue.nextCharDialogue = (const char*)(i + 0x100000);
+                continue;
+            case 16:
+                if (!((D_801BC3E8 >> g_Dialogue.nextCharDialogue[0]) & 1)) {
+                    --g_Dialogue.nextCharDialogue;
+                    return;
+                }
+                D_801BC3E8 &= ~(1 << g_Dialogue.nextCharDialogue[0]);
+                ++g_Dialogue.nextCharDialogue;
+                continue;
+            case 17:
+                D_801BC3E8 |= 1 << g_Dialogue.nextCharDialogue++[0];
+                continue;
+            case 18:
+                g_Dialogue.unk3C = 0;
+                continue;
+            case 19:
+                if (D_801BC350 != 0) {
+                    g_Dialogue.nextCharDialogue += 5;
+                } else {
+                    i = g_Dialogue.nextCharDialogue++[0];
+                    i <<= 4;
+                    i |= g_Dialogue.nextCharDialogue++[0];
+                    i <<= 4;
+                    i |= g_Dialogue.nextCharDialogue++[0];
+                    i <<= 4;
+                    i |= g_Dialogue.nextCharDialogue++[0];
+                    i += 0x100000;
+                    nextChar2 = g_Dialogue.nextCharDialogue++[0];
+                    LoadTPage((u_long*)i, 1, 0, D_80180834[nextChar2], 0x100,
+                              0x30, 0x48);
+                }
+                continue;
+            case 20:
+                nextChar = g_Dialogue.nextCharDialogue++[0];
+                g_api.PlaySfx(
+                    g_Dialogue.nextCharDialogue++[0] | (nextChar << 4));
+                continue;
+            case 21:
+                D_801D6B00 = D_801BC350 = D_801BC3E8 = 0;
+                continue;
+            case 22:
+                D_801BC3E8 &= ~(1 << g_Dialogue.nextCharDialogue++[0]);
+                continue;
+            case 23:
+                return;
+            case 24:
+                if (!((D_801BC3E8 >> g_Dialogue.nextCharDialogue[0]) & 1)) {
+                    --g_Dialogue.nextCharDialogue;
+                    return;
+                }
+                ++g_Dialogue.nextCharDialogue;
+                continue;
+            default:
+                if (D_801BC350 != 0) {
+                    ++g_Dialogue.nextCharDialogue;
+                    continue;
+                }
+                g_Dialogue.nextCharTimer = g_Dialogue.unk17;
+            }
+            break;
+        }
+
+        if (nextChar == 0x20) {
+            g_Dialogue.nextCharX += 2;
+            break;
+        }
+        rect->x = ((nextChar & 0xF) * 2) + 0x380;
+        rect->y = ((nextChar & 0xF0) / 2) + 0xF0;
+        rect->w = 2;
+        rect->h = 8;
+        y = g_Dialogue.nextCharY * 12 + 0x180;
+        MoveImage(rect, g_Dialogue.nextCharX, y);
+        g_Dialogue.nextCharX += 2;
+        break;
+    case 2:
+        func_801B690C(2, entity);
+        if (g_Dialogue.portraitAnimTimer >= 6) {
+            entity->step -= 1;
+        }
+        break;
+    case 3:
+        prim = g_Dialogue.prim[5];
+        prim->x0 = prim->x2 = prim->x2 - 4;
+        prim->x1 = prim->x3 = prim->x3 + 4;
+        prim->y0 = prim->y1 = prim->y1 - 6;
+        prim->y2 = prim->y3 = prim->y3 + 6;
+
+        if (--g_Dialogue.portraitAnimTimer == 0) {
+            entity->step = 1;
+            for (prim = &g_PrimBuf[g_Dialogue.primIndex[1]]; prim;
+                 prim = prim->next) {
+                prim->blendMode = 0;
+            }
+        }
+        break;
+    case 4:
+        prim = g_Dialogue.prim[5];
+        prim->x0 = prim->x2 = prim->x2 + 4;
+        prim->x1 = prim->x3 = prim->x3 - 4;
+        prim->y0 = prim->y1 = prim->y1 + 6;
+        prim->y2 = prim->y3 = prim->y3 - 6;
+        if (prim->x1 >= (g_Dialogue.startX - 2)) {
+            prim->x1 = prim->x3 = g_Dialogue.startX - 3;
+        }
+        if (--g_Dialogue.portraitAnimTimer == 0) {
+            entity->step = 1;
+        }
+        break;
+    case 5:
+        D_801D6B00 = 1;
+        prim = g_Dialogue.prim[5];
+        prim = prim->next;
+        if (--g_Dialogue.portraitAnimTimer >= 12) {
+            prim = prim->next;
+            prim->u0 += 20;
+            if (g_Dialogue.portraitAnimTimer & 1) {
+                ++prim->u0;
+                break;
+            }
+        } else {
+            if (g_Dialogue.portraitAnimTimer == 0) {
+                entity->step = 1;
+            }
+            prim->y2 = prim->y3 = prim->y3 + 6;
+        }
+        break;
+    case 6:
+        prim = g_Dialogue.prim[5];
+        prim = prim->next;
+        if (--g_Dialogue.portraitAnimTimer >= 12) {
+            prim = prim->next;
+            prim->u0 += 0xEC;
+            if (g_Dialogue.portraitAnimTimer & 1) {
+                --prim->u0;
+                break;
+            }
+        } else {
+            if (g_Dialogue.portraitAnimTimer == 0) {
+                entity->step = 1;
+                prim->blendMode = 8;
+            } else {
+                prim->y2 = prim->y3 = prim->y3 - 6;
+            }
+            prim = prim->next;
+            prim->blendMode = 8;
+        }
+        break;
+    case 7:
+        D_8003C704 = 0;
+        break;
+    }
+}
 
 s32 func_801B76F0(const char* msg) {
     const int PRIM = -5;

@@ -119,6 +119,7 @@ extern s8 D_801823A0[]; // on-screen keyboard
 extern RECT D_80182584;
 extern RECT D_8018258C;
 extern RECT D_801825A4;
+extern const char D_8018B304[];
 extern s32 g_StreamWidth;
 extern int g_StreamHeight;
 extern s32 D_801962F4;
@@ -203,6 +204,7 @@ extern s32 D_801D6B0C;
 extern s32 g_MemcardBlockRead;
 extern char g_InputSaveName[12];
 extern s32 g_MemcardStep;
+extern s32 D_801D6B00;
 extern s32 D_801D6B24;
 
 void SEL_Update(void);
