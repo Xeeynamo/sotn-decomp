@@ -103,7 +103,7 @@ segments:
       - [0x27BD8, .rodata, 3410C] # func_801B55C8
       - [0x27BF8, .rodata, 3585C]
       - [0x27CD4, .rodata, 3642C] # g_DiagActors strings
-      - [0x27CF4, rodata] # func_801B69F8 jtbl
+      - [0x27CF4, .rodata, 3642C] # func_801B69F8 jtbl
       - [0x27D78, .rodata, save_mgr]
       - [0x28040, .rodata, config_us] # equip strings
       - [0x29B18, .rodata, config_us] # accessories strings

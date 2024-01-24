@@ -3,7 +3,6 @@
 void func_801B4B9C(Entity* entity, s16 step);
 extern u8 D_80180538[]; // animation frames
 extern u8 D_80180554[]; // more animation frames
-extern s32 D_801BC3E8;
 
 void func_801B585C(u16 arg0) {
     Entity* e = &g_Entities[UNK_ENTITY_5];
