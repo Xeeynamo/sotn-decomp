@@ -29,6 +29,8 @@ int MyResetGraph(int arg0) { return 0; }
 
 void MySsInitHot(void) {}
 
+DRAWENV* MyPutDrawEnv(DRAWENV* env) {}
+
 void MyDrawOTag(OT_TYPE* p) {}
 
 int main(int argc, char* argv[]) {
