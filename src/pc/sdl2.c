@@ -701,7 +701,7 @@ void MyDrawOTag(OT_TYPE* p) {
     bool dtd = false;
     size_t n = 0;
 
-    for (size_t n = 0; p->tag != 0xffffff; n++, p = (OT_TYPE*)p->tag) {
+    for (size_t n = 0; (u_long)p != 0xffffff; n++, p = (OT_TYPE*)p->tag) {
         P_TAG* tag = (P_TAG*)p;
         if (tag->len == 0) {
             continue;
