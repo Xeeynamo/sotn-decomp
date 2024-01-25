@@ -523,8 +523,8 @@ void func_80169D74(Entity* entity) {
     }
     temp = entity->ext.generic.unk84;
     ptr = temp.unk + ((u16)entity->ext.generic.unk80.modeS16.unk0 * 4);
-    entity->posX.i.hi = ptr[0] - g_Tilemap.cameraX.i.hi;
-    entity->posY.i.hi = ptr[1] - g_Tilemap.cameraY.i.hi;
+    entity->posX.i.hi = ptr[0] - g_Tilemap.scrollX.i.hi;
+    entity->posY.i.hi = ptr[1] - g_Tilemap.scrollY.i.hi;
     entity->ext.generic.unk80.modeS16.unk0 =
         (entity->ext.generic.unk80.modeS16.unk0 + 1) & 0x3F;
 }

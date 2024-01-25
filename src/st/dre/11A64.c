@@ -139,7 +139,7 @@ void EntityBackgroundClouds(Entity* self) {
         prim->type = PRIM_G4;
         prim->x0 = prim->x2 = 0;
         prim->x1 = prim->x3 = 0x100;
-        prim->y0 = prim->y1 = 0x6E - g_Tilemap.cameraY.i.hi;
+        prim->y0 = prim->y1 = 0x6E - g_Tilemap.scrollY.i.hi;
         prim->y2 = prim->y3 = 0xF0;
         setRGB0(prim, 16, 16, 16);
         prim->priority = 0x20;
@@ -148,8 +148,8 @@ void EntityBackgroundClouds(Entity* self) {
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
         prim = prim->next;
-        camX = -g_Tilemap.cameraX.i.hi;
-        camY = 32 - g_Tilemap.cameraY.i.hi;
+        camX = -g_Tilemap.scrollX.i.hi;
+        camY = 32 - g_Tilemap.scrollY.i.hi;
         while (prim != 0) {
             prim->x0 = prim->x2 = camX;
             camX += 95;

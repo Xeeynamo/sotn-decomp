@@ -686,6 +686,16 @@ void MyRenderPrimitives(void) {
     }
 }
 
+u_short g_DrawEnvTpage;
+DRAWENV* MyPutDrawEnv(DRAWENV* env) {
+    if (env->isbg) {
+        SDL_SetRenderDrawColor(g_Renderer, env->r0, env->g0, env->b0, 255);
+    }
+    g_DrawEnvTpage = env->tpage;
+
+    return env;
+}
+
 void MyDrawOTag(OT_TYPE* p) {
     POLY_G4* g4;
     POLY_GT4* gt4;
@@ -696,12 +706,12 @@ void MyDrawOTag(OT_TYPE* p) {
 
     SDL_Vertex v[6];
     SDL_Texture* t = NULL;
-    int tpage = 0;
+    u_short tpage = g_DrawEnvTpage;
     bool dfe = false;
     bool dtd = false;
     size_t n = 0;
 
-    for (size_t n = 0; p->tag != 0xffffff; n++, p = (OT_TYPE*)p->tag) {
+    for (size_t n = 0; (u_long)p != 0xffffff; n++, p = (OT_TYPE*)p->tag) {
         P_TAG* tag = (P_TAG*)p;
         if (tag->len == 0) {
             continue;
@@ -739,7 +749,7 @@ void MyDrawOTag(OT_TYPE* p) {
         case 0x7C:
             sp16 = (SPRT_16*)tag;
             SetSdlVertexSprite16(v, sp16);
-            t = GetVramTexture(8, sp16->clut); // TODO hack: tpage hardcoded
+            t = GetVramTexture(tpage, sp16->clut);
             SDL_RenderGeometry(g_Renderer, t, v, 6, NULL, 0);
             break;
         case 0xE0:

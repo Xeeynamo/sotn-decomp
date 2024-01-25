@@ -41,7 +41,6 @@ SetGameState = 0x800E4124;
 HandleGameOver = 0x800E5584;
 RenderEntities = 0x800EBBAC;
 HideAllBackgroundLayers = 0x800ECE2C;
-RenderTilemap = 0x800ECE58;
 DestroyAllPrimitives = 0x800EDA94;
 AllocPrimitives = 0x800EDC80;
 FreePrimitives = 0x800EDE78;

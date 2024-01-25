@@ -536,7 +536,7 @@ void EntityTransparentWater(Entity* self) {
 
     AnimateEntity(D_80181224, self);
 
-    var_a3 = -1 * g_Tilemap.cameraX.i.hi % 38;
+    var_a3 = -1 * g_Tilemap.scrollX.i.hi % 38;
     var_a3 += 304;
     if (self->params != 0) {
         var_a3 = 96;
@@ -810,8 +810,8 @@ void EntityClickSwitch(Entity* entity) {
         if (temp_a0 != 0) {
             player->posY.i.hi++;
             entity->posY.val += FIX(0.75);
-            if ((g_Tilemap.cameraY.i.hi + entity->posY.i.hi) > 160) {
-                entity->posY.i.hi = 160 - g_Tilemap.cameraY.i.hi;
+            if ((g_Tilemap.scrollY.i.hi + entity->posY.i.hi) > 160) {
+                entity->posY.i.hi = 160 - g_Tilemap.scrollY.i.hi;
                 g_api.PlaySfx(SE_FLOOR_SWITCH_CLICK);
                 g_CastleFlags[0x31] = 1;
                 entity->step++;
@@ -871,8 +871,8 @@ void EntityPathBlockSmallWeight(Entity* self) {
 
     case 2:
         self->posY.val += FIX(0.5);
-        if ((self->posY.i.hi + g_Tilemap.cameraY.i.hi) >= 175) {
-            self->posY.i.hi = 175 - g_Tilemap.cameraY.i.hi;
+        if ((self->posY.i.hi + g_Tilemap.scrollY.i.hi) >= 175) {
+            self->posY.i.hi = 175 - g_Tilemap.scrollY.i.hi;
             self->step++;
         }
         break;
@@ -946,9 +946,9 @@ void EntityPathBlockTallWeight(Entity* self) {
 
     case 2:
         self->posY.val -= FIX(0.5);
-        temp = self->posY.i.hi + g_Tilemap.cameraY.i.hi;
+        temp = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         if (temp <= -16) {
-            self->posY.i.hi = -16 - g_Tilemap.cameraY.i.hi;
+            self->posY.i.hi = -16 - g_Tilemap.scrollY.i.hi;
             self->step++;
         }
         break;
@@ -956,7 +956,7 @@ void EntityPathBlockTallWeight(Entity* self) {
 
     func_801B9C44(WEIGHT_TALL);
     do {
-        temp = self->posY.i.hi + g_Tilemap.cameraY.i.hi;
+        temp = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
     } while (0);
     var_v0 = 112 - temp;
     var_a1 = 0x157;
@@ -1325,8 +1325,8 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
         InitializeEntity(g_EInitGeneric);
         self->hitboxWidth = 8;
         self->hitboxHeight = 8;
-        self->posX.i.hi = 1432 - g_Tilemap.cameraX.i.hi;
-        self->posY.i.hi = 200 - g_Tilemap.cameraY.i.hi;
+        self->posX.i.hi = 1432 - g_Tilemap.scrollX.i.hi;
+        self->posY.i.hi = 200 - g_Tilemap.scrollY.i.hi;
         self->hitPoints = 16;
         if (g_CastleFlags[stairwayPieceBroken]) {
             self->hitboxState = 0;
@@ -1381,10 +1381,10 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
         self->ext.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
         UnkPolyFunc2(prim);
-        v1 = g_Tilemap.D_80073088->gfxIndex[0x409];
+        v1 = g_Tilemap.tileDef->gfxIndex[0x409];
         arg1 = v1;
-        temp = g_Tilemap.D_80073088->gfxPage[0x409];
-        prim->clut = g_Tilemap.D_80073088->clut[0x409];
+        temp = g_Tilemap.tileDef->gfxPage[0x409];
+        prim->clut = g_Tilemap.tileDef->clut[0x409];
         prim->tpage = temp + 8;
         arg1 *= 16;
         arg3 = 0xF;
@@ -1605,8 +1605,8 @@ void EntitySwitch(Entity* entity) {
         if (temp_a0 != 0) {
             player->posY.i.hi++;
             entity->posY.val += FIX(0.25);
-            if ((g_Tilemap.cameraY.i.hi + entity->posY.i.hi) > 193) {
-                entity->posY.i.hi = 193 - g_Tilemap.cameraY.i.hi;
+            if ((g_Tilemap.scrollY.i.hi + entity->posY.i.hi) > 193) {
+                entity->posY.i.hi = 193 - g_Tilemap.scrollY.i.hi;
                 g_CastleFlags[0x32] = 1;
                 g_api.PlaySfx(SE_BARRIER_MOVE_2);
                 entity->step++;

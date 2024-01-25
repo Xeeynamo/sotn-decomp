@@ -68,7 +68,7 @@ void EntitySplashWater(Entity* self) {
             self->primIndex = primIndex;
             temp_t3 = self->posY.i.hi;
             temp_t8 = self->posX.i.hi;
-            self->ext.waterEffects.unk82 = temp_t3 + tilemap->cameraY.i.hi;
+            self->ext.waterEffects.unk82 = temp_t3 + tilemap->scrollY.i.hi;
             for (i = 0; prim != NULL; i++) {
                 if (i % 2) {
                     prim->u0 = prim->u2 = prim2->u0;
@@ -204,7 +204,7 @@ void EntitySplashWater(Entity* self) {
     }
 
     temp_t3 = self->ext.waterEffects.unk82 - self->posY.i.hi;
-    temp_t3 -= tilemap->cameraY.i.hi;
+    temp_t3 -= tilemap->scrollY.i.hi;
     prim = &g_PrimBuf[self->primIndex];
 
     for (i = 0; prim != NULL; i++) {
@@ -274,7 +274,7 @@ void EntitySurfacingWater(Entity* self) {
         bottom = self->posY.i.hi;
         left = right - 9;
         right += 9;
-        self->ext.waterEffects.unk82 = self->posY.i.hi + g_Tilemap.cameraY.i.hi;
+        self->ext.waterEffects.unk82 = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
 
         for (i = 0; i < 2; i++) {
             prim->u2 = 0;
@@ -331,14 +331,14 @@ void EntitySurfacingWater(Entity* self) {
         ptr = D_80181230;
         if (self->velocityX < 0) {
             right += 6;
-            x = right - tilemap->cameraX.i.hi;
+            x = right - tilemap->scrollX.i.hi;
             if (self->posX.i.hi < x) {
                 DestroyEntity(self);
                 return;
             }
         } else {
             ptr++;
-            temp3 = tilemap->cameraX.i.hi + 6;
+            temp3 = tilemap->scrollX.i.hi + 6;
             x = right;
             x += (ptr[self->ext.waterEffects.unk88] - temp3);
             if (self->posX.i.hi >= x) {
@@ -353,7 +353,7 @@ void EntitySurfacingWater(Entity* self) {
     x = self->posX.i.hi;
     y = self->posY.i.hi;
 
-    bottom = tempv0 - y - tilemap->cameraY.i.hi;
+    bottom = tempv0 - y - tilemap->scrollY.i.hi;
 
     prim = &g_PrimBuf[self->primIndex];
     temp_t0 = x - 9;
@@ -377,7 +377,7 @@ void EntitySurfacingWater(Entity* self) {
         prim = prim->next;
         j++;
     }
-    self->ext.waterEffects.unk82 = self->posY.i.hi + tilemap->cameraY.i.hi;
+    self->ext.waterEffects.unk82 = self->posY.i.hi + tilemap->scrollY.i.hi;
 }
 
 // ID 0x2F
@@ -729,9 +729,9 @@ void EntityMerman2(Entity* self) {
         }
         pos = D_80181230;
         pos += (self->params >> 8) & 1;
-        posY += g_Tilemap.cameraY.i.hi;
+        posY += g_Tilemap.scrollY.i.hi;
         if (pos[4] < posY) {
-            self->posY.i.hi = pos[4] - g_Tilemap.cameraY.i.hi - 24;
+            self->posY.i.hi = pos[4] - g_Tilemap.scrollY.i.hi - 24;
         }
 
         if ((u8)self->ext.merman2.timer++ > 32) {
@@ -807,7 +807,7 @@ void EntityMerman2(Entity* self) {
             pos += (self->params >> 8) & 1;
             posY = self->posY.i.hi;
             posY -= 24;
-            camY = g_Tilemap.cameraY.i.hi + posY;
+            camY = g_Tilemap.scrollY.i.hi + posY;
             if (camY < pos[3]) {
                 g_api.PlaySfx(NA_SE_EV_WATER_SPLASH);
                 newEntity = AllocEntity(D_8007DE38, &D_8007DE38[24]);
@@ -1476,9 +1476,9 @@ void EntityMermanSpawner(Entity* self) {
 
     if (!(g_Timer & 0x3F)) {
         Entity* player = &PLAYER;
-        temp = g_Tilemap.cameraY.i.hi + player->posY.i.hi;
+        temp = g_Tilemap.scrollY.i.hi + player->posY.i.hi;
         if (temp >= 256) {
-            temp_s0 = g_Tilemap.cameraX.i.hi + player->posX.i.hi;
+            temp_s0 = g_Tilemap.scrollX.i.hi + player->posX.i.hi;
             temp_s0_2 = 128;
             temp_s0_2 = temp_s0 - temp_s0_2 + Random();
             temp_s0 = temp_s0_2 - 64;
@@ -1492,8 +1492,8 @@ void EntityMermanSpawner(Entity* self) {
                     } else {
                         CreateEntityFromCurrentEntity(0x39, newEntity);
                     }
-                    newEntity->posX.i.hi = temp_s0_2 - g_Tilemap.cameraX.i.hi;
-                    newEntity->posY.i.hi = temp2 - g_Tilemap.cameraY.i.hi;
+                    newEntity->posX.i.hi = temp_s0_2 - g_Tilemap.scrollX.i.hi;
+                    newEntity->posY.i.hi = temp2 - g_Tilemap.scrollY.i.hi;
                 }
             }
         }

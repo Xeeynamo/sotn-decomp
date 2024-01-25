@@ -11,7 +11,7 @@ void CreateEntityWhenInVerticalRange(LayoutEntity* layoutObj) {
     s16 posY;
     Entity* entity;
 
-    posY = g_Tilemap.cameraY.i.hi;
+    posY = g_Tilemap.scrollY.i.hi;
     yClose = posY - 0x40;
     yFar = posY + 0x120;
     if (yClose < 0) {
@@ -51,7 +51,7 @@ void CreateEntityWhenInHorizontalRange(LayoutEntity* layoutObj) {
     s16 posX;
     Entity* entity;
 
-    posX = g_Tilemap.cameraX.i.hi;
+    posX = g_Tilemap.scrollX.i.hi;
     xClose = posX - 0x40;
     xFar = posX + 0x140;
     if (xClose < 0) {
@@ -160,7 +160,7 @@ void InitRoomEntities(s32 objLayoutId) {
         D_801A32C8 += i * 2 + 2;
         D_801A32C8 = (D_801A32C8[1] << 0x10) + D_801A32C8[0];
     }
-    arg0 = tilemap->cameraX.i.hi;
+    arg0 = tilemap->scrollX.i.hi;
     temp_s0 = arg0 + 0x140;
     i = arg0 - 0x40;
     if (i < 0) {
@@ -171,14 +171,14 @@ void InitRoomEntities(s32 objLayoutId) {
     D_801A32D0 = 0;
     func_80198E74(i);
     func_80198F18(temp_s0);
-    func_80199128(tilemap->cameraY.i.hi + 0x120);
+    func_80199128(tilemap->scrollY.i.hi + 0x120);
 }
 
 void func_80199554(void) {
     Tilemap* tilemap = &g_Tilemap;
 
     if (D_80097908 != 0) {
-        s16 tmp = tilemap->cameraX.i.hi;
+        s16 tmp = tilemap->scrollX.i.hi;
         if (D_80097908 > 0) {
             func_80198F18(tmp + 0x140);
         } else {
@@ -187,7 +187,7 @@ void func_80199554(void) {
     }
 
     if (D_8009790C != 0) {
-        s16 tmp = tilemap->cameraY.i.hi;
+        s16 tmp = tilemap->scrollY.i.hi;
         if (D_8009790C > 0) {
             func_801991CC(tmp + 0x120);
         } else {

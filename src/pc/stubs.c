@@ -626,55 +626,6 @@ void func_800EA7CC(void) { NOT_IMPLEMENTED; }
 
 void RenderEntities(void) { NOT_IMPLEMENTED; }
 
-void RenderTilemap(void) {
-    u16* layout = g_Tilemap.fg;
-    if (!layout) {
-        return;
-    }
-
-    u16 prevTpage = -1;
-    u16 n = 0;
-    for (int i = 0; i < 16; i++) {
-        for (int j = 0; j < 17; j++) {
-            u16 tile = layout[j];
-            if (tile == 0) {
-                continue;
-            }
-            if (g_GpuUsage.sp16 >= MAXSPRT16) {
-                WARNF("sprt16 out of memory");
-                continue;
-            }
-
-            SPRT_16* sprt = &g_CurrentBuffer->sprite16[g_GpuUsage.sp16++];
-            u16 gfxPage = g_Tilemap.D_80073088->gfxPage[tile];
-            u16 gfxIndex = g_Tilemap.D_80073088->gfxIndex[tile];
-            u16 clut = D_8003C104[g_Tilemap.D_80073088->clut[tile]];
-            gfxPage += 0x8;
-
-            if (gfxPage != prevTpage) {
-                RECT r = {0, 0, 0, 0};
-                DR_MODE* drawMode =
-                    &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes++];
-                SetDrawMode(drawMode, 0, 0, gfxPage, &r);
-                AddPrim(g_CurrentBuffer->ot, drawMode);
-                prevTpage = gfxPage;
-            }
-
-            sprt->clut = clut;
-            sprt->x0 = j * 16;
-            sprt->y0 = i * 16;
-            sprt->u0 = gfxIndex * 16;
-            sprt->v0 = gfxIndex & ~TILE_MASK;
-            sprt->r0 = 0xFF;
-            sprt->g0 = 0xFF;
-            sprt->b0 = 0xFF;
-            SetSprt16(sprt);
-            AddPrim(g_CurrentBuffer->ot + 1, sprt);
-        }
-        layout += g_Tilemap.hSize * 16;
-    }
-}
-
 void UpdateCd(void) { NOT_IMPLEMENTED; }
 
 int CdInit(void) {

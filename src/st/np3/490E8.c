@@ -62,7 +62,7 @@ void EntityBoneScimitar(Entity* self) {
             self->palette += self->params;
             self->flags &= ~(FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
                              FLAG_DESTROY_IF_OUT_OF_CAMERA | 0xC00);
-            self->ext.generic.unk9C = g_Tilemap.cameraX.i.hi + self->posX.i.hi;
+            self->ext.generic.unk9C = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
             if (self->params & D_80182460) {
                 DestroyEntity(self);
                 return;
@@ -199,7 +199,7 @@ void EntityBoneScimitar(Entity* self) {
         switch (self->step_s) {
         case BONE_SCIMITAR_WALK_RIGHT:
             self->velocityX = FIX(0.5);
-            if (((s16)((g_Tilemap.cameraX.i.hi + self->posX.i.hi) -
+            if (((s16)((g_Tilemap.scrollX.i.hi + self->posX.i.hi) -
                        ((u16)self->ext.generic.unk9C))) > 32) {
                 self->step_s++;
             }
@@ -207,7 +207,7 @@ void EntityBoneScimitar(Entity* self) {
 
         case BONE_SCIMITAR_WALK_LEFT:
             self->velocityX = FIX(-0.5);
-            if (((s16)((g_Tilemap.cameraX.i.hi + ((u16)self->posX.i.hi)) -
+            if (((s16)((g_Tilemap.scrollX.i.hi + ((u16)self->posX.i.hi)) -
                        ((u16)self->ext.generic.unk9C))) < -32) {
                 self->step_s--;
             }

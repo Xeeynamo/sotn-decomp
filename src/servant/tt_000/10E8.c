@@ -248,8 +248,8 @@ void func_8017160C(s32 amount, s32 entityId) {
             entity->params = i + 1;
             entity->facingLeft = facing;
         }
-        entity->ext.bat.cameraX = g_Tilemap.cameraX.i.hi;
-        entity->ext.bat.cameraY = g_Tilemap.cameraY.i.hi;
+        entity->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
+        entity->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
     }
 }
 
@@ -354,8 +354,8 @@ void func_801719E0(Entity* self) {
             } else {
                 self->ext.bat.follow = &g_Entities[3 + self->ext.bat.unk82];
             }
-            self->ext.bat.cameraX = g_Tilemap.cameraX.i.hi;
-            self->ext.bat.cameraY = g_Tilemap.cameraY.i.hi;
+            self->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
+            self->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
 
             if (self->ext.bat.unk82 == 0) {
                 for (i = 0; i < 16; i++) {
@@ -407,8 +407,8 @@ void func_801719E0(Entity* self) {
             } else {
                 self->ext.bat.follow = &g_Entities[3 + self->ext.bat.unk82];
             }
-            self->ext.bat.cameraX = g_Tilemap.cameraX.i.hi;
-            self->ext.bat.cameraY = g_Tilemap.cameraY.i.hi;
+            self->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
+            self->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
 
             for (i = 0; i < 16; i++) {
                 if (PLAYER.facingLeft) {
@@ -505,8 +505,8 @@ void func_80171ED4(s32 arg0) {
         }
     }
     D_80174D3C = 0;
-    e->ext.bat.cameraX = g_Tilemap.cameraX.i.hi;
-    e->ext.bat.cameraY = g_Tilemap.cameraY.i.hi;
+    e->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
+    e->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
 }
 
 void func_80172120(Entity* self) {
@@ -743,9 +743,9 @@ void func_80172120(Entity* self) {
 
 void func_80172C30(Entity* self) {
     if (self->step == 1 && self->flags & FLAG_UNK_00200000) {
-        D_80174B38 = (self->ext.bat.cameraX - g_Tilemap.cameraX.i.hi) +
+        D_80174B38 = (self->ext.bat.cameraX - g_Tilemap.scrollX.i.hi) +
                      (self->ext.bat.unkB0 - PLAYER.posX.i.hi);
-        D_80174B3C = (self->ext.bat.cameraY - g_Tilemap.cameraY.i.hi) +
+        D_80174B3C = (self->ext.bat.cameraY - g_Tilemap.scrollY.i.hi) +
                      (self->ext.bat.unkB2 - PLAYER.posY.i.hi);
 
         for (D_80174B30 = 0; D_80174B30 < 0x10; D_80174B30++) {
@@ -769,8 +769,8 @@ void func_80172C30(Entity* self) {
     case 1:
         self->ext.bat.unkB0 = PLAYER.posX.i.hi;
         self->ext.bat.unkB2 = PLAYER.posY.i.hi;
-        self->ext.bat.cameraX = g_Tilemap.cameraX.i.hi;
-        self->ext.bat.cameraY = g_Tilemap.cameraY.i.hi;
+        self->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
+        self->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
         D_80174B40 =
             D_80174C3C[self->ext.bat.unk82][0].x - self->ext.bat.cameraX;
         D_80174B44 =
@@ -1253,8 +1253,8 @@ void func_80174210(Entity* self, s32 arg1) {
         D_801710A0 = 0;
         return;
     }
-    cameraX = g_Tilemap.cameraX.i.hi;
-    cameraY = g_Tilemap.cameraY.i.hi;
+    cameraX = g_Tilemap.scrollX.i.hi;
+    cameraY = g_Tilemap.scrollY.i.hi;
     if (D_801710A0 != g_Servant || D_801710A4 != g_Tilemap.left ||
         D_801710A8 != g_Tilemap.top) {
         var_s1 = D_8017109C;

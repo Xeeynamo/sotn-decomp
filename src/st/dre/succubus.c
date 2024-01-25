@@ -113,8 +113,8 @@ void EntitySuccubus(Entity* self) {
     case SUCCUBUS_CS_1: // Disguised as Lisa
         if (g_CastleFlags[SeenCutscene] || (g_DemoMode != Demo_None)) {
             self->facingLeft = 0;
-            self->posX.i.hi = 416 - g_Tilemap.cameraX.i.hi;
-            self->posY.i.hi = 175 - g_Tilemap.cameraY.i.hi;
+            self->posX.i.hi = 416 - g_Tilemap.scrollX.i.hi;
+            self->posY.i.hi = 175 - g_Tilemap.scrollY.i.hi;
             SetStep(SUCCUBUS_CS_4);
             self->step_s = 3;
         }
@@ -172,8 +172,8 @@ void EntitySuccubus(Entity* self) {
             switch (self->step_s) {
             case 0:
                 self->facingLeft = 0;
-                self->posX.i.hi = 416 - g_Tilemap.cameraX.i.hi;
-                self->posY.i.hi = 175 - g_Tilemap.cameraY.i.hi;
+                self->posX.i.hi = 416 - g_Tilemap.scrollX.i.hi;
+                self->posY.i.hi = 175 - g_Tilemap.scrollY.i.hi;
                 self->step_s++;
 
             case 1:
@@ -258,7 +258,7 @@ void EntitySuccubus(Entity* self) {
                 TIMEATTACK_EVENT_SUCCUBUS_DEFEAT, TIMEATTACK_SET_RECORD);
             self->velocityX = 0;
             self->velocityY = 0;
-            posY = self->posY.i.hi + g_Tilemap.cameraY.i.hi;
+            posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
             if (posY > 160) {
                 self->velocityY = FIX(-2);
                 self->step_s = 1;
@@ -280,12 +280,12 @@ void EntitySuccubus(Entity* self) {
             AnimateEntity(D_80180768, self);
             MoveEntity();
             self->velocityY += FIX(0.125);
-            posY = self->posY.i.hi + g_Tilemap.cameraY.i.hi;
+            posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
             if (posY >= 176) {
                 func_801A046C(NA_SE_SU_LANDING);
-                self->posY.i.hi = 175 - g_Tilemap.cameraY.i.hi;
+                self->posY.i.hi = 175 - g_Tilemap.scrollY.i.hi;
                 SetSubStep(SUCCUBUS_DYING_ANIM_1);
-                posX = self->posX.i.hi + g_Tilemap.cameraX.i.hi;
+                posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
                 if (posX < 80) {
                     D_801816C4 = self->facingLeft = 1;
                 } else if (posX > 432) {
@@ -408,7 +408,7 @@ void EntitySuccubus(Entity* self) {
                 }
             }
 
-            posX = self->posX.i.hi + g_Tilemap.cameraX.i.hi;
+            posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
             if (self->facingLeft != 0) {
                 posX = 512 - posX;
             }
@@ -591,9 +591,9 @@ void EntitySuccubus(Entity* self) {
                 FntPrint("ng status\n");
             }
 
-            posY = self->posY.i.hi + g_Tilemap.cameraY.i.hi;
+            posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
             if (posY > 176) {
-                self->posY.i.hi = 176 - g_Tilemap.cameraY.i.hi;
+                self->posY.i.hi = 176 - g_Tilemap.scrollY.i.hi;
             }
 
             if (g_Player.unk60 == 0) {
@@ -675,7 +675,7 @@ void EntitySuccubus(Entity* self) {
     case SUCCUBUS_CLONE_ATTACK:
         switch (self->step_s) {
         case SUCCUBUS_CLONE_ATTACK_CREATE_CLONES:
-            posX = self->posX.i.hi + g_Tilemap.cameraX.i.hi;
+            posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
             posX -= 192;
 
             // left bound limit
@@ -694,7 +694,7 @@ void EntitySuccubus(Entity* self) {
             clonesShootOrder += temp * 7;
 
             entity = &g_Entities[112];
-            temp = self->posX.i.hi + g_Tilemap.cameraX.i.hi;
+            temp = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
 
             for (i = 0; i < 6; i++, entity++, clonesShootOrder++, posX += 64) {
                 CreateEntityFromEntity(E_SUCCUBUS_CLONE, self, entity);
@@ -934,18 +934,18 @@ void EntitySuccubus(Entity* self) {
         }
         break;
     }
-    posX = self->posX.i.hi + g_Tilemap.cameraX.i.hi;
-    posY = self->posY.i.hi + g_Tilemap.cameraY.i.hi;
+    posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
+    posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
 
     if (self->velocityX < 0) {
         if (posX < 40) {
-            self->posX.i.hi = 40 - g_Tilemap.cameraX.i.hi;
+            self->posX.i.hi = 40 - g_Tilemap.scrollX.i.hi;
         }
     } else if (posX > 480) {
-        self->posX.i.hi = 480 - g_Tilemap.cameraX.i.hi;
+        self->posX.i.hi = 480 - g_Tilemap.scrollX.i.hi;
     }
     if ((self->velocityY < 0) && (posY < 48)) {
-        self->posY.i.hi = 48 - g_Tilemap.cameraY.i.hi;
+        self->posY.i.hi = 48 - g_Tilemap.scrollY.i.hi;
     }
     // TODO: !FAKE
     hitbox = (s8*)&D_80180830[self->animCurFrame][D_801807F8];
@@ -1069,7 +1069,7 @@ void EntitySuccubusClone(Entity* self) {
         InitializeEntity(D_801804F4);
         self->hitboxState = 0;
         velX = self->ext.succubus.clonePosX -
-                   (self->posX.i.hi + g_Tilemap.cameraX.i.hi)
+                   (self->posX.i.hi + g_Tilemap.scrollX.i.hi)
                << 0x10;
         if (velX < 0) {
             velX += 0x3F;

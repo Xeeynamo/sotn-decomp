@@ -43,7 +43,8 @@ int MoveImage(RECT* rect, int x, int y) { NOT_IMPLEMENTED; }
 int MyDrawSync(int mode);
 int DrawSync(int mode) { return MyDrawSync(mode); }
 
-DRAWENV* PutDrawEnv(DRAWENV* env) { NOT_IMPLEMENTED; }
+DRAWENV* MyPutDrawEnv(DRAWENV* env);
+DRAWENV* PutDrawEnv(DRAWENV* env) { return MyPutDrawEnv(env); }
 
 DISPENV* MyPutDispEnv(DISPENV* env);
 DISPENV* PutDispEnv(DISPENV* env) { MyPutDispEnv(env); }

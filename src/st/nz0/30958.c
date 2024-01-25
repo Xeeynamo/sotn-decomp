@@ -459,9 +459,9 @@ void func_801B1C18(Entity* self) {
             player = &PLAYER;
             player->posY.i.hi++;
             self->posY.val += FIX(1.0);
-            temp = g_Tilemap.cameraY.i.hi + self->posY.i.hi;
+            temp = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
             if (temp > 468) {
-                self->posY.i.hi = 468 - g_Tilemap.cameraY.i.hi;
+                self->posY.i.hi = 468 - g_Tilemap.scrollY.i.hi;
                 D_80180EB4 ^= self->params;
                 self->step++;
             }
@@ -476,9 +476,9 @@ void func_801B1C18(Entity* self) {
 
     case 3:
         self->posY.val += 0xFFFF0000;
-        temp = g_Tilemap.cameraY.i.hi + self->posY.i.hi;
+        temp = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
         if (temp < 464) {
-            self->posY.i.hi = 464 - g_Tilemap.cameraY.i.hi;
+            self->posY.i.hi = 464 - g_Tilemap.scrollY.i.hi;
             self->step = 1;
         }
         break;
@@ -522,26 +522,26 @@ void func_801B1E54(Entity* self, s16 primIndex) {
         poly->pad3 = 2;
 
         if (self->params & D_80180EB4) {
-            self->posY.i.hi = 480 - g_Tilemap.cameraY.i.hi;
+            self->posY.i.hi = 480 - g_Tilemap.scrollY.i.hi;
             self->ext.generic.unk88.S8.unk0 = 1;
         } else {
-            self->posY.i.hi = 452 - g_Tilemap.cameraY.i.hi;
+            self->posY.i.hi = 452 - g_Tilemap.scrollY.i.hi;
             self->ext.generic.unk88.S8.unk0 = 0;
         }
 
     case 1:
         if (self->params & D_80180EB4) {
             self->posY.val += FIX(1.0);
-            temp = g_Tilemap.cameraY.i.hi + self->posY.i.hi;
+            temp = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
             if (temp > 480) {
-                self->posY.i.hi = 480 - g_Tilemap.cameraY.i.hi;
+                self->posY.i.hi = 480 - g_Tilemap.scrollY.i.hi;
             }
             var_v1 = 1;
         } else {
             self->posY.val += 0xFFFF0000;
-            temp = g_Tilemap.cameraY.i.hi + self->posY.i.hi;
+            temp = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
             if (temp < 452) {
-                self->posY.i.hi = 452 - g_Tilemap.cameraY.i.hi;
+                self->posY.i.hi = 452 - g_Tilemap.scrollY.i.hi;
                 self->step = 1;
             }
             var_v1 = 0;
@@ -556,7 +556,7 @@ void func_801B1E54(Entity* self, s16 primIndex) {
     poly = (POLY_GT4*)(*((s32*)(&self->ext.generic.unk7C)));
     poly->x0 = self->posX.i.hi - 16;
     poly->y0 = self->posY.i.hi - 16;
-    temp = 480 - (g_Tilemap.cameraY.i.hi + self->posY.i.hi);
+    temp = 480 - (g_Tilemap.scrollY.i.hi + self->posY.i.hi);
     D_801CB736[self->params] = temp;
 }
 
@@ -619,7 +619,7 @@ void EntityMoveableBox(Entity* self) {
         func_801BCF74(&D_80180EB8);
 
         if (self->params == 0) {
-            temp_v0_2 = self->posX.i.hi + g_Tilemap.cameraX.i.hi;
+            temp_v0_2 = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
             var_v1 = temp_v0_2 - 192;
             var_v1 = ABS(var_v1);
             var_v0 = temp_v0_2 - 256;
@@ -636,7 +636,7 @@ void EntityMoveableBox(Entity* self) {
             self->ext.generic.unk84.unk = var_s1;
             if (var_s1 != 0) {
                 self->posY.i.hi =
-                    (448 - D_801CB736[var_s1]) - g_Tilemap.cameraY.i.hi;
+                    (448 - D_801CB736[var_s1]) - g_Tilemap.scrollY.i.hi;
             }
         }
         break;
@@ -766,7 +766,7 @@ void EntityCannon(Entity* self) {
         prim->u1 = 0x40;
         prim->v1 = 0x28;
         prim->x0 = self->posX.i.hi - 8;
-        prim->y0 = 120 - g_Tilemap.cameraY.i.hi;
+        prim->y0 = 120 - g_Tilemap.scrollY.i.hi;
         prim->priority = 0x78;
         prim->drawMode = 2;
 
@@ -833,7 +833,7 @@ void EntityCannonShot(Entity* self) {
 
     case 1:
         MoveEntity();
-        if ((self->posX.i.hi + g_Tilemap.cameraX.i.hi) < 112) {
+        if ((self->posX.i.hi + g_Tilemap.scrollX.i.hi) < 112) {
             g_api.func_80102CD8(1);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
@@ -903,7 +903,7 @@ void func_801B2AD8(Entity* self) {
         self->hitboxWidth = 6;
         self->hitboxState = 1;
         CreateEntityFromEntity(0x26, self, &self[-1]);
-        self[-1].posY.i.hi = 344 - g_Tilemap.cameraY.i.hi;
+        self[-1].posY.i.hi = 344 - g_Tilemap.scrollY.i.hi;
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
@@ -934,16 +934,16 @@ void func_801B2AD8(Entity* self) {
 
         if (var_a0 != 0) {
             self->posY.val += FIX(1.0);
-            temp = g_Tilemap.cameraY.i.hi + self->posY.i.hi;
+            temp = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
             if (temp > 376) {
-                self->posY.i.hi = 376 - g_Tilemap.cameraY.i.hi;
+                self->posY.i.hi = 376 - g_Tilemap.scrollY.i.hi;
             }
             g_CallElevator = true;
         } else {
             self->posY.val += 0xFFFF0000;
-            temp = g_Tilemap.cameraY.i.hi + self->posY.i.hi;
+            temp = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
             if (temp < 372) {
-                self->posY.i.hi = 372 - g_Tilemap.cameraY.i.hi;
+                self->posY.i.hi = 372 - g_Tilemap.scrollY.i.hi;
             }
             g_CallElevator = false;
         }
@@ -1009,7 +1009,7 @@ void EntityElevator2(Entity* self) {
         player = PLAYER_CHARACTER;
         if (g_CallElevator) {
             self->posY.i.hi--;
-            camY = g_Tilemap.cameraY.i.hi;
+            camY = g_Tilemap.scrollY.i.hi;
             if ((self->posY.i.hi + camY) < 96) {
                 self->posY.i.hi = 96 - camY;
             } else if (temp != 0) {
@@ -1018,7 +1018,7 @@ void EntityElevator2(Entity* self) {
             }
         } else {
             self->posY.i.hi++;
-            camY = g_Tilemap.cameraY.i.hi;
+            camY = g_Tilemap.scrollY.i.hi;
             if ((self->posY.i.hi + camY) > 216) {
                 self->posY.i.hi = 216 - camY;
             } else if (temp != 0) {
@@ -1052,7 +1052,7 @@ void func_801B2FD8(Entity* self) {
     case 0:
         InitializeEntity(g_EInitGeneric);
         self->ext.generic.unk80.modeS32 =
-            self->posY.i.hi + g_Tilemap.cameraY.i.hi;
+            self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -1072,13 +1072,13 @@ void func_801B2FD8(Entity* self) {
         prim->drawMode = 2;
 
         posX = self->posX.i.hi;
-        posX += g_Tilemap.cameraX.i.hi;
+        posX += g_Tilemap.scrollX.i.hi;
         posX >>= 4;
 
         // TODO: !FAKE
         camY = self->posY.i.hi;
         posY = camY += 4;
-        posY = camY += g_Tilemap.cameraY.i.hi;
+        posY = camY += g_Tilemap.scrollY.i.hi;
 
         camY = (camY >> 4) * g_Tilemap.hSize * 16;
         g_Tilemap.fg[posX + camY] = 0x5AF;
@@ -1088,10 +1088,10 @@ void func_801B2FD8(Entity* self) {
             player = &PLAYER;
             player->posY.i.hi++;
             self->posY.val += FIX(1.0);
-            posY = g_Tilemap.cameraY.i.hi + self->posY.i.hi;
+            posY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
             if ((self->ext.generic.unk80.modeS32 + 4) < posY) {
                 self->posY.i.hi = (self->ext.generic.unk80.modeS16.unk0 + 4) -
-                                  g_Tilemap.cameraY.i.hi;
+                                  g_Tilemap.scrollY.i.hi;
                 self[1].ext.stub[0xC] = 1;
                 self->step++;
                 LOW(self[1].ext.stub[0x8]) ^= 1;
@@ -1107,10 +1107,10 @@ void func_801B2FD8(Entity* self) {
     case 2:
         if (temp == 0) {
             self->posY.val += ~0xFFFF;
-            posY = g_Tilemap.cameraY.i.hi + self->posY.i.hi;
+            posY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
             if (posY < self->ext.generic.unk80.modeS32) {
                 self->posY.i.hi = self->ext.generic.unk80.modeS16.unk0 -
-                                  g_Tilemap.cameraY.i.hi;
+                                  g_Tilemap.scrollY.i.hi;
                 self->step = 1;
             }
         }
@@ -1139,12 +1139,12 @@ void EntityFloorSpikes(Entity* self) {
         self->attack = 7;
         self->hitboxState = 1;
         self->ext.generic.unk80.modeS32 =
-            self->posY.i.hi + g_Tilemap.cameraY.i.hi;
+            self->posY.i.hi + g_Tilemap.scrollY.i.hi;
 
         temp = 4;
         new_var = self->posY.i.hi - 4;
-        new_var += g_Tilemap.cameraY.i.hi;
-        tilePos = ((self->posX.i.hi - temp + g_Tilemap.cameraX.i.hi) >> 4) +
+        new_var += g_Tilemap.scrollY.i.hi;
+        tilePos = ((self->posX.i.hi - temp + g_Tilemap.scrollX.i.hi) >> 4) +
                   (((new_var >> 4) * g_Tilemap.hSize) * 16);
 
         g_Tilemap.fg[tilePos] = 0x102;
@@ -1172,16 +1172,16 @@ void EntityFloorSpikes(Entity* self) {
         self->hitboxState = 1;
         if (self->ext.generic.unk84.unk != 0) {
             self->posY.val += FIX(1.0);
-            new_var = g_Tilemap.cameraY.i.hi + self->posY.i.hi;
-            var_v1 = g_Tilemap.cameraY.i.hi;
+            new_var = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
+            var_v1 = g_Tilemap.scrollY.i.hi;
             if (new_var > self->ext.generic.unk80.modeS32) {
                 self->hitboxState = 0;
                 self->posY.i.hi = self->ext.generic.unk80.modeS16.unk0 - var_v1;
             }
         } else {
             self->posY.val += 0xFFFF0000;
-            new_var = g_Tilemap.cameraY.i.hi + self->posY.i.hi;
-            var_v1 = g_Tilemap.cameraY.i.hi;
+            new_var = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
+            var_v1 = g_Tilemap.scrollY.i.hi;
             if (new_var < (self->ext.generic.unk80.modeS32 - 28)) {
                 self->posY.i.hi =
                     self->ext.generic.unk80.modeS16.unk0 - 28 - var_v1;

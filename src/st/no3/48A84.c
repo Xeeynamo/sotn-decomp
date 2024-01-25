@@ -748,7 +748,7 @@ void func_801CF5E0(Entity* self) {
     }
 
     temp_v0 = self->ext.generic.unk84.S16.unk0 - self->posX.i.hi -
-              g_Tilemap.cameraX.i.hi;
+              g_Tilemap.scrollX.i.hi;
 
     if (temp_v0 > 16) {
         SetStep(3);
@@ -1003,7 +1003,7 @@ void EntitySplashWater(Entity* self) {
             self->primIndex = primIndex;
             temp_t3 = self->posY.i.hi;
             temp_t8 = self->posX.i.hi;
-            self->ext.waterEffects.unk82 = temp_t3 + tilemap->cameraY.i.hi;
+            self->ext.waterEffects.unk82 = temp_t3 + tilemap->scrollY.i.hi;
             for (i = 0; prim != NULL; i++) {
                 if (i % 2) {
                     prim->u0 = prim->u2 = prim2->u0;
@@ -1139,7 +1139,7 @@ void EntitySplashWater(Entity* self) {
     }
 
     temp_t3 = self->ext.waterEffects.unk82 - self->posY.i.hi;
-    temp_t3 -= tilemap->cameraY.i.hi;
+    temp_t3 -= tilemap->scrollY.i.hi;
     prim = &g_PrimBuf[self->primIndex];
 
     for (i = 0; prim != NULL; i++) {
@@ -1209,7 +1209,7 @@ void EntitySurfacingWater(Entity* self) {
         bottom = self->posY.i.hi;
         left = right - 9;
         right += 9;
-        self->ext.waterEffects.unk82 = self->posY.i.hi + g_Tilemap.cameraY.i.hi;
+        self->ext.waterEffects.unk82 = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
 
         for (i = 0; i < 2; i++) {
             prim->u2 = 0;
@@ -1266,14 +1266,14 @@ void EntitySurfacingWater(Entity* self) {
         ptr = D_801813AC;
         if (self->velocityX < 0) {
             right += 6;
-            x = right - tilemap->cameraX.i.hi;
+            x = right - tilemap->scrollX.i.hi;
             if (self->posX.i.hi < x) {
                 DestroyEntity(self);
                 return;
             }
         } else {
             ptr++;
-            temp3 = tilemap->cameraX.i.hi + 6;
+            temp3 = tilemap->scrollX.i.hi + 6;
             x = right;
             x += (ptr[self->ext.waterEffects.unk88] - temp3);
             if (self->posX.i.hi >= x) {
@@ -1288,7 +1288,7 @@ void EntitySurfacingWater(Entity* self) {
     x = self->posX.i.hi;
     y = self->posY.i.hi;
 
-    bottom = tempv0 - y - tilemap->cameraY.i.hi;
+    bottom = tempv0 - y - tilemap->scrollY.i.hi;
 
     prim = &g_PrimBuf[self->primIndex];
     temp_t0 = x - 9;
@@ -1312,7 +1312,7 @@ void EntitySurfacingWater(Entity* self) {
         prim = prim->next;
         j++;
     }
-    self->ext.waterEffects.unk82 = self->posY.i.hi + tilemap->cameraY.i.hi;
+    self->ext.waterEffects.unk82 = self->posY.i.hi + tilemap->scrollY.i.hi;
 }
 
 // ID 0x37

@@ -168,8 +168,8 @@ void EntitySecretStairs(Entity* self) {
         if (g_isSecretStairsButtonPressed) {
             temp_s0 = D_801808A0[self->params].x;
             temp_s1 = D_801808A0[self->params].y;
-            self->posX.i.hi = temp_s0 - g_Tilemap.cameraX.i.hi;
-            self->posY.i.hi = temp_s1 - g_Tilemap.cameraY.i.hi;
+            self->posX.i.hi = temp_s0 - g_Tilemap.scrollX.i.hi;
+            self->posY.i.hi = temp_s1 - g_Tilemap.scrollY.i.hi;
             self->step = 15;
             break;
         }
@@ -212,8 +212,8 @@ void EntitySecretStairs(Entity* self) {
 
         switch (self->step_s) {
         case 0:
-            posX = g_Tilemap.cameraX.i.hi + self->posX.i.hi;
-            posY = g_Tilemap.cameraY.i.hi + self->posY.i.hi;
+            posX = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
+            posY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
             angle = ratan2(temp_s1 - posY, temp_s0 - posX);
             self->velocityX = rcos(angle) * 12;
             self->velocityY = rsin(angle) * 12;
@@ -222,11 +222,11 @@ void EntitySecretStairs(Entity* self) {
 
         case 1:
             MoveEntity();
-            posX = g_Tilemap.cameraX.i.hi + self->posX.i.hi;
+            posX = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
             if (temp_s0 == posX) {
                 g_api.PlaySfx(0x64F);
-                self->posX.i.hi = temp_s0 - g_Tilemap.cameraX.i.hi;
-                self->posY.i.hi = temp_s1 - g_Tilemap.cameraY.i.hi;
+                self->posX.i.hi = temp_s0 - g_Tilemap.scrollX.i.hi;
+                self->posY.i.hi = temp_s1 - g_Tilemap.scrollY.i.hi;
                 if (self->params != 3) {
                     self[1].ext.stub[0x8] = 1;
                 } else {
