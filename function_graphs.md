@@ -356,7 +356,7 @@
 - [✅ RefreshCapePalette](function_calls/dra.RefreshCapePalette.svg?raw=1)
 - [❌ RenderEntities](function_calls/dra.RenderEntities.svg?raw=1)
 - [❌ RenderPrimitives](function_calls/dra.RenderPrimitives.svg?raw=1)
-- [❌ RenderTilemap](function_calls/dra.RenderTilemap.svg?raw=1)
+- [✅ RenderTilemap](function_calls/dra.RenderTilemap.svg?raw=1)
 - [✅ ResetEntityArray](function_calls/dra.ResetEntityArray.svg?raw=1)
 - [✅ ResetPadsRepeat](function_calls/dra.ResetPadsRepeat.svg?raw=1)
 - [✅ ResetPendingGfxLoad](function_calls/dra.ResetPendingGfxLoad.svg?raw=1)
