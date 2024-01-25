@@ -1,6 +1,7 @@
 g_EntityGfxs = 0x80180760;
 g_StreamWidth = 0x8018B2FC;
 g_StreamHeight = 0x8018B300;
+func_801B69F8 = 0x801B69F8;
 StreamNextVlc = 0x801B988C;
 func_801BAB70 = 0x801BAB70;
 DecDCTvlc = 0x801BABA4;

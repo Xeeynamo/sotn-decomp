@@ -119,6 +119,7 @@ extern s8 D_801823A0[]; // on-screen keyboard
 extern RECT D_80182584;
 extern RECT D_8018258C;
 extern RECT D_801825A4;
+extern const char D_8018B304[];
 extern s32 g_StreamWidth;
 extern int g_StreamHeight;
 extern s32 D_801962F4;
@@ -186,7 +187,7 @@ extern s32 g_MemCardSelectorX;
 extern s32 g_MemCardSelectorY;
 extern s32 D_801BC3E0; // on-screen keyboard key position
 extern s32 D_801BC3E4;
-extern s32 D_801BC3E8;
+extern u32 D_801BC3E8;
 extern s32 D_801BC3EC; // selected memory card block
 extern s32 D_801BC650;
 extern SaveSummary g_SaveSummary[PORT_COUNT];
@@ -203,6 +204,7 @@ extern s32 D_801D6B0C;
 extern s32 g_MemcardBlockRead;
 extern char g_InputSaveName[12];
 extern s32 g_MemcardStep;
+extern s32 D_801D6B00;
 extern s32 D_801D6B24;
 
 void SEL_Update(void);
