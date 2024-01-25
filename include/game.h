@@ -1177,8 +1177,8 @@ typedef struct {
     /* 0x0C */ s16 nextLineX;                // next line x coord
     /* 0x0E */ s16 nextCharY;                // next char y coord
     /* 0x10 */ s16 portraitAnimTimer;        // portrait animation timer
-    /* 0x12 */ s16 unk12;                    // unknown
-    /* 0x14 */ s16 clutIndex;                // CLUT index
+    /* 0x12 */ u16 unk12;                    // unknown
+    /* 0x14 */ u16 clutIndex;                // CLUT index
     /* 0x16 */ u8 nextCharTimer;             // timer to next character
     /* 0x17 */ u8 unk17;                     // unknown
     /* 0x18 */ Primitive* prim[6];           // for dialogue graphics rendering
