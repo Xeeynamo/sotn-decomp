@@ -16,28 +16,6 @@ extern LayoutEntity* D_80180310[];
 extern u8 D_80193ABC;
 extern LayoutEntity* g_pStObjLayout[];
 
-void BottomCornerText(u8* str, u8 lower_left);
-extern s32 D_8003BF7C;
-extern u16 D_80073412;     // PLAYER.enemyId ???
-extern s16 D_80073416;     // PLAYER.hitPoints ???
-extern u8 D_80073420;      // PLAYER.hitFlags
-extern Entity* D_80073490; // PLAYER.ext.player.unkB8
-extern Entity* D_80075718; // &g_Entities[0x30]
-extern Entity* D_8007D858; // &g_Entities[0xE0]
-extern u16 D_801806BC[];
-extern u8 D_801809DC[];
-extern u8 D_801809E0[];
-extern u8 D_801809E8[];
-extern u16 D_801809F0[];
-extern u8 D_80180A04[];
-extern u16 D_80180A10[];
-extern u16 D_80180A50[];
-extern Entity* g_Entities_1;
-extern Entity* g_Entities_STAGE_ENTITY_START;
-extern s32 g_Status_killCount;
-extern u8 g_Status_relics_11;
-extern u8 g_Status_relics_15;
-
 INCLUDE_ASM("st/wrp/nonmatchings/861C", TestCollisions);
 
 // DECOMP_ME_WIP EntityNumericDamage https://decomp.me/scratch/m0PKE
