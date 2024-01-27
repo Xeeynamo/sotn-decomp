@@ -371,47 +371,51 @@ void UpdateEntityRichter(void) {
     s32 i;
     bool condition;
     f32* playerY;
-    
+
     PlayerDraw* playerDraw = g_PlayerDraw;
 
     g_CurrentEntity = &PLAYER;
     g_Player.unk4C = 0;
     g_Player.unk72 = func_80156DE4();
     FntPrint("pl_head_f:%02x\n", g_Player.unk72);
-    for(i = 0; i < 16; i++) {
+    for (i = 0; i < 16; i++) {
         if (g_Player.D_80072F00[i] == 0) {
             continue;
         }
         switch (i) {
-        case 0:          
-        case 1:          
-        case 3:          
-        case 5:          
-        case 6:          
-        case 7:          
-        case 8:          
-        case 9:          
-        case 10:         
-        case 11:         
-        case 12:         
-        case 14:         
+        case 0:
+        case 1:
+        case 3:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+        case 12:
+        case 14:
             break;
-        case 2:          
+        case 2:
             PLAYER.palette = g_Player.unk40;
             break;
-        case 4:{
+        case 4: {
             s32 temp_s0 = (g_GameTimer & 0xF) << 8;
-            playerDraw->r0 = playerDraw->b0 = playerDraw->g0 = (rsin((s16)temp_s0) + 0x1000) / 64 + 0x60;
-            playerDraw->r1 = playerDraw->b1 = playerDraw->g1 = (rsin(temp_s0 + 0x200) + 0x1000) / 64 + 0x60;
-            playerDraw->r3 = playerDraw->b3 = playerDraw->g3 = (rsin(temp_s0 + 0x400) + 0x1000) / 64 + 0x60;
-            playerDraw->r2 = playerDraw->b2 = playerDraw->g2 = (rsin(temp_s0 + 0x600) + 0x1000) / 64 + 0x60;
+            playerDraw->r0 = playerDraw->b0 = playerDraw->g0 =
+                (rsin((s16)temp_s0) + 0x1000) / 64 + 0x60;
+            playerDraw->r1 = playerDraw->b1 = playerDraw->g1 =
+                (rsin(temp_s0 + 0x200) + 0x1000) / 64 + 0x60;
+            playerDraw->r3 = playerDraw->b3 = playerDraw->g3 =
+                (rsin(temp_s0 + 0x400) + 0x1000) / 64 + 0x60;
+            playerDraw->r2 = playerDraw->b2 = playerDraw->g2 =
+                (rsin(temp_s0 + 0x600) + 0x1000) / 64 + 0x60;
             playerDraw->enableColorBlend = 1;
             break;
         }
-        case 13:         
+        case 13:
             g_Player.D_80072F00[13] = 4;
             break;
-        case 15:         
+        case 15:
             func_8015CB58(0, 0);
             break;
         }
@@ -421,22 +425,22 @@ void UpdateEntityRichter(void) {
         switch (i) {
         case 0:
             break;
-        case 2:          
+        case 2:
             PLAYER.palette = 0x8120;
             break;
-        case 4:          
+        case 4:
             playerDraw->enableColorBlend = 0;
             break;
-        case 13:         
+        case 13:
             func_8015CAD4(1, 0x10);
             break;
-        case 6:          
+        case 6:
             if ((PLAYER.step == Player_Fall) && (PLAYER.unk4C != D_80155534)) {
                 func_8015C920(D_80155534);
                 g_Player.unk44 &= ~0x10;
             }
             break;
-        case 15:         
+        case 15:
             func_8015CC28();
             break;
         }
@@ -448,7 +452,8 @@ void UpdateEntityRichter(void) {
     } else {
         g_Player.padPressed = g_pads[0].pressed;
     }
-    g_Player.padTapped = (g_Player.padHeld ^ g_Player.padPressed) & g_Player.padPressed;
+    g_Player.padTapped =
+        (g_Player.padHeld ^ g_Player.padPressed) & g_Player.padPressed;
     if (PLAYER.step == Player_Kill) {
         goto block_47;
     }
@@ -473,7 +478,8 @@ void UpdateEntityRichter(void) {
         SetPlayerStep(Player_BossGrab);
         goto block_48;
     }
-    if (((g_Player.D_80072F00[13] | g_Player.D_80072F00[14]) != 0)|| (PLAYER.unk44 == 0)) {
+    if (((g_Player.D_80072F00[13] | g_Player.D_80072F00[14]) != 0) ||
+        (PLAYER.unk44 == 0)) {
         goto block_47;
     }
     playerStep = PLAYER.step;
@@ -501,113 +507,113 @@ block_47:
 block_48:
     g_Player.unk50 = PLAYER.step;
     g_Player.unk52 = PLAYER.step_s;
-    switch (PLAYER.step) {                      
-    case 0:                                     
+    switch (PLAYER.step) {
+    case 0:
         func_80158BFC();
         break;
-    case 1:                                     
+    case 1:
         func_80158F38();
         break;
-    case 2:                                     
+    case 2:
         func_80159670();
         break;
-    case 3:                                     
+    case 3:
         func_801595D8();
         break;
-    case 4:                                     
+    case 4:
         func_801590A0();
         break;
-    case 8:                                     
+    case 8:
         func_8015C2A8();
         break;
-    case 10:                                    
+    case 10:
         RichterHandleDamage(damageEffects, damageKind, playerStep, playerStepS);
         break;
-    case 12:                                    
+    case 12:
         func_8015A7D0();
         break;
-    case 16:                                    
+    case 16:
         func_8015A9B0(damageEffects, damageKind, playerStep, playerStepS);
         break;
-    case 18:                                    
+    case 18:
         func_8015AFE0();
         break;
-    case 19:                                    
+    case 19:
         func_8015B098();
         break;
-    case 20:                                    
+    case 20:
         func_8015B18C();
         break;
-    case 21:                                    
+    case 21:
         func_8015B244();
         break;
-    case 27:                                    
+    case 27:
         func_8015B1E8();
         break;
-    case 22:                                    
+    case 22:
         func_8015B348();
         break;
-    case 23:                                    
+    case 23:
         func_8015B898();
         break;
-    case 25:                                    
+    case 25:
         func_80158FA4();
         break;
-    case 26:                                    
+    case 26:
         func_8015BE84();
         break;
-    case 24:                                    
+    case 24:
         func_8015C178();
         break;
-    case 32:                                    
+    case 32:
         func_8015BCD0();
         break;
     }
     g_Player.unk08 = g_Player.unk0C;
     switch (PLAYER.step) {
-    case 0:                                     
-    case 1:                                     
+    case 0:
+    case 1:
         var_s4 = 0x08000000;
         break;
-    case 2:                                     
+    case 2:
         var_s4 = 0x08000000;
         if (PLAYER.step_s != 2) {
             var_s4 = 0x08000020;
         }
         break;
-    case 3:                                     
-    case 4:                                     
+    case 3:
+    case 4:
         var_s4 = 0x08002000;
         break;
-    case 8:                                     
+    case 8:
         func_8015CAD4(1, 4);
         break;
-    case 10:                                    
+    case 10:
         var_s4 = 0x08010000;
-    case 18:                                    
+    case 18:
         func_8015CAD4(1, 16);
         break;
-    case 12:                                    
+    case 12:
         var_s4 = 0x08110040;
         func_8015CAD4(1, 16);
         break;
-    case 16:                                    
+    case 16:
         var_s4 = 0x08050000;
         if (PLAYER.step_s == 0x80) {
             var_s4 = 0x080D0000;
         }
         func_8015CAD4(1, 16);
         break;
-    case 23:                                    
-    case 26:                                    
+    case 23:
+    case 26:
         var_s4 = 0x20;
         break;
-    case 19:                                    
-    case 20:                                    
-    case 21:                                    
-    case 22:                                    
-    case 27:                                    
-    case 32:                                    
+    case 19:
+    case 20:
+    case 21:
+    case 22:
+    case 27:
+    case 32:
         var_s4 = 0x08000000;
         func_8015CAD4(1, 16);
         break;
@@ -665,18 +671,17 @@ block_48:
     }
     func_8015C4AC();
     if ((*D_80097448 >= 0x29) && (g_CurrentEntity->nFramesInvincibility == 0)) {
-        PLAYER.velocityY = PLAYER.velocityY * 3/4;
-        PLAYER.velocityX = PLAYER.velocityX * 3/4;
+        PLAYER.velocityY = PLAYER.velocityY * 3 / 4;
+        PLAYER.velocityX = PLAYER.velocityX * 3 / 4;
     }
     playerY = &g_Entities[PLAYER_CHARACTER].posY.i;
     temp_s0 = g_Player.pl_vram_flag;
     if ((ABS(PLAYER.velocityY) > FIX(2)) || (ABS(PLAYER.velocityX) > FIX(2))) {
         PLAYER.velocityY = PLAYER.velocityY >> 2;
         PLAYER.velocityX = PLAYER.velocityX >> 2;
-        if ((playerY->i.hi < 0) || 
-            (func_801572A8(1), (playerY->i.hi < 0)) || 
-            (func_801572A8(0), (playerY->i.hi < 0)) || 
-            (func_801572A8(0), (playerY->i.hi < 0)) || 
+        if ((playerY->i.hi < 0) || (func_801572A8(1), (playerY->i.hi < 0)) ||
+            (func_801572A8(0), (playerY->i.hi < 0)) ||
+            (func_801572A8(0), (playerY->i.hi < 0)) ||
             (func_801572A8(0), (playerY->i.hi < 0))) {
             PLAYER.posY.val = FIX(-1);
         }

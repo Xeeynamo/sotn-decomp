@@ -1,12 +1,7 @@
 g_richter_spritesheet = 0x8013C020;
 g_RicFactoryBlueprints = 0x80154A6C;
 DestroyEntity = 0x80156C60;
-GetTeleportToOtherCastle = 0x80156CCC;
-CheckBladeDashInput = 0x80157894;
-CheckHighJumpInput = 0x80157A50;
 UpdateEntityRichter = 0x80157BFC;
-RichterHandleDamage = 0x80159CE4;
-SetPlayerStep = 0x8015C908;
 SetSpeedX = 0x8015CA84;
 CreateEntFactoryFromEntity = 0x801606BC;
 RicPrimDecreaseBrightness = 0x8016C6C4;
