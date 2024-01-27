@@ -360,13 +360,6 @@ void CheckHighJumpInput(void) {
     }
 }
 
-extern s16 D_80154574[];
-extern s16 D_80154594[];
-extern s32 D_8015538C;
-extern AnimationFrame D_80155658[];
-extern AnimationFrame D_801556C4[];
-extern FrameProperty D_80155964;
-
 void UpdateEntityRichter(void) {
     DamageParam sp10;
     s32 temp_s0;
