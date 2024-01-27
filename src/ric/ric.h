@@ -204,7 +204,7 @@ extern AnimationFrame D_801554E0[];
 extern AnimationFrame* D_801554F0;
 extern AnimationFrame* D_8015550C;
 extern AnimationFrame D_80155528[];
-extern AnimationFrame* D_80155534;
+extern AnimationFrame D_80155534[];
 extern AnimationFrame D_8015555C[];
 extern AnimationFrame D_80155588[];
 extern AnimationFrame D_801555A8[];
