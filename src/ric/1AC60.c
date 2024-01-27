@@ -361,18 +361,17 @@ void CheckHighJumpInput(void) {
 }
 
 void UpdateEntityRichter(void) {
-    DamageParam sp10;
+    DamageParam damage;
     s32 temp_s0;
     s32 var_s4;
-    s32 var_fp;
-    s32 var_s7;
-    s16 var_s5;
-    s16 var_s6;
+    s32 damageKind;
+    s32 damageEffects;
+    s16 playerStep;
+    s16 playerStepS;
     s32 i;
     bool condition;
     f32* playerY;
     
-
     PlayerDraw* playerDraw = g_PlayerDraw;
 
     g_CurrentEntity = &PLAYER;
@@ -402,7 +401,7 @@ void UpdateEntityRichter(void) {
             break;
         case 4:{
             s32 temp_s0 = (g_GameTimer & 0xF) << 8;
-            playerDraw->r0 = playerDraw->b0 = playerDraw->g0 = (rsin((s16)temp_s0 + 0x000) + 0x1000) / 64 + 0x60;
+            playerDraw->r0 = playerDraw->b0 = playerDraw->g0 = (rsin((s16)temp_s0) + 0x1000) / 64 + 0x60;
             playerDraw->r1 = playerDraw->b1 = playerDraw->g1 = (rsin(temp_s0 + 0x200) + 0x1000) / 64 + 0x60;
             playerDraw->r3 = playerDraw->b3 = playerDraw->g3 = (rsin(temp_s0 + 0x400) + 0x1000) / 64 + 0x60;
             playerDraw->r2 = playerDraw->b2 = playerDraw->g2 = (rsin(temp_s0 + 0x600) + 0x1000) / 64 + 0x60;
@@ -432,9 +431,9 @@ void UpdateEntityRichter(void) {
             func_8015CAD4(1, 0x10);
             break;
         case 6:          
-            if ((PLAYER.step == 3) && (PLAYER.unk4C != D_80155534)) {
+            if ((PLAYER.step == Player_Fall) && (PLAYER.unk4C != D_80155534)) {
                 func_8015C920(D_80155534);
-                g_Player.unk44 &= 0xFFEF;
+                g_Player.unk44 &= ~0x10;
             }
             break;
         case 15:         
@@ -450,7 +449,7 @@ void UpdateEntityRichter(void) {
         g_Player.padPressed = g_pads[0].pressed;
     }
     g_Player.padTapped = (g_Player.padHeld ^ g_Player.padPressed) & g_Player.padPressed;
-    if (PLAYER.step == 0x10) {
+    if (PLAYER.step == Player_Kill) {
         goto block_47;
     }
     // Reuse the i variable here even though we aren't iterating
@@ -458,7 +457,8 @@ void UpdateEntityRichter(void) {
     if (i != TELEPORT_CHECK_NONE) {
         func_8015CC70(i);
     }
-    if (PLAYER.step == 0x20) {
+    // Richter must use step #32 for something else, look into it!
+    if (PLAYER.step == Player_SpellDarkMetamorphosis) {
         goto block_48;
     }
     if ((g_DebugPlayer != 0) && (func_8015885C())) {
@@ -468,22 +468,22 @@ void UpdateEntityRichter(void) {
         goto block_47;
     }
     if (g_Player.unk60 == 1) {
-        var_s5 = PLAYER.step;
-        var_s6 = PLAYER.step_s;
+        playerStep = PLAYER.step;
+        playerStepS = PLAYER.step_s;
         SetPlayerStep(Player_BossGrab);
         goto block_48;
     }
     if (((g_Player.D_80072F00[13] | g_Player.D_80072F00[14]) != 0)|| (PLAYER.unk44 == 0)) {
         goto block_47;
     }
-    var_s5 = PLAYER.step;
-    var_s6 = PLAYER.step_s;
-    sp10.effects = PLAYER.unk44 & 0xFFE0;
-    sp10.damageKind = PLAYER.unk44 & 0x1F;
-    sp10.damageTaken = PLAYER.hitPoints;
-    condition = g_api.func_800FD5BC(&sp10);
-    var_fp = sp10.damageKind;
-    var_s7 = sp10.effects;
+    playerStep = PLAYER.step;
+    playerStepS = PLAYER.step_s;
+    damage.effects = PLAYER.unk44 & ~0x1F;
+    damage.damageKind = PLAYER.unk44 & 0x1F;
+    damage.damageTaken = PLAYER.hitPoints;
+    condition = g_api.func_800FD5BC(&damage);
+    damageKind = damage.damageKind;
+    damageEffects = damage.effects;
     if (condition) {
         if (g_Player.unk5C == 0) {
             SetPlayerStep(Player_Kill);
@@ -521,13 +521,13 @@ block_48:
         func_8015C2A8();
         break;
     case 10:                                    
-        RichterHandleDamage(var_s7, var_fp, var_s5, var_s6);
+        RichterHandleDamage(damageEffects, damageKind, playerStep, playerStepS);
         break;
     case 12:                                    
         func_8015A7D0();
         break;
     case 16:                                    
-        func_8015A9B0(var_s7, var_fp, var_s5, var_s6);
+        func_8015A9B0(damageEffects, damageKind, playerStep, playerStepS);
         break;
     case 18:                                    
         func_8015AFE0();
@@ -564,50 +564,50 @@ block_48:
         break;
     }
     g_Player.unk08 = g_Player.unk0C;
-    switch (PLAYER.step) {                      /* switch 4 */
-    case 0:                                     /* switch 4 */
-    case 1:                                     /* switch 4 */
+    switch (PLAYER.step) {
+    case 0:                                     
+    case 1:                                     
         var_s4 = 0x08000000;
         break;
-    case 2:                                     /* switch 4 */
+    case 2:                                     
         var_s4 = 0x08000000;
         if (PLAYER.step_s != 2) {
             var_s4 = 0x08000020;
         }
         break;
-    case 3:                                     /* switch 4 */
-    case 4:                                     /* switch 4 */
+    case 3:                                     
+    case 4:                                     
         var_s4 = 0x08002000;
         break;
-    case 8:                                     /* switch 4 */
+    case 8:                                     
         func_8015CAD4(1, 4);
         break;
-    case 10:                                    /* switch 4 */
+    case 10:                                    
         var_s4 = 0x08010000;
-    case 18:                                    /* switch 4 */
+    case 18:                                    
         func_8015CAD4(1, 16);
         break;
-    case 12:                                    /* switch 4 */
+    case 12:                                    
         var_s4 = 0x08110040;
         func_8015CAD4(1, 16);
         break;
-    case 16:                                    /* switch 4 */
+    case 16:                                    
         var_s4 = 0x08050000;
         if (PLAYER.step_s == 0x80) {
             var_s4 = 0x080D0000;
         }
         func_8015CAD4(1, 16);
         break;
-    case 23:                                    /* switch 4 */
-    case 26:                                    /* switch 4 */
+    case 23:                                    
+    case 26:                                    
         var_s4 = 0x20;
         break;
-    case 19:                                    /* switch 4 */
-    case 20:                                    /* switch 4 */
-    case 21:                                    /* switch 4 */
-    case 22:                                    /* switch 4 */
-    case 27:                                    /* switch 4 */
-    case 32:                                    /* switch 4 */
+    case 19:                                    
+    case 20:                                    
+    case 21:                                    
+    case 22:                                    
+    case 27:                                    
+    case 32:                                    
         var_s4 = 0x08000000;
         func_8015CAD4(1, 16);
         break;
