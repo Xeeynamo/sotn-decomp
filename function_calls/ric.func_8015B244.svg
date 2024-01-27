@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>ric.UpdateEntityRichter</title>
 <g id="a_node6"><a xlink:href="ric.UpdateEntityRichter.svg" xlink:title="ric.UpdateEntityRichter">
-<ellipse fill="red" stroke="black" cx="426.09" cy="-378" rx="122.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="426.09" cy="-378" rx="122.68" ry="18"/>
 <text text-anchor="middle" x="426.09" y="-374.3" font-family="Times,serif" font-size="14.00">ric.UpdateEntityRichter</text>
 </a>
 </g>

@@ -2012,7 +2012,7 @@
 - [✅ SetPlayerStep](function_calls/ric.SetPlayerStep.svg?raw=1)
 - [✅ SetSpeedX](function_calls/ric.SetSpeedX.svg?raw=1)
 - [✅ StopwatchCrashDoneSparkle](function_calls/ric.StopwatchCrashDoneSparkle.svg?raw=1)
-- [❌ UpdateEntityRichter](function_calls/ric.UpdateEntityRichter.svg?raw=1)
+- [✅ UpdateEntityRichter](function_calls/ric.UpdateEntityRichter.svg?raw=1)
 - [✅ func_80156DE4](function_calls/ric.func_80156DE4.svg?raw=1)
 - [✅ func_80156F40](function_calls/ric.func_80156F40.svg?raw=1)
 - [✅ func_801572A8](function_calls/ric.func_801572A8.svg?raw=1)

@@ -12,7 +12,7 @@
 <!-- ric.UpdateEntityRichter -->
 <g id="node1" class="node">
 <title>ric.UpdateEntityRichter</title>
-<ellipse fill="red" stroke="black" cx="4336.05" cy="-198" rx="122.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="4336.05" cy="-198" rx="122.68" ry="18"/>
 <text text-anchor="middle" x="4336.05" y="-194.3" font-family="Times,serif" font-size="14.00">ric.UpdateEntityRichter</text>
 </g>
 <!-- FntPrint -->
