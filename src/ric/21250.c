@@ -1336,7 +1336,7 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     func_80168A20,
     func_80161C2C,
     func_80166784,
-    func_80167EC4,
+    EntityHydroStorm,
     EntityGiantSpinningCross,
     func_8016902C,
     func_80167A58,
