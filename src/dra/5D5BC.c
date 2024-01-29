@@ -1638,12 +1638,12 @@ void DrawRichterHudSubweapon(void) {
     if (D_8003C744 == 5) {
         prim = &g_PrimBuf[g_PlayerHud.primIndex1];
         while (prim != NULL) {
-            prim->blendMode = 8;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
         prim = &g_PrimBuf[g_PlayerHud.primIndex2];
         while (prim != NULL) {
-            prim->blendMode = 8;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
         return;
@@ -1712,14 +1712,14 @@ void DrawRichterHudSubweapon(void) {
     SetPrimRect(prim, g_PlayerHud.unk14 + 0xD8, 0x16, 0x20, 0x60);
     if ((D_8003C744 == 3) && (g_PlayerHud.unk20 == 0) &&
         ((g_PlayerHud.unk24 == 0) || (g_PlayerHud.unk24 >= 0x33U))) {
-        prim->blendMode = 8;
+        prim->drawMode = DRAW_HIDE;
 
         for (altPrim = &g_PrimBuf[g_PlayerHud.primIndex2]; altPrim != NULL;
              altPrim = altPrim->next) {
             if (altPrim->p2 != 0) {
                 continue;
             }
-            altPrim->blendMode = 0x2004;
+            altPrim->drawMode = 0x2004;
             if (altPrim->p1 != 0) {
                 altPrim->p1--;
                 continue;
@@ -1728,7 +1728,7 @@ void DrawRichterHudSubweapon(void) {
             altPrim->y0 += temp_a0;
             altPrim->y1 += temp_a0;
             temp_a0 = (rand() & 3) + 1;
-            altPrim->blendMode = 0x2004;
+            altPrim->drawMode = 0x2004;
             altPrim->y2 += temp_a0;
             altPrim->y3 += temp_a0;
             if (altPrim->r2 >= 3) {
@@ -1737,7 +1737,7 @@ void DrawRichterHudSubweapon(void) {
                 func_801071CC(altPrim, temp_s2, 3);
             }
             if (altPrim->y2 >= 0x100) {
-                altPrim->blendMode = 0x2015;
+                altPrim->drawMode = 0x2015;
                 if (altPrim->r0 != 0) {
                     temp_r0 = altPrim->r0;
                     temp_s2 = temp_r0 & 0xFF;
@@ -1746,11 +1746,11 @@ void DrawRichterHudSubweapon(void) {
                     func_801071CC(altPrim, temp_s2, 1);
                 }
                 if (altPrim->y2 >= 0x180) {
-                    altPrim->blendMode = 0x2075;
+                    altPrim->drawMode = 0x2075;
                 }
             }
             if (altPrim->y2 >= 0x200) {
-                altPrim->blendMode = 8;
+                altPrim->drawMode = DRAW_HIDE;
                 altPrim->p2 = 1;
             }
         }
@@ -1816,11 +1816,11 @@ void DrawRichterHudSubweapon(void) {
     prim->v3 = 0x68;
 
     prim->clut = altPrim->clut;
-    prim->blendMode = altPrim->blendMode;
+    prim->drawMode = altPrim->drawMode;
     prim = prim->next;
     temp_subweapon = g_Status.subWeapon;
     if (temp_subweapon == 0) {
-        prim->blendMode = 8;
+        prim->drawMode = DRAW_HIDE;
     } else {
         // Convert from system where 0 is "no subweapon" to "first subweapon"
         temp_subweapon--;
@@ -1829,10 +1829,10 @@ void DrawRichterHudSubweapon(void) {
                             temp_s0->h, temp_s0->u, temp_s0->v);
         prim->tpage = temp_s0->tpage;
         prim->clut = temp_s0->clut;
-        prim->blendMode = 0x2000;
+        prim->drawMode = 0x2000;
 
         if (prim->clut == 0x17F) {
-            prim->blendMode = 0x2011;
+            prim->drawMode = 0x2011;
         }
     }
     prim = prim->next;
