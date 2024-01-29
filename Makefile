@@ -17,7 +17,7 @@ OBJCOPY         := $(CROSS)objcopy
 AS_FLAGS        += -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0
 PSXCC_FLAGS		:= -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff
 CC_FLAGS        += -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g
-CPP_FLAGS       += -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin
+CPP_FLAGS       += -Iinclude -Iinclude/psxsdk -I./src/main/psy-q-decomp/include -undef -Wall -fno-builtin
 CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DNO_LOGS -DHACKS -DUSE_INCLUDE_ASM
 CPP_FLAGS       += -D_internal_version_$(VERSION) -DSOTN_STR
 LD_FLAGS		:= -nostdlib --no-check-sections
@@ -32,15 +32,21 @@ DISK_DIR        := $(BUILD_DIR)/${VERSION}/disk
 CONFIG_DIR      := config
 TOOLS_DIR       := tools
 
+PSXLIBS_NO_LIB := c c2 api etc card gpu gs gte cd snd spu
+PSY_Q_DECOMP_DIRS := $(addprefix src/main/psy-q-decomp/src/, $(PSXLIBS_NO_LIB))
+PSY_Q_DECOMP_C_FILES    := $(wildcard $(addsuffix /*.c, $(PSY_Q_DECOMP_DIRS)))
+
 PSXLIBS         := $(addprefix lib, c c2 api etc card gpu gs gte cd snd spu)
 
 # Files
 PSXLIB_DIRS     := $(addprefix psxsdk/, . $(PSXLIBS))
 MAIN_ASM_DIRS   := $(addprefix $(ASM_DIR)/$(MAIN)/,. $(PSXLIB_DIRS) data)
 MAIN_SRC_DIRS   := $(addprefix $(SRC_DIR)/$(MAIN)/,. $(PSXLIB_DIRS))
+MAIN_SRC_DIRS   += $(PSY_Q_DECOMP_DIRS)
 
 MAIN_S_FILES    := $(wildcard $(addsuffix /*.s, $(MAIN_ASM_DIRS)))
 MAIN_C_FILES    := $(wildcard $(addsuffix /*.c, $(MAIN_SRC_DIRS)))
+MAIN_C_FILES    += $(PSY_Q_DECOMP_C_FILES)
 MAIN_O_FILES    := $(patsubst %.s,%.s.o,$(MAIN_S_FILES))
 MAIN_O_FILES    += $(patsubst %.c,%.c.o,$(MAIN_C_FILES))
 MAIN_O_FILES    := $(addprefix $(BUILD_DIR)/,$(MAIN_O_FILES))

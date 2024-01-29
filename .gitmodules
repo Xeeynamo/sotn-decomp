@@ -13,3 +13,6 @@
 [submodule "tools/maspsx"]
 	path = tools/maspsx
 	url = https://github.com/mkst/maspsx.git
+[submodule "src/main/psy-q-decomp"]
+	path = src/main/psy-q-decomp
+	url = https://github.com/sozud/psy-q-decomp.git
