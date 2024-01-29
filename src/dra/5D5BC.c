@@ -1625,8 +1625,6 @@ TexturedRectParams D_800A3014[] = {
     {0x008, 0x00D, 0x018, 0x010, 0x0A8, 0x0D0, 0x01E, 0x17F},
     {0x008, 0x006, 0x018, 0x018, 0x080, 0x0D8, 0x01E, 0x17F}};
 
-extern s32 D_80139008;
-extern s32 D_801397FC;
 void DrawRichterHudSubweapon(void) {
     Primitive* prim;
     Primitive* altPrim;
