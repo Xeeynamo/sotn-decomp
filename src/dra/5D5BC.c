@@ -1614,7 +1614,7 @@ void DrawRichterHud(void) {
     }
 }
 
-TexturedRectParams D_800A3014[] = {
+RicSubwpnIconParams g_ricSubwpnIcons[] = {
     {0x9, 0x00F, 0x018, 0x010, 0x0A8, 0x0C0, 0x01E, 0x17F},
     {0x009, 0x007, 0x018, 0x018, 0x080, 0x0C0, 0x01E, 0x17F},
     {0x00C, 0x00D, 0x010, 0x010, 0x028, 0x070, 0x01B, 0x102},
@@ -1633,7 +1633,7 @@ void DrawRichterHudSubweapon(void) {
     s32 temp_s2;
     u8 temp_r0;
     u8 temp_p2;
-    TexturedRectParams* temp_s0;
+    RicSubwpnIconParams* temp_s0;
 
     if (D_8003C744 == 5) {
         prim = &g_PrimBuf[g_PlayerHud.primIndex1];
@@ -1799,6 +1799,7 @@ void DrawRichterHudSubweapon(void) {
     prim->v2 = 0x68;
     prim->u3 = ((g_Status.hearts / 10) * 8) + 8;
     prim->v3 = 0x68;
+    // Perhaps flashes the heart numbers when you have enough for a crash
     if ((g_Player.unk0C & 0x200000) && !(g_Timer & 2)) {
         prim->clut = 0x100;
     } else {
@@ -1824,7 +1825,7 @@ void DrawRichterHudSubweapon(void) {
     } else {
         // Convert from system where 0 is "no subweapon" to "first subweapon"
         temp_subweapon--;
-        temp_s0 = &D_800A3014[temp_subweapon];
+        temp_s0 = &g_ricSubwpnIcons[temp_subweapon];
         SetTexturedPrimRect(prim, temp_s0->x + 2, temp_s0->y + 0x16, temp_s0->w,
                             temp_s0->h, temp_s0->u, temp_s0->v);
         prim->tpage = temp_s0->tpage;

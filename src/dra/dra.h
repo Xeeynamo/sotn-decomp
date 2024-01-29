@@ -313,7 +313,7 @@ typedef struct {
     s32 v;
     s32 tpage;
     s32 clut;
-} TexturedRectParams;
+} RicSubwpnIconParams;
 
 typedef struct {
     u32 displayHP;
