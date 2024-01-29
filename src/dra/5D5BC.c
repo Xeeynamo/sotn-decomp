@@ -1625,7 +1625,266 @@ TexturedRectParams D_800A3014[] = {
     {0x008, 0x00D, 0x018, 0x010, 0x0A8, 0x0D0, 0x01E, 0x17F},
     {0x008, 0x006, 0x018, 0x018, 0x080, 0x0D8, 0x01E, 0x17F}};
 
-INCLUDE_ASM("dra/nonmatchings/5D5BC", DrawRichterHudSubweapon);
+extern s32 D_80139008;
+extern s32 D_801397FC;
+void DrawRichterHudSubweapon(void) {
+    Primitive* prim;
+    Primitive* altPrim;
+    s32 temp_subweapon;
+    s32 temp_a0;
+    s32 temp_s2;
+    u8 temp_r0;
+    u8 temp_p2;
+    TexturedRectParams* temp_s0;
+
+    if (D_8003C744 == 5) {
+        prim = &g_PrimBuf[g_PlayerHud.primIndex1];
+        while (prim != NULL) {
+            prim->blendMode = 8;
+            prim = prim->next;
+        }
+        prim = &g_PrimBuf[g_PlayerHud.primIndex2];
+        while (prim != NULL) {
+            prim->blendMode = 8;
+            prim = prim->next;
+        }
+        return;
+    }
+    if ((D_8003C744 == 1) && (g_PlayerHud.unk28 == 0)) {
+        g_PlayerHud.unk20 = 100;
+        g_PlayerHud.unk28 = D_8003C744;
+        g_PlayerHud.unk10 = g_Entities[80].hitPoints;
+        g_PlayerHud.unk0C = g_Entities[80].hitPoints;
+        D_80139008 = g_Status.hearts;
+        // Not really sure what the point of this is.
+        g_PlayerHud.unk1C =
+            (g_Entities[80].hitPoints * 100) / (u32)g_Entities[80].hitPoints;
+    }
+    if ((D_8003C744 == 2) && (g_PlayerHud.unk28 == 1)) {
+        g_PlayerHud.unk28 = D_8003C744;
+        g_PlayerHud.unk10 = g_Entities[85].hitPoints;
+        g_PlayerHud.unk0C = g_Entities[85].hitPoints;
+    }
+    if (g_PlayerHud.unk28 != 100) {
+        if (D_8003C744 == 1) {
+            g_PlayerHud.unk0C = g_Entities[80].hitPoints;
+        }
+        if ((D_8003C744 - 2) < 2U) {
+            g_PlayerHud.unk0C = g_Entities[85].hitPoints;
+        }
+        if (g_PlayerHud.unk0C < 0) {
+            g_PlayerHud.unk0C = 0;
+        }
+    }
+    if (g_PlayerHud.displayHP < g_Status.hp) {
+        g_PlayerHud.displayHP++;
+        D_801397FC = 1;
+    }
+    if (g_Status.hp < g_PlayerHud.displayHP) {
+        g_PlayerHud.displayHP--;
+    }
+    if (D_8003C744 == 1) {
+        if (g_PlayerHud.unk1C <
+            ((g_PlayerHud.unk0C * 100) / g_PlayerHud.unk10)) {
+            g_PlayerHud.unk1C++;
+        }
+        if (((g_PlayerHud.unk0C * 100) / g_PlayerHud.unk10) <
+            g_PlayerHud.unk1C) {
+            g_PlayerHud.unk1C--;
+        }
+    }
+    if ((D_8003C744 - 2) < 2U) {
+        if (g_PlayerHud.unk1C != 0) {
+            g_PlayerHud.unk1C -= 1;
+        }
+        if (g_PlayerHud.unk20 <
+            ((g_PlayerHud.unk0C * 100) / g_PlayerHud.unk10)) {
+            g_PlayerHud.unk20++;
+        }
+        if (((g_PlayerHud.unk0C * 100) / g_PlayerHud.unk10) <
+            g_PlayerHud.unk20) {
+            g_PlayerHud.unk20--;
+        }
+    }
+    if ((D_8003C744 != 0) && (g_PlayerHud.unk14 != 0)) {
+        g_PlayerHud.unk14--;
+    }
+    prim = &g_PrimBuf[g_PlayerHud.primIndex1];
+    prim = prim->next;
+    SetPrimRect(prim, g_PlayerHud.unk14 + 0xD8, 0x16, 0x20, 0x60);
+    if ((D_8003C744 == 3) && (g_PlayerHud.unk20 == 0) &&
+        ((g_PlayerHud.unk24 == 0) || (g_PlayerHud.unk24 >= 0x33U))) {
+        prim->blendMode = 8;
+
+        for (altPrim = &g_PrimBuf[g_PlayerHud.primIndex2]; altPrim != NULL;
+             altPrim = altPrim->next) {
+            if (altPrim->p2 != 0) {
+                continue;
+            }
+            altPrim->blendMode = 0x2004;
+            if (altPrim->p1 != 0) {
+                altPrim->p1--;
+                continue;
+            }
+            temp_a0 = rand() & 1;
+            altPrim->y0 += temp_a0;
+            altPrim->y1 += temp_a0;
+            temp_a0 = (rand() & 3) + 1;
+            altPrim->blendMode = 0x2004;
+            altPrim->y2 += temp_a0;
+            altPrim->y3 += temp_a0;
+            if (altPrim->r2 >= 3) {
+                temp_s2 = altPrim->r2 - 3;
+                func_801071CC(altPrim, temp_s2, 2);
+                func_801071CC(altPrim, temp_s2, 3);
+            }
+            if (altPrim->y2 >= 0x100) {
+                altPrim->blendMode = 0x2015;
+                if (altPrim->r0 != 0) {
+                    temp_r0 = altPrim->r0;
+                    temp_s2 = temp_r0 & 0xFF;
+                    altPrim->r0 = temp_r0 + 0xFF;
+                    func_801071CC(altPrim, temp_s2, 0);
+                    func_801071CC(altPrim, temp_s2, 1);
+                }
+                if (altPrim->y2 >= 0x180) {
+                    altPrim->blendMode = 0x2075;
+                }
+            }
+            if (altPrim->y2 >= 0x200) {
+                altPrim->blendMode = 8;
+                altPrim->p2 = 1;
+            }
+        }
+    }
+
+    prim = prim->next;
+    temp_a0 = (g_PlayerHud.displayHP * 0x5B) / g_Status.hpMax;
+    prim->y0 = prim->y1 = prim->y2 - temp_a0;
+    prim = prim->next;
+    SetPrimRect(prim, g_PlayerHud.unk14 + 0xE4, 0x70, 9, 3);
+    temp_a0 = (g_PlayerHud.unk1C * 0x5B) / 100;
+    if (temp_a0 < 0) {
+        temp_a0 = 0;
+    }
+    temp_p2 = prim->p2;
+    prim->y0 = prim->y1 = prim->y2 - temp_a0;
+    prim->p2 = temp_p2 + 0xFF;
+    if (temp_p2 == 0) {
+        prim->p1++;
+        if (prim->p1 == 9) {
+            prim->p1 = 0;
+        }
+        if (D_8003C744 == 2) {
+            prim->p2 = 1;
+        } else {
+            prim->p2 = 4;
+        }
+        prim->clut = prim->p1 + 0x103;
+    }
+    temp_s2 = prim->clut;
+    prim = prim->next;
+    SetPrimRect(prim, g_PlayerHud.unk14 + 0xEC, 0x70, 9, 3);
+    temp_a0 = (g_PlayerHud.unk20 * 0x5B) / 100;
+    if (temp_a0 >= 0x5C) {
+        temp_a0 = 0x5B;
+    }
+    prim->clut = temp_s2;
+    prim->y0 = prim->y1 = prim->y2 - temp_a0;
+    prim = prim->next;
+
+    prim->u0 = (g_Status.hearts / 10) * 8;
+    prim->v0 = 0x60;
+    prim->u1 = ((g_Status.hearts / 10) * 8) + 8;
+    prim->v1 = 0x60;
+    prim->u2 = (g_Status.hearts / 10) * 8;
+    prim->v2 = 0x68;
+    prim->u3 = ((g_Status.hearts / 10) * 8) + 8;
+    prim->v3 = 0x68;
+    if ((g_Player.unk0C & 0x200000) && !(g_Timer & 2)) {
+        prim->clut = 0x100;
+    } else {
+        prim->clut = 0x103;
+    }
+    altPrim = prim;
+    prim = prim->next;
+    prim->u0 = (g_Status.hearts % 10) * 8;
+    prim->v0 = 0x60;
+    prim->u1 = ((g_Status.hearts % 10) * 8) + 8;
+    prim->v1 = 0x60;
+    prim->u2 = (g_Status.hearts % 10) * 8;
+    prim->v2 = 0x68;
+    prim->u3 = ((g_Status.hearts % 10) * 8) + 8;
+    prim->v3 = 0x68;
+
+    prim->clut = altPrim->clut;
+    prim->blendMode = altPrim->blendMode;
+    prim = prim->next;
+    temp_subweapon = g_Status.subWeapon;
+    if (temp_subweapon == 0) {
+        prim->blendMode = 8;
+    } else {
+        // Convert from system where 0 is "no subweapon" to "first subweapon"
+        temp_subweapon--;
+        temp_s0 = &D_800A3014[temp_subweapon];
+        SetTexturedPrimRect(prim, temp_s0->x + 2, temp_s0->y + 0x16, temp_s0->w,
+                            temp_s0->h, temp_s0->u, temp_s0->v);
+        prim->tpage = temp_s0->tpage;
+        prim->clut = temp_s0->clut;
+        prim->blendMode = 0x2000;
+
+        if (prim->clut == 0x17F) {
+            prim->blendMode = 0x2011;
+        }
+    }
+    prim = prim->next;
+    // This should be a switch, but that doesn't work.
+    if (g_PlayerHud.unk24 == 0) {
+    } else if (g_PlayerHud.unk24 < 9) {
+        prim->clut = g_PlayerHud.unk24 + 0x102;
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 == 9) {
+        SetTexturedPrimRect(prim, 0x21, 0x18, 0x40, 0x10, 0x40, 0);
+        prim->clut = 0x103;
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 == 10) {
+        SetTexturedPrimRect(prim, 0x21, 0x1C, 0x40, 8, 0x40, 0x10);
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 == 11) {
+        SetTexturedPrimRect(prim, 0x21, 0x18, 0x40, 0x10, 0x40, 0x18);
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 == 12) {
+        SetTexturedPrimRect(prim, 0x21, 0x14, 0x40, 0x18, 0x40, 0x40);
+        prim->clut = 0x112;
+        g_PlayerHud.unk24++;
+    } else if (13 <= g_PlayerHud.unk24 && g_PlayerHud.unk24 <= 20) {
+        prim->clut = 0x11F - g_PlayerHud.unk24;
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 == 21) {
+    } else if (51 <= g_PlayerHud.unk24 && g_PlayerHud.unk24 <= 58) {
+        prim->clut = g_PlayerHud.unk24 + 0xD8;
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 == 59) {
+        SetTexturedPrimRect(prim, 0x21, 0x18, 0x40, 0x10, 0x40, 0x18);
+        prim->clut = 0x103;
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 == 60) {
+        SetTexturedPrimRect(prim, 0x21, 0x1C, 0x40, 8, 0x40, 0x10);
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 == 61) {
+        SetTexturedPrimRect(prim, 0x21, 0x18, 0x40, 0x10, 0x40, 0);
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 == 62) {
+        SetTexturedPrimRect(prim, 0x21, 0x14, 0x40, 0x18, 0x40, 0x28);
+        prim->clut = 0x10A;
+        g_PlayerHud.unk24++;
+    } else if (63 <= g_PlayerHud.unk24 && g_PlayerHud.unk24 <= 70) {
+        prim->clut = 0x149 - g_PlayerHud.unk24;
+        g_PlayerHud.unk24++;
+    } else if (g_PlayerHud.unk24 == 71) {
+        g_PlayerHud.unk24 = 0;
+    }
+}
 
 bool func_8010183C(s32 arg0) {
     if (arg0 == 0) {

@@ -325,8 +325,8 @@ typedef struct {
     u32 unk18;
     u32 unk1C;
     u32 unk20;
-    s32 unk24;
-    s32 unk28;
+    u32 unk24;
+    s32 unk28
 } PlayerHud;
 
 // All the Joseph's Cloak color fields are in RGB555 format
