@@ -88,7 +88,7 @@ void func_801684D8(Entity* self);
 void func_80168A20(Entity* self);
 void func_80161C2C(Entity* self);
 void func_80166784(Entity* self);
-void func_80167EC4(Entity* self);
+void EntityHydroStorm(Entity* self);
 void EntityGiantSpinningCross(Entity* self);
 void func_8016902C(Entity* self);
 void func_80167A58(Entity* self);

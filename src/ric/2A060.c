@@ -403,7 +403,112 @@ void func_80167A70(Entity* self) {
     }
 }
 
-INCLUDE_ASM("ric/nonmatchings/2A060", func_80167EC4);
+// Entity ID #11. Created by blueprint 12.
+// This is blueprintNum for subweapon ID 16.
+// That is the crash for subweapon 3. That's holy water!
+void EntityHydroStorm(Entity* self) {
+    PrimLineG2* line;
+    s16 primcount;
+    s32 trigresult;
+    s32 trigtemp;
+
+    if (self->params < 40) {
+        primcount = 32;
+    } else {
+        primcount = 33 - ((self->params - 32) * 2);
+    }
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, primcount);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->ext.factory.unkB0 = 0x10;
+        func_8015FAB8(self);
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
+                      FLAG_UNK_20000;
+        line = (PrimLineG2*)&g_PrimBuf[self->primIndex];
+        self->facingLeft = 0;
+        while (line != NULL) {
+            line->r0 = 0x1F;
+            line->g0 = 0x1F;
+            line->b0 = 0x30;
+            line->r1 = 0x3F;
+            line->g1 = 0x50;
+            line->b1 = 0x7F;
+            line->x1 = line->x0 = rand() & 0x1FF;
+            line->y0 = line->y1 = -(rand() & 0xF);
+            line->preciseX.i.hi = line->x1;
+            line->preciseY.i.hi = line->y1;
+
+            // This whole block is weird. Why are we calculating rcos
+            // and rsin on a fixed value at runtime? And why aren't
+            // these simple multiplications?
+            trigresult = rcos(0xB80);
+            trigtemp = trigresult * 16;
+            line->velocityX.val = (trigresult * 32 + trigtemp) * 4;
+            trigresult = rsin(0xB80);
+            trigtemp = trigresult * -16;
+            line->velocityY.val = trigtemp * 12;
+
+            line->timer = 0;
+            line->delay = (rand() & 0xF) + 12;
+            if (rand() & 1) {
+                line->priority = PLAYER.zPriority + 2;
+            } else {
+                line->priority = PLAYER.zPriority - 2;
+            }
+            line->drawMode = 0x31;
+            line = line->next;
+        }
+        if (self->params == 1) {
+            g_api.func_801027C4(3);
+        }
+        self->ext.timer.t = 0x160;
+        if ((self->params < 32) && !(self->params & 3)) {
+            g_api.PlaySfx(0x708);
+        }
+        self->step += 1;
+        break;
+    case 1:
+        line = (PrimLineG2*)&g_PrimBuf[self->primIndex];
+        while (line != NULL) {
+            if (line->timer == 0) {
+                line->preciseX.i.hi = line->x1;
+                line->preciseY.i.hi = line->y1;
+                line->preciseX.val += line->velocityX.val;
+                line->preciseY.val += line->velocityY.val;
+                line->x1 = line->preciseX.i.hi;
+                line->y1 = line->preciseY.i.hi;
+                if (line->delay < line->y1) {
+                    line->timer++;
+                    line->xLength = line->x0 - line->x1;
+                    line->yLength = line->y0 - line->y1;
+                }
+            } else {
+                line->preciseX.i.hi = line->x1;
+                line->preciseY.i.hi = line->y1;
+                line->preciseX.val += line->velocityX.val;
+                line->preciseY.val += line->velocityY.val;
+                line->x1 = line->preciseX.i.hi;
+                line->y1 = line->preciseY.i.hi;
+                line->y0 = line->y1 + line->yLength;
+                line->x0 = line->x1 + line->xLength;
+                if (line->y0 >= 0xD8) {
+                    self->step = 2;
+                }
+            }
+            line = line->next;
+        }
+        self->ext.timer.t++;
+        break;
+    case 2:
+        DestroyEntity(self);
+        break;
+    }
+    g_Player.D_80072F00[3] = 16;
+}
 
 INCLUDE_ASM("ric/nonmatchings/2A060", func_801682B4);
 
