@@ -304,6 +304,31 @@ typedef struct {
     /* 8013761C */ MenuContext menus[NUM_MENU]; // 761C, 763A, 7658, 7676
 } MenuData;
 
+typedef struct {
+    s32 x;
+    s32 y;
+    s32 w;
+    s32 h;
+    s32 u;
+    s32 v;
+    s32 tpage;
+    s32 clut;
+} RicSubwpnIconParams;
+
+typedef struct {
+    u32 displayHP;
+    s32 primIndex1;
+    s32 primIndex2;
+    s32 unk0C;
+    u32 unk10;
+    s32 unk14;
+    u32 unk18;
+    u32 unk1C;
+    u32 unk20;
+    u32 unk24;
+    s32 unk28;
+} PlayerHud;
+
 // All the Joseph's Cloak color fields are in RGB555 format
 typedef struct {
     u16 liningDark;
@@ -598,18 +623,7 @@ extern s32 g_ServantPrevious;
 extern s32 D_80137960;
 extern s32 D_80137964;
 extern s32 D_80137968;
-// not actually an array, likely a struct member
-extern u32 g_DisplayHP[];
-extern s32 D_80137970;
-extern s32 D_80137974;
-extern u32 D_80137978;
-extern u32 D_8013797C;
-extern s32 D_80137980;
-extern s32 D_80137984;
-extern u32 D_80137988;
-extern u32 D_8013798C;
-extern Unkstruct_80137990 D_80137990;
-extern s32 D_80137994;
+extern PlayerHud g_PlayerHud;
 // not actually an array, likely a struct member
 extern s32 g_HealingMailTimer[];
 extern u32 D_8013799C;

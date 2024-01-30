@@ -387,19 +387,10 @@ u16 D_801374B8[0x20];
 u16 D_801374F8[0x20];
 u16 D_80137538[0x20];
 u32 g_DisplayHP[1];
-s32 D_80137970;
-s32 D_80137974;
-u32 D_80137978;
-u32 D_8013797C;
-s32 D_80137980;
-s32 D_80137984;
-u32 D_80137988;
-u32 D_8013798C;
-Unkstruct_80137990 D_80137990;
+PlayerHud g_PlayerHud;
 s32 D_8013B5E8;
 s32 g_HealingMailTimer[1] = {0};
 s32 D_8013B5E8;
-s32 D_80137994;
 s32 D_80139008;
 s32 D_801397FC;
 SimFile* g_SimFile;
@@ -634,8 +625,6 @@ int CdInit(void) {
 }
 
 void func_801083BC(void) { NOT_IMPLEMENTED; }
-
-void DrawRichterHudSubweapon(void) { NOT_IMPLEMENTED; }
 
 void func_800F24F4(void) { NOT_IMPLEMENTED; }
 
