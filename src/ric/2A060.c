@@ -510,7 +510,39 @@ void EntityHydroStorm(Entity* self) {
     g_Player.D_80072F00[3] = 16;
 }
 
-INCLUDE_ASM("ric/nonmatchings/2A060", func_801682B4);
+// Copy of DRA function func_80125A30
+s32 func_801682B4(s32 baseY, s32 baseX) {
+    s16 x;
+    s16 y;
+    Collider res1;
+    Collider res2;
+    s16 colRes1;
+    s16 colRes2;
+
+    x = baseX + g_CurrentEntity->posX.i.hi;
+    y = baseY + g_CurrentEntity->posY.i.hi;
+
+    g_api.CheckCollision(x, y, &res1, 0);
+    colRes1 = res1.effects & 0xF801;
+    g_api.CheckCollision(x, (s16)(y - 1 + res1.unk18), &res2, 0);
+    y = baseY + (g_CurrentEntity->posY.i.hi + res1.unk18);
+
+    if ((colRes1 & 0x8801) == 1 || (colRes1 & 0x8801) == 0x0801) {
+        colRes2 = res2.effects & 0xF001;
+        if (!((s16)res2.effects & 1)) {
+            g_CurrentEntity->posY.i.hi = y;
+            return 1;
+        }
+        if ((res2.effects & 0x8001) == 0x8001) {
+            g_CurrentEntity->posY.i.hi = y + (s16)(res2.unk18 - 1);
+            return colRes2;
+        }
+    } else if ((colRes1 & 0x8001) == 0x8001) {
+        g_CurrentEntity->posY.i.hi = y;
+        return colRes1 & 0xF001;
+    }
+    return 0;
+}
 
 s32 func_8016840C(s16 x, s16 y) {
     Collider collider;

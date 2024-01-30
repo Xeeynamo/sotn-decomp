@@ -268,6 +268,7 @@ INCLUDE_ASM("dra/nonmatchings/843B0", EntitySubwpnThrownDagger);
 // axe thrown when using subweapon
 INCLUDE_ASM("dra/nonmatchings/843B0", EntitySubwpnThrownAxe);
 
+// Same RIC function is func_801682B4
 s32 func_80125A30(s32 baseY, s32 baseX) {
     s16 x;
     s16 y;
