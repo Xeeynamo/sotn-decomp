@@ -84,7 +84,7 @@ void func_80169704(Entity* self);
 void func_80169C10(Entity* self);
 void func_8016147C(Entity* self);
 void func_80169D74(Entity* self);
-void func_801684D8(Entity* self);
+void EntityHolyWater(Entity* self);
 void func_80168A20(Entity* self);
 void func_80161C2C(Entity* self);
 void func_80166784(Entity* self);
