@@ -12,7 +12,7 @@
 <!-- ric.func_801682B4 -->
 <g id="node1" class="node">
 <title>ric.func_801682B4</title>
-<ellipse fill="red" stroke="black" cx="107.89" cy="-198" rx="98.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="107.89" cy="-198" rx="98.28" ry="18"/>
 <text text-anchor="middle" x="107.89" y="-194.3" font-family="Times,serif" font-size="14.00">ric.func_801682B4</text>
 </g>
 <!-- g_api_CheckCollision -->
