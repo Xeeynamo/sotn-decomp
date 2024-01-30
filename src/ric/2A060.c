@@ -510,7 +510,47 @@ void EntityHydroStorm(Entity* self) {
     g_Player.D_80072F00[3] = 16;
 }
 
-INCLUDE_ASM("ric/nonmatchings/2A060", func_801682B4);
+// Copy of DRA function func_80125A30
+s32 func_801682B4(s32 baseY, s32 baseX) {
+    s16 x;
+    s16 y;
+    Collider res1;
+    Collider res2;
+    s16 colRes1;
+    s16 colRes2;
+
+    const u32 colFullSet =
+        (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 | EFFECT_UNK_1000 |
+         EFFECT_UNK_0800 | EFFECT_SOLID);
+    const u32 colSetNo800 = (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
+                             EFFECT_UNK_2000 | EFFECT_UNK_1000 | EFFECT_SOLID);
+    const u32 colSet1 = (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_SOLID);
+    const u32 colSet2 = (EFFECT_UNK_8000 | EFFECT_SOLID);
+    x = baseX + g_CurrentEntity->posX.i.hi;
+    y = baseY + g_CurrentEntity->posY.i.hi;
+
+    g_api.CheckCollision(x, y, &res1, 0);
+    colRes1 = res1.effects & colFullSet;
+    g_api.CheckCollision(x, (s16)(y - 1 + res1.unk18), &res2, 0);
+    y = baseY + (g_CurrentEntity->posY.i.hi + res1.unk18);
+
+    if ((colRes1 & colSet1) == EFFECT_SOLID ||
+        (colRes1 & colSet1) == (EFFECT_UNK_0800 | EFFECT_SOLID)) {
+        colRes2 = res2.effects & colSetNo800;
+        if (!((s16)res2.effects & 1)) {
+            g_CurrentEntity->posY.i.hi = y;
+            return 1;
+        }
+        if ((res2.effects & colSet2) == colSet2) {
+            g_CurrentEntity->posY.i.hi = y + (s16)(res2.unk18 - 1);
+            return colRes2;
+        }
+    } else if ((colRes1 & colSet2) == colSet2) {
+        g_CurrentEntity->posY.i.hi = y;
+        return colRes1 & colSetNo800;
+    }
+    return 0;
+}
 
 s32 func_8016840C(s16 x, s16 y) {
     Collider collider;
