@@ -12,7 +12,7 @@
 <!-- dra.DrawRichterHudSubweapon -->
 <g id="node1" class="node">
 <title>dra.DrawRichterHudSubweapon</title>
-<ellipse fill="red" stroke="black" cx="449.39" cy="-198" rx="161.37" ry="18"/>
+<ellipse fill="green" stroke="black" cx="449.39" cy="-198" rx="161.37" ry="18"/>
 <text text-anchor="middle" x="449.39" y="-194.3" font-family="Times,serif" font-size="14.00">dra.DrawRichterHudSubweapon</text>
 </g>
 <!-- dra.SetPrimRect -->

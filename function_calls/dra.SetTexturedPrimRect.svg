@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>dra.DrawRichterHud</title>
 <g id="a_node3"><a xlink:href="dra.DrawRichterHud.svg" xlink:title="dra.DrawRichterHud">
-<ellipse fill="red" stroke="black" cx="272.44" cy="-198" rx="107.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="272.44" cy="-198" rx="107.78" ry="18"/>
 <text text-anchor="middle" x="272.44" y="-194.3" font-family="Times,serif" font-size="14.00">dra.DrawRichterHud</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>dra.DrawRichterHudSubweapon</title>
 <g id="a_node4"><a xlink:href="dra.DrawRichterHudSubweapon.svg" xlink:title="dra.DrawRichterHudSubweapon">
-<ellipse fill="red" stroke="black" cx="559.44" cy="-198" rx="161.37" ry="18"/>
+<ellipse fill="green" stroke="black" cx="559.44" cy="-198" rx="161.37" ry="18"/>
 <text text-anchor="middle" x="559.44" y="-194.3" font-family="Times,serif" font-size="14.00">dra.DrawRichterHudSubweapon</text>
 </a>
 </g>

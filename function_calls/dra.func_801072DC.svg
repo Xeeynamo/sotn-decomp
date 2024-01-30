@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>dra.DrawRichterHud</title>
 <g id="a_node3"><a xlink:href="dra.DrawRichterHud.svg" xlink:title="dra.DrawRichterHud">
-<ellipse fill="red" stroke="black" cx="107.89" cy="-378" rx="107.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="107.89" cy="-378" rx="107.78" ry="18"/>
 <text text-anchor="middle" x="107.89" y="-374.3" font-family="Times,serif" font-size="14.00">dra.DrawRichterHud</text>
 </a>
 </g>

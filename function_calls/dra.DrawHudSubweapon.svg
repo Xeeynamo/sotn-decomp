@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>dra.DrawRichterHudSubweapon</title>
 <g id="a_node5"><a xlink:href="dra.DrawRichterHudSubweapon.svg" xlink:title="dra.DrawRichterHudSubweapon">
-<ellipse fill="red" stroke="black" cx="783.34" cy="-18" rx="161.37" ry="18"/>
+<ellipse fill="green" stroke="black" cx="783.34" cy="-18" rx="161.37" ry="18"/>
 <text text-anchor="middle" x="783.34" y="-14.3" font-family="Times,serif" font-size="14.00">dra.DrawRichterHudSubweapon</text>
 </a>
 </g>
