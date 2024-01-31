@@ -193,7 +193,7 @@ segments:
       - [0x41DA4, rodata] # EntityPlayerDissolves
       - [0x41DBC, rodata] # EntityMist
       - [0x41DD4, .rodata, 843B0] # EntityTeleport
-      - [0x41E34, rodata] # EntitySubwpnCrashCross
+      - [0x41E34, .rodata, 843B0] # EntitySubwpnCrashCross
       - [0x41E48, rodata]
       - [0x41E5C, .rodata, 86ECC] # EntityHellfireHandler
       - [0x41E90, rodata] # EntityStopWatch
