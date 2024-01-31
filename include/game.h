@@ -77,13 +77,16 @@ typedef struct Prim {
 #include "primitive.h"
 
 #define DRAW_DEFAULT 0x00
-#define DRAW_TRANSP 0x01   // make it semi transparent
-#define DRAW_UNK02 0x02    // unknown
-#define DRAW_COLORS 0x04   // use color blending
-#define DRAW_HIDE 0x08     // do not render the primitive
-#define DRAW_TPAGE 0x10    // use custom tpage
-#define DRAW_MENU 0x80     // render only if D_800973EC is set
-#define DRAW_ABSPOS 0x2000 // use absolute coordinates with DRAW_MENU
+#define DRAW_TRANSP 0x01     // make it semi transparent
+#define DRAW_UNK02 0x02      // unknown
+#define DRAW_COLORS 0x04     // use color blending
+#define DRAW_HIDE 0x08       // do not render the primitive
+#define DRAW_TPAGE 0x10      // use custom tpage
+#define DRAW_MENU 0x80       // render only if D_800973EC is set
+#define DRAW_UNK_400 0x400   // unknown
+#define DRAW_UNK_800 0x400   // unknown
+#define DRAW_UNK_1000 0x1000 // unknown
+#define DRAW_ABSPOS 0x2000   // use absolute coordinates with DRAW_MENU
 
 #include "entity.h"
 
@@ -94,6 +97,13 @@ typedef struct Prim {
 #define OTSIZE 0x200
 #define MAXSPRT16 0x280
 #define MAX_DRAW_MODES 0x400
+#define MAX_TILE_COUNT 0x100
+#define MAX_LINE_G2_COUNT 0x100
+#define MAX_POLY_GT3_COUNT 0x30
+#define MAX_POLY_GT4_COUNT 0x300
+#define MAX_POLY_G4_COUNT 0x100
+#define MAX_SPRT_COUNT 0x200
+#define MAX_ENV_COUNT 0x10
 
 #define DISP_ALL_H 240
 #define DISP_STAGE_W 256
@@ -633,23 +643,21 @@ typedef struct {
     /* 0x10 */ const u8* unk10;
 } ObjInit2; // size = 0x14
 
-#define GPU_MAX_TILE_COUNT 0x100
-
 typedef struct GpuBuffer { // also called 'DB' in the PSY-Q samples
-    /* 0x00000 */ struct GpuBuffer* next; // next chained buffer
-    /* 0x00004 */ DRAWENV draw;           // drawing environment
-    /* 0x0005C */ DISPENV disp;           // display environment
-    /* 0x00074 */ DR_ENV env[0x10];       // packed drawing environment
-    /* 0x00474 */ OT_TYPE ot[OTSIZE];     // ordering table
-    /* 0x00474 */ DR_MODE drawModes[MAX_DRAW_MODES]; // draw modes
-    /* 0x03C74 */ POLY_GT4 polyGT4[0x300];           // textured quads
-    /* 0x0D874 */ POLY_G4 polyG4[0x100];             // untextured quads
-    /* 0x0FC74 */ POLY_GT3 polyGT3[0x30];            // textured triangles
-    /* 0x103F4 */ LINE_G2 lineG2[0x100];             // lines
-    /* 0x117F4 */ SPRT_16 sprite16[MAXSPRT16];       // tile map sprites
-    /* 0x13FF4 */ TILE tiles[GPU_MAX_TILE_COUNT];    // squared sprites
-    /* 0x14FF4 */ SPRT sprite[0x200];                // dynamic-size sprites
-} GpuBuffer;                                         // size=0x177F4
+    /* 0x00000 */ struct GpuBuffer* next;    // next chained buffer
+    /* 0x00004 */ DRAWENV draw;              // drawing environment
+    /* 0x0005C */ DISPENV disp;              // display environment
+    /* 0x00074 */ DR_ENV env[MAX_ENV_COUNT]; // packed drawing environment
+    /* 0x00474 */ OT_TYPE ot[OTSIZE];        // ordering table
+    /* 0x00474 */ DR_MODE drawModes[MAX_DRAW_MODES];    // draw modes
+    /* 0x03C74 */ POLY_GT4 polyGT4[MAX_POLY_GT4_COUNT]; // textured quads
+    /* 0x0D874 */ POLY_G4 polyG4[MAX_POLY_G4_COUNT];    // untextured quads
+    /* 0x0FC74 */ POLY_GT3 polyGT3[MAX_POLY_GT3_COUNT]; // textured triangles
+    /* 0x103F4 */ LINE_G2 lineG2[MAX_LINE_G2_COUNT];    // lines
+    /* 0x117F4 */ SPRT_16 sprite16[MAXSPRT16];          // tile map sprites
+    /* 0x13FF4 */ TILE tiles[MAX_TILE_COUNT];           // squared sprites
+    /* 0x14FF4 */ SPRT sprite[MAX_SPRT_COUNT];          // dynamic-size sprites
+} GpuBuffer;                                            // size=0x177F4
 
 typedef struct {
     /* 0x00 */ u32 drawModes;

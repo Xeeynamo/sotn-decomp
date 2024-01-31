@@ -1140,4 +1140,425 @@ void FreePrimitives(s32 primitiveIndex) {
     }
 }
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("dra/nonmatchings/4A538", RenderPrimitives);
+#else
+typedef struct {
+    /* 0x1F800000 */ OT_TYPE* ot;
+    /* 0x1F800004 */ POLY_GT4* gt4;
+    /* 0x1F800008 */ POLY_G4* g4;
+    /* 0x1F80000C */ POLY_GT3* gt3;
+    /* 0x1F800010 */ LINE_G2* g2;
+    /* 0x1F800014 */ TILE* tile;
+    /* 0x1F800018 */ DR_MODE* dr;
+    /* 0x1F80001C */ SPRT* sprt;
+    /* 0x1F800020 */ DR_ENV* env;
+} PrimitivesRenderer;
+
+typedef union {
+    TILE tile;
+    LINE_G2 g2;
+    POLY_G4 g4;
+    POLY_GT4 gt4;
+    POLY_GT3 gt3;
+    SPRT sprt;
+} PrimBuf;
+
+void RenderPrimitives(void) {
+#ifdef VERSION_PC
+    RECT _rect;
+    RECT* rect = &_rect;
+    PrimitivesRenderer _r;
+    PrimitivesRenderer* r = &_r;
+    PrimBuf _primbuf;
+    PrimBuf* primbuf = &_primbuf;
+#else
+    RECT* rect = (RECT*)0x1F800128;
+    PrimitivesRenderer* r = (PrimitivesRenderer*)0x1F800000;
+    PrimBuf* primbuf = (PrimBuf*)0x1F800024;
+#endif
+
+    DRAWENV sp18;
+    s32 i;
+    s16 sp80;
+    Primitive* prim;
+    DR_ENV* env;
+    s32 useShadeTex;
+    s32 var_a1;
+    s32 tpage;
+    s32 dtd;
+    u16 var_v0;
+    u16 drawMode;
+    u8 primType;
+
+    rect->x = 0;
+    rect->y = 0;
+    rect->w = 255;
+    rect->h = 255;
+    r->ot = g_CurrentBuffer->ot;
+    r->gt4 = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
+    r->g4 = &g_CurrentBuffer->polyG4[g_GpuUsage.g4];
+    r->gt3 = &g_CurrentBuffer->polyGT3[g_GpuUsage.gt3];
+    r->g2 = &g_CurrentBuffer->lineG2[g_GpuUsage.line];
+    r->tile = &g_CurrentBuffer->tiles[g_GpuUsage.tile];
+    r->dr = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
+    r->sprt = &g_CurrentBuffer->sprite[g_GpuUsage.sp];
+    r->env = &g_CurrentBuffer->env[g_GpuUsage.env];
+    if (D_8003C0EC[3]) {
+        if (g_GpuUsage.tile < MAX_TILE_COUNT) {
+            setSemiTrans(r->tile, false);
+            r->tile->r0 = D_8003C0EC[0];
+            r->tile->g0 = D_8003C0EC[1];
+            r->tile->b0 = D_8003C0EC[2];
+            r->tile->x0 = 0;
+            r->tile->y0 = 0;
+            r->tile->w = DISP_STAGE_W;
+            r->tile->h = DISP_STAGE_H;
+            addPrim(r->ot, r->tile);
+            g_GpuUsage.tile++;
+            D_8003C0EC[3]--;
+        }
+    } else {
+        var_a1 = 0;
+        i = 0;
+        prim = g_PrimBuf + i;
+        for (; i < MAX_PRIM_COUNT; prim++, i++) {
+            primType = prim->type;
+            if (!primType) {
+                continue;
+            }
+            drawMode = prim->drawMode;
+            if (drawMode & DRAW_HIDE) {
+                continue;
+            }
+            var_v0 = drawMode & DRAW_COLORS;
+            useShadeTex = var_v0 < 1;
+            if (D_800973EC != 0 && !(drawMode & DRAW_MENU)) {
+                continue;
+            }
+            if (prim->x0 < -512 || prim->x0 > 512) {
+                continue;
+            }
+            if (prim->y0 < -512 || prim->y0 > 512) {
+                continue;
+            }
+            if (drawMode & DRAW_UNK_400) {
+                dtd = 1;
+                if (var_a1 == 0) {
+                    SetDrawMode(r->dr, 0, 0, 0, rect);
+                    addPrim(&r->ot[prim->priority], r->dr);
+                    r->dr++;
+                    g_GpuUsage.drawModes++;
+                }
+            } else {
+                dtd = 0;
+            }
+            switch (primType) {
+            case PRIM_TILE:
+            case PRIM_TILE_ALT:
+                setTile(&primbuf->tile);
+                if (g_GpuUsage.tile < MAX_TILE_COUNT) {
+                    if (prim->drawMode & DRAW_TRANSP) {
+                        setSemiTrans(&primbuf->tile, true);
+                    }
+                    primbuf->tile.r0 = prim->r0;
+                    primbuf->tile.g0 = prim->g0;
+                    primbuf->tile.b0 = prim->b0;
+                    if (prim->drawMode & (DRAW_ABSPOS | DRAW_MENU)) {
+                        primbuf->tile.x0 = prim->x0;
+                        primbuf->tile.y0 = prim->y0;
+                    } else {
+                        primbuf->tile.x0 = prim->x0 + g_backbufferX;
+                        primbuf->tile.y0 = prim->y0 + g_backbufferY;
+                    }
+                    primbuf->tile.w = prim->u0;
+                    primbuf->tile.h = prim->v0;
+                    __builtin_memcpy(r->tile, &primbuf->tile, sizeof(TILE));
+                    addPrim(&r->ot[prim->priority], r->tile);
+                    r->tile++;
+                    g_GpuUsage.tile++;
+                    if ((primType & 0x10) == 0 &&
+                        g_GpuUsage.drawModes < MAX_DRAW_MODES) {
+                        tpage = prim->drawMode & 0x60;
+                        SetDrawMode(r->dr, 0, dtd, tpage, rect);
+                        addPrim(&r->ot[prim->priority], r->dr);
+                        r->dr++;
+                        g_GpuUsage.drawModes++;
+                    }
+                }
+                break;
+            case 2:
+            case 18:
+                setLineG2(&primbuf->g2);
+                if (g_GpuUsage.line < MAX_LINE_G2_COUNT) {
+                    if (prim->drawMode & DRAW_TRANSP) {
+                        setSemiTrans(&primbuf->g2, true);
+                    }
+                    setShadeTex(&primbuf->g2, !!useShadeTex);
+                    primbuf->g2.r0 = prim->r0;
+                    primbuf->g2.g0 = prim->g0;
+                    primbuf->g2.b0 = prim->b0;
+                    primbuf->g2.r1 = prim->r1;
+                    primbuf->g2.g1 = prim->g1;
+                    primbuf->g2.b1 = prim->b1;
+                    if (prim->drawMode & (DRAW_ABSPOS | DRAW_MENU)) {
+                        primbuf->g2.x0 = prim->x0;
+                        primbuf->g2.y0 = prim->y0;
+                        primbuf->g2.x1 = prim->x1;
+                        primbuf->g2.y1 = prim->y1;
+                    } else {
+                        primbuf->g2.x0 = prim->x0 + g_backbufferX;
+                        primbuf->g2.y0 = prim->y0 + g_backbufferY;
+                        primbuf->g2.x1 = prim->x1 + g_backbufferX;
+                        primbuf->g2.y1 = prim->y1 + g_backbufferY;
+                    }
+                    __builtin_memcpy(r->g2, &primbuf->g2, sizeof(LINE_G2));
+                    addPrim(&r->ot[prim->priority], r->g2);
+                    r->g2++;
+                    g_GpuUsage.line++;
+                    if ((primType & 0x10) == 0 &&
+                        g_GpuUsage.drawModes < MAX_DRAW_MODES) {
+                        tpage = prim->drawMode & 0x60;
+                        SetDrawMode(r->dr, 0, dtd, tpage, rect);
+                        addPrim(&r->ot[prim->priority], r->dr);
+                        r->dr++;
+                        g_GpuUsage.drawModes++;
+                    }
+                }
+                break;
+            case PRIM_G4:
+            case 19:
+                setPolyG4(&primbuf->g4);
+                if (g_GpuUsage.g4 < MAX_POLY_G4_COUNT) {
+                    if (prim->drawMode & DRAW_TRANSP) {
+                        setSemiTrans(&primbuf->g4, true);
+                    }
+                    setShadeTex(&primbuf->g4, !!useShadeTex);
+                    primbuf->g4.r0 = prim->r0;
+                    primbuf->g4.g0 = prim->g0;
+                    primbuf->g4.b0 = prim->b0;
+                    primbuf->g4.r1 = prim->r1;
+                    primbuf->g4.g1 = prim->g1;
+                    primbuf->g4.b1 = prim->b1;
+                    primbuf->g4.r2 = prim->r2;
+                    primbuf->g4.g2 = prim->g2;
+                    primbuf->g4.b2 = prim->b2;
+                    primbuf->g4.r3 = prim->r3;
+                    primbuf->g4.g3 = prim->g3;
+                    primbuf->g4.b3 = prim->b3;
+                    if (prim->drawMode & (DRAW_ABSPOS | DRAW_MENU)) {
+                        primbuf->g4.x0 = prim->x0;
+                        primbuf->g4.y0 = prim->y0;
+                        primbuf->g4.x1 = prim->x1;
+                        primbuf->g4.y1 = prim->y1;
+                        primbuf->g4.x2 = prim->x2;
+                        primbuf->g4.y2 = prim->y2;
+                        primbuf->g4.x3 = prim->x3;
+                        primbuf->g4.y3 = prim->y3;
+                    } else {
+                        primbuf->g4.x0 = prim->x0 + g_backbufferX;
+                        primbuf->g4.y0 = prim->y0 + g_backbufferY;
+                        primbuf->g4.x1 = prim->x1 + g_backbufferX;
+                        primbuf->g4.y1 = prim->y1 + g_backbufferY;
+                        primbuf->g4.x2 = prim->x2 + g_backbufferX;
+                        primbuf->g4.y2 = prim->y2 + g_backbufferY;
+                        primbuf->g4.x3 = prim->x3 + g_backbufferX;
+                        primbuf->g4.y3 = prim->y3 + g_backbufferY;
+                    }
+                    __builtin_memcpy(r->g4, &primbuf->g4, sizeof(POLY_G4));
+                    addPrim(&r->ot[prim->priority], r->g4);
+                    r->g4++;
+                    g_GpuUsage.g4++;
+                    if ((primType & 0x10) == 0 &&
+                        g_GpuUsage.drawModes < MAX_DRAW_MODES) {
+                        tpage = prim->drawMode & 0x60;
+                        SetDrawMode(r->dr, 0, dtd, tpage, rect);
+                        addPrim(&r->ot[prim->priority], r->dr);
+                        r->dr++;
+                        g_GpuUsage.drawModes++;
+                    }
+                }
+                break;
+            case PRIM_GT4:
+                setPolyGT4(&primbuf->gt4);
+                if (g_GpuUsage.gt4 < MAX_POLY_GT4_COUNT) {
+                    if (prim->drawMode & DRAW_TRANSP) {
+                        setSemiTrans(&primbuf->gt4, true);
+                    }
+                    setShadeTex(&primbuf->gt4, !!useShadeTex);
+                    primbuf->gt4.r0 = prim->r0;
+                    primbuf->gt4.g0 = prim->g0;
+                    primbuf->gt4.b0 = prim->b0;
+                    primbuf->gt4.r1 = prim->r1;
+                    primbuf->gt4.g1 = prim->g1;
+                    primbuf->gt4.b1 = prim->b1;
+                    primbuf->gt4.r2 = prim->r2;
+                    primbuf->gt4.g2 = prim->g2;
+                    primbuf->gt4.b2 = prim->b2;
+                    primbuf->gt4.r3 = prim->r3;
+                    primbuf->gt4.g3 = prim->g3;
+                    primbuf->gt4.b3 = prim->b3;
+                    if (prim->drawMode & (DRAW_ABSPOS | DRAW_MENU)) {
+                        primbuf->gt4.x0 = prim->x0;
+                        primbuf->gt4.y0 = prim->y0;
+                        primbuf->gt4.x1 = prim->x1;
+                        primbuf->gt4.y1 = prim->y1;
+                        primbuf->gt4.x2 = prim->x2;
+                        primbuf->gt4.y2 = prim->y2;
+                        primbuf->gt4.x3 = prim->x3;
+                        primbuf->gt4.y3 = prim->y3;
+                    } else {
+                        primbuf->gt4.x0 = prim->x0 + g_backbufferX;
+                        primbuf->gt4.y0 = prim->y0 + g_backbufferY;
+                        primbuf->gt4.x1 = prim->x1 + g_backbufferX;
+                        primbuf->gt4.y1 = prim->y1 + g_backbufferY;
+                        primbuf->gt4.x2 = prim->x2 + g_backbufferX;
+                        primbuf->gt4.y2 = prim->y2 + g_backbufferY;
+                        primbuf->gt4.x3 = prim->x3 + g_backbufferX;
+                        primbuf->gt4.y3 = prim->y3 + g_backbufferY;
+                    }
+                    primbuf->gt4.u0 = prim->u0;
+                    primbuf->gt4.v0 = prim->v0;
+                    primbuf->gt4.u1 = prim->u1;
+                    primbuf->gt4.v1 = prim->v1;
+                    primbuf->gt4.u2 = prim->u2;
+                    primbuf->gt4.v2 = prim->v2;
+                    primbuf->gt4.u3 = prim->u3;
+                    primbuf->gt4.v3 = prim->v3;
+                    primbuf->gt4.tpage = prim->tpage + (prim->drawMode & 0x60);
+                    primbuf->gt4.clut = D_8003C104[prim->clut];
+                    __builtin_memcpy(r->gt4, &primbuf->gt4, sizeof(POLY_GT4));
+                    addPrim(&r->ot[prim->priority], r->gt4);
+                    r->gt4++;
+                    g_GpuUsage.gt4++;
+                    if (dtd && g_GpuUsage.drawModes < MAX_DRAW_MODES) {
+                        tpage = 0;
+                        SetDrawMode(r->dr, 0, dtd, tpage, rect);
+                        addPrim(&r->ot[prim->priority], r->dr);
+                        r->dr++;
+                        g_GpuUsage.drawModes++;
+                    }
+                }
+                break;
+            case PRIM_GT3:
+                setPolyGT3(&primbuf->gt3);
+                if (g_GpuUsage.gt3 < MAX_POLY_GT3_COUNT) {
+                    if (prim->drawMode & DRAW_TRANSP) {
+                        setSemiTrans(&primbuf->gt3, true);
+                    }
+                    setShadeTex(&primbuf->gt3, !!useShadeTex);
+                    primbuf->gt3.r0 = prim->r0;
+                    primbuf->gt3.g0 = prim->g0;
+                    primbuf->gt3.b0 = prim->b0;
+                    primbuf->gt3.r1 = prim->r1;
+                    primbuf->gt3.g1 = prim->g1;
+                    primbuf->gt3.b1 = prim->b1;
+                    primbuf->gt3.r2 = prim->r2;
+                    primbuf->gt3.g2 = prim->g2;
+                    primbuf->gt3.b2 = prim->b2;
+                    if (prim->drawMode & (DRAW_ABSPOS | DRAW_MENU)) {
+                        primbuf->gt3.x0 = prim->x0;
+                        primbuf->gt3.y0 = prim->y0;
+                        primbuf->gt3.x1 = prim->x1;
+                        primbuf->gt3.y1 = prim->y1;
+                        primbuf->gt3.x2 = prim->x2;
+                        primbuf->gt3.y2 = prim->y2;
+                    } else {
+                        primbuf->gt3.x0 = prim->x0 + g_backbufferX;
+                        primbuf->gt3.y0 = prim->y0 + g_backbufferY;
+                        primbuf->gt3.x1 = prim->x1 + g_backbufferX;
+                        primbuf->gt3.y1 = prim->y1 + g_backbufferY;
+                        primbuf->gt3.x2 = prim->x2 + g_backbufferX;
+                        primbuf->gt3.y2 = prim->y2 + g_backbufferY;
+                    }
+                    primbuf->gt3.u0 = prim->u0;
+                    primbuf->gt3.v0 = prim->v0;
+                    primbuf->gt3.u1 = prim->u1;
+                    primbuf->gt3.v1 = prim->v1;
+                    primbuf->gt3.u2 = prim->u2;
+                    primbuf->gt3.v2 = prim->v2;
+                    primbuf->gt3.tpage = prim->tpage + (prim->drawMode & 0x60);
+                    primbuf->gt3.clut = D_8003C104[prim->clut];
+
+                    __builtin_memcpy(r->gt3, &primbuf->gt3, sizeof(POLY_GT3));
+                    addPrim(&r->ot[prim->priority], r->gt3);
+                    r->gt3++;
+                    g_GpuUsage.gt3++;
+                    if (dtd && g_GpuUsage.drawModes < MAX_DRAW_MODES) {
+                        tpage = 0;
+                        SetDrawMode(r->dr, 0, dtd, tpage, rect);
+                        addPrim(&r->ot[prim->priority], r->dr);
+                        r->dr++;
+                        g_GpuUsage.drawModes++;
+                    }
+                }
+                break;
+            case PRIM_SPRT:
+            case 22:
+                setSprt(&primbuf->sprt);
+                if (g_GpuUsage.sp < MAX_SPRT_COUNT) {
+                    if (prim->drawMode & DRAW_TRANSP) {
+                        setSemiTrans(&primbuf->sprt, true);
+                    }
+                    setShadeTex(&primbuf->sprt, !!useShadeTex);
+                    primbuf->sprt.r0 = prim->r0;
+                    primbuf->sprt.g0 = prim->g0;
+                    primbuf->sprt.b0 = prim->b0;
+                    if (prim->drawMode & (DRAW_ABSPOS | DRAW_MENU)) {
+                        primbuf->sprt.x0 = prim->x0;
+                        primbuf->sprt.y0 = prim->y0;
+                    } else {
+                        primbuf->sprt.x0 = prim->x0 + g_backbufferX;
+                        primbuf->sprt.y0 = prim->y0 + g_backbufferY;
+                    }
+                    primbuf->sprt.u0 = prim->u0;
+                    primbuf->sprt.v0 = prim->v0;
+                    primbuf->sprt.w = prim->u1;
+                    primbuf->sprt.h = prim->v1;
+                    primbuf->sprt.clut = D_8003C104[prim->clut];
+                    __builtin_memcpy(r->sprt, &primbuf->sprt, sizeof(SPRT));
+                    addPrim(&r->ot[prim->priority], r->sprt);
+                    r->sprt++;
+                    g_GpuUsage.sp++;
+                    if ((primType & 0x10) == 0 &&
+                        g_GpuUsage.drawModes < MAX_DRAW_MODES) {
+                        tpage = prim->tpage + (prim->drawMode & 0x60);
+                        SetDrawMode(r->dr, 0, dtd, tpage, rect);
+                        addPrim(&r->ot[prim->priority], r->dr);
+                        r->dr++;
+                        g_GpuUsage.drawModes++;
+                    }
+                }
+                break;
+            case PRIM_ENV:
+                if (g_GpuUsage.env < MAX_ENV_COUNT) {
+                    env = *(DR_ENV**)&prim->r1;
+                    if (prim->drawMode & DRAW_UNK_1000) {
+                        sp80 = g_CurrentBuffer->draw.ofs[0];
+                        *(s16*)&env->code[2] = sp80;
+                        *(s16*)&env->code[7] = sp80;
+                    }
+                    if (prim->drawMode & DRAW_UNK_800) {
+                        __builtin_memcpy(
+                            &sp18, &g_CurrentBuffer->draw, sizeof(DRAWENV));
+                        sp18.isbg = 0;
+                        SetDrawEnv(env, &sp18);
+                    }
+                    __builtin_memcpy(r->env, env, sizeof(DR_ENV));
+                    if (prim->drawMode & DRAW_UNK_1000) {
+                        env = r->env;
+                        *(s16*)&env->code[0] += sp80;
+                        *(s16*)&env->code[1] += sp80;
+                    }
+                    addPrim(&r->ot[prim->priority], r->env);
+                    r->env++;
+                    g_GpuUsage.env++;
+                }
+                break;
+            }
+            var_v0 = primType & 0x10;
+            var_a1 = var_v0 != 0;
+        }
+    }
+}
+#endif
