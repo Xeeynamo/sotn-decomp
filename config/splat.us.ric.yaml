@@ -56,7 +56,8 @@ segments:
       - [0x1AA28, .rodata, 2A060]
       - [0x1AAA0, rodata]
       - [0x1AABC, .rodata, 2C4C4]
-      - [0x1AAD4, rodata]
+      - [0x1AAD4, .rodata, 2C4C4] #EntitySubwpnCrashCross
+      - [0x1AAEC, rodata]
       - [0x1AB04, rodata]
       - [0x1AB68, .rodata, 32324]
       - [0x1AC50, rodata]
