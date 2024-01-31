@@ -44,7 +44,7 @@ void EntityHolyWater(Entity* self) {
         break;
     case 1:
         self->posY.val += self->velocityY;
-        collision_result = func_801682B4(0, 0);
+        collision_result = CheckHolyWaterCollision(0, 0);
         self->posX.val += self->velocityX;
 
         if (self->velocityX < 0) {
@@ -82,7 +82,7 @@ void EntityHolyWater(Entity* self) {
             self->ext.holywater.unk82 = self->ext.holywater.unk82 + 1;
             self->velocityX -= (self->velocityX / 32);
         }
-        collision_result = func_801682B4(6, 0);
+        collision_result = CheckHolyWaterCollision(6, 0);
         tempXVel = self->velocityX;
         if (self->velocityX < 0) {
             if ((collision_result & 0xF000) == 0xC000) {
@@ -123,7 +123,7 @@ void EntityHolyWater(Entity* self) {
             self->velocityY = FIX(4);
         }
         self->posY.val += self->velocityY;
-        collision_result = func_801682B4(0, 0);
+        collision_result = CheckHolyWaterCollision(0, 0);
         self->posX.val += self->velocityX;
         if (self->velocityX < 0) {
             argY = -4;

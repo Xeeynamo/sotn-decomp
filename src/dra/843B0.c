@@ -269,7 +269,7 @@ INCLUDE_ASM("dra/nonmatchings/843B0", EntitySubwpnThrownDagger);
 INCLUDE_ASM("dra/nonmatchings/843B0", EntitySubwpnThrownAxe);
 
 // Same RIC function is func_801682B4
-s32 func_80125A30(s32 baseY, s32 baseX) {
+s32 CheckHolyWaterCollision(s32 baseY, s32 baseX) {
     s16 x;
     s16 y;
     Collider res1;
@@ -362,7 +362,7 @@ void EntityHolyWater(Entity* entity) {
             entity->velocityY += FIX(0.21875);
         }
 
-        temp = func_80125A30(0, 0);
+        temp = CheckHolyWaterCollision(0, 0);
         entity->posX.val += entity->velocityX;
 
         if (entity->velocityX < 0) {

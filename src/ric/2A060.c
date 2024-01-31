@@ -510,8 +510,8 @@ void EntityHydroStorm(Entity* self) {
     g_Player.D_80072F00[3] = 16;
 }
 
-// Copy of DRA function func_80125A30
-s32 func_801682B4(s32 baseY, s32 baseX) {
+// Copy of DRA function
+s32 CheckHolyWaterCollision(s32 baseY, s32 baseX) {
     s16 x;
     s16 y;
     Collider res1;
