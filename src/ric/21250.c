@@ -1332,7 +1332,7 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     func_80169C10,
     func_8016147C,
     func_80169D74,
-    func_801684D8,
+    EntityHolyWater,
     func_80168A20,
     func_80161C2C,
     func_80166784,

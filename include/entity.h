@@ -729,6 +729,13 @@ typedef struct {
     s32 unk90;
 } ET_Teleport;
 
+typedef struct {
+    s16 timer;
+    s16 angle;
+    s16 unk80;
+    s16 unk82;
+} ET_HolyWater;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_TimerOnly timer;
@@ -740,6 +747,7 @@ typedef union {
     /* 0x7C */ ET_HellfireHandler hellfireHandler;
     /* 0x7C */ ET_ReboundStone reboundStone;
     /* 0x7C */ ET_Vibhuti vibhuti;
+    /* 0x7C */ ET_HolyWater holywater;
     /* 0x7C */ ET_GiantSpinningCross giantcross;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
     /* 0x7C */ ET_RelicOrb relicOrb;
