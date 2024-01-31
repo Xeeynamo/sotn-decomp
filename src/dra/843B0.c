@@ -440,7 +440,7 @@ void EntitySubwpnCrashCross(Entity* self) {
         self->ext.crashcross.unk80 = 1;
         self->zPriority = 0xC2;
         func_8011A290(self);
-        LoadImage(&D_800B0788, &D_800B06C8);
+        LoadImage(&D_800B0788, D_800B06C8);
         prim = &g_PrimBuf[self->primIndex];
         prim->u0 = prim->u2 = 1;
         prim->v0 = prim->v1 = prim->v2 = prim->v3 = 0xF8;
