@@ -497,6 +497,7 @@ void HandleNowLoading(void) {
 
 void HandleVideoPlayback(void) {
     Primitive* prim;
+    Primitive* prim2;
     u8 temp;
 
     if (!(g_pads[0].tapped & PAD_START) || !g_IsTimeAttackUnlocked) {
@@ -538,10 +539,11 @@ void HandleVideoPlayback(void) {
             temp = prim->r0 + 1;
             func_80107250(prim, temp);
             if (temp == 96) {
+                prim2 = prim->next;
 #if defined(VERSION_US)
-                prim->next->drawMode = DRAW_HIDE;
+                prim2->drawMode = DRAW_HIDE;
 #elif defined(VERSION_HD)
-                prim->next->drawMode = DRAW_DEFAULT;
+                prim2->drawMode = DRAW_DEFAULT;
 #endif
             }
             if (temp == 128) {
@@ -563,7 +565,8 @@ void HandleVideoPlayback(void) {
             temp = prim->r0 - 1;
             func_80107250(prim, temp);
             if (temp == 64) {
-                ((Primitive*)prim->next)->drawMode = DRAW_HIDE;
+                prim2 = prim->next;
+                prim2->drawMode = DRAW_HIDE;
             }
             if (temp == 0) {
                 FreePrimitives(D_8013640C);
