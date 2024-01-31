@@ -248,7 +248,7 @@ extern s16 D_80155D08[];
 extern s16 D_80155D1C[];
 extern s16 D_80155D30;
 extern s16 D_80155D64[4][6];
-extern u32 D_80155DDC;
+extern u16 D_80155DDC[0x30];
 extern RECT D_80155E3C;
 extern s16 D_80155E68[];
 extern AnimationFrame* D_80155EA8;

@@ -181,7 +181,7 @@ void EntitySubwpnCrashCross(Entity* self) {
         self->zPriority = 0xC2;
         self->ext.factory.unkB0 = 0xC;
         func_8015FAB8(self);
-        LoadImage(&D_80155E3C, &D_80155DDC);
+        LoadImage(&D_80155E3C, D_80155DDC);
         g_api.PlaySfx(0x6DF);
         g_api.PlaySfx(0x636);
         self->step += 1;
