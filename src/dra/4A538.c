@@ -992,16 +992,16 @@ void func_800EDAE4(void) {
     }
 }
 
-DR_ENV* func_800EDB08(POLY_GT4* poly) {
-    DR_ENV* ptr = &D_800974AC;
-    s32 i = 0;
+DR_ENV* func_800EDB08(Primitive* prim) {
+    DR_ENV* dr = &D_800974AC;
+    s32 i;
 
-    for (; i < 0x10; i++, ptr++) {
-        if (ptr->tag == 0) {
-            ptr->tag = 1;
-            setcode(poly, 7);
-            *(u32*)&poly->r1 = (u32)ptr; // similar issue as FreePrimitives
-            return ptr;
+    for (i = 0; i < LEN(D_800974AC); i++, dr++) {
+        if (dr->tag == 0) {
+            dr->tag = 1;
+            setcode(prim, 7);
+            *(DR_ENV**)&prim->r1 = dr;
+            return dr;
         }
     }
 
@@ -1131,7 +1131,7 @@ void FreePrimitives(s32 primitiveIndex) {
     if (prim) {
         do {
             if (prim->type == PRIM_ENV) {
-                *(*(s32**)&prim->r1) = 0;
+                **(DR_ENV***)&prim->r1 = NULL;
                 prim->type = PRIM_NONE;
             } else
                 prim->type = PRIM_NONE;

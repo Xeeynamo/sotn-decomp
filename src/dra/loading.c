@@ -498,7 +498,6 @@ void HandleNowLoading(void) {
 void HandleVideoPlayback(void) {
     Primitive* prim;
     u8 temp;
-    s32 temp2;
 
     if (!(g_pads[0].tapped & PAD_START) || !g_IsTimeAttackUnlocked) {
         switch (g_GameStep) {
@@ -535,16 +534,14 @@ void HandleVideoPlayback(void) {
             break;
 
         case 2:
-            temp2 = D_8013640C;
-            prim = &g_PrimBuf[temp2];
+            prim = &g_PrimBuf[D_8013640C];
             temp = prim->r0 + 1;
             func_80107250(prim, temp);
             if (temp == 96) {
-                temp2 = prim->next;
 #if defined(VERSION_US)
-                ((Primitive*)temp2)->drawMode = DRAW_HIDE;
+                prim->next->drawMode = DRAW_HIDE;
 #elif defined(VERSION_HD)
-                ((Primitive*)temp2)->drawMode = DRAW_DEFAULT;
+                prim->next->drawMode = DRAW_DEFAULT;
 #endif
             }
             if (temp == 128) {
