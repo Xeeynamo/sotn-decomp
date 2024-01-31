@@ -435,7 +435,7 @@ void EntitySubwpnCrashCross(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = 0x00800000;
+        self->flags = FLAG_HAS_PRIMS;
         self->posY.i.hi = 0x78;
         self->ext.crashcross.unk80 = 1;
         self->zPriority = 0xC2;
