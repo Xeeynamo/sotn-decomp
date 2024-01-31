@@ -95,6 +95,13 @@ typedef struct Prim {
 #define MAXSPRT16 0x280
 #define MAX_DRAW_MODES 0x400
 
+#define DISP_ALL_H 240
+#define DISP_STAGE_W 256
+#define DISP_STAGE_H DISP_ALL_H
+#define DISP_MENU_W 384
+#define DISP_MENU_H DISP_ALL_H
+#define DISP_TITLE_W 512
+#define DISP_TITLE_H DISP_ALL_H
 // Width in pixel of how wide is the horizontal camera during normal game play
 #define STAGE_WIDTH 256
 

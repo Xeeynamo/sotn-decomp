@@ -1,14 +1,6 @@
 #include "dra.h"
 #include "lba.h"
 
-#define DISP_ALL_H 240
-#define DISP_STAGE_W 256
-#define DISP_STAGE_H DISP_ALL_H
-#define DISP_MENU_W 384
-#define DISP_MENU_H DISP_ALL_H
-#define DISP_UNK2_W 512
-#define DISP_UNK2_H DISP_ALL_H
-
 #if defined(VERSION_US)
 #define PAD_RESETCOMBO ((PAD_START) | (PAD_SELECT))
 #elif defined(VERSION_HD)
@@ -699,13 +691,13 @@ void SetMenuDisplayBuffer(void) {
 }
 
 void SetTitleDisplayBuffer(void) {
-    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
-    SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
-    SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
-    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
-    g_GpuBuffers[1].draw.clip.y = DISP_UNK2_W / 2;
-    g_GpuBuffers[1].draw.clip.h = DISP_UNK2_H;
-    g_GpuBuffers[0].draw.clip.h = DISP_UNK2_H;
+    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_TITLE_W, DISP_TITLE_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, DISP_TITLE_W, DISP_TITLE_H);
+    SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, DISP_TITLE_W, DISP_TITLE_H);
+    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_TITLE_W, DISP_TITLE_H);
+    g_GpuBuffers[1].draw.clip.y = DISP_TITLE_W / 2;
+    g_GpuBuffers[1].draw.clip.h = DISP_TITLE_H;
+    g_GpuBuffers[0].draw.clip.h = DISP_TITLE_H;
     g_GpuBuffers[0].draw.clip.y = 0;
     g_GpuBuffers[1].draw.isbg = 1;
     g_GpuBuffers[0].draw.isbg = 1;

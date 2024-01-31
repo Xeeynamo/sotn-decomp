@@ -78,13 +78,13 @@ void func_801B0280(void) {
 }
 
 void func_801B0324(void) {
-    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
-    SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
-    SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, DISP_UNK2_W, DISP_UNK2_H);
-    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_UNK2_W, DISP_UNK2_H);
-    g_GpuBuffers[1].draw.clip.y = DISP_UNK2_W / 2;
-    g_GpuBuffers[1].draw.clip.h = DISP_UNK2_H;
-    g_GpuBuffers[0].draw.clip.h = DISP_UNK2_H;
+    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_TITLE_W, DISP_TITLE_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, DISP_TITLE_W, DISP_TITLE_H);
+    SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, DISP_TITLE_W, DISP_TITLE_H);
+    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_TITLE_W, DISP_TITLE_H);
+    g_GpuBuffers[1].draw.clip.y = DISP_TITLE_W / 2;
+    g_GpuBuffers[1].draw.clip.h = DISP_TITLE_H;
+    g_GpuBuffers[0].draw.clip.h = DISP_TITLE_H;
     g_GpuBuffers[0].draw.clip.y = 0;
     g_GpuBuffers[1].draw.isbg = 1;
     g_GpuBuffers[0].draw.isbg = 1;
