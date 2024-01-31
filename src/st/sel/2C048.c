@@ -2310,6 +2310,10 @@ void func_801B1FD8(u8* arg0, s32 arg1) {
     u8* srcPix;
     s32 param;
 
+#ifdef VERSION_PC
+    NOT_IMPLEMENTED;
+    return;
+#endif
     y = func_801B1EF4(arg1);
     x = 0;
     while (*arg0 != 0 && D_801BAFD0 < g_Pix[4]) {
@@ -2361,6 +2365,10 @@ void func_801B2108(const char* str, s32 arg1) {
         var_s6 += 0x20;
         var_s5 &= ~0x200;
     }
+#ifdef VERSION_PC
+    NOT_IMPLEMENTED;
+    return;
+#endif
     var_s5 = func_801B1EF4(var_s5 & 0xFF) & 0xFF;
     while (*var_s1 != 0) {
         var_s2 = 0;
