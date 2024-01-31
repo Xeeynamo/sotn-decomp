@@ -654,7 +654,7 @@ typedef struct {
     /* 0x18 */ u8* page;
     /* 0x1C */ u8* gfx;
     /* 0x20 */ u8* clut;
-    /* 0x24 */ u_long* ot;
+    /* 0x24 */ OT_TYPE* ot;
     /* 0x28 */ SPRT_16* sp16;
     /* 0x2C */ DR_MODE* dr;
     /* 0x30 */ RECT rect;
