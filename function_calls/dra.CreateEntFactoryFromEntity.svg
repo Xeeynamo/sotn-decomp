@@ -275,7 +275,7 @@
 <g id="node18" class="node">
 <title>dra.EntitySubwpnCrashCross</title>
 <g id="a_node18"><a xlink:href="dra.EntitySubwpnCrashCross.svg" xlink:title="dra.EntitySubwpnCrashCross">
-<ellipse fill="red" stroke="black" cx="3627.29" cy="-378" rx="149.47" ry="18"/>
+<ellipse fill="green" stroke="black" cx="3627.29" cy="-378" rx="149.47" ry="18"/>
 <text text-anchor="middle" x="3627.29" y="-374.3" font-family="Times,serif" font-size="14.00">dra.EntitySubwpnCrashCross</text>
 </a>
 </g>
