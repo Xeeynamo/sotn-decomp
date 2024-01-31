@@ -1578,6 +1578,15 @@
 | 1.00 | false    | EntityWeaponAttack                  | ../../asm/us/weapon/nonmatchings/w_036/EntityWeaponAttack.s 
 | 1.00 | false    | EntityWeaponAttack                  | ../../asm/us/weapon/nonmatchings/w_057/EntityWeaponAttack.s 
 -------------------------------------------------------------------------------
+| 0.90 | true     | SetReverbDepth                      | ../../asm/us/dra/nonmatchings/91EBC/SetReverbDepth.s 
+| 1.00 | true     | func_801073C0                       | ../../asm/us/dra/nonmatchings/cd/func_801073C0.s 
+| 0.90 | true     | _addque                             | ../../asm/us/main/nonmatchings/psxsdk/libgpu/sys/_addque.s 
+| 0.90 | true     | SsSepClose                          | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssclose/SsSepClose.s 
+| 0.90 | true     | SsSeqClose                          | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
+| 0.90 | true     | SsSeqStop                           | ../../asm/us/main/nonmatchings/psxsdk/libsnd/stop/SsSeqStop.s 
+| 1.00 | true     | func_801B9924                       | ../../asm/us/st/sel/nonmatchings/stream/func_801B9924.s 
+| 0.90 | true     | func_801BA6A8                       | ../../asm/us/st/sel/nonmatchings/stream/func_801BA6A8.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | CollectGold                         | ../../asm/us/st/cen/nonmatchings/11280/CollectGold.s 
 | 1.00 | true     | CollectGold                         | ../../asm/us/st/dre/nonmatchings/173C4/CollectGold.s 
 | 1.00 | false    | CollectGold                         | ../../asm/us/st/mad/nonmatchings/EDB8/CollectGold.s 
@@ -1658,14 +1667,6 @@
 | 1.00 | true     | UpdateStageEntities                 | ../../asm/us/st/rwrp/nonmatchings/update_stage_entities/UpdateStageEntities.s 
 | 1.00 | true     | UpdateStageEntities                 | ../../asm/us/st/st0/nonmatchings/update_stage_entities/UpdateStageEntities.s 
 | 1.00 | true     | UpdateStageEntities                 | ../../asm/us/st/wrp/nonmatchings/update_stage_entities/UpdateStageEntities.s 
--------------------------------------------------------------------------------
-| 0.90 | true     | SetReverbDepth                      | ../../asm/us/dra/nonmatchings/91EBC/SetReverbDepth.s 
-| 1.00 | true     | func_801073C0                       | ../../asm/us/dra/nonmatchings/cd/func_801073C0.s 
-| 0.90 | true     | _addque                             | ../../asm/us/main/nonmatchings/psxsdk/libgpu/sys/_addque.s 
-| 0.90 | true     | SsSepClose                          | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssclose/SsSepClose.s 
-| 0.90 | true     | SsSeqClose                          | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
-| 0.90 | true     | SsSeqStop                           | ../../asm/us/main/nonmatchings/psxsdk/libsnd/stop/SsSeqStop.s 
-| 1.00 | true     | func_801B9924                       | ../../asm/us/st/sel/nonmatchings/stream/func_801B9924.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801072DC                       | ../../asm/us/dra/nonmatchings/63ED4/func_801072DC.s 
 | 1.00 | true     | func_800FAC98                       | ../../asm/us/dra/nonmatchings/menu/func_800FAC98.s 
@@ -1979,7 +1980,7 @@
 | 1.00 | false    | func_13F000_8017A718                | ../../asm/us/weapon/nonmatchings/w_045/func_13F000_8017A718.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | DraPrimDecreaseBrightness           | ../../asm/us/dra/nonmatchings/86ECC/DraPrimDecreaseBrightness.s 
-| 1.00 | true     | RicPrimDecreaseBrightness           | ../../asm/us/ric/nonmatchings/2A060/RicPrimDecreaseBrightness.s 
+| 1.00 | true     | RicPrimDecreaseBrightness           | ../../asm/us/ric/nonmatchings/2C4C4/RicPrimDecreaseBrightness.s 
 | 0.93 | true     | PrimDecreaseBrightness              | ../../asm/us/st/mad/nonmatchings/prim_helpers/PrimDecreaseBrightness.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | MenuDrawInt                         | ../../asm/us/dra/nonmatchings/menu/MenuDrawInt.s 
@@ -2151,13 +2152,10 @@
 | 0.98 | true     | func_80167A70                       | ../../asm/us/ric/nonmatchings/2A060/func_80167A70.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | EntitySubwpnThrownAxe               | ../../asm/us/dra/nonmatchings/843B0/EntitySubwpnThrownAxe.s 
-| 0.93 | false    | func_8016A26C                       | ../../asm/us/ric/nonmatchings/2A060/func_8016A26C.s 
+| 0.93 | false    | func_8016A26C                       | ../../asm/us/ric/nonmatchings/2C4C4/func_8016A26C.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityTeleport                      | ../../asm/us/dra/nonmatchings/843B0/EntityTeleport.s 
 | 0.90 | true     | EntityTeleport                      | ../../asm/us/ric/nonmatchings/2A060/EntityTeleport.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_80125B6C                       | ../../asm/us/dra/nonmatchings/843B0/func_80125B6C.s 
-| 0.92 | true     | func_8016840C                       | ../../asm/us/ric/nonmatchings/2A060/func_8016840C.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityStopWatchExpandingCircle      | ../../asm/us/dra/nonmatchings/86ECC/EntityStopWatchExpandingCircle.s 
 | 0.97 | true     | func_8017161C                       | ../../asm/us/ric/nonmatchings/32324/func_8017161C.s 
@@ -2166,13 +2164,13 @@
 | 0.92 | true     | EntitySubwpnBible                   | ../../asm/us/ric/nonmatchings/32324/EntitySubwpnBible.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | ReboundStoneBounce1                 | ../../asm/us/dra/nonmatchings/86ECC/ReboundStoneBounce1.s 
-| 1.00 | true     | func_8016B8E8                       | ../../asm/us/ric/nonmatchings/2A060/func_8016B8E8.s 
+| 1.00 | true     | func_8016B8E8                       | ../../asm/us/ric/nonmatchings/2C4C4/func_8016B8E8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | ReboundStoneBounce2                 | ../../asm/us/dra/nonmatchings/86ECC/ReboundStoneBounce2.s 
-| 1.00 | true     | func_8016B92C                       | ../../asm/us/ric/nonmatchings/2A060/func_8016B92C.s 
+| 1.00 | true     | func_8016B92C                       | ../../asm/us/ric/nonmatchings/2C4C4/func_8016B92C.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | func_801291C4                       | ../../asm/us/dra/nonmatchings/86ECC/func_801291C4.s 
-| 0.99 | false    | func_8016CC74                       | ../../asm/us/ric/nonmatchings/2A060/func_8016CC74.s 
+| 0.99 | false    | func_8016CC74                       | ../../asm/us/ric/nonmatchings/2C4C4/func_8016CC74.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8012B78C                       | ../../asm/us/dra/nonmatchings/86ECC/func_8012B78C.s 
 | 0.96 | true     | func_80172AE8                       | ../../asm/us/ric/nonmatchings/32324/func_80172AE8.s 
@@ -2357,16 +2355,13 @@
 | 1.00 | true     | SpuRead                             | ../../asm/us/main/nonmatchings/psxsdk/libspu/s_r/SpuRead.s 
 | 1.00 | true     | SpuWrite                            | ../../asm/us/main/nonmatchings/psxsdk/libspu/s_w/SpuWrite.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SpuSetVoiceAttr                     | ../../asm/us/main/nonmatchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
-| 0.90 | true     | func_801BA6A8                       | ../../asm/us/st/sel/nonmatchings/stream/func_801BA6A8.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | func_8015B18C                       | ../../asm/us/ric/nonmatchings/1CB04/func_8015B18C.s 
 | 0.91 | true     | func_8015B1E8                       | ../../asm/us/ric/nonmatchings/1CB04/func_8015B1E8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8015F414                       | ../../asm/us/ric/nonmatchings/21250/func_8015F414.s 
 | 0.96 | true     | func_8015F680                       | ../../asm/us/ric/nonmatchings/21250/func_8015F680.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_8016D920                       | ../../asm/us/ric/nonmatchings/2A060/func_8016D920.s 
+| 1.00 | true     | func_8016D920                       | ../../asm/us/ric/nonmatchings/2C4C4/func_8016D920.s 
 | 1.00 | true     | func_80170548                       | ../../asm/us/ric/nonmatchings/32324/func_80170548.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018F890                       | ../../asm/us/st/cen/nonmatchings/D600/func_8018F890.s 
