@@ -427,7 +427,7 @@ void EntityCrossBoomerang(Entity* self) {
             if (ABS(yDist) < (PLAYER.hitboxHeight + self->hitboxHeight)) {
                 // ... Then we go to step 7 to be destroyed.
                 self->step = 7;
-                self->ext.timer.t = 0x20;
+                self->ext.crossBoomerang.timer = 0x20;
                 return;
             }
         }
@@ -435,7 +435,7 @@ void EntityCrossBoomerang(Entity* self) {
         if ((self->facingLeft == 0 && self->posX.i.hi < -0x20) ||
             (self->facingLeft != 0 && self->posX.i.hi >= 0x121)) {
             self->step = 7;
-            self->ext.timer.t = 0x20;
+            self->ext.crossBoomerang.timer = 0x20;
             return;
         }
         // Otherwise, we keep trucking. spin at the slower rate again.
@@ -444,7 +444,7 @@ void EntityCrossBoomerang(Entity* self) {
         break;
 
     case 7:
-        if (--self->ext.timer.t == 0) {
+        if (--self->ext.crossBoomerang.timer == 0) {
             DestroyEntity(self);
             return;
         }
