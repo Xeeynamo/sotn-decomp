@@ -54,7 +54,7 @@ segments:
       - [0x1A9D0, .rodata, 26C84]
       - [0x1A9E8, rodata]
       - [0x1AA28, .rodata, 2A060]
-      - [0x1AAA0, rodata]
+      - [0x1AAA0, .rodata, 2A060]
       - [0x1AABC, .rodata, 2C4C4]
       - [0x1AAD4, .rodata, 2C4C4] #EntitySubwpnCrashCross
       - [0x1AAEC, .rodata, 2C4C4] #EntityRichterRevivalColumn
