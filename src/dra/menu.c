@@ -2231,6 +2231,10 @@ void func_800F98AC(const char* str, u32 arg1) {
     var_s1 = (temp_s2 >> 2) & 0x40;
     temp_s2 = func_800F548C(temp_s2);
 
+#ifdef VERSION_PC
+    NOT_IMPLEMENTED;
+#endif
+
     for (data_ptr = str; *data_ptr != 0;) {
         // Loads a big-endian u16 from data_ptr.
         // This is connected to shift-jis.

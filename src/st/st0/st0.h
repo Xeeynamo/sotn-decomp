@@ -3,12 +3,6 @@
 #undef STAGE
 #define STAGE STAGE_ST0
 
-#define DISP_ALL_H 240
-#define DISP_STAGE_W 256
-#define DISP_STAGE_H DISP_ALL_H
-#define DISP_UNK2_W 512
-#define DISP_UNK2_H DISP_ALL_H
-
 typedef enum {
     E_NONE,
     E_BREAKABLE,

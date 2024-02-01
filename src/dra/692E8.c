@@ -26,7 +26,7 @@ void func_80109328(void) {
 }
 
 void func_801093C4(void) {
-    DRAWENV sp10;
+    DRAWENV drawEnv;
     Primitive* prim;
     s32 i;
 
@@ -37,12 +37,12 @@ void func_801093C4(void) {
     switch (g_Player.unk6A) {
     case 0:
         if (func_800EDB08(prim) != 0) {
-            prim->type = 7;
+            prim->type = PRIM_ENV;
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
             func_800EDB08(prim);
             if (prim != NULL) {
-                prim->type = 7;
+                prim->type = PRIM_ENV;
                 prim->drawMode = DRAW_HIDE;
                 g_Player.unk6A++;
             }
@@ -52,16 +52,16 @@ void func_801093C4(void) {
         if (g_Player.unk6A != 1) {
             return;
         }
-        sp10 = g_CurrentBuffer->draw;
-        sp10.isbg = 0;
+        drawEnv = g_CurrentBuffer->draw;
+        drawEnv.isbg = false;
         if (g_Player.unk0C & 0x04000000) {
-            sp10.isbg = 1;
+            drawEnv.isbg = true;
         }
-        sp10.r0 = sp10.g0 = sp10.b0 = 0;
-        sp10.ofs[0] = 0x200;
-        sp10.clip = D_800ACE60;
-        sp10.ofs[1] = 0x1C0;
-        SetDrawEnv(*(s32*)&prim->r1, &sp10);
+        drawEnv.r0 = drawEnv.g0 = drawEnv.b0 = 0;
+        drawEnv.ofs[0] = 0x200;
+        drawEnv.clip = D_800ACE60;
+        drawEnv.ofs[1] = 0x1C0;
+        SetDrawEnv(*(DR_ENV**)&prim->r1, &drawEnv);
         prim->priority = 0x190;
         prim->drawMode = DRAW_DEFAULT;
         prim = prim->next;

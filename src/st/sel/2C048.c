@@ -2185,13 +2185,13 @@ void func_801B19F4(void) {
 }
 
 void func_801B1A98(void) {
-    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_W, DISP_H);
-    SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, DISP_W, DISP_H);
-    SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, DISP_W, DISP_H);
-    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_W, DISP_H);
-    g_GpuBuffers[1].draw.clip.y = DISP_W / 2;
-    g_GpuBuffers[1].draw.clip.h = DISP_H;
-    g_GpuBuffers[0].draw.clip.h = DISP_H;
+    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_TITLE_W, DISP_TITLE_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, DISP_TITLE_W, DISP_TITLE_H);
+    SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, DISP_TITLE_W, DISP_TITLE_H);
+    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_TITLE_W, DISP_TITLE_H);
+    g_GpuBuffers[1].draw.clip.y = DISP_TITLE_W / 2;
+    g_GpuBuffers[1].draw.clip.h = DISP_TITLE_H;
+    g_GpuBuffers[0].draw.clip.h = DISP_TITLE_H;
     g_GpuBuffers[0].draw.clip.y = 0;
     g_GpuBuffers[1].draw.isbg = 1;
     g_GpuBuffers[0].draw.isbg = 1;
@@ -2201,13 +2201,13 @@ void func_801B1A98(void) {
 }
 
 void func_801B1B88(void) {
-    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, 384, DISP_H);
-    SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, 384, DISP_H);
-    SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, 384, DISP_H);
-    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, 384, DISP_H);
+    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_MENU_W, DISP_TITLE_H);
+    SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, DISP_MENU_W, DISP_TITLE_H);
+    SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, DISP_MENU_W, DISP_TITLE_H);
+    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, DISP_MENU_W, DISP_TITLE_H);
     g_GpuBuffers[1].draw.clip.y = 256;
-    g_GpuBuffers[1].draw.clip.h = DISP_H;
-    g_GpuBuffers[0].draw.clip.h = DISP_H;
+    g_GpuBuffers[1].draw.clip.h = DISP_TITLE_H;
+    g_GpuBuffers[0].draw.clip.h = DISP_TITLE_H;
     g_GpuBuffers[0].draw.clip.y = 0;
     g_GpuBuffers[1].draw.isbg = 1;
     g_GpuBuffers[0].draw.isbg = 1;
@@ -2310,6 +2310,10 @@ void func_801B1FD8(u8* arg0, s32 arg1) {
     u8* srcPix;
     s32 param;
 
+#ifdef VERSION_PC
+    NOT_IMPLEMENTED;
+    return;
+#endif
     y = func_801B1EF4(arg1);
     x = 0;
     while (*arg0 != 0 && D_801BAFD0 < g_Pix[4]) {
@@ -2361,6 +2365,10 @@ void func_801B2108(const char* str, s32 arg1) {
         var_s6 += 0x20;
         var_s5 &= ~0x200;
     }
+#ifdef VERSION_PC
+    NOT_IMPLEMENTED;
+    return;
+#endif
     var_s5 = func_801B1EF4(var_s5 & 0xFF) & 0xFF;
     while (*var_s1 != 0) {
         var_s2 = 0;
