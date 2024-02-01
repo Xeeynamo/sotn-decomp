@@ -764,6 +764,28 @@ typedef struct {
     Point16* unk84;
 } ET_CrossBoomerang;
 
+typedef struct {
+    f32 unk7C;
+    f32 unk80;
+    s16 unk84;
+    s16 unk86;
+    s32 unk88;
+    s16 unk8C;
+    s16 unk8E;
+    s32 unk90;
+    s32 unk94;
+    s32 unk98;
+    s32 unk9C;
+    s32 unkA0;
+    s16 unkA4;
+    s16 unkA6;
+    s32 unkA8;
+    s32 unkAC;
+    s16 unkB0;
+    s32 unkB4;
+    s32 unkB8;
+} ET_80166784;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_TimerOnly timer;
@@ -803,6 +825,7 @@ typedef union {
     /* 0x7C */ ET_stopwatchSparkle et_stopWatchSparkle;
     /* 0x7C */ ET_80161FF0 et_80161FF0;
     /* 0x7C */ ET_80162870 et_80162870;
+    /* 0x7C */ ET_80166784 et_80166784;
     /* 0x7C */ ET_RichterPowerUpRing ricPowerRing;
     /* 0x7C */ ET_8016E9E4 et_8016E9E4;
     /* 0x7C */ ET_801719A4 et_801719A4;
