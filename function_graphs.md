@@ -2111,7 +2111,7 @@
 - [✅ func_80165DD8](function_calls/ric.func_80165DD8.svg?raw=1)
 - [✅ func_80166024](function_calls/ric.func_80166024.svg?raw=1)
 - [✅ func_80166044](function_calls/ric.func_80166044.svg?raw=1)
-- [❌ func_80166784](function_calls/ric.func_80166784.svg?raw=1)
+- [✅ func_80166784](function_calls/ric.func_80166784.svg?raw=1)
 - [✅ func_8016779C](function_calls/ric.func_8016779C.svg?raw=1)
 - [✅ func_80167964](function_calls/ric.func_80167964.svg?raw=1)
 - [✅ func_80167A58](function_calls/ric.func_80167A58.svg?raw=1)
