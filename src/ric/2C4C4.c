@@ -276,8 +276,8 @@ void EntitySubwpnCrashCross(Entity* self) {
 }
 
 // Entity ID #21. Blueprint 22. Called in func_8015B348.
-// Creates the "wipe" effect when Richter is revived in the Prologue.
-void EntityRichterDeathScreenWipe(Entity* self) {
+// Creates the white column around Richter when he is revived in the Prologue.
+void EntityRichterRevivalColumn(Entity* self) {
     Primitive* prim;
     u32 three = 3;
     u32 one = 1;
@@ -291,38 +291,38 @@ void EntityRichterDeathScreenWipe(Entity* self) {
         }
         self->flags = FLAG_HAS_PRIMS | FLAG_UNK_10000;
         self->posY.i.hi = 0x78;
-        self->ext.deadRicWipe.unk80 = 1;
+        self->ext.ricColumn.unk80 = 1;
         self->zPriority = 0xC2;
         LoadImage(&D_80155E3C, &D_80155DDC);
         self->step += 1;
         break;
     case 1:
-        self->ext.deadRicWipe.unk7E = three + self->ext.deadRicWipe.unk7E;
-        self->ext.deadRicWipe.unk82 += three * 2;
-        if ((u8)self->ext.deadRicWipe.unk7E >= 0x70U) {
+        self->ext.ricColumn.unk7E = three + self->ext.ricColumn.unk7E;
+        self->ext.ricColumn.unk82 += three * 2;
+        if ((u8)self->ext.ricColumn.unk7E >= 0x70U) {
             self->step += 1;
         }
         break;
     case 2:
         if (g_Timer & 1) {
-            self->ext.deadRicWipe.unk80 += one * 2;
-            self->ext.deadRicWipe.unk7C = one + self->ext.deadRicWipe.unk7C;
-            if (self->ext.deadRicWipe.unk80 >= 0x2CU) {
-                self->ext.deadRicWipe.unk84 = 0xA0;
+            self->ext.ricColumn.unk80 += one * 2;
+            self->ext.ricColumn.unk7C = one + self->ext.ricColumn.unk7C;
+            if (self->ext.ricColumn.unk80 >= 0x2CU) {
+                self->ext.ricColumn.unk84 = 0xA0;
                 self->step += 1;
             }
         }
         break;
     case 3:
-        if (--self->ext.deadRicWipe.unk84 == 0) {
+        if (--self->ext.ricColumn.unk84 == 0) {
             self->step += 1;
         }
         break;
     case 4:
         if (g_Timer & 1) {
-            self->ext.deadRicWipe.unk80 -= one * 4;
-            self->ext.deadRicWipe.unk7C -= (one * 2);
-            if (self->ext.deadRicWipe.unk80 < 4U) {
+            self->ext.ricColumn.unk80 -= one * 4;
+            self->ext.ricColumn.unk7C -= (one * 2);
+            if (self->ext.ricColumn.unk80 < 4U) {
                 DestroyEntity(self);
                 return;
             }
@@ -330,10 +330,10 @@ void EntityRichterDeathScreenWipe(Entity* self) {
         break;
     }
     prim = &g_PrimBuf[self->primIndex];
-    prim->x0 = prim->x2 = self->posX.i.hi - self->ext.deadRicWipe.unk7C;
+    prim->x0 = prim->x2 = self->posX.i.hi - self->ext.ricColumn.unk7C;
     prim->y1 = prim->y0 = self->posY.i.hi - self->ext.factory.unk7E;
-    prim->x1 = prim->x3 = prim->x0 + self->ext.deadRicWipe.unk80;
-    prim->y2 = prim->y3 = prim->y0 + self->ext.deadRicWipe.unk82;
+    prim->x1 = prim->x3 = prim->x0 + self->ext.ricColumn.unk80;
+    prim->y2 = prim->y3 = prim->y0 + self->ext.ricColumn.unk82;
     prim->u0 = prim->u2 = 1;
     prim->u1 = prim->u3 = 0x30;
     prim->v0 = prim->v1 = prim->v2 = prim->v3 = 0xF8;

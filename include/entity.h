@@ -754,7 +754,7 @@ typedef struct {
     u8 unk82;
     byte pad83;
     s32 unk84;
-} ET_RicDeathScreenWipe; // Note this is the same as CrashCross
+} ET_RicRevivalColumn; // Note this is the same as CrashCross
 
 typedef union {
     /* 0x7C */ struct Primitive* prim;
@@ -769,7 +769,7 @@ typedef union {
     /* 0x7C */ ET_Vibhuti vibhuti;
     /* 0x7C */ ET_HolyWater holywater;
     /* 0x7C */ ET_CrashCross crashcross;
-    /* 0x7C */ ET_RicDeathScreenWipe deadRicWipe;
+    /* 0x7C */ ET_RicRevivalColumn ricColumn;
     /* 0x7C */ ET_GiantSpinningCross giantcross;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
     /* 0x7C */ ET_RelicOrb relicOrb;
