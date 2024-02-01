@@ -756,6 +756,14 @@ typedef struct {
     s32 unk84;
 } ET_RicRevivalColumn; // Note this is the same as CrashCross
 
+typedef struct {
+    s16 timer;
+    s16 unk7E;
+    u16 unk80;
+    u16 pad82;
+    Point16* unk84;
+} ET_CrossBoomerang;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_TimerOnly timer;
@@ -766,6 +774,7 @@ typedef union {
     /* 0x7C */ ET_8011E4BC et_8011E4BC;
     /* 0x7C */ ET_HellfireHandler hellfireHandler;
     /* 0x7C */ ET_ReboundStone reboundStone;
+                   ET_CrossBoomerang crossBoomerang;
     /* 0x7C */ ET_Vibhuti vibhuti;
     /* 0x7C */ ET_HolyWater holywater;
     /* 0x7C */ ET_CrashCross crashcross;

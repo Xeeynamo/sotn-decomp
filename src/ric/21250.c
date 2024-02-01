@@ -1328,7 +1328,7 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     func_801603B4,
     EntityEntFactory,
     func_80160FC4,
-    func_80169704,
+    EntityCrossBoomerang,
     func_80169C10,
     func_8016147C,
     func_80169D74,
