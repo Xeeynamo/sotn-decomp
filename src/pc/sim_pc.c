@@ -141,6 +141,7 @@ void LoadStageTileset(u8* pTilesetData, size_t len, s32 y) {
 
 void InitStageDummy(Overlay* o);
 void InitStageSel(Overlay* o);
+void InitPlayerRic(void);
 void func_80131EBC(const char* str, s16 arg1);
 s32 LoadFileSimToMem(SimKind kind) {
     char pad[0x20];
@@ -294,9 +295,16 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         case 4:
             sim.path = "BIN/ARC_F.BIN";
             break;
+        case 5:
+            InitPlayerRic();
+            return 0;
         case 12:
             sim.path = "ST/SEL/F_SEL.BIN";
             sim.kind = SIM_STAGE_CHR;
+            break;
+        case 13:
+            sim.path = "BIN/F_GAME2.BIN";
+            sim.kind = SIM_1;
             break;
         default:
             WARNF("not implemented for ID %d: %s", fileId, D_800A024C[fileId]);
@@ -330,6 +338,18 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             break;
         case 0x8001:
             sim.path = "VAB/SD_ALK.VB";
+            break;
+        case 0x8002:
+            sim.path = "VAB/SD_RIH.VH";
+            break;
+        case 0x8003:
+            sim.path = "VAB/SD_RIH.VB";
+            break;
+        case 0x8004:
+            sim.path = "VAB/SD_MAR.VH";
+            break;
+        case 0x8005:
+            sim.path = "VAB/SD_MAR.VB";
             break;
         default:
             if (fileId & 0x8000) {

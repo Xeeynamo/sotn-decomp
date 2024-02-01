@@ -3,9 +3,6 @@
 #include "memcard.h"
 
 #define DISP_W 512
-#define DISP_H 240
-#define DISP_STAGE_W 256
-#define DISP_STAGE_H DISP_H
 
 #define NUM_MENU_OPTIONS 5
 #define NUM_MENU_UNK_084 8

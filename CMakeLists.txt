@@ -30,6 +30,7 @@ set(SOURCE_FILES_PC
     src/pc/pc.c
     src/pc/str.c
     src/pc/sim_pc.c
+    src/pc/pl_ric.c
     src/pc/stage_dummy.c
 )
 

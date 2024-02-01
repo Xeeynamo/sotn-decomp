@@ -915,7 +915,7 @@ void DrawEntitiesHitbox(s32 drawMode) {
         entity++) {
         if (entity->hitboxState == 0)
             continue;
-        if (g_GpuUsage.tile >= GPU_MAX_TILE_COUNT) {
+        if (g_GpuUsage.tile >= MAX_TILE_COUNT) {
             break;
         }
 
@@ -946,10 +946,10 @@ void DrawEntitiesHitbox(s32 drawMode) {
         g_GpuUsage.tile++;
     }
 
-    for (; polyCount < GPU_MAX_TILE_COUNT; polyCount++, entity++) {
+    for (; polyCount < MAX_TILE_COUNT; polyCount++, entity++) {
         if (entity->hitboxState == 0)
             continue;
-        if (g_GpuUsage.tile >= GPU_MAX_TILE_COUNT) {
+        if (g_GpuUsage.tile >= MAX_TILE_COUNT) {
             break;
         }
 
