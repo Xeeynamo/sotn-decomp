@@ -3,11 +3,6 @@
  */
 
 typedef struct {
-    /* 0x0 */ s16 x;
-    /* 0x2 */ s16 y;
-} Point16; // size = 0x4
-
-typedef struct {
     /* 0x0 */ s32 x;
     /* 0x4 */ s32 y;
 } Point32; // size = 0x8

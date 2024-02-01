@@ -346,9 +346,154 @@ void EntityRichterRevivalColumn(Entity* self) {
     prim->priority = self->zPriority;
 }
 
-const s32 rodata_pad_1AB00 = 0; // Remove when func_80169704 is decompiled!
-// ID 3. Created by blueprint 2.
-INCLUDE_ASM("ric/nonmatchings/2C4C4", func_80169704);
+void EntityCrossBoomerang(Entity* self) {
+    s32 xAccel;
+    s32 xDist;
+    s32 yDist;
+    Point16* temp_a0;
+    s16 playerHitboxX;
+    s16 playerHitboxY;
+
+    f32 tempX;
+
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_100000;
+        self->ext.crossBoomerang.unk84 = &D_80175088[D_80175888];
+        D_80175888++;
+        D_80175888 &= 3;
+        CreateEntFactoryFromEntity(self, FACTORY(0, 5), 0);
+        self->animSet = ANIMSET_OVL(0x11);
+        self->unk5A = 0x66;
+        self->unk4C = D_80155E44;
+        self->facingLeft = PLAYER.facingLeft;
+        self->zPriority = PLAYER.zPriority;
+        SetSpeedX(FIX(3.5625));
+        self->drawFlags = 4;
+        self->rotZ = 0xC00;
+        self->ext.factory.unkB0 = 4;
+        func_8015FAB8(self);
+        self->hitboxHeight = self->hitboxWidth = 8;
+        self->posY.i.hi -= 8;
+        g_api.PlaySfx(0x69F);
+        self->step++;
+        break;
+    case 1:
+        if (PLAYER.animFrameIdx == 1) {
+            self->step++;
+        }
+        /* fallthrough */
+    case 2:
+        // First phase. We spin at 0x80 angle units per frame.
+        // Velocity gets decremented by 1/16 per frame until we slow
+        // down to less than 0.75.
+        self->rotZ -= 0x80;
+        self->posX.val += self->velocityX;
+        xAccel = self->facingLeft ? FIX(-1.0 / 16) : FIX(1.0 / 16);
+        self->velocityX -= xAccel;
+        if (ABS(self->velocityX) < FIX(0.75)) {
+            self->step++;
+        }
+        break;
+    case 3:
+        // Second phase. Once we are slow, we spin twice as fast, and then
+        // wait until our speed gets higher once again (turned around).
+        self->rotZ -= 0x100;
+        self->posX.val += self->velocityX;
+        xAccel = self->facingLeft ? FIX(-1.0 / 16) : FIX(1.0 / 16);
+        self->velocityX -= xAccel;
+        if (ABS(self->velocityX) > FIX(0.75)) {
+            self->step++;
+        }
+        break;
+    case 4:
+        // Third phase. We've now sped up and we're coming back.
+        // Increase speed until a terminal velocity of 2.5.
+        xAccel = self->facingLeft ? FIX(-1.0 / 16) : FIX(1.0 / 16);
+        self->velocityX -= xAccel;
+        if (ABS(self->velocityX) > FIX(2.5)) {
+            self->step++;
+        }
+        /* fallthrough */
+    case 5:
+        // FAKE, unfortunate need to preload this.
+        tempX = self->posX;
+        // Now we check 2 conditions. If we're within the player's hitbox...
+        playerHitboxX = (PLAYER.posX.i.hi + PLAYER.hitboxOffX);
+        playerHitboxY = (PLAYER.posY.i.hi + PLAYER.hitboxOffY);
+        xDist = tempX.i.hi - playerHitboxX;
+        if (ABS(xDist) < (PLAYER.hitboxWidth + self->hitboxWidth)) {
+            yDist = self->posY.i.hi - playerHitboxY;
+            if (ABS(yDist) < (PLAYER.hitboxHeight + self->hitboxHeight)) {
+                // ... Then we go to step 7 to be destroyed.
+                self->step = 7;
+                self->ext.crossBoomerang.timer = 0x20;
+                return;
+            }
+        }
+        // Alternatively, if we're offscreen, we will also be destroyed.
+        if ((self->facingLeft == 0 && self->posX.i.hi < -0x20) ||
+            (self->facingLeft != 0 && self->posX.i.hi >= 0x121)) {
+            self->step = 7;
+            self->ext.crossBoomerang.timer = 0x20;
+            return;
+        }
+        // Otherwise, we keep trucking. spin at the slower rate again.
+        self->rotZ -= 0x80;
+        self->posX.val += self->velocityX;
+        break;
+
+    case 7:
+        if (--self->ext.crossBoomerang.timer == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        self->hitboxState = 0;
+        self->animSet = 0;
+        self->posX.val += self->velocityX;
+        break;
+    }
+    // We will increment through these states, creating trails.
+    // Factory 3 is entity #4, func_80169C10. Appears to make tiny sparkles.
+    // Factory 4 is entity #5, func_8016147C. Appears to make a "shadow" of the
+    // cross boomerang.
+    self->ext.crossBoomerang.unk7E++;
+    if (1 < self->step && self->step < 6) {
+        if ((self->ext.crossBoomerang.unk7E & 0xF) == 1) {
+            CreateEntFactoryFromEntity(self, FACTORY(0, 3), 0);
+        }
+        if ((self->ext.crossBoomerang.unk7E & 0xF) == 4) {
+            CreateEntFactoryFromEntity(self, FACTORY(0x600, 4), 0);
+        }
+        if ((self->ext.crossBoomerang.unk7E & 0xF) == 6) {
+            CreateEntFactoryFromEntity(self, FACTORY(0, 3), 0);
+        }
+        if ((self->ext.crossBoomerang.unk7E & 0xF) == 8) {
+            CreateEntFactoryFromEntity(self, FACTORY(0x600, 4), 0);
+        }
+        if ((self->ext.crossBoomerang.unk7E & 0xF) == 12) {
+            CreateEntFactoryFromEntity(self, FACTORY(0x600, 4), 0);
+        }
+        if ((self->ext.crossBoomerang.unk7E & 0xF) == 11) {
+            CreateEntFactoryFromEntity(self, FACTORY(0, 3), 0);
+        }
+    }
+    // Applies a flickering effect
+    if (!((g_GameTimer >> 1) & 1)) {
+        self->palette = 0x81B1;
+    } else {
+        self->palette = 0x81B0;
+    }
+    temp_a0 = self->ext.crossBoomerang.unk84;
+    // This indexes into the unk84 array.
+    // Better way would have been temp_a0 = &unk84[unk80].
+    temp_a0 += self->ext.crossBoomerang.unk80;
+    temp_a0->x = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
+    temp_a0->y = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+    self->ext.crossBoomerang.unk80++;
+    self->ext.crossBoomerang.unk80 &= 0x3F;
+    g_Player.D_80072F00[3] = 2;
+}
 
 void func_80169C10(Entity* entity) {
     Primitive* prim;
