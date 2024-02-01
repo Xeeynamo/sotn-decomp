@@ -389,10 +389,10 @@ void EntityCrossBoomerang(Entity* self) {
         // down to less than 0.75.
         self->rotZ -= 0x80;
         self->posX.val += self->velocityX;
-        xAccel = self->facingLeft ? FIX(-1.0/16) : FIX(1.0/16);
+        xAccel = self->facingLeft ? FIX(-1.0 / 16) : FIX(1.0 / 16);
         self->velocityX -= xAccel;
         if (ABS(self->velocityX) < FIX(0.75)) {
-            self->step ++;
+            self->step++;
         }
         break;
     case 3:
@@ -400,23 +400,23 @@ void EntityCrossBoomerang(Entity* self) {
         // wait until our speed gets higher once again (turned around).
         self->rotZ -= 0x100;
         self->posX.val += self->velocityX;
-        xAccel = self->facingLeft ? FIX(-1.0/16) : FIX(1.0/16);
+        xAccel = self->facingLeft ? FIX(-1.0 / 16) : FIX(1.0 / 16);
         self->velocityX -= xAccel;
         if (ABS(self->velocityX) > FIX(0.75)) {
-            self->step ++;
+            self->step++;
         }
         break;
     case 4:
         // Third phase. We've now sped up and we're coming back.
         // Increase speed until a terminal velocity of 2.5.
-        xAccel = self->facingLeft ? FIX(-1.0/16) : FIX(1.0/16);
+        xAccel = self->facingLeft ? FIX(-1.0 / 16) : FIX(1.0 / 16);
         self->velocityX -= xAccel;
         if (ABS(self->velocityX) > FIX(2.5)) {
             self->step++;
         }
         /* fallthrough */
     case 5:
-        //FAKE, unfortunate need to preload this.
+        // FAKE, unfortunate need to preload this.
         tempX = self->posX;
         // Now we check 2 conditions. If we're within the player's hitbox...
         playerHitboxX = (PLAYER.posX.i.hi + PLAYER.hitboxOffX);
@@ -433,7 +433,7 @@ void EntityCrossBoomerang(Entity* self) {
         }
         // Alternatively, if we're offscreen, we will also be destroyed.
         if ((self->facingLeft == 0 && self->posX.i.hi < -0x20) ||
-            (self->facingLeft != 0 && self->posX.i.hi >= 0x121)){
+            (self->facingLeft != 0 && self->posX.i.hi >= 0x121)) {
             self->step = 7;
             self->ext.timer.t = 0x20;
             return;
@@ -442,7 +442,7 @@ void EntityCrossBoomerang(Entity* self) {
         self->rotZ -= 0x80;
         self->posX.val += self->velocityX;
         break;
-        
+
     case 7:
         if (--self->ext.timer.t == 0) {
             DestroyEntity(self);
@@ -455,7 +455,8 @@ void EntityCrossBoomerang(Entity* self) {
     }
     // We will increment through these states, creating trails.
     // Factory 3 is entity #4, func_80169C10. Appears to make tiny sparkles.
-    // Factory 4 is entity #5, func_8016147C. Appears to make a "shadow" of the cross boomerang.
+    // Factory 4 is entity #5, func_8016147C. Appears to make a "shadow" of the
+    // cross boomerang.
     self->ext.crossBoomerang.unk7E++;
     if (1 < self->step && self->step < 6) {
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 1) {
@@ -465,7 +466,7 @@ void EntityCrossBoomerang(Entity* self) {
             CreateEntFactoryFromEntity(self, FACTORY(0x600, 4), 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 6) {
-            CreateEntFactoryFromEntity(self, FACTORY(0,3), 0);
+            CreateEntFactoryFromEntity(self, FACTORY(0, 3), 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 8) {
             CreateEntFactoryFromEntity(self, FACTORY(0x600, 4), 0);
@@ -474,10 +475,10 @@ void EntityCrossBoomerang(Entity* self) {
             CreateEntFactoryFromEntity(self, FACTORY(0x600, 4), 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 11) {
-            CreateEntFactoryFromEntity(self, FACTORY(0,3), 0);
+            CreateEntFactoryFromEntity(self, FACTORY(0, 3), 0);
         }
     }
-    //Applies a flickering effect
+    // Applies a flickering effect
     if (!((g_GameTimer >> 1) & 1)) {
         self->palette = 0x81B1;
     } else {
@@ -486,14 +487,13 @@ void EntityCrossBoomerang(Entity* self) {
     temp_a0 = self->ext.crossBoomerang.unk84;
     // This indexes into the unk84 array.
     // Better way would have been temp_a0 = &unk84[unk80].
-    temp_a0 += self->ext.crossBoomerang.unk80; 
+    temp_a0 += self->ext.crossBoomerang.unk80;
     temp_a0->x = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
     temp_a0->y = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
     self->ext.crossBoomerang.unk80++;
     self->ext.crossBoomerang.unk80 &= 0x3F;
     g_Player.D_80072F00[3] = 2;
 }
-
 
 void func_80169C10(Entity* entity) {
     Primitive* prim;

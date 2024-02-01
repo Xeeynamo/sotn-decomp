@@ -774,7 +774,7 @@ typedef union {
     /* 0x7C */ ET_8011E4BC et_8011E4BC;
     /* 0x7C */ ET_HellfireHandler hellfireHandler;
     /* 0x7C */ ET_ReboundStone reboundStone;
-                   ET_CrossBoomerang crossBoomerang;
+    ET_CrossBoomerang crossBoomerang;
     /* 0x7C */ ET_Vibhuti vibhuti;
     /* 0x7C */ ET_HolyWater holywater;
     /* 0x7C */ ET_CrashCross crashcross;
