@@ -97,7 +97,7 @@ void func_8016779C(Entity* self);
 void func_80167964(Entity* self);
 void func_80161EF8(Entity* self);
 void func_80167A68(Entity* self);
-void func_80169470(Entity* self);
+void EntityRichterDeathScreenWipe(Entity* self);
 void func_80161FF0(Entity* self);
 void func_80160C38(Entity* self);
 void func_80160E4C(Entity* self);

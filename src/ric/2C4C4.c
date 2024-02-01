@@ -275,9 +275,78 @@ void EntitySubwpnCrashCross(Entity* self) {
     return;
 }
 
-const s32 rodata_pad_1aae8 = 0; // Remove once func_80169470 is decompiled
-INCLUDE_ASM("ric/nonmatchings/2C4C4", func_80169470);
+// Entity ID #21. Blueprint 22. Called in func_8015B348.
+// Creates the "wipe" effect when Richter is revived in the Prologue.
+void EntityRichterDeathScreenWipe(Entity* self) {
+    Primitive* prim;
+    u32 three = 3;
+    u32 one = 1;
 
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_10000;
+        self->posY.i.hi = 0x78;
+        self->ext.deadRicWipe.unk80 = 1;
+        self->zPriority = 0xC2;
+        LoadImage(&D_80155E3C, &D_80155DDC);
+        self->step += 1;
+        break;
+    case 1:
+        self->ext.deadRicWipe.unk7E = three + self->ext.deadRicWipe.unk7E;
+        self->ext.deadRicWipe.unk82 += three * 2;
+        if ((u8)self->ext.deadRicWipe.unk7E >= 0x70U) {
+            self->step += 1;
+        }
+        break;
+    case 2:
+        if (g_Timer & 1) {
+            self->ext.deadRicWipe.unk80 += one * 2;
+            self->ext.deadRicWipe.unk7C = one + self->ext.deadRicWipe.unk7C;
+            if (self->ext.deadRicWipe.unk80 >= 0x2CU) {
+                self->ext.deadRicWipe.unk84 = 0xA0;
+                self->step += 1;
+            }
+        }
+        break;
+    case 3:
+        if (--self->ext.deadRicWipe.unk84 == 0) {
+            self->step += 1;
+        }
+        break;
+    case 4:
+        if (g_Timer & 1) {
+            self->ext.deadRicWipe.unk80 -= one * 4;
+            self->ext.deadRicWipe.unk7C -= (one * 2);
+            if (self->ext.deadRicWipe.unk80 < 4U) {
+                DestroyEntity(self);
+                return;
+            }
+        }
+        break;
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    prim->x0 = prim->x2 = self->posX.i.hi - self->ext.deadRicWipe.unk7C;
+    prim->y1 = prim->y0 = self->posY.i.hi - self->ext.factory.unk7E;
+    prim->x1 = prim->x3 = prim->x0 + self->ext.deadRicWipe.unk80;
+    prim->y2 = prim->y3 = prim->y0 + self->ext.deadRicWipe.unk82;
+    prim->u0 = prim->u2 = 1;
+    prim->u1 = prim->u3 = 0x30;
+    prim->v0 = prim->v1 = prim->v2 = prim->v3 = 0xF8;
+    prim->tpage = 0x11C;
+    if (g_Timer & 1) {
+        prim->drawMode = 0x31;
+    } else {
+        prim->drawMode = DRAW_HIDE;
+    }
+    prim->priority = self->zPriority;
+}
+
+const s32 rodata_pad_1AB00 = 0; // Remove when func_80169704 is decompiled!
 // ID 3. Created by blueprint 2.
 INCLUDE_ASM("ric/nonmatchings/2C4C4", func_80169704);
 

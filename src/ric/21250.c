@@ -1346,7 +1346,7 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     func_801603B4,
     func_80161EF8,
     func_80167A68,
-    func_80169470,
+    EntityRichterDeathScreenWipe,
     func_80161FF0,
     func_80160C38,
     func_80160E4C,
