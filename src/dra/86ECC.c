@@ -34,7 +34,7 @@ void EntityHellfireHandler(Entity* self) {
         self->posY.i.hi = 120;
         // I think this is to make the yellow laser beam?
         // it ends up looking like the library card effect.
-        LoadImage(&D_800B0788, &D_800B06C8);
+        LoadImage(&D_800B0788, D_800B06C8);
         LoadImage(&D_800B0790, &D_800B0728);
         prim = &g_PrimBuf[self->primIndex];
         prim->v0 = prim->v1 = prim->v2 = prim->v3 = 0xF8;

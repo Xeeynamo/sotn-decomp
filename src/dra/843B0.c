@@ -269,7 +269,7 @@ INCLUDE_ASM("dra/nonmatchings/843B0", EntitySubwpnThrownDagger);
 INCLUDE_ASM("dra/nonmatchings/843B0", EntitySubwpnThrownAxe);
 
 // Same RIC function is func_801682B4
-s32 func_80125A30(s32 baseY, s32 baseX) {
+s32 CheckHolyWaterCollision(s32 baseY, s32 baseX) {
     s16 x;
     s16 y;
     Collider res1;
@@ -362,7 +362,7 @@ void EntityHolyWater(Entity* entity) {
             entity->velocityY += FIX(0.21875);
         }
 
-        temp = func_80125A30(0, 0);
+        temp = CheckHolyWaterCollision(0, 0);
         entity->posX.val += entity->velocityX;
 
         if (entity->velocityX < 0) {
@@ -417,7 +417,124 @@ INCLUDE_ASM("dra/nonmatchings/843B0", EntityHolyWaterBreakGlass);
 INCLUDE_ASM("dra/nonmatchings/843B0", EntityHolyWaterFlame);
 
 // cross subweapon crash (full effect with all parts)
-INCLUDE_ASM("dra/nonmatchings/843B0", EntitySubwpnCrashCross);
+void EntitySubwpnCrashCross(Entity* self) {
+    Primitive* prim;
+    s16 right;
+    s16 left;
+    s32 var_v0;
+    u16 temp_three;
+    s8 temp_one;
+    u16 three = 3;
+    u32 one = 1;
+
+    func_8010DFF0(1, 1);
+    switch (self->step) {
+    case 0:
+        self->primIndex = AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_HAS_PRIMS;
+        self->posY.i.hi = 0x78;
+        self->ext.crashcross.unk80 = 1;
+        self->zPriority = 0xC2;
+        func_8011A290(self);
+        LoadImage(&D_800B0788, D_800B06C8);
+        prim = &g_PrimBuf[self->primIndex];
+        prim->u0 = prim->u2 = 1;
+        prim->v0 = prim->v1 = prim->v2 = prim->v3 = 0xF8;
+        prim->u1 = prim->u3 = 0x30;
+        prim->b3 = 0x80;
+        prim->tpage = 0x11C;
+        prim->drawMode = 0x31;
+        PlaySfx(0x6DF);
+        PlaySfx(0x636);
+        self->step += 1;
+        g_Player.D_80072F00[12] = 4;
+        break;
+    case 1:
+        self->ext.crashcross.unk7E = three + self->ext.crashcross.unk7E;
+        self->ext.crashcross.unk82 += three * 2;
+        if ((u8)self->ext.crashcross.unk7E >= 0x70U) {
+            CreateEntFactoryFromEntity(
+                self, FACTORY(0, 7), self->ext.factory.unkB2 << 9);
+            CreateEntFactoryFromEntity(self, FACTORY(0, 8), 0);
+            self->step += 1;
+        }
+        break;
+    case 2:
+        if (g_Timer & 1) {
+            self->ext.crashcross.unk80 += one * 2;
+            self->ext.crashcross.unk7C = one + self->ext.crashcross.unk7C;
+            if (self->ext.crashcross.unk80 >= 0x2CU) {
+                self->ext.crashcross.unk84 = 0x80;
+                self->step += 1;
+            }
+        }
+        break;
+    case 3:
+        if (--self->ext.crashcross.unk84 == 0) {
+            left = self->posX.i.hi - self->ext.crashcross.unk7C;
+            ;
+            if (left < 0) {
+                left = 0;
+            }
+            right = self->posX.i.hi + self->ext.crashcross.unk7C;
+            if (right >= 0x100) {
+                right = 0xFF;
+            }
+            self->step += 1;
+            PlaySfx(0x62F);
+        }
+        break;
+    case 4:
+        // this is so stupid
+        temp_one = one;
+        temp_three = temp_one * 2;
+        temp_three |= temp_one;
+        var_v0 = self->posX.i.hi - 0x80;
+        self->ext.crashcross.unk7C =
+            (((temp_three) * ((s16)(var_v0 > 0 ? var_v0 : -var_v0) + 0x80)) /
+             112) +
+            self->ext.crashcross.unk7C;
+
+        left = self->posX.i.hi - self->ext.crashcross.unk7C;
+        right = self->posX.i.hi + self->ext.crashcross.unk7C;
+        if (right > 0x180 && left < -0x80) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    self->hitboxOffY = 0;
+    self->hitboxHeight = self->ext.crashcross.unk7E;
+    if (self->step == 4) {
+        self->hitboxWidth = ((right - left) >> 1);
+        self->hitboxOffX = ((left + right) >> 1) - self->posX.i.hi;
+    } else {
+        self->hitboxOffX = 0;
+        self->hitboxWidth = self->ext.crashcross.unk7C;
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    prim->x0 = prim->x2 = self->posX.i.hi - self->ext.crashcross.unk7C;
+    prim->y1 = prim->y0 = self->posY.i.hi - self->ext.crashcross.unk7E;
+    prim->x1 = prim->x3 = prim->x0 + self->ext.crashcross.unk80;
+    prim->y2 = prim->y3 = prim->y0 + self->ext.crashcross.unk82;
+
+    if (self->step == 4) {
+        if (prim->b3 < 0xF8) {
+            prim->b3 += 4;
+        }
+        prim->x0 = prim->x2 = left;
+        prim->x1 = prim->x3 = right;
+        prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
+            prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3;
+        prim->drawMode = 0x35;
+    }
+    prim->priority = self->zPriority;
+    return;
+}
 
 // rising blue particles from cross crash
 void EntitySubwpnCrashCrossParticles(Entity* self) {

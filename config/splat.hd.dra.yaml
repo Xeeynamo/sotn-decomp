@@ -177,7 +177,7 @@ segments:
       - [0x41CC0, rodata] # jtbl_800E1CC0
       - [0x41CD8, rodata] # jtbl_800E1CD8
       - [0x41CF0, .rodata, 843B0] # EntityTeleport
-      - [0x41D50, rodata] # jtbl_800E1D50
+      - [0x41D50, .rodata, 843B0] # EntitySubwpnCrashCross
       - [0x41D64, rodata]
       - [0x41D78, .rodata, 86ECC] # jtbl_800E1D78
       - [0x41D98, .rodata, 86ECC] # jtbl_800E1D98
