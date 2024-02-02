@@ -80,7 +80,6 @@ EntityTeleport = 0x801243B0;
 EntitySubwpnThrownDagger = 0x80124B88;
 EntitySubwpnThrownAxe = 0x80125330;
 EntityHolyWaterBreakGlass = 0x80125E68;
-EntityHolyWaterFlame = 0x801262AC;
 EntitySubwpnCrashCross = 0x801267B0;
 EntityHellfireHandler = 0x80126ECC;
 DraPrimDecreaseBrightness = 0x80128BBC;

@@ -732,7 +732,102 @@ void func_80169D74(Entity* entity) {
         (entity->ext.generic.unk80.modeS16.unk0 + 1) & 0x3F;
 }
 
-INCLUDE_ASM("ric/nonmatchings/2C4C4", func_80169F04);
+// Entity ID #32. Comes from blueprint 34.
+// Surprisingly pretty different from DRA version.
+void EntitySubwpnCrashCrossParticles(Entity* self) {
+    Primitive* prim;
+    s32 var_a2;
+    s32 temp_s0;
+    s32 temp_a3;
+    s32 temp_t0;
+    u8* temp_a1;
+    s32 priority;
+
+    s16 temp_a0;
+    u8 temps0copy;
+
+    if (self->step == 0) {
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x20);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        self->ext.timer.t = 0xC0;
+        self->step += 1;
+        return;
+    }
+    if (--self->ext.timer.t == 0) {
+        DestroyEntity(self);
+        return;
+    }
+    if ((self->ext.timer.t >= 9) && !(self->ext.timer.t & 3)) {
+        for (prim = &g_PrimBuf[self->primIndex]; prim != NULL;
+             prim = prim->next) {
+            if (prim->r0 == 0) {
+                prim->r0 = 1;
+                prim->r1 = 0;
+                break;
+            }
+        }
+    }
+    for (prim = &g_PrimBuf[self->primIndex]; prim != NULL; prim = prim->next) {
+        if (prim->r0 == 0) {
+            continue;
+        }
+        if (prim->r1 == 0) {
+            temp_s0 = rand() & 0x3F;
+            prim->g0 = (rand() % 237) + 9;
+            temps0copy = temp_s0;
+            prim->g1 = -0x10 - (rand() & 0x20);
+            prim->clut = 0x1B0;
+            prim->tpage = 0x1A;
+            prim->b0 = 0;
+            priority = (temp_s0 + PLAYER.zPriority) - 0x20;
+            prim->drawMode = 0x31;
+            prim->g3 = (temps0copy >> 2) + 4;
+            prim->priority = priority;
+            prim->r1++;
+        } else {
+            prim->g1 -= prim->g3;
+            if (((u8)prim->b0 >= 6U) || ((u8)prim->g1 < 0x18U)) {
+                prim->drawMode = 8;
+                prim->r0 = 0;
+            }
+        }
+        if (prim->r0 == 0) {
+            continue;
+        }
+        temp_a1 = &D_801548F4;
+        temp_a3 = prim->g0;
+        temp_t0 = prim->g1;
+        temp_a1 += prim->b0 * 8; // weird array indexing
+        if (prim->b0 >= 3) {
+            var_a2 = 4;
+        } else {
+            var_a2 = 8;
+        }
+        temp_a0 = temp_a3 - var_a2;
+        prim->y1 = prim->y0 = temp_t0 - var_a2;
+        prim->x0 = temp_a0;
+        prim->x1 = temp_a3 + var_a2;
+        prim->x2 = temp_a0;
+        prim->y2 = temp_t0 + var_a2;
+        prim->x3 = var_a2 + temp_a3;
+        prim->y3 = var_a2 + temp_t0;
+        prim->u0 = *temp_a1++;
+        prim->v0 = *temp_a1++;
+        prim->u1 = *temp_a1++;
+        prim->v1 = *temp_a1++;
+        prim->u2 = *temp_a1++;
+        prim->v2 = *temp_a1++;
+        prim->u3 = *temp_a1++;
+        prim->v3 = *temp_a1++;
+        if (!(g_GameTimer & 1)) {
+            prim->b0 += 1;
+        }
+    }
+}
 
 INCLUDE_ASM("ric/nonmatchings/2C4C4", func_8016A26C);
 
