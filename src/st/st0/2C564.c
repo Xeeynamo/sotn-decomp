@@ -813,6 +813,29 @@ void EntityDraculaRainAttack(Entity* self) {
 
 INCLUDE_ASM("st/st0/nonmatchings/2C564", func_801AF380);
 
-INCLUDE_ASM("st/st0/nonmatchings/2C564", func_801AF6D0);
+void func_801AF6D0(void) {
+    s16* var_a0;
+    s16* var_a1;
+    s32 i;
+    s32* var_a2;
+    s32 a, b, c, d;
+
+    var_a1 = (s16*)D_80181150;
+    var_a0 = (s16*)D_8018129C;
+
+    d = -0x1E;
+    c = -0x53;
+    b = -0x38;
+    a = -0x75;
+
+    i = 0;
+    var_a2 = D_801BEB68;
+
+    for (; i < 0x53; ++i) {
+        var_a2[-1] += ((b + var_a0++[0]) - (d + var_a1++[0])) << 9;
+        *var_a2 += ((a + var_a0++[0]) - (c + var_a1++[0])) << 9;
+        var_a2 += 2;
+    }
+}
 
 INCLUDE_ASM("st/st0/nonmatchings/2C564", func_801AF774);
