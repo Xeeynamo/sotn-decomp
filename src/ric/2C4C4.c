@@ -732,8 +732,7 @@ void func_80169D74(Entity* entity) {
         (entity->ext.generic.unk80.modeS16.unk0 + 1) & 0x3F;
 }
 
-
-// Entity ID #32. Comes from blueprint 34. 
+// Entity ID #32. Comes from blueprint 34.
 // Surprisingly pretty different from DRA version.
 void EntitySubwpnCrashCrossParticles(Entity* self) {
     Primitive* prim;
@@ -743,7 +742,7 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
     s32 temp_t0;
     u8* temp_a1;
     s32 priority;
-    
+
     s16 temp_a0;
     u8 temps0copy;
 
@@ -763,16 +762,16 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
         return;
     }
     if ((self->ext.timer.t >= 9) && !(self->ext.timer.t & 3)) {
-        for(prim = &g_PrimBuf[self->primIndex];prim != NULL; prim = prim->next){
+        for (prim = &g_PrimBuf[self->primIndex]; prim != NULL;
+             prim = prim->next) {
             if (prim->r0 == 0) {
-                prim->r0 = 1; 
+                prim->r0 = 1;
                 prim->r1 = 0;
                 break;
             }
         }
-        
     }
-    for ( prim = &g_PrimBuf[self->primIndex]; prim != NULL; prim = prim->next) {
+    for (prim = &g_PrimBuf[self->primIndex]; prim != NULL; prim = prim->next) {
         if (prim->r0 == 0) {
             continue;
         }
@@ -791,7 +790,7 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
             prim->r1++;
         } else {
             prim->g1 -= prim->g3;
-            if (((u8) prim->b0 >= 6U) || ((u8) prim->g1 < 0x18U)) {
+            if (((u8)prim->b0 >= 6U) || ((u8)prim->g1 < 0x18U)) {
                 prim->drawMode = 8;
                 prim->r0 = 0;
             }
@@ -802,7 +801,7 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
         temp_a1 = &D_801548F4;
         temp_a3 = prim->g0;
         temp_t0 = prim->g1;
-        temp_a1 += prim->b0 * 8; //weird array indexing
+        temp_a1 += prim->b0 * 8; // weird array indexing
         if (prim->b0 >= 3) {
             var_a2 = 4;
         } else {
