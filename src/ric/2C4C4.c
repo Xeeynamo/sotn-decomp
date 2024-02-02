@@ -183,7 +183,7 @@ void EntityHolyWaterFlame(Entity* self) {
         randR = (rand() & 0x3F) + 0x2F;
         randG = (rand() & 0x3F) + 0x6F;
         randB = (rand() & 0x7F) + 0x6F;
-        self->primIndex = g_api.AllocPrimitives(4U, 4);
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

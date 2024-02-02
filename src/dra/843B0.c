@@ -440,7 +440,7 @@ void EntityHolyWaterFlame(Entity* self) {
         randR = (rand() & 0x1F) | 0x40;
         randG = (rand() & 0x1F) | 0x80;
         randB = (rand() & 0x1F) | 0x60;
-        self->primIndex = AllocPrimitives(4U, 4);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 4);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
