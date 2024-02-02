@@ -12,7 +12,7 @@
 <!-- dra.EntityHolyWaterFlame -->
 <g id="node1" class="node">
 <title>dra.EntityHolyWaterFlame</title>
-<ellipse fill="red" stroke="black" cx="768.44" cy="-198" rx="135.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="768.44" cy="-198" rx="135.68" ry="18"/>
 <text text-anchor="middle" x="768.44" y="-194.3" font-family="Times,serif" font-size="14.00">dra.EntityHolyWaterFlame</text>
 </g>
 <!-- dra.AllocPrimitives -->
