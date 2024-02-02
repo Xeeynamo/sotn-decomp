@@ -970,7 +970,7 @@ void EntitySubwpnCrashAgunea(Entity* self) {
     sp10 = 0;
     prim = &g_PrimBuf[self->primIndex];
     prevPrim = prim;
-    sp18 = (((u32)g_GameTimer >> 1) & 1) + 0x1AB;
+    sp18 = ((g_GameTimer >> 1) & 1) + 0x1AB;
     while (prim != NULL) {
         prim->clut = sp18;
         if (sp10 == 0) {
