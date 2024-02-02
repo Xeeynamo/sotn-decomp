@@ -737,6 +737,14 @@ typedef struct {
     s16 unk82;
 } ET_HolyWater;
 typedef struct {
+    s16 timer;
+    s16 angle;
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+} ET_HolyWaterFlame;
+
+typedef struct {
     u16 unk7C;
     u16 unk7E;
     u8 unk80;
@@ -799,6 +807,7 @@ typedef union {
     /* 0x7C */ ET_CrossBoomerang crossBoomerang;
     /* 0x7C */ ET_Vibhuti vibhuti;
     /* 0x7C */ ET_HolyWater holywater;
+    /* 0x7C */ ET_HolyWaterFlame holywaterflame;
     /* 0x7C */ ET_CrashCross crashcross;
     /* 0x7C */ ET_RicRevivalColumn ricColumn;
     /* 0x7C */ ET_GiantSpinningCross giantcross;

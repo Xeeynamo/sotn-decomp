@@ -154,7 +154,156 @@ void EntityHolyWater(Entity* self) {
     g_Player.D_80072F00[3] = 2;
 }
 
-INCLUDE_ASM("ric/nonmatchings/2C4C4", func_80168A20);
+// Entity ID #8. Blueprint 7.
+void EntityHolyWaterFlame(Entity* self) {
+    s16 sp10[5];
+    s16 sp20[5];
+    s16 pad[2];
+    Primitive* prim;
+    s16 angleTemp;
+    s32 angle;
+    s32 i;
+    s32 hex80;
+    u8 randR;
+    u8 randG;
+    u8 randB;
+    u8 primUBase;
+    u8 primVBase;
+    s16* primYPtr;
+    s32 var_s4;
+    s16 temp_v0_2;
+    s32 doubleparams;
+
+    s16 upperParams = self->params >> 8;
+
+    primUBase = D_80155D9C[(g_GameTimer & 7)].x;
+    primVBase = D_80155D9C[(g_GameTimer & 7)].y;
+    switch (self->step) {
+    case 0:
+        randR = (rand() & 0x3F) + 0x2F;
+        randG = (rand() & 0x3F) + 0x6F;
+        randB = (rand() & 0x7F) + 0x6F;
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        i = 0;
+        while (prim != NULL) {
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = randR;
+            prim->g0 = prim->g1 = prim->g2 = prim->g3 = randG;
+            prim->b0 = prim->b1 = prim->b2 = prim->b3 = randB;
+            if (i == 0) {
+                prim->b0 = prim->b1 = prim->g0 = prim->g1 = prim->r0 =
+                    prim->r1 = 0;
+            }
+            prim->clut = 0x1B0;
+            prim->tpage = 0x1A;
+            prim->priority = PLAYER.zPriority + 2;
+            prim->drawMode = 0x7F;
+            prim = prim->next;
+            i++;
+        }
+        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        self->ext.timer.t = 1;
+        self->step += 1;
+        break;
+
+    case 1:
+        if (--self->ext.timer.t == 0) {
+            self->ext.factory.unkB0 = 0xB;
+            func_8015FAB8(self);
+            self->hitboxWidth = 4;
+            self->ext.factory.unk84 = (s16)self->hitboxState;
+            self->posY.i.hi = self->posY.i.hi - 0xA;
+            CreateEntFactoryFromEntity(self, 0x30004U, 0);
+            self->ext.timer.t = 0x50;
+            self->posY.i.hi = self->posY.i.hi + 0xA;
+            self->ext.holywaterflame.unk80 = (rand() & 0xF) + 0x12;
+            self->ext.holywaterflame.angle = rand() & 0xFFF;
+            self->step += 1;
+        }
+        break;
+    case 2:
+        if (self->facingLeft) {
+            var_s4 = 1;
+        } else {
+            var_s4 = -1;
+        }
+        angleTemp = self->ext.holywaterflame.angle;
+        self->ext.holywaterflame.angle += 0xC0;
+        angle = angleTemp;
+        for (i = 0; i < 4; i++) {
+            sp10[i] = self->posX.i.hi + (rsin(angle) >> 0xA);
+            angle += 0x400;
+        }
+        sp10[4] = self->posX.i.hi;
+        sp10[0] = var_s4 + self->posX.i.hi;
+        temp_v0_2 = rsin((s16)((self->ext.timer.t * 64) + 0x800)) >> 8;
+        temp_v0_2 += self->ext.holywaterflame.unk80;
+        temp_v0_2 = temp_v0_2 * 3 >> 1;
+        sp20[0] = self->posY.i.hi - temp_v0_2;
+        sp20[4] = self->posY.i.hi;
+        sp20[2] = (sp20[0] + sp20[4]) / 2;
+        sp20[1] = (sp20[0] + sp20[2]) / 2;
+        sp20[3] = (sp20[2] + sp20[4]) / 2;
+        prim = &g_PrimBuf[self->primIndex];
+        if (--self->ext.timer.t < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        if (self->ext.timer.t & 3) {
+            self->hitboxState = 0;
+        } else {
+            self->hitboxState = self->ext.holywaterflame.unk84;
+        }
+        if (self->ext.timer.t < 0x15) {
+            self->hitboxState = 0;
+        }
+        i = 0;
+        while (prim != NULL) {
+            if (upperParams * 2 + 0x18 >= self->ext.timer.t) {
+                if (prim->g0 >= 10) {
+                    prim->g0 -= 5;
+                }
+                if (prim->b0 >= 10) {
+                    prim->b0 -= 5;
+                }
+                if (prim->r0 >= 16) {
+                    prim->r0 -= 8;
+                }
+                prim->g1 = prim->g2 = prim->g3 = prim->g0;
+                prim->r1 = prim->r2 = prim->r3 = prim->r0;
+                prim->b1 = prim->b2 = prim->b3 = prim->b0;
+            }
+            prim->x0 = sp10[i] - 8;
+            prim->x1 = sp10[i] + 8;
+            prim->y0 = sp10[i + 8];
+            prim->y1 = sp10[i + 8];
+            prim->x2 = sp10[i + 1] - 8;
+            prim->x3 = sp10[i + 1] + 8;
+            prim->y2 = sp20[i + 1];
+            prim->y3 = sp20[i + 1];
+            prim->drawMode &= ~DRAW_HIDE;
+            hex80 = 0x80;
+            prim->u0 = prim->u1 = primUBase - ((i * 7) + hex80);
+            prim->u2 = prim->u3 = primUBase - (((i + 1) * 7) + hex80);
+            prim->v0 = prim->v2 = primVBase - hex80;
+            prim->v1 = prim->v3 = primVBase - 0x70;
+            if ((sp20[4] - sp20[0]) < 7) {
+                prim->drawMode |= DRAW_HIDE;
+                DestroyEntity(self);
+                return;
+            }
+            i++;
+            prim = prim->next;
+        }
+        self->hitboxHeight = temp_v0_2 >> 1;
+        self->hitboxOffY = (-temp_v0_2 >> 1);
+    }
+    g_Player.D_80072F00[3] = 2;
+}
 
 // Entity 13. Made by blueprint 13. That's from subweapon 12.
 // That's the crash for subweapon 4. That's the cross.
