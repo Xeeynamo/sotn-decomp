@@ -829,7 +829,224 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
     }
 }
 
-INCLUDE_ASM("ric/nonmatchings/2C4C4", func_8016A26C);
+// RIC entity #36. Uses RIC blueprint 67. Comes from subweapon 28.
+// Subweapon 28 is the crash of subweapon 9, which is the Agunea (thunder).
+void EntitySubwpnCrashAgunea(Entity* self) {
+    s32 sp10;
+    s32 sp18;
+    Primitive* prevPrim;
+    Primitive* prim;
+    s32 temp_v1_3;
+    s16 var_a1;
+    s16 var_s0;
+    s16 var_s1;
+    s16 var_s2;
+    s16 var_s3;
+    u16 temp_s4;
+    u16 temp_s5;
+    u8 temp_v0_4;
+
+    u8* arr0;
+    u8* arr1;
+    u8* arr2;
+    s32 twentyone;
+
+    u8 rVal;
+    u8 gVal;
+    u8 bVal;
+
+    u16 tempLeft;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
+                      FLAG_UNK_20000;
+        self->facingLeft = (PLAYER.facingLeft + 1) & 1;
+        SetSpeedX(FIX(-2));
+        self->velocityY = FIX(-6);
+        tempLeft = self->facingLeft;
+        self->ext.aguneaCrash.unk7C = tempLeft ? 0x400 : 0xC00;
+        sp10 = 0;
+        prim = &g_PrimBuf[self->primIndex];
+        self->posY.i.hi -= 0xC;
+        while (prim != NULL) {
+            prim->tpage = 0x1C;
+            prim->u0 = 0;
+            prim->v0 = 0;
+            prim->u1 = 0x18;
+            prim->v1 = 0;
+            prim->u2 = 0;
+            prim->v2 = 0x28;
+            prim->u3 = 0x18;
+            prim->v3 = 0x28;
+            prim->priority = PLAYER.zPriority - 2;
+            if (sp10 != 0) {
+                prim->drawMode = 0x13D;
+                self->ext.aguneaCrash.unk8B[sp10] = 0;
+                self->ext.aguneaCrash.unk8B[sp10 + 4] = 0;
+                self->ext.aguneaCrash.unk8B[sp10 + 8] = 0;
+            } else {
+                prim->drawMode = 0x100 | DRAW_HIDE;
+            }
+            prim = prim->next;
+            sp10++;
+        }
+        self->ext.factory.unkB0 = 2;
+        func_8015FAB8(self);
+        self->hitboxWidth = 12;
+        self->hitboxHeight = 12;
+        g_api.PlaySfx(0x60C);
+        self->ext.aguneaCrash.unk98 = 0x7F;
+        self->step++;
+        break;
+    case 1:
+        if (self->facingLeft) {
+            var_a1 = -0x80;
+        } else {
+            var_a1 = 0x80;
+        }
+        self->ext.aguneaCrash.unk7C = var_a1 + self->ext.aguneaCrash.unk7C;
+        if (!(self->ext.aguneaCrash.unk7C & 0x3FF)) {
+            g_api.func_80134714(0x60C, self->ext.aguneaCrash.unk98, 0);
+            self->ext.aguneaCrash.unk98 -= 8;
+            if (self->ext.aguneaCrash.unk98 < 0) {
+                self->ext.aguneaCrash.unk98 = 0;
+            }
+        }
+        self->velocityY += FIX(34.0 / 128);
+        if (self->velocityY > FIX(8)) {
+            self->velocityY = FIX(8);
+        }
+        self->posY.val += self->velocityY;
+        self->posX.val += self->velocityX;
+        if (self->posY.i.hi < 0x101) {
+            if (self->hitFlags == 2) {
+                self->velocityY = FIX(-3);
+                self->hitboxState = 0;
+                self->step = 2;
+                self->velocityX = -(self->velocityX / 2);
+            }
+            break;
+        }
+        DestroyEntity(self);
+        return;
+    case 2:
+        if (self->facingLeft) {
+            var_a1 = 0xC0;
+        } else {
+            var_a1 = -0xC0;
+        }
+        self->ext.aguneaCrash.unk7C = var_a1 + self->ext.aguneaCrash.unk7C;
+        self->velocityY += FIX(18.0 / 128);
+        if (self->velocityY > FIX(8)) {
+            self->velocityY = FIX(8);
+        }
+        self->posY.val += self->velocityY;
+        self->posX.val += self->velocityX;
+        if (self->posY.i.hi > 0x100) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    if (self->animFrameDuration == 0) {
+        sp18 = self->animFrameIdx;
+        self->ext.aguneaCrash.unk8B[sp18 + 1] = 0;
+        self->ext.aguneaCrash.unk8B[sp18 + 5] = 1;
+        self->ext.aguneaCrash.unk8B[sp18 + 9] = 1;
+        sp18++;
+        sp18 &= 3;
+        self->animFrameIdx = sp18;
+        self->animFrameDuration = 2;
+    } else {
+        self->animFrameDuration--;
+    }
+    sp10 = 0;
+    prim = &g_PrimBuf[self->primIndex];
+    prevPrim = prim;
+    sp18 = (((u32)g_GameTimer >> 1) & 1) + 0x1AB;
+    while (prim != NULL) {
+        prim->clut = sp18;
+        if (sp10 == 0) {
+            if (self->facingLeft != 0) {
+                var_s0 = 0x560;
+                var_s1 = 0x2A0;
+                var_s2 = 0xAA0;
+                var_s3 = 0xD60;
+            } else {
+                var_s1 = 0x560;
+                var_s0 = 0x2A0;
+                var_s3 = 0xAA0;
+                var_s2 = 0xD60;
+            }
+            var_a1 = self->ext.aguneaCrash.unk7C;
+            temp_s4 = self->posX.i.hi;
+            temp_s5 = self->posY.i.hi;
+            var_s0 += var_a1;
+            var_s1 += var_a1;
+            var_s2 += var_a1;
+            var_s3 += var_a1;
+            twentyone = 21;
+            prim->x0 = temp_s4 + (((rcos(var_s0) << 4) * twentyone) >> 0x10);
+            prim->y0 = temp_s5 - (((rsin(var_s0) << 4) * twentyone) >> 0x10);
+            prim->x1 = temp_s4 + (((rcos(var_s1) << 4) * twentyone) >> 0x10);
+            prim->y1 = temp_s5 - (((rsin(var_s1) << 4) * twentyone) >> 0x10);
+            prim->x2 = temp_s4 + (((rcos(var_s2) << 4) * twentyone) >> 0x10);
+            prim->y2 = temp_s5 - (((rsin(var_s2) << 4) * twentyone) >> 0x10);
+            prim->x3 = temp_s4 + (((rcos(var_s3) << 4) * twentyone) >> 0x10);
+            prim->y3 = temp_s5 - (((rsin(var_s3) << 4) * twentyone) >> 0x10);
+            prim->drawMode &= ~DRAW_HIDE;
+        } else if (self->ext.aguneaCrash.unk8B[sp10 + 4] != 0) {
+            if (self->ext.aguneaCrash.unk8B[sp10 + 8] != 0) {
+                self->ext.aguneaCrash.unk8B[sp10 + 8] = 0;
+                prim->x0 = prevPrim->x0;
+                prim->y0 = prevPrim->y0;
+                prim->x1 = prevPrim->x1;
+                prim->y1 = prevPrim->y1;
+                prim->x2 = prevPrim->x2;
+                prim->y2 = prevPrim->y2;
+                prim->x3 = prevPrim->x3;
+                prim->y3 = prevPrim->y3;
+            }
+            temp_v0_4 = self->ext.aguneaCrash.unk8B[sp10];
+            self->ext.aguneaCrash.unk8B[sp10] = temp_v0_4 + 1;
+            temp_v1_3 = temp_v0_4 & 0xFF;
+            if ((temp_v1_3) < 0xA) {
+                // whyyyyyy
+                arr0 = &D_80155E70[temp_v0_4][0];
+                rVal = *arr0;
+                arr1 = &D_80155E70[temp_v0_4][1];
+                gVal = *arr1;
+                arr2 = &D_80155E70[temp_v0_4][2];
+                bVal = *arr2;
+                prim->r0 = rVal;
+                prim->g0 = gVal;
+                prim->b0 = bVal;
+                prim->r1 = rVal;
+                prim->g1 = gVal;
+                prim->b1 = bVal;
+                prim->r2 = rVal;
+                prim->g2 = gVal;
+                prim->b2 = bVal;
+                prim->r3 = rVal;
+                prim->g3 = gVal;
+                prim->b3 = bVal;
+                prim->drawMode &= ~DRAW_HIDE;
+            } else {
+                self->ext.aguneaCrash.unk8B[sp10 + 4] = 0;
+                prim->drawMode |= DRAW_HIDE;
+            }
+        }
+        prim = prim->next;
+        sp10++;
+    }
+}
 
 INCLUDE_ASM("ric/nonmatchings/2C4C4", func_8016A974);
 
