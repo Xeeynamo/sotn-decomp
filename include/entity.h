@@ -794,6 +794,19 @@ typedef struct {
     s32 unkB8;
 } ET_80166784;
 
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+    s16 unk86;
+    s16 unk88;
+    s8 unk8A;
+    u8 unk8B[12];
+    s32 unk98;
+} ET_AguneaCrash;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_TimerOnly timer;
@@ -809,6 +822,7 @@ typedef union {
     /* 0x7C */ ET_HolyWater holywater;
     /* 0x7C */ ET_HolyWaterFlame holywaterflame;
     /* 0x7C */ ET_CrashCross crashcross;
+    /* 0x7C */ ET_AguneaCrash aguneaCrash;
     /* 0x7C */ ET_RicRevivalColumn ricColumn;
     /* 0x7C */ ET_GiantSpinningCross giantcross;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
