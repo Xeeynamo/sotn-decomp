@@ -108,7 +108,7 @@ void func_80162870(Entity* self);
 void func_80160F0C(Entity* self);
 void func_80162C7C(Entity* self);
 void func_80162EF8(Entity* self);
-void func_80169F04(Entity* self);
+void EntitySubwpnCrashCrossParticles(Entity* self);
 void func_801641A0(Entity* self);
 void EntityShrinkingPowerUpRing(Entity* self);
 void func_80167A70(Entity* self);
