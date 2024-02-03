@@ -1261,7 +1261,7 @@ void EntitySubwpnCrashAxe(Entity* self) {
 
 INCLUDE_ASM("ric/nonmatchings/2C4C4", func_8016B0C0);
 
-void func_8016B8E8(s32 arg0) {
+void ReboundStoneBounce1(s32 arg0) {
     g_CurrentEntity->ext.generic.unk7C.s =
         (arg0 << 0x10 >> 0xF) - g_CurrentEntity->ext.generic.unk7C.s;
     if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 == 0) {
@@ -1270,7 +1270,7 @@ void func_8016B8E8(s32 arg0) {
     }
 }
 
-void func_8016B92C(s16 arg0) {
+void ReboundStoneBounce2(s16 arg0) {
     if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 == 0) {
         g_CurrentEntity->ext.generic.unk7C.s =
             (arg0 * 2) - g_CurrentEntity->ext.generic.unk7C.s;
@@ -1279,7 +1279,288 @@ void func_8016B92C(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("ric/nonmatchings/2C4C4", func_8016B97C);
+// RIC entity #42. Blueprint 50. Comes from subweapon 7.
+// Rebound stone!
+void EntitySubwpnReboundStone(Entity* self) {
+    Collider collider;
+    u16 playerX;
+    u16 playerY;
+    PrimLineG2* prim;
+    s32 colliderFlags;
+    s32 i;
+    s32 deltaX;
+    s32 deltaY;
+    s32 currX;
+    s32 currY;
+
+    s32 speed = 0x400;
+    s32 facingLeft;
+
+    playerY = self->posY.i.hi;
+    playerX = self->posX.i.hi;
+    self->ext.reboundStone.unk82 = 0;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 16);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->posY.i.hi -= 0x10;
+        playerY = self->posY.i.hi;
+        for (i = 0, prim = &g_PrimBuf[self->primIndex]; prim != NULL;
+             prim = prim->next, i++) {
+            prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
+                0xFF;
+            prim->priority = PLAYER.zPriority + 2;
+            prim->drawMode = 0x33;
+            if (i != 0) {
+                prim->drawMode |= DRAW_HIDE;
+            }
+            prim->x0 = prim->x1 = playerX;
+            prim->y0 = prim->y1 = playerY;
+            prim->timer = 20;
+        }
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        self->zPriority = PLAYER.zPriority + 2;
+
+        facingLeft = PLAYER.facingLeft;
+        self->ext.reboundStone.stoneAngle = facingLeft == 0 ? 0xE80 : 0x980;
+        self->ext.reboundStone.stoneAngle += (rand() & 0x7F) - 0x40;
+
+        self->ext.reboundStone.lifeTimer = 0x40;
+        self->ext.factory.unkB0 = 7;
+        func_8015FAB8(self);
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 4;
+        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            self->ext.reboundStone.unk84 = 4;
+        }
+        self->step += 1;
+        g_api.PlaySfx(SUBWPN_THROW);
+        break;
+
+    case 1:
+        deltaX = rcos(self->ext.reboundStone.stoneAngle) * 0x10;
+        deltaY = -rsin(self->ext.reboundStone.stoneAngle) * 0x10;
+        currX = self->posX.val;
+        currY = self->posY.val;
+        if (self->ext.reboundStone.unk84 == 0) {
+            for (i = 0; i < 6; i++) {
+                g_api.CheckCollision(
+                    FIX_TO_I(currX), FIX_TO_I(currY + deltaY), &collider, 0);
+                if (collider.effects & EFFECT_SOLID) {
+                    colliderFlags =
+                        collider.effects &
+                        (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+                         EFFECT_UNK_1000 | EFFECT_UNK_0800);
+                    if (deltaY > 0) {
+                        if ((colliderFlags == 0) ||
+                            (collider.effects & EFFECT_UNK_0800)) {
+                            ReboundStoneBounce1(0x800);
+                        }
+                        if (colliderFlags == EFFECT_UNK_8000) {
+                            ReboundStoneBounce2(0x200);
+                        }
+                        if (colliderFlags ==
+                            EFFECT_UNK_8000 + EFFECT_UNK_1000) {
+                            ReboundStoneBounce2(0x12E);
+                        }
+                        if (colliderFlags ==
+                            EFFECT_UNK_8000 + EFFECT_UNK_2000) {
+                            ReboundStoneBounce2(0xA0);
+                        }
+                        if (colliderFlags ==
+                            EFFECT_UNK_8000 + EFFECT_UNK_4000) {
+                            ReboundStoneBounce2(0x600);
+                        }
+                        if (colliderFlags == EFFECT_UNK_8000 + EFFECT_UNK_4000 +
+                                                 EFFECT_UNK_1000) {
+                            ReboundStoneBounce2(0x6D2);
+                        }
+                        if (colliderFlags == EFFECT_UNK_8000 + EFFECT_UNK_4000 +
+                                                 EFFECT_UNK_2000) {
+                            ReboundStoneBounce2(0x760);
+                        }
+                    }
+                    if (deltaY < 0) {
+                        if ((colliderFlags == 0) ||
+                            (colliderFlags & EFFECT_UNK_8000)) {
+                            ReboundStoneBounce1(0x800);
+                        }
+                        if (colliderFlags == EFFECT_UNK_0800) {
+                            ReboundStoneBounce2(0xE00);
+                        }
+                        if (colliderFlags ==
+                            EFFECT_UNK_0800 + EFFECT_UNK_1000) {
+                            ReboundStoneBounce2(0xED2);
+                        }
+                        if (colliderFlags ==
+                            EFFECT_UNK_0800 + EFFECT_UNK_2000) {
+                            ReboundStoneBounce2(0xF60);
+                        }
+                        if (colliderFlags ==
+                            EFFECT_UNK_0800 + EFFECT_UNK_4000) {
+                            ReboundStoneBounce2(0xA00);
+                        }
+                        if (colliderFlags == EFFECT_UNK_0800 + EFFECT_UNK_4000 +
+                                                 EFFECT_UNK_1000) {
+                            ReboundStoneBounce2(0x92E);
+                        }
+                        if (colliderFlags == EFFECT_UNK_0800 + EFFECT_UNK_4000 +
+                                                 EFFECT_UNK_2000) {
+                            ReboundStoneBounce2(0x8A0);
+                        }
+                    }
+                }
+                g_api.CheckCollision(
+                    FIX_TO_I(currX + deltaX), FIX_TO_I(currY), &collider, 0);
+                if (collider.effects & EFFECT_SOLID) {
+                    colliderFlags =
+                        collider.effects &
+                        (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+                         EFFECT_UNK_1000 | EFFECT_UNK_0800);
+                    // Cases when traveling right
+                    if (deltaX > 0) {
+                        if ((colliderFlags == 0) ||
+                            TEST_BITS(collider.effects, 0x4800) ||
+                            TEST_BITS(collider.effects, 0xC000)) {
+                            ReboundStoneBounce1(0x400);
+                        }
+                        if (colliderFlags == EFFECT_UNK_0800) {
+                            ReboundStoneBounce2(0xE00);
+                        }
+                        if (colliderFlags ==
+                            EFFECT_UNK_0800 + EFFECT_UNK_1000) {
+                            ReboundStoneBounce2(0xED2);
+                        }
+                        if (colliderFlags ==
+                            EFFECT_UNK_0800 + EFFECT_UNK_2000) {
+                            ReboundStoneBounce2(0xF60);
+                        }
+                        if (colliderFlags == EFFECT_UNK_8000) {
+                            ReboundStoneBounce2(0x200);
+                        }
+                        if (colliderFlags ==
+                            EFFECT_UNK_8000 + EFFECT_UNK_1000) {
+                            ReboundStoneBounce2(0x12E);
+                        }
+                        if (colliderFlags ==
+                            EFFECT_UNK_8000 + EFFECT_UNK_2000) {
+                            ReboundStoneBounce2(0xA0);
+                        }
+                    }
+                    // Cases when traveling left
+                    if (deltaX < 0) {
+                        if ((colliderFlags == 0) ||
+                            ((colliderFlags & 0x4800) == 0x800) ||
+                            ((colliderFlags & 0xC000) == 0x8000)) {
+                            ReboundStoneBounce1(0x400);
+                        }
+                        if (colliderFlags ==
+                            EFFECT_UNK_0800 + EFFECT_UNK_4000) {
+                            ReboundStoneBounce2(0xA00);
+                        }
+                        if (colliderFlags == EFFECT_UNK_0800 + EFFECT_UNK_4000 +
+                                                 EFFECT_UNK_1000) {
+                            ReboundStoneBounce2(0x92E);
+                        }
+                        if (colliderFlags == EFFECT_UNK_0800 + EFFECT_UNK_4000 +
+                                                 EFFECT_UNK_2000) {
+                            ReboundStoneBounce2(0x8A0);
+                        }
+                        if (colliderFlags ==
+                            EFFECT_UNK_8000 + EFFECT_UNK_4000) {
+                            ReboundStoneBounce2(0x600);
+                        }
+                        if (colliderFlags == EFFECT_UNK_8000 + EFFECT_UNK_4000 +
+                                                 EFFECT_UNK_1000) {
+                            ReboundStoneBounce2(0x6D2);
+                        }
+                        if (colliderFlags == EFFECT_UNK_8000 + EFFECT_UNK_4000 +
+                                                 EFFECT_UNK_2000) {
+                            ReboundStoneBounce2(0x760);
+                        }
+                    }
+                }
+                currX += deltaX;
+                if (self->ext.reboundStone.unk82 != 0) {
+                    goto block_93;
+                }
+                currY += deltaY;
+            }
+        } else {
+            self->ext.reboundStone.unk84--;
+        }
+        if (self->ext.reboundStone.unk82 != 0) {
+        block_93:
+            g_api.CreateEntFactoryFromEntity(self, FACTORY(0x200, 42), 0);
+            g_api.PlaySfx(REBOUND_STONE_BOUNCE);
+        }
+        if (self->posX.i.hi < -0x40 || self->posX.i.hi > 0x140 ||
+            self->posY.i.hi < -0x40 || self->posY.i.hi > 0x140 ||
+            self->ext.reboundStone.unk80 == 15) {
+            self->step = 2;
+        } else {
+            deltaX =
+                ((rcos(self->ext.reboundStone.stoneAngle) << 4) * speed) >> 8;
+            self->posX.val += deltaX;
+            deltaY =
+                -((rsin(self->ext.reboundStone.stoneAngle) << 4) * speed) >> 8;
+            self->posY.val += deltaY;
+        }
+        break;
+    case 2:
+        if (--self->ext.reboundStone.lifeTimer == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        if (self->ext.reboundStone.lifeTimer == 0x20) {
+            self->hitboxState = 0;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        while (prim != NULL) {
+            prim->timer = 0;
+            prim = prim->next;
+        }
+        break;
+    }
+
+    i = 0;
+    prim = &g_PrimBuf[self->primIndex];
+    colliderFlags = self->step == 2 ? 4 : 2; // reused var, not colliderFlags
+    // cleaner to use previous 3 lines than to put them in the for's initializer
+    for (; prim != NULL; i++, prim = prim->next) {
+        if (self->ext.reboundStone.unk82 != 0) {
+            if (i == self->ext.reboundStone.unk80) {
+                prim->x0 = playerX;
+                prim->y0 = playerY;
+                prim->drawMode &= ~DRAW_HIDE;
+                // unusual nesting of the same condition
+                if (i == self->ext.reboundStone.unk80) {
+                    prim->x1 = self->posX.i.hi;
+                    prim->y1 = self->posY.i.hi;
+                }
+            }
+        } else if (i == self->ext.reboundStone.unk80) {
+            prim->x1 = self->posX.i.hi;
+            prim->y1 = self->posY.i.hi;
+        }
+        if (!(prim->drawMode & DRAW_HIDE)) {
+            if (prim->timer != 0) {
+                prim->timer--;
+            } else {
+                // again not colliderFlags, seems to control stone fading
+                if (colliderFlags < prim->b1) {
+                    prim->b1 -= colliderFlags;
+                }
+                prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("ric/nonmatchings/2C4C4", func_8016C1BC);
 

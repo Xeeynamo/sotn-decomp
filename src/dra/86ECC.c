@@ -484,7 +484,7 @@ void EntitySubwpnReboundStone(Entity* self) {
     Collider collider;
     u16 playerX;
     u16 playerY;
-    Primitive* prim;
+    PrimLineG2* prim;
     s32 colliderFlags;
     s32 i;
     s32 deltaX;
@@ -518,7 +518,7 @@ void EntitySubwpnReboundStone(Entity* self) {
             }
             prim->x0 = prim->x1 = playerX;
             prim->y0 = prim->y1 = playerY;
-            LOH(prim->u3) = 0x14;
+            prim->timer = 0x14;
         }
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
         self->zPriority = PLAYER.zPriority + 2;
@@ -720,7 +720,7 @@ void EntitySubwpnReboundStone(Entity* self) {
         }
         prim = &g_PrimBuf[self->primIndex];
         while (prim != NULL) {
-            LOH(prim->u3) = 0;
+            prim->timer = 0;
             prim = prim->next;
         }
         break;
@@ -747,8 +747,8 @@ void EntitySubwpnReboundStone(Entity* self) {
             prim->y1 = self->posY.i.hi;
         }
         if (!(prim->drawMode & DRAW_HIDE)) {
-            if (LOH(prim->u3) != 0) {
-                LOH(prim->u3)--;
+            if (prim->timer != 0) {
+                prim->timer--;
             } else {
                 // again not colliderFlags, seems to control stone fading
                 if (colliderFlags < prim->b1) {
