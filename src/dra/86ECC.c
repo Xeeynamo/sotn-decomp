@@ -922,7 +922,7 @@ s32 DraPrimDecreaseBrightness(Primitive* prim, u8 amount) {
 
 // ID #17. Created by factory blueprint #22. This is the blueprint for the
 // Agunea (lightning) subweapon.
-void func_80128C2C(Entity* self) {
+void EntitySubwpnAgunea(Entity* self) {
     Entity* ent;
     Primitive* prim;
     s32 heartCost;

@@ -1369,7 +1369,7 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     EntityHitByLightning,
     EntitySubwpnReboundStone,
     EntitySubwpnThrownVibhuti,
-    func_8016C734,
+    EntitySubwpnAgunea,
     func_8016CC74,
     func_8016D4D8,
     func_8016D328,

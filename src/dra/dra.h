@@ -995,7 +995,7 @@ void func_8011E0E4(Entity* self);
 void func_8011EDA0(Entity* self);
 void EntityUnarmedAttack(Entity* self);
 void func_8011EDA8(Entity* self);
-void func_80128C2C(Entity* self);
+void EntitySubwpnAgunea(Entity* self);
 void func_801291C4(Entity* self);
 void EntityNumberMovesToHpMeter(Entity* self);
 void EntitySubwpnReboundStone(Entity* self);

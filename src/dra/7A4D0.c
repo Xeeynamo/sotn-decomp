@@ -20,7 +20,7 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     func_8011EDA0,
     EntityUnarmedAttack,
     func_8011EDA8,
-    func_80128C2C,
+    EntitySubwpnAgunea,
     func_801291C4,
     EntityNumberMovesToHpMeter,
     EntitySubwpnReboundStone,
