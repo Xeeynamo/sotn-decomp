@@ -1367,7 +1367,7 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     func_80160D2C,
     EntityHitByIce,
     EntityHitByLightning,
-    func_8016B97C,
+    EntitySubwpnReboundStone,
     func_8016C1BC,
     func_8016C734,
     func_8016CC74,
