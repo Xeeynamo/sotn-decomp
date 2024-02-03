@@ -159,4 +159,4 @@ extern Dialogue g_Dialogue;
 // func_801AF6D0
 extern u8 D_80181150[]; // Animation
 extern Unkstruct_80180FE0 D_8018129C[];
-extern s32 D_801BEB68[];
+extern s32 D_801BEB64[][2];

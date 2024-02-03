@@ -829,11 +829,11 @@ void func_801AF6D0(void) {
     a = -0x75;
 
     i = 0;
-    var_a2 = D_801BEB68;
-
+    var_a2 = D_801BEB64;
+    
     for (; i < 0x53; ++i) {
-        var_a2[-1] += ((b + var_a0++[0]) - (d + var_a1++[0])) << 9;
-        *var_a2 += ((a + var_a0++[0]) - (c + var_a1++[0])) << 9;
+        D_801BEB64[i][0] += ((b + *var_a0++) - (d + *var_a1++)) << 9;
+        D_801BEB64[i][1] += ((a + *var_a0++) - (c + *var_a1++)) << 9;
         var_a2 += 2;
     }
 }
