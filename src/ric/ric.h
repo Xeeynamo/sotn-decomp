@@ -119,7 +119,7 @@ void func_80160D2C(Entity* self);
 void EntityHitByIce(Entity* self);
 void EntityHitByLightning(Entity* self);
 void EntitySubwpnReboundStone(Entity* self);
-void func_8016C1BC(Entity* self);
+void EntitySubwpnThrownVibhuti(Entity* self);
 void func_8016C734(Entity* self);
 void func_8016CC74(Entity* self);
 void func_8016D4D8(Entity* self);

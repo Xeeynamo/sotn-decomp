@@ -1562,7 +1562,149 @@ void EntitySubwpnReboundStone(Entity* self) {
     }
 }
 
-INCLUDE_ASM("ric/nonmatchings/2C4C4", func_8016C1BC);
+// RIC entity #43. Blueprint 49. Subweapon 8. Vibhuti!
+void EntitySubwpnThrownVibhuti(Entity* self) {
+    Collider collider;
+    FakePrim* fakeprim;
+    s16 collisionOffsetX;
+    s16 randomAngle;
+    s16 randomVelocity;
+    s32 i;
+    u16 selfX;
+    u16 selfY;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 13);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        self->ext.factory.unkB0 = 8;
+        func_8015FAB8(self);
+        self->hitboxWidth = self->hitboxHeight = 4;
+        self->posY.i.hi -= 15;
+        selfX = self->posX.i.hi;
+        selfY = self->posY.i.hi;
+        self->ext.vibhuti.timer = 0x80;
+        fakeprim = (FakePrim*)&g_PrimBuf[self->primIndex];
+        if (PLAYER.facingLeft) {
+            self->posX.i.hi -= 13;
+        } else {
+            self->posX.i.hi += 13;
+        }
+        selfX = self->posX.i.hi;
+        selfY = self->posY.i.hi;
+        while (1) {
+            fakeprim->drawMode = 2;
+            fakeprim->priority = PLAYER.zPriority - 1;
+            if (fakeprim->next == NULL) {
+                fakeprim->y0 = fakeprim->x0 = fakeprim->w = 0;
+                fakeprim->drawMode &= ~DRAW_HIDE;
+                break;
+            }
+            fakeprim->posX.i.hi = selfX;
+            fakeprim->posY.i.hi = selfY;
+            fakeprim->posX.i.lo = fakeprim->posY.i.lo = 0;
+            randomAngle = (rand() & 0xFF) + 0x100;
+            randomVelocity = (rand() & 0xFF) + 0x80;
+            fakeprim->velocityX.val =
+                ((rcos(randomAngle) << 4) * randomVelocity >> 9) + FIX(0.5);
+            fakeprim->velocityY.val =
+                -((rsin(randomAngle) << 4) * randomVelocity >> 9);
+            fakeprim->velocityX.val = (fakeprim->velocityX.val * 3) >> 1;
+            if (self->facingLeft) {
+                fakeprim->velocityX.val = -fakeprim->velocityX.val;
+            }
+            fakeprim->delay = 1;
+            fakeprim->posY.i.hi -= 4;
+            fakeprim->b0 = fakeprim->g0 = fakeprim->r0 = 0xFF;
+            fakeprim->h = fakeprim->w = 2;
+            fakeprim->x0 = fakeprim->posX.i.hi;
+            fakeprim->y0 = fakeprim->posY.i.hi;
+            fakeprim = fakeprim->next;
+        }
+        g_api.PlaySfx(SUBWPN_THROW);
+        self->step++;
+        break;
+    case 1:
+        if (self->facingLeft) {
+            collisionOffsetX = -2;
+        } else {
+            collisionOffsetX = 2;
+        }
+
+        if (--self->ext.vibhuti.timer == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        fakeprim = (FakePrim*)&g_PrimBuf[self->primIndex];
+        i = 0;
+        while (1) {
+            if (fakeprim->next == NULL) {
+                fakeprim->y0 = fakeprim->x0 = fakeprim->w = 0;
+                fakeprim->drawMode &= ~DRAW_HIDE;
+                break;
+            }
+            fakeprim->posX.i.hi = fakeprim->x0;
+            fakeprim->posY.i.hi = fakeprim->y0;
+            if (fakeprim->delay != 0) {
+                if (fakeprim->velocityX.val != 0) {
+                    fakeprim->posX.val += fakeprim->velocityX.val;
+                    g_api.CheckCollision(fakeprim->posX.i.hi + collisionOffsetX,
+                                         fakeprim->posY.i.hi, &collider, 0);
+                    if (collider.effects & EFFECT_UNK_0002) {
+                        fakeprim->velocityX.val = 0;
+                    }
+                }
+                fakeprim->posY.val += fakeprim->velocityY.val;
+                fakeprim->velocityY.val += FIX(12.0 / 128);
+                if (fakeprim->velocityY.val > FIX(4)) {
+                    fakeprim->velocityY.val = FIX(4);
+                }
+                if (fakeprim->velocityY.val > 0) {
+                    g_api.CheckCollision(
+                        fakeprim->posX.i.hi, fakeprim->posY.i.hi, &collider, 0);
+                    if (collider.effects & EFFECT_SOLID) {
+                        fakeprim->delay = 0;
+                        fakeprim->posY.i.hi =
+                            fakeprim->posY.i.hi + collider.unk18 - (i % 3 + 1);
+                        fakeprim->w = fakeprim->h = 3;
+                    }
+                }
+            }
+            if ((self->ext.vibhuti.timer & 7) == i) {
+                self->posX.i.hi = fakeprim->posX.i.hi;
+                self->posY.i.hi = fakeprim->posY.i.hi;
+                if (fakeprim->drawMode & DRAW_HIDE) {
+                    self->hitboxHeight = 0;
+                    self->hitboxWidth = 0;
+                } else {
+                    self->hitboxWidth = self->hitboxHeight = 4;
+                }
+                if (fakeprim->delay != 0) {
+                    self->hitboxOffY = 0;
+                } else {
+                    self->hitboxOffY = -6;
+                }
+            }
+            if ((self->hitFlags != 0) &&
+                (((self->ext.vibhuti.timer + 1) & 7) == i)) {
+                fakeprim->drawMode = DRAW_HIDE;
+            }
+            if ((self->ext.vibhuti.timer - 1) == i) {
+                fakeprim->drawMode = DRAW_HIDE;
+            }
+            fakeprim->x0 = fakeprim->posX.i.hi;
+            fakeprim->y0 = fakeprim->posY.i.hi;
+            fakeprim = fakeprim->next;
+            i++;
+        }
+        self->hitFlags = 0;
+        break;
+    }
+}
 
 s32 RicPrimDecreaseBrightness(Primitive* prim, u8 amount) {
     u8 isEnd;
