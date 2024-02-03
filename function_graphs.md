@@ -2564,7 +2564,7 @@
 - [✅ func_801ADAC8](function_calls/st0.func_801ADAC8.svg?raw=1)
 - [❌ func_801ADB10](function_calls/st0.func_801ADB10.svg?raw=1)
 - [❌ func_801AF380](function_calls/st0.func_801AF380.svg?raw=1)
-- [❌ func_801AF6D0](function_calls/st0.func_801AF6D0.svg?raw=1)
+- [✅ func_801AF6D0](function_calls/st0.func_801AF6D0.svg?raw=1)
 - [❌ func_801AF774](function_calls/st0.func_801AF774.svg?raw=1)
 - [✅ func_801B0058](function_calls/st0.func_801B0058.svg?raw=1)
 - [✅ func_801B0180](function_calls/st0.func_801B0180.svg?raw=1)
