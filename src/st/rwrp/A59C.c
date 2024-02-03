@@ -441,7 +441,9 @@ void func_8018EA30(void) {
 
 INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018EAB4);
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018EC10);
+extern s8 c_HeartPrizes[];
+
+#include "../collect_heart.h"
 
 void CollectGold(u16 goldSize) {
     s32 *gold, *unk;
