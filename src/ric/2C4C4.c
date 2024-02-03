@@ -1048,7 +1048,216 @@ void EntitySubwpnCrashAgunea(Entity* self) {
     }
 }
 
-INCLUDE_ASM("ric/nonmatchings/2C4C4", func_8016A974);
+// RIC entity #37. Comes from blueprint 41. That's subweapon 20.
+// Subweapon 20 is crash of subweapon 2, which is the axe.
+void EntitySubwpnCrashAxe(Entity* self) {
+    s32 sp10;
+    s32 sp18;
+    Primitive* prevPrim;
+    Primitive* prim;
+    s32 temp_v1_3;
+    s16 var_s0;
+    s16 var_s1;
+    s16 var_s2;
+    s16 var_s3;
+    s16 var_v0;
+    s16 temp_s4;
+    s16 temp_s5;
+    u8 temp_v0_4;
+
+    s32 temp_s1;
+    s16 temp_s0;
+
+    u8* arr0;
+    u8* arr1;
+    u8* arr2;
+    s32 twentyone;
+
+    u8 rVal;
+    u8 gVal;
+    u8 bVal;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        sp10 = 0;
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
+                      FLAG_UNK_20000;
+        self->facingLeft = 0;
+        prim = &g_PrimBuf[self->primIndex];
+        self->ext.axeCrash.unk7C = ((u8)self->params << 9) + 0xC00;
+        self->posY.i.hi -= 12;
+        if (prim != NULL) {
+            do {
+                prim->tpage = 0x1C;
+                prim->u0 = prim->v0 = prim->v1 = prim->u2 = 0;
+                prim->u1 = prim->u3 = 0x18;
+                prim->v2 = prim->v3 = 0x28;
+                prim->priority = PLAYER.zPriority + 4;
+                if (sp10 != 0) {
+                    prim->drawMode = 0x13D;
+                    self->ext.axeCrash.unk8B[sp10] = 0;
+                    self->ext.axeCrash.unk8B[sp10 + 4] = 0;
+                    self->ext.axeCrash.unk8B[sp10 + 8] = 0;
+                } else {
+                    prim->drawMode = 0x100 | DRAW_HIDE;
+                }
+                prim = prim->next;
+                sp10++;
+            } while (prim != NULL);
+        }
+        self->ext.factory.unkB0 = 2;
+        func_8015FAB8(self);
+        self->hitboxWidth = 12;
+        self->hitboxHeight = 12;
+        self->ext.axeCrash.unk9C = 16;
+        self->ext.axeCrash.unkA0 = (u8)self->params << 9;
+        self->step++;
+        break;
+    case 1:
+        temp_s1 = self->ext.axeCrash.unk9C;
+        if (++self->ext.axeCrash.unk9C >= 0x29) {
+            self->ext.factory.unkA2 = 16;
+            self->step++;
+        }
+        temp_s0 = self->ext.axeCrash.unkA0;
+        self->ext.axeCrash.unkA0 += 0xC0;
+        self->ext.axeCrash.unk7C += 0x80;
+        self->velocityX = rcos(temp_s0) * temp_s1;
+        self->velocityY = -rsin(temp_s0) * temp_s1;
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        break;
+    case 2:
+        if (--self->ext.factory.unkA2 == 0) {
+            self->ext.factory.unkA2 = 8;
+            self->step++;
+        }
+        temp_s1 = self->ext.axeCrash.unk9C;
+        temp_s0 = self->ext.axeCrash.unkA0;
+        self->ext.axeCrash.unkA0 += 0xC0;
+        self->ext.axeCrash.unk7C += 0x80;
+        self->velocityX = rcos(temp_s0) * temp_s1;
+        self->velocityY = -rsin(temp_s0) * temp_s1;
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        break;
+    case 3:
+        if (--self->ext.factory.unkA2 == 0) {
+            if ((u8)self->params == 0) {
+                g_api.PlaySfx(0x635);
+                g_api.PlaySfx(0x62F);
+            }
+            g_Player.unk4E = 1;
+            self->flags &= ~(FLAG_UNK_04000000 | FLAG_UNK_20000);
+        }
+        temp_s1 = self->ext.axeCrash.unk9C;
+        self->ext.axeCrash.unk9C += 2;
+        temp_s0 = self->ext.axeCrash.unkA0;
+        self->ext.axeCrash.unkA0 += 0x28;
+        self->ext.axeCrash.unk7C += 0x80;
+        self->velocityX = rcos(temp_s0) * temp_s1;
+        self->velocityY = -rsin(temp_s0) * temp_s1;
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        if (self->animFrameDuration == 0) {
+            sp18 = self->animFrameIdx;
+            self->ext.axeCrash.unk8B[sp18 + 1] = 0;
+            self->ext.axeCrash.unk8B[sp18 + 5] = 1;
+            self->ext.axeCrash.unk8B[sp18 + 9] = 1;
+            sp18++;
+            sp18 &= 3;
+            self->animFrameIdx = sp18;
+            self->animFrameDuration = 2;
+        } else {
+            self->animFrameDuration--;
+        }
+        break;
+    }
+    sp10 = 0;
+    prim = &g_PrimBuf[self->primIndex];
+    prevPrim = prim;
+    sp18 = ((g_GameTimer >> 1) & 1) + 0x1AB;
+    while (prim != NULL) {
+        prim->clut = sp18;
+        if (sp10 == 0) {
+            if (self->facingLeft != 0) {
+                var_s0 = 0x560;
+                var_s1 = 0x2A0;
+                var_s3 = 0xAA0;
+                var_v0 = 0xD60;
+            } else {
+                var_s1 = 0x560;
+                var_s0 = 0x2A0;
+                var_v0 = 0xAA0;
+                var_s3 = 0xD60;
+            }
+            var_s2 = self->ext.axeCrash.unk7C;
+            temp_s4 = self->posX.i.hi;
+            temp_s5 = self->posY.i.hi;
+            var_s0 += var_s2;
+            var_s1 += var_s2;
+            var_s3 += var_s2;
+            var_v0 += var_s2;
+            twentyone = 21;
+            prim->x0 = temp_s4 + (((rcos(var_s0) << 4) * twentyone) >> 0x10);
+            prim->y0 = temp_s5 - (((rsin(var_s0) << 4) * twentyone) >> 0x10);
+            prim->x1 = temp_s4 + (((rcos(var_s1) << 4) * twentyone) >> 0x10);
+            prim->y1 = temp_s5 - (((rsin(var_s1) << 4) * twentyone) >> 0x10);
+            prim->x2 = temp_s4 + (((rcos(var_s3) << 4) * twentyone) >> 0x10);
+            prim->y2 = temp_s5 - (((rsin(var_s3) << 4) * twentyone) >> 0x10);
+            prim->x3 = temp_s4 + (((rcos(var_v0) << 4) * twentyone) >> 0x10);
+            prim->y3 = temp_s5 - (((rsin(var_v0) << 4) * twentyone) >> 0x10);
+            prim->drawMode &= 0xFFF7;
+        } else if (self->ext.axeCrash.unk8B[sp10 + 4] != 0) {
+            if (self->ext.axeCrash.unk8B[sp10 + 8] != 0) {
+                self->ext.axeCrash.unk8B[sp10 + 8] = 0;
+                prim->x0 = prevPrim->x0;
+                prim->y0 = prevPrim->y0;
+                prim->x1 = prevPrim->x1;
+                prim->y1 = prevPrim->y1;
+                prim->x2 = prevPrim->x2;
+                prim->y2 = prevPrim->y2;
+                prim->x3 = prevPrim->x3;
+                prim->y3 = prevPrim->y3;
+            }
+            temp_v0_4 = self->ext.axeCrash.unk8B[sp10];
+            self->ext.axeCrash.unk8B[sp10] = temp_v0_4 + 1;
+            temp_v1_3 = temp_v0_4 & 0xFF;
+            if ((temp_v1_3) < 0xA) {
+                // whyyyyyy
+                arr0 = &D_80155E70[temp_v0_4][0];
+                rVal = *arr0;
+                arr1 = &D_80155E70[temp_v0_4][1];
+                gVal = *arr1;
+                arr2 = &D_80155E70[temp_v0_4][2];
+                bVal = *arr2;
+                prim->r0 = rVal;
+                prim->g0 = gVal;
+                prim->b0 = bVal;
+                prim->r1 = rVal;
+                prim->g1 = gVal;
+                prim->b1 = bVal;
+                prim->r2 = rVal;
+                prim->g2 = gVal;
+                prim->b2 = bVal;
+                prim->r3 = rVal;
+                prim->g3 = gVal;
+                prim->b3 = bVal;
+                prim->drawMode &= ~DRAW_HIDE;
+            } else {
+                self->ext.axeCrash.unk8B[sp10 + 4] = 0;
+                prim->drawMode |= DRAW_HIDE;
+            }
+        }
+        prim = prim->next;
+        sp10++;
+    }
+}
 
 INCLUDE_ASM("ric/nonmatchings/2C4C4", func_8016B0C0);
 

@@ -113,7 +113,7 @@ void func_801641A0(Entity* self);
 void EntityShrinkingPowerUpRing(Entity* self);
 void func_80167A70(Entity* self);
 void EntitySubwpnCrashAgunea(Entity* self);
-void func_8016A974(Entity* self);
+void EntitySubwpnCrashAxe(Entity* self);
 void func_8016B0C0(Entity* self);
 void func_80160D2C(Entity* self);
 void EntityHitByIce(Entity* self);
