@@ -441,21 +441,9 @@ void func_8018EA30(void) {
 
 INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018EAB4);
 
-extern s8 D_80180EC0[];
+extern s8 c_HeartPrizes[];
 
-void func_8018EC10(s32 arg0) {
-    s32* hearts;
-
-    g_api_PlaySfx(NA_SE_PL_COLLECT_HEART);
-    hearts = &g_Status.hearts;
-    *hearts += D_80180EC0[arg0 & 0xffff];
-
-    if (g_Status.heartsMax < *hearts) {
-        *hearts = g_Status.heartsMax;
-    }
-
-    DestroyEntity(g_CurrentEntity);
-}
+#include "../collect_heart.h"
 
 void CollectGold(u16 goldSize) {
     s32 *gold, *unk;

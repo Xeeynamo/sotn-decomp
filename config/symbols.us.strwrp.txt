@@ -44,3 +44,5 @@ EntitySoulStealOrb = 0x80194590;
 EntityEnemyBlood = 0x80194924;
 BottomCornerText = 0x80194EC0;
 g_ItemIconSlots = 0x801966A8;
+c_HeartPrizes = 0x80180EC0;
+CollectHeart = 0x8018EC10;
