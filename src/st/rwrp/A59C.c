@@ -441,9 +441,6 @@ void func_8018EA30(void) {
 
 INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018EAB4);
 
-// #ifndef NON_MATCHING
-// INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018EC10);
-// #else
 extern s8 D_80180EC0[];
 
 void func_8018EC10(s32 arg0) {
@@ -459,8 +456,6 @@ void func_8018EC10(s32 arg0) {
 
     DestroyEntity(g_CurrentEntity);
 }
-
-// #endif
 
 void CollectGold(u16 goldSize) {
     s32 *gold, *unk;
