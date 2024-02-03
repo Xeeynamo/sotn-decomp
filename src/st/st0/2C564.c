@@ -830,7 +830,7 @@ void func_801AF6D0(void) {
 
     i = 0;
     var_a2 = D_801BEB64;
-    
+
     for (; i < 0x53; ++i) {
         D_801BEB64[i][0] += ((b + *var_a0++) - (d + *var_a1++)) << 9;
         D_801BEB64[i][1] += ((a + *var_a0++) - (c + *var_a1++)) << 9;
