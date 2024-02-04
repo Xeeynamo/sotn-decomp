@@ -822,6 +822,16 @@ typedef struct {
     u16 unkA0;
 } ET_AxeCrash;
 
+typedef struct {
+    s32 pad7c;
+    Primitive* unk80;
+    s16 unk84;
+    s16 unk86;
+    s16 unk88;
+    struct Entity* parent;
+    s16 unk90;
+} ET_801291C4;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_TimerOnly timer;
@@ -858,6 +868,7 @@ typedef union {
     /* 0x7C */ ET_Merman_2 merman2;
     /* 0x7C */ ET_MermanWaterSplash mermanWaterSplash;
     /* 0x7C */ ET_80128C2C et_80128C2C;
+    /* 0x7C */ ET_801291C4 et_801291C4;
     /* 0x7C */ ET_8017091C et_8017091C;
     /* 0x7C */ ET_80170F64 et_80170F64;
     /* 0x7C */ ET_stopwatchCircle et_stopwatchCircle;
