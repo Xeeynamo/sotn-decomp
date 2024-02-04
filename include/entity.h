@@ -832,6 +832,16 @@ typedef struct {
     s16 unk90;
 } ET_801291C4;
 
+typedef struct {
+    s16 timer;
+    u16 unk7E;
+    s16 unk80;
+    s16 pad82;
+    s32 unk84;
+    s32 unk88;
+    u16 unk8C;
+} ET_VibhutiCrash;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_TimerOnly timer;
@@ -849,6 +859,7 @@ typedef union {
     /* 0x7C */ ET_CrashCross crashcross;
     /* 0x7C */ ET_AguneaCrash aguneaCrash;
     /* 0x7C */ ET_AxeCrash axeCrash;
+    /* 0x7C */ ET_VibhutiCrash vibhutiCrash;
     /* 0x7C */ ET_RicRevivalColumn ricColumn;
     /* 0x7C */ ET_GiantSpinningCross giantcross;
     /* 0x7C */ ET_EquipItemDrop equipItemDrop;
