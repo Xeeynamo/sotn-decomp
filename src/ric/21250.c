@@ -1371,7 +1371,7 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     EntitySubwpnThrownVibhuti,
     EntitySubwpnAgunea,
     EntityAguneaHitEnemy,
-    func_8016D4D8,
+    EntitySubwpnCrashVibhuti,
     func_8016D328,
     func_8016E324,
     func_8016D9C4,

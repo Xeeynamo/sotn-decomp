@@ -2111,7 +2111,96 @@ void func_8016D328(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("ric/nonmatchings/2C4C4", func_8016D4D8);
+void EntitySubwpnCrashVibhuti(Entity* self) {
+    FakePrim* prim;
+    s32 magnitude;
+    s32 angle;
+    s32 i;
+    s32 unk7E;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_TILE, 9);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            g_Player.unk4E = 1;
+            return;
+        }
+        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 9; i++) {
+            prim->r0 = prim->g0 = prim->b0 = 0xFF;
+            prim->w = prim->h = 1;
+            prim->priority = PLAYER.zPriority + 8;
+            prim->drawMode = 0xA;
+            prim = prim->next;
+        }
+        D_80175890 = 0;
+        self->step++;
+        return;
+    case 1:
+        // Weird fake stuff to load unk7E a second time
+        self->ext.vibhutiCrash.unk7E++;
+        unk7E = self->ext.vibhutiCrash.unk7E;
+        if (!(unk7E & 1)) {
+            if (self->ext.vibhutiCrash.timer < 8) {
+                self->ext.vibhutiCrash.timer++;
+                self->ext.vibhutiCrash.unk80++;
+                if (self->ext.vibhutiCrash.unk80 >= 0x30) {
+                    self->step += 1;
+                }
+                prim = &g_PrimBuf[self->primIndex];
+                for (i = 0; i < 9; i++) {
+                    if ((prim->drawMode & 8)) {
+                        break;
+                    }
+                    prim = prim->next;
+                }
+                prim->posX.val = PLAYER.posX.val;
+                prim->posY.val = PLAYER.posY.val + FIX(-24);
+                angle = rand() % 0x200 + 0x300;
+                magnitude = (rand() % 24) + 0x20;
+                prim->velocityX.val = (rcos(angle) * magnitude);
+                prim->velocityY.val = -(rsin(angle) * magnitude);
+                prim->delay = 0x10;
+                prim->drawMode &= ~DRAW_HIDE;
+            }
+        }
+        /* fallthrough */
+    case 2:
+        if (!(++D_80175890 & 7)) {
+            g_api.PlaySfx(0x672);
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 9; i++) {
+            if (!(prim->drawMode & DRAW_HIDE)) {
+                if (--prim->delay == 0) {
+                    prim->drawMode |= DRAW_HIDE;
+                    self->ext.vibhutiCrash.timer--;
+                    self->ext.vibhutiCrash.unk84 = prim->posX.val;
+                    self->ext.vibhutiCrash.unk88 = prim->posY.val;
+                    self->ext.vibhutiCrash.unk8C = prim->velocityX.val < 1;
+                    CreateEntFactoryFromEntity(self, FACTORY(0, 55), 0);
+                } else {
+                    prim->posX.val += prim->velocityX.val;
+                    prim->posY.val += prim->velocityY.val;
+                    prim->velocityY.val += FIX(0.25);
+                    prim->x0 = prim->posX.i.hi;
+                    prim->y0 = prim->posY.i.hi;
+                }
+            }
+            prim = prim->next;
+        }
+        if ((self->step == 2) && (self->ext.vibhutiCrash.timer == 0)) {
+            self->step++;
+        }
+        return;
+    case 3:
+        g_Player.unk4E = 1;
+        DestroyEntity(self);
+        break;
+    }
+}
 
 void func_8016D920(Entity* entity) {
     switch (entity->step) {
