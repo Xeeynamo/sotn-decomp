@@ -60,7 +60,8 @@ segments:
       - [0x1AAEC, .rodata, 2C4C4] #EntityRichterRevivalColumn
       - [0x1AB04, .rodata, 2C4C4] #EntityCrossBoomerang
       - [0x1AB24, .rodata, 2C4C4] #EntitySubwpnAgunea
-      - [0x1AB38, rodata]
+      - [0x1AB38, .rodata, 319C4]
+      - [0x1AB50, rodata]
       - [0x1AB68, .rodata, 32324]
       - [0x1AC50, rodata]
       - [0x1AC60, c, 1AC60]
@@ -73,6 +74,7 @@ segments:
       - [0x26C84, c, 26C84]
       - [0x2A060, c, 2A060]
       - [0x2C4C4, c, 2C4C4]
+      - [0x319C4, c, 319C4]
       - [0x32324, c, 32324]
       - [0x37B64, sbss]
   - [0x39A58]
