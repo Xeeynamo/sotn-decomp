@@ -295,7 +295,109 @@ void func_8016E324(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("ric/nonmatchings/319C4", func_8016E46C);
+void func_8016E46C(Entity* self) {
+    Primitive* prim;
+    s16 var_s7;
+    s16 hitboxOffX;
+    s32 temp_s0;
+    s32 temp_s0_2;
+    s32 halfwidth;
+    s32 var_s3;
+    s32 i;
+    s32 temp_v1;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_G4, 6);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        if (self->facingLeft != 0) {
+            self->ext.et_8016E46C.unk7C = -16;
+            self->ext.et_8016E46C.unk7E = -2;
+        } else {
+            self->ext.et_8016E46C.unk7C = 16;
+            self->ext.et_8016E46C.unk7E = 2;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 6; i++) {
+            var_s3 = i + 2;
+            if (var_s3 >= 6) {
+                var_s3 = i - 4;
+            }
+            prim->x0 = prim->x1 = D_80175894[i].unk0;
+            prim->y0 = prim->y1 = D_80175894[i].unk2;
+            prim->x2 = prim->x3 = D_80175894[var_s3].unk0;
+            prim->y2 = prim->y3 = D_80175894[var_s3].unk2;
+            prim->priority = 0xC2;
+            prim->blendMode = 0x435;
+            prim = prim->next;
+        }
+        self->step++;
+        break;
+
+    case 1:
+        if (++self->ext.et_8016E46C.unk80 >= 0x3C) {
+            self->ext.et_8016E46C.unkB0 = 0x11;
+            func_8015FAB8(self);
+            g_api.PlaySfx(0x62F);
+            g_api.PlaySfx(0x635);
+            self->step++;
+        }
+        break;
+    case 2:
+        self->ext.et_8016E46C.unk80++;
+        self->ext.et_8016E46C.unk7E += self->ext.et_8016E46C.unk7C;
+        var_s3 = D_80175894[1].unk0 + self->ext.et_8016E46C.unk7E;
+        if (var_s3 < -0x50 || var_s3 > 0x150) {
+            self->step++;
+        }
+        break;
+    case 3:
+        if (++self->ext.et_8016E46C.unk80 >= 0x78) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    var_s7 = 0;
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 6; i++) {
+        var_s3 = i + 2;
+        if (var_s3 >= 6) {
+            var_s3 = i - 4;
+        }
+        temp_v1 = rsin((self->ext.et_8016E46C.unk80 * 20) + (i << 8)) * 96;
+        prim->r0 = prim->r1 = ABS(temp_v1 >> 0xc);
+        temp_v1 = rsin((self->ext.et_8016E46C.unk80 * 15) + (i << 8)) * 96;
+        prim->g0 = prim->g1 = ABS(temp_v1 >> 0xc);
+        temp_v1 = rsin((self->ext.et_8016E46C.unk80 * 10) + (i << 8)) * 96;
+        prim->b0 = prim->b1 = ABS(temp_v1 >> 0xc);
+        temp_v1 = rsin((self->ext.et_8016E46C.unk80 * 15) + (var_s3 << 8)) * 96;
+        prim->r2 = prim->r3 = ABS(temp_v1 >> 0xc);
+        temp_v1 = rsin((self->ext.et_8016E46C.unk80 * 10) + (var_s3 << 8)) * 96;
+        prim->g2 = prim->g3 = ABS(temp_v1 >> 0xc);
+        temp_v1 = rsin((self->ext.et_8016E46C.unk80 * 20) + (var_s3 << 8)) * 96;
+        prim->b2 = prim->b3 = ABS(temp_v1 >> 0xc);
+        prim->x1 = D_80175894[i].unk0;
+        prim->y0 = prim->y1 = D_80175894[i].unk2;
+        prim->x3 = D_80175894[var_s3].unk0;
+        prim->y2 = prim->y3 = D_80175894[var_s3].unk2;
+        prim->x0 = D_80175894[i].unk0 + self->ext.et_8016E46C.unk7E;
+        prim->x2 = D_80175894[var_s3].unk0 + self->ext.et_8016E46C.unk7E;
+        if (var_s7 < ABS(D_80175894[i].unk2)) {
+            var_s7 = ABS(D_80175894[i].unk2);
+        }
+        prim = prim->next;
+    }
+    halfwidth = self->ext.et_8016E46C.unk7E / 2;
+    hitboxOffX = self->facingLeft == 0 ? halfwidth : -halfwidth;
+    self->hitboxOffX = hitboxOffX;
+    self->hitboxWidth = ABS(hitboxOffX);
+    self->hitboxHeight = var_s7 - self->posY.i.hi;
+}
 
 void func_8016E9E4(Entity* self) {
     Primitive* prim;
