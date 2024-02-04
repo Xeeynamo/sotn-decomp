@@ -849,6 +849,15 @@ typedef struct {
     s16 unk90;
 } ET_8016D9C4;
 
+typedef struct{
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+    s16 unk86;
+} ET_8016DF74;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_TimerOnly timer;
@@ -860,6 +869,7 @@ typedef union {
     /* 0x7C */ ET_HellfireHandler hellfireHandler;
     /* 0x7C */ ET_ReboundStone reboundStone;
     /* 0x7C */ ET_8016D9C4 et_8016D9C4;
+    /* 0x7C */ ET_8016DF74 et_8016DF74;
     /* 0x7C */ ET_CrossBoomerang crossBoomerang;
     /* 0x7C */ ET_Vibhuti vibhuti;
     /* 0x7C */ ET_HolyWater holywater;
