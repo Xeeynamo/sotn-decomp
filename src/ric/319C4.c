@@ -176,8 +176,8 @@ void func_8016DF74(Entity* self) {
         }
         self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
         prim = &g_PrimBuf[self->primIndex];
-        
-        for(i = 0; i < 0x10; i++) {
+
+        for (i = 0; i < 0x10; i++) {
             prim->priority = 0xC2;
             prim->drawMode = 0x435;
             prim->x0 = prim->x1 = 0x80;
@@ -197,8 +197,8 @@ void func_8016DF74(Entity* self) {
         if (self->ext.et_8016DF74.unk84 > 0x120) {
             self->ext.factory.unkB0 = 0x1D;
             func_8015FAB8(self);
-            self->posX.val = 0x800000;
-            self->posY.val = 0x800000;
+            self->posX.val = FIX(128.0);
+            self->posY.val = FIX(128.0);
             self->hitboxWidth = 0x80;
             self->hitboxHeight = 0x80;
             self->step++;
@@ -230,23 +230,26 @@ void func_8016DF74(Entity* self) {
     if (self->ext.et_8016DF74.unk7E >= 0x100) {
         self->ext.et_8016DF74.unk7E = 0xFF;
         self->ext.et_8016DF74.unk82 = 0;
-    }
-    else if (self->ext.et_8016DF74.unk7E < 0) {
+    } else if (self->ext.et_8016DF74.unk7E < 0) {
         self->ext.et_8016DF74.unk82 = 0;
         self->ext.et_8016DF74.unk7E = 0;
-        self->step += 1;        
+        self->step += 1;
     }
     prim = &g_PrimBuf[self->primIndex];
-    for(i = 0; i < 16; i++) {
+    for (i = 0; i < 16; i++) {
         prim->b0 = prim->b1 = self->ext.et_8016DF74.unk7C;
         prim->b2 = prim->b3 = self->ext.et_8016DF74.unk7E;
         prim->r0 = prim->r1 = prim->g0 = prim->g1 = self->ext.et_8016DF74.unk7C;
         prim->r2 = prim->r3 = prim->g2 = prim->g3 = self->ext.et_8016DF74.unk7E;
         if (self->step < 2U) {
-            prim->x2 = ((rcos(i << 7) * self->ext.et_8016DF74.unk84) >> 0xC) + 0x80;
-            prim->x3 = ((rcos((i+1) << 7) * self->ext.et_8016DF74.unk84) >> 0xC) + 0x80;
+            prim->x2 =
+                ((rcos(i << 7) * self->ext.et_8016DF74.unk84) >> 0xC) + 0x80;
+            prim->x3 =
+                ((rcos((i + 1) << 7) * self->ext.et_8016DF74.unk84) >> 0xC) +
+                0x80;
             prim->y2 = ((rsin(i << 7) * self->ext.et_8016DF74.unk84) >> 0xC);
-            prim->y3 = ((rsin((i+1) << 7) * self->ext.et_8016DF74.unk84) >> 0xC);
+            prim->y3 =
+                ((rsin((i + 1) << 7) * self->ext.et_8016DF74.unk84) >> 0xC);
         }
         prim = prim->next;
     }
@@ -2192,4 +2195,3 @@ void EntityGiantSpinningCross(Entity* self) {
         gte_stsxy(&prim->x3);
     }
 }
-

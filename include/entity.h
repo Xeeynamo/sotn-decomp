@@ -849,7 +849,7 @@ typedef struct {
     s16 unk90;
 } ET_8016D9C4;
 
-typedef struct{
+typedef struct {
     s16 unk7C;
     s16 unk7E;
     s16 unk80;
