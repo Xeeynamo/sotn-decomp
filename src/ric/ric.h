@@ -121,7 +121,7 @@ void EntityHitByLightning(Entity* self);
 void EntitySubwpnReboundStone(Entity* self);
 void EntitySubwpnThrownVibhuti(Entity* self);
 void EntitySubwpnAgunea(Entity* self);
-void func_8016CC74(Entity* self);
+void EntityAguneaHitEnemy(Entity* self);
 void func_8016D4D8(Entity* self);
 void func_8016D328(Entity* self);
 void func_8016E324(Entity* self);

@@ -1858,7 +1858,210 @@ void EntitySubwpnAgunea(Entity* self) {
     return;
 }
 
-INCLUDE_ASM("ric/nonmatchings/2C4C4", func_8016CC74);
+// RIC entity 45. Blueprint 52. That blueprint comes from RIC
+// EntitySubwpnAgunea.
+void EntityAguneaHitEnemy(Entity* self) {
+    Entity* temp_s6;
+    Primitive* prim;
+    Primitive* temp_s3;
+    Primitive* var_a0;
+    s16 somethingY;
+    s16 somethingX;
+    s16 angle;
+    s16 xOffset;
+    s16 yOffset;
+    u8 var_s2;
+    s16 temp_s2;
+    u8 var_s3;
+    s32 i;
+    s32 randy;
+
+    temp_s6 = self->ext.et_801291C4.parent;
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    self->posY.i.hi = (PLAYER.posY.i.hi + PLAYER.hitboxOffY) - 8;
+
+    if (self->ext.et_801291C4.parent->entityId != 0x2C) {
+        switch (self->step) {
+        case 0:
+            DestroyEntity(self);
+            return;
+        case 1:
+        case 2:
+        case 4:
+            self->step = 3;
+        }
+    }
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x28);
+        if (self->primIndex == -1) {
+        block_71:
+            DestroyEntity(self);
+            break;
+        }
+        self->flags = 0x04800000;
+
+        self->facingLeft = PLAYER.facingLeft;
+        self->ext.et_801291C4.unk84 = ((rand() & 0x3FF) - 0x200) & 0xFFF;
+        prim = &g_PrimBuf[self->primIndex];
+        self->ext.prim = prim;
+        self->ext.et_801291C4.unk80 = prim;
+        self->ext.et_801291C4.unk90 = (self->params >> 8);
+        for (i = 0; prim != NULL;) {
+            prim->tpage = 0x1A;
+            prim->clut = 0x194;
+            prim->u0 = prim->u1 = i * 0x10 - 0x70;
+            prim->u2 = prim->u3 = i * 0x10 - 0x60;
+            prim->v0 = prim->v2 = 0xD0;
+            prim->v1 = prim->v3 = 0xC0;
+            prim->x0 = self->posX.i.hi;
+            prim->y0 = self->posY.i.hi;
+            prim->x2 = self->posX.i.hi;
+            prim->y2 = self->posX.i.hi;
+            prim->r0 = prim->g0 = prim->b0 = 0xF0;
+            i += 1;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            prim->priority = self->zPriority;
+            prim->drawMode = 8;
+            prim = prim->next;
+            if (i >= 6) {
+                i = 0;
+            }
+        }
+        prim = self->ext.prim;
+        prim->x0 = self->posX.i.hi;
+        prim->y0 = self->posY.i.hi;
+        prim->x1 = prim->x0;
+        prim->y1 -= 0x10;
+        prim->x2 = self->posX.i.hi;
+        prim->y2 = self->posY.i.hi;
+        prim->x3 = prim->x2;
+        prim->y3 = prim->y2 - 0x10;
+        self->ext.et_801291C4.unk80 = prim;
+        while (prim != NULL) {
+            prim->clut = 0x194;
+            prim->r0 = prim->g0 = prim->b0 = 0x80;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            prim->priority = self->zPriority;
+            prim->drawMode = 8;
+            prim = prim->next;
+        }
+        self->ext.et_801291C4.unk88 = 0;
+        self->step += 1;
+        break;
+    case 1:
+
+        for (i = 0; i < 2; i++) {
+            prim = self->ext.et_801291C4.unk80;
+            temp_s2 = self->ext.et_801291C4.unk84;
+            somethingX = temp_s6->posX.i.hi - prim->x2;
+            somethingY = temp_s6->posY.i.hi - prim->y2;
+            var_s3 = 0;
+            if ((ABS(somethingX) < 8) && (ABS(somethingY) < 8)) {
+                self->step++;
+                break;
+            }
+            if (ABS(somethingX) < 0x40) {
+                var_s3 = ABS(somethingY) < 0x40;
+            }
+            if (self->ext.et_801291C4.unk88 == 0) {
+                self->ext.et_801291C4.unk88 = 4;
+                if (var_s3 != 0) {
+                    self->ext.et_801291C4.unk88 = 2;
+                }
+                angle = ratan2(-somethingY, somethingX) - temp_s2;
+                if (angle >= 0x801) {
+                    angle = 0x1000 - angle;
+                }
+                if (angle < -0x800) {
+                    angle += 0x1000;
+                }
+                if (var_s3 == 0) {
+                    angle = angle / 4;
+                } else {
+                    angle = angle / 2;
+                }
+                self->ext.et_801291C4.unk86 = angle;
+            }
+            temp_s2 = temp_s2 + self->ext.et_801291C4.unk86;
+            if (var_s3 == 0) {
+                randy = rand();
+                temp_s2 += 0x180;
+                temp_s2 -= ((randy & 3) << 8);
+            }
+            temp_s2 = temp_s2 & 0xFFF;
+            temp_s3 = prim->next;
+            if (temp_s3 == NULL) {
+                self->step += 1;
+                break;
+            }
+            LOW(temp_s3->x0) = LOW(prim->x2);
+            LOW(temp_s3->x1) = LOW(prim->x3);
+            self->ext.et_801291C4.unk84 = temp_s2;
+            self->ext.et_801291C4.unk80 = temp_s3;
+            xOffset = (rcos(temp_s2) * 0xC) >> 0xC;
+            yOffset = (rsin(temp_s2) * 0xC) >> 0xC;
+            temp_s2 = temp_s2 - 0x400;
+            temp_s3->x2 = xOffset + temp_s3->x0;
+            temp_s3->y2 = temp_s3->y0 - yOffset;
+            var_s2 = 0x10 - (self->params * 4);
+            xOffset = (var_s2 * rcos(temp_s2)) >> 0xC;
+            yOffset = (var_s2 * rsin(temp_s2)) >> 0xC;
+            temp_s3->x3 = xOffset + temp_s3->x2;
+            temp_s3->y3 = temp_s3->y2 - yOffset;
+            temp_s3->drawMode = 6;
+            self->ext.et_801291C4.unk88--;
+        }
+        return;
+    case 2:
+        if (self->step_s == 0) {
+            prim = self->ext.prim;
+            while (prim != NULL) {
+                prim->clut = 0x15F;
+                prim = prim->next;
+            }
+            self->step_s += 1;
+            return;
+        }
+        prim = self->ext.prim;
+        while (prim != NULL) {
+            prim->clut = 0x194;
+            prim->r0 = prim->g0 = prim->b0 = 0x60;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            prim = prim->next;
+        }
+        self->step_s = 0;
+        self->step += 1;
+        break;
+    case 3:
+        prim = self->ext.prim;
+        var_s2 = 1;
+        while (prim != NULL) {
+            if (RicPrimDecreaseBrightness(prim, 4) & 0xFF) {
+                var_s2 = 0;
+            } else {
+                var_s2 &= 1;
+            }
+            prim = prim->next;
+        }
+        if (var_s2 != 0) {
+            prim = self->ext.prim;
+            while (prim != NULL) {
+                prim->drawMode = 8;
+                prim = prim->next;
+            }
+            DestroyEntity(self);
+            break;
+        }
+        break;
+    }
+}
 
 void func_8016D328(Entity* entity) {
     s16 primIndex;
