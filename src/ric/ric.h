@@ -269,6 +269,7 @@ extern AnimationFrame D_80155E44[];
 extern s16 D_80155E68[];
 extern u8 D_80155E70[][4];
 extern AnimationFrame* D_80155EA8;
+extern s32 D_80155EE0[];
 extern s16 D_80155EF0[];
 extern SVECTOR* D_8015607C[][4];
 extern s8 D_80156A28;

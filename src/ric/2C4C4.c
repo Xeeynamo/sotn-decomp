@@ -2220,7 +2220,3 @@ void func_8016D920(Entity* entity) {
         break;
     }
 }
-
-INCLUDE_ASM("ric/nonmatchings/2C4C4", func_8016D9C4);
-
-INCLUDE_ASM("ric/nonmatchings/2C4C4", func_8016DF74);

@@ -96,8 +96,7 @@ typedef struct {
     /* 0x16 */ s16 y1;
     /* 0x18 */ f32 velocityX;
     /* 0x1C */ f32 velocityY;
-    /* 0x20 */ s16 x2;
-    /* 0x22 */ s16 y2;
+    /* 0x20 */ s32 angle;
     /* 0x24 */ s16 delay;
     /* 0x26 */ u16 priority;
     /* 0x28 */ f32 preciseX;
