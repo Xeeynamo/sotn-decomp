@@ -482,10 +482,7 @@ s32 D_800B0914;
 s32 D_800B0918;
 s32 D_800B091C;
 s32 D_800B0920;
-void (*D_8013C000)(void);
-void (*D_8013C004)(s32);
-void (*D_8013C008)(void);
-void (*D_8013C00C)(void);
+PlayerOvl g_PlOvl = {0};
 
 // sound bss
 s16 g_SoundCommandRingBufferReadPos;

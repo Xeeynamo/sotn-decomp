@@ -1242,6 +1242,16 @@ typedef struct {
     /* 8003C8B4 */ void* unused13C;
 } GameApi; /* size=0x140 */
 
+typedef struct {
+    void (*D_8013C000)(void);
+    void (*D_8013C004)(void);
+    void (*D_8013C008)(void);
+    void (*D_8013C00C)(void);
+} PlayerOvl;
+extern PlayerOvl g_PlOvl;
+extern u8** g_PlOvlAluBatSpritesheet[1];
+extern u8* g_PlOvlSpritesheet[99];
+
 /**** Helper signatures ****/
 extern void (*g_api_FreePrimitives)(s32);
 extern s16 (*g_api_AllocPrimitives)(PrimitiveType type, s32 count);

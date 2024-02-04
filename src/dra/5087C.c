@@ -1027,8 +1027,8 @@ void func_800F298C(void) {
     LayerDef* layer;
     s32 i;
     s32 ent_unk68;
-    void (*RichterInitializer)();
-    void (*RichterUpdater)();
+    void (*RichterInitializer)(int isPrologue);
+    void (*RichterUpdater)(void);
     s32 tempX;
     s32 tempY;
     s32* ptr_791c;
@@ -1049,9 +1049,8 @@ void func_800F298C(void) {
         func_800EAD7C();
         DrawHud();
         func_800F2404(0);
-        if ((g_StageId == STAGE_ST0) ||
-            (g_PlayableCharacter != PLAYER_ALUCARD)) {
-            RichterInitializer = D_8013C004;
+        if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
+            RichterInitializer = g_PlOvl.D_8013C004;
             if (g_StageId == STAGE_ST0) {
                 RichterInitializer(1);
             } else {
@@ -1191,10 +1190,9 @@ void func_800F298C(void) {
         D_80097488.y.val = 0;
         D_801375A0 = PLAYER.posY.i.hi;
         g_Player.unk7E = PLAYER.posY.i.hi;
-        if ((g_StageId == STAGE_ST0) ||
-            (g_PlayableCharacter != PLAYER_ALUCARD)) {
-            D_8013C000();
-            D_8013C008();
+        if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
+            g_PlOvl.D_8013C000();
+            g_PlOvl.D_8013C008();
         } else {
             EntityAlucard();
             func_8011A4D0();
@@ -1698,9 +1696,9 @@ void func_800F298C(void) {
                 } else {
                     D_8013759C = PLAYER.posX.i.hi;
                     D_801375A0 = PLAYER.posY.i.hi;
-                    RichterUpdater = D_8013C000;
+                    RichterUpdater = g_PlOvl.D_8013C000;
                     RichterUpdater();
-                    RichterUpdater = D_8013C008;
+                    RichterUpdater = g_PlOvl.D_8013C008;
                     RichterUpdater();
                     D_801375A4 = D_8013759C - PLAYER.posX.i.hi;
                     D_801375A8 = D_801375A0 - PLAYER.posY.i.hi;
