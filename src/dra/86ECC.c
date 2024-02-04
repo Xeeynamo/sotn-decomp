@@ -1106,7 +1106,7 @@ void EntityAguneaHitEnemy(Entity* self) {
             DestroyEntity(self);
             break;
         }
-        self->flags = 0x04800000;
+        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
 
         self->facingLeft = PLAYER.facingLeft;
         self->ext.et_801291C4.unk84 = ((rand() & 0x3FF) - 0x200) & 0xFFF;
@@ -1131,7 +1131,7 @@ void EntityAguneaHitEnemy(Entity* self) {
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r0);
             prim->priority = self->zPriority;
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
             if (i >= 6) {
                 i = 0;
@@ -1154,7 +1154,7 @@ void EntityAguneaHitEnemy(Entity* self) {
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r0);
             prim->priority = self->zPriority;
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
         self->ext.et_801291C4.unk88 = 0;
@@ -1260,7 +1260,7 @@ void EntityAguneaHitEnemy(Entity* self) {
         if (var_s2 != 0) {
             prim = self->ext.prim;
             while (prim != NULL) {
-                prim->drawMode = 8;
+                prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
             DestroyEntity(self);
