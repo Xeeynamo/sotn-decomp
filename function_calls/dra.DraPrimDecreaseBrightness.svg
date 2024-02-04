@@ -15,18 +15,18 @@
 <ellipse fill="green" stroke="black" cx="162.49" cy="-18" rx="162.47" ry="18"/>
 <text text-anchor="middle" x="162.49" y="-14.3" font-family="Times,serif" font-size="14.00">dra.DraPrimDecreaseBrightness</text>
 </g>
-<!-- dra.func_801291C4 -->
+<!-- dra.EntityAguneaHitEnemy -->
 <g id="node2" class="node">
-<title>dra.func_801291C4</title>
-<g id="a_node2"><a xlink:href="dra.func_801291C4.svg" xlink:title="dra.func_801291C4">
-<ellipse fill="red" stroke="black" cx="162.49" cy="-198" rx="101.28" ry="18"/>
-<text text-anchor="middle" x="162.49" y="-194.3" font-family="Times,serif" font-size="14.00">dra.func_801291C4</text>
+<title>dra.EntityAguneaHitEnemy</title>
+<g id="a_node2"><a xlink:href="dra.EntityAguneaHitEnemy.svg" xlink:title="dra.EntityAguneaHitEnemy">
+<ellipse fill="green" stroke="black" cx="162.49" cy="-198" rx="139.98" ry="18"/>
+<text text-anchor="middle" x="162.49" y="-194.3" font-family="Times,serif" font-size="14.00">dra.EntityAguneaHitEnemy</text>
 </a>
 </g>
 </g>
-<!-- dra.func_801291C4&#45;&gt;dra.DraPrimDecreaseBrightness -->
+<!-- dra.EntityAguneaHitEnemy&#45;&gt;dra.DraPrimDecreaseBrightness -->
 <g id="edge1" class="edge">
-<title>dra.func_801291C4&#45;&gt;dra.DraPrimDecreaseBrightness</title>
+<title>dra.EntityAguneaHitEnemy&#45;&gt;dra.DraPrimDecreaseBrightness</title>
 <path fill="none" stroke="black" d="M162.49,-179.93C162.49,-148.97 162.49,-83.3 162.49,-46.13"/>
 <polygon fill="black" stroke="black" points="165.99,-46.02 162.49,-36.02 158.99,-46.02 165.99,-46.02"/>
 <text text-anchor="middle" x="157.49" y="-168.73" font-family="Times,serif" font-size="14.00">1</text>
