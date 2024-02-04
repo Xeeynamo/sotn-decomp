@@ -12,8 +12,8 @@ void func_8016D9C4(Entity* self) {
     s32 angleChange;
     s32 brightness;
 
-    switch (self->step) { /* switch 1; irregular */
-    case 0:               /* switch 1 */
+    switch (self->step) {
+    case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 20);
         if (self->primIndex == -1) {
             DestroyEntity(self);
@@ -66,7 +66,7 @@ void func_8016D9C4(Entity* self) {
         g_api.PlaySfx(0x623);
         self->step++;
         break;
-    case 1: /* switch 1 */
+    case 1:
         self->ext.et_8016D9C4.unk8E = 1;
         switch (self->ext.et_8016D9C4.unk8C) {
         case 0:
@@ -93,13 +93,13 @@ void func_8016D9C4(Entity* self) {
             self->step++;
         }
         break;
-    case 2: /* switch 1 */
+    case 2:
         if (self->ext.et_8016D9C4.unk90 == 0) {
             self->step++;
             break;
         }
         break;
-    case 3: /* switch 1 */
+    case 3:
         if (++self->ext.et_8016D9C4.unk90 >= 5) {
             DestroyEntity(self);
             return;
