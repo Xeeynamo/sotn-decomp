@@ -88,6 +88,11 @@ void MyDrawSyncCallback(int mode) {
     DEBUGF("-------------------- frame %d --------------------", g_Frame);
     DEBUGF("state: %d, game step: %d", g_GameState, g_GameStep);
 
+    // force loaded map to always be visible
+    if (g_Tilemap.tileDef) {
+        g_Tilemap.flags |= LAYER_SHOW;
+    }
+
     g_Frame++;
 }
 
