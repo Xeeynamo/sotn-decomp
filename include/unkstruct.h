@@ -111,11 +111,6 @@ typedef struct Unkstruct_801C3F9C {
 } Unkstruct_801C3F9C;
 
 typedef struct {
-    u16 D_800A37D8;
-    u16 D_800A37DA;
-} Unkstruct_801092E8;
-
-typedef struct {
     s32 D_8003C908;
     s32 D_8003C90C;
     s32 D_8003C910;

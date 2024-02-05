@@ -398,7 +398,7 @@ extern SVECTOR* D_800A35D0[];
 extern SVECTOR* D_800A3608[];
 extern u8 D_800A3728;
 extern MATRIX D_800A37B8;
-extern Unkstruct_801092E8 D_800A37D8;
+extern u16 D_800A37D8[2];
 extern u16 g_JosephsCloakColors[4];
 extern GfxBank** g_GfxSharedBank[];
 extern u_long* D_800A3BB8[];
