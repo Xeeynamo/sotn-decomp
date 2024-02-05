@@ -62,18 +62,10 @@ s32 D_800978C4;
 s32 D_80097C98;
 s8 D_80097B98;
 s8 D_80097B99;
-SVECTOR* D_800A3210[1];
-SVECTOR* D_800A33A0[1];
-SVECTOR* D_800A34C0[18][3];
-SVECTOR* D_800A3598[1];
-SVECTOR* D_800A35D0[1];
-SVECTOR* D_800A3608[1];
-u8 D_800A3728;
-MATRIX D_800A37B8;
 u8 D_800B0608[0xC0]; // size guessed
 s16 D_80136308[1];
 u16 g_Clut[0x3000];
-u32 D_8006EBCC;
+u16 D_8006EBCC[0x1000]; // part of g_Clut?
 u16 D_8006EBE0;
 s32 D_8006C384;
 s32 D_8006C388;
@@ -183,7 +175,6 @@ s16 D_800AC998[] = {
     0x0300, 0x0320, 0x0300, 0x0320, 0x0340, 0x0360, 0x0340, 0x0360,
     0x0380, 0x03A0, 0x0380, 0x03A0, 0x03C0, 0x03E0, 0x03C0, 0x03E0,
 };
-Unkstruct_801092E8 D_800A37D8;
 s32 D_800ACDF8;
 s32 D_800ACDFC;
 s32 D_800ACE00[8];
@@ -326,7 +317,7 @@ VECTOR D_801379E0;
 VECTOR D_80137B20;
 SVECTOR D_80137CA0;
 SVECTOR D_80137D40;
-SVECTOR D_80137E70[1];
+SVECTOR D_80137E70[14] = {0};
 s32 D_80137EE0;
 s32 D_80137EE4;
 s32 D_80137EE8;
@@ -345,43 +336,12 @@ s32 D_8013984C;
 s32 D_80139850;
 s32 D_80139854;
 u16 D_80137538[32];
-GfxBank* g_FakeGfxBank = {NULL};
-GfxBank** g_GfxSharedBank[] = {
-    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
-    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
-    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
-    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
-    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
-    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
-    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
-    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
-    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
-    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
-    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
-    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
-    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
-    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
-    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
-    &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
-};
 u8* g_DecSrcPtr = NULL;
 u8* g_DecDstPtr = NULL;
 s32 g_DecReadNibbleFlag = 0;
 s32 g_DecWriteNibbleFlag = 0;
 u8 g_GfxEquipIcon[320][16 * 16 / 2];
 s16 g_PalEquipIcon[320 * 16];
-u_long g_FakeUnkStruct = {MAKE_PAL_OP(0, 0)};
-u_long* D_800A3BB8[] = {
-    &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct,
-    &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct,
-    &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct,
-    &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct,
-    &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct,
-    &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct,
-    &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct,
-    &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct, &g_FakeUnkStruct,
-    &g_FakeUnkStruct, &g_FakeUnkStruct,
-};
 u16 D_80137478[0x20];
 u16 D_801374B8[0x20];
 u16 D_801374F8[0x20];
@@ -395,10 +355,52 @@ s32 D_80139008;
 s32 D_801397FC;
 SimFile* g_SimFile;
 SimFile D_80136450;
-s16 D_80136460[0x400];
-s16 D_80136C60[0x400];
+s16 D_80136460[0x400] = {0};
+s16 D_80136C60[0x400] = {0};
+u16 D_8006ED0C[0x10] = {0};
+u16 D_8006ED2C[0x10] = {0};
+u16 D_8006ED4C[0x10] = {0};
+u16 D_800D68D4[0x10] = {0};
+u16 D_800D68F4[0x10] = {0};
+u16 D_800D6914[0x10] = {0};
+u16 D_800D6934[0x10] = {0};
+u16 D_800D6954[0x10] = {0};
+u16 D_800D6974[0x10] = {0};
+u16 D_800D6994[0x10] = {0};
+u16 D_800D69B4[0x10] = {0};
+u16 D_800D69D4[0x10] = {0};
+u16 D_800D69F4[0x10] = {0};
+u16 D_800D6A14[0x10] = {0};
+u16 D_800D6A34[0x10] = {0};
+u16 D_800D6A54[0x40] = {0};
+u16 D_800D6AD4[0x100] = {0};
+u16 D_800D6B54[0x10] = {0};
+u16 D_800D6C14[0x60] = {0};
+u16 D_800D6CD4[0x100] = {0};
+u16 D_800D6ED4[0x100] = {0};
+u16 D_800D70D4[0x100] = {0};
+u16 D_800D72D4[0x100] = {0};
+u16 D_800DB0D4[0x10] = {0};
+u16 D_800DB0F4[0x10] = {0};
+u16 D_800DB114[0x70] = {0};
+u16 D_800DB1F4[0xE0] = {0};
+s16* D_800CF324[] = {NULL};
+s16* D_800CFF10[] = {NULL};
+s16* D_800D0F68[] = {NULL};
+s16* D_800D2BF4[] = {NULL};
+s16* D_800D2CF8[] = {NULL};
+s16* D_800D2FFC[] = {NULL};
+s16* D_800D3428[] = {NULL};
+s16* D_800D34B8[] = {NULL};
+s16* D_800D372C[] = {NULL};
+s16* D_800D3B88[] = {NULL};
+s16* D_800D5628[] = {NULL};
+s16* D_800D327C[] = {NULL};
+unkstr_800cfe48* D_800CFE48[18] = {NULL};
+s16* D_800D56AC[] = {NULL};
+s16* D_800D5868[] = {NULL};
+s16* D_800D684C[] = {NULL};
 
-JosephsCloak g_JosephsCloak;
 u8 g_Pix[4][128 * 128 / 2];
 ImgSrc g_imgUnk8013C200_impl = {
     0,
@@ -409,7 +411,6 @@ ImgSrc* g_imgUnk8013C200 = &g_imgUnk8013C200_impl;
 ImgSrc* g_imgUnk8013C270 = &g_imgUnk8013C200_impl;
 s32 g_PrevEquippedWeapons[2];
 s32 D_8013AEE4;
-s32 D_800A3194[1];
 s32 D_80139060;
 u32 D_8013799C;
 s32 D_801379A0;

@@ -27,12 +27,24 @@ typedef struct {
 #define GET_PAL_OP_KIND(x) (LOH(x))
 #define GET_PAL_OP_FREQ(x) (HIH(x))
 
+#define PAL_COPY 1
+#define PAL_COPY_INFO() MAKE_PAL_OP(PAL_COPY, 0)
+#define PAL_COPY_DATA(dst, data) (dst), (u_long*)LEN(data), (u_long*)(data)
+
+#define PAL_UNK_OP2 2
+#define PAL_UNK_OP2_INFO(dst, n) (u_long*)(dst), (u_long*)(n)
+#define PAL_UNK_OP2_DATA(data) (u_long*)(data)
+
+#define PAL_UNK_OP3 3
+#define PAL_UNK_OP3_INFO(dst, n) (u_long*)(dst), (u_long*)(n)
+#define PAL_UNK_OP3_DATA(data) (u_long*)(data)
+
 #define PAL_GLOW_ANIM 4
 #define PAL_GLOW_INFO(dst, n) (u_long*)(dst), (u_long*)(n)
 #define PAL_GLOW_DATA(data) (u_long*)(data)
 
 #define PAL_BULK_COPY 5
-#define PAL_BULK(dst, n, data) (u_long*)(dst), (u_long*)(n), (u_long*)(data)
+#define PAL_BULK(dst, data) (u_long*)(dst), (u_long*)LEN(data), (u_long*)(data)
 
 #define PAL_TERMINATE() ((u_long*)-1)
 
@@ -109,11 +121,6 @@ typedef struct Unkstruct_801C3F9C {
     /* 0x25 */ char pad25[0x7];
     /* 0x2C */ s16 unk2C;
 } Unkstruct_801C3F9C;
-
-typedef struct {
-    u16 D_800A37D8;
-    u16 D_800A37DA;
-} Unkstruct_801092E8;
 
 typedef struct {
     s32 D_8003C908;

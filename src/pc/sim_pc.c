@@ -241,30 +241,27 @@ s32 LoadFileSimToMem(SimKind kind) {
     return 0;
 }
 
-bool LoadFilePc(void* content, size_t len) {
-    g_SimFile->addr = content;
-    switch (g_SimFile->kind) { // slowly replacing the original func
+bool LoadFilePc(FileLoad* file, SimFile* sim) {
+    sim->addr = file->content;
+    switch (sim->kind) { // slowly replacing the original func
     case SIM_1:
-        DEBUGF("************ %p", content);
-        LoadStageTileset(content, len, 0x100);
+        LoadStageTileset(sim->addr, file->length, 0x100);
         LoadImage(&g_Vram.D_800ACD98, D_800A04CC);
-        LoadImage(&g_Vram.D_800ACDA8, (u8*)content + 0x40000);
+        LoadImage(&g_Vram.D_800ACDA8, (u8*)sim->addr + 0x40000);
         StoreImage(&g_Vram.D_800ACDA8, g_Clut + 0x1000);
         break;
     case SIM_STAGE_CHR:
-        DEBUGF("############# %p, %d", content, len);
-        LoadStageTileset(content, len, 0);
+        LoadStageTileset(sim->addr, file->length, 0);
         break;
     case SIM_12:
-        DEBUGF(">>>>>>>>>>>>> %p", content);
-        LoadStageTileset(content, len, 0x100);
+        LoadStageTileset(sim->addr, file->length, 0x100);
     case SIM_13:
-        DEBUGF("============= %p", content);
-        LoadStageTileset(content, len, 0x100);
+        LoadStageTileset(sim->addr, file->length, 0x100);
         LoadImage(&g_Vram.D_800ACD98, D_800A04CC);
         break;
     default:
-        if (LoadFileSimToMem(g_SimFile->kind) < 0) {
+        g_SimFile = sim;
+        if (LoadFileSimToMem(sim->kind) < 0) {
             return false;
         }
     }
@@ -313,9 +310,9 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         break;
     case SimFileType_StagePrg:
         switch (g_StageId) {
-        case STAGE_SEL:
-            InitStageSel(&g_api.o);
-            break;
+        // case STAGE_SEL:
+        //     InitStageSel(&g_api.o);
+        //     break;
         default:
             InitStageDummy(&g_api.o);
             INFOF("TODO: will load stage '%s'", g_StagesLba[g_StageId].ovlName);
@@ -395,8 +392,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
 
     snprintf(buf, sizeof(buf), "disks/us/%s", sim.path);
     INFOF("open %s", buf);
-    g_SimFile = &sim;
-    if (!FileUseContent(LoadFilePc, buf)) {
+    if (!FileUseContent(LoadFilePc, buf, &sim)) {
         ERRORF("failed to load '%s'", buf);
         D_800A04EC = 0;
         return -1;

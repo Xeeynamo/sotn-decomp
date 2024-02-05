@@ -37,7 +37,7 @@ Weapon D_8017D000 = {
     func_ptr_80170024,  func_ptr_80170028,
 };
 
-extern GfxBank g_FakeGfxBank;
+GfxBank* g_FakeGfxBank = NULL;
 GfxBank** g_GfxStageBank[0x40] = {
     &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
     &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
@@ -57,6 +57,13 @@ GfxBank** g_GfxStageBank[0x40] = {
     &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
 };
 extern u_long* D_800A3BB8[];
+
+#define MAX_SIZE_FOR_COMPRESSED_GFX 8192
+u8 D_800C217C[MAX_SIZE_FOR_COMPRESSED_GFX];
+u8 D_800C27B0[MAX_SIZE_FOR_COMPRESSED_GFX];
+u8 D_800C3560[MAX_SIZE_FOR_COMPRESSED_GFX];
+u8 D_800C4864[MAX_SIZE_FOR_COMPRESSED_GFX];
+u8 D_800C4A90[MAX_SIZE_FOR_COMPRESSED_GFX];
 
 void WeaponLoadPaletteStub(s32 arg0) { NOT_IMPLEMENTED; }
 
@@ -81,12 +88,18 @@ void MyDrawSyncCallback(int mode) {
     DEBUGF("-------------------- frame %d --------------------", g_Frame);
     DEBUGF("state: %d, game step: %d", g_GameState, g_GameStep);
 
+    // force loaded map to always be visible
+    if (g_Tilemap.tileDef) {
+        g_Tilemap.flags |= LAYER_SHOW;
+    }
+
     g_Frame++;
 }
 
 // called before MainGame
 bool InitPlatform(void);
 void InitStrings(void);
+static void InitAssets(void);
 bool InitEquipDefs(const char* jsonContent);
 bool InitAccessoryDefs(const char* jsonContent);
 void InitRelicDefs(void);
@@ -177,6 +190,7 @@ bool InitGame(void) {
     D_8017D000.LoadWeaponPalette = WeaponLoadPaletteStub;
 
     InitStrings();
+    InitAssets();
 
     D_80137590 = g_DemoRecordingBuffer;
 
@@ -258,7 +272,8 @@ bool FileStringify(bool (*cb)(const char* content), const char* path) {
     fclose(f);
     return r;
 }
-bool FileUseContent(bool (*cb)(void* content, size_t len), const char* path) {
+bool FileUseContent(
+    bool (*cb)(FileLoad* file, void* param), const char* path, void* param) {
     INFOF("open '%s'", path);
     FILE* f = fopen(path, "rb");
     if (f == NULL) {
@@ -285,7 +300,12 @@ bool FileUseContent(bool (*cb)(void* content, size_t len), const char* path) {
         return false;
     }
 
-    bool r = cb(content, bytesread);
+    FileLoad file;
+    file.path = path;
+    file.content = content;
+    file.length = bytesread;
+    bool r = cb(&file, param);
+
     free(content);
     fclose(f);
     return r;
@@ -306,6 +326,24 @@ void InitStrings(void) {
     for (int i = 0; i < LEN(g_EnemyDefs); i++) {
         g_EnemyDefs[i].name = AnsiToSotnMenuString(g_EnemyDefs[i].name);
     }
+}
+
+static bool LoadCmpGfx(FileLoad* file, void* dst) {
+    if (file->length > MAX_SIZE_FOR_COMPRESSED_GFX) {
+        ERRORF("file '%s' too big, max size is %d ", file->path,
+               MAX_SIZE_FOR_COMPRESSED_GFX);
+        return false;
+    }
+    memcpy(dst, file->content, file->length);
+    return true;
+}
+
+static void InitAssets() {
+    FileUseContent(LoadCmpGfx, "assets/dra/D_800C217C.bin", D_800C217C);
+    FileUseContent(LoadCmpGfx, "assets/dra/D_800C27B0.bin", D_800C27B0);
+    FileUseContent(LoadCmpGfx, "assets/dra/D_800C3560.bin", D_800C3560);
+    FileUseContent(LoadCmpGfx, "assets/dra/D_800C4864.bin", D_800C4864);
+    FileUseContent(LoadCmpGfx, "assets/dra/D_800C4A90.bin", D_800C4A90);
 }
 
 void (*g_VsyncCallback)() = NULL;

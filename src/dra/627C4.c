@@ -3,6 +3,29 @@
 #include "objects.h"
 #include "sfx.h"
 
+#define COORD_TERMINATOR 0x7FFF
+
+u16 D_800A3134[] = {
+    3, -3, 2, -2, 1, -1, COORD_TERMINATOR,
+};
+
+u16 D_800A3144[] = {
+    3, -3, 3, -3, 2, -2, 2, -2, 1, -1, 1, -1, COORD_TERMINATOR,
+};
+
+u16 D_800A3160[] = {
+    +6, -6, +6, -6, +5,
+    -5, +5, -5, +4, -4,
+    +4, -4, +3, -3, +3,
+    -3, +2, -2, +2, -2,
+    +1, -1, +1, -1, COORD_TERMINATOR,
+};
+
+u16* D_800A3194[] = {
+    D_800A3134, D_800A3134, D_800A3144, D_800A3134,
+    D_800A3144, D_800A3144, D_800A3160,
+};
+
 extern s32 D_801379A4;
 extern s32 D_801379A8;
 
@@ -183,7 +206,8 @@ void func_80102CD8(s32 start) {
 
 void func_80102D08(void) {
     D_801379AC.unk8 = D_801379AC.coords[D_801379AC.current];
-    if (D_801379AC.coords[++D_801379AC.current] == 0x7FFF) {
+    D_801379AC.current++;
+    if (D_801379AC.coords[D_801379AC.current] == COORD_TERMINATOR) {
         D_801379AC.start = 0;
         D_801379AC.unk8 = 0;
     }
