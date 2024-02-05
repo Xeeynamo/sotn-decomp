@@ -13,8 +13,6 @@ bool InitPlatform() {
 
 void ResetPlatform() {}
 
-void MyRenderPrimitives(void) {}
-
 void MyPadInit(int mode) {}
 
 u_long MyPadRead(int id) { return 0; }
