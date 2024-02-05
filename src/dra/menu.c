@@ -854,19 +854,19 @@ s32 DarkenCloakColor(s32 color) { return color * 3 / 4; }
 
 // Creates light and dark versions of cloak colors in BGR555 format
 void ApplyJosephsCloakPalette(void) {
-    g_JosephsCloak.liningDark =
+    g_JosephsCloakColors[0] =
         DarkenCloakColor(g_Settings.cloakColors[3]) +
         ((DarkenCloakColor(g_Settings.cloakColors[4]) << 5) - 0x8000) +
         (DarkenCloakColor(g_Settings.cloakColors[5]) << 0xA);
-    g_JosephsCloak.liningLight =
+    g_JosephsCloakColors[1] =
         (g_Settings.cloakColors[3] +
          ((g_Settings.cloakColors[4] << 5) - 0x8000)) +
         ((u32)g_Settings.cloakColors[5] << 0xA);
-    g_JosephsCloak.exteriorDark =
+    g_JosephsCloakColors[2] =
         DarkenCloakColor(g_Settings.cloakColors[0]) +
         ((DarkenCloakColor(g_Settings.cloakColors[1]) << 5) - 0x8000) +
         (DarkenCloakColor(g_Settings.cloakColors[2]) << 0xA);
-    g_JosephsCloak.exteriorLight =
+    g_JosephsCloakColors[3] =
         g_Settings.cloakColors[0] +
         ((g_Settings.cloakColors[1] << 5) - 0x8000) +
         ((u32)g_Settings.cloakColors[2] << 0xA);

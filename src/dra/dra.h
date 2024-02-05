@@ -329,14 +329,6 @@ typedef struct {
     s32 unk28;
 } PlayerHud;
 
-// All the Joseph's Cloak color fields are in RGB555 format
-typedef struct {
-    u16 liningDark;
-    u16 liningLight;
-    u16 exteriorDark;
-    u16 exteriorLight;
-} JosephsCloak;
-
 // g_ButtonCombo is an array of 16, here is what each index is for
 // Names should be updated as each one is decompiled.
 typedef enum {
@@ -407,7 +399,7 @@ extern SVECTOR* D_800A3608[];
 extern u8 D_800A3728;
 extern MATRIX D_800A37B8;
 extern Unkstruct_801092E8 D_800A37D8;
-extern JosephsCloak g_JosephsCloak;
+extern u16 g_JosephsCloakColors[4];
 extern GfxBank** g_GfxSharedBank[];
 extern u_long* D_800A3BB8[];
 extern Lba g_StagesLba[80];
