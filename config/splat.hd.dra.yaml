@@ -105,7 +105,12 @@ segments:
       - [0x1D2E8, data, assets, music_xa, g_XaMusicConfigs] # g_XaMusicConfigs
       - [0x1F5F8, assets, sfx, g_SfxData] # g_SfxData
       - [0x20A20, .data, 953A0]
-      - [0x22220, data]
+      - [0x22220, cmp, D_800C217C]
+      - [0x22854, cmp, D_800C27B0]
+      - [0x23604, cmp, D_800C3560]
+      - [0x24908, cmp, D_800C4864]
+      - [0x24B34, cmp, D_800C4A90]
+      - [0x24D90, data]
       - [0x253C8, raw, g_GfxEquipIcon]
       - [0x2F3C8, data]
       - [0x38978, raw, g_PalEquipIcon]
