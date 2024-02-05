@@ -94,6 +94,7 @@ void MyDrawSyncCallback(int mode) {
 // called before MainGame
 bool InitPlatform(void);
 void InitStrings(void);
+static void InitAssets(void);
 bool InitEquipDefs(const char* jsonContent);
 bool InitAccessoryDefs(const char* jsonContent);
 void InitRelicDefs(void);
@@ -184,6 +185,7 @@ bool InitGame(void) {
     D_8017D000.LoadWeaponPalette = WeaponLoadPaletteStub;
 
     InitStrings();
+    InitAssets();
 
     D_80137590 = g_DemoRecordingBuffer;
 
@@ -265,7 +267,8 @@ bool FileStringify(bool (*cb)(const char* content), const char* path) {
     fclose(f);
     return r;
 }
-bool FileUseContent(bool (*cb)(void* content, size_t len), const char* path) {
+bool FileUseContent(
+    bool (*cb)(FileLoad* file, void* param), const char* path, void* param) {
     INFOF("open '%s'", path);
     FILE* f = fopen(path, "rb");
     if (f == NULL) {
@@ -292,7 +295,12 @@ bool FileUseContent(bool (*cb)(void* content, size_t len), const char* path) {
         return false;
     }
 
-    bool r = cb(content, bytesread);
+    FileLoad file;
+    file.path = path;
+    file.content = content;
+    file.length = bytesread;
+    bool r = cb(&file, param);
+
     free(content);
     fclose(f);
     return r;
@@ -313,6 +321,24 @@ void InitStrings(void) {
     for (int i = 0; i < LEN(g_EnemyDefs); i++) {
         g_EnemyDefs[i].name = AnsiToSotnMenuString(g_EnemyDefs[i].name);
     }
+}
+
+static bool LoadCmpGfx(FileLoad* file, void* dst) {
+    if (file->length > MAX_SIZE_FOR_COMPRESSED_GFX) {
+        ERRORF("file '%s' too big, max size is %d ", file->path,
+               MAX_SIZE_FOR_COMPRESSED_GFX);
+        return false;
+    }
+    memcpy(dst, file->content, file->length);
+    return true;
+}
+
+static void InitAssets() {
+    FileUseContent(LoadCmpGfx, "assets/dra/D_800C217C.bin", D_800C217C);
+    FileUseContent(LoadCmpGfx, "assets/dra/D_800C27B0.bin", D_800C27B0);
+    FileUseContent(LoadCmpGfx, "assets/dra/D_800C3560.bin", D_800C3560);
+    FileUseContent(LoadCmpGfx, "assets/dra/D_800C4864.bin", D_800C4864);
+    FileUseContent(LoadCmpGfx, "assets/dra/D_800C4A90.bin", D_800C4A90);
 }
 
 void (*g_VsyncCallback)() = NULL;
