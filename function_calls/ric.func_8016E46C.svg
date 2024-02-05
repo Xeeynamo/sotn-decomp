@@ -12,7 +12,7 @@
 <!-- ric.func_8016E46C -->
 <g id="node1" class="node">
 <title>ric.func_8016E46C</title>
-<ellipse fill="red" stroke="black" cx="475.44" cy="-198" rx="98.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="475.44" cy="-198" rx="98.58" ry="18"/>
 <text text-anchor="middle" x="475.44" y="-194.3" font-family="Times,serif" font-size="14.00">ric.func_8016E46C</text>
 </g>
 <!-- dra.AllocPrimitives -->

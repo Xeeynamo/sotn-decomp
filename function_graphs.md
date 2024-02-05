@@ -2139,7 +2139,7 @@
 - [✅ func_8016D9C4](function_calls/ric.func_8016D9C4.svg?raw=1)
 - [✅ func_8016DF74](function_calls/ric.func_8016DF74.svg?raw=1)
 - [✅ func_8016E324](function_calls/ric.func_8016E324.svg?raw=1)
-- [❌ func_8016E46C](function_calls/ric.func_8016E46C.svg?raw=1)
+- [✅ func_8016E46C](function_calls/ric.func_8016E46C.svg?raw=1)
 - [✅ func_8016E9E4](function_calls/ric.func_8016E9E4.svg?raw=1)
 - [✅ func_8016F198](function_calls/ric.func_8016F198.svg?raw=1)
 - [✅ func_80170548](function_calls/ric.func_80170548.svg?raw=1)
