@@ -37,7 +37,7 @@ Weapon D_8017D000 = {
     func_ptr_80170024,  func_ptr_80170028,
 };
 
-extern GfxBank g_FakeGfxBank;
+GfxBank* g_FakeGfxBank = NULL;
 GfxBank** g_GfxStageBank[0x40] = {
     &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
     &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
@@ -57,6 +57,13 @@ GfxBank** g_GfxStageBank[0x40] = {
     &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
 };
 extern u_long* D_800A3BB8[];
+
+#define MAX_SIZE_FOR_COMPRESSED_GFX 8192
+u8 D_800C217C[MAX_SIZE_FOR_COMPRESSED_GFX];
+u8 D_800C27B0[MAX_SIZE_FOR_COMPRESSED_GFX];
+u8 D_800C3560[MAX_SIZE_FOR_COMPRESSED_GFX];
+u8 D_800C4864[MAX_SIZE_FOR_COMPRESSED_GFX];
+u8 D_800C4A90[MAX_SIZE_FOR_COMPRESSED_GFX];
 
 void WeaponLoadPaletteStub(s32 arg0) { NOT_IMPLEMENTED; }
 

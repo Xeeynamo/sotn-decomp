@@ -339,14 +339,6 @@ typedef enum {
 } Stages;
 
 typedef enum {
-    GFX_BANK_NONE,
-    GFX_BANK_4BPP,
-    GFX_BANK_8BPP,
-    GFX_BANK_16BPP,
-    GFX_BANK_COMPRESSED,
-} GfxBankKind;
-
-typedef enum {
     // Clean-up and reset all the gameplay related memory
     Play_Reset = 0,
     // Re-initialize stage-specific resources
@@ -671,10 +663,20 @@ typedef struct {
     /* 0x20 */ u32 env;
 } GpuUsage;
 
+typedef enum {
+    GFX_BANK_NONE,
+    GFX_BANK_4BPP,
+    GFX_BANK_8BPP,
+    GFX_BANK_16BPP,
+    GFX_BANK_COMPRESSED,
+} GfxBankKind;
+#define GFX_TERMINATE() ((u_long*)-1) // can't be in GfxBankKind
+#define GFX_ENTRY(x, y, w, h, data)                                            \
+    (u_long*)((x) | ((y) << 16)), (u_long*)((w) | ((h) << 16)), (u_long*)data
 typedef struct {
-    /* 0x00 */ u32 xy;
-    /* 0x04 */ u32 wh;
-    /* 0x08 */ void* data;
+    /* 0x00 */ u_long* xy;
+    /* 0x04 */ u_long* wh;
+    /* 0x08 */ u_long* data;
 } GfxEntry; // size=0xC
 
 typedef struct {
@@ -1549,12 +1551,12 @@ extern Entity* g_CurrentEntity;
 extern Unkstruct_8006C3C4 D_8006C3C4[32];
 extern s32 g_Servant; // Currently selected familiar in the menu
 extern u16 g_Clut[0x3000];
-extern u32 D_8006EBCC;
-extern u16 D_8006EBE0;
-extern u16 D_8006F3CC[];
-extern u16 D_8006F42C[];
-extern s16 D_800705CC[];
-extern u32 D_80070BCC;
+extern u16 D_8006EBCC[0x1000]; // part of g_Clut
+extern u16 D_8006EBE0;         // part of g_Clut
+extern u16 D_8006F3CC[];       // part of g_Clut
+extern u16 D_8006F42C[];       // part of g_Clut
+extern s16 D_800705CC[];       // part of g_Clut
+extern u32 D_80070BCC;         // part of g_Clut
 
 extern PlayerState g_Player;
 extern u16 g_Player_D_80072EF6; // TODO merge with g_Player

@@ -1,9 +1,4 @@
 g_CheatCodes = 0x800A300C;
-g_JosephsCloak = 0x800A37DC;
-g_JosephsCloak_liningLight = 0x800A37DE;
-g_JosephsCloak_exteriorDark = 0x800A37E0;
-g_JosephsCloak_exteriorLight = 0x800A37E2;
-g_GfxSharedBank = 0x800A3B5C;
 g_Vram = 0x800ACD80;
 g_Vram_D_800ACD88 = 0x800ACD88;
 g_Vram_D_800ACD90 = 0x800ACD90;
