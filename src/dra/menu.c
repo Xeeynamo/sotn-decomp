@@ -2233,6 +2233,7 @@ void func_800F98AC(const char* str, u32 arg1) {
 
 #ifdef VERSION_PC
     NOT_IMPLEMENTED;
+    return;
 #endif
 
     for (data_ptr = str; *data_ptr != 0;) {
@@ -2292,6 +2293,10 @@ void func_800F99B8(const char* str, s32 arg1, s32 arg2) {
         var_s5 &= ~0x200;
     }
     var_s5 = func_800F548C(var_s5 & 0xFF) & 0xFF;
+#ifdef VERSION_PC
+    NOT_IMPLEMENTED;
+    return;
+#endif
     while (*var_s1 != 0) {
         var_s2 = 0;
         var_s0 = *var_s1++;
