@@ -2,14 +2,14 @@
 #include "libsnd_internal.h"
 
 short SsUtGetProgAtr(short vabId, short programNum, ProgAtr* pProgAttr) {
-    if (svm_vab_used[vabId] == 1) {
+    if (_svm_vab_used[vabId] == 1) {
         SpuVmVSetUp(vabId, programNum);
-        pProgAttr->tones = D_8006C3B4[programNum].tones;
-        pProgAttr->mvol = D_8006C3B4[programNum].mvol;
-        pProgAttr->prior = D_8006C3B4[programNum].prior;
-        pProgAttr->mode = D_8006C3B4[programNum].mode;
-        pProgAttr->mpan = D_8006C3B4[programNum].mpan;
-        pProgAttr->attr = D_8006C3B4[programNum].attr;
+        pProgAttr->tones = _svm_pg[programNum].tones;
+        pProgAttr->mvol = _svm_pg[programNum].mvol;
+        pProgAttr->prior = _svm_pg[programNum].prior;
+        pProgAttr->mode = _svm_pg[programNum].mode;
+        pProgAttr->mpan = _svm_pg[programNum].mpan;
+        pProgAttr->attr = _svm_pg[programNum].attr;
         return 0;
     }
     return -1;
