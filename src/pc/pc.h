@@ -18,9 +18,16 @@
 #define VRAM_H 512
 #define VRAM_STRIDE 2048
 
+typedef struct {
+    const char* path;
+    const void* content;
+    size_t length;
+} FileLoad;
+
 bool FileRead(bool (*cb)(FILE* file), const char* path);
 bool FileStringify(bool (*cb)(const char* content), const char* path);
-bool FileUseContent(bool (*cb)(void* content, size_t len), const char* path);
+bool FileUseContent(
+    bool (*cb)(FileLoad* file, void* param), const char* path, void* param);
 
 const char* AnsiToSotnMenuString(const char* str);
 

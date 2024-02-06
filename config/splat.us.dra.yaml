@@ -81,9 +81,10 @@ segments:
       - [0x2FBC, .data, 5D5BC] # g_CapePaletteDefs
       - [0x300C, .data, 5D5BC] # g_CheatCodes
       - [0x3014, .data, 5D5BC] # D_800A3014
-      - [0x3134, data, 627C4]
-      - [0x31B0, data, 63ED4]
-      - [0x37D8, data]
+      - [0x3134, .data, 627C4] # D_800A3194
+      - [0x31B0, .data, 63ED4] # D_800A3210
+      - [0x3330, .data, 63ED4] # D_800A33A0-D_800A35D0
+      - [0x37D8, .data, 63ED4] # Palette, GFX desc until D_800A3BB8
       - [0x3C40, .data, lba_stage]
       - [0x4A00, .data, config_us] # subweapons
       - [0x4B04, .data, config_us] # equipments
@@ -116,8 +117,12 @@ segments:
       - [0x1D224, assets, music_xa, g_XaMusicConfigs]
       - [0x1F554, assets, sfx, g_SfxData]
       - [0x2097C, .data, 953A0]
-      - [0x2217C, data]
-      - [0x227B0, data]
+      - [0x2217C, cmp, D_800C217C]
+      - [0x227B0, cmp, D_800C27B0]
+      - [0x23560, cmp, D_800C3560]
+      - [0x24864, cmp, D_800C4864]
+      - [0x24A90, cmp, D_800C4A90]
+      - [0x24CEC, data]
       - [0x25324, raw, g_GfxEquipIcon]
       - [0x2F324, data]
       - [0x388D4, raw, g_PalEquipIcon]

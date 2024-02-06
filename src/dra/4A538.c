@@ -341,8 +341,8 @@ void LoadPendingGfx(void) {
     s32 j;
     u32 xy;
     u32 wh;
+    u8* cmp;
     u8* src;
-    u8* src2;
     u8* dst;
     s32 over;
     GfxLoad* gfxLoad;
@@ -358,10 +358,10 @@ void LoadPendingGfx(void) {
         case GFX_BANK_8BPP:
         case GFX_BANK_16BPP:
             for (gfxEntry = gfxLoad->next; gfxEntry->xy != -1; gfxEntry++) {
-                xy = gfxEntry->xy;
-                wh = gfxEntry->wh;
-                src2 = gfxEntry->data;
-                LoadTPage(src2, gfxLoad->kind - 1, 0, xy >> 0x10, (u16)xy,
+                xy = (u32)gfxEntry->xy;
+                wh = (u32)gfxEntry->wh;
+                src = (u8*)gfxEntry->data;
+                LoadTPage(src, gfxLoad->kind - 1, 0, xy >> 0x10, (u16)xy,
                           wh >> 0x10, (u16)wh);
             }
             gfxLoad->kind = GFX_BANK_NONE;
@@ -370,12 +370,12 @@ void LoadPendingGfx(void) {
             gfxEntry = gfxLoad->next;
             for (; j < 4; j++) {
                 dst = g_Pix[j];
-                xy = gfxEntry->xy;
-                wh = gfxEntry->wh;
-                src = gfxEntry->data;
-                over = DecompressData(dst, src);
+                xy = (u32)gfxEntry->xy;
+                wh = (u32)gfxEntry->wh;
+                cmp = (u8*)gfxEntry->data;
+                over = DecompressData(dst, cmp);
                 if (over) {
-                    sprintf(buf, "over:%08x(%04x)", src, over);
+                    sprintf(buf, "over:%08x(%04x)", cmp, over);
                     DebugInputWait(buf);
                 }
                 LoadTPage(dst, 0, 0, xy >> 0x10, (u16)xy, wh >> 0x10, (u16)wh);

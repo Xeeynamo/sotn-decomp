@@ -3,8 +3,8 @@
 #include "player.h"
 
 void func_801092E8(s32 arg0) {
-    D_800A37D8.D_800A37D8 = D_800ACE48[arg0 * 2];
-    D_800A37D8.D_800A37DA = D_800ACE48[arg0 * 2 + 1];
+    D_800A37D8[0] = D_800ACE48[arg0 * 2];
+    D_800A37D8[1] = D_800ACE48[arg0 * 2 + 1];
     D_8006EBE0 = D_800ACE48[arg0 * 2];
 }
 
@@ -1043,7 +1043,7 @@ block_160:
         func_8010D800();
         if (PLAYER.animSet == 0xD) {
             D_800CFE48[PLAYER.animCurFrame & 0x7FFF]->unk4 =
-                D_8013AECC + D_800ACE20[(s16)PLAYER.animCurFrame];
+                D_8013AECC + D_800ACE20[PLAYER.animCurFrame];
         }
 #ifdef VERSION_US
         FntPrint("step:%04x\n", PLAYER.step);

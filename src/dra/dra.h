@@ -329,14 +329,6 @@ typedef struct {
     s32 unk28;
 } PlayerHud;
 
-// All the Joseph's Cloak color fields are in RGB555 format
-typedef struct {
-    u16 liningDark;
-    u16 liningLight;
-    u16 exteriorDark;
-    u16 exteriorLight;
-} JosephsCloak;
-
 // g_ButtonCombo is an array of 16, here is what each index is for
 // Names should be updated as each one is decompiled.
 typedef enum {
@@ -397,17 +389,11 @@ extern s32 D_800A2438;
 extern RoomTeleport D_800A245C[];
 extern u32 D_800A2D24;
 extern const char* D_800A83AC[];
-extern s32 D_800A3194[];
-extern SVECTOR* D_800A3210[];
-extern SVECTOR* D_800A33A0[];
-extern SVECTOR* D_800A34C0[18][3];
-extern SVECTOR* D_800A3598[];
-extern SVECTOR* D_800A35D0[];
+
 extern SVECTOR* D_800A3608[];
-extern u8 D_800A3728;
 extern MATRIX D_800A37B8;
-extern Unkstruct_801092E8 D_800A37D8;
-extern JosephsCloak g_JosephsCloak;
+extern u16 D_800A37D8[2];
+extern u16 g_JosephsCloakColors[4];
 extern GfxBank** g_GfxSharedBank[];
 extern s16** D_800A3B70[18];
 extern u_long* D_800A3BB8[];
@@ -656,7 +642,6 @@ extern s32 D_80137E60; // most likely part of the g_Cd struct
 extern s32 g_MemCardRStep;
 extern s32 g_MemCardRStepSub;
 extern s32 D_80137E6C;
-extern SVECTOR D_80137E70[];
 extern s32 D_80137EE0;
 extern s32 D_80137EE4;
 extern s32 D_80137EE8;

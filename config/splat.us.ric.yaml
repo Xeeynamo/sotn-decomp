@@ -30,7 +30,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, data]
-      - [0x20, spritesheet, richter, disks/us/BIN/F_GAME2.BIN, 0x40400]
+      - [0x20, spritesheet, richter, disks/us/BIN/F_GAME2.BIN, 32]
       - [0x170AC, .data, spriteparts]
       - [0x18568, data]
       - [0x18688, assets, subweapondefs, D_80154688]
@@ -61,8 +61,8 @@ segments:
       - [0x1AB04, .rodata, 2C4C4] #EntityCrossBoomerang
       - [0x1AB24, .rodata, 2C4C4] #EntitySubwpnAgunea
       - [0x1AB38, .rodata, 319C4]
-      - [0x1AB50, rodata]
-      - [0x1AB68, .rodata, 32324]
+      - [0x1AB50, .rodata, 319C4]
+      - [0x1AB68, .rodata, 319C4]
       - [0x1AC50, rodata]
       - [0x1AC60, c, 1AC60]
       - [0x1CB04, c, 1CB04]
@@ -75,6 +75,5 @@ segments:
       - [0x2A060, c, 2A060]
       - [0x2C4C4, c, 2C4C4]
       - [0x319C4, c, 319C4]
-      - [0x32324, c, 32324]
       - [0x37B64, sbss]
   - [0x39A58]

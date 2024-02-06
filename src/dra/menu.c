@@ -854,19 +854,24 @@ s32 DarkenCloakColor(s32 color) { return color * 3 / 4; }
 
 // Creates light and dark versions of cloak colors in BGR555 format
 void ApplyJosephsCloakPalette(void) {
-    g_JosephsCloak.liningDark =
+    const int LiningDark = 0;
+    const int LiningLight = 1;
+    const int ExteriorDark = 2;
+    const int ExteriorLight = 3;
+
+    g_JosephsCloakColors[LiningDark] =
         DarkenCloakColor(g_Settings.cloakColors[3]) +
         ((DarkenCloakColor(g_Settings.cloakColors[4]) << 5) - 0x8000) +
         (DarkenCloakColor(g_Settings.cloakColors[5]) << 0xA);
-    g_JosephsCloak.liningLight =
+    g_JosephsCloakColors[LiningLight] =
         (g_Settings.cloakColors[3] +
          ((g_Settings.cloakColors[4] << 5) - 0x8000)) +
         ((u32)g_Settings.cloakColors[5] << 0xA);
-    g_JosephsCloak.exteriorDark =
+    g_JosephsCloakColors[ExteriorDark] =
         DarkenCloakColor(g_Settings.cloakColors[0]) +
         ((DarkenCloakColor(g_Settings.cloakColors[1]) << 5) - 0x8000) +
         (DarkenCloakColor(g_Settings.cloakColors[2]) << 0xA);
-    g_JosephsCloak.exteriorLight =
+    g_JosephsCloakColors[ExteriorLight] =
         g_Settings.cloakColors[0] +
         ((g_Settings.cloakColors[1] << 5) - 0x8000) +
         ((u32)g_Settings.cloakColors[2] << 0xA);
@@ -2233,6 +2238,7 @@ void func_800F98AC(const char* str, u32 arg1) {
 
 #ifdef VERSION_PC
     NOT_IMPLEMENTED;
+    return;
 #endif
 
     for (data_ptr = str; *data_ptr != 0;) {
@@ -2292,6 +2298,10 @@ void func_800F99B8(const char* str, s32 arg1, s32 arg2) {
         var_s5 &= ~0x200;
     }
     var_s5 = func_800F548C(var_s5 & 0xFF) & 0xFF;
+#ifdef VERSION_PC
+    NOT_IMPLEMENTED;
+    return;
+#endif
     while (*var_s1 != 0) {
         var_s2 = 0;
         var_s0 = *var_s1++;
