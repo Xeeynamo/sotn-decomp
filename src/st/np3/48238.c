@@ -162,7 +162,7 @@ void EntityMerman(Entity* self) {
             posY += camY;
             if (posY < pos[3]) {
                 g_api.PlaySfx(NA_SE_EV_WATER_SPLASH);
-                newEntity = AllocEntity(D_8007DE38, &D_8007DE38[24]);
+                newEntity = AllocEntity(g_Entities + 232, g_Entities + 256);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x33, self, newEntity);
                     newEntity->posY.i.hi -= 20;
@@ -194,7 +194,7 @@ void EntityMerman(Entity* self) {
                     self->ext.merman.palette--;
                 }
                 self->palette = self->ext.merman.palette;
-                newEntity = AllocEntity(D_8007DE38, &D_8007DE38[24]);
+                newEntity = AllocEntity(g_Entities + 232, g_Entities + 256);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x3B, self, newEntity);
                     newEntity->posX.i.hi -= 6 - ((Random() & 3) * 4);
@@ -270,7 +270,7 @@ void EntityMerman(Entity* self) {
             }
             if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
                 func_801C2598(0x662);
-                newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
+                newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x3A, self, newEntity);
                     if (self->facingLeft != 0) {

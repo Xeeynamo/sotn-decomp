@@ -79,7 +79,7 @@ void EntityUnkId1C(Entity* self) {
         if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
             func_801A046C(0x6E2);
             for (i = 0; i < 2; i++) {
-                newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
+                newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x1D, self, newEntity);
                     newEntity->params = i;

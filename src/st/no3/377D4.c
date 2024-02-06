@@ -1095,7 +1095,7 @@ void EntityMermanRockLeftSide(Entity* self) {
         }
 
         if (self->ext.generic.unk84.S16.unk0 >= 2) {
-            newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
+            newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, newEntity);
                 newEntity->params = ITEM_POT_ROAST;

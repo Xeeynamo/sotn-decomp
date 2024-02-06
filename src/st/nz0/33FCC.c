@@ -348,7 +348,7 @@ void EntitySlogra(Entity* self) {
         case SLOGRA_FIRE_PROJECTILE:
             if (AnimateEntity(D_8018108C, self) == 0) {
                 func_801C29B0(NA_SE_EN_SLOGRA_SPEAR_PROJECTILE);
-                newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
+                newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
                         E_SLOGRA_SPEAR_PROJECTILE, self, newEntity);
@@ -840,7 +840,7 @@ void EntityGaibon(Entity* self) {
                 shootSpeed = 15;
             }
             if (self->ext.GS_Props.timer & shootSpeed == 0) {
-                newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
+                newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
                         E_GAIBON_SMALL_FIREBALL, self, newEntity);
@@ -930,7 +930,7 @@ void EntityGaibon(Entity* self) {
 
         case GAIBON_SHOOT_FROM_GROUND_FACE_SHOOTING:
             if (!(self->ext.GS_Props.timer % 16)) {
-                newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
+                newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 if (newEntity != NULL) {
                     if (self->ext.GS_Props.nearDeath == 0) {
                         CreateEntityFromEntity(
@@ -968,8 +968,8 @@ void EntityGaibon(Entity* self) {
             break;
 
         case GAIBON_FLY_SHOOT_BIG_FIREBALL_SHOOTING:
-            if (AllocEntity(D_8007A958, &D_8007A958[32]) != 0) {
-                newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
+            if (AllocEntity(g_Entities + 160, g_Entities + 192) != 0) {
+                newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
                         E_GAIBON_BIG_FIREBALL, self, newEntity);

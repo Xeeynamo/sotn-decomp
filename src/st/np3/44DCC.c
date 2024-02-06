@@ -644,7 +644,7 @@ s32 func_801C6458(s16 yOffset) {
 
     if (collider.effects & EFFECT_WATER) {
         if (!g_CurrentEntity->ext.merman.isUnderwater) {
-            newEntity = AllocEntity(&D_8007DE38, &D_8007DE38[24]);
+            newEntity = AllocEntity(g_Entities + 232, g_Entities + 256);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x33, g_CurrentEntity, newEntity);
                 newEntity->posY.i.hi += yOffset;
@@ -810,7 +810,7 @@ void EntityMerman2(Entity* self) {
             camY = g_Tilemap.scrollY.i.hi + posY;
             if (camY < pos[3]) {
                 g_api.PlaySfx(NA_SE_EV_WATER_SPLASH);
-                newEntity = AllocEntity(D_8007DE38, &D_8007DE38[24]);
+                newEntity = AllocEntity(g_Entities + 232, g_Entities + 256);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x33, self, newEntity);
                     newEntity->posY.i.hi -= 24;
@@ -859,7 +859,7 @@ void EntityMerman2(Entity* self) {
                 *(s32*)&prim->r3 = *(s32*)&prim->r0;
             }
             if (self->velocityY < 0) {
-                newEntity = AllocEntity(D_8007DE38, &D_8007DE38[24]);
+                newEntity = AllocEntity(g_Entities + 232, g_Entities + 256);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x38, self, newEntity);
                     newEntity->posX.i.hi -= 6 - ((Random() & 3) * 4);
@@ -952,16 +952,16 @@ void EntityMerman2(Entity* self) {
         case MERMAN2_SPIT_FIRE_ATTACK:
             if (AnimateEntity(D_8018227C, self) == 0) {
                 func_801C2598(0x662);
-                newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
+                newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 i = 0;
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x34, self, newEntity);
                     newEntity->posY.i.hi -= 12;
                     newEntity->facingLeft = self->facingLeft;
                 }
-                newEntity2 = &D_8007A958[64];
+                newEntity2 = g_Entities + 224;
                 for (offset = 0; i < 3; i++, offset += 8) {
-                    newEntity = AllocEntity(newEntity2, &newEntity2[32]);
+                    newEntity = AllocEntity(newEntity2, newEntity2 + 32);
                     if (newEntity != NULL) {
                         CreateEntityFromEntity(0x36, self, newEntity);
                         if (self->facingLeft != 0) {
