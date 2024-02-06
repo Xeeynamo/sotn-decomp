@@ -1574,7 +1574,7 @@ s32 func_801D2D40(s16 yVector) {
 
     if (collider.effects & EFFECT_WATER) {
         if (*(u8*)&g_CurrentEntity->ext.generic.unkA0 == 0) {
-            newEntity = AllocEntity(&D_8007DE38, &D_8007DE38[24]);
+            newEntity = AllocEntity(g_Entities + 232, g_Entities + 256);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x3B, g_CurrentEntity, newEntity);
                 newEntity->posY.i.hi += yVector;

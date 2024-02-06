@@ -1571,31 +1571,10 @@ extern s32 D_80073074;      // Probably also an Event?
 extern Event g_EvSwCardNew; // 80073078
 extern s32 D_8007307C;      // Maybe also an Event?
 extern s32 D_80073080;
-
 extern Tilemap g_Tilemap;
-
-// Beginning of Player Character offset = 0x800733D8
 extern Entity g_Entities[TOTAL_ENTITY_COUNT];
-
-extern u16 D_800734C0;
-
-// D_800736C8 g_Entities[4]
-// D_80073784 g_Entities[5]
-// D_800739B8 g_Entities[8]
-// D_80073F98 g_Entities[16]
-// D_800741CC g_Entities[19]
-// D_80074C08 g_Entities[20]
-
-// *** ENTITY DIRECT ACCESS PROPERTIES START ***
-extern Entity D_80074C08[];
-// *** ENTITY DIRECT ACCESS PROPERTIES END ***
-
-extern Entity D_8007A958[]; // &g_Entities[160]
-extern Entity D_8007C0D8[]; // &g_Entities[192]
-extern Entity D_8007DE38[];
 extern unkGraphicsStruct g_unkGraphicsStruct;
-extern s32 g_entityDestroyed[];
-extern Entity D_8007EF1C;
+extern s32 g_entityDestroyed[18];
 extern Event g_EvHwCardEnd;
 extern Event g_EvHwCardErr;
 extern Event g_EvHwCardTmo;

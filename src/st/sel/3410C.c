@@ -480,32 +480,30 @@ void func_801B4FFC(void) {
 }
 
 void func_801B519C(void) {
+    Entity* self;
     Primitive* prim;
     s16 angle;
     s16 y;
     s32 angle2;
-    Entity* ent = &g_Entities[1];
+    s32 uvOfst;
+    s16 primBufIndex;
+    s32 v01;
 
-    if (D_800734C0 != 0) {
-        if (D_800734C0 != 1) {
-            do {
-            } while (0);
-            return;
-        }
-    } else {
-        s32 uvOfst;
-        s16 primBufIndex = g_api.AllocPrimitives(PRIM_GT4, 0x18);
+    self = &g_Entities[1];
+    switch (self->step) {
+    case 0:
+        primBufIndex = g_api.AllocPrimitives(PRIM_GT4, 0x18);
         if (primBufIndex == -1) {
             return;
         }
         prim = &g_PrimBuf[primBufIndex];
-        g_Entities[1].primIndex = primBufIndex;
-        g_Entities[1].ext.prim = prim;
-        g_Entities[1].flags |= 0x800000;
+        self->primIndex = primBufIndex;
+        self->ext.prim = prim;
+        self->flags |= 0x800000;
         uvOfst = 0;
         while (prim) {
-            s32 v01 = 0x38 + uvOfst;
-            ++uvOfst;
+            v01 = 0x38 + uvOfst;
+            uvOfst++;
             prim->tpage = 8;
             prim->clut = 0x201;
             prim->u0 = prim->u2 = 0x38;
@@ -516,29 +514,31 @@ void func_801B519C(void) {
             prim->drawMode = 0x71;
             prim = prim->next;
         }
-        ++ent->step;
-    }
-    y = 0xA2;
-    prim = ent->ext.prim;
-    angle = ent->ext.generic.unk88.unk + 0x40;
-    angle2 = angle;
-    ent->ext.generic.unk88.S16.unk0 = angle2;
-    while (prim) {
-        s16 xBase;
-        s32 sin;
-        angle &= 0xFFF;
-        sin = rsin(angle);
-        if (sin < 0) {
-            sin += 0x7FF;
+        self->step++;
+    case 1:
+        y = 0xA2;
+        prim = self->ext.prim;
+        angle = self->ext.generic.unk88.unk + 0x40;
+        angle2 = angle;
+        self->ext.generic.unk88.S16.unk0 = angle2;
+        while (prim) {
+            s16 xBase;
+            s32 sin;
+            angle &= 0xFFF;
+            sin = rsin(angle);
+            if (sin < 0) {
+                sin += 0x7FF;
+            }
+            xBase = sin >> 0xB;
+            prim->x0 = prim->x2 = xBase + 0x40;
+            prim->x1 = prim->x3 = xBase + 0x88;
+            prim->y0 = prim->y1 = y;
+            y++;
+            prim->y2 = prim->y3 = y;
+            prim = prim->next;
+            angle += 0x100;
         }
-        xBase = sin >> 0xB;
-        prim->x0 = prim->x2 = xBase + 0x40;
-        prim->x1 = prim->x3 = xBase + 0x88;
-        prim->y0 = prim->y1 = y;
-        ++y;
-        prim->y2 = prim->y3 = y;
-        prim = prim->next;
-        angle += 0x100;
+        break;
     }
 }
 

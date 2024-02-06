@@ -43,15 +43,6 @@ void func_80198BC8(void* const, s32);
 void func_8019344C(void);
 void EntityUnkId15(Entity* entity);
 
-// OFFSET FIXED
-extern u8 D_8003BEE8[];
-extern Entity* g_CurrentEntity;
-extern Entity g_Entities[];
-extern Entity D_8007EF1C;
-extern s32 g_BottomCornerTextTimer;
-extern s32 g_BottomCornerTextPrims;
-extern s32 D_800973FC;
-
 // TODO FIX
 extern s32 D_80097908;
 

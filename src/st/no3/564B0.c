@@ -96,7 +96,7 @@ void EntityZombieSpawner(Entity* self) {
     if (D_8003BE23 != 0) {
         self->posX.i.hi = 128;
         if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
-            newEntity = AllocEntity(D_8007A958, &D_8007A958[8]);
+            newEntity = AllocEntity(g_Entities + 160, g_Entities + 168);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(0x4C, self, newEntity);
                 rnd = (Random() & 0x3F) + 96;
