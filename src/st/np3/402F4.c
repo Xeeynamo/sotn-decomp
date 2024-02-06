@@ -735,7 +735,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
         }
     }
 
-    g_BottomCornerTextPrims = g_api_AllocPrimitives(PRIM_SPRT, charcount + 4);
+    g_BottomCornerTextPrims = g_api.AllocPrimitives(PRIM_SPRT, charcount + 4);
     if (g_BottomCornerTextPrims == -1) {
         return;
     }

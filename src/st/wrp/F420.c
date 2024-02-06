@@ -70,7 +70,7 @@ void func_8018F620(
     newX = self->posX.i.hi + x;
     newY = self->posY.i.hi + y;
     for (i = 0; i < count; i++) {
-        newEntity = AllocEntity(D_8007A958, D_8007A958 + 0x20);
+        newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
         if (newEntity != NULL) {
             newEntity->posX.i.hi = newX + xGap * i;
             newEntity->posY.i.hi = newY;

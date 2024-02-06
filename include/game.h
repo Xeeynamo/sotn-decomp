@@ -1505,10 +1505,9 @@ extern s32 g_IsTimeAttackUnlocked;
 // shortcuts around the castle. One typical example is the wood column that
 // prevents the player to enter in the warp room. When g_CastleFlags[0x32] the
 // column will disappear.
-extern u8 g_CastleFlags[0x300];
-extern u8 D_8003BE23;
-extern u8 D_8003BEEC[];
-extern u8 D_8003BF9C[];
+extern u8 g_CastleFlags[0x300]; // starts at 0x8003BDEC
+extern u8 D_8003BEEC[];         // part of g_CastleFlags or a second array?
+extern u8 D_8003BF9C[];         // not sure if it is part of D_8003BEEC?
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
 extern s32 D_8003C100;
@@ -1581,31 +1580,10 @@ extern s32 D_80073074;      // Probably also an Event?
 extern Event g_EvSwCardNew; // 80073078
 extern s32 D_8007307C;      // Maybe also an Event?
 extern s32 D_80073080;
-
 extern Tilemap g_Tilemap;
-
-// Beginning of Player Character offset = 0x800733D8
 extern Entity g_Entities[TOTAL_ENTITY_COUNT];
-
-extern u16 D_800734C0;
-
-// D_800736C8 g_Entities[4]
-// D_80073784 g_Entities[5]
-// D_800739B8 g_Entities[8]
-// D_80073F98 g_Entities[16]
-// D_800741CC g_Entities[19]
-// D_80074C08 g_Entities[20]
-
-// *** ENTITY DIRECT ACCESS PROPERTIES START ***
-extern Entity D_80074C08[];
-// *** ENTITY DIRECT ACCESS PROPERTIES END ***
-
-extern Entity D_8007A958[]; // &g_Entities[160]
-extern Entity D_8007C0D8[]; // &g_Entities[192]
-extern Entity D_8007DE38[];
 extern unkGraphicsStruct g_unkGraphicsStruct;
-extern s32 g_entityDestroyed[];
-extern Entity D_8007EF1C;
+extern s32 g_entityDestroyed[18];
 extern Event g_EvHwCardEnd;
 extern Event g_EvHwCardErr;
 extern Event g_EvHwCardTmo;

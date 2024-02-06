@@ -210,7 +210,7 @@ void EntityAxeKnight(Entity* self) {
             }
         } else if ((animStatus & 0x80) && (self->animFrameIdx == 7)) {
             func_801C29B0(NA_SE_VO_AXE_KNIGHT_THROW);
-            newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
+            newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);
                 newEntity->facingLeft = self->facingLeft;
@@ -229,7 +229,7 @@ void EntityAxeKnight(Entity* self) {
         if (animStatus != 0) {
             if ((animStatus & 0x80) && (self->animFrameIdx == 6)) {
                 func_801C29B0(NA_SE_VO_AXE_KNIGHT_THROW);
-                newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
+                newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 if (newEntity != NULL) {
                     CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);
                     newEntity->facingLeft = self->facingLeft;
@@ -262,7 +262,7 @@ void EntityAxeKnight(Entity* self) {
 
         if ((animStatus & 0x80) && (self->animFrameIdx == 7)) {
             func_801C29B0(NA_SE_VO_AXE_KNIGHT_THROW);
-            newEntity = AllocEntity(D_8007A958, &D_8007A958[32]);
+            newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);
                 newEntity->facingLeft = self->facingLeft;
