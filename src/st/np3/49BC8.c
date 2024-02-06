@@ -93,7 +93,7 @@ void EntityZombieSpawner(Entity* self) {
         self->flags &= FLAG_UNK_2000;
     }
 
-    if (D_8003BE23 != 0) {
+    if (g_CastleFlags[0x37]) {
         self->posX.i.hi = 128;
         if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
             newEntity = AllocEntity(g_Entities + 160, g_Entities + 168);
