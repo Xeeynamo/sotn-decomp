@@ -544,7 +544,460 @@ void ResetEntityArray(void) {
     }
 }
 
+#ifndef NON_MATCHING
 INCLUDE_ASM("dra/nonmatchings/4A538", RenderEntities);
+#else
+typedef struct {
+    /* 0x1F800034 */ u16 unk0;
+    /* 0x1F800036 */ s16 animSet;
+    /* 0x1F800038 */ s16 animCurFrame;
+    /* 0x1F80003A */ u16 w;
+    /* 0x1F80003C */ u16 h;
+    /* 0x1F80003E */ s16 x;
+    /* 0x1F800040 */ s16 y;
+    /* 0x1F800042 */ u16 xPivot;
+    /* 0x1F800044 */ u16 yPivot;
+    /* 0x1F800046 */ u16 unused12;
+    /* 0x1F800048 */ s32 index;
+    /* 0x1F80004C */ s32 unk18;
+    /* 0x1F800050 */ u32 unk1C;
+    /* 0x1F800054 */ s32 unk20;
+    /* 0x1F800058 */ s32 unk24;
+    /* 0x1F80005C */ OT_TYPE* ot;
+    /* 0x1F800060 */ POLY_GT4* poly;
+} EntitiesRenderer; // size=0x30
+
+void RenderEntities(void) {
+#ifdef VERSION_PC
+    POLY_GT4 _poly;
+    POLY_GT4* poly = &_poly;
+    EntitiesRenderer _r;
+    EntitiesRenderer* r = &_r;
+#else
+    POLY_GT4* poly = (POLY_GT4*)0x1F800000;
+    EntitiesRenderer* r = (EntitiesRenderer*)0x1F800034;
+#endif
+
+    Entity* entity;
+    PlayerDraw* plDraw;
+    s32 temp_s2_2;
+    s16* var_t2;
+    s16 temp_a0_10;
+    s16 temp_a0_2;
+    s32 temp_v1_4;
+    s32 var_a0_2;
+    s16 var_a0;
+    u16 temp_a2;
+    s32 new_var;
+    u16 temp_v0_6;
+    u16 temp_v1_6;
+    u16 temp_v1_8;
+    u16 var_v0_3;
+    s32 var_v0_4;
+    s32 test;
+    u8 texEX;
+    u8 texSY;
+    u8 texEY;
+    u8 texSX;
+    u8* spriteData;
+    s16** spriteBank;
+    u16 animSet;
+    u8** prestuff;
+    u8** stuff;
+
+    entity = g_Entities;
+    setPolyGT4(poly);
+    r->index = 0;
+    r->poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
+    r->ot = g_CurrentBuffer->ot;
+    for (; r->index < 0x100; r->index++, entity++) {
+        animSet = entity->animSet;
+        r->animSet = animSet;
+        r->animCurFrame = entity->animCurFrame;
+        if (animSet == 0 | r->animCurFrame == 0) {
+            continue;
+        }
+        r->unk24 = entity->drawFlags;
+        if (r->unk24 & 0x80 && (r->index ^ g_Timer) & 1) {
+            continue;
+        }
+        r->unk20 = entity->facingLeft * 2;
+        r->x = entity->posX.i.hi + g_backbufferX;
+        r->y = entity->posY.i.hi + g_backbufferY;
+        if (r->x < -512 || r->x > 512) {
+            continue;
+        }
+        if (r->y < -512 || r->y > 512) {
+            continue;
+        }
+        temp_a0_2 = r->animCurFrame & 0x7FFF;
+        if (temp_a0_2 == 0) {
+            continue;
+        }
+        if (r->animSet > 0) {
+            var_t2 = D_800A3B70[r->animSet][temp_a0_2];
+        } else {
+            spriteBank = g_api.o.spriteBanks;
+            spriteBank = &spriteBank[r->animSet & 0x7FFF];
+            spriteBank = (s16**)*spriteBank;
+            var_t2 = spriteBank[temp_a0_2];
+        }
+        r->unk1C = *var_t2++;
+        if (r->unk1C & 0x8000) {
+            plDraw = &g_PlayerDraw[entity->unk5A];
+            r->unk20 = plDraw->flipX ^ r->unk20;
+            r->unk1C &= 0x7FFF;
+            if (r->animSet > 0) {
+                if (r->animSet == 13) { // BAT FORM
+                    stuff = r->unk1C + g_PlOvlAluBatSpritesheet[0];
+                    spriteData = *stuff;
+                } else {
+                    stuff = r->unk1C + g_PlOvlSpritesheet;
+                    spriteData = *stuff;
+                }
+            } else {
+                temp_v1_4 = (r->animSet & 0x7FFF);
+                if (temp_v1_4 == 1) {
+                    stuff = r->unk1C + g_api.o.unk2c;
+                    spriteData = *stuff;
+                } else if (temp_v1_4 == 16) {
+                    stuff = r->unk1C + g_PlOvlSpritesheet;
+                    spriteData = *stuff;
+                } else {
+                    stuff = r->unk1C + g_api.o.unk30;
+                    spriteData = *stuff;
+                }
+            }
+            r->xPivot = spriteData[2] + var_t2[0];
+            r->yPivot = spriteData[3] + var_t2[1];
+            r->w = spriteData[0];
+            r->h = spriteData[1];
+            poly->tpage = plDraw->tpage;
+            texSX = (plDraw->rect0.x & 0x3F) * 4;
+            texSY = plDraw->rect0.y;
+            texEX = texSX + r->w;
+            texEY = texSY + r->h;
+            if (!(r->animCurFrame & 0x8000)) {
+                new_var = 4; // FAKE!
+                plDraw->rect0.w = r->w >> 2;
+                plDraw->rect0.h = r->h;
+                LoadImage(&plDraw->rect0, (u_long*)(spriteData + 4));
+                plDraw->rect1.w = 1;
+                plDraw->rect1.x = plDraw->rect0.x + plDraw->rect0.w;
+                plDraw->rect1.y = plDraw->rect0.y - 1;
+                plDraw->rect1.h = plDraw->rect0.h + 4;
+                ClearImage(&plDraw->rect1, 0, 0, 0);
+                plDraw->rect2.h = 4;
+                plDraw->rect2.x = plDraw->rect0.x - 1;
+                plDraw->rect2.y = plDraw->rect0.y + plDraw->rect0.h;
+                plDraw->rect2.w = plDraw->rect0.w + 2;
+                ClearImage(&plDraw->rect2, 0, 0, 0);
+            }
+            if (r->unk20 & 2) {
+                var_v0_3 = r->x - r->xPivot;
+            } else {
+                var_v0_3 = r->x + r->xPivot;
+            }
+            var_a0 = var_v0_3;
+            temp_a2 = r->y + r->yPivot;
+            if (r->unk20) {
+                poly->y0 = temp_a2;
+                poly->x1 = var_a0 + 1;
+                poly->y1 = temp_a2;
+                poly->x3 = var_a0 + 1;
+                poly->x0 = var_a0 - r->w + 1;
+                poly->x2 = var_a0 - r->w + 1;
+                poly->y2 = temp_a2 + r->h;
+                poly->y3 = temp_a2 + r->h;
+            } else {
+                poly->x0 = var_a0;
+                poly->y0 = temp_a2;
+                poly->y1 = temp_a2;
+                poly->x2 = var_a0;
+                poly->x1 = var_a0 + r->w;
+                poly->y2 = temp_a2 + r->h;
+                poly->x3 = var_a0 + r->w;
+                poly->y3 = temp_a2 + r->h;
+            }
+            if (r->unk20) {
+                poly->u0 = texEX - 1;
+                poly->v0 = texSY;
+                poly->u1 = texSX - 1;
+                poly->v1 = texSY;
+                poly->u2 = texEX - 1;
+                poly->v2 = texEY;
+                poly->u3 = texSX - 1;
+                poly->v3 = texEY;
+            } else {
+                poly->u0 = texSX;
+                poly->v0 = texSY;
+                poly->u1 = texEX;
+                poly->v1 = texSY;
+                poly->u2 = texSX;
+                poly->v2 = texEY;
+                poly->u3 = texEX;
+                poly->v3 = texEY;
+            }
+            func_800EB758(r->x, r->y, entity, (u8)r->unk24, poly, r->unk20);
+            temp_v1_6 = entity->palette;
+            if (temp_v1_6 & 0x8000) {
+                test = temp_v1_6 & 0x7FFF;
+            } else {
+                test = temp_v1_6 + var_t2[2];
+            }
+            poly->clut = D_8003C104[test];
+            if (entity->drawMode) {
+                setSemiTrans(poly, true);
+                poly->tpage += entity->drawMode & 0x60;
+            } else {
+                setSemiTrans(poly, false);
+            }
+            if (plDraw->enableColorBlend) {
+                poly->r0 = plDraw->r0;
+                poly->g0 = plDraw->b0;
+                poly->b0 = plDraw->g0;
+                poly->r1 = plDraw->r1;
+                poly->g1 = plDraw->b1;
+                poly->b1 = plDraw->g1;
+                poly->r2 = plDraw->r2;
+                poly->g2 = plDraw->b2;
+                poly->b2 = plDraw->g2;
+                poly->r3 = plDraw->r3;
+                poly->g3 = plDraw->b3;
+                poly->b3 = plDraw->g3;
+                setShadeTex(poly, false);
+            } else {
+                if (r->unk24 & 8) {
+                    poly->r0 = poly->g0 = poly->b0 = poly->r1 = poly->g1 =
+                        poly->b1 = poly->r2 = poly->g2 = poly->b2 = poly->r3 =
+                            poly->g3 = poly->b3 = entity->unk6C;
+                    if (r->unk24 & 0x10) {
+                        poly->r0 = poly->r1 = poly->r2 = poly->r3 = 0x80;
+                    }
+                    if (r->unk24 & 0x20) {
+                        poly->g0 = poly->g1 = poly->g2 = poly->g3 = 0x80;
+                    }
+                    if (r->unk24 & 0x40) {
+                        poly->b0 = poly->b1 = poly->b2 = poly->b3 = 0x80;
+                    }
+                    setShadeTex(poly, false);
+                } else {
+                    setShadeTex(poly, true);
+                }
+            }
+            __builtin_memcpy(r->poly, poly, sizeof(POLY_GT4));
+            addPrim(entity->zPriority + r->ot, r->poly);
+            r->poly++;
+            g_GpuUsage.gt4++;
+        } else {
+            for (r->unk18 = 0; r->unk18 < r->unk1C; r->unk18++, var_t2 += 11) {
+                if (g_GpuUsage.gt4 >= 0x300) {
+                    break;
+                }
+                temp_s2_2 = var_t2[0];
+                poly->tpage = var_t2[6];
+                poly->tpage += entity->unk5A;
+                r->unk0 = poly->tpage & 3;
+                poly->tpage >>= 2;
+                r->xPivot = var_t2[1];
+                r->yPivot = var_t2[2];
+                r->w = var_t2[3];
+                r->h = var_t2[4];
+                if (temp_s2_2 & 4) {
+                    r->w--;
+                    if (temp_s2_2 & 2) {
+                        r->xPivot++;
+                    }
+                }
+                if (temp_s2_2 & 8) {
+                    r->h--;
+                    if (temp_s2_2 & 1) {
+                        r->yPivot++;
+                    }
+                }
+                if (temp_s2_2 & 0x10) {
+                    r->w--;
+                    if (!(temp_s2_2 & 2)) {
+                        r->xPivot++;
+                    }
+                }
+                if (temp_s2_2 & 0x20) {
+                    r->h--;
+                    if (!(temp_s2_2 & 1)) {
+                        r->yPivot++;
+                    }
+                }
+                if (entity->facingLeft != 0) {
+                    var_v0_3 = r->x - r->xPivot;
+                } else {
+                    var_v0_3 = r->x + r->xPivot;
+                }
+                temp_a2 = r->y + r->yPivot;
+                if (r->unk20 != 0) {
+                    poly->x0 = var_v0_3 - r->w + 1;
+                    poly->y0 = temp_a2;
+                    poly->x1 = var_v0_3 + 1;
+                    poly->y1 = temp_a2;
+                    poly->x2 = var_v0_3 - r->w + 1;
+                    poly->y2 = temp_a2 + r->h;
+                    poly->x3 = var_v0_3 + 1;
+                    poly->y3 = temp_a2 + r->h;
+                } else {
+                    poly->x0 = var_v0_3;
+                    poly->y0 = temp_a2;
+                    poly->x1 = var_v0_3 + r->w;
+                    poly->y1 = temp_a2;
+                    poly->x2 = var_v0_3;
+                    poly->y2 = temp_a2 + r->h;
+                    poly->x3 = var_v0_3 + r->w;
+                    poly->y3 = temp_a2 + r->h;
+                }
+                if (r->unk24 & 7) {
+                    func_800EB758(
+                        r->x, r->y, entity, (u8)r->unk24, poly, r->unk20);
+                }
+                temp_v1_6 = entity->palette;
+                if (temp_v1_6 & 0x8000) {
+                    var_v0_4 = temp_v1_6 & 0x7FFF;
+                } else {
+                    var_v0_4 = temp_v1_6 + var_t2[5];
+                }
+                poly->clut = D_8003C104[var_v0_4];
+                texSX = var_t2[7];
+                texSY = var_t2[8];
+                texEX = var_t2[9];
+                temp_v1_8 = r->unk0;
+                texEY = var_t2[10];
+                if (temp_v1_8 & 1) {
+                    texSX -= 0x80;
+                    texEX -= 0x80;
+                }
+                if (temp_v1_8 & 2) {
+                    texSY -= 0x80;
+                    texEY -= 0x80;
+                }
+                if (temp_s2_2 & 4) {
+                    texEX--;
+                }
+                if (temp_s2_2 & 8) {
+                    texEY--;
+                }
+                if (temp_s2_2 & 0x10) {
+                    texSX++;
+                }
+                if (temp_s2_2 & 0x20) {
+                    texSY++;
+                }
+                if (((temp_s2_2 & 2) ^ r->unk20) == 0) {
+                    if (!(temp_s2_2 & 1)) {
+                        poly->u0 = texSX;
+                        poly->v0 = texSY;
+                        poly->u1 = texEX;
+                        poly->v1 = texSY;
+                        poly->u2 = texSX;
+                        poly->v2 = texEY;
+                        poly->u3 = texEX;
+                        poly->v3 = texEY;
+                    } else {
+                        poly->v0 = texEY - 1;
+                        poly->v1 = texEY - 1;
+                        poly->u0 = texSX;
+                        poly->u1 = texEX;
+                        poly->u2 = texSX;
+                        poly->v2 = texSY - 1;
+                        poly->u3 = texEX;
+                        poly->v3 = texSY - 1;
+                    }
+                } else {
+                    if (!(temp_s2_2 & 1)) {
+                        poly->u0 = texEX - 1;
+                        poly->v0 = texSY;
+                        poly->u1 = texSX - 1;
+                        poly->v1 = texSY;
+                        poly->u2 = texEX - 1;
+                        poly->v2 = texEY;
+                        poly->u3 = texSX - 1;
+                        poly->v3 = texEY;
+                    } else {
+                        poly->u0 = texEX - 1;
+                        poly->v0 = texEY - 1;
+                        poly->u1 = texSX - 1;
+                        poly->v1 = texEY - 1;
+                        poly->u2 = texEX - 1;
+                        poly->v2 = texSY - 1;
+                        poly->u3 = texSX - 1;
+                        poly->v3 = texSY - 1;
+                    }
+                }
+                if (entity->drawMode != 0) {
+                    setSemiTrans(poly, true);
+                    poly->tpage += entity->drawMode & 0x60;
+                } else {
+                    setSemiTrans(poly, false);
+                }
+                if (r->unk24 & 8) {
+                    poly->r0 = poly->g0 = poly->b0 = poly->r1 = poly->g1 =
+                        poly->b1 = poly->r2 = poly->g2 = poly->b2 = poly->r3 =
+                            poly->g3 = poly->b3 = entity->unk6C;
+                    if (r->unk24 & 0x10) {
+                        poly->r0 = poly->r1 = poly->r2 = poly->r3 = 0x80;
+                    }
+                    if (r->unk24 & 0x20) {
+                        poly->g0 = poly->g1 = poly->g2 = poly->g3 = 0x80;
+                    }
+                    if (r->unk24 & 0x40) {
+                        poly->b0 = poly->b1 = poly->b2 = poly->b3 = 0x80;
+                    }
+                    setShadeTex(poly, false);
+                } else {
+                    setShadeTex(poly, true);
+                }
+                __builtin_memcpy(r->poly, poly, sizeof(POLY_GT4));
+                var_a0 = entity->zPriority;
+                if (temp_s2_2 & 0x100) {
+                    var_a0 += 4;
+                }
+                addPrim(var_a0 + r->ot, r->poly);
+                r->poly++;
+                g_GpuUsage.gt4++;
+                if (r->animSet == 0xF) {
+                    if (g_GpuUsage.gt4 >= 0x300) {
+                        break;
+                    }
+
+                    if (entity->facingLeft != 0) {
+                        temp_v1_8 = PLAYER.posX.i.hi;
+                        var_a0_2 = 0x14 - temp_v1_8;
+                    } else {
+                        temp_v1_8 = PLAYER.posX.i.hi;
+                        var_a0_2 = 0x2C - temp_v1_8;
+                    }
+                    poly->x0 = var_a0_2 + poly->x0;
+                    poly->x1 = var_a0_2 + poly->x1;
+                    poly->x2 = var_a0_2 + poly->x2;
+                    poly->x3 = var_a0_2 + poly->x3;
+                    temp_a0_10 = 0x18 - PLAYER.posY.i.hi;
+                    poly->y0 = temp_a0_10 + poly->y0;
+                    poly->y1 = temp_a0_10 + poly->y1;
+                    poly->y2 = temp_a0_10 + poly->y2;
+                    poly->y3 = temp_a0_10 + poly->y3;
+                    poly->clut = D_8003C104[0x104];
+                    __builtin_memcpy(r->poly, poly, sizeof(POLY_GT4));
+                    var_a0 = (entity->zPriority + 0x1A0) - PLAYER.zPriority;
+                    if (temp_s2_2 & 0x100) {
+                        var_a0 = var_a0 + new_var;
+                    }
+                    setSemiTrans(poly, true);
+                    poly->tpage += 0x20;
+                    addPrim(var_a0 + r->ot, r->poly);
+                    r->poly++;
+                    g_GpuUsage.gt4++;
+                }
+            }
+        }
+    }
+}
+#endif
 
 #define PL_SPRT(x, y, flipx) (x), ((y)&0x1FF) | ((flipx) << 9)
 s16 D_800A21B8[] = {

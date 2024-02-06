@@ -71,7 +71,7 @@ void func_801093C4(void) {
 }
 
 // Duplicate of RIC func_80156F40
-void func_80109594(void) {
+void func_80109594() {
     Entity* e;
     Primitive* prim;
     s32 radius;
@@ -1060,7 +1060,7 @@ void func_8010BF64(Unkstruct_8010BF64* arg0) {
         arg0->unk18 = D_800ACED0.pairs[1].unk2 - 1;
         arg0->unk20 = D_800ACEC0[1].unk2 + 1;
     } else {
-        D_8013C00C();
+        g_PlOvl.D_8013C00C();
     }
 }
 

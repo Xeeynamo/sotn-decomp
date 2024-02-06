@@ -236,6 +236,10 @@ def analyze(input_function):
         for i, line in enumerate(asm_lines):
             if "jal" in line:
                 callee_name = handle_jal_call(asm_lines, i)
+                # Special case due to a problem with assembly assigning symbols (see PR #1034)
+                if "g_PlOvl" in callee_name:
+                    input_function.add_callee(fake_function("g_PlOvl"))
+                    continue
                 if callee_name.startswith("D_"):
                     input_function.add_callee(fake_function(callee_name))
                     continue

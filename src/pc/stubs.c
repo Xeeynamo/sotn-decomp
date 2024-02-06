@@ -483,10 +483,9 @@ s32 D_800B0914;
 s32 D_800B0918;
 s32 D_800B091C;
 s32 D_800B0920;
-void (*D_8013C000)(void);
-void (*D_8013C004)(s32);
-void (*D_8013C008)(void);
-void (*D_8013C00C)(void);
+PlayerOvl g_PlOvl = {0};
+u8** g_PlOvlAluBatSpritesheet[1] = {0};
+u8* g_PlOvlSpritesheet[99] = {0};
 
 // sound bss
 s16 g_SoundCommandRingBufferReadPos;
@@ -616,8 +615,6 @@ void SpuGetAllKeysStatus(char* status) { NOT_IMPLEMENTED; }
 void func_801073C0(void) { NOT_IMPLEMENTED; }
 
 void func_800EA7CC(void) { NOT_IMPLEMENTED; }
-
-void RenderEntities(void) { NOT_IMPLEMENTED; }
 
 void UpdateCd(void) { NOT_IMPLEMENTED; }
 

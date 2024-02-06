@@ -577,7 +577,7 @@ typedef struct Entity {
     /* 0x12 */ s16 hitboxOffY;
     /* 0x14 */ u16 facingLeft;
     /* 0x16 */ u16 palette;
-    /* 0x18 */ s8 drawMode;
+    /* 0x18 */ u8 drawMode;
     /* 0x19 */ u8 drawFlags;
     /* 0x1A */ s16 rotX;
     /* 0x1C */ s16 rotY;
@@ -963,8 +963,8 @@ typedef struct {
     /* 8003C794 */ RoomDef* tileLayers;
     /* 8003C798 */ GfxBank** gfxBanks;
     /* 8003C79C */ void (*unk28)(void);
-    /* 8003C7A0 */ void (*unk2c)(void); // similar to Update
-    /* 8003C7A4 */ void* unk30;
+    /* 8003C7A0 */ u8** unk2c; // sprite bank 1
+    /* 8003C7A4 */ u8** unk30; // sprite bank 2
     /* 8003C7A8 */ s32* unk34;
     /* 8003C7AC */ s32* unk38;
     /* 8003C7B0 */ void (*unk3C)(void);
@@ -1243,6 +1243,16 @@ typedef struct {
     /* 8003C8AC */ void* unused138;
     /* 8003C8B4 */ void* unused13C;
 } GameApi; /* size=0x140 */
+
+typedef struct {
+    void (*D_8013C000)(void);
+    void (*D_8013C004)(void);
+    void (*D_8013C008)(void);
+    void (*D_8013C00C)(void);
+} PlayerOvl;
+extern PlayerOvl g_PlOvl;
+extern u8** g_PlOvlAluBatSpritesheet[1];
+extern u8* g_PlOvlSpritesheet[99];
 
 /**** Helper signatures ****/
 extern void (*g_api_FreePrimitives)(s32);
