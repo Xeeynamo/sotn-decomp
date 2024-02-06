@@ -85,13 +85,12 @@ void CreateEntityWhenInHorizontalRange(LayoutEntity* layoutObj) {
     }
 }
 
-void func_80190838(s32 arg0) {
-    s32 a1 = 0xFFFE;
-    arg0 = (s16)arg0;
-loop_1:
-    if (D_801997D8->posX == a1 || D_801997D8->posX < arg0) {
+void func_80190838(s16 arg0) {
+    while (true) {
+        if ((D_801997D8->posX != (u16)~1) && !(D_801997D8->posX < arg0)) {
+            break;
+        }
         D_801997D8++;
-        goto loop_1;
     }
 }
 
@@ -105,30 +104,29 @@ void func_80190884(s16 arg0) {
     }
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/EDB8", func_801908DC);
-#else
 void func_801908DC(s16 arg0) {
-    u32 temp_a0, temp_v1_2;
+    s32 expected;
+    u8 flag;
+
     if (D_801997E0 != 0) {
-        func_80190838((s16)(arg0 - D_80097908));
+        func_80190838(arg0 - D_80097908);
         D_801997E0 = 0;
     }
 
     while (true) {
-        if (D_801997D8->posX == 0xFFFF || arg0 < D_801997D8->posX)
-            break;
+        if ((D_801997D8->posX == 0xFFFF) || (arg0 < D_801997D8->posX)) {
+            return;
+        }
 
-        temp_a0 = ((u32)D_801997D8->unk6 >> 8) + 0xFF;
-        temp_v1_2 = temp_a0 & 0xFF;
-        if (temp_v1_2 == 0xFF || (((1 << (temp_a0 & 0x1F)) &
-                                   g_entityDestroyed[temp_v1_2 >> 5]) == 0)) {
-            func_80190608(D_801997D8);
+        expected = 0;
+        flag = (D_801997D8->entityRoomIndex >> 8) + 0xFF;
+        if ((flag == 0xFF) ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+            CreateEntityWhenInVerticalRange(D_801997D8);
         }
         D_801997D8++;
     }
 }
-#endif
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/EDB8", func_801909D8);
 
