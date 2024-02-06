@@ -278,10 +278,16 @@ typedef struct {
 } ET_GurkhaSword;
 
 typedef struct ET_Dracula {
-    /* 0x7C */ char pad_7C[0x10];
+    /* 0x7C */ char pad_7C[4];
+    /* 0x80 */ struct draculaPrimitive* unk80;
+    /* 0x84 */ struct draculaPrimitive* unk84;
+    /* 0x88 */ char pad_88[4];
     /* 0x8C */ s16 unk8C;
     /* 0x8E */ char pad_8E[0x2];
-    /* 0x90 */ char pad_90[0x4];
+    /* 0x90 */ u8 unk90;
+    /* 0x91 */ char pad91;
+    /* 0x92 */ u8 unk92;
+    /* 0x93 */ char pad93;
     /* 0x94 */ u8 unk94;
     /* 0x95 */ char pad_95[0x3];
     /* 0x98 */ s16 unk98;
