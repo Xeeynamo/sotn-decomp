@@ -34,11 +34,11 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmInit);
 void SpuVmNoiseOnWithAdsr(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s16 temp_v0;
 
-    svm_cur.field_F_prior = 0x7F;
+    _svm_cur.field_F_prior = 0x7F;
     temp_v0 = SpuVmAlloc(0xFF) & 0xFF;
-    svm_cur.field_0x1a = temp_v0;
+    _svm_cur.field_0x1a = temp_v0;
     if (temp_v0 < (s32)spuVmMaxVoice) {
-        vmNoiseOn2((u8)svm_cur.field_0x1a, arg0, arg1, arg2, arg3);
+        vmNoiseOn2((u8)_svm_cur.field_0x1a, arg0, arg1, arg2, arg3);
     }
 }
 
@@ -56,10 +56,10 @@ void SpuVmNoiseOff(void) {
 }
 
 void SpuVmNoiseOn(s32 arg0, s32 arg1) {
-    svm_cur.field_F_prior = 0x7F;
-    svm_cur.field_0x1a = SpuVmAlloc(0xFF);
-    if (svm_cur.field_0x1a < spuVmMaxVoice) {
-        vmNoiseOn2(svm_cur.field_0x1a, arg0, arg1, 0x80FF, 0x5FC8);
+    _svm_cur.field_F_prior = 0x7F;
+    _svm_cur.field_0x1a = SpuVmAlloc(0xFF);
+    if (_svm_cur.field_0x1a < spuVmMaxVoice) {
+        vmNoiseOn2(_svm_cur.field_0x1a, arg0, arg1, 0x80FF, 0x5FC8);
     }
 }
 
@@ -88,14 +88,14 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmGetSeqVol);
 s16 SpuVmGetSeqLVol(s16 arg0) {
     struct SeqStruct* new_var;
     new_var = _ss_score[arg0 & 0xFF];
-    svm_cur.field_16_vag_idx = arg0;
+    _svm_cur.field_16_vag_idx = arg0;
     return new_var[((s32)(arg0 & 0xFF00)) >> 8].unk74;
 }
 
 s16 SpuVmGetSeqRVol(s16 arg0) {
     struct SeqStruct* new_var;
     new_var = _ss_score[arg0 & 0xFF];
-    svm_cur.field_16_vag_idx = arg0;
+    _svm_cur.field_16_vag_idx = arg0;
     return new_var[((s32)(arg0 & 0xFF00)) >> 8].unk76;
 }
 
@@ -105,7 +105,7 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmSetProgVol);
 
 s32 SpuVmGetProgVol(s16 arg0, s16 arg1) {
     if (!(SpuVmVSetUp(arg0, arg1))) {
-        return D_8006C3B4[arg1].mvol;
+        return _svm_pg[arg1].mvol;
     } else {
         return -1;
     }
@@ -113,15 +113,15 @@ s32 SpuVmGetProgVol(s16 arg0, s16 arg1) {
 
 s32 SpuVmSetProgPan(s16 arg0, s16 arg1, u8 pan) {
     if (!SpuVmVSetUp(arg0, arg1)) {
-        D_8006C3B4[arg1].mpan = pan;
-        return D_8006C3B4[arg1].mpan;
+        _svm_pg[arg1].mpan = pan;
+        return _svm_pg[arg1].mpan;
     }
     return -1;
 }
 
 s32 SpuVmGetProgPan(s16 arg0, s16 arg1) {
     if (!(SpuVmVSetUp(arg0, arg1))) {
-        return D_8006C3B4[arg1].mpan;
+        return _svm_pg[arg1].mpan;
     } else {
         return -1;
     }

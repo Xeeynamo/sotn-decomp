@@ -4,9 +4,9 @@
 short SsUtSetVagAtr(
     short vabId, short progNum, short toneNum, VagAtr* pVagAttr) {
     s16 toneIndex;
-    if (svm_vab_used[vabId] == 1) {
+    if (_svm_vab_used[vabId] == 1) {
         SpuVmVSetUp(vabId, progNum);
-        toneIndex = toneNum + svm_cur.field_7_fake_program * 0x10;
+        toneIndex = toneNum + _svm_cur.field_7_fake_program * 0x10;
         _svm_tn[toneIndex].prior = pVagAttr->prior;
         _svm_tn[toneIndex].mode = pVagAttr->mode;
         _svm_tn[toneIndex].vol = pVagAttr->vol;

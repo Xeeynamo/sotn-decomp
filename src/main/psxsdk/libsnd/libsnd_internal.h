@@ -48,9 +48,9 @@ s16 SpuIsTransferCompleted(s16);
 
 void _spu_setInTransfer(s32);
 u32 SpuSetTransferStartAddr(u32);
-extern s32 D_800987CC[];
-extern s32 D_80098810[];
-extern u8 svm_vab_used[];
+extern s32 _svm_vab_total[];
+extern s32 _svm_vab_start[];
+extern u8 _svm_vab_used[];
 
 s16 SsVabOpenHeadWithMode(u8* addr, s16 vabid, s32 arg2, u32 sbaddr);
 
@@ -75,7 +75,7 @@ typedef struct VabHdr {
 
 s16 SsVabOpenHead(u8*, s16);
 s16 SsVabTransBody(u8*, s16);
-extern s32 D_80098854[];
+extern s32 _svm_brr_start_addr[];
 
 extern u8 spuVmMaxVoice;
 
@@ -111,7 +111,7 @@ struct struct_svm {
     short field_0x1a;
 };
 
-extern struct struct_svm svm_cur;
+extern struct struct_svm _svm_cur;
 
 extern u8 spuVmMaxVoice;
 void SeAutoVol(s16, s16, s16, s16);
@@ -212,8 +212,7 @@ typedef struct ProgAtr { /* Program Headdings */
     unsigned short reserved3; // odd vag spu ptr
 } ProgAtr;                    /* 16 byte */
 
-extern ProgAtr* D_8006C3B4;
-extern u8 svm_vab_used[];
+extern ProgAtr* _svm_pg;
 
 struct RegBufStruct {
     short field_0_vol_left;
@@ -227,8 +226,6 @@ struct RegBufStruct {
 };
 extern struct RegBufStruct _svm_sreg_buf[24];
 extern unsigned char _svm_sreg_dirty[24];
-
-extern ProgAtr* D_8006C3B4;
 
 extern volatile u16* D_80032F10;
 extern u8 spuVmMaxVoice;

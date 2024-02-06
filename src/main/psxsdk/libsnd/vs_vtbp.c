@@ -5,15 +5,15 @@ s16 SsVabTransBodyPartly(u8* addr, u32 bufsize, s16 vabid) {
     s16 new_vabid;
     s32 buff_diff;
     u32 new_bufsize;
-    if (vabid < 0 || vabid > 16 || svm_vab_used[vabid] != 2) {
+    if (vabid < 0 || vabid > 16 || _svm_vab_used[vabid] != 2) {
         _spu_setInTransfer(0);
         return -1;
     }
     if (D_80032F08 == 0) {
         D_80032F0C = vabid;
-        D_80032F08 = D_800987CC[vabid];
+        D_80032F08 = _svm_vab_total[vabid];
         SpuSetTransferMode(0);
-        SpuSetTransferStartAddr(D_80098810[vabid]);
+        SpuSetTransferStartAddr(_svm_vab_start[vabid]);
     }
     new_vabid = D_80032F0C;
     if (new_vabid != vabid) {
@@ -31,7 +31,7 @@ s16 SsVabTransBodyPartly(u8* addr, u32 bufsize, s16 vabid) {
     if (buff_diff == 0) {
         D_80032F0C = -1;
         D_80032F08 = 0;
-        svm_vab_used[new_vabid] = 1;
+        _svm_vab_used[new_vabid] = 1;
         return new_vabid;
     }
     return -2;

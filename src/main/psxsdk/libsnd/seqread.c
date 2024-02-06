@@ -87,7 +87,7 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContPortamento);
 void _SsContResetAll(s16 arg0, s16 arg1) {
     struct SeqStruct* temp_s0;
     temp_s0 = &_ss_score[arg0][arg1];
-    func_80021F0C();
+    SsUtReverbOff();
     SpuVmDamperOff();
     temp_s0->programs[temp_s0->channel] = temp_s0->channel;
     temp_s0->unk13 = 0;
