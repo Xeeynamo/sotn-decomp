@@ -33,6 +33,7 @@ typedef enum {
     PRIM_SPRT,
     PRIM_ENV,
     PRIM_TILE_ALT = PRIM_TILE | 0x10,
+    PRIM_LINE_G2_ALT = PRIM_LINE_G2 | 0x10,
     PRIM_G4_ALT = PRIM_G4 | 0x10
 } PrimitiveType;
 
