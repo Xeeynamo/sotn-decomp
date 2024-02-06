@@ -299,7 +299,7 @@ typedef struct ET_Dracula {
     /* 0xA2 */ u8 unkA2;
     /* 0xA3 */ char pad_A3[0x9];
     /* 0xAC */ struct Primitive* prim;
-    } ET_Dracula;
+} ET_Dracula;
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;

@@ -397,12 +397,12 @@ u32 func_801ABBBC(s32 step, Entity* dracula) {
     u8* redPtr;
     u8* greenPtr;
     u8 constFF;
-    
+
     switch (step) {
     case 0:
         prim = dracula->ext.dracula.prim;
         dracula->ext.dracula.unk80 = prim;
-        for(i = 0; i < 16; i++) {
+        for (i = 0; i < 16; i++) {
             prim->type = PRIM_LINE_G2_ALT;
             if (i == 15) {
                 prim->type = PRIM_LINE_G2;
@@ -412,7 +412,7 @@ u32 func_801ABBBC(s32 step, Entity* dracula) {
             } else {
                 prim->x0 = prim->x1 = dracula->posX.i.hi - i / 2;
             }
-            
+
             prim->y0 = prim->y1 = 0;
             prim->r0 = prim->g0 = prim->b0 = 0x70;
             prim->r1 = prim->g1 = prim->b1 = 0;
@@ -442,7 +442,7 @@ u32 func_801ABBBC(s32 step, Entity* dracula) {
         }
         prim = dracula->ext.dracula.unk80;
         i = 0;
-        for(i = 0; i < dracula->ext.dracula.unk90; i++){
+        for (i = 0; i < dracula->ext.dracula.unk90; i++) {
             prim->y1 += 0x30;
             if (dracula->ext.dracula.unkA1 != 0) {
                 if (prim->y1 >= 171) {
@@ -452,7 +452,8 @@ u32 func_801ABBBC(s32 step, Entity* dracula) {
                 prim->y1 = 203;
             }
             // Iterate through r1, g1, and b1.
-            for(redPtr = &prim->r1, var_a1 = 0; var_a1 <3; redPtr++, var_a1++){
+            for (redPtr = &prim->r1, var_a1 = 0; var_a1 < 3; redPtr++,
+                var_a1++) {
                 color = *redPtr;
                 if (color < 0xFF) {
                     // This ends up offsetting to r2, g2, and b2
@@ -472,11 +473,11 @@ u32 func_801ABBBC(s32 step, Entity* dracula) {
         break;
     case 2:
         prim = dracula->ext.dracula.unk80;
-        for(i = 0; i < 16; i++){
+        for (i = 0; i < 16; i++) {
             prim = prim->next;
         }
         dracula->ext.dracula.unk84 = prim;
-        for(i = 0; i < 48; i++){
+        for (i = 0; i < 48; i++) {
             prim->type = PRIM_LINE_G2_ALT;
             if (i == 47) {
                 prim->type = PRIM_LINE_G2;
@@ -504,7 +505,8 @@ u32 func_801ABBBC(s32 step, Entity* dracula) {
             prim->y1_f32.i.hi = prim->y1;
             // FAKE variable reuse
             color = (i >> 1);
-            prim->y1_f32_velocity.val = ((color * color * color) << 8) + 0x80000;
+            prim->y1_f32_velocity.val =
+                ((color * color * color) << 8) + 0x80000;
             prim->priority = dracula->zPriority + 2;
             prim->drawMode = 0x33;
             if (i == 0) {
@@ -523,7 +525,7 @@ u32 func_801ABBBC(s32 step, Entity* dracula) {
         } else {
             var_a1 = 0x30;
         }
-        for(i = 0; i < var_a1; prim = prim->next) {
+        for (i = 0; i < var_a1; prim = prim->next) {
             prim->y1_f32.i.hi = prim->y1;
             prim->y1_f32.val -= prim->y1_f32_velocity.val;
             prim->y1 = prim->y1_f32.i.hi;
@@ -534,33 +536,32 @@ u32 func_801ABBBC(s32 step, Entity* dracula) {
         }
         if (++dracula->ext.dracula.unk8C < 9) {
             prim = dracula->ext.dracula.unk80;
-            for(i = 0; i < 16 - (dracula->ext.dracula.unk8C * 2); i++) {
+            for (i = 0; i < 16 - (dracula->ext.dracula.unk8C * 2); i++) {
                 prim = prim->next;
             }
-            for(; i < 16; i++) {
+            for (; i < 16; i++) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
         }
         prim = dracula->ext.dracula.unk84;
-        for(i = 0 , constFF = 0xFF, colorLimit = 0xFF; i < 48; i++) {
+        for (i = 0, constFF = 0xFF, colorLimit = 0xFF; i < 48; i++) {
             color = prim->r0;
             color += 4;
-            prim->r0 = (color > colorLimit ? colorLimit :color);
+            prim->r0 = (color > colorLimit ? colorLimit : color);
             colorLimit -= 2;
             if (prim->r0 >= 0xFF) {
                 prim->r0 = constFF;
                 step = 4;
-            }            
+            }
             prim->b0 = prim->g0 = prim->r0;
             prim = prim->next;
-            
         }
         var_a2 = 0xFF;
         prim = dracula->ext.dracula.unk84;
-        for(i = 0; i < 48; i++) {
+        for (i = 0; i < 48; i++) {
             redPtr = &prim->r1;
-            for(var_a1 = 0; var_a1 < 3; var_a1 += 1){
+            for (var_a1 = 0; var_a1 < 3; var_a1 += 1) {
                 color = *redPtr;
                 color += redPtr[0xC];
                 if (var_a2 < color) {
@@ -576,9 +577,10 @@ u32 func_801ABBBC(s32 step, Entity* dracula) {
     case 4:
         var_t0 = 1;
         prim = dracula->ext.dracula.unk84;
-        for(i = 0, var_a3 = 0xFF; i < 48; i++) {
-            
-            for(redPtr = &prim->r1, var_a1 = 0,var_a2 = var_a3; var_a1 <3; redPtr++, var_a1++){
+        for (i = 0, var_a3 = 0xFF; i < 48; i++) {
+
+            for (redPtr = &prim->r1, var_a1 = 0, var_a2 = var_a3; var_a1 < 3;
+                 redPtr++, var_a1++) {
                 color = *redPtr;
                 color += 0x18;
                 if (var_a2 < color) {
@@ -598,7 +600,7 @@ u32 func_801ABBBC(s32 step, Entity* dracula) {
     case 5:
         prim = dracula->ext.dracula.unk80;
         // @bug: They forgot to do prim = prim->next in this loop!
-        for(i = 0; i < 16; i++){
+        for (i = 0; i < 16; i++) {
             prim->drawMode = DRAW_HIDE;
         }
         prim = dracula->ext.dracula.unk80;
@@ -622,11 +624,11 @@ u32 func_801ABBBC(s32 step, Entity* dracula) {
     case 6:
         var_t0 = 1;
         prim = dracula->ext.dracula.unk84;
-        for(i = 0; i < 48; i++) {
+        for (i = 0; i < 48; i++) {
             redPtr = &prim->r0;
             var_a1 = 0;
             greenPtr = &prim->g0;
-            for(; var_a1 < 2; ){
+            for (; var_a1 < 2;) {
                 color = *redPtr;
                 color -= 10;
                 if (color < 0) {
@@ -641,18 +643,18 @@ u32 func_801ABBBC(s32 step, Entity* dracula) {
                 redPtr += 0xC;
             }
             prim = prim->next;
-        } 
+        }
         prim = dracula->ext.dracula.unk80;
         prim->r0 += 7;
         if (prim->r0 > 0xE0) {
             prim->r0 = 0xE0;
         } else {
             var_t0 = 0;
-        }        
+        }
         prim->g0 = prim->b0 = prim->r0;
         if (var_t0 != 0) {
             prim = dracula->ext.dracula.unk84;
-            for(i = 0; i < 48; i++) {
+            for (i = 0; i < 48; i++) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
@@ -666,7 +668,7 @@ u32 func_801ABBBC(s32 step, Entity* dracula) {
         prim = dracula->ext.dracula.unk80;
         color = prim->r0;
         color -= 16;
-        if(color < 0){
+        if (color < 0) {
             color = 0;
         }
         prim->g0 = prim->b0 = prim->r0 = color;
