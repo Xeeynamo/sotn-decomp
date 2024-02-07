@@ -139,7 +139,27 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtKeyOffV);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtPitchBend);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtChangePitch);
+short SsUtChangePitch(short voice, short vabId, short prog, short old_note,
+                      short old_fine, short new_note, short new_fine) {
+    if (voice >= 0 && voice < 24) {
+        if (_svm_voice[voice].unk16 == vabId) {
+            if (_svm_voice[voice].unk12 == prog) {
+                if (_svm_voice[voice].unkc == old_note) {
+                    SpuVmVSetUp(
+                        _svm_voice[voice].unk16, _svm_voice[voice].unk12);
+                    _svm_cur.field_16_vag_idx = 0x21;
+                    _svm_cur.field_0x1a = voice;
+                    _svm_cur.field_C_vag_idx = _svm_voice[voice].unk14;
+                    _svm_sreg_buf[voice].field_4_pitch =
+                        note2pitch2((u16)new_note, (u16)new_fine);
+                    _svm_sreg_dirty[voice] = _svm_sreg_dirty[voice] | 4;
+                    return 0;
+                }
+            }
+        }
+    }
+    return -1;
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtChangeADSR);
 
