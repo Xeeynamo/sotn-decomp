@@ -97,7 +97,33 @@ void _SsContResetAll(s16 arg0, s16 arg1) {
     temp_s0->delta_value = _SsReadDeltaValue(arg0, arg1);
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContNrpn1);
+typedef void (*SndSsMarkCallbackProc)(short seq_no, short sep_no, short data);
+
+extern SndSsMarkCallbackProc _SsMarkCallback[32][16];
+
+void _SsContNrpn1(s16 arg0, s16 arg1, s8 arg2) {
+    SndSsMarkCallbackProc temp_v0;
+    struct SeqStruct* temp_s0;
+    temp_s0 = &_ss_score[arg0][arg1];
+    if ((temp_s0->unk27 == 1) && (temp_s0->unk10 == 0)) {
+        temp_s0->unk28 = arg2;
+        temp_s0->unk10 = 1U;
+    } else {
+        if (temp_s0->unk16 != 0x1E) {
+            if (temp_s0->unk16 != 0x14) {
+                temp_s0->unk15 = arg2;
+                temp_s0->unk2a = (u8)(temp_s0->unk2a + 1);
+            }
+        }
+    }
+    if (temp_s0->unk16 == 0x28) {
+        temp_v0 = _SsMarkCallback[arg0][arg1];
+        if (temp_v0 != NULL) {
+            temp_v0(arg0, arg1, arg2 & 0xFF);
+        }
+    }
+    temp_s0->delta_value = _SsReadDeltaValue(arg0, arg1);
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContNrpn2);
 
