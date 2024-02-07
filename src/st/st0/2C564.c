@@ -703,7 +703,66 @@ bool func_801ADAC8(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("st/st0/nonmatchings/2C564", func_801ADB10);
+// Function unique to ST0. Has many similarities to ClutLerp.
+// Unclear what it actually does; no known calls.
+void func_801ADB10(u16* arg0, u16 arg1, u16 arg2, s32 steps, u8* arg4) {
+    u16 buf[COLORS_PER_PAL];
+    RECT bufRect;
+    s32 temp_a2;
+    s32 factor;
+    s32 temp_v0;
+    s32 i;
+    s32 j;
+    s32 var_v0;
+    u16* palA;
+
+    u32 t;
+    u32 r, g, b;
+    u32 tempR;
+    u32 tempG;
+    u32 tempB;
+
+    bufRect.x = *arg0;
+    bufRect.w = COLORS_PER_PAL;
+    bufRect.h = 1;
+
+    arg4[0] >>= 3;
+    arg4[1] >>= 3;
+    arg4[2] >>= 3;
+    palA = g_Clut + arg1 * COLORS_PER_PAL;
+
+    for (i = 0; i < steps; arg2++, i++) {
+        factor = i * 4096 / steps;
+        for (j = 0; j < 16; j++) {
+            if (j == 0) {
+                buf[0] = *palA;
+            } else {
+                t = palA[j] & 0x8000;
+                tempR = (palA[j] & 0x1F);
+                r = (tempR * (4096 - factor)) + (arg4[0] * factor);
+                tempG = (palA[j] >> 5) & 0x1F;
+                tempR = r >> 12;
+                g = (tempG * (4096 - factor)) + (arg4[1] * factor);
+                tempB = (palA[j] >> 10) & 0x1F;
+                tempG = g >> 12;
+                b = (tempB * (4096 - factor)) + (arg4[2] * factor);
+                tempB = b >> 12;
+                buf[j] = ((t | (tempR)) | (tempG << 5)) | (tempB << 10);
+                (g_Clut + (arg2 * COLORS_PER_PAL))[j] = buf[j];
+            }
+        }
+        temp_a2 = arg2 - 0x200;
+        var_v0 = temp_a2;
+        if (var_v0 < 0) {
+            var_v0 = arg2 - 0x1F1;
+        }
+        temp_v0 = var_v0 >> 4;
+        bufRect.y = temp_v0 + 0xF0;
+        bufRect.x = ((temp_a2 - (temp_v0 * 0x10)) * 0x10) + 0x100;
+        LoadImage(&bufRect, buf);
+        D_8003C104[arg2] = GetClut(bufRect.x, bufRect.y);
+    }
+}
 
 // DECOMP_ME_WIP EntityDraculaFinalForm https://decomp.me/scratch/kUpoj
 INCLUDE_ASM("st/st0/nonmatchings/2C564", EntityDraculaFinalForm);
