@@ -125,7 +125,51 @@ void _SsContNrpn1(s16 arg0, s16 arg1, s8 arg2) {
     temp_s0->delta_value = _SsReadDeltaValue(arg0, arg1);
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContNrpn2);
+void _SsContNrpn2(s16 arg0, s16 arg1, u8 arg2) {
+    s16 var_a0;
+    s16 var_a1;
+    struct SeqStruct* temp_s0;
+
+    var_a0 = arg0;
+    var_a1 = arg1;
+    temp_s0 = &_ss_score[var_a0][var_a1];
+    switch (arg2 & 0xFF) {
+    case 20:
+        temp_s0->unk16 = arg2;
+        temp_s0->unk27 = 1;
+        temp_s0->delta_value = _SsReadDeltaValue(var_a0, var_a1);
+        temp_s0->unkc = (s32)temp_s0->read_pos;
+        return;
+    case 30:
+        temp_s0->unk16 = arg2;
+        if (temp_s0->unk28 == 0) {
+            temp_s0->unk10 = 0;
+            temp_s0->delta_value = _SsReadDeltaValue(var_a0, var_a1);
+            return;
+        }
+        if (temp_s0->unk28 < 0x7FU) {
+            temp_s0->unk28--;
+            temp_s0->delta_value = _SsReadDeltaValue(var_a0, var_a1);
+            if (temp_s0->unk28 != 0) {
+                temp_s0->read_pos = (u8*)temp_s0->unkc;
+                return;
+            }
+            temp_s0->unk10 = 0;
+            return;
+        }
+        _SsReadDeltaValue(var_a0, var_a1);
+        temp_s0->delta_value = 0;
+        temp_s0->read_pos = (u8*)temp_s0->unkc;
+        return;
+    default:
+        var_a0 = arg0;
+        var_a1 = arg1;
+        temp_s0->unk16 = arg2;
+        temp_s0->unk2a += 1;
+        temp_s0->delta_value = _SsReadDeltaValue(var_a0, var_a1);
+        return;
+    }
+}
 
 void _SsContRpn1(s16 arg0, s16 arg1, u8 arg2) {
     struct SeqStruct* temp_s0;
