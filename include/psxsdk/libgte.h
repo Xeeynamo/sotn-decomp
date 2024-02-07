@@ -28,7 +28,11 @@ void SetGeomOffset(long ofx, long ofy);
 long RotTransPers(SVECTOR*, long*, long*, long*);
 void SetGeomScreen(long h);
 void SetRotMatrix(MATRIX* m);
+MATRIX* RotMatrixX(long r, MATRIX* m);
+MATRIX* RotMatrixY(long r, MATRIX* m);
+MATRIX* RotMatrixZ(long r, MATRIX* m);
 MATRIX* TransMatrix(MATRIX* m, VECTOR* v);
+MATRIX* ScaleMatrix(MATRIX* m, VECTOR* v);
 void SetTransMatrix(MATRIX* m);
 long RotTransPers4(
     SVECTOR* v0, SVECTOR* v1, SVECTOR* v2,

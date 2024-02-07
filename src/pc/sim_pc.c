@@ -140,6 +140,7 @@ void LoadStageTileset(u8* pTilesetData, size_t len, s32 y) {
 }
 
 void InitStageDummy(Overlay* o);
+void InitStageWrp(Overlay* o);
 void InitStageSel(Overlay* o);
 void InitPlayerArc(FileLoad* file);
 void InitPlayerRic(void);
@@ -319,6 +320,9 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         // case STAGE_SEL:
         //     InitStageSel(&g_api.o);
         //     break;
+        case STAGE_WRP:
+            InitStageWrp(&g_api.o);
+            break;
         default:
             InitStageDummy(&g_api.o);
             INFOF("TODO: will load stage '%s'", g_StagesLba[g_StageId].ovlName);

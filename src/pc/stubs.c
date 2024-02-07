@@ -17,6 +17,7 @@ u32 g_CdStep;
 GameState g_GameState;
 Entity g_Entities[TOTAL_ENTITY_COUNT];
 unkGraphicsStruct g_unkGraphicsStruct;
+s32 g_entityDestroyed[18] = {0};
 Primitive g_PrimBuf[MAX_PRIM_COUNT];
 FgLayer D_8003C708;
 s16 D_8003C710;
@@ -78,6 +79,8 @@ s32 g_CurrentStream;
 u16 g_ClutIds[0x400];
 s32 D_8003C738;
 u8 g_CastleFlags[0x300];
+u8 D_8003BEEC[0x200]; // part of g_CastleFlags or second array?
+u8 D_8003BF9C[0x100]; // not sure if it is part of D_8003BEEC?
 s32 D_8006C374;
 s32 D_8006C378;
 u32 D_80070BCC;
@@ -90,9 +93,8 @@ Event g_EvHwCardNew;
 Event g_EvSwCardEnd;
 Event g_EvSwCardErr;
 Event g_EvSwCardTmo;
-s32 g_PrevScrollX;
-u16 D_800734C0;
 Event g_EvSwCardNew;
+s32 g_PrevScrollX;
 s32 g_PrevScrollY;
 s32 D_80073080;
 s32 g_IsTimeAttackUnlocked;

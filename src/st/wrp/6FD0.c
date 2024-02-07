@@ -16,14 +16,14 @@ void BottomCornerText(u8*, u8);
 
 u32 D_80181420[];
 u32 D_80181764[];
-void* D_801801B8[] = {
+static void* D_801801B8[] = {
     /* 0x1B8 */ (void*)0x00000000,
     /* 0x1BC */ (void*)0x00000000,
     /* 0x1C0 */ (void*)0x00000000,
     /* 0x1C4 */ (void*)0x00000000,
     /* 0x1C8 */ (void*)0xFFFFFFFF,
 };
-void* D_801801CC[] = {
+static void* D_801801CC[] = {
     /* 0x1CC */ (void*)0x00000004,
     /* 0x1D0 */ (void*)0x00400100,
     /* 0x1D4 */ (void*)0x00800080,
@@ -33,7 +33,7 @@ void* D_801801CC[] = {
     /* 0x1E4 */ (void*)D_80181764,
     /* 0x1E8 */ (void*)0xFFFFFFFF,
 };
-void* g_EntityGfxs[] = {
+void* OVL_EXPORT(g_EntityGfxs)[] = {
     /* 0x1EC */ D_801801B8,
     /* 0x1F0 */ D_801801B8,
     /* 0x1F4 */ D_801801B8,
