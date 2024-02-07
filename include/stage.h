@@ -54,7 +54,6 @@ void InitRoomEntities(s32 objLayoutId);
 void UpdateRoomPosition();
 
 s32 Random();
-void Update(void);
 void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
 void CreateEntityFromLayout(Entity* entity, LayoutEntity* initDesc);
 void DestroyEntity(Entity*);

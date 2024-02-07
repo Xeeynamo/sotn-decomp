@@ -3,11 +3,16 @@
 #include <cJSON/cJSON.h>
 #include "stage_loader.h"
 
+// Use a pre-allocated pool of bytes instead of relying on malloc. This is done
+// because the JSON size is unknown and because it is easier to not take track
+// of previously allocated memory.
+// Don't try this at work!
+
+#define JITEM(x) cJSON_GetObjectItemCaseSensitive(jitem, x)
+
 typedef struct {
     const char* assetPath;
 } RoomLoadDesc;
-
-#define JITEM(x) cJSON_GetObjectItemCaseSensitive(jitem, x)
 static TileDefinition* g_TileDefToLoad = NULL;
 static bool LoadRoomTileDef(FileStringified* file) {
     INFOF("load");
@@ -121,7 +126,7 @@ static int g_LayerDefIndex = 0;
 static LayerDef g_LayerDefPool[0x40];
 static RoomDef g_TileLayers[0x100];
 static bool LoadTileLayers(FileStringified* file) {
-    INFOF("load");
+    int i;
     RoomLoadDesc* desc = (RoomLoadDesc*)file->param;
     cJSON* json = cJSON_Parse(file->content);
     if (!json) {
@@ -136,7 +141,7 @@ static bool LoadTileLayers(FileStringified* file) {
               LEN(g_TileLayers));
         len = LEN(g_TileLayers);
     }
-    for (int i = 0; i < len; i++) {
+    for (i = 0; i < len; i++) {
         RoomDef* item = &g_TileLayers[i];
         cJSON* jitem = cJSON_GetArrayItem(json, i);
 
@@ -170,7 +175,7 @@ static bool LoadTileLayers(FileStringified* file) {
     }
     cJSON_Delete(json);
 
-    for (int i = len; i < LEN(g_TileLayers); i++) {
+    for (i = len; i < LEN(g_TileLayers); i++) {
         g_TileLayers[i].fg = NULL;
         g_TileLayers[i].bg = NULL;
     }
@@ -198,4 +203,119 @@ RoomDef* LoadRooms(const char* filePath) {
     }
 
     return g_TileLayers;
+}
+
+static int g_LayoutEntityIndex = 0;
+static LayoutEntity g_LayoutEntityPool[0x200];
+static bool _LoadObjLayout(const FileLoad* file) {
+    int i;
+    cJSON* json = cJSON_Parse(file->content);
+    if (!json) {
+        ERRORF("failed to parse: %s", cJSON_GetErrorPtr());
+        return false;
+    }
+
+    // from here, assume the JSON is valid and well structured
+    LayoutEntity* e;
+    int len = cJSON_GetArraySize(json);
+    for (i = 0; i < len; i++) {
+        cJSON* jitem = cJSON_GetArrayItem(json, i);
+        e = g_LayoutEntityPool + g_LayoutEntityIndex++;
+        e->posX = JITEM("x")->valueint;
+        e->posY = JITEM("y")->valueint;
+        e->entityId = JITEM("entityId")->valueint;
+        e->entityRoomIndex = JITEM("entityRoomIndex")->valueint;
+        e->params = JITEM("subId")->valueint;
+    }
+
+    e = g_LayoutEntityPool + g_LayoutEntityIndex++;
+    e->posX = -1;
+    e->posY = -1;
+    e->entityId = 0;
+    e->entityRoomIndex = 0;
+    e->params = 0;
+    return true;
+}
+LayoutEntity* LoadObjLayout(const char* filePath) {
+    int start = g_LayoutEntityIndex;
+    if (!FileStringify(_LoadObjLayout, filePath, NULL)) {
+        // if the load fails, resets the pool as it was before
+        g_LayoutEntityIndex = start;
+        return NULL;
+    }
+
+    return g_LayoutEntityPool + start;
+}
+
+static int g_SpritePartPtrIndex = 0;
+static SpriteParts* g_SpritePartPtrPool[0x100];
+static int g_SpritePartIndex = 0;
+static u16 g_SpritePartPool[0x200 * sizeof(SpritePart)];
+static bool _LoadSpriteParts(FileStringified* file) {
+    int i, j;
+    cJSON* json = cJSON_Parse(file->content);
+    if (!json) {
+        ERRORF("failed to parse: %s", cJSON_GetErrorPtr());
+        return false;
+    }
+
+    // from here, assume the JSON is valid and well structured
+    int len = cJSON_GetArraySize(json);
+    if (g_SpritePartPtrIndex + len > LEN(g_SpritePartPtrPool)) {
+        WARNF("sprite pointer pool out of memory");
+        return false;
+    }
+
+    for (i = 0; i < len; i++) {
+        SpriteParts* s = NULL;
+        const cJSON* jpart = cJSON_GetArrayItem(json, i);
+        if (!cJSON_IsNull(jpart))
+            jpart = cJSON_GetArrayItem(json, i);
+        u16 spriteCount = (u16)cJSON_GetArraySize(jpart);
+        u32 dataNeeded = 1 + spriteCount * sizeof(SpritePart) / sizeof(u16);
+        if (g_SpritePartIndex + dataNeeded > LEN(g_SpritePartPool)) {
+            WARNF("sprite pool out of memory");
+            return false;
+        }
+
+        s = (SpriteParts*)&g_SpritePartPool[g_SpritePartIndex];
+        g_SpritePartIndex += dataNeeded;
+        s->count = spriteCount;
+        for (j = 0; j < spriteCount; j++) {
+            SpritePart* p = &s->parts[j];
+            const cJSON* jitem = cJSON_GetArrayItem(jpart, j);
+            p->flags = JITEM("flags")->valueint;
+            p->offsetx = JITEM("offsetx")->valueint;
+            p->offsety = JITEM("offsety")->valueint;
+            p->width = JITEM("width")->valueint;
+            p->height = JITEM("height")->valueint;
+            p->clut = JITEM("clut")->valueint;
+            p->tileset = JITEM("tileset")->valueint;
+            p->left = JITEM("left")->valueint;
+            p->top = JITEM("top")->valueint;
+            p->right = JITEM("right")->valueint;
+            p->bottom = JITEM("bottom")->valueint;
+        }
+        g_SpritePartPtrPool[g_SpritePartPtrIndex++] = s;
+    }
+
+    return true;
+}
+SpritePart* LoadSpriteParts(const char* filePath) {
+    int start = g_SpritePartPtrIndex;
+    int spriteStart = g_SpritePartIndex;
+    if (!FileStringify(_LoadSpriteParts, filePath, NULL)) {
+        // if the load fails, resets the pool as it was before
+        g_SpritePartPtrIndex = start;
+        g_SpritePartIndex = spriteStart;
+        return NULL;
+    }
+
+    return g_SpritePartPtrPool + start;
+}
+
+void LoadReset() {
+    g_LayoutEntityIndex = 0;
+    g_SpritePartPtrIndex = 0;
+    g_SpritePartIndex = 0;
 }

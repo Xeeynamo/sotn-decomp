@@ -9,7 +9,7 @@
 static void Update(void);
 static void HitDetection(void);
 static void func_8018A7AC(void);
-static void InitRoomEntities(s32 objLayoutId);
+static void MyInitRoomEntities(s32 objLayoutId);
 
 static u32* empty_entity_gfx[] = {
     (u32*)0xFFFFFFFF,
@@ -28,7 +28,7 @@ static Overlay g_StageDesc = {
     Update,
     HitDetection,
     func_8018A7AC,
-    InitRoomEntities,
+    MyInitRoomEntities,
     g_Rooms,
     g_SpriteBanks,
     g_Cluts,
@@ -44,6 +44,7 @@ static Overlay g_StageDesc = {
 };
 
 void InitStageDummy(Overlay* o) {
+    LoadReset();
     g_StageDesc.tileLayers = LoadRooms("assets/st/wrp/rooms.layers.json");
     memcpy(o, &g_StageDesc, sizeof(Overlay));
 }
@@ -56,7 +57,7 @@ static void func_8018A7AC(void) { NOT_IMPLEMENTED; }
 
 void SetGameState(GameState gameState);
 void PlaySfx(s32 sfxId);
-static void InitRoomEntities(s32 objLayoutId) {
+static void MyInitRoomEntities(s32 objLayoutId) {
     if (g_StageId == STAGE_SEL) {
         SetGameState(Game_NowLoading);
         g_GameStep = NowLoading_2;
