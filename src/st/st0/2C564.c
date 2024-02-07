@@ -721,19 +721,19 @@ void func_801ADB10(u16* arg0, u16 arg1, u16 arg2, s32 steps, u8* arg4) {
     u32 tempR;
     u32 tempG;
     u32 tempB;
-    
+
     bufRect.x = *arg0;
     bufRect.w = COLORS_PER_PAL;
     bufRect.h = 1;
-    
+
     arg4[0] >>= 3;
     arg4[1] >>= 3;
     arg4[2] >>= 3;
     palA = g_Clut + arg1 * COLORS_PER_PAL;
-    
-    for(i = 0; i < steps; arg2++, i++) {
+
+    for (i = 0; i < steps; arg2++, i++) {
         factor = i * 4096 / steps;
-        for(j = 0; j < 16; j++){
+        for (j = 0; j < 16; j++) {
             if (j == 0) {
                 buf[0] = *palA;
             } else {
