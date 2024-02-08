@@ -875,7 +875,8 @@ typedef struct {
 typedef struct {
     struct Primitive* prim1;
     struct Primitive* prim2;
-} ET_801AF774;
+}
+ET_801AF774;
 
 typedef union {
     /* 0x7C */ struct Primitive* prim;
