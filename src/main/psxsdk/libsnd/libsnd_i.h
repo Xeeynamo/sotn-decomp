@@ -310,4 +310,6 @@ struct SndSeqTickEnv {
 
 extern struct SndSeqTickEnv _snd_seq_tick_env;
 
+extern s32 VBLANK_MINUS;
+
 #endif

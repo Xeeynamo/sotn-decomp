@@ -1,7 +1,6 @@
-#include "common.h"
 #include "libsnd_i.h"
 
-void SsSetTableSize(u8* table, s16 s_max, s16 t_max) {
+void SsSetTableSize(char* table, short s_max, short t_max) {
     s32 i;
     s32 j;
     struct SeqStruct* pTypedTable;

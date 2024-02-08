@@ -1,31 +1,27 @@
-#include "common.h"
 
-s32 GetVideoMode();
-extern s32 D_80032EF4;
-extern s32 VBLANK_MINUS;
-extern s32 _snd_seq_tick_env;
+#include "libsnd_i.h"
 
-void SsSetTickMode(s32 tick_mode) {
+void SsSetTickMode(long tick_mode) {
     s32 videoMode;
     s32 var_v0;
 
     videoMode = GetVideoMode();
     if (tick_mode & 0x1000) {
-        D_80032EF4 = 1;
-        _snd_seq_tick_env = tick_mode & 0xFFF;
+        _snd_seq_tick_env.unk4 = 1;
+        _snd_seq_tick_env.unk0 = tick_mode & 0xFFF;
     } else {
-        D_80032EF4 = 0;
-        _snd_seq_tick_env = tick_mode;
+        _snd_seq_tick_env.unk4 = 0;
+        _snd_seq_tick_env.unk0 = tick_mode;
     }
-    if (_snd_seq_tick_env < 6) {
-        switch (_snd_seq_tick_env) {
+    if (_snd_seq_tick_env.unk0 < 6) {
+        switch (_snd_seq_tick_env.unk0) {
         case 4:
             VBLANK_MINUS = 0x32;
             if (videoMode != 1) {
-                _snd_seq_tick_env = 0x32;
+                _snd_seq_tick_env.unk0 = 0x32;
                 return;
             }
-            _snd_seq_tick_env = 5;
+            _snd_seq_tick_env.unk0 = 5;
             return;
         case 1:
             var_v0 = 0x3C;
@@ -33,7 +29,7 @@ void SsSetTickMode(s32 tick_mode) {
             if (videoMode == 0) {
                 var_v0 = 5;
             }
-            _snd_seq_tick_env = var_v0;
+            _snd_seq_tick_env.unk0 = var_v0;
             return;
         case 3:
             VBLANK_MINUS = 0x78;
@@ -66,6 +62,6 @@ void SsSetTickMode(s32 tick_mode) {
             return;
         }
     } else {
-        VBLANK_MINUS = _snd_seq_tick_env;
+        VBLANK_MINUS = _snd_seq_tick_env.unk0;
     }
 }
