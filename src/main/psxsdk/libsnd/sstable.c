@@ -1,5 +1,5 @@
 #include "common.h"
-#include "libsnd_internal.h"
+#include "libsnd_i.h"
 
 void SsSetTableSize(u8* table, s16 s_max, s16 t_max) {
     s32 i;

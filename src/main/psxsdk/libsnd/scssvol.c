@@ -1,5 +1,5 @@
 #include "common.h"
-#include "libsnd_internal.h"
+#include "libsnd_i.h"
 
 void SsSetSerialVol(u8 s_num, s16 voll, s16 volr) {
     SpuCommonAttr attr;

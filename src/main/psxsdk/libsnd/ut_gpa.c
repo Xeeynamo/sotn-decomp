@@ -1,5 +1,5 @@
 #include "common.h"
-#include "libsnd_internal.h"
+#include "libsnd_i.h"
 
 short SsUtGetProgAtr(short vabId, short programNum, ProgAtr* pProgAttr) {
     if (_svm_vab_used[vabId] == 1) {

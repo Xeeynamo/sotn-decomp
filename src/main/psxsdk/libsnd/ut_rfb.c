@@ -1,5 +1,5 @@
 #include "common.h"
-#include "libsnd_internal.h"
+#include "libsnd_i.h"
 
 void SsUtSetReverbFeedback(s16 feedback) {
     _svm_rattr.mask = SPU_REV_FEEDBACK;
