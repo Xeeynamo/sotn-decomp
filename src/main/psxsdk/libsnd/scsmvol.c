@@ -1,5 +1,5 @@
 #include "common.h"
-#include "libsnd_internal.h"
+#include "libsnd_i.h"
 
 void SsSetMVol(short voll, short volr) {
     SpuCommonAttr attr;

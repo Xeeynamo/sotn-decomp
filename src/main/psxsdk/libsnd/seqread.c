@@ -1,5 +1,5 @@
 #include "common.h"
-#include "libsnd_internal.h"
+#include "libsnd_i.h"
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsSeqPlay);
 

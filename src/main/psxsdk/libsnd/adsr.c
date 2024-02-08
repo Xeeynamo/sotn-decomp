@@ -1,5 +1,5 @@
 #include "common.h"
-#include "libsnd_internal.h"
+#include "libsnd_i.h"
 
 void _SsUtResolveADSR(u16 arg0, u16 arg1, struct Unk* arg2) {
     arg2->unkA = arg0 & 0x8000;

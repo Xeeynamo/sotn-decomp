@@ -1,5 +1,5 @@
 #include "common.h"
-#include "libsnd_internal.h"
+#include "libsnd_i.h"
 
 s16 SsUtSetReverbType(s16 arg0) {
     s16 var_v1;

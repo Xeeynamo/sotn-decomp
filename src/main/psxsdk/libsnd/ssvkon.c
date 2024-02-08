@@ -1,5 +1,5 @@
 #include "common.h"
-#include "libsnd_internal.h"
+#include "libsnd_i.h"
 
 s32 SsVoKeyOn(s32 vab_pro, s32 pitch, u16 volL, u16 volR) {
     SpuVmSeKeyOn(

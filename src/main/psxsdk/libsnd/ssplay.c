@@ -1,5 +1,5 @@
 #include "common.h"
-#include "libsnd_internal.h"
+#include "libsnd_i.h"
 
 void Snd_SetPlayMode(s16 arg0, s16 arg1, u8 arg2, s16 arg3) {
     struct SeqStruct* temp_t2;

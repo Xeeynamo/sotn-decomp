@@ -1,5 +1,5 @@
 #include "common.h"
-#include "libsnd_internal.h"
+#include "libsnd_i.h"
 
 short SsUtSetVagAtr(
     short vabId, short progNum, short toneNum, VagAtr* pVagAttr) {

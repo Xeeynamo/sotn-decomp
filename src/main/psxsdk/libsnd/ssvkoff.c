@@ -1,5 +1,5 @@
 #include "common.h"
-#include "libsnd_internal.h"
+#include "libsnd_i.h"
 
 // some sort of conflict with vmanager.c SpuVmSeKeyOff
 void SpuVmSeKeyOff(s32, u8, u16, u8);

@@ -1,5 +1,5 @@
 #include "common.h"
-#include "libsnd_internal.h"
+#include "libsnd_i.h"
 
 s16 SsVabOpenHead(u8* arg1, s16 vabid) {
     return SsVabOpenHeadWithMode(arg1, vabid, 0, 0);

@@ -1,5 +1,4 @@
-#include "common.h"
-#include "libsnd_internal.h"
+#include "libsnd_i.h"
 
 void _SsSndNextSep(s16 arg0, s16 arg1) {
     struct SeqStruct* temp_a0;

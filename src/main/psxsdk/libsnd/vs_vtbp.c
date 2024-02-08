@@ -1,5 +1,5 @@
 #include "common.h"
-#include "libsnd_internal.h"
+#include "libsnd_i.h"
 
 s16 SsVabTransBodyPartly(u8* addr, u32 bufsize, s16 vabid) {
     s16 new_vabid;
