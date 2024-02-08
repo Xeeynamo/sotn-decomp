@@ -1,7 +1,6 @@
-#include "common.h"
 #include "libsnd_i.h"
 
-void SsSetSerialAttr(s32 arg0, s32 arg1, s32 arg2) {
+void SsSetSerialAttr(char arg0, char arg1, char arg2) {
     SpuCommonAttr attr;
     s32 temp_a0;
     s32 temp_a1;
