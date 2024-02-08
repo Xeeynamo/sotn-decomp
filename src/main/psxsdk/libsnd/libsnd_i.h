@@ -295,9 +295,6 @@ short SsUtSetVagAtr(
 s16 SsVabTransBodyPartly(u8* addr, u32 bufsize, s16 vabid);
 u32 SpuWritePartly(u8*, u32);
 
-extern s32 D_80032F08;
-extern s16 D_80032F0C;
-
 struct SndSeqTickEnv {
     s32 unk0;
     s32 unk4;

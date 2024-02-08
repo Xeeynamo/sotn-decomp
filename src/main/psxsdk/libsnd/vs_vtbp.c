@@ -1,6 +1,9 @@
 #include "common.h"
 #include "libsnd_i.h"
 
+static s32 D_80032F08 = 0;
+static s16 D_80032F0C = 0xffff;
+
 s16 SsVabTransBodyPartly(u8* addr, u32 bufsize, s16 vabid) {
     s16 new_vabid;
     s32 buff_diff;

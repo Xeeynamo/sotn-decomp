@@ -255,5 +255,7 @@ segments:
       - [0x1B93C, c, psxsdk/libspu/s_n2p]
       - [0x1BB88, c, psxsdk/libspu/sr_gaks]
       - [0x1BCE0, data]
+      - [0x23708, .data, psxsdk/libsnd/vs_vtbp] # needs to be ram address + 0x800
+      - [0x23710, data]
   - [0x89800]
 
