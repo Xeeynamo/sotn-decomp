@@ -1,5 +1,3 @@
-#include "common.h"
-
-extern s16 _svm_damper;
+#include "libsnd_i.h"
 
 void SpuVmDamperOn(void) { _svm_damper = 2; }

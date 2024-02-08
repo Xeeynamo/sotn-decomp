@@ -312,4 +312,6 @@ extern struct SndSeqTickEnv _snd_seq_tick_env;
 
 extern s32 VBLANK_MINUS;
 
+extern s16 _svm_damper;
+
 #endif
