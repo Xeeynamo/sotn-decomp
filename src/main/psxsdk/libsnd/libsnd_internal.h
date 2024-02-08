@@ -233,9 +233,16 @@ extern u8 spuVmMaxVoice;
 struct SpuVoice {
     u8 pad[4];
     s16 unk04;
-    u8 pad2[21];
+    u8 pad2[6];
+    s16 unkc;
+    s16 unke;
+    s16 unk10;
+    s16 unk12;
+    s16 unk14;
+    s16 unk16;
+    u8 pad4[3];
     u8 unk1b;
-    u8 pad3[24];
+    u8 pad3[23];
 };
 
 extern struct SpuVoice _svm_voice[24];
