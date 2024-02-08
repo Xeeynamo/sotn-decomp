@@ -42,13 +42,13 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-          submodules: false
+          submodules: true
       - name: Clone main repo
         if: github.event_name != 'pull_request_target'
         uses: actions/checkout@v3
         with:
           ref: ${{ github.ref }}
-          submodules: false
+          submodules: true
       - name: Get dependencies
         uses: actions/cache@v3
         id: get-dependencies
