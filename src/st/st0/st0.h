@@ -117,14 +117,19 @@ extern u8 D_80180BCC[]; // Animation
 extern u8 D_80180BDC[]; // Animation
 extern u16 D_80180A48[];
 extern Point16 D_80180A58[];
+extern s16 D_80181150[];
+extern s16 D_8018129C[];
+extern u8 D_801813E8;
+extern u8 D_801814A8;
+extern u16 D_80181CAC[];
+extern u16 D_80181CDC[];
+extern u32 D_80181CF0[];
+extern Point32 D_801BEB64[];
 extern LayoutEntity* D_801C00A0;
 extern u8 D_801C00A8;
 extern u8 D_801C00AC;
 extern s32 D_801C2578;
 extern u32 D_801C257C;
-extern u16 D_80181CAC[];
-extern u16 D_80181CDC[];
-extern u32 D_80181CF0[];
 
 // *** EntityDracula properties END ***
 
@@ -155,8 +160,3 @@ extern u8 D_80181FC4;
 // *** EntitySoulStealOrb properties END ***
 
 extern Dialogue g_Dialogue;
-
-// func_801AF6D0
-extern u8 D_80181150[]; // Animation
-extern Unkstruct_80180FE0 D_8018129C[];
-extern s32 D_801BEB64[][2];
