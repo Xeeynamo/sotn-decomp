@@ -1,18 +1,5 @@
 #include "st0.h"
 
-void CreateEntityFromCurrentEntity(u16, Entity*);
-void InitializeEntity(u16 self[]);
-s32 PrimDecreaseBrightness(Primitive* prim, u8 amount); /* extern */
-void func_801AF380(void);                               /* extern */
-void func_801AF6D0(void);                               /* extern */
-extern u16 D_801805E0[];
-extern s32 D_80180910;
-extern u8 D_801813E8;
-extern u8 D_801814A8;
-extern s8 D_801A7BDC;
-extern Point32 D_801BEB64[];
-extern s32 D_801C2578;
-
 void func_801AF774(Entity* self) {
     RECT sp10;
     DRAWENV sp18;
