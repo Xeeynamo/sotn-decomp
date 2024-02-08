@@ -2,7 +2,6 @@
  * These are to be merged later on
  */
 
-
 typedef struct {
     /* 0x0 */ s32 x;
     /* 0x4 */ s32 y;
