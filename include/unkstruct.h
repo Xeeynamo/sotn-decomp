@@ -2,10 +2,6 @@
  * These are to be merged later on
  */
 
-typedef struct {
-    /* 0x0 */ f32 x;
-    /* 0x4 */ f32 y;
-} PointF32; // size = 0x8
 
 typedef struct {
     /* 0x0 */ s32 x;
