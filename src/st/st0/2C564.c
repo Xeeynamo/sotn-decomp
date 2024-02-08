@@ -870,7 +870,79 @@ void EntityDraculaRainAttack(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/st0/nonmatchings/2C564", func_801AF380);
+void func_801AF380(void) {
+    Primitive* prim;
+    s16* var_t0;
+    s32 i;
+    u8* var_a3;
+    s32 uBase;
+    s32 vBase;
+
+    var_t0 = &D_80181150[0];
+    var_a3 = &D_801813E8;
+    uBase = 0;
+    vBase = 0;
+    prim = g_CurrentEntity->ext.et_801AF774.prim1;
+    for (i = 0; i < 47; i++) {
+        prim->tpage = 0x17;
+        prim->clut = 0x200;
+        // This should REALLY be done using Point16, but no,
+        // that would make too much sense for SOTN
+        prim->u0 = uBase + var_t0[*var_a3 * 2];
+        prim->v0 = vBase + var_t0[*var_a3 * 2 + 1];
+        var_a3++;
+        prim->u1 = uBase + var_t0[*var_a3 * 2];
+        prim->v1 = vBase + var_t0[*var_a3 * 2 + 1];
+        var_a3++;
+        prim->u2 = uBase + var_t0[*var_a3 * 2];
+        prim->v2 = vBase + var_t0[*var_a3 * 2 + 1];
+        var_a3++;
+        prim->u3 = uBase + var_t0[*var_a3 * 2];
+        prim->v3 = vBase + var_t0[*var_a3 * 2 + 1];
+        var_a3++;
+        prim->r0 = prim->g0 = prim->b0 = 0x80;
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+        prim->priority = 0xA0;
+        prim->drawMode = 0x35;
+        prim = prim->next;
+    }
+    var_t0 = &D_8018129C[0];
+    var_a3 = &D_801814A8;
+    uBase = 0;
+    vBase = 0x80;
+    g_CurrentEntity->ext.et_801AF774.prim2 = prim;
+    for (i = 0; i < 42; i++) {
+        prim->tpage = 0x17;
+        prim->clut = 0x204;
+        prim->u0 = uBase + var_t0[*var_a3 * 2];
+        prim->v0 = vBase + var_t0[*var_a3 * 2 + 1];
+        var_a3++;
+        prim->u1 = uBase + var_t0[*var_a3 * 2];
+        prim->v1 = vBase + var_t0[*var_a3 * 2 + 1];
+        var_a3++;
+        prim->u2 = uBase + var_t0[*var_a3 * 2];
+        prim->v2 = vBase + var_t0[*var_a3 * 2 + 1];
+        var_a3++;
+        prim->u3 = uBase + var_t0[*var_a3 * 2];
+        prim->v3 = vBase + var_t0[*var_a3 * 2 + 1];
+        var_a3++;
+        prim->r0 = prim->g0 = prim->b0 = 0;
+        LOW(prim->r1) = LOW(prim->r0);
+        LOW(prim->r2) = LOW(prim->r0);
+        LOW(prim->r3) = LOW(prim->r0);
+        prim->priority = 0xA0;
+        prim->drawMode = 0x35;
+        prim = prim->next;
+    }
+
+    var_t0 = &D_80181150;
+    for (i = 0; i < 83; i++) {
+        D_801BEB64[i].x = (*var_t0++ - 0x1E) << 0x10;
+        D_801BEB64[i].y = (*var_t0++ - 0x53) << 0x10;
+    }
+}
 
 void func_801AF6D0(void) {
     s16* var_a0;
@@ -891,8 +963,8 @@ void func_801AF6D0(void) {
     var_a2 = D_801BEB64;
 
     for (; i < 0x53; ++i) {
-        D_801BEB64[i][0] += ((b + *var_a0++) - (d + *var_a1++)) << 9;
-        D_801BEB64[i][1] += ((a + *var_a0++) - (c + *var_a1++)) << 9;
+        D_801BEB64[i].x += ((b + *var_a0++) - (d + *var_a1++)) << 9;
+        D_801BEB64[i].y += ((a + *var_a0++) - (c + *var_a1++)) << 9;
         var_a2 += 2;
     }
 }

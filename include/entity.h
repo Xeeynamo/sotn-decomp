@@ -872,6 +872,11 @@ typedef struct {
     s16 unkB0;
 } ET_8016E46C;
 
+typedef struct {
+    struct Primitive* prim1;
+    struct Primitive* prim2;
+} ET_801AF774;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_TimerOnly timer;
@@ -954,5 +959,6 @@ typedef union {
     /* 0x7C */ ET_SpittleBone spittleBone;
     /* 0x7C */ ET_Player player;
     /* 0x7C */ ET_801CC820 et_801CC820;
+    /* 0x7C */ ET_801AF774 et_801AF774;
     /* 0x7C */ char stub[0x40];
 } Ext;
