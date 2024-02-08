@@ -298,4 +298,16 @@ u32 SpuWritePartly(u8*, u32);
 extern s32 D_80032F08;
 extern s16 D_80032F0C;
 
+struct SndSeqTickEnv {
+    s32 unk0;
+    s32 unk4;
+    u32 unk8;
+    u32 unk12;
+    u8 unk16;
+    u8 unk17;
+    u8 unk18;
+};
+
+extern struct SndSeqTickEnv _snd_seq_tick_env;
+
 #endif
