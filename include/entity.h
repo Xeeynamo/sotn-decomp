@@ -872,11 +872,10 @@ typedef struct {
     s16 unkB0;
 } ET_8016E46C;
 
-typedef sturct {
+typedef struct {
     struct Primitive* prim1;
     struct Primitive* prim2;
-}
-ET_801AF774;
+} ET_801AF774;
 
 typedef union {
     /* 0x7C */ struct Primitive* prim;
