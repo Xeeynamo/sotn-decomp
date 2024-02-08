@@ -882,7 +882,7 @@ void func_801AF380(void) {
     var_a3 = &D_801813E8;
     uBase = 0;
     vBase = 0;
-    prim = g_CurrentEntity->ext.prim;
+    prim = g_CurrentEntity->ext.et_801AF774.prim1;
     for (i = 0; i < 47; i++) {
         prim->tpage = 0x17;
         prim->clut = 0x200;
@@ -912,7 +912,7 @@ void func_801AF380(void) {
     var_a3 = &D_801814A8;
     uBase = 0;
     vBase = 0x80;
-    g_CurrentEntity->ext.generic.unk80.modeS32 = (s32)prim;
+    g_CurrentEntity->ext.et_801AF774.prim2 = prim;
     for (i = 0; i < 42; i++) {
         prim->tpage = 0x17;
         prim->clut = 0x204;
