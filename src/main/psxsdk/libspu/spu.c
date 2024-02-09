@@ -115,8 +115,7 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libspu/spu", _spu_FsetRXXa);
 u32 _spu_FgetRXXa(s32 arg0, s32 arg1) {
     u16 temp = _spu_RXX->raw[arg0];
     s32 temp2;
-    if(arg1 == -1)
-    {
+    if (arg1 == -1) {
         return temp;
     }
     return temp << _spu_mem_mode_plus;

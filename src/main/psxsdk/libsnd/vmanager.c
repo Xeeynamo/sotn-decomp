@@ -104,7 +104,7 @@ s32 SpuVmGetSeqVol(s16 arg0, s16* arg1, s16* arg2) {
     _svm_cur.field_16_vag_idx = arg0;
     *arg1 = temp_v0->unk74;
     *arg2 = temp_v0->unk76;
-    return  _svm_cur.field_16_vag_idx;
+    return _svm_cur.field_16_vag_idx;
 }
 
 s16 SpuVmGetSeqLVol(s16 arg0) {
