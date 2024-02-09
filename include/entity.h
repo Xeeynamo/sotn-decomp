@@ -875,6 +875,10 @@ typedef struct {
 typedef struct {
     struct Primitive* prim1;
     struct Primitive* prim2;
+    struct Primitive* prim3;
+    struct Primitive* prim4;
+    s16 unk8C;
+    s16 unk8E;
 } ET_801AF774;
 
 typedef union {

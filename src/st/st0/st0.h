@@ -97,9 +97,9 @@ extern Point16 D_801808A0[];
 extern u16 D_801808B0[];
 extern s16 D_801808F8[];
 extern s32 D_80180908;
+extern s32 D_80180910;
 
 // *** EntityDracula properties START ***
-
 extern u8 D_80180914[]; // Animation
 extern u8 D_80180924[]; // Animation
 extern u8 D_80180934[]; // Animation
@@ -147,8 +147,11 @@ extern u16 D_80181EF4[];
 extern u16 D_80181F04[];
 extern u8 D_801824CC[];
 
+extern s8 D_801A7BDC;
+extern Point32 D_801BEB64[];
 extern u16* D_801C00A4;
 extern s32 D_801C24C8;
+extern s32 D_801C2578;
 extern s32 D_801C2580;
 
 // *** EntitySoulStealOrb properties START ***

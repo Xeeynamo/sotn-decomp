@@ -968,5 +968,3 @@ void func_801AF6D0(void) {
         var_a2 += 2;
     }
 }
-
-INCLUDE_ASM("st/st0/nonmatchings/2C564", func_801AF774);
