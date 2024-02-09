@@ -1,7 +1,4 @@
-#include "common.h"
 #include "libsnd_i.h"
-
-void _SsSndStop(s32, s32);
 
 void SsSeqCalledTbyT(void) {
     int i;
@@ -11,11 +8,11 @@ void SsSeqCalledTbyT(void) {
 
         SpuVmFlush();
 
-        // For each SEP block
+        /* For each SEP block */
         for (i = 0; i < _snd_seq_s_max; i++) {
-            // Is it on?
+            /* Is it on? */
             if ((1 << i) & _snd_openflag) {
-                // Go through each SEQ track
+                /* Go through each SEQ track */
                 for (j = 0; j < _snd_seq_t_max; j++) {
                     if (_ss_score[i][j].unk90 & 1) {
                         _SsSndPlay(i, j);

@@ -1,4 +1,3 @@
-#include "common.h"
 #include "libsnd_i.h"
 
 void Snd_SetPlayMode(s16 arg0, s16 arg1, u8 arg2, s16 arg3) {
@@ -18,10 +17,11 @@ void Snd_SetPlayMode(s16 arg0, s16 arg1, u8 arg2, s16 arg3) {
     }
 }
 
-void SsSeqPlay(s16 seq_access_num, s8 play_mode, s16 l_count) {
+void SsSeqPlay(short seq_access_num, char play_mode, short l_count) {
     Snd_SetPlayMode(seq_access_num, 0, play_mode, l_count);
 }
 
-void SsSepPlay(s16 sep_access_num, s16 seq_num, s8 play_mode, s16 l_count) {
+void SsSepPlay(
+    short sep_access_num, short seq_num, char play_mode, short l_count) {
     Snd_SetPlayMode(sep_access_num, seq_num, play_mode, l_count);
 }
