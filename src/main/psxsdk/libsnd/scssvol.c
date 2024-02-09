@@ -1,7 +1,6 @@
-#include "common.h"
 #include "libsnd_i.h"
 
-void SsSetSerialVol(u8 s_num, s16 voll, s16 volr) {
+void SsSetSerialVol(char s_num, short voll, short volr) {
     SpuCommonAttr attr;
     if (s_num == 0) {
         attr.mask = 0xC0;

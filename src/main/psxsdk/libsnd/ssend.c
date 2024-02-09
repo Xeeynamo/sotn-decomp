@@ -1,20 +1,19 @@
-#include "common.h"
 #include "libsnd_i.h"
 
 void SsEnd(void) {
-    if (D_80032EF4 == 0) {
-        D_80032F01 = 0;
+    if (_snd_seq_tick_env.unk4 == 0) {
+        _snd_seq_tick_env.unk17 = 0;
         EnterCriticalSection();
-        if (D_80032F00 != 0) {
+        if (_snd_seq_tick_env.unk16 != 0) {
             VSyncCallback(NULL);
-            D_80032F00 = 0;
-        } else if (D_80032F02 == 0) {
-            InterruptCallback(0, D_80032EFC);
-            D_80032EFC = 0;
+            _snd_seq_tick_env.unk16 = 0;
+        } else if (_snd_seq_tick_env.unk18 == 0) {
+            InterruptCallback(0, _snd_seq_tick_env.unk12);
+            _snd_seq_tick_env.unk12 = 0;
         } else {
             InterruptCallback(6, NULL);
         }
         ExitCriticalSection();
-        D_80032F02 = 0xFF;
+        _snd_seq_tick_env.unk18 = 0xFF;
     }
 }

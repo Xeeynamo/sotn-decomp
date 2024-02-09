@@ -1,4 +1,3 @@
-#include "common.h"
 #include "libsnd_i.h"
 
 void SsUtSetReverbFeedback(s16 feedback) {

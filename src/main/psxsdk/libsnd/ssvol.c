@@ -1,11 +1,10 @@
-#include "common.h"
 #include "libsnd_i.h"
 
 void _SsSndSetVol(s32 arg0, s32 arg1, u16 arg2, u16 arg3) {
     SpuVmSetSeqVol(arg0 | (arg1 << 8), arg2, arg3, 0);
 }
 
-void SsSeqSetVol(s16 arg0, s32 arg1, s32 arg2) {
+void SsSeqSetVol(short arg0, short arg1, short arg2) {
     SpuVmSetSeqVol(arg0, arg1, arg2, 0);
 }
 

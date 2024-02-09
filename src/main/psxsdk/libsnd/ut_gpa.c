@@ -1,4 +1,3 @@
-#include "common.h"
 #include "libsnd_i.h"
 
 short SsUtGetProgAtr(short vabId, short programNum, ProgAtr* pProgAttr) {
