@@ -85,7 +85,7 @@ typedef struct Prim {
 #define DRAW_TPAGE 0x10      // use custom tpage
 #define DRAW_MENU 0x80       // render only if D_800973EC is set
 #define DRAW_UNK_400 0x400   // unknown
-#define DRAW_UNK_800 0x400   // unknown
+#define DRAW_UNK_800 0x800   // unknown
 #define DRAW_UNK_1000 0x1000 // unknown
 #define DRAW_ABSPOS 0x2000   // use absolute coordinates with DRAW_MENU
 
