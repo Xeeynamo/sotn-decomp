@@ -73,7 +73,22 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmKeyOn);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmKeyOff);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmSeKeyOn);
+void SpuVmSeKeyOn(s16 arg0, s16 arg1, u16 arg2, s32 arg3, u16 arg4, u16 arg5) {
+    u16 var_v1;
+    u16 var_a1;
+
+    if (arg4 == arg5) {
+        var_v1 = 0x40;
+        var_a1 = arg4;
+    } else if (arg5 < arg4) {
+        var_a1 = arg4;
+        var_v1 = (arg5 << 6) / arg4;
+    } else {
+        var_a1 = arg5;
+        var_v1 = 0x7F - ((arg4 << 6) / arg5);
+    }
+    SpuVmKeyOn(0x21, arg0, arg1, arg2, var_a1, var_v1);
+}
 
 void SpuVmSeKeyOff(s16 arg0, s16 arg1, u16 arg2) {
     SpuVmKeyOff(0x21, arg0, arg1, arg2);
@@ -83,7 +98,14 @@ void KeyOnCheck(void) {}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmSetSeqVol);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmGetSeqVol);
+s32 SpuVmGetSeqVol(s16 arg0, s16* arg1, s16* arg2) {
+    struct SeqStruct* temp_v0;
+    temp_v0 = &_ss_score[arg0 & 0xFF][(arg0 & 0xFF00) >> 8];
+    _svm_cur.field_16_vag_idx = arg0;
+    *arg1 = temp_v0->unk74;
+    *arg2 = temp_v0->unk76;
+    return  _svm_cur.field_16_vag_idx;
+}
 
 s16 SpuVmGetSeqLVol(s16 arg0) {
     struct SeqStruct* new_var;
@@ -101,7 +123,13 @@ s16 SpuVmGetSeqRVol(s16 arg0) {
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmSeqKeyOff);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmSetProgVol);
+s32 SpuVmSetProgVol(s16 arg0, s16 arg1, u8 arg2) {
+    if (!SpuVmVSetUp(arg0, arg1)) {
+        _svm_pg[arg1].mvol = arg2;
+        return _svm_pg[arg1].mvol;
+    }
+    return -1;
+}
 
 s32 SpuVmGetProgVol(s16 arg0, s16 arg1) {
     if (!(SpuVmVSetUp(arg0, arg1))) {

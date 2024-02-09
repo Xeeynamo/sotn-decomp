@@ -587,6 +587,7 @@ SpuSetIRQ = 0x80029E8C;
 SpuSetIRQCallback = 0x80029FBC;
 _SpuCallback = 0x8002A000;
 SpuSetKey = 0x8002A024;
+_spu_keystat = 0x800330F4;
 SpuSetVoiceAttr = 0x8002A09C;
 _SpuSetVoiceAttr = 0x8002A0C4;
 SpuGetVoiceAttr = 0x8002A720;
