@@ -39,25 +39,25 @@ jobs:
         run: sudo apt-get install gcc-mipsel-linux-gnu
       - name: Clone main repo (PR)
         if: github.event_name == 'pull_request_target'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           submodules: false
       - name: Clone main repo
         if: github.event_name != 'pull_request_target'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
           submodules: false
       - name: Get dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: get-dependencies
         with:
           path: 'disks/dependencies'
           key: sotn-${{ matrix.dependency }}-deps
       - name: Get dependencies (uncached)
         if: steps.get-dependencies.outputs.cache-hit != 'true'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: xeeynamo/sotn-decomp-dependencies
           ref: ${{ matrix.dependency }}
@@ -113,11 +113,11 @@ jobs:
       DISCORD_PROGRESS_WEBHOOK: ${{ secrets.DISCORD_PROGRESS_WEBHOOK }}
     steps:
       - name: Clone main repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: false
       - name: Get dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: 'disks/dependencies'
           key: sotn-${{ matrix.dependency }}-deps
@@ -129,7 +129,7 @@ jobs:
       - name: Split game data
         run: make -j extract
       - name: Obtain built binaries
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build_${{ matrix.version }}
           path: build/${{ matrix.version }}
@@ -150,11 +150,11 @@ jobs:
       VERSION: ${{ matrix.version }}
     steps:
       - name: Clone main repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: false
       - name: Get dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: 'disks/dependencies'
           key: sotn-${{ matrix.dependency }}-deps
@@ -164,17 +164,17 @@ jobs:
       - name: Extract dependencies
         run: make extract_disk
       - name: Obtain built binaries
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build_${{ matrix.version }}
           path: build/${{ matrix.version }}
       - name: Clone asset repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: 'gh-duplicates'
           path: 'gh-duplicates'
       - name: Set-up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
       - name: Install secondary pre-requirements
@@ -187,7 +187,7 @@ jobs:
             make force_symbols
             make force_extract
             python3 tools/analyze_calls.py
-            git clean -fdx asm/ 
+            git clean -fdx asm/
       - name: Generate function report
         run: |
             git checkout config/
@@ -204,7 +204,7 @@ jobs:
           cargo run --release -- --threshold .90 --output-file ../../gh-duplicates/duplicates.txt
       - name: Commit all reports
         run: |
-            git config --global user.name 'GitHub Action' 
+            git config --global user.name 'GitHub Action'
             git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
             git add -A
             git commit -m 'Update reports' || true

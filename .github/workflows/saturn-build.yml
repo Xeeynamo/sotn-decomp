@@ -22,18 +22,18 @@ jobs:
     steps:
       - name: Clone main repo (PR)
         if: github.event_name == 'pull_request_target'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           submodules: false
       - name: Clone main repo
         if: github.event_name != 'pull_request_target'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
           submodules: false
       - name: Clone dependencies
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: xeeynamo/sotn-decomp-dependencies
           ref: saturn
@@ -69,18 +69,18 @@ jobs:
     steps:
       - name: Clone main repo (PR)
         if: github.event_name == 'pull_request_target'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           submodules: false
       - name: Clone main repo
         if: github.event_name != 'pull_request_target'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
           submodules: false
       - name: Clone dependencies
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: xeeynamo/sotn-decomp-dependencies
           ref: saturn
@@ -97,12 +97,12 @@ jobs:
       - name: Extract asm
         run: VERSION=saturn make extract
       - name: Clone asset repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: 'gh-functions-saturn'
           path: 'gh-functions-saturn'
       - name: Set-up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
       - name: Install secondary pre-requirements
@@ -111,7 +111,7 @@ jobs:
         run: python3 tools/function_finder/function_finder_saturn.py > gh-functions-saturn/functions_saturn.md
       - name: Commit all reports
         run: |
-            git config --global user.name 'GitHub Action' 
+            git config --global user.name 'GitHub Action'
             git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
             git add -A
             git commit -m 'Update reports' || true
