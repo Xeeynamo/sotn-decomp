@@ -12,4 +12,14 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/iso9660", CD_cachefile);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/iso9660", cd_read);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/iso9660", cd_memcpy);
+void cd_memcpy(unsigned char* src, unsigned char* dst, int size) {
+    int i;
+    unsigned char* srcTmp = src;
+    unsigned char* dstTmp = dst;
+
+    for (i = size - 1; i != -1; i--) {
+        *srcTmp = *dstTmp;
+        dstTmp += 1;
+        srcTmp += 1;
+    }
+}
