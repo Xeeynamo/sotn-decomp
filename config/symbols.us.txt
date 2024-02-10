@@ -626,6 +626,7 @@ CD_mode = 0x80032AC4;
 CD_com = 0x80032AC5;
 _snd_seq_tick_env = 0x80032EF0;
 _spu_EVdma = 0x800330F0;
+_spu_keystat = 0x800330F4;
 _spu_isCalled = 0x800334F8;
 _spu_tsa = 0x80033500;
 _spu_RXX = 0x80033504;

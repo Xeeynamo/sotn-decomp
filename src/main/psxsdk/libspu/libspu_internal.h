@@ -93,7 +93,7 @@ typedef struct tagSpuControl {
     SpuVolume main_vol; // 180
     SpuVolume rev_vol;  // 184
     // bit flags
-    u16 key_on[2];           // 188
+    volatile u16 key_on[2];  // 188
     u16 key_off[2];          // 18C
     u16 chan_fm[2];          // 190
     u16 noise_mode[2];       // 194

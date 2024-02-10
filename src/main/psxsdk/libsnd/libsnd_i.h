@@ -41,7 +41,7 @@ extern s32 D_80032F04;
 extern s32 D_8003C74C;
 extern SpuReverbAttr _svm_rattr;
 
-void SpuVmSeKeyOn(s32, u8, u16, u8, u16, u16);
+void SpuVmSeKeyOn(s16 arg0, s16 arg1, u16 arg2, s32 arg3, u16 arg4, u16 arg5);
 void SpuVmSetSeqVol(s16, u16, u16, s32);
 s32 SpuVmGetSeqVol(s16, s16*, s16*);
 s16 SpuIsTransferCompleted(s16);
