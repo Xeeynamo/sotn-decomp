@@ -191,7 +191,7 @@ jobs:
       - name: Generate function report
         run: |
             git checkout config/
-            make clean && make -j extract
+            make -j extract
             python3 tools/function_finder/function_finder_psx.py --use-call-trees > gh-duplicates/functions.md
             rm -rf gh-duplicates/function_calls/ || true
             mv function_calls gh-duplicates/
