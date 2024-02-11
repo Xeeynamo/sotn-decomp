@@ -10,7 +10,9 @@ int CdMode(void) { return CD_mode; }
 
 int CdLastCom(void) { return CD_com; }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdLastPos);
+extern int CD_pos;
+
+int* CdLastPos(void) { return &CD_pos; }
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdReset);
 
