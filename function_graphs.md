@@ -1325,7 +1325,7 @@
 - [❌ _sync](function_calls/main._sync.svg?raw=1)
 - [❌ callback](function_calls/main.callback.svg?raw=1)
 - [❌ cb_read](function_calls/main.cb_read.svg?raw=1)
-- [❌ cd_memcpy](function_calls/main.cd_memcpy.svg?raw=1)
+- [✅ cd_memcpy](function_calls/main.cd_memcpy.svg?raw=1)
 - [❌ cd_read](function_calls/main.cd_read.svg?raw=1)
 - [❌ cd_read_retry](function_calls/main.cd_read_retry.svg?raw=1)
 - [✅ checkRECT](function_calls/main.checkRECT.svg?raw=1)
