@@ -22,6 +22,8 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_datasync);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_getsector);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_set_test_parmnum);
+extern int CD_TestParmNum;
+
+void CD_set_test_parmnum(int parmNum) { CD_TestParmNum = parmNum; }
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", callback);
