@@ -1350,7 +1350,7 @@
 - [❌ init_ring_status](function_calls/main.init_ring_status.svg?raw=1)
 - [❌ main](function_calls/main.main.svg?raw=1)
 - [❌ mem2mem](function_calls/main.mem2mem.svg?raw=1)
-- [❌ memclr](function_calls/main.memclr.svg?raw=1)
+- [✅ memclr](function_calls/main.memclr.svg?raw=1)
 - [❌ memmove](function_calls/main.memmove.svg?raw=1)
 - [❌ note2pitch](function_calls/main.note2pitch.svg?raw=1)
 - [❌ note2pitch2](function_calls/main.note2pitch2.svg?raw=1)
