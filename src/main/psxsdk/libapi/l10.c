@@ -38,4 +38,12 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libapi/l10", stopIntr);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libapi/l10", restartIntr);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libapi/l10", memclr);
+void memclr(int* ptr, int size) {
+    int i;
+    int* e = ptr;
+
+    for (i = size - 1; i != -1; i--) {
+        *e = 0;
+        e++;
+    }
+}
