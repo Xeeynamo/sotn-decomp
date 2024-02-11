@@ -625,6 +625,7 @@ CD_pos = 0x80032AC0;
 CD_mode = 0x80032AC4;
 CD_com = 0x80032AC5;
 CD_TestParmNum = 0x80032D4C;
+CD_ReadCallbackFunc = 0x80032DB8;
 _snd_seq_tick_env = 0x80032EF0;
 _spu_EVdma = 0x800330F0;
 _spu_keystat = 0x800330F4;
