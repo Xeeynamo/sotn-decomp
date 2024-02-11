@@ -12,7 +12,7 @@
 <!-- main.CD_set_test_parmnum -->
 <g id="node1" class="node">
 <title>main.CD_set_test_parmnum</title>
-<ellipse fill="red" stroke="black" cx="141.04" cy="-18" rx="141.07" ry="18"/>
+<ellipse fill="green" stroke="black" cx="141.04" cy="-18" rx="141.07" ry="18"/>
 <text text-anchor="middle" x="141.04" y="-14.3" font-family="Times,serif" font-size="14.00">main.CD_set_test_parmnum</text>
 </g>
 </g>
