@@ -311,4 +311,6 @@ extern s32 VBLANK_MINUS;
 
 extern s16 _svm_damper;
 
+s32 SpuVmPBVoice(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u16 arg4);
+
 #endif
