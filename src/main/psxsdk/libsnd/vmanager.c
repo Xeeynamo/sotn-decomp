@@ -193,7 +193,21 @@ short SsUtChangePitch(short voice, short vabId, short prog, short old_note,
     return -1;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtChangeADSR);
+s16 SsUtChangeADSR(
+    s16 vc, s16 vabId, s16 prog, s16 old_note, u16 adsr1, u16 adsr2) {
+    u8 pad[2];
+    if (vc >= 0 && vc < 24) {
+        if ((_svm_voice[vc].unk16 == vabId) && _svm_voice[vc].unk12 == prog) {
+            if (_svm_voice[vc].unkc == old_note) {
+                _svm_sreg_buf[vc].field_8_adsr1 = adsr1;
+                _svm_sreg_buf[vc].field_A_adsr2 = adsr2;
+                _svm_sreg_dirty[vc] = _svm_sreg_dirty[vc] | 0x30;
+                return 0;
+            }
+        }
+    }
+    return -1;
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtGetDetVVol);
 
