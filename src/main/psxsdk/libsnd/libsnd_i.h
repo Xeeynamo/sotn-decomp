@@ -313,4 +313,11 @@ extern s16 _svm_damper;
 
 s32 SpuVmPBVoice(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u16 arg4);
 
+extern VagAtr* _svm_vab_tn[16];
+extern ProgAtr* _svm_vab_pg[16];
+extern VabHdr* _svm_vab_vh[16];
+extern ProgAtr* _svm_pg;
+extern VabHdr* _svm_vh;
+extern s16 kMaxPrograms;
+
 #endif
