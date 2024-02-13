@@ -196,7 +196,7 @@ short SsUtChangePitch(short voice, short vabId, short prog, short old_note,
 s16 SsUtChangeADSR(
     s16 vc, s16 vabId, s16 prog, s16 old_note, u16 adsr1, u16 adsr2) {
     u8 pad[2];
-    if (vc >= 0 && vc < 24) {
+    if (vc >= 0 && vc < NUM_SPU_CHANNELS) {
         if ((_svm_voice[vc].unk16 == vabId) && _svm_voice[vc].unk12 == prog) {
             if (_svm_voice[vc].unkc == old_note) {
                 _svm_sreg_buf[vc].field_8_adsr1 = adsr1;

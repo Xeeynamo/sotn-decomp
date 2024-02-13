@@ -224,8 +224,11 @@ struct RegBufStruct {
     short field_0xc;
     short field_0xe;
 };
-extern struct RegBufStruct _svm_sreg_buf[24];
-extern unsigned char _svm_sreg_dirty[24];
+
+#define NUM_SPU_CHANNELS 24
+
+extern struct RegBufStruct _svm_sreg_buf[NUM_SPU_CHANNELS];
+extern unsigned char _svm_sreg_dirty[NUM_SPU_CHANNELS];
 
 extern volatile u16* D_80032F10;
 extern u8 spuVmMaxVoice;
@@ -245,7 +248,7 @@ struct SpuVoice {
     u8 pad3[23];
 };
 
-extern struct SpuVoice _svm_voice[24];
+extern struct SpuVoice _svm_voice[NUM_SPU_CHANNELS];
 u32 SpuVmVSetUp(s16, s16);
 
 typedef struct VagAtr { /* VAG Tone Headdings */
