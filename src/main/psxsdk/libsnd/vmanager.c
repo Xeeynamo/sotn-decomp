@@ -1,6 +1,8 @@
 #include "common.h"
 #include "libsnd_i.h"
 
+static inline u16 get_field_0x1a() { return _svm_cur.field_0x1a; }
+
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmAlloc);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmKeyOnNow);
@@ -71,7 +73,55 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmFlush);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmKeyOn);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmKeyOff);
+s32 SpuVmKeyOff(s16 arg0, s16 vabId, s16 prog, s32 note) {
+    s32 bitsUpper;
+    s32 bitsLower;
+    u8 var_t0;
+    s32 var_t1;
+    u16 temp_v1;
+    u8 pad[2];
+
+    var_t0 = 0;
+    var_t1 = 0;
+    if (spuVmMaxVoice != 0) {
+        do {
+            if ((_svm_voice[var_t0].note == (note & 0xFFFF)) &&
+                (_svm_voice[var_t0].prog == prog) &&
+                (_svm_voice[var_t0].unke == arg0) &&
+                (_svm_voice[var_t0].vabId == vabId)) {
+                if (_svm_voice[var_t0].unk0 == 0xFF) {
+                    _svm_voice[var_t0].unk1b = 0;
+                    _svm_voice[var_t0].unk04 = 0;
+                    D_80032F10[202] = 0;
+                    D_80032F10[203] = 0;
+                } else {
+                    _svm_cur.field_0x1a = var_t0;
+                    temp_v1 = get_field_0x1a();
+                    if (temp_v1 < 0x10) {
+                        bitsLower = 1 << temp_v1;
+                        bitsUpper = 0;
+                    } else {
+                        bitsLower = 0;
+                        bitsUpper = 1 << (temp_v1 - 0x10);
+                    }
+
+                    _svm_voice[temp_v1].unk1b = 0;
+                    _svm_voice[temp_v1].unk04 = 0;
+                    _svm_voice[temp_v1].unk0 = 0;
+
+                    _svm_okof1 = bitsLower | _svm_okof1;
+                    _svm_okof2 = bitsUpper | _svm_okof2;
+
+                    _svm_okon1 = _svm_okon1 & ~_svm_okof1;
+                    _svm_okon2 = _svm_okon2 & ~_svm_okof2;
+                }
+                var_t1 += 1;
+            }
+            var_t0 += 1;
+        } while (var_t0 < spuVmMaxVoice);
+    }
+    return var_t1;
+}
 
 void SpuVmSeKeyOn(s16 arg0, s16 arg1, u16 arg2, s32 arg3, u16 arg4, u16 arg5) {
     u16 var_v1;
@@ -159,7 +209,50 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmSetVol);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtKeyOn);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtKeyOff);
+short SsUtKeyOff(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note) {
+    unsigned char new_var;
+    s16 bitsUpper;
+    s16 bitsLower;
+    u16 temp_v1;
+    if (_snd_ev_flag != 1) {
+        _snd_ev_flag = 1;
+        if ((voice >= 0) && (voice < 24)) {
+            if ((_svm_voice[voice].vabId == vabId) &&
+                (_svm_voice[voice].prog == prog) &&
+                (_svm_voice[voice].tone == tone) &&
+                (_svm_voice[voice].note == note)) {
+                if (_svm_voice[voice].unk0 == 0xFF) {
+                    new_var = voice;
+                    _svm_voice[new_var].unk1b = 0;
+                    _svm_voice[new_var].unk04 = 0;
+                    D_80032F10[202] = 0;
+                    D_80032F10[203] = 0;
+                } else {
+                    _svm_cur.field_0x1a = voice;
+                    temp_v1 = get_field_0x1a();
+                    if (temp_v1 < 0x10) {
+                        bitsLower = 1 << temp_v1;
+                        bitsUpper = 0;
+                    } else {
+                        bitsLower = 0;
+                        bitsUpper = 1 << (temp_v1 - 0x10);
+                    }
+                    _svm_voice[temp_v1].unk1b = 0;
+                    _svm_voice[temp_v1].unk04 = 0;
+                    _svm_voice[temp_v1].unk0 = 0;
+                    _svm_okof1 = bitsLower | _svm_okof1;
+                    _svm_okof2 = bitsUpper | _svm_okof2;
+                    _svm_okon1 = _svm_okon1 & (~_svm_okof1);
+                    _svm_okon2 = _svm_okon2 & (~_svm_okof2);
+                }
+                _snd_ev_flag = 0;
+                return 0;
+            }
+        }
+        _snd_ev_flag = 0;
+    }
+    return -1;
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtKeyOnV);
 
@@ -174,14 +267,14 @@ s16 SsUtPitchBend(s16 voice, s16 vabId, s16 prog, s16 note, s16 pbend) {
 short SsUtChangePitch(short voice, short vabId, short prog, short old_note,
                       short old_fine, short new_note, short new_fine) {
     if (voice >= 0 && voice < 24) {
-        if (_svm_voice[voice].unk16 == vabId) {
-            if (_svm_voice[voice].unk12 == prog) {
-                if (_svm_voice[voice].unkc == old_note) {
+        if (_svm_voice[voice].vabId == vabId) {
+            if (_svm_voice[voice].prog == prog) {
+                if (_svm_voice[voice].note == old_note) {
                     SpuVmVSetUp(
-                        _svm_voice[voice].unk16, _svm_voice[voice].unk12);
+                        _svm_voice[voice].vabId, _svm_voice[voice].prog);
                     _svm_cur.field_16_vag_idx = 0x21;
                     _svm_cur.field_0x1a = voice;
-                    _svm_cur.field_C_vag_idx = _svm_voice[voice].unk14;
+                    _svm_cur.field_C_vag_idx = _svm_voice[voice].tone;
                     _svm_sreg_buf[voice].field_4_pitch =
                         note2pitch2((u16)new_note, (u16)new_fine);
                     _svm_sreg_dirty[voice] = _svm_sreg_dirty[voice] | 4;
@@ -197,8 +290,8 @@ s16 SsUtChangeADSR(
     s16 vc, s16 vabId, s16 prog, s16 old_note, u16 adsr1, u16 adsr2) {
     u8 pad[2];
     if (vc >= 0 && vc < NUM_SPU_CHANNELS) {
-        if ((_svm_voice[vc].unk16 == vabId) && _svm_voice[vc].unk12 == prog) {
-            if (_svm_voice[vc].unkc == old_note) {
+        if ((_svm_voice[vc].vabId == vabId) && _svm_voice[vc].prog == prog) {
+            if (_svm_voice[vc].note == old_note) {
                 _svm_sreg_buf[vc].field_8_adsr1 = adsr1;
                 _svm_sreg_buf[vc].field_A_adsr2 = adsr2;
                 _svm_sreg_dirty[vc] = _svm_sreg_dirty[vc] | 0x30;
