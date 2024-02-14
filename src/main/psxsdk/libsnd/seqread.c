@@ -82,7 +82,33 @@ void _SsContPortaTime(s16 arg0, s16 arg1, u8 arg2) {
     temp_s2->delta_value = _SsReadDeltaValue(arg0, arg1);
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContPortamento);
+void _SsContPortamento(s16 arg0, s16 arg1, s32 arg2) {
+    struct ProgAtr sp10;
+    struct VagAtr sp20;
+    s32 var_s0;
+    u8 channel;
+    struct SeqStruct* temp_s2;
+    u8 new_var;
+    temp_s2 = &_ss_score[arg0][arg1];
+    channel = temp_s2->channel;
+    SsUtGetProgAtr(temp_s2->unk4c, temp_s2->programs[channel], &sp10);
+    for (var_s0 = 0; var_s0 < sp10.tones; var_s0++) {
+        new_var = channel;
+        SsUtGetVagAtr(
+            temp_s2->unk4c, temp_s2->programs[new_var], var_s0, &sp20);
+        if ((arg2 & 0xFF) < 0x40U) {
+            do {
+            } while (0);
+            sp20.mode = 2;
+        } else if (((arg2 + 0xC0) & 0xFF) < 0x40U) {
+            sp20.mode = 0;
+        }
+        SsUtSetVagAtr(
+            temp_s2->unk4c, temp_s2->programs[new_var], var_s0, &sp20);
+    }
+
+    temp_s2->delta_value = _SsReadDeltaValue(arg0, arg1);
+}
 
 void _SsContResetAll(s16 arg0, s16 arg1) {
     struct SeqStruct* temp_s0;
