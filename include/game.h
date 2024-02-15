@@ -181,6 +181,7 @@ typedef struct Prim {
 #define FLAG_DRAW_UNK8 0x08
 #define FLAG_DRAW_UNK10 0x10
 #define FLAG_DRAW_UNK20 0x20
+#define FLAG_DRAW_UNK40 0x40
 #define FLAG_DRAW_UNK80 0x80
 
 // Flags for entity->flags

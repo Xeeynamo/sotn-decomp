@@ -96,6 +96,8 @@ segments:
       - [0xD010, data]
       - [0xD188, .data, 7A4D0] # D_800AD0C4
       - [0xD298, data]
+      - [0x10B00, .data, 90264] # D_800B0A3C to D_800B0AAC
+      - [0x10B80, data]
       - [0x1D140, .data, 91EBC] # g_CdVolumeTable
       - [0x1D260, .data, 91EBC] # g_VolumeTable
       - [0x1D284, .data, 91EBC] # g_DebugEnabled
@@ -193,10 +195,8 @@ segments:
       - [0x41DE4, .rodata, 8D3E8] # jtbl_800E1DE4
       - [0x41E0C, rodata] # jtbl_800E1E0C
       - [0x41E34, rodata] # jtbl_800E1E34
-      - [0x41E4C, rodata] # jtbl_800E1E4C
-      - [0x41E74, rodata] # jtbl_800E1E74
-      - [0x41E8C, rodata] # jtbl_800E1E8C
-      - [0x41EB4, rodata] # jtbl_800E1EB4
+      - [0x41E4C, .rodata, 90264] # func_80130264
+      - [0x41E8C, .rodata, 90264] # func_80130618
       - [0x41ECC, rodata] # jtbl_800E1ECC
       - [0x41EF4, rodata] # jtbl_800E1EF4
       - [0x41F1C, rodata] # jtbl_800E1F1C
@@ -233,6 +233,7 @@ segments:
       - [0x8403C, c, 843B0]
       - [0x86B58, c, 86ECC]
       - [0x8D050, c, 8D3E8]
+      - [0x8FE50, c, 90264]
       - [0x91A98, c, 91EBC]
       - [0x92B3C, c, 92F60]
       - [0x92E6C, c, 93290]

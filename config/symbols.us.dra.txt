@@ -48,7 +48,6 @@ MenuHandle = 0x800FBC24;
 TimeAttackController = 0x800FD4C0;
 AddToInventory = 0x800FD874;
 GetStatusAilmentTimer = 0x800FDB18;
-CastSpell = 0x800FDC94;
 IsRelicActive = 0x800FE3A8;
 HandleSaveMenu = 0x80103238;
 DestroyEntity = 0x80106590;
