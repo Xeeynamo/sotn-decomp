@@ -67,7 +67,7 @@ extern int rcos(int a);
 extern int rsin(int a);
 extern long ratan2(long y, long x);
 
-#ifndef VERSION_PC
+#if !defined(VERSION_PC) && !defined(M2CTX)
 #define gte_SetRotMatrix(r0)                                                   \
     __asm__ volatile(                                                          \
         "lw	$12, 0( %0 );"                                                     \

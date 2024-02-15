@@ -90,6 +90,7 @@ set(SOURCE_FILES_DRA
     src/dra/843B0.c
     src/dra/86ECC.c
     #src/dra/8D3E8.c # countless unimplemented symbols
+    src/dra/90264.c
     src/dra/91EBC.c
     src/dra/92F60.c
     src/dra/93290.c
