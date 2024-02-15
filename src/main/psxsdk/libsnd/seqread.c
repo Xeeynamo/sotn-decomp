@@ -3,7 +3,93 @@
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsSeqPlay);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsGetSeqData);
+void _SsGetMetaEvent(s16, s16, u8);
+void _SsNoteOn(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
+s32 _SsReadDeltaValue(s16, s16);
+void _SsSetControlChange(s16, s16, u8, u8*);
+void _SsSetPitchBend(s16, s16);
+void _SsSetProgramChange(s16 arg0, s16 arg1, u8 arg2);
+
+void _SsGetSeqData(s16 arg0, s16 arg1) {
+    s32 temp_a2;
+    struct SeqStruct* score;
+    u8 channel;
+    u8 temp_s0;
+    u8 temp_s0_2;
+    u8 var_s3;
+    u8* read_ptr;
+    u8* temp_v0;
+    u8* temp_v0_2;
+    u8* temp_v0_3;
+    u8* temp_v1;
+
+    score = &_ss_score[arg0][arg1];
+    read_ptr = score->read_pos;
+    score->read_pos++;
+    temp_s0 = read_ptr[0];
+    channel = read_ptr[0] & 0xF;
+    if (read_ptr[0] & 0x80) {
+        temp_a2 = read_ptr[0] & 0xF0;
+        score->channel = channel;
+        switch (temp_a2) {
+        case 0x90:
+            temp_v1 = score->read_pos;
+            score->unk11 = 0x90;
+            score->read_pos = temp_v1 + 1;
+            temp_s0_2 = temp_v1[0];
+            score->read_pos++;
+            var_s3 = temp_v1[1];
+            score->delta_value = _SsReadDeltaValue(arg0, arg1);
+            _SsNoteOn(arg0, arg1, temp_s0_2, var_s3);
+            return;
+        case 0xB0:
+            temp_v0 = score->read_pos;
+            score->unk11 = 0xB0;
+            score->read_pos = temp_v0 + 1;
+            _SsSetControlChange(arg0, arg1, temp_v0[0], read_ptr);
+            return;
+        case 0xC0:
+            temp_v0_2 = score->read_pos;
+            score->unk11 = 0xC0;
+            score->read_pos = temp_v0_2 + 1;
+            _SsSetProgramChange(arg0, arg1, temp_v0_2[0]);
+            return;
+        case 0xE0:
+            score->unk11 = 0xE0;
+            score->read_pos += 1;
+            _SsSetPitchBend(arg0, arg1);
+            return;
+        case 0xF0:
+            temp_v0_3 = score->read_pos;
+            score->unk11 = 0xFF;
+            score->channel = channel;
+            score->read_pos = temp_v0_3 + 1;
+            _SsGetMetaEvent(arg0, arg1, temp_v0_3[0]);
+            return;
+        }
+    } else {
+        switch (score->unk11) {
+        case 0x90:
+            score->read_pos = read_ptr + 2;
+            var_s3 = read_ptr[1];
+            score->delta_value = _SsReadDeltaValue(arg0, arg1);
+            _SsNoteOn(arg0, arg1, temp_s0, var_s3);
+            return;
+        case 0xB0:
+            _SsSetControlChange(arg0, arg1, temp_s0, read_ptr);
+            return;
+        case 0xC0:
+            _SsSetProgramChange(arg0, arg1, temp_s0);
+            return;
+        case 0xE0:
+            _SsSetPitchBend(arg0, arg1);
+            return;
+        case 0xFF:
+            _SsGetMetaEvent(arg0, arg1, temp_s0);
+            return;
+        }
+    }
+}
 
 void SpuVmKeyOff(s16, s16, u8, s32);
 void SpuVmKeyOn(s16, s16, u8, s32, s32, s32);
@@ -33,7 +119,7 @@ void _SsNoteOn(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
 
 s32 _SsReadDeltaValue(s16, s16);
 
-void _SsSetProgramChange(s16 arg0, s16 arg1, s8 arg2) {
+void _SsSetProgramChange(s16 arg0, s16 arg1, u8 arg2) {
     struct SeqStruct* temp_s0;
     temp_s0 = &_ss_score[arg0][arg1];
     temp_s0->programs[temp_s0->channel] = arg2;
@@ -82,7 +168,33 @@ void _SsContPortaTime(s16 arg0, s16 arg1, u8 arg2) {
     temp_s2->delta_value = _SsReadDeltaValue(arg0, arg1);
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContPortamento);
+void _SsContPortamento(s16 arg0, s16 arg1, s32 arg2) {
+    struct ProgAtr sp10;
+    struct VagAtr sp20;
+    s32 var_s0;
+    u8 channel;
+    struct SeqStruct* temp_s2;
+    u8 new_var;
+    temp_s2 = &_ss_score[arg0][arg1];
+    channel = temp_s2->channel;
+    SsUtGetProgAtr(temp_s2->unk4c, temp_s2->programs[channel], &sp10);
+    for (var_s0 = 0; var_s0 < sp10.tones; var_s0++) {
+        new_var = channel;
+        SsUtGetVagAtr(
+            temp_s2->unk4c, temp_s2->programs[new_var], var_s0, &sp20);
+        if ((arg2 & 0xFF) < 0x40U) {
+            do {
+            } while (0);
+            sp20.mode = 2;
+        } else if (((arg2 + 0xC0) & 0xFF) < 0x40U) {
+            sp20.mode = 0;
+        }
+        SsUtSetVagAtr(
+            temp_s2->unk4c, temp_s2->programs[new_var], var_s0, &sp20);
+    }
+
+    temp_s2->delta_value = _SsReadDeltaValue(arg0, arg1);
+}
 
 void _SsContResetAll(s16 arg0, s16 arg1) {
     struct SeqStruct* temp_s0;

@@ -230,19 +230,20 @@ struct RegBufStruct {
 extern struct RegBufStruct _svm_sreg_buf[NUM_SPU_CHANNELS];
 extern unsigned char _svm_sreg_dirty[NUM_SPU_CHANNELS];
 
-extern volatile u16* D_80032F10;
+extern u16* D_80032F10;
 extern u8 spuVmMaxVoice;
 
 struct SpuVoice {
-    u8 pad[4];
+    s16 unk0;
+    u8 pad[2];
     s16 unk04;
     u8 pad2[6];
-    s16 unkc;
+    s16 note;
     s16 unke;
     s16 unk10;
-    s16 unk12;
-    s16 unk14;
-    s16 unk16;
+    s16 prog;
+    s16 tone;
+    s16 vabId;
     u8 pad4[3];
     u8 unk1b;
     u8 pad3[23];
@@ -322,5 +323,10 @@ extern VabHdr* _svm_vab_vh[16];
 extern ProgAtr* _svm_pg;
 extern VabHdr* _svm_vh;
 extern s16 kMaxPrograms;
+
+extern unsigned short _svm_okon1;
+extern unsigned short _svm_okon2;
+extern unsigned short _svm_okof1;
+extern unsigned short _svm_okof2;
 
 #endif
