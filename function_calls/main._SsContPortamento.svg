@@ -12,7 +12,7 @@
 <!-- main._SsContPortamento -->
 <g id="node1" class="node">
 <title>main._SsContPortamento</title>
-<ellipse fill="red" stroke="black" cx="128.04" cy="-18" rx="128.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="128.04" cy="-18" rx="128.08" ry="18"/>
 <text text-anchor="middle" x="128.04" y="-14.3" font-family="Times,serif" font-size="14.00">main._SsContPortamento</text>
 </g>
 </g>
