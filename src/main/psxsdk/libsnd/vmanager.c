@@ -302,7 +302,14 @@ s16 SsUtChangeADSR(
     return -1;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtGetDetVVol);
+s16 SsUtGetDetVVol(s16 vc, s16* voll, s16* volr) {
+    if (vc >= 0 && vc < 24) {
+        *voll = D_80032F10[vc * 8 + 0];
+        *volr = D_80032F10[vc * 8 + 1];
+        return 0;
+    }
+    return -1;
+}
 
 s32 SsUtSetDetVVol(s16 arg0, s16 arg1, s16 arg2) {
     s32 temp[2];
@@ -316,9 +323,36 @@ s32 SsUtSetDetVVol(s16 arg0, s16 arg1, s16 arg2) {
     return -1;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtGetVVol);
+s16 SsUtGetVVol(s16 vc, s16* voll, s16* volr) {
+    struct Unk* temp_v1;
+    s16 temp1;
+    s16 temp2;
+    s16* temp;
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtSetVVol);
+    if (vc >= 0 && vc < 24) {
+        temp = &D_80032F10[vc * 8];
+        temp1 = temp[0];
+        temp2 = temp[1];
+        *voll = temp1 / 129;
+        *volr = temp2 / 129;
+        return 0;
+    }
+    return -1;
+}
+
+s16 SsUtSetVVol(s16 vc, s16 voll, s16 volr) {
+    s32 temp[2];
+    if (vc >= 0 && vc < 24) {
+        voll *= 129;
+        volr *= 129;
+        _svm_sreg_buf[vc].field_2_vol_right = volr;
+        _svm_sreg_buf[vc].field_0_vol_left = voll;
+        _svm_sreg_dirty[vc] = _svm_sreg_dirty[vc] | 3;
+        return 0;
+    }
+
+    return -1;
+}
 
 s16 SsUtAutoVol(s16 vc, s16 start_vol, s16 end_vol, s16 delta_time) {
     if (!(vc >= 0x18U)) {
