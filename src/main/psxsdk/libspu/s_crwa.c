@@ -4,7 +4,7 @@
 void WaitEvent(s32);
 s32 _SpuIsInAllocateArea_(s32);
 extern s32 D_800330F8;
-extern s32 D_80033568[];
+extern s32 _spu_rev_startaddr[];
 extern s32 _spu_EVdma;
 extern s32 _spu_mem_mode_plus;
 extern s32 _spu_transMode;
@@ -21,15 +21,15 @@ s32 SpuClearReverbWorkArea(s32 rev_mode) {
     callback = 0;
     transmodeCleared = 0;
     if ((rev_mode >= 0xAU) ||
-        (_SpuIsInAllocateArea_(D_80033568[rev_mode]) != 0)) {
+        (_SpuIsInAllocateArea_(_spu_rev_startaddr[rev_mode]) != 0)) {
         return -1;
     }
     if (rev_mode == 0) {
         var_s1 = 0x10 << _spu_mem_mode_plus;
         var_s2 = 0xFFF0 << _spu_mem_mode_plus;
     } else {
-        var_s1 = (0x10000 - D_80033568[rev_mode]) << _spu_mem_mode_plus;
-        var_s2 = D_80033568[rev_mode] << _spu_mem_mode_plus;
+        var_s1 = (0x10000 - _spu_rev_startaddr[rev_mode]) << _spu_mem_mode_plus;
+        var_s2 = _spu_rev_startaddr[rev_mode] << _spu_mem_mode_plus;
     }
     oldTransmode = _spu_transMode;
     if (_spu_transMode == 1) {

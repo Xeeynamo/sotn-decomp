@@ -154,11 +154,11 @@ union SpuUnion {
 extern union SpuUnion* _spu_RXX;
 
 s32 _SpuIsInAllocateArea_(s32);
-extern s32 D_800330A0;
-extern s32 D_800330A4;
-extern s32 D_800330A8;
+extern s32 _spu_rev_flag;
+extern s32 _spu_rev_reserve_wa;
+extern s32 _spu_rev_offsetaddr;
 
-extern s32 D_8003309C;
+extern s32 _spu_trans_mode;
 extern s32 _spu_transMode;
 
 #define SPU_TRANSFER_BY_DMA 0

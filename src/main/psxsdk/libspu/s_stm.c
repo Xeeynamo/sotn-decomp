@@ -14,7 +14,7 @@ long SpuSetTransferMode(long mode) {
     default:
         transMode = 0;
     }
-    D_8003309C = mode;
+    _spu_trans_mode = mode;
     _spu_transMode = transMode;
     return transMode;
 }

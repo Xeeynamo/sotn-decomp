@@ -1,7 +1,54 @@
 #include "common.h"
 #include "libspu_internal.h"
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libspu/s_ini", _SpuInit);
+extern s32 _spu_fd;
+extern s32 _spu_trans_mode;
+extern s32 _spu_rev_flag;
+extern s32 _spu_rev_reserve_wa;
+extern s32 _spu_rev_offsetaddr;
+
+struct SpuRevAttr {
+    s32 unk0;
+    s32 unk18;
+    s16 unk1c;
+    s16 unk1e;
+    s32 unk20;
+    s32 unk24;
+};
+
+extern struct SpuRevAttr _spu_rev_attr;
+
+extern u16 _spu_voice_centerNote[];
+
+extern s32 _spu_EVdma;
+
+extern s32 _spu_keystat;
+
+extern s32 _spu_rev_startaddr[];
+
+void _SpuInit(s32 arg0) {
+    s32 i;
+    ResetCallback();
+    _spu_init(arg0);
+    if (arg0 == 0) {
+        for (i = 0; i < 0x18; i++) {
+            _spu_voice_centerNote[i] = 0xC000;
+        }
+    }
+    SpuStart();
+    _spu_rev_flag = 0;
+    _spu_rev_reserve_wa = 0;
+    _spu_rev_attr.unk18 = 0;
+    _spu_rev_attr.unk1c = 0;
+    _spu_rev_attr.unk1e = 0;
+    _spu_rev_attr.unk20 = 0;
+    _spu_rev_attr.unk24 = 0;
+    _spu_rev_offsetaddr = _spu_rev_startaddr[0];
+    _spu_FsetRXX(0xD1, _spu_rev_startaddr[0], 0);
+    _spu_trans_mode = 0;
+    _spu_transMode = 0;
+    _spu_keystat = 0;
+}
 
 void SpuStart(void) {
     s32 temp_v0;
