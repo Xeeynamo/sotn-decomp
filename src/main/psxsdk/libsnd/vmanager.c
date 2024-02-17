@@ -303,7 +303,7 @@ s16 SsUtChangeADSR(
 }
 
 s16 SsUtGetDetVVol(s16 vc, s16* voll, s16* volr) {
-    if (vc >= 0 && vc < 24) {
+    if (vc >= 0 && vc < NUM_SPU_CHANNELS) {
         *voll = D_80032F10[vc * 8 + 0];
         *volr = D_80032F10[vc * 8 + 1];
         return 0;
@@ -313,7 +313,7 @@ s16 SsUtGetDetVVol(s16 vc, s16* voll, s16* volr) {
 
 s32 SsUtSetDetVVol(s16 arg0, s16 arg1, s16 arg2) {
     s32 temp[2];
-    if (arg0 >= 0 && arg0 < 24) {
+    if (arg0 >= 0 && arg0 < NUM_SPU_CHANNELS) {
         _svm_sreg_buf[arg0].field_0_vol_left = arg1;
         _svm_sreg_buf[arg0].field_2_vol_right = arg2;
         _svm_sreg_dirty[arg0] = _svm_sreg_dirty[arg0] | 3;
@@ -329,7 +329,7 @@ s16 SsUtGetVVol(s16 vc, s16* voll, s16* volr) {
     s16 temp2;
     s16* temp;
 
-    if (vc >= 0 && vc < 24) {
+    if (vc >= 0 && vc < NUM_SPU_CHANNELS) {
         temp = &D_80032F10[vc * 8];
         temp1 = temp[0];
         temp2 = temp[1];
@@ -342,7 +342,7 @@ s16 SsUtGetVVol(s16 vc, s16* voll, s16* volr) {
 
 s16 SsUtSetVVol(s16 vc, s16 voll, s16 volr) {
     s32 temp[2];
-    if (vc >= 0 && vc < 24) {
+    if (vc >= 0 && vc < NUM_SPU_CHANNELS) {
         voll *= 129;
         volr *= 129;
         _svm_sreg_buf[vc].field_2_vol_right = volr;
