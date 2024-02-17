@@ -4,13 +4,10 @@
 
 s16 D_800B0A3C[] = {1, 2, 1, 0, 1, 2, 1, 0};
 s16 D_800B0A4C[] = {0, 1, 2, 3, 4, 3, 2, 1};
-s16 D_800B0A5C[] = {0, 1, 0, -1, 0, 1, 0, -1};
-s16 D_800B0A6C[] = {0, 1, 2, 3, 4, 3, 2, 1};
-s16 D_800B0A7C[] = {0, 0, 1, 1, 2, 2, 3, 3};
-s16 D_800B0A8C[] = {0, 1, 0, -1, 0, 1, 0, -1};
-s16 D_800B0A9C[] = {0, 1, 1, 0, 0, 1, 1, 0};
-s16 D_800B0AAC[] = {0, 0, 0, 1, 1, 1, 2, 2};
 
+static s16 D_800B0A5C[] = {0, 1, 0, -1, 0, 1, 0, -1};
+static s16 D_800B0A6C[] = {0, 1, 2, 3, 4, 3, 2, 1};
+static s16 D_800B0A7C[] = {0, 0, 1, 1, 2, 2, 3, 3};
 void func_80130264(Entity* self) {
     s32 var_v1;
 
@@ -118,6 +115,9 @@ void func_80130264(Entity* self) {
 }
 static const u32 rodata_func_80130264_padding = 0;
 
+static s16 D_800B0A8C[] = {0, 1, 0, -1, 0, 1, 0, -1};
+static s16 D_800B0A9C[] = {0, 1, 1, 0, 0, 1, 1, 0};
+static s16 D_800B0AAC[] = {0, 0, 0, 1, 1, 1, 2, 2};
 void func_80130618(Entity* self) {
     s32 var_v1;
 
@@ -227,103 +227,392 @@ void func_80130618(Entity* self) {
 }
 static const u32 rodata_func_80130618_padding = 0;
 
-INCLUDE_ASM("dra/nonmatchings/90264", func_801309B4);
+static AnimationFrame D_800B0ABC[] = {
+    {0x0002, 0x0048}, {0x0004, 0x004B}, {0x0010, 0x004C},
+    {0x0004, 0x004B}, {0x0008, 0x0048}, {0xFFFF, 0x0000},
+};
+static s32 D_800B0AD4[] = {0, 1, 2, 1, 0, 0};
+static s32 D_800B0AEC[] = {0, 1, 1, 2, 2, 1, 1, 0};
+extern s32 D_80138448;
 
-INCLUDE_ASM("dra/nonmatchings/90264", func_80130E94);
+void func_801309B4(Entity* self) {
+    s32 var_s2;
+    s32 var_a1;
+    s32 var_s0;
+    s32 var_s0_2;
+    s32 var_v0;
+    s32 var_v0_2;
 
-// DECOMP_ME_WIP func_8013136C https://decomp.me/scratch/cu30D
-// TODO: branching is wrong jpt_ needs a file split
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("dra/nonmatchings/90264", func_8013136C);
-#else
-void func_8012C600(void);
-extern u16 D_8007412E;
-extern s32 D_800741CC;
-extern s32 D_800741D0;
-
-void func_8013136C(Entity* entity) {
     if (!(g_Player.unk0C & PLAYER_STATUS_WOLF_FORM)) {
-        DestroyEntity(entity);
+        DestroyEntity(self);
         return;
     }
-    if (entity->step == 0) {
-        entity->animSet = ANIMSET_DRA(15);
-        entity->unk5A = 0x7E;
-        entity->palette = PLAYER.palette;
-        entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000;
-        entity->drawFlags = FLAG_DRAW_ROTZ;
-        entity->unk20 = -8;
-        entity->step++;
+    if (self->step == 0) {
+        self->animSet = ANIMSET_DRA(15);
+        self->unk5A = 0x7E;
+#if defined(VERSION_HD)
+        self->zPriority = PLAYER.zPriority + 2;
+#endif
+        self->flags = FLAG_UNK_04000000 | FLAG_UNK_100000 | FLAG_UNK_20000 |
+                      FLAG_UNK_40000;
+        self->animFrameDuration = 1;
+        self->animFrameIdx = 4;
+        self->unk4C = D_800B0ABC;
+        self->hitboxWidth = 10;
+        self->hitboxHeight = 8;
+        self->animCurFrame = 72;
+        self->step++;
     }
-    entity->animCurFrame = 80;
-    entity->facingLeft = PLAYER.facingLeft;
-    entity->posX.val = g_Entities[UNK_ENTITY_13].posX.val; // D_800741CC
-    entity->posY.val = g_Entities[UNK_ENTITY_13].posY.val; // D_800741D0
-    if (PLAYER.facingLeft == 0) {
-        entity->zPriority = PLAYER.zPriority - 5;
-        entity->posX.i.hi += 8;
-    } else {
-        entity->zPriority = PLAYER.zPriority + 5;
-        entity->posX.i.hi -= 8;
+#if !defined(VERSION_HD)
+    self->zPriority = PLAYER.zPriority + 2;
+#endif
+    self->facingLeft = PLAYER.facingLeft;
+    self->posX.val = g_Entities[UNK_ENTITY_12].posX.val;
+    self->posY.val = g_Entities[UNK_ENTITY_12].posY.val + FIX(4);
+    self->flags =
+        FLAG_UNK_04000000 | FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_UNK_40000;
+
+    var_a1 = D_80138430 - 0x800;
+    if (D_80138430 > 0x980) {
+        var_a1 = 0x180;
     }
-    entity->posY.i.hi += 3;
-    entity->unk1E = g_Entities[UNK_ENTITY_13].unk1E;
-    switch (PLAYER.step_s - 1) {
+    if (D_80138430 < 0x680) {
+        var_a1 = -0x180;
+    }
+    self->palette = PLAYER.palette;
+    var_s2 = 11;
+    var_s0 = var_a1;
+    switch (PLAYER.step_s) {
     case 1:
+        var_s0 = var_a1;
+        if (D_800B0914 == 1) {
+            var_s0 += 0x100;
+        }
+        break;
+    case 2:
+        switch (D_800B0914) {
+        case 0:
+            if (PLAYER.animCurFrame == 33) {
+                var_s0 = !PLAYER.facingLeft;
+                self->posX.i.hi =
+                    var_s0 ? self->posX.i.hi + 4 : self->posX.i.hi - 4;
+                self->animCurFrame = 73;
+                self->flags &= ~FLAG_UNK_100000;
+                return;
+            }
+            if (PLAYER.animCurFrame == 34) {
+                self->animCurFrame = 74;
+                self->flags &= ~FLAG_UNK_100000;
+                return;
+            }
+            break;
+        case 1:
+            break;
+        case 2:
+            var_s2 += D_800B0AEC[PLAYER.animFrameIdx];
+            var_s0 -= 0x80;
+            if (D_80138430 == 0xA00) {
+                var_s0 += 0x80;
+            }
+            if (D_80138430 == 0x600) {
+                var_s0 += 0x80;
+            }
+            break;
+        }
+        break;
     case 3:
+        var_s0 -= 0x100;
+        if (var_s0 < -0x180) {
+            var_s0 = -0x180;
+            break;
+        }
+        break;
+    case 4:
+        if (D_800B0914 == 2) {
+            var_s0 -= 0x40;
+        }
+        break;
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+        break;
+    }
+
+    var_s2 = var_s2 - (var_s0 >> 7);
+    if (PLAYER.facingLeft) {
+        var_s0 = 0x800 - var_s0;
+    }
+    self->posX.i.hi += ((rcos(var_s0) >> 4) * var_s2) >> 8;
+    self->posY.i.hi -= ((rsin(var_s0) >> 4) * var_s2) >> 8;
+    if (PLAYER.step_s != 8 && PLAYER.step_s != 0 && D_80138444 != 0 &&
+        self->animFrameDuration == -1) {
+        PlaySfx(0x6F7);
+        self->animFrameDuration = 0;
+        self->animFrameIdx = 0;
+    }
+    var_s2 = D_800B0AD4[self->animFrameIdx];
+    if (PLAYER.facingLeft) {
+        var_s2 = -var_s2;
+    }
+    self->posX.i.hi += var_s2;
+    if (PLAYER.step_s == 2 && D_800B0914 == 4) {
+        func_8011A328(self, 4);
+        self->enemyId = 3;
+    } else if (self->animCurFrame != 72 && self->animCurFrame != 73 &&
+               self->animCurFrame != 74) {
+        func_8011A328(self, 14);
+        self->enemyId = 3;
+    } else {
+        self->hitboxState = 0;
+    }
+    if (self->animFrameDuration < 0) {
+        if (D_80138448 != 0) {
+            D_80138448 -= 1;
+        } else if (*D_80097448 >= 0x19) {
+            var_s0_2 = PLAYER.facingLeft ? -4 : 4;
+            self->posX.i.hi = var_s0_2 + self->posX.i.hi;
+            self->posY.i.hi += 2;
+            CreateEntFactoryFromEntity(self, FACTORY(0xD00, 4), 0);
+            D_80138448 = 0x40;
+            self->posY.i.hi -= 2;
+            self->posX.i.hi -= var_s0_2;
+        }
+    }
+}
+static const u32 rodata_func_801309B4_padding = 0;
+
+static s16 D_800B0B0C[] = {87, 88, 89, 89, 90, 90, 89, 88, 87};
+static s16 D_800B0B20[] = {
+    0x000, 0x040, 0x080, 0x0C0, 0x100, 0x140, 0x180, 0x1C0, 0x200};
+extern s32 D_8013844C;
+extern s32 D_80138450;
+
+void func_80130E94(Entity* self) {
+    s32 temp_v1;
+    s32 var_s1;
+    s32 var_s2;
+    s32 var_s3;
+    s32 var_s4;
+    u16 params;
+    s32 var_s6;
+    s32 var_s7;
+
+    if (!(g_Player.unk0C & PLAYER_STATUS_WOLF_FORM)) {
+        DestroyEntity(self);
+        return;
+    }
+    params = self->params;
+    var_s1 = 0;
+    var_s2 = 0;
+    if (self->step == 0) {
+        self->animSet = 15;
+        self->animCurFrame = D_800B0B0C[params];
+        self->unk5A = 0x7E;
+        D_8013844C = 0;
+        self->palette = PLAYER.palette;
+#if defined(VERSION_HD)
+        self->zPriority = PLAYER.zPriority - 3;
+#endif
+        self->flags = FLAG_UNK_04000000 | FLAG_UNK_20000 | FLAG_UNK_40000;
+        self->ext.timer.t = 0x20;
+        self->rotZ = D_80138430;
+        self->step++;
+    }
+    self->facingLeft = PLAYER.facingLeft;
+#if !defined(VERSION_HD)
+    self->zPriority = PLAYER.zPriority - 3;
+#endif
+    var_s6 = 2;
+    if (params == 0) {
+        var_s4 = g_Entities[19].posX.val;
+        var_s4 += PLAYER.facingLeft ? FIX(3) : -FIX(3);
+        var_s7 = g_Entities[19].posY.val + FIX(7);
+    } else {
+        var_s4 = self[-1].posX.val;
+        var_s7 = self[-1].posY.val;
+    }
+    if (PLAYER.animCurFrame == 33) {
+        var_s6 = 1;
+    }
+    if (PLAYER.animCurFrame == 34) {
+        var_s6 = 0;
+    }
+    if (params == 0) {
+        var_s3 = D_8013844C;
+        switch (PLAYER.step_s) {
+        case 1:
+            var_s2 = 0x100;
+            var_s1 = 0x80;
+            D_8013844C += 0x18;
+            if (D_800B0914 == 1) {
+                var_s1 = -0x80;
+            }
+            break;
+        case 2:
+            switch (D_800B0914) {
+            case 0:
+                var_s1 = -0x300;
+                break;
+            case 1:
+            case 3:
+                var_s2 = 0x40;
+                var_s1 = -0x200;
+                D_8013844C += 0x100;
+                break;
+            case 2:
+                var_s2 = 0x40;
+                D_8013844C += 0x100;
+                var_s1 =
+                    MIN((ABS(PLAYER.velocityX) + -FIX(3)) >> 10, 0x100) - 0x100;
+                break;
+            }
+            break;
+        case 3:
+            var_s2 = 0x40;
+            var_s1 = 0x80;
+            D_8013844C += 0x10;
+            break;
+        case 4:
+            if (D_800B0914 == 0) {
+                var_s1 = -0x200;
+                if (PLAYER.velocityY < 0) {
+                    var_s1 = 0x600;
+                }
+            } else {
+                var_s2 = 0x20;
+                var_s1 = -0x100;
+                if (PLAYER.velocityY < 0) {
+                    var_s1 = 0x100;
+                }
+            }
+            break;
+        case 7:
+            var_s1 = -0x80;
+            break;
+        case 5:
+        case 6:
+        case 8:
+            var_s1 = -0x200;
+            break;
+        case 9:
+            var_s2 = 0x100;
+            var_s1 = 0x80;
+            D_8013844C += 0x18;
+            break;
+        }
+        D_80138450 =
+            var_s1 + D_80138430 + (((rsin(var_s3) >> 8) * var_s2) >> 4);
+    }
+    temp_v1 = (D_80138450 - D_80138430) * D_800B0B20[params] / 256 + D_80138430;
+    if (temp_v1 < self->rotZ) {
+        self->rotZ -= self->ext.timer.t;
+    }
+    if (self->rotZ < temp_v1) {
+        self->rotZ += self->ext.timer.t;
+    }
+    if (PLAYER.facingLeft == 0) {
+        var_s3 = self->rotZ;
+    } else {
+        var_s3 = 0x800 - self->rotZ;
+    }
+    self->posX.val = var_s4 + rcos(var_s3) * var_s6 * 0x10;
+    self->posY.val = var_s7 - rsin(var_s3) * var_s6 * 0x10;
+    self->palette = PLAYER.palette;
+    self->drawMode = 0;
+    self->drawFlags &= ~DRAW_HIDE;
+    if (ABS(PLAYER.velocityX) > FIX(3)) {
+        self->drawFlags |= DRAW_HIDE;
+        self->drawMode = FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
+        self->unk6C = ~MIN((ABS(PLAYER.velocityX) - FIX(3)) >> 12, 128);
+    }
+}
+static const u32 rodata_func_80130E94_padding = 0;
+
+void func_8013136C(Entity* self) {
+    if (!(g_Player.unk0C & PLAYER_STATUS_WOLF_FORM)) {
+        DestroyEntity(self);
+        return;
+    }
+    if (self->step == 0) {
+        self->animSet = 0xF;
+        self->unk5A = 0x7E;
+        self->palette = PLAYER.palette;
+        self->flags = FLAG_UNK_04000000 | FLAG_UNK_20000 | FLAG_UNK_40000;
+        self->drawFlags = DRAW_COLORS;
+        LOH(self->rotPivotX) = -8;
+        self->step++;
+    }
+    self->animCurFrame = 80;
+    self->facingLeft = PLAYER.facingLeft;
+    self->posX.val = g_Entities[UNK_ENTITY_13].posX.val;
+    self->posY.val = g_Entities[UNK_ENTITY_13].posY.val;
+    if (PLAYER.facingLeft == 0) {
+        self->zPriority = PLAYER.zPriority - 5;
+        self->posX.i.hi = self->posX.i.hi + 8;
+    } else {
+        self->zPriority = PLAYER.zPriority + 5;
+        self->posX.i.hi = self->posX.i.hi - 8;
+    }
+    self->posY.i.hi += 3;
+    self->rotZ = g_Entities[UNK_ENTITY_12].rotZ;
+    switch (PLAYER.step_s) {
+    case 1:
+        if (D_800B0914 == 1) {
+            self->posY.i.hi -= 2;
+            if (PLAYER.facingLeft == 0) {
+                self->posX.i.hi -= 8;
+            } else {
+                self->posX.i.hi += 8;
+            }
+        }
+        break;
+    case 2:
+        switch (D_800B0914) {
+        case 0:
+            if (PLAYER.animCurFrame == 33) {
+                self->animCurFrame = 81;
+                if (PLAYER.facingLeft == 0) {
+                    self->posX.i.hi += 3;
+                } else {
+                    self->posX.i.hi += 6;
+                }
+            }
+            if (PLAYER.animCurFrame == 34) {
+                if (PLAYER.facingLeft == 0) {
+                    self->posX.i.hi += 3;
+                } else {
+                    self->posX.i.hi += 13;
+                }
+                self->animCurFrame = 82;
+            }
+            break;
+        case 1:
+            break;
+        case 255:
+            break;
+        }
+        break;
+    case 3:
+        break;
     case 4:
     case 5:
     case 6:
     case 7:
     case 8:
-        break;
-
-    case 0:
-        if (D_800B0914 == 1) {
-            entity->posY.i.hi -= 2;
-            if (PLAYER.facingLeft == 0) {
-                entity->posX.i.hi -= 8;
-            } else {
-                entity->posX.i.hi += 8;
-            }
-        }
-        break;
-
-    case 2:
-        switch (D_800B0914) {
-        case 1:
-            break;
-
-        case 0:
-            if (PLAYER.animCurFrame == 33) {
-                entity->animCurFrame = 81;
-                if (PLAYER.facingLeft == 0) {
-                    entity->posX.i.hi += 3;
-                } else {
-                    entity->posX.i.hi += 6;
-                }
-            }
-            if (PLAYER.animCurFrame == 34) {
-                if (PLAYER.facingLeft == 0) {
-                    entity->posX.i.hi += 3;
-                } else {
-                    entity->posX.i.hi += 13;
-                }
-                entity->animCurFrame = 82;
-            }
-        case 2:
-            break;
-        }
+    case 9:
         break;
     }
-    entity->palette = PLAYER.palette;
+    self->palette = PLAYER.palette;
     func_8012C600();
 }
-#endif
 
 // When Alucard uses the cross subweapon for 100 hearts.
 // Entity ID 7, blueprint #7 (this is a coincidence)
 void EntityGiantSpinningCross(Entity* self) {
+    static const SVECTOR D_800E2024 = {0, 0, 0};
+    static const SVECTOR D_800E202C = {0xFFA0, 0, 0};
     MATRIX m;
     SVECTOR rot;
     VECTOR trans1;

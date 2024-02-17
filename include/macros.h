@@ -10,6 +10,7 @@ typedef enum {
     UNK_ENTITY_8,
     E_WEAPON = 0x10,
     UNK_ENTITY_11 = 0x11, // related to wolf
+    UNK_ENTITY_12 = 0x12, // related to wolf?
     UNK_ENTITY_13 = 0x13,
     UNK_ENTITY_20 = 0x20,
     UNK_ENTITY_51 = 0x51, // SubWeapons container falling liquid
