@@ -399,7 +399,7 @@ void func_80130E94(Entity* self) {
     s32 var_s6;
     s32 var_s7;
 
-    if (!(g_Player.unk0C & 4)) {
+    if (!(g_Player.unk0C & PLAYER_STATUS_WOLF_FORM)) {
         DestroyEntity(self);
         return;
     }
@@ -530,95 +530,83 @@ void func_80130E94(Entity* self) {
 }
 static const u32 rodata_func_80130E94_padding = 0;
 
-// DECOMP_ME_WIP func_8013136C https://decomp.me/scratch/cu30D
-// TODO: branching is wrong jpt_ needs a file split
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("dra/nonmatchings/90264", func_8013136C);
-#else
-void func_8012C600(void);
-extern u16 D_8007412E;
-extern s32 D_800741CC;
-extern s32 D_800741D0;
-
-void func_8013136C(Entity* entity) {
+void func_8013136C(Entity* self) {
     if (!(g_Player.unk0C & PLAYER_STATUS_WOLF_FORM)) {
-        DestroyEntity(entity);
+        DestroyEntity(self);
         return;
     }
-    if (entity->step == 0) {
-        entity->animSet = ANIMSET_DRA(15);
-        entity->unk5A = 0x7E;
-        entity->palette = PLAYER.palette;
-        entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000;
-        entity->drawFlags = FLAG_DRAW_ROTZ;
-        entity->unk20 = -8;
-        entity->step++;
+    if (self->step == 0) {
+        self->animSet = 0xF;
+        self->unk5A = 0x7E;
+        self->palette = PLAYER.palette;
+        self->flags = FLAG_UNK_04000000 | FLAG_UNK_20000 | FLAG_UNK_40000;
+        self->drawFlags = DRAW_COLORS;
+        LOH(self->rotPivotX) = -8;
+        self->step++;
     }
-    entity->animCurFrame = 80;
-    entity->facingLeft = PLAYER.facingLeft;
-    entity->posX.val = g_Entities[UNK_ENTITY_13].posX.val; // D_800741CC
-    entity->posY.val = g_Entities[UNK_ENTITY_13].posY.val; // D_800741D0
+    self->animCurFrame = 80;
+    self->facingLeft = PLAYER.facingLeft;
+    self->posX.val = g_Entities[UNK_ENTITY_13].posX.val;
+    self->posY.val = g_Entities[UNK_ENTITY_13].posY.val;
     if (PLAYER.facingLeft == 0) {
-        entity->zPriority = PLAYER.zPriority - 5;
-        entity->posX.i.hi += 8;
+        self->zPriority = PLAYER.zPriority - 5;
+        self->posX.i.hi = self->posX.i.hi + 8;
     } else {
-        entity->zPriority = PLAYER.zPriority + 5;
-        entity->posX.i.hi -= 8;
+        self->zPriority = PLAYER.zPriority + 5;
+        self->posX.i.hi = self->posX.i.hi - 8;
     }
-    entity->posY.i.hi += 3;
-    entity->unk1E = g_Entities[UNK_ENTITY_13].unk1E;
-    switch (PLAYER.step_s - 1) {
+    self->posY.i.hi += 3;
+    self->rotZ = g_Entities[UNK_ENTITY_12].rotZ;
+    switch (PLAYER.step_s) {
     case 1:
+        if (D_800B0914 == 1) {
+            self->posY.i.hi -= 2;
+            if (PLAYER.facingLeft == 0) {
+                self->posX.i.hi -= 8;
+            } else {
+                self->posX.i.hi += 8;
+            }
+        }
+        break;
+    case 2:
+        switch (D_800B0914) {
+        case 0:
+            if (PLAYER.animCurFrame == 33) {
+                self->animCurFrame = 81;
+                if (PLAYER.facingLeft == 0) {
+                    self->posX.i.hi += 3;
+                } else {
+                    self->posX.i.hi += 6;
+                }
+            }
+            if (PLAYER.animCurFrame == 34) {
+                if (PLAYER.facingLeft == 0) {
+                    self->posX.i.hi += 3;
+                } else {
+                    self->posX.i.hi += 13;
+                }
+                self->animCurFrame = 82;
+            }
+            break;
+        case 1:
+            break;
+        case 255:
+            break;
+        }
+        break;
     case 3:
+        break;
     case 4:
     case 5:
     case 6:
     case 7:
     case 8:
-        break;
-
-    case 0:
-        if (D_800B0914 == 1) {
-            entity->posY.i.hi -= 2;
-            if (PLAYER.facingLeft == 0) {
-                entity->posX.i.hi -= 8;
-            } else {
-                entity->posX.i.hi += 8;
-            }
-        }
-        break;
-
-    case 2:
-        switch (D_800B0914) {
-        case 1:
-            break;
-
-        case 0:
-            if (PLAYER.animCurFrame == 33) {
-                entity->animCurFrame = 81;
-                if (PLAYER.facingLeft == 0) {
-                    entity->posX.i.hi += 3;
-                } else {
-                    entity->posX.i.hi += 6;
-                }
-            }
-            if (PLAYER.animCurFrame == 34) {
-                if (PLAYER.facingLeft == 0) {
-                    entity->posX.i.hi += 3;
-                } else {
-                    entity->posX.i.hi += 13;
-                }
-                entity->animCurFrame = 82;
-            }
-        case 2:
-            break;
-        }
+    case 9:
         break;
     }
-    entity->palette = PLAYER.palette;
+    self->palette = PLAYER.palette;
     func_8012C600();
 }
-#endif
 
 // When Alucard uses the cross subweapon for 100 hearts.
 // Entity ID 7, blueprint #7 (this is a coincidence)

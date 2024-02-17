@@ -211,8 +211,8 @@ segments:
       - [0x41F70, .rodata, 90264] # func_80130618
       - [0x41FB0, .rodata, 90264] # func_801309B4
       - [0x41FD8, .rodata, 90264] # func_80130E94
-      - [0x42000, rodata] # func_8013136C
-      - [0x4202C, rodata]
+      - [0x42000, .rodata, 90264] # func_8013136C
+      - [0x42024, rodata]
       - [0x42034, .rodata, 92F60] # CdSoundCommand4
       - [0x4205C, .rodata, 93290] # CdSoundCommand6
       - [0x42074, .rodata, 93290] # CdSoundCommand12
