@@ -287,7 +287,6 @@ void func_801309B4(Entity* self) {
         var_s0 = var_a1;
         if (D_800B0914 == 1) {
             var_s0 += 0x100;
-        } else {
         }
         break;
     case 2:
@@ -384,7 +383,152 @@ void func_801309B4(Entity* self) {
 }
 static const u32 rodata_func_801309B4_padding = 0;
 
-INCLUDE_ASM("dra/nonmatchings/90264", func_80130E94);
+s16 D_800B0B0C[] = {87, 88, 89, 89, 90, 90, 89, 88, 87};
+s16 D_800B0B20[] = {0x000, 0x040, 0x080, 0x0C0, 0x100,
+                    0x140, 0x180, 0x1C0, 0x200};
+extern s32 D_8013844C;
+extern s32 D_80138450;
+
+void func_80130E94(Entity* self) {
+    s32 temp_v1;
+    s32 var_s1;
+    s32 var_s2;
+    s32 var_s3;
+    s32 var_s4;
+    u16 params;
+    s32 var_s6;
+    s32 var_s7;
+
+    if (!(g_Player.unk0C & 4)) {
+        DestroyEntity(self);
+        return;
+    }
+    params = self->params;
+    var_s1 = 0;
+    var_s2 = 0;
+    if (self->step == 0) {
+        self->animSet = 15;
+        self->animCurFrame = D_800B0B0C[params];
+        self->unk5A = 0x7E;
+        D_8013844C = 0;
+        self->palette = PLAYER.palette;
+#if defined(VERSION_HD)
+        self->zPriority = PLAYER.zPriority - 3;
+#endif
+        self->flags = FLAG_UNK_04000000 | FLAG_UNK_20000 | FLAG_UNK_40000;
+        self->ext.timer.t = 0x20;
+        self->rotZ = D_80138430;
+        self->step++;
+    }
+    self->facingLeft = PLAYER.facingLeft;
+#if !defined(VERSION_HD)
+    self->zPriority = PLAYER.zPriority - 3;
+#endif
+    var_s6 = 2;
+    if (params == 0) {
+        var_s4 = g_Entities[19].posX.val;
+        var_s4 += PLAYER.facingLeft ? FIX(3) : -FIX(3);
+        var_s7 = g_Entities[19].posY.val + FIX(7);
+    } else {
+        var_s4 = self[-1].posX.val;
+        var_s7 = self[-1].posY.val;
+    }
+    if (PLAYER.animCurFrame == 33) {
+        var_s6 = 1;
+    }
+    if (PLAYER.animCurFrame == 34) {
+        var_s6 = 0;
+    }
+    if (params == 0) {
+        var_s3 = D_8013844C;
+        switch (PLAYER.step_s) {
+        case 1:
+            var_s2 = 0x100;
+            var_s1 = 0x80;
+            D_8013844C += 0x18;
+            if (D_800B0914 == 1) {
+                var_s1 = -0x80;
+            }
+            break;
+        case 2:
+            switch (D_800B0914) {
+            case 0:
+                var_s1 = -0x300;
+                break;
+            case 1:
+            case 3:
+                var_s2 = 0x40;
+                var_s1 = -0x200;
+                D_8013844C += 0x100;
+                break;
+            case 2:
+                var_s2 = 0x40;
+                D_8013844C += 0x100;
+                var_s1 =
+                    MIN((ABS(PLAYER.velocityX) + -FIX(3)) >> 10, 0x100) - 0x100;
+                break;
+            }
+            break;
+        case 3:
+            var_s2 = 0x40;
+            var_s1 = 0x80;
+            D_8013844C += 0x10;
+            break;
+        case 4:
+            if (D_800B0914 == 0) {
+                var_s1 = -0x200;
+                if (PLAYER.velocityY < 0) {
+                    var_s1 = 0x600;
+                }
+            } else {
+                var_s2 = 0x20;
+                var_s1 = -0x100;
+                if (PLAYER.velocityY < 0) {
+                    var_s1 = 0x100;
+                }
+            }
+            break;
+        case 7:
+            var_s1 = -0x80;
+            break;
+        case 5:
+        case 6:
+        case 8:
+            var_s1 = -0x200;
+            break;
+        case 9:
+            var_s2 = 0x100;
+            var_s1 = 0x80;
+            D_8013844C += 0x18;
+            break;
+        }
+        D_80138450 =
+            var_s1 + D_80138430 + (((rsin(var_s3) >> 8) * var_s2) >> 4);
+    }
+    temp_v1 = (D_80138450 - D_80138430) * D_800B0B20[params] / 256 + D_80138430;
+    if (temp_v1 < self->rotZ) {
+        self->rotZ -= self->ext.timer.t;
+    }
+    if (self->rotZ < temp_v1) {
+        self->rotZ += self->ext.timer.t;
+    }
+    if (PLAYER.facingLeft == 0) {
+        var_s3 = self->rotZ;
+    } else {
+        var_s3 = 0x800 - self->rotZ;
+    }
+    self->posX.val = var_s4 + rcos(var_s3) * var_s6 * 0x10;
+    self->posY.val = var_s7 - rsin(var_s3) * var_s6 * 0x10;
+    self->palette = PLAYER.palette;
+    self->drawMode = 0;
+    self->drawFlags &= ~DRAW_HIDE;
+    if (ABS(PLAYER.velocityX) > FIX(3)) {
+        self->drawFlags |= DRAW_HIDE;
+        self->drawMode = FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
+        self->unk6C = ~MIN((ABS(PLAYER.velocityX) - FIX(3)) >> 12, 128);
+    }
+}
+static const u32 rodata_func_80130E94_padding = 0;
 
 // DECOMP_ME_WIP func_8013136C https://decomp.me/scratch/cu30D
 // TODO: branching is wrong jpt_ needs a file split

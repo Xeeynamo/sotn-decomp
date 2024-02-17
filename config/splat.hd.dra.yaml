@@ -97,7 +97,7 @@ segments:
       - [0xD188, .data, 7A4D0] # D_800AD0C4
       - [0xD298, data]
       - [0x10B00, .data, 90264] # D_800B0A3C to D_800B0AEC
-      - [0x10BD0, data]
+      - [0x10BF8, data]
       - [0x1D140, .data, 91EBC] # g_CdVolumeTable
       - [0x1D260, .data, 91EBC] # g_VolumeTable
       - [0x1D284, .data, 91EBC] # g_DebugEnabled
@@ -198,7 +198,7 @@ segments:
       - [0x41E4C, .rodata, 90264] # func_80130264
       - [0x41E8C, .rodata, 90264] # func_80130618
       - [0x41ECC, .rodata, 90264] # func_801309B4
-      - [0x41EF4, rodata] # jtbl_800E1EF4
+      - [0x41EF4, .rodata, 90264] # func_80130E94
       - [0x41F1C, rodata] # jtbl_800E1F1C
       - [0x41F48, rodata]
       - [0x41F50, .rodata, 92F60] # jtbl_800E1F50
