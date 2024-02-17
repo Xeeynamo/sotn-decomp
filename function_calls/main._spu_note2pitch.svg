@@ -12,7 +12,7 @@
 <!-- main._spu_note2pitch -->
 <g id="node1" class="node">
 <title>main._spu_note2pitch</title>
-<ellipse fill="red" stroke="black" cx="111.79" cy="-18" rx="111.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="111.79" cy="-18" rx="111.58" ry="18"/>
 <text text-anchor="middle" x="111.79" y="-14.3" font-family="Times,serif" font-size="14.00">main._spu_note2pitch</text>
 </g>
 </g>
