@@ -103,8 +103,8 @@ segments:
       - [0xD0C4, .data, 7A4D0]
       - [0xD1D4, assets, factory_blueprint, g_FactoryBlueprints]
       - [0xD4B8, data]
-      - [0x10A3C, .data, 90264] # D_800B0A3C to D_800B0AAC
-      - [0x10ABC, data]
+      - [0x10A3C, .data, 90264] # D_800B0A3C to D_800B0AEC
+      - [0x10B0C, data]
       - [0x1107C, raw, vh_0] # aPbav
       - [0x1407C, raw, vh_1] # aPbav_0
       - [0x1607C, raw, vh_2] # aPbav_2
@@ -209,7 +209,7 @@ segments:
       - [0x41EF0, rodata] # func_8012F894
       - [0x41F30, .rodata, 90264] # func_80130264
       - [0x41F70, .rodata, 90264] # func_80130618
-      - [0x41FB0, rodata] # func_801309B4
+      - [0x41FB0, .rodata, 90264] # func_801309B4
       - [0x41FD8, rodata] # func_80130E94
       - [0x42000, rodata] # func_8013136C
       - [0x4202C, rodata]
