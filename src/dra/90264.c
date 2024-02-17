@@ -5,9 +5,9 @@
 s16 D_800B0A3C[] = {1, 2, 1, 0, 1, 2, 1, 0};
 s16 D_800B0A4C[] = {0, 1, 2, 3, 4, 3, 2, 1};
 
-s16 D_800B0A5C[] = {0, 1, 0, -1, 0, 1, 0, -1};
-s16 D_800B0A6C[] = {0, 1, 2, 3, 4, 3, 2, 1};
-s16 D_800B0A7C[] = {0, 0, 1, 1, 2, 2, 3, 3};
+static s16 D_800B0A5C[] = {0, 1, 0, -1, 0, 1, 0, -1};
+static s16 D_800B0A6C[] = {0, 1, 2, 3, 4, 3, 2, 1};
+static s16 D_800B0A7C[] = {0, 0, 1, 1, 2, 2, 3, 3};
 void func_80130264(Entity* self) {
     s32 var_v1;
 
@@ -115,9 +115,9 @@ void func_80130264(Entity* self) {
 }
 static const u32 rodata_func_80130264_padding = 0;
 
-s16 D_800B0A8C[] = {0, 1, 0, -1, 0, 1, 0, -1};
-s16 D_800B0A9C[] = {0, 1, 1, 0, 0, 1, 1, 0};
-s16 D_800B0AAC[] = {0, 0, 0, 1, 1, 1, 2, 2};
+static s16 D_800B0A8C[] = {0, 1, 0, -1, 0, 1, 0, -1};
+static s16 D_800B0A9C[] = {0, 1, 1, 0, 0, 1, 1, 0};
+static s16 D_800B0AAC[] = {0, 0, 0, 1, 1, 1, 2, 2};
 void func_80130618(Entity* self) {
     s32 var_v1;
 
@@ -227,12 +227,12 @@ void func_80130618(Entity* self) {
 }
 static const u32 rodata_func_80130618_padding = 0;
 
-AnimationFrame D_800B0ABC[] = {
+static AnimationFrame D_800B0ABC[] = {
     {0x0002, 0x0048}, {0x0004, 0x004B}, {0x0010, 0x004C},
     {0x0004, 0x004B}, {0x0008, 0x0048}, {0xFFFF, 0x0000},
 };
-s32 D_800B0AD4[] = {0, 1, 2, 1, 0, 0};
-s32 D_800B0AEC[] = {0, 1, 1, 2, 2, 1, 1, 0};
+static s32 D_800B0AD4[] = {0, 1, 2, 1, 0, 0};
+static s32 D_800B0AEC[] = {0, 1, 1, 2, 2, 1, 1, 0};
 extern s32 D_80138448;
 
 void func_801309B4(Entity* self) {
@@ -383,9 +383,9 @@ void func_801309B4(Entity* self) {
 }
 static const u32 rodata_func_801309B4_padding = 0;
 
-s16 D_800B0B0C[] = {87, 88, 89, 89, 90, 90, 89, 88, 87};
-s16 D_800B0B20[] = {0x000, 0x040, 0x080, 0x0C0, 0x100,
-                    0x140, 0x180, 0x1C0, 0x200};
+static s16 D_800B0B0C[] = {87, 88, 89, 89, 90, 90, 89, 88, 87};
+static s16 D_800B0B20[] = {
+    0x000, 0x040, 0x080, 0x0C0, 0x100, 0x140, 0x180, 0x1C0, 0x200};
 extern s32 D_8013844C;
 extern s32 D_80138450;
 
@@ -611,6 +611,8 @@ void func_8013136C(Entity* self) {
 // When Alucard uses the cross subweapon for 100 hearts.
 // Entity ID 7, blueprint #7 (this is a coincidence)
 void EntityGiantSpinningCross(Entity* self) {
+    static const SVECTOR D_800E2024 = {0, 0, 0};
+    static const SVECTOR D_800E202C = {0xFFA0, 0, 0};
     MATRIX m;
     SVECTOR rot;
     VECTOR trans1;

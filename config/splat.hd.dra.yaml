@@ -200,7 +200,7 @@ segments:
       - [0x41ECC, .rodata, 90264] # func_801309B4
       - [0x41EF4, .rodata, 90264] # func_80130E94
       - [0x41F1C, .rodata, 90264] # func_8013136C
-      - [0x41F40, rodata]
+      - [0x41F40, .rodata, 90264] # EntityGiantSpinningCross SVECTOR
       - [0x41F50, .rodata, 92F60] # jtbl_800E1F50
       - [0x41F78, .rodata, 93290] # jtbl_800E1F78
       - [0x41F90, .rodata, 93290] # CdSoundCommand12
