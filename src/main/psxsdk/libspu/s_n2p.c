@@ -17,11 +17,9 @@ s32 _spu_note2pitch(s32 center_note, u16 center_note_frac, s32 offset_note,
     }
     var_a1 = var_v0 >> 3;
     var_v1_2 = 0;
-    if (var_a1 >= 16) {
-        do {
-            var_a1 = var_a1 - 16;
-            var_v1_2 += 1;
-        } while (var_a1 >= 16);
+    while (var_a1 >= 16) {
+        var_a1 = var_a1 - 16;
+        var_v1_2 += 1;
     }
     if (var_a1 < 0) {
         var_a1 = 0;
