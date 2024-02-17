@@ -67,7 +67,20 @@ void SpuVmNoiseOn(s32 arg0, s32 arg1) {
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmPBVoice);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmPitchBend);
+s32 SpuVmPitchBend(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
+    s16 temp_v0;
+    s32 var_a0;
+    s32 var_s1;
+
+    SpuVmVSetUp(arg1, arg2);
+    _svm_cur.field_16_vag_idx = arg0;
+    var_s1 = 0;
+
+    for (temp_v0 = 0; temp_v0 < spuVmMaxVoice; temp_v0++) {
+        var_s1 += SpuVmPBVoice(temp_v0, arg0, arg1, arg2, arg3);
+    }
+    return var_s1;
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmFlush);
 
