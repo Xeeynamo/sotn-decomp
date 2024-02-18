@@ -97,7 +97,9 @@ segments:
       - [0xCFDC, .data, 6D59C]
       - [0xD010, data]
       - [0xD188, .data, 7A4D0] # D_800AD0C4
-      - [0xD298, data]
+      - [0xD298, assets, factory_blueprint, g_FactoryBlueprints]
+      - [0xD57C, .data, 7E4BC]
+      - [0xDC98, data]
       - [0x10B00, .data, 90264] # D_800B0A3C to D_800B0AEC
       - [0x10BF8, data]
       - [0x1D140, .data, 91EBC] # g_CdVolumeTable

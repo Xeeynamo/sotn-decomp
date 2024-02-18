@@ -429,6 +429,7 @@ void EntityEntFactory(Entity* self) {
 }
 
 // Name comes purely from emulator breakpoint experiments, could be wrong
+extern s32 D_800AD53C[]; // TODO wrong type
 void EntityUnarmedAttack(Entity* entity) {
     Equipment equip;
     AnimSoundEvent* temp_s1;
