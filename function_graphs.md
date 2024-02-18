@@ -3316,6 +3316,10 @@
 - [❌ func_ptr_80170024](function_calls/w_025.func_ptr_80170024.svg?raw=1)
 - [✅ func_ptr_80170028](function_calls/w_025.func_ptr_80170028.svg?raw=1)
 # w_026
+- [✅ D_BA000_8017AB7C](function_calls/w_026.D_BA000_8017AB7C.svg?raw=1)
+- [✅ D_BA000_8017AB84](function_calls/w_026.D_BA000_8017AB84.svg?raw=1)
+- [✅ D_BA000_8017AB8C](function_calls/w_026.D_BA000_8017AB8C.svg?raw=1)
+- [✅ D_BA000_8017AB94](function_calls/w_026.D_BA000_8017AB94.svg?raw=1)
 - [✅ DecelerateX](function_calls/w_026.DecelerateX.svg?raw=1)
 - [✅ DecelerateY](function_calls/w_026.DecelerateY.svg?raw=1)
 - [✅ DestroyEntity](function_calls/w_026.DestroyEntity.svg?raw=1)
