@@ -2,7 +2,7 @@
 #include "libspu_internal.h"
 
 void WaitEvent(s32);
-s32 _SpuIsInAllocateArea_(s32);
+s32 _SpuIsInAllocateArea_(u32);
 extern s32 D_800330F8;
 extern s32 _spu_rev_startaddr[];
 extern s32 _spu_EVdma;

@@ -647,6 +647,7 @@ _spu_mem_mode_unitM = 0x80033530;
 _spu_inTransfer = 0x80033534;
 _spu_transferCallback = 0x80033538;
 _spu_IRQCallback = 0x8003353C;
+_spu_memList = 0x80033564;
 _spu_rev_startaddr =  0x80033568;
 text_orgend = 0x800339E8;
 tpage = 0x80037E18;
