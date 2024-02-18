@@ -19,20 +19,11 @@ int rcos(int a) {
     return cos(x) * 4096.f;
 }
 
-long ratan2(long y, long x) {
-    NOT_IMPLEMENTED;
-    return 0;
-}
+long ratan2(long y, long x) { return (long)(atan2(y, x) * 2048.0 / M_PI); }
 
-long SquareRoot0(long a) {
-    NOT_IMPLEMENTED;
-    return 0;
-}
+long SquareRoot0(long a) { return (long)sqrt((double)a); }
 
-long SquareRoot12(long a) {
-    NOT_IMPLEMENTED;
-    return 0;
-}
+long SquareRoot12(long a) { return (long)sqrt((double)a * 4096.0); }
 
 MATRIX* RotMatrix(SVECTOR* r, MATRIX* m) {
     NOT_IMPLEMENTED;
