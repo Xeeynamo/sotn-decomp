@@ -3,14 +3,13 @@
 #include "weapon_private.h"
 #include "shared.h"
 
-extern const char D_4A000_8017AC08[]; // "\no\n"
-extern s32 D_4A000_8017CC1C;          // g_DebugWaitInfoTimer
+extern s32 D_4A000_8017CC1C; // g_DebugWaitInfoTimer
 
 void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint(msg);
     if (D_4A000_8017CC1C++ & 4) {
-        FntPrint(D_4A000_8017AC08); // TODO: inline
+        FntPrint("\no\n");
     }
     DrawSync(0);
     VSync(0);

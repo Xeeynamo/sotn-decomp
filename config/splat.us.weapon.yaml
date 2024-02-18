@@ -17,7 +17,6 @@ options:
   undefined_syms_auto_path:  config/undefined_syms_auto.us.weapon.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
-  migrate_rodata_to_functions: no
   extensions_path: tools/splat_ext
   symbol_name_format: $SEG_$VRAM
   section_order:
@@ -59,6 +58,7 @@ segments:
       - [0x0B040, animset, w_001_1]
       - [0x0BA44, animset, w_001_2]
       - [0x0BA44, data, w_001]
+      - [0x0BFF8, .rodata, w_001]
       - [0x0C014, c, w_001]
       - [0x0D430, sbss, w_001]
   - name: f_002
@@ -144,6 +144,7 @@ segments:
       - [0x2E040, animset, w_006_1]
       - [0x2E884, animset, w_006_2]
       - [0x2E884, data, w_006]
+      - [0x2EC40, .rodata, w_006]
       - [0x2EC54, c, w_006]
       - [0x2F9B8, sbss, w_006]
   - name: f_007
@@ -178,6 +179,7 @@ segments:
       - [0x3C040, animset, w_008_1]
       - [0x3C804, animset, w_008_2]
       - [0x3C804, data, w_008]
+      - [0x3CAC4, .rodata, w_008]
       - [0x3CB4C, c, w_008]
       - [0x3DF78, sbss, w_008]
   - name: f_009
@@ -195,6 +197,7 @@ segments:
       - [0x43040, animset, w_009_1]
       - [0x43804, animset, w_009_2]
       - [0x43804, data, w_009]
+      - [0x43AC4, .rodata, w_009]
       - [0x43B4C, c, w_009]
       - [0x450F0, sbss, w_009]
   - name: f_010
@@ -212,6 +215,7 @@ segments:
       - [0x4A040, animset, w_010_1]
       - [0x4A8EC, animset, w_010_2]
       - [0x4A8EC, data, w_010]
+      - [0x4AC08, .rodata, w_010]
       - [0x4ACC0, c, w_010]
       - [0x4CC1C, sbss, w_010]
   - name: f_011
@@ -229,6 +233,7 @@ segments:
       - [0x51040, animset, w_011_1]
       - [0x51958, animset, w_011_2]
       - [0x51958, data, w_011]
+      - [0x51C40, .rodata, w_011]
       - [0x51CDC, c, w_011]
       - [0x53810, sbss, w_011]
   - name: f_012
@@ -263,6 +268,7 @@ segments:
       - [0x5F040, animset, w_013_1]
       - [0x5F2B0, animset, w_013_2]
       - [0x5F2B0, data, w_013]
+      - [0x5F608, .rodata, w_013]
       - [0x5F62C, c, w_013]
       - [0x60C10, sbss, w_013]
   - name: f_014
@@ -314,6 +320,7 @@ segments:
       - [0x74040, animset, w_016_1]
       - [0x742B0, animset, w_016_2]
       - [0x742B0, data, w_016]
+      - [0x745F8, .rodata, w_016]
       - [0x7460C, c, w_016]
       - [0x75D74, sbss, w_016]
   - name: f_017
@@ -382,6 +389,7 @@ segments:
       - [0x90040, animset, w_020_1]
       - [0x90630, animset, w_020_2]
       - [0x90630, data, w_020]
+      - [0x90BA0, .rodata, w_020]
       - [0x90BC8, c, w_020]
       - [0x92238, sbss, w_020]
   - name: f_021
@@ -399,6 +407,7 @@ segments:
       - [0x97040, animset, w_021_1]
       - [0x97564, animset, w_021_2]
       - [0x97564, data, w_021]
+      - [0x97798, .rodata, w_021]
       - [0x977B4, c, w_021]
       - [0x98B78, sbss, w_021]
   - name: f_022
@@ -433,6 +442,7 @@ segments:
       - [0xA5040, animset, w_023_1]
       - [0xA58A4, animset, w_023_2]
       - [0xA58A4, data, w_023]
+      - [0xA5CF4, .rodata, w_023]
       - [0xA5D80, c, w_023]
       - [0xA797C, sbss, w_023]
   - name: f_024
@@ -450,6 +460,7 @@ segments:
       - [0xAC040, animset, w_024_1]
       - [0xAC804, animset, w_024_2]
       - [0xAC804, data, w_024]
+      - [0xACD54, .rodata, w_024]
       - [0xACDE0, c, w_024]
       - [0xAEBF4, sbss, w_024]
   - name: f_025
@@ -467,6 +478,7 @@ segments:
       - [0xB3040, animset, w_025_1]
       - [0xB3804, animset, w_025_2]
       - [0xB3804, data, w_025]
+      - [0xB3AE4, .rodata, w_025]
       - [0xB3B74, c, w_025]
       - [0xB5918, sbss, w_025]
   - name: f_026
@@ -484,6 +496,7 @@ segments:
       - [0xBA040, animset, w_026_1]
       - [0xBA804, animset, w_026_2]
       - [0xBA804, data, w_026]
+      - [0xBAAF0, .rodata, w_026]
       - [0xBAB9C, c, w_026]
       - [0xBCC3C, sbss, w_026]
   - name: f_027
@@ -501,6 +514,7 @@ segments:
       - [0xC1040, animset, w_027_1]
       - [0xC1A18, animset, w_027_2]
       - [0xC1A18, data, w_027]
+      - [0xC1CCC, .rodata, w_027]
       - [0xC1D54, c, w_027]
       - [0xC36EC, sbss, w_027]
   - name: f_028
@@ -518,6 +532,7 @@ segments:
       - [0xC8040, animset, w_028_1]
       - [0xC8804, animset, w_028_2]
       - [0xC8804, data, w_028]
+      - [0xC8B68, .rodata, w_028]
       - [0xC8BF4, c, w_028]
       - [0xCA954, sbss, w_028]
   - name: f_029
@@ -553,6 +568,7 @@ segments:
       - [0xD6040, animset, w_030_1]
       - [0xD6040, animset, w_030_2]
       - [0xD6040, data, w_030]
+      - [0xD6680, .rodata, w_030]
       - [0xD66DC, c, w_030]
       - [0xD8C44, sbss, w_030]
   - name: f_031
@@ -740,6 +756,7 @@ segments:
       - [0x123040, animset, w_041_1]
       - [0x123284, animset, w_041_2]
       - [0x123284, data, w_041]
+      - [0x123560, .rodata, w_041]
       - [0x123574, c, w_041]
       - [0x124200, sbss, w_041]
   - name: f_042
@@ -791,6 +808,7 @@ segments:
       - [0x138040, animset, w_044_1]
       - [0x138040, animset, w_044_2]
       - [0x138040, data, w_044]
+      - [0x1382A8, .rodata, w_044]
       - [0x1382C0, c, w_044]
       - [0x138F24, sbss, w_044]
   - name: f_045
@@ -842,6 +860,7 @@ segments:
       - [0x14D040, animset, w_047_1]
       - [0x14D0D4, animset, w_047_2]
       - [0x14D228, data, w_047]
+      - [0x14D554, .rodata, w_047]
       - [0x14D568, c, w_047]
       - [0x14E6A4, sbss, w_047]
   - name: f_048
@@ -927,6 +946,7 @@ segments:
       - [0x170040, animset, w_052_1]
       - [0x170808, animset, w_052_2]
       - [0x170808, data, w_052]
+      - [0x170C24, .rodata, w_052]
       - [0x170CB0, c, w_052]
       - [0x172B84, sbss, w_052]
   - name: f_053
@@ -944,6 +964,7 @@ segments:
       - [0x177040, animset, w_053_1]
       - [0x177A44, animset, w_053_2]
       - [0x177A44, data, w_053]
+      - [0x17826C, .rodata, w_053]
       - [0x178280, c, w_053]
       - [0x179894, sbss, w_053]
   - name: f_054
@@ -1029,6 +1050,7 @@ segments:
       - [0x19A040, animset, w_058_1]
       - [0x19A808, animset, w_058_2]
       - [0x19A808, data, w_058]
+      - [0x19ABCC, .rodata, w_058]
       - [0x19AC50, c, w_058]
       - [0x19BB40, sbss, w_058]
   - [0x19D000]

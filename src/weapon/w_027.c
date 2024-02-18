@@ -3,14 +3,13 @@
 #include "weapon_private.h"
 #include "shared.h"
 
-extern const char D_C1000_8017ACCC[]; // "\no\n"
-extern s32 D_C1000_8017C6EC;          // g_DebugWaitInfoTimer
+extern s32 D_C1000_8017C6EC; // g_DebugWaitInfoTimer
 
 void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint(msg);
     if (D_C1000_8017C6EC++ & 4) {
-        FntPrint(D_C1000_8017ACCC); // TODO: inline
+        FntPrint("\no\n\0"); // TODO: remove extra NUL byte padding
     }
     DrawSync(0);
     VSync(0);
@@ -25,6 +24,8 @@ void DebugInputWait(const char* msg) {
     while (!PadRead(0))
         DebugShowWaitInfo(msg);
 }
+
+// jumptable alignment suggests file split here
 
 INCLUDE_ASM("weapon/nonmatchings/w_027", EntityWeaponAttack);
 
