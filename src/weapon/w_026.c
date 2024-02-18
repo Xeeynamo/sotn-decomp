@@ -21,6 +21,23 @@ INCLUDE_ASM("weapon/nonmatchings/w_026", func_BA000_8017B37C);
 
 INCLUDE_ASM("weapon/nonmatchings/w_026", EntityWeaponShieldSpell);
 
+const s32 D_BA000_8017AB7C[] = {
+    0xFFE40008,
+    0x00000000,
+};
+const s32 D_BA000_8017AB84[] = {
+    0xFFE40038,
+    0x00000000,
+};
+const s32 D_BA000_8017AB8C[] = {
+    0x001C0008,
+    0x00000000,
+};
+const s32 D_BA000_8017AB94[] = {
+    0x001C0038,
+    0x00000000,
+};
+
 INCLUDE_ASM("weapon/nonmatchings/w_026", func_ptr_80170024);
 
 void func_ptr_80170028(Entity* self) {}
