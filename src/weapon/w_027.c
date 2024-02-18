@@ -3,7 +3,7 @@
 #include "weapon_private.h"
 #include "shared.h"
 
-extern s32 D_C1000_8017C6EC;          // g_DebugWaitInfoTimer
+extern s32 D_C1000_8017C6EC; // g_DebugWaitInfoTimer
 
 void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
