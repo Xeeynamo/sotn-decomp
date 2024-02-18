@@ -201,13 +201,6 @@ typedef struct {
     u16 drawMode;
     s16 unkA;
     u32 flags;
-    s16 unk10;
-    s16 unk12;
-    s16 unk14;
-    s16 unk16;
-    s16 unk18;
-    s16 unk1A;
-    s16 unk1C;
 } unkStr_8011E4BC;
 
 typedef struct {
