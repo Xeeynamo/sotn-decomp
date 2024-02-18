@@ -9,7 +9,10 @@ options:
   src_path:     src/st/mad
   ld_script_path: build/us/stmad.ld
   compiler:     GCC
-  symbol_addrs_path:    config/generated.symbols.stmad.txt
+  symbol_addrs_path:
+    # NOTE: shifted overlay!
+    - config/symbols.beta.txt
+    - config/symbols.stmad.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.stmad.txt
   undefined_syms_auto_path:  config/undefined_syms_auto.stmad.txt
   find_file_boundaries: yes

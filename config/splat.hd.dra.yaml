@@ -9,7 +9,9 @@ options:
   src_path:     src/dra
   ld_script_path: build/hd/dra.ld
   compiler:     GCC
-  symbol_addrs_path:    config/generated.symbols.hd.dra.txt
+  symbol_addrs_path:
+    - config/symbols.hd.txt
+    - config/symbols.hd.dra.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.hd.dra.txt
   undefined_syms_auto_path:  config/undefined_syms_auto.hd.dra.txt
   find_file_boundaries: yes

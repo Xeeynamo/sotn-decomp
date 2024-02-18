@@ -9,7 +9,9 @@ options:
   src_path:     src/st/wrp
   ld_script_path: build/us/stwrp.ld
   compiler:     GCC
-  symbol_addrs_path:    config/generated.symbols.us.stwrp.txt
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.stwrp.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.us.stwrp.txt
   undefined_syms_auto_path:  config/undefined_syms_auto.us.stwrp.txt
   find_file_boundaries: yes

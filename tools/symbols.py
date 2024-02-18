@@ -80,6 +80,10 @@ def add_newline_if_missing(list):
 def sort_symbols(syms):
     offsets = []
     for line in syms:
+        if line.startswith("//"):
+            # ignore comments
+            continue
+
         parts = line.strip().split()
         if len(parts) >= 3:
             offset = int(parts[2].rstrip(";"), 16)
@@ -306,6 +310,10 @@ def remove_orphans(symbol_file_name, symbols_set):
 
     symbols_unorphaned = []
     for sym_def in symbols_defined:
+        if sym_def.startswith("//"):
+            # ignore comments
+            continue
+
         if len(sym_def) > 4 and sym_def.find("ignore:true") == -1:
             sym_tokenized = sym_def.split("=")
             if len(sym_tokenized) >= 2:
@@ -322,7 +330,12 @@ def remove_orphans(symbol_file_name, symbols_set):
 def remove_orphans_from_config(config_yaml):
     with open(config_yaml, "r") as config_yaml_ref:
         config = yaml.safe_load(config_yaml_ref)
-    symbol_file_name = config["options"]["symbol_addrs_path"].replace("generated.", "")
+    symbol_addrs_path = config["options"]["symbol_addrs_path"]
+    if isinstance(symbol_addrs_path, str):
+        symbol_file_name = symbol_addrs_path
+    else:
+        symbol_file_name = symbol_addrs_path[-1]  # take last
+
     asm_path = config["options"]["asm_path"]
 
     file_list = get_all_file_paths_recursively(asm_path)
