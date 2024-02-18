@@ -9,7 +9,9 @@ options:
   src_path:     src/st/st0
   ld_script_path: build/us/stst0.ld
   compiler:     GCC
-  symbol_addrs_path:    config/generated.symbols.us.stst0.txt
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.stst0.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.us.stst0.txt
   undefined_syms_auto_path:  config/undefined_syms_auto.us.stst0.txt
   find_file_boundaries: yes

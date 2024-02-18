@@ -9,7 +9,9 @@ options:
   src_path:     src/st/dre
   ld_script_path: build/us/stdre.ld
   compiler:     GCC
-  symbol_addrs_path:    config/generated.symbols.us.stdre.txt
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.stdre.txt
   undefined_funcs_auto_path: config/undefined_funcs_auto.us.stdre.txt
   undefined_syms_auto_path:  config/undefined_syms_auto.us.stdre.txt
   find_file_boundaries: yes

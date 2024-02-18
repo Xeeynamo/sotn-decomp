@@ -9,7 +9,10 @@ options:
   src_path:     src/weapon
   ld_script_path: build/us/weapon.ld
   compiler:     GCC
-  symbol_addrs_path:    config/generated.symbols.us.weapon.txt
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.weapon.txt
+    - config/symbols.us.weapon.txt.in
   undefined_funcs_auto_path: config/undefined_funcs_auto.us.weapon.txt
   undefined_syms_auto_path:  config/undefined_syms_auto.us.weapon.txt
   find_file_boundaries: yes

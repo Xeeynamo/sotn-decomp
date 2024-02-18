@@ -98,7 +98,7 @@ define link
 	$(LD) $(LD_FLAGS) -o $(2) \
 		-Map $(BUILD_DIR)/$(1).map \
 		-T $(BUILD_DIR)/$(1).ld \
-		-T $(CONFIG_DIR)/symbols.$(VERSION).txt \
+		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
 		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(1).txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt
 endef
