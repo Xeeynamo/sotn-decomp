@@ -1146,7 +1146,7 @@
 - [✅ SpuVmGetSeqLVol](function_calls/main.SpuVmGetSeqLVol.svg?raw=1)
 - [✅ SpuVmGetSeqRVol](function_calls/main.SpuVmGetSeqRVol.svg?raw=1)
 - [✅ SpuVmGetSeqVol](function_calls/main.SpuVmGetSeqVol.svg?raw=1)
-- [❌ SpuVmInit](function_calls/main.SpuVmInit.svg?raw=1)
+- [✅ SpuVmInit](function_calls/main.SpuVmInit.svg?raw=1)
 - [✅ SpuVmKeyOff](function_calls/main.SpuVmKeyOff.svg?raw=1)
 - [❌ SpuVmKeyOn](function_calls/main.SpuVmKeyOn.svg?raw=1)
 - [❌ SpuVmKeyOnNow](function_calls/main.SpuVmKeyOnNow.svg?raw=1)
