@@ -21,7 +21,95 @@ s32 _spu_reset(void) {
     return 0;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libspu/spu", _spu_init);
+extern s32 D_80010CEC;
+extern s32 D_800334FC;
+extern s32* D_80033514;
+extern s32 D_80033540;
+extern s32 _spu_addrMode;
+extern s32 _spu_mem_mode;
+extern s32 _spu_mem_mode_unit;
+extern s32 _spu_mem_mode_unitM;
+extern s32 aWaitReset;
+
+s32 _spu_init(s32 arg0) {
+    volatile s32 sp0;
+    volatile s32 sp4;
+    s32 wait_count;
+    s32 channel;
+    s16 temp;
+
+    *D_80033514 |= 0xB0000;
+    _spu_RXX->rxx.main_vol.left = 0;
+    _spu_RXX->rxx.main_vol.right = 0;
+    _spu_RXX->rxx.spucnt = 0;
+    _spu_transMode = 0;
+    _spu_addrMode = 0;
+    _spu_tsa = 0;
+    WASTE_TIME();
+    _spu_RXX->rxx.main_vol.left = 0;
+    _spu_RXX->rxx.main_vol.right = 0;
+    D_800334FC = 0;
+    if (_spu_RXX->rxx.spustat & 0x7FF) {
+        do {
+            wait_count = D_800334FC + 1;
+            D_800334FC = wait_count;
+            if (wait_count > 5000) {
+                printf(&D_80010CEC, &aWaitReset);
+                break;
+            }
+        } while (_spu_RXX->rxx.spustat & 0x7FF);
+    }
+    _spu_mem_mode = 2;
+    _spu_mem_mode_plus = 3;
+    _spu_mem_mode_unit = 8;
+    _spu_mem_mode_unitM = 7;
+    _spu_RXX->rxx.data_trans = 4;
+    _spu_RXX->rxx.rev_vol.left = 0;
+    _spu_RXX->rxx.rev_vol.right = 0;
+    _spu_RXX->rxx.key_off[0] = 0xFFFF;
+    _spu_RXX->rxx.key_off[1] = 0xFFFF;
+    _spu_RXX->rxx.rev_mode[0] = 0;
+    _spu_RXX->rxx.rev_mode[1] = 0;
+    if (arg0 == 0) {
+        _spu_RXX->rxx.chan_fm[0] = 0;
+        _spu_RXX->rxx.chan_fm[1] = 0;
+        _spu_RXX->rxx.noise_mode[0] = 0;
+        _spu_RXX->rxx.noise_mode[1] = 0;
+        _spu_RXX->rxx.cd_vol.left = 0;
+        _spu_RXX->rxx.cd_vol.right = 0;
+        _spu_RXX->rxx.ex_vol.left = 0;
+        _spu_RXX->rxx.ex_vol.right = 0;
+        _spu_tsa = 0x200;
+        _spu_writeByIO((s32)&D_80033540, 0x10);
+        for (channel = 0; channel < 24; channel++) {
+            _spu_RXX->raw[channel * 8 + 0] = 0;      /* left volume */
+            _spu_RXX->raw[channel * 8 + 1] = 0;      /* right volume */
+            _spu_RXX->raw[channel * 8 + 2] = 0x3fff; /* pitch */
+            _spu_RXX->raw[channel * 8 + 3] = 0x200;  /* addr */
+            _spu_RXX->raw[channel * 8 + 4] = 0;      /* adsr1 */
+            _spu_RXX->raw[channel * 8 + 5] = 0;      /* adsr2 */
+        }
+        temp = _spu_RXX->rxx.key_on[0];
+        _spu_RXX->rxx.key_on[0] = 0xFFFF;
+        _spu_RXX->rxx.key_on[1] |= 0xFF;
+        WASTE_TIME();
+        WASTE_TIME();
+        WASTE_TIME();
+        WASTE_TIME();
+        temp = _spu_RXX->rxx.key_off[0];
+        _spu_RXX->rxx.key_off[0] = 0xFFFF;
+        _spu_RXX->rxx.key_off[1] |= 0xFF;
+        WASTE_TIME();
+        WASTE_TIME();
+        WASTE_TIME();
+        WASTE_TIME();
+    }
+    _spu_inTransfer = 1;
+    _spu_RXX->rxx.spucnt = 0xC000;
+    _spu_transferCallback = NULL;
+    _spu_IRQCallback = NULL;
+    return 0;
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libspu/spu", _spu_writeByIO);
 
