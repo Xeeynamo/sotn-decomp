@@ -81,7 +81,7 @@ s32 _spu_init(s32 arg0) {
         _spu_RXX->rxx.ex_vol.right = 0;
         _spu_tsa = 0x200;
         _spu_writeByIO((s32)&D_80033540, 0x10);
-        for (channel = 0; channel < 24; channel++) {
+        for (channel = 0; channel < NUM_SPU_CHANNELS; channel++) {
             _spu_RXX->raw[channel * 8 + 0] = 0;      /* left volume */
             _spu_RXX->raw[channel * 8 + 1] = 0;      /* right volume */
             _spu_RXX->raw[channel * 8 + 2] = 0x3fff; /* pitch */
@@ -217,9 +217,7 @@ u32 _spu_FsetRXXa(s32 arg0, u32 arg1) {
     default:
         _spu_RXX->raw[arg0] = temp_a3;
         return var_a1;
-        break;
     }
-    return var_a1;
 }
 
 u32 _spu_FgetRXXa(s32 arg0, s32 arg1) {
