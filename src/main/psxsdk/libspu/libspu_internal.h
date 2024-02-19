@@ -30,7 +30,7 @@ extern s32 _spu_inTransfer;
 void _SpuCallback(s32 arg0);
 extern void (* volatile _spu_IRQCallback)();
 
-void SpuSetAnyVoice(s32, s32, u16, u16);
+s32 SpuSetAnyVoice(s32 on_off, u32 bits, s32 addr1, s32 addr2);
 
 s32 _spu_t(s32, ...);
 s32 _spu_writeByIO(s32, s32);
