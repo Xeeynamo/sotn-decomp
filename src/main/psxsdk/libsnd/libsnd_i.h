@@ -148,10 +148,10 @@ struct SeqStruct {
     s16 unk44;
     s16 unk46;
     s16 unk48;
-    u8 pad8[2];
+    s16 unk4a;
     s16 unk4c;
     s16 vol[16];
-    u8 pad10[1];
+    s16 unk6E;
     s16 unk70;
     s16 unk72;
     u16 unk74;
