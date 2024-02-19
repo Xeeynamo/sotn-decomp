@@ -56,10 +56,10 @@ void SpuVmInit(u8 arg0) {
     _svm_vcf = 0;
     _svm_damper = 0;
     SpuInitMalloc(0x20, &_ss_spu_vm_rec.D_8003BD50);
-    for (var_a1 = 0; var_a1 < 8 * 24; var_a1++) {
+    for (var_a1 = 0; var_a1 < 8 * NUM_SPU_CHANNELS; var_a1++) {
         _svm_sreg_buf.raw[var_a1] = 0;
     }
-    for (var_a1 = 0; var_a1 < 24; var_a1++) {
+    for (var_a1 = 0; var_a1 < NUM_SPU_CHANNELS; var_a1++) {
         _svm_sreg_dirty[var_a1] = 0;
     }
 
@@ -70,8 +70,8 @@ void SpuVmInit(u8 arg0) {
     }
 
     var_a0 = arg0;
-    if (arg0 >= 24) {
-        spuVmMaxVoice = 24;
+    if (arg0 >= NUM_SPU_CHANNELS) {
+        spuVmMaxVoice = NUM_SPU_CHANNELS;
     } else {
         spuVmMaxVoice = var_a0;
     }
