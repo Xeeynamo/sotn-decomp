@@ -3,6 +3,8 @@
 
 #include "psxsdk/libspu.h"
 
+#define NUM_SPU_CHANNELS 24
+
 void InterruptCallback(s32, s32);
 void _SpuInit(s32);
 s32 _spu_read(s32 arg0, s32 arg1);
@@ -28,16 +30,16 @@ extern void (* volatile _spu_transferCallback)();
 extern s32 _spu_inTransfer;
 
 void _SpuCallback(s32 arg0);
-extern void (*_spu_IRQCallback)();
+extern void (* volatile _spu_IRQCallback)();
 
-void SpuSetAnyVoice(s32, s32, u16, u16);
+s32 SpuSetAnyVoice(s32 on_off, u32 bits, s32 addr1, s32 addr2);
 
 s32 _spu_t(s32, ...);
 s32 _spu_writeByIO(s32, s32);
 extern s32 _spu_transMode;
 extern u16 _spu_tsa;
 
-u16 _spu_FsetRXXa(s32, s32);
+u32 _spu_FsetRXXa(s32 arg0, u32 arg1);
 s32 _spu_write(u32, u32);
 extern s32 _spu_inTransfer;
 
@@ -93,24 +95,24 @@ typedef struct tagSpuControl {
     SpuVolume main_vol; // 180
     SpuVolume rev_vol;  // 184
     // bit flags
-    volatile u16 key_on[2];  // 188
-    u16 key_off[2];          // 18C
-    u16 chan_fm[2];          // 190
-    u16 noise_mode[2];       // 194
-    u16 rev_mode[2];         // 198
-    u32 chan_on;             // 19C
-    u16 unk;                 // 1A0
-    u16 rev_work_addr;       // 1A2
-    u16 irq_addr;            // 1A4
-    volatile u16 trans_addr; // 1A6
-    u16 trans_fifo;          // 1A8
-    u16 spucnt;              // 1AA SPUCNT
-    u16 data_trans;          // 1AC
-    u16 spustat;             // 1AE SPUSTAT
-    SpuVolume cd_vol;        // 1B0
-    SpuVolume ex_vol;        // 1B4
-    SpuVolume main_volx;     // 1B8
-    SpuVolume unk_vol;       // 1BC
+    u16 key_on[2];       // 188
+    u16 key_off[2];      // 18C
+    u16 chan_fm[2];      // 190
+    u16 noise_mode[2];   // 194
+    u16 rev_mode[2];     // 198
+    u32 chan_on;         // 19C
+    u16 unk;             // 1A0
+    u16 rev_work_addr;   // 1A2
+    u16 irq_addr;        // 1A4
+    u16 trans_addr;      // 1A6
+    u16 trans_fifo;      // 1A8
+    u16 spucnt;          // 1AA SPUCNT
+    u16 data_trans;      // 1AC
+    u16 spustat;         // 1AE SPUSTAT
+    SpuVolume cd_vol;    // 1B0
+    SpuVolume ex_vol;    // 1B4
+    SpuVolume main_volx; // 1B8
+    SpuVolume unk_vol;   // 1BC
 
     u16 dAPF1; // Starting at 0x1F801DC0
     u16 dAPF2;
@@ -147,7 +149,8 @@ typedef struct tagSpuControl {
 } SPU_RXX;
 
 union SpuUnion {
-    SPU_RXX rxx;
+    SPU_RXX rxxnv;
+    volatile SPU_RXX rxx;
     volatile u16 raw[0x100];
 };
 
