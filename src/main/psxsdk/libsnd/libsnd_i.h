@@ -227,7 +227,13 @@ struct RegBufStruct {
 
 #define NUM_SPU_CHANNELS 24
 
-extern struct RegBufStruct _svm_sreg_buf[NUM_SPU_CHANNELS];
+union RegBuf {
+    struct RegBufStruct buf[NUM_SPU_CHANNELS];
+    s16 raw[192];
+};
+
+extern union RegBuf _svm_sreg_buf;
+
 extern unsigned char _svm_sreg_dirty[NUM_SPU_CHANNELS];
 
 extern u16* D_80032F10;
@@ -235,9 +241,12 @@ extern u8 spuVmMaxVoice;
 
 struct SpuVoice {
     s16 unk0;
-    u8 pad[2];
+    s16 unk2;
     s16 unk04;
-    u8 pad2[6];
+    s16 unk6;
+    s16 unk8;
+    char unka;
+    char unkb;
     s16 note;
     s16 unke;
     s16 unk10;
@@ -246,7 +255,18 @@ struct SpuVoice {
     s16 vabId;
     u8 pad4[3];
     u8 unk1b;
-    u8 pad3[23];
+    s16 unk1c;
+    s16 unk1e;
+    s16 unk20;
+    s16 unk22;
+    s16 unk24;
+    s16 unk26;
+    s16 unk28;
+    s16 unk2a;
+    s16 unk2c;
+    s16 unk2e;
+    s16 unk30;
+    s16 unk32;
 };
 
 extern struct SpuVoice _svm_voice[NUM_SPU_CHANNELS];
