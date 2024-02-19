@@ -237,6 +237,9 @@ void _SsContNrpn1(s16 arg0, s16 arg1, s8 arg2) {
     temp_s0->delta_value = _SsReadDeltaValue(arg0, arg1);
 }
 
+#define NRPN_LOOP_START 20
+#define NRPN_LOOP_END 30
+
 void _SsContNrpn2(s16 arg0, s16 arg1, u8 arg2) {
     s16 var_a0;
     s16 var_a1;
@@ -246,13 +249,13 @@ void _SsContNrpn2(s16 arg0, s16 arg1, u8 arg2) {
     var_a1 = arg1;
     temp_s0 = &_ss_score[var_a0][var_a1];
     switch (arg2 & 0xFF) {
-    case 20:
+    case NRPN_LOOP_START:
         temp_s0->unk16 = arg2;
         temp_s0->unk27 = 1;
         temp_s0->delta_value = _SsReadDeltaValue(var_a0, var_a1);
-        temp_s0->unkc = (s32)temp_s0->read_pos;
+        temp_s0->loop_pos = temp_s0->read_pos;
         return;
-    case 30:
+    case NRPN_LOOP_END:
         temp_s0->unk16 = arg2;
         if (temp_s0->unk28 == 0) {
             temp_s0->unk10 = 0;
@@ -263,7 +266,7 @@ void _SsContNrpn2(s16 arg0, s16 arg1, u8 arg2) {
             temp_s0->unk28--;
             temp_s0->delta_value = _SsReadDeltaValue(var_a0, var_a1);
             if (temp_s0->unk28 != 0) {
-                temp_s0->read_pos = (u8*)temp_s0->unkc;
+                temp_s0->read_pos = temp_s0->loop_pos;
                 return;
             }
             temp_s0->unk10 = 0;
@@ -271,7 +274,7 @@ void _SsContNrpn2(s16 arg0, s16 arg1, u8 arg2) {
         }
         _SsReadDeltaValue(var_a0, var_a1);
         temp_s0->delta_value = 0;
-        temp_s0->read_pos = (u8*)temp_s0->unkc;
+        temp_s0->read_pos = temp_s0->loop_pos;
         return;
     default:
         var_a0 = arg0;
@@ -340,17 +343,17 @@ void _SsGetMetaEvent(s16 arg0, s16 arg1, u8 arg2) {
         tempo = 60000000 / ((a << 0x10) | (b << 8) | c);
         temp_lo_2 = score->unk4a * tempo;
         score->unk8c = tempo;
-        if ((temp_lo_2 * 0xA) < VBLANK_MINUS * 0x3C) {
+        if ((temp_lo_2 * 10) < VBLANK_MINUS * 60) {
             temp_lo_3 = (VBLANK_MINUS * 600) / temp_lo_2;
-            score->unk6E = (s16)temp_lo_3;
-            score->unk70 = (s16)temp_lo_3;
+            score->unk6E = temp_lo_3;
+            score->unk70 = temp_lo_3;
         } else {
             score->unk6E = -1;
-            score->unk70 = (u32)(score->unk4a * score->unk8c * 0xA) /
-                           (VBLANK_MINUS * 0x3C);
-            if ((u32)(VBLANK_MINUS * 0x1E) <
-                (u32)((u32)(score->unk4a * score->unk8c * 0xA) %
-                      (VBLANK_MINUS * 0x3C))) {
+            score->unk70 = (u32)(score->unk4a * score->unk8c * 10) /
+                           (VBLANK_MINUS * 60);
+            if ((VBLANK_MINUS * 30) <
+                ((u32)(score->unk4a * score->unk8c * 10) %
+                      (VBLANK_MINUS * 60))) {
                 score->unk70++;
             }
         }
@@ -362,15 +365,15 @@ void _SsGetMetaEvent(s16 arg0, s16 arg1, u8 arg2) {
             score->unk80 = 0;
             score->unk27 = 0;
             score->delta_value = 0;
-            score->read_pos = score->unk8;
+            score->read_pos = score->next_sep_pos;
             return;
         }
         if (score->unk48 < score->unk46) {
             score->unk80 = 0;
             score->unk27 = 0;
             score->delta_value = 0;
-            score->read_pos = score->unk8;
-            score->unkc = score->unk8;
+            score->read_pos = score->next_sep_pos;
+            score->loop_pos = score->next_sep_pos;
             return;
         }
         _ss_score[arg0][arg1].unk90 &= ~1;
@@ -379,7 +382,7 @@ void _SsGetMetaEvent(s16 arg0, s16 arg1, u8 arg2) {
         _ss_score[arg0][arg1].unk90 |= 0x200;
         _ss_score[arg0][arg1].unk90 |= 4;
         score->unk2b = 0;
-        score->unkc = score->unk8;
+        score->loop_pos = score->next_sep_pos;
         if (score->unk3C != 0xFF) {
             score->unk2b = 0;
             _SsSndNextSep(score->unk3C, score->unk0);

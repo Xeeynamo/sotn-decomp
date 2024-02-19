@@ -124,8 +124,8 @@ struct SeqStruct {
     u8 unk0;
     u8 pad1[3];
     u8* read_pos;
-    s32 unk8;
-    s32 unkc;
+    u8* next_sep_pos; /* 0x8 */
+    u8* loop_pos; /* 0xC */
     u8 unk10;
     u8 unk11;
     u8 channel;
