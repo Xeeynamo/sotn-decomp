@@ -37,7 +37,7 @@ s32 _spu_writeByIO(s32, s32);
 extern s32 _spu_transMode;
 extern u16 _spu_tsa;
 
-u16 _spu_FsetRXXa(s32, s32);
+u32 _spu_FsetRXXa(s32 arg0, u32 arg1);
 s32 _spu_write(u32, u32);
 extern s32 _spu_inTransfer;
 
