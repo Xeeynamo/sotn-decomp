@@ -349,11 +349,10 @@ void _SsGetMetaEvent(s16 arg0, s16 arg1, u8 arg2) {
             score->unk70 = temp_lo_3;
         } else {
             score->unk6E = -1;
-            score->unk70 = (u32)(score->unk4a * score->unk8c * 10) /
-                           (VBLANK_MINUS * 60);
-            if ((VBLANK_MINUS * 30) <
-                ((u32)(score->unk4a * score->unk8c * 10) %
-                      (VBLANK_MINUS * 60))) {
+            score->unk70 =
+                (u32)(score->unk4a * score->unk8c * 10) / (VBLANK_MINUS * 60);
+            if ((VBLANK_MINUS * 30) < ((u32)(score->unk4a * score->unk8c * 10) %
+                                       (VBLANK_MINUS * 60))) {
                 score->unk70++;
             }
         }
