@@ -81,8 +81,10 @@ extern u8 spuVmMaxVoice;
 
 extern s16 _svm_stereo_mono;
 
-u8 SpuVmAlloc(u8);
+u8 SpuVmAlloc(s32);
 s32 vmNoiseOn2(u8, u16, u16, u16, u16);
+
+s32 note2pitch2(u16, u16);
 
 struct struct_svm {
     char field_0_sep_sep_no_tonecount;
@@ -105,7 +107,8 @@ struct struct_svm {
     unsigned char field_11_shift;
     char field_12_mode;
     char field_0x13;
-    short field_14_seq_sep_no;
+    u8 field_14_seq_sep_no;
+    u8 pad;
     short field_16_vag_idx;
     short field_18_voice_idx;
     short field_0x1a;
@@ -247,12 +250,12 @@ struct SpuVoice {
     s16 unk8;
     char unka;
     char unkb;
-    s16 note;
+    s16 note; /* 0xC */
     s16 unke;
     s16 unk10;
-    s16 prog;
-    s16 tone;
-    s16 vabId;
+    s16 prog;  /* 0x12 */
+    s16 tone;  /* 0x14*/
+    s16 vabId; /* 0x16 */
     u8 pad4[3];
     u8 unk1b;
     s16 unk1c;
