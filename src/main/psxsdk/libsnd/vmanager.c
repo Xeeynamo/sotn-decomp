@@ -327,7 +327,87 @@ s32 SpuVmGetProgPan(s16 arg0, s16 arg1) {
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmSetVol);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtKeyOn);
+s16 SsUtKeyOn(
+    s16 vabId, s16 prog, s16 tone, s16 note, s16 fine, s16 voll, s16 volr) {
+    VagAtr* vagAtr;
+    s16 vag;
+    char vag_idx;
+    ProgAtr* progAtr;
+    s32 program;
+    s16 voice;
+    if (_snd_ev_flag == 1) {
+        return -1;
+    }
+    _snd_ev_flag = 1;
+
+    if ((SpuVmVSetUp(vabId, prog) == 0)) {
+        _svm_cur.field_16_vag_idx = 0x21;
+        _svm_cur.field_2_note = note;
+        _svm_cur.field_0x3 = fine;
+        _svm_cur.field_C_vag_idx = tone;
+        if (voll == volr) {
+            _svm_cur.field_0x5 = 0x40;
+            _svm_cur.field_4_voll = voll;
+        } else if (volr < voll) {
+            _svm_cur.field_4_voll = voll;
+            _svm_cur.field_0x5 = (volr * 64) / voll;
+        } else {
+            _svm_cur.field_4_voll = volr;
+            _svm_cur.field_0x5 = 0x7F - ((voll * 64) / volr);
+        }
+        progAtr = &_svm_pg[prog];
+        _svm_cur.field_A_mvol = progAtr->mvol;
+        _svm_cur.field_B_mpan = progAtr->mpan;
+        _svm_cur.field_0_sep_sep_no_tonecount = progAtr->tones;
+        vagAtr = &_svm_tn[_svm_cur.field_C_vag_idx +
+                          (_svm_cur.field_7_fake_program * 0x10)];
+        _svm_cur.field_F_prior = vagAtr->prior;
+        vag = (u16)vagAtr->vag;
+        _svm_cur.field_18_voice_idx = vag;
+        _svm_cur.field_D_vol = vagAtr->vol;
+        _svm_cur.field_E_pan = vagAtr->pan;
+        _svm_cur.field_10_centre = vagAtr->center;
+        _svm_cur.field_11_shift = vagAtr->shift;
+        _svm_cur.field_14_seq_sep_no = vagAtr->mode;
+        _svm_cur.field_12_mode = vagAtr->min;
+        _svm_cur.field_0x13 = vagAtr->max;
+        if (vag == 0) {
+            _snd_ev_flag = 0;
+            return -1;
+        }
+    } else {
+        _snd_ev_flag = 0;
+        return -1;
+    }
+
+    voice = SpuVmAlloc(vag);
+
+    if (voice == spuVmMaxVoice) {
+        _snd_ev_flag = 0;
+        return -1;
+    }
+
+    _svm_cur.field_0x1a = voice;
+    _svm_voice[voice].unke = 0x21;
+    _svm_voice[voice].vabId = vabId;
+    program = _svm_cur.field_7_fake_program;
+    _svm_voice[voice].prog = prog;
+    _svm_voice[voice].unk10 = program;
+    _svm_voice[voice].unk0 = _svm_cur.field_18_voice_idx;
+    vag_idx = _svm_cur.field_C_vag_idx;
+    _svm_voice[voice].note = note;
+    _svm_voice[voice].unk1b = 1;
+    _svm_voice[voice].unk2 = 0;
+    _svm_voice[voice].tone = vag_idx;
+    SpuVmDoAllocate();
+    if (_svm_cur.field_18_voice_idx == 0xFF) {
+        vmNoiseOn(voice & 0xFF);
+    } else {
+        SpuVmKeyOnNow(1, note2pitch2(note, fine) & 0xFFFF);
+    }
+    _snd_ev_flag = 0;
+    return voice;
+}
 
 short SsUtKeyOff(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note) {
     unsigned char new_var;
@@ -374,7 +454,79 @@ short SsUtKeyOff(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note) {
     return -1;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtKeyOnV);
+s16 SsUtKeyOnV(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note, s16 fine,
+               s16 voll, s16 volr) {
+    VagAtr* vagAtr;
+    u16 vag;
+    char vag_idx;
+    ProgAtr* progAtr;
+    s32 program;
+    if (_snd_ev_flag == 1) {
+        return -1;
+    }
+    _snd_ev_flag = 1;
+    if (((voice >= 0) && (voice <= 23)) && (SpuVmVSetUp(vabId, prog) == 0)) {
+        _svm_cur.field_16_vag_idx = 0x21;
+        _svm_cur.field_2_note = note;
+        _svm_cur.field_0x3 = fine;
+        _svm_cur.field_C_vag_idx = tone;
+        if (voll == volr) {
+            _svm_cur.field_0x5 = 0x40;
+            _svm_cur.field_4_voll = voll;
+        } else if (volr < voll) {
+            _svm_cur.field_4_voll = voll;
+            _svm_cur.field_0x5 = (volr * 64) / voll;
+        } else {
+            _svm_cur.field_4_voll = volr;
+            _svm_cur.field_0x5 = 0x7F - ((voll * 64) / volr);
+        }
+        progAtr = &_svm_pg[prog];
+        _svm_cur.field_A_mvol = progAtr->mvol;
+        _svm_cur.field_B_mpan = progAtr->mpan;
+        _svm_cur.field_0_sep_sep_no_tonecount = progAtr->tones;
+        vagAtr = &_svm_tn[_svm_cur.field_C_vag_idx +
+                          (_svm_cur.field_7_fake_program * 0x10)];
+        _svm_cur.field_F_prior = vagAtr->prior;
+        vag = vagAtr->vag;
+        _svm_cur.field_18_voice_idx = vag;
+        _svm_cur.field_D_vol = vagAtr->vol;
+        _svm_cur.field_E_pan = vagAtr->pan;
+        _svm_cur.field_10_centre = vagAtr->center;
+        _svm_cur.field_11_shift = vagAtr->shift;
+        _svm_cur.field_14_seq_sep_no = vagAtr->mode;
+        _svm_cur.field_12_mode = vagAtr->min;
+        _svm_cur.field_0x13 = vagAtr->max;
+    } else {
+        _snd_ev_flag = 0;
+        return -1;
+    }
+
+    if (vag == 0) {
+        _snd_ev_flag = 0;
+        return -1;
+    }
+
+    _svm_cur.field_0x1a = voice;
+    _svm_voice[voice].unke = 0x21;
+    _svm_voice[voice].vabId = vabId;
+    program = _svm_cur.field_7_fake_program;
+    _svm_voice[voice].prog = prog;
+    _svm_voice[voice].unk10 = program;
+    _svm_voice[voice].unk0 = _svm_cur.field_18_voice_idx;
+    vag_idx = _svm_cur.field_C_vag_idx;
+    _svm_voice[voice].note = note;
+    _svm_voice[voice].unk1b = 1;
+    _svm_voice[voice].unk2 = 0;
+    _svm_voice[voice].tone = vag_idx;
+    SpuVmDoAllocate();
+    if (_svm_cur.field_18_voice_idx == 0xFF) {
+        vmNoiseOn(voice & 0xFF);
+    } else {
+        SpuVmKeyOnNow(1, note2pitch2(note, fine) & 0xFFFF);
+    }
+    _snd_ev_flag = 0;
+    return voice;
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtKeyOffV);
 
