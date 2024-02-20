@@ -44,7 +44,6 @@ SetNextRoomToLoad = 0x800F0BC0;
 MenuDraw = 0x800F8F28;
 MenuHandleCursorInput = 0x800FA034;
 MenuHandle = 0x800FBC24;
-TimeAttackController = 0x800FD4C0;
 AddToInventory = 0x800FD874;
 GetStatusAilmentTimer = 0x800FDB18;
 IsRelicActive = 0x800FE3A8;
