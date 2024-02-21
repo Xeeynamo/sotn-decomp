@@ -6,7 +6,7 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsSeqPlay);
 void _SsGetMetaEvent(s16, s16, u8);
 void _SsNoteOn(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 _SsReadDeltaValue(s16, s16);
-void _SsSetControlChange(s16, s16, u8, u8*);
+void _SsSetControlChange(s16 arg0, s16 arg1, s32 arg2);
 void _SsSetPitchBend(s16, s16);
 void _SsSetProgramChange(s16 arg0, s16 arg1, u8 arg2);
 
@@ -46,7 +46,7 @@ void _SsGetSeqData(s16 arg0, s16 arg1) {
             temp_v0 = score->read_pos;
             score->unk11 = 0xB0;
             score->read_pos = temp_v0 + 1;
-            _SsSetControlChange(arg0, arg1, temp_v0[0], read_ptr);
+            _SsSetControlChange(arg0, arg1, temp_v0[0]);
             return;
         case 0xC0:
             temp_v0_2 = score->read_pos;
@@ -76,7 +76,7 @@ void _SsGetSeqData(s16 arg0, s16 arg1) {
             _SsNoteOn(arg0, arg1, temp_s0, var_s3);
             return;
         case 0xB0:
-            _SsSetControlChange(arg0, arg1, temp_s0, read_ptr);
+            _SsSetControlChange(arg0, arg1, temp_s0);
             return;
         case 0xC0:
             _SsSetProgramChange(arg0, arg1, temp_s0);
@@ -126,7 +126,89 @@ void _SsSetProgramChange(s16 arg0, s16 arg1, u8 arg2) {
     temp_s0->delta_value = _SsReadDeltaValue(arg0, arg1);
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsSetControlChange);
+void SpuVmDamperOff();
+void SpuVmDamperOn();
+void SpuVmSetProgVol(s16, u8, u8);
+void SpuVmSetVol(s32, s16, u8, s16, s32);
+void _SsContDataEntry(s16, s16, u8);
+void _SsContNrpn2(s16, s16, u8);
+void _SsContRpn1(s16, s16, u8);
+void _SsContRpn2(s16, s16, u8);
+
+void _SsSetControlChange(s16 arg0, s16 arg1, s32 arg2) {
+    u32 control;
+    s16 val;
+    s16 channel;
+    u8* read_pos;
+    struct SeqStruct* score;
+
+    control = arg2 & 0xFF;
+    score = &_ss_score[arg0][arg1];
+    read_pos = score->read_pos;
+    channel = score->channel;
+    score->read_pos++;
+    val = *read_pos;
+    switch (control) {
+    case 0x0:
+        score->unk4c = val;
+        score->delta_value = _SsReadDeltaValue(arg0, arg1);
+        return;
+    case 0x6:
+        _SsContDataEntry(arg0, arg1, val);
+        return;
+    case 0x7:
+        SpuVmSetVol((arg1 << 8) | arg0, score->unk4c, score->programs[channel],
+                    val, score->panpot[channel]);
+        score->vol[channel] = val;
+        score->delta_value = _SsReadDeltaValue(arg0, arg1);
+        return;
+    case 0xA:
+        SpuVmSetVol((arg1 << 8) | arg0, score->unk4c, score->programs[channel],
+                    score->vol[channel], val);
+        score->panpot[channel] = val;
+        score->delta_value = _SsReadDeltaValue(arg0, arg1);
+        return;
+    case 0xB:
+        SpuVmSetProgVol(score->unk4c, score->programs[channel], val);
+        SpuVmSetVol((arg1 << 8) | arg0, score->unk4c, score->programs[channel],
+                    score->vol[channel], score->panpot[channel]);
+        score->delta_value = _SsReadDeltaValue(arg0, arg1);
+        return;
+    case 0x40:
+        if (val < 0x40U) {
+            SpuVmDamperOff();
+        } else {
+            SpuVmDamperOn();
+        }
+        score->delta_value = _SsReadDeltaValue(arg0, arg1);
+        return;
+    case 0x41:
+        _SsContPortamento(arg0, arg1, val);
+        return;
+    case 0x5B:
+        SsUtSetReverbDepth(val, val);
+        score->delta_value = _SsReadDeltaValue(arg0, arg1);
+        return;
+    case 0x62:
+        _SsContNrpn1(arg0, arg1, val);
+        return;
+    case 0x63:
+        _SsContNrpn2(arg0, arg1, val);
+        return;
+    case 0x64:
+        _SsContRpn1(arg0, arg1, val);
+        return;
+    case 0x65:
+        _SsContRpn2(arg0, arg1, val);
+        return;
+    case 0x79:
+        _SsContResetAll(arg0, arg1);
+        return;
+    default:
+        score->delta_value = _SsReadDeltaValue(arg0, arg1);
+        return;
+    }
+}
 
 void _SsContModulation(s16 arg0, s16 arg1, u8 arg2) {
     ProgAtr sp10;
