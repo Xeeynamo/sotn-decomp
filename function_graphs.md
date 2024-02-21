@@ -1273,7 +1273,7 @@
 - [✅ _SsReadDeltaValue](function_calls/main._SsReadDeltaValue.svg?raw=1)
 - [✅ _SsSeqCalledTbyT_1per2](function_calls/main._SsSeqCalledTbyT_1per2.svg?raw=1)
 - [❌ _SsSeqPlay](function_calls/main._SsSeqPlay.svg?raw=1)
-- [❌ _SsSetControlChange](function_calls/main._SsSetControlChange.svg?raw=1)
+- [✅ _SsSetControlChange](function_calls/main._SsSetControlChange.svg?raw=1)
 - [✅ _SsSetPitchBend](function_calls/main._SsSetPitchBend.svg?raw=1)
 - [✅ _SsSetProgramChange](function_calls/main._SsSetProgramChange.svg?raw=1)
 - [❌ _SsSndCrescendo](function_calls/main._SsSndCrescendo.svg?raw=1)
