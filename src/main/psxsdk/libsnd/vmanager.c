@@ -11,38 +11,30 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmDoAllocate);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", vmNoiseOn);
 
-void vmNoiseOn2(u8 arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4) {
-    u16 voice;
-    u32 temp_a0;
+void vmNoiseOn2(u8 voice, u16 arg1, u16 arg2, u16 arg3, u16 arg4) {
+    u16 i;
     u16 bitsUpper;
     u16 bitsLower;
     u8 pad[2];
-    temp_a0 = arg0 & 0xFF;
-    _svm_sreg_buf.buf[arg0].field_0_vol_left = arg1;
-    _svm_sreg_buf.buf[arg0].field_2_vol_right = arg2;
-    _svm_sreg_dirty[arg0] = _svm_sreg_dirty[arg0] | 3;
-    _svm_sreg_dirty[temp_a0] = _svm_sreg_dirty[temp_a0] | 3;
+    _svm_sreg_buf.buf[voice].field_0_vol_left = arg1;
+    _svm_sreg_buf.buf[voice].field_2_vol_right = arg2;
+    _svm_sreg_dirty[voice] = _svm_sreg_dirty[voice] | 3;
+    _svm_sreg_dirty[voice] = _svm_sreg_dirty[voice] | 3;
 
-    if (temp_a0 < 0x10) {
-        bitsLower = 1 << temp_a0;
+    if (voice < 0x10) {
+        bitsLower = 1 << voice;
         bitsUpper = 0;
     } else {
         bitsLower = 0;
-        bitsUpper = 1 << (temp_a0 - 0x10);
+        bitsUpper = 1 << (voice - 0x10);
     }
 
-    _svm_voice[arg0].unk04 = 0xa;
-    voice = 0;
-    if (spuVmMaxVoice != 0) {
-        voice = 0 & 0xFFFF;
-        do {
-            _svm_voice[voice].unk1b &= 1;
-            voice += 1;
-            voice = voice & 0xFFFF;
-        } while (voice < spuVmMaxVoice);
+    _svm_voice[voice].unk04 = 0xa;
+    for (i = 0; i < spuVmMaxVoice; i++) {
+        _svm_voice[i].unk1b &= 1;
     }
-    _svm_voice[arg0].unk1b = 2;
-    _svm_voice[arg0].unk2 = 0;
+    _svm_voice[voice].unk1b = 2;
+    _svm_voice[voice].unk2 = 0;
 
     _svm_okon1 = bitsLower | _svm_okon1;
     _svm_okon2 = bitsUpper | _svm_okon2;
@@ -336,32 +328,28 @@ void SpuVmSeqKeyOff(s16 arg0) {
     s32 bitsUpper;
     s32 bitsLower;
     u16 temp2;
-    voice = 0;
-    if (spuVmMaxVoice != 0) {
-        do {
-            if (_svm_voice[voice].unke == arg0) {
-                _svm_cur.field_0x1a = voice;
-                temp2 = get_field_0x1a();
-                if (temp2 < 0x10) {
-                    bitsLower = 1 << temp2;
-                    bitsUpper = 0;
-                } else {
-                    bitsLower = 0;
-                    bitsUpper = 1 << (temp2 - 0x10);
-                }
-
-                _svm_voice[temp2].unk1b = 0;
-                _svm_voice[temp2].unk04 = 0;
-                _svm_voice[temp2].unk0 = 0;
-
-                _svm_okof1 = bitsLower | _svm_okof1;
-                _svm_okof2 = bitsUpper | _svm_okof2;
-
-                _svm_okon1 = _svm_okon1 & ~_svm_okof1;
-                _svm_okon2 = _svm_okon2 & ~_svm_okof2;
+    for (voice = 0; voice < spuVmMaxVoice; voice++) {
+        if (_svm_voice[voice].unke == arg0) {
+            _svm_cur.field_0x1a = voice;
+            temp2 = get_field_0x1a();
+            if (temp2 < 0x10) {
+                bitsLower = 1 << temp2;
+                bitsUpper = 0;
+            } else {
+                bitsLower = 0;
+                bitsUpper = 1 << (temp2 - 0x10);
             }
-            voice++;
-        } while (voice < spuVmMaxVoice);
+
+            _svm_voice[temp2].unk1b = 0;
+            _svm_voice[temp2].unk04 = 0;
+            _svm_voice[temp2].unk0 = 0;
+
+            _svm_okof1 = bitsLower | _svm_okof1;
+            _svm_okof2 = bitsUpper | _svm_okof2;
+
+            _svm_okon1 = _svm_okon1 & ~_svm_okof1;
+            _svm_okon2 = _svm_okon2 & ~_svm_okof2;
+        }
     }
 }
 
@@ -755,47 +743,43 @@ void SsUtAllKeyOff(void) {
     s32 bitsLower;
     u16 temp2;
     s16 pos;
-    voice = 0;
-    if (spuVmMaxVoice != 0) {
-        do {
-            _svm_voice[voice].unk2 = 0x18;
-            _svm_voice[voice].unk0 = 0xFF;
-            _svm_voice[voice].unk1b = 0;
-            _svm_voice[voice].unk04 = 0;
-            _svm_voice[voice].unk6 = 0;
-            _svm_voice[voice].unke = 0xFF;
-            _svm_voice[voice].unk10 = 0;
-            _svm_voice[voice].prog = 0;
-            _svm_voice[voice].tone = 0xFF;
+    for (voice = 0; voice < spuVmMaxVoice; voice++) {
+        _svm_voice[voice].unk2 = 0x18;
+        _svm_voice[voice].unk0 = 0xFF;
+        _svm_voice[voice].unk1b = 0;
+        _svm_voice[voice].unk04 = 0;
+        _svm_voice[voice].unk6 = 0;
+        _svm_voice[voice].unke = 0xFF;
+        _svm_voice[voice].unk10 = 0;
+        _svm_voice[voice].prog = 0;
+        _svm_voice[voice].tone = 0xFF;
 
-            pos = voice * 8;
-            D_80032F10[pos + 0x6 / 2] = 0x200;
-            D_80032F10[pos + 0x4 / 2] = 0x1000;
-            D_80032F10[pos + 0x8 / 2] = 0x80ff;
-            D_80032F10[pos + 0x0] = 0;
-            D_80032F10[pos + 0x2 / 2] = 0;
-            D_80032F10[pos + 0xa / 2] = 0x4000;
+        pos = voice * 8;
+        D_80032F10[pos + 0x6 / 2] = 0x200;
+        D_80032F10[pos + 0x4 / 2] = 0x1000;
+        D_80032F10[pos + 0x8 / 2] = 0x80ff;
+        D_80032F10[pos + 0x0] = 0;
+        D_80032F10[pos + 0x2 / 2] = 0;
+        D_80032F10[pos + 0xa / 2] = 0x4000;
 
-            _svm_cur.field_0x1a = voice;
-            temp2 = get_field_0x1a();
-            if (temp2 < 0x10) {
-                bitsLower = 1 << temp2;
-                bitsUpper = 0;
-            } else {
-                bitsLower = 0;
-                bitsUpper = 1 << (temp2 - 0x10);
-            }
+        _svm_cur.field_0x1a = voice;
+        temp2 = get_field_0x1a();
+        if (temp2 < 0x10) {
+            bitsLower = 1 << temp2;
+            bitsUpper = 0;
+        } else {
+            bitsLower = 0;
+            bitsUpper = 1 << (temp2 - 0x10);
+        }
 
-            _svm_voice[temp2].unk1b = 0;
-            _svm_voice[temp2].unk04 = 0;
-            _svm_voice[temp2].unk0 = 0;
+        _svm_voice[temp2].unk1b = 0;
+        _svm_voice[temp2].unk04 = 0;
+        _svm_voice[temp2].unk0 = 0;
 
-            _svm_okof1 = bitsLower | _svm_okof1;
-            _svm_okof2 = bitsUpper | _svm_okof2;
+        _svm_okof1 = bitsLower | _svm_okof1;
+        _svm_okof2 = bitsUpper | _svm_okof2;
 
-            _svm_okon1 = _svm_okon1 & ~_svm_okof1;
-            _svm_okon2 = _svm_okon2 & ~_svm_okof2;
-            voice++;
-        } while (voice < spuVmMaxVoice);
+        _svm_okon1 = _svm_okon1 & ~_svm_okof1;
+        _svm_okon2 = _svm_okon2 & ~_svm_okof2;
     }
 }

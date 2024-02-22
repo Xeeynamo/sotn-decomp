@@ -19,19 +19,18 @@ void SpuFree(unsigned long arg0) {
         cur_mem = _spu_memList;
         while (true) {
             temp_v1 = cur_mem->addr;
-
-            if (!(temp_v1 & mask4)) {
-                cur_block_num += 1;
-                if (temp_v1 == arg0) {
-                    cur_mem->addr = temp;
-                } else {
-                    cur_mem++;
-                    if (cur_block_num < block_num) {
-                        continue;
-                    }
-                }
+            if (temp_v1 & mask4) {
+                break;
             }
-            break;
+            if (temp_v1 == arg0) {
+                cur_mem->addr = temp;
+                break;
+            }
+            cur_mem++;
+            cur_block_num++;
+            if (cur_block_num >= block_num) {
+                break;
+            }
         }
     }
     func_800286E0();
