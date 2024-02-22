@@ -82,7 +82,7 @@ extern u8 spuVmMaxVoice;
 extern s16 _svm_stereo_mono;
 
 u8 SpuVmAlloc(s32);
-s32 vmNoiseOn2(u8, u16, u16, u16, u16);
+void vmNoiseOn2(u8 arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4);
 
 s32 note2pitch2(u16, u16);
 
