@@ -12,7 +12,7 @@
 <!-- main.SsUtKeyOff -->
 <g id="node1" class="node">
 <title>main.SsUtKeyOff</title>
-<ellipse fill="red" stroke="black" cx="90.34" cy="-18" rx="90.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="90.34" cy="-18" rx="90.18" ry="18"/>
 <text text-anchor="middle" x="90.34" y="-14.3" font-family="Times,serif" font-size="14.00">main.SsUtKeyOff</text>
 </g>
 </g>
