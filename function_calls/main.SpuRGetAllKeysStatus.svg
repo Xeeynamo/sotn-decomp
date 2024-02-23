@@ -12,7 +12,7 @@
 <!-- main.SpuRGetAllKeysStatus -->
 <g id="node1" class="node">
 <title>main.SpuRGetAllKeysStatus</title>
-<ellipse fill="red" stroke="black" cx="142.34" cy="-18" rx="142.17" ry="18"/>
+<ellipse fill="green" stroke="black" cx="142.34" cy="-18" rx="142.17" ry="18"/>
 <text text-anchor="middle" x="142.34" y="-14.3" font-family="Times,serif" font-size="14.00">main.SpuRGetAllKeysStatus</text>
 </g>
 </g>
