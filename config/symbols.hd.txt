@@ -787,6 +787,7 @@ g_api_unused13C = 0x8003C8B4;
 g_GameTimer = 0x8003C8C4;
 _svm_damper = 0x8003C954;
 g_Timer = 0x8003C998;
+g_MapCursorTimer = 0x8003C99C;
 g_PlayableCharacter = 0x8003C9A0;
 g_MenuNavigation = 0x8003C9A8;
 g_MenuNavigation_cursorRelic = 0x8003C9AC;

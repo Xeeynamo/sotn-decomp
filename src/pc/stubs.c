@@ -43,7 +43,7 @@ s32 D_800973EC;
 s32 D_8003C704;
 s32 D_800973EC;
 s32 D_8003C73C;
-s32 D_8003C99C;
+s32 g_MapCursorTimer;
 s32 g_PlayableCharacter;
 s32 g_backbufferX;
 s32 g_backbufferY;
@@ -624,8 +624,6 @@ void func_801083BC(void) { NOT_IMPLEMENTED; }
 void func_800F24F4(void) { NOT_IMPLEMENTED; }
 
 void func_8011A4D0(void) { NOT_IMPLEMENTED; }
-
-void func_800F2658(void) { NOT_IMPLEMENTED; }
 
 void func_8011A9D8(void) { NOT_IMPLEMENTED; }
 

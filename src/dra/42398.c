@@ -780,7 +780,7 @@ void MainGame(void) {
         ((void**)&g_api)[i] = g_ApiInit[i];
     }
     g_Timer = 0;
-    D_8003C99C = 0;
+    g_MapCursorTimer = 0;
     D_800987B4 = 0;
     g_Settings.D_8003CB00 = 0;
     g_Settings.D_8003CB04 = 0;
@@ -968,7 +968,7 @@ loop_5:
 
         // Update game timer
         D_801362D4 = (D_801362D4 + 0xFF) >> 8;
-        D_8003C99C += D_801362D4;
+        g_MapCursorTimer += D_801362D4;
         if (D_800973EC == 0 && D_800974A4 == 0) {
             g_Status.timerFrames += D_801362D4;
             if (g_Status.timerFrames >= 60) {
