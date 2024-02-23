@@ -111,7 +111,89 @@ s32 _spu_init(s32 arg0) {
     return 0;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libspu/spu", _spu_writeByIO);
+extern s32 aWaitDmafClearW;
+extern s32 aWaitWrdyHL;
+
+s32 _spu_writeByIO(s32 addr, s32 size) {
+    volatile s32 sp0;
+    volatile s32 sp4;
+    s32 spustat_prev;
+    s32 spustat;
+    s32 wait_count;
+    s32 num_to_trans;
+    u32 total_size;
+    u16* cur_pos;
+    s32 spustat_cur;
+    s32 less_than_64;
+    s32 num_trans;
+    u16 data;
+    u8 pad[8];
+    u16 spucnt;
+
+    total_size = size;
+    cur_pos = addr;
+    spustat = _spu_RXX->rxx.spustat & 0x7FF;
+    _spu_RXX->rxx.trans_addr = _spu_tsa;
+    WASTE_TIME();
+    less_than_64 = total_size < 0x41;
+    if (total_size != 0) {
+        do {
+            num_to_trans = total_size;
+            if (less_than_64 == 0) {
+                num_to_trans = 0x40;
+            }
+            num_trans = 0;
+            if (num_to_trans > 0) {
+                do {
+                    data = *cur_pos++;
+                    num_trans += 2;
+                    _spu_RXX->rxx.trans_fifo = data;
+                } while (num_trans < num_to_trans);
+            }
+            spucnt = _spu_RXX->rxx.spucnt;
+            spucnt &= 0xffcf;
+            spucnt |= 0x10;
+            _spu_RXX->rxx.spucnt = spucnt;
+            WASTE_TIME();
+            D_800334FC = 0;
+            if (_spu_RXX->rxx.spustat & 0x400) {
+                do {
+                    wait_count = D_800334FC + 1;
+                    D_800334FC = wait_count;
+                    if (wait_count > 5000) {
+                        printf(&D_80010CEC, &aWaitWrdyHL);
+                        break;
+                    }
+                } while (_spu_RXX->rxx.spustat & 0x400);
+            }
+            WASTE_TIME();
+            WASTE_TIME();
+            total_size -= num_to_trans;
+            less_than_64 = total_size < 0x41;
+        } while (total_size != 0);
+    }
+    spucnt = _spu_RXX->rxx.spucnt;
+    spucnt &= 0xffcf;
+    _spu_RXX->rxx.spucnt = spucnt;
+    spustat_prev = spustat & 0xFFFF;
+    D_800334FC = 0;
+    spustat_cur = _spu_RXX->rxx.spustat & 0x7FF;
+    if (spustat_cur != spustat_prev) {
+        while (true) {
+            wait_count = D_800334FC + 1;
+            D_800334FC = wait_count;
+            if (wait_count > 5000) {
+                printf(&D_80010CEC, &aWaitDmafClearW);
+                return;
+            }
+            spustat_cur = _spu_RXX->rxx.spustat & 0x7FF;
+            if (spustat_cur == spustat_prev) {
+                break;
+            }
+        }
+    }
+    return spustat_cur;
+}
 
 void _spu_FiDMA(void) {
     volatile s32 sp0;
