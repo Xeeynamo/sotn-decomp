@@ -47,7 +47,43 @@ void vmNoiseOn2(u8 voice, u16 arg1, u16 arg2, u16 arg3, u16 arg4) {
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", note2pitch);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", note2pitch2);
+extern u16 D_80032F14[];
+s32 note2pitch2(u16 arg0, u16 arg1) {
+    VagAtr* temp_v1;
+    s16 octave;
+    s32 temp_a1;
+    u16 temp_v0;
+    s16 var_a2;
+    s16 var_a3;
+    short new_var;
+    s32 var_v0;
+    u16 var_v1;
+    s32 pos;
+    temp_v1 = &_svm_tn[_svm_cur.field_C_vag_idx +
+                       (_svm_cur.field_7_fake_program * 0x10)];
+    var_v0 = arg1 + temp_v1->shift;
+    if (var_v0 < 0) {
+        var_v0 += 7;
+    }
+    temp_a1 = var_v0 >> 3;
+    var_a3 = temp_a1;
+    var_a2 = 0;
+    if (temp_a1 >= 16) {
+        var_a2 = 1;
+        var_a3 = temp_a1 - 16;
+    }
+    temp_v0 = arg0 - (temp_v1->center - 60);
+    new_var = var_a2 + temp_v0;
+    octave = (new_var / 12) - 5;
+    pos = (new_var % 12) * 16 + var_a3;
+    var_v1 = D_80032F14[pos];
+    if (octave > 0) {
+        var_v1 <<= octave;
+    } else if (octave < 0) {
+        var_v1 = var_v1 >> (-octave);
+    }
+    return var_v1;
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SePitchBend);
 

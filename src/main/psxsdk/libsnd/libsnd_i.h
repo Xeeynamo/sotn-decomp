@@ -84,8 +84,6 @@ extern s16 _svm_stereo_mono;
 u8 SpuVmAlloc(s32);
 void vmNoiseOn2(u8 arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4);
 
-s32 note2pitch2(u16, u16);
-
 struct struct_svm {
     char field_0_sep_sep_no_tonecount;
     char field_1_vabId;
@@ -171,7 +169,7 @@ struct SeqStruct {
     s32 unk98;
     s32 unk9C;
     s32 unkA0;
-    s32 unkA4;
+    u32 unkA4;
     s16 padA6;
     s16 padaa;
 };
