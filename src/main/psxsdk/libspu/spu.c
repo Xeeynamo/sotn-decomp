@@ -136,41 +136,39 @@ s32 _spu_writeByIO(s32 addr, s32 size) {
     _spu_RXX->rxx.trans_addr = _spu_tsa;
     WASTE_TIME();
     less_than_64 = total_size < 0x41;
-    if (total_size != 0) {
-        do {
-            num_to_trans = total_size;
-            if (less_than_64 == 0) {
-                num_to_trans = 0x40;
-            }
-            num_trans = 0;
-            if (num_to_trans > 0) {
-                do {
-                    data = *cur_pos++;
-                    num_trans += 2;
-                    _spu_RXX->rxx.trans_fifo = data;
-                } while (num_trans < num_to_trans);
-            }
-            spucnt = _spu_RXX->rxx.spucnt;
-            spucnt &= 0xffcf;
-            spucnt |= 0x10;
-            _spu_RXX->rxx.spucnt = spucnt;
-            WASTE_TIME();
-            D_800334FC = 0;
-            if (_spu_RXX->rxx.spustat & 0x400) {
-                do {
-                    wait_count = D_800334FC + 1;
-                    D_800334FC = wait_count;
-                    if (wait_count > 5000) {
-                        printf(&D_80010CEC, &aWaitWrdyHL);
-                        break;
-                    }
-                } while (_spu_RXX->rxx.spustat & 0x400);
-            }
-            WASTE_TIME();
-            WASTE_TIME();
-            total_size -= num_to_trans;
-            less_than_64 = total_size < 0x41;
-        } while (total_size != 0);
+    while (total_size != 0) {
+        num_to_trans = total_size;
+        if (less_than_64 == 0) {
+            num_to_trans = 0x40;
+        }
+        num_trans = 0;
+        if (num_to_trans > 0) {
+            do {
+                data = *cur_pos++;
+                num_trans += 2;
+                _spu_RXX->rxx.trans_fifo = data;
+            } while (num_trans < num_to_trans);
+        }
+        spucnt = _spu_RXX->rxx.spucnt;
+        spucnt &= 0xffcf;
+        spucnt |= 0x10;
+        _spu_RXX->rxx.spucnt = spucnt;
+        WASTE_TIME();
+        D_800334FC = 0;
+        if (_spu_RXX->rxx.spustat & 0x400) {
+            do {
+                wait_count = D_800334FC + 1;
+                D_800334FC = wait_count;
+                if (wait_count > 5000) {
+                    printf(&D_80010CEC, &aWaitWrdyHL);
+                    break;
+                }
+            } while (_spu_RXX->rxx.spustat & 0x400);
+        }
+        WASTE_TIME();
+        WASTE_TIME();
+        total_size -= num_to_trans;
+        less_than_64 = total_size < 0x41;
     }
     spucnt = _spu_RXX->rxx.spucnt;
     spucnt &= 0xffcf;
