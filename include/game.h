@@ -1513,8 +1513,7 @@ extern u8 D_8003BF9C[];         // not sure if it is part of D_8003BEEC?
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
 extern s32 D_8003C100;
-extern u16 D_8003C104[];
-extern u16 D_8003C3C2[]; // confirmed array
+extern u16 D_8003C104[]; // array of palette VRAM offsets
 extern s32 D_8003C704;
 extern FgLayer D_8003C708;
 extern s16 D_8003C710;

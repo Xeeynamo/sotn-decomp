@@ -380,7 +380,7 @@ void func_800E5498(void) {
     setUV4(poly, 16, 16, 24, 16, 16, 24, 24, 24);
     func_801072BC(poly);
     poly->tpage = 0x5A;
-    poly->clut = D_8003C3C2[0];
+    poly->clut = D_8003C104[0x15F];
     AddPrim(&buffer->ot[0x1FF], poly);
     g_GpuUsage.gt4++;
 }

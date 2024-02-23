@@ -80,7 +80,6 @@ s32 D_8003C738;
 u8 g_CastleFlags[0x300];
 s32 D_8006C374;
 s32 D_8006C378;
-u16 D_8003C3C2[1];
 u32 D_80070BCC;
 s32 g_Servant;
 s32 g_ServantLoaded;
