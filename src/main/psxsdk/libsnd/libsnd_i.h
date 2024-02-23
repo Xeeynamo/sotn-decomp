@@ -171,7 +171,7 @@ struct SeqStruct {
     s32 unk98;
     s32 unk9C;
     s32 unkA0;
-    s32 unkA4;
+    u32 unkA4;
     s16 padA6;
     s16 padaa;
 };
