@@ -647,7 +647,7 @@ void MenuDrawImg(MenuContext* menu, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
         sp->r0 = c;
         sp->g0 = c;
         sp->b0 = c;
-        sp->clut = D_8003C104[clut];
+        sp->clut = g_ClutIds[clut];
         AddPrim(&ot[otIdx], sp);
         g_GpuUsage.sp++;
         func_800F53D4(tpage, otIdx);
@@ -690,7 +690,7 @@ void MenuDrawSprite(
 
     if (ScissorPolyGT4(poly, context) == false) {
         poly->tpage = tpage;
-        poly->clut = D_8003C104[clut];
+        poly->clut = g_ClutIds[clut];
         func_80107250(poly, colorIntensity);
         if (fade == 1) {
             polyColorIntensity = (poly->y2 - poly->y0) * 4;
@@ -3846,7 +3846,7 @@ void func_800FD39C(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 pal, s32 _,
     sprt->u0 = u;
     sprt->v0 = v;
     sprt->b0 = sprt->g0 = sprt->r0 = color;
-    sprt->clut = D_8003C104[pal];
+    sprt->clut = g_ClutIds[pal];
     AddPrim(&gpuBuffer->ot[0x1FF], sprt);
     g_GpuUsage.sp++;
 }

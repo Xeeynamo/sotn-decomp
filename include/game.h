@@ -1513,8 +1513,7 @@ extern u8 D_8003BF9C[];         // not sure if it is part of D_8003BEEC?
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
 extern s32 D_8003C100;
-extern u16 D_8003C104[];
-extern u16 D_8003C3C2[]; // confirmed array
+extern u16 g_ClutIds[]; // array of palette VRAM offsets
 extern s32 D_8003C704;
 extern FgLayer D_8003C708;
 extern s16 D_8003C710;
@@ -1532,7 +1531,7 @@ extern u32 g_GameTimer; // Increases when unpaused
 extern Unkstruct_8003C908 D_8003C908;
 extern s32 D_8003C90C[2];
 extern u32 g_Timer; // Increases continuously
-/* 0x8003C99C */ extern s32 D_8003C99C;
+extern s32 g_MapCursorTimer;
 /* 0x8003C9A0 */ extern s32 g_PlayableCharacter;
 /* 0x8003C9A4 */ extern u32 D_8003C9A4; // when player change stages?
 /* 0x8003C9A8 */ extern MenuNavigation g_MenuNavigation;

@@ -447,7 +447,7 @@ void EntityTransparentWater(Entity* self) {
     case 1:
         var_a0 = &D_801810C0;
         while (*var_a0 != 0xFF) {
-            D_8003C104[var_a0[0]] = D_8003C104[var_a0[2] + 0x200];
+            g_ClutIds[var_a0[0]] = g_ClutIds[var_a0[2] + 0x200];
             var_a0 += 4;
         }
 
@@ -460,7 +460,7 @@ void EntityTransparentWater(Entity* self) {
     case 2:
         var_a0 = &D_801810C0;
         while (*var_a0 != 0xFF) {
-            D_8003C104[var_a0[0]] = D_8003C104[var_a0[3] + 0x200];
+            g_ClutIds[var_a0[0]] = g_ClutIds[var_a0[3] + 0x200];
             var_a0 += 4;
         }
 

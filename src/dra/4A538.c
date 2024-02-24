@@ -140,19 +140,19 @@ void func_800EAD7C(void) {
 
     for (i = 0xF0; i < 0x100; i++) {
         for (j = 0x200; j < 0x300; j += 0x10) {
-            D_8003C104[index++] = GetClut(j, i);
+            g_ClutIds[index++] = GetClut(j, i);
         }
     }
 
     for (i = 0xF0; i < 0x100; i++) {
         for (j = 0; j < 0x100; j += 0x10) {
-            D_8003C104[index++] = GetClut(j, i);
+            g_ClutIds[index++] = GetClut(j, i);
         }
     }
 
     for (i = 0xF0; i < 0x100; i++) {
         for (j = 0x100; j < 0x200; j += 0x10) {
-            D_8003C104[index++] = GetClut(j, i);
+            g_ClutIds[index++] = GetClut(j, i);
         }
     }
 }
@@ -745,7 +745,7 @@ void RenderEntities(void) {
             } else {
                 test = temp_v1_6 + var_t2[2];
             }
-            poly->clut = D_8003C104[test];
+            poly->clut = g_ClutIds[test];
             if (entity->drawMode) {
                 setSemiTrans(poly, true);
                 poly->tpage += entity->drawMode & 0x60;
@@ -862,7 +862,7 @@ void RenderEntities(void) {
                 } else {
                     var_v0_4 = temp_v1_6 + var_t2[5];
                 }
-                poly->clut = D_8003C104[var_v0_4];
+                poly->clut = g_ClutIds[var_v0_4];
                 texSX = var_t2[7];
                 texSY = var_t2[8];
                 texEX = var_t2[9];
@@ -981,7 +981,7 @@ void RenderEntities(void) {
                     poly->y1 = temp_a0_10 + poly->y1;
                     poly->y2 = temp_a0_10 + poly->y2;
                     poly->y3 = temp_a0_10 + poly->y3;
-                    poly->clut = D_8003C104[0x104];
+                    poly->clut = g_ClutIds[0x104];
                     __builtin_memcpy(r->poly, poly, sizeof(POLY_GT4));
                     var_a0 = (entity->zPriority + 0x1A0) - PLAYER.zPriority;
                     if (temp_s2_2 & 0x100) {
@@ -1208,9 +1208,9 @@ void RenderTilemap(void) {
                     gfx = r->gfx[tile];
                     u = gfx * 0x10;
                     v = gfx & 0xF0;
-                    clut = D_8003C104[r->clut[tile]];
+                    clut = g_ClutIds[r->clut[tile]];
                     if (r->clutAlt) {
-                        clut = D_8003C104[0x100 + r->clut[tile]];
+                        clut = g_ClutIds[0x100 + r->clut[tile]];
                     }
                     if (g_GpuUsage.sp16 >= MAXSPRT16) {
                         continue;
@@ -1314,9 +1314,9 @@ void RenderTilemap(void) {
                 gfx = r->gfx[tile];
                 u = gfx * 0x10;
                 v = gfx & 0xF0;
-                clut = D_8003C104[r->clut[tile]];
+                clut = g_ClutIds[r->clut[tile]];
                 if (r->clutAlt) {
-                    clut = D_8003C104[0x100 + r->clut[tile]];
+                    clut = g_ClutIds[0x100 + r->clut[tile]];
                 }
                 if (g_GpuUsage.sp16 >= MAXSPRT16) {
                     continue;
@@ -1879,7 +1879,7 @@ void RenderPrimitives(void) {
                     primbuf->gt4.u3 = prim->u3;
                     primbuf->gt4.v3 = prim->v3;
                     primbuf->gt4.tpage = prim->tpage + (prim->drawMode & 0x60);
-                    primbuf->gt4.clut = D_8003C104[prim->clut];
+                    primbuf->gt4.clut = g_ClutIds[prim->clut];
                     __builtin_memcpy(r->gt4, &primbuf->gt4, sizeof(POLY_GT4));
                     addPrim(&r->ot[prim->priority], r->gt4);
                     r->gt4++;
@@ -1931,7 +1931,7 @@ void RenderPrimitives(void) {
                     primbuf->gt3.u2 = prim->u2;
                     primbuf->gt3.v2 = prim->v2;
                     primbuf->gt3.tpage = prim->tpage + (prim->drawMode & 0x60);
-                    primbuf->gt3.clut = D_8003C104[prim->clut];
+                    primbuf->gt3.clut = g_ClutIds[prim->clut];
 
                     __builtin_memcpy(r->gt3, &primbuf->gt3, sizeof(POLY_GT3));
                     addPrim(&r->ot[prim->priority], r->gt3);
@@ -1968,7 +1968,7 @@ void RenderPrimitives(void) {
                     primbuf->sprt.v0 = prim->v0;
                     primbuf->sprt.w = prim->u1;
                     primbuf->sprt.h = prim->v1;
-                    primbuf->sprt.clut = D_8003C104[prim->clut];
+                    primbuf->sprt.clut = g_ClutIds[prim->clut];
                     __builtin_memcpy(r->sprt, &primbuf->sprt, sizeof(SPRT));
                     addPrim(&r->ot[prim->priority], r->sprt);
                     r->sprt++;

@@ -43,7 +43,7 @@ s32 D_800973EC;
 s32 D_8003C704;
 s32 D_800973EC;
 s32 D_8003C73C;
-s32 D_8003C99C;
+s32 g_MapCursorTimer;
 s32 g_PlayableCharacter;
 s32 g_backbufferX;
 s32 g_backbufferY;
@@ -75,12 +75,11 @@ s32 D_8006C384;
 s32 D_8006C388;
 s32 D_8006C38C;
 s32 D_8006C390;
-u16 D_8003C104[0x400];
+u16 g_ClutIds[0x400];
 s32 D_8003C738;
 u8 g_CastleFlags[0x300];
 s32 D_8006C374;
 s32 D_8006C378;
-u16 D_8003C3C2[1];
 u32 D_80070BCC;
 s32 g_Servant;
 s32 g_ServantLoaded;
@@ -624,8 +623,6 @@ void func_801083BC(void) { NOT_IMPLEMENTED; }
 void func_801042C4(s32 arg0) { NOT_IMPLEMENTED; }
 
 void func_8011A4D0(void) { NOT_IMPLEMENTED; }
-
-void func_800F2658(void) { NOT_IMPLEMENTED; }
 
 void func_8011A9D8(void) { NOT_IMPLEMENTED; }
 

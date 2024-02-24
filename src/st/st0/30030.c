@@ -14,19 +14,19 @@ void func_801B0058(void) {
 
     for (i = 0xF0; i < 0x100; i++) {
         for (j = 0x200; j < 0x300; j += 0x10) {
-            D_8003C104[index++] = GetClut(j, i);
+            g_ClutIds[index++] = GetClut(j, i);
         }
     }
 
     for (i = 0xF0; i < 0x100; i++) {
         for (j = 0; j < 0x100; j += 0x10) {
-            D_8003C104[index++] = GetClut(j, i);
+            g_ClutIds[index++] = GetClut(j, i);
         }
     }
 
     for (i = 0xF0; i < 0x100; i++) {
         for (j = 0x100; j < 0x200; j += 0x10) {
-            D_8003C104[index++] = GetClut(j, i);
+            g_ClutIds[index++] = GetClut(j, i);
         }
     }
 }

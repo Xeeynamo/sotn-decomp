@@ -937,7 +937,54 @@ void func_800F24F4(void) {
     D_80137598 = 0;
 }
 
-INCLUDE_ASM("dra/nonmatchings/5087C", func_800F2658);
+void DrawMapCursor(void) {
+    s32 x;
+    s32 y;
+    s32 tick;
+    s32 cursorSize;
+    GpuBuffer* gpu = g_CurrentBuffer;
+    POLY_GT4* poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
+
+    x = g_Tilemap.left + (playerX >> 8);
+    x = x * 4 - 14;
+    y = g_Tilemap.top + (playerY >> 8);
+    y = y * 4 - 13;
+    if (g_StageId & 0x20) {
+        x -= 1;
+        y -= 17;
+    }
+
+    tick = g_MapCursorTimer & 0x3F;
+    tick = 0x3F - tick;
+    tick = SQ(tick) >> 8;
+    tick = 15 - tick;
+    if (tick == 0) {
+        tick = 15;
+    }
+
+    x += tick;
+    y += tick;
+    cursorSize = 32 - (tick * 2);
+
+    poly->x0 = x;
+    poly->y0 = y;
+    poly->x1 = x + cursorSize;
+    poly->y1 = y;
+    poly->x2 = x;
+    poly->y2 = y + cursorSize;
+    poly->x3 = x + cursorSize;
+    poly->y3 = y + cursorSize;
+    poly->u2 = poly->v1 = poly->v0 = poly->u0 = 0;
+    poly->v3 = poly->u3 = poly->v2 = poly->u1 = 32;
+    poly->tpage = 0x1A;
+    setSemiTrans(poly, true);
+    setShadeTex(poly, false);
+    poly->clut = g_ClutIds[0x170];
+
+    func_80107250(poly, tick * 0x10);
+    AddPrim(&gpu->ot[OTSIZE - 1], poly);
+    g_GpuUsage.gt4++;
+}
 
 bool func_800F27F4(s32 arg0) {
     if (arg0 == 0) {
@@ -1433,7 +1480,7 @@ void func_800F298C(void) {
             break;
         case 0x14:
             if (D_8013AED0 != 0) {
-                func_800F2658();
+                DrawMapCursor();
             }
             if (g_pads[0].tapped & (PAD_START | PAD_SELECT)) {
                 func_801027C4(7);

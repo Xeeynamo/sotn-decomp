@@ -405,7 +405,7 @@ void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
 
         bufRect.y = rect->y + i;
         LoadImage(&bufRect, buf);
-        D_8003C104[offset + i] = GetClut(bufRect.x, bufRect.y);
+        g_ClutIds[offset + i] = GetClut(bufRect.x, bufRect.y);
     }
 }
 
