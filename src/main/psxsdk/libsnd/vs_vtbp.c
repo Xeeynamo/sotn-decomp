@@ -4,7 +4,8 @@
 static s32 D_80032F08 = 0;
 static s16 D_80032F0C = 0xffff;
 
-s16 SsVabTransBodyPartly(u8* addr, u32 bufsize, s16 vabid) {
+short SsVabTransBodyPartly(
+    unsigned char* addr, unsigned long bufsize, short vabid) {
     s16 new_vabid;
     s32 buff_diff;
     u32 new_bufsize;
