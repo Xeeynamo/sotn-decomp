@@ -192,6 +192,7 @@ jobs:
         run: |
             git checkout config/
             rm -rf build/us/main.ld
+            rm -rf build/us/weapon.ld
             make -j extract
             python3 tools/function_finder/function_finder_psx.py --use-call-trees > gh-duplicates/functions.md
             rm -rf gh-duplicates/function_calls/ || true
