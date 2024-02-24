@@ -461,7 +461,7 @@
 - [✅ func_800F1954](function_calls/dra.func_800F1954.svg?raw=1)
 - [✅ func_800F1A3C](function_calls/dra.func_800F1A3C.svg?raw=1)
 - [✅ func_800F1B08](function_calls/dra.func_800F1B08.svg?raw=1)
-- [❌ func_800F1D54](function_calls/dra.func_800F1D54.svg?raw=1)
+- [✅ func_800F1D54](function_calls/dra.func_800F1D54.svg?raw=1)
 - [✅ func_800F1EB0](function_calls/dra.func_800F1EB0.svg?raw=1)
 - [✅ func_800F1FC4](function_calls/dra.func_800F1FC4.svg?raw=1)
 - [✅ func_800F2014](function_calls/dra.func_800F2014.svg?raw=1)
