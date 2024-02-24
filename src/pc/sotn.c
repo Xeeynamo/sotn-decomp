@@ -58,6 +58,8 @@ GfxBank** g_GfxStageBank[0x40] = {
 };
 extern u_long* D_800A3BB8[];
 
+u8 g_BmpCastleMap[0x20000];
+
 #define MAX_SIZE_FOR_COMPRESSED_GFX 8192
 u8 D_800C217C[MAX_SIZE_FOR_COMPRESSED_GFX];
 u8 D_800C27B0[MAX_SIZE_FOR_COMPRESSED_GFX];

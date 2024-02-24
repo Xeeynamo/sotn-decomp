@@ -596,8 +596,6 @@ u8 func_800F17C8(s8 arg0[], s32 arg1, s32 arg2) {
 }
 
 void func_800F180C(s32 x, s32 y, u8* dst) {
-// TODO fix CASTLE_MAP_PTR
-#ifndef VERSION_PC
     s32 i, j;
     u8 *start, *curSrc, *src;
 
@@ -612,12 +610,9 @@ void func_800F180C(s32 x, s32 y, u8* dst) {
             dst[4 * i + j] = curSrc[j];
         }
     }
-#endif
 }
 
 void func_800F1868(s32 x, s32 y, u8* src) {
-// TODO fix CASTLE_MAP_PTR
-#ifndef VERSION_PC
     s32 i;
     s32 j;
     u8* dst;
@@ -635,26 +630,25 @@ void func_800F1868(s32 x, s32 y, u8* src) {
             curDst[j] = src[4 * i + j];
         }
     }
-#endif
 }
 
-void func_800F18C4(s32 arg0, s32 arg1) {
-    s8 sp10[20];
+void func_800F18C4(s32 x, s32 y) {
+    u8 sp10[4 * 5];
     s32 i;
     s32 j;
 
-    func_800F180C(arg0, arg1, &sp10);
+    func_800F180C(x, y, &sp10);
 
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 5; j++) {
             func_800F1770(sp10, j, i, false);
         }
     }
-    func_800F1868(arg0, arg1, &sp10);
+    func_800F1868(x, y, sp10);
 }
 
 void func_800F1954(s32 x, s32 y, s32 arg2) {
-    u8 sp10[20];
+    u8 sp10[4 * 5];
     s32 i;
     s32 j;
 
