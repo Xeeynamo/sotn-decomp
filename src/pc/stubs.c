@@ -628,8 +628,6 @@ void func_8011A9D8(void) { NOT_IMPLEMENTED; }
 
 void func_8011A870(void) { NOT_IMPLEMENTED; }
 
-void func_800F1D54(s32 arg0, s32 arg1, s32 arg2, s32 arg3) { NOT_IMPLEMENTED; }
-
 s32 func_800F0CD8(s32 arg0) {
     NOT_IMPLEMENTED;
     return 0;

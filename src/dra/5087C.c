@@ -756,7 +756,33 @@ void func_800F1B08(s32 x, s32 y, s32 arg2) {
     LoadTPage(bitmap, 0, 0, x + VramPosX, y * 4 + VramPosY, 8, 5);
 }
 
-INCLUDE_ASM("dra/nonmatchings/5087C", func_800F1D54);
+void func_800F1D54(s32 x, s32 y, s32 arg2) {
+    const int VramPosX = 0x340;
+    const int VramPosY = 0x100;
+    RECT rect;
+    u8 buf[20];
+    u8* bitmap = buf;
+
+    rect.x = x + VramPosX;
+    rect.y = y * 4 + VramPosY;
+    rect.w = 2;
+    rect.h = 5;
+    StoreImage(&rect, bitmap);
+    DrawSync(0);
+    if (arg2 == 1) {
+        func_800F1770(bitmap, 2, 0, func_800F17C8(bitmap, 2, 1));
+    }
+    if (arg2 == 2) {
+        func_800F1770(bitmap, 0, 2, func_800F17C8(bitmap, 1, 2));
+    }
+    if (arg2 == 3) {
+        func_800F1770(bitmap, 2, 4, func_800F17C8(bitmap, 2, 3));
+    }
+    if (arg2 == 4) {
+        func_800F1770(bitmap, 4, 2, func_800F17C8(bitmap, 3, 2));
+    }
+    LoadTPage(bitmap, 0, 0, x + VramPosX, y * 4 + VramPosY, 8, 5);
+}
 
 void func_800F1EB0(s32 playerX, s32 playerY, s32 arg2) {
     s32 x;
@@ -783,11 +809,11 @@ void func_800F1EB0(s32 playerX, s32 playerY, s32 arg2) {
         if (data_3 != 0xFF) {
             if (arg2 != 0xFFFF) {
                 if (arg2 == data_3) {
-                    func_800F1D54(x, y, data_2, data_4);
+                    func_800F1D54(x, y, data_2);
                 }
             } else {
                 if (x == playerX && y == playerY && g_CastleFlags[data_3]) {
-                    func_800F1D54(x, y, data_2, data_4);
+                    func_800F1D54(x, y, data_2);
                 }
             }
         }
