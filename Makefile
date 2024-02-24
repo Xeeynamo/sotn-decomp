@@ -36,7 +36,9 @@ PSXLIBS         := $(addprefix lib, c c2 api etc card gpu gs gte cd snd spu)
 
 # Files
 PSXLIB_DIRS     := $(addprefix psxsdk/, . $(PSXLIBS))
-MAIN_ASM_DIRS   := $(addprefix $(ASM_DIR)/$(MAIN)/,. $(PSXLIB_DIRS) data)
+PSXLIB_DATA_DIRS := $(addprefix data/, . $(PSXLIB_DIRS))
+
+MAIN_ASM_DIRS   := $(addprefix $(ASM_DIR)/$(MAIN)/,. $(PSXLIB_DIRS) data $(PSXLIB_DATA_DIRS))
 MAIN_SRC_DIRS   := $(addprefix $(SRC_DIR)/$(MAIN)/,. $(PSXLIB_DIRS))
 
 MAIN_S_FILES    := $(wildcard $(addsuffix /*.s, $(MAIN_ASM_DIRS)))

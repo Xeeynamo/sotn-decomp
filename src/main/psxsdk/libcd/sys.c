@@ -20,6 +20,8 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdFlush);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdSetDebug);
 
+const char aNone[] = "none";
+
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdComstr);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdIntstr);

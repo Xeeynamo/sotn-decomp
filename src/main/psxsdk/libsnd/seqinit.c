@@ -4,7 +4,6 @@ s16 _SsInitSoundSeq(s16, s16, u32);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqinit", _SsInitSoundSeq);
 
-extern s8 D_80010A3C;
 extern u32 _snd_openflag;
 
 s16 SsSeqOpen(u32 addr, s16 vab_id) {
@@ -14,7 +13,7 @@ s16 SsSeqOpen(u32 addr, s16 vab_id) {
     u8 found;
     open_bits = _snd_openflag;
     if (open_bits == 0xFFFFFFFF) {
-        printf(&D_80010A3C);
+        printf("Can't Open Sequence data any more\n\n");
         return -1;
     }
     bit_pos = 0;

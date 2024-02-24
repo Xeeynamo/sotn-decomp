@@ -1,5 +1,7 @@
 #include "common.h"
 
+const char D_800106B4[] = "%s:(%s) Sync=%s, Ready=%s\n";
+
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", getintr);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_sync);
@@ -7,6 +9,9 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_sync);
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_ready);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_cw);
+
+const char aIdBiosCV177199[] =
+    "$Id: bios.c,v 1.77 1996/05/13 06:58:16 suzu Exp $";
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_vol);
 

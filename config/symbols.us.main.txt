@@ -1,0 +1,2 @@
+D_80010960 = 0x80010960; // force_migration:True
+D_80010964 = 0x80010964; // force_migration:True

@@ -21,7 +21,6 @@ s32 _spu_reset(void) {
     return 0;
 }
 
-extern s32 D_80010CEC;
 extern s32 D_800334FC;
 extern s32* D_80033514;
 extern s32 D_80033540;
@@ -29,7 +28,6 @@ extern s32 _spu_addrMode;
 extern s32 _spu_mem_mode;
 extern s32 _spu_mem_mode_unit;
 extern s32 _spu_mem_mode_unitM;
-extern s32 aWaitReset;
 
 s32 _spu_init(s32 arg0) {
     volatile s32 sp0;
@@ -54,7 +52,7 @@ s32 _spu_init(s32 arg0) {
             wait_count = D_800334FC + 1;
             D_800334FC = wait_count;
             if (wait_count > 5000) {
-                printf(&D_80010CEC, &aWaitReset);
+                printf("SPU:T/O [%s]\n", "wait (reset)");
                 break;
             }
         } while (_spu_RXX->rxx.spustat & 0x7FF);
@@ -111,9 +109,6 @@ s32 _spu_init(s32 arg0) {
     return 0;
 }
 
-extern s32 aWaitDmafClearW;
-extern s32 aWaitWrdyHL;
-
 s32 _spu_writeByIO(s32 addr, s32 size) {
     volatile s32 sp0;
     volatile s32 sp4;
@@ -160,7 +155,7 @@ s32 _spu_writeByIO(s32 addr, s32 size) {
                 wait_count = D_800334FC + 1;
                 D_800334FC = wait_count;
                 if (wait_count > 5000) {
-                    printf(&D_80010CEC, &aWaitWrdyHL);
+                    printf("SPU:T/O [%s]\n", "wait (wrdy H -> L)");
                     break;
                 }
             } while (_spu_RXX->rxx.spustat & 0x400);
@@ -181,7 +176,7 @@ s32 _spu_writeByIO(s32 addr, s32 size) {
             wait_count = D_800334FC + 1;
             D_800334FC = wait_count;
             if (wait_count > 5000) {
-                printf(&D_80010CEC, &aWaitDmafClearW);
+                printf("SPU:T/O [%s]\n", "wait (dmaf clear/W)");
                 return;
             }
             spustat_cur = _spu_RXX->rxx.spustat & 0x7FF;
