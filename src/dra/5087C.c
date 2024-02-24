@@ -894,61 +894,48 @@ void func_800F2404(s32 arg0) {
     func_800E346C();
 }
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("dra/nonmatchings/5087C", func_800F24F4);
-#else
-void func_801042C4(s32);
-void func_80105428();
-extern s32 D_80137598;
-
 void func_800F24F4(void) {
-    s32 castleX;
-    s32 castleY;
-    s32 phi_v1;
-    s32 phi_a0;
+    s32 x;
+    s32 y;
+    s32 var_a0;
 
-    castleX = ((s32)playerX >> 8) + g_Tilemap.left;
-    castleY = ((s32)playerY >> 8) + g_Tilemap.top;
-    if (D_8003C708 & 0x20) {
-        phi_v1 = g_StageId;
-        if (phi_v1 == (STAGE_NO0 | STAGE_INVERTEDCASTLE_FLAG)) {
-            if ((castleX == phi_v1) && (castleY == 0x24)) {
+    x = (playerX >> 8) + g_Tilemap.left;
+    y = (playerY >> 8) + g_Tilemap.top;
+    if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
+        if (g_StageId == STAGE_RNO0) {
+            if (x == 32 && y == 36) {
                 if (TimeAttackController(TIMEATTACK_EVENT_FINAL_SAVEPOINT,
                                          TIMEATTACK_GET_RECORD) == 0) {
                     TimeAttackController(TIMEATTACK_EVENT_FINAL_SAVEPOINT,
                                          TIMEATTACK_SET_RECORD);
                 }
-                phi_v1 = g_StageId;
             }
         }
 
-        if (phi_v1 == (STAGE_NO4 | STAGE_INVERTEDCASTLE_FLAG) &&
-            castleX == 0x12 && castleY == 0x1E) {
-        } else {
-            phi_a0 = 0;
-            if (g_StageId == STAGE_NO4 && castleX == 0x2D && castleY == 0x21) {
-                if (PLAYER.posX.val == 0x80) {
+        var_a0 = 0; // FAKE?
+        if (g_StageId != STAGE_RNO4 || x != 18 || y != 30) {
+            if (g_StageId == STAGE_NO4 && x == 45 && y == 33) {
+                if (g_Entities[var_a0].posX.i.hi == 128) {
                     D_8003C730 = 1;
-                    phi_a0 = 1;
+                    func_801042C4(1);
                 } else {
-                    phi_a0 = 1;
-                    if (TimeAttackController(TIMEATTACK_EVENT_ORLOX_DEFEAT,
+                    if (TimeAttackController(TIMEATTACK_EVENT_SUCCUBUS_DEFEAT,
                                              TIMEATTACK_GET_RECORD)) {
-                        goto block_18;
+                        D_80137598 = 0;
+                        return;
                     }
+                    func_801042C4(1);
                 }
+            } else {
+                func_801042C4(var_a0);
             }
-
-            func_801042C4(phi_a0);
             D_80137598 = 1;
             func_80105428();
             return;
         }
     }
-block_18:
     D_80137598 = 0;
 }
-#endif
 
 void DrawMapCursor(void) {
     s32 x;

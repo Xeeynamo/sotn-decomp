@@ -41,7 +41,7 @@ segments:
       - [0xEB4, rodata]
       - [0xF18, rodata] # jpt_80019DE8
       - [0xF2C, rodata]
-      - [0x1260, rodata] # jpt_8001DE24
+      - [0x1260, .rodata, psxsdk/libsnd/seqread] # jpt_8001DE24 _SsSetControlChange
       - [0x1448, rodata] # jpt_8001EECC
       - [0x14A8, rodata] # jpt_8001EFB8
       - [0x14D4, .rodata, psxsdk/libsnd/sstick] # jpt_80020818, SsSetTickMode

@@ -11,11 +11,79 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmDoAllocate);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", vmNoiseOn);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", vmNoiseOn2);
+void vmNoiseOn2(u8 voice, u16 arg1, u16 arg2, u16 arg3, u16 arg4) {
+    u16 i;
+    u16 bitsUpper;
+    u16 bitsLower;
+    u8 pad[2];
+    _svm_sreg_buf.buf[voice].field_0_vol_left = arg1;
+    _svm_sreg_buf.buf[voice].field_2_vol_right = arg2;
+    _svm_sreg_dirty[voice] = _svm_sreg_dirty[voice] | 3;
+    _svm_sreg_dirty[voice] = _svm_sreg_dirty[voice] | 3;
+
+    if (voice < 0x10) {
+        bitsLower = 1 << voice;
+        bitsUpper = 0;
+    } else {
+        bitsLower = 0;
+        bitsUpper = 1 << (voice - 0x10);
+    }
+
+    _svm_voice[voice].unk04 = 0xa;
+    for (i = 0; i < spuVmMaxVoice; i++) {
+        _svm_voice[i].unk1b &= 1;
+    }
+    _svm_voice[voice].unk1b = 2;
+    _svm_voice[voice].unk2 = 0;
+
+    _svm_okon1 = bitsLower | _svm_okon1;
+    _svm_okon2 = bitsUpper | _svm_okon2;
+
+    _svm_okof1 = _svm_okof1 & ~_svm_okon1;
+    _svm_okof2 = _svm_okof2 & ~_svm_okon2;
+    D_80032F10[0x194 / 2] = bitsLower;
+    D_80032F10[0x196 / 2] = bitsUpper;
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", note2pitch);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", note2pitch2);
+extern u16 D_80032F14[];
+s32 note2pitch2(u16 arg0, u16 arg1) {
+    VagAtr* temp_v1;
+    s16 octave;
+    s32 temp_a1;
+    u16 temp_v0;
+    s16 var_a2;
+    s16 var_a3;
+    short new_var;
+    s32 var_v0;
+    u16 var_v1;
+    s32 pos;
+    temp_v1 = &_svm_tn[_svm_cur.field_C_vag_idx +
+                       (_svm_cur.field_7_fake_program * 0x10)];
+    var_v0 = arg1 + temp_v1->shift;
+    if (var_v0 < 0) {
+        var_v0 += 7;
+    }
+    temp_a1 = var_v0 >> 3;
+    var_a3 = temp_a1;
+    var_a2 = 0;
+    if (temp_a1 >= 16) {
+        var_a2 = 1;
+        var_a3 = temp_a1 - 16;
+    }
+    temp_v0 = arg0 - (temp_v1->center - 60);
+    new_var = var_a2 + temp_v0;
+    octave = (new_var / 12) - 5;
+    pos = (new_var % 12) * 16 + var_a3;
+    var_v1 = D_80032F14[pos];
+    if (octave > 0) {
+        var_v1 <<= octave;
+    } else if (octave < 0) {
+        var_v1 = var_v1 >> (-octave);
+    }
+    return var_v1;
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SePitchBend);
 
@@ -291,7 +359,35 @@ s16 SpuVmGetSeqRVol(s16 arg0) {
     return new_var[((s32)(arg0 & 0xFF00)) >> 8].unk76;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmSeqKeyOff);
+void SpuVmSeqKeyOff(s16 arg0) {
+    u8 voice;
+    s32 bitsUpper;
+    s32 bitsLower;
+    u16 temp2;
+    for (voice = 0; voice < spuVmMaxVoice; voice++) {
+        if (_svm_voice[voice].unke == arg0) {
+            _svm_cur.field_0x1a = voice;
+            temp2 = get_field_0x1a();
+            if (temp2 < 0x10) {
+                bitsLower = 1 << temp2;
+                bitsUpper = 0;
+            } else {
+                bitsLower = 0;
+                bitsUpper = 1 << (temp2 - 0x10);
+            }
+
+            _svm_voice[temp2].unk1b = 0;
+            _svm_voice[temp2].unk04 = 0;
+            _svm_voice[temp2].unk0 = 0;
+
+            _svm_okof1 = bitsLower | _svm_okof1;
+            _svm_okof2 = bitsUpper | _svm_okof2;
+
+            _svm_okon1 = _svm_okon1 & ~_svm_okof1;
+            _svm_okon2 = _svm_okon2 & ~_svm_okof2;
+        }
+    }
+}
 
 s32 SpuVmSetProgVol(s16 arg0, s16 arg1, u8 arg2) {
     if (!SpuVmVSetUp(arg0, arg1)) {
@@ -528,7 +624,42 @@ s16 SsUtKeyOnV(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note, s16 fine,
     return voice;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtKeyOffV);
+s32 SsUtKeyOffV(u16 arg0) {
+    s32 bitsUpper;
+    s32 bitsLower;
+    u16 temp2;
+
+    if (_snd_ev_flag != 1) {
+        _snd_ev_flag = 1;
+        if (arg0 < 24) {
+            _svm_cur.field_0x1a = arg0;
+            temp2 = get_field_0x1a();
+            if (temp2 < 0x10) {
+                bitsLower = 1 << temp2;
+                bitsUpper = 0;
+            } else {
+                bitsLower = 0;
+                bitsUpper = 1 << (temp2 - 0x10);
+            }
+
+            _svm_voice[temp2].unk1b = 0;
+            _svm_voice[temp2].unk04 = 0;
+            _svm_voice[temp2].unk0 = 0;
+
+            _snd_ev_flag = 0;
+
+            _svm_okof1 = bitsLower | _svm_okof1;
+            _svm_okof2 = bitsUpper | _svm_okof2;
+
+            _svm_okon1 = _svm_okon1 & ~_svm_okof1;
+            _svm_okon2 = _svm_okon2 & ~_svm_okof2;
+            return 0;
+        }
+        _snd_ev_flag = 0;
+        return -1;
+    }
+    return -1;
+}
 
 s16 SsUtPitchBend(s16 voice, s16 vabId, s16 prog, s16 note, s16 pbend) {
     SpuVmVSetUp(vabId, prog);
@@ -642,4 +773,49 @@ s16 SsUtAutoPan(s16 vc, s16 start_pan, s16 end_pan, s16 delta_time) {
     return -1;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SsUtAllKeyOff);
+void SsUtAllKeyOff(void) {
+    s16 voice;
+    s32 bitsUpper;
+    s32 bitsLower;
+    u16 temp2;
+    s16 pos;
+    for (voice = 0; voice < spuVmMaxVoice; voice++) {
+        _svm_voice[voice].unk2 = 0x18;
+        _svm_voice[voice].unk0 = 0xFF;
+        _svm_voice[voice].unk1b = 0;
+        _svm_voice[voice].unk04 = 0;
+        _svm_voice[voice].unk6 = 0;
+        _svm_voice[voice].unke = 0xFF;
+        _svm_voice[voice].unk10 = 0;
+        _svm_voice[voice].prog = 0;
+        _svm_voice[voice].tone = 0xFF;
+
+        pos = voice * 8;
+        D_80032F10[pos + 0x6 / 2] = 0x200;
+        D_80032F10[pos + 0x4 / 2] = 0x1000;
+        D_80032F10[pos + 0x8 / 2] = 0x80ff;
+        D_80032F10[pos + 0x0] = 0;
+        D_80032F10[pos + 0x2 / 2] = 0;
+        D_80032F10[pos + 0xa / 2] = 0x4000;
+
+        _svm_cur.field_0x1a = voice;
+        temp2 = get_field_0x1a();
+        if (temp2 < 0x10) {
+            bitsLower = 1 << temp2;
+            bitsUpper = 0;
+        } else {
+            bitsLower = 0;
+            bitsUpper = 1 << (temp2 - 0x10);
+        }
+
+        _svm_voice[temp2].unk1b = 0;
+        _svm_voice[temp2].unk04 = 0;
+        _svm_voice[temp2].unk0 = 0;
+
+        _svm_okof1 = bitsLower | _svm_okof1;
+        _svm_okof2 = bitsUpper | _svm_okof2;
+
+        _svm_okon1 = _svm_okon1 & ~_svm_okof1;
+        _svm_okon2 = _svm_okon2 & ~_svm_okof2;
+    }
+}

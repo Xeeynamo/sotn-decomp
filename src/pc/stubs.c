@@ -620,7 +620,7 @@ int CdInit(void) {
 
 void func_801083BC(void) { NOT_IMPLEMENTED; }
 
-void func_800F24F4(void) { NOT_IMPLEMENTED; }
+void func_801042C4(s32 arg0) { NOT_IMPLEMENTED; }
 
 void func_8011A4D0(void) { NOT_IMPLEMENTED; }
 
