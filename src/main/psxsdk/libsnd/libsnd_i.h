@@ -350,4 +350,6 @@ extern unsigned short _svm_okon2;
 extern unsigned short _svm_okof1;
 extern unsigned short _svm_okof2;
 
+void SsUtSetReverbDepth(short, short);
+
 #endif
