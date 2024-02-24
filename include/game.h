@@ -161,6 +161,7 @@ typedef struct Prim {
 #define WEAPON_0_END (WEAPON_1_START - 1)
 #define WEAPON_1_START 0xF0
 
+#ifndef VERSION_PC
 #define RIC_PRG_PTR 0x8013C000
 #define FAMILIAR_PTR 0x80170000
 #define WEAPON0_PTR 0x8017A000
@@ -173,6 +174,24 @@ typedef struct Prim {
 #define SIM_CHR0 0x80280000
 #define SIM_CHR1 0x80284000
 #define SIM_PTR 0x80280000
+
+#else
+#define RIC_PRG_PTR 0x8013C000
+#define FAMILIAR_PTR 0x80170000
+#define WEAPON0_PTR 0x8017A000
+#define WEAPON1_PTR 0x8017D000
+#define STAGE_PRG_PTR 0x80180000
+#define CASTLE_MAP_PTR g_BmpCastleMap
+#ifndef DEMO_KEY_PTR
+#define DEMO_KEY_PTR 0x801E8000
+#endif
+#define SIM_CHR0 0x80280000
+#define SIM_CHR1 0x80284000
+#define SIM_PTR 0x80280000
+
+extern u8 g_BmpCastleMap[0x20000];
+
+#endif
 
 // Flags for entity->drawFlags
 #define FLAG_DRAW_ROTX 0x01
