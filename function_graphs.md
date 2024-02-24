@@ -1285,7 +1285,7 @@
 - [✅ _SsSndPause](function_calls/main._SsSndPause.svg?raw=1)
 - [✅ _SsSndPlay](function_calls/main._SsSndPlay.svg?raw=1)
 - [✅ _SsSndReplay](function_calls/main._SsSndReplay.svg?raw=1)
-- [❌ _SsSndSetVabAttr](function_calls/main._SsSndSetVabAttr.svg?raw=1)
+- [✅ _SsSndSetVabAttr](function_calls/main._SsSndSetVabAttr.svg?raw=1)
 - [✅ _SsSndSetVol](function_calls/main._SsSndSetVol.svg?raw=1)
 - [✅ _SsSndStop](function_calls/main._SsSndStop.svg?raw=1)
 - [✅ _SsSndTempo](function_calls/main._SsSndTempo.svg?raw=1)
