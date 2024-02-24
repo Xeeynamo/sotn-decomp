@@ -268,7 +268,7 @@ void func_800E2B00(void) {
     sprite->v0 = (D_801362B4 & 2) << (new_var = 6);
     sprite->w = 128;
     sprite->h = 128;
-    sprite->clut = D_8003C104[g_DebugCurPal];
+    sprite->clut = g_ClutIds[g_DebugCurPal];
     AddPrim(&g_CurrentOT[0x1FE], sprite);
     g_GpuUsage.sp++;
     SetDrawMode(drMode, 0, 0, (D_801362B4 >> 2) + var_s7, &g_Vram.D_800ACD80);

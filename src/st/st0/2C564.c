@@ -760,7 +760,7 @@ void func_801ADB10(u16* arg0, u16 arg1, u16 arg2, s32 steps, u8* arg4) {
         bufRect.y = temp_v0 + 0xF0;
         bufRect.x = ((temp_a2 - (temp_v0 * 0x10)) * 0x10) + 0x100;
         LoadImage(&bufRect, buf);
-        D_8003C104[arg2] = GetClut(bufRect.x, bufRect.y);
+        g_ClutIds[arg2] = GetClut(bufRect.x, bufRect.y);
     }
 }
 

@@ -992,7 +992,7 @@ void DrawMapCursor(void) {
     poly->tpage = 0x1A;
     setSemiTrans(poly, true);
     setShadeTex(poly, false);
-    poly->clut = D_8003C104[0x170];
+    poly->clut = g_ClutIds[0x170];
 
     func_80107250(poly, tick * 0x10);
     AddPrim(&gpu->ot[OTSIZE - 1], poly);

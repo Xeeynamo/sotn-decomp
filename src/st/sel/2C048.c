@@ -2250,19 +2250,19 @@ void func_801B1DA8(void) {
 
     for (i = 0xF0; i < 0x100; i++) {
         for (j = 0x200; j < 0x300; j += 0x10) {
-            D_8003C104[index++] = GetClut(j, i);
+            g_ClutIds[index++] = GetClut(j, i);
         }
     }
 
     for (i = 0xF0; i < 0x100; i++) {
         for (j = 0; j < 0x100; j += 0x10) {
-            D_8003C104[index++] = GetClut(j, i);
+            g_ClutIds[index++] = GetClut(j, i);
         }
     }
 
     for (i = 0xF0; i < 0x100; i++) {
         for (j = 0x100; j < 0x200; j += 0x10) {
-            D_8003C104[index++] = GetClut(j, i);
+            g_ClutIds[index++] = GetClut(j, i);
         }
     }
 }
@@ -2531,7 +2531,7 @@ void func_801B27A8(s32 x, s32 y, s32 w, s32 h, s32 u, s32 v, s32 clut, s32 arg7,
     sprite->r0 = c;
     sprite->g0 = c;
     sprite->b0 = c;
-    sprite->clut = D_8003C104[clut];
+    sprite->clut = g_ClutIds[clut];
     AddPrim(&temp_s4->ot[0x20], sprite);
     g_GpuUsage.sp++;
     func_801B2700(arg7, 0x20);
