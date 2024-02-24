@@ -388,7 +388,145 @@ void _SsContRpn2(s16 arg0, s16 arg1, u8 arg2) {
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContDataEntry);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsSndSetVabAttr);
+#define DE_PRIORITY 0
+#define DE_MODE 1
+#define DE_LIMITL 2
+#define DE_LIMITH 3
+#define DE_ADSR_AR_L 4
+#define DE_ADSR_AR_E 5
+#define DE_ADSR_DR 6
+#define DE_ADSR_SL 7
+#define DE_ADSR_SR_L 8
+#define DE_ADSR_SR_E 9
+#define DE_ADSR_RR_L 10
+#define DE_ADSR_RR_E 11
+#define DE_ADSR_SR 12
+#define DE_VIB_TIME 13
+#define DE_PORTA_DEPTH 14
+#define DE_REV_TYPE 15
+#define DE_REV_DEPTH 16
+#define DE_ECHO_FB 17
+#define DE_ECHO_DELAY 18
+#define DE_DELAY 19
+
+void _SsSndSetVabAttr(s16 vabId, s16 progNum, s16 toneNum, VagAtr vagAtr,
+                      struct Unk adsrBuffer, short idx, unsigned char attr) {
+    s16 temp;
+    SsUtGetVagAtr(vabId, progNum, toneNum, &vagAtr);
+    switch ((s16)idx) {
+    case DE_PRIORITY:
+        vagAtr.prior = attr;
+        SsUtSetVagAtr(vabId, progNum, toneNum, &vagAtr);
+        return;
+    case DE_MODE:
+        vagAtr.mode = attr;
+        SsUtSetVagAtr(vabId, progNum, toneNum, &vagAtr);
+
+        if (attr == 0) {
+            SsUtReverbOff();
+            return;
+        } else if (attr == 1) {
+            return;
+        } else if (attr == 2) {
+            return;
+        } else if (attr == 3) {
+            return;
+        } else if (attr == 4) {
+            SsUtReverbOn();
+            return;
+        }
+        break;
+    case DE_LIMITL:
+        vagAtr.min = attr;
+        SsUtSetVagAtr(vabId, progNum, toneNum, &vagAtr);
+        return;
+    case DE_LIMITH:
+        vagAtr.max = attr;
+        SsUtSetVagAtr(vabId, progNum, toneNum, &vagAtr);
+        return;
+    case DE_ADSR_AR_L:
+    case DE_ADSR_AR_E:
+    case DE_ADSR_DR:
+    case DE_ADSR_SL:
+    case DE_ADSR_SR_L:
+    case DE_ADSR_SR_E:
+    case DE_ADSR_RR_L:
+    case DE_ADSR_RR_E:
+    case DE_ADSR_SR:
+    case DE_VIB_TIME:
+    case DE_PORTA_DEPTH:
+        temp = idx - 4;
+        _SsUtResolveADSR(vagAtr.adsr1, vagAtr.adsr2, &adsrBuffer);
+        switch (temp) {
+        case 0:
+            adsrBuffer.unkA = 0;
+            adsrBuffer.unk0 = attr;
+            break;
+        case 1:
+            adsrBuffer.unkA = 1;
+            adsrBuffer.unk0 = attr;
+            break;
+        case 2:
+            adsrBuffer.unk2 = attr;
+            break;
+        case 3:
+            adsrBuffer.unk4 = attr;
+            break;
+        case 4:
+            adsrBuffer.unkC = 0;
+            adsrBuffer.unk6 = attr;
+            break;
+        case 5:
+            adsrBuffer.unkC = 1;
+            adsrBuffer.unk6 = attr;
+            break;
+        case 6:
+            adsrBuffer.unkE = 0;
+            adsrBuffer.unk8 = attr;
+            break;
+        case 7:
+            adsrBuffer.unkE = 1;
+            adsrBuffer.unk8 = attr;
+            break;
+        case 8:
+            if (attr != 0 && attr < 64) {
+                adsrBuffer.unk10 = 0;
+                break;
+            }
+            if ((attr - 64) < 64U) {
+                adsrBuffer.unk10 = 1;
+            }
+            break;
+        case 9:
+            vagAtr.vibT = attr;
+            break;
+        case 10:
+            vagAtr.porW = attr;
+            break;
+        }
+
+        _SsUtBuildADSR(&adsrBuffer, &vagAtr.adsr1, &vagAtr.adsr2);
+        SsUtSetVagAtr(vabId, progNum, toneNum, &vagAtr);
+        return;
+    case DE_REV_TYPE:
+        SsUtSetReverbType(attr);
+        return;
+    case DE_REV_DEPTH:
+        SsUtSetReverbDepth(attr, attr);
+        return;
+    case DE_ECHO_FB:
+        SsUtSetReverbFeedback(attr);
+        return;
+    case DE_ECHO_DELAY:
+    case DE_DELAY:
+        SsUtSetReverbDelay(attr);
+        break;
+    case 20:
+    case 21:
+    case 22:
+        break;
+    }
+}
 
 void SpuVmPitchBend(s32, s16, u8, u8);
 s32 _SsReadDeltaValue(s16, s16);
