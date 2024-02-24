@@ -20,8 +20,9 @@ typedef struct {
     /* 0x3C */ void (*sync)(int);           // _sync
 } gpu;                                      // size = 0x40
 
-extern const char
-    aIdSysCV1831995[]; // "$Id: sys.c,v 1.83 1995/05/25 13:43:27 suzu Exp $"
+const char aIdSysCV1831995[] =
+    "$Id: sys.c,v 1.83 1995/05/25 13:43:27 suzu Exp $";
+
 extern const char D_800101FC[]; // "ResetGraph(%d)...\n"
 extern const char D_80010360[]; // "PutDispEnv(%08x)...\n"
 extern const char D_80010378[]; // "GPU_exeque: null func.\n"
