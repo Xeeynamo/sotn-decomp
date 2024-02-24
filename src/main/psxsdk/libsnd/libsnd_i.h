@@ -317,7 +317,9 @@ short SsUtGetVagAtr(
 short SsUtSetVagAtr(
     short vabId, short progNum, short toneNum, VagAtr* vagatrptr);
 
-s16 SsVabTransBodyPartly(u8* addr, u32 bufsize, s16 vabid);
+short SsVabTransBodyPartly(
+    unsigned char* addr, unsigned long bufsize, short vabid);
+
 u32 SpuWritePartly(u8*, u32);
 
 struct SndSeqTickEnv {
