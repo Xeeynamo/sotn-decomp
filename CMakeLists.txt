@@ -76,7 +76,7 @@ set(SOURCE_FILES_DRA
     src/dra/lba_stage.c
     src/dra/config_us.c
     src/dra/menu.c
-    src/dra/5D5BC.c 
+    src/dra/5D5BC.c
     src/dra/627C4.c
     src/dra/63ED4.c
     src/dra/692E8.c
@@ -88,7 +88,6 @@ set(SOURCE_FILES_DRA
     #src/dra/7A4D0.c # loads of unimplemented calls and symbols
     src/dra/7E4BC.c
     src/dra/843B0.c
-    src/dra/86ECC.c
     #src/dra/8D3E8.c # countless unimplemented symbols
     src/dra/90264.c
     src/dra/91EBC.c
@@ -136,7 +135,7 @@ target_include_directories(core PRIVATE
     src/pc/3rd
     )
 
-target_compile_definitions(core PRIVATE 
+target_compile_definitions(core PRIVATE
     _USE_MATH_DEFINES # needed for msvc
     VERSION_PC
     PERMUTER
@@ -160,14 +159,14 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     )
 
 if (WIN32)
-target_link_libraries(${PROJECT_NAME} PRIVATE 
+target_link_libraries(${PROJECT_NAME} PRIVATE
     ${SDL2_LIBRARIES} core)
 else()
-target_link_libraries(${PROJECT_NAME} PRIVATE 
+target_link_libraries(${PROJECT_NAME} PRIVATE
     ${SDL2_LIBRARIES} core m)
 endif()
 
-target_compile_definitions(${PROJECT_NAME} PRIVATE 
+target_compile_definitions(${PROJECT_NAME} PRIVATE
     _USE_MATH_DEFINES # needed for msvc
     VERSION_PC
     PERMUTER
@@ -190,14 +189,14 @@ target_include_directories(${PROJECT_NAME}_null PRIVATE
     )
 
 if (WIN32)
-target_link_libraries(${PROJECT_NAME}_null PRIVATE 
+target_link_libraries(${PROJECT_NAME}_null PRIVATE
     core)
 else()
-target_link_libraries(${PROJECT_NAME}_null PRIVATE 
+target_link_libraries(${PROJECT_NAME}_null PRIVATE
     core m)
 endif()
 
-target_compile_definitions(${PROJECT_NAME}_null PRIVATE 
+target_compile_definitions(${PROJECT_NAME}_null PRIVATE
     _USE_MATH_DEFINES # needed for msvc
     VERSION_PC
     PERMUTER
