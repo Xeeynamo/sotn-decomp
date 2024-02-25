@@ -385,10 +385,6 @@ void func_800E5498(void) {
     g_GpuUsage.gt4++;
 }
 
-#if !defined(NON_MATCHING) && defined(VERSION_HD)
-const u32 gameover_rodata_padding = 0;
-INCLUDE_ASM("dra/nonmatchings/play", HandleGameOver);
-#else
 void HandleGameOver(void) {
     Primitive* prim;
     u8 var_s0;
@@ -418,7 +414,8 @@ void HandleGameOver(void) {
         func_800EDAE4();
         HideAllBackgroundLayers();
         func_800EAD7C();
-    case Gameover_10:
+        g_GameStep++;
+        break;
     case Gameover_AllocResources_Alt:
         g_GameStep++;
         break;
@@ -648,6 +645,9 @@ void HandleGameOver(void) {
         FreePrimitives(D_8013640C);
         g_GameStep++;
         break;
+    case Gameover_10:
+        g_GameStep++;
+        break;
     case Gameover_11:
     case Gameover_11_Alt:
         if (g_GameStep != Gameover_11_Alt && g_StageId == STAGE_ST0) {
@@ -658,4 +658,3 @@ void HandleGameOver(void) {
         break;
     }
 }
-#endif
