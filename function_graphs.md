@@ -432,7 +432,7 @@
 - [✅ GetTeleportToOtherCastle](function_calls/dra.GetTeleportToOtherCastle.svg?raw=1)
 - [✅ HandleDamage](function_calls/dra.HandleDamage.svg?raw=1)
 - [✅ HandleEnding](function_calls/dra.HandleEnding.svg?raw=1)
-- [❌ HandleGameOver](function_calls/dra.HandleGameOver.svg?raw=1)
+- [✅ HandleGameOver](function_calls/dra.HandleGameOver.svg?raw=1)
 - [✅ HandleGravityBootsMP](function_calls/dra.HandleGravityBootsMP.svg?raw=1)
 - [✅ HandleNowLoading](function_calls/dra.HandleNowLoading.svg?raw=1)
 - [✅ HandlePlay](function_calls/dra.HandlePlay.svg?raw=1)

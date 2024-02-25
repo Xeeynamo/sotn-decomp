@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>dra.HandleGameOver</title>
 <g id="a_node3"><a xlink:href="dra.HandleGameOver.svg" xlink:title="dra.HandleGameOver">
-<ellipse fill="red" stroke="black" cx="320.54" cy="-198" rx="111.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="320.54" cy="-198" rx="111.58" ry="18"/>
 <text text-anchor="middle" x="320.54" y="-194.3" font-family="Times,serif" font-size="14.00">dra.HandleGameOver</text>
 </a>
 </g>

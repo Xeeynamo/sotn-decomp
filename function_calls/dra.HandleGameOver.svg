@@ -12,7 +12,7 @@
 <!-- dra.HandleGameOver -->
 <g id="node1" class="node">
 <title>dra.HandleGameOver</title>
-<ellipse fill="red" stroke="black" cx="2684.74" cy="-198" rx="111.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2684.74" cy="-198" rx="111.58" ry="18"/>
 <text text-anchor="middle" x="2684.74" y="-194.3" font-family="Times,serif" font-size="14.00">dra.HandleGameOver</text>
 </g>
 <!-- LoadImage -->
