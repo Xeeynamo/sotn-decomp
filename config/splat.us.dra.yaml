@@ -131,38 +131,104 @@ segments:
       - [0x388D4, raw, g_PalEquipIcon]
       - [0x3B0D4, data]
       - [0x3B3B0, data]
-      - [0x3B3B4, .rodata, 42398]
-      - [0x3B530, .rodata, play]
-      - [0x3B720, .rodata, loading]
-      - [0x3B9B8, .rodata, 47BB8]
-      - [0x3BEE0, .rodata, save_mgr]
-      - [0x3C1A8, .rodata, 4A538]
-      - [0x3C290, .rodata, collider]
-      - [0x3C490, .rodata, demo]
-      - [0x3C514, .rodata, 5087C]
-      - [0x3C5D4, .rodata, menu]
-      - [0x3CBAC, .rodata, 5D5BC]
-      - [0x3CC0C, .rodata, 627C4]
-      - [0x3CDC0, .rodata, 63ED4]
+      - [0x3B3B4, .rodata, 42398] # func_800E2398
+      # - [0x3B3B8, .rodata, 42398] # func_800E249C
+      # - [0x3B3F0, .rodata, 42398] # func_800E2824
+      # - [0x3B430, .rodata, 42398] # func_800E2B00
+      # - [0x3B44C, .rodata, 42398] # func_800E2F3C
+      # - [0x3B524, .rodata, 42398] # func_800E31C0
+      - [0x3B530, .rodata, play] # func_800E4A14
+      # - [0x3B560, .rodata, play] # HandleGameOver
+      - [0x3B720, .rodata, loading] # func_800E6358
+      # - [0x3B7E8, .rodata, loading] # func_800E6FD4
+      # - [0x3B808, .rodata, loading] # func_800E7458
+      # - [0x3B828, .rodata, loading] # func_800E7AEC
+      - [0x3B9B8, .rodata, 47BB8] # func_800E7BB8
+      # - [0x3BD88, .rodata, 47BB8] # func_800E7E08
+      # - [0x3BDE0, .rodata, 47BB8] # func_800E81FC
+      - [0x3BEE0, .rodata, save_mgr] # func_800E930C
+      # - [0x3BEEC, .rodata, save_mgr] # func_800E9640
+      # - [0x3BEF8, .rodata, save_mgr] # func_800E9880
+      # - [0x3C160, .rodata, save_mgr] # func_800E9C14
+      # - [0x3C194, .rodata, save_mgr] # func_800EA48C
+      - [0x3C1A8, .rodata, 4A538] # func_800EA7CC
+      # - [0x3C1E8, .rodata, 4A538] # func_800EB098
+      # - [0x3C228, .rodata, 4A538] # func_800EB314
+      # - [0x3C238, .rodata, 4A538] # RenderPrimitives
+      - [0x3C290, .rodata, collider] # CheckCollision
+      - [0x3C490, .rodata, demo] # func_800F0334
+      # - [0x3C4C0, .rodata, demo] # func_800F04A4
+      # - [0x3C4C8, .rodata, demo] # func_800F0608
+      - [0x3C514, .rodata, 5087C] # func_800F0940
+      # - [0x3C534, .rodata, 5087C] # func_800F2860
+      # - [0x3C55C, .rodata, 5087C] # func_800F298C
+      - [0x3C5D4, .rodata, menu] # func_800F7F64
+      # - [0x3C6AC, .rodata, menu] # MenuDraw
+      # - [0x3C6EC, .rodata, menu] # func_800F9F40
+      # - [0x3C71C, .rodata, menu] # MenuHandleCursorInput
+      # - [0x3C734, .rodata, menu] # MenuHandle
+      - [0x3CBAC, .rodata, 5D5BC] # func_800FD6C4
+      # - [0x3CBC4, .rodata, 5D5BC] # func_800FD7C0
+      # - [0x3CBDC, .rodata, 5D5BC] # GetStatusAilmentTimer
+      - [0x3CC0C, .rodata, 627C4] # func_801027C4
+      # - [0x3CC2C, .rodata, 627C4] # func_801028AC
+      # - [0x3CC54, .rodata, 627C4] # func_80102D70
+      # - [0x3CC70, .rodata, 627C4] # HandleSaveMenu
+      - [0x3CDC0, .rodata, 63ED4] # func_80103ED4
       - [0x3CDDC, .rodata, lba_stage]
       - [0x3D188, .rodata, config_us]
-      - [0x40D38, .rodata, cd]
-      - [0x40E28, .rodata, 692E8]
-      - [0x4108C, .rodata, 6D59C]
-      - [0x41308, .rodata, 704D0]
-      - [0x41410, .rodata, 71830]
-      - [0x41588, .rodata, 72BB0]
-      - [0x419E8, .rodata, 75F54]
-      - [0x41AA4, .rodata, 7A4D0]
-      - [0x41CB4, .rodata, 7E4BC]
-      - [0x41DD4, .rodata, 843B0]
-      - [0x41EB0, .rodata, 8D3E8]
-      - [0x41F30, .rodata, 90264]
-      - [0x42034, .rodata, 92F60]
-      - [0x4205C, .rodata, 93290]
-      - [0x4208C, .rodata, 93BDC]
-      - [0x420B4, .rodata, 94F50]
-      - [0x42354, .rodata, 953A0]
+      - [0x40D38, .rodata, cd] # func_801080DC
+      # - [0x40D54, .rodata, cd] # func_80108448
+      - [0x40E28, .rodata, 692E8] # EntityAlucard
+      - [0x4108C, .rodata, 6D59C] # func_8010EDB8
+      - [0x41308, .rodata, 704D0] # func_80110968
+      # - [0x41320, .rodata, 704D0] # func_80110BC8
+      # - [0x41334, .rodata, 704D0] # func_80110DF8
+      # - [0x41360, .rodata, 704D0] # func_80111018
+      # - [0x41380, .rodata, 704D0] # func_801112AC
+      # - [0x413A0, .rodata, 704D0] # func_8011151C
+      - [0x413C0, .rodata, 71830] # func_80111830
+      # - [0x41400, .rodata, 71830] # func_801119C4
+      - [0x41410, .rodata, 71830] # func_801120B4
+      - [0x41588, .rodata, 72BB0] # func_80112BB0
+      # - [0x41750, .rodata, 72BB0] # func_801131C4
+      # - [0x418E0, .rodata, 72BB0] # func_80113AAC
+      # - [0x418F4, .rodata, 72BB0] # AlucardHandleDamage
+      # - [0x419D0, .rodata, 72BB0] # func_80115DA0
+      - [0x419E8, .rodata, 75F54] # PlayerStepHellfire
+      # - [0x41A00, .rodata, 75F54] # func_80116994
+      # - [0x41A20, .rodata, 75F54] # func_80116B0C
+      # - [0x41A38, .rodata, 75F54] # func_80117DEC
+      # - [0x41A44, .rodata, 75F54] # EntityNumberMovesToHpMeter
+      # - [0x41A74, .rodata, 75F54] # EntityGuardText
+      - [0x41AA4, .rodata, 7A4D0] # func_8011A4D0
+      # - [0x41AB4, .rodata, 7A4D0] # EntityEntFactory
+      # - [0x41AF4, .rodata, 7A4D0] # EntityPlayerBlinkWhite
+      # - [0x41B94, .rodata, 7A4D0] # EntityMpReplenished
+      - [0x41CB4, .rodata, 7E4BC] # func_8011E4BC
+      # - [0x41D84, .rodata, 7E4BC] # EntityPlayerPinkEffect
+      # - [0x41DA4, .rodata, 7E4BC] # EntityPlayerDissolves
+      # - [0x41DBC, .rodata, 7E4BC] # EntityMist
+      - [0x41DD4, .rodata, 843B0] # EntityTeleport
+      # - [0x41E34, .rodata, 843B0] # EntitySubwpnCrashCross
+      # - [0x41E48, .rodata, 843B0] # EntityHellfireHandler
+      # - [0x41E7C, .rodata, 843B0] # func_80128C2C
+      # - [0x41E90, .rodata, 843B0] # EntityStopWatch
+      - [0x41EB0, .rodata, 8D3E8] # func_8012D3E8
+      # - [0x41EC8, .rodata, 8D3E8] # func_8012EF2C
+      # - [0x41EF0, .rodata, 8D3E8] # func_8012F894
+      - [0x41F30, .rodata, 90264] # func_80130264
+      # - [0x41F70, .rodata, 90264] # func_80130618
+      # - [0x41FB0, .rodata, 90264] # func_801309B4
+      # - [0x41FD8, .rodata, 90264] # func_80130E94
+      # - [0x42000, .rodata, 90264] # func_8013136C
+      # - [0x42024, .rodata, 90264] # func_801315F8
+      - [0x42034, .rodata, 92F60] # CdSoundCommand4
+      - [0x4205C, .rodata, 93290] # CdSoundCommand6
+      # - [0x42074, .rodata, 93290] # CdSoundCommand12
+      - [0x4208C, .rodata, 93BDC] # CdSoundCommand14
+      - [0x420B4, .rodata, 94F50] # func_80134F50
+      - [0x42354, .rodata, 953A0] # func_801353A0
       - [0x42398, c, 42398]
       - [0x4493C, c, play]
       - [0x45D30, c, loading]
