@@ -3,7 +3,14 @@
 #include "weapon_private.h"
 #include "shared.h"
 
-INCLUDE_ASM("weapon/nonmatchings/w_025", func_B3000_8017AF14);
+void func_B3000_8017AF14(const char* fmt, u_long end) {
+    while (PadRead(0) != end) {
+        FntPrint(fmt);
+        DrawSync(0);
+        VSync(0);
+        FntFlush(-1);
+    }
+}
 
 INCLUDE_ASM("weapon/nonmatchings/w_025", EntityWeaponAttack);
 
