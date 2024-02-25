@@ -3,7 +3,35 @@
 #include "weapon_private.h"
 #include "shared.h"
 
-INCLUDE_ASM("weapon/nonmatchings/w_045", func_13F000_8017A718);
+int func_13F000_8017A718() {
+    int var;
+    if (!(g_Player.unk44 & 2)) {
+        if (g_Entities[PLAYER_CHARACTER].facingLeft == 1) {
+            if (g_Player.padPressed & PAD_RIGHT) {
+                g_Entities[PLAYER_CHARACTER].facingLeft = 0;
+                g_Player.unk4C = 1;
+                return -1;
+            }
+            if (g_Player.padPressed & PAD_LEFT) {
+                return 1;
+            }
+            do {
+                var = 0;
+            } while (0);
+            return var;
+        }
+        if (!(g_Player.padPressed & PAD_RIGHT)) {
+            if (g_Player.padPressed & PAD_LEFT) {
+                g_Entities[PLAYER_CHARACTER].facingLeft = 1;
+                g_Player.unk4C = 1;
+                return -1;
+            }
+            return 0;
+        }
+        return 1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("weapon/nonmatchings/w_045", EntityWeaponAttack);
 
