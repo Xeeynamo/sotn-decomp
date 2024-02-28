@@ -575,23 +575,23 @@ s32 func_800F16D0(void) {
     }
 }
 
-void func_800F1770(s8 arg0[], s32 arg1, s32 arg2, s32 isEnabled) {
-    s32 temp_v0 = (arg1 / 2) + (arg2 * 4);
+void func_800F1770(u8 bitmap[], s32 x, s32 y, s32 explored) {
+    s32 index = (x / 2) + (y * 4);
 
-    if (!(arg1 & 1)) {
-        arg0[temp_v0] = (arg0[temp_v0] & 0xF0) + isEnabled;
+    if (!(x & 1)) {
+        bitmap[index] = (bitmap[index] & 0xF0) + explored;
     } else {
-        arg0[temp_v0] = (arg0[temp_v0] & 0xF) + (isEnabled * 0x10);
+        bitmap[index] = (bitmap[index] & 0xF) + (explored * 0x10);
     }
 }
 
-u8 func_800F17C8(s8 arg0[], s32 arg1, s32 arg2) {
-    s32 temp_v0 = (arg1 / 2) + (arg2 * 4);
+s32 func_800F17C8(u8 bitmap[], s32 x, s32 y) {
+    s32 temp_v0 = (x / 2) + (y * 4);
 
-    if (!(arg1 & 1)) {
-        return (u8)arg0[temp_v0] & 0xF;
+    if (!(x & 1)) {
+        return bitmap[temp_v0] & 0xF;
     } else {
-        return (u8)arg0[temp_v0] >> 4;
+        return bitmap[temp_v0] >> 4;
     }
 }
 
@@ -685,9 +685,104 @@ void func_800F1A3C(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/5087C", func_800F1B08);
+void func_800F1B08(s32 x, s32 y, s32 arg2) {
+    const int VramPosX = 0x340;
+    const int VramPosY = 0x100;
+    RECT rect;
+    u8 sp28[20];
+    u8 sp40[20];
+    s32 j;
+    s32 i;
+    s32 temp_v0;
+    u8* var_a2;
+    u8* src;
+    u8* dst;
+    u8* bitmap;
 
-INCLUDE_ASM("dra/nonmatchings/5087C", func_800F1D54);
+    if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+        x = 0x3F - x;
+        y = 0x3F - y;
+    }
+    bitmap = sp28;
+    rect.x = x + VramPosX;
+    rect.y = y * 4 + VramPosY;
+    rect.w = 2;
+    rect.h = 5;
+    StoreImage(&rect, bitmap);
+    DrawSync(0);
+    var_a2 = CASTLE_MAP_PTR;
+    var_a2 += x * 2;
+    var_a2 += y * 4 * 0x80;
+
+    i = 0;
+    dst = sp40;
+    src = var_a2;
+    for (; i < 5; i++) {
+        for (j = 0; j < 4; j++) {
+            dst[i * 4 + j] = src[j];
+        }
+        src += 0x80;
+    }
+    if (arg2 == 0) {
+        for (i = 0; i < 5; i++) {
+            for (j = 0; j < 5; j++) {
+                temp_v0 = func_800F17C8(bitmap, j, i);
+                if (temp_v0 == 0 || temp_v0 == 3 || temp_v0 == 13) {
+                    temp_v0 = func_800F17C8(sp40, j, i);
+                    if (temp_v0 == 2) {
+                        temp_v0 = 1;
+                    }
+                    if (temp_v0 == 0) {
+                        func_800F1770(bitmap, j, i, 14);
+                    } else {
+                        func_800F1770(bitmap, j, i, temp_v0);
+                    }
+                }
+            }
+        }
+    } else {
+        for (i = 0; i < 5; i++) {
+            for (j = 0; j < 5; j++) {
+                if (func_800F17C8(bitmap, j, i) == 0) {
+                    if (func_800F17C8(sp40, j, i) == 0) {
+                        func_800F1770(bitmap, j, i, 13);
+                    } else {
+                        func_800F1770(bitmap, j, i, 3);
+                    }
+                }
+            }
+        }
+    }
+    LoadTPage(bitmap, 0, 0, x + VramPosX, y * 4 + VramPosY, 8, 5);
+}
+
+void func_800F1D54(s32 x, s32 y, s32 arg2) {
+    const int VramPosX = 0x340;
+    const int VramPosY = 0x100;
+    RECT rect;
+    u8 buf[20];
+    u8* bitmap = buf;
+
+    rect.x = x + VramPosX;
+    rect.y = y * 4 + VramPosY;
+    rect.w = 2;
+    rect.h = 5;
+    StoreImage(&rect, bitmap);
+    DrawSync(0);
+    if (arg2 == 1) {
+        func_800F1770(bitmap, 2, 0, func_800F17C8(bitmap, 2, 1));
+    }
+    if (arg2 == 2) {
+        func_800F1770(bitmap, 0, 2, func_800F17C8(bitmap, 1, 2));
+    }
+    if (arg2 == 3) {
+        func_800F1770(bitmap, 2, 4, func_800F17C8(bitmap, 2, 3));
+    }
+    if (arg2 == 4) {
+        func_800F1770(bitmap, 4, 2, func_800F17C8(bitmap, 3, 2));
+    }
+    LoadTPage(bitmap, 0, 0, x + VramPosX, y * 4 + VramPosY, 8, 5);
+}
 
 void func_800F1EB0(s32 playerX, s32 playerY, s32 arg2) {
     s32 x;
@@ -714,11 +809,11 @@ void func_800F1EB0(s32 playerX, s32 playerY, s32 arg2) {
         if (data_3 != 0xFF) {
             if (arg2 != 0xFFFF) {
                 if (arg2 == data_3) {
-                    func_800F1D54(x, y, data_2, data_4);
+                    func_800F1D54(x, y, data_2);
                 }
             } else {
                 if (x == playerX && y == playerY && g_CastleFlags[data_3]) {
-                    func_800F1D54(x, y, data_2, data_4);
+                    func_800F1D54(x, y, data_2);
                 }
             }
         }
@@ -743,7 +838,7 @@ void func_800F2014(void) {
         idx = (x >> 2) + (y * 16);
         subMap = 1 << ((3 - (x & 3)) * 2);
         if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
-            idx += 0x400;
+            idx += 2 * 4 * 0x80;
         }
         currMapRect = g_CastleMap[idx];
         if (!(currMapRect & subMap)) {

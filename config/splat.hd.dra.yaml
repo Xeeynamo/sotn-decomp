@@ -16,7 +16,6 @@ options:
   undefined_syms_auto_path:  config/undefined_syms_auto.hd.dra.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
-  migrate_rodata_to_functions: no
   asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
   section_order:
@@ -123,93 +122,35 @@ segments:
       - [0x3B178, data]
       - [0x3B458, .rodata, 42398]
       - [0x3B618, .rodata, play]
-      - [0x3B648, rodata, play] # jtbl_800DB648
       - [0x3B808, .rodata, loading]
-      - [0x3B8D0, .rodata, loading]
-      - [0x3B938, .rodata, 47BB8] # SimFile strings
-      - [0x3BCF0, .rodata, 47BB8] # VSyncHandler
-      - [0x3BD08, .rodata, 47BB8] # func_800E7E08
-      - [0x3BD60, .rodata, 47BB8] # LoadFileSim
+      - [0x3B938, .rodata, 47BB8]
       - [0x3BE60, .rodata, save_mgr]
-      - [0x3C11C, rodata] # func_800EA7CC
-      - [0x3C15C, .rodata, 4A538] # DecompressData
-      - [0x3C19C, .rodata, 4A538]
-      - [0x3C1AC, rodata] # RenderPrimitives
+      - [0x3C11C, .rodata, 4A538]
       - [0x3C204, .rodata, collider]
       - [0x3C404, .rodata, demo]
-      - [0x3C488, .rodata, 5087C] # func_800F0940
-      - [0x3C4A8, .rodata, 5087C]
-      - [0x3C4D0, .rodata, 5087C] # func_800F298C
-      - [0x3C548, .rodata, menu] # strings
-      - [0x3C658, .rodata, menu] # HD exclusive array of strings
-      - [0x3C6F8, .rodata, menu] # MenuDrawFamiliars
-      - [0x3C718, .rodata, menu] # MenuDraw
-      - [0x3C758, .rodata, menu] # func_800F9F40
-      - [0x3C788, .rodata, menu] # MenuHandleCursorInput
-      - [0x3C7A0, .rodata, menu] # MenuHandle str
-      - [0x3C7C8, .rodata, menu] # MenuHandle jtbl
+      - [0x3C488, .rodata, 5087C]
+      - [0x3C548, .rodata, menu]
       - [0x3CC18, .rodata, 5D5BC]
-      - [0x3CC60, .rodata, 5D5BC] # g_CheatCodes
-      - [0x3CC78, .rodata, 627C4] # jtbl_800DCC78
-      - [0x3CC98, .rodata, 627C4] # jtbl_800DCC98
-      - [0x3CCC0, .rodata, 627C4]
-      - [0x3CCC0, .rodata, 627C4] # HandleSaveMenu, all the strings
-      - [0x3CED4, .rodata, 63ED4] # jtbl_800DCED4
+      - [0x3CC78, .rodata, 627C4]
+      - [0x3CED4, .rodata, 63ED4]
       - [0x3CEF0, .rodata, lba_stage]
       - [0x3D29C, .rodata, config_jp]
       - [0x40C74, .rodata, cd]
-      - [0x40D64, .rodata, 692E8] # EntityAlucard
-      - [0x40FA8, .rodata, 6D59C] # func_8010EDB8
-      - [0x41224, .rodata, 704D0] # jtbl_800E1224
-      - [0x4132C, .rodata, 71830] # jtbl_800E132C
-      - [0x414A4, .rodata, 72BB0] # jtbl_800E14A4
-      - [0x4166C, .rodata, 72BB0] # jtbl_800E166C
-      - [0x417E4, .rodata, 72BB0] # jtbl_800E17E4
-      - [0x417FC, .rodata, 72BB0] # func_80113AAC
-      - [0x41810, .rodata, 72BB0] # AlucardHandleDamage string
-      - [0x41824, .rodata, 72BB0] # AlucardHandleDamage jumptables
-      - [0x418EC, .rodata, 72BB0] # func_80115DA0
-      - [0x41904, .rodata, 75F54] # jtbl_800E1904
-      - [0x4191C, .rodata, 75F54] # jtbl_800E191C
-      - [0x4193C, .rodata, 75F54] # jtbl_800E193C
-      - [0x41954, .rodata, 75F54] # "error step\n"
-      - [0x41960, rodata] # jtbl_800E1960
-      - [0x41990, rodata]
-      - [0x419A0, rodata] # jtbl_800E19A0
-      - [0x419C0, .rodata, 7A4D0] # "atari nuki\n"
-      - [0x419D0, .rodata, 7A4D0] # jtbl_800E19D0
-      - [0x419F0, .rodata, 7A4D0] # jtbl_800E19F0
-      - [0x41A10, rodata] # jtbl_800E1A10
-      - [0x41A60, rodata] # jtbl_800E1A60
-      - [0x41A90, rodata] # jtbl_800E1A90
-      - [0x41AB0, rodata] # jtbl_800E1AB0
-      - [0x41B10, rodata] # jtbl_800E1B10
-      - [0x41B70, rodata] # jtbl_800E1B70
-      - [0x41BD0, .rodata, 7E4BC] # func_8011E4BC
-      - [0x41CA0, rodata] # jtbl_800E1CA0
-      - [0x41CC0, rodata] # jtbl_800E1CC0
-      - [0x41CD8, rodata] # jtbl_800E1CD8
-      - [0x41CF0, .rodata, 843B0] # EntityTeleport
-      - [0x41D50, .rodata, 843B0] # EntitySubwpnCrashCross
-      - [0x41D64, rodata]
-      - [0x41D78, .rodata, 86ECC] # jtbl_800E1D78
-      - [0x41D98, .rodata, 86ECC] # jtbl_800E1D98
-      - [0x41DAC, rodata] # jtbl_800E1DAC
-      - [0x41DCC, .rodata, 8D3E8] # jtbl_800E1DCC
-      - [0x41DE4, .rodata, 8D3E8] # jtbl_800E1DE4
-      - [0x41E0C, rodata] # jtbl_800E1E0C
-      - [0x41E34, rodata] # jtbl_800E1E34
-      - [0x41E4C, .rodata, 90264] # func_80130264
-      - [0x41E8C, .rodata, 90264] # func_80130618
-      - [0x41ECC, .rodata, 90264] # func_801309B4
-      - [0x41EF4, .rodata, 90264] # func_80130E94
-      - [0x41F1C, .rodata, 90264] # func_8013136C
-      - [0x41F40, .rodata, 90264] # EntityGiantSpinningCross SVECTOR
-      - [0x41F50, .rodata, 92F60] # jtbl_800E1F50
-      - [0x41F78, .rodata, 93290] # jtbl_800E1F78
-      - [0x41F90, .rodata, 93290] # CdSoundCommand12
-      - [0x41FA8, .rodata, 93BDC] # CdSoundCommand14
-      - [0x41FD0, .rodata, 94F50] # jtbl_800E1FD0
+      - [0x40D64, .rodata, 692E8]
+      - [0x40FA8, .rodata, 6D59C]
+      - [0x41224, .rodata, 704D0]
+      - [0x4132C, .rodata, 71830]
+      - [0x414A4, .rodata, 72BB0]
+      - [0x41904, .rodata, 75F54]
+      - [0x419C0, .rodata, 7A4D0]
+      - [0x41BD0, .rodata, 7E4BC]
+      - [0x41CF0, .rodata, 843B0]
+      - [0x41DCC, .rodata, 8D3E8]
+      - [0x41E4C, .rodata, 90264]
+      - [0x41F50, .rodata, 92F60]
+      - [0x41F78, .rodata, 93290]
+      - [0x41FA8, .rodata, 93BDC]
+      - [0x41FD0, .rodata, 94F50]
       - [0x42270, .rodata, 953A0]
       - [0x422B4, c, 42398]
       - [0x44EC8, c, play]
@@ -235,7 +176,6 @@ segments:
       - [0x7A1C8, c, 7A4D0]
       - [0x7E168, c, 7E4BC]
       - [0x8403C, c, 843B0]
-      - [0x86B58, c, 86ECC]
       - [0x8D050, c, 8D3E8]
       - [0x8FE50, c, 90264]
       - [0x91A98, c, 91EBC]
