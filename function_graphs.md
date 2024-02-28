@@ -1531,7 +1531,7 @@
 - [❌ mem2mem](function_calls/main.mem2mem.svg?raw=1)
 - [✅ memclr](function_calls/main.memclr.svg?raw=1)
 - [❌ memmove](function_calls/main.memmove.svg?raw=1)
-- [❌ note2pitch](function_calls/main.note2pitch.svg?raw=1)
+- [✅ note2pitch](function_calls/main.note2pitch.svg?raw=1)
 - [✅ note2pitch2](function_calls/main.note2pitch2.svg?raw=1)
 - [❌ patch_gte](function_calls/main.patch_gte.svg?raw=1)
 - [✅ ratan2](function_calls/main.ratan2.svg?raw=1)
