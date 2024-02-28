@@ -60,7 +60,7 @@ u16 note2pitch() {
     var_a2 = ((long)_svm_cur.field_11_shift) >> 3;
     pos = (temp % 12);
     if (var_a2 > 15) {
-        var_a2 = 0xF;
+        var_a2 = 15;
     }
     var_v1 = D_80032F14[pos * 16 + var_a2];
     octave -= 5;
