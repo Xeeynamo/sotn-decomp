@@ -57,9 +57,7 @@ void SetTile1(TILE_1* p) { setTile1(p); }
 void SetTile8(TILE_8* p) { setTile8(p); }
 void SetTile16(TILE_16* p) { setTile16(p); }
 void SetTile(TILE* p) { setTile(p); }
-
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/prim", SetBlockFill);
-
+void SetBlockFill(BLK_FILL* p) { setBlockFill(p); }
 void SetLineF2(LINE_F2* p) { setLineF2(p); }
 void SetLineG2(LINE_G2* p) { setLineG2(p); }
 void SetLineF3(LINE_F3* p) { setLineF3(p); }
