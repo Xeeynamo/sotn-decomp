@@ -45,9 +45,33 @@ void vmNoiseOn2(u8 voice, u16 arg1, u16 arg2, u16 arg3, u16 arg4) {
     D_80032F10[0x196 / 2] = bitsUpper;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", note2pitch);
-
 extern u16 D_80032F14[];
+
+u16 note2pitch() {
+    s16 octave;
+    u16 var_a2;
+    s16 new_var;
+    s32 temp;
+    u16 var_v1;
+    s16 pos;
+    new_var = (_svm_cur.field_2_note + 60) - _svm_cur.field_10_centre;
+    temp = new_var;
+    octave = new_var / 12;
+    var_a2 = ((long)_svm_cur.field_11_shift) >> 3;
+    pos = (temp % 12);
+    if (var_a2 > 15) {
+        var_a2 = 15;
+    }
+    var_v1 = D_80032F14[pos * 16 + var_a2];
+    octave -= 5;
+    if (octave > 0) {
+        var_v1 <<= octave;
+    } else if (octave < 0) {
+        var_v1 >>= -octave;
+    }
+    return var_v1;
+}
+
 s32 note2pitch2(u16 arg0, u16 arg1) {
     VagAtr* temp_v1;
     s16 octave;
