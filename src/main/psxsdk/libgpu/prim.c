@@ -67,7 +67,16 @@ void SetLineG3(LINE_G3* p) { setLineG3(p); }
 void SetLineF4(LINE_F4* p) { setLineF4(p); }
 void SetLineG4(LINE_G4* p) { setLineG4(p); }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/prim", MargePrim);
+int MargePrim(void* p1, void* p2) {
+    int length = getlen(p1) + getlen(p2) + 1;
+    if (length >= 0x21) {
+        return -1;
+    }
+    setlen(p1, length);
+    // Bug: this should also do *(u_long*)p2 = 0; so the link pointer of
+    // prim2 isn't treated as a GPU command. Fixed in newer PSY-Q.
+    return 0;
+}
 
 void DumpDrawEnv(DRAWENV* env) {
     GPU_printf("clip (%3d,%3d)-(%d,%d)\n", env->clip.x, env->clip.y,
