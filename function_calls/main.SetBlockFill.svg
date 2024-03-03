@@ -12,7 +12,7 @@
 <!-- main.SetBlockFill -->
 <g id="node1" class="node">
 <title>main.SetBlockFill</title>
-<ellipse fill="red" stroke="black" cx="92.94" cy="-18" rx="92.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="92.94" cy="-18" rx="92.88" ry="18"/>
 <text text-anchor="middle" x="92.94" y="-14.3" font-family="Times,serif" font-size="14.00">main.SetBlockFill</text>
 </g>
 </g>

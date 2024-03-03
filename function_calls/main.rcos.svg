@@ -12,7 +12,7 @@
 <!-- main.rcos -->
 <g id="node1" class="node">
 <title>main.rcos</title>
-<ellipse fill="red" stroke="black" cx="55.9" cy="-18" rx="55.79" ry="18"/>
+<ellipse fill="green" stroke="black" cx="55.9" cy="-18" rx="55.79" ry="18"/>
 <text text-anchor="middle" x="55.9" y="-14.3" font-family="Times,serif" font-size="14.00">main.rcos</text>
 </g>
 </g>
