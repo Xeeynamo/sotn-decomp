@@ -100,6 +100,7 @@
 #define setTile8(p) setlen(p, 2), setcode(p, 0x70)
 #define setTile16(p) setlen(p, 2), setcode(p, 0x78)
 #define setTile(p) setlen(p, 3), setcode(p, 0x60)
+#define setBlockFill(p) setlen(p, 3), setcode(p, 0x02)
 #define setLineF2(p) setlen(p, 3), setcode(p, 0x40)
 #define setLineG2(p) setlen(p, 4), setcode(p, 0x50)
 #define setLineF3(p) setlen(p, 5), setcode(p, 0x48), (p)->pad = 0x55555555
@@ -452,6 +453,13 @@ typedef struct {
     u_char r0, g0, b0, code;
     short x0, y0;
 } TILE_1;
+
+typedef struct {
+    O_TAG;
+    u_char r0, g0, b0, code;
+    short x0, y0;
+    short w, h;
+} BLK_FILL;
 
 typedef struct {
     /* 0x00 */ RECT clip;     /* clip area */

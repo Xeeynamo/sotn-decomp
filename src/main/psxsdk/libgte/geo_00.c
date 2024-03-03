@@ -7,7 +7,6 @@ s32 rsin(s32 arg0) {
     return sin_1(arg0 & 0xFFF);
 }
 
-extern s16 D_8002C3CC[];
 extern s16 rsin_tbl[];
 s32 sin_1(s32 arg0) {
     if (arg0 < 0x801) {
@@ -18,7 +17,7 @@ s32 sin_1(s32 arg0) {
         }
     } else {
         if (arg0 < 0xC01) {
-            return -1 * D_8002C3CC[arg0];
+            return -1 * rsin_tbl[arg0 - 0x800];
         } else {
             return -1 * rsin_tbl[0x1000 - arg0];
         }
