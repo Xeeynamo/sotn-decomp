@@ -1294,7 +1294,7 @@
 - [❌ SpuIsTransferCompleted](function_calls/main.SpuIsTransferCompleted.svg?raw=1)
 - [❌ SpuMalloc](function_calls/main.SpuMalloc.svg?raw=1)
 - [❌ SpuMallocWithStartAddr](function_calls/main.SpuMallocWithStartAddr.svg?raw=1)
-- [❌ SpuQuit](function_calls/main.SpuQuit.svg?raw=1)
+- [✅ SpuQuit](function_calls/main.SpuQuit.svg?raw=1)
 - [✅ SpuRGetAllKeysStatus](function_calls/main.SpuRGetAllKeysStatus.svg?raw=1)
 - [✅ SpuRead](function_calls/main.SpuRead.svg?raw=1)
 - [✅ SpuSetAnyVoice](function_calls/main.SpuSetAnyVoice.svg?raw=1)
