@@ -1,7 +1,33 @@
 #include "common.h"
 #include "libsnd_i.h"
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsSeqPlay);
+void _SsSeqPlay(s16 arg0, s16 arg1) {
+    struct SeqStruct* temp_s1;
+    s32 var_s0;
+    s32 temp;
+
+    temp_s1 = &_ss_score[arg0][arg1];
+    temp = temp_s1->delta_value - temp_s1->unk70;
+    if (temp > 0) {
+        if (temp_s1->unk6E > 0) {
+            temp_s1->unk6E--;
+        } else if (temp_s1->unk6E == 0) {
+            temp_s1->unk6E = temp_s1->unk70;
+            temp_s1->delta_value--;
+        } else {
+            temp_s1->delta_value = temp;
+        }
+    } else if (temp_s1->delta_value <= temp_s1->unk70) {
+        var_s0 = temp_s1->delta_value;
+        do {
+            do {
+                _SsGetSeqData(arg0, arg1);
+            } while (temp_s1->delta_value == 0);
+            var_s0 += temp_s1->delta_value;
+        } while (var_s0 < temp_s1->unk70);
+        temp_s1->delta_value = var_s0 - temp_s1->unk70;
+    }
+}
 
 void _SsGetMetaEvent(s16, s16, u8);
 void _SsNoteOn(s16 arg0, s16 arg1, s32 arg2, s32 arg3);

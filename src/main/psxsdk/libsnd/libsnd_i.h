@@ -11,11 +11,10 @@ struct Unk {
     u16 unk6;
     u16 unk8;
     s16 unkA;
-    u16 unkC;
+    s16 unkC;
     u16 unkE;
-    u16 unk10;
+    s16 unk10;
 };
-
 void _SsUtResolveADSR(u16 arg0, u16 arg1, struct Unk* arg2);
 void _SsSeqPlay(s16, s16);
 void _SsClose(s16);
