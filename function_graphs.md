@@ -1440,7 +1440,7 @@
 - [✅ _SsContRpn2](function_calls/main._SsContRpn2.svg?raw=1)
 - [✅ _SsGetMetaEvent](function_calls/main._SsGetMetaEvent.svg?raw=1)
 - [✅ _SsGetSeqData](function_calls/main._SsGetSeqData.svg?raw=1)
-- [❌ _SsInit](function_calls/main._SsInit.svg?raw=1)
+- [✅ _SsInit](function_calls/main._SsInit.svg?raw=1)
 - [❌ _SsInitSoundSeq](function_calls/main._SsInitSoundSeq.svg?raw=1)
 - [✅ _SsNoteOn](function_calls/main._SsNoteOn.svg?raw=1)
 - [✅ _SsReadDeltaValue](function_calls/main._SsReadDeltaValue.svg?raw=1)
