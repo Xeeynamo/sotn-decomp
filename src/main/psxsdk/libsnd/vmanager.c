@@ -358,7 +358,40 @@ void SpuVmSeKeyOff(s16 arg0, s16 arg1, u16 arg2) {
 
 void KeyOnCheck(void) {}
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmSetSeqVol);
+s32 SpuVmSetSeqVol(s16 seq_sep_no, u16 voll, u16 volr, s16 arg3) {
+    s16 voice;
+    struct SeqStruct* temp_v1;
+    int voll_mul;
+    int volr_mul;
+    u8 pad[4];
+    int temp;
+    s16 pos;
+    temp_v1 = &_ss_score[seq_sep_no & 0xFF][(seq_sep_no >> 8) & 0xff];
+    _svm_cur.field_16_vag_idx = seq_sep_no;
+    temp_v1->unk74 = voll;
+    temp_v1->unk76 = volr;
+    temp = seq_sep_no;
+    if (temp_v1->unk74 >= 0x80) {
+        temp_v1->unk74 = 0x7F;
+    }
+    if (temp_v1->unk76 >= 0x80) {
+        temp_v1->unk76 = 0x7F;
+    }
+    voll_mul = voll * 0x81;
+    volr_mul = volr * 0x81;
+
+    if (arg3 == 1) {
+        for (voice = 0; voice < spuVmMaxVoice; voice++) {
+            if ((u16)_svm_voice[voice].unke == (u16)temp) {
+                pos = voice * 8;
+                _svm_sreg_buf.raw[pos + 0] = voll_mul;
+                _svm_sreg_buf.raw[pos + 1] = volr_mul;
+                _svm_sreg_dirty[voice] = _svm_sreg_dirty[voice] | 3;
+            }
+        }
+    }
+    return _svm_cur.field_16_vag_idx;
+}
 
 s32 SpuVmGetSeqVol(s16 arg0, s16* arg1, s16* arg2) {
     struct SeqStruct* temp_v0;

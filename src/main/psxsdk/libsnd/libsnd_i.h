@@ -41,7 +41,7 @@ extern s32 D_8003C74C;
 extern SpuReverbAttr _svm_rattr;
 
 void SpuVmSeKeyOn(s16 arg0, s16 arg1, u16 arg2, s32 arg3, u16 arg4, u16 arg5);
-void SpuVmSetSeqVol(s16, u16, u16, s32);
+s32 SpuVmSetSeqVol(s16 seq_sep_no, u16 voll, u16 volr, s16 arg3);
 s32 SpuVmGetSeqVol(s16, s16*, s16*);
 s16 SpuIsTransferCompleted(s16);
 
@@ -155,7 +155,7 @@ struct SeqStruct {
     s16 unk70;
     s16 unk72;
     u16 unk74;
-    s16 unk76;
+    u16 unk76;
     s16 unk78;
     s16 unk7A;
     s32 unk7c;
