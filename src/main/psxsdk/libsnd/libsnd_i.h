@@ -80,7 +80,6 @@ extern u8 spuVmMaxVoice;
 
 extern s16 _svm_stereo_mono;
 
-u8 SpuVmAlloc(s32);
 void vmNoiseOn2(u8 arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4);
 
 struct struct_svm {
@@ -243,7 +242,7 @@ struct SpuVoice {
     s16 unk0;
     s16 unk2;
     s16 unk04;
-    s16 unk6;
+    u16 unk6;
     s16 unk8;
     char unka;
     char unkb;
@@ -253,7 +252,8 @@ struct SpuVoice {
     s16 prog;  /* 0x12 */
     s16 tone;  /* 0x14*/
     s16 vabId; /* 0x16 */
-    u8 pad4[3];
+    s16 unk18;
+    u8 pad4[1];
     u8 unk1b;
     s16 unk1c;
     s16 unk1e;

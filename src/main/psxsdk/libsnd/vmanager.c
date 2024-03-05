@@ -3,7 +3,71 @@
 
 static inline u16 get_field_0x1a() { return _svm_cur.field_0x1a; }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmAlloc);
+u8 SpuVmAlloc(s32 arg0) {
+    s16 temp_a2;
+    u8 var_t2;
+    u16 var_t0;
+    u16 var_t3;
+    u8 cur_voice;
+    u8 channel;
+    u8 var_t1;
+    u16 prior;
+    char temp;
+
+    channel = 0x63;
+    var_t3 = 0xFFFF;
+    var_t2 = 0;
+    var_t0 = 0;
+    prior = _svm_cur.field_F_prior;
+    var_t1 = 0x63;
+    for (cur_voice = 0; cur_voice < spuVmMaxVoice; cur_voice++) {
+        if (_svm_voice[cur_voice].unk1b == 0 &&
+            _svm_voice[cur_voice].unk6 == 0) {
+            channel = cur_voice;
+            break;
+        } else {
+            temp_a2 = _svm_voice[cur_voice].unk18;
+            if (temp_a2 < prior) {
+                prior = temp_a2;
+                var_t1 = cur_voice;
+                var_t3 = _svm_voice[cur_voice].unk6;
+                var_t0 = _svm_voice[cur_voice].unk2;
+                var_t2 = 1;
+            } else {
+                if (temp_a2 == prior) {
+                    var_t2 += 1;
+                    if (_svm_voice[cur_voice].unk6 < var_t3) {
+                        var_t0 = _svm_voice[cur_voice].unk2;
+                        var_t3 = _svm_voice[cur_voice].unk6;
+                        var_t1 = cur_voice;
+                    } else if (_svm_voice[cur_voice].unk6 == var_t3) {
+                        if (var_t0 < _svm_voice[cur_voice].unk2) {
+                            var_t0 = _svm_voice[cur_voice].unk2;
+                            var_t1 = cur_voice;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if (channel == 0x63) {
+        channel = var_t1;
+        if (!var_t2) {
+            channel = spuVmMaxVoice;
+        }
+    }
+    if (channel < spuVmMaxVoice) {
+        for (cur_voice = 0; cur_voice < spuVmMaxVoice; cur_voice++) {
+            _svm_voice[cur_voice].unk2++;
+        }
+        _svm_voice[channel].unk2 = 0;
+        _svm_voice[channel].unk18 = _svm_cur.field_F_prior;
+        if (_svm_voice[channel].unk1b == 2) {
+            SpuSetNoiseVoice(0, 0xFFFFFF);
+        }
+    }
+    return channel;
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmKeyOnNow);
 
@@ -109,7 +173,33 @@ s32 note2pitch2(u16 arg0, u16 arg1) {
     return var_v1;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SePitchBend);
+void SePitchBend(u8 arg0, s16 arg1) {
+    s32 tone;
+    s32 temp_v0_2;
+    u16 note;
+    u16 pbend;
+    u8 temp_v0;
+    int pos;
+    pos = arg0 * 8;
+    if (arg0 < 0x18U) {
+        _svm_cur.field_7_fake_program = _svm_voice[arg0].unk10;
+        _svm_cur.field_C_vag_idx = _svm_voice[arg0].tone;
+        _svm_cur.field_0x1a = arg0;
+        tone =
+            _svm_cur.field_C_vag_idx + (_svm_cur.field_7_fake_program * 0x10);
+        if (arg1 >= 0) {
+            temp_v0 = _svm_tn[tone].pbmax;
+            note = _svm_voice[arg0].note + ((arg1 * temp_v0) / 127);
+            pbend = (arg1 * temp_v0) % 127;
+        } else {
+            temp_v0_2 = (arg1 * _svm_tn[tone].pbmin) / 127;
+            note = (_svm_voice[arg0].note + temp_v0_2) - 1;
+            pbend = temp_v0_2 + 0x7F;
+        }
+        _svm_sreg_buf.raw[pos + 2] = note2pitch2(note, pbend);
+        _svm_sreg_dirty[arg0] |= 4;
+    }
+}
 
 void SsUtVibrateOn(void) {}
 
