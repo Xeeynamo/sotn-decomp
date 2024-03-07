@@ -62,6 +62,20 @@ s32 D_800978C4;
 s32 D_80097C98;
 s8 D_80097B98;
 s8 D_80097B99;
+AnimationFrame D_800B0594_sub[] = {
+    {0x0002, 0x0239},
+    {0xFFFF, 0x0000},
+};
+AnimationFrame* D_800B0594[] = {
+    D_800B0594_sub, D_800B0594_sub, D_800B0594_sub, D_800B0594_sub,
+    D_800B0594_sub, D_800B0594_sub, D_800B0594_sub, D_800B0594_sub,
+    D_800B0594_sub, D_800B0594_sub, D_800B0594_sub, D_800B0594_sub,
+    D_800B0594_sub, D_800B0594_sub, D_800B0594_sub, D_800B0594_sub,
+    D_800B0594_sub, D_800B0594_sub, D_800B0594_sub, D_800B0594_sub,
+    D_800B0594_sub, D_800B0594_sub, D_800B0594_sub, D_800B0594_sub,
+    D_800B0594_sub, D_800B0594_sub, D_800B0594_sub, D_800B0594_sub,
+    D_800B0594_sub, D_800B0594_sub,
+};
 u8 D_800B0608[0xC0]; // size guessed
 s16 D_80136308[1];
 u16 g_Clut[0x3000];
@@ -634,12 +648,6 @@ s32 func_800F0CD8(s32 arg0) {
 }
 
 void func_80118C28(s32 arg0) { NOT_IMPLEMENTED; }
-
-AnimationFrame frame = {0};
-AnimationFrame* func_8010DA70(s32* frames) {
-    NOT_IMPLEMENTED;
-    return &frame;
-}
 
 void EntityWeaponAttack(Entity* self) { NOT_IMPLEMENTED; }
 void func_ptr_80170004(Entity* self) { NOT_IMPLEMENTED; }
