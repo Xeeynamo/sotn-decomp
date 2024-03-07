@@ -140,8 +140,40 @@ void func_8010DA48(u32 arg0) {
     g_CurrentEntity->animFrameIdx = 0;
 }
 
-AnimationFrame* func_8010DA70(s32* frames);
-INCLUDE_ASM("dra/nonmatchings/6D59C", func_8010DA70);
+AnimationFrame* func_8010DA70(AnimationFrame** frames) {
+    Entity* entity;
+    AnimationFrame* frame;
+    s32 idx;
+    AnimationFrame* frameSub;
+    s32 idxSub;
+
+    entity = g_CurrentEntity;
+    frame = frames[entity->ext.generic.unkAC];
+    idx = 0;
+    while (true) {
+        if (frame->duration == 0xFFFD) {
+            frameSub = D_800B0594[(u8)frame->unk2];
+            idxSub = 0;
+            while (true) {
+                if (frameSub[idxSub].duration == 0xFFFF) {
+                    break;
+                }
+                entity = g_CurrentEntity;
+                if (idx == entity->animFrameIdx) {
+                    return &frameSub[idxSub];
+                }
+                idx++;
+                idxSub++;
+            }
+            frame++;
+        } else if (idx == g_CurrentEntity->animFrameIdx) {
+            return frame;
+        } else {
+            idx++;
+            frame++;
+        }
+    }
+}
 
 u32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
     u16* frameIndex;

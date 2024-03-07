@@ -459,6 +459,7 @@ extern RECT c_backbufferClear;
 extern s16 D_800AFFB8[];
 extern s32 D_800B0130[];
 extern s32 D_800B01B8[];
+extern AnimationFrame* D_800B0594[];
 extern u8 D_800B0608[];
 extern Point32 D_800B0688[];
 extern u16 D_800B06C8[0x30];
