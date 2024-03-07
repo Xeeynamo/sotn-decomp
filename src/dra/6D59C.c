@@ -148,7 +148,7 @@ AnimationFrame* func_8010DA70(AnimationFrame** frames) {
     s32 idxSub;
 
     entity = g_CurrentEntity;
-    frame = frames[entity->ext.generic.unkAC];
+    frame = frames[entity->ext.player.unkAC];
     idx = 0;
     while (true) {
         if (frame->duration == 0xFFFD) {
