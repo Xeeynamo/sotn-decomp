@@ -12,7 +12,7 @@
 <!-- main.DMA_memclr -->
 <g id="node1" class="node">
 <title>main.DMA_memclr</title>
-<ellipse fill="red" stroke="black" cx="98.79" cy="-18" rx="98.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="98.79" cy="-18" rx="98.58" ry="18"/>
 <text text-anchor="middle" x="98.79" y="-14.3" font-family="Times,serif" font-size="14.00">main.DMA_memclr</text>
 </g>
 </g>
