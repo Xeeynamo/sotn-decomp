@@ -20,13 +20,12 @@ void _SsSeqPlay(s16, s16);
 void _SsClose(s16);
 
 extern s32 D_80032EF4;
-extern u8 D_80032F00;
-extern s8 D_80032F01;
+extern u8 D_80032F01;
 extern u8 D_80032F02;
 void EnterCriticalSection(void);
 void VSyncCallback(void (*func)());
 void ExitCriticalSection(void);
-void InterruptCallback(s32, s32);
+void* InterruptCallback(u8, void (*)());
 void ResetCallback();
 void SpuInit();
 void _SsInit();
