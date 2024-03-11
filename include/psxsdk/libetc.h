@@ -2,9 +2,9 @@
 #define LIBETC_H
 
 struct Callbacks {
-    void (*unk0)(void);
+    const char* rcsid; /* "$Id: intr.c,v 1.73 1995/11/10 05:29:40 suzu Exp $" */
     void* (*DMACallback)(int dma, void (*func)());
-    void (*unk8)(void);
+    void* (*InterruptCallback)(int irq, void (*f)());
     int (*ResetCallback)(void);
     int (*StopCallback)(void);
     int (*VSyncCallbacks)(int ch, void (*f)());

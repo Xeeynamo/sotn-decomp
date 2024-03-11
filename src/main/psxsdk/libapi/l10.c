@@ -6,13 +6,15 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libapi/l10", ChangeClearRCnt);
 
 int ResetCallback(void) { return D_8002D340->ResetCallback(); }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libapi/l10", InterruptCallback);
+void InterruptCallback(int irq, void (*f)()) {
+    D_8002D340->InterruptCallback(irq, f);
+}
 
 void* DMACallback(int dma, void (*func)()) {
     return D_8002D340->DMACallback(dma, func);
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libapi/l10", VSyncCallback);
+int VSyncCallback(void (*f)()) { D_8002D340->VSyncCallbacks(0, f); }
 
 int VSyncCallbacks(int ch, void (*f)()) {
     return D_8002D340->VSyncCallbacks(ch, f);
