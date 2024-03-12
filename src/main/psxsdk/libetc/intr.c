@@ -2,8 +2,6 @@
 #include <game.h>
 #include <psxsdk/libetc.h>
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libapi/l10", ChangeClearRCnt);
-
 int ResetCallback(void) { return D_8002D340->ResetCallback(); }
 
 void InterruptCallback(int irq, void (*f)()) {
@@ -26,19 +24,19 @@ int RestartCallback(void) { return D_8002D340->RestartCallback(); }
 
 int CheckCallback(void) { return D_8002C2BA; }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libapi/l10", GetIntrMask);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libetc/intr", GetIntrMask);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libapi/l10", SetIntrMask);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libetc/intr", SetIntrMask);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libapi/l10", startIntr);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libetc/intr", startIntr);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libapi/l10", trapIntr);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libetc/intr", trapIntr);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libapi/l10", setIntr);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libetc/intr", setIntr);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libapi/l10", stopIntr);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libetc/intr", stopIntr);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libapi/l10", restartIntr);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libetc/intr", restartIntr);
 
 void memclr(int* ptr, int size) {
     int i;
