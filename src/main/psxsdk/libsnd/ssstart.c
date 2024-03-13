@@ -1,15 +1,10 @@
 #include "common.h"
 #include "libsnd_i.h"
 
-struct Thing {
-    u8 unk0;
-};
-extern struct Thing D_80032F00;
-
 void _SsSeqCalledTbyT_1per2();
 void _SsTrapIntrVSync();
 
-void _SsStart(s32 arg0) {
+static void _SsStart(s32 arg0) {
     u16 rcnt_target;
     s32 wait;
     unsigned short var_v0_2;
@@ -23,20 +18,20 @@ void _SsStart(s32 arg0) {
     do {
         wait -= 1;
     } while (wait >= 0);
-    D_80032F00.unk0 = 0;
-    D_80032F02 = 6;
-    D_80032F01 = 0;
-    D_80032EFC = 0;
+    _snd_seq_tick_env.unk16 = 0;
+    _snd_seq_tick_env.unk18 = 6;
+    _snd_seq_tick_env.unk17 = 0;
+    _snd_seq_tick_env.unk12 = 0;
     rcnt_spec = 0xF2000002;
     switch (_snd_seq_tick_env.unk0) {
     case 0:
-        D_80032F02 = 0xFF;
+        _snd_seq_tick_env.unk18 = 0xFF;
         return;
 
     case 5:
-        D_80032F02 = 0;
+        _snd_seq_tick_env.unk18 = 0;
         if (arg0 == 0) {
-            D_80032F00.unk0 = 1;
+            _snd_seq_tick_env.unk16 = 1;
         } else {
             rcnt_spec = 0xF2000003;
             rcnt_target = 1;
@@ -56,8 +51,6 @@ void _SsStart(s32 arg0) {
             if (_snd_seq_tick_env.unk0 < 0x46) {
                 var_v0_2 = 0x204CC0 / _snd_seq_tick_env.unk0;
                 _snd_seq_tick_env.unk17++;
-                do {
-                } while (0);
             } else {
                 var_v0_2 = 0x409980 / _snd_seq_tick_env.unk0;
             }
@@ -68,48 +61,49 @@ void _SsStart(s32 arg0) {
         break;
     }
 
-    temp2 = D_80032F00.unk0;
+    temp2 = _snd_seq_tick_env.unk16;
     if (temp2 != 0) {
         EnterCriticalSection();
-        VSyncCallback(D_80032EF8);
+        VSyncCallback(_snd_seq_tick_env.unk8);
     } else {
         EnterCriticalSection();
         ResetRCnt(rcnt_spec);
         SetRCnt(rcnt_spec, rcnt_target & 0xFFFF, 0x1000);
-        temp_a0 = D_80032F02;
+        temp_a0 = _snd_seq_tick_env.unk18;
         if (temp_a0 == 0) {
             temp3 = InterruptCallback(0U, 0);
             callback_func = _SsTrapIntrVSync;
-            temp_a0 = D_80032F02;
-            D_80032EFC = temp3;
+            temp_a0 = _snd_seq_tick_env.unk18;
+            _snd_seq_tick_env.unk12 = temp3;
         } else {
             callback_func = _SsSeqCalledTbyT_1per2;
-            if (D_80032F01 == 0) {
-                callback_func = D_80032EF8;
+            if (_snd_seq_tick_env.unk17 == 0) {
+                callback_func = _snd_seq_tick_env.unk8;
             }
         }
         InterruptCallback(temp_a0, callback_func);
     }
     ExitCriticalSection();
-    return;
 }
 
 void SsStart(void) { _SsStart(1); }
 
 void SsStart2(void) { _SsStart(0); }
 
-void _SsTrapIntrVSync(void) {
-    if (D_80032EFC != NULL) {
-        D_80032EFC();
+static void _SsTrapIntrVSync(void) {
+    if (_snd_seq_tick_env.unk12 != NULL) {
+        _snd_seq_tick_env.unk12();
     }
-    D_80032EF8();
+    _snd_seq_tick_env.unk8();
 }
 
-void _SsSeqCalledTbyT_1per2(void) {
-    if (D_80032F04 == 0) {
-        D_80032F04 = 1;
+static inline s32 get20() { return _snd_seq_tick_env.unk20; }
+
+static void _SsSeqCalledTbyT_1per2(void) {
+    if (get20() == 0) {
+        _snd_seq_tick_env.unk20 = 1;
         return;
     }
-    D_80032F04 = 0;
-    D_80032EF8();
+    _snd_seq_tick_env.unk20 = 0;
+    _snd_seq_tick_env.unk8();
 }
