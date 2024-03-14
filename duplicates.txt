@@ -1732,12 +1732,12 @@
 | 1.00 | true     | func_801B3E14                       | ../../asm/us/st/sel/nonmatchings/33164/func_801B3E14.s 
 | 1.00 | true     | MemcardInfoInit                     | ../../asm/us/st/sel/nonmatchings/save_mgr/MemcardInfoInit.s 
 -------------------------------------------------------------------------------
-| 0.92 | true     | DMACallback                         | ../../asm/us/main/nonmatchings/psxsdk/libapi/l10/DMACallback.s 
-| 0.92 | true     | InterruptCallback                   | ../../asm/us/main/nonmatchings/psxsdk/libapi/l10/InterruptCallback.s 
-| 0.92 | true     | ResetCallback                       | ../../asm/us/main/nonmatchings/psxsdk/libapi/l10/ResetCallback.s 
-| 0.92 | true     | RestartCallback                     | ../../asm/us/main/nonmatchings/psxsdk/libapi/l10/RestartCallback.s 
-| 0.92 | true     | StopCallback                        | ../../asm/us/main/nonmatchings/psxsdk/libapi/l10/StopCallback.s 
-| 0.92 | true     | VSyncCallbacks                      | ../../asm/us/main/nonmatchings/psxsdk/libapi/l10/VSyncCallbacks.s 
+| 0.92 | true     | DMACallback                         | ../../asm/us/main/nonmatchings/psxsdk/libetc/intr/DMACallback.s 
+| 0.92 | true     | InterruptCallback                   | ../../asm/us/main/nonmatchings/psxsdk/libetc/intr/InterruptCallback.s 
+| 0.92 | true     | ResetCallback                       | ../../asm/us/main/nonmatchings/psxsdk/libetc/intr/ResetCallback.s 
+| 0.92 | true     | RestartCallback                     | ../../asm/us/main/nonmatchings/psxsdk/libetc/intr/RestartCallback.s 
+| 0.92 | true     | StopCallback                        | ../../asm/us/main/nonmatchings/psxsdk/libetc/intr/StopCallback.s 
+| 0.92 | true     | VSyncCallbacks                      | ../../asm/us/main/nonmatchings/psxsdk/libetc/intr/VSyncCallbacks.s 
 | 1.00 | true     | GetODE                              | ../../asm/us/main/nonmatchings/psxsdk/libgpu/sys/GetODE.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | BlinkItem                           | ../../asm/us/st/cen/nonmatchings/11280/BlinkItem.s 
@@ -2003,7 +2003,7 @@
 | 1.00 | true     | SetLineG3                           | ../../asm/us/main/nonmatchings/psxsdk/libgpu/prim/SetLineG3.s 
 | 1.00 | true     | SetLineG4                           | ../../asm/us/main/nonmatchings/psxsdk/libgpu/prim/SetLineG4.s 
 -------------------------------------------------------------------------------
-| 0.91 | true     | memclr                              | ../../asm/us/main/nonmatchings/psxsdk/libapi/l10/memclr.s 
+| 0.91 | true     | memclr                              | ../../asm/us/main/nonmatchings/psxsdk/libetc/intr/memclr.s 
 | 0.91 | true     | DMA_memclr                          | ../../asm/us/main/nonmatchings/psxsdk/libetc/intr_dma/DMA_memclr.s 
 | 0.91 | true     | VSync_memclr                        | ../../asm/us/main/nonmatchings/psxsdk/libetc/intr_vb/VSync_memclr.s 
 | 1.00 | true     | GPU_memset                          | ../../asm/us/main/nonmatchings/psxsdk/libgpu/sys/GPU_memset.s 
@@ -2057,10 +2057,6 @@
 | 1.00 | true     | MenuDrawInt                         | ../../asm/us/dra/nonmatchings/menu/MenuDrawInt.s 
 | 0.91 | true     | MenuDrawTime                        | ../../asm/us/dra/nonmatchings/menu/MenuDrawTime.s 
 | 0.93 | true     | func_801B2BD4                       | ../../asm/us/st/sel/nonmatchings/2C048/func_801B2BD4.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | ChangeClearRCnt                     | ../../asm/us/main/nonmatchings/psxsdk/libapi/l10/ChangeClearRCnt.s 
-| 1.00 | true     | strcmp                              | ../../asm/us/main/nonmatchings/psxsdk/libc/c23/strcmp.s 
-| 1.00 | true     | strncmp                             | ../../asm/us/main/nonmatchings/psxsdk/libc/c24/strncmp.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CdLastCom                           | ../../asm/us/main/nonmatchings/psxsdk/libcd/sys/CdLastCom.s 
 | 1.00 | true     | CdMode                              | ../../asm/us/main/nonmatchings/psxsdk/libcd/sys/CdMode.s 
@@ -2352,6 +2348,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_800E9880                       | ../../asm/us/dra/nonmatchings/save_mgr/func_800E9880.s 
 | 0.91 | true     | func_801B8A8C                       | ../../asm/us/st/sel/nonmatchings/save_mgr/func_801B8A8C.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | strcmp                              | ../../asm/us/main/nonmatchings/psxsdk/libc/c23/strcmp.s 
+| 1.00 | true     | strncmp                             | ../../asm/us/main/nonmatchings/psxsdk/libc/c24/strncmp.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CdComstr                            | ../../asm/us/main/nonmatchings/psxsdk/libcd/sys/CdComstr.s 
 | 1.00 | true     | CdIntstr                            | ../../asm/us/main/nonmatchings/psxsdk/libcd/sys/CdIntstr.s 

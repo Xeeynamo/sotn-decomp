@@ -12,7 +12,7 @@
 <!-- main.InterruptCallback -->
 <g id="node1" class="node">
 <title>main.InterruptCallback</title>
-<ellipse fill="red" stroke="black" cx="118.94" cy="-18" rx="118.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="118.94" cy="-18" rx="118.88" ry="18"/>
 <text text-anchor="middle" x="118.94" y="-14.3" font-family="Times,serif" font-size="14.00">main.InterruptCallback</text>
 </g>
 </g>
