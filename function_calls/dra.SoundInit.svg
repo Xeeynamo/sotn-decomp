@@ -307,7 +307,7 @@
 <g id="node20" class="node">
 <title>main.SsStart</title>
 <g id="a_node20"><a xlink:href="main.SsStart.svg" xlink:title="main.SsStart">
-<ellipse fill="red" stroke="black" cx="4009.64" cy="-18" rx="71.49" ry="18"/>
+<ellipse fill="green" stroke="black" cx="4009.64" cy="-18" rx="71.49" ry="18"/>
 <text text-anchor="middle" x="4009.64" y="-14.3" font-family="Times,serif" font-size="14.00">main.SsStart</text>
 </a>
 </g>
