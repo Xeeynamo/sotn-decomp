@@ -65,7 +65,7 @@ M2C_ARGS        := -P 4
 SOTNSTR			:= $(PYTHON) $(TOOLS_DIR)/sotn_str/sotn_str.py process
 MASPSX_DIR      := $(TOOLS_DIR)/maspsx
 MASPSX_APP      := $(MASPSX_DIR)/maspsx.py
-MASPSX          := $(PYTHON) $(MASPSX_APP) --no-macro-inc --expand-div --expand-li
+MASPSX          := $(PYTHON) $(MASPSX_APP) --expand-div --aspsx-version=2.34
 GO              := $(HOME)/go/bin/go
 GOPATH          := $(HOME)/go
 SOTNDISK        := $(GOPATH)/bin/sotn-disk
