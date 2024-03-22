@@ -254,18 +254,18 @@ struct SpuVoice {
     s16 unk18;
     u8 pad4[1];
     u8 unk1b;
-    s16 unk1c;
+    s16 auto_vol; /* 0x1c */
     s16 unk1e;
     s16 unk20;
     s16 unk22;
-    s16 unk24;
-    s16 unk26;
-    s16 unk28;
+    s16 start_vol; /* 0x24 */
+    s16 end_vol;   /* 0x26 */
+    s16 auto_pan;  /* 0x28 */
     s16 unk2a;
     s16 unk2c;
     s16 unk2e;
-    s16 unk30;
-    s16 unk32;
+    s16 start_pan; /* 0x30 */
+    s16 end_pan;   /* 0x32 */
 };
 
 extern struct SpuVoice _svm_voice[NUM_SPU_CHANNELS];

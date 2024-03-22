@@ -205,11 +205,43 @@ void SsUtVibrateOn(void) {}
 
 void SsUtVibrateOff(void) {}
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SeAutoVol);
+#define klabs(A) (((A) >= 0) ? (A) : -(A))
+
+void SeAutoVol(s16 vc, s16 start_vol, s16 end_vol, s16 delta_time) {
+    if (start_vol != end_vol) {
+        _svm_voice[vc].auto_vol = 1;
+        _svm_voice[vc].start_vol = start_vol;
+        _svm_voice[vc].end_vol = end_vol;
+
+        if (klabs(start_vol - end_vol) < delta_time) {
+            _svm_voice[vc].unk1e = 1;
+            _svm_voice[vc].unk20 = delta_time / (start_vol - end_vol);
+            _svm_voice[vc].unk22 = delta_time / (start_vol - end_vol);
+        } else {
+            _svm_voice[vc].unk20 = 0;
+            _svm_voice[vc].unk1e = (start_vol - end_vol) / delta_time;
+        }
+    }
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SetAutoVol);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SeAutoPan);
+void SeAutoPan(s16 vc, s16 start_pan, s16 end_pan, s16 delta_time) {
+    if (start_pan != end_pan) {
+        _svm_voice[vc].auto_pan = 1;
+        _svm_voice[vc].start_pan = start_pan;
+        _svm_voice[vc].end_pan = end_pan;
+
+        if (klabs(start_pan - end_pan) < delta_time) {
+            _svm_voice[vc].unk2a = 1;
+            _svm_voice[vc].unk2c = delta_time / (start_pan - end_pan);
+            _svm_voice[vc].unk2e = delta_time / (start_pan - end_pan);
+        } else {
+            _svm_voice[vc].unk2c = 0;
+            _svm_voice[vc].unk2a = (start_pan - end_pan) / delta_time;
+        }
+    }
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SetAutoPan);
 
@@ -270,16 +302,16 @@ void SpuVmInit(u8 arg0) {
         _svm_voice[var_a1].tone = 0xff;
         _svm_voice[var_a1].unk8 = 0;
         _svm_voice[var_a1].unka = 0x40;
-        _svm_voice[var_a1].unk1c = 0;
+        _svm_voice[var_a1].auto_vol = 0;
         _svm_voice[var_a1].unk1e = 0;
         _svm_voice[var_a1].unk20 = 0;
         _svm_voice[var_a1].unk22 = 0;
-        _svm_voice[var_a1].unk28 = 0;
+        _svm_voice[var_a1].auto_pan = 0;
         _svm_voice[var_a1].unk2a = 0;
         _svm_voice[var_a1].unk2c = 0;
         _svm_voice[var_a1].unk2e = 0;
-        _svm_voice[var_a1].unk30 = 0;
-        _svm_voice[var_a1].unk24 = 0;
+        _svm_voice[var_a1].start_pan = 0;
+        _svm_voice[var_a1].start_vol = 0;
         temp_a0 = &D_80032F10[temp];
         temp_a0[3] = 0x200;
         temp_a0[2] = 0x1000;
