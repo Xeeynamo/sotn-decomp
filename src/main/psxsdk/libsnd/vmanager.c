@@ -207,44 +207,38 @@ void SsUtVibrateOff(void) {}
 
 #define klabs(A) (((A) >= 0) ? (A) : -(A))
 
-void SeAutoVol(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
-    s32 temp_v0_2;
-    s32 var_a0_2;
+void SeAutoVol(s16 vc, s16 start_vol, s16 end_vol, s16 delta_time) {
+    if (start_vol != end_vol) {
+        _svm_voice[vc].unk1c = 1;
+        _svm_voice[vc].unk24 = start_vol;
+        _svm_voice[vc].unk26 = end_vol;
 
-    if (arg1 != arg2) {
-        _svm_voice[arg0].unk1c = 1;
-        _svm_voice[arg0].unk24 = arg1;
-        _svm_voice[arg0].unk26 = arg2;
-
-        if (klabs(arg1 - arg2) < arg3) {
-            _svm_voice[arg0].unk1e = 1;
-            _svm_voice[arg0].unk20 = arg3 / (arg1 - arg2);
-            _svm_voice[arg0].unk22 = arg3 / (arg1 - arg2);
+        if (klabs(start_vol - end_vol) < delta_time) {
+            _svm_voice[vc].unk1e = 1;
+            _svm_voice[vc].unk20 = delta_time / (start_vol - end_vol);
+            _svm_voice[vc].unk22 = delta_time / (start_vol - end_vol);
         } else {
-            _svm_voice[arg0].unk20 = 0;
-            _svm_voice[arg0].unk1e = (arg1 - arg2) / arg3;
+            _svm_voice[vc].unk20 = 0;
+            _svm_voice[vc].unk1e = (start_vol - end_vol) / delta_time;
         }
     }
 }
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SetAutoVol);
 
-void SeAutoPan(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
-    s32 temp_v0_2;
-    s32 var_a0_2;
+void SeAutoPan(s16 vc, s16 start_pan, s16 end_pan, s16 delta_time) {
+    if (start_pan != end_pan) {
+        _svm_voice[vc].unk28 = 1;
+        _svm_voice[vc].unk30 = start_pan;
+        _svm_voice[vc].unk32 = end_pan;
 
-    if (arg1 != arg2) {
-        _svm_voice[arg0].unk28 = 1;
-        _svm_voice[arg0].unk30 = arg1;
-        _svm_voice[arg0].unk32 = arg2;
-
-        if (klabs(arg1 - arg2) < arg3) {
-            _svm_voice[arg0].unk2a = 1;
-            _svm_voice[arg0].unk2c = arg3 / (arg1 - arg2);
-            _svm_voice[arg0].unk2e = arg3 / (arg1 - arg2);
+        if (klabs(start_pan - end_pan) < delta_time) {
+            _svm_voice[vc].unk2a = 1;
+            _svm_voice[vc].unk2c = delta_time / (start_pan - end_pan);
+            _svm_voice[vc].unk2e = delta_time / (start_pan - end_pan);
         } else {
-            _svm_voice[arg0].unk2c = 0;
-            _svm_voice[arg0].unk2a = (arg1 - arg2) / arg3;
+            _svm_voice[vc].unk2c = 0;
+            _svm_voice[vc].unk2a = (start_pan - end_pan) / delta_time;
         }
     }
 }
