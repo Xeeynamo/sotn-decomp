@@ -162,8 +162,8 @@ struct SeqStruct {
     s32 delta_value;
     s32 unk8c;
     s32 unk90;
-    s32 unk94;
-    s32 unk98;
+    u32 unk94;
+    u32 unk98;
     s32 unk9C;
     s32 unkA0;
     u32 unkA4;
