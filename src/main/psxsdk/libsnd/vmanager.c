@@ -394,7 +394,6 @@ s16 SpuVmPBVoice(
     s32 temp_v0_2;
     u16 temp_v1;
     u16 pbend;
-    s32 var_v0_2;
     u16 temp_a1;
     u16 note;
     temp_t1 = amount + 0xFFC0U;
@@ -413,11 +412,7 @@ s16 SpuVmPBVoice(
             note = temp_a1;
             if (temp_t1 < 0) {
                 temp_lo = temp_t1 * _svm_tn[temp_v1].pbmin;
-                var_v0_2 = temp_lo;
-                if (temp_lo < 0) {
-                    var_v0_2 = temp_lo + 0x3F;
-                }
-                temp_v0_2 = var_v0_2 >> 6;
+                temp_v0_2 = temp_lo / 64;
                 note = temp_v0_2;
                 note = (temp_a1 + note) - 1;
                 pbend = ((temp_lo - (temp_v0_2 << 6)) * 2) + 0x7F;
