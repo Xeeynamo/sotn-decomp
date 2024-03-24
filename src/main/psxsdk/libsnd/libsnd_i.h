@@ -338,8 +338,6 @@ extern s32 VBLANK_MINUS;
 
 extern s16 _svm_damper;
 
-s16 SpuVmPBVoice(s32, s16, s16, s16, u16);
-
 extern VagAtr* _svm_vab_tn[16];
 extern ProgAtr* _svm_vab_pg[16];
 extern VabHdr* _svm_vab_vh[16];

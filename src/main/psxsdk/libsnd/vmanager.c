@@ -387,7 +387,53 @@ void SpuVmNoiseOn(s32 arg0, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmPBVoice);
+s16 SpuVmPBVoice(
+    s16 voice, s16 seq_sep_no, s16 vabId, s16 program, u16 amount) {
+    s16 temp_t1;
+    s32 temp_lo;
+    s32 temp_v0_2;
+    u16 temp_v1;
+    u16 pbend;
+    s32 var_v0_2;
+    u16 temp_a1;
+    u16 note;
+    temp_t1 = amount + 0xFFC0U;
+    if (((_svm_voice[voice].unke == seq_sep_no) &&
+         (_svm_voice[voice].vabId == vabId)) &&
+        (_svm_voice[voice].prog == program)) {
+        temp_a1 = _svm_voice[voice].note;
+        temp_v1 =
+            _svm_voice[voice].tone + (_svm_cur.field_7_fake_program * 0x10);
+        if (temp_t1 > 0) {
+            do {
+                note = temp_a1 + ((temp_t1 * _svm_tn[temp_v1].pbmax) / 63);
+            } while (0);
+            pbend = ((temp_t1 * _svm_tn[temp_v1].pbmax) % 63) * 2;
+        } else {
+            note = temp_a1;
+            if (temp_t1 < 0) {
+                temp_lo = temp_t1 * _svm_tn[temp_v1].pbmin;
+                var_v0_2 = temp_lo;
+                if (temp_lo < 0) {
+                    var_v0_2 = temp_lo + 0x3F;
+                }
+                temp_v0_2 = var_v0_2 >> 6;
+                note = temp_v0_2;
+                note = (temp_a1 + note) - 1;
+                pbend = ((temp_lo - (temp_v0_2 << 6)) * 2) + 0x7F;
+            } else {
+                pbend = 0;
+            }
+        }
+        _svm_cur.field_C_vag_idx = _svm_voice[voice].tone;
+        _svm_cur.field_0x1a = voice;
+        _svm_sreg_buf.buf[voice].field_4_pitch = note2pitch2(note, pbend);
+        _svm_sreg_dirty[voice] |= 4;
+        return 1;
+    } else {
+        return 0;
+    }
+}
 
 s32 SpuVmPitchBend(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
     s16 voice;
