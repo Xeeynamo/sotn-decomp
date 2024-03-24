@@ -1325,7 +1325,7 @@
 - [✅ SpuVmNoiseOff](function_calls/main.SpuVmNoiseOff.svg?raw=1)
 - [✅ SpuVmNoiseOn](function_calls/main.SpuVmNoiseOn.svg?raw=1)
 - [✅ SpuVmNoiseOnWithAdsr](function_calls/main.SpuVmNoiseOnWithAdsr.svg?raw=1)
-- [❌ SpuVmPBVoice](function_calls/main.SpuVmPBVoice.svg?raw=1)
+- [✅ SpuVmPBVoice](function_calls/main.SpuVmPBVoice.svg?raw=1)
 - [✅ SpuVmPitchBend](function_calls/main.SpuVmPitchBend.svg?raw=1)
 - [✅ SpuVmSeKeyOff](function_calls/main.SpuVmSeKeyOff.svg?raw=1)
 - [✅ SpuVmSeKeyOn](function_calls/main.SpuVmSeKeyOn.svg?raw=1)
