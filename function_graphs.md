@@ -1449,7 +1449,7 @@
 - [✅ _SsSetPitchBend](function_calls/main._SsSetPitchBend.svg?raw=1)
 - [✅ _SsSetProgramChange](function_calls/main._SsSetProgramChange.svg?raw=1)
 - [❌ _SsSndCrescendo](function_calls/main._SsSndCrescendo.svg?raw=1)
-- [❌ _SsSndDecrescendo](function_calls/main._SsSndDecrescendo.svg?raw=1)
+- [✅ _SsSndDecrescendo](function_calls/main._SsSndDecrescendo.svg?raw=1)
 - [✅ _SsSndNextSep](function_calls/main._SsSndNextSep.svg?raw=1)
 - [✅ _SsSndPause](function_calls/main._SsSndPause.svg?raw=1)
 - [✅ _SsSndPlay](function_calls/main._SsSndPlay.svg?raw=1)
