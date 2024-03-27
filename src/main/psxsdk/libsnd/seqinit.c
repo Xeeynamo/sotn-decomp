@@ -5,7 +5,7 @@ s16 _SsInitSoundSeq(s16 arg0, s16 vab_id, u8* addr) {
     s32 temp_lo;
     s32 tempo;
     s32 delta_value;
-    s32 var_v1;
+    s32 channel;
     u32 temp_a1_2;
     u32 temp_lo_2;
     u32 temp_lo_3;
@@ -18,7 +18,7 @@ s16 _SsInitSoundSeq(s16 arg0, s16 vab_id, u8* addr) {
     u8 c;
     u8 t;
     u8 q;
-    var_v1 = 0;
+    channel = 0;
     score = &_ss_score[arg0][0];
     score->unk4c = vab_id;
     score->unk4a = 0;
@@ -42,12 +42,11 @@ s16 _SsInitSoundSeq(s16 arg0, s16 vab_id, u8* addr) {
     score->unk11 = 0;
     score->padA6 = 0x7F;
     score->padaa = 0;
-    do {
-        score->programs[var_v1] = var_v1;
-        score->panpot[var_v1] = 0x40;
-        score->vol[var_v1] = 0x7f;
-        var_v1 += 1;
-    } while (var_v1 < 0x10);
+    for (channel = 0; channel < 16; channel++) {
+        score->programs[channel] = channel;
+        score->panpot[channel] = 0x40;
+        score->vol[channel] = 0x7f;
+    }
     score->unk6E = 1;
     score->read_pos = addr;
     if ((score->read_pos[0] == 'S') || (score->read_pos[0] == 'p')) {
