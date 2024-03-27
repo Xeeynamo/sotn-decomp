@@ -12,7 +12,7 @@
 <!-- main._SsInitSoundSeq -->
 <g id="node1" class="node">
 <title>main._SsInitSoundSeq</title>
-<ellipse fill="red" stroke="black" cx="115.04" cy="-18" rx="115.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="115.04" cy="-18" rx="115.08" ry="18"/>
 <text text-anchor="middle" x="115.04" y="-14.3" font-family="Times,serif" font-size="14.00">main._SsInitSoundSeq</text>
 </g>
 </g>
