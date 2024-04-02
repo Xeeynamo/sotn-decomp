@@ -2606,7 +2606,9 @@
 - [✅ func_801BA7EC](function_calls/sel.func_801BA7EC.svg?raw=1)
 - [✅ func_801BA880](function_calls/sel.func_801BA880.svg?raw=1)
 # servant
+- [✅ CreateEventEntity](function_calls/servant.CreateEventEntity.svg?raw=1)
 - [✅ DestroyEntity](function_calls/servant.DestroyEntity.svg?raw=1)
+- [✅ ProcessEvent](function_calls/servant.ProcessEvent.svg?raw=1)
 - [✅ UpdateAnim](function_calls/servant.UpdateAnim.svg?raw=1)
 - [✅ func_801710E8](function_calls/servant.func_801710E8.svg?raw=1)
 - [✅ func_8017110C](function_calls/servant.func_8017110C.svg?raw=1)
@@ -2640,8 +2642,6 @@
 - [✅ func_80173F74](function_calls/servant.func_80173F74.svg?raw=1)
 - [✅ func_80173FE8](function_calls/servant.func_80173FE8.svg?raw=1)
 - [✅ func_80174038](function_calls/servant.func_80174038.svg?raw=1)
-- [❌ func_80174210](function_calls/servant.func_80174210.svg?raw=1)
-- [✅ func_801745E4](function_calls/servant.func_801745E4.svg?raw=1)
 - [✅ func_801746A0](function_calls/servant.func_801746A0.svg?raw=1)
 - [✅ func_801747B8](function_calls/servant.func_801747B8.svg?raw=1)
 - [✅ func_80174864](function_calls/servant.func_80174864.svg?raw=1)
