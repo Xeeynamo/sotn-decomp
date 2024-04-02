@@ -96,7 +96,7 @@ void EntitySuccubus(Entity* self) {
         SetStep(SUCCUBUS_GET_HIT);
     }
 
-    if (self->flags & 0x100) {
+    if (self->flags & FLAG_DEAD) {
         if (self->step != SUCCUBUS_DYING) {
             self->hitboxState = 0;
             SetStep(SUCCUBUS_DYING);
@@ -963,13 +963,13 @@ void EntitySuccubusPetal(Entity* self) {
     s16 angle;
 
     if (D_80180664 & 2) {
-        self->flags |= 0x100;
+        self->flags |= FLAG_DEAD;
     }
     if (self->hitFlags & 0x80) {
         D_80180668 = 1;
     }
 
-    if (self->flags & 0x100) {
+    if (self->flags & FLAG_DEAD) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
@@ -1049,16 +1049,16 @@ void EntitySuccubusClone(Entity* self) {
     s32 i;
 
     if (D_80180660 == 0) {
-        self->flags |= 0x100;
+        self->flags |= FLAG_DEAD;
     }
 
-    if (self->flags & 0x100) {
+    if (self->flags & FLAG_DEAD) {
         if (self->step != 5) {
             if (D_80180660 != 0) {
                 D_80180660--;
             }
             self->hitboxState = 0;
-            self->flags |= 0x100;
+            self->flags |= FLAG_DEAD;
             g_api.func_80134714(0x6D9, 0x54, 0);
             SetStep(5);
         }
@@ -1199,7 +1199,7 @@ void EntityPinkBallProjectile(Entity* self) {
             self->drawFlags = 0;
             self->step++;
         }
-        if (entity->flags & 0x100) {
+        if (entity->flags & FLAG_DEAD) {
             DestroyEntity(self);
         }
         break;

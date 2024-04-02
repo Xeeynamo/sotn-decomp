@@ -220,7 +220,7 @@ void EntityBloodyZombie(Entity* self) {
         SetStep(BLOODY_ZOMBIE_TAKE_HIT);
     }
 
-    if (self->flags & 0x100 && self->step < 8) {
+    if (self->flags & FLAG_DEAD && self->step < 8) {
         func_801C29B0(NA_SE_EN_BLOODY_ZOMBIE_DEATH_SCREAM);
         self->hitboxState = 0;
         self->flags &= ~FLAG_UNK_20000000;

@@ -1666,7 +1666,7 @@ void EntityMediumWaterSplash(Entity* entity) {
     }
     AnimateEntity(D_80183994, entity);
     MoveEntity();
-    if (entity->flags & 0x100) {
+    if (entity->flags & FLAG_DEAD) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(2, entity, newEntity);
@@ -1929,7 +1929,7 @@ void EntityMermanFireball(Entity* self) {
             self->rotY = self->rotX += 8;
         }
 
-        if (self->flags & 0x100) {
+        if (self->flags & FLAG_DEAD) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 CreateEntityFromEntity(2, self, entity);

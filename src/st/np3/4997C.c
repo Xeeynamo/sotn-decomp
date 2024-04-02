@@ -5,7 +5,7 @@ void EntityBat(Entity* entity) {
     s16 xDistance;
     s16 yDistance;
 
-    if (entity->flags & 0x100) {
+    if (entity->flags & FLAG_DEAD) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);

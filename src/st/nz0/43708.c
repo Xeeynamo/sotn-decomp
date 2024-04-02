@@ -52,7 +52,7 @@ void EntityBoneScimitar(Entity* self) {
     u8 animStatus;
     s32 i;
 
-    if (self->flags & 0x100) {
+    if (self->flags & FLAG_DEAD) {
         self->step = BONE_SCIMITAR_DESTROY;
     }
 

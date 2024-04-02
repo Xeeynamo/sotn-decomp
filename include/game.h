@@ -204,6 +204,8 @@ extern u8 g_BmpCastleMap[0x20000];
 #define FLAG_DRAW_UNK80 0x80
 
 // Flags for entity->flags
+// Signals that the entity should run its death routine
+#define FLAG_DEAD 0x100
 #define FLAG_UNK_2000 0x2000
 #define FLAG_UNK_10000 0x10000
 #define FLAG_UNK_20000 0x20000 // func_8011A9D8 will destroy if not set

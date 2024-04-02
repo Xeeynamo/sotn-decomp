@@ -24,7 +24,7 @@ void EntitySkeleton(Entity* self) {
     u8 animStatus;
     u8 i;
 
-    if (self->flags & 0x100) {
+    if (self->flags & FLAG_DEAD) {
         self->step = SKELETON_DESTROY;
     }
 
@@ -204,7 +204,7 @@ void func_801C6574(Entity* entity) { // Bone Projectile from Skeleton
     u32 xDistanceToPlayer;
 
     if (entity->step) {
-        if (entity->flags & 0x100) {
+        if (entity->flags & FLAG_DEAD) {
             EntityExplosionSpawn(0, 0);
             return;
         }

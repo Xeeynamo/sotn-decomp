@@ -87,11 +87,11 @@ void EntityDraculaFinalForm(Entity* self) {
     u16 selfzPriority;
     s32 selfParams;
 
-    if (self->flags & 0x100) { // Does this test for the entity being killed?
+    if (self->flags & FLAG_DEAD) {
         self->hitboxState = 0;
         if (self->step < 6) {
             D_8003C744 = 3;
-            SetStep(6); // Set step to 6, which is Dracula defeated?
+            SetStep(6);
         }
     }
     if (self->params == 0) {
@@ -654,7 +654,7 @@ void EntityDraculaRainAttack(Entity* self) {
     s16 angle;
     s32 i;
 
-    if (self->flags & 0x100) {
+    if (self->flags & FLAG_DEAD) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
