@@ -825,8 +825,10 @@ void EntityHellfireHandler(Entity* self) {
         if (self->ext.hellfireHandler.unk80 == 0x30) {
             // When you press up during hellfire, you get different fireballs.
             if (g_Player.padPressed & PAD_UP) {
+                // Blueprint 35 makes child 27, the big black fireballs
                 CreateEntFactoryFromEntity(self, FACTORY(0, 35), 0);
             } else {
+                // Blueprint 34 makes child 26, the small, normal fireballs
                 CreateEntFactoryFromEntity(self, FACTORY(0, 34), 0);
             }
         }
@@ -875,7 +877,8 @@ void EntityHellfireHandler(Entity* self) {
     return;
 }
 
-void func_801274DC(Entity* entity) {
+// The fireball produced by Hellfire, when you do NOT press up
+void EntityHellfireNormalFireball(Entity* entity) {
     switch (entity->step) {
     case 0:
         if (entity->params == 0) {
@@ -976,7 +979,8 @@ void EntityBatFireball(Entity* self) {
     return;
 }
 
-void func_80127840(Entity* entity) {
+// Produced in Hellfire when you press UP during the casting
+void EntityHellfireBigFireball(Entity* entity) {
     switch (entity->step) {
     case 0:
         if (entity->params != 0) {
