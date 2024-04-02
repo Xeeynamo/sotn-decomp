@@ -691,102 +691,102 @@ block_160:
     g_Player.unk52 = PLAYER.step_s;
     D_800ACDF8 = (s32)g_Player.D_80072F00[11];
     switch (PLAYER.step) {
-    case 0:
+    case Player_Stand:
         func_801120B4();
         break;
-    case 1:
+    case Player_Walk:
         func_80112B64();
         break;
-    case 2:
+    case Player_Crouch:
         func_801131C4();
         break;
-    case 3:
+    case Player_Fall:
         func_80113148();
         break;
-    case 4:
+    case Player_Jump:
         func_80112BB0();
         break;
-    case 5:
+    case Player_MorphBat:
         ControlBatForm();
         break;
-    case 9:
+    case Player_UnmorphBat:
         func_801177A0();
         break;
-    case 7:
+    case Player_MorphMist:
         ControlMistForm();
         break;
-    case 14:
+    case Player_UnmorphMist:
         func_801182F8();
         break;
-    case 24:
+    case Player_MorphWolf:
         func_8012EF2C();
         break;
-    case 25:
+    case Player_UnmorphWolf:
         func_8012EAD0();
         break;
-    case 8:
+    case Player_HighJump:
         func_80113AAC();
         break;
-    case 15:
+    case Player_SwordWarp:
         func_801186EC();
         break;
-    case 10:
+    case Player_Hit:
         AlucardHandleDamage(&damage, (s16)var_s6, (s16)var_s7);
         break;
-    case 11:
+    case Player_StatusStone:
         func_80114DF4(var_fp);
         break;
-    case 12:
+    case Player_BossGrab:
         func_80116208();
         break;
-    case 16:
+    case Player_Kill:
         func_80115394(&damage, (s16)var_s6, (s16)var_s7);
         break;
-    case 17:
+    case Player_Unk17:
         func_80115BB0();
         break;
-    case 18:
+    case Player_Teleport:
         func_80115DA0();
         break;
-    case 32:
+    case Player_SpellDarkMetamorphosis:
         func_80118614();
         break;
-    case 34:
+    case Player_SpellHellfire:
         PlayerStepHellfire();
         break;
-    case 37:
+    case Player_SpellSoulSteal:
         func_80118670();
         break;
-    case 33:
-    case 35:
-    case 39:
+    case Player_SpellSummonSpirit:
+    case Player_SpellTetraSpirit:
+    case Player_SpellSwordBrothers:
         func_80118640();
         break;
-    case 48:
+    case Player_Unk48:
         func_801166A4();
         break;
-    case 49:
+    case Player_Unk49:
         func_8011678C();
         break;
-    case 50:
+    case Player_Unk50:
         func_801167D0();
         break;
-    case 13:
+    case Player_KillWater:
         func_80115F54();
         break;
-    case 6:
+    case Player_AlucardStuck:
         func_80117AC0();
         break;
-    case 40:
+    case Player_AxearmorStand:
         weapon_func = D_8017A000.func_ptr_80170004;
         goto runweapon;
-    case 41:
+    case Player_AxearmorWalk:
         weapon_func = D_8017A000.func_ptr_80170008;
         goto runweapon;
-    case 42:
+    case Player_AxearmorJump:
         weapon_func = D_8017A000.func_ptr_8017000C;
         goto runweapon;
-    case 43:
+    case Player_AxearmorHit:
         weapon_func = D_8017A000.func_ptr_80170010;
     runweapon:
         weapon_func();

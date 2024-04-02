@@ -2271,12 +2271,13 @@ bool WolfFormFinished(void) {
     if (D_80097448[1] != 0 && !IsRelicActive(RELIC_HOLY_SYMBOL) ||
         g_Player.padTapped & PAD_R2 ||
         HandleTransformationMP(FORM_WOLF, REDUCE) < 0) {
-        SetPlayerStep(Player_Unk25);
+        SetPlayerStep(Player_UnmorphWolf);
         func_8010DA48(0xCA);
         D_800AFDA6[0] = 1;
         PLAYER.palette = 0x810D;
         g_Player.unk66 = 0;
         g_Player.unk68 = 0;
+        // Create factory for EntityPlayerBlinkWhite
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2400, 44), 0);
         PLAYER.velocityY >>= 1;
         return true;

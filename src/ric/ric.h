@@ -33,8 +33,8 @@ typedef enum {
     Player_ThousandBlades,
     Player_RichterFourHolyBeasts,
     Player_Slide,
-    Player_Unk24, // MorphWolf and Richter's Tackle
-    Player_Unk25, // UnMorphWolf and Sprint
+    Player_RichterTackle,
+    Player_RichterSprint,
     Player_SlideKick,
     Player_Unk27, // other item crashes
     Player_SpellDarkMetamorphosis = 32,

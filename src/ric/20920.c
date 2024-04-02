@@ -227,7 +227,7 @@ void func_8015D020(void) {
     }
     if (func_8015C9CC() != 0 || PLAYER.step == Player_Slide) {
         func_8015C920(&D_8015550C);
-        if (PLAYER.step == Player_Unk25) {
+        if (PLAYER.step == Player_RichterSprint) {
             SetSpeedX(FIX(2.25));
             g_Player.unk44 = 0x10;
         } else {
