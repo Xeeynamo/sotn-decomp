@@ -70,44 +70,9 @@ void func_801ADB10(u16* arg0, u16 arg1, u16 arg2, s32 steps, u8* arg4) {
         bufRect.y = temp_v0 + 0xF0;
         bufRect.x = ((temp_a2 - (temp_v0 * 0x10)) * 0x10) + 0x100;
         LoadImage(&bufRect, buf);
-        D_8003C104[arg2] = GetClut(bufRect.x, bufRect.y);
+        g_ClutIds[arg2] = GetClut(bufRect.x, bufRect.y);
     }
 }
-
-Entity* AllocEntity(Entity* start, Entity* end); /* extern */
-s32 AnimateEntity(const u8 frames[], Entity* entity);
-void CreateEntityFromCurrentEntity(u16, Entity*);
-void CreateEntityFromEntity(u16 entityId, Entity* ent1, Entity* ent2);
-s16 GetSideToPlayer(void); /* extern */
-void InitializeEntity(u16 self[]);
-void MoveEntity();
-s32 Random(); /* extern */
-void SetStep(u8);
-void SetSubStep(u8 step_s);   /* extern */
-bool func_801ADAC8(s32 self); /* extern */
-extern Entity D_8007D858;
-extern u16 D_80180604[];
-extern s32 D_80180910;
-// Animations
-extern u8 D_80180AA4[];
-extern u8 D_80180AB0[];
-extern u8 D_80180AC8[];
-extern u8 D_80180AD4[];
-extern u8 D_80180AEC[];
-extern u8 D_80180AFC[];
-extern u8 D_80180B20[];
-extern u8 D_80180B48[];
-extern u8 D_80180B58[];
-extern u8 D_80180B60[];
-extern u8 D_80180B80[];
-// End animations
-extern u16 D_80180BE4[];
-extern s16 D_801810F4[];
-extern Point16 D_80181108[];
-extern s32 D_80181148;
-extern u32 D_8018114C;
-extern s8 D_801A7B7C;
-extern s32 D_801C2578;
 
 void EntityDraculaFinalForm(Entity* self) {
     byte stackpad[56];
@@ -121,13 +86,12 @@ void EntityDraculaFinalForm(Entity* self) {
     s32 timerDiff;
     u16 selfzPriority;
     s32 selfParams;
-    s32 mainStep;
 
-    if (self->flags & 0x100) {
+    if (self->flags & 0x100) { // Does this test for the entity being killed?
         self->hitboxState = 0;
-        if (self->step < 6U) {
+        if (self->step < 6) {
             D_8003C744 = 3;
-            SetStep(6);
+            SetStep(6); // Set step to 6, which is Dracula defeated?
         }
     }
     if (self->params == 0) {
@@ -137,14 +101,13 @@ void EntityDraculaFinalForm(Entity* self) {
             self->palette = 0x202;
         }
     }
-    mainStep = self->step;
-    switch (mainStep) {
-    case 0x0: /* switch 4 */
+    switch (self->step) {
+    case 0:
         InitializeEntity(D_80180604);
-        self->hitboxHeight = 0x10;
-        self->hitboxWidth = 0x10;
-        self->hitboxOffX = -0x18;
-        self->hitboxOffY = -0x10;
+        self->hitboxHeight = 16;
+        self->hitboxWidth = 16;
+        self->hitboxOffX = -24;
+        self->hitboxOffY = -16;
         self->hitboxState = 0;
         if (self->params == 0) {
             temp_s2 = self + 1;
@@ -152,52 +115,53 @@ void EntityDraculaFinalForm(Entity* self) {
             var_s1 = self + 1;
             self->animCurFrame = 0;
             for (i = 1; i < 4; i++, temp_s2++, var_s1++) {
-                CreateEntityFromCurrentEntity(0x20, temp_s2);
+                CreateEntityFromCurrentEntity(32, temp_s2);
                 selfzPriority = self->zPriority;
                 var_s1->params = i;
                 var_s1->unk60 = temp_s2 - 1;
                 var_s1->unk5C = self;
 
                 var_s1->zPriority = selfzPriority + 2;
+                // seems hitPoints might be used for something else
                 var_s1->hitPoints = 0x7FFE;
             }
             self->unk5C = 0;
             self->unk60 = self + 3;
-            return;
+        } else {
+            self->animCurFrame = 0;
+            SetStep(16);
         }
-        self->animCurFrame = 0;
-        SetStep(0x10);
-        return;
-    case 0x1: /* switch 4 */
+        break;
+    case 1:
         if (D_801C2578 == 0) {
             self->animCurFrame = 1;
         }
         if (D_80180910 != 0) {
             self->animCurFrame = 1;
-            self->hitboxState = 3U;
+            self->hitboxState = 3;
             self->unk6C = 0x80;
             self->drawFlags = 0;
             SetStep(2);
         }
         break;
-    case 0x2: /* switch 4 */
+    case 2:
         if (self->step_s == 0) {
-            self->ext.factory.unk80 = 0x50;
-            self->step_s = (self->step_s + 1);
+            self->ext.dracFinalForm.timer = 80;
+            self->step_s++;
         }
         if ((AnimateEntity(D_80180AA4, self) == 0) &&
             (((GetSideToPlayer() & 1) ^ 1) != self->facingLeft)) {
             SetStep(3);
         }
-        if (--self->ext.factory.unk80 == 0) {
+        if (--self->ext.dracFinalForm.timer == 0) {
             SetStep(5);
-            if ((self->posX.i.hi < 0x98) && (self->facingLeft == 1)) {
+            if ((self->posX.i.hi < 152) && (self->facingLeft == 1)) {
                 if (Random() & 1) {
                     SetStep(7);
                 } else {
                     SetStep(4);
                 }
-            } else if ((self->posX.i.hi >= 0x69) && (self->facingLeft == 0)) {
+            } else if ((self->posX.i.hi > 104) && (self->facingLeft == 0)) {
                 if (Random() & 1) {
                     SetStep(7);
                 } else {
@@ -210,14 +174,14 @@ void EntityDraculaFinalForm(Entity* self) {
             }
         }
         break;
-    case 0x7:                   /* switch 4 */
-        switch (self->step_s) { /* switch 5; irregular */
-        case 0:                 /* switch 5 */
+    case 7:
+        switch (self->step_s) {
+        case 0:
             self->velocityX = 0;
             self->velocityY = 0;
             self->step_s++;
             /* fallthrough */
-        case 1: /* switch 5 */
+        case 1:
             if (AnimateEntity(D_80180AB0, self) == 0) {
                 SetSubStep(2);
             }
@@ -231,13 +195,12 @@ void EntityDraculaFinalForm(Entity* self) {
             }
             MoveEntity();
             if (self->velocityY != 0) {
-                self->velocityY += 0x1400;
-                return;
+                self->velocityY += FIX(10.0 / 128);
             }
             break;
-        case 2: /* switch 5 */
+        case 2:
             MoveEntity();
-            self->velocityY += 0x1400;
+            self->velocityY += FIX(10.0 / 128);
             if (self->velocityY >= 0) {
                 AnimateEntity(D_80180AC8, self);
             }
@@ -245,26 +208,23 @@ void EntityDraculaFinalForm(Entity* self) {
                 g_api.PlaySfx(0x63D);
                 g_api.func_80102CD8(1);
                 self->step_s++;
-                return;
             }
             break;
-        case 3: /* switch 5 */
+        case 3:
             if (AnimateEntity(D_80180AD4, self) == 0) {
                 SetStep(2);
-                return;
             }
-            break;
         }
         break;
-    case 0x3: /* switch 4 */
+    case 3:
         if (AnimateEntity(D_80180B60, self) == 0) {
-            if ((self->posX.i.hi < 0xA0) && (self->facingLeft == 1)) {
+            if ((self->posX.i.hi < 160) && (self->facingLeft == 1)) {
                 if (Random() & 1) {
                     SetStep(4);
                 } else {
                     SetStep(7);
                 }
-            } else if ((self->posX.i.hi >= 0x61) && (self->facingLeft == 0)) {
+            } else if ((self->posX.i.hi > 96) && (self->facingLeft == 0)) {
                 if (Random() & 1) {
                     SetStep(4);
                 } else {
@@ -276,79 +236,76 @@ void EntityDraculaFinalForm(Entity* self) {
         }
         if (self->animFrameIdx == 2 && self->animFrameDuration == 0) {
             self->facingLeft = (self->facingLeft ^ 1);
-            return;
         }
         break;
-    case 0x4:                   /* switch 4 */
-        switch (self->step_s) { /* switch 6; irregular */
-        case 0:                 /* switch 6 */
+    case 4:
+        switch (self->step_s) {
+        case 0:
             if (AnimateEntity(D_80180B48, self) == 0) {
                 g_api.PlaySfx(0x866);
                 self->step_s++;
-                return;
             }
             break;
-        case 1: /* switch 6 */
+        case 1:
             temp_s2 = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (temp_s2 != NULL) {
-                CreateEntityFromEntity(0x21, self, temp_s2);
+                CreateEntityFromEntity(33, self, temp_s2);
                 temp_s2->posX.i.hi = temp_s2->posX.i.hi;
                 temp_s2->posY.i.hi = temp_s2->posY.i.hi;
                 temp_s2->facingLeft = self->facingLeft;
                 temp_s2->params = 1;
             }
-            self->ext.factory.unk80 = 0x20;
+            self->ext.dracFinalForm.timer = 32;
             self->step_s++;
-            return;
-        case 2: /* switch 6 */
+            break;
+        case 2:
             // FAKE assignment to i
-            if (i = --self->ext.factory.unk80 == 0) {
+            if (i = --self->ext.dracFinalForm.timer == 0) {
                 self->ext.factory.unk84 = 0;
                 self->step_s++;
-                return;
             }
             break;
-        case 3: /* switch 6 */
-            if (self->ext.factory.unk80 != 0) {
-                self->ext.factory.unk80--;
-                return;
+        case 3:
+            if (self->ext.dracFinalForm.timer != 0) {
+                self->ext.dracFinalForm.timer--;
+                break;
             }
-            self->ext.factory.unk80 = 0x30;
+            self->ext.dracFinalForm.timer = 48;
             temp_s1 = &D_801810F4;
             temp_s1 += self->ext.factory.unk84;
             if (*temp_s1 == -1) {
                 SetStep(2);
                 return;
             }
-            if (self->facingLeft != 0) {
-                xShift = 0x20;
+            if (self->facingLeft) {
+                xShift = 32;
             } else {
-                xShift = -0x20;
+                xShift = -32;
             }
             temp_s2 = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (temp_s2 != NULL) {
                 g_api.PlaySfx(0x660);
-                CreateEntityFromEntity(0x21, self, temp_s2);
+                CreateEntityFromEntity(33, self, temp_s2);
                 temp_s2->posX.i.hi = (xShift + temp_s2->posX.i.hi);
                 temp_s2->posY.i.hi = (temp_s2->posY.i.hi - 4);
                 temp_s2->rotZ = *temp_s1;
-                if (self->facingLeft != 0) {
+                if (self->facingLeft) {
                     temp_s2->rotZ = (0x800 - temp_s2->rotZ);
                 }
             }
             self->ext.factory.unk84++;
         }
         break;
-    case 0x8:                   /* switch 4 */
-        switch (self->step_s) { /* switch 7; irregular */
-        case 0:                 /* switch 7 */
+    case 8:
+        switch (self->step_s) {
+        case 0:
             self->velocityX = 0;
             self->velocityY = 0;
-            self->ext.factory.unk80 = 4;
+            self->ext.dracFinalForm.timer = 4;
             self->ext.factory.unk84 = 0;
-            self->step_s = (self->step_s + 1);
+            self->step_s++;
             /* fallthrough */
-        case 1: /* switch 7 */
+        case 1:
             if (AnimateEntity(D_80180B80, self) == 0) {
                 SetSubStep(2);
             }
@@ -360,26 +317,25 @@ void EntityDraculaFinalForm(Entity* self) {
             if (self->velocityY != 0) {
                 self->velocityY += FIX(0.09375);
             }
-            if (--self->ext.factory.unk80 == 0) {
+            if (--self->ext.dracFinalForm.timer == 0) {
                 temp_s1 = &D_801810F4[4];
                 temp_s1 += self->ext.factory.unk84;
                 if (*temp_s1 == -1) {
-                    self->ext.factory.unk80 = 0x7FFF;
+                    self->ext.dracFinalForm.timer = 0x7FFF;
                     return;
                 }
-                self->ext.factory.unk80 = 6;
+                self->ext.dracFinalForm.timer = 6;
                 temp_s2 = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (temp_s2 != NULL) {
                     g_api.PlaySfx(0x661);
-                    CreateEntityFromEntity(0x22, self, temp_s2);
+                    CreateEntityFromEntity(34, self, temp_s2);
                     temp_s2->posX.i.hi = (temp_s2->posX.i.hi + *temp_s1);
                     temp_s2->zPriority = (self->zPriority + 1);
                 }
                 self->ext.factory.unk84++;
-                return;
             }
             break;
-        case 2: /* switch 7 */
+        case 2:
             MoveEntity();
             self->velocityY += FIX(0.125);
             if (self->velocityY >= 0) {
@@ -389,60 +345,54 @@ void EntityDraculaFinalForm(Entity* self) {
                 g_api.PlaySfx(0x63D);
                 g_api.func_80102CD8(1);
                 self->step_s++;
-                return;
             }
             break;
-        case 3: /* switch 7 */
+        case 3:
             if (AnimateEntity(D_80180AD4, self) == 0) {
                 SetStep(2);
-                return;
             }
         }
         break;
-    case 0x5:                   /* switch 4 */
-        switch (self->step_s) { /* switch 1 */
-        case 0:                 /* switch 1 */
+    case 5:
+        switch (self->step_s) {
+        case 0:
             if (AnimateEntity(D_80180AEC, self) == 0) {
                 SetSubStep(1);
-                return;
             }
             break;
-        case 1: /* switch 1 */
+        case 1:
             if (AnimateEntity(D_80180AFC, self) == 0) {
                 g_api.PlaySfx(0x856);
                 temp_s2 = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (temp_s2 != NULL) {
-                    CreateEntityFromEntity(0x2E, self, temp_s2);
+                    CreateEntityFromEntity(46, self, temp_s2);
                     if (self->facingLeft != 0) {
-                        temp_s2->posX.i.hi += 0x28;
+                        temp_s2->posX.i.hi += 40;
                     } else {
-                        temp_s2->posX.i.hi -= 0x28;
+                        temp_s2->posX.i.hi -= 40;
                     }
-                    temp_s2->posY.i.hi += 0x10;
+                    temp_s2->posY.i.hi += 16;
                     temp_s2->facingLeft = self->facingLeft;
                 }
                 SetSubStep(2);
-                return;
             }
             break;
-        case 2: /* switch 1 */
+        case 2:
             if (AnimateEntity(D_80180B20, self) == 0) {
                 SetSubStep(3);
-                return;
             }
             break;
-        case 3: /* switch 1 */
-            self->ext.factory.unk80 = 0x100;
+        case 3:
+            self->ext.dracFinalForm.timer = 256;
             self->step_s++;
-            return;
-        case 4: /* switch 1 */
-            if (--self->ext.factory.unk80 == 0) {
+            break;
+        case 4:
+            if (--self->ext.dracFinalForm.timer == 0) {
                 SetStep(2);
-                return;
             }
         }
         break;
-    case 0x10: /* switch 4 */
+    case 16:
         temp_s2 = self - self->params;
         self->facingLeft = temp_s2->facingLeft;
         self->hitboxState = temp_s2->hitboxState;
@@ -459,13 +409,13 @@ void EntityDraculaFinalForm(Entity* self) {
         self->hitboxWidth = *temp_s1++;
         self->hitboxHeight = *temp_s1++;
         if (self->params == 1) {
-            switch (self->step_s) { /* switch 2 */
-            case 0:                 /* switch 2 */
-                self->ext.factory.unk80 = 0x64;
+            switch (self->step_s) {
+            case 0:
+                self->ext.dracFinalForm.timer = 100;
                 self->step_s++;
                 return;
-            case 1: /* switch 2 */
-                if (--self->ext.factory.unk80 == 0) {
+            case 1:
+                if (--self->ext.dracFinalForm.timer == 0) {
                     self->animCurFrame = 0x5A;
                     self->unk5A = 0x5E;
                     self->palette = 0x815F;
@@ -476,20 +426,18 @@ void EntityDraculaFinalForm(Entity* self) {
                     self->rotX = 0x400;
                     g_api.PlaySfx(0x880);
                     self->step_s++;
-                    return;
                 }
                 break;
-            case 2: /* switch 2 */
+            case 2:
                 self->rotX = self->rotY = self->rotY - 0x18;
                 if (self->rotY < 0x100) {
                     self->animCurFrame = 0;
                     self->drawMode = 0;
                     self->drawFlags = 0;
                     self->step_s++;
-                    return;
                 }
                 break;
-            case 3: /* switch 2 */
+            case 3:
                 if (D_801C2578 == 0) {
                     self->animCurFrame = 1;
                     self->unk5A = 0x50;
@@ -498,18 +446,16 @@ void EntityDraculaFinalForm(Entity* self) {
                     self->unk6C = 0;
                     self->drawMode = 0x30;
                     self->step_s++;
-                    return;
                 }
                 break;
-            case 4: /* switch 2 */
+            case 4:
                 self->unk6C += 4;
                 self->animCurFrame = temp_s2->animCurFrame;
                 if (self->unk6C > 0x60) {
                     self->step_s++;
-                    return;
                 }
                 break;
-            case 5: /* switch 2 */
+            case 5:
                 self->unk6C -= 4;
                 self->animCurFrame = temp_s2->animCurFrame;
                 if (self->unk6C == 0) {
@@ -517,15 +463,14 @@ void EntityDraculaFinalForm(Entity* self) {
                     self->drawMode = 0;
                     self->drawFlags = 0;
                     self->step_s++;
-                    return;
                 }
                 break;
             }
         }
         break;
-    case 0x6:                   /* switch 4 */
-        switch (self->step_s) { /* switch 3 */
-        case 0:                 /* switch 3 */
+    case 6: // Time attack call indicates this state is Dracula's defeat
+        switch (self->step_s) {
+        case 0:
             g_api.PlaySfx(0x866);
             temp_s2 = self + 1;
             self->hitboxState = 0;
@@ -534,20 +479,20 @@ void EntityDraculaFinalForm(Entity* self) {
                 temp_s2++;
             }
             g_api.PlaySfx(0x80);
-            self->ext.factory.unk80 = 4;
+            self->ext.dracFinalForm.timer = 4;
             self->ext.factory.unk84 = 0;
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_DRACULA_DEFEAT, TIMEATTACK_SET_RECORD);
             D_8003C8B8 = 0;
             D_80181148 = 0x800;
-            self->step_s = (self->step_s + 1);
+            self->step_s++;
             /* fallthrough */
-        case 1: /* switch 3 */
+        case 1:
             if (AnimateEntity(D_80180B58, self) == 0) {
                 self->step_s++;
             }
             break;
-        case 2: /* switch 3 */
+        case 2:
             if (g_api.func_80131F68() == true) {
                 if (--D_80181148 == 0) {
                     D_80181148 = 0x800;
@@ -559,7 +504,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 self->step_s++;
             }
             break;
-        case 3: /* switch 3 */
+        case 3:
             if (g_api.func_80131F68() == false) {
                 // Fake reuse of the i variable
                 i = g_Timer - D_8018114C;
@@ -583,13 +528,13 @@ void EntityDraculaFinalForm(Entity* self) {
                 self->step_s++;
             }
             break;
-        case 4: /* switch 3 */
+        case 4:
             if (--self->ext.factory.unk82 == 0) {
                 self->step_s++;
             }
             break;
-        case 5: /* switch 3 */
-            CreateEntityFromCurrentEntity(0x2C, self + 1);
+        case 5:
+            CreateEntityFromCurrentEntity(44, self + 1);
             self->step_s++;
             primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
             if (primIndex == -1) {
@@ -600,7 +545,7 @@ void EntityDraculaFinalForm(Entity* self) {
             prim = &g_PrimBuf[primIndex];
             self->primIndex = primIndex;
             self->ext.prim = prim;
-            self->flags |= 0x800000;
+            self->flags |= FLAG_HAS_PRIMS;
             prim->r0 = prim->g0 = prim->b0 = 0;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
@@ -610,9 +555,9 @@ void EntityDraculaFinalForm(Entity* self) {
             prim->y0 = prim->y1 = 0;
             prim->y2 = prim->y3 = 0x100;
             prim->priority = self->zPriority + 0x10;
-            prim->drawMode = 0x31;
+            prim->drawMode = DRAW_TRANSP | 0x30;
             self->step_s++;
-        case 6: /* switch 3 */
+        case 6:
             prim = self->ext.prim;
             prim->g0 = prim->b0 = prim->r0 = prim->r0 + 0x18;
             LOW(prim->r1) = LOW(prim->r0);
@@ -625,9 +570,9 @@ void EntityDraculaFinalForm(Entity* self) {
         case 7:
             break;
         }
-        if (--self->ext.factory.unk80 == 0) {
+        if (--self->ext.dracFinalForm.timer == 0) {
             g_api.PlaySfx(0x655);
-            self->ext.factory.unk80 = 8;
+            self->ext.dracFinalForm.timer = 8;
             temp_s2 = AllocEntity(&g_Entities[224], &g_Entities[256]);
             temp_s1 = &D_80181108[self->ext.factory.unk84].x;
             if (temp_s2 != NULL) {
@@ -638,14 +583,11 @@ void EntityDraculaFinalForm(Entity* self) {
                 temp_s2->posY.i.hi = (temp_s2->posY.i.hi + *temp_s1++);
             }
             self->ext.factory.unk84 = ((self->ext.factory.unk84 + 1) & 0xF);
-            return;
         }
         break;
-    case 0xFF: /* switch 4 */
+    case 0xFF:
         FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & 0x80) {
-            // uncomment to add eight 00 bytes
-            // const char* pad_data = "";
+        if (g_pads[1].pressed & PAD_SQUARE) {
             if (self->params != 0) {
                 return;
             }
@@ -654,7 +596,7 @@ void EntityDraculaFinalForm(Entity* self) {
         } else {
             self->params = 0;
         }
-        if (g_pads[1].pressed & 0x20) {
+        if (g_pads[1].pressed & PAD_CIRCLE) {
             if (self->step_s != 0) {
                 return;
             }
@@ -805,7 +747,7 @@ void func_801AF380(void) {
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
         prim->priority = 0xA0;
-        prim->drawMode = 0x35;
+        prim->drawMode = DRAW_TRANSP | 0x34;
         prim = prim->next;
     }
     var_t0 = &D_8018129C[0];
@@ -833,7 +775,7 @@ void func_801AF380(void) {
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
         prim->priority = 0xA0;
-        prim->drawMode = 0x35;
+        prim->drawMode = DRAW_TRANSP | 0x34;
         prim = prim->next;
     }
 

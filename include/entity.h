@@ -881,6 +881,11 @@ typedef struct {
     s16 unk8E;
 } ET_801AF774;
 
+typedef struct {
+    s32 unk7C;
+    s16 timer;
+} ET_DracFinal;
+
 typedef union {
     /* 0x7C */ struct Primitive* prim;
     /* 0x7C */ ET_TimerOnly timer;
@@ -936,6 +941,7 @@ typedef union {
     /* 0x7C */ ET_801CF254 et_801CF254;
     /* 0x7C */ ET_GurkhaSword gurkhaSword;
     /* 0x7C */ ET_Dracula dracula;
+    /* 0x7C */ ET_DracFinal dracFinalForm;
     /* 0x7C */ ET_Succubus succubus;
     /* 0x7C */ ET_StageTitleCard stageTitleCard;
     /* 0x7C */ ET_RoomTransition2 roomTransition2;

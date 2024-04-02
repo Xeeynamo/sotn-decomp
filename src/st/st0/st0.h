@@ -56,6 +56,7 @@ extern u16 D_801805BC[];
 extern u16 D_801805D4[]; // Init EntityStageTitleCard
 extern u16 D_801805E0[]; // Init EntityDracula
 extern u16 D_801805EC[]; // Init EntityDraculaFireball
+extern u16 D_80180604[]; // Init EntityDraculaFinalForm
 extern u16 D_80180610[]; // Init EntityDraculaMegaFireball
 extern u16 D_8018061C[]; // Init EntityDraculaRainAttack
 extern u16 D_80180628[];
@@ -111,12 +112,30 @@ extern u8 D_801809A4[]; // Animation
 extern u8 D_80180A0C[]; // Animation
 extern u8 D_80180A20[]; // Animation
 extern u8 D_80180A2C[]; // Animation
+// Animations for EntityDraculaFinalForm
+extern u8 D_80180AA4[];
+extern u8 D_80180AB0[];
+extern u8 D_80180AC8[];
+extern u8 D_80180AD4[];
+extern u8 D_80180AEC[];
+extern u8 D_80180AFC[];
+extern u8 D_80180B20[];
+extern u8 D_80180B48[];
+extern u8 D_80180B58[];
+extern u8 D_80180B60[];
+extern u8 D_80180B80[];
 extern u8 D_80180BA0[]; // Animation
 extern u8 D_80180BB8[]; // Animation
 extern u8 D_80180BCC[]; // Animation
 extern u8 D_80180BDC[]; // Animation
+
 extern u16 D_80180A48[];
 extern Point16 D_80180A58[];
+extern u16 D_80180BE4[];
+extern s16 D_801810F4[];
+extern Point16 D_80181108[];
+extern s32 D_80181148;
+extern u32 D_8018114C;
 extern s16 D_80181150[];
 extern s16 D_8018129C[];
 extern u8 D_801813E8;
@@ -124,12 +143,14 @@ extern u8 D_801814A8;
 extern u16 D_80181CAC[];
 extern u16 D_80181CDC[];
 extern u32 D_80181CF0[];
+extern s8 D_801A7B7C;
 extern Point32 D_801BEB64[];
 extern LayoutEntity* D_801C00A0;
 extern u8 D_801C00A8;
 extern u8 D_801C00AC;
 extern s32 D_801C2578;
 extern u32 D_801C257C;
+extern s32 D_801C2578;
 
 // *** EntityDracula properties END ***
 
