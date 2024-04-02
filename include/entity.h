@@ -884,6 +884,8 @@ typedef struct {
 typedef struct {
     s32 unk7C;
     s16 timer;
+    s16 unk82;
+    s16 unk84;
 } ET_DracFinal;
 
 typedef union {

@@ -261,7 +261,7 @@ void EntityDraculaFinalForm(Entity* self) {
         case 2:
             // FAKE assignment to i
             if (i = --self->ext.dracFinalForm.timer == 0) {
-                self->ext.factory.unk84 = 0;
+                self->ext.dracFinalForm.unk84 = 0;
                 self->step_s++;
             }
             break;
@@ -272,7 +272,7 @@ void EntityDraculaFinalForm(Entity* self) {
             }
             self->ext.dracFinalForm.timer = 48;
             temp_s1 = &D_801810F4;
-            temp_s1 += self->ext.factory.unk84;
+            temp_s1 += self->ext.dracFinalForm.unk84;
             if (*temp_s1 == -1) {
                 SetStep(2);
                 return;
@@ -293,7 +293,7 @@ void EntityDraculaFinalForm(Entity* self) {
                     temp_s2->rotZ = (0x800 - temp_s2->rotZ);
                 }
             }
-            self->ext.factory.unk84++;
+            self->ext.dracFinalForm.unk84++;
         }
         break;
     case 8:
@@ -302,7 +302,7 @@ void EntityDraculaFinalForm(Entity* self) {
             self->velocityX = 0;
             self->velocityY = 0;
             self->ext.dracFinalForm.timer = 4;
-            self->ext.factory.unk84 = 0;
+            self->ext.dracFinalForm.unk84 = 0;
             self->step_s++;
             /* fallthrough */
         case 1:
@@ -319,7 +319,7 @@ void EntityDraculaFinalForm(Entity* self) {
             }
             if (--self->ext.dracFinalForm.timer == 0) {
                 temp_s1 = &D_801810F4[4];
-                temp_s1 += self->ext.factory.unk84;
+                temp_s1 += self->ext.dracFinalForm.unk84;
                 if (*temp_s1 == -1) {
                     self->ext.dracFinalForm.timer = 0x7FFF;
                     return;
@@ -332,7 +332,7 @@ void EntityDraculaFinalForm(Entity* self) {
                     temp_s2->posX.i.hi = (temp_s2->posX.i.hi + *temp_s1);
                     temp_s2->zPriority = (self->zPriority + 1);
                 }
-                self->ext.factory.unk84++;
+                self->ext.dracFinalForm.unk84++;
             }
             break;
         case 2:
@@ -480,7 +480,7 @@ void EntityDraculaFinalForm(Entity* self) {
             }
             g_api.PlaySfx(0x80);
             self->ext.dracFinalForm.timer = 4;
-            self->ext.factory.unk84 = 0;
+            self->ext.dracFinalForm.unk84 = 0;
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_DRACULA_DEFEAT, TIMEATTACK_SET_RECORD);
             D_8003C8B8 = 0;
@@ -510,7 +510,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 i = g_Timer - D_8018114C;
                 if (i >= 0x301) {
                     g_api.PlaySfx(0x654);
-                    self->ext.factory.unk82 = 0x80;
+                    self->ext.dracFinalForm.unk82 = 0x80;
                     self->step_s++;
                     break;
                 }
@@ -524,12 +524,12 @@ void EntityDraculaFinalForm(Entity* self) {
                 }
             } else {
                 g_api.PlaySfx(0x654);
-                self->ext.factory.unk82 = 0x80;
+                self->ext.dracFinalForm.unk82 = 0x80;
                 self->step_s++;
             }
             break;
         case 4:
-            if (--self->ext.factory.unk82 == 0) {
+            if (--self->ext.dracFinalForm.unk82 == 0) {
                 self->step_s++;
             }
             break;
@@ -574,7 +574,7 @@ void EntityDraculaFinalForm(Entity* self) {
             g_api.PlaySfx(0x655);
             self->ext.dracFinalForm.timer = 8;
             temp_s2 = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            temp_s1 = &D_80181108[self->ext.factory.unk84].x;
+            temp_s1 = &D_80181108[self->ext.dracFinalForm.unk84].x;
             if (temp_s2 != NULL) {
                 CreateEntityFromEntity(2, self, temp_s2);
                 temp_s2->params = 3;
@@ -582,7 +582,8 @@ void EntityDraculaFinalForm(Entity* self) {
                 temp_s2->posX.i.hi = (temp_s2->posX.i.hi + *temp_s1++);
                 temp_s2->posY.i.hi = (temp_s2->posY.i.hi + *temp_s1++);
             }
-            self->ext.factory.unk84 = ((self->ext.factory.unk84 + 1) & 0xF);
+            self->ext.dracFinalForm.unk84 =
+                ((self->ext.dracFinalForm.unk84 + 1) & 0xF);
         }
         break;
     case 0xFF:
