@@ -545,7 +545,7 @@ void EntitySlograSpear(Entity* self) {
 void EntitySlograSpearProjectile(Entity* self) {
     Entity* entity;
 
-    if (self->flags & 0x100) {
+    if (self->flags & FLAG_DEAD) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, entity);
@@ -608,7 +608,7 @@ void EntityGaibon(Entity* self) {
                 }
             }
         }
-        if ((!(self->flags & 0x100) || (self->step >= GAIBON_NEAR_DEATH)) &&
+        if ((!(self->flags & FLAG_DEAD) || (self->step >= GAIBON_NEAR_DEATH)) &&
             (SLOGRA.ext.GS_Props.pickupFlag) &&
             (self->step < GAIBON_LANDING_AFTER_SHOOTING)) {
             SetStep(GAIBON_PICKUP_SLOGRA);
@@ -1203,7 +1203,7 @@ void func_801B8CC0(Entity* self) {
 
 // small red projectile from gaibon
 void EntitySmallGaibonProjectile(Entity* self) {
-    if (self->flags & 0x100) {
+    if (self->flags & FLAG_DEAD) {
         self->pfnUpdate = EntityExplosion;
         self->drawFlags = 0;
         self->step = 0;
@@ -1234,7 +1234,7 @@ void EntitySmallGaibonProjectile(Entity* self) {
 void EntityLargeGaibonProjectile(Entity* self) {
     Entity* newEntity;
 
-    if (self->flags & 0x100) {
+    if (self->flags & FLAG_DEAD) {
         self->pfnUpdate = EntityExplosion;
         self->entityId = 2;
         self->drawFlags = 0;

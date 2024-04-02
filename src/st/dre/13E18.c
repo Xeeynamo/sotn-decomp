@@ -12,13 +12,13 @@ void EntityUnkId1C(Entity* self) {
         self->flags |= 0x100;
     }
 
-    if (self->flags & 0x100) {
+    if (self->flags & FLAG_DEAD) {
         if (self->step != 5) {
             if (D_80180660 != 0) {
                 D_80180660--;
             }
             self->hitboxState = 0;
-            self->flags |= 0x100;
+            self->flags |= FLAG_DEAD;
             g_api.func_80134714(0x6D9, 0x54, 0);
             SetStep(5);
         }

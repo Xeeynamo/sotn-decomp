@@ -63,7 +63,7 @@ void EntityMerman(Entity* self) {
         SetStep(MERMAN_FALLING);
     }
 
-    if ((self->flags & 0x100) && (self->step < MERMAN_DYING)) {
+    if ((self->flags & FLAG_DEAD) && (self->step < MERMAN_DYING)) {
         func_801C2598(0x71D);
         self->hitboxState = 0;
         if (self->step == MERMAN_LUNGE) {
@@ -446,7 +446,7 @@ void func_801C8DF0(Entity* self) {
             self->rotY = self->rotX += 8;
         }
 
-        if (self->flags & 0x100) {
+        if (self->flags & FLAG_DEAD) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, entity);

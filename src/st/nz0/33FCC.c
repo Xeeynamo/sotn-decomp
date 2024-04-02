@@ -235,7 +235,7 @@ void EntitySlogra(Entity* self) {
         }
     }
 
-    if ((self->flags & 0x100) && (self->step != SLOGRA_DYING)) {
+    if ((self->flags & FLAG_DEAD) && (self->step != SLOGRA_DYING)) {
         SetStep(SLOGRA_DYING);
     }
 
@@ -648,7 +648,7 @@ void EntitySlograSpear(Entity* self) {
 void EntitySlograSpearProjectile(Entity* self) {
     Entity* entity;
 
-    if (self->flags & 0x100) {
+    if (self->flags & FLAG_DEAD) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, entity);
@@ -710,7 +710,7 @@ void EntityGaibon(Entity* self) {
         }
     }
 
-    if (self->flags & 0x100 && self->step < GAIBON_NEAR_DEATH) {
+    if (self->flags & FLAG_DEAD && self->step < GAIBON_NEAR_DEATH) {
         self->ext.GS_Props.grabedAscending = 0;
         self->unk3C = 0;
         SetStep(GAIBON_NEAR_DEATH);
@@ -1122,7 +1122,7 @@ void EntityGaibon(Entity* self) {
             if (AnimateEntity(D_801812F0, self) == 0) {
                 self->ext.GS_Props.flag = 0;
                 SetSubStep(GAIBON_NEAR_DEATH_TRANSFORM);
-                if (self->flags & 0x100) {
+                if (self->flags & FLAG_DEAD) {
                     func_801C29B0(NA_SE_EN_GAIBON_COLLAPSE);
                     SetStep(GAIBON_DYING);
                 } else {
@@ -1203,7 +1203,7 @@ void EntityGaibon(Entity* self) {
         break;
     }
 
-    if (!(self->flags & 0x100)) {
+    if (!(self->flags & FLAG_DEAD)) {
         slograGaibonDistX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
         slograGaibonDistY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
 
@@ -1260,7 +1260,7 @@ void func_801B69E8(Entity* self) {
 
 // small red projectile from gaibon
 void EntitySmallGaibonProjectile(Entity* self) {
-    if (self->flags & 0x100) {
+    if (self->flags & FLAG_DEAD) {
         self->pfnUpdate = EntityExplosion;
         self->drawFlags = 0;
         self->step = 0;
@@ -1292,7 +1292,7 @@ void EntitySmallGaibonProjectile(Entity* self) {
 void EntityLargeGaibonProjectile(Entity* self) {
     Entity* newEntity;
 
-    if (self->flags & 0x100) {
+    if (self->flags & FLAG_DEAD) {
         self->pfnUpdate = EntityExplosion;
         self->entityId = 2;
         self->drawFlags = 0;

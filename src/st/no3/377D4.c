@@ -1345,7 +1345,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
             g_api.PlaySfx(SE_NO3_ALUCARD_FLOOR_HIT);
         }
 
-        if (self->flags & 0x100) {
+        if (self->flags & FLAG_DEAD) {
             self->step++;
         }
         break;

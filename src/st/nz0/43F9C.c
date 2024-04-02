@@ -79,7 +79,7 @@ void EntityAxeKnight(Entity* self) {
     s8* hitbox;
     s16 temp;
 
-    if (self->flags & 0x100) {
+    if (self->flags & FLAG_DEAD) {
         if (self->step != AXE_KNIGHT_DYING) {
             func_801C29B0(NA_SE_VO_AXE_KNIGHT_SCREAM);
             func_801B3B78();
@@ -325,7 +325,7 @@ void EntityAxeKnightRotateAxe(void) {
 void EntityAxeKnightThrowingAxe(Entity* entity) {
     s32 velocityX;
 
-    if (entity->flags & 0x100) {
+    if (entity->flags & FLAG_DEAD) {
         func_801C29B0(NA_SE_EN_AXE_KNIGHT_BREAK_AXE);
         EntityExplosionSpawn(0, 0);
         return;

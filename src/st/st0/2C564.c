@@ -19,7 +19,7 @@ void EntityDracula(Entity* self) {
     u16 posX;
     s32 i;
 
-    if ((self->flags & 0x100) && (self->step < 8)) {
+    if ((self->flags & FLAG_DEAD) && (self->step < 8)) {
         self->hitboxState = 0;
         self[1].hitboxState = 0;
         SetStep(8);
@@ -515,7 +515,7 @@ void EntityDraculaFireball(Entity* self) {
         self->flags |= 0x100;
     }
 
-    if (self->flags & 0x100) {
+    if (self->flags & FLAG_DEAD) {
         self->pfnUpdate = EntityExplosion;
         self->step = 0;
         self->params = 2;

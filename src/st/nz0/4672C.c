@@ -10,7 +10,7 @@ void EntitySpittleBone(Entity* self) {
     Entity* newEntity;
     s32 i;
 
-    if ((self->flags & 0x100) && (self->step < 3)) {
+    if ((self->flags & FLAG_DEAD) && (self->step < 3)) {
         self->step = 3;
     }
 

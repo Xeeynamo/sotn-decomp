@@ -1720,7 +1720,7 @@ void EntitySubwpnAgunea(Entity* self) {
         if (ent->entityId == 0 ||
             self->ext.et_80128C2C.unk7C != 0 &&
                 (ent->hitPoints > 0x7000 || ent->hitPoints == 0 ||
-                 ent->flags & 0x100)) {
+                 ent->flags & FLAG_DEAD)) {
             self->step = 2;
             return;
         }

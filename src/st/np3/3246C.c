@@ -1288,7 +1288,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
             g_api.PlaySfx(0x64B);
         }
 
-        if (self->flags & 0x100) {
+        if (self->flags & FLAG_DEAD) {
             self->step++;
         }
         break;

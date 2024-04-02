@@ -676,7 +676,7 @@ void EntityMerman2(Entity* self) {
         SetStep(MERMAN2_7);
     }
 
-    if ((self->flags & 0x100) && (self->step < MERMAN2_DYING)) {
+    if ((self->flags & FLAG_DEAD) && (self->step < MERMAN2_DYING)) {
         func_801C2598(0x71D);
         self->drawFlags = 0;
         if (self->flags & FLAG_HAS_PRIMS) {
@@ -1240,7 +1240,7 @@ void EntityMediumWaterSplash(Entity* entity) {
     }
     AnimateEntity(D_801822A4, entity);
     MoveEntity();
-    if (entity->flags & 0x100) {
+    if (entity->flags & FLAG_DEAD) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);

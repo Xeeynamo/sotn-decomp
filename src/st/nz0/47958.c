@@ -16,7 +16,7 @@ typedef enum {
 void EntityBloodSkeleton(Entity* self) {
     u8* animation;
 
-    if ((self->flags & 0x100) && (self->step < 3)) {
+    if ((self->flags & FLAG_DEAD) && (self->step < 3)) {
         func_801C29B0(NA_SE_EN_BLOOD_SKELETON_DISASSEMBLES);
         self->hitboxState = 0;
         SetStep(BLOOD_SKELETON_DISASSEMBLE);
