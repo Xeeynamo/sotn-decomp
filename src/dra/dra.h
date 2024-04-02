@@ -212,8 +212,8 @@ typedef enum {
     Player_ThousandBlades,
     Player_RichterFourHolyBeasts,
     Player_Slide,
-    Player_Unk24, // MorphWolf and Richter's Tackle
-    Player_Unk25, // UnMorphWolf and Sprint
+    Player_MorphWolf,
+    Player_UnmorphWolf,
     Player_SlideKick,
     Player_Unk27, // other item crashes
     Player_SpellDarkMetamorphosis = 32,
@@ -228,6 +228,9 @@ typedef enum {
     Player_AxearmorWalk,
     Player_AxearmorJump,
     Player_AxearmorHit,
+    Player_Unk48 = 48,
+    Player_Unk49,
+    Player_Unk50
 } PlayerSteps;
 
 typedef enum {

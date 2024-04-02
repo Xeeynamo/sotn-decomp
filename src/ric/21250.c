@@ -102,7 +102,7 @@ bool func_8015D3CC(void) {
             func_8015C920(D_80155588);
             g_CurrentEntity->velocityX = 0;
             break;
-        case Player_Unk25:
+        case Player_RichterSprint:
             PLAYER.step = 0;
             func_8015C920(D_80155588);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
