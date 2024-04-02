@@ -442,7 +442,7 @@ void func_80171ED4(s32 arg0) {
     Entity* e;
 
     if (arg0 == 1 || arg0 == 3)
-        func_80174210(0, 1);
+        ProcessEvent(NULL, true);
 
     if (arg0 == 3)
         return;
@@ -736,7 +736,7 @@ void func_80172120(Entity* self) {
         func_801718A0(self);
         break;
     }
-    func_80174210(self, 0);
+    ProcessEvent(self, false);
     func_80171560(self);
     g_api.UpdateAnim(NULL, D_801705F4);
 }
@@ -859,7 +859,7 @@ void func_80172C30(Entity* self) {
         }
         break;
     }
-    func_80174210(self, 0);
+    ProcessEvent(self, false);
     func_80171560(self);
     g_api.UpdateAnim(NULL, D_801705F4);
 }
@@ -1212,132 +1212,114 @@ void func_80174038(Entity* entity) {
     D_80171090 = entity->step;
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80174210);
-#else
-typedef struct {
-    u32 unk0;
-    u32 unk4;
-    u32 unk8;
-    s32 unkC;
-    u32 unk10;
-    u32 cameraX;
-    u32 cameraY;
-    s32 unk1C;
-    u32 unk20;
-    u32 entityId;
-    u32 params;
-    u32 unk2C;
-} Unkstruct_80174210;
+extern ServantEvent g_Events[];
+extern ServantEvent** g_EventQueue;
+extern u32 g_CurrentServant;
+extern s32 g_CurrentRoomX;
+extern s32 g_CurrentRoomY;
 
-extern Unkstruct_80174210 D_80170760[];
-extern s32* D_8017109C;
-extern s32 D_801710A0;
-extern s32 D_801710A4;
-extern s32 D_801710A8;
-
-void func_80174210(Entity* self, s32 arg1) {
-    Unkstruct_80174210* temp_s0;
-    Unkstruct_80174210** var_s1_2;
-    Unkstruct_80174210* temp_v1_5;
-    Unkstruct_80174210* temp_v1_4;
-    s32* var_s1;
+// Trigger an event under certain specific set of conditions
+void ProcessEvent(Entity* self, bool resetEvent) {
+    ServantEvent* queue;
     s32 cameraY;
     s32 cameraX;
-    s32 var_s2;
-    s32 var_v0_2;
+    s32 temp_v0;
+    s32 i;
 
-    if (arg1 != 0) {
-        D_801710A8 = 0;
-        D_801710A4 = 0;
-        D_801710A0 = 0;
+    if (resetEvent) {
+        g_CurrentRoomY = 0;
+        g_CurrentRoomX = 0;
+        g_CurrentServant = 0;
         return;
     }
+
     cameraX = g_Tilemap.scrollX.i.hi;
     cameraY = g_Tilemap.scrollY.i.hi;
-    if (D_801710A0 != g_Servant || D_801710A4 != g_Tilemap.left ||
-        D_801710A8 != g_Tilemap.top) {
-        var_s1 = D_8017109C;
-        D_801710A0 = g_Servant;
-        D_801710A4 = g_Tilemap.left;
-        D_801710A8 = g_Tilemap.top;
-        if (D_80170760[1].unkC != -1) {
-            var_s2 = 1;
-            do {
-                temp_s0 = &D_80170760[var_s2];
-                if (temp_s0->unk8 == -1 || temp_s0->unk8 == D_801710A0) {
-                    if ((temp_s0->unkC < 0 &&
-                         !(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) ||
-                        !(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
-                        if (ABS(temp_s0->unkC) == D_801710A4 &&
-                            temp_s0->unk10 == D_801710A8) {
-                            if (temp_s0->cameraX == cameraX &&
-                                temp_s0->cameraY == cameraY &&
-                                (temp_s0->unk1C == -1 ||
-                                 (temp_s0->unk1C >= 0 ||
-                                  g_CastleFlags[temp_s0->unk1C & 0xFFFF] ==
-                                      0) &&
-                                     (!(temp_s0->unk1C & 0x40000000) ||
-                                      !(g_Status
-                                            .relics[temp_s0->unk1C & 0xFFFF] &
-                                        1)))) {
-                                temp_s0->unk4 = 0;
-                                if (temp_s0->unk20 == 0) {
-                                    func_801745E4(self, temp_s0->entityId,
-                                                  temp_s0->params);
-                                    if (temp_s0->unk2C == 0) {
-                                        goto block_26;
-                                    }
-                                } else {
-                                    goto block_27;
-                                }
-                            } else {
-                            block_26:
-                                if (temp_s0->unk20 != 0) {
-                                block_27:
-                                    temp_s0->unk4 = (s32)(temp_s0->unk20 - 1);
-                                }
-                                *var_s1 = temp_s0;
-                                var_s1 = temp_s0;
-                            }
-                        }
-                    }
+    // Ensures the following block is only evaluated once per room
+    if (g_CurrentServant != g_Servant || g_CurrentRoomX != g_Tilemap.left ||
+        g_CurrentRoomY != g_Tilemap.top) {
+        queue = g_EventQueue;
+        g_CurrentServant = g_Servant;
+        g_CurrentRoomX = g_Tilemap.left;
+        g_CurrentRoomY = g_Tilemap.top;
+        for (i = 1; g_Events[i].roomX != -1; i++) {
+            ServantEvent* evt = &g_Events[i];
+            // Filter by familiar
+            if (evt->servantId != -1 && evt->servantId != g_CurrentServant) {
+                continue;
+            }
+
+            if (evt->roomX < 0) {
+                if (!(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
+                    continue;
                 }
-            } while (D_80170760[++var_s2].unkC != -1);
+                goto block_13;
+            }
+            if (!(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
+            block_13:
+                if (ABS(evt->roomX) != g_CurrentRoomX ||
+                    evt->roomY != g_CurrentRoomY) {
+                    continue;
+                }
+
+                if (evt->cameraX == cameraX && evt->cameraY == cameraY &&
+                    (evt->condition == -1 ||
+                     (evt->condition >= 0 ||
+                      g_CastleFlags[evt->condition & 0xFFFF] == 0) &&
+                         (!(evt->condition & CHECK_RELIC_FLAG) ||
+                          !(g_Status.relics[evt->condition & 0xFFFF] &
+                            RELIC_FLAG_FOUND)))) {
+                    evt->timer = 0;
+                    if (evt->delay == 0) {
+                        CreateEventEntity(self, evt->entityId, evt->params);
+                        if (!evt->unk2C) {
+                            goto block_26;
+                        }
+                    } else {
+                        goto block_27;
+                    }
+                } else {
+                block_26:
+                    if (evt->delay > 0) {
+                    block_27:
+                        evt->timer = evt->delay - 1;
+                    }
+                    queue->next = evt;
+                    queue = evt;
+                }
+            }
         }
-        *var_s1 = NULL;
+        queue->next = NULL;
     } else {
-        var_s1_2 = D_8017109C;
-        while (*var_s1_2 != NULL) {
-            temp_v1_5 = *var_s1_2;
-            if (temp_v1_5->cameraX == cameraX &&
-                temp_v1_5->cameraY == cameraY &&
-                (temp_v1_5->unk1C == -1 ||
-                 (temp_v1_5->unk1C >= 0 ||
-                  g_CastleFlags[temp_v1_5->unk1C & 0xFFFF] == 0) &&
-                     (!(temp_v1_5->unk1C & 0x40000000) ||
-                      !(g_Status.relics[temp_v1_5->unk1C & 0xFFFF] & 1)))) {
-                temp_v1_5 = *var_s1_2;
-                var_v0_2 = temp_v1_5->unk4 - 1;
-                if (temp_v1_5->unk4 == 0) {
-                    func_801745E4(self, temp_v1_5->entityId, temp_v1_5->params);
-                    temp_v1_4 = *var_s1_2;
-                    if (temp_v1_4->unk2C != 0) {
-                        *var_s1_2 = temp_v1_4->unk0;
+        queue = g_EventQueue;
+        while (queue->next != NULL) {
+            ServantEvent* evt = queue->next;
+            if (evt->cameraX == cameraX && evt->cameraY == cameraY &&
+                (evt->condition == -1 ||
+                 (evt->condition >= 0 ||
+                  g_CastleFlags[evt->condition & 0xFFFF] == 0) &&
+                     (!(evt->condition & CHECK_RELIC_FLAG) ||
+                      !(g_Status.relics[evt->condition & 0xFFFF] & 1)))) {
+                evt = queue->next;
+                if (evt->timer > 0) {
+                    evt->timer--;
+                } else {
+                    CreateEventEntity(self, evt->entityId, evt->params);
+                    evt = queue->next;
+                    if (evt->unk2C) {
+                        queue->next = evt->next;
                         continue;
                     } else {
-                        var_v0_2 = temp_v1_4->unk20;
+                        evt->timer = evt->delay;
                     }
                 }
-                temp_v1_5->unk4 = var_v0_2;
             }
-            var_s1_2 = *var_s1_2;
+            queue = queue->next;
         }
     }
 }
-#endif
 
-void func_801745E4(Entity* entityParent, s32 entityId, s32 params) {
+void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params) {
     Entity* entity;
     s32 i;
 
