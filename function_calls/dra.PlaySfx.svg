@@ -3619,7 +3619,7 @@
 <g id="node227" class="node">
 <title>st0.EntityDracula</title>
 <g id="a_node227"><a xlink:href="st0.EntityDracula.svg" xlink:title="st0.EntityDracula">
-<ellipse fill="red" stroke="black" cx="55235.19" cy="-198" rx="92.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="55235.19" cy="-198" rx="92.88" ry="18"/>
 <text text-anchor="middle" x="55235.19" y="-194.3" font-family="Times,serif" font-size="14.00">st0.EntityDracula</text>
 </a>
 </g>
@@ -3635,7 +3635,7 @@
 <g id="node228" class="node">
 <title>st0.EntityDraculaFinalForm</title>
 <g id="a_node228"><a xlink:href="st0.EntityDraculaFinalForm.svg" xlink:title="st0.EntityDraculaFinalForm">
-<ellipse fill="red" stroke="black" cx="55487.19" cy="-198" rx="141.07" ry="18"/>
+<ellipse fill="green" stroke="black" cx="55487.19" cy="-198" rx="141.07" ry="18"/>
 <text text-anchor="middle" x="55487.19" y="-194.3" font-family="Times,serif" font-size="14.00">st0.EntityDraculaFinalForm</text>
 </a>
 </g>
