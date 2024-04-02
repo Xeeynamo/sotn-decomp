@@ -9,7 +9,7 @@ void EntityUnkId1C(Entity* self) {
     s32 i;
 
     if (D_80180660 == 0) {
-        self->flags |= 0x100;
+        self->flags |= FLAG_DEAD;
     }
 
     if (self->flags & FLAG_DEAD) {

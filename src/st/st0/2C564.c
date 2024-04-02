@@ -512,7 +512,7 @@ void EntityDraculaBody(Entity* self) {
 
 void EntityDraculaFireball(Entity* self) {
     if (g_isDraculaFirstFormDefeated) {
-        self->flags |= 0x100;
+        self->flags |= FLAG_DEAD;
     }
 
     if (self->flags & FLAG_DEAD) {

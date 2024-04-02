@@ -963,7 +963,7 @@ void EntitySuccubusPetal(Entity* self) {
     s16 angle;
 
     if (D_80180664 & 2) {
-        self->flags |= 0x100;
+        self->flags |= FLAG_DEAD;
     }
     if (self->hitFlags & 0x80) {
         D_80180668 = 1;
