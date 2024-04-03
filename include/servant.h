@@ -48,9 +48,11 @@ typedef struct {
 #define CHECK_CASTLE_FLAG 0x80000000
 #define FOR_CASTLE_FLAG(x) CHECK_CASTLE_FLAG | x
 
+extern ServantDesc g_ServantDesc;
 extern SpriteParts* D_80170040[];
 extern u16 D_80170448[];
 extern s32 D_801704A8[];
+extern s32 D_80170514[];
 extern s32 D_8017054C[];
 extern s32 D_801705EC[];
 extern s32* D_801705F4[];
@@ -59,5 +61,3 @@ extern s32 D_80170658[][5];
 extern u16 D_80170720[];
 extern s32 D_80171090;
 extern EntitySearch D_80171094[];
-
-extern ServantDesc g_ServantDesc;
