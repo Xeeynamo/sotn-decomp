@@ -37,6 +37,7 @@ Unkstruct_8011A3AC D_80174C30;
 Point16 D_80174C3C[4][16];
 s32 D_80174D3C;
 s32 D_80174D40;
+s32 _unused[26];
 
 void func_80171ED4(s32 arg0);
 void func_80172120(Entity* self);
@@ -1248,6 +1249,7 @@ void ProcessEvent(Entity* self, bool resetEvent) {
                 continue;
             }
 
+#if defined(VERSION_US)
             if (evt->roomX < 0) {
                 if (!(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
                     continue;
@@ -1256,6 +1258,9 @@ void ProcessEvent(Entity* self, bool resetEvent) {
             }
             if (!(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
             block_13:
+#elif defined(VERSION_HD)
+            if (evt->roomX >= 0 || (g_StageId >= 0x20 && g_StageId < 0x35)) {
+#endif
                 if (ABS(evt->roomX) != g_CurrentRoomX ||
                     evt->roomY != g_CurrentRoomY) {
                     continue;

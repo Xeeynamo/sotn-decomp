@@ -2,18 +2,18 @@ options:
   platform:     psx
   basename:     tt_000
   base_path:    ..
-  build_path:   build/us
-  target_path:  disks/us/SERVANT/TT_000.BIN
-  asm_path:     asm/us/servant/tt_000
+  build_path:   build/hd
+  target_path:  disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/tt_000.bin
+  asm_path:     asm/hd/servant/tt_000
   asset_path:   assets/servant/tt_000
   src_path:     src/servant/tt_000
-  ld_script_path: build/us/tt_000.ld
+  ld_script_path: build/hd/tt_000.ld
   compiler:     GCC
   symbol_addrs_path:
-    - config/symbols.us.txt
-    - config/symbols.us.tt_000.txt
-  undefined_funcs_auto_path: config/undefined_funcs_auto.us.tt_000.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.us.tt_000.txt
+    - config/symbols.hd.txt
+    - config/symbols.hd.tt_000.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.hd.tt_000.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.hd.tt_000.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
@@ -38,6 +38,6 @@ segments:
       - [0x608, .data, 608]
       - [0x10AC, .rodata, 10E8] # func_80172120
       - [0x10C4, .rodata, 10E8] # func_80174038
-      - [0x10E8, c]
-      - [0x48D8, .bss, 10E8]
-  - [0xA000]
+      - [0x10E8, c, 10E8]
+      - [0x48B8, .bss, 10E8]
+  - [19852]
