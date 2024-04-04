@@ -113,8 +113,8 @@ build_us: main dra weapon ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
 build_hd: dra
 clean:
 	git clean -fdx assets/
-	git clean -fdx asm/
-	git clean -fdx build/
+	git clean -fdx asm/$(VERSION)/
+	git clean -fdx build/$(VERSION)/
 	git clean -fdx config/
 	git clean -fdx function_calls/
 	git clean -fdx sotn_calltree.txt
