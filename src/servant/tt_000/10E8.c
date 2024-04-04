@@ -1259,7 +1259,8 @@ void ProcessEvent(Entity* self, bool resetEvent) {
             if (!(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
             block_13:
 #elif defined(VERSION_HD)
-            if (evt->roomX >= 0 || (g_StageId >= 0x20 && g_StageId < 0x35)) {
+            if (evt->roomX >= 0 ||
+                (g_StageId >= STAGE_RNO0 && g_StageId < STAGE_RNZ1_DEMO)) {
 #endif
                 if (ABS(evt->roomX) != g_CurrentRoomX ||
                     evt->roomY != g_CurrentRoomY) {
