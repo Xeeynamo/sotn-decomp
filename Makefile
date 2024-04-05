@@ -51,9 +51,7 @@ MAIN_TARGET     := $(BUILD_DIR)/$(MAIN)
 
 # Tooling
 PYTHON          := python3
-SPLAT_DIR       := $(TOOLS_DIR)/n64splat
-SPLAT_APP       := $(SPLAT_DIR)/split.py
-SPLAT           := $(PYTHON) $(SPLAT_APP)
+SPLAT           := splat split
 ASMDIFFER_DIR   := $(TOOLS_DIR)/asm-differ
 ASMDIFFER_APP   := $(ASMDIFFER_DIR)/diff.py
 M2CTX_APP       := $(TOOLS_DIR)/m2ctx.py
@@ -402,7 +400,7 @@ extract_disk_psp%:
 	mkdir -p disks/psp$*
 	7z x -y disks/sotn.psp$*.iso -odisks/psp$*/
 
-update-dependencies: $(SPLAT_APP) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(SATURN_SPLITTER_APP) $(GO)
+update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(SATURN_SPLITTER_APP) $(GO)
 	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release
 	cd $(SATURN_SPLITTER_DIR)/adpcm-extract && cargo build --release
 	pip3 install -r $(TOOLS_DIR)/requirements-python.txt
@@ -417,10 +415,6 @@ bin/%: bin/%.tar.gz
 	touch $@
 bin/%.tar.gz: bin/%.tar.gz.sha256
 	wget -O $@ https://github.com/Xeeynamo/sotn-decomp/releases/download/cc1-psx-26/$*.tar.gz
-$(SPLAT_APP):
-	git submodule init $(SPLAT_DIR)
-	git submodule update $(SPLAT_DIR)
-	pip3 install -r $(TOOLS_DIR)/requirements-python.txt
 $(ASMDIFFER_APP):
 	git submodule init $(ASMDIFFER_DIR)
 	git submodule update $(ASMDIFFER_DIR)

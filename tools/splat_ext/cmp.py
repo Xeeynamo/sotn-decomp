@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Optional
-from segtypes.n64.segment import N64Segment
-from util import options, log
+from splat.segtypes.n64.segment import N64Segment
+from splat.util import options, log
 
 
 class PSXSegCmp(N64Segment):

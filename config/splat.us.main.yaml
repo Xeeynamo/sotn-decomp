@@ -28,6 +28,7 @@ segments:
     type: code
     start: 0x00000800
     vram:  0x80010000
+    align: 4
     subalign: 4
     subsegments:
       - [0x800, .rodata, main]

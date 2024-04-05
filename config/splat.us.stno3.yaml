@@ -24,11 +24,13 @@ options:
     - ".rodata"
     - ".text"
     - ".bss"
+    - ".sbss"
 segments:
   - name: stno3
     type: code
     start: 0x00000000
     vram:  0x80180000
+    align: 4
     subalign: 4
     subsegments:
       - [0x0, data]

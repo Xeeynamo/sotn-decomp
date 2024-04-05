@@ -28,6 +28,7 @@ segments:
     type: code
     start: 0x00000000
     vram:  0x800A0000
+    align: 4
     subalign: 4
     subsegments:
       - [0x0, .data, dra_header]
