@@ -24,6 +24,16 @@ class TestProcessFile(unittest.TestCase):
         os.remove(self.output_name)
         return super().tearDown(self)
 
+    def helper_process_lines(self, assembly):
+        with open(self.c_file_name, "w") as f:
+            f.write(f'INCLUDE_ASM("ovl", func_name)')
+        with open(f"{self.asm_dir_name}/ovl/func_name.s", "w") as f:
+            f.write(assembly)
+        with open(self.output_name, "w") as f:
+            process_file(self.c_file_name, f, self.seed)
+        with open(self.output_name, "r") as f:
+            return "".join(f.readlines())
+
     def test_process_include_asm(self):
         with open(self.c_file_name, "w") as f:
             f.writelines(
@@ -57,6 +67,18 @@ LABEL:
 /* 8 */ addiu $a0, my_symbol@l
 }
 // INCLUDE_ASM("ovl", func_name)
+""",
+        )
+
+    def test_fix_jalr(self):
+        self.assertEqual(
+            self.helper_process_lines(
+                """jalr $v0
+"""
+            ),
+            """asm void func_name() {
+jalr $ra, $v0
+}
 """,
         )
 

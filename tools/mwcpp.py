@@ -9,6 +9,7 @@ from typing import TextIO
 def include_asm(line: str, out: TextIO, version: str) -> None:
     hireg = r"%hi\((.*)\)"
     loreg = r"%lo\((.*)\)"
+    jalr_fix = r"jalr\s*\$([a-z][a-z0-9])"
     match = re.search(r'\s*INCLUDE_ASM\(\s*"(.*)",\s*(\w*)\)', line)
     if match:
         base_path = match.group(1)
@@ -34,6 +35,11 @@ def include_asm(line: str, out: TextIO, version: str) -> None:
                 if lomatch:
                     symbol_name = lomatch.group(1)
                     line = line.replace(f"%lo({symbol_name})", f"{symbol_name}@l")
+                # jalr needs two arguments
+                jalr_match = re.search(jalr_fix, line)
+                if jalr_match:
+                    reg_name = jalr_match.group(1)
+                    line = line.replace(reg_name, f"ra, ${reg_name}")
                 # write adjusted assembly line
                 out.write(line)
         out.write(f"}}\n")
