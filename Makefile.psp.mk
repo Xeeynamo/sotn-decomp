@@ -18,7 +18,7 @@ $(PSP_BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.$(VERSION).tt_%.yaml $(PSX_BASE_SY
 $(PSP_BUILD_DIR)/%.c.o: %.c bin/mwccpsp.exe
 	mkdir -p $(dir $@)
 	$(MWCPP_APP) $< -o $@.processed
-	$(CCPSP) -gccinc -Iinclude -O0 -c -g -o $@ $@.processed
+	$(CCPSP) -gccinc -Iinclude -D_internal_version_hd -O0 -c -g -o $@ $@.processed
 	rm $@.processed
 
 tt_000_psp: $(PSP_BUILD_DIR)/src/servant/tt_000_psp/80.c.o

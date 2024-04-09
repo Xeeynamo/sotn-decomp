@@ -2,6 +2,8 @@
  * Standard Primitive and its variants
  */
 
+#ifndef PRIMITIVE_H
+#define PRIMITIVE_H
 #include "common.h"
 
 #define blendMode drawMode // maintained to easily migrate existing scratches
@@ -78,7 +80,7 @@ typedef struct FakePrim {
 // Not actually sure if this is for LineG2, but the only time LineG2
 // is used is also the only time this struct is used, so we will call
 // it this for now. That one use is in EntityHydroStorm.
-typedef struct {
+typedef struct PrimLineG2 {
     struct PrimLineG2* next;
     /* 0x04 */ u8 r0;
     /* 0x05 */ u8 g0;
@@ -140,3 +142,5 @@ typedef struct {
     /* 0x30 */ s16 unk30;
     /* 0x32 */ u16 drawMode;
 } draculaPrimitive;
+
+#endif PRIMITIVE_H
