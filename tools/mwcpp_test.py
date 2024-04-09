@@ -53,7 +53,7 @@ class TestProcessFile(unittest.TestCase):
 asm void func_name() {
 /* 0 */ jmp LABEL
 LABEL:
-/* 4 */ lui $a0, my_symbol@h
+/* 4 */ lui $a0, my_symbol@ha
 /* 8 */ addiu $a0, my_symbol@l
 }
 // INCLUDE_ASM("ovl", func_name)

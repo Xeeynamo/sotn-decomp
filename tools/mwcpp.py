@@ -28,7 +28,7 @@ def include_asm(line: str, out: TextIO, version: str) -> None:
                 himatch = re.search(hireg, line)
                 if himatch:
                     symbol_name = himatch.group(1)
-                    line = line.replace(f"%hi({symbol_name})", f"{symbol_name}@h")
+                    line = line.replace(f"%hi({symbol_name})", f"{symbol_name}@ha")
                 # use symbol@l instead of %lo(symbol)
                 lomatch = re.search(loreg, line)
                 if lomatch:
