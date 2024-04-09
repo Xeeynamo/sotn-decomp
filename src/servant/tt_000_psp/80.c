@@ -1,4 +1,4 @@
-#include "common.h"
+#include <servant.h>
 
 INCLUDE_ASM("servant/tt_000/nonmatchings/80", func_801710E8);
 
