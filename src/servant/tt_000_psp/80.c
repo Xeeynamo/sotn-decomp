@@ -1,5 +1,17 @@
 #include <servant.h>
 
+u8* D_91F85F8;
+u8* D_092EC280;
+u8* D_092EC9E8;
+u8* D_801530AC;
+u8* D_91E1970;
+u8* D_8D1DC40;
+
+void DestroyEntity(Entity* self);
+void func_80174864(void); // TODO fix prototype
+void func_8909F84();      // ????
+void ProcessEvent(Entity* self, bool resetEvent);
+
 INCLUDE_ASM("servant/tt_000/nonmatchings/80", func_801710E8);
 
 INCLUDE_ASM("servant/tt_000/nonmatchings/80", func_8017110C);
@@ -64,4 +76,5 @@ INCLUDE_ASM("servant/tt_000/nonmatchings/80", func_801746A0);
 
 INCLUDE_ASM("servant/tt_000/nonmatchings/80", func_80174864);
 
+// new function?!
 INCLUDE_ASM("servant/tt_000/nonmatchings/80", func_092EC220);

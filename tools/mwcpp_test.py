@@ -10,7 +10,6 @@ class TestProcessFile(unittest.TestCase):
     @classmethod
     def setUp(self) -> None:
         self.seed = f"{random.randint(0, 100000)}"
-        self.seed = 81666
         self.c_file_name = f"test_file_{self.seed}.c"
         self.asm_dir_name = f"asm/{self.seed}"
         self.output_name = f"test_processed_file_{self.seed}.c"
@@ -34,7 +33,7 @@ class TestProcessFile(unittest.TestCase):
         with open(self.output_name, "r") as f:
             return "".join(f.readlines())
 
-    def test_process_include_asm(self):
+    def test_process_basic_include_asm(self):
         with open(self.c_file_name, "w") as f:
             f.writelines(
                 [
@@ -46,10 +45,7 @@ class TestProcessFile(unittest.TestCase):
             )
         with open(f"{self.asm_dir_name}/ovl/func_name.s", "w") as f:
             f.write("glabel function_name_should_be_skipped\n")
-            f.write("/* 0 */ jmp .LABEL\n")
-            f.write(".LABEL:\n")
-            f.write("/* 4 */ lui $a0, %hi(my_symbol)\n")
-            f.write("/* 8 */ addiu $a0, %lo(my_symbol)\n")
+            f.write("/* 0 */ nop\n")
             f.write(".size this_part_should_be_skipped\n")
         with open(self.output_name, "w") as f:
             process_file(self.c_file_name, f, self.seed)
@@ -61,10 +57,7 @@ class TestProcessFile(unittest.TestCase):
             """ignore this line
 // this too
 asm void func_name() {
-/* 0 */ jmp LABEL
-LABEL:
-/* 4 */ lui $a0, my_symbol@ha
-/* 8 */ addiu $a0, my_symbol@l
+/* 0 */ nop
 }
 // INCLUDE_ASM("ovl", func_name)
 """,
@@ -78,6 +71,33 @@ LABEL:
             ),
             """asm void func_name() {
 jalr $ra, $v0
+}
+""",
+        )
+
+    def test_fix_lui_addiu_combo(self):
+        self.assertEqual(
+            self.helper_process_lines(
+                """lui        $a0, %hi(D_8D1DC40)
+/* some stuff */   addiu      $a0, $a0, %lo(D_8D1DC40)
+"""
+            ),
+            """asm void func_name() {
+la $a0, D_8D1DC40
+}
+""",
+        )
+
+    def test_fix_dot_on_label_names(self):
+        self.assertEqual(
+            self.helper_process_lines(
+                """jmp .LABEL
+.LABEL:
+"""
+            ),
+            """asm void func_name() {
+jmp LABEL
+LABEL:
 }
 """,
         )
