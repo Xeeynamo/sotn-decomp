@@ -36,29 +36,29 @@ INCLUDE_ASM("servant/tt_000/nonmatchings/80", func_80172120);
 
 INCLUDE_ASM("servant/tt_000/nonmatchings/80", func_80172C30);
 
-void func_092EA930(void) {}
+void func_8017339C(void) {}
 
-void func_092EA938(void) {}
+void func_801733A4(void) {}
 
-void func_092EA940(void) {}
+void func_801733AC(void) {}
 
-void func_092EA948(void) {}
+void func_801733B4(void) {}
 
-void func_092EA950(void) {}
+void func_801733BC(void) {}
 
-void func_092EA958(void) {}
+void func_801733C4(void) {}
 
-void func_092EA960(void) {}
+void func_801733CC(void) {}
 
 INCLUDE_ASM("servant/tt_000/nonmatchings/80", func_801733D4);
 
-void func_092EB7D8(void) {}
+void func_80173C0C(void) {}
 
-void func_092EB7E0(void) {}
+void func_80173C14(void) {}
 
-void func_092EB7E8(void) {}
+void func_80173C1C(void) {}
 
-void func_092EB7F0(void) {}
+void func_80173C24(void) {}
 
 INCLUDE_ASM("servant/tt_000/nonmatchings/80", func_80173C2C);
 
