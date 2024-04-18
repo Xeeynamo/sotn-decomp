@@ -35,9 +35,7 @@ typedef unsigned long long u64;
 
 typedef signed char byte;
 
-#ifndef __MWERKS__
 typedef enum { false, true } bool;
-#endif
 
 #ifndef NULL
 #define NULL (0)

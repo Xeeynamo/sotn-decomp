@@ -1,16 +1,16 @@
 #include <servant.h>
 
-u8* D_91F85F8;
-u8* D_092EC280;
-u8* D_092EC9E8;
-u8* D_801530AC;
-u8* D_91E1970;
-u8* D_8D1DC40;
+extern u8* D_91F85F8;
+extern u8* D_092EC280;
+extern u8* D_092EC9E8;
+extern u8* D_801530AC;
+extern u8* D_91E1970;
+extern u8* D_8D1DC40;
 
-void DestroyEntity(Entity* self);
-void func_80174864(void); // TODO fix prototype
-void func_8909F84();      // ????
-void ProcessEvent(Entity* self, bool resetEvent);
+void DestroyEntity();
+void func_80174864();
+void func_8909F84();
+void ProcessEvent();
 
 INCLUDE_ASM("servant/tt_000/nonmatchings/80", func_801710E8);
 
