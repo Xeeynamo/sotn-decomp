@@ -15,7 +15,7 @@ MWCPP_APP		:= python3 tools/mwcpp.py
 define list_src_files_psp
 	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
 	$(foreach dir,$(ASM_DIR)/$(1)/data,$(wildcard $(dir)/**.s))
-	$(foreach dir,$(SRC_DIR)/$(1)_psp,$(wildcard $(dir)/**.c))
+	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/**.c))
 	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/**))
 endef
 

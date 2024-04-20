@@ -1,9 +1,10 @@
-#include "servant.h"
-#include "sfx.h"
+#include <servant.h>
+#include <sfx.h>
 
 #define SFX_BAT_SCREECH SOUND_BAT_SCREECH
 #define SFX_BAT_NOTIFY SE_UI_OVERWRITE_MSG
 
+#ifndef VERSION_PSP
 s32 D_801748D8[0x80];
 Collider D_80174AD8;
 s16 D_80174AFC, D_80174AFC_;
@@ -62,15 +63,35 @@ ServantDesc g_ServantDesc = {
     func_801733C4, func_801733CC, func_801733D4, func_80173C0C,
     func_80173C14, func_80173C1C, func_80173C24, func_80173C2C,
 };
+#endif
 
-void func_801710E8(Entity* entity, s32* arg1) {
-    if (entity->unk4C != arg1) {
-        entity->unk4C = arg1;
+#ifdef VERSION_PSP
+
+extern u8* D_91F85F8;
+extern u8* D_092EC280;
+extern u8* D_092EC9E8;
+extern u8* D_801530AC;
+extern u8* D_91E1970;
+extern u8* D_8D1DC40;
+
+void DestroyEntity();
+void func_80174864();
+void func_8909F84();
+void ProcessEvent();
+
+#endif
+
+void func_801710E8(Entity* entity, AnimationFrame* anim) {
+    if (entity->unk4C != anim) {
+        entity->unk4C = anim;
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;
     }
 }
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_8017110C);
+#else
 Entity* func_8017110C(Entity* self) {
     const int EntitySearchCount = 128;
     s32 foundIndex;
@@ -158,7 +179,11 @@ Entity* func_8017110C(Entity* self) {
 
     return NULL;
 }
+#endif
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_801713C8);
+#else
 s32 func_801713C8(Entity* entity) {
     if (entity->hitboxState == 0)
         return 0;
@@ -174,7 +199,9 @@ s32 func_801713C8(Entity* entity) {
         return 0;
     return entity->hitPoints > 0;
 }
+#endif
 
+#ifndef VERSION_PSP
 bool func_80171434(s16 x, s16 y, s16* outX, s16* outY) {
     s32 curY;
 
@@ -198,9 +225,17 @@ bool func_80171434(s16 x, s16 y, s16* outX, s16* outY) {
     }
     return 0;
 }
+#endif
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80171560);
+#else
 void func_80171560(Entity* self) {}
+#endif
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80171568);
+#else
 void func_80171568(Entity* self) {
     Entity* entity;
     s32 i;
@@ -223,36 +258,36 @@ init_entity:
     entity->posY.val = self->posY.val;
     entity->ext.generic.unk8C.entityPtr = self;
 }
+#endif
 
 void func_8017160C(s32 amount, s32 entityId) {
     s32 i;
     Entity* entity;
-    s16 facing;
+    u16 facing;
 
-    if (amount > 3) {
-        amount = 3;
-    }
-
+    amount = MIN(amount, 3);
     for (i = 0; i < amount; i++) {
         entity = &g_Entities[5 + i];
         if (entity->entityId == entityId) {
             entity->step = 0;
         } else {
             DestroyEntity(entity);
+            entity->entityId = entityId;
             entity->unk5A = 0x6C;
             entity->palette = 0x140;
-            entity->entityId = entityId;
             entity->animSet = ANIMSET_OVL(20);
             entity->zPriority = g_Entities[0].zPriority - 2;
-            facing = (g_Entities[0].facingLeft + 1) & 1;
+            entity->facingLeft = (g_Entities[0].facingLeft + 1) & 1;
             entity->params = i + 1;
-            entity->facingLeft = facing;
         }
         entity->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
         entity->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
     }
 }
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_8017170C);
+#else
 void func_8017170C(Entity* entity, s32 frameIndex) {
     Primitive* prim;
     s32 tpage;
@@ -290,7 +325,11 @@ void func_8017170C(Entity* entity, s32 frameIndex) {
     prim->priority = entity->zPriority + 1;
     prim->drawMode = 0x102;
 }
+#endif
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_801718A0);
+#else
 void func_801718A0(Entity* entity) {
     Primitive* prim;
     s32 frame;
@@ -314,7 +353,11 @@ void func_801718A0(Entity* entity) {
     prim->x1 = prim->x3 = prim->x0 + D_80170608[frame].width;
     prim->y2 = prim->y3 = prim->y0 + D_80170608[frame].height;
 }
+#endif
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_801719E0);
+#else
 void func_801719E0(Entity* self) {
     s32 i;
 
@@ -431,7 +474,11 @@ void func_801719E0(Entity* self) {
     self->ext.bat.unk80 = self->entityId;
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
 }
+#endif
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80171ED4);
+#else
 void func_80171ED4(s32 arg0) {
     RECT rect;
     s32 i;
@@ -508,7 +555,11 @@ void func_80171ED4(s32 arg0) {
     e->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
     e->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
 }
+#endif
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80172120);
+#else
 void func_80172120(Entity* self) {
     s32 var_v0;
     s32 var_v1;
@@ -740,7 +791,11 @@ void func_80172120(Entity* self) {
     func_80171560(self);
     g_api.UpdateAnim(NULL, D_801705F4);
 }
+#endif
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80172C30);
+#else
 void func_80172C30(Entity* self) {
     if (self->step == 1 && self->flags & FLAG_UNK_00200000) {
         D_80174B38 = (self->ext.bat.cameraX - g_Tilemap.scrollX.i.hi) +
@@ -863,6 +918,7 @@ void func_80172C30(Entity* self) {
     func_80171560(self);
     g_api.UpdateAnim(NULL, D_801705F4);
 }
+#endif
 
 void func_8017339C(void) {}
 
@@ -878,6 +934,9 @@ void func_801733C4(void) {}
 
 void func_801733CC(void) {}
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_801733D4);
+#else
 void func_801733D4(Entity* self) {
     const s32 nPrim = 16;
     const s32 XS = 11; // X start, left
@@ -1009,6 +1068,7 @@ void func_801733D4(Entity* self) {
         break;
     }
 }
+#endif
 
 void func_80173C0C(void) {}
 
@@ -1018,13 +1078,18 @@ void func_80173C1C(void) {}
 
 void func_80173C24(void) {}
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80173C2C);
+#else
 void func_80173C2C(Entity* entity) {
     if (entity->params == 0xF) {
         D_80174D3C = 1;
     }
     DestroyEntity(entity);
 }
+#endif
 
+#ifndef VERSION_PSP
 u32 UpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
     AnimationFrame* animFrame;
     s32 ret;
@@ -1069,9 +1134,15 @@ u32 UpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
     self->animCurFrame = self->unk4C[self->animFrameIdx].unk2 & 0x1FF;
     return ret;
 }
+#endif
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", DestroyEntity);
+#else
 #include "../../destroy_entity.h"
+#endif
 
+#ifndef VERSION_PSP
 s32 func_80173E78(s32 arg0, s32 arg1) {
     if (arg0 < 0) {
         arg0 += arg1;
@@ -1103,12 +1174,20 @@ Entity* func_80173EB0(s32 rangeIndex, s32 entityId) {
 
     return NULL;
 }
+#endif
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80173F30);
+#else
 s32 func_80173F30(Entity* entity, s16 x, s16 y) {
     s16 diffx = x - entity->posX.i.hi;
     return ratan2(-(s16)(y - entity->posY.i.hi), diffx) & 0xFFF;
 }
+#endif
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80173F74);
+#else
 s16 func_80173F74(s16 arg0, s16 arg1, s16 arg2) {
     s32 diffTmp = arg1 - arg0;
     s16 diff = ABS(diffTmp);
@@ -1133,7 +1212,9 @@ s16 func_80173F74(s16 arg0, s16 arg1, s16 arg2) {
     }
     return res & 0xFFF;
 }
+#endif
 
+#ifndef VERSION_PSP
 s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
     s32 diffX = x - entity->posX.i.hi;
     s32 diffY = y - entity->posY.i.hi;
@@ -1211,9 +1292,13 @@ void func_80174038(Entity* entity) {
 
     D_80171090 = entity->step;
 }
+#endif
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", ProcessEvent);
+#else
 extern ServantEvent g_Events[];
-extern ServantEvent** g_EventQueue;
+extern ServantEvent* g_EventQueue;
 extern u32 g_CurrentServant;
 extern s32 g_CurrentRoomX;
 extern s32 g_CurrentRoomY;
@@ -1323,7 +1408,11 @@ void ProcessEvent(Entity* self, bool resetEvent) {
         }
     }
 }
+#endif
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", CreateEventEntity);
+#else
 void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params) {
     Entity* entity;
     s32 i;
@@ -1347,7 +1436,11 @@ init_entity:
     entity->ext.generic.unk8C.entityPtr = entityParent;
     entity->params = params;
 }
+#endif
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_801746A0);
+#else
 s32 func_801746A0(s32 arg0) {
     s32 tmp;
 
@@ -1385,7 +1478,9 @@ s32 func_801746A0(s32 arg0) {
 
     return g_Player.unk52 != 0 && g_Player.unk52 != 4;
 }
+#endif
 
+#ifndef VERSION_PSP
 s32 func_801747B8(void) {
     Entity* entity;
     s32 i;
@@ -1411,7 +1506,11 @@ s32 func_801747B8(void) {
     }
     return 0;
 }
+#endif
 
+#ifdef VERSION_PSP
+INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80174864);
+#else
 s32 func_80174864(void) {
     int tmp;
 
@@ -1431,3 +1530,8 @@ s32 func_80174864(void) {
     tmp = 0x20;
     return D_8003C708.flags != tmp ? 2 : 1;
 }
+#endif
+
+#ifdef VERSION_PSP
+INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_092EC220);
+#endif

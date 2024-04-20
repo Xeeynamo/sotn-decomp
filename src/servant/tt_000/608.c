@@ -32,7 +32,7 @@ u16 D_80170720[] = {
 #define MAKE_EVENT(servant, roomX, roomY, camX, camY, check, delay, entity, params) \
     { 0, 0, servant, roomX, roomY, camX, camY, check, delay, entity, params, 1 }
 #define NULL_EVENT \
-    { 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0 }
+    { 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0 }
 ServantEvent g_Events[] = {
     NULL_EVENT,
     MAKE_EVENT(FAM_ACTIVE_BAT, 41, 50, 0, 4, FOR_CASTLE_FLAG(0x42), 1, E_UNK_DF, 15),
@@ -92,7 +92,7 @@ ServantEvent g_Events[] = {
 
 s32 D_80171090 = 99;
 EntitySearch D_80171094[] = {{5, 7}, {32, 63}};
-ServantEvent** g_EventQueue = g_Events;
+ServantEvent* g_EventQueue = g_Events;
 u32 g_CurrentServant = 0;
 u32 g_CurrentRoomX = 0;
 u32 g_CurrentRoomY = 0;

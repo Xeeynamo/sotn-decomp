@@ -13,8 +13,8 @@
 #define VERSION_HD
 #define VERSION "hd"
 #elif defined(_internal_version_pspeu)
-#define VERSION_HD   // pspeu and hd are equivalent
-#define VERSION "hd" // pspeu and hd are equivalent
+#define VERSION_PSP
+#define VERSION "psp"
 #elif defined(_internal_version_beta)
 #define VERSION_BETA
 #define VERSION "beta"
@@ -49,7 +49,7 @@
 int sprintf(char* dst, const char* fmt, ...);
 #endif
 
-#define FIX(x) ((s32)((x)*65536.0))
+#define FIX(x) ((s32)((x) * 65536.0))
 #define FIX_TO_I(x) ((s32)((x) >> 16))
 
 // The second argument to CreateEntFactoryFromEntity has weird bit packing,
@@ -62,6 +62,6 @@ int sprintf(char* dst, const char* fmt, ...);
 
 // PSX SDK libraries do not use float. Instead they use a fix-point number
 // where 4096 is equal to 1.0.
-#define FLT(x) ((s32)((x)*4096.0))
+#define FLT(x) ((s32)((x) * 4096.0))
 
 #endif
