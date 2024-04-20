@@ -12,7 +12,13 @@ void func_80174864();
 void func_8909F84();
 void ProcessEvent();
 
-INCLUDE_ASM("servant/tt_000/nonmatchings/80", func_801710E8);
+void func_801710E8(Entity* entity, AnimationFrame* anim) {
+    if (entity->unk4C != anim) {
+        entity->unk4C = anim;
+        entity->animFrameIdx = 0;
+        entity->animFrameDuration = 0;
+    }
+}
 
 INCLUDE_ASM("servant/tt_000/nonmatchings/80", func_8017110C);
 
