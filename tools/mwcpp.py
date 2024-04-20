@@ -73,12 +73,16 @@ def include_asm(c_line: str, out: TextIO, version: str) -> None:
         func_name = match.group(2)
         out.write(f"asm void {func_name}() {{\n")
         with open(f"asm/{version}/{base_path}/{func_name}.s", "r") as f:
-            while True:
-                line = f.readline()
-                patched_line = process_asm_line(f, line)
-                if patched_line == None:
-                    break
-                out.write(patched_line)
+            try:
+                while True:
+                    line = f.readline()
+                    patched_line = process_asm_line(f, line)
+                    if patched_line == None:
+                        break
+                    out.write(patched_line)
+            except Exception as ex:
+                print(f"line {line} caused an exception")
+                raise ex
         out.write(f"}}\n")
     else:
         out.write(c_line)
@@ -91,7 +95,11 @@ def process_file(file_name_in: str, out: TextIO, version: str) -> None:
             if not line:
                 return None
             if line.startswith("INCLUDE_ASM"):
-                include_asm(line, out, version)
+                try:
+                    include_asm(line, out, version)
+                except Exception as ex:
+                    print(f"{line} caused an exception")
+                    raise
             else:
                 out.write(line)
 
