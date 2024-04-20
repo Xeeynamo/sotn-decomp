@@ -22,12 +22,14 @@ jobs:
   build-and-test:
     strategy:
       matrix:
-        version: ["us", "hd"]
+        version: ["us", "hd", "pspeu"]
         include:
           - dependency: us
             version: us
           - dependency: pspeu
             version: hd
+          - dependency: pspeu
+            version: pspeu
     # Building and testing cannot work if the repository owner is not Xeeynamo
     # due to the missing secrets to clone the CI dependencies
     if: github.repository == 'Xeeynamo/sotn-decomp'
@@ -90,12 +92,14 @@ jobs:
   generate-progress-report:
     strategy:
       matrix:
-        version: ["us", "hd"]
+        version: ["us", "hd", "pspeu"]
         include:
           - dependency: us
             version: us
           - dependency: pspeu
             version: hd
+          - dependency: pspeu
+            version: pspeu
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     needs: build-and-test
     runs-on: ubuntu-latest
