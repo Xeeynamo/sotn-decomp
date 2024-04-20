@@ -12,6 +12,9 @@
 #elif defined(_internal_version_hd)
 #define VERSION_HD
 #define VERSION "hd"
+#elif defined(_internal_version_pspeu)
+#define VERSION_HD   // pspeu and hd are equivalent
+#define VERSION "hd" // pspeu and hd are equivalent
 #elif defined(_internal_version_beta)
 #define VERSION_BETA
 #define VERSION "beta"
