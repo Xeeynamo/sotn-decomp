@@ -37,7 +37,7 @@ $(PSP_BUILD_DIR)/%.c.o: %.c bin/mwccpsp.exe
 	mkdir -p $(dir $@)
 	$(MWCPP_APP) $< -o $@.post.c
 	$(CCPSP) -gccinc -Iinclude -D_internal_version_$(VERSION) -O0 -c -lang c -sdatathreshold 0 -o $@ $@.post.c
-	rm $@.post.c
+	rm $@.post.c || true
 $(PSP_BUILD_DIR)/asm/psp%.s.o: asm/psp%.s
 	mkdir -p $(dir $@)
 	$(ASPSP) -o $@ $<
