@@ -22,7 +22,30 @@ INCLUDE_ASM("servant/tt_000/nonmatchings/80", func_80171560);
 
 INCLUDE_ASM("servant/tt_000/nonmatchings/80", func_80171568);
 
-INCLUDE_ASM("servant/tt_000/nonmatchings/80", func_8017160C);
+void func_8017160C(s32 amount, s32 entityId) {
+    s32 i;
+    Entity* entity;
+    u16 facing;
+
+    amount = MIN(amount, 3);
+    for (i = 0; i < amount; i++) {
+        entity = &g_Entities[5 + i];
+        if (entity->entityId == entityId) {
+            entity->step = 0;
+        } else {
+            DestroyEntity(entity);
+            entity->entityId = entityId;
+            entity->unk5A = 0x6C;
+            entity->palette = 0x140;
+            entity->animSet = ANIMSET_OVL(20);
+            entity->zPriority = g_Entities[0].zPriority - 2;
+            entity->facingLeft = (g_Entities[0].facingLeft + 1) & 1;
+            entity->params = i + 1;
+        }
+        entity->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
+        entity->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
+    }
+}
 
 INCLUDE_ASM("servant/tt_000/nonmatchings/80", func_8017170C);
 
