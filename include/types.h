@@ -34,7 +34,6 @@ typedef unsigned int u32;
 typedef unsigned long long u64;
 
 typedef signed char byte;
-
 typedef enum { false, true } bool;
 
 #ifndef NULL
