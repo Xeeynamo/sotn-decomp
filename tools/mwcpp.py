@@ -8,8 +8,9 @@ from typing import TextIO
 r_lui = r"\s*lui\s*\$(.*),\s\%hi\((.*)\)"
 r_lui_addiu_combo = r"\s*addiu\s*\$(.*),\s\$(.*),\s\%lo\((.*)\)"
 r_hi = r"%hi\((.*)\)"
-r_lo = r"%lo\((.*)\)"
+r_lo = r"%lo\((.*)\)\(|%lo\((.*)\)"
 r_jalr = r"jalr\s*\$([a-z][a-z0-9])"
+r_jlabel = r"jlabel \.(.*)"
 
 
 def process_asm_line(asm_f: TextIO, line: str) -> str | None:
@@ -24,8 +25,17 @@ def process_asm_line(asm_f: TextIO, line: str) -> str | None:
     if line.startswith(".size"):
         return ""
 
+    match_jlabel = re.search(r_jlabel, line)
+    if match_jlabel:
+        label_name = match_jlabel.group(1)
+        line = f"{label_name}:\n"
+
     # do not use '.' on label names
     line = line.replace(".L", "L")
+
+    # remove trailing hash comment
+    if "#" in line:
+        line = line.split("#")[0] + "\n"
 
     # look for a LUI/ADDIU combo
     match_lui = re.search(r_lui, line)
@@ -41,20 +51,20 @@ def process_asm_line(asm_f: TextIO, line: str) -> str | None:
             if dst_reg == dst_reg_2 and src_reg_2 == dst_reg_2 and src_sym == src_sym_2:
                 return f"la ${dst_reg}, {src_sym}\n"
         second_line = process_asm_line(asm_f, second_line)
-        line = line.replace(f"%hi({symbol_name})", f"{symbol_name}@ha")
+        line = line.replace(f"%hi({src_sym})", f"({src_sym})@ha")
         return line + second_line
 
     # use symbol@h instead of %hi(symbol)
     himatch = re.search(r_hi, line)
     if himatch:
         symbol_name = himatch.group(1)
-        return line.replace(f"%hi({symbol_name})", f"{symbol_name}@ha")
+        return line.replace(f"%hi({symbol_name})", f"({symbol_name})@ha")
 
     # use symbol@l instead of %lo(symbol)
     lomatch = re.search(r_lo, line)
     if lomatch:
         symbol_name = lomatch.group(1)
-        return line.replace(f"%lo({symbol_name})", f"{symbol_name}@l")
+        return line.replace(f"%lo({symbol_name})", f"({symbol_name}@l)")
 
     # jalr needs two arguments
     jalr_match = re.search(r_jalr, line)

@@ -75,6 +75,18 @@ jalr $ra, $v0
 """,
         )
 
+    def test_fix_jlabel(self):
+        self.assertEqual(
+            self.helper_process_lines(
+                """jlabel .LHELLO
+"""
+            ),
+            """asm void func_name() {
+LHELLO:
+}
+""",
+        )
+
     def test_fix_lui_addiu_combo(self):
         self.assertEqual(
             self.helper_process_lines(
@@ -84,6 +96,32 @@ jalr $ra, $v0
             ),
             """asm void func_name() {
 la $a0, D_8D1DC40
+}
+""",
+        )
+
+    def test_fix_lui_lh_combo(self):
+        self.assertEqual(
+            self.helper_process_lines(
+                """lui        $v1, %hi(D_92EFFDE)
+/* some stuff */   lh         $a0, -0x2948($v1)
+"""
+            ),
+            """asm void func_name() {
+lui        $v1, (D_92EFFDE)@ha
+/* some stuff */   lh         $a0, -0x2948($v1)
+}
+""",
+        )
+
+    def test_fix_lower_16bit(self):
+        self.assertEqual(
+            self.helper_process_lines(
+                """lw $s1, %lo(g_EventQueue)($v1)
+"""
+            ),
+            """asm void func_name() {
+lw $s1, (g_EventQueue@l)($v1)
 }
 """,
         )
@@ -98,6 +136,18 @@ la $a0, D_8D1DC40
             """asm void func_name() {
 jmp LABEL
 LABEL:
+}
+""",
+        )
+
+    def test_remove_trailing_hash_comment(self):
+        self.assertEqual(
+            self.helper_process_lines(
+                """nop# comment
+"""
+            ),
+            """asm void func_name() {
+nop
 }
 """,
         )
