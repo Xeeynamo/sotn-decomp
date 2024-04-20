@@ -24,7 +24,7 @@ options:
     - ".rodata"
   ld_bss_is_noload: True
 segments:
-  - [0x80, header]
+  - [0x0, bin, header]
   - name: tt_000
     type: code
     start: 0x00000080
