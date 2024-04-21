@@ -12,14 +12,14 @@
 <!-- servant.func_80173C2C -->
 <g id="node1" class="node">
 <title>servant.func_80173C2C</title>
-<ellipse fill="green" stroke="black" cx="122.19" cy="-198" rx="122.38" ry="18"/>
+<ellipse fill="red" stroke="black" cx="122.19" cy="-198" rx="122.38" ry="18"/>
 <text text-anchor="middle" x="122.19" y="-194.3" font-family="Times,serif" font-size="14.00">servant.func_80173C2C</text>
 </g>
 <!-- servant.DestroyEntity -->
 <g id="node2" class="node">
 <title>servant.DestroyEntity</title>
 <g id="a_node2"><a xlink:href="servant.DestroyEntity.svg" xlink:title="servant.DestroyEntity">
-<ellipse fill="green" stroke="black" cx="122.19" cy="-18" rx="114.28" ry="18"/>
+<ellipse fill="red" stroke="black" cx="122.19" cy="-18" rx="114.28" ry="18"/>
 <text text-anchor="middle" x="122.19" y="-14.3" font-family="Times,serif" font-size="14.00">servant.DestroyEntity</text>
 </a>
 </g>

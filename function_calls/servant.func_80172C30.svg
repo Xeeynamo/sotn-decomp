@@ -12,7 +12,7 @@
 <!-- servant.func_80172C30 -->
 <g id="node1" class="node">
 <title>servant.func_80172C30</title>
-<ellipse fill="green" stroke="black" cx="1452.34" cy="-198" rx="120.78" ry="18"/>
+<ellipse fill="red" stroke="black" cx="1452.34" cy="-198" rx="120.78" ry="18"/>
 <text text-anchor="middle" x="1452.34" y="-194.3" font-family="Times,serif" font-size="14.00">servant.func_80172C30</text>
 </g>
 <!-- SquareRoot12 -->
@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>servant.DestroyEntity</title>
 <g id="a_node7"><a xlink:href="servant.DestroyEntity.svg" xlink:title="servant.DestroyEntity">
-<ellipse fill="green" stroke="black" cx="1089.34" cy="-18" rx="114.28" ry="18"/>
+<ellipse fill="red" stroke="black" cx="1089.34" cy="-18" rx="114.28" ry="18"/>
 <text text-anchor="middle" x="1089.34" y="-14.3" font-family="Times,serif" font-size="14.00">servant.DestroyEntity</text>
 </a>
 </g>
@@ -115,7 +115,7 @@
 <g id="node8" class="node">
 <title>servant.ProcessEvent</title>
 <g id="a_node8"><a xlink:href="servant.ProcessEvent.svg" xlink:title="servant.ProcessEvent">
-<ellipse fill="green" stroke="black" cx="1334.34" cy="-18" rx="112.38" ry="18"/>
+<ellipse fill="red" stroke="black" cx="1334.34" cy="-18" rx="112.38" ry="18"/>
 <text text-anchor="middle" x="1334.34" y="-14.3" font-family="Times,serif" font-size="14.00">servant.ProcessEvent</text>
 </a>
 </g>
@@ -163,7 +163,7 @@
 <g id="node11" class="node">
 <title>servant.func_80171560</title>
 <g id="a_node11"><a xlink:href="servant.func_80171560.svg" xlink:title="servant.func_80171560">
-<ellipse fill="green" stroke="black" cx="2075.34" cy="-18" rx="120.48" ry="18"/>
+<ellipse fill="red" stroke="black" cx="2075.34" cy="-18" rx="120.48" ry="18"/>
 <text text-anchor="middle" x="2075.34" y="-14.3" font-family="Times,serif" font-size="14.00">servant.func_80171560</text>
 </a>
 </g>
@@ -195,7 +195,7 @@
 <g id="node13" class="node">
 <title>servant.func_8017170C</title>
 <g id="a_node13"><a xlink:href="servant.func_8017170C.svg" xlink:title="servant.func_8017170C">
-<ellipse fill="green" stroke="black" cx="2594.34" cy="-18" rx="120.78" ry="18"/>
+<ellipse fill="red" stroke="black" cx="2594.34" cy="-18" rx="120.78" ry="18"/>
 <text text-anchor="middle" x="2594.34" y="-14.3" font-family="Times,serif" font-size="14.00">servant.func_8017170C</text>
 </a>
 </g>
@@ -211,7 +211,7 @@
 <g id="node14" class="node">
 <title>servant.func_801719E0</title>
 <g id="a_node14"><a xlink:href="servant.func_801719E0.svg" xlink:title="servant.func_801719E0">
-<ellipse fill="green" stroke="black" cx="2854.34" cy="-18" rx="120.78" ry="18"/>
+<ellipse fill="red" stroke="black" cx="2854.34" cy="-18" rx="120.78" ry="18"/>
 <text text-anchor="middle" x="2854.34" y="-14.3" font-family="Times,serif" font-size="14.00">servant.func_801719E0</text>
 </a>
 </g>
@@ -227,7 +227,7 @@
 <g id="node15" class="node">
 <title>servant.func_801746A0</title>
 <g id="a_node15"><a xlink:href="servant.func_801746A0.svg" xlink:title="servant.func_801746A0">
-<ellipse fill="green" stroke="black" cx="3113.34" cy="-18" rx="120.48" ry="18"/>
+<ellipse fill="red" stroke="black" cx="3113.34" cy="-18" rx="120.48" ry="18"/>
 <text text-anchor="middle" x="3113.34" y="-14.3" font-family="Times,serif" font-size="14.00">servant.func_801746A0</text>
 </a>
 </g>

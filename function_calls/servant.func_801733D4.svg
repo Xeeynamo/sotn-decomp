@@ -12,7 +12,7 @@
 <!-- servant.func_801733D4 -->
 <g id="node1" class="node">
 <title>servant.func_801733D4</title>
-<ellipse fill="green" stroke="black" cx="215.44" cy="-198" rx="121.58" ry="18"/>
+<ellipse fill="red" stroke="black" cx="215.44" cy="-198" rx="121.58" ry="18"/>
 <text text-anchor="middle" x="215.44" y="-194.3" font-family="Times,serif" font-size="14.00">servant.func_801733D4</text>
 </g>
 <!-- dra.AllocPrimitives -->
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>servant.DestroyEntity</title>
 <g id="a_node3"><a xlink:href="servant.DestroyEntity.svg" xlink:title="servant.DestroyEntity">
-<ellipse fill="green" stroke="black" cx="331.44" cy="-18" rx="114.28" ry="18"/>
+<ellipse fill="red" stroke="black" cx="331.44" cy="-18" rx="114.28" ry="18"/>
 <text text-anchor="middle" x="331.44" y="-14.3" font-family="Times,serif" font-size="14.00">servant.DestroyEntity</text>
 </a>
 </g>
