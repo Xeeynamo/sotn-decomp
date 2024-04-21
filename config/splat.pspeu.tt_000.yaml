@@ -1,0 +1,38 @@
+options:
+  platform:     psx
+  basename:     tt_000
+  base_path:    ..
+  build_path:   build/pspeu
+  target_path:  disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_000.bin
+  asm_path:     asm/pspeu/servant/tt_000
+  asset_path:   assets/servant/tt_000
+  src_path:     src/servant/tt_000
+  ld_script_path: build/pspeu/tt_000.ld
+  compiler:     GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.tt_000.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.pspeu.tt_000.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.pspeu.tt_000.txt
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
+  asm_jtbl_label_macro: jlabel
+  section_order:
+    - ".text"
+    - ".data"
+    - ".rodata"
+  ld_bss_is_noload: True
+segments:
+  - [0x0, bin, header]
+  - name: tt_000
+    type: code
+    start: 0x00000080
+    vram:  0x092E7680
+    align: 128
+    subalign: 4
+    subsegments:
+      - [0x80, c, 10E8]
+      - [0x4C80, data]
+      - [0x5E00, rodata]
+  - [0x5E80]

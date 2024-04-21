@@ -9,7 +9,6 @@ on:
       - '**/*.md'
   pull_request:
     paths-ignore:
-      - '.github/workflows/**'
       - '*.md'
       - '**/*.md'
   workflow_dispatch:
@@ -22,12 +21,14 @@ jobs:
   build-and-test:
     strategy:
       matrix:
-        version: ["us", "hd"]
+        version: ["us", "hd", "pspeu"]
         include:
           - dependency: us
             version: us
           - dependency: pspeu
             version: hd
+          - dependency: pspeu
+            version: pspeu
     # Building and testing cannot work if the repository owner is not Xeeynamo
     # due to the missing secrets to clone the CI dependencies
     if: github.repository == 'Xeeynamo/sotn-decomp'
@@ -67,6 +68,9 @@ jobs:
         run: cat dependencies/* | tar -zxf -
       - name: Extract dependencies
         run: make extract_disk
+      - name: Install PSP-specific dependencies
+        if: matrix.version == 'pspeu'
+        run: pip3 install -r tools/requirements-python.txt
       - name: Split game data
         run: make -j extract
       - name: Build binaries
@@ -90,12 +94,14 @@ jobs:
   generate-progress-report:
     strategy:
       matrix:
-        version: ["us", "hd"]
+        version: ["us", "hd", "pspeu"]
         include:
           - dependency: us
             version: us
           - dependency: pspeu
             version: hd
+          - dependency: pspeu
+            version: pspeu
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     needs: build-and-test
     runs-on: ubuntu-latest

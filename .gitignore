@@ -13,7 +13,6 @@ __pycache__
 
 asm/
 assets/
-bin/
 build/
 expected/
 disks/

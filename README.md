@@ -1,11 +1,12 @@
 # Castlevania: Symphony of the Night Decompilation
 
-A work-in-progress decompilation of Castlevania Symphony of the Night for Sony PlayStation 1 and Sega Saturn. It aims to recreate the source code from the existing binaries using static and/or dynamic analysis. The code compiles byte-for-byte to the same binaries of the game, effectively being a matching decompilation.
+A work-in-progress decompilation of Castlevania Symphony of the Night for Sony PlayStation 1, Sony PlayStation Portable and Sega Saturn. It aims to recreate the source code from the existing binaries using static and/or dynamic analysis. The code compiles byte-for-byte to the same binaries of the game, effectively being a matching decompilation.
 
 It currently supports the following versions of the game:
 
 * `us` the reference build with the serial number SLUS-00067
 * `hd` an unreleased PS1 Japanese build found in Castlevania: Dracula X Chronicles game data
+* `pspeu` European build from Castlevania: Dracula X Chronicles
 * `saturn` the port created by an external development team
 
 This repo does not include any assets or assembly code necessary for compiling the binaries. A prior copy of the game is required to extract the required assets.

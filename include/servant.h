@@ -1,5 +1,7 @@
-#include "common.h"
-#include "game.h"
+#ifndef SERVANT_H
+#define SERVANT_H
+#include <common.h>
+#include <game.h>
 
 typedef struct {
     void (*Init)(s32 arg0);
@@ -24,7 +26,7 @@ typedef struct {
     u16 start, end;
 } EntitySearch;
 
-typedef struct {
+typedef struct ServantEvent {
     /* 0x00 */ struct ServantEvent* next; // next event in the queue
     /* 0x04 */ u32 timer;     // internal timer from 'delay' to the activation 0
     /* 0x08 */ u32 servantId; // the familiar ID that can trigger the event
@@ -61,3 +63,5 @@ extern s32 D_80170658[][5];
 extern u16 D_80170720[];
 extern s32 D_80171090;
 extern EntitySearch D_80171094[];
+
+#endif
