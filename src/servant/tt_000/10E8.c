@@ -1128,11 +1128,7 @@ u32 UpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
 }
 #endif
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", DestroyEntity);
-#else
 #include "../../destroy_entity.h"
-#endif
 
 #ifndef VERSION_PSP
 s32 func_80173E78(s32 arg0, s32 arg1) {
