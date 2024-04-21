@@ -1426,9 +1426,6 @@ void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params) {
     }
 }
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_801746A0);
-#else
 s32 func_801746A0(s32 arg0) {
     if (PLAYER.velocityY < 0 && !(g_Player.pl_vram_flag & 1)) {
         return 1;
@@ -1447,18 +1444,17 @@ s32 func_801746A0(s32 arg0) {
     if (arg0 == 0)
         return 0;
 
-    if (g_Player.unk50 != PLAYER.step || g_Player.unk50 != 0)
+    if (g_Player.unk50 != PLAYER.step || PLAYER.step != 0)
         return 1;
 
     if (g_Player.unk52 != PLAYER.step_s)
         return 1;
 
-    if (g_Player.unk52 != 0 && g_Player.unk52 != 4)
+    if (PLAYER.step_s != 0 && PLAYER.step_s != 4)
         return 1;
 
     return 0;
 }
-#endif
 
 #ifndef VERSION_PSP
 s32 func_801747B8(void) {
