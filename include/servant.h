@@ -64,4 +64,9 @@ extern u16 D_80170720[];
 extern s32 D_80171090;
 extern EntitySearch D_80171094[];
 
+#ifdef VERSION_PSP
+extern ServantDesc D_8D1DC40;
+void func_8909F84(ServantDesc* dst, ServantDesc* src, int len);
+#endif
+
 #endif

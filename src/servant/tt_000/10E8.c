@@ -72,10 +72,10 @@ extern u8* D_092EC280;
 extern u8* D_092EC9E8;
 extern u8* D_801530AC;
 extern u8* D_91E1970;
-extern u8* D_8D1DC40;
+extern ServantDesc g_ServantDesc;
 
 void DestroyEntity();
-void func_80174864();
+s32 func_80174864(void);
 void func_8909F84();
 void ProcessEvent();
 
@@ -227,38 +227,30 @@ bool func_80171434(s16 x, s16 y, s16* outX, s16* outY) {
 }
 #endif
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80171560);
-#else
 void func_80171560(Entity* self) {}
-#endif
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80171568);
-#else
 void func_80171568(Entity* self) {
     Entity* entity;
     s32 i;
 
     for (i = 0; i < 3; i++) {
         entity = &g_Entities[5 + i];
-        if (entity->entityId == 0) {
-            goto init_entity;
+        if (!entity->entityId) {
+            break;
         }
     }
-    return;
 
-init_entity:
-    DestroyEntity(entity);
-    entity->entityId = 0xDA;
-    entity->zPriority = self->zPriority;
-    entity->facingLeft = self->facingLeft;
-    entity->flags = FLAG_UNK_04000000;
-    entity->posX.val = self->posX.val;
-    entity->posY.val = self->posY.val;
-    entity->ext.generic.unk8C.entityPtr = self;
+    if (!entity->entityId) {
+        DestroyEntity(entity);
+        entity->entityId = 0xDA;
+        entity->zPriority = self->zPriority;
+        entity->facingLeft = self->facingLeft;
+        entity->flags = FLAG_UNK_04000000;
+        entity->posX.val = self->posX.val;
+        entity->posY.val = self->posY.val;
+        entity->ext.generic.unk8C.entityPtr = self;
+    }
 }
-#endif
 
 void func_8017160C(s32 amount, s32 entityId) {
     s32 i;
@@ -1410,73 +1402,61 @@ void ProcessEvent(Entity* self, bool resetEvent) {
 }
 #endif
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", CreateEventEntity);
-#else
 void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params) {
     Entity* entity;
     s32 i;
 
     for (i = 0; i < 3; i++) {
         entity = &g_Entities[5 + i];
-        if (entity->entityId == 0) {
-            goto init_entity;
+        if (!entity->entityId) {
+            break;
         }
     }
-    return;
 
-init_entity:
-    DestroyEntity(entity);
-    entity->entityId = entityId;
-    entity->zPriority = entityParent->zPriority;
-    entity->facingLeft = entityParent->facingLeft;
-    entity->flags = FLAG_UNK_04000000;
-    entity->posX.val = entityParent->posX.val;
-    entity->posY.val = entityParent->posY.val;
-    entity->ext.generic.unk8C.entityPtr = entityParent;
-    entity->params = params;
+    if (!entity->entityId) {
+        DestroyEntity(entity);
+        entity->entityId = entityId;
+        entity->zPriority = entityParent->zPriority;
+        entity->facingLeft = entityParent->facingLeft;
+        entity->flags = FLAG_UNK_04000000;
+        entity->posX.val = entityParent->posX.val;
+        entity->posY.val = entityParent->posY.val;
+        entity->ext.generic.unk8C.entityPtr = entityParent;
+        entity->params = params;
+    }
 }
-#endif
 
 #ifdef VERSION_PSP
 INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_801746A0);
 #else
 s32 func_801746A0(s32 arg0) {
-    s32 tmp;
-
-    if (PLAYER.velocityY < 0) {
-        if (!(g_Player.pl_vram_flag & 1)) {
-            return 1;
-        }
+    if (PLAYER.velocityY < 0 && !(g_Player.pl_vram_flag & 1)) {
+        return 1;
     }
 
-    tmp = PLAYER.velocityY;
-    if (tmp > 0) {
-        if (!(g_Player.pl_vram_flag & 2)) {
-            return 1;
-        }
+    if (PLAYER.velocityY > 0 && !(g_Player.pl_vram_flag & 2)) {
+        return 1;
     }
 
     if (PLAYER.velocityX < 0 && !(g_Player.pl_vram_flag & 8))
         return 1;
 
-    tmp = PLAYER.velocityX;
     if (PLAYER.velocityX > 0 && !(g_Player.pl_vram_flag & 4))
         return 1;
 
     if (arg0 == 0)
         return 0;
 
-    if (g_Player.unk50 != PLAYER.step)
-        return 1;
-
-    if (g_Player.unk50 != 0)
+    if (g_Player.unk50 != PLAYER.step || g_Player.unk50 != 0)
         return 1;
 
     if (g_Player.unk52 != PLAYER.step_s)
         return 1;
 
-    return g_Player.unk52 != 0 && g_Player.unk52 != 4;
+    if (g_Player.unk52 != 0 && g_Player.unk52 != 4)
+        return 1;
+
+    return 0;
 }
 #endif
 
@@ -1508,30 +1488,29 @@ s32 func_801747B8(void) {
 }
 #endif
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80174864);
-#else
 s32 func_80174864(void) {
-    int tmp;
-
     if (g_StageId >= STAGE_RNO0 && g_StageId < STAGE_RNZ1_DEMO) {
         if (D_8003C708.flags == 0x22) {
             return 1;
         }
+        if (D_8003C708.flags == 0x20) {
+            return 0;
+        }
+        return 2;
+    } else {
+        if (D_8003C708.flags == 0x22) {
+            return 0;
+        }
 
-        tmp = (D_8003C708.flags != 0x20) * 2;
-        return tmp;
+        if (D_8003C708.flags == 0x20) {
+            return 1;
+        }
+        return 2;
     }
-
-    if (D_8003C708.flags == 0x22) {
-        return 0;
-    }
-
-    tmp = 0x20;
-    return D_8003C708.flags != tmp ? 2 : 1;
 }
-#endif
 
 #ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_092EC220);
+void func_092EC220(void) {
+    func_8909F84(&D_8D1DC40, &g_ServantDesc, sizeof(ServantDesc));
+}
 #endif
