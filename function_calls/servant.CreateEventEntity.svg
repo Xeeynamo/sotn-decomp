@@ -12,7 +12,7 @@
 <!-- servant.CreateEventEntity -->
 <g id="node1" class="node">
 <title>servant.CreateEventEntity</title>
-<ellipse fill="red" stroke="black" cx="135.84" cy="-198" rx="135.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="135.84" cy="-198" rx="135.68" ry="18"/>
 <text text-anchor="middle" x="135.84" y="-194.3" font-family="Times,serif" font-size="14.00">servant.CreateEventEntity</text>
 </g>
 <!-- servant.DestroyEntity -->

@@ -19,7 +19,7 @@
 <g id="node2" class="node">
 <title>servant.CreateEventEntity</title>
 <g id="a_node2"><a xlink:href="servant.CreateEventEntity.svg" xlink:title="servant.CreateEventEntity">
-<ellipse fill="red" stroke="black" cx="382.19" cy="-18" rx="135.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="382.19" cy="-18" rx="135.68" ry="18"/>
 <text text-anchor="middle" x="382.19" y="-14.3" font-family="Times,serif" font-size="14.00">servant.CreateEventEntity</text>
 </a>
 </g>

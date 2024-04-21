@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>servant.CreateEventEntity</title>
 <g id="a_node3"><a xlink:href="servant.CreateEventEntity.svg" xlink:title="servant.CreateEventEntity">
-<ellipse fill="red" stroke="black" cx="135.84" cy="-378" rx="135.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="135.84" cy="-378" rx="135.68" ry="18"/>
 <text text-anchor="middle" x="135.84" y="-374.3" font-family="Times,serif" font-size="14.00">servant.CreateEventEntity</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>servant.func_80171568</title>
 <g id="a_node4"><a xlink:href="servant.func_80171568.svg" xlink:title="servant.func_80171568">
-<ellipse fill="red" stroke="black" cx="409.84" cy="-378" rx="120.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="409.84" cy="-378" rx="120.48" ry="18"/>
 <text text-anchor="middle" x="409.84" y="-374.3" font-family="Times,serif" font-size="14.00">servant.func_80171568</text>
 </a>
 </g>
