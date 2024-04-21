@@ -19,24 +19,24 @@ def add_custom_arguments(parser):
 
 
 def apply_psx_base(config, version, name):
-    config["baseimg"] = f"disks/{version}" + (f"{name}.bin").upper()
-    config["myimg"] = f"build/{version}" + (f"{name}.bin").upper()
+    config["baseimg"] = f"disks/{version}/" + (f"{name}.bin").upper()
+    config["myimg"] = f"build/{version}/" + (f"{name}.bin").upper()
     config["mapfile"] = f"build/{version}/{name}.map"
     config["source_directories"] = [f"src/{name}", "include", f"asm/{version}/{name}"]
     config["objdump_executable"] = "mipsel-linux-gnu-objdump"
 
 
 def apply_psx_bin(config, version, name):
-    config["baseimg"] = f"disks/{version}" + (f"BIN/{name}.BIN").upper()
-    config["myimg"] = f"build/{version}" + (f"{name}.bin").upper()
+    config["baseimg"] = f"disks/{version}/" + (f"BIN/{name}.BIN").upper()
+    config["myimg"] = f"build/{version}/" + (f"{name}.bin").upper()
     config["mapfile"] = f"build/{version}/{name}.map"
     config["source_directories"] = [f"src/{name}", "include", f"asm/{version}/{name}"]
     config["objdump_executable"] = "mipsel-linux-gnu-objdump"
 
 
 def apply_psx_servant(config, version, name):
-    config["baseimg"] = f"disks/{version}" + (f"SERVANT/{name}.bin").upper()
-    config["myimg"] = f"build/{version}" + (f"{name}.bin").upper()
+    config["baseimg"] = f"disks/{version}/" + (f"SERVANT/{name}.bin").upper()
+    config["myimg"] = f"build/{version}/" + (f"{name}.bin").upper()
     config["mapfile"] = f"build/{version}/{name}.map"
     config["source_directories"] = [
         f"src/servant/{name}",
@@ -47,7 +47,7 @@ def apply_psx_servant(config, version, name):
 
 
 def apply_psx_weapon(config, version, name):
-    config["baseimg"] = f"disks/{version}" + (f"SERVANT/{name}.bin").upper()
+    config["baseimg"] = f"disks/{version}/" + (f"SERVANT/{name}.bin").upper()
     config["myimg"] = f"build/{version}/weapon/w0_{name[2:]}.bin"
     config["mapfile"] = f"build/{version}/weapon/w0_{name[2:]}.map"
     config["source_directories"] = [
@@ -59,8 +59,8 @@ def apply_psx_weapon(config, version, name):
 
 
 def apply_psx_stage(config, version, name):
-    config["baseimg"] = f"disks/{version}" + (f"ST/{name}/{name}.BIN").upper()
-    config["myimg"] = f"build/{version}" + (f"{name}.bin").upper()
+    config["baseimg"] = f"disks/{version}/" + (f"ST/{name}/{name}.BIN").upper()
+    config["myimg"] = f"build/{version}/" + (f"{name}.bin").upper()
     config["mapfile"] = f"build/{version}/st{name}.map"
     config["source_directories"] = [
         f"src/st/{name}",
