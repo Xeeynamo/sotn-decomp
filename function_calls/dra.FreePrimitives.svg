@@ -1123,7 +1123,7 @@
 <g id="node71" class="node">
 <title>servant.DestroyEntity</title>
 <g id="a_node71"><a xlink:href="servant.DestroyEntity.svg" xlink:title="servant.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="15478.19" cy="-198" rx="114.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="15478.19" cy="-198" rx="114.28" ry="18"/>
 <text text-anchor="middle" x="15478.19" y="-194.3" font-family="Times,serif" font-size="14.00">servant.DestroyEntity</text>
 </a>
 </g>

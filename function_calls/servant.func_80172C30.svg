@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>servant.DestroyEntity</title>
 <g id="a_node7"><a xlink:href="servant.DestroyEntity.svg" xlink:title="servant.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="1089.34" cy="-18" rx="114.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1089.34" cy="-18" rx="114.28" ry="18"/>
 <text text-anchor="middle" x="1089.34" y="-14.3" font-family="Times,serif" font-size="14.00">servant.DestroyEntity</text>
 </a>
 </g>
@@ -227,7 +227,7 @@
 <g id="node15" class="node">
 <title>servant.func_801746A0</title>
 <g id="a_node15"><a xlink:href="servant.func_801746A0.svg" xlink:title="servant.func_801746A0">
-<ellipse fill="red" stroke="black" cx="3113.34" cy="-18" rx="120.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="3113.34" cy="-18" rx="120.48" ry="18"/>
 <text text-anchor="middle" x="3113.34" y="-14.3" font-family="Times,serif" font-size="14.00">servant.func_801746A0</text>
 </a>
 </g>
