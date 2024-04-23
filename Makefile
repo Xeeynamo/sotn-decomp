@@ -128,6 +128,7 @@ format:
 	black tools/split_jpt_yaml/*.py
 	VERSION=us $(PYTHON) ./tools/symbols.py sort
 	VERSION=hd $(PYTHON) ./tools/symbols.py sort
+	VERSION=pspeu $(PYTHON) ./tools/symbols.py sort
 	./tools/symbols.py remove-orphans config/splat.us.dra.yaml
 	./tools/symbols.py remove-orphans config/splat.hd.dra.yaml
 	./tools/symbols.py remove-orphans config/splat.us.ric.yaml
