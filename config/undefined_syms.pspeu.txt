@@ -1,4 +1,8 @@
+
 g_StageId = 0x091ce5b8;
 g_Player = 0x91CF030;
+g_api = 0x091cf738;
 D_8003C708 = 0x091e1308;
 g_Tilemap = 0x091e1628;
+g_Entities = 0x091e1680;
+
