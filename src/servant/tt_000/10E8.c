@@ -504,7 +504,7 @@ void func_80171ED4(s32 arg0) {
     rect.w = 0x100;
     rect.h = 1;
     rect.y = 0xF4;
-    
+
     dst = D_8006F3CC;
     LoadImage(&rect, (u_long*)dst);
 
