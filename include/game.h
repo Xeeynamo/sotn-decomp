@@ -975,12 +975,44 @@ typedef struct {
 } RoomDef;
 
 typedef struct {
+    /* 0x00 */ s16 x;
+    /* 0x02 */ s16 y;
+    /* 0x04 */ s16 width;
+    /* 0x06 */ s16 height;
+    /* 0x08 */ s16 clut;
+    /* 0x0A */ s16 tpage;
+    /* 0x0C */ u8 texLeft, dummyLeft;
+    /* 0x0E */ u8 texTop, dummyTop;
+    /* 0x10 */ u8 texRight, dummyRight;
+    /* 0x12 */ u8 texBottom, dummyBottom;
+} Sprite; /* size=0x14 */
+
+typedef struct {
+    /* 00 */ s16 flags;
+    /* 02 */ s16 offsetx;
+    /* 04 */ s16 offsety;
+    /* 06 */ s16 width;
+    /* 08 */ s16 height;
+    /* 0A */ s16 clut;
+    /* 0C */ s16 tileset;
+    /* 0E */ s16 left;
+    /* 10 */ s16 top;
+    /* 12 */ s16 right;
+    /* 14 */ s16 bottom;
+} SpritePart; /* size=0x16 */
+
+typedef struct {
+    /* 00 */ u16 count;
+    /* 02 */ SpritePart parts[0];
+} SpriteParts; // size = 4 + count*sizeof(SpritePart)
+
+typedef struct {
     /* 8003C774 */ void (*Update)(void);
     /* 8003C778 */ void (*TestCollisions)(void);
     /* 8003C77C */ void (*unk08)(void);
     /* 8003C780 */ void (*InitRoomEntities)(s32 layoutId);
     /* 8003C784 */ RoomHeader* rooms;
-    /* 8003C788 */ s16** spriteBanks;
+    /* 8003C788 */ SpriteParts** spriteBanks;
     /* 8003C78C */ u_long** cluts;
     /* 8003C790 */ void* unk1C; // related to entity layout
     /* 8003C794 */ RoomDef* tileLayers;
@@ -1335,38 +1367,6 @@ extern s32 (*g_api_func_800FD5BC)(DamageParam* arg0);
 extern void (*g_api_LearnSpell)(s32 spellId);
 extern void (*g_api_func_800E2438)(const char* str);
 /***************************/
-
-typedef struct {
-    /* 0x00 */ s16 x;
-    /* 0x02 */ s16 y;
-    /* 0x04 */ s16 width;
-    /* 0x06 */ s16 height;
-    /* 0x08 */ s16 clut;
-    /* 0x0A */ s16 tpage;
-    /* 0x0C */ u8 texLeft, dummyLeft;
-    /* 0x0E */ u8 texTop, dummyTop;
-    /* 0x10 */ u8 texRight, dummyRight;
-    /* 0x12 */ u8 texBottom, dummyBottom;
-} Sprite; /* size=0x14 */
-
-typedef struct {
-    /* 00 */ s16 flags;
-    /* 02 */ s16 offsetx;
-    /* 04 */ s16 offsety;
-    /* 06 */ s16 width;
-    /* 08 */ s16 height;
-    /* 0A */ s16 clut;
-    /* 0C */ s16 tileset;
-    /* 0E */ s16 left;
-    /* 10 */ s16 top;
-    /* 12 */ s16 right;
-    /* 14 */ s16 bottom;
-} SpritePart; /* size=0x16 */
-
-typedef struct {
-    /* 00 */ u16 count;
-    /* 02 */ SpritePart parts[0];
-} SpriteParts; // size = 4 + count*sizeof(SpritePart)
 
 typedef struct {
     /* 0x00 */ u16** frames;
