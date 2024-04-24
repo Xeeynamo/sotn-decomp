@@ -74,8 +74,6 @@ extern u8* D_801530AC;
 extern u8* D_91E1970;
 extern ServantDesc g_ServantDesc;
 
-#define D_80174D3C D_92ED828
-
 void DestroyEntity();
 s32 func_80174864(void);
 void func_8909F84();
