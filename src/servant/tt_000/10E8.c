@@ -517,10 +517,10 @@ void func_80171ED4(s32 arg0) {
     e->unk5A = 0x6C;
     e->palette = 0x140;
     e->animSet = ANIMSET_OVL(20);
-    e->zPriority = g_Entities[PLAYER_CHARACTER].zPriority - 2;
-    e->facingLeft = (g_Entities[PLAYER_CHARACTER].facingLeft + 1) & 1;
-    e->posX.val = g_Entities[PLAYER_CHARACTER].posX.val;
-    e->posY.val = g_Entities[PLAYER_CHARACTER].posY.val;
+    e->zPriority = PLAYER.zPriority - 2;
+    e->facingLeft = (PLAYER.facingLeft + 1) & 1;
+    e->posX.val = PLAYER.posX.val;
+    e->posY.val = PLAYER.posY.val;
     e->params = 0;
 
     if (arg0 == 1) {
@@ -534,10 +534,10 @@ void func_80171ED4(s32 arg0) {
             e->posY.val = 0xA00000;
         } else {
             e->posX.val =
-                (g_Entities[PLAYER_CHARACTER].facingLeft ? +0x120000
+                (PLAYER.facingLeft ? +0x120000
                                                          : -0x120000) +
-                g_Entities[PLAYER_CHARACTER].posX.val;
-            e->posY.val = g_Entities[PLAYER_CHARACTER].posY.val - 0x220000;
+                PLAYER.posX.val;
+            e->posY.val = PLAYER.posY.val - 0x220000;
         }
     }
     e->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
