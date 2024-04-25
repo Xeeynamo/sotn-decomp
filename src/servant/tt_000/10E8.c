@@ -534,9 +534,7 @@ void func_80171ED4(s32 arg0) {
             e->posY.val = 0xA00000;
         } else {
             e->posX.val =
-                (PLAYER.facingLeft ? +0x120000
-                                                         : -0x120000) +
-                PLAYER.posX.val;
+                (PLAYER.facingLeft ? +0x120000 : -0x120000) + PLAYER.posX.val;
             e->posY.val = PLAYER.posY.val - 0x220000;
         }
     }
