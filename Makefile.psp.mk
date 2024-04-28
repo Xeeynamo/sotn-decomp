@@ -1,4 +1,4 @@
-GNUASPSP		:= mipsel-linux-gnu-as -I include/ -G0 -march=r6000 -mabi=eabi 
+GNUASPSP		:= mipsel-linux-gnu-as -I include/ -G0 -march=r6000 -mabi=eabi
 MWASPSP			:= bin/wibo bin/asm_psp_elf.exe -gnu
 ASPSP			:= $(GNUASPSP)
 
@@ -10,7 +10,7 @@ PSP_BUILD_DIR	:= build/pspeu
 CCPSP			:= MWCIncludes=bin/ bin/wibo bin/mwccpsp.exe
 PSP_EU_TARGETS	:= tt_000
 SPLAT_PIP		:= splat split
-MWCPP_APP		:= python3 tools/mwcpp.py
+MWCCGAP         := $(PYTHON) $(TOOLS_DIR)/mwccgap/mwccgap.py
 
 define list_src_files_psp
 	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
@@ -33,9 +33,11 @@ bin/wibo:
 	chmod +x bin/wibo
 bin/mwccpsp.exe: bin/wibo bin/mwccpsp_3.0.1_147
 
+# FIXME: we don't need to use MWCCGAP for files that don't have any INCLUDE_ASM macros
 $(PSP_BUILD_DIR)/%.c.o: %.c bin/mwccpsp.exe
-	mkdir -p $(dir $@)
-	$(MWCPP_APP) $< -o $<.post.c && (($(CCPSP) -gccinc -Iinclude -D_internal_version_$(VERSION) -O0 -c -lang c -sdatathreshold 0 -o $@ $<.post.c && rm $<.post.c) || (rm $<.post.c && exit 1))
+	$(MWCCGAP) $< $@ --mwcc-path bin/mwccpsp.exe --use-wibo --wibo-path bin/wibo -gccinc -Iinclude -D_internal_version_$(VERSION) -O0 -c -lang c -sdatathreshold 0
+
+
 $(PSP_BUILD_DIR)/asm/psp%.s.o: asm/psp%.s
 	mkdir -p $(dir $@)
 	$(ASPSP) -o $@ $<
@@ -45,7 +47,7 @@ $(PSP_BUILD_DIR)/assets/servant/tt_000/header.bin.o: assets/servant/tt_000/heade
 	mkdir -p $(dir $@)
 	mipsel-linux-gnu-ld -r -b binary -o $@ $<
 
-tt_000_psp: $(PSP_BUILD_DIR)/tt_000.bin
+tt_000_psp: $(PSP_BUILD_DIR)/tt_000.bin $(PSP_BUILD_DIR)/assets/servant/tt_000/header.bin.o
 
 $(PSP_BUILD_DIR)/tt_%.bin: $(PSP_BUILD_DIR)/tt_%.elf
 	$(OBJCOPY) -O binary $< $@
@@ -53,6 +55,3 @@ $(PSP_BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.pspeu.tt_%.yaml $(PSX_BASE_SYMS) $
 	$(SPLAT_PIP) $<
 $(PSP_BUILD_DIR)/tt_%.elf: $(PSP_BUILD_DIR)/tt_%.ld $$(call list_o_files_psp,servant/tt_$$*)
 	$(call link,tt_$*,$@)
-
-# cannot remove it for some reason? makefile bug?
-_ignoreme_tt_000: $(PSP_BUILD_DIR)/src/servant/tt_000_psp/80.c.o $(PSP_BUILD_DIR)/asm/pspeu/servant/tt_000/data/4C80.data.s.o $(BUILD_DIR)/asm/pspeu/servant/tt_000/data/5E00.rodata.s.o
