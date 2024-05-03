@@ -143,4 +143,4 @@ typedef struct {
     /* 0x32 */ u16 drawMode;
 } draculaPrimitive;
 
-#endif PRIMITIVE_H
+#endif
