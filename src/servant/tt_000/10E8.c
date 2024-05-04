@@ -66,12 +66,6 @@ ServantDesc g_ServantDesc = {
 #endif
 
 #ifdef VERSION_PSP
-extern s32 D_92ED828;
-extern u8* D_91F85F8;
-extern u8* D_092EC280;
-extern u8* D_092EC9E8;
-extern u8* D_801530AC;
-extern u8* D_91E1970;
 extern ServantDesc g_ServantDesc;
 extern s32 D_80174D3C;
 
@@ -1067,9 +1061,9 @@ void func_80173C24(void) {}
 
 void func_80173C2C(Entity* entity) {
     switch (entity->params) {
-        case 15:
-            D_80174D3C = 1;
-            break;
+    case 15:
+        D_80174D3C = 1;
+        break;
     }
     DestroyEntity(entity);
 }
