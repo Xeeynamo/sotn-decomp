@@ -24,6 +24,7 @@ options:
     - ".rodata"
     - ".bss"
   ld_bss_is_noload: True
+  # disasm_unknown: True
 segments:
   - [0x0, bin, header]
   - name: tt_000
@@ -32,7 +33,7 @@ segments:
     vram:  0x092E7680
     bss_size: 0x500
     align: 128
-    subalign: 4
+    subalign: 8
     subsegments:
       - [0x80, c, 10E8]
       - [0x4C80, data]
