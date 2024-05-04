@@ -3,6 +3,8 @@ D_8003C908    = 0x8003C908;
 g_GpuBuffers  = 0x8003CB08;
 g_api         = 0x8003C774;
 
+g_Clut        = 0x8006CBCC;
+
 g_Player      = 0x80072BD0;
 g_Tilemap     = 0x80073084;
 g_CurrentRoom = 0x800730A0;

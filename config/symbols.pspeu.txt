@@ -26,3 +26,6 @@ g_Player_unk52 = 0x91CF3D2;
 D_8006F3CC = 0x091f8658;
 PLAYER_velocityX = 0x91E1688;
 PLAYER_velocityY = 0x91E168C;
+g_Clut = 0x091F5DF8;
+g_Clut_2800 = 0x091F85F8;
+g_Clut_2860 = 0x091F8658;

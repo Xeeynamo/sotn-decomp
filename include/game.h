@@ -1584,8 +1584,6 @@ extern s32 g_Servant; // Currently selected familiar in the menu
 extern u16 g_Clut[0x3000];
 extern u16 D_8006EBCC[0x1000]; // part of g_Clut
 extern u16 D_8006EBE0;         // part of g_Clut
-extern u16 D_8006F3CC[];       // part of g_Clut
-extern u16 D_8006F42C[];       // part of g_Clut
 extern s16 D_800705CC[];       // part of g_Clut
 extern u32 D_80070BCC;         // part of g_Clut
 

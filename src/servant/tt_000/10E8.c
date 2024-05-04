@@ -484,14 +484,14 @@ void func_80171ED4(s32 arg0) {
         }
     }
 
-    dst = D_8006F3CC;
+    dst = g_Clut + 0x1400;
     src = D_80170448;
 
     for (i = 0; i < 256; i++) {
         *dst++ = *src++;
     }
 
-    dst = D_8006F42C;
+    dst = g_Clut + 0x1430;
     src = D_80170720;
 
     for (i = 0; i < 32; i++) {
@@ -503,7 +503,7 @@ void func_80171ED4(s32 arg0) {
     rect.h = 1;
     rect.y = 0xF4;
 
-    dst = D_8006F3CC;
+    dst = g_Clut + 0x1400;
     LoadImage(&rect, (u_long*)dst);
 
     spriteBanks = g_api.o.spriteBanks;
