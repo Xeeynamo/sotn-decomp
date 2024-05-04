@@ -66,13 +66,8 @@ ServantDesc g_ServantDesc = {
 #endif
 
 #ifdef VERSION_PSP
-
-extern u8* D_91F85F8;
-extern u8* D_092EC280;
-extern u8* D_092EC9E8;
-extern u8* D_801530AC;
-extern u8* D_91E1970;
 extern ServantDesc g_ServantDesc;
+extern s32 D_80174D3C;
 
 void DestroyEntity();
 s32 func_80174864(void);
@@ -468,86 +463,80 @@ void func_801719E0(Entity* self) {
 }
 #endif
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80171ED4);
-#else
 void func_80171ED4(s32 arg0) {
+    u16* dst;
+    u16* src;
     RECT rect;
     s32 i;
     s32 x;
-    u16* spriteBanks;
-    s16* src;
-    s16* dst;
+    SpriteParts** spriteBanks;
     Entity* e;
 
-    if (arg0 == 1 || arg0 == 3)
+    if ((arg0 == 1) || (arg0 == 3)) {
         ProcessEvent(NULL, true);
+        if (arg0 == 3) {
+            return;
+        }
+    }
 
-    if (arg0 == 3)
-        return;
-
-    dst = D_8006F3CC;
+    dst = &g_Clut[0x1400];
     src = D_80170448;
-    for (i = 0; i < 0x100; i++) {
+
+    for (i = 0; i < 256; i++) {
         *dst++ = *src++;
     }
 
-    dst = D_8006F42C;
-    spriteBanks = D_80170720;
-    src = spriteBanks;
-    for (i = 0; i < 0x20; i++) {
+    dst = &g_Clut[0x1430];
+    src = D_80170720;
+
+    for (i = 0; i < 32; i++) {
         *dst++ = *src++;
     }
 
+    rect.x = 0;
     rect.w = 0x100;
     rect.h = 1;
-    rect.x = 0;
     rect.y = 0xF4;
-    dst = D_8006F3CC;
-    LoadImage(&rect, dst);
 
-    spriteBanks = D_80170040;
-    g_api.o.spriteBanks[0x14] = spriteBanks;
+    dst = &g_Clut[0x1400];
+    LoadImage(&rect, (u_long*)dst);
+
+    spriteBanks = g_api.o.spriteBanks;
+    spriteBanks += 20;
+    *spriteBanks = (SpriteParts*)D_80170040;
 
     e = &g_Entities[4];
+
     DestroyEntity(e);
+
     e->unk5A = 0x6C;
     e->palette = 0x140;
     e->animSet = ANIMSET_OVL(20);
-    e->params = 0;
     e->zPriority = PLAYER.zPriority - 2;
     e->facingLeft = (PLAYER.facingLeft + 1) & 1;
     e->posX.val = PLAYER.posX.val;
     e->posY.val = PLAYER.posY.val;
+    e->params = 0;
+
     if (arg0 == 1) {
         e->entityId = 0xD1;
         e->posX.val = 0x800000;
         e->posY.val = 0xFFE00000;
     } else {
-        Entity* p;
         e->entityId = 0xD1;
         if (D_8003C708.flags & 0x20) {
-            if (func_80174864() != 0) {
-                x = 0xC00000;
-            } else {
-                x = 0x400000;
-            }
-            e->posX.val = x;
+            e->posX.val = func_80174864() ? 0xC00000 : 0x400000;
             e->posY.val = 0xA00000;
         } else {
-            if (PLAYER.facingLeft == 0) {
-                e->posX.val = PLAYER.posX.val - 0x120000;
-            } else {
-                e->posX.val = PLAYER.posX.val + 0x120000;
-            }
+            e->posX.val =
+                (PLAYER.facingLeft ? +0x120000 : -0x120000) + PLAYER.posX.val;
             e->posY.val = PLAYER.posY.val - 0x220000;
         }
     }
-    D_80174D3C = 0;
     e->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
     e->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
+    D_80174D3C = 0;
 }
-#endif
 
 #ifdef VERSION_PSP
 INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80172120);
@@ -1070,16 +1059,14 @@ void func_80173C1C(void) {}
 
 void func_80173C24(void) {}
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80173C2C);
-#else
 void func_80173C2C(Entity* entity) {
-    if (entity->params == 0xF) {
+    switch (entity->params) {
+    case 15:
         D_80174D3C = 1;
+        break;
     }
     DestroyEntity(entity);
 }
-#endif
 
 #ifndef VERSION_PSP
 u32 UpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
