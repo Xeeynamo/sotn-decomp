@@ -1065,16 +1065,14 @@ void func_80173C1C(void) {}
 
 void func_80173C24(void) {}
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80173C2C);
-#else
 void func_80173C2C(Entity* entity) {
-    if (entity->params == 0xF) {
-        D_80174D3C = 1;
+    switch (entity->params) {
+        case 15:
+            D_80174D3C = 1;
+            break;
     }
     DestroyEntity(entity);
 }
-#endif
 
 #ifndef VERSION_PSP
 u32 UpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
