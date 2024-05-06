@@ -71,8 +71,15 @@ extern s32 D_80174D3C;
 
 void DestroyEntity();
 s32 func_80174864(void);
-void func_8909F84();
+s32 func_801746A0(s32 arg0);
 void ProcessEvent();
+void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params);
+
+void func_8909F84();     // DRA, new function from PSP
+int func_8906AF0(int x); // DRA, ABS ?
+int func_890B954(void);  // DRA, rand ?
+void func_80173F74();
+void func_80173F30();
 
 #endif
 
