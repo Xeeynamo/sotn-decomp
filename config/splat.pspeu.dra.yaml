@@ -1,0 +1,183 @@
+options:
+  platform:     psp
+  basename:     dra
+  base_path:    ..
+  build_path:   build/pspeu
+  target_path:  disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/dra.bin
+  asm_path:     asm/pspeu/dra
+  asset_path:   assets/dra_psp
+  src_path:     src/dra_psp
+  ld_script_path: build/pspeu/dra.ld
+  compiler:     GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.dra.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.pspeu.dra.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.pspeu.dra.txt
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format : psp_$VRAM
+  section_order:
+    - ".text"
+    - ".data"
+    - ".rodata"
+    - ".bss"
+  ld_bss_is_noload: True
+segments:
+  - [0x0, bin, header]
+  - name: dra
+    type: code
+    start: 0x00000080
+    vram:  0x090DCA00
+    bss_size: 0x6BF80
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c]
+      - [0x1E50, c]
+      - [0x33F0, c]
+      - [0x3650, c]
+      - [0x4370, c]
+      - [0x5DA0, c]
+      - [0x65E0, c]
+      - [0x66B0, c]
+      - [0x67F0, c]
+      - [0x86A0, c]
+      - [0xAA50, c]
+      - [0xB240, c]
+      - [0xBDE0, c]
+      - [0xC0B0, c]
+      - [0xEC60, c]
+      - [0xF4A0, c]
+      - [0xF4D0, c]
+      - [0xF740, c]
+      - [0xFA00, c]
+      - [0x10340, c]
+      - [0x10990, c]
+      - [0x10BF0, c]
+      - [0x111F0, c]
+      - [0x11C50, c]
+      - [0x12820, c]
+      - [0x12A00, c]
+      - [0x12E00, c]
+      - [0x13080, c]
+      - [0x13BD0, c]
+      - [0x14490, c]
+      - [0x14F30, c]
+      - [0x151E0, c]
+      - [0x15280, c]
+      - [0x15300, c]
+      - [0x15360, c]
+      - [0x15520, c]
+      - [0x160C0, c]
+      - [0x18210, c]
+      - [0x18800, c]
+      - [0x18920, c]
+      - [0x18BA0, c]
+      - [0x18BE0, c]
+      - [0x19AB0, c]
+      - [0x1A0D0, c]
+      - [0x1A110, c]
+      - [0x1A1A0, c]
+      - [0x1AD50, c]
+      - [0x1BF70, c]
+      - [0x1C030, c]
+      - [0x1DCE0, c]
+      - [0x1DDC0, c]
+      - [0x1E1B0, c]
+      - [0x20560, c]
+      - [0x22A40, c]
+      - [0x23D20, c]
+      - [0x23E60, c]
+      - [0x23EF0, c]
+      - [0x23FE0, c]
+      - [0x243F0, c]
+      - [0x246E0, c]
+      - [0x24810, c]
+      - [0x25670, c]
+      - [0x25720, c]
+      - [0x26170, c]
+      - [0x262A0, c]
+      - [0x29420, c]
+      - [0x29760, c]
+      - [0x2BF60, c]
+      - [0x2C350, c]
+      - [0x2E050, c]
+      - [0x2E0E0, c]
+      - [0x329F0, c]
+      - [0x32DA0, c]
+      - [0x35060, c]
+      - [0x353B0, c]
+      - [0x35840, c]
+      - [0x37280, c]
+      - [0x375C0, c]
+      - [0x37930, c]
+      - [0x37A50, c]
+      - [0x37B80, c]
+      - [0x37C10, c]
+      - [0x37F00, c]
+      - [0x39710, c]
+      - [0x39750, c]
+      - [0x397A0, c]
+      - [0x398C0, c]
+      - [0x3A4C0, c]
+      - [0x3A770, c]
+      - [0x3AE30, c]
+      - [0x3B110, c]
+      - [0x3B240, c]
+      - [0x3EEA0, c]
+      - [0x41E80, c]
+      - [0x42180, c]
+      - [0x43250, c]
+      - [0x43320, c]
+      - [0x44FF0, c]
+      - [0x45B30, c]
+      - [0x47F50, c]
+      - [0x4A0E0, c]
+      - [0x4A890, c]
+      - [0x4B020, c]
+      - [0x4B440, c]
+      - [0x4BC00, c]
+      - [0x50290, c]
+      - [0x50620, c]
+      - [0x51A40, c]
+      - [0x53DB0, c]
+      - [0x54180, c]
+      - [0x581A0, c]
+      - [0x585C0, c]
+      - [0x58C20, c]
+      - [0x58E60, c]
+      - [0x5A560, c]
+      - [0x5A5B0, c]
+      - [0x5B8C0, c]
+      - [0x5BC80, c]
+      - [0x5C420, c]
+      - [0x5DA20, c]
+      - [0x5EC50, c]
+      - [0x60C90, c]
+      - [0x60D80, c]
+      - [0x60F10, c]
+      - [0x61030, c]
+      - [0x61F30, c]
+      - [0x62FE0, c]
+      - [0x63C90, c]
+      - [0x63E40, c]
+      - [0x63E60, c]
+      - [0x63FE0, c]
+      - [0x64370, c]
+      - [0x64480, c]
+      - [0x64EE0, c]
+      - [0x65290, c]
+      - [0x654B0, c]
+      - [0x65790, c]
+      - [0x65F50, c]
+      - [0x661C0, c]
+      - [0x67D50, c]
+      - [0x67E90, c]
+      - [0x680C0, c]
+      - [0x68E00, rodata]
+      #- [0xEEE00, data] # rodata, not data
+      - {type: bss, vram: 0x091CB700}
+  - [0xEED80]
