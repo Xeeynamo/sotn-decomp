@@ -16,3 +16,5 @@ extern void* malloc(size_t // Size of memory block to be allocated
 );
 extern void free(void*);
 int printf(char*, ...);
+
+int abs(int x);

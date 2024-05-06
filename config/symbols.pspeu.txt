@@ -1,3 +1,6 @@
+abs = 0x08906AF0;
+memcpy = 0x08909F84;
+rand = 0x0890B954;
 LoadImage = 0x0891bfe4;
 SquareRoot12 = 0x08927ccc;
 ratan2 = 0x08927cfc;

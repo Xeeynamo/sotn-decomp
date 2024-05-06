@@ -1,5 +1,6 @@
 #include <servant.h>
 #include <sfx.h>
+#include <psxsdk/libc.h>
 
 #define SFX_BAT_SCREECH SOUND_BAT_SCREECH
 #define SFX_BAT_NOTIFY SE_UI_OVERWRITE_MSG
@@ -75,9 +76,6 @@ s32 func_801746A0(s32 arg0);
 void ProcessEvent();
 void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params);
 
-void func_8909F84();     // DRA, new function from PSP
-int func_8906AF0(int x); // DRA, ABS ?
-int func_890B954(void);  // DRA, rand ?
 void func_80173F74();
 void func_80173F30();
 
@@ -1497,6 +1495,6 @@ s32 func_80174864(void) {
 
 #ifdef VERSION_PSP
 void func_092EC220(void) {
-    func_8909F84(&D_8D1DC40, &g_ServantDesc, sizeof(ServantDesc));
+    memcpy((u8*)&D_8D1DC40, (u8*)&g_ServantDesc, sizeof(ServantDesc));
 }
 #endif
