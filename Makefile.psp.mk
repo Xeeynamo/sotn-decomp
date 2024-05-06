@@ -31,7 +31,7 @@ define list_o_files_psp
 	$(foreach file,$(call list_src_files_psp,$(1)),$(PSP_BUILD_DIR)/$(file).o)
 endef
 
-build_pspeu: tt_000_psp
+build_pspeu: $(addsuffix _psp,$(PSP_EU_TARGETS))
 
 extract_pspeu: $(addprefix $(PSP_BUILD_DIR)/,$(addsuffix .ld,$(PSP_EU_TARGETS)))
 
@@ -59,15 +59,20 @@ $(PSP_BUILD_DIR)/asm/psp%.s.o: asm/psp%.s
 	$(ASPSP) -o $@ $<
 
 
-$(PSP_BUILD_DIR)/assets/servant/tt_000/header.bin.o: assets/servant/tt_000/header.bin
+$(PSP_BUILD_DIR)/assets/%/header.bin.o: assets/%/header.bin
 	mkdir -p $(dir $@)
 	mipsel-linux-gnu-ld -r -b binary -o $@ $<
 
-tt_000_psp: $(PSP_BUILD_DIR)/tt_000.bin $(PSP_BUILD_DIR)/assets/servant/tt_000/header.bin.o
+tt_000_psp: $(PSP_BUILD_DIR)/tt_000.bin
+dra_psp: $(PSP_BUILD_DIR)/dra.bin
 
-$(PSP_BUILD_DIR)/tt_%.bin: $(PSP_BUILD_DIR)/tt_%.elf
+$(PSP_BUILD_DIR)/%.bin: $(PSP_BUILD_DIR)/%.elf
 	$(OBJCOPY) -O binary $< $@
+$(PSP_BUILD_DIR)/dra.ld: $(CONFIG_DIR)/splat.pspeu.dra.yaml $(PSX_BASE_SYMS) $(CONFIG_DIR)/symbols.pspeu.dra.txt
+	$(SPLAT_PIP) $<
 $(PSP_BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.pspeu.tt_%.yaml $(PSX_BASE_SYMS) $(CONFIG_DIR)/symbols.pspeu.tt_%.txt
 	$(SPLAT_PIP) $<
-$(PSP_BUILD_DIR)/tt_%.elf: $(PSP_BUILD_DIR)/tt_%.ld $$(call list_o_files_psp,servant/tt_$$*)
+$(PSP_BUILD_DIR)/dra.elf: $(PSP_BUILD_DIR)/dra.ld $$(call list_o_files_psp,dra_psp)
+	$(call link,dra_psp,$@)
+$(PSP_BUILD_DIR)/tt_%.elf: $(PSP_BUILD_DIR)/tt_%.ld $$(call list_o_files_psp,servant/tt_$$*) $(PSP_BUILD_DIR)/assets/servant/tt_%/header.bin.o
 	$(call link,tt_$*,$@)

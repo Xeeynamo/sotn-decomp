@@ -324,7 +324,9 @@ $(BUILD_DIR)/$(ASSETS_DIR)/weapon/%_2.animset.o: $(ASSETS_DIR)/weapon/%_2.animse
 
 extract: extract_$(VERSION)
 
-include Makefile.*.mk
+include Makefile.psx.mk
+include Makefile.psp.mk
+include Makefile.saturn.mk
 
 # Force to extract all the assembly code regardless if a function is already decompiled
 force_extract:
