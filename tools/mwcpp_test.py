@@ -87,41 +87,16 @@ LHELLO:
 """,
         )
 
-    def test_fix_lui_addiu_combo(self):
+    def test_fix_lo_hi(self):
         self.assertEqual(
             self.helper_process_lines(
-                """lui        $a0, %hi(D_8D1DC40)
-/* some stuff */   addiu      $a0, $a0, %lo(D_8D1DC40)
+                """/* XXXX 09012348 DEADBEEF */  lui        $v1, %hi(D_92EFFDE)
+/* XXXX 09012344 BADC0FFE */  lh         $a0, %lo(D_92EFFDE)
 """
             ),
             """asm void func_name() {
-la $a0, D_8D1DC40
-}
-""",
-        )
-
-    def test_fix_lui_lh_combo(self):
-        self.assertEqual(
-            self.helper_process_lines(
-                """lui        $v1, %hi(D_92EFFDE)
-/* some stuff */   lh         $a0, -0x2948($v1)
-"""
-            ),
-            """asm void func_name() {
-lui        $v1, (D_92EFFDE)@ha
-/* some stuff */   lh         $a0, -0x2948($v1)
-}
-""",
-        )
-
-    def test_fix_lower_16bit(self):
-        self.assertEqual(
-            self.helper_process_lines(
-                """lw $s1, %lo(g_EventQueue)($v1)
-"""
-            ),
-            """asm void func_name() {
-lw $s1, (g_EventQueue@l)($v1)
+.word 0xEFBEADDE
+.word 0xFE0FDCBA
 }
 """,
         )
