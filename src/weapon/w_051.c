@@ -104,7 +104,6 @@ void func_169000_8017B1DC(s32 arg0) {
 }
 
 void EntityWeaponAttack(Entity* self) {
-    volatile int pad[4];
     WeaponProperties* props;
     s16 subType;
 
@@ -142,9 +141,9 @@ void EntityWeaponAttack(Entity* self) {
             self->drawMode = 0x10;
         }
         if (subType != 0) {
-            D_169000_8017AD68 = D_169000_8017AD54[subType * 0x10];
+            D_169000_8017AD68 = D_169000_8017AD58[subType * 0x10 - 2];
             D_169000_8017AD6C = D_169000_8017AD58[subType * 0x10];
-            D_169000_8017AD6A = D_169000_8017AD5C[subType * 0x10];
+            D_169000_8017AD6A = D_169000_8017AD58[subType * 0x10 + 2];
             D_169000_8017AD6E = 0;
             D_169000_8017AD70 = 0;
         }
@@ -170,7 +169,6 @@ void EntityWeaponAttack(Entity* self) {
 }
 
 void func_ptr_80170004(Entity* self) {
-    volatile int pad[4];
     WeaponProperties* props;
     s16 subType;
 
@@ -206,9 +204,9 @@ void func_ptr_80170004(Entity* self) {
             self->drawMode = 0x10;
         }
         if (subType != 0) {
-            D_169000_8017AD68 = D_169000_8017AD54[subType * 0x10];
+            D_169000_8017AD68 = D_169000_8017AD58[subType * 0x10 - 2];
             D_169000_8017AD6C = D_169000_8017AD58[subType * 0x10];
-            D_169000_8017AD6A = D_169000_8017AD5C[subType * 0x10];
+            D_169000_8017AD6A = D_169000_8017AD58[subType * 0x10 + 2];
             D_169000_8017AD6E = 0;
             D_169000_8017AD70 = 0;
         }
