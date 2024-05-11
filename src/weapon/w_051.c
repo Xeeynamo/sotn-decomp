@@ -4,16 +4,6 @@
 #include "weapon_private.h"
 #include "shared.h"
 
-typedef struct {
-    /* 0 */ u16** frames;
-    /* 0x4 */ s8* frameProps;
-    /* 8 */ u16 palette;
-    /* 0xA */ u16 sfxId;
-    /* 0xC */ u8 unk0C;
-    /* 0xD */ u8 animFrameIdx;
-    /* 0xE */ s16 unused;
-} WeaponProperties;
-
 u16 D_169000_8017A950[] = {
     0x0000, 0x0421, 0x04CA, 0x152F, 0x2173, 0x1218, 0x1EDF, 0x20A4,
     0x03E0, 0x3BF6, 0x0623, 0x0000, 0x45A7, 0x5A4F, 0x5F37, 0x6F99,
@@ -165,14 +155,14 @@ static u16* D_169000_8017ACBC[] = {
     D_169000_8017ABC0, D_169000_8017ABC0, D_169000_8017ABC0,
 };
 
-static WeaponProperties D_169000_8017ACD8[] = {
+static WeaponAnimation D_169000_8017ACD8[] = {
     {D_169000_8017AC68, hitboxes, 0, 0x62C, 0x68, 4},
     {D_169000_8017AC84, hitboxes, 2, 0x62C, 0x68, 4},
     {D_169000_8017AC84, hitboxes, 4, 0x62C, 0x68, 4},
     {D_169000_8017AC84, hitboxes, 6, 0x62C, 0x68, 4},
 };
 
-static WeaponProperties D_169000_8017AD18[] = {
+static WeaponAnimation D_169000_8017AD18[] = {
     {D_169000_8017ACBC, hitboxes, 0, 0x60C, 0xD6, 4},
     {D_169000_8017ACA0, hitboxes, 0, 0x60C, 0xD6, 4},
     {D_169000_8017ACA0, hitboxes, 0, 0x60C, 0xD6, 4},
@@ -304,7 +294,7 @@ void func_169000_8017B1DC(s32 arg0) {
 }
 
 void EntityWeaponAttack(Entity* self) {
-    WeaponProperties* props;
+    WeaponAnimation* anim;
     s16 subType;
 
     self->posX.val = PLAYER.posX.val;
@@ -312,9 +302,9 @@ void EntityWeaponAttack(Entity* self) {
     self->facingLeft = PLAYER.facingLeft;
     subType = self->params & 0x7FFF;
     subType >>= 8;
-    props = &D_169000_8017ACD8[subType];
-    if (PLAYER.ext.player.unkAC < props->unk0C ||
-        PLAYER.ext.player.unkAC >= props->unk0C + 7 || !g_Player.unk46) {
+    anim = &D_169000_8017ACD8[subType];
+    if (PLAYER.ext.player.unkAC < anim->frameStart ||
+        PLAYER.ext.player.unkAC >= anim->frameStart + 7 || !g_Player.unk46) {
         DestroyEntity(self);
         return;
     }
@@ -328,7 +318,7 @@ void EntityWeaponAttack(Entity* self) {
             self->palette += 0x18;
             self->unk5A += 2;
         }
-        self->palette += props->palette;
+        self->palette += anim->palette;
         self->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
         self->zPriority = PLAYER.zPriority - 2;
         if (subType == 1) {
@@ -351,12 +341,12 @@ void EntityWeaponAttack(Entity* self) {
         self->step++;
         break;
     }
-    self->ext.generic.unkAC = PLAYER.ext.player.unkAC - props->unk0C;
+    self->ext.generic.unkAC = PLAYER.ext.player.unkAC - anim->frameStart;
     if (PLAYER.animFrameDuration == 1 &&
-        PLAYER.animFrameIdx == props->animFrameIdx) {
-        g_api.PlaySfx(props->sfxId);
+        PLAYER.animFrameIdx == anim->soundFrame) {
+        g_api.PlaySfx(anim->soundId);
     }
-    if (g_api.UpdateUnarmedAnim(props->frameProps, props->frames) < 0) {
+    if (g_api.UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
         DestroyEntity(self);
         return;
     }
@@ -369,7 +359,7 @@ void EntityWeaponAttack(Entity* self) {
 }
 
 void func_ptr_80170004(Entity* self) {
-    WeaponProperties* props;
+    WeaponAnimation* anim;
     s16 subType;
 
     self->posX.val = PLAYER.posX.val;
@@ -377,7 +367,7 @@ void func_ptr_80170004(Entity* self) {
     self->facingLeft = PLAYER.facingLeft;
     subType = self->params & 0x7FFF;
     subType >>= 8;
-    props = &D_169000_8017AD18[subType];
+    anim = &D_169000_8017AD18[subType];
     if (PLAYER.ext.player.unkAC < 0xD6 || PLAYER.ext.player.unkAC >= 0xD8) {
         DestroyEntity(self);
         return;
@@ -416,8 +406,8 @@ void func_ptr_80170004(Entity* self) {
         self->step++;
         break;
     }
-    self->ext.generic.unkAC = PLAYER.ext.player.unkAC - props->unk0C;
-    if (g_api.UpdateUnarmedAnim(props->frameProps, props->frames) < 0) {
+    self->ext.generic.unkAC = PLAYER.ext.player.unkAC - anim->frameStart;
+    if (g_api.UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
         DestroyEntity(self);
         return;
     }
