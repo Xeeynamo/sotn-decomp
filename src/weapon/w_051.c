@@ -4,6 +4,21 @@
 #include "weapon_private.h"
 #include "shared.h"
 
+typedef struct {
+    /* 0x00 */ u16** frames;
+    /* 0x04 */ s8* frameProps;
+    /* 0x08 */ u16 palette;
+    /* 0x0A */ u16 sfxId;
+    /* 0x0C */ u8 unk0C;
+    /* 0x0D */ u8 animFrameIdx;
+    /* 0x0E */ s16 unused;
+} WeaponProperties;
+
+extern WeaponProperties D_169000_8017ACD8[];
+extern u16 D_169000_8017AD54[];
+extern u16 D_169000_8017AD58[];
+extern u16 D_169000_8017AD5C[];
+
 extern s16 D_169000_8017AD68; // R
 extern s16 D_169000_8017AD6A; // B
 extern s16 D_169000_8017AD6C; // G
@@ -86,7 +101,71 @@ void func_169000_8017B1DC(s32 arg0) {
     LoadImage(&rect, (u_long*)D_8006EDCC);
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_051", EntityWeaponAttack);
+void EntityWeaponAttack(Entity* self) {
+    volatile int pad[4];
+    WeaponProperties* props;
+    s16 subType;
+
+    self->posX.val = PLAYER.posX.val;
+    self->posY.val = PLAYER.posY.val;
+    self->facingLeft = PLAYER.facingLeft;
+    subType = self->params & 0x7FFF;
+    subType >>= 8;
+    props = &D_169000_8017ACD8[subType];
+    if (PLAYER.ext.player.unkAC < props->unk0C ||
+        PLAYER.ext.player.unkAC >= props->unk0C + 7 || !g_Player.unk46) {
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        self->animSet = 10;
+        self->palette = 0x110;
+        self->unk5A = 100;
+        if (g_HandId) {
+            self->palette += 0x18;
+            self->unk5A += 2;
+        }
+        self->palette += props->palette;
+        self->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
+        self->zPriority = PLAYER.zPriority - 2;
+        if (subType == 1) {
+            self->drawMode = 0x30;
+        }
+        if (subType == 2) {
+            self->drawMode = 0x30;
+        }
+        if (subType == 3) {
+            self->drawMode = 0x10;
+        }
+        if (subType != 0) {
+            D_169000_8017AD68 = D_169000_8017AD54[subType * 0x10];
+            D_169000_8017AD6C = D_169000_8017AD58[subType * 0x10];
+            D_169000_8017AD6A = D_169000_8017AD5C[subType * 0x10];
+            D_169000_8017AD6E = 0;
+            D_169000_8017AD70 = 0;
+        }
+        SetWeaponProperties(self, 0);
+        self->step++;
+        break;
+    }
+    self->ext.generic.unkAC = PLAYER.ext.player.unkAC - props->unk0C;
+    if (PLAYER.animFrameDuration == 1 &&
+        PLAYER.animFrameIdx == props->animFrameIdx) {
+        g_api.PlaySfx(props->sfxId);
+    }
+    if (g_api.UpdateUnarmedAnim(props->frameProps, props->frames) < 0) {
+        DestroyEntity(self);
+        return;
+    }
+    self->drawFlags = PLAYER.drawFlags;
+    self->rotY = PLAYER.rotY;
+    self->rotPivotY = PLAYER.rotPivotY;
+    if (subType != 0) {
+        func_169000_8017B1DC(subType - 1);
+    }
+}
 
 INCLUDE_ASM("weapon/nonmatchings/w_051", func_ptr_80170004);
 
