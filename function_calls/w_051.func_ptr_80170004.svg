@@ -12,7 +12,7 @@
 <!-- w_051.func_ptr_80170004 -->
 <g id="node1" class="node">
 <title>w_051.func_ptr_80170004</title>
-<ellipse fill="red" stroke="black" cx="736.74" cy="-198" rx="133.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="736.74" cy="-198" rx="133.48" ry="18"/>
 <text text-anchor="middle" x="736.74" y="-194.3" font-family="Times,serif" font-size="14.00">w_051.func_ptr_80170004</text>
 </g>
 <!-- dra.CreateEntFactoryFromEntity -->
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>w_051.func_169000_8017B1DC</title>
 <g id="a_node6"><a xlink:href="w_051.func_169000_8017B1DC.svg" xlink:title="w_051.func_169000_8017B1DC">
-<ellipse fill="red" stroke="black" cx="1327.74" cy="-18" rx="157.07" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1327.74" cy="-18" rx="157.07" ry="18"/>
 <text text-anchor="middle" x="1327.74" y="-14.3" font-family="Times,serif" font-size="14.00">w_051.func_169000_8017B1DC</text>
 </a>
 </g>
