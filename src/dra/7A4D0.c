@@ -428,21 +428,23 @@ void EntityEntFactory(Entity* self) {
     self->ext.factory.unk9A = self->ext.factory.unk98;
 }
 
-// Name comes purely from emulator breakpoint experiments, could be wrong
-extern s32 D_800AD53C[]; // TODO wrong type
+extern WeaponAnimation D_800AD53C[];
 void EntityUnarmedAttack(Entity* entity) {
     Equipment equip;
-    AnimSoundEvent* temp_s1;
-    u16 paramsTopBit;
+    WeaponAnimation* anim;
+    u16 handId;
+    s16 subType;
 
     entity->posX.val = PLAYER.posX.val;
     entity->posY.val = PLAYER.posY.val;
-    paramsTopBit = entity->params >> 0xF;
     entity->facingLeft = PLAYER.facingLeft;
-    temp_s1 = &D_800AD53C[(entity->params >> 6) & 0x1FC];
+    handId = entity->params >> 0xF;
+    subType = entity->params & 0x7FFF;
+    subType >>= 8;
+    anim = &D_800AD53C[subType];
 
-    if (PLAYER.ext.generic.unkAC < temp_s1->ACshift ||
-        (temp_s1->ACshift + 7) <= PLAYER.ext.generic.unkAC ||
+    if (PLAYER.ext.generic.unkAC < anim->frameStart ||
+        (anim->frameStart + 7) <= PLAYER.ext.generic.unkAC ||
         g_Player.unk46 == 0) {
         DestroyEntity(entity);
         return;
@@ -450,7 +452,7 @@ void EntityUnarmedAttack(Entity* entity) {
 
     if (entity->step == 0) {
         entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
-        GetEquipProperties(paramsTopBit, &equip, 0);
+        GetEquipProperties(handId, &equip, 0);
         entity->attack = equip.attack;
         entity->attackElement = equip.element;
         entity->hitboxState = equip.hitType;
@@ -461,12 +463,12 @@ void EntityUnarmedAttack(Entity* entity) {
         func_80118894(entity);
         entity->step++;
     }
-    entity->ext.generic.unkAC = PLAYER.ext.generic.unkAC - temp_s1->ACshift;
+    entity->ext.generic.unkAC = PLAYER.ext.generic.unkAC - anim->frameStart;
     if ((PLAYER.animFrameDuration == 1) &&
-        (PLAYER.animFrameIdx == temp_s1->soundFrame)) {
-        PlaySfx(temp_s1->soundId);
+        (PLAYER.animFrameIdx == anim->soundFrame)) {
+        PlaySfx(anim->soundId);
     }
-    if (UpdateUnarmedAnim(temp_s1->frameProps, temp_s1->frames) < 0) {
+    if (UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
         DestroyEntity(entity);
     }
 }
