@@ -14,7 +14,9 @@ typedef struct {
     /* 0x0E */ s16 unused;
 } WeaponProperties;
 
-extern WeaponProperties D_169000_8017ACD8[];
+extern s32 D_169000_8017C0E0;
+extern WeaponProperties D_169000_8017ACD8[4];
+extern WeaponProperties D_169000_8017AD18[4];
 extern u16 D_169000_8017AD54[];
 extern u16 D_169000_8017AD58[];
 extern u16 D_169000_8017AD5C[];
@@ -167,7 +169,72 @@ void EntityWeaponAttack(Entity* self) {
     }
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_051", func_ptr_80170004);
+void func_ptr_80170004(Entity* self) {
+    volatile int pad[4];
+    WeaponProperties* props;
+    s16 subType;
+
+    self->posX.val = PLAYER.posX.val;
+    self->posY.val = PLAYER.posY.val;
+    self->facingLeft = PLAYER.facingLeft;
+    subType = self->params & 0x7FFF;
+    subType >>= 8;
+    props = &D_169000_8017AD18[subType];
+    if (PLAYER.ext.player.unkAC < 0xD6 || PLAYER.ext.player.unkAC >= 0xD8) {
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        self->animSet = 10;
+        self->palette = 0x110;
+        self->unk5A = 100;
+        if (g_HandId) {
+            self->palette += 0x18;
+            self->unk5A += 2;
+        }
+        self->palette += subType * 2;
+        self->zPriority = PLAYER.zPriority - 2;
+        if (subType == 1) {
+            self->drawMode = 0x30;
+        }
+        if (subType == 2) {
+            self->drawMode = 0x30;
+        }
+        if (subType == 3) {
+            self->drawMode = 0x10;
+        }
+        if (subType != 0) {
+            D_169000_8017AD68 = D_169000_8017AD54[subType * 0x10];
+            D_169000_8017AD6C = D_169000_8017AD58[subType * 0x10];
+            D_169000_8017AD6A = D_169000_8017AD5C[subType * 0x10];
+            D_169000_8017AD6E = 0;
+            D_169000_8017AD70 = 0;
+        }
+        D_169000_8017C0E0 = 0;
+        self->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
+        SetWeaponProperties(self, 0);
+        self->step++;
+        break;
+    }
+    self->ext.generic.unkAC = PLAYER.ext.player.unkAC - props->unk0C;
+    if (g_api.UpdateUnarmedAnim(props->frameProps, props->frames) < 0) {
+        DestroyEntity(self);
+        return;
+    }
+    if (PLAYER.animFrameIdx == 1 && PLAYER.animFrameDuration == 1) {
+        g_api.CreateEntFactoryFromEntity(
+            self, ((g_HandId + 1) * 4096) | 0x3E, 0);
+    }
+    self->drawFlags = PLAYER.drawFlags;
+    self->rotY = PLAYER.rotY;
+    self->rotPivotY = PLAYER.rotPivotY;
+    if (subType != 0 &&
+        (((u16)PLAYER.animFrameIdx != 4) || (D_169000_8017AD6E == 0))) {
+        func_169000_8017B1DC(subType - 1);
+    }
+}
 
 INCLUDE_ASM("weapon/nonmatchings/w_051", func_ptr_80170008);
 
