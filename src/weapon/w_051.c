@@ -210,7 +210,7 @@ static u16* g_Cluts[] = {
 
 static s32 g_HandId = 0;
 
-extern s32 D_169000_8017C0E0;
+static s32 D_169000_8017C0E0;
 
 void func_169000_8017B1DC(s32 arg0) {
     RECT rect;
