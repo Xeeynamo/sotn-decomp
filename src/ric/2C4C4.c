@@ -1339,7 +1339,7 @@ void EntitySubwpnReboundStone(Entity* self) {
             self->ext.reboundStone.unk84 = 4;
         }
         self->step += 1;
-        g_api.PlaySfx(SUBWPN_THROW);
+        g_api.PlaySfx(SFX_SUBWPN_THROW);
         break;
 
     case 1:
@@ -1625,7 +1625,7 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
             fakeprim->y0 = fakeprim->posY.i.hi;
             fakeprim = fakeprim->next;
         }
-        g_api.PlaySfx(SUBWPN_THROW);
+        g_api.PlaySfx(SFX_SUBWPN_THROW);
         self->step++;
         break;
     case 1:

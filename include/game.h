@@ -95,6 +95,7 @@ typedef struct Prim {
 #define COLOR_BPP (16)
 #define COLOR_LEN ((COLOR_BPP) / 8)
 #define PALETTE_LEN ((COLORS_PER_PAL) * ((COLOR_BPP) / 8))
+#define COLOR16(r, g, b, a) (r) + ((g) << 5) + ((b) << 10) + ((a) << 15)
 #define OTSIZE 0x200
 #define MAXSPRT16 0x280
 #define MAX_DRAW_MODES 0x400
@@ -202,6 +203,7 @@ extern u8 g_BmpCastleMap[0x20000];
 #define FLAG_DRAW_UNK20 0x20
 #define FLAG_DRAW_UNK40 0x40
 #define FLAG_DRAW_UNK80 0x80
+#define FLAG_DRAW_UNK100 0x100
 
 // Flags for entity->flags
 // Signals that the entity should run its death routine
