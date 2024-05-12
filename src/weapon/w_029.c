@@ -391,7 +391,7 @@ void func_ptr_80170024(Entity* self) {
             self->ext.weapon29.unk7D = 0;
         }
         self->flags |= 0x04800000;
-        self->ext.weapon.unk9C = 0x40;
+        self->ext.weapon29.unk9C = 0x40;
 
         for (i = 0, prim = &g_PrimBuf[self->primIndex]; prim != NULL; i++,
             prim = prim->next) {
@@ -504,9 +504,9 @@ void func_ptr_80170024(Entity* self) {
                 break;
             }
         }
-        self->ext.weapon.unk9C += 2;
-        if (self->ext.weapon.unk9C > 0x100) {
-            self->ext.weapon.unk9C = 0x100;
+        self->ext.weapon29.unk9C += 2;
+        if (self->ext.weapon29.unk9C > 0x100) {
+            self->ext.weapon29.unk9C = 0x100;
         }
     }
     firstPrim = prim = &g_PrimBuf[self->primIndex];
@@ -532,7 +532,7 @@ void func_ptr_80170024(Entity* self) {
     }
 
     var_s7 = &D_CF000_8017C9A0[dragonNumber][0];
-    size = ((self->ext.weapon.unk9C * 54 / 256) *
+    size = ((self->ext.weapon29.unk9C * 54 / 256) *
             (rsin(var_s7->unkE) * var_s7->unk14 / 256 + 4096)) /
            4096;
     nextX = (var_s7 + 1)->posX.i.hi;
