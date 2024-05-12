@@ -4178,7 +4178,7 @@
 - [✅ WeaponUnused3C](function_calls/w_051.WeaponUnused3C.svg?raw=1)
 - [✅ func_169000_8017B1DC](function_calls/w_051.func_169000_8017B1DC.svg?raw=1)
 - [✅ func_ptr_80170004](function_calls/w_051.func_ptr_80170004.svg?raw=1)
-- [❌ func_ptr_80170008](function_calls/w_051.func_ptr_80170008.svg?raw=1)
+- [✅ func_ptr_80170008](function_calls/w_051.func_ptr_80170008.svg?raw=1)
 - [✅ func_ptr_8017000C](function_calls/w_051.func_ptr_8017000C.svg?raw=1)
 - [✅ func_ptr_80170010](function_calls/w_051.func_ptr_80170010.svg?raw=1)
 - [✅ func_ptr_80170014](function_calls/w_051.func_ptr_80170014.svg?raw=1)
