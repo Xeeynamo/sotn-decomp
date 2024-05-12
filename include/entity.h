@@ -164,9 +164,8 @@ typedef struct {
     /* 0x90 */ s32 unk90;
     /* 0x94 */ s32 unk94;
     /* 0x98 */ s32 unk98;
-    /* 0x9C */ s16 unk9C;
-    /* 0x9E */ s16 unk9E;
-    /* 0xA0 */ s32 unkA0;
+    /* 0x9C */ s32 accelerationX;
+    /* 0xA0 */ s32 accelerationY;
     /* 0xA4 */ s32 unkA4;
     /* 0xA8 */ s32 unkA8;
     /* 0xAC */ u8 unkAC;
@@ -177,6 +176,17 @@ typedef struct {
 typedef struct {
     /* 0x7C */ u8 unk7C;
     /* 0x7D */ u8 unk7D;
+    /* 0x7E */ s16 unk7E;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s32 unk84;
+    /* 0x88 */ s16 childPalette;
+    /* 0x8A */ s16 unk8A;
+    /* 0x8C */ struct Entity* parent;
+    /* 0x90 */ s32 unk90;
+    /* 0x94 */ s32 unk94;
+    /* 0x98 */ s32 unk98;
+    /* 0x9C */ s16 unk9C;
 } ET_Weapon29;
 
 typedef struct {
