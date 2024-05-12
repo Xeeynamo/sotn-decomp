@@ -32,7 +32,7 @@ void func_ptr_80170014(Entity* self) {
         }
         self->unk4C = D_15B000_8017B10C;
         self->zPriority = PLAYER.zPriority + 2;
-        self->flags =FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
         self->rotX = self->rotY = 0x100;
         self->drawMode = DRAW_TPAGE | 0x20;
