@@ -3,6 +3,7 @@
 // Unknown#182, Unknown#183, Unknown#184, Unknown#185
 #include "weapon_private.h"
 #include "shared.h"
+#include "sfx.h"
 
 u16 D_169000_8017A950[] = {
     0x0000, 0x0421, 0x04CA, 0x152F, 0x2173, 0x1218, 0x1EDF, 0x20A4,
@@ -34,12 +35,12 @@ static s16 D_169000_8017AA50[] = {
 };
 
 static s16 D_169000_8017AA6C[] = {
-    0xE0E,  0x120F, 0x3610, 0x3611, 0x3612, 0x3613, 0x1814,
+    0x0E0E, 0x120F, 0x3610, 0x3611, 0x3612, 0x3613, 0x1814,
     0x1A15, 0x1A16, 0x101D, 0x101E, 0x101F, 0x1020, 0xFFFF,
 };
 
 static s16 D_169000_8017AA88[] = {
-    0xE0E,  0x120F, 0x3817, 0x3818, 0x3A19, 0x3C1A, 0x241B,
+    0x0E0E, 0x120F, 0x3817, 0x3818, 0x3A19, 0x3C1A, 0x241B,
     0x241C, 0x101D, 0x101E, 0x101F, 0x1020, 0xFFFF,
 };
 
@@ -156,67 +157,64 @@ static u16* D_169000_8017ACBC[] = {
 };
 
 static WeaponAnimation D_169000_8017ACD8[] = {
-    {D_169000_8017AC68, hitboxes, 0, 0x62C, 0x68, 4},
-    {D_169000_8017AC84, hitboxes, 2, 0x62C, 0x68, 4},
-    {D_169000_8017AC84, hitboxes, 4, 0x62C, 0x68, 4},
-    {D_169000_8017AC84, hitboxes, 6, 0x62C, 0x68, 4},
+    {D_169000_8017AC68, hitboxes, 0, SFX_WEAPON_62C, 0x68, 4},
+    {D_169000_8017AC84, hitboxes, 2, SFX_WEAPON_62C, 0x68, 4},
+    {D_169000_8017AC84, hitboxes, 4, SFX_WEAPON_62C, 0x68, 4},
+    {D_169000_8017AC84, hitboxes, 6, SFX_WEAPON_62C, 0x68, 4},
 };
 
 static WeaponAnimation D_169000_8017AD18[] = {
-    {D_169000_8017ACBC, hitboxes, 0, 0x60C, 0xD6, 4},
-    {D_169000_8017ACA0, hitboxes, 0, 0x60C, 0xD6, 4},
-    {D_169000_8017ACA0, hitboxes, 0, 0x60C, 0xD6, 4},
-    {D_169000_8017ACA0, hitboxes, 0, 0x60C, 0xD6, 4},
+    {D_169000_8017ACBC, hitboxes, 0, SFX_SUBWPN_THROW, 0xD6, 4},
+    {D_169000_8017ACA0, hitboxes, 0, SFX_SUBWPN_THROW, 0xD6, 4},
+    {D_169000_8017ACA0, hitboxes, 0, SFX_SUBWPN_THROW, 0xD6, 4},
+    {D_169000_8017ACA0, hitboxes, 0, SFX_SUBWPN_THROW, 0xD6, 4},
 };
 
 static s16 D_169000_8017AD58[] = {
-    0xAC68, 0x8017, 0xABE0, 0x8017, 0x000, 0x6A2, 0x0D6, 0x000,
+    0xAC68, 0x8017, 0xABE0, 0x8017, 0x0000, 0x06A2, 0x00D6, 0x0000,
 };
 
-static s16 D_169000_8017AD68 = 0; // R
-static s16 D_169000_8017AD6A = 0; // B
-static s16 D_169000_8017AD6C = 0; // G
-static s16 D_169000_8017AD6E = 0; // step?
-static s16 D_169000_8017AD70 = 0; // A
-static s32 D_169000_8017AD74[] = {0, 0, 0, 0};
-
-static s32 D_169000_8017AD84[] = {
-    16, 15, 0,  1, 0, 0, 0, 0, 0, 16, 16, 1, 8,  8,  8, 0, 8, 16, 8, 1,
-    0,  0,  0,  0, 0, 0, 0, 0, 0, 0,  0,  0, 16, 15, 0, 1, 0, 0,  0, 0,
-    0,  16, 16, 1, 8, 8, 8, 0, 8, 16, 8,  1, 0,  0,  0, 0, 0, 0,  0, 0,
+static s16 _r = 0;
+static s16 _b = 0;
+static s16 _g = 0;
+static s16 color_step = 0;
+static s16 _a = 0;
+static s32 color_table[] = {
+    /* 0 */ 0, 0, 0, 0, 16, 15, 0,  1,
+    /* 1 */ 0, 0, 0, 0, 0,  16, 16, 1,
+    /* 2 */ 8, 8, 8, 0, 8,  16, 8,  1,
+    /* 3 */ 0, 0, 0, 0, 0,  0,  0,  0,
+    /* 4 */ 0, 0, 0, 0, 16, 15, 0,  1,
+    /* 5 */ 0, 0, 0, 0, 0,  16, 16, 1,
+    /* 6 */ 8, 8, 8, 0, 8,  16, 8,  1,
+    /* 7 */ 0, 0, 0, 0, 0,  0,  0,  0,
 };
 
-static s16 D_169000_8017AE74[] = {
-    0x0000, 0x0025, 0x0100, 0x0001, 0x0020, 0x0F00, 0x0000, 0x0030,
-    0x0000, 0x0001, 0x0018, 0x0080, 0x0000, 0x0025, 0x0F40, 0x0001,
-    0x0020, 0x00C0, 0x0000, 0x0030, 0x0000, 0x0001, 0x0018, 0x0140,
+typedef struct {
+    s16 isFlipped;
+    s16 timer;
+    s16 rotation;
+} AnimProperties;
+
+static AnimProperties D_169000_8017AE74[] = {
+    {0, 37, 0x100}, {1, 32, 0xF00}, {0, 48, 0x000}, {1, 24, 0x080},
+    {0, 37, 0xF40}, {1, 32, 0x0C0}, {0, 48, 0x000}, {1, 24, 0x140},
 };
 
-extern u8 D_169000_8017AEA4[4];
+static u16 D_169000_8017AEA4[] = {
+    0x80, 0x80, 0x90, 0x00, 0xC0, 0x60, 0x00, 0x00,
+    0x00, 0x60, 0xA0, 0x00, 0x40, 0x48, 0x40, 0x00,
+};
 
-// static u8 D_169000_8017AEA4[4] = {
-//     0x80,
-//     0x00,
-//     0x80,
-//     0x00,
-// };
+static u16* g_Cluts[] = {
+    D_169000_8017A950,
+    D_169000_8017A990,
+    D_169000_8017A9D0,
+};
 
-extern u8 D_169000_8017AEA8[];
-// static u8 D_169000_8017AEA8[] = {
-//     0x90, 0x00, 0x00, 0x00, 0xC0, 0x00, 0x60, 0x00, 0x00, 0x00,
-//     0x00, 0x00, 0x00, 0x00, 0x60, 0x00, 0xA0, 0x00, 0x00, 0x00,
-//     0x40, 0x00, 0x48, 0x00, 0x40, 0x00, 0x00, 0x00,
-// };
+static s32 g_HandId = 0;
 
-// static u16* g_Cluts[] = {
-//     D_169000_8017A950,
-//     D_169000_8017A990,
-//     D_169000_8017A9D0,
-// };
-
-// s32 g_HandId = 0;
-
-extern s32 D_169000_8017C0E0;
+static s32 D_169000_8017C0E0;
 
 void func_169000_8017B1DC(s32 arg0) {
     RECT rect;
@@ -225,63 +223,62 @@ void func_169000_8017B1DC(s32 arg0) {
     u16 color;
 
     colorsChanged = 0;
-    switch (D_169000_8017AD6E) {
+    switch (color_step) {
     case 0:
-        D_169000_8017AD68 += 2;
-        D_169000_8017AD6C += 2;
-        D_169000_8017AD6A += 2;
-        if (D_169000_8017AD68 >= D_169000_8017AD74[arg0 * 8 + 4]) {
+        _r += 2;
+        _g += 2;
+        _b += 2;
+        if (_r >= color_table[arg0 * 8 + 4]) {
             colorsChanged++;
-            D_169000_8017AD68 = D_169000_8017AD74[arg0 * 8 + 4];
+            _r = color_table[arg0 * 8 + 4];
         }
-        if (D_169000_8017AD6C >= D_169000_8017AD74[arg0 * 8 + 5]) {
+        if (_g >= color_table[arg0 * 8 + 5]) {
             colorsChanged++;
-            D_169000_8017AD6C = D_169000_8017AD74[arg0 * 8 + 5];
+            _g = color_table[arg0 * 8 + 5];
         }
-        if (D_169000_8017AD6A >= D_169000_8017AD74[arg0 * 8 + 6]) {
+        if (_b >= color_table[arg0 * 8 + 6]) {
             colorsChanged++;
-            D_169000_8017AD6A = D_169000_8017AD74[arg0 * 8 + 6];
+            _b = color_table[arg0 * 8 + 6];
         }
-        if (!D_169000_8017AD68 && !D_169000_8017AD6C && !D_169000_8017AD6A) {
-            D_169000_8017AD70 = 0;
+        if (!_r && !_g && !_b) {
+            _a = 0;
         } else {
-            D_169000_8017AD70 = 1;
+            _a = 1;
         }
         if (colorsChanged == 3) {
-            D_169000_8017AD6E++;
+            color_step++;
         }
         break;
     case 1:
-        D_169000_8017AD68 -= 2;
-        D_169000_8017AD6C -= 2;
-        D_169000_8017AD6A -= 2;
-        if (D_169000_8017AD68 <= D_169000_8017AD74[arg0 * 8]) {
+        _r -= 2;
+        _g -= 2;
+        _b -= 2;
+        if (_r <= color_table[arg0 * 8]) {
             colorsChanged++;
-            D_169000_8017AD68 = D_169000_8017AD74[arg0 * 8];
+            _r = color_table[arg0 * 8];
         }
-        if (D_169000_8017AD6C <= D_169000_8017AD74[arg0 * 8 + 1]) {
+        if (_g <= color_table[arg0 * 8 + 1]) {
             colorsChanged++;
-            D_169000_8017AD6C = D_169000_8017AD74[arg0 * 8 + 1];
+            _g = color_table[arg0 * 8 + 1];
         }
-        if (D_169000_8017AD6A <= D_169000_8017AD74[arg0 * 8 + 2]) {
+        if (_b <= color_table[arg0 * 8 + 2]) {
             colorsChanged++;
-            D_169000_8017AD6A = D_169000_8017AD74[arg0 * 8 + 2];
+            _b = color_table[arg0 * 8 + 2];
         }
-        if (!D_169000_8017AD68 && !D_169000_8017AD6C && !D_169000_8017AD6A) {
-            D_169000_8017AD70 = 0;
+        if (!_r && !_g && !_b) {
+            _a = 0;
         } else {
-            D_169000_8017AD70 = 1;
+            _a = 1;
         }
         if (colorsChanged == 3) {
-            D_169000_8017AD6E++;
+            color_step++;
         }
         break;
     case 2:
         return;
     }
 
-    color = D_169000_8017AD68 + (D_169000_8017AD6C << 5) +
-            (D_169000_8017AD6A << 10) + (D_169000_8017AD70 << 15);
+    color = COLOR16(_r, _g, _b, _a);
     palIndex = (g_HandId * 0x180);
     palIndex += arg0 << 5;
     D_8006EDCC[0][0x2B + palIndex] = color;
@@ -331,11 +328,11 @@ void EntityWeaponAttack(Entity* self) {
             self->drawMode = 0x10;
         }
         if (subType != 0) {
-            D_169000_8017AD68 = D_169000_8017AD58[subType * 0x10 - 2];
-            D_169000_8017AD6C = D_169000_8017AD58[subType * 0x10];
-            D_169000_8017AD6A = D_169000_8017AD58[subType * 0x10 + 2];
-            D_169000_8017AD6E = 0;
-            D_169000_8017AD70 = 0;
+            _r = D_169000_8017AD58[subType * 0x10 - 2];
+            _g = D_169000_8017AD58[subType * 0x10];
+            _b = D_169000_8017AD58[subType * 0x10 + 2];
+            color_step = 0;
+            _a = 0;
         }
         SetWeaponProperties(self, 0);
         self->step++;
@@ -394,11 +391,11 @@ void func_ptr_80170004(Entity* self) {
             self->drawMode = 0x10;
         }
         if (subType != 0) {
-            D_169000_8017AD68 = D_169000_8017AD58[subType * 0x10 - 2];
-            D_169000_8017AD6C = D_169000_8017AD58[subType * 0x10];
-            D_169000_8017AD6A = D_169000_8017AD58[subType * 0x10 + 2];
-            D_169000_8017AD6E = 0;
-            D_169000_8017AD70 = 0;
+            _r = D_169000_8017AD58[subType * 0x10 - 2];
+            _g = D_169000_8017AD58[subType * 0x10];
+            _b = D_169000_8017AD58[subType * 0x10 + 2];
+            color_step = 0;
+            _a = 0;
         }
         D_169000_8017C0E0 = 0;
         self->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
@@ -418,13 +415,147 @@ void func_ptr_80170004(Entity* self) {
     self->drawFlags = PLAYER.drawFlags;
     self->rotY = PLAYER.rotY;
     self->rotPivotY = PLAYER.rotPivotY;
-    if (subType != 0 &&
-        (((u16)PLAYER.animFrameIdx != 4) || (D_169000_8017AD6E == 0))) {
+    if (subType != 0 && (PLAYER.animFrameIdx != 4 || color_step == 0)) {
         func_169000_8017B1DC(subType - 1);
     }
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_051", func_ptr_80170008);
+void func_ptr_80170008(Entity* self) {
+    AnimProperties* anim;
+    Primitive* prim;
+    s16 rot;
+    u16 color;
+    s16 x;
+    s16 y;
+    s16 t;
+    u32 subType;
+    u16 temp_s6;
+    u32 tmp_var;
+    u8 temp_s3;
+    u32 flags;
+
+    color = (g_Entities[0x10].params & 0x7F00) >> 8;
+    tmp_var = self->params & 0x7F00;
+    subType = tmp_var >> 8;
+    temp_s6 = subType & 0xFFFF;
+    temp_s3 = 128;
+    temp_s3 = g_HandId ? -temp_s3 : 0;
+    anim = &D_169000_8017AE74[subType % LEN(D_169000_8017AE74)];
+    switch (self->step) {
+    case 0:
+        self->posX.val = PLAYER.posX.val;
+        self->posY.val = PLAYER.posY.val;
+        self->facingLeft = PLAYER.facingLeft;
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        prim->u0 = prim->u2 = 128;
+        prim->u1 = prim->u3 = 192;
+        if (anim->isFlipped) {
+            prim->v0 = prim->v1 = temp_s3 | 0x40;
+            prim->v2 = prim->v3 = temp_s3;
+        } else {
+            prim->v0 = prim->v1 = temp_s3;
+            prim->v2 = prim->v3 = temp_s3 | 0x40;
+        }
+        prim->r1 = prim->r3 = D_169000_8017AEA4[color * 4 + 0] + (rand() & 0xF);
+        prim->g1 = prim->g3 = D_169000_8017AEA4[color * 4 + 1] + (rand() & 0xF);
+        prim->b1 = prim->b3 = D_169000_8017AEA4[color * 4 + 2] + (rand() & 0xF);
+        prim->clut = 0x15F;
+        prim->r0 = prim->r2 = 0;
+        prim->g0 = prim->g2 = 0;
+        prim->b0 = prim->b2 = 0;
+        prim->tpage = 0x19;
+        prim->priority = PLAYER.zPriority + 4;
+        prim->drawMode = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ;
+        prim->drawMode |= FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
+        prim->drawMode |= FLAG_DRAW_UNK100;
+        if (color == 3) {
+            prim->drawMode &= ~(FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40);
+        }
+        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        if (temp_s6 == 0) {
+            self->ext.weapon.equipId =
+                self->ext.weapon.parent->ext.weapon.equipId;
+            SetWeaponProperties(self, 0);
+            self->enemyId = self->ext.weapon.parent->enemyId;
+            self->hitboxWidth = 30;
+            self->hitboxHeight = 16;
+            self->hitboxOffX = 8;
+        }
+        if (!(temp_s6 & 3)) {
+            g_api.PlaySfx(SFX_SUBWPN_THROW);
+        }
+        self->ext.weapon.unk82 = color == 0 ? 20 : 30;
+        if (self->facingLeft) {
+            self->ext.weapon.unk82 = -self->ext.weapon.unk82;
+        }
+        self->ext.weapon.unk80 = -18;
+        self->posX.i.hi += self->ext.weapon.unk82;
+        self->posY.i.hi += self->ext.weapon.unk80;
+        self->rotZ = anim->rotation;
+        self->ext.timer.t = anim->timer;
+        self->ext.weapon.unk7E = 0;
+        SetSpeedX((rand() * 2) + FIX(6));
+        self->step++;
+        break;
+    }
+    self->posX.val += self->velocityX;
+    DecelerateX(0x2800);
+    if (temp_s6 == 0) {
+        u32 tmp = (g_HandId + 1) << 0xC;
+        flags = 0;
+        flags += (self->ext.weapon.unk7E + 1) << 0x10;
+        flags += 0x3E;
+        g_api.CreateEntFactoryFromEntity(self, tmp + flags, 0);
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    self->ext.weapon.unk7E++;
+    if (self->ext.weapon.unk7E > 8) {
+        DestroyEntity(self);
+        return;
+    }
+
+    x = self->posX.i.hi;
+    y = self->posY.i.hi;
+    t = self->ext.timer.t;
+    rot = self->rotZ;
+
+    rot += 0x600;
+    if (self->facingLeft) {
+        prim->x0 = x - (((rcos(rot) >> 4) * t) >> 8);
+    } else {
+        prim->x0 = x + (((rcos(rot) >> 4) * t) >> 8);
+    }
+    prim->y0 = y - (((rsin(rot) >> 4) * t) >> 9);
+
+    rot -= 0x400;
+    if (self->facingLeft) {
+        prim->x1 = x - (((rcos(rot) >> 4) * t) >> 8);
+    } else {
+        prim->x1 = x + (((rcos(rot) >> 4) * t) >> 8);
+    }
+    prim->y1 = y - (((rsin(rot) >> 4) * t) >> 9);
+
+    rot -= 0x800;
+    if (self->facingLeft) {
+        prim->x2 = x - (((rcos(rot) >> 4) * t) >> 8);
+    } else {
+        prim->x2 = x + (((rcos(rot) >> 4) * t) >> 8);
+    }
+    prim->y2 = y - (((rsin(rot) >> 4) * t) >> 9);
+
+    rot += 0x400;
+    if (self->facingLeft) {
+        prim->x3 = x - (((rcos(rot) >> 4) * t) >> 8);
+    } else {
+        prim->x3 = x + (((rcos(rot) >> 4) * t) >> 8);
+    }
+    prim->y3 = y - (((rsin(rot) >> 4) * t) >> 9);
+}
 
 void func_ptr_8017000C(Entity* self) {}
 
