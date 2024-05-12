@@ -1369,13 +1369,14 @@ extern void (*g_api_func_800E2438)(const char* str);
 /***************************/
 
 typedef struct {
-    /* 0x00 */ u16** frames;
-    /* 0x04 */ s8* frameProps;
-    /* 0x08 */ s16 unk8;
-    /* 0x0A */ u16 soundId;
-    /* 0x0C */ u8 ACshift;
-    /* 0x0D */ u8 soundFrame;
-} AnimSoundEvent;
+    /* 0x00 */ u16** frames;   // all the animation frames
+    /* 0x04 */ s8* frameProps; // hitboxes
+    /* 0x08 */ u16 palette;    // palette modifier
+    /* 0x0A */ u16 soundId;    // which sound effect to trigger
+    /* 0x0C */ u8 frameStart;  // when the animation starts
+    /* 0x0D */ u8 soundFrame;  // when the sound effect is triggered
+    /* 0x0E */ s16 unused;     // reserved, always 0
+} WeaponAnimation;
 
 #define TILE_SIZE 16
 #define TILE_MASK 0x0F

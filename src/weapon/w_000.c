@@ -173,7 +173,7 @@ u8* g_Anim1[] = {
     g_Anim1Frame3, g_Anim1Frame4, g_Anim1Frame5,
 };
 
-AnimSoundEvent g_SoundEvents[] = {
+WeaponAnimation g_SoundEvents[] = {
     {g_Anim1, g_Hitboxes, 0, 0x60B, 0x41, 4},
     {g_Anim0, g_Hitboxes, 0, 0x60B, 0x41, 4},
     {g_Anim0, g_Hitboxes, 0, 0x60C, 0x41, 4},
@@ -188,17 +188,19 @@ u16* g_Cluts[] = {
 s32 g_HandId = HAND_ID;
 
 void EntityWeaponAttack(Entity* self) {
-    AnimSoundEvent* sndEvent;
+    WeaponAnimation* anim;
     s32 mask;
+    s16 subType;
 
     self->posX.val = g_Entities->posX.val;
     self->posY.val = PLAYER.posY.val;
     self->facingLeft = PLAYER.facingLeft;
-    mask = 0x17F;
-    sndEvent = &g_SoundEvents[(self->params >> 8) & mask];
+    subType = self->params & 0x7FFF;
+    subType >>= 8;
+    anim = &g_SoundEvents[subType];
 
-    if (!(PLAYER.ext.weapon.unkAC >= sndEvent->ACshift &&
-          PLAYER.ext.weapon.unkAC < sndEvent->ACshift + 7 &&
+    if (!(PLAYER.ext.weapon.unkAC >= anim->frameStart &&
+          PLAYER.ext.weapon.unkAC < anim->frameStart + 7 &&
           g_Player.unk46 != 0)) {
         DestroyEntity(self);
         return;
@@ -214,7 +216,7 @@ void EntityWeaponAttack(Entity* self) {
             self->palette += 0x18;
             self->unk5A += 2;
         }
-        self->palette += sndEvent->unk8;
+        self->palette += anim->palette;
         self->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
         self->zPriority = PLAYER.zPriority - 2;
         self->drawMode = 0x30;
@@ -222,13 +224,13 @@ void EntityWeaponAttack(Entity* self) {
         self->step++;
     }
 
-    self->ext.generic.unkAC = PLAYER.ext.weapon.unkAC - sndEvent->ACshift;
+    self->ext.generic.unkAC = PLAYER.ext.weapon.unkAC - anim->frameStart;
     if (PLAYER.animFrameDuration == 1 &&
-        PLAYER.animFrameIdx == sndEvent->soundFrame) {
-        g_api.PlaySfx(sndEvent->soundId);
+        PLAYER.animFrameIdx == anim->soundFrame) {
+        g_api.PlaySfx(anim->soundId);
     }
 
-    if (g_api.UpdateUnarmedAnim(sndEvent->frameProps, sndEvent->frames) < 0) {
+    if (g_api.UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
         DestroyEntity(self);
         return;
     }

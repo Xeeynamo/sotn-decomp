@@ -36,9 +36,9 @@ u16* D_800AD520[] = {
 };
 
 extern u8 D_800B0188[];
-AnimSoundEvent D_800AD53C = {
-    // TODO: move to 7A4D0.c
-    D_800AD520, D_800B0188, 0x0000, 0x060C, 0x24, 1,
+// TODO: move to 7A4D0.c
+WeaponAnimation D_800AD53C[] = {
+    {D_800AD520, D_800B0188, 0x0000, 0x60C, 0x24, 1},
 };
 
 u16 D_800AD54C[] = {

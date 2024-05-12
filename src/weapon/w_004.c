@@ -3,20 +3,21 @@
 #include "weapon_private.h"
 #include "shared.h"
 
-extern AnimSoundEvent D_20000_8017B2F4[]; // g_SoundEvents
+extern WeaponAnimation D_20000_8017B2F4[]; // g_SoundEvents
 
 void EntityWeaponAttack(Entity* self) {
-    AnimSoundEvent* sndEvent;
-    s32 mask;
+    WeaponAnimation* anim;
+    s16 subType;
 
     self->posX.val = g_Entities->posX.val;
     self->posY.val = PLAYER.posY.val;
     self->facingLeft = PLAYER.facingLeft;
-    mask = 0x17F;
-    sndEvent = &D_20000_8017B2F4[(self->params >> 8) & mask];
+    subType = self->params & 0x7FFF;
+    subType >>= 8;
+    anim = &D_20000_8017B2F4[subType];
 
-    if (!(PLAYER.ext.weapon.unkAC >= sndEvent->ACshift &&
-          PLAYER.ext.weapon.unkAC < sndEvent->ACshift + 7 &&
+    if (!(PLAYER.ext.weapon.unkAC >= anim->frameStart &&
+          PLAYER.ext.weapon.unkAC < anim->frameStart + 7 &&
           g_Player.unk46 != 0)) {
         DestroyEntity(self);
         return;
@@ -32,7 +33,7 @@ void EntityWeaponAttack(Entity* self) {
             self->palette += 0x18;
             self->unk5A += 2;
         }
-        self->palette += sndEvent->unk8;
+        self->palette += anim->palette;
         self->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
         self->zPriority = PLAYER.zPriority - 2;
         self->drawMode = 0x30;
@@ -40,14 +41,14 @@ void EntityWeaponAttack(Entity* self) {
         self->step++;
     }
 
-    self->ext.generic.unkAC = PLAYER.ext.weapon.unkAC - sndEvent->ACshift;
+    self->ext.generic.unkAC = PLAYER.ext.weapon.unkAC - anim->frameStart;
     if (PLAYER.animFrameDuration == 1 &&
-        PLAYER.animFrameIdx == sndEvent->soundFrame) {
-        g_api.PlaySfx(sndEvent->soundId);
+        PLAYER.animFrameIdx == anim->soundFrame) {
+        g_api.PlaySfx(anim->soundId);
         g_api.PlaySfx(0x640);
     }
 
-    if (g_api.UpdateUnarmedAnim(sndEvent->frameProps, sndEvent->frames) < 0) {
+    if (g_api.UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
         DestroyEntity(self);
     }
 
