@@ -929,7 +929,6 @@ segments:
       - [0x169040, animset, w_051_1]
       - [0x169950, animset, w_051_2]
       - [0x169950, .data, w_051]
-      - [0x169EA4, data, w_051]
       - [0x169ED4, c, w_051]
       - [0x16B0E0, sbss, w_051]
   - name: f_052
