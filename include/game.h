@@ -95,6 +95,7 @@ typedef struct Prim {
 #define COLOR_BPP (16)
 #define COLOR_LEN ((COLOR_BPP) / 8)
 #define PALETTE_LEN ((COLORS_PER_PAL) * ((COLOR_BPP) / 8))
+#define COLOR16(r, g, b, a) (r) + ((g) << 5) + ((b) << 10) + ((a) << 15)
 #define OTSIZE 0x200
 #define MAXSPRT16 0x280
 #define MAX_DRAW_MODES 0x400
