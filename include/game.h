@@ -83,6 +83,7 @@ typedef struct Prim {
 #define DRAW_COLORS 0x04     // use color blending
 #define DRAW_HIDE 0x08       // do not render the primitive
 #define DRAW_TPAGE 0x10      // use custom tpage
+#define DRAW_TPAGE2 0x20     // use custom tpage
 #define DRAW_MENU 0x80       // render only if D_800973EC is set
 #define DRAW_UNK_400 0x400   // unknown
 #define DRAW_UNK_800 0x800   // unknown

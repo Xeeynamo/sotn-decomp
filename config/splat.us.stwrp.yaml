@@ -72,7 +72,7 @@ segments:
       - [0x6D78, tiledef, D_80186D78]
       - [0x6D88, animset, D_80186D88]
       - [0x6E30, .rodata, 6FD0]
-      - [0x6E70, rodata] # EntityWarpRoom
+      - [0x6E70, .rodata, 73A0] # EntityWarpRoom
       - [0x6E90, .rodata, 73A0] # EntityWarpSmallRocks
       - [0x6EA8, rodata] # EntityRedDoor
       - [0x6EC0, rodata] # CollectGold

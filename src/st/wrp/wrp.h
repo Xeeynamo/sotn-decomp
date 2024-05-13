@@ -29,20 +29,34 @@ typedef enum {
     E_UNK_13,
     E_UNK_14,
     E_ID_15,
+    E_WARP,
+    E_SMALL_ROCKS,
 } EntityIDs;
 
-// *** EntitySoulStealOrb properties START ***
+typedef struct {
+    s16 x, y;
+} WarpCoord;
+
+extern u8 D_8003BEBC[];
+extern s32 D_8003C8B8;
 
 extern u16 g_InitializeData0[];
 extern u16 D_80180458[];
-extern u16 D_80180608[];
+extern u16 g_EInitGeneric[];
+extern u16 D_801804C4[];
+extern u32 D_80180608[];
+extern u32 D_80180648;
+extern WarpCoord D_8018065C[];
 extern u16 D_80180FE8[];
 extern u32 D_80181044[];
-extern u16 D_801810A0[]; // NOTE(sestren): Random angle offsets?
-extern u16 D_801810B0[]; // NOTE(sestren): Animation frame properties?
+extern u16 D_801810A0[]; // sestren: soul steal random angle offsets?
+extern u16 D_801810B0[]; // sestren: soul steal animation frame properties?
 extern u32 D_80181110[];
 
-// *** EntitySoulStealOrb properties END ***
+extern s32 D_80193AA0; // rename into move_room?
+extern s32 D_80193AA4;
+extern s32 D_80193AA8;
+extern s32 D_80193AAC;
 
 void func_8018F838(Entity*);
 void EntityUnkId15(Entity* entity);
