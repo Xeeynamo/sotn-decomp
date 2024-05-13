@@ -12,7 +12,7 @@
 <!-- wrp.EntityWarpRoom -->
 <g id="node1" class="node">
 <title>wrp.EntityWarpRoom</title>
-<ellipse fill="red" stroke="black" cx="805.05" cy="-198" rx="111.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="805.05" cy="-198" rx="111.28" ry="18"/>
 <text text-anchor="middle" x="805.05" y="-194.3" font-family="Times,serif" font-size="14.00">wrp.EntityWarpRoom</text>
 </g>
 <!-- FntPrint -->

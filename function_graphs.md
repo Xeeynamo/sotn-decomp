@@ -4406,7 +4406,7 @@
 - [✅ EntityStageNamePopup](function_calls/wrp.EntityStageNamePopup.svg?raw=1)
 - [✅ EntityUnkId15](function_calls/wrp.EntityUnkId15.svg?raw=1)
 - [✅ EntityUnkId15Spawner](function_calls/wrp.EntityUnkId15Spawner.svg?raw=1)
-- [❌ EntityWarpRoom](function_calls/wrp.EntityWarpRoom.svg?raw=1)
+- [✅ EntityWarpRoom](function_calls/wrp.EntityWarpRoom.svg?raw=1)
 - [✅ EntityWarpSmallRocks](function_calls/wrp.EntityWarpSmallRocks.svg?raw=1)
 - [✅ FallEntity](function_calls/wrp.FallEntity.svg?raw=1)
 - [✅ FindFirstUnkPrim](function_calls/wrp.FindFirstUnkPrim.svg?raw=1)

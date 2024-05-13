@@ -5363,7 +5363,7 @@
 <g id="node336" class="node">
 <title>wrp.EntityWarpRoom</title>
 <g id="a_node336"><a xlink:href="wrp.EntityWarpRoom.svg" xlink:title="wrp.EntityWarpRoom">
-<ellipse fill="red" stroke="black" cx="86711.19" cy="-198" rx="111.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="86711.19" cy="-198" rx="111.28" ry="18"/>
 <text text-anchor="middle" x="86711.19" y="-194.3" font-family="Times,serif" font-size="14.00">wrp.EntityWarpRoom</text>
 </a>
 </g>
