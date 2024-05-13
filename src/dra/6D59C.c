@@ -900,10 +900,9 @@ block_32:
         }
         equipped_id = g_Status.equipment[hand];
         equipped_item = &g_EquipDefs[g_Status.equipment[hand]];
-        if (CheckChainLimit(equipped_id, hand) >= 0) {
-            goto block_45;
+        if (CheckChainLimit(equipped_id, hand) < 0) {
+            return 0;
         }
-        return 0;
     }
 block_45:
     if (equipped_id != 0) {
