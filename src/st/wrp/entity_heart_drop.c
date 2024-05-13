@@ -13,7 +13,7 @@ void EntityHeartDrop(Entity* self) {
             return;
         }
         temp_a0_2 = temp_a0 - 0x118;
-        var_a0 = D_80180608[temp_a0_2];
+        var_a0 = ((u16*)D_80180608)[temp_a0_2];
         if (var_a0 < 128) {
             self->ext.generic.unkB8.unkFuncB8 = EntityPrizeDrop;
         } else {

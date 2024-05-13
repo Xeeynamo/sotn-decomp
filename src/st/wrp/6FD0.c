@@ -6,10 +6,6 @@
 
 #include "wrp.h"
 
-typedef struct {
-    s16 x, y;
-} WarpCoord;
-
 // *** Overlay exports start ***
 void CreateEntityWhenInHorizontalRange(LayoutEntity*);
 void func_8018A520(s16);
@@ -418,24 +414,23 @@ u8 g_eBreakableDrawModes[] = {
     /* 607 */ 0x00,
 };
 
-// owned by func_1873A0
-u16 D_80180608[] = {
-    /* 608 */ 0x0000, 0x0000,
-    /* 60C */ 0x0200, 0x0000,
-    /* 610 */ 0x0400, 0x0000,
-    /* 614 */ 0x0600, 0x0000,
-    /* 618 */ 0x0800, 0x0000,
-    /* 61C */ 0x0A00, 0x0000,
-    /* 620 */ 0x0C00, 0x0000,
-    /* 624 */ 0x0E00, 0x0000,
-    /* 628 */ 0x1000, 0x0000,
-    /* 62C */ 0x1200, 0x0000,
-    /* 630 */ 0x1400, 0x0000,
-    /* 634 */ 0x1600, 0x0000,
-    /* 638 */ 0x1800, 0x0000,
-    /* 63C */ 0x1A00, 0x0000,
-    /* 640 */ 0x1C00, 0x0000,
-    /* 644 */ 0x1E00, 0x0000,
+u32 D_80180608[] = {
+    /* 608 */ 0x0000,
+    /* 60C */ 0x0200,
+    /* 610 */ 0x0400,
+    /* 614 */ 0x0600,
+    /* 618 */ 0x0800,
+    /* 61C */ 0x0A00,
+    /* 620 */ 0x0C00,
+    /* 624 */ 0x0E00,
+    /* 628 */ 0x1000,
+    /* 62C */ 0x1200,
+    /* 630 */ 0x1400,
+    /* 634 */ 0x1600,
+    /* 638 */ 0x1800,
+    /* 63C */ 0x1A00,
+    /* 640 */ 0x1C00,
+    /* 644 */ 0x1E00,
 };
 
 // owned by EntityWarpRoom
@@ -1056,15 +1051,6 @@ u8 D_80180F6C[] = {0x01, 0x43, 0x00, 0x00};
 u8* D_80180F70[] = {
     D_80180ED8, D_80180EEC, D_80180F08, D_80180F38, D_80180F6C,
 };
-
-// *** rodata section start ***
-const char D_80186E30[] = "step %x\n";
-const char D_80186E3C[] = "move_room%x\n";
-const char D_80186E4C[] = "for_x:%x y%x\n";
-// gives some padding to align it to the next section
-const char D_80186E5C[] = "move_x:%x y%x\n\0\0\0\0\0";
-// TODO import missing RODATA
-// *** rodata section end ***
 
 // *** bss? section start ***
 extern LayoutEntity* D_80193AB0;
