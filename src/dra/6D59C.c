@@ -882,10 +882,8 @@ block_32:
     // we're attacking with the special
     equipped_item = &g_EquipDefs[var_s2];
     equipped_id = var_s2;
-    if (CheckChainLimit(equipped_id, hand) < 0) {
-        goto block_38c;
-    }
-    if (HasEnoughMp(g_EquipDefs[equipped_id].mpUsage, 0)) {
+    if (CheckChainLimit(equipped_id, hand) < 0 ||
+        HasEnoughMp(g_EquipDefs[equipped_id].mpUsage, 0)) {
     block_38c:
         equipped_item = &g_EquipDefs[g_Status.equipment[hand]];
         if (D_80138FC8 == 0xFF) {
