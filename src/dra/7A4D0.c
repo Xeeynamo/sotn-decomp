@@ -107,10 +107,12 @@ void func_8011A4D0(void) {
                 entity->pfnUpdate = g_DraEntityTbl[15];
             } else if (entityId >= 0xF0) {
                 // Objects F0-FC
-                entity->pfnUpdate = D_8017CC40[entityId];
+                entity->pfnUpdate =
+                    ((PfnEntityUpdate*)(&D_8017D000))[entityId - 0xF0];
             } else {
                 // Objects E0-EC
-                entity->pfnUpdate = D_80179C80[entityId];
+                entity->pfnUpdate =
+                    ((PfnEntityUpdate*)(&D_8017A000))[entityId - 0xE0];
             }
         }
         if ((temp_s2 == 0) || (entity->flags & FLAG_UNK_10000)) {
