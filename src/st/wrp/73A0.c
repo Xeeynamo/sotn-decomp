@@ -22,7 +22,7 @@ void EntityWarpRoom(Entity* self) {
         // Initialize all the objects in the warp room
         InitializeEntity(g_EInitGeneric);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 24);
-        if (primIndex == -1) { // AC
+        if (primIndex == -1) {
             self->step = 0;
             return;
         }
@@ -50,7 +50,7 @@ void EntityWarpRoom(Entity* self) {
             prim->tpage = 0x1A;
             prim->clut = 0x15F;
             prim->priority = 0x40;
-            prim->drawMode = 0x406;
+            prim->drawMode = DRAW_UNK02 | DRAW_COLORS | DRAW_UNK_400;
             prim = prim->next;
         }
 
@@ -123,7 +123,7 @@ void EntityWarpRoom(Entity* self) {
         entity = &PLAYER;
         g_unkGraphicsStruct.g_zEntityCenter.unk = entity->zPriority = 0x5C;
         prim = self->ext.warpRoom.primFade;
-        prim->drawMode = 0x31;
+        prim->drawMode = DRAW_TRANSP | DRAW_TPAGE | DRAW_TPAGE2;
         prim->g0 = prim->b0 = prim->r0 += 2;
         if (prim->r0 > 96) {
             D_80180648 = 1;
@@ -139,12 +139,12 @@ void EntityWarpRoom(Entity* self) {
         entity = &PLAYER;
         g_unkGraphicsStruct.g_zEntityCenter.unk = entity->zPriority = 0x5C;
         prim = self->ext.warpRoom.primFade;
-        prim->drawMode = 0x31;
+        prim->drawMode = DRAW_TRANSP | DRAW_TPAGE | DRAW_TPAGE2;
         if (prim->r0 < 0xF0) {
             prim->g0 = prim->b0 = prim->r0 += 2;
         }
         prim = prim->next;
-        prim->drawMode = 0x31;
+        prim->drawMode = DRAW_TRANSP | DRAW_TPAGE | DRAW_TPAGE2;
         if (prim->r0 < 0xF8) {
             prim->g0 = prim->b0 = prim->r0 += 2;
         } else {
@@ -189,7 +189,7 @@ void EntityWarpRoom(Entity* self) {
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
-        prim->drawMode = 0x31;
+        prim->drawMode = DRAW_TRANSP | DRAW_TPAGE | DRAW_TPAGE2;
         g_api.g_pfn_800EA5AC(0, 0, 0, 0);
         self->step++;
     case 6:
