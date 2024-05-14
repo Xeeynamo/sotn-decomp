@@ -35,7 +35,7 @@ func performCueAction(cuePath string, action imageAction) error {
 	case "MODE2/2352":
 		mode = iso9660.TrackMode2_2352
 	default:
-		return fmt.Errorf("unrecognized TRACK mode '%s'", mode)
+		return fmt.Errorf("unrecognized TRACK mode '%s'", mainTrack.mode)
 	}
 
 	baseDir, _ := path.Split(cuePath)
@@ -75,6 +75,7 @@ func parseTracks(cuePath string) ([]cueTrack, error) {
 	lines := strings.Split(string(content), "\n")
 
 	tracks := make([]cueTrack, 0)
+	var file = ""
 	var track *cueTrack = nil
 	for _, line := range lines {
 		tokens := tokenizeCueLine(line)
@@ -87,17 +88,17 @@ func parseTracks(cuePath string) ([]cueTrack, error) {
 			if len(tokens) < 3 {
 				return nil, fmt.Errorf("cue line '%s' invalid", line)
 			}
+			file = tokens[1]
+		case "TRACK":
+			if len(tokens) < 3 {
+				return nil, fmt.Errorf("cue line '%s' invalid", line)
+			}
 			if track != nil {
 				tracks = append(tracks, *track)
 			}
 
 			track = &cueTrack{}
-			track.file = tokens[1]
-		case "TRACK":
-			if len(tokens) < 3 {
-				return nil, fmt.Errorf("cue line '%s' invalid", line)
-			}
-
+			track.file = file
 			track.id = tokens[1]
 			track.mode = tokens[2]
 		}
