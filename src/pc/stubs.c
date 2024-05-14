@@ -654,7 +654,7 @@ void func_ptr_80170004(Entity* self) { NOT_IMPLEMENTED; }
 void func_ptr_80170008(Entity* self) { NOT_IMPLEMENTED; }
 void func_ptr_8017000C(Entity* self) { NOT_IMPLEMENTED; }
 void func_ptr_80170010(Entity* self) { NOT_IMPLEMENTED; }
-void func_ptr_80170014(Entity* self) { NOT_IMPLEMENTED; }
+s32 func_ptr_80170014(Entity* self) { NOT_IMPLEMENTED; }
 int GetWeaponId(void) {
     NOT_IMPLEMENTED;
     return 0;
