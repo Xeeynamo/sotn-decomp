@@ -105,6 +105,8 @@ define link
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt
 endef
 
+SOTNDISK_SOURCES := $(shell find tools/sotn-disk -name '*.go')
+
 .PHONY: build
 
 all: build check
@@ -421,8 +423,8 @@ $(GO):
 	curl -L -o go1.19.7.linux-amd64.tar.gz https://go.dev/dl/go1.19.7.linux-amd64.tar.gz
 	tar -C $(HOME) -xzf go1.19.7.linux-amd64.tar.gz
 	rm go1.19.7.linux-amd64.tar.gz
-$(SOTNDISK): $(GO)
-	$(GO) install github.com/xeeynamo/sotn-decomp/tools/sotn-disk@latest
+$(SOTNDISK): $(GO) $(SOTNDISK_SOURCES)
+	cd tools/sotn-disk; $(GO) install
 
 $(BUILD_DIR)/%.s.o: %.s
 	$(AS) $(AS_FLAGS) -o $@ $<
