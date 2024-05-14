@@ -868,24 +868,18 @@ block_32:
         goto block_38c;
     }
     var_s2 = equipped_item->specialMove;
-    if (var_s2 == 0) {
-        goto block_38c;
-    }
-    // Sword of Dawn
-    if ((equipped_id == 0x11) && ((g_Player.pl_vram_flag & 0x41) != 1)) {
-        goto block_38c;
-    }
-    if (!(g_Player.pl_vram_flag & 1)) {
+    if (var_s2 == 0 ||
+        // Sword of Dawn
+        ((equipped_id == 0x11) && ((g_Player.pl_vram_flag & 0x41) != 1)) ||
+        !(g_Player.pl_vram_flag & 1)) {
         goto block_38c;
     }
     // Load up the item's special move as the new "virtual" equipped item since
     // we're attacking with the special
     equipped_item = &g_EquipDefs[var_s2];
     equipped_id = var_s2;
-    if (CheckChainLimit(equipped_id, hand) < 0) {
-        goto block_38c;
-    }
-    if (HasEnoughMp(g_EquipDefs[equipped_id].mpUsage, 0)) {
+    if (CheckChainLimit(equipped_id, hand) < 0 ||
+        HasEnoughMp(g_EquipDefs[equipped_id].mpUsage, 0)) {
     block_38c:
         equipped_item = &g_EquipDefs[g_Status.equipment[hand]];
         if (D_80138FC8 == 0xFF) {
@@ -900,10 +894,9 @@ block_32:
         }
         equipped_id = g_Status.equipment[hand];
         equipped_item = &g_EquipDefs[g_Status.equipment[hand]];
-        if (CheckChainLimit(equipped_id, hand) >= 0) {
-            goto block_45;
+        if (CheckChainLimit(equipped_id, hand) < 0) {
+            return 0;
         }
-        return 0;
     }
 block_45:
     if (equipped_id != 0) {
