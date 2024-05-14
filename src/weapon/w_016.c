@@ -46,7 +46,7 @@ s32 func_ptr_80170014(Entity* self) {
     u16 tempEffects;
     s16 xShift;
     s16 yShift;
-    
+
     switch (self->step) {
     case 0:
         SetSpriteBank1(&D_74000_8017A040);
@@ -63,7 +63,7 @@ s32 func_ptr_80170014(Entity* self) {
         self->zPriority = PLAYER.zPriority - 2;
         self->flags = FLAG_UNK_08000000;
         self->velocityY = FIX(-2.25) - (rand() & 0x7FFF); // -2.5 +- 0.25
-        SetSpeedX((rand() & 0x7FFF) + FIX(1.25)); // 1.5 +- 0.25
+        SetSpeedX((rand() & 0x7FFF) + FIX(1.25));         // 1.5 +- 0.25
         self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
         SetWeaponProperties(self, 0);
         DestroyEntityWeapon(true);
@@ -95,7 +95,7 @@ s32 func_ptr_80170014(Entity* self) {
             } else {
                 self->posX.i.hi += collider.unk4;
             }
-            self->velocityX /= - 2;
+            self->velocityX /= -2;
             self->facingLeft = (self->facingLeft + 1) & 1;
         }
         collX = self->posX.i.hi;
@@ -121,9 +121,9 @@ s32 func_ptr_80170014(Entity* self) {
             self->velocityY = FIX(-1.125);
             self->velocityX /= 2;
             self->ext.weapon.lifetime++;
-            // Create factory with blueprint 31. Blueprint 31 has child entity 2, 
-            // which is func_8011B5A4.
-            g_api.CreateEntFactoryFromEntity(self, FACTORY(0x900,31), 0);
+            // Create factory with blueprint 31. Blueprint 31 has child entity
+            // 2, which is func_8011B5A4.
+            g_api.CreateEntFactoryFromEntity(self, FACTORY(0x900, 31), 0);
         }
         return;
     case 2:
@@ -144,8 +144,7 @@ s32 func_ptr_80170014(Entity* self) {
             g_api.CheckCollision(collX, collY, &collider, 0);
             if (!(collider.effects & EFFECT_SOLID)) {
                 self->posY.i.hi = yShift + self->posY.i.hi;
-            }
-            else if (!(collider.effects & EFFECT_UNK_8000)) {
+            } else if (!(collider.effects & EFFECT_UNK_8000)) {
                 self->step = 1;
                 self->velocityY = 0;
                 self->hitboxWidth = 8;
@@ -154,16 +153,18 @@ s32 func_ptr_80170014(Entity* self) {
                 self->posY.i.hi += 3 + (yShift + collider.unk18);
                 tempEffects = collider.effects;
             }
-            tempEffects &= 0xF000; //mask off just a couple effects
+            tempEffects &= 0xF000; // mask off just a couple effects
             if (tempEffects == EFFECT_UNK_8000 + EFFECT_UNK_4000) {
                 self->facingLeft = 0;
                 self->velocityX += 0x400;
             }
-            if (tempEffects == EFFECT_UNK_8000 + EFFECT_UNK_4000 + EFFECT_UNK_1000) {
+            if (tempEffects ==
+                EFFECT_UNK_8000 + EFFECT_UNK_4000 + EFFECT_UNK_1000) {
                 self->facingLeft = 0;
                 self->velocityX += 0x300;
             }
-            if (tempEffects == EFFECT_UNK_8000 + EFFECT_UNK_4000 + EFFECT_UNK_2000) {
+            if (tempEffects ==
+                EFFECT_UNK_8000 + EFFECT_UNK_4000 + EFFECT_UNK_2000) {
                 self->facingLeft = 0;
                 self->velocityX += 0x200;
             }
@@ -185,7 +186,7 @@ s32 func_ptr_80170014(Entity* self) {
             if (self->velocityX < FIX(-1)) {
                 self->velocityX = FIX(-1);
             }
-            
+
             if (!(tempEffects & EFFECT_UNK_8000)) {
                 if (self->velocityX < 0) {
                     xShift = -5;
@@ -206,7 +207,7 @@ s32 func_ptr_80170014(Entity* self) {
                         self->posX.i.hi += collider.unk4;
                     }
                 }
-                DecelerateX(FIX(1.0/128));
+                DecelerateX(FIX(1.0 / 128));
             }
         } else {
             self->step = 1;
