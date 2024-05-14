@@ -38,7 +38,7 @@ INCLUDE_ASM("weapon/nonmatchings/w_015", func_ptr_80170010);
 extern SpriteParts D_6D000_8017A2B0[];
 extern AnimationFrame D_6D000_8017A770[];
 
-void func_ptr_80170014(Entity* self) {
+s32 func_ptr_80170014(Entity* self) {
     s16 angle;
 
     if (self->step == 0) {

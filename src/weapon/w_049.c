@@ -18,7 +18,7 @@ INCLUDE_ASM("weapon/nonmatchings/w_049", func_ptr_80170010);
 extern SpriteParts D_15B000_8017AA44[];
 extern AnimationFrame D_15B000_8017B10C[];
 
-void func_ptr_80170014(Entity* self) {
+s32 func_ptr_80170014(Entity* self) {
     switch (self->step) {
     case 0:
         SetSpriteBank2(D_15B000_8017AA44);
