@@ -3,7 +3,102 @@
 #include "weapon_private.h"
 #include "shared.h"
 
-INCLUDE_ASM("weapon/nonmatchings/w_016", EntityWeaponAttack);
+// Weapon 16
+extern SpriteParts D_74000_8017A040;
+
+void EntityWeaponAttack(Entity* self) {
+    FakePrim* fakePrim;
+    s16 angle;
+    u16 temp_a0;
+    s32 sine;
+    s32 cosine;
+
+    switch (self->step) { /* irregular */
+    case 0:
+        SetSpriteBank1(&D_74000_8017A040);
+        self->animSet = ANIMSET_OVL(0x10);
+        self->unk5A = 100;
+        self->palette = 0x11A;
+        if (g_HandId != 0) {
+            self->palette = 0x132;
+            self->unk5A = 102;
+            self->animSet = self->animSet + 2;
+        }
+        self->animCurFrame = 14;
+        self->facingLeft = PLAYER.facingLeft;
+        self->zPriority = PLAYER.zPriority - 2;
+        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
+        fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
+        fakePrim->drawMode = DRAW_HIDE;
+        fakePrim->priority = 0;
+        fakePrim->posY.val = self->posY.val;
+        fakePrim->posX.val = self->posX.val;
+        fakePrim->x0 = self->posX.i.hi;
+        fakePrim->y0 = self->posY.i.hi;
+        fakePrim->velocityX.val = FIX(3.5);
+        if (self->facingLeft) {
+            fakePrim->velocityX.val = FIX(-3.5);
+        }
+        self->ext.weapon.unk82 = -0x100;
+        self->ext.weapon.unk80 = 0x800;
+        if (self->facingLeft != 0) {
+            self->ext.weapon.unk82 = -self->ext.weapon.unk82;
+            self->ext.weapon.unk80 += 0x800;
+        }
+        self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY - 8;
+        if (PLAYER.step != Player_Crouch) {
+            self->posY.i.hi -= 6;
+        }
+        if (self->facingLeft) {
+            self->posX.i.hi = PLAYER.posX.i.hi - PLAYER.hitboxOffX;
+        } else {
+            self->posX.i.hi = PLAYER.posX.i.hi + PLAYER.hitboxOffX;
+        }
+        SetWeaponProperties(self, 0);
+        DestroyEntityWeapon(1);
+        self->hitboxHeight = self->hitboxWidth = 4;
+        g_api.PlaySfx(0x69E);
+        g_Player.D_80072F00[10] = 4;
+        self->step++;
+        break;
+    case 1:
+        if (self->ext.weapon.unk7E < 448) {
+            self->ext.weapon.unk7E += 8;
+        }
+        fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
+        self->rotZ += ABS(self->ext.weapon.unk82);
+        self->ext.weapon.unk80 += self->ext.weapon.unk82;
+        fakePrim->posX.i.hi = fakePrim->x0;
+        fakePrim->posY.i.hi = fakePrim->y0;
+        fakePrim->posX.val += fakePrim->velocityX.val;
+        fakePrim->x0 = fakePrim->posX.i.hi;
+        fakePrim->y0 = fakePrim->posY.i.hi;
+        break;
+    }
+    fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
+    angle = self->ext.weapon.unk80;
+    cosine = rcos(angle) * self->ext.weapon.unk7E;
+    sine = -rsin(angle) * self->ext.weapon.unk7E;
+    self->posX.val = cosine + fakePrim->posX.val;
+    self->posY.val = sine + fakePrim->posY.val;
+    if (self->ext.weapon.lifetime & 1) {
+        // Create a factory, with a 1 shifted 0xC, or a 2 shifted 0xC (which is
+        // a 1 shifted 0xD)
+        //  Therefore this is 0x1000 or 0x2000. Will trigger if-statements so
+        //  factory gets unkA8 = 0xE0 or 0xF0, putting it into the range of
+        //  weapon functions. Then we use blueprint 0x3A, or 58, so child is E1
+        //  or F1. This will make the entity in func_ptr_80170004.
+        g_api.CreateEntFactoryFromEntity(
+            self, ((g_HandId + 1) << 0xC) | 0x3A, 0);
+    }
+    self->ext.weapon.lifetime++;
+}
 
 void func_ptr_80170004(Entity* self) {
 
@@ -39,6 +134,8 @@ INCLUDE_ASM("weapon/nonmatchings/w_016", func_ptr_80170010);
 
 extern SpriteParts D_74000_8017A040;
 
+// Tracing function calls in emulator indicates that this function manages
+// the physics for the Iron Ball item.
 s32 func_ptr_80170014(Entity* self) {
     Collider collider;
     s16 collX;
