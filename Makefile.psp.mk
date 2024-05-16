@@ -1,16 +1,22 @@
-GNUASPSP		:= mipsel-linux-gnu-as -I include/ -G0 -march=r6000 -mabi=eabi
-MWASPSP			:= bin/wibo bin/asm_psp_elf.exe -gnu
-ASPSP			:= $(GNUASPSP)
+WIBO            := bin/wibo
+MWCCPSP         := bin/mwccpsp.exe
 
-GNULDPSP		:= mipsel-linux-gnu-ld
-MWLDPSP			:= bin/wibo bin/mwldpsp.exe -partial -nostdlib -msgstyle gcc -sym full,elf -g
-LDPSP			:= $(GNULDPSP)
+GNUASPSP        := mipsel-linux-gnu-as -I include/ -G0 -march=r6000 -mabi=eabi
+MWASPSP         := $(WIBO) bin/asm_psp_elf.exe -gnu
+ASPSP           := $(GNUASPSP)
 
-PSP_BUILD_DIR	:= build/pspeu
-CCPSP			:= MWCIncludes=bin/ bin/wibo bin/mwccpsp.exe
-PSP_EU_TARGETS	:= tt_000
-SPLAT_PIP		:= splat split
-MWCCGAP         := $(PYTHON) $(TOOLS_DIR)/mwccgap/mwccgap.py
+GNULDPSP        := mipsel-linux-gnu-ld
+MWLDPSP         := $(WIBO) bin/mwldpsp.exe -partial -nostdlib -msgstyle gcc -sym full,elf -g
+LDPSP           := $(GNULDPSP)
+
+MWCCGAP_DIR     := $(TOOLS_DIR)/mwccgap
+MWCCGAP_APP     := $(MWCCGAP_DIR)/mwccgap.py
+MWCCGAP         := $(PYTHON) $(MWCCGAP_APP)
+
+PSP_BUILD_DIR   := build/pspeu
+CCPSP           := MWCIncludes=bin/ $(WIBO) $(MWCCPSP)
+PSP_EU_TARGETS  := tt_000
+SPLAT_PIP       := splat split
 
 define list_src_files_psp
 	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
@@ -27,15 +33,19 @@ build_pspeu: tt_000_psp
 
 extract_pspeu: $(addprefix $(PSP_BUILD_DIR)/,$(addsuffix .ld,$(PSP_EU_TARGETS)))
 
-bin/wibo:
+$(WIBO):
 	wget -O $@ https://github.com/decompals/wibo/releases/download/0.6.13/wibo
-	sha256sum --check bin/wibo.sha256
-	chmod +x bin/wibo
-bin/mwccpsp.exe: bin/wibo bin/mwccpsp_3.0.1_147
+	sha256sum --check $(WIBO).sha256
+	chmod +x $(WIBO)
+$(MWCCPSP): $(WIBO) bin/mwccpsp_3.0.1_147
+
+$(MWCCGAP_APP):
+	git submodule init $(MWCCGAP_DIR)
+	git submodule update $(MWCCGAP_DIR)
 
 # FIXME: we don't need to use MWCCGAP for files that don't have any INCLUDE_ASM macros
-$(PSP_BUILD_DIR)/%.c.o: %.c bin/mwccpsp.exe
-	$(MWCCGAP) $< $@ --mwcc-path bin/mwccpsp.exe --use-wibo --wibo-path bin/wibo -gccinc -Iinclude -D_internal_version_$(VERSION) -O0 -c -lang c -sdatathreshold 0
+$(PSP_BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
+	$(MWCCGAP) $< $@ --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) -gccinc -Iinclude -D_internal_version_$(VERSION) -O0 -c -lang c -sdatathreshold 0
 
 
 $(PSP_BUILD_DIR)/asm/psp%.s.o: asm/psp%.s
