@@ -18,7 +18,7 @@ s32 func_107000_8017ADF8(Primitive* prim, s32 x, s32 y) {
     // Should be able to do this as an array access but nope
     uvPtr = &D_107000_8017A6E4;
     uvPtr += prim->b0 * 8;
-    
+
     if (prim->b0 >= 3) {
         size = 4;
     } else {
@@ -31,7 +31,7 @@ s32 func_107000_8017ADF8(Primitive* prim, s32 x, s32 y) {
     top = y - size;
     right = x + size;
     bottom = y + size;
-    
+
     prim->x0 = left;
     prim->y0 = top;
     prim->x1 = right;
@@ -40,7 +40,7 @@ s32 func_107000_8017ADF8(Primitive* prim, s32 x, s32 y) {
     prim->y2 = bottom;
     prim->x3 = right;
     prim->y3 = bottom;
-    
+
     prim->u0 = *uvPtr++;
     prim->v0 = *uvPtr++;
     prim->u1 = *uvPtr++;
