@@ -376,7 +376,7 @@ void SEL_Init(s32 objLayoutId) {
         }
         g_IsTimeAttackUnlocked = true;
         D_8003C728 = 1;
-        D_8003C100 = 0;
+        g_CurrentStream = 0;
         D_8003C9A4 = 1;
         break;
 
@@ -388,7 +388,7 @@ void SEL_Init(s32 objLayoutId) {
         }
 #endif
         g_IsTimeAttackUnlocked = false;
-        D_8003C100 = 0;
+        g_CurrentStream = 0;
         func_801B18F4();
         g_GameState = Game_Title;
         D_8003C9A4 = 0;

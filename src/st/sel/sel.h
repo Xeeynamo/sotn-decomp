@@ -92,12 +92,35 @@ typedef struct {
     const char* line2;
 } StageName;
 
+typedef struct {
+    u_long* vlcbuf[2];  // 0x00
+    int vlcid;          // 0x08
+    u_short* imgbuf[2]; // 0x0c
+    int imgid;          // 0x20
+    RECT rect[2];       // 0x24
+    int rectid;         // 0x32
+    RECT slice;
+    int isdone;
+} DECENV;
+
+typedef struct {
+    u32 cdOffset;
+    u16 frameCount;
+    u16 isRGB24;
+} StreamInfo;
+
+extern s32 g_CurrentStream;
 extern const char* D_801803A8[10];
 extern StageName D_80180128[80];
 
 extern const s32 D_801A7B8C[2];
 extern void* g_Cluts[];
 extern void* g_EntityGfxs[];
+extern StreamInfo g_StreamInfo0;
+extern StreamInfo g_StreamInfo1;
+extern StreamInfo g_StreamInfo2;
+extern StreamInfo g_StreamInfo3;
+extern StreamInfo* g_Streams[4];
 extern s16** g_SpriteBanks[]; // g_SpriteBanks
 extern void* D_8018C404[];    // unknown type
 
@@ -175,7 +198,7 @@ extern const char D_8018BC54[];
 extern s32 g_MemcardRetryCount;
 extern s32 g_MemcardFd;
 extern s32 D_801BC340;
-extern s32 D_801BC344;
+extern s32 g_StreamDiskIsReady;
 extern s32 D_801BC348;
 extern s32 D_801BC34C;
 extern s32 D_801BC350;
@@ -193,8 +216,10 @@ extern u32 D_801BD030;
 extern u32 g_StreamEndFrame;
 extern u32 D_801BD03C;
 extern u32 D_801BD040;
-extern s32 g_StreamRewindSwitch[0x5001];
+extern s32 g_StreamRewindSwitch[1];
+extern u8 g_StreamImageBuffer[0x14000];
 extern s32 D_801D104C[0x1680];
+extern DECENV* D_801D6A4C[2];
 extern s32 D_801D6B04;
 extern s32 g_InputCursorPos;
 extern s32 D_801D6B0C;

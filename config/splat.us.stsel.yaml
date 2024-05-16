@@ -83,7 +83,8 @@ segments:
       - [0x64FC, .data, config_us] # enemies
       - [0xA37C, .data, config_us] # exp table
       - [0xA50C, .data, lba_stage]
-      - [0xB2CC, data]
+      - [0xB2CC, .data, stream_info]
+      - [0xB304, data]
       - [0xCD54, .data, CD54]
       - [0xDBD4, data]
       - [0x176C0, rodata]

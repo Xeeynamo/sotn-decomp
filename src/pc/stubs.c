@@ -74,6 +74,7 @@ s32 D_8006C384;
 s32 D_8006C388;
 s32 D_8006C38C;
 s32 D_8006C390;
+s32 g_CurrentStream;
 u16 g_ClutIds[0x400];
 s32 D_8003C738;
 u8 g_CastleFlags[0x300];
