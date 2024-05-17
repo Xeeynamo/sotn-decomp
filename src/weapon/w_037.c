@@ -60,7 +60,6 @@ INCLUDE_ASM("weapon/nonmatchings/w_037", func_107000_8017AEF0);
 extern s16 D_107000_8017A714[];
 
 void func_107000_8017B0AC(Entity* ent, Point16* outPoint, bool arg2) {
-    s32* point;
     s32 idx;
 
     idx = PLAYER.ext.player.unkAC - 0xA7;
