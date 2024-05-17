@@ -664,6 +664,61 @@
 | 1.00 | true     | ResetAnimation                      | ../../asm/us/weapon/nonmatchings/w_057/ResetAnimation.s 
 | 1.00 | true     | ResetAnimation                      | ../../asm/us/weapon/nonmatchings/w_058/ResetAnimation.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | DeliverEvent                        | ../../asm/us/main/nonmatchings/psxsdk/libapi/a07/DeliverEvent.s 
+| 1.00 | true     | OpenEvent                           | ../../asm/us/main/nonmatchings/psxsdk/libapi/a08/OpenEvent.s 
+| 1.00 | true     | CloseEvent                          | ../../asm/us/main/nonmatchings/psxsdk/libapi/a09/CloseEvent.s 
+| 1.00 | true     | WaitEvent                           | ../../asm/us/main/nonmatchings/psxsdk/libapi/a10/WaitEvent.s 
+| 1.00 | true     | TestEvent                           | ../../asm/us/main/nonmatchings/psxsdk/libapi/a11/TestEvent.s 
+| 1.00 | true     | EnableEvent                         | ../../asm/us/main/nonmatchings/psxsdk/libapi/a12/EnableEvent.s 
+| 1.00 | true     | DisableEvent                        | ../../asm/us/main/nonmatchings/psxsdk/libapi/a13/DisableEvent.s 
+| 1.00 | true     | StopPAD                             | ../../asm/us/main/nonmatchings/psxsdk/libapi/a20/StopPAD.s 
+| 1.00 | true     | PAD_init                            | ../../asm/us/main/nonmatchings/psxsdk/libapi/a21/PAD_init.s 
+| 1.00 | true     | PAD_dr                              | ../../asm/us/main/nonmatchings/psxsdk/libapi/a22/PAD_dr.s 
+| 1.00 | true     | ReturnFromException                 | ../../asm/us/main/nonmatchings/psxsdk/libapi/a23/ReturnFromException.s 
+| 1.00 | true     | ResetEntryInt                       | ../../asm/us/main/nonmatchings/psxsdk/libapi/a24/ResetEntryInt.s 
+| 1.00 | true     | HookEntryInt                        | ../../asm/us/main/nonmatchings/psxsdk/libapi/a25/HookEntryInt.s 
+| 1.00 | true     | open                                | ../../asm/us/main/nonmatchings/psxsdk/libapi/a50/open.s 
+| 1.00 | true     | lseek                               | ../../asm/us/main/nonmatchings/psxsdk/libapi/a51/lseek.s 
+| 1.00 | true     | read                                | ../../asm/us/main/nonmatchings/psxsdk/libapi/a52/read.s 
+| 1.00 | true     | write                               | ../../asm/us/main/nonmatchings/psxsdk/libapi/a53/write.s 
+| 1.00 | true     | close                               | ../../asm/us/main/nonmatchings/psxsdk/libapi/a54/close.s 
+| 1.00 | true     | format                              | ../../asm/us/main/nonmatchings/psxsdk/libapi/a65/format.s 
+| 1.00 | true     | firstfile                           | ../../asm/us/main/nonmatchings/psxsdk/libapi/a66/firstfile.s 
+| 1.00 | true     | nextfile                            | ../../asm/us/main/nonmatchings/psxsdk/libapi/a67/nextfile.s 
+| 1.00 | true     | erase                               | ../../asm/us/main/nonmatchings/psxsdk/libapi/a69/erase.s 
+| 1.00 | true     | Krom2RawAdd                         | ../../asm/us/main/nonmatchings/psxsdk/libapi/a81/Krom2RawAdd.s 
+| 1.00 | true     | ChangeClearPAD                      | ../../asm/us/main/nonmatchings/psxsdk/libapi/a91/ChangeClearPAD.s 
+| 1.00 | true     | _bu_init                            | ../../asm/us/main/nonmatchings/psxsdk/libapi/c112/_bu_init.s 
+| 1.00 | true     | _96_remove                          | ../../asm/us/main/nonmatchings/psxsdk/libapi/c114/_96_remove.s 
+| 1.00 | true     | InitHeap                            | ../../asm/us/main/nonmatchings/psxsdk/libapi/c57/InitHeap.s 
+| 1.00 | true     | Load                                | ../../asm/us/main/nonmatchings/psxsdk/libapi/c66/Load.s 
+| 1.00 | true     | Exec                                | ../../asm/us/main/nonmatchings/psxsdk/libapi/c67/Exec.s 
+| 1.00 | true     | FlushCache                          | ../../asm/us/main/nonmatchings/psxsdk/libapi/c68/FlushCache.s 
+| 1.00 | true     | GPU_cw                              | ../../asm/us/main/nonmatchings/psxsdk/libapi/c73/GPU_cw.s 
+| 1.00 | true     | ChangeClearRCnt                     | ../../asm/us/main/nonmatchings/psxsdk/libapi/l10/ChangeClearRCnt.s 
+| 1.00 | true     | exit                                | ../../asm/us/main/nonmatchings/psxsdk/libc/a56/exit.s 
+| 1.00 | true     | puts                                | ../../asm/us/main/nonmatchings/psxsdk/libc/a63/puts.s 
+| 1.00 | true     | setjmp                              | ../../asm/us/main/nonmatchings/psxsdk/libc/c19/setjmp.s 
+| 1.00 | true     | strcat                              | ../../asm/us/main/nonmatchings/psxsdk/libc/c21/strcat.s 
+| 1.00 | true     | strcmp                              | ../../asm/us/main/nonmatchings/psxsdk/libc/c23/strcmp.s 
+| 1.00 | true     | strncmp                             | ../../asm/us/main/nonmatchings/psxsdk/libc/c24/strncmp.s 
+| 1.00 | true     | strcpy                              | ../../asm/us/main/nonmatchings/psxsdk/libc/c25/strcpy.s 
+| 1.00 | true     | strlen                              | ../../asm/us/main/nonmatchings/psxsdk/libc/c27/strlen.s 
+| 1.00 | true     | memcpy                              | ../../asm/us/main/nonmatchings/psxsdk/libc/c42/memcpy.s 
+| 1.00 | true     | memset                              | ../../asm/us/main/nonmatchings/psxsdk/libc/c43/memset.s 
+| 1.00 | true     | memchr                              | ../../asm/us/main/nonmatchings/psxsdk/libc/c46/memchr.s 
+| 1.00 | true     | rand                                | ../../asm/us/main/nonmatchings/psxsdk/libc/c47/rand.s 
+| 1.00 | true     | srand                               | ../../asm/us/main/nonmatchings/psxsdk/libc/c48/srand.s 
+| 1.00 | true     | malloc                              | ../../asm/us/main/nonmatchings/psxsdk/libc/c51/malloc.s 
+| 1.00 | true     | free                                | ../../asm/us/main/nonmatchings/psxsdk/libc/c52/free.s 
+| 1.00 | true     | printf                              | ../../asm/us/main/nonmatchings/psxsdk/libc/c63/printf.s 
+| 1.00 | true     | InitCARD                            | ../../asm/us/main/nonmatchings/psxsdk/libcard/a74/InitCARD.s 
+| 1.00 | true     | StartCARD                           | ../../asm/us/main/nonmatchings/psxsdk/libcard/a75/StartCARD.s 
+| 1.00 | true     | _card_write                         | ../../asm/us/main/nonmatchings/psxsdk/libcard/a78/_card_write.s 
+| 1.00 | true     | _new_card                           | ../../asm/us/main/nonmatchings/psxsdk/libcard/a80/_new_card.s 
+| 1.00 | true     | _card_info                          | ../../asm/us/main/nonmatchings/psxsdk/libcard/c171/_card_info.s 
+| 1.00 | true     | _card_load                          | ../../asm/us/main/nonmatchings/psxsdk/libcard/c172/_card_load.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | padding_CdSoundCommand4             | ../../asm/us/dra/nonmatchings/92F60/padding_CdSoundCommand4.s 
 | 1.00 | true     | padding_CdSoundCommand12            | ../../asm/us/dra/nonmatchings/93290/padding_CdSoundCommand12.s 
 | 1.00 | true     | padding_CdSoundCommand14            | ../../asm/us/dra/nonmatchings/93BDC/padding_CdSoundCommand14.s 
@@ -1918,6 +1973,12 @@
 | 1.00 | true     | func_801B0958                       | ../../asm/us/st/nz0/nonmatchings/30958/func_801B0958.s 
 | 1.00 | true     | func_801A7D64                       | ../../asm/us/st/st0/nonmatchings/27D64/func_801A7D64.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_800F6A48                       | ../../asm/us/dra/nonmatchings/menu/func_800F6A48.s 
+| 0.90 | true     | def_cbread                          | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbread.s 
+| 0.90 | true     | def_cbready                         | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbready.s 
+| 0.90 | true     | def_cbsync                          | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbsync.s 
+| 0.90 | true     | SpuSetNoiseVoice                    | ../../asm/us/main/nonmatchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | D_800DBF3C                          | ../../asm/us/dra/nonmatchings/save_mgr/D_800DBF3C.s 
 | 1.00 | true     | D_800DBF74                          | ../../asm/us/dra/nonmatchings/save_mgr/D_800DBF74.s 
 | 1.00 | true     | D_800DBF7C                          | ../../asm/us/dra/nonmatchings/save_mgr/D_800DBF7C.s 
@@ -1929,12 +1990,6 @@
 | 1.00 | true     | CdSetDebug                          | ../../asm/us/main/nonmatchings/psxsdk/libcd/sys/CdSetDebug.s 
 | 1.00 | true     | CdSyncCallback                      | ../../asm/us/main/nonmatchings/psxsdk/libcd/sys/CdSyncCallback.s 
 | 1.00 | true     | SetVideoMode                        | ../../asm/us/main/nonmatchings/psxsdk/libetc/vmode/SetVideoMode.s 
--------------------------------------------------------------------------------
-| 0.90 | true     | def_cbread                          | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbread.s 
-| 0.90 | true     | def_cbready                         | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbready.s 
-| 0.90 | true     | def_cbsync                          | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbsync.s 
-| 1.00 | true     | GsGetVcount                         | ../../asm/us/main/nonmatchings/psxsdk/libgs/gs_008/GsGetVcount.s 
-| 1.00 | true     | GsClearVcount                       | ../../asm/us/main/nonmatchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018E124                       | ../../asm/us/st/cen/nonmatchings/D600/func_8018E124.s 
 | 1.00 | true     | func_8019498C                       | ../../asm/us/st/dre/nonmatchings/14774/func_8019498C.s 
@@ -2012,6 +2067,11 @@
 | 1.00 | true     | SetData32                           | ../../asm/us/main/nonmatchings/psxsdk/libgte/reg03/SetData32.s 
 | 1.00 | true     | SetIR0                              | ../../asm/us/main/nonmatchings/psxsdk/libgte/reg03/SetIR0.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | SsSeqGetVol                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
+-------------------------------------------------------------------------------
 | 1.00 | false    | EntityUnkId16                       | ../../asm/us/st/cen/nonmatchings/D600/EntityUnkId16.s 
 | 0.91 | false    | EntitySuccubusCutscene              | ../../asm/us/st/dre/nonmatchings/14774/EntitySuccubusCutscene.s 
 | 0.94 | false    | EntityRoomTransition1               | ../../asm/us/st/no3/nonmatchings/3E134/EntityRoomTransition1.s 
@@ -2071,10 +2131,6 @@
 | 0.93 | true     | _SsContRpn1                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | ../../asm/us/main/nonmatchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | ../../asm/us/main/nonmatchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
@@ -2269,9 +2325,6 @@
 | 1.00 | true     | func_800F548C                       | ../../asm/us/dra/nonmatchings/menu/func_800F548C.s 
 | 0.94 | true     | func_801B1EF4                       | ../../asm/us/st/sel/nonmatchings/2C048/func_801B1EF4.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_800F6A48                       | ../../asm/us/dra/nonmatchings/menu/func_800F6A48.s 
-| 0.90 | true     | SpuSetNoiseVoice                    | ../../asm/us/main/nonmatchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | func_800F99B8                       | ../../asm/us/dra/nonmatchings/menu/func_800F99B8.s 
 | 0.95 | true     | func_801B2108                       | ../../asm/us/st/sel/nonmatchings/2C048/func_801B2108.s 
 -------------------------------------------------------------------------------
@@ -2347,8 +2400,8 @@
 | 1.00 | true     | func_800E9880                       | ../../asm/us/dra/nonmatchings/save_mgr/func_800E9880.s 
 | 0.91 | true     | func_801B8A8C                       | ../../asm/us/st/sel/nonmatchings/save_mgr/func_801B8A8C.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | strcmp                              | ../../asm/us/main/nonmatchings/psxsdk/libc/c23/strcmp.s 
-| 1.00 | true     | strncmp                             | ../../asm/us/main/nonmatchings/psxsdk/libc/c24/strncmp.s 
+| 1.00 | true     | EnterCriticalSection                | ../../asm/us/main/nonmatchings/psxsdk/libapi/a36/EnterCriticalSection.s 
+| 1.00 | true     | ExitCriticalSection                 | ../../asm/us/main/nonmatchings/psxsdk/libapi/a37/ExitCriticalSection.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CdComstr                            | ../../asm/us/main/nonmatchings/psxsdk/libcd/sys/CdComstr.s 
 | 1.00 | true     | CdIntstr                            | ../../asm/us/main/nonmatchings/psxsdk/libcd/sys/CdIntstr.s 
@@ -2370,6 +2423,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | get_ce                              | ../../asm/us/main/nonmatchings/psxsdk/libgpu/sys/get_ce.s 
 | 1.00 | true     | get_cs                              | ../../asm/us/main/nonmatchings/psxsdk/libgpu/sys/get_cs.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | GsGetVcount                         | ../../asm/us/main/nonmatchings/psxsdk/libgs/gs_008/GsGetVcount.s 
+| 1.00 | true     | GsClearVcount                       | ../../asm/us/main/nonmatchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | RotMatrix                           | ../../asm/us/main/nonmatchings/psxsdk/libgte/fgo_01/RotMatrix.s 
 | 0.99 | true     | RotMatrixYXZ                        | ../../asm/us/main/nonmatchings/psxsdk/libgte/fgo_02/RotMatrixYXZ.s 
@@ -2400,9 +2456,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSeqPlay                           | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
-| 0.93 | true     | SsSeqGetVol                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
