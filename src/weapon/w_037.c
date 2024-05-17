@@ -57,7 +57,35 @@ s32 func_107000_8017ADF8(Primitive* prim, s32 x, s32 y) {
 
 INCLUDE_ASM("weapon/nonmatchings/w_037", func_107000_8017AEF0);
 
-INCLUDE_ASM("weapon/nonmatchings/w_037", func_107000_8017B0AC);
+extern s16 D_107000_8017A714[];
+
+void func_107000_8017B0AC(Entity* ent, Point16* outPoint, bool arg2) {
+    s32* point;
+    s32 idx;
+
+    idx = PLAYER.ext.player.unkAC - 0xA7;
+    if (PLAYER.facingLeft) {
+        ent->posX.i.hi = PLAYER.posX.i.hi - D_107000_8017A714[idx * 4 + 0];
+        if (arg2) {
+            outPoint->x = D_107000_8017A714[idx * 4 + 2] * 3 / -4;
+        } else {
+            outPoint->x = D_107000_8017A714[idx * 4 + 2] / -2;
+        }
+    } else {
+        ent->posX.i.hi = PLAYER.posX.i.hi + D_107000_8017A714[idx * 4 + 0];
+        if (arg2) {
+            outPoint->x = D_107000_8017A714[idx * 4 + 2] * 3 / 4;
+        } else {
+            outPoint->x = D_107000_8017A714[idx * 4 + 2] / 2;
+        }
+    }
+    ent->posY.i.hi = PLAYER.posY.i.hi + D_107000_8017A714[idx * 4 + 1];
+    if (arg2) {
+        outPoint->y = D_107000_8017A714[idx * 4 + 3] * 3 / 4;
+    } else {
+        outPoint->y = D_107000_8017A714[idx * 4 + 3] / 2;
+    }
+}
 
 INCLUDE_ASM("weapon/nonmatchings/w_037", func_ptr_80170004);
 
