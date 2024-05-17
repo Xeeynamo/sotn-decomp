@@ -18,6 +18,8 @@ CCPSP           := MWCIncludes=bin/ $(WIBO) $(MWCCPSP)
 PSP_EU_TARGETS  := tt_000
 SPLAT_PIP       := splat split
 
+MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -O0 -c -lang c -sdatathreshold 0
+
 define list_src_files_psp
 	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
 	$(foreach dir,$(ASM_DIR)/$(1)/data,$(wildcard $(dir)/**.s))
@@ -43,9 +45,13 @@ $(MWCCGAP_APP):
 	git submodule init $(MWCCGAP_DIR)
 	git submodule update $(MWCCGAP_DIR)
 
-# FIXME: we don't need to use MWCCGAP for files that don't have any INCLUDE_ASM macros
 $(PSP_BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
-	$(MWCCGAP) $< $@ --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) -gccinc -Iinclude -D_internal_version_$(VERSION) -O0 -c -lang c -sdatathreshold 0
+	mkdir -p $(dir $@)
+	if grep -q INCLUDE_ASM $<; then \
+		$(MWCCGAP) $< $@ --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) $(MWCCPSP_FLAGS) ; \
+	else \
+		MWCIncludes=. $(WIBO) $(MWCCPSP) $< -o $@ $(MWCCPSP_FLAGS) ; \
+	fi
 
 
 $(PSP_BUILD_DIR)/asm/psp%.s.o: asm/psp%.s
