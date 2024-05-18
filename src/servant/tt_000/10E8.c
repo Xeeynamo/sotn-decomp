@@ -192,7 +192,10 @@ s32 func_801713C8(Entity* entity) {
         return 0;
     if (entity->hitPoints >= 0x7000)
         return 0;
-    return entity->hitPoints > 0;
+    if (entity->hitPoints <= 0)
+        return 0;
+
+    return 1;
 }
 #endif
 
