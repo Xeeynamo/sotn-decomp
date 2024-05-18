@@ -25,6 +25,10 @@ options:
     - ".rodata"
     - ".bss"
   ld_bss_is_noload: True
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+    .include "macro.inc"
 segments:
   - [0x0, bin, header]
   - name: ric
