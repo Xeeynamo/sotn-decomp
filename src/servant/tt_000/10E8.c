@@ -5,6 +5,11 @@
 #define SFX_BAT_SCREECH SOUND_BAT_SCREECH
 #define SFX_BAT_NOTIFY SE_UI_OVERWRITE_MSG
 
+#ifdef VERSION_PSP
+#undef INCLUDE_ASM
+#define INCLUDE_ASM(FOLDER, NAME)
+#endif
+
 #ifndef VERSION_PSP
 s32 D_801748D8[0x80];
 Collider D_80174AD8;
@@ -67,18 +72,8 @@ ServantDesc g_ServantDesc = {
 #endif
 
 #ifdef VERSION_PSP
-extern ServantDesc g_ServantDesc;
 extern s32 D_80174D3C;
-
-void DestroyEntity();
-s32 func_80174864(void);
-s32 func_801746A0(s32 arg0);
-void ProcessEvent();
-void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params);
-
-void func_80173F74();
-void func_80173F30();
-
+void DestroyEntity(Entity* entity);
 #endif
 
 void func_801710E8(Entity* entity, AnimationFrame* anim) {
@@ -197,7 +192,10 @@ s32 func_801713C8(Entity* entity) {
         return 0;
     if (entity->hitPoints >= 0x7000)
         return 0;
-    return entity->hitPoints > 0;
+    if (entity->hitPoints <= 0)
+        return 0;
+
+    return 1;
 }
 #endif
 

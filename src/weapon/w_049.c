@@ -5,7 +5,34 @@
 
 INCLUDE_ASM("weapon/nonmatchings/w_049", EntityWeaponAttack);
 
-INCLUDE_ASM("weapon/nonmatchings/w_049", func_15B000_8017B88C);
+extern s16 D_15B000_8017B03C[];
+
+void func_15B000_8017B88C(Entity* ent, Point16* outPoint, bool arg2) {
+    s32 idx;
+
+    idx = PLAYER.ext.player.unkAC - 0x41;
+    if (PLAYER.facingLeft) {
+        ent->posX.i.hi = PLAYER.posX.i.hi - D_15B000_8017B03C[idx * 4 + 0];
+        if (arg2) {
+            outPoint->x = -(D_15B000_8017B03C[idx * 4 + 2] * 3 / 4);
+        } else {
+            outPoint->x = -(D_15B000_8017B03C[idx * 4 + 2] * 2 / 3);
+        }
+    } else {
+        ent->posX.i.hi = PLAYER.posX.i.hi + D_15B000_8017B03C[idx * 4 + 0];
+        if (arg2) {
+            outPoint->x = D_15B000_8017B03C[idx * 4 + 2] * 3 / 4;
+        } else {
+            outPoint->x = D_15B000_8017B03C[idx * 4 + 2] * 2 / 3;
+        }
+    }
+    ent->posY.i.hi = PLAYER.posY.i.hi + D_15B000_8017B03C[idx * 4 + 1];
+    if (arg2) {
+        outPoint->y = D_15B000_8017B03C[idx * 4 + 3] * 3 / 4;
+    } else {
+        outPoint->y = D_15B000_8017B03C[idx * 4 + 3] * 2 / 3;
+    }
+}
 
 INCLUDE_ASM("weapon/nonmatchings/w_049", func_ptr_80170004);
 
