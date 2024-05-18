@@ -5,7 +5,55 @@
 
 INCLUDE_ASM("weapon/nonmatchings/w_050", EntityWeaponAttack);
 
-INCLUDE_ASM("weapon/nonmatchings/w_050", func_162000_8017B784);
+extern u8 D_162000_8017B000[6][8];
+
+s32 func_162000_8017B784(Primitive* prim, s32 x, s32 y) {
+    s32 size;
+    s32 left;
+    s32 right;
+    s32 top;
+    s32 bottom;
+    u8* uvPtr;
+
+    // Should be able to do this as an array access but nope
+    uvPtr = &D_162000_8017B000;
+    uvPtr += prim->b0 * 8;
+
+    if (prim->b0 >= 3) {
+        size = 4;
+    } else {
+        size = 6;
+    }
+    if (prim->b0 == 6) {
+        return -1;
+    }
+    left = x - size;
+    top = y - size;
+    right = x + size;
+    bottom = y + size;
+
+    prim->x0 = left;
+    prim->y0 = top;
+    prim->x1 = right;
+    prim->y1 = top;
+    prim->x2 = left;
+    prim->y2 = bottom;
+    prim->x3 = right;
+    prim->y3 = bottom;
+
+    prim->u0 = *uvPtr++;
+    prim->v0 = *uvPtr++;
+    prim->u1 = *uvPtr++;
+    prim->v1 = *uvPtr++;
+    prim->u2 = *uvPtr++;
+    prim->v2 = *uvPtr++;
+    prim->u3 = *uvPtr++;
+    prim->v3 = *uvPtr++;
+    if (!(++prim->b1 & 1)) {
+        prim->b0++;
+    }
+    return 0;
+}
 
 extern s16 D_162000_8017B030[];
 
