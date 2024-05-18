@@ -39,7 +39,7 @@ $(WIBO):
 	wget -O $@ https://github.com/decompals/wibo/releases/download/0.6.13/wibo
 	sha256sum --check $(WIBO).sha256
 	chmod +x $(WIBO)
-$(MWCCPSP): $(WIBO) bin/mwccpsp_3.0.1_147
+$(MWCCPSP): $(WIBO) bin/mwccpsp_219
 
 $(MWCCGAP_APP):
 	git submodule init $(MWCCGAP_DIR)
