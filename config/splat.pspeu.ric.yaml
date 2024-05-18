@@ -30,27 +30,11 @@ segments:
   - name: ric
     type: code
     start: 0x00000080
-    vram:  0x09237700
-    bss_size: 0x1180
+    vram:  0x092a6280
+    bss_size: 0x1f80
     align: 128
     subalign: 8
     subsegments:
       - [0x80, c]
-      - [0x4D0, c]
-      - [0x31F0, c]
-      - [0x3C70, c]
-      - [0x4100, c]
-      - [0x5600, c]
-      - [0x5AB0, c]
-      - [0x6BF0, c]
-      - [0x8580, c]
-      - [0x95D0, c]
-      - [0xBDA0, c]
-      - [0xBF50, c]
-      - [0xC3F0, c]
-      - [0xD010, c]
-      - [0xD0E0, c]
-      - [0xD140, c]
-      - [0xE980, data]
-      - {type: bss, vram: 0x924BC80}
-  - [0x14580]
+      - [0x283ec, data]
+  - [0x30400]

@@ -175,8 +175,8 @@ $(BUILD_DIR)/$(DRA).elf: $(call list_o_files,dra)
 ric: ric_dirs $(BUILD_DIR)/RIC.BIN
 $(BUILD_DIR)/RIC.BIN: $(BUILD_DIR)/ric.elf
 	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/ric.elf: $(call list_o_files,ric)
-	$(call link,ric,$@)
+$(BUILD_DIR)/ric.elf: $(call list_o_files,ric_psp)
+	$(call link,ric_psp,$@)
 
 cen: stcen_dirs $(BUILD_DIR)/CEN.BIN $(BUILD_DIR)/F_CEN.BIN
 $(BUILD_DIR)/CEN.BIN: $(BUILD_DIR)/stcen.elf
@@ -324,7 +324,9 @@ $(BUILD_DIR)/$(ASSETS_DIR)/weapon/%_2.animset.o: $(ASSETS_DIR)/weapon/%_2.animse
 
 extract: extract_$(VERSION)
 
-include Makefile.*.mk
+include Makefile.psx.mk
+include Makefile.psp.mk
+include Makefile.saturn.mk
 
 # Force to extract all the assembly code regardless if a function is already decompiled
 force_extract:
