@@ -111,7 +111,6 @@ void func_107000_8017B0AC(Entity* ent, Point16* outPoint, bool arg2) {
     }
 }
 
-// Weapon 37
 extern s16 D_107000_8017A74C[];
 extern s32 D_107000_8017A758[];
 extern Point16 D_107000_8017BBE8[];
