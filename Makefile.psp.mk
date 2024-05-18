@@ -50,7 +50,7 @@ $(PSP_BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
 	if grep -q INCLUDE_ASM $<; then \
 		$(MWCCGAP) $< $@ --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --asm-dir-prefix asm/pspeu $(MWCCPSP_FLAGS) ; \
 	else \
-		MWCIncludes=. $(WIBO) $(MWCCPSP) $< -o $@ $(MWCCPSP_FLAGS) ; \
+		$(CCPSP) $< -o $@ $(MWCCPSP_FLAGS) ; \
 	fi
 
 

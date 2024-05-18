@@ -72,18 +72,8 @@ ServantDesc g_ServantDesc = {
 #endif
 
 #ifdef VERSION_PSP
-extern ServantDesc g_ServantDesc;
 extern s32 D_80174D3C;
-
-void DestroyEntity();
-s32 func_80174864(void);
-s32 func_801746A0(s32 arg0);
-void ProcessEvent();
-void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params);
-
-void func_80173F74();
-void func_80173F30();
-
+void DestroyEntity(Entity* entity);
 #endif
 
 void func_801710E8(Entity* entity, AnimationFrame* anim) {
