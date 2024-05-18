@@ -1157,34 +1157,32 @@ s16 func_80173F30(Entity* entity, s16 x, s16 y) {
     return angle;
 }
 
+s16 func_80173F74(s16 x1, s16 x2, s16 minDistance) {
 #ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80173F74);
+    s16 diff = ABS(x2 - x1);
 #else
-s16 func_80173F74(s16 arg0, s16 arg1, s16 arg2) {
-    s32 diffTmp = arg1 - arg0;
+    s32 diffTmp = x2 - x1;
     s16 diff = ABS(diffTmp);
-    s16 res;
-
-    if (arg2 > diff) {
-        arg2 = diff;
+#endif
+    if (minDistance > diff) {
+        minDistance = diff;
     }
 
-    if (arg1 < arg0) {
+    if (x2 < x1) {
         if (diff < 0x800) {
-            res = arg1 + arg2;
+            x2 += minDistance;
         } else {
-            res = arg1 - arg2;
+            x2 -= minDistance;
         }
     } else {
         if (diff < 0x800) {
-            res = arg1 - arg2;
+            x2 -= minDistance;
         } else {
-            res = arg1 + arg2;
+            x2 += minDistance;
         }
     }
-    return res & 0xFFF;
+    return x2 & 0xFFF;
 }
-#endif
 
 #ifndef VERSION_PSP
 s32 func_80173FE8(Entity* entity, s32 x, s32 y) {
