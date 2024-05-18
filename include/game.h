@@ -1030,10 +1030,10 @@ typedef struct {
     /* 0x06 */ s16 height;
     /* 0x08 */ s16 clut;
     /* 0x0A */ s16 tpage;
-    /* 0x0C */ u8 texLeft, dummyLeft;
-    /* 0x0E */ u8 texTop, dummyTop;
-    /* 0x10 */ u8 texRight, dummyRight;
-    /* 0x12 */ u8 texBottom, dummyBottom;
+    /* 0x0C */ s16 texLeft;
+    /* 0x0E */ s16 texTop;
+    /* 0x10 */ s16 texRight;
+    /* 0x12 */ s16 texBottom;
 } Sprite; /* size=0x14 */
 
 typedef struct {

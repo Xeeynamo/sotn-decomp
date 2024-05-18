@@ -310,9 +310,6 @@ void func_8017170C(Entity* entity, s32 frameIndex) {
 }
 #endif
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_801718A0);
-#else
 void func_801718A0(Entity* entity) {
     Primitive* prim;
     s32 frame;
@@ -320,7 +317,7 @@ void func_801718A0(Entity* entity) {
     s32 x;
 
     frame = 2;
-    if (entity->facingLeft != 0) {
+    if (entity->facingLeft) {
         x = entity->posX.i.hi + 2;
     } else {
         x = entity->posX.i.hi - 16;
@@ -336,7 +333,6 @@ void func_801718A0(Entity* entity) {
     prim->x1 = prim->x3 = prim->x0 + D_80170608[frame].width;
     prim->y2 = prim->y3 = prim->y0 + D_80170608[frame].height;
 }
-#endif
 
 void func_801719E0(Entity* self) {
     s32 i;
