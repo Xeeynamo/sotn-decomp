@@ -201,7 +201,33 @@ void func_80193088(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("st/cen/nonmatchings/11280", func_80193184);
+void CreateEntitiesToTheLeft(s16 posY) {
+    u8 flag;
+    s32 expected;
+
+    if (posY < 0) {
+        posY = 0;
+    }
+
+    if (D_8019C770 == 0) {
+        func_80193030(posY - D_8009790C);
+        D_8019C770 = 1;
+    }
+
+    while (true) {
+        if (g_LayoutObjEnd->posY == LAYOUT_OBJ_END ||
+            posY > g_LayoutObjEnd->posY) {
+            return;
+        }
+        expected = 0;
+        flag = (g_LayoutObjEnd->entityRoomIndex >> 8) + 0xFF;
+        if ((flag == 0xFF) ||
+            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
+            CreateEntityWhenInHorizontalRange(g_LayoutObjEnd);
+        }
+        g_LayoutObjEnd--;
+    }
+}
 
 void InitRoomEntities(s32 objLayoutId) {
     u16* pObjLayoutStart = D_801801EC[objLayoutId];

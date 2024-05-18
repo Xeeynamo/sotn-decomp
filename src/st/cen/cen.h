@@ -85,6 +85,7 @@ extern ObjInit2 D_8018125C[];
 
 extern LayoutEntity* D_8019C764;
 extern u16* D_8019C768;
+#define g_LayoutObjEnd ((LayoutEntity*)D_8019C768)
 extern u8 D_8019C76C;
 extern s16 D_8019D37E;
 extern u16 D_8019D380;

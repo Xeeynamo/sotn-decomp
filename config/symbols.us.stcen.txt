@@ -24,6 +24,7 @@ UpdateStageEntities = 0x80191178;
 TestCollisions = 0x80191280;
 EntityNumericDamage = 0x80192398;
 CreateEntityWhenInHorizontalRange = 0x80192C18;
+CreateEntitiesToTheLeft = 0x80193184;
 InitRoomEntities = 0x80193298;
 CreateEntityFromEntity = 0x80193538;
 EntityIsNearPlayer = 0x801935B4;
