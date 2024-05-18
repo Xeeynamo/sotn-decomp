@@ -732,7 +732,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
     DestroyEntity(g_CurrentEntity);
 }
 
-INCLUDE_ASM("st/cen/nonmatchings/11280", func_80195B68);
+#include "../collect_heart_vessel.h"
 
 void func_80195C0C(void) {
     g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);

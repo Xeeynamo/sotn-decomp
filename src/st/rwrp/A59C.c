@@ -500,7 +500,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
     DestroyEntity(g_CurrentEntity);
 }
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018EE84);
+#include "../collect_heart_vessel.h"
 
 void CollectLifeVessel(void) {
     g_api_PlaySfx(NA_SE_PL_COLLECT_HEART);
