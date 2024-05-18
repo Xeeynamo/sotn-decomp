@@ -95,5 +95,5 @@ def apply(config, args):
             apply_psx_base(config, version, name)
         else:
             apply_psx_bin(config, version, name)
-        config["arch"] = "mipsel"
+        config["arch"] = "mipsel:4000" if version == "pspeu" else "mipsel"
         config["objdump_executable"] = "mipsel-linux-gnu-objdump"
