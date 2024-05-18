@@ -1,6 +1,7 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
+#define WEAPON
 #include <game.h>
 
 typedef struct {

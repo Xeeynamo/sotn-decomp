@@ -170,7 +170,41 @@ void func_97000_8017AB54(u8* str, u8 lowerLeft) {
     g_BottomCornerTextTimer = 0x130;
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_021", func_97000_8017AF2C);
+// Function that tests if a food is successfully eaten (collected)
+s32 func_97000_8017AF2C(Entity* self, s32 arg1) {
+    s16 xDist;
+    s16 yDist;
+
+    if (arg1 == 0) {
+        // seems like silly logic to compare against 0 and then again 2
+        if (self->velocityY < 0 || self->velocityY < FIX(2)) {
+            return 0;
+        }
+    }
+    // If peanut, use this logic to tell if it was eaten
+    if (((self->params >> 8) & 0x7F) == 6) {
+        if ((PLAYER.animCurFrame != 0x7B) || (PLAYER.ext.player.unkAC != 0) ||
+            (self->posY.i.hi > (PLAYER.posY.i.hi - 16)) ||
+            (self->posY.i.hi < (PLAYER.posY.i.hi - 24)) ||
+            (self->posX.i.hi > (PLAYER.posX.i.hi + 4)) ||
+            (self->posX.i.hi < (PLAYER.posX.i.hi - 4))) {
+            return 0;
+        }
+        PLAYER.animFrameIdx = 3;
+        PLAYER.animFrameDuration = 8;
+        return 1;
+    }
+    // All other foods use this logic to tell if you've grabbed it
+    xDist = ABS(self->posX.i.hi - PLAYER.posX.i.hi + PLAYER.hitboxOffX);
+    yDist = ABS(self->posY.i.hi - PLAYER.posY.i.hi + PLAYER.hitboxOffY);
+    if (xDist > (self->hitboxWidth + PLAYER.hitboxWidth)) {
+        return 0;
+    }
+    if (yDist > (self->hitboxHeight + PLAYER.hitboxHeight)) {
+        return 0;
+    }
+    return 1;
+}
 
 INCLUDE_ASM("weapon/nonmatchings/w_021", EntityWeaponAttack);
 
