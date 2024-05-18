@@ -1,3 +1,3 @@
-#include "common.h"
+#include "bios.h"
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libc/c23", strcmp);
+BIOS_A_FUNCTION(strcmp, 0x17);

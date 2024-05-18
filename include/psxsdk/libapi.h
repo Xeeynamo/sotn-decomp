@@ -15,7 +15,7 @@ struct EXEC {
     unsigned long sp, fp, gp, ret, base;
 };
 
-extern void InitHeap(unsigned long*, unsigned long);
+extern void InitHeap(void*, unsigned long);
 extern long Load(char*, struct EXEC*);
 extern long Exec(struct EXEC*, long, char**);
 // GPU_cw
