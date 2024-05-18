@@ -159,7 +159,7 @@ main_dirs:
 	$(foreach dir,$(MAIN_ASM_DIRS) $(MAIN_SRC_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 $(MAIN_TARGET).exe: $(MAIN_TARGET).elf
 	$(OBJCOPY) -O binary $< $@
-$(MAIN_TARGET).elf: $(MAIN_O_FILES)
+$(MAIN_TARGET).elf: $(MAIN_O_FILES) $(BUILD_DIR)/main.ld $(CONFIG_DIR)/undefined_syms.$(VERSION).txt $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(MAIN).txt
 	$(LD) $(LD_FLAGS) -o $@ \
 	-Map $(MAIN_TARGET).map \
 	-T $(BUILD_DIR)/main.ld \
