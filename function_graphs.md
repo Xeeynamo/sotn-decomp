@@ -2667,7 +2667,7 @@
 - [✅ UpdateAnim](function_calls/servant.UpdateAnim.svg?raw=1)
 - [✅ func_801710E8](function_calls/servant.func_801710E8.svg?raw=1)
 - [❌ func_8017110C](function_calls/servant.func_8017110C.svg?raw=1)
-- [❌ func_801713C8](function_calls/servant.func_801713C8.svg?raw=1)
+- [✅ func_801713C8](function_calls/servant.func_801713C8.svg?raw=1)
 - [✅ func_80171434](function_calls/servant.func_80171434.svg?raw=1)
 - [✅ func_80171560](function_calls/servant.func_80171560.svg?raw=1)
 - [✅ func_80171568](function_calls/servant.func_80171568.svg?raw=1)
