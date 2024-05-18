@@ -7,13 +7,13 @@ options:
   asm_path:     asm/pspeu/ric
   asset_path:   assets/ric_psp
   src_path:     src/ric_psp
-  ld_script_path: build/pspeu/ric.ld
+  ld_script_path: build/pspeu/ric_psp.ld
   compiler:     GCC
   symbol_addrs_path:
     - config/symbols.pspeu.txt
     - config/symbols.pspeu.ric.txt
-  undefined_funcs_auto_path: config/undefined_funcs_auto.pspeu.ric.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.pspeu.ric.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.pspeu.ric_psp.txt
+  undefined_syms_auto_path:  config/undefined_syms_auto.pspeu.ric_psp.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
