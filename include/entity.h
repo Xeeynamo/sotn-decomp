@@ -190,6 +190,14 @@ typedef struct {
 } ET_Weapon29;
 
 typedef struct {
+    s16 timer;
+    s16 unk7E;
+    s32 unk80;
+    s16 pad[21];
+    s16 foodId;
+} ET_Food;
+
+typedef struct {
     /* 0x7C */ char pad_7C[0x4];
     /* 0x80 */ s16 timer;
     /* 0x82 */ char pad_82[0x2];
@@ -927,6 +935,7 @@ typedef union {
     /* 0x7C */ ET_MessageBox messageBox;
     /* 0x7C */ ET_Weapon weapon;
     /* 0x7C */ ET_Weapon29 weapon29;
+    /* 0x7C */ ET_Food food;
     /* 0x7C */ ET_HitByIce hitbyice;
     /* 0x7C */ ET_HitByLightning hitbylightning;
     /* 0x7C */ ET_Bat bat;
