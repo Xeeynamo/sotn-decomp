@@ -53,11 +53,11 @@ typedef struct ServantEvent {
 extern ServantDesc g_ServantDesc;
 extern SpriteParts* D_80170040[];
 extern u16 D_80170448[];
-extern s32 D_801704A8[];
-extern s32 D_80170514[];
-extern s32 D_8017054C[];
-extern s32 D_801705EC[];
-extern s32* D_801705F4[];
+extern AnimationFrame D_801704A8[];
+extern AnimationFrame D_80170514[];
+extern AnimationFrame D_8017054C[];
+extern AnimationFrame D_801705EC[];
+extern AnimationFrame* D_801705F4[];
 extern Sprite D_80170608[];
 extern s32 D_80170658[][5];
 extern u16 D_80170720[];

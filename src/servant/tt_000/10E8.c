@@ -68,6 +68,8 @@ ServantDesc g_ServantDesc = {
 
 #ifdef VERSION_PSP
 extern s32 D_80174D3C;
+extern Unkstruct_8011A3AC D_80174C30;
+extern Point16 D_80174C3C[4][16];
 void DestroyEntity(Entity* entity);
 #endif
 
@@ -336,15 +338,12 @@ void func_801718A0(Entity* entity) {
 }
 #endif
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_801719E0);
-#else
 void func_801719E0(Entity* self) {
     s32 i;
 
-    if (self->ext.bat.unk80 == 0) {
-        self->ext.bat.unk8E = 0;
+    if (!self->ext.bat.unk80) {
         self->ext.bat.unk82 = self->params;
+        self->ext.bat.unk8E = 0;
         switch (self->entityId) {
         case 0xD1:
             self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
@@ -355,7 +354,7 @@ void func_801719E0(Entity* self) {
             func_8017170C(self, 0);
             self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
-            func_801710E8(self, &D_801704A8);
+            func_801710E8(self, D_801704A8);
             self->ext.bat.unk84 = rand() % 4096;
             self->ext.bat.unk86 = 0;
             self->ext.bat.unk88 = 0xC;
@@ -372,8 +371,8 @@ void func_801719E0(Entity* self) {
             func_8017170C(self, 0);
             self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
                           FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
-            func_801710E8(self, &D_801704A8);
-            if (self->ext.bat.unk82 == 0) {
+            func_801710E8(self, D_801704A8);
+            if (!self->ext.bat.unk82) {
                 self->ext.bat.follow = &PLAYER;
             } else {
                 self->ext.bat.follow = &g_Entities[3 + self->ext.bat.unk82];
@@ -381,7 +380,7 @@ void func_801719E0(Entity* self) {
             self->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
             self->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
 
-            if (self->ext.bat.unk82 == 0) {
+            if (!self->ext.bat.unk82) {
                 for (i = 0; i < 16; i++) {
                     D_80174C3C[self->ext.bat.unk82][i].x =
                         self->ext.bat.follow->posX.i.hi + self->ext.bat.cameraX;
@@ -418,15 +417,15 @@ void func_801719E0(Entity* self) {
         case 0xD1:
             self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
-            func_801710E8(self, &D_801704A8);
+            func_801710E8(self, D_801704A8);
             self->ext.bat.unk8C = rand() % 4096;
             self->step++;
             break;
         case 0xD2:
             self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
                           FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
-            func_801710E8(self, &D_801704A8);
-            if (self->ext.bat.unk82 == 0) {
+            func_801710E8(self, D_801704A8);
+            if (!self->ext.bat.unk82) {
                 self->ext.bat.follow = &PLAYER;
             } else {
                 self->ext.bat.follow = &g_Entities[3 + self->ext.bat.unk82];
@@ -455,7 +454,6 @@ void func_801719E0(Entity* self) {
     self->ext.bat.unk80 = self->entityId;
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
 }
-#endif
 
 void func_80171ED4(s32 arg0) {
     u16* dst;
