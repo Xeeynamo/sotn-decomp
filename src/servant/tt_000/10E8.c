@@ -268,9 +268,6 @@ void func_8017160C(s32 amount, s32 entityId) {
     }
 }
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_8017170C);
-#else
 void func_8017170C(Entity* entity, s32 frameIndex) {
     Primitive* prim;
     s32 tpage;
@@ -284,7 +281,7 @@ void func_8017170C(Entity* entity, s32 frameIndex) {
         return;
     }
     index = frameIndex - 1;
-    if (entity->facingLeft != 0) {
+    if (entity->facingLeft) {
         x = entity->posX.i.hi + 2;
     } else {
         x = entity->posX.i.hi - 16;
@@ -296,11 +293,7 @@ void func_8017170C(Entity* entity, s32 frameIndex) {
     prim->x1 = prim->x3 = prim->x0 + D_80170608[index].width;
     prim->y2 = prim->y3 = prim->y0 + D_80170608[index].height;
     prim->clut = D_80170608[index].clut;
-    tpage = D_80170608[index].tpage;
-    if (tpage < 0) {
-        tpage += 3;
-    }
-    prim->tpage = tpage >> 2;
+    prim->tpage = D_80170608[index].tpage / 4;
     prim->u0 = prim->u2 = D_80170608[index].texLeft;
     prim->v0 = prim->v1 = D_80170608[index].texTop;
     prim->u1 = prim->u3 = D_80170608[index].texRight;
@@ -308,7 +301,6 @@ void func_8017170C(Entity* entity, s32 frameIndex) {
     prim->priority = entity->zPriority + 1;
     prim->drawMode = 0x102;
 }
-#endif
 
 void func_801718A0(Entity* entity) {
     Primitive* prim;
