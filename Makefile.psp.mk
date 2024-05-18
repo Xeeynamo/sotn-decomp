@@ -15,7 +15,7 @@ MWCCGAP         := $(PYTHON) $(MWCCGAP_APP)
 
 PSP_BUILD_DIR   := build/pspeu
 CCPSP           := MWCIncludes=bin/ $(WIBO) $(MWCCPSP)
-PSP_EU_TARGETS  := tt_000
+PSP_EU_TARGETS  := tt_000 ric
 SPLAT_PIP       := splat split
 
 MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -O0 -c -lang c -sdatathreshold 0
