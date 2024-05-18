@@ -96,7 +96,7 @@ s32 D_801BC650;
 SaveSummary g_SaveSummary[PORT_COUNT];
 u32 D_801BD030;
 u32 g_StreamEndFrame;
-u32 g_StreamIsRGB24;
+u32 g_StreamIsRGB24[1];
 u32 D_801BD03C;
 u32 D_801BD040;
 s32 g_StreamRewindSwitch[0x5001];
