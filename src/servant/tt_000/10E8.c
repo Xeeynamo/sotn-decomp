@@ -1145,14 +1145,17 @@ Entity* func_80173EB0(s32 rangeIndex, s32 entityId) {
 }
 #endif
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80173F30);
-#else
-s32 func_80173F30(Entity* entity, s16 x, s16 y) {
-    s16 diffx = x - entity->posX.i.hi;
-    return ratan2(-(s16)(y - entity->posY.i.hi), diffx) & 0xFFF;
+s16 func_80173F30(Entity* entity, s16 x, s16 y) {
+    s16 angle;
+    s16 diffy;
+    s16 diffx;
+
+    diffx = x - entity->posX.i.hi;
+    diffy = y - entity->posY.i.hi;
+    angle = ratan2(-diffy, diffx) & 0xFFF;
+
+    return angle;
 }
-#endif
 
 #ifdef VERSION_PSP
 INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80173F74);
