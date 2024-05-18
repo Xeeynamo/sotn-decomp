@@ -3,7 +3,6 @@
 extern s32 g_StreamWidth;
 extern int g_StreamHeight;
 extern u32 g_StreamEndFrame;
-extern u32 g_StreamIsRGB24;
 extern s32 g_StreamRewindSwitch[];
 
 typedef struct {
@@ -100,9 +99,50 @@ void func_801B994C(DECENV* dec) {
 void func_801B99E4(void);
 INCLUDE_ASM("st/sel/nonmatchings/stream", func_801B99E4);
 
-// func_801B9B7C(Unkstruct_801B9B7C* arg0, s16 arg1, s16 arg2, s16 arg3, s32
-// arg4);
-INCLUDE_ASM("st/sel/nonmatchings/stream", func_801B9B7C);
+// access to g_StreamIsRGB24 (in the two places it is accessed) is always as an
+// array but only the first element is ever read.
+extern u32 g_StreamIsRGB24[];
+
+void func_801B9B7C(DECENV* env, s16 x0, s16 y0, s16 x1, s32 y1) {
+    s16 bitsPerPixel;
+    s16 width;
+
+    env->vlcbuf[0] = (void*)0x8013C000;
+    env->vlcbuf[1] = (void*)0x8015E000;
+    env->imgbuf[0] = (u16*)D_801D104C;
+    env->vlcid = 0;
+    env->imgbuf[1] = (u16*)&D_801D104C[0xb40];
+    env->imgid = 0;
+    env->rectid = 0;
+    env->isdone = 0;
+
+    if (*g_StreamIsRGB24 == 1) {
+        width = 480;
+        bitsPerPixel = 24;
+    } else {
+        width = 320;
+        bitsPerPixel = 16;
+    }
+
+    env->rect[0] = (RECT){
+        .x = x0,
+        .y = y0,
+        .w = width,
+        .h = 240,
+    };
+    env->rect[1] = (RECT){
+        .x = x1,
+        .y = y1,
+        .w = width,
+        .h = 240,
+    };
+    env->slice = (RECT){
+        .x = x0,
+        .y = y0,
+        .w = bitsPerPixel,
+        .h = 240,
+    };
+}
 
 void func_801B9C18(s32 unused, void (*callback)()) {
     const int START_FRAME = 1;
@@ -112,7 +152,7 @@ void func_801B9C18(s32 unused, void (*callback)()) {
     *s0 = 0;
     func_801BA6CC(callback);
     StSetRing((s32)(s0 + 2), 0x28);
-    StSetStream(g_StreamIsRGB24, START_FRAME, -1, NULL, NULL);
+    StSetStream(*g_StreamIsRGB24, START_FRAME, -1, NULL, NULL);
 }
 
 INCLUDE_ASM("st/sel/nonmatchings/stream", func_801B9C80);

@@ -191,7 +191,6 @@ extern s32 D_801BC650;
 extern SaveSummary g_SaveSummary[PORT_COUNT];
 extern u32 D_801BD030;
 extern u32 g_StreamEndFrame;
-extern u32 g_StreamIsRGB24;
 extern u32 D_801BD03C;
 extern u32 D_801BD040;
 extern s32 g_StreamRewindSwitch[0x5001];
