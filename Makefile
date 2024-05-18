@@ -15,12 +15,12 @@ LD              := $(CROSS)ld
 CPP             := $(CROSS)cpp
 OBJCOPY         := $(CROSS)objcopy
 AS_FLAGS        += -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0
-PSXCC_FLAGS		:= -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff
+PSXCC_FLAGS     := -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff
 CC_FLAGS        += -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g
 CPP_FLAGS       += -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin
 CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DNO_LOGS -DHACKS -DUSE_INCLUDE_ASM
 CPP_FLAGS       += -D_internal_version_$(VERSION) -DSOTN_STR
-LD_FLAGS		:= -nostdlib --no-check-sections
+LD_FLAGS        := -nostdlib --no-check-sections
 
 # Directories
 ASM_DIR         := asm/$(VERSION)
@@ -62,7 +62,7 @@ M2C_DIR         := $(TOOLS_DIR)/m2c
 M2C_APP         := $(M2C_DIR)/m2c.py
 M2C             := $(PYTHON) $(M2C_APP)
 M2C_ARGS        := -P 4
-SOTNSTR			:= $(PYTHON) $(TOOLS_DIR)/sotn_str/sotn_str.py process
+SOTNSTR         := $(PYTHON) $(TOOLS_DIR)/sotn_str/sotn_str.py process
 MASPSX_DIR      := $(TOOLS_DIR)/maspsx
 MASPSX_APP      := $(MASPSX_DIR)/maspsx.py
 MASPSX          := $(PYTHON) $(MASPSX_APP) --expand-div --aspsx-version=2.34

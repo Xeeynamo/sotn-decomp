@@ -13,3 +13,6 @@
 [submodule "tools/maspsx"]
 	path = tools/maspsx
 	url = https://github.com/mkst/maspsx.git
+[submodule "tools/mwccgap"]
+	path = tools/mwccgap
+	url = https://github.com/mkst/mwccgap.git
