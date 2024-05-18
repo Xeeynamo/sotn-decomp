@@ -30,6 +30,7 @@ EntityDummy = 0x8018E38C;
 CollectHeart = 0x8018EC10;
 CollectGold = 0x8018EC90;
 CollectSubweapon = 0x8018ED6C;
+CollectHeartVessel = 0x8018EE84;
 CollectLifeVessel = 0x8018EF28;
 DestroyCurrentEntity = 0x8018EF78;
 EntityPrizeDrop = 0x8018EFA0;
