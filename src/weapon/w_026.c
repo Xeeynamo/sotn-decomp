@@ -17,7 +17,36 @@ s32 func_ptr_80170014(Entity* self) {}
 
 int GetWeaponId(void) { return 26; }
 
-INCLUDE_ASM("weapon/nonmatchings/w_026", func_BA000_8017B37C);
+extern s16 D_BA000_8017AA98;
+extern s16 D_BA000_8017AA9A;
+
+void func_BA000_8017B37C(void) {
+    RECT rect;
+    s16 temp;
+
+    if (D_BA000_8017AA9A & 1) {
+        if (++D_BA000_8017AA98 >= 0x20) {
+            D_BA000_8017AA9A++;
+            D_BA000_8017AA98 = 0x1F;
+        }
+    } else {
+        if (--D_BA000_8017AA98 < 0) {
+            D_BA000_8017AA9A++;
+            D_BA000_8017AA98 = 0;
+        }
+    }
+
+    temp = g_Clut[0x112D + g_HandId * 0x180];
+    temp &= 0xFC1F;
+    temp += D_BA000_8017AA98 << 5;
+    g_Clut[0x112D + g_HandId * 0x180] = temp;
+
+    rect.x = 0;
+    rect.y = 0xF1;
+    rect.w = 0x100;
+    rect.h = 3;
+    LoadImage(&rect, &g_Clut[0x1100]);
+}
 
 INCLUDE_ASM("weapon/nonmatchings/w_026", EntityWeaponShieldSpell);
 
