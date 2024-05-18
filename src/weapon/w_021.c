@@ -206,7 +206,214 @@ s32 func_97000_8017AF2C(Entity* self, s32 arg1) {
     return 1;
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_021", EntityWeaponAttack);
+extern SpriteParts D_97000_8017A040[];
+
+void EntityWeaponAttack(Entity* self) {
+    Collider sp10;
+    s16 xShift;
+    s16 yShift;
+    s32 factory_arg1;
+
+    switch (self->step) {
+    case 0:
+        SetSpriteBank1(D_97000_8017A040);
+        self->animSet = ANIMSET_OVL(0x10);
+        self->palette = 0x110;
+        self->unk5A = 100;
+        if (g_HandId != 0) {
+            self->palette += 0x18;
+            self->unk5A += 2;
+            self->animSet += 2;
+        }
+        // Testing for meal ticket
+        if (((self->params >> 8) & 0x7F) == 41) {
+            self->params &= 0x80FF;
+            self->params |= (rand() % 41) << 8;
+            self->step = 5;
+            self->animCurFrame = 0;
+            // weird logic here
+            self->ext.food.foodId -= 41;
+            self->ext.food.foodId += ((self->params & 0x7F00) >> 8);
+            return;
+        }
+        self->zPriority = PLAYER.zPriority + 2;
+        self->facingLeft = PLAYER.facingLeft;
+        self->flags = FLAG_UNK_08000000;
+        self->animCurFrame = ((self->params >> 8) & 0x7F) + 1;
+        self->posY.i.hi -= 4;
+        SetSpeedX((rand() & 0x3FFF) + FIX(0.875)); // 1 +- 0.125
+        self->velocityY = FIX(-2);
+        // This tests for the peanut!
+        if (((self->params >> 8) & 0x7F) == 6) {
+            if (self->facingLeft) {
+                self->posX.i.hi -= 8;
+            } else {
+                self->posX.i.hi += 8;
+            }
+            SetSpeedX((rand() & 0xFFF) | FIX(1.0 / 16)); // 1/16 to 1/8
+            self->velocityY = FIX(-5.5);
+            self->ext.food.unk80 = FIX(-5.5);
+        }
+        SetWeaponProperties(self, 2);
+        DestroyEntityWeapon(1);
+        self->facingLeft = 0;
+        self->hitboxHeight = self->hitboxWidth = 8;
+        self->step++;
+        return;
+    case 1:
+        if (func_97000_8017AF2C(self, 0) != 0) {
+            // Testing for toadstool!
+            if (((self->params >> 8) & 0x7F) == 7) {
+                self->ext.food.timer = 12;
+                self->step = 4;
+                self->animCurFrame = 0;
+                g_Player.D_80072EF4 =
+                    0x4000;               // Note: different in steps 1 and 2
+                g_Player.D_80072EFC = 20; // stun player for 20 frames
+                return;
+            }
+            if (g_Player.unk56 == 0) {
+                g_Player.unk56 = 1;
+                g_Player.unk58 = self->attack;
+                DestroyEntity(self);
+                return;
+            }
+            self->ext.food.timer = 8;
+            self->animCurFrame = 0;
+            self->step = 3;
+            return;
+        }
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->velocityY += FIX(20.0 / 128);
+        g_api.CheckCollision(
+            self->posX.i.hi, (s16)(self->posY.i.hi + 8), &sp10, 0);
+        if (sp10.effects & 1) {
+            self->posY.i.hi += sp10.unk18;
+            // Test for peanut. Peanut should bounce.
+            if (((self->params >> 8) & 0x7F) == 6) {
+                self->ext.food.unk80 /= 2;
+                self->velocityY = self->ext.food.unk80;
+                if (self->velocityY <= FIX(-1)) {
+                    self->posY.val += self->velocityY;
+                } else {
+                    DestroyEntity(self);
+                    return;
+                }
+            } else {
+                self->ext.food.timer = 0x80;
+                self->step++;
+                return;
+            }
+        }
+        if (self->velocityX < 0) {
+            xShift = -4;
+        } else {
+            xShift = 4;
+        }
+        g_api.CheckCollision(
+            (s16)(xShift + self->posX.i.hi), self->posY.i.hi, &sp10, 0);
+        if (sp10.effects & 2) {
+            if (xShift < 0) {
+                self->posX.i.hi += sp10.unkC;
+            } else {
+                self->posX.i.hi += sp10.unk4;
+            }
+            self->velocityX /= -2;
+            // Applies to the peanut
+            if (((self->params >> 8) & 0x7F) == 6) {
+                DestroyEntity(self);
+                return;
+            }
+        }
+        // Peanut has lower collision than other food (probably because it's
+        // tiny?)
+        if (((self->params >> 8) & 0x7F) == 6) {
+            yShift = -4;
+        } else {
+            yShift = -8;
+        }
+        g_api.CheckCollision(
+            self->posX.i.hi, (s16)(yShift + self->posY.i.hi), &sp10, 0);
+        if (sp10.effects & 1) {
+            self->posY.i.hi += (1 + sp10.unk20);
+            self->velocityX /= 2;
+            self->velocityY = FIX(1);
+            return;
+        }
+
+        return;
+    case 2:
+        DecelerateX(FIX(36.0 / 128));
+        self->posX.val += self->velocityX;
+        if (func_97000_8017AF2C(self, 1) != 0) {
+            // Toadstool logic
+            if (((self->params >> 8) & 0x7F) == 7) {
+                self->ext.food.timer = 12;
+                self->step = 4;
+                self->animCurFrame = 0;
+                g_Player.D_80072EF4 = 0; // Note: different in steps 1 and 2
+                g_Player.D_80072EFC = 20;
+                return;
+            }
+            if (g_Player.unk56 == 0) {
+                g_Player.unk56 = 1;
+                g_Player.unk58 = self->attack;
+                DestroyEntity(self);
+                return;
+            }
+            self->ext.food.timer = 8;
+            self->animCurFrame = 0;
+            self->step = 3;
+            return;
+        }
+        if (self->ext.food.timer == 24) {
+            self->drawFlags |= FLAG_DRAW_UNK80;
+        }
+        if (--self->ext.food.timer == 0) {
+            DestroyEntity(self);
+        }
+        return;
+    case 3:
+        if (--self->ext.food.timer == 0) {
+            if (g_Player.unk56 == 0) {
+                g_Player.unk56 = 1;
+                g_Player.unk58 = self->attack;
+                DestroyEntity(self);
+                return;
+            }
+            self->ext.food.timer = 8;
+        }
+        return;
+    case 4:
+        if (--self->ext.food.timer == 0) {
+            PLAYER.unk44 = 0x81;
+            PLAYER.hitPoints = 0;
+            PLAYER.hitboxState = 0;
+            DestroyEntity(self);
+            return;
+        }
+        return;
+    case 5:
+        // Creates factory to make an entity where the params is the food ID.
+        // Uses blueprint 56, indexed into the weapon functions.
+        // Blueprint 56 is child offset 1, so this runs func_ptr_80170004 for
+        // food.
+        factory_arg1 =
+            56 + ((g_HandId + 1) << 0xE) + ((self->ext.food.foodId << 0x10));
+        if (g_api.CreateEntFactoryFromEntity(self, factory_arg1, 0) != NULL) {
+            self->ext.food.timer = 4;
+            self->step++;
+            return;
+        }
+        return;
+    case 6:
+        if (--self->ext.food.timer == 0) {
+            DestroyEntity(self);
+        }
+        return;
+    }
+}
 
 INCLUDE_ASM("weapon/nonmatchings/w_021", func_ptr_80170004);
 
