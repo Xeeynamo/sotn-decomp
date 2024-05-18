@@ -782,6 +782,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
     DestroyEntity(g_CurrentEntity);
 }
 
+// Different from "collect_heart_vessel.h"
 void CollectHeartVessel(void) {
     g_api.PlaySfx(0x670);
     g_api.func_800FE044(HEART_VESSEL_INCREASE, 0x4000);
