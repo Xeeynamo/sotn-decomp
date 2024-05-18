@@ -1,11 +1,6 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-#include "include_asm.h"
-#include "macros.h"
-#include "settings.h"
-#include "types.h"
-
 #if defined(_internal_version_us)
 #define VERSION_US
 #define VERSION "us"
@@ -23,6 +18,11 @@
 #define VERSION_US
 #define VERSION "us"
 #endif
+
+#include "include_asm.h"
+#include "macros.h"
+#include "settings.h"
+#include "types.h"
 
 #define LEN(x) ((s32)(sizeof(x) / sizeof(*(x))))
 #define LENU(x) ((u32)(sizeof(x) / sizeof(*(x))))

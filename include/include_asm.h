@@ -6,7 +6,7 @@
 
 #define ASM_RODATA __asm__(".section .rodata")
 
-#ifndef PERMUTER
+#if !defined(PERMUTER) && !defined(VERSION_PSP)
 
 #ifndef INCLUDE_ASM
 
@@ -41,7 +41,7 @@
 __asm__(".include \"macro.inc\"\n");
 #endif
 
-#else
+#else // PERMUTER || VERSION_PSP
 #define INCLUDE_ASM(FOLDER, NAME)
 #endif
 
