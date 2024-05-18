@@ -171,9 +171,6 @@ Entity* func_8017110C(Entity* self) {
 }
 #endif
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_801713C8);
-#else
 s32 func_801713C8(Entity* entity) {
     if (entity->hitboxState == 0)
         return 0;
@@ -192,7 +189,6 @@ s32 func_801713C8(Entity* entity) {
 
     return 1;
 }
-#endif
 
 #ifndef VERSION_PSP
 bool func_80171434(s16 x, s16 y, s16* outX, s16* outY) {
