@@ -20,7 +20,11 @@ typedef enum {
 #define PLAYER g_Entities[PLAYER_CHARACTER]
 
 #define SQ(x) ((x) * (x))
+#ifndef VERSION_PSP
 #define ABS(x) ((x) < 0 ? -(x) : (x))
+#else
+#define ABS abs
+#endif
 #define ABS_ALT(x) ((x) >= 0 ? (x) : -(x))
 #define MIN(a, b) (a > b ? b : a)
 #define DECR(x) ((x) == 0 ? 0 : --(x))

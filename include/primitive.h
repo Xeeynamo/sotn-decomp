@@ -9,7 +9,7 @@
 #define blendMode drawMode // maintained to easily migrate existing scratches
 typedef struct Primitive {
     /* 0x00 */ struct Primitive* next;
-#ifdef VERSION_PC
+#if defined(VERSION_PC) || defined(VERSION_PSP)
     u_long dummy;
 #endif
     /* 0x04 */ u8 r0;

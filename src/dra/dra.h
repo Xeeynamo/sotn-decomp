@@ -909,8 +909,7 @@ void func_80115C50(void);
 void func_80118894(Entity*);
 
 void func_80118C28(s32 arg0);
-void func_8011A3AC(
-    Entity* entity, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3);
+void func_8011A3AC(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
 Entity* CreateEntFactoryFromEntity(Entity* entity, u32, s32);
 
 // Forward declarations for all the entity updating functions

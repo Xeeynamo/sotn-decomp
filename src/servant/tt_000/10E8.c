@@ -35,7 +35,7 @@ s16 D_80174BCC[16];
 s16 D_80174BEC[16];
 s16 D_80174C0C[16];
 s32 D_80174C2C;
-Unkstruct_8011A3AC D_80174C30;
+FamiliarStats D_80174C30;
 Point16 D_80174C3C[4][16];
 s32 D_80174D3C;
 s32 D_80174D40;
@@ -68,6 +68,10 @@ ServantDesc g_ServantDesc = {
 
 #ifdef VERSION_PSP
 extern s32 D_80174D3C;
+extern FamiliarStats D_80174C30;
+extern Point16 D_80174C3C[4][16];
+extern s32 D_801748D8[0x80];
+extern s32 D_80174D40;
 void DestroyEntity(Entity* entity);
 #endif
 
@@ -96,7 +100,7 @@ Entity* func_8017110C(Entity* self) {
     e = &g_Entities[STAGE_ENTITY_START];
     for (i = 0; i < EntitySearchCount; i++, e++) {
         D_801748D8[i] = 0;
-        if (e->entityId == 0) {
+        if (!e->entityId) {
             continue;
         }
         if (e->hitboxState == 0) {
@@ -105,12 +109,11 @@ Entity* func_8017110C(Entity* self) {
         if (e->flags & FLAG_UNK_00200000) {
             continue;
         }
-
         entityX = e->posX.i.hi;
-        if (entityX < -0x10) {
+        if (e->posX.i.hi < -0x10) {
             continue;
         }
-        if (entityX > 0x110) {
+        if (e->posX.i.hi > 0x110) {
             continue;
         }
         if (e->posY.i.hi > 0xF0) {
@@ -119,7 +122,7 @@ Entity* func_8017110C(Entity* self) {
         if (e->posY.i.hi < 0) {
             continue;
         }
-        if (e->hitboxState & 8 && D_80170658[D_80174C30.unk0 / 10][4] == 0) {
+        if (e->hitboxState & 8 && !D_80170658[D_80174C30.level / 10][4]) {
             continue;
         }
 
@@ -145,20 +148,21 @@ Entity* func_8017110C(Entity* self) {
             continue;
         }
 
-        if (!(e->flags & FLAG_UNK_80000)) {
+        if (e->flags & FLAG_UNK_80000) {
+            if (e->hitPoints >= D_80170658[D_80174C30.level / 10][3]) {
+                found++;
+                D_801748D8[i] = 1;
+            }
+        } else {
             e->flags |= FLAG_UNK_80000;
             return e;
-        }
-        if (e->hitPoints >= D_80170658[D_80174C30.unk0 / 10][3]) {
-            found++;
-            D_801748D8[i] = 1;
         }
     }
 
     if (found > 0) {
         foundIndex = D_80174D40 % EntitySearchCount;
         for (i = 0; i < 0x80; i++) {
-            if (D_801748D8[foundIndex] != 0) {
+            if (D_801748D8[foundIndex]) {
                 e = &g_Entities[STAGE_ENTITY_START + foundIndex];
                 D_80174D40 = (foundIndex + 1) % EntitySearchCount;
                 return e;
@@ -266,9 +270,6 @@ void func_8017160C(s32 amount, s32 entityId) {
     }
 }
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_8017170C);
-#else
 void func_8017170C(Entity* entity, s32 frameIndex) {
     Primitive* prim;
     s32 tpage;
@@ -282,7 +283,7 @@ void func_8017170C(Entity* entity, s32 frameIndex) {
         return;
     }
     index = frameIndex - 1;
-    if (entity->facingLeft != 0) {
+    if (entity->facingLeft) {
         x = entity->posX.i.hi + 2;
     } else {
         x = entity->posX.i.hi - 16;
@@ -294,11 +295,7 @@ void func_8017170C(Entity* entity, s32 frameIndex) {
     prim->x1 = prim->x3 = prim->x0 + D_80170608[index].width;
     prim->y2 = prim->y3 = prim->y0 + D_80170608[index].height;
     prim->clut = D_80170608[index].clut;
-    tpage = D_80170608[index].tpage;
-    if (tpage < 0) {
-        tpage += 3;
-    }
-    prim->tpage = tpage >> 2;
+    prim->tpage = D_80170608[index].tpage / 4;
     prim->u0 = prim->u2 = D_80170608[index].texLeft;
     prim->v0 = prim->v1 = D_80170608[index].texTop;
     prim->u1 = prim->u3 = D_80170608[index].texRight;
@@ -306,11 +303,7 @@ void func_8017170C(Entity* entity, s32 frameIndex) {
     prim->priority = entity->zPriority + 1;
     prim->drawMode = 0x102;
 }
-#endif
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_801718A0);
-#else
 void func_801718A0(Entity* entity) {
     Primitive* prim;
     s32 frame;
@@ -318,7 +311,7 @@ void func_801718A0(Entity* entity) {
     s32 x;
 
     frame = 2;
-    if (entity->facingLeft != 0) {
+    if (entity->facingLeft) {
         x = entity->posX.i.hi + 2;
     } else {
         x = entity->posX.i.hi - 16;
@@ -334,17 +327,13 @@ void func_801718A0(Entity* entity) {
     prim->x1 = prim->x3 = prim->x0 + D_80170608[frame].width;
     prim->y2 = prim->y3 = prim->y0 + D_80170608[frame].height;
 }
-#endif
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_801719E0);
-#else
 void func_801719E0(Entity* self) {
     s32 i;
 
-    if (self->ext.bat.unk80 == 0) {
-        self->ext.bat.unk8E = 0;
+    if (!self->ext.bat.unk80) {
         self->ext.bat.unk82 = self->params;
+        self->ext.bat.unk8E = 0;
         switch (self->entityId) {
         case 0xD1:
             self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
@@ -355,7 +344,7 @@ void func_801719E0(Entity* self) {
             func_8017170C(self, 0);
             self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
-            func_801710E8(self, &D_801704A8);
+            func_801710E8(self, D_801704A8);
             self->ext.bat.unk84 = rand() % 4096;
             self->ext.bat.unk86 = 0;
             self->ext.bat.unk88 = 0xC;
@@ -372,8 +361,8 @@ void func_801719E0(Entity* self) {
             func_8017170C(self, 0);
             self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
                           FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
-            func_801710E8(self, &D_801704A8);
-            if (self->ext.bat.unk82 == 0) {
+            func_801710E8(self, D_801704A8);
+            if (!self->ext.bat.unk82) {
                 self->ext.bat.follow = &PLAYER;
             } else {
                 self->ext.bat.follow = &g_Entities[3 + self->ext.bat.unk82];
@@ -381,7 +370,7 @@ void func_801719E0(Entity* self) {
             self->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
             self->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
 
-            if (self->ext.bat.unk82 == 0) {
+            if (!self->ext.bat.unk82) {
                 for (i = 0; i < 16; i++) {
                     D_80174C3C[self->ext.bat.unk82][i].x =
                         self->ext.bat.follow->posX.i.hi + self->ext.bat.cameraX;
@@ -418,15 +407,15 @@ void func_801719E0(Entity* self) {
         case 0xD1:
             self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
                           FLAG_HAS_PRIMS | FLAG_UNK_20000;
-            func_801710E8(self, &D_801704A8);
+            func_801710E8(self, D_801704A8);
             self->ext.bat.unk8C = rand() % 4096;
             self->step++;
             break;
         case 0xD2:
             self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
                           FLAG_UNK_02000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000;
-            func_801710E8(self, &D_801704A8);
-            if (self->ext.bat.unk82 == 0) {
+            func_801710E8(self, D_801704A8);
+            if (!self->ext.bat.unk82) {
                 self->ext.bat.follow = &PLAYER;
             } else {
                 self->ext.bat.follow = &g_Entities[3 + self->ext.bat.unk82];
@@ -455,7 +444,6 @@ void func_801719E0(Entity* self) {
     self->ext.bat.unk80 = self->entityId;
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
 }
-#endif
 
 void func_80171ED4(s32 arg0) {
     u16* dst;
@@ -671,7 +659,7 @@ void func_80172120(Entity* self) {
                         func_801710E8(self, D_8017054C);
                     }
                     self->ext.bat.unk8C++;
-                    if (D_80170658[D_80174C30.unk0 / 10][0] <
+                    if (D_80170658[D_80174C30.level / 10][0] <
                         self->ext.bat.unk8C) {
                         self->ext.bat.unk8C = 0;
                         self->ext.bat.target = func_8017110C(self);
@@ -697,7 +685,7 @@ void func_80172120(Entity* self) {
             D_80174B20 = self->ext.bat.target->posY.i.hi;
             self->hitboxWidth = 5;
             self->hitboxHeight = 5;
-            g_api.func_8011A3AC(self, 0xF, 1, &D_80174C30);
+            g_api.func_8011A3AC(self, 15, 1, &D_80174C30);
             self->ext.bat.unk86 = 0xC00;
             func_801710E8(self, D_801705EC);
             func_80171568(self);
@@ -709,7 +697,7 @@ void func_80172120(Entity* self) {
         D_80174B20 = self->ext.bat.target->posY.i.hi;
         D_80174B0C = func_80173F30(self, (s16)D_80174B1C, (s16)D_80174B20);
         D_80174B10 = func_80173F74(D_80174B0C, self->ext.bat.unk86,
-                                   (s16)D_80170658[D_80174C30.unk0 / 10][1]);
+                                   (s16)D_80170658[D_80174C30.level / 10][1]);
         self->ext.bat.unk86 = D_80174B10;
         self->velocityX = rcos(D_80174B10) << 6;
         self->velocityY = -(rsin(D_80174B10) << 6);
@@ -793,7 +781,7 @@ void func_80172C30(Entity* self) {
     case 0:
         func_801719E0(self);
         if (self->ext.bat.unk82 == 0) {
-            func_8017160C(D_80170658[D_80174C30.unk0 / 10][2], 0xD2);
+            func_8017160C(D_80170658[D_80174C30.level / 10][2], 0xD2);
         }
         break;
     case 1:
@@ -1145,43 +1133,44 @@ Entity* func_80173EB0(s32 rangeIndex, s32 entityId) {
 }
 #endif
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80173F30);
-#else
-s32 func_80173F30(Entity* entity, s16 x, s16 y) {
-    s16 diffx = x - entity->posX.i.hi;
-    return ratan2(-(s16)(y - entity->posY.i.hi), diffx) & 0xFFF;
+s16 func_80173F30(Entity* entity, s16 x, s16 y) {
+    s16 angle;
+    s16 diffy;
+    s16 diffx;
+
+    diffx = x - entity->posX.i.hi;
+    diffy = y - entity->posY.i.hi;
+    angle = ratan2(-diffy, diffx) & 0xFFF;
+
+    return angle;
 }
-#endif
 
+s16 func_80173F74(s16 x1, s16 x2, s16 minDistance) {
 #ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80173F74);
+    s16 diff = ABS(x2 - x1);
 #else
-s16 func_80173F74(s16 arg0, s16 arg1, s16 arg2) {
-    s32 diffTmp = arg1 - arg0;
+    s32 diffTmp = x2 - x1;
     s16 diff = ABS(diffTmp);
-    s16 res;
-
-    if (arg2 > diff) {
-        arg2 = diff;
+#endif
+    if (minDistance > diff) {
+        minDistance = diff;
     }
 
-    if (arg1 < arg0) {
+    if (x2 < x1) {
         if (diff < 0x800) {
-            res = arg1 + arg2;
+            x2 += minDistance;
         } else {
-            res = arg1 - arg2;
+            x2 -= minDistance;
         }
     } else {
         if (diff < 0x800) {
-            res = arg1 - arg2;
+            x2 -= minDistance;
         } else {
-            res = arg1 + arg2;
+            x2 += minDistance;
         }
     }
-    return res & 0xFFF;
+    return x2 & 0xFFF;
 }
-#endif
 
 #ifndef VERSION_PSP
 s32 func_80173FE8(Entity* entity, s32 x, s32 y) {

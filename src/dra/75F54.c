@@ -1607,21 +1607,21 @@ void func_8011A328(Entity* entity, s32 arg1) {
     func_80118894(entity);
 }
 
-void func_8011A3AC(Entity* arg0, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3) {
+void func_8011A3AC(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out) {
     SpellDef spell;
 
-    *arg3 = D_80097C38[g_Servant];
+    *out = g_Status.statsFamiliars[g_Servant - 1];
     if (arg2 != 0) {
-        func_800FD9D4(&spell, arg1);
-        arg0->attack = spell.attack;
-        arg0->attackElement = spell.attackElement;
-        arg0->hitboxState = spell.hitboxState;
-        arg0->nFramesInvincibility = spell.nFramesInvincibility;
-        arg0->stunFrames = spell.stunFrames;
-        arg0->hitEffect = spell.hitEffect;
-        arg0->entityRoomIndex = spell.entityRoomIndex;
-        arg0->attack = spell.attack * ((arg3->unk0 * 4 / 95) + 1);
-        func_80118894(arg0);
+        func_800FD9D4(&spell, spellId);
+        entity->attack = spell.attack;
+        entity->attackElement = spell.attackElement;
+        entity->hitboxState = spell.hitboxState;
+        entity->nFramesInvincibility = spell.nFramesInvincibility;
+        entity->stunFrames = spell.stunFrames;
+        entity->hitEffect = spell.hitEffect;
+        entity->entityRoomIndex = spell.entityRoomIndex;
+        entity->attack = spell.attack * ((out->level * 4 / 95) + 1);
+        func_80118894(entity);
     }
 }
 
