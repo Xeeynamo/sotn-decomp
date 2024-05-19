@@ -682,7 +682,7 @@ void func_80172120(Entity* self) {
                         << 0xC) >>
                     0xC;
                 if (D_80174B2C < 0x18) {
-                    if (self->ext.bat.unk8E != 0) {
+                    if (self->ext.bat.unk8E) {
                         self->ext.bat.unk8E = 0;
                         func_801710E8(self, D_8017054C);
                     }
@@ -691,7 +691,7 @@ void func_80172120(Entity* self) {
                         self->ext.bat.unk8C) {
                         self->ext.bat.unk8C = 0;
                         self->ext.bat.target = func_8017110C(self);
-                        if (self->ext.bat.target != 0) {
+                        if (self->ext.bat.target) {
                             self->step++;
                         }
                     }
@@ -808,7 +808,7 @@ void func_80172C30(Entity* self) {
     switch (self->step) {
     case 0:
         func_801719E0(self);
-        if (self->ext.bat.unk82 == 0) {
+        if (!self->ext.bat.unk82) {
             func_8017160C(D_80170658[D_80174C30.level / 10][2], 0xD2);
         }
         break;
@@ -826,28 +826,30 @@ void func_80172C30(Entity* self) {
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         if ((self->velocityX == 0) && (self->velocityY == 0)) {
-            if (self->ext.bat.unk8E != 0) {
+            if (self->ext.bat.unk8E) {
                 func_801710E8(self, D_8017054C);
-                self->ext.bat.unk8E = 0;
+                self->ext.bat.unk8E = false;
             }
         } else {
             if (self->velocityY > FIX(1)) {
-                func_801710E8(self, &D_801705EC);
+                func_801710E8(self, D_801705EC);
             } else {
-                func_801710E8(self, &D_801704A8);
+                func_801710E8(self, D_801704A8);
             }
-            self->ext.bat.unk8E = 1;
+            self->ext.bat.unk8E = true;
         }
-        self->facingLeft = PLAYER.facingLeft == 0;
-        if (self->ext.bat.unkA8 == 0) {
+        self->facingLeft = PLAYER.facingLeft ? false : true;
+        if (!self->ext.bat.unkA8) {
             if (g_Player.unk0C & 0x800) {
                 // This causes the bat familiar to shoot a fireball when the
                 // player does so in bat form.
                 g_api.CreateEntFactoryFromEntity(self, FACTORY(0x100, 81), 0);
                 self->ext.bat.unkA8 = 1;
             }
-        } else if (!(g_Player.unk0C & 0x800)) {
-            self->ext.bat.unkA8 = 0;
+        } else if (self->ext.bat.unkA8) {
+            if (!(g_Player.unk0C & 0x800)) {
+                self->ext.bat.unkA8 = 0;
+            }
         }
         D_80174B38 = self->ext.bat.follow->posX.i.hi - self->posX.i.hi;
         D_80174B3C = self->ext.bat.follow->posY.i.hi - self->posY.i.hi;
@@ -855,7 +857,7 @@ void func_80172C30(Entity* self) {
             SquareRoot12(((D_80174B38 * D_80174B38) + (D_80174B3C * D_80174B3C))
                          << 0xC) >>
             0xC;
-        if ((func_801746A0(0) != 0) || (D_80174B34 >= 0x19)) {
+        if (func_801746A0(0) || D_80174B34 >= 0x19) {
             for (D_80174B30 = 0; D_80174B30 < 0xF; D_80174B30++) {
                 D_80174C3C[self->ext.bat.unk82][D_80174B30].x =
                     D_80174C3C[self->ext.bat.unk82][D_80174B30 + 1].x;
@@ -873,14 +875,15 @@ void func_80172C30(Entity* self) {
         }
         break;
     case 2:
-        if (++self->ext.bat.unk8C == 1) {
-            if (self->ext.bat.unk82 == 0) {
+        self->ext.bat.unk8C++;
+        if (self->ext.bat.unk8C == 1) {
+            if (!self->ext.bat.unk82) {
                 g_api.PlaySfx(SFX_BAT_SCREECH);
             }
             func_8017170C(self, 2);
         } else if (self->ext.bat.unk8C >= 0x1F) {
             func_8017170C(self, 0);
-            if (self->ext.bat.unk82 == 0) {
+            if (!self->ext.bat.unk82) {
                 self->entityId = 0xD1;
                 self->step = 0;
                 break;
@@ -889,7 +892,7 @@ void func_80172C30(Entity* self) {
             D_80174C3C[self->ext.bat.unk82][0].x =
                 PLAYER.facingLeft ? -0x80 : 0x180;
             D_80174C3C[self->ext.bat.unk82][0].y = rand() % 256;
-            func_801710E8(self, &D_801704A8);
+            func_801710E8(self, D_801704A8);
         }
         break;
     case 3:
@@ -907,7 +910,7 @@ void func_80172C30(Entity* self) {
     }
     ProcessEvent(self, false);
     func_80171560(self);
-    g_api.UpdateAnim(NULL, D_801705F4);
+    g_api.UpdateAnim(NULL, (s32*)D_801705F4);
 }
 #endif
 
