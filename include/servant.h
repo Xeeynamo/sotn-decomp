@@ -29,15 +29,15 @@ typedef struct {
 typedef struct ServantEvent {
     /* 0x00 */ struct ServantEvent* next; // next event in the queue
     /* 0x04 */ u32 timer;     // internal timer from 'delay' to the activation 0
-    /* 0x08 */ u32 servantId; // the familiar ID that can trigger the event
+    /* 0x08 */ s32 servantId; // the familiar ID that can trigger the event
     /* 0x0C */ s32 roomX;     // only activate in the specified room coords...
-    /* 0x10 */ u32 roomY;     // ... where on X negative is the inverted castle
-    /* 0x14 */ u32 cameraX;   // only activate on the camera coordinate...
-    /* 0x18 */ u32 cameraY;   // ...within the room
+    /* 0x10 */ s32 roomY;     // ... where on X negative is the inverted castle
+    /* 0x14 */ s32 cameraX;   // only activate on the camera coordinate...
+    /* 0x18 */ s32 cameraY;   // ...within the room
     /* 0x1C */ s32 condition; // condition for the event
     /* 0x20 */ u32 delay;     // after how many frames the event is triggered
-    /* 0x24 */ u32 entityId;  // ID of the entity to spawn
-    /* 0x28 */ u32 params;    // parameters of the entity to spawn
+    /* 0x24 */ s32 entityId;  // ID of the entity to spawn
+    /* 0x28 */ s32 params;    // parameters of the entity to spawn
     /* 0x2C */ u32 unk2C;
 } ServantEvent;
 

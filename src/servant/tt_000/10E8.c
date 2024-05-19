@@ -67,21 +67,18 @@ ServantDesc g_ServantDesc = {
 #endif
 
 #ifdef VERSION_PSP
-extern s32 D_80174D3C;
 extern FamiliarStats D_80174C30;
-extern Point16 D_80174C3C[4][16];
 extern s32 D_801748D8[0x80];
-extern s32 D_80174D40;
 
 extern Collider D_80174AD8;
-extern s16 D_80174AFC, D_80174AFC_;
-extern s16 D_80174B00, D_80174B00_;
-extern s16 D_80174B04, D_80174B04_;
-extern s16 D_80174B08, D_80174B08_;
-extern s16 D_80174B0C, D_80174B0C_;
-extern s16 D_80174B10, D_80174B10_;
-extern s16 D_80174B14, D_80174B14_;
-extern s16 D_80174B18, D_80174B18_;
+extern s16 D_80174AFC;
+extern s16 D_80174B00;
+extern s16 D_80174B04;
+extern s16 D_80174B08;
+extern s16 D_80174B0C;
+extern s16 D_80174B10;
+extern s16 D_80174B14;
+extern s16 D_80174B18;
 extern s32 D_80174B1C;
 extern s32 D_80174B20;
 extern s32 D_80174B24;
@@ -90,10 +87,10 @@ extern s32 D_80174B2C;
 extern s32 D_80174B2C;
 extern s32 D_80174B30;
 extern s32 D_80174B34;
-extern s16 D_80174B38, D_80174B38_;
-extern s16 D_80174B3C, D_80174B3C_;
-extern s16 D_80174B40, D_80174B40_;
-extern s16 D_80174B44, D_80174B44_;
+extern s16 D_80174B38;
+extern s16 D_80174B3C;
+extern s16 D_80174B40;
+extern s16 D_80174B44;
 extern Primitive* D_80174B48;
 extern s32 D_80174B4C[16];
 extern Point16 D_80174B8C[16];
@@ -107,6 +104,8 @@ extern s32 D_80174D3C;
 extern s32 D_80174D40;
 
 void DestroyEntity(Entity* entity);
+void ProcessEvent(Entity* self, bool resetEvent);
+void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params);
 #endif
 
 void func_801710E8(Entity* entity, AnimationFrame* anim) {
@@ -1292,10 +1291,10 @@ extern s32 g_CurrentRoomY;
 
 // Trigger an event under certain specific set of conditions
 void ProcessEvent(Entity* self, bool resetEvent) {
+    ServantEvent* evt;
     ServantEvent* queue;
-    s32 cameraY;
     s32 cameraX;
-    s32 temp_v0;
+    s32 cameraY;
     s32 i;
 
     if (resetEvent) {
@@ -1310,12 +1309,12 @@ void ProcessEvent(Entity* self, bool resetEvent) {
     // Ensures the following block is only evaluated once per room
     if (g_CurrentServant != g_Servant || g_CurrentRoomX != g_Tilemap.left ||
         g_CurrentRoomY != g_Tilemap.top) {
-        queue = g_EventQueue;
         g_CurrentServant = g_Servant;
         g_CurrentRoomX = g_Tilemap.left;
         g_CurrentRoomY = g_Tilemap.top;
+        queue = g_EventQueue;
         for (i = 1; g_Events[i].roomX != -1; i++) {
-            ServantEvent* evt = &g_Events[i];
+            evt = &g_Events[i];
             // Filter by familiar
             if (evt->servantId != -1 && evt->servantId != g_CurrentServant) {
                 continue;
@@ -1330,7 +1329,7 @@ void ProcessEvent(Entity* self, bool resetEvent) {
             }
             if (!(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
             block_13:
-#elif defined(VERSION_HD)
+#elif defined(VERSION_HD) || defined(VERSION_PSP)
             if (evt->roomX >= 0 ||
                 (g_StageId >= STAGE_RNO0 && g_StageId < STAGE_RNZ1_DEMO)) {
 #endif
@@ -1341,53 +1340,50 @@ void ProcessEvent(Entity* self, bool resetEvent) {
 
                 if (evt->cameraX == cameraX && evt->cameraY == cameraY &&
                     (evt->condition == -1 ||
-                     (evt->condition >= 0 ||
-                      g_CastleFlags[evt->condition & 0xFFFF] == 0) &&
+                     (!(evt->condition & 0x80000000) ||
+                      !g_CastleFlags[evt->condition & 0xFFFF]) &&
                          (!(evt->condition & CHECK_RELIC_FLAG) ||
                           !(g_Status.relics[evt->condition & 0xFFFF] &
                             RELIC_FLAG_FOUND)))) {
                     evt->timer = 0;
                     if (evt->delay == 0) {
                         CreateEventEntity(self, evt->entityId, evt->params);
-                        if (!evt->unk2C) {
-                            goto block_26;
+                        if (evt->unk2C) {
+                            continue;
                         }
-                    } else {
-                        goto block_27;
                     }
-                } else {
-                block_26:
-                    if (evt->delay > 0) {
-                    block_27:
-                        evt->timer = evt->delay - 1;
-                    }
-                    queue->next = evt;
-                    queue = evt;
                 }
+                if (evt->delay > 0) {
+                    evt->timer = evt->delay - 1;
+                }
+                queue->next = evt;
+                queue = evt;
             }
         }
         queue->next = NULL;
     } else {
         queue = g_EventQueue;
         while (queue->next != NULL) {
-            ServantEvent* evt = queue->next;
-            if (evt->cameraX == cameraX && evt->cameraY == cameraY &&
-                (evt->condition == -1 ||
-                 (evt->condition >= 0 ||
-                  g_CastleFlags[evt->condition & 0xFFFF] == 0) &&
-                     (!(evt->condition & CHECK_RELIC_FLAG) ||
-                      !(g_Status.relics[evt->condition & 0xFFFF] & 1)))) {
-                evt = queue->next;
-                if (evt->timer > 0) {
-                    evt->timer--;
+            if (!evt->delay) {
+            }
+            if (queue->next->cameraX == cameraX &&
+                queue->next->cameraY == cameraY &&
+                (queue->next->condition == -1 ||
+                 (!(queue->next->condition & 0x80000000) ||
+                  !g_CastleFlags[queue->next->condition & 0xFFFF]) &&
+                     (!(queue->next->condition & CHECK_RELIC_FLAG) ||
+                      !(g_Status.relics[queue->next->condition & 0xFFFF] &
+                        1)))) {
+                if (queue->next->timer > 0) {
+                    queue->next->timer--;
                 } else {
-                    CreateEventEntity(self, evt->entityId, evt->params);
-                    evt = queue->next;
-                    if (evt->unk2C) {
-                        queue->next = evt->next;
+                    CreateEventEntity(
+                        self, queue->next->entityId, queue->next->params);
+                    if (queue->next->unk2C) {
+                        queue->next = queue->next->next;
                         continue;
                     } else {
-                        evt->timer = evt->delay;
+                        queue->next->timer = queue->next->delay;
                     }
                 }
             }
