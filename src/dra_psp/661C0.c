@@ -30,7 +30,7 @@ INCLUDE_ASM("dra/nonmatchings/661C0", func_80134E64);
 
 INCLUDE_ASM("dra/nonmatchings/661C0", func_psp_09143758);
 
-INCLUDE_ASM("dra/nonmatchings/661C0", func_psp_09143ED8);
+INCLUDE_ASM("dra/nonmatchings/661C0", ExecCdSoundCommands);
 
 INCLUDE_ASM("dra/nonmatchings/661C0", func_psp_09144038);
 
