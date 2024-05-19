@@ -1,4 +1,5 @@
 g_StageId     = 0x091CE5B8;
+g_Servant     = 0x091CF028;
 g_Player      = 0x091CF030;
 g_api         = 0x091CF738;
 g_PrimBuf     = 0x091CFAF8;
