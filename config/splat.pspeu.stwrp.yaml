@@ -31,7 +31,7 @@ options:
     .set noreorder /* don't insert nops after branches */
     .include "macro.inc"
 segments:
-  - [0x0, bin, header]
+  - [0x0, bin, mwo_header]
   - name: stwrp
     type: code
     start: 0x00000080
