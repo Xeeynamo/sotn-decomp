@@ -652,7 +652,7 @@ block_48:
     if ((g_Player.D_80072F00[13] | g_Player.D_80072F00[14]) != 0) {
         g_Player.unk0C |= 0x100;
     }
-    g_api.UpdateAnim(&D_80155964, &D_8015538C);
+    g_api.UpdateAnim(D_80155964, D_8015538C);
     PLAYER.hitboxState = 1;
     PLAYER.unk44 = 0;
     PLAYER.hitPoints = 0;

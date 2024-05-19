@@ -125,7 +125,7 @@ void func_8011A4D0(void) {
                     DestroyEntity(entity);
                 } else {
                     if (entity->flags & 0x100000) {
-                        UpdateAnim(NULL, (s32*)D_800ACFB4);
+                        UpdateAnim(NULL, D_800ACFB4);
                     }
                 }
             }

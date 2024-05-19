@@ -899,7 +899,7 @@ void func_80172C30(Entity* self) {
     }
     ProcessEvent(self, false);
     func_80171560(self);
-    g_api.UpdateAnim(NULL, (s32*)D_801705F4);
+    g_api.UpdateAnim(NULL, D_801705F4);
 }
 #endif
 
