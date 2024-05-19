@@ -452,7 +452,7 @@ void func_80159C04(void) {
 
     temp_v0 = var_a0 + PLAYER.posX.i.hi - entity->posX.i.hi - var_a2;
 
-    if (ABS(temp_v0) < 16) {
+    if (abs(temp_v0) < 16) {
         if (entity->velocityX != 0) {
             if (entity->velocityX < 0) {
                 PLAYER.entityRoomIndex = 0;
@@ -1130,36 +1130,23 @@ void func_8015B898(void) {
 
 // same as DRA/func_80115C50
 void func_8015BB80(void) {
-    s32 dist;
-
     if (g_StageId == STAGE_TOP) {
-        dist = g_Tilemap.left * 256 + playerX;
-        dist = ABS(dist);
-
-        if (dist - 8000 > 0) {
+        if (abs(g_Tilemap.left * 256 + playerX) - 8000 > 0) {
             PLAYER.posX.i.hi--;
         }
 
-        dist = g_Tilemap.left * 256 + playerX;
-        dist = ABS(dist);
-
-        if (dist - 8000 < 0) {
+        if (abs(g_Tilemap.left * 256 + playerX) - 8000 < 0) {
             PLAYER.posX.i.hi++;
         }
     }
 
     if (g_StageId == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
-        dist = g_Tilemap.left * 256 + playerX;
-        dist = ABS(dist);
 
-        if (dist - 8384 > 0) {
+        if (abs(g_Tilemap.left * 256 + playerX) - 8384 > 0) {
             PLAYER.posX.i.hi--;
         }
 
-        dist = g_Tilemap.left * 256 + playerX;
-        dist = ABS(dist);
-
-        if (dist - 8384 < 0) {
+        if (abs(g_Tilemap.left * 256 + playerX) - 8384 < 0) {
             PLAYER.posX.i.hi++;
         }
     }

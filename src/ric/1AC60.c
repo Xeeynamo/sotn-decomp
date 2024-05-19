@@ -10,11 +10,6 @@
 #include "../destroy_entity.h"
 
 TeleportCheck GetTeleportToOtherCastle(void) {
-    s32 xCheckTop;
-    s32 yCheckTop;
-    s32 xCheckRTop;
-    s32 yCheckRTop;
-
     // Is player in the pose when pressing UP?
     if (PLAYER.step != 0 || PLAYER.step_s != 1) {
         return TELEPORT_CHECK_NONE;
@@ -22,23 +17,17 @@ TeleportCheck GetTeleportToOtherCastle(void) {
 
     // Check for X/Y boundaries in TOP
     if (g_StageId == STAGE_TOP) {
-        xCheckTop = (g_Tilemap.left << 8) + playerX - 8000;
-        if (ABS(xCheckTop) < 4) {
-            yCheckTop = (g_Tilemap.top << 8) + playerY - 2127;
-            if (ABS(yCheckTop) < 4) {
-                return TELEPORT_CHECK_TO_RTOP;
-            }
+        if (abs((g_Tilemap.left << 8) + playerX - 8000) < 4 &&
+            abs((g_Tilemap.top << 8) + playerY - 2127) < 4) {
+            return TELEPORT_CHECK_TO_RTOP;
         }
     }
 
     // Check for X/Y boundaries in RTOP
     if (g_StageId == STAGE_RTOP) {
-        xCheckRTop = (g_Tilemap.left << 8) + playerX - 8384;
-        if (ABS(xCheckRTop) < 4) {
-            yCheckRTop = (g_Tilemap.top << 8) + playerY;
-            if (ABS(yCheckRTop) - 14407 < 4) {
-                return TELEPORT_CHECK_TO_TOP;
-            }
+        if (abs((g_Tilemap.left << 8) + playerX - 8384) < 4 &&
+            abs((g_Tilemap.top << 8) + playerY) - 14407 < 4) {
+            return TELEPORT_CHECK_TO_TOP;
         }
     }
 
@@ -676,7 +665,7 @@ block_48:
     }
     playerY = &g_Entities[PLAYER_CHARACTER].posY.i;
     temp_s0 = g_Player.pl_vram_flag;
-    if ((ABS(PLAYER.velocityY) > FIX(2)) || (ABS(PLAYER.velocityX) > FIX(2))) {
+    if ((abs(PLAYER.velocityY) > FIX(2)) || (abs(PLAYER.velocityX) > FIX(2))) {
         PLAYER.velocityY = PLAYER.velocityY >> 2;
         PLAYER.velocityX = PLAYER.velocityX >> 2;
         if ((playerY->i.hi < 0) || (func_801572A8(1), (playerY->i.hi < 0)) ||

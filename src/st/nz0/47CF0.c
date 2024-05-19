@@ -9,14 +9,18 @@
 s32 EntityIsNearPlayer2(Entity* e) {
     s16 diff = PLAYER.posX.i.hi - e->posX.i.hi;
 
-    diff = ABS(diff);
+    diff = abs(diff);
 
     if (diff >= 25) {
-        diff = 0;
+        return 0;
     } else {
         diff = PLAYER.posY.i.hi - e->posY.i.hi;
-        diff = ABS(diff);
-        diff = diff < 33;
+        diff = abs(diff);
+        if (diff < 33) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
     return diff;
 }

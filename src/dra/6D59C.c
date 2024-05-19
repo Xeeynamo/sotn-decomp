@@ -535,7 +535,7 @@ void func_8010E570(s32 arg0) {
     case 3:
     case 4:
         var_a0 = 6;
-        if (ABS(PLAYER.velocityX) > FIX(2.5)) {
+        if (abs(PLAYER.velocityX) > FIX(2.5)) {
             var_a0 = 4;
         }
         break;
@@ -1390,7 +1390,7 @@ bool func_8010FDF8(s32 branchFlags) {
                 goto label;
             }
 
-            if (ABS(PLAYER.velocityX) > 0x20000) {
+            if (abs(PLAYER.velocityX) > 0x20000) {
                 PlaySfx(0x647);
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
                 func_8010E570(PLAYER.velocityX);

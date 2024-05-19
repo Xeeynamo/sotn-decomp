@@ -262,11 +262,6 @@ void func_8010A3F0(void) {
 }
 
 TeleportCheck GetTeleportToOtherCastle(void) {
-    s32 xCheckTop;
-    s32 yCheckTop;
-    s32 xCheckRTop;
-    s32 yCheckRTop;
-
     // Is player in the pose when pressing UP?
     if (PLAYER.step != 0 || PLAYER.step_s != 1) {
         return TELEPORT_CHECK_NONE;
@@ -274,30 +269,21 @@ TeleportCheck GetTeleportToOtherCastle(void) {
 
     // Check for X/Y boundaries in TOP
     if (g_StageId == STAGE_TOP) {
-        xCheckTop = g_Tilemap.left * 256 + playerX - 8000;
-        if (ABS(xCheckTop) < 4) {
-            yCheckTop = g_Tilemap.top * 256 + playerY - 2127;
-            if (ABS(yCheckTop) < 4) {
-                return TELEPORT_CHECK_TO_RTOP;
-            }
+        if (abs(g_Tilemap.left * 256 + playerX - 8000) < 4 &&
+            abs(g_Tilemap.top * 256 + playerY - 2127) < 4) {
+            return TELEPORT_CHECK_TO_RTOP;
         }
     }
 
     // Check for X/Y boundaries in RTOP
     if (g_StageId == STAGE_RTOP) {
-        xCheckRTop = g_Tilemap.left * 256 + playerX - 8384;
-        if (ABS(xCheckRTop) < 4) {
+        if (abs(g_Tilemap.left * 256 + playerX - 8384) < 4 &&
 #if defined(VERSION_US)
-            yCheckRTop = g_Tilemap.top * 256 + playerY - 14407;
-            if (ABS(yCheckRTop) < 4) {
-                return TELEPORT_CHECK_TO_TOP;
-            }
+            abs(g_Tilemap.top * 256 + playerY - 14407) < 4) {
 #elif defined(VERSION_HD)
-            yCheckRTop = g_Tilemap.top * 256 + playerY;
-            if (ABS(yCheckRTop) - 14407 < 4) {
-                return TELEPORT_CHECK_TO_TOP;
-            }
+            abs(g_Tilemap.top * 256 + playerY) - 14407 < 4) {
 #endif
+            return TELEPORT_CHECK_TO_TOP;
         }
     }
 
@@ -907,7 +893,7 @@ block_160:
         break;
     case 24: /* switch 5 */
         D_8009741C[0] |= 2;
-        if (ABS(PLAYER.velocityX) > FIX(3)) {
+        if (abs(PLAYER.velocityX) > FIX(3)) {
             func_8010E168(1, 4);
         }
         var_s0 = 0x2C100204;
@@ -997,7 +983,7 @@ block_160:
         }
         temp_s1 = g_Player.pl_vram_flag;
         if (!(g_Player.unk0C & (0x40400000 | 5))) {
-            if ((ABS(PLAYER.velocityX) >= FIX(2)) || (PLAYER.step == 8)) {
+            if ((abs(PLAYER.velocityX) >= FIX(2)) || (PLAYER.step == 8)) {
                 goto block_293;
             } else {
                 goto oddblock;

@@ -286,7 +286,7 @@ void EntityGurkhaSword(Entity* self) {
             func_801C2598(0x625);
         }
 
-        if (ABS(self->velocityX) == 0x80000) {
+        if (abs(self->velocityX) == 0x80000) {
             self->ext.gurkhaSword.unk8C = 0;
             self->step = 1;
         }

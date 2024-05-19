@@ -466,7 +466,7 @@ void ControlBatForm(void) {
             }
             DecelerateX(0x480);
             DecelerateY(0x480);
-            if (ABS(PLAYER.velocityY) > FIX(1.25)) {
+            if (abs(PLAYER.velocityY) > FIX(1.25)) {
                 if (PLAYER.velocityY > 0) {
                     PLAYER.velocityY = FIX(1.25);
                 } else {

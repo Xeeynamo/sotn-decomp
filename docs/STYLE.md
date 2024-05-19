@@ -114,13 +114,11 @@ If a function returns only `0` or `1`, and is used as a boolean (i.e. in conditi
   Become familiar with the various defines and enums we have available.
 
 - Those in `macros.h`
-  - `ABS`, `ABS_ALT`,
   - `CLAMP` and friends.
 
 ## Arrays
 
 - It's better to not hardcode array sizes (easier to mod)
-- Use `sizeof` or `ARRAY_COUNT`/`ARRAY_COUNTU` where it makes sense, e.g. in loops that are using an array.
 - clang-format sometimes does weird things to array formatting. Experiment with and without a comma after the last element and see which looks better.
 
 ## Documentation and Comments

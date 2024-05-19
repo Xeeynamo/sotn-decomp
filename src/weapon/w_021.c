@@ -195,8 +195,8 @@ s32 func_97000_8017AF2C(Entity* self, s32 arg1) {
         return 1;
     }
     // All other foods use this logic to tell if you've grabbed it
-    xDist = ABS(self->posX.i.hi - PLAYER.posX.i.hi + PLAYER.hitboxOffX);
-    yDist = ABS(self->posY.i.hi - PLAYER.posY.i.hi + PLAYER.hitboxOffY);
+    xDist = abs(self->posX.i.hi - PLAYER.posX.i.hi + PLAYER.hitboxOffX);
+    yDist = abs(self->posY.i.hi - PLAYER.posY.i.hi + PLAYER.hitboxOffY);
     if (xDist > (self->hitboxWidth + PLAYER.hitboxWidth)) {
         return 0;
     }
