@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>servant.ProcessEvent</title>
 <g id="a_node7"><a xlink:href="servant.ProcessEvent.svg" xlink:title="servant.ProcessEvent">
-<ellipse fill="red" stroke="black" cx="809.34" cy="-18" rx="112.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="809.34" cy="-18" rx="112.38" ry="18"/>
 <text text-anchor="middle" x="809.34" y="-14.3" font-family="Times,serif" font-size="14.00">servant.ProcessEvent</text>
 </a>
 </g>
@@ -147,7 +147,7 @@
 <g id="node10" class="node">
 <title>servant.func_8017110C</title>
 <g id="a_node10"><a xlink:href="servant.func_8017110C.svg" xlink:title="servant.func_8017110C">
-<ellipse fill="red" stroke="black" cx="1551.34" cy="-18" rx="120.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1551.34" cy="-18" rx="120.78" ry="18"/>
 <text text-anchor="middle" x="1551.34" y="-14.3" font-family="Times,serif" font-size="14.00">servant.func_8017110C</text>
 </a>
 </g>
