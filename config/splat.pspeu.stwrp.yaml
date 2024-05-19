@@ -4,9 +4,9 @@ options:
   base_path:    ..
   build_path:   build/pspeu
   target_path:  disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/wrp.bin
-  asm_path:     asm/pspeu/wrp
-  asset_path:   assets/wrp_psp
-  src_path:     src/wrp_psp
+  asm_path:     asm/pspeu/st/wrp_psp
+  asset_path:   assets/st/wrp
+  src_path:     src/st/wrp_psp
   ld_script_path: build/pspeu/stwrp.ld
   compiler:     GCC
   symbol_addrs_path:
@@ -25,6 +25,11 @@ options:
     - ".rodata"
     - ".bss"
   ld_bss_is_noload: True
+  disasm_unknown: True
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+    .include "macro.inc"
 segments:
   - [0x0, bin, header]
   - name: stwrp
@@ -52,5 +57,5 @@ segments:
       - [0xD0E0, c]
       - [0xD140, c]
       - [0xE980, data]
-      - {type: bss, vram: 0x924BC80}
+      - {type: bss, vram: 0x924BC00}
   - [0x14580]

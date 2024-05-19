@@ -15,7 +15,7 @@ MWCCGAP         := $(PYTHON) $(MWCCGAP_APP)
 
 PSP_BUILD_DIR   := build/pspeu
 CCPSP           := MWCIncludes=bin/ $(WIBO) $(MWCCPSP)
-PSP_EU_TARGETS  := tt_000
+PSP_EU_TARGETS  := wrp tt_000
 SPLAT_PIP       := splat split
 
 MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -Op -c -lang c -sdatathreshold 0
@@ -65,14 +65,19 @@ $(PSP_BUILD_DIR)/assets/%/header.bin.o: assets/%/header.bin
 
 tt_000_psp: $(PSP_BUILD_DIR)/tt_000.bin
 dra_psp: $(PSP_BUILD_DIR)/dra.bin
+wrp_psp: $(PSP_BUILD_DIR)/wrp.bin
 
 $(PSP_BUILD_DIR)/%.bin: $(PSP_BUILD_DIR)/%.elf
 	$(OBJCOPY) -O binary $< $@
 $(PSP_BUILD_DIR)/dra.ld: $(CONFIG_DIR)/splat.pspeu.dra.yaml $(PSX_BASE_SYMS) $(CONFIG_DIR)/symbols.pspeu.dra.txt
 	$(SPLAT_PIP) $<
+$(PSP_BUILD_DIR)/st%.ld: $(CONFIG_DIR)/splat.pspeu.st%.yaml $(PSX_BASE_SYMS) $(CONFIG_DIR)/symbols.pspeu.st%.txt
+	$(SPLAT_PIP) $<
 $(PSP_BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.pspeu.tt_%.yaml $(PSX_BASE_SYMS) $(CONFIG_DIR)/symbols.pspeu.tt_%.txt
 	$(SPLAT_PIP) $<
 $(PSP_BUILD_DIR)/dra.elf: $(PSP_BUILD_DIR)/dra.ld $$(call list_o_files_psp,dra_psp)
 	$(call link,dra_psp,$@)
+$(PSP_BUILD_DIR)/wrp.elf: $(PSP_BUILD_DIR)/stwrp.ld $$(call list_o_files_psp,st/wrp_psp) $(PSP_BUILD_DIR)/assets/st/wrp/header.bin.o
+	$(call link,stwrp,$@)
 $(PSP_BUILD_DIR)/tt_%.elf: $(PSP_BUILD_DIR)/tt_%.ld $$(call list_o_files_psp,servant/tt_$$*) $(PSP_BUILD_DIR)/assets/servant/tt_%/header.bin.o
 	$(call link,tt_$*,$@)
