@@ -152,21 +152,10 @@ Entity* func_8017110C(Entity* self) {
         if (e->hitboxState & 8 && !D_80170658[D_80174C30.level / 10][4]) {
             continue;
         }
-
-#if defined(VERSION_PSP)
-        if (ABS(self->posX.i.hi - e->posX.i.hi) < 64 &&
-            ABS(self->posY.i.hi - e->posY.i.hi) < 64) {
+        if (abs(self->posX.i.hi - e->posX.i.hi) < 64 &&
+            abs(self->posY.i.hi - e->posY.i.hi) < 64) {
             continue;
         }
-#else
-        distance = self->posX.i.hi - e->posX.i.hi;
-        if (ABS(distance) < 64) {
-            distance = self->posY.i.hi - e->posY.i.hi;
-            if (ABS(distance) < 64) {
-                continue;
-            }
-        }
-#endif
         if (!self->facingLeft && self->posX.i.hi < e->posX.i.hi) {
             continue;
         }
@@ -1172,12 +1161,7 @@ s16 func_80173F30(Entity* entity, s16 x, s16 y) {
 }
 
 s16 func_80173F74(s16 x1, s16 x2, s16 minDistance) {
-#ifdef VERSION_PSP
-    s16 diff = ABS(x2 - x1);
-#else
-    s32 diffTmp = x2 - x1;
-    s16 diff = ABS(diffTmp);
-#endif
+    s16 diff = abs(x2 - x1);
     if (minDistance > diff) {
         minDistance = diff;
     }
@@ -1328,7 +1312,7 @@ void ProcessEvent(Entity* self, bool resetEvent) {
             if (evt->roomX >= 0 ||
                 (g_StageId >= STAGE_RNO0 && g_StageId < STAGE_RNZ1_DEMO)) {
 #endif
-                if (ABS(evt->roomX) != g_CurrentRoomX ||
+                if (abs(evt->roomX) != g_CurrentRoomX ||
                     evt->roomY != g_CurrentRoomY) {
                     continue;
                 }
