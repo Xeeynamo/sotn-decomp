@@ -116,9 +116,6 @@ void func_801710E8(Entity* entity, AnimationFrame* anim) {
     }
 }
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_8017110C);
-#else
 Entity* func_8017110C(Entity* self) {
     const int EntitySearchCount = 128;
     s32 foundIndex;
@@ -126,8 +123,6 @@ Entity* func_8017110C(Entity* self) {
     u32 found;
     Entity* e;
     s32 distance;
-    s32 entityX;
-    s32 selfX;
 
     found = 0;
     e = &g_Entities[STAGE_ENTITY_START];
@@ -142,7 +137,6 @@ Entity* func_8017110C(Entity* self) {
         if (e->flags & FLAG_UNK_00200000) {
             continue;
         }
-        entityX = e->posX.i.hi;
         if (e->posX.i.hi < -0x10) {
             continue;
         }
@@ -159,22 +153,24 @@ Entity* func_8017110C(Entity* self) {
             continue;
         }
 
-        selfX = self->posX.i.hi;
-        distance = self->posX.i.hi - entityX;
-        if (distance < 0) {
-            distance = -distance;
+#if defined(VERSION_PSP)
+        if (ABS(self->posX.i.hi - e->posX.i.hi) < 64 &&
+            ABS(self->posY.i.hi - e->posY.i.hi) < 64) {
+            continue;
         }
-        if (distance < 64) {
+#else
+        distance = self->posX.i.hi - e->posX.i.hi;
+        if (ABS(distance) < 64) {
             distance = self->posY.i.hi - e->posY.i.hi;
-            if (distance < 0) {
-                distance = -distance;
-            }
-            if (distance < 64) {
+            if (ABS(distance) < 64) {
                 continue;
             }
         }
-
-        if ((self->facingLeft ? entityX < selfX : selfX < entityX) != 0) {
+#endif
+        if (!self->facingLeft && self->posX.i.hi < e->posX.i.hi) {
+            continue;
+        }
+        if (self->facingLeft && self->posX.i.hi > e->posX.i.hi) {
             continue;
         }
         if (e->hitPoints >= 0x7000) {
@@ -206,7 +202,6 @@ Entity* func_8017110C(Entity* self) {
 
     return NULL;
 }
-#endif
 
 s32 func_801713C8(Entity* entity) {
     if (entity->hitboxState == 0)
