@@ -1028,8 +1028,8 @@ void EntityGaibon(Entity* self) {
             self->velocityX = (speed * rcos(angle)) >> 0xC;
             self->velocityY = (speed * rsin(angle)) >> 0xC;
             MoveEntity();
-            if (ABS(slograGaibonDistX) < 8) {
-                if (ABS(slograGaibonDistY) < 8) {
+            if (abs(slograGaibonDistX) < 8) {
+                if (abs(slograGaibonDistY) < 8) {
                     self->ext.GS_Props.grabedAscending = 1;
                     self->velocityX = 0;
                     self->velocityY = 0;

@@ -61,7 +61,7 @@ void EntitySubWeaponContainer(Entity* self) {
                 newEntity->posY.i.hi -= 30;
                 newEntity->params = Random() & 3;
                 if (newEntity->params == 0) {
-                    absRnd = ABS(rnd);
+                    absRnd = abs(rnd);
                     if (absRnd >= 9) {
                         newEntity->params = 1;
                     }

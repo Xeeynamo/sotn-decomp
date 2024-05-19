@@ -20,14 +20,15 @@
 #endif
 
 #include "include_asm.h"
-#include "macros.h"
 #include "settings.h"
 #include "types.h"
 
 #define LEN(x) ((s32)(sizeof(x) / sizeof(*(x))))
-#define LENU(x) ((u32)(sizeof(x) / sizeof(*(x))))
 #define OFF(type, field) ((size_t)(&((type*)0)->field))
 #define STRCPY(dst, src) __builtin_memcpy(dst, src, sizeof(src))
+#define SQ(x) ((x) * (x))
+#define MIN(a, b) ((a) > (b) ? (b) : (a))
+#define MAX(a, b) ((a) > (b) ? (b) : (a))
 
 #ifdef _MSC_VER
 #define __builtin_memcpy memcpy

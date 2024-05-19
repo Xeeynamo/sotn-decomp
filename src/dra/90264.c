@@ -101,7 +101,7 @@ void func_80130264(Entity* self) {
     }
     self->palette = PLAYER.palette;
     self->hitboxState = 0;
-    if (ABS(PLAYER.velocityX) > FIX(3) &&
+    if (abs(PLAYER.velocityX) > FIX(3) &&
         (PLAYER.step_s != 2 || D_800B0914 != 4)) {
         func_8011A328(self, 13);
         self->enemyId = 3;
@@ -219,10 +219,10 @@ void func_80130618(Entity* self) {
     self->palette = PLAYER.palette;
     self->drawMode = 0;
     self->drawFlags &= ~DRAW_HIDE;
-    if (ABS(PLAYER.velocityX) > FIX(3)) {
+    if (abs(PLAYER.velocityX) > FIX(3)) {
         self->drawFlags |= DRAW_HIDE;
         self->drawMode = FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
-        self->unk6C = ~MIN((ABS(PLAYER.velocityX) - FIX(3)) >> 12, 160);
+        self->unk6C = ~MIN((abs(PLAYER.velocityX) - FIX(3)) >> 12, 160);
     }
 }
 static const u32 rodata_func_80130618_padding = 0;
@@ -465,7 +465,7 @@ void func_80130E94(Entity* self) {
                 var_s2 = 0x40;
                 D_8013844C += 0x100;
                 var_s1 =
-                    MIN((ABS(PLAYER.velocityX) + -FIX(3)) >> 10, 0x100) - 0x100;
+                    MIN((abs(PLAYER.velocityX) + -FIX(3)) >> 10, 0x100) - 0x100;
                 break;
             }
             break;
@@ -522,10 +522,10 @@ void func_80130E94(Entity* self) {
     self->palette = PLAYER.palette;
     self->drawMode = 0;
     self->drawFlags &= ~DRAW_HIDE;
-    if (ABS(PLAYER.velocityX) > FIX(3)) {
+    if (abs(PLAYER.velocityX) > FIX(3)) {
         self->drawFlags |= DRAW_HIDE;
         self->drawMode = FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
-        self->unk6C = ~MIN((ABS(PLAYER.velocityX) - FIX(3)) >> 12, 128);
+        self->unk6C = ~MIN((abs(PLAYER.velocityX) - FIX(3)) >> 12, 128);
     }
 }
 static const u32 rodata_func_80130E94_padding = 0;

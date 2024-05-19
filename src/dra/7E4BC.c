@@ -972,7 +972,7 @@ void UnknownEntId49(Entity* self) {
     self->drawFlags = PLAYER.drawFlags & FLAG_DRAW_UNK8;
     self->unk6C = PLAYER.unk6C;
 
-    if (ABS(PLAYER.rotZ) == 0x200) {
+    if (abs(PLAYER.rotZ) == 0x200) {
         x_offset = PLAYER.entityRoomIndex != 0 ? 0x10 : -0x10;
         self->posX.i.hi = x_offset + PLAYER.posX.i.hi;
         self->posY.i.hi = PLAYER.posY.i.hi + 9 + ((g_GameTimer >> 1) & 1);

@@ -1890,12 +1890,12 @@ void EntityAguneaHitEnemy(Entity* self) {
             somethingX = temp_s6->posX.i.hi - prim->x2;
             somethingY = temp_s6->posY.i.hi - prim->y2;
             var_s3 = 0;
-            if ((ABS(somethingX) < 8) && (ABS(somethingY) < 8)) {
+            if ((abs(somethingX) < 8) && (abs(somethingY) < 8)) {
                 self->step++;
                 break;
             }
-            if (ABS(somethingX) < 0x40) {
-                var_s3 = ABS(somethingY) < 0x40;
+            if (abs(somethingX) < 0x40) {
+                var_s3 = abs(somethingY) < 0x40;
             }
             if (self->ext.et_801291C4.unk88 == 0) {
                 self->ext.et_801291C4.unk88 = 4;
@@ -2226,7 +2226,7 @@ void EntitySubwpnBible(Entity* self) {
         self->ext.et_BibleSubwpn.unk80 += (self->facingLeft ? 0x80 : -0x80);
         self->ext.et_BibleSubwpn.unk80 &= 0xFFF;
         self->ext.et_BibleSubwpn.unk82 += self->ext.et_BibleSubwpn.unk84;
-        if (ABS(self->ext.et_BibleSubwpn.unk82) >= 0x200) {
+        if (abs(self->ext.et_BibleSubwpn.unk82) >= 0x200) {
             // temp_v0 needed because otherwise unk84 gets loaded with lhu
             // instead of lh
             temp_v0 = -self->ext.et_BibleSubwpn.unk84;
@@ -2401,14 +2401,14 @@ void func_8012CCE4(void) {
         // some clever && and ||
         if (PLAYER.facingLeft) {
             if ((g_Player.pl_vram_flag & 0xF000) == 0xC000) {
-                PLAYER.velocityY = -(ABS(PLAYER.velocityX) + FIX(3.5));
+                PLAYER.velocityY = -(abs(PLAYER.velocityX) + FIX(3.5));
             }
             if ((g_Player.pl_vram_flag & 0xF000) == 0x8000) {
                 PLAYER.velocityY = FIX(-0.5);
             }
         } else {
             if ((g_Player.pl_vram_flag & 0xF000) == 0x8000) {
-                PLAYER.velocityY = -(ABS(PLAYER.velocityX) + FIX(3.5));
+                PLAYER.velocityY = -(abs(PLAYER.velocityX) + FIX(3.5));
             }
             if ((g_Player.pl_vram_flag & 0xF000) == 0xC000) {
                 PLAYER.velocityY = FIX(-0.5);
@@ -2469,7 +2469,6 @@ void func_8012CFF0(void) {
 }
 
 void func_8012D024(void) {
-    s32 separation;
     DecelerateX(0x2000);
     if (g_Player.padTapped & PAD_CROSS) {
         func_8012CCE4();
@@ -2494,8 +2493,8 @@ void func_8012D024(void) {
     if (D_800B0914 != 0) {
         return;
     }
-    separation = (PLAYER.posY.i.hi - g_Entities[17].posY.i.hi);
-    if (ABS(separation) < 4 && --D_800B0918 == 0) {
+    if (abs(PLAYER.posY.i.hi - g_Entities[17].posY.i.hi) < 4 &&
+        --D_800B0918 == 0) {
         D_800B0914 = 1;
         func_8010DA48(0xE9);
         return;

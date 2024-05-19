@@ -22,10 +22,10 @@ void func_801A7D64(Entity* self) {
 bool func_801A7E2C(Entity* self) {
     s16 diffX = PLAYER.posX.i.hi - self->posX.i.hi;
 
-    diffX = ABS(diffX);
+    diffX = abs(diffX);
     if (self->hitboxWidth >= diffX) {
         diffX = PLAYER.posY.i.hi - self->posY.i.hi;
-        diffX = ABS(diffX);
+        diffX = abs(diffX);
         return (self->hitboxHeight >= diffX);
     } else {
         return false;
@@ -274,7 +274,7 @@ void func_801A8620(Entity* entity) {
 
     case 1:
         dist = entity->posY.i.hi - PLAYER.posY.i.hi;
-        dist = ABS(dist);
+        dist = abs(dist);
 
         if (dist < 0x20) {
             switch (params) {

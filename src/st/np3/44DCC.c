@@ -849,7 +849,7 @@ void EntityMerman2(Entity* self) {
                 }
 
                 colorOffset =
-                    (u32)(((ABS(self->velocityY) >> 0xC) - 10) & 0xFF) >> 1;
+                    (u32)(((abs(self->velocityY) >> 0xC) - 10) & 0xFF) >> 1;
 
                 setRGB0(prim, 128 - colorOffset, 128 - colorOffset,
                         colorOffset + 192);

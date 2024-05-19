@@ -2,6 +2,7 @@
 #define GAME_H
 #include "common.h"
 #include "log.h"
+#include "macros.h"
 #include <psxsdk/kernel.h>
 
 // lseek etc. conflicts
