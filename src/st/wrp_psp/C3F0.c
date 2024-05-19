@@ -14,6 +14,6 @@ INCLUDE_ASM("st/wrp_psp/nonmatchings/C3F0", ReplaceBreakableWithItemDrop);
 
 INCLUDE_ASM("st/wrp_psp/nonmatchings/C3F0", func_psp_09244020);
 
-INCLUDE_ASM("st/wrp_psp/nonmatchings/C3F0", func_psp_09244520);
+INCLUDE_ASM("st/wrp_psp/nonmatchings/C3F0", PrimResetNext);
 
-INCLUDE_ASM("st/wrp_psp/nonmatchings/C3F0", func_psp_09244628);
+INCLUDE_ASM("st/wrp_psp/nonmatchings/C3F0", UnkPolyFunc2);

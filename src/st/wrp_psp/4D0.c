@@ -26,7 +26,7 @@ INCLUDE_ASM("st/wrp_psp/nonmatchings/4D0", CreateEntityFromEntity);
 
 INCLUDE_ASM("st/wrp_psp/nonmatchings/4D0", EntityStageNamePopup);
 
-INCLUDE_ASM("st/wrp_psp/nonmatchings/4D0", func_801BBC3C);
+INCLUDE_ASM("st/wrp_psp/nonmatchings/4D0", EntityIsNearPlayer);
 
 INCLUDE_ASM("st/wrp_psp/nonmatchings/4D0", EntityRedDoor);
 
