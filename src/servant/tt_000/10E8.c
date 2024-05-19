@@ -67,12 +67,45 @@ ServantDesc g_ServantDesc = {
 #endif
 
 #ifdef VERSION_PSP
-extern s32 D_80174D3C;
+extern FamiliarStats D_80174C30;
+extern s32 D_801748D8[0x80];
+
+extern Collider D_80174AD8;
+extern s16 D_80174AFC;
+extern s16 D_80174B00;
+extern s16 D_80174B04;
+extern s16 D_80174B08;
+extern s16 D_80174B0C;
+extern s16 D_80174B10;
+extern s16 D_80174B14;
+extern s16 D_80174B18;
+extern s32 D_80174B1C;
+extern s32 D_80174B20;
+extern s32 D_80174B24;
+extern s32 D_80174B28;
+extern s32 D_80174B2C;
+extern s32 D_80174B2C;
+extern s32 D_80174B30;
+extern s32 D_80174B34;
+extern s16 D_80174B38;
+extern s16 D_80174B3C;
+extern s16 D_80174B40;
+extern s16 D_80174B44;
+extern Primitive* D_80174B48;
+extern s32 D_80174B4C[16];
+extern Point16 D_80174B8C[16];
+extern s16 D_80174BCC[16];
+extern s16 D_80174BEC[16];
+extern s16 D_80174C0C[16];
+extern s32 D_80174C2C;
 extern FamiliarStats D_80174C30;
 extern Point16 D_80174C3C[4][16];
-extern s32 D_801748D8[0x80];
+extern s32 D_80174D3C;
 extern s32 D_80174D40;
+
 void DestroyEntity(Entity* entity);
+void ProcessEvent(Entity* self, bool resetEvent);
+void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params);
 #endif
 
 void func_801710E8(Entity* entity, AnimationFrame* anim) {
@@ -83,9 +116,6 @@ void func_801710E8(Entity* entity, AnimationFrame* anim) {
     }
 }
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_8017110C);
-#else
 Entity* func_8017110C(Entity* self) {
     const int EntitySearchCount = 128;
     s32 foundIndex;
@@ -93,8 +123,6 @@ Entity* func_8017110C(Entity* self) {
     u32 found;
     Entity* e;
     s32 distance;
-    s32 entityX;
-    s32 selfX;
 
     found = 0;
     e = &g_Entities[STAGE_ENTITY_START];
@@ -109,7 +137,6 @@ Entity* func_8017110C(Entity* self) {
         if (e->flags & FLAG_UNK_00200000) {
             continue;
         }
-        entityX = e->posX.i.hi;
         if (e->posX.i.hi < -0x10) {
             continue;
         }
@@ -125,23 +152,14 @@ Entity* func_8017110C(Entity* self) {
         if (e->hitboxState & 8 && !D_80170658[D_80174C30.level / 10][4]) {
             continue;
         }
-
-        selfX = self->posX.i.hi;
-        distance = self->posX.i.hi - entityX;
-        if (distance < 0) {
-            distance = -distance;
+        if (abs(self->posX.i.hi - e->posX.i.hi) < 64 &&
+            abs(self->posY.i.hi - e->posY.i.hi) < 64) {
+            continue;
         }
-        if (distance < 64) {
-            distance = self->posY.i.hi - e->posY.i.hi;
-            if (distance < 0) {
-                distance = -distance;
-            }
-            if (distance < 64) {
-                continue;
-            }
+        if (!self->facingLeft && self->posX.i.hi < e->posX.i.hi) {
+            continue;
         }
-
-        if ((self->facingLeft ? entityX < selfX : selfX < entityX) != 0) {
+        if (self->facingLeft && self->posX.i.hi > e->posX.i.hi) {
             continue;
         }
         if (e->hitPoints >= 0x7000) {
@@ -173,7 +191,6 @@ Entity* func_8017110C(Entity* self) {
 
     return NULL;
 }
-#endif
 
 s32 func_801713C8(Entity* entity) {
     if (entity->hitboxState == 0)
@@ -654,7 +671,7 @@ void func_80172120(Entity* self) {
                         << 0xC) >>
                     0xC;
                 if (D_80174B2C < 0x18) {
-                    if (self->ext.bat.unk8E != 0) {
+                    if (self->ext.bat.unk8E) {
                         self->ext.bat.unk8E = 0;
                         func_801710E8(self, D_8017054C);
                     }
@@ -663,7 +680,7 @@ void func_80172120(Entity* self) {
                         self->ext.bat.unk8C) {
                         self->ext.bat.unk8C = 0;
                         self->ext.bat.target = func_8017110C(self);
-                        if (self->ext.bat.target != 0) {
+                        if (self->ext.bat.target) {
                             self->step++;
                         }
                     }
@@ -780,7 +797,7 @@ void func_80172C30(Entity* self) {
     switch (self->step) {
     case 0:
         func_801719E0(self);
-        if (self->ext.bat.unk82 == 0) {
+        if (!self->ext.bat.unk82) {
             func_8017160C(D_80170658[D_80174C30.level / 10][2], 0xD2);
         }
         break;
@@ -798,28 +815,30 @@ void func_80172C30(Entity* self) {
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         if ((self->velocityX == 0) && (self->velocityY == 0)) {
-            if (self->ext.bat.unk8E != 0) {
+            if (self->ext.bat.unk8E) {
                 func_801710E8(self, D_8017054C);
-                self->ext.bat.unk8E = 0;
+                self->ext.bat.unk8E = false;
             }
         } else {
             if (self->velocityY > FIX(1)) {
-                func_801710E8(self, &D_801705EC);
+                func_801710E8(self, D_801705EC);
             } else {
-                func_801710E8(self, &D_801704A8);
+                func_801710E8(self, D_801704A8);
             }
-            self->ext.bat.unk8E = 1;
+            self->ext.bat.unk8E = true;
         }
-        self->facingLeft = PLAYER.facingLeft == 0;
-        if (self->ext.bat.unkA8 == 0) {
+        self->facingLeft = PLAYER.facingLeft ? false : true;
+        if (!self->ext.bat.unkA8) {
             if (g_Player.unk0C & 0x800) {
                 // This causes the bat familiar to shoot a fireball when the
                 // player does so in bat form.
                 g_api.CreateEntFactoryFromEntity(self, FACTORY(0x100, 81), 0);
                 self->ext.bat.unkA8 = 1;
             }
-        } else if (!(g_Player.unk0C & 0x800)) {
-            self->ext.bat.unkA8 = 0;
+        } else if (self->ext.bat.unkA8) {
+            if (!(g_Player.unk0C & 0x800)) {
+                self->ext.bat.unkA8 = 0;
+            }
         }
         D_80174B38 = self->ext.bat.follow->posX.i.hi - self->posX.i.hi;
         D_80174B3C = self->ext.bat.follow->posY.i.hi - self->posY.i.hi;
@@ -827,7 +846,7 @@ void func_80172C30(Entity* self) {
             SquareRoot12(((D_80174B38 * D_80174B38) + (D_80174B3C * D_80174B3C))
                          << 0xC) >>
             0xC;
-        if ((func_801746A0(0) != 0) || (D_80174B34 >= 0x19)) {
+        if (func_801746A0(0) || D_80174B34 >= 0x19) {
             for (D_80174B30 = 0; D_80174B30 < 0xF; D_80174B30++) {
                 D_80174C3C[self->ext.bat.unk82][D_80174B30].x =
                     D_80174C3C[self->ext.bat.unk82][D_80174B30 + 1].x;
@@ -845,14 +864,15 @@ void func_80172C30(Entity* self) {
         }
         break;
     case 2:
-        if (++self->ext.bat.unk8C == 1) {
-            if (self->ext.bat.unk82 == 0) {
+        self->ext.bat.unk8C++;
+        if (self->ext.bat.unk8C == 1) {
+            if (!self->ext.bat.unk82) {
                 g_api.PlaySfx(SFX_BAT_SCREECH);
             }
             func_8017170C(self, 2);
         } else if (self->ext.bat.unk8C >= 0x1F) {
             func_8017170C(self, 0);
-            if (self->ext.bat.unk82 == 0) {
+            if (!self->ext.bat.unk82) {
                 self->entityId = 0xD1;
                 self->step = 0;
                 break;
@@ -861,7 +881,7 @@ void func_80172C30(Entity* self) {
             D_80174C3C[self->ext.bat.unk82][0].x =
                 PLAYER.facingLeft ? -0x80 : 0x180;
             D_80174C3C[self->ext.bat.unk82][0].y = rand() % 256;
-            func_801710E8(self, &D_801704A8);
+            func_801710E8(self, D_801704A8);
         }
         break;
     case 3:
@@ -897,9 +917,6 @@ void func_801733C4(void) {}
 
 void func_801733CC(void) {}
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_801733D4);
-#else
 void func_801733D4(Entity* self) {
     const s32 nPrim = 16;
     const s32 XS = 11; // X start, left
@@ -944,8 +961,7 @@ void func_801733D4(Entity* self) {
         D_80174BEC[D_80174C2C] = 256;
         D_80174C0C[D_80174C2C] = 192;
         D_80174B4C[D_80174C2C] = 1;
-        D_80174C2C++;
-        D_80174C2C = D_80174C2C >= nPrim ? 0 : D_80174C2C;
+        D_80174C2C = ++D_80174C2C >= nPrim ? 0 : D_80174C2C;
         D_80174B48 = &g_PrimBuf[self->primIndex];
         for (i = 0; i < nPrim; i++) {
             if (D_80174B4C[i]) {
@@ -1031,7 +1047,6 @@ void func_801733D4(Entity* self) {
         break;
     }
 }
-#endif
 
 void func_80173C0C(void) {}
 
@@ -1146,12 +1161,7 @@ s16 func_80173F30(Entity* entity, s16 x, s16 y) {
 }
 
 s16 func_80173F74(s16 x1, s16 x2, s16 minDistance) {
-#ifdef VERSION_PSP
     s16 diff = abs(x2 - x1);
-#else
-    s32 diffTmp = x2 - x1;
-    s16 diff = abs(diffTmp);
-#endif
     if (minDistance > diff) {
         minDistance = diff;
     }
@@ -1252,9 +1262,6 @@ void func_80174038(Entity* entity) {
 }
 #endif
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", ProcessEvent);
-#else
 extern ServantEvent g_Events[];
 extern ServantEvent* g_EventQueue;
 extern u32 g_CurrentServant;
@@ -1263,10 +1270,10 @@ extern s32 g_CurrentRoomY;
 
 // Trigger an event under certain specific set of conditions
 void ProcessEvent(Entity* self, bool resetEvent) {
+    ServantEvent* evt;
     ServantEvent* queue;
-    s32 cameraY;
     s32 cameraX;
-    s32 temp_v0;
+    s32 cameraY;
     s32 i;
 
     if (resetEvent) {
@@ -1281,12 +1288,12 @@ void ProcessEvent(Entity* self, bool resetEvent) {
     // Ensures the following block is only evaluated once per room
     if (g_CurrentServant != g_Servant || g_CurrentRoomX != g_Tilemap.left ||
         g_CurrentRoomY != g_Tilemap.top) {
-        queue = g_EventQueue;
         g_CurrentServant = g_Servant;
         g_CurrentRoomX = g_Tilemap.left;
         g_CurrentRoomY = g_Tilemap.top;
+        queue = g_EventQueue;
         for (i = 1; g_Events[i].roomX != -1; i++) {
-            ServantEvent* evt = &g_Events[i];
+            evt = &g_Events[i];
             // Filter by familiar
             if (evt->servantId != -1 && evt->servantId != g_CurrentServant) {
                 continue;
@@ -1301,7 +1308,7 @@ void ProcessEvent(Entity* self, bool resetEvent) {
             }
             if (!(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
             block_13:
-#elif defined(VERSION_HD)
+#elif defined(VERSION_HD) || defined(VERSION_PSP)
             if (evt->roomX >= 0 ||
                 (g_StageId >= STAGE_RNO0 && g_StageId < STAGE_RNZ1_DEMO)) {
 #endif
@@ -1312,53 +1319,50 @@ void ProcessEvent(Entity* self, bool resetEvent) {
 
                 if (evt->cameraX == cameraX && evt->cameraY == cameraY &&
                     (evt->condition == -1 ||
-                     (evt->condition >= 0 ||
-                      g_CastleFlags[evt->condition & 0xFFFF] == 0) &&
+                     (!(evt->condition & 0x80000000) ||
+                      !g_CastleFlags[evt->condition & 0xFFFF]) &&
                          (!(evt->condition & CHECK_RELIC_FLAG) ||
                           !(g_Status.relics[evt->condition & 0xFFFF] &
                             RELIC_FLAG_FOUND)))) {
                     evt->timer = 0;
                     if (evt->delay == 0) {
                         CreateEventEntity(self, evt->entityId, evt->params);
-                        if (!evt->unk2C) {
-                            goto block_26;
+                        if (evt->unk2C) {
+                            continue;
                         }
-                    } else {
-                        goto block_27;
                     }
-                } else {
-                block_26:
-                    if (evt->delay > 0) {
-                    block_27:
-                        evt->timer = evt->delay - 1;
-                    }
-                    queue->next = evt;
-                    queue = evt;
                 }
+                if (evt->delay > 0) {
+                    evt->timer = evt->delay - 1;
+                }
+                queue->next = evt;
+                queue = evt;
             }
         }
         queue->next = NULL;
     } else {
         queue = g_EventQueue;
         while (queue->next != NULL) {
-            ServantEvent* evt = queue->next;
-            if (evt->cameraX == cameraX && evt->cameraY == cameraY &&
-                (evt->condition == -1 ||
-                 (evt->condition >= 0 ||
-                  g_CastleFlags[evt->condition & 0xFFFF] == 0) &&
-                     (!(evt->condition & CHECK_RELIC_FLAG) ||
-                      !(g_Status.relics[evt->condition & 0xFFFF] & 1)))) {
-                evt = queue->next;
-                if (evt->timer > 0) {
-                    evt->timer--;
+            if (!evt->delay) {
+            }
+            if (queue->next->cameraX == cameraX &&
+                queue->next->cameraY == cameraY &&
+                (queue->next->condition == -1 ||
+                 (!(queue->next->condition & 0x80000000) ||
+                  !g_CastleFlags[queue->next->condition & 0xFFFF]) &&
+                     (!(queue->next->condition & CHECK_RELIC_FLAG) ||
+                      !(g_Status.relics[queue->next->condition & 0xFFFF] &
+                        1)))) {
+                if (queue->next->timer > 0) {
+                    queue->next->timer--;
                 } else {
-                    CreateEventEntity(self, evt->entityId, evt->params);
-                    evt = queue->next;
-                    if (evt->unk2C) {
-                        queue->next = evt->next;
+                    CreateEventEntity(
+                        self, queue->next->entityId, queue->next->params);
+                    if (queue->next->unk2C) {
+                        queue->next = queue->next->next;
                         continue;
                     } else {
-                        evt->timer = evt->delay;
+                        queue->next->timer = queue->next->delay;
                     }
                 }
             }
@@ -1366,113 +1370,3 @@ void ProcessEvent(Entity* self, bool resetEvent) {
         }
     }
 }
-#endif
-
-void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params) {
-    Entity* entity;
-    s32 i;
-
-    for (i = 0; i < 3; i++) {
-        entity = &g_Entities[5 + i];
-        if (!entity->entityId) {
-            break;
-        }
-    }
-
-    if (!entity->entityId) {
-        DestroyEntity(entity);
-        entity->entityId = entityId;
-        entity->zPriority = entityParent->zPriority;
-        entity->facingLeft = entityParent->facingLeft;
-        entity->flags = FLAG_UNK_04000000;
-        entity->posX.val = entityParent->posX.val;
-        entity->posY.val = entityParent->posY.val;
-        entity->ext.generic.unk8C.entityPtr = entityParent;
-        entity->params = params;
-    }
-}
-
-s32 func_801746A0(s32 arg0) {
-    if (PLAYER.velocityY < 0 && !(g_Player.pl_vram_flag & 1)) {
-        return 1;
-    }
-
-    if (PLAYER.velocityY > 0 && !(g_Player.pl_vram_flag & 2)) {
-        return 1;
-    }
-
-    if (PLAYER.velocityX < 0 && !(g_Player.pl_vram_flag & 8))
-        return 1;
-
-    if (PLAYER.velocityX > 0 && !(g_Player.pl_vram_flag & 4))
-        return 1;
-
-    if (arg0 == 0)
-        return 0;
-
-    if (g_Player.unk50 != PLAYER.step || PLAYER.step != 0)
-        return 1;
-
-    if (g_Player.unk52 != PLAYER.step_s)
-        return 1;
-
-    if (PLAYER.step_s != 0 && PLAYER.step_s != 4)
-        return 1;
-
-    return 0;
-}
-
-#ifndef VERSION_PSP
-s32 func_801747B8(void) {
-    Entity* entity;
-    s32 i;
-
-    entity = &g_Entities[STAGE_ENTITY_START];
-    for (i = 0; i < 0x80; i++, entity++) {
-        if (entity->entityId == 0)
-            continue;
-        if (entity->hitboxState == 0)
-            continue;
-        if (entity->flags & FLAG_UNK_00200000)
-            continue;
-        if (entity->posX.i.hi < -16)
-            continue;
-        if (entity->posX.i.hi > 272)
-            continue;
-        if (entity->posY.i.hi > 240)
-            continue;
-        if (entity->posY.i.hi < 0)
-            continue;
-        if (entity->hitPoints < 0x7000)
-            return 1;
-    }
-    return 0;
-}
-#endif
-
-s32 func_80174864(void) {
-    if (g_StageId >= STAGE_RNO0 && g_StageId < STAGE_RNZ1_DEMO) {
-        if (D_8003C708.flags == 0x22) {
-            return 1;
-        }
-        if (D_8003C708.flags == 0x20) {
-            return 0;
-        }
-        return 2;
-    } else {
-        if (D_8003C708.flags == 0x22) {
-            return 0;
-        }
-
-        if (D_8003C708.flags == 0x20) {
-            return 1;
-        }
-        return 2;
-    }
-}
-
-#ifdef VERSION_PSP
-void func_092EC220(void) {
-    memcpy((u8*)&D_8D1DC40, (u8*)&g_ServantDesc, sizeof(ServantDesc));
-}
-#endif

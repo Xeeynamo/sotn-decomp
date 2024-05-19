@@ -391,7 +391,7 @@ extern unkstruct_800ACF7C D_800ACF7C[];
 extern s16 D_800ACF84[8]; // collection of sounds
 extern s16 D_800ACF94[];
 extern u8 D_800AD094[0x30];
-extern u8 D_800ACFB4[][4];
+extern u8 D_800ACFB4[][4]; // TODO AnimationFrames*[]
 extern unkstr_800cfe48* D_800CFE48[];
 extern PfnEntityUpdate D_800AD0C4[];
 extern FactoryBlueprint g_FactoryBlueprints[];
@@ -883,7 +883,7 @@ void func_801073C0(void);
 void func_801092E8(s32);
 void SetPrimRect(Primitive* poly, s32 x, s32 y, s32 width, s32 height);
 void SetPlayerStep(PlayerSteps step);
-u32 UpdateAnim(s8* frameProps, s32*);
+u32 UpdateAnim(s8* frameProps, AnimationFrame** anims);
 void func_8010DFF0(s32, s32);
 void func_8010E0A8(void);
 void func_8010E0B8(void);

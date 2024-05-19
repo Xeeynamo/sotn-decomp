@@ -18,7 +18,7 @@ CCPSP           := MWCIncludes=bin/ $(WIBO) $(MWCCPSP)
 PSP_EU_TARGETS  := tt_000
 SPLAT_PIP       := splat split
 
-MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -O0 -c -lang c -sdatathreshold 0
+MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -Op -c -lang c -sdatathreshold 0
 
 define list_src_files_psp
 	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))

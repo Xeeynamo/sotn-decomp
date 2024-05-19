@@ -1421,7 +1421,7 @@ void func_801603C4(void) {
                          (u16)(entity->posY.i.hi + 16) > 272)) {
                         DestroyEntity(entity);
                     } else if (entity->flags & 0x100000) {
-                        g_api.UpdateAnim(0, (s32*)D_80154674);
+                        g_api.UpdateAnim(0, D_80154674);
                     }
                 }
             }
