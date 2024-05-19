@@ -35,7 +35,7 @@ s16 D_80174BCC[16];
 s16 D_80174BEC[16];
 s16 D_80174C0C[16];
 s32 D_80174C2C;
-Unkstruct_8011A3AC D_80174C30;
+FamiliarStats D_80174C30;
 Point16 D_80174C3C[4][16];
 s32 D_80174D3C;
 s32 D_80174D40;
@@ -68,8 +68,10 @@ ServantDesc g_ServantDesc = {
 
 #ifdef VERSION_PSP
 extern s32 D_80174D3C;
-extern Unkstruct_8011A3AC D_80174C30;
+extern FamiliarStats D_80174C30;
 extern Point16 D_80174C3C[4][16];
+extern s32 D_801748D8[0x80];
+extern s32 D_80174D40;
 void DestroyEntity(Entity* entity);
 #endif
 
@@ -98,7 +100,7 @@ Entity* func_8017110C(Entity* self) {
     e = &g_Entities[STAGE_ENTITY_START];
     for (i = 0; i < EntitySearchCount; i++, e++) {
         D_801748D8[i] = 0;
-        if (e->entityId == 0) {
+        if (!e->entityId) {
             continue;
         }
         if (e->hitboxState == 0) {
@@ -107,12 +109,11 @@ Entity* func_8017110C(Entity* self) {
         if (e->flags & FLAG_UNK_00200000) {
             continue;
         }
-
         entityX = e->posX.i.hi;
-        if (entityX < -0x10) {
+        if (e->posX.i.hi < -0x10) {
             continue;
         }
-        if (entityX > 0x110) {
+        if (e->posX.i.hi > 0x110) {
             continue;
         }
         if (e->posY.i.hi > 0xF0) {
@@ -121,7 +122,7 @@ Entity* func_8017110C(Entity* self) {
         if (e->posY.i.hi < 0) {
             continue;
         }
-        if (e->hitboxState & 8 && D_80170658[D_80174C30.unk0 / 10][4] == 0) {
+        if (e->hitboxState & 8 && !D_80170658[D_80174C30.level / 10][4]) {
             continue;
         }
 
@@ -147,20 +148,21 @@ Entity* func_8017110C(Entity* self) {
             continue;
         }
 
-        if (!(e->flags & FLAG_UNK_80000)) {
+        if (e->flags & FLAG_UNK_80000) {
+            if (e->hitPoints >= D_80170658[D_80174C30.level / 10][3]) {
+                found++;
+                D_801748D8[i] = 1;
+            }
+        } else {
             e->flags |= FLAG_UNK_80000;
             return e;
-        }
-        if (e->hitPoints >= D_80170658[D_80174C30.unk0 / 10][3]) {
-            found++;
-            D_801748D8[i] = 1;
         }
     }
 
     if (found > 0) {
         foundIndex = D_80174D40 % EntitySearchCount;
         for (i = 0; i < 0x80; i++) {
-            if (D_801748D8[foundIndex] != 0) {
+            if (D_801748D8[foundIndex]) {
                 e = &g_Entities[STAGE_ENTITY_START + foundIndex];
                 D_80174D40 = (foundIndex + 1) % EntitySearchCount;
                 return e;
@@ -657,7 +659,7 @@ void func_80172120(Entity* self) {
                         func_801710E8(self, D_8017054C);
                     }
                     self->ext.bat.unk8C++;
-                    if (D_80170658[D_80174C30.unk0 / 10][0] <
+                    if (D_80170658[D_80174C30.level / 10][0] <
                         self->ext.bat.unk8C) {
                         self->ext.bat.unk8C = 0;
                         self->ext.bat.target = func_8017110C(self);
@@ -683,7 +685,7 @@ void func_80172120(Entity* self) {
             D_80174B20 = self->ext.bat.target->posY.i.hi;
             self->hitboxWidth = 5;
             self->hitboxHeight = 5;
-            g_api.func_8011A3AC(self, 0xF, 1, &D_80174C30);
+            g_api.func_8011A3AC(self, 15, 1, &D_80174C30);
             self->ext.bat.unk86 = 0xC00;
             func_801710E8(self, D_801705EC);
             func_80171568(self);
@@ -695,7 +697,7 @@ void func_80172120(Entity* self) {
         D_80174B20 = self->ext.bat.target->posY.i.hi;
         D_80174B0C = func_80173F30(self, (s16)D_80174B1C, (s16)D_80174B20);
         D_80174B10 = func_80173F74(D_80174B0C, self->ext.bat.unk86,
-                                   (s16)D_80170658[D_80174C30.unk0 / 10][1]);
+                                   (s16)D_80170658[D_80174C30.level / 10][1]);
         self->ext.bat.unk86 = D_80174B10;
         self->velocityX = rcos(D_80174B10) << 6;
         self->velocityY = -(rsin(D_80174B10) << 6);
@@ -779,7 +781,7 @@ void func_80172C30(Entity* self) {
     case 0:
         func_801719E0(self);
         if (self->ext.bat.unk82 == 0) {
-            func_8017160C(D_80170658[D_80174C30.unk0 / 10][2], 0xD2);
+            func_8017160C(D_80170658[D_80174C30.level / 10][2], 0xD2);
         }
         break;
     case 1:

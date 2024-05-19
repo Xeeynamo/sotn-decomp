@@ -1330,7 +1330,7 @@ typedef struct {
     /* 8003C86C */ void (*func_800F1FC4)(s32 arg0);
     /* 8003C870 */ void (*func_800F2288)(s32 arg0);
     /* 8003C874 */ void (*func_8011A3AC)(
-        Entity* entity, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3);
+        Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
     /* 8003C878 */ s32 (*func_800FF460)(s32 arg0);
     /* 8003C87C */ s32 (*func_800FF494)(EnemyDef* arg0);
     /* 8003C880 */ bool (*CdSoundCommandQueueEmpty)(void);
@@ -1404,7 +1404,7 @@ extern void (*g_api_func_8010BF64)(Unkstruct_8010BF64* arg0);
 extern void (*g_api_func_800F1FC4)(s32 arg0);
 extern void (*g_api_func_800F2288)(s32 arg0);
 extern void (*g_api_func_8011A3AC)(
-    Entity* entity, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3);
+    Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
 extern s32 (*g_api_func_800FF460)(s32 arg0);
 extern s32 (*g_api_func_800FF494)(EnemyDef* arg0);
 extern bool (*g_api_CdSoundCommandQueueEmpty)(void);
@@ -1704,7 +1704,6 @@ extern PlayerStatus g_Status;
 extern u8 D_80097B9C[];
 extern s32 subWeapon; // g_SubweaponId
 extern u8 g_SaveName[12] ALIGNED4;
-extern Unkstruct_8011A3AC D_80097C38[];
 extern u32 D_80097C40[];
 extern s32 D_80097C98;
 extern PlayerDraw g_PlayerDraw[0x10];

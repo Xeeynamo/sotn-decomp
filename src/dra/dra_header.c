@@ -53,7 +53,7 @@ u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void func_8010BF64(Unkstruct_8010BF64* arg0);
 void func_800F1FC4(s32 arg0);
 void func_800F2288(void); // unknown signature
-void func_8011A3AC(Entity* arg0, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3);
+void func_8011A3AC(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
 s32 func_800FF460(s32 arg0);
 s32 func_800FF494(EnemyDef* arg0);
 bool CdSoundCommandQueueEmpty(void);

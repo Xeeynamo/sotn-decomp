@@ -21,9 +21,9 @@
 #define GREEN_MASK 0x3E0
 #define BLUE_MASK 0x7C00
 
-#define GET_RED(x) ((x)&RED_MASK)
-#define GET_GREEN(x) ((x)&GREEN_MASK)
-#define GET_BLUE(x) ((x)&BLUE_MASK)
+#define GET_RED(x) ((x) & RED_MASK)
+#define GET_GREEN(x) ((x) & GREEN_MASK)
+#define GET_BLUE(x) ((x) & BLUE_MASK)
 
 typedef enum {
     MENU_DG_MAIN,
@@ -909,8 +909,7 @@ void func_80115C50(void);
 void func_80118894(Entity*);
 
 void func_80118C28(s32 arg0);
-void func_8011A3AC(
-    Entity* entity, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3);
+void func_8011A3AC(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
 Entity* CreateEntFactoryFromEntity(Entity* entity, u32, s32);
 
 // Forward declarations for all the entity updating functions
