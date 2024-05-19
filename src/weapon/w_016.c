@@ -72,7 +72,7 @@ void EntityWeaponAttack(Entity* self) {
             self->ext.weapon.unk7E += 8;
         }
         fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
-        self->rotZ += ABS(self->ext.weapon.unk82);
+        self->rotZ += abs(self->ext.weapon.unk82);
         self->ext.weapon.unk80 += self->ext.weapon.unk82;
         fakePrim->posX.i.hi = fakePrim->x0;
         fakePrim->posY.i.hi = fakePrim->y0;
@@ -312,7 +312,7 @@ s32 func_ptr_80170014(Entity* self) {
             self->hitboxWidth = 4;
         }
         self->posX.val += self->velocityX;
-        if (ABS(self->velocityX) >= FIX(0.5)) {
+        if (abs(self->velocityX) >= FIX(0.5)) {
             self->hitboxWidth = 8;
             return;
         }

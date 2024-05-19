@@ -602,8 +602,8 @@ void EntityGaibon(Entity* self) {
             if (self->hitPoints < (hitPoints / 2)) {
                 self->ext.GS_Props.nearDeath = 1;
                 temp_s3 = self->posX.i.hi - 128;
-                if (ABS(temp_s3) < 0x60) {
-                    self->unk3C = 0;
+                if (abs(temp_s3) < 0x60) {
+                    self->hitboxState = 0;
                     SetStep(GAIBON_NEAR_DEATH);
                 }
             }
@@ -614,7 +614,7 @@ void EntityGaibon(Entity* self) {
             SetStep(GAIBON_PICKUP_SLOGRA);
         }
         if (D_801812CC != 0) {
-            self->unk3C = 0;
+            self->hitboxState = 0;
             if (self->step != GAIBON_RETREAT) {
                 SetStep(GAIBON_RETREAT);
             }
@@ -752,10 +752,10 @@ void EntityGaibon(Entity* self) {
                     func_801C2598(NA_SE_EN_GAIBON_SMALL_FIREBALL);
                     newEntity->posY.i.hi -= 2;
                     if (self->facingLeft != 0) {
-                        newEntity->unk1E = 0x220;
+                        newEntity->rotZ = 0x220;
                         newEntity->posX.i.hi += 12;
                     } else {
-                        newEntity->unk1E = 0x5E0;
+                        newEntity->rotZ = 0x5E0;
                         newEntity->posX.i.hi -= 12;
                     }
                     newEntity->zPriority = self->zPriority + 1;
@@ -773,7 +773,7 @@ void EntityGaibon(Entity* self) {
             self->velocityY -= self->velocityY / 32;
             if (AnimateEntity(&D_801814D8, self) == 0) {
                 temp_s3 = self->posX.i.hi - 128;
-                if (ABS(temp_s3) < 0x60) {
+                if (abs(temp_s3) < 0x60) {
                     SetStep(GAIBON_LANDING_AFTER_SHOOTING);
                 } else {
                     SetStep(GAIBON_FLY_SHOOT_BIG_FIREBALL);
@@ -857,10 +857,10 @@ void EntityGaibon(Entity* self) {
 
                     newEntity->posY.i.hi -= 6;
                     if (self->facingLeft != 0) {
-                        newEntity->unk1E = 0;
+                        newEntity->rotZ = 0;
                         newEntity->posX.i.hi += 16;
                     } else {
-                        newEntity->unk1E = 0x800;
+                        newEntity->rotZ = 0x800;
                         newEntity->posX.i.hi -= 16;
                     }
                     newEntity->zPriority = self->zPriority + 1;
@@ -891,10 +891,10 @@ void EntityGaibon(Entity* self) {
                         E_GAIBON_BIG_FIREBALL, self, newEntity);
                     newEntity->posY.i.hi -= 2;
                     if (self->facingLeft != 0) {
-                        newEntity->unk1E = 0x220;
+                        newEntity->rotZ = 0x220;
                         newEntity->posX.i.hi += 12;
                     } else {
-                        newEntity->unk1E = 0x5E0;
+                        newEntity->rotZ = 0x5E0;
                         newEntity->posX.i.hi -= 12;
                     }
                     newEntity->zPriority = self->zPriority + 1;
@@ -916,7 +916,7 @@ void EntityGaibon(Entity* self) {
             self->ext.GS_Props.timer--;
             if (self->ext.GS_Props.timer == 0) {
                 temp_s3 = self->posX.i.hi - 128;
-                if (ABS(temp_s3) < 96) {
+                if (abs(temp_s3) < 96) {
                     SetStep(GAIBON_LANDING_AFTER_SHOOTING);
                 } else {
                     SetStep(GAIBON_FLY_TOWARDS_PLAYER);
@@ -951,8 +951,8 @@ void EntityGaibon(Entity* self) {
             self->velocityY = (speed * rsin(angle)) >> 0xC;
             MoveEntity();
 
-            if (ABS(slograGaibonDistX) < 8) {
-                if (ABS(slograGaibonDistY) < 8) {
+            if (abs(slograGaibonDistX) < 8) {
+                if (abs(slograGaibonDistY) < 8) {
                     self->ext.GS_Props.grabedAscending = 1;
                     self->velocityX = 0;
                     self->velocityY = 0;
@@ -1080,8 +1080,8 @@ void EntityGaibon(Entity* self) {
             self->velocityX = (speed * rcos(angle)) >> 0xC;
             self->velocityY = (speed * rsin(angle)) >> 0xC;
             MoveEntity();
-            if (ABS(slograGaibonDistX) < 8) {
-                if (ABS(slograGaibonDistY) < 8) {
+            if (abs(slograGaibonDistX) < 8) {
+                if (abs(slograGaibonDistY) < 8) {
                     self->velocityX = 0;
                     self->velocityY = 0;
                     self->step_s++;
@@ -1165,8 +1165,8 @@ void EntityGaibon(Entity* self) {
     hitbox = &D_801815B4[self->animCurFrame][D_80181584];
     hitbox--;
     hitbox++;
-    self->unk10 = *hitbox++;
-    self->unk12 = *hitbox++;
+    self->hitboxOffX = *hitbox++;
+    self->hitboxOffY = *hitbox++;
     self->hitboxWidth = hitbox[0];
     self->hitboxHeight = hitbox[1];
 }

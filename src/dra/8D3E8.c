@@ -63,7 +63,7 @@ void func_8012D3E8(void) {
         return;
     case 2:
         if ((g_Player.padTapped & PAD_SQUARE) &&
-            (ABS(PLAYER.velocityX) < FIX(3))) {
+            (abs(PLAYER.velocityX) < FIX(3))) {
             func_8012CC30(0);
             return;
         }
@@ -143,11 +143,11 @@ void func_8012D3E8(void) {
         return;
     case 3:
         if ((g_Player.padTapped & PAD_SQUARE) &&
-            (ABS(PLAYER.velocityX) < FIX(3))) {
+            (abs(PLAYER.velocityX) < FIX(3))) {
             func_8012CC30(0);
             return;
         }
-        if (ABS(PLAYER.velocityX) > FIX(1)) {
+        if (abs(PLAYER.velocityX) > FIX(1)) {
             DecelerateX(0x2000);
         }
         if ((PLAYER.facingLeft && (directionsPressed & PAD_RIGHT)) ||
@@ -173,7 +173,7 @@ void func_8012D3E8(void) {
             ((g_Player.padPressed & PAD_LEFT) && PLAYER.facingLeft)) {
             func_8010DA48(0xE2);
             D_800B0914 = 2;
-            if (ABS(PLAYER.velocityX) < FIX(2)) {
+            if (abs(PLAYER.velocityX) < FIX(2)) {
                 SetSpeedX(FIX(2));
                 return;
             }
@@ -345,7 +345,7 @@ void func_8012E040(void) {
     case 0:
         func_8010E27C();
         if (var_s0 != 0) {
-            if (ABS(PLAYER.velocityX) < FIX(1)) {
+            if (abs(PLAYER.velocityX) < FIX(1)) {
                 SetSpeedX(FIX(1));
             }
         }
@@ -353,7 +353,7 @@ void func_8012E040(void) {
     case 1:
         func_8010E27C();
         if (var_s0 != 0) {
-            if (ABS(PLAYER.velocityX) >= FIX(1)) {
+            if (abs(PLAYER.velocityX) >= FIX(1)) {
                 DecelerateX(FIX(16.0 / 128));
             } else {
                 SetSpeedX(FIX(1));
@@ -374,7 +374,7 @@ void func_8012E040(void) {
         if (g_Player.pl_vram_flag & 8 && PLAYER.velocityX != 0) {
             D_800B0914 = 1;
         }
-        if (ABS(PLAYER.velocityX) < FIX(1)) {
+        if (abs(PLAYER.velocityX) < FIX(1)) {
             D_800B0914 = 1;
         }
         if ((PLAYER.facingLeft != 0 && (g_Player.padPressed & PAD_RIGHT)) ||
@@ -737,13 +737,13 @@ void func_8012EF2C(void) {
     D_80138438 = g_Player.unk04;
     for (i = 0; i < 8; i++) {
         var_v1 = 4;
-        if (ABS(PLAYER.velocityX) >= FIX(4)) {
+        if (abs(PLAYER.velocityX) >= FIX(4)) {
             var_v1 = 3;
         }
-        if (ABS(PLAYER.velocityX) >= FIX(5)) {
+        if (abs(PLAYER.velocityX) >= FIX(5)) {
             var_v1--;
         }
-        if (ABS(PLAYER.velocityX) >= FIX(6)) {
+        if (abs(PLAYER.velocityX) >= FIX(6)) {
             var_v1--;
         }
         // Might be misusing D_800AFFB8 here

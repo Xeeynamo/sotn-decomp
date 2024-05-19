@@ -120,7 +120,7 @@ void func_8016D9C4(Entity* self) {
                 primLine->angle - (ratan2(primLine->preciseY.val,
                                           FIX(128) - primLine->preciseX.val) &
                                    0xFFF);
-            if (ABS(angleChange) > 0x800) {
+            if (abs(angleChange) > 0x800) {
                 if (angleChange < 0) {
                     angleChange += 0x1000;
                 } else {
@@ -369,33 +369,33 @@ void func_8016E46C(Entity* self) {
         if (var_s3 >= 6) {
             var_s3 = i - 4;
         }
-        temp_v1 = rsin((self->ext.et_8016E46C.unk80 * 20) + (i << 8)) * 96;
-        prim->r0 = prim->r1 = ABS(temp_v1 >> 0xc);
+        temp_v1 = (rsin((self->ext.et_8016E46C.unk80 * 20) + (i << 8)) * 96);
+        prim->r0 = prim->r1 = abs(temp_v1 >> 0xc);
         temp_v1 = rsin((self->ext.et_8016E46C.unk80 * 15) + (i << 8)) * 96;
-        prim->g0 = prim->g1 = ABS(temp_v1 >> 0xc);
+        prim->g0 = prim->g1 = abs(temp_v1 >> 0xc);
         temp_v1 = rsin((self->ext.et_8016E46C.unk80 * 10) + (i << 8)) * 96;
-        prim->b0 = prim->b1 = ABS(temp_v1 >> 0xc);
+        prim->b0 = prim->b1 = abs(temp_v1 >> 0xc);
         temp_v1 = rsin((self->ext.et_8016E46C.unk80 * 15) + (var_s3 << 8)) * 96;
-        prim->r2 = prim->r3 = ABS(temp_v1 >> 0xc);
+        prim->r2 = prim->r3 = abs(temp_v1 >> 0xc);
         temp_v1 = rsin((self->ext.et_8016E46C.unk80 * 10) + (var_s3 << 8)) * 96;
-        prim->g2 = prim->g3 = ABS(temp_v1 >> 0xc);
+        prim->g2 = prim->g3 = abs(temp_v1 >> 0xc);
         temp_v1 = rsin((self->ext.et_8016E46C.unk80 * 20) + (var_s3 << 8)) * 96;
-        prim->b2 = prim->b3 = ABS(temp_v1 >> 0xc);
+        prim->b2 = prim->b3 = abs(temp_v1 >> 0xc);
         prim->x1 = D_80175894[i].unk0;
         prim->y0 = prim->y1 = D_80175894[i].unk2;
         prim->x3 = D_80175894[var_s3].unk0;
         prim->y2 = prim->y3 = D_80175894[var_s3].unk2;
         prim->x0 = D_80175894[i].unk0 + self->ext.et_8016E46C.unk7E;
         prim->x2 = D_80175894[var_s3].unk0 + self->ext.et_8016E46C.unk7E;
-        if (var_s7 < ABS(D_80175894[i].unk2)) {
-            var_s7 = ABS(D_80175894[i].unk2);
+        if (var_s7 < abs(D_80175894[i].unk2)) {
+            var_s7 = abs(D_80175894[i].unk2);
         }
         prim = prim->next;
     }
     halfwidth = self->ext.et_8016E46C.unk7E / 2;
     hitboxOffX = self->facingLeft == 0 ? halfwidth : -halfwidth;
     self->hitboxOffX = hitboxOffX;
-    self->hitboxWidth = ABS(hitboxOffX);
+    self->hitboxWidth = abs(hitboxOffX);
     self->hitboxHeight = var_s7 - self->posY.i.hi;
 }
 
@@ -983,7 +983,7 @@ void StopwatchCrashDoneSparkle(Entity* self) {
                     }
                     var_v1 = self->ext.et_stopWatchSparkle.unk86 -
                              self->ext.et_stopWatchSparkle.unk94;
-                    if (ABS(var_v1) >= 0x801) {
+                    if (abs(var_v1) >= 0x801) {
                         if (var_v1 < 0) {
                             var_v1 += 0x1000;
                         } else {
@@ -1500,7 +1500,6 @@ void func_801719A4(Entity* self) {
     s32 cosine;
     s32 var_s4;
     s32 var_s6;
-    s32 xDiff;
     s32 ySub;
     s16 temp_v0;
 
@@ -1701,8 +1700,7 @@ void func_801719A4(Entity* self) {
         self->posY.val += (var_s6 - self->posY.val) / 4;
         if (self->ext.et_801719A4.unk94 < 2) {
             if (PLAYER.facingLeft != self->facingLeft) {
-                xDiff = var_s4 - self->posX.val;
-                if (ABS(xDiff) < FIX(1)) {
+                if (abs(var_s4 - self->posX.val) < FIX(1)) {
                     self->facingLeft = PLAYER.facingLeft;
                 } else if (!self->facingLeft) {
                     if (var_s4 < self->posX.val) {
@@ -1717,8 +1715,7 @@ void func_801719A4(Entity* self) {
         } else if (D_801758CC[self->ext.et_801719A4.unk94] != 0) {
             parent = self->ext.et_801719A4.unk98;
             if (parent->facingLeft != self->facingLeft) {
-                xDiff = var_s4 - self->posX.val;
-                if (ABS(xDiff) >= FIX(1)) {
+                if (abs(var_s4 - self->posX.val) >= FIX(1)) {
                     if (!self->facingLeft) {
                         if (var_s4 < self->posX.val) {
                             self->facingLeft = parent->facingLeft;
@@ -2074,7 +2071,7 @@ void EntitySubwpnBible(Entity* self) {
         self->ext.et_BibleSubwpn.unk80 += (self->facingLeft ? 0x80 : -0x80);
         self->ext.et_BibleSubwpn.unk80 &= 0xFFF;
         self->ext.et_BibleSubwpn.unk82 += self->ext.et_BibleSubwpn.unk84;
-        if (ABS(self->ext.et_BibleSubwpn.unk82) >= 0x200) {
+        if (abs(self->ext.et_BibleSubwpn.unk82) >= 0x200) {
             // temp_v0 needed because otherwise unk84 gets loaded with lhu
             // instead of lh
             temp_v0 = -self->ext.et_BibleSubwpn.unk84;

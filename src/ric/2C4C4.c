@@ -497,8 +497,6 @@ void EntityRichterRevivalColumn(Entity* self) {
 
 void EntityCrossBoomerang(Entity* self) {
     s32 xAccel;
-    s32 xDist;
-    s32 yDist;
     Point16* temp_a0;
     s16 playerHitboxX;
     s16 playerHitboxY;
@@ -540,7 +538,7 @@ void EntityCrossBoomerang(Entity* self) {
         self->posX.val += self->velocityX;
         xAccel = self->facingLeft ? FIX(-1.0 / 16) : FIX(1.0 / 16);
         self->velocityX -= xAccel;
-        if (ABS(self->velocityX) < FIX(0.75)) {
+        if (abs(self->velocityX) < FIX(0.75)) {
             self->step++;
         }
         break;
@@ -551,7 +549,7 @@ void EntityCrossBoomerang(Entity* self) {
         self->posX.val += self->velocityX;
         xAccel = self->facingLeft ? FIX(-1.0 / 16) : FIX(1.0 / 16);
         self->velocityX -= xAccel;
-        if (ABS(self->velocityX) > FIX(0.75)) {
+        if (abs(self->velocityX) > FIX(0.75)) {
             self->step++;
         }
         break;
@@ -560,7 +558,7 @@ void EntityCrossBoomerang(Entity* self) {
         // Increase speed until a terminal velocity of 2.5.
         xAccel = self->facingLeft ? FIX(-1.0 / 16) : FIX(1.0 / 16);
         self->velocityX -= xAccel;
-        if (ABS(self->velocityX) > FIX(2.5)) {
+        if (abs(self->velocityX) > FIX(2.5)) {
             self->step++;
         }
         /* fallthrough */
@@ -570,15 +568,14 @@ void EntityCrossBoomerang(Entity* self) {
         // Now we check 2 conditions. If we're within the player's hitbox...
         playerHitboxX = (PLAYER.posX.i.hi + PLAYER.hitboxOffX);
         playerHitboxY = (PLAYER.posY.i.hi + PLAYER.hitboxOffY);
-        xDist = tempX.i.hi - playerHitboxX;
-        if (ABS(xDist) < (PLAYER.hitboxWidth + self->hitboxWidth)) {
-            yDist = self->posY.i.hi - playerHitboxY;
-            if (ABS(yDist) < (PLAYER.hitboxHeight + self->hitboxHeight)) {
-                // ... Then we go to step 7 to be destroyed.
-                self->step = 7;
-                self->ext.crossBoomerang.timer = 0x20;
-                return;
-            }
+        if (abs(tempX.i.hi - playerHitboxX) <
+                PLAYER.hitboxWidth + self->hitboxWidth &&
+            abs(self->posY.i.hi - playerHitboxY) <
+                PLAYER.hitboxHeight + self->hitboxHeight) {
+            // ... Then we go to step 7 to be destroyed.
+            self->step = 7;
+            self->ext.crossBoomerang.timer = 0x20;
+            return;
         }
         // Alternatively, if we're offscreen, we will also be destroyed.
         if ((self->facingLeft == 0 && self->posX.i.hi < -0x20) ||
@@ -1961,12 +1958,12 @@ void EntityAguneaHitEnemy(Entity* self) {
             somethingX = temp_s6->posX.i.hi - prim->x2;
             somethingY = temp_s6->posY.i.hi - prim->y2;
             var_s3 = 0;
-            if ((ABS(somethingX) < 8) && (ABS(somethingY) < 8)) {
+            if ((abs(somethingX) < 8) && (abs(somethingY) < 8)) {
                 self->step++;
                 break;
             }
-            if (ABS(somethingX) < 0x40) {
-                var_s3 = ABS(somethingY) < 0x40;
+            if (abs(somethingX) < 0x40) {
+                var_s3 = abs(somethingY) < 0x40;
             }
             if (self->ext.et_801291C4.unk88 == 0) {
                 self->ext.et_801291C4.unk88 = 4;

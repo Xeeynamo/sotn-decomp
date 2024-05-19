@@ -1147,10 +1147,10 @@ s16 func_80173F30(Entity* entity, s16 x, s16 y) {
 
 s16 func_80173F74(s16 x1, s16 x2, s16 minDistance) {
 #ifdef VERSION_PSP
-    s16 diff = ABS(x2 - x1);
+    s16 diff = abs(x2 - x1);
 #else
     s32 diffTmp = x2 - x1;
-    s16 diff = ABS(diffTmp);
+    s16 diff = abs(diffTmp);
 #endif
     if (minDistance > diff) {
         minDistance = diff;
@@ -1305,7 +1305,7 @@ void ProcessEvent(Entity* self, bool resetEvent) {
             if (evt->roomX >= 0 ||
                 (g_StageId >= STAGE_RNO0 && g_StageId < STAGE_RNZ1_DEMO)) {
 #endif
-                if (ABS(evt->roomX) != g_CurrentRoomX ||
+                if (abs(evt->roomX) != g_CurrentRoomX ||
                     evt->roomY != g_CurrentRoomY) {
                     continue;
                 }
