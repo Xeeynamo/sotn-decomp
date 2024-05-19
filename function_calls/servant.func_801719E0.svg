@@ -12,7 +12,7 @@
 <!-- servant.func_801719E0 -->
 <g id="node1" class="node">
 <title>servant.func_801719E0</title>
-<ellipse fill="red" stroke="black" cx="554.44" cy="-198" rx="120.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="554.44" cy="-198" rx="120.78" ry="18"/>
 <text text-anchor="middle" x="554.44" y="-194.3" font-family="Times,serif" font-size="14.00">servant.func_801719E0</text>
 </g>
 <!-- dra.AllocPrimitives -->
@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>servant.func_8017170C</title>
 <g id="a_node7"><a xlink:href="servant.func_8017170C.svg" xlink:title="servant.func_8017170C">
-<ellipse fill="red" stroke="black" cx="1150.44" cy="-18" rx="120.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1150.44" cy="-18" rx="120.78" ry="18"/>
 <text text-anchor="middle" x="1150.44" y="-14.3" font-family="Times,serif" font-size="14.00">servant.func_8017170C</text>
 </a>
 </g>
