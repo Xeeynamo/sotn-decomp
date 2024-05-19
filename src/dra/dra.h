@@ -21,9 +21,9 @@
 #define GREEN_MASK 0x3E0
 #define BLUE_MASK 0x7C00
 
-#define GET_RED(x) ((x)&RED_MASK)
-#define GET_GREEN(x) ((x)&GREEN_MASK)
-#define GET_BLUE(x) ((x)&BLUE_MASK)
+#define GET_RED(x) ((x) & RED_MASK)
+#define GET_GREEN(x) ((x) & GREEN_MASK)
+#define GET_BLUE(x) ((x) & BLUE_MASK)
 
 typedef enum {
     MENU_DG_MAIN,
