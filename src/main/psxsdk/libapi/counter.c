@@ -39,7 +39,7 @@ s32 SetRCnt(s32 spec, s16 target, s32 flags) {
     if ((flags & 0x1000) != 0) {
         final_mode |= 0x10;
     }
-    
+
     D_8002D3B8[i].mode = final_mode;
     return 1;
 }
