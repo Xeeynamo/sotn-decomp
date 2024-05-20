@@ -26,6 +26,7 @@ DemoUpdate = 0x090ff738;
 TimeAttackController = 0x09100458;
 AddToInventory = 0x09100B68;
 func_800FE044 = 0x091015B8;
+IsRelicActive = 0x09101AA8;
 GetEquipProperties = 0x09101DB0;
 AddHearts = 0x09101FF0;
 DealDamage = 0x09102C20;
