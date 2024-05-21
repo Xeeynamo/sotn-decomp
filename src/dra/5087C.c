@@ -1261,8 +1261,8 @@ void func_800F298C(void) {
         }
         func_800F0CD8(0);
         func_800F0CD8(0);
-        D_80073074 = (s32)g_Tilemap.scrollX.i.hi;
-        D_8007307C = (s32)g_Tilemap.scrollY.i.hi;
+        g_PrevScrollX = (s32)g_Tilemap.scrollX.i.hi;
+        g_PrevScrollY = (s32)g_Tilemap.scrollY.i.hi;
         g_api.o.InitRoomEntities(D_801375BC.def->objLayoutId);
         g_api.o.Update();
         g_api.o.Update();
@@ -1301,10 +1301,10 @@ void func_800F298C(void) {
         func_800F1424();
 #endif
         func_800F2014();
-        D_80097908 = g_Tilemap.scrollX.i.hi - D_80073074;
-        D_8009790C = g_Tilemap.scrollY.i.hi - D_8007307C;
-        D_80073074 = g_Tilemap.scrollX.i.hi;
-        D_8007307C = g_Tilemap.scrollY.i.hi;
+        g_ScrollDeltaX = g_Tilemap.scrollX.i.hi - g_PrevScrollX;
+        g_ScrollDeltaY = g_Tilemap.scrollY.i.hi - g_PrevScrollY;
+        g_PrevScrollX = g_Tilemap.scrollX.i.hi;
+        g_PrevScrollY = g_Tilemap.scrollY.i.hi;
 
         g_api.o.TestCollisions();
         D_8013759C = PLAYER.posX.i.hi;
@@ -1691,8 +1691,8 @@ void func_800F298C(void) {
                     for (i = 0; i < LEN(g_unkGraphicsStruct.D_8009742C); i++) {
                         g_unkGraphicsStruct.D_8009742C[i] = 0;
                     }
-                    D_80073074 = (s32)g_Tilemap.scrollX.i.hi;
-                    D_8007307C = (s32)g_Tilemap.scrollY.i.hi;
+                    g_PrevScrollX = (s32)g_Tilemap.scrollX.i.hi;
+                    g_PrevScrollY = (s32)g_Tilemap.scrollY.i.hi;
                     g_api.o.InitRoomEntities(D_801375BC.def->objLayoutId);
                     g_api.o.Update();
                     func_800F0CD8(0);
@@ -1744,8 +1744,8 @@ void func_800F298C(void) {
                     for (i = 0; i < LEN(g_unkGraphicsStruct.D_8009742C); i++) {
                         g_unkGraphicsStruct.D_8009742C[i] = 0;
                     }
-                    D_80073074 = g_Tilemap.scrollX.i.hi;
-                    D_8007307C = g_Tilemap.scrollY.i.hi;
+                    g_PrevScrollX = g_Tilemap.scrollX.i.hi;
+                    g_PrevScrollY = g_Tilemap.scrollY.i.hi;
                     g_api.o.InitRoomEntities(D_801375BC.def->objLayoutId);
                     g_api.o.Update();
                     func_800F0CD8(0);
@@ -1755,8 +1755,8 @@ void func_800F298C(void) {
                         g_unkGraphicsStruct.D_8009742C[i] = 0;
                     }
                 }
-                D_80073074 = g_Tilemap.scrollX.i.hi;
-                D_8007307C = g_Tilemap.scrollY.i.hi;
+                g_PrevScrollX = g_Tilemap.scrollX.i.hi;
+                g_PrevScrollY = g_Tilemap.scrollY.i.hi;
                 if (D_80097C98 == 2) {
                     D_80097C98 = 3;
                     func_800EA5AC(0x40, 0xFF, 0xFF, 0xFF);

@@ -177,18 +177,18 @@ void InitRoomEntities(s32 objLayoutId) {
 void func_80199554(void) {
     Tilemap* tilemap = &g_Tilemap;
 
-    if (D_80097908 != 0) {
+    if (g_ScrollDeltaX != 0) {
         s16 tmp = tilemap->scrollX.i.hi;
-        if (D_80097908 > 0) {
+        if (g_ScrollDeltaX > 0) {
             func_80198F18(tmp + 0x140);
         } else {
             func_80199014(tmp - 0x40);
         }
     }
 
-    if (D_8009790C != 0) {
+    if (g_ScrollDeltaY != 0) {
         s16 tmp = tilemap->scrollY.i.hi;
-        if (D_8009790C > 0) {
+        if (g_ScrollDeltaY > 0) {
             func_801991CC(tmp + 0x120);
         } else {
             func_801992C8(tmp - 0x40);
