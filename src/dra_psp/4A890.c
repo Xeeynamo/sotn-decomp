@@ -8,4 +8,4 @@ INCLUDE_ASM("dra/nonmatchings/4A890", func_psp_09127348);
 
 INCLUDE_ASM("dra/nonmatchings/4A890", func_psp_09127480);
 
-INCLUDE_ASM("dra/nonmatchings/4A890", func_psp_09127490);
+INCLUDE_ASM("dra/nonmatchings/4A890", func_8011A4D0);
