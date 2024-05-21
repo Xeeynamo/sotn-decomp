@@ -1281,7 +1281,7 @@
 - [✅ SetPolyGT3](function_calls/main.SetPolyGT3.svg?raw=1)
 - [✅ SetPolyGT4](function_calls/main.SetPolyGT4.svg?raw=1)
 - [❌ SetPriority](function_calls/main.SetPriority.svg?raw=1)
-- [❌ SetRCnt](function_calls/main.SetRCnt.svg?raw=1)
+- [✅ SetRCnt](function_calls/main.SetRCnt.svg?raw=1)
 - [❌ SetRGBfifo](function_calls/main.SetRGBfifo.svg?raw=1)
 - [❌ SetRii](function_calls/main.SetRii.svg?raw=1)
 - [❌ SetRotMatrix](function_calls/main.SetRotMatrix.svg?raw=1)
