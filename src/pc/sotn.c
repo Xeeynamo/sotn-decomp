@@ -9,9 +9,10 @@
 
 u16 g_RawVram[VRAM_W * VRAM_H];
 GameApi g_ApiInit = {0};
-void (*D_80170000)(s32 arg0); // ServantDesc D_80170000 = {0};
 u8 g_DemoRecordingBuffer[DEMO_MAX_LEN];
 extern bool g_IsQuitRequested;
+
+ServantDesc D_80170000;
 
 void EntityWeaponAttack(Entity* self);
 void func_ptr_80170004(Entity* self);
