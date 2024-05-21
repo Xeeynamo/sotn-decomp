@@ -78,10 +78,7 @@ void func_8011A4D0(void) {
     s32 temp_s2;
     s32 i;
     s32 i2;
-    s32 i3;
-    u16 entityId;
     s32 enemy;
-    s32 enemy2;
 
     temp_s2 = *D_80097420;
     entity = g_CurrentEntity = &g_Entities[4];
@@ -93,26 +90,26 @@ void func_8011A4D0(void) {
             continue;
         }
         if (entity->step == 0) {
-            entityId = entity->entityId;
-            if (entityId < 0xD0) {
+            if (entity->entityId < 0xD0) {
                 // Objects 00-CF
-                entity->pfnUpdate = g_DraEntityTbl[entityId];
-            } else if (entityId < 0xE0) {
+                entity->pfnUpdate = g_DraEntityTbl[entity->entityId];
+            } else if (entity->entityId < 0xE0) {
                 // Objects D0-DF
-                entity->pfnUpdate = D_8016FCC0[entityId];
-            } else if (entityId == 0xEF || entityId == 0xFF ||
-                       entityId == 0xED || entityId == 0xFD) {
+                entity->pfnUpdate =
+                    ((PfnEntityUpdate*)FAMILIAR_PTR)[entity->entityId - 0xD0];
+            } else if (entity->entityId == 0xEF || entity->entityId == 0xFF ||
+                       entity->entityId == 0xED || entity->entityId == 0xFD) {
                 entity->pfnUpdate = g_DraEntityTbl[1];
-            } else if (entityId == 0xEE || entityId == 0xFE) {
+            } else if (entity->entityId == 0xEE || entity->entityId == 0xFE) {
                 entity->pfnUpdate = g_DraEntityTbl[15];
-            } else if (entityId >= 0xF0) {
+            } else if (entity->entityId >= 0xF0) {
                 // Objects F0-FC
                 entity->pfnUpdate =
-                    ((PfnEntityUpdate*)(&D_8017D000))[entityId - 0xF0];
+                    ((PfnEntityUpdate*)WEAPON1_PTR)[entity->entityId - 0xF0];
             } else {
                 // Objects E0-EC
                 entity->pfnUpdate =
-                    ((PfnEntityUpdate*)(&D_8017A000))[entityId - 0xE0];
+                    ((PfnEntityUpdate*)WEAPON0_PTR)[entity->entityId - 0xE0];
             }
         }
         if ((temp_s2 == 0) || (entity->flags & FLAG_UNK_10000)) {
@@ -120,9 +117,9 @@ void func_8011A4D0(void) {
             entity = g_CurrentEntity;
             if (entity->entityId != 0) {
                 if (!(entity->flags & FLAG_UNK_04000000) &&
-                    ((u16)(entity->posX.i.hi + 32) > 320 ||
-                     (u16)(entity->posY.i.hi + 16) > 272)) {
-                    DestroyEntity(entity);
+                    (entity->posX.i.hi > 288 || entity->posX.i.hi < -32 ||
+                     entity->posY.i.hi > 256 || entity->posY.i.hi < -16)) {
+                    DestroyEntity(g_CurrentEntity);
                 } else {
                     if (entity->flags & 0x100000) {
                         UpdateAnim(NULL, D_800ACFB4);
@@ -131,31 +128,31 @@ void func_8011A4D0(void) {
             }
         }
     }
-    if (D_8013803C != 0) {
-        if (--D_8013803C & 1) {
+    if (D_8013803C) {
+        D_8013803C--;
+        if (D_8013803C & 1) {
             func_800EA5AC(1U, D_80138040, D_80138044, D_80138048);
         }
     }
     D_8013800C[1] = D_8013800C[2] = 0;
-    enemy = g_Entities[16].enemyId;
-    if (enemy == 1) {
+    if (g_Entities[16].enemyId == 1) {
         D_8013800C[1] = 1;
-    } else if (enemy == 2) {
+    } else if (g_Entities[16].enemyId == 2) {
         D_8013800C[2] = 1;
     }
     for (i2 = 3; i2 < 11; i2++) {
         D_8013800C[i2] = 0;
     }
     entity = &g_Entities[17];
-    for (i3 = 17; i3 < 48; entity++, i3++) {
-        enemy2 = entity->enemyId;
-        if (enemy2 >= 3) {
-            D_8013800C[enemy2]++;
+    for (i2 = 17; i2 < 48; entity++, i2++) {
+        enemy = entity->enemyId;
+        if (2 < enemy) {
+            D_8013800C[enemy]++;
         }
     }
     // Appears to be a temporary debugging block that was left in.
     if ((g_Player.unk0C & 0xC0000) ||
-        (PLAYER.step == 0x12 && PLAYER.step_s == 0)) {
+        (PLAYER.step == Player_Teleport && PLAYER.step_s == 0)) {
 #if defined(VERSION_US)
         // Japanese for "without hit".
         FntPrint("atari nuki\n");
@@ -183,7 +180,8 @@ void func_8011A870(void) {
 
         if (entity->step == 0) {
             if (entity->entityId >= 0xD0 && entity->entityId < 0xE0) {
-                entity->pfnUpdate = D_8016FCC0[entity->entityId];
+                entity->pfnUpdate =
+                    ((PfnEntityUpdate*)FAMILIAR_PTR)[entity->entityId - 0xD0];
             } else {
                 continue;
             }

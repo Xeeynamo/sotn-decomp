@@ -3,6 +3,7 @@
 
 #include "game.h"
 #include "weapon.h"
+#include "servant.h"
 #include "items.h"
 
 #define DAMAGE_FLAG_NORMAL 0x0000
@@ -778,10 +779,9 @@ extern u8 g_CdSoundCommand16;
 extern s8 D_8013B690;
 extern s32 D_8013B694;
 extern s32 D_8013B69C;
-extern PfnEntityUpdate D_8016FCC0[];
+extern ServantDesc D_80170000;
 extern Weapon D_8017A000;
 extern Weapon D_8017D000;
-extern void (*D_80170000)(s32 arg0);
 extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
 extern u8 D_801EC000[];
