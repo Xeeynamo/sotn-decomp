@@ -1,7 +1,7 @@
 #include "mad.h"
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/EDB8", func_8018EDB8);
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/EDB8", EntityNumericDamage);
+#include "../entity_damage_display.h"
 
 #include "../create_entity_from_layout.h"
 
@@ -109,7 +109,7 @@ void func_801908DC(s16 arg0) {
     u8 flag;
 
     if (D_801997E0 != 0) {
-        func_80190838(arg0 - D_80097908);
+        func_80190838(arg0 - g_ScrollDeltaX);
         D_801997E0 = 0;
     }
 
@@ -198,17 +198,17 @@ void InitRoomEntities(s32 objLayoutId) {
 void func_80190F04(void) {
     Tilemap* tilemap = &g_Tilemap;
 
-    if (D_80097908 != 0) {
+    if (g_ScrollDeltaX != 0) {
         s16 tmp = tilemap->scrollX.i.hi;
-        if (D_80097908 > 0)
+        if (g_ScrollDeltaX > 0)
             func_801908DC(tmp + 0x140);
         else
             func_801909D8(tmp - 0x40);
     }
 
-    if (D_8009790C != 0) {
+    if (g_ScrollDeltaY != 0) {
         s16 tmp = tilemap->scrollY.i.hi;
-        if (D_8009790C > 0)
+        if (g_ScrollDeltaY > 0)
             func_80190B7C(tmp + 0x120);
         else
             func_80190C78(tmp - 0x40);

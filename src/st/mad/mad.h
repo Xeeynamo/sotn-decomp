@@ -43,9 +43,6 @@ void func_80198BC8(void* const, s32);
 void func_8019344C(void);
 void EntityUnkId15(Entity* entity);
 
-// TODO FIX
-extern s32 D_80097908;
-
 // ST/MAD
 extern u16 g_InitializeData0[];
 extern u16 D_8018052C[];

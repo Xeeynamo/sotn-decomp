@@ -480,8 +480,10 @@ s32 func_800FE044(s32 amount, s32 type) {
 }
 
 bool IsRelicActive(RelicIds relicId) {
-    u8 bitTest = RELIC_FLAG_ACTIVE;
-    return (g_Status.relics[relicId] & bitTest) != 0;
+    if ((g_Status.relics[relicId] & RELIC_FLAG_ACTIVE)) {
+        return 1;
+    }
+    return 0;
 }
 
 s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
@@ -492,10 +494,10 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
         accessoryCount =
             CheckEquipmentItemCount(ITEM_HEART_BROACH, EQUIP_ACCESSORY);
         if (accessoryCount == 1) {
-            subwpn->heartCost = subwpn->heartCost / 2;
+            subwpn->heartCost /= 2;
         }
         if (accessoryCount == 2) {
-            subwpn->heartCost = subwpn->heartCost / 3;
+            subwpn->heartCost /= 3;
         }
         if (subwpn->heartCost <= 0) {
             subwpn->heartCost = 1;
@@ -515,7 +517,7 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
         }
 #if defined(VERSION_US)
         if (subweaponId == 4 || subweaponId == 12) {
-#elif defined(VERSION_HD)
+#elif defined(VERSION_HD) || defined(VERSION_PSP)
         if (subweaponId == 4) {
 #endif
             accessoryCount =

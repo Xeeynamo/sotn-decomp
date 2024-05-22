@@ -1,7 +1,7 @@
 #include "nz0.h"
 INCLUDE_ASM("st/nz0/nonmatchings/39908", TestCollisions);
 
-INCLUDE_ASM("st/nz0/nonmatchings/39908", EntityNumericDamage);
+#include "../entity_damage_display.h"
 
 #include "../create_entity_from_layout.h"
 
@@ -109,7 +109,7 @@ void func_801BB45C(s16 arg0) {
     u8 flag;
 
     if (D_801CAA7C != 0) {
-        func_801BB3B8(arg0 - D_80097908);
+        func_801BB3B8(arg0 - g_ScrollDeltaX);
         D_801CAA7C = 0;
     }
 
@@ -137,7 +137,7 @@ void func_801BB558(s16 arg0) {
     }
 
     if (D_801CAA7C == 0) {
-        func_801BB404(arg0 - D_80097908);
+        func_801BB404(arg0 - g_ScrollDeltaX);
         D_801CAA7C = 1;
     }
 
@@ -180,7 +180,7 @@ void func_801BB710(s16 arg0) {
     s32 expected;
 
     if (D_801CAA80 != 0) {
-        func_801BB66C(arg0 - D_8009790C);
+        func_801BB66C(arg0 - g_ScrollDeltaY);
         D_801CAA80 = 0;
     }
 
@@ -208,7 +208,7 @@ void func_801BB80C(s16 arg0) {
     }
 
     if (D_801CAA80 == 0) {
-        func_801BB6B8(arg0 - D_8009790C);
+        func_801BB6B8(arg0 - g_ScrollDeltaY);
         D_801CAA80 = 1;
     }
 
@@ -271,17 +271,17 @@ void InitRoomEntities(s32 objLayoutId) {
 void func_801BBA98(void) {
     Tilemap* tilemap = &g_Tilemap;
 
-    if (D_80097908 != 0) {
+    if (g_ScrollDeltaX != 0) {
         s16 tmp = tilemap->scrollX.i.hi;
-        if (D_80097908 > 0)
+        if (g_ScrollDeltaX > 0)
             func_801BB45C(tmp + 320);
         else
             func_801BB558(tmp - 64);
     }
 
-    if (D_8009790C != 0) {
+    if (g_ScrollDeltaY != 0) {
         s16 tmp = tilemap->scrollY.i.hi;
-        if (D_8009790C > 0)
+        if (g_ScrollDeltaY > 0)
             func_801BB710(tilemap->scrollY.i.hi + 288);
         else
             func_801BB80C(tmp - 64);
