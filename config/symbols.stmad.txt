@@ -71,3 +71,5 @@ EntityUnkId15 = 0x80195B44;
 EntityIsNearPlayer = 0x801910A8;
 UnkPolyFunc2 = 0x801996EC;
 PrimDecreaseBrightness = 0x8019976C;
+g_ENumericDamageInit = 0x80180550;
+g_ENumericDamageClut = 0x801809C4;
