@@ -18,7 +18,7 @@ extern LayoutEntity* g_pStObjLayout[];
 
 INCLUDE_ASM("st/wrp/nonmatchings/861C", TestCollisions);
 
-#include "../entity_numeric_damage.h"
+#include "../entity_damage_display.h"
 
 #include "../create_entity_from_layout.h"
 

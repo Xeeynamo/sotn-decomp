@@ -1,7 +1,7 @@
 #include "dre.h"
 INCLUDE_ASM("st/dre/nonmatchings/173C4", TestCollisions);
 
-#include "../entity_numeric_damage.h"
+#include "../entity_damage_display.h"
 
 #include "../create_entity_from_layout.h"
 

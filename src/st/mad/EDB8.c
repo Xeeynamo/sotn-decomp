@@ -1,7 +1,7 @@
 #include "mad.h"
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/EDB8", func_8018EDB8);
 
-#include "../entity_numeric_damage.h"
+#include "../entity_damage_display.h"
 
 #include "../create_entity_from_layout.h"
 

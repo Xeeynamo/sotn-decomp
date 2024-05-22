@@ -1,7 +1,7 @@
 #include "nz0.h"
 INCLUDE_ASM("st/nz0/nonmatchings/39908", TestCollisions);
 
-#include "../entity_numeric_damage.h"
+#include "../entity_damage_display.h"
 
 #include "../create_entity_from_layout.h"
 

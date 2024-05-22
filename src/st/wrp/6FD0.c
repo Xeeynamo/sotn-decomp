@@ -197,7 +197,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     /* 3E4 */ (PfnEntityUpdate)EntityBreakable,
     /* 3E8 */ (PfnEntityUpdate)EntityExplosion,
     /* 3EC */ (PfnEntityUpdate)EntityPrizeDrop,
-    /* 3F0 */ (PfnEntityUpdate)EntityNumericDamage,
+    /* 3F0 */ (PfnEntityUpdate)EntityDamageDisplay,
     /* 3F4 */ (PfnEntityUpdate)EntityRedDoor,
     /* 3F8 */ (PfnEntityUpdate)EntityIntenseExplosion,
     /* 3FC */ (PfnEntityUpdate)EntitySoulStealOrb,
@@ -241,7 +241,7 @@ u16 D_80180488[] = {
 u16 D_80180494[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0003, 0x0000,
 };
-u16 g_ENumericDamageInit[] = {
+u16 g_eDamageDisplayInit[] = {
     /**/ 0x0000, 0x0000, 0x0000, 0x0000, 0x0003, 0x0000,
     /**/ 0x8001, 0x0000, 0x0000, 0x0000, 0x0003, 0x0000,
     /**/ 0x800B, 0x0001, 0x0048, 0x021A, 0x0061, 0x0000,
@@ -641,7 +641,7 @@ u16 D_80180A50[] = {
     /* A6A */ 0x016E,
 };
 
-u16 g_ENumericDamageClut[] = {
+u16 g_eDamageDisplayClut[] = {
     /* A6C */ 0x01B2,
     /* A6E */ 0x01B3,
     /* A70 */ 0x01B6,

@@ -1,5 +1,5 @@
-extern u16 g_ENumericDamageInit[];
-extern u16 g_ENumericDamageClut[];
+extern u16 g_eDamageDisplayInit[];
+extern u16 g_eDamageDisplayClut[];
 
 typedef struct NumericPrim {
     /* 0x00 */ struct NumericPrim* next;
@@ -37,7 +37,7 @@ typedef struct NumericPrim {
     /* 0x32 */ u16 drawMode;
 } NumericPrim; /* size=0x34 */
 
-void EntityNumericDamage(Entity* self) {
+void EntityDamageDisplay(Entity* self) {
     NumericPrim* prim;
     s16 x;
     s16 y;
@@ -64,7 +64,7 @@ void EntityNumericDamage(Entity* self) {
         params = self->params;
         nDigits = &self->ext.ndmg.nDigits;
         if (!self->step_s) {
-            InitializeEntity(g_ENumericDamageInit);
+            InitializeEntity(g_eDamageDisplayInit);
             self->step = 0;
             if (params == 0xC000) {
                 self->ext.ndmg.nPrims++;
@@ -188,7 +188,7 @@ void EntityNumericDamage(Entity* self) {
         params &= 1;
         iDigit = (self->params >> 13) & 6;
         params |= iDigit;
-        clut = g_ENumericDamageClut[params];
+        clut = g_eDamageDisplayClut[params];
         prim = &g_PrimBuf[self->primIndex];
         if (iDigit && iDigit != 4) {
             while (prim != NULL) {
