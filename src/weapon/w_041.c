@@ -18,7 +18,83 @@ void func_123000_8017A914(void) {
     LoadImage(&rect, D_8006EDCC);
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_041", func_123000_8017A994);
+extern s32 D_123000_8017B200;
+
+// Purpose is not 100% clear, but appears to be something like:
+// Iterate over entities 64-192. Look for any which are positioned
+// in a certain direction from us. That direction is the angleTarget,
+// and the targeted entity must be within tolerance from that target.
+
+Entity* func_123000_8017A994(Entity* self, s16 angleTarget, s16 tolerance) {
+    s32 sp10[128];
+    Entity* other;
+
+    s16 angleDiff;
+    s32 var_a0;
+    s32 i;
+    s32 entCount;
+
+    s16 xVar;
+    s16 yVar;
+    s16 angleResult;
+
+    entCount = 0;
+    for (other = &g_Entities[64], i = 0; i < 128; i++, other++) {
+        sp10[i] = 0;
+        if ((!other->entityId) || (other->hitboxState == 0) ||
+            (other->flags & FLAG_UNK_00200000)) {
+            continue;
+        }
+        if (other->posX.i.hi < -16) {
+            continue;
+        }
+        if (other->posX.i.hi > 272) {
+            continue;
+        }
+        if (other->posY.i.hi > 240) {
+            continue;
+        }
+        if (other->posY.i.hi < 0) {
+            continue;
+        }
+        if (other->hitPoints >= 0x7000) {
+            continue;
+        }
+        xVar = other->posX.i.hi - self->posX.i.hi;
+        yVar = other->posY.i.hi - self->posY.i.hi;
+        angleResult = ratan2(-yVar, xVar) & 0xFFF;
+        angleDiff = abs(angleTarget - angleResult);
+        if (angleDiff < 0x800) {
+            if (angleDiff > tolerance) {
+                continue;
+            }
+        } else {
+            if ((0x1000 - angleDiff) > tolerance) {
+                continue;
+            }
+        }
+        if ((other->flags & FLAG_UNK_80000)) {
+            entCount++;
+            sp10[i] = 1;
+            continue;
+        }
+        other->flags |= FLAG_UNK_80000;
+        return other;
+    }
+
+    if (entCount != 0) {
+        var_a0 = D_123000_8017B200 % 128;
+        for (i = 0; i < 128; i++) {
+            if (sp10[var_a0] != 0) {
+                other = &g_Entities[64 + var_a0];
+                D_123000_8017B200 = (var_a0 + 1) % 128;
+                return other;
+            }
+            var_a0 = (var_a0 + 1) % 128;
+        }
+    }
+    return NULL;
+}
 
 INCLUDE_ASM("weapon/nonmatchings/w_041", EntityWeaponAttack);
 
