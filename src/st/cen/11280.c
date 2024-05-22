@@ -110,7 +110,7 @@ void func_80192DD4(s16 arg0) {
     u8 flag;
 
     if (D_8019C76C != 0) {
-        func_80192D30(arg0 - D_80097908);
+        func_80192D30(arg0 - g_ScrollDeltaX);
         D_8019C76C = 0;
     }
 
@@ -138,7 +138,7 @@ void func_80192ED0(s16 arg0) {
     }
 
     if (D_8019C76C == 0) {
-        func_80192D7C(arg0 - D_80097908);
+        func_80192D7C(arg0 - g_ScrollDeltaX);
         D_8019C76C = 1;
     }
 
@@ -182,7 +182,7 @@ void func_80193088(s16 arg0) {
     s32 expected;
 
     if (D_8019C770 != 0) {
-        func_80192FE4(arg0 - D_8009790C);
+        func_80192FE4(arg0 - g_ScrollDeltaY);
         D_8019C770 = 0;
     }
 

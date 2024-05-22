@@ -110,7 +110,7 @@ void func_801C37D4(s16 arg0) {
     u8 flag;
 
     if (D_801D7118 != 0) {
-        func_801C3730(arg0 - D_80097908);
+        func_801C3730(arg0 - g_ScrollDeltaX);
         D_801D7118 = 0;
     }
 
@@ -138,7 +138,7 @@ void func_801C38D0(s16 arg0) {
     }
 
     if (D_801D7118 == 0) {
-        func_801C377C(arg0 - D_80097908);
+        func_801C377C(arg0 - g_ScrollDeltaX);
         D_801D7118 = 1;
     }
 
@@ -182,7 +182,7 @@ void func_801C3A88(s16 arg0) {
     s32 expected;
 
     if (D_801D711C != 0) {
-        func_801C39E4(arg0 - D_8009790C);
+        func_801C39E4(arg0 - g_ScrollDeltaY);
         D_801D711C = 0;
     }
 
@@ -210,7 +210,7 @@ void func_801C3B84(s16 arg0) {
     }
 
     if (D_801D711C == 0) {
-        func_801C3A30(arg0 - D_8009790C);
+        func_801C3A30(arg0 - g_ScrollDeltaY);
         D_801D711C = 1;
     }
 
@@ -278,17 +278,17 @@ void func_801C3B84(s16);
 void func_801C3E10(void) {
     Tilemap* tilemap = &g_Tilemap;
 
-    if (D_80097908 != 0) {
+    if (g_ScrollDeltaX != 0) {
         s16 tmp = tilemap->scrollX.i.hi;
-        if (D_80097908 > 0)
+        if (g_ScrollDeltaX > 0)
             func_801C37D4(tmp + 0x140);
         else
             func_801C38D0(tmp - 0x40);
     }
 
-    if (D_8009790C != 0) {
+    if (g_ScrollDeltaY != 0) {
         s16 tmp = tilemap->scrollY.i.hi;
-        if (D_8009790C > 0)
+        if (g_ScrollDeltaY > 0)
             func_801C3A88(tilemap->scrollY.i.hi + 0x120);
         else
             func_801C3B84(tmp - 0x40);

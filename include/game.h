@@ -1648,9 +1648,9 @@ extern s32 g_ServantLoaded; // Currently loaded servant in-memory
 extern Event g_EvSwCardEnd; // 80073068
 extern Event g_EvSwCardErr; // 8007306C
 extern Event g_EvSwCardTmo; // 80073070
-extern s32 D_80073074;      // Probably also an Event?
+extern s32 g_PrevScrollX;
 extern Event g_EvSwCardNew; // 80073078
-extern s32 D_8007307C;      // Maybe also an Event?
+extern s32 g_PrevScrollY;
 extern s32 D_80073080;
 extern Tilemap g_Tilemap;
 extern Entity g_Entities[TOTAL_ENTITY_COUNT];
@@ -1692,8 +1692,8 @@ extern s32 D_800978C4;
 extern u32 g_MenuStep;
 extern char D_80097902[];
 extern s32 D_80097904;
-extern s32 D_80097908;
-extern s32 D_8009790C;
+extern s32 g_ScrollDeltaX;
+extern s32 g_ScrollDeltaY;
 extern s32 D_80097910;
 extern DemoMode g_DemoMode;
 extern s32 g_LoadOvlIdx; // 0x80097918

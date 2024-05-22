@@ -110,7 +110,7 @@ void func_801B3478(s16 arg0) {
     u8 flag;
 
     if (D_801C00A8 != 0) {
-        func_801B33D4(arg0 - D_80097908);
+        func_801B33D4(arg0 - g_ScrollDeltaX);
         D_801C00A8 = 0;
     }
 
@@ -138,7 +138,7 @@ void func_801B3574(s16 arg0) {
     }
 
     if (D_801C00A8 == 0) {
-        func_801B3420(arg0 - D_80097908);
+        func_801B3420(arg0 - g_ScrollDeltaX);
         D_801C00A8 = 1;
     }
 
@@ -181,7 +181,7 @@ void func_801B372C(s16 arg0) {
     u8 flag;
 
     if (D_801C00AC != 0) {
-        func_801B3688(arg0 - D_8009790C);
+        func_801B3688(arg0 - g_ScrollDeltaY);
         D_801C00AC = 0;
     }
 
@@ -209,7 +209,7 @@ void func_801B3828(s16 arg0) {
     }
 
     if (D_801C00AC == 0) {
-        func_801B36D4(arg0 - D_8009790C);
+        func_801B36D4(arg0 - g_ScrollDeltaY);
         D_801C00AC = 1;
     }
 
@@ -272,17 +272,17 @@ void InitRoomEntities(s32 objLayoutId) {
 void func_801B3AB4(void) {
     Tilemap* tilemap = &g_Tilemap;
 
-    if (D_80097908 != 0) {
+    if (g_ScrollDeltaX != 0) {
         s16 tmp = tilemap->scrollX.i.hi;
-        if (D_80097908 > 0)
+        if (g_ScrollDeltaX > 0)
             func_801B3478(tmp + 320);
         else
             func_801B3574(tmp - 64);
     }
 
-    if (D_8009790C != 0) {
+    if (g_ScrollDeltaY != 0) {
         s16 tmp = tilemap->scrollY.i.hi;
-        if (D_8009790C > 0)
+        if (g_ScrollDeltaY > 0)
             func_801B372C(tilemap->scrollY.i.hi + 288);
         else
             func_801B3828(tmp - 64);
