@@ -398,22 +398,22 @@ void func_8019F3BC(Entity* arg0) {
         arg0->unk80.modeS16.unk0 = temp_v1_2;
         arg0->unk1E = temp_v1_2;
         temp_s0 = (arg0->unk84.U8.unk1 * 320) / 24;
-        arg0->accelerationX = temp_s0 * rsin(arg0->unk80.modeS16.unk0);
-        arg0->accelerationY = -(temp_s0 * rcos(arg0->unk80.modeS16.unk0));
+        arg0->velocityX = temp_s0 * rsin(arg0->unk80.modeS16.unk0);
+        arg0->velocityY = -(temp_s0 * rcos(arg0->unk80.modeS16.unk0));
     }
 
     if (arg0->animFrameIdx >= 13) {
-        var_v1 = arg0->accelerationX;
+        var_v1 = arg0->velocityX;
         if (var_v1 < 0) {
             var_v1 += 3;
         }
 
-        var_a0 = arg0->accelerationY;
-        arg0->accelerationX = (var_v1 >> 2) * 3;
+        var_a0 = arg0->velocityY;
+        arg0->velocityX = (var_v1 >> 2) * 3;
         if (var_a0 < 0) {
             var_a0 += 3;
         }
-        arg0->accelerationY = (var_a0 >> 2) * 3;
+        arg0->velocityY = (var_a0 >> 2) * 3;
     }
 
     MoveEntity();
