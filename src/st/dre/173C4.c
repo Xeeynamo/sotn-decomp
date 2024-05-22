@@ -85,80 +85,85 @@ void CreateEntityWhenInHorizontalRange(LayoutEntity* layoutObj) {
     }
 }
 
-void func_80198E74(s16 arg0) {
+void FindFirstEntityToTheRight(s16 arg0) {
     while (1) {
-        if ((D_801A32C4->posX != 0xFFFE) && ((s32)D_801A32C4->posX >= arg0)) {
+        if ((g_LayoutObjHorizontal->posX != 0xFFFE) &&
+            ((s32)g_LayoutObjHorizontal->posX >= arg0)) {
             break;
         }
 
-        D_801A32C4++;
+        g_LayoutObjHorizontal++;
     }
 }
 
-void func_80198EC0(s16 arg0) {
+void FindFirstEntityToTheLeft(s16 arg0) {
     while (true) {
-        if ((D_801A32C4->posX != 0xFFFF) &&
-            ((arg0 >= (s32)D_801A32C4->posX) || (D_801A32C4->posX == 0xFFFE))) {
+        if ((g_LayoutObjHorizontal->posX != 0xFFFF) &&
+            ((arg0 >= (s32)g_LayoutObjHorizontal->posX) ||
+             (g_LayoutObjHorizontal->posX == 0xFFFE))) {
             break;
         }
-        D_801A32C4--;
+        g_LayoutObjHorizontal--;
     }
 }
 
-INCLUDE_ASM("st/dre/nonmatchings/173C4", func_80198F18);
+INCLUDE_ASM("st/dre/nonmatchings/173C4", CreateEntitiesToTheRight);
 
-INCLUDE_ASM("st/dre/nonmatchings/173C4", func_80199014);
+INCLUDE_ASM("st/dre/nonmatchings/173C4", CreateEntitiesToTheLeft);
 
-void func_80199128(s16 arg0) {
+void FindFirstEntityAbove(s16 arg0) {
     while (1) {
-        if ((D_801A32C8[1] != 0xFFFE) && ((s32)D_801A32C8[1] >= arg0)) {
+        if ((g_LayoutObjVertical->posY != 0xFFFE) &&
+            ((s32)g_LayoutObjVertical->posY >= arg0)) {
             break;
         }
 
-        D_801A32C8 += 5;
+        g_LayoutObjVertical++;
     }
 }
 
-void func_80199174(s16 arg0) {
+void FindFirstEntityBelow(s16 arg0) {
     while (true) {
-        if ((D_801A32C8[1] != 0xFFFF) &&
-            (((s32)arg0 >= D_801A32C8[1]) || (D_801A32C8[1] == 0xFFFE))) {
+        if ((g_LayoutObjVertical->posY != 0xFFFF) &&
+            (((s32)arg0 >= g_LayoutObjVertical->posY) ||
+             (g_LayoutObjVertical->posY == 0xFFFE))) {
             break;
         }
-        D_801A32C8 -= 5;
+        g_LayoutObjVertical--;
     }
 }
 
-INCLUDE_ASM("st/dre/nonmatchings/173C4", func_801991CC);
+INCLUDE_ASM("st/dre/nonmatchings/173C4", CreateEntitiesAbove);
 
-INCLUDE_ASM("st/dre/nonmatchings/173C4", func_801992C8);
+INCLUDE_ASM("st/dre/nonmatchings/173C4", CreateEntitiesBelow);
 
 void InitRoomEntities(s32 objLayoutId) {
-    u16* pObjLayoutStart = D_80180220[objLayoutId];
+    u16* pObjLayoutStart = g_pStObjLayoutHorizontal[objLayoutId];
     Tilemap* tilemap = &g_Tilemap;
     s16 temp_s0;
     s16 arg0;
     s16 i;
     u16* temp_v1;
 
-    D_801A32C4 = pObjLayoutStart;
-    D_801A32C8 = D_801802F4[objLayoutId];
+    g_LayoutObjHorizontal = pObjLayoutStart;
+    g_LayoutObjVertical = g_pStObjLayoutVertical[objLayoutId];
 
     if (*pObjLayoutStart != 0xFFFE) {
-        D_801A32C4 = pObjLayoutStart + 1;
+        g_LayoutObjHorizontal = pObjLayoutStart + 1;
         arg0 = Random() & 0xFF;
         for (i = 0; true; i++) {
-            temp_v1 = D_801A32C4;
-            D_801A32C4 = temp_v1 + 1;
+            temp_v1 = g_LayoutObjHorizontal;
+            g_LayoutObjHorizontal = temp_v1 + 1;
             arg0 -= temp_v1[0];
             if (arg0 < 0) {
                 break;
             }
-            D_801A32C4 = temp_v1 + 3;
+            g_LayoutObjHorizontal = temp_v1 + 3;
         }
-        D_801A32C4 = (temp_v1[2] << 0x10) + temp_v1[1];
-        D_801A32C8 += i * 2 + 2;
-        D_801A32C8 = (D_801A32C8[1] << 0x10) + D_801A32C8[0];
+        g_LayoutObjHorizontal = (temp_v1[2] << 0x10) + temp_v1[1];
+        ((u16*)g_LayoutObjVertical) += i * 2 + 2;
+        g_LayoutObjVertical =
+            (g_LayoutObjVertical->posY << 0x10) + g_LayoutObjVertical->posX;
     }
     arg0 = tilemap->scrollX.i.hi;
     temp_s0 = arg0 + 0x140;
@@ -167,31 +172,31 @@ void InitRoomEntities(s32 objLayoutId) {
         i = 0;
     }
 
-    D_801A32CC = 0;
-    D_801A32D0 = 0;
-    func_80198E74(i);
-    func_80198F18(temp_s0);
-    func_80199128(tilemap->scrollY.i.hi + 0x120);
+    g_LayoutObjPosHorizontal = 0;
+    g_LayoutObjPosVertical = 0;
+    FindFirstEntityToTheRight(i);
+    CreateEntitiesToTheRight(temp_s0);
+    FindFirstEntityAbove(tilemap->scrollY.i.hi + 0x120);
 }
 
-void func_80199554(void) {
+void UpdateRoomPosition(void) {
     Tilemap* tilemap = &g_Tilemap;
 
     if (g_ScrollDeltaX != 0) {
         s16 tmp = tilemap->scrollX.i.hi;
         if (g_ScrollDeltaX > 0) {
-            func_80198F18(tmp + 0x140);
+            CreateEntitiesToTheRight(tmp + 0x140);
         } else {
-            func_80199014(tmp - 0x40);
+            CreateEntitiesToTheLeft(tmp - 0x40);
         }
     }
 
     if (g_ScrollDeltaY != 0) {
         s16 tmp = tilemap->scrollY.i.hi;
         if (g_ScrollDeltaY > 0) {
-            func_801991CC(tmp + 0x120);
+            CreateEntitiesAbove(tmp + 0x120);
         } else {
-            func_801992C8(tmp - 0x40);
+            CreateEntitiesBelow(tmp - 0x40);
         }
     }
 }

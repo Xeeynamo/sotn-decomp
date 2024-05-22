@@ -89,7 +89,7 @@ extern void ReplaceBreakableWithItemDrop(Entity*);
 extern s32 func_801C5D18(Entity* entity, s32 arg1, s32 arg2, s32 arg3);
 extern Primitive* FindFirstUnkPrim(Primitive* poly);
 
-extern LayoutEntity* D_80180850[];
+extern LayoutEntity* g_pStObjLayoutVertical[];
 extern u16 g_InitializeData0[];
 extern u16 g_InitializeEntityData0[];
 extern s16 D_80182A38[];
@@ -235,10 +235,10 @@ extern u8 D_80183C84[];
 extern u8 D_80183C98[];
 extern s32 D_80183CAC;
 extern s32 D_80183CBC;
-extern LayoutEntity* D_801D7110;
-extern u16* D_801D7114;
-extern u8 D_801D7118;
-extern u8 D_801D711C;
+extern LayoutEntity* g_LayoutObjHorizontal;
+extern LayoutEntity* g_LayoutObjVertical;
+extern u8 g_LayoutObjPosHorizontal;
+extern u8 g_LayoutObjPosVertical;
 extern s32 D_801D7D20;
 extern s16 D_801D7D2A;
 extern u16 D_801D7D2C;
@@ -253,7 +253,7 @@ extern s32 D_801D7D58;
 extern u32 D_801D7DD0;
 extern u16 g_ItemIconSlots[0x20];
 
-extern LayoutEntity* g_pStObjLayout[];
+extern LayoutEntity* g_pStObjLayoutHorizontal[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 
 // *** EntitySoulStealOrb properties START ***

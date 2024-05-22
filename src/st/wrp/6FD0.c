@@ -64,7 +64,7 @@ LayoutEntity D_801812C8[];
 LayoutEntity D_80181278[];
 LayoutEntity D_801812F0[];
 LayoutEntity D_80181304[];
-LayoutEntity* g_pStObjLayout[] = {
+LayoutEntity* g_pStObjLayoutHorizontal[] = {
     /* 0x23C */ D_801812F0,
     /* 0x240 */ D_80181228,
     /* 0x244 */ D_80181250,
@@ -127,7 +127,7 @@ LayoutEntity D_8018139C[];
 LayoutEntity D_801813C4[];
 LayoutEntity D_801813EC[];
 LayoutEntity D_80181400[];
-LayoutEntity* D_80180310[] = {
+LayoutEntity* g_pStObjLayoutVertical[] = {
     /* 310 */ D_801813EC,
     /* 314 */ D_80181324,
     /* 318 */ D_8018134C,
@@ -1053,10 +1053,10 @@ u8* D_80180F70[] = {
 };
 
 // *** bss? section start ***
-extern LayoutEntity* D_80193AB0;
-extern u16* D_80193AB4;
-extern u8 D_80193AB8;
-extern u8 D_80193ABC;
+extern LayoutEntity* g_LayoutObjHorizontal;
+extern LayoutEntity* g_LayoutObjVertical;
+extern u8 g_LayoutObjPosHorizontal;
+extern u8 g_LayoutObjPosVertical;
 extern u16 g_ItemIconSlots[];
 // *** bss? section end ***
 

@@ -4,7 +4,7 @@ void Update(void);
 void TestCollisions(void);
 void CreateEntityWhenInHorizontalRange(LayoutEntity*);
 void func_8018A520(s16);
-void func_8018A7AC(void);
+void UpdateRoomPosition(void);
 void func_8018CAB0(void);
 void InitRoomEntities(s32 objLayoutId);
 void func_801916C4(u16);
@@ -20,7 +20,7 @@ void UpdateStageEntities(void);
 Overlay g_StageOverlay = {
     /* 0x00 */ Update,
     /* 0x04 */ TestCollisions,
-    /* 0x08 */ func_8018A7AC,
+    /* 0x08 */ UpdateRoomPosition,
     /* 0x0C */ InitRoomEntities,
     /* 0x10 */ g_Rooms,
     /* 0x14 */ g_SpriteBanks,

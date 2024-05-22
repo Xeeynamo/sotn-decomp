@@ -8,6 +8,12 @@
 #include "objects.h"
 #include "sfx.h"
 
+#define LAYOUT_OBJ_START 0xffff
+#define LAYOUT_OBJ_END 0xfffe
+
+#define LAYOUT_OBJ_POSITION_END 0
+#define LAYOUT_OBJ_POSITION_START 1
+
 typedef struct {
     /* 0x0 */ u16 posX;
     /* 0x2 */ u16 posY;

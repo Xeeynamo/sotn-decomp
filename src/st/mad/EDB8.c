@@ -87,20 +87,22 @@ void CreateEntityWhenInHorizontalRange(LayoutEntity* layoutObj) {
 
 void func_80190838(s16 arg0) {
     while (true) {
-        if ((D_801997D8->posX != (u16)~1) && !(D_801997D8->posX < arg0)) {
+        if ((g_LayoutObjHorizontal->posX != (u16)~1) &&
+            !(g_LayoutObjHorizontal->posX < arg0)) {
             break;
         }
-        D_801997D8++;
+        g_LayoutObjHorizontal++;
     }
 }
 
-void func_80190884(s16 arg0) {
+void FindFirstEntityToTheLeft(s16 arg0) {
     while (true) {
-        if ((D_801997D8->posX != 0xFFFF) &&
-            ((arg0 >= (s32)D_801997D8->posX) || (D_801997D8->posX == 0xFFFE))) {
+        if ((g_LayoutObjHorizontal->posX != 0xFFFF) &&
+            ((arg0 >= (s32)g_LayoutObjHorizontal->posX) ||
+             (g_LayoutObjHorizontal->posX == 0xFFFE))) {
             break;
         }
-        D_801997D8--;
+        g_LayoutObjHorizontal--;
     }
 }
 
@@ -108,23 +110,24 @@ void func_801908DC(s16 arg0) {
     s32 expected;
     u8 flag;
 
-    if (D_801997E0 != 0) {
+    if (g_LayoutObjPosHorizontal != 0) {
         func_80190838(arg0 - g_ScrollDeltaX);
-        D_801997E0 = 0;
+        g_LayoutObjPosHorizontal = 0;
     }
 
     while (true) {
-        if ((D_801997D8->posX == 0xFFFF) || (arg0 < D_801997D8->posX)) {
+        if ((g_LayoutObjHorizontal->posX == 0xFFFF) ||
+            (arg0 < g_LayoutObjHorizontal->posX)) {
             return;
         }
 
         expected = 0;
-        flag = (D_801997D8->entityRoomIndex >> 8) + 0xFF;
+        flag = (g_LayoutObjHorizontal->entityRoomIndex >> 8) + 0xFF;
         if ((flag == 0xFF) ||
             (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
-            CreateEntityWhenInVerticalRange(D_801997D8);
+            CreateEntityWhenInVerticalRange(g_LayoutObjHorizontal);
         }
-        D_801997D8++;
+        g_LayoutObjHorizontal++;
     }
 }
 
@@ -132,21 +135,23 @@ INCLUDE_ASM("asm/us/st/mad/nonmatchings/EDB8", func_801909D8);
 
 void func_80190AD8(s16 arg0) {
     while (true) {
-        if ((D_801997DC[1] != 0xFFFE) && ((s32)D_801997DC[1] >= arg0)) {
+        if ((g_LayoutObjVertical->posY != 0xFFFE) &&
+            (g_LayoutObjVertical->posY >= arg0)) {
             break;
         }
 
-        D_801997DC += 5;
+        g_LayoutObjVertical++;
     }
 }
 
 void func_80190B24(s16 arg0) {
     while (true) {
-        if ((D_801997DC[1] != 0xFFFF) &&
-            ((arg0 >= D_801997DC[1] || D_801997DC[1] == 0xFFFE))) {
+        if ((g_LayoutObjVertical->posY != 0xFFFF) &&
+            ((arg0 >= g_LayoutObjVertical->posY ||
+              g_LayoutObjVertical->posY == 0xFFFE))) {
             break;
         }
-        D_801997DC -= 5;
+        g_LayoutObjVertical--;
     }
 }
 
@@ -162,24 +167,25 @@ void InitRoomEntities(s32 objLayoutId) {
     s16 i;
     u16* temp_v1;
 
-    D_801997D8 = pObjLayoutStart;
-    D_801997DC = D_801803C8[objLayoutId];
+    g_LayoutObjHorizontal = pObjLayoutStart;
+    g_LayoutObjVertical = D_801803C8[objLayoutId];
 
     if (*pObjLayoutStart != 0xFFFE) {
-        D_801997D8 = pObjLayoutStart + 1;
+        g_LayoutObjHorizontal = pObjLayoutStart + 1;
         arg0 = Random() & 0xFF;
         for (i = 0; true; i++) {
-            temp_v1 = D_801997D8;
-            D_801997D8 = temp_v1 + 1;
+            temp_v1 = g_LayoutObjHorizontal;
+            g_LayoutObjHorizontal = temp_v1 + 1;
             arg0 -= temp_v1[0];
             if (arg0 < 0) {
                 break;
             }
-            D_801997D8 = temp_v1 + 3;
+            g_LayoutObjHorizontal = temp_v1 + 3;
         }
-        D_801997D8 = (temp_v1[2] << 0x10) + temp_v1[1];
-        D_801997DC += i * 2 + 2;
-        D_801997DC = (D_801997DC[1] << 0x10) + D_801997DC[0];
+        g_LayoutObjHorizontal = (temp_v1[2] << 0x10) + temp_v1[1];
+        ((u16*)g_LayoutObjVertical) += i * 2 + 2;
+        g_LayoutObjVertical =
+            (g_LayoutObjVertical->posY << 0x10) + g_LayoutObjVertical->posX;
     }
     arg0 = tilemap->scrollX.i.hi;
     temp_s0 = arg0 + 0x140;
@@ -188,14 +194,14 @@ void InitRoomEntities(s32 objLayoutId) {
         i = 0;
     }
 
-    D_801997E0 = 0;
-    D_801997E4 = 0;
+    g_LayoutObjPosHorizontal = 0;
+    g_LayoutObjPosVertical = 0;
     func_80190838(i);
     func_801908DC(temp_s0);
     func_80190AD8(tilemap->scrollY.i.hi + 0x120);
 }
 
-void func_80190F04(void) {
+void UpdateRoomPosition(void) {
     Tilemap* tilemap = &g_Tilemap;
 
     if (g_ScrollDeltaX != 0) {
