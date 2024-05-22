@@ -48,8 +48,8 @@ void CreateEntityFromLayout(Entity*, LayoutEntity*);
 extern u16 func_80194E44(u16 arg0, u16 arg1, u16 arg2);
 void EntityUnkId15(Entity* entity);
 
-extern LayoutEntity* D_801801EC[];
-extern LayoutEntity* D_801802C0[];
+extern LayoutEntity* g_pStObjLayoutHorizontal[];
+extern LayoutEntity* g_pStObjLayoutVertical[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 
 /*** Initializers ***/
@@ -83,9 +83,10 @@ extern u16 D_801811D8[];
 extern u8 D_80181238;
 extern ObjInit2 D_8018125C[];
 
-extern LayoutEntity* D_8019C764;
-extern u16* D_8019C768;
-extern u8 D_8019C76C;
+extern LayoutEntity* g_LayoutObjHorizontal;
+extern LayoutEntity* g_LayoutObjVertical;
+extern u8 g_LayoutObjPosHorizontal;
+extern u8 g_LayoutObjPosVertical;
 extern s16 D_8019D37E;
 extern u16 D_8019D380;
 extern s16 D_8019D382;
@@ -95,8 +96,6 @@ extern s16 D_8019D38A;
 extern s8 D_8019D38E;
 extern s8 D_8019D38F;
 extern u32 D_8019D424;
-extern u8 D_8019C76C;
-extern u8 D_8019C770;
 
 extern u16 g_InitializeEntityData0[];
 

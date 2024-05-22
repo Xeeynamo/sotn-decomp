@@ -85,51 +85,54 @@ void CreateEntityWhenInHorizontalRange(LayoutEntity* layoutObj) {
     }
 }
 
-void func_80192D30(s16 arg0) {
+void FindFirstEntityToTheRight(s16 arg0) {
     while (1) {
-        if ((D_8019C764->posX != 0xFFFE) && ((s32)D_8019C764->posX >= arg0)) {
+        if ((g_LayoutObjHorizontal->posX != 0xFFFE) &&
+            ((s32)g_LayoutObjHorizontal->posX >= arg0)) {
             break;
         }
 
-        D_8019C764++;
+        g_LayoutObjHorizontal++;
     }
 }
 
-void func_80192D7C(s16 arg0) {
+void FindFirstEntityToTheLeft(s16 arg0) {
     while (true) {
-        if (((D_8019C764->posX != 0xFFFF) &&
-             ((arg0 >= D_8019C764->posX) || (D_8019C764->posX == 0xFFFE)))) {
+        if (((g_LayoutObjHorizontal->posX != 0xFFFF) &&
+             ((arg0 >= g_LayoutObjHorizontal->posX) ||
+              (g_LayoutObjHorizontal->posX == 0xFFFE)))) {
             break;
         }
-        D_8019C764--;
+        g_LayoutObjHorizontal--;
     }
 }
 
-void func_80192DD4(s16 arg0) {
+void CreateEntitiesToTheRight(s16 arg0) {
     s32 expected;
     u8 flag;
 
-    if (D_8019C76C != 0) {
-        func_80192D30(arg0 - g_ScrollDeltaX);
-        D_8019C76C = 0;
+    if (g_LayoutObjPosHorizontal != 0) {
+        FindFirstEntityToTheRight(arg0 - g_ScrollDeltaX);
+        g_LayoutObjPosHorizontal = 0;
     }
 
     while (true) {
-        if ((D_8019C764->posX == 0xFFFF) || (arg0 < D_8019C764->posX)) {
+        if ((g_LayoutObjHorizontal->posX == 0xFFFF) ||
+            (arg0 < g_LayoutObjHorizontal->posX)) {
             return;
         }
 
         expected = 0;
-        flag = (D_8019C764->entityRoomIndex >> 8) + 0xFF;
+        flag = (g_LayoutObjHorizontal->entityRoomIndex >> 8) + 0xFF;
         if ((flag == 0xFF) ||
             (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
-            CreateEntityWhenInVerticalRange(D_8019C764);
+            CreateEntityWhenInVerticalRange(g_LayoutObjHorizontal);
         }
-        D_8019C764++;
+        g_LayoutObjHorizontal++;
     }
 }
 
-void func_80192ED0(s16 arg0) {
+void CreateEntitiesToTheLeft(s16 arg0) {
     u8 flag;
     s32 expected;
 
@@ -137,98 +140,103 @@ void func_80192ED0(s16 arg0) {
         arg0 = 0;
     }
 
-    if (D_8019C76C == 0) {
-        func_80192D7C(arg0 - g_ScrollDeltaX);
-        D_8019C76C = 1;
+    if (g_LayoutObjPosHorizontal == 0) {
+        FindFirstEntityToTheLeft(arg0 - g_ScrollDeltaX);
+        g_LayoutObjPosHorizontal = 1;
     }
 
     while (true) {
-        if (D_8019C764->posX == 0xFFFE || arg0 > D_8019C764->posX) {
+        if (g_LayoutObjHorizontal->posX == 0xFFFE ||
+            arg0 > g_LayoutObjHorizontal->posX) {
             return;
         }
 
         expected = 0;
-        flag = (D_8019C764->entityRoomIndex >> 8) + 255;
+        flag = (g_LayoutObjHorizontal->entityRoomIndex >> 8) + 255;
         if (flag == 0xFF ||
             (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
-            CreateEntityWhenInVerticalRange(D_8019C764);
+            CreateEntityWhenInVerticalRange(g_LayoutObjHorizontal);
         }
-        D_8019C764--;
+        g_LayoutObjHorizontal--;
     }
 }
 
-void func_80192FE4(s16 arg0) {
+void FindFirstEntityAbove(s16 arg0) {
     while (true) {
-        if ((D_8019C768[1] != 0xFFFE) && ((s32)D_8019C768[1] >= arg0)) {
+        if ((g_LayoutObjVertical->posY != 0xFFFE) &&
+            ((s32)g_LayoutObjVertical->posY >= arg0)) {
             break;
         }
 
-        D_8019C768 += 5;
+        g_LayoutObjVertical++;
     }
 }
 
-void func_80193030(s16 arg0) {
+void FindFirstEntityBelow(s16 arg0) {
     while (true) {
-        if ((D_8019C768[1] != 0xFFFF) &&
-            ((arg0 >= D_8019C768[1]) || !(D_8019C768[1] != 0xFFFE))) {
+        if ((g_LayoutObjVertical->posY != 0xFFFF) &&
+            ((arg0 >= g_LayoutObjVertical->posY) ||
+             !(g_LayoutObjVertical->posY != 0xFFFE))) {
             break;
         }
-        D_8019C768 -= 5;
+        g_LayoutObjVertical--;
     }
 }
 
-void func_80193088(s16 arg0) {
+void CreateEntitiesAbove(s16 arg0) {
     u8 flag;
     s32 expected;
 
-    if (D_8019C770 != 0) {
-        func_80192FE4(arg0 - g_ScrollDeltaY);
-        D_8019C770 = 0;
+    if (g_LayoutObjPosVertical != 0) {
+        FindFirstEntityAbove(arg0 - g_ScrollDeltaY);
+        g_LayoutObjPosVertical = 0;
     }
 
     while (true) {
-        if ((D_8019C768[1] == 0xFFFF) || (arg0 < D_8019C768[1])) {
+        if ((g_LayoutObjVertical->posY == 0xFFFF) ||
+            (arg0 < g_LayoutObjVertical->posY)) {
             return;
         }
 
         expected = 0;
-        flag = (D_8019C768[3] >> 8) + 0xFF;
+        flag = (g_LayoutObjVertical->entityRoomIndex >> 8) + 0xFF;
         if ((flag == 0xFF) ||
             (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
-            CreateEntityWhenInHorizontalRange(D_8019C768);
+            CreateEntityWhenInHorizontalRange(g_LayoutObjVertical);
         }
-        D_8019C768 += 5;
+        g_LayoutObjVertical++;
     }
 }
 
-INCLUDE_ASM("st/cen/nonmatchings/11280", func_80193184);
+INCLUDE_ASM("st/cen/nonmatchings/11280", CreateEntitiesBelow);
 
 void InitRoomEntities(s32 objLayoutId) {
-    u16* pObjLayoutStart = D_801801EC[objLayoutId];
+    u16* pObjLayoutStart = g_pStObjLayoutHorizontal[objLayoutId];
     Tilemap* tilemap = &g_Tilemap;
     s16 temp_s0;
     s16 arg0;
     s16 i;
     u16* temp_v1;
 
-    D_8019C764 = pObjLayoutStart;
-    D_8019C768 = D_801802C0[objLayoutId];
+    g_LayoutObjHorizontal = pObjLayoutStart;
+    g_LayoutObjVertical = g_pStObjLayoutVertical[objLayoutId];
 
     if (*pObjLayoutStart != 0xFFFE) {
-        D_8019C764 = pObjLayoutStart + 1;
+        g_LayoutObjHorizontal = pObjLayoutStart + 1;
         arg0 = Random() & 0xFF;
         for (i = 0; true; i++) {
-            temp_v1 = D_8019C764;
-            D_8019C764 = temp_v1 + 1;
+            temp_v1 = g_LayoutObjHorizontal;
+            g_LayoutObjHorizontal = temp_v1 + 1;
             arg0 -= temp_v1[0];
             if (arg0 < 0) {
                 break;
             }
-            D_8019C764 = temp_v1 + 3;
+            g_LayoutObjHorizontal = temp_v1 + 3;
         }
-        D_8019C764 = (temp_v1[2] << 0x10) + temp_v1[1];
-        D_8019C768 += i * 2 + 2;
-        D_8019C768 = (D_8019C768[1] << 0x10) + D_8019C768[0];
+        g_LayoutObjHorizontal = (temp_v1[2] << 0x10) + temp_v1[1];
+        ((u16*)g_LayoutObjVertical) += i * 2 + 2;
+        g_LayoutObjVertical =
+            (g_LayoutObjVertical->posY << 0x10) + g_LayoutObjVertical->posX;
     }
     arg0 = tilemap->scrollX.i.hi;
     temp_s0 = arg0 + 0x140;
@@ -237,14 +245,14 @@ void InitRoomEntities(s32 objLayoutId) {
         i = 0;
     }
 
-    D_8019C76C = 0;
-    D_8019C770 = 0;
-    func_80192D30(i);
-    func_80192DD4(temp_s0);
-    func_80192FE4(tilemap->scrollY.i.hi + 0x120);
+    g_LayoutObjPosHorizontal = 0;
+    g_LayoutObjPosVertical = 0;
+    FindFirstEntityToTheRight(i);
+    CreateEntitiesToTheRight(temp_s0);
+    FindFirstEntityAbove(tilemap->scrollY.i.hi + 0x120);
 }
 
-INCLUDE_ASM("st/cen/nonmatchings/11280", func_80193410);
+INCLUDE_ASM("st/cen/nonmatchings/11280", UpdateRoomPosition);
 
 void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity) {
     DestroyEntity(entity);

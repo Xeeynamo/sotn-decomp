@@ -85,55 +85,59 @@ void CreateEntityWhenInHorizontalRange(LayoutEntity* layoutObj) {
     }
 }
 
-void func_8018C04C(s16 arg0) {
+void FindFirstEntityToTheRight(s16 arg0) {
     while (true) {
-        if (D_80195A30->posX != 0xFFFE && (s32)D_80195A30->posX >= arg0) {
+        if (g_LayoutObjHorizontal->posX != 0xFFFE &&
+            (s32)g_LayoutObjHorizontal->posX >= arg0) {
             break;
         }
-        D_80195A30++;
+        g_LayoutObjHorizontal++;
     }
 }
 
-void func_8018C098(s16 arg0) {
+void FindFirstEntityToTheLeft(s16 arg0) {
     while (true) {
-        if ((D_80195A30->posX != 0xFFFF) &&
-            ((arg0 >= D_80195A30->posX) || (D_80195A30->posX == 0xFFFE))) {
+        if ((g_LayoutObjHorizontal->posX != 0xFFFF) &&
+            ((arg0 >= g_LayoutObjHorizontal->posX) ||
+             (g_LayoutObjHorizontal->posX == 0xFFFE))) {
             break;
         }
-        D_80195A30--;
+        g_LayoutObjHorizontal--;
     }
 }
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018C0F0);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", CreateEntitiesToTheRight);
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018C1EC);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", CreateEntitiesToTheLeft);
 
-void func_8018C300(s16 arg0) {
+void FindFirstEntityAbove(s16 arg0) {
     while (true) {
-        if (D_80195A34->posY != 0xFFFE && (s32)D_80195A34->posY >= arg0) {
+        if (g_LayoutObjVertical->posY != 0xFFFE &&
+            (s32)g_LayoutObjVertical->posY >= arg0) {
             break;
         }
-        D_80195A34++;
+        g_LayoutObjVertical++;
     }
 }
 
-void func_8018C34C(s16 arg0) {
+void FindFirstEntityBelow(s16 arg0) {
     while (true) {
-        if ((D_80195A34->posY != 0xFFFF) &&
-            ((arg0 >= D_80195A34->posY) || (D_80195A34->posY == 0xFFFE))) {
+        if ((g_LayoutObjVertical->posY != 0xFFFF) &&
+            ((arg0 >= g_LayoutObjVertical->posY) ||
+             (g_LayoutObjVertical->posY == 0xFFFE))) {
             break;
         }
-        D_80195A34--;
+        g_LayoutObjVertical--;
     }
 }
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018C3A4);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", CreateEntitiesAbove);
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018C4A0);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", CreateEntitiesBelow);
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018C5B4);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", InitRoomEntities);
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018C72C);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", UpdateRoomPosition);
 
 void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity) {
     DestroyEntity(entity);

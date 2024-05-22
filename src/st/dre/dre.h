@@ -33,10 +33,10 @@ typedef enum {
 
 void ReplaceBreakableWithItemDrop(Entity* arg0);
 void DestroyEntity(Entity* entity);
-void func_80198F18(s16);
-void func_80199014(s16);
-void func_801991CC(s16);
-void func_801992C8(s16);
+void CreateEntitiesToTheRight(s16);
+void CreateEntitiesToTheLeft(s16);
+void CreateEntitiesAbove(s16);
+void CreateEntitiesBelow(s16);
 s32 func_8019AC78(u8, s16);
 void PreventEntityFromRespawning(Entity* entity);
 void FallEntity(void);
@@ -48,8 +48,8 @@ Entity* func_8019AC18(Entity*, Entity*);
 void func_8019E5E0(Entity* entity);
 void EntityUnkId15(Entity* entity);
 
-extern LayoutEntity* D_80180220[];
-extern LayoutEntity* D_801802F4[];
+extern LayoutEntity* g_pStObjLayoutHorizontal[];
+extern LayoutEntity* g_pStObjLayoutVertical[];
 
 /* *** Initializers *** */
 extern u16 g_InitializeData0[];
@@ -132,10 +132,10 @@ extern u8 D_801813FC;
 
 // *** EntitySoulStealOrb properties END ***
 
-extern LayoutEntity* D_801A32C4;
-extern u16* D_801A32C8;
-extern s8 D_801A32CC;
-extern u8 D_801A32D0;
+extern LayoutEntity* g_LayoutObjHorizontal;
+extern LayoutEntity* g_LayoutObjVertical;
+extern s8 g_LayoutObjPosHorizontal;
+extern u8 g_LayoutObjPosVertical;
 extern s32 D_801A3ED4;
 extern s32 D_801A3ED8;
 extern s16 D_801A3EDE;
