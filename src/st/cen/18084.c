@@ -291,7 +291,7 @@ void func_8019A328(s16 sfxId) {
     s16 var_v1;
 
     var_a3 = g_CurrentEntity->posX.i.hi - 128;
-    var_a2 = (ABS(var_a3) - 32) >> 5;
+    var_a2 = (abs(var_a3) - 32) >> 5;
     if (var_a2 > 8) {
         var_a2 = 8;
     } else if (var_a2 < 0) {
@@ -300,9 +300,9 @@ void func_8019A328(s16 sfxId) {
     if (var_a3 < 0) {
         var_a2 = -var_a2;
     }
-    var_a3 = ABS(var_a3) - 96;
+    var_a3 = abs(var_a3) - 96;
     y = g_CurrentEntity->posY.i.hi - 128;
-    temp_v0_2 = ABS(y) - 112;
+    temp_v0_2 = abs(y) - 112;
     var_v1 = var_a3;
     if (temp_v0_2 > 0) {
         var_v1 += temp_v0_2;

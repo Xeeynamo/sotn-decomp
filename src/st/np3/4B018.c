@@ -135,10 +135,7 @@ void func_801CDA6C(Entity* self, s32 arg1) {
 INCLUDE_ASM("st/np3/nonmatchings/4B018", func_801CDAC8);
 
 bool func_801CDC80(s16* arg0, s16 arg1, s16 arg2) {
-    s32 var_v1 = *arg0 - arg1;
-    s32 ret;
-
-    if (ABS(var_v1) < arg2) {
+    if (abs(*arg0 - arg1) < arg2) {
         *arg0 = arg1;
         return true;
     }

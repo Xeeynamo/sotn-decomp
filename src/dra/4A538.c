@@ -535,7 +535,7 @@ void ResetEntityArray(void) {
     u32 j;
 
     entity = &g_Entities[0];
-    for (i = 0; i < ARRAY_COUNT(g_Entities); i++) {
+    for (i = 0; i < LEN(g_Entities); i++) {
         ch = (s8*)entity;
         for (j = 0; j < sizeof(Entity); j++) {
             *ch++ = 0;

@@ -3,6 +3,7 @@
 
 #include "game.h"
 #include "weapon.h"
+#include "servant.h"
 #include "items.h"
 
 #define DAMAGE_FLAG_NORMAL 0x0000
@@ -391,7 +392,7 @@ extern unkstruct_800ACF7C D_800ACF7C[];
 extern s16 D_800ACF84[8]; // collection of sounds
 extern s16 D_800ACF94[];
 extern u8 D_800AD094[0x30];
-extern u8 D_800ACFB4[][4];
+extern u8 D_800ACFB4[][4]; // TODO AnimationFrames*[]
 extern unkstr_800cfe48* D_800CFE48[];
 extern PfnEntityUpdate D_800AD0C4[];
 extern FactoryBlueprint g_FactoryBlueprints[];
@@ -778,10 +779,9 @@ extern u8 g_CdSoundCommand16;
 extern s8 D_8013B690;
 extern s32 D_8013B694;
 extern s32 D_8013B69C;
-extern PfnEntityUpdate D_8016FCC0[];
+extern ServantDesc D_80170000;
 extern Weapon D_8017A000;
 extern Weapon D_8017D000;
-extern void (*D_80170000)(s32 arg0);
 extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
 extern u8 D_801EC000[];
@@ -883,7 +883,7 @@ void func_801073C0(void);
 void func_801092E8(s32);
 void SetPrimRect(Primitive* poly, s32 x, s32 y, s32 width, s32 height);
 void SetPlayerStep(PlayerSteps step);
-u32 UpdateAnim(s8* frameProps, s32*);
+u32 UpdateAnim(s8* frameProps, AnimationFrame** anims);
 void func_8010DFF0(s32, s32);
 void func_8010E0A8(void);
 void func_8010E0B8(void);
@@ -909,8 +909,7 @@ void func_80115C50(void);
 void func_80118894(Entity*);
 
 void func_80118C28(s32 arg0);
-void func_8011A3AC(
-    Entity* entity, s32 arg1, s32 arg2, Unkstruct_8011A3AC* arg3);
+void func_8011A3AC(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
 Entity* CreateEntFactoryFromEntity(Entity* entity, u32, s32);
 
 // Forward declarations for all the entity updating functions

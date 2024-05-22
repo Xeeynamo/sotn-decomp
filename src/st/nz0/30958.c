@@ -27,10 +27,10 @@ void func_801B0958(Entity* self) {
 bool func_801B0A20(Entity* self) {
     s16 diffX = PLAYER.posX.i.hi - self->posX.i.hi;
 
-    diffX = ABS(diffX);
+    diffX = abs(diffX);
     if (self->hitboxWidth >= diffX) {
         diffX = PLAYER.posY.i.hi - self->posY.i.hi;
-        diffX = ABS(diffX);
+        diffX = abs(diffX);
         return (self->hitboxHeight >= diffX);
     } else {
         return false;
@@ -568,8 +568,6 @@ void EntityMoveableBox(Entity* self) {
     s32 var_s1 = temp_s1;
     s16 primIndex;
     s32 temp_v0_2;
-    s32 var_v0;
-    s32 var_v1;
     s32 new_var;
 
     switch (self->step) {
@@ -620,12 +618,12 @@ void EntityMoveableBox(Entity* self) {
 
         if (self->params == 0) {
             temp_v0_2 = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
-            var_v1 = temp_v0_2 - 192;
-            var_v1 = ABS(var_v1);
-            var_v0 = temp_v0_2 - 256;
-            var_v0 = ABS(var_v0);
-            var_s1 = 24 > var_v1;
-            if (var_v0 < 24) {
+            if (abs(temp_v0_2 - 192) < 24) {
+                var_s1 = 1;
+            } else {
+                var_s1 = 0;
+            }
+            if (abs(temp_v0_2 - 256) < 24) {
                 var_s1 = 2;
             }
             if ((self->ext.generic.unk84.unk == 0) &&
@@ -891,7 +889,6 @@ void EntityCannonWall(Entity* self) {
 void func_801B2AD8(Entity* self) {
     POLY_GT4* poly;
     s16 primIndex;
-    s32 var_v0;
     s32 var_a0;
     s32 temp;
 
@@ -926,13 +923,12 @@ void func_801B2AD8(Entity* self) {
 
     case 1:
         var_a0 = self->hitFlags;
-        var_v0 = self->posX.i.hi - self[-1].posX.i.hi;
 
-        if (ABS(var_v0) < 8) {
+        if (abs(self->posX.i.hi - self[-1].posX.i.hi) < 8) {
             var_a0 |= 0x8000;
         }
 
-        if (var_a0 != 0) {
+        if (var_a0) {
             self->posY.val += FIX(1.0);
             temp = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
             if (temp > 376) {

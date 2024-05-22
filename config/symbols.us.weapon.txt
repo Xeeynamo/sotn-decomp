@@ -1,2 +1,2 @@
-g_Weapon = 0x80170000;
+g_Weapon = 0x8017A000;
 BottomCornerText = 0x8017AB54;

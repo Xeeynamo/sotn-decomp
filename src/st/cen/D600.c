@@ -884,7 +884,7 @@ void EntityElevatorStationary(Entity* self) {
         if (*(u8*)&self[-1].ext.stub[0x4]) {
             posX = self->posX.i.hi - player->posX.i.hi;
             if (g_pads[0].pressed & PAD_UP) {
-                if (ABS(posX) < 8) {
+                if (abs(posX) < 8) {
                     g_Entities[1].ext.stub[0x00] = 1;
                     g_Player.D_80072EFC = 2;
                     g_Player.D_80072EF4 = 0;
@@ -983,7 +983,7 @@ void EntityElevatorStationary(Entity* self) {
         prim = prim->next;
     }
 
-    if (ABS(self->posY.i.hi) > 384) {
+    if (abs(self->posY.i.hi) > 384) {
         DestroyEntity(self);
     }
 }
@@ -1108,7 +1108,7 @@ void EntityMovingElevator(Entity* self) {
         prim = prim->next;
     }
 
-    if (ABS(self->posY.i.hi) > 384) {
+    if (abs(self->posY.i.hi) > 384) {
         DestroyEntity(self);
     }
 }

@@ -229,8 +229,7 @@ void func_8010DBFC(s8* frameProps, s32* frames) {
         // FrameProperty* but anything besides this where we assign this big
         // expression fails.
 
-        // Please check function u32 UpdateAnim(s8* frameProps, s32* frames)
-        // down below
+        // Please check function UpdateAnim down below
         frameProps = &frameProps[animFrame->unk2 >> 9 << 2];
         g_CurrentEntity->hitboxOffX = *frameProps++;
         g_CurrentEntity->hitboxOffY = *frameProps++;
@@ -240,7 +239,7 @@ void func_8010DBFC(s8* frameProps, s32* frames) {
     g_CurrentEntity->animCurFrame = animFrame->unk2 & 0x1FF;
 }
 
-u32 UpdateAnim(s8* frameProps, s32* frames) {
+u32 UpdateAnim(s8* frameProps, AnimationFrame** anims) {
     AnimationFrame* animFrame;
     s32 ret;
 
@@ -264,7 +263,7 @@ u32 UpdateAnim(s8* frameProps, s32* frames) {
             g_CurrentEntity->animFrameDuration = -1;
             ret = -1;
         } else if (animFrame->duration == 0xFFFE) {
-            g_CurrentEntity->unk4C = frames[animFrame->unk2];
+            g_CurrentEntity->unk4C = anims[animFrame->unk2];
             g_CurrentEntity->animFrameIdx = 0;
             ret = -2;
             g_CurrentEntity->animFrameDuration =
@@ -536,7 +535,7 @@ void func_8010E570(s32 arg0) {
     case 3:
     case 4:
         var_a0 = 6;
-        if (ABS(PLAYER.velocityX) > FIX(2.5)) {
+        if (abs(PLAYER.velocityX) > FIX(2.5)) {
             var_a0 = 4;
         }
         break;
@@ -1391,7 +1390,7 @@ bool func_8010FDF8(s32 branchFlags) {
                 goto label;
             }
 
-            if (ABS(PLAYER.velocityX) > 0x20000) {
+            if (abs(PLAYER.velocityX) > 0x20000) {
                 PlaySfx(0x647);
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
                 func_8010E570(PLAYER.velocityX);
