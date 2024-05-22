@@ -30,11 +30,11 @@ void func_ptr_80170028(Entity* self) {
         self->palette = self->ext.weapon.parent->palette;
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->unk4C = D_A5000_8017AB58;
-        self->flags |= 0x04100000;
-        self->drawFlags = 3;
+        self->flags |= (FLAG_UNK_04000000 | FLAG_UNK_100000);
+        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
 
         self->rotX = self->rotY = 0;
-        self->posY.i.hi += 0x28;
+        self->posY.i.hi += 40;
         self->velocityY = FIX(-1.5);
         self->ext.weapon.unk7E = 0;
         // Note: This is a weird use of the lifetime, it's not a lifetime! It's
