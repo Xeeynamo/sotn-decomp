@@ -85,7 +85,7 @@ void CreateEntityWhenInHorizontalRange(LayoutEntity* layoutObj) {
     }
 }
 
-void func_80190838(s16 arg0) {
+void FindFirstEntityToTheRight(s16 arg0) {
     while (true) {
         if ((g_LayoutObjHorizontal->posX != (u16)~1) &&
             !(g_LayoutObjHorizontal->posX < arg0)) {
@@ -106,12 +106,12 @@ void FindFirstEntityToTheLeft(s16 arg0) {
     }
 }
 
-void func_801908DC(s16 arg0) {
+void CreateEntitiesToTheRight(s16 arg0) {
     s32 expected;
     u8 flag;
 
     if (g_LayoutObjPosHorizontal != 0) {
-        func_80190838(arg0 - g_ScrollDeltaX);
+        FindFirstEntityToTheRight(arg0 - g_ScrollDeltaX);
         g_LayoutObjPosHorizontal = 0;
     }
 
@@ -131,9 +131,9 @@ void func_801908DC(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/EDB8", func_801909D8);
+INCLUDE_ASM("asm/us/st/mad/nonmatchings/EDB8", CreateEntitiesToTheLeft);
 
-void func_80190AD8(s16 arg0) {
+void FindFirstEntityAbove(s16 arg0) {
     while (true) {
         if ((g_LayoutObjVertical->posY != 0xFFFE) &&
             (g_LayoutObjVertical->posY >= arg0)) {
@@ -144,7 +144,7 @@ void func_80190AD8(s16 arg0) {
     }
 }
 
-void func_80190B24(s16 arg0) {
+void FindFirstEntityBelow(s16 arg0) {
     while (true) {
         if ((g_LayoutObjVertical->posY != 0xFFFF) &&
             ((arg0 >= g_LayoutObjVertical->posY ||
@@ -155,12 +155,12 @@ void func_80190B24(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/EDB8", func_80190B7C);
+INCLUDE_ASM("asm/us/st/mad/nonmatchings/EDB8", CreateEntitiesAbove);
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/EDB8", func_80190C78);
+INCLUDE_ASM("asm/us/st/mad/nonmatchings/EDB8", CreateEntitiesBelow);
 
 void InitRoomEntities(s32 objLayoutId) {
-    u16* pObjLayoutStart = g_pStObjLayout[objLayoutId];
+    u16* pObjLayoutStart = g_pStObjLayoutHorizontal[objLayoutId];
     Tilemap* tilemap = &g_Tilemap;
     s16 temp_s0;
     s16 arg0;
@@ -168,7 +168,7 @@ void InitRoomEntities(s32 objLayoutId) {
     u16* temp_v1;
 
     g_LayoutObjHorizontal = pObjLayoutStart;
-    g_LayoutObjVertical = D_801803C8[objLayoutId];
+    g_LayoutObjVertical = g_pStObjLayoutVertical[objLayoutId];
 
     if (*pObjLayoutStart != 0xFFFE) {
         g_LayoutObjHorizontal = pObjLayoutStart + 1;
@@ -196,9 +196,9 @@ void InitRoomEntities(s32 objLayoutId) {
 
     g_LayoutObjPosHorizontal = 0;
     g_LayoutObjPosVertical = 0;
-    func_80190838(i);
-    func_801908DC(temp_s0);
-    func_80190AD8(tilemap->scrollY.i.hi + 0x120);
+    FindFirstEntityToTheRight(i);
+    CreateEntitiesToTheRight(temp_s0);
+    FindFirstEntityAbove(tilemap->scrollY.i.hi + 0x120);
 }
 
 void UpdateRoomPosition(void) {
@@ -207,17 +207,17 @@ void UpdateRoomPosition(void) {
     if (g_ScrollDeltaX != 0) {
         s16 tmp = tilemap->scrollX.i.hi;
         if (g_ScrollDeltaX > 0)
-            func_801908DC(tmp + 0x140);
+            CreateEntitiesToTheRight(tmp + 0x140);
         else
-            func_801909D8(tmp - 0x40);
+            CreateEntitiesToTheLeft(tmp - 0x40);
     }
 
     if (g_ScrollDeltaY != 0) {
         s16 tmp = tilemap->scrollY.i.hi;
         if (g_ScrollDeltaY > 0)
-            func_80190B7C(tmp + 0x120);
+            CreateEntitiesAbove(tmp + 0x120);
         else
-            func_80190C78(tmp - 0x40);
+            CreateEntitiesBelow(tmp - 0x40);
     }
 }
 
