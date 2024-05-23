@@ -31,10 +31,10 @@ typedef enum {
     E_ID_15 = 0x15
 } EntityIDs;
 
-void func_801908DC(s16);
-void func_801909D8(s16);
-void func_80190B7C(s16);
-void func_80190C78(s16);
+void CreateEntitiesToTheRight(s16);
+void CreateEntitiesToTheLeft(s16);
+void CreateEntitiesAbove(s16);
+void CreateEntitiesBelow(s16);
 void CreateEntityFromCurrentEntity(u16, Entity*);
 u8 func_80192914(s16 arg0, s16 arg1);
 void ReplaceBreakableWithItemDrop(Entity*);
@@ -66,8 +66,8 @@ extern u16 g_InitializeEntityData0[];
 extern s16 D_801809EC[];
 extern u8 D_80181010[];
 extern RoomHeader g_rooms[];
-extern LayoutEntity* g_pStObjLayout[];
-extern LayoutEntity* D_801803C8[];
+extern LayoutEntity* g_pStObjLayoutHorizontal[];
+extern LayoutEntity* g_pStObjLayoutVertical[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 
 extern LayoutEntity* g_LayoutObjHorizontal;
