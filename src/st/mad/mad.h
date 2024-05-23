@@ -73,7 +73,7 @@ extern PfnEntityUpdate PfnEntityUpdates[];
 extern LayoutEntity* g_LayoutObjHorizontal;
 extern LayoutEntity* g_LayoutObjVertical;
 extern u8 g_LayoutObjPosHorizontal;
-extern s8 g_LayoutObjPosVertical;
+extern u8 g_LayoutObjPosVertical;
 
 extern u16 g_eBreakableInit[];
 extern u8* g_eBreakableAnimations[8];

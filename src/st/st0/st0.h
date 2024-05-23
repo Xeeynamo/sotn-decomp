@@ -44,9 +44,6 @@ extern PfnEntityUpdate PfnEntityUpdates[];
 extern bool g_isSecretStairsButtonPressed;
 extern bool g_isDraculaFirstFormDefeated;
 
-extern LayoutEntity* g_pStObjLayoutHorizontal[];
-extern LayoutEntity* g_pStObjLayoutVertical[];
-
 // *** Initializers ***
 extern u16 D_80180574[];
 extern u16 g_InitializeEntityData0[];
@@ -145,10 +142,6 @@ extern u16 D_80181CDC[];
 extern u32 D_80181CF0[];
 extern s8 D_801A7B7C;
 extern Point32 D_801BEB64[];
-extern LayoutEntity* g_LayoutObjHorizontal;
-extern LayoutEntity* g_LayoutObjVertical;
-extern u8 g_LayoutObjPosHorizontal;
-extern u8 g_LayoutObjPosVertical;
 extern s32 D_801C2578;
 extern u32 D_801C257C;
 extern s32 D_801C2578;

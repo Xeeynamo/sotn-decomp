@@ -48,8 +48,6 @@ void EntityUnkId15(Entity* entity);
 void func_801C4CC0(void);
 
 extern u8 D_8003BE6F[];
-extern LayoutEntity* g_pStObjLayoutHorizontal[];
-extern LayoutEntity* g_pStObjLayoutVertical[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 extern const u16 g_InitializeEntityData0[];
 extern u16 D_80180BEC[];
@@ -203,10 +201,6 @@ extern s32 D_80180ED0[];
 extern s16 D_80181EDC[];
 extern u32 D_80181EEC[];
 extern ObjInit2 D_80182014[];
-extern LayoutEntity* g_LayoutObjHorizontal;
-extern LayoutEntity* g_LayoutObjVertical;
-extern u8 g_LayoutObjPosHorizontal;
-extern u8 g_LayoutObjPosVertical;
 
 // *** EntityAxeKnight properties START ***
 

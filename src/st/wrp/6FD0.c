@@ -5,6 +5,7 @@
  */
 
 #include "wrp.h"
+#include "../st_private.h"
 
 // *** Overlay exports start ***
 void CreateEntityWhenInHorizontalRange(LayoutEntity*);
@@ -1053,10 +1054,6 @@ u8* D_80180F70[] = {
 };
 
 // *** bss? section start ***
-extern LayoutEntity* g_LayoutObjHorizontal;
-extern LayoutEntity* g_LayoutObjVertical;
-extern u8 g_LayoutObjPosHorizontal;
-extern u8 g_LayoutObjPosVertical;
 extern u16 g_ItemIconSlots[];
 // *** bss? section end ***
 
