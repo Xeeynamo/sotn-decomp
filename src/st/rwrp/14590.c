@@ -67,7 +67,7 @@ void EntitySoulStealOrb(Entity* self) {
                        self->ext.soulStealOrb.unk80);
         MoveEntity(self); // argument pass necessary to match
         prim = &g_PrimBuf[self->primIndex];
-        func_8018D6B0(&D_80181110, self);
+        AnimateEntity(&D_80181110, self);
         angle = (float)(u32)self; // !FAKE
         prim->tpage = 0x18;
         prim->clut = 0x194;
@@ -107,7 +107,7 @@ void func_80194DD4(Entity* entity) {
             entity->drawFlags = (u8)(entity->drawFlags | FLAG_DRAW_ROTZ);
         }
     }
-    func_8018D6B0(objInit->unk10, entity);
+    AnimateEntity(objInit->unk10, entity);
 }
 
 INCLUDE_ASM("st/rwrp/nonmatchings/14590", BottomCornerText);

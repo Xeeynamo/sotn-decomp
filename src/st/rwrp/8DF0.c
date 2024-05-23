@@ -23,7 +23,7 @@ void EntityBreakable(Entity* entity) {
     u16 temp_s0 = entity->params >> 0xC;
 
     if (entity->step != 0) {
-        func_8018D6B0(D_801805B8[temp_s0], entity);
+        AnimateEntity(D_801805B8[temp_s0], entity);
         if (entity->unk44 != 0) {
             g_api.PlaySfx(NA_SE_BREAK_CANDLE);
             temp_v0 = AllocEntity(&D_8007D858, &D_8007D858 + 32);

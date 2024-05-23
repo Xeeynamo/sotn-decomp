@@ -36,6 +36,7 @@ CreateEntityFromEntity = 0x80193538;
 EntityRedDoor = 0x8019362C;
 DestroyEntity = 0x80194264;
 PreventEntityFromRespawning = 0x8019434C;
+AnimateEntity = 0x80194394;
 GetSideToPlayer = 0x801945D4;
 MoveEntity = 0x80194618;
 FallEntity = 0x80194648;
