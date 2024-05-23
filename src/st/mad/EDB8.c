@@ -131,7 +131,37 @@ void CreateEntitiesToTheRight(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/EDB8", CreateEntitiesToTheLeft);
+/*
+ * n.b.! This is different from every other stage's `CreateEntitiesToTheLeft`.
+ * It will at most create 1 entity to the left and then exit with the horizontal
+ * array pointer updated to the next element in the sequence.
+ */
+void CreateEntitiesToTheLeft(s16 posX) {
+    u8 flag;
+    s32 expected = 0;
+
+    if (posX < 0) {
+        posX = 0;
+    }
+
+    if (g_LayoutObjPosHorizontal == LAYOUT_OBJ_POSITION_END) {
+        FindFirstEntityToTheLeft(posX - g_ScrollDeltaX);
+        g_LayoutObjPosHorizontal = LAYOUT_OBJ_POSITION_START;
+    }
+
+    if (g_LayoutObjHorizontal->posX == LAYOUT_OBJ_END ||
+        g_LayoutObjHorizontal->posX < posX) {
+        return;
+    }
+
+    flag = (g_LayoutObjHorizontal->entityRoomIndex >> 8) + 0xff;
+    expected = 0;
+    if (flag == 0xFF ||
+        ((g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1f))) == expected)) {
+        CreateEntityWhenInVerticalRange(g_LayoutObjHorizontal);
+    }
+    g_LayoutObjHorizontal--;
+}
 
 void FindFirstEntityAbove(s16 arg0) {
     while (true) {
