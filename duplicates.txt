@@ -781,8 +781,8 @@
 | 1.00 | true     | CreateEntitiesToTheRight            | ../../asm/us/st/cen/nonmatchings/11280/CreateEntitiesToTheRight.s 
 | 1.00 | false    | CreateEntitiesAbove                 | ../../asm/us/st/dre/nonmatchings/173C4/CreateEntitiesAbove.s 
 | 1.00 | false    | CreateEntitiesToTheRight            | ../../asm/us/st/dre/nonmatchings/173C4/CreateEntitiesToTheRight.s 
+| 1.00 | false    | CreateEntitiesAbove                 | ../../asm/us/st/mad/nonmatchings/EDB8/CreateEntitiesAbove.s 
 | 1.00 | true     | func_801908DC                       | ../../asm/us/st/mad/nonmatchings/EDB8/func_801908DC.s 
-| 1.00 | false    | func_80190B7C                       | ../../asm/us/st/mad/nonmatchings/EDB8/func_80190B7C.s 
 | 1.00 | true     | CreateEntitiesAbove                 | ../../asm/us/st/no3/nonmatchings/41C80/CreateEntitiesAbove.s 
 | 1.00 | true     | CreateEntitiesToTheRight            | ../../asm/us/st/no3/nonmatchings/41C80/CreateEntitiesToTheRight.s 
 | 1.00 | true     | CreateEntitiesAbove                 | ../../asm/us/st/np3/nonmatchings/394F0/CreateEntitiesAbove.s 
@@ -819,8 +819,8 @@
 | 1.00 | true     | FindFirstEntityToTheLeft            | ../../asm/us/st/cen/nonmatchings/11280/FindFirstEntityToTheLeft.s 
 | 1.00 | true     | FindFirstEntityBelow                | ../../asm/us/st/dre/nonmatchings/173C4/FindFirstEntityBelow.s 
 | 1.00 | true     | FindFirstEntityToTheLeft            | ../../asm/us/st/dre/nonmatchings/173C4/FindFirstEntityToTheLeft.s 
+| 1.00 | true     | FindFirstEntityBelow                | ../../asm/us/st/mad/nonmatchings/EDB8/FindFirstEntityBelow.s 
 | 1.00 | true     | FindFirstEntityToTheLeft            | ../../asm/us/st/mad/nonmatchings/EDB8/FindFirstEntityToTheLeft.s 
-| 1.00 | true     | func_80190B24                       | ../../asm/us/st/mad/nonmatchings/EDB8/func_80190B24.s 
 | 1.00 | true     | FindFirstEntityBelow                | ../../asm/us/st/no3/nonmatchings/41C80/FindFirstEntityBelow.s 
 | 1.00 | true     | FindFirstEntityToTheLeft            | ../../asm/us/st/no3/nonmatchings/41C80/FindFirstEntityToTheLeft.s 
 | 1.00 | true     | FindFirstEntityBelow                | ../../asm/us/st/np3/nonmatchings/394F0/FindFirstEntityBelow.s 
@@ -838,8 +838,8 @@
 | 1.00 | true     | FindFirstEntityToTheRight           | ../../asm/us/st/cen/nonmatchings/11280/FindFirstEntityToTheRight.s 
 | 1.00 | true     | FindFirstEntityAbove                | ../../asm/us/st/dre/nonmatchings/173C4/FindFirstEntityAbove.s 
 | 1.00 | true     | FindFirstEntityToTheRight           | ../../asm/us/st/dre/nonmatchings/173C4/FindFirstEntityToTheRight.s 
+| 1.00 | true     | FindFirstEntityAbove                | ../../asm/us/st/mad/nonmatchings/EDB8/FindFirstEntityAbove.s 
 | 1.00 | true     | func_80190838                       | ../../asm/us/st/mad/nonmatchings/EDB8/func_80190838.s 
-| 1.00 | true     | func_80190AD8                       | ../../asm/us/st/mad/nonmatchings/EDB8/func_80190AD8.s 
 | 1.00 | true     | FindFirstEntityAbove                | ../../asm/us/st/no3/nonmatchings/41C80/FindFirstEntityAbove.s 
 | 1.00 | true     | FindFirstEntityToTheRight           | ../../asm/us/st/no3/nonmatchings/41C80/FindFirstEntityToTheRight.s 
 | 1.00 | true     | FindFirstEntityAbove                | ../../asm/us/st/np3/nonmatchings/394F0/FindFirstEntityAbove.s 
@@ -876,7 +876,7 @@
 | 1.00 | true     | CreateEntitiesToTheLeft             | ../../asm/us/st/cen/nonmatchings/11280/CreateEntitiesToTheLeft.s 
 | 1.00 | false    | CreateEntitiesBelow                 | ../../asm/us/st/dre/nonmatchings/173C4/CreateEntitiesBelow.s 
 | 1.00 | false    | CreateEntitiesToTheLeft             | ../../asm/us/st/dre/nonmatchings/173C4/CreateEntitiesToTheLeft.s 
-| 1.00 | false    | func_80190C78                       | ../../asm/us/st/mad/nonmatchings/EDB8/func_80190C78.s 
+| 1.00 | false    | CreateEntitiesBelow                 | ../../asm/us/st/mad/nonmatchings/EDB8/CreateEntitiesBelow.s 
 | 1.00 | true     | CreateEntitiesBelow                 | ../../asm/us/st/no3/nonmatchings/41C80/CreateEntitiesBelow.s 
 | 1.00 | true     | CreateEntitiesToTheLeft             | ../../asm/us/st/no3/nonmatchings/41C80/CreateEntitiesToTheLeft.s 
 | 1.00 | true     | CreateEntitiesBelow                 | ../../asm/us/st/np3/nonmatchings/394F0/CreateEntitiesBelow.s 
