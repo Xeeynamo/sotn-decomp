@@ -36,15 +36,18 @@ INCLUDE_ASM("dra/nonmatchings/262A0", LoadGfxAsync);
 
 INCLUDE_ASM("dra/nonmatchings/262A0", func_psp_091040A0);
 
-INCLUDE_ASM("dra/nonmatchings/262A0", func_psp_09104108);
+INCLUDE_ASM("dra/nonmatchings/262A0", DecompressWriteNibble);
 
-INCLUDE_ASM("dra/nonmatchings/262A0", func_psp_09104178);
+INCLUDE_ASM("dra/nonmatchings/262A0", DecompressReadNibble);
 
-INCLUDE_ASM("dra/nonmatchings/262A0", func_psp_091041D0);
+// https://decomp.me/scratch/ylDoN
+INCLUDE_ASM("dra/nonmatchings/262A0", DecompressData);
 
-INCLUDE_ASM("dra/nonmatchings/262A0", func_psp_09104478);
+// https://decomp.me/scratch/BwdAt
+INCLUDE_ASM("dra/nonmatchings/262A0", LoadPendingGfx);
 
-INCLUDE_ASM("dra/nonmatchings/262A0", func_psp_09104628);
+// https://decomp.me/scratch/Bp68W
+INCLUDE_ASM("dra/nonmatchings/262A0", func_800EB4F8);
 
 INCLUDE_ASM("dra/nonmatchings/262A0", LoadEquipIcon);
 
