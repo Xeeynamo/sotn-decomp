@@ -85,7 +85,7 @@ void EntityRedDoor(Entity* self) {
             self->animCurFrame = 0;
             self->step = 4;
             PLAYER.velocityY = 0;
-            g_Player.D_80072EF4 = 0;
+            g_Player.padSim = 0;
             g_Player.D_80072EFC = 0x18;
         } else {
             self->ext.door.angle = 0xC00;
@@ -134,13 +134,13 @@ void EntityRedDoor(Entity* self) {
                 prim = prim->next;
             }
             self->animCurFrame = 0;
-            g_Player.D_80072EF4 = 0;
+            g_Player.padSim = 0;
             g_Player.D_80072EFC = 2;
             self->step++;
         }
         break;
     case 2:
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         g_Player.D_80072EFC = 0x18;
         if (!(self->params & 0x100)) {
             self->ext.door.angle += 0x20;
@@ -165,17 +165,17 @@ void EntityRedDoor(Entity* self) {
             return;
         }
         if (!(self->params & 0x100)) {
-            g_Player.D_80072EF4 = PAD_LEFT;
+            g_Player.padSim = PAD_LEFT;
         } else {
-            g_Player.D_80072EF4 = PAD_RIGHT;
+            g_Player.padSim = PAD_RIGHT;
         }
         g_Player.D_80072EFC = 3;
         break;
     case 4:
         if (!(self->params & 0x100)) {
-            g_Player.D_80072EF4 = PAD_RIGHT;
+            g_Player.padSim = PAD_RIGHT;
         } else {
-            g_Player.D_80072EF4 = PAD_LEFT;
+            g_Player.padSim = PAD_LEFT;
         }
         g_Player.D_80072EFC = 4;
         if (EntityIsNearPlayer(self) == 0) {
@@ -183,7 +183,7 @@ void EntityRedDoor(Entity* self) {
         }
         break;
     case 5:
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         g_Player.D_80072EFC = 4;
         if (!(self->params & 0x100)) {
             self->ext.door.angle -= 0x20;
