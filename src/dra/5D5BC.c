@@ -539,8 +539,8 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     u8 itemCategory;
     *res = g_EquipDefs[equipId];
     criticalRate = res->criticalRate;
-    criticalRate = SquareRoot0((g_Status.statsTotal[3] * 2) + (rand() & 0xF)) -
-                   5 + criticalRate;
+    criticalRate +=
+        SquareRoot0((g_Status.statsTotal[3] * 2) + (rand() & 0xF)) - 5;
     if (criticalRate > 255) {
         criticalRate = 255;
     }
