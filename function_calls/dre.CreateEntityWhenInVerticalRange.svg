@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>dre.CreateEntitiesToTheLeft</title>
 <g id="a_node3"><a xlink:href="dre.CreateEntitiesToTheLeft.svg" xlink:title="dre.CreateEntitiesToTheLeft">
-<ellipse fill="red" stroke="black" cx="143.64" cy="-378" rx="143.77" ry="18"/>
+<ellipse fill="green" stroke="black" cx="143.64" cy="-378" rx="143.77" ry="18"/>
 <text text-anchor="middle" x="143.64" y="-374.3" font-family="Times,serif" font-size="14.00">dre.CreateEntitiesToTheLeft</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>dre.CreateEntitiesToTheRight</title>
 <g id="a_node4"><a xlink:href="dre.CreateEntitiesToTheRight.svg" xlink:title="dre.CreateEntitiesToTheRight">
-<ellipse fill="red" stroke="black" cx="455.64" cy="-378" rx="150.27" ry="18"/>
+<ellipse fill="green" stroke="black" cx="455.64" cy="-378" rx="150.27" ry="18"/>
 <text text-anchor="middle" x="455.64" y="-374.3" font-family="Times,serif" font-size="14.00">dre.CreateEntitiesToTheRight</text>
 </a>
 </g>

@@ -12,7 +12,7 @@
 <!-- dre.CreateEntitiesBelow -->
 <g id="node1" class="node">
 <title>dre.CreateEntitiesBelow</title>
-<ellipse fill="red" stroke="black" cx="377.78" cy="-198" rx="125.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="377.78" cy="-198" rx="125.38" ry="18"/>
 <text text-anchor="middle" x="377.78" y="-194.3" font-family="Times,serif" font-size="14.00">dre.CreateEntitiesBelow</text>
 </g>
 <!-- dre.CreateEntityWhenInHorizontalRange -->

@@ -19,7 +19,7 @@
 <g id="node2" class="node">
 <title>rwrp.CreateEntitiesAbove</title>
 <g id="a_node2"><a xlink:href="rwrp.CreateEntitiesAbove.svg" xlink:title="rwrp.CreateEntitiesAbove">
-<ellipse fill="red" stroke="black" cx="131.94" cy="-198" rx="131.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="131.94" cy="-198" rx="131.88" ry="18"/>
 <text text-anchor="middle" x="131.94" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.CreateEntitiesAbove</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>rwrp.InitRoomEntities</title>
 <g id="a_node3"><a xlink:href="rwrp.InitRoomEntities.svg" xlink:title="rwrp.InitRoomEntities">
-<ellipse fill="red" stroke="black" cx="396.94" cy="-198" rx="115.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="396.94" cy="-198" rx="115.08" ry="18"/>
 <text text-anchor="middle" x="396.94" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.InitRoomEntities</text>
 </a>
 </g>

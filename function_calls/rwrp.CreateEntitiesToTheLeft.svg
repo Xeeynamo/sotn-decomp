@@ -12,7 +12,7 @@
 <!-- rwrp.CreateEntitiesToTheLeft -->
 <g id="node1" class="node">
 <title>rwrp.CreateEntitiesToTheLeft</title>
-<ellipse fill="red" stroke="black" cx="380.28" cy="-198" rx="150.27" ry="18"/>
+<ellipse fill="green" stroke="black" cx="380.28" cy="-198" rx="150.27" ry="18"/>
 <text text-anchor="middle" x="380.28" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.CreateEntitiesToTheLeft</text>
 </g>
 <!-- rwrp.CreateEntityWhenInVerticalRange -->
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>rwrp.UpdateRoomPosition</title>
 <g id="a_node4"><a xlink:href="rwrp.UpdateRoomPosition.svg" xlink:title="rwrp.UpdateRoomPosition">
-<ellipse fill="red" stroke="black" cx="380.28" cy="-378" rx="133.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="380.28" cy="-378" rx="133.78" ry="18"/>
 <text text-anchor="middle" x="380.28" y="-374.3" font-family="Times,serif" font-size="14.00">rwrp.UpdateRoomPosition</text>
 </a>
 </g>

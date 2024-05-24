@@ -12,7 +12,7 @@
 <!-- cen.InitializeEntity -->
 <g id="node1" class="node">
 <title>cen.InitializeEntity</title>
-<ellipse fill="red" stroke="black" cx="3315.74" cy="-18" rx="98.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="3315.74" cy="-18" rx="98.58" ry="18"/>
 <text text-anchor="middle" x="3315.74" y="-14.3" font-family="Times,serif" font-size="14.00">cen.InitializeEntity</text>
 </g>
 <!-- cen.EntityBackgroundBlock -->

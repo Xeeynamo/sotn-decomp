@@ -12,14 +12,14 @@
 <!-- rwrp.InitRoomEntities -->
 <g id="node1" class="node">
 <title>rwrp.InitRoomEntities</title>
-<ellipse fill="red" stroke="black" cx="627.29" cy="-198" rx="115.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="627.29" cy="-198" rx="115.08" ry="18"/>
 <text text-anchor="middle" x="627.29" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.InitRoomEntities</text>
 </g>
 <!-- rwrp.CreateEntitiesToTheRight -->
 <g id="node2" class="node">
 <title>rwrp.CreateEntitiesToTheRight</title>
 <g id="a_node2"><a xlink:href="rwrp.CreateEntitiesToTheRight.svg" xlink:title="rwrp.CreateEntitiesToTheRight">
-<ellipse fill="red" stroke="black" cx="157.29" cy="-18" rx="157.07" ry="18"/>
+<ellipse fill="green" stroke="black" cx="157.29" cy="-18" rx="157.07" ry="18"/>
 <text text-anchor="middle" x="157.29" y="-14.3" font-family="Times,serif" font-size="14.00">rwrp.CreateEntitiesToTheRight</text>
 </a>
 </g>

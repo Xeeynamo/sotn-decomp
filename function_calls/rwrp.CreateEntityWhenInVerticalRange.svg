@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>rwrp.CreateEntitiesToTheLeft</title>
 <g id="a_node3"><a xlink:href="rwrp.CreateEntitiesToTheLeft.svg" xlink:title="rwrp.CreateEntitiesToTheLeft">
-<ellipse fill="red" stroke="black" cx="150.14" cy="-378" rx="150.27" ry="18"/>
+<ellipse fill="green" stroke="black" cx="150.14" cy="-378" rx="150.27" ry="18"/>
 <text text-anchor="middle" x="150.14" y="-374.3" font-family="Times,serif" font-size="14.00">rwrp.CreateEntitiesToTheLeft</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>rwrp.CreateEntitiesToTheRight</title>
 <g id="a_node4"><a xlink:href="rwrp.CreateEntitiesToTheRight.svg" xlink:title="rwrp.CreateEntitiesToTheRight">
-<ellipse fill="red" stroke="black" cx="475.14" cy="-378" rx="157.07" ry="18"/>
+<ellipse fill="green" stroke="black" cx="475.14" cy="-378" rx="157.07" ry="18"/>
 <text text-anchor="middle" x="475.14" y="-374.3" font-family="Times,serif" font-size="14.00">rwrp.CreateEntitiesToTheRight</text>
 </a>
 </g>
