@@ -109,7 +109,7 @@ void func_8018E5AC(Entity* self) {
     ObjInit2* objInit = &D_8018056C[self->params];
 
     if (self->step == 0) {
-        InitializeEntity(D_80180544);
+        InitializeEntity(g_eInitGeneric2);
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
         self->unk5A = objInit->unk4.s;

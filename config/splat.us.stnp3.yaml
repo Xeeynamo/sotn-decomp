@@ -60,7 +60,8 @@ segments:
       - [0x31EBC, .rodata, 365FC] # func_801B65FC
       - [0x31ED0, .rodata, 36990] # EntitySlogra .rodata, 36990
       - [0x31EDC, rodata] # EntityGaibon .rodata, 36990
-      - [0x31F00, rodata]
+      - [0x31F00, .rodata, 394F0] # EntityRedDoor
+      - [0x31F18, rodata]
       - [0x31F68, .rodata, 3DEF4]
       - [0x31FA0, .rodata, entity_relic_orb]
       - [0x31FD8, .rodata, entity_message_box]

@@ -12,7 +12,7 @@ void EntityBackgroundBlock(Entity* self) {
     ObjInit2* obj = &D_80180490[self->params].animSet;
 
     if (self->step == 0) {
-        InitializeEntity(D_80180458);
+        InitializeEntity(g_eInitGeneric2);
         self->animSet = obj->animSet;
         self->zPriority = obj->zPriority;
         self->unk5A = obj->unk4.s;

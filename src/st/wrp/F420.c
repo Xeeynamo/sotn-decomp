@@ -797,11 +797,10 @@ ObjInit2 D_80181134[] = {
     {0x000C, 0x01EC, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_80181130},
     {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0, D_8018112C},
 };
-extern u16 D_80180494[];
 void EntityRoomForeground(Entity* entity) {
     ObjInit2* objInit = &D_80181134[entity->params];
     if (entity->step == 0) {
-        InitializeEntity(D_80180494);
+        InitializeEntity(g_eInitGeneric2);
         entity->animSet = objInit->animSet;
         entity->zPriority = objInit->zPriority;
         entity->unk5A = objInit->unk4.s;

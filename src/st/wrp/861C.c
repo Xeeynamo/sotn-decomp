@@ -17,7 +17,7 @@ INCLUDE_ASM("st/wrp/nonmatchings/861C", TestCollisions);
 
 #include "../libstage.h"
 
-INCLUDE_ASM("st/wrp/nonmatchings/861C", EntityRedDoor);
+#include "../entity_red_door.h"
 
 #include "../../destroy_entity.h"
 

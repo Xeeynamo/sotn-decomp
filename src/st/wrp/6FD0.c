@@ -239,7 +239,7 @@ u16 D_8018047C[] = {
 u16 D_80180488[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000,
 };
-u16 D_80180494[] = {
+u16 g_eInitGeneric2[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0003, 0x0000,
 };
 u16 g_eDamageDisplayInit[] = {
@@ -266,11 +266,9 @@ ObjInit2 D_801804E0[] = {
 // Owned by EntityRedDoor to animate the tiles behind the door itself.
 // There is a loop in EntityRedDoor that forces to write those tiles
 // at every frame based on the door state to create the animation.
-u16 D_80180508[] = {
-    /* 508 */ 0x001D, 0x0025, 0x0075, 0x007D,
-    /* 510 */ 0x00C6, 0x00C7, 0x00C8, 0x00C9,
-    /* 518 */ 0x001F, 0x0027, 0x0077, 0x007F,
-    /* 520 */ 0x00CA, 0x00CB, 0x00CC, 0x00CD,
+u16 g_eRedDoorTiles[2][8] = {
+    {0x1D, 0x25, 0x75, 0x7D, 0xC6, 0xC7, 0xC8, 0xC9},
+    {0x1F, 0x27, 0x77, 0x7F, 0xCA, 0xCB, 0xCC, 0xCD},
 };
 
 // owned by func_801870B0
@@ -653,31 +651,10 @@ u16 g_eDamageDisplayClut[] = {
     /* A7A */ 0x01B1,
 };
 
-u8 D_80180A7C[] = {
-    /* A7C */ 0xB1,
-    /* A7D */ 0xB7,
-    /* A7E */ 0xB1,
-    /* A7F */ 0xB7,
-    /* A80 */ 0x21,
-    /* A81 */ 0x21,
-    /* A82 */ 0x5F,
-    /* A83 */ 0x5F,
-    /* A84 */ 0x88,
-    /* A85 */ 0xA8,
-    /* A86 */ 0x88,
-    /* A87 */ 0xA8,
-    /* A88 */ 0x21,
-    /* A89 */ 0x21,
-    /* A8A */ 0x5F,
-    /* A8B */ 0x5F,
-    /* A8C */ 0xA8,
-    /* A8D */ 0x88,
-    /* A8E */ 0xA8,
-    /* A8F */ 0x88,
-    /* A90 */ 0x21,
-    /* A91 */ 0x21,
-    /* A92 */ 0x5F,
-    /* A93 */ 0x5F,
+u8 g_eRedDoorUV[][8] = {
+    {0xB1, 0xB7, 0xB1, 0xB7, 0x21, 0x21, 0x5F, 0x5F},
+    {0x88, 0xA8, 0x88, 0xA8, 0x21, 0x21, 0x5F, 0x5F},
+    {0xA8, 0x88, 0xA8, 0x88, 0x21, 0x21, 0x5F, 0x5F},
 };
 
 s16 D_80180A94[] = {
@@ -1060,7 +1037,7 @@ extern u16 g_ItemIconSlots[];
 void func_80186FD0(Entity* arg0) {
     ObjInit2* objInit = &D_801804E0[arg0->params];
     if (arg0->step == 0) {
-        InitializeEntity(D_80180494);
+        InitializeEntity(g_eInitGeneric2);
         arg0->animSet = objInit->animSet;
         arg0->zPriority = objInit->zPriority;
         arg0->unk5A = objInit->unk4.s;

@@ -757,7 +757,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AACC, func_0607AACC);
  * 1 = Player is on the left side
  * 2 = Player is above
  */
-s16 GetSideToPlayer(Entity* self) {
+s32 GetSideToPlayer(Entity* self) {
     Entity* player = &PLAYER;
     s16 side = 0;
 

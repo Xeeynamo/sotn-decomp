@@ -28,7 +28,7 @@ typedef enum {
 } EntityIDs;
 
 void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
-s16 GetSideToPlayer();
+s32 GetSideToPlayer();
 void MoveEntity();
 void SetStep(u8);
 void EntityExplosion(Entity*);
@@ -49,7 +49,7 @@ extern u16 D_80180574[];
 extern u16 g_InitializeEntityData0[];
 extern u16 D_80180598[]; // Init EntityCutscene
 extern u16 D_801805A4[];
-extern u16 D_801805BC[];
+extern u16 g_eInitGeneric2[];
 extern u16 D_801805D4[]; // Init EntityStageTitleCard
 extern u16 D_801805E0[]; // Init EntityDracula
 extern u16 D_801805EC[]; // Init EntityDraculaFireball
