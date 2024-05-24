@@ -122,6 +122,7 @@ extern u16 D_80181328[];
 extern u16 D_801810B0[];
 extern u16 D_801810E0[];
 extern u8* D_801810F4[];
+extern u16 D_801811D8[];
 extern s32 c_GoldPrizes[];
 
 // *** EntitySoulStealOrb properties START ***
