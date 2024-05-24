@@ -215,9 +215,9 @@ void EntityCutscene(Entity* self) {
                     posX = 0;
                 }
                 if (posX > 0xA0) {
-                    g_Player.D_80072EF4 = 0x8000;
+                    g_Player.padSim = PAD_LEFT;
                 } else {
-                    g_Player.D_80072EF4 = 0x2000;
+                    g_Player.padSim = PAD_RIGHT;
                 }
                 g_Entities[1].ext.generic.unk7C.S8.unk0 = 1;
                 g_Player.D_80072EFC = 0xFF;
@@ -238,10 +238,10 @@ void EntityCutscene(Entity* self) {
             posX = 0;
         }
 
-        if ((g_Player.D_80072EF4 == 0x8000) && (posX <= 0xA0) ||
-            (g_Player.D_80072EF4 == 0x2000) && (posX >= 0x9F)) {
+        if ((g_Player.padSim == 0x8000) && (posX <= 0xA0) ||
+            (g_Player.padSim == 0x2000) && (posX >= 0x9F)) {
             g_Player.D_80072EFC = 1;
-            g_Player.D_80072EF4 = 0x8000;
+            g_Player.padSim = PAD_LEFT;
             self->ext.generic.unk7C.s = 0x18;
             D_801C257C |= 1;
             self->step++;
@@ -256,7 +256,7 @@ void EntityCutscene(Entity* self) {
         }
         func_801AA218(posX);
         g_Player.D_80072EFC = 1;
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         if (!--self->ext.generic.unk7C.u) {
             SetStep(4);
         }
@@ -376,7 +376,7 @@ void EntityCutscene(Entity* self) {
         g_Player.D_80072EFC = 1;
         player->animCurFrame = 7;
         if (D_801C257C & 4) {
-            g_Player.D_80072EF4 = 0x8000;
+            g_Player.padSim = PAD_LEFT;
             DestroyEntity(self);
             D_8003C8B8 = 1;
         }

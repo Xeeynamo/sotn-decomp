@@ -263,7 +263,7 @@ void EntityStageTitleCard(Entity* self) {
             self->step++;
         }
         g_Player.D_80072EFC = 4;
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         break;
 
     case 2:
@@ -311,7 +311,7 @@ void EntityStageTitleCard(Entity* self) {
             self->step++;
         }
         g_Player.D_80072EFC = 4;
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         break;
 
     case 3:
@@ -338,7 +338,7 @@ void EntityStageTitleCard(Entity* self) {
         self->ext.stageTitleCard.unk88 = 0x20;
         self->step++;
         g_Player.D_80072EFC = 4;
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         break;
 
     case 4:
@@ -349,7 +349,7 @@ void EntityStageTitleCard(Entity* self) {
             self->step++;
         }
         g_Player.D_80072EFC = 4;
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         return;
 
     case 5:
@@ -376,7 +376,7 @@ void EntityStageTitleCard(Entity* self) {
         }
     default:
         g_Player.D_80072EFC = 4;
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         break;
     }
 }

@@ -2540,7 +2540,7 @@ void func_8012D28C(bool exitEarly) {
     PlaySfx(0x644);
     PLAYER.velocityX = 0;
     g_Player.D_80072EFC = 0x20;
-    g_Player.D_80072EF4 = 0;
+    g_Player.padSim = 0;
     // Odd logic, if we exit early, we force an R2-tap. Strange!
     if (exitEarly) {
         g_Player.padTapped = PAD_R2;

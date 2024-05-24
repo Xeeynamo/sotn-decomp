@@ -473,25 +473,25 @@ void func_801B8E0C(Entity* self) {
         InitializeEntity(D_80180BEC);
         D_8003C8B8 = 0;
         *D_80097400 = 1;
-        g_Player.D_80072EF4 = 0x8000;
+        g_Player.padSim = PAD_LEFT;
         if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
-            g_Player.D_80072EF4 = 2;
+            g_Player.padSim = PAD_R2;
         }
         g_Player.D_80072EFC = 1;
         break;
 
     case 1:
         if (PLAYER.posX.i.hi < 176) {
-            g_Player.D_80072EF4 = 0;
+            g_Player.padSim = 0;
             self->step++;
         } else {
-            g_Player.D_80072EF4 = 0;
+            g_Player.padSim = 0;
             if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
                 if (g_Timer & 1) {
-                    g_Player.D_80072EF4 = 2;
+                    g_Player.padSim = PAD_R2;
                 }
             } else {
-                g_Player.D_80072EF4 = 0x8000;
+                g_Player.padSim = PAD_LEFT;
             }
         }
         g_Player.D_80072EFC = 1;
@@ -505,7 +505,7 @@ void func_801B8E0C(Entity* self) {
             }
             DestroyEntity(self);
         }
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         g_Player.D_80072EFC = 1;
         break;
     }

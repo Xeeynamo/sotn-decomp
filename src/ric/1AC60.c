@@ -437,7 +437,7 @@ void UpdateEntityRichter(void) {
     g_Player.padHeld = g_Player.padPressed;
     if (g_Player.D_80072EFC != 0) {
         g_Player.D_80072EFC--;
-        g_Player.padPressed = g_Player.D_80072EF4;
+        g_Player.padPressed = g_Player.padSim;
     } else {
         g_Player.padPressed = g_pads[0].pressed;
     }

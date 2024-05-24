@@ -544,17 +544,17 @@ void EntityPlatform(Entity* self) {
             D_8003C8B8 = 0;
             *D_80097400 = 1;
             if (g_Player.unk0C & PLAYER_STATUS_BAT_FORM) {
-                g_Player.D_80072EF4 = 8;
+                g_Player.padSim = PAD_R1;
             } else if (g_Player.unk0C & PLAYER_STATUS_MIST_FORM) {
-                g_Player.D_80072EF4 = 4;
+                g_Player.padSim = PAD_L1;
             } else if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
-                g_Player.D_80072EF4 = 2;
+                g_Player.padSim = PAD_R2;
             } else if (temp_s1 > 384) {
-                g_Player.D_80072EF4 = 0x8000;
+                g_Player.padSim = PAD_LEFT;
             } else if (temp_s1 < 384) {
-                g_Player.D_80072EF4 = 0x2000;
+                g_Player.padSim = PAD_RIGHT;
             } else {
-                g_Player.D_80072EF4 = 0;
+                g_Player.padSim = 0;
             }
             g_Entities[1].ext.generic.unk7C.S8.unk0 = 0;
             g_Player.D_80072EFC = 1;
@@ -563,23 +563,23 @@ void EntityPlatform(Entity* self) {
         break;
 
     case 2:
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         if (g_Player.unk0C & PLAYER_STATUS_TRANSFORM) {
             if (g_Timer & 1) {
                 if (g_Player.unk0C & PLAYER_STATUS_BAT_FORM) {
-                    g_Player.D_80072EF4 = 8;
+                    g_Player.padSim = PAD_R1;
                 } else if (g_Player.unk0C & PLAYER_STATUS_MIST_FORM) {
-                    g_Player.D_80072EF4 = 4;
+                    g_Player.padSim = PAD_L1;
                 } else if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
-                    g_Player.D_80072EF4 = 2;
+                    g_Player.padSim = PAD_R2;
                 }
             }
         } else {
             if ((temp_a1 != 0) || (g_Player.pl_vram_flag & 1)) {
                 if (temp_s1 > 384) {
-                    g_Player.D_80072EF4 = 0x8000;
+                    g_Player.padSim = PAD_LEFT;
                 } else if (temp_s1 < 384) {
-                    g_Player.D_80072EF4 = 0x2000;
+                    g_Player.padSim = PAD_RIGHT;
                 }
                 self->step++;
             }
@@ -588,15 +588,15 @@ void EntityPlatform(Entity* self) {
         break;
 
     case 3:
-        if (g_Player.D_80072EF4 == 0x8000) {
+        if (g_Player.padSim == 0x8000) {
             if (temp_s1 <= 384) {
-                g_Player.D_80072EF4 = 0;
+                g_Player.padSim = 0;
             }
-        } else if ((g_Player.D_80072EF4 == 0x2000) && (temp_s1 >= 384)) {
-            g_Player.D_80072EF4 = 0;
+        } else if ((g_Player.padSim == 0x2000) && (temp_s1 >= 384)) {
+            g_Player.padSim = 0;
         }
-        if (g_Player.D_80072EF4 == 0) {
-            g_Player.D_80072EF4 = 0x8000;
+        if (g_Player.padSim == 0) {
+            g_Player.padSim = PAD_LEFT;
             player->posX.i.hi = 384 - tilemap->scrollX.i.hi;
             self->step++;
             g_api.PlaySfx(SE_CEN_ELEVATOR_MOVE);
@@ -608,7 +608,7 @@ void EntityPlatform(Entity* self) {
         break;
 
     case 4:
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         g_Player.D_80072EFC = 1;
         player->posX.i.hi = 384 - tilemap->scrollX.i.hi;
         if (temp_v0 > 496) {
@@ -618,7 +618,7 @@ void EntityPlatform(Entity* self) {
         } else {
             g_api.PlaySfx(SE_CEN_PLATFORM_STOP);
             if (player->facingLeft == 0) {
-                g_Player.D_80072EF4 = 0x8000;
+                g_Player.padSim = PAD_LEFT;
             }
             D_8019D424 |= 4;
             self->step++;
@@ -628,7 +628,7 @@ void EntityPlatform(Entity* self) {
 
     case 5:
         func_8018F890(0x200);
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         g_Player.D_80072EFC = 1;
 
         if (D_8019D424 & 8) {
@@ -645,7 +645,7 @@ void EntityPlatform(Entity* self) {
             self->step++;
             g_api.PlaySfx(SE_CEN_ELEVATOR_MOVE);
         }
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         g_Player.D_80072EFC = 1;
         break;
 
@@ -664,7 +664,7 @@ void EntityPlatform(Entity* self) {
             g_api.PlaySfx(SE_CEN_PLATFORM_STOP);
         }
         func_8018F890(0x300);
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         g_Player.D_80072EFC = 1;
         break;
 
@@ -887,7 +887,7 @@ void EntityElevatorStationary(Entity* self) {
                 if (abs(posX) < 8) {
                     g_Entities[1].ext.stub[0x00] = 1;
                     g_Player.D_80072EFC = 2;
-                    g_Player.D_80072EF4 = 0;
+                    g_Player.padSim = 0;
                     PLAYER.velocityX = 0;
                     PLAYER.velocityY = 0;
                     self->step = 2;
@@ -898,7 +898,7 @@ void EntityElevatorStationary(Entity* self) {
 
     case 3:
         g_Player.D_80072EFC = 2;
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         switch (self->step_s) {
         case 0:
             self->posY.val += FIX(0.5);
@@ -928,7 +928,7 @@ void EntityElevatorStationary(Entity* self) {
 
     case 2:
         g_Player.D_80072EFC = self->step;
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
 
         switch (self->step_s) {
         case 0:
@@ -1069,7 +1069,7 @@ void EntityMovingElevator(Entity* self) {
 
     case 3:
         g_Player.D_80072EFC = 2;
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         self->posY.val += FIX(0.5);
         player->posY.i.hi = self->posY.i.hi + 4;
         g_Player.pl_vram_flag = 0x41;
@@ -1077,7 +1077,7 @@ void EntityMovingElevator(Entity* self) {
 
     case 2:
         g_Player.D_80072EFC = self->step;
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         self->posY.val -= FIX(0.5);
         player->posY.i.hi = self->posY.i.hi + 4;
         g_Player.pl_vram_flag = 0x41;

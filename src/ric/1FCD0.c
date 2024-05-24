@@ -4,7 +4,7 @@
 void func_8015BCD0(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
-    g_Player.D_80072EF4 = 0;
+    g_Player.padSim = 0;
     g_Player.D_80072EFC = 4;
     switch (PLAYER.step_s) {
     case 0:

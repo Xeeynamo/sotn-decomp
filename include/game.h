@@ -1495,7 +1495,7 @@ typedef struct {
     /* 80072EE8 */ s32 padPressed;
     /* 80072EEC */ s32 padTapped;
     /* 80072EF0 */ s32 padHeld;
-    /* 80072EF4 */ u32 D_80072EF4;
+    /* 80072EF4 */ u32 padSim; // simulate input to force player actions
     /* 80072EF8 */ s32 D_80072EF8;
     /* 80072EFC */ s32 D_80072EFC; // stun timer
     // Known timers: 0 = poison, 1 = curse, 2 = visual from stoned/hit,

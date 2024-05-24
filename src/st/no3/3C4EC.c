@@ -9,7 +9,7 @@ void EntityPushAlucard(Entity* entity) {
     case 0:
         InitializeEntity(D_80180AD0);
         g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = true;
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         g_Player.D_80072EFC = 255;
         player->posX.i.hi = 0;
         *D_8009740C = 0;
@@ -21,7 +21,7 @@ void EntityPushAlucard(Entity* entity) {
         player->posX.val += 0x60000;
         if (tilemap->scrollX.i.hi > 0x800) {
             g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = false;
-            g_Player.D_80072EF4 = 0x2000;
+            g_Player.padSim = PAD_RIGHT;
             entity->step++;
         }
         player->animCurFrame = 0;
@@ -59,7 +59,7 @@ void EntityPushAlucard(Entity* entity) {
         player->posX.val += 0x48000;
         if (tilemap->scrollX.i.hi > 0xF80) {
             g_api.PlaySfx(SE_NO3_ALUCARD_JUMP);
-            g_Player.D_80072EF4 = 0x2040;
+            g_Player.padSim = PAD_RIGHT | PAD_CROSS;
             entity->ext.generic.unk7C.S8.unk0 = 0;
             entity->step++;
         }
@@ -70,10 +70,10 @@ void EntityPushAlucard(Entity* entity) {
     case 5:
         if ((player->velocityY > 0) &&
             (entity->ext.generic.unk7C.U8.unk0 == 0)) {
-            g_Player.D_80072EF4 = 0x40;
+            g_Player.padSim = PAD_CROSS;
             entity->ext.generic.unk7C.S8.unk0 = 1;
         } else {
-            g_Player.D_80072EF4 = 0x2040;
+            g_Player.padSim = PAD_RIGHT | PAD_CROSS;
         }
         g_api.func_8010E0A8();
         g_Player.D_80072EFC = 1;
@@ -93,7 +93,7 @@ void EntityCastleDoorTransition(Entity* entity) {
         }
         InitializeEntity(D_80180AD0);
         g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = true;
-        g_Player.D_80072EF4 = 0x2000;
+        g_Player.padSim = PAD_RIGHT;
         g_Player.D_80072EFC = 0xFF;
         player->posX.i.hi = 8;
         entity->ext.castleDoorTransition.playerVelocity = 0x28000;
@@ -103,7 +103,7 @@ void EntityCastleDoorTransition(Entity* entity) {
         player->posX.val += entity->ext.castleDoorTransition.playerVelocity;
         g_Player.D_80072EFC = 1;
         if ((player->posX.i.hi + g_Tilemap.scrollX.i.hi) > 120) {
-            g_Player.D_80072EF4 = 0;
+            g_Player.padSim = 0;
             entity->step++;
         }
         break;
