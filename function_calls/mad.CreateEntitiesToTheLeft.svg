@@ -12,7 +12,7 @@
 <!-- mad.CreateEntitiesToTheLeft -->
 <g id="node1" class="node">
 <title>mad.CreateEntitiesToTheLeft</title>
-<ellipse fill="red" stroke="black" cx="147.54" cy="-18" rx="147.57" ry="18"/>
+<ellipse fill="green" stroke="black" cx="147.54" cy="-18" rx="147.57" ry="18"/>
 <text text-anchor="middle" x="147.54" y="-14.3" font-family="Times,serif" font-size="14.00">mad.CreateEntitiesToTheLeft</text>
 </g>
 </g>
