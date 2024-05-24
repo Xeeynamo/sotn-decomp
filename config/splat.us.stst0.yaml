@@ -58,6 +58,8 @@ segments:
       - [0x27BDC, .rodata, 2DAC8] # "can't get effect works!\n"
       - [0x27BFC, .rodata, 2DAC8] # func_801AF774
       - [0x27C1C, rodata]
+      - [0x27C6C, .rodata, 31CA0] # EntityRedDoor
+      - [0x27C84, rodata]
       - [0x27C8C, .rodata, 36358]
       - [0x27CAC, rodata]
       - [0x27CC4, rodata]

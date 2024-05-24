@@ -5,7 +5,7 @@ void func_801A7D64(Entity* self) {
     ObjInit2* obj = &D_80180638[self->params];
 
     if (self->step == 0) {
-        InitializeEntity(D_801805BC);
+        InitializeEntity(g_eInitGeneric2);
         self->animSet = obj->animSet;
         self->zPriority = obj->zPriority;
         self->unk5A = obj->unk4.s;
@@ -266,7 +266,7 @@ void func_801A8620(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(D_801805BC);
+        InitializeEntity(g_eInitGeneric2);
         entity->animSet = ANIMSET_DRA(2);
         entity->animCurFrame = 1;
         entity->zPriority = 0xB0;

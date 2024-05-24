@@ -11,7 +11,7 @@ void EntityCavernDoorVase(Entity* self) {
     ObjInit2* objInit = &D_80180BFC[self->params];
 
     if (self->step == 0) {
-        InitializeEntity(D_80180B00);
+        InitializeEntity(g_eInitGeneric2);
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
         self->facingLeft = objInit->unk4.U8.unk0;

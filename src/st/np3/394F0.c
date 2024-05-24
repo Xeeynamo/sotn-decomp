@@ -5,7 +5,7 @@ INCLUDE_ASM("st/np3/nonmatchings/394F0", TestCollisions);
 
 #include "../libstage.h"
 
-INCLUDE_ASM("st/np3/nonmatchings/394F0", EntityRedDoor);
+#include "../entity_red_door.h"
 
 #include "../../destroy_entity.h"
 

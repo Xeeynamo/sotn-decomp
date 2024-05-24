@@ -43,10 +43,13 @@ extern s32 D_8003C8B8;
 extern u16 g_InitializeData0[];
 extern u16 D_80180458[];
 extern u16 g_EInitGeneric[];
+extern u16 g_eInitGeneric2[];
 extern u16 D_801804C4[];
+extern u16 g_eRedDoorTiles[2][8];
 extern u32 D_80180608[];
 extern u32 D_80180648;
 extern WarpCoord D_8018065C[];
+extern u8 g_eRedDoorUV[3][8];
 extern u16 D_80180FE8[];
 extern u32 D_80181044[];
 extern u16 D_801810A0[]; // sestren: soul steal random angle offsets?

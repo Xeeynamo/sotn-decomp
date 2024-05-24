@@ -92,7 +92,7 @@ void EntityUnkId08(Entity* entity) {
     ObjInit2* objInit = &D_8018125C[entity->params];
 
     if (entity->step == 0) {
-        InitializeEntity(D_80180458);
+        InitializeEntity(g_eInitGeneric2);
         entity->animSet = objInit->animSet;
         entity->zPriority = objInit->zPriority;
         entity->unk5A = objInit->unk4.s;

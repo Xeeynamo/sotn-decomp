@@ -47,7 +47,7 @@ void EntityUnkId15(Entity* entity);
 extern u16 g_InitializeData0[];
 extern u16 D_8018052C[];
 extern u16 UNK_Invincibility0[];
-extern u16 D_80180544[];
+extern u16 g_eInitGeneric2[];
 extern ObjInit2 D_8018056C[];
 extern u16 D_80180D1C[];
 extern u16 D_80180D4C[];

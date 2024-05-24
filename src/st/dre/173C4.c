@@ -5,7 +5,7 @@ INCLUDE_ASM("st/dre/nonmatchings/173C4", TestCollisions);
 
 #include "../libstage.h"
 
-INCLUDE_ASM("st/dre/nonmatchings/173C4", EntityRedDoor);
+#include "../entity_red_door.h"
 
 #include "../../destroy_entity.h"
 
@@ -104,7 +104,7 @@ s32 GetDistanceToPlayerY(void) {
     return yDistance;
 }
 
-s16 GetSideToPlayer(void) {
+s32 GetSideToPlayer(void) {
     s16 var_a0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
 
     if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {

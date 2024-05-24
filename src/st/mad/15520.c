@@ -546,7 +546,7 @@ void EntityRoomForeground(Entity* entity) {
     ObjInit2* obj = &D_801810F4[entity->params];
 
     if (entity->step == 0) {
-        InitializeEntity(D_80180544);
+        InitializeEntity(g_eInitGeneric2);
         entity->animSet = obj->animSet;
         entity->zPriority = obj->zPriority;
         entity->unk5A = obj->unk4.s;

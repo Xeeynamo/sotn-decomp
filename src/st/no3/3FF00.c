@@ -128,7 +128,7 @@ void EntityDeathStolenItem(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180B00);
+        InitializeEntity(g_eInitGeneric2);
         break;
 
     case 1:
@@ -289,7 +289,7 @@ void EntityDeath(Entity* self) {
         if (D_801D7DD0 & 0x80) {
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
             if (primIndex != -1) {
-                InitializeEntity(D_80180B00);
+                InitializeEntity(g_eInitGeneric2);
                 self->animSet = ANIMSET_OVL(8);
                 self->palette = 0x2D6;
                 self->unk5A = 0x44;
@@ -565,7 +565,7 @@ void EntityUnkId5B(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(D_80180B00);
+        InitializeEntity(g_eInitGeneric2);
         entity->animSet = ANIMSET_OVL(8);
         entity->palette = 0x2D6;
         entity->animCurFrame = 0;
@@ -605,7 +605,7 @@ void EntityUnkId5E(Entity* entity) {
     switch (entity->step) {
     case 0:
         animCurFrame = entity->animCurFrame;
-        InitializeEntity(D_80180B00);
+        InitializeEntity(g_eInitGeneric2);
         entity->animCurFrame = animCurFrame;
         entity->animSet = ANIMSET_OVL(8);
         entity->palette = 0x2D6;
