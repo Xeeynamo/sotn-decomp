@@ -6,6 +6,7 @@ g_eBreakableInit = 0x80180458;
 g_InitializeData0 = 0x80180464;
 g_InitializeEntityData0 = 0x80180470;
 g_EInitGeneric = 0x80180488;
+g_eInitGeneric2 = 0x801804AC;
 g_eDamageDisplayInit = 0x801804B8;
 g_eBreakableAnimations = 0x80180610;
 g_eBreakableHitboxes = 0x80180630;

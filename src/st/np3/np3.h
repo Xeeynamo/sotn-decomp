@@ -70,7 +70,7 @@ extern u16 D_80180A60[];
 extern u16 g_EInitGeneric[];
 extern u16 D_80180A78[];
 extern u16 D_80180A84[];
-extern u16 D_80180A90[];
+extern u16 g_eInitGeneric2[];
 extern u16 D_80180AA8[];
 extern u16 D_80180AB4[];
 extern u16 D_80180AC0[];

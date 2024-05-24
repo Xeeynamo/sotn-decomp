@@ -10,7 +10,7 @@ void func_801B246C(Entity* self) {
     ObjInit2* temp_s0 = &D_80180C10[self->params];
 
     if (self->step == 0) {
-        InitializeEntity(D_80180A90);
+        InitializeEntity(g_eInitGeneric2);
         self->animSet = temp_s0->animSet;
         self->zPriority = temp_s0->zPriority;
         self->facingLeft = temp_s0->unk4.U8.unk0;

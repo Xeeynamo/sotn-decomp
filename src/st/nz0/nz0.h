@@ -52,7 +52,7 @@ extern PfnEntityUpdate PfnEntityUpdates[];
 extern const u16 g_InitializeEntityData0[];
 extern u16 D_80180BEC[];
 extern u16 g_EInitGeneric[]; // Init Elevator2
-extern u16 D_80180C1C[];
+extern u16 g_eInitGeneric2[];
 extern u16 D_80180C34[];
 
 // *** EntityBloodSkeleton properties START ***

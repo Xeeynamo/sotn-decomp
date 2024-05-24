@@ -4,6 +4,7 @@ g_pStObjLayoutVertical = 0x801803E8;
 PfnEntityUpdates = 0x801804BC;
 g_InitializeData0 = 0x80180580;
 g_InitializeEntityData0 = 0x8018058C;
+g_eInitGeneric2 = 0x801805BC;
 g_eDamageDisplayInit = 0x801805C8;
 g_isSecretStairsButtonPressed = 0x8018089C;
 g_isDraculaFirstFormDefeated = 0x8018090C;
