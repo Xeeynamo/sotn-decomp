@@ -883,7 +883,7 @@ void func_80105078(s32 arg0, s32 arg1) {
 }
 
 void func_80105408(void) {
-    g_Player.D_80072EF4 = 0x1000;
+    g_Player.padSim = PAD_UP;
     g_Player.D_80072EFC = 1;
 }
 
@@ -962,10 +962,10 @@ void func_80105428(void) {
             D_801379B8++;
         }
         if (PLAYER.posX.i.hi < 0x7F) {
-            g_Player.D_80072EF4 = 0x2000;
+            g_Player.padSim = PAD_RIGHT;
             g_Player.D_80072EFC = 1;
         } else if (PLAYER.posX.i.hi > 0x80) {
-            g_Player.D_80072EF4 = 0x8000;
+            g_Player.padSim = PAD_LEFT;
             g_Player.D_80072EFC = 1;
         } else if (D_801379B8 ==
                    (((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) >> 1) + 8)) {
@@ -1043,7 +1043,7 @@ void func_80105428(void) {
         D_801379C8.vy = temp_s3 + D_80137EE8;
         func_80104790(0, D_80137EE4, 0);
         if (g_pads[0].pressed & PAD_MASK) {
-            g_Player.D_80072EF4 = 0;
+            g_Player.padSim = 0;
             g_Player.D_80072EFC = 1;
             D_80097924 = D_80137EF0;
             D_8006C378 = D_80137EF4;
@@ -1313,7 +1313,7 @@ void func_80105428(void) {
         func_80104790(3, D_80137EE4, D_80137EEC);
         D_80137EEC -= 2;
         if ((g_Player.D_80072EFC == 0) && (g_pads[0].pressed & PAD_MASK)) {
-            g_Player.D_80072EF4 = 0;
+            g_Player.padSim = 0;
             g_Player.D_80072EFC = 1;
             if (D_80137EEC <= 0) {
                 D_80137EEC = 0;

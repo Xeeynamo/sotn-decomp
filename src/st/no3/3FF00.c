@@ -18,7 +18,7 @@ void EntityRoomTransition2(Entity* self) {
     case 0:
         InitializeEntity(D_80180AD0);
         tilemap->y = 0xFC;
-        g_Player.D_80072EF4 = 0x2000;
+        g_Player.padSim = PAD_RIGHT;
         D_8003C8B8 = 0;
         g_Player.D_80072EFC = 1;
         D_801D7DD0 |= 0x100;
@@ -28,9 +28,9 @@ void EntityRoomTransition2(Entity* self) {
         // Evil use of local 'gents' instead of PLAYER
         if (gents->posX.i.hi < 52) {
             g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = 1;
-            g_Player.D_80072EF4 = 0x2000;
+            g_Player.padSim = PAD_RIGHT;
         } else {
-            g_Player.D_80072EF4 = 0;
+            g_Player.padSim = 0;
             D_801D7DD0 |= 0x80;
             self->step++;
         }
@@ -49,7 +49,7 @@ void EntityRoomTransition2(Entity* self) {
                 CreateEntityFromEntity(E_ID_59, gents, newEntity);
                 newEntity->params = localVar;
             }
-            g_Player.D_80072EF4 = 0x10000;
+            g_Player.padSim = 0x10000;
             self->ext.roomTransition2.timer = 16;
             self->step++;
         }
@@ -75,7 +75,7 @@ void EntityRoomTransition2(Entity* self) {
                 self->ext.roomTransition2.timer++;
             }
         }
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         g_Player.D_80072EFC = 1;
         break;
 
@@ -89,7 +89,7 @@ void EntityRoomTransition2(Entity* self) {
             g_api.PlaySfx(0xA1);
             g_api.PlaySfx(0x30F);
         }
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         g_Player.D_80072EFC = 1;
         break;
 
@@ -104,7 +104,7 @@ void EntityRoomTransition2(Entity* self) {
             DestroyEntity(gents);
             CreateEntityFromCurrentEntity(E_ID_17, gents);
         }
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         g_Player.D_80072EFC = 1;
         break;
     }

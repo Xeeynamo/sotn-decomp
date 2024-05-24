@@ -267,9 +267,8 @@ void EntityWeaponAttack(Entity* self) {
                 self->ext.food.timer = 12;
                 self->step = 4;
                 self->animCurFrame = 0;
-                g_Player.D_80072EF4 =
-                    0x4000;               // Note: different in steps 1 and 2
-                g_Player.D_80072EFC = 20; // stun player for 20 frames
+                g_Player.padSim = PAD_DOWN; // Note: different in steps 1 and 2
+                g_Player.D_80072EFC = 20;   // stun player for 20 frames
                 return;
             }
             if (g_Player.unk56 == 0) {
@@ -352,7 +351,7 @@ void EntityWeaponAttack(Entity* self) {
                 self->ext.food.timer = 12;
                 self->step = 4;
                 self->animCurFrame = 0;
-                g_Player.D_80072EF4 = 0; // Note: different in steps 1 and 2
+                g_Player.padSim = 0; // Note: different in steps 1 and 2
                 g_Player.D_80072EFC = 20;
                 return;
             }

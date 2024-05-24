@@ -1034,10 +1034,10 @@ void func_800E414C(void) {
         D_80097928 = 1;
         if (D_8003C708.flags == 0x40) {
             g_Player.D_80072EFC = 0x18;
-            g_Player.D_80072EF4 = 0x8000;
+            g_Player.padSim = PAD_LEFT;
         } else {
             g_Player.D_80072EFC = 0x18;
-            g_Player.D_80072EF4 = 0x2000;
+            g_Player.padSim = PAD_RIGHT;
         }
         D_8003C708.unk2++;
         return;

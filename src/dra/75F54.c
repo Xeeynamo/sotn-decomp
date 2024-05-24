@@ -649,7 +649,7 @@ void ControlBatForm(void) {
             PlaySfx(0x644);
             PLAYER.velocityX = 0;
             g_Player.D_80072EFC = 0x20;
-            g_Player.D_80072EF4 = 0;
+            g_Player.padSim = 0;
             break;
         }
         // When wing smash ends, force an un-transform
@@ -657,7 +657,7 @@ void ControlBatForm(void) {
             g_Player.padTapped = PAD_R1;
             BatFormFinished();
             g_Player.D_80072EFC = 0x20;
-            g_Player.D_80072EF4 = 0;
+            g_Player.padSim = 0;
         } else {
             if (directionsPressed & PAD_UP) {
                 PLAYER.velocityY -= FIX(0.125);

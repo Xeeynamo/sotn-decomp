@@ -131,7 +131,7 @@ void func_80109594() {
 #if defined(VERSION_US)
     g_Player.unk20[0] = 0x10;
     g_Player.D_80072EFC = 0x10;
-    g_Player.D_80072EF4 = 0;
+    g_Player.padSim = 0;
     D_80137FB8 = 0;
     D_80137FBC = 1;
 #elif defined(VERSION_HD)
@@ -211,7 +211,7 @@ void func_8010A234(s32 arg0) {
         if (!(g_Player.unk0C & 0x01000000)) {
             // Alucard says "WHAT?!" when first putting on Axe Lord Armor
             PlaySfx(NA_SE_VO_AL_WHAT);
-            g_Player.D_80072EF4 = 0;
+            g_Player.padSim = 0;
             g_Player.D_80072EFC = 0x20;
             func_8010FAF4();
             weapon = D_8017A000.EntityWeaponAttack;
@@ -449,9 +449,9 @@ void EntityAlucard(void) {
                     D_80137FBC = 1;
                 }
 #endif
-                g_Player.padPressed = g_Player.D_80072EF4 & 0xFFFF;
-                switch (g_Player.D_80072EF4 >> 0x10) { /* switch 6; irregular */
-                case 1:                                /* switch 6 */
+                g_Player.padPressed = g_Player.padSim & 0xFFFF;
+                switch (g_Player.padSim >> 0x10) { /* switch 6; irregular */
+                case 1:                            /* switch 6 */
                     if (PLAYER.step != 0x30) {
                         func_8010E168(1, 4);
                         SetPlayerStep(0x30);

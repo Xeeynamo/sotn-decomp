@@ -94,7 +94,7 @@ void EntityWarpRoom(Entity* self) {
         entity = &PLAYER;
         moveX = entity->posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (moveX > 0x60 && moveX < 0xA0) {
-            g_Player.D_80072EF4 = 0;
+            g_Player.padSim = 0;
             g_Player.D_80072EFC = 0x10;
             D_8003C8B8 = 0;
             self->step = 5;
@@ -105,7 +105,7 @@ void EntityWarpRoom(Entity* self) {
         // Wait for player to press the UP button
         if (self->hitFlags && g_pads->pressed & 0x1000 &&
             !(g_Player.unk0C & 0xC5CF3EF7)) {
-            g_Player.D_80072EF4 = 0;
+            g_Player.padSim = 0;
             g_Player.D_80072EFC = 0x80;
             D_8003C8B8 = 0;
 #if defined(VERSION_US)
@@ -117,7 +117,7 @@ void EntityWarpRoom(Entity* self) {
         break;
     case 2:
         // Move Alucard in the background and fade him to white
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         g_Player.D_80072EFC = 0x80;
         D_8003C8B8 = 0;
         entity = &PLAYER;
@@ -133,7 +133,7 @@ void EntityWarpRoom(Entity* self) {
         break;
     case 3:
         // Fade the entire room into white
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         g_Player.D_80072EFC = 0x80;
         D_8003C8B8 = 0;
         entity = &PLAYER;
@@ -178,7 +178,7 @@ void EntityWarpRoom(Entity* self) {
         D_80097C98 = 2;
         break;
     case 5:
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         g_Player.D_80072EFC = 0x10;
         D_8003C8B8 = 0;
         prim = self->ext.warpRoom.primFade;
@@ -194,7 +194,7 @@ void EntityWarpRoom(Entity* self) {
         self->step++;
     case 6:
         // Finalize warp by fading in from white
-        g_Player.D_80072EF4 = 0;
+        g_Player.padSim = 0;
         g_Player.D_80072EFC = 0x10;
         D_8003C8B8 = 0;
         prim = self->ext.warpRoom.primFade;
