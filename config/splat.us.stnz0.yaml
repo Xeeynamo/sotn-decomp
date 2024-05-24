@@ -87,6 +87,8 @@ segments:
       - [0x30618, rodata] # EntityGaibon .rodata, 33FCC
       - [0x3063C, .rodata, 36DE4] # func_801B7034
       - [0x3064C, rodata]
+      - [0x30728, .rodata, 39908] # EntityRedDoor
+      - [0x30740, rodata]
       - [0x30790, .rodata, 3E30C]
       - [0x307B0, .rodata, 3E30C]
       - [0x307C8, .rodata, entity_relic_orb]

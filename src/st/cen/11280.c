@@ -5,8 +5,7 @@ INCLUDE_ASM("st/cen/nonmatchings/11280", TestCollisions);
 
 #include "../libstage.h"
 
-// Red door (ID 05)
-INCLUDE_ASM("st/cen/nonmatchings/11280", EntityRedDoor);
+#include "../entity_red_door.h"
 
 #include "../../destroy_entity.h"
 

@@ -4,7 +4,7 @@ INCLUDE_ASM("st/nz0/nonmatchings/39908", TestCollisions);
 #include "../entity_damage_display.h"
 #include "../libstage.h"
 
-INCLUDE_ASM("st/nz0/nonmatchings/39908", EntityRedDoor);
+#include "../entity_red_door.h"
 
 #include "../../destroy_entity.h"
 

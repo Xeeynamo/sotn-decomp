@@ -49,7 +49,7 @@ void CreateEntitiesToTheLeft(s16 posX) {
 #include "../create_entity_from_entity.h"
 #include "../entity_is_near_player.h"
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/EDB8", EntityRedDoor);
+#include "../entity_red_door.h"
 
 #include "../../destroy_entity.h"
 
