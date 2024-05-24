@@ -3,133 +3,12 @@ INCLUDE_ASM("asm/us/st/mad/nonmatchings/EDB8", func_8018EDB8);
 
 #include "../entity_damage_display.h"
 
+#include "../st_private.h"
+
 #include "../create_entity_from_layout.h"
-
-void CreateEntityWhenInVerticalRange(LayoutEntity* layoutObj) {
-    s16 yClose;
-    s16 yFar;
-    s16 posY;
-    Entity* entity;
-
-    posY = g_Tilemap.scrollY.i.hi;
-    yClose = posY - 0x40;
-    yFar = posY + 0x120;
-    if (yClose < 0) {
-        yClose = 0;
-    }
-
-    posY = layoutObj->posY;
-    if (posY < yClose) {
-        return;
-    }
-
-    if (yFar < posY) {
-        return;
-    }
-
-    switch (layoutObj->entityId & 0xE000) {
-    case 0x0:
-        entity =
-            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->entityRoomIndex];
-        if (entity->entityId == E_NONE) {
-            CreateEntityFromLayout(entity, layoutObj);
-        }
-        break;
-    case 0x8000:
-        break;
-    case 0xA000:
-        entity =
-            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->entityRoomIndex];
-        CreateEntityFromLayout(entity, layoutObj);
-        break;
-    }
-}
-
-void CreateEntityWhenInHorizontalRange(LayoutEntity* layoutObj) {
-    s16 xClose;
-    s16 xFar;
-    s16 posX;
-    Entity* entity;
-
-    posX = g_Tilemap.scrollX.i.hi;
-    xClose = posX - 0x40;
-    xFar = posX + 0x140;
-    if (xClose < 0) {
-        xClose = 0;
-    }
-
-    posX = layoutObj->posX;
-    if (posX < xClose) {
-        return;
-    }
-
-    if (xFar < posX) {
-        return;
-    }
-
-    switch (layoutObj->entityId & 0xE000) {
-    case 0x0:
-        entity =
-            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->entityRoomIndex];
-        if (entity->entityId == E_NONE) {
-            CreateEntityFromLayout(entity, layoutObj);
-        }
-        break;
-    case 0x8000:
-        break;
-    case 0xA000:
-        entity =
-            &g_Entities[STAGE_ENTITY_START + (u8)layoutObj->entityRoomIndex];
-        CreateEntityFromLayout(entity, layoutObj);
-        break;
-    }
-}
-
-void FindFirstEntityToTheRight(s16 arg0) {
-    while (true) {
-        if ((g_LayoutObjHorizontal->posX != (u16)~1) &&
-            !(g_LayoutObjHorizontal->posX < arg0)) {
-            break;
-        }
-        g_LayoutObjHorizontal++;
-    }
-}
-
-void FindFirstEntityToTheLeft(s16 arg0) {
-    while (true) {
-        if ((g_LayoutObjHorizontal->posX != 0xFFFF) &&
-            ((arg0 >= (s32)g_LayoutObjHorizontal->posX) ||
-             (g_LayoutObjHorizontal->posX == 0xFFFE))) {
-            break;
-        }
-        g_LayoutObjHorizontal--;
-    }
-}
-
-void CreateEntitiesToTheRight(s16 arg0) {
-    s32 expected;
-    u8 flag;
-
-    if (g_LayoutObjPosHorizontal != 0) {
-        FindFirstEntityToTheRight(arg0 - g_ScrollDeltaX);
-        g_LayoutObjPosHorizontal = 0;
-    }
-
-    while (true) {
-        if ((g_LayoutObjHorizontal->posX == 0xFFFF) ||
-            (arg0 < g_LayoutObjHorizontal->posX)) {
-            return;
-        }
-
-        expected = 0;
-        flag = (g_LayoutObjHorizontal->entityRoomIndex >> 8) + 0xFF;
-        if ((flag == 0xFF) ||
-            (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
-            CreateEntityWhenInVerticalRange(g_LayoutObjHorizontal);
-        }
-        g_LayoutObjHorizontal++;
-    }
-}
+#include "../create_entity_in_range.h"
+#include "../find_entity_horizontal.h"
+#include "../create_entities_right.h"
 
 /*
  * n.b.! This is different from every other stage's `CreateEntitiesToTheLeft`.
@@ -144,12 +23,12 @@ void CreateEntitiesToTheLeft(s16 posX) {
         posX = 0;
     }
 
-    if (g_LayoutObjPosHorizontal == LAYOUT_OBJ_POSITION_END) {
+    if (g_LayoutObjPosHorizontal == LAYOUT_OBJ_POSITION_FORWARD) {
         FindFirstEntityToTheLeft(posX - g_ScrollDeltaX);
-        g_LayoutObjPosHorizontal = LAYOUT_OBJ_POSITION_START;
+        g_LayoutObjPosHorizontal = LAYOUT_OBJ_POSITION_BACKWARD;
     }
 
-    if (g_LayoutObjHorizontal->posX == LAYOUT_OBJ_END ||
+    if (g_LayoutObjHorizontal->posX == LAYOUT_OBJ_START ||
         g_LayoutObjHorizontal->posX < posX) {
         return;
     }
@@ -163,110 +42,11 @@ void CreateEntitiesToTheLeft(s16 posX) {
     g_LayoutObjHorizontal--;
 }
 
-void FindFirstEntityAbove(s16 arg0) {
-    while (true) {
-        if ((g_LayoutObjVertical->posY != 0xFFFE) &&
-            (g_LayoutObjVertical->posY >= arg0)) {
-            break;
-        }
-
-        g_LayoutObjVertical++;
-    }
-}
-
-void FindFirstEntityBelow(s16 arg0) {
-    while (true) {
-        if ((g_LayoutObjVertical->posY != 0xFFFF) &&
-            ((arg0 >= g_LayoutObjVertical->posY ||
-              g_LayoutObjVertical->posY == 0xFFFE))) {
-            break;
-        }
-        g_LayoutObjVertical--;
-    }
-}
-
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/EDB8", CreateEntitiesAbove);
-
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/EDB8", CreateEntitiesBelow);
-
-void InitRoomEntities(s32 objLayoutId) {
-    u16* pObjLayoutStart = g_pStObjLayoutHorizontal[objLayoutId];
-    Tilemap* tilemap = &g_Tilemap;
-    s16 temp_s0;
-    s16 arg0;
-    s16 i;
-    u16* temp_v1;
-
-    g_LayoutObjHorizontal = pObjLayoutStart;
-    g_LayoutObjVertical = g_pStObjLayoutVertical[objLayoutId];
-
-    if (*pObjLayoutStart != 0xFFFE) {
-        g_LayoutObjHorizontal = pObjLayoutStart + 1;
-        arg0 = Random() & 0xFF;
-        for (i = 0; true; i++) {
-            temp_v1 = g_LayoutObjHorizontal;
-            g_LayoutObjHorizontal = temp_v1 + 1;
-            arg0 -= temp_v1[0];
-            if (arg0 < 0) {
-                break;
-            }
-            g_LayoutObjHorizontal = temp_v1 + 3;
-        }
-        g_LayoutObjHorizontal = (temp_v1[2] << 0x10) + temp_v1[1];
-        ((u16*)g_LayoutObjVertical) += i * 2 + 2;
-        g_LayoutObjVertical =
-            (g_LayoutObjVertical->posY << 0x10) + g_LayoutObjVertical->posX;
-    }
-    arg0 = tilemap->scrollX.i.hi;
-    temp_s0 = arg0 + 0x140;
-    i = arg0 - 0x40;
-    if (i < 0) {
-        i = 0;
-    }
-
-    g_LayoutObjPosHorizontal = 0;
-    g_LayoutObjPosVertical = 0;
-    FindFirstEntityToTheRight(i);
-    CreateEntitiesToTheRight(temp_s0);
-    FindFirstEntityAbove(tilemap->scrollY.i.hi + 0x120);
-}
-
-void UpdateRoomPosition(void) {
-    Tilemap* tilemap = &g_Tilemap;
-
-    if (g_ScrollDeltaX != 0) {
-        s16 tmp = tilemap->scrollX.i.hi;
-        if (g_ScrollDeltaX > 0)
-            CreateEntitiesToTheRight(tmp + 0x140);
-        else
-            CreateEntitiesToTheLeft(tmp - 0x40);
-    }
-
-    if (g_ScrollDeltaY != 0) {
-        s16 tmp = tilemap->scrollY.i.hi;
-        if (g_ScrollDeltaY > 0)
-            CreateEntitiesAbove(tmp + 0x120);
-        else
-            CreateEntitiesBelow(tmp - 0x40);
-    }
-}
-
-void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity) {
-    DestroyEntity(entity);
-    entity->entityId = entityId;
-    entity->pfnUpdate = PfnEntityUpdates[entityId - 1];
-    entity->posX.i.hi = g_CurrentEntity->posX.i.hi;
-    entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
-}
-
-void CreateEntityFromEntity(u16 entityId, Entity* ent1, Entity* ent2) {
-    DestroyEntity(ent2);
-    ent2->entityId = entityId;
-    ent2->pfnUpdate = PfnEntityUpdates[entityId - 1];
-    ent2->posX.i.hi = (s16)ent1->posX.i.hi;
-    ent2->posY.i.hi = (s16)ent1->posY.i.hi;
-}
-
+#include "../find_entity_vertical.h"
+#include "../create_entities_vertical.h"
+#include "../init_room_entities.h"
+#include "../update_room_position.h"
+#include "../create_entity_from_entity.h"
 #include "../entity_is_near_player.h"
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/EDB8", EntityRedDoor);

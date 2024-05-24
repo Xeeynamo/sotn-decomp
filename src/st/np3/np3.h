@@ -66,8 +66,6 @@ extern u16 g_eBreakableanimSets[];
 extern u8 g_eBreakableDrawModes[];
 extern u16 g_InitializeData0[];
 extern u16 g_InitializeEntityData0[];
-extern LayoutEntity* g_pStObjLayoutHorizontal[];
-extern LayoutEntity* g_pStObjLayoutVertical[];
 extern u16 D_80180A60[];
 extern u16 g_EInitGeneric[];
 extern u16 D_80180A78[];
@@ -288,10 +286,6 @@ extern s32 D_80182530;
 // *** EntityBloodyZombie properties START ***
 
 extern u16 D_80180B38[]; // InitProps
-extern u8 g_LayoutObjPosHorizontal;
-extern u8 g_LayoutObjPosVertical;
-extern LayoutEntity* g_LayoutObjHorizontal;
-extern LayoutEntity* g_LayoutObjVertical;
 extern s32 D_801D3378;
 extern s32 D_801D337C;
 extern s32 D_801D3380;

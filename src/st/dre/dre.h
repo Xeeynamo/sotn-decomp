@@ -135,7 +135,7 @@ extern u8 D_801813FC;
 
 extern LayoutEntity* g_LayoutObjHorizontal;
 extern LayoutEntity* g_LayoutObjVertical;
-extern s8 g_LayoutObjPosHorizontal;
+extern u8 g_LayoutObjPosHorizontal;
 extern u8 g_LayoutObjPosVertical;
 extern s32 D_801A3ED4;
 extern s32 D_801A3ED8;
