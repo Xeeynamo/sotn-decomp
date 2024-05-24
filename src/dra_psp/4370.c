@@ -6,8 +6,8 @@ INCLUDE_ASM("dra/nonmatchings/4370", func_800EDB58);
 
 INCLUDE_ASM("dra/nonmatchings/4370", AllocPrimitives);
 
-INCLUDE_ASM("dra/nonmatchings/4370", func_psp_090E0F00);
+INCLUDE_ASM("dra/nonmatchings/4370", func_800EDD9C);
 
 INCLUDE_ASM("dra/nonmatchings/4370", FreePrimitives);
 
-INCLUDE_ASM("dra/nonmatchings/4370", func_psp_090E0FF8);
+INCLUDE_ASM("dra/nonmatchings/4370", RenderPrimitives);
