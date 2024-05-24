@@ -10,18 +10,28 @@ INCLUDE_ASM("dra/nonmatchings/262A0", func_psp_091032C8);
 
 INCLUDE_ASM("dra/nonmatchings/262A0", RenderTilemap);
 
-INCLUDE_ASM("dra/nonmatchings/262A0", func_psp_09103B78);
+// https://decomp.me/scratch/msJvI
+INCLUDE_ASM("dra/nonmatchings/262A0", SetRoomForegroundLayer);
 
-INCLUDE_ASM("dra/nonmatchings/262A0", func_psp_09103CF8);
+// https://decomp.me/scratch/yWihP
+INCLUDE_ASM("dra/nonmatchings/262A0", SetRoomBackgroundLayer);
 
-INCLUDE_ASM("dra/nonmatchings/262A0", func_psp_09103DF0);
+// https://decomp.me/scratch/DJTZ0
+INCLUDE_ASM("dra/nonmatchings/262A0", LoadRoomLayer);
 
+// stuff is moved around here vs. PS1
+
+// seems to be unique to psp, called by LoadGfxAsync to get gfxBank
+// https://decomp.me/scratch/DqKHA
 INCLUDE_ASM("dra/nonmatchings/262A0", func_psp_09103E68);
 
-INCLUDE_ASM("dra/nonmatchings/262A0", func_psp_09103F08);
+// https://decomp.me/scratch/XOaDi
+INCLUDE_ASM("dra/nonmatchings/262A0", func_800EAEA4);
 
-INCLUDE_ASM("dra/nonmatchings/262A0", func_psp_09103F90);
+// https://decomp.me/scratch/4RcwR
+INCLUDE_ASM("dra/nonmatchings/262A0", ResetPendingGfxLoad);
 
+// https://decomp.me/scratch/HDCYU
 INCLUDE_ASM("dra/nonmatchings/262A0", LoadGfxAsync);
 
 INCLUDE_ASM("dra/nonmatchings/262A0", func_psp_091040A0);
