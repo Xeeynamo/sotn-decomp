@@ -145,6 +145,13 @@ typedef struct {
 } ET_RelicOrb;
 
 typedef struct {
+    /* 0x7C */ u32 unused7C;
+    /* 0x80 */ u32 unused80;
+    /* 0x84 */ s16 angle;
+    /* 0x86 */ s16 unk86;
+} ET_RedDoor;
+
+typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s32 unk80;
     /* 0x84 */ struct Primitive* unk84;
@@ -943,6 +950,7 @@ typedef union { // offset=0x7C
     ET_EquipItemDrop equipItemDrop;
     ET_NumericDamage ndmg;
     ET_RelicOrb relicOrb;
+    ET_RedDoor door;
     ET_StagePopup stpopup;
     ET_MessageBox messageBox;
     ET_Weapon weapon;
