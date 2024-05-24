@@ -355,7 +355,7 @@
 <g id="node23" class="node">
 <title>wrp.EntityRedDoor</title>
 <g id="a_node23"><a xlink:href="wrp.EntityRedDoor.svg" xlink:title="wrp.EntityRedDoor">
-<ellipse fill="red" stroke="black" cx="5415.19" cy="-378" rx="100.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="5415.19" cy="-378" rx="100.98" ry="18"/>
 <text text-anchor="middle" x="5415.19" y="-374.3" font-family="Times,serif" font-size="14.00">wrp.EntityRedDoor</text>
 </a>
 </g>

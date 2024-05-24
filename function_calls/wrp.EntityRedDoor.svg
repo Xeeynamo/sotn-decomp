@@ -12,7 +12,7 @@
 <!-- wrp.EntityRedDoor -->
 <g id="node1" class="node">
 <title>wrp.EntityRedDoor</title>
-<ellipse fill="red" stroke="black" cx="948.44" cy="-198" rx="100.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="948.44" cy="-198" rx="100.98" ry="18"/>
 <text text-anchor="middle" x="948.44" y="-194.3" font-family="Times,serif" font-size="14.00">wrp.EntityRedDoor</text>
 </g>
 <!-- dra.AllocPrimitives -->

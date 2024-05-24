@@ -19,7 +19,7 @@
 <g id="node2" class="node">
 <title>dre.EntityRedDoor</title>
 <g id="a_node2"><a xlink:href="dre.EntityRedDoor.svg" xlink:title="dre.EntityRedDoor">
-<ellipse fill="red" stroke="black" cx="98.79" cy="-198" rx="98.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="98.79" cy="-198" rx="98.58" ry="18"/>
 <text text-anchor="middle" x="98.79" y="-194.3" font-family="Times,serif" font-size="14.00">dre.EntityRedDoor</text>
 </a>
 </g>

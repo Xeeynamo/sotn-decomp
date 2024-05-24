@@ -12,7 +12,7 @@
 <!-- no3.EntityRedDoor -->
 <g id="node1" class="node">
 <title>no3.EntityRedDoor</title>
-<ellipse fill="red" stroke="black" cx="1093.44" cy="-198" rx="100.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1093.44" cy="-198" rx="100.18" ry="18"/>
 <text text-anchor="middle" x="1093.44" y="-194.3" font-family="Times,serif" font-size="14.00">no3.EntityRedDoor</text>
 </g>
 <!-- dra.AllocPrimitives -->

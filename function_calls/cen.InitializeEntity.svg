@@ -211,7 +211,7 @@
 <g id="node14" class="node">
 <title>cen.EntityRedDoor</title>
 <g id="a_node14"><a xlink:href="cen.EntityRedDoor.svg" xlink:title="cen.EntityRedDoor">
-<ellipse fill="red" stroke="black" cx="3207.74" cy="-198" rx="98.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="3207.74" cy="-198" rx="98.58" ry="18"/>
 <text text-anchor="middle" x="3207.74" y="-194.3" font-family="Times,serif" font-size="14.00">cen.EntityRedDoor</text>
 </a>
 </g>

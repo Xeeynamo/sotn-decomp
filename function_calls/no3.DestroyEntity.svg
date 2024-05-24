@@ -835,7 +835,7 @@
 <g id="node53" class="node">
 <title>no3.EntityRedDoor</title>
 <g id="a_node53"><a xlink:href="no3.EntityRedDoor.svg" xlink:title="no3.EntityRedDoor">
-<ellipse fill="red" stroke="black" cx="13818.89" cy="-378" rx="100.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="13818.89" cy="-378" rx="100.18" ry="18"/>
 <text text-anchor="middle" x="13818.89" y="-374.3" font-family="Times,serif" font-size="14.00">no3.EntityRedDoor</text>
 </a>
 </g>
