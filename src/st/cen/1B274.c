@@ -67,7 +67,7 @@ void EntitySoulStealOrb(Entity* self) {
                        self->ext.soulStealOrb.unk80);
         MoveEntity(self); // argument pass necessary to match
         prim = &g_PrimBuf[self->primIndex];
-        func_80194394(&D_80181238, self);
+        AnimateEntity(&D_80181238, self);
         angle = (float)(u32)self; // !FAKE
         prim->tpage = 0x18;
         prim->clut = 0x194;
@@ -107,7 +107,7 @@ void EntityUnkId08(Entity* entity) {
             entity->drawFlags = (u8)(entity->drawFlags | FLAG_DRAW_ROTZ);
         }
     }
-    func_80194394(objInit->unk10, entity);
+    AnimateEntity(objInit->unk10, entity);
 }
 
 void BottomCornerText(u8* str, u8 lower_left) {

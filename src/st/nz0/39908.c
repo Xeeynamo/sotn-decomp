@@ -6,20 +6,7 @@ INCLUDE_ASM("st/nz0/nonmatchings/39908", TestCollisions);
 
 #include "../entity_red_door.h"
 
-#include "../../destroy_entity.h"
-
-#include "../../destroy_entities_from_index.h"
-
-void PreventEntityFromRespawning(Entity* entity) {
-    if (entity->entityRoomIndex) {
-        u32 value = (entity->entityRoomIndex - 1);
-        u16 index = value / 32;
-        u16 bit = value % 32;
-        g_entityDestroyed[index] |= 1 << bit;
-    }
-}
-
-#include "../animate_entity.h"
+#include "../entity.h"
 
 u8 func_801BCAD4(u8 frames[], Entity* self, u8 arg2) {
     u16 animFrameStart = self->animFrameIdx * 2;

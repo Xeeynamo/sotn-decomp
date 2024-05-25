@@ -29,7 +29,7 @@ void EntityBackgroundBlock(Entity* self) {
             self->rotX = 0x200;
         }
     }
-    func_80194394(obj->unk10, self);
+    AnimateEntity(obj->unk10, self);
 }
 
 INCLUDE_ASM("st/cen/nonmatchings/D600", EntityUnkId12);
@@ -58,7 +58,7 @@ void EntityUnkId01(Entity* self) {
         newEntity->params = 1;
     }
 
-    func_80194394(D_80180574[params], self);
+    AnimateEntity(D_80180574[params], self);
 
     if (self->unk44 != 0) {
         g_api.PlaySfx(NA_SE_BREAK_CANDLE);
@@ -913,7 +913,7 @@ void EntityElevatorStationary(Entity* self) {
             break;
 
         case 1:
-            if (func_80194394(D_80180780, self) == 0) {
+            if (AnimateEntity(D_80180780, self) == 0) {
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
                 g_Entities[1].ext.stub[0x00] = 0;
@@ -932,7 +932,7 @@ void EntityElevatorStationary(Entity* self) {
 
         switch (self->step_s) {
         case 0:
-            if (func_80194394(D_80180768, self) == 0) {
+            if (AnimateEntity(D_80180768, self) == 0) {
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
                 self->step_s++;
@@ -950,7 +950,7 @@ void EntityElevatorStationary(Entity* self) {
             break;
 
         case 2:
-            if (func_80194394(&D_80180780, self) == 0) {
+            if (AnimateEntity(&D_80180780, self) == 0) {
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
                 g_Entities[1].ext.stub[0x00] = 0;

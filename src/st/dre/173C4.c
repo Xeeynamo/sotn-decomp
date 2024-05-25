@@ -7,51 +7,7 @@ INCLUDE_ASM("st/dre/nonmatchings/173C4", TestCollisions);
 
 #include "../entity_red_door.h"
 
-#include "../../destroy_entity.h"
-
-#include "../../destroy_entities_from_index.h"
-
-void PreventEntityFromRespawning(Entity* entity) {
-    if (entity->entityRoomIndex) {
-        u32 value = (entity->entityRoomIndex - 1);
-        u16 index = value / 32;
-        u16 bit = value % 32;
-        g_entityDestroyed[index] |= 1 << bit;
-    }
-}
-
-s32 AnimateEntity(const u8 frames[], Entity* entity) {
-    s32 flag = 0;
-    u16 currentFrameIndex = entity->animFrameIdx * 2;
-    u8* currentFrame = frames + currentFrameIndex;
-
-    if (entity->animFrameDuration == 0) {
-        if (currentFrame[0] > 0) {
-            flag = 0x80;
-            if (currentFrame[0] == 0xFF) {
-                return false;
-            }
-
-            entity->animFrameDuration = *currentFrame++;
-            entity->animCurFrame = *currentFrame++;
-            entity->animFrameIdx++;
-        } else {
-            currentFrame = frames;
-            entity->animFrameIdx = 0;
-            entity->animFrameDuration = 0;
-            entity->animFrameDuration = *currentFrame++;
-            entity->animCurFrame = *currentFrame++;
-            entity->animFrameIdx++;
-            return false;
-        }
-    }
-
-    entity->animFrameDuration = entity->animFrameDuration - 1;
-    entity->animCurFrame = currentFrame[-1];
-    flag |= true;
-
-    return (u8)flag;
-}
+#include "../entity.h"
 
 u8 func_8019A590(u8 frames[], Entity* self, u8 arg2) {
     u16 animFrameStart = self->animFrameIdx * 2;

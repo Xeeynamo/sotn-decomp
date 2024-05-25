@@ -21,6 +21,7 @@ CreateEntityFromEntity = 0x8018C854;
 EntityIsNearPlayer = 0x8018C8D0;
 DestroyEntity = 0x8018D580;
 PreventEntityFromRespawning = 0x8018D668;
+AnimateEntity = 0x8018D6B0;
 GetDistanceToPlayerX = 0x8018D880;
 GetSideToPlayer = 0x8018D8F0;
 MoveEntity = 0x8018D934;
