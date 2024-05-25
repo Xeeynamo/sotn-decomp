@@ -1,7 +1,28 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", func_8018A0CC);
+// redeclaring for the moment due to header conflict with Random() definition
+typedef struct {
+    /* 0x0 */ u16 posX;
+    /* 0x2 */ u16 posY;
+    /* 0x4 */ u16 entityId;
+    /* 0x6 */ u16 entityRoomIndex;
+    /* 0x8 */ u16 params;
+} LayoutEntity; // size = 0xA
+
+extern LayoutEntity* g_LayoutObjHorizontal;
+
+void FindFirstEntityToTheRight(s16 arg0) {
+    while (1) {
+        LayoutEntity* layoutEntity = g_LayoutObjHorizontal;
+        if ((layoutEntity->posX != 0xFFFE) &&
+            ((s32)layoutEntity->posX >= arg0)) {
+            break;
+        }
+
+        g_LayoutObjHorizontal++;
+    }
+}
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", func_8018A118);
 
