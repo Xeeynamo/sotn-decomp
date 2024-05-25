@@ -1,6 +1,7 @@
 # cen
 - [✅ AdjustValueWithinThreshold](function_calls/cen.AdjustValueWithinThreshold.svg?raw=1)
 - [✅ AllocEntity](function_calls/cen.AllocEntity.svg?raw=1)
+- [✅ AnimateEntity](function_calls/cen.AnimateEntity.svg?raw=1)
 - [✅ BlinkItem](function_calls/cen.BlinkItem.svg?raw=1)
 - [✅ BlitChar](function_calls/cen.BlitChar.svg?raw=1)
 - [✅ BottomCornerText](function_calls/cen.BottomCornerText.svg?raw=1)
@@ -92,7 +93,6 @@
 - [✅ func_8018F8EC](function_calls/cen.func_8018F8EC.svg?raw=1)
 - [✅ func_8019040C](function_calls/cen.func_8019040C.svg?raw=1)
 - [✅ func_801904B8](function_calls/cen.func_801904B8.svg?raw=1)
-- [❌ func_80194394](function_calls/cen.func_80194394.svg?raw=1)
 - [✅ func_8019444C](function_calls/cen.func_8019444C.svg?raw=1)
 - [✅ func_80194674](function_calls/cen.func_80194674.svg?raw=1)
 - [✅ func_801948EC](function_calls/cen.func_801948EC.svg?raw=1)
@@ -2386,6 +2386,7 @@
 # rwrp
 - [✅ AdjustValueWithinThreshold](function_calls/rwrp.AdjustValueWithinThreshold.svg?raw=1)
 - [✅ AllocEntity](function_calls/rwrp.AllocEntity.svg?raw=1)
+- [✅ AnimateEntity](function_calls/rwrp.AnimateEntity.svg?raw=1)
 - [✅ BlinkItem](function_calls/rwrp.BlinkItem.svg?raw=1)
 - [✅ BlitChar](function_calls/rwrp.BlitChar.svg?raw=1)
 - [❌ BottomCornerText](function_calls/rwrp.BottomCornerText.svg?raw=1)
@@ -2460,7 +2461,6 @@
 - [❌ func_80189E9C](function_calls/rwrp.func_80189E9C.svg?raw=1)
 - [❌ func_8018B6B4](function_calls/rwrp.func_8018B6B4.svg?raw=1)
 - [❌ func_8018C948](function_calls/rwrp.func_8018C948.svg?raw=1)
-- [❌ func_8018D6B0](function_calls/rwrp.func_8018D6B0.svg?raw=1)
 - [✅ func_8018D768](function_calls/rwrp.func_8018D768.svg?raw=1)
 - [❌ func_8018D990](function_calls/rwrp.func_8018D990.svg?raw=1)
 - [✅ func_8018DC08](function_calls/rwrp.func_8018DC08.svg?raw=1)
