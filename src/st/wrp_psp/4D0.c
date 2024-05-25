@@ -11,6 +11,7 @@ typedef struct {
 } LayoutEntity; // size = 0xA
 
 extern LayoutEntity* g_LayoutObjHorizontal;
+extern LayoutEntity* g_LayoutObjVertical;
 
 void FindFirstEntityToTheRight(s16 arg0) {
     while (1) {
@@ -30,7 +31,15 @@ INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", func_8018A170);
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", func_8018A26C);
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", func_8018A380);
+void FindFirstEntityAbove(s16 arg0) {
+    while (true) {
+        u16* ptr = &g_LayoutObjVertical->posY;
+        if ((*ptr != (u16)~1) && !(*ptr < arg0)) {
+            break;
+        }
+        g_LayoutObjVertical++;
+    }
+}
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", func_8018A3CC);
 
