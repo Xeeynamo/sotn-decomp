@@ -53,7 +53,14 @@ INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", func_8018A7AC);
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", CreateEntityFromCurrentEntity);
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", CreateEntityFromEntity);
+extern PfnEntityUpdate* PfnEntityUpdates;
+void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity) {
+    DestroyEntity(entity);
+    entity->entityId = entityId;
+    entity->pfnUpdate = PfnEntityUpdates[entityId - 1];
+    entity->posX.i.hi = source->posX.i.hi;
+    entity->posY.i.hi = source->posY.i.hi;
+}
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", EntityStageNamePopup);
 
