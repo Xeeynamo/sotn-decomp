@@ -64,6 +64,7 @@ def apply_psx_stage(config, version, name):
     config["mapfile"] = f"build/{version}/st{name}.map"
     config["source_directories"] = [
         f"src/st/{name}",
+        f"src/st/{name}_psp",
         "include",
         f"asm/{version}/st/{name}",
     ]

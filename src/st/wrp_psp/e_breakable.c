@@ -1,13 +1,13 @@
 #include "../wrp/wrp.h"
 #include <sfx.h>
 
-u16 g_eBreakableInit[];
+extern u16 g_eBreakableInit[];
 
-u8* g_eBreakableAnimations[];
-u8 g_eBreakableHitboxes[];
-u8 g_eBreakableExplosionTypes[];
-u16 g_eBreakableanimSets[];
-u8 g_eBreakableDrawModes[];
+extern u8* g_eBreakableAnimations[];
+extern u8 g_eBreakableHitboxes[];
+extern u8 g_eBreakableExplosionTypes[];
+extern u16 g_eBreakableanimSets[];
+extern u8 g_eBreakableDrawModes[];
 
 void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity);
 void ReplaceBreakableWithItemDrop(Entity*);
