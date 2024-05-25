@@ -1110,29 +1110,3 @@ void func_801870B0(Entity* entity) {
         }
     }
 }
-
-void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity);
-void ReplaceBreakableWithItemDrop(Entity*);
-void EntityBreakable(Entity* entity) {
-    u16 breakableType = entity->params >> 0xC;
-    if (entity->step) {
-        AnimateEntity(g_eBreakableAnimations[breakableType], entity);
-        if (entity->unk44) { // If the candle is destroyed
-            Entity* entityDropItem;
-            g_api.PlaySfx(NA_SE_BREAK_CANDLE);
-            entityDropItem = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (entityDropItem != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);
-                entityDropItem->params =
-                    g_eBreakableExplosionTypes[breakableType];
-            }
-            ReplaceBreakableWithItemDrop(entity);
-        }
-    } else {
-        InitializeEntity(g_eBreakableInit);
-        entity->zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 0x14;
-        entity->drawMode = g_eBreakableDrawModes[breakableType];
-        entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
-        entity->animSet = g_eBreakableanimSets[breakableType];
-    }
-}
