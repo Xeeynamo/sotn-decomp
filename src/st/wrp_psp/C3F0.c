@@ -22,4 +22,10 @@ INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/C3F0", func_psp_09244020);
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/C3F0", PrimResetNext);
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/C3F0", UnkPolyFunc2);
+void UnkPolyFunc2(Primitive* prim) {
+    PrimResetNext(prim);
+    prim->p3 = 8;
+    prim->next->p3 = 1;
+    prim->next->type = PRIM_LINE_G2;
+    prim->next->drawMode = 0xA;
+}
