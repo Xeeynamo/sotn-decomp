@@ -1,4 +1,5 @@
 #include "common.h"
+#include "game.h"
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", func_8018A0CC);
 
@@ -30,4 +31,9 @@ INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", EntityIsNearPlayer);
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", EntityRedDoor);
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", Random);
+// INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", Random);
+
+u8 Random(void) {
+    g_randomNext = (g_randomNext * 0x01010101) + 1;
+    return g_randomNext >> 0x18;
+}
