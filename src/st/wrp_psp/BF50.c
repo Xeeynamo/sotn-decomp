@@ -33,4 +33,8 @@ Entity* AllocEntity(Entity* start, Entity* end) {
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/BF50", UnkEntityFunc0);
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/BF50", func_8018C160);
+u16 func_8018C160(Entity* a, Entity* b) {
+    s32 diffX = b->posX.i.hi - a->posX.i.hi;
+    s32 diffY = b->posY.i.hi - a->posY.i.hi;
+    return ratan2(diffY, diffX);
+}
