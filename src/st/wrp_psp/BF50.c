@@ -18,7 +18,18 @@ void FallEntity(void) {
     }
 }
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/BF50", AllocEntity);
+Entity* AllocEntity(Entity* start, Entity* end) {
+    Entity* current = start;
+
+    while (current < end) {
+        if (!current->entityId) {
+            DestroyEntity(current);
+            return current;
+        }
+        current++;
+    }
+    return NULL;
+}
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/BF50", UnkEntityFunc0);
 
