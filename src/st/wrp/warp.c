@@ -258,10 +258,8 @@ void EntityWarpRoom(Entity* self) {
 void EntityWarpSmallRocks(Entity* entity) {
     s32 x;
     s32 y;
-    s16* y_unk;
-    s32 distance;
-    s16 radians;
-    u32* unk;
+    s32 rotation;
+    s16 angle;
 
     switch (entity->step) {
     case 0:
@@ -269,30 +267,27 @@ void EntityWarpSmallRocks(Entity* entity) {
         entity->drawFlags = FLAG_DRAW_ROTZ;
         entity->rotZ = Random() * 0x10;
         entity->animCurFrame = (Random() % 5) + 1;
-        if (D_80180648 != 0) {
+        if (D_80180648) {
             entity->posY.i.hi = (Random() & 0x1F) + 0x90;
             entity->step = 4;
         }
         break;
     case 1:
-        if (D_80180648 != 0) {
-            *(u32*)(&entity->ext.generic.unk88) = Random() & 0x3F;
+        if (D_80180648) {
+            entity->ext.warpRoom.unk88 = Random() & 0x3F;
             entity->velocityY = FIX(-4);
             entity->step++;
         }
         break;
     case 2:
-        if (*(u32*)&entity->ext.generic.unk88 != 0) {
-            *(u32*)&entity->ext.generic.unk88 =
-                *(u32*)&entity->ext.generic.unk88 - 1;
+        if (entity->ext.warpRoom.unk88) {
+            entity->ext.warpRoom.unk88--;
         } else {
             MoveEntity();
             entity->velocityY += FIX(0.25);
-            if (entity->velocityY > ((s32)0xFFFF0000)) {
+            if (entity->velocityY > FIX(-1.0f)) {
                 entity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-                entity->rotY = 0x100;
-                distance = 0x100;
-                entity->rotX = distance;
+                entity->rotX = entity->rotY = 0x100;
                 entity->step++;
             }
         }
@@ -300,39 +295,38 @@ void EntityWarpSmallRocks(Entity* entity) {
     case 3:
         x = 0x80 - entity->posX.i.hi;
         y = 0x80 - entity->posY.i.hi;
-        radians = ratan2(y, x);
-        entity->velocityX = rcos(radians) << 5;
-        entity->velocityY = rsin(radians) << 5;
+        angle = ratan2(y, x);
+        entity->velocityX = rcos(angle) << 5;
+        entity->velocityY = rsin(angle) << 5;
         MoveEntity();
-        distance = SquareRoot0(x * x + y * y) * 2;
-        if (distance >= 0x101) {
-            distance = 0x100;
+        rotation = x * x + y * y;
+        rotation = SquareRoot0(rotation);
+        rotation *= 2;
+        if (rotation > 0x100) {
+            rotation = 0x100;
         }
-        entity->rotX = entity->rotY = distance;
-        if (distance < 8) {
+        entity->rotX = entity->rotY = rotation;
+        if (rotation < 8) {
             DestroyEntity(entity);
         }
         break;
     case 4:
-        entity->rotZ += 0x20;
-        entity->velocityY = rsin(entity->rotZ) * 4;
+        angle = entity->rotZ += 0x20;
+        entity->velocityY = rsin(angle) * 4;
         if (D_80180648 == 0) {
-            *(u32*)&entity->ext.generic.unk88 = 0x10;
+            entity->ext.warpRoom.unk88 = 0x10;
             entity->step++;
         }
         break;
     case 5:
-        y_unk = &g_Tilemap.scrollY.i.hi;
-        *(u32*)&entity->ext.generic.unk88 =
-            *(u32*)&entity->ext.generic.unk88 - 1;
-        if (*(u32*)&entity->ext.generic.unk88 == 0) {
+        if (--entity->ext.warpRoom.unk88 == 0) {
             func_801916C4(SE_WARP_DEBRIS);
         }
         MoveEntity();
         entity->velocityY += FIX(0.1875);
-        y = entity->posY.i.hi + *y_unk + 5;
-        if (y >= 209) {
-            entity->posY.i.hi = 203 - (*y_unk);
+        y = entity->posY.i.hi + g_Tilemap.scrollY.i.hi + 5;
+        if (y > 208) {
+            entity->posY.i.hi = 203 - g_Tilemap.scrollY.i.hi;
             entity->step = 1;
         }
         break;
