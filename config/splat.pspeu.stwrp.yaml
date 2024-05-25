@@ -55,8 +55,8 @@ segments:
       - [0xBF50, c, wrp_psp/BF50]
       - [0xC3F0, c, wrp_psp/C3F0]
       - [0xD010, c, wrp_psp/D010]
-      - [0xD0E0, c, wrp_psp/D0E0]
-      - [0xD140, c, wrp_psp/D140]
+      - [0xD0E0, c, wrp_psp/st_init_wrp]
+      - [0xD1B8, c, wrp_psp/D1B8]
       - [0xE980, data]
       - [0x14480, data] # rodata?
       - {type: bss, vram: 0x924BC00}
