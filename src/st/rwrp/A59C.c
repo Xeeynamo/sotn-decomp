@@ -7,20 +7,7 @@ INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018B6B4);
 
 INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018C948);
 
-#include "../../destroy_entity.h"
-
-#include "../../destroy_entities_from_index.h"
-
-void PreventEntityFromRespawning(Entity* entity) {
-    if (entity->entityRoomIndex) {
-        u32 value = (entity->entityRoomIndex - 1);
-        u16 index = value / 32;
-        u16 bit = value % 32;
-        g_entityDestroyed[index] |= 1 << bit;
-    }
-}
-
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018D6B0);
+#include "../entity.h"
 
 u8 func_8018D768(u8 frames[], Entity* self, u8 arg2) {
     u16 animFrameStart = self->animFrameIdx * 2;
