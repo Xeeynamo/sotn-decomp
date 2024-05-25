@@ -16,9 +16,6 @@ extract_hd: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_HD_TARGETS)))
 
 extract_disk_us: extract_disk_psxus
 extract_disk_hd: extract_disk_pspeu
-extract_disk_psp%:
-	mkdir -p disks/psp$*
-	7z x disks/sotn.psp$*.iso -odisks/psp$*/
 extract_disk_psx%: $(SOTNDISK)
 	$(SOTNDISK) extract disks/sotn.$*.cue disks/$*
 

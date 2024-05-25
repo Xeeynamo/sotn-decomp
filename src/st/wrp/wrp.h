@@ -1,4 +1,4 @@
-#include "stage.h"
+#include <stage.h>
 
 #define CASTLE_FLAG_BANK 0x00
 

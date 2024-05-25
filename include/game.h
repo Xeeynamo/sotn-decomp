@@ -121,6 +121,8 @@ typedef struct Prim {
 
 #define BUTTON_COUNT 8
 #define PAD_COUNT 2
+
+#if !defined(VERSION_PSP)
 #define PAD_L2 0x0001
 #define PAD_R2 0x0002
 #define PAD_L1 0x0004
@@ -137,6 +139,21 @@ typedef struct Prim {
 #define PAD_RIGHT 0x2000
 #define PAD_DOWN 0x4000
 #define PAD_LEFT 0x8000
+
+#else
+#define PAD_L1 0x0100
+#define PAD_R1 0x0200
+#define PAD_TRIANGLE 0x1000
+#define PAD_CIRCLE 0x2000
+#define PAD_CROSS 0x4000
+#define PAD_SQUARE 0x8000
+#define PAD_SELECT 0x0001
+#define PAD_START 0x0008
+#define PAD_UP 0x0010
+#define PAD_RIGHT 0x0020
+#define PAD_DOWN 0x0040
+#define PAD_LEFT 0x0080
+#endif
 
 // Game Buttons unofficially refers to buttons used in playing the game.
 // Direction, action and shoulder buttons. Any button except start or select.
@@ -696,14 +713,12 @@ typedef struct Entity {
 } Entity; // size = 0xBC
 
 typedef struct {
-    /* 0x00 */ s16 animSet;
+    /* 0x00 */ u16 animSet;
     /* 0x02 */ u16 zPriority;
     /* 0x04 */ Multi16 unk4;
     /* 0x06 */ u16 palette;
-    /* 0x08 */ u8 drawFlags;
-    /* 0x09 */ u8 unk9;
-    /* 0x0A */ u8 drawMode;
-    /* 0x0B */ u8 unkB;
+    /* 0x08 */ u16 drawFlags;
+    /* 0x0A */ u16 drawMode;
     /* 0x0C */ u32 unkC;
     /* 0x10 */ const u8* unk10;
 } ObjInit2; // size = 0x14

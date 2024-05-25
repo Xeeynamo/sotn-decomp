@@ -324,7 +324,12 @@ $(BUILD_DIR)/$(ASSETS_DIR)/weapon/%_2.animset.o: $(ASSETS_DIR)/weapon/%_2.animse
 
 extract: extract_$(VERSION)
 
-include Makefile.*.mk
+ifneq (,$(filter psp%,$(VERSION)))
+include Makefile.psp.mk
+else
+include Makefile.psx.mk
+endif
+include Makefile.saturn.mk
 
 # Force to extract all the assembly code regardless if a function is already decompiled
 force_extract:
@@ -387,6 +392,11 @@ disk_debug: disk_prepare
 	cd tools/sotn-debugmodule && make
 	cp $(BUILD_DIR)/../sotn-debugmodule.bin $(DISK_DIR)/SERVANT/TT_000.BIN
 	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
+
+# put this here as both PSX HD and PSP use it
+extract_disk_psp%:
+	mkdir -p disks/psp$*
+	7z x disks/sotn.psp$*.iso -odisks/psp$*/
 
 update-dependencies: $(SPLAT_APP) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(SATURN_SPLITTER_APP) $(GO)
 	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release

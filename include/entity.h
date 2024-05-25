@@ -239,6 +239,7 @@ typedef struct {
     /* 0x7C */ Primitive* primBg;
     /* 0x80 */ s32 unused80;
     /* 0x84 */ Primitive* primFade;
+    /* 0x88 */ s32 unk88;
 } ET_WarpRoom;
 
 typedef struct {

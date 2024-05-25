@@ -257,10 +257,8 @@ u16 D_801804C4[] = {
 u32 D_801804D0[] = {0x00FF0140};
 u32 D_801804D4[] = {0x26022502, 0x26022702, 0x00000000};
 ObjInit2 D_801804E0[] = {
-    {0x0006, 0x01FA, 0x0000, 0x0000, 0x00, 0x00, 0x10, 0x00, 0x00000000,
-     D_801804D0},
-    {0x8001, 0x00C0, 0x0000, 0x0000, 0x03, 0x00, 0x30, 0x00, 0x00000000,
-     D_801804D4},
+    {0x0006, 0x01FA, 0x0000, 0x0000, 0x00, 0x10, 0x00000000, D_801804D0},
+    {0x8001, 0x00C0, 0x0000, 0x0000, 0x03, 0x30, 0x00000000, D_801804D4},
 };
 
 // Owned by EntityRedDoor to animate the tiles behind the door itself.
@@ -1033,108 +1031,3 @@ u8* D_80180F70[] = {
 // *** bss? section start ***
 extern u16 g_ItemIconSlots[];
 // *** bss? section end ***
-
-void func_80186FD0(Entity* arg0) {
-    ObjInit2* objInit = &D_801804E0[arg0->params];
-    if (arg0->step == 0) {
-        InitializeEntity(g_eInitGeneric2);
-        arg0->animSet = objInit->animSet;
-        arg0->zPriority = objInit->zPriority;
-        arg0->unk5A = objInit->unk4.s;
-        arg0->palette = objInit->palette;
-        arg0->drawFlags = objInit->drawFlags;
-        arg0->drawMode = objInit->drawMode;
-
-        if (objInit->unkC != 0) {
-            arg0->flags = objInit->unkC;
-        }
-
-        if (arg0->params == 1) {
-            arg0->rotX = arg0->rotY = 0x0200;
-        }
-    }
-
-    AnimateEntity(objInit->unk10, arg0);
-}
-
-void func_801870B0(Entity* entity) {
-    s32 ret;
-    u16* temp_v0_2;
-    u16 temp_s1 = entity->params;
-    u16 phi_v1;
-    u16 unk;
-    entity->unk6D[0] = 0;
-
-    if (entity->step != 0) {
-        switch (temp_s1) {
-        case 4:
-        case 5:
-            if (g_Tilemap.x != 0) {
-                return;
-            }
-            break;
-
-        case 6:
-            if (g_pads->pressed & PAD_TRIANGLE) {
-                g_Tilemap.x = 0;
-                g_Tilemap.width = 1280;
-                entity->step++;
-                return;
-            }
-            break;
-        }
-
-        if (entity->unk44 != 0) {
-            ret = GetSideToPlayer();
-            phi_v1 = entity->ext.generic.unk7C.s;
-            if (phi_v1 != 0) {
-                phi_v1 = (ret & 2) * 2;
-            } else {
-                phi_v1 = (ret & 1) * 4;
-            }
-            unk = 8;
-            temp_s1 = (temp_s1 * unk) + phi_v1;
-            temp_v0_2 = &D_80180538[temp_s1];
-            g_Tilemap.x = *(temp_v0_2++);
-            g_Tilemap.y = *(temp_v0_2++);
-            g_Tilemap.width = *(temp_v0_2++);
-            g_Tilemap.height = *(temp_v0_2++);
-        }
-    } else {
-        InitializeEntity(D_80180488);
-        entity->ext.generic.unk7C.s = D_80180530[temp_s1];
-        if (entity->ext.generic.unk7C.s != 0) {
-            entity->hitboxWidth = D_80180528[temp_s1];
-            entity->hitboxHeight = 16;
-        } else {
-            entity->hitboxWidth = 16;
-            entity->hitboxHeight = D_80180528[temp_s1];
-        }
-    }
-}
-
-void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity);
-void ReplaceBreakableWithItemDrop(Entity*);
-void EntityBreakable(Entity* entity) {
-    u16 breakableType = entity->params >> 0xC;
-    if (entity->step) {
-        AnimateEntity(g_eBreakableAnimations[breakableType], entity);
-        if (entity->unk44) { // If the candle is destroyed
-            Entity* entityDropItem;
-            g_api.PlaySfx(NA_SE_BREAK_CANDLE);
-            entityDropItem = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (entityDropItem != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);
-                entityDropItem->params =
-                    g_eBreakableExplosionTypes[breakableType];
-            }
-            ReplaceBreakableWithItemDrop(entity);
-        }
-    } else {
-        InitializeEntity(g_eBreakableInit);
-        entity->zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 0x14;
-        entity->drawMode = g_eBreakableDrawModes[breakableType];
-        entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
-        entity->animSet = g_eBreakableanimSets[breakableType];
-    }
-}
