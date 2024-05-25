@@ -4,7 +4,7 @@ INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/BF50", PreventEntityFromRespawning);
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/BF50", AnimateEntity);
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/BF50", GetPlayerSide);
+INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/BF50", GetSideToPlayer);
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/BF50", MoveEntity);
 
