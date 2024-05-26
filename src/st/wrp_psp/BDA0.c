@@ -2,7 +2,7 @@
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/BDA0", EntityRoomForeground);
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/BDA0", DestroyEntity);
+#include "../../destroy_entity.h"
 
 void PreventEntityFromRespawning(Entity* entity) {
     if (entity->entityRoomIndex) {
