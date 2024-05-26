@@ -27,7 +27,12 @@ extern LayoutEntity* g_pStObjLayoutHorizontal[];
  */
 extern LayoutEntity* g_pStObjLayoutVertical[];
 
+#if defined(VERSION_PSP)
+extern PfnEntityUpdate* PfnEntityUpdates;
+#else
 extern PfnEntityUpdate PfnEntityUpdates[];
+#endif
+
 extern u16 g_ItemIconSlots[0x20];
 extern u16 UNK_Invincibility0[];
 

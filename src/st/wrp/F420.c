@@ -493,6 +493,7 @@ void func_801903C8(Entity* entity) {
     }
 }
 
+extern PfnEntityUpdate PfnEntityUpdates[];
 void func_80190494(u16 entityId, Entity* src, Entity* dst) {
     DestroyEntity(dst);
     dst->entityId = entityId;

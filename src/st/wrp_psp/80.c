@@ -1,7 +1,5 @@
-#include "common.h"
+#include "../wrp/wrp.h"
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/80", CreateEntityFromLayout);
+#include "../create_entity_from_layout.h"
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/80", CreateEntityWhenInVerticalRange);
-
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/80", CreateEntityWhenInHorizontalRange);
+#include "../create_entity_in_range.h"

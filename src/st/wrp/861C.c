@@ -7,7 +7,6 @@ extern u16 D_80180DC4[];
 extern u16 D_80180DF4[];
 extern u16 g_ItemIconSlots[];
 extern u16 UNK_Invincibility0[];
-extern PfnEntityUpdate PfnEntityUpdates[];
 extern s16 D_80180A94[];
 extern LayoutEntity* D_80180310[];
 
