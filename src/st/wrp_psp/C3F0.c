@@ -1,4 +1,5 @@
 #include "common.h"
+#include "game.h"
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/C3F0", func_8018C1E0);
 
@@ -6,7 +7,11 @@ INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/C3F0", SetStep);
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/C3F0", InitializeEntity);
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/C3F0", EntityDummy);
+void EntityDummy(Entity* arg0) {
+    if (!arg0->step) {
+        arg0->step++;
+    }
+}
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/C3F0", func_8018C55C);
 
