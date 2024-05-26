@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/BFD8", AnimateEntity);
+#include "../animate_entity.h"
 
 u8 GetSideToPlayer() {
     u8 side = 0;
