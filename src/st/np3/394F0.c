@@ -2,595 +2,508 @@
 
 void TestCollisions(void) {
     s32 temp_rand;
-    
-    Entity* var_s0;
-    
-    Primitive* var_s2;
-    Entity* var_s3;
-    s32 *var_s4;
-    Entity *var_s5;
-    u16 var_s6;
-    u16 var_s8;
-
-    s32* sp50;
-    u16* sp4C;
-    u32 sp40;
+    Entity* otherEntity;
+    Primitive* prim;
+    Entity* entFrom5C;
+    s32* scratchpad_2;
+    Entity* iterEnt2;
+    u16 miscVar3;
+    u16 i;
+    s32* scratchpad_1;
+    u16* randCompare;
+    u32 hitboxCheck1;
     EnemyDef* sp3C;
-    
+    s16 xCoord;
+    s16 yCoord2;
+    u16 miscVar1;
+    u16 hitboxCheck2;
+    s32 yCoord1;
+    s32 hitboxWidth;
+    s8 uselessVar;
+    Entity* iterEnt1;
+    u8 miscVar2;
 
-    s16 sp5C;
-    s16 sp5A;
-    u16 sp58;
-    u16 sp56; //sp18
-    s32 sp44; //sp20
-    s32 sp48;
-    
-    s8 sp5F;
-    Entity *var_s1; //sp28
-    u8 var_s7; //sp30
-
-    
-    #define SP(x) (0x1F800000 | (x))
-
-
-    sp50 = (s32 *)SP(0);
-    var_s4 = (s32 *)SP(0xC0);
-    for(var_s1 = &g_Entities[0]; var_s1 < &g_Entities[48]; sp50++, var_s1++) {
-        *sp50 = var_s1->hitboxState;
-        if ((*sp50 != 0) && !(*sp50 & 0x80)) {
-            *var_s4 = var_s1->posX.i.hi;
-//84
-            if (var_s1->facingLeft) {
-                *var_s4 -= var_s1->hitboxOffX;
+    scratchpad_1 = (s32*)SP(0);
+    scratchpad_2 = (s32*)SP(0xC0);
+    for (iterEnt1 = &g_Entities[0]; iterEnt1 < &g_Entities[48]; scratchpad_1++,
+        iterEnt1++) {
+        *scratchpad_1 = iterEnt1->hitboxState;
+        if ((*scratchpad_1 != 0) && !(*scratchpad_1 & 0x80)) {
+            *scratchpad_2 = iterEnt1->posX.i.hi;
+            if (iterEnt1->facingLeft) {
+                *scratchpad_2 -= iterEnt1->hitboxOffX;
             } else {
-                *var_s4 += var_s1->hitboxOffX;
+                *scratchpad_2 += iterEnt1->hitboxOffX;
             }
-            sp44 = var_s1->posY.i.hi + var_s1->hitboxOffY;
-            if ((*var_s4 < -0x20) || (*var_s4 >= 0x121) || (sp44 < -0x20) || (sp44 >= 0x101) || !var_s1->hitboxWidth || !var_s1->hitboxHeight) {
-                *sp50 = 0;
-                var_s4 += 4;
+            yCoord1 = iterEnt1->posY.i.hi + iterEnt1->hitboxOffY;
+            if ((*scratchpad_2 < -32) || (*scratchpad_2 > 288) ||
+                (yCoord1 < -32) || (yCoord1 > 256) || !iterEnt1->hitboxWidth ||
+                !iterEnt1->hitboxHeight) {
+                *scratchpad_1 = 0;
+                scratchpad_2 += 4;
             } else {
-                //158
-                var_s4++;
-                *var_s4++ = var_s1->hitboxWidth;
-                *var_s4++ = sp44;
-                *var_s4++ = var_s1->hitboxHeight;
+                scratchpad_2++;
+                *scratchpad_2++ = iterEnt1->hitboxWidth;
+                *scratchpad_2++ = yCoord1;
+                *scratchpad_2++ = iterEnt1->hitboxHeight;
             }
         } else {
-            var_s4 += 4;
+            scratchpad_2 += 4;
         }
     }
-
-    //1dc
-    for(var_s1 = &g_Entities[64]; var_s1 < &g_Entities[192]; var_s1++){
-        //1f0
-        sp58 = var_s1->hitboxState;
-        if (!sp58 || !(var_s1->hitboxWidth) || !(var_s1->hitboxHeight) || (var_s1->flags & 0x100)) {
+    for (iterEnt1 = &g_Entities[64]; iterEnt1 < &g_Entities[192]; iterEnt1++) {
+        miscVar1 = iterEnt1->hitboxState;
+        if (!miscVar1 || !(iterEnt1->hitboxWidth) ||
+            !(iterEnt1->hitboxHeight) || (iterEnt1->flags & FLAG_DEAD)) {
             continue;
         }
-        //22C
-        for(var_s8 = 0; var_s8 < 11; var_s8++) {
-            if (var_s1->unk6D[var_s8]) {
-                var_s1->unk6D[var_s8]--;
+        for (i = 0; i < 11; i++) {
+            if (iterEnt1->unk6D[i]) {
+                iterEnt1->unk6D[i]--;
             }
         }
-        //278
-        sp5C = var_s1->posX.i.hi;
-        if (var_s1->facingLeft) {
-            sp5C -= var_s1->hitboxOffX;
+        xCoord = iterEnt1->posX.i.hi;
+        if (iterEnt1->facingLeft) {
+            xCoord -= iterEnt1->hitboxOffX;
         } else {
-            sp5C += var_s1->hitboxOffX;
+            xCoord += iterEnt1->hitboxOffX;
         }
-        //2B4
-        sp5A = var_s1->posY.i.hi + var_s1->hitboxOffY;
-        if ((sp5C < -0x1F) || (sp5C >= 0x120) || (sp5A < -0x1F) || (sp5A >= 0x100)) {
+        yCoord2 = iterEnt1->posY.i.hi + iterEnt1->hitboxOffY;
+        if ((xCoord <= -32) || (xCoord >= 288) || (yCoord2 <= -32) ||
+            (yCoord2 >= 256)) {
             continue;
         }
-        //320
-        var_s7 = 0;
-        var_s6 = (u16)(sp58 & 0x3E);
-        sp48 = var_s1->hitboxWidth - 1;
-        sp44 = var_s1->hitboxHeight - 1;
-        //35c
-        if (var_s6) {
-            //364
-            sp50 = (s32*)SP(4);
-            var_s4 = (s32 *)SP(0xD0);
-            for(var_s5 = &g_Entities[1]; var_s5 < &g_Entities[48]; var_s5++) {
-            //390
-                if ((*sp50 & var_s6) && (!var_s1->unk6D[var_s5->enemyId])) {
-                    //3c0
-                    if (*sp50 & 0x80) {
-                        var_s1->unk44 = var_s5->hitEffect & 0x7F ;
-                        var_s7 = 0xFF;
+        miscVar2 = 0;
+        miscVar3 = (u16)(miscVar1 & 0x3E);
+        hitboxWidth = iterEnt1->hitboxWidth - 1;
+        yCoord1 = iterEnt1->hitboxHeight - 1;
+        if (miscVar3) {
+            scratchpad_1 = (s32*)SP(4);
+            scratchpad_2 = (s32*)SP(0xD0);
+            for (iterEnt2 = &g_Entities[1]; iterEnt2 < &g_Entities[48];
+                 iterEnt2++) {
+                if ((*scratchpad_1 & miscVar3) &&
+                    (!iterEnt1->unk6D[iterEnt2->enemyId])) {
+                    if (*scratchpad_1 & 0x80) {
+                        iterEnt1->unk44 = iterEnt2->hitEffect & 0x7F;
+                        miscVar2 = 0xFF;
                         break;
                     } else {
-                        //3FC
-                        sp56 = (u16)*var_s4++ - (u16)sp5C;
-                        //42C
-                        sp40 = sp48 + *var_s4++;
-                        //448
-                        sp56 += sp40;
-                        //45C
-                        sp40 *= 2;
-                        if (sp40 >= sp56) {
-                            //480
-                            sp56 = (u16)*var_s4++ - (u16)sp5A ;
-                            //4B0
-                            sp40 = sp44 + *var_s4++;
-                            //4CC
-                            sp56 += sp40;
-                            //4E0
-                            sp40 *= 2;
-                            //4EC
-                            if (sp40 >= sp56) {
-                                //504
-                                var_s8 = var_s5->hitEffect & 0x7F;
-                                //518
-                                if (!(var_s5->flags & var_s1->flags & 0x100000)) {
-                                    //534
-                                    var_s5->ext.generic.unkB8.entityPtr = var_s1;
-                                    //538
-                                    if (sp58 & 8) {
-                                        //54c
-                                        var_s5->hitFlags = 3;
+                        hitboxCheck2 = (u16)*scratchpad_2++ - (u16)xCoord;
+                        hitboxCheck1 = hitboxWidth + *scratchpad_2++;
+                        hitboxCheck2 += hitboxCheck1;
+                        hitboxCheck1 *= 2;
+                        if (hitboxCheck1 >= hitboxCheck2) {
+                            hitboxCheck2 = (u16)*scratchpad_2++ - (u16)yCoord2;
+                            hitboxCheck1 = yCoord1 + *scratchpad_2++;
+                            hitboxCheck2 += hitboxCheck1;
+                            hitboxCheck1 *= 2;
+                            if (hitboxCheck1 >= hitboxCheck2) {
+                                // reusing the i variable here, maybe can be a
+                                // different var
+                                i = iterEnt2->hitEffect & 0x7F;
+                                if (!(iterEnt2->flags & iterEnt1->flags &
+                                      FLAG_UNK_100000)) {
+                                    // Probably has to stay generic since
+                                    // iterEnt2 could be any entity?
+                                    iterEnt2->ext.generic.unkB8.entityPtr =
+                                        iterEnt1;
+                                    // reminder: iterEnt1->hitboxState
+                                    if (miscVar1 & 8) {
+                                        iterEnt2->hitFlags = 3;
                                     } else {
-                                        //55c
-                                        var_s5->hitFlags = 1;
+                                        iterEnt2->hitFlags = 1;
                                     }
-                                    //564
-                                    if ((var_s8 == 3) && (var_s1->flags & 0x8000)) {
-                                        //584
-                                        g_api.PlaySfx(0x611);
-                                        var_s5->hitFlags = 2;
+                                    if ((i == 3) &&
+                                        (iterEnt1->flags & FLAG_UNK_8000)) {
+                                        g_api.PlaySfx(SFX_CLANK);
+                                        iterEnt2->hitFlags = 2;
                                     }
-                                    //5a4
-                                    if ((var_s8 == 4) && (var_s1->flags & 0x4000)) {
-                                        //5cc
-                                        g_api.PlaySfx(0x611);
-                                        var_s5->hitFlags = 2;
+                                    if ((i == 4) &&
+                                        (iterEnt1->flags & FLAG_UNK_4000)) {
+                                        g_api.PlaySfx(SFX_CLANK);
+                                        iterEnt2->hitFlags = 2;
                                     }
                                 }
-                                //5e8
-                                var_s1->unk44 = var_s8;
-                                var_s7 = 0xFF;
+                                iterEnt1->unk44 = i;
+                                miscVar2 = 0xFF;
                                 break;
                             } else {
-                                sp50++;
+                                scratchpad_1++;
                                 continue;
                             }
                         } else {
-                            //614
-                            sp50++;
-                            var_s4 += 2;
+                            scratchpad_1++;
+                            scratchpad_2 += 2;
                             continue;
                         }
                     }
                 } else {
-                    sp50 ++;
-                    var_s4 += 4;
+                    scratchpad_1++;
+                    scratchpad_2 += 4;
                 }
             }
         }
 
-        
-        //660
-        if ((sp58 & 1) && (!var_s7)) {
-            //67C
-            var_s5 = &PLAYER;
-            sp50 = (s32 *)SP(0);
-            var_s4 = (s32 *)SP(0xC0);
-            //69C
-            if (!var_s1->unk6D[var_s5->enemyId] && (*sp50 & 1)) {
-                //6c8
-                sp56 = (u16)*var_s4++ - (u16)sp5C;
-                //6f8
-                sp40 = sp48 + *var_s4++;
-                //714
-                sp56 += sp40;
-                //728
-                sp40 *= 2;
-                //734
-                if (sp40 >= sp56) {
-                    //74c
-                    sp56 = (u16)*var_s4++ - (u16)sp5A;
-                    //77c
-                    sp40 = sp44 + *var_s4++;
-                    //798
-                    sp56 += sp40;
-                    //7ac
-                    sp40 *= 2;
-                    //7b8
-                    if (sp40 >= sp56) {
-                        //7d0
-                        if ((var_s1->attack) && (var_s5->hitPoints < var_s1->attack)) {
-                            //7f8
-                            var_s5->ext.generic.unkB8.entityPtr = var_s1;
-                            //7fc
-                            if (sp58 & 8) {
-                                //810
-                                var_s5->hitFlags = 3;
+        if ((miscVar1 & 1) && (!miscVar2)) {
+            // Note that in this block, iterEnt2 is never advanced, so it's
+            // always the player.
+            iterEnt2 = &PLAYER;
+            scratchpad_1 = (s32*)SP(0);
+            scratchpad_2 = (s32*)SP(0xC0);
+            if (!iterEnt1->unk6D[iterEnt2->enemyId] && (*scratchpad_1 & 1)) {
+                hitboxCheck2 = (u16)*scratchpad_2++ - (u16)xCoord;
+                hitboxCheck1 = hitboxWidth + *scratchpad_2++;
+                hitboxCheck2 += hitboxCheck1;
+                hitboxCheck1 *= 2;
+                if (hitboxCheck1 >= hitboxCheck2) {
+                    hitboxCheck2 = (u16)*scratchpad_2++ - (u16)yCoord2;
+                    hitboxCheck1 = yCoord1 + *scratchpad_2++;
+                    hitboxCheck2 += hitboxCheck1;
+                    hitboxCheck1 *= 2;
+                    if (hitboxCheck1 >= hitboxCheck2) {
+                        if ((iterEnt1->attack) &&
+                            (iterEnt2->hitPoints < iterEnt1->attack)) {
+                            iterEnt2->ext.player.unkB8 = iterEnt1;
+                            if (miscVar1 & 8) {
+                                iterEnt2->hitFlags = 3;
                             } else {
-                                //820
-                                var_s5->hitFlags = 1;
+                                iterEnt2->hitFlags = 1;
                             }
-                            //828
-                            var_s5->unk44 = var_s1->attackElement;
-                            var_s5->hitPoints = var_s1->attack;
+                            iterEnt2->unk44 = iterEnt1->attackElement;
+                            iterEnt2->hitPoints = iterEnt1->attack;
                         }
-                        //838
-                        var_s1->unk44 = var_s5->hitEffect & 0x7F;
-                        var_s7 = 0xFF;
-                        var_s1->hitFlags = 0x80;
+                        iterEnt1->unk44 = iterEnt2->hitEffect & 0x7F;
+                        miscVar2 = 0xFF;
+                        iterEnt1->hitFlags = 0x80;
                     }
                 }
             }
         }
-        //860
-        if (var_s7) {
-            //868
-            if (var_s1->unk5C != NULL) {
-                var_s3 = var_s1->unk5C;
-                var_s3->unk44 = (u16) var_s1->unk44;
-                var_s3->hitFlags = (u8) var_s1->hitFlags;
+        if (miscVar2) {
+            if (iterEnt1->unk5C != NULL) {
+                entFrom5C = iterEnt1->unk5C;
+                entFrom5C->unk44 = (u16)iterEnt1->unk44;
+                entFrom5C->hitFlags = (u8)iterEnt1->hitFlags;
             } else {
-                //894
-                var_s3 = var_s1;
+                entFrom5C = iterEnt1;
             }
-            //898
-            if (!(var_s3->flags & 0x100) && var_s7) {
-                //8b0
-                sp56 = var_s5->hitEffect & 0x7F;
-                //8C4
-                if ((sp56 == 2) || ((sp56 == 6) && (sp58 & 0x20))) {
-                    //900
-                    var_s0 = AllocEntity(&g_Entities[160], &g_Entities[192]);
-                    if (var_s0 != NULL) {
-                        CreateEntityFromEntity(7, var_s1, var_s0);
+            if (!(entFrom5C->flags & 0x100) && miscVar2) {
+                hitboxCheck2 = iterEnt2->hitEffect & 0x7F;
+                if ((hitboxCheck2 == 2) ||
+                    ((hitboxCheck2 == 6) && (miscVar1 & 0x20))) {
+                    otherEntity =
+                        AllocEntity(&g_Entities[160], &g_Entities[192]);
+                    if (otherEntity != NULL) {
+                        // EntitySoulStealOrb
+                        CreateEntityFromEntity(7, iterEnt1, otherEntity);
                     }
                 }
-                //940
-                sp58 = D_80181678[var_s3->enemyId];
-                if (sp58) {
-                    sp58--;
-                    var_s6 = 1 << (sp58 & 7);
-                    g_CastleFlags[(sp58 >> 3) + 0x190] |= var_s6;
+                miscVar1 = D_80181678[entFrom5C->enemyId];
+                if (miscVar1) {
+                    miscVar1--;
+                    miscVar3 = 1 << (miscVar1 & 7);
+                    g_CastleFlags[(miscVar1 >> 3) + 0x190] |= miscVar3;
                 }
-                //9C4
-                if ((g_Status.relics[RELIC_FAERIE_SCROLL] & 2) && !(var_s3->flags & 0x01000000)) {
-                    //9F0
+                if ((g_Status.relics[RELIC_FAERIE_SCROLL] & 2) &&
+                    !(entFrom5C->flags & FLAG_UNK_01000000)) {
                     if (g_unkGraphicsStruct.BottomCornerTextTimer != 0) {
-                        g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
+                        g_api.FreePrimitives(
+                            g_unkGraphicsStruct.BottomCornerTextPrims);
                         g_unkGraphicsStruct.BottomCornerTextTimer = 0;
                     }
-                    //A24
-                    BottomCornerText(g_api.enemyDefs[var_s3->enemyId].name, 0);
-                    var_s3->flags = (u32) (var_s3->flags | 0x01000000);
+                    BottomCornerText(
+                        g_api.enemyDefs[entFrom5C->enemyId].name, 0);
+                    entFrom5C->flags |= FLAG_UNK_01000000;
                 }
-                //A68
-                var_s7 = 0;
-                if ((var_s1->hitboxState & 8) && (var_s5->hitboxState & 4)) {
+                miscVar2 = 0;
+                if ((iterEnt1->hitboxState & 8) &&
+                    (iterEnt2->hitboxState & 4)) {
                     goto block_164;
                 }
-                //A9C
-                if (var_s3->hitPoints) {
-                    //AA8
-                    if (var_s5->attack) {
-                        //AB4
-                        if (!(var_s5->hitboxState & 0x80)) {
-                            //AC8
-                            var_s4 -= 4;
-                            //ACC
-                            sp5C += *var_s4++;
-                            //AF0
-                            var_s4++;
-                            //AF8
-                            sp5A += *var_s4;
-                            //B0C
-                            sp5C /= 2;
-                            sp5A /= 2;
+                if (entFrom5C->hitPoints) {
+                    if (iterEnt2->attack) {
+                        if (!(iterEnt2->hitboxState & 0x80)) {
+                            scratchpad_2 -= 4;
+                            xCoord += *scratchpad_2++;
+                            scratchpad_2++;
+                            yCoord2 += *scratchpad_2;
+                            xCoord /= 2;
+                            yCoord2 /= 2;
                         }
-                        //b58
-                        for(var_s2 = &g_PrimBuf[D_800973F8];var_s2 != NULL; var_s2 = var_s2->next){
-                            //b80
-                            if (var_s2->blendMode == 8) {
-                                var_s2->clut = 0x199;
-                                //b9c
+                        for (prim = &g_PrimBuf[D_800973F8]; prim != NULL;
+                             prim = prim->next) {
+                            if (prim->drawMode == DRAW_HIDE) {
+                                prim->clut = 0x199;
                                 temp_rand = (Random() & 7) - 13;
-                                var_s2->x0 = var_s2->x2 = sp5C + temp_rand - 3;
-                                //bd4
-                                var_s2->x1 = var_s2->x3 = var_s2->x0 + 0x20;
+                                prim->x0 = prim->x2 = xCoord + temp_rand - 3;
+                                prim->x1 = prim->x3 = prim->x0 + 0x20;
                                 temp_rand = (Random() & 7) - 10;
-                                var_s2->y0 = var_s2->y1 = sp5A + temp_rand - 3;
-                                var_s2->y2 = var_s2->y3 = var_s2->y0 + 0x20;
-                                //c3c
-                                var_s2->p1 = 0;
-//Mismatch???
-                                if (var_s5->zPriority > var_s1->zPriority) {
-                                    var_s2->priority = var_s5->zPriority + 1;
+                                prim->y0 = prim->y1 = yCoord2 + temp_rand - 3;
+                                prim->y2 = prim->y3 = prim->y0 + 0x20;
+                                prim->p1 = 0;
+                                if (iterEnt2->zPriority > iterEnt1->zPriority) {
+                                    prim->priority = iterEnt2->zPriority + 1;
                                 } else {
-                                    var_s2->priority = var_s1->zPriority + 1;
+                                    prim->priority = iterEnt1->zPriority + 1;
                                 }
-                                //c8c
-                                var_s2->blendMode = 2U;
+                                prim->drawMode = DRAW_UNK02;
                                 break;
                             }
                         }
                     }
-                    //ca8
-                    if ((var_s5->attack) && (var_s3->hitPoints != 0x7FFF)) {
-                        //cc8
-                        sp58 = g_api.DealDamage(var_s1, var_s5);
-                        if (var_s5->hitboxState == 4) {
-                            sp58 = 0;
+                    if ((iterEnt2->attack) &&
+                        (entFrom5C->hitPoints != 0x7FFF)) {
+                        miscVar1 = g_api.DealDamage(iterEnt1, iterEnt2);
+                        if (iterEnt2->hitboxState == 4) {
+                            miscVar1 = 0;
                         }
-                        if ((g_Status.relics[RELIC_SPIRIT_ORB] & 2) && !(var_s3->flags & 0x04000000) && sp58) {
-                            //d38
-                            var_s0 = AllocEntity(&g_Entities[224], &g_Entities[256]);
-                            if (var_s0 != NULL) {
-                                DestroyEntity(var_s0);
-                                var_s0->entityId = 4;
-                                var_s0->pfnUpdate = EntityDamageDisplay;
-                                var_s0->posX.i.hi = sp5C;
-                                var_s0->posY.i.hi = sp5A;
-                                var_s0->params = sp58;
+                        if ((g_Status.relics[RELIC_SPIRIT_ORB] & 2) &&
+                            !(entFrom5C->flags & FLAG_UNK_04000000) &&
+                            miscVar1) {
+                            otherEntity =
+                                AllocEntity(&g_Entities[224], &g_Entities[256]);
+                            if (otherEntity != NULL) {
+                                DestroyEntity(otherEntity);
+                                otherEntity->entityId = 4;
+                                otherEntity->pfnUpdate = EntityDamageDisplay;
+                                otherEntity->posX.i.hi = xCoord;
+                                otherEntity->posY.i.hi = yCoord2;
+                                otherEntity->params = miscVar1;
                             }
                         }
                     } else {
-                        //da4
-                        sp58 = 0;
+                        miscVar1 = 0;
                     }
-                    if (sp58 != 0xC000) {
-                        //dbc
-                        if (sp58 & 0x8000) {
-                            var_s7 = 9;
+                    if (miscVar1 != 0xC000) {
+                        if (miscVar1 & 0x8000) {
+                            miscVar2 = 9;
                         } else {
-                            var_s6 = (u16) var_s5->attackElement;
-                            if (var_s6 & 0xFFC0) {
-                                //E00
-                                for(var_s8 = 0; var_s8 < 10; var_s8++){
-                                    if (var_s6 & D_801819AC[var_s8]) {
-                                        var_s7 = D_801819C0[var_s8];
+                            miscVar3 = (u16)iterEnt2->attackElement;
+                            // includes all elements 0x40 and up
+                            if (miscVar3 & 0xFFC0) {
+                                for (i = 0; i < 10; i++) {
+                                    if (miscVar3 & D_801819AC[i]) {
+                                        miscVar2 = D_801819C0[i];
                                         break;
                                     }
                                 }
                             }
                         }
                     } else {
-                        //e7c
-                        var_s3->hitFlags |= 0x20;
-                        sp58 = 0;
+                        entFrom5C->hitFlags |= 0x20;
+                        miscVar1 = 0;
                     }
-                    //e8c
-                    if (!sp58) {
+                    if (!miscVar1) {
                         goto unusual_spot;
                     }
-                        //e98
-                        if (sp58 & 0x8000) {
-                            //eac
-                            var_s3->hitPoints += (sp58 & 0x3FFF);
-                            //ec8
-                            var_s6 = g_api.enemyDefs[var_s3 ->enemyId].hitPoints;
-                            if (var_s3->hitPoints > var_s6) {
-                                var_s3->hitPoints = var_s6;
-                            }
-                        } else {
-                            //f18
-                            sp58 &= 0x3FFF;
-                            //f24
-                            if (var_s3->flags & 0x10) {
-                                //f34
-                                //Different on PSP vs PSX
-                                if (g_PlayableCharacter != 0) {
-                                    g_api.PlaySfx(0x705);
-                                } else if (var_s5->hitEffect & 0x80) {
-                                    g_api.PlaySfx(0x62E);
-                                } else {
-                                    g_api.PlaySfx(0x678);
-                                }
-                            }
-                            //fb8
-                            if (var_s3->hitPoints != 0x7FFE) {
-                                //fcc
-                                if (var_s3->hitPoints < (sp58 * 2)) {
-                                    //fec
-                                    var_s3->hitFlags |= 3;
-                                //1000
-                                } else if (var_s3->hitPoints < ((sp58) * 4)) {
-                                    //1020
-                                    var_s3->hitFlags |= 2;
-                                } else {
-                                    //1034
-                                    var_s3->hitFlags |= 1;
-                                }
-                                //1040
-                                var_s3->hitPoints -= sp58;
-                            }
-                            //1054
-                            if ((var_s5->attackElement & 0x40) && (var_s3->hitboxState & 0x10)) {
-                                //107c
-                                var_s0 = AllocEntity(&g_Entities[160], &g_Entities[192]);
-                                if (var_s0 != NULL) {
-                                    CreateEntityFromEntity(0xDU, var_s1, var_s0);
-                                    if (sp5C > var_s1->posX.i.hi) {
-                                        var_s0->params = 1;
-                                    }
-                                    var_s0->posX.i.hi = sp5C;
-                                    var_s0->posY.i.hi = sp5A;
-                                    var_s0->zPriority = 0xC0;
-                                }
+                    if (miscVar1 & 0x8000) {
+                        entFrom5C->hitPoints += (miscVar1 & 0x3FFF);
+                        miscVar3 =
+                            g_api.enemyDefs[entFrom5C->enemyId].hitPoints;
+                        if (entFrom5C->hitPoints > miscVar3) {
+                            entFrom5C->hitPoints = miscVar3;
+                        }
+                    } else {
+                        miscVar1 &= 0x3FFF;
+                        if (entFrom5C->flags & FLAG_UNK_10) {
+                            // Different on PSP vs PSX
+                            if (g_PlayableCharacter != PLAYER_ALUCARD) {
+                                // normally this is Alucard shouting "Dark
+                                // Metamorphosis" but obviously if not playing
+                                // as Alucard, this won't match
+                                g_api.PlaySfx(SFX_RICHTER_ATTACK_HIT);
+                            } else if (iterEnt2->hitEffect & 0x80) {
+                                g_api.PlaySfx(SE_WEAPON_STAB);
+                            } else {
+                                g_api.PlaySfx(SE_WEAPON_WHACK);
                             }
                         }
-                        //10f8
-                        if (var_s3->hitPoints > 0) {
-                            //1108
-                            var_s0 = var_s3;
-                            //110c
-                            var_s6 = var_s5->enemyId;
-                            //1118
-                            do{
-                                var_s0->unk6D[var_s6] = var_s5->nFramesInvincibility;
-                                if (var_s3 < var_s0) {
-                                    var_s0->unk6D[var_s6]++;
-                                }
-                                if (!(var_s1->flags & 0x400000)) {
-                                    var_s0->stunFrames = var_s5->stunFrames;
-                                }
-                                //1164
-                                if ((!var_s0->hitEffect) && !(var_s0->flags & 0xF)) {
-                                    var_s0->hitEffect = var_s0->palette;
-                                }
-                                var_s0->nFramesInvincibility = var_s7;
-                                //118c
-                                var_s0->flags |= 0xF;
-                                //1198
-                                var_s0 = var_s0->unk60;
-                                }while ((var_s0 != NULL) && (var_s0 != var_s3));
-                                //11ac
-                                sp5F = ((u32)var_s3->flags >> 4) & 7 & 0xFF;
-                            continue;
+                        if (entFrom5C->hitPoints != 0x7FFE) {
+                            if (entFrom5C->hitPoints < (miscVar1 * 2)) {
+                                entFrom5C->hitFlags |= 3;
+                            } else if (entFrom5C->hitPoints < ((miscVar1)*4)) {
+                                entFrom5C->hitFlags |= 2;
+                            } else {
+                                entFrom5C->hitFlags |= 1;
+                            }
+                            entFrom5C->hitPoints -= miscVar1;
                         }
+                        if ((iterEnt2->attackElement & ELEMENT_CUT) &&
+                            (entFrom5C->hitboxState & 0x10)) {
+                            otherEntity =
+                                AllocEntity(&g_Entities[160], &g_Entities[192]);
+                            if (otherEntity != NULL) {
+                                // EntityEnemyBlood
+                                CreateEntityFromEntity(
+                                    13, iterEnt1, otherEntity);
+                                if (xCoord > iterEnt1->posX.i.hi) {
+                                    otherEntity->params = 1;
+                                }
+                                otherEntity->posX.i.hi = xCoord;
+                                otherEntity->posY.i.hi = yCoord2;
+                                otherEntity->zPriority = 192;
+                            }
+                        }
+                    }
+                    if (entFrom5C->hitPoints > 0) {
+                        otherEntity = entFrom5C;
+                        miscVar3 = iterEnt2->enemyId;
+                        do {
+                            otherEntity->unk6D[miscVar3] =
+                                iterEnt2->nFramesInvincibility;
+                            if (entFrom5C < otherEntity) {
+                                otherEntity->unk6D[miscVar3]++;
+                            }
+                            if (!(iterEnt1->flags & FLAG_UNK_400000)) {
+                                otherEntity->stunFrames = iterEnt2->stunFrames;
+                            }
+                            if ((!otherEntity->hitEffect) &&
+                                !(otherEntity->flags & 0xF)) {
+                                otherEntity->hitEffect = otherEntity->palette;
+                            }
+                            otherEntity->nFramesInvincibility = miscVar2;
+                            otherEntity->flags |= 0xF;
+                            otherEntity = otherEntity->unk60;
+                        } while ((otherEntity != NULL) &&
+                                 (otherEntity != entFrom5C));
+                        // I don't understand this; we write to a spot but we
+                        // never reference it again.
+                        uselessVar = ((u32)entFrom5C->flags >> 4) & 7 & 0xFF;
+                        continue;
+                    }
                 }
-block_164:
-                //11cc
-                PreventEntityFromRespawning(var_s3);
-                sp3C = &g_api.enemyDefs[var_s3->enemyId];
-                //11fc
-                if (!(var_s3->hitFlags & 0x80)) {
-                    //1210
+            block_164:
+                PreventEntityFromRespawning(entFrom5C);
+                sp3C = &g_api.enemyDefs[entFrom5C->enemyId];
+                if (!(entFrom5C->hitFlags & 0x80)) {
                     g_api.func_800FE044(sp3C->exp, sp3C->level);
-                    if ((var_s3->flags & 0x1000) && (g_Status.killCount < 0xF423F)) {
+                    if ((entFrom5C->flags & FLAG_UNK_1000) &&
+                        (g_Status.killCount < 999999)) {
                         g_Status.killCount++;
                     }
                 }
-                //1280
-                var_s6 = var_s3->flags & 0xC00;
-                if (var_s6) {
-                    //1298
-                    if ((rand() & 0xFF) < g_api.func_800FF460(D_80181998[var_s6 >> 0xA])) {
-                        //12ec
-                        var_s0 = AllocEntity(&g_Entities[160], &g_Entities[192]);
-                        //130c
-                        sp58 = 0;
-                        //1310
-                        if (var_s0 != NULL) {
-                            //1318
-                            if (sp56 == 5) {
-                                //132c
-                                sp4C = &D_80181A0C;
-                                var_s6 = rand() & 0xFFF;
-                                //1350
-                                while(1){
-                                    if (*sp4C++ >= var_s6 ) {
-                                        var_s6 = *sp4C;
+                miscVar3 = entFrom5C->flags & (FLAG_UNK_800 | FLAG_UNK_400);
+                if (miscVar3) {
+                    if ((rand() & 0xFF) <
+                        g_api.func_800FF460(D_80181998[miscVar3 >> 0xA])) {
+                        otherEntity =
+                            AllocEntity(&g_Entities[160], &g_Entities[192]);
+                        miscVar1 = 0;
+                        if (otherEntity != NULL) {
+                            if (hitboxCheck2 == 5) {
+                                // This little block is weird, especially since
+                                // the D_80181A0C is not any obvious number
+                                // pattern.
+                                randCompare = &D_80181A0C;
+                                miscVar3 = rand() & 0xFFF;
+                                while (1) {
+                                    if (*randCompare++ >= miscVar3) {
+                                        miscVar3 = *randCompare;
                                         break;
                                     }
-                                    sp4C++;
+                                    randCompare++;
                                 }
-                                
+
                             } else {
-                                //139c
-                                var_s6 = g_api.func_800FF494(sp3C);
-                                //13c0
-                                if (var_s6 & 0x40) {
-                                    var_s6 = sp3C->rareItemId;
-                                    //13dc
-                                    //Paranthropus check: Drops turquoise if game not beaten. Otherwise ring of Varda
-                                    if ((var_s6 == 0x173) && (!g_IsTimeAttackUnlocked)) {
-                                        var_s6 = 0x16A;
+                                miscVar3 = g_api.func_800FF494(sp3C);
+                                if (miscVar3 & 0x40) {
+                                    miscVar3 = sp3C->rareItemId;
+                                    // Paranthropus check: Drops turquoise if
+                                    // game not beaten. Otherwise ring of Varda
+                                    if ((miscVar3 == 0x173) &&
+                                        (!g_IsTimeAttackUnlocked)) {
+                                        miscVar3 = 0x16A;
                                     } else {
-                                        //140c
-                                        sp58 = D_80181678[var_s3->enemyId];
+                                        miscVar1 =
+                                            D_80181678[entFrom5C->enemyId];
                                     }
-                                //1434
-                                } else if (var_s6 & 0x20) {
-                                    var_s6 = sp3C->uncommonItemId;
+                                } else if (miscVar3 & 0x20) {
+                                    miscVar3 = sp3C->uncommonItemId;
                                 } else {
-                                    //1458
-                                    var_s6 = D_801819CC[var_s6];
+                                    miscVar3 = D_801819CC[miscVar3];
                                 }
                             }
-                            //1474
-                            if (var_s6 >= 0x80) {
-                                var_s6 -= 0x80;
-                                CreateEntityFromEntity(10, var_s1, var_s0);
+                            if (miscVar3 >= 0x80) {
+                                miscVar3 -= 0x80;
+                                // Create an EntityEquipItemDrop
+                                CreateEntityFromEntity(
+                                    10, iterEnt1, otherEntity);
                             } else {
-                                CreateEntityFromEntity(3, var_s1, var_s0);
+                                // Create an EntityPrizeDrop
+                                CreateEntityFromEntity(
+                                    3, iterEnt1, otherEntity);
                             }
-                            //14c4
-                            var_s0->ext.relicOrb.yFloatSpeed = sp58;
-                            var_s0->params = var_s6;
-                            var_s0->velocityY = -0x38000;
+                            otherEntity->ext.drop.unk94 = miscVar1;
+                            otherEntity->params = miscVar3;
+                            // item pops up in the air a bit when spawned
+                            otherEntity->velocityY = FIX(-3.5);
                         }
                     }
                 }
-                //14e0
-                var_s0 = var_s3;
-                do{
-                    var_s0->flags |= 0x10C100;
-                    var_s0->flags &= 0xDFFFFFFF;
-                    //150c
-                    if (!var_s0->hitEffect) {
-                        var_s0->hitEffect = var_s0->palette;
+                otherEntity = entFrom5C;
+                do {
+                    otherEntity->flags |= (FLAG_UNK_100000 + FLAG_UNK_8000 +
+                                           FLAG_UNK_4000 + FLAG_DEAD);
+                    otherEntity->flags &= ~FLAG_UNK_20000000;
+                    if (!otherEntity->hitEffect) {
+                        otherEntity->hitEffect = otherEntity->palette;
                     }
-                    var_s0->nFramesInvincibility = var_s7;
-                    var_s0->flags |= 0xF;
-                    var_s0 = var_s0->unk60;
-                //1538
-                }while(var_s0 != NULL && var_s0 != var_s3);
+                    otherEntity->nFramesInvincibility = miscVar2;
+                    otherEntity->flags |= 0xF;
+                    otherEntity = otherEntity->unk60;
+                } while (otherEntity != NULL && otherEntity != entFrom5C);
                 continue;
-                
-                unusual_spot:
-                //1564
-                if (!(var_s3->hitFlags & 0xF)) {
-                    var_s3->hitFlags |= 0x10;
+            // this spot is unusual because of where it appears in the code. I
+            // would have expected this to be included in the spot with the
+            // goto, since there is no way to reach this without using that one
+            // single goto.
+            unusual_spot:
+                if (!(entFrom5C->hitFlags & 0xF)) {
+                    entFrom5C->hitFlags |= 0x10;
                 }
-                //1570
-                if ((var_s3->flags & 0x10) && (var_s5->attack)) {
-                    if (var_s5->hitEffect & 0x80) {
-                        g_api.PlaySfx(0x611);
+                if ((entFrom5C->flags & 0x10) && (iterEnt2->attack)) {
+                    if (iterEnt2->hitEffect & 0x80) {
+                        g_api.PlaySfx(SFX_CLANK);
                     } else {
-                        g_api.PlaySfx(0x611);
+                        g_api.PlaySfx(SFX_CLANK);
                     }
                 }
-                //15d8
-                var_s0 = var_s3;
-                var_s6 = var_s5->enemyId;
-                do{
-                    if (var_s1->hitPoints == 0x7FFF) {
-                        if (var_s0->hitPoints == 0x7FFF) {
-                            var_s0->unk6D[var_s6] = var_s5->nFramesInvincibility;
-                            if (var_s3 < var_s0) {
-                                //1630
-                                var_s0->unk6D[var_s6]++;
+                otherEntity = entFrom5C;
+                miscVar3 = iterEnt2->enemyId;
+                do {
+                    if (iterEnt1->hitPoints == 0x7FFF) {
+                        if (otherEntity->hitPoints == 0x7FFF) {
+                            otherEntity->unk6D[miscVar3] =
+                                iterEnt2->nFramesInvincibility;
+                            if (entFrom5C < otherEntity) {
+                                otherEntity->unk6D[miscVar3]++;
                             }
                         }
                     } else {
-                        //1644
-                        var_s0->unk6D[var_s6] = var_s5->nFramesInvincibility;
-                        if (var_s3 < var_s0) {
-                            var_s0->unk6D[var_s6]++;
+                        otherEntity->unk6D[miscVar3] =
+                            iterEnt2->nFramesInvincibility;
+                        if (entFrom5C < otherEntity) {
+                            otherEntity->unk6D[miscVar3]++;
                         }
                     }
-                    var_s0 = var_s0->unk60;
-                } while((var_s0 != NULL) && (var_s0 != var_s3));
+                    otherEntity = otherEntity->unk60;
+                } while ((otherEntity != NULL) && (otherEntity != entFrom5C));
             }
         }
     }
-    //16a4
-    for(var_s2 = &g_PrimBuf[D_800973F8]; var_s2 != NULL; var_s2 = var_s2->next){
-        //16cc
-        if ((var_s2->drawMode) != 8) {
-            var_s7 = var_s2->p1;
-            var_s2->u0 = var_s2->u2 = D_8018199C[var_s7];
-            var_s2->u1 = var_s2->u3 = var_s2->u0 + 0x20;
-            var_s2->v0 = var_s2->v1 = D_801819A4[var_s7];
-            var_s2->v2 = var_s2->v3 = var_s2->v0 + 0x20;
-            var_s7++;
-            if (var_s7 >= 7) {
-                var_s2->drawMode = 8U;
+    for (prim = &g_PrimBuf[D_800973F8]; prim != NULL; prim = prim->next) {
+        if ((prim->drawMode) != 8) {
+            miscVar2 = prim->p1;
+            prim->u0 = prim->u2 = D_8018199C[miscVar2];
+            prim->u1 = prim->u3 = prim->u0 + 0x20;
+            prim->v0 = prim->v1 = D_801819A4[miscVar2];
+            prim->v2 = prim->v3 = prim->v0 + 0x20;
+            miscVar2++;
+            if (miscVar2 >= 7) {
+                prim->drawMode = DRAW_HIDE;
             } else {
-                var_s2->p1 = var_s7;
+                prim->p1 = miscVar2;
             }
         }
     }
@@ -606,31 +519,31 @@ block_164:
 
 u8 func_801BC6BC(u8 frames[], Entity* self, u8 arg2) {
     u16 animFrameStart = self->animFrameIdx * 2;
-    u8* var_s1 = &frames[animFrameStart];
+    u8* iterEnt1 = &frames[animFrameStart];
     s16 var_a1 = 0;
 
     if (self->animFrameDuration == 0) {
-        if (*var_s1 != 0) {
-            if (*var_s1 == 0xFF) {
+        if (*iterEnt1 != 0) {
+            if (*iterEnt1 == 0xFF) {
                 return 0;
             }
-            self->animFrameDuration = *var_s1++ + (u8)self->ext.stub[0x3F];
-            self->animCurFrame = *var_s1++;
+            self->animFrameDuration = *iterEnt1++ + (u8)self->ext.stub[0x3F];
+            self->animCurFrame = *iterEnt1++;
             self->animFrameIdx++;
             var_a1 = 128;
         } else {
-            var_s1 = frames;
+            iterEnt1 = frames;
             self->animFrameIdx = 0;
             self->animFrameDuration = 0;
             self->ext.stub[0x3F] = (arg2 * Random()) >> 8;
-            self->animFrameDuration = *var_s1++ + (u8)self->ext.stub[0x3F];
-            self->animCurFrame = *var_s1;
+            self->animFrameDuration = *iterEnt1++ + (u8)self->ext.stub[0x3F];
+            self->animCurFrame = *iterEnt1;
             self->animFrameIdx++;
             return 0;
         }
     }
     self->animFrameDuration--;
-    self->animCurFrame = var_s1[-1];
+    self->animCurFrame = iterEnt1[-1];
     var_a1 |= 1;
     return var_a1;
 }

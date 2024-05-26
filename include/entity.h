@@ -536,6 +536,8 @@ typedef struct {
     Primitive* prim;
     char pad[0x2C];
     u8 unkAC;
+    char pad2[0x8];
+    struct Entity* unkB8;
 } ET_Player;
 
 typedef struct {
@@ -924,6 +926,13 @@ typedef struct {
     s16 unk84;
 } ET_DracFinal;
 
+// To be used for EntityEquipItemDrop and/or EntityPrizeDrop, when they are
+// moved off of Generic.
+typedef struct {
+    byte pad[0x18];
+    s32 unk94;
+} ET_Drop;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1012,4 +1021,5 @@ typedef union { // offset=0x7C
     ET_Player player;
     ET_801CC820 et_801CC820;
     ET_801AF774 et_801AF774;
+    ET_Drop drop;
 } Ext;

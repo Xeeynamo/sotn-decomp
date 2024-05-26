@@ -185,6 +185,7 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define NA_SE_EV_HEAVY_BLOCK_DRAG 0x609
 #define NA_SE_EN_BLOOD_ZOMBIE_SWORD_SLASH 0x60B
 #define SFX_SUBWPN_THROW 0x60C // Throwing rebound stone, vibhuti, others?
+#define SFX_CLANK 0x611 // when attacking invulnerable enemy (like Stone Skull)
 #define NA_SE_AL_BACKSLIDE 0x617
 #define NA_SE_EV_VASE_BREAK 0x61D
 #define NA_SE_PL_BT_ECHO 0x61F
@@ -242,6 +243,8 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define NA_SE_VO_AL_DARK_METAMORPHOSIS 0x6F3
 #define NA_SE_VO_AL_SOUL_STEAL 0x6F4
 #define NA_SE_VO_AL_DYING 0x6F6
+#define SFX_RICHTER_ATTACK_HIT 0x705
+#define ALUCARD_DARK_METAMORPHOSIS 0x705
 #define NA_SE_VO_WO_BARK 0x706
 #define NA_SE_EN_SLOGRA_HISSING 0x709
 #define NA_SE_EN_GAIBON_SCREAM 0x70B
@@ -309,6 +312,7 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SE_WEAPON_STAB 0x62E
 #define SE_DOOR_OPEN 0x642
 #define SE_DOOR_CLOSE 0x64F
+#define SE_WEAPON_WHACK 0x678
 #define SE_BOSS_DEFEATED 0x7D2
 
 // UI SOUNDS

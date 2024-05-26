@@ -121,7 +121,7 @@ extern Unkstruct_80180FE0 D_8018129C[];
 
 // *** Merman properties START ***
 
-extern u16 D_80181230[];     // pos TBL
+extern u16 D_80181230[]; // pos TBL
 extern u16 D_80181678[];
 extern u8 D_80181998[];
 extern u8 D_8018199C[];
