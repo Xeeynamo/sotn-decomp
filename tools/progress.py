@@ -74,6 +74,7 @@ class DecompProgressStats:
     def get_nonmatchings_path(self, asm_path: Path) -> Path:
         """
         Returns one of the following valid paths:
+        `asm/us/main/nonmatchings`
         `asm/us/st/wrp/nonmatchings`
         `asm/pspeu/st/wrp_psp/psp/wrp_psp`
         """
@@ -87,6 +88,11 @@ class DecompProgressStats:
         nonmatchings_subdir = os.path.join(nonmatchings, os.path.basename(asm_path))
         if os.path.exists(nonmatchings_subdir):
             nonmatchings = nonmatchings_subdir
+
+        # hack to return 'asm/us/main/nonmatchings' instead of 'asm/us/main/nonmatchings/main'
+        if nonmatchings.endswith("/main"):
+            nonmatchings = nonmatchings[:-5]
+
         return Path(nonmatchings)
 
     def __init__(self, module_name: str, path: str):
