@@ -57,7 +57,7 @@ class DecompProgressStats:
     code_matching_prev: int
     functions_prev: int
 
-    def get_asm_path(self, ovl_path):
+    def get_asm_path(self, ovl_path) -> Path:
         """
         Returns one of the following valid paths:
         `asm/us/st/wrp`
@@ -65,13 +65,13 @@ class DecompProgressStats:
         """
         asm_path = f"asm/{args.version}/{ovl_path}"
         if os.path.exists(asm_path):
-            return asm_path
+            return Path(asm_path)
         asm_path_psp = f"asm/{args.version}/{ovl_path}_psp"
         if os.path.exists(asm_path_psp):
-            return asm_path_psp
+            return Path(asm_path_psp)
         exiterr(f"path '{asm_path}' or '{asm_path_psp}' not found")
 
-    def get_nonmatchings_path(self, asm_path):
+    def get_nonmatchings_path(self, asm_path: Path) -> Path:
         """
         Returns one of the following valid paths:
         `asm/us/st/wrp/nonmatchings`
@@ -87,6 +87,7 @@ class DecompProgressStats:
         nonmatchings_subdir = os.path.join(nonmatchings, os.path.basename(asm_path))
         if os.path.exists(nonmatchings_subdir):
             nonmatchings = nonmatchings_subdir
+        return Path(nonmatchings)
 
     def __init__(self, module_name: str, path: str):
         self.name = module_name
