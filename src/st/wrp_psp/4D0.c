@@ -25,7 +25,20 @@ void FindFirstEntityToTheRight(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", func_8018A118);
+#define LAYOUT_OBJ_START 0xfffe
+#define LAYOUT_OBJ_END 0xffff
+
+void FindFirstEntityToTheLeft(s16 posX) {
+    while (true) {
+        LayoutEntity* layoutObject = g_LayoutObjHorizontal;
+        if (layoutObject->posX != LAYOUT_OBJ_END &&
+            (layoutObject->posX <= posX ||
+             layoutObject->posX == LAYOUT_OBJ_START)) {
+            break;
+        }
+        g_LayoutObjHorizontal--;
+    }
+}
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", func_8018A170);
 
