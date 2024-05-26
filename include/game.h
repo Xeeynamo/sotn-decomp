@@ -928,7 +928,7 @@ typedef struct {
     /* 80097BE8 */ u32 level;
     /* 80097BEC */ u32 exp;
     /* 80097BF0 */ u32 gold;
-    /* 80097BF4 */ u32 killCount;
+    /* 80097BF4 */ s32 killCount;
     /* 80097BF8 */ u32 D_80097BF8;
     /* 80097BFC */ u32 subWeapon;
     /* 80097C00 */ u32 equipment[7];
@@ -1149,10 +1149,10 @@ typedef struct {
     /* 0x10 */ u16 strengths;
     /* 0x12 */ u16 immunes;
     /* 0x14 */ u16 absorbs;
-    /* 0x16 */ s16 level;
-    /* 0x18 */ s16 exp;
-    /* 0x1A */ s16 rareItemId;
-    /* 0x1C */ s16 uncommonItemId;
+    /* 0x16 */ u16 level;
+    /* 0x18 */ u16 exp;
+    /* 0x1A */ u16 rareItemId;
+    /* 0x1C */ u16 uncommonItemId;
     /* 0x1E */ u16 rareItemDropRate;
     /* 0x20 */ u16 uncommonItemDropRate;
     /* 0x22 */ u8 hitboxWidth;

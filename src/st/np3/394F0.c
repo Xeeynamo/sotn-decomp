@@ -259,9 +259,9 @@ void TestCollisions(void) {
                 //9C4
                 if ((g_Status.relics[RELIC_FAERIE_SCROLL] & 2) && !(var_s3->flags & 0x01000000)) {
                     //9F0
-                    if (g_BottomCornerTextTimer != 0) {
-                        g_api.FreePrimitives(g_BottomCornerTextPrims);
-                        g_BottomCornerTextTimer = 0;
+                    if (g_unkGraphicsStruct.BottomCornerTextTimer != 0) {
+                        g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
+                        g_unkGraphicsStruct.BottomCornerTextTimer = 0;
                     }
                     //A24
                     BottomCornerText(g_api.enemyDefs[var_s3->enemyId].name, 0);
