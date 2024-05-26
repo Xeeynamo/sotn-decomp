@@ -1,8 +1,143 @@
 #include "wrp.h"
 
+extern LayoutEntity* D_80180310[];
+extern u16 D_80180DC4[];
 extern u16 D_80180DF4[];
+extern u8* D_80180E08[];
+extern s8 c_HeartPrizes[];
 extern u8* D_80180E58[];
 extern u16 D_80180EB8[];
+extern s32 c_GoldPrizes[];
+extern u16 g_ItemIconSlots[];
+extern u16 UNK_Invincibility0[];
+
+void func_8018CAB0(void) {
+    s32 temp_v1;
+    Entity* entity;
+
+    entity = g_CurrentEntity;
+    if (entity->velocityY >= 0) {
+        temp_v1 =
+            entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
+        entity->ext.generic.unk84.unk = temp_v1;
+        entity->velocityX = temp_v1;
+        if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
+            entity->ext.generic.unk88.S16.unk0 =
+                -entity->ext.generic.unk88.S16.unk0;
+        }
+        entity = g_CurrentEntity;
+    }
+
+    if (entity->velocityY < FIX(0.25)) {
+        entity->velocityY += FIX(0.125);
+    }
+}
+
+void func_8018CB34(u16 arg0) {
+    Collider collider;
+
+    if (g_CurrentEntity->velocityX < 0) {
+        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                             g_CurrentEntity->posY.i.hi - 7, &collider, 0);
+        if (collider.effects & EFFECT_NOTHROUGH) {
+            g_CurrentEntity->velocityY = 0;
+        }
+    }
+
+    g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                         g_CurrentEntity->posY.i.hi + 7, &collider, 0);
+
+    if (arg0) {
+        if (!(collider.effects & EFFECT_NOTHROUGH)) {
+            MoveEntity();
+            FallEntity();
+            return;
+        }
+
+        g_CurrentEntity->velocityX = 0;
+        g_CurrentEntity->velocityY = 0;
+
+        if (collider.effects & EFFECT_QUICKSAND) {
+            g_CurrentEntity->posY.val += FIX(0.125);
+            return;
+        }
+
+        g_CurrentEntity->posY.i.hi += collider.unk18;
+        return;
+    }
+
+    if (!(collider.effects & EFFECT_NOTHROUGH)) {
+        MoveEntity();
+        func_8018CAB0();
+    }
+}
+
+#include "../collect_heart.h"
+
+void CollectGold(u16 goldSize) {
+    s32 *gold, *unk;
+    u16 goldSizeIndex;
+
+    g_api.PlaySfx(NA_SE_PL_COLLECT_GOLD);
+    gold = &g_Status.gold;
+    goldSizeIndex = goldSize - 2;
+    *gold += c_GoldPrizes[goldSizeIndex];
+    if (*gold > MAX_GOLD) {
+        *gold = MAX_GOLD;
+    }
+
+    unk = &g_unkGraphicsStruct.BottomCornerTextTimer;
+    if (*unk) {
+        g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
+        *unk = 0;
+    }
+
+    BottomCornerText(D_80180E08[goldSizeIndex], 1);
+    DestroyEntity(g_CurrentEntity);
+}
+
+void CollectSubweapon(u16 subWeaponIdx) {
+    Entity* player = &PLAYER;
+    u16 subWeapon;
+
+    g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+    subWeapon = g_Status.subWeapon;
+    g_Status.subWeapon = D_80180DC4[subWeaponIdx];
+
+    if (subWeapon == g_Status.subWeapon) {
+        subWeapon = 1;
+        g_CurrentEntity->unk6D[0] = 0x10;
+    } else {
+        subWeapon = D_80180DF4[subWeapon];
+        g_CurrentEntity->unk6D[0] = 0x60;
+    }
+
+    if (subWeapon != 0) {
+        g_CurrentEntity->params = subWeapon;
+        g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
+        SetStep(7);
+        g_CurrentEntity->velocityY = FIX(-2.5);
+        g_CurrentEntity->animCurFrame = 0;
+        g_CurrentEntity->ext.generic.unk88.S16.unk2 = 5;
+        if (player->facingLeft != 1) {
+            g_CurrentEntity->velocityX = FIX(-2);
+            return;
+        }
+        g_CurrentEntity->velocityX = FIX(2);
+        return;
+    }
+    DestroyEntity(g_CurrentEntity);
+}
+
+#include "../collect_heart_vessel.h"
+
+void CollectLifeVessel(void) {
+    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_api.func_800FE044(LIFE_VESSEL_INCREASE, 0x8000);
+    DestroyEntity(g_CurrentEntity);
+}
+
+void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
 void EntityPrizeDrop(Entity* self) {
     Collider collider;
@@ -442,5 +577,3 @@ void EntityEquipItemDrop(Entity* self) {
         BlinkItem(self, self->ext.equipItemDrop.timer);
     }
 }
-
-#include "../blit_char.h"
