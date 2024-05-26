@@ -1023,7 +1023,7 @@ INCLUDE_ASM("dra/nonmatchings/7E4BC", func_80123B40);
 void func_80123F78(Entity* entity) {
     PlayerDraw* plDraw = &g_PlayerDraw[13];
 
-    if (D_800973FC == 0) {
+    if (g_unkGraphicsStruct.D_800973FC == 0) {
         plDraw->enableColorBlend = 0;
         DestroyEntity(entity);
         return;

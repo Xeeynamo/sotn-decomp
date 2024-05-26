@@ -66,7 +66,7 @@ void Update(void) {
                     ((u16)(entity->posY.i.hi + 64) <= 352)) {
                 if (!entity->stunFrames ||
                     (entity->stunFrames--, unk34 & 0x100000)) {
-                    if (!D_800973FC || unk34 & 0x2100 ||
+                    if (!g_unkGraphicsStruct.D_800973FC || unk34 & 0x2100 ||
                         (unk34 & 0x200 && !(g_GameTimer & 3))) {
                         g_CurrentEntity = entity;
                         entity->pfnUpdate(entity);

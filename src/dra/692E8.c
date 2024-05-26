@@ -309,13 +309,13 @@ void EntityAlucard(void) {
     if (D_800ACE44 != 0) {
         D_800ACE44--;
     }
-    if (D_800973FC != 0 && D_80137FB8 == 0) {
+    if (g_unkGraphicsStruct.D_800973FC != 0 && D_80137FB8 == 0) {
         CreateEntFactoryFromEntity(g_Entities, 0x78U, 0);
     }
     var_fp = 0;
     var_s6 = 0;
     g_Player.unk70 = g_Player.unk18 = PLAYER.drawFlags = g_Player.unk4C = 0;
-    D_80137FB8 = D_800973FC;
+    D_80137FB8 = g_unkGraphicsStruct.D_800973FC;
     var_s7 = 0;
     g_Player.unk72 = func_80110394();
     if (!(g_Player.unk0C & 0x40000)) {
@@ -931,7 +931,7 @@ block_160:
         var_s0 |= 0x02000000;
     }
     g_Player.unk0C = var_s0;
-    if ((var_s0 & 0x08000000) || (D_800973FC != 0)) {
+    if ((var_s0 & 0x08000000) || (g_unkGraphicsStruct.D_800973FC != 0)) {
         func_8010DFF0(1, 1);
     }
     if (var_s0 & 0x10000000) {
