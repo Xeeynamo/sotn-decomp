@@ -1174,7 +1174,7 @@ void func_80115BB0(void) {
     PLAYER.velocityX = 0;
     PLAYER.animFrameDuration = 4;
 
-    if (D_80097420[0] == 0) {
+    if (g_unkGraphicsStruct.unk20 == 0) {
         if (g_Player.pl_vram_flag & 1) {
             func_8010E570(0);
         } else {

@@ -711,7 +711,7 @@ s32 func_8010EB5C(void) {
     if (subWpnId == 0) {
         return 1;
     }
-    if (subWpnId == 6 && D_80097400[0] != 0) {
+    if (subWpnId == 6 && g_unkGraphicsStruct.unk0 != 0) {
         return 4;
     }
     if (func_8010EADC(subWpnId, subWpn.unk6) < 0) {

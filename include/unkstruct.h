@@ -179,9 +179,18 @@ typedef struct {
 } unk_800B08CC; // size = 0xC
 
 typedef struct {
-    Multi g_zEntityCenter;
-    byte pad[0x1A];
-    s32 D_8009742C[8];
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s32 unk4;
+    /* 0x08 */ Multi g_zEntityCenter;
+    /* 0x0C */ Multi unkC; // multi for dre/func_801961DC
+    /* 0x10 */ s32 BottomCornerTextTimer;
+    /* 0x14 */ s32 BottomCornerTextPrims;
+    /* 0x18 */ s32 unk18;
+    /* 0x1C */ s32 unk1C;
+    /* 0x20 */ s32 unk20;
+    /* 0x24 */ s32 unk24;
+    /* 0x28 */ s32 D_80097428[8]; // size must be 8 for the loop in
+                                  // func_800F298C
 } unkGraphicsStruct;
 
 typedef struct {

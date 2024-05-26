@@ -10,10 +10,10 @@ void Update(void) {
         }
     }
 
-    unk = &g_BottomCornerTextTimer;
+    unk = &g_unkGraphicsStruct.BottomCornerTextTimer;
     if (*unk) {
         if (!--*unk) {
-            g_api.FreePrimitives(g_BottomCornerTextPrims);
+            g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
         }
     }
 
