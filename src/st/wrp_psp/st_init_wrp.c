@@ -1,4 +1,4 @@
-#include <game.h>
+#include "../wrp/wrp.h"
 
 // entity table to allocate new entities
 extern PfnEntityUpdate* D_08C6BC30;

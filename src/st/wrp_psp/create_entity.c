@@ -1,5 +1,13 @@
 #include <game.h>
 
+// *** TODO ***
+// REMOVE THIS WHEN DOING #include <stage.h>
+#if defined(VERSION_PSP)
+extern PfnEntityUpdate* PfnEntityUpdates;
+#else
+extern PfnEntityUpdate PfnEntityUpdates[];
+#endif
+
 // redeclaring for the moment due to header conflict with Random() definition
 typedef struct {
     /* 0x0 */ u16 posX;
@@ -8,6 +16,10 @@ typedef struct {
     /* 0x6 */ u16 entityRoomIndex;
     /* 0x8 */ u16 params;
 } LayoutEntity; // size = 0xA
+
+#include "../create_entity_from_layout.h"
+
+#include "../create_entity_in_range.h"
 
 extern LayoutEntity* g_LayoutObjHorizontal;
 extern LayoutEntity* g_LayoutObjVertical;
@@ -39,9 +51,11 @@ void FindFirstEntityToTheLeft(s16 posX) {
     }
 }
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", CreateEntitiesToTheRight);
+void CreateEntitiesToTheRight(s16);
+INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/create_entity", CreateEntitiesToTheRight);
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", CreateEntitiesToTheLeft);
+void CreateEntitiesToTheLeft(s16);
+INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/create_entity", CreateEntitiesToTheLeft);
 
 void FindFirstEntityAbove(s16 arg0) {
     while (true) {
@@ -64,16 +78,13 @@ void FindFirstEntityBelow(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", CreateEntitiesAbove);
-
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", CreateEntitiesBelow);
-
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", InitRoomEntities);
-
-void CreateEntitiesToTheRight(s16);
-void CreateEntitiesToTheLeft(s16);
 void CreateEntitiesAbove(s16);
+INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/create_entity", CreateEntitiesAbove);
+
 void CreateEntitiesBelow(s16);
+INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/create_entity", CreateEntitiesBelow);
+
+INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/create_entity", InitRoomEntities);
 
 void UpdateRoomPosition() {
     Tilemap* tilemap = &g_Tilemap;
@@ -116,15 +127,4 @@ void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity) {
     entity->pfnUpdate = PfnEntityUpdates[entityId - 1];
     entity->posX.i.hi = source->posX.i.hi;
     entity->posY.i.hi = source->posY.i.hi;
-}
-
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", EntityStageNamePopup);
-
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", EntityIsNearPlayer);
-
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", EntityRedDoor);
-
-u8 Random(void) {
-    g_randomNext = (g_randomNext * 0x01010101) + 1;
-    return g_randomNext >> 0x18;
 }
