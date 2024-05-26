@@ -54,7 +54,16 @@ void FindFirstEntityAbove(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", func_8018A3CC);
+void FindFirstEntityBelow(s16 arg0) {
+    while (true) {
+        u16* ptr = &g_LayoutObjVertical->posY;
+
+        if ((*ptr != 0xFFFF) && ((*ptr <= arg0) || !(*ptr != 0xFFFE))) {
+            break;
+        }
+        g_LayoutObjVertical--;
+    }
+}
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", func_8018A424);
 
