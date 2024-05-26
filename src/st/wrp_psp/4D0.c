@@ -51,9 +51,15 @@ INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", InitRoomEntities);
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", func_8018A7AC);
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", CreateEntityFromCurrentEntity);
-
 extern PfnEntityUpdate* PfnEntityUpdates;
+void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity) {
+    DestroyEntity(entity);
+    entity->entityId = entityId;
+    entity->pfnUpdate = PfnEntityUpdates[entityId - 1];
+    entity->posX.i.hi = g_CurrentEntity->posX.i.hi;
+    entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
+}
+
 void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity) {
     DestroyEntity(entity);
     entity->entityId = entityId;
