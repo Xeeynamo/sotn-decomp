@@ -69,6 +69,7 @@ func_80186FD0 = 0x092449b8;
 func_801870B0 = 0x09244ac8;
 EntityWarpRoom = 0x09244d28;
 EntityWarpSmallRocks = 0x09245c50;
+c_HeartPrizes = 0x09246500;
 g_eBreakableInit = 0x09246E90;
 D_80180488 = 0x09246EE0;
 g_eInitGeneric2 = 0x09246EF0;

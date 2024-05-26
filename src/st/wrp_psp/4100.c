@@ -1,4 +1,6 @@
 #include "common.h"
+#include "game.h"
+#include "sfx.h"
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4100", EntitySoulStealOrb);
 
@@ -33,4 +35,16 @@ INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4100", func_8018CAB0);
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4100", func_8018CB34);
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4100", CollectHeart);
+extern s8 c_HeartPrizes[];
+void CollectHeart(u16 arg0) {
+    s32* hearts;
+
+    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_Status.hearts += c_HeartPrizes[arg0];
+
+    if (g_Status.hearts > g_Status.heartsMax) {
+        g_Status.hearts = g_Status.heartsMax;
+    }
+
+    DestroyEntity(g_CurrentEntity);
+}
