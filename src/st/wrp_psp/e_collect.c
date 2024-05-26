@@ -34,7 +34,25 @@ void CollectHeart(u16 arg0) {
     DestroyEntity(g_CurrentEntity);
 }
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_collect", CollectGold);
+extern u8* D_80180E08[];
+extern s32 c_GoldPrizes[];
+
+void CollectGold(u16 goldSize) {
+    g_api.PlaySfx(NA_SE_PL_COLLECT_GOLD);
+    goldSize -= 2;
+    g_Status.gold += c_GoldPrizes[goldSize];
+    if ((s32)g_Status.gold > MAX_GOLD) {
+        g_Status.gold = MAX_GOLD;
+    }
+
+    if (g_unkGraphicsStruct.BottomCornerTextTimer) {
+        g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
+        g_unkGraphicsStruct.BottomCornerTextTimer = 0;
+    }
+
+    BottomCornerText(D_80180E08[goldSize], 1);
+    DestroyEntity(g_CurrentEntity);
+}
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_collect", CollectSubweapon);
 

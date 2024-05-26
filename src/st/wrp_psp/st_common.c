@@ -101,4 +101,4 @@ void EntityDummy(Entity* arg0) {
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/st_common", func_8018C55C);
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/st_common", ReplaceBreakableWithItemDrop);
+#include "../replace_breakable_with_item_drop.h"
