@@ -949,9 +949,9 @@ void func_800F2404(s32 arg0) {
         D_800973F8 = 0;
         D_800973FC = 0;
     }
+    D_8003C704 = 0;
 
     g_unkGraphicsStruct.unk0 = 0;
-    D_8003C704 = 0;
     g_unkGraphicsStruct.unk18 = 0;
     g_unkGraphicsStruct.unk1C = 0;
     g_unkGraphicsStruct.unkC.unk = 0x80;
