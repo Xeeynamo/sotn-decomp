@@ -174,14 +174,14 @@ INCLUDE_ASM("st/st0/nonmatchings/28BF8", EntityDialogue);
 
 void func_801AA218(s16 arg0) {
     s16 temp_a1 = ((0xE0 - arg0) / 2) + 0x80;
-    s16 temp_v1 = temp_a1 - g_unkGraphicsStruct.unk0[3];
+    s16 temp_v1 = temp_a1 - g_unkGraphicsStruct.unkC.S16.unk0;
 
     if (temp_v1 >= 3) {
-        g_unkGraphicsStruct.unk0[3] = g_unkGraphicsStruct.unk0[3] + 2;
+        g_unkGraphicsStruct.unkC.unk += 2;
     } else if (temp_v1 < -2) {
-        g_unkGraphicsStruct.unk0[3] = g_unkGraphicsStruct.unk0[3] - 2;
+        g_unkGraphicsStruct.unkC.unk -= 2;
     } else {
-        g_unkGraphicsStruct.unk0[3] = temp_a1;
+        g_unkGraphicsStruct.unkC.unk = temp_a1;
     }
 }
 

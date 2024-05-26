@@ -409,9 +409,9 @@ void EntityEquipItemDrop(Entity* self) {
         break;
 
     case 5:
-        unk = &g_unkGraphicsStruct.unk10;
+        unk = &g_unkGraphicsStruct.BottomCornerTextTimer;
         if (*unk != 0) {
-            g_api.FreePrimitives(g_unkGraphicsStruct.unk14);
+            g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
             *unk = 0;
         }
 

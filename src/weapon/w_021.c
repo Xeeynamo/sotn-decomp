@@ -59,13 +59,14 @@ void func_97000_8017AB54(u8* str, u8 lowerLeft) {
         chIdx++;
     }
 
-    g_unkGraphicsStruct.unk14 = g_api.AllocPrimitives(PRIM_SPRT, charcount + 4);
-    if (g_unkGraphicsStruct.unk14 == -1) {
+    g_unkGraphicsStruct.BottomCornerTextPrims =
+        g_api.AllocPrimitives(PRIM_SPRT, charcount + 4);
+    if (g_unkGraphicsStruct.BottomCornerTextPrims == -1) {
         return;
     }
 #undef charcount
 
-    prim = &g_PrimBuf[g_unkGraphicsStruct.unk14];
+    prim = &g_PrimBuf[g_unkGraphicsStruct.BottomCornerTextPrims];
     prim->type = 3;
     prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->g0 = prim->g1 = prim->g2 =
         prim->g3 = prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
@@ -167,7 +168,7 @@ void func_97000_8017AB54(u8* str, u8 lowerLeft) {
             xpos += 8;
         }
     }
-    g_unkGraphicsStruct.unk10 = 0x130;
+    g_unkGraphicsStruct.BottomCornerTextTimer = 0x130;
 }
 
 // Function that tests if a food is successfully eaten (collected)

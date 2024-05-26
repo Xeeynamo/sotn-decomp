@@ -1,2 +1,2 @@
-g_Weapon = 0x8017A000;
+g_unkGraphicsStruct = 0x80097400;g_Weapon = 0x8017A000;
 BottomCornerText = 0x8017AB54;

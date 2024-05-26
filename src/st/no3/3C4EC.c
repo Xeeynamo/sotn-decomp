@@ -12,7 +12,7 @@ void EntityPushAlucard(Entity* entity) {
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 255;
         player->posX.i.hi = 0;
-        g_unkGraphicsStruct.unk0[3] = 0;
+        g_unkGraphicsStruct.unkC.unk = 0;
         player->animCurFrame = 0;
         D_8003C8B8 = 0;
         break;
@@ -31,8 +31,8 @@ void EntityPushAlucard(Entity* entity) {
 
     case 2:
         player->posX.val += 0x88000;
-        g_unkGraphicsStruct.unk0[3] += 4;
-        if (g_unkGraphicsStruct.unk0[3] == 192) {
+        g_unkGraphicsStruct.unkC.unk += 4;
+        if (g_unkGraphicsStruct.unkC.unk == 192) {
             entity->ext.generic.unk80.modeS32 = 0x48000;
             entity->step++;
         }
@@ -41,8 +41,8 @@ void EntityPushAlucard(Entity* entity) {
         break;
 
     case 3:
-        if (g_unkGraphicsStruct.unk0[3] > 128) {
-            g_unkGraphicsStruct.unk0[3] -= 1;
+        if (g_unkGraphicsStruct.unkC.unk > 128) {
+            g_unkGraphicsStruct.unkC.unk -= 1;
             entity->ext.generic.unk80.modeS32 = 0x38000;
         } else {
             entity->ext.generic.unk80.modeS32 = 0x48000;

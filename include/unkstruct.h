@@ -181,17 +181,17 @@ typedef struct {
 typedef struct {
     /* 0x00 */ s32 unk0;
     /* 0x04 */ s32 unk4;
-    /* 0x08 */ Multi g_zEntityCenter; 
-    /* 0x0C */ s32 unkC;
-    /* 0x10 */ s32 unk10;
-    /* 0x14 */ s32 unk14;
+    /* 0x08 */ Multi g_zEntityCenter;
+    /* 0x0C */ Multi unkC; // multi for dre/func_801961DC
+    /* 0x10 */ s32 BottomCornerTextTimer;
+    /* 0x14 */ s32 BottomCornerTextPrims;
     /* 0x18 */ s32 unk18;
     /* 0x1C */ s32 unk1C;
     /* 0x20 */ s32 unk20;
     /* 0x24 */ s32 unk24;
-    /* 0x28 */ s32 unk28;
-    /* 0x2C */ s32 D_8009742C[8];
-} unkGraphicsStruct; //size = 17 ints from func_800F2404
+    /* 0x28 */ s32 D_80097428[8]; // size must be 8 for the loop in
+                                  // func_800F298C
+} unkGraphicsStruct;
 
 typedef struct {
     u8 count;

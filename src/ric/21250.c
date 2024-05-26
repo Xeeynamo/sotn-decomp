@@ -1405,7 +1405,7 @@ void func_801603C4(void) {
     s32 enemy;
     s32 enemy2;
 
-    temp_s2 = *g_unkGraphicsStruct.unk20;
+    temp_s2 = g_unkGraphicsStruct.unk20;
     entity = g_CurrentEntity = &g_Entities[4];
     for (i = 4; i < 0x40; i++, g_CurrentEntity++, entity++) {
         if (entity->entityId != 0) {

@@ -414,30 +414,31 @@ s32 func_800F0CD8(s32 arg0) {
         }
     }
 block_25:
-    temp_a1 = g_Tilemap.x + g_unkGraphicsStruct.unk0[3];
+    temp_a1 = g_Tilemap.x + g_unkGraphicsStruct.unkC;
 
     if (playerX < temp_a1) {
         if (arg0 != 0 && g_Tilemap.hSize != 1 &&
             temp_a1 < playerX + D_801375A4) {
             g_Entities[0].posX.i.hi =
                 (u16)g_Entities[0].posX.i.hi +
-                (playerX + D_801375A4 - (g_Tilemap.x + g_unkGraphicsStruct.unk0[3]));
+                (playerX + D_801375A4 -
+                 (g_Tilemap.x + g_unkGraphicsStruct.unkC));
         }
         g_Tilemap.scrollX.i.hi = g_Tilemap.x;
     } else {
-        temp_a1_2 = g_Tilemap.width + g_unkGraphicsStruct.unk0[3] - 0x100;
+        temp_a1_2 = g_Tilemap.width + g_unkGraphicsStruct.unkC - 0x100;
         if (temp_a1_2 < playerX) {
             if (arg0 != 0 && g_Tilemap.hSize != 1 &&
                 playerX + D_801375A4 < temp_a1_2) {
                 g_Entities[0].posX.i.hi =
                     ((u16)g_Entities[0].posX.i.hi) +
                     (((playerX + D_801375A4) + 0x100) -
-                     (g_Tilemap.width + (g_unkGraphicsStruct.unk0[3])));
+                     (g_Tilemap.width + (g_unkGraphicsStruct.unkC)));
             }
             g_Tilemap.scrollX.i.hi = g_Tilemap.width - 0x100;
         } else {
-            g_Tilemap.scrollX.i.hi = playerX - (g_unkGraphicsStruct.unk0[3]);
-            g_Entities[0].posX.i.hi = g_unkGraphicsStruct.unk0[3];
+            g_Tilemap.scrollX.i.hi = playerX - (g_unkGraphicsStruct.unkC);
+            g_Entities[0].posX.i.hi = g_unkGraphicsStruct.unkC;
         }
     }
     if (g_unkGraphicsStruct.unk1C != 0) {
@@ -941,11 +942,10 @@ void func_800F2288(s32 arg0) {
 }
 
 void func_800F2404(s32 arg0) {
-    s32* ptr;
-    s32 count;
+    s32 i;
 
     if (arg0 == 0) {
-        g_unkGraphicsStruct.unk10 = 0;
+        g_unkGraphicsStruct.BottomCornerTextTimer = 0;
         D_800973F8 = 0;
         D_800973FC = 0;
     }
@@ -954,23 +954,17 @@ void func_800F2404(s32 arg0) {
     D_8003C704 = 0;
     g_unkGraphicsStruct.unk18 = 0;
     g_unkGraphicsStruct.unk1C = 0;
-    g_unkGraphicsStruct.unkC = 0x80;
+    g_unkGraphicsStruct.unkC.unk = 0x80;
 
-    if (g_unkGraphicsStruct.unk10 != 0) {
-        FreePrimitives(g_unkGraphicsStruct.unk14);
+    if (g_unkGraphicsStruct.BottomCornerTextTimer != 0) {
+        FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
     }
 
-    g_unkGraphicsStruct.unk10 = 0;
-    g_unkGraphicsStruct.unk14 = 0;
+    g_unkGraphicsStruct.BottomCornerTextTimer = 0;
+    g_unkGraphicsStruct.BottomCornerTextPrims = 0;
     g_unkGraphicsStruct.g_zEntityCenter.unk = 148;
-    count = 7;
-
-    ptr = &g_unkGraphicsStruct.D_8009742C[8];
-
-    while (count >= 0) {
-        *ptr = 0;
-        count -= 1;
-        ptr -= 1;
+    for (i = 0; i < LEN(g_unkGraphicsStruct.D_80097428); i++) {
+        g_unkGraphicsStruct.D_80097428[i] = 0;
     }
 
     g_unkGraphicsStruct.unk20 = 0;
@@ -1686,8 +1680,8 @@ void func_800F298C(void) {
                 func_800F0CD8(0);
                 if (g_StageId == STAGE_RTOP) {
                     DestroyEntitiesFromIndex(0x40);
-                    for (i = 0; i < LEN(g_unkGraphicsStruct.D_8009742C); i++) {
-                        g_unkGraphicsStruct.D_8009742C[i] = 0;
+                    for (i = 0; i < LEN(g_unkGraphicsStruct.D_80097428); i++) {
+                        g_unkGraphicsStruct.D_80097428[i] = 0;
                     }
                     g_PrevScrollX = (s32)g_Tilemap.scrollX.i.hi;
                     g_PrevScrollY = (s32)g_Tilemap.scrollY.i.hi;
@@ -1696,8 +1690,8 @@ void func_800F298C(void) {
                     func_800F0CD8(0);
                     func_800F0CD8(0);
                     DestroyEntitiesFromIndex(0x40);
-                    for (i = 0; i < LEN(g_unkGraphicsStruct.D_8009742C); i++) {
-                        g_unkGraphicsStruct.D_8009742C[i] = 0;
+                    for (i = 0; i < LEN(g_unkGraphicsStruct.D_80097428); i++) {
+                        g_unkGraphicsStruct.D_80097428[i] = 0;
                     }
                 }
                 D_801375A4 = D_8013759C - PLAYER.posX.val;
@@ -1739,8 +1733,8 @@ void func_800F298C(void) {
                 }
                 if (g_StageId != STAGE_RTOP) {
                     DestroyEntitiesFromIndex(0x40);
-                    for (i = 0; i < LEN(g_unkGraphicsStruct.D_8009742C); i++) {
-                        g_unkGraphicsStruct.D_8009742C[i] = 0;
+                    for (i = 0; i < LEN(g_unkGraphicsStruct.D_80097428); i++) {
+                        g_unkGraphicsStruct.D_80097428[i] = 0;
                     }
                     g_PrevScrollX = g_Tilemap.scrollX.i.hi;
                     g_PrevScrollY = g_Tilemap.scrollY.i.hi;
@@ -1749,8 +1743,8 @@ void func_800F298C(void) {
                     func_800F0CD8(0);
                     func_800F0CD8(0);
                     DestroyEntitiesFromIndex(0x40);
-                    for (i = 0; i < LEN(g_unkGraphicsStruct.D_8009742C); i++) {
-                        g_unkGraphicsStruct.D_8009742C[i] = 0;
+                    for (i = 0; i < LEN(g_unkGraphicsStruct.D_80097428); i++) {
+                        g_unkGraphicsStruct.D_80097428[i] = 0;
                     }
                 }
                 g_PrevScrollX = g_Tilemap.scrollX.i.hi;
