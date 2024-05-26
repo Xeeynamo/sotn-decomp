@@ -4,7 +4,16 @@ INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4100", EntitySoulStealOrb);
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4100", EntityEnemyBlood);
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4100", func_psp_0923C2F8);
+// psp unique?
+u8 func_psp_0923C2F8(u8 arg0) {
+    if (arg0 & 0x100) {
+        return func_psp_0923C2F8(arg0 & 0xFF);
+    }
+    if (arg0 & 0x80) {
+        return func_psp_0923C2F8((arg0 & 0x7F) + 3);
+    }
+    return (arg0 * 0x10);
+}
 
 extern s32 D_91ED5F8;
 extern s32 D_psp_0924BC68;
