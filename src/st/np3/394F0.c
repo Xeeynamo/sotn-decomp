@@ -231,8 +231,8 @@ void TestCollisions(void) {
                             xCoord /= 2;
                             yCoord2 /= 2;
                         }
-                        for (prim = &g_PrimBuf[D_800973F8]; prim != NULL;
-                             prim = prim->next) {
+                        for (prim = &g_PrimBuf[g_unkGraphicsStruct.D_800973F8];
+                             prim != NULL; prim = prim->next) {
                             if (prim->drawMode == DRAW_HIDE) {
                                 prim->clut = 0x199;
                                 temp_rand = (Random() & 7) - 13;
@@ -492,7 +492,8 @@ void TestCollisions(void) {
             }
         }
     }
-    for (prim = &g_PrimBuf[D_800973F8]; prim != NULL; prim = prim->next) {
+    for (prim = &g_PrimBuf[g_unkGraphicsStruct.D_800973F8]; prim != NULL;
+         prim = prim->next) {
         if ((prim->drawMode) != 8) {
             miscVar2 = prim->p1;
             prim->u0 = prim->u2 = D_8018199C[miscVar2];
