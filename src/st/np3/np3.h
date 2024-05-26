@@ -126,8 +126,8 @@ extern u16 D_80181678[];
 extern u8 D_80181998[];
 extern u8 D_8018199C[];
 extern u8 D_801819A4[];
-extern u16 D_801819AC[];
-extern u8 D_801819C0[];
+extern u16 D_801819AC[10];
+extern u8 D_801819C0[10];
 extern u16 D_801819CC[];
 extern u16 D_80181A0C;
 extern Point32 D_80182224[]; // accel_x TBL

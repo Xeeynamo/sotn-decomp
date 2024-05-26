@@ -188,7 +188,7 @@ void TestCollisions(void) {
             } else {
                 entFrom5C = iterEnt1;
             }
-            if (!(entFrom5C->flags & 0x100) && miscVar2) {
+            if (!(entFrom5C->flags & FLAG_DEAD) && miscVar2) {
                 hitboxCheck2 = iterEnt2->hitEffect & 0x7F;
                 if ((hitboxCheck2 == 2) ||
                     ((hitboxCheck2 == 6) && (miscVar1 & 0x20))) {
@@ -282,7 +282,7 @@ void TestCollisions(void) {
                             miscVar3 = (u16)iterEnt2->attackElement;
                             // includes all elements 0x40 and up
                             if (miscVar3 & 0xFFC0) {
-                                for (i = 0; i < 10; i++) {
+                                for (i = 0; i < LEN(D_801819AC); i++) {
                                     if (miscVar3 & D_801819AC[i]) {
                                         miscVar2 = D_801819C0[i];
                                         break;
@@ -494,7 +494,7 @@ void TestCollisions(void) {
     }
     for (prim = &g_PrimBuf[g_unkGraphicsStruct.D_800973F8]; prim != NULL;
          prim = prim->next) {
-        if ((prim->drawMode) != 8) {
+        if ((prim->drawMode) != DRAW_HIDE) {
             miscVar2 = prim->p1;
             prim->u0 = prim->u2 = D_8018199C[miscVar2];
             prim->u1 = prim->u3 = prim->u0 + 0x20;
