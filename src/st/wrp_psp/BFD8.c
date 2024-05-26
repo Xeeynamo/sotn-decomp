@@ -1,9 +1,7 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/BF50", PreventEntityFromRespawning);
-
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/BF50", AnimateEntity);
+INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/BFD8", AnimateEntity);
 
 u8 GetSideToPlayer() {
     u8 side = 0;
@@ -43,7 +41,7 @@ Entity* AllocEntity(Entity* start, Entity* end) {
     return NULL;
 }
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/BF50", UnkEntityFunc0);
+INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/BFD8", UnkEntityFunc0);
 
 u16 func_8018C160(Entity* a, Entity* b) {
     s32 diffX = b->posX.i.hi - a->posX.i.hi;

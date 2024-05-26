@@ -52,7 +52,7 @@ segments:
       - [0x8580, c, wrp_psp/8580]
       - [0x95D0, c, wrp_psp/95D0]
       - [0xBDA0, c, wrp_psp/BDA0]
-      - [0xBF50, c, wrp_psp/BF50]
+      - [0xBFD8, c, wrp_psp/BFD8]
       - [0xC3F0, c, wrp_psp/C3F0]
       - [0xD010, c, wrp_psp/D010]
       - [0xD0E0, c, wrp_psp/st_init_wrp]
