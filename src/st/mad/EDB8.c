@@ -47,7 +47,6 @@ void CreateEntitiesToTheLeft(s16 posX) {
 #include "../init_room_entities.h"
 #include "../update_room_position.h"
 #include "../create_entity_from_entity.h"
-#include "../entity_is_near_player.h"
 
 #include "../entity_red_door.h"
 

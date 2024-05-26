@@ -1028,6 +1028,5 @@ u8* D_80180F70[] = {
     D_80180ED8, D_80180EEC, D_80180F08, D_80180F38, D_80180F6C,
 };
 
-// *** bss? section start ***
+// BSS
 extern u16 g_ItemIconSlots[];
-// *** bss? section end ***

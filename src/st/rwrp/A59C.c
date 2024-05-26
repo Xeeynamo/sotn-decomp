@@ -1,9 +1,12 @@
 #include "rwrp.h"
+
 INCLUDE_ASM("st/rwrp/nonmatchings/A59C", TestCollisions);
 
 INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018B6B4);
 
 #include "../libstage.h"
+
+#include "../entity_is_near_player.h"
 
 INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018C948);
 

@@ -1,5 +1,43 @@
 #include "wrp.h"
 
+#include "../entity_relic_orb.h"
+
+void EntityHeartDrop(Entity* self) {
+    u16 temp_a0;
+    u16 temp_a0_2;
+    u16 var_a0;
+
+    if (self->step == 0) {
+        temp_a0 = self->params + 0x118;
+        self->ext.generic.unkB4 = temp_a0;
+        if ((D_8003BEEC[temp_a0 >> 3] >> (temp_a0 & 7)) & 1) {
+            DestroyEntity(self);
+            return;
+        }
+        temp_a0_2 = temp_a0 - 0x118;
+        var_a0 = ((u16*)D_80180608)[temp_a0_2];
+        if (var_a0 < 128) {
+            self->ext.generic.unkB8.unkFuncB8 = EntityPrizeDrop;
+        } else {
+            self->ext.generic.unkB8.unkFuncB8 = EntityEquipItemDrop;
+            var_a0 -= 128;
+        }
+        self->params = var_a0 + 0x8000;
+    } else {
+        temp_a0_2 = self->ext.generic.unkB4;
+        if (self->step < 5) {
+            if (self->hitFlags != 0) {
+                var_a0 = self->ext.generic.unkB4;
+                D_8003BEEC[temp_a0_2 >> 3] |= 1 << (var_a0 & 7);
+                self->step = 5;
+            }
+        }
+    }
+    self->ext.generic.unkB8.unkFuncB8(self);
+}
+
+#include "../entity_message_box.h"
+
 u8 func_8018F420(s16* arg0, u8 facing) {
     u8 ret = 0;
     Collider collider;
@@ -591,10 +629,10 @@ void func_80190614(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/wrp/nonmatchings/F420", func_801907EC);
+INCLUDE_ASM("st/wrp/nonmatchings/e_misc", func_801907EC);
 
 u16 D_8018107C[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8, 0, 0};
-INCLUDE_ASM("st/wrp/nonmatchings/F420", func_80190DCC);
+INCLUDE_ASM("st/wrp/nonmatchings/e_misc", func_80190DCC);
 
 void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     u16 buf[COLORS_PER_PAL];
@@ -667,293 +705,4 @@ void func_801916C4(s16 sfxId) {
     if (var_a3 > 0) {
         g_api.func_80134714(sfxId, var_a3, var_a2);
     }
-}
-
-#include "../entity_stage_name_popup.h"
-
-u16 D_801810A0[] = {
-    /* 10A0 */ 0x0820,
-    /* 10A2 */ 0x0840,
-    /* 10A4 */ 0x0860,
-    /* 10A6 */ 0x0880,
-    /* 10A8 */ 0x08C0,
-    /* 10AA */ 0x0900,
-    /* 10AC */ 0x0940,
-    /* 10AE */ 0x0A00,
-};
-
-u16 D_801810B0[] = {
-    0xFFFD, 0xFFFD, 0x0008, 0x0008, 0x00D0, 0x0068, 0x00D8, 0x0070,
-    0xFFFD, 0xFFFD, 0x0008, 0x0008, 0x00C8, 0x0068, 0x00D0, 0x0070,
-    0xFFF9, 0xFFF9, 0x0010, 0x000F, 0x00C8, 0x0070, 0x00D8, 0x007F,
-    0xFFF5, 0xFFF5, 0x0018, 0x0017, 0x0080, 0x0068, 0x0098, 0x007F,
-    0xFFF5, 0xFFF5, 0x0018, 0x0017, 0x0098, 0x0068, 0x00B0, 0x007F,
-    0xFFF5, 0xFFF5, 0x0018, 0x0017, 0x00B0, 0x0068, 0x00C8, 0x007F,
-};
-
-u32 D_80181110[] = {
-    /* 1110 */ 0x03030204,
-    /* 1114 */ 0x05030403,
-    /* 1118 */ 0x03030603,
-    /* 111C */ 0x00000000,
-};
-// The white flying orbs of energy that Alucard summons as part of the Soul
-// Steal spell
-void EntitySoulStealOrb(Entity* self) {
-    Primitive* prim;
-    s32 primIndex;
-    u16 *temp_d, temp_e;
-    s32 temp_a, temp_b;
-    u16 angle;
-
-    switch (self->step) {
-    case 0:
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-        if (primIndex == -1) {
-            DestroyEntity(self);
-            return;
-        }
-        InitializeEntity(g_InitializeData0);
-        g_PrimBuf[primIndex].drawMode = DRAW_HIDE;
-        self->primIndex = primIndex;
-        self->animSet = ANIMSET_DRA(0);
-        self->flags |= FLAG_HAS_PRIMS;
-        angle = func_8018C160(self, &PLAYER);
-        temp_a = self->posY.i.hi < 113;
-        temp_b = temp_a ^ 1;
-        if (self->posX.i.hi < PLAYER.posX.i.hi) {
-            temp_b = temp_a;
-        }
-        if (temp_b & 0xFFFF) {
-            self->ext.soulStealOrb.angle = angle - D_801810A0[Random() & 7];
-        } else {
-            angle += D_801810A0[Random() & 7];
-            self->ext.soulStealOrb.angle = angle;
-        }
-        self->ext.soulStealOrb.unk80 = 0x400;
-        self->ext.soulStealOrb.unk7E = 0;
-        self->hitboxState = 0;
-        break;
-
-    case 1:
-        self->ext.soulStealOrb.unk82++;
-        if (self->ext.soulStealOrb.unk82 == 16) {
-            self->hitboxState = 1;
-        }
-        if (self->hitFlags != 0) {
-            if (g_Player.unk56 == 0) {
-                g_Player.unk56 = 1;
-                g_Player.unk58 = 8;
-            }
-            DestroyEntity(self);
-            return;
-        }
-        if (self->rotX < 0x100) {
-            self->rotX = self->rotY += 0x10;
-        }
-        if (self->ext.soulStealOrb.unk7E < 0x200) {
-            self->ext.soulStealOrb.unk7E += 2;
-        }
-        if (self->ext.soulStealOrb.unk80 < 0x800) {
-            self->ext.soulStealOrb.unk80 += 4;
-        }
-        self->ext.soulStealOrb.angle = func_8018C1E0(
-            self->ext.soulStealOrb.unk7E, (u16)self->ext.soulStealOrb.angle,
-            0xffff & func_8018C160(self, &PLAYER));
-        UnkEntityFunc0(self->ext.soulStealOrb.angle & 0xFFFF,
-                       self->ext.soulStealOrb.unk80);
-        MoveEntity(self); // argument pass necessary to match
-        prim = &g_PrimBuf[self->primIndex];
-        AnimateEntity(&D_80181110, self);
-        angle = (float)(u32)self; // !FAKE
-        prim->tpage = 0x18;
-        prim->clut = 0x194;
-        temp_d = &D_801810B0[(u16)((8 * (u16)self->animCurFrame) - 8)];
-        prim->x0 = prim->x2 = self->posX.i.hi + *(temp_d++);
-        prim->y0 = prim->y1 = self->posY.i.hi + *(temp_d++);
-        prim->x1 = prim->x3 = prim->x0 + *(temp_d++);
-        prim->y2 = prim->y3 = prim->y0 + *(temp_d++);
-        prim->u0 = prim->u2 = *(temp_d++);
-        prim->v0 = prim->v1 = *(temp_d++);
-        prim->u1 = prim->u3 = *(temp_d++);
-        prim->v2 = prim->v3 = *(temp_d++);
-        prim->priority = self->zPriority;
-        prim->drawMode = DRAW_DEFAULT;
-        break;
-    }
-}
-
-#include "../entity_enemy_blood.h"
-
-u8 D_80181120[] = {0x40, 0x01, 0xFF, 0x00};
-u8 D_80181124[] = {0x40, 0x02, 0xFF, 0x00};
-u8 D_80181128[] = {0x40, 0x02, 0xFF, 0x00};
-u8 D_8018112C[] = {0x40, 0x01, 0xFF, 0x00};
-u8 D_80181130[] = {0x40, 0x03, 0xFF, 0x00};
-ObjInit2 D_80181134[] = {
-    {0x0006, 0x01EC, 0x0000, 0x0000, 0x00, 0x10, 0, D_80181120},
-    {0x000C, 0x01EC, 0x0000, 0x0000, 0x00, 0x10, 0, D_80181128},
-    {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x10, 0, D_8018112C},
-    {0x0006, 0x01EC, 0x0000, 0x0000, 0x00, 0x10, 0, D_80181124},
-    {0x000C, 0x01EC, 0x0000, 0x0000, 0x00, 0x10, 0, D_80181130},
-    {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x10, 0, D_8018112C},
-};
-void EntityRoomForeground(Entity* entity) {
-    ObjInit2* objInit = &D_80181134[entity->params];
-    if (entity->step == 0) {
-        InitializeEntity(g_eInitGeneric2);
-        entity->animSet = objInit->animSet;
-        entity->zPriority = objInit->zPriority;
-        entity->unk5A = objInit->unk4.s;
-        entity->palette = objInit->palette;
-        entity->drawFlags = objInit->drawFlags;
-        entity->drawMode = objInit->drawMode;
-        if (objInit->unkC != 0) {
-            entity->flags = objInit->unkC;
-        }
-        if (entity->params >= 5) {
-            entity->rotZ = 0x800;
-            entity->drawFlags |= 4;
-        }
-    }
-    AnimateEntity(objInit->unk10, entity);
-}
-
-void BottomCornerText(u8* str, u8 lower_left) {
-    u8 toPrint[64];
-    Primitive* prim;
-    s32 i;
-    u32 ch;
-    u8* chIdx = &toPrint;
-
-    u16 textWidth = 0;
-    // serves two purposes, use #define for dual names
-    u16 dualVar = 0;
-#define charcount dualVar
-
-    // Clear out the toPrint array
-    for (i = 0; i < 64; i++) {
-        *chIdx++ = 0;
-    }
-    // Reset array pointer
-    chIdx = &toPrint;
-
-    while (1) {
-        i = 0;
-        // Copy values from the incoming arg0 array to the local array, until we
-        // get a 0xFF followed by a 0
-        ch = *str++;
-        if (ch == 0xFF) {
-            ch = *str++;
-            if (ch == 0) {
-                break;
-            }
-        }
-        *chIdx = ch;
-        chIdx++;
-        if (ch != 0) {
-            charcount++;
-            textWidth += 8;
-        } else {
-            textWidth += 4;
-        }
-    }
-
-    g_unkGraphicsStruct.BottomCornerTextPrims =
-        g_api.AllocPrimitives(PRIM_SPRT, charcount + 4);
-    if (g_unkGraphicsStruct.BottomCornerTextPrims == -1) {
-        return;
-    }
-#undef charcount
-
-    prim = &g_PrimBuf[g_unkGraphicsStruct.BottomCornerTextPrims];
-    prim->type = 3;
-    prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->g0 = prim->g1 = prim->g2 =
-        prim->g3 = prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
-
-    if (lower_left) {
-        prim->b0 = prim->b1 = 0xAF;
-    } else {
-        prim->g0 = prim->g1 = 0x5F;
-    }
-
-#define xpos dualVar
-    if (lower_left) {
-        xpos = 7;
-        textWidth += 4;
-    } else {
-        xpos = 0xD4 - textWidth;
-    }
-
-    prim->x0 = prim->x2 = xpos;
-    prim->x1 = prim->x3 = xpos + textWidth + 0x20;
-    prim->y0 = prim->y1 = 0xD0;
-    prim->y2 = prim->y3 = 0xDF;
-    prim->priority = 0x1EE;
-    prim->drawMode = 0x11;
-    prim = prim->next;
-
-    prim->tpage = 0x1F;
-    prim->clut = 0x197;
-    prim->x0 = xpos - 6;
-    prim->y0 = 0xCB;
-    prim->u0 = 0x80;
-    prim->v0 = 0;
-    prim->u1 = 0x10;
-    prim->v1 = 0x18;
-    prim->priority = 0x1EF;
-    prim->drawMode = DRAW_DEFAULT;
-    prim = prim->next;
-
-    prim->tpage = 0x1F;
-    prim->clut = 0x197;
-    prim->x0 = xpos + textWidth + 0x16;
-    prim->y0 = 0xCB;
-    prim->u0 = 0xA8;
-    prim->v0 = 0;
-    prim->u1 = 0x10;
-    prim->v1 = 0x18;
-    prim->priority = 0x1EF;
-    prim->drawMode = DRAW_DEFAULT;
-    prim = prim->next;
-
-    prim->type = 4;
-    prim->y0 = prim->y1 = 0xCD;
-    prim->tpage = 0x1F;
-    prim->clut = 0x197;
-    prim->y2 = prim->y3 = 0xE1;
-    prim->u0 = prim->u2 = 0x98;
-    prim->u1 = prim->u3 = 0x9C;
-    prim->v0 = prim->v1 = 2;
-    prim->x0 = prim->x2 = xpos + 0xA;
-    prim->x1 = prim->x3 = xpos + textWidth + 0x18;
-    prim->v2 = prim->v3 = 0x16;
-    prim->priority = 0x1EF;
-    prim->drawMode = DRAW_DEFAULT;
-
-    xpos += 0x10;
-
-    // Reset array pointer
-    chIdx = &toPrint;
-    for (prim = prim->next; prim != NULL;) {
-        ch = *chIdx++;
-        if (ch != 0) {
-            prim->x0 = xpos;
-            prim->u0 = (ch & 0xF) * 8;
-            prim->tpage = 0x1E;
-            prim->clut = 0x196;
-            prim->v0 = (ch & 0xF0) >> 1;
-            prim->v1 = 8;
-            prim->u1 = 8;
-            prim->priority = 0x1F0;
-            prim->drawMode = DRAW_DEFAULT;
-            prim->y0 = 0xD4;
-            prim = prim->next;
-            xpos += 8;
-        } else {
-            xpos += 4;
-        }
-    }
-#undef xpos
-    g_unkGraphicsStruct.BottomCornerTextTimer = 0x130;
 }
