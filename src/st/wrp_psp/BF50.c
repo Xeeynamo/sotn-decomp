@@ -5,7 +5,19 @@ INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/BF50", PreventEntityFromRespawning);
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/BF50", AnimateEntity);
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/BF50", GetSideToPlayer);
+u8 GetSideToPlayer() {
+    u8 side = 0;
+    Entity* player = &PLAYER;
+
+    if (g_CurrentEntity->posX.i.hi > player->posX.i.hi) {
+        side |= 1;
+    }
+
+    if (g_CurrentEntity->posY.i.hi > player->posY.i.hi) {
+        side |= 2;
+    }
+    return side;
+}
 
 void MoveEntity() {
     g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;
