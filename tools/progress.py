@@ -57,6 +57,37 @@ class DecompProgressStats:
     code_matching_prev: int
     functions_prev: int
 
+    def get_asm_path(self, ovl_path):
+        """
+        Returns one of the following valid paths:
+        `asm/us/st/wrp`
+        `asm/pspeu/st/wrp_psp`
+        """
+        asm_path = f"asm/{args.version}/{ovl_path}"
+        if os.path.exists(asm_path):
+            return asm_path
+        asm_path_psp = f"asm/{args.version}/{ovl_path}_psp"
+        if os.path.exists(asm_path_psp):
+            return asm_path_psp
+        exiterr(f"path '{asm_path}' or '{asm_path_psp}' not found")
+
+    def get_nonmatchings_path(self, asm_path):
+        """
+        Returns one of the following valid paths:
+        `asm/us/st/wrp/nonmatchings`
+        `asm/pspeu/st/wrp_psp/psp/wrp_psp`
+        """
+        nonmatchings = f"{asm_path}/nonmatchings"
+        if not os.path.exists(nonmatchings):
+            nonmatchings_psp = f"{asm_path}/psp"
+            if not os.path.exists(nonmatchings_psp):
+                exiterr(f"path '{nonmatchings}' or '{nonmatchings_psp} not found")
+            nonmatchings = nonmatchings_psp
+
+        nonmatchings_subdir = os.path.join(nonmatchings, os.path.basename(asm_path))
+        if os.path.exists(nonmatchings_subdir):
+            nonmatchings = nonmatchings_subdir
+
     def __init__(self, module_name: str, path: str):
         self.name = module_name
         self.code_matching = 0
@@ -74,16 +105,9 @@ class DecompProgressStats:
         map_file = mapfile_parser.MapFile()
         map_file.readMapFile(map_path)
 
-        asm_path = f"asm/{args.version}/{path}"
-        if not os.path.exists(asm_path):
-            exiterr(f"path '{asm_path}' not found")
-
-        nonmatchings = f"{asm_path}/nonmatchings"
-        if not os.path.exists(nonmatchings):
-            exiterr(f"path '{nonmatchings}' not found")
-
+        asm_path = self.get_asm_path(path)
+        nonmatchings = self.get_nonmatchings_path(asm_path)
         depth = 4 + path.count("/")
-
         self.calculate_progress(
             map_file.filterBySectionType(".text"), asm_path, nonmatchings, depth
         )
