@@ -1,5 +1,600 @@
 #include "np3.h"
-INCLUDE_ASM("st/np3/nonmatchings/394F0", TestCollisions);
+
+void TestCollisions(void) {
+    s32 temp_rand;
+    
+    Entity* var_s0;
+    
+    Primitive* var_s2;
+    Entity* var_s3;
+    s32 *var_s4;
+    Entity *var_s5;
+    u16 var_s6;
+    u16 var_s8;
+
+    s32* sp50;
+    u16* sp4C;
+    u32 sp40;
+    EnemyDef* sp3C;
+    
+
+    s16 sp5C;
+    s16 sp5A;
+    u16 sp58;
+    u16 sp56; //sp18
+    s32 sp44; //sp20
+    s32 sp48;
+    
+    s8 sp5F;
+    Entity *var_s1; //sp28
+    u8 var_s7; //sp30
+
+    
+    #define SP(x) (0x1F800000 | (x))
+
+
+    sp50 = (s32 *)SP(0);
+    var_s4 = (s32 *)SP(0xC0);
+    for(var_s1 = &g_Entities[0]; var_s1 < &g_Entities[48]; sp50++, var_s1++) {
+        *sp50 = var_s1->hitboxState;
+        if ((*sp50 != 0) && !(*sp50 & 0x80)) {
+            *var_s4 = var_s1->posX.i.hi;
+//84
+            if (var_s1->facingLeft) {
+                *var_s4 -= var_s1->hitboxOffX;
+            } else {
+                *var_s4 += var_s1->hitboxOffX;
+            }
+            sp44 = var_s1->posY.i.hi + var_s1->hitboxOffY;
+            if ((*var_s4 < -0x20) || (*var_s4 >= 0x121) || (sp44 < -0x20) || (sp44 >= 0x101) || !var_s1->hitboxWidth || !var_s1->hitboxHeight) {
+                *sp50 = 0;
+                var_s4 += 4;
+            } else {
+                //158
+                var_s4++;
+                *var_s4++ = var_s1->hitboxWidth;
+                *var_s4++ = sp44;
+                *var_s4++ = var_s1->hitboxHeight;
+            }
+        } else {
+            var_s4 += 4;
+        }
+    }
+
+    //1dc
+    for(var_s1 = &g_Entities[64]; var_s1 < &g_Entities[192]; var_s1++){
+        //1f0
+        sp58 = var_s1->hitboxState;
+        if (!sp58 || !(var_s1->hitboxWidth) || !(var_s1->hitboxHeight) || (var_s1->flags & 0x100)) {
+            continue;
+        }
+        //22C
+        for(var_s8 = 0; var_s8 < 11; var_s8++) {
+            if (var_s1->unk6D[var_s8]) {
+                var_s1->unk6D[var_s8]--;
+            }
+        }
+        //278
+        sp5C = var_s1->posX.i.hi;
+        if (var_s1->facingLeft) {
+            sp5C -= var_s1->hitboxOffX;
+        } else {
+            sp5C += var_s1->hitboxOffX;
+        }
+        //2B4
+        sp5A = var_s1->posY.i.hi + var_s1->hitboxOffY;
+        if ((sp5C < -0x1F) || (sp5C >= 0x120) || (sp5A < -0x1F) || (sp5A >= 0x100)) {
+            continue;
+        }
+        //320
+        var_s7 = 0;
+        var_s6 = (u16)(sp58 & 0x3E);
+        sp48 = var_s1->hitboxWidth - 1;
+        sp44 = var_s1->hitboxHeight - 1;
+        //35c
+        if (var_s6) {
+            //364
+            sp50 = (s32*)SP(4);
+            var_s4 = (s32 *)SP(0xD0);
+            for(var_s5 = &g_Entities[1]; var_s5 < &g_Entities[48]; var_s5++) {
+            //390
+                if ((*sp50 & var_s6) && (!var_s1->unk6D[var_s5->enemyId])) {
+                    //3c0
+                    if (*sp50 & 0x80) {
+                        var_s1->unk44 = var_s5->hitEffect & 0x7F ;
+                        var_s7 = 0xFF;
+                        break;
+                    } else {
+                        //3FC
+                        sp56 = (u16)*var_s4++ - (u16)sp5C;
+                        //42C
+                        sp40 = sp48 + *var_s4++;
+                        //448
+                        sp56 += sp40;
+                        //45C
+                        sp40 *= 2;
+                        if (sp40 >= sp56) {
+                            //480
+                            sp56 = (u16)*var_s4++ - (u16)sp5A ;
+                            //4B0
+                            sp40 = sp44 + *var_s4++;
+                            //4CC
+                            sp56 += sp40;
+                            //4E0
+                            sp40 *= 2;
+                            //4EC
+                            if (sp40 >= sp56) {
+                                //504
+                                var_s8 = var_s5->hitEffect & 0x7F;
+                                //518
+                                if (!(var_s5->flags & var_s1->flags & 0x100000)) {
+                                    //534
+                                    var_s5->ext.generic.unkB8.entityPtr = var_s1;
+                                    //538
+                                    if (sp58 & 8) {
+                                        //54c
+                                        var_s5->hitFlags = 3;
+                                    } else {
+                                        //55c
+                                        var_s5->hitFlags = 1;
+                                    }
+                                    //564
+                                    if ((var_s8 == 3) && (var_s1->flags & 0x8000)) {
+                                        //584
+                                        g_api.PlaySfx(0x611);
+                                        var_s5->hitFlags = 2;
+                                    }
+                                    //5a4
+                                    if ((var_s8 == 4) && (var_s1->flags & 0x4000)) {
+                                        //5cc
+                                        g_api.PlaySfx(0x611);
+                                        var_s5->hitFlags = 2;
+                                    }
+                                }
+                                //5e8
+                                var_s1->unk44 = var_s8;
+                                var_s7 = 0xFF;
+                                break;
+                            } else {
+                                sp50++;
+                                continue;
+                            }
+                        } else {
+                            //614
+                            sp50++;
+                            var_s4 += 2;
+                            continue;
+                        }
+                    }
+                } else {
+                    sp50 ++;
+                    var_s4 += 4;
+                }
+            }
+        }
+
+        
+        //660
+        if ((sp58 & 1) && (!var_s7)) {
+            //67C
+            var_s5 = &PLAYER;
+            sp50 = (s32 *)SP(0);
+            var_s4 = (s32 *)SP(0xC0);
+            //69C
+            if (!var_s1->unk6D[var_s5->enemyId] && (*sp50 & 1)) {
+                //6c8
+                sp56 = (u16)*var_s4++ - (u16)sp5C;
+                //6f8
+                sp40 = sp48 + *var_s4++;
+                //714
+                sp56 += sp40;
+                //728
+                sp40 *= 2;
+                //734
+                if (sp40 >= sp56) {
+                    //74c
+                    sp56 = (u16)*var_s4++ - (u16)sp5A;
+                    //77c
+                    sp40 = sp44 + *var_s4++;
+                    //798
+                    sp56 += sp40;
+                    //7ac
+                    sp40 *= 2;
+                    //7b8
+                    if (sp40 >= sp56) {
+                        //7d0
+                        if ((var_s1->attack) && (var_s5->hitPoints < var_s1->attack)) {
+                            //7f8
+                            var_s5->ext.generic.unkB8.entityPtr = var_s1;
+                            //7fc
+                            if (sp58 & 8) {
+                                //810
+                                var_s5->hitFlags = 3;
+                            } else {
+                                //820
+                                var_s5->hitFlags = 1;
+                            }
+                            //828
+                            var_s5->unk44 = var_s1->attackElement;
+                            var_s5->hitPoints = var_s1->attack;
+                        }
+                        //838
+                        var_s1->unk44 = var_s5->hitEffect & 0x7F;
+                        var_s7 = 0xFF;
+                        var_s1->hitFlags = 0x80;
+                    }
+                }
+            }
+        }
+        //860
+        if (var_s7) {
+            //868
+            if (var_s1->unk5C != NULL) {
+                var_s3 = var_s1->unk5C;
+                var_s3->unk44 = (u16) var_s1->unk44;
+                var_s3->hitFlags = (u8) var_s1->hitFlags;
+            } else {
+                //894
+                var_s3 = var_s1;
+            }
+            //898
+            if (!(var_s3->flags & 0x100) && var_s7) {
+                //8b0
+                sp56 = var_s5->hitEffect & 0x7F;
+                //8C4
+                if ((sp56 == 2) || ((sp56 == 6) && (sp58 & 0x20))) {
+                    //900
+                    var_s0 = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                    if (var_s0 != NULL) {
+                        CreateEntityFromEntity(7, var_s1, var_s0);
+                    }
+                }
+                //940
+                sp58 = D_80181678[var_s3->enemyId];
+                if (sp58) {
+                    sp58--;
+                    var_s6 = 1 << (sp58 & 7);
+                    g_CastleFlags[(sp58 >> 3) + 0x190] |= var_s6;
+                }
+                //9C4
+                if ((g_Status.relics[RELIC_FAERIE_SCROLL] & 2) && !(var_s3->flags & 0x01000000)) {
+                    //9F0
+                    if (g_BottomCornerTextTimer != 0) {
+                        g_api.FreePrimitives(g_BottomCornerTextPrims);
+                        g_BottomCornerTextTimer = 0;
+                    }
+                    //A24
+                    BottomCornerText(g_api.enemyDefs[var_s3->enemyId].name, 0);
+                    var_s3->flags = (u32) (var_s3->flags | 0x01000000);
+                }
+                //A68
+                var_s7 = 0;
+                if ((var_s1->hitboxState & 8) && (var_s5->hitboxState & 4)) {
+                    goto block_164;
+                }
+                //A9C
+                if (var_s3->hitPoints) {
+                    //AA8
+                    if (var_s5->attack) {
+                        //AB4
+                        if (!(var_s5->hitboxState & 0x80)) {
+                            //AC8
+                            var_s4 -= 4;
+                            //ACC
+                            sp5C += *var_s4++;
+                            //AF0
+                            var_s4++;
+                            //AF8
+                            sp5A += *var_s4;
+                            //B0C
+                            sp5C /= 2;
+                            sp5A /= 2;
+                        }
+                        //b58
+                        for(var_s2 = &g_PrimBuf[D_800973F8];var_s2 != NULL; var_s2 = var_s2->next){
+                            //b80
+                            if (var_s2->blendMode == 8) {
+                                var_s2->clut = 0x199;
+                                //b9c
+                                temp_rand = (Random() & 7) - 13;
+                                var_s2->x0 = var_s2->x2 = sp5C + temp_rand - 3;
+                                //bd4
+                                var_s2->x1 = var_s2->x3 = var_s2->x0 + 0x20;
+                                temp_rand = (Random() & 7) - 10;
+                                var_s2->y0 = var_s2->y1 = sp5A + temp_rand - 3;
+                                var_s2->y2 = var_s2->y3 = var_s2->y0 + 0x20;
+                                //c3c
+                                var_s2->p1 = 0;
+//Mismatch???
+                                if (var_s5->zPriority > var_s1->zPriority) {
+                                    var_s2->priority = var_s5->zPriority + 1;
+                                } else {
+                                    var_s2->priority = var_s1->zPriority + 1;
+                                }
+                                //c8c
+                                var_s2->blendMode = 2U;
+                                break;
+                            }
+                        }
+                    }
+                    //ca8
+                    if ((var_s5->attack) && (var_s3->hitPoints != 0x7FFF)) {
+                        //cc8
+                        sp58 = g_api.DealDamage(var_s1, var_s5);
+                        if (var_s5->hitboxState == 4) {
+                            sp58 = 0;
+                        }
+                        if ((g_Status.relics[RELIC_SPIRIT_ORB] & 2) && !(var_s3->flags & 0x04000000) && sp58) {
+                            //d38
+                            var_s0 = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                            if (var_s0 != NULL) {
+                                DestroyEntity(var_s0);
+                                var_s0->entityId = 4;
+                                var_s0->pfnUpdate = EntityDamageDisplay;
+                                var_s0->posX.i.hi = sp5C;
+                                var_s0->posY.i.hi = sp5A;
+                                var_s0->params = sp58;
+                            }
+                        }
+                    } else {
+                        //da4
+                        sp58 = 0;
+                    }
+                    if (sp58 != 0xC000) {
+                        //dbc
+                        if (sp58 & 0x8000) {
+                            var_s7 = 9;
+                        } else {
+                            var_s6 = (u16) var_s5->attackElement;
+                            if (var_s6 & 0xFFC0) {
+                                //E00
+                                for(var_s8 = 0; var_s8 < 10; var_s8++){
+                                    if (var_s6 & D_801819AC[var_s8]) {
+                                        var_s7 = D_801819C0[var_s8];
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        //e7c
+                        var_s3->hitFlags |= 0x20;
+                        sp58 = 0;
+                    }
+                    //e8c
+                    if (!sp58) {
+                        goto unusual_spot;
+                    }
+                        //e98
+                        if (sp58 & 0x8000) {
+                            //eac
+                            var_s3->hitPoints += (sp58 & 0x3FFF);
+                            //ec8
+                            var_s6 = g_api.enemyDefs[var_s3 ->enemyId].hitPoints;
+                            if (var_s3->hitPoints > var_s6) {
+                                var_s3->hitPoints = var_s6;
+                            }
+                        } else {
+                            //f18
+                            sp58 &= 0x3FFF;
+                            //f24
+                            if (var_s3->flags & 0x10) {
+                                //f34
+                                //Different on PSP vs PSX
+                                if (g_PlayableCharacter != 0) {
+                                    g_api.PlaySfx(0x705);
+                                } else if (var_s5->hitEffect & 0x80) {
+                                    g_api.PlaySfx(0x62E);
+                                } else {
+                                    g_api.PlaySfx(0x678);
+                                }
+                            }
+                            //fb8
+                            if (var_s3->hitPoints != 0x7FFE) {
+                                //fcc
+                                if (var_s3->hitPoints < (sp58 * 2)) {
+                                    //fec
+                                    var_s3->hitFlags |= 3;
+                                //1000
+                                } else if (var_s3->hitPoints < ((sp58) * 4)) {
+                                    //1020
+                                    var_s3->hitFlags |= 2;
+                                } else {
+                                    //1034
+                                    var_s3->hitFlags |= 1;
+                                }
+                                //1040
+                                var_s3->hitPoints -= sp58;
+                            }
+                            //1054
+                            if ((var_s5->attackElement & 0x40) && (var_s3->hitboxState & 0x10)) {
+                                //107c
+                                var_s0 = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                                if (var_s0 != NULL) {
+                                    CreateEntityFromEntity(0xDU, var_s1, var_s0);
+                                    if (sp5C > var_s1->posX.i.hi) {
+                                        var_s0->params = 1;
+                                    }
+                                    var_s0->posX.i.hi = sp5C;
+                                    var_s0->posY.i.hi = sp5A;
+                                    var_s0->zPriority = 0xC0;
+                                }
+                            }
+                        }
+                        //10f8
+                        if (var_s3->hitPoints > 0) {
+                            //1108
+                            var_s0 = var_s3;
+                            //110c
+                            var_s6 = var_s5->enemyId;
+                            //1118
+                            do{
+                                var_s0->unk6D[var_s6] = var_s5->nFramesInvincibility;
+                                if (var_s3 < var_s0) {
+                                    var_s0->unk6D[var_s6]++;
+                                }
+                                if (!(var_s1->flags & 0x400000)) {
+                                    var_s0->stunFrames = var_s5->stunFrames;
+                                }
+                                //1164
+                                if ((!var_s0->hitEffect) && !(var_s0->flags & 0xF)) {
+                                    var_s0->hitEffect = var_s0->palette;
+                                }
+                                var_s0->nFramesInvincibility = var_s7;
+                                //118c
+                                var_s0->flags |= 0xF;
+                                //1198
+                                var_s0 = var_s0->unk60;
+                                }while ((var_s0 != NULL) && (var_s0 != var_s3));
+                                //11ac
+                                sp5F = ((u32)var_s3->flags >> 4) & 7 & 0xFF;
+                            continue;
+                        }
+                }
+block_164:
+                //11cc
+                PreventEntityFromRespawning(var_s3);
+                sp3C = &g_api.enemyDefs[var_s3->enemyId];
+                //11fc
+                if (!(var_s3->hitFlags & 0x80)) {
+                    //1210
+                    g_api.func_800FE044(sp3C->exp, sp3C->level);
+                    if ((var_s3->flags & 0x1000) && (g_Status.killCount < 0xF423F)) {
+                        g_Status.killCount++;
+                    }
+                }
+                //1280
+                var_s6 = var_s3->flags & 0xC00;
+                if (var_s6) {
+                    //1298
+                    if ((rand() & 0xFF) < g_api.func_800FF460(D_80181998[var_s6 >> 0xA])) {
+                        //12ec
+                        var_s0 = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                        //130c
+                        sp58 = 0;
+                        //1310
+                        if (var_s0 != NULL) {
+                            //1318
+                            if (sp56 == 5) {
+                                //132c
+                                sp4C = &D_80181A0C;
+                                var_s6 = rand() & 0xFFF;
+                                //1350
+                                while(1){
+                                    if (*sp4C++ >= var_s6 ) {
+                                        var_s6 = *sp4C;
+                                        break;
+                                    }
+                                    sp4C++;
+                                }
+                                
+                            } else {
+                                //139c
+                                var_s6 = g_api.func_800FF494(sp3C);
+                                //13c0
+                                if (var_s6 & 0x40) {
+                                    var_s6 = sp3C->rareItemId;
+                                    //13dc
+                                    //Paranthropus check: Drops turquoise if game not beaten. Otherwise ring of Varda
+                                    if ((var_s6 == 0x173) && (!g_IsTimeAttackUnlocked)) {
+                                        var_s6 = 0x16A;
+                                    } else {
+                                        //140c
+                                        sp58 = D_80181678[var_s3->enemyId];
+                                    }
+                                //1434
+                                } else if (var_s6 & 0x20) {
+                                    var_s6 = sp3C->uncommonItemId;
+                                } else {
+                                    //1458
+                                    var_s6 = D_801819CC[var_s6];
+                                }
+                            }
+                            //1474
+                            if (var_s6 >= 0x80) {
+                                var_s6 -= 0x80;
+                                CreateEntityFromEntity(10, var_s1, var_s0);
+                            } else {
+                                CreateEntityFromEntity(3, var_s1, var_s0);
+                            }
+                            //14c4
+                            var_s0->ext.relicOrb.yFloatSpeed = sp58;
+                            var_s0->params = var_s6;
+                            var_s0->velocityY = -0x38000;
+                        }
+                    }
+                }
+                //14e0
+                var_s0 = var_s3;
+                do{
+                    var_s0->flags |= 0x10C100;
+                    var_s0->flags &= 0xDFFFFFFF;
+                    //150c
+                    if (!var_s0->hitEffect) {
+                        var_s0->hitEffect = var_s0->palette;
+                    }
+                    var_s0->nFramesInvincibility = var_s7;
+                    var_s0->flags |= 0xF;
+                    var_s0 = var_s0->unk60;
+                //1538
+                }while(var_s0 != NULL && var_s0 != var_s3);
+                continue;
+                
+                unusual_spot:
+                //1564
+                if (!(var_s3->hitFlags & 0xF)) {
+                    var_s3->hitFlags |= 0x10;
+                }
+                //1570
+                if ((var_s3->flags & 0x10) && (var_s5->attack)) {
+                    if (var_s5->hitEffect & 0x80) {
+                        g_api.PlaySfx(0x611);
+                    } else {
+                        g_api.PlaySfx(0x611);
+                    }
+                }
+                //15d8
+                var_s0 = var_s3;
+                var_s6 = var_s5->enemyId;
+                do{
+                    if (var_s1->hitPoints == 0x7FFF) {
+                        if (var_s0->hitPoints == 0x7FFF) {
+                            var_s0->unk6D[var_s6] = var_s5->nFramesInvincibility;
+                            if (var_s3 < var_s0) {
+                                //1630
+                                var_s0->unk6D[var_s6]++;
+                            }
+                        }
+                    } else {
+                        //1644
+                        var_s0->unk6D[var_s6] = var_s5->nFramesInvincibility;
+                        if (var_s3 < var_s0) {
+                            var_s0->unk6D[var_s6]++;
+                        }
+                    }
+                    var_s0 = var_s0->unk60;
+                } while((var_s0 != NULL) && (var_s0 != var_s3));
+            }
+        }
+    }
+    //16a4
+    for(var_s2 = &g_PrimBuf[D_800973F8]; var_s2 != NULL; var_s2 = var_s2->next){
+        //16cc
+        if ((var_s2->drawMode) != 8) {
+            var_s7 = var_s2->p1;
+            var_s2->u0 = var_s2->u2 = D_8018199C[var_s7];
+            var_s2->u1 = var_s2->u3 = var_s2->u0 + 0x20;
+            var_s2->v0 = var_s2->v1 = D_801819A4[var_s7];
+            var_s2->v2 = var_s2->v3 = var_s2->v0 + 0x20;
+            var_s7++;
+            if (var_s7 >= 7) {
+                var_s2->drawMode = 8U;
+            } else {
+                var_s2->p1 = var_s7;
+            }
+        }
+    }
+}
 
 #include "../entity_damage_display.h"
 
