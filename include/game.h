@@ -1683,8 +1683,6 @@ extern s32 D_80096ED8[];
 extern s8 D_80097B98;
 extern s8 D_80097B99;
 extern s32 D_800973EC; // flag to check if the menu is shown
-extern s32 D_800973F8;
-extern s32 D_800973FC;
 extern unkGraphicsStruct g_unkGraphicsStruct;
 extern s32 D_80097448[]; // underwater physics. 7448 and 744C. Could be struct.
 extern s32 D_80097450;

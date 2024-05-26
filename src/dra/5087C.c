@@ -946,8 +946,8 @@ void func_800F2404(s32 arg0) {
 
     if (arg0 == 0) {
         g_unkGraphicsStruct.BottomCornerTextTimer = 0;
-        D_800973F8 = 0;
-        D_800973FC = 0;
+        g_unkGraphicsStruct.D_800973F8 = 0;
+        g_unkGraphicsStruct.D_800973FC = 0;
     }
     D_8003C704 = 0;
 
@@ -1069,7 +1069,8 @@ void DrawMapCursor(void) {
 
 bool func_800F27F4(s32 arg0) {
     if (arg0 == 0) {
-        if (D_800973FC != 0 || D_8006BB00 != 0 || D_8003C708.flags & 0x60) {
+        if (g_unkGraphicsStruct.D_800973FC != 0 || D_8006BB00 != 0 ||
+            D_8003C708.flags & 0x60) {
             return false;
         }
         D_801375C8 = 1;
@@ -1274,9 +1275,9 @@ void func_800F298C(void) {
             D_8003C730 = 0;
         }
         func_800F24F4();
-        D_800973F8 = AllocPrimitives(PRIM_GT4, 16);
-        if (D_800973F8 != 0) {
-            prim = &g_PrimBuf[D_800973F8];
+        g_unkGraphicsStruct.D_800973F8 = AllocPrimitives(PRIM_GT4, 16);
+        if (g_unkGraphicsStruct.D_800973F8 != 0) {
+            prim = &g_PrimBuf[g_unkGraphicsStruct.D_800973F8];
             while (prim != NULL) {
                 prim->tpage = 0x1A;
                 prim->clut = 0x120;
@@ -1478,7 +1479,7 @@ void func_800F298C(void) {
                 D_8003C9A4 = 10;
                 g_MenuStep = MENU_STEP_INIT;
             }
-            if (D_800973FC != 0) {
+            if (g_unkGraphicsStruct.D_800973FC != 0) {
                 if (D_8006BB00 == 0) {
                     D_8006BB00 = 1;
                     MuteCd();
@@ -1597,7 +1598,7 @@ void func_800F298C(void) {
                     break;
                 } else if (D_80097928 != 0) {
                     D_80097910 = g_StagesLba[g_StageId].unk18;
-                    if (D_800973FC != 1) {
+                    if (g_unkGraphicsStruct.D_800973FC != 1) {
                         PlaySfx(SET_STOP_MUSIC);
                         if (func_80131F68() == false) {
                             PlaySfx(D_80097910);
