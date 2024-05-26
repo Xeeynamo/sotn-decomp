@@ -1,7 +1,22 @@
 #include "../wrp/wrp.h"
 #include <sfx.h>
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_collect", func_8018CAB0);
+void func_8018CAB0(void) {
+    if (g_CurrentEntity->velocityY >= 0) {
+        g_CurrentEntity->ext.generic.unk84.unk +=
+            g_CurrentEntity->ext.generic.unk88.S16.unk0;
+        g_CurrentEntity->velocityX = g_CurrentEntity->ext.generic.unk84.unk;
+        if (g_CurrentEntity->velocityX == FIX(1) ||
+            g_CurrentEntity->velocityX == FIX(-1)) {
+            g_CurrentEntity->ext.generic.unk88.S16.unk0 =
+                -g_CurrentEntity->ext.generic.unk88.S16.unk0;
+        }
+    }
+
+    if (g_CurrentEntity->velocityY < FIX(0.25)) {
+        g_CurrentEntity->velocityY += FIX(0.125);
+    }
+}
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_collect", func_8018CB34);
 
