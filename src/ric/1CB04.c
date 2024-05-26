@@ -939,7 +939,7 @@ void func_8015B348(void) {
     switch (PLAYER.step_s) {
     case 0:
         g_CurrentEntity->flags |= FLAG_UNK_10000;
-        D_80097420[0] = 4;
+        g_unkGraphicsStruct.unk20[0] = 4;
         func_8015C93C(0x2000);
 
         if (PLAYER.velocityX == 0) {
@@ -1056,7 +1056,7 @@ void func_8015B348(void) {
     case 7:
         if (PLAYER.animFrameDuration < 0) {
             g_CurrentEntity->flags &= ~FLAG_UNK_10000;
-            D_80097420[0] = 0;
+            g_unkGraphicsStruct.unk20[0] = 0;
             func_8015CF08();
             func_8015C920(&D_801558DC);
             g_Player.D_80072F00[13] = 4;

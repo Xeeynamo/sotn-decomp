@@ -1511,7 +1511,7 @@ void func_801719A4(Entity* self) {
     s32 temp_a1_3;
     s32 temp_t0;
     s32 temp_v1_11;
-    if (*D_80097400 != 0) {
+    if (g_unkGraphicsStruct.unk0 != 0) {
         // FAKE, needed to make step load at the right time
         do {
             D_800973FC = 0;

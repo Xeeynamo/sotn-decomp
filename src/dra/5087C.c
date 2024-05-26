@@ -343,7 +343,7 @@ s32 func_800F0CD8(s32 arg0) {
     s32 var_s0;
     s32 var_v0;
 
-    if (D_80097418 == 0) {
+    if (g_unkGraphicsStruct.unk18 == 0) {
         if (D_80097C98 == 2) {
             var_v0 = SetNextRoomToLoad(
                 (g_Entities[0].posX.i.hi >> 8) + g_Tilemap.left,
@@ -380,7 +380,7 @@ s32 func_800F0CD8(s32 arg0) {
             playerX = g_Tilemap.width - 1;
         }
     }
-    if (D_80097424 == 0) {
+    if (g_unkGraphicsStruct.unk24 == 0) {
         if (playerY < g_Tilemap.y + 4) {
             temp_v0 = SetNextRoomToLoad(
                 (playerX >> 8) + g_Tilemap.left, g_Tilemap.top - 1);
@@ -414,33 +414,33 @@ s32 func_800F0CD8(s32 arg0) {
         }
     }
 block_25:
-    temp_a1 = g_Tilemap.x + *D_8009740C;
+    temp_a1 = g_Tilemap.x + g_unkGraphicsStruct.unk0[3];
 
     if (playerX < temp_a1) {
         if (arg0 != 0 && g_Tilemap.hSize != 1 &&
             temp_a1 < playerX + D_801375A4) {
             g_Entities[0].posX.i.hi =
                 (u16)g_Entities[0].posX.i.hi +
-                (playerX + D_801375A4 - (g_Tilemap.x + *D_8009740C));
+                (playerX + D_801375A4 - (g_Tilemap.x + g_unkGraphicsStruct.unk0[3]));
         }
         g_Tilemap.scrollX.i.hi = g_Tilemap.x;
     } else {
-        temp_a1_2 = g_Tilemap.width + *D_8009740C - 0x100;
+        temp_a1_2 = g_Tilemap.width + g_unkGraphicsStruct.unk0[3] - 0x100;
         if (temp_a1_2 < playerX) {
             if (arg0 != 0 && g_Tilemap.hSize != 1 &&
                 playerX + D_801375A4 < temp_a1_2) {
                 g_Entities[0].posX.i.hi =
                     ((u16)g_Entities[0].posX.i.hi) +
                     (((playerX + D_801375A4) + 0x100) -
-                     (g_Tilemap.width + (*D_8009740C)));
+                     (g_Tilemap.width + (g_unkGraphicsStruct.unk0[3])));
             }
             g_Tilemap.scrollX.i.hi = g_Tilemap.width - 0x100;
         } else {
-            g_Tilemap.scrollX.i.hi = playerX - (*D_8009740C);
-            g_Entities[0].posX.i.hi = *D_8009740C;
+            g_Tilemap.scrollX.i.hi = playerX - (g_unkGraphicsStruct.unk0[3]);
+            g_Entities[0].posX.i.hi = g_unkGraphicsStruct.unk0[3];
         }
     }
-    if (D_8009741C != 0) {
+    if (g_unkGraphicsStruct.unk1C != 0) {
         if (playerY < g_Tilemap.y + 0x8C) {
             g_Tilemap.scrollY.i.hi = g_Tilemap.y + 4;
             g_Entities[0].posY.i.hi = playerY - g_Tilemap.scrollY.i.hi;
@@ -941,33 +941,31 @@ void func_800F2288(s32 arg0) {
 }
 
 void func_800F2404(s32 arg0) {
-    s32* temp;
     s32* ptr;
     s32 count;
 
     if (arg0 == 0) {
-        g_BottomCornerTextTimer = 0;
+        g_unkGraphicsStruct.unk10 = 0;
         D_800973F8 = 0;
         D_800973FC = 0;
     }
 
-    temp = D_80097400;
-    *temp = 0;
+    g_unkGraphicsStruct.unk0 = 0;
     D_8003C704 = 0;
-    D_80097418 = 0;
-    D_8009741C[0] = 0;
-    D_8009740C[0] = 0x80;
+    g_unkGraphicsStruct.unk18 = 0;
+    g_unkGraphicsStruct.unk1C = 0;
+    g_unkGraphicsStruct.unkC = 0x80;
 
-    if (g_BottomCornerTextTimer != 0) {
-        FreePrimitives(g_BottomCornerTextPrims);
+    if (g_unkGraphicsStruct.unk10 != 0) {
+        FreePrimitives(g_unkGraphicsStruct.unk14);
     }
 
-    g_BottomCornerTextTimer = 0;
-    g_BottomCornerTextPrims = 0;
+    g_unkGraphicsStruct.unk10 = 0;
+    g_unkGraphicsStruct.unk14 = 0;
     g_unkGraphicsStruct.g_zEntityCenter.unk = 148;
     count = 7;
 
-    ptr = &D_80097400[17];
+    ptr = &g_unkGraphicsStruct.D_8009742C[8];
 
     while (count >= 0) {
         *ptr = 0;
@@ -975,8 +973,8 @@ void func_800F2404(s32 arg0) {
         ptr -= 1;
     }
 
-    D_80097420[0] = 0;
-    D_80097424 = 0;
+    g_unkGraphicsStruct.unk20 = 0;
+    g_unkGraphicsStruct.unk24 = 0;
     D_80097448[0] = 0;
     D_80097448[1] = 0;
     D_80097450 = 0;
@@ -1381,8 +1379,8 @@ void func_800F298C(void) {
             D_801375AC = g_Tilemap.scrollX.i.hi;
             D_801375B0 = g_Tilemap.scrollY.i.hi;
 
-            if (*D_80097420 != 0) {
-                func_8010E0D0(*D_80097420);
+            if (g_unkGraphicsStruct.unk20 != 0) {
+                func_8010E0D0(g_unkGraphicsStruct.unk20);
                 PlaySfx(SET_UNK_0E);
                 D_8003C9A4 = 5;
                 return;
@@ -1492,7 +1490,7 @@ void func_800F298C(void) {
                     MuteCd();
                 }
             } else if (D_8006BB00 != 0) {
-                if (*D_80097400 != 0) {
+                if (g_unkGraphicsStruct.unk0 != 0) {
                     D_80097928 = 0;
                     D_8006BB00 = 0;
                     UnMuteCd();
@@ -1794,19 +1792,19 @@ void func_800F298C(void) {
             func_801028AC(1);
             break;
         case 0x5:
-            if (*D_80097420 != 0) {
+            if (g_unkGraphicsStruct.unk20 != 0) {
                 if (g_StageId != STAGE_ST0) {
                     if (g_PlayableCharacter == PLAYER_ALUCARD) {
-                        if (*D_80097420 == 0xFFF) {
+                        if (g_unkGraphicsStruct.unk20 == 0xFFF) {
                             EntityAlucard();
                             func_8011A870();
                             g_api.o.unk28();
                             if (g_pads[1].pressed & PAD_DOWN) {
-                                *D_80097420 = 0;
+                                g_unkGraphicsStruct.unk20 = 0;
                             }
                         } else {
-                            if (*D_80097420 != 0xFF) {
-                                func_8010DF70(*D_80097420);
+                            if (g_unkGraphicsStruct.unk20 != 0xFF) {
+                                func_8010DF70(g_unkGraphicsStruct.unk20);
                                 func_8011A4D0();
                             }
                             g_api.o.unk28();

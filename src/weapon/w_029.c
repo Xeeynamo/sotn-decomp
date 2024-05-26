@@ -251,7 +251,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         self->velocityY = 0;
         DestroyEntityWeapon(1);
         g_api.PlaySfx(0x641);
-        *D_80097420 = 1;
+        *g_unkGraphicsStruct.unk20 = 1;
         self->step++;
         break;
 
@@ -319,7 +319,7 @@ void EntityWeaponShieldSpell(Entity* self) {
             g_api.CreateEntFactoryFromEntity(
                 self, ((g_HandId + 1) << 14) + 102, 0);
             self->ext.weapon.unk80 = 0x18;
-            *D_80097420 = 0;
+            *g_unkGraphicsStruct.unk20 = 0;
             self->step++;
         }
         break;

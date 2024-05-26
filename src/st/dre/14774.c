@@ -269,14 +269,14 @@ void func_80194FF4(u8 ySteps) {
 INCLUDE_ASM("st/dre/nonmatchings/14774", EntitySuccubusCutscene);
 
 void func_801961DC(s16 arg0) {
-    s16 temp_v0 = arg0 - *(s16*)D_8009740C;
+    s16 temp_v0 = arg0 - *(s16*)g_unkGraphicsStruct.unkC;
 
     if (temp_v0 > 1) {
-        D_8009740C[0]++;
+        g_unkGraphicsStruct.unkC++;
     } else if (temp_v0 < -1) {
-        D_8009740C[0]--;
+        g_unkGraphicsStruct.unkC--;
     } else {
-        D_8009740C[0] = arg0;
+        g_unkGraphicsStruct.unkC = arg0;
     }
 }
 

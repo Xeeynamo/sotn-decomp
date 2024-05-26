@@ -9,7 +9,7 @@ void func_80115F54(void) {
     var_s2 = false;
     PLAYER.drawFlags = FLAG_DRAW_ROTZ;
     plDraw = g_PlayerDraw;
-    if (*D_80097420 == 0xFFF && PLAYER.step_s != 0) {
+    if (g_unkGraphicsStruct.unk20 == 0xFFF && PLAYER.step_s != 0) {
         SetPlayerStep(Player_Unk17);
         PLAYER.velocityY = 0;
         PLAYER.velocityX = 0;

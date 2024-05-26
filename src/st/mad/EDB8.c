@@ -537,9 +537,9 @@ void CollectGold(u16 goldSize) { // CollectGold
         *gold = MAX_GOLD;
     }
 
-    unk = &g_BottomCornerTextTimer;
+    unk = &g_unkGraphicsStruct.unk10;
     if (*unk) {
-        g_api.FreePrimitives(g_BottomCornerTextPrims); // g_api.FreePrimitives
+        g_api.FreePrimitives(g_unkGraphicsStruct.unk14); // g_api.FreePrimitives
         *unk = 0;
     }
 

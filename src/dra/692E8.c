@@ -455,7 +455,7 @@ void EntityAlucard(void) {
                     if (PLAYER.step != 0x30) {
                         func_8010E168(1, 4);
                         SetPlayerStep(0x30);
-                        *D_80097400 = 1;
+                        g_unkGraphicsStruct.unk0 = 1;
                     }
                     break;
                 case 2: /* switch 6 */
@@ -465,7 +465,7 @@ void EntityAlucard(void) {
                     } else {
                         SetPlayerStep(0x31);
                     }
-                    *D_80097400 = 1;
+                    g_unkGraphicsStruct.unk0 = 1;
                     break;
                 }
             } else {
@@ -778,7 +778,7 @@ block_160:
         weapon_func();
     }
     var_s0 = 0;
-    D_8009741C[0] &= ~2;
+    g_unkGraphicsStruct.unk1C &= ~2;
     g_Player.unk0C &= ~8;
     g_Player.unk08 = g_Player.unk0C;
     g_Status.D_80097BF8 &= ~1;
@@ -805,7 +805,7 @@ block_160:
     case 5: /* switch 5 */
         if (PLAYER.step_s == 3) {
             func_8010E168(1, 4);
-            D_8009741C[0] |= 2;
+            g_unkGraphicsStruct.unk1C |= 2;
         }
         var_s0 = 0x28100001;
         break;
@@ -892,7 +892,7 @@ block_160:
         PLAYER.palette = 0x810D;
         break;
     case 24: /* switch 5 */
-        D_8009741C[0] |= 2;
+        g_unkGraphicsStruct.unk1C |= 2;
         if (abs(PLAYER.velocityX) > FIX(3)) {
             func_8010E168(1, 4);
         }

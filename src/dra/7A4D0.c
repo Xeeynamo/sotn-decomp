@@ -80,7 +80,7 @@ void func_8011A4D0(void) {
     s32 i2;
     s32 enemy;
 
-    temp_s2 = *D_80097420;
+    temp_s2 = g_unkGraphicsStruct.unk20;
     entity = g_CurrentEntity = &g_Entities[4];
     for (i = 4; i < 64; i++, g_CurrentEntity++, entity++) {
         if (i == 16 && entity->entityId == E_NONE) {

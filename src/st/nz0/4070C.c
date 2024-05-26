@@ -770,13 +770,13 @@ void BottomCornerText(u8* str, u8 lower_left) {
         }
     }
 
-    g_BottomCornerTextPrims = g_api.AllocPrimitives(PRIM_SPRT, charcount + 4);
-    if (g_BottomCornerTextPrims == -1) {
+    g_unkGraphicsStruct.unk14 = g_api.AllocPrimitives(PRIM_SPRT, charcount + 4);
+    if (g_unkGraphicsStruct.unk14 == -1) {
         return;
     }
 #undef charcount
 
-    prim = &g_PrimBuf[g_BottomCornerTextPrims];
+    prim = &g_PrimBuf[g_unkGraphicsStruct.unk14];
     prim->type = 3;
     prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->g0 = prim->g1 = prim->g2 =
         prim->g3 = prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
@@ -865,5 +865,5 @@ void BottomCornerText(u8* str, u8 lower_left) {
         }
     }
 #undef xpos
-    g_BottomCornerTextTimer = 0x130;
+    g_unkGraphicsStruct.unk10 = 0x130;
 }

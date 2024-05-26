@@ -574,7 +574,7 @@ void func_8015E800(void) {
 
     var_s5 = 0;
     i = 0;
-    if (D_80097418 != 0) {
+    if (g_unkGraphicsStruct.unk18 != 0) {
         *vram_ptr = 1;
         return;
     }
@@ -748,7 +748,7 @@ void func_8015EE28(void) {
     // weird thing where i has to get initialized first
     i = 1;
 
-    if (D_80097418 != 0) {
+    if (g_unkGraphicsStruct.unk18 != 0) {
         return;
     }
     for (i = 1; i < 4; i++) {
@@ -911,7 +911,7 @@ void func_8015F414(void) {
     u16* xPosPtr = &PLAYER.posX.i.hi;
     s32* vram_ptr = &g_Player.pl_vram_flag;
 
-    if (D_80097418 != 0) {
+    if (g_unkGraphicsStruct.unk18 != 0) {
         return;
     }
     temp_s0 =
@@ -984,7 +984,7 @@ void func_8015F680(void) {
     u16* xPosPtr = &PLAYER.posX.i.hi;
     s32* vram_ptr = &g_Player.pl_vram_flag;
 
-    if (D_80097418 != 0) {
+    if (g_unkGraphicsStruct.unk18 != 0) {
         return;
     }
     temp_s0 =
@@ -1405,7 +1405,7 @@ void func_801603C4(void) {
     s32 enemy;
     s32 enemy2;
 
-    temp_s2 = *D_80097420;
+    temp_s2 = *g_unkGraphicsStruct.unk20;
     entity = g_CurrentEntity = &g_Entities[4];
     for (i = 4; i < 0x40; i++, g_CurrentEntity++, entity++) {
         if (entity->entityId != 0) {

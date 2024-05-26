@@ -1669,7 +1669,6 @@ extern s32 g_PrevScrollY;
 extern s32 D_80073080;
 extern Tilemap g_Tilemap;
 extern Entity g_Entities[TOTAL_ENTITY_COUNT];
-extern unkGraphicsStruct g_unkGraphicsStruct;
 extern s32 g_entityDestroyed[18];
 extern Event g_EvHwCardEnd;
 extern Event g_EvHwCardErr;
@@ -1686,14 +1685,7 @@ extern s8 D_80097B99;
 extern s32 D_800973EC; // flag to check if the menu is shown
 extern s32 D_800973F8;
 extern s32 D_800973FC;
-extern s32 D_80097400[];
-extern s32 D_8009740C[];
-extern s32 g_BottomCornerTextTimer;
-extern s32 g_BottomCornerTextPrims;
-extern s32 D_80097418;
-extern s32 D_8009741C[];
-extern s32 D_80097420[];
-extern s32 D_80097424;
+extern unkGraphicsStruct g_unkGraphicsStruct;
 extern s32 D_80097448[]; // underwater physics. 7448 and 744C. Could be struct.
 extern s32 D_80097450;
 extern Pos D_80097488;
