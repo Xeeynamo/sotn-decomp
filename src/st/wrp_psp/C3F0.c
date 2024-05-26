@@ -33,3 +33,5 @@ void UnkPolyFunc2(Primitive* prim) {
     prim->next->type = PRIM_LINE_G2;
     prim->next->drawMode = 0xA;
 }
+
+INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/C3F0", PrimDecreaseBrightness);

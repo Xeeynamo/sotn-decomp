@@ -54,7 +54,6 @@ segments:
       - [0xBDA0, c, wrp_psp/BDA0]
       - [0xBFD8, c, wrp_psp/BFD8]
       - [0xC3F0, c, wrp_psp/C3F0]
-      - [0xD010, c, wrp_psp/D010]
       - [0xD0E0, c, wrp_psp/st_init_wrp]
       - [0xD1B8, c, wrp/e_breakable]
       - [0xD338, c, wrp/st_debug]
