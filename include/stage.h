@@ -27,7 +27,12 @@ extern LayoutEntity* g_pStObjLayoutHorizontal[];
  */
 extern LayoutEntity* g_pStObjLayoutVertical[];
 
+#if defined(VERSION_PSP)
+extern PfnEntityUpdate* PfnEntityUpdates;
+#else
 extern PfnEntityUpdate PfnEntityUpdates[];
+#endif
+
 extern u16 g_ItemIconSlots[0x20];
 extern u16 UNK_Invincibility0[];
 
@@ -52,7 +57,6 @@ void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
 void CreateEntityFromLayout(Entity* entity, LayoutEntity* initDesc);
 void DestroyEntity(Entity*);
 void DestroyEntitiesFromIndex(s16 index);
-s32 AnimateEntity(const u8 frames[], Entity* entity);
 void MoveEntity();
 void FallEntity(void);
 Entity* AllocEntity(Entity* start, Entity* end);

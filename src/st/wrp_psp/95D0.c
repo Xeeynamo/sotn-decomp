@@ -1,4 +1,4 @@
-#include "common.h"
+#include "../wrp/wrp.h"
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/95D0", TestCollisions);
 

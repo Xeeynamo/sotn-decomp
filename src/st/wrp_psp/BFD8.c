@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/BFD8", AnimateEntity);
+#include "../animate_entity.h"
 
 u8 GetSideToPlayer() {
     u8 side = 0;
@@ -41,7 +41,10 @@ Entity* AllocEntity(Entity* start, Entity* end) {
     return NULL;
 }
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/BFD8", UnkEntityFunc0);
+void UnkEntityFunc0(u16 slope, s16 speed) {
+    g_CurrentEntity->velocityX = rcos(slope) * speed / 16;
+    g_CurrentEntity->velocityY = rsin(slope) * speed / 16;
+}
 
 u16 func_8018C160(Entity* a, Entity* b) {
     s32 diffX = b->posX.i.hi - a->posX.i.hi;
