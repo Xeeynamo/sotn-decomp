@@ -1,5 +1,14 @@
-#include "common.h"
-#include "game.h"
+#include "../wrp/wrp.h"
+
+#include "../../destroy_entity.h"
+
+void PreventEntityFromRespawning(Entity* entity) {
+    if (entity->entityRoomIndex) {
+        u16 index = entity->entityRoomIndex - 1 >> 5;
+        g_unkGraphicsStruct.D_80097428[index] |=
+            1 << ((entity->entityRoomIndex - 1) & 0x1F);
+    }
+}
 
 #include "../animate_entity.h"
 
@@ -51,3 +60,24 @@ u16 func_8018C160(Entity* a, Entity* b) {
     s32 diffY = b->posY.i.hi - a->posY.i.hi;
     return ratan2(diffY, diffX);
 }
+
+INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/st_common", func_8018C1E0);
+
+void SetStep(u8 step) {
+    g_CurrentEntity->step = step;
+    g_CurrentEntity->step_s = 0;
+    g_CurrentEntity->animFrameIdx = 0;
+    g_CurrentEntity->animFrameDuration = 0;
+}
+
+INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/st_common", InitializeEntity);
+
+void EntityDummy(Entity* arg0) {
+    if (!arg0->step) {
+        arg0->step++;
+    }
+}
+
+INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/st_common", func_8018C55C);
+
+INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/st_common", ReplaceBreakableWithItemDrop);
