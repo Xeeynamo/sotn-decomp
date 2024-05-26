@@ -1,5 +1,4 @@
-#include "common.h"
-#include "game.h"
+#include <game.h>
 
 // redeclaring for the moment due to header conflict with Random() definition
 typedef struct {
@@ -40,9 +39,9 @@ void FindFirstEntityToTheLeft(s16 posX) {
     }
 }
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", func_8018A170);
+INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", CreateEntitiesToTheRight);
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", func_8018A26C);
+INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", CreateEntitiesToTheLeft);
 
 void FindFirstEntityAbove(s16 arg0) {
     while (true) {
@@ -65,13 +64,13 @@ void FindFirstEntityBelow(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", func_8018A424);
+INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", CreateEntitiesAbove);
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", func_8018A520);
+INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", CreateEntitiesBelow);
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", InitRoomEntities);
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", func_8018A7AC);
+INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4D0", UpdateRoomPosition);
 
 extern PfnEntityUpdate* PfnEntityUpdates;
 void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity) {
