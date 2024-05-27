@@ -1,9 +1,9 @@
 #include "st0.h"
 
-// Warning: This is different from TestCollisions in other overlays.
+// Warning: This is different from HitDetection in other overlays.
 // Some of the logic is removed since it doesn't apply in prologue.
 // Attempting to de-duplicate this would involve a lot of #ifdef.
-void TestCollisions(void) {
+void HitDetection(void) {
     s32 temp_rand;
     Entity* otherEntity;
     Primitive* prim;

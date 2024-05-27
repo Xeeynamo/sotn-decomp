@@ -1,7 +1,7 @@
 #include "stage.h"
 
 void Update(void);
-void TestCollisions(void);
+void HitDetection(void);
 void CreateEntityWhenInHorizontalRange(LayoutEntity*);
 void func_8018A520(s16);
 void UpdateRoomPosition(void);
@@ -19,7 +19,7 @@ void UpdateStageEntities(void);
 
 Overlay g_StageOverlay = {
     /* 0x00 */ Update,
-    /* 0x04 */ TestCollisions,
+    /* 0x04 */ HitDetection,
     /* 0x08 */ UpdateRoomPosition,
     /* 0x0C */ InitRoomEntities,
     /* 0x10 */ g_Rooms,

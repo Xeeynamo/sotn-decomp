@@ -1093,7 +1093,7 @@ typedef struct {
 
 typedef struct {
     /* 8003C774 */ void (*Update)(void);
-    /* 8003C778 */ void (*TestCollisions)(void);
+    /* 8003C778 */ void (*HitDetection)(void);
     /* 8003C77C */ void (*unk08)(void);
     /* 8003C780 */ void (*InitRoomEntities)(s32 layoutId);
     /* 8003C784 */ RoomHeader* rooms;
