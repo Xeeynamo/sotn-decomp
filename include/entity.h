@@ -130,6 +130,12 @@ typedef struct {
 } ET_HeartDrop;
 
 typedef struct {
+    /* 0x7C */ u16 timer;
+    /* 0x7E */ u16 size;
+    /* 0x80 */ s32 speed;
+} ET_BloodDroplets;
+
+typedef struct {
     /* 0x7C */ u16 nPrims;
     /* 0x7E */ u16 nDigits;
     /* 0x80 */ u8 digits[4];
@@ -968,6 +974,7 @@ typedef union { // offset=0x7C
     ET_GiantSpinningCross giantcross;
     ET_EquipItemDrop equipItemDrop;
     ET_HeartDrop heartDrop;
+    ET_BloodDroplets bloodDroplets;
     ET_NumericDamage ndmg;
     ET_RelicOrb relicOrb;
     ET_RedDoor door;

@@ -54,6 +54,9 @@ typedef struct Primitive {
 // But it's an alternate use of the Primitive structure.
 typedef struct FakePrim {
     struct FakePrim* next;
+#if defined(VERSION_PC) || defined(VERSION_PSP)
+    u_long dummy;
+#endif
     /* 0x04 */ u8 r0;
     /* 0x05 */ u8 g0;
     /* 0x06 */ u8 b0;
