@@ -74,6 +74,6 @@ $(PSP_BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.pspeu.tt_%.yaml $(PSX_BASE_SYMS) $
 $(PSP_BUILD_DIR)/tt_%.elf: $(PSP_BUILD_DIR)/tt_%.ld $$(call list_o_files_psp,servant/tt_$$*) $(PSP_BUILD_DIR)/assets/servant/tt_%/mwo_header.bin.o
 	$(call link,tt_$*,$@)
 
-ST_WRP_MERGE = st_debug e_breakable
+ST_WRP_MERGE = st_update st_debug e_breakable
 $(PSP_BUILD_DIR)/stwrp.elf: $(PSP_BUILD_DIR)/stwrp.ld $(addprefix $(PSP_BUILD_DIR)/src/st/wrp/,$(addsuffix .c.o,$(ST_WRP_MERGE))) $$(call list_o_files_psp,st/wrp_psp) $(PSP_BUILD_DIR)/assets/st/wrp/mwo_header.bin.o
 	$(call link,stwrp,$@)
