@@ -3,7 +3,7 @@
 // Slightly different to other overlays. May be possible to
 //  de-duplicate with several #ifdef, but for now it's broken out.
 
-void TestCollisions(void) {
+void HitDetection(void) {
     s32 temp_rand;
     Entity* otherEntity;
     Primitive* prim;
