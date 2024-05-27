@@ -947,7 +947,7 @@ s32 func_800FF460(s32 arg0) {
     if (arg0 == 0) {
         return 0;
     }
-    return arg0 + ((u32)(arg0 * g_Status.statsTotal[3]) >> 7);
+    return arg0 + ((u32)(arg0 * g_Status.statsTotal[STAT_LCK]) >> 7);
 }
 
 // Determine what type of item to drop
