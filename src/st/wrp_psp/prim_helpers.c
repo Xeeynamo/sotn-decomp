@@ -32,4 +32,46 @@ void UnkPolyFunc2(Primitive* prim) {
     prim->next->drawMode = 0xA;
 }
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/prim_helpers", PrimDecreaseBrightness);
+struct SubPrim {
+    u8 col[3];
+    u8 type;
+    s16 x0;
+    s16 y0;
+    u8 u0;
+    u8 v0;
+    u16 clut;
+};
+
+typedef struct Primitive2 {
+    struct Primitive2* next;
+    u32 dummy;
+    struct SubPrim prim[4];
+} Primitive2;
+
+s32 PrimDecreaseBrightness(Primitive2* prim, u8 amount) {
+    s32 isEnd;
+    s32 i;
+    s32 j;
+    struct SubPrim* subprim;
+    u8* pColor;
+    s32 col;
+
+    isEnd = 0;
+    subprim = &prim->prim[0];
+    for (i = 0; i < 4; i++) {
+        j = 0;
+        for (; j < 3; j++) {
+            pColor = &subprim->col[j];
+            col = *pColor;
+            col = col - amount;
+            if (col < 0) {
+                col = 0;
+            } else {
+                isEnd |= 1;
+            }
+            *pColor = col;
+        }
+        subprim++;
+    }
+    return isEnd;
+}
