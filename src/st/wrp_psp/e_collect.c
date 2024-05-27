@@ -81,7 +81,33 @@ INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_collect", DestroyCurrentEntity);
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_collect", EntityPrizeDrop);
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_collect", EntityExplosion);
+extern u16 D_80180458[];
+extern s32 D_80180EC4[];
+extern u8* D_80180F70[];
+void EntityExplosion(Entity* entity) {
+    if (!entity->step) {
+        InitializeEntity(D_80180458);
+        entity->animFrameIdx = 0;
+        entity->animFrameDuration = 0;
+        entity->animSet = ANIMSET_DRA(2);
+        entity->drawMode = 0x30;
+        if (entity->params & 0xF0) {
+            entity->palette = 0x8195;
+            entity->drawMode = DRAW_TPAGE;
+        }
+
+        if (entity->params & 0xFF00) {
+            entity->zPriority = (entity->params & 0xFF00) >> 8;
+        }
+        entity->params &= 15;
+        entity->velocityY = D_80180EC4[entity->params];
+    } else {
+        entity->posY.val += entity->velocityY;
+        if (!AnimateEntity(D_80180F70[entity->params], entity)) {
+            DestroyEntity(entity);
+        }
+    }
+}
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_collect", BlinkItem);
 
