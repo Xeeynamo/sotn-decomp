@@ -1,8 +1,7 @@
 void PreventEntityFromRespawning(Entity* entity) {
     if (entity->entityRoomIndex) {
-        u32 value = (entity->entityRoomIndex - 1);
-        u16 index = value / 32;
-        u16 bit = value % 32;
-        g_entityDestroyed[index] |= 1 << bit;
+        u16 index = entity->entityRoomIndex - 1 >> 5;
+        g_unkGraphicsStruct.D_80097428[index] |=
+            1 << ((entity->entityRoomIndex - 1) & 0x1F);
     }
 }

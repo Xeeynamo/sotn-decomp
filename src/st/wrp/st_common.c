@@ -196,12 +196,12 @@ s32 func_8018BC88(s16* posX) {
 
 Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
+
     while (current < end) {
-        if (current->entityId == E_NONE) {
+        if (!current->entityId) {
             DestroyEntity(current);
             return current;
         }
-
         current++;
     }
     return NULL;
@@ -254,18 +254,18 @@ u16 func_8018C198(s32 x, s32 y) {
 }
 #endif
 
-u16 func_8018C1E0(u16 arg0, s16 arg1, s16 arg2) {
-    u16 var_v0 = arg1;
-    u16 temp_a2 = arg2 - arg1;
-    u16 var_v0_2;
+u16 func_8018C1E0(u16 arg0, u16 arg1, u16 arg2) {
+    u16 temp_a2;
+    u16 var_v0;
 
+    temp_a2 = (s16)(arg2 - arg1);
     if (temp_a2 & 0x800) {
-        var_v0_2 = (0x800 - temp_a2) & 0x7FF;
+        var_v0 = (0x800 - temp_a2) & 0x7FF;
     } else {
-        var_v0_2 = temp_a2;
+        var_v0 = temp_a2;
     }
 
-    if (var_v0_2 > arg0) {
+    if (var_v0 > arg0) {
         if (temp_a2 & 0x800) {
             var_v0 = arg1 - arg0;
         } else {
@@ -273,9 +273,9 @@ u16 func_8018C1E0(u16 arg0, s16 arg1, s16 arg2) {
         }
 
         return var_v0;
+    } else {
+        return arg2;
     }
-
-    return arg2;
 }
 
 void SetStep(u8 step) {
@@ -345,7 +345,7 @@ void InitializeEntity(u16 arg0[]) {
 }
 
 void EntityDummy(Entity* arg0) {
-    if (arg0->step == 0) {
+    if (!arg0->step) {
         arg0->step++;
     }
 }
