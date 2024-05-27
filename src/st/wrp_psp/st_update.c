@@ -2,8 +2,6 @@
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/st_update", Update);
 
-// INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/st_update", UpdateStageEntities);
-
 extern u16 UNK_Invincibility0[];
 
 void UpdateStageEntities(void) {
