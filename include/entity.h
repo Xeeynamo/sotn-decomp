@@ -4,6 +4,8 @@
 
 #include "common.h"
 
+typedef void (*PfnEntityUpdate)(struct Entity*);
+
 typedef union {
     s32 unk;
     void* ptr;
@@ -119,6 +121,13 @@ typedef struct {
     /* 0x16 */ s16 unk92;
     /* 0x18 */ s16 unk94;
 } ET_EquipItemDrop;
+
+typedef struct {
+    /* 0x7C */ u32 unk[14];
+    /* 0xB4 */ u16 unkB4;
+    /* 0xB6 */ s16 unkB6;
+    /* 0xB8 */ PfnEntityUpdate update;
+} ET_HeartDrop;
 
 typedef struct {
     /* 0x7C */ u16 nPrims;
@@ -958,6 +967,7 @@ typedef union { // offset=0x7C
     ET_RicRevivalColumn ricColumn;
     ET_GiantSpinningCross giantcross;
     ET_EquipItemDrop equipItemDrop;
+    ET_HeartDrop heartDrop;
     ET_NumericDamage ndmg;
     ET_RelicOrb relicOrb;
     ET_RedDoor door;
