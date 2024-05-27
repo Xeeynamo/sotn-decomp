@@ -322,7 +322,7 @@ void HitDetection(void) {
                         if (entFrom5C->hitPoints != 0x7FFE) {
                             if (entFrom5C->hitPoints < (miscVar1 * 2)) {
                                 entFrom5C->hitFlags |= 3;
-                            } else if (entFrom5C->hitPoints < ((miscVar1)*4)) {
+                            } else if (entFrom5C->hitPoints < (miscVar1 * 4)) {
                                 entFrom5C->hitFlags |= 2;
                             } else {
                                 entFrom5C->hitFlags |= 1;
@@ -963,7 +963,7 @@ void func_80192EF8(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/EDB8", func_80193050);
+#include "../get_player_collision_with.h"
 
 #include "../replace_breakable_with_item_drop.h"
 

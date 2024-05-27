@@ -1,6 +1,7 @@
 g_CastleFlags       = 0x8003BDEC;
 g_api               = 0x8003C670;
-g_CurrentRoom       = 0x80072b50;
-g_Camera            = 0x80072b3c;
 g_Player            = 0x80072684;
+g_Camera            = 0x80072B3C;
+g_CurrentRoom       = 0x80072550;
 g_unkGraphicsStruct = 0x80096EA8;
+D_80097488          = 0x80096F38;

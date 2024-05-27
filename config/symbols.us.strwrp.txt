@@ -38,6 +38,7 @@ AllocEntity = 0x8018DDF0;
 SetStep = 0x8018E1C0;
 InitializeEntity = 0x8018E290;
 EntityDummy = 0x8018E38C;
+GetPlayerCollisionWith = 0x8018E634;
 CollectHeart = 0x8018EC10;
 CollectGold = 0x8018EC90;
 CollectSubweapon = 0x8018ED6C;

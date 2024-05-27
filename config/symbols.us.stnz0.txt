@@ -72,6 +72,7 @@ SetStep = 0x801BD52C;
 SetSubStep = 0x801BD54C;
 InitializeEntity = 0x801BD5FC;
 EntityDummy = 0x801BD6F8;
+GetPlayerCollisionWith = 0x801BD9A0;
 EntityPrizeDrop = 0x801BE30C;
 EntityExplosion = 0x801BEB80;
 EntityEquipItemDrop = 0x801BED20;

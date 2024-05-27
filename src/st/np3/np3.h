@@ -50,7 +50,7 @@ extern void func_801BB140(s16);
 extern void func_801BB2F8(s16);
 extern void func_801BB3F4(s16);
 extern s32 func_801BD308(u16* hitSensors, s16 sensorCount);
-extern s32 func_801BD588(Entity* arg0, s32 arg1, s32 arg2, s32 arg3);
+extern s32 GetPlayerCollisionWith(Entity* entity, u16 w, u16 h, u16 flags);
 extern s32 GetDistanceToPlayerX(void);
 extern void func_801C070C(Entity* entity);
 extern void func_801CD658();

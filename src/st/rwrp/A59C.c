@@ -255,7 +255,7 @@ INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018E3B4);
 
 INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018E4DC);
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018E634);
+#include "../get_player_collision_with.h"
 
 #include "../replace_breakable_with_item_drop.h"
 

@@ -506,7 +506,7 @@ void EntityPlatform(Entity* self) {
     u16 temp_a1;
 
     self->posY.i.hi -= 8;
-    temp_a1 = func_80195318(self, 0x20, 0x11, 4);
+    temp_a1 = GetPlayerCollisionWith(self, 0x20, 0x11, 4);
     temp_s1 = player->posX.i.hi + g_Tilemap.scrollX.i.hi;
     temp_v0 = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
 
@@ -1008,10 +1008,12 @@ void EntityUnkId1B(Entity* self) {
         self->posX.i.hi = entity->posX.i.hi;
         if (self->params == step) {
             self->posY.i.hi = entity->posY.i.hi + 35;
-            self->ext.generic.unk80.modeS8.unk0 = func_80195318(self, 12, 8, 4);
+            self->ext.generic.unk80.modeS8.unk0 =
+                GetPlayerCollisionWith(self, 12, 8, 4);
         } else {
             self->posY.i.hi = entity->posY.i.hi - 24;
-            self->ext.generic.unk80.modeS8.unk0 = func_80195318(self, 12, 8, 6);
+            self->ext.generic.unk80.modeS8.unk0 =
+                GetPlayerCollisionWith(self, 12, 8, 6);
         }
         break;
     }

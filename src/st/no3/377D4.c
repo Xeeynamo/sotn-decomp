@@ -627,7 +627,8 @@ void EntityCavernDoorPlatform(Entity* self) {
 
     case 1:
         player = &PLAYER;
-        self->ext.generic.unk84.S8.unk0 = temp2 = func_801C5D18(self, 6, 5, 4);
+        self->ext.generic.unk84.S8.unk0 = temp2 =
+            GetPlayerCollisionWith(self, 6, 5, 4);
 
         if (temp2 != 0) {
             temp = self->posX.i.hi;
@@ -792,7 +793,7 @@ void func_801B9C44(WeightSelect weight) {
 
 // switch that clicks when you step on it
 void EntityClickSwitch(Entity* entity) {
-    s32 temp_a0 = func_801C5D18(entity, 8, 4, 4);
+    s32 temp_a0 = GetPlayerCollisionWith(entity, 8, 4, 4);
     Entity* player = &PLAYER;
 
     switch (entity->step) {
@@ -886,7 +887,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
         break;
     }
 
-    if (self->step < 3 && func_801C5D18(self, 16, 16, 5) & 4) {
+    if (self->step < 3 && GetPlayerCollisionWith(self, 16, 16, 5) & 4) {
         Entity* player = &PLAYER;
 
         player->posY.i.hi++;
@@ -1587,7 +1588,7 @@ void EntityUnkId2A(Entity* entity) {
 
 // switch that goes downwards when you stand on it
 void EntitySwitch(Entity* entity) {
-    s32 temp_a0 = func_801C5D18(entity, 8, 4, 4);
+    s32 temp_a0 = GetPlayerCollisionWith(entity, 8, 4, 4);
     Entity* player = &PLAYER;
 
     switch (entity->step) {

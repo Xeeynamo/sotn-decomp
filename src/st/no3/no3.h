@@ -86,7 +86,7 @@ typedef enum EntityIDs {
 
 extern void CreateEntityFromCurrentEntity(u16, Entity*);
 extern void ReplaceBreakableWithItemDrop(Entity*);
-extern s32 func_801C5D18(Entity* entity, s32 arg1, s32 arg2, s32 arg3);
+extern s32 GetPlayerCollisionWith(Entity* entity, u16 w, u16 h, u16 flags);
 extern Primitive* FindFirstUnkPrim(Primitive* poly);
 
 extern u16 g_InitializeData0[];
