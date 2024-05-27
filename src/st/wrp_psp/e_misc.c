@@ -94,8 +94,8 @@ void func_8018F838(Entity* self) {
     }
 }
 
-s16 D_80180FF8[];
-s32 D_80181008[];
+extern s16 D_80180FF8[];
+extern s32 D_80181008[];
 void EntityUnkId15(Entity* self) {
     if (!self->step) {
         self->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
