@@ -86,3 +86,4 @@ g_LayoutObjVertical = 0x801997DC;
 g_LayoutObjPosVertical = 0x801997E4;
 UpdateRoomPosition = 0x80190F04;
 g_pStObjLayoutVertical = 0x801803C8;
+GetPlayerCollisionWith = 0x80193050;

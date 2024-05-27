@@ -106,3 +106,4 @@ g_LayoutObjPosHorizontal = 0x801CAA7C;
 g_LayoutObjPosVertical = 0x801CAA80;
 g_Dialogue = 0x801CB688;
 g_ItemIconSlots = 0x801CB740;
+GetPlayerCollisionWith = 0x801BD9A0;

@@ -40,7 +40,7 @@ void DestroyEntity(Entity* item);
 void func_8019B858(void);
 void func_801BDD9C(void);
 s32 func_801BD720(u16* hitSensors, s16 sensorCount);
-s32 func_801BD9A0(Entity* entity, s32 arg1, s32 arg2, s32 arg3);
+s32 GetPlayerCollisionWith(Entity* entity, u16 w, u16 h, u16 flags);
 void EntityExplosion(Entity*);
 void func_801C33D8(const u32*, s32);
 void func_801C0B24(Entity* entity);

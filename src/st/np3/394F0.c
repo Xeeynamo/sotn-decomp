@@ -365,7 +365,7 @@ void func_801BD430(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-INCLUDE_ASM("st/np3/nonmatchings/394F0", func_801BD588);
+#include "../get_player_collision_with.h"
 
 #include "../replace_breakable_with_item_drop.h"
 
