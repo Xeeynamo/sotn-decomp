@@ -72,7 +72,35 @@ INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_misc", func_8018F838);
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_misc", EntityUnkId15);
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_misc", EntityIntenseExplosion);
+extern u16 D_80180458[];
+void EntityIntenseExplosion(Entity* self) {
+    if (!self->step) {
+        InitializeEntity(D_80180458);
+        self->palette = PAL_OVL(0x170);
+        self->animSet = ANIMSET_DRA(5);
+        self->animCurFrame = 1;
+        self->drawMode = 0x30;
+        if (self->params & 0xF0) {
+            self->palette = PAL_OVL(0x195);
+            self->drawMode = DRAW_TPAGE;
+        }
+
+        if (self->params & 0xFF00) {
+            self->zPriority = (self->params & 0xFF00) >> 8;
+        }
+        self->zPriority += 8;
+    } else {
+        self->animFrameDuration++;
+        self->posY.val -= FIX(0.25);
+        if ((self->animFrameDuration % 2) == 0) {
+            self->animCurFrame++;
+        }
+
+        if (self->animFrameDuration > 36) {
+            DestroyEntity(self);
+        }
+    }
+}
 
 void func_801916C4(s16 sfxId) {
     s32 posX;
