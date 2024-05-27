@@ -1699,6 +1699,15 @@
 | 1.00 | true     | EntityExplosionSpawn                | ../../asm/us/st/rwrp/nonmatchings/A59C/EntityExplosionSpawn.s 
 | 1.00 | true     | EntityExplosionSpawn                | ../../asm/us/st/wrp/nonmatchings/st_common/EntityExplosionSpawn.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | HitDetection                        | ../../asm/us/st/cen/nonmatchings/11280/HitDetection.s 
+| 1.00 | true     | HitDetection                        | ../../asm/us/st/dre/nonmatchings/173C4/HitDetection.s 
+| 0.95 | true     | HitDetection                        | ../../asm/us/st/mad/nonmatchings/EDB8/HitDetection.s 
+| 1.00 | true     | HitDetection                        | ../../asm/us/st/no3/nonmatchings/41C80/HitDetection.s 
+| 1.00 | true     | HitDetection                        | ../../asm/us/st/np3/nonmatchings/394F0/HitDetection.s 
+| 1.00 | true     | HitDetection                        | ../../asm/us/st/nz0/nonmatchings/39908/HitDetection.s 
+| 1.00 | true     | HitDetection                        | ../../asm/us/st/rwrp/nonmatchings/A59C/HitDetection.s 
+| 1.00 | true     | HitDetection                        | ../../asm/us/st/wrp/nonmatchings/collision/HitDetection.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | ReplaceBreakableWithItemDrop        | ../../asm/us/st/cen/nonmatchings/11280/ReplaceBreakableWithItemDrop.s 
 | 1.00 | true     | ReplaceBreakableWithItemDrop        | ../../asm/us/st/dre/nonmatchings/173C4/ReplaceBreakableWithItemDrop.s 
 | 1.00 | true     | func_80193394                       | ../../asm/us/st/mad/nonmatchings/EDB8/func_80193394.s 
@@ -1707,15 +1716,6 @@
 | 1.00 | true     | ReplaceBreakableWithItemDrop        | ../../asm/us/st/nz0/nonmatchings/39908/ReplaceBreakableWithItemDrop.s 
 | 1.00 | true     | ReplaceBreakableWithItemDrop        | ../../asm/us/st/rwrp/nonmatchings/A59C/ReplaceBreakableWithItemDrop.s 
 | 1.00 | true     | ReplaceBreakableWithItemDrop        | ../../asm/us/st/wrp/nonmatchings/st_common/ReplaceBreakableWithItemDrop.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | TestCollisions                      | ../../asm/us/st/cen/nonmatchings/11280/TestCollisions.s 
-| 1.00 | true     | TestCollisions                      | ../../asm/us/st/dre/nonmatchings/173C4/TestCollisions.s 
-| 0.95 | true     | TestCollisions                      | ../../asm/us/st/mad/nonmatchings/EDB8/TestCollisions.s 
-| 1.00 | true     | TestCollisions                      | ../../asm/us/st/no3/nonmatchings/41C80/TestCollisions.s 
-| 1.00 | true     | TestCollisions                      | ../../asm/us/st/np3/nonmatchings/394F0/TestCollisions.s 
-| 1.00 | true     | TestCollisions                      | ../../asm/us/st/nz0/nonmatchings/39908/TestCollisions.s 
-| 1.00 | true     | TestCollisions                      | ../../asm/us/st/rwrp/nonmatchings/A59C/TestCollisions.s 
-| 1.00 | true     | TestCollisions                      | ../../asm/us/st/wrp/nonmatchings/collision/TestCollisions.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | func_80195318                       | ../../asm/us/st/cen/nonmatchings/11280/func_80195318.s 
 | 1.00 | false    | func_8019B45C                       | ../../asm/us/st/dre/nonmatchings/173C4/func_8019B45C.s 
@@ -1973,6 +1973,12 @@
 | 1.00 | true     | func_801B0958                       | ../../asm/us/st/nz0/nonmatchings/30958/func_801B0958.s 
 | 1.00 | true     | func_801A7D64                       | ../../asm/us/st/st0/nonmatchings/27D64/func_801A7D64.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_800F6A48                       | ../../asm/us/dra/nonmatchings/menu/func_800F6A48.s 
+| 0.90 | true     | def_cbread                          | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbread.s 
+| 0.90 | true     | def_cbready                         | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbready.s 
+| 0.90 | true     | def_cbsync                          | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbsync.s 
+| 0.90 | true     | SpuSetNoiseVoice                    | ../../asm/us/main/nonmatchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | D_800DBF3C                          | ../../asm/us/dra/nonmatchings/save_mgr/D_800DBF3C.s 
 | 1.00 | true     | D_800DBF74                          | ../../asm/us/dra/nonmatchings/save_mgr/D_800DBF74.s 
 | 1.00 | true     | D_800DBF7C                          | ../../asm/us/dra/nonmatchings/save_mgr/D_800DBF7C.s 
@@ -1984,12 +1990,6 @@
 | 1.00 | true     | CdSetDebug                          | ../../asm/us/main/nonmatchings/psxsdk/libcd/sys/CdSetDebug.s 
 | 1.00 | true     | CdSyncCallback                      | ../../asm/us/main/nonmatchings/psxsdk/libcd/sys/CdSyncCallback.s 
 | 1.00 | true     | SetVideoMode                        | ../../asm/us/main/nonmatchings/psxsdk/libetc/vmode/SetVideoMode.s 
--------------------------------------------------------------------------------
-| 0.90 | true     | def_cbread                          | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbread.s 
-| 0.90 | true     | def_cbready                         | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbready.s 
-| 0.90 | true     | def_cbsync                          | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbsync.s 
-| 1.00 | true     | GsGetVcount                         | ../../asm/us/main/nonmatchings/psxsdk/libgs/gs_008/GsGetVcount.s 
-| 1.00 | true     | GsClearVcount                       | ../../asm/us/main/nonmatchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018E124                       | ../../asm/us/st/cen/nonmatchings/D600/func_8018E124.s 
 | 1.00 | true     | func_8019498C                       | ../../asm/us/st/dre/nonmatchings/14774/func_8019498C.s 
@@ -2324,9 +2324,6 @@
 | 1.00 | true     | func_800F548C                       | ../../asm/us/dra/nonmatchings/menu/func_800F548C.s 
 | 0.94 | true     | func_801B1EF4                       | ../../asm/us/st/sel/nonmatchings/2C048/func_801B1EF4.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_800F6A48                       | ../../asm/us/dra/nonmatchings/menu/func_800F6A48.s 
-| 0.90 | true     | SpuSetNoiseVoice                    | ../../asm/us/main/nonmatchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | func_800F99B8                       | ../../asm/us/dra/nonmatchings/menu/func_800F99B8.s 
 | 0.95 | true     | func_801B2108                       | ../../asm/us/st/sel/nonmatchings/2C048/func_801B2108.s 
 -------------------------------------------------------------------------------
@@ -2425,6 +2422,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | get_ce                              | ../../asm/us/main/nonmatchings/psxsdk/libgpu/sys/get_ce.s 
 | 1.00 | true     | get_cs                              | ../../asm/us/main/nonmatchings/psxsdk/libgpu/sys/get_cs.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | GsGetVcount                         | ../../asm/us/main/nonmatchings/psxsdk/libgs/gs_008/GsGetVcount.s 
+| 1.00 | true     | GsClearVcount                       | ../../asm/us/main/nonmatchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | RotMatrix                           | ../../asm/us/main/nonmatchings/psxsdk/libgte/fgo_01/RotMatrix.s 
 | 0.99 | true     | RotMatrixYXZ                        | ../../asm/us/main/nonmatchings/psxsdk/libgte/fgo_02/RotMatrixYXZ.s 
