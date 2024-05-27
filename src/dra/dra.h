@@ -22,9 +22,9 @@
 #define GREEN_MASK 0x3E0
 #define BLUE_MASK 0x7C00
 
-#define GET_RED(x) ((x)&RED_MASK)
-#define GET_GREEN(x) ((x)&GREEN_MASK)
-#define GET_BLUE(x) ((x)&BLUE_MASK)
+#define GET_RED(x) ((x) & RED_MASK)
+#define GET_GREEN(x) ((x) & GREEN_MASK)
+#define GET_BLUE(x) ((x) & BLUE_MASK)
 
 typedef enum {
     MENU_DG_MAIN,
@@ -895,7 +895,7 @@ bool CheckQuarterCircleForwardInput();
 bool CheckBackForwardInput();
 bool CheckDarkMetamorphosisInput();
 bool CheckSummonSpiritInput();
-void func_8010DBFC(s8*, s32*);
+void func_8010DBFC(s8*, AnimationFrame** frames);
 bool CheckHellfireInput();
 bool CheckTetraSpiritInput();
 bool CheckSoulStealInput();

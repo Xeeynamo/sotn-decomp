@@ -707,11 +707,11 @@ void HandleEnding(void) {
             if (g_IsUsingCd) {
                 break;
             }
-            LoadImage(&g_Vram.D_800ACDE0, STAGE_PRG_PTR);
-            LoadImage(&g_Vram.D_800ACDD8, 0x80182000);
-            LoadImage(&g_Vram.D_800ACDB8, 0x80192000);
+            LoadImage(&g_Vram.D_800ACDE0, (u_long*)STAGE_PRG_PTR);
+            LoadImage(&g_Vram.D_800ACDD8, (u_long*)0x80182000);
+            LoadImage(&g_Vram.D_800ACDB8, (u_long*)0x80192000);
             StoreImage(&g_Vram.D_800ACDB8, &D_80070BCC);
-            LoadImage(&g_Vram.D_800ACDA8, 0x80194000);
+            LoadImage(&g_Vram.D_800ACDA8, (u_long*)0x80194000);
             StoreImage(&g_Vram.D_800ACDA8, &D_80070BCC - 0x1000);
             LoadClut2(g_Clut, 0x200, 0xF0);
         } else {

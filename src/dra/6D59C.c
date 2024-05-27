@@ -194,7 +194,7 @@ u32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
     return PLAYER.animFrameDuration >= 0 ? 0 : -1;
 }
 
-void func_8010DBFC(s8* frameProps, s32* frames) {
+void func_8010DBFC(s8* frameProps, AnimationFrame** frames) {
     AnimationFrame* animFrame;
 
     animFrame = func_8010DA70(frames);
