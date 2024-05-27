@@ -420,7 +420,7 @@ void func_8018C55C(s16* hitSensors, s16 sensorCount) {
 }
 
 #if !defined(VERSION_PSP)
-INCLUDE_ASM("st/wrp/nonmatchings/st_common", func_8018C6B4);
+#include "../get_player_collision_with.h"
 #endif
 
 #include "../replace_breakable_with_item_drop.h"
