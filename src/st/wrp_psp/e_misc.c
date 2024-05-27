@@ -68,7 +68,31 @@ void func_8018F510(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_misc", func_8018F838);
+extern s32 D_80181020[];
+extern u8 D_80181038[];
+extern u16 D_8018103C[];
+
+void func_8018F838(Entity* self) {
+    if (!self->step) {
+        self->velocityY = D_80181020[self->ext.generic.unk94];
+        self->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
+        self->palette = PAL_OVL(0x195);
+        self->animSet = ANIMSET_DRA(2);
+        self->animCurFrame = D_80181038[self->params];
+        self->drawMode = DRAW_TPAGE;
+        self->step++;
+    } else {
+        self->posY.val -= self->velocityY;
+        ++self->animFrameDuration;
+        if (!(self->animFrameDuration % 2)) {
+            self->animCurFrame++;
+        }
+
+        if (self->animFrameDuration > D_8018103C[self->params]) {
+            DestroyEntity(self);
+        }
+    }
+}
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_misc", EntityUnkId15);
 
