@@ -1,26 +1,6 @@
 #include "nz0.h"
 
-u8 func_801C070C(s16* arg0, u8 facing) {
-    u8 ret = 0;
-    Collider collider;
-    s16 posX, posY;
-
-    while (*arg0 != 0xFF) {
-        ret <<= 1;
-
-        posX = facing ? (g_CurrentEntity->posX.i.hi + *arg0++)
-                      : (g_CurrentEntity->posX.i.hi - *arg0++);
-        posY = g_CurrentEntity->posY.i.hi + *arg0++;
-
-        g_api.CheckCollision(posX, posY, &collider, 0);
-
-        if (collider.effects & EFFECT_SOLID) {
-            ret |= 1;
-        }
-    }
-
-    return ret;
-}
+#include "../check_coll_offsets.h"
 
 void func_801C07FC(Entity* entity) {
     switch (entity->step) {
@@ -161,7 +141,7 @@ void func_801C0D08(Entity* self) {
 
     case 1:
         prim = (Primitive*)*(s32*)&self->ext.generic.unk7C.s;
-        if (func_801C070C(&D_80181F28, 0) & 255) {
+        if (CheckColliderOffsets(&D_80181F28, 0)) {
             prim->y1 += 2;
             if (self->step_s == 0) {
                 func_801C090C(self, 1, 2, 0, 0, 3, 0);

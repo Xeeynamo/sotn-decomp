@@ -39,27 +39,7 @@ void EntityHeartDrop(Entity* self) {
 
 #include "../entity_message_box.h"
 
-u8 func_8018F420(s16* arg0, u8 facing) {
-    u8 ret = 0;
-    Collider collider;
-    s16 posX, posY;
-
-    while (*arg0 != 0xFF) {
-        ret <<= 1;
-
-        posX = facing ? (g_CurrentEntity->posX.i.hi + *arg0++)
-                      : (g_CurrentEntity->posX.i.hi - *arg0++);
-        posY = g_CurrentEntity->posY.i.hi + *arg0++;
-
-        g_api.CheckCollision(posX, posY, &collider, 0);
-
-        if (collider.effects & EFFECT_SOLID) {
-            ret |= 1;
-        }
-    }
-
-    return ret;
-}
+#include "../check_coll_offsets.h"
 
 extern u16 D_8018047C[];
 void func_8018F510(Entity* entity) {
@@ -249,7 +229,7 @@ void func_8018FA1C(Entity* self) {
 
     case 1:
         prim = (Primitive*)*(s32*)&self->ext.generic.unk7C.s;
-        if (func_8018F420(D_80181044, 0) & 255) {
+        if (CheckColliderOffsets(D_80181044, 0)) {
             prim->y1 += 2;
             if (self->step_s == 0) {
                 func_8018F620(self, 1, 2, 0, 0, 3, 0);

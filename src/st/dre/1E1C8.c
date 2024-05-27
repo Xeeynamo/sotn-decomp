@@ -1,6 +1,6 @@
 #include "dre.h"
 
-INCLUDE_ASM("st/dre/nonmatchings/1E1C8", func_8019E1C8);
+#include "../check_coll_offsets.h"
 
 void EntityUnkId13(Entity* entity) {
     switch (entity->step) {

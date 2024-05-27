@@ -477,7 +477,7 @@ void func_801C5D20(Entity* self) { // BloodDrips
 
     case 1:
         prim = *(s32*)&self->ext.generic.unk7C;
-        if (func_801C070C(&D_801823C4, 0) != 0) {
+        if (CheckColliderOffsets(&D_801823C4, 0) != 0) {
             prim->y1 += 2;
             if (self->step_s == 0) {
                 self->step_s = 1;

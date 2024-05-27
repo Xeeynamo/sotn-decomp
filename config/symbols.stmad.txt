@@ -65,6 +65,7 @@ EntityExplosion = 0x80194218;
 EntityEquipItemDrop = 0x801943EC;
 EntityRelicOrb = 0x801949C0;
 EntityHeartDrop = 0x80195520;
+CheckColliderOffsets = 0x8019563C;
 EntityIntenseExplosion = 0x801964E4;
 EntitySoulStealOrb = 0x801982BC;
 EntityEnemyBlood = 0x80198650;

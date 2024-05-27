@@ -1,6 +1,6 @@
 #include "rwrp.h"
 
-INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_801913A0);
+#include "../check_coll_offsets.h"
 
 INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_80191490);
 

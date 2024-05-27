@@ -71,6 +71,7 @@ EntityEquipItemDrop = 0x8019C7DC;
 EntityRelicOrb = 0x8019D074;
 EntityHeartDrop = 0x8019DB44;
 EntityMessageBox = 0x8019DC6C;
+CheckColliderOffsets = 0x8019E1C8;
 EntityUnkId13 = 0x8019E2B8;
 EntityExplosion14 = 0x8019E5E0;
 EntityUnkId15 = 0x8019E6D0;

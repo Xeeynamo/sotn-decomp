@@ -1,6 +1,6 @@
 #include "cen.h"
 
-INCLUDE_ASM("st/cen/nonmatchings/18084", func_80198084);
+#include "../check_coll_offsets.h"
 
 extern u16 D_80180440[];
 void EntityUnkId13(Entity* entity) {
