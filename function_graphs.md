@@ -2777,7 +2777,7 @@
 - [✅ SetGameState](function_calls/st0.SetGameState.svg?raw=1)
 - [✅ SetStep](function_calls/st0.SetStep.svg?raw=1)
 - [✅ SetSubStep](function_calls/st0.SetSubStep.svg?raw=1)
-- [❌ TestCollisions](function_calls/st0.TestCollisions.svg?raw=1)
+- [✅ TestCollisions](function_calls/st0.TestCollisions.svg?raw=1)
 - [✅ UnkEntityFunc0](function_calls/st0.UnkEntityFunc0.svg?raw=1)
 - [✅ UnkPolyFunc0](function_calls/st0.UnkPolyFunc0.svg?raw=1)
 - [✅ UnkPolyFunc2](function_calls/st0.UnkPolyFunc2.svg?raw=1)
