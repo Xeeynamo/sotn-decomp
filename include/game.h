@@ -213,6 +213,19 @@ extern u8 g_BmpCastleMap[0x20000];
 
 #endif
 
+// used with various equipment, enemy resistances, etc
+#define ELEMENT_HIT 0x20
+#define ELEMENT_CUT 0x40
+#define ELEMENT_POISON 0x80
+#define ELEMENT_CURSE 0x100
+#define ELEMENT_STONE 0x200
+#define ELEMENT_WATER 0x400
+#define ELEMENT_DARK 0x800
+#define ELEMENT_HOLY 0x1000
+#define ELEMENT_ICE 0x2000
+#define ELEMENT_THUNDER 0x4000
+#define ELEMENT_FIRE 0x8000
+
 // Flags for entity->drawFlags
 #define FLAG_DRAW_ROTX 0x01
 #define FLAG_DRAW_ROTY 0x02
@@ -226,13 +239,20 @@ extern u8 g_BmpCastleMap[0x20000];
 
 // Flags for entity->flags
 // Signals that the entity should run its death routine
+#define FLAG_UNK_10 0x10
 #define FLAG_DEAD 0x100
+#define FLAG_UNK_400 0x400
+#define FLAG_UNK_800 0x800
+#define FLAG_UNK_1000 0x1000
 #define FLAG_UNK_2000 0x2000
+#define FLAG_UNK_4000 0x4000
+#define FLAG_UNK_8000 0x8000
 #define FLAG_UNK_10000 0x10000
 #define FLAG_UNK_20000 0x20000 // func_8011A9D8 will destroy if not set
 #define FLAG_UNK_40000 0x40000
 #define FLAG_UNK_80000 0x80000
 #define FLAG_UNK_100000 0x100000
+#define FLAG_UNK_400000 0x400000
 #define FLAG_UNK_800000 0x800000
 #define FLAG_UNK_00200000 0x00200000
 
@@ -701,8 +721,8 @@ typedef struct Entity {
     /* 0x56 */ s16 animCurFrame;
     /* 0x58 */ s16 stunFrames;
     /* 0x5A */ u16 unk5A;
-    /* 0x5C */ s32 unk5C;
-    /* 0x60 */ s32 unk60;
+    /* 0x5C */ struct Entity* unk5C;
+    /* 0x60 */ struct Entity* unk60;
     /* 0x64 */ s32 primIndex;
     /* 0x68 */ u16 unk68;
     /* 0x6A */ u16 hitEffect;
@@ -928,7 +948,7 @@ typedef struct {
     /* 80097BE8 */ u32 level;
     /* 80097BEC */ u32 exp;
     /* 80097BF0 */ u32 gold;
-    /* 80097BF4 */ u32 killCount;
+    /* 80097BF4 */ s32 killCount;
     /* 80097BF8 */ u32 D_80097BF8;
     /* 80097BFC */ u32 subWeapon;
     /* 80097C00 */ u32 equipment[7];
@@ -1149,10 +1169,10 @@ typedef struct {
     /* 0x10 */ u16 strengths;
     /* 0x12 */ u16 immunes;
     /* 0x14 */ u16 absorbs;
-    /* 0x16 */ s16 level;
-    /* 0x18 */ s16 exp;
-    /* 0x1A */ s16 rareItemId;
-    /* 0x1C */ s16 uncommonItemId;
+    /* 0x16 */ u16 level;
+    /* 0x18 */ u16 exp;
+    /* 0x1A */ u16 rareItemId;
+    /* 0x1C */ u16 uncommonItemId;
     /* 0x1E */ u16 rareItemDropRate;
     /* 0x20 */ u16 uncommonItemDropRate;
     /* 0x22 */ u8 hitboxWidth;
