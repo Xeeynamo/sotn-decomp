@@ -12,7 +12,7 @@
 <!-- np3.TestCollisions -->
 <g id="node1" class="node">
 <title>np3.TestCollisions</title>
-<ellipse fill="red" stroke="black" cx="1302.39" cy="-198" rx="95.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1302.39" cy="-198" rx="95.58" ry="18"/>
 <text text-anchor="middle" x="1302.39" y="-194.3" font-family="Times,serif" font-size="14.00">np3.TestCollisions</text>
 </g>
 <!-- dra.DealDamage -->

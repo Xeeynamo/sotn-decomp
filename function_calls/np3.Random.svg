@@ -451,7 +451,7 @@
 <g id="node29" class="node">
 <title>np3.TestCollisions</title>
 <g id="a_node29"><a xlink:href="np3.TestCollisions.svg" xlink:title="np3.TestCollisions">
-<ellipse fill="red" stroke="black" cx="7045.04" cy="-198" rx="95.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="7045.04" cy="-198" rx="95.58" ry="18"/>
 <text text-anchor="middle" x="7045.04" y="-194.3" font-family="Times,serif" font-size="14.00">np3.TestCollisions</text>
 </a>
 </g>

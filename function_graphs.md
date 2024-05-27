@@ -1938,7 +1938,7 @@
 - [✅ SetStep](function_calls/np3.SetStep.svg?raw=1)
 - [✅ SetSubStep](function_calls/np3.SetSubStep.svg?raw=1)
 - [✅ StageNamePopupHelper](function_calls/np3.StageNamePopupHelper.svg?raw=1)
-- [❌ TestCollisions](function_calls/np3.TestCollisions.svg?raw=1)
+- [✅ TestCollisions](function_calls/np3.TestCollisions.svg?raw=1)
 - [✅ UnkEntityFunc0](function_calls/np3.UnkEntityFunc0.svg?raw=1)
 - [✅ UnkPolyFunc0](function_calls/np3.UnkPolyFunc0.svg?raw=1)
 - [✅ UnkPolyFunc2](function_calls/np3.UnkPolyFunc2.svg?raw=1)
