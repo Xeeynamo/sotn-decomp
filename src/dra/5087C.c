@@ -1299,7 +1299,7 @@ void func_800F298C(void) {
         g_PrevScrollX = g_Tilemap.scrollX.i.hi;
         g_PrevScrollY = g_Tilemap.scrollY.i.hi;
 
-        g_api.o.TestCollisions();
+        g_api.o.HitDetection();
         D_8013759C = PLAYER.posX.i.hi;
         g_Player.unk7C = PLAYER.posX.i.hi;
         D_80097488.x.val = 0;

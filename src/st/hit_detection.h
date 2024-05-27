@@ -7,7 +7,7 @@ extern u8 g_testColliFrames[10];
 extern u16 g_testCollPrizeTable[];
 extern u16 g_testCollRandTable;
 
-void TestCollisions(void) {
+void HitDetection(void) {
     s32 temp_rand;
     Entity* otherEntity;
     Primitive* prim;
