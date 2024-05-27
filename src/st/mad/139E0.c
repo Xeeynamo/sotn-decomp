@@ -264,7 +264,10 @@ void func_80194314(Entity* entity) {
     }
 }
 
+<<<<<<< HEAD
 // Different from other overlays, but extremely similar to ST0.
+=======
+>>>>>>> df961d35 (Decompile EntityEquipItemDrop ST0 and MAD)
 void EntityEquipItemDrop(Entity* self) {
     u16 itemId = self->params & 0x7FFF;
     s32 primIndex;
