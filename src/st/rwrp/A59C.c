@@ -2,7 +2,6 @@
 
 #include "../hit_detection.h"
 
-
 INCLUDE_ASM("st/rwrp/nonmatchings/A59C", EntityDamageDisplay);
 
 #include "../libstage.h"
