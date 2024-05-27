@@ -1,10 +1,8 @@
 #include "st0.h"
-extern u16 g_testCollEnemyLookup[];
-extern u8 g_testColluCoords[];
-extern u8 g_testCollvCoords[];
-extern u16 g_testCollElementLookup[10];
-extern u8 g_testColliFrames[10];
 
+// Warning: This is different from TestCollisions in other overlays.
+// Some of the logic is removed since it doesn't apply in prologue.
+// Attempting to de-duplicate this would involve a lot of #ifdef.
 void TestCollisions(void) {
     s32 temp_rand;
     Entity* otherEntity;
