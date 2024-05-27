@@ -6,7 +6,34 @@ INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_misc", EntityHeartDrop);
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_misc", EntityMessageBox);
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_misc", func_8018F510);
+extern u16 D_8018047C[];
+void func_8018F510(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        InitializeEntity(D_8018047C);
+        entity->ext.generic.unk8C.modeU16.unk0 =
+            entity->ext.generic.unk80.entityPtr->entityId;
+    case 1:
+        if (entity->ext.generic.unk7C.U8.unk0++ > 4) {
+            Entity* newEntity =
+                (Entity*)AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
+                newEntity->entityId = E_EXPLOSION;
+                newEntity->pfnUpdate = EntityExplosion;
+                newEntity->params = entity->params;
+            }
+            entity->ext.generic.unk7C.U8.unk0 = 0;
+        }
+        entity->posX.i.hi = entity->ext.generic.unk80.entityPtr->posX.i.hi;
+        entity->posY.i.hi = entity->ext.generic.unk80.entityPtr->posY.i.hi;
+        if (entity->ext.generic.unk80.entityPtr->entityId !=
+            entity->ext.generic.unk8C.modeU16.unk0) {
+            DestroyEntity(entity);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_misc", func_8018F838);
 
