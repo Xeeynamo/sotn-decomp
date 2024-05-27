@@ -1165,7 +1165,7 @@ typedef struct XaMusicConfig {
 typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ s16 hitPoints;
-    /* 0x06 */ u16 attack;
+    /* 0x06 */ s16 attack;
     /* 0x08 */ u16 attackElement;
     /* 0x0A */ s16 defense;
     /* 0x0C */ u16 hitboxState;
