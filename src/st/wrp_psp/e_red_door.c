@@ -1,28 +1,9 @@
 #include "../wrp/wrp.h"
 
-bool EntityIsNearPlayer(Entity* self) {
-    s16 posX;
-    s16 diffX;
-    s16 posY;
-    s16 diffY;
+#include "../entity_is_near_player.h"
 
-    diffX = PLAYER.posX.i.hi - self->posX.i.hi;
-    posX = abs(diffX);
-
-    if (posX > 16) {
-        return 0;
-    }
-
-    diffY = PLAYER.posY.i.hi - self->posY.i.hi;
-    posY = abs(diffY);
-
-    if (posY > 32) {
-        return 0;
-    }
-
-    return 1;
-}
-
+extern u8 g_eRedDoorUV[3][8];
+extern u16 g_eRedDoorTiles[2][8];
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_red_door", EntityRedDoor);
 
 // TODO move this function to the next file
