@@ -4,6 +4,8 @@
 
 #include "common.h"
 
+typedef void (*PfnEntityUpdate)(struct Entity*);
+
 typedef union {
     s32 unk;
     void* ptr;
@@ -121,6 +123,19 @@ typedef struct {
 } ET_EquipItemDrop;
 
 typedef struct {
+    /* 0x7C */ u32 unk[14];
+    /* 0xB4 */ u16 unkB4;
+    /* 0xB6 */ s16 unkB6;
+    /* 0xB8 */ PfnEntityUpdate update;
+} ET_HeartDrop;
+
+typedef struct {
+    /* 0x7C */ u16 timer;
+    /* 0x7E */ u16 size;
+    /* 0x80 */ s32 speed;
+} ET_BloodDroplets;
+
+typedef struct {
     /* 0x7C */ u16 nPrims;
     /* 0x7E */ u16 nDigits;
     /* 0x80 */ u8 digits[4];
@@ -162,7 +177,7 @@ typedef struct {
 } ET_StagePopup;
 
 typedef struct {
-    /* 0x7C */ u8* label;
+    /* 0x7C */ char* label;
     /* 0x80 */ u16 width;
     /* 0x82 */ u16 height;
     /* 0x84 */ s16 unk84;
@@ -958,6 +973,8 @@ typedef union { // offset=0x7C
     ET_RicRevivalColumn ricColumn;
     ET_GiantSpinningCross giantcross;
     ET_EquipItemDrop equipItemDrop;
+    ET_HeartDrop heartDrop;
+    ET_BloodDroplets bloodDroplets;
     ET_NumericDamage ndmg;
     ET_RelicOrb relicOrb;
     ET_RedDoor door;

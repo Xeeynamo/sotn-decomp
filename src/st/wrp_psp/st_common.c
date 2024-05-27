@@ -91,7 +91,33 @@ void SetStep(u8 step) {
     g_CurrentEntity->animFrameDuration = 0;
 }
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/st_common", InitializeEntity);
+void InitializeEntity(u16 arg0[]) {
+    u16 enemyId;
+    EnemyDef* enemyDef;
+
+    g_CurrentEntity->animSet = *arg0++;
+    g_CurrentEntity->animCurFrame = *arg0++;
+    g_CurrentEntity->unk5A = *arg0++;
+    g_CurrentEntity->palette = *arg0++;
+
+    enemyId = g_CurrentEntity->enemyId = *arg0++;
+    enemyDef = &g_api.enemyDefs[enemyId];
+    g_CurrentEntity->hitPoints = enemyDef->hitPoints;
+    g_CurrentEntity->attack = enemyDef->attack;
+    g_CurrentEntity->attackElement = enemyDef->attackElement;
+    g_CurrentEntity->hitboxState = enemyDef->hitboxState;
+    g_CurrentEntity->hitboxWidth = enemyDef->hitboxWidth;
+    g_CurrentEntity->hitboxHeight = enemyDef->hitboxHeight;
+    g_CurrentEntity->flags = enemyDef->flags;
+    g_CurrentEntity->hitboxOffX = 0;
+    g_CurrentEntity->hitboxOffY = 0;
+    g_CurrentEntity->step++;
+    g_CurrentEntity->step_s = 0;
+    if (!g_CurrentEntity->zPriority) {
+        g_CurrentEntity->zPriority =
+            g_unkGraphicsStruct.g_zEntityCenter.unk - 0xC;
+    }
+}
 
 void EntityDummy(Entity* arg0) {
     if (!arg0->step) {
@@ -99,6 +125,39 @@ void EntityDummy(Entity* arg0) {
     }
 }
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/st_common", func_8018C55C);
+void func_8018C55C(s16* hitSensors, s16 sensorCount) {
+    Collider collider;
+    s32 velocityX;
+    s16 i;
+    s16 x;
+    s16 y;
+
+    velocityX = g_CurrentEntity->velocityX;
+    if (velocityX == 0) {
+        return;
+    }
+
+    x = g_CurrentEntity->posX.i.hi;
+    y = g_CurrentEntity->posY.i.hi;
+    for (i = 0; i < sensorCount; i++) {
+        if (velocityX < 0) {
+            x += *hitSensors++;
+        } else {
+            x -= *hitSensors++;
+        }
+
+        y += *hitSensors++;
+        g_api.CheckCollision(x, y, &collider, 0);
+        if (collider.effects & EFFECT_UNK_0002 &&
+            (!(collider.effects & EFFECT_UNK_8000) || i)) {
+            if (velocityX < 0) {
+                g_CurrentEntity->posX.i.hi += collider.unk1C;
+            } else {
+                g_CurrentEntity->posX.i.hi += collider.unk14;
+            }
+            break;
+        }
+    }
+}
 
 #include "../replace_breakable_with_item_drop.h"

@@ -38,7 +38,7 @@ void EntityRedDoor(Entity* self) {
             return;
         }
         self->flags |= FLAG_HAS_PRIMS;
-        uv = g_eRedDoorUV;
+        uv = (u8*)g_eRedDoorUV;
         prim = &g_PrimBuf[self->primIndex];
         i = 0;
         y = self->posY.i.hi - 0x1F;

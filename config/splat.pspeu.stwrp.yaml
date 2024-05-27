@@ -44,7 +44,7 @@ segments:
       - [0x80, c, wrp_psp/create_entity]
       - [0x1028, c, wrp_psp/e_stage_name]
       - [0x1EA8, c, wrp_psp/e_red_door]
-      - [0x31F0, c, wrp_psp/st_update]
+      - [0x31B0, c, wrp/st_update]
       - [0x36E8, c, wrp_psp/e_particles]
       - [0x4C78, c, wrp_psp/blit_char]
       - [0x5308, c, wrp_psp/e_collect]

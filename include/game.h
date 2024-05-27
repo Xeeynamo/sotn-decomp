@@ -241,6 +241,7 @@ extern u8 g_BmpCastleMap[0x20000];
 // Signals that the entity should run its death routine
 #define FLAG_UNK_10 0x10
 #define FLAG_DEAD 0x100
+#define FLAG_UNK_200 0x200
 #define FLAG_UNK_400 0x400
 #define FLAG_UNK_800 0x800
 #define FLAG_UNK_1000 0x1000
@@ -278,10 +279,15 @@ extern u8 g_BmpCastleMap[0x20000];
 #define PLAYER_STATUS_POISON 0x00004000
 #define PLAYER_STATUS_CURSE 0x00008000
 #define PLAYER_STATUS_AXEARMOR 0x01000000
+#define PLAYER_STATUS_ABSORB_BLOOD 0x02000000
 
 #define ANIMSET_OVL_FLAG 0x8000
 #define ANIMSET_DRA(x) (x)
 #define ANIMSET_OVL(x) ((x) | ANIMSET_OVL_FLAG)
+
+#define PAL_OVL_FLAG 0x8000
+#define PAL_DRA(x) (x)
+#define PAL_OVL(x) ((x) | ANIMSET_OVL_FLAG)
 
 #ifndef SOTN_STR
 // Decorator to re-encode strings with tools/sotn_str/sotn_str.py when building
@@ -514,8 +520,6 @@ typedef enum {
 } TimeAttackEvents;
 
 struct Entity;
-
-typedef void (*PfnEntityUpdate)(struct Entity*);
 
 #include "unkstruct.h"
 
@@ -1161,7 +1165,7 @@ typedef struct XaMusicConfig {
 typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ s16 hitPoints;
-    /* 0x06 */ u16 attack;
+    /* 0x06 */ s16 attack;
     /* 0x08 */ u16 attackElement;
     /* 0x0A */ s16 defense;
     /* 0x0C */ u16 hitboxState;
@@ -1616,7 +1620,7 @@ extern s32 g_IsTimeAttackUnlocked;
 // prevents the player to enter in the warp room. When g_CastleFlags[0x32] the
 // column will disappear.
 extern u8 g_CastleFlags[0x300]; // starts at 0x8003BDEC
-extern u8 D_8003BEEC[];         // part of g_CastleFlags or a second array?
+extern u8 D_8003BEEC[];         // g_CastleFlags[x + 0x100]
 extern u8 D_8003BF9C[];         // not sure if it is part of D_8003BEEC?
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
