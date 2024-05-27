@@ -52,7 +52,7 @@ segments:
       - [0x95D0, c, wrp_psp/collision]
       - [0xB7A8, c, wrp_psp/popup]
       - [0xBDA0, c, wrp_psp/e_room_fg]
-      - [0xBEB8, c, wrp_psp/st_common]
+      - [0xBEB8, c, wrp/st_common]
       - [0xC9A0, c, wrp_psp/stage_name_new]
       - [0xCEA0, c, wrp_psp/prim_helpers]
       - [0xD0E0, c, wrp_psp/st_init_wrp]
