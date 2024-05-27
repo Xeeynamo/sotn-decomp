@@ -83,29 +83,7 @@ INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_8019583C);
 
 #include "../entity_unkId15_spawner.h"
 
-void func_80195A54(Entity* entity) {
-    if (entity->step == 0) {
-        entity->velocityY = D_80180FE4[entity->ext.generic.unk94];
-        entity->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        entity->palette = 0x8195;
-        entity->animSet = ANIMSET_DRA(2);
-        entity->animCurFrame = D_80180FFC[entity->params];
-        entity->drawMode = DRAW_TPAGE;
-        entity->step++;
-        return;
-    }
-
-    entity->animFrameDuration++;
-    entity->posY.val -= entity->velocityY;
-
-    if (!(entity->animFrameDuration & 1)) {
-        entity->animCurFrame++;
-    }
-
-    if (D_80181000[entity->params] < (s32)entity->animFrameDuration) {
-        DestroyEntity(entity);
-    }
-}
+#include "../entity_unkId14.h"
 
 void EntityUnkId15(Entity* entity) {
     u16 temp_v0;

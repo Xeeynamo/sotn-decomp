@@ -89,12 +89,12 @@ void func_8018F620(
     newX = self->posX.i.hi + x;
     newY = self->posY.i.hi + y;
     for (i = 0; i < count; i++) {
-        newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
+        newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (newEntity != NULL) {
             newEntity->posX.i.hi = newX + xGap * i;
             newEntity->posY.i.hi = newY;
             newEntity->entityId = E_UNK_14;
-            newEntity->pfnUpdate = func_8018F838;
+            newEntity->pfnUpdate = EntityUnkId14;
             newEntity->params = params;
             newEntity->ext.generic.unk94 = arg5 + i;
             newEntity->rotY = newEntity->rotX = D_80180FE8[arg5 + i];
@@ -126,7 +126,7 @@ s32 D_80181008[] = {
     /* 101C */ 0x0000C000,
 };
 
-s32 D_80181020[] = {
+s32 unk14_yVel[] = {
     /* 1020 */ 0x00000800,
     /* 1024 */ 0x00002800,
     /* 1028 */ 0x00004800,
@@ -135,40 +135,20 @@ s32 D_80181020[] = {
     /* 1034 */ 0x00012000,
 };
 
-u8 D_80181038[] = {
+u8 unk14_startFrame[] = {
     /* 1038 */ 0x01,
     /* 1039 */ 0x09,
     /* 103A */ 0x15,
     /* 103B */ 0x2B,
 };
 
-u16 D_8018103C[] = {
+u16 unk14_lifetime[] = {
     /* 103C */ 0x0010,
     /* 103E */ 0x0018,
     /* 1040 */ 0x002A,
     /* 1042 */ 0x002F,
 };
-void func_8018F838(Entity* self) {
-    if (!self->step) {
-        self->velocityY = D_80181020[self->ext.generic.unk94];
-        self->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        self->palette = PAL_OVL(0x195);
-        self->animSet = ANIMSET_DRA(2);
-        self->animCurFrame = D_80181038[self->params];
-        self->drawMode = DRAW_TPAGE;
-        self->step++;
-    } else {
-        self->animFrameDuration++;
-        self->posY.val -= self->velocityY;
-        if (!(self->animFrameDuration & 1)) {
-            self->animCurFrame++;
-        }
-
-        if (D_8018103C[self->params] < self->animFrameDuration) {
-            DestroyEntity(self);
-        }
-    }
-}
+#include "../entity_unkId14.h"
 
 void EntityUnkId15(Entity* self) {
     if (!self->step) {

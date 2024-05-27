@@ -42,7 +42,7 @@ void func_801C090C(
             newEntity->posX.i.hi = newX + xGap * i;
             newEntity->posY.i.hi = newY;
             newEntity->entityId = E_ID_14;
-            newEntity->pfnUpdate = func_801C0B24;
+            newEntity->pfnUpdate = EntityUnkId14;
             newEntity->params = params;
             newEntity->ext.generic.unk94 = arg5 + i;
             newEntity->rotY = newEntity->rotX = D_80181ECC[arg5 + i];
@@ -54,28 +54,7 @@ void func_801C090C(
 
 #include "../entity_unkId15_spawner.h"
 
-void func_801C0B24(Entity* entity) {
-    if (entity->step == 0) {
-        entity->velocityY = D_80181F04[entity->ext.generic.unk94];
-        entity->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        entity->palette = 0x8195;
-        entity->animSet = ANIMSET_DRA(2);
-        entity->animCurFrame = D_80181F1C[entity->params];
-        entity->drawMode = DRAW_TPAGE;
-        entity->step++;
-    } else {
-        entity->animFrameDuration++;
-        entity->posY.val -= entity->velocityY;
-
-        if (!(entity->animFrameDuration & 1)) {
-            entity->animCurFrame++;
-        }
-
-        if (D_80181F20[entity->params] < (s32)entity->animFrameDuration) {
-            DestroyEntity(entity);
-        }
-    }
-}
+#include "../entity_unkId14.h"
 
 void EntityUnkId15(Entity* entity) {
     u16 temp_v0;

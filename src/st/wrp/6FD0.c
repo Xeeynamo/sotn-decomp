@@ -189,7 +189,7 @@ LayoutEntity* g_pStObjLayoutVertical[] = {
 void func_80186FD0(Entity*);
 void func_801870B0(Entity*);
 void func_8018F510(Entity*);
-void func_8018F838(Entity*);
+void EntityUnkId14(Entity*);
 void EntityUnkId15(Entity*);
 void EntityWarpRoom(Entity*);
 void EntityWarpSmallRocks(Entity*);
@@ -214,7 +214,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     /* 424 */ (PfnEntityUpdate)func_80186FD0, // unused
     /* 428 */ (PfnEntityUpdate)func_801870B0, // unused? looks debugging stuff
     /* 42C */ (PfnEntityUpdate)func_8018F510,
-    /* 430 */ (PfnEntityUpdate)func_8018F838,
+    /* 430 */ (PfnEntityUpdate)EntityUnkId14,
     /* 434 */ (PfnEntityUpdate)EntityUnkId15,
     /* 438 */ (PfnEntityUpdate)EntityWarpRoom,
     /* 43C */ (PfnEntityUpdate)EntityWarpSmallRocks,

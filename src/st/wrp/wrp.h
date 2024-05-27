@@ -61,5 +61,5 @@ extern s32 D_80193AA4;
 extern s32 D_80193AA8;
 extern s32 D_80193AAC;
 
-void func_8018F838(Entity*);
+void EntityUnkId14(Entity* entity);
 void EntityUnkId15(Entity* entity);

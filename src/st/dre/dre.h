@@ -116,9 +116,6 @@ extern u32 D_801812F4[];
 extern s8 D_801816C4; // Succubus facing assigned to it
 extern u8 D_80181338[];
 extern u16 D_801811A4[];
-extern u32 D_8018130C[];
-extern u8 D_80181324[];
-extern u16 D_80181328[];
 extern u16 D_801810B0[];
 extern u16 D_801810E0[];
 extern u8* D_801810F4[];
