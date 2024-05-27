@@ -2,8 +2,17 @@
 
 extern s16 D_80180A94[];
 
-#include "../entity.h"
+#include "../../destroy_entity.h"
 
+#if !defined(VERSION_PSP)
+#include "../../destroy_entities_from_index.h"
+#endif
+
+#include "../prevent_entity_from_respawning.h"
+
+#include "../animate_entity.h"
+
+#if !defined(VERSION_PSP)
 u8 func_8018B7E8(u8 frames[], Entity* self, u8 arg2) {
     u16 animFrameStart = self->animFrameIdx * 2;
     u8* var_s1 = &frames[animFrameStart];
@@ -34,7 +43,9 @@ u8 func_8018B7E8(u8 frames[], Entity* self, u8 arg2) {
     var_a1 |= 1;
     return var_a1;
 }
+#endif
 
+#if !defined(VERSION_PSP)
 // Absolute distance from g_CurrentEntity to the player in the X Axis
 s16 GetDistanceToPlayerX(void) {
     s16 xDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
@@ -44,7 +55,9 @@ s16 GetDistanceToPlayerX(void) {
     }
     return xDistance;
 }
+#endif
 
+#if !defined(VERSION_PSP)
 // Absolute distance from g_CurrentEntity to the player in the Y Axis
 s32 GetDistanceToPlayerY(void) {
     s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
@@ -54,6 +67,7 @@ s32 GetDistanceToPlayerY(void) {
     }
     return yDistance;
 }
+#endif
 
 #include "../get_side_to_player.h"
 
@@ -68,6 +82,7 @@ void FallEntity(void) {
     }
 }
 
+#if !defined(VERSION_PSP)
 s32 func_8018BA10(u16* sensors) {
     Collider col;
     Collider colBack;
@@ -120,7 +135,9 @@ s32 func_8018BA10(u16* sensors) {
     g_CurrentEntity->flags |= FLAG_UNK_10000000;
     return 0;
 }
+#endif
 
+#if !defined(VERSION_PSP)
 s32 func_8018BC88(s16* posX) {
     Collider collider;
     s16 temp2;
@@ -175,6 +192,7 @@ s32 func_8018BC88(s16* posX) {
     }
     return 1;
 }
+#endif
 
 Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
@@ -189,6 +207,7 @@ Entity* AllocEntity(Entity* start, Entity* end) {
     return NULL;
 }
 
+#if !defined(VERSION_PSP)
 s32 func_8018BED0(u8 arg0, s16 arg1) { return D_80180A94[arg0] * arg1; }
 
 s16 func_8018BEFC(u8 arg0) { return D_80180A94[arg0]; }
@@ -213,10 +232,13 @@ u8 func_8018C004(s32 x, s32 y) {
 }
 
 #include "../adjust_value_within_threshold.h"
+#endif
 
 #include "../unk_entity_func0.h"
 
+#if !defined(VERSION_PSP)
 u16 func_8018C130(s16 x, s16 y) { return ratan2(y, x); }
+#endif
 
 u16 func_8018C160(Entity* a, Entity* b) {
     s32 diffX = b->posX.i.hi - a->posX.i.hi;
@@ -224,11 +246,13 @@ u16 func_8018C160(Entity* a, Entity* b) {
     return ratan2(diffY, diffX);
 }
 
+#if !defined(VERSION_PSP)
 u16 func_8018C198(s32 x, s32 y) {
     s16 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
     s16 diffY = y - (u16)g_CurrentEntity->posY.i.hi;
     return ratan2(diffY, diffX);
 }
+#endif
 
 u16 func_8018C1E0(u16 arg0, s16 arg1, s16 arg2) {
     u16 var_v0 = arg1;
@@ -261,12 +285,15 @@ void SetStep(u8 step) {
     g_CurrentEntity->animFrameDuration = 0;
 }
 
+#if !defined(VERSION_PSP)
 void func_8018C260(u8 step_s) {
     g_CurrentEntity->step_s = step_s;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
+#endif
 
+#if !defined(VERSION_PSP)
 void EntityExplosionSpawn(u16 arg0, u16 arg1) {
     Entity* entity;
 
@@ -287,6 +314,7 @@ void EntityExplosionSpawn(u16 arg0, u16 arg1) {
     g_CurrentEntity->step = 0;
     g_CurrentEntity->step_s = 0;
 }
+#endif
 
 void InitializeEntity(u16 arg0[]) {
     u16 enemyId;
@@ -322,6 +350,7 @@ void EntityDummy(Entity* arg0) {
     }
 }
 
+#if !defined(VERSION_PSP)
 s32 func_8018C434(u16* hitSensors, s16 sensorCount) {
     Collider collider;
     s16 i;
@@ -353,6 +382,7 @@ s32 func_8018C434(u16* hitSensors, s16 sensorCount) {
         return 0;
     }
 }
+#endif
 
 void func_8018C55C(s16* hitSensors, s16 sensorCount) {
     Collider collider;
@@ -389,6 +419,8 @@ void func_8018C55C(s16* hitSensors, s16 sensorCount) {
     }
 }
 
+#if !defined(VERSION_PSP)
 INCLUDE_ASM("st/wrp/nonmatchings/st_common", func_8018C6B4);
+#endif
 
 #include "../replace_breakable_with_item_drop.h"
