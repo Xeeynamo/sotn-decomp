@@ -1,5 +1,5 @@
 #include "wrp.h"
 
-INCLUDE_ASM("st/wrp/nonmatchings/collision", TestCollisions);
+#include "../test_collisions.h"
 
 #include "../entity_damage_display.h"

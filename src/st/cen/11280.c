@@ -1,5 +1,5 @@
 #include "cen.h"
-INCLUDE_ASM("st/cen/nonmatchings/11280", TestCollisions);
+#include "../test_collisions.h"
 
 #include "../entity_damage_display.h"
 

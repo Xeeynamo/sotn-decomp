@@ -1,8 +1,8 @@
 #include "rwrp.h"
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", TestCollisions);
+#include "../test_collisions.h"
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018B6B4);
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", EntityDamageDisplay);
 
 #include "../libstage.h"
 
