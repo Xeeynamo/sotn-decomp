@@ -65,7 +65,6 @@ EntityUnkId15 = 0x801B8014;
 EntityIntenseExplosion = 0x801B89B4;
 EntitySoulStealOrb = 0x801B9EA8;
 EntityRoomForeground = 0x801BA6EC;
-BottomCornerText = 0x801BA7D8;
 EntityClouds = 0x801BAB08;
 EntityClockTower3D = 0x801BB2AC;
 EntityCutscenePhotograph = 0x801BB764;

@@ -69,7 +69,6 @@ EntityIntenseExplosion = 0x801964E4;
 EntitySoulStealOrb = 0x801982BC;
 EntityEnemyBlood = 0x80198650;
 EntityRoomForeground = 0x80198B00;
-BottomCornerText = 0x80198BC8;
 GetSideToPlayer = 0x801920AC;
 UNK_Invincibility0 = 0x801806B4;
 g_ItemIconSlots = 0x80199E54;

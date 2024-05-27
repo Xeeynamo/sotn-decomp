@@ -51,6 +51,7 @@ extern u16 g_eInitGeneric2[];
 extern ObjInit2 D_8018056C[];
 extern u16 D_80180D1C[];
 extern u16 D_80180D4C[];
+extern u16 D_80180E10[];
 extern s16 D_80180ED8[];
 extern s32 D_80180E18[];
 extern s32 D_80180EC4[];
