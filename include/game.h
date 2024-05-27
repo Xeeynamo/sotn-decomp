@@ -284,6 +284,10 @@ extern u8 g_BmpCastleMap[0x20000];
 #define ANIMSET_DRA(x) (x)
 #define ANIMSET_OVL(x) ((x) | ANIMSET_OVL_FLAG)
 
+#define PAL_OVL_FLAG 0x8000
+#define PAL_DRA(x) (x)
+#define PAL_OVL(x) ((x) | ANIMSET_OVL_FLAG)
+
 #ifndef SOTN_STR
 // Decorator to re-encode strings with tools/sotn_str/sotn_str.py when building
 // the game. Certain strings in SOTN do not follow the ASCII encoding and each

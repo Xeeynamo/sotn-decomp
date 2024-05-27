@@ -162,7 +162,7 @@ typedef struct {
 } ET_StagePopup;
 
 typedef struct {
-    /* 0x7C */ u8* label;
+    /* 0x7C */ char* label;
     /* 0x80 */ u16 width;
     /* 0x82 */ u16 height;
     /* 0x84 */ s16 unk84;

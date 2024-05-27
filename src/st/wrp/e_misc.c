@@ -167,35 +167,34 @@ u16 D_8018103C[] = {
     /* 1040 */ 0x002A,
     /* 1042 */ 0x002F,
 };
-void func_8018F838(Entity* entity) {
-    if (entity->step == 0) {
-        entity->velocityY = D_80181020[entity->ext.generic.unk94];
-        entity->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        entity->palette = 0x8195;
-        entity->animSet = ANIMSET_DRA(2);
-        entity->animCurFrame = D_80181038[entity->params];
-        entity->drawMode = DRAW_TPAGE;
-        entity->step++;
+void func_8018F838(Entity* self) {
+    if (!self->step) {
+        self->velocityY = D_80181020[self->ext.generic.unk94];
+        self->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
+        self->palette = PAL_OVL(0x195);
+        self->animSet = ANIMSET_DRA(2);
+        self->animCurFrame = D_80181038[self->params];
+        self->drawMode = DRAW_TPAGE;
+        self->step++;
     } else {
-        entity->animFrameDuration++;
-        entity->posY.val -= entity->velocityY;
-
-        if (!(entity->animFrameDuration & 1)) {
-            entity->animCurFrame++;
+        self->animFrameDuration++;
+        self->posY.val -= self->velocityY;
+        if (!(self->animFrameDuration & 1)) {
+            self->animCurFrame++;
         }
 
-        if (D_8018103C[entity->params] < (s32)entity->animFrameDuration) {
-            DestroyEntity(entity);
+        if (D_8018103C[self->params] < self->animFrameDuration) {
+            DestroyEntity(self);
         }
     }
 }
 
 void EntityUnkId15(Entity* self) {
-    if (self->step == 0) {
+    if (!self->step) {
         self->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        self->palette = 0x8195;
+        self->palette = PAL_OVL(0x195);
         self->animSet = ANIMSET_DRA(5);
-        self->animCurFrame = 1U;
+        self->animCurFrame = 1;
         self->drawMode = DRAW_TPAGE;
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
         self->rotY = self->rotX = D_80180FF8[self->params];
@@ -471,34 +470,31 @@ u8 func_8018FD48(s32 arg0) {
     return bits_01;
 }
 
-void EntityIntenseExplosion(Entity* entity) {
-    u32 zPriority;
-    if (entity->step == 0) {
+void EntityIntenseExplosion(Entity* self) {
+    if (!self->step) {
         InitializeEntity(D_80180458);
-        entity->palette = 0x8170;
-        entity->animSet = ANIMSET_DRA(5);
-        entity->animCurFrame = 1;
-        entity->drawMode = 0x30;
-        if (entity->params & 0xF0) {
-            entity->palette = 0x8195;
-            entity->drawMode = DRAW_TPAGE;
+        self->palette = PAL_OVL(0x170);
+        self->animSet = ANIMSET_DRA(5);
+        self->animCurFrame = 1;
+        self->drawMode = 0x30;
+        if (self->params & 0xF0) {
+            self->palette = PAL_OVL(0x195);
+            self->drawMode = DRAW_TPAGE;
         }
 
-        zPriority = entity->params & 0xFF00;
-        if (zPriority != 0) {
-            entity->zPriority = zPriority >> 8;
+        if (self->params & 0xFF00) {
+            self->zPriority = (self->params & 0xFF00) >> 8;
         }
-        entity->zPriority += 8;
+        self->zPriority += 8;
     } else {
-        entity->animFrameDuration++;
-        entity->posY.val -= FIX(0.25);
-
-        if ((entity->animFrameDuration & 1) == 0) {
-            entity->animCurFrame++;
+        self->animFrameDuration++;
+        self->posY.val -= FIX(0.25);
+        if ((self->animFrameDuration & 1) == 0) {
+            self->animCurFrame++;
         }
 
-        if (entity->animFrameDuration >= 37) {
-            DestroyEntity(entity);
+        if (self->animFrameDuration >= 37) {
+            DestroyEntity(self);
         }
     }
 }
@@ -506,27 +502,27 @@ void EntityIntenseExplosion(Entity* entity) {
 u8 D_8018104C[] = {
     2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1,
 };
-void func_801903C8(Entity* entity) {
-    if (entity->step == 0) {
+void func_801903C8(Entity* self) {
+    if (!self->step) {
         InitializeEntity(D_80180458);
-        entity->unk6C = 0xF0;
-        entity->rotX = 0x01A0;
-        entity->rotY = 0x01A0;
-        entity->animSet = ANIMSET_DRA(8);
-        entity->animCurFrame = 1;
-        entity->zPriority += 16;
+        self->unk6C = 0xF0;
+        self->rotX = 0x01A0;
+        self->rotY = 0x01A0;
+        self->animSet = ANIMSET_DRA(8);
+        self->animCurFrame = 1;
+        self->zPriority += 16;
 
-        if (entity->params) {
-            entity->palette = entity->params;
+        if (self->params) {
+            self->palette = self->params;
         } else {
-            entity->palette = 0x8160;
+            self->palette = PAL_OVL(0x160);
         }
 
-        entity->step++;
+        self->step++;
     } else {
         MoveEntity();
-        if (!AnimateEntity(D_8018104C, entity)) {
-            DestroyEntity(entity);
+        if (!AnimateEntity(D_8018104C, self)) {
+            DestroyEntity(self);
         }
     }
 }
@@ -545,7 +541,7 @@ void func_80190494(u16 entityId, Entity* src, Entity* dst) {
                  FLAG_UNK_08000000 | FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
                  FLAG_DESTROY_IF_OUT_OF_CAMERA;
 
-    if (src->palette & 0x8000) {
+    if (src->palette & PAL_OVL_FLAG) {
         dst->palette = src->hitEffect;
     } else {
         dst->palette = src->palette;
@@ -582,11 +578,11 @@ void func_80190614(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(D_80180458);
         self->animSet = ANIMSET_DRA(2);
-        self->palette = 0x81B6;
+        self->palette = PAL_OVL(0x1B6);
         self->unk6C = 0x70;
         self->zPriority = 192;
-        self->drawFlags |= 0xC;
-        self->drawMode |= 0x30;
+        self->drawFlags |= FLAG_DRAW_ROTZ | FLAG_DRAW_UNK8;
+        self->drawMode |= DRAW_TPAGE | DRAW_TPAGE2;
 
         switch (self->ext.generic.unk84.U8.unk0) {
         case 1:
@@ -672,37 +668,31 @@ void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
 }
 
 void func_801916C4(s16 sfxId) {
-    s32 var_a3;
-    s32 temp_v0_2;
-    s16 var_a2;
-    s32 y;
-    s16 var_v0_4;
-    s16 var_v1;
+    s32 posX;
+    s32 posY;
+    s16 arg2;
+    s16 arg1;
 
-    var_a3 = g_CurrentEntity->posX.i.hi - 128;
-    var_a2 = (abs(var_a3) - 32) >> 5;
-    if (var_a2 > 8) {
-        var_a2 = 8;
-    } else if (var_a2 < 0) {
-        var_a2 = 0;
+    posX = g_CurrentEntity->posX.i.hi - 128;
+    arg2 = (abs(posX) - 32) >> 5;
+    if (arg2 > 8) {
+        arg2 = 8;
+    } else if (arg2 < 0) {
+        arg2 = 0;
     }
-    if (var_a3 < 0) {
-        var_a2 = -var_a2;
+    if (posX < 0) {
+        arg2 = -arg2;
     }
-    var_a3 = abs(var_a3) - 96;
-    y = g_CurrentEntity->posY.i.hi - 128;
-    temp_v0_2 = abs(y) - 112;
-    var_v1 = var_a3;
-    if (temp_v0_2 > 0) {
-        var_v1 += temp_v0_2;
+    arg1 = abs(posX) - 96;
+    posY = abs(g_CurrentEntity->posY.i.hi - 128) - 112;
+    if (posY > 0) {
+        arg1 += posY;
     }
-    if (var_v1 < 0) {
-        var_v0_4 = 0;
-    } else {
-        var_v0_4 = var_v1;
+    if (arg1 < 0) {
+        arg1 = 0;
     }
-    var_a3 = 127 - (var_v0_4 >> 1);
-    if (var_a3 > 0) {
-        g_api.func_80134714(sfxId, var_a3, var_a2);
+    arg1 = 127 - (arg1 >> 1);
+    if (arg1 > 0) {
+        g_api.func_80134714(sfxId, arg1, arg2);
     }
 }
