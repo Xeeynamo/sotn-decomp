@@ -1034,7 +1034,7 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | CreateEntityFromEntity              | ../../asm/us/st/cen/nonmatchings/11280/CreateEntityFromEntity.s 
 | 1.00 | true     | CreateEntityFromEntity              | ../../asm/us/st/dre/nonmatchings/173C4/CreateEntityFromEntity.s 
-| 1.00 | true     | CreateEntityFromEntity              | ../../asm/us/st/mad/nonmatchings/EDB8/CreateEntityFromEntity.s 
+| 1.00 | true     | func_8019102C                       | ../../asm/us/st/mad/nonmatchings/EDB8/func_8019102C.s 
 | 1.00 | true     | CreateEntityFromEntity              | ../../asm/us/st/no3/nonmatchings/41C80/CreateEntityFromEntity.s 
 | 1.00 | true     | CreateEntityFromEntity              | ../../asm/us/st/np3/nonmatchings/394F0/CreateEntityFromEntity.s 
 | 1.00 | true     | CreateEntityFromEntity              | ../../asm/us/st/nz0/nonmatchings/39908/CreateEntityFromEntity.s 
@@ -1164,7 +1164,7 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | PreventEntityFromRespawning         | ../../asm/us/st/cen/nonmatchings/11280/PreventEntityFromRespawning.s 
 | 1.00 | true     | PreventEntityFromRespawning         | ../../asm/us/st/dre/nonmatchings/173C4/PreventEntityFromRespawning.s 
-| 1.00 | true     | PreventEntityFromRespawning         | ../../asm/us/st/mad/nonmatchings/EDB8/PreventEntityFromRespawning.s 
+| 1.00 | true     | func_80191E24                       | ../../asm/us/st/mad/nonmatchings/EDB8/func_80191E24.s 
 | 1.00 | true     | PreventEntityFromRespawning         | ../../asm/us/st/no3/nonmatchings/41C80/PreventEntityFromRespawning.s 
 | 1.00 | true     | PreventEntityFromRespawning         | ../../asm/us/st/np3/nonmatchings/394F0/PreventEntityFromRespawning.s 
 | 1.00 | true     | PreventEntityFromRespawning         | ../../asm/us/st/nz0/nonmatchings/39908/PreventEntityFromRespawning.s 
@@ -1634,7 +1634,7 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | Random                              | ../../asm/us/st/cen/nonmatchings/random/Random.s 
 | 1.00 | true     | Random                              | ../../asm/us/st/dre/nonmatchings/random/Random.s 
-| 1.00 | true     | Random                              | ../../asm/us/st/mad/nonmatchings/random/Random.s 
+| 1.00 | true     | func_8018E964                       | ../../asm/us/st/mad/nonmatchings/random/func_8018E964.s 
 | 1.00 | true     | Random                              | ../../asm/us/st/no3/nonmatchings/random/Random.s 
 | 1.00 | true     | Random                              | ../../asm/us/st/np3/nonmatchings/random/Random.s 
 | 1.00 | true     | Random                              | ../../asm/us/st/nz0/nonmatchings/random/Random.s 
@@ -1719,7 +1719,7 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | TestCollisions                      | ../../asm/us/st/cen/nonmatchings/11280/TestCollisions.s 
 | 1.00 | true     | TestCollisions                      | ../../asm/us/st/dre/nonmatchings/173C4/TestCollisions.s 
-| 0.95 | false    | func_8018EDB8                       | ../../asm/us/st/mad/nonmatchings/EDB8/func_8018EDB8.s 
+| 0.95 | true     | TestCollisions                      | ../../asm/us/st/mad/nonmatchings/EDB8/TestCollisions.s 
 | 1.00 | true     | TestCollisions                      | ../../asm/us/st/no3/nonmatchings/41C80/TestCollisions.s 
 | 1.00 | true     | TestCollisions                      | ../../asm/us/st/np3/nonmatchings/394F0/TestCollisions.s 
 | 1.00 | true     | TestCollisions                      | ../../asm/us/st/nz0/nonmatchings/39908/TestCollisions.s 
