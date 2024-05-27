@@ -272,7 +272,7 @@ def decompile(func_name: str, number_occurrence: int = None, force: bool = False
 
     if force:
         funcs = funcs[:1]
-    elif number_occurrence and number_occurrence < len(funcs):
+    elif number_occurrence is not None and number_occurrence < len(funcs):
         funcs = [funcs[number_occurrence]]
     else:
         if len(funcs) > 1:
