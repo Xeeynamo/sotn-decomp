@@ -547,7 +547,7 @@
 <g id="node35" class="node">
 <title>cen.TestCollisions</title>
 <g id="a_node35"><a xlink:href="cen.TestCollisions.svg" xlink:title="cen.TestCollisions">
-<ellipse fill="red" stroke="black" cx="8354.24" cy="-378" rx="94.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="8354.24" cy="-378" rx="94.48" ry="18"/>
 <text text-anchor="middle" x="8354.24" y="-374.3" font-family="Times,serif" font-size="14.00">cen.TestCollisions</text>
 </a>
 </g>

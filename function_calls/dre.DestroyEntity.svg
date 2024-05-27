@@ -627,7 +627,7 @@
 <g id="node40" class="node">
 <title>dre.TestCollisions</title>
 <g id="a_node40"><a xlink:href="dre.TestCollisions.svg" xlink:title="dre.TestCollisions">
-<ellipse fill="red" stroke="black" cx="10103.59" cy="-378" rx="93.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="10103.59" cy="-378" rx="93.68" ry="18"/>
 <text text-anchor="middle" x="10103.59" y="-374.3" font-family="Times,serif" font-size="14.00">dre.TestCollisions</text>
 </a>
 </g>

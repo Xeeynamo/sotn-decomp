@@ -12,7 +12,7 @@
 <!-- cen.TestCollisions -->
 <g id="node1" class="node">
 <title>cen.TestCollisions</title>
-<ellipse fill="red" stroke="black" cx="1558.24" cy="-198" rx="94.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1558.24" cy="-198" rx="94.48" ry="18"/>
 <text text-anchor="middle" x="1558.24" y="-194.3" font-family="Times,serif" font-size="14.00">cen.TestCollisions</text>
 </g>
 <!-- cen.AllocEntity -->

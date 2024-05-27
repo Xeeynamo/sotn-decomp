@@ -371,7 +371,7 @@
 <g id="node24" class="node">
 <title>no3.TestCollisions</title>
 <g id="a_node24"><a xlink:href="no3.TestCollisions.svg" xlink:title="no3.TestCollisions">
-<ellipse fill="red" stroke="black" cx="5874.14" cy="-378" rx="94.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="5874.14" cy="-378" rx="94.78" ry="18"/>
 <text text-anchor="middle" x="5874.14" y="-374.3" font-family="Times,serif" font-size="14.00">no3.TestCollisions</text>
 </a>
 </g>

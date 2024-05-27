@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>rwrp.TestCollisions</title>
 <g id="a_node3"><a xlink:href="rwrp.TestCollisions.svg" xlink:title="rwrp.TestCollisions">
-<ellipse fill="red" stroke="black" cx="490.88" cy="-198" rx="100.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="490.88" cy="-198" rx="100.98" ry="18"/>
 <text text-anchor="middle" x="490.88" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.TestCollisions</text>
 </a>
 </g>

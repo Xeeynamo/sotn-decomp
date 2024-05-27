@@ -1058,7 +1058,7 @@
 | 1.00 | true     | EntityDamageDisplay                 | ../../asm/us/st/no3/nonmatchings/41C80/EntityDamageDisplay.s 
 | 1.00 | true     | EntityDamageDisplay                 | ../../asm/us/st/np3/nonmatchings/394F0/EntityDamageDisplay.s 
 | 1.00 | true     | EntityDamageDisplay                 | ../../asm/us/st/nz0/nonmatchings/39908/EntityDamageDisplay.s 
-| 1.00 | false    | func_8018B6B4                       | ../../asm/us/st/rwrp/nonmatchings/A59C/func_8018B6B4.s 
+| 1.00 | false    | EntityDamageDisplay                 | ../../asm/us/st/rwrp/nonmatchings/A59C/EntityDamageDisplay.s 
 | 1.00 | true     | EntityDamageDisplay                 | ../../asm/us/st/st0/nonmatchings/31CA0/EntityDamageDisplay.s 
 | 1.00 | true     | EntityDamageDisplay                 | ../../asm/us/st/wrp/nonmatchings/collision/EntityDamageDisplay.s 
 -------------------------------------------------------------------------------
@@ -1708,14 +1708,14 @@
 | 1.00 | true     | ReplaceBreakableWithItemDrop        | ../../asm/us/st/rwrp/nonmatchings/A59C/ReplaceBreakableWithItemDrop.s 
 | 1.00 | true     | ReplaceBreakableWithItemDrop        | ../../asm/us/st/wrp/nonmatchings/st_common/ReplaceBreakableWithItemDrop.s 
 -------------------------------------------------------------------------------
-| 1.00 | false    | TestCollisions                      | ../../asm/us/st/cen/nonmatchings/11280/TestCollisions.s 
-| 1.00 | false    | TestCollisions                      | ../../asm/us/st/dre/nonmatchings/173C4/TestCollisions.s 
+| 1.00 | true     | TestCollisions                      | ../../asm/us/st/cen/nonmatchings/11280/TestCollisions.s 
+| 1.00 | true     | TestCollisions                      | ../../asm/us/st/dre/nonmatchings/173C4/TestCollisions.s 
 | 0.95 | false    | func_8018EDB8                       | ../../asm/us/st/mad/nonmatchings/EDB8/func_8018EDB8.s 
-| 1.00 | false    | TestCollisions                      | ../../asm/us/st/no3/nonmatchings/41C80/TestCollisions.s 
+| 1.00 | true     | TestCollisions                      | ../../asm/us/st/no3/nonmatchings/41C80/TestCollisions.s 
 | 1.00 | true     | TestCollisions                      | ../../asm/us/st/np3/nonmatchings/394F0/TestCollisions.s 
-| 1.00 | false    | TestCollisions                      | ../../asm/us/st/nz0/nonmatchings/39908/TestCollisions.s 
-| 1.00 | false    | TestCollisions                      | ../../asm/us/st/rwrp/nonmatchings/A59C/TestCollisions.s 
-| 1.00 | false    | TestCollisions                      | ../../asm/us/st/wrp/nonmatchings/collision/TestCollisions.s 
+| 1.00 | true     | TestCollisions                      | ../../asm/us/st/nz0/nonmatchings/39908/TestCollisions.s 
+| 1.00 | true     | TestCollisions                      | ../../asm/us/st/rwrp/nonmatchings/A59C/TestCollisions.s 
+| 1.00 | true     | TestCollisions                      | ../../asm/us/st/wrp/nonmatchings/collision/TestCollisions.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | func_80195318                       | ../../asm/us/st/cen/nonmatchings/11280/func_80195318.s 
 | 1.00 | false    | func_8019B45C                       | ../../asm/us/st/dre/nonmatchings/173C4/func_8019B45C.s 

@@ -12,7 +12,7 @@
 <!-- nz0.TestCollisions -->
 <g id="node1" class="node">
 <title>nz0.TestCollisions</title>
-<ellipse fill="red" stroke="black" cx="1301.39" cy="-198" rx="94.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1301.39" cy="-198" rx="94.78" ry="18"/>
 <text text-anchor="middle" x="1301.39" y="-194.3" font-family="Times,serif" font-size="14.00">nz0.TestCollisions</text>
 </g>
 <!-- dra.DealDamage -->
