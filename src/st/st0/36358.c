@@ -263,6 +263,7 @@ void func_801B6C5C(Entity* entity) {
     }
 }
 
+// Different from other overlays, but extremely similar to MAD.
 void EntityEquipItemDrop(Entity* self) {
     u16 itemId = self->params & 0x7FFF;
     s32 primIndex;

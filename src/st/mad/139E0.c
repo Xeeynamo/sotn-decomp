@@ -264,6 +264,7 @@ void func_80194314(Entity* entity) {
     }
 }
 
+// Different from other overlays, but extremely similar to ST0.
 void EntityEquipItemDrop(Entity* self) {
     u16 itemId = self->params & 0x7FFF;
     s32 primIndex;
