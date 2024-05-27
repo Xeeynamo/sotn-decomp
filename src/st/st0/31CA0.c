@@ -284,7 +284,7 @@ void HitDetection(void) {
                         if (entFrom5C->hitPoints != 0x7FFE) {
                             if (entFrom5C->hitPoints < (miscVar1 * 2)) {
                                 entFrom5C->hitFlags |= 3;
-                            } else if (entFrom5C->hitPoints < ((miscVar1)*4)) {
+                            } else if (entFrom5C->hitPoints < (miscVar1 * 4)) {
                                 entFrom5C->hitFlags |= 2;
                             } else {
                                 entFrom5C->hitFlags |= 1;
