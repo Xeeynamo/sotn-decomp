@@ -216,7 +216,8 @@ void TestCollisions(void) {
                             g_unkGraphicsStruct.BottomCornerTextPrims);
                         g_unkGraphicsStruct.BottomCornerTextTimer = 0;
                     }
-                    func_80198BC8(g_api.enemyDefs[entFrom5C->enemyId].name, 0);
+                    BottomCornerText(
+                        g_api.enemyDefs[entFrom5C->enemyId].name, 0);
                     entFrom5C->flags |= FLAG_UNK_01000000;
                 }
                 miscVar2 = 0;
@@ -1052,7 +1053,7 @@ void CollectGold(u16 goldSize) { // CollectGold
         *unk = 0;
     }
 
-    func_80198BC8(D_80180D60[goldSizeIndex], 1);
+    BottomCornerText(D_80180D60[goldSizeIndex], 1);
     DestroyEntity(g_CurrentEntity);
 }
 
