@@ -68,7 +68,7 @@ segments:
       - [0xD7CC, .rodata, EDB8] # EntityRedDoor
       - [0xD7E4, rodata]
       - [0xD83C, .rodata, 139E0]
-      - [0xD85C, rodata] # EntityEquipItemDrop
+      - [0xD85C, .rodata, 139E0] # EntityEquipItemDrop
       - [0xD874, .rodata, entity_relic_orb]
       - [0xD8AC, rodata]
       - [0xD8C8, c]
