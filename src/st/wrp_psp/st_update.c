@@ -1,6 +1,6 @@
 #include "../wrp/wrp.h"
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/st_update", Update);
+#include "../update.h"
 
 extern u16 UNK_Invincibility0[];
 

@@ -1,85 +1,89 @@
 #include <stage.h>
 
 void Update(void) {
-    s16 i;
-    Entity* entity;
-    s32* unk;
+    s16 x;
+    Entity* e;
+    s32 flags;
+    s16 y;
+    s16 iFramePalette;
 
-    for (i = 0; i < LEN(g_ItemIconSlots); i++) {
-        if (g_ItemIconSlots[i]) {
-            g_ItemIconSlots[i]--;
+    for (x = 0; x < LEN(g_ItemIconSlots); x++) {
+        if (g_ItemIconSlots[x]) {
+            g_ItemIconSlots[x]--;
         }
     }
 
-    unk = &g_unkGraphicsStruct.BottomCornerTextTimer;
-    if (*unk) {
-        if (!--*unk) {
+    if (g_unkGraphicsStruct.BottomCornerTextTimer) {
+        if (!--g_unkGraphicsStruct.BottomCornerTextTimer) {
             g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
         }
     }
 
-    for (entity = &g_Entities[STAGE_ENTITY_START];
-         entity < &g_Entities[TOTAL_ENTITY_COUNT]; entity++) {
-        if (!entity->pfnUpdate)
+    for (e = &g_Entities[STAGE_ENTITY_START];
+         e < &g_Entities[TOTAL_ENTITY_COUNT]; e++) {
+        if (!e->pfnUpdate)
             continue;
 
-        if (entity->step) {
-            s32 unk34 = entity->flags;
-            if (unk34 & FLAG_DESTROY_IF_OUT_OF_CAMERA) {
-                s16 posX = i = entity->posX.i.hi;
-                s16 posY = entity->posY.i.hi;
-                if (unk34 & FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
-                    if ((u16)(posX + 64) > 384 || (u16)(posY + 64) > 352) {
-                        DestroyEntity(entity);
+        if (e->step) {
+            flags = e->flags;
+            if (flags & FLAG_DESTROY_IF_OUT_OF_CAMERA) {
+                x = e->posX.i.hi;
+                y = e->posY.i.hi;
+                if (flags & FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA) {
+                    if (x < -64 || x > 320 || y < -64 || y > 288) {
+                        DestroyEntity(e);
                         continue;
                     }
                 } else {
-                    if ((u16)(posX + 128) > 512 || (u16)(posY + 128) > 480) {
-                        DestroyEntity(entity);
+                    if (x < -128 || x > 384 || y < -128 || y > 352) {
+                        DestroyEntity(e);
                         continue;
                     }
                 }
             }
 
-            if ((unk34 & 0x02000000)) {
-                s16 posY = entity->posY.i.hi + g_Tilemap.scrollY.i.hi;
-                s16 test = (LOHU(g_Tilemap.vSize) * 256) + 128;
-                if (posY > test) {
-                    DestroyEntity(entity);
+            if (flags & FLAG_UNK_02000000) {
+                x = e->posY.i.hi + g_Tilemap.scrollY.i.hi;
+#if defined(VERSION_PSP)
+                y = (s16)g_Tilemap.vSize * 256 + 128;
+#else
+                y = (u16)g_Tilemap.vSize * 256 + 128;
+#endif
+                if (x > y) {
+                    DestroyEntity(e);
                     continue;
                 }
             }
 
-            if (unk34 & 0xF) {
-                entity->palette =
-                    UNK_Invincibility0[(entity->nFramesInvincibility << 1) |
-                                       (unk34 & 1)];
-                entity->flags--;
-                if ((entity->flags & 0xF) == 0) {
-                    entity->palette = entity->hitEffect;
-                    entity->hitEffect = 0;
+            if (flags & 0xF) {
+                iFramePalette = e->nFramesInvincibility << 1;
+                iFramePalette += (flags & 1);
+                e->palette = UNK_Invincibility0[iFramePalette];
+                if (!(--e->flags & 0xF)) {
+                    e->palette = e->hitEffect;
+                    e->hitEffect = 0;
                 }
             }
 
-            if (!(unk34 & 0x20000000) || (unk34 & 0x10000000) ||
-                ((u16)(entity->posX.i.hi + 64) <= 384) &&
-                    ((u16)(entity->posY.i.hi + 64) <= 352)) {
-                if (!entity->stunFrames ||
-                    (entity->stunFrames--, unk34 & 0x100000)) {
-                    if (!g_unkGraphicsStruct.D_800973FC || unk34 & 0x2100 ||
-                        (unk34 & 0x200 && !(g_GameTimer & 3))) {
-                        g_CurrentEntity = entity;
-                        entity->pfnUpdate(entity);
-                        entity->unk44 = 0;
-                        entity->hitFlags = 0;
+            if (!(flags & FLAG_UNK_20000000) || (flags & FLAG_UNK_10000000) ||
+                (e->posX.i.hi >= -64 && e->posX.i.hi <= 320 &&
+                 e->posY.i.hi >= -64 && e->posY.i.hi <= 288)) {
+                if (!e->stunFrames ||
+                    (e->stunFrames--, flags & FLAG_UNK_100000)) {
+                    if (!g_unkGraphicsStruct.D_800973FC ||
+                        flags & (FLAG_UNK_2000 | FLAG_DEAD) ||
+                        (flags & FLAG_UNK_200 && !(g_GameTimer & 3))) {
+                    process_entity:
+                        g_CurrentEntity = e;
+                        e->pfnUpdate(e);
+                        e->unk44 = 0;
+                        e->hitFlags = 0;
+                        continue;
                     }
                 }
             }
         } else {
-            g_CurrentEntity = entity;
-            entity->pfnUpdate(entity);
-            entity->unk44 = 0;
-            entity->hitFlags = 0;
+            goto process_entity;
         }
     }
 }
