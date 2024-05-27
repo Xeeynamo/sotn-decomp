@@ -79,6 +79,7 @@ EntityEquipItemDrop = 0x801BED20;
 EntityRelicOrb = 0x801BF5B8;
 EntityHeartDrop = 0x801C0088;
 EntityMessageBox = 0x801C01B0;
+CheckColliderOffsets = 0x8017070C;
 EntityUnkId15 = 0x801C0C14;
 EntityIntenseExplosion = 0x801C15B4;
 EntitySoulStealOrb = 0x801C2AA8;

@@ -50,7 +50,7 @@ void EntityHeartDrop(Entity* entity, u32 arg1) {
 }
 #endif
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_8019563C);
+#include "../check_coll_offsets.h"
 
 void func_8019572C(Entity* entity) {
     switch (entity->step) {

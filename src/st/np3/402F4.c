@@ -1,26 +1,6 @@
 #include "np3.h"
 
-u8 func_801C02F4(s16* arg0, u8 facing) {
-    u8 ret = 0;
-    Collider collider;
-    s16 posX, posY;
-
-    while (*arg0 != 0xFF) {
-        ret <<= 1;
-
-        posX = facing ? (g_CurrentEntity->posX.i.hi + *arg0++)
-                      : (g_CurrentEntity->posX.i.hi - *arg0++);
-        posY = g_CurrentEntity->posY.i.hi + *arg0++;
-
-        g_api.CheckCollision(posX, posY, &collider, 0);
-
-        if (collider.effects & EFFECT_SOLID) {
-            ret |= 1;
-        }
-    }
-
-    return ret;
-}
+#include "../check_coll_offsets.h"
 
 void func_801C03E4(Entity* entity) {
     switch (entity->step) {
@@ -160,7 +140,7 @@ void func_801C08F0(Entity* self) {
 
     case 1:
         prim = (Primitive*)*(s32*)&self->ext.generic.unk7C.s;
-        if (func_801C02F4(&D_80182000, 0) & 255) {
+        if (CheckColliderOffsets(&D_80182000, 0)) {
             prim->y1 += 2;
             if (self->step_s == 0) {
                 func_801C04F4(self, 1, 2, 0, 0, 3, 0);
