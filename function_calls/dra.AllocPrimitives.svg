@@ -4068,7 +4068,7 @@
 <g id="node254" class="node">
 <title>st0.EntityEquipItemDrop</title>
 <g id="a_node254"><a xlink:href="st0.EntityEquipItemDrop.svg" xlink:title="st0.EntityEquipItemDrop">
-<ellipse fill="red" stroke="black" cx="65576.34" cy="-378" rx="128.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="65576.34" cy="-378" rx="128.88" ry="18"/>
 <text text-anchor="middle" x="65576.34" y="-374.3" font-family="Times,serif" font-size="14.00">st0.EntityEquipItemDrop</text>
 </a>
 </g>

@@ -2739,7 +2739,7 @@
 - [✅ EntityDraculaRainAttack](function_calls/st0.EntityDraculaRainAttack.svg?raw=1)
 - [✅ EntityDummy](function_calls/st0.EntityDummy.svg?raw=1)
 - [✅ EntityEnemyBlood](function_calls/st0.EntityEnemyBlood.svg?raw=1)
-- [❌ EntityEquipItemDrop](function_calls/st0.EntityEquipItemDrop.svg?raw=1)
+- [✅ EntityEquipItemDrop](function_calls/st0.EntityEquipItemDrop.svg?raw=1)
 - [✅ EntityExplosion](function_calls/st0.EntityExplosion.svg?raw=1)
 - [✅ EntityIntenseExplosion](function_calls/st0.EntityIntenseExplosion.svg?raw=1)
 - [✅ EntityIsNearPlayer](function_calls/st0.EntityIsNearPlayer.svg?raw=1)

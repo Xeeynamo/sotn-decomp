@@ -12,7 +12,7 @@
 <!-- st0.EntityEquipItemDrop -->
 <g id="node1" class="node">
 <title>st0.EntityEquipItemDrop</title>
-<ellipse fill="red" stroke="black" cx="1345.69" cy="-198" rx="128.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1345.69" cy="-198" rx="128.88" ry="18"/>
 <text text-anchor="middle" x="1345.69" y="-194.3" font-family="Times,serif" font-size="14.00">st0.EntityEquipItemDrop</text>
 </g>
 <!-- dra.AddToInventory -->
