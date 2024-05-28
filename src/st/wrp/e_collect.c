@@ -356,14 +356,14 @@ void EntityPrizeDrop(Entity* self) {
     }
 }
 
-extern u16 D_80180458[];
+extern u16 g_InitializeEntityData0[];
 extern s32 D_80180EC4[];
 extern u8* D_80180F70[];
 void EntityExplosion(Entity* entity) {
     u16 zPriority;
 
     if (entity->step == 0) {
-        InitializeEntity(D_80180458);
+        InitializeEntity(g_InitializeEntityData0);
         entity->animSet = ANIMSET_DRA(2);
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;

@@ -150,67 +150,11 @@ void EntityUnkId15(Entity* self) {
     }
 }
 
-u32 D_80181044[] = {
+u32 g_olroxDroolCollOffsets[] = {
     /* 1044 */ 0x00000000,
     /* 1048 */ 0x000000FF,
 };
-void func_8018FA1C(Entity* self) {
-    s16 primIndex;
-    Primitive* prim;
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(D_80180458);
-        primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
-        if (primIndex != -1) {
-            prim = &g_PrimBuf[primIndex];
-            self->primIndex = primIndex;
-            self->hitboxState = 0;
-            *(s32*)&self->ext.generic.unk7C = prim;
-            self->flags |= FLAG_HAS_PRIMS;
-            while (prim != NULL) {
-                prim->x0 = prim->x1 = self->posX.i.hi;
-                prim->y0 = prim->y1 = self->posY.i.hi;
-                prim->r0 = 64;
-                prim->r1 = 0;
-                prim->g0 = 64;
-                prim->g1 = 0;
-                prim->b0 = 255;
-                prim->b1 = 16;
-                prim->priority = self->zPriority + 1;
-                prim->drawMode |= 0x37;
-                prim = prim->next;
-            }
-        }
-        break;
-
-    case 1:
-        prim = (Primitive*)*(s32*)&self->ext.generic.unk7C.s;
-        if (CheckColliderOffsets(D_80181044, 0)) {
-            prim->y1 += 2;
-            if (self->step_s == 0) {
-                EntityUnkId14Spawner(self, 1, 2, 0, 0, 3, 0);
-                self->step_s = 1;
-            }
-        } else {
-            self->velocityY += 0x400;
-            self->posY.val += self->velocityY;
-            if ((prim->y0 - prim->y1) >= 9) {
-                prim->y1 = prim->y0 - 8;
-            }
-        }
-
-        prim->x0 = self->posX.i.hi;
-        prim->x1 = self->posX.i.hi;
-        prim->y0 = self->posY.i.hi;
-
-        if (prim->y0 < prim->y1) {
-            g_api.FreePrimitives(self->primIndex);
-            DestroyEntity(self);
-        }
-        break;
-    }
-}
+#include "../entity_olrox_drool.h"
 
 bool func_8018FC4C(Point16* unk) {
     Collider collider;
@@ -410,7 +354,7 @@ u8 func_8018FD48(s32 arg0) {
 
 void EntityIntenseExplosion(Entity* self) {
     if (!self->step) {
-        InitializeEntity(D_80180458);
+        InitializeEntity(g_InitializeEntityData0);
         self->palette = PAL_OVL(0x170);
         self->animSet = ANIMSET_DRA(5);
         self->animCurFrame = 1;
@@ -442,7 +386,7 @@ u8 D_8018104C[] = {
 };
 void func_801903C8(Entity* self) {
     if (!self->step) {
-        InitializeEntity(D_80180458);
+        InitializeEntity(g_InitializeEntityData0);
         self->unk6C = 0xF0;
         self->rotX = 0x01A0;
         self->rotY = 0x01A0;
@@ -514,7 +458,7 @@ void func_80190614(Entity* self) {
     s32 temp;
 
     if (self->step == 0) {
-        InitializeEntity(D_80180458);
+        InitializeEntity(g_InitializeEntityData0);
         self->animSet = ANIMSET_DRA(2);
         self->palette = PAL_OVL(0x1B6);
         self->unk6C = 0x70;

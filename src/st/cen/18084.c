@@ -38,7 +38,7 @@ void EntityUnkId13(Entity* entity) {
 
 INCLUDE_ASM("st/cen/nonmatchings/18084", EntityUnkId15);
 
-INCLUDE_ASM("st/cen/nonmatchings/18084", func_80198680);
+#include "../entity_olrox_drool.h"
 
 INCLUDE_ASM("st/cen/nonmatchings/18084", func_801988B0);
 

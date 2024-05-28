@@ -12,7 +12,7 @@ INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_80191490);
 
 INCLUDE_ASM("st/rwrp/nonmatchings/113A0", EntityUnkId15);
 
-INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_8019199C);
+#include "../entity_olrox_drool.h"
 
 INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_80191BCC);
 
