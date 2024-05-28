@@ -90,7 +90,6 @@ EntityMessageBox = 0x801BFD98;
 EntityUnkId15Spawner = 0x801C0624;
 EntityUnkId14 = 0x801C070C;
 EntityUnkId15 = 0x801C07FC;
-EntityOlroxDrool = 0x801C08F0;
 EntityIntenseExplosion = 0x801C119C;
 EntityStageNamePopup = 0x801C2860;
 EntitySoulStealOrb = 0x801C34E4;

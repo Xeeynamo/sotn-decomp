@@ -30,7 +30,8 @@ void EntityOlroxDrool(Entity* self) {
             prim->b0 = 255;
             prim->b1 = 16;
             prim->priority = self->zPriority + 1;
-            prim->drawMode |= (DRAW_TPAGE2 + DRAW_TPAGE + DRAW_COLORS + DRAW_UNK02 + DRAW_TRANSP);
+            prim->drawMode |= (DRAW_TPAGE2 + DRAW_TPAGE + DRAW_COLORS +
+                               DRAW_UNK02 + DRAW_TRANSP);
             prim = prim->next;
         }
         break;

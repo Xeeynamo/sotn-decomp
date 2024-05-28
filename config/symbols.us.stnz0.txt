@@ -86,7 +86,6 @@ EntityHeartDrop = 0x801C0088;
 EntityMessageBox = 0x801C01B0;
 EntityUnkId14 = 0x801C0B24;
 EntityUnkId15 = 0x801C0C14;
-EntityOlroxDrool = 0x801C0D08;
 EntityIntenseExplosion = 0x801C15B4;
 EntitySoulStealOrb = 0x801C2AA8;
 EntityEnemyBlood = 0x801C2E3C;

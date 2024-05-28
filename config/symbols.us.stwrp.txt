@@ -1,5 +1,3 @@
-g_InitializeEntityData0 = 0x80180458;
-g_olroxDroolCollOffsets = 0x80181044;
 g_Rooms = 0x801811AC;
 D_80181228 = 0x80181228;
 D_80181250 = 0x80181250;
@@ -51,7 +49,6 @@ EntityWarpSmallRocks = 0x80187F1C;
 EntityRedDoor = 0x8018A9C8;
 CollectGold = 0x8018CD10;
 EntityEquipItemDrop = 0x8018DA34;
-EntityOlroxDrool = 0x8018FA1C;
 EntityStageNamePopup = 0x8019198C;
 g_LayoutObjHorizontal = 0x80193AB0;
 g_LayoutObjVertical = 0x80193AB4;
