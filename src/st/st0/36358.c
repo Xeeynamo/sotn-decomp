@@ -483,32 +483,11 @@ void func_801B7BFC(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("st/st0/nonmatchings/36358", func_801B7D0C);
+#include "../entity_unkId14_spawner.h"
 
 #include "../entity_unkId15_spawner.h"
 
-void func_801B7F24(Entity* entity) {
-    if (entity->step == 0) {
-        entity->velocityY = D_80181ED8[entity->ext.generic.unk94];
-        entity->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        entity->palette = 0x8195;
-        entity->animSet = ANIMSET_DRA(2);
-        entity->animCurFrame = D_80181EF0[entity->params];
-        entity->drawMode = DRAW_TPAGE;
-        entity->step++;
-    } else {
-        entity->animFrameDuration++;
-        entity->posY.val -= entity->velocityY;
-
-        if (!(entity->animFrameDuration & 1)) {
-            entity->animCurFrame++;
-        }
-
-        if (D_80181EF4[entity->params] < (s32)entity->animFrameDuration) {
-            DestroyEntity(entity);
-        }
-    }
-}
+#include "../entity_unkId14.h"
 
 void EntityUnkId15(Entity* entity) {
     u16 temp_v0;

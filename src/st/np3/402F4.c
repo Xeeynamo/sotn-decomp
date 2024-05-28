@@ -29,53 +29,11 @@ void func_801C03E4(Entity* entity) {
     }
 }
 
-void func_801C04F4(
-    Entity* self, u8 count, u8 params, s32 x, s32 y, u8 arg5, s16 xGap) {
-    Entity* newEntity;
-    s32 i;
-    s16 newX = self->posX.i.hi + x;
-    s16 newY = self->posY.i.hi + y;
-
-    for (i = 0; i < count; i++) {
-        newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-        if (newEntity != NULL) {
-            newEntity->posX.i.hi = newX + xGap * i;
-            newEntity->posY.i.hi = newY;
-            newEntity->entityId = E_ID_14;
-            newEntity->pfnUpdate = func_801C070C;
-            newEntity->params = params;
-            newEntity->ext.generic.unk94 = arg5 + i;
-            newEntity->rotY = newEntity->rotX = D_80181FA4[arg5 + i];
-            newEntity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-            newEntity->zPriority = self->zPriority + 1;
-        }
-    }
-}
+#include "../entity_unkId14_spawner.h"
 
 #include "../entity_unkId15_spawner.h"
 
-void func_801C070C(Entity* entity) {
-    if (entity->step == 0) {
-        entity->velocityY = D_80181FDC[entity->ext.generic.unk94];
-        entity->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        entity->palette = 0x8195;
-        entity->animSet = ANIMSET_DRA(2);
-        entity->animCurFrame = D_80181FF4[entity->params];
-        entity->drawMode = DRAW_TPAGE;
-        entity->step++;
-    } else {
-        entity->animFrameDuration++;
-        entity->posY.val -= entity->velocityY;
-
-        if (!(entity->animFrameDuration & 1)) {
-            entity->animCurFrame++;
-        }
-
-        if (D_80181FF8[entity->params] < (s32)entity->animFrameDuration) {
-            DestroyEntity(entity);
-        }
-    }
-}
+#include "../entity_unkId14.h"
 
 void EntityUnkId15(Entity* entity) {
     u16 temp_v0;
@@ -143,7 +101,7 @@ void func_801C08F0(Entity* self) {
         if (CheckColliderOffsets(&D_80182000, 0)) {
             prim->y1 += 2;
             if (self->step_s == 0) {
-                func_801C04F4(self, 1, 2, 0, 0, 3, 0);
+                EntityUnkId14Spawner(self, 1, 2, 0, 0, 3, 0);
                 self->step_s = 1;
             }
         } else {

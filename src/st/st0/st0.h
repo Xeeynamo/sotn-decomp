@@ -21,7 +21,8 @@ typedef enum {
     E_DUMMY_0E,
     E_DUMMY_0F,
     E_DUMMY_10,
-    E_ID_15 = 0x15,
+    E_ID_14 = 0x14,
+    E_ID_15,
     E_ID_26 = 0x26,
     E_SECRET_BUTTON = 0x28,
     E_SECRET_STAIRS = 0x29,
@@ -32,6 +33,7 @@ s32 GetSideToPlayer();
 void MoveEntity();
 void SetStep(u8);
 void EntityExplosion(Entity*);
+void EntityUnkId14(Entity* entity);
 void EntityUnkId15(Entity* entity);
 
 extern const char* D_801A7984;
@@ -163,9 +165,6 @@ extern s16 D_80181E3C[];
 extern s16 D_80181E3E[];
 extern s16 D_80181EB0[];
 extern u32 D_80181EC0[];
-extern s32 D_80181ED8[];
-extern u8 D_80181EF0[];
-extern u16 D_80181EF4[];
 extern u16 D_80181F04[];
 extern u8 D_801824CC[];
 
