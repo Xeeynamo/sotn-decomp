@@ -34,8 +34,7 @@ INCLUDE_ASM("st/cen/nonmatchings/18084", func_80198284);
 
 #include "../entity_unkId15_spawner.h"
 
-// ID 14
-INCLUDE_ASM("st/cen/nonmatchings/18084", EntityExplosion14);
+#include "../entity_unkId14.h"
 
 INCLUDE_ASM("st/cen/nonmatchings/18084", EntityUnkId15);
 

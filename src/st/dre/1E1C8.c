@@ -34,35 +34,7 @@ INCLUDE_ASM("st/dre/nonmatchings/1E1C8", func_8019E3C8);
 
 #include "../entity_unkId15_spawner.h"
 
-// an explosion animation ID 0x14
-void EntityExplosion14(Entity* entity) {
-    u8 new_var2;
-    u32 new_var;
-
-    if (!entity->step) {
-        new_var = D_8018130C[entity->ext.generic.unk94];
-        entity->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        entity->palette = 0x8195;
-        entity->animSet = ANIMSET_DRA(2);
-        entity->velocityY = new_var;
-        new_var2 = D_80181324[entity->params];
-        entity->drawMode = DRAW_TPAGE;
-        entity->step++;
-        entity->animCurFrame = new_var2;
-        return;
-    }
-
-    entity->animFrameDuration++;
-    entity->posY.val -= entity->velocityY;
-
-    if (!(entity->animFrameDuration & 1)) {
-        entity->animCurFrame++;
-    }
-
-    if (D_80181328[entity->params] < entity->animFrameDuration) {
-        DestroyEntity(entity);
-    }
-}
+#include "../entity_unkId14.h"
 
 // looks like a particle of dust fading away
 void EntityUnkId15(Entity* entity) {
