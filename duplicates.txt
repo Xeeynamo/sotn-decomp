@@ -1014,7 +1014,7 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | AllocEntity                         | ../../asm/us/st/cen/nonmatchings/11280/AllocEntity.s 
 | 1.00 | true     | AllocEntity                         | ../../asm/us/st/dre/nonmatchings/173C4/AllocEntity.s 
-| 1.00 | true     | AllocEntity                         | ../../asm/us/st/mad/nonmatchings/EDB8/AllocEntity.s 
+| 1.00 | true     | func_80192800                       | ../../asm/us/st/mad/nonmatchings/EDB8/func_80192800.s 
 | 1.00 | true     | AllocEntity                         | ../../asm/us/st/no3/nonmatchings/41C80/AllocEntity.s 
 | 1.00 | true     | AllocEntity                         | ../../asm/us/st/np3/nonmatchings/394F0/AllocEntity.s 
 | 1.00 | true     | AllocEntity                         | ../../asm/us/st/nz0/nonmatchings/39908/AllocEntity.s 
@@ -1422,6 +1422,16 @@
 | 1.00 | true     | EntityUnkId14                       | ../../asm/us/st/st0/nonmatchings/36358/EntityUnkId14.s 
 | 1.00 | true     | EntityUnkId14                       | ../../asm/us/st/wrp/nonmatchings/e_misc/EntityUnkId14.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | EntityUnkId14Spawner                | ../../asm/us/st/cen/nonmatchings/18084/EntityUnkId14Spawner.s 
+| 1.00 | true     | EntityUnkId14Spawner                | ../../asm/us/st/dre/nonmatchings/1E1C8/EntityUnkId14Spawner.s 
+| 1.00 | true     | EntityUnkId14Spawner                | ../../asm/us/st/mad/nonmatchings/15520/EntityUnkId14Spawner.s 
+| 1.00 | true     | EntityUnkId14Spawner                | ../../asm/us/st/no3/nonmatchings/48A84/EntityUnkId14Spawner.s 
+| 1.00 | true     | EntityUnkId14Spawner                | ../../asm/us/st/np3/nonmatchings/402F4/EntityUnkId14Spawner.s 
+| 1.00 | true     | EntityUnkId14Spawner                | ../../asm/us/st/nz0/nonmatchings/4070C/EntityUnkId14Spawner.s 
+| 1.00 | true     | EntityUnkId14Spawner                | ../../asm/us/st/rwrp/nonmatchings/113A0/EntityUnkId14Spawner.s 
+| 1.00 | true     | EntityUnkId14Spawner                | ../../asm/us/st/st0/nonmatchings/36358/EntityUnkId14Spawner.s 
+| 1.00 | true     | EntityUnkId14Spawner                | ../../asm/us/st/wrp/nonmatchings/e_misc/EntityUnkId14Spawner.s 
+-------------------------------------------------------------------------------
 | 1.00 | false    | EntityUnkId15                       | ../../asm/us/st/cen/nonmatchings/18084/EntityUnkId15.s 
 | 1.00 | true     | EntityUnkId15                       | ../../asm/us/st/dre/nonmatchings/1E1C8/EntityUnkId15.s 
 | 1.00 | true     | EntityUnkId15                       | ../../asm/us/st/mad/nonmatchings/15520/EntityUnkId15.s 
@@ -1441,16 +1451,6 @@
 | 1.00 | true     | EntityUnkId15Spawner                | ../../asm/us/st/rwrp/nonmatchings/113A0/EntityUnkId15Spawner.s 
 | 1.00 | true     | EntityUnkId15Spawner                | ../../asm/us/st/st0/nonmatchings/36358/EntityUnkId15Spawner.s 
 | 1.00 | true     | EntityUnkId15Spawner                | ../../asm/us/st/wrp/nonmatchings/e_misc/EntityUnkId15Spawner.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | func_80198284                       | ../../asm/us/st/cen/nonmatchings/18084/func_80198284.s 
-| 1.00 | false    | func_8019E3C8                       | ../../asm/us/st/dre/nonmatchings/1E1C8/func_8019E3C8.s 
-| 1.00 | false    | func_8019583C                       | ../../asm/us/st/mad/nonmatchings/15520/func_8019583C.s 
-| 1.00 | true     | func_801C8C84                       | ../../asm/us/st/no3/nonmatchings/48A84/func_801C8C84.s 
-| 1.00 | true     | func_801C04F4                       | ../../asm/us/st/np3/nonmatchings/402F4/func_801C04F4.s 
-| 1.00 | true     | func_801C090C                       | ../../asm/us/st/nz0/nonmatchings/4070C/func_801C090C.s 
-| 1.00 | false    | func_801915A0                       | ../../asm/us/st/rwrp/nonmatchings/113A0/func_801915A0.s 
-| 1.00 | false    | func_801B7D0C                       | ../../asm/us/st/st0/nonmatchings/36358/func_801B7D0C.s 
-| 1.00 | true     | func_8018F620                       | ../../asm/us/st/wrp/nonmatchings/e_misc/func_8018F620.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | func_801988B0                       | ../../asm/us/st/cen/nonmatchings/18084/func_801988B0.s 
 | 1.00 | true     | func_8019E9F4                       | ../../asm/us/st/dre/nonmatchings/1E1C8/func_8019E9F4.s 
@@ -2068,11 +2068,6 @@
 | 1.00 | true     | SetData32                           | ../../asm/us/main/nonmatchings/psxsdk/libgte/reg03/SetData32.s 
 | 1.00 | true     | SetIR0                              | ../../asm/us/main/nonmatchings/psxsdk/libgte/reg03/SetIR0.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | SsSeqGetVol                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
--------------------------------------------------------------------------------
 | 1.00 | false    | EntityUnkId16                       | ../../asm/us/st/cen/nonmatchings/D600/EntityUnkId16.s 
 | 0.91 | false    | EntitySuccubusCutscene              | ../../asm/us/st/dre/nonmatchings/14774/EntitySuccubusCutscene.s 
 | 0.94 | false    | EntityRoomTransition1               | ../../asm/us/st/no3/nonmatchings/3E134/EntityRoomTransition1.s 
@@ -2132,6 +2127,10 @@
 | 0.93 | true     | _SsContRpn1                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | ../../asm/us/main/nonmatchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | ../../asm/us/main/nonmatchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
@@ -2457,6 +2456,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSeqPlay                           | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
+| 0.93 | true     | SsSeqGetVol                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
