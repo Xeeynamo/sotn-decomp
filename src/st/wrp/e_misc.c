@@ -69,7 +69,7 @@ void func_8018F510(Entity* entity) {
     }
 }
 
-u16 eUnk14SpawnRots[] = {
+u16 g_eUnk14SpawnRots[] = {
     /* FE8 */ 0x0010,
     /* FEA */ 0x0020,
     /* FEC */ 0x0030,

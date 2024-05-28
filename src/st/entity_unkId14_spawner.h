@@ -1,4 +1,4 @@
-extern u16 eUnk14SpawnRots[];
+extern u16 g_eUnk14SpawnRots[];
 
 void EntityUnkId14Spawner(
     Entity* self, u8 count, u8 params, s32 x, s32 y, u8 arg5, s16 xGap) {
@@ -16,7 +16,7 @@ void EntityUnkId14Spawner(
             newEntity->pfnUpdate = EntityUnkId14;
             newEntity->params = params;
             newEntity->ext.generic.unk94 = arg5 + i;
-            newEntity->rotY = newEntity->rotX = eUnk14SpawnRots[arg5 + i];
+            newEntity->rotY = newEntity->rotX = g_eUnk14SpawnRots[arg5 + i];
             newEntity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
             newEntity->zPriority = self->zPriority + 1;
         }
