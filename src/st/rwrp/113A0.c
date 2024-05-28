@@ -4,7 +4,7 @@
 
 INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_80191490);
 
-INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_801915A0);
+#include "../entity_unkId14_spawner.h"
 
 #include "../entity_unkId15_spawner.h"
 

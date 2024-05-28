@@ -28,7 +28,8 @@ typedef enum {
     E_DUMMY_0E,
     E_DUMMY_0F,
     E_DUMMY_10,
-    E_ID_15 = 0x15
+    E_ID_14 = 0x14,
+    E_ID_15
 } EntityIDs;
 
 void CreateEntitiesToTheRight(s16);
@@ -41,6 +42,7 @@ void ReplaceBreakableWithItemDrop(Entity*);
 void CreateEntityFromEntity(u16 entityId, Entity* ent1, Entity* ent2);
 void BottomCornerText(u8* str, u8 lowerLeft);
 void func_8019344C(void);
+void EntityUnkId14(Entity* entity);
 void EntityUnkId15(Entity* entity);
 
 // ST/MAD

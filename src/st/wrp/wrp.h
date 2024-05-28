@@ -27,7 +27,7 @@ typedef enum {
     E_UNK_11,
     E_UNK_12,
     E_UNK_13,
-    E_UNK_14,
+    E_ID_14,
     E_ID_15,
     E_WARP,
     E_SMALL_ROCKS,
@@ -50,7 +50,7 @@ extern u32 D_80180608[];
 extern u32 D_80180648;
 extern WarpCoord D_8018065C[];
 extern u8 g_eRedDoorUV[3][8];
-extern u16 D_80180FE8[];
+extern u16 eUnk14SpawnRots[];
 extern u32 D_80181044[];
 extern u16 D_801810A0[]; // sestren: soul steal random angle offsets?
 extern u16 D_801810B0[]; // sestren: soul steal animation frame properties?

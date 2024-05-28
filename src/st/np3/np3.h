@@ -226,7 +226,6 @@ extern s8 c_HeartPrizes[];
 extern u8 D_80181EA8[];
 extern s32 D_80181E80[];
 extern const u8* D_80181F2C[];
-extern u16 D_80181FA4[];
 extern s16 D_80181FB4[];
 extern u32 D_80181FC4[];
 extern s16* D_80182000;
