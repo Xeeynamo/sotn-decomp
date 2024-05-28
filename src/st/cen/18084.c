@@ -30,7 +30,7 @@ void EntityUnkId13(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("st/cen/nonmatchings/18084", func_80198284);
+#include "../entity_unkId14_spawner.h"
 
 #include "../entity_unkId15_spawner.h"
 

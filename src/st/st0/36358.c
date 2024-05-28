@@ -483,7 +483,7 @@ void func_801B7BFC(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("st/st0/nonmatchings/36358", func_801B7D0C);
+#include "../entity_unkId14_spawner.h"
 
 #include "../entity_unkId15_spawner.h"
 

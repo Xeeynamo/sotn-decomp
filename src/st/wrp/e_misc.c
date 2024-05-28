@@ -69,7 +69,7 @@ void func_8018F510(Entity* entity) {
     }
 }
 
-u16 D_80180FE8[] = {
+u16 g_eUnk14SpawnRots[] = {
     /* FE8 */ 0x0010,
     /* FEA */ 0x0020,
     /* FEC */ 0x0030,
@@ -79,30 +79,7 @@ u16 D_80180FE8[] = {
     /* FF4 */ 0x0070,
     /* FF6 */ 0x0000,
 };
-void func_8018F620(
-    Entity* self, u8 count, u8 params, s32 x, s32 y, u8 arg5, s16 xGap) {
-    Entity* newEntity;
-    s16 newY;
-    s16 newX;
-    s32 i;
-
-    newX = self->posX.i.hi + x;
-    newY = self->posY.i.hi + y;
-    for (i = 0; i < count; i++) {
-        newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-        if (newEntity != NULL) {
-            newEntity->posX.i.hi = newX + xGap * i;
-            newEntity->posY.i.hi = newY;
-            newEntity->entityId = E_UNK_14;
-            newEntity->pfnUpdate = EntityUnkId14;
-            newEntity->params = params;
-            newEntity->ext.generic.unk94 = arg5 + i;
-            newEntity->rotY = newEntity->rotX = D_80180FE8[arg5 + i];
-            newEntity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-            newEntity->zPriority = self->zPriority + 1;
-        }
-    }
-}
+#include "../entity_unkId14_spawner.h"
 
 #include "../entity_unkId15_spawner.h"
 
@@ -212,7 +189,7 @@ void func_8018FA1C(Entity* self) {
         if (CheckColliderOffsets(D_80181044, 0)) {
             prim->y1 += 2;
             if (self->step_s == 0) {
-                func_8018F620(self, 1, 2, 0, 0, 3, 0);
+                EntityUnkId14Spawner(self, 1, 2, 0, 0, 3, 0);
                 self->step_s = 1;
             }
         } else {

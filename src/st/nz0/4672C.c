@@ -213,7 +213,7 @@ void EntitySpittleBoneSpit(Entity* self) {
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
         if (collider.effects != 0) {
             func_801C29B0(NA_SE_EN_SPITTLEBONE_ACID_SPLAT);
-            func_801C090C(self, 1, 2, 0, 0, 5, 0);
+            EntityUnkId14Spawner(self, 1, 2, 0, 0, 5, 0);
             self->animCurFrame = 0;
             self->hitboxState = 0;
             self->step++;

@@ -29,8 +29,7 @@ void EntityUnkId13(Entity* entity) {
     }
 }
 
-// DECOMP_ME_WIP func_8019E3C8 https://decomp.me/scratch/lcx4I
-INCLUDE_ASM("st/dre/nonmatchings/1E1C8", func_8019E3C8);
+#include "../entity_unkId14_spawner.h"
 
 #include "../entity_unkId15_spawner.h"
 
