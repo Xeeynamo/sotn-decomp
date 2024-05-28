@@ -29,7 +29,6 @@ void EntityUnkId13(Entity* entity) {
     }
 }
 
-// DECOMP_ME_WIP EntityUnkId14Spawner https://decomp.me/scratch/lcx4I
 #include "../entity_unkId14_spawner.h"
 
 #include "../entity_unkId15_spawner.h"
