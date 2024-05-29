@@ -15,18 +15,18 @@ void CreateEntitiesAbove(s16 posY) {
     }
 
     while (true) {
-        if (g_LayoutObjVertical->posY == LAYOUT_OBJ_END ||
-            posY < g_LayoutObjVertical->posY) {
+        if (g_LayoutObjVertical[1] == LAYOUT_OBJ_END ||
+            posY < g_LayoutObjVertical[1]) {
             break;
         }
 
         expected = 0;
-        flag = (g_LayoutObjVertical->entityRoomIndex >> 8) + 0xFF;
+        flag = (g_LayoutObjVertical[3] >> 8) + 0xFF;
         if (flag == 0xFF ||
             (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
             CreateEntityWhenInHorizontalRange(g_LayoutObjVertical);
         }
-        g_LayoutObjVertical++;
+        g_LayoutObjVertical += 5;
     }
 }
 
@@ -51,17 +51,17 @@ void CreateEntitiesBelow(s16 posY) {
     }
 
     while (true) {
-        if (g_LayoutObjVertical->posY == LAYOUT_OBJ_START ||
-            (posY > g_LayoutObjVertical->posY)) {
+        if (g_LayoutObjVertical[1] == LAYOUT_OBJ_START ||
+            (posY > g_LayoutObjVertical[1])) {
             break;
         }
 
         expected = 0;
-        flag = (g_LayoutObjVertical->entityRoomIndex >> 8) + 0xFF;
+        flag = (g_LayoutObjVertical[3] >> 8) + 0xFF;
         if (flag == 0xFF ||
             (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
             CreateEntityWhenInHorizontalRange(g_LayoutObjVertical);
         }
-        g_LayoutObjVertical--;
+        g_LayoutObjVertical -= 5;
     }
 }

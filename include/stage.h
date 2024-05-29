@@ -16,16 +16,19 @@ typedef struct {
     /* 0x8 */ u16 params;
 } LayoutEntity; // size = 0xA
 
-/*
- * A horizontally ordered Layout array with head
- * and tail sigils in the `posX` field.
- */
+#if defined(VERSION_PSP)
+// A horizontally ordered array with head and tail sigils in the 1st field
+extern LayoutEntity** g_pStObjLayoutHorizontal;
+// A vertically ordered array with head and tail sigils in the 1st field
+extern LayoutEntity** g_pStObjLayoutVertical;
+
+#else
+// A horizontally ordered array with head and tail sigils in the 1st field
 extern LayoutEntity* g_pStObjLayoutHorizontal[];
-/*
- * A vertically ordered Layout array with head
- * and tail sigils in the `posY` field.
- */
+// A vertically ordered array with head and tail sigils in the 1st field
 extern LayoutEntity* g_pStObjLayoutVertical[];
+
+#endif
 
 #if defined(VERSION_PSP)
 extern PfnEntityUpdate* PfnEntityUpdates;

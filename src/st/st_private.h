@@ -12,11 +12,11 @@
 /*
  * A pointer to the current element in `g_pStObjLayoutHorizontal`
  */
-extern LayoutEntity* g_LayoutObjHorizontal;
+extern u16* g_LayoutObjHorizontal;
 /*
  * A pointer to the current element in `g_pStObjLayoutVertical`
  */
-extern LayoutEntity* g_LayoutObjVertical;
+extern u16* g_LayoutObjVertical;
 /*
  * The direction last traversed in `g_pStObjLayoutHorizontal`
  */
