@@ -784,60 +784,7 @@ void func_801B8C48(void) {
     }
 }
 
-void func_801B8D00(Entity* self) {
-    s32 velocityX;
-    s32 velocityY;
-    s32 temp;
-
-    if (self->step == 0) {
-        InitializeEntity(g_InitializeEntityData0);
-        self->animSet = ANIMSET_DRA(2);
-        self->palette = 0x81B6;
-        self->unk6C = 0x70;
-        self->zPriority = 192;
-        self->drawFlags |= 0xC;
-        self->drawMode |= 0x30;
-
-        switch (self->ext.generic.unk84.U8.unk0) {
-        case 1:
-            if (self->ext.generic.unk84.U8.unk1 >= 4) {
-                self->ext.generic.unk84.U8.unk1 += 253;
-                self->ext.generic.unk80.modeS16.unk0 -= 0x800;
-            }
-            break;
-
-        case 2:
-            self->ext.generic.unk80.modeS16.unk0 +=
-                self->ext.generic.unk84.U8.unk1 * 192;
-            break;
-        }
-
-        self->rotZ = self->ext.generic.unk80.modeS16.unk0 &= 0xFFF;
-        temp = (self->ext.generic.unk84.U8.unk1 * 320) / 24;
-        self->velocityX = temp * rsin(self->ext.generic.unk80.modeS16.unk0);
-        self->velocityY = -(temp * rcos(self->ext.generic.unk80.modeS16.unk0));
-    }
-
-    if (self->animFrameIdx >= 13) {
-        velocityX = self->velocityX;
-        if (velocityX < 0) {
-            velocityX += 3;
-        }
-
-        velocityY = self->velocityY;
-        self->velocityX = (velocityX >> 2) * 3;
-        if (velocityY < 0) {
-            velocityY += 3;
-        }
-        self->velocityY = (velocityY >> 2) * 3;
-    }
-
-    MoveEntity();
-
-    if (AnimateEntity(D_80181DA4, self) == 0) {
-        DestroyEntity(self);
-    }
-}
+#include "../entity_big_red_fireball.h"
 
 INCLUDE_ASM("st/st0/nonmatchings/36358", func_801B8ED8);
 
