@@ -115,7 +115,7 @@ void EntityUnkId15(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_80195C38);
+#include "../entity_olrox_drool.h"
 
 bool func_80195E68(Point16* unk) {
     Collider collider;

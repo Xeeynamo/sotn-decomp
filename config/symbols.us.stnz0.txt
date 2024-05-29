@@ -32,6 +32,7 @@ g_eUnk14SpawnRots = 0x80181ECC;
 unk14_yVel = 0x80181F04;
 unk14_startFrame = 0x80181F1C;
 unk14_lifetime = 0x80181F20;
+g_olroxDroolCollOffsets = 0x80181F28;
 g_Rooms = 0x8018272C;
 g_UnkPrimHelperRot = 0x801B0934;
 EntityBreakable = 0x801B0EEC;
