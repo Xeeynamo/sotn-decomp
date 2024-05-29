@@ -982,7 +982,7 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | AnimateEntity                       | ../../asm/us/st/cen/nonmatchings/11280/AnimateEntity.s 
 | 1.00 | true     | AnimateEntity                       | ../../asm/us/st/dre/nonmatchings/173C4/AnimateEntity.s 
-| 1.00 | true     | AnimateEntity                       | ../../asm/us/st/mad/nonmatchings/EDB8/AnimateEntity.s 
+| 1.00 | true     | func_80191E6C                       | ../../asm/us/st/mad/nonmatchings/EDB8/func_80191E6C.s 
 | 1.00 | true     | AnimateEntity                       | ../../asm/us/st/no3/nonmatchings/41C80/AnimateEntity.s 
 | 1.00 | true     | AnimateEntity                       | ../../asm/us/st/np3/nonmatchings/394F0/AnimateEntity.s 
 | 1.00 | true     | AnimateEntity                       | ../../asm/us/st/nz0/nonmatchings/39908/AnimateEntity.s 
@@ -1392,6 +1392,16 @@
 | 1.00 | true     | ClutLerp                            | ../../asm/us/st/st0/nonmatchings/36358/ClutLerp.s 
 | 1.00 | true     | ClutLerp                            | ../../asm/us/st/wrp/nonmatchings/e_misc/ClutLerp.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | EntityBigRedFireball                | ../../asm/us/st/cen/nonmatchings/18084/EntityBigRedFireball.s 
+| 1.00 | true     | EntityBigRedFireball                | ../../asm/us/st/dre/nonmatchings/1E1C8/EntityBigRedFireball.s 
+| 1.00 | true     | func_801969EC                       | ../../asm/us/st/mad/nonmatchings/15520/func_801969EC.s 
+| 1.00 | true     | EntityBigRedFireball                | ../../asm/us/st/no3/nonmatchings/48A84/EntityBigRedFireball.s 
+| 1.00 | true     | EntityBigRedFireball                | ../../asm/us/st/np3/nonmatchings/402F4/EntityBigRedFireball.s 
+| 1.00 | true     | EntityBigRedFireball                | ../../asm/us/st/nz0/nonmatchings/4070C/EntityBigRedFireball.s 
+| 1.00 | true     | EntityBigRedFireball                | ../../asm/us/st/rwrp/nonmatchings/113A0/EntityBigRedFireball.s 
+| 1.00 | true     | EntityBigRedFireball                | ../../asm/us/st/st0/nonmatchings/36358/EntityBigRedFireball.s 
+| 1.00 | true     | EntityBigRedFireball                | ../../asm/us/st/wrp/nonmatchings/e_misc/EntityBigRedFireball.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | EntityIntenseExplosion              | ../../asm/us/st/cen/nonmatchings/18084/EntityIntenseExplosion.s 
 | 1.00 | true     | EntityIntenseExplosion              | ../../asm/us/st/dre/nonmatchings/1E1C8/EntityIntenseExplosion.s 
 | 1.00 | true     | EntityIntenseExplosion              | ../../asm/us/st/mad/nonmatchings/15520/EntityIntenseExplosion.s 
@@ -1491,16 +1501,6 @@
 | 1.00 | false    | func_80192414                       | ../../asm/us/st/rwrp/nonmatchings/113A0/func_80192414.s 
 | 1.00 | true     | func_801B8B80                       | ../../asm/us/st/st0/nonmatchings/36358/func_801B8B80.s 
 | 1.00 | true     | func_80190494                       | ../../asm/us/st/wrp/nonmatchings/e_misc/func_80190494.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | func_80199278                       | ../../asm/us/st/cen/nonmatchings/18084/func_80199278.s 
-| 1.00 | true     | func_8019F3BC                       | ../../asm/us/st/dre/nonmatchings/1E1C8/func_8019F3BC.s 
-| 1.00 | false    | func_801969EC                       | ../../asm/us/st/mad/nonmatchings/15520/func_801969EC.s 
-| 1.00 | false    | func_801C9C78                       | ../../asm/us/st/no3/nonmatchings/48A84/func_801C9C78.s 
-| 1.00 | true     | func_801C14E8                       | ../../asm/us/st/np3/nonmatchings/402F4/func_801C14E8.s 
-| 1.00 | true     | func_801C1900                       | ../../asm/us/st/nz0/nonmatchings/4070C/func_801C1900.s 
-| 1.00 | false    | func_80192594                       | ../../asm/us/st/rwrp/nonmatchings/113A0/func_80192594.s 
-| 1.00 | true     | func_801B8D00                       | ../../asm/us/st/st0/nonmatchings/36358/func_801B8D00.s 
-| 1.00 | true     | func_80190614                       | ../../asm/us/st/wrp/nonmatchings/e_misc/func_80190614.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | func_80199450                       | ../../asm/us/st/cen/nonmatchings/18084/func_80199450.s 
 | 1.00 | false    | func_8019F594                       | ../../asm/us/st/dre/nonmatchings/1E1C8/func_8019F594.s 
