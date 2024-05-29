@@ -68,9 +68,57 @@ void func_8018F510(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_misc", func_8018F838);
+extern s32 D_80181020[];
+extern u8 D_80181038[];
+extern u16 D_8018103C[];
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_misc", EntityUnkId15);
+void func_8018F838(Entity* self) {
+    if (!self->step) {
+        self->velocityY = D_80181020[self->ext.generic.unk94];
+        self->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
+        self->palette = PAL_OVL(0x195);
+        self->animSet = ANIMSET_DRA(2);
+        self->animCurFrame = D_80181038[self->params];
+        self->drawMode = DRAW_TPAGE;
+        self->step++;
+    } else {
+        self->posY.val -= self->velocityY;
+        ++self->animFrameDuration;
+        if (!(self->animFrameDuration % 2)) {
+            self->animCurFrame++;
+        }
+
+        if (self->animFrameDuration > D_8018103C[self->params]) {
+            DestroyEntity(self);
+        }
+    }
+}
+
+extern s16 D_80180FF8[];
+extern s32 D_80181008[];
+void EntityUnkId15(Entity* self) {
+    if (!self->step) {
+        self->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
+        self->palette = PAL_OVL(0x195);
+        self->animSet = ANIMSET_DRA(5);
+        self->animCurFrame = 1;
+        self->drawMode = DRAW_TPAGE;
+        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        self->rotX = D_80180FF8[self->params];
+        self->rotY = self->rotX;
+        self->velocityY = D_80181008[self->params];
+        self->step++;
+    } else {
+        self->posY.val -= self->velocityY;
+        self->animFrameDuration++;
+        if (!(self->animFrameDuration % 2)) {
+            self->animCurFrame++;
+        }
+        if (self->animFrameDuration > 36) {
+            DestroyEntity(self);
+        }
+    }
+}
 
 extern u16 D_80180458[];
 void EntityIntenseExplosion(Entity* self) {
