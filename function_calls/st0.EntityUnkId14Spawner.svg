@@ -31,18 +31,18 @@
 <polygon fill="black" stroke="black" points="141.29,-46.02 137.79,-36.02 134.29,-46.02 141.29,-46.02"/>
 <text text-anchor="middle" x="132.79" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- st0.func_801B8108 -->
+<!-- st0.EntityOlroxDrool -->
 <g id="node3" class="node">
-<title>st0.func_801B8108</title>
-<g id="a_node3"><a xlink:href="st0.func_801B8108.svg" xlink:title="st0.func_801B8108">
-<ellipse fill="red" stroke="black" cx="137.79" cy="-378" rx="100.98" ry="18"/>
-<text text-anchor="middle" x="137.79" y="-374.3" font-family="Times,serif" font-size="14.00">st0.func_801B8108</text>
+<title>st0.EntityOlroxDrool</title>
+<g id="a_node3"><a xlink:href="st0.EntityOlroxDrool.svg" xlink:title="st0.EntityOlroxDrool">
+<ellipse fill="green" stroke="black" cx="137.79" cy="-378" rx="107.78" ry="18"/>
+<text text-anchor="middle" x="137.79" y="-374.3" font-family="Times,serif" font-size="14.00">st0.EntityOlroxDrool</text>
 </a>
 </g>
 </g>
-<!-- st0.func_801B8108&#45;&gt;st0.EntityUnkId14Spawner -->
+<!-- st0.EntityOlroxDrool&#45;&gt;st0.EntityUnkId14Spawner -->
 <g id="edge2" class="edge">
-<title>st0.func_801B8108&#45;&gt;st0.EntityUnkId14Spawner</title>
+<title>st0.EntityOlroxDrool&#45;&gt;st0.EntityUnkId14Spawner</title>
 <path fill="none" stroke="black" d="M137.79,-359.93C137.79,-328.97 137.79,-263.3 137.79,-226.13"/>
 <polygon fill="black" stroke="black" points="141.29,-226.02 137.79,-216.02 134.29,-226.02 141.29,-226.02"/>
 <text text-anchor="middle" x="132.79" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>

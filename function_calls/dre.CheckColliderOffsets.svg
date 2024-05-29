@@ -31,18 +31,18 @@
 <polygon fill="black" stroke="black" points="130.24,-46.02 126.74,-36.02 123.24,-46.02 130.24,-46.02"/>
 <text text-anchor="middle" x="121.74" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- dre.func_8019E7C4 -->
+<!-- dre.EntityOlroxDrool -->
 <g id="node3" class="node">
-<title>dre.func_8019E7C4</title>
-<g id="a_node3"><a xlink:href="dre.func_8019E7C4.svg" xlink:title="dre.func_8019E7C4">
-<ellipse fill="red" stroke="black" cx="126.74" cy="-378" rx="102.88" ry="18"/>
-<text text-anchor="middle" x="126.74" y="-374.3" font-family="Times,serif" font-size="14.00">dre.func_8019E7C4</text>
+<title>dre.EntityOlroxDrool</title>
+<g id="a_node3"><a xlink:href="dre.EntityOlroxDrool.svg" xlink:title="dre.EntityOlroxDrool">
+<ellipse fill="green" stroke="black" cx="126.74" cy="-378" rx="108.58" ry="18"/>
+<text text-anchor="middle" x="126.74" y="-374.3" font-family="Times,serif" font-size="14.00">dre.EntityOlroxDrool</text>
 </a>
 </g>
 </g>
-<!-- dre.func_8019E7C4&#45;&gt;dre.CheckColliderOffsets -->
+<!-- dre.EntityOlroxDrool&#45;&gt;dre.CheckColliderOffsets -->
 <g id="edge2" class="edge">
-<title>dre.func_8019E7C4&#45;&gt;dre.CheckColliderOffsets</title>
+<title>dre.EntityOlroxDrool&#45;&gt;dre.CheckColliderOffsets</title>
 <path fill="none" stroke="black" d="M126.74,-359.93C126.74,-328.97 126.74,-263.3 126.74,-226.13"/>
 <polygon fill="black" stroke="black" points="130.24,-226.02 126.74,-216.02 123.24,-226.02 130.24,-226.02"/>
 <text text-anchor="middle" x="121.74" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>

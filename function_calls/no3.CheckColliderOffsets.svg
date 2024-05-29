@@ -31,18 +31,18 @@
 <polygon fill="black" stroke="black" points="131.54,-46.02 128.04,-36.02 124.54,-46.02 131.54,-46.02"/>
 <text text-anchor="middle" x="123.04" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- no3.func_801C9080 -->
+<!-- no3.EntityOlroxDrool -->
 <g id="node3" class="node">
-<title>no3.func_801C9080</title>
-<g id="a_node3"><a xlink:href="no3.func_801C9080.svg" xlink:title="no3.func_801C9080">
-<ellipse fill="red" stroke="black" cx="128.04" cy="-378" rx="102.88" ry="18"/>
-<text text-anchor="middle" x="128.04" y="-374.3" font-family="Times,serif" font-size="14.00">no3.func_801C9080</text>
+<title>no3.EntityOlroxDrool</title>
+<g id="a_node3"><a xlink:href="no3.EntityOlroxDrool.svg" xlink:title="no3.EntityOlroxDrool">
+<ellipse fill="green" stroke="black" cx="128.04" cy="-378" rx="110.48" ry="18"/>
+<text text-anchor="middle" x="128.04" y="-374.3" font-family="Times,serif" font-size="14.00">no3.EntityOlroxDrool</text>
 </a>
 </g>
 </g>
-<!-- no3.func_801C9080&#45;&gt;no3.CheckColliderOffsets -->
+<!-- no3.EntityOlroxDrool&#45;&gt;no3.CheckColliderOffsets -->
 <g id="edge2" class="edge">
-<title>no3.func_801C9080&#45;&gt;no3.CheckColliderOffsets</title>
+<title>no3.EntityOlroxDrool&#45;&gt;no3.CheckColliderOffsets</title>
 <path fill="none" stroke="black" d="M128.04,-359.93C128.04,-328.97 128.04,-263.3 128.04,-226.13"/>
 <polygon fill="black" stroke="black" points="131.54,-226.02 128.04,-216.02 124.54,-226.02 131.54,-226.02"/>
 <text text-anchor="middle" x="123.04" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
