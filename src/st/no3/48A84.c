@@ -319,7 +319,7 @@ void func_801C9BC0(void) {
     }
 }
 
-INCLUDE_ASM("st/no3/nonmatchings/48A84", func_801C9C78);
+#include "../entity_big_red_fireball.h"
 
 INCLUDE_ASM("st/no3/nonmatchings/48A84", func_801C9E50);
 

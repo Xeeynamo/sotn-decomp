@@ -386,7 +386,7 @@ void func_80196934(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_801969EC);
+#include "../entity_big_red_fireball.h"
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_80196BC4);
 

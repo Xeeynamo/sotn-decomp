@@ -159,7 +159,6 @@ extern s16 D_80181990[];
 extern u16 g_InitializeData0[];
 extern u16 D_80181D74[];
 extern u32 D_80181D7C[];
-extern u16 D_80181DA4[];
 extern u8* D_80181E28[];
 extern s16 D_80181E3C[];
 extern s16 D_80181E3E[];

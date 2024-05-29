@@ -28,6 +28,7 @@ g_eDamageDisplayClut = 0x80181950;
 g_eRedDoorUV = 0x80181960;
 c_GoldPrizes = 0x80181D14;
 c_HeartPrizes = 0x80181DA4;
+g_bigRedFireballAnim = 0x80181DD0;
 g_eUnk14SpawnRots = 0x80181ECC;
 unk14_yVel = 0x80181F04;
 unk14_startFrame = 0x80181F1C;

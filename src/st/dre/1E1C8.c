@@ -336,65 +336,7 @@ void func_8019F304(void) {
     }
 }
 
-void func_8019F3BC(Entity* arg0) {
-    s16 temp_v1;
-    s32 temp_v1_2;
-    s32 var_a0;
-    s32 var_v1;
-    s32 temp_s0;
-
-    if (arg0->step == 0) {
-        InitializeEntity(g_InitializeEntityData0);
-        arg0->animSet = 2;
-        arg0->palette = 0x81B6;
-        arg0->unk6C = 0x70;
-        arg0->zPriority = 0xC0;
-        arg0->drawFlags |= 0xC;
-        arg0->drawMode |= 0x30;
-
-        switch (arg0->ext.generic.unk84.U8.unk0) {
-        case 1:
-            if (arg0->ext.generic.unk84.U8.unk1 >= 4u) {
-                arg0->ext.generic.unk84.U8.unk1 += 0xFD;
-                arg0->ext.generic.unk80.modeS16.unk0 -= 0x800;
-            }
-            break;
-
-        case 2:
-            arg0->ext.generic.unk80.modeS16.unk0 +=
-                (arg0->ext.generic.unk84.U8.unk1 * 0xC0);
-            break;
-        }
-
-        temp_v1_2 = arg0->ext.generic.unk80.modeS16.unk0 & 0xFFF;
-        arg0->ext.generic.unk80.modeS16.unk0 = temp_v1_2;
-        arg0->rotZ = temp_v1_2;
-        temp_s0 = (arg0->ext.generic.unk84.U8.unk1 * 320) / 24;
-        arg0->velocityX = temp_s0 * rsin(arg0->ext.generic.unk80.modeS16.unk0);
-        arg0->velocityY =
-            -(temp_s0 * rcos(arg0->ext.generic.unk80.modeS16.unk0));
-    }
-
-    if (arg0->animFrameIdx >= 13) {
-        var_v1 = arg0->velocityX;
-        if (var_v1 < 0) {
-            var_v1 += 3;
-        }
-
-        var_a0 = arg0->velocityY;
-        arg0->velocityX = (var_v1 >> 2) * 3;
-        if (var_a0 < 0) {
-            var_a0 += 3;
-        }
-        arg0->velocityY = (var_a0 >> 2) * 3;
-    }
-
-    MoveEntity();
-
-    if (AnimateEntity(D_801811D8, arg0) == 0) {
-        DestroyEntity(arg0);
-    }
-}
+#include "../entity_big_red_fireball.h"
 
 INCLUDE_ASM("st/dre/nonmatchings/1E1C8", func_8019F594);
 

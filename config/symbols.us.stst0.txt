@@ -17,6 +17,7 @@ g_testCollElementLookup = 0x80181948;
 g_testColliFrames = 0x8018195C;
 g_eDamageDisplayClut = 0x80181968;
 g_eRedDoorUV = 0x80181978;
+g_bigRedFireballAnim = 0x80181DA4;
 g_eUnk14SpawnRots = 0x80181EA0;
 unk14_yVel = 0x80181ED8;
 unk14_startFrame = 0x80181EF0;

@@ -331,49 +331,7 @@ void func_801C1848(void) {
     }
 }
 
-void func_801C14E8(Entity* self) {
-    s32 temp;
-
-    if (self->step == 0) {
-        InitializeEntity(g_InitializeEntityData0);
-        self->animSet = ANIMSET_DRA(2);
-        self->palette = 0x81B6;
-        self->unk6C = 0x70;
-        self->zPriority = 192;
-        self->drawFlags |= 0xC;
-        self->drawMode |= 0x30;
-
-        switch (self->ext.bigredfireball.switch_control) {
-        case 1:
-            if (self->ext.bigredfireball.speed > 3) {
-                self->ext.bigredfireball.speed -= 3;
-                self->ext.bigredfireball.angle -= 0x800;
-            }
-            break;
-
-        case 2:
-            self->ext.bigredfireball.angle +=
-                self->ext.bigredfireball.speed * 192;
-            break;
-        }
-
-        self->rotZ = self->ext.bigredfireball.angle &= 0xFFF;
-        temp = (self->ext.bigredfireball.speed * 320) / 24;
-        self->velocityX = temp * rsin(self->ext.bigredfireball.angle);
-        self->velocityY = -(temp * rcos(self->ext.bigredfireball.angle));
-    }
-
-    if (self->animFrameIdx >= 13) {
-        self->velocityX = self->velocityX / 4 * 3;
-        self->velocityY = self->velocityY / 4 * 3;
-    }
-
-    MoveEntity();
-
-    if (AnimateEntity(D_80181EA8, self) == 0) {
-        DestroyEntity(self);
-    }
-}
+#include "../entity_big_red_fireball.h"
 
 INCLUDE_ASM("st/np3/nonmatchings/402F4", func_801C16C0);
 

@@ -210,7 +210,7 @@ void func_801924DC(void) {
         }
     }
 }
-INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_80192594);
+#include "../entity_big_red_fireball.h"
 
 INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_8019276C);
 
