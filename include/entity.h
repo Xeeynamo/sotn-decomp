@@ -948,6 +948,14 @@ typedef struct {
     s32 unk94;
 } ET_Drop;
 
+typedef struct {
+    /* 0x7C */ byte pad[4];
+    /* 0x80 */ s16 angle;
+    /* 0x82 */ byte pad2[2];
+    /* 0x84 */ u8 switch_control;
+    /* 0x85 */ u8 speed;
+} ET_BigRedFireball;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1039,4 +1047,5 @@ typedef union { // offset=0x7C
     ET_801CC820 et_801CC820;
     ET_801AF774 et_801AF774;
     ET_Drop drop;
+    ET_BigRedFireball bigredfireball;
 } Ext;

@@ -332,8 +332,6 @@ void func_801C1848(void) {
 }
 
 void func_801C14E8(Entity* self) {
-    s32 velocityX;
-    s32 velocityY;
     s32 temp;
 
     if (self->step == 0) {
@@ -345,38 +343,29 @@ void func_801C14E8(Entity* self) {
         self->drawFlags |= 0xC;
         self->drawMode |= 0x30;
 
-        switch (self->ext.generic.unk84.U8.unk0) {
+        switch (self->ext.bigredfireball.switch_control) {
         case 1:
-            if (self->ext.generic.unk84.U8.unk1 >= 4) {
-                self->ext.generic.unk84.U8.unk1 += 253;
-                self->ext.generic.unk80.modeS16.unk0 -= 0x800;
+            if (self->ext.bigredfireball.speed > 3) {
+                self->ext.bigredfireball.speed -= 3;
+                self->ext.bigredfireball.angle -= 0x800;
             }
             break;
 
         case 2:
-            self->ext.generic.unk80.modeS16.unk0 +=
-                self->ext.generic.unk84.U8.unk1 * 192;
+            self->ext.bigredfireball.angle +=
+                self->ext.bigredfireball.speed * 192;
             break;
         }
 
-        self->rotZ = self->ext.generic.unk80.modeS16.unk0 &= 0xFFF;
-        temp = (self->ext.generic.unk84.U8.unk1 * 320) / 24;
-        self->velocityX = temp * rsin(self->ext.generic.unk80.modeS16.unk0);
-        self->velocityY = -(temp * rcos(self->ext.generic.unk80.modeS16.unk0));
+        self->rotZ = self->ext.bigredfireball.angle &= 0xFFF;
+        temp = (self->ext.bigredfireball.speed * 320) / 24;
+        self->velocityX = temp * rsin(self->ext.bigredfireball.angle);
+        self->velocityY = -(temp * rcos(self->ext.bigredfireball.angle));
     }
 
     if (self->animFrameIdx >= 13) {
-        velocityX = self->velocityX;
-        if (velocityX < 0) {
-            velocityX += 3;
-        }
-
-        velocityY = self->velocityY;
-        self->velocityX = (velocityX >> 2) * 3;
-        if (velocityY < 0) {
-            velocityY += 3;
-        }
-        self->velocityY = (velocityY >> 2) * 3;
+        self->velocityX = self->velocityX / 4 * 3;
+        self->velocityY = self->velocityY / 4 * 3;
     }
 
     MoveEntity();
