@@ -5,16 +5,16 @@
 extern u8 g_bigRedFireballAnim[];
 
 void EntityBigRedFireball(Entity* self) {
-    s32 temp;
+    s32 speedTemp;
 
     if (self->step == 0) {
         InitializeEntity(g_InitializeEntityData0);
         self->animSet = ANIMSET_DRA(2);
-        self->palette = 0x81B6;
+        self->palette = PAL_OVL(0x1B6);
         self->unk6C = 0x70;
         self->zPriority = 192;
-        self->drawFlags |= 0xC;
-        self->drawMode |= 0x30;
+        self->drawFlags |= (FLAG_DRAW_ROTZ + FLAG_DRAW_UNK8);
+        self->drawMode |= (DRAW_TPAGE + DRAW_TPAGE2);
 
         switch (self->ext.bigredfireball.switch_control) {
         case 1:
@@ -31,9 +31,9 @@ void EntityBigRedFireball(Entity* self) {
         }
 
         self->rotZ = self->ext.bigredfireball.angle &= 0xFFF;
-        temp = (self->ext.bigredfireball.speed * 320) / 24;
-        self->velocityX = temp * rsin(self->ext.bigredfireball.angle);
-        self->velocityY = -(temp * rcos(self->ext.bigredfireball.angle));
+        speedTemp = self->ext.bigredfireball.speed * 320 / 24; // = 13.333
+        self->velocityX = speedTemp * rsin(self->ext.bigredfireball.angle);
+        self->velocityY = -(speedTemp * rcos(self->ext.bigredfireball.angle));
     }
 
     if (self->animFrameIdx >= 13) {
