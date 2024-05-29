@@ -392,7 +392,7 @@ INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_80196BC4);
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_801971A4);
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_801978A4);
+#include "../clut_lerp.h"
 
 void func_80197A9C(s16 sfxId) {
     s32 var_a3;
