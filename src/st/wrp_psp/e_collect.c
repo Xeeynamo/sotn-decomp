@@ -156,12 +156,12 @@ INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_collect", DestroyCurrentEntity);
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_collect", EntityPrizeDrop);
 
-extern u16 D_80180458[];
+extern u16 g_InitializeEntityData0[];
 extern s32 D_80180EC4[];
 extern u8* D_80180F70[];
 void EntityExplosion(Entity* entity) {
     if (!entity->step) {
-        InitializeEntity(D_80180458);
+        InitializeEntity(g_InitializeEntityData0);
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;
         entity->animSet = ANIMSET_DRA(2);
