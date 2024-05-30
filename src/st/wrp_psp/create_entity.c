@@ -23,31 +23,33 @@ INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/create_entity", CreateEntitiesBelow);
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/create_entity", InitRoomEntities);
 
-void UpdateRoomPosition() {
-    Tilemap* tilemap = &g_Tilemap;
-    s16 tmp;
-    if (g_ScrollDeltaX != 0) {
-        tmp = tilemap->scrollX.i.hi;
-        if (g_ScrollDeltaX > 0) {
-            tmp += 320;
-            CreateEntitiesToTheRight(tmp);
-        } else {
-            tmp -= 64;
-            CreateEntitiesToTheLeft(tmp);
-        }
-    }
+#include "../update_room_position.h"
 
-    if (g_ScrollDeltaY != 0) {
-        tmp = tilemap->scrollY.i.hi;
-        if (g_ScrollDeltaY > 0) {
-            tmp += 288;
-            CreateEntitiesAbove(tmp);
-        } else {
-            tmp -= 64;
-            CreateEntitiesBelow(tmp);
-        }
-    }
-}
+// void UpdateRoomPosition() {
+//     Tilemap* tilemap = &g_Tilemap;
+//     s16 tmp;
+//     if (g_ScrollDeltaX != 0) {
+//         tmp = tilemap->scrollX.i.hi;
+//         if (g_ScrollDeltaX > 0) {
+//             tmp += 320;
+//             CreateEntitiesToTheRight(tmp);
+//         } else {
+//             tmp -= 64;
+//             CreateEntitiesToTheLeft(tmp);
+//         }
+//     }
+
+// if (g_ScrollDeltaY != 0) {
+//     tmp = tilemap->scrollY.i.hi;
+//     if (g_ScrollDeltaY > 0) {
+//         tmp += 288;
+//         CreateEntitiesAbove(tmp);
+//     } else {
+//         tmp -= 64;
+//         CreateEntitiesBelow(tmp);
+//     }
+// }
+// }
 
 extern PfnEntityUpdate* PfnEntityUpdates;
 void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity) {
