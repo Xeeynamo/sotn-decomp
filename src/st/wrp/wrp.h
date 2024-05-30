@@ -52,7 +52,11 @@ extern WarpCoord D_8018065C[];
 extern u8 g_eRedDoorUV[3][8];
 extern u16 g_eUnk14SpawnRots[];
 extern u16 D_801810A0[]; // sestren: soul steal random angle offsets?
-extern u16 D_801810B0[]; // sestren: soul steal animation frame properties?
+#if defined(VERSION_PSP)
+extern s16 D_801810B0[]; // sestren: soul steal animation frame properties?
+#else
+extern u16 D_801810B0[];
+#endif
 extern u32 D_80181110[];
 
 extern s32 D_80193AA0; // rename into move_room?
