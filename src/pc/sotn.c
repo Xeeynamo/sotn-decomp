@@ -88,8 +88,11 @@ void DebugInputWait(const char* msg);
 
 int g_Frame = 0;
 void MyDrawSyncCallback(int mode) {
-    DEBUGF("-------------------- frame %d --------------------", g_Frame);
     DEBUGF("state: %d, game step: %d", g_GameState, g_GameStep);
+    DEBUGF("*** HEEY, I AM A DEBUG LOG");
+    INFOF("*** YOYO, I AM AN INFO LOG");
+    WARNF("*** 'SUP, I AM A WARN LOG");
+    ERRORF("*** HALT, I AM A WARN LOG");
 
     // force loaded map to always be visible
     if (g_Tilemap.tileDef) {
