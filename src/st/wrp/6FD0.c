@@ -937,7 +937,7 @@ extern u8 D_80186EF0[];
 extern u8 D_80186EF8[];
 extern u8 D_80186F00[];
 extern u8 D_80186F08[];
-u8* D_80180E08[] = {
+u8* g_goldCollectTexts[] = {
     // u8 is an assumption
     /* E08 */ D_80186F08,
     /* E0C */ D_80186F00,

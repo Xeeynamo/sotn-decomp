@@ -25,7 +25,6 @@ extern u16 g_InitializeData0[];
 extern u16 D_80181110[];
 
 // *** EntitySoulStealOrb properties END ***
-extern s32 c_GoldPrizes[];
 extern u16 D_80180DC4[];
 extern u16 D_80180DF4[];
 extern u8* D_80180E08[];

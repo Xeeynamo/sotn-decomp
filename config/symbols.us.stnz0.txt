@@ -26,6 +26,7 @@ g_testCollPrizeTable = 0x801818F4;
 g_testCollRandTable = 0x80181934;
 g_eDamageDisplayClut = 0x80181950;
 g_eRedDoorUV = 0x80181960;
+g_goldCollectTexts = 0x80181CEC;
 c_GoldPrizes = 0x80181D14;
 c_HeartPrizes = 0x80181DA4;
 g_bigRedFireballAnim = 0x80181DD0;

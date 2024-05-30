@@ -268,8 +268,6 @@ extern u16 D_80181CD8[];
 extern u8* D_80181D3C[];
 extern u16 D_80180C94[];
 extern u16 D_80182424[];
-extern u32* D_80181CEC[];
-extern s32 c_GoldPrizes[];
 extern u16 D_80180CA0[];
 extern u32 D_80182488[];
 extern u16 D_80180C58[];

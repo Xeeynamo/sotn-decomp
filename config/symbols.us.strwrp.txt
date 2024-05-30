@@ -14,6 +14,7 @@ g_testCollElementLookup = 0x801809F0;
 g_testColliFrames = 0x80180A04;
 g_testCollPrizeTable = 0x80180A10;
 g_testCollRandTable = 0x80180A50;
+g_goldCollectTexts = 0x80180E08;
 c_GoldPrizes = 0x80180E30;
 c_HeartPrizes = 0x80180EC0;
 g_bigRedFireballAnim = 0x80180EEC;
