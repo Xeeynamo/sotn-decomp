@@ -58,18 +58,8 @@ void func_8018CB34(u16 arg0) {
 }
 
 extern s8 c_HeartPrizes[];
-void CollectHeart(u16 arg0) {
-    s32* hearts;
 
-    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
-    g_Status.hearts += c_HeartPrizes[arg0];
-
-    if (g_Status.hearts > g_Status.heartsMax) {
-        g_Status.hearts = g_Status.heartsMax;
-    }
-
-    DestroyEntity(g_CurrentEntity);
-}
+#include "../collect_heart.h"
 
 #include "../collect_gold.h"
 
@@ -131,20 +121,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
     DestroyEntity(g_CurrentEntity);
 }
 
-void CollectHeartVessel(void) {
-    if (g_PlayableCharacter != PLAYER_ALUCARD) {
-        g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
-        g_Status.hearts += HEART_VESSEL_RICHTER;
-
-        if (g_Status.hearts > g_Status.heartsMax) {
-            g_Status.hearts = g_Status.heartsMax;
-        }
-    } else {
-        g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
-        g_api.func_800FE044(HEART_VESSEL_INCREASE, 0x4000);
-    }
-    DestroyEntity(g_CurrentEntity);
-}
+#include "../collect_heart_vessel.h"
 
 void CollectLifeVessel(void) {
     g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
@@ -156,12 +133,12 @@ INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_collect", DestroyCurrentEntity);
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_collect", EntityPrizeDrop);
 
-extern u16 D_80180458[];
+extern u16 g_InitializeEntityData0[];
 extern s32 D_80180EC4[];
 extern u8* D_80180F70[];
 void EntityExplosion(Entity* entity) {
     if (!entity->step) {
-        InitializeEntity(D_80180458);
+        InitializeEntity(g_InitializeEntityData0);
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;
         entity->animSet = ANIMSET_DRA(2);
@@ -184,26 +161,6 @@ void EntityExplosion(Entity* entity) {
     }
 }
 
-void BlinkItem(Entity* self, u16 renderFlags) {
-    Primitive* prim;
-    s32 temp;
-    prim = &g_PrimBuf[self->primIndex];
-
-    prim->x0 = prim->x2 = self->posX.i.hi - 7;
-    prim->x1 = prim->x3 = prim->x0 + 14;
-
-    prim->y0 = prim->y1 = self->posY.i.hi - 7;
-    prim->y2 = prim->y3 = prim->y0 + 14;
-
-    if (renderFlags & RENDERFLAGS_NOSHADOW) {
-        prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
-            prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 =
-                255;
-    } else {
-        prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
-            prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 =
-                128;
-    }
-}
+#include "../blink_item.h"
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_collect", EntityEquipItemDrop);
