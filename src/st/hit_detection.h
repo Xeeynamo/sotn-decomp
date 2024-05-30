@@ -8,6 +8,9 @@ extern u16 g_testCollPrizeTable[];
 extern u16 g_testCollRandTable;
 
 void HitDetection(void) {
+#ifdef VERSION_PC
+    u8 sp[SP_LEN];
+#endif
     s32 temp_rand;
     Entity* otherEntity;
     Primitive* prim;
