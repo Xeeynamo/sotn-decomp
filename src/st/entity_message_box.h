@@ -4,13 +4,17 @@
 void EntityMessageBox(Entity* self) {
     Primitive* prim;
     s32 i;
-    char* str;
-    s16 primIndex;
+    u8* str;
+    s32 primIndex;
     u16 xOffset;
     u8* chPix;
     u8* dstPix;
     u8 ch;
     RECT rect;
+
+    s32 s4;
+    u16 s5;
+    s32 s6;
 
     switch (self->step) {
     case 0:
@@ -34,7 +38,7 @@ void EntityMessageBox(Entity* self) {
             prim = prim->next;
         }
 
-        str = self->ext.messageBox.label;
+        str = (u8*)self->ext.messageBox.label;
         self->ext.messageBox.width = *str++;
         self->ext.messageBox.height = *str++;
         self->ext.messageBox.label += 2;
@@ -85,6 +89,7 @@ void EntityMessageBox(Entity* self) {
         self->step++;
         break;
     case 2:
+#if !defined(VERSION_PSP)
         dstPix = g_Pix[0];
         chPix = dstPix;
         str = self->ext.messageBox.label;
@@ -105,8 +110,8 @@ void EntityMessageBox(Entity* self) {
                 xOffset = 0;
                 chPix = &dstPix[self->ext.messageBox.width * 8];
             } else {
-                str = BlitChar(
-                    str, &xOffset, chPix, self->ext.messageBox.width >> 1);
+                str = (char*)BlitChar(
+                    str, &xOffset, chPix, (self->ext.messageBox.width >> 1));
             }
         }
 
@@ -114,21 +119,31 @@ void EntityMessageBox(Entity* self) {
                   self->ext.messageBox.height);
         self->ext.messageBox.duration = 0;
         self->step++;
+#else
+        s6 = 0;
+        s4 = 0;
+        s5 = 0x180;
+        str = (u8*)self->ext.messageBox.label;
+        BlitChar(str, 0, 0, 0x180);
+        self->ext.messageBox.duration = 0;
+        self->step++;
+#endif
         break;
     case 3:
         self->ext.messageBox.duration++;
-        prim = g_PrimBuf[self->primIndex].next;
+        prim = &g_PrimBuf[self->primIndex];
+        prim = prim->next;
         for (i = 0; prim != NULL; prim = prim->next, i++) {
             if (i == 0) {
                 prim->y2 = prim->y3 =
                     prim->y0 + (self->ext.messageBox.height + 8) *
                                    self->ext.messageBox.duration / 8;
-                prim->b0 = prim->b1 = prim->b1 - 0x10;
+                prim->b0 = prim->b1 -= 0x10;
             } else {
                 prim->y0 = prim->y1 =
                     prim->y2 - (self->ext.messageBox.height + 8) *
                                    self->ext.messageBox.duration / 8;
-                prim->g2 = prim->g3 = prim->g3 - 0x10;
+                prim->g2 = prim->g3 -= 0x10;
             }
         }
         if (self->ext.messageBox.duration == 8) {
@@ -137,7 +152,8 @@ void EntityMessageBox(Entity* self) {
         }
         break;
     case 4:
-        g_PrimBuf[self->primIndex].drawMode = 0;
+        prim = &g_PrimBuf[self->primIndex];
+        prim->drawMode = 0;
         self->ext.messageBox.duration++;
         if (self->ext.messageBox.duration > self->params) {
             DestroyEntity(self);
