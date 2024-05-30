@@ -3,7 +3,7 @@ void CollectHeartVessel(void) {
         g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
         g_Status.hearts += HEART_VESSEL_RICHTER;
 
-        if (g_Status.heartsMax < g_Status.hearts) {
+        if (g_Status.hearts > g_Status.heartsMax) {
             g_Status.hearts = g_Status.heartsMax;
         }
     } else {
