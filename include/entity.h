@@ -132,7 +132,7 @@ typedef struct {
 typedef struct {
     /* 0x7C */ u16 timer;
     /* 0x7E */ u16 size;
-    /* 0x80 */ s32 speed;
+    /* 0x80 */ u32 speed;
 } ET_BloodDroplets;
 
 typedef struct {
