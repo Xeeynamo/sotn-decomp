@@ -72,12 +72,12 @@ void CollectHeart(u16 arg0) {
 }
 
 extern u8* D_80180E08[];
-extern s32 c_GoldPrizes[];
+extern u32 c_GoldPrizes[];
 
 void CollectGold(u16 goldSize) {
     g_api.PlaySfx(NA_SE_PL_COLLECT_GOLD);
     goldSize -= 2;
-    g_Status.gold += (s32)c_GoldPrizes[goldSize];
+    g_Status.gold += c_GoldPrizes[goldSize];
     if (g_Status.gold > MAX_GOLD) {
         g_Status.gold = MAX_GOLD;
     }

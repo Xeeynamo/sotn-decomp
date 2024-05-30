@@ -1,4 +1,4 @@
-extern s32 c_GoldPrizes[];
+extern u32 c_GoldPrizes[];
 extern u8* g_goldCollectTexts[];
 
 void CollectGold(u16 goldSize) {

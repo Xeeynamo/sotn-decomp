@@ -951,7 +951,7 @@ u8* g_goldCollectTexts[] = {
     /* E2C */ D_80186EC0,
 };
 
-s32 c_GoldPrizes[] = {
+u32 c_GoldPrizes[] = {
     1, 25, 50, 100, 250, 400, 700, 1000, 2000, 5000,
 };
 
