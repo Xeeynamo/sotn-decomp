@@ -110,7 +110,7 @@ void EntityMessageBox(Entity* self) {
                 xOffset = 0;
                 chPix = &dstPix[self->ext.messageBox.width * 8];
             } else {
-                str = (char*)BlitChar(
+                str = BlitChar(
                     str, &xOffset, chPix, (self->ext.messageBox.width >> 1));
             }
         }
