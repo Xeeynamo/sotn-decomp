@@ -39,8 +39,6 @@ void EntityHeartDrop(Entity* self) {
 
 u16 g_InitializeData0[];
 void BlitChar(u8*, s32, s32, s32);
-// params: message box duration
-// ext.messageBox.label: box size and text to render
 #include "../entity_message_box.h"
 
 extern u16 D_8018047C[];
