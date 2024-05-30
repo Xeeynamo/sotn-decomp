@@ -6,4 +6,4 @@ INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_particles", func_psp_0923B2F0);
 
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_particles", EntitySoulStealOrb);
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_particles", EntityEnemyBlood);
+#include "../entity_enemy_blood.h"
