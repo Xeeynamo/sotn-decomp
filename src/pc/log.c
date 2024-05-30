@@ -71,42 +71,40 @@ void _log(unsigned int level, const char* file, unsigned int line,
             logHash = djb2_hash(logHash, func);
 
             LogEntry* entry = &logHistory[logHash % MAX_LOGS];
-            if (entry->hash) {
-                // check if the collision is real or caused by a small dict
-                if (entry->hash == altHash) {
-                    // duplicate log
-                    if (++entry->count > 9999) {
-                        // adjust the count to show the log keeps being
-                        // triggered
-                        entry->count = 9000;
-                    }
-
-                    // go back N amount of lines to modify the existing log
-                    size_t nLinesBack = ttyLineCount - entry->ttyLine;
-                    while (nLinesBack-- > 0) {
-                        fputs("\033[F", stderr);
-                    }
-
-                    // now update the log line, in a very cheap way
-                    fprintf(stderr, "(%d) ", entry->count);
-
-                    // go immediately back to the last line
-                    nLinesBack = ttyLineCount - entry->ttyLine;
-                    while (nLinesBack-- > 0) {
-                        fputs("\033[E", stderr);
-                    }
-                    va_end(args);
-                    return;
+            // check if the collision is real, caused by a small dict or because
+            // the entry is just unused
+            if (entry->hash == altHash) {
+                // duplicate log
+                if (++entry->count > 9999) {
+                    // adjust the count to show the log keeps being
+                    // triggered
+                    entry->count = 9000;
                 }
+
+                // go back N amount of lines to modify the existing log
+                size_t nLinesBack = ttyLineCount - entry->ttyLine;
+                while (nLinesBack-- > 0) {
+                    fputs("\033[F", stderr);
+                }
+
+                // now update the log line, in a very cheap way
+                fprintf(stderr, "(%d) ", entry->count);
+
+                // go immediately back to the last line
+                nLinesBack = ttyLineCount - entry->ttyLine;
+                while (nLinesBack-- > 0) {
+                    fputs("\033[E", stderr);
+                }
+            } else {
+                entry->level = level;
+                entry->count = 1;
+                entry->ttyLine = ttyLineCount;
+                entry->hash = altHash;
+                ttyLineCount++;
+                fprintf(stderr, "%s%s:%d ┃ %s ┃ %s\033[m\n",
+                        coloured_levels[level], file, line, func, buf);
             }
 
-            entry->level = level;
-            entry->count = 1;
-            entry->ttyLine = ttyLineCount;
-            entry->hash = altHash;
-            ttyLineCount++;
-            fprintf(stderr, "%s%s:%d ┃ %s ┃ %s\033[m\n", coloured_levels[level],
-                    file, line, func, buf);
         } else {
             fprintf(stderr, "[%c][%s:%d][%s] %s\n", levels[level], file, line,
                     func, buf);
