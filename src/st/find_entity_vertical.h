@@ -11,7 +11,7 @@
  */
 void FindFirstEntityAbove(s16 posY) {
     while (true) {
-        u16* ptr = &g_LayoutObjVertical[1];
+        u16* ptr = &g_LayoutObjVertical[LAYOUT_OBJ_POS_Y];
         if (*ptr != LAYOUT_OBJ_START && *ptr >= posY) {
             break;
         }
@@ -32,7 +32,7 @@ void FindFirstEntityAbove(s16 posY) {
  */
 void FindFirstEntityBelow(s16 posY) {
     while (true) {
-        u16* ptr = &g_LayoutObjVertical[1];
+        u16* ptr = &g_LayoutObjVertical[LAYOUT_OBJ_POS_Y];
 
         if (*ptr != LAYOUT_OBJ_END &&
             (*ptr <= posY || *ptr == LAYOUT_OBJ_START)) {

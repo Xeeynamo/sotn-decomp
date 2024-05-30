@@ -538,12 +538,12 @@ void CreateEntitiesToTheLeft(s16 posX) {
         g_LayoutObjPosHorizontal = LAYOUT_OBJ_POSITION_BACKWARD;
     }
 
-    if (g_LayoutObjHorizontal[0] == LAYOUT_OBJ_START ||
-        g_LayoutObjHorizontal[0] < posX) {
+    if (g_LayoutObjHorizontal[LAYOUT_OBJ_POS_X] == LAYOUT_OBJ_START ||
+        g_LayoutObjHorizontal[LAYOUT_OBJ_POS_X] < posX) {
         return;
     }
 
-    flag = (g_LayoutObjHorizontal[3] >> 8) + 0xff;
+    flag = (g_LayoutObjHorizontal[LAYOUT_OBJ_SLOT] >> 8) + 0xff;
     expected = 0;
     if (flag == 0xFF ||
         ((g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1f))) == expected)) {

@@ -30,8 +30,8 @@ void InitRoomEntities(s32 objLayoutId) {
         }
         g_LayoutObjHorizontal = (temp_v1[2] << 0x10) + temp_v1[1];
         g_LayoutObjVertical += i * 2 + 2;
-        g_LayoutObjVertical =
-            (g_LayoutObjVertical[1] << 0x10) + g_LayoutObjVertical[0];
+        g_LayoutObjVertical = (g_LayoutObjVertical[LAYOUT_OBJ_POS_Y] << 0x10) +
+                              g_LayoutObjVertical[LAYOUT_OBJ_POS_X];
     }
     arg0 = tilemap->scrollX.i.hi;
     temp_s0 = arg0 + 320;
