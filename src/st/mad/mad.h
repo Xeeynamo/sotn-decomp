@@ -74,14 +74,7 @@ extern u8 g_testColliFrames[10];
 extern u16 g_testCollPrizeTable[];
 extern u16 g_testCollRandTable;
 extern RoomHeader g_rooms[];
-extern LayoutEntity* g_pStObjLayoutHorizontal[];
-extern LayoutEntity* g_pStObjLayoutVertical[];
 extern PfnEntityUpdate PfnEntityUpdates[];
-
-extern LayoutEntity* g_LayoutObjHorizontal;
-extern LayoutEntity* g_LayoutObjVertical;
-extern u8 g_LayoutObjPosHorizontal;
-extern u8 g_LayoutObjPosVertical;
 
 extern u16 g_eBreakableInit[];
 extern u8* g_eBreakableAnimations[8];

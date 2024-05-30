@@ -21,17 +21,17 @@ void CreateEntitiesToTheLeft(s16 posX) {
     }
 
     while (true) {
-        if (g_LayoutObjHorizontal->posX == LAYOUT_OBJ_START ||
-            posX > g_LayoutObjHorizontal->posX) {
+        if (g_LayoutObjHorizontal[LAYOUT_OBJ_POS_X] == LAYOUT_OBJ_START ||
+            posX > g_LayoutObjHorizontal[LAYOUT_OBJ_POS_X]) {
             break;
         }
 
         expected = 0;
-        flag = (g_LayoutObjHorizontal->entityRoomIndex >> 8) + 0xFF;
+        flag = (g_LayoutObjHorizontal[LAYOUT_OBJ_SLOT] >> 8) + 0xFF;
         if (flag == 0xFF ||
             (g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1F))) == expected) {
             CreateEntityWhenInVerticalRange(g_LayoutObjHorizontal);
         }
-        g_LayoutObjHorizontal--;
+        g_LayoutObjHorizontal -= sizeof(LayoutEntity) / sizeof(u16);
     }
 }

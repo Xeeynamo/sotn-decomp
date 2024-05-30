@@ -49,9 +49,6 @@ Entity* func_8019AC18(Entity*, Entity*);
 void EntityUnkId14(Entity* entity);
 void EntityUnkId15(Entity* entity);
 
-extern LayoutEntity* g_pStObjLayoutHorizontal[];
-extern LayoutEntity* g_pStObjLayoutVertical[];
-
 /* *** Initializers *** */
 extern u16 g_InitializeData0[];
 extern u16 D_8018047C[];
@@ -128,10 +125,6 @@ extern u8 D_801813FC;
 
 // *** EntitySoulStealOrb properties END ***
 
-extern LayoutEntity* g_LayoutObjHorizontal;
-extern LayoutEntity* g_LayoutObjVertical;
-extern u8 g_LayoutObjPosHorizontal;
-extern u8 g_LayoutObjPosVertical;
 extern s32 D_801A3ED4;
 extern s32 D_801A3ED8;
 extern s16 D_801A3EDE;
