@@ -4,7 +4,7 @@
 void EntityMessageBox(Entity* self) {
     Primitive* prim;
     s32 i;
-    u8* str;
+    char* str;
     s32 primIndex;
     u16 xOffset;
     u8* chPix;
@@ -38,7 +38,7 @@ void EntityMessageBox(Entity* self) {
             prim = prim->next;
         }
 
-        str = (u8*)self->ext.messageBox.label;
+        str = self->ext.messageBox.label;
         self->ext.messageBox.width = *str++;
         self->ext.messageBox.height = *str++;
         self->ext.messageBox.label += 2;
@@ -123,7 +123,7 @@ void EntityMessageBox(Entity* self) {
         s6 = 0;
         s4 = 0;
         s5 = 0x180;
-        str = (u8*)self->ext.messageBox.label;
+        str = self->ext.messageBox.label;
         BlitChar(str, 0, 0, 0x180);
         self->ext.messageBox.duration = 0;
         self->step++;

@@ -38,7 +38,7 @@ void EntityHeartDrop(Entity* self) {
 }
 
 u16 g_InitializeData0[];
-void BlitChar(u8*, s32, s32, s32);
+void BlitChar(char*, s32, s32, s32);
 #include "../entity_message_box.h"
 
 extern u16 D_8018047C[];
