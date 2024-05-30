@@ -445,8 +445,8 @@ void func_80134D14(void) {
     func_80132A04(0x16, g_SfxData[D_80139804].vabid, g_SfxData[D_80139804].prog,
                   g_SfxData[D_80139804].tone, g_SfxData[D_80139804].note,
                   volume, D_8013AE94);
-    g_VolR = (volume * g_VolumeTable[D_8013AE94 * 2 + 0]) >> 8;
-    g_VolL = (volume * g_VolumeTable[D_8013AE94 * 2 + 1]) >> 8;
+    g_VolR = (volume * g_CdVolumeTable[D_8013AE94 * 2 + 144]) >> 8;
+    g_VolL = (volume * g_CdVolumeTable[D_8013AE94 * 2 + 145]) >> 8;
     SsUtSetVVol(0x16, g_VolL, g_VolR);
     SsUtSetVVol(0x17, g_VolL, g_VolR);
 }
@@ -456,8 +456,8 @@ void func_80134E64(void) {
 
     volume = D_8013AE7C * g_SfxData[D_80139804].volume >> 7;
     volume = volume * D_8013AEE0 >> 7;
-    g_VolR = (volume * g_VolumeTable[D_8013AE94 * 2 + 0]) >> 8;
-    g_VolL = (volume * g_VolumeTable[D_8013AE94 * 2 + 1]) >> 8;
+    g_VolR = (volume * g_CdVolumeTable[D_8013AE94 * 2 + 144]) >> 8;
+    g_VolL = (volume * g_CdVolumeTable[D_8013AE94 * 2 + 145]) >> 8;
     SsUtSetVVol(0x16, g_VolL, g_VolR);
     SsUtSetVVol(0x17, g_VolL, g_VolR);
 }
