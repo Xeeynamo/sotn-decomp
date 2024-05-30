@@ -37,7 +37,9 @@ void EntityHeartDrop(Entity* self) {
     update(self);
 }
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_misc", EntityMessageBox);
+u16 g_InitializeData0[];
+void BlitChar(char*, s32, s32, s32);
+#include "../entity_message_box.h"
 
 extern u16 D_8018047C[];
 void func_8018F510(Entity* entity) {

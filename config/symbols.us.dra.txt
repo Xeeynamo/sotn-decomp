@@ -22,7 +22,6 @@ aPqes_1 = 0x800BA07C;
 aPqes = 0x800BC37D;
 aPqes_0 = 0x800BCAC3;
 g_CdVolumeTable = 0x800BD07C;
-g_VolumeTable = 0x800BD19C;
 g_DebugEnabled = 0x800BD1C0;
 g_VabAddrs = 0x800BD1C8;
 g_SeqInfo = 0x800BD1E0;
