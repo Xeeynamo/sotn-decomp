@@ -70,6 +70,17 @@ def apply_psx_stage(config, version, name):
     ]
     config["objdump_executable"] = "mipsel-linux-gnu-objdump"
 
+def apply_psp_stage(config, version, name):
+    config["baseimg"] = f"disks/{version}/" + (f"PSP_GAME/USRDIR/res/ps/PSPBIN/{name}.bin")
+    config["myimg"] = f"build/{version}/" + (f"{name}.bin")
+    config["mapfile"] = f"build/{version}/st{name}.map"
+    config["source_directories"] = [
+        f"src/st/{name}",
+        f"src/st/{name}_psp",
+        "include",
+        f"asm/{version}/st/{name}",
+    ]
+    config["objdump_executable"] = "mipsel-linux-gnu-objdump"
 
 def apply_saturn(config, name):
     config["arch"] = "sh2"
@@ -82,7 +93,11 @@ def apply_saturn(config, name):
 
 def apply(config, args):
     version = args.version or os.getenv("VERSION") or "us"
-    if version == "saturn":
+    if version == "pspeu":
+        name = args.overlay or "dra"
+        if name.startswith("st/"):
+            apply_psp_stage(config, version, name[3:])
+    elif version == "saturn":
         apply_saturn(config, args.overlay)
     else:
         name = args.overlay or "dra"
