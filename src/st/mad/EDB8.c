@@ -1031,31 +1031,7 @@ void func_801934D0(u16 arg0) {
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/EDB8", CollectHeart);
 
-extern void* const D_80180D60[];
-extern const s32 D_80180D88[]; // c_GoldPrizes
-
-void CollectGold(u16 goldSize) { // CollectGold
-    s32 *gold, *unk;
-    u16 goldSizeIndex;
-
-    g_api.PlaySfx(0x69D);
-    gold = &g_Status.gold;
-    goldSizeIndex = goldSize - 2;
-    *gold += D_80180D88[goldSizeIndex];
-    if (*gold > MAX_GOLD) {
-        *gold = MAX_GOLD;
-    }
-
-    unk = &g_unkGraphicsStruct.BottomCornerTextTimer;
-    if (*unk) {
-        g_api.FreePrimitives(
-            g_unkGraphicsStruct.BottomCornerTextPrims); // g_api.FreePrimitives
-        *unk = 0;
-    }
-
-    BottomCornerText(D_80180D60[goldSizeIndex], 1);
-    DestroyEntity(g_CurrentEntity);
-}
+#include "../collect_gold.h"
 
 void func_801937BC(void) {}
 

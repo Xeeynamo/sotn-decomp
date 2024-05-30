@@ -219,8 +219,6 @@ extern u16 UNK_Invincibility0[];
 extern s16 D_80181A50[];
 extern u16 D_80181D80[];
 extern u16 D_80181DB0[];
-extern const u32* D_80181DC4[];
-extern const s32 c_GoldPrizes[];
 extern u16 D_80181E74[];
 extern s8 c_HeartPrizes[];
 extern s32 D_80181E80[];

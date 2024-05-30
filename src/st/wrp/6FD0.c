@@ -937,7 +937,7 @@ extern u8 D_80186EF0[];
 extern u8 D_80186EF8[];
 extern u8 D_80186F00[];
 extern u8 D_80186F08[];
-u8* D_80180E08[] = {
+u8* g_goldCollectTexts[] = {
     // u8 is an assumption
     /* E08 */ D_80186F08,
     /* E0C */ D_80186F00,
@@ -951,7 +951,7 @@ u8* D_80180E08[] = {
     /* E2C */ D_80186EC0,
 };
 
-s32 c_GoldPrizes[] = {
+u32 c_GoldPrizes[] = {
     1, 25, 50, 100, 250, 400, 700, 1000, 2000, 5000,
 };
 

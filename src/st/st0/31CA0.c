@@ -827,15 +827,7 @@ void CollectHeart(u16 index) {
     DestroyEntity(g_CurrentEntity);
 }
 
-void CollectGold(u16 index) {
-    g_api.PlaySfx(0x6A9);
-    index -= 2;
-    g_Status.gold += D_80181CF0[index];
-
-    if ((s32)g_Status.gold > 0xF423F) {
-        g_Status.gold = 0xF423F;
-    }
-}
+#include "../collect_gold.h"
 
 void func_801B61D4(void) {}
 

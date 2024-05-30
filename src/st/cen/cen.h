@@ -74,8 +74,6 @@ extern u8 D_80180780[]; // Animation
 extern s16 D_80180BBC[];
 extern u16 D_80180EEC[];
 extern u16 D_80180F1C[];
-extern u8* D_80180F30[];
-extern s32 c_GoldPrizes[];
 extern s8 c_HeartPrizes[];
 extern u16 D_801811C8[];
 extern u16 D_801811D8[];
