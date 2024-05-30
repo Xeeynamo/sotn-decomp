@@ -154,7 +154,7 @@ segments:
       - [0x956C, c, psxsdk/libgte/fgo_05]
       - [0x970C, c, psxsdk/libgte/fgo_06]
       - [0x98AC, c, psxsdk/libgte/ratan]
-      - [0x9A2C, c, psxsdk/libgte/patchgte]
+      - [0x9A2C, asm, psxsdk/libgte/patchgte]
       - [0x9ACC, c, psxsdk/libapi/c68]
       - [0x9ADC, c, psxsdk/libcd/cdrom]
       - [0x9B0C, c, psxsdk/libcd/event]
