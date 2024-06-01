@@ -217,14 +217,14 @@ void EntityWeaponShieldSpell(Entity* self) {
             self->animSet = -0x7FEE;
             self->ext.weapon.childPalette = 0x128;
             self->unk5A = 0x66;
-            self->ext.weapon29.unk7C = 0;
-            self->ext.weapon29.unk7D = 0x80;
+            self->ext.shield.unk7C = 0;
+            self->ext.shield.unk7D = 0x80;
         } else {
             self->animSet = -0x7FF0;
             self->ext.weapon.childPalette = 0x110;
             self->unk5A = 0x64;
-            self->ext.weapon29.unk7C = 0x80;
-            self->ext.weapon29.unk7D = 0;
+            self->ext.shield.unk7C = 0x80;
+            self->ext.shield.unk7D = 0;
         }
         self->posY.i.hi -= 8;
         self->flags = 0x04810000;
@@ -239,8 +239,8 @@ void EntityWeaponShieldSpell(Entity* self) {
         prim->tpage = 0x19;
         prim->u0 = prim->u2 = 0x80;
         prim->u1 = prim->u3 = 0xCF;
-        prim->v0 = prim->v1 = self->ext.weapon29.unk7C;
-        prim->v2 = prim->v3 = self->ext.weapon29.unk7C + 0x4F;
+        prim->v0 = prim->v1 = self->ext.shield.unk7C;
+        prim->v2 = prim->v3 = self->ext.shield.unk7C + 0x4F;
         self->ext.weapon.unk82 = 0;
         prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
             prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
@@ -385,13 +385,13 @@ void func_ptr_80170024(Entity* self) {
         }
         if (g_HandId != 0) {
             self->ext.weapon.childPalette = 0x128;
-            self->ext.weapon29.unk7D = 0x80;
+            self->ext.shield.unk7D = 0x80;
         } else {
             self->ext.weapon.childPalette = 0x110;
-            self->ext.weapon29.unk7D = 0;
+            self->ext.shield.unk7D = 0;
         }
         self->flags |= 0x04800000;
-        self->ext.weapon29.unk9C = 0x40;
+        self->ext.shield.unk9C = 0x40;
 
         for (i = 0, prim = &g_PrimBuf[self->primIndex]; prim != NULL; i++,
             prim = prim->next) {
@@ -400,15 +400,15 @@ void func_ptr_80170024(Entity* self) {
             prim->priority = 0x1BC;
             prim->drawMode = DRAW_DEFAULT;
             prim->u0 = prim->u2 = 0x50;
-            prim->v0 = prim->v1 = self->ext.weapon29.unk7D + 8;
+            prim->v0 = prim->v1 = self->ext.shield.unk7D + 8;
             prim->u1 = prim->u3 = 0x7F;
-            prim->v2 = prim->v3 = self->ext.weapon29.unk7D + 0x2F;
+            prim->v2 = prim->v3 = self->ext.shield.unk7D + 0x2F;
             if (i == 0) { // for the first prim. Maybe this is the dragon head
                           // or something?
                 prim->u0 = prim->u1 = 0;
                 prim->u2 = prim->u3 = 0x57;
-                prim->v0 = prim->v2 = self->ext.weapon29.unk7D + 0x30;
-                prim->v1 = prim->v3 = self->ext.weapon29.unk7D + 0x6F;
+                prim->v0 = prim->v2 = self->ext.shield.unk7D + 0x30;
+                prim->v1 = prim->v3 = self->ext.shield.unk7D + 0x6F;
             }
             prim->priority = 0x1BA;
         }
@@ -504,9 +504,9 @@ void func_ptr_80170024(Entity* self) {
                 break;
             }
         }
-        self->ext.weapon29.unk9C += 2;
-        if (self->ext.weapon29.unk9C > 0x100) {
-            self->ext.weapon29.unk9C = 0x100;
+        self->ext.shield.unk9C += 2;
+        if (self->ext.shield.unk9C > 0x100) {
+            self->ext.shield.unk9C = 0x100;
         }
     }
     firstPrim = prim = &g_PrimBuf[self->primIndex];
@@ -532,7 +532,7 @@ void func_ptr_80170024(Entity* self) {
     }
 
     var_s7 = &D_CF000_8017C9A0[dragonNumber][0];
-    size = ((self->ext.weapon29.unk9C * 54 / 256) *
+    size = ((self->ext.shield.unk9C * 54 / 256) *
             (rsin(var_s7->unkE) * var_s7->unk14 / 256 + 4096)) /
            4096;
     nextX = (var_s7 + 1)->posX.i.hi;
