@@ -169,9 +169,6 @@ void BottomCornerText(u8* str, u8 lower_left) {
             if (ch == 0) {
                 break;
             }
-        } else {
-
-            (void)1;
         }
 
         *chIdx++ = ch;
@@ -211,7 +208,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
 #undef charcount
 
     prim = &g_PrimBuf[g_unkGraphicsStruct.BottomCornerTextPrims];
-    prim->type = 3;
+    prim->type = PRIM_G4;
     prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
     prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0;
     prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0;
@@ -265,7 +262,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
     prim->drawMode = DRAW_DEFAULT;
     prim = prim->next;
 
-    prim->type = 4;
+    prim->type = PRIM_GT4;
     prim->tpage = 0x1F;
     prim->clut = 0x197;
     prim->x0 = prim->x2 = xpos + 0xA;
@@ -312,7 +309,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
             prim->y0 = 0xcc;
             prim = prim->next;
         }
-        if (((ch) >= 0xF0) && ((ch) < 0xFD)) {
+        if ((ch >= 0xF0) && (ch < 0xFD)) {
             xpos2 += 0xC;
         } else {
             xpos2 += 8;
