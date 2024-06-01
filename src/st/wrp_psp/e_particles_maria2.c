@@ -44,7 +44,7 @@ void func_psp_0923B2F0(Entity* self) {
             if (self->ext.soulStealOrb.unk80 < 0x800) {
                 self->ext.soulStealOrb.unk80 += 0x10;
             }
-            angle = func_8018C160(self, pl);
+            angle = GetAngleBetweenEntities(self, pl);
             self->ext.soulStealOrb.angle = angle =
                 func_8018C1E0(self->ext.soulStealOrb.unk7E,
                               self->ext.soulStealOrb.angle, angle);

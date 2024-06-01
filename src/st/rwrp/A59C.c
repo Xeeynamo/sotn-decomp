@@ -176,7 +176,7 @@ s32 func_8018DF84(s32 arg0, s32 arg1) {
 
 u16 func_8018E0B0(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
-u16 func_8018E0E0(Entity* arg0, Entity* arg1) {
+u16 GetAngleBetweenEntities(Entity* arg0, Entity* arg1) {
     s32 x = arg1->posX.i.hi - arg0->posX.i.hi;
     s32 y = arg1->posY.i.hi - arg0->posY.i.hi;
 

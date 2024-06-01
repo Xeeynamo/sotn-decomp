@@ -432,7 +432,7 @@ void EntitySoulStealOrb(Entity* self) {
         self->primIndex = primIndex;
         self->animSet = ANIMSET_DRA(0);
         self->flags |= FLAG_HAS_PRIMS;
-        angle = func_801BD44C(self, &PLAYER);
+        angle = GetAngleBetweenEntities(self, &PLAYER);
         temp_a = self->posY.i.hi < 113;
         temp_b = temp_a ^ 1;
         if (self->posX.i.hi < PLAYER.posX.i.hi) {
@@ -473,7 +473,7 @@ void EntitySoulStealOrb(Entity* self) {
         }
         self->ext.soulStealOrb.angle = func_801BD4CC(
             self->ext.soulStealOrb.unk7E, self->ext.soulStealOrb.angle,
-            0xffff & func_801BD44C(self, &PLAYER));
+            0xffff & GetAngleBetweenEntities(self, &PLAYER));
         UnkEntityFunc0(self->ext.soulStealOrb.angle & 0xFFFF,
                        self->ext.soulStealOrb.unk80);
         MoveEntity(self); // argument pass necessary to match

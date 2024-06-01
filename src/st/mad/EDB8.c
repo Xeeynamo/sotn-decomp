@@ -793,7 +793,7 @@ u8 func_80192994(s32 x, s32 y) {
 
 u16 func_80192AC0(s16 x, s16 y) { return ratan2(y, x); }
 
-u16 func_80192AF0(Entity* a, Entity* b) {
+u16 GetAngleBetweenEntities(Entity* a, Entity* b) {
     s32 diffX = b->posX.i.hi - a->posX.i.hi;
     s32 diffY = b->posY.i.hi - a->posY.i.hi;
     return ratan2(diffY, diffX);

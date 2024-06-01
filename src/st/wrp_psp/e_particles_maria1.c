@@ -24,7 +24,7 @@ void func_psp_0923AD68(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             self->animSet = 0;
-            angle = func_8018C160(self, pl);
+            angle = GetAngleBetweenEntities(self, pl);
             direction = 0;
             if (self->posY.i.hi > 0x70) {
                 direction = 1;
@@ -65,7 +65,7 @@ void func_psp_0923AD68(Entity* self) {
         if (self->ext.soulStealOrb.unk80 < 0x800) {
             self->ext.soulStealOrb.unk80 += 0x10;
         }
-        angle = func_8018C160(self, pl);
+        angle = GetAngleBetweenEntities(self, pl);
         self->ext.soulStealOrb.angle = angle = func_8018C1E0(
             self->ext.soulStealOrb.unk7E, self->ext.soulStealOrb.angle, angle);
         UnkEntityFunc0(angle, self->ext.soulStealOrb.unk80);

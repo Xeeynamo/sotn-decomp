@@ -42,7 +42,6 @@ GetSideToPlayer = 0x8018D8F0;
 MoveEntity = 0x8018D934;
 FallEntity = 0x8018D964;
 AllocEntity = 0x8018DDF0;
-SetStep = 0x8018E1C0;
 InitializeEntity = 0x8018E290;
 EntityDummy = 0x8018E38C;
 GetPlayerCollisionWith = 0x8018E634;

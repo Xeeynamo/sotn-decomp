@@ -399,7 +399,7 @@ void EntitySoulStealOrb(Entity* self) {
         self->primIndex = primIndex;
         self->animSet = ANIMSET_DRA(0);
         self->flags |= FLAG_HAS_PRIMS;
-        angle = func_801BD034(self, &g_Entities[PLAYER_CHARACTER]);
+        angle = GetAngleBetweenEntities(self, &g_Entities[PLAYER_CHARACTER]);
         temp_a = self->posY.i.hi < 113;
         temp_b = temp_a ^ 1;
         if (self->posX.i.hi < g_Entities[PLAYER_CHARACTER].posX.i.hi) {
@@ -440,7 +440,8 @@ void EntitySoulStealOrb(Entity* self) {
         }
         self->ext.soulStealOrb.angle = func_801BD0B4(
             self->ext.soulStealOrb.unk7E, (u16)self->ext.soulStealOrb.angle,
-            0xffff & func_801BD034(self, &g_Entities[PLAYER_CHARACTER]));
+            0xffff &
+                GetAngleBetweenEntities(self, &g_Entities[PLAYER_CHARACTER]));
         UnkEntityFunc0(self->ext.soulStealOrb.angle & 0xFFFF,
                        self->ext.soulStealOrb.unk80);
         MoveEntity(self);
