@@ -211,15 +211,19 @@ typedef struct {
     /* 0x7E */ s16 unk7E;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 unk82;
-    /* 0x84 */ s32 unk84;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 unk86;
     /* 0x88 */ s16 childPalette;
     /* 0x8A */ s16 unk8A;
     /* 0x8C */ struct Entity* parent;
-    /* 0x90 */ s32 unk90;
-    /* 0x94 */ s32 unk94;
-    /* 0x98 */ s32 unk98;
+    /* 0x90 */ s16 unk90;
+    /* 0x92 */ s16 unk92;
+    /* 0x94 */ s16 unk94;
+    /* 0x96 */ s16 unk96;
+    /* 0x98 */ s16 unk98;
+    /* 0x9A */ s16 unk9A;
     /* 0x9C */ s16 unk9C;
-} ET_Weapon29;
+} ET_Shield;
 
 typedef struct {
     s16 timer;
@@ -993,7 +997,7 @@ typedef union { // offset=0x7C
     ET_StagePopup stpopup;
     ET_MessageBox messageBox;
     ET_Weapon weapon;
-    ET_Weapon29 weapon29;
+    ET_Shield shield;
     ET_Food food;
     ET_HitByIce hitbyice;
     ET_HitByLightning hitbylightning;
