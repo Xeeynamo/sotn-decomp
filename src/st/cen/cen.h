@@ -45,7 +45,7 @@ typedef enum {
 
 void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity);
 void CreateEntityFromLayout(Entity*, LayoutEntity*);
-extern u16 func_80194E44(u16 arg0, u16 arg1, u16 arg2);
+extern u16 GetNormalizedAngle(u16 arg0, u16 arg1, u16 arg2);
 void EntityUnkId14(Entity* entity);
 void EntityUnkId15(Entity* entity);
 
@@ -75,9 +75,9 @@ extern s16 D_80180BBC[];
 extern u16 D_80180EEC[];
 extern u16 D_80180F1C[];
 extern s8 c_HeartPrizes[];
-extern u16 D_801811C8[];
-extern u16 D_801811D8[];
-extern u8 D_80181238;
+extern u16 g_ESoulStealOrbAngles[];
+extern s16 g_ESoulStealOrbSprt[];
+extern u8 g_ESoulStealOrbAnim[];
 extern ObjInit2 D_8018125C[];
 
 extern s16 D_8019D37E;

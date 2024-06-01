@@ -129,7 +129,7 @@ void func_80109594() {
     func_801093C4();
 
 #if defined(VERSION_US)
-    g_Player.unk20[0] = 0x10;
+    g_Player.unk20 = 0x10;
     g_Player.D_80072EFC = 0x10;
     g_Player.padSim = 0;
     D_80137FB8 = 0;
@@ -608,7 +608,7 @@ void EntityAlucard(void) {
                 specialmove:
                     CheckSpecialMoveInputs();
 #if defined(VERSION_US)
-                    if (g_Player.unk20[0] == 0 || --g_Player.unk20[0] == 0) {
+                    if (g_Player.unk20 == 0 || --g_Player.unk20 == 0) {
 #elif defined(VERSION_HD)
                     if (D_800ACEDC_hd == 0 || --D_800ACEDC_hd == 0) {
 #endif

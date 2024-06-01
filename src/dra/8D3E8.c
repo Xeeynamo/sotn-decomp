@@ -610,7 +610,7 @@ void func_8012EAD0(void) {
             }
             PLAYER.palette = 0x8100;
 #if defined(VERSION_US)
-            g_Player.unk20[0] = 0x18;
+            g_Player.unk20 = 0x18;
 #elif defined(VERSION_HD)
             D_800ACEDC_hd = 0x18;
 #endif
