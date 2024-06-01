@@ -76,7 +76,7 @@ extern u16 D_80180EEC[];
 extern u16 D_80180F1C[];
 extern s8 c_HeartPrizes[];
 extern u16 g_ESoulStealOrbAngles[];
-extern s16 g_ESouldStelOrbSprt[];
+extern s16 g_ESoulStealOrbSprt[];
 extern u8 g_ESoulStealOrbAnim[];
 extern ObjInit2 D_8018125C[];
 

@@ -176,7 +176,7 @@ extern s32 D_801C2580;
 // *** EntitySoulStealOrb properties START ***
 
 extern u16 g_ESoulStealOrbAngles[];
-extern s16 g_ESouldStelOrbSprt[];
+extern s16 g_ESoulStealOrbSprt[];
 extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***

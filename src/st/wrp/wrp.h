@@ -52,7 +52,7 @@ extern WarpCoord D_8018065C[];
 extern u8 g_eRedDoorUV[3][8];
 extern u16 g_eUnk14SpawnRots[];
 extern u16 g_ESoulStealOrbAngles[];
-extern s16 g_ESouldStelOrbSprt[];
+extern s16 g_ESoulStealOrbSprt[];
 extern u8 g_ESoulStealOrbAnim[];
 
 extern s32 D_80193AA0; // rename into move_room?

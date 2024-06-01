@@ -94,4 +94,4 @@ UpdateRoomPosition = 0x80190F04;
 g_pStObjLayoutVertical = 0x801803C8;
 g_ESoulStealOrbAngles = 0x80181068;
 g_ESoulStealOrbAnim = 0x801810D8;
-g_ESouldStelOrbSprt = 0x80181078;
+g_ESoulStealOrbSprt = 0x80181078;

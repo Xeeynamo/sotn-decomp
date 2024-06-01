@@ -20,7 +20,7 @@ void CreateEntityFromLayout(Entity*, LayoutEntity*);
 // *** EntitySoulStealOrb properties START ***
 
 extern u16 g_ESoulStealOrbAngles[];
-extern s16 g_ESouldStelOrbSprt[];
+extern s16 g_ESoulStealOrbSprt[];
 extern u16 g_InitializeData0[];
 extern u8 g_ESoulStealOrbAnim[];
 

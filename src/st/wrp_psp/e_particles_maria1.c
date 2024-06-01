@@ -1,6 +1,5 @@
 #include "../wrp/wrp.h"
 
-// INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_particles_maria1", func_psp_0923AD68);
 void func_psp_0923AD68(Entity* self) {
     u16 angle;
     Primitive* prim;
@@ -29,7 +28,7 @@ void func_psp_0923AD68(Entity* self) {
             if (self->posY.i.hi > 0x70) {
                 direction = 1;
             }
-            if (self->posX.i.hi < *(s16*)0x091E1682) {
+            if (self->posX.i.hi < PLAYER.posX.i.hi) {
                 direction ^= 1;
             }
             if (direction) {
@@ -76,7 +75,7 @@ void func_psp_0923AD68(Entity* self) {
         prim->clut = 0x194;
         angle = self->animCurFrame;
         angle = (angle - 1) * 8;
-        spr = &g_ESouldStelOrbSprt[angle];
+        spr = &g_ESoulStealOrbSprt[angle];
         prim->x0 = prim->x2 = self->posX.i.hi + *spr++;
         prim->y0 = prim->y1 = self->posY.i.hi + *spr++;
         prim->x1 = prim->x3 = prim->x0 + *spr++;

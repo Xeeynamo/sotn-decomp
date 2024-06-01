@@ -87,7 +87,7 @@ void EntitySoulStealOrb(Entity* self) {
 #else
         angle = (angle * 8) - 8;
 #endif
-        spr = &g_ESouldStelOrbSprt[angle];
+        spr = &g_ESoulStealOrbSprt[angle];
         prim->x0 = prim->x2 = self->posX.i.hi + *spr++;
         prim->y0 = prim->y1 = self->posY.i.hi + *spr++;
         prim->x1 = prim->x3 = prim->x0 + *spr++;

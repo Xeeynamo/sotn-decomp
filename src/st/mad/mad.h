@@ -86,7 +86,7 @@ extern u8 g_eBreakableDrawModes[];
 // *** EntitySoulStealOrb properties START ***
 
 extern u16 g_ESoulStealOrbAngles[];
-extern s16 g_ESouldStelOrbSprt[];
+extern s16 g_ESoulStealOrbSprt[];
 extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
