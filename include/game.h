@@ -166,6 +166,7 @@ typedef struct Prim {
 #define RENDERFLAGS_NOSHADOW 2
 #define PLAYER_ALUCARD 0
 #define PLAYER_RICHTER 1
+#define PLAYER_MARIA 2
 #define MAX_GOLD 999999
 #define HEART_VESSEL_INCREASE 5
 #define HEART_VESSEL_RICHTER 30
@@ -1687,6 +1688,12 @@ extern u32 D_80070BCC;         // part of g_Clut
 
 extern PlayerState g_Player;
 extern u16 g_Player_D_80072EF6; // TODO merge with g_Player
+// the following are most likely part of g_Player
+extern Entity* D_psp_091CF3A0;
+extern s32 D_psp_091CF3A4; // maybe not s32 but a pointer?
+extern void (*D_psp_091CF3A8)(Entity*);
+extern s32 D_psp_091CF3AC; // maybe not s32 but a pointer?
+extern u16 D_psp_091CF3DC;
 
 extern GfxLoad g_GfxLoad[0x10];
 extern u32 g_GameStep;

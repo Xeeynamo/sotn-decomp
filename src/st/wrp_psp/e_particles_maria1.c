@@ -1,27 +1,19 @@
-#define VERSION_PSP
 #include "../wrp/wrp.h"
 
-void func_psp_0923AD68(Entity*);
-void func_psp_0923B2F0(Entity*);
-s32 func_8018C160(Entity*, Entity*);
-
-// worse with prototype
-// u16 func_8018C1E0(u16 arg0, u16 arg1, u16 arg2);
-void EntitySoulStealOrb(Entity* self) {
+// INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_particles_maria1", func_psp_0923AD68);
+void func_psp_0923AD68(Entity* self) {
     u16 angle;
     Primitive* prim;
     s32 primIndex;
     s16* spr;
     u16 direction;
-    Entity* player;
+    Entity* pl;
 
-    if (g_PlayableCharacter == PLAYER_MARIA) {
-        D_psp_091CF3A8 = &func_psp_0923B2F0;
-        func_psp_0923AD68(self);
-        return;
+    if (D_psp_091CF3DC && D_psp_091CF3A0) {
+        pl = D_psp_091CF3A0;
+    } else {
+        pl = &PLAYER;
     }
-    player = &PLAYER;
-
     switch (self->step) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
@@ -31,13 +23,13 @@ void EntitySoulStealOrb(Entity* self) {
             prim->drawMode = DRAW_HIDE;
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
-            self->animSet = ANIMSET_DRA(0);
-            angle = func_8018C160(self, &PLAYER);
+            self->animSet = 0;
+            angle = func_8018C160(self, pl);
             direction = 0;
-            if (self->posY.i.hi > 112) {
+            if (self->posY.i.hi > 0x70) {
                 direction = 1;
             }
-            if (self->posX.i.hi < PLAYER.posX.i.hi) {
+            if (self->posX.i.hi < *(s16*)0x091E1682) {
                 direction ^= 1;
             }
             if (direction) {
@@ -46,24 +38,21 @@ void EntitySoulStealOrb(Entity* self) {
                 angle += D_801810A0[Random() & 7];
             }
             self->ext.soulStealOrb.angle = angle;
-            self->ext.soulStealOrb.unk80 = 0x400;
+            self->ext.soulStealOrb.unk80 = 0x200;
             self->ext.soulStealOrb.unk7E = 0;
             self->hitboxState = 0;
-            return;
+        } else {
+            DestroyEntity(self);
         }
-        DestroyEntity(self);
         break;
-
     case 1:
-        self->ext.soulStealOrb.unk82++;
-        if (self->ext.soulStealOrb.unk82 == 16) {
+        self->ext.soulStealOrb.unk82 += 1;
+        if (self->ext.soulStealOrb.unk82 == 0x10) {
             self->hitboxState = 1;
         }
-        if (self->hitFlags) {
-            if (!g_Player.unk56) {
-                g_Player.unk56 = 1;
-                g_Player.unk58 = 8;
-            }
+        if (abs(pl->posX.i.hi - self->posX.i.hi) < 8 &&
+            abs(pl->posY.i.hi - self->posY.i.hi) < 8) {
+            D_psp_091CF3A4 += 4;
             DestroyEntity(self);
             return;
         }
@@ -71,13 +60,12 @@ void EntitySoulStealOrb(Entity* self) {
             self->rotX = self->rotY += 0x10;
         }
         if (self->ext.soulStealOrb.unk7E < 0x200) {
-            self->ext.soulStealOrb.unk7E += 2;
+            self->ext.soulStealOrb.unk7E += 4;
         }
         if (self->ext.soulStealOrb.unk80 < 0x800) {
-            self->ext.soulStealOrb.unk80 += 4;
+            self->ext.soulStealOrb.unk80 += 0x10;
         }
-        // soulStealOrb.angle changed to u16
-        angle = func_8018C160(self, &PLAYER);
+        angle = func_8018C160(self, pl);
         self->ext.soulStealOrb.angle = angle = func_8018C1E0(
             self->ext.soulStealOrb.unk7E, self->ext.soulStealOrb.angle, angle);
         UnkEntityFunc0(angle, self->ext.soulStealOrb.unk80);
@@ -102,5 +90,3 @@ void EntitySoulStealOrb(Entity* self) {
         break;
     }
 }
-
-#include "../entity_enemy_blood.h"
