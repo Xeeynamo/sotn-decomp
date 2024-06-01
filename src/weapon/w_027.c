@@ -183,7 +183,237 @@ void EntityWeaponShieldSpell(Entity* self) {
     return;
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_027", func_ptr_80170024);
+void func_ptr_80170024(Entity* self) {
+    Primitive* prim;
+    Primitive* basePrim;
+    s16 angle;
+    s16 temp_s1;
+    s16 temp_v0_8;
+    s16 var_s4;
+    s16 var_v0;
+    s32 temp_a2_2;
+
+    s32 i;
+    u16 selfPosX;
+    u16 selfPosY;
+
+    s16 bottom;
+    s16 right;
+    s16 top;
+    s16 left;
+
+    s16 iterations;
+
+    s32 xShift;
+    s32 yShift;
+
+    s32 var_s7 = 0;
+    s32 var_s8 = 0;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 18);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        if (g_HandId != 0) {
+            self->ext.medshieldlaser.childPalette = 0x129;
+            self->ext.medshieldlaser.unk7D = 0x80;
+        } else {
+            self->ext.medshieldlaser.childPalette = 0x111;
+            self->ext.medshieldlaser.unk7D = 0;
+        }
+        self->flags |= FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        if ((self->params & 0xFF) != 0) {
+            if (self->facingLeft) {
+                self->posX.i.hi -= 14;
+            } else {
+                self->posX.i.hi += 14;
+            }
+        } else if (self->facingLeft) {
+            self->posX.i.hi -= 6;
+        } else {
+            self->posX.i.hi += 6;
+        }
+        if (!self->facingLeft) {
+            self->ext.medshieldlaser.unk86 =
+                0x700 - ((self->params & 0xFF) << 9);
+        } else {
+            self->ext.medshieldlaser.unk86 =
+                ((self->params & 0xFF) << 9) + 0x100;
+        }
+        self->ext.medshieldlaser.unk96 = 0x50;
+        self->ext.medshieldlaser.unk8A = 0x1000;
+        self->ext.medshieldlaser.unk9C = 0x400;
+        self->ext.medshieldlaser.unk9E = -0x58;
+        self->ext.medshieldlaser.unk98 = 0;
+        self->ext.medshieldlaser.target = g_api.func_80118970();
+        self->ext.medshieldlaser.unk94 = 1;
+        for (prim = &g_PrimBuf[self->primIndex]; prim != NULL;
+             prim = prim->next) {
+            prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
+                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
+                    prim->b3 = 0x80;
+            angle = self->ext.medshieldlaser.unk86 + 0x400;
+            prim->x0 = self->posX.i.hi + (rcos(angle) >> 9);
+            prim->y0 = self->posY.i.hi - (rsin(angle) >> 9);
+            angle = self->ext.medshieldlaser.unk86 - 0x400;
+            prim->x2 = self->posX.i.hi + (rcos(angle) >> 9);
+            prim->y2 = self->posY.i.hi - (rsin(angle) >> 9);
+            prim->tpage = 0x19;
+            prim->clut = self->ext.medshieldlaser.childPalette;
+            prim->priority = 0x1BC;
+            prim->drawMode = 0x39;
+        }
+        self->ext.medshieldlaser.unkA0 = 0x300;
+        self->ext.medshieldlaser.unk80 = 0;
+        g_api.PlaySfx(0x6B2);
+        self->step++;
+        break;
+    case 1:
+        if ((self->ext.medshieldlaser.unk9C & 0x800) &&
+            !(self->ext.medshieldlaser.unkA4 & 0x800) &&
+            (-0x120 <= self->posX.i.hi && self->posX.i.hi <= 0x120) &&
+            (0 <= self->posY.i.hi && self->posY.i.hi <= 0x100)) {
+            g_api.PlaySfx(0x6B2);
+        }
+        self->ext.medshieldlaser.unkA4 = self->ext.medshieldlaser.unk9C;
+        temp_v0_8 = g_api.func_80118B18(
+            self, self->ext.medshieldlaser.target, self->facingLeft);
+        if (temp_v0_8 >= 0) {
+            temp_a2_2 = self->ext.medshieldlaser.unk86 & 0xFFF;
+            // This use of "right" is so fake it's not even funny.
+            right = temp_a2_2;
+            var_v0 = abs(right - temp_v0_8);
+            if (var_v0 < self->ext.medshieldlaser.unk96) {
+                self->ext.medshieldlaser.unk96 = var_v0;
+            }
+            if ((right < temp_v0_8) && (var_v0 >= 0x800) ||
+                (right >= temp_v0_8) && (var_v0 < 0x800)) {
+                self->ext.medshieldlaser.unk86 =
+                    (temp_a2_2 - self->ext.medshieldlaser.unk96) & 0xFFF;
+            } else {
+                self->ext.medshieldlaser.unk86 =
+                    (self->ext.medshieldlaser.unk96 + temp_a2_2) & 0xFFF;
+            }
+        }
+        self->ext.medshieldlaser.unk9C += self->ext.medshieldlaser.unk9E;
+        temp_s1 =
+            SquareRoot0(0x01000000 - (rsin(self->ext.medshieldlaser.unk9C) *
+                                      rsin(self->ext.medshieldlaser.unk9C)));
+        self->ext.medshieldlaser.unk98 -=
+            ((rsin(self->ext.medshieldlaser.unk9C) << 0xC) >> 8);
+
+        temp_s1 -= self->ext.medshieldlaser.unkA0 *
+                   self->ext.medshieldlaser.unk98 / 0x10000;
+        if (--self->ext.medshieldlaser.unkA0 < 0) {
+            self->ext.medshieldlaser.unkA0 = 0;
+        }
+        xShift = ((rcos(self->ext.medshieldlaser.unk86) * temp_s1) >> 7) * 3;
+        yShift = -((rsin(self->ext.medshieldlaser.unk86) * temp_s1) >> 7) * 3;
+
+        self->posX.val += xShift;
+        self->posY.val += yShift;
+        var_s7 = -(self->ext.medshieldlaser.unk98 >> 0xF);
+
+        self->ext.medshieldlaser.unk96 += 8;
+        if (self->ext.medshieldlaser.unk96 > 0x100) {
+            self->ext.medshieldlaser.unk96 = 0x100;
+        }
+        if (++self->ext.medshieldlaser.unk94 > 0x80) {
+            self->ext.medshieldlaser.unk94 = 0x80;
+        }
+        break;
+    }
+
+    if ((self->posX.i.hi < -0x200 || self->posX.i.hi > 0x200) ||
+        (self->posY.i.hi < -0xC0 || self->posY.i.hi > 0x1A0)) {
+        DestroyEntity(self);
+        return;
+    }
+    if (!(g_Timer & 1)) {
+        // Blueprint 100 has child 10, to spawn func_ptr_80170028
+        g_api.CreateEntFactoryFromEntity(
+            self, ((g_HandId + 1) << 0xE) | 100, 0);
+    }
+    selfPosX = self->posX.i.hi;
+    selfPosY = self->posY.i.hi;
+    if (self->ext.medshieldlaser.unk98 > 0) {
+        var_s4 = 8 - (self->ext.medshieldlaser.unk98 >> 16);
+        if (var_s4 < 0) {
+            var_s4 = 1;
+        }
+    } else {
+        var_s4 = 8 - (self->ext.medshieldlaser.unk98 >> 0x13);
+        if (var_s4 > 16) {
+            var_s4 = 16;
+        }
+    }
+    // This variable literally never gets set anywhere in this function.
+    // I hate this game.
+    if (var_s8 != 0) {
+        var_s4 = 1;
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    left = prim->x0;
+    top = prim->y0;
+    right = prim->x2;
+    bottom = prim->y2;
+    if (self->ext.medshieldlaser.unk94 < 0x13) {
+        for (i = 0; i < self->ext.medshieldlaser.unk94; i++) {
+            if (i == self->ext.medshieldlaser.unk94 - 1) {
+                prim->x0 = left;
+                prim->y0 = top;
+                prim->x2 = right;
+                prim->y2 = bottom;
+                angle = self->ext.medshieldlaser.unk86 + 0x400;
+                prim->x1 = selfPosX + (((rcos(angle) >> 4) * var_s4) >> 8);
+                prim->y1 =
+                    var_s7 + (selfPosY - (((rsin(angle) >> 4) * var_s4) >> 8));
+                angle = self->ext.medshieldlaser.unk86 - 0x400;
+                prim->x3 = selfPosX + (((rcos(angle) >> 4) * var_s4) >> 8);
+                prim->y3 =
+                    var_s7 + (selfPosY - ((rsin(angle) >> 4) * var_s4 >> 8));
+                prim->drawMode &= ~DRAW_HIDE;
+            }
+            left = prim->x1;
+            top = prim->y1;
+            right = prim->x3;
+            bottom = prim->y3;
+            prim = prim->next;
+        }
+    } else {
+        for (i = 0; i < 17; i++) {
+            basePrim = prim;
+            prim = prim->next;
+            *basePrim = *prim;
+            basePrim->next = prim;
+        }
+        prim->x0 = prim->x1;
+        prim->y0 = prim->y1;
+        prim->x2 = prim->x3;
+        prim->y2 = prim->y3;
+        angle = self->ext.medshieldlaser.unk86 + 0x400;
+        prim->x1 = selfPosX + (((rcos(angle) >> 4) * var_s4) >> 8);
+        prim->y1 = var_s7 + (selfPosY - (((rsin(angle) >> 4) * var_s4) >> 8));
+        angle = self->ext.medshieldlaser.unk86 - 0x400;
+        prim->x3 = selfPosX + (((rcos(angle) >> 4) * var_s4) >> 8);
+        prim->y3 = var_s7 + (selfPosY - (((rsin(angle) >> 4) * var_s4) >> 8));
+    }
+    iterations = self->ext.medshieldlaser.unk94;
+    if (self->ext.medshieldlaser.unk94 >= 0x13) {
+        iterations = 0x12;
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < iterations; i++) {
+        prim->u0 = prim->u2 = ((i * 3) << 5) / iterations;
+        prim->u1 = prim->u3 = (((i + 1) * 0x60) / iterations) - 1;
+        prim->v0 = prim->v1 = self->ext.medshieldlaser.unk7D + 0x30;
+        prim->v2 = prim->v3 = self->ext.medshieldlaser.unk7D + 0x3F;
+        prim = prim->next;
+    }
+}
 
 void func_ptr_80170028(Entity* self) {
     Entity* parent = self->ext.generic.unk8C.entityPtr;

@@ -228,6 +228,30 @@ typedef struct {
 } ET_Shield;
 
 typedef struct {
+    u8 unk7C;
+    /* 0x7D */ u8 unk7D;
+    /* 0x7E */ s16 unk7E;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ s16 childPalette;
+    /* 0x8A */ s16 unk8A;
+    /* 0x8C */ struct Entity* parent;
+    /* 0x90 */ struct Entity* target;
+    /* 0x94 */ s16 unk94;
+    /* 0x96 */ s16 unk96;
+    /* 0x98 */ s32 unk98;
+    /* 0x9C */ s16 unk9C;
+    /* 0x9E */ s16 unk9E;
+    /* 0xA0 */ s16 unkA0;
+    /* 0xA2 */ s16 unkA2;
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ byte pad[6];
+    /* 0xAE */ s16 unkAE;
+} ET_MedusaShieldLaser;
+
+typedef struct {
     s16 timer;
     s16 unk7E;
     s32 unk80;
@@ -996,6 +1020,7 @@ typedef union { // offset=0x7C
     ET_MessageBox messageBox;
     ET_Weapon weapon;
     ET_Shield shield;
+    ET_MedusaShieldLaser medshieldlaser;
     ET_Food food;
     ET_HitByIce hitbyice;
     ET_HitByLightning hitbylightning;
