@@ -228,7 +228,7 @@ typedef struct {
 } ET_Shield;
 
 typedef struct {
-    u8 unk7C;
+    /* 0x7D */ u8 unk7C;
     /* 0x7D */ u8 unk7D;
     /* 0x7E */ s16 unk7E;
     /* 0x80 */ s16 unk80;
