@@ -76,8 +76,8 @@ extern u16 D_80180EEC[];
 extern u16 D_80180F1C[];
 extern s8 c_HeartPrizes[];
 extern u16 D_801811C8[];
-extern u16 D_801811D8[];
-extern u8 D_80181238;
+extern u16 g_ESouldStelOrbSprt[];
+extern u8 D_80181238[];
 extern ObjInit2 D_8018125C[];
 
 extern s16 D_8019D37E;

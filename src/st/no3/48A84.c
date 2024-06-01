@@ -365,93 +365,11 @@ void func_801CAD28(s16 sfxId) {
 
 #include "../entity_stage_name_popup.h"
 
-// The white flying orbs of energy that Alucard summons as part of the Soul
-// Steal spell
-void EntitySoulStealOrb(Entity* self) {
-    Primitive* prim;
-    s32 primIndex;
-    u16* temp_d;
-    u16 temp_e;
-    s32 temp_a;
-    s32 temp_b;
-    u16 angle;
-    switch (self->step) {
-    case 0:
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-        if (primIndex == -1) {
-            DestroyEntity(self);
-            return;
-        }
-        InitializeEntity(g_InitializeData0);
-        g_PrimBuf[primIndex].drawMode = DRAW_HIDE;
-        self->primIndex = primIndex;
-        self->animSet = ANIMSET_DRA(0);
-        self->flags |= FLAG_HAS_PRIMS;
-        angle = GetAngleBetweenEntities(self, &g_Entities[PLAYER_CHARACTER]);
-        temp_a = self->posY.i.hi < 113;
-        temp_b = temp_a ^ 1;
-        if (self->posX.i.hi < g_Entities[PLAYER_CHARACTER].posX.i.hi) {
-            temp_b = temp_a;
-        }
-        if (temp_b & 0xFFFF) {
-            self->ext.soulStealOrb.angle = angle - D_801826D0[Random() & 7];
-        } else {
-            angle += D_801826D0[Random() & 7];
-            self->ext.soulStealOrb.angle = angle;
-        }
-        self->ext.soulStealOrb.unk80 = 0x400;
-        self->ext.soulStealOrb.unk7E = 0;
-        self->hitboxState = 0;
-        break;
-
-    case 1:
-        self->ext.soulStealOrb.unk82++;
-        if (self->ext.soulStealOrb.unk82 == 16) {
-            self->hitboxState = 1;
-        }
-        if (self->hitFlags != 0) {
-            if (g_Player.unk56 == 0) {
-                g_Player.unk56 = 1;
-                g_Player.unk58 = 8;
-            }
-            DestroyEntity(self);
-            return;
-        }
-        if (self->rotX < 0x100) {
-            self->rotX = (self->rotY += 0x10);
-        }
-        if (self->ext.soulStealOrb.unk7E < 0x200) {
-            self->ext.soulStealOrb.unk7E += 2;
-        }
-        if (self->ext.soulStealOrb.unk80 < 0x800) {
-            self->ext.soulStealOrb.unk80 += 4;
-        }
-        self->ext.soulStealOrb.angle = func_801C5844(
-            self->ext.soulStealOrb.unk7E, (u16)self->ext.soulStealOrb.angle,
-            0xffff &
-                GetAngleBetweenEntities(self, &g_Entities[PLAYER_CHARACTER]));
-        UnkEntityFunc0(self->ext.soulStealOrb.angle & 0xFFFF,
-                       self->ext.soulStealOrb.unk80);
-        MoveEntity(self);
-        prim = &g_PrimBuf[self->primIndex];
-        AnimateEntity(&D_80182740, self);
-        angle = (float)((u32)self);
-        prim->tpage = 0x18;
-        prim->clut = 0x194;
-        temp_d = &D_801826E0[(u16)((8 * ((u16)self->animCurFrame)) - 8)];
-        prim->x0 = (prim->x2 = self->posX.i.hi + (*(temp_d++)));
-        prim->y0 = (prim->y1 = self->posY.i.hi + (*(temp_d++)));
-        prim->x1 = (prim->x3 = prim->x0 + (*(temp_d++)));
-        prim->y2 = (prim->y3 = prim->y0 + (*(temp_d++)));
-        prim->u0 = (prim->u2 = *(temp_d++));
-        prim->v0 = (prim->v1 = *(temp_d++));
-        prim->u1 = (prim->u3 = *(temp_d++));
-        prim->v2 = (prim->v3 = *(temp_d++));
-        prim->priority = self->zPriority;
-        prim->drawMode = DRAW_DEFAULT;
-        break;
-    }
-}
+#define g_ESoulStealOrbAngles D_801826D0
+#define GetNormalizedAngle func_801C5844
+#define g_ESoulStealOrbAnim D_80182740
+#define g_ESouldStelOrbSprt D_801826E0
+#include "../entity_soul_steal_orb.h"
 
 #include "../entity_enemy_blood.h"
 
