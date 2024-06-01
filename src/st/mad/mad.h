@@ -85,9 +85,9 @@ extern u8 g_eBreakableDrawModes[];
 
 // *** EntitySoulStealOrb properties START ***
 
-extern u16 D_80181068[]; // NOTE(sestren): Random angle offsets?
-extern u16 D_80181078[]; // NOTE(sestren): Animation frame properties?
-extern u8 D_801810D8[];
+extern u16 g_ESoulStealOrbAngles[];
+extern s16 g_ESouldStelOrbSprt[];
+extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
 

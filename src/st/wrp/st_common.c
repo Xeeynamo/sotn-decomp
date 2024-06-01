@@ -254,7 +254,7 @@ u16 func_8018C198(s32 x, s32 y) {
 }
 #endif
 
-u16 func_8018C1E0(u16 arg0, u16 arg1, u16 arg2) {
+u16 GetNormalizedAngle(u16 arg0, u16 arg1, u16 arg2) {
     u16 temp_a2;
     u16 var_v0;
 

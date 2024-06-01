@@ -1,7 +1,7 @@
 #include "wrp.h"
 
 #ifndef VERSION_PSP
-u16 D_801810A0[] = {
+u16 g_ESoulStealOrbAngles[] = {
     /* 10A0 */ 0x0820,
     /* 10A2 */ 0x0840,
     /* 10A4 */ 0x0860,
@@ -12,7 +12,7 @@ u16 D_801810A0[] = {
     /* 10AE */ 0x0A00,
 };
 
-u16 D_801810B0[] = {
+s16 g_ESouldStelOrbSprt[] = {
     0xFFFD, 0xFFFD, 0x0008, 0x0008, 0x00D0, 0x0068, 0x00D8, 0x0070,
     0xFFFD, 0xFFFD, 0x0008, 0x0008, 0x00C8, 0x0068, 0x00D0, 0x0070,
     0xFFF9, 0xFFF9, 0x0010, 0x000F, 0x00C8, 0x0070, 0x00D8, 0x007F,
@@ -21,11 +21,9 @@ u16 D_801810B0[] = {
     0xFFF5, 0xFFF5, 0x0018, 0x0017, 0x00B0, 0x0068, 0x00C8, 0x007F,
 };
 
-u32 D_80181110[] = {
-    /* 1110 */ 0x03030204,
-    /* 1114 */ 0x05030403,
-    /* 1118 */ 0x03030603,
-    /* 111C */ 0x00000000,
+u8 g_ESoulStealOrbAnim[] = {
+    0x04, 0x02, 0x03, 0x03, 0x03, 0x04, 0x03,
+    0x05, 0x03, 0x06, 0x03, 0x03, 0x00,
 };
 
 #else
@@ -34,10 +32,6 @@ void func_psp_0923B2F0(Entity*);
 
 #endif
 
-#define g_ESoulStealOrbAngles D_801810A0
-#define GetNormalizedAngle func_8018C1E0
-#define g_ESoulStealOrbAnim D_80181110
-#define g_ESouldStelOrbSprt D_801810B0
 #include "../entity_soul_steal_orb.h"
 
 #include "../entity_enemy_blood.h"

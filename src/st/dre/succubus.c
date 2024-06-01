@@ -1216,7 +1216,7 @@ void EntityPinkBallProjectile(Entity* self) {
         AnimateEntity(D_80180794, self);
         MoveEntity();
         temp_v0 = GetAngleBetweenEntities(self, g_Entities);
-        temp_s0 = func_8019AF88(0x10, self->ext.succubus.unkA2, temp_v0);
+        temp_s0 = GetNormalizedAngle(0x10, self->ext.succubus.unkA2, temp_v0);
         self->velocityX = rcos(temp_s0) * 0x38;
         self->velocityY = rsin(temp_s0) * 0x38;
         self->ext.succubus.unkA2 = temp_s0;

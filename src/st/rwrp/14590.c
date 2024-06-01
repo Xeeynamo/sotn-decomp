@@ -1,9 +1,5 @@
 #include "rwrp.h"
 
-#define g_ESoulStealOrbAngles D_801810A0
-#define GetNormalizedAngle func_8018E160
-#define g_ESoulStealOrbAnim D_80181110
-#define g_ESouldStelOrbSprt D_801810B0
 #include "../entity_soul_steal_orb.h"
 
 #include "../entity_enemy_blood.h"

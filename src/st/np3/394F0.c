@@ -236,7 +236,7 @@ u16 func_801BD06C(s32 x, s32 y) {
     return ratan2(diffY, diffX);
 }
 
-u16 func_801BD0B4(u16 arg0, s16 arg1, s16 arg2) {
+u16 GetNormalizedAngle(u16 arg0, s16 arg1, s16 arg2) {
     u16 var_v0 = arg1;
     u16 temp_a2 = arg2 - arg1;
     u16 var_v0_2;

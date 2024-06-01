@@ -33,9 +33,9 @@ void func_psp_0923AD68(Entity* self) {
                 direction ^= 1;
             }
             if (direction) {
-                angle -= D_801810A0[Random() & 7];
+                angle -= g_ESoulStealOrbAngles[Random() & 7];
             } else {
-                angle += D_801810A0[Random() & 7];
+                angle += g_ESoulStealOrbAngles[Random() & 7];
             }
             self->ext.soulStealOrb.angle = angle;
             self->ext.soulStealOrb.unk80 = 0x200;
@@ -66,17 +66,17 @@ void func_psp_0923AD68(Entity* self) {
             self->ext.soulStealOrb.unk80 += 0x10;
         }
         angle = GetAngleBetweenEntities(self, pl);
-        self->ext.soulStealOrb.angle = angle = func_8018C1E0(
+        self->ext.soulStealOrb.angle = angle = GetNormalizedAngle(
             self->ext.soulStealOrb.unk7E, self->ext.soulStealOrb.angle, angle);
         UnkEntityFunc0(angle, self->ext.soulStealOrb.unk80);
         MoveEntity(self);
         prim = &g_PrimBuf[self->primIndex];
-        AnimateEntity(D_80181110, self);
+        AnimateEntity(g_ESoulStealOrbAnim, self);
         prim->tpage = 0x18;
         prim->clut = 0x194;
         angle = self->animCurFrame;
         angle = (angle - 1) * 8;
-        spr = &D_801810B0[angle];
+        spr = &g_ESouldStelOrbSprt[angle];
         prim->x0 = prim->x2 = self->posX.i.hi + *spr++;
         prim->y0 = prim->y1 = self->posY.i.hi + *spr++;
         prim->x1 = prim->x3 = prim->x0 + *spr++;

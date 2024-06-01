@@ -1,8 +1,5 @@
 #include "cen.h"
 
-#define g_ESoulStealOrbAngles D_801811C8
-#define GetNormalizedAngle func_80194E44
-#define g_ESoulStealOrbAnim D_80181238
 #include "../entity_soul_steal_orb.h"
 
 #include "../entity_enemy_blood.h"

@@ -828,10 +828,6 @@ void func_801B9DB0(s16 sfxId) {
     }
 }
 
-#define g_ESoulStealOrbAngles D_80181F54
-#define GetNormalizedAngle func_801B573C
-#define g_ESoulStealOrbAnim D_80181FC4
-#define g_ESouldStelOrbSprt D_80181F64
 #include "../entity_soul_steal_orb.h"
 
 #include "../entity_enemy_blood.h"

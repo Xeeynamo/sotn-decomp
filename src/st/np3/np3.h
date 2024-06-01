@@ -304,9 +304,9 @@ extern u8 D_80182935[];
 
 // *** EntitySoulStealOrb properties START ***
 
-extern u16 D_8018205C[]; // NOTE(sestren): Random angle offsets?
-extern u16 D_8018206C[]; // NOTE(sestren): Animation frame properties?
-extern u16 D_801820CC[];
+extern u16 g_ESoulStealOrbAngles[];
+extern s16 g_ESouldStelOrbSprt[];
+extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
 

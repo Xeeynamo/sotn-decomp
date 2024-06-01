@@ -190,7 +190,7 @@ u16 func_8018E118(s32 arg0, s32 arg1) {
     return ratan2(y, x);
 }
 
-u16 func_8018E160(u16 arg0, s16 arg1, s16 arg2) {
+u16 GetNormalizedAngle(u16 arg0, s16 arg1, s16 arg2) {
     u16 var_v0;
     u16 var_v0_2;
     u16 temp_a2 = arg2 - arg1;

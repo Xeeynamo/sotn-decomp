@@ -432,10 +432,6 @@ void func_80197A9C(s16 sfxId) {
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_80197B94);
 
-#define g_ESoulStealOrbAngles D_80181068
-#define GetNormalizedAngle func_80192B70
-#define g_ESoulStealOrbAnim D_801810D8
-#define g_ESouldStelOrbSprt D_80181078
 #include "../entity_soul_steal_orb.h"
 
 #include "../entity_enemy_blood.h"

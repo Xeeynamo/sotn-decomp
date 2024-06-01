@@ -365,10 +365,6 @@ void func_801CAD28(s16 sfxId) {
 
 #include "../entity_stage_name_popup.h"
 
-#define g_ESoulStealOrbAngles D_801826D0
-#define GetNormalizedAngle func_801C5844
-#define g_ESoulStealOrbAnim D_80182740
-#define g_ESouldStelOrbSprt D_801826E0
 #include "../entity_soul_steal_orb.h"
 
 #include "../entity_enemy_blood.h"
