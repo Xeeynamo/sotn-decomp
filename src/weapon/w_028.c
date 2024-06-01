@@ -4,9 +4,142 @@
 #include "shared.h"
 
 extern SpriteParts D_C8000_8017A040[];
+extern s8 D_C8000_8017AA98[];
+extern s32 D_C8000_8017AAE0[];
 extern s32 D_C8000_8017AB1C[];
 
-INCLUDE_ASM("weapon/nonmatchings/w_028", EntityWeaponAttack);
+void EntityWeaponAttack(Entity* self) {
+    s32 newUnkAC = 0;
+    bool crouchCheck = false;
+    s32 attackButton;
+
+    if (g_HandId != 0) {
+        attackButton = PAD_CIRCLE;
+    } else {
+        attackButton = PAD_SQUARE;
+    }
+    if (!(attackButton & g_Player.padPressed) && (self->step < 3)) {
+        self->animFrameDuration = 0;
+        self->animFrameIdx = 0;
+        self->step = 3;
+    }
+    if (self->step != 4) {
+        self->posX.val = g_Entities->posX.val;
+        self->posY.val = PLAYER.posY.val;
+        self->facingLeft = PLAYER.facingLeft;
+    }
+    if ((g_Player.unk0C & PLAYER_STATUS_UNK10000) && (self->step != 4)) {
+        self->zPriority = PLAYER.zPriority + 2;
+        self->step = 4;
+        if (g_Player.pl_vram_flag & 1) {
+            self->velocityX = PLAYER.velocityX;
+        } else {
+            self->velocityX = PLAYER.velocityX * 2;
+        }
+        self->velocityY = FIX(-3.5);
+        self->ext.weapon.lifetime = 128;
+        self->flags = FLAG_UNK_08000000;
+        self->animCurFrame = 0x3E;
+    }
+    if ((PLAYER.step == Player_Crouch) && (PLAYER.step_s != 2)) {
+        crouchCheck++;
+    }
+    switch (self->step) {
+    case 0:
+        SetSpriteBank1(D_C8000_8017A040);
+        if (g_HandId != 0) {
+            self->animSet = ANIMSET_OVL(0x12);
+            self->palette = 0x128;
+            self->unk5A = 0x66;
+        } else {
+            self->animSet = ANIMSET_OVL(0x10);
+            self->palette = 0x110;
+            self->unk5A = 0x64;
+        }
+        self->flags = FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->zPriority = PLAYER.zPriority - 2;
+        g_Player.unk48 = 1;
+        SetWeaponProperties(self, 0);
+        self->step++;
+        /* fallthrough */
+    case 1:
+        self->ext.weapon.unkAC = crouchCheck + 10;
+        if (self->animFrameDuration < 0) {
+            self->step++;
+        }
+        break;
+    case 2:
+        switch (PLAYER.ext.player.unkAC) {
+        case 9:
+        case 10:
+        case 11:
+            newUnkAC++;
+            /* fallthrough */
+        case 7:
+            newUnkAC++;
+            /* fallthrough */
+        case 8:
+            newUnkAC++;
+            /* fallthrough */
+        case 12:
+            newUnkAC++;
+            /* fallthrough */
+        case 13:
+            newUnkAC++;
+            /* fallthrough */
+        case 24:
+        case 25:
+            newUnkAC++;
+            /* fallthrough */
+        case 14:
+        case 15:
+            newUnkAC++;
+            /* fallthrough */
+        case 26:
+            newUnkAC = newUnkAC + 2;
+            self->animFrameIdx = PLAYER.animFrameIdx;
+            break;
+        default:
+            self->animFrameIdx = 0;
+            newUnkAC += crouchCheck;
+            break;
+        }
+        self->ext.weapon.unkAC = newUnkAC;
+        self->animFrameDuration = 2;
+        break;
+    case 3:
+        g_Player.unk48 = 0;
+        self->ext.weapon.unkAC = crouchCheck + 12;
+        if (self->animFrameDuration < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    case 4:
+        self->hitboxState = 0;
+        g_Player.unk48 = 0;
+        self->drawFlags |= FLAG_DRAW_ROTZ;
+        self->posY.val += self->velocityY;
+        self->posX.val += self->velocityX;
+        self->velocityY += FIX(20.0 / 128);
+        self->rotZ += 0x80;
+        if (--self->ext.weapon.lifetime < 16) {
+            self->drawFlags |= FLAG_DRAW_UNK80;
+        }
+        if (--self->ext.weapon.lifetime == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    if (self->step != 4) {
+        g_api.func_8010DBFC(D_C8000_8017AA98, D_C8000_8017AAE0);
+    }
+    self->drawFlags = PLAYER.drawFlags;
+    self->rotY = PLAYER.rotY;
+    self->rotPivotY = PLAYER.rotPivotY;
+    return;
+}
 
 void func_ptr_80170004(Entity* self) {}
 
