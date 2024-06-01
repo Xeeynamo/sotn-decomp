@@ -84,10 +84,12 @@ void EntityWeaponShieldSpell(Entity* self) {
         prim->tpage = 0x19;
         prim->u0 = prim->u2 = 0x80;
         prim->u1 = prim->u3 = 0x80 + 0x4F;
-        prim->v0 = prim->v1 = self->ext.shield.unk7C; 
+        prim->v0 = prim->v1 = self->ext.shield.unk7C;
         prim->v2 = prim->v3 = self->ext.shield.unk7C + 0x4F;
         self->ext.shield.unk82 = 0;
-        prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = 0x80;
+        prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
+            prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
+                0x80;
         prim->priority = 0x1B4;
         prim->drawMode = 0x75;
         SetSpeedX(FIX(-2));
@@ -130,14 +132,16 @@ void EntityWeaponShieldSpell(Entity* self) {
         if (prim->b3 > 8) {
             prim->b3 -= 4;
         }
-        prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
+        prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
+            prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
         if (self->ext.shield.unk82 >= 160) {
             prim->b3 = 6;
             prim = &g_PrimBuf[self->primIndex];
             prim->drawMode |= 8;
             self->ext.shield.unk80 = 4;
-            //Blueprint 98 has child 9, which makes func_ptr_80170024.
-            g_api.CreateEntFactoryFromEntity(self, ((g_HandId + 1) << 0xE) | 98, 0);
+            // Blueprint 98 has child 9, which makes func_ptr_80170024.
+            g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xE) | 98, 0);
             self->ext.shield.unk80 = 80;
             g_unkGraphicsStruct.unk20 = 0;
             self->step++;
@@ -171,8 +175,8 @@ void EntityWeaponShieldSpell(Entity* self) {
         } else {
             prim->drawMode &= ~DRAW_HIDE;
         }
-    }    
-    prim->x0 = prim->x2 = selfPosX - self->ext.shield.unk82;    
+    }
+    prim->x0 = prim->x2 = selfPosX - self->ext.shield.unk82;
     prim->x1 = prim->x3 = selfPosX + self->ext.shield.unk82 - 1;
     prim->y0 = prim->y1 = selfPosY - self->ext.shield.unk82;
     prim->y2 = prim->y3 = selfPosY + self->ext.shield.unk82 - 1;
