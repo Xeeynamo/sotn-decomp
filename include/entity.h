@@ -244,7 +244,11 @@ typedef struct {
 } ET_GaibonSlogra;
 
 typedef struct {
+#if defined(VERSION_PSP)
+    /* 0x7C */ u16 angle;
+#else
     /* 0x7C */ s16 angle;
+#endif
     /* 0x7E */ u16 unk7E;
     /* 0x80 */ u16 unk80;
     /* 0x82 */ s16 unk82;

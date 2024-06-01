@@ -25,3 +25,4 @@ g_ItemIconSlots     = 0x0924BC20;
 D_091CF020          = 0x091CF020;
 D_091CF6DC          = 0x091CF6DC;
 D_091CF698          = 0x091CF698;
+D_091CF3A8          = 0x091CF3A8;
