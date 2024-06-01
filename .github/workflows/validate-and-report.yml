@@ -85,7 +85,6 @@ jobs:
       - name: Remove clutter from build folder
         run: rm -rf build/${{ matrix.version }}/asm build/${{ matrix.version }}/src build/${{ matrix.version }}/assets
       - name: Export build folder
-        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         uses: actions/upload-artifact@v4
         with:
           name: build_${{ matrix.version }}
