@@ -1340,7 +1340,7 @@ Entity* func_80118970(void) {
     return NULL;
 }
 
-s32 func_80118B18(Entity* ent1, Entity* ent2, s32 arg2) {
+s32 func_80118B18(Entity* ent1, Entity* ent2, s16 facingLeft) {
     s16 var_a1;
     s16 posX;
     s16 posY;
@@ -1351,7 +1351,7 @@ s32 func_80118B18(Entity* ent1, Entity* ent2, s32 arg2) {
         posY = ent2->posY.i.hi;
     } else {
         posY = 112;
-        if ((arg2 << 0x10) != 0) {
+        if (facingLeft != 0) {
             posX = -32;
         } else {
             posX = 288;
