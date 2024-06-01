@@ -1340,30 +1340,35 @@ Entity* func_80118970(void) {
     return NULL;
 }
 
-s32 func_80118B18(Entity* ent1, Entity* ent2, s16 facingLeft) {
+s16 func_80118B18(Entity* ent1, Entity* ent2, s16 facingLeft) {
     s16 var_a1;
-    s16 posX;
     s16 posY;
-    u16 temp;
+    s16 posX;
+    s16 temp;
+    s16 diffY;
+    s16 diffX;
 
     if (ent2 != NULL) {
         posX = ent2->posX.i.hi;
         posY = ent2->posY.i.hi;
     } else {
         posY = 112;
-        if (facingLeft != 0) {
+        if (facingLeft) {
             posX = -32;
         } else {
             posX = 288;
         }
     }
 
-    posX = posX - ent1->posX.i.hi;
-    temp = ratan2(-(s16)(posY - ent1->posY.i.hi), posX) & 0xFFF;
+    diffX = posX - ent1->posX.i.hi;
+    diffY = posY - ent1->posY.i.hi;
+    temp = ratan2(-diffY, diffX) & 0xFFF;
 
     var_a1 = 0;
     if (ent2 != NULL) {
-        var_a1 = (ent2->entityId == E_NONE) << 0xC;
+        if (ent2->entityId == E_NONE){
+            var_a1 = 0x1000;
+        }
         if (ent2->hitboxState == 0) {
             var_a1 = 0x2000;
         }
@@ -1385,8 +1390,7 @@ s32 func_80118B18(Entity* ent1, Entity* ent2, s16 facingLeft) {
     if (ent1->posY.i.hi < 0) {
         var_a1 = 0x7000;
     }
-    posX = temp - var_a1;
-    return posX;
+    return temp - var_a1;
 }
 
 void func_80118C28(s32 arg0) {
