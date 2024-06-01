@@ -1366,7 +1366,7 @@ s16 func_80118B18(Entity* ent1, Entity* ent2, s16 facingLeft) {
 
     var_a1 = 0;
     if (ent2 != NULL) {
-        if (ent2->entityId == E_NONE){
+        if (ent2->entityId == E_NONE) {
             var_a1 = 0x1000;
         }
         if (ent2->hitboxState == 0) {

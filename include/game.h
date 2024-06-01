@@ -1345,6 +1345,8 @@ typedef struct {
     /* 8003C804 */ void (*func_80118894)(Entity*);
     /* 8003C808 */ EnemyDef* enemyDefs;
     /* 8003C80C */ Entity* (*func_80118970)(void);
+    // Note type of facingLeft is different from in the C for this function.
+    // Needs s16 to match the code for this, but callers treat it as s32.
     /* 8003C810 */ s16 (*func_80118B18)(
         Entity* ent1, Entity* ent2, s32 facingLeft);
     /* 8003C814 */ s32 (*UpdateUnarmedAnim)(s8* frameProps, u16** frames);
