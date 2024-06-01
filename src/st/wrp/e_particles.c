@@ -1,5 +1,6 @@
 #include "wrp.h"
 
+#ifndef VERSION_PSP
 u16 D_801810A0[] = {
     /* 10A0 */ 0x0820,
     /* 10A2 */ 0x0840,
@@ -26,6 +27,12 @@ u32 D_80181110[] = {
     /* 1118 */ 0x03030603,
     /* 111C */ 0x00000000,
 };
+
+#else
+void func_psp_0923AD68(Entity*);
+void func_psp_0923B2F0(Entity*);
+
+#endif
 
 #define g_ESoulStealOrbAngles D_801810A0
 #define GetNormalizedAngle func_8018C1E0
