@@ -3,6 +3,9 @@
 #include "weapon_private.h"
 #include "shared.h"
 
+extern SpriteParts D_C8000_8017A040[];
+extern s32 D_C8000_8017AB1C[];
+
 INCLUDE_ASM("weapon/nonmatchings/w_028", EntityWeaponAttack);
 
 void func_ptr_80170004(Entity* self) {}
@@ -47,9 +50,6 @@ void func_C8000_8017B3D4(void) {
     rect.h = 3;
     LoadImage(&rect, &g_Clut[0x1100]);
 }
-
-extern SpriteParts D_C8000_8017A040[];
-extern s32 D_C8000_8017AB1C[];
 
 void EntityWeaponShieldSpell(Entity* self) {
     s32 i;
