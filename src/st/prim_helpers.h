@@ -1,5 +1,6 @@
 #include "game.h"
 
+#if !defined(VERSION_PSP)
 extern SVECTOR g_UnkPrimHelperRot;
 void UnkPrimHelper(Primitive* prim) {
     SVECTOR sp10; // FAKE, not really an svector
@@ -192,6 +193,8 @@ Primitive* PrimToggleVisibility(Primitive* firstPrim, s32 count) {
     return prim;
 }
 
+#endif
+
 void PrimResetNext(Primitive* prim) {
     prim->p1 = 0;
     prim->p2 = 0;
@@ -224,6 +227,7 @@ void UnkPolyFunc2(Primitive* prim) {
     prim->next->drawMode = 0xA;
 }
 
+#if !defined(VERSION_PSP)
 void UnkPolyFunc0(Primitive* prim) {
     prim->p3 = 0;
     prim->drawMode = DRAW_HIDE;
@@ -231,33 +235,54 @@ void UnkPolyFunc0(Primitive* prim) {
     prim->next->type = PRIM_GT4;
     prim->next->drawMode = DRAW_HIDE;
 }
+#endif
 
 #if !defined(VERSION_BETA)
-s32 PrimDecreaseBrightness(Primitive* prim, u8 amount) {
-    s32 diff;
+struct SubPrim {
+    u8 col[3];
+    u8 type;
+    s16 x0;
+    s16 y0;
+    u8 u0;
+    u8 v0;
+    u16 clut;
+};
+
+typedef struct Primitive2 {
+    struct Primitive2* next;
+#if defined(VERSION_PSP)
+    u32 dummy;
+#endif
+    struct SubPrim prim[4];
+} Primitive2;
+
+s32 PrimDecreaseBrightness(Primitive2* prim, u8 amount) {
     s32 isEnd;
-    s32 i, j;
+    s32 i;
+    s32 j;
+    struct SubPrim* subprim;
     u8* pColor;
+    s32 col;
 
     isEnd = 0;
-    pColor = &prim->r0;
-    for (i = 0; i < 4; i++, pColor += OFF(Primitive, r1) - OFF(Primitive, r0)) {
-        for (j = 0; j < 3; j++) {
-            diff = pColor[j] - amount;
-
-            if (diff < 0) {
-                diff = 0;
+    subprim = &prim->prim[0];
+    for (i = 0; i < 4; i++) {
+        j = 0;
+        for (; j < 3; j++) {
+            pColor = &subprim->col[j];
+            col = *pColor;
+            col = col - amount;
+            if (col < 0) {
+                col = 0;
             } else {
                 isEnd |= 1;
             }
-
-            pColor[j] = diff;
+            *pColor = col;
         }
+        subprim++;
     }
-
     return isEnd;
 }
-
 #else
 s32 PrimDecreaseBrightness(Primitive* prim, u8 amount) {
     u8 isEnd;
