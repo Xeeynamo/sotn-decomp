@@ -223,6 +223,8 @@ typedef struct {
     /* 0x98 */ s16 unk98;
     /* 0x9A */ s16 unk9A;
     /* 0x9C */ s16 unk9C;
+    /* 0x9E */ byte pad[16];
+    /* 0xAE */ s16 unkAE;
 } ET_Shield;
 
 typedef struct {
