@@ -375,7 +375,149 @@ void EntityWeaponShieldSpell(Entity* self) {
     func_C8000_8017B3D4();
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_028", func_ptr_80170024);
+void func_ptr_80170024(Entity* self) {
+    Primitive* prim;
+    s32 xShift;
+    s16 selfPosX;
+    s16 selfPosY;
+
+    switch (self->step) {
+    case 0:
+        if (self->ext.shield.parent->entityId == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->ext.shield.unk7D = self->ext.shield.parent->ext.shield.unk7D;
+        self->ext.shield.childPalette =
+            self->ext.shield.parent->ext.shield.childPalette + 3;
+        self->flags |= FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
+        if (self->facingLeft) {
+            xShift = -24;
+        } else {
+            xShift = 24;
+        }
+        self->posX.i.hi = xShift + self->posX.i.hi;
+        prim = &g_PrimBuf[self->primIndex];
+        prim->tpage = 0x1A;
+        prim->clut = 0x15E;
+        prim->u0 = prim->u2 = 0;
+        prim->u1 = prim->u3 = 63;
+        prim->v0 = prim->v1 = 192;
+        prim->v2 = prim->v3 = 192 + 63;
+        prim->drawMode = 0;
+        prim->priority = 0x1BA;
+
+        self->ext.shield.unk84 = self->ext.shield.unk86 = 0;
+        prim = prim->next;
+
+        prim->tpage = 0x19;
+        prim->u0 = prim->u1 = 64;
+        prim->u2 = prim->u3 = 64 + 63;
+        prim->v3 = prim->v1 = self->ext.shield.unk7D + 64;
+        prim->v2 = prim->v0 = self->ext.shield.unk7D + 64 + 63;
+        prim->priority = 0x1BA;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE | DRAW_TRANSP;
+        prim = prim->next;
+
+        prim->tpage = 0x19;
+
+        prim->u0 = prim->u1 = 80;
+        prim->u2 = prim->u3 = 80 + 31;
+        prim->v3 = prim->v1 = self->ext.shield.unk7D + 56;
+        prim->v2 = prim->v0 = self->ext.shield.unk7D + 56 + 7;
+        prim->priority = 0x1BA;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE | DRAW_TRANSP;
+        self->ext.shield.unk80 = 0x40;
+        self->step++;
+        break;
+    case 1:
+        self->ext.shield.unk84 += 2;
+        if (self->ext.shield.unk84 >= 32) {
+            self->ext.shield.unk84 = 32;
+            prim = &g_PrimBuf[self->primIndex];
+            prim->drawMode |= DRAW_HIDE;
+            prim = prim->next;
+            prim->drawMode &= ~DRAW_HIDE;
+            prim = prim->next;
+            prim->drawMode &= ~DRAW_HIDE;
+            g_api.PlaySfx(0x660);
+            self->step++;
+        }
+        self->ext.shield.unk86 = self->ext.shield.unk84;
+        break;
+    case 2:
+        self->ext.shield.unkAE = self->ext.shield.parent->ext.shield.unkAE;
+        SetWeaponProperties(self, 0);
+        if (!self->facingLeft) {
+            self->hitboxWidth = (0x118 - self->posX.i.hi) / 2;
+            self->hitboxOffX = (0x118 - self->posX.i.hi) / 2;
+        } else {
+            self->hitboxWidth = (self->posX.i.hi + 24) / 2;
+            self->hitboxOffX = (self->posX.i.hi + 24) / 2;
+        }
+        self->hitboxHeight = 0x10;
+        if (--self->ext.shield.unk80 == 0) {
+            self->hitboxState = 0;
+            self->step++;
+        }
+        break;
+    case 3:
+        self->ext.shield.unk84 -= 8;
+        self->ext.shield.unk86 -= 8;
+        if (self->ext.shield.unk84 < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    if (self->facingLeft) {
+        xShift = -24;
+    } else {
+        xShift = 24;
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    self->posX.i.hi = xShift + self->ext.shield.parent->posX.i.hi;
+    selfPosX = self->posX.i.hi;
+    selfPosY = self->posY.i.hi;
+
+    prim->y0 = prim->y1 = selfPosY - self->ext.shield.unk86;
+    prim->y2 = prim->y3 = selfPosY + self->ext.shield.unk86 - 1;
+    if (!self->facingLeft) {
+        prim->x0 = prim->x2 = selfPosX - self->ext.shield.unk84;
+        prim->x1 = prim->x3 = selfPosX + self->ext.shield.unk84 - 1;
+    } else {
+        prim->x1 = prim->x3 = selfPosX - self->ext.shield.unk84;
+        prim->x0 = prim->x2 = selfPosX + self->ext.shield.unk84 - 1;
+    }
+    prim = prim->next;
+    prim->y0 = prim->y1 = selfPosY - self->ext.shield.unk86;
+    prim->y2 = prim->y3 = (selfPosY + self->ext.shield.unk86) - 1;
+    if (!self->facingLeft) {
+        prim->x0 = prim->x2 = selfPosX - self->ext.shield.unk84;
+        prim->x1 = prim->x3 = selfPosX + self->ext.shield.unk84 - 1;
+    } else {
+        prim->x1 = prim->x3 = selfPosX - self->ext.shield.unk84;
+        prim->x0 = prim->x2 = selfPosX + self->ext.shield.unk84 - 1;
+    }
+    prim->clut = self->ext.shield.childPalette + ((g_Timer >> 1) & 1);
+    prim = prim->next;
+    prim->y0 = prim->y1 = selfPosY - (self->ext.shield.unk86 / 2);
+    prim->y2 = prim->y3 = selfPosY + (self->ext.shield.unk86 / 2) - 1;
+    if (!self->facingLeft) {
+        prim->x0 = prim->x2 = selfPosX + self->ext.shield.unk84 - 1;
+        prim->x1 = prim->x3 = 288 - 16;
+    } else {
+        prim->x1 = prim->x3 = selfPosX - self->ext.shield.unk84;
+        prim->x0 = prim->x2 = -16;
+    }
+    prim->clut = self->ext.shield.childPalette + ((g_Timer >> 1) & 1);
+    return;
+}
 
 void func_ptr_80170028(Entity* self) {}
 
