@@ -229,7 +229,7 @@ u8 func_801BD2F0(s16 arg0, s16 arg1) {
 
 u16 func_801BD41C(s16 x, s16 y) { return ratan2(y, x); }
 
-u16 func_801BD44C(Entity* a, Entity* b) {
+u16 GetAngleBetweenEntities(Entity* a, Entity* b) {
     s32 diffX = b->posX.i.hi - a->posX.i.hi;
     s32 diffY = b->posY.i.hi - a->posY.i.hi;
     return ratan2(diffY, diffX);
@@ -241,8 +241,8 @@ u16 func_801BD484(s32 x, s32 y) {
     return ratan2(diffY, diffX);
 }
 
-// TODO(sestren): Reconcile this func_801BD4CC with the one in 3E30C.c
-u16 func_801BD4CC(u16 arg0, s16 arg1, s16 arg2) {
+// TODO(sestren): Reconcile this GetNormalizedAngle with the one in 3E30C.c
+u16 GetNormalizedAngle(u16 arg0, s16 arg1, s16 arg2) {
     u16 var_v0 = arg1;
     u16 temp_a2 = arg2 - arg1;
     u16 var_v0_2;

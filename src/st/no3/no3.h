@@ -246,9 +246,9 @@ extern PfnEntityUpdate PfnEntityUpdates[];
 
 // *** EntitySoulStealOrb properties START ***
 
-extern u16 D_801826D0[]; // NOTE(sestren): Random angle offsets?
-extern u16 D_801826E0[]; // NOTE(sestren): Animation frame properties?
-extern u16 D_80182740[];
+extern u16 g_ESoulStealOrbAngles[];
+extern s16 g_ESoulStealOrbSprt[];
+extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
 

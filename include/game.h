@@ -166,6 +166,7 @@ typedef struct Prim {
 #define RENDERFLAGS_NOSHADOW 2
 #define PLAYER_ALUCARD 0
 #define PLAYER_RICHTER 1
+#define PLAYER_MARIA 2
 #define MAX_GOLD 999999
 #define HEART_VESSEL_INCREASE 5
 #define HEART_VESSEL_RICHTER 30
@@ -1549,7 +1550,14 @@ typedef struct {
     /* 80072F34 */ u32 unk14;
     /* 80072F38 */ s32 unk18;
     /* 80072F3C */ s32 unk1C;
-    /* 80072F40 */ s32 unk20[8];
+    /* 80072F40 */ s32 unk20;
+    /* 80072F44 */ s32 unk24;
+    /* 80072F48 */ s32 unk28;
+    /* 80072F4C */ s32 unk2C;
+    /* 80072F50 */ s32 unk30;
+    /* 80072F54 */ s32 unk34;
+    /* 80072F58 */ s32 unk38;
+    /* 80072F5C */ s32 unk3C;
     /* 80072F60 */ u16 unk40;
     /* 80072F62 */ u16 pl_high_jump_timer;
     /* 80072F64 */ u16 unk44;
@@ -1681,6 +1689,12 @@ extern u32 D_80070BCC;         // part of g_Clut
 
 extern PlayerState g_Player;
 extern u16 g_Player_D_80072EF6; // TODO merge with g_Player
+// the following are most likely part of g_Player
+extern Entity* D_psp_091CF3A0;
+extern s32 D_psp_091CF3A4; // maybe not s32 but a pointer?
+extern void (*D_psp_091CF3A8)(Entity*);
+extern s32 D_psp_091CF3AC; // maybe not s32 but a pointer?
+extern u16 D_psp_091CF3DC;
 
 extern GfxLoad g_GfxLoad[0x10];
 extern u32 g_GameStep;
