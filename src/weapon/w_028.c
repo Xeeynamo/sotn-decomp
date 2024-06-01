@@ -138,7 +138,6 @@ void EntityWeaponAttack(Entity* self) {
     self->drawFlags = PLAYER.drawFlags;
     self->rotY = PLAYER.rotY;
     self->rotPivotY = PLAYER.rotPivotY;
-    return;
 }
 
 void func_ptr_80170004(Entity* self) {}
