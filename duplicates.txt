@@ -1102,6 +1102,16 @@
 | 1.00 | true     | FallEntity                          | ../../asm/us/st/st0/nonmatchings/31CA0/FallEntity.s 
 | 1.00 | true     | FallEntity                          | ../../asm/us/st/wrp/nonmatchings/st_common/FallEntity.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | GetAngleBetweenEntities             | ../../asm/us/st/cen/nonmatchings/11280/GetAngleBetweenEntities.s 
+| 1.00 | true     | GetAngleBetweenEntities             | ../../asm/us/st/dre/nonmatchings/173C4/GetAngleBetweenEntities.s 
+| 1.00 | true     | func_80192AF0                       | ../../asm/us/st/mad/nonmatchings/EDB8/func_80192AF0.s 
+| 1.00 | true     | GetAngleBetweenEntities             | ../../asm/us/st/no3/nonmatchings/41C80/GetAngleBetweenEntities.s 
+| 1.00 | true     | GetAngleBetweenEntities             | ../../asm/us/st/np3/nonmatchings/394F0/GetAngleBetweenEntities.s 
+| 1.00 | true     | GetAngleBetweenEntities             | ../../asm/us/st/nz0/nonmatchings/39908/GetAngleBetweenEntities.s 
+| 1.00 | true     | GetAngleBetweenEntities             | ../../asm/us/st/rwrp/nonmatchings/A59C/GetAngleBetweenEntities.s 
+| 1.00 | true     | GetAngleBetweenEntities             | ../../asm/us/st/st0/nonmatchings/31CA0/GetAngleBetweenEntities.s 
+| 1.00 | true     | GetAngleBetweenEntities             | ../../asm/us/st/wrp/nonmatchings/st_common/GetAngleBetweenEntities.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | GetDistanceToPlayerX                | ../../asm/us/st/cen/nonmatchings/11280/GetDistanceToPlayerX.s 
 | 1.00 | true     | GetDistanceToPlayerX                | ../../asm/us/st/dre/nonmatchings/173C4/GetDistanceToPlayerX.s 
 | 1.00 | true     | func_8019203C                       | ../../asm/us/st/mad/nonmatchings/EDB8/func_8019203C.s 
@@ -1121,6 +1131,16 @@
 | 1.00 | true     | GetDistanceToPlayerY                | ../../asm/us/st/rwrp/nonmatchings/A59C/GetDistanceToPlayerY.s 
 | 1.00 | true     | GetDistanceToPlayerY                | ../../asm/us/st/st0/nonmatchings/31CA0/GetDistanceToPlayerY.s 
 | 1.00 | true     | GetDistanceToPlayerY                | ../../asm/us/st/wrp/nonmatchings/st_common/GetDistanceToPlayerY.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | GetNormalizedAngle                  | ../../asm/us/st/cen/nonmatchings/11280/GetNormalizedAngle.s 
+| 1.00 | true     | GetNormalizedAngle                  | ../../asm/us/st/dre/nonmatchings/173C4/GetNormalizedAngle.s 
+| 1.00 | true     | func_80192B70                       | ../../asm/us/st/mad/nonmatchings/EDB8/func_80192B70.s 
+| 1.00 | true     | GetNormalizedAngle                  | ../../asm/us/st/no3/nonmatchings/41C80/GetNormalizedAngle.s 
+| 1.00 | true     | GetNormalizedAngle                  | ../../asm/us/st/np3/nonmatchings/394F0/GetNormalizedAngle.s 
+| 1.00 | true     | GetNormalizedAngle                  | ../../asm/us/st/nz0/nonmatchings/39908/GetNormalizedAngle.s 
+| 1.00 | true     | GetNormalizedAngle                  | ../../asm/us/st/rwrp/nonmatchings/A59C/GetNormalizedAngle.s 
+| 0.92 | true     | GetNormalizedAngle                  | ../../asm/us/st/st0/nonmatchings/31CA0/GetNormalizedAngle.s 
+| 1.00 | true     | GetNormalizedAngle                  | ../../asm/us/st/wrp/nonmatchings/st_common/GetNormalizedAngle.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | GetSideToPlayer                     | ../../asm/us/st/cen/nonmatchings/11280/GetSideToPlayer.s 
 | 1.00 | true     | GetSideToPlayer                     | ../../asm/us/st/dre/nonmatchings/173C4/GetSideToPlayer.s 
@@ -1281,26 +1301,6 @@
 | 1.00 | true     | func_8018DF3C                       | ../../asm/us/st/rwrp/nonmatchings/A59C/func_8018DF3C.s 
 | 1.00 | true     | func_801B5518                       | ../../asm/us/st/st0/nonmatchings/31CA0/func_801B5518.s 
 | 1.00 | true     | func_8018BFBC                       | ../../asm/us/st/wrp/nonmatchings/st_common/func_8018BFBC.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_80194DC4                       | ../../asm/us/st/cen/nonmatchings/11280/func_80194DC4.s 
-| 1.00 | true     | func_8019AF08                       | ../../asm/us/st/dre/nonmatchings/173C4/func_8019AF08.s 
-| 1.00 | true     | func_80192AF0                       | ../../asm/us/st/mad/nonmatchings/EDB8/func_80192AF0.s 
-| 1.00 | true     | func_801C57C4                       | ../../asm/us/st/no3/nonmatchings/41C80/func_801C57C4.s 
-| 1.00 | true     | func_801BD034                       | ../../asm/us/st/np3/nonmatchings/394F0/func_801BD034.s 
-| 1.00 | true     | func_801BD44C                       | ../../asm/us/st/nz0/nonmatchings/39908/func_801BD44C.s 
-| 1.00 | true     | func_8018E0E0                       | ../../asm/us/st/rwrp/nonmatchings/A59C/func_8018E0E0.s 
-| 1.00 | true     | func_801B56BC                       | ../../asm/us/st/st0/nonmatchings/31CA0/func_801B56BC.s 
-| 1.00 | true     | func_8018C160                       | ../../asm/us/st/wrp/nonmatchings/st_common/func_8018C160.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_80194E44                       | ../../asm/us/st/cen/nonmatchings/11280/func_80194E44.s 
-| 1.00 | true     | func_8019AF88                       | ../../asm/us/st/dre/nonmatchings/173C4/func_8019AF88.s 
-| 1.00 | true     | func_80192B70                       | ../../asm/us/st/mad/nonmatchings/EDB8/func_80192B70.s 
-| 1.00 | true     | func_801C5844                       | ../../asm/us/st/no3/nonmatchings/41C80/func_801C5844.s 
-| 1.00 | true     | func_801BD0B4                       | ../../asm/us/st/np3/nonmatchings/394F0/func_801BD0B4.s 
-| 1.00 | true     | func_801BD4CC                       | ../../asm/us/st/nz0/nonmatchings/39908/func_801BD4CC.s 
-| 1.00 | true     | func_8018E160                       | ../../asm/us/st/rwrp/nonmatchings/A59C/func_8018E160.s 
-| 0.92 | true     | func_801B573C                       | ../../asm/us/st/st0/nonmatchings/31CA0/func_801B573C.s 
-| 1.00 | true     | func_8018C1E0                       | ../../asm/us/st/wrp/nonmatchings/st_common/func_8018C1E0.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80194EC4                       | ../../asm/us/st/cen/nonmatchings/11280/func_80194EC4.s 
 | 1.00 | true     | SetSubStep                          | ../../asm/us/st/dre/nonmatchings/173C4/SetSubStep.s 
@@ -1672,15 +1672,6 @@
 | 1.00 | false    | EntityWeaponAttack                  | ../../asm/us/weapon/nonmatchings/w_036/EntityWeaponAttack.s 
 | 1.00 | false    | EntityWeaponAttack                  | ../../asm/us/weapon/nonmatchings/w_057/EntityWeaponAttack.s 
 -------------------------------------------------------------------------------
-| 0.90 | true     | SetReverbDepth                      | ../../asm/us/dra/nonmatchings/91EBC/SetReverbDepth.s 
-| 1.00 | true     | func_801073C0                       | ../../asm/us/dra/nonmatchings/cd/func_801073C0.s 
-| 0.90 | true     | _addque                             | ../../asm/us/main/nonmatchings/psxsdk/libgpu/sys/_addque.s 
-| 0.90 | true     | SsSepClose                          | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssclose/SsSepClose.s 
-| 0.90 | true     | SsSeqClose                          | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
-| 0.90 | true     | SsSeqStop                           | ../../asm/us/main/nonmatchings/psxsdk/libsnd/stop/SsSeqStop.s 
-| 1.00 | true     | func_801B9924                       | ../../asm/us/st/sel/nonmatchings/stream/func_801B9924.s 
-| 0.90 | true     | func_801BA6A8                       | ../../asm/us/st/sel/nonmatchings/stream/func_801BA6A8.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | D_800DBF44                          | ../../asm/us/dra/nonmatchings/save_mgr/D_800DBF44.s 
 | 1.00 | true     | D_800DBF4C                          | ../../asm/us/dra/nonmatchings/save_mgr/D_800DBF4C.s 
 | 1.00 | true     | D_800DBF54                          | ../../asm/us/dra/nonmatchings/save_mgr/D_800DBF54.s 
@@ -1770,6 +1761,14 @@
 | 1.00 | true     | UpdateStageEntities                 | ../../asm/us/st/rwrp/nonmatchings/update_stage_entities/UpdateStageEntities.s 
 | 1.00 | true     | UpdateStageEntities                 | ../../asm/us/st/st0/nonmatchings/update_stage_entities/UpdateStageEntities.s 
 | 1.00 | true     | UpdateStageEntities                 | ../../asm/us/st/wrp/nonmatchings/st_update/UpdateStageEntities.s 
+-------------------------------------------------------------------------------
+| 0.90 | true     | SetReverbDepth                      | ../../asm/us/dra/nonmatchings/91EBC/SetReverbDepth.s 
+| 1.00 | true     | func_801073C0                       | ../../asm/us/dra/nonmatchings/cd/func_801073C0.s 
+| 0.90 | true     | _addque                             | ../../asm/us/main/nonmatchings/psxsdk/libgpu/sys/_addque.s 
+| 0.90 | true     | SsSepClose                          | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssclose/SsSepClose.s 
+| 0.90 | true     | SsSeqClose                          | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
+| 0.90 | true     | SsSeqStop                           | ../../asm/us/main/nonmatchings/psxsdk/libsnd/stop/SsSeqStop.s 
+| 1.00 | true     | func_801B9924                       | ../../asm/us/st/sel/nonmatchings/stream/func_801B9924.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801072DC                       | ../../asm/us/dra/nonmatchings/63ED4/func_801072DC.s 
 | 1.00 | true     | func_800FAC98                       | ../../asm/us/dra/nonmatchings/menu/func_800FAC98.s 
@@ -2068,11 +2067,6 @@
 | 1.00 | true     | SetData32                           | ../../asm/us/main/nonmatchings/psxsdk/libgte/reg03/SetData32.s 
 | 1.00 | true     | SetIR0                              | ../../asm/us/main/nonmatchings/psxsdk/libgte/reg03/SetIR0.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | SsSeqGetVol                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
--------------------------------------------------------------------------------
 | 1.00 | false    | EntityUnkId16                       | ../../asm/us/st/cen/nonmatchings/D600/EntityUnkId16.s 
 | 0.91 | false    | EntitySuccubusCutscene              | ../../asm/us/st/dre/nonmatchings/14774/EntitySuccubusCutscene.s 
 | 0.94 | false    | EntityRoomTransition1               | ../../asm/us/st/no3/nonmatchings/3E134/EntityRoomTransition1.s 
@@ -2132,6 +2126,10 @@
 | 0.93 | true     | _SsContRpn1                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | ../../asm/us/main/nonmatchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | ../../asm/us/main/nonmatchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
@@ -2458,6 +2456,9 @@
 | 1.00 | true     | _SsContModulation                   | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SsSeqPlay                           | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
+| 0.93 | true     | SsSeqGetVol                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
 -------------------------------------------------------------------------------
@@ -2487,6 +2488,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | SpuRead                             | ../../asm/us/main/nonmatchings/psxsdk/libspu/s_r/SpuRead.s 
 | 1.00 | true     | SpuWrite                            | ../../asm/us/main/nonmatchings/psxsdk/libspu/s_w/SpuWrite.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SpuSetVoiceAttr                     | ../../asm/us/main/nonmatchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
+| 0.90 | true     | func_801BA6A8                       | ../../asm/us/st/sel/nonmatchings/stream/func_801BA6A8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8015B18C                       | ../../asm/us/ric/nonmatchings/1CB04/func_8015B18C.s 
 | 0.91 | true     | func_8015B1E8                       | ../../asm/us/ric/nonmatchings/1CB04/func_8015B1E8.s 
