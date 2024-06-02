@@ -1,268 +1,268 @@
 #include <game.h>
 
-static u32 D_800CF748[];
-static u32 D_800CF750[];
-static u32 D_800CF758[];
-static u32 D_800CF760[];
-static u32 D_800CF768[];
-static u32 D_800CF770[];
-static u32 D_800CF778[];
-static u32 D_800CF780[];
-static u32 D_800CF788[];
-static u32 D_800CF790[];
-static u32 D_800CF798[];
-static u32 D_800CF7A0[];
-static u32 D_800CF7A8[];
-static u32 D_800CF7B0[];
-static u32 D_800CF7B8[];
-static u32 D_800CF7C0[];
-static u32 D_800CF7C8[];
-static u32 D_800CF7D0[];
-static u32 D_800CF7D8[];
-static u32 D_800CF7E0[];
-static u32 D_800CF7E8[];
-static u32 D_800CF7F0[];
-static u32 D_800CF7F8[];
-static u32 D_800CF800[];
-static u32 D_800CF808[];
-static u32 D_800CF810[];
-static u32 D_800CF818[];
-static u32 D_800CF820[];
-static u32 D_800CF828[];
-static u32 D_800CF830[];
-static u32 D_800CF838[];
-static u32 D_800CF840[];
-static u32 D_800CF848[];
-static u32 D_800CF850[];
-static u32 D_800CF858[];
-static u32 D_800CF860[];
-static u32 D_800CF868[];
-static u32 D_800CF870[];
-static u32 D_800CF878[];
-static u32 D_800CF880[];
-static u32 D_800CF888[];
-static u32 D_800CF890[];
-static u32 D_800CF898[];
-static u32 D_800CF8A0[];
-static u32 D_800CF8A8[];
-static u32 D_800CF8B0[];
-static u32 D_800CF8B8[];
-static u32 D_800CF8C0[];
-static u32 D_800CF8C8[];
-static u32 D_800CF8D0[];
-static u32 D_800CF8D8[];
-static u32 D_800CF8E0[];
-static u32 D_800CF8E8[];
-static u32 D_800CF8F0[];
-static u32 D_800CF8F8[];
-static u32 D_800CF900[];
-static u32 D_800CF908[];
-static u32 D_800CF910[];
-static u32 D_800CF918[];
-static u32 D_800CF920[];
-static u32 D_800CF928[];
-static u32 D_800CF930[];
-static u32 D_800CF938[];
-static u32 D_800CF940[];
-static u32 D_800CF948[];
-static u32 D_800CF950[];
-static u32 D_800CF958[];
-static u32 D_800CF960[];
-static u32 D_800CF968[];
-static u32 D_800CF970[];
-static u32 D_800CF978[];
-static u32 D_800CF980[];
-static u32 D_800CF988[];
-static u32 D_800CF990[];
-static u32 D_800CF998[];
-static u32 D_800CF9A0[];
-static u32 D_800CF9A8[];
-static u32 D_800CF9B0[];
-static u32 D_800CF9B8[];
-static u32 D_800CF9C0[];
-static u32 D_800CF9C8[];
-static u32 D_800CF9D0[];
-static u32 D_800CF9D8[];
-static u32 D_800CF9E0[];
-static u32 D_800CF9E8[];
-static u32 D_800CF9F0[];
-static u32 D_800CF9F8[];
-static u32 D_800CFA00[];
-static u32 D_800CFA08[];
-static u32 D_800CFA10[];
-static u32 D_800CFA18[];
-static u32 D_800CFA20[];
-static u32 D_800CFA28[];
-static u32 D_800CFA30[];
-static u32 D_800CFA38[];
-static u32 D_800CFA40[];
-static u32 D_800CFA48[];
-static u32 D_800CFA50[];
-static u32 D_800CFA58[];
-static u32 D_800CFA60[];
-static u32 D_800CFA68[];
-static u32 D_800CFA70[];
-static u32 D_800CFA78[];
-static u32 D_800CFA80[];
-static u32 D_800CFA88[];
-static u32 D_800CFA90[];
-static u32 D_800CFA98[];
-static u32 D_800CFAA0[];
-static u32 D_800CFAA8[];
-static u32 D_800CFAB0[];
-static u32 D_800CFAB8[];
-static u32 D_800CFAC0[];
-static u32 D_800CFAC8[];
-static u32 D_800CFAD0[];
-static u32 D_800CFAD8[];
-static u32 D_800CFAE0[];
-static u32 D_800CFAE8[];
-static u32 D_800CFAF0[];
-static u32 D_800CFAF8[];
-static u32 D_800CFB00[];
-static u32 D_800CFB08[];
-static u32 D_800CFB10[];
-static u32 D_800CFB18[];
-static u32 D_800CFB20[];
-static u32 D_800CFB28[];
-static u32 D_800CFB30[];
-static u32 D_800CFB38[];
-static u32 D_800CFB40[];
-static u32 D_800CFB48[];
-static u32 D_800CFB50[];
-static u32 D_800CFB58[];
-static u32 D_800CFB60[];
-static u32 D_800CFB68[];
-static u32 D_800CFB70[];
-static u32 D_800CFB78[];
-static u32 D_800CFB80[];
-static u32 D_800CFB88[];
-static u32 D_800CFB90[];
-static u32 D_800CFB98[];
-static u32 D_800CFBA0[];
-static u32 D_800CFBA8[];
-static u32 D_800CFBB0[];
-static u32 D_800CFBB8[];
-static u32 D_800CFBC0[];
-static u32 D_800CFBC8[];
-static u32 D_800CFBD0[];
-static u32 D_800CFBD8[];
-static u32 D_800CFBE0[];
-static u32 D_800CFBE8[];
-static u32 D_800CFBF0[];
-static u32 D_800CFBF8[];
-static u32 D_800CFC00[];
-static u32 D_800CFC08[];
-static u32 D_800CFC10[];
-static u32 D_800CFC18[];
-static u32 D_800CFC20[];
-static u32 D_800CFC28[];
-static u32 D_800CFC30[];
-static u32 D_800CFC38[];
-static u32 D_800CFC40[];
-static u32 D_800CFC48[];
-static u32 D_800CFC50[];
-static u32 D_800CFC58[];
-static u32 D_800CFC60[];
-static u32 D_800CFC68[];
-static u32 D_800CFC70[];
-static u32 D_800CFC78[];
-static u32 D_800CFC80[];
-static u32 D_800CFC88[];
-static u32 D_800CFC90[];
-static u32 D_800CFC98[];
-static u32 D_800CFCA0[];
-static u32 D_800CFCA8[];
-static u32 D_800CFCB0[];
-static u32 D_800CFCB8[];
-static u32 D_800CFCC0[];
-static u32 D_800CFCC8[];
-static u32 D_800CFCD0[];
-static u32 D_800CFCD8[];
-static u32 D_800CFCE0[];
-static u32 D_800CFCE8[];
-static u32 D_800CFCF0[];
-static u32 D_800CFCF8[];
-static u32 D_800CFD00[];
-static u32 D_800CFD08[];
-static u32 D_800CFD10[];
-static u32 D_800CFD18[];
-static u32 D_800CFD20[];
-static u32 D_800CFD28[];
-static u32 D_800CFD30[];
-static u32 D_800CFD38[];
-static u32 D_800CFD40[];
-static u32 D_800CFD48[];
-static u32 D_800CFD50[];
-static u32 D_800CFD58[];
-static u32 D_800CFD60[];
-static u32 D_800CFD68[];
-static u32 D_800CFD70[];
-static u32 D_800CFD78[];
-static u32 D_800CFD80[];
-static u32 D_800CFD88[];
-static u32 D_800CFD90[];
-static u32 D_800CFD98[];
-static u32 D_800CFDA0[];
-static u32 D_800CFDA8[];
-static u32 D_800CFDB0[];
-static u32 D_800CFDB8[];
-static u32 D_800CFDC0[];
-static u32 D_800CFDC8[];
-static u32 D_800CFDD0[];
-static u32 D_800CFDD8[];
-static u32 D_800CFDE0[];
-static u32 D_800CFDE8[];
-static u32 D_800CFDF0[];
-static u32 D_800CFDF8[];
-static u32 D_800CFE00[];
-static u32 D_800CFE08[];
-static u32 D_800CFE10[];
-static u32 D_800CFE18[];
-static u32 D_800CFE20[];
-static u32 D_800CFE28[];
-static u32 D_800CFE30[];
-static u32 D_800CFE38[];
-static u32 D_800CFE40[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
-static u32 D_800CFE10[];
+u32 D_800CF748[];
+u32 D_800CF750[];
+u32 D_800CF758[];
+u32 D_800CF760[];
+u32 D_800CF768[];
+u32 D_800CF770[];
+u32 D_800CF778[];
+u32 D_800CF780[];
+u32 D_800CF788[];
+u32 D_800CF790[];
+u32 D_800CF798[];
+u32 D_800CF7A0[];
+u32 D_800CF7A8[];
+u32 D_800CF7B0[];
+u32 D_800CF7B8[];
+u32 D_800CF7C0[];
+u32 D_800CF7C8[];
+u32 D_800CF7D0[];
+u32 D_800CF7D8[];
+u32 D_800CF7E0[];
+u32 D_800CF7E8[];
+u32 D_800CF7F0[];
+u32 D_800CF7F8[];
+u32 D_800CF800[];
+u32 D_800CF808[];
+u32 D_800CF810[];
+u32 D_800CF818[];
+u32 D_800CF820[];
+u32 D_800CF828[];
+u32 D_800CF830[];
+u32 D_800CF838[];
+u32 D_800CF840[];
+u32 D_800CF848[];
+u32 D_800CF850[];
+u32 D_800CF858[];
+u32 D_800CF860[];
+u32 D_800CF868[];
+u32 D_800CF870[];
+u32 D_800CF878[];
+u32 D_800CF880[];
+u32 D_800CF888[];
+u32 D_800CF890[];
+u32 D_800CF898[];
+u32 D_800CF8A0[];
+u32 D_800CF8A8[];
+u32 D_800CF8B0[];
+u32 D_800CF8B8[];
+u32 D_800CF8C0[];
+u32 D_800CF8C8[];
+u32 D_800CF8D0[];
+u32 D_800CF8D8[];
+u32 D_800CF8E0[];
+u32 D_800CF8E8[];
+u32 D_800CF8F0[];
+u32 D_800CF8F8[];
+u32 D_800CF900[];
+u32 D_800CF908[];
+u32 D_800CF910[];
+u32 D_800CF918[];
+u32 D_800CF920[];
+u32 D_800CF928[];
+u32 D_800CF930[];
+u32 D_800CF938[];
+u32 D_800CF940[];
+u32 D_800CF948[];
+u32 D_800CF950[];
+u32 D_800CF958[];
+u32 D_800CF960[];
+u32 D_800CF968[];
+u32 D_800CF970[];
+u32 D_800CF978[];
+u32 D_800CF980[];
+u32 D_800CF988[];
+u32 D_800CF990[];
+u32 D_800CF998[];
+u32 D_800CF9A0[];
+u32 D_800CF9A8[];
+u32 D_800CF9B0[];
+u32 D_800CF9B8[];
+u32 D_800CF9C0[];
+u32 D_800CF9C8[];
+u32 D_800CF9D0[];
+u32 D_800CF9D8[];
+u32 D_800CF9E0[];
+u32 D_800CF9E8[];
+u32 D_800CF9F0[];
+u32 D_800CF9F8[];
+u32 D_800CFA00[];
+u32 D_800CFA08[];
+u32 D_800CFA10[];
+u32 D_800CFA18[];
+u32 D_800CFA20[];
+u32 D_800CFA28[];
+u32 D_800CFA30[];
+u32 D_800CFA38[];
+u32 D_800CFA40[];
+u32 D_800CFA48[];
+u32 D_800CFA50[];
+u32 D_800CFA58[];
+u32 D_800CFA60[];
+u32 D_800CFA68[];
+u32 D_800CFA70[];
+u32 D_800CFA78[];
+u32 D_800CFA80[];
+u32 D_800CFA88[];
+u32 D_800CFA90[];
+u32 D_800CFA98[];
+u32 D_800CFAA0[];
+u32 D_800CFAA8[];
+u32 D_800CFAB0[];
+u32 D_800CFAB8[];
+u32 D_800CFAC0[];
+u32 D_800CFAC8[];
+u32 D_800CFAD0[];
+u32 D_800CFAD8[];
+u32 D_800CFAE0[];
+u32 D_800CFAE8[];
+u32 D_800CFAF0[];
+u32 D_800CFAF8[];
+u32 D_800CFB00[];
+u32 D_800CFB08[];
+u32 D_800CFB10[];
+u32 D_800CFB18[];
+u32 D_800CFB20[];
+u32 D_800CFB28[];
+u32 D_800CFB30[];
+u32 D_800CFB38[];
+u32 D_800CFB40[];
+u32 D_800CFB48[];
+u32 D_800CFB50[];
+u32 D_800CFB58[];
+u32 D_800CFB60[];
+u32 D_800CFB68[];
+u32 D_800CFB70[];
+u32 D_800CFB78[];
+u32 D_800CFB80[];
+u32 D_800CFB88[];
+u32 D_800CFB90[];
+u32 D_800CFB98[];
+u32 D_800CFBA0[];
+u32 D_800CFBA8[];
+u32 D_800CFBB0[];
+u32 D_800CFBB8[];
+u32 D_800CFBC0[];
+u32 D_800CFBC8[];
+u32 D_800CFBD0[];
+u32 D_800CFBD8[];
+u32 D_800CFBE0[];
+u32 D_800CFBE8[];
+u32 D_800CFBF0[];
+u32 D_800CFBF8[];
+u32 D_800CFC00[];
+u32 D_800CFC08[];
+u32 D_800CFC10[];
+u32 D_800CFC18[];
+u32 D_800CFC20[];
+u32 D_800CFC28[];
+u32 D_800CFC30[];
+u32 D_800CFC38[];
+u32 D_800CFC40[];
+u32 D_800CFC48[];
+u32 D_800CFC50[];
+u32 D_800CFC58[];
+u32 D_800CFC60[];
+u32 D_800CFC68[];
+u32 D_800CFC70[];
+u32 D_800CFC78[];
+u32 D_800CFC80[];
+u32 D_800CFC88[];
+u32 D_800CFC90[];
+u32 D_800CFC98[];
+u32 D_800CFCA0[];
+u32 D_800CFCA8[];
+u32 D_800CFCB0[];
+u32 D_800CFCB8[];
+u32 D_800CFCC0[];
+u32 D_800CFCC8[];
+u32 D_800CFCD0[];
+u32 D_800CFCD8[];
+u32 D_800CFCE0[];
+u32 D_800CFCE8[];
+u32 D_800CFCF0[];
+u32 D_800CFCF8[];
+u32 D_800CFD00[];
+u32 D_800CFD08[];
+u32 D_800CFD10[];
+u32 D_800CFD18[];
+u32 D_800CFD20[];
+u32 D_800CFD28[];
+u32 D_800CFD30[];
+u32 D_800CFD38[];
+u32 D_800CFD40[];
+u32 D_800CFD48[];
+u32 D_800CFD50[];
+u32 D_800CFD58[];
+u32 D_800CFD60[];
+u32 D_800CFD68[];
+u32 D_800CFD70[];
+u32 D_800CFD78[];
+u32 D_800CFD80[];
+u32 D_800CFD88[];
+u32 D_800CFD90[];
+u32 D_800CFD98[];
+u32 D_800CFDA0[];
+u32 D_800CFDA8[];
+u32 D_800CFDB0[];
+u32 D_800CFDB8[];
+u32 D_800CFDC0[];
+u32 D_800CFDC8[];
+u32 D_800CFDD0[];
+u32 D_800CFDD8[];
+u32 D_800CFDE0[];
+u32 D_800CFDE8[];
+u32 D_800CFDF0[];
+u32 D_800CFDF8[];
+u32 D_800CFE00[];
+u32 D_800CFE08[];
+u32 D_800CFE10[];
+u32 D_800CFE18[];
+u32 D_800CFE20[];
+u32 D_800CFE28[];
+u32 D_800CFE30[];
+u32 D_800CFE38[];
+u32 D_800CFE40[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
+u32 D_800CFE10[];
 
 s16* D_800CF324[] = {
     NULL,
@@ -532,1142 +532,1142 @@ s16* D_800CF324[] = {
     NULL,
 };
 
-static u32 D_800CF748[] = {
+u32 D_800CF748[] = {
     0xFFF08000,
     0x0000FFE9,
 };
 
-static u32 D_800CF750[] = {
+u32 D_800CF750[] = {
     0xFFD88001,
     0x0000FFE1,
 };
 
-static u32 D_800CF758[] = {
+u32 D_800CF758[] = {
     0xFFD88002,
     0x0000FFE1,
 };
 
-static u32 D_800CF760[] = {
+u32 D_800CF760[] = {
     0xFFD88003,
     0x0000FFE1,
 };
 
-static u32 D_800CF768[] = {
+u32 D_800CF768[] = {
     0xFFD88004,
     0x0000FFE1,
 };
 
-static u32 D_800CF770[] = {
+u32 D_800CF770[] = {
     0xFFD88005,
     0x0000FFE1,
 };
 
-static u32 D_800CF778[] = {
+u32 D_800CF778[] = {
     0xFFD88006,
     0x0000FFE1,
 };
 
-static u32 D_800CF780[] = {
+u32 D_800CF780[] = {
     0xFFD88007,
     0x0000FFE1,
 };
 
-static u32 D_800CF788[] = {
+u32 D_800CF788[] = {
     0xFFE08008,
     0x0000FFF1,
 };
 
-static u32 D_800CF790[] = {
+u32 D_800CF790[] = {
     0xFFE08009,
     0x0000FFF9,
 };
 
-static u32 D_800CF798[] = {
+u32 D_800CF798[] = {
     0xFFE0800A,
     0x0000FFF9,
 };
 
-static u32 D_800CF7A0[] = {
+u32 D_800CF7A0[] = {
     0xFFE0800B,
     0x0000FFF9,
 };
 
-static u32 D_800CF7A8[] = {
+u32 D_800CF7A8[] = {
     0xFFE0800C,
     0x0000FFF9,
 };
 
-static u32 D_800CF7B0[] = {
+u32 D_800CF7B0[] = {
     0xFFE8800D,
     0x0000FFF9,
 };
 
-static u32 D_800CF7B8[] = {
+u32 D_800CF7B8[] = {
     0xFFE8800E,
     0x0000FFF9,
 };
 
-static u32 D_800CF7C0[] = {
+u32 D_800CF7C0[] = {
     0xFFF0800F,
     0x0000FFF1,
 };
 
-static u32 D_800CF7C8[] = {
+u32 D_800CF7C8[] = {
     0xFFF08010,
     0x0000FFE9,
 };
 
-static u32 D_800CF7D0[] = {
+u32 D_800CF7D0[] = {
     0xFFF08011,
     0x0000FFE9,
 };
 
-static u32 D_800CF7D8[] = {
+u32 D_800CF7D8[] = {
     0xFFF08012,
     0x0000FFE9,
 };
 
-static u32 D_800CF7E0[] = {
+u32 D_800CF7E0[] = {
     0xFFF08013,
     0x0000FFE9,
 };
 
-static u32 D_800CF7E8[] = {
+u32 D_800CF7E8[] = {
     0xFFF08014,
     0x0000FFE9,
 };
 
-static u32 D_800CF7F0[] = {
+u32 D_800CF7F0[] = {
     0xFFF08015,
     0x0000FFE9,
 };
 
-static u32 D_800CF7F8[] = {
+u32 D_800CF7F8[] = {
     0xFFF08016,
     0x0000FFE9,
 };
 
-static u32 D_800CF800[] = {
+u32 D_800CF800[] = {
     0xFFF08017,
     0x0000FFE9,
 };
 
-static u32 D_800CF808[] = {
+u32 D_800CF808[] = {
     0xFFF08018,
     0x0000FFE9,
 };
 
-static u32 D_800CF810[] = {
+u32 D_800CF810[] = {
     0xFFF08019,
     0x0000FFE9,
 };
 
-static u32 D_800CF818[] = {
+u32 D_800CF818[] = {
     0xFFF0801A,
     0x0000FFE9,
 };
 
-static u32 D_800CF820[] = {
+u32 D_800CF820[] = {
     0xFFF0801B,
     0x0000FFE9,
 };
 
-static u32 D_800CF828[] = {
+u32 D_800CF828[] = {
     0xFFF0801C,
     0x0000FFE9,
 };
 
-static u32 D_800CF830[] = {
+u32 D_800CF830[] = {
     0xFFE0801D,
     0x0000FFE1,
 };
 
-static u32 D_800CF838[] = {
+u32 D_800CF838[] = {
     0xFFE0801E,
     0x0000FFE1,
 };
 
-static u32 D_800CF840[] = {
+u32 D_800CF840[] = {
     0xFFE0801F,
     0x0000FFE1,
 };
 
-static u32 D_800CF848[] = {
+u32 D_800CF848[] = {
     0xFFE08020,
     0x0000FFE1,
 };
 
-static u32 D_800CF850[] = {
+u32 D_800CF850[] = {
     0xFFE08021,
     0x0000FFE1,
 };
 
-static u32 D_800CF858[] = {
+u32 D_800CF858[] = {
     0xFFE08022,
     0x0000FFE1,
 };
 
-static u32 D_800CF860[] = {
+u32 D_800CF860[] = {
     0xFFE08023,
     0x0000FFE1,
 };
 
-static u32 D_800CF868[] = {
+u32 D_800CF868[] = {
     0xFFE08024,
     0x0000FFE1,
 };
 
-static u32 D_800CF870[] = {
+u32 D_800CF870[] = {
     0xFFE08025,
     0x0000FFE1,
 };
 
-static u32 D_800CF878[] = {
+u32 D_800CF878[] = {
     0xFFE08026,
     0x0000FFE1,
 };
 
-static u32 D_800CF880[] = {
+u32 D_800CF880[] = {
     0xFFE08027,
     0x0000FFE1,
 };
 
-static u32 D_800CF888[] = {
+u32 D_800CF888[] = {
     0xFFE88028,
     0x0000FFE9,
 };
 
-static u32 D_800CF890[] = {
+u32 D_800CF890[] = {
     0xFFE08029,
     0x0000FFE1,
 };
 
-static u32 D_800CF898[] = {
+u32 D_800CF898[] = {
     0xFFE0802A,
     0x0000FFE1,
 };
 
-static u32 D_800CF8A0[] = {
+u32 D_800CF8A0[] = {
     0xFFE0802B,
     0x0000FFE1,
 };
 
-static u32 D_800CF8A8[] = {
+u32 D_800CF8A8[] = {
     0xFFE0802C,
     0x0000FFE1,
 };
 
-static u32 D_800CF8B0[] = {
+u32 D_800CF8B0[] = {
     0xFFE0802D,
     0x0000FFE1,
 };
 
-static u32 D_800CF8B8[] = {
+u32 D_800CF8B8[] = {
     0xFFE0802E,
     0x0000FFE1,
 };
 
-static u32 D_800CF8C0[] = {
+u32 D_800CF8C0[] = {
     0xFFE0802F,
     0x0000FFE1,
 };
 
-static u32 D_800CF8C8[] = {
+u32 D_800CF8C8[] = {
     0xFFE08030,
     0x0000FFE1,
 };
 
-static u32 D_800CF8D0[] = {
+u32 D_800CF8D0[] = {
     0xFFE08031,
     0x0000FFE1,
 };
 
-static u32 D_800CF8D8[] = {
+u32 D_800CF8D8[] = {
     0xFFE08032,
     0x0000FFE1,
 };
 
-static u32 D_800CF8E0[] = {
+u32 D_800CF8E0[] = {
     0xFFE08033,
     0x0000FFE1,
 };
 
-static u32 D_800CF8E8[] = {
+u32 D_800CF8E8[] = {
     0xFFE08034,
     0x0000FFE1,
 };
 
-static u32 D_800CF8F0[] = {
+u32 D_800CF8F0[] = {
     0xFFE08035,
     0x0000FFE1,
 };
 
-static u32 D_800CF8F8[] = {
+u32 D_800CF8F8[] = {
     0xFFE08036,
     0x0000FFE1,
 };
 
-static u32 D_800CF900[] = {
+u32 D_800CF900[] = {
     0xFFE08037,
     0x0000FFE1,
 };
 
-static u32 D_800CF908[] = {
+u32 D_800CF908[] = {
     0xFFE08038,
     0x0000FFE1,
 };
 
-static u32 D_800CF910[] = {
+u32 D_800CF910[] = {
     0xFFE08039,
     0x0000FFE1,
 };
 
-static u32 D_800CF918[] = {
+u32 D_800CF918[] = {
     0xFFE0803A,
     0x0000FFE1,
 };
 
-static u32 D_800CF920[] = {
+u32 D_800CF920[] = {
     0xFFE0803B,
     0x0000FFE1,
 };
 
-static u32 D_800CF928[] = {
+u32 D_800CF928[] = {
     0xFFE0803C,
     0x0000FFE1,
 };
 
-static u32 D_800CF930[] = {
+u32 D_800CF930[] = {
     0xFFE0803D,
     0x0000FFE1,
 };
 
-static u32 D_800CF938[] = {
+u32 D_800CF938[] = {
     0xFFE0803E,
     0x0000FFE1,
 };
 
-static u32 D_800CF940[] = {
+u32 D_800CF940[] = {
     0xFFE0803F,
     0x0000FFE1,
 };
 
-static u32 D_800CF948[] = {
+u32 D_800CF948[] = {
     0xFFE08040,
     0x0000FFE1,
 };
 
-static u32 D_800CF950[] = {
+u32 D_800CF950[] = {
     0xFFE08041,
     0x0000FFE1,
 };
 
-static u32 D_800CF958[] = {
+u32 D_800CF958[] = {
     0xFFE08042,
     0x0000FFE9,
 };
 
-static u32 D_800CF960[] = {
+u32 D_800CF960[] = {
     0xFFE08043,
     0x0000FFE1,
 };
 
-static u32 D_800CF968[] = {
+u32 D_800CF968[] = {
     0xFFE08044,
     0x0000FFE1,
 };
 
-static u32 D_800CF970[] = {
+u32 D_800CF970[] = {
     0xFFE08045,
     0x0000FFE1,
 };
 
-static u32 D_800CF978[] = {
+u32 D_800CF978[] = {
     0xFFE08046,
     0x0000FFE1,
 };
 
-static u32 D_800CF980[] = {
+u32 D_800CF980[] = {
     0xFFE08047,
     0x0000FFE1,
 };
 
-static u32 D_800CF988[] = {
+u32 D_800CF988[] = {
     0xFFE08048,
     0x0000FFE1,
 };
 
-static u32 D_800CF990[] = {
+u32 D_800CF990[] = {
     0xFFE08049,
     0x0000FFE1,
 };
 
-static u32 D_800CF998[] = {
+u32 D_800CF998[] = {
     0xFFE0804A,
     0x0000FFE1,
 };
 
-static u32 D_800CF9A0[] = {
+u32 D_800CF9A0[] = {
     0xFFE0804B,
     0x0000FFE1,
 };
 
-static u32 D_800CF9A8[] = {
+u32 D_800CF9A8[] = {
     0xFFE0804C,
     0x0000FFE1,
 };
 
-static u32 D_800CF9B0[] = {
+u32 D_800CF9B0[] = {
     0xFFE0804D,
     0x0000FFE1,
 };
 
-static u32 D_800CF9B8[] = {
+u32 D_800CF9B8[] = {
     0xFFE0804E,
     0x0000FFE1,
 };
 
-static u32 D_800CF9C0[] = {
+u32 D_800CF9C0[] = {
     0xFFE0804F,
     0x0000FFE9,
 };
 
-static u32 D_800CF9C8[] = {
+u32 D_800CF9C8[] = {
     0xFFE08050,
     0x0000FFE1,
 };
 
-static u32 D_800CF9D0[] = {
+u32 D_800CF9D0[] = {
     0xFFE08051,
     0x0000FFE1,
 };
 
-static u32 D_800CF9D8[] = {
+u32 D_800CF9D8[] = {
     0xFFE08052,
     0x0000FFE1,
 };
 
-static u32 D_800CF9E0[] = {
+u32 D_800CF9E0[] = {
     0xFFE08053,
     0x0000FFE1,
 };
 
-static u32 D_800CF9E8[] = {
+u32 D_800CF9E8[] = {
     0xFFE08054,
     0x0000FFE1,
 };
 
-static u32 D_800CF9F0[] = {
+u32 D_800CF9F0[] = {
     0xFFE08055,
     0x0000FFE9,
 };
 
-static u32 D_800CF9F8[] = {
+u32 D_800CF9F8[] = {
     0xFFE08056,
     0x0000FFE1,
 };
 
-static u32 D_800CFA00[] = {
+u32 D_800CFA00[] = {
     0xFFE08057,
     0x0000FFE1,
 };
 
-static u32 D_800CFA08[] = {
+u32 D_800CFA08[] = {
     0xFFE08058,
     0x0000FFE1,
 };
 
-static u32 D_800CFA10[] = {
+u32 D_800CFA10[] = {
     0xFFE08059,
     0x0000FFE1,
 };
 
-static u32 D_800CFA18[] = {
+u32 D_800CFA18[] = {
     0xFFE0805A,
     0x0000FFE1,
 };
 
-static u32 D_800CFA20[] = {
+u32 D_800CFA20[] = {
     0xFFE0805B,
     0x0000FFE1,
 };
 
-static u32 D_800CFA28[] = {
+u32 D_800CFA28[] = {
     0xFFE0805C,
     0x0000FFE1,
 };
 
-static u32 D_800CFA30[] = {
+u32 D_800CFA30[] = {
     0xFFE0805D,
     0x0000FFE1,
 };
 
-static u32 D_800CFA38[] = {
+u32 D_800CFA38[] = {
     0xFFF0805E,
     0x0000FFE1,
 };
 
-static u32 D_800CFA40[] = {
+u32 D_800CFA40[] = {
     0xFFF0805F,
     0x0000FFE1,
 };
 
-static u32 D_800CFA48[] = {
+u32 D_800CFA48[] = {
     0xFFF08060,
     0x0000FFE1,
 };
 
-static u32 D_800CFA50[] = {
+u32 D_800CFA50[] = {
     0xFFF08061,
     0x0000FFE1,
 };
 
-static u32 D_800CFA58[] = {
+u32 D_800CFA58[] = {
     0xFFE08062,
     0x0000FFE1,
 };
 
-static u32 D_800CFA60[] = {
+u32 D_800CFA60[] = {
     0xFFE08063,
     0x0000FFE1,
 };
 
-static u32 D_800CFA68[] = {
+u32 D_800CFA68[] = {
     0xFFE08064,
     0x0000FFE1,
 };
 
-static u32 D_800CFA70[] = {
+u32 D_800CFA70[] = {
     0xFFE08065,
     0x0000FFE1,
 };
 
-static u32 D_800CFA78[] = {
+u32 D_800CFA78[] = {
     0xFFF08066,
     0x0000FFE1,
 };
 
-static u32 D_800CFA80[] = {
+u32 D_800CFA80[] = {
     0xFFF08067,
     0x0000FFE1,
 };
 
-static u32 D_800CFA88[] = {
+u32 D_800CFA88[] = {
     0xFFF08068,
     0x0000FFE1,
 };
 
-static u32 D_800CFA90[] = {
+u32 D_800CFA90[] = {
     0xFFD88069,
     0x0000FFE1,
 };
 
-static u32 D_800CFA98[] = {
+u32 D_800CFA98[] = {
     0xFFD8806A,
     0x0000FFE1,
 };
 
-static u32 D_800CFAA0[] = {
+u32 D_800CFAA0[] = {
     0xFFD8806B,
     0x0000FFE1,
 };
 
-static u32 D_800CFAA8[] = {
+u32 D_800CFAA8[] = {
     0xFFD8806C,
     0x0000FFE1,
 };
 
-static u32 D_800CFAB0[] = {
+u32 D_800CFAB0[] = {
     0xFFD8806D,
     0x0000FFE1,
 };
 
-static u32 D_800CFAB8[] = {
+u32 D_800CFAB8[] = {
     0xFFD8806E,
     0x0000FFE1,
 };
 
-static u32 D_800CFAC0[] = {
+u32 D_800CFAC0[] = {
     0xFFD8806F,
     0x0000FFE1,
 };
 
-static u32 D_800CFAC8[] = {
+u32 D_800CFAC8[] = {
     0xFFD88070,
     0x0000FFD9,
 };
 
-static u32 D_800CFAD0[] = {
+u32 D_800CFAD0[] = {
     0xFFD88071,
     0x0000FFD9,
 };
 
-static u32 D_800CFAD8[] = {
+u32 D_800CFAD8[] = {
     0xFFD88072,
     0x0000FFD9,
 };
 
-static u32 D_800CFAE0[] = {
+u32 D_800CFAE0[] = {
     0xFFE08073,
     0x0000FFE1,
 };
 
-static u32 D_800CFAE8[] = {
+u32 D_800CFAE8[] = {
     0xFFE08074,
     0x0000FFE1,
 };
 
-static u32 D_800CFAF0[] = {
+u32 D_800CFAF0[] = {
     0xFFE08075,
     0x0000FFE1,
 };
 
-static u32 D_800CFAF8[] = {
+u32 D_800CFAF8[] = {
     0xFFE08076,
     0x0000FFE1,
 };
 
-static u32 D_800CFB00[] = {
+u32 D_800CFB00[] = {
     0xFFE08077,
     0x0000FFE1,
 };
 
-static u32 D_800CFB08[] = {
+u32 D_800CFB08[] = {
     0xFFF08078,
     0x0000FFE9,
 };
 
-static u32 D_800CFB10[] = {
+u32 D_800CFB10[] = {
     0xFFF08079,
     0x0000FFE9,
 };
 
-static u32 D_800CFB18[] = {
+u32 D_800CFB18[] = {
     0xFFF0807A,
     0x0000FFE9,
 };
 
-static u32 D_800CFB20[] = {
+u32 D_800CFB20[] = {
     0xFFF8807B,
     0x0000FFE1,
 };
 
-static u32 D_800CFB28[] = {
+u32 D_800CFB28[] = {
     0xFFF8807C,
     0x0000FFE1,
 };
 
-static u32 D_800CFB30[] = {
+u32 D_800CFB30[] = {
     0xFFF8807D,
     0x0000FFE1,
 };
 
-static u32 D_800CFB38[] = {
+u32 D_800CFB38[] = {
     0xFFF8807E,
     0x0000FFE1,
 };
 
-static u32 D_800CFB40[] = {
+u32 D_800CFB40[] = {
     0xFFF8807F,
     0x0000FFE1,
 };
 
-static u32 D_800CFB48[] = {
+u32 D_800CFB48[] = {
     0xFFF08080,
     0x0000FFF9,
 };
 
-static u32 D_800CFB50[] = {
+u32 D_800CFB50[] = {
     0xFFF08081,
     0x0000FFF9,
 };
 
-static u32 D_800CFB58[] = {
+u32 D_800CFB58[] = {
     0xFFE88082,
     0x0000FFFB,
 };
 
-static u32 D_800CFB60[] = {
+u32 D_800CFB60[] = {
     0xFFE88083,
     0x0000FFFB,
 };
 
-static u32 D_800CFB68[] = {
+u32 D_800CFB68[] = {
     0xFFD88084,
     0x0000FFE1,
 };
 
-static u32 D_800CFB70[] = {
+u32 D_800CFB70[] = {
     0xFFD88085,
     0x0000FFE1,
 };
 
-static u32 D_800CFB78[] = {
+u32 D_800CFB78[] = {
     0xFFD88086,
     0x0000FFE1,
 };
 
-static u32 D_800CFB80[] = {
+u32 D_800CFB80[] = {
     0xFFD88087,
     0x0000FFD9,
 };
 
-static u32 D_800CFB88[] = {
+u32 D_800CFB88[] = {
     0xFFE08088,
     0x0000FFD9,
 };
 
-static u32 D_800CFB90[] = {
+u32 D_800CFB90[] = {
     0xFFE08089,
     0x0000FFD9,
 };
 
-static u32 D_800CFB98[] = {
+u32 D_800CFB98[] = {
     0xFFD8808A,
     0x0000FFD9,
 };
 
-static u32 D_800CFBA0[] = {
+u32 D_800CFBA0[] = {
     0xFFF0808B,
     0x0000FFE1,
 };
 
-static u32 D_800CFBA8[] = {
+u32 D_800CFBA8[] = {
     0xFFE8808C,
     0x0000FFD9,
 };
 
-static u32 D_800CFBB0[] = {
+u32 D_800CFBB0[] = {
     0xFFF0808D,
     0x0000FFE1,
 };
 
-static u32 D_800CFBB8[] = {
+u32 D_800CFBB8[] = {
     0xFFF0808E,
     0x0000FFE1,
 };
 
-static u32 D_800CFBC0[] = {
+u32 D_800CFBC0[] = {
     0xFFF0808F,
     0x0000FFE1,
 };
 
-static u32 D_800CFBC8[] = {
+u32 D_800CFBC8[] = {
     0xFFF08090,
     0x0000FFE1,
 };
 
-static u32 D_800CFBD0[] = {
+u32 D_800CFBD0[] = {
     0xFFF08091,
     0x0000FFE1,
 };
 
-static u32 D_800CFBD8[] = {
+u32 D_800CFBD8[] = {
     0xFFE88092,
     0x0000FFE9,
 };
 
-static u32 D_800CFBE0[] = {
+u32 D_800CFBE0[] = {
     0xFFE88093,
     0x0000FFE9,
 };
 
-static u32 D_800CFBE8[] = {
+u32 D_800CFBE8[] = {
     0xFFE88094,
     0x0000FFE9,
 };
 
-static u32 D_800CFBF0[] = {
+u32 D_800CFBF0[] = {
     0xFFE88095,
     0x0000FFE9,
 };
 
-static u32 D_800CFBF8[] = {
+u32 D_800CFBF8[] = {
     0xFFE08096,
     0x0000FFE1,
 };
 
-static u32 D_800CFC00[] = {
+u32 D_800CFC00[] = {
     0xFFE08097,
     0x0000FFB1,
 };
 
-static u32 D_800CFC08[] = {
+u32 D_800CFC08[] = {
     0xFFE88098,
     0x0000FFE1,
 };
 
-static u32 D_800CFC10[] = {
+u32 D_800CFC10[] = {
     0xFFE08099,
     0x0000FFE9,
 };
 
-static u32 D_800CFC18[] = {
+u32 D_800CFC18[] = {
     0xFFE0809A,
     0x0000FFE9,
 };
 
-static u32 D_800CFC20[] = {
+u32 D_800CFC20[] = {
     0xFFE8809B,
     0x0000FFE9,
 };
 
-static u32 D_800CFC28[] = {
+u32 D_800CFC28[] = {
     0xFFF0809C,
     0x0000FFE9,
 };
 
-static u32 D_800CFC30[] = {
+u32 D_800CFC30[] = {
     0xFFE5809D,
     0x0000FFE5,
 };
 
-static u32 D_800CFC38[] = {
+u32 D_800CFC38[] = {
     0xFFF0809E,
     0x0000FFE1,
 };
 
-static u32 D_800CFC40[] = {
+u32 D_800CFC40[] = {
     0xFFF0809E,
     0x0000FFE0,
 };
 
-static u32 D_800CFC48[] = {
+u32 D_800CFC48[] = {
     0xFFF0809F,
     0x0000FFE1,
 };
 
-static u32 D_800CFC50[] = {
+u32 D_800CFC50[] = {
     0xFFF080A0,
     0x0000FFE1,
 };
 
-static u32 D_800CFC58[] = {
+u32 D_800CFC58[] = {
     0xFFF080A1,
     0x0000FFE1,
 };
 
-static u32 D_800CFC60[] = {
+u32 D_800CFC60[] = {
     0xFFF080A1,
     0x0000FFE0,
 };
 
-static u32 D_800CFC68[] = {
+u32 D_800CFC68[] = {
     0xFFE080A2,
     0x0000FFE1,
 };
 
-static u32 D_800CFC70[] = {
+u32 D_800CFC70[] = {
     0xFFDF80A2,
     0x0000FFE1,
 };
 
-static u32 D_800CFC78[] = {
+u32 D_800CFC78[] = {
     0xFFE080A3,
     0x0000FFE1,
 };
 
-static u32 D_800CFC80[] = {
+u32 D_800CFC80[] = {
     0xFFDF80A3,
     0x0000FFE1,
 };
 
-static u32 D_800CFC88[] = {
+u32 D_800CFC88[] = {
     0xFFE080A4,
     0x0000FFE1,
 };
 
-static u32 D_800CFC90[] = {
+u32 D_800CFC90[] = {
     0xFFE180A4,
     0x0000FFE1,
 };
 
-static u32 D_800CFC98[] = {
+u32 D_800CFC98[] = {
     0xFFE080A5,
     0x0000FFE1,
 };
 
-static u32 D_800CFCA0[] = {
+u32 D_800CFCA0[] = {
     0xFFE180A5,
     0x0000FFE1,
 };
 
-static u32 D_800CFCA8[] = {
+u32 D_800CFCA8[] = {
     0xFFE880A6,
     0x009EFFE9,
 };
 
-static u32 D_800CFCB0[] = {
+u32 D_800CFCB0[] = {
     0xFFF580A7,
     0x009FFFE9,
 };
 
-static u32 D_800CFCB8[] = {
+u32 D_800CFCB8[] = {
     0xFFB780A8,
     0x009EFFD1,
 };
 
-static u32 D_800CFCC0[] = {
+u32 D_800CFCC0[] = {
     0xFFE080A9,
     0x0000FFE1,
 };
 
-static u32 D_800CFCC8[] = {
+u32 D_800CFCC8[] = {
     0xFFD880AA,
     0x0000FFE1,
 };
 
-static u32 D_800CFCD0[] = {
+u32 D_800CFCD0[] = {
     0xFFD880AB,
     0x0000FFE1,
 };
 
-static u32 D_800CFCD8[] = {
+u32 D_800CFCD8[] = {
     0xFFD880AC,
     0x0000FFE1,
 };
 
-static u32 D_800CFCE0[] = {
+u32 D_800CFCE0[] = {
     0xFFE080AD,
     0x0000FFE1,
 };
 
-static u32 D_800CFCE8[] = {
+u32 D_800CFCE8[] = {
     0xFFE080AE,
     0x0000FFE1,
 };
 
-static u32 D_800CFCF0[] = {
+u32 D_800CFCF0[] = {
     0xFFE080AF,
     0x0000FFE1,
 };
 
-static u32 D_800CFCF8[] = {
+u32 D_800CFCF8[] = {
     0xFFE080B0,
     0x0000FFE1,
 };
 
-static u32 D_800CFD00[] = {
+u32 D_800CFD00[] = {
     0xFFE080B1,
     0x0000FFE1,
 };
 
-static u32 D_800CFD08[] = {
+u32 D_800CFD08[] = {
     0xFFE880B2,
     0x0000FFE1,
 };
 
-static u32 D_800CFD10[] = {
+u32 D_800CFD10[] = {
     0xFFE080B3,
     0x0000FFE9,
 };
 
-static u32 D_800CFD18[] = {
+u32 D_800CFD18[] = {
     0xFFE880B4,
     0x0000FFE9,
 };
 
-static u32 D_800CFD20[] = {
+u32 D_800CFD20[] = {
     0xFFE880B5,
     0x0000FFE1,
 };
 
-static u32 D_800CFD28[] = {
+u32 D_800CFD28[] = {
     0xFFE880B6,
     0x0000FFE1,
 };
 
-static u32 D_800CFD30[] = {
+u32 D_800CFD30[] = {
     0xFFF080B7,
     0x0000FFE9,
 };
 
-static u32 D_800CFD38[] = {
+u32 D_800CFD38[] = {
     0xFFF080B8,
     0x0000FFE9,
 };
 
-static u32 D_800CFD40[] = {
+u32 D_800CFD40[] = {
     0xFFF880B9,
     0x0000FFE9,
 };
 
-static u32 D_800CFD48[] = {
+u32 D_800CFD48[] = {
     0xFFF880BA,
     0x0000FFE9,
 };
 
-static u32 D_800CFD50[] = {
+u32 D_800CFD50[] = {
     0xFFF080BB,
     0x0000FFE9,
 };
 
-static u32 D_800CFD58[] = {
+u32 D_800CFD58[] = {
     0xFFF080BC,
     0x0000FFE9,
 };
 
-static u32 D_800CFD60[] = {
+u32 D_800CFD60[] = {
     0xFFE880BD,
     0x0000FFF9,
 };
 
-static u32 D_800CFD68[] = {
+u32 D_800CFD68[] = {
     0xFFE080BE,
     0x0000FFF9,
 };
 
-static u32 D_800CFD70[] = {
+u32 D_800CFD70[] = {
     0xFFE080BF,
     0x0000FFF9,
 };
 
-static u32 D_800CFD78[] = {
+u32 D_800CFD78[] = {
     0xFFE080C0,
     0x0000FFF9,
 };
 
-static u32 D_800CFD80[] = {
+u32 D_800CFD80[] = {
     0xFFE080C1,
     0x0000FFF1,
 };
 
-static u32 D_800CFD88[] = {
+u32 D_800CFD88[] = {
     0xFFE880C2,
     0x0000FFF9,
 };
 
-static u32 D_800CFD90[] = {
+u32 D_800CFD90[] = {
     0xFFE880C3,
     0x0000FFF9,
 };
 
-static u32 D_800CFD98[] = {
+u32 D_800CFD98[] = {
     0xFFE880C4,
     0x0000FFF9,
 };
 
-static u32 D_800CFDA0[] = {
+u32 D_800CFDA0[] = {
     0xFFF080C5,
     0x0000FFF9,
 };
 
-static u32 D_800CFDA8[] = {
+u32 D_800CFDA8[] = {
     0xFFF080C6,
     0x0000FFF9,
 };
 
-static u32 D_800CFDB0[] = {
+u32 D_800CFDB0[] = {
     0xFFF080C7,
     0x0000FFF9,
 };
 
-static u32 D_800CFDB8[] = {
+u32 D_800CFDB8[] = {
     0xFFF080C8,
     0x0000FFF9,
 };
 
-static u32 D_800CFDC0[] = {
+u32 D_800CFDC0[] = {
     0xFFE080C9,
     0x0000FFE1,
 };
 
-static u32 D_800CFDC8[] = {
+u32 D_800CFDC8[] = {
     0xFFD880CA,
     0x0000FFE1,
 };
 
-static u32 D_800CFDD0[] = {
+u32 D_800CFDD0[] = {
     0xFFE080CB,
     0x0000FFE9,
 };
 
-static u32 D_800CFDD8[] = {
+u32 D_800CFDD8[] = {
     0xFFE080CC,
     0x0000FFE9,
 };
 
-static u32 D_800CFDE0[] = {
+u32 D_800CFDE0[] = {
     0xFFD880CD,
     0x0000FFD9,
 };
 
-static u32 D_800CFDE8[] = {
+u32 D_800CFDE8[] = {
     0xFFE080CE,
     0x0000FFD9,
 };
 
-static u32 D_800CFDF0[] = {
+u32 D_800CFDF0[] = {
     0xFFE080CF,
     0x0000FFD9,
 };
 
-static u32 D_800CFDF8[] = {
+u32 D_800CFDF8[] = {
     0xFFE080D0,
     0x0000FFD1,
 };
 
-static u32 D_800CFE00[] = {
+u32 D_800CFE00[] = {
     0xFFE080D1,
     0x0000FFD1,
 };
 
-static u32 D_800CFE08[] = {
+u32 D_800CFE08[] = {
     0xFFE880D2,
     0x0000FFF1,
 };
 
-static u32 D_800CFE10[] = {
+u32 D_800CFE10[] = {
     0xFFEE80D3,
     0x0000FFEA,
 };
 
-static u32 D_800CFE18[] = {
+u32 D_800CFE18[] = {
     0xFFF080D4,
     0x0000FFEA,
 };
 
-static u32 D_800CFE20[] = {
+u32 D_800CFE20[] = {
     0xFFF280D5,
     0x0000FFEA,
 };
 
-static u32 D_800CFE28[] = {
+u32 D_800CFE28[] = {
     0xFFEB80D6,
     0x0000FFEB,
 };
 
-static u32 D_800CFE30[] = {
+u32 D_800CFE30[] = {
     0xFFED80D7,
     0x0000FFEB,
 };
 
-static u32 D_800CFE38[] = {
+u32 D_800CFE38[] = {
     0xFFED80D8,
     0x0000FFEB,
 };
 
-static u32 D_800CFE40[] = {
+u32 D_800CFE40[] = {
     0xFFF480D9,
     0x0000FFEC,
 };
 
-static u32 D_800CFE90[];
-static u32 D_800CFE98[];
-static u32 D_800CFEA0[];
-static u32 D_800CFEA8[];
-static u32 D_800CFEB0[];
-static u32 D_800CFEB8[];
-static u32 D_800CFEC0[];
-static u32 D_800CFEC8[];
-static u32 D_800CFED0[];
-static u32 D_800CFED8[];
-static u32 D_800CFEE0[];
-static u32 D_800CFEE8[];
-static u32 D_800CFEF0[];
-static u32 D_800CFEF8[];
-static u32 D_800CFF00[];
-static u32 D_800CFF08[];
+u32 D_800CFE90[];
+u32 D_800CFE98[];
+u32 D_800CFEA0[];
+u32 D_800CFEA8[];
+u32 D_800CFEB0[];
+u32 D_800CFEB8[];
+u32 D_800CFEC0[];
+u32 D_800CFEC8[];
+u32 D_800CFED0[];
+u32 D_800CFED8[];
+u32 D_800CFEE0[];
+u32 D_800CFEE8[];
+u32 D_800CFEF0[];
+u32 D_800CFEF8[];
+u32 D_800CFF00[];
+u32 D_800CFF08[];
 
 s16* D_800CFE48[] = {
     NULL,
@@ -1690,153 +1690,153 @@ s16* D_800CFE48[] = {
     NULL,
 };
 
-static u32 D_800CFE90[] = {
+u32 D_800CFE90[] = {
     0xFFEA8000,
     0x0000FFD0,
 };
 
-static u32 D_800CFE98[] = {
+u32 D_800CFE98[] = {
     0xFFEA8001,
     0x0000FFD1,
 };
 
-static u32 D_800CFEA0[] = {
+u32 D_800CFEA0[] = {
     0xFFEA8002,
     0x0000FFD8,
 };
 
-static u32 D_800CFEA8[] = {
+u32 D_800CFEA8[] = {
     0xFFEA8003,
     0x0000FFD7,
 };
 
-static u32 D_800CFEB0[] = {
+u32 D_800CFEB0[] = {
     0xFFEA8004,
     0x0000FFE2,
 };
 
-static u32 D_800CFEB8[] = {
+u32 D_800CFEB8[] = {
     0xFFEA8004,
     0x0000FFE1,
 };
 
-static u32 D_800CFEC0[] = {
+u32 D_800CFEC0[] = {
     0xFFEA8005,
     0x0000FFE2,
 };
 
-static u32 D_800CFEC8[] = {
+u32 D_800CFEC8[] = {
     0xFFEA8003,
     0x0000FFD7,
 };
 
-static u32 D_800CFED0[] = {
+u32 D_800CFED0[] = {
     0xFFEA8002,
     0x0000FFD7,
 };
 
-static u32 D_800CFED8[] = {
+u32 D_800CFED8[] = {
     0xFFEA8001,
     0x0000FFCF,
 };
 
-static u32 D_800CFEE0[] = {
+u32 D_800CFEE0[] = {
     0xFFEA8000,
     0x0000FFCD,
 };
 
-static u32 D_800CFEE8[] = {
+u32 D_800CFEE8[] = {
     0xFFEA8001,
     0x0000FFCD,
 };
 
-static u32 D_800CFEF0[] = {
+u32 D_800CFEF0[] = {
     0xFFEA8002,
     0x0000FFD6,
 };
 
-static u32 D_800CFEF8[] = {
+u32 D_800CFEF8[] = {
     0xFFEA8003,
     0x0000FFD7,
 };
 
-static u32 D_800CFF00[] = {
+u32 D_800CFF00[] = {
     0xFFEA8004,
     0x0000FFE3,
 };
 
-static u32 D_800CFF08[] = {
+u32 D_800CFF08[] = {
     0xFFEA8005,
     0x0000FFE3,
 };
 
-static u32 D_800D0020[];
-static u32 D_800D003C[];
-static u32 D_800D0058[];
-static u32 D_800D0074[];
-static u32 D_800D0090[];
-static u32 D_800D00AC[];
-static u32 D_800D00C8[];
-static u32 D_800D00E4[];
-static u32 D_800D0100[];
-static u32 D_800D011C[];
-static u32 D_800D014C[];
-static u32 D_800D0168[];
-static u32 D_800D0184[];
-static u32 D_800D01A0[];
-static u32 D_800D01BC[];
-static u32 D_800D01D8[];
-static u32 D_800D01F4[];
-static u32 D_800D0210[];
-static u32 D_800D022C[];
-static u32 D_800D0248[];
-static u32 D_800D0264[];
-static u32 D_800D0280[];
-static u32 D_800D029C[];
-static u32 D_800D02CC[];
-static u32 D_800D02FC[];
-static u32 D_800D0344[];
-static u32 D_800D038C[];
-static u32 D_800D03E8[];
-static u32 D_800D0444[];
-static u32 D_800D04A0[];
-static u32 D_800D04FC[];
-static u32 D_800D0558[];
-static u32 D_800D05B4[];
-static u32 D_800D0610[];
-static u32 D_800D066C[];
-static u32 D_800D06C8[];
-static u32 D_800D0724[];
-static u32 D_800D076C[];
-static u32 D_800D07B4[];
-static u32 D_800D07E4[];
-static u32 D_800D0814[];
-static u32 D_800D0830[];
-static u32 D_800D084C[];
-static u32 D_800D0868[];
-static u32 D_800D0898[];
-static u32 D_800D08C8[];
-static u32 D_800D08F8[];
-static u32 D_800D0940[];
-static u32 D_800D099C[];
-static u32 D_800D09F8[];
-static u32 D_800D0A54[];
-static u32 D_800D0AB0[];
-static u32 D_800D0B24[];
-static u32 D_800D0B98[];
-static u32 D_800D0C0C[];
-static u32 D_800D0C68[];
-static u32 D_800D0CDC[];
-static u32 D_800D0D38[];
-static u32 D_800D0D94[];
-static u32 D_800D0DDC[];
-static u32 D_800D0E24[];
-static u32 D_800D0E6C[];
-static u32 D_800D0EB4[];
-static u32 D_800D0EE4[];
-static u32 D_800D0F14[];
-static u32 D_800D0F30[];
-static u32 D_800D0F4C[];
+u32 D_800D0020[];
+u32 D_800D003C[];
+u32 D_800D0058[];
+u32 D_800D0074[];
+u32 D_800D0090[];
+u32 D_800D00AC[];
+u32 D_800D00C8[];
+u32 D_800D00E4[];
+u32 D_800D0100[];
+u32 D_800D011C[];
+u32 D_800D014C[];
+u32 D_800D0168[];
+u32 D_800D0184[];
+u32 D_800D01A0[];
+u32 D_800D01BC[];
+u32 D_800D01D8[];
+u32 D_800D01F4[];
+u32 D_800D0210[];
+u32 D_800D022C[];
+u32 D_800D0248[];
+u32 D_800D0264[];
+u32 D_800D0280[];
+u32 D_800D029C[];
+u32 D_800D02CC[];
+u32 D_800D02FC[];
+u32 D_800D0344[];
+u32 D_800D038C[];
+u32 D_800D03E8[];
+u32 D_800D0444[];
+u32 D_800D04A0[];
+u32 D_800D04FC[];
+u32 D_800D0558[];
+u32 D_800D05B4[];
+u32 D_800D0610[];
+u32 D_800D066C[];
+u32 D_800D06C8[];
+u32 D_800D0724[];
+u32 D_800D076C[];
+u32 D_800D07B4[];
+u32 D_800D07E4[];
+u32 D_800D0814[];
+u32 D_800D0830[];
+u32 D_800D084C[];
+u32 D_800D0868[];
+u32 D_800D0898[];
+u32 D_800D08C8[];
+u32 D_800D08F8[];
+u32 D_800D0940[];
+u32 D_800D099C[];
+u32 D_800D09F8[];
+u32 D_800D0A54[];
+u32 D_800D0AB0[];
+u32 D_800D0B24[];
+u32 D_800D0B98[];
+u32 D_800D0C0C[];
+u32 D_800D0C68[];
+u32 D_800D0CDC[];
+u32 D_800D0D38[];
+u32 D_800D0D94[];
+u32 D_800D0DDC[];
+u32 D_800D0E24[];
+u32 D_800D0E6C[];
+u32 D_800D0EB4[];
+u32 D_800D0EE4[];
+u32 D_800D0F14[];
+u32 D_800D0F30[];
+u32 D_800D0F4C[];
 
 u16* D_800CFF10[] = {
     NULL,
@@ -1909,295 +1909,295 @@ u16* D_800CFF10[] = {
     (s16*)D_800D0F4C,
 };
 
-static u32 D_800D0020[] = {
+u32 D_800D0020[] = {
     0x00000001, 0xFFF6FFF8, 0x00100010, 0x00680170,
     0x00200040, 0x00300050, 0x00000000,
 };
 
-static u32 D_800D003C[] = {
+u32 D_800D003C[] = {
     0x00020001, 0xFFF6FFF8, 0x00100010, 0x00680170,
     0x00200040, 0x00300050, 0x00000000,
 };
 
-static u32 D_800D0058[] = {
+u32 D_800D0058[] = {
     0x00000001, 0xFFF6FFF8, 0x00100010, 0x00680170,
     0x00200050, 0x00300060, 0x00000000,
 };
 
-static u32 D_800D0074[] = {
+u32 D_800D0074[] = {
     0x00020001, 0xFFF6FFF8, 0x00100010, 0x00680170,
     0x00200050, 0x00300060, 0x00000000,
 };
 
-static u32 D_800D0090[] = {
+u32 D_800D0090[] = {
     0x00000001, 0xFFF6FFF8, 0x00100010, 0x00680170,
     0x00200060, 0x00300070, 0x00000000,
 };
 
-static u32 D_800D00AC[] = {
+u32 D_800D00AC[] = {
     0x00020001, 0xFFF6FFF8, 0x00100010, 0x00680170,
     0x00200060, 0x00300070, 0x00000000,
 };
 
-static u32 D_800D00C8[] = {
+u32 D_800D00C8[] = {
     0x00000001, 0xFFF6FFF8, 0x00100010, 0x00680170,
     0x00200070, 0x00300080, 0x00000000,
 };
 
-static u32 D_800D00E4[] = {
+u32 D_800D00E4[] = {
     0x00020001, 0xFFF6FFF8, 0x00100010, 0x00680170,
     0x00200070, 0x00300080, 0x00000000,
 };
 
-static u32 D_800D0100[] = {
+u32 D_800D0100[] = {
     0x00300001, 0xFFF1FFF0, 0x00200020, 0x00680170,
     0x00000000, 0x00200020, 0x00000000,
 };
 
-static u32 D_800D011C[] = {
+u32 D_800D011C[] = {
     0x00200002, 0xFFF1FFF0, 0x00200020, 0x00680170, 0x00000020, 0x00200040,
     0xFFF80000, 0x0010FFF9, 0x01700010, 0x00400068, 0x00500030, 0x00000040,
 };
 
-static u32 D_800D014C[] = {
+u32 D_800D014C[] = {
     0x00220001, 0xFFF1FFF0, 0x00200020, 0x00680170,
     0x00000020, 0x00200040, 0x00000000,
 };
 
-static u32 D_800D0168[] = {
+u32 D_800D0168[] = {
     0x00200001, 0xFFF1FFF0, 0x00200020, 0x00680170,
     0x00000040, 0x00200060, 0x00000000,
 };
 
-static u32 D_800D0184[] = {
+u32 D_800D0184[] = {
     0x00220001, 0xFFF1FFF0, 0x00200020, 0x00680170,
     0x00000040, 0x00200060, 0x00000000,
 };
 
-static u32 D_800D01A0[] = {
+u32 D_800D01A0[] = {
     0x00200001, 0xFFF1FFF0, 0x00200020, 0x00680170,
     0x00000060, 0x00200080, 0x00000000,
 };
 
-static u32 D_800D01BC[] = {
+u32 D_800D01BC[] = {
     0x00220001, 0xFFF1FFF0, 0x00200020, 0x00680170,
     0x00000060, 0x00200080, 0x00000000,
 };
 
-static u32 D_800D01D8[] = {
+u32 D_800D01D8[] = {
     0x00100001, 0xFFF1FFF0, 0x00200020, 0x00680170,
     0x00200000, 0x00400020, 0x00000000,
 };
 
-static u32 D_800D01F4[] = {
+u32 D_800D01F4[] = {
     0x00120001, 0xFFF1FFF0, 0x00200020, 0x00680170,
     0x00200000, 0x00400020, 0x00000000,
 };
 
-static u32 D_800D0210[] = {
+u32 D_800D0210[] = {
     0x00000001, 0xFFF4FFF0, 0x00100020, 0x00680170,
     0x00200020, 0x00300040, 0x00000000,
 };
 
-static u32 D_800D022C[] = {
+u32 D_800D022C[] = {
     0x00020001, 0xFFF4FFF0, 0x00100020, 0x00680170,
     0x00200020, 0x00300040, 0x00000000,
 };
 
-static u32 D_800D0248[] = {
+u32 D_800D0248[] = {
     0x00000001, 0xFFF1FFF0, 0x00100020, 0x00680170,
     0x00300020, 0x00400040, 0x00000000,
 };
 
-static u32 D_800D0264[] = {
+u32 D_800D0264[] = {
     0x00000001, 0xFFF8FFF8, 0x00100010, 0x00680170,
     0x00200040, 0x00300050, 0x00000000,
 };
 
-static u32 D_800D0280[] = {
+u32 D_800D0280[] = {
     0x00020001, 0xFFF8FFF8, 0x00100010, 0x00680170,
     0x00200040, 0x00300050, 0x00000000,
 };
 
-static u32 D_800D029C[] = {
+u32 D_800D029C[] = {
     0x00000002, 0x0001FFFE, 0x00100010, 0x00680170, 0x00200040, 0x00300050,
     0xFFF80000, 0x0010FFF8, 0x01700010, 0x00500068, 0x00600020, 0x00000030,
 };
 
-static u32 D_800D02CC[] = {
+u32 D_800D02CC[] = {
     0x00020002, 0x0001FFFE, 0x00100010, 0x00680170, 0x00200040, 0x00300050,
     0xFFF80002, 0x0010FFF8, 0x01700010, 0x00500068, 0x00600020, 0x00000030,
 };
 
-static u32 D_800D02FC[] = {
+u32 D_800D02FC[] = {
     0x00000003, 0x0008FFF6, 0x00100010, 0x00680170, 0x00200040, 0x00300050,
     0xFFFE0000, 0x00100001, 0x01700010, 0x00500068, 0x00600020, 0x00000030,
     0xFFF8FFF8, 0x00100010, 0x00680170, 0x00200060, 0x00300070, 0x00000000,
 };
 
-static u32 D_800D0344[] = {
+u32 D_800D0344[] = {
     0x00020003, 0x0008FFF6, 0x00100010, 0x00680170, 0x00200040, 0x00300050,
     0xFFFE0002, 0x00100001, 0x01700010, 0x00500068, 0x00600020, 0x00020030,
     0xFFF8FFF8, 0x00100010, 0x00680170, 0x00200060, 0x00300070, 0x00000000,
 };
 
-static u32 D_800D038C[] = {
+u32 D_800D038C[] = {
     0x00000004, 0x00180000, 0x00100010, 0x00680170, 0x00200040, 0x00300050,
     0xFFF60000, 0x00100008, 0x01700010, 0x00500068, 0x00600020, 0x00000030,
     0x0001FFFE, 0x00100010, 0x00680170, 0x00200060, 0x00300070, 0xFFF80000,
     0x0010FFF8, 0x01700010, 0x00700068, 0x00800020, 0x00000030,
 };
 
-static u32 D_800D03E8[] = {
+u32 D_800D03E8[] = {
     0x00020004, 0x00180000, 0x00100010, 0x00680170, 0x00200040, 0x00300050,
     0xFFF60002, 0x00100008, 0x01700010, 0x00500068, 0x00600020, 0x00020030,
     0x0001FFFE, 0x00100010, 0x00680170, 0x00200060, 0x00300070, 0xFFF80002,
     0x0010FFF8, 0x01700010, 0x00700068, 0x00800020, 0x00000030,
 };
 
-static u32 D_800D0444[] = {
+u32 D_800D0444[] = {
     0x00000004, 0x0018FFF8, 0x00100010, 0x00680170, 0x00200040, 0x00300050,
     0x00000000, 0x00100018, 0x01700010, 0x00500068, 0x00600020, 0x00000030,
     0x0008FFF6, 0x00100010, 0x00680170, 0x00200060, 0x00300070, 0xFFFE0000,
     0x00100001, 0x01700010, 0x00700068, 0x00800020, 0x00000030,
 };
 
-static u32 D_800D04A0[] = {
+u32 D_800D04A0[] = {
     0x00020004, 0x0018FFF8, 0x00100010, 0x00680170, 0x00200040, 0x00300050,
     0x00000002, 0x00100018, 0x01700010, 0x00500068, 0x00600020, 0x00020030,
     0x0008FFF6, 0x00100010, 0x00680170, 0x00200060, 0x00300070, 0xFFFE0002,
     0x00100001, 0x01700010, 0x00700068, 0x00800020, 0x00000030,
 };
 
-static u32 D_800D04FC[] = {
+u32 D_800D04FC[] = {
     0x00000004, 0x0020FFF0, 0x00100010, 0x00680170, 0x00200040, 0x00300050,
     0xFFF80000, 0x00100018, 0x01700010, 0x00500068, 0x00600020, 0x00000030,
     0x00180000, 0x00100010, 0x00680170, 0x00200060, 0x00300070, 0xFFF60000,
     0x00100008, 0x01700010, 0x00700068, 0x00800020, 0x00000030,
 };
 
-static u32 D_800D0558[] = {
+u32 D_800D0558[] = {
     0x00020004, 0x0020FFF0, 0x00100010, 0x00680170, 0x00200040, 0x00300050,
     0xFFF80002, 0x00100018, 0x01700010, 0x00500068, 0x00600020, 0x00020030,
     0x00180000, 0x00100010, 0x00680170, 0x00200060, 0x00300070, 0xFFF60002,
     0x00100008, 0x01700010, 0x00700068, 0x00800020, 0x00000030,
 };
 
-static u32 D_800D05B4[] = {
+u32 D_800D05B4[] = {
     0x00000004, 0x0025FFFD, 0x00100010, 0x00680170, 0x00200040, 0x00300050,
     0xFFF00000, 0x00100020, 0x01700010, 0x00500068, 0x00600020, 0x00000030,
     0x0018FFF8, 0x00100010, 0x00680170, 0x00200060, 0x00300070, 0x00000000,
     0x00100018, 0x01700010, 0x00700068, 0x00800020, 0x00000030,
 };
 
-static u32 D_800D0610[] = {
+u32 D_800D0610[] = {
     0x00020004, 0x0025FFFD, 0x00100010, 0x00680170, 0x00200040, 0x00300050,
     0xFFF00002, 0x00100020, 0x01700010, 0x00500068, 0x00600020, 0x00020030,
     0x0018FFF8, 0x00100010, 0x00680170, 0x00200060, 0x00300070, 0x00000002,
     0x00100018, 0x01700010, 0x00700068, 0x00800020, 0x00000030,
 };
 
-static u32 D_800D066C[] = {
+u32 D_800D066C[] = {
     0x00000004, 0x002BFFF4, 0x00100010, 0x00680170, 0x00200040, 0x00300050,
     0xFFFD0000, 0x00100025, 0x01700010, 0x00500068, 0x00600020, 0x00000030,
     0x0020FFF0, 0x00100010, 0x00680170, 0x00200060, 0x00300070, 0xFFF80000,
     0x00100018, 0x01700010, 0x00700068, 0x00800020, 0x00000030,
 };
 
-static u32 D_800D06C8[] = {
+u32 D_800D06C8[] = {
     0x00020004, 0x002BFFF4, 0x00100010, 0x00680170, 0x00200040, 0x00300050,
     0xFFFD0002, 0x00100025, 0x01700010, 0x00500068, 0x00600020, 0x00020030,
     0x0020FFF0, 0x00100010, 0x00680170, 0x00200060, 0x00300070, 0xFFF80002,
     0x00100018, 0x01700010, 0x00700068, 0x00800020, 0x00000030,
 };
 
-static u32 D_800D0724[] = {
+u32 D_800D0724[] = {
     0x00000003, 0x002BFFF4, 0x00100010, 0x00680170, 0x00200050, 0x00300060,
     0xFFFD0000, 0x00100025, 0x01700010, 0x00600068, 0x00700020, 0x00000030,
     0x0020FFF0, 0x00100010, 0x00680170, 0x00200070, 0x00300080, 0x00000000,
 };
 
-static u32 D_800D076C[] = {
+u32 D_800D076C[] = {
     0x00020003, 0x002BFFF4, 0x00100010, 0x00680170, 0x00200050, 0x00300060,
     0xFFFD0002, 0x00100025, 0x01700010, 0x00600068, 0x00700020, 0x00020030,
     0x0020FFF0, 0x00100010, 0x00680170, 0x00200070, 0x00300080, 0x00000000,
 };
 
-static u32 D_800D07B4[] = {
+u32 D_800D07B4[] = {
     0x00000002, 0x002BFFF4, 0x00100010, 0x00680170, 0x00200060, 0x00300070,
     0xFFFD0000, 0x00100025, 0x01700010, 0x00700068, 0x00800020, 0x00000030,
 };
 
-static u32 D_800D07E4[] = {
+u32 D_800D07E4[] = {
     0x00020002, 0x002BFFF4, 0x00100010, 0x00680170, 0x00200060, 0x00300070,
     0xFFFD0002, 0x00100025, 0x01700010, 0x00700068, 0x00800020, 0x00000030,
 };
 
-static u32 D_800D0814[] = {
+u32 D_800D0814[] = {
     0x00000001, 0x002BFFF4, 0x00100010, 0x00680170,
     0x00200070, 0x00300080, 0x00000000,
 };
 
-static u32 D_800D0830[] = {
+u32 D_800D0830[] = {
     0x00020001, 0x002BFFF4, 0x00100010, 0x00680170,
     0x00200070, 0x00300080, 0x00000000,
 };
 
-static u32 D_800D084C[] = {
+u32 D_800D084C[] = {
     0x00300001, 0xFFEFFFF2, 0x00200020, 0x00680170,
     0x00000000, 0x00200020, 0x00000000,
 };
 
-static u32 D_800D0868[] = {
+u32 D_800D0868[] = {
     0x00200002, 0xFFEFFFF2, 0x00200020, 0x00680170, 0x00000020, 0x00200040,
     0xFFFA0000, 0x0010FFF7, 0x01700010, 0x00400068, 0x00500030, 0x00000040,
 };
 
-static u32 D_800D0898[] = {
+u32 D_800D0898[] = {
     0x00000002, 0x0002FFED, 0x00100010, 0x00680170, 0x00200040, 0x00300050,
     0xFFF20022, 0x0020FFEF, 0x01700020, 0x00200068, 0x00400000, 0x00000020,
 };
 
-static u32 D_800D08C8[] = {
+u32 D_800D08C8[] = {
     0x00020002, 0x0002FFED, 0x00100010, 0x00680170, 0x00200040, 0x00300050,
     0xFFF20020, 0x0020FFEF, 0x01700020, 0x00400068, 0x00600000, 0x00000020,
 };
 
-static u32 D_800D08F8[] = {
+u32 D_800D08F8[] = {
     0x00300003, 0xFFFFFFFA, 0x00200020, 0x00680170, 0x00000000, 0x00200020,
     0xFFED0000, 0x00100002, 0x01700010, 0x00500068, 0x00600020, 0x00220030,
     0xFFEFFFF2, 0x00200020, 0x00680170, 0x00000040, 0x00200060, 0x00000000,
 };
 
-static u32 D_800D0940[] = {
+u32 D_800D0940[] = {
     0x00200004, 0xFFFFFFFA, 0x00200020, 0x00680170, 0x00000020, 0x00200040,
     0x00020000, 0x00100007, 0x01700010, 0x00400068, 0x00500030, 0x00020040,
     0x0002FFED, 0x00100010, 0x00680170, 0x00200050, 0x00300060, 0xFFF20020,
     0x0020FFEF, 0x01700020, 0x00600068, 0x00800000, 0x00000020,
 };
 
-static u32 D_800D099C[] = {
+u32 D_800D099C[] = {
     0x00000004, 0xFFF7000A, 0x00100010, 0x00680170, 0x00200040, 0x00300050,
     0xFFFA0022, 0x0020FFFF, 0x01700020, 0x00200068, 0x00400000, 0x00000020,
     0x0002FFED, 0x00100010, 0x00680170, 0x00200060, 0x00300070, 0xFFF20022,
     0x0020FFEF, 0x01700020, 0x00600068, 0x00800000, 0x00000020,
 };
 
-static u32 D_800D09F8[] = {
+u32 D_800D09F8[] = {
     0x00020004, 0xFFF7000A, 0x00100010, 0x00680170, 0x00200040, 0x00300050,
     0xFFF90020, 0x0020FFFF, 0x01700020, 0x00400068, 0x00600000, 0x00020020,
     0x0002FFED, 0x00100010, 0x00680170, 0x00200060, 0x00300070, 0xFFF20010,
     0x0020FFEF, 0x01700020, 0x00000068, 0x00200020, 0x00000040,
 };
 
-static u32 D_800D0A54[] = {
+u32 D_800D0A54[] = {
     0x00300004, 0x0007FFEA, 0x00200020, 0x00680170, 0x00000000, 0x00200020,
     0x000A0000, 0x0010FFF7, 0x01700010, 0x00500068, 0x00600020, 0x00220030,
     0xFFFFFFF9, 0x00200020, 0x00680170, 0x00000040, 0x00200060, 0xFFF20012,
     0x0020FFEE, 0x01700020, 0x00000068, 0x00200020, 0x00000040,
 };
 
-static u32 D_800D0AB0[] = {
+u32 D_800D0AB0[] = {
     0x00200005, 0x0007FFEC, 0x00200020, 0x00680170, 0x00000020, 0x00200040,
     0xFFF20000, 0x0010000F, 0x01700010, 0x00400068, 0x00500030, 0x00020040,
     0xFFF7000A, 0x00100010, 0x00680170, 0x00200050, 0x00300060, 0xFFF80020,
@@ -2205,7 +2205,7 @@ static u32 D_800D0AB0[] = {
     0x00100020, 0x00680170, 0x00200020, 0x00300040, 0x00000000,
 };
 
-static u32 D_800D0B24[] = {
+u32 D_800D0B24[] = {
     0x00000005, 0x001BFFFD, 0x00100010, 0x00680170, 0x00200040, 0x00300050,
     0xFFEB0022, 0x00200007, 0x01700020, 0x00200068, 0x00400000, 0x00000020,
     0xFFF7000A, 0x00100010, 0x00680170, 0x00200060, 0x00300070, 0xFFF90022,
@@ -2213,7 +2213,7 @@ static u32 D_800D0B24[] = {
     0x00100020, 0x00680170, 0x00200020, 0x00300040, 0x00000000,
 };
 
-static u32 D_800D0B98[] = {
+u32 D_800D0B98[] = {
     0x00020005, 0x001BFFFD, 0x00100010, 0x00680170, 0x00200040, 0x00300050,
     0xFFEA0020, 0x00200007, 0x01700020, 0x00400068, 0x00600000, 0x00020020,
     0xFFF7000A, 0x00100010, 0x00680170, 0x00200060, 0x00300070, 0xFFFA0010,
@@ -2221,14 +2221,14 @@ static u32 D_800D0B98[] = {
     0x00100020, 0x00680170, 0x00300020, 0x00400040, 0x00000000,
 };
 
-static u32 D_800D0C0C[] = {
+u32 D_800D0C0C[] = {
     0x00300004, 0x000FFFF2, 0x00200020, 0x00680170, 0x00000000, 0x00200020,
     0xFFEA0022, 0x00200007, 0x01700020, 0x00400068, 0x00600000, 0x00120020,
     0xFFFEFFFA, 0x00200020, 0x00680170, 0x00200000, 0x00400020, 0x000A0000,
     0x0010FFF6, 0x01700010, 0x00700068, 0x00800020, 0x00000030,
 };
 
-static u32 D_800D0C68[] = {
+u32 D_800D0C68[] = {
     0x00200005, 0x000FFFF2, 0x00200020, 0x00680170, 0x00000020, 0x00200040,
     0xFFFA0000, 0x00100017, 0x01700010, 0x00400068, 0x00500030, 0x00200040,
     0x0007FFE9, 0x00200020, 0x00680170, 0x00000060, 0x00200080, 0x000A0002,
@@ -2236,229 +2236,229 @@ static u32 D_800D0C68[] = {
     0x00100020, 0x00680170, 0x00200020, 0x00300040, 0x00000000,
 };
 
-static u32 D_800D0CDC[] = {
+u32 D_800D0CDC[] = {
     0x00000004, 0x0025FFF1, 0x00100010, 0x00680170, 0x00200040, 0x00300050,
     0xFFF20022, 0x0020000F, 0x01700020, 0x00200068, 0x00400000, 0x00220020,
     0x0007FFEA, 0x00200020, 0x00680170, 0x00000060, 0x00200080, 0xFFFA0002,
     0x00200000, 0x01700010, 0x00200068, 0x00400020, 0x00000030,
 };
 
-static u32 D_800D0D38[] = {
+u32 D_800D0D38[] = {
     0x00020004, 0x0025FFF1, 0x00100010, 0x00680170, 0x00200040, 0x00300050,
     0xFFF20020, 0x0020000F, 0x01700020, 0x00400068, 0x00600000, 0x00100020,
     0x0007FFEA, 0x00200020, 0x00680170, 0x00200000, 0x00400020, 0xFFFA0000,
     0x0020FFFF, 0x01700010, 0x00200068, 0x00400030, 0x00000040,
 };
 
-static u32 D_800D0D94[] = {
+u32 D_800D0D94[] = {
     0x00000003, 0x0025FFF1, 0x00100010, 0x00680170, 0x00200050, 0x00300060,
     0xFFF20022, 0x0020000F, 0x01700020, 0x00400068, 0x00600000, 0x00120020,
     0x0006FFEA, 0x00200020, 0x00680170, 0x00200000, 0x00400020, 0x00000000,
 };
 
-static u32 D_800D0DDC[] = {
+u32 D_800D0DDC[] = {
     0x00020003, 0x0025FFF1, 0x00100010, 0x00680170, 0x00200050, 0x00300060,
     0xFFF20020, 0x0020000E, 0x01700020, 0x00600068, 0x00800000, 0x00000020,
     0x0009FFEA, 0x00100020, 0x00680170, 0x00200020, 0x00300040, 0x00000000,
 };
 
-static u32 D_800D0E24[] = {
+u32 D_800D0E24[] = {
     0x00000003, 0x0025FFF1, 0x00100010, 0x00680170, 0x00200060, 0x00300070,
     0xFFF20022, 0x0020000F, 0x01700020, 0x00600068, 0x00800000, 0x00020020,
     0x0008FFEA, 0x00100020, 0x00680170, 0x00200020, 0x00300040, 0x00000000,
 };
 
-static u32 D_800D0E6C[] = {
+u32 D_800D0E6C[] = {
     0x00020003, 0x0025FFF1, 0x00100010, 0x00680170, 0x00200060, 0x00300070,
     0xFFF20010, 0x0020000F, 0x01700020, 0x00000068, 0x00200020, 0x00000040,
     0x0007FFEA, 0x00100020, 0x00680170, 0x00300020, 0x00400040, 0x00000000,
 };
 
-static u32 D_800D0EB4[] = {
+u32 D_800D0EB4[] = {
     0x00000002, 0x0024FFF1, 0x00100010, 0x00680170, 0x00200070, 0x00300080,
     0xFFF20012, 0x0020000E, 0x01700020, 0x00000068, 0x00200020, 0x00000040,
 };
 
-static u32 D_800D0EE4[] = {
+u32 D_800D0EE4[] = {
     0x00000002, 0x0011FFF2, 0x00100020, 0x00680170, 0x00200020, 0x00300040,
     0xFFF10002, 0x00100023, 0x01700010, 0x00700068, 0x00800020, 0x00000030,
 };
 
-static u32 D_800D0F14[] = {
+u32 D_800D0F14[] = {
     0x00020001, 0x0010FFF2, 0x00100020, 0x00680170,
     0x00200020, 0x00300040, 0x00000000,
 };
 
-static u32 D_800D0F30[] = {
+u32 D_800D0F30[] = {
     0x00000001, 0x000FFFF2, 0x00100020, 0x00680170,
     0x00300020, 0x00400040, 0x00000000,
 };
 
-static u32 D_800D0F4C[] = {
+u32 D_800D0F4C[] = {
     0x00240001, 0xFFC1FFC1, 0x00800080, 0x006801A0,
     0x00000080, 0x00800100, 0x5F650000,
 };
 
-static u32 D_800D11EC[];
-static u32 D_800D1208[];
-static u32 D_800D1224[];
-static u32 D_800D1240[];
-static u32 D_800D125C[];
-static u32 D_800D1278[];
-static u32 D_800D1294[];
-static u32 D_800D12B0[];
-static u32 D_800D12CC[];
-static u32 D_800D12E8[];
-static u32 D_800D1304[];
-static u32 D_800D1320[];
-static u32 D_800D133C[];
-static u32 D_800D1358[];
-static u32 D_800D1374[];
-static u32 D_800D1390[];
-static u32 D_800D13AC[];
-static u32 D_800D13C8[];
-static u32 D_800D13E4[];
-static u32 D_800D1400[];
-static u32 D_800D141C[];
-static u32 D_800D1438[];
-static u32 D_800D1454[];
-static u32 D_800D1470[];
-static u32 D_800D148C[];
-static u32 D_800D14A8[];
-static u32 D_800D14C4[];
-static u32 D_800D14E0[];
-static u32 D_800D14FC[];
-static u32 D_800D1518[];
-static u32 D_800D1534[];
-static u32 D_800D1550[];
-static u32 D_800D156C[];
-static u32 D_800D1588[];
-static u32 D_800D15A4[];
-static u32 D_800D15C0[];
-static u32 D_800D15DC[];
-static u32 D_800D15F8[];
-static u32 D_800D1614[];
-static u32 D_800D1630[];
-static u32 D_800D164C[];
-static u32 D_800D1668[];
-static u32 D_800D16B0[];
-static u32 D_800D16F8[];
-static u32 D_800D1740[];
-static u32 D_800D1788[];
-static u32 D_800D17D0[];
-static u32 D_800D1818[];
-static u32 D_800D1860[];
-static u32 D_800D18A8[];
-static u32 D_800D18D8[];
-static u32 D_800D1908[];
-static u32 D_800D1938[];
-static u32 D_800D1968[];
-static u32 D_800D1998[];
-static u32 D_800D19C8[];
-static u32 D_800D19F8[];
-static u32 D_800D1A28[];
-static u32 D_800D1A58[];
-static u32 D_800D1A88[];
-static u32 D_800D1AB8[];
-static u32 D_800D1AE8[];
-static u32 D_800D1B18[];
-static u32 D_800D1B48[];
-static u32 D_800D1B78[];
-static u32 D_800D1BA8[];
-static u32 D_800D1BD8[];
-static u32 D_800D1C08[];
-static u32 D_800D1C38[];
-static u32 D_800D1C68[];
-static u32 D_800D1C98[];
-static u32 D_800D1CC8[];
-static u32 D_800D1CF8[];
-static u32 D_800D1D28[];
-static u32 D_800D1D58[];
-static u32 D_800D1D88[];
-static u32 D_800D1DB8[];
-static u32 D_800D1DE8[];
-static u32 D_800D1E18[];
-static u32 D_800D1E48[];
-static u32 D_800D1E78[];
-static u32 D_800D1EA8[];
-static u32 D_800D1ED8[];
-static u32 D_800D1F08[];
-static u32 D_800D1F38[];
-static u32 D_800D1F68[];
-static u32 D_800D1F98[];
-static u32 D_800D1FC8[];
-static u32 D_800D1FF8[];
-static u32 D_800D2028[];
-static u32 D_800D2070[];
-static u32 D_800D20B8[];
-static u32 D_800D2100[];
-static u32 D_800D2148[];
-static u32 D_800D2190[];
-static u32 D_800D21D8[];
-static u32 D_800D2220[];
-static u32 D_800D2268[];
-static u32 D_800D2298[];
-static u32 D_800D22C8[];
-static u32 D_800D22F8[];
-static u32 D_800D2328[];
-static u32 D_800D2358[];
-static u32 D_800D2388[];
-static u32 D_800D23B8[];
-static u32 D_800D23E8[];
-static u32 D_800D2418[];
-static u32 D_800D2448[];
-static u32 D_800D2478[];
-static u32 D_800D24A8[];
-static u32 D_800D24D8[];
-static u32 D_800D2508[];
-static u32 D_800D2538[];
-static u32 D_800D2568[];
-static u32 D_800D2584[];
-static u32 D_800D25A0[];
-static u32 D_800D25BC[];
-static u32 D_800D25D8[];
-static u32 D_800D25F4[];
-static u32 D_800D2610[];
-static u32 D_800D262C[];
-static u32 D_800D2648[];
-static u32 D_800D2664[];
-static u32 D_800D2680[];
-static u32 D_800D26B0[];
-static u32 D_800D26E0[];
-static u32 D_800D2710[];
-static u32 D_800D2740[];
-static u32 D_800D2770[];
-static u32 D_800D27A0[];
-static u32 D_800D27BC[];
-static u32 D_800D27D8[];
-static u32 D_800D27F4[];
-static u32 D_800D2810[];
-static u32 D_800D282C[];
-static u32 D_800D2848[];
-static u32 D_800D2864[];
-static u32 D_800D2880[];
-static u32 D_800D289C[];
-static u32 D_800D28B8[];
-static u32 D_800D28E8[];
-static u32 D_800D2918[];
-static u32 D_800D2948[];
-static u32 D_800D2978[];
-static u32 D_800D29A8[];
-static u32 D_800D29D8[];
-static u32 D_800D29F4[];
-static u32 D_800D2A10[];
-static u32 D_800D2A2C[];
-static u32 D_800D2A48[];
-static u32 D_800D2A64[];
-static u32 D_800D2A80[];
-static u32 D_800D2A9C[];
-static u32 D_800D2AB8[];
-static u32 D_800D2AD4[];
-static u32 D_800D2B04[];
-static u32 D_800D2B34[];
-static u32 D_800D2B64[];
-static u32 D_800D2B94[];
-static u32 D_800D2BC4[];
+u32 D_800D11EC[];
+u32 D_800D1208[];
+u32 D_800D1224[];
+u32 D_800D1240[];
+u32 D_800D125C[];
+u32 D_800D1278[];
+u32 D_800D1294[];
+u32 D_800D12B0[];
+u32 D_800D12CC[];
+u32 D_800D12E8[];
+u32 D_800D1304[];
+u32 D_800D1320[];
+u32 D_800D133C[];
+u32 D_800D1358[];
+u32 D_800D1374[];
+u32 D_800D1390[];
+u32 D_800D13AC[];
+u32 D_800D13C8[];
+u32 D_800D13E4[];
+u32 D_800D1400[];
+u32 D_800D141C[];
+u32 D_800D1438[];
+u32 D_800D1454[];
+u32 D_800D1470[];
+u32 D_800D148C[];
+u32 D_800D14A8[];
+u32 D_800D14C4[];
+u32 D_800D14E0[];
+u32 D_800D14FC[];
+u32 D_800D1518[];
+u32 D_800D1534[];
+u32 D_800D1550[];
+u32 D_800D156C[];
+u32 D_800D1588[];
+u32 D_800D15A4[];
+u32 D_800D15C0[];
+u32 D_800D15DC[];
+u32 D_800D15F8[];
+u32 D_800D1614[];
+u32 D_800D1630[];
+u32 D_800D164C[];
+u32 D_800D1668[];
+u32 D_800D16B0[];
+u32 D_800D16F8[];
+u32 D_800D1740[];
+u32 D_800D1788[];
+u32 D_800D17D0[];
+u32 D_800D1818[];
+u32 D_800D1860[];
+u32 D_800D18A8[];
+u32 D_800D18D8[];
+u32 D_800D1908[];
+u32 D_800D1938[];
+u32 D_800D1968[];
+u32 D_800D1998[];
+u32 D_800D19C8[];
+u32 D_800D19F8[];
+u32 D_800D1A28[];
+u32 D_800D1A58[];
+u32 D_800D1A88[];
+u32 D_800D1AB8[];
+u32 D_800D1AE8[];
+u32 D_800D1B18[];
+u32 D_800D1B48[];
+u32 D_800D1B78[];
+u32 D_800D1BA8[];
+u32 D_800D1BD8[];
+u32 D_800D1C08[];
+u32 D_800D1C38[];
+u32 D_800D1C68[];
+u32 D_800D1C98[];
+u32 D_800D1CC8[];
+u32 D_800D1CF8[];
+u32 D_800D1D28[];
+u32 D_800D1D58[];
+u32 D_800D1D88[];
+u32 D_800D1DB8[];
+u32 D_800D1DE8[];
+u32 D_800D1E18[];
+u32 D_800D1E48[];
+u32 D_800D1E78[];
+u32 D_800D1EA8[];
+u32 D_800D1ED8[];
+u32 D_800D1F08[];
+u32 D_800D1F38[];
+u32 D_800D1F68[];
+u32 D_800D1F98[];
+u32 D_800D1FC8[];
+u32 D_800D1FF8[];
+u32 D_800D2028[];
+u32 D_800D2070[];
+u32 D_800D20B8[];
+u32 D_800D2100[];
+u32 D_800D2148[];
+u32 D_800D2190[];
+u32 D_800D21D8[];
+u32 D_800D2220[];
+u32 D_800D2268[];
+u32 D_800D2298[];
+u32 D_800D22C8[];
+u32 D_800D22F8[];
+u32 D_800D2328[];
+u32 D_800D2358[];
+u32 D_800D2388[];
+u32 D_800D23B8[];
+u32 D_800D23E8[];
+u32 D_800D2418[];
+u32 D_800D2448[];
+u32 D_800D2478[];
+u32 D_800D24A8[];
+u32 D_800D24D8[];
+u32 D_800D2508[];
+u32 D_800D2538[];
+u32 D_800D2568[];
+u32 D_800D2584[];
+u32 D_800D25A0[];
+u32 D_800D25BC[];
+u32 D_800D25D8[];
+u32 D_800D25F4[];
+u32 D_800D2610[];
+u32 D_800D262C[];
+u32 D_800D2648[];
+u32 D_800D2664[];
+u32 D_800D2680[];
+u32 D_800D26B0[];
+u32 D_800D26E0[];
+u32 D_800D2710[];
+u32 D_800D2740[];
+u32 D_800D2770[];
+u32 D_800D27A0[];
+u32 D_800D27BC[];
+u32 D_800D27D8[];
+u32 D_800D27F4[];
+u32 D_800D2810[];
+u32 D_800D282C[];
+u32 D_800D2848[];
+u32 D_800D2864[];
+u32 D_800D2880[];
+u32 D_800D289C[];
+u32 D_800D28B8[];
+u32 D_800D28E8[];
+u32 D_800D2918[];
+u32 D_800D2948[];
+u32 D_800D2978[];
+u32 D_800D29A8[];
+u32 D_800D29D8[];
+u32 D_800D29F4[];
+u32 D_800D2A10[];
+u32 D_800D2A2C[];
+u32 D_800D2A48[];
+u32 D_800D2A64[];
+u32 D_800D2A80[];
+u32 D_800D2A9C[];
+u32 D_800D2AB8[];
+u32 D_800D2AD4[];
+u32 D_800D2B04[];
+u32 D_800D2B34[];
+u32 D_800D2B64[];
+u32 D_800D2B94[];
+u32 D_800D2BC4[];
 
 s16* D_800D0F68[] = {
     NULL,
@@ -2624,830 +2624,830 @@ s16* D_800D0F68[] = {
     (s16*)D_800D2BC4,
 };
 
-static u32 D_800D11EC[] = {
+u32 D_800D11EC[] = {
     0x00000001, 0xFFF1FFF5, 0x00180018, 0x00780190,
     0x00800080, 0x00980098, 0x00000000,
 };
 
-static u32 D_800D1208[] = {
+u32 D_800D1208[] = {
     0x00020001, 0xFFF1FFF4, 0x00180018, 0x00780190,
     0x00800080, 0x00980098, 0x00000000,
 };
 
-static u32 D_800D1224[] = {
+u32 D_800D1224[] = {
     0x00000001, 0xFFF8FFF9, 0x00100010, 0x00780191,
     0x008000B0, 0x009000C0, 0x00000000,
 };
 
-static u32 D_800D1240[] = {
+u32 D_800D1240[] = {
     0x00000001, 0xFFF8FFF9, 0x00100010, 0x00780191,
     0x008000C0, 0x009000D0, 0x00000000,
 };
 
-static u32 D_800D125C[] = {
+u32 D_800D125C[] = {
     0x00000001, 0xFFF8FFF9, 0x00100010, 0x00780191,
     0x008000D0, 0x009000E0, 0x00000000,
 };
 
-static u32 D_800D1278[] = {
+u32 D_800D1278[] = {
     0x00000001, 0xFFF8FFF9, 0x00100010, 0x00780191,
     0x009000B0, 0x00A000C0, 0x00000000,
 };
 
-static u32 D_800D1294[] = {
+u32 D_800D1294[] = {
     0x00000001, 0xFFF8FFF9, 0x00100010, 0x00780191,
     0x009000C0, 0x00A000D0, 0x00000000,
 };
 
-static u32 D_800D12B0[] = {
+u32 D_800D12B0[] = {
     0x00000001, 0xFFF8FFFA, 0x00100010, 0x00780191,
     0x009000D0, 0x00A000E0, 0x00000000,
 };
 
-static u32 D_800D12CC[] = {
+u32 D_800D12CC[] = {
     0x00020001, 0xFFF8FFFA, 0x00100010, 0x00780191,
     0x009000C0, 0x00A000D0, 0x00000000,
 };
 
-static u32 D_800D12E8[] = {
+u32 D_800D12E8[] = {
     0x00020001, 0xFFF8FFFA, 0x00100010, 0x00780191,
     0x009000B0, 0x00A000C0, 0x00000000,
 };
 
-static u32 D_800D1304[] = {
+u32 D_800D1304[] = {
     0x00020001, 0xFFF8FFFA, 0x00100010, 0x00780191,
     0x008000D0, 0x009000E0, 0x00000000,
 };
 
-static u32 D_800D1320[] = {
+u32 D_800D1320[] = {
     0x00020001, 0xFFF8FFFA, 0x00100010, 0x00780191,
     0x008000C0, 0x009000D0, 0x00000000,
 };
 
-static u32 D_800D133C[] = {
+u32 D_800D133C[] = {
     0x00020001, 0xFFF8FFF9, 0x00100010, 0x00780192,
     0x008000B0, 0x009000C0, 0x00000000,
 };
 
-static u32 D_800D1358[] = {
+u32 D_800D1358[] = {
     0x00020001, 0xFFF8FFF9, 0x00100010, 0x00780191,
     0x008000E0, 0x009000F0, 0x00000000,
 };
 
-static u32 D_800D1374[] = {
+u32 D_800D1374[] = {
     0x00000001, 0xFFF8FFF9, 0x00100010, 0x00780191,
     0x00B00080, 0x00C00090, 0x00000000,
 };
 
-static u32 D_800D1390[] = {
+u32 D_800D1390[] = {
     0x00000001, 0xFFF8FFF9, 0x00100010, 0x00780191,
     0x00B00090, 0x00C000A0, 0x00000000,
 };
 
-static u32 D_800D13AC[] = {
+u32 D_800D13AC[] = {
     0x00000001, 0xFFF8FFF9, 0x00100010, 0x00780191,
     0x00B000A0, 0x00C000B0, 0x00000000,
 };
 
-static u32 D_800D13C8[] = {
+u32 D_800D13C8[] = {
     0x00000001, 0xFFF8FFF9, 0x00100010, 0x00780191,
     0x00B000B0, 0x00C000C0, 0x00000000,
 };
 
-static u32 D_800D13E4[] = {
+u32 D_800D13E4[] = {
     0x00000001, 0xFFF0FFF5, 0x00180018, 0x00780193,
     0x00800098, 0x009800B0, 0x00000000,
 };
 
-static u32 D_800D1400[] = {
+u32 D_800D1400[] = {
     0x00000001, 0x0000FFFD, 0x00080008, 0x00780193,
     0x00A000D0, 0x00A800D8, 0x00000000,
 };
 
-static u32 D_800D141C[] = {
+u32 D_800D141C[] = {
     0x00000001, 0x0000FFFD, 0x00080008, 0x00780193,
     0x00A800D0, 0x00B000D8, 0x00000000,
 };
 
-static u32 D_800D1438[] = {
+u32 D_800D1438[] = {
     0x00000001, 0x0000FFFE, 0x00080008, 0x00780193,
     0x00A000D8, 0x00A800E0, 0x00000000,
 };
 
-static u32 D_800D1454[] = {
+u32 D_800D1454[] = {
     0x00000001, 0x0000FFFE, 0x00080008, 0x00780193,
     0x00A800D8, 0x00B000E0, 0x00000000,
 };
 
-static u32 D_800D1470[] = {
+u32 D_800D1470[] = {
     0x00010001, 0x0000FFFD, 0x00080008, 0x00780193,
     0x00A800D8, 0x00B000E0, 0x00000000,
 };
 
-static u32 D_800D148C[] = {
+u32 D_800D148C[] = {
     0x00020001, 0x0000FFFC, 0x00080008, 0x00780193,
     0x00A000D8, 0x00A800E0, 0x00000000,
 };
 
-static u32 D_800D14A8[] = {
+u32 D_800D14A8[] = {
     0x00000001, 0xFFF8FFF8, 0x00100010, 0x00780181,
     0x00A000C0, 0x00B000D0, 0x00000000,
 };
 
-static u32 D_800D14C4[] = {
+u32 D_800D14C4[] = {
     0x00000001, 0xFFF8FFF8, 0x00100010, 0x00780182,
     0x00A000C0, 0x00B000D0, 0x00000000,
 };
 
-static u32 D_800D14E0[] = {
+u32 D_800D14E0[] = {
     0x00000001, 0xFFF8FFF8, 0x00100010, 0x00780183,
     0x00A000C0, 0x00B000D0, 0x00000000,
 };
 
-static u32 D_800D14FC[] = {
+u32 D_800D14FC[] = {
     0x00000001, 0xFFF8FFF9, 0x00100010, 0x00780184,
     0x00A000B0, 0x00B000C0, 0x00000000,
 };
 
-static u32 D_800D1518[] = {
+u32 D_800D1518[] = {
     0x00000001, 0xFFF8FFF9, 0x00100010, 0x00780186,
     0x00A000B0, 0x00B000C0, 0x00000000,
 };
 
-static u32 D_800D1534[] = {
+u32 D_800D1534[] = {
     0x00000001, 0xFFF8FFF9, 0x00100010, 0x00780187,
     0x00A000B0, 0x00B000C0, 0x00000000,
 };
 
-static u32 D_800D1550[] = {
+u32 D_800D1550[] = {
     0x00000001, 0xFFF0FFF3, 0x00180018, 0x00780180,
     0x00980098, 0x00B000B0, 0x00000000,
 };
 
-static u32 D_800D156C[] = {
+u32 D_800D156C[] = {
     0x00000001, 0xFFF0FFF3, 0x00180018, 0x00780188,
     0x00980098, 0x00B000B0, 0x00000000,
 };
 
-static u32 D_800D1588[] = {
+u32 D_800D1588[] = {
     0x00000001, 0xFFF0FFF6, 0x00180018, 0x00780181,
     0x00980080, 0x00B00098, 0x00000000,
 };
 
-static u32 D_800D15A4[] = {
+u32 D_800D15A4[] = {
     0x00000001, 0xFFF0FFF6, 0x00180018, 0x00780182,
     0x00980080, 0x00B00098, 0x00000000,
 };
 
-static u32 D_800D15C0[] = {
+u32 D_800D15C0[] = {
     0x00000001, 0xFFF0FFF6, 0x00180018, 0x00780183,
     0x00980080, 0x00B00098, 0x00000000,
 };
 
-static u32 D_800D15DC[] = {
+u32 D_800D15DC[] = {
     0x00000001, 0xFFF0FFF6, 0x00180018, 0x00780180,
     0x00980080, 0x00B00098, 0x00000000,
 };
 
-static u32 D_800D15F8[] = {
+u32 D_800D15F8[] = {
     0x00000001, 0xFFF0FFF6, 0x00180018, 0x00780184,
     0x00980080, 0x00B00098, 0x00000000,
 };
 
-static u32 D_800D1614[] = {
+u32 D_800D1614[] = {
     0x00000001, 0xFFF0FFF6, 0x00180018, 0x00780185,
     0x00980080, 0x00B00098, 0x00000000,
 };
 
-static u32 D_800D1630[] = {
+u32 D_800D1630[] = {
     0x00000001, 0xFFF0FFF6, 0x00180018, 0x00780186,
     0x00980080, 0x00B00098, 0x00000000,
 };
 
-static u32 D_800D164C[] = {
+u32 D_800D164C[] = {
     0x00000001, 0xFFF0FFF6, 0x00180018, 0x00780187,
     0x00980080, 0x00B00098, 0x00000000,
 };
 
-static u32 D_800D1668[] = {
+u32 D_800D1668[] = {
     0x00000003, 0xFFF8FFF7, 0x00100018, 0x0078017E, 0x00E000A8, 0x00F000C0,
     0xFFFF0008, 0x0010FFF3, 0x017E0010, 0x00A00078, 0x00B000F0, 0x00000100,
     0xFFF3FFF7, 0x00080010, 0x0078017E, 0x00F00080, 0x00F80090, 0x00000000,
 };
 
-static u32 D_800D16B0[] = {
+u32 D_800D16B0[] = {
     0x00000003, 0xFFF8FFF7, 0x00100018, 0x0078017E, 0x00E000A8, 0x00F000C0,
     0xFFFF0008, 0x0010FFF3, 0x017E0010, 0x00B00078, 0x00C000F0, 0x00080100,
     0xFFF3FFF7, 0x00080010, 0x0078017E, 0x00F80080, 0x01000090, 0x00000000,
 };
 
-static u32 D_800D16F8[] = {
+u32 D_800D16F8[] = {
     0x00000003, 0xFFF8FFF7, 0x00100018, 0x0078017E, 0x00E000A8, 0x00F000C0,
     0xFFFF0008, 0x0010FFF3, 0x017E0010, 0x00C00078, 0x00D000F0, 0x00000100,
     0xFFF3FFF7, 0x00080010, 0x0078017E, 0x00F00090, 0x00F800A0, 0x00000000,
 };
 
-static u32 D_800D1740[] = {
+u32 D_800D1740[] = {
     0x00000003, 0xFFF8FFF7, 0x00100018, 0x0078017E, 0x00E000A8, 0x00F000C0,
     0xFFFF0008, 0x0010FFF3, 0x017E0010, 0x00D00078, 0x00E000F0, 0x00080100,
     0xFFF3FFF7, 0x00080010, 0x0078017E, 0x00F80090, 0x010000A0, 0x00000000,
 };
 
-static u32 D_800D1788[] = {
+u32 D_800D1788[] = {
     0x00000003, 0xFFF8FFF7, 0x00100018, 0x0078017E, 0x00E000A8, 0x00F000C0,
     0xFFFF0000, 0x0010FFFB, 0x017E0008, 0x00800078, 0x009000F0, 0x000800F8,
     0xFFEBFFF7, 0x00100010, 0x0078017E, 0x00F000A0, 0x010000B0, 0x00000000,
 };
 
-static u32 D_800D17D0[] = {
+u32 D_800D17D0[] = {
     0x00000003, 0xFFF8FFF7, 0x00100018, 0x0078017E, 0x00E000A8, 0x00F000C0,
     0xFFFF0008, 0x0010FFFB, 0x017E0008, 0x00800078, 0x009000F8, 0x00080100,
     0xFFEBFFF7, 0x00100010, 0x0078017E, 0x00F000B0, 0x010000C0, 0x00000000,
 };
 
-static u32 D_800D1818[] = {
+u32 D_800D1818[] = {
     0x00000003, 0xFFF8FFF7, 0x00100018, 0x0078017E, 0x00E000A8, 0x00F000C0,
     0xFFFF0000, 0x0010FFFB, 0x017E0008, 0x00900078, 0x00A000F0, 0x000800F8,
     0xFFEBFFF7, 0x00100010, 0x0078017E, 0x00F000C0, 0x010000D0, 0x00000000,
 };
 
-static u32 D_800D1860[] = {
+u32 D_800D1860[] = {
     0x00000003, 0xFFF8FFF7, 0x00100018, 0x0078017E, 0x00E000A8, 0x00F000C0,
     0xFFFF0008, 0x0010FFFB, 0x017E0008, 0x00900078, 0x00A000F8, 0x00080100,
     0xFFEBFFF7, 0x00100010, 0x0078017E, 0x00F000D0, 0x010000E0, 0x00000000,
 };
 
-static u32 D_800D18A8[] = {
+u32 D_800D18A8[] = {
     0x00000002, 0xFFF0FFF9, 0x00180010, 0x0078017E, 0x00D800C8, 0x00F000D8,
     0xFFF90008, 0x0010FFEC, 0x017E0010, 0x00A00078, 0x00B000F0, 0x00000100,
 };
 
-static u32 D_800D18D8[] = {
+u32 D_800D18D8[] = {
     0x00000002, 0xFFF0FFF9, 0x00180010, 0x0078017E, 0x00D800C8, 0x00F000D8,
     0xFFF90008, 0x0010FFEC, 0x017E0010, 0x00B00078, 0x00C000F0, 0x00000100,
 };
 
-static u32 D_800D1908[] = {
+u32 D_800D1908[] = {
     0x00000002, 0xFFF0FFF9, 0x00180010, 0x0078017E, 0x00D800C8, 0x00F000D8,
     0xFFF90008, 0x0010FFEC, 0x017E0010, 0x00C00078, 0x00D000F0, 0x00000100,
 };
 
-static u32 D_800D1938[] = {
+u32 D_800D1938[] = {
     0x00000002, 0xFFF0FFF9, 0x00180010, 0x0078017E, 0x00D800C8, 0x00F000D8,
     0xFFF80008, 0x0010FFEC, 0x017E0010, 0x00D00078, 0x00E000F0, 0x00000100,
 };
 
-static u32 D_800D1968[] = {
+u32 D_800D1968[] = {
     0x00000002, 0xFFF0FFF9, 0x00180010, 0x0078017E, 0x00D800C8, 0x00F000D8,
     0xFFF80000, 0x0010FFF4, 0x017E0008, 0x00800078, 0x009000F0, 0x000000F8,
 };
 
-static u32 D_800D1998[] = {
+u32 D_800D1998[] = {
     0x00000002, 0xFFF0FFF9, 0x00180010, 0x0078017E, 0x00D800C8, 0x00F000D8,
     0xFFF80008, 0x0010FFF4, 0x017E0008, 0x00800078, 0x009000F8, 0x00000100,
 };
 
-static u32 D_800D19C8[] = {
+u32 D_800D19C8[] = {
     0x00000002, 0xFFF0FFF9, 0x00180010, 0x0078017E, 0x00D800C8, 0x00F000D8,
     0xFFF80000, 0x0010FFF4, 0x017E0008, 0x00900078, 0x00A000F0, 0x000000F8,
 };
 
-static u32 D_800D19F8[] = {
+u32 D_800D19F8[] = {
     0x00000002, 0xFFF0FFF9, 0x00180010, 0x0078017E, 0x00D800C8, 0x00F000D8,
     0xFFF90008, 0x0010FFF4, 0x017E0008, 0x00900078, 0x00A000F8, 0x00000100,
 };
 
-static u32 D_800D1A28[] = {
+u32 D_800D1A28[] = {
     0x00000002, 0xFFF0FFF5, 0x00180018, 0x0078017F, 0x00C00080, 0x00D80098,
     0xFFF90000, 0x0010FFF3, 0x017F0008, 0x00800078, 0x009000F0, 0x000000F8,
 };
 
-static u32 D_800D1A58[] = {
+u32 D_800D1A58[] = {
     0x00000002, 0xFFF0FFF5, 0x00180018, 0x0078017F, 0x00C00080, 0x00D80098,
     0xFFF90008, 0x0010FFF3, 0x017F0008, 0x00800078, 0x009000F8, 0x00000100,
 };
 
-static u32 D_800D1A88[] = {
+u32 D_800D1A88[] = {
     0x00000002, 0xFFF0FFF5, 0x00180018, 0x0078017F, 0x00C00080, 0x00D80098,
     0xFFF90000, 0x0010FFF3, 0x017F0008, 0x00900078, 0x00A000F0, 0x000000F8,
 };
 
-static u32 D_800D1AB8[] = {
+u32 D_800D1AB8[] = {
     0x00000002, 0xFFF0FFF5, 0x00180018, 0x0078017F, 0x00C00080, 0x00D80098,
     0xFFF90008, 0x0010FFF3, 0x017F0008, 0x00900078, 0x00A000F8, 0x00000100,
 };
 
-static u32 D_800D1AE8[] = {
+u32 D_800D1AE8[] = {
     0x00000002, 0xFFF0FFF5, 0x00180018, 0x0078017F, 0x00C00080, 0x00D80098,
     0xFFF90008, 0x0010FFEB, 0x017F0010, 0x00A00078, 0x00B000F0, 0x00000100,
 };
 
-static u32 D_800D1B18[] = {
+u32 D_800D1B18[] = {
     0x00000002, 0xFFF0FFF5, 0x00180018, 0x0078017F, 0x00C00080, 0x00D80098,
     0xFFF90008, 0x0010FFEB, 0x017F0010, 0x00B00078, 0x00C000F0, 0x00000100,
 };
 
-static u32 D_800D1B48[] = {
+u32 D_800D1B48[] = {
     0x00000002, 0xFFF0FFF5, 0x00180018, 0x0078017F, 0x00C00080, 0x00D80098,
     0xFFF90008, 0x0010FFEB, 0x017F0010, 0x00C00078, 0x00D000F0, 0x00000100,
 };
 
-static u32 D_800D1B78[] = {
+u32 D_800D1B78[] = {
     0x00000002, 0xFFF0FFF5, 0x00180018, 0x0078017F, 0x00C00080, 0x00D80098,
     0xFFF90008, 0x0010FFEB, 0x017F0010, 0x00D00078, 0x00E000F0, 0x00000100,
 };
 
-static u32 D_800D1BA8[] = {
+u32 D_800D1BA8[] = {
     0x00000002, 0xFFF8FFF5, 0x00100018, 0x0078017F, 0x00C000A8, 0x00D000C0,
     0xFFF80000, 0x0010FFF8, 0x017F0008, 0x00800078, 0x009000F0, 0x000000F8,
 };
 
-static u32 D_800D1BD8[] = {
+u32 D_800D1BD8[] = {
     0x00000002, 0xFFF8FFF5, 0x00100018, 0x0078017F, 0x00C000A8, 0x00D000C0,
     0xFFF80008, 0x0010FFF8, 0x017F0008, 0x00800078, 0x009000F8, 0x00000100,
 };
 
-static u32 D_800D1C08[] = {
+u32 D_800D1C08[] = {
     0x00000002, 0xFFF8FFF5, 0x00100018, 0x0078017F, 0x00C000A8, 0x00D000C0,
     0xFFF80000, 0x0010FFF8, 0x017F0008, 0x00900078, 0x00A000F0, 0x000000F8,
 };
 
-static u32 D_800D1C38[] = {
+u32 D_800D1C38[] = {
     0x00000002, 0xFFF8FFF5, 0x00100018, 0x0078017F, 0x00C000A8, 0x00D000C0,
     0xFFF80008, 0x0010FFF8, 0x017F0008, 0x00900078, 0x00A000F8, 0x00000100,
 };
 
-static u32 D_800D1C68[] = {
+u32 D_800D1C68[] = {
     0x00000002, 0xFFF8FFF5, 0x00100018, 0x0078017F, 0x00C000A8, 0x00D000C0,
     0xFFF80008, 0x0010FFF0, 0x017F0010, 0x00A00078, 0x00B000F0, 0x00000100,
 };
 
-static u32 D_800D1C98[] = {
+u32 D_800D1C98[] = {
     0x00000002, 0xFFF8FFF5, 0x00100018, 0x0078017F, 0x00C000A8, 0x00D000C0,
     0xFFF80008, 0x0010FFF0, 0x017F0010, 0x00B00078, 0x00C000F0, 0x00000100,
 };
 
-static u32 D_800D1CC8[] = {
+u32 D_800D1CC8[] = {
     0x00000002, 0xFFF8FFF5, 0x00100018, 0x0078017F, 0x00C000A8, 0x00D000C0,
     0xFFF80008, 0x0010FFF0, 0x017F0010, 0x00C00078, 0x00D000F0, 0x00000100,
 };
 
-static u32 D_800D1CF8[] = {
+u32 D_800D1CF8[] = {
     0x00000002, 0xFFF8FFF5, 0x00100018, 0x0078017F, 0x00C000A8, 0x00D000C0,
     0xFFF80008, 0x0010FFF0, 0x017F0010, 0x00D00078, 0x00E000F0, 0x00000100,
 };
 
-static u32 D_800D1D28[] = {
+u32 D_800D1D28[] = {
     0x00000002, 0xFFF0FFF8, 0x00180010, 0x0078017F, 0x00C00098, 0x00D800A8,
     0xFFF90000, 0x0010FFF6, 0x017F0008, 0x00800078, 0x009000F0, 0x000000F8,
 };
 
-static u32 D_800D1D58[] = {
+u32 D_800D1D58[] = {
     0x00000002, 0xFFF0FFF8, 0x00180010, 0x0078017F, 0x00C00098, 0x00D800A8,
     0xFFF90008, 0x0010FFF6, 0x017F0008, 0x00800078, 0x009000F8, 0x00000100,
 };
 
-static u32 D_800D1D88[] = {
+u32 D_800D1D88[] = {
     0x00000002, 0xFFF0FFF8, 0x00180010, 0x0078017F, 0x00C00098, 0x00D800A8,
     0xFFF90000, 0x0010FFF6, 0x017F0008, 0x00900078, 0x00A000F0, 0x000000F8,
 };
 
-static u32 D_800D1DB8[] = {
+u32 D_800D1DB8[] = {
     0x00000002, 0xFFF0FFF8, 0x00180010, 0x0078017F, 0x00C00098, 0x00D800A8,
     0xFFF90008, 0x0010FFF6, 0x017F0008, 0x00900078, 0x00A000F8, 0x00000100,
 };
 
-static u32 D_800D1DE8[] = {
+u32 D_800D1DE8[] = {
     0x00000002, 0xFFF0FFF8, 0x00180010, 0x0078017F, 0x00C00098, 0x00D800A8,
     0xFFF90008, 0x0010FFEE, 0x017F0010, 0x00A00078, 0x00B000F0, 0x00000100,
 };
 
-static u32 D_800D1E18[] = {
+u32 D_800D1E18[] = {
     0x00000002, 0xFFF0FFF8, 0x00180010, 0x0078017F, 0x00C00098, 0x00D800A8,
     0xFFF90008, 0x0010FFEE, 0x017F0010, 0x00B00078, 0x00C000F0, 0x00000100,
 };
 
-static u32 D_800D1E48[] = {
+u32 D_800D1E48[] = {
     0x00000002, 0xFFF0FFF8, 0x00180010, 0x0078017F, 0x00C00098, 0x00D800A8,
     0xFFF90008, 0x0010FFEE, 0x017F0010, 0x00C00078, 0x00D000F0, 0x00000100,
 };
 
-static u32 D_800D1E78[] = {
+u32 D_800D1E78[] = {
     0x00000002, 0xFFF0FFF8, 0x00180010, 0x0078017F, 0x00C00098, 0x00D800A8,
     0xFFF90008, 0x0010FFEE, 0x017F0010, 0x00D00078, 0x00E000F0, 0x00000100,
 };
 
-static u32 D_800D1EA8[] = {
+u32 D_800D1EA8[] = {
     0x00000002, 0xFFF0FFF8, 0x00180010, 0x0078017F, 0x00D80098, 0x00F000A8,
     0xFFF80000, 0x0010FFED, 0x017F0008, 0x00800078, 0x009000F0, 0x000000F8,
 };
 
-static u32 D_800D1ED8[] = {
+u32 D_800D1ED8[] = {
     0x00000002, 0xFFF0FFF8, 0x00180010, 0x0078017F, 0x00D80098, 0x00F000A8,
     0xFFF80008, 0x0010FFED, 0x017F0008, 0x00800078, 0x009000F8, 0x00000100,
 };
 
-static u32 D_800D1F08[] = {
+u32 D_800D1F08[] = {
     0x00000002, 0xFFF0FFF8, 0x00180010, 0x0078017F, 0x00D80098, 0x00F000A8,
     0xFFF80000, 0x0010FFED, 0x017F0008, 0x00900078, 0x00A000F0, 0x000000F8,
 };
 
-static u32 D_800D1F38[] = {
+u32 D_800D1F38[] = {
     0x00000002, 0xFFF0FFF8, 0x00180010, 0x0078017F, 0x00D80098, 0x00F000A8,
     0xFFF80008, 0x0010FFED, 0x017F0008, 0x00900078, 0x00A000F8, 0x00000100,
 };
 
-static u32 D_800D1F68[] = {
+u32 D_800D1F68[] = {
     0x00000002, 0xFFF0FFF8, 0x00180010, 0x0078017F, 0x00D80098, 0x00F000A8,
     0xFFF80008, 0x0010FFE5, 0x017F0010, 0x00A00078, 0x00B000F0, 0x00000100,
 };
 
-static u32 D_800D1F98[] = {
+u32 D_800D1F98[] = {
     0x00000002, 0xFFF0FFF8, 0x00180010, 0x0078017F, 0x00D80098, 0x00F000A8,
     0xFFF80008, 0x0010FFE5, 0x017F0010, 0x00B00078, 0x00C000F0, 0x00000100,
 };
 
-static u32 D_800D1FC8[] = {
+u32 D_800D1FC8[] = {
     0x00000002, 0xFFF0FFF8, 0x00180010, 0x0078017F, 0x00D80098, 0x00F000A8,
     0xFFF80008, 0x0010FFE5, 0x017F0010, 0x00C00078, 0x00D000F0, 0x00000100,
 };
 
-static u32 D_800D1FF8[] = {
+u32 D_800D1FF8[] = {
     0x00000002, 0xFFF0FFF8, 0x00180010, 0x0078017F, 0x00D80098, 0x00F000A8,
     0xFFF80008, 0x0010FFE5, 0x017F0010, 0x00D00078, 0x00E000F0, 0x00000100,
 };
 
-static u32 D_800D2028[] = {
+u32 D_800D2028[] = {
     0x00000003, 0xFFFCFFFC, 0x00080008, 0x00780163, 0x00D000C0, 0x00D800C8,
     0xFFF80000, 0x0010FFFA, 0x017F0010, 0x00C00078, 0x00D000C0, 0x000000D0,
     0xFFF9FFF8, 0x00080010, 0x0078017F, 0x00F00080, 0x00F80090, 0x00000000,
 };
 
-static u32 D_800D2070[] = {
+u32 D_800D2070[] = {
     0x00000003, 0xFFFCFFFC, 0x00080008, 0x00780163, 0x00D000C0, 0x00D800C8,
     0xFFF80000, 0x0010FFFA, 0x017F0010, 0x00C00078, 0x00D000C0, 0x000800D0,
     0xFFF9FFF8, 0x00080010, 0x0078017F, 0x00F80080, 0x01000090, 0x00000000,
 };
 
-static u32 D_800D20B8[] = {
+u32 D_800D20B8[] = {
     0x00000003, 0xFFFCFFFC, 0x00080008, 0x00780163, 0x00D000C0, 0x00D800C8,
     0xFFF80000, 0x0010FFFA, 0x017F0010, 0x00C00078, 0x00D000C0, 0x000000D0,
     0xFFF9FFF8, 0x00080010, 0x0078017F, 0x00F00090, 0x00F800A0, 0x00000000,
 };
 
-static u32 D_800D2100[] = {
+u32 D_800D2100[] = {
     0x00000003, 0xFFFCFFFC, 0x00080008, 0x00780163, 0x00D000C0, 0x00D800C8,
     0xFFF80000, 0x0010FFFA, 0x017F0010, 0x00C00078, 0x00D000C0, 0x000800D0,
     0xFFF9FFF8, 0x00080010, 0x0078017F, 0x00F80090, 0x010000A0, 0x00000000,
 };
 
-static u32 D_800D2148[] = {
+u32 D_800D2148[] = {
     0x00000003, 0xFFFCFFFC, 0x00080008, 0x00780163, 0x00D000C0, 0x00D800C8,
     0xFFF80000, 0x0010FFFA, 0x017F0010, 0x00C00078, 0x00D000C0, 0x000800D0,
     0xFFF1FFF8, 0x00100010, 0x0078017F, 0x00F000A0, 0x010000B0, 0x00000000,
 };
 
-static u32 D_800D2190[] = {
+u32 D_800D2190[] = {
     0x00000003, 0xFFFCFFFC, 0x00080008, 0x00780163, 0x00D000C0, 0x00D800C8,
     0xFFF80000, 0x0010FFFA, 0x017F0010, 0x00C00078, 0x00D000C0, 0x000800D0,
     0xFFF1FFF8, 0x00100010, 0x0078017F, 0x00F000B0, 0x010000C0, 0x00000000,
 };
 
-static u32 D_800D21D8[] = {
+u32 D_800D21D8[] = {
     0x00000003, 0xFFFCFFFC, 0x00080008, 0x00780163, 0x00D000C0, 0x00D800C8,
     0xFFF80000, 0x0010FFFA, 0x017F0010, 0x00C00078, 0x00D000C0, 0x000800D0,
     0xFFF1FFF8, 0x00100010, 0x0078017F, 0x00F000C0, 0x010000D0, 0x00000000,
 };
 
-static u32 D_800D2220[] = {
+u32 D_800D2220[] = {
     0x00000003, 0xFFFCFFFC, 0x00080008, 0x00780163, 0x00D000C0, 0x00D800C8,
     0xFFF80000, 0x0010FFFA, 0x017F0010, 0x00C00078, 0x00D000C0, 0x000800D0,
     0xFFF1FFF8, 0x00100010, 0x0078017F, 0x00F000D0, 0x010000E0, 0x00000000,
 };
 
-static u32 D_800D2268[] = {
+u32 D_800D2268[] = {
     0x00000002, 0xFFF3FFFA, 0x00080010, 0x0078017F, 0x00F00080, 0x00F80090,
     0xFFF40000, 0x0018FFF8, 0x017F0010, 0x00A80078, 0x00C000D0, 0x000000E0,
 };
 
-static u32 D_800D2298[] = {
+u32 D_800D2298[] = {
     0x00080002, 0xFFF3FFFA, 0x00080010, 0x0078017F, 0x00F80080, 0x01000090,
     0xFFF40000, 0x0018FFF8, 0x017F0010, 0x00A80078, 0x00C000D0, 0x000000E0,
 };
 
-static u32 D_800D22C8[] = {
+u32 D_800D22C8[] = {
     0x00000002, 0xFFF3FFFA, 0x00080010, 0x0078017F, 0x00F00090, 0x00F800A0,
     0xFFF40000, 0x0018FFF8, 0x017F0010, 0x00A80078, 0x00C000D0, 0x000000E0,
 };
 
-static u32 D_800D22F8[] = {
+u32 D_800D22F8[] = {
     0x00080002, 0xFFF3FFFA, 0x00080010, 0x0078017F, 0x00F80090, 0x010000A0,
     0xFFF40000, 0x0018FFF8, 0x017F0010, 0x00A80078, 0x00C000D0, 0x000000E0,
 };
 
-static u32 D_800D2328[] = {
+u32 D_800D2328[] = {
     0x00080002, 0xFFEBFFFA, 0x00100010, 0x0078017F, 0x00F000A0, 0x010000B0,
     0xFFF40000, 0x0018FFF8, 0x017F0010, 0x00A80078, 0x00C000D0, 0x000000E0,
 };
 
-static u32 D_800D2358[] = {
+u32 D_800D2358[] = {
     0x00080002, 0xFFEBFFFA, 0x00100010, 0x0078017F, 0x00F000B0, 0x010000C0,
     0xFFF40000, 0x0018FFF8, 0x017F0010, 0x00A80078, 0x00C000D0, 0x000000E0,
 };
 
-static u32 D_800D2388[] = {
+u32 D_800D2388[] = {
     0x00080002, 0xFFEBFFFA, 0x00100010, 0x0078017F, 0x00F000C0, 0x010000D0,
     0xFFF40000, 0x0018FFF8, 0x017F0010, 0x00A80078, 0x00C000D0, 0x000000E0,
 };
 
-static u32 D_800D23B8[] = {
+u32 D_800D23B8[] = {
     0x00080002, 0xFFEBFFFA, 0x00100010, 0x0078017F, 0x00F000D0, 0x010000E0,
     0xFFF40000, 0x0018FFF8, 0x017F0010, 0x00A80078, 0x00C000D0, 0x000000E0,
 };
 
-static u32 D_800D23E8[] = {
+u32 D_800D23E8[] = {
     0x00000002, 0xFFF0FFF5, 0x00180018, 0x0078017F, 0x00D80080, 0x00F00098,
     0xFFF80000, 0x0010FFF1, 0x017F0008, 0x00800078, 0x009000F0, 0x000000F8,
 };
 
-static u32 D_800D2418[] = {
+u32 D_800D2418[] = {
     0x00000002, 0xFFF0FFF5, 0x00180018, 0x0078017F, 0x00D80080, 0x00F00098,
     0xFFF80008, 0x0010FFF1, 0x017F0008, 0x00800078, 0x009000F8, 0x00000100,
 };
 
-static u32 D_800D2448[] = {
+u32 D_800D2448[] = {
     0x00000002, 0xFFF0FFF5, 0x00180018, 0x0078017F, 0x00D80080, 0x00F00098,
     0xFFF80000, 0x0010FFF1, 0x017F0008, 0x00900078, 0x00A000F0, 0x000000F8,
 };
 
-static u32 D_800D2478[] = {
+u32 D_800D2478[] = {
     0x00000002, 0xFFF0FFF5, 0x00180018, 0x0078017F, 0x00D80080, 0x00F00098,
     0xFFF80008, 0x0010FFF1, 0x017F0008, 0x00900078, 0x00A000F8, 0x00000100,
 };
 
-static u32 D_800D24A8[] = {
+u32 D_800D24A8[] = {
     0x00000002, 0xFFF0FFF5, 0x00180018, 0x0078017F, 0x00D80080, 0x00F00098,
     0xFFF80008, 0x0010FFE9, 0x017F0010, 0x00A00078, 0x00B000F0, 0x00000100,
 };
 
-static u32 D_800D24D8[] = {
+u32 D_800D24D8[] = {
     0x00000002, 0xFFF0FFF5, 0x00180018, 0x0078017F, 0x00D80080, 0x00F00098,
     0xFFF80008, 0x0010FFE9, 0x017F0010, 0x00B00078, 0x00C000F0, 0x00000100,
 };
 
-static u32 D_800D2508[] = {
+u32 D_800D2508[] = {
     0x00000002, 0xFFF0FFF5, 0x00180018, 0x0078017F, 0x00D80080, 0x00F00098,
     0xFFF80008, 0x0010FFE9, 0x017F0010, 0x00C00078, 0x00D000F0, 0x00000100,
 };
 
-static u32 D_800D2538[] = {
+u32 D_800D2538[] = {
     0x00000002, 0xFFF0FFF5, 0x00180018, 0x0078017F, 0x00D80080, 0x00F00098,
     0xFFF80008, 0x0010FFE9, 0x017F0010, 0x00D00078, 0x00E000F0, 0x00000100,
 };
 
-static u32 D_800D2568[] = {
+u32 D_800D2568[] = {
     0x00000001, 0xFFF8FFF9, 0x00100010, 0x00780180,
     0x00A000E0, 0x00B000F0, 0x00000000,
 };
 
-static u32 D_800D2584[] = {
+u32 D_800D2584[] = {
     0x00000001, 0xFFF8FFF9, 0x00100010, 0x00780180,
     0x009000E0, 0x00A000F0, 0x00000000,
 };
 
-static u32 D_800D25A0[] = {
+u32 D_800D25A0[] = {
     0x00000001, 0xFFF8FFF9, 0x00100010, 0x00780181,
     0x009000E0, 0x00A000F0, 0x00000000,
 };
 
-static u32 D_800D25BC[] = {
+u32 D_800D25BC[] = {
     0x00000001, 0xFFF8FFF9, 0x00100010, 0x00780182,
     0x009000E0, 0x00A000F0, 0x00000000,
 };
 
-static u32 D_800D25D8[] = {
+u32 D_800D25D8[] = {
     0x00000001, 0xFFF8FFF9, 0x00100010, 0x00780183,
     0x009000E0, 0x00A000F0, 0x00000000,
 };
 
-static u32 D_800D25F4[] = {
+u32 D_800D25F4[] = {
     0x00000001, 0xFFF8FFF9, 0x00100010, 0x00780184,
     0x009000E0, 0x00A000F0, 0x00000000,
 };
 
-static u32 D_800D2610[] = {
+u32 D_800D2610[] = {
     0x00000001, 0xFFF8FFF9, 0x00100010, 0x00780185,
     0x009000E0, 0x00A000F0, 0x00000000,
 };
 
-static u32 D_800D262C[] = {
+u32 D_800D262C[] = {
     0x00000001, 0xFFF8FFF9, 0x00100010, 0x00780186,
     0x009000E0, 0x00A000F0, 0x00000000,
 };
 
-static u32 D_800D2648[] = {
+u32 D_800D2648[] = {
     0x00000001, 0xFFF8FFF9, 0x00100010, 0x00780187,
     0x009000E0, 0x00A000F0, 0x00000000,
 };
 
-static u32 D_800D2664[] = {
+u32 D_800D2664[] = {
     0x00000001, 0xFFF8FFF9, 0x00100010, 0x00780188,
     0x009000E0, 0x00A000F0, 0x00000000,
 };
 
-static u32 D_800D2680[] = {
+u32 D_800D2680[] = {
     0x00000002, 0xFFF8FFF9, 0x00100010, 0x00780180, 0x00A000E0, 0x00B000F0,
     0xFFF90000, 0x0010FFF8, 0x01600010, 0x00E00078, 0x00F00090, 0x000000A0,
 };
 
-static u32 D_800D26B0[] = {
+u32 D_800D26B0[] = {
     0x00000002, 0xFFF8FFF9, 0x00100010, 0x00780180, 0x00A000E0, 0x00B000F0,
     0xFFF90000, 0x0010FFF8, 0x01610010, 0x00E00078, 0x00F00090, 0x000000A0,
 };
 
-static u32 D_800D26E0[] = {
+u32 D_800D26E0[] = {
     0x00000002, 0xFFF8FFF9, 0x00100010, 0x00780180, 0x00A000E0, 0x00B000F0,
     0xFFF90000, 0x0010FFF8, 0x01620010, 0x00E00078, 0x00F00090, 0x000000A0,
 };
 
-static u32 D_800D2710[] = {
+u32 D_800D2710[] = {
     0x00000002, 0xFFF8FFF9, 0x00100010, 0x00780180, 0x00A000E0, 0x00B000F0,
     0xFFF90000, 0x0010FFF8, 0x01630010, 0x00E00078, 0x00F00090, 0x000000A0,
 };
 
-static u32 D_800D2740[] = {
+u32 D_800D2740[] = {
     0x00000002, 0xFFF8FFF9, 0x00100010, 0x00780180, 0x00A000E0, 0x00B000F0,
     0xFFF90000, 0x0010FFF8, 0x01650010, 0x00E00078, 0x00F00090, 0x000000A0,
 };
 
-static u32 D_800D2770[] = {
+u32 D_800D2770[] = {
     0x00000002, 0xFFF8FFF9, 0x00100010, 0x00780180, 0x00A000E0, 0x00B000F0,
     0xFFF90000, 0x0010FFF8, 0x01660010, 0x00E00078, 0x00F00090, 0x000000A0,
 };
 
-static u32 D_800D27A0[] = {
+u32 D_800D27A0[] = {
     0x00040001, 0xFFF8FFF9, 0x00100010, 0x00780180,
     0x00A000F0, 0x00B00100, 0x00000000,
 };
 
-static u32 D_800D27BC[] = {
+u32 D_800D27BC[] = {
     0x00040001, 0xFFF8FFF9, 0x00100010, 0x00780180,
     0x009000F0, 0x00A00100, 0x00000000,
 };
 
-static u32 D_800D27D8[] = {
+u32 D_800D27D8[] = {
     0x00040001, 0xFFF8FFF9, 0x00100010, 0x00780181,
     0x009000F0, 0x00A00100, 0x00000000,
 };
 
-static u32 D_800D27F4[] = {
+u32 D_800D27F4[] = {
     0x00040001, 0xFFF8FFF9, 0x00100010, 0x00780182,
     0x009000F0, 0x00A00100, 0x00000000,
 };
 
-static u32 D_800D2810[] = {
+u32 D_800D2810[] = {
     0x00040001, 0xFFF8FFF9, 0x00100010, 0x00780183,
     0x009000F0, 0x00A00100, 0x00000000,
 };
 
-static u32 D_800D282C[] = {
+u32 D_800D282C[] = {
     0x00040001, 0xFFF8FFF9, 0x00100010, 0x00780184,
     0x009000F0, 0x00A00100, 0x00000000,
 };
 
-static u32 D_800D2848[] = {
+u32 D_800D2848[] = {
     0x00040001, 0xFFF8FFF9, 0x00100010, 0x00780185,
     0x009000F0, 0x00A00100, 0x00000000,
 };
 
-static u32 D_800D2864[] = {
+u32 D_800D2864[] = {
     0x00040001, 0xFFF8FFF9, 0x00100010, 0x00780186,
     0x009000F0, 0x00A00100, 0x00000000,
 };
 
-static u32 D_800D2880[] = {
+u32 D_800D2880[] = {
     0x00040001, 0xFFF8FFF9, 0x00100010, 0x00780187,
     0x009000F0, 0x00A00100, 0x00000000,
 };
 
-static u32 D_800D289C[] = {
+u32 D_800D289C[] = {
     0x00040001, 0xFFF8FFF9, 0x00100010, 0x00780188,
     0x009000F0, 0x00A00100, 0x00000000,
 };
 
-static u32 D_800D28B8[] = {
+u32 D_800D28B8[] = {
     0x00040002, 0xFFF8FFF9, 0x00100010, 0x00780180, 0x00A000F0, 0x00B00100,
     0xFFF90004, 0x0010FFF8, 0x01600010, 0x00F00078, 0x01000090, 0x000000A0,
 };
 
-static u32 D_800D28E8[] = {
+u32 D_800D28E8[] = {
     0x00040002, 0xFFF8FFF9, 0x00100010, 0x00780180, 0x00A000F0, 0x00B00100,
     0xFFF90004, 0x0010FFF8, 0x01610010, 0x00F00078, 0x01000090, 0x000000A0,
 };
 
-static u32 D_800D2918[] = {
+u32 D_800D2918[] = {
     0x00040002, 0xFFF8FFF9, 0x00100010, 0x00780180, 0x00A000F0, 0x00B00100,
     0xFFF90004, 0x0010FFF8, 0x01620010, 0x00F00078, 0x01000090, 0x000000A0,
 };
 
-static u32 D_800D2948[] = {
+u32 D_800D2948[] = {
     0x00040002, 0xFFF8FFF9, 0x00100010, 0x00780180, 0x00A000F0, 0x00B00100,
     0xFFF90004, 0x0010FFF8, 0x01630010, 0x00F00078, 0x01000090, 0x000000A0,
 };
 
-static u32 D_800D2978[] = {
+u32 D_800D2978[] = {
     0x00040002, 0xFFF8FFF9, 0x00100010, 0x00780180, 0x00A000F0, 0x00B00100,
     0xFFF90004, 0x0010FFF8, 0x01650010, 0x00F00078, 0x01000090, 0x000000A0,
 };
 
-static u32 D_800D29A8[] = {
+u32 D_800D29A8[] = {
     0x00040002, 0xFFF8FFF9, 0x00100010, 0x00780180, 0x00A000F0, 0x00B00100,
     0xFFF90004, 0x0010FFF8, 0x01660010, 0x00F00078, 0x01000090, 0x000000A0,
 };
 
-static u32 D_800D29D8[] = {
+u32 D_800D29D8[] = {
     0x00040001, 0xFFF8FFF8, 0x00100010, 0x00780180,
     0x008000F0, 0x00900100, 0x00000000,
 };
 
-static u32 D_800D29F4[] = {
+u32 D_800D29F4[] = {
     0x00040001, 0xFFF8FFF8, 0x00100010, 0x00780181,
     0x008000F0, 0x00900100, 0x00000000,
 };
 
-static u32 D_800D2A10[] = {
+u32 D_800D2A10[] = {
     0x00040001, 0xFFF8FFF8, 0x00100010, 0x00780182,
     0x008000F0, 0x00900100, 0x00000000,
 };
 
-static u32 D_800D2A2C[] = {
+u32 D_800D2A2C[] = {
     0x00040001, 0xFFF8FFF8, 0x00100010, 0x00780183,
     0x008000F0, 0x00900100, 0x00000000,
 };
 
-static u32 D_800D2A48[] = {
+u32 D_800D2A48[] = {
     0x00040001, 0xFFF8FFF8, 0x00100010, 0x00780184,
     0x008000F0, 0x00900100, 0x00000000,
 };
 
-static u32 D_800D2A64[] = {
+u32 D_800D2A64[] = {
     0x00040001, 0xFFF8FFF8, 0x00100010, 0x00780185,
     0x008000F0, 0x00900100, 0x00000000,
 };
 
-static u32 D_800D2A80[] = {
+u32 D_800D2A80[] = {
     0x00040001, 0xFFF8FFF8, 0x00100010, 0x00780186,
     0x008000F0, 0x00900100, 0x00000000,
 };
 
-static u32 D_800D2A9C[] = {
+u32 D_800D2A9C[] = {
     0x00040001, 0xFFF8FFF8, 0x00100010, 0x00780187,
     0x008000F0, 0x00900100, 0x00000000,
 };
 
-static u32 D_800D2AB8[] = {
+u32 D_800D2AB8[] = {
     0x00040001, 0xFFF8FFF8, 0x00100010, 0x00780188,
     0x008000F0, 0x00900100, 0x00000000,
 };
 
-static u32 D_800D2AD4[] = {
+u32 D_800D2AD4[] = {
     0x00000002, 0xFFFCFFFC, 0x00080008, 0x00780160, 0x00D000C8, 0x00D800D0,
     0xFFF80004, 0x0010FFF8, 0x01820010, 0x00F00078, 0x01000080, 0x00000090,
 };
 
-static u32 D_800D2B04[] = {
+u32 D_800D2B04[] = {
     0x00000002, 0xFFFCFFFC, 0x00080008, 0x00780161, 0x00D000C8, 0x00D800D0,
     0xFFF80004, 0x0010FFF8, 0x01820010, 0x00F00078, 0x01000080, 0x00000090,
 };
 
-static u32 D_800D2B34[] = {
+u32 D_800D2B34[] = {
     0x00000002, 0xFFFCFFFC, 0x00080008, 0x00780162, 0x00D000C8, 0x00D800D0,
     0xFFF80004, 0x0010FFF8, 0x01820010, 0x00F00078, 0x01000080, 0x00000090,
 };
 
-static u32 D_800D2B64[] = {
+u32 D_800D2B64[] = {
     0x00000002, 0xFFFCFFFC, 0x00080008, 0x00780163, 0x00D000C8, 0x00D800D0,
     0xFFF80004, 0x0010FFF8, 0x01820010, 0x00F00078, 0x01000080, 0x00000090,
 };
 
-static u32 D_800D2B94[] = {
+u32 D_800D2B94[] = {
     0x00000002, 0xFFFCFFFC, 0x00080008, 0x00780165, 0x00D000C8, 0x00D800D0,
     0xFFF80004, 0x0010FFF8, 0x01820010, 0x00F00078, 0x01000080, 0x00000090,
 };
 
-static u32 D_800D2BC4[] = {
+u32 D_800D2BC4[] = {
     0x00000002, 0xFFFCFFFC, 0x00080008, 0x00780166, 0x00D000C8, 0x00D800D0,
     0xFFF80004, 0x0010FFF8, 0x01820010, 0x00F00078, 0x01000080, 0x00000090,
 };
 
-static u32 D_800D2C18[];
-static u32 D_800D2C34[];
-static u32 D_800D2C50[];
-static u32 D_800D2C6C[];
-static u32 D_800D2C88[];
-static u32 D_800D2CA4[];
-static u32 D_800D2CC0[];
-static u32 D_800D2CDC[];
+u32 D_800D2C18[];
+u32 D_800D2C34[];
+u32 D_800D2C50[];
+u32 D_800D2C6C[];
+u32 D_800D2C88[];
+u32 D_800D2CA4[];
+u32 D_800D2CC0[];
+u32 D_800D2CDC[];
 
 s16* D_800D2BF4[] = {
     NULL,
@@ -3461,70 +3461,70 @@ s16* D_800D2BF4[] = {
     (s16*)D_800D2CDC,
 };
 
-static u32 D_800D2C18[] = {
+u32 D_800D2C18[] = {
     0x00100001, 0xFFF9FFF9, 0x00100010, 0x00680194,
     0x00400000, 0x00500010, 0x00000000,
 };
 
-static u32 D_800D2C34[] = {
+u32 D_800D2C34[] = {
     0x00000001, 0xFFF9FFF9, 0x00100010, 0x00680194,
     0x00400010, 0x00500020, 0x00000000,
 };
 
-static u32 D_800D2C50[] = {
+u32 D_800D2C50[] = {
     0x00100001, 0xFFF9FFF9, 0x00100010, 0x00680194,
     0x00500000, 0x00600010, 0x00000000,
 };
 
-static u32 D_800D2C6C[] = {
+u32 D_800D2C6C[] = {
     0x00000001, 0xFFF9FFF9, 0x00100010, 0x00680194,
     0x00500010, 0x00600020, 0x00000000,
 };
 
-static u32 D_800D2C88[] = {
+u32 D_800D2C88[] = {
     0x00000001, 0xFFF9FFF9, 0x00100008, 0x00680194,
     0x00300068, 0x00400070, 0x00000000,
 };
 
-static u32 D_800D2CA4[] = {
+u32 D_800D2CA4[] = {
     0x00000001, 0xFFF9FFF9, 0x00100008, 0x00680194,
     0x00300070, 0x00400078, 0x00000000,
 };
 
-static u32 D_800D2CC0[] = {
+u32 D_800D2CC0[] = {
     0x00000001, 0xFFFDFFF9, 0x00080008, 0x00680194,
     0x00300078, 0x00380080, 0x00000000,
 };
 
-static u32 D_800D2CDC[] = {
+u32 D_800D2CDC[] = {
     0x00100001, 0xFFE2FFF1, 0x00200020, 0x00680170,
     0x00600000, 0x00800020, 0x20300000,
 };
 
-static u32 D_800D2D5C[];
-static u32 D_800D2D78[];
-static u32 D_800D2D94[];
-static u32 D_800D2DB0[];
-static u32 D_800D2DCC[];
-static u32 D_800D2DE8[];
-static u32 D_800D2E04[];
-static u32 D_800D2E20[];
-static u32 D_800D2E3C[];
-static u32 D_800D2E58[];
-static u32 D_800D2E74[];
-static u32 D_800D2E90[];
-static u32 D_800D2EAC[];
-static u32 D_800D2EC8[];
-static u32 D_800D2EE4[];
-static u32 D_800D2F00[];
-static u32 D_800D2F1C[];
-static u32 D_800D2F38[];
-static u32 D_800D2F54[];
-static u32 D_800D2F70[];
-static u32 D_800D2F8C[];
-static u32 D_800D2FA8[];
-static u32 D_800D2FC4[];
-static u32 D_800D2FE0[];
+u32 D_800D2D5C[];
+u32 D_800D2D78[];
+u32 D_800D2D94[];
+u32 D_800D2DB0[];
+u32 D_800D2DCC[];
+u32 D_800D2DE8[];
+u32 D_800D2E04[];
+u32 D_800D2E20[];
+u32 D_800D2E3C[];
+u32 D_800D2E58[];
+u32 D_800D2E74[];
+u32 D_800D2E90[];
+u32 D_800D2EAC[];
+u32 D_800D2EC8[];
+u32 D_800D2EE4[];
+u32 D_800D2F00[];
+u32 D_800D2F1C[];
+u32 D_800D2F38[];
+u32 D_800D2F54[];
+u32 D_800D2F70[];
+u32 D_800D2F8C[];
+u32 D_800D2FA8[];
+u32 D_800D2FC4[];
+u32 D_800D2FE0[];
 
 s16* D_800D2CF8[] = {
     NULL,
@@ -3554,128 +3554,128 @@ s16* D_800D2CF8[] = {
     (s16*)D_800D2FE0,
 };
 
-static u32 D_800D2D5C[] = {
+u32 D_800D2D5C[] = {
     0x00200001, 0xFFF3FFF9, 0x00100010, 0x00680195,
     0x00000080, 0x00100090, 0x00000000,
 };
 
-static u32 D_800D2D78[] = {
+u32 D_800D2D78[] = {
     0x00200001, 0xFFF4FFF8, 0x00100010, 0x00680195,
     0x00000090, 0x001000A0, 0x00000000,
 };
 
-static u32 D_800D2D94[] = {
+u32 D_800D2D94[] = {
     0x00200001, 0xFFF4FFF8, 0x00100010, 0x00680195,
     0x000000A0, 0x001000B0, 0x00000000,
 };
 
-static u32 D_800D2DB0[] = {
+u32 D_800D2DB0[] = {
     0x00200001, 0xFFF4FFF8, 0x00100010, 0x00680195,
     0x000000B0, 0x001000C0, 0x00000000,
 };
 
-static u32 D_800D2DCC[] = {
+u32 D_800D2DCC[] = {
     0x00000001, 0xFFF2FFF7, 0x00180018, 0x00680195,
     0x00100080, 0x00280098, 0x00000000,
 };
 
-static u32 D_800D2DE8[] = {
+u32 D_800D2DE8[] = {
     0x00000001, 0xFFF6FFF5, 0x00180018, 0x00680195,
     0x00100098, 0x002800B0, 0x00000000,
 };
 
-static u32 D_800D2E04[] = {
+u32 D_800D2E04[] = {
     0x00000001, 0xFFF6FFF5, 0x00180018, 0x00680195,
     0x001000B0, 0x002800C8, 0x00000000,
 };
 
-static u32 D_800D2E20[] = {
+u32 D_800D2E20[] = {
     0x00000001, 0xFFF6FFF5, 0x00180018, 0x00680195,
     0x001000C8, 0x002800E0, 0x00000000,
 };
 
-static u32 D_800D2E3C[] = {
+u32 D_800D2E3C[] = {
     0x00000001, 0xFFF5FFF5, 0x00180018, 0x00680195,
     0x001000E0, 0x002800F8, 0x00000000,
 };
 
-static u32 D_800D2E58[] = {
+u32 D_800D2E58[] = {
     0x00000001, 0xFFF5FFF5, 0x00180018, 0x00680195,
     0x00280080, 0x00400098, 0x00000000,
 };
 
-static u32 D_800D2E74[] = {
+u32 D_800D2E74[] = {
     0x00000001, 0xFFF5FFF5, 0x00180018, 0x00680195,
     0x00280098, 0x004000B0, 0x00000000,
 };
 
-static u32 D_800D2E90[] = {
+u32 D_800D2E90[] = {
     0x00000001, 0xFFF5FFF5, 0x00180018, 0x00680195,
     0x002800B0, 0x004000C8, 0x00000000,
 };
 
-static u32 D_800D2EAC[] = {
+u32 D_800D2EAC[] = {
     0x00000001, 0xFFF6FFF5, 0x00180018, 0x00680195,
     0x002800C8, 0x004000E0, 0x00000000,
 };
 
-static u32 D_800D2EC8[] = {
+u32 D_800D2EC8[] = {
     0x00000001, 0xFFF6FFF8, 0x00180010, 0x00680195,
     0x002800E0, 0x004000F0, 0x00000000,
 };
 
-static u32 D_800D2EE4[] = {
+u32 D_800D2EE4[] = {
     0x00000001, 0xFFFBFFF8, 0x00180010, 0x00680195,
     0x00400080, 0x00580090, 0x00000000,
 };
 
-static u32 D_800D2F00[] = {
+u32 D_800D2F00[] = {
     0x00000001, 0xFFFAFFF9, 0x00180010, 0x00680195,
     0x00400090, 0x005800A0, 0x00000000,
 };
 
-static u32 D_800D2F1C[] = {
+u32 D_800D2F1C[] = {
     0x00000001, 0xFFFCFFF7, 0x00180010, 0x00680195,
     0x004000A0, 0x005800B0, 0x00000000,
 };
 
-static u32 D_800D2F38[] = {
+u32 D_800D2F38[] = {
     0x00000001, 0xFFFCFFF8, 0x00180010, 0x00680195,
     0x004000B0, 0x005800C0, 0x00000000,
 };
 
-static u32 D_800D2F54[] = {
+u32 D_800D2F54[] = {
     0x00000001, 0xFFFCFFF7, 0x00180010, 0x00680195,
     0x004000C0, 0x005800D0, 0x00000000,
 };
 
-static u32 D_800D2F70[] = {
+u32 D_800D2F70[] = {
     0x00000001, 0xFFFCFFF8, 0x00180010, 0x00680195,
     0x004000D0, 0x005800E0, 0x00000000,
 };
 
-static u32 D_800D2F8C[] = {
+u32 D_800D2F8C[] = {
     0x00000001, 0x0001FFF8, 0x00100010, 0x00680195,
     0x000000C0, 0x001000D0, 0x00000000,
 };
 
-static u32 D_800D2FA8[] = {
+u32 D_800D2FA8[] = {
     0x00000001, 0x0001FFF8, 0x00100010, 0x00680195,
     0x000000D0, 0x001000E0, 0x00000000,
 };
 
-static u32 D_800D2FC4[] = {
+u32 D_800D2FC4[] = {
     0x00000001, 0x0002FFF9, 0x00080010, 0x00680195,
     0x000000E0, 0x000800F0, 0x00000000,
 };
 
-static u32 D_800D2FE0[] = {
+u32 D_800D2FE0[] = {
     0x00000001, 0x0000FFFD, 0x00080008, 0x00680195,
     0x000800E8, 0x001000F0, 0x6B610000,
 };
 
-static u32 D_800D300C[];
-static u32 D_800D3144[];
+u32 D_800D300C[];
+u32 D_800D3144[];
 
 s16* D_800D2FFC[] = {
     NULL,
@@ -3684,7 +3684,7 @@ s16* D_800D2FFC[] = {
     NULL,
 };
 
-static u32 D_800D300C[] = {
+u32 D_800D300C[] = {
     0x0006000E, 0x0048FFFF, 0x00100010, 0x007001FA, 0x004000F0, 0x00500100,
     0x000E0002, 0x00100048, 0x01FA0010, 0x00E00070, 0x00F00040, 0x00020050,
     0x001C007C, 0x00080008, 0x007001F9, 0x007000E0, 0x007800E8, 0x00E10004,
@@ -3700,7 +3700,7 @@ static u32 D_800D300C[] = {
     0xFFFF0026, 0x00100008, 0x01FB0040, 0x00F00070, 0x01000000, 0x00000040,
 };
 
-static u32 D_800D3144[] = {
+u32 D_800D3144[] = {
     0x0007000E, 0x0038FFFF, 0x00100010, 0x007001FA, 0x004000F0, 0x00500100,
     0x000E0003, 0x00100038, 0x01FA0010, 0x00E00070, 0x00F00040, 0x00030050,
     0x006C007C, 0x00080008, 0x007001F9, 0x007000E0, 0x007800E8, 0x00E10005,
@@ -3716,20 +3716,20 @@ static u32 D_800D3144[] = {
     0xFFFF0027, 0x00100048, 0x01FB0040, 0x00F00070, 0x01000000, 0x00000040,
 };
 
-static u32 D_800D3290[];
-static u32 D_800D32C0[];
-static u32 D_800D3374[];
+u32 D_800D3290[];
+u32 D_800D32C0[];
+u32 D_800D3374[];
 
 s16* D_800D327C[] = {
     NULL, (s16*)D_800D3290, (s16*)D_800D32C0, (s16*)D_800D3374, NULL,
 };
 
-static u32 D_800D3290[] = {
+u32 D_800D3290[] = {
     0x00220002, 0xFFFEFFFE, 0x00200028, 0x007001F6, 0x000000A0, 0x002000C8,
     0xFFDA0020, 0x0028FFFE, 0x01F60020, 0x00A00070, 0x00C80000, 0x00000020,
 };
 
-static u32 D_800D32C0[] = {
+u32 D_800D32C0[] = {
     0x00220008, 0xFFF0FFE3, 0x00200020, 0x007001A3, 0x00000080, 0x002000A0,
     0xFFFD0020, 0x0020FFF0, 0x01A30020, 0x00800070, 0x00A00000, 0x00020020,
     0xFFF1FFB8, 0x00200048, 0x007001A3, 0x00200080, 0x004000C8, 0xFF7F0002,
@@ -3740,7 +3740,7 @@ static u32 D_800D32C0[] = {
     0x00C80070, 0x01000000, 0x00000080,
 };
 
-static u32 D_800D3374[] = {
+u32 D_800D3374[] = {
     0x00330008, 0xFFF1FFE3, 0x00200020, 0x007001A3, 0x00000080, 0x002000A0,
     0xFFFD0031, 0x0020FFF1, 0x01A30020, 0x00800070, 0x00A00000, 0x00130020,
     0xFFF0FFB8, 0x00200048, 0x007001A3, 0x00200080, 0x004000C8, 0xFF7F001B,
@@ -3751,9 +3751,9 @@ static u32 D_800D3374[] = {
     0x00C80070, 0x01000000, 0x00000080,
 };
 
-static u32 D_800D3438[];
-static u32 D_800D3480[];
-static u32 D_800D349C[];
+u32 D_800D3438[];
+u32 D_800D3480[];
+u32 D_800D349C[];
 
 s16* D_800D3428[] = {
     NULL,
@@ -3762,28 +3762,28 @@ s16* D_800D3428[] = {
     (s16*)D_800D349C,
 };
 
-static u32 D_800D3438[] = {
+u32 D_800D3438[] = {
     0x00230003, 0xFFFBFFF8, 0x00280010, 0x007C016D, 0x000000C0, 0x002800D0,
     0xFFF80020, 0x0010FFDD, 0x016D0028, 0x00C0007C, 0x00D00000, 0x00000028,
     0xFFE0FFFC, 0x00400008, 0x007C0198, 0x002000B0, 0x006000B8, 0x00000000,
 };
 
-static u32 D_800D3480[] = {
+u32 D_800D3480[] = {
     0x00000001, 0xFFE0FFFC, 0x00400008, 0x007C0198,
     0x002000B0, 0x006000B8, 0x00000000,
 };
 
-static u32 D_800D349C[] = {
+u32 D_800D349C[] = {
     0x00000001, 0xFFE0FFF0, 0x00400020, 0x007C0198,
     0x00200088, 0x006000A8, 0x5B6A0000,
 };
 
-static u32 D_800D34D4[];
-static u32 D_800D3530[];
-static u32 D_800D358C[];
-static u32 D_800D35E8[];
-static u32 D_800D3644[];
-static u32 D_800D36B8[];
+u32 D_800D34D4[];
+u32 D_800D3530[];
+u32 D_800D358C[];
+u32 D_800D35E8[];
+u32 D_800D3644[];
+u32 D_800D36B8[];
 
 s16* D_800D34B8[] = {
     NULL,
@@ -3795,35 +3795,35 @@ s16* D_800D34B8[] = {
     (s16*)D_800D36B8,
 };
 
-static u32 D_800D34D4[] = {
+u32 D_800D34D4[] = {
     0x00240004, 0xFFF9FFF9, 0x00100010, 0x00680170, 0x000000F0, 0x00100100,
     0xFFF70024, 0x0010FFF9, 0x01700010, 0x00F00068, 0x01000000, 0x00240010,
     0xFFF7FFF9, 0x00100010, 0x00680170, 0x000000F0, 0x00100100, 0xFFF70024,
     0x0010FFF7, 0x01700010, 0x00F00068, 0x01000000, 0x00000010,
 };
 
-static u32 D_800D3530[] = {
+u32 D_800D3530[] = {
     0x00240004, 0xFFFBFFFB, 0x00100010, 0x00680170, 0x000000F0, 0x00100100,
     0xFFF50024, 0x0010FFFB, 0x01700010, 0x00F00068, 0x01000000, 0x00240010,
     0xFFF6FFFA, 0x00100010, 0x00680170, 0x000000F0, 0x00100100, 0xFFF60024,
     0x0010FFF6, 0x01700010, 0x00F00068, 0x01000000, 0x00000010,
 };
 
-static u32 D_800D358C[] = {
+u32 D_800D358C[] = {
     0x00240004, 0xFFFDFFFD, 0x00100010, 0x00680170, 0x000000F0, 0x00100100,
     0xFFF30024, 0x0010FFFD, 0x01700010, 0x00F00068, 0x01000000, 0x00240010,
     0xFFF5FFFB, 0x00100010, 0x00680170, 0x000000F0, 0x00100100, 0xFFF50024,
     0x0010FFF5, 0x01700010, 0x00F00068, 0x01000000, 0x00000010,
 };
 
-static u32 D_800D35E8[] = {
+u32 D_800D35E8[] = {
     0x00240004, 0x00000000, 0x00100010, 0x00680170, 0x000000F0, 0x00100100,
     0xFFF00024, 0x00100000, 0x01700010, 0x00F00068, 0x01000000, 0x00240010,
     0xFFF4FFFD, 0x00100010, 0x00680170, 0x000000F0, 0x00100100, 0xFFF30024,
     0x0010FFF4, 0x01700010, 0x00F00068, 0x01000000, 0x00000010,
 };
 
-static u32 D_800D3644[] = {
+u32 D_800D3644[] = {
     0x00060005, 0xFFFCFFF8, 0x00100010, 0x00680170, 0x002800F0, 0x00380100,
     0x00030024, 0x00100003, 0x01700010, 0x00F00068, 0x01000000, 0x00240010,
     0x0003FFED, 0x00100010, 0x00680170, 0x000000F0, 0x00100100, 0x00000024,
@@ -3831,7 +3831,7 @@ static u32 D_800D3644[] = {
     0x00100010, 0x00680170, 0x000000F0, 0x00100100, 0x00000000,
 };
 
-static u32 D_800D36B8[] = {
+u32 D_800D36B8[] = {
     0x00060005, 0x0002FFF8, 0x00100010, 0x00680170, 0x002800F0, 0x00380100,
     0x00000004, 0x0010FFF2, 0x01700010, 0x00F00068, 0x01000028, 0x00040038,
     0x00050005, 0x00100010, 0x00680170, 0x002800F0, 0x00380100, 0xFFEB0004,
@@ -3839,35 +3839,35 @@ static u32 D_800D36B8[] = {
     0x00100010, 0x00680170, 0x002800F0, 0x00380100, 0x645F0000,
 };
 
-static u32 D_800D37A4[];
-static u32 D_800D37C0[];
-static u32 D_800D37DC[];
-static u32 D_800D37F8[];
-static u32 D_800D3814[];
-static u32 D_800D3830[];
-static u32 D_800D384C[];
-static u32 D_800D3868[];
-static u32 D_800D3884[];
-static u32 D_800D38A0[];
-static u32 D_800D38BC[];
-static u32 D_800D38D8[];
-static u32 D_800D38F4[];
-static u32 D_800D3910[];
-static u32 D_800D392C[];
-static u32 D_800D3988[];
-static u32 D_800D39A4[];
-static u32 D_800D39C0[];
-static u32 D_800D39F0[];
-static u32 D_800D3A0C[];
-static u32 D_800D3A3C[];
-static u32 D_800D3A58[];
-static u32 D_800D3A88[];
-static u32 D_800D3AA4[];
-static u32 D_800D3AD4[];
-static u32 D_800D3AF0[];
-static u32 D_800D3B20[];
-static u32 D_800D3B3C[];
-static u32 D_800D3B6C[];
+u32 D_800D37A4[];
+u32 D_800D37C0[];
+u32 D_800D37DC[];
+u32 D_800D37F8[];
+u32 D_800D3814[];
+u32 D_800D3830[];
+u32 D_800D384C[];
+u32 D_800D3868[];
+u32 D_800D3884[];
+u32 D_800D38A0[];
+u32 D_800D38BC[];
+u32 D_800D38D8[];
+u32 D_800D38F4[];
+u32 D_800D3910[];
+u32 D_800D392C[];
+u32 D_800D3988[];
+u32 D_800D39A4[];
+u32 D_800D39C0[];
+u32 D_800D39F0[];
+u32 D_800D3A0C[];
+u32 D_800D3A3C[];
+u32 D_800D3A58[];
+u32 D_800D3A88[];
+u32 D_800D3AA4[];
+u32 D_800D3AD4[];
+u32 D_800D3AF0[];
+u32 D_800D3B20[];
+u32 D_800D3B3C[];
+u32 D_800D3B6C[];
 
 s16* D_800D372C[] = {
     NULL,
@@ -3902,253 +3902,253 @@ s16* D_800D372C[] = {
     (s16*)D_800D3B6C,
 };
 
-static u32 D_800D37A4[] = {
+u32 D_800D37A4[] = {
     0x00000001, 0xFFF8FFF7, 0x00100020, 0x0068019A,
     0x00800080, 0x009000A0, 0x00000000,
 };
 
-static u32 D_800D37C0[] = {
+u32 D_800D37C0[] = {
     0x00000001, 0xFFF8FFF7, 0x00100020, 0x0068019A,
     0x00900080, 0x00A000A0, 0x00000000,
 };
 
-static u32 D_800D37DC[] = {
+u32 D_800D37DC[] = {
     0x00000001, 0xFFF8FFF7, 0x00100020, 0x0068019A,
     0x00A00080, 0x00B000A0, 0x00000000,
 };
 
-static u32 D_800D37F8[] = {
+u32 D_800D37F8[] = {
     0x00000001, 0xFFF8FFF7, 0x00100020, 0x0068019A,
     0x00B00080, 0x00C000A0, 0x00000000,
 };
 
-static u32 D_800D3814[] = {
+u32 D_800D3814[] = {
     0x00000001, 0xFFF8FFF7, 0x00100020, 0x0068019A,
     0x008000A0, 0x009000C0, 0x00000000,
 };
 
-static u32 D_800D3830[] = {
+u32 D_800D3830[] = {
     0x00000001, 0xFFF8FFF7, 0x00100020, 0x0068019A,
     0x009000A0, 0x00A000C0, 0x00000000,
 };
 
-static u32 D_800D384C[] = {
+u32 D_800D384C[] = {
     0x00000001, 0xFFF8FFF7, 0x00100020, 0x0068019A,
     0x00A000A0, 0x00B000C0, 0x00000000,
 };
 
-static u32 D_800D3868[] = {
+u32 D_800D3868[] = {
     0x00000001, 0xFFF8FFF7, 0x00100020, 0x0068019A,
     0x00B000A0, 0x00C000C0, 0x00000000,
 };
 
-static u32 D_800D3884[] = {
+u32 D_800D3884[] = {
     0x00040001, 0xFFF0FFF0, 0x00200020, 0x0068019A,
     0x008000E0, 0x00A00100, 0x00000000,
 };
 
-static u32 D_800D38A0[] = {
+u32 D_800D38A0[] = {
     0x00060001, 0xFFF0FFF0, 0x00200020, 0x0068019A,
     0x008000E0, 0x00A00100, 0x00000000,
 };
 
-static u32 D_800D38BC[] = {
+u32 D_800D38BC[] = {
     0x00070001, 0xFFF0FFF0, 0x00200020, 0x0068019A,
     0x008000E0, 0x00A00100, 0x00000000,
 };
 
-static u32 D_800D38D8[] = {
+u32 D_800D38D8[] = {
     0x00050001, 0xFFF0FFF0, 0x00200020, 0x0068019A,
     0x008000E0, 0x00A00100, 0x00000000,
 };
 
-static u32 D_800D38F4[] = {
+u32 D_800D38F4[] = {
     0x00000001, 0xFFF8FFF8, 0x00100010, 0x0068015E,
     0x00400070, 0x00500080, 0x00000000,
 };
 
-static u32 D_800D3910[] = {
+u32 D_800D3910[] = {
     0x00000001, 0xFFF8FFF8, 0x00100010, 0x0068015E,
     0x00300040, 0x00400050, 0x00000000,
 };
 
-static u32 D_800D392C[] = {
+u32 D_800D392C[] = {
     0x00030004, 0xFFFEFFFD, 0x00100010, 0x0068015E, 0x00600070, 0x00700080,
     0xFFF30001, 0x0010FFFE, 0x015E0010, 0x00700068, 0x00800060, 0x00020070,
     0xFFF2FFFD, 0x00100010, 0x0068015E, 0x00600070, 0x00700080, 0xFFF30000,
     0x0010FFF2, 0x015E0010, 0x00700068, 0x00800060, 0x00000070,
 };
 
-static u32 D_800D3988[] = {
+u32 D_800D3988[] = {
     0x00040001, 0xFFF0FFF0, 0x00200020, 0x0068015E,
     0x008000E0, 0x00A00100, 0x00000000,
 };
 
-static u32 D_800D39A4[] = {
+u32 D_800D39A4[] = {
     0x00000001, 0xFFF0FFF8, 0x00100010, 0x00680194,
     0x008000C0, 0x009000D0, 0x00000000,
 };
 
-static u32 D_800D39C0[] = {
+u32 D_800D39C0[] = {
     0x00000002, 0xFFF00008, 0x00100010, 0x00680194, 0x008000D0, 0x009000E0,
     0xFFF00030, 0x0020FFF0, 0x015E0020, 0x00000068, 0x00200000, 0x00000020,
 };
 
-static u32 D_800D39F0[] = {
+u32 D_800D39F0[] = {
     0x00000001, 0x00000008, 0x00100010, 0x00680194,
     0x009000D0, 0x00A000E0, 0x00000000,
 };
 
-static u32 D_800D3A0C[] = {
+u32 D_800D3A0C[] = {
     0x00000002, 0x0000FFF8, 0x00100010, 0x00680194, 0x00A000D0, 0x00B000E0,
     0xFFF00030, 0x0020FFF0, 0x015E0020, 0x00000068, 0x00200000, 0x00000020,
 };
 
-static u32 D_800D3A3C[] = {
+u32 D_800D3A3C[] = {
     0x00000001, 0x0000FFE8, 0x00100010, 0x00680194,
     0x00A000C0, 0x00B000D0, 0x00000000,
 };
 
-static u32 D_800D3A58[] = {
+u32 D_800D3A58[] = {
     0x00000002, 0xFFF0FFE8, 0x00100010, 0x00680194, 0x009000C0, 0x00A000D0,
     0xFFF00030, 0x0020FFF0, 0x015E0020, 0x00000068, 0x00200000, 0x00000020,
 };
 
-static u32 D_800D3A88[] = {
+u32 D_800D3A88[] = {
     0x00010001, 0x0008FFF0, 0x00100010, 0x00680194,
     0x008000C0, 0x009000D0, 0x00000000,
 };
 
-static u32 D_800D3AA4[] = {
+u32 D_800D3AA4[] = {
     0x00010002, 0x00080000, 0x00100010, 0x00680194, 0x008000D0, 0x009000E0,
     0xFFF00030, 0x0020FFF0, 0x015E0020, 0x00000068, 0x00200000, 0x00000020,
 };
 
-static u32 D_800D3AD4[] = {
+u32 D_800D3AD4[] = {
     0x00010001, 0xFFF80000, 0x00100010, 0x00680194,
     0x009000D0, 0x00A000E0, 0x00000000,
 };
 
-static u32 D_800D3AF0[] = {
+u32 D_800D3AF0[] = {
     0x00010002, 0xFFE80000, 0x00100010, 0x00680194, 0x00A000D0, 0x00B000E0,
     0xFFF00030, 0x0020FFF0, 0x015E0020, 0x00000068, 0x00200000, 0x00000020,
 };
 
-static u32 D_800D3B20[] = {
+u32 D_800D3B20[] = {
     0x00010001, 0xFFE8FFF0, 0x00100010, 0x00680194,
     0x00A000C0, 0x00B000D0, 0x00000000,
 };
 
-static u32 D_800D3B3C[] = {
+u32 D_800D3B3C[] = {
     0x00010002, 0xFFF8FFF0, 0x00100010, 0x00680194, 0x009000C0, 0x00A000D0,
     0xFFF00030, 0x0020FFF0, 0x015E0020, 0x00000068, 0x00200000, 0x00000020,
 };
 
-static u32 D_800D3B6C[] = {
+u32 D_800D3B6C[] = {
     0x00000001, 0xFFFCFFFC, 0x00080008, 0x00680186,
     0x00380078, 0x00400080, 0x61090000,
 };
 
-static u32 D_800D3D1C[];
-static u32 D_800D3D38[];
-static u32 D_800D3D54[];
-static u32 D_800D3D84[];
-static u32 D_800D3DA0[];
-static u32 D_800D3DBC[];
-static u32 D_800D3DD8[];
-static u32 D_800D3DF4[];
-static u32 D_800D3E10[];
-static u32 D_800D3E2C[];
-static u32 D_800D3E48[];
-static u32 D_800D3E64[];
-static u32 D_800D3E80[];
-static u32 D_800D3E9C[];
-static u32 D_800D3EB8[];
-static u32 D_800D3ED4[];
-static u32 D_800D3F04[];
-static u32 D_800D3F20[];
-static u32 D_800D3F3C[];
-static u32 D_800D3F58[];
-static u32 D_800D3F74[];
-static u32 D_800D3F90[];
-static u32 D_800D3FAC[];
-static u32 D_800D3FDC[];
-static u32 D_800D3FF8[];
-static u32 D_800D4014[];
-static u32 D_800D4030[];
-static u32 D_800D404C[];
-static u32 D_800D4068[];
-static u32 D_800D4084[];
-static u32 D_800D40A0[];
-static u32 D_800D40BC[];
-static u32 D_800D40D8[];
-static u32 D_800D40F4[];
-static u32 D_800D4110[];
-static u32 D_800D4140[];
-static u32 D_800D415C[];
-static u32 D_800D4178[];
-static u32 D_800D4194[];
-static u32 D_800D41B0[];
-static u32 D_800D41CC[];
-static u32 D_800D41E8[];
-static u32 D_800D4204[];
-static u32 D_800D4220[];
-static u32 D_800D423C[];
-static u32 D_800D4258[];
-static u32 D_800D4274[];
-static u32 D_800D4290[];
-static u32 D_800D42C0[];
-static u32 D_800D42DC[];
-static u32 D_800D42F8[];
-static u32 D_800D4314[];
-static u32 D_800D4330[];
-static u32 D_800D434C[];
-static u32 D_800D4368[];
-static u32 D_800D4398[];
-static u32 D_800D43B4[];
-static u32 D_800D43D0[];
-static u32 D_800D43EC[];
-static u32 D_800D4408[];
-static u32 D_800D4424[];
-static u32 D_800D4440[];
-static u32 D_800D445C[];
-static u32 D_800D4478[];
-static u32 D_800D4494[];
-static u32 D_800D4534[];
-static u32 D_800D45D4[];
-static u32 D_800D4674[];
-static u32 D_800D4714[];
-static u32 D_800D479C[];
-static u32 D_800D4824[];
-static u32 D_800D48AC[];
-static u32 D_800D4934[];
-static u32 D_800D49D4[];
-static u32 D_800D4A74[];
-static u32 D_800D4B14[];
-static u32 D_800D4BB4[];
-static u32 D_800D4C54[];
-static u32 D_800D4CDC[];
-static u32 D_800D4D64[];
-static u32 D_800D4E04[];
-static u32 D_800D4EA4[];
-static u32 D_800D4F44[];
-static u32 D_800D4FE4[];
-static u32 D_800D5084[];
-static u32 D_800D5124[];
-static u32 D_800D51AC[];
-static u32 D_800D5234[];
-static u32 D_800D52D4[];
-static u32 D_800D52F0[];
-static u32 D_800D5320[];
-static u32 D_800D5350[];
-static u32 D_800D53AC[];
-static u32 D_800D5408[];
-static u32 D_800D5450[];
-static u32 D_800D54C4[];
-static u32 D_800D550C[];
-static u32 D_800D5568[];
-static u32 D_800D55C4[];
-static u32 D_800D560C[];
+u32 D_800D3D1C[];
+u32 D_800D3D38[];
+u32 D_800D3D54[];
+u32 D_800D3D84[];
+u32 D_800D3DA0[];
+u32 D_800D3DBC[];
+u32 D_800D3DD8[];
+u32 D_800D3DF4[];
+u32 D_800D3E10[];
+u32 D_800D3E2C[];
+u32 D_800D3E48[];
+u32 D_800D3E64[];
+u32 D_800D3E80[];
+u32 D_800D3E9C[];
+u32 D_800D3EB8[];
+u32 D_800D3ED4[];
+u32 D_800D3F04[];
+u32 D_800D3F20[];
+u32 D_800D3F3C[];
+u32 D_800D3F58[];
+u32 D_800D3F74[];
+u32 D_800D3F90[];
+u32 D_800D3FAC[];
+u32 D_800D3FDC[];
+u32 D_800D3FF8[];
+u32 D_800D4014[];
+u32 D_800D4030[];
+u32 D_800D404C[];
+u32 D_800D4068[];
+u32 D_800D4084[];
+u32 D_800D40A0[];
+u32 D_800D40BC[];
+u32 D_800D40D8[];
+u32 D_800D40F4[];
+u32 D_800D4110[];
+u32 D_800D4140[];
+u32 D_800D415C[];
+u32 D_800D4178[];
+u32 D_800D4194[];
+u32 D_800D41B0[];
+u32 D_800D41CC[];
+u32 D_800D41E8[];
+u32 D_800D4204[];
+u32 D_800D4220[];
+u32 D_800D423C[];
+u32 D_800D4258[];
+u32 D_800D4274[];
+u32 D_800D4290[];
+u32 D_800D42C0[];
+u32 D_800D42DC[];
+u32 D_800D42F8[];
+u32 D_800D4314[];
+u32 D_800D4330[];
+u32 D_800D434C[];
+u32 D_800D4368[];
+u32 D_800D4398[];
+u32 D_800D43B4[];
+u32 D_800D43D0[];
+u32 D_800D43EC[];
+u32 D_800D4408[];
+u32 D_800D4424[];
+u32 D_800D4440[];
+u32 D_800D445C[];
+u32 D_800D4478[];
+u32 D_800D4494[];
+u32 D_800D4534[];
+u32 D_800D45D4[];
+u32 D_800D4674[];
+u32 D_800D4714[];
+u32 D_800D479C[];
+u32 D_800D4824[];
+u32 D_800D48AC[];
+u32 D_800D4934[];
+u32 D_800D49D4[];
+u32 D_800D4A74[];
+u32 D_800D4B14[];
+u32 D_800D4BB4[];
+u32 D_800D4C54[];
+u32 D_800D4CDC[];
+u32 D_800D4D64[];
+u32 D_800D4E04[];
+u32 D_800D4EA4[];
+u32 D_800D4F44[];
+u32 D_800D4FE4[];
+u32 D_800D5084[];
+u32 D_800D5124[];
+u32 D_800D51AC[];
+u32 D_800D5234[];
+u32 D_800D52D4[];
+u32 D_800D52F0[];
+u32 D_800D5320[];
+u32 D_800D5350[];
+u32 D_800D53AC[];
+u32 D_800D5408[];
+u32 D_800D5450[];
+u32 D_800D54C4[];
+u32 D_800D550C[];
+u32 D_800D5568[];
+u32 D_800D55C4[];
+u32 D_800D560C[];
 
 s16* D_800D3B88[] = {
     0x00000000,       (s16*)D_800D3D1C, (s16*)D_800D3D38, (s16*)D_800D3D54,
@@ -4179,327 +4179,327 @@ s16* D_800D3B88[] = {
     (s16*)D_800D560C,
 };
 
-static u32 D_800D3D1C[] = {
+u32 D_800D3D1C[] = {
     0x01000001, 0xFFDBFFFB, 0x00180020, 0x00000000,
     0x00400048, 0x00580068, 0x00000000,
 };
 
-static u32 D_800D3D38[] = {
+u32 D_800D3D38[] = {
     0x01020001, 0xFFDCFFDF, 0x00180020, 0x00000000,
     0x00400048, 0x00580068, 0x00000000,
 };
 
-static u32 D_800D3D54[] = {
+u32 D_800D3D54[] = {
     0x01100002, 0xFFEB0010, 0x00100040, 0x00000000, 0x00600000, 0x00700040,
     0xFFF30130, 0x0048FFED, 0x00010020, 0x00000000, 0x00480000, 0x00000020,
 };
 
-static u32 D_800D3D84[] = {
+u32 D_800D3D84[] = {
     0x01100001, 0xFFEA0011, 0x00100040, 0x00000000,
     0x00600000, 0x00700040, 0x00000000,
 };
 
-static u32 D_800D3DA0[] = {
+u32 D_800D3DA0[] = {
     0x01180001, 0xFFEA0011, 0x00100040, 0x00000000,
     0x00700000, 0x00800040, 0x00000000,
 };
 
-static u32 D_800D3DBC[] = {
+u32 D_800D3DBC[] = {
     0x00190001, 0xFFE9000E, 0x00100040, 0x00000000,
     0x00700000, 0x00800040, 0x00000000,
 };
 
-static u32 D_800D3DD8[] = {
+u32 D_800D3DD8[] = {
     0x00040001, 0xFFE7FFFD, 0x00100038, 0x00000000,
     0x00280048, 0x00380080, 0x00000000,
 };
 
-static u32 D_800D3DF4[] = {
+u32 D_800D3DF4[] = {
     0x00000001, 0xFFE30003, 0x00180020, 0x00000000,
     0x00400048, 0x00580068, 0x00000000,
 };
 
-static u32 D_800D3E10[] = {
+u32 D_800D3E10[] = {
     0x00000001, 0xFFE6FFF8, 0x00180020, 0x00000000,
     0x00400048, 0x00580068, 0x00000000,
 };
 
-static u32 D_800D3E2C[] = {
+u32 D_800D3E2C[] = {
     0x00100001, 0xFFEEFFE9, 0x00100020, 0x00000000,
     0x00500000, 0x00600020, 0x00000000,
 };
 
-static u32 D_800D3E48[] = {
+u32 D_800D3E48[] = {
     0x00100001, 0xFFF0FFE3, 0x00100020, 0x00000000,
     0x00500000, 0x00600020, 0x00000000,
 };
 
-static u32 D_800D3E64[] = {
+u32 D_800D3E64[] = {
     0x00100001, 0xFFF1FFE1, 0x00100020, 0x00000000,
     0x00500000, 0x00600020, 0x00000000,
 };
 
-static u32 D_800D3E80[] = {
+u32 D_800D3E80[] = {
     0x00100001, 0xFFF2FFDF, 0x00100020, 0x00000000,
     0x00500000, 0x00600020, 0x00000000,
 };
 
-static u32 D_800D3E9C[] = {
+u32 D_800D3E9C[] = {
     0x01000001, 0xFFEBFFF3, 0x00180020, 0x00000000,
     0x00400048, 0x00580068, 0x00000000,
 };
 
-static u32 D_800D3EB8[] = {
+u32 D_800D3EB8[] = {
     0x01020001, 0xFFEEFFD8, 0x00180020, 0x00000000,
     0x00400048, 0x00580068, 0x00000000,
 };
 
-static u32 D_800D3ED4[] = {
+u32 D_800D3ED4[] = {
     0x01100002, 0xFFFC0007, 0x00100040, 0x00000000, 0x00600000, 0x00700040,
     0xFFE60130, 0x00500000, 0x00010020, 0x00000000, 0x00500000, 0x00000020,
 };
 
-static u32 D_800D3F04[] = {
+u32 D_800D3F04[] = {
     0x01100001, 0xFFFB0008, 0x00100040, 0x00000000,
     0x00600000, 0x00700040, 0x00000000,
 };
 
-static u32 D_800D3F20[] = {
+u32 D_800D3F20[] = {
     0x01180001, 0xFFFB0008, 0x00100040, 0x00000000,
     0x00700000, 0x00800040, 0x00000000,
 };
 
-static u32 D_800D3F3C[] = {
+u32 D_800D3F3C[] = {
     0x00180001, 0xFFF90005, 0x00100040, 0x00000000,
     0x00700000, 0x00800040, 0x00000000,
 };
 
-static u32 D_800D3F58[] = {
+u32 D_800D3F58[] = {
     0x00040001, 0xFFF8FFF9, 0x00100030, 0x00000000,
     0x00280050, 0x00380080, 0x00000000,
 };
 
-static u32 D_800D3F74[] = {
+u32 D_800D3F74[] = {
     0x00000001, 0xFFF6FFF8, 0x00180020, 0x00000000,
     0x00400048, 0x00580068, 0x00000000,
 };
 
-static u32 D_800D3F90[] = {
+u32 D_800D3F90[] = {
     0x00000001, 0xFFF8FFEF, 0x00180020, 0x00000000,
     0x00400048, 0x00580068, 0x00000000,
 };
 
-static u32 D_800D3FAC[] = {
+u32 D_800D3FAC[] = {
     0x01240002, 0x0009000A, 0x00280030, 0x00000000, 0x00000050, 0x00280080,
     0xFFE90110, 0x0048FFF5, 0x00010030, 0x00000000, 0x00480020, 0x00000050,
 };
 
-static u32 D_800D3FDC[] = {
+u32 D_800D3FDC[] = {
     0x01240001, 0x0008000B, 0x00280030, 0x00000000,
     0x00000050, 0x00280080, 0x00000000,
 };
 
-static u32 D_800D3FF8[] = {
+u32 D_800D3FF8[] = {
     0x01240001, 0x00020009, 0x00280030, 0x00000000,
     0x00000050, 0x00280080, 0x00000000,
 };
 
-static u32 D_800D4014[] = {
+u32 D_800D4014[] = {
     0x00180001, 0x0000FFF2, 0x00100040, 0x00000000,
     0x00700000, 0x00800040, 0x00000000,
 };
 
-static u32 D_800D4030[] = {
+u32 D_800D4030[] = {
     0x00000001, 0xFFFC0002, 0x00100020, 0x00000000,
     0x00600020, 0x00700040, 0x00000000,
 };
 
-static u32 D_800D404C[] = {
+u32 D_800D404C[] = {
     0x00000001, 0xFFFBFFF6, 0x00100020, 0x00000000,
     0x00600020, 0x00700040, 0x00000000,
 };
 
-static u32 D_800D4068[] = {
+u32 D_800D4068[] = {
     0x00100001, 0xFFFEFFE7, 0x00100020, 0x00000000,
     0x00500000, 0x00600020, 0x00000000,
 };
 
-static u32 D_800D4084[] = {
+u32 D_800D4084[] = {
     0x00100001, 0xFFFFFFE5, 0x00100020, 0x00000000,
     0x00500000, 0x00600020, 0x00000000,
 };
 
-static u32 D_800D40A0[] = {
+u32 D_800D40A0[] = {
     0x00100001, 0x0000FFE3, 0x00100020, 0x00000000,
     0x00500000, 0x00600020, 0x00000000,
 };
 
-static u32 D_800D40BC[] = {
+u32 D_800D40BC[] = {
     0x00100001, 0x0001FFE2, 0x00100020, 0x00000000,
     0x00500000, 0x00600020, 0x00000000,
 };
 
-static u32 D_800D40D8[] = {
+u32 D_800D40D8[] = {
     0x01000001, 0xFFD9FFF7, 0x00180020, 0x00000000,
     0x00400048, 0x00580068, 0x00000000,
 };
 
-static u32 D_800D40F4[] = {
+u32 D_800D40F4[] = {
     0x01020001, 0xFFDAFFDC, 0x00180020, 0x00000000,
     0x00400048, 0x00580068, 0x00000000,
 };
 
-static u32 D_800D4110[] = {
+u32 D_800D4110[] = {
     0x01100002, 0xFFE9000D, 0x00100040, 0x00000000, 0x00600000, 0x00700040,
     0xFFEE0130, 0x0050FFED, 0x00010020, 0x00000000, 0x00500000, 0x00000020,
 };
 
-static u32 D_800D4140[] = {
+u32 D_800D4140[] = {
     0x01100001, 0xFFE8000E, 0x00100040, 0x00000000,
     0x00600000, 0x00700040, 0x00000000,
 };
 
-static u32 D_800D415C[] = {
+u32 D_800D415C[] = {
     0x01180001, 0xFFE8000E, 0x00100040, 0x00000000,
     0x00700000, 0x00800040, 0x00000000,
 };
 
-static u32 D_800D4178[] = {
+u32 D_800D4178[] = {
     0x00180001, 0xFFE60008, 0x00100040, 0x00000000,
     0x00700000, 0x00800040, 0x00000000,
 };
 
-static u32 D_800D4194[] = {
+u32 D_800D4194[] = {
     0x00040001, 0xFFE60001, 0x00100030, 0x00000000,
     0x00280050, 0x00380080, 0x00000000,
 };
 
-static u32 D_800D41B0[] = {
+u32 D_800D41B0[] = {
     0x00000001, 0xFFE10001, 0x00180020, 0x00000000,
     0x00400048, 0x00580068, 0x00000000,
 };
 
-static u32 D_800D41CC[] = {
+u32 D_800D41CC[] = {
     0x00000001, 0xFFE4FFF5, 0x00180020, 0x00000000,
     0x00400048, 0x00580068, 0x00000000,
 };
 
-static u32 D_800D41E8[] = {
+u32 D_800D41E8[] = {
     0x00100001, 0xFFECFFE7, 0x00100020, 0x00000000,
     0x00500000, 0x00600020, 0x00000000,
 };
 
-static u32 D_800D4204[] = {
+u32 D_800D4204[] = {
     0x00100001, 0xFFEDFFE5, 0x00100020, 0x00000000,
     0x00500000, 0x00600020, 0x00000000,
 };
 
-static u32 D_800D4220[] = {
+u32 D_800D4220[] = {
     0x00100001, 0xFFEEFFE3, 0x00100020, 0x00000000,
     0x00500000, 0x00600020, 0x00000000,
 };
 
-static u32 D_800D423C[] = {
+u32 D_800D423C[] = {
     0x00100001, 0xFFEFFFE1, 0x00100020, 0x00000000,
     0x00500000, 0x00600020, 0x00000000,
 };
 
-static u32 D_800D4258[] = {
+u32 D_800D4258[] = {
     0x01000001, 0xFFD7FFEF, 0x00180020, 0x00000000,
     0x00400048, 0x00580068, 0x00000000,
 };
 
-static u32 D_800D4274[] = {
+u32 D_800D4274[] = {
     0x01020001, 0xFFD9FFD3, 0x00180020, 0x00000000,
     0x00400048, 0x00580068, 0x00000000,
 };
 
-static u32 D_800D4290[] = {
+u32 D_800D4290[] = {
     0x01100002, 0xFFEB0009, 0x00100040, 0x00000000, 0x00600000, 0x00700040,
     0xFFE80130, 0x0050FFEE, 0x00010020, 0x00000000, 0x00500000, 0x00000020,
 };
 
-static u32 D_800D42C0[] = {
+u32 D_800D42C0[] = {
     0x01100001, 0xFFEA000A, 0x00100040, 0x00000000,
     0x00600000, 0x00700040, 0x00000000,
 };
 
-static u32 D_800D42DC[] = {
+u32 D_800D42DC[] = {
     0x01180001, 0xFFEA000A, 0x00100040, 0x00000000,
     0x00700000, 0x00800040, 0x00000000,
 };
 
-static u32 D_800D42F8[] = {
+u32 D_800D42F8[] = {
     0x00180001, 0xFFE80006, 0x00100040, 0x00000000,
     0x00700000, 0x00800040, 0x00000000,
 };
 
-static u32 D_800D4314[] = {
+u32 D_800D4314[] = {
     0x00040001, 0xFFE70004, 0x00100028, 0x00000000,
     0x00280058, 0x00380080, 0x00000000,
 };
 
-static u32 D_800D4330[] = {
+u32 D_800D4330[] = {
     0x00000001, 0xFFE2FFFB, 0x00180020, 0x00000000,
     0x00400048, 0x00580068, 0x00000000,
 };
 
-static u32 D_800D434C[] = {
+u32 D_800D434C[] = {
     0x00000001, 0xFFE3FFF5, 0x00180020, 0x00000000,
     0x00400048, 0x00580068, 0x00000000,
 };
 
-static u32 D_800D4368[] = {
+u32 D_800D4368[] = {
     0x01240002, 0xFFFE000F, 0x00280030, 0x00000000, 0x00000050, 0x00280080,
     0xFFF00110, 0x0048FFEC, 0x00010030, 0x00000000, 0x00480020, 0x00000050,
 };
 
-static u32 D_800D4398[] = {
+u32 D_800D4398[] = {
     0x01240001, 0xFFFD0010, 0x00280030, 0x00000000,
     0x00000050, 0x00280080, 0x00000000,
 };
 
-static u32 D_800D43B4[] = {
+u32 D_800D43B4[] = {
     0x01240001, 0xFFF7000D, 0x00280030, 0x00000000,
     0x00000050, 0x00280080, 0x00000000,
 };
 
-static u32 D_800D43D0[] = {
+u32 D_800D43D0[] = {
     0x00180001, 0xFFF1FFF7, 0x00100040, 0x00000000,
     0x00700000, 0x00800040, 0x00000000,
 };
 
-static u32 D_800D43EC[] = {
+u32 D_800D43EC[] = {
     0x00000001, 0xFFEDFFFB, 0x00100028, 0x00000000,
     0x00600018, 0x00700040, 0x00000000,
 };
 
-static u32 D_800D4408[] = {
+u32 D_800D4408[] = {
     0x00000001, 0xFFEB0000, 0x00100018, 0x00000000,
     0x00600028, 0x00700040, 0x00000000,
 };
 
-static u32 D_800D4424[] = {
+u32 D_800D4424[] = {
     0x00100001, 0xFFEEFFE9, 0x00100020, 0x00000000,
     0x00500000, 0x00600020, 0x00000000,
 };
 
-static u32 D_800D4440[] = {
+u32 D_800D4440[] = {
     0x00100001, 0xFFEFFFE7, 0x00100020, 0x00000000,
     0x00500000, 0x00600020, 0x00000000,
 };
 
-static u32 D_800D445C[] = {
+u32 D_800D445C[] = {
     0x00100001, 0xFFF0FFE5, 0x00100020, 0x00000000,
     0x00500000, 0x00600020, 0x00000000,
 };
 
-static u32 D_800D4478[] = {
+u32 D_800D4478[] = {
     0x00100001, 0xFFF1FFE3, 0x00100020, 0x00000000,
     0x00500000, 0x00600020, 0x00000000,
 };
 
-static u32 D_800D4494[] = {
+u32 D_800D4494[] = {
     0x00300007, 0xFFF1FFFB, 0x00180010, 0x00010004, 0x00000000, 0x00180010,
     0xFFFB0010, 0x0010FFEA, 0x00040018, 0x00000001, 0x00100058, 0x00000070,
     0xFFE7FFF8, 0x00180010, 0x00010004, 0x00400020, 0x00580030, 0xFFF80020,
@@ -4509,7 +4509,7 @@ static u32 D_800D4494[] = {
     0x00010004, 0x00600010, 0x00800020, 0x00000000,
 };
 
-static u32 D_800D4534[] = {
+u32 D_800D4534[] = {
     0x00300007, 0xFFF2FFFC, 0x00180010, 0x00010004, 0x00000000, 0x00180010,
     0xFFFC0010, 0x0010FFE9, 0x00040018, 0x00000001, 0x00100058, 0x00000070,
     0xFFE6FFF8, 0x00180010, 0x00010004, 0x00400020, 0x00580030, 0xFFF80020,
@@ -4519,7 +4519,7 @@ static u32 D_800D4534[] = {
     0x00010004, 0x00600010, 0x00800020, 0x00000000,
 };
 
-static u32 D_800D45D4[] = {
+u32 D_800D45D4[] = {
     0x00300007, 0xFFF1FFFD, 0x00180010, 0x00010004, 0x00000000, 0x00180010,
     0xFFFD0010, 0x0010FFE9, 0x00040018, 0x00000001, 0x00100058, 0x00000070,
     0xFFE6FFF8, 0x00180010, 0x00010004, 0x00400020, 0x00580030, 0xFFFC0000,
@@ -4529,7 +4529,7 @@ static u32 D_800D45D4[] = {
     0x00010004, 0x00600010, 0x00800020, 0x00000000,
 };
 
-static u32 D_800D4674[] = {
+u32 D_800D4674[] = {
     0x00300007, 0xFFF0FFFC, 0x00180010, 0x00010004, 0x00000000, 0x00180010,
     0xFFFC0010, 0x0010FFEA, 0x00040018, 0x00000001, 0x00100058, 0x00000070,
     0xFFE7FFF8, 0x00180010, 0x00010004, 0x00400020, 0x00580030, 0xFFFC0000,
@@ -4539,7 +4539,7 @@ static u32 D_800D4674[] = {
     0x00010004, 0x00600010, 0x00800020, 0x00000000,
 };
 
-static u32 D_800D4714[] = {
+u32 D_800D4714[] = {
     0x00100006, 0xFFEAFFFB, 0x00180010, 0x00010006, 0x00580000, 0x00700010,
     0xFFF80000, 0x0010FFE7, 0x00060018, 0x00200001, 0x00300040, 0x00200058,
     0xFFF9FFF8, 0x00200018, 0x00010006, 0x00000048, 0x00200060, 0x00010000,
@@ -4548,7 +4548,7 @@ static u32 D_800D4714[] = {
     0x00060020, 0x00100001, 0x00200060, 0x00000080,
 };
 
-static u32 D_800D479C[] = {
+u32 D_800D479C[] = {
     0x00100006, 0xFFE9FFFC, 0x00180010, 0x00010006, 0x00580000, 0x00700010,
     0xFFF80000, 0x0010FFE6, 0x00060018, 0x00200001, 0x00300040, 0x00200058,
     0xFFF9FFF8, 0x00200018, 0x00010006, 0x00000048, 0x00200060, 0x00000000,
@@ -4557,7 +4557,7 @@ static u32 D_800D479C[] = {
     0x00060020, 0x00100001, 0x00200060, 0x00000080,
 };
 
-static u32 D_800D4824[] = {
+u32 D_800D4824[] = {
     0x00100006, 0xFFE9FFFD, 0x00180010, 0x00010006, 0x00580000, 0x00700010,
     0xFFF80000, 0x0010FFE6, 0x00060018, 0x00200001, 0x00300040, 0x00000058,
     0xFFF9FFFC, 0x00200010, 0x00010006, 0x00200020, 0x00400030, 0xFFFF0000,
@@ -4566,7 +4566,7 @@ static u32 D_800D4824[] = {
     0x00060020, 0x00100001, 0x00200060, 0x00000080,
 };
 
-static u32 D_800D48AC[] = {
+u32 D_800D48AC[] = {
     0x00100006, 0xFFEAFFFC, 0x00180010, 0x00010006, 0x00580000, 0x00700010,
     0xFFF80000, 0x0010FFE7, 0x00060018, 0x00200001, 0x00300040, 0x00000058,
     0xFFF9FFFC, 0x00200010, 0x00010006, 0x00200020, 0x00400030, 0x00000000,
@@ -4575,7 +4575,7 @@ static u32 D_800D48AC[] = {
     0x00060020, 0x00100001, 0x00200060, 0x00000080,
 };
 
-static u32 D_800D4934[] = {
+u32 D_800D4934[] = {
     0x00000007, 0xFFECFFEB, 0x00080018, 0x00010008, 0x00580010, 0x00600028,
     0xFFFB0020, 0x0010FFE7, 0x00080018, 0x00100001, 0x00200000, 0x00000018,
     0xFFEBFFEA, 0x00080018, 0x00010008, 0x00480030, 0x00500048, 0xFFF30010,
@@ -4585,7 +4585,7 @@ static u32 D_800D4934[] = {
     0x00010008, 0x00700000, 0x00800010, 0x00000000,
 };
 
-static u32 D_800D49D4[] = {
+u32 D_800D49D4[] = {
     0x00000007, 0xFFECFFEC, 0x00080018, 0x00010008, 0x00580010, 0x00600028,
     0xFFFB0020, 0x0010FFE7, 0x00080018, 0x00100001, 0x00200000, 0x00000018,
     0xFFEBFFE9, 0x00080018, 0x00010008, 0x00480030, 0x00500048, 0xFFF30010,
@@ -4595,7 +4595,7 @@ static u32 D_800D49D4[] = {
     0x00010008, 0x00700000, 0x00800010, 0x00000000,
 };
 
-static u32 D_800D4A74[] = {
+u32 D_800D4A74[] = {
     0x00000007, 0xFFECFFED, 0x00080018, 0x00010008, 0x00580010, 0x00600028,
     0xFFFB0020, 0x0010FFE7, 0x00080018, 0x00100001, 0x00200000, 0x00000018,
     0xFFEBFFE9, 0x00080018, 0x00010008, 0x00480030, 0x00500048, 0xFFF30010,
@@ -4605,7 +4605,7 @@ static u32 D_800D4A74[] = {
     0x00010008, 0x00700000, 0x00800010, 0x00000000,
 };
 
-static u32 D_800D4B14[] = {
+u32 D_800D4B14[] = {
     0x00000007, 0xFFECFFEC, 0x00080018, 0x00010008, 0x00580010, 0x00600028,
     0xFFFB0020, 0x0010FFE7, 0x00080018, 0x00100001, 0x00200000, 0x00000018,
     0xFFEBFFE8, 0x00080018, 0x00010008, 0x00480030, 0x00500048, 0xFFF30010,
@@ -4615,7 +4615,7 @@ static u32 D_800D4B14[] = {
     0x00010008, 0x00700000, 0x00800010, 0x00000000,
 };
 
-static u32 D_800D4BB4[] = {
+u32 D_800D4BB4[] = {
     0x00000007, 0xFFECFFEC, 0x00080018, 0x00010008, 0x00580010, 0x00600028,
     0xFFFB0020, 0x0010FFE7, 0x00080018, 0x00100001, 0x00200000, 0x00000018,
     0xFFEBFFE7, 0x00080018, 0x00010008, 0x00480030, 0x00500048, 0xFFF30010,
@@ -4625,7 +4625,7 @@ static u32 D_800D4BB4[] = {
     0x00010008, 0x00700000, 0x00800010, 0x00000000,
 };
 
-static u32 D_800D4C54[] = {
+u32 D_800D4C54[] = {
     0x00000006, 0xFFEDFFEB, 0x00080018, 0x00010008, 0x00580010, 0x00600028,
     0xFFFA0020, 0x0010FFE7, 0x00080018, 0x00100001, 0x00200000, 0x00100018,
     0xFFF1FFF2, 0x00280020, 0x00010008, 0x00300000, 0x00580020, 0xFFE30023,
@@ -4634,7 +4634,7 @@ static u32 D_800D4C54[] = {
     0x00080010, 0x00000001, 0x00100070, 0x00000080,
 };
 
-static u32 D_800D4CDC[] = {
+u32 D_800D4CDC[] = {
     0x00000006, 0xFFEDFFEB, 0x00080018, 0x00010008, 0x00580010, 0x00600028,
     0xFFFA0020, 0x0010FFE7, 0x00080018, 0x00100001, 0x00200000, 0x00100018,
     0xFFF1FFF2, 0x00280020, 0x00010008, 0x00300000, 0x00580020, 0xFFEC0021,
@@ -4643,7 +4643,7 @@ static u32 D_800D4CDC[] = {
     0x00080010, 0x00000001, 0x00100070, 0x00000080,
 };
 
-static u32 D_800D4D64[] = {
+u32 D_800D4D64[] = {
     0x00000007, 0xFFF30009, 0x00080008, 0x00010008, 0x00700008, 0x00780010,
     0xFFEB0000, 0x0018FFED, 0x00080008, 0x00100001, 0x00280058, 0x00200060,
     0xFFE7FFFB, 0x00180010, 0x00010008, 0x00000010, 0x00180020, 0xFFF20010,
@@ -4653,7 +4653,7 @@ static u32 D_800D4D64[] = {
     0x00010008, 0x00000020, 0x00200030, 0x00000000,
 };
 
-static u32 D_800D4E04[] = {
+u32 D_800D4E04[] = {
     0x00000007, 0xFFF8FFEB, 0x00080018, 0x0001000A, 0x00580010, 0x00600028,
     0xFFFB0020, 0x0010FFF3, 0x000A0018, 0x00100001, 0x00200000, 0x00000018,
     0xFFF7FFEA, 0x00080018, 0x0001000A, 0x00480030, 0x00500048, 0xFFEF0010,
@@ -4663,7 +4663,7 @@ static u32 D_800D4E04[] = {
     0x0001000A, 0x00700000, 0x00800010, 0x00000000,
 };
 
-static u32 D_800D4EA4[] = {
+u32 D_800D4EA4[] = {
     0x00000007, 0xFFF8FFEC, 0x00080018, 0x0001000A, 0x00580010, 0x00600028,
     0xFFFB0020, 0x0010FFF3, 0x000A0018, 0x00100001, 0x00200000, 0x00000018,
     0xFFF7FFE9, 0x00080018, 0x0001000A, 0x00480030, 0x00500048, 0xFFEF0010,
@@ -4673,7 +4673,7 @@ static u32 D_800D4EA4[] = {
     0x0001000A, 0x00700000, 0x00800010, 0x00000000,
 };
 
-static u32 D_800D4F44[] = {
+u32 D_800D4F44[] = {
     0x00000007, 0xFFF8FFED, 0x00080018, 0x0001000A, 0x00580010, 0x00600028,
     0xFFFB0020, 0x0010FFF3, 0x000A0018, 0x00100001, 0x00200000, 0x00000018,
     0xFFF7FFE9, 0x00080018, 0x0001000A, 0x00480030, 0x00500048, 0xFFEF0010,
@@ -4683,7 +4683,7 @@ static u32 D_800D4F44[] = {
     0x0001000A, 0x00700000, 0x00800010, 0x00000000,
 };
 
-static u32 D_800D4FE4[] = {
+u32 D_800D4FE4[] = {
     0x00000007, 0xFFF8FFEC, 0x00080018, 0x0001000A, 0x00580010, 0x00600028,
     0xFFFB0020, 0x0010FFF3, 0x000A0018, 0x00100001, 0x00200000, 0x00000018,
     0xFFF7FFE8, 0x00080018, 0x0001000A, 0x00480030, 0x00500048, 0xFFEF0010,
@@ -4693,7 +4693,7 @@ static u32 D_800D4FE4[] = {
     0x0001000A, 0x00700000, 0x00800010, 0x00000000,
 };
 
-static u32 D_800D5084[] = {
+u32 D_800D5084[] = {
     0x00000007, 0xFFF8FFEC, 0x00080018, 0x0001000A, 0x00580010, 0x00600028,
     0xFFFB0020, 0x0010FFF3, 0x000A0018, 0x00100001, 0x00200000, 0x00000018,
     0xFFF7FFE7, 0x00080018, 0x0001000A, 0x00480030, 0x00500048, 0xFFEF0010,
@@ -4703,7 +4703,7 @@ static u32 D_800D5084[] = {
     0x0001000A, 0x00700000, 0x00800010, 0x00000000,
 };
 
-static u32 D_800D5124[] = {
+u32 D_800D5124[] = {
     0x00000006, 0xFFF9FFEB, 0x00080018, 0x0001000A, 0x00580010, 0x00600028,
     0xFFFA0020, 0x0010FFF3, 0x000A0018, 0x00100001, 0x00200000, 0x00100018,
     0x0000FFEE, 0x00180020, 0x0001000A, 0x00180000, 0x00300020, 0xFFE30023,
@@ -4712,7 +4712,7 @@ static u32 D_800D5124[] = {
     0x000A0010, 0x00000001, 0x00100070, 0x00000080,
 };
 
-static u32 D_800D51AC[] = {
+u32 D_800D51AC[] = {
     0x00000006, 0xFFF9FFEB, 0x00080018, 0x0001000A, 0x00580010, 0x00600028,
     0xFFFA0020, 0x0010FFF3, 0x000A0018, 0x00100001, 0x00200000, 0x00100018,
     0x0000FFEE, 0x00180020, 0x0001000A, 0x00180000, 0x00300020, 0xFFEC0021,
@@ -4721,7 +4721,7 @@ static u32 D_800D51AC[] = {
     0x000A0010, 0x00000001, 0x00100070, 0x00000080,
 };
 
-static u32 D_800D5234[] = {
+u32 D_800D5234[] = {
     0x00000007, 0xFFFF0009, 0x00080008, 0x0001000A, 0x00700008, 0x00780010,
     0xFFEB0000, 0x0018FFF9, 0x000A0008, 0x00100001, 0x00280058, 0x00200060,
     0xFFF3FFFB, 0x00180010, 0x0001000A, 0x00000010, 0x00180020, 0xFFEF0010,
@@ -4731,42 +4731,42 @@ static u32 D_800D5234[] = {
     0x0001000A, 0x00000020, 0x00200030, 0x00000000,
 };
 
-static u32 D_800D52D4[] = {
+u32 D_800D52D4[] = {
     0x00000001, 0xFFF0FFF3, 0x00280018, 0x0001000C,
     0x00200030, 0x00480048, 0x00000000,
 };
 
-static u32 D_800D52F0[] = {
+u32 D_800D52F0[] = {
     0x00000002, 0xFFF1FFF3, 0x00200018, 0x0001000C, 0x00200030, 0x00400048,
     0xFFF30000, 0x00180010, 0x000C0008, 0x00300001, 0x00480040, 0x00000048,
 };
 
-static u32 D_800D5320[] = {
+u32 D_800D5320[] = {
     0x00000002, 0xFFF2FFF3, 0x00200018, 0x0001000C, 0x00200030, 0x00400048,
     0xFFF30000, 0x00180010, 0x000C0008, 0x00300001, 0x00480040, 0x00000048,
 };
 
-static u32 D_800D5350[] = {
+u32 D_800D5350[] = {
     0x00000004, 0xFFE9FFFC, 0x00080008, 0x0001000E, 0x00680038, 0x00700040,
     0x000B0008, 0x0008FFEB, 0x000E0008, 0x00300001, 0x00380078, 0x00000080,
     0xFFEAFFF1, 0x00080008, 0x0001000E, 0x00700030, 0x00780038, 0xFFF60000,
     0x0018FFE8, 0x000E0030, 0x00480001, 0x00600020, 0x00000050,
 };
 
-static u32 D_800D53AC[] = {
+u32 D_800D53AC[] = {
     0x00000004, 0xFFE9FFFC, 0x00080008, 0x0001000E, 0x00600038, 0x00680040,
     0x000B0008, 0x0008FFEB, 0x000E0008, 0x00300001, 0x00380078, 0x00000080,
     0xFFEAFFF1, 0x00080008, 0x0001000E, 0x00700030, 0x00780038, 0xFFF60000,
     0x0018FFE8, 0x000E0030, 0x00480001, 0x00600020, 0x00000050,
 };
 
-static u32 D_800D5408[] = {
+u32 D_800D5408[] = {
     0x00080003, 0xFFEB000B, 0x00080008, 0x0001000E, 0x00780030, 0x00800038,
     0xFFF10000, 0x0008FFEA, 0x000E0008, 0x00300001, 0x00380070, 0x00000078,
     0xFFE8FFF6, 0x00300018, 0x0001000E, 0x00200048, 0x00500060, 0x00000000,
 };
 
-static u32 D_800D5450[] = {
+u32 D_800D5450[] = {
     0x00000005, 0xFFF8FFFA, 0x00080008, 0x0001000E, 0x00580028, 0x00600030,
     0xFFF60000, 0x0018FFE8, 0x000E0010, 0x00300001, 0x00480050, 0x00080060,
     0xFFEB000B, 0x00080008, 0x0001000E, 0x00780038, 0x00800040, 0xFFF10000,
@@ -4774,41 +4774,41 @@ static u32 D_800D5450[] = {
     0x00280018, 0x0001000E, 0x00280048, 0x00500060, 0x00000000,
 };
 
-static u32 D_800D54C4[] = {
+u32 D_800D54C4[] = {
     0x00000003, 0xFFEAFFF0, 0x00100008, 0x0001000E, 0x00600030, 0x00700038,
     0xFFF60000, 0x0018FFEA, 0x000E0018, 0x00480001, 0x00600050, 0x00080068,
     0x0000FFF8, 0x00180020, 0x0001000E, 0x00680040, 0x00800060, 0x00000000,
 };
 
-static u32 D_800D550C[] = {
+u32 D_800D550C[] = {
     0x00000004, 0xFFEBFFFD, 0x00080008, 0x0001000E, 0x00600038, 0x00680040,
     0xFFF00000, 0x0008FFEA, 0x000E0010, 0x00300001, 0x00380060, 0x00000070,
     0xFFEAFFF6, 0x00180018, 0x0001000E, 0x00500048, 0x00680060, 0xFFF80008,
     0x00200000, 0x000E0018, 0x00400001, 0x00600068, 0x00000080,
 };
 
-static u32 D_800D5568[] = {
+u32 D_800D5568[] = {
     0x00000004, 0xFFEBFFFD, 0x00080008, 0x0001000E, 0x00680038, 0x00700040,
     0xFFF00000, 0x0008FFEA, 0x000E0010, 0x00300001, 0x00380060, 0x00000070,
     0xFFEAFFF6, 0x00180018, 0x0001000E, 0x00500048, 0x00680060, 0xFFF80008,
     0x00200000, 0x000E0018, 0x00400001, 0x00600068, 0x00000080,
 };
 
-static u32 D_800D55C4[] = {
+u32 D_800D55C4[] = {
     0x00000003, 0xFFEAFFEF, 0x00100008, 0x0001000E, 0x00600030, 0x00700038,
     0xFFF50000, 0x0018FFEA, 0x000E0018, 0x00480001, 0x00600050, 0x00080068,
     0x0000FFF7, 0x00180020, 0x0001000E, 0x00680040, 0x00800060, 0x00000000,
 };
 
-static u32 D_800D560C[] = {
+u32 D_800D560C[] = {
     0x00000001, 0xFFFCFFF4, 0x00080018, 0x00010008,
     0x00480030, 0x00500048, 0x0D200000,
 };
 
-static u32 D_800D563C[];
-static u32 D_800D5658[];
-static u32 D_800D5674[];
-static u32 D_800D5690[];
+u32 D_800D563C[];
+u32 D_800D5658[];
+u32 D_800D5674[];
+u32 D_800D5690[];
 
 s16* D_800D5628[] = {
     NULL,
@@ -4818,39 +4818,39 @@ s16* D_800D5628[] = {
     (s16*)D_800D5690,
 };
 
-static u32 D_800D563C[] = {
+u32 D_800D563C[] = {
     0x00200001, 0x00000000, 0x00180060, 0x0070019F,
     0x00000080, 0x001800E0, 0x00000000,
 };
 
-static u32 D_800D5658[] = {
+u32 D_800D5658[] = {
     0x00000001, 0x00000000, 0x00180060, 0x0070019F,
     0x00180080, 0x003000E0, 0x00000000,
 };
 
-static u32 D_800D5674[] = {
+u32 D_800D5674[] = {
     0x00000001, 0x00000000, 0x00180060, 0x0070019F,
     0x00300080, 0x004800E0, 0x00000000,
 };
 
-static u32 D_800D5690[] = {
+u32 D_800D5690[] = {
     0x00000001, 0x00000000, 0x00180060, 0x0070019F,
     0x00480080, 0x006000E0, 0x0A0D0000,
 };
 
-static u32 D_800D56E8[];
-static u32 D_800D5704[];
-static u32 D_800D5720[];
-static u32 D_800D573C[];
-static u32 D_800D5758[];
-static u32 D_800D5774[];
-static u32 D_800D5790[];
-static u32 D_800D57AC[];
-static u32 D_800D57C8[];
-static u32 D_800D57E4[];
-static u32 D_800D5800[];
-static u32 D_800D5830[];
-static u32 D_800D584C[];
+u32 D_800D56E8[];
+u32 D_800D5704[];
+u32 D_800D5720[];
+u32 D_800D573C[];
+u32 D_800D5758[];
+u32 D_800D5774[];
+u32 D_800D5790[];
+u32 D_800D57AC[];
+u32 D_800D57C8[];
+u32 D_800D57E4[];
+u32 D_800D5800[];
+u32 D_800D5830[];
+u32 D_800D584C[];
 
 s16* D_800D56AC[] = {
     NULL,
@@ -4870,161 +4870,161 @@ s16* D_800D56AC[] = {
     NULL,
 };
 
-static u32 D_800D56E8[] = {
+u32 D_800D56E8[] = {
     0x00180001, 0xFFF4FFF5, 0x00180018, 0x00000000,
     0x00680000, 0x00800018, 0x00000000,
 };
 
-static u32 D_800D5704[] = {
+u32 D_800D5704[] = {
     0x00300001, 0xFFEDFFF0, 0x00200028, 0x00000000,
     0x00000000, 0x00200028, 0x00000000,
 };
 
-static u32 D_800D5720[] = {
+u32 D_800D5720[] = {
     0x00200001, 0xFFEBFFF0, 0x00200028, 0x00000000,
     0x00000028, 0x00200050, 0x00000000,
 };
 
-static u32 D_800D573C[] = {
+u32 D_800D573C[] = {
     0x00200001, 0xFFEBFFF1, 0x00200028, 0x00000000,
     0x00000050, 0x00200078, 0x00000000,
 };
 
-static u32 D_800D5758[] = {
+u32 D_800D5758[] = {
     0x00100001, 0xFFE7FFF0, 0x00280028, 0x00000000,
     0x00200000, 0x00480028, 0x00000000,
 };
 
-static u32 D_800D5774[] = {
+u32 D_800D5774[] = {
     0x00000001, 0xFFF0FFEF, 0x00280028, 0x00000000,
     0x00200028, 0x00480050, 0x00000000,
 };
 
-static u32 D_800D5790[] = {
+u32 D_800D5790[] = {
     0x00000001, 0xFFEFFFEF, 0x00280028, 0x00000000,
     0x00200050, 0x00480078, 0x00000000,
 };
 
-static u32 D_800D57AC[] = {
+u32 D_800D57AC[] = {
     0x00100001, 0xFFF1FFED, 0x00200028, 0x00000000,
     0x00480000, 0x00680028, 0x00000000,
 };
 
-static u32 D_800D57C8[] = {
+u32 D_800D57C8[] = {
     0x00000001, 0xFFF0FFEF, 0x00200020, 0x00000000,
     0x00480028, 0x00680048, 0x00000000,
 };
 
-static u32 D_800D57E4[] = {
+u32 D_800D57E4[] = {
     0x00000001, 0xFFF0FFF1, 0x00200020, 0x00000000,
     0x00480048, 0x00680068, 0x00000000,
 };
 
-static u32 D_800D5800[] = {
+u32 D_800D5800[] = {
     0x00040002, 0xFFF7FFED, 0x00100010, 0x00000000, 0x00680070, 0x00780080,
     0xFFFD0004, 0x0010FFEF, 0x00000020, 0x00700000, 0x00800048, 0x00000068,
 };
 
-static u32 D_800D5830[] = {
+u32 D_800D5830[] = {
     0x00080001, 0xFFEFFFFF, 0x00180010, 0x00000000,
     0x00680018, 0x00800028, 0x00000000,
 };
 
-static u32 D_800D584C[] = {
+u32 D_800D584C[] = {
     0x00080001, 0xFFEF0003, 0x00180010, 0x00000000,
     0x00680028, 0x00800038, 0x2C350000,
 };
 
-static u32 D_800D59D8[];
-static u32 D_800D59F4[];
-static u32 D_800D5A24[];
-static u32 D_800D5A54[];
-static u32 D_800D5A84[];
-static u32 D_800D5AB4[];
-static u32 D_800D5AE4[];
-static u32 D_800D5B14[];
-static u32 D_800D5B44[];
-static u32 D_800D5B74[];
-static u32 D_800D5BA4[];
-static u32 D_800D5BD4[];
-static u32 D_800D5C04[];
-static u32 D_800D5C34[];
-static u32 D_800D5C64[];
-static u32 D_800D5C94[];
-static u32 D_800D5CC4[];
-static u32 D_800D5CF4[];
-static u32 D_800D5D10[];
-static u32 D_800D5D2C[];
-static u32 D_800D5D48[];
-static u32 D_800D5D78[];
-static u32 D_800D5DA8[];
-static u32 D_800D5DD8[];
-static u32 D_800D5E08[];
-static u32 D_800D5E38[];
-static u32 D_800D5E68[];
-static u32 D_800D5E98[];
-static u32 D_800D5EC8[];
-static u32 D_800D5EF8[];
-static u32 D_800D5F28[];
-static u32 D_800D5F44[];
-static u32 D_800D5F60[];
-static u32 D_800D5F90[];
-static u32 D_800D5FC0[];
-static u32 D_800D5FDC[];
-static u32 D_800D600C[];
-static u32 D_800D603C[];
-static u32 D_800D606C[];
-static u32 D_800D609C[];
-static u32 D_800D60CC[];
-static u32 D_800D60FC[];
-static u32 D_800D612C[];
-static u32 D_800D615C[];
-static u32 D_800D618C[];
-static u32 D_800D61BC[];
-static u32 D_800D61EC[];
-static u32 D_800D621C[];
-static u32 D_800D624C[];
-static u32 D_800D627C[];
-static u32 D_800D62AC[];
-static u32 D_800D62DC[];
-static u32 D_800D62F8[];
-static u32 D_800D6314[];
-static u32 D_800D6330[];
-static u32 D_800D6360[];
-static u32 D_800D6390[];
-static u32 D_800D63C0[];
-static u32 D_800D63F0[];
-static u32 D_800D6420[];
-static u32 D_800D6450[];
-static u32 D_800D6480[];
-static u32 D_800D64B0[];
-static u32 D_800D64E0[];
-static u32 D_800D6510[];
-static u32 D_800D652C[];
-static u32 D_800D6548[];
-static u32 D_800D6578[];
-static u32 D_800D65A8[];
-static u32 D_800D65D8[];
-static u32 D_800D6608[];
-static u32 D_800D6638[];
-static u32 D_800D6654[];
-static u32 D_800D6670[];
-static u32 D_800D668C[];
-static u32 D_800D66A8[];
-static u32 D_800D66C4[];
-static u32 D_800D66E0[];
-static u32 D_800D66FC[];
-static u32 D_800D6718[];
-static u32 D_800D6734[];
-static u32 D_800D6750[];
-static u32 D_800D676C[];
-static u32 D_800D6788[];
-static u32 D_800D67A4[];
-static u32 D_800D67C0[];
-static u32 D_800D67DC[];
-static u32 D_800D67F8[];
-static u32 D_800D6814[];
-static u32 D_800D6830[];
+u32 D_800D59D8[];
+u32 D_800D59F4[];
+u32 D_800D5A24[];
+u32 D_800D5A54[];
+u32 D_800D5A84[];
+u32 D_800D5AB4[];
+u32 D_800D5AE4[];
+u32 D_800D5B14[];
+u32 D_800D5B44[];
+u32 D_800D5B74[];
+u32 D_800D5BA4[];
+u32 D_800D5BD4[];
+u32 D_800D5C04[];
+u32 D_800D5C34[];
+u32 D_800D5C64[];
+u32 D_800D5C94[];
+u32 D_800D5CC4[];
+u32 D_800D5CF4[];
+u32 D_800D5D10[];
+u32 D_800D5D2C[];
+u32 D_800D5D48[];
+u32 D_800D5D78[];
+u32 D_800D5DA8[];
+u32 D_800D5DD8[];
+u32 D_800D5E08[];
+u32 D_800D5E38[];
+u32 D_800D5E68[];
+u32 D_800D5E98[];
+u32 D_800D5EC8[];
+u32 D_800D5EF8[];
+u32 D_800D5F28[];
+u32 D_800D5F44[];
+u32 D_800D5F60[];
+u32 D_800D5F90[];
+u32 D_800D5FC0[];
+u32 D_800D5FDC[];
+u32 D_800D600C[];
+u32 D_800D603C[];
+u32 D_800D606C[];
+u32 D_800D609C[];
+u32 D_800D60CC[];
+u32 D_800D60FC[];
+u32 D_800D612C[];
+u32 D_800D615C[];
+u32 D_800D618C[];
+u32 D_800D61BC[];
+u32 D_800D61EC[];
+u32 D_800D621C[];
+u32 D_800D624C[];
+u32 D_800D627C[];
+u32 D_800D62AC[];
+u32 D_800D62DC[];
+u32 D_800D62F8[];
+u32 D_800D6314[];
+u32 D_800D6330[];
+u32 D_800D6360[];
+u32 D_800D6390[];
+u32 D_800D63C0[];
+u32 D_800D63F0[];
+u32 D_800D6420[];
+u32 D_800D6450[];
+u32 D_800D6480[];
+u32 D_800D64B0[];
+u32 D_800D64E0[];
+u32 D_800D6510[];
+u32 D_800D652C[];
+u32 D_800D6548[];
+u32 D_800D6578[];
+u32 D_800D65A8[];
+u32 D_800D65D8[];
+u32 D_800D6608[];
+u32 D_800D6638[];
+u32 D_800D6654[];
+u32 D_800D6670[];
+u32 D_800D668C[];
+u32 D_800D66A8[];
+u32 D_800D66C4[];
+u32 D_800D66E0[];
+u32 D_800D66FC[];
+u32 D_800D6718[];
+u32 D_800D6734[];
+u32 D_800D6750[];
+u32 D_800D676C[];
+u32 D_800D6788[];
+u32 D_800D67A4[];
+u32 D_800D67C0[];
+u32 D_800D67DC[];
+u32 D_800D67F8[];
+u32 D_800D6814[];
+u32 D_800D6830[];
 
 s16* D_800D5868[] = {
     NULL,
@@ -5121,460 +5121,460 @@ s16* D_800D5868[] = {
     NULL,
 };
 
-static u32 D_800D59D8[] = {
+u32 D_800D59D8[] = {
     0x00000001, 0xFFFFFFF3, 0x00100018, 0x00000000,
     0x00580050, 0x00680068, 0x00000000,
 };
 
-static u32 D_800D59F4[] = {
+u32 D_800D59F4[] = {
     0x01200002, 0x0002FFF4, 0x00180010, 0x00000000, 0x00000020, 0x00180030,
     0xFFF80030, 0x00100002, 0x00010018, 0x00000000, 0x00100000, 0x00000018,
 };
 
-static u32 D_800D5A24[] = {
+u32 D_800D5A24[] = {
     0x01200002, 0x0002FFF4, 0x00180010, 0x00000000, 0x00000030, 0x00180040,
     0xFFF80020, 0x00100002, 0x00010018, 0x00100000, 0x00200000, 0x00000018,
 };
 
-static u32 D_800D5A54[] = {
+u32 D_800D5A54[] = {
     0x01200002, 0x0002FFF8, 0x00180010, 0x00000000, 0x00000040, 0x00180050,
     0xFFF40020, 0x00100002, 0x00010018, 0x00200000, 0x00300000, 0x00000018,
 };
 
-static u32 D_800D5A84[] = {
+u32 D_800D5A84[] = {
     0x01200002, 0x0002FFF8, 0x00180010, 0x00000000, 0x00000050, 0x00180060,
     0xFFF40020, 0x00100002, 0x00010018, 0x00300000, 0x00400000, 0x00000018,
 };
 
-static u32 D_800D5AB4[] = {
+u32 D_800D5AB4[] = {
     0x01200002, 0x0002FFFC, 0x00180010, 0x00000000, 0x00000060, 0x00180070,
     0xFFF80020, 0x00100002, 0x00010018, 0x00400000, 0x00500000, 0x00000018,
 };
 
-static u32 D_800D5AE4[] = {
+u32 D_800D5AE4[] = {
     0x01240002, 0x0002FFF8, 0x00180010, 0x00000000, 0x00000070, 0x00180080,
     0xFFF80020, 0x00100002, 0x00010018, 0x00500000, 0x00600000, 0x00000018,
 };
 
-static u32 D_800D5B14[] = {
+u32 D_800D5B14[] = {
     0x01300002, 0x0002FFF8, 0x00180010, 0x00000000, 0x00000000, 0x00180010,
     0xFFFC0020, 0x00100002, 0x00010018, 0x00600000, 0x00700000, 0x00000018,
 };
 
-static u32 D_800D5B44[] = {
+u32 D_800D5B44[] = {
     0x01200002, 0x0002FFF8, 0x00180010, 0x00000000, 0x00000010, 0x00180020,
     0xFFF80024, 0x00100002, 0x00010018, 0x00700000, 0x00800000, 0x00000018,
 };
 
-static u32 D_800D5B74[] = {
+u32 D_800D5B74[] = {
     0x01200002, 0x0002FFF8, 0x00180010, 0x00000000, 0x00000040, 0x00180050,
     0xFFF80030, 0x00100002, 0x00010018, 0x00000000, 0x00100000, 0x00000018,
 };
 
-static u32 D_800D5BA4[] = {
+u32 D_800D5BA4[] = {
     0x01200002, 0x0002FFF8, 0x00180010, 0x00000000, 0x00000050, 0x00180060,
     0xFFF80020, 0x00100002, 0x00010018, 0x00100000, 0x00200000, 0x00000018,
 };
 
-static u32 D_800D5BD4[] = {
+u32 D_800D5BD4[] = {
     0x01200002, 0x0002FFFC, 0x00180010, 0x00000000, 0x00000060, 0x00180070,
     0xFFF40020, 0x00100002, 0x00010018, 0x00200000, 0x00300000, 0x00000018,
 };
 
-static u32 D_800D5C04[] = {
+u32 D_800D5C04[] = {
     0x01240002, 0x0002FFF8, 0x00180010, 0x00000000, 0x00000070, 0x00180080,
     0xFFF40020, 0x00100002, 0x00010018, 0x00300000, 0x00400000, 0x00000018,
 };
 
-static u32 D_800D5C34[] = {
+u32 D_800D5C34[] = {
     0x01300002, 0x0002FFF8, 0x00180010, 0x00000000, 0x00000000, 0x00180010,
     0xFFF80020, 0x00100002, 0x00010018, 0x00400000, 0x00500000, 0x00000018,
 };
 
-static u32 D_800D5C64[] = {
+u32 D_800D5C64[] = {
     0x01200002, 0x0002FFF8, 0x00180010, 0x00000000, 0x00000010, 0x00180020,
     0xFFF80020, 0x00100002, 0x00010018, 0x00500000, 0x00600000, 0x00000018,
 };
 
-static u32 D_800D5C94[] = {
+u32 D_800D5C94[] = {
     0x01200002, 0x0002FFF4, 0x00180010, 0x00000000, 0x00000020, 0x00180030,
     0xFFFC0020, 0x00100002, 0x00010018, 0x00600000, 0x00700000, 0x00000018,
 };
 
-static u32 D_800D5CC4[] = {
+u32 D_800D5CC4[] = {
     0x01200002, 0x0002FFF4, 0x00180010, 0x00000000, 0x00000030, 0x00180040,
     0xFFF80024, 0x00100002, 0x00010018, 0x00700000, 0x00800000, 0x00000018,
 };
 
-static u32 D_800D5CF4[] = {
+u32 D_800D5CF4[] = {
     0x01000001, 0x000AFFF8, 0x00100010, 0x00010000,
     0x00180020, 0x00280030, 0x00000000,
 };
 
-static u32 D_800D5D10[] = {
+u32 D_800D5D10[] = {
     0x01000001, 0x000AFFF8, 0x00100010, 0x00010000,
     0x00180030, 0x00280040, 0x00000000,
 };
 
-static u32 D_800D5D2C[] = {
+u32 D_800D5D2C[] = {
     0x01100001, 0x000AFFF8, 0x00100010, 0x00010000,
     0x00180000, 0x00280010, 0x00000000,
 };
 
-static u32 D_800D5D48[] = {
+u32 D_800D5D48[] = {
     0x01100002, 0x0008FFF3, 0x00100010, 0x00000000, 0x00500000, 0x00600010,
     0xFFEE0020, 0x00100001, 0x00010018, 0x00300000, 0x00400000, 0x00000018,
 };
 
-static u32 D_800D5D78[] = {
+u32 D_800D5D78[] = {
     0x01000002, 0x0008FFFB, 0x00100010, 0x00000000, 0x00500010, 0x00600020,
     0xFFF30000, 0x00100006, 0x00010018, 0x00100000, 0x00200030, 0x00000048,
 };
 
-static u32 D_800D5DA8[] = {
+u32 D_800D5DA8[] = {
     0x01000002, 0x0008FFFB, 0x00100010, 0x00000000, 0x00500020, 0x00600030,
     0xFFF60000, 0x00100009, 0x00010010, 0x00200000, 0x00300030, 0x00000040,
 };
 
-static u32 D_800D5DD8[] = {
+u32 D_800D5DD8[] = {
     0x01000002, 0x0008FFFB, 0x00100018, 0x00000000, 0x00480030, 0x00580048,
     0xFFFE0000, 0x00180006, 0x00010010, 0x00300000, 0x00480048, 0x00000058,
 };
 
-static u32 D_800D5E08[] = {
+u32 D_800D5E08[] = {
     0x01100002, 0x0008FFF7, 0x00180010, 0x00000000, 0x00300000, 0x00480010,
     0xFFF70020, 0x00100004, 0x00010018, 0x00300000, 0x00400000, 0x00000018,
 };
 
-static u32 D_800D5E38[] = {
+u32 D_800D5E38[] = {
     0x01000002, 0x0008FFF7, 0x00180010, 0x00000000, 0x00300010, 0x00480020,
     0xFFFA0000, 0x00100009, 0x00010018, 0x00200000, 0x00300030, 0x00000048,
 };
 
-static u32 D_800D5E68[] = {
+u32 D_800D5E68[] = {
     0x01000002, 0x0008FFF7, 0x00180010, 0x00000000, 0x00300020, 0x00480030,
     0xFFFC0020, 0x00100002, 0x00010018, 0x00500000, 0x00600000, 0x00000018,
 };
 
-static u32 D_800D5E98[] = {
+u32 D_800D5E98[] = {
     0x01200002, 0x0002FFF8, 0x00180010, 0x00000000, 0x00000050, 0x00180060,
     0xFFF70000, 0x00100009, 0x00010018, 0x00300000, 0x00400030, 0x00000048,
 };
 
-static u32 D_800D5EC8[] = {
+u32 D_800D5EC8[] = {
     0x01000002, 0x0008FFF7, 0x00180010, 0x00000000, 0x00300020, 0x00480030,
     0xFFF50000, 0x00100009, 0x00010018, 0x00100000, 0x00200030, 0x00000048,
 };
 
-static u32 D_800D5EF8[] = {
+u32 D_800D5EF8[] = {
     0x01000002, 0x0008FFF7, 0x00180010, 0x00000000, 0x00300030, 0x00480040,
     0xFFF70010, 0x0010000A, 0x00010018, 0x00000000, 0x00100030, 0x00000048,
 };
 
-static u32 D_800D5F28[] = {
+u32 D_800D5F28[] = {
     0x00040001, 0xFFFFFFF3, 0x00100018, 0x00000000,
     0x00580068, 0x00680080, 0x00000000,
 };
 
-static u32 D_800D5F44[] = {
+u32 D_800D5F44[] = {
     0x00000001, 0xFFFFFFF8, 0x00100010, 0x00000000,
     0x00680060, 0x00780070, 0x00000000,
 };
 
-static u32 D_800D5F60[] = {
+u32 D_800D5F60[] = {
     0x01200002, 0x0002FFF4, 0x00180010, 0x00010000, 0x00000030, 0x00180040,
     0xFFFD0020, 0x00100002, 0x00010018, 0x00300001, 0x00400000, 0x00000018,
 };
 
-static u32 D_800D5F90[] = {
+u32 D_800D5F90[] = {
     0x01200002, 0x0002FFFE, 0x00180010, 0x00010000, 0x00000040, 0x00180050,
     0xFFF20120, 0x00100002, 0x00000018, 0x00400001, 0x00500000, 0x00000018,
 };
 
-static u32 D_800D5FC0[] = {
+u32 D_800D5FC0[] = {
     0x00000001, 0xFFFFFFF9, 0x00100010, 0x00010000,
     0x00180060, 0x00280070, 0x00000000,
 };
 
-static u32 D_800D5FDC[] = {
+u32 D_800D5FDC[] = {
     0x01000002, 0x0000FFFC, 0x00180010, 0x00000000, 0x00180020, 0x00300030,
     0xFFF80010, 0x00100000, 0x00010018, 0x00000000, 0x00100018, 0x00000030,
 };
 
-static u32 D_800D600C[] = {
+u32 D_800D600C[] = {
     0x01000002, 0x0000FFFC, 0x00180010, 0x00000000, 0x00180030, 0x00300040,
     0xFFF80000, 0x00100000, 0x00010018, 0x00100000, 0x00200018, 0x00000030,
 };
 
-static u32 D_800D603C[] = {
+u32 D_800D603C[] = {
     0x01000002, 0x0000FFF8, 0x00180010, 0x00000000, 0x00180040, 0x00300050,
     0xFFFC0000, 0x00100000, 0x00010018, 0x00200000, 0x00300018, 0x00000030,
 };
 
-static u32 D_800D606C[] = {
+u32 D_800D606C[] = {
     0x01000002, 0x0000FFF8, 0x00180010, 0x00000000, 0x00180050, 0x00300060,
     0xFFFC0000, 0x00100000, 0x00010018, 0x00300000, 0x00400018, 0x00000030,
 };
 
-static u32 D_800D609C[] = {
+u32 D_800D609C[] = {
     0x01000002, 0x0000FFF4, 0x00180010, 0x00000000, 0x00180060, 0x00300070,
     0xFFF80000, 0x00100000, 0x00010018, 0x00400000, 0x00500018, 0x00000030,
 };
 
-static u32 D_800D60CC[] = {
+u32 D_800D60CC[] = {
     0x01040002, 0x0000FFF4, 0x00180010, 0x00000000, 0x00180070, 0x00300080,
     0xFFF80000, 0x00100000, 0x00010018, 0x00500000, 0x00600018, 0x00000030,
 };
 
-static u32 D_800D60FC[] = {
+u32 D_800D60FC[] = {
     0x01100002, 0x0000FFF8, 0x00180010, 0x00000000, 0x00180000, 0x00300010,
     0xFFF40000, 0x00100000, 0x00010018, 0x00600000, 0x00700018, 0x00000030,
 };
 
-static u32 D_800D612C[] = {
+u32 D_800D612C[] = {
     0x01000002, 0x0000FFF8, 0x00180010, 0x00000000, 0x00180010, 0x00300020,
     0xFFF40004, 0x00100000, 0x00010018, 0x00700000, 0x00800018, 0x00000030,
 };
 
-static u32 D_800D615C[] = {
+u32 D_800D615C[] = {
     0x01000002, 0x0000FFF8, 0x00180010, 0x00000000, 0x00180040, 0x00300050,
     0xFFF80010, 0x00100000, 0x00010018, 0x00000000, 0x00100018, 0x00000030,
 };
 
-static u32 D_800D618C[] = {
+u32 D_800D618C[] = {
     0x01000002, 0x0000FFF8, 0x00180010, 0x00000000, 0x00180050, 0x00300060,
     0xFFF80000, 0x00100000, 0x00010018, 0x00100000, 0x00200018, 0x00000030,
 };
 
-static u32 D_800D61BC[] = {
+u32 D_800D61BC[] = {
     0x01000002, 0x0000FFF4, 0x00180010, 0x00000000, 0x00180060, 0x00300070,
     0xFFFC0000, 0x00100000, 0x00010018, 0x00200000, 0x00300018, 0x00000030,
 };
 
-static u32 D_800D61EC[] = {
+u32 D_800D61EC[] = {
     0x01040002, 0x0000FFF4, 0x00180010, 0x00000000, 0x00180070, 0x00300080,
     0xFFFC0000, 0x00100000, 0x00010018, 0x00300000, 0x00400018, 0x00000030,
 };
 
-static u32 D_800D621C[] = {
+u32 D_800D621C[] = {
     0x01100002, 0x0000FFF8, 0x00180010, 0x00000000, 0x00180000, 0x00300010,
     0xFFF80000, 0x00100000, 0x00010018, 0x00400000, 0x00500018, 0x00000030,
 };
 
-static u32 D_800D624C[] = {
+u32 D_800D624C[] = {
     0x01000002, 0x0000FFF8, 0x00180010, 0x00000000, 0x00180010, 0x00300020,
     0xFFF80000, 0x00100000, 0x00010018, 0x00500000, 0x00600018, 0x00000030,
 };
 
-static u32 D_800D627C[] = {
+u32 D_800D627C[] = {
     0x01000002, 0x0000FFFC, 0x00180010, 0x00000000, 0x00180020, 0x00300030,
     0xFFF40000, 0x00100000, 0x00010018, 0x00600000, 0x00700018, 0x00000030,
 };
 
-static u32 D_800D62AC[] = {
+u32 D_800D62AC[] = {
     0x01000002, 0x0000FFFC, 0x00180010, 0x00000000, 0x00180030, 0x00300040,
     0xFFF40004, 0x00100000, 0x00010018, 0x00700000, 0x00800018, 0x00000030,
 };
 
-static u32 D_800D62DC[] = {
+u32 D_800D62DC[] = {
     0x01000001, 0x0008FFF8, 0x00100010, 0x00010000,
     0x00180040, 0x00280050, 0x00000000,
 };
 
-static u32 D_800D62F8[] = {
+u32 D_800D62F8[] = {
     0x01000001, 0x0008FFF8, 0x00100010, 0x00010000,
     0x00180050, 0x00280060, 0x00000000,
 };
 
-static u32 D_800D6314[] = {
+u32 D_800D6314[] = {
     0x01000001, 0x0008FFF8, 0x00100010, 0x00010000,
     0x00180010, 0x00280020, 0x00000000,
 };
 
-static u32 D_800D6330[] = {
+u32 D_800D6330[] = {
     0x01180002, 0x0005FFF0, 0x00180018, 0x00000000, 0x00680000, 0x00800018,
     0xFFF80004, 0x00100001, 0x00010018, 0x00700000, 0x00800018, 0x00000030,
 };
 
-static u32 D_800D6360[] = {
+u32 D_800D6360[] = {
     0x01080002, 0x0005FFF0, 0x00180018, 0x00000000, 0x00680018, 0x00800030,
     0xFFF50004, 0x00100001, 0x00010018, 0x00700000, 0x00800018, 0x00000030,
 };
 
-static u32 D_800D6390[] = {
+u32 D_800D6390[] = {
     0x01080002, 0x0005FFF0, 0x00180018, 0x00000000, 0x00680030, 0x00800048,
     0xFFF30008, 0x00180005, 0x00010018, 0x00300000, 0x00480068, 0x00000080,
 };
 
-static u32 D_800D63C0[] = {
+u32 D_800D63C0[] = {
     0x01000002, 0x0005FFF0, 0x00100018, 0x00000000, 0x00680048, 0x00780060,
     0xFFEF0000, 0x00180003, 0x00010010, 0x00480000, 0x00600068, 0x00000078,
 };
 
-static u32 D_800D63F0[] = {
+u32 D_800D63F0[] = {
     0x01000002, 0x0005FFF9, 0x00180010, 0x00000000, 0x00300040, 0x00480050,
     0xFFF70000, 0x00100004, 0x00010018, 0x00400000, 0x00500030, 0x00000048,
 };
 
-static u32 D_800D6420[] = {
+u32 D_800D6420[] = {
     0x01000002, 0x0005FFF9, 0x00180010, 0x00000000, 0x00300050, 0x00480060,
     0xFFF70000, 0x00100007, 0x00010018, 0x00600000, 0x00700030, 0x00000048,
 };
 
-static u32 D_800D6450[] = {
+u32 D_800D6450[] = {
     0x01000002, 0x0005FFFA, 0x00180010, 0x00000000, 0x00300060, 0x00480070,
     0xFFFD0000, 0x00100006, 0x00010018, 0x00600000, 0x00700030, 0x00000048,
 };
 
-static u32 D_800D6480[] = {
+u32 D_800D6480[] = {
     0x01040002, 0x0005FFFA, 0x00180010, 0x00000000, 0x00300070, 0x00480080,
     0xFFFD0004, 0x00100005, 0x00010018, 0x00700000, 0x00800030, 0x00000048,
 };
 
-static u32 D_800D64B0[] = {
+u32 D_800D64B0[] = {
     0x01000002, 0x0005FFFA, 0x00180010, 0x00000000, 0x00300050, 0x00480060,
     0xFFFC0000, 0x00100006, 0x00010018, 0x00600000, 0x00700030, 0x00000048,
 };
 
-static u32 D_800D64E0[] = {
+u32 D_800D64E0[] = {
     0x01000002, 0x0005FFF9, 0x00180010, 0x00000000, 0x00300040, 0x00480050,
     0xFFFC0000, 0x00100008, 0x00010018, 0x00600000, 0x00700030, 0x00000048,
 };
 
-static u32 D_800D6510[] = {
+u32 D_800D6510[] = {
     0x00040001, 0xFFFDFFF9, 0x00100010, 0x00010000,
     0x00100070, 0x00200080, 0x00000000,
 };
 
-static u32 D_800D652C[] = {
+u32 D_800D652C[] = {
     0x00240001, 0xFFFDFFF9, 0x00100010, 0x00010001,
     0x00000070, 0x00100080, 0x00000000,
 };
 
-static u32 D_800D6548[] = {
+u32 D_800D6548[] = {
     0x01200002, 0x0000FFF7, 0x00180010, 0x00010000, 0x00000050, 0x00180060,
     0xFFFD0020, 0x00100000, 0x00010018, 0x00500001, 0x00600000, 0x00000018,
 };
 
-static u32 D_800D6578[] = {
+u32 D_800D6578[] = {
     0x01200002, 0x0000FFFD, 0x00180010, 0x00010001, 0x00000060, 0x00180070,
     0xFFF50120, 0x00100000, 0x00010018, 0x00600001, 0x00700000, 0x00000018,
 };
 
-static u32 D_800D65A8[] = {
+u32 D_800D65A8[] = {
     0x01000002, 0x0000FFFC, 0x00180010, 0x00000000, 0x00180030, 0x00300040,
     0xFFF80000, 0x00100000, 0x00010018, 0x00500000, 0x00600018, 0x00000030,
 };
 
-static u32 D_800D65D8[] = {
+u32 D_800D65D8[] = {
     0x01300002, 0x0002FFF9, 0x00180010, 0x00000000, 0x00000000, 0x00180010,
     0xFFF50024, 0x00100002, 0x00010018, 0x00700000, 0x00800000, 0x00000018,
 };
 
-static u32 D_800D6608[] = {
+u32 D_800D6608[] = {
     0x01000002, 0x0000FFF7, 0x00180010, 0x00000000, 0x00180040, 0x00300050,
     0xFFFC0000, 0x00100000, 0x00010018, 0x00500000, 0x00600018, 0x00000030,
 };
 
-static u32 D_800D6638[] = {
+u32 D_800D6638[] = {
     0x00000001, 0xFFF8FFF8, 0x00100010, 0x00000000,
     0x00480068, 0x00580078, 0x00000000,
 };
 
-static u32 D_800D6654[] = {
+u32 D_800D6654[] = {
     0x00000001, 0xFFF8FFF8, 0x00100010, 0x00000000,
     0x00480058, 0x00580068, 0x00000000,
 };
 
-static u32 D_800D6670[] = {
+u32 D_800D6670[] = {
     0x00000001, 0xFFF8FFF8, 0x00100010, 0x00000000,
     0x00480048, 0x00580058, 0x00000000,
 };
 
-static u32 D_800D668C[] = {
+u32 D_800D668C[] = {
     0x00000001, 0xFFF8FFF8, 0x00100010, 0x00000000,
     0x00580030, 0x00680040, 0x00000000,
 };
 
-static u32 D_800D66A8[] = {
+u32 D_800D66A8[] = {
     0x00000001, 0xFFF8FFF8, 0x00100010, 0x00000000,
     0x00580040, 0x00680050, 0x00000000,
 };
 
-static u32 D_800D66C4[] = {
+u32 D_800D66C4[] = {
     0x00040001, 0xFFFCFFF8, 0x00080010, 0x00000000,
     0x00680070, 0x00700080, 0x00000000,
 };
 
-static u32 D_800D66E0[] = {
+u32 D_800D66E0[] = {
     0x00040001, 0xFFFCFFF8, 0x00080010, 0x00000000,
     0x00700070, 0x00780080, 0x00000000,
 };
 
-static u32 D_800D66FC[] = {
+u32 D_800D66FC[] = {
     0x000C0001, 0xFFFCFFF8, 0x00080010, 0x00000000,
     0x00780070, 0x00800080, 0x00000000,
 };
 
-static u32 D_800D6718[] = {
+u32 D_800D6718[] = {
     0x00300001, 0xFFF4FFF4, 0x00180018, 0x00010000,
     0x00000000, 0x00180018, 0x00000000,
 };
 
-static u32 D_800D6734[] = {
+u32 D_800D6734[] = {
     0x00200001, 0xFFF4FFF8, 0x00180010, 0x00010000,
     0x00000018, 0x00180028, 0x00000000,
 };
 
-static u32 D_800D6750[] = {
+u32 D_800D6750[] = {
     0x00200001, 0xFFF4FFFC, 0x00180008, 0x00010000,
     0x00000028, 0x00180030, 0x00000000,
 };
 
-static u32 D_800D676C[] = {
+u32 D_800D676C[] = {
     0x00040001, 0xFFFDFFB0, 0x00180070, 0x00010002,
     0x00280010, 0x00400080, 0x00000000,
 };
 
-static u32 D_800D6788[] = {
+u32 D_800D6788[] = {
     0x00100001, 0xFFF9FFC8, 0x00200058, 0x00010002,
     0x00400000, 0x00600058, 0x00000000,
 };
 
-static u32 D_800D67A4[] = {
+u32 D_800D67A4[] = {
     0x00180001, 0xFFF9FFF0, 0x00200020, 0x00010000,
     0x00600000, 0x00800020, 0x00000000,
 };
 
-static u32 D_800D67C0[] = {
+u32 D_800D67C0[] = {
     0x00040001, 0xFFF5FFEC, 0x00280028, 0x00010002,
     0x00400058, 0x00680080, 0x00000000,
 };
 
-static u32 D_800D67DC[] = {
+u32 D_800D67DC[] = {
     0x00000001, 0xFFFCFFFC, 0x00080008, 0x00010000,
     0x00600020, 0x00680028, 0x00000000,
 };
 
-static u32 D_800D67F8[] = {
+u32 D_800D67F8[] = {
     0x00000001, 0xFFFCFFFC, 0x00080008, 0x00010000,
     0x00600028, 0x00680030, 0x00000000,
 };
 
-static u32 D_800D6814[] = {
+u32 D_800D6814[] = {
     0x00000001, 0xFFFCFFFC, 0x00080008, 0x00010000,
     0x00600030, 0x00680038, 0x00000000,
 };
 
-static u32 D_800D6830[] = {
+u32 D_800D6830[] = {
     0x00000001, 0xFFFCFFFC, 0x00080008, 0x00010000,
     0x00600038, 0x00680040, 0x20290000,
 };
 
-static u32 D_800D6864[];
-static u32 D_800D6880[];
-static u32 D_800D689C[];
-static u32 D_800D68B8[];
+u32 D_800D6864[];
+u32 D_800D6880[];
+u32 D_800D689C[];
+u32 D_800D68B8[];
 
 s16* D_800D684C[] = {
     NULL,
@@ -5585,22 +5585,22 @@ s16* D_800D684C[] = {
     NULL,
 };
 
-static u32 D_800D6864[] = {
+u32 D_800D6864[] = {
     0x00100001, 0xFFFCFFFD, 0x00080008, 0x0020009F,
     0x00680000, 0x00700008, 0x00000000,
 };
 
-static u32 D_800D6880[] = {
+u32 D_800D6880[] = {
     0x00000001, 0xFFF4FFFD, 0x00100008, 0x0020009F,
     0x00600008, 0x00700010, 0x00000000,
 };
 
-static u32 D_800D689C[] = {
+u32 D_800D689C[] = {
     0x00000001, 0xFFF4FFFD, 0x00100008, 0x0020009F,
     0x00600010, 0x00700018, 0x00000000,
 };
 
-static u32 D_800D68B8[] = {
+u32 D_800D68B8[] = {
     0x00000001, 0xFFF4FFFD, 0x00100010, 0x0020009F,
     0x00600018, 0x00700028, 0x30200000,
 };
