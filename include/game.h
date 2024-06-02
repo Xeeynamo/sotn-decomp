@@ -1410,7 +1410,7 @@ typedef struct {
 } PlayerOvl;
 extern PlayerOvl g_PlOvl;
 extern u8** g_PlOvlAluBatSpritesheet[1];
-extern u8* g_PlOvlSpritesheet[99];
+extern u8* g_PlOvlSpritesheet[];
 
 /**** Helper signatures ****/
 extern void (*g_api_FreePrimitives)(s32);
