@@ -541,8 +541,8 @@ void func_8012E9C0(void) {
 
     PLAYER.palette = 0x810D;
     for (i = 0; i < 4; i++) {
-        if (D_800ACED0.pairs[i].unk2 < D_800ACE90[i]) {
-            D_800ACED0.pairs[i].unk2++;
+        if (D_800ACED0.pairs[i].y < D_800ACE90[i]) {
+            D_800ACED0.pairs[i].y++;
         }
     }
     func_8010E168(1, 4);
