@@ -198,38 +198,13 @@ s16 D_800ACF6C[4];                    // guessed size
 s16 D_800ACF8A[5];                    // guessed size
 s16 D_800ACF94[16];                   // guessed size
 u8 D_800AD094[0x30];
-s16 D_800ADC7C[2];
-s16_pair D_800ADCC8_stub;
-s16_pair* D_800ADCC8[] = {
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-};
 unkstr_800cfe48* D_800CFE48[18];    // guessed size
 Unkstruct_80138094 D_80138094[100]; // unknown size
 s32 D_800AE270[9];                  // guessed size
-AnimationFrame D_800ADBD4[15];
-AnimationFrame D_800ADC10[13];
 u32 D_800B0188[] = {
     0x00000000, 0x0000E1E0, 0x05041509, 0x0705F312, 0x0711F512, 0x0705050B,
     0x0710070C, 0x0705F20F, 0x0713F612, 0x070CF606, 0x08080613, 0x090B0C15,
 };
-s32 D_800ADC44;
 s32 D_8013808C;
 GpuUsage g_GpuMaxUsage;
 GpuBuffer* g_BackBuffer;

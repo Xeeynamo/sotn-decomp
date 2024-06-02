@@ -103,7 +103,8 @@ segments:
       - [0xD0C4, .data, 7A4D0]
       - [0xD1D4, assets, factory_blueprint, g_FactoryBlueprints]
       - [0xD4B8, .data, 7E4BC]
-      - [0xDBD4, data]
+      - [0xDBD4, .data, d_DBD4]
+      - [0xE270, data]
       - [0x10A3C, .data, 90264] # D_800B0A3C to D_800B0AEC
       - [0x10B34, data]
       - [0x1107C, raw, vh_0] # aPbav
