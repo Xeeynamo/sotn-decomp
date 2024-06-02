@@ -770,8 +770,8 @@ void func_801177A0(void) {
     switch (PLAYER.step_s) {
     case 0:
         for (i = 0; i < 4; i++) {
-            if (D_800ACED0.pairs[i].unk2 < D_800ACE90[i]) {
-                D_800ACED0.pairs[i].unk2++;
+            if (D_800ACED0.pairs[i].y < D_800ACE90[i]) {
+                D_800ACED0.pairs[i].y++;
             } else {
                 else_cycles++;
             }
@@ -1114,8 +1114,8 @@ void func_801182F8(void) {
     DecelerateY(0x200);
     else_cycles = 0;
     for (i = 0; i < 4; i++) {
-        if (D_800ACED0.pairs[i].unk2 < D_800ACE90[i]) {
-            D_800ACED0.pairs[i].unk2++;
+        if (D_800ACED0.pairs[i].y < D_800ACE90[i]) {
+            D_800ACED0.pairs[i].y++;
         } else {
             else_cycles++;
         }

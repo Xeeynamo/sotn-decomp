@@ -64,7 +64,7 @@ typedef struct {
 } s16_pair;
 
 typedef struct {
-    /* 0x00 */ s16_pair pairs[4];
+    /* 0x00 */ Point16 pairs[4];
     /* 0x08 */ char pad12[0x8];
     /* 0x10 */ s16 unk1A; /* D_800ACEE0 */
     /* 0x12 */ s16 unk1C; /* D_800ACEE2 */

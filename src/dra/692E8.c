@@ -1041,9 +1041,9 @@ block_160:
 void func_8010BF64(Unkstruct_8010BF64* arg0) {
     if (g_PlayableCharacter == PLAYER_ALUCARD) {
         u32 unk0C_var = (g_Player.unk0C / 2) & 2;
-        arg0->unk14 = D_800ACED0.pairs[4].unk0 - unk0C_var;
-        arg0->unk1C = D_800ACED0.pairs[4].unk2 + unk0C_var;
-        arg0->unk18 = D_800ACED0.pairs[1].unk2 - 1;
+        arg0->unk14 = D_800ACED0.pairs[4].x - unk0C_var;
+        arg0->unk1C = D_800ACED0.pairs[4].y + unk0C_var;
+        arg0->unk18 = D_800ACED0.pairs[1].y - 1;
         arg0->unk20 = D_800ACEC0[1].unk2 + 1;
     } else {
         g_PlOvl.D_8013C00C();
@@ -1071,8 +1071,8 @@ void func_8010BFFC(void) {
         PLAYER.posY.i.hi -= 16;
         while (true) {
             for (i = 0; i < 4; i++) {
-                x = PLAYER.posX.i.hi + D_800ACED0.pairs[i].unk0;
-                y = PLAYER.posY.i.hi + D_800ACED0.pairs[i].unk2;
+                x = PLAYER.posX.i.hi + D_800ACED0.pairs[i].x;
+                y = PLAYER.posY.i.hi + D_800ACED0.pairs[i].y;
                 CheckCollision(x, y, &g_Player.colliders[i], 0);
             }
             if ((g_Player.colliders[1].effects &
@@ -1134,7 +1134,179 @@ void func_8010BFFC(void) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/692E8", func_8010C36C);
+void func_8010C36C(void) {
+    Collider sp10;
+    byte stackpad[40];
+    s32 var_s1;
+    s32 var_a0;
+    s32 var_s2;
+    s32 sp30;
+    s32 var_s8;
+    s16 var_s6;
+    s16 argX;
+    s16 argY;
+
+    s16 var_s5 = 0;
+    s32 i = 0;
+    s16* yPosPtr = &PLAYER.posY.i.hi;
+    s16* xPosPtr = &PLAYER.posX.i.hi;
+    s32* vram_ptr = &g_Player.pl_vram_flag;
+
+    if (g_unkGraphicsStruct.unk18 != 0) {
+        *vram_ptr = 1;
+        return;
+    }
+    if ((PLAYER.velocityY == 0) && (g_Player.unk04 & 1) &&
+        !(g_Player.unk0C & 3)) {
+        var_s5 = 4;
+    } else {
+        i = 1;
+    }
+    for (; i < 4; i++, var_s5 = 0) {
+        if (g_Player.colliders[i].effects & EFFECT_SOLID_FROM_BELOW) {
+            continue;
+        }
+        if (!((g_Player.colliders[i].effects & EFFECT_UNK_0002) ||
+              (PLAYER.velocityY >= 0) || (g_Player.unk0C & 7) ||
+              (abs(PLAYER.velocityX) >= FIX(2)))) {
+            continue;
+        }
+        var_s2 = g_Player.colliders[i].effects &
+                 (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_SOLID);
+        if ((var_s2 == EFFECT_SOLID) || (var_s2 & EFFECT_UNK_0800)) {
+            if ((g_Player.unk0C & 3) && !(var_s2 & 1)) {
+                continue;
+            }
+            argX = *xPosPtr + D_800ACED0.pairs[i].x;
+            argY = *yPosPtr + D_800ACED0.pairs[i].y;
+            argY += (g_Player.colliders[i].unk18 - 1);
+            CheckCollision(argX, argY, &sp10, 0);
+            if ((g_Player.unk0C & 2) && (sp10.effects & 0x10)) {
+                sp10.effects &= ~3;
+            }
+            var_s1 = sp10.effects;
+            if (!(sp10.effects & EFFECT_SOLID)) {
+                if (((g_Player.colliders[i].effects != 1) &&
+                     (g_Player.colliders[i].effects != 0x41)) ||
+                    (PLAYER.velocityY >= 0)) {
+                    if (var_s2 & EFFECT_UNK_0800) {
+                        *yPosPtr += var_s5 + g_Player.colliders[i].unk8;
+                    } else {
+                        *yPosPtr += var_s5 + g_Player.colliders[i].unk18;
+                    }
+                    *vram_ptr |= 1;
+                    return;
+                }
+                continue;
+            } else {
+                var_a0 =
+                    var_s1 & (EFFECT_UNK_8000 | EFFECT_UNK_0002 | EFFECT_SOLID);
+                if (var_a0 == (EFFECT_UNK_8000 | EFFECT_SOLID)) {
+                    if (i < 2) {
+                        *vram_ptr |=
+                            ((var_s1 & (EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+                                        EFFECT_UNK_1000)) +
+                             0x7FFF + 2);
+                        *yPosPtr += g_Player.colliders[i].unk8 + sp10.unk18 -
+                                    1 + var_s5;
+                        return;
+                    }
+                    if ((i == 2) &&
+                        ((var_s1 &
+                          (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_SOLID)) ==
+                         (EFFECT_UNK_8000 | EFFECT_SOLID))) {
+                        g_Player.colliders[2].effects = var_s1;
+                        g_Player.colliders[2].unk10 =
+                            g_Player.colliders[2].unk8;
+                    }
+                    if ((i == 3) &&
+                        ((var_s1 &
+                          (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_SOLID)) ==
+                         (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_SOLID))) {
+                        g_Player.colliders[3].effects = var_s1;
+                        g_Player.colliders[3].unk10 =
+                            g_Player.colliders[3].unk8;
+                    }
+                }
+            }
+        }
+        if ((var_s2 != (EFFECT_UNK_8000 | EFFECT_SOLID)) || (i >= 2)) {
+            continue;
+        }
+        *vram_ptr |= g_Player.colliders[i].effects &
+                     (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+                      EFFECT_UNK_1000 | EFFECT_SOLID);
+        *yPosPtr += var_s5 + g_Player.colliders[i].unk18;
+        return;
+    }
+    if (g_Player.colliders[1].effects & 4) {
+        *vram_ptr |= 0x11;
+        if ((g_Timer & 3) == 0) {
+            (*yPosPtr)++;
+        }
+        return;
+    }
+    if (g_Player.colliders[1].effects & 8) {
+        *vram_ptr |= 0x80;
+    }
+    if (PLAYER.velocityY < 0) {
+        return;
+    }
+    argX = *xPosPtr + D_800ACED0.pairs[0].x;
+    argY = *yPosPtr + D_800ACED0.pairs[0].y + 10;
+    CheckCollision(argX, argY, &sp10, 0);
+    if ((sp10.effects & (EFFECT_UNK_8000 | EFFECT_SOLID)) != 0) {
+        return;
+    }
+
+    for (i = 2; i < 4; i++) {
+        if ((g_Player.colliders[3].effects & EFFECT_UNK_8000) &&
+            (g_Player.colliders[2].effects & EFFECT_UNK_8000)) {
+            return;
+        }
+        var_s2 = g_Player.colliders[i].effects;
+        sp30 =
+            ((var_s2 & (EFFECT_UNK_4000 | EFFECT_UNK_2000 | EFFECT_UNK_1000)) +
+             0x7FFF + 2);
+        if (!(var_s2 & EFFECT_UNK_8000)) {
+            continue;
+        }
+        if (i == 2) {
+            var_s1 = EFFECT_UNK_4000;
+            var_s6 = g_Player.colliders[2].unk4;
+            var_s8 = var_s6 + 8;
+        } else {
+            var_s1 = 0;
+            var_s6 = g_Player.colliders[3].unkC;
+            var_s8 = 8 - var_s6;
+        }
+        if ((var_s2 & EFFECT_UNK_4000) == var_s1) {
+            argX = var_s6 + (*xPosPtr + D_800ACED0.pairs[i].x);
+            argY = *yPosPtr + D_800ACED0.pairs[i].y;
+            CheckCollision(argX, argY, &sp10, 0);
+            if (sp10.effects & 1) {
+                *yPosPtr += sp10.unk18;
+                *vram_ptr |= sp30;
+                return;
+            }
+            continue;
+        }
+        if (var_s8 <= 0) {
+            continue;
+        }
+        if (!(var_s2 & 1)) {
+            continue;
+        }
+        argX = var_s6 + (*xPosPtr + D_800ACED0.pairs[i].x);
+        argY = *yPosPtr + D_800ACED0.pairs[i].y + g_Player.colliders[i].unk10;
+        CheckCollision(argX, argY, &sp10, 0);
+        if (sp10.effects & 1) {
+            *yPosPtr += (sp10.unk18 + g_Player.colliders[i].unk10);
+            *vram_ptr |= sp30;
+            return;
+        }
+    }
+}
 
 INCLUDE_ASM("dra/nonmatchings/692E8", func_8010C9F4);
 
