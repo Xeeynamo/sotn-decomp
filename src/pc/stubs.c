@@ -62,21 +62,6 @@ s32 D_800978C4;
 s32 D_80097C98;
 s8 D_80097B98;
 s8 D_80097B99;
-AnimationFrame D_800B0594_sub[] = {
-    {0x0002, 0x0239},
-    {0xFFFF, 0x0000},
-};
-AnimationFrame* D_800B0594[] = {
-    D_800B0594_sub, D_800B0594_sub, D_800B0594_sub, D_800B0594_sub,
-    D_800B0594_sub, D_800B0594_sub, D_800B0594_sub, D_800B0594_sub,
-    D_800B0594_sub, D_800B0594_sub, D_800B0594_sub, D_800B0594_sub,
-    D_800B0594_sub, D_800B0594_sub, D_800B0594_sub, D_800B0594_sub,
-    D_800B0594_sub, D_800B0594_sub, D_800B0594_sub, D_800B0594_sub,
-    D_800B0594_sub, D_800B0594_sub, D_800B0594_sub, D_800B0594_sub,
-    D_800B0594_sub, D_800B0594_sub, D_800B0594_sub, D_800B0594_sub,
-    D_800B0594_sub, D_800B0594_sub,
-};
-u8 D_800B0608[0xC0]; // size guessed
 s16 D_80136308[1];
 u16 g_Clut[0x3000];
 u16 D_8006EBCC[0x1000]; // part of g_Clut?
