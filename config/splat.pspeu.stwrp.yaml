@@ -114,9 +114,9 @@ segments:
       - [0xF740, data] # D_psp_09246DC0
       - [0xF790, data] # g_eRedDoorTiles
       - [0xF7B0, data] # D_psp_09246E30
-      - [0xF810, data] # g_eBreakableInit
-      - [0xF820, data] # g_InitializeData0
-      - [0xF830, data] # g_InitializeEntityData0
+      - [0xF810, .data, wrp_psp/wrp_data_F810] # g_eBreakableInit
+      - [0xF820, .data, wrp_psp/wrp_data_F810] # g_InitializeData0
+      - [0xF830, .data, wrp_psp/wrp_data_F810] # g_InitializeEntityData0
       - [0xF840, data] # D_psp_09246EC0
       - [0xF850, data] # D_psp_09246ED0
       - [0xF860, data] # D_80180488
@@ -124,9 +124,9 @@ segments:
       - [0xF880, data] # D_psp_09246F00
       - [0xF890, data] # D_801804C4
       - [0xF8A0, data] # D_psp_09246F20
-      - [0xF920, .data, wrp_psp/create_entity] # D_psp_09246FA0
-      - [0xF930, .data, wrp_psp/create_entity] # g_eBreakableAnimations
-      - [0xF950, .data, wrp_psp/create_entity] # g_eBreakableHitboxes
+      - [0xF920, .data, wrp_psp/wrp_data_F920] # D_801805A8
+      - [0xF930, .data, wrp_psp/wrp_data_F920] # g_eBreakableAnimations
+      - [0xF950, .data, wrp_psp/wrp_data_F920] # g_eBreakableHitboxes
       - [0xF970, data] # D_psp_09246FF0
       - [0x10260, data] # D_psp_092478E0
       - [0x102C0, data] # D_psp_09247940
