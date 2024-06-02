@@ -125,7 +125,7 @@ segments:
       - [0xF890, data] # D_801804C4
       - [0xF8A0, data] # D_psp_09246F20
       - [0xF920, data] # D_psp_09246FA0
-      - [0xF930, data] # g_eBreakableAnimations
+      - [0xF930, .data, wrp_psp/create_entity] # g_eBreakableAnimations
       - [0xF950, .data, wrp_psp/create_entity] # g_eBreakableHitboxes
       - [0xF970, data] # D_psp_09246FF0
       - [0x10260, data] # D_psp_092478E0

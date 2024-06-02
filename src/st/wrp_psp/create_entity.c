@@ -1,5 +1,18 @@
 #include "../wrp/wrp.h"
 
+extern u8 D_psp_09246FA0[];
+
+u8* g_eBreakableAnimations[] = {
+    /* 5B8 */ D_psp_09246FA0,
+    /* 5BC */ (u8*)0x09246FA8, // TODO
+    /* 5C0 */ 0,
+    /* 5C4 */ 0,
+    /* 5C8 */ 0,
+    /* 5CC */ 0,
+    /* 5D0 */ 0,
+    /* 5D4 */ 0,
+};
+
 u8 g_eBreakableHitboxes[] = {
     /* 5D8 */ 8,
     /* 5D9 */ 8,
