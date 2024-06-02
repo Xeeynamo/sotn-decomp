@@ -33,8 +33,7 @@ u8 g_eBreakableDrawModes[] = {
     /* 5FC */ 0x00,
     /* 5FD */ 0x00,
     /* 5FE */ 0x00,
-    /* 5FF */ 0x00
-};
+    /* 5FF */ 0x00};
 
 #include "../st_private.h"
 
