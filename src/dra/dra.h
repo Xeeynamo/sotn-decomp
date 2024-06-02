@@ -22,9 +22,9 @@
 #define GREEN_MASK 0x3E0
 #define BLUE_MASK 0x7C00
 
-#define GET_RED(x) ((x)&RED_MASK)
-#define GET_GREEN(x) ((x)&GREEN_MASK)
-#define GET_BLUE(x) ((x)&BLUE_MASK)
+#define GET_RED(x) ((x) & RED_MASK)
+#define GET_GREEN(x) ((x) & GREEN_MASK)
+#define GET_BLUE(x) ((x) & BLUE_MASK)
 
 typedef enum {
     MENU_DG_MAIN,
@@ -411,12 +411,12 @@ extern u16 D_800ADC7C[2];
 extern s16_pair* D_800ADCC8[];
 extern RECT D_800AE130;
 extern s32 D_800AE270[9];
-extern AnimationFrame* D_800AE294;
-extern s16 D_800AFDA6[];
+extern AnimationFrame D_800AE294[];
+extern s16 D_800AFDA4[];
 extern RECT c_backbufferClear;
 extern s16 D_800AFFB8[];
 extern s32 D_800B0130[];
-extern s32 D_800B01B8[];
+extern u32* D_800B01B8[];
 extern AnimationFrame* D_800B0594[];
 extern u8 D_800B0608[];
 extern Point32 D_800B0688[];

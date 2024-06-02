@@ -244,7 +244,7 @@ void func_80124A8C(Entity* entity) {
         SetSpeedX(0x4000);
         entity->unk5A = 0x50;
         entity->palette = 0x819F;
-        entity->unk4C = &D_800AE294;
+        entity->unk4C = D_800AE294;
         entity->flags = FLAG_UNK_100000;
         entity->facingLeft = 0;
         entity->posY.i.hi -= 16;
@@ -2277,7 +2277,7 @@ bool WolfFormFinished(void) {
         HandleTransformationMP(FORM_WOLF, REDUCE) < 0) {
         SetPlayerStep(Player_UnmorphWolf);
         func_8010DA48(0xCA);
-        D_800AFDA6[0] = 1;
+        D_800AFDA4[1] = 1;
         PLAYER.palette = 0x810D;
         g_Player.unk66 = 0;
         g_Player.unk68 = 0;

@@ -595,10 +595,10 @@ void func_8012EAD0(void) {
             g_Player.unk66 = 1;
             if (g_Player.unk68 != 0) {
                 PLAYER.step_s = 2;
-                D_800AFDA6[0] = 0xC7;
+                D_800AFDA4[1] = 0xC7;
             } else {
                 PLAYER.step_s = 1;
-                D_800AFDA6[0] = 0x5F;
+                D_800AFDA4[1] = 0x5F;
             }
         }
         return;

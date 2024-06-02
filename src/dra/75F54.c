@@ -252,7 +252,7 @@ bool BatFormFinished(void) {
         HandleTransformationMP(FORM_BAT, REDUCE) < 0) {
         SetPlayerStep(Player_UnmorphBat);
         func_8010DA48(0xCA);
-        D_800AFDA6[0] = 6;
+        D_800AFDA4[1] = 6;
         g_Entities->palette = 0x810D;
         g_Player.unk66 = 0;
         g_Player.unk68 = 0;
@@ -444,7 +444,7 @@ void ControlBatForm(void) {
         g_Player.unk44 = 0;
         if (g_Entities[16].entityId == 0x22) {
             PLAYER.animSet = 0xD;
-            D_800AFDA6[0] = 6;
+            D_800AFDA4[1] = 6;
             PLAYER.unk5A = 0;
             PLAYER.ext.player.unkAC = 0xCA;
             if (func_8011203C() == 0) {
@@ -475,14 +475,14 @@ void ControlBatForm(void) {
             }
             func_8010DA48(0xCA);
             PLAYER.palette = 0x810D;
-            D_800AFDA6[0] = (s16)PLAYER.animCurFrame;
+            D_800AFDA4[1] = (s16)PLAYER.animCurFrame;
             if (g_Player.unk66 == 1) {
                 return;
             }
             if (g_Player.unk66 == 2) {
                 PLAYER.animSet = 0xD;
                 PLAYER.unk5A = 0;
-                D_800AFDA6[0] = 6;
+                D_800AFDA4[1] = 6;
                 return;
             }
         }
@@ -808,10 +808,10 @@ void func_801177A0(void) {
             g_Player.unk66 = 1;
             if (g_Player.unk68 != 0) {
                 PLAYER.step_s = 2;
-                D_800AFDA6[0] = 0xC7;
+                D_800AFDA4[1] = 0xC7;
             } else {
                 PLAYER.step_s = 1;
-                D_800AFDA6[0] = 0x5F;
+                D_800AFDA4[1] = 0x5F;
             }
         }
         break;
@@ -971,7 +971,7 @@ void ControlMistForm(void) {
             PLAYER.velocityY = -ySpeedOrtho;
         }
         func_8010DA48(0xCA);
-        D_800AFDA6[0] = PLAYER.animCurFrame;
+        D_800AFDA4[1] = PLAYER.animCurFrame;
         func_800EA538(8);
         if (!IsRelicActive(RELIC_GAS_CLOUD)) {
             func_800EA5E4(0x11CU);

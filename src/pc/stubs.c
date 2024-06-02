@@ -200,11 +200,7 @@ s16 D_800ACF94[16];                   // guessed size
 u8 D_800AD094[0x30];
 unkstr_800cfe48* D_800CFE48[18];    // guessed size
 Unkstruct_80138094 D_80138094[100]; // unknown size
-s32 D_800AE270[9];                  // guessed size
-u32 D_800B0188[] = {
-    0x00000000, 0x0000E1E0, 0x05041509, 0x0705F312, 0x0711F512, 0x0705050B,
-    0x0710070C, 0x0705F20F, 0x0713F612, 0x070CF606, 0x08080613, 0x090B0C15,
-};
+s32 D_800AE270[] = {0xFF, 0xFF, 0xFF, 0x7F, 0x7F, 0x3F, 0x7F, 0x3F, 0x7F};
 s32 D_8013808C;
 GpuUsage g_GpuMaxUsage;
 GpuBuffer* g_BackBuffer;
@@ -528,8 +524,6 @@ u8 g_CdMode[3];
 
 struct XaMusicConfig g_XaMusicConfigs[563] = {0};
 
-s32 D_800B0130[] = {0, -1, 0, -1}; // dummy data
-s32 D_800B01B8[] = {0, -1, 0, -1}; // dummy data
 s8 D_80138F64[20];
 u8 D_801390C4;
 s16 D_8013AE8A[1];
