@@ -87,6 +87,8 @@ set(SOURCE_FILES_DRA
     #src/dra/75F54.c # unable to link it, the file needs to be splitted
     #src/dra/7A4D0.c # loads of unimplemented calls and symbols
     src/dra/7E4BC.c
+    src/dra/d_DBD4.c
+    src/dra/d_E294.c
     src/dra/843B0.c
     #src/dra/8D3E8.c # countless unimplemented symbols
     src/dra/90264.c
@@ -96,6 +98,7 @@ set(SOURCE_FILES_DRA
     src/dra/93BDC.c
     src/dra/94F50.c
     src/dra/953A0.c
+    src/dra/d_24CEC.c
 )
 
 set(SOURCE_FILES_STAGE_SEL

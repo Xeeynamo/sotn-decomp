@@ -62,21 +62,6 @@ s32 D_800978C4;
 s32 D_80097C98;
 s8 D_80097B98;
 s8 D_80097B99;
-AnimationFrame D_800B0594_sub[] = {
-    {0x0002, 0x0239},
-    {0xFFFF, 0x0000},
-};
-AnimationFrame* D_800B0594[] = {
-    D_800B0594_sub, D_800B0594_sub, D_800B0594_sub, D_800B0594_sub,
-    D_800B0594_sub, D_800B0594_sub, D_800B0594_sub, D_800B0594_sub,
-    D_800B0594_sub, D_800B0594_sub, D_800B0594_sub, D_800B0594_sub,
-    D_800B0594_sub, D_800B0594_sub, D_800B0594_sub, D_800B0594_sub,
-    D_800B0594_sub, D_800B0594_sub, D_800B0594_sub, D_800B0594_sub,
-    D_800B0594_sub, D_800B0594_sub, D_800B0594_sub, D_800B0594_sub,
-    D_800B0594_sub, D_800B0594_sub, D_800B0594_sub, D_800B0594_sub,
-    D_800B0594_sub, D_800B0594_sub,
-};
-u8 D_800B0608[0xC0]; // size guessed
 s16 D_80136308[1];
 u16 g_Clut[0x3000];
 u16 D_8006EBCC[0x1000]; // part of g_Clut?
@@ -153,17 +138,6 @@ u32 D_8003C744 = 0;
 s32 D_80097448[2];
 s32 D_80097450;
 Pos D_80097488;
-PixPattern* mocked_800C52F8[0x200] = {NULL};
-PixPattern* D_800C52F8[] = {
-    mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
-    mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
-    mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
-    mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
-    mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
-    mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
-    mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
-    mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
-};
 
 // dra.h
 u16 D_800AC958[] = {
@@ -198,38 +172,9 @@ s16 D_800ACF6C[4];                    // guessed size
 s16 D_800ACF8A[5];                    // guessed size
 s16 D_800ACF94[16];                   // guessed size
 u8 D_800AD094[0x30];
-s16 D_800ADC7C[2];
-s16_pair D_800ADCC8_stub;
-s16_pair* D_800ADCC8[] = {
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-    &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub, &D_800ADCC8_stub,
-};
 unkstr_800cfe48* D_800CFE48[18];    // guessed size
 Unkstruct_80138094 D_80138094[100]; // unknown size
-s32 D_800AE270[9];                  // guessed size
-AnimationFrame D_800ADBD4[15];
-AnimationFrame D_800ADC10[13];
-u32 D_800B0188[] = {
-    0x00000000, 0x0000E1E0, 0x05041509, 0x0705F312, 0x0711F512, 0x0705050B,
-    0x0710070C, 0x0705F20F, 0x0713F612, 0x070CF606, 0x08080613, 0x090B0C15,
-};
-s32 D_800ADC44;
+s32 D_800AE270[] = {0xFF, 0xFF, 0xFF, 0x7F, 0x7F, 0x3F, 0x7F, 0x3F, 0x7F};
 s32 D_8013808C;
 GpuUsage g_GpuMaxUsage;
 GpuBuffer* g_BackBuffer;
@@ -553,8 +498,6 @@ u8 g_CdMode[3];
 
 struct XaMusicConfig g_XaMusicConfigs[563] = {0};
 
-s32 D_800B0130[] = {0, -1, 0, -1}; // dummy data
-s32 D_800B01B8[] = {0, -1, 0, -1}; // dummy data
 s8 D_80138F64[20];
 u8 D_801390C4;
 s16 D_8013AE8A[1];
