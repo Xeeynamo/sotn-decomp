@@ -88,8 +88,8 @@ void EntityWarpRoom(Entity* self) {
         self->hitboxOffY += 16;
         self->hitboxWidth = 2;
         self->hitboxHeight = 16;
-        *D_8003BEBC |= 1;
-        *D_8003BEBC |= 1 << self->params;
+        g_CastleFlags[0xD0] |= 1;
+        g_CastleFlags[0xD0] |= 1 << self->params;
         D_80180648 = 0;
         entity = &PLAYER;
         moveX = entity->posX.i.hi + g_Tilemap.scrollX.i.hi;
@@ -161,7 +161,7 @@ void EntityWarpRoom(Entity* self) {
             if (moveRoom >= 5) {
                 moveRoom = 0;
             }
-            if (*D_8003BEBC & (1 << moveRoom)) {
+            if (g_CastleFlags[0xD0] & (1 << moveRoom)) {
                 break;
             }
         }
