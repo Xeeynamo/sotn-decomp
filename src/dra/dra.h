@@ -895,7 +895,7 @@ bool CheckQuarterCircleForwardInput();
 bool CheckBackForwardInput();
 bool CheckDarkMetamorphosisInput();
 bool CheckSummonSpiritInput();
-void func_8010DBFC(s8*, s32*);
+void func_8010DBFC(s8*, AnimationFrame** frames);
 bool CheckHellfireInput();
 bool CheckTetraSpiritInput();
 bool CheckSoulStealInput();

@@ -14,6 +14,11 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
   set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fsanitize=address")
+
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-implicit-function-declaration")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-incompatible-pointer-types")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-int-conversion")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-return-mismatch")
 endif()
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")

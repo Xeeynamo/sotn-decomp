@@ -37,7 +37,6 @@ typedef struct {
     s16 x, y;
 } WarpCoord;
 
-extern u8 D_8003BEBC[];
 extern s32 D_8003C8B8;
 
 extern u16 g_InitializeData0[];

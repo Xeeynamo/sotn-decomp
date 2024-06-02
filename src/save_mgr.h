@@ -373,7 +373,7 @@ u8* g_saveIconTexture[] = {
 };
 
 #if defined(VERSION_US)
-u8* g_saveUnkData[] = {
+s32 g_saveUnkData[] = {
     1, 1, 3, 1, 1, 1, 3, 1, 2, 2, 1, 1, 1, 1, 1, 2,
 };
 #endif

@@ -33,7 +33,7 @@ void func_80118894(Entity* self);
 Entity* func_80118970(void);
 s16 func_80118B18(Entity* ent1, Entity* ent2, s16 facingLeft);
 u32 UpdateUnarmedAnim(s8* frameProps, u16** frames);
-void func_8010DBFC(s32*, s32*);
+void func_8010DBFC(s32*, AnimationFrame** frames);
 void func_80118C28(s32 arg0);
 void func_8010E168(s32 arg0, s16 arg1);
 void func_8010DFF0(s32 arg0, s32 arg1);

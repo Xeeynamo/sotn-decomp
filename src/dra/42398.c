@@ -66,7 +66,7 @@ void DebugCaptureScreen(void) {
         return;
     }
 
-    StoreImage(&g_CurrentBuffer->disp.disp, (u32*)0x80200000);
+    StoreImage(&g_CurrentBuffer->disp.disp, (u_long*)0x80200000);
     DrawSync(0);
 
     for (i = 0; i < MaxScreenshotCount; i++) {
@@ -114,7 +114,7 @@ void DebugCaptureScreen(void) {
 
     bufferPos = 0;
     dst = buffer;
-    src = 0x80200000;
+    src = (u16*)0x80200000;
     for (i = height - 1; i >= 0; i--) {
         u16* start = buffer;
         for (j = 0; j < width; j++) {
@@ -199,7 +199,7 @@ void DebugCaptureVideo(void) {
     StoreImage(&g_CurrentBuffer->disp.disp, (u_long*)0x80200000);
     DrawSync(0);
 
-    src = 0x80200000;
+    src = (u16*)0x80200000;
     i = 0;
     bufferPos = 0;
     dst = buffer;
