@@ -128,7 +128,7 @@ segments:
       - [0x23560, cmp, D_800C3560]
       - [0x24864, cmp, D_800C4864]
       - [0x24A90, cmp, D_800C4A90]
-      - [0x24CEC, data]
+      - [0x24CEC, .data, d_24CEC]
       - [0x25324, raw, g_GfxEquipIcon]
       - [0x2F324, data]
       - [0x388D4, raw, g_PalEquipIcon]

@@ -443,7 +443,7 @@ extern s32 D_800BD1C4;
 extern s16 g_CurrentXaSoundId;
 extern s32 g_VabAddrs[6];
 extern u8* D_800C1ECC[172];
-extern PixPattern* D_800C52F8[];
+extern u8* D_800C52F8[];
 extern const char D_800DB524[];
 extern const char a0104x04x;
 extern const char a2304x04x;

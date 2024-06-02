@@ -138,17 +138,6 @@ u32 D_8003C744 = 0;
 s32 D_80097448[2];
 s32 D_80097450;
 Pos D_80097488;
-PixPattern* mocked_800C52F8[0x200] = {NULL};
-PixPattern* D_800C52F8[] = {
-    mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
-    mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
-    mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
-    mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
-    mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
-    mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
-    mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
-    mocked_800C52F8, mocked_800C52F8, mocked_800C52F8, mocked_800C52F8,
-};
 
 // dra.h
 u16 D_800AC958[] = {
