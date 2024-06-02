@@ -1,5 +1,6 @@
 #include "np3.h"
-INCLUDE_ASM("st/np3/nonmatchings/394F0", TestCollisions);
+
+#include "../hit_detection.h"
 
 #include "../entity_damage_display.h"
 
@@ -11,31 +12,31 @@ INCLUDE_ASM("st/np3/nonmatchings/394F0", TestCollisions);
 
 u8 func_801BC6BC(u8 frames[], Entity* self, u8 arg2) {
     u16 animFrameStart = self->animFrameIdx * 2;
-    u8* var_s1 = &frames[animFrameStart];
+    u8* iterEnt1 = &frames[animFrameStart];
     s16 var_a1 = 0;
 
     if (self->animFrameDuration == 0) {
-        if (*var_s1 != 0) {
-            if (*var_s1 == 0xFF) {
+        if (*iterEnt1 != 0) {
+            if (*iterEnt1 == 0xFF) {
                 return 0;
             }
-            self->animFrameDuration = *var_s1++ + (u8)self->ext.stub[0x3F];
-            self->animCurFrame = *var_s1++;
+            self->animFrameDuration = *iterEnt1++ + (u8)self->ext.stub[0x3F];
+            self->animCurFrame = *iterEnt1++;
             self->animFrameIdx++;
             var_a1 = 128;
         } else {
-            var_s1 = frames;
+            iterEnt1 = frames;
             self->animFrameIdx = 0;
             self->animFrameDuration = 0;
             self->ext.stub[0x3F] = (arg2 * Random()) >> 8;
-            self->animFrameDuration = *var_s1++ + (u8)self->ext.stub[0x3F];
-            self->animCurFrame = *var_s1;
+            self->animFrameDuration = *iterEnt1++ + (u8)self->ext.stub[0x3F];
+            self->animCurFrame = *iterEnt1;
             self->animFrameIdx++;
             return 0;
         }
     }
     self->animFrameDuration--;
-    self->animCurFrame = var_s1[-1];
+    self->animCurFrame = iterEnt1[-1];
     var_a1 |= 1;
     return var_a1;
 }
@@ -223,7 +224,7 @@ u8 func_801BCED8(s32 x, s32 y) {
 
 u16 func_801BD004(s16 x, s16 y) { return ratan2(y, x); }
 
-u16 func_801BD034(Entity* a, Entity* b) {
+u16 GetAngleBetweenEntities(Entity* a, Entity* b) {
     s32 diffX = b->posX.i.hi - a->posX.i.hi;
     s32 diffY = b->posY.i.hi - a->posY.i.hi;
     return ratan2(diffY, diffX);
@@ -235,7 +236,7 @@ u16 func_801BD06C(s32 x, s32 y) {
     return ratan2(diffY, diffX);
 }
 
-u16 func_801BD0B4(u16 arg0, s16 arg1, s16 arg2) {
+u16 GetNormalizedAngle(u16 arg0, s16 arg1, s16 arg2) {
     u16 var_v0 = arg1;
     u16 temp_a2 = arg2 - arg1;
     u16 var_v0_2;
@@ -364,7 +365,7 @@ void func_801BD430(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-INCLUDE_ASM("st/np3/nonmatchings/394F0", func_801BD588);
+#include "../get_player_collision_with.h"
 
 #include "../replace_breakable_with_item_drop.h"
 
@@ -429,27 +430,7 @@ void func_801BDA08(u16 arg0) {
 
 #include "../collect_heart.h"
 
-void CollectGold(u16 goldSize) {
-    s32 *gold, *unk;
-    u16 goldSizeIndex;
-
-    g_api.PlaySfx(NA_SE_PL_COLLECT_GOLD);
-    gold = &g_Status.gold;
-    goldSizeIndex = goldSize - 2;
-    *gold += c_GoldPrizes[goldSizeIndex];
-    if (*gold > MAX_GOLD) {
-        *gold = MAX_GOLD;
-    }
-
-    unk = &g_unkGraphicsStruct.BottomCornerTextTimer;
-    if (*unk) {
-        g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
-        *unk = 0;
-    }
-
-    BottomCornerText(D_80181DC4[goldSizeIndex], 1);
-    DestroyEntity(g_CurrentEntity);
-}
+#include "../collect_gold.h"
 
 void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;

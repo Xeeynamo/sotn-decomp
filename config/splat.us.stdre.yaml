@@ -65,6 +65,7 @@ segments:
       - [0x16FC0, c, update]
       - [0x172BC, c, update_stage_entities]
       - [0x173C4, c]
+      - [0x1C63C, c]
       - [0x1C7DC, c]
       - [0x1D074, c, entity_relic_orb]
       - [0x1DB44, c, entity_heart_drop]

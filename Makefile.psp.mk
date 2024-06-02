@@ -18,7 +18,7 @@ CCPSP           := MWCIncludes=bin/ $(WIBO) $(MWCCPSP)
 PSP_EU_TARGETS  := stwrp tt_000
 SPLAT_PIP       := splat split
 
-MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -Op -c -lang c -sdatathreshold 0
+MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -Op -c -lang c -sdatathreshold 0 -char unsigned
 
 define list_src_files_psp
 	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
@@ -79,6 +79,6 @@ $(PSP_BUILD_DIR)/dra.elf: $(PSP_BUILD_DIR)/dra.ld $$(call list_o_files_psp,dra_p
 $(PSP_BUILD_DIR)/tt_%.elf: $(PSP_BUILD_DIR)/tt_%.ld $$(call list_o_files_psp,servant/tt_$$*) $(PSP_BUILD_DIR)/assets/servant/tt_%/mwo_header.bin.o
 	$(call link,tt_$*,$@)
 
-ST_WRP_MERGE = st_debug e_breakable
+ST_WRP_MERGE = st_update e_particles e_room_fg st_common st_debug e_breakable popup
 $(PSP_BUILD_DIR)/stwrp.elf: $(PSP_BUILD_DIR)/stwrp.ld $(addprefix $(PSP_BUILD_DIR)/src/st/wrp/,$(addsuffix .c.o,$(ST_WRP_MERGE))) $$(call list_o_files_psp,st/wrp_psp) $(PSP_BUILD_DIR)/assets/st/wrp/mwo_header.bin.o
 	$(call link,stwrp,$@)

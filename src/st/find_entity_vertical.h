@@ -10,13 +10,12 @@
  *    y position larger than `posY` or the tail eleement.
  */
 void FindFirstEntityAbove(s16 posY) {
-    while (1) {
-        if (g_LayoutObjVertical->posY != LAYOUT_OBJ_START &&
-            g_LayoutObjVertical->posY >= posY) {
+    while (true) {
+        u16* ptr = &g_LayoutObjVertical[LAYOUT_OBJ_POS_Y];
+        if (*ptr != LAYOUT_OBJ_START && *ptr >= posY) {
             break;
         }
-
-        g_LayoutObjVertical++;
+        g_LayoutObjVertical += sizeof(LayoutEntity) / sizeof(u16);
     }
 }
 
@@ -33,11 +32,12 @@ void FindFirstEntityAbove(s16 posY) {
  */
 void FindFirstEntityBelow(s16 posY) {
     while (true) {
-        if (g_LayoutObjVertical->posY != LAYOUT_OBJ_END &&
-            (posY >= g_LayoutObjVertical->posY ||
-             g_LayoutObjVertical->posY == LAYOUT_OBJ_START)) {
+        u16* ptr = &g_LayoutObjVertical[LAYOUT_OBJ_POS_Y];
+
+        if (*ptr != LAYOUT_OBJ_END &&
+            (*ptr <= posY || *ptr == LAYOUT_OBJ_START)) {
             break;
         }
-        g_LayoutObjVertical--;
+        g_LayoutObjVertical -= sizeof(LayoutEntity) / sizeof(u16);
     }
 }

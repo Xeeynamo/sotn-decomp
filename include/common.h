@@ -65,4 +65,7 @@ int sprintf(char* dst, const char* fmt, ...);
 // where 4096 is equal to 1.0.
 #define FLT(x) ((s32)((x)*4096.0))
 
+// Access to the Scratchpad memory. Different on different systems.
+#define SP(x) (0x1F800000 | (x))
+
 #endif

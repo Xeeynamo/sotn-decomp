@@ -50,9 +50,9 @@ extern void func_801BB140(s16);
 extern void func_801BB2F8(s16);
 extern void func_801BB3F4(s16);
 extern s32 func_801BD308(u16* hitSensors, s16 sensorCount);
-extern s32 func_801BD588(Entity* arg0, s32 arg1, s32 arg2, s32 arg3);
+extern s32 GetPlayerCollisionWith(Entity* entity, u16 w, u16 h, u16 flags);
 extern s32 GetDistanceToPlayerX(void);
-extern void func_801C070C(Entity* entity);
+extern void EntityUnkId14(Entity* entity);
 extern void func_801CD658();
 extern void EntityPrizeDrop(Entity* entity);
 extern void EntityEquipItemDrop(Entity* entity);
@@ -219,20 +219,12 @@ extern u16 UNK_Invincibility0[];
 extern s16 D_80181A50[];
 extern u16 D_80181D80[];
 extern u16 D_80181DB0[];
-extern const u32* D_80181DC4[];
-extern const s32 c_GoldPrizes[];
 extern u16 D_80181E74[];
 extern s8 c_HeartPrizes[];
-extern u8 D_80181EA8[];
 extern s32 D_80181E80[];
 extern const u8* D_80181F2C[];
-extern u16 D_80181FA4[];
 extern s16 D_80181FB4[];
 extern u32 D_80181FC4[];
-extern s32 D_80181FDC[];
-extern u8 D_80181FF4[];
-extern u16 D_80181FF8[];
-extern s16* D_80182000;
 extern u8 D_80182008[];
 extern s32 D_80182204[];
 extern s64 D_801821B4[];
@@ -312,9 +304,9 @@ extern u8 D_80182935[];
 
 // *** EntitySoulStealOrb properties START ***
 
-extern u16 D_8018205C[]; // NOTE(sestren): Random angle offsets?
-extern u16 D_8018206C[]; // NOTE(sestren): Animation frame properties?
-extern u16 D_801820CC[];
+extern u16 g_ESoulStealOrbAngles[];
+extern s16 g_ESoulStealOrbSprt[];
+extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
 

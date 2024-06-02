@@ -19,13 +19,12 @@ void CreateEntityFromLayout(Entity*, LayoutEntity*);
 
 // *** EntitySoulStealOrb properties START ***
 
-extern u16 D_801810A0[]; // NOTE(sestren): Random angle offsets?
-extern u16 D_801810B0[]; // NOTE(sestren): Animation frame properties?
+extern u16 g_ESoulStealOrbAngles[];
+extern s16 g_ESoulStealOrbSprt[];
 extern u16 g_InitializeData0[];
-extern u16 D_80181110[];
+extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
-extern s32 c_GoldPrizes[];
 extern u16 D_80180DC4[];
 extern u16 D_80180DF4[];
 extern u8* D_80180E08[];
@@ -33,6 +32,7 @@ extern u8* D_80180E08[];
 extern u16 g_InitializeEntityData0[];
 
 void InitializeEntity(u16 arg0[]);
+void EntityUnkId14(Entity* entity);
 void EntityUnkId15(Entity* entity);
 void EntityExplosion(Entity* entity);
 
@@ -57,7 +57,7 @@ typedef enum {
     E_UNK_11,
     E_UNK_12,
     E_UNK_13,
-    E_UNK_14,
+    E_ID_14,
     E_ID_15,
 } EntityIDs;
 

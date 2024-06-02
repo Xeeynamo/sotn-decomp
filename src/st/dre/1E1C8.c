@@ -1,6 +1,6 @@
 #include "dre.h"
 
-INCLUDE_ASM("st/dre/nonmatchings/1E1C8", func_8019E1C8);
+#include "../check_coll_offsets.h"
 
 void EntityUnkId13(Entity* entity) {
     switch (entity->step) {
@@ -29,40 +29,11 @@ void EntityUnkId13(Entity* entity) {
     }
 }
 
-// DECOMP_ME_WIP func_8019E3C8 https://decomp.me/scratch/lcx4I
-INCLUDE_ASM("st/dre/nonmatchings/1E1C8", func_8019E3C8);
+#include "../entity_unkId14_spawner.h"
 
 #include "../entity_unkId15_spawner.h"
 
-// an explosion animation ID 0x14
-void EntityExplosion14(Entity* entity) {
-    u8 new_var2;
-    u32 new_var;
-
-    if (!entity->step) {
-        new_var = D_8018130C[entity->ext.generic.unk94];
-        entity->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        entity->palette = 0x8195;
-        entity->animSet = ANIMSET_DRA(2);
-        entity->velocityY = new_var;
-        new_var2 = D_80181324[entity->params];
-        entity->drawMode = DRAW_TPAGE;
-        entity->step++;
-        entity->animCurFrame = new_var2;
-        return;
-    }
-
-    entity->animFrameDuration++;
-    entity->posY.val -= entity->velocityY;
-
-    if (!(entity->animFrameDuration & 1)) {
-        entity->animCurFrame++;
-    }
-
-    if (D_80181328[entity->params] < entity->animFrameDuration) {
-        DestroyEntity(entity);
-    }
-}
+#include "../entity_unkId14.h"
 
 // looks like a particle of dust fading away
 void EntityUnkId15(Entity* entity) {
@@ -97,7 +68,7 @@ void EntityUnkId15(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("st/dre/nonmatchings/1E1C8", func_8019E7C4);
+#include "../entity_olrox_drool.h"
 
 bool func_8019E9F4(Point16* arg0) {
     Collider collider;
@@ -365,106 +336,13 @@ void func_8019F304(void) {
     }
 }
 
-void func_8019F3BC(Entity* arg0) {
-    s16 temp_v1;
-    s32 temp_v1_2;
-    s32 var_a0;
-    s32 var_v1;
-    s32 temp_s0;
-
-    if (arg0->step == 0) {
-        InitializeEntity(g_InitializeEntityData0);
-        arg0->animSet = 2;
-        arg0->palette = 0x81B6;
-        arg0->unk6C = 0x70;
-        arg0->zPriority = 0xC0;
-        arg0->drawFlags |= 0xC;
-        arg0->drawMode |= 0x30;
-
-        switch (arg0->ext.generic.unk84.U8.unk0) {
-        case 1:
-            if (arg0->ext.generic.unk84.U8.unk1 >= 4u) {
-                arg0->ext.generic.unk84.U8.unk1 += 0xFD;
-                arg0->ext.generic.unk80.modeS16.unk0 -= 0x800;
-            }
-            break;
-
-        case 2:
-            arg0->ext.generic.unk80.modeS16.unk0 +=
-                (arg0->ext.generic.unk84.U8.unk1 * 0xC0);
-            break;
-        }
-
-        temp_v1_2 = arg0->ext.generic.unk80.modeS16.unk0 & 0xFFF;
-        arg0->ext.generic.unk80.modeS16.unk0 = temp_v1_2;
-        arg0->rotZ = temp_v1_2;
-        temp_s0 = (arg0->ext.generic.unk84.U8.unk1 * 320) / 24;
-        arg0->velocityX = temp_s0 * rsin(arg0->ext.generic.unk80.modeS16.unk0);
-        arg0->velocityY =
-            -(temp_s0 * rcos(arg0->ext.generic.unk80.modeS16.unk0));
-    }
-
-    if (arg0->animFrameIdx >= 13) {
-        var_v1 = arg0->velocityX;
-        if (var_v1 < 0) {
-            var_v1 += 3;
-        }
-
-        var_a0 = arg0->velocityY;
-        arg0->velocityX = (var_v1 >> 2) * 3;
-        if (var_a0 < 0) {
-            var_a0 += 3;
-        }
-        arg0->velocityY = (var_a0 >> 2) * 3;
-    }
-
-    MoveEntity();
-
-    if (AnimateEntity(D_801811D8, arg0) == 0) {
-        DestroyEntity(arg0);
-    }
-}
+#include "../entity_big_red_fireball.h"
 
 INCLUDE_ASM("st/dre/nonmatchings/1E1C8", func_8019F594);
 
 INCLUDE_ASM("st/dre/nonmatchings/1E1C8", func_8019FB74);
 
-void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
-    u16 buf[COLORS_PER_PAL];
-    RECT bufRect;
-    s32 factor;
-    u32 t;
-    u32 r, g, b;
-    s32 i, j;
-    u16 *palA, *palB;
-
-    bufRect.x = rect->x;
-    bufRect.w = COLORS_PER_PAL;
-    bufRect.h = 1;
-
-    palA = g_Clut + palIdxA * COLORS_PER_PAL;
-    palB = g_Clut + palIdxB * COLORS_PER_PAL;
-
-    for (i = 0; i < steps; i++) {
-        factor = i * 4096 / steps;
-        for (j = 0; j < COLORS_PER_PAL; j++) {
-            r = (palA[j] & 0x1F) * (4096 - factor) + (palB[j] & 0x1F) * factor;
-            g = ((palA[j] >> 5) & 0x1F) * (4096 - factor) +
-                ((palB[j] >> 5) & 0x1F) * factor;
-            b = ((palA[j] >> 10) & 0x1F) * (4096 - factor) +
-                ((palB[j] >> 10) & 0x1F) * factor;
-
-            t = palA[j] & 0x8000;
-            t |= palB[j] & 0x8000;
-
-            buf[j] = t | (r >> 12) | ((g >> 12) << 5) | ((b >> 12) << 10);
-        }
-
-        bufRect.y = rect->y + i;
-        LoadImage(&bufRect, buf);
-        g_ClutIds[offset + i] = GetClut(bufRect.x, bufRect.y);
-    }
-}
+#include "../clut_lerp.h"
 
 void func_801A046C(s16 sfxId) {
     s32 var_a3;
@@ -504,93 +382,8 @@ void func_801A046C(s16 sfxId) {
 
 #include "../entity_stage_name_popup.h"
 
-// The white flying orbs of energy that Alucard summons as part of the Soul
-// Steal spell
-void EntitySoulStealOrb(Entity* self) {
-    Primitive* prim;
-    s32 primIndex;
-    u16 *temp_d, temp_e;
-    s32 temp_a, temp_b;
-    u16 angle;
+#include "../entity_soul_steal_orb.h"
 
-    switch (self->step) {
-    case 0:
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-        if (primIndex == -1) {
-            DestroyEntity(self);
-            return;
-        }
-        InitializeEntity(g_InitializeData0);
-        g_PrimBuf[primIndex].drawMode = DRAW_HIDE;
-        self->primIndex = primIndex;
-        self->animSet = ANIMSET_DRA(0);
-        self->flags |= FLAG_HAS_PRIMS;
-        angle = func_8019AF08(self, &PLAYER);
-        temp_a = self->posY.i.hi < 113;
-        temp_b = temp_a ^ 1;
-        if (self->posX.i.hi < PLAYER.posX.i.hi) {
-            temp_b = temp_a;
-        }
-        if (temp_b & 0xFFFF) {
-            self->ext.soulStealOrb.angle = angle - D_8018138C[Random() & 7];
-        } else {
-            angle += D_8018138C[Random() & 7];
-            self->ext.soulStealOrb.angle = angle;
-        }
-        self->ext.soulStealOrb.unk80 = 0x400;
-        self->ext.soulStealOrb.unk7E = 0;
-        self->hitboxState = 0;
-        break;
-
-    case 1:
-        self->ext.soulStealOrb.unk82++;
-        if (self->ext.soulStealOrb.unk82 == 16) {
-            self->hitboxState = 1;
-        }
-        if (self->hitFlags != 0) {
-            if (g_Player.unk56 == 0) {
-                g_Player.unk56 = 1;
-                g_Player.unk58 = 8;
-            }
-            DestroyEntity(self);
-            return;
-        }
-        if (self->rotX < 0x100) {
-            self->rotX = self->rotY += 0x10;
-        }
-        if (self->ext.soulStealOrb.unk7E < 0x200) {
-            self->ext.soulStealOrb.unk7E += 2;
-        }
-        if (self->ext.soulStealOrb.unk80 < 0x800) {
-            self->ext.soulStealOrb.unk80 += 4;
-        }
-        self->ext.soulStealOrb.angle = func_8019AF88(
-            self->ext.soulStealOrb.unk7E, (u16)self->ext.soulStealOrb.angle,
-            0xffff & func_8019AF08(self, &PLAYER));
-        UnkEntityFunc0(self->ext.soulStealOrb.angle & 0xFFFF,
-                       self->ext.soulStealOrb.unk80);
-        MoveEntity(self); // argument pass necessary to match
-        prim = &g_PrimBuf[self->primIndex];
-        AnimateEntity(&D_801813FC, self);
-        angle = (float)(u32)self; // !FAKE
-        prim->tpage = 0x18;
-        prim->clut = 0x194;
-        temp_d = &D_8018139C[(u16)((8 * (u16)self->animCurFrame) - 8)];
-        prim->x0 = prim->x2 = self->posX.i.hi + *(temp_d++);
-        prim->y0 = prim->y1 = self->posY.i.hi + *(temp_d++);
-        prim->x1 = prim->x3 = prim->x0 + *(temp_d++);
-        prim->y2 = prim->y3 = prim->y0 + *(temp_d++);
-        prim->u0 = prim->u2 = *(temp_d++);
-        prim->v0 = prim->v1 = *(temp_d++);
-        prim->u1 = prim->u3 = *(temp_d++);
-        prim->v2 = prim->v3 = *(temp_d++);
-        prim->priority = self->zPriority;
-        prim->drawMode = DRAW_DEFAULT;
-        break;
-    }
-}
-
-// ID 0x0D
 #include "../entity_enemy_blood.h"
 
 extern ObjInit2 D_80181420[];

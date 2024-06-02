@@ -11,13 +11,13 @@
  *    x position larger than `posX` or the tail eleement.
  */
 void FindFirstEntityToTheRight(s16 posX) {
-    while (true) {
-        if (g_LayoutObjHorizontal->posX != LAYOUT_OBJ_START &&
-            g_LayoutObjHorizontal->posX >= posX) {
+    while (1) {
+        u16* layoutEntity = g_LayoutObjHorizontal;
+        if (layoutEntity[0] != LAYOUT_OBJ_START && layoutEntity[0] >= posX) {
             break;
         }
 
-        g_LayoutObjHorizontal++;
+        g_LayoutObjHorizontal += sizeof(LayoutEntity) / sizeof(u16);
     }
 }
 
@@ -34,11 +34,11 @@ void FindFirstEntityToTheRight(s16 posX) {
  */
 void FindFirstEntityToTheLeft(s16 posX) {
     while (true) {
-        if (g_LayoutObjHorizontal->posX != LAYOUT_OBJ_END &&
-            (posX >= g_LayoutObjHorizontal->posX ||
-             g_LayoutObjHorizontal->posX == LAYOUT_OBJ_START)) {
+        u16* layoutObject = g_LayoutObjHorizontal;
+        if (layoutObject[0] != LAYOUT_OBJ_END &&
+            (layoutObject[0] <= posX || layoutObject[0] == LAYOUT_OBJ_START)) {
             break;
         }
-        g_LayoutObjHorizontal--;
+        g_LayoutObjHorizontal -= sizeof(LayoutEntity) / sizeof(u16);
     }
 }

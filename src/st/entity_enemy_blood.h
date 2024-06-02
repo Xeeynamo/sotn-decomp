@@ -1,54 +1,46 @@
 void EntityEnemyBlood(Entity* self) {
-    int fakeTemp; // !TODO: !FAKE
+    const int NParticles = 12;
     FakePrim* prim;
-    s32 var_a0_2;
-    u16 params;
-    s16 posX;
-    s32 rnd;
     s32 i;
+    s16 x;
+    u16 facingLeft;
 
     switch (self->step) {
     case 0:
-        i = g_api.func_800EDB58(PRIM_TILE_ALT, 12);
+        i = g_api.func_800EDB58(PRIM_TILE_ALT, NParticles);
         if (i != -1) {
             InitializeEntity(g_InitializeData0);
-            prim = &g_PrimBuf[i];
+            facingLeft = self->params;
+            self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = i;
             self->animSet = ANIMSET_DRA(0);
-            params = self->params;
             self->hitboxState = 1;
-            self->ext.generic.unk7C.s = 48;
+            self->ext.bloodDroplets.timer = 48;
+            self->hitboxWidth = 0;
             self->hitboxHeight = 8;
             self->zPriority = 0xC0;
-            self->hitboxWidth = 0;
-            self->flags |= FLAG_HAS_PRIMS;
 
-            for (i = 12; i != 0;) {
-                prim->x0 = self->posX.i.hi + ((Random() & (fakeTemp = 7)) - 5);
-                rnd = (Random() & 7) - 5;
-                prim->y0 = self->posY.i.hi + rnd;
+            prim = (FakePrim*)&g_PrimBuf[i];
+            i = NParticles;
+            while (true) {
+                prim->x0 = self->posX.i.hi - 5 + (Random() & 7);
+                prim->y0 = self->posY.i.hi - 5 + (Random() & 7);
                 prim->posX.val = 0;
                 prim->posY.val = 0;
                 prim->w = 4;
                 prim->h = 4;
 
-                if (params != 0) {
+                if (facingLeft) {
                     UnkEntityFunc0(
-                        0xCC0 + i * 64, ((Random() & 0xF) * 0x10) + 0x180);
+                        0xCC0 + i * 64, (Random() & 0xF) * 0x10 + 0x180);
                 } else {
                     UnkEntityFunc0(
-                        0xB40 - i * 64, ((Random() & 0xF) * 0x10) + 0x180);
+                        0xB40 - i * 64, (Random() & 0xF) * 0x10 + 0x180);
                 }
 
                 prim->velocityX.val = self->velocityX;
                 prim->velocityY.val = self->velocityY;
-
-                var_a0_2 = prim->velocityX.val;
-                if (var_a0_2 <= -1) {
-                    var_a0_2 += 0x3F;
-                }
-
-                prim->accelerationX.val = -(var_a0_2 >> 6);
+                prim->accelerationX.val = -(prim->velocityX.val / 64);
                 prim->accelerationY.val = -(prim->velocityY.val / 48) + 0xC00;
 
                 prim->x2 = prim->y2 = (Random() & 7) + 7;
@@ -56,55 +48,55 @@ void EntityEnemyBlood(Entity* self) {
                 prim->b0 = 16;
                 prim->g0 = 0;
                 prim->priority = self->zPriority;
-                prim->drawMode = 2;
-                i--;
-                if (i != 0) {
-                    prim++;
+                prim->drawMode = DRAW_UNK02;
+                if (!--i) {
+                    break;
                 }
+                prim++;
             }
 
-            if (params != 0) {
+            if (facingLeft) {
                 self->velocityX = FIX(1.25);
-                self->ext.generic.unk80.modeS32 = -0x200;
+                self->ext.bloodDroplets.speed = -0x200;
             } else {
                 self->velocityX = FIX(-1.25);
-                self->ext.generic.unk80.modeS32 = 0x200;
+                self->ext.bloodDroplets.speed = 0x200;
             }
             self->velocityY = 0;
-            break;
+        } else {
+            DestroyEntity(self);
         }
-        DestroyEntity(self);
         break;
 
     case 1:
-        if (!(--self->ext.generic.unk7C.u)) {
+        if (!(--self->ext.bloodDroplets.timer)) {
             DestroyEntity(self);
             break;
         }
 
-        if (self->hitboxState != 0) {
-            if (g_Player.unk0C & 0x02000000) {
-                posX = self->posX.i.hi;
-                self->velocityX += self->ext.generic.unk80.modeS32;
+        if (self->hitboxState) {
+            if (!(g_Player.unk0C & PLAYER_STATUS_ABSORB_BLOOD)) {
+                self->hitboxState = 0;
+            } else {
+                self->velocityX += self->ext.bloodDroplets.speed;
 
-                MoveEntity(self); // argument pass necessary to match
-
-                posX -= self->posX.i.hi;
-                if (posX < 0) {
-                    posX = -posX;
+                x = self->posX.i.hi;
+                MoveEntity(self);
+                x -= self->posX.i.hi;
+                if (x < 0) {
+                    x = -x;
                 }
 
-                if (self->ext.generic.unk7C.u > 16) {
-                    self->ext.generic.unk7E.modeU16 += posX;
-                    self->hitboxWidth = self->ext.generic.unk7E.modeU16 / 2;
-                    self->hitboxHeight =
-                        (self->ext.generic.unk7E.modeU16 / 4) + 8;
+                if (self->ext.bloodDroplets.timer > 16) {
+                    self->ext.bloodDroplets.size += x;
+                    self->hitboxWidth = self->ext.bloodDroplets.size / 2;
+                    self->hitboxHeight = self->ext.bloodDroplets.size / 4 + 8;
                 } else {
                     self->hitboxState = 0;
                 }
 
-                if (self->hitFlags != 0) {
-                    if (g_Player.unk56 == 0) {
+                if (self->hitFlags) {
+                    if (!g_Player.unk56) {
                         g_Player.unk56 = 1;
                         g_Player.unk58 = 8;
                         if (g_api.CheckEquipmentItemCount(
@@ -115,13 +107,12 @@ void EntityEnemyBlood(Entity* self) {
                     g_Player.unk10++;
                     self->hitboxState = 0;
                 }
-            } else {
-                self->hitboxState = 0;
             }
         }
 
-        prim = &g_PrimBuf[self->primIndex];
-        for (i = 12; i != 0; i--, prim++) {
+        prim = (FakePrim*)&g_PrimBuf[self->primIndex];
+        i = NParticles;
+        while (true) {
             prim->posX.i.hi = prim->x0;
             prim->posY.i.hi = prim->y0;
             prim->velocityX.val += prim->accelerationX.val;
@@ -130,17 +121,20 @@ void EntityEnemyBlood(Entity* self) {
             prim->posY.val += prim->velocityY.val;
             prim->x0 = prim->posX.i.hi;
             prim->y0 = prim->posY.i.hi;
-            prim->x2--;
 
-            if ((prim->x2 == 0) && (prim->w != 0)) {
+            if (!--prim->x2 && prim->w) {
                 prim->h--;
                 prim->w--;
                 if (!(prim->w & 1)) {
                     prim->x0++;
                     prim->y0++;
                 }
-                prim->x2 = *(s32*)&prim->y2;
+                prim->x2 = prim->y2;
             }
+            if (!--i) {
+                break;
+            }
+            prim++;
         }
     }
 }

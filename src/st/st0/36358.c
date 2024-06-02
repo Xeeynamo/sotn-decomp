@@ -263,31 +263,198 @@ void func_801B6C5C(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("st/st0/nonmatchings/36358", EntityEquipItemDrop);
+// Different from other overlays, but extremely similar to MAD.
+void EntityEquipItemDrop(Entity* self) {
+    u16 itemId = self->params & 0x7FFF;
+    s32 primIndex;
+    Collider collider;
+    POLY_GT4* poly;
+    s32* itemName;
+    s16 index;
+    s32 vramX;
+    s32 vramY;
+    u8 left;
+    u8 right;
+    u16 top;
+    u8 bottom;
+    u8 temp_v0_6;
+    s16 temp_a0;
+    s32* unk;
+
+    s32 xPos;
+    s32 yPos;
+
+    if ((self->step != 0) && (self->step < 5) && (self->hitFlags != 0)) {
+        self->step = 5;
+    }
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_InitializeData0);
+        self->ext.equipItemDrop.timer = 0;
+        break;
+
+    case 1:
+        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
+
+        if (!(collider.effects & EFFECT_NOTHROUGH_PLUS)) {
+            for (index = 0; index < 32; index++) {
+                if (g_ItemIconSlots[index] == 0) {
+                    break;
+                }
+            }
+
+            if (index >= 32) {
+                DestroyEntity(self);
+                return;
+            }
+
+            primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+            if (primIndex == -1) {
+                DestroyEntity(self);
+                return;
+            }
+
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            g_ItemIconSlots[index] = 0x1E0;
+
+            if (itemId < NUM_HAND_ITEMS) {
+                g_api.LoadEquipIcon(g_api.equipDefs[itemId].icon,
+                                    g_api.equipDefs[itemId].iconPalette, index);
+            } else {
+                itemId -= NUM_HAND_ITEMS;
+                g_api.LoadEquipIcon(
+                    g_api.accessoryDefs[itemId].icon,
+                    g_api.accessoryDefs[itemId].iconPalette, index);
+            }
+
+            poly = &g_PrimBuf[primIndex];
+            vramX = ((temp_v0_6 = index) & 7) * 0x10;
+            vramY = (temp_v0_6 & 0x18) * 2;
+
+            left = vramX | 1;
+            right = vramX | 0xF;
+            top = 0x81;
+            top = vramY | top;
+            bottom = vramY | 0x8F;
+
+            poly->tpage = 0x1A;
+            poly->v3 = bottom;
+            poly->clut = index + 464;
+            poly->u0 = poly->u2 = left;
+            poly->u1 = poly->u3 = right;
+            poly->v1 = top;
+            poly->v2 = bottom;
+            poly->v0 = top;
+            poly->pad2 = 0x80;
+            poly->pad3 = 6;
+
+            self->ext.equipItemDrop.timer = 128;
+            self->step++;
+            break;
+        }
+        DestroyEntity(self);
+        break;
+
+    case 2:
+        if (self->velocityX < 0) {
+            g_api.CheckCollision(
+                self->posX.i.hi, self->posY.i.hi - 7, &collider, 0);
+            if (collider.effects & EFFECT_NOTHROUGH) {
+                self->velocityY = 0;
+            }
+        }
+
+        MoveEntity();
+
+        g_api.CheckCollision(
+            self->posX.i.hi, self->posY.i.hi + 7, &collider, 0);
+
+        if ((collider.effects & EFFECT_NOTHROUGH) && (self->velocityY > 0)) {
+            self->velocityX = 0;
+            self->velocityY = 0;
+            self->posY.i.hi += collider.unk18;
+            self->ext.equipItemDrop.unk80 = 240;
+            self->step++;
+        } else {
+            FallEntity();
+        }
+
+        func_801B5A98(D_80181D74, 2);
+        break;
+
+    case 3:
+        func_801B5F4C(1);
+        if (!(self->params & 0x8000)) {
+            if (!(--self->ext.equipItemDrop.unk80 & 255)) {
+                self->ext.equipItemDrop.unk80 = 0x50;
+                self->step++;
+            }
+        }
+        break;
+
+    case 4:
+        func_801B5F4C(1);
+        if (self->ext.equipItemDrop.unk80 += 255) {
+            poly = &g_PrimBuf[self->primIndex];
+            if (self->ext.equipItemDrop.unk80 & 2) {
+                poly->pad3 = 8;
+            } else {
+                poly->pad3 = 2;
+            }
+        } else {
+            DestroyEntity(self);
+        }
+        break;
+
+    case 5:
+        unk = &g_unkGraphicsStruct.BottomCornerTextTimer;
+        if (*unk != 0) {
+            g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
+            *unk = 0;
+        }
+
+        g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+
+        if (itemId < NUM_HAND_ITEMS) {
+            itemName = g_api.equipDefs[itemId].name;
+            g_api.AddToInventory(itemId, EQUIP_HAND);
+        } else {
+            itemId -= NUM_HAND_ITEMS;
+            itemName = g_api.accessoryDefs[itemId].name;
+            g_api.AddToInventory(itemId, EQUIP_ARMOR);
+        }
+
+        BottomCornerText(itemName, 1);
+        DestroyEntity(self);
+        break;
+    }
+    if (self->step >= 2) {
+        poly = &g_PrimBuf[self->primIndex];
+        xPos = (u16)self->posX.i.hi;
+        poly->x0 = poly->x2 = xPos - 7;
+        poly->x1 = poly->x3 = xPos + 7;
+        yPos = (u16)self->posY.i.hi;
+        poly->y0 = poly->y1 = yPos - 7;
+        poly->y2 = poly->y3 = yPos + 7;
+        if (self->ext.equipItemDrop.timer != 0) {
+            self->ext.equipItemDrop.timer--;
+            if (!(self->ext.equipItemDrop.timer & 2)) {
+                poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 =
+                    poly->g1 = poly->g2 = poly->g3 = poly->b0 = poly->b1 =
+                        poly->b2 = poly->b3 = 0x80;
+            } else {
+                poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 =
+                    poly->g1 = poly->g2 = poly->g3 = poly->b0 = poly->b1 =
+                        poly->b2 = poly->b3 = 0xFF;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("st/st0/nonmatchings/36358", func_801B7308);
 
-u8 func_801B7B0C(s16* arg0, u8 facing) {
-    u8 ret = 0;
-    Collider collider;
-    s16 posX, posY;
-
-    while (*arg0 != 0xFF) {
-        ret <<= 1;
-
-        posX = facing ? (g_CurrentEntity->posX.i.hi + *arg0++)
-                      : (g_CurrentEntity->posX.i.hi - *arg0++);
-        posY = g_CurrentEntity->posY.i.hi + *arg0++;
-
-        g_api.CheckCollision(posX, posY, &collider, 0);
-
-        if (collider.effects & EFFECT_SOLID) {
-            ret |= 1;
-        }
-    }
-
-    return ret;
-}
+#include "../check_coll_offsets.h"
 
 void func_801B7BFC(Entity* entity) {
     switch (entity->step) {
@@ -316,32 +483,11 @@ void func_801B7BFC(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("st/st0/nonmatchings/36358", func_801B7D0C);
+#include "../entity_unkId14_spawner.h"
 
 #include "../entity_unkId15_spawner.h"
 
-void func_801B7F24(Entity* entity) {
-    if (entity->step == 0) {
-        entity->velocityY = D_80181ED8[entity->ext.generic.unk94];
-        entity->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        entity->palette = 0x8195;
-        entity->animSet = ANIMSET_DRA(2);
-        entity->animCurFrame = D_80181EF0[entity->params];
-        entity->drawMode = DRAW_TPAGE;
-        entity->step++;
-    } else {
-        entity->animFrameDuration++;
-        entity->posY.val -= entity->velocityY;
-
-        if (!(entity->animFrameDuration & 1)) {
-            entity->animCurFrame++;
-        }
-
-        if (D_80181EF4[entity->params] < (s32)entity->animFrameDuration) {
-            DestroyEntity(entity);
-        }
-    }
-}
+#include "../entity_unkId14.h"
 
 void EntityUnkId15(Entity* entity) {
     u16 temp_v0;
@@ -374,7 +520,7 @@ void EntityUnkId15(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("st/st0/nonmatchings/36358", func_801B8108);
+#include "../entity_olrox_drool.h"
 
 bool func_801B8338(Point16* unk) {
     Collider collider;
@@ -638,101 +784,13 @@ void func_801B8C48(void) {
     }
 }
 
-void func_801B8D00(Entity* self) {
-    s32 velocityX;
-    s32 velocityY;
-    s32 temp;
-
-    if (self->step == 0) {
-        InitializeEntity(g_InitializeEntityData0);
-        self->animSet = ANIMSET_DRA(2);
-        self->palette = 0x81B6;
-        self->unk6C = 0x70;
-        self->zPriority = 192;
-        self->drawFlags |= 0xC;
-        self->drawMode |= 0x30;
-
-        switch (self->ext.generic.unk84.U8.unk0) {
-        case 1:
-            if (self->ext.generic.unk84.U8.unk1 >= 4) {
-                self->ext.generic.unk84.U8.unk1 += 253;
-                self->ext.generic.unk80.modeS16.unk0 -= 0x800;
-            }
-            break;
-
-        case 2:
-            self->ext.generic.unk80.modeS16.unk0 +=
-                self->ext.generic.unk84.U8.unk1 * 192;
-            break;
-        }
-
-        self->rotZ = self->ext.generic.unk80.modeS16.unk0 &= 0xFFF;
-        temp = (self->ext.generic.unk84.U8.unk1 * 320) / 24;
-        self->velocityX = temp * rsin(self->ext.generic.unk80.modeS16.unk0);
-        self->velocityY = -(temp * rcos(self->ext.generic.unk80.modeS16.unk0));
-    }
-
-    if (self->animFrameIdx >= 13) {
-        velocityX = self->velocityX;
-        if (velocityX < 0) {
-            velocityX += 3;
-        }
-
-        velocityY = self->velocityY;
-        self->velocityX = (velocityX >> 2) * 3;
-        if (velocityY < 0) {
-            velocityY += 3;
-        }
-        self->velocityY = (velocityY >> 2) * 3;
-    }
-
-    MoveEntity();
-
-    if (AnimateEntity(D_80181DA4, self) == 0) {
-        DestroyEntity(self);
-    }
-}
+#include "../entity_big_red_fireball.h"
 
 INCLUDE_ASM("st/st0/nonmatchings/36358", func_801B8ED8);
 
 INCLUDE_ASM("st/st0/nonmatchings/36358", func_801B94B8);
 
-void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
-    u16 buf[COLORS_PER_PAL];
-    RECT bufRect;
-    s32 factor;
-    u32 t;
-    u32 r, g, b;
-    s32 i, j;
-    u16 *palA, *palB;
-
-    bufRect.x = rect->x;
-    bufRect.w = COLORS_PER_PAL;
-    bufRect.h = 1;
-
-    palA = g_Clut + palIdxA * COLORS_PER_PAL;
-    palB = g_Clut + palIdxB * COLORS_PER_PAL;
-
-    for (i = 0; i < steps; i++) {
-        factor = i * 4096 / steps;
-        for (j = 0; j < COLORS_PER_PAL; j++) {
-            r = (palA[j] & 0x1F) * (4096 - factor) + (palB[j] & 0x1F) * factor;
-            g = ((palA[j] >> 5) & 0x1F) * (4096 - factor) +
-                ((palB[j] >> 5) & 0x1F) * factor;
-            b = ((palA[j] >> 10) & 0x1F) * (4096 - factor) +
-                ((palB[j] >> 10) & 0x1F) * factor;
-
-            t = palA[j] & 0x8000;
-            t |= palB[j] & 0x8000;
-
-            buf[j] = t | (r >> 12) | ((g >> 12) << 5) | ((b >> 12) << 10);
-        }
-
-        bufRect.y = rect->y + i;
-        LoadImage(&bufRect, buf);
-        g_ClutIds[offset + i] = GetClut(bufRect.x, bufRect.y);
-    }
-}
+#include "../clut_lerp.h"
 
 void func_801B9DB0(s16 sfxId) {
     s32 var_a3;
@@ -770,91 +828,7 @@ void func_801B9DB0(s16 sfxId) {
     }
 }
 
-// The white flying orbs of energy that Alucard summons as part of the Soul
-// Steal spell
-void EntitySoulStealOrb(Entity* self) {
-    Primitive* prim;
-    s32 primIndex;
-    u16 *temp_d, temp_e;
-    s32 temp_a, temp_b;
-    u16 angle;
-
-    switch (self->step) {
-    case 0:
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-        if (primIndex == -1) {
-            DestroyEntity(self);
-            return;
-        }
-        InitializeEntity(g_InitializeData0);
-        g_PrimBuf[primIndex].drawMode = DRAW_HIDE;
-        self->primIndex = primIndex;
-        self->animSet = ANIMSET_DRA(0);
-        self->flags |= FLAG_HAS_PRIMS;
-        angle = func_801B56BC(self, &PLAYER);
-        temp_a = self->posY.i.hi < 113;
-        temp_b = temp_a ^ 1;
-        if (self->posX.i.hi < PLAYER.posX.i.hi) {
-            temp_b = temp_a;
-        }
-        if (temp_b & 0xFFFF) {
-            self->ext.soulStealOrb.angle = angle - D_80181F54[Random() & 7];
-        } else {
-            angle += D_80181F54[Random() & 7];
-            self->ext.soulStealOrb.angle = angle;
-        }
-        self->ext.soulStealOrb.unk80 = 0x400;
-        self->ext.soulStealOrb.unk7E = 0;
-        self->hitboxState = 0;
-        break;
-
-    case 1:
-        self->ext.soulStealOrb.unk82++;
-        if (self->ext.soulStealOrb.unk82 == 16) {
-            self->hitboxState = 1;
-        }
-        if (self->hitFlags != 0) {
-            if (g_Player.unk56 == 0) {
-                g_Player.unk56 = 1;
-                g_Player.unk58 = 8;
-            }
-            DestroyEntity(self);
-            return;
-        }
-        if (self->rotX < 0x100) {
-            self->rotX = self->rotY += 0x10;
-        }
-        if (self->ext.soulStealOrb.unk7E < 0x200) {
-            self->ext.soulStealOrb.unk7E += 2;
-        }
-        if (self->ext.soulStealOrb.unk80 < 0x800) {
-            self->ext.soulStealOrb.unk80 += 4;
-        }
-        self->ext.soulStealOrb.angle = func_801B573C(
-            self->ext.soulStealOrb.unk7E, (u16)self->ext.soulStealOrb.angle,
-            0xffff & func_801B56BC(self, &PLAYER));
-        UnkEntityFunc0(self->ext.soulStealOrb.angle & 0xFFFF,
-                       self->ext.soulStealOrb.unk80);
-        MoveEntity(self); // argument pass necessary to match
-        prim = &g_PrimBuf[self->primIndex];
-        AnimateEntity(&D_80181FC4, self);
-        angle = (float)(u32)self; // !FAKE
-        prim->tpage = 0x18;
-        prim->clut = 0x194;
-        temp_d = &D_80181F64[(u16)((8 * (u16)self->animCurFrame) - 8)];
-        prim->x0 = prim->x2 = self->posX.i.hi + *(temp_d++);
-        prim->y0 = prim->y1 = self->posY.i.hi + *(temp_d++);
-        prim->x1 = prim->x3 = prim->x0 + *(temp_d++);
-        prim->y2 = prim->y3 = prim->y0 + *(temp_d++);
-        prim->u0 = prim->u2 = *(temp_d++);
-        prim->v0 = prim->v1 = *(temp_d++);
-        prim->u1 = prim->u3 = *(temp_d++);
-        prim->v2 = prim->v3 = *(temp_d++);
-        prim->priority = self->zPriority;
-        prim->drawMode = DRAW_DEFAULT;
-        break;
-    }
-}
+#include "../entity_soul_steal_orb.h"
 
 #include "../entity_enemy_blood.h"
 

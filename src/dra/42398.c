@@ -1218,7 +1218,7 @@ void HandleTitle(void) {
     case 6:
 #if defined(VERSION_US)
         if (g_GameState == Game_Title) {
-            callback = g_api.o.TestCollisions;
+            callback = g_api.o.HitDetection;
         } else {
             callback = g_api.o.InitRoomEntities;
         }
@@ -1226,7 +1226,7 @@ void HandleTitle(void) {
         if (g_GameState == Game_Init) {
             callback = g_api.o.InitRoomEntities;
         } else {
-            callback = g_api.o.TestCollisions;
+            callback = g_api.o.HitDetection;
         }
 #endif
         callback();

@@ -566,6 +566,7 @@ void MyDrawOTag(OT_TYPE* p) {
     LINE_G2* lg2;
     SPRT* sp;
     SPRT_16* sp16;
+    TILE* tile;
     DR_MODE* drMode;
 
     SDL_Vertex v[6];
@@ -574,6 +575,7 @@ void MyDrawOTag(OT_TYPE* p) {
     bool dfe = false;
     bool dtd = false;
     size_t n = 0;
+    SDL_Rect rect;
 
     for (size_t n = 0; (u_long)p != 0xffffff; n++, p = (OT_TYPE*)p->tag) {
         P_TAG* tag = (P_TAG*)p;
@@ -603,6 +605,16 @@ void MyDrawOTag(OT_TYPE* p) {
             lg2 = (LINE_G2*)tag;
             SDL_SetRenderDrawColor(g_Renderer, lg2->r0, lg2->g0, lg2->b0, 255);
             SDL_RenderDrawLine(g_Renderer, lg2->x0, lg2->y0, lg2->x1, lg2->y1);
+            break;
+        case 0x60:
+            tile = (TILE*)tag;
+            SDL_SetRenderDrawColor(g_Renderer, tile->r0, tile->g0, tile->b0,
+                                   isSemiTrans ? 128 : 255);
+            rect.x = tile->x0;
+            rect.y = tile->y0;
+            rect.w = tile->w;
+            rect.h = tile->h;
+            SDL_RenderFillRect(g_Renderer, &rect);
             break;
         case 0x64:
             sp = (SPRT*)tag;

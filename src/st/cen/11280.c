@@ -1,5 +1,5 @@
 #include "cen.h"
-INCLUDE_ASM("st/cen/nonmatchings/11280", TestCollisions);
+#include "../hit_detection.h"
 
 #include "../entity_damage_display.h"
 
@@ -228,7 +228,7 @@ u16 func_80194C68(s16 x, s16 y) {
 
 u16 func_80194D94(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
-u16 func_80194DC4(Entity* a, Entity* b) {
+u16 GetAngleBetweenEntities(Entity* a, Entity* b) {
     s32 diffX = b->posX.i.hi - a->posX.i.hi;
     s32 diffY = b->posY.i.hi - a->posY.i.hi;
     return ratan2(diffY, diffX);
@@ -240,7 +240,7 @@ u16 func_80194DFC(s32 x, s32 y) {
     return ratan2(diffY, diffX);
 }
 
-u16 func_80194E44(u16 arg0, u16 arg1, u16 arg2) {
+u16 GetNormalizedAngle(u16 arg0, u16 arg1, u16 arg2) {
     u16 var_v0 = arg1;
     u16 temp_a2 = arg2 - arg1;
     u16 var_v0_2;
@@ -374,7 +374,7 @@ void func_801951C0(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-INCLUDE_ASM("st/cen/nonmatchings/11280", func_80195318);
+#include "../get_player_collision_with.h"
 
 #include "../replace_breakable_with_item_drop.h"
 
@@ -404,27 +404,7 @@ INCLUDE_ASM("st/cen/nonmatchings/11280", func_80195798);
 
 #include "../collect_heart.h"
 
-void CollectGold(u16 goldSize) {
-    s32 *gold, *unk;
-    u16 goldSizeIndex;
-
-    g_api.PlaySfx(NA_SE_PL_COLLECT_GOLD);
-    gold = &g_Status.gold;
-    goldSizeIndex = goldSize - 2;
-    *gold += c_GoldPrizes[goldSizeIndex];
-    if (*gold > MAX_GOLD) {
-        *gold = MAX_GOLD;
-    }
-
-    unk = &g_unkGraphicsStruct.BottomCornerTextTimer;
-    if (*unk) {
-        g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
-        *unk = 0;
-    }
-
-    BottomCornerText(D_80180F30[goldSizeIndex], 1);
-    DestroyEntity(g_CurrentEntity);
-}
+#include "../collect_gold.h"
 
 void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;

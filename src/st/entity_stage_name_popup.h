@@ -67,8 +67,7 @@ void EntityStageNamePopup(Entity* self) {
 
     switch (self->step) {
     case 0:
-        if (g_DemoMode != Demo_None ||
-            g_CastleFlags[CASTLE_FLAG_BANK + 2] != 0) {
+        if (g_DemoMode != Demo_None || g_CastleFlags[CASTLE_FLAG_BANK + 2]) {
             DestroyEntity(self);
             return;
         }
@@ -79,12 +78,12 @@ void EntityStageNamePopup(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        prim = &g_PrimBuf[primIndex];
+        self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
         self->ext.stpopup.prim = prim;
-        self->flags |= 0x800000;
         while (prim != NULL) {
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
         prim = self->ext.stpopup.prim;
@@ -100,7 +99,7 @@ void EntityStageNamePopup(Entity* self) {
             prim->x3 = prim->x1 = 0x80;
             prim->y3 = prim->y2 = 0xC5;
             prim->priority = 0xC0 - i;
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
 
             prim->tpage = 0x11;
@@ -114,7 +113,7 @@ void EntityStageNamePopup(Entity* self) {
             prim->x3 = prim->x1 = 0xF4;
             prim->y3 = prim->y2 = 0xC5;
             prim->priority = 0xC0 - i;
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
 
@@ -131,7 +130,7 @@ void EntityStageNamePopup(Entity* self) {
         prim->x3 = prim->x1 = 0x80;
         prim->y3 = prim->y2 = 0xC5;
         prim->priority = 0xBF;
-        prim->drawMode = 8;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
 
         prim->clut = 0x19D;
@@ -145,7 +144,7 @@ void EntityStageNamePopup(Entity* self) {
         prim->x3 = prim->x1 = 0xF4;
         prim->y3 = prim->y2 = 0xC5;
         prim->priority = 0xBF;
-        prim->drawMode = 8;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
 
         self->ext.stpopup.unk84 = prim;
@@ -169,7 +168,7 @@ void EntityStageNamePopup(Entity* self) {
         prim->g2 = 0;
         prim->b2 = 0x38;
         prim->priority = 0xB0;
-        prim->drawMode = 0x1D;
+        prim->drawMode = 0x15 | DRAW_HIDE;
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r2);
         prim = prim->next;
@@ -190,7 +189,7 @@ void EntityStageNamePopup(Entity* self) {
             prim->u2 = prim->u0 = 4;
             prim->u1 = prim->u3 = primIndex = 0x78; // FAKE
             prim->priority = 0xC0;
-            prim->drawMode = 0xC;
+            prim->drawMode = 4 | DRAW_HIDE;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r0);
@@ -211,7 +210,7 @@ void EntityStageNamePopup(Entity* self) {
             prim->g0 = 0x78;
             prim->b0 = 0xA8;
             prim->priority = 0xC0;
-            prim->drawMode = 0xC;
+            prim->drawMode = 4 | DRAW_HIDE;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r0);
@@ -307,7 +306,7 @@ void EntityStageNamePopup(Entity* self) {
             break;
         case 4:
             prim = self->ext.stpopup.unk88;
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             self->ext.stpopup.unk80 = 0x40;
             self->step = 2;
             self->step_s = 0;
@@ -345,7 +344,7 @@ void EntityStageNamePopup(Entity* self) {
         case 1:
             prim = self->ext.stpopup.prim;
             for (i = 0; i < 4; i++) {
-                prim->drawMode = 8;
+                prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
 

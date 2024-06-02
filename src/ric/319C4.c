@@ -1514,7 +1514,7 @@ void func_801719A4(Entity* self) {
     if (g_unkGraphicsStruct.unk0 != 0) {
         // FAKE, needed to make step load at the right time
         do {
-            D_800973FC = 0;
+            g_unkGraphicsStruct.D_800973FC = 0;
         } while (0);
         if ((self->step > 0) && (self->step < 4)) {
             self->step = 4;
@@ -1574,7 +1574,7 @@ void func_801719A4(Entity* self) {
         func_8015FAB8(self);
         g_api.PlaySfx(0x6AD);
         if (self->ext.et_801719A4.unk94 < 2) {
-            D_800973FC = 1;
+            g_unkGraphicsStruct.D_800973FC = 1;
         }
         self->step++;
         break;
@@ -1672,7 +1672,7 @@ void func_801719A4(Entity* self) {
     case 7:
         if ((self->ext.et_801719A4.unk94 == 0) ||
             (self->ext.et_801719A4.unk94 == D_801758D0)) {
-            D_800973FC = 0;
+            g_unkGraphicsStruct.D_800973FC = 0;
         }
         if (self->ext.et_801719A4.unk94 != 0) {
             (&D_801758D0)[self->ext.et_801719A4.unk94] = 0;

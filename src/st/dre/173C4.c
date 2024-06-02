@@ -1,5 +1,5 @@
 #include "dre.h"
-INCLUDE_ASM("st/dre/nonmatchings/173C4", TestCollisions);
+#include "../hit_detection.h"
 
 #include "../entity_damage_display.h"
 
@@ -238,7 +238,7 @@ u8 func_8019ADAC(s16 arg0, s16 arg1) {
 
 u16 func_8019AED8(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
-u16 func_8019AF08(Entity* a, Entity* b) {
+u16 GetAngleBetweenEntities(Entity* a, Entity* b) {
     s32 diffX = b->posX.i.hi - a->posX.i.hi;
     s32 diffY = b->posY.i.hi - a->posY.i.hi;
     return ratan2(diffY, diffX);
@@ -250,7 +250,7 @@ u16 func_8019AF40(s32 x, s32 y) {
     return ratan2(diffY, diffX);
 }
 
-u16 func_8019AF88(u16 arg0, s16 arg1, s16 arg2) {
+u16 GetNormalizedAngle(u16 arg0, s16 arg1, s16 arg2) {
     u16 var_v0 = arg1;
     u16 temp_a2 = arg2 - arg1;
     u16 var_v0_2;
@@ -388,7 +388,7 @@ void func_8019B304(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-INCLUDE_ASM("st/dre/nonmatchings/173C4", func_8019B45C);
+#include "../get_player_collision_with.h"
 
 #include "../replace_breakable_with_item_drop.h"
 
@@ -467,27 +467,7 @@ void func_8019BA38(u16 arg0) {
     DestroyEntity(g_CurrentEntity);
 }
 
-void CollectGold(u16 goldSize) {
-    s32 *gold, *unk;
-    u16 goldSizeIndex;
-
-    g_api.PlaySfx(NA_SE_PL_COLLECT_GOLD);
-    gold = &g_Status.gold;
-    goldSizeIndex = goldSize - 2;
-    *gold += c_GoldPrizes[goldSizeIndex];
-    if (*gold > MAX_GOLD) {
-        *gold = MAX_GOLD;
-    }
-
-    unk = &g_unkGraphicsStruct.BottomCornerTextTimer;
-    if (*unk) {
-        g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
-        *unk = 0;
-    }
-
-    BottomCornerText(D_801810F4[goldSizeIndex], 1);
-    DestroyEntity(g_CurrentEntity);
-}
+#include "../collect_gold.h"
 
 void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;
@@ -533,38 +513,3 @@ void CollectLifeVessel(void) {
 void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
 INCLUDE_ASM("st/dre/nonmatchings/173C4", EntityPrizeDrop);
-
-void EntityExplosion(Entity* entity) {
-    u32 temp_v0;
-    u32 temp;
-
-    if (!entity->step) {
-        InitializeEntity(g_InitializeEntityData0);
-        entity->animSet = ANIMSET_DRA(2);
-        entity->animFrameIdx = 0;
-        entity->animFrameDuration = 0;
-        entity->drawMode = 0x30;
-
-        if (entity->params & 0xF0) {
-            entity->palette = 0x8195;
-            entity->drawMode = DRAW_TPAGE;
-        }
-
-        temp_v0 = entity->params & 0xFF00;
-
-        if (temp_v0 != 0) {
-            entity->zPriority = (u16)(temp_v0 >> 8);
-        }
-
-        entity->params &= 0xF;
-        entity->velocityY = D_801811B0[entity->params];
-        return;
-    }
-
-    entity->posY.val += entity->velocityY;
-    if (!AnimateEntity(D_8018125C[entity->params], entity)) {
-        DestroyEntity(entity);
-    }
-}
-
-#include "../blink_item.h"

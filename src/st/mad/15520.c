@@ -50,7 +50,7 @@ void EntityHeartDrop(Entity* entity, u32 arg1) {
 }
 #endif
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_8019563C);
+#include "../check_coll_offsets.h"
 
 void func_8019572C(Entity* entity) {
     switch (entity->step) {
@@ -79,33 +79,11 @@ void func_8019572C(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_8019583C);
+#include "../entity_unkId14_spawner.h"
 
 #include "../entity_unkId15_spawner.h"
 
-void func_80195A54(Entity* entity) {
-    if (entity->step == 0) {
-        entity->velocityY = D_80180FE4[entity->ext.generic.unk94];
-        entity->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        entity->palette = 0x8195;
-        entity->animSet = ANIMSET_DRA(2);
-        entity->animCurFrame = D_80180FFC[entity->params];
-        entity->drawMode = DRAW_TPAGE;
-        entity->step++;
-        return;
-    }
-
-    entity->animFrameDuration++;
-    entity->posY.val -= entity->velocityY;
-
-    if (!(entity->animFrameDuration & 1)) {
-        entity->animCurFrame++;
-    }
-
-    if (D_80181000[entity->params] < (s32)entity->animFrameDuration) {
-        DestroyEntity(entity);
-    }
-}
+#include "../entity_unkId14.h"
 
 void EntityUnkId15(Entity* entity) {
     u16 temp_v0;
@@ -137,7 +115,7 @@ void EntityUnkId15(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_80195C38);
+#include "../entity_olrox_drool.h"
 
 bool func_80195E68(Point16* unk) {
     Collider collider;
@@ -408,13 +386,13 @@ void func_80196934(void) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_801969EC);
+#include "../entity_big_red_fireball.h"
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_80196BC4);
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_801971A4);
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_801978A4);
+#include "../clut_lerp.h"
 
 void func_80197A9C(s16 sfxId) {
     s32 var_a3;
@@ -454,91 +432,7 @@ void func_80197A9C(s16 sfxId) {
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_80197B94);
 
-// The white flying orbs of energy that Alucard summons as part of the Soul
-// Steal spell
-void EntitySoulStealOrb(Entity* self) {
-    Primitive* prim;
-    s32 primIndex;
-    u16 *temp_d, temp_e;
-    s32 temp_a, temp_b;
-    u16 angle;
-
-    switch (self->step) {
-    case 0:
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-        if (primIndex == -1) {
-            DestroyEntity(self);
-            return;
-        }
-        InitializeEntity(g_InitializeData0);
-        g_PrimBuf[primIndex].drawMode = DRAW_HIDE;
-        self->primIndex = primIndex;
-        self->animSet = ANIMSET_DRA(0);
-        self->flags |= FLAG_HAS_PRIMS;
-        angle = func_80192AF0(self, &PLAYER);
-        temp_a = self->posY.i.hi < 113;
-        temp_b = temp_a ^ 1;
-        if (self->posX.i.hi < PLAYER.posX.i.hi) {
-            temp_b = temp_a;
-        }
-        if (temp_b & 0xFFFF) {
-            self->ext.soulStealOrb.angle = angle - D_80181068[Random() & 7];
-        } else {
-            angle += D_80181068[Random() & 7];
-            self->ext.soulStealOrb.angle = angle;
-        }
-        self->ext.soulStealOrb.unk80 = 0x400;
-        self->ext.soulStealOrb.unk7E = 0;
-        self->hitboxState = 0;
-        break;
-
-    case 1:
-        self->ext.soulStealOrb.unk82++;
-        if (self->ext.soulStealOrb.unk82 == 16) {
-            self->hitboxState = 1;
-        }
-        if (self->hitFlags != 0) {
-            if (g_Player.unk56 == 0) {
-                g_Player.unk56 = 1;
-                g_Player.unk58 = 8;
-            }
-            DestroyEntity(self);
-            return;
-        }
-        if (self->rotX < 0x100) {
-            self->rotX = self->rotY += 0x10;
-        }
-        if (self->ext.soulStealOrb.unk7E < 0x200) {
-            self->ext.soulStealOrb.unk7E += 2;
-        }
-        if (self->ext.soulStealOrb.unk80 < 0x800) {
-            self->ext.soulStealOrb.unk80 += 4;
-        }
-        self->ext.soulStealOrb.angle = func_80192B70(
-            self->ext.soulStealOrb.unk7E, (u16)self->ext.soulStealOrb.angle,
-            0xffff & func_80192AF0(self, &PLAYER));
-        UnkEntityFunc0(self->ext.soulStealOrb.angle & 0xFFFF,
-                       self->ext.soulStealOrb.unk80);
-        MoveEntity(self); // argument pass necessary to match
-        prim = &g_PrimBuf[self->primIndex];
-        AnimateEntity(&D_801810D8, self);
-        angle = (float)(u32)self; // !FAKE
-        prim->tpage = 0x18;
-        prim->clut = 0x194;
-        temp_d = &D_80181078[(u16)((8 * (u16)self->animCurFrame) - 8)];
-        prim->x0 = prim->x2 = self->posX.i.hi + *(temp_d++);
-        prim->y0 = prim->y1 = self->posY.i.hi + *(temp_d++);
-        prim->x1 = prim->x3 = prim->x0 + *(temp_d++);
-        prim->y2 = prim->y3 = prim->y0 + *(temp_d++);
-        prim->u0 = prim->u2 = *(temp_d++);
-        prim->v0 = prim->v1 = *(temp_d++);
-        prim->u1 = prim->u3 = *(temp_d++);
-        prim->v2 = prim->v3 = *(temp_d++);
-        prim->priority = self->zPriority;
-        prim->drawMode = DRAW_DEFAULT;
-        break;
-    }
-}
+#include "../entity_soul_steal_orb.h"
 
 #include "../entity_enemy_blood.h"
 
@@ -560,4 +454,164 @@ void EntityRoomForeground(Entity* entity) {
     AnimateEntity(obj->unk10, entity);
 }
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_80198BC8);
+// Different from other overlays, but identical to the one in Weapon 21.
+void BottomCornerText(u8* str, u8 lowerLeft) {
+    u8 toPrint[64];
+    Primitive* prim;
+    s32 i;
+    u32 ch;
+    u32 ch2;
+    u8* chIdx = &toPrint;
+
+    s16 textWidth = 0;
+    s32 widthTemp;
+    // serves two purposes, use #define for dual names
+    u16 dualVar = 0;
+#define charcount dualVar
+    for (i = 0; i < 64; i++) {
+        *chIdx++ = 0;
+    }
+
+    chIdx = &toPrint;
+    while (1) {
+        ch = *str++;
+        if (ch == 0xFF) {
+            ch = *str++;
+            if (ch == 0) {
+                break;
+            }
+        }
+        *chIdx = ch;
+        chIdx++;
+        textWidth += 1;
+        if (ch != 0) {
+            charcount += 1;
+        }
+        if (*str == 0xFF) {
+            str++;
+            ch = *str++;
+            ch2 = ch & 0xFF;
+            if (ch2 == 0) {
+                break;
+            }
+            if (ch2 != 0xFF) {
+                *chIdx = ch;
+                charcount += 1;
+            } else {
+                str -= 2;
+            }
+        }
+        chIdx++;
+    }
+
+    g_unkGraphicsStruct.BottomCornerTextPrims =
+        g_api.AllocPrimitives(PRIM_SPRT, charcount + 4);
+    if (g_unkGraphicsStruct.BottomCornerTextPrims == -1) {
+        return;
+    }
+#undef charcount
+
+    prim = &g_PrimBuf[g_unkGraphicsStruct.BottomCornerTextPrims];
+    prim->type = 3;
+    prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->g0 = prim->g1 = prim->g2 =
+        prim->g3 = prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
+    if (lowerLeft) {
+        prim->b0 = prim->b1 = 0xAF;
+    } else {
+        prim->g0 = prim->g1 = 0x5F;
+    }
+#define xpos dualVar
+
+    textWidth <<= 3;
+    if (lowerLeft) {
+        textWidth |= 4;
+        xpos = 7;
+    } else {
+        xpos = 0xD4 - textWidth;
+    }
+    prim->x0 = prim->x2 = xpos;
+    prim->x1 = prim->x3 = xpos + textWidth + 0x20;
+    prim->y0 = prim->y1 = 0xD0;
+    prim->y2 = prim->y3 = 0xDF;
+    prim->priority = 0x1EE;
+    prim->drawMode = 0x11;
+    prim = prim->next;
+
+    prim->tpage = 0x1F;
+    prim->clut = 0x197;
+    prim->x0 = xpos - 6;
+    prim->y0 = 0xCB;
+    prim->u0 = 0x80;
+    prim->v0 = 0;
+    prim->u1 = 0x10;
+    prim->v1 = 0x18;
+    prim->priority = 0x1EF;
+    prim->drawMode = DRAW_DEFAULT;
+    prim = prim->next;
+
+    prim->tpage = 0x1F;
+    prim->clut = 0x197;
+    prim->x0 = xpos + textWidth + 0x16;
+    prim->y0 = 0xCB;
+    prim->u0 = 0xA8;
+    prim->v0 = 0;
+    prim->u1 = 0x10;
+    prim->v1 = 0x18;
+    prim->priority = 0x1EF;
+    prim->drawMode = DRAW_DEFAULT;
+    prim = prim->next;
+
+    prim->type = 4;
+    prim->y0 = prim->y1 = 0xCD;
+    prim->tpage = 0x1F;
+    prim->clut = 0x197;
+    prim->y2 = prim->y3 = 0xE1;
+    prim->u0 = prim->u2 = 0x98;
+    prim->u1 = prim->u3 = 0x9C;
+    prim->v0 = prim->v1 = 2;
+    prim->x0 = prim->x2 = xpos + 0xA;
+    prim->x1 = prim->x3 = xpos + textWidth + 0x18;
+    prim->v2 = prim->v3 = 0x16;
+    prim->priority = 0x1EF;
+    prim->drawMode = DRAW_DEFAULT;
+
+    xpos += 0x10;
+
+    chIdx = &toPrint;
+    for (prim = prim->next; prim != NULL;) {
+        ch = *chIdx++;
+        if (ch != 0) {
+            prim->u0 = (ch & 0xF) * 8;
+            prim->v0 = (ch & 0xF0) >> 1;
+            prim->tpage = 0x1E;
+            prim->clut = 0x196;
+            prim->v1 = 8;
+            prim->u1 = 8;
+            prim->priority = 0x1F0;
+            prim->drawMode = 0;
+            prim->x0 = xpos;
+            prim->y0 = 0xD4;
+            prim = prim->next;
+        }
+        ch = *chIdx++;
+        if (ch != 0) {
+            prim->u0 = (ch & 0xF) * 8;
+            prim->v0 = (ch & 0xF0) >> 1;
+            prim->tpage = 0x1E;
+            prim->clut = 0x196;
+            prim->v1 = 8;
+            prim->u1 = 8;
+            prim->priority = 0x1F0;
+            prim->drawMode = 0;
+            prim->x0 = xpos;
+            prim->y0 = 0xCC;
+            prim = prim->next;
+        }
+        if ((u32)((ch + 0x10) & 0xFF) < 0xDU) {
+            xpos += 0xC;
+        } else {
+            xpos += 8;
+        }
+    }
+    g_unkGraphicsStruct.BottomCornerTextTimer = 0x130;
+}

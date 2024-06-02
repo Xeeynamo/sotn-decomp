@@ -11,7 +11,6 @@ extern u8 g_eBreakableDrawModes[];
 
 void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity);
 void ReplaceBreakableWithItemDrop(Entity*);
-s32 AnimateEntity(const u8 frames[], Entity* entity);
 Entity* AllocEntity(Entity* start, Entity* end);
 
 void EntityBreakable(Entity* entity) {

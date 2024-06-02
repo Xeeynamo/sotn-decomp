@@ -1,5 +1,7 @@
 #include <game.h>
 
+#include "entity_is_near_player.h"
+
 extern u8 g_eRedDoorUV[3][8];
 extern u16 g_eRedDoorTiles[2][8];
 void EntityRedDoor(Entity* self) {
@@ -36,7 +38,7 @@ void EntityRedDoor(Entity* self) {
             return;
         }
         self->flags |= FLAG_HAS_PRIMS;
-        uv = g_eRedDoorUV;
+        uv = (u8*)g_eRedDoorUV;
         prim = &g_PrimBuf[self->primIndex];
         i = 0;
         y = self->posY.i.hi - 0x1F;

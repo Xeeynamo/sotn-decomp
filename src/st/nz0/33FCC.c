@@ -148,7 +148,7 @@ void EntityBossRoomBlock(Entity* self) {
             self->velocityX = FIX(-1);
         }
         MoveEntity();
-        func_801BD9A0(self, 8, 8, 5);
+        GetPlayerCollisionWith(self, 8, 8, 5);
         if (!(g_Timer & 3)) {
             g_api.PlaySfx(0x608);
         }
@@ -159,7 +159,7 @@ void EntityBossRoomBlock(Entity* self) {
         break;
 
     case 3:
-        func_801BD9A0(self, 8, 8, 5);
+        GetPlayerCollisionWith(self, 8, 8, 5);
         if (g_BossFlag & BOSS_FLAG_DOORS_OPEN) {
             self->step++;
         }

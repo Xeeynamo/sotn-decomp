@@ -1,8 +1,4 @@
-#include "common.h"
-
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4100", EntitySoulStealOrb);
-
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4100", EntityEnemyBlood);
+#include "../wrp/wrp.h"
 
 // psp unique?
 u8 func_psp_0923C2F8(u8 arg0) {
@@ -27,10 +23,4 @@ void func_psp_0923C390(s32 arg0, s32 arg1) {
     D_psp_0924BC68 = arg1;
 }
 
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4100", BlitChar);
-
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4100", func_8018CAB0);
-
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4100", func_8018CB34);
-
-INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/4100", CollectHeart);
+INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/blit_char", BlitChar);

@@ -137,7 +137,7 @@ bool func_8015D678(void) {
     if ((subWpnID == 3) && (g_Player.D_80072F00[3] != 0)) {
         return 0;
     }
-    if ((subWpnID == 6) && (D_800973FC != 0)) {
+    if ((subWpnID == 6) && (g_unkGraphicsStruct.D_800973FC != 0)) {
         return 0;
     }
     if (subWpn.blueprintNum != 0) {

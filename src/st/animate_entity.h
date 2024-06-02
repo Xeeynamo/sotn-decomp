@@ -1,11 +1,14 @@
-s32 AnimateEntity(const u8 frames[], Entity* entity) {
-    s32 flag = 0;
-    u16 currentFrameIndex = entity->animFrameIdx * 2;
-    u8* currentFrame = frames + currentFrameIndex;
+u8 AnimateEntity(u8 frames[], Entity* entity) {
+    u16 flag;
+    u16 currentFrameIndex;
+    u8* currentFrame;
 
-    if (entity->animFrameDuration == 0) {
-        if (currentFrame[0] > 0) {
-            flag = 0x80;
+    flag = 0;
+    currentFrameIndex = entity->animFrameIdx * 2;
+    currentFrame = frames + currentFrameIndex;
+
+    if (!entity->animFrameDuration) {
+        if (currentFrame[0]) {
             if (currentFrame[0] == 0xFF) {
                 return 0;
             }
@@ -13,10 +16,11 @@ s32 AnimateEntity(const u8 frames[], Entity* entity) {
             entity->animFrameDuration = *currentFrame++;
             entity->animCurFrame = *currentFrame++;
             entity->animFrameIdx++;
+            flag |= 0x80;
         } else {
-            currentFrame = frames;
             entity->animFrameIdx = 0;
             entity->animFrameDuration = 0;
+            currentFrame = frames;
             entity->animFrameDuration = *currentFrame++;
             entity->animCurFrame = *currentFrame++;
             entity->animFrameIdx++;
@@ -24,9 +28,9 @@ s32 AnimateEntity(const u8 frames[], Entity* entity) {
         }
     }
 
-    entity->animFrameDuration = entity->animFrameDuration - 1;
+    entity->animFrameDuration--;
     entity->animCurFrame = currentFrame[-1];
     flag |= true;
 
-    return (u8)flag;
+    return flag;
 }

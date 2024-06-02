@@ -88,7 +88,6 @@ void DebugInputWait(const char* msg);
 
 int g_Frame = 0;
 void MyDrawSyncCallback(int mode) {
-    DEBUGF("-------------------- frame %d --------------------", g_Frame);
     DEBUGF("state: %d, game step: %d", g_GameState, g_GameStep);
 
     // force loaded map to always be visible

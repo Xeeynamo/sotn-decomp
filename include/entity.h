@@ -4,6 +4,8 @@
 
 #include "common.h"
 
+typedef void (*PfnEntityUpdate)(struct Entity*);
+
 typedef union {
     s32 unk;
     void* ptr;
@@ -121,6 +123,19 @@ typedef struct {
 } ET_EquipItemDrop;
 
 typedef struct {
+    /* 0x7C */ u32 unk[14];
+    /* 0xB4 */ u16 unkB4;
+    /* 0xB6 */ s16 unkB6;
+    /* 0xB8 */ PfnEntityUpdate update;
+} ET_HeartDrop;
+
+typedef struct {
+    /* 0x7C */ u16 timer;
+    /* 0x7E */ u16 size;
+    /* 0x80 */ u32 speed;
+} ET_BloodDroplets;
+
+typedef struct {
     /* 0x7C */ u16 nPrims;
     /* 0x7E */ u16 nDigits;
     /* 0x80 */ u8 digits[4];
@@ -162,7 +177,7 @@ typedef struct {
 } ET_StagePopup;
 
 typedef struct {
-    /* 0x7C */ u8* label;
+    /* 0x7C */ char* label;
     /* 0x80 */ u16 width;
     /* 0x82 */ u16 height;
     /* 0x84 */ s16 unk84;
@@ -196,15 +211,45 @@ typedef struct {
     /* 0x7E */ s16 unk7E;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 unk82;
-    /* 0x84 */ s32 unk84;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 unk86;
     /* 0x88 */ s16 childPalette;
     /* 0x8A */ s16 unk8A;
     /* 0x8C */ struct Entity* parent;
-    /* 0x90 */ s32 unk90;
-    /* 0x94 */ s32 unk94;
+    /* 0x90 */ s16 unk90;
+    /* 0x92 */ s16 unk92;
+    /* 0x94 */ s16 unk94;
+    /* 0x96 */ s16 unk96;
+    /* 0x98 */ s16 unk98;
+    /* 0x9A */ s16 unk9A;
+    /* 0x9C */ s16 unk9C;
+    /* 0x9E */ byte pad[16];
+    /* 0xAE */ s16 unkAE;
+} ET_Shield;
+
+typedef struct {
+    /* 0x7D */ u8 unk7C;
+    /* 0x7D */ u8 unk7D;
+    /* 0x7E */ s16 unk7E;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ s16 childPalette;
+    /* 0x8A */ s16 unk8A;
+    /* 0x8C */ struct Entity* parent;
+    /* 0x90 */ struct Entity* target;
+    /* 0x94 */ s16 unk94;
+    /* 0x96 */ s16 unk96;
     /* 0x98 */ s32 unk98;
     /* 0x9C */ s16 unk9C;
-} ET_Weapon29;
+    /* 0x9E */ s16 unk9E;
+    /* 0xA0 */ s16 unkA0;
+    /* 0xA2 */ s16 unkA2;
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ byte pad[6];
+    /* 0xAE */ s16 unkAE;
+} ET_MedusaShieldLaser;
 
 typedef struct {
     s16 timer;
@@ -229,7 +274,7 @@ typedef struct {
 } ET_GaibonSlogra;
 
 typedef struct {
-    /* 0x7C */ s16 angle;
+    /* 0x7C */ u16 angle;
     /* 0x7E */ u16 unk7E;
     /* 0x80 */ u16 unk80;
     /* 0x82 */ s16 unk82;
@@ -536,6 +581,8 @@ typedef struct {
     Primitive* prim;
     char pad[0x2C];
     u8 unkAC;
+    char pad2[0x8];
+    struct Entity* unkB8;
 } ET_Player;
 
 typedef struct {
@@ -924,6 +971,21 @@ typedef struct {
     s16 unk84;
 } ET_DracFinal;
 
+// To be used for EntityEquipItemDrop and/or EntityPrizeDrop, when they are
+// moved off of Generic.
+typedef struct {
+    byte pad[0x18];
+    s32 unk94;
+} ET_Drop;
+
+typedef struct {
+    /* 0x7C */ byte pad[4];
+    /* 0x80 */ s16 angle;
+    /* 0x82 */ byte pad2[2];
+    /* 0x84 */ u8 switch_control;
+    /* 0x85 */ u8 speed;
+} ET_BigRedFireball;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -949,13 +1011,16 @@ typedef union { // offset=0x7C
     ET_RicRevivalColumn ricColumn;
     ET_GiantSpinningCross giantcross;
     ET_EquipItemDrop equipItemDrop;
+    ET_HeartDrop heartDrop;
+    ET_BloodDroplets bloodDroplets;
     ET_NumericDamage ndmg;
     ET_RelicOrb relicOrb;
     ET_RedDoor door;
     ET_StagePopup stpopup;
     ET_MessageBox messageBox;
     ET_Weapon weapon;
-    ET_Weapon29 weapon29;
+    ET_Shield shield;
+    ET_MedusaShieldLaser medshieldlaser;
     ET_Food food;
     ET_HitByIce hitbyice;
     ET_HitByLightning hitbylightning;
@@ -1012,4 +1077,6 @@ typedef union { // offset=0x7C
     ET_Player player;
     ET_801CC820 et_801CC820;
     ET_801AF774 et_801AF774;
+    ET_Drop drop;
+    ET_BigRedFireball bigredfireball;
 } Ext;

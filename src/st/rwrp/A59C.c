@@ -1,9 +1,12 @@
 #include "rwrp.h"
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", TestCollisions);
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018B6B4);
+#include "../hit_detection.h"
+
+INCLUDE_ASM("st/rwrp/nonmatchings/A59C", EntityDamageDisplay);
 
 #include "../libstage.h"
+
+#include "../entity_is_near_player.h"
 
 INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018C948);
 
@@ -173,7 +176,7 @@ s32 func_8018DF84(s32 arg0, s32 arg1) {
 
 u16 func_8018E0B0(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
-u16 func_8018E0E0(Entity* arg0, Entity* arg1) {
+u16 GetAngleBetweenEntities(Entity* arg0, Entity* arg1) {
     s32 x = arg1->posX.i.hi - arg0->posX.i.hi;
     s32 y = arg1->posY.i.hi - arg0->posY.i.hi;
 
@@ -187,7 +190,7 @@ u16 func_8018E118(s32 arg0, s32 arg1) {
     return ratan2(y, x);
 }
 
-u16 func_8018E160(u16 arg0, s16 arg1, s16 arg2) {
+u16 GetNormalizedAngle(u16 arg0, s16 arg1, s16 arg2) {
     u16 var_v0;
     u16 var_v0_2;
     u16 temp_a2 = arg2 - arg1;
@@ -252,7 +255,7 @@ INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018E3B4);
 
 INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018E4DC);
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", func_8018E634);
+#include "../get_player_collision_with.h"
 
 #include "../replace_breakable_with_item_drop.h"
 
@@ -284,27 +287,7 @@ extern s8 c_HeartPrizes[];
 
 #include "../collect_heart.h"
 
-void CollectGold(u16 goldSize) {
-    s32 *gold, *unk;
-    u16 goldSizeIndex;
-
-    g_api.PlaySfx(NA_SE_PL_COLLECT_GOLD);
-    gold = &g_Status.gold;
-    goldSizeIndex = goldSize - 2;
-    *gold += c_GoldPrizes[goldSizeIndex];
-    if (*gold > MAX_GOLD) {
-        *gold = MAX_GOLD;
-    }
-
-    unk = &g_unkGraphicsStruct.BottomCornerTextTimer;
-    if (*unk) {
-        g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
-        *unk = 0;
-    }
-
-    BottomCornerText(D_80180E08[goldSizeIndex], 1);
-    DestroyEntity(g_CurrentEntity);
-}
+#include "../collect_gold.h"
 
 void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;

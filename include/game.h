@@ -166,6 +166,7 @@ typedef struct Prim {
 #define RENDERFLAGS_NOSHADOW 2
 #define PLAYER_ALUCARD 0
 #define PLAYER_RICHTER 1
+#define PLAYER_MARIA 2
 #define MAX_GOLD 999999
 #define HEART_VESSEL_INCREASE 5
 #define HEART_VESSEL_RICHTER 30
@@ -213,6 +214,19 @@ extern u8 g_BmpCastleMap[0x20000];
 
 #endif
 
+// used with various equipment, enemy resistances, etc
+#define ELEMENT_HIT 0x20
+#define ELEMENT_CUT 0x40
+#define ELEMENT_POISON 0x80
+#define ELEMENT_CURSE 0x100
+#define ELEMENT_STONE 0x200
+#define ELEMENT_WATER 0x400
+#define ELEMENT_DARK 0x800
+#define ELEMENT_HOLY 0x1000
+#define ELEMENT_ICE 0x2000
+#define ELEMENT_THUNDER 0x4000
+#define ELEMENT_FIRE 0x8000
+
 // Flags for entity->drawFlags
 #define FLAG_DRAW_ROTX 0x01
 #define FLAG_DRAW_ROTY 0x02
@@ -226,13 +240,21 @@ extern u8 g_BmpCastleMap[0x20000];
 
 // Flags for entity->flags
 // Signals that the entity should run its death routine
+#define FLAG_UNK_10 0x10
 #define FLAG_DEAD 0x100
+#define FLAG_UNK_200 0x200
+#define FLAG_UNK_400 0x400
+#define FLAG_UNK_800 0x800
+#define FLAG_UNK_1000 0x1000
 #define FLAG_UNK_2000 0x2000
+#define FLAG_UNK_4000 0x4000
+#define FLAG_UNK_8000 0x8000
 #define FLAG_UNK_10000 0x10000
 #define FLAG_UNK_20000 0x20000 // func_8011A9D8 will destroy if not set
 #define FLAG_UNK_40000 0x40000
 #define FLAG_UNK_80000 0x80000
 #define FLAG_UNK_100000 0x100000
+#define FLAG_UNK_400000 0x400000
 #define FLAG_UNK_800000 0x800000
 #define FLAG_UNK_00200000 0x00200000
 
@@ -257,11 +279,17 @@ extern u8 g_BmpCastleMap[0x20000];
 #define PLAYER_STATUS_STONE 0x00000080
 #define PLAYER_STATUS_POISON 0x00004000
 #define PLAYER_STATUS_CURSE 0x00008000
+#define PLAYER_STATUS_UNK10000 0x10000 // possibly freezing?
 #define PLAYER_STATUS_AXEARMOR 0x01000000
+#define PLAYER_STATUS_ABSORB_BLOOD 0x02000000
 
 #define ANIMSET_OVL_FLAG 0x8000
 #define ANIMSET_DRA(x) (x)
 #define ANIMSET_OVL(x) ((x) | ANIMSET_OVL_FLAG)
+
+#define PAL_OVL_FLAG 0x8000
+#define PAL_DRA(x) (x)
+#define PAL_OVL(x) ((x) | ANIMSET_OVL_FLAG)
 
 #ifndef SOTN_STR
 // Decorator to re-encode strings with tools/sotn_str/sotn_str.py when building
@@ -495,8 +523,6 @@ typedef enum {
 
 struct Entity;
 
-typedef void (*PfnEntityUpdate)(struct Entity*);
-
 #include "unkstruct.h"
 
 typedef struct {
@@ -701,8 +727,8 @@ typedef struct Entity {
     /* 0x56 */ s16 animCurFrame;
     /* 0x58 */ s16 stunFrames;
     /* 0x5A */ u16 unk5A;
-    /* 0x5C */ s32 unk5C;
-    /* 0x60 */ s32 unk60;
+    /* 0x5C */ struct Entity* unk5C;
+    /* 0x60 */ struct Entity* unk60;
     /* 0x64 */ s32 primIndex;
     /* 0x68 */ u16 unk68;
     /* 0x6A */ u16 hitEffect;
@@ -720,7 +746,7 @@ typedef struct {
     /* 0x08 */ u16 drawFlags;
     /* 0x0A */ u16 drawMode;
     /* 0x0C */ u32 unkC;
-    /* 0x10 */ const u8* unk10;
+    /* 0x10 */ u8* unk10;
 } ObjInit2; // size = 0x14
 
 typedef struct GpuBuffer { // also called 'DB' in the PSY-Q samples
@@ -927,8 +953,8 @@ typedef struct {
     /* 80097BD8 */ s32 statsTotal[4];
     /* 80097BE8 */ u32 level;
     /* 80097BEC */ u32 exp;
-    /* 80097BF0 */ u32 gold;
-    /* 80097BF4 */ u32 killCount;
+    /* 80097BF0 */ s32 gold;
+    /* 80097BF4 */ s32 killCount;
     /* 80097BF8 */ u32 D_80097BF8;
     /* 80097BFC */ u32 subWeapon;
     /* 80097C00 */ u32 equipment[7];
@@ -1073,7 +1099,7 @@ typedef struct {
 
 typedef struct {
     /* 8003C774 */ void (*Update)(void);
-    /* 8003C778 */ void (*TestCollisions)(void);
+    /* 8003C778 */ void (*HitDetection)(void);
     /* 8003C77C */ void (*unk08)(void);
     /* 8003C780 */ void (*InitRoomEntities)(s32 layoutId);
     /* 8003C784 */ RoomHeader* rooms;
@@ -1141,7 +1167,7 @@ typedef struct XaMusicConfig {
 typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ s16 hitPoints;
-    /* 0x06 */ u16 attack;
+    /* 0x06 */ s16 attack;
     /* 0x08 */ u16 attackElement;
     /* 0x0A */ s16 defense;
     /* 0x0C */ u16 hitboxState;
@@ -1149,10 +1175,10 @@ typedef struct {
     /* 0x10 */ u16 strengths;
     /* 0x12 */ u16 immunes;
     /* 0x14 */ u16 absorbs;
-    /* 0x16 */ s16 level;
-    /* 0x18 */ s16 exp;
-    /* 0x1A */ s16 rareItemId;
-    /* 0x1C */ s16 uncommonItemId;
+    /* 0x16 */ u16 level;
+    /* 0x18 */ u16 exp;
+    /* 0x1A */ u16 rareItemId;
+    /* 0x1C */ u16 uncommonItemId;
     /* 0x1E */ u16 rareItemDropRate;
     /* 0x20 */ u16 uncommonItemDropRate;
     /* 0x22 */ u8 hitboxWidth;
@@ -1319,7 +1345,10 @@ typedef struct {
     /* 8003C804 */ void (*func_80118894)(Entity*);
     /* 8003C808 */ EnemyDef* enemyDefs;
     /* 8003C80C */ Entity* (*func_80118970)(void);
-    /* 8003C810 */ s32 (*func_80118B18)(Entity* ent1, Entity* ent2, s32 arg2);
+    // Note type of facingLeft is different from in the C for this function.
+    // Needs s16 to match the code for this, but callers treat it as s32.
+    /* 8003C810 */ s16 (*func_80118B18)(
+        Entity* ent1, Entity* ent2, s32 facingLeft);
     /* 8003C814 */ s32 (*UpdateUnarmedAnim)(s8* frameProps, u16** frames);
     /* 8003C818 */ void (*func_8010DBFC)(s8*, s32*);
     /* 8003C81C */ void (*func_80118C28)(s32 arg0);
@@ -1524,7 +1553,14 @@ typedef struct {
     /* 80072F34 */ u32 unk14;
     /* 80072F38 */ s32 unk18;
     /* 80072F3C */ s32 unk1C;
-    /* 80072F40 */ s32 unk20[8];
+    /* 80072F40 */ s32 unk20;
+    /* 80072F44 */ s32 unk24;
+    /* 80072F48 */ s32 unk28;
+    /* 80072F4C */ s32 unk2C;
+    /* 80072F50 */ s32 unk30;
+    /* 80072F54 */ s32 unk34;
+    /* 80072F58 */ s32 unk38;
+    /* 80072F5C */ s32 unk3C;
     /* 80072F60 */ u16 unk40;
     /* 80072F62 */ u16 pl_high_jump_timer;
     /* 80072F64 */ u16 unk44;
@@ -1596,7 +1632,7 @@ extern s32 g_IsTimeAttackUnlocked;
 // prevents the player to enter in the warp room. When g_CastleFlags[0x32] the
 // column will disappear.
 extern u8 g_CastleFlags[0x300]; // starts at 0x8003BDEC
-extern u8 D_8003BEEC[];         // part of g_CastleFlags or a second array?
+extern u8 D_8003BEEC[];         // g_CastleFlags[x + 0x100]
 extern u8 D_8003BF9C[];         // not sure if it is part of D_8003BEEC?
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
@@ -1656,6 +1692,12 @@ extern u32 D_80070BCC;         // part of g_Clut
 
 extern PlayerState g_Player;
 extern u16 g_Player_D_80072EF6; // TODO merge with g_Player
+// the following are most likely part of g_Player
+extern Entity* D_psp_091CF3A0;
+extern s32 D_psp_091CF3A4; // maybe not s32 but a pointer?
+extern void (*D_psp_091CF3A8)(Entity*);
+extern s32 D_psp_091CF3AC; // maybe not s32 but a pointer?
+extern u16 D_psp_091CF3DC;
 
 extern GfxLoad g_GfxLoad[0x10];
 extern u32 g_GameStep;
@@ -1683,8 +1725,6 @@ extern s32 D_80096ED8[];
 extern s8 D_80097B98;
 extern s8 D_80097B99;
 extern s32 D_800973EC; // flag to check if the menu is shown
-extern s32 D_800973F8;
-extern s32 D_800973FC;
 extern unkGraphicsStruct g_unkGraphicsStruct;
 extern s32 D_80097448[]; // underwater physics. 7448 and 744C. Could be struct.
 extern s32 D_80097450;

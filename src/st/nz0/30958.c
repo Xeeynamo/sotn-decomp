@@ -426,7 +426,7 @@ void func_801B19A0(Entity* self) {
 }
 
 void func_801B1C18(Entity* self) {
-    s32 temp_s1 = func_801BD9A0(self, 8, 8, 4);
+    s32 temp_s1 = GetPlayerCollisionWith(self, 8, 8, 4);
     s16 primIndex;
     POLY_GT4* poly;
     Entity* player;
@@ -564,7 +564,7 @@ void func_801B1E54(Entity* self, s16 primIndex) {
 void EntityMoveableBox(Entity* self) {
     Entity* player;
     POLY_GT4* poly;
-    s32 temp_s1 = func_801BD9A0(self, 0x10, 0x10, 5);
+    s32 temp_s1 = GetPlayerCollisionWith(self, 0x10, 0x10, 5);
     s32 var_s1 = temp_s1;
     s16 primIndex;
     s32 temp_v0_2;
@@ -952,7 +952,7 @@ void func_801B2AD8(Entity* self) {
 }
 
 void EntityElevator2(Entity* self) {
-    s32 temp = func_801BD9A0(self, 16, 5, 4);
+    s32 temp = GetPlayerCollisionWith(self, 16, 5, 4);
     volatile int pad[3];
     Primitive* prim;
     s16 primIndex;
@@ -1037,7 +1037,7 @@ void EntityElevator2(Entity* self) {
 }
 
 void func_801B2FD8(Entity* self) {
-    s32 temp = func_801BD9A0(self, 8, 8, 4);
+    s32 temp = GetPlayerCollisionWith(self, 8, 8, 4);
     Primitive* prim;
     Entity* player;
     s16 primIndex;

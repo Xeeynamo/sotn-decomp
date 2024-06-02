@@ -1,35 +1,28 @@
-void EntityIntenseExplosion(Entity* entity) {
-    u32 temp_v0;
-
-    if (entity->step == 0) {
+void EntityIntenseExplosion(Entity* self) {
+    if (!self->step) {
         InitializeEntity(g_InitializeEntityData0);
-        entity->palette = 0x8170;
-        entity->animSet = ANIMSET_DRA(5);
-        entity->animCurFrame = 1;
-        entity->drawMode = 0x30;
-
-        if (entity->params & 0xF0) {
-            entity->palette = 0x8195;
-            entity->drawMode = DRAW_TPAGE;
+        self->palette = PAL_OVL(0x170);
+        self->animSet = ANIMSET_DRA(5);
+        self->animCurFrame = 1;
+        self->drawMode = 0x30;
+        if (self->params & 0xF0) {
+            self->palette = PAL_OVL(0x195);
+            self->drawMode = DRAW_TPAGE;
         }
 
-        temp_v0 = entity->params & 0xFF00;
-        if (temp_v0 != 0) {
-            entity->zPriority = temp_v0 >> 8;
+        if (self->params & 0xFF00) {
+            self->zPriority = (self->params & 0xFF00) >> 8;
+        }
+        self->zPriority += 8;
+    } else {
+        self->animFrameDuration++;
+        self->posY.val -= FIX(0.25);
+        if ((self->animFrameDuration % 2) == 0) {
+            self->animCurFrame++;
         }
 
-        entity->zPriority += 8;
-        return;
-    }
-
-    entity->animFrameDuration++;
-    entity->posY.val -= FIX(0.25);
-
-    if (!(entity->animFrameDuration & 1)) {
-        entity->animCurFrame++;
-    }
-
-    if (entity->animFrameDuration >= 0x25) {
-        DestroyEntity(entity);
+        if (self->animFrameDuration > 36) {
+            DestroyEntity(self);
+        }
     }
 }

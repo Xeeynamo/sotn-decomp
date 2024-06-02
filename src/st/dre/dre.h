@@ -21,7 +21,8 @@ typedef enum {
     /* 0x0E */ E_SAVE_GAME_POPUP,
     /* 0x0F */ E_DUMMY_0F,
     /* 0x10 */ E_DUMMY_10,
-    /* 0x15 */ E_ID_15 = 0x15,
+    /* 0x15 */ E_ID_14 = 0x14,
+    /* 0x15 */ E_ID_15,
     /* 0x1A */ E_SUCCUBUS_PETAL = 0x1A,
     /* 0x1B */ E_SUCCUBUS_WING_OVERLAY,
     /* 0x1C */ E_SUCCUBUS_CLONE,
@@ -45,11 +46,8 @@ void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity);
 Entity* AllocEntity(Entity*, Entity*);
 void func_8019A78C(void);
 Entity* func_8019AC18(Entity*, Entity*);
-void func_8019E5E0(Entity* entity);
+void EntityUnkId14(Entity* entity);
 void EntityUnkId15(Entity* entity);
-
-extern LayoutEntity* g_pStObjLayoutHorizontal[];
-extern LayoutEntity* g_pStObjLayoutVertical[];
 
 /* *** Initializers *** */
 extern u16 g_InitializeData0[];
@@ -116,27 +114,17 @@ extern u32 D_801812F4[];
 extern s8 D_801816C4; // Succubus facing assigned to it
 extern u8 D_80181338[];
 extern u16 D_801811A4[];
-extern u32 D_8018130C[];
-extern u8 D_80181324[];
-extern u16 D_80181328[];
 extern u16 D_801810B0[];
 extern u16 D_801810E0[];
-extern u8* D_801810F4[];
-extern u16 D_801811D8[];
-extern s32 c_GoldPrizes[];
 
 // *** EntitySoulStealOrb properties START ***
 
-extern u16 D_8018138C[]; // NOTE(sestren): Random angle offsets?
-extern u16 D_8018139C[]; // NOTE(sestren): Animation frame properties?
-extern u8 D_801813FC;
+extern u16 g_ESoulStealOrbAngles[];
+extern s16 g_ESoulStealOrbSprt[];
+extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
 
-extern LayoutEntity* g_LayoutObjHorizontal;
-extern LayoutEntity* g_LayoutObjVertical;
-extern u8 g_LayoutObjPosHorizontal;
-extern u8 g_LayoutObjPosVertical;
 extern s32 D_801A3ED4;
 extern s32 D_801A3ED8;
 extern s16 D_801A3EDE;

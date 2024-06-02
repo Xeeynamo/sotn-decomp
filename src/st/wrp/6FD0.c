@@ -189,7 +189,7 @@ LayoutEntity* g_pStObjLayoutVertical[] = {
 void func_80186FD0(Entity*);
 void func_801870B0(Entity*);
 void func_8018F510(Entity*);
-void func_8018F838(Entity*);
+void EntityUnkId14(Entity*);
 void EntityUnkId15(Entity*);
 void EntityWarpRoom(Entity*);
 void EntityWarpSmallRocks(Entity*);
@@ -214,7 +214,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     /* 424 */ (PfnEntityUpdate)func_80186FD0, // unused
     /* 428 */ (PfnEntityUpdate)func_801870B0, // unused? looks debugging stuff
     /* 42C */ (PfnEntityUpdate)func_8018F510,
-    /* 430 */ (PfnEntityUpdate)func_8018F838,
+    /* 430 */ (PfnEntityUpdate)EntityUnkId14,
     /* 434 */ (PfnEntityUpdate)EntityUnkId15,
     /* 438 */ (PfnEntityUpdate)EntityWarpRoom,
     /* 43C */ (PfnEntityUpdate)EntityWarpSmallRocks,
@@ -226,7 +226,7 @@ u16 g_eBreakableInit[] = {
 u16 g_InitializeData0[] = {
     0x0003, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000,
 };
-u16 D_80180458[] = {
+u16 g_InitializeEntityData0[] = {
     0x0003, 0x0000, 0x0000, 0x0000, 0x0002, 0x0000,
     0x0000, 0x0000, 0x0000, 0x0000, 0x0004, 0x0000,
 };
@@ -481,7 +481,7 @@ u16 UNK_Invincibility0[] = {
     /* 6BA */ 0x8165,
 };
 
-u16 D_801806BC[] = {
+u16 g_testCollEnemyLookup[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x001E, 0x0000, 0x0000,
     0x002B, 0x0000, 0x0010, 0x0000, 0x000D, 0x0068, 0x0068, 0x0016, 0x0000,
     0x0000, 0x0000, 0x003E, 0x0000, 0x0023, 0x0050, 0x0000, 0x0000, 0x0000,
@@ -529,14 +529,14 @@ u16 D_801806BC[] = {
     0x008F, 0x0000, 0x0000, 0x0000,
 };
 
-u8 D_801809DC[] = {
+u8 g_testCollLuckCutoff[] = {
     /* 9DC */ 0x00,
     /* 9DD */ 0x40,
     /* 9DE */ 0x20,
     /* 9DF */ 0x10,
 };
 
-u8 D_801809E0[] = {
+u8 g_testColluCoords[] = {
     /* 9E0 */ 0x80,
     /* 9E1 */ 0x80,
     /* 9E2 */ 0xA0,
@@ -547,7 +547,7 @@ u8 D_801809E0[] = {
     /* 9E7 */ 0x00,
 };
 
-u8 D_801809E8[] = {
+u8 g_testCollvCoords[] = {
     /* 9E8 */ 0x60,
     /* 9E9 */ 0x60,
     /* 9EA */ 0x60,
@@ -558,7 +558,7 @@ u8 D_801809E8[] = {
     /* 9EF */ 0x00,
 };
 
-u16 D_801809F0[] = {
+u16 g_testCollElementLookup[] = {
     /* 9F0 */ 0x8000,
     /* 9F2 */ 0x4000,
     /* 9F4 */ 0x2000,
@@ -571,7 +571,7 @@ u16 D_801809F0[] = {
     /* A02 */ 0x0040,
 };
 
-u8 D_80180A04[] = {
+u8 g_testColliFrames[] = {
     /* A04 */ 0x02,
     /* A05 */ 0x04,
     /* A06 */ 0x03,
@@ -586,7 +586,7 @@ u8 D_80180A04[] = {
     /* A0F */ 0x00,
 };
 
-u16 D_80180A10[] = {
+u16 g_testCollPrizeTable[] = {
     /* A10 */ 0x0003,
     /* A12 */ 0x0000,
     /* A14 */ 0x0002,
@@ -621,7 +621,7 @@ u16 D_80180A10[] = {
     /* A4E */ 0x00C6,
 };
 
-u16 D_80180A50[] = {
+u16 g_testCollRandTable[] = {
     /* A50 */ 0x0C00,
     /* A52 */ 0x0168,
     /* A54 */ 0x0F00,
@@ -937,7 +937,7 @@ extern u8 D_80186EF0[];
 extern u8 D_80186EF8[];
 extern u8 D_80186F00[];
 extern u8 D_80186F08[];
-u8* D_80180E08[] = {
+u8* g_goldCollectTexts[] = {
     // u8 is an assumption
     /* E08 */ D_80186F08,
     /* E0C */ D_80186F00,
@@ -951,7 +951,7 @@ u8* D_80180E08[] = {
     /* E2C */ D_80186EC0,
 };
 
-s32 c_GoldPrizes[] = {
+u32 c_GoldPrizes[] = {
     1, 25, 50, 100, 250, 400, 700, 1000, 2000, 5000,
 };
 
@@ -1003,7 +1003,7 @@ u8 D_80180ED8[] = {
     0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x02, 0x05,
     0x02, 0x06, 0x02, 0x07, 0x02, 0x08, 0x00, 0x00, 0x00, 0x00,
 };
-u8 D_80180EEC[] = {
+u8 g_bigRedFireballAnim[] = {
     0x01, 0x09, 0x02, 0x0A, 0x02, 0x0B, 0x02, 0x0C, 0x02, 0x0D,
     0x02, 0x0E, 0x02, 0x0F, 0x02, 0x10, 0x02, 0x11, 0x02, 0x12,
     0x03, 0x13, 0x04, 0x14, 0x00, 0x00, 0x00, 0x00,
@@ -1025,9 +1025,8 @@ u8 D_80180F38[] = {
 u8 D_80180F6C[] = {0x01, 0x43, 0x00, 0x00};
 
 u8* D_80180F70[] = {
-    D_80180ED8, D_80180EEC, D_80180F08, D_80180F38, D_80180F6C,
+    D_80180ED8, g_bigRedFireballAnim, D_80180F08, D_80180F38, D_80180F6C,
 };
 
-// *** bss? section start ***
+// BSS
 extern u16 g_ItemIconSlots[];
-// *** bss? section end ***

@@ -436,7 +436,6 @@ extern s32 D_800B0920;
 extern u8 D_800B0F94[][5];
 extern SVECTOR* D_800B0CB4[][4];
 extern s16 g_CdVolumeTable[];
-extern s16 g_VolumeTable[];
 extern struct SeqData g_SeqInfo[];
 extern struct XaMusicConfig g_XaMusicConfigs[563];
 extern s32 g_DebugEnabled;

@@ -4,11 +4,16 @@
  * 1 = Player is on the left side
  * 2 = Player is above
  */
-s32 GetSideToPlayer(void) {
-    s16 var_a0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
+u8 GetSideToPlayer() {
+    u8 side = 0;
+    Entity* player = &PLAYER;
 
-    if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
-        var_a0 |= 2;
+    if (g_CurrentEntity->posX.i.hi > player->posX.i.hi) {
+        side |= 1;
     }
-    return var_a0;
+
+    if (g_CurrentEntity->posY.i.hi > player->posY.i.hi) {
+        side |= 2;
+    }
+    return side;
 }

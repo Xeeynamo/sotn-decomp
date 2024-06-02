@@ -179,18 +179,22 @@ typedef struct {
 } unk_800B08CC; // size = 0xC
 
 typedef struct {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ s32 unk4;
-    /* 0x08 */ Multi g_zEntityCenter;
-    /* 0x0C */ Multi unkC; // multi for dre/func_801961DC
-    /* 0x10 */ s32 BottomCornerTextTimer;
-    /* 0x14 */ s32 BottomCornerTextPrims;
-    /* 0x18 */ s32 unk18;
-    /* 0x1C */ s32 unk1C;
-    /* 0x20 */ s32 unk20;
-    /* 0x24 */ s32 unk24;
-    /* 0x28 */ s32 D_80097428[8]; // size must be 8 for the loop in
-                                  // func_800F298C
+    /* 0x800973F8 */ s32 D_800973F8;
+    /* 0x800973FC */ s32 D_800973FC;
+    /* 0x80097400 */ s32 unk0;
+    /* 0x80097404 */ s32 unk4;
+    /* 0x80097408 */ Multi g_zEntityCenter;
+    /* 0x8009740C */ Multi unkC; // multi for dre/func_801961DC
+    /* 0x80097410 */ s32 BottomCornerTextTimer;
+    /* 0x80097414 */ s32 BottomCornerTextPrims;
+    /* 0x80097418 */ s32 unk18;
+    /* 0x8009741C */ s32 unk1C;
+    /* 0x80097420 */ s32 unk20;
+    /* 0x80097424 */ s32 unk24;
+
+    // size must be 8 for the loop in func_800F298C, while
+    // PreventEntityFromRespawning suggests it has a size of 32
+    /* 0x80097428 */ s32 D_80097428[8];
 } unkGraphicsStruct;
 
 typedef struct {

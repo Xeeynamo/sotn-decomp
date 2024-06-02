@@ -18,9 +18,9 @@ void ReplaceBreakableWithItemDrop(Entity* self) {
         self->animFrameDuration = 0;
         self->animFrameIdx = 0;
     } else {
-        params -= 0x80;
         self->entityId = E_EQUIP_ITEM_DROP;
         self->pfnUpdate = (PfnEntityUpdate)EntityEquipItemDrop;
+        params -= 0x80;
     }
 
     self->params = params;

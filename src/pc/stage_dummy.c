@@ -7,7 +7,7 @@
 #include "sfx.h"
 
 static void Update(void);
-static void TestCollisions(void);
+static void HitDetection(void);
 static void func_8018A7AC(void);
 static void InitRoomEntities(s32 objLayoutId);
 
@@ -20,7 +20,7 @@ static void UpdateStageEntities(void);
 
 static Overlay g_StageDummy = {
     Update,
-    TestCollisions,
+    HitDetection,
     func_8018A7AC,
     InitRoomEntities,
     g_Rooms,
@@ -233,7 +233,7 @@ void InitStageDummy(Overlay* o) {
 
 static void Update(void) { NOT_IMPLEMENTED; }
 
-static void TestCollisions(void) { NOT_IMPLEMENTED; }
+static void HitDetection(void) { NOT_IMPLEMENTED; }
 
 static void func_8018A7AC(void) { NOT_IMPLEMENTED; }
 

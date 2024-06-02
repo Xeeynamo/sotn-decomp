@@ -1,20 +1,15 @@
 #include "game.h"
 
-void BlinkItem(Entity* self, s32 renderFlags) {
-    Primitive* prim = &g_PrimBuf[self->primIndex];
-    s16 right, left, bottom, top;
+void BlinkItem(Entity* self, u16 renderFlags) {
+    Primitive* prim;
+    s32 temp;
+    prim = &g_PrimBuf[self->primIndex];
 
-    left = self->posX.i.hi - 7;
-    right = self->posX.i.hi + 7;
+    prim->x0 = prim->x2 = self->posX.i.hi - 7;
+    prim->x1 = prim->x3 = prim->x0 + 14;
 
-    prim->x0 = prim->x2 = left;
-    prim->x1 = prim->x3 = right;
-
-    top = self->posY.i.hi - 7;
-    bottom = self->posY.i.hi + 7;
-
-    prim->y0 = prim->y1 = top;
-    prim->y2 = prim->y3 = bottom;
+    prim->y0 = prim->y1 = self->posY.i.hi - 7;
+    prim->y2 = prim->y3 = prim->y0 + 14;
 
     if (renderFlags & RENDERFLAGS_NOSHADOW) {
         prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =

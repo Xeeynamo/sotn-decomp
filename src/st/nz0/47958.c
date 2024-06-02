@@ -52,7 +52,7 @@ void EntityBloodSkeleton(Entity* self) {
             self->facingLeft = GetSideToPlayer() % 2 == 0;
         }
 
-        if ((u8)func_801C070C(&D_801826AC, self->facingLeft) != 2) {
+        if ((u8)CheckColliderOffsets(&D_801826AC, self->facingLeft) != 2) {
             self->facingLeft ^= 1;
         }
         break;

@@ -88,7 +88,7 @@ void EntityElevator(Entity* self) {
     if (g_Player.unk0C & 3) {
         temp = 0;
     } else {
-        temp = func_801BD9A0(self, 16, 5, 4);
+        temp = GetPlayerCollisionWith(self, 16, 5, 4);
     }
 
     //! FAKE:

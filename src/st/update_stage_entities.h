@@ -1,7 +1,10 @@
 #include <stage.h>
 
+extern u16 UNK_Invincibility0[];
 void UpdateStageEntities(void) {
     Entity* entity;
+    s16 iFramePalette;
+
     for (entity = &g_Entities[STAGE_ENTITY_START];
          entity < &g_Entities[TOTAL_ENTITY_COUNT]; entity++) {
         if (!entity->pfnUpdate)
@@ -11,11 +14,10 @@ void UpdateStageEntities(void) {
             if (!(entity->flags & FLAG_UNK_10000))
                 continue;
             if (entity->flags & 0xF) {
-                entity->palette =
-                    UNK_Invincibility0[entity->nFramesInvincibility << 1 |
-                                       LOH(entity->flags) & 1];
-                entity->flags--;
-                if ((entity->flags & 0xF) == 0) {
+                iFramePalette = entity->nFramesInvincibility << 1;
+                iFramePalette += entity->flags & 1;
+                entity->palette = UNK_Invincibility0[iFramePalette];
+                if ((--entity->flags & 0xF) == 0) {
                     entity->palette = entity->hitEffect;
                     entity->hitEffect = 0;
                 }

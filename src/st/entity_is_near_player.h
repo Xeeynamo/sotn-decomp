@@ -1,13 +1,20 @@
 bool EntityIsNearPlayer(Entity* self) {
-    s16 posX = PLAYER.posX.i.hi - self->posX.i.hi;
-    s16 posY;
+    s16 distanceX;
+    s16 diffX;
+    s16 distanceY;
+    s16 diffY;
 
-    posX = abs(posX);
-
-    if (posX < 17) {
-        posY = PLAYER.posY.i.hi - self->posY.i.hi;
-        posY = abs(posY);
-        return posY < 33;
+    diffX = PLAYER.posX.i.hi - self->posX.i.hi;
+    distanceX = abs(diffX);
+    if (distanceX > 16) {
+        return false;
     }
-    return 0;
+
+    diffY = PLAYER.posY.i.hi - self->posY.i.hi;
+    distanceY = abs(diffY);
+    if (distanceY > 32) {
+        return false;
+    }
+
+    return true;
 }

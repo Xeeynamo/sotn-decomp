@@ -86,7 +86,7 @@ typedef enum EntityIDs {
 
 extern void CreateEntityFromCurrentEntity(u16, Entity*);
 extern void ReplaceBreakableWithItemDrop(Entity*);
-extern s32 func_801C5D18(Entity* entity, s32 arg1, s32 arg2, s32 arg3);
+extern s32 GetPlayerCollisionWith(Entity* entity, u16 w, u16 h, u16 flags);
 extern Primitive* FindFirstUnkPrim(Primitive* poly);
 
 extern u16 g_InitializeData0[];
@@ -180,11 +180,9 @@ extern u8 D_80181B4C[];
 extern Unkstruct_80180FE0 D_80181C5C[];
 extern u16 D_80181C8C[];
 extern s16 D_801820C4[];
-extern s16 D_80182618[];
 extern s16 D_801832D8[];
 extern u8 D_801832E8[];
 extern u16 D_801823F4[];
-extern u8* D_80182438[];
 extern u16 D_80182424[];
 extern u8* D_80182488[];
 extern u16 D_801824E8[];
@@ -192,13 +190,9 @@ extern s8 c_HeartPrizes[];
 extern s32 D_801824F4[];
 extern u8* D_801825A0[];
 extern u16 D_80182628[];
-extern s32 D_80182650[];
-extern u8 D_80182668[];
-extern u16 D_8018266C[];
 extern s32 D_80182638[];
 extern u8 D_8018267C[];
 extern ObjInit2 D_80182764[];
-extern s32 c_GoldPrizes[];
 extern u8 D_8018383C[];
 extern s32 D_801838F4[];
 extern s16 D_80183858[];
@@ -252,9 +246,9 @@ extern PfnEntityUpdate PfnEntityUpdates[];
 
 // *** EntitySoulStealOrb properties START ***
 
-extern u16 D_801826D0[]; // NOTE(sestren): Random angle offsets?
-extern u16 D_801826E0[]; // NOTE(sestren): Animation frame properties?
-extern u16 D_80182740[];
+extern u16 g_ESoulStealOrbAngles[];
+extern s16 g_ESoulStealOrbSprt[];
+extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
 

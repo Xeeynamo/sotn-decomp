@@ -40,10 +40,10 @@ void DestroyEntity(Entity* item);
 void func_8019B858(void);
 void func_801BDD9C(void);
 s32 func_801BD720(u16* hitSensors, s16 sensorCount);
-s32 func_801BD9A0(Entity* entity, s32 arg1, s32 arg2, s32 arg3);
+s32 GetPlayerCollisionWith(Entity* entity, u16 w, u16 h, u16 flags);
 void EntityExplosion(Entity*);
 void func_801C33D8(const u32*, s32);
-void func_801C0B24(Entity* entity);
+void EntityUnkId14(Entity* entity);
 void EntityUnkId15(Entity* entity);
 void func_801C4CC0(void);
 
@@ -188,14 +188,7 @@ extern u16 UNK_Invincibility0[];
 extern s16 D_80181978[];
 extern u16 D_80181D9C[];
 extern s32 D_80181DA8[];
-extern u8 D_80181DD0[];
-extern u8 D_80181DD0[];
 extern const u8* D_80181E54[];
-extern u16 D_80181ECC[];
-extern u8 D_80181F1C[];
-extern s32 D_80181F04[];
-extern u16 D_80181F20[];
-extern s16* D_80181F28;
 extern s32* D_80180EB8;
 extern s32 D_80180ED0[];
 extern s16 D_80181EDC[];
@@ -275,8 +268,6 @@ extern u16 D_80181CD8[];
 extern u8* D_80181D3C[];
 extern u16 D_80180C94[];
 extern u16 D_80182424[];
-extern u32* D_80181CEC[];
-extern s32 c_GoldPrizes[];
 extern u16 D_80180CA0[];
 extern u32 D_80182488[];
 extern u16 D_80180C58[];
@@ -368,9 +359,9 @@ extern u16 D_801CB736[];
 
 // *** EntitySoulStealOrb properties START ***
 
-extern u16 D_80181F80[]; // NOTE(sestren): Random angle offsets?
-extern u16 D_80181F90[]; // NOTE(sestren): Animation frame properties?
-extern u8 D_80181FF0;
+extern u16 g_ESoulStealOrbAngles[];
+extern s16 g_ESoulStealOrbSprt[];
+extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
 

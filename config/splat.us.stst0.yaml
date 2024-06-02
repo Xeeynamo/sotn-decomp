@@ -61,7 +61,7 @@ segments:
       - [0x27C6C, .rodata, 31CA0] # EntityRedDoor
       - [0x27C84, rodata]
       - [0x27C8C, .rodata, 36358]
-      - [0x27CAC, rodata]
+      - [0x27CAC, .rodata, 36358] # EntityEquipItemDrop
       - [0x27CC4, rodata]
       - [0x27D64, c]
       - [0x28BF8, c] # Dracula Cutscene
