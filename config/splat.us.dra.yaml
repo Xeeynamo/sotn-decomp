@@ -132,7 +132,6 @@ segments:
       - [0x2F324, .data, d_2F324]
       - [0x388D4, raw, g_PalEquipIcon]
       - [0x3B0D4, .data, d_3B0D4]
-      - [0x3B0F4, data]
       - [0x3B3B0, .data, d_3B3B0]
       - [0x3B3B4, .rodata, 42398] # func_800E2398
       # - [0x3B3B8, .rodata, 42398] # func_800E249C
