@@ -152,25 +152,7 @@ s16 D_800AC998[] = {
     0x0300, 0x0320, 0x0300, 0x0320, 0x0340, 0x0360, 0x0340, 0x0360,
     0x0380, 0x03A0, 0x0380, 0x03A0, 0x03C0, 0x03E0, 0x03C0, 0x03E0,
 };
-s32 D_800ACDF8;
-s32 D_800ACDFC;
-s32 D_800ACE00[8];
-u16 D_800ACE20[18]; // size guessed up to next symbol
-s32 D_800ACE44;
-s32 D_800ACE48[12]; // size guessed
 s16 D_800ACF84[8];
-RECT D_800ACE60;
-s16 D_800ACE68[] = {0, 0, 0, 0, 0, 0, 0, 0};
-s16 D_800ACE70[] = {0, 0, 0, 0, 0, 0, 0, 0};
-s16 D_800ACE78[] = {0, 0, 0, 0, 0, 0, 0, 0};
-s16 D_800ACE98[] = {0, 0, 0, 0, 0, 0, 0, 0};
-s16 D_800ACEA8[] = {0, 0, 0, 0, 0, 0, 0, 0};
-s16 D_800ACEB0[] = {0, 0, 0, 0, 0, 0, 0, 0};
-s16 D_800ACE88[] = {0, 0, 0, 0, 0, 0, 0, 0};
-s16 D_800ACE90[] = {0, 0, 0, 0, 0, 0, 0, 0};
-Point16 D_800ACEC0[16];
-Point16 D_800ACED0[16];
-Point16 D_800ACEE0[16] = {0};
 u8 D_800ACF4C[0x200];                 // random size just to play safe
 u8 D_800ACF54[0x200];                 // random size just to play safe
 s32 D_800ACF74;                       // These two might...

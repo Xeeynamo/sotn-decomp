@@ -97,7 +97,7 @@ segments:
       - [0xC910, data] # exp table and other stuff
       - [0xC958, .data, cd]
       - [0xCD80, data]
-      - [0xCEB0, data]
+      - [0xCDF8, .data, 692E8]
       - [0xCF18, .data, 6D59C]
       - [0xCF4C, data]
       - [0xD0C4, .data, 7A4D0]
