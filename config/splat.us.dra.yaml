@@ -104,7 +104,6 @@ segments:
       - [0xD1D4, assets, factory_blueprint, g_FactoryBlueprints]
       - [0xD4B8, .data, 7E4BC]
       - [0xDBD4, .data, d_DBD4]
-      - [0xE270, data]
       - [0xE294, .data, d_E294]
       - [0x10658, data]
       - [0x10A3C, .data, 90264] # D_800B0A3C to D_800B0AEC

@@ -207,7 +207,6 @@ FactoryBlueprint g_FactoryBlueprints[400] = {0}; // TODO load from JSON file
 s32 D_800B07C8 = 0x12345678;
 u8 D_800AD094[0x30];
 Unkstruct_80138094 D_80138094[100]; // unknown size
-s32 D_800AE270[] = {0xFF, 0xFF, 0xFF, 0x7F, 0x7F, 0x3F, 0x7F, 0x3F, 0x7F};
 s32 D_8013808C;
 GpuUsage g_GpuMaxUsage;
 GpuBuffer* g_BackBuffer;
