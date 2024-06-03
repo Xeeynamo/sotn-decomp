@@ -16,26 +16,28 @@ AnimationFrame D_800ADC44[] = {
 };
 
 u16 D_800ADC7C[] = {PAL_DRA(0x194), PAL_DRA(0x199)};
-
-static s16_pair D_800ADC80 = {0xFFFE, 0xFFE8};
-static s16_pair D_800ADC84 = {0x0000, 0xFFF8};
-static s16_pair D_800ADC88 = {0x0002, 0x0008};
-static s16_pair D_800ADC8C = {0x0000, 0x0018};
-static s16_pair D_800ADC90 = {0x0006, 0xFFF4};
-static s16_pair D_800ADC94 = {0x0008, 0x0000};
-static s16_pair D_800ADC98 = {0x0007, 0x000C};
-static s16_pair D_800ADC9C = {0xFFF8, 0xFFF4};
-static s16_pair D_800ADCA0 = {0xFFF7, 0x0000};
-static s16_pair D_800ADCA4 = {0xFFF9, 0x000C};
-static s16_pair D_800ADCA8 = {0xFFF2, 0xFFFA};
-static s16_pair D_800ADCAC = {0xFFF1, 0x0007};
-static s16_pair D_800ADCB0 = {0x000D, 0xFFF9};
-static s16_pair D_800ADCB4 = {0x0010, 0x0008};
-static s16_pair D_800ADCB8 = {0xFFF9, 0xFFEA};
-static s16_pair D_800ADCBC = {0x0006, 0xFFEB};
-static s16_pair D_800ADCC0 = {0xFFF8, 0x0015};
-static s16_pair D_800ADCC4 = {0x0007, 0x0016};
-s16_pair* D_800ADCC8[] = {
+// disable format to allow for extra spaces, to space these out nicely
+// clang-format off
+static Point16 D_800ADC80 = { -2, -24};
+static Point16 D_800ADC84 = {  0,  -8};
+static Point16 D_800ADC88 = {  2,   8};
+static Point16 D_800ADC8C = {  0,  24};
+static Point16 D_800ADC90 = {  6, -12};
+static Point16 D_800ADC94 = {  8,   0};
+static Point16 D_800ADC98 = {  7,  12};
+static Point16 D_800ADC9C = { -8, -12};
+static Point16 D_800ADCA0 = { -9,   0};
+static Point16 D_800ADCA4 = { -7,  12};
+static Point16 D_800ADCA8 = {-14,  -6};
+static Point16 D_800ADCAC = {-15,   7};
+static Point16 D_800ADCB0 = { 13,  -7};
+static Point16 D_800ADCB4 = { 16,   8};
+static Point16 D_800ADCB8 = { -7, -22};
+static Point16 D_800ADCBC = {  6, -21};
+static Point16 D_800ADCC0 = { -8,  21};
+static Point16 D_800ADCC4 = {  7,  22};
+// clang-format on
+Point16* D_800ADCC8[] = {
     &D_800ADC80, &D_800ADC90, &D_800ADC84, &D_800ADC90, &D_800ADC94,
     &D_800ADC84, &D_800ADC94, &D_800ADC88, &D_800ADC84, &D_800ADC94,
     &D_800ADC98, &D_800ADC88, &D_800ADC98, &D_800ADC8C, &D_800ADC88,

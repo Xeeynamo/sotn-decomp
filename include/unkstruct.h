@@ -58,11 +58,6 @@ typedef struct {
     /* 0x10 */ u8 unkArray[0x30]; // color buffer
 } Unkstruct_8006C3C4;             // size = 0x40
 
-typedef struct {
-    s16 unk0;
-    s16 unk2;
-} s16_pair;
-
 // Used in:
 // func_8015E7B4
 // func_8010BF64

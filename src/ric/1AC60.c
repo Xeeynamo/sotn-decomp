@@ -168,20 +168,20 @@ void func_801572A8(bool arg0) {
     if (arg0) {
         for (i = 0; i < LEN(D_801545E4); i++) {
             if (unk0C & 0x20) {
-                D_801545F4[i].unk2 = D_80154644[i];
-                D_801545E4[i].unk2 = D_8015465C[i];
+                D_801545F4[i].y = D_80154644[i];
+                D_801545E4[i].y = D_8015465C[i];
             } else {
-                D_801545F4[i].unk2 = D_80154644[i];
-                D_801545E4[i].unk2 = D_8015463C[i];
+                D_801545F4[i].y = D_80154644[i];
+                D_801545E4[i].y = D_8015463C[i];
             }
         }
         for (i = 0; i < 7; i++) {
             if (unk0C & 0x20) {
-                D_80154604[i].unk2 = D_80154664[i];
-                D_80154604[i + 7].unk2 = D_80154664[i];
+                D_80154604[i].y = D_80154664[i];
+                D_80154604[i + 7].y = D_80154664[i];
             } else {
-                D_80154604[i].unk2 = D_8015464C[i];
-                D_80154604[i + 7].unk2 = D_8015464C[i];
+                D_80154604[i].y = D_8015464C[i];
+                D_80154604[i + 7].y = D_8015464C[i];
             }
         }
     }
@@ -215,8 +215,8 @@ void func_801572A8(bool arg0) {
         PLAYER.posY.val += PLAYER.velocityY;
     }
     for (i = 0; i < 4; i++) {
-        argX = PLAYER.posX.i.hi + D_801545F4[i].unk0;
-        argY = PLAYER.posY.i.hi + D_801545F4[i].unk2;
+        argX = PLAYER.posX.i.hi + D_801545F4[i].x;
+        argY = PLAYER.posY.i.hi + D_801545F4[i].y;
         g_api.CheckCollision(argX, argY, &g_Player.colliders[i], 0);
         if ((g_Player.D_80072F00[7] != 0) &&
             (g_Player.colliders[i].effects & 0x40)) {
@@ -228,8 +228,8 @@ void func_801572A8(bool arg0) {
     }
     func_8015E800();
     for (i = 0; i < 4; i++) {
-        argX = PLAYER.posX.i.hi + D_801545E4[i].unk0;
-        argY = PLAYER.posY.i.hi + D_801545E4[i].unk2;
+        argX = PLAYER.posX.i.hi + D_801545E4[i].x;
+        argY = PLAYER.posY.i.hi + D_801545E4[i].y;
         g_api.CheckCollision(argX, argY, &g_Player.colliders2[i], 0);
     }
     func_8015EE28();
@@ -240,8 +240,8 @@ void func_801572A8(bool arg0) {
         PLAYER.posY.i.lo = 0;
     }
     for (i = 0; i < 14; i++) {
-        argX = PLAYER.posX.i.hi + D_80154604[i].unk0;
-        argY = PLAYER.posY.i.hi + D_80154604[i].unk2;
+        argX = PLAYER.posX.i.hi + D_80154604[i].x;
+        argY = PLAYER.posY.i.hi + D_80154604[i].y;
         g_api.CheckCollision(argX, argY, &g_Player.colliders3[i], 0);
     }
     func_8015F414();

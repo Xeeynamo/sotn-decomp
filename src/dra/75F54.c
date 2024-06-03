@@ -1530,8 +1530,8 @@ void func_80119F70(Entity* entity) {
         for (i = 0; i < 16; i++) {
             temp_xRand = hitboxX + rand() % 24 - 12;
             temp_yRand = rand();
-            D_8013804C[i].unk0 = temp_xRand;
-            D_8013804C[i].unk2 = hitboxY + temp_yRand % 48 - 24;
+            D_8013804C[i].x = temp_xRand;
+            D_8013804C[i].y = hitboxY + temp_yRand % 48 - 24;
             prim->clut = 0x1B2;
             prim->tpage = 0x1A;
             prim->b0 = 0;
@@ -1565,10 +1565,10 @@ void func_80119F70(Entity* entity) {
             }
             break;
         case 1:
-            hitboxX = D_8013804C[i].unk2;
-            hitboxY = D_8013804C[i].unk0;
+            hitboxX = D_8013804C[i].y;
+            hitboxY = D_8013804C[i].x;
             temp = func_80119E78(prim, hitboxY, hitboxX);
-            D_8013804C[i].unk2--;
+            D_8013804C[i].y--;
             if (temp < 0) {
                 prim->drawMode |= DRAW_HIDE;
                 prim->g0++;

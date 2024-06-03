@@ -50,8 +50,8 @@ void EntityTeleport(Entity* self) {
             xVar = PLAYER.posX.i.hi + (rand() % 28) - 14;
             yVar = rand();
             yVar = 0xE0 - (yVar & 0x3F);
-            D_80175000[i].unk0 = xVar;
-            D_80175000[i].unk2 = yVar;
+            D_80175000[i].x = xVar;
+            D_80175000[i].y = yVar;
             prim->clut = 0x1BA;
             prim->tpage = 0x1A;
             prim->b0 = 0;
@@ -205,9 +205,8 @@ void EntityTeleport(Entity* self) {
                 }
                 break;
             case 1:
-                result =
-                    func_8015FDB0(prim, D_80175000[i].unk0, D_80175000[i].unk2);
-                D_80175000[i].unk2 -= 16;
+                result = func_8015FDB0(prim, D_80175000[i].x, D_80175000[i].y);
+                D_80175000[i].y -= 16;
                 if (result < 0) {
                     prim->drawMode |= DRAW_HIDE;
                     prim->g0++;
@@ -739,7 +738,7 @@ void func_80167A68(Entity* self) {}
 // Entity ID #35. Created by blueprint 40. No known FACTORY calls with
 // blueprint 40. No known DRA match.
 void func_80167A70(Entity* self) {
-    s16_pair sp10[8];
+    Point16 sp10[8];
     Primitive* prim;
     FakePrim* fakeprim;
     s32 velX;
@@ -764,10 +763,10 @@ void func_80167A70(Entity* self) {
                 fakeprim = (FakePrim*)prim;
                 fakeprim->x0 = posX;
                 fakeprim->posX.i.hi = posX;
-                sp10[i].unk0 = posX;
+                sp10[i].x = posX;
                 fakeprim->y0 = posY;
                 fakeprim->posY.i.hi = posY;
-                sp10[i].unk2 = posY;
+                sp10[i].y = posY;
                 // Random velocity from 0.25 to 0.5
                 velX = (rand() & 0x3FFF) + FIX(0.25);
                 fakeprim->velocityX = velX;
@@ -785,8 +784,8 @@ void func_80167A70(Entity* self) {
                     (rand() & 0x1F) + 0x30;
                 randbit = rand() & 1;
                 prim->drawMode = !(randbit) ? 6 : 0x37;
-                posX = sp10[i - 8].unk0;
-                posY = sp10[i - 8].unk2;
+                posX = sp10[i - 8].x;
+                posY = sp10[i - 8].y;
                 arrIndex = i & 3;
                 prim->u0 = arrIndex;
                 prim->x0 = posX + D_80155D64[arrIndex][0];
@@ -818,13 +817,13 @@ void func_80167A70(Entity* self) {
                 fakeprim->posX.val += fakeprim->velocityX.val;
                 fakeprim->posY.val += fakeprim->velocityY.val;
                 fakeprim->velocityY.val += FIX(36.0 / 128);
-                sp10[i].unk0 = fakeprim->posX.i.hi;
-                sp10[i].unk2 = fakeprim->posY.i.hi;
+                sp10[i].x = fakeprim->posX.i.hi;
+                sp10[i].y = fakeprim->posY.i.hi;
                 fakeprim->x0 = fakeprim->posX.i.hi;
                 fakeprim->y0 = fakeprim->posY.i.hi;
             } else {
-                posX = sp10[i - 8].unk0;
-                posY = sp10[i - 8].unk2;
+                posX = sp10[i - 8].x;
+                posY = sp10[i - 8].y;
                 arrIndex = prim->u0;
                 prim->x0 = posX + D_80155D64[arrIndex][0];
                 prim->y0 = posY + D_80155D64[arrIndex][1];

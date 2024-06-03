@@ -733,7 +733,7 @@ void EntityHitByIce(Entity* self) {
     u32 primYshift;
     u16 selfX;
     u16 selfY;
-    s16_pair* offset;
+    Point16* offset;
     bool sp18 = false;
 
     self->posX.i.hi = PLAYER.posX.i.hi;
@@ -819,9 +819,8 @@ void EntityHitByIce(Entity* self) {
         offset = D_800ADCC8[i * 3];
         if (prim->u0 < 2) {
             size = SquareRoot12(
-                ((offset->unk0 * offset->unk0) + (offset->unk2 * offset->unk2))
-                << 0xC);
-            angle = self->rotZ + ratan2(offset->unk2, offset->unk0);
+                ((offset->x * offset->x) + (offset->y * offset->y)) << 0xC);
+            angle = self->rotZ + ratan2(offset->y, offset->x);
             xShift1 = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
             yShift1 = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
             prim->x0 = selfX + xShift1;
@@ -829,9 +828,8 @@ void EntityHitByIce(Entity* self) {
 
             offset = D_800ADCC8[i * 3 + 1];
             size = SquareRoot12(
-                ((offset->unk0 * offset->unk0) + (offset->unk2 * offset->unk2))
-                << 0xC);
-            angle = self->rotZ + ratan2(offset->unk2, offset->unk0);
+                ((offset->x * offset->x) + (offset->y * offset->y)) << 0xC);
+            angle = self->rotZ + ratan2(offset->y, offset->x);
             xShift2 = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
             yShift2 = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
             prim->x1 = selfX + xShift2;
@@ -839,9 +837,8 @@ void EntityHitByIce(Entity* self) {
 
             offset = D_800ADCC8[i * 3 + 2];
             size = SquareRoot12(
-                ((offset->unk0 * offset->unk0) + (offset->unk2 * offset->unk2))
-                << 0xC);
-            angle = self->rotZ + ratan2(offset->unk2, offset->unk0);
+                ((offset->x * offset->x) + (offset->y * offset->y)) << 0xC);
+            angle = self->rotZ + ratan2(offset->y, offset->x);
             xShift3 = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
             yShift3 = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
             prim->x2 = prim->x3 = selfX + xShift3;
