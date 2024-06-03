@@ -202,6 +202,7 @@ SVECTOR* D_800B0CB4[][4] = {
     &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
     &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
 };
+unk_800B08CC D_800B08CC[6] = {0};
 FactoryBlueprint g_FactoryBlueprints[400] = {0}; // TODO load from JSON file
 s32 D_800B07C8 = 0x12345678;
 u8 D_800AD094[0x30];
@@ -608,10 +609,6 @@ u16* func_80106A28(u32 arg0, u16 kind) {
     NOT_IMPLEMENTED;
     return g_FontCharData;
 }
-
-void func_8012EF2C(void) { NOT_IMPLEMENTED; }
-
-void func_8012EAD0(void) { NOT_IMPLEMENTED; }
 
 void func_80115394(s32* arg0, s16 arg1, s16 arg2) { NOT_IMPLEMENTED; }
 
