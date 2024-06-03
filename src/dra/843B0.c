@@ -49,8 +49,8 @@ void EntityTeleport(Entity* self) {
             xVar = PLAYER.posX.i.hi + (rand() % 28) - 14;
             yVar = rand();
             yVar = 0xE0 - (yVar & 0x3F);
-            D_8013839C[i].unk0 = xVar;
-            D_8013839C[i].unk2 = yVar;
+            D_8013839C[i].x = xVar;
+            D_8013839C[i].y = yVar;
             prim->clut = 0x1BA;
             prim->tpage = 0x1A;
             prim->b0 = 0;
@@ -205,8 +205,8 @@ void EntityTeleport(Entity* self) {
                 break;
             case 1:
                 result =
-                    func_80119E78(prim, D_8013839C[i].unk0, D_8013839C[i].unk2);
-                D_8013839C[i].unk2 -= 16;
+                    func_80119E78(prim, D_8013839C[i].x, D_8013839C[i].y);
+                D_8013839C[i].y -= 16;
                 if (result < 0) {
                     prim->drawMode |= DRAW_HIDE;
                     prim->g0++;
