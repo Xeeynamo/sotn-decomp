@@ -378,7 +378,7 @@ extern s16 D_800ACE88[];
 extern s16 D_800ACE90[];
 extern Point16 D_800ACEC0[4];
 extern Point16 D_800ACED0[4];
-extern Point16 D_800ACEE0[12];
+extern Point16 D_800ACEE0[16];
 #if defined(VERSION_HD)
 extern s32 D_800ACEDC_hd;
 #endif
