@@ -1973,12 +1973,6 @@
 | 1.00 | true     | func_801B0958                       | ../../asm/us/st/nz0/nonmatchings/30958/func_801B0958.s 
 | 1.00 | true     | func_801A7D64                       | ../../asm/us/st/st0/nonmatchings/27D64/func_801A7D64.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_800F6A48                       | ../../asm/us/dra/nonmatchings/menu/func_800F6A48.s 
-| 0.90 | true     | def_cbread                          | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbread.s 
-| 0.90 | true     | def_cbready                         | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbready.s 
-| 0.90 | true     | def_cbsync                          | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbsync.s 
-| 0.90 | true     | SpuSetNoiseVoice                    | ../../asm/us/main/nonmatchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | D_800DBF3C                          | ../../asm/us/dra/nonmatchings/save_mgr/D_800DBF3C.s 
 | 1.00 | true     | D_800DBF74                          | ../../asm/us/dra/nonmatchings/save_mgr/D_800DBF74.s 
 | 1.00 | true     | D_800DBF7C                          | ../../asm/us/dra/nonmatchings/save_mgr/D_800DBF7C.s 
@@ -1990,6 +1984,12 @@
 | 1.00 | true     | CdSetDebug                          | ../../asm/us/main/nonmatchings/psxsdk/libcd/sys/CdSetDebug.s 
 | 1.00 | true     | CdSyncCallback                      | ../../asm/us/main/nonmatchings/psxsdk/libcd/sys/CdSyncCallback.s 
 | 1.00 | true     | SetVideoMode                        | ../../asm/us/main/nonmatchings/psxsdk/libetc/vmode/SetVideoMode.s 
+-------------------------------------------------------------------------------
+| 0.90 | true     | def_cbread                          | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbread.s 
+| 0.90 | true     | def_cbready                         | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbready.s 
+| 0.90 | true     | def_cbsync                          | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbsync.s 
+| 1.00 | true     | GsGetVcount                         | ../../asm/us/main/nonmatchings/psxsdk/libgs/gs_008/GsGetVcount.s 
+| 1.00 | true     | GsClearVcount                       | ../../asm/us/main/nonmatchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018E124                       | ../../asm/us/st/cen/nonmatchings/D600/func_8018E124.s 
 | 1.00 | true     | func_8019498C                       | ../../asm/us/st/dre/nonmatchings/14774/func_8019498C.s 
@@ -2208,7 +2208,7 @@
 | 1.00 | true     | SetPlayerStep                       | ../../asm/us/ric/nonmatchings/202A8/SetPlayerStep.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8010D010                       | ../../asm/us/dra/nonmatchings/692E8/func_8010D010.s 
-| 0.97 | false    | func_8010D2C8                       | ../../asm/us/dra/nonmatchings/692E8/func_8010D2C8.s 
+| 0.97 | true     | func_8010D2C8                       | ../../asm/us/dra/nonmatchings/692E8/func_8010D2C8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8010DA2C                       | ../../asm/us/dra/nonmatchings/6D59C/func_8010DA2C.s 
 | 1.00 | true     | func_8015C920                       | ../../asm/us/ric/nonmatchings/20920/func_8015C920.s 
@@ -2324,6 +2324,9 @@
 | 1.00 | true     | func_800F548C                       | ../../asm/us/dra/nonmatchings/menu/func_800F548C.s 
 | 0.94 | true     | func_801B1EF4                       | ../../asm/us/st/sel/nonmatchings/2C048/func_801B1EF4.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_800F6A48                       | ../../asm/us/dra/nonmatchings/menu/func_800F6A48.s 
+| 0.90 | true     | SpuSetNoiseVoice                    | ../../asm/us/main/nonmatchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_800F99B8                       | ../../asm/us/dra/nonmatchings/menu/func_800F99B8.s 
 | 0.95 | true     | func_801B2108                       | ../../asm/us/st/sel/nonmatchings/2C048/func_801B2108.s 
 -------------------------------------------------------------------------------
@@ -2422,9 +2425,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | get_ce                              | ../../asm/us/main/nonmatchings/psxsdk/libgpu/sys/get_ce.s 
 | 1.00 | true     | get_cs                              | ../../asm/us/main/nonmatchings/psxsdk/libgpu/sys/get_cs.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | GsGetVcount                         | ../../asm/us/main/nonmatchings/psxsdk/libgs/gs_008/GsGetVcount.s 
-| 1.00 | true     | GsClearVcount                       | ../../asm/us/main/nonmatchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | RotMatrix                           | ../../asm/us/main/nonmatchings/psxsdk/libgte/fgo_01/RotMatrix.s 
 | 0.99 | true     | RotMatrixYXZ                        | ../../asm/us/main/nonmatchings/psxsdk/libgte/fgo_02/RotMatrixYXZ.s 
