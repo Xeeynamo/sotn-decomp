@@ -160,9 +160,17 @@ s32 D_800ACE44;
 s32 D_800ACE48[12]; // size guessed
 s16 D_800ACF84[8];
 RECT D_800ACE60;
+s16 D_800ACE68[] = {0, 0, 0, 0, 0, 0, 0, 0};
+s16 D_800ACE70[] = {0, 0, 0, 0, 0, 0, 0, 0};
+s16 D_800ACE78[] = {0, 0, 0, 0, 0, 0, 0, 0};
+s16 D_800ACE98[] = {0, 0, 0, 0, 0, 0, 0, 0};
+s16 D_800ACEA8[] = {0, 0, 0, 0, 0, 0, 0, 0};
+s16 D_800ACEB0[] = {0, 0, 0, 0, 0, 0, 0, 0};
+s16 D_800ACE88[] = {0, 0, 0, 0, 0, 0, 0, 0};
+s16 D_800ACE90[] = {0, 0, 0, 0, 0, 0, 0, 0};
 Point16 D_800ACEC0[4];
 Point16 D_800ACED0[4];
-Point16 D_800ACEE0[12];
+Point16 D_800ACEE0[16] = {0};
 u8 D_800ACF4C[0x200];                 // random size just to play safe
 u8 D_800ACF54[0x200];                 // random size just to play safe
 s32 D_800ACF74;                       // These two might...
