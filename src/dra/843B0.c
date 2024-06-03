@@ -204,8 +204,7 @@ void EntityTeleport(Entity* self) {
                 }
                 break;
             case 1:
-                result =
-                    func_80119E78(prim, D_8013839C[i].x, D_8013839C[i].y);
+                result = func_80119E78(prim, D_8013839C[i].x, D_8013839C[i].y);
                 D_8013839C[i].y -= 16;
                 if (result < 0) {
                     prim->drawMode |= DRAW_HIDE;

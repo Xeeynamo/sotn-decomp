@@ -462,8 +462,7 @@ void EntityHitByIce(Entity* self) {
         offset = D_80155244[i * 3];
         if (prim->u0 < 2) {
             size = SquareRoot12(
-                ((offset->x * offset->x) + (offset->y * offset->y))
-                << 0xC);
+                ((offset->x * offset->x) + (offset->y * offset->y)) << 0xC);
             angle = self->rotZ + ratan2(offset->y, offset->x);
             xShift1 = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
             yShift1 = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
@@ -472,8 +471,7 @@ void EntityHitByIce(Entity* self) {
 
             offset = D_80155244[i * 3 + 1];
             size = SquareRoot12(
-                ((offset->x * offset->x) + (offset->y * offset->y))
-                << 0xC);
+                ((offset->x * offset->x) + (offset->y * offset->y)) << 0xC);
             angle = self->rotZ + ratan2(offset->y, offset->x);
             xShift2 = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
             yShift2 = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
@@ -482,8 +480,7 @@ void EntityHitByIce(Entity* self) {
 
             offset = D_80155244[i * 3 + 2];
             size = SquareRoot12(
-                ((offset->x * offset->x) + (offset->y * offset->y))
-                << 0xC);
+                ((offset->x * offset->x) + (offset->y * offset->y)) << 0xC);
             angle = self->rotZ + ratan2(offset->y, offset->x);
             xShift3 = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
             yShift3 = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;

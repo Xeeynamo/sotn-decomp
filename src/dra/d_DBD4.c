@@ -16,7 +16,8 @@ AnimationFrame D_800ADC44[] = {
 };
 
 u16 D_800ADC7C[] = {PAL_DRA(0x194), PAL_DRA(0x199)};
-
+// disable format to allow for extra spaces, to space these out nicely
+// clang-format off
 static Point16 D_800ADC80 = { -2, -24};
 static Point16 D_800ADC84 = {  0,  -8};
 static Point16 D_800ADC88 = {  2,   8};
@@ -35,6 +36,7 @@ static Point16 D_800ADCB8 = { -7, -22};
 static Point16 D_800ADCBC = {  6, -21};
 static Point16 D_800ADCC0 = { -8,  21};
 static Point16 D_800ADCC4 = {  7,  22};
+// clang-format on
 Point16* D_800ADCC8[] = {
     &D_800ADC80, &D_800ADC90, &D_800ADC84, &D_800ADC90, &D_800ADC94,
     &D_800ADC84, &D_800ADC94, &D_800ADC88, &D_800ADC84, &D_800ADC94,
