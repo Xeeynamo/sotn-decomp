@@ -575,8 +575,8 @@ void func_8012EAD0(void) {
     case 0:
         i = 0;
         for (i = 0; i < 4; i++) {
-            if (D_800ACE88[i] < D_800ACEC0[i].unk2) {
-                D_800ACEC0[i].unk2--;
+            if (D_800ACE88[i] < D_800ACEC0[i].y) {
+                D_800ACEC0[i].y--;
             } else {
                 else_cycles += 1;
             }
