@@ -583,8 +583,6 @@ s32 func_800F0CD8(s32 arg0) {
     return 0;
 }
 
-void func_80118C28(s32 arg0) { NOT_IMPLEMENTED; }
-
 void EntityWeaponAttack(Entity* self) { NOT_IMPLEMENTED; }
 void func_ptr_80170004(Entity* self) { NOT_IMPLEMENTED; }
 void func_ptr_80170008(Entity* self) { NOT_IMPLEMENTED; }
@@ -611,161 +609,13 @@ u16* func_80106A28(u32 arg0, u16 kind) {
     return g_FontCharData;
 }
 
-// copied from 75F54.c
-Entity* GetFreeEntity(s16 start, s16 end) {
-    Entity* entity = &g_Entities[start];
-    s16 i;
-
-    for (i = start; i < end; i++, entity++) {
-        if (entity->entityId == E_NONE) {
-            return entity;
-        }
-    }
-    ERRORF("NOOOOOOOOOOOOOOOOO");
-    return NULL;
-}
-Entity* GetFreeEntityReverse(s16 start, s16 end) {
-    Entity* entity = &g_Entities[end - 1];
-    s16 i;
-
-    for (i = end - 1; i >= start; i--, entity--) {
-        if (entity->entityId == E_NONE) {
-            return entity;
-        }
-    }
-    return NULL;
-}
-void func_80118894(Entity* self) {
-    s32 i;
-    s32 search_value;
-
-    if (self == &g_Entities[E_WEAPON]) {
-        if (!(self->params & 0x8000)) {
-            self->enemyId = 1;
-            return;
-        }
-        self->enemyId = 2;
-        return;
-    }
-    // It appears we're looping over elements of the 8013800C array.
-    // If the pointer to arg0 comes before the 32nd (0x20th) g_Entities,
-    // we iterate through the 8013800C array, starting from element 3 and going
-    // as high as 7, searching for our enemy ID. Otherwise we do the same, but
-    // starting from element 7 and going up to 11. 8013800C therefore must have
-    // 11 elements. It may be possible to refactor this code to remove the
-    // duplication.
-
-    search_value = 0;
-    if (self < &g_Entities[UNK_ENTITY_20]) {
-        while (1) {
-            for (i = 3; i < 7; i++) {
-                if (D_8013800C[i] == search_value) {
-                    D_8013800C[i]++;
-                    self->enemyId = i;
-                    return;
-                }
-            }
-            search_value++;
-        }
-    } else {
-        while (1) {
-            for (i = 7; i < 11; i++) {
-                if (D_8013800C[i] == search_value) {
-                    D_8013800C[i]++;
-                    self->enemyId = i;
-                    return;
-                }
-            }
-            search_value++;
-        }
-    }
-}
-s32 func_80119E78(Primitive* prim, s32 xCenter, s32 yCenter) {
-    s16 left;
-    s16 top;
-    s16 right;
-    s32 size;
-    u8* idx;
-    // 800AD094 is a read-only array of bytes in 8-byte groups.
-    // These are sets of 4 pairs of u,v values.
-    // the ->b0 value is very likely fake.
-    idx = D_800AD094;
-    idx += prim->b0 * 8;
-    size = 6;
-    if (prim->b0 >= 3U) {
-        size = 4;
-    }
-    if (prim->b0 == 6) {
-        return -1;
-    }
-    left = xCenter - size;
-    top = yCenter - size;
-    prim->y0 = top;            // a
-    prim->y1 = top;            // 16
-    prim->x0 = left;           // 8
-    prim->x1 = xCenter + size; // 14
-    prim->x2 = left;           // 20
-    prim->y2 = yCenter + size; // 22
-    prim->x3 = xCenter + size; // 2c
-    prim->y3 = yCenter + size; // 2e
-
-    prim->u0 = *idx++;
-    prim->v0 = *idx++;
-    prim->u1 = *idx++;
-    prim->v1 = *idx++;
-    prim->u2 = *idx++;
-    prim->v2 = *idx++;
-    prim->u3 = *idx++;
-    prim->v3 = *idx;
-    if (!(++prim->b1 & 1)) {
-        prim->b0++;
-    }
-    return 0;
-}
-
-s32 func_80118C84(s16 arg0, s16 arg1) { NOT_IMPLEMENTED; }
-
-void ControlBatForm(void) { NOT_IMPLEMENTED; }
-
-void func_801177A0(void) { NOT_IMPLEMENTED; }
-
-void ControlMistForm(void) { NOT_IMPLEMENTED; }
-
-void func_801182F8(void) { NOT_IMPLEMENTED; }
-
 void func_8012EF2C(void) { NOT_IMPLEMENTED; }
 
 void func_8012EAD0(void) { NOT_IMPLEMENTED; }
 
-void func_801186EC(void) { NOT_IMPLEMENTED; }
-
-void func_80116208(void) { NOT_IMPLEMENTED; }
-
 void func_80115394(s32* arg0, s16 arg1, s16 arg2) { NOT_IMPLEMENTED; }
 
-void func_80118614(void) { NOT_IMPLEMENTED; }
-
-void PlayerStepHellfire(void) { NOT_IMPLEMENTED; }
-
-void func_80118670(void) { NOT_IMPLEMENTED; }
-
-void func_80118640(void) { NOT_IMPLEMENTED; }
-
-void func_801166A4(void) { NOT_IMPLEMENTED; }
-
-void func_8011678C(void) { NOT_IMPLEMENTED; }
-
-void func_801167D0(void) { NOT_IMPLEMENTED; }
-
-void func_80115F54(void) { NOT_IMPLEMENTED; }
-
-void func_80117AC0(void) { NOT_IMPLEMENTED; }
-
 void func_8012C600(void) { NOT_IMPLEMENTED; }
-
-void func_8011A328(Entity* entity, s32 arg1) { NOT_IMPLEMENTED; }
-
-void func_8011A290(Entity* self) { NOT_IMPLEMENTED; }
 
 void EntitySubwpnThrownDagger(Entity* self) { NOT_IMPLEMENTED; }
 void EntitySubwpnThrownAxe(Entity* self) { NOT_IMPLEMENTED; }
@@ -781,10 +631,7 @@ void EntityPlayerPinkEffect(Entity* self) { NOT_IMPLEMENTED; }
 void EntityHolyWaterBreakGlass(Entity* self) { NOT_IMPLEMENTED; }
 void EntityStopWatch(Entity* self) { NOT_IMPLEMENTED; }
 void func_80123B40(Entity* self) { NOT_IMPLEMENTED; }
-void func_80119F70(Entity* self) { NOT_IMPLEMENTED; }
-void func_80119D3C(Entity* self) { NOT_IMPLEMENTED; }
 void EntityBatEcho(Entity* self) { NOT_IMPLEMENTED; }
 void func_8012F894(Entity* self) { NOT_IMPLEMENTED; }
 void func_80129864(Entity* self) { NOT_IMPLEMENTED; }
-void func_8011A4C8(Entity* self) { NOT_IMPLEMENTED; }
 void EntitySummonSpirit(Entity* self) { NOT_IMPLEMENTED; }
