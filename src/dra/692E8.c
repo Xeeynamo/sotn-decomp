@@ -2,6 +2,11 @@
 #include "sfx.h"
 #include "player.h"
 
+void func_8010C36C(void);
+void func_8010C9F4(void);
+void func_8010D010(void);
+void func_8010D2C8(void);
+
 void func_801092E8(s32 arg0) {
     D_800A37D8[0] = D_800ACE48[arg0 * 2];
     D_800A37D8[1] = D_800ACE48[arg0 * 2 + 1];
@@ -197,8 +202,161 @@ void func_80109990(void) {
     }
 }
 
-void func_80109A44(s32 arg0);
-INCLUDE_ASM("dra/nonmatchings/692E8", func_80109A44);
+void func_80109A44(s32 isTransformed) {
+    s32 i;
+    s32 psp_s2;
+    s32 status;
+    s32 mist;
+    s32* pl_vram;
+    s32 speed;
+    s32 psp_fp;
+
+    Collider sp10;
+    s32* pl_04;
+    s16 x, y;
+
+    mist = 0;
+    if (g_Player.unk0C & PLAYER_STATUS_MIST_FORM ||
+        g_Entities[0x10].entityId == 0x22) {
+        mist = mist + 1;
+    }
+    pl_vram = &g_Player.pl_vram_flag;
+    pl_04 = &g_Player.unk04;
+    *pl_04 = *pl_vram;
+    *pl_vram = 0;
+    status = g_Player.unk0C;
+    if (isTransformed) {
+        for (i = 0; i < 4; i++) {
+            if (status & (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) {
+                D_800ACED0[i].y = D_800ACE70[i];
+                D_800ACEC0[i].y = D_800ACE68[i];
+            } else if (
+                status & (PLAYER_STATUS_WOLF_FORM | PLAYER_STATUS_UNK_20)) {
+                D_800ACED0[i].y = D_800ACE90[i];
+                D_800ACEC0[i].y = D_800ACEA8[i];
+            } else {
+                D_800ACED0[i].y = D_800ACE90[i];
+                D_800ACEC0[i].y = D_800ACE88[i];
+            }
+        }
+        for (i = 0; i < 7; i++) {
+            if (status & (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) {
+                D_800ACEC0[i + 8].y = D_800ACE78[i];
+                D_800ACEE0[i + 7].y = D_800ACE78[i];
+            } else if (
+                status & (PLAYER_STATUS_WOLF_FORM | PLAYER_STATUS_UNK_20)) {
+                D_800ACEC0[i + 8].y = D_800ACEB0[i];
+                D_800ACEE0[i + 7].y = D_800ACEB0[i];
+            } else {
+                D_800ACEC0[i + 8].y = D_800ACE98[i];
+                D_800ACEE0[i + 7].y = D_800ACE98[i];
+            }
+        }
+    }
+    speed = PLAYER.velocityX;
+    psp_fp = *pl_04 & 0xF000;
+    if (PLAYER.velocityX < 0 && !(*pl_04 & 8)) {
+        if (psp_fp == 0xC000) {
+            speed = speed * 10 / 16;
+        }
+        if (psp_fp == 0xD000) {
+            speed = speed * 13 / 16;
+        }
+        PLAYER.posX.val += speed;
+    }
+    if (PLAYER.velocityX > 0 && !(*pl_04 & 4)) {
+        if (psp_fp == 0x8000) {
+            speed = speed * 10 / 16;
+        }
+        if (psp_fp == 0x9000) {
+            speed = speed * 13 / 16;
+        }
+        PLAYER.posX.val += speed;
+    }
+
+    PLAYER.posY.val += PLAYER.velocityY;
+    for (i = 0; i < LEN(g_Player.colliders); i++) {
+        x = PLAYER.posX.i.hi + D_800ACED0[i].x;
+        y = PLAYER.posY.i.hi + D_800ACED0[i].y;
+        CheckCollision(x, y, &g_Player.colliders[i], 0);
+        if (g_Player.D_80072F00[7] &&
+            g_Player.colliders[i].effects & EFFECT_SOLID_FROM_ABOVE) {
+            CheckCollision(x, y + 12, &sp10, 0);
+            if (!(sp10.effects & EFFECT_SOLID)) {
+                g_Player.colliders[i].effects = 0;
+            }
+        }
+        if (mist && g_Player.colliders[i].effects & EFFECT_MIST_ONLY) {
+            g_Player.colliders[i].effects = 0;
+        }
+        if (PLAYER.step == Player_MorphBat || PLAYER.step == Player_MorphMist) {
+            if (g_Player.colliders[i].effects &
+                (EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID_FROM_BELOW)) {
+                g_Player.colliders[i].effects = 0;
+            }
+        }
+    }
+    func_8010C36C();
+    if (PLAYER.step == Player_UnmorphBat || PLAYER.step == Player_UnmorphMist ||
+        PLAYER.step == Player_UnmorphWolf) {
+        if (g_Player.colliders2[1].effects & 1 &&
+            !(g_Player.colliders2[1].effects & EFFECT_SOLID_FROM_ABOVE) &&
+            g_Player.colliders[1].effects & 1 &&
+            !(g_Player.colliders[1].effects & EFFECT_SOLID_FROM_BELOW)) {
+            g_Player.pl_vram_flag = 3;
+            PLAYER.posX.val -= speed;
+            return;
+        }
+    }
+
+    for (i = 0; i < LEN(g_Player.colliders2); i++) {
+        x = PLAYER.posX.i.hi + D_800ACEC0[i].x;
+        y = PLAYER.posY.i.hi + D_800ACEC0[i].y;
+        CheckCollision(x, y, &g_Player.colliders2[i], 0);
+        if (mist && g_Player.colliders2[i].effects & EFFECT_MIST_ONLY) {
+            g_Player.colliders2[i].effects = 0;
+        }
+        if (PLAYER.step == Player_MorphBat || PLAYER.step == Player_MorphMist) {
+            if (g_Player.colliders2[i].effects &
+                (EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID_FROM_BELOW)) {
+                g_Player.colliders2[i].effects = 0;
+            }
+        }
+    }
+    func_8010C9F4();
+    if (*pl_vram & 1 && PLAYER.velocityY >= 0) {
+        PLAYER.posY.i.lo = 0;
+    }
+    if (*pl_vram & 2 && PLAYER.velocityY <= 0) {
+        PLAYER.posY.i.lo = 0;
+    }
+
+    for (i = 0; i < LEN(g_Player.colliders3); i++) {
+        x = PLAYER.posX.i.hi + D_800ACEE0[i].x;
+        y = PLAYER.posY.i.hi + D_800ACEE0[i].y;
+        CheckCollision(x, y, &g_Player.colliders3[i], 0);
+        if (mist && g_Player.colliders3[i].effects & EFFECT_MIST_ONLY) {
+            g_Player.colliders3[i].effects = 0;
+        }
+    }
+    func_8010D010();
+    func_8010D2C8();
+    if (*pl_vram & 4 && PLAYER.velocityX > 0) {
+        PLAYER.posX.i.lo = 0;
+    }
+    if (*pl_vram & 8 && PLAYER.velocityX < 0) {
+        PLAYER.posX.i.lo = 0;
+    }
+
+    if (*pl_vram & 0x8000) {
+        *pl_vram |= 0x20;
+    }
+    if (!(g_Player.colliders[1].effects & 1) ||
+        !(g_Player.colliders[2].effects & 1) ||
+        !(g_Player.colliders[3].effects & 1)) {
+        *pl_vram |= 0x20;
+    }
+}
 
 void func_8010A234(s32 arg0) {
     s32 (*weapon)(void);
@@ -620,7 +778,8 @@ void EntityAlucard(void) {
                                  (PLAYER.step == 2) || (PLAYER.step == 3) ||
                                  (PLAYER.step == 4) || (PLAYER.step == 6) ||
                                  (PLAYER.step == 8) ||
-                                 ((PLAYER.step == 5) && (PLAYER.step_s != 0)) ||
+                                 ((PLAYER.step == Player_MorphBat) &&
+                                  (PLAYER.step_s != 0)) ||
                                  ((PLAYER.step == 0x18) &&
                                   (PLAYER.step_s != 0) &&
                                   (PLAYER.step_s != 8)))) {
@@ -637,7 +796,8 @@ void EntityAlucard(void) {
                                     (PLAYER.step == 4) || (PLAYER.step == 6)) {
                                     goto block_62check;
                                 }
-                                if ((PLAYER.step == 7) || (PLAYER.step == 8) ||
+                                if ((PLAYER.step == Player_MorphMist) ||
+                                    (PLAYER.step == 8) ||
                                     (PLAYER.step == 24 &&
                                      (PLAYER.step_s != 0 &&
                                       PLAYER.step_s != 8))) {
@@ -660,8 +820,10 @@ void EntityAlucard(void) {
                             (PLAYER.step == 0 || (PLAYER.step == 1) ||
                              (PLAYER.step == 2) || (PLAYER.step == 3) ||
                              (PLAYER.step == 4) || (PLAYER.step == 6) ||
-                             ((PLAYER.step == 7) || (PLAYER.step == 8)) ||
-                             ((PLAYER.step == 5) && (PLAYER.step_s != 0)))) {
+                             ((PLAYER.step == Player_MorphMist) ||
+                              (PLAYER.step == 8)) ||
+                             ((PLAYER.step == Player_MorphBat) &&
+                              (PLAYER.step_s != 0)))) {
                             func_80109328();
                             SetPlayerStep(0x18);
                             PlaySfx(0x668);

@@ -4,25 +4,24 @@ extern u16 unk14_lifetime[];
 
 // Appears to be related to some sort of explosion or puff of smoke.
 // ID is 0x14.
-void EntityUnkId14(Entity* entity) {
-    if (entity->step == 0) {
-        entity->velocityY = unk14_yVel[entity->ext.generic.unk94];
-        entity->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        entity->palette = 0x8195;
-        entity->animSet = ANIMSET_DRA(2);
-        entity->animCurFrame = unk14_startFrame[entity->params];
-        entity->drawMode = DRAW_TPAGE;
-        entity->step++;
+void EntityUnkId14(Entity* self) {
+    if (!self->step) {
+        self->velocityY = unk14_yVel[self->ext.generic.unk94];
+        self->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
+        self->palette = PAL_OVL(0x195);
+        self->animSet = ANIMSET_DRA(2);
+        self->animCurFrame = unk14_startFrame[self->params];
+        self->drawMode = DRAW_TPAGE;
+        self->step++;
     } else {
-        entity->animFrameDuration++;
-        entity->posY.val -= entity->velocityY;
-
-        if (!(entity->animFrameDuration & 1)) {
-            entity->animCurFrame++;
+        self->posY.val -= self->velocityY;
+        ++self->animFrameDuration;
+        if (!(self->animFrameDuration % 2)) {
+            self->animCurFrame++;
         }
-        // Once the entity has outlived its lifetime, destroy it
-        if (entity->animFrameDuration > unk14_lifetime[entity->params]) {
-            DestroyEntity(entity);
+
+        if (self->animFrameDuration > unk14_lifetime[self->params]) {
+            DestroyEntity(self);
         }
     }
 }

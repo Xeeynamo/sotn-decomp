@@ -87,8 +87,8 @@ segments:
       - [0xEE00, data] # D_psp_09246480
       - [0xEE10, data] # D_psp_09246490
       - [0xEE20, data] # D_psp_092464A0
-      - [0xEE50, data] # c_GoldPrizes
-      - [0xEE80, data] # c_HeartPrizes
+      - [0xEE50, .data, wrp_psp/wrp_data_EE50] # c_GoldPrizes
+      - [0xEE80, .data, wrp_psp/wrp_data_EE50] # c_HeartPrizes
       - [0xEEA0, data] # D_psp_09246520
       - [0xEF40, data] # D_psp_092465C0
       - [0xEF60, data] # D_psp_092465E0
@@ -100,9 +100,9 @@ segments:
       - [0xEFC0, data] # D_psp_09246640
       - [0xEFD0, data] # D_psp_09246650
       - [0xEFE0, data] # D_psp_09246660
-      - [0xF010, data] # D_80180FF8
-      - [0xF020, data] # D_80181008
-      - [0xF050, data] # D_80181038
+      - [0xF010, .data, wrp_psp/wrp_data_F010] # D_80180FF8
+      - [0xF020, .data, wrp_psp/wrp_data_F010] # D_80181008
+      - [0xF050, .data, wrp_psp/wrp_data_F010] # D_80181038
       - [0xF060, data] # D_psp_092466E0
       - [0xF390, data] # D_psp_09246A10
       - [0xF3A0, data] # D_psp_09246A20
