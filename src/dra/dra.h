@@ -867,6 +867,8 @@ bool func_8010183C(s32 arg0);
 s32 func_801025F4(void);
 void func_80102CD8(s32);
 void func_80103EAC(void);
+Entity* GetFreeEntity(s16 start, s16 end);
+Entity* GetFreeEntityReverse(s16 start, s16 end);
 void DestroyEntity(Entity*);
 void DestroyEntitiesFromIndex(s16 startIndex);
 void func_801071CC(POLY_GT4* poly, u32 colorIntensity, s32 vertexIndex);
