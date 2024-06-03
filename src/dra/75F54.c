@@ -224,7 +224,7 @@ void func_801166A4(void) {
 void func_8011678C(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
-    if (g_Player_D_80072EF6 != 2) {
+    if ((g_Player.padSim >> 16) != 2) {
         func_8010E570(0);
     }
 }
@@ -233,7 +233,7 @@ void func_801167D0(void) {
     s32* velocityX = &PLAYER.velocityX;
     PLAYER.velocityY = 0;
     *velocityX = 0;
-    if (g_Player_D_80072EF6 != 2) {
+    if ((g_Player.padSim >> 16) != 2) {
         PLAYER.step = Player_AxearmorStand;
         PLAYER.step_s = 0;
         PLAYER.velocityY = 0;
@@ -1400,7 +1400,7 @@ void func_80118C28(s32 arg0) {
     D_80138048 = D_800ACFB4[arg0][3];
 }
 
-s32 func_80118C84(s16 arg0, s16 arg1) {
+s32 func_80118C84(s32 arg0, s32 arg1) {
     Entity* entity = GetFreeEntity(0x38, 0x40);
 
     if (entity != NULL) {

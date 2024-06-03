@@ -2,6 +2,83 @@
 #include "sfx.h"
 #include "player.h"
 
+// data order is slightly different between US and HD
+// maybe this suggests a file split
+
+#if defined(VERSION_US)
+s32 D_800ACDF8 = 0;
+s32 D_800ACDFC = 0;
+s32 D_800ACE00[] = {
+    PAD_SQUARE, PAD_CIRCLE, PAD_CROSS, PAD_TRIANGLE,
+    PAD_R2,     PAD_L1,     PAD_R1,    PAD_L2,
+};
+
+u16 D_800ACE20[] = {
+    0xFFD0, 0xFFD0, 0xFFD1, 0xFFD8, 0xFFD7, 0xFFE2, 0xFFE1, 0xFFE2, 0xFFD7,
+    0xFFD7, 0xFFCF, 0xFFCD, 0xFFCD, 0xFFD6, 0xFFD7, 0xFFE3, 0xFFE3, 0x0000,
+};
+
+s32 D_800ACE44 = 0;
+
+s32 D_800ACE48[] = {
+    0x0000, 0x0000, 0x8000, 0x801F, 0x01FF, 0x81FF,
+};
+
+RECT D_800ACE60 = {0x0200, 0x01C0, 0x003F, 0x003F};
+
+#elif defined(VERSION_HD)
+u16 D_800ACE20[] = {
+    0xFFD0, 0xFFD0, 0xFFD1, 0xFFD8, 0xFFD7, 0xFFE2, 0xFFE1, 0xFFE2, 0xFFD7,
+    0xFFD7, 0xFFCF, 0xFFCD, 0xFFCD, 0xFFD6, 0xFFD7, 0xFFE3, 0xFFE3, 0x0000,
+};
+
+#if defined(VERSION_HD)
+s32 D_800ACEDC_hd = 0;
+#endif
+
+s32 D_800ACE44 = 0;
+
+s32 D_800ACE48[] = {
+    0x0000, 0x0000, 0x8000, 0x801F, 0x01FF, 0x81FF,
+};
+
+RECT D_800ACE60 = {0x0200, 0x01C0, 0x003F, 0x003F};
+
+s32 D_800ACDF8 = 0;
+s32 D_800ACDFC = 0;
+s32 D_800ACE00[] = {
+    PAD_SQUARE, PAD_CIRCLE, PAD_CROSS, PAD_TRIANGLE,
+    PAD_R2,     PAD_L1,     PAD_R1,    PAD_L2,
+};
+
+#endif
+
+s16 D_800ACE68[] = {-8, -8, -8, -8};
+s16 D_800ACE70[] = {8, 8, 8, 8};
+s16 D_800ACE78[] = {7, 0, 0, 0, 0, 0, -7};
+s16 D_800ACE88[] = {-22, -22, -22, -22};
+s16 D_800ACE90[] = {29, 25, 25, 25};
+s16 D_800ACE98[] = {24, 17, 9, 1, -7, -14, -21};
+s16 D_800ACEA8[] = {0, 0, 0, 0};
+s16 D_800ACEB0[] = {24, 17, 9, 5, 5, 1, 1};
+
+Point16 D_800ACEC0[] = {
+    {0, -22},
+    {0, -22},
+    {4, -22},
+    {-4, -22},
+};
+Point16 D_800ACED0[] = {
+    {0, 29},
+    {0, 25},
+    {4, 25},
+    {-4, 25},
+};
+Point16 D_800ACEE0[] = {
+    {7, 24},  {7, 17},  {7, 9},  {7, 1},  {7, -7},  {7, -14},  {7, -21},
+    {-7, 24}, {-7, 17}, {-7, 9}, {-7, 1}, {-7, -7}, {-7, -14}, {-7, -21},
+};
+
 void func_8010C36C(void);
 void func_8010C9F4(void);
 void func_8010D010(void);
@@ -241,14 +318,14 @@ void func_80109A44(s32 isTransformed) {
         }
         for (i = 0; i < 7; i++) {
             if (status & (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) {
-                D_800ACEC0[i + 8].y = D_800ACE78[i];
+                D_800ACEE0[i].y = D_800ACE78[i];
                 D_800ACEE0[i + 7].y = D_800ACE78[i];
             } else if (
                 status & (PLAYER_STATUS_WOLF_FORM | PLAYER_STATUS_UNK_20)) {
-                D_800ACEC0[i + 8].y = D_800ACEB0[i];
+                D_800ACEE0[i].y = D_800ACEB0[i];
                 D_800ACEE0[i + 7].y = D_800ACEB0[i];
             } else {
-                D_800ACEC0[i + 8].y = D_800ACE98[i];
+                D_800ACEE0[i].y = D_800ACE98[i];
                 D_800ACEE0[i + 7].y = D_800ACE98[i];
             }
         }

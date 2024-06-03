@@ -1698,7 +1698,6 @@ extern s16 D_800705CC[];       // part of g_Clut
 extern u32 D_80070BCC;         // part of g_Clut
 
 extern PlayerState g_Player;
-extern u16 g_Player_D_80072EF6; // TODO merge with g_Player
 // the following are most likely part of g_Player
 extern Entity* D_psp_091CF3A0;
 extern s32 D_psp_091CF3A4; // maybe not s32 but a pointer?

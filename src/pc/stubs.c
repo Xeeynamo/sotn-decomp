@@ -152,25 +152,12 @@ s16 D_800AC998[] = {
     0x0300, 0x0320, 0x0300, 0x0320, 0x0340, 0x0360, 0x0340, 0x0360,
     0x0380, 0x03A0, 0x0380, 0x03A0, 0x03C0, 0x03E0, 0x03C0, 0x03E0,
 };
-s32 D_800ACDF8;
-s32 D_800ACDFC;
-s32 D_800ACE00[8];
-u16 D_800ACE20[18]; // size guessed up to next symbol
-s32 D_800ACE44;
-s32 D_800ACE48[12]; // size guessed
+u32 D_800B0728 = 0x910C90EB;
+RECT D_800B0788 = {0x0301, 0x01F8, 0x0030, 0x0001};
+RECT D_800B0790 = {0x0301, 0x01FC, 0x0030, 0x0001};
+Point32 D_800B0688[8] = {0};
+u16 D_800B06C8[0x30] = {0};
 s16 D_800ACF84[8];
-RECT D_800ACE60;
-s16 D_800ACE68[] = {0, 0, 0, 0, 0, 0, 0, 0};
-s16 D_800ACE70[] = {0, 0, 0, 0, 0, 0, 0, 0};
-s16 D_800ACE78[] = {0, 0, 0, 0, 0, 0, 0, 0};
-s16 D_800ACE98[] = {0, 0, 0, 0, 0, 0, 0, 0};
-s16 D_800ACEA8[] = {0, 0, 0, 0, 0, 0, 0, 0};
-s16 D_800ACEB0[] = {0, 0, 0, 0, 0, 0, 0, 0};
-s16 D_800ACE88[] = {0, 0, 0, 0, 0, 0, 0, 0};
-s16 D_800ACE90[] = {0, 0, 0, 0, 0, 0, 0, 0};
-Point16 D_800ACEC0[16];
-Point16 D_800ACED0[16];
-Point16 D_800ACEE0[16] = {0};
 u8 D_800ACF4C[0x200];                 // random size just to play safe
 u8 D_800ACF54[0x200];                 // random size just to play safe
 s32 D_800ACF74;                       // These two might...
@@ -180,6 +167,44 @@ s16 D_800ACF60[6];                    // guessed size
 s16 D_800ACF6C[4];                    // guessed size
 s16 D_800ACF8A[5];                    // guessed size
 s16 D_800ACF94[16];                   // guessed size
+u8 D_800ACFB4[20][4];                 // TODO AnimationFrames*[], random size
+s32 D_800B0830[99];                   // random size to play safe
+s32 D_800B083C[99];                   // random size to play safe
+AnimationFrame D_800B0798[40];        // random size to play safe
+u8 D_800B0F94[100][5];                // random size to play safe
+SVECTOR stubbbbbbbb = {0};
+SVECTOR* D_800B0CB4[][4] = {
+    // a lot of random data to play safe
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
+};
+unk_800B08CC D_800B08CC[6] = {0};
+FactoryBlueprint g_FactoryBlueprints[400] = {0}; // TODO load from JSON file
+s32 D_800B07C8 = 0x12345678;
 u8 D_800AD094[0x30];
 Unkstruct_80138094 D_80138094[100]; // unknown size
 s32 D_800AE270[] = {0xFF, 0xFF, 0xFF, 0x7F, 0x7F, 0x3F, 0x7F, 0x3F, 0x7F};
@@ -372,7 +397,7 @@ s32 g_WingSmashTimer;
 s32 g_BatScreechDone;
 s32 g_MistTimer;
 s32 D_80138008;
-s32 D_8013800C[1]; // unknown size
+s32 D_8013800C[100]; // random size to play safe
 s32 D_80138038;
 u8 D_8013803C;
 u8 D_80138040;
@@ -521,6 +546,19 @@ s16 D_8013B650[4];
 s32 g_CdCommandStatus;
 const char* D_80138784[0x800];
 s32 D_8013B65C;
+s32 D_8013841C;
+s32 D_8013842C;
+s32 D_80138430;
+s32 D_80138438;
+s32 D_80138440;
+s32 D_80138444;
+s32 D_80138448;
+s32 D_8013844C;
+s32 D_80138450;
+s32 D_80138454;
+Point16 D_8013839C[12];
+Point16 D_8013804C[16];
+u_long* D_80139A7C;
 
 // sound stubs
 
@@ -541,18 +579,10 @@ void func_801083BC(void) { NOT_IMPLEMENTED; }
 
 void func_801042C4(s32 arg0) { NOT_IMPLEMENTED; }
 
-void func_8011A4D0(void) { NOT_IMPLEMENTED; }
-
-void func_8011A9D8(void) { NOT_IMPLEMENTED; }
-
-void func_8011A870(void) { NOT_IMPLEMENTED; }
-
 s32 func_800F0CD8(s32 arg0) {
     NOT_IMPLEMENTED;
     return 0;
 }
-
-void func_80118C28(s32 arg0) { NOT_IMPLEMENTED; }
 
 void EntityWeaponAttack(Entity* self) { NOT_IMPLEMENTED; }
 void func_ptr_80170004(Entity* self) { NOT_IMPLEMENTED; }
@@ -574,66 +604,31 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
     return 0;
 }
 
-Entity* GetFreeEntity(s16 start, s16 end);
-Entity* CreateEntFactoryFromEntity(
-    Entity* source, u32 factoryParams, s32 arg2_raw) {
-    return GetFreeEntity(8, 16);
-}
-
 u16 g_FontCharData[0x60] = {1, 1, 1, 0, 0, 0};
 u16* func_80106A28(u32 arg0, u16 kind) {
     NOT_IMPLEMENTED;
     return g_FontCharData;
 }
 
-// copied from 75F54.c
-Entity* GetFreeEntity(s16 start, s16 end) {
-    Entity* entity = &g_Entities[start];
-    s16 i;
-
-    for (i = start; i < end; i++, entity++) {
-        if (entity->entityId == E_NONE) {
-            return entity;
-        }
-    }
-    return NULL;
-}
-s32 func_80118C84(s16 arg0, s16 arg1) { NOT_IMPLEMENTED; }
-
-void ControlBatForm(void) { NOT_IMPLEMENTED; }
-
-void func_801177A0(void) { NOT_IMPLEMENTED; }
-
-void ControlMistForm(void) { NOT_IMPLEMENTED; }
-
-void func_801182F8(void) { NOT_IMPLEMENTED; }
-
-void func_8012EF2C(void) { NOT_IMPLEMENTED; }
-
-void func_8012EAD0(void) { NOT_IMPLEMENTED; }
-
-void func_801186EC(void) { NOT_IMPLEMENTED; }
-
-void func_80116208(void) { NOT_IMPLEMENTED; }
-
 void func_80115394(s32* arg0, s16 arg1, s16 arg2) { NOT_IMPLEMENTED; }
 
-void func_80118614(void) { NOT_IMPLEMENTED; }
+void func_8012C600(void) { NOT_IMPLEMENTED; }
 
-void PlayerStepHellfire(void) { NOT_IMPLEMENTED; }
-
-void func_80118670(void) { NOT_IMPLEMENTED; }
-
-void func_80118640(void) { NOT_IMPLEMENTED; }
-
-void func_801166A4(void) { NOT_IMPLEMENTED; }
-
-void func_8011678C(void) { NOT_IMPLEMENTED; }
-
-void func_801167D0(void) { NOT_IMPLEMENTED; }
-
-void func_80115F54(void) { NOT_IMPLEMENTED; }
-
-void func_80117AC0(void) { NOT_IMPLEMENTED; }
-
-void func_8011A328(Entity* entity, s32 arg1) { NOT_IMPLEMENTED; }
+void EntitySubwpnThrownDagger(Entity* self) { NOT_IMPLEMENTED; }
+void EntitySubwpnThrownAxe(Entity* self) { NOT_IMPLEMENTED; }
+void EntityPlayerBlinkWhite(Entity* self) { NOT_IMPLEMENTED; }
+void EntityNumberMovesToHpMeter(Entity* self) { NOT_IMPLEMENTED; }
+void EntityLevelUpAnimation(Entity* self) { NOT_IMPLEMENTED; }
+void EntityMpReplenished(Entity* self) { NOT_IMPLEMENTED; }
+void EntityPlayerDissolves(Entity* self) { NOT_IMPLEMENTED; }
+void EntityMist(Entity* self) { NOT_IMPLEMENTED; }
+void EntityGuardText(Entity* self) { NOT_IMPLEMENTED; }
+void EntityTransparentWhiteCircle(Entity* self) { NOT_IMPLEMENTED; }
+void EntityPlayerPinkEffect(Entity* self) { NOT_IMPLEMENTED; }
+void EntityHolyWaterBreakGlass(Entity* self) { NOT_IMPLEMENTED; }
+void EntityStopWatch(Entity* self) { NOT_IMPLEMENTED; }
+void func_80123B40(Entity* self) { NOT_IMPLEMENTED; }
+void EntityBatEcho(Entity* self) { NOT_IMPLEMENTED; }
+void func_8012F894(Entity* self) { NOT_IMPLEMENTED; }
+void func_80129864(Entity* self) { NOT_IMPLEMENTED; }
+void EntitySummonSpirit(Entity* self) { NOT_IMPLEMENTED; }
