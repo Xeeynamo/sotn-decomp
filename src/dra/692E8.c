@@ -4,6 +4,7 @@
 
 void func_8010C36C(void);
 void func_8010C9F4(void);
+void func_8010D010(void);
 void func_8010D2C8(void);
 
 void func_801092E8(s32 arg0) {
