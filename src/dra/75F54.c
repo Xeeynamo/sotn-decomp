@@ -775,8 +775,8 @@ void func_801177A0(void) {
             } else {
                 else_cycles++;
             }
-            if (D_800ACE88[i] < D_800ACEC0[i].unk2) {
-                D_800ACEC0[i].unk2--;
+            if (D_800ACE88[i] < D_800ACEC0[i].y) {
+                D_800ACEC0[i].y--;
             } else {
                 else_cycles++;
             }
@@ -1119,8 +1119,8 @@ void func_801182F8(void) {
         } else {
             else_cycles++;
         }
-        if (D_800ACE88[i] < D_800ACEC0[i].unk2) {
-            D_800ACEC0[i].unk2--;
+        if (D_800ACE88[i] < D_800ACEC0[i].y) {
+            D_800ACEC0[i].y--;
         } else {
             else_cycles++;
         }
