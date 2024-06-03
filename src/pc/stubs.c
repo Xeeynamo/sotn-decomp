@@ -162,6 +162,7 @@ s16 D_800ACF84[8];
 RECT D_800ACE60;
 Point16 D_800ACEC0[4];
 Unkstruct_800ACED0 D_800ACED0;
+Point16 D_800ACEE0[4];
 u8 D_800ACF4C[0x200];                 // random size just to play safe
 u8 D_800ACF54[0x200];                 // random size just to play safe
 s32 D_800ACF74;                       // These two might...
