@@ -4,6 +4,7 @@
 
 void func_8010C36C(void);
 void func_8010C9F4(void);
+void func_8010D2C8(void);
 
 void func_801092E8(s32 arg0) {
     D_800A37D8[0] = D_800ACE48[arg0 * 2];
