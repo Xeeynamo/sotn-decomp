@@ -19,7 +19,7 @@ on:
 
 jobs:
   build-linux:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Install requirements
         run: sudo apt-get update && sudo apt-get install build-essential libsdl2-dev

@@ -32,7 +32,7 @@ jobs:
     # Building and testing cannot work if the repository owner is not Xeeynamo
     # due to the missing secrets to clone the CI dependencies
     if: github.repository == 'Xeeynamo/sotn-decomp'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       VERSION: ${{ matrix.version }}
     steps:
@@ -104,7 +104,7 @@ jobs:
             version: pspeu
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     needs: build-and-test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       VERSION: ${{ matrix.version }}
       FROGRESS_API_BASE_URL: ${{ secrets.FROGRESS_API_BASE_URL }}
@@ -147,7 +147,7 @@ jobs:
             version: us
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     needs: build-and-test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       VERSION: ${{ matrix.version }}
     steps:
