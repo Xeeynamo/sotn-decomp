@@ -224,7 +224,7 @@ void func_801166A4(void) {
 void func_8011678C(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
-    if (g_Player_D_80072EF6 != 2) {
+    if ((g_Player.padSim >> 16) != 2) {
         func_8010E570(0);
     }
 }
@@ -233,7 +233,7 @@ void func_801167D0(void) {
     s32* velocityX = &PLAYER.velocityX;
     PLAYER.velocityY = 0;
     *velocityX = 0;
-    if (g_Player_D_80072EF6 != 2) {
+    if ((g_Player.padSim >> 16) != 2) {
         PLAYER.step = Player_AxearmorStand;
         PLAYER.step_s = 0;
         PLAYER.velocityY = 0;
