@@ -374,10 +374,16 @@ extern u16 D_800ACE20[18]; // size guessed up to next symbol
 extern s32 D_800ACE44;
 extern s32 D_800ACE48[12]; // size guessed
 extern RECT D_800ACE60;
+extern s16 D_800ACE68[];
+extern s16 D_800ACE70[];
+extern s16 D_800ACE78[];
+extern s16 D_800ACE98[];
+extern s16 D_800ACEA8[];
+extern s16 D_800ACEB0[];
 extern s16 D_800ACE88[];
 extern s16 D_800ACE90[];
-extern Point16 D_800ACEC0[4];
-extern Point16 D_800ACED0[4];
+extern Point16 D_800ACEC0[16];
+extern Point16 D_800ACED0[16];
 extern Point16 D_800ACEE0[16];
 #if defined(VERSION_HD)
 extern s32 D_800ACEDC_hd;

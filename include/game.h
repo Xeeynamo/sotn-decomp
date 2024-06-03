@@ -274,6 +274,7 @@ extern u8 g_BmpCastleMap[0x20000];
 #define PLAYER_STATUS_BAT_FORM 0x00000001
 #define PLAYER_STATUS_MIST_FORM 0x00000002
 #define PLAYER_STATUS_WOLF_FORM 0x00000004
+#define PLAYER_STATUS_UNK_20 0x00000020
 #define PLAYER_STATUS_TRANSFORM                                                \
     (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM | PLAYER_STATUS_WOLF_FORM)
 #define PLAYER_STATUS_STONE 0x00000080
@@ -1552,7 +1553,7 @@ typedef struct {
     //  13 = invincibility, 14 = invincibility from consumables
     /* 80072F00 */ s16 D_80072F00[16]; // poison timer
     /* 80072F20 */ s32 pl_vram_flag;
-    /* 80072F24 */ s32 unk04;
+    /* 80072F24 */ s32 unk04; // unknown, check func_80109A44
     /* 80072F28 */ s32 unk08;
     /* 80072F2C */ u32 unk0C;
     /* 80072F30 */ s32 unk10;

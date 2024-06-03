@@ -168,8 +168,8 @@ s16 D_800ACEA8[] = {0, 0, 0, 0, 0, 0, 0, 0};
 s16 D_800ACEB0[] = {0, 0, 0, 0, 0, 0, 0, 0};
 s16 D_800ACE88[] = {0, 0, 0, 0, 0, 0, 0, 0};
 s16 D_800ACE90[] = {0, 0, 0, 0, 0, 0, 0, 0};
-Point16 D_800ACEC0[4];
-Point16 D_800ACED0[4];
+Point16 D_800ACEC0[16];
+Point16 D_800ACED0[16];
 Point16 D_800ACEE0[16] = {0};
 u8 D_800ACF4C[0x200];                 // random size just to play safe
 u8 D_800ACF54[0x200];                 // random size just to play safe
@@ -635,7 +635,5 @@ void func_801167D0(void) { NOT_IMPLEMENTED; }
 void func_80115F54(void) { NOT_IMPLEMENTED; }
 
 void func_80117AC0(void) { NOT_IMPLEMENTED; }
-
-void func_80109A44(s32 arg0) { NOT_IMPLEMENTED; }
 
 void func_8011A328(Entity* entity, s32 arg1) { NOT_IMPLEMENTED; }
