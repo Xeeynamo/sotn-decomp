@@ -1400,7 +1400,7 @@ void func_80118C28(s32 arg0) {
     D_80138048 = D_800ACFB4[arg0][3];
 }
 
-s32 func_80118C84(s16 arg0, s16 arg1) {
+s32 func_80118C84(s32 arg0, s32 arg1) {
     Entity* entity = GetFreeEntity(0x38, 0x40);
 
     if (entity != NULL) {
