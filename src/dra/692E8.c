@@ -2,9 +2,12 @@
 #include "sfx.h"
 #include "player.h"
 
+// data order is slightly different between US and HD
+// maybe this suggests a file split
+
+#if defined(VERSION_US)
 s32 D_800ACDF8 = 0;
 s32 D_800ACDFC = 0;
-
 s32 D_800ACE00[] = {
     PAD_SQUARE, PAD_CIRCLE, PAD_CROSS, PAD_TRIANGLE,
     PAD_R2,     PAD_L1,     PAD_R1,    PAD_L2,
@@ -22,6 +25,33 @@ s32 D_800ACE48[] = {
 };
 
 RECT D_800ACE60 = {0x0200, 0x01C0, 0x003F, 0x003F};
+
+#elif defined(VERSION_HD)
+u16 D_800ACE20[] = {
+    0xFFD0, 0xFFD0, 0xFFD1, 0xFFD8, 0xFFD7, 0xFFE2, 0xFFE1, 0xFFE2, 0xFFD7,
+    0xFFD7, 0xFFCF, 0xFFCD, 0xFFCD, 0xFFD6, 0xFFD7, 0xFFE3, 0xFFE3, 0x0000,
+};
+
+#if defined(VERSION_HD)
+s32 D_800ACEDC_hd = 0;
+#endif
+
+s32 D_800ACE44 = 0;
+
+s32 D_800ACE48[] = {
+    0x0000, 0x0000, 0x8000, 0x801F, 0x01FF, 0x81FF,
+};
+
+RECT D_800ACE60 = {0x0200, 0x01C0, 0x003F, 0x003F};
+
+s32 D_800ACDF8 = 0;
+s32 D_800ACDFC = 0;
+s32 D_800ACE00[] = {
+    PAD_SQUARE, PAD_CIRCLE, PAD_CROSS, PAD_TRIANGLE,
+    PAD_R2,     PAD_L1,     PAD_R1,    PAD_L2,
+};
+
+#endif
 
 s16 D_800ACE68[] = {-8, -8, -8, -8};
 s16 D_800ACE70[] = {8, 8, 8, 8};
