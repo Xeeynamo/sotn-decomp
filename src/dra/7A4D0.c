@@ -603,8 +603,8 @@ void func_8011B5A4(Entity* self) {
                 DestroyEntity(self);
                 return;
             }
-            self->posX.i.hi = PLAYER.posX.i.hi + D_800ACEE0[D_800AD5E0[i]].unk0;
-            self->posY.i.hi = PLAYER.posY.i.hi + D_800ACEE0[D_800AD5E0[i]].unk2;
+            self->posX.i.hi = PLAYER.posX.i.hi + D_800ACEE0[D_800AD5E0[i]].x;
+            self->posY.i.hi = PLAYER.posY.i.hi + D_800ACEE0[D_800AD5E0[i]].y;
             self->velocityY = FIX(-0.25);
             self->rotY = self->rotX = D_800AD570[1] + 0x40;
             self->step++;
@@ -620,8 +620,8 @@ void func_8011B5A4(Entity* self) {
                 DestroyEntity(self);
                 return;
             }
-            self->posX.i.hi = PLAYER.posX.i.hi + D_800ACEE0[D_800AD5F0[i]].unk0;
-            self->posY.i.hi = PLAYER.posY.i.hi + D_800ACEE0[D_800AD5F0[i]].unk2;
+            self->posX.i.hi = PLAYER.posX.i.hi + D_800ACEE0[D_800AD5F0[i]].x;
+            self->posY.i.hi = PLAYER.posY.i.hi + D_800ACEE0[D_800AD5F0[i]].y;
             self->velocityY = D_800AD558[paramsLo];
             self->rotY = self->rotX = D_800AD570[paramsLo] + 0x20;
             self->step++;
