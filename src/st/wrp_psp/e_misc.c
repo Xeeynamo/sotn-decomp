@@ -70,13 +70,13 @@ void func_8018F510(Entity* entity) {
     }
 }
 
-extern s32 D_80181020[];
+extern s32 unk14_yVel[];
 extern u8 D_80181038[];
 extern u16 D_8018103C[];
 
 void func_8018F838(Entity* self) {
     if (!self->step) {
-        self->velocityY = D_80181020[self->ext.generic.unk94];
+        self->velocityY = unk14_yVel[self->ext.generic.unk94];
         self->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
         self->palette = PAL_OVL(0x195);
         self->animSet = ANIMSET_DRA(2);

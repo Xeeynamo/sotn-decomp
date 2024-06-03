@@ -101,7 +101,7 @@ segments:
       - [0xEFD0, data] # D_psp_09246650
       - [0xEFE0, data] # D_psp_09246660
       - [0xF010, .data, wrp_psp/wrp_data_F010] # D_80180FF8
-      - [0xF020, data] # D_80181008
+      - [0xF020, .data, wrp_psp/wrp_data_F010] # D_80181008
       - [0xF050, data] # D_80181038
       - [0xF060, data] # D_psp_092466E0
       - [0xF390, data] # D_psp_09246A10
