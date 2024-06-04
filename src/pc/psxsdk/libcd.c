@@ -46,7 +46,7 @@ char* CdSyncModeToStr(int mode) {
     return "";
 }
 
-#define DECODE_BCD(x) (((x) >> 4) * 10 + ((x)&0xF))
+#define DECODE_BCD(x) (((x) >> 4) * 10 + ((x) & 0xF))
 
 int CdPosToInt(CdlLOC* p) {
     return (75 * (60 * DECODE_BCD(p->minute) + DECODE_BCD(p->second))) +
