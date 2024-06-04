@@ -29,9 +29,9 @@ AlignConsecutiveMacros:
   AlignCompound:   false
   PadOperators:    false
 AlignConsecutiveShortCaseStatements:
-  Enabled:         false
-  AcrossEmptyLines: false
-  AcrossComments:  false
+  Enabled:         true
+  AcrossEmptyLines: true
+  AcrossComments:  true
   AlignCaseColons: false
 AlignEscapedNewlines: Right
 AlignOperands:   Align
