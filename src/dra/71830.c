@@ -303,7 +303,7 @@ void func_801120B4(void) {
             local_flags = 1;
         }
         if (((u16)PLAYER.animFrameIdx >= 7U) ||
-            ((PLAYER.animFrameDuration < 0))) {
+            (PLAYER.animFrameDuration < 0)) {
             local_flags = 7;
         }
         break;

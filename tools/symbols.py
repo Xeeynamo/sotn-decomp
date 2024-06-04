@@ -132,7 +132,7 @@ def re_ident(name):
 
 # regex helper to match assembly registers
 def re_reg(name):
-    return f"(?P<{name}>\$[0-9a-z]+)"
+    return rf"(?P<{name}>\$[0-9a-z]+)"
 
 
 # regex helper to match the two %lo and %hi functions
@@ -142,39 +142,39 @@ re_func = r"(?P<FUNC>\%(hi|lo))"
 # all the regex patterns supported by the MIPS assembly parser
 patterns = [
     (
-        f"{re_splat_line()}\\s+{re_ident('OP')}\\s+{re_reg('DST')},\\s+{re_func}\({re_ident('SYM')}\)\({re_reg('IMM')}\)",
+        rf"{re_splat_line()}\\s+{re_ident('OP')}\\s+{re_reg('DST')},\\s+{re_func}\({re_ident('SYM')}\)\({re_reg('IMM')}\)",
         ["LOC", "VRAM", "VAL", "OP", "DST", "FUNC", "SYM", "IMM"],
     ),
     (
-        f"{re_splat_line()}\\s+{re_ident('OP')}\\s+{re_reg('DST')},\\s+{re_func}\({re_ident('SYM')}\)",
+        rf"{re_splat_line()}\\s+{re_ident('OP')}\\s+{re_reg('DST')},\\s+{re_func}\({re_ident('SYM')}\)",
         ["LOC", "VRAM", "VAL", "OP", "DST", "FUNC", "SYM"],
     ),
     (
-        f"{re_splat_line()}\\s+{re_ident('OP')}\\s+{re_reg('DST')},\\s+{re_reg('LEFT')},\\s+{re_reg('RIGHT')}",
+        rf"{re_splat_line()}\\s+{re_ident('OP')}\\s+{re_reg('DST')},\\s+{re_reg('LEFT')},\\s+{re_reg('RIGHT')}",
         ["LOC", "VRAM", "VAL", "OP", "DST", "LEFT", "RIGHT"],
     ),
     (
-        f"{re_splat_line()}\\s+{re_ident('OP')}\\s+{re_reg('DST')},\\s+{re_reg('LEFT')},\\s+{re_func}\({re_ident('SYM')}\)\({re_reg('IMM')}\)",
+        rf"{re_splat_line()}\\s+{re_ident('OP')}\\s+{re_reg('DST')},\\s+{re_reg('LEFT')},\\s+{re_func}\({re_ident('SYM')}\)\({re_reg('IMM')}\)",
         ["LOC", "VRAM", "VAL", "OP", "DST", "LEFT", "FUNC", "SYM", "IMM"],
     ),
     (
-        f"{re_splat_line()}\\s+{re_ident('OP')}\\s+{re_reg('DST')},\\s+{re_reg('LEFT')},\\s+{re_func}\({re_ident('SYM')}\)",
+        rf"{re_splat_line()}\\s+{re_ident('OP')}\\s+{re_reg('DST')},\\s+{re_reg('LEFT')},\\s+{re_func}\({re_ident('SYM')}\)",
         ["LOC", "VRAM", "VAL", "OP", "DST", "LEFT", "FUNC", "SYM"],
     ),
     (
-        f"{re_splat_line()}\\s+{re_ident('OP')}\\s+{re_reg('DST')},\\s+{re_reg('LEFT')}",
+        rf"{re_splat_line()}\\s+{re_ident('OP')}\\s+{re_reg('DST')},\\s+{re_reg('LEFT')}",
         ["LOC", "VRAM", "VAL", "OP", "DST", "LEFT"],
     ),
     (
-        f"{re_splat_line()}\\s+{re_ident('OP')}\\s+\.{re_ident('LABEL')}",
+        rf"{re_splat_line()}\\s+{re_ident('OP')}\\s+\.{re_ident('LABEL')}",
         ["LOC", "VRAM", "VAL", "OP", "LABEL"],
     ),
     (
-        f"{re_splat_line()}\\s+{re_ident('OP')}\\s+{re_reg('DST')},\\s+\.{re_ident('LABEL')}",
+        rf"{re_splat_line()}\\s+{re_ident('OP')}\\s+{re_reg('DST')},\\s+\.{re_ident('LABEL')}",
         ["LOC", "VRAM", "VAL", "OP", "DST", "LABEL"],
     ),
     (
-        f"{re_splat_line()}\\s+{re_ident('OP')}$",
+        rf"{re_splat_line()}\\s+{re_ident('OP')}$",
         ["LOC", "VRAM", "VAL", "OP"],
     ),
     (r"glabel (?P<FUNC_NAME>\w+)", ["FUNC_NAME"]),

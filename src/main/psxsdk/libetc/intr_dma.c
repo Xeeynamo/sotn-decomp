@@ -47,7 +47,7 @@ Callback setIntrDMA(int index, Callback callback) {
         if (callback != NULL) {
             D_8002D380[index] = callback;
             *D_8002D37C =
-                (*D_8002D37C & 0xFFFFFF) | 0x800000 | ((1 << (index + 16)));
+                (*D_8002D37C & 0xFFFFFF) | 0x800000 | (1 << (index + 16));
         } else {
             D_8002D380[index] = 0;
             *D_8002D37C =

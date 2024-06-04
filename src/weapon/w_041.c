@@ -73,7 +73,7 @@ Entity* func_123000_8017A994(Entity* self, s16 angleTarget, s16 tolerance) {
                 continue;
             }
         }
-        if ((other->flags & FLAG_UNK_80000)) {
+        if (other->flags & FLAG_UNK_80000) {
             entCount++;
             sp10[i] = 1;
             continue;

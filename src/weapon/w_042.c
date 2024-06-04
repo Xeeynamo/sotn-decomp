@@ -173,8 +173,8 @@ void func_ptr_80170004(Entity* self) {
         break;
     case 2:
         if (self->animFrameDuration == 1) {
-            if ((self->animFrameIdx == 6 || self->animFrameIdx == 0xC ||
-                 self->animFrameIdx == 0x12)) {
+            if (self->animFrameIdx == 6 || self->animFrameIdx == 0xC ||
+                self->animFrameIdx == 0x12) {
                 unk = 0x3E;
                 // TODO: FACTORY()
                 if (g_api.CreateEntFactoryFromEntity(

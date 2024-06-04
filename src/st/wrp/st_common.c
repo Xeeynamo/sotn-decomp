@@ -217,7 +217,7 @@ void func_8018BF18(s32 arg0, s16 arg1) {
     g_CurrentEntity->velocityY = func_8018BED0(arg0 - 0x40, arg1);
 }
 
-u8 func_8018BF84(s16 x, s16 y) { return ((ratan2(y, x) >> 4) + 0x40); }
+u8 func_8018BF84(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 0x40; }
 
 u8 func_8018BFBC(Entity* a, Entity* b) {
     s32 diffX = (u16)b->posX.i.hi - (u16)a->posX.i.hi;

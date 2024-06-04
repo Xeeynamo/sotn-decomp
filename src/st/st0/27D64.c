@@ -26,7 +26,7 @@ bool func_801A7E2C(Entity* self) {
     if (self->hitboxWidth >= diffX) {
         diffX = PLAYER.posY.i.hi - self->posY.i.hi;
         diffX = abs(diffX);
-        return (self->hitboxHeight >= diffX);
+        return self->hitboxHeight >= diffX;
     } else {
         return false;
     }

@@ -203,7 +203,7 @@ void func_80194B7C(s32 arg0, s16 arg1) {
     g_CurrentEntity->velocityY = func_80194B34((arg0 - 0x40) & 0xFF, arg1);
 }
 
-u8 func_80194BE8(s16 x, s16 y) { return ((ratan2(y, x) >> 4) + 0x40); }
+u8 func_80194BE8(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 0x40; }
 
 u8 func_80194C20(Entity* arg0, Entity* arg1) {
     u16 x;

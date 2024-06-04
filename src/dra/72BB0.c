@@ -187,7 +187,7 @@ void func_801131C4(void) {
     if ((g_Player.padTapped & PAD_CROSS) && !(g_Player.unk46 & PAD_LEFT)) {
         if (g_Player.padPressed & PAD_DOWN) {
             for (i = 0; i < 4; i++) {
-                if ((g_Player.colliders[i].effects & EFFECT_SOLID_FROM_ABOVE)) {
+                if (g_Player.colliders[i].effects & EFFECT_SOLID_FROM_ABOVE) {
                     g_Player.D_80072F00[7] = 8;
                     return;
                 }
@@ -880,13 +880,13 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
         if ((g_StageId != STAGE_BO6) && (g_StageId != STAGE_RBO6) &&
             (g_StageId != STAGE_DRE)) {
             for (var_s0 = 2; var_s0 < 7; var_s0++) {
-                if ((g_Player.colliders3[var_s0].effects & 2)) {
+                if (g_Player.colliders3[var_s0].effects & 2) {
                     break;
                 }
             }
             if (var_s0 == 7) {
                 for (var_s0 = 9; var_s0 < 14; var_s0++) {
-                    if ((g_Player.colliders3[var_s0].effects & 2)) {
+                    if (g_Player.colliders3[var_s0].effects & 2) {
                         break;
                     }
                 }

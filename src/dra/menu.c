@@ -18,7 +18,7 @@ typedef struct {
     /* 0x0A */ s16 padding;
 } MenuContextInit; // size = 0x1C
 
-#define CH(x) ((x)-0x20)
+#define CH(x) ((x) - 0x20)
 
 #if defined(VERSION_US)
 #define ShowText(str, id) func_800F99B8(str, id, 0);
@@ -2358,7 +2358,7 @@ void func_800F99B8(const char* str, s32 arg1, s32 arg2) {
             }
         }
         for (i = 0; i < FontHeight; i++) {
-            if ((var_a2[i * FontStride + var_a3] & 0xF0)) {
+            if (var_a2[i * FontStride + var_a3] & 0xF0) {
                 break;
             }
         }

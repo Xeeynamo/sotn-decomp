@@ -1174,7 +1174,7 @@ void RenderEntities(void) {
 }
 #endif
 
-#define PL_SPRT(x, y, flipx) (x), ((y)&0x1FF) | ((flipx) << 9)
+#define PL_SPRT(x, y, flipx) (x), ((y) & 0x1FF) | ((flipx) << 9)
 s16 D_800A21B8[] = {
     PL_SPRT(0x0201, 0x0101, false), PL_SPRT(0x0221, 0x0101, false),
     PL_SPRT(0x0231, 0x0101, false), PL_SPRT(0x0201, 0x0181, false),

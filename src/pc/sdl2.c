@@ -396,7 +396,7 @@ SDL_Texture* GetVramTexture(int tpage, int clut) {
 // that is half brightness. A value of 0xFF on PSX is double the brightness.
 // Higher values than 0x80 on PC are for now ignored without a GPU shader.
 // NOTE: For some reason it only works well on sprite primitives?
-#define PSX_COL(x) MIN(0xFF, ((unsigned int)(x)*2 - 1))
+#define PSX_COL(x) MIN(0xFF, ((unsigned int)(x) * 2 - 1))
 
 #define PSX_TEX_U(x) ((float)(x) / 256.0f)
 #define PSX_TEX_V(x) ((float)(x) / 256.0f)

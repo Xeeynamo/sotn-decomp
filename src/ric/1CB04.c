@@ -309,7 +309,7 @@ void func_80159670(void) {
     if ((g_Player.padTapped & PAD_CROSS) && (g_Player.unk46 == 0) &&
         (g_Player.padPressed & PAD_DOWN)) {
         for (i = 0; i < 4; i++) {
-            if ((g_Player.colliders[i].effects & EFFECT_SOLID_FROM_ABOVE)) {
+            if (g_Player.colliders[i].effects & EFFECT_SOLID_FROM_ABOVE) {
                 g_Player.D_80072F00[7] = 8;
                 return;
             }
@@ -677,13 +677,13 @@ void RichterHandleDamage(s32 arg0, u32 arg1, s16 arg2) {
             if ((g_StageId != STAGE_BO6) && (g_StageId != STAGE_RBO6) &&
                 (g_StageId != STAGE_DRE)) {
                 for (i = 2; i < 7; i++) {
-                    if ((g_Player.colliders3[i].effects & 2)) {
+                    if (g_Player.colliders3[i].effects & 2) {
                         break;
                     }
                 }
                 if (i == 7) {
                     for (i = 9; i < 0xE; i++) {
-                        if ((g_Player.colliders3[i].effects & 2)) {
+                        if (g_Player.colliders3[i].effects & 2) {
                             break;
                         }
                     }
