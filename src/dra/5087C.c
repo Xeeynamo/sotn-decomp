@@ -415,29 +415,27 @@ s32 func_800F0CD8(s32 arg0) {
         }
     }
 block_25:
-    if (playerX < g_Tilemap.x + g_unkGraphicsStruct.unkC.unk) {
+    if (playerX < g_Tilemap.x + g_unkGraphicsStruct.unkC) {
         if (arg0 && g_Tilemap.hSize != 1) {
-            if (g_Tilemap.x + g_unkGraphicsStruct.unkC.unk <
-                playerX + D_801375A4) {
-                PLAYER.posX.i.hi +=
-                    playerX + D_801375A4 -
-                    (g_Tilemap.x + g_unkGraphicsStruct.unkC.unk);
+            if (g_Tilemap.x + g_unkGraphicsStruct.unkC < playerX + D_801375A4) {
+                PLAYER.posX.i.hi += playerX + D_801375A4 -
+                                    (g_Tilemap.x + g_unkGraphicsStruct.unkC);
             }
         }
         g_Tilemap.scrollX.i.hi = g_Tilemap.x;
-    } else if (g_Tilemap.width + g_unkGraphicsStruct.unkC.unk - 256 < playerX) {
+    } else if (g_Tilemap.width + g_unkGraphicsStruct.unkC - 256 < playerX) {
         if (arg0 && g_Tilemap.hSize != 1) {
             if (playerX + D_801375A4 <
-                g_Tilemap.width + g_unkGraphicsStruct.unkC.unk - 256) {
+                g_Tilemap.width + g_unkGraphicsStruct.unkC - 256) {
                 PLAYER.posX.i.hi +=
                     playerX + D_801375A4 -
-                    (g_Tilemap.width + g_unkGraphicsStruct.unkC.unk - 256);
+                    (g_Tilemap.width + g_unkGraphicsStruct.unkC - 256);
             }
         }
         g_Tilemap.scrollX.i.hi = g_Tilemap.width - 256;
     } else {
-        g_Tilemap.scrollX.i.hi = playerX - g_unkGraphicsStruct.unkC.unk;
-        PLAYER.posX.i.hi = g_unkGraphicsStruct.unkC.unk;
+        g_Tilemap.scrollX.i.hi = playerX - g_unkGraphicsStruct.unkC;
+        PLAYER.posX.i.hi = g_unkGraphicsStruct.unkC;
     }
     if (g_unkGraphicsStruct.unk1C != 0) {
         if (playerY < g_Tilemap.y + 140) {
@@ -953,7 +951,7 @@ void func_800F2404(s32 arg0) {
     g_unkGraphicsStruct.unk0 = 0;
     g_unkGraphicsStruct.unk18 = 0;
     g_unkGraphicsStruct.unk1C = 0;
-    g_unkGraphicsStruct.unkC.unk = 0x80;
+    g_unkGraphicsStruct.unkC = 0x80;
 
     if (g_unkGraphicsStruct.BottomCornerTextTimer != 0) {
         FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
