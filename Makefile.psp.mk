@@ -48,10 +48,10 @@ $(MWCCGAP_APP):
 
 $(PSP_BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
 	mkdir -p $(dir $@)
-	$(MWCCGAP) $< $@ --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --asm-dir-prefix asm/pspeu $(MWCCPSP_FLAGS)
+	$(MWCCGAP) $< $@ --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path $(AS_ALLEGREX) --asm-dir-prefix asm/pspeu $(MWCCPSP_FLAGS)
 
 
-$(PSP_BUILD_DIR)/asm/psp%.s.o: asm/psp%.s
+$(PSP_BUILD_DIR)/asm/psp%.s.o: asm/psp%.s bin/allegrex-as
 	mkdir -p $(dir $@)
 	$(ASPSP) -o $@ $<
 
