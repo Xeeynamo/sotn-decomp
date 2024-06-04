@@ -561,8 +561,6 @@ void SpuGetAllKeysStatus(char* status) { NOT_IMPLEMENTED; }
 
 void func_801073C0(void) { NOT_IMPLEMENTED; }
 
-void func_800EA7CC(void) { NOT_IMPLEMENTED; }
-
 void UpdateCd(void) { NOT_IMPLEMENTED; }
 
 int CdInit(void) {
