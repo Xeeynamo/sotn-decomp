@@ -327,163 +327,162 @@ s32 SetNextRoomToLoad(u32 x, u32 y) {
     }
 }
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("dra/nonmatchings/5087C", func_800F0CD8);
-#else
 extern s16 D_80072F98;
 extern s32 D_801375A4;
 extern s32 D_801375C0;
 extern s32 D_801375C4;
 
 s32 func_800F0CD8(s32 arg0) {
-    s32 temp_a1;
-    s32 temp_a1_2;
-    s32 temp_v0;
-    s32 new_var2;
     s32 var_s0;
-    s32 var_v0;
+    s16 temp_a3;
+    s32 temp_a0;
+    s16 temp_a2;
+    s32 ret;
 
     if (g_unkGraphicsStruct.unk18 == 0) {
         if (D_80097C98 == 2) {
-            var_v0 = SetNextRoomToLoad(
-                (g_Entities[0].posX.i.hi >> 8) + g_Tilemap.left,
-                (g_Entities[0].posY.i.hi >> 8) + g_Tilemap.top);
-            D_801375C0 = (u8)g_Entities[0].posX.i.hi;
-            D_801375C4 = (u8)g_Entities[0].posY.i.hi;
-            return var_v0;
+            ret = SetNextRoomToLoad(g_Tilemap.left + (PLAYER.posX.i.hi >> 8),
+                                    g_Tilemap.top + (PLAYER.posY.i.hi >> 8));
+            D_801375C0 = PLAYER.posX.i.hi & 0xFF;
+            D_801375C4 = PLAYER.posY.i.hi & 0xFF;
+            return ret;
         }
-        if (arg0 == 0) {
+        if (arg0) {
+            if (playerX < g_Tilemap.x) {
+                ret = SetNextRoomToLoad(
+                    g_Tilemap.left - 1, g_Tilemap.top + (playerY >> 8));
+                if (ret) {
+                    D_801375C0 = PLAYER.posX.i.hi + 256;
+                    D_801375C4 = PLAYER.posY.i.hi;
+                    g_Player.unk78 = 1;
+                    return ret;
+                } else {
+                    playerX = g_Tilemap.x;
+                    PLAYER.posX.i.hi = 0;
+                }
+            }
+            if (playerX >= g_Tilemap.width) {
+                ret = SetNextRoomToLoad(
+                    g_Tilemap.right + 1, g_Tilemap.top + (playerY >> 8));
+                if (ret) {
+                    D_801375C0 = PLAYER.posX.i.hi - 256;
+                    D_801375C4 = PLAYER.posY.i.hi;
+                    g_Player.unk78 = 1;
+                    return ret;
+                } else {
+                    playerX = g_Tilemap.width - 1;
+                    PLAYER.posX.i.hi = 255;
+                }
+            }
+        } else {
             goto block_25;
-        }
-        if (playerX < g_Tilemap.x) {
-            var_v0 = SetNextRoomToLoad(
-                g_Tilemap.left - 1, (playerY >> 8) + g_Tilemap.top);
-            if (var_v0) {
-                D_80072F98 = 1;
-                D_801375C0 = g_Entities[0].posX.i.hi + 0x100;
-                D_801375C4 = g_Entities[0].posY.i.hi;
-                return var_v0;
-            }
-            g_Entities[0].posX.i.hi = 0;
-            playerX = g_Tilemap.x;
-        }
-        if (playerX >= g_Tilemap.width) {
-            var_v0 = SetNextRoomToLoad(
-                g_Tilemap.right + 1, (playerY >> 8) + g_Tilemap.top);
-            if (var_v0) {
-                D_80072F98 = 1;
-                D_801375C0 = g_Entities[0].posX.i.hi - 0x100;
-                D_801375C4 = g_Entities[0].posY.i.hi;
-                return var_v0;
-            }
-            g_Entities[0].posX.i.hi = 0xFF;
-            playerX = g_Tilemap.width - 1;
         }
     }
     if (g_unkGraphicsStruct.unk24 == 0) {
         if (playerY < g_Tilemap.y + 4) {
-            temp_v0 = SetNextRoomToLoad(
-                (playerX >> 8) + g_Tilemap.left, g_Tilemap.top - 1);
-            if (temp_v0 != false) {
-                D_80072F98 = 2;
-                D_801375C0 = g_Entities[0].posX.i.hi;
-                D_801375C4 = g_Entities[0].posY.i.hi + 0xD0;
-                playerY -= 0x80;
-                return temp_v0;
+            ret = SetNextRoomToLoad(
+                g_Tilemap.left + (playerX >> 8), g_Tilemap.top - 1);
+            if (ret) {
+                D_801375C0 = PLAYER.posX.i.hi;
+                D_801375C4 = PLAYER.posY.i.hi + 208;
+                playerY -= 128;
+                g_Player.unk78 = 2;
+                return ret;
+            } else {
+                playerY = g_Tilemap.y + 4;
+                PLAYER.posY.i.hi = 0;
             }
-            g_Entities[0].posY.i.hi = 0;
-            playerY = g_Tilemap.y + 4;
         }
-        var_s0 = 0x30;
-        if ((!(*g_Player.pl_vram_flag & 1)) && !(g_Player.unk0C & 3)) {
-            var_s0 = 0x18;
+        var_s0 = 48;
+        if (!(g_Player.pl_vram_flag & 1) &&
+            !(g_Player.unk0C &
+              (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM))) {
+            var_s0 = 24;
         }
-        if (playerY >= ((g_Tilemap.height - var_s0) + 0x14)) {
-            temp_v0 = SetNextRoomToLoad(
-                (playerX >> 8) + g_Tilemap.left, g_Tilemap.bottom + 1);
-            if (temp_v0 != false) {
-                D_80072F98 = 2;
-                D_801375C0 = g_Entities[0].posX.i.hi;
-                D_801375C4 = g_Entities[0].posY.i.hi - 0x100;
-                D_801375C4 = D_801375C4 + var_s0;
+        if (playerY >= g_Tilemap.height - var_s0 + 20) {
+            ret = SetNextRoomToLoad(
+                g_Tilemap.left + (playerX >> 8), g_Tilemap.bottom + 1);
+            if (ret) {
+                D_801375C0 = PLAYER.posX.i.hi;
+                D_801375C4 = PLAYER.posY.i.hi - (256 - var_s0);
                 playerY += 0x80;
-                return temp_v0;
+                g_Player.unk78 = 2;
+                return ret;
+            } else {
+                playerY = g_Tilemap.height - var_s0 + 0x13;
+                PLAYER.posY.i.hi = 271 - var_s0;
             }
-            g_Entities[0].posY.i.hi = 0x10F - var_s0;
-            playerY = g_Tilemap.height - var_s0 + 0x13;
         }
     }
 block_25:
-    temp_a1 = g_Tilemap.x + g_unkGraphicsStruct.unkC;
-
-    if (playerX < temp_a1) {
-        if (arg0 != 0 && g_Tilemap.hSize != 1 &&
-            temp_a1 < playerX + D_801375A4) {
-            g_Entities[0].posX.i.hi =
-                (u16)g_Entities[0].posX.i.hi +
-                (playerX + D_801375A4 -
-                 (g_Tilemap.x + g_unkGraphicsStruct.unkC));
+    if (playerX < g_Tilemap.x + g_unkGraphicsStruct.unkC.unk) {
+        if (arg0 && g_Tilemap.hSize != 1) {
+            if (g_Tilemap.x + g_unkGraphicsStruct.unkC.unk <
+                playerX + D_801375A4) {
+                PLAYER.posX.i.hi +=
+                    playerX + D_801375A4 -
+                    (g_Tilemap.x + g_unkGraphicsStruct.unkC.unk);
+            }
         }
         g_Tilemap.scrollX.i.hi = g_Tilemap.x;
-    } else {
-        temp_a1_2 = g_Tilemap.width + g_unkGraphicsStruct.unkC - 0x100;
-        if (temp_a1_2 < playerX) {
-            if (arg0 != 0 && g_Tilemap.hSize != 1 &&
-                playerX + D_801375A4 < temp_a1_2) {
-                g_Entities[0].posX.i.hi =
-                    ((u16)g_Entities[0].posX.i.hi) +
-                    (((playerX + D_801375A4) + 0x100) -
-                     (g_Tilemap.width + (g_unkGraphicsStruct.unkC)));
+    } else if (g_Tilemap.width + g_unkGraphicsStruct.unkC.unk - 256 < playerX) {
+        if (arg0 && g_Tilemap.hSize != 1) {
+            if (playerX + D_801375A4 <
+                g_Tilemap.width + g_unkGraphicsStruct.unkC.unk - 256) {
+                PLAYER.posX.i.hi +=
+                    playerX + D_801375A4 -
+                    (g_Tilemap.width + g_unkGraphicsStruct.unkC.unk - 256);
             }
-            g_Tilemap.scrollX.i.hi = g_Tilemap.width - 0x100;
-        } else {
-            g_Tilemap.scrollX.i.hi = playerX - (g_unkGraphicsStruct.unkC);
-            g_Entities[0].posX.i.hi = g_unkGraphicsStruct.unkC;
         }
+        g_Tilemap.scrollX.i.hi = g_Tilemap.width - 256;
+    } else {
+        g_Tilemap.scrollX.i.hi = playerX - g_unkGraphicsStruct.unkC.unk;
+        PLAYER.posX.i.hi = g_unkGraphicsStruct.unkC.unk;
     }
     if (g_unkGraphicsStruct.unk1C != 0) {
-        if (playerY < g_Tilemap.y + 0x8C) {
+        if (playerY < g_Tilemap.y + 140) {
             g_Tilemap.scrollY.i.hi = g_Tilemap.y + 4;
-            g_Entities[0].posY.i.hi = playerY - g_Tilemap.scrollY.i.hi;
+            PLAYER.posY.i.hi = playerY - g_Tilemap.scrollY.i.hi;
         } else if (g_Tilemap.height - 0x74 < playerY) {
-            g_Tilemap.scrollY.i.hi = g_Tilemap.height - 0xFC;
-            g_Entities[0].posY.i.hi = playerY - g_Tilemap.scrollY.i.hi;
+            g_Tilemap.scrollY.i.hi = g_Tilemap.height - 252;
+            PLAYER.posY.i.hi = playerY - g_Tilemap.scrollY.i.hi;
         } else {
-            g_Entities[0].posY.i.hi = 0x88;
-            g_Tilemap.scrollY.i.hi = playerY - 0x88;
+            g_Tilemap.scrollY.i.hi = playerY - 136;
+            PLAYER.posY.i.hi = 136;
+        }
+    } else if (playerY < g_Tilemap.y + 140) {
+        if (g_Tilemap.scrollY.i.hi - (playerY - 136) >= 4 &&
+            g_Tilemap.y + 8 < g_Tilemap.scrollY.i.hi) {
+            g_Tilemap.scrollY.i.hi -= 4;
+            PLAYER.posY.i.hi += 4;
+        } else if (g_Tilemap.scrollY.i.hi < g_Tilemap.y && g_Tilemap.y != 0) {
+            g_Tilemap.scrollY.i.hi += 4;
+            PLAYER.posY.i.hi -= 4;
+        } else {
+            temp_a2 = g_Tilemap.y + 4;
+            g_Tilemap.scrollY.i.hi = temp_a2;
+            PLAYER.posY.i.hi = playerY - g_Tilemap.scrollY.i.hi;
         }
     } else {
-        new_var2 = 0x88;
-        if (playerY < g_Tilemap.y + 0x8C) {
-            if (g_Tilemap.scrollY.i.hi + new_var2 - playerY >= 4 &&
-                g_Tilemap.y + 8 < g_Tilemap.scrollY.i.hi) {
-                g_Tilemap.scrollY.i.hi -= 4;
-                g_Entities[0].posY.i.hi += 4;
-            } else if (
-                g_Tilemap.scrollY.i.hi < g_Tilemap.y && g_Tilemap.y != 0) {
-                g_Tilemap.scrollY.i.hi += 4;
-                g_Entities[0].posY.i.hi -= 4;
-            } else {
-                g_Tilemap.scrollY.i.hi = g_Tilemap.y + 4;
-                g_Entities[0].posY.i.hi = playerY - g_Tilemap.scrollY.i.hi;
-            }
-        } else {
-            g_Entities[0].posY.i.hi = g_Tilemap.scrollY.i.hi;
-            if (g_Tilemap.height - 0x74 < playerY) {
+        temp_a2 = g_Tilemap.scrollY.i.hi;
+        temp_a3 = PLAYER.posY.i.hi;
+        g_Tilemap.scrollY.i = g_Tilemap.scrollY.i;
+        temp_a0 = temp_a2 << 16;
+        if (g_Tilemap.height - 0x74 < playerY) {
+            do {
                 g_Tilemap.scrollY.i.hi = g_Tilemap.height - 0xFC;
-                g_Entities[0].posY.i.hi = playerY - g_Tilemap.scrollY.i.hi;
-            } else if (g_Tilemap.scrollY.i.hi + new_var2 - playerY >= 4) {
-                g_Tilemap.scrollY.i.hi -= 4;
-                g_Entities[0].posY.i.hi += 4;
-            } else {
-                g_Entities[0].posY.i.hi = 0x88;
-                g_Tilemap.scrollY.i.hi = playerY - 0x88;
-            }
+                PLAYER.posY.i.hi = playerY - g_Tilemap.scrollY.i.hi;
+            } while (0);
+        } else if ((temp_a0 >> 16) - (playerY - 136) >= 4) {
+            g_Tilemap.scrollY.i.hi = temp_a2 - 4;
+            PLAYER.posY.i.hi = temp_a3 + 4;
+        } else {
+            g_Tilemap.scrollY.i.hi = playerY - 136;
+            PLAYER.posY.i.hi = 136;
         }
     }
-    return false;
+    return 0;
 }
-#endif
 
 void func_800F1424(void) {
     if (g_pads[1].tapped & PAD_R1) {
