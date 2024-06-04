@@ -104,7 +104,6 @@ segments:
       - [0xD1D4, assets, factory_blueprint, g_FactoryBlueprints]
       - [0xD4B8, .data, 7E4BC]
       - [0xDBD4, .data, d_DBD4]
-      - [0xE270, data]
       - [0xE294, .data, d_E294]
       - [0x10658, data]
       - [0x10A3C, .data, 90264] # D_800B0A3C to D_800B0AEC
@@ -132,8 +131,7 @@ segments:
       - [0x25324, raw, g_GfxEquipIcon]
       - [0x2F324, .data, d_2F324]
       - [0x388D4, raw, g_PalEquipIcon]
-      - [0x3B0D4, data]
-      - [0x3B3B0, data]
+      - [0x3B0D4, .data, d_3B0D4]
       - [0x3B3B4, .rodata, 42398] # func_800E2398
       # - [0x3B3B8, .rodata, 42398] # func_800E249C
       # - [0x3B3F0, .rodata, 42398] # func_800E2824

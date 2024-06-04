@@ -207,7 +207,6 @@ FactoryBlueprint g_FactoryBlueprints[400] = {0}; // TODO load from JSON file
 s32 D_800B07C8 = 0x12345678;
 u8 D_800AD094[0x30];
 Unkstruct_80138094 D_80138094[100]; // unknown size
-s32 D_800AE270[] = {0xFF, 0xFF, 0xFF, 0x7F, 0x7F, 0x3F, 0x7F, 0x3F, 0x7F};
 s32 D_8013808C;
 GpuUsage g_GpuMaxUsage;
 GpuBuffer* g_BackBuffer;
@@ -337,10 +336,6 @@ s16 D_80136C60[0x400] = {0};
 u16 D_8006ED0C[0x10] = {0};
 u16 D_8006ED2C[0x10] = {0};
 u16 D_8006ED4C[0x10] = {0};
-u16 D_800DB0D4[0x10] = {0};
-u16 D_800DB0F4[0x10] = {0};
-u16 D_800DB114[0x70] = {0};
-u16 D_800DB1F4[0xE0] = {0};
 
 u8 g_Pix[4][128 * 128 / 2];
 ImgSrc g_imgUnk8013C200_impl = {

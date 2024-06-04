@@ -105,6 +105,7 @@ set(SOURCE_FILES_DRA
     src/dra/953A0.c
     src/dra/d_24CEC.c
     src/dra/d_2F324.c
+    src/dra/d_3B0D4.c
 )
 
 set(SOURCE_FILES_STAGE_SEL
