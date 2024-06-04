@@ -480,7 +480,7 @@ s32 func_800FE044(s32 amount, s32 type) {
 }
 
 bool IsRelicActive(RelicIds relicId) {
-    if ((g_Status.relics[relicId] & RELIC_FLAG_ACTIVE)) {
+    if (g_Status.relics[relicId] & RELIC_FLAG_ACTIVE) {
         return 1;
     }
     return 0;

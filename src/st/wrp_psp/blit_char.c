@@ -8,7 +8,7 @@ u8 func_psp_0923C2F8(u8 arg0) {
     if (arg0 & 0x80) {
         return func_psp_0923C2F8((arg0 & 0x7F) + 3);
     }
-    return (arg0 * 0x10);
+    return arg0 * 0x10;
 }
 
 extern s32 D_91ED5F8;

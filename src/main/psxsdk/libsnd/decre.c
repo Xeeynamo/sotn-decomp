@@ -44,7 +44,7 @@ void _SsSndDecrescendo(s16 arg0, s16 arg1) {
             SpuVmGetSeqVol(arg0 | (arg1 << 8), &stack.voll, &stack.volr);
             if ((score->unk3E >=
                  ((score->unk94 - score->unk98) * -score->unk42)) &&
-                (((-score->unk42 < stack.voll) != 0))) {
+                ((-score->unk42 < stack.voll) != 0)) {
                 SpuVmSetSeqVol(arg0 | (arg1 << 8), stack.voll + score->unk42,
                                stack.volr + score->unk42, 0);
             } else {

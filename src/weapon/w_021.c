@@ -400,7 +400,7 @@ void EntityWeaponAttack(Entity* self) {
         // Blueprint 56 is child offset 1, so this runs func_ptr_80170004 for
         // food.
         factory_arg1 =
-            56 + ((g_HandId + 1) << 0xE) + ((self->ext.food.foodId << 0x10));
+            56 + ((g_HandId + 1) << 0xE) + (self->ext.food.foodId << 0x10);
         if (g_api.CreateEntFactoryFromEntity(self, factory_arg1, 0) != NULL) {
             self->ext.food.timer = 4;
             self->step++;

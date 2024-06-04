@@ -444,7 +444,7 @@ void SCL_PriorityInit(void) {
 }
 // func_06025214
 Uint32 SCL_GetColRamMode(void) {
-    return ((Uint32)((Scl_s_reg.ramcontrl & 0x3000) >> 12));
+    return (Uint32)((Scl_s_reg.ramcontrl & 0x3000) >> 12);
 }
 
 // func_06025244
@@ -1761,24 +1761,24 @@ Uint32 SCL_AllocColRam(Uint32 Surface, Uint32 NumOfColors, Uint8 transparent) {
     SCL_FreeColRam(Surface);
 
     if (SclColRamAlloc2048[0] != 0)
-        return ((Uint32)NULL);
+        return (Uint32)NULL;
 
     switch (SCL_GetColRamMode()) {
     case SCL_CRM15_1024:
         if (1024 < NumOfColors)
-            return ((Uint32)NULL);
+            return (Uint32)NULL;
         Max256 = 4;
         Size256 = 512;
         break;
     case SCL_CRM15_2048:
         if (2048 < NumOfColors)
-            return ((Uint32)NULL);
+            return (Uint32)NULL;
         Max256 = 8;
         Size256 = 512;
         break;
     case SCL_CRM24_1024:
         if (1024 < NumOfColors)
-            return ((Uint32)NULL);
+            return (Uint32)NULL;
         Max256 = 4;
         Size256 = 1024;
         break;
@@ -1789,16 +1789,16 @@ Uint32 SCL_AllocColRam(Uint32 Surface, Uint32 NumOfColors, Uint8 transparent) {
             if (SclColRamAlloc256[i] == 0) {
                 SclColRamAlloc256[i] = Surface;
                 SCL_SetColRamOffset(Surface, i, transparent);
-                return (SCL_COLRAM_ADDR + (Size256 * i));
+                return SCL_COLRAM_ADDR + (Size256 * i);
             }
         }
     } else {
         for (i = 0; i < Max256; i++)
             if (SclColRamAlloc256[i] != 0)
-                return ((Uint32)NULL);
+                return (Uint32)NULL;
         SclColRamAlloc2048[0] = Surface;
         SCL_SetColRamOffset(Surface, 0, transparent);
-        return (SCL_COLRAM_ADDR);
+        return SCL_COLRAM_ADDR;
     }
 }
 
@@ -1829,7 +1829,7 @@ static Fixed32 Fsin(Fixed32 a) {
 
     if (sign)
         val = -val;
-    return (val);
+    return val;
 }
 
 // func_0602AA84
@@ -1845,7 +1845,7 @@ static Fixed32 Fcos(Fixed32 a) {
     a = a % FIXED(360);
 
     if (a == 0)
-        return (FIXED(1));
+        return FIXED(1);
 
     if (FIXED(270) <= a) {
         val = fcos(FIXED(360) - a);
@@ -1858,7 +1858,7 @@ static Fixed32 Fcos(Fixed32 a) {
     } else {
         val = fcos(a);
     }
-    return (val);
+    return val;
 }
 
 extern Fixed32 currentMatrix[2][9];
@@ -1990,7 +1990,7 @@ void SCL_SetColRam(Uint32 Object, Uint32 Index, Uint32 num, void* Color) {
     if (SCL_GetColRamMode() == 2) {
         color32 = (Uint32*)Color;
         ram32 = (Uint32*)((Uint32)SCL_COLRAM_ADDR +
-                          ((SCL_GetColRamOffset(Object) * 0x400))) +
+                          (SCL_GetColRamOffset(Object) * 0x400)) +
                 Index;
 
         if (num == 1) {
@@ -2001,7 +2001,7 @@ void SCL_SetColRam(Uint32 Object, Uint32 Index, Uint32 num, void* Color) {
     } else {
         color16 = (Uint16*)Color;
         ram16 = (Uint16*)((Uint32)SCL_COLRAM_ADDR +
-                          ((SCL_GetColRamOffset(Object) * 0x200))) +
+                          (SCL_GetColRamOffset(Object) * 0x200)) +
                 Index;
 
         if (num == 1) {
@@ -2069,27 +2069,27 @@ extern Uint32 SclLineColRamOffset;
 Uint32 SCL_GetColRamOffset(Uint32 Object) {
     switch (Object) {
     case SCL_SPR:
-        return (SCL_GET_SPCAOS());
+        return SCL_GET_SPCAOS();
         break;
     case SCL_NBG0:
     case SCL_RBG1:
-        return (SCL_GET_N0CAOS());
+        return SCL_GET_N0CAOS();
         break;
     case SCL_NBG1:
     case SCL_EXBG:
-        return (SCL_GET_N1CAOS());
+        return SCL_GET_N1CAOS();
         break;
     case SCL_NBG2:
-        return (SCL_GET_N2CAOS());
+        return SCL_GET_N2CAOS();
         break;
     case SCL_NBG3:
-        return (SCL_GET_N3CAOS());
+        return SCL_GET_N3CAOS();
         break;
     case SCL_RBG0:
-        return (SCL_GET_R0CAOS());
+        return SCL_GET_R0CAOS();
         break;
     case SCL_LNCL:
-        return (SclLineColRamOffset);
+        return SclLineColRamOffset;
         break;
     default:
         break;

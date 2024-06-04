@@ -12,7 +12,7 @@ void _SsSndTempo(s16 arg0, s16 arg1) {
 
     if (pSeq->unk44 > 0) {
         if ((pSeq->unkA0 % ((u32)pSeq->unk44)) == 0) {
-            if ((pSeq->unk8c > pSeq->unkA4)) {
+            if (pSeq->unk8c > pSeq->unkA4) {
                 pSeq->unk8c--;
             } else if (pSeq->unk8c < pSeq->unkA4) {
                 pSeq->unk8c++;

@@ -773,7 +773,7 @@ void func_801928A8(s32 arg0, s16 arg1) {
     g_CurrentEntity->velocityY = func_80192860(arg0 - 0x40, arg1);
 }
 
-u8 func_80192914(s16 x, s16 y) { return ((ratan2(y, x) >> 4) + 0x40); }
+u8 func_80192914(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 0x40; }
 
 u8 func_8019294C(Entity* a, Entity* b) {
     s32 diffX = (u16)b->posX.i.hi - (u16)a->posX.i.hi;

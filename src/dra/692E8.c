@@ -1570,7 +1570,7 @@ void func_8010C9F4(void) {
         return;
     }
     for (; i < 4; i++) {
-        if ((g_Player.colliders2[i].effects & EFFECT_SOLID_FROM_ABOVE)) {
+        if (g_Player.colliders2[i].effects & EFFECT_SOLID_FROM_ABOVE) {
             continue;
         }
         if ((g_Player.unk0C & 2) && (collider.effects & 0x10)) {
@@ -1578,7 +1578,7 @@ void func_8010C9F4(void) {
         }
         temp_s0 = g_Player.colliders2[i].effects &
                   (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_SOLID);
-        if (((temp_s0 == EFFECT_SOLID) || (temp_s0 & EFFECT_UNK_8000))) {
+        if ((temp_s0 == EFFECT_SOLID) || (temp_s0 & EFFECT_UNK_8000)) {
             if ((g_Player.unk0C & 3) && !(temp_s0 & EFFECT_SOLID)) {
                 continue;
             }
@@ -1707,7 +1707,7 @@ void func_8010C9F4(void) {
                 argX = var_a1 + (*xPosPtr + D_800ACEC0[i].x);
                 argY = *yPosPtr + D_800ACEC0[i].y + g_Player.colliders2[i].unk8;
                 CheckCollision(argX, argY, &collider, 0);
-                if ((collider.effects & 1)) {
+                if (collider.effects & 1) {
                     if (!(*vram_ptr & 1)) {
                         *yPosPtr +=
                             collider.unk20 + g_Player.colliders2[i].unk8;

@@ -2358,7 +2358,7 @@ void func_800F99B8(const char* str, s32 arg1, s32 arg2) {
             }
         }
         for (i = 0; i < FontHeight; i++) {
-            if ((var_a2[i * FontStride + var_a3] & 0xF0)) {
+            if (var_a2[i * FontStride + var_a3] & 0xF0) {
                 break;
             }
         }

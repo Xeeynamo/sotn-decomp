@@ -655,7 +655,7 @@ block_48:
     if ((PLAYER.step == 0x10) && (PLAYER.animFrameDuration < 0)) {
         PLAYER.animCurFrame |= 0x8000;
     }
-    if ((g_Player.unk0C & 0x50)) {
+    if (g_Player.unk0C & 0x50) {
         return;
     }
     func_8015C4AC();

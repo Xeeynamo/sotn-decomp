@@ -2549,7 +2549,7 @@ void func_8012D28C(bool exitEarly) {
     // Start a routine where we look through this array for a value.
     bitNotFound = 0;
     for (i = 3; i < 7; i++) {
-        if ((g_Player.colliders3[i].effects & EFFECT_UNK_0002)) {
+        if (g_Player.colliders3[i].effects & EFFECT_UNK_0002) {
             break;
         }
     }
@@ -2557,7 +2557,7 @@ void func_8012D28C(bool exitEarly) {
     // and keep searching.
     if (i == 7) {
         for (i = 10; i < 14; i++) {
-            if ((g_Player.colliders3[i].effects & EFFECT_UNK_0002)) {
+            if (g_Player.colliders3[i].effects & EFFECT_UNK_0002) {
                 break;
             }
         }

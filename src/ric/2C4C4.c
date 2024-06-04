@@ -131,7 +131,7 @@ void EntityHolyWater(Entity* self) {
             argY = 4;
         }
         collision_result |= func_8016840C(-7, argY);
-        if ((collision_result & 1)) {
+        if (collision_result & 1) {
             self->velocityX *= 2;
             self->step--;
         }
@@ -2148,7 +2148,7 @@ void EntitySubwpnCrashVibhuti(Entity* self) {
                 }
                 prim = &g_PrimBuf[self->primIndex];
                 for (i = 0; i < 9; i++) {
-                    if ((prim->drawMode & 8)) {
+                    if (prim->drawMode & 8) {
                         break;
                     }
                     prim = prim->next;

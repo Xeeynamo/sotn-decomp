@@ -586,8 +586,8 @@ void func_8015E800(void) {
         if (temp_a0 & EFFECT_SOLID_FROM_BELOW) {
             continue;
         }
-        if (((temp_a0 & EFFECT_UNK_0002) || (PLAYER.velocityY >= 0) ||
-             ((PLAYER.step == 26) && (temp_a0 & EFFECT_UNK_8000)))) {
+        if ((temp_a0 & EFFECT_UNK_0002) || (PLAYER.velocityY >= 0) ||
+            ((PLAYER.step == 26) && (temp_a0 & EFFECT_UNK_8000))) {
             temp_s0 = g_Player.colliders[i].effects &
                       (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_SOLID);
             if ((temp_s0 == EFFECT_SOLID) ||
@@ -752,7 +752,7 @@ void func_8015EE28(void) {
     for (i = 1; i < 4; i++) {
         var_a0 = g_Player.colliders2[i].effects;
         temp_s0 = var_a0 & (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_SOLID);
-        if ((var_a0 & EFFECT_SOLID_FROM_ABOVE)) {
+        if (var_a0 & EFFECT_SOLID_FROM_ABOVE) {
             continue;
         }
         if ((temp_s0 == EFFECT_SOLID) || (var_a0 & EFFECT_UNK_8000)) {
@@ -883,7 +883,7 @@ void func_8015EE28(void) {
                 argX = var_a1 + (*xPosPtr + D_801545E4[i].x);
                 argY = *yPosPtr + D_801545E4[i].y + g_Player.colliders2[i].unk8;
                 g_api.CheckCollision(argX, argY, &collider, 0);
-                if ((collider.effects & 1)) {
+                if (collider.effects & 1) {
                     if (!(*vram_ptr & 1)) {
                         *yPosPtr +=
                             collider.unk20 + g_Player.colliders2[i].unk8;
