@@ -504,19 +504,19 @@ TeleportCheck GetTeleportToOtherCastle(void) {
 
     // Check for X/Y boundaries in TOP
     if (g_StageId == STAGE_TOP) {
-        if (abs(g_Tilemap.left * 256 + playerX - 8000) < 4 &&
-            abs(g_Tilemap.top * 256 + playerY - 2127) < 4) {
+        if (abs(g_Tilemap.left * 256 + g_PlayerX - 8000) < 4 &&
+            abs(g_Tilemap.top * 256 + g_PlayerY - 2127) < 4) {
             return TELEPORT_CHECK_TO_RTOP;
         }
     }
 
     // Check for X/Y boundaries in RTOP
     if (g_StageId == STAGE_RTOP) {
-        if (abs(g_Tilemap.left * 256 + playerX - 8384) < 4 &&
+        if (abs(g_Tilemap.left * 256 + g_PlayerX - 8384) < 4 &&
 #if defined(VERSION_US)
-            abs(g_Tilemap.top * 256 + playerY - 14407) < 4) {
+            abs(g_Tilemap.top * 256 + g_PlayerY - 14407) < 4) {
 #elif defined(VERSION_HD)
-            abs(g_Tilemap.top * 256 + playerY) - 14407 < 4) {
+            abs(g_Tilemap.top * 256 + g_PlayerY) - 14407 < 4) {
 #endif
             return TELEPORT_CHECK_TO_TOP;
         }

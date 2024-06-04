@@ -348,29 +348,29 @@ s32 func_800F0CD8(s32 arg0) {
             return ret;
         }
         if (arg0) {
-            if (playerX < g_Tilemap.x) {
+            if (g_PlayerX < g_Tilemap.x) {
                 ret = SetNextRoomToLoad(
-                    g_Tilemap.left - 1, g_Tilemap.top + (playerY >> 8));
+                    g_Tilemap.left - 1, g_Tilemap.top + (g_PlayerY >> 8));
                 if (ret) {
                     D_801375C0 = PLAYER.posX.i.hi + 256;
                     D_801375C4 = PLAYER.posY.i.hi;
                     g_Player.unk78 = 1;
                     return ret;
                 } else {
-                    playerX = g_Tilemap.x;
+                    g_PlayerX = g_Tilemap.x;
                     PLAYER.posX.i.hi = 0;
                 }
             }
-            if (playerX >= g_Tilemap.width) {
+            if (g_PlayerX >= g_Tilemap.width) {
                 ret = SetNextRoomToLoad(
-                    g_Tilemap.right + 1, g_Tilemap.top + (playerY >> 8));
+                    g_Tilemap.right + 1, g_Tilemap.top + (g_PlayerY >> 8));
                 if (ret) {
                     D_801375C0 = PLAYER.posX.i.hi - 256;
                     D_801375C4 = PLAYER.posY.i.hi;
                     g_Player.unk78 = 1;
                     return ret;
                 } else {
-                    playerX = g_Tilemap.width - 1;
+                    g_PlayerX = g_Tilemap.width - 1;
                     PLAYER.posX.i.hi = 255;
                 }
             }
@@ -379,17 +379,17 @@ s32 func_800F0CD8(s32 arg0) {
         }
     }
     if (!g_unkGraphicsStruct.unk24) {
-        if (playerY < g_Tilemap.y + 4) {
+        if (g_PlayerY < g_Tilemap.y + 4) {
             ret = SetNextRoomToLoad(
-                g_Tilemap.left + (playerX >> 8), g_Tilemap.top - 1);
+                g_Tilemap.left + (g_PlayerX >> 8), g_Tilemap.top - 1);
             if (ret) {
                 D_801375C0 = PLAYER.posX.i.hi;
                 D_801375C4 = PLAYER.posY.i.hi + 208;
-                playerY -= 128;
+                g_PlayerY -= 128;
                 g_Player.unk78 = 2;
                 return ret;
             } else {
-                playerY = g_Tilemap.y + 4;
+                g_PlayerY = g_Tilemap.y + 4;
                 PLAYER.posY.i.hi = 0;
             }
         }
@@ -399,57 +399,58 @@ s32 func_800F0CD8(s32 arg0) {
               (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM))) {
             var_s0 = 24;
         }
-        if (playerY >= g_Tilemap.height - var_s0 + 20) {
+        if (g_PlayerY >= g_Tilemap.height - var_s0 + 20) {
             ret = SetNextRoomToLoad(
-                g_Tilemap.left + (playerX >> 8), g_Tilemap.bottom + 1);
+                g_Tilemap.left + (g_PlayerX >> 8), g_Tilemap.bottom + 1);
             if (ret) {
                 D_801375C0 = PLAYER.posX.i.hi;
                 D_801375C4 = PLAYER.posY.i.hi - (256 - var_s0);
-                playerY += 0x80;
+                g_PlayerY += 0x80;
                 g_Player.unk78 = 2;
                 return ret;
             } else {
-                playerY = g_Tilemap.height - var_s0 + 0x13;
+                g_PlayerY = g_Tilemap.height - var_s0 + 0x13;
                 PLAYER.posY.i.hi = 271 - var_s0;
             }
         }
     }
 block_25:
-    if (playerX < g_Tilemap.x + g_unkGraphicsStruct.unkC) {
+    if (g_PlayerX < g_Tilemap.x + g_unkGraphicsStruct.unkC) {
         if (arg0 && g_Tilemap.hSize != 1) {
-            if (g_Tilemap.x + g_unkGraphicsStruct.unkC < playerX + D_801375A4) {
-                PLAYER.posX.i.hi += playerX + D_801375A4 -
+            if (g_Tilemap.x + g_unkGraphicsStruct.unkC <
+                g_PlayerX + D_801375A4) {
+                PLAYER.posX.i.hi += g_PlayerX + D_801375A4 -
                                     (g_Tilemap.x + g_unkGraphicsStruct.unkC);
             }
         }
         g_Tilemap.scrollX.i.hi = g_Tilemap.x;
-    } else if (g_Tilemap.width + g_unkGraphicsStruct.unkC - 256 < playerX) {
+    } else if (g_Tilemap.width + g_unkGraphicsStruct.unkC - 256 < g_PlayerX) {
         if (arg0 && g_Tilemap.hSize != 1) {
-            if (playerX + D_801375A4 <
+            if (g_PlayerX + D_801375A4 <
                 g_Tilemap.width + g_unkGraphicsStruct.unkC - 256) {
                 PLAYER.posX.i.hi +=
-                    playerX + D_801375A4 -
+                    g_PlayerX + D_801375A4 -
                     (g_Tilemap.width + g_unkGraphicsStruct.unkC - 256);
             }
         }
         g_Tilemap.scrollX.i.hi = g_Tilemap.width - 256;
     } else {
-        g_Tilemap.scrollX.i.hi = playerX - g_unkGraphicsStruct.unkC;
+        g_Tilemap.scrollX.i.hi = g_PlayerX - g_unkGraphicsStruct.unkC;
         PLAYER.posX.i.hi = g_unkGraphicsStruct.unkC;
     }
     if (g_unkGraphicsStruct.unk1C != 0) {
-        if (playerY < g_Tilemap.y + 140) {
+        if (g_PlayerY < g_Tilemap.y + 140) {
             g_Tilemap.scrollY.i.hi = g_Tilemap.y + 4;
-            PLAYER.posY.i.hi = playerY - g_Tilemap.scrollY.i.hi;
-        } else if (g_Tilemap.height - 116 < playerY) {
+            PLAYER.posY.i.hi = g_PlayerY - g_Tilemap.scrollY.i.hi;
+        } else if (g_Tilemap.height - 116 < g_PlayerY) {
             g_Tilemap.scrollY.i.hi = g_Tilemap.height - 252;
-            PLAYER.posY.i.hi = playerY - g_Tilemap.scrollY.i.hi;
+            PLAYER.posY.i.hi = g_PlayerY - g_Tilemap.scrollY.i.hi;
         } else {
-            g_Tilemap.scrollY.i.hi = playerY - 136;
+            g_Tilemap.scrollY.i.hi = g_PlayerY - 136;
             PLAYER.posY.i.hi = 136;
         }
-    } else if (playerY < g_Tilemap.y + 140) {
-        if (g_Tilemap.scrollY.i.hi - (playerY - 136) >= 4 &&
+    } else if (g_PlayerY < g_Tilemap.y + 140) {
+        if (g_Tilemap.scrollY.i.hi - (g_PlayerY - 136) >= 4 &&
             g_Tilemap.y + 8 < g_Tilemap.scrollY.i.hi) {
             g_Tilemap.scrollY.i.hi -= 4;
             PLAYER.posY.i.hi += 4;
@@ -459,23 +460,23 @@ block_25:
         } else {
             temp_a2 = g_Tilemap.y + 4;
             g_Tilemap.scrollY.i.hi = temp_a2;
-            PLAYER.posY.i.hi = playerY - g_Tilemap.scrollY.i.hi;
+            PLAYER.posY.i.hi = g_PlayerY - g_Tilemap.scrollY.i.hi;
         }
     } else {
         temp_a2 = g_Tilemap.scrollY.i.hi;
         temp_a3 = PLAYER.posY.i.hi;
         g_Tilemap.scrollY.i = g_Tilemap.scrollY.i;
         temp_a0 = temp_a2 << 16;
-        if (g_Tilemap.height - 116 < playerY) {
+        if (g_Tilemap.height - 116 < g_PlayerY) {
             do {
                 g_Tilemap.scrollY.i.hi = g_Tilemap.height - 252;
-                PLAYER.posY.i.hi = playerY - g_Tilemap.scrollY.i.hi;
+                PLAYER.posY.i.hi = g_PlayerY - g_Tilemap.scrollY.i.hi;
             } while (0);
-        } else if ((temp_a0 >> 16) - (playerY - 136) >= 4) {
+        } else if ((temp_a0 >> 16) - (g_PlayerY - 136) >= 4) {
             g_Tilemap.scrollY.i.hi = temp_a2 - 4;
             PLAYER.posY.i.hi = temp_a3 + 4;
         } else {
-            g_Tilemap.scrollY.i.hi = playerY - 136;
+            g_Tilemap.scrollY.i.hi = g_PlayerY - 136;
             PLAYER.posY.i.hi = 136;
         }
     }
@@ -819,8 +820,8 @@ void func_800F1EB0(s32 playerX, s32 playerY, s32 arg2) {
 }
 
 void func_800F1FC4(s32 arg0) {
-    func_800F1EB0(
-        (playerX >> 8) + g_Tilemap.left, (playerY >> 8) + g_Tilemap.top, arg0);
+    func_800F1EB0((g_PlayerX >> 8) + g_Tilemap.left,
+                  (g_PlayerY >> 8) + g_Tilemap.top, arg0);
 }
 
 void func_800F2014(void) {
@@ -831,8 +832,8 @@ void func_800F2014(void) {
     s32 currMapRect;
 
     if ((D_8013AED0 != 0) && (g_StageId != STAGE_ST0)) {
-        x = (playerX >> 8) + g_Tilemap.left;
-        y = (playerY >> 8) + g_Tilemap.top;
+        x = (g_PlayerX >> 8) + g_Tilemap.left;
+        y = (g_PlayerY >> 8) + g_Tilemap.top;
         idx = (x >> 2) + (y * 16);
         subMap = 1 << ((3 - (x & 3)) * 2);
         if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
@@ -977,8 +978,8 @@ void func_800F24F4(void) {
     s32 y;
     s32 var_a0;
 
-    x = (playerX >> 8) + g_Tilemap.left;
-    y = (playerY >> 8) + g_Tilemap.top;
+    x = (g_PlayerX >> 8) + g_Tilemap.left;
+    y = (g_PlayerY >> 8) + g_Tilemap.top;
     if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
         if (g_StageId == STAGE_RNO0) {
             if (x == 32 && y == 36) {
@@ -1023,9 +1024,9 @@ void DrawMapCursor(void) {
     GpuBuffer* gpu = g_CurrentBuffer;
     POLY_GT4* poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
 
-    x = g_Tilemap.left + (playerX >> 8);
+    x = g_Tilemap.left + (g_PlayerX >> 8);
     x = x * 4 - 14;
-    y = g_Tilemap.top + (playerY >> 8);
+    y = g_Tilemap.top + (g_PlayerY >> 8);
     y = y * 4 - 13;
     if (g_StageId & 0x20) {
         x -= 1;
@@ -1209,8 +1210,8 @@ void func_800F298C(void) {
         }
         tempX = PLAYER.posX.i.hi;
         tempY = PLAYER.posY.i.hi;
-        playerX = tempX;
-        playerY = tempY;
+        g_PlayerX = tempX;
+        g_PlayerY = tempY;
         PLAYER.posX.i.hi = (u8)tempX;
         PLAYER.posY.i.hi = (u8)tempY;
         if (PLAYER.posX.i.hi < 0x80) {
@@ -1227,8 +1228,8 @@ void func_800F298C(void) {
         g_Tilemap.height =
             (((D_801375BC.def - 1)->objLayoutId - g_Tilemap.top) + 1) << 8;
 
-        *ptr_791c = (playerX >> 8) + g_Tilemap.left;
-        D_80097920 = (playerY >> 8) + g_Tilemap.top;
+        *ptr_791c = (g_PlayerX >> 8) + g_Tilemap.left;
+        D_80097920 = (g_PlayerY >> 8) + g_Tilemap.top;
 
         g_Tilemap.scrollX.i.hi = (*ptr_791c - g_Tilemap.left) << 8;
         g_Tilemap.scrollY.i.hi = (D_80097920 - g_Tilemap.top) << 8;
@@ -1364,8 +1365,8 @@ void func_800F298C(void) {
             }
             D_801375A4 = D_8013759C - PLAYER.posX.i.hi;
             D_801375A8 = D_801375A0 - PLAYER.posY.i.hi;
-            playerX -= D_801375A4;
-            playerY -= D_801375A8;
+            g_PlayerX -= D_801375A4;
+            g_PlayerY -= D_801375A8;
             D_8013759C = PLAYER.posX.val;
             D_801375A0 = PLAYER.posY.val;
             D_801375AC = g_Tilemap.scrollX.i.hi;
@@ -1623,8 +1624,8 @@ void func_800F298C(void) {
                     } while (0);
                     D_80097920 = layer->flags;
                 } else {
-                    D_8009791C = (playerX >> 8) + g_Tilemap.left;
-                    D_80097920 = (playerY >> 8) + g_Tilemap.top;
+                    D_8009791C = (g_PlayerX >> 8) + g_Tilemap.left;
+                    D_80097920 = (g_PlayerY >> 8) + g_Tilemap.top;
                 }
                 D_8013759C = PLAYER.posX.val;
                 D_801375A0 = PLAYER.posY.val;
@@ -1667,14 +1668,14 @@ void func_800F298C(void) {
                 // permuter found this weird & -> thing, I don't know man
                 (&g_Tilemap.scrollX)->i.hi = (D_8009791C - g_Tilemap.left) << 8;
                 g_Tilemap.scrollY.i.hi = (D_80097920 - g_Tilemap.top) << 8;
-                playerX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
-                playerY = PLAYER.posY.i.hi + g_Tilemap.scrollY.i.hi;
+                g_PlayerX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
+                g_PlayerY = PLAYER.posY.i.hi + g_Tilemap.scrollY.i.hi;
                 func_8011A9D8();
                 PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk;
                 func_800F0CD8(0);
                 func_8010BFFC();
-                playerX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
-                playerY = PLAYER.posY.i.hi + g_Tilemap.scrollY.i.hi;
+                g_PlayerX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
+                g_PlayerY = PLAYER.posY.i.hi + g_Tilemap.scrollY.i.hi;
                 func_800F0CD8(0);
                 if (g_StageId == STAGE_RTOP) {
                     DestroyEntitiesFromIndex(0x40);
@@ -1815,8 +1816,8 @@ void func_800F298C(void) {
                     RichterUpdater();
                     D_801375A4 = D_8013759C - PLAYER.posX.i.hi;
                     D_801375A8 = D_801375A0 - PLAYER.posY.i.hi;
-                    playerX -= D_801375A4;
-                    playerY -= D_801375A8;
+                    g_PlayerX -= D_801375A4;
+                    g_PlayerY -= D_801375A8;
                 }
             } else {
                 func_8010E168(1, 0x30);

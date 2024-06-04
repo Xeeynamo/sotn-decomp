@@ -303,13 +303,13 @@ extern u8 g_BmpCastleMap[0x20000];
 #define DEMO_KEY_LEN 3
 #define DEMO_MAX_LEN 0x2000
 
-#define FONT_W 8                 // small font size used for dialogues and menu
-#define FONT_H 8                 // small font size used for dialogues and menu
-#define FONT_GAP FONT_W          // gap between the beginning of two letters
-#define FONT_SPACE 4             // gap for the space character
-#define MENUCHAR(x) ((x) - 0x20) // 8x8 characters are ASCII offset by 0x20
-#define DIAG_EOL 0xFF            // end of line
-#define DIAG_EOS 0x00            // end of string
+#define FONT_W 8               // small font size used for dialogues and menu
+#define FONT_H 8               // small font size used for dialogues and menu
+#define FONT_GAP FONT_W        // gap between the beginning of two letters
+#define FONT_SPACE 4           // gap for the space character
+#define MENUCHAR(x) ((x)-0x20) // 8x8 characters are ASCII offset by 0x20
+#define DIAG_EOL 0xFF          // end of line
+#define DIAG_EOS 0x00          // end of string
 
 #define SAVE_FLAG_NORMAL (0)
 #define SAVE_FLAG_CLEAR (1)
@@ -1724,8 +1724,8 @@ extern Event g_EvHwCardTmo;
 extern Event g_EvHwCardNew;
 extern u8 g_Pix[4][128 * 128 / 2];
 extern Primitive g_PrimBuf[MAX_PRIM_COUNT];
-extern s32 playerX;
-extern s32 playerY;
+extern s32 g_PlayerX;
+extern s32 g_PlayerY;
 extern u32 g_randomNext;
 extern s32 D_80096ED8[];
 extern s8 D_80097B98;

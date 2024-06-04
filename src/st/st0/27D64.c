@@ -279,7 +279,7 @@ void func_801A8620(Entity* entity) {
         if (dist < 0x20) {
             switch (params) {
             case 0:
-                if (playerX > 0x280) {
+                if (g_PlayerX > 0x280) {
                     g_Tilemap.width = 0x280;
                     g_Tilemap.right--;
                     entity->step++;
@@ -287,7 +287,7 @@ void func_801A8620(Entity* entity) {
                 break;
 
             case 1:
-                if (playerX < 0x180) {
+                if (g_PlayerX < 0x180) {
                     g_Tilemap.x = 0x180;
                     g_Tilemap.left++;
                     entity->step++;
@@ -295,7 +295,7 @@ void func_801A8620(Entity* entity) {
                 break;
 
             case 3:
-                if (playerX < 0x100) {
+                if (g_PlayerX < 0x100) {
                     g_Tilemap.x = 0x100;
                     g_Tilemap.left++;
                     entity->step++;
@@ -303,42 +303,42 @@ void func_801A8620(Entity* entity) {
                 break;
 
             case 5:
-                if (playerX < 0x80) {
+                if (g_PlayerX < 0x80) {
                     g_Tilemap.x = 0x80;
                     entity->step++;
                 }
                 break;
 
             case 6:
-                if (playerX > 0x480) {
+                if (g_PlayerX > 0x480) {
                     g_Tilemap.width = 0x480;
                     entity->step++;
                 }
                 break;
 
             case 7:
-                if (playerX > 0x480) {
+                if (g_PlayerX > 0x480) {
                     g_Tilemap.width = 0x480;
                     entity->step++;
                 }
                 break;
 
             case 8:
-                if (playerX < 0x80) {
+                if (g_PlayerX < 0x80) {
                     g_Tilemap.x = 0x80;
                     entity->step++;
                 }
                 break;
 
             case 9:
-                if (playerX > 0x280) {
+                if (g_PlayerX > 0x280) {
                     g_Tilemap.width = 0x280;
                     entity->step++;
                 }
                 break;
 
             case 10:
-                if (playerX < 0x180) {
+                if (g_PlayerX < 0x180) {
                     g_Tilemap.x = 0x180;
                     g_Tilemap.left++;
                     entity->step++;
@@ -346,7 +346,7 @@ void func_801A8620(Entity* entity) {
                 break;
 
             case 11:
-                if (playerX > 0x280) {
+                if (g_PlayerX > 0x280) {
                     g_Tilemap.width = 0x280;
                     g_Tilemap.right--;
                     entity->step++;
@@ -354,7 +354,7 @@ void func_801A8620(Entity* entity) {
                 break;
 
             case 12:
-                if (playerX < 0x180) {
+                if (g_PlayerX < 0x180) {
                     g_Tilemap.x = 0x180;
                     g_Tilemap.left++;
                     entity->step++;
@@ -365,7 +365,7 @@ void func_801A8620(Entity* entity) {
             case 4:
             case 13:
             case 14:
-                if (playerX > 0x300) {
+                if (g_PlayerX > 0x300) {
                     g_Tilemap.width = 0x300;
                     g_Tilemap.right--;
                     entity->step++;
