@@ -36,10 +36,6 @@ build_pspeu: $(addsuffix _psp,$(PSP_EU_TARGETS))
 
 extract_pspeu: $(addprefix $(PSP_BUILD_DIR)/,$(addsuffix .ld,$(PSP_EU_TARGETS)))
 
-$(AS_ALLEGREX):
-	wget https://github.com/sozud/binutils-allegrex/raw/master/allegrex.tar.gz
-	tar -xf allegrex.tar.gz -C ./bin
-
 $(WIBO):
 	wget -O $@ https://github.com/decompals/wibo/releases/download/0.6.13/wibo
 	sha256sum --check $(WIBO).sha256

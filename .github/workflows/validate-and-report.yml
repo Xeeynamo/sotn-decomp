@@ -72,7 +72,7 @@ jobs:
         run: make extract_disk
       - name: Install PSP-specific dependencies
         if: matrix.version == 'pspeu'
-        run: pip3 install -r tools/requirements-python.txt
+        run: pip3 install -r tools/requirements-python.txt && make get_allegrex
       - name: Split game data
         run: make -j extract
       - name: Build binaries
