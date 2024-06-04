@@ -398,13 +398,17 @@ extract_disk_psp%:
 	mkdir -p disks/psp$*
 	7z x disks/sotn.psp$*.iso -odisks/psp$*/
 
-update-dependencies: $(SPLAT_APP) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(SATURN_SPLITTER_APP) $(GO) $(AS_ALLEGREX)
+update-dependencies: $(SPLAT_APP) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(SATURN_SPLITTER_APP) $(GO)
 	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release
 	cd $(SATURN_SPLITTER_DIR)/adpcm-extract && cargo build --release
 	pip3 install -r $(TOOLS_DIR)/requirements-python.txt
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/gfxsotn@latest
 	$(GO) install github.com/xeeynamo/sotn-decomp/tools/sotn-disk@latest
 	git clean -fd bin/
+
+get_allegrex:
+	wget https://github.com/sozud/binutils-allegrex/raw/master/allegrex.tar.gz
+	tar -xf allegrex.tar.gz -C ./bin
 
 bin/%: bin/%.tar.gz
 	sha256sum --check $<.sha256
