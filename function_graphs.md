@@ -602,7 +602,7 @@
 - [✅ func_800EA5AC](function_calls/dra.func_800EA5AC.svg?raw=1)
 - [✅ func_800EA5E4](function_calls/dra.func_800EA5E4.svg?raw=1)
 - [✅ func_800EA720](function_calls/dra.func_800EA720.svg?raw=1)
-- [❌ func_800EA7CC](function_calls/dra.func_800EA7CC.svg?raw=1)
+- [✅ func_800EA7CC](function_calls/dra.func_800EA7CC.svg?raw=1)
 - [✅ func_800EAD0C](function_calls/dra.func_800EAD0C.svg?raw=1)
 - [✅ func_800EAD7C](function_calls/dra.func_800EAD7C.svg?raw=1)
 - [✅ func_800EAEA4](function_calls/dra.func_800EAEA4.svg?raw=1)
