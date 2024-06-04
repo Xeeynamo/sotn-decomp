@@ -1042,7 +1042,6 @@ typedef union { // offset=0x7C
     ET_Shield shield;
     ET_MedusaShieldLaser medshieldlaser;
     ET_ShamanShieldStar shamanshieldstar;
-
     ET_Food food;
     ET_HitByIce hitbyice;
     ET_HitByLightning hitbylightning;
