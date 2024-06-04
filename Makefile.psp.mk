@@ -46,7 +46,7 @@ $(MWCCGAP_APP):
 	git submodule init $(MWCCGAP_DIR)
 	git submodule update $(MWCCGAP_DIR)
 
-$(PSP_BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
+$(PSP_BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP) bin/allegrex-as
 	mkdir -p $(dir $@)
 	$(MWCCGAP) $< $@ --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path $(AS_ALLEGREX) --asm-dir-prefix asm/pspeu $(MWCCPSP_FLAGS)
 
