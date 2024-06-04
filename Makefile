@@ -445,10 +445,6 @@ update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(SA
 	rm $(SOTNASSETS) && make $(SOTNASSETS) || true
 	git clean -fd bin/
 
-get_allegrex:
-	wget https://github.com/sozud/binutils-allegrex/raw/master/allegrex.tar.gz
-	tar -xf allegrex.tar.gz -C ./bin
-
 bin/%: bin/%.tar.gz
 	sha256sum --check $<.sha256
 	cd bin && tar -xzf ../$<
