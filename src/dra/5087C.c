@@ -1670,7 +1670,7 @@ void func_800F298C(void) {
                 playerX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
                 playerY = PLAYER.posY.i.hi + g_Tilemap.scrollY.i.hi;
                 func_8011A9D8();
-                PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0;
+                PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk;
                 func_800F0CD8(0);
                 func_8010BFFC();
                 playerX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;

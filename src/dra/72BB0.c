@@ -577,7 +577,7 @@ void func_80113EE0(void) {
     g_Player.unk44 = 0;
     g_Player.unk46 = 0;
     PLAYER.rotZ = 0;
-    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0;
+    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk;
     if (g_Entities[E_WEAPON].entityId == E_UNK_22) {
         func_8010FAF4();
     }
