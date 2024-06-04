@@ -1756,11 +1756,10 @@ extern s32 D_80097924;
 extern s32 D_80097928;
 extern GpuUsage g_GpuUsage;
 extern PlayerStatus g_Status;
-extern u8 D_80097B9C[];
+extern s32 D_80097C98;
 extern s32 subWeapon; // g_SubweaponId
 extern u8 g_SaveName[12] ALIGNED4;
 extern u32 D_80097C40[];
-extern s32 D_80097C98;
 extern PlayerDraw g_PlayerDraw[0x10];
 extern s32 D_800987B4;
 extern s32 D_800987C8;

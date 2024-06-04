@@ -1391,7 +1391,7 @@ void func_8010C36C(void) {
     s16* xPosPtr = &PLAYER.posX.i.hi;
     s32* vram_ptr = &g_Player.pl_vram_flag;
 
-    if (g_unkGraphicsStruct.unk18 != 0) {
+    if (g_unkGraphicsStruct.unk18) {
         *vram_ptr = 1;
         return;
     }
@@ -1566,7 +1566,7 @@ void func_8010C9F4(void) {
     s16* xPosPtr = &PLAYER.posX.i.hi;
     s32* vram_ptr = &g_Player.pl_vram_flag;
 
-    if (g_unkGraphicsStruct.unk18 != 0) {
+    if (g_unkGraphicsStruct.unk18) {
         return;
     }
     for (; i < 4; i++) {
@@ -1740,7 +1740,7 @@ void func_8010D010(void) {
         return;
     }
 
-    if (g_unkGraphicsStruct.unk18 != 0) {
+    if (g_unkGraphicsStruct.unk18) {
         return;
     }
     temp_s0 =
@@ -1821,7 +1821,7 @@ void func_8010D2C8(void) {
         return;
     }
 
-    if (g_unkGraphicsStruct.unk18 != 0) {
+    if (g_unkGraphicsStruct.unk18) {
         return;
     }
     temp_s0 =

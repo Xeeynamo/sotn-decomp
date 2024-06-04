@@ -339,7 +339,7 @@ s32 func_800F0CD8(s32 arg0) {
     s16 temp_a2;
     s32 ret;
 
-    if (g_unkGraphicsStruct.unk18 == 0) {
+    if (!g_unkGraphicsStruct.unk18) {
         if (D_80097C98 == 2) {
             ret = SetNextRoomToLoad(g_Tilemap.left + (PLAYER.posX.i.hi >> 8),
                                     g_Tilemap.top + (PLAYER.posY.i.hi >> 8));
@@ -378,7 +378,7 @@ s32 func_800F0CD8(s32 arg0) {
             goto block_25;
         }
     }
-    if (g_unkGraphicsStruct.unk24 == 0) {
+    if (!g_unkGraphicsStruct.unk24) {
         if (playerY < g_Tilemap.y + 4) {
             ret = SetNextRoomToLoad(
                 g_Tilemap.left + (playerX >> 8), g_Tilemap.top - 1);
@@ -441,7 +441,7 @@ block_25:
         if (playerY < g_Tilemap.y + 140) {
             g_Tilemap.scrollY.i.hi = g_Tilemap.y + 4;
             PLAYER.posY.i.hi = playerY - g_Tilemap.scrollY.i.hi;
-        } else if (g_Tilemap.height - 0x74 < playerY) {
+        } else if (g_Tilemap.height - 116 < playerY) {
             g_Tilemap.scrollY.i.hi = g_Tilemap.height - 252;
             PLAYER.posY.i.hi = playerY - g_Tilemap.scrollY.i.hi;
         } else {
@@ -466,9 +466,9 @@ block_25:
         temp_a3 = PLAYER.posY.i.hi;
         g_Tilemap.scrollY.i = g_Tilemap.scrollY.i;
         temp_a0 = temp_a2 << 16;
-        if (g_Tilemap.height - 0x74 < playerY) {
+        if (g_Tilemap.height - 116 < playerY) {
             do {
-                g_Tilemap.scrollY.i.hi = g_Tilemap.height - 0xFC;
+                g_Tilemap.scrollY.i.hi = g_Tilemap.height - 252;
                 PLAYER.posY.i.hi = playerY - g_Tilemap.scrollY.i.hi;
             } while (0);
         } else if ((temp_a0 >> 16) - (playerY - 136) >= 4) {
