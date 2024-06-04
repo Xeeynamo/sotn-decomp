@@ -35,7 +35,6 @@ AllocPrimitives = 0x800EDC80;
 FreePrimitives = 0x800EDE78;
 RenderPrimitives = 0x800EDEDC;
 CheckCollision = 0x800EF45C;
-SetNextRoomToLoad = 0x800F0BC0;
 MenuDraw = 0x800F8F28;
 MenuHandleCursorInput = 0x800FA034;
 MenuHandle = 0x800FBC24;
