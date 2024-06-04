@@ -1,7 +1,8 @@
 WIBO            := bin/wibo
 MWCCPSP         := bin/mwccpsp.exe
+AS_ALLEGREX     := bin/allegrex-as
 
-GNUASPSP        := mipsel-linux-gnu-as -I include/ -G0 -march=r6000 -mabi=eabi
+GNUASPSP        := $(AS_ALLEGREX) -I include/ -G0 -march=allegrex -mabi=eabi -EL
 MWASPSP         := $(WIBO) bin/asm_psp_elf.exe -gnu
 ASPSP           := $(GNUASPSP)
 
@@ -34,6 +35,10 @@ endef
 build_pspeu: $(addsuffix _psp,$(PSP_EU_TARGETS))
 
 extract_pspeu: $(addprefix $(PSP_BUILD_DIR)/,$(addsuffix .ld,$(PSP_EU_TARGETS)))
+
+$(AS_ALLEGREX):
+	wget https://github.com/sozud/binutils-allegrex/raw/master/allegrex.tar.gz
+	tar -xf allegrex.tar.gz -C ./bin
 
 $(WIBO):
 	wget -O $@ https://github.com/decompals/wibo/releases/download/0.6.13/wibo
