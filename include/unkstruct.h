@@ -45,6 +45,7 @@ typedef struct {
 #define PAL_GLOW_DATA(data) (u_long*)(data)
 
 #define PAL_BULK_COPY 5
+#define PAL_BULK_COPY_INFO(dst, n) (u_long*)(dst), (u_long*)(n)
 #define PAL_BULK(dst, data) (u_long*)(dst), (u_long*)LEN(data), (u_long*)(data)
 
 #define PAL_TERMINATE() ((u_long*)-1)

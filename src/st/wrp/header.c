@@ -64,13 +64,11 @@ s16** g_SpriteBanks[] = {
     /* 0x09C */ 0x00000000,
 };
 
-u32 D_80181D08[];
+extern u16 D_80181D08[16];
 void* D_801800A0[] = {
-    /* 0x0A0 */ (void*)0x00000005,
-    /* 0x0A4 */ (void*)0x00002000,
-    /* 0x0A8 */ (void*)0x00000010,
-    /* 0x0AC */ (void*)D_80181D08,
-    /* 0x0B0 */ (void*)0xFFFFFFFF,
+    MAKE_PAL_OP(PAL_BULK_COPY, 0),
+    PAL_BULK(0x2000, D_80181D08),
+    PAL_TERMINATE(),
 };
 void* g_Cluts[] = {
     /* 0x0B4 */ D_801800A0,
