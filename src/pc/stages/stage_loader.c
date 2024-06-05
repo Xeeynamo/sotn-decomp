@@ -182,7 +182,7 @@ static bool LoadTileLayers(FileStringified* file) {
     return true;
 }
 
-RoomDef* LoadRooms(const char* filePath) {
+RoomDef* LoadRoomsLayers(const char* filePath) {
     char assetPath[0x100];
 
     const char* strTerminator = strrchr(filePath, '/');
@@ -207,7 +207,7 @@ RoomDef* LoadRooms(const char* filePath) {
 
 static int g_LayoutEntityIndex = 0;
 static LayoutEntity g_LayoutEntityPool[0x200];
-static bool _LoadObjLayout(const FileLoad* file) {
+static bool _LoadObjLayout(const FileStringified* file) {
     int i;
     cJSON* json = cJSON_Parse(file->content);
     if (!json) {
@@ -245,6 +245,44 @@ LayoutEntity* LoadObjLayout(const char* filePath) {
     }
 
     return g_LayoutEntityPool + start;
+}
+
+RoomHeader room_headers[0x100];
+static bool _LoadRoomDefArray(const FileStringified* file) {
+    int i;
+    cJSON* json = cJSON_Parse(file->content);
+    if (!json) {
+        ERRORF("failed to parse: %s", cJSON_GetErrorPtr());
+        return false;
+    }
+
+    // from here, assume the JSON is valid and well structured
+    const int max = LEN(room_headers);
+    int len = cJSON_GetArraySize(json);
+    if (len > max) {
+        WARNF("room def has %i elements, but only %i will be read", len, max);
+        len = max;
+    }
+
+    for (i = 0; i < len; i++) {
+        cJSON* jitem = cJSON_GetArrayItem(json, i);
+        RoomHeader* room = &room_headers[i];
+        room->left = JITEM("left")->valueint;
+        room->top = JITEM("top")->valueint;
+        room->right = JITEM("right")->valueint;
+        room->bottom = JITEM("bottom")->valueint;
+        room->load.tileLayoutId = JITEM("tileLayoutId")->valueint;
+        room->load.tilesetId = JITEM("tilesetId")->valueint;
+        room->load.objGfxId = JITEM("objGfxId")->valueint;
+        room->load.objLayoutId = JITEM("objLayoutId")->valueint;
+    }
+    return true;
+}
+RoomHeader* LoadRoomDefs(const char* filePath) {
+    if (!FileStringify(_LoadRoomDefArray, filePath, NULL)) {
+        return NULL;
+    }
+    return room_headers;
 }
 
 static int g_SpritePartPtrIndex = 0;

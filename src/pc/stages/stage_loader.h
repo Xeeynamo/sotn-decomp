@@ -6,7 +6,11 @@
 
 // load a rooms.layers.json file and all its dependencies to the returned
 // pre-allocated RoomDef array. Returns NULL in case of a failure.
-RoomDef* LoadRooms(const char* filePath);
+RoomDef* LoadRoomsLayers(const char* filePath);
+
+// load a g_Rooms.roomdef.json file into the pre-allocated returning pointer.
+// Returns NULL in case of a failure.
+RoomHeader* LoadRoomDefs(const char* filePath);
 
 // load a *.layoutobj.json file into the returning pre-allocated array.
 // Returns NULL in case of a failure.

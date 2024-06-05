@@ -12,11 +12,6 @@ void UpdateRoomPosition(void);
 void UpdateStageEntities(void);
 static void MyInitRoomEntities(s32 objLayoutId);
 
-static RoomHeader rooms[] = {
-    {40, 12, 40, 12, {0, 0, 0, 1}},
-    {0x40},
-};
-
 // TODO populate from assets/st/wrp/D_80186D88.animset.json
 static SpriteParts* D_80186D88[] = {NULL, NULL, NULL, NULL};
 static u_long* sprite_banks[] = {
@@ -90,11 +85,11 @@ static Overlay g_StageDesc = {
     HitDetection,
     UpdateRoomPosition,
     MyInitRoomEntities,
-    rooms,
+    NULL, // set in InitStageWrp
     sprite_banks,
     clut_anims,
     NULL,
-    NULL,
+    NULL, // set in InitStageWrp
     WRP_g_EntityGfxs,
     UpdateStageEntities,
     NULL,
@@ -263,7 +258,8 @@ void InitStageWrp(Overlay* o) {
 
     sprite_banks[1] = LoadSpriteParts("assets/st/wrp/D_80186D88.animset.json");
 
-    g_StageDesc.tileLayers = LoadRooms("assets/st/wrp/rooms.layers.json");
+    g_StageDesc.tileLayers = LoadRoomsLayers("assets/st/wrp/rooms.layers.json");
+    g_StageDesc.rooms = LoadRoomDefs("assets/st/wrp/g_Rooms.roomdef.json");
     memcpy(o, &g_StageDesc, sizeof(Overlay));
 }
 

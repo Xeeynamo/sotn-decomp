@@ -46,7 +46,8 @@ static Overlay g_StageDesc = {
 
 void InitStageDummy(Overlay* o) {
     LoadReset();
-    g_StageDesc.tileLayers = LoadRooms("assets/st/wrp/rooms.layers.json");
+
+    g_StageDesc.tileLayers = LoadRoomsLayers("assets/st/wrp/rooms.layers.json");
     memcpy(o, &g_StageDesc, sizeof(Overlay));
 }
 
