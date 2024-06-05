@@ -740,7 +740,7 @@
 <g id="node46" class="node">
 <title>dra.EntitySummonSpirit</title>
 <g id="a_node46"><a xlink:href="dra.EntitySummonSpirit.svg" xlink:title="dra.EntitySummonSpirit">
-<ellipse fill="red" stroke="black" cx="11906.34" cy="-378" rx="125.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="11906.34" cy="-378" rx="125.38" ry="18"/>
 <text text-anchor="middle" x="11906.34" y="-374.3" font-family="Times,serif" font-size="14.00">dra.EntitySummonSpirit</text>
 </a>
 </g>

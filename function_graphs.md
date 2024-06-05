@@ -409,7 +409,7 @@
 - [❌ EntitySubwpnThrownAxe](function_calls/dra.EntitySubwpnThrownAxe.svg?raw=1)
 - [❌ EntitySubwpnThrownDagger](function_calls/dra.EntitySubwpnThrownDagger.svg?raw=1)
 - [✅ EntitySubwpnThrownVibhuti](function_calls/dra.EntitySubwpnThrownVibhuti.svg?raw=1)
-- [❌ EntitySummonSpirit](function_calls/dra.EntitySummonSpirit.svg?raw=1)
+- [✅ EntitySummonSpirit](function_calls/dra.EntitySummonSpirit.svg?raw=1)
 - [✅ EntityTeleport](function_calls/dra.EntityTeleport.svg?raw=1)
 - [❌ EntityTransparentWhiteCircle](function_calls/dra.EntityTransparentWhiteCircle.svg?raw=1)
 - [✅ EntityUnarmedAttack](function_calls/dra.EntityUnarmedAttack.svg?raw=1)
