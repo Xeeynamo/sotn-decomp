@@ -72,8 +72,8 @@ void func_8018F510(Entity* entity) {
 
 #include "../entity_unkId14.h"
 
-extern s16 D_80180FF8[];
-extern s32 D_80181008[];
+extern s16 unk15_rot[];
+extern s32 unk15_yVel[];
 void EntityUnkId15(Entity* self) {
     if (!self->step) {
         self->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
@@ -82,9 +82,9 @@ void EntityUnkId15(Entity* self) {
         self->animCurFrame = 1;
         self->drawMode = DRAW_TPAGE;
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        self->rotX = D_80180FF8[self->params];
+        self->rotX = unk15_rot[self->params];
         self->rotY = self->rotX;
-        self->velocityY = D_80181008[self->params];
+        self->velocityY = unk15_yVel[self->params];
         self->step++;
     } else {
         self->posY.val -= self->velocityY;
