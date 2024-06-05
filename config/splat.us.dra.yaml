@@ -94,12 +94,13 @@ segments:
       - [0x8410, .data, config_us] # spells
       - [0x8720, .data, config_us] # relics
       - [0x8900, .data, config_us] # enemies
-      - [0xC910, data] # exp table and other stuff
+      - [0xC910, .data, d_C910] # exp table and other stuff
       - [0xC958, .data, cd]
-      - [0xCD80, data]
+      - [0xCD80, .data, d_CD80]
       - [0xCDF8, .data, 692E8]
       - [0xCF18, .data, 6D59C]
       - [0xCF4C, data]
+      - [0xD014, .data, d_D094]
       - [0xD0C4, .data, 7A4D0]
       - [0xD1D4, assets, factory_blueprint, g_FactoryBlueprints]
       - [0xD4B8, .data, 7E4BC]
