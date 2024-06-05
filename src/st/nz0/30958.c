@@ -71,7 +71,7 @@ void EntityBreakable(Entity* self) {
         }
     } else {
         InitializeEntity(D_80180BC8);
-        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 20;
+        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk - 20;
         self->drawMode = D_80180E44[params];
         self->hitboxHeight = D_80180E24[params];
         self->animSet = D_80180E34[params];

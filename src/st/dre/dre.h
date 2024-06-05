@@ -23,6 +23,8 @@ typedef enum {
     /* 0x10 */ E_DUMMY_10,
     /* 0x15 */ E_ID_14 = 0x14,
     /* 0x15 */ E_ID_15,
+    /* 0x16 */ E_ID_BACKGROUND_HOUSE,
+    /* 0x17 */ E_ID_HOUSE_SPAWNER,
     /* 0x1A */ E_SUCCUBUS_PETAL = 0x1A,
     /* 0x1B */ E_SUCCUBUS_WING_OVERLAY,
     /* 0x1C */ E_SUCCUBUS_CLONE,
@@ -111,7 +113,8 @@ extern s32 D_801811B0[];
 extern u32 D_8018125C[];
 extern s16 D_801812E4[];
 extern u32 D_801812F4[];
-extern s8 D_801816C4; // Succubus facing assigned to it
+extern s16 D_801815E8[]; // X, Y, params for Entity3DHouseSpawner
+extern s8 D_801816C4;    // Succubus facing assigned to it
 extern u8 D_80181338[];
 extern u16 D_801811A4[];
 extern u16 D_801810B0[];

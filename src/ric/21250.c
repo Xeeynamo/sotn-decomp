@@ -572,7 +572,7 @@ void func_8015E800(void) {
 
     var_s5 = 0;
     i = 0;
-    if (g_unkGraphicsStruct.unk18 != 0) {
+    if (g_unkGraphicsStruct.unk18) {
         *vram_ptr = 1;
         return;
     }
@@ -746,7 +746,7 @@ void func_8015EE28(void) {
     // weird thing where i has to get initialized first
     i = 1;
 
-    if (g_unkGraphicsStruct.unk18 != 0) {
+    if (g_unkGraphicsStruct.unk18) {
         return;
     }
     for (i = 1; i < 4; i++) {
@@ -908,7 +908,7 @@ void func_8015F414(void) {
     u16* xPosPtr = &PLAYER.posX.i.hi;
     s32* vram_ptr = &g_Player.pl_vram_flag;
 
-    if (g_unkGraphicsStruct.unk18 != 0) {
+    if (g_unkGraphicsStruct.unk18) {
         return;
     }
     temp_s0 =
@@ -980,7 +980,7 @@ void func_8015F680(void) {
     u16* xPosPtr = &PLAYER.posX.i.hi;
     s32* vram_ptr = &g_Player.pl_vram_flag;
 
-    if (g_unkGraphicsStruct.unk18 != 0) {
+    if (g_unkGraphicsStruct.unk18) {
         return;
     }
     temp_s0 =
