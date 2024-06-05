@@ -29,8 +29,8 @@ Entity* g_CurrentEntity;
 GpuUsage g_GpuUsage;
 PlayerStatus g_Status;
 u32 g_randomNext;
-s32 playerX;
-s32 playerY;
+s32 g_PlayerX;
+s32 g_PlayerY;
 PlayerState g_Player;
 u32 g_GameTimer;
 GpuBuffer g_GpuBuffers[2];
@@ -571,11 +571,6 @@ int CdInit(void) {
 void func_801083BC(void) { NOT_IMPLEMENTED; }
 
 void func_801042C4(s32 arg0) { NOT_IMPLEMENTED; }
-
-s32 func_800F0CD8(s32 arg0) {
-    NOT_IMPLEMENTED;
-    return 0;
-}
 
 void EntityWeaponAttack(Entity* self) { NOT_IMPLEMENTED; }
 void func_ptr_80170004(Entity* self) { NOT_IMPLEMENTED; }
