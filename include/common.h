@@ -70,9 +70,9 @@ int sprintf(char* dst, const char* fmt, ...);
 #define SP_LEN 0x400
 #define SP(x) (&sp[x])
 #elif defined(VERSION_PSP)
-#define SP(x) (0x00010000 | (x))
+#define SP(x) (0x00010000 + (x))
 #else
-#define SP(x) (0x1F800000 | (x))
+#define SP(x) (0x1F800000 + (x))
 #endif
 
 #endif
