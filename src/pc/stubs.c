@@ -170,6 +170,7 @@ s16 D_800ACF94[16];                   // guessed size
 u8 D_800ACFB4[20][4];                 // TODO AnimationFrames*[], random size
 s32 D_800B0830[99];                   // random size to play safe
 s32 D_800B083C[99];                   // random size to play safe
+s16 D_800B0860[99];                   // random size to play safe
 AnimationFrame D_800B0798[40];        // random size to play safe
 u8 D_800B0F94[100][5];                // random size to play safe
 SVECTOR stubbbbbbbb = {0};
@@ -617,4 +618,3 @@ void func_80123B40(Entity* self) { NOT_IMPLEMENTED; }
 void EntityBatEcho(Entity* self) { NOT_IMPLEMENTED; }
 void func_8012F894(Entity* self) { NOT_IMPLEMENTED; }
 void func_80129864(Entity* self) { NOT_IMPLEMENTED; }
-void EntitySummonSpirit(Entity* self) { NOT_IMPLEMENTED; }
