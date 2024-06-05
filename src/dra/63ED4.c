@@ -198,8 +198,6 @@ extern u16 D_800D6A14[0x10];
 extern u16 D_800D6A34[0x10];
 extern u16 D_800D6A54[0x40]; // UNUSED
 extern u16 D_800D6AD4[0x100];
-extern u16 D_800D6B54[0x10]; // overlaps with D_800D6AD4?
-extern u16 D_800D6C14[0x60]; // overlaps with D_800D6AD4?
 extern u16 D_800D6CD4[0x100];
 extern u16 D_800D6ED4[0x100];
 extern u16 D_800D70D4[0x100];
@@ -367,15 +365,15 @@ u_long* D_800A3A74[] = {
 
 u_long* D_800A3A88[] = {
     PAL_COPY_INFO(),
-    PAL_COPY_DATA(0x1F20, D_800D6B54),
+    PAL_COPY_DATA_(0x1F20, D_800D6AD4 + 64, 16),
     PAL_TERMINATE(),
 };
 
 u_long* D_800A3A9C[] = {
     MAKE_PAL_OP(PAL_GLOW_ANIM, 1),
     PAL_GLOW_INFO(0x1F20, 16),
-    PAL_GLOW_DATA(D_800D6C14),
-    PAL_GLOW_DATA(D_800D6B54),
+    PAL_GLOW_DATA(D_800D6AD4 + 160),
+    PAL_GLOW_DATA(D_800D6AD4 + 64),
     PAL_TERMINATE(),
 };
 
