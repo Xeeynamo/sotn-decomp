@@ -1,4 +1,5 @@
 g_CheatCodes = 0x800A300C;
+D_800B0860 = 0x800B0860;
 aPbav = 0x800B107C;
 aPbav_0 = 0x800B407C;
 aPbav_2 = 0x800B607C;
@@ -51,7 +52,6 @@ EntitySubwpnThrownAxe = 0x80125330;
 EntityHolyWaterBreakGlass = 0x80125E68;
 EntitySubwpnCrashCross = 0x801267B0;
 EntityHellfireHandler = 0x80126ECC;
-EntitySummonSpirit = 0x8012A0A4;
 EntityStopWatch = 0x8012A89C;
 EntityBatEcho = 0x8012BEF8;
 CdSoundCommand4 = 0x80132F60;
