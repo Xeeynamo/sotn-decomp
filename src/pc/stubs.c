@@ -221,7 +221,6 @@ OT_TYPE* g_CurrentOT;
 s32 D_801362B8;
 s32 D_801362BC;
 s32 g_DebugPlayer;
-Vram g_Vram;
 s32 g_softResetTimer;
 DebugMode g_DebugMode;
 s32 g_DebugPalIdx;
