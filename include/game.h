@@ -20,7 +20,7 @@
 #include <psxsdk/libsnd.h>
 #include <psxsdk/romio.h>
 
-#define SPAD(x) ((long*)0x1F800000 + x)
+#define SPAD(x) ((s32*)SP(x * sizeof(s32)))
 
 typedef long Event;
 
