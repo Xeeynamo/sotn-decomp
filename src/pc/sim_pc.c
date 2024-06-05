@@ -252,6 +252,7 @@ bool LoadFilePc(FileLoad* file, SimFile* sim) {
         break;
     case SIM_STAGE_CHR:
         LoadStageTileset(sim->addr, file->length, 0);
+        StoreImage(&g_Vram.D_800ACDB8, g_Clut);
         break;
     case SIM_12:
         LoadStageTileset(sim->addr, file->length, 0x100);
