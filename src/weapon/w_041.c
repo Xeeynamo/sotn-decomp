@@ -3,6 +3,10 @@
 #include "weapon_private.h"
 #include "shared.h"
 
+extern AnimationFrame D_123000_8017A4A4[];
+extern FrameProperty D_123000_8017A50C[];
+extern s32 D_123000_8017B200;
+
 void func_123000_8017A914(void) {
     RECT rect;
     RECT rectDummy;
@@ -17,8 +21,6 @@ void func_123000_8017A914(void) {
     rect.h = 3;
     LoadImage(&rect, D_8006EDCC);
 }
-
-extern s32 D_123000_8017B200;
 
 // Purpose is not 100% clear, but appears to be something like:
 // Iterate over entities 64-192. Look for any which are positioned
@@ -98,7 +100,103 @@ Entity* func_123000_8017A994(Entity* self, s16 angleTarget, s16 tolerance) {
 
 INCLUDE_ASM("weapon/nonmatchings/w_041", EntityWeaponAttack);
 
-INCLUDE_ASM("weapon/nonmatchings/w_041", func_ptr_80170004);
+void func_ptr_80170004(Entity* self) {
+    s16 result;
+    s16 angleDiff;
+    s16 angle;
+    s32 fakeAngle;
+    s32 velTemp;
+
+    s32 trigresult;
+    s32 trigtemp;
+
+    switch (self->step) {
+    case 0:
+        self->animSet = self->ext.weapon.parent->animSet;
+        self->unk5A = self->ext.weapon.parent->unk5A;
+        self->palette = self->ext.weapon.parent->palette;
+        self->facingLeft++;
+        self->facingLeft &= 1;
+        self->flags = FLAG_UNK_08000000;
+
+        self->zPriority = self->ext.weapon.parent->zPriority - 2;
+        self->unk4C = D_123000_8017A4A4;
+        self->drawFlags |= 3;
+        self->rotX = self->rotY = 0;
+        self->step++;
+        break;
+    case 1:
+        self->rotX += 4;
+        if (self->rotX >= 0x100) {
+            self->rotX = 0x100;
+            self->ext.weapon.equipId =
+                self->ext.weapon.parent->ext.weapon.equipId;
+            SetWeaponProperties(self, 0);
+            self->ext.weapon.lifetime = 8;
+            self->step++;
+        }
+        self->rotY = self->rotX;
+        break;
+    case 2:
+        if (--self->ext.weapon.lifetime == 0) {
+            if (self->facingLeft) {
+                self->ext.weapon.unk80 = 0;
+                self->ext.weapon.unk7E = 0;
+            } else {
+                self->ext.weapon.unk80 = 0x800;
+                self->ext.weapon.unk7E = 1;
+            }
+            self->ext.weapon.some_ent =
+                func_123000_8017A994(self, self->ext.weapon.unk80, 0x280);
+            g_api.PlaySfx(0x69B);
+            g_api.PlaySfx(0x64E);
+            self->ext.weapon.lifetime = 0x16;
+            self->ext.weapon.unk82 = 0x80;
+            self->step++;
+        }
+        break;
+    case 3:
+        result = g_api.func_80118B18(
+            self, self->ext.weapon.some_ent, self->ext.weapon.unk7E);
+        if (result >= 0) {
+            angle = self->ext.weapon.unk80 & 0xFFF;
+            angleDiff = abs(angle - result);
+            if (self->ext.weapon.unk82 > angleDiff) {
+                self->ext.weapon.unk82 = angleDiff;
+            }
+            if (angle < result) {
+                if (angleDiff < 0x800) {
+                    angle += self->ext.weapon.unk82;
+                } else {
+                    angle -= self->ext.weapon.unk82;
+                }
+            } else {
+                if (angleDiff < 0x800) {
+                    angle -= self->ext.weapon.unk82;
+                } else {
+                    angle += self->ext.weapon.unk82;
+                }
+            }
+            self->ext.weapon.unk80 = angle & 0xFFF;
+        }
+        trigresult = rcos(self->ext.weapon.unk80);
+        trigtemp = trigresult * 16;
+        self->velocityX = (trigresult * 32 + trigtemp) << 7 >> 8;
+
+        trigresult = rsin(self->ext.weapon.unk80);
+        trigtemp = trigresult * 16;
+        self->velocityY = -((trigresult * 32 + trigtemp) << 7) >> 8;
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        break;
+    case 4:
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        break;
+    }
+    g_api.UpdateAnim(D_123000_8017A50C, NULL);
+    func_123000_8017A914();
+}
 
 void func_ptr_80170008(Entity* self) {}
 
