@@ -12,7 +12,7 @@
 <!-- dra.func_800F0CD8 -->
 <g id="node1" class="node">
 <title>dra.func_800F0CD8</title>
-<ellipse fill="red" stroke="black" cx="126.74" cy="-198" rx="103.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="126.74" cy="-198" rx="103.18" ry="18"/>
 <text text-anchor="middle" x="126.74" y="-194.3" font-family="Times,serif" font-size="14.00">dra.func_800F0CD8</text>
 </g>
 <!-- dra.SetNextRoomToLoad -->

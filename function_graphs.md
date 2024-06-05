@@ -616,7 +616,7 @@
 - [✅ func_800EDD9C](function_calls/dra.func_800EDD9C.svg?raw=1)
 - [✅ func_800F087C](function_calls/dra.func_800F087C.svg?raw=1)
 - [✅ func_800F0940](function_calls/dra.func_800F0940.svg?raw=1)
-- [❌ func_800F0CD8](function_calls/dra.func_800F0CD8.svg?raw=1)
+- [✅ func_800F0CD8](function_calls/dra.func_800F0CD8.svg?raw=1)
 - [✅ func_800F1424](function_calls/dra.func_800F1424.svg?raw=1)
 - [✅ func_800F14CC](function_calls/dra.func_800F14CC.svg?raw=1)
 - [✅ func_800F16D0](function_calls/dra.func_800F16D0.svg?raw=1)
