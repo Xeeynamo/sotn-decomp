@@ -141,36 +141,35 @@ void func_8010DA48(u32 arg0) {
 }
 
 AnimationFrame* func_8010DA70(AnimationFrame** frames) {
-    Entity* entity;
-    AnimationFrame* frame;
-    s32 idx;
-    AnimationFrame* frameSub;
     s32 idxSub;
+    s32 var_s1;
+    s32 idx;
+    u16* subanim;
+    u16* anim;
 
-    entity = g_CurrentEntity;
-    frame = frames[entity->ext.player.unkAC];
+    anim = (u16*)frames[g_CurrentEntity->ext.player.unkAC];
     idx = 0;
+    var_s1 = 0;
     while (true) {
-        if (frame->duration == 0xFFFD) {
-            frameSub = D_800B0594[(u8)frame->unk2];
+        if ((&anim[idx * 2])[0] == 0xFFFD) {
             idxSub = 0;
             while (true) {
-                if (frameSub[idxSub].duration == 0xFFFF) {
+                subanim = (u16*)D_800B0594[(&anim[idx * 2])[1] & 0xFF];
+                if ((&subanim[idxSub * 2])[0] == 0xFFFF) {
+                    idx++;
                     break;
                 }
-                entity = g_CurrentEntity;
-                if (idx == entity->animFrameIdx) {
-                    return &frameSub[idxSub];
+                if (var_s1 == g_CurrentEntity->animFrameIdx) {
+                    return (AnimationFrame*)&subanim[idxSub * 2];
                 }
-                idx++;
                 idxSub++;
+                var_s1++;
             }
-            frame++;
-        } else if (idx == g_CurrentEntity->animFrameIdx) {
-            return frame;
+        } else if (var_s1 == g_CurrentEntity->animFrameIdx) {
+            return (AnimationFrame*)(anim + idx * 2);
         } else {
+            var_s1++;
             idx++;
-            frame++;
         }
     }
 }
@@ -214,7 +213,7 @@ void func_8010DBFC(s8* frameProps, AnimationFrame** frames) {
                 g_CurrentEntity->animFrameDuration = -1;
                 animFrame = func_8010DA70(frames);
             } else if (animFrame->duration == 0xFFFE) {
-                g_CurrentEntity->ext.generic.unkAC = animFrame->unk2;
+                g_CurrentEntity->ext.generic.unkAC = animFrame->unk2 & 0xFF;
                 g_CurrentEntity->animFrameIdx = animFrame->unk2 >> 8;
                 animFrame = func_8010DA70(frames);
                 g_CurrentEntity->animFrameDuration = animFrame->duration;
@@ -230,11 +229,14 @@ void func_8010DBFC(s8* frameProps, AnimationFrame** frames) {
         // expression fails.
 
         // Please check function UpdateAnim down below
-        frameProps = &frameProps[animFrame->unk2 >> 9 << 2];
-        g_CurrentEntity->hitboxOffX = *frameProps++;
-        g_CurrentEntity->hitboxOffY = *frameProps++;
-        g_CurrentEntity->hitboxWidth = *frameProps++;
-        g_CurrentEntity->hitboxHeight = *frameProps++;
+        frameProps = &frameProps[((animFrame->unk2 >> 9) & 0x7F) * 4];
+        g_CurrentEntity->hitboxOffX = *frameProps;
+        frameProps++;
+        g_CurrentEntity->hitboxOffY = *frameProps;
+        frameProps++;
+        g_CurrentEntity->hitboxWidth = *frameProps;
+        frameProps++;
+        g_CurrentEntity->hitboxHeight = *frameProps;
     }
     g_CurrentEntity->animCurFrame = animFrame->unk2 & 0x1FF;
 }
