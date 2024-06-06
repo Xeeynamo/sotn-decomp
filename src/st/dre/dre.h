@@ -55,7 +55,6 @@ void EntityUnkId15(Entity* entity);
 extern u16 g_InitializeData0[];
 extern u16 D_8018047C[];
 extern u16 g_EInitGeneric[];
-extern u16 D_80180494[];
 extern u16 D_801804A0[];
 extern u16 D_801804D0[]; // EntitySuccubus
 extern u16 D_801804DC[];

@@ -188,7 +188,7 @@ LayoutEntity* g_pStObjLayoutVertical[] = {
 // *** entity definition start ***
 void func_80186FD0(Entity*);
 void func_801870B0(Entity*);
-void func_8018F510(Entity*);
+void EntityUnkId13(Entity*);
 void EntityUnkId14(Entity*);
 void EntityUnkId15(Entity*);
 void EntityWarpRoom(Entity*);
@@ -213,7 +213,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     /* 420 */ (PfnEntityUpdate)EntityDummy,
     /* 424 */ (PfnEntityUpdate)func_80186FD0, // unused
     /* 428 */ (PfnEntityUpdate)func_801870B0, // unused? looks debugging stuff
-    /* 42C */ (PfnEntityUpdate)func_8018F510,
+    /* 42C */ (PfnEntityUpdate)EntityUnkId13,
     /* 430 */ (PfnEntityUpdate)EntityUnkId14,
     /* 434 */ (PfnEntityUpdate)EntityUnkId15,
     /* 438 */ (PfnEntityUpdate)EntityWarpRoom,
@@ -233,7 +233,7 @@ u16 g_InitializeEntityData0[] = {
 u16 g_EInitGeneric[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0005, 0x0000,
 };
-u16 D_8018047C[] = {
+u16 g_InitDataEnt13[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0002, 0x0000,
 };
 u16 D_80180488[] = {

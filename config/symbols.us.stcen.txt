@@ -5,6 +5,7 @@ PfnEntityUpdates = 0x80180394;
 g_InitializeData0 = 0x80180410;
 g_InitializeEntityData0 = 0x8018041C;
 g_EInitGeneric = 0x80180434;
+g_InitDataEnt13 = 0x80180440;
 g_eInitGeneric2 = 0x80180458;
 g_eDamageDisplayInit = 0x80180464;
 g_eRedDoorTiles = 0x801804A4;
