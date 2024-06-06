@@ -1442,13 +1442,13 @@
 | 1.00 | true     | EntityUnkId14Spawner                | ../../asm/us/st/st0/nonmatchings/36358/EntityUnkId14Spawner.s 
 | 1.00 | true     | EntityUnkId14Spawner                | ../../asm/us/st/wrp/nonmatchings/e_misc/EntityUnkId14Spawner.s 
 -------------------------------------------------------------------------------
-| 1.00 | false    | EntityUnkId15                       | ../../asm/us/st/cen/nonmatchings/18084/EntityUnkId15.s 
+| 1.00 | true     | EntityUnkId15                       | ../../asm/us/st/cen/nonmatchings/18084/EntityUnkId15.s 
 | 1.00 | true     | EntityUnkId15                       | ../../asm/us/st/dre/nonmatchings/1E1C8/EntityUnkId15.s 
 | 1.00 | true     | EntityUnkId15                       | ../../asm/us/st/mad/nonmatchings/15520/EntityUnkId15.s 
 | 1.00 | true     | EntityUnkId15                       | ../../asm/us/st/no3/nonmatchings/48A84/EntityUnkId15.s 
 | 1.00 | true     | EntityUnkId15                       | ../../asm/us/st/np3/nonmatchings/402F4/EntityUnkId15.s 
 | 1.00 | true     | EntityUnkId15                       | ../../asm/us/st/nz0/nonmatchings/4070C/EntityUnkId15.s 
-| 1.00 | false    | EntityUnkId15                       | ../../asm/us/st/rwrp/nonmatchings/113A0/EntityUnkId15.s 
+| 1.00 | true     | EntityUnkId15                       | ../../asm/us/st/rwrp/nonmatchings/113A0/EntityUnkId15.s 
 | 1.00 | true     | EntityUnkId15                       | ../../asm/us/st/st0/nonmatchings/36358/EntityUnkId15.s 
 | 1.00 | true     | EntityUnkId15                       | ../../asm/us/st/wrp/nonmatchings/e_misc/EntityUnkId15.s 
 -------------------------------------------------------------------------------
