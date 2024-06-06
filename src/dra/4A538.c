@@ -164,7 +164,7 @@ void func_800EA7CC(void) {
         new_var = temp_s0[1];
         count = temp_s0[2];
 
-        clut = &g_Clut;
+        clut = g_Clut;
         clut += new_var;
 
         switch (ptr->unk8 & 0xFF) {
@@ -273,7 +273,7 @@ void func_800EA7CC(void) {
     offset = 0;
     temp_s0 = g_Clut;
     clutX = 0x200;
-    for (i = 0xF0; i < 0x100; i++, temp_s0 += 0x80, offset++) {
+    for (i = 0xF0; i < 0x100; i++, temp_s0 = (s16*)temp_s0 + 0x100, offset++) {
         if (palettes[offset] != 0) {
             LoadClut2(temp_s0, clutX, i);
         }
@@ -281,7 +281,7 @@ void func_800EA7CC(void) {
 
     // re-upload updated shared entity palette
     clutX = 0;
-    for (i = 0xF0; i < 0x100; i++, temp_s0 += 0x80, offset++) {
+    for (i = 0xF0; i < 0x100; i++, temp_s0 = (s16*)temp_s0 + 0x100, offset++) {
         if (palettes[offset] != 0) {
             LoadClut2(temp_s0, clutX, i);
         }
@@ -289,7 +289,7 @@ void func_800EA7CC(void) {
 
     // re-upload updated stage-specific entities palette
     clutX = 0x100;
-    for (i = 0xF0; i < 0x100; i++, temp_s0 += 0x80, offset++) {
+    for (i = 0xF0; i < 0x100; i++, temp_s0 = (s16*)temp_s0 + 0x100, offset++) {
         if (palettes[offset]) {
             LoadClut2(temp_s0, clutX, i);
         }
