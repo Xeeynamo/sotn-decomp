@@ -18,6 +18,8 @@ void EntityUnkId13(Entity* entity) {
         }
         entity->posX.i.hi = entity->ext.ent13.parent->posX.i.hi;
         entity->posY.i.hi = entity->ext.ent13.parent->posY.i.hi;
+        // Tests if the parent's ID is different from what it was when we were
+        // created. I suspect this is to check for the parent being destroyed.
         if (entity->ext.ent13.parent->entityId != entity->ext.ent13.parentId) {
             DestroyEntity(entity);
         }
