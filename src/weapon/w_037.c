@@ -116,7 +116,7 @@ extern s32 D_107000_8017A758[];
 extern Point16 D_107000_8017BBE8[];
 extern s32 D_107000_8017BD28;
 
-void func_ptr_80170004(Entity* self) {
+s32 func_ptr_80170004(Entity* self) {
     Point16 basePoint;
     Primitive* prim;
     s32 randy;

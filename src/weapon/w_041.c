@@ -100,7 +100,7 @@ Entity* func_123000_8017A994(Entity* self, s16 angleTarget, s16 tolerance) {
 
 INCLUDE_ASM("weapon/nonmatchings/w_041", EntityWeaponAttack);
 
-void func_ptr_80170004(Entity* self) {
+s32 func_ptr_80170004(Entity* self) {
     s16 result;
     s16 angleDiff;
     s16 angle;
