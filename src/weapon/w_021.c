@@ -424,9 +424,8 @@ s32 func_ptr_80170004(Entity* self) {
     s16 xVar;
     s16 yVar;
 
-
     upperParams = (self->params >> 8) & 0x7F;
-    
+
     switch (self->step) {
     case 0:
         SetSpriteBank1(D_97000_8017A040);
@@ -466,7 +465,7 @@ s32 func_ptr_80170004(Entity* self) {
         }
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        self->velocityY += 0x2800;
+        self->velocityY += FIX(0.15625);
         xShift = 0;
         yShift = 8;
         xVar = self->posX.i.hi + xShift;
@@ -523,7 +522,6 @@ s32 func_ptr_80170004(Entity* self) {
             DestroyEntity(self);
         }
     }
-    
 }
 
 void func_ptr_80170008(Entity* self) {}
