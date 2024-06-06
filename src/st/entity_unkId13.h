@@ -6,7 +6,7 @@ void EntityUnkId13(Entity* self) {
         InitializeEntity(g_InitDataEnt13);
         self->ext.ent13.parentId = self->ext.ent13.parent->entityId;
     case 1:
-        if (self->ext.ent13.fiveFrameCounter++ >= 5) {
+        if (self->ext.ent13.fiveFrameCounter++ > 4) {
             Entity* newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
