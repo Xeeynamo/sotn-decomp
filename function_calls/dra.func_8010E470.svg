@@ -15,18 +15,18 @@
 <ellipse fill="green" stroke="black" cx="615.84" cy="-198" rx="101.28" ry="18"/>
 <text text-anchor="middle" x="615.84" y="-194.3" font-family="Times,serif" font-size="14.00">dra.func_8010E470</text>
 </g>
-<!-- dra.func_8010DA48 -->
+<!-- dra.SetPlayerAnim -->
 <g id="node2" class="node">
-<title>dra.func_8010DA48</title>
-<g id="a_node2"><a xlink:href="dra.func_8010DA48.svg" xlink:title="dra.func_8010DA48">
-<ellipse fill="green" stroke="black" cx="615.84" cy="-18" rx="102.88" ry="18"/>
-<text text-anchor="middle" x="615.84" y="-14.3" font-family="Times,serif" font-size="14.00">dra.func_8010DA48</text>
+<title>dra.SetPlayerAnim</title>
+<g id="a_node2"><a xlink:href="dra.SetPlayerAnim.svg" xlink:title="dra.SetPlayerAnim">
+<ellipse fill="green" stroke="black" cx="615.84" cy="-18" rx="98.58" ry="18"/>
+<text text-anchor="middle" x="615.84" y="-14.3" font-family="Times,serif" font-size="14.00">dra.SetPlayerAnim</text>
 </a>
 </g>
 </g>
-<!-- dra.func_8010E470&#45;&gt;dra.func_8010DA48 -->
+<!-- dra.func_8010E470&#45;&gt;dra.SetPlayerAnim -->
 <g id="edge1" class="edge">
-<title>dra.func_8010E470&#45;&gt;dra.func_8010DA48</title>
+<title>dra.func_8010E470&#45;&gt;dra.SetPlayerAnim</title>
 <path fill="none" stroke="black" d="M615.84,-179.93C615.84,-148.97 615.84,-83.3 615.84,-46.13"/>
 <polygon fill="black" stroke="black" points="619.34,-46.02 615.84,-36.02 612.34,-46.02 619.34,-46.02"/>
 <text text-anchor="middle" x="610.84" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
