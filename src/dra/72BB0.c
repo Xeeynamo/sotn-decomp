@@ -577,7 +577,7 @@ void func_80113EE0(void) {
     g_Player.unk44 = 0;
     g_Player.unk46 = 0;
     PLAYER.rotZ = 0;
-    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0;
+    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk;
     if (g_Entities[E_WEAPON].entityId == E_UNK_22) {
         func_8010FAF4();
     }
@@ -1188,22 +1188,22 @@ void func_80115BB0(void) {
 // same as RIC/func_8015BB80
 void func_80115C50(void) {
     if (g_StageId == STAGE_TOP) {
-        if (abs(g_Tilemap.left * 256 + playerX) - 8000 > 0) {
+        if (abs(g_Tilemap.left * 256 + g_PlayerX) - 8000 > 0) {
             PLAYER.posX.i.hi--;
         }
 
-        if (abs(g_Tilemap.left * 256 + playerX) - 8000 < 0) {
+        if (abs(g_Tilemap.left * 256 + g_PlayerX) - 8000 < 0) {
             PLAYER.posX.i.hi++;
         }
     }
 
     if (g_StageId == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
 
-        if (abs(g_Tilemap.left * 256 + playerX) - 8384 > 0) {
+        if (abs(g_Tilemap.left * 256 + g_PlayerX) - 8384 > 0) {
             PLAYER.posX.i.hi--;
         }
 
-        if (abs(g_Tilemap.left * 256 + playerX) - 8384 < 0) {
+        if (abs(g_Tilemap.left * 256 + g_PlayerX) - 8384 < 0) {
             PLAYER.posX.i.hi++;
         }
     }

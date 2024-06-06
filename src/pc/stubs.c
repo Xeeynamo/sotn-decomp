@@ -29,8 +29,8 @@ Entity* g_CurrentEntity;
 GpuUsage g_GpuUsage;
 PlayerStatus g_Status;
 u32 g_randomNext;
-s32 playerX;
-s32 playerY;
+s32 g_PlayerX;
+s32 g_PlayerY;
 PlayerState g_Player;
 u32 g_GameTimer;
 GpuBuffer g_GpuBuffers[2];
@@ -170,6 +170,7 @@ s16 D_800ACF94[16];                   // guessed size
 u8 D_800ACFB4[20][4];                 // TODO AnimationFrames*[], random size
 s32 D_800B0830[99];                   // random size to play safe
 s32 D_800B083C[99];                   // random size to play safe
+s16 D_800B0860[99];                   // random size to play safe
 AnimationFrame D_800B0798[40];        // random size to play safe
 u8 D_800B0F94[100][5];                // random size to play safe
 SVECTOR stubbbbbbbb = {0};
@@ -205,7 +206,6 @@ SVECTOR* D_800B0CB4[][4] = {
 unk_800B08CC D_800B08CC[6] = {0};
 FactoryBlueprint g_FactoryBlueprints[400] = {0}; // TODO load from JSON file
 s32 D_800B07C8 = 0x12345678;
-u8 D_800AD094[0x30];
 Unkstruct_80138094 D_80138094[100]; // unknown size
 s32 D_8013808C;
 GpuUsage g_GpuMaxUsage;
@@ -221,7 +221,6 @@ OT_TYPE* g_CurrentOT;
 s32 D_801362B8;
 s32 D_801362BC;
 s32 g_DebugPlayer;
-Vram g_Vram;
 s32 g_softResetTimer;
 DebugMode g_DebugMode;
 s32 g_DebugPalIdx;
@@ -542,6 +541,7 @@ s32 g_CdCommandStatus;
 const char* D_80138784[0x800];
 s32 D_8013B65C;
 s32 D_8013841C;
+RECT D_80138424;
 s32 D_8013842C;
 s32 D_80138430;
 s32 D_80138438;
@@ -571,11 +571,6 @@ int CdInit(void) {
 void func_801083BC(void) { NOT_IMPLEMENTED; }
 
 void func_801042C4(s32 arg0) { NOT_IMPLEMENTED; }
-
-s32 func_800F0CD8(s32 arg0) {
-    NOT_IMPLEMENTED;
-    return 0;
-}
 
 void EntityWeaponAttack(Entity* self) { NOT_IMPLEMENTED; }
 void func_ptr_80170004(Entity* self) { NOT_IMPLEMENTED; }
@@ -624,4 +619,3 @@ void func_80123B40(Entity* self) { NOT_IMPLEMENTED; }
 void EntityBatEcho(Entity* self) { NOT_IMPLEMENTED; }
 void func_8012F894(Entity* self) { NOT_IMPLEMENTED; }
 void func_80129864(Entity* self) { NOT_IMPLEMENTED; }
-void EntitySummonSpirit(Entity* self) { NOT_IMPLEMENTED; }

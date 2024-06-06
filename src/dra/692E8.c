@@ -175,7 +175,7 @@ void func_80109594() {
     PLAYER.facingLeft = 0;
     PLAYER.rotX = 0x100;
     PLAYER.rotY = 0x100;
-    PLAYER.zPriority = (u16)g_unkGraphicsStruct.g_zEntityCenter.S16.unk0;
+    PLAYER.zPriority = (u16)g_unkGraphicsStruct.g_zEntityCenter.unk;
 
     memset_len = sizeof(PlayerState) / sizeof(s32);
     memset_ptr = &g_Player;
@@ -504,19 +504,19 @@ TeleportCheck GetTeleportToOtherCastle(void) {
 
     // Check for X/Y boundaries in TOP
     if (g_StageId == STAGE_TOP) {
-        if (abs(g_Tilemap.left * 256 + playerX - 8000) < 4 &&
-            abs(g_Tilemap.top * 256 + playerY - 2127) < 4) {
+        if (abs(g_Tilemap.left * 256 + g_PlayerX - 8000) < 4 &&
+            abs(g_Tilemap.top * 256 + g_PlayerY - 2127) < 4) {
             return TELEPORT_CHECK_TO_RTOP;
         }
     }
 
     // Check for X/Y boundaries in RTOP
     if (g_StageId == STAGE_RTOP) {
-        if (abs(g_Tilemap.left * 256 + playerX - 8384) < 4 &&
+        if (abs(g_Tilemap.left * 256 + g_PlayerX - 8384) < 4 &&
 #if defined(VERSION_US)
-            abs(g_Tilemap.top * 256 + playerY - 14407) < 4) {
+            abs(g_Tilemap.top * 256 + g_PlayerY - 14407) < 4) {
 #elif defined(VERSION_HD)
-            abs(g_Tilemap.top * 256 + playerY) - 14407 < 4) {
+            abs(g_Tilemap.top * 256 + g_PlayerY) - 14407 < 4) {
 #endif
             return TELEPORT_CHECK_TO_TOP;
         }
@@ -1391,7 +1391,7 @@ void func_8010C36C(void) {
     s16* xPosPtr = &PLAYER.posX.i.hi;
     s32* vram_ptr = &g_Player.pl_vram_flag;
 
-    if (g_unkGraphicsStruct.unk18 != 0) {
+    if (g_unkGraphicsStruct.unk18) {
         *vram_ptr = 1;
         return;
     }
@@ -1566,7 +1566,7 @@ void func_8010C9F4(void) {
     s16* xPosPtr = &PLAYER.posX.i.hi;
     s32* vram_ptr = &g_Player.pl_vram_flag;
 
-    if (g_unkGraphicsStruct.unk18 != 0) {
+    if (g_unkGraphicsStruct.unk18) {
         return;
     }
     for (; i < 4; i++) {
@@ -1740,7 +1740,7 @@ void func_8010D010(void) {
         return;
     }
 
-    if (g_unkGraphicsStruct.unk18 != 0) {
+    if (g_unkGraphicsStruct.unk18) {
         return;
     }
     temp_s0 =
@@ -1821,7 +1821,7 @@ void func_8010D2C8(void) {
         return;
     }
 
-    if (g_unkGraphicsStruct.unk18 != 0) {
+    if (g_unkGraphicsStruct.unk18) {
         return;
     }
     temp_s0 =

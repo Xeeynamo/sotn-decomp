@@ -20,7 +20,7 @@
 #include <psxsdk/libsnd.h>
 #include <psxsdk/romio.h>
 
-#define SPAD(x) ((long*)0x1F800000 + x)
+#define SPAD(x) ((s32*)SP(x * sizeof(s32)))
 
 typedef long Event;
 
@@ -86,6 +86,7 @@ typedef struct Prim {
 #define DRAW_TPAGE 0x10      // use custom tpage
 #define DRAW_TPAGE2 0x20     // use custom tpage
 #define DRAW_MENU 0x80       // render only if D_800973EC is set
+#define DRAW_UNK_100 0x100   // unknown
 #define DRAW_UNK_400 0x400   // unknown
 #define DRAW_UNK_800 0x800   // unknown
 #define DRAW_UNK_1000 0x1000 // unknown
@@ -1724,8 +1725,8 @@ extern Event g_EvHwCardTmo;
 extern Event g_EvHwCardNew;
 extern u8 g_Pix[4][128 * 128 / 2];
 extern Primitive g_PrimBuf[MAX_PRIM_COUNT];
-extern s32 playerX;
-extern s32 playerY;
+extern s32 g_PlayerX;
+extern s32 g_PlayerY;
 extern u32 g_randomNext;
 extern s32 D_80096ED8[];
 extern s8 D_80097B98;
@@ -1756,11 +1757,10 @@ extern s32 D_80097924;
 extern s32 D_80097928;
 extern GpuUsage g_GpuUsage;
 extern PlayerStatus g_Status;
-extern u8 D_80097B9C[];
+extern s32 D_80097C98;
 extern s32 subWeapon; // g_SubweaponId
 extern u8 g_SaveName[12] ALIGNED4;
 extern u32 D_80097C40[];
-extern s32 D_80097C98;
 extern PlayerDraw g_PlayerDraw[0x10];
 extern s32 D_800987B4;
 extern s32 D_800987C8;
