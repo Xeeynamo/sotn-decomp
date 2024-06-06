@@ -189,7 +189,7 @@ typedef struct {
     /* 0x7E */ s16 unk7E;
     /* 0x80 */ s16 unk80; // Y?
     /* 0x82 */ s16 unk82; // X?
-    /* 0x84 */ s32 unk84;
+    /* 0x84 */ struct Entity* some_ent;
     /* 0x88 */ s16 childPalette;
     /* 0x8A */ s16 unk8A;
     /* 0x8C */ struct Entity* parent;
