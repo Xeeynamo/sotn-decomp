@@ -159,7 +159,7 @@ void EntityWeaponAttack(Entity* self) {
     return;
 }
 
-void func_ptr_80170004(Entity* self) {
+s32 func_ptr_80170004(Entity* self) {
     if (self->ext.weapon.parent->ext.weapon.equipId != 15) {
         DestroyEntity(self);
         return;

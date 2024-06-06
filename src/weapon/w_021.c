@@ -8,6 +8,8 @@
 #include "weapon_private.h"
 #include "shared.h"
 
+extern SpriteParts D_97000_8017A040[];
+
 // Similar to BottomCornerText which exists in many overlays
 // This one seems to process 2 characters at a time, weird.
 void func_97000_8017AB54(u8* str, u8 lowerLeft) {
@@ -206,8 +208,6 @@ s32 func_97000_8017AF2C(Entity* self, s32 arg1) {
     }
     return 1;
 }
-
-extern SpriteParts D_97000_8017A040[];
 
 void EntityWeaponAttack(Entity* self) {
     Collider sp10;
@@ -415,7 +415,116 @@ void EntityWeaponAttack(Entity* self) {
     }
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_021", func_ptr_80170004);
+s32 func_ptr_80170004(Entity* self) {
+    Collider sp10;
+    u32 upperParams;
+    s16 xShift;
+    s16 yShift;
+    const char* temp_s1;
+    s16 xVar;
+    s16 yVar;
+
+
+    upperParams = (self->params >> 8) & 0x7F;
+    
+    switch (self->step) {
+    case 0:
+        SetSpriteBank1(D_97000_8017A040);
+        self->animSet = -0x7FF0;
+        self->palette = 0x110;
+        self->unk5A = 0x64;
+        if (g_HandId != 0) {
+            self->palette += 0x18;
+            self->unk5A += 2;
+            self->animSet += 2;
+        }
+        self->zPriority = PLAYER.zPriority + 2;
+        self->facingLeft = PLAYER.facingLeft;
+        self->flags = 0x08000000;
+        self->animCurFrame = upperParams - 0x1C;
+        self->posY.i.hi -= 4;
+        SetSpeedX((rand() & 0x3FFF) + FIX(0.875));
+        self->velocityY = FIX(-2);
+        DestroyEntityWeapon(1);
+        self->facingLeft = 0;
+        self->hitboxWidth = 8;
+        self->hitboxHeight = 8;
+        self->step++;
+        return;
+    case 1:
+        if (func_97000_8017AF2C(self, 0) != 0) {
+            if (g_unkGraphicsStruct.BottomCornerTextTimer) {
+                g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
+                g_unkGraphicsStruct.BottomCornerTextTimer = 0;
+            }
+            g_api.PlaySfx(0x67C);
+            temp_s1 = g_api.equipDefs[upperParams].name;
+            g_api.AddToInventory(upperParams, EQUIP_HAND);
+            func_97000_8017AB54(temp_s1, 1);
+            DestroyEntity(self);
+            return;
+        }
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->velocityY += 0x2800;
+        xShift = 0;
+        yShift = 8;
+        xVar = self->posX.i.hi + xShift;
+        yVar = self->posY.i.hi + yShift;
+        g_api.CheckCollision(xVar, yVar, &sp10, 0);
+        if (sp10.effects & 1) {
+            self->posY.i.hi += sp10.unk18;
+            self->ext.timer.t = 0x200;
+            self->step++;
+            return;
+        }
+        xShift = 4;
+        if (self->velocityX < 0) {
+            xShift = -xShift;
+        }
+        yShift = 0;
+        xVar = self->posX.i.hi + xShift;
+        yVar = self->posY.i.hi + yShift;
+        g_api.CheckCollision(xVar, yVar, &sp10, 0);
+        if (sp10.effects & 2) {
+            if (xShift < 0) {
+                self->posX.i.hi += sp10.unkC;
+            } else {
+                self->posX.i.hi += sp10.unk4;
+            }
+            self->velocityX = -(self->velocityX / 2);
+        }
+        xShift = 0;
+        yShift = -8;
+        xVar = self->posX.i.hi + xShift;
+        yVar = self->posY.i.hi + yShift;
+        g_api.CheckCollision(xVar, yVar, &sp10, 0);
+        if (sp10.effects & 1) {
+            self->posY.i.hi += (1 + sp10.unk20);
+            self->velocityY = FIX(1);
+            self->velocityX = self->velocityX / 2;
+        }
+        break;
+    case 2:
+        self->velocityY = 0;
+        if (--self->ext.timer.t == 0) {
+            DestroyEntity(self);
+            break;
+        }
+        if (func_97000_8017AF2C(self, 1) != 0) {
+            if (g_unkGraphicsStruct.BottomCornerTextTimer) {
+                g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
+                g_unkGraphicsStruct.BottomCornerTextTimer = 0;
+            }
+            g_api.PlaySfx(0x67C);
+            temp_s1 = g_api.equipDefs[upperParams].name;
+            g_api.AddToInventory(upperParams, EQUIP_HAND);
+            func_97000_8017AB54(temp_s1, 1);
+            DestroyEntity(self);
+        }
+    }
+    
+}
 
 void func_ptr_80170008(Entity* self) {}
 

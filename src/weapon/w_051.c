@@ -355,7 +355,7 @@ void EntityWeaponAttack(Entity* self) {
     }
 }
 
-void func_ptr_80170004(Entity* self) {
+s32 func_ptr_80170004(Entity* self) {
     WeaponAnimation* anim;
     s16 subType;
 

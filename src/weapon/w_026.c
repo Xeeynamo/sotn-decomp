@@ -5,7 +5,7 @@
 
 INCLUDE_ASM("weapon/nonmatchings/w_026", EntityWeaponAttack);
 
-void func_ptr_80170004(Entity* self) {}
+s32 func_ptr_80170004(Entity* self) {}
 
 void func_ptr_80170008(Entity* self) {}
 

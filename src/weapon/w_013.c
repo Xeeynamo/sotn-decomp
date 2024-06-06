@@ -55,7 +55,7 @@ s32 func_5F000_8017A9CC(Primitive* prim, s32 x, s32 y) {
 
 INCLUDE_ASM("weapon/nonmatchings/w_013", EntityWeaponAttack);
 
-void func_ptr_80170004(Entity* self) {
+s32 func_ptr_80170004(Entity* self) {
     if (self->step == 0) {
         if (self->ext.weapon.parent->entityId == 0) {
             DestroyEntity(self);
