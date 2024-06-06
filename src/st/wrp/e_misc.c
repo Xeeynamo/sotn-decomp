@@ -57,7 +57,7 @@ u16 g_eUnk14SpawnRots[] = {
 
 #include "../entity_unkId15_spawner.h"
 
-u16 D_80180FF8[] = {
+static s16 unk15_rot[] = {
     /* FF8 */ 0x0030,
     /* FFA */ 0x0050,
     /* FFC */ 0x0080,
@@ -68,7 +68,7 @@ u16 D_80180FF8[] = {
     /* 1006 */ 0x0000,
 };
 
-s32 D_80181008[] = {
+static s32 unk15_yVel[] = {
     /* 1008 */ 0x00000400,
     /* 100C */ 0x00002400,
     /* 1010 */ 0x00003C00,
@@ -99,30 +99,10 @@ u16 unk14_lifetime[] = {
     /* 1040 */ 0x002A,
     /* 1042 */ 0x002F,
 };
+
 #include "../entity_unkId14.h"
 
-void EntityUnkId15(Entity* self) {
-    if (!self->step) {
-        self->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        self->palette = PAL_OVL(0x195);
-        self->animSet = ANIMSET_DRA(5);
-        self->animCurFrame = 1;
-        self->drawMode = DRAW_TPAGE;
-        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        self->rotY = self->rotX = D_80180FF8[self->params];
-        self->velocityY = D_80181008[self->params];
-        self->step++;
-    } else {
-        self->animFrameDuration++;
-        self->posY.val -= self->velocityY;
-        if (!(self->animFrameDuration & 1)) {
-            self->animCurFrame++;
-        }
-        if (self->animFrameDuration >= 37) {
-            DestroyEntity(self);
-        }
-    }
-}
+#include "../entity_unkId15.h"
 
 u32 g_olroxDroolCollOffsets[] = {
     /* 1044 */ 0x00000000,

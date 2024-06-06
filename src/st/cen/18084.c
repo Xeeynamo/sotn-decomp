@@ -10,7 +10,7 @@
 
 #include "../entity_unkId14.h"
 
-INCLUDE_ASM("st/cen/nonmatchings/18084", EntityUnkId15);
+#include "../entity_unkId15.h"
 
 #include "../entity_olrox_drool.h"
 

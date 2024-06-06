@@ -10,28 +10,7 @@
 
 #include "../entity_unkId14.h"
 
-void EntityUnkId15(Entity* arg0) {
-    if (arg0->step == 0) {
-        arg0->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        arg0->palette = 0x8195;
-        arg0->animSet = ANIMSET_DRA(5);
-        arg0->animCurFrame = 1;
-        arg0->drawMode = DRAW_TPAGE;
-        arg0->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        arg0->rotY = arg0->rotX = D_80182628[arg0->params];
-        arg0->velocityY = D_80182638[arg0->params];
-        arg0->step++;
-    } else {
-        arg0->animFrameDuration++;
-        arg0->posY.val -= arg0->velocityY;
-        if (!(arg0->animFrameDuration & 1)) {
-            arg0->animCurFrame++;
-        }
-        if (arg0->animFrameDuration >= 37) {
-            DestroyEntity(arg0);
-        }
-    }
-}
+#include "../entity_unkId15.h"
 
 #include "../entity_olrox_drool.h"
 
