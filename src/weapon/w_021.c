@@ -429,7 +429,7 @@ s32 func_ptr_80170004(Entity* self) {
     switch (self->step) {
     case 0:
         SetSpriteBank1(D_97000_8017A040);
-        self->animSet = -0x7FF0;
+        self->animSet = ANIMSET_OVL(0x10);
         self->palette = 0x110;
         self->unk5A = 0x64;
         if (g_HandId != 0) {
@@ -439,17 +439,16 @@ s32 func_ptr_80170004(Entity* self) {
         }
         self->zPriority = PLAYER.zPriority + 2;
         self->facingLeft = PLAYER.facingLeft;
-        self->flags = 0x08000000;
+        self->flags = FLAG_UNK_08000000;
         self->animCurFrame = upperParams - 0x1C;
         self->posY.i.hi -= 4;
         SetSpeedX((rand() & 0x3FFF) + FIX(0.875));
         self->velocityY = FIX(-2);
         DestroyEntityWeapon(1);
         self->facingLeft = 0;
-        self->hitboxWidth = 8;
-        self->hitboxHeight = 8;
+        self->hitboxHeight = self->hitboxWidth = 8;
         self->step++;
-        return;
+        break;
     case 1:
         if (func_97000_8017AF2C(self, 0) != 0) {
             if (g_unkGraphicsStruct.BottomCornerTextTimer) {
@@ -498,7 +497,7 @@ s32 func_ptr_80170004(Entity* self) {
         xVar = self->posX.i.hi + xShift;
         yVar = self->posY.i.hi + yShift;
         g_api.CheckCollision(xVar, yVar, &sp10, 0);
-        if (sp10.effects & 1) {
+        if (sp10.effects & EFFECT_SOLID) {
             self->posY.i.hi += (1 + sp10.unk20);
             self->velocityY = FIX(1);
             self->velocityX = self->velocityX / 2;
@@ -521,6 +520,7 @@ s32 func_ptr_80170004(Entity* self) {
             func_97000_8017AB54(temp_s1, 1);
             DestroyEntity(self);
         }
+        break;
     }
 }
 
