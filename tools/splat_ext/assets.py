@@ -99,9 +99,9 @@ def serialize_asset(content: str, asset_config: str) -> bytearray:
                     field_bitsize = field_def[field_name]
                     # If the field is a bit flag
                     if field_bitsize == 1:
-                        if subvalue == "TRUE":
+                        if subvalue == True:
                             packed_bitstring += "1"
-                        elif subvalue == "FALSE":
+                        elif subvalue == False:
                             packed_bitstring += "0"
                         else:
                             print("Problem serializing asset")
@@ -206,7 +206,7 @@ class PSXSegAssets(N64Segment):
                             # If the field is a bit flag
                             if field_bitcount == 1:
                                 bit_state = (
-                                    "TRUE" if value_bits[bit_index] == "1" else "FALSE"
+                                    True if value_bits[bit_index] == "1" else False
                                 )
                                 parsed_fields[field_name] = bit_state
                                 bit_index += 1

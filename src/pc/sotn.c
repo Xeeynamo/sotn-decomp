@@ -59,6 +59,7 @@ GfxBank** g_GfxStageBank[0x40] = {
 };
 extern u_long* D_800A3BB8[];
 
+FactoryBlueprint g_FactoryBlueprints[0xC0] = {0};
 u8 g_BmpCastleMap[0x20000];
 
 #define MAX_SIZE_FOR_COMPRESSED_GFX 8192
@@ -114,6 +115,7 @@ void InitPalEquipIcons(FILE* f);
 void InitVbVh(void);
 static bool InitSfxData(FileStringified* file);
 static bool InitXaData(FileStringified* file);
+static bool InitBlueprintData(FileStringified* file);
 
 bool InitGame(void) {
     if (!InitPlatform()) {
@@ -217,11 +219,20 @@ bool InitGame(void) {
     InitVbVh();
 
     if (!FileStringify(InitSfxData, "assets/dra/sfx.json", NULL)) {
-        WARNF("failed to init sfx");
+        ERRORF("failed to init sfx");
+        return false;
     }
 
     if (!FileStringify(InitXaData, "assets/dra/music_xa.json", NULL)) {
-        WARNF("failed to init xa data");
+        ERRORF("failed to init xa data");
+        return false;
+    }
+
+    // TODO different between RIC and ARC
+    if (!FileStringify(
+            InitBlueprintData, "assets/dra/factory_blueprint.json", NULL)) {
+        ERRORF("failed to init blueprint data");
+        return false;
     }
 
     return true;
@@ -470,6 +481,15 @@ void InitVbVh() {
                                                                                \
         if (cJSON_IsNumber(field)) {                                           \
             to_set = field->valueint;                                          \
+        } else if (cJSON_IsBool(field)) {                                      \
+            if (cJSON_IsTrue(field)) {                                         \
+                to_set = 1;                                                    \
+            } else if (cJSON_IsFalse(field)) {                                 \
+                to_set = 0;                                                    \
+            } else {                                                           \
+                ERRORF("undefined behaviour for %s", field_str);               \
+                exit(1);                                                       \
+            }                                                                  \
         } else {                                                               \
             ERRORF("Wrong field %s", field_str);                               \
             exit(1);                                                           \
@@ -478,23 +498,28 @@ void InitVbVh() {
 
 static bool InitSfxData(FileStringified* file) {
     cJSON* json = cJSON_Parse(file->content);
+    if (!json) {
+        ERRORF("failed to parse '%s': %s", file->param, cJSON_GetErrorPtr());
+        return false;
+    }
     cJSON* array = cJSON_GetObjectItemCaseSensitive(json, "asset_data");
-    if (cJSON_IsArray(array)) {
-        int len = cJSON_GetArraySize(array);
-        for (int i = 0; i < len; i++) {
-            Unkstruct_800BF554* item = &g_SfxData[i];
-            cJSON* jitem = cJSON_GetArrayItem(array, i);
-            DO_ITEM("vabid", jitem, item, item->vabid);
-            DO_ITEM("prog", jitem, item, item->prog);
-            DO_ITEM("note", jitem, item, item->note);
-            DO_ITEM("volume", jitem, item, item->volume);
-            DO_ITEM("unk4", jitem, item, item->unk4);
-            DO_ITEM("tone", jitem, item, item->tone);
-            DO_ITEM("unk6", jitem, item, item->unk6);
-        }
-    } else {
-        ERRORF("Error loading sfx.");
-        exit(1);
+    if (!cJSON_IsArray(array)) {
+        cJSON_Delete(json);
+        ERRORF("data malformed in '%s'", file->param);
+        return false;
+    }
+
+    int len = cJSON_GetArraySize(array);
+    for (int i = 0; i < len; i++) {
+        Unkstruct_800BF554* item = &g_SfxData[i];
+        cJSON* jitem = cJSON_GetArrayItem(array, i);
+        DO_ITEM("vabid", jitem, item, item->vabid);
+        DO_ITEM("prog", jitem, item, item->prog);
+        DO_ITEM("note", jitem, item, item->note);
+        DO_ITEM("volume", jitem, item, item->volume);
+        DO_ITEM("unk4", jitem, item, item->unk4);
+        DO_ITEM("tone", jitem, item, item->tone);
+        DO_ITEM("unk6", jitem, item, item->unk6);
     }
     cJSON_Delete(json);
     return true;
@@ -502,24 +527,70 @@ static bool InitSfxData(FileStringified* file) {
 
 static bool InitXaData(FileStringified* file) {
     cJSON* json = cJSON_Parse(file->content);
+    if (!json) {
+        ERRORF("failed to parse '%s': %s", file->param, cJSON_GetErrorPtr());
+        return false;
+    }
+
     cJSON* array = cJSON_GetObjectItemCaseSensitive(json, "asset_data");
-    if (cJSON_IsArray(array)) {
-        int len = cJSON_GetArraySize(array);
-        for (int i = 0; i < len; i++) {
-            struct XaMusicConfig* item = &g_XaMusicConfigs[i];
-            cJSON* jitem = cJSON_GetArrayItem(array, i);
-            DO_ITEM("cd_addr", jitem, item, item->cd_addr);
-            DO_ITEM("unk228", jitem, item, item->unk228);
-            DO_ITEM("filter_file", jitem, item, item->filter_file);
-            DO_ITEM("filter_channel_id", jitem, item, item->filter_channel_id);
-            DO_ITEM("volume", jitem, item, item->volume);
-            DO_ITEM("unk22f", jitem, item, item->unk22f);
-            DO_ITEM("unk230", jitem, item, item->unk230);
-            // ignore pad for now
-        }
-    } else {
-        ERRORF("Error loading sfx.");
-        exit(1);
+    if (!cJSON_IsArray(array)) {
+        cJSON_Delete(json);
+        ERRORF("data malformed in '%s'", file->param);
+        return false;
+    }
+
+    int len = cJSON_GetArraySize(array);
+    for (int i = 0; i < len; i++) {
+        struct XaMusicConfig* item = &g_XaMusicConfigs[i];
+        cJSON* jitem = cJSON_GetArrayItem(array, i);
+        DO_ITEM("cd_addr", jitem, item, item->cd_addr);
+        DO_ITEM("unk228", jitem, item, item->unk228);
+        DO_ITEM("filter_file", jitem, item, item->filter_file);
+        DO_ITEM("filter_channel_id", jitem, item, item->filter_channel_id);
+        DO_ITEM("volume", jitem, item, item->volume);
+        DO_ITEM("unk22f", jitem, item, item->unk22f);
+        DO_ITEM("unk230", jitem, item, item->unk230);
+        // ignore pad for now
+    }
+    cJSON_Delete(json);
+    return true;
+}
+
+static bool InitBlueprintData(FileStringified* file) {
+    cJSON* json = cJSON_Parse(file->content);
+    if (!json) {
+        ERRORF("failed to parse '%s': %s", file->param, cJSON_GetErrorPtr());
+        return false;
+    }
+
+    cJSON* array = cJSON_GetObjectItemCaseSensitive(json, "asset_data");
+    if (!cJSON_IsArray(array)) {
+        cJSON_Delete(json);
+        ERRORF("data malformed in '%s'", file->param);
+        return false;
+    }
+
+    int len = cJSON_GetArraySize(array);
+    for (int i = 0; i < len; i++) {
+        u32 bits = 0;
+        FactoryBlueprint* item = &g_FactoryBlueprints[i];
+        cJSON* jitem = cJSON_GetArrayItem(array, i);
+        DO_ITEM("childId", jitem, item, item->childId);
+        DO_ITEM("unk1", jitem, item, item->unk1);
+        DO_ITEM("unk3", jitem, item, item->unk3);
+        DO_ITEM("unk5", jitem, item, item->unk5);
+
+        cJSON* jUnk2 = cJSON_GetObjectItem(jitem, "unk2");
+        DO_ITEM("bottom6", jUnk2, item, item->unk2);
+        DO_ITEM("bit6", jUnk2, item, bits);
+        item->unk2 |= !!bits << 6;
+        DO_ITEM("bit7", jUnk2, item, bits);
+        item->unk2 |= !!bits << 7;
+
+        cJSON* jUnk4 = cJSON_GetObjectItem(jitem, "unk4");
+        DO_ITEM("bottomHalf", jUnk4, item, item->unk4);
+        DO_ITEM("topHalf", jUnk4, item, bits);
+        item->unk4 |= bits << 4;
     }
     cJSON_Delete(json);
     return true;

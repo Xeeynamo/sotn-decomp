@@ -204,7 +204,6 @@ SVECTOR* D_800B0CB4[][4] = {
     &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
 };
 unk_800B08CC D_800B08CC[6] = {0};
-FactoryBlueprint g_FactoryBlueprints[400] = {0}; // TODO load from JSON file
 s32 D_800B07C8 = 0x12345678;
 Unkstruct_80138094 D_80138094[100]; // unknown size
 s32 D_8013808C;
