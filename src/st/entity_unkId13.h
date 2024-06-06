@@ -1,27 +1,28 @@
 extern u16 g_InitDataEnt13[];
 
-void EntityUnkId13(Entity* entity) {
-    switch (entity->step) {
+void EntityUnkId13(Entity* self) {
+    switch (self->step) {
     case 0:
         InitializeEntity(g_InitDataEnt13);
-        entity->ext.ent13.parentId = entity->ext.ent13.parent->entityId;
+        self->ext.ent13.parentId = self->ext.ent13.parent->entityId;
     case 1:
-        if (entity->ext.ent13.fiveFrameCounter++ >= 5) {
+        if (self->ext.ent13.fiveFrameCounter++ >= 5) {
             Entity* newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
+                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->entityId = E_EXPLOSION;
                 newEntity->pfnUpdate = EntityExplosion;
-                newEntity->params = entity->params;
+                newEntity->params = self->params;
             }
-            entity->ext.ent13.fiveFrameCounter = 0;
+            self->ext.ent13.fiveFrameCounter = 0;
         }
-        entity->posX.i.hi = entity->ext.ent13.parent->posX.i.hi;
-        entity->posY.i.hi = entity->ext.ent13.parent->posY.i.hi;
+        // We just follow the location of our parent
+        self->posX.i.hi = self->ext.ent13.parent->posX.i.hi;
+        self->posY.i.hi = self->ext.ent13.parent->posY.i.hi;
         // Tests if the parent's ID is different from what it was when we were
         // created. I suspect this is to check for the parent being destroyed.
-        if (entity->ext.ent13.parent->entityId != entity->ext.ent13.parentId) {
-            DestroyEntity(entity);
+        if (self->ext.ent13.parent->entityId != self->ext.ent13.parentId) {
+            DestroyEntity(self);
         }
         break;
     }
