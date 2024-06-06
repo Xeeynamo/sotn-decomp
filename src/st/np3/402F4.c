@@ -35,36 +35,7 @@ void func_801C03E4(Entity* entity) {
 
 #include "../entity_unkId14.h"
 
-void EntityUnkId15(Entity* entity) {
-    u16 temp_v0;
-    u32 temp2;
-
-    if (entity->step == 0) {
-        entity->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        entity->palette = 0x8195;
-        entity->animSet = ANIMSET_DRA(5);
-        entity->animCurFrame = 1;
-        entity->drawMode = DRAW_TPAGE;
-        entity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        temp_v0 = D_80181FB4[entity->params];
-        entity->rotX = temp_v0;
-        entity->rotY = temp_v0;
-        temp2 = D_80181FC4[entity->params];
-        entity->step += 1;
-        entity->velocityY = temp2;
-    } else {
-        entity->animFrameDuration++;
-        entity->posY.val -= entity->velocityY;
-
-        if (!(entity->animFrameDuration & 1)) {
-            entity->animCurFrame++;
-        }
-
-        if (entity->animFrameDuration >= 0x25) {
-            DestroyEntity(entity);
-        }
-    }
-}
+#include "../entity_unkId15.h"
 
 #include "../entity_olrox_drool.h"
 

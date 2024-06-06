@@ -10,7 +10,7 @@ INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_80191490);
 
 #include "../entity_unkId14.h"
 
-INCLUDE_ASM("st/rwrp/nonmatchings/113A0", EntityUnkId15);
+#include "../entity_unkId15.h"
 
 #include "../entity_olrox_drool.h"
 
