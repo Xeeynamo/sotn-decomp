@@ -463,7 +463,7 @@ void EntityUnarmedAttack(Entity* entity) {
         func_80118894(entity);
         entity->step++;
     }
-    entity->ext.generic.unkAC = PLAYER.ext.player.anim - anim->frameStart;
+    entity->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
     if ((PLAYER.animFrameDuration == 1) &&
         (PLAYER.animFrameIdx == anim->soundFrame)) {
         PlaySfx(anim->soundId);

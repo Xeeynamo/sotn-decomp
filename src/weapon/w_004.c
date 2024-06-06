@@ -41,7 +41,7 @@ void EntityWeaponAttack(Entity* self) {
         self->step++;
     }
 
-    self->ext.generic.unkAC = PLAYER.ext.weapon.anim - anim->frameStart;
+    self->ext.weapon.anim = PLAYER.ext.weapon.anim - anim->frameStart;
     if (PLAYER.animFrameDuration == 1 &&
         PLAYER.animFrameIdx == anim->soundFrame) {
         g_api.PlaySfx(anim->soundId);

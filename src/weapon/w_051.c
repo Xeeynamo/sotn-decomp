@@ -338,7 +338,7 @@ void EntityWeaponAttack(Entity* self) {
         self->step++;
         break;
     }
-    self->ext.generic.unkAC = PLAYER.ext.player.anim - anim->frameStart;
+    self->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
     if (PLAYER.animFrameDuration == 1 &&
         PLAYER.animFrameIdx == anim->soundFrame) {
         g_api.PlaySfx(anim->soundId);
@@ -403,7 +403,7 @@ void func_ptr_80170004(Entity* self) {
         self->step++;
         break;
     }
-    self->ext.generic.unkAC = PLAYER.ext.player.anim - anim->frameStart;
+    self->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
     if (g_api.UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
         DestroyEntity(self);
         return;
