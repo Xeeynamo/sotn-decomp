@@ -334,7 +334,9 @@ void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
 INCLUDE_ASM("st/rwrp/nonmatchings/A59C", EntityPrizeDrop);
 
-INCLUDE_ASM("st/rwrp/nonmatchings/A59C", EntityExplosion);
+#define MISSING_ANIMATE_ENTITY_PROTOTYPE
+#include "../entity_explosion.h"
+#undef MISSING_ANIMATE_ENTITY_PROTOTYPE
 
 #include "../blink_item.h"
 

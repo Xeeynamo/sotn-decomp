@@ -214,33 +214,7 @@ void EntityPrizeDrop(Entity* self) {
     }
 }
 
-void EntityExplosion(Entity* entity) {
-    u16 zPriority;
-
-    if (entity->step == 0) {
-        InitializeEntity(g_InitializeEntityData0);
-        entity->animSet = ANIMSET_DRA(2);
-        entity->animFrameIdx = 0;
-        entity->animFrameDuration = 0;
-        entity->drawMode = 0x30;
-        if (entity->params & 0xF0) {
-            entity->palette = 0x8195;
-            entity->drawMode = DRAW_TPAGE;
-        }
-
-        zPriority = entity->params & 0xFF00;
-        if (zPriority) {
-            entity->zPriority = zPriority >> 8;
-        }
-        entity->params &= 15;
-        entity->velocityY = D_801824F4[entity->params];
-    } else {
-        entity->posY.val += entity->velocityY;
-        if (!AnimateEntity(D_801825A0[entity->params], entity)) {
-            DestroyEntity(entity);
-        }
-    }
-}
+#include "../entity_explosion.h"
 
 #include "../blink_item.h"
 

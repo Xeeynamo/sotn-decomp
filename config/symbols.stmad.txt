@@ -97,3 +97,5 @@ g_pStObjLayoutVertical = 0x801803C8;
 g_ESoulStealOrbAngles = 0x80181068;
 g_ESoulStealOrbAnim = 0x801810D8;
 g_ESoulStealOrbSprt = 0x80181078;
+g_ExplosionYVelocities = 0x80180E18;
+g_ExplosionAnimations = 0x80180EC4;

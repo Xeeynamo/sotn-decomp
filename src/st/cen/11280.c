@@ -451,7 +451,9 @@ void func_80195C5C(void) { DestroyEntity(g_CurrentEntity); }
 
 INCLUDE_ASM("st/cen/nonmatchings/11280", EntityPrizeDrop);
 
-INCLUDE_ASM("st/cen/nonmatchings/11280", EntityExplosion);
+#define MISSING_ANIMATE_ENTITY_PROTOTYPE
+#include "../entity_explosion.h"
+#undef MISSING_ANIMATE_ENTITY_PROTOTYPE
 
 #include "../blink_item.h"
 
