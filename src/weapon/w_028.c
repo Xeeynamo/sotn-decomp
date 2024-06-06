@@ -9,7 +9,7 @@ extern s32 D_C8000_8017AAE0[];
 extern s32 D_C8000_8017AB1C[];
 
 void EntityWeaponAttack(Entity* self) {
-    s32 newUnkAC = 0;
+    s32 anim = 0;
     bool crouchCheck = false;
     s32 attackButton;
 
@@ -63,53 +63,53 @@ void EntityWeaponAttack(Entity* self) {
         self->step++;
         /* fallthrough */
     case 1:
-        self->ext.weapon.unkAC = crouchCheck + 10;
+        self->ext.weapon.anim = crouchCheck + 10;
         if (self->animFrameDuration < 0) {
             self->step++;
         }
         break;
     case 2:
-        switch (PLAYER.ext.player.unkAC) {
+        switch (PLAYER.ext.player.anim) {
         case 9:
         case 10:
         case 11:
-            newUnkAC++;
+            anim++;
             /* fallthrough */
         case 7:
-            newUnkAC++;
+            anim++;
             /* fallthrough */
         case 8:
-            newUnkAC++;
+            anim++;
             /* fallthrough */
         case 12:
-            newUnkAC++;
+            anim++;
             /* fallthrough */
         case 13:
-            newUnkAC++;
+            anim++;
             /* fallthrough */
         case 24:
         case 25:
-            newUnkAC++;
+            anim++;
             /* fallthrough */
         case 14:
         case 15:
-            newUnkAC++;
+            anim++;
             /* fallthrough */
         case 26:
-            newUnkAC = newUnkAC + 2;
+            anim += 2;
             self->animFrameIdx = PLAYER.animFrameIdx;
             break;
         default:
             self->animFrameIdx = 0;
-            newUnkAC += crouchCheck;
+            anim += crouchCheck;
             break;
         }
-        self->ext.weapon.unkAC = newUnkAC;
+        self->ext.weapon.anim = anim;
         self->animFrameDuration = 2;
         break;
     case 3:
         g_Player.unk48 = 0;
-        self->ext.weapon.unkAC = crouchCheck + 12;
+        self->ext.weapon.anim = crouchCheck + 12;
         if (self->animFrameDuration < 0) {
             DestroyEntity(self);
             return;
@@ -133,14 +133,14 @@ void EntityWeaponAttack(Entity* self) {
         break;
     }
     if (self->step != 4) {
-        g_api.func_8010DBFC(D_C8000_8017AA98, D_C8000_8017AAE0);
+        g_api.PlayAnimation(D_C8000_8017AA98, D_C8000_8017AAE0);
     }
     self->drawFlags = PLAYER.drawFlags;
     self->rotY = PLAYER.rotY;
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
-void func_ptr_80170004(Entity* self) {}
+s32 func_ptr_80170004(Entity* self) {}
 
 void func_ptr_80170008(Entity* self) {}
 

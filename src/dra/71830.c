@@ -217,12 +217,15 @@ bool func_8011203C(void) {
 void func_801120B4(void) {
     s32 x_offset;
     u16 local_flags = 3;
+    s32 atLedge;
 
-    bool condition = false;
-    condition = ((g_Player.pl_vram_flag & 0x20) != condition);
+    atLedge = 0;
+    if (g_Player.pl_vram_flag & 0x20) {
+        atLedge = 1;
+    }
 
     if (((PLAYER.step_s == 0x57) || (PLAYER.step_s == 0x5B)) &&
-        PLAYER.animFrameIdx < 5U) {
+        PLAYER.animFrameIdx < 5) {
         if (func_8010FDF8(0x43018) != 0) {
             return;
         }
@@ -234,7 +237,7 @@ void func_801120B4(void) {
         DecelerateX(0x2000);
     }
 
-    if ((PLAYER.step < 0x40U) && (g_Player.unk48 == 0)) {
+    if ((PLAYER.step < 0x40) && (g_Player.unk48 == 0)) {
         if (D_800ACF74 != 0) {
             D_800ACF74--;
         } else if (D_80097448[0] >= 0x31) {
@@ -258,19 +261,19 @@ void func_801120B4(void) {
         if (g_Player.unk14 != 0) {
             switch (g_Player.unk14) {
             case 2:
-                func_8010DA48(0xF2);
+                SetPlayerAnim(0xF2);
                 PLAYER.facingLeft = 1;
                 break;
             case 1:
-                func_8010DA48(0xF2);
+                SetPlayerAnim(0xF2);
                 PLAYER.facingLeft = 0;
                 break;
             case 3:
-                func_8010DA48(0xF3);
+                SetPlayerAnim(0xF3);
                 PLAYER.facingLeft = 0;
                 break;
             default:
-                func_8010DA48(0xF3);
+                SetPlayerAnim(0xF3);
                 PLAYER.facingLeft = 1;
                 break;
             }
@@ -282,14 +285,14 @@ void func_801120B4(void) {
         }
         break;
     case 2:
-        switch (PLAYER.ext.player.unkAC) {
+        switch (PLAYER.ext.player.anim) {
         case 10:
         case 11:
         case 14:
         case 15:
             break;
         default:
-            func_8010DA48(0x63);
+            SetPlayerAnim(0x63);
         case 0x63:
             if (g_Player.unk48 == 0) {
                 local_flags = 5;
@@ -299,7 +302,7 @@ void func_801120B4(void) {
     case 0x3:
         local_flags = 0;
         if (((u16)PLAYER.animFrameIdx >= 4U) ||
-            (PLAYER.ext.player.unkAC == 0xE)) {
+            (PLAYER.ext.player.anim == 0xE)) {
             local_flags = 1;
         }
         if (((u16)PLAYER.animFrameIdx >= 7U) ||
@@ -308,7 +311,7 @@ void func_801120B4(void) {
         }
         break;
     case 0x4:
-        if (PLAYER.ext.player.unkAC == 0xF2 && --D_800ACF78 == 0) {
+        if (PLAYER.ext.player.anim == 0xF2 && --D_800ACF78 == 0) {
             if (g_StageId == 1) {
                 PlaySfx(0x7AD);
             }
@@ -326,7 +329,7 @@ void func_801120B4(void) {
                 func_8010E27C();
                 if (g_Player.padPressed & PAD_DOWN) {
                     PLAYER.step = 2;
-                    PLAYER.ext.player.unkAC = 0x26;
+                    PLAYER.ext.player.anim = 0x26;
                 }
             }
         } else {
@@ -370,7 +373,7 @@ void func_801120B4(void) {
             func_8010E27C();
             if (g_Player.padPressed & PAD_DOWN) {
                 // Note that to reach this point, our minimum case is 0x41
-                PLAYER.ext.player.unkAC = D_800B0608[PLAYER.step_s - 0x41] + 2;
+                PLAYER.ext.player.anim = D_800B0608[PLAYER.step_s - 0x41] + 2;
                 PLAYER.step = 2;
             }
         } else {
@@ -423,7 +426,7 @@ void func_801120B4(void) {
         if (PLAYER.animFrameIdx == 4 && PLAYER.animFrameDuration == 1 &&
             !(g_Player.pl_vram_flag & 1)) {
             PLAYER.animFrameIdx = 5;
-            PLAYER.ext.player.unkAC = 0x6C;
+            PLAYER.ext.player.anim = 0x6C;
             PLAYER.step = 4;
             g_Player.unk44 = 1;
         }
@@ -484,25 +487,25 @@ void func_801120B4(void) {
     }
     if ((local_flags & 2) && (g_Player.padPressed & PAD_UP) &&
         g_Player.unk48 == 0) {
-        func_8010DA48(condition);
+        SetPlayerAnim(atLedge);
         PLAYER.step_s = 1;
         local_flags |= 0x8000;
         if (g_Player.unk14 != 0) {
             switch (g_Player.unk14) {
             case 2:
-                func_8010DA48(0xF2);
+                SetPlayerAnim(0xF2);
                 PLAYER.facingLeft = 1;
                 break;
             case 1:
-                func_8010DA48(0xF2);
+                SetPlayerAnim(0xF2);
                 PLAYER.facingLeft = 0;
                 break;
             case 3:
-                func_8010DA48(0xF3);
+                SetPlayerAnim(0xF3);
                 PLAYER.facingLeft = 0;
                 break;
             default:
-                func_8010DA48(0xF3);
+                SetPlayerAnim(0xF3);
                 PLAYER.facingLeft = 1;
                 break;
             }

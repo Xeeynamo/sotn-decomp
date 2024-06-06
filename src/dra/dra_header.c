@@ -33,7 +33,7 @@ void func_80118894(Entity* self);
 Entity* func_80118970(void);
 s16 func_80118B18(Entity* ent1, Entity* ent2, s16 facingLeft);
 u32 UpdateUnarmedAnim(s8* frameProps, u16** frames);
-void func_8010DBFC(s32*, AnimationFrame** frames);
+void PlayAnimation(s32*, AnimationFrame** frames);
 void func_80118C28(s32 arg0);
 void func_8010E168(s32 arg0, s16 arg1);
 void func_8010DFF0(s32 arg0, s32 arg1);
@@ -93,7 +93,7 @@ GameApi g_ApiInit = {
     func_80118970,
     func_80118B18,
     UpdateUnarmedAnim,
-    func_8010DBFC,
+    PlayAnimation,
     func_80118C28,
     func_8010E168,
     func_8010DFF0,

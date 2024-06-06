@@ -15,7 +15,7 @@ extern bool g_IsQuitRequested;
 ServantDesc D_80170000;
 
 void EntityWeaponAttack(Entity* self);
-void func_ptr_80170004(Entity* self);
+s32 func_ptr_80170004(Entity* self);
 void func_ptr_80170008(Entity* self);
 void func_ptr_8017000C(Entity* self);
 void func_ptr_80170010(Entity* self);
@@ -79,6 +79,7 @@ void PlaySfx(s16 sfxId);
 void func_800EA538(s32 arg0);
 bool func_80131F68(void);
 u16* func_80106A28(u32 arg0, u16 kind);
+void PlayAnimation(s8* frameProps, AnimationFrame** frames);
 void func_8010E168(s32 arg0, s16 arg1);
 void func_8010DFF0(s32 arg0, s32 arg1);
 void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index);
@@ -147,7 +148,7 @@ bool InitGame(void) {
     api.func_80118970 = NULL;
     api.func_80118B18 = NULL;
     api.UpdateUnarmedAnim = NULL;
-    api.func_8010DBFC = NULL;
+    api.PlayAnimation = PlayAnimation;
     api.func_80118C28 = NULL;
     api.func_8010E168 = func_8010E168;
     api.func_8010DFF0 = func_8010DFF0;

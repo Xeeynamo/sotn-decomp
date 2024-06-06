@@ -28,21 +28,21 @@ void func_80112BB0(void) {
     case 0x0:
         var_s2 = func_8010E27C();
         if (var_s2 != 0) {
-            if ((PLAYER.ext.player.unkAC == 0x16) ||
-                (PLAYER.ext.player.unkAC == 0x19)) {
-                func_8010DA48(0x18U);
+            if ((PLAYER.ext.player.anim == 0x16) ||
+                (PLAYER.ext.player.anim == 0x19)) {
+                SetPlayerAnim(0x18U);
             }
             SetSpeedX(0x18000);
-        } else if ((PLAYER.ext.player.unkAC == 0x1A) ||
-                   (PLAYER.ext.player.unkAC == 0x18)) {
-            func_8010DA48(0x19U);
+        } else if ((PLAYER.ext.player.anim == 0x1A) ||
+                   (PLAYER.ext.player.anim == 0x18)) {
+            SetPlayerAnim(0x19U);
         }
         if (var_s2 <= 0) {
             g_Player.unk44 &= 0xFFEF;
         }
         if (PLAYER.velocityY > 0) {
-            if (PLAYER.ext.player.unkAC != 0x1B) {
-                func_8010DA48(0x1BU);
+            if (PLAYER.ext.player.anim != 0x1B) {
+                SetPlayerAnim(0x1BU);
             }
             PLAYER.step_s = 1;
         }
@@ -71,11 +71,11 @@ void func_80112BB0(void) {
     case 0x5B:
         func_8010DFF0(1, 1);
         DecelerateX(0x1000);
-        if (PLAYER.ext.player.unkAC == 0x6C) {
+        if (PLAYER.ext.player.anim == 0x6C) {
             if (PLAYER.animFrameDuration < 0) {
                 temp_v0 = (PLAYER.velocityY > 0x10000) ^ 1;
-                PLAYER.step_s = D_800ACF7C[temp_v0].unk0;
-                func_8010DA48(D_800ACF7C[temp_v0].unk2);
+                PLAYER.step_s = D_800ACF7C[temp_v0].step_s;
+                SetPlayerAnim(D_800ACF7C[temp_v0].anim);
                 func_8010FAF4();
                 g_Player.unk44 = 1;
                 D_80138FC8 = 0xFE;
@@ -84,7 +84,7 @@ void func_80112BB0(void) {
         } else if (
             (PLAYER.animFrameIdx == 4) && (PLAYER.animFrameDuration == 1)) {
             PLAYER.animFrameIdx = 5;
-            PLAYER.ext.player.unkAC = 0x6C;
+            PLAYER.ext.player.anim = 0x6C;
         }
         break;
     case 0x41:
@@ -123,8 +123,8 @@ void func_80112BB0(void) {
         }
         if (PLAYER.animFrameDuration < 0) {
             temp_v1 = (PLAYER.velocityY > 0x10000) ^ 1;
-            PLAYER.step_s = D_800ACF7C[temp_v1].unk0;
-            func_8010DA48(D_800ACF7C[temp_v1].unk2);
+            PLAYER.step_s = D_800ACF7C[temp_v1].step_s;
+            SetPlayerAnim(D_800ACF7C[temp_v1].anim);
             func_8010FAF4();
         }
         break;
@@ -143,7 +143,7 @@ void func_80112BB0(void) {
         if (g_Player.unk44 & 1) {
             if ((g_Player.padPressed & PAD_DOWN) &&
                 (g_Player.padTapped & PAD_CROSS)) {
-                func_8010DA48(0x22U);
+                SetPlayerAnim(0x22U);
                 PLAYER.step_s = 0x70;
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 5), 0);
                 PLAYER.velocityY = 0x60000;
@@ -179,10 +179,14 @@ void func_801131C4(void) {
     s32 i;
     s32 x_offset;
     u16 local_flags;
-    bool condition = false;
+    bool atLedge;
 
     local_flags = 0;
-    condition = ((g_Player.pl_vram_flag & 0x20) != condition);
+
+    atLedge = 0;
+    if (g_Player.pl_vram_flag & 0x20) {
+        atLedge = 1;
+    }
 
     if ((g_Player.padTapped & PAD_CROSS) && !(g_Player.unk46 & PAD_LEFT)) {
         if (g_Player.padPressed & PAD_DOWN) {
@@ -203,13 +207,13 @@ void func_801131C4(void) {
     }
     DecelerateX(0x2000);
     if (g_Player.unk48 != 0) {
-        if (PLAYER.ext.player.unkAC == 0x11) {
-            PLAYER.ext.player.unkAC = 0x65;
+        if (PLAYER.ext.player.anim == 0x11) {
+            PLAYER.ext.player.anim = 0x65;
             PLAYER.animFrameDuration = 2;
             PLAYER.animFrameIdx = 3;
         }
-    } else if (PLAYER.ext.player.unkAC == 0x65) {
-        func_8010DA48(0x11);
+    } else if (PLAYER.ext.player.anim == 0x65) {
+        SetPlayerAnim(0x11);
     }
     switch (PLAYER.step_s) {
     case 0x0:
@@ -235,8 +239,8 @@ void func_801131C4(void) {
     case 0x1:
         if (!(g_Player.padPressed & PAD_DOWN)) {
             local_flags = 1;
-            if ((PLAYER.animFrameIdx >= 4) || PLAYER.ext.player.unkAC == 0x65) {
-                func_8010DA48(0x13);
+            if ((PLAYER.animFrameIdx >= 4) || PLAYER.ext.player.anim == 0x65) {
+                SetPlayerAnim(0x13);
                 PLAYER.step_s = 2;
                 PLAYER.animFrameIdx = 2;
                 if (g_Player.unk72 == 1) {
@@ -247,7 +251,7 @@ void func_801131C4(void) {
                 }
                 return;
             }
-        } else if (PLAYER.ext.player.unkAC == 0x65) {
+        } else if (PLAYER.ext.player.anim == 0x65) {
             PLAYER.step_s = 0;
         } else {
             if (PLAYER.animFrameDuration < 0) {
@@ -315,7 +319,7 @@ void func_801131C4(void) {
                 if (!(g_Player.padPressed & PAD_DOWN)) {
                     if (g_Player.unk72 == 0) {
                         PLAYER.step = 0;
-                        PLAYER.ext.player.unkAC = 0x24;
+                        PLAYER.ext.player.anim = 0x24;
                     }
                 }
             }
@@ -368,8 +372,8 @@ void func_801131C4(void) {
                 func_8010E27C();
                 if (!(g_Player.padPressed & PAD_DOWN)) {
                     if (g_Player.unk72 == 0) {
-                        PLAYER.ext.player.unkAC =
-                            D_800B0608[PLAYER.step_s - 0x41] + condition;
+                        PLAYER.ext.player.anim =
+                            D_800B0608[PLAYER.step_s - 0x41] + atLedge;
                         PLAYER.step = 0;
                     }
                 }
@@ -396,14 +400,14 @@ void func_801131C4(void) {
     }
     if (local_flags & 2) {
         if (g_Player.unk4C != 0) {
-            func_8010DA48(0x14);
+            SetPlayerAnim(0x14);
             PLAYER.step_s = 0;
             local_flags |= 0x8000;
         }
     }
     if (local_flags & 4) {
         if (!(g_Player.padPressed & PAD_DOWN)) {
-            func_8010DA48(0x13);
+            SetPlayerAnim(0x13);
             PLAYER.step_s = 2;
             local_flags |= 0x8000;
         }
@@ -421,7 +425,7 @@ void func_801131C4(void) {
             case 2:
                 if (g_Player.padTapped & (PAD_RIGHT | PAD_LEFT)) {
                     PLAYER.step_s = 5;
-                    func_8010DA48(0xF6);
+                    SetPlayerAnim(0xF6);
                     SetSpeedX(FIX(0.75));
                     local_flags |= 0x8000;
                 }
@@ -472,14 +476,14 @@ void func_80113AAC(void) {
                 PLAYER.rotPivotX = 0;
                 PLAYER.drawFlags |= 4;
                 PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
-                func_8010DA48(0x2B);
+                SetPlayerAnim(0x2B);
             } else {
                 PLAYER.step_s = 3;
             }
         } else if (g_Player.unk4A > 28) {
             PLAYER.step_s = 1;
             PLAYER.velocityY = -0x60000;
-            func_8010DA48(0x1B);
+            SetPlayerAnim(0x1B);
         }
         break;
 
@@ -500,7 +504,7 @@ void func_80113AAC(void) {
         PLAYER.rotPivotX = 0;
         PLAYER.rotPivotY = 2;
         if (g_Player.unk4A >= 0x39) {
-            func_8010DA48(0x2D);
+            SetPlayerAnim(0x2D);
             PLAYER.rotZ = 0;
             PLAYER.step_s = 4;
             PLAYER.drawFlags &= 0xFB;
@@ -525,7 +529,7 @@ void func_80113AAC(void) {
     if (var_s1 != 0) {
         temp = 0; // TODO: !FAKE
         if ((var_s1 - 1) != temp) {
-            func_8010DA48(0x1C);
+            SetPlayerAnim(0x1C);
         }
         PLAYER.palette = 0x8100;
         PLAYER.step_s = 1;
@@ -563,7 +567,7 @@ s32 func_80113D7C(s16 damageAmount) {
 
 s32 func_80113E68(void) {
     s16 rnd = rand();
-    PLAYER.ext.player.unkAC = 0x2E + (rnd % 3);
+    PLAYER.ext.player.anim = 0x2E + (rnd % 3);
     return rnd % 16;
 }
 
@@ -584,7 +588,7 @@ void func_80113EE0(void) {
 }
 
 void func_80113F7C(void) {
-    Entity* entity = PLAYER.ext.generic.unkB8.entityPtr;
+    Entity* entity = PLAYER.ext.player.unkB8;
     s16 posX;
     s32 var_a0;
     s32 var_a2;
@@ -653,7 +657,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
             func_8010E3B8(FIX(-1.25));
             PLAYER.step = Player_AxearmorHit;
             PLAYER.step_s = 0;
-            PLAYER.ext.player.unkAC = 0xD1;
+            PLAYER.ext.player.anim = 0xD1;
             PlaySfx(0x6ED);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 85), 0);
             D_8017A000.func_ptr_80170010();
@@ -676,7 +680,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
             PLAYER.velocityY = FIX(-0.5);
             func_8010E3B8(FIX(-8));
             PLAYER.step_s = var_s0 + 2;
-            PLAYER.ext.player.unkAC = 0x2E;
+            PLAYER.ext.player.anim = 0x2E;
             g_Player.D_80072F00[2] = 0x200;
             PLAYER.facingLeft = PLAYER.entityRoomIndex;
             if (damage->damageKind == 4) {
@@ -700,7 +704,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
             func_8010E3B8(FIX(-1.66666));
             PLAYER.step_s = 1;
             if (func_80113E68() == 0) {
-                PLAYER.ext.player.unkAC = 0x40;
+                PLAYER.ext.player.anim = 0x40;
             }
             break;
         case 3:
@@ -716,7 +720,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
                 func_8010E3B8(FIX(-1.66666));
                 PLAYER.step_s = 1;
                 if (func_80113E68() == 0) {
-                    PLAYER.ext.player.unkAC = 0x40;
+                    PLAYER.ext.player.anim = 0x40;
                 }
                 break;
             case 2:
@@ -724,7 +728,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
                 PLAYER.velocityY = 0;
                 func_8010E3B8(FIX(-2.5));
                 PLAYER.step_s = 7;
-                PLAYER.ext.player.unkAC = 0x23;
+                PLAYER.ext.player.anim = 0x23;
                 CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
             }
             break;
@@ -742,7 +746,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
                 unkAC_offset =
                     randbit |
                     ((PLAYER.entityRoomIndex != PLAYER.facingLeft) ? 2 : 0);
-                PLAYER.ext.player.unkAC = unkAC_offset + 0x31;
+                PLAYER.ext.player.anim = unkAC_offset + 0x31;
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(0x600, 0), 0);
                 break;
@@ -751,7 +755,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
                 PLAYER.velocityY = 0;
                 func_8010E3B8(FIX(-2.5));
                 PLAYER.step_s = 7;
-                PLAYER.ext.player.unkAC = 0x23;
+                PLAYER.ext.player.anim = 0x23;
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
                 break;
             case 3:
@@ -808,7 +812,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 46), 0);
             g_Player.D_80072F00[2] = 12;
             g_Player.unk40 = 0x8169;
-            PLAYER.ext.player.unkAC = 0x2E;
+            PLAYER.ext.player.anim = 0x2E;
         } else {
             if (damage->effects & 0x1000) {
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 119), 0);
@@ -850,7 +854,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
             return;
         }
         if (PLAYER.animFrameDuration < 0) {
-            func_8010DA48(0x1C);
+            SetPlayerAnim(0x1C);
             PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
         }
         break;
@@ -897,7 +901,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
             deepcond:
                 PLAYER.velocityY = FIX(-4);
                 func_8010E3B8(FIX(-1.25));
-                PLAYER.ext.player.unkAC = 0x2F;
+                PLAYER.ext.player.anim = 0x2F;
                 var_s0 = -3;
                 if (PLAYER.velocityX != 0) {
                     var_s0 = 3;
@@ -921,7 +925,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
 
         if (PLAYER.step_s == 0xF) {
             g_Player.D_80072F00[8] = 8;
-            func_8010DA48(0x3F);
+            SetPlayerAnim(0x3F);
             PlaySfx(0x644);
             PLAYER.velocityY = FIX(-2.5);
             func_80102CD8(2);
@@ -940,7 +944,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
         PLAYER.rotPivotX = 0x10;
         PLAYER.rotPivotY = 4;
         PLAYER.drawFlags |= 4;
-        func_8010DA48(0x2C);
+        SetPlayerAnim(0x2C);
         PLAYER.step_s = 0xE;
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x800, 31), 0);
         break;
@@ -984,7 +988,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
             PLAYER.rotZ = 0x800;
             PLAYER.velocityY = 0;
             PLAYER.velocityX /= -2;
-            func_8010DA48(0x1C);
+            SetPlayerAnim(0x1C);
             PLAYER.step_s = 1;
             PLAYER.step = 4;
             g_Player.unk44 = 0;
@@ -1011,7 +1015,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
 }
 
 void func_80114DF4(s32 arg0) {
-    s16 randvar;
+    s16 animVariant;
     s32 newlyPetrified;
     s32 yShift;
 
@@ -1048,20 +1052,20 @@ void func_80114DF4(s32 arg0) {
             PlaySfx(0x644);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 39), 0);
 
-            randvar = rand() % 64;
+            animVariant = rand() % 64;
 
             if (g_Status.hp == 0) {
                 D_80137FE0 = 0x20;
-                randvar = 2;
+                animVariant = 2;
             }
-            if (randvar << 0x10) {
-                PLAYER.palette = (randvar & 1) - 0x7E62;
-                func_8010DA48(randvar & 1 | 0x38);
+            if (animVariant << 0x10) {
+                PLAYER.palette = 0x819E + (animVariant & 1);
+                SetPlayerAnim(0x38 | (animVariant & 1));
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(0x300, 16), 0);
             } else {
                 PLAYER.palette = 0x819E;
-                func_8010DA48(0x3A);
+                SetPlayerAnim(0x3A);
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(0x700, 29), 0);
             }
@@ -1112,8 +1116,8 @@ void func_80114DF4(s32 arg0) {
             g_Player.unk5E--;
             PlaySfx(0x608);
             if (g_Player.unk5E == 0) {
-                func_8010DA48(0x3B);
-                if (PLAYER.ext.player.unkAC != 0x3A) {
+                SetPlayerAnim(0x3B);
+                if (PLAYER.ext.player.anim != 0x3A) {
                     CreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0x300, 16), 0);
                 } else {
@@ -1128,7 +1132,7 @@ void func_80114DF4(s32 arg0) {
             }
             func_8010E168(1, 0x1C);
             PLAYER.step_s = 3;
-            if (PLAYER.ext.player.unkAC != 0x3A) {
+            if (PLAYER.ext.player.anim != 0x3A) {
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(0x300, 13), 0);
                 CreateEntFactoryFromEntity(
@@ -1140,7 +1144,7 @@ void func_80114DF4(s32 arg0) {
                     g_CurrentEntity, FACTORY(0x700, 30), 0);
             }
         }
-        PLAYER.palette = ((PLAYER.ext.player.unkAC + 0xFFC8) & 1) - 0x7E62;
+        PLAYER.palette = ((PLAYER.ext.player.anim + 0xFFC8) & 1) - 0x7E62;
         break;
     case 3:
         if (PLAYER.animFrameDuration < 0) {
@@ -1158,7 +1162,7 @@ void func_80114DF4(s32 arg0) {
         }
         break;
     }
-    if (PLAYER.ext.player.unkAC == 0x3A) {
+    if (PLAYER.ext.player.anim == 0x3A) {
         func_8010E168(1, 4);
     }
     if (newlyPetrified && (g_Player.unk72 != 0)) {

@@ -199,8 +199,8 @@ void EntityWeaponAttack(Entity* self) {
     subType >>= 8;
     anim = &g_SoundEvents[subType];
 
-    if (!(PLAYER.ext.weapon.unkAC >= anim->frameStart &&
-          PLAYER.ext.weapon.unkAC < anim->frameStart + 7 &&
+    if (!(PLAYER.ext.weapon.anim >= anim->frameStart &&
+          PLAYER.ext.weapon.anim < anim->frameStart + 7 &&
           g_Player.unk46 != 0)) {
         DestroyEntity(self);
         return;
@@ -224,7 +224,7 @@ void EntityWeaponAttack(Entity* self) {
         self->step++;
     }
 
-    self->ext.generic.unkAC = PLAYER.ext.weapon.unkAC - anim->frameStart;
+    self->ext.weapon.anim = PLAYER.ext.weapon.anim - anim->frameStart;
     if (PLAYER.animFrameDuration == 1 &&
         PLAYER.animFrameIdx == anim->soundFrame) {
         g_api.PlaySfx(anim->soundId);
@@ -240,7 +240,7 @@ void EntityWeaponAttack(Entity* self) {
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
-void func_ptr_80170004(Entity* self) {}
+s32 func_ptr_80170004(Entity* self) {}
 
 void func_ptr_80170008(Entity* self) {}
 

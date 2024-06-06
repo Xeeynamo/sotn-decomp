@@ -300,8 +300,8 @@ void EntityWeaponAttack(Entity* self) {
     subType = self->params & 0x7FFF;
     subType >>= 8;
     anim = &D_169000_8017ACD8[subType];
-    if (PLAYER.ext.player.unkAC < anim->frameStart ||
-        PLAYER.ext.player.unkAC >= anim->frameStart + 7 || !g_Player.unk46) {
+    if (PLAYER.ext.player.anim < anim->frameStart ||
+        PLAYER.ext.player.anim >= anim->frameStart + 7 || !g_Player.unk46) {
         DestroyEntity(self);
         return;
     }
@@ -338,7 +338,7 @@ void EntityWeaponAttack(Entity* self) {
         self->step++;
         break;
     }
-    self->ext.generic.unkAC = PLAYER.ext.player.unkAC - anim->frameStart;
+    self->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
     if (PLAYER.animFrameDuration == 1 &&
         PLAYER.animFrameIdx == anim->soundFrame) {
         g_api.PlaySfx(anim->soundId);
@@ -355,7 +355,7 @@ void EntityWeaponAttack(Entity* self) {
     }
 }
 
-void func_ptr_80170004(Entity* self) {
+s32 func_ptr_80170004(Entity* self) {
     WeaponAnimation* anim;
     s16 subType;
 
@@ -365,7 +365,7 @@ void func_ptr_80170004(Entity* self) {
     subType = self->params & 0x7FFF;
     subType >>= 8;
     anim = &D_169000_8017AD18[subType];
-    if (PLAYER.ext.player.unkAC < 0xD6 || PLAYER.ext.player.unkAC >= 0xD8) {
+    if (PLAYER.ext.player.anim < 0xD6 || PLAYER.ext.player.anim >= 0xD8) {
         DestroyEntity(self);
         return;
     }
@@ -403,7 +403,7 @@ void func_ptr_80170004(Entity* self) {
         self->step++;
         break;
     }
-    self->ext.generic.unkAC = PLAYER.ext.player.unkAC - anim->frameStart;
+    self->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
     if (g_api.UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
         DestroyEntity(self);
         return;
