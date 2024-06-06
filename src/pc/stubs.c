@@ -573,7 +573,7 @@ void func_801083BC(void) { NOT_IMPLEMENTED; }
 void func_801042C4(s32 arg0) { NOT_IMPLEMENTED; }
 
 void EntityWeaponAttack(Entity* self) { NOT_IMPLEMENTED; }
-void func_ptr_80170004(Entity* self) { NOT_IMPLEMENTED; }
+s32 func_ptr_80170004(Entity* self) { NOT_IMPLEMENTED; }
 void func_ptr_80170008(Entity* self) { NOT_IMPLEMENTED; }
 void func_ptr_8017000C(Entity* self) { NOT_IMPLEMENTED; }
 void func_ptr_80170010(Entity* self) { NOT_IMPLEMENTED; }

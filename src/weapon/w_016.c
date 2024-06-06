@@ -100,7 +100,7 @@ void EntityWeaponAttack(Entity* self) {
     self->ext.weapon.lifetime++;
 }
 
-void func_ptr_80170004(Entity* self) {
+s32 func_ptr_80170004(Entity* self) {
 
     if (self->step == 0) {
         self->animSet = self->ext.weapon.parent->animSet;
