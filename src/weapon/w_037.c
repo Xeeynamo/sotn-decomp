@@ -60,7 +60,7 @@ extern s16 D_107000_8017A714[];
 void func_107000_8017AEF0(Entity* ent, Point16* outPoint, bool arg2) {
     s32 idx;
 
-    idx = PLAYER.ext.player.unkAC - 0xA7;
+    idx = PLAYER.ext.player.anim - 0xA7;
     if (PLAYER.facingLeft) {
         ent->posX.i.hi = PLAYER.posX.i.hi - D_107000_8017A714[idx * 4 + 0];
         if (arg2) {
@@ -87,7 +87,7 @@ void func_107000_8017AEF0(Entity* ent, Point16* outPoint, bool arg2) {
 void func_107000_8017B0AC(Entity* ent, Point16* outPoint, bool arg2) {
     s32 idx;
 
-    idx = PLAYER.ext.player.unkAC - 0xA7;
+    idx = PLAYER.ext.player.anim - 0xA7;
     if (PLAYER.facingLeft) {
         ent->posX.i.hi = PLAYER.posX.i.hi - D_107000_8017A714[idx * 4 + 0];
         if (arg2) {
@@ -180,8 +180,8 @@ s32 func_ptr_80170004(Entity* self) {
         baseX = randy;
         baseY = basePoint.y;
         if (PLAYER.drawFlags & DRAW_UNK02) {
-            if (0x42 < PLAYER.ext.player.unkAC &&
-                PLAYER.ext.player.unkAC < 0x45) {
+            if (0x42 < PLAYER.ext.player.anim &&
+                PLAYER.ext.player.anim < 0x45) {
                 self->posY.i.hi -= 1;
             } else {
                 self->posY.i.hi -= 3;

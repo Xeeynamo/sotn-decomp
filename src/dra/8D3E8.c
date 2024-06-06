@@ -54,7 +54,7 @@ void func_8012D3E8(void) {
         if ((PLAYER.facingLeft && (directionsPressed & PAD_RIGHT)) ||
             (!PLAYER.facingLeft && (directionsPressed & PAD_LEFT))) {
             D_800B0914 = 0;
-            func_8010DA48(0xE1);
+            SetPlayerAnim(0xE1);
         }
 
         if (!(directionsPressed & (PAD_LEFT | PAD_RIGHT))) {
@@ -108,7 +108,7 @@ void func_8012D3E8(void) {
         if ((g_Player.pl_vram_flag & 4) && PLAYER.velocityX > 0 ||
             (g_Player.pl_vram_flag & 8) && PLAYER.velocityX < 0 ||
             (directionsPressed & (PAD_LEFT | PAD_RIGHT)) == 0) {
-            PLAYER.ext.player.unkAC = 0xE0;
+            PLAYER.ext.player.anim = 0xE0;
             // Set the state to 3, and the timer to 24. Note that in case 3,
             // this decrements.
             D_800B0914 = 3;
@@ -153,7 +153,7 @@ void func_8012D3E8(void) {
         if ((PLAYER.facingLeft && (directionsPressed & PAD_RIGHT)) ||
             (!PLAYER.facingLeft && (directionsPressed & PAD_LEFT))) {
             D_800B0914 = 0;
-            func_8010DA48(0xE1);
+            SetPlayerAnim(0xE1);
         }
 
         if (--D_800B091C == 0) {
@@ -171,7 +171,7 @@ void func_8012D3E8(void) {
         }
         if (((g_Player.padPressed & PAD_RIGHT) && !PLAYER.facingLeft) ||
             ((g_Player.padPressed & PAD_LEFT) && PLAYER.facingLeft)) {
-            func_8010DA48(0xE2);
+            SetPlayerAnim(0xE2);
             D_800B0914 = 2;
             if (abs(PLAYER.velocityX) < FIX(2)) {
                 SetSpeedX(FIX(2));
@@ -200,11 +200,11 @@ void func_8012DBBC(void) {
         if (D_800B0914 == 1) {
             PLAYER.step_s = 2;
             D_800B0914 = 2;
-            func_8010DA48(0xE2);
+            SetPlayerAnim(0xE2);
         } else if (PLAYER.velocityY > FIX(6.875)) {
             PLAYER.step_s = 3;
             D_800B0914 = 3;
-            func_8010DA48(0xE5);
+            SetPlayerAnim(0xE5);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
         } else {
             func_8012CA64();
@@ -275,7 +275,7 @@ void func_8012DF04(void) {
         if (PLAYER.velocityY > FIX(6.875)) {
             PLAYER.step_s = 3;
             D_800B0914 = 3;
-            func_8010DA48(0xE5);
+            SetPlayerAnim(0xE5);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
         } else {
             func_8012CA64();
@@ -299,11 +299,11 @@ void func_8012E040(void) {
         if (D_800B0914 == 2) {
             PLAYER.step_s = 2;
             D_800B0914 = 2;
-            func_8010DA48(0xE2);
+            SetPlayerAnim(0xE2);
         } else if ((PLAYER.velocityY > FIX(6.875)) || (D_800B0914 == 3)) {
             PLAYER.step_s = 3;
             D_800B0914 = 3;
-            func_8010DA48(0xE5);
+            SetPlayerAnim(0xE5);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
         } else {
             if (D_800B0914 == 0) {
@@ -441,7 +441,7 @@ void func_8012E550(void) {
     switch (D_800B0914) {
     case 0:
         if (!pressingDown) {
-            func_8010DA48(0xE4);
+            SetPlayerAnim(0xE4);
             D_800B0914 = 2;
             if (playerFrame == 0) {
                 PLAYER.animFrameIdx = 1;
@@ -454,12 +454,12 @@ void func_8012E550(void) {
         if (pressingDown) {
             return;
         }
-        func_8010DA48(0xE4);
+        SetPlayerAnim(0xE4);
         D_800B0914 = 2;
         return;
     case 2:
         if (pressingDown) {
-            func_8010DA48(0xE3);
+            SetPlayerAnim(0xE3);
             D_800B0914 = 0;
             if (playerFrame != 0) {
                 return;
@@ -591,7 +591,7 @@ void func_8012EAD0(void) {
             PLAYER.unk5A = 0;
             PLAYER.rotZ = 0;
             PLAYER.drawFlags = 0;
-            func_8010DA48(0xCA);
+            SetPlayerAnim(0xCA);
             g_Player.unk66 = 1;
             if (g_Player.unk68 != 0) {
                 PLAYER.step_s = 2;

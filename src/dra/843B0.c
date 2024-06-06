@@ -2392,7 +2392,7 @@ bool WolfFormFinished(void) {
         g_Player.padTapped & PAD_R2 ||
         HandleTransformationMP(FORM_WOLF, REDUCE) < 0) {
         SetPlayerStep(Player_UnmorphWolf);
-        func_8010DA48(0xCA);
+        SetPlayerAnim(0xCA);
         D_800AFDA4[1] = 1;
         PLAYER.palette = 0x810D;
         g_Player.unk66 = 0;
@@ -2434,22 +2434,21 @@ void func_8012C97C(void) {
 
     PLAYER.step_s = 9;
     D_800B0914 = 0;
-    func_8010DA48(0xEC);
+    SetPlayerAnim(0xEC);
     PLAYER.velocityY = 0;
 }
 
 void func_8012CA64(void) {
-    u32 var_a0;
+    u8 anim;
 
     PLAYER.step_s = 1;
     D_800B0914 = 0;
 
+    anim = 0xDE;
     if (g_Player.pl_vram_flag & 0x20) {
-        var_a0 = 0xDF;
-    } else {
-        var_a0 = 0xDE;
+        anim = 0xDF;
     }
-    func_8010DA48(var_a0);
+    SetPlayerAnim(anim);
 
     PLAYER.velocityY = 0;
     PLAYER.velocityX /= 2;
@@ -2457,12 +2456,12 @@ void func_8012CA64(void) {
     D_800B0918 = 0x200;
     if (g_Player.pl_vram_flag & 0x40) {
         D_800B0914 = 1;
-        func_8010DA48(0xE9U);
+        SetPlayerAnim(0xE9);
     }
 }
 
 void func_8012CB0C(void) {
-    PLAYER.ext.generic.unkAC = 0xDE;
+    PLAYER.ext.player.anim = 0xDE;
     PLAYER.velocityY = 0;
     D_800B0914 = 0;
     PLAYER.animFrameIdx = 0;
@@ -2474,17 +2473,17 @@ void func_8012CB4C(void) {
     PLAYER.step_s = 2;
     if ((PLAYER.facingLeft != 0 && g_Player.padPressed & PAD_RIGHT) ||
         (PLAYER.facingLeft == 0 && g_Player.padPressed & PAD_LEFT)) {
-        func_8010DA48(0xE1);
+        SetPlayerAnim(0xE1);
         D_800B0914 = 0;
         D_8013842C = 0;
         return;
     } else if (D_8013842C != 0) {
-        func_8010DA48(0xE2);
+        SetPlayerAnim(0xE2);
         D_800B0914 = 2;
         SetSpeedX(0x20000);
         return;
     } else {
-        func_8010DA48(0xE0);
+        SetPlayerAnim(0xE0);
         D_800B0914 = 1;
         D_8013842C = 0xC;
     }
@@ -2501,7 +2500,7 @@ void func_8012CC30(s32 arg0) {
             D_800B0914 = 4;
             SetSpeedX(0x50000);
             g_CurrentEntity->velocityY = 0;
-            func_8010DA48(0xEDU);
+            SetPlayerAnim(0xED);
             LearnSpell(4);
         }
     } else {
@@ -2512,7 +2511,7 @@ void func_8012CC30(s32 arg0) {
 void func_8012CCE4(void) {
     PLAYER.velocityY = FIX(-3.5);
     if ((PLAYER.step_s == 2) & (D_800B0914 == 2)) {
-        func_8010DA48(0xE7);
+        SetPlayerAnim(0xE7);
         // Might be possible to rewrite this block to reduce duplication with
         // some clever && and ||
         if (PLAYER.facingLeft) {
@@ -2534,13 +2533,13 @@ void func_8012CCE4(void) {
     } else if (
         (g_Player.padPressed & (PAD_RIGHT | PAD_LEFT)) &&
         ((PLAYER.step_s != 2) || (D_800B0914 != 0)) && (PLAYER.step_s != 9)) {
-        func_8010DA48(0xE7);
+        SetPlayerAnim(0xE7);
         D_800B0914 = 1;
         if (g_Player.padPressed & PAD_UP) {
             PLAYER.velocityY = FIX(-4.875);
         }
     } else {
-        func_8010DA48(0xE6);
+        SetPlayerAnim(0xE6);
         D_800B0914 = 0;
         if (g_Player.padPressed & PAD_UP) {
             PLAYER.velocityY = FIX(-4.875);
@@ -2552,10 +2551,10 @@ void func_8012CCE4(void) {
 
 void func_8012CED4(void) {
     if (PLAYER.step_s == 2 && D_800B0914 == PLAYER.step_s) {
-        func_8010DA48(0xE7);
+        SetPlayerAnim(0xE7);
         D_800B0914 = 1;
     } else {
-        func_8010DA48(0xE8);
+        SetPlayerAnim(0xE8);
         SetSpeedX(0x10000);
         D_800B0914 = 0;
         if (D_80138438 & 0x40) {
@@ -2571,7 +2570,7 @@ void func_8012CED4(void) {
 }
 
 void func_8012CFA8(void) {
-    func_8010DA48(0xEA);
+    SetPlayerAnim(0xEA);
     PLAYER.step_s = 6;
     D_800B0914 = 0;
     PLAYER.velocityX = 0;
@@ -2580,7 +2579,7 @@ void func_8012CFA8(void) {
 
 void func_8012CFF0(void) {
     PLAYER.step_s = 3;
-    func_8010DA48(0xE3);
+    SetPlayerAnim(0xE3);
     D_800B0914 = 0;
 }
 
@@ -2612,12 +2611,12 @@ void func_8012D024(void) {
     if (abs(PLAYER.posY.i.hi - g_Entities[17].posY.i.hi) < 4 &&
         --D_800B0918 == 0) {
         D_800B0914 = 1;
-        func_8010DA48(0xE9);
+        SetPlayerAnim(0xE9);
         return;
     }
     if (g_Player.pl_vram_flag & 0x40) {
         D_800B0914 = 1;
-        func_8010DA48(0xE9);
+        SetPlayerAnim(0xE9);
     }
 }
 

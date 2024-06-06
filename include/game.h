@@ -1195,7 +1195,7 @@ typedef struct {
     /* 0x06 */ u8 unk6;
     /* 0x07 */ u8 nFramesInvincibility;
     /* 0x08 */ u16 stunFrames;
-    /* 0x0A */ u8 unkA;
+    /* 0x0A */ u8 anim;
     /* 0x0B */ u8 blueprintNum; // Blueprint for entity factory spawning subwpn
     /* 0x0C */ u16 hitboxState;
     /* 0x0E */ u16 hitEffect;
@@ -1352,7 +1352,7 @@ typedef struct {
     /* 8003C810 */ s16 (*func_80118B18)(
         Entity* ent1, Entity* ent2, s32 facingLeft);
     /* 8003C814 */ s32 (*UpdateUnarmedAnim)(s8* frameProps, u16** frames);
-    /* 8003C818 */ void (*func_8010DBFC)(s8*, AnimationFrame** frames);
+    /* 8003C818 */ void (*PlayAnimation)(s8*, AnimationFrame** frames);
     /* 8003C81C */ void (*func_80118C28)(s32 arg0);
     /* 8003C820 */ void (*func_8010E168)(s32 arg0, s16 arg1);
     /* 8003C824 */ void (*func_8010DFF0)(s32 arg0, s32 arg1);
@@ -1436,7 +1436,7 @@ extern u16* (*g_api_func_80106A28)(u16 arg0, u16 kind);
 extern void (*g_api_func_80118894)(Entity*);
 extern EnemyDef* g_api_enemyDefs;
 extern u32 (*g_api_UpdateUnarmedAnim)(s8* frameProps, u16** frames);
-extern void (*g_api_func_8010DBFC)(s8*, AnimationFrame** frames);
+extern void (*g_api_PlayAnimation)(s8*, AnimationFrame** frames);
 extern void (*g_api_func_8010E168)(s32 arg0, s16 arg1);
 extern void (*g_api_func_8010DFF0)(s32 arg0, s32 arg1);
 extern u16 (*g_api_DealDamage)(Entity* enemyEntity, Entity* attackerEntity);
@@ -1553,8 +1553,19 @@ typedef struct {
     // Known timers: 0 = poison, 1 = curse, 2 = visual from stoned/hit,
     //  13 = invincibility, 14 = invincibility from consumables
     /* 80072F00 */ s16 D_80072F00[16]; // poison timer
+
+    // 0x01: touching the ground
+    // 0x02: touching the ceiling
+    // 0x04: touching the right wall
+    // 0x08: touching the left wall
+    // 0x20: in-air or near the edge
+    // 0x0800: touching the ceiling slope
+    // 0x1000: standing on a slightly ascending or descending slope
+    // 0x4000: standing on a raising slope
+    // 0x8000: standing on any slope
     /* 80072F20 */ s32 pl_vram_flag;
-    /* 80072F24 */ s32 unk04; // unknown, check func_80109A44
+
+    /* 80072F24 */ s32 unk04; // copy of the previous field
     /* 80072F28 */ s32 unk08;
     /* 80072F2C */ u32 unk0C;
     /* 80072F30 */ s32 unk10;

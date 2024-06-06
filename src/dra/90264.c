@@ -107,7 +107,7 @@ void func_80130264(Entity* self) {
         self->enemyId = 3;
         if (self->hitFlags && !CastSpell(13)) {
             D_800B0914 = 3;
-            PLAYER.ext.player.unkAC = 0xE0;
+            PLAYER.ext.player.anim = 0xE0;
             D_800B091C = 0x18;
         }
     }

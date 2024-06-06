@@ -184,6 +184,7 @@ typedef struct {
     /* 0x86 */ u16 duration;
 } ET_MessageBox;
 
+// !!! IMPORTANT: the struct MUST align with ET_Player due to the 'anim' field
 typedef struct {
     /* 0x7C */ s16 lifetime;
     /* 0x7E */ s16 unk7E;
@@ -200,7 +201,7 @@ typedef struct {
     /* 0xA0 */ s32 accelerationY;
     /* 0xA4 */ s32 unkA4;
     /* 0xA8 */ s32 unkA8;
-    /* 0xAC */ u8 unkAC;
+    /* 0xAC */ u8 anim;
     /* 0xAD */ u8 unkAD;
     /* 0xAE */ s16 equipId;
 } ET_Weapon;
@@ -599,8 +600,11 @@ typedef struct {
 
 typedef struct {
     Primitive* prim;
-    char pad[0x2C];
-    u8 unkAC;
+    char pad[0x24];
+    s16 unkA4;
+    s16 unkA6;
+    char padd[4];
+    u8 anim;
     char pad2[0x8];
     struct Entity* unkB8;
 } ET_Player;

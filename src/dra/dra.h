@@ -378,12 +378,19 @@ extern Point16 D_800ACEE0[];
 extern s32 D_800ACEDC_hd;
 #endif
 extern u8 D_800ACF4C[];
-extern u8 D_800ACF54[];
+extern u8 D_800ACF54[10];
 extern s16 D_800ACF60[]; // collection of sounds?
 extern s16 D_800ACF6C[];
 extern s32 D_800ACF74; // These two might...
 extern s32 D_800ACF78; // ...be an array
-extern unkstruct_800ACF7C D_800ACF7C[];
+
+typedef struct {
+    s16 step_s;
+    u8 anim;
+    u8 unused;
+} PlayerFallingAnim;
+extern PlayerFallingAnim D_800ACF7C[2];
+
 extern s16 D_800ACF84[8]; // collection of sounds
 extern s16 D_800ACF94[];
 extern u8 D_800AD094[0x30];
@@ -894,7 +901,7 @@ bool CheckQuarterCircleForwardInput();
 bool CheckBackForwardInput();
 bool CheckDarkMetamorphosisInput();
 bool CheckSummonSpiritInput();
-void func_8010DBFC(s8*, AnimationFrame** frames);
+void PlayAnimation(s8*, AnimationFrame** frames);
 bool CheckHellfireInput();
 bool CheckTetraSpiritInput();
 bool CheckSoulStealInput();
