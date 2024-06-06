@@ -83,7 +83,7 @@ u16 g_eUnk14SpawnRots[] = {
 
 #include "../entity_unkId15_spawner.h"
 
-u16 unk15_rot[] = {
+static s16 unk15_rot[] = {
     /* FF8 */ 0x0030,
     /* FFA */ 0x0050,
     /* FFC */ 0x0080,
@@ -94,7 +94,7 @@ u16 unk15_rot[] = {
     /* 1006 */ 0x0000,
 };
 
-u32 unk15_yVel[] = {
+static s32 unk15_yVel[] = {
     /* 1008 */ 0x00000400,
     /* 100C */ 0x00002400,
     /* 1010 */ 0x00003C00,
