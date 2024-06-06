@@ -455,7 +455,7 @@ void func_8010A234(s32 arg0) {
             func_8010DFF0(1, 0xA);
             func_80109328();
             if (arg0 != 0) {
-                func_8010DBFC(D_800B0130, D_800B01B8);
+                PlayAnimation(D_800B0130, D_800B01B8);
             }
         }
     } else if (g_Player.unk0C & 0x01000000) {
@@ -475,7 +475,7 @@ void func_8010A234(s32 arg0) {
         g_Player.unk0C &= ~0x01000000;
         func_80111CC0();
         if (arg0 != 0) {
-            func_8010DBFC(D_800B0130, D_800B01B8);
+            PlayAnimation(D_800B0130, D_800B01B8);
         }
     }
 }
@@ -655,8 +655,8 @@ void EntityAlucard(void) {
                             continue;
                         case 6:
                             if ((PLAYER.step == 3) &&
-                                (PLAYER.ext.player.unkAC != 0x1C)) {
-                                func_8010DA48(0x1C);
+                                (PLAYER.ext.player.anim != 0x1C)) {
+                                SetPlayerAnim(0x1C);
                                 g_Player.unk44 &= 0xFFEF;
                             }
                             continue;
@@ -1191,7 +1191,7 @@ block_160:
             PLAYER.palette = 0x8100;
         }
     }
-    func_8010DBFC(D_800B0130, D_800B01B8);
+    PlayAnimation(D_800B0130, D_800B01B8);
     if (g_Player.unk0C & 0x40000) {
         if (PLAYER.animFrameDuration < 0) {
             PLAYER.animCurFrame |= 0x8000;

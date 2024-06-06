@@ -31,6 +31,7 @@ HandleSaveMenu = 0x80103238;
 DestroyEntity = 0x80106590;
 EntityAlucard = 0x8010A5BC;
 SetPlayerStep = 0x8010D584;
+SetPlayerAnim = 0x8010DA48;
 DecelerateX = 0x8010E1EC;
 SetSpeedX = 0x8010E390;
 AlucardHandleDamage = 0x8011405C;

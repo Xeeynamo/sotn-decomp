@@ -443,8 +443,8 @@ void EntityUnarmedAttack(Entity* entity) {
     subType >>= 8;
     anim = &D_800AD53C[subType];
 
-    if (PLAYER.ext.generic.unkAC < anim->frameStart ||
-        (anim->frameStart + 7) <= PLAYER.ext.generic.unkAC ||
+    if (PLAYER.ext.player.anim < anim->frameStart ||
+        (anim->frameStart + 7) <= PLAYER.ext.player.anim ||
         g_Player.unk46 == 0) {
         DestroyEntity(entity);
         return;
@@ -463,7 +463,7 @@ void EntityUnarmedAttack(Entity* entity) {
         func_80118894(entity);
         entity->step++;
     }
-    entity->ext.generic.unkAC = PLAYER.ext.generic.unkAC - anim->frameStart;
+    entity->ext.generic.unkAC = PLAYER.ext.player.anim - anim->frameStart;
     if ((PLAYER.animFrameDuration == 1) &&
         (PLAYER.animFrameIdx == anim->soundFrame)) {
         PlaySfx(anim->soundId);

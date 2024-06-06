@@ -184,7 +184,7 @@ s32 func_97000_8017AF2C(Entity* self, s32 arg1) {
     }
     // If peanut, use this logic to tell if it was eaten
     if (((self->params >> 8) & 0x7F) == 6) {
-        if ((PLAYER.animCurFrame != 0x7B) || (PLAYER.ext.player.unkAC != 0) ||
+        if ((PLAYER.animCurFrame != 0x7B) || (PLAYER.ext.player.anim != 0) ||
             (self->posY.i.hi > (PLAYER.posY.i.hi - 16)) ||
             (self->posY.i.hi < (PLAYER.posY.i.hi - 24)) ||
             (self->posX.i.hi > (PLAYER.posX.i.hi + 4)) ||

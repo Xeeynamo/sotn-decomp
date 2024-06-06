@@ -12,7 +12,7 @@
 
 #define DISP_WIDTH 256
 #define DISP_HEIGHT 256
-#define SCREEN_SCALE 2
+#define SCREEN_SCALE 4
 
 #define VRAM_W 1024
 #define VRAM_H 512

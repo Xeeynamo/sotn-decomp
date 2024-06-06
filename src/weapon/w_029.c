@@ -25,11 +25,11 @@ typedef struct {
 extern FireShieldDragon D_CF000_8017C9A0[][20];
 
 void EntityWeaponAttack(Entity* self) {
-    s32 newUnkAC;
+    s32 anim;
     s32 handButton;
     s32 unkAC_offset;
 
-    newUnkAC = 0;
+    anim = 0;
     unkAC_offset = 0;
     if (g_HandId != 0) {
         handButton = PAD_CIRCLE;
@@ -80,46 +80,46 @@ void EntityWeaponAttack(Entity* self) {
         SetWeaponProperties(self, 0);
         self->step++;
     case 1:
-        self->ext.weapon.unkAC = unkAC_offset + 10;
+        self->ext.weapon.anim = unkAC_offset + 10;
         if (self->animFrameDuration < 0) {
             self->step++;
         }
         break;
     case 2:
-        switch (PLAYER.ext.player.unkAC) {
+        switch (PLAYER.ext.player.anim) {
         case 9:
         case 10:
         case 11:
-            newUnkAC++;
+            anim++;
         case 7:
-            newUnkAC++;
+            anim++;
         case 8:
-            newUnkAC++;
+            anim++;
         case 12:
-            newUnkAC++;
+            anim++;
         case 13:
-            newUnkAC++;
+            anim++;
         case 24:
         case 25:
-            newUnkAC++;
+            anim++;
         case 14:
         case 15:
-            newUnkAC++;
+            anim++;
         case 26:
-            newUnkAC += 2;
+            anim += 2;
             self->animFrameIdx = PLAYER.animFrameIdx;
             break;
         default:
             self->animFrameIdx = 0;
-            newUnkAC = newUnkAC + unkAC_offset;
+            anim = anim + unkAC_offset;
             break;
         }
-        self->ext.weapon.unkAC = newUnkAC;
+        self->ext.weapon.anim = anim;
         self->animFrameDuration = 2;
         break;
     case 3:
         g_Player.unk48 = 0;
-        self->ext.weapon.unkAC = unkAC_offset + 12;
+        self->ext.weapon.anim = unkAC_offset + 12;
         if (self->animFrameDuration < 0) {
             DestroyEntity(self);
             return;
@@ -143,7 +143,7 @@ void EntityWeaponAttack(Entity* self) {
         break;
     }
     if (self->step != 4) {
-        g_api.func_8010DBFC(&D_CF000_8017AC78, &D_CF000_8017ACC0);
+        g_api.PlayAnimation(&D_CF000_8017AC78, &D_CF000_8017ACC0);
         if (g_GameTimer % 5 == 0) {
             // Need to enable FACTORY() in weapon overlay
             // TODO: FACTORY()

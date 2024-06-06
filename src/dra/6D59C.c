@@ -13,7 +13,7 @@ void func_8010D59C(void) {
     if (g_Entities[1].ext.entSlot1.unk0 != 0) {
         return;
     }
-    switch (PLAYER.ext.player.unkAC) {
+    switch (PLAYER.ext.player.anim) {
     case 0x5D:
     case 0x5E:
     case 0x60:
@@ -134,8 +134,8 @@ void func_8010DA2C(s32* arg0) {
     g_CurrentEntity->animFrameIdx = 0;
 }
 
-void func_8010DA48(u32 arg0) {
-    g_CurrentEntity->ext.generic.unkAC = arg0;
+void SetPlayerAnim(s32 anim) {
+    g_CurrentEntity->ext.player.anim = anim;
     g_CurrentEntity->animFrameDuration = 0;
     g_CurrentEntity->animFrameIdx = 0;
 }
@@ -147,7 +147,7 @@ AnimationFrame* func_8010DA70(AnimationFrame** frames) {
     u16* subanim;
     u16* anim;
 
-    anim = (u16*)frames[g_CurrentEntity->ext.player.unkAC];
+    anim = (u16*)frames[g_CurrentEntity->ext.player.anim];
     idx = 0;
     var_s1 = 0;
     while (true) {
@@ -177,8 +177,7 @@ AnimationFrame* func_8010DA70(AnimationFrame** frames) {
 u32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
     u16* frameIndex;
 
-    frameIndex =
-        frames[g_CurrentEntity->ext.generic.unkAC] + PLAYER.animFrameIdx;
+    frameIndex = frames[g_CurrentEntity->ext.player.anim] + PLAYER.animFrameIdx;
     if (*frameIndex == 0xFFFF) {
         return -1;
     }
@@ -193,7 +192,7 @@ u32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
     return PLAYER.animFrameDuration >= 0 ? 0 : -1;
 }
 
-void func_8010DBFC(s8* frameProps, AnimationFrame** frames) {
+void PlayAnimation(s8* frameProps, AnimationFrame** frames) {
     AnimationFrame* animFrame;
 
     animFrame = func_8010DA70(frames);
@@ -213,7 +212,7 @@ void func_8010DBFC(s8* frameProps, AnimationFrame** frames) {
                 g_CurrentEntity->animFrameDuration = -1;
                 animFrame = func_8010DA70(frames);
             } else if (animFrame->duration == 0xFFFE) {
-                g_CurrentEntity->ext.generic.unkAC = animFrame->unk2 & 0xFF;
+                g_CurrentEntity->ext.player.anim = animFrame->unk2 & 0xFF;
                 g_CurrentEntity->animFrameIdx = animFrame->unk2 >> 8;
                 animFrame = func_8010DA70(frames);
                 g_CurrentEntity->animFrameDuration = animFrame->duration;
@@ -296,13 +295,13 @@ u32 UpdateAnim(s8* frameProps, AnimationFrame** anims) {
 void func_8010DF70(void) {
     g_CurrentEntity = &PLAYER;
 
-    switch (PLAYER.ext.generic.unkAC) {
+    switch (PLAYER.ext.player.anim) {
     case 0xBA:
     case 0xBB:
     case 0xBE:
     case 0xF0:
     case 0xF1:
-        func_8010DBFC(D_800B0130, D_800B01B8);
+        PlayAnimation(D_800B0130, D_800B01B8);
     }
 }
 
@@ -471,9 +470,9 @@ void func_8010E42C(u16 arg0) {
     PLAYER.step = Player_Teleport;
 
     if (!(arg0 & 1)) {
-        func_8010DA48(0xF4);
+        SetPlayerAnim(0xF4);
     } else {
-        func_8010DA48(0xF5);
+        SetPlayerAnim(0xF5);
     }
 }
 
@@ -482,7 +481,7 @@ void func_8010E470(s32 arg0, s32 arg1) {
     PLAYER.velocityY = 0;
     PLAYER.step = Player_Crouch;
     PLAYER.step_s = D_800ACF4C[arg0 * 2 + 0];
-    func_8010DA48(D_800ACF4C[arg0 * 2 + 1]);
+    SetPlayerAnim(D_800ACF4C[arg0 * 2 + 1]);
 }
 
 // This may be the function that turns Alucard into stone
@@ -493,7 +492,7 @@ void func_8010E4D0(void) {
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk;
 
     if ((u32)(g_Player.unk72 - 1) < 2U) {
-        func_8010DA48(0xC7);
+        SetPlayerAnim(0xC7);
         PLAYER.velocityY = 0;
         PLAYER.velocityX = 0;
         SetPlayerStep(Player_AlucardStuck);
@@ -507,70 +506,77 @@ void func_8010E4D0(void) {
 
 // Corresponding RIC function is func_8015CD98 (much simpler)
 void func_8010E570(s32 arg0) {
-    s32 var_a0;
-    bool condition = false;
+    s32 anim;
+    s32 atLedge;
 
-    condition = ((g_Player.pl_vram_flag & 0x20) != condition);
+    atLedge = 0;
+    if (g_Player.pl_vram_flag & 0x20) {
+        atLedge = 1;
+    }
 
     PLAYER.velocityX = arg0;
     PLAYER.velocityY = 0;
     SetPlayerStep(Player_Stand);
     if (g_Player.unk48 != 0) {
         PLAYER.step_s = 2;
-        condition = 0;
+        atLedge = 0;
     }
     switch (g_Player.unk50) {
 
     case 9:
-        var_a0 = 4;
+        anim = 4;
         break;
     case 1:
-        var_a0 = 4;
-        if (PLAYER.ext.player.unkAC == 9) {
-            PLAYER.ext.player.unkAC = D_800ACF54[2 + condition];
+        anim = 4;
+        if (PLAYER.ext.player.anim == 9) {
+            PLAYER.ext.player.anim = D_800ACF54[2 + atLedge];
             return;
         }
-        if (PLAYER.ext.player.unkAC == 7) {
-            var_a0 = 0;
+        if (PLAYER.ext.player.anim == 7) {
+            anim = 0;
         }
         break;
     case 3:
     case 4:
-        var_a0 = 6;
+        anim = 6;
         if (abs(PLAYER.velocityX) > FIX(2.5)) {
-            var_a0 = 4;
+            anim = 4;
         }
         break;
     default:
-        var_a0 = 8;
+        anim = 8;
         break;
     }
-    var_a0 += condition;
-    func_8010DA48(D_800ACF54[var_a0]);
+    anim += atLedge;
+    SetPlayerAnim(D_800ACF54[anim]);
 }
 
 void func_8010E6AC(s32 arg0) {
-    bool condition = false;
+    bool atLedge;
 
-    condition = ((g_Player.pl_vram_flag & 0x20) != condition);
+    atLedge = 0;
+    if (g_Player.pl_vram_flag & 0x20) {
+        atLedge = 1;
+    }
+
     SetSpeedX(0x18000);
     PLAYER.velocityY = 0;
     SetPlayerStep(Player_Walk);
 
     if (arg0 != 0) {
-        if (PLAYER.ext.generic.unkAC != 0xD) {
-            func_8010DA48(0xD);
+        if (PLAYER.ext.player.anim != 0xD) {
+            SetPlayerAnim(0xD);
         }
     } else {
-        func_8010DA48(7);
+        SetPlayerAnim(7);
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x500, 1), 0);
     }
 
     if (g_Player.unk4C != 0) {
-        PLAYER.ext.generic.unkAC = 9;
+        PLAYER.ext.player.anim = 9;
     }
 
-    if ((PLAYER.ext.generic.unkAC == 7) && (condition)) {
+    if ((PLAYER.ext.player.anim == 7) && atLedge) {
         PLAYER.animFrameIdx = 1;
     }
 
@@ -583,7 +589,7 @@ void func_8010E7AC(void) {
     SetPlayerStep(Player_Fall);
 
     if (g_Player.unk50 != 1) {
-        func_8010DA48(0x1C);
+        SetPlayerAnim(0x1C);
     }
 
     PLAYER.velocityY = 0x20000;
@@ -604,11 +610,11 @@ void func_8010E83C(s32 arg0) {
         func_8010E7AC();
         return;
     } else if (func_8010E27C() != 0) {
-        func_8010DA48(0x1A);
+        SetPlayerAnim(0x1A);
         SetSpeedX(0x18000);
         g_Player.unk44 = 0;
     } else {
-        func_8010DA48(0x16);
+        SetPlayerAnim(0x16);
         PLAYER.velocityX = 0;
         g_Player.unk44 = 4;
     }
@@ -629,7 +635,7 @@ void func_8010E83C(s32 arg0) {
 
 void func_8010E940(void) {
     g_Player.unk44 |= 0x21;
-    func_8010DA48(0x20);
+    SetPlayerAnim(0x20);
     PLAYER.step_s = 0;
     PLAYER.velocityY = -0x44000;
     if (g_Player.unk72 != 0) {
@@ -654,7 +660,7 @@ void DoGravityJump(void) {
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 2), 0);
     SetPlayerStep(Player_HighJump);
     PLAYER.velocityY = FIX(-12);
-    func_8010DA48(0x21);
+    SetPlayerAnim(0x21);
     g_Player.unk4A = 0;
 }
 
@@ -698,15 +704,15 @@ s32 func_8010EADC(s16 arg0, s16 arg1) {
 s32 func_8010EB5C(void) {
     SubweaponDef subWpn;
     s16 subWpnId;
-    s32 var_s0;
-    s32 faker;
+    s32 atLedge;
+    u8 anim;
 
-    var_s0 = 0;
+    atLedge = 0;
     if (!(g_Player.padPressed & PAD_UP)) {
         return 1;
     }
     if (g_Player.pl_vram_flag & 0x20) {
-        var_s0 = 1;
+        atLedge = 1;
     }
     subWpnId = func_800FE3C4(&subWpn, 0, false);
 
@@ -727,9 +733,9 @@ s32 func_8010EB5C(void) {
         g_CurrentEntity, FACTORY(0, subWpn.blueprintNum), subWpnId << 9);
     g_Player.D_80072F00[10] = 4;
     if (PLAYER.step_s < 64) {
-        faker = subWpn.unkA;
+        anim = subWpn.anim;
         if (PLAYER.step == 0) {
-            func_8010DA48(faker + var_s0);
+            SetPlayerAnim(anim + atLedge);
         }
         func_8010EA54(8);
     }
@@ -772,11 +778,11 @@ s32 CheckChainLimit(s32 itemId, s32 handId) {
     return 0;
 }
 
-void func_8010ED54(u8 arg0) {
+void func_8010ED54(u8 anim) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SwordWarp);
-    func_8010DA48(arg0);
+    SetPlayerAnim(anim);
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1400, 61), 0);
     g_Player.unk48 = 0;
 }
@@ -786,18 +792,22 @@ bool func_8010EDB8(void) {
     Equipment sp10;
     Entity* ent;
     Equipment* equipped_item;
-    s16 var_s2; // Related to animations?
+    s16 var_s2; // mixed between anim and equip index
     u16 equipped_id;
     u16 hand;
-    s16 var_s5; // Related to animations?
+    s16 animVariant;
     s32 attBtnsPressed;
     bool var_s7; // Triggers on some kind of special move spell
     s32 i;
-    bool condition = false;
+    s32 atLedge;
 
     var_s7 = 0;
     attBtnsPressed = g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE);
-    condition = ((g_Player.pl_vram_flag & 0x20) != condition);
+
+    atLedge = 0;
+    if (g_Player.pl_vram_flag & 0x20) {
+        atLedge = 1;
+    }
 
     if (attBtnsPressed != 0 && func_8010EB5C() == 0) {
         return 1;
@@ -980,16 +990,16 @@ block_45:
                 switch (PLAYER.step) {
                 case 0:
                 case 1:
-                    func_8010DA48(0xB5);
+                    SetPlayerAnim(0xB5);
                     PLAYER.step = 0;
                     break;
                 case 2:
-                    func_8010DA48(0xB6);
+                    SetPlayerAnim(0xB6);
                     PLAYER.step = 2;
                     break;
                 case 3:
                 case 4:
-                    func_8010DA48(0xB7);
+                    SetPlayerAnim(0xB7);
                     PLAYER.step = 4;
                     break;
                 }
@@ -1052,7 +1062,7 @@ block_45:
         PlaySfx(0x6EF);
         goto block_98;
     case 27: // Estoc
-        var_s5 = condition;
+        animVariant = atLedge;
         func_8010E27C();
         SetSpeedX(FIX(4));
         PLAYER.velocityX >>= 1;
@@ -1063,7 +1073,7 @@ block_45:
         } else {
             PLAYER.step = 4;
         }
-        func_8010DA48(var_s2 + var_s5);
+        SetPlayerAnim(var_s2 + animVariant);
         g_Player.unk46 = equipped_item->unk11 - 0x7FFF;
         g_Player.unk54 = equipped_item->lockDuration;
         PLAYER.step_s = equipped_item->unk11 + 0x40;
@@ -1110,35 +1120,35 @@ block_45:
         case 1:
             g_CurrentEntity->velocityX >>= 1;
             PLAYER.step = 0;
-            var_s5 = condition;
+            animVariant = atLedge;
             break;
         case 2:
-            var_s5 = 2;
+            animVariant = 2;
             if (g_Player.padPressed & (PAD_RIGHT | PAD_LEFT)) {
-                var_s5 = 3;
+                animVariant = 3;
             }
             if (g_Player.unk72 == 0 && PLAYER.step_s == 2) {
                 PLAYER.step = 0;
-                var_s5 = condition;
+                animVariant = atLedge;
             }
             break;
         case 3:
         case 4:
-            var_s5 = 4;
+            animVariant = 4;
             if (PLAYER.velocityY > 0) {
-                var_s5 = 5;
+                animVariant = 5;
                 if (equipped_item->unk11 == 0) {
                     if (g_Player.padPressed & (PAD_RIGHT | PAD_LEFT) &&
                         g_Player.padPressed & PAD_DOWN) {
-                        var_s5 = 6;
+                        animVariant = 6;
                     }
                 } else if (g_Player.padPressed & PAD_DOWN) {
-                    var_s5 = 6;
+                    animVariant = 6;
                 }
             }
             break;
         }
-        func_8010DA48(var_s2 + var_s5);
+        SetPlayerAnim(var_s2 + animVariant);
         g_Player.unk46 = equipped_item->unk11 - 0x7FFF;
         g_Player.unk54 = equipped_item->lockDuration;
         PLAYER.step_s = equipped_item->unk11 + 0x40;
@@ -1149,7 +1159,7 @@ block_45:
         if (step >= 0) {
             if (step < 3) {
                 g_CurrentEntity->velocityX >>= 1;
-                func_8010DA48(var_s2 + condition);
+                SetPlayerAnim(var_s2 + atLedge);
                 g_Player.unk46 = equipped_item->unk11 - 0x7FFF;
                 g_Player.unk54 = equipped_item->lockDuration;
                 PLAYER.step = 0;
@@ -1164,11 +1174,11 @@ block_45:
         switch (PLAYER.step) {
         case 0:
             PLAYER.step_s = 2;
-            func_8010DA48(var_s2 + condition);
+            SetPlayerAnim(var_s2 + atLedge);
             break;
         case 2:
             PLAYER.step_s = 0;
-            func_8010DA48(var_s2 + 2);
+            SetPlayerAnim(var_s2 + 2);
             break;
         case 1:
         case 3:
@@ -1186,15 +1196,15 @@ block_45:
             var_s2 = equipped_item->playerAnim;
             switch (PLAYER.step) {
             case 0:
-                func_8010DA48(var_s2 + condition);
+                SetPlayerAnim(var_s2 + atLedge);
                 break;
             case 2:
-                var_s5 = 2;
+                animVariant = 2;
                 if (g_Player.unk72 == 0 && PLAYER.step_s == 2) {
-                    var_s5 = condition;
+                    animVariant = atLedge;
                     SetPlayerStep(Player_Stand);
                 }
-                func_8010DA48(var_s2 + var_s5);
+                SetPlayerAnim(var_s2 + animVariant);
             case 1:
             case 3:
             case 4:
@@ -1206,7 +1216,7 @@ block_45:
         if (PLAYER.step_s < 0x40) {
             var_s2 = equipped_item->playerAnim;
             if (PLAYER.step == 0) {
-                func_8010DA48(var_s2 + condition);
+                SetPlayerAnim(var_s2 + atLedge);
             }
         }
         break;
@@ -1237,7 +1247,7 @@ void func_8010FB68(void) { // Related to Dark Metamorphosis
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SpellDarkMetamorphosis);
     func_8010E3E0();
-    func_8010DA48(0xBA);
+    SetPlayerAnim(0xBA);
     PlaySfx(NA_SE_VO_AL_DARK_METAMORPHOSIS);
     PlaySfx(NA_SE_PL_MP_GAUGE);
     g_Player.D_80072F00[11] =
@@ -1252,7 +1262,7 @@ void func_8010FBF4(void) { // Related to Soul Steal spell
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SpellSoulSteal);
     func_8010E3E0();
-    func_8010DA48(0xDA);
+    SetPlayerAnim(0xDA);
     PlaySfx(NA_SE_VO_AL_SOUL_STEAL);
     func_80118C28(0xC);
     g_Player.D_80072F00[12] = 4;
@@ -1264,7 +1274,7 @@ void func_8010FC50(void) {
     SetPlayerStep(Player_SpellSummonSpirit);
     func_8010E3E0();
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 117), 0);
-    func_8010DA48(0xF0);
+    SetPlayerAnim(0xF0);
     PlaySfx(NA_SE_VO_AL_PUNCH);
     g_Player.D_80072F00[12] = 4;
 }
@@ -1275,7 +1285,7 @@ void func_8010FCB8(void) {
     SetPlayerStep(Player_SpellTetraSpirit);
     func_8010E3E0();
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x100, 117), 0);
-    func_8010DA48(0xF1);
+    SetPlayerAnim(0xF1);
     PlaySfx(NA_SE_VO_AL_PUNCH);
     g_Player.D_80072F00[12] = 4;
 }
@@ -1285,7 +1295,7 @@ void func_8010FD24(void) {
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SpellSwordBrothers);
     func_8010E3E0();
-    func_8010DA48(0xF1);
+    SetPlayerAnim(0xF1);
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1700, 40), 0);
     g_Player.D_80072F00[12] = 4;
 }
@@ -1295,7 +1305,7 @@ void func_8010FD88(void) {
     PLAYER.step_s = 3;
     SetSpeedX(0xFFFC8000);
     g_CurrentEntity->velocityY = 0;
-    func_8010DA48(0xDB);
+    SetPlayerAnim(0xDB);
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
     g_Player.unk46 = 0;
     PlaySfx(NA_SE_AL_BACKSLIDE);
@@ -1440,7 +1450,7 @@ bool func_8010FDF8(s32 branchFlags) {
         return 1;
     }
 
-    if (branchFlags & 0x40000 && PLAYER.ext.generic.unkAC != 0xDB) {
+    if (branchFlags & 0x40000 && PLAYER.ext.player.anim != 0xDB) {
         if (g_Player.unk46 & 0x7FFF) {
             tempTriangle = g_Player.padPressed & PAD_TRIANGLE;
         } else {
