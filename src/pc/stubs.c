@@ -421,7 +421,6 @@ s32 D_800B091C;
 s32 D_800B0920;
 PlayerOvl g_PlOvl = {0};
 u8** g_PlOvlAluBatSpritesheet[1] = {0};
-u8* g_PlOvlSpritesheet[99] = {0};
 
 // sound bss
 s16 g_SoundCommandRingBufferReadPos;

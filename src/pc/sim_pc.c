@@ -141,6 +141,7 @@ void LoadStageTileset(u8* pTilesetData, size_t len, s32 y) {
 
 void InitStageDummy(Overlay* o);
 void InitStageSel(Overlay* o);
+void InitPlayerArc(FileLoad* file);
 void InitPlayerRic(void);
 void func_80131EBC(const char* str, s16 arg1);
 s32 LoadFileSimToMem(SimKind kind) {
@@ -260,6 +261,9 @@ bool LoadFilePc(FileLoad* file, SimFile* sim) {
         LoadStageTileset(sim->addr, file->length, 0x100);
         LoadImage(&g_Vram.D_800ACD98, D_800A04CC);
         break;
+    case 99:
+        InitPlayerArc(file);
+        break;
     default:
         g_SimFile = sim;
         if (LoadFileSimToMem(sim->kind) < 0) {
@@ -292,6 +296,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             break;
         case 4:
             sim.path = "BIN/ARC_F.BIN";
+            sim.kind = 99;
             break;
         case 5:
             InitPlayerRic();
@@ -392,7 +397,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
     }
 
     snprintf(buf, sizeof(buf), "disks/us/%s", sim.path);
-    INFOF("open %s", buf);
+    DEBUGF("about to load %s", buf);
     if (!FileUseContent(LoadFilePc, buf, &sim)) {
         ERRORF("failed to load '%s'", buf);
         D_800A04EC = 0;

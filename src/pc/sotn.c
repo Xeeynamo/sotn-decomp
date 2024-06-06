@@ -78,6 +78,7 @@ s32 func_800EA5E4(u32);
 void LoadGfxAsync(s32 gfxId);
 void PlaySfx(s16 sfxId);
 void func_800EA538(s32 arg0);
+void func_800EA5AC(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
 bool func_80131F68(void);
 u16* func_80106A28(u32 arg0, u16 kind);
 void PlayAnimation(s8* frameProps, AnimationFrame** frames);
@@ -138,7 +139,7 @@ bool InitGame(void) {
     api.PlaySfx = PlaySfx;
     api.func_800EDB58 = NULL;
     api.func_800EA538 = func_800EA538;
-    api.g_pfn_800EA5AC = NULL;
+    api.g_pfn_800EA5AC = func_800EA5AC;
     api.func_801027C4 = NULL;
     api.func_800EB758 = NULL;
     api.CreateEntFactoryFromEntity = NULL;

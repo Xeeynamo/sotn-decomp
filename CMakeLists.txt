@@ -35,6 +35,7 @@ set(SOURCE_FILES_PC
     src/pc/pc.c
     src/pc/str.c
     src/pc/sim_pc.c
+    src/pc/pl_arc.c
     src/pc/pl_ric.c
     src/pc/stages/stage_loader.c
     src/pc/stages/stage_dummy.c
