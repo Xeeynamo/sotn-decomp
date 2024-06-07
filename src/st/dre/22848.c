@@ -173,6 +173,9 @@ void Entity3DHouseSpawner(Entity* self) {
             CreateEntityFromCurrentEntity(E_ID_BACKGROUND_HOUSE, newEntity);
             newEntity->posX.i.hi = *dataPtr++ - g_Tilemap.scrollX.i.hi;
             newEntity->posY.i.hi = *dataPtr++ - g_Tilemap.scrollY.i.hi;
+            // Params is either 0 or 1. In-game, there are 3 houses in
+            // a row, and behind them 2 more houses, which are rotated 90 deg.
+            // This likely controls the rotation.
             newEntity->params = *dataPtr++;
         }
         self->step++;
@@ -233,6 +236,7 @@ void Entity3DBackgroundHouse(Entity* self) {
         SetGeomOffset(128, 192);
         // this is a 7-by-X array, so params picks a set of 7 values
         houseData = &D_801815CC;
+        // Params is 0 or 1. 0 if house is straight, 1 if rotated 90 degree.
         houseData += 7 * self->params;
         rot.vx = 0;
         rot.vy = *houseData++;
