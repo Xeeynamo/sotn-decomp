@@ -16,7 +16,7 @@ options:
   undefined_syms_auto_path:  config/undefined_syms_auto.pspeu.stwrp.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
-  migrate_rodata_to_functions: no
+  migrate_rodata_to_functions: yes
   asm_jtbl_label_macro: jlabel
   symbol_name_format : psp_$VRAM
   nonmatchings_path: psp
@@ -151,6 +151,9 @@ segments:
       - [0x14440, data] # D_psp_0924BAC0
       - [0x14450, data] # D_psp_0924BAD0
       - [0x14460, data] # D_psp_0924BAE0
-      - [0x14480, data] # rodata?
+      - [0x14480, .rodata, wrp_psp/e_red_door]
+      - [0x14498, .rodata, wrp_psp/e_collect]
+      - [0x144D0, .rodata, wrp_psp/e_misc]
+      - [0x144F8, .rodata, wrp_psp/warp]
       - {type: bss, vram: 0x924BC00}
   - [0x14580]
