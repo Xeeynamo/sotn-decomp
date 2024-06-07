@@ -63,7 +63,6 @@ segments:
       - [0xD1B8, c, wrp/e_breakable]
       - [0xD338, c, wrp/st_debug]
       - [0xD6A8, c, wrp_psp/warp]
-      - [0xE980, data] # D_psp_09246000
       - [0xEA00, .data, wrp_psp/wrp_data_EA00] # g_eRedDoorUV
       - [0xEAD0, data] # D_psp_09246150
       - [0xEB00, data] # D_psp_09246180
