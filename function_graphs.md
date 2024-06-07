@@ -959,7 +959,7 @@
 - [✅ DestroyCurrentEntity](function_calls/dre.DestroyCurrentEntity.svg?raw=1)
 - [✅ DestroyEntitiesFromIndex](function_calls/dre.DestroyEntitiesFromIndex.svg?raw=1)
 - [✅ DestroyEntity](function_calls/dre.DestroyEntity.svg?raw=1)
-- [❌ Entity3DBackgroundHouse](function_calls/dre.Entity3DBackgroundHouse.svg?raw=1)
+- [✅ Entity3DBackgroundHouse](function_calls/dre.Entity3DBackgroundHouse.svg?raw=1)
 - [✅ Entity3DHouseSpawner](function_calls/dre.Entity3DHouseSpawner.svg?raw=1)
 - [✅ EntityBackgroundClouds](function_calls/dre.EntityBackgroundClouds.svg?raw=1)
 - [✅ EntityBigRedFireball](function_calls/dre.EntityBigRedFireball.svg?raw=1)

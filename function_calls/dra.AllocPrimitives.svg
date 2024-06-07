@@ -1012,7 +1012,7 @@
 <g id="node63" class="node">
 <title>dre.Entity3DBackgroundHouse</title>
 <g id="a_node63"><a xlink:href="dre.Entity3DBackgroundHouse.svg" xlink:title="dre.Entity3DBackgroundHouse">
-<ellipse fill="red" stroke="black" cx="15937.34" cy="-378" rx="155.97" ry="18"/>
+<ellipse fill="green" stroke="black" cx="15937.34" cy="-378" rx="155.97" ry="18"/>
 <text text-anchor="middle" x="15937.34" y="-374.3" font-family="Times,serif" font-size="14.00">dre.Entity3DBackgroundHouse</text>
 </a>
 </g>
