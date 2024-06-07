@@ -248,7 +248,7 @@ void Entity3DBackgroundHouse(Entity* self) {
         TransMatrix(&m, &trans);
         SetRotMatrix(&m);
         SetTransMatrix(&m);
-        vertices = D_80181544;
+        vertices = &D_80181544[0][0];
         scratchpad = SPAD(0);
         for (i = 0; i < 6; i++) {
             RotTransPers3(vertices[0], vertices[1], vertices[2], &scratchpad[0],
