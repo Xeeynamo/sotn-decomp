@@ -65,8 +65,70 @@ Primitive* func_801A2848(Primitive* prim, u8* arg1, u16* arg2) {
     return prim->next;
 }
 
-Primitive* func_801A2A58(Primitive* prim, u8* model, u16* arg2);
-INCLUDE_ASM("st/dre/nonmatchings/22848", func_801A2A58);
+Primitive* func_801A2A58(Primitive* prim, u8* model, u16* arg2) {
+    Point16 points[4];
+    s32 clipper;
+    s16 avg1;
+    s16 avg2;
+    s16 avg3;
+    s16 avg4;
+    u16 clut;
+
+    LOW(points[0].x) = *SPAD(model[0]);
+    LOW(points[1].x) = *SPAD(model[1]);
+    LOW(points[2].x) = *SPAD(model[2]);
+    clipper = NormalClip(LOW(points[0].x), LOW(points[1].x), LOW(points[2].x));
+    if (clipper <= 0) {
+        return prim;
+    }
+    LOW(points[3].x) = *SPAD(model[3]);
+
+    prim->tpage = 0xF;
+    clut = arg2[0];
+    prim->u0 = prim->u2 = 4;
+    prim->u1 = prim->u3 = 0x7C;
+    prim->v0 = prim->v1 = 3;
+    prim->v2 = prim->v3 = 0x9E;
+    LOW(prim->x0) = LOW(points[0].x);
+    LOW(prim->x2) = LOW(points[2].x);
+    avg1 = (points[0].x + points[1].x) / 2;
+    prim->clut = clut;
+    avg2 = (points[2].x + points[3].x) / 2;
+    prim->x1 = avg1;
+    prim->x3 = avg2;
+    avg3 = (points[0].y + points[1].y) / 2;
+    prim->y1 = avg3;
+    avg4 = (points[2].y + points[3].y) / 2;
+    prim->y3 = avg4;
+    prim->drawMode = DRAW_UNK02;
+    prim->drawMode |= DRAW_COLORS;
+    prim->r0 = prim->g0 = prim->b0 = arg2[2];
+    LOW(prim->r1) = LOW(prim->r0);
+    LOW(prim->r2) = LOW(prim->r0);
+    LOW(prim->r3) = LOW(prim->r0);
+    prim = prim->next;
+
+    prim->tpage = 0xF;
+    prim->clut = arg2[0];
+    prim->u0 = prim->u2 = 4;
+    prim->u1 = prim->u3 = 0x7C;
+    prim->v0 = prim->v1 = 3;
+    prim->v2 = prim->v3 = 0x9E;
+    LOW(prim->x1) = LOW(points[1].x);
+    LOW(prim->x3) = LOW(points[3].x);
+    prim->x0 = avg1;
+    prim->x2 = avg2;
+    prim->y0 = avg3;
+    prim->y2 = avg4;
+    prim->drawMode = DRAW_UNK02;
+    prim->drawMode |= DRAW_COLORS;
+    prim->r0 = prim->g0 = prim->b0 = arg2[2];
+    LOW(prim->r1) = LOW(prim->r0);
+    LOW(prim->r2) = LOW(prim->r0);
+    LOW(prim->r3) = LOW(prim->r0);
+    prim = prim->next;
+    return prim;
+}
 
 Primitive* func_801A2C9C(Primitive* prim, u8* model, u16* arg2) {
     long* spad;
