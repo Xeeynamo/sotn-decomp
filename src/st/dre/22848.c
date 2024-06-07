@@ -221,13 +221,13 @@ void Entity3DBackgroundHouse(Entity* self) {
         self->ext.bghouse.unk80 = 0x80;
         self->ext.bghouse.unk82 = 0x80;
         self->ext.bghouse.unk84 = 0x80;
-        return;
+        break;
     case 1:
         // surprised this isn't just if abs(posX) > 0x200
         if (self->posX.i.hi > 0x200 || self->posX.i.hi < -0x200) {
             for (prim = self->ext.bghouse.prim; prim != NULL;
                  prim = prim->next) {
-                prim->drawMode = 8;
+                prim->drawMode = DRAW_HIDE;
             }
             return;
         }
@@ -235,7 +235,7 @@ void Entity3DBackgroundHouse(Entity* self) {
         SetGeomScreen(0x400);
         SetGeomOffset(128, 192);
         // this is a 7-by-X array, so params picks a set of 7 values
-        houseData = &D_801815CC;
+        houseData = D_801815CC;
         // Params is 0 or 1. 0 if house is straight, 1 if rotated 90 degree.
         houseData += 7 * self->params;
         rot.vx = 0;
@@ -248,7 +248,7 @@ void Entity3DBackgroundHouse(Entity* self) {
         TransMatrix(&m, &trans);
         SetRotMatrix(&m);
         SetTransMatrix(&m);
-        vertices = &D_80181544[0][0];
+        vertices = D_80181544;
         scratchpad = SPAD(0);
         for (i = 0; i < 6; i++) {
             RotTransPers3(vertices[0], vertices[1], vertices[2], &scratchpad[0],
@@ -277,9 +277,9 @@ void Entity3DBackgroundHouse(Entity* self) {
             model += 20;
         }
         while (prim != NULL) {
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
-        return;
+        break;
     }
 }
