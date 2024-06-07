@@ -1,13 +1,10 @@
 #include "dre.h"
 
-extern SVECTOR* D_80181544[];
-extern u8 D_80181590[];
-extern u8 D_8018159C[];
-extern u8 D_801815A4[];
-extern u16 D_801815CC[];
-long RotTransPers3(SVECTOR* v0, SVECTOR* v1, SVECTOR* v2, long* sxy0,
-                   long* sxy1, long* sxy2, long* p, long* flag);
-long NormalClip(long sxy0, long sxy1, long sxy2);
+extern SVECTOR* D_80181544[][3];
+extern u8 D_80181590[][5];
+extern u8 D_8018159C[][4];
+extern u8 D_801815A4[][20];
+extern s16 D_801815CC[][7];
 
 Primitive* func_801A2848(Primitive* prim, u8* arg1, u16* arg2) {
     s32 pad0;
@@ -183,4 +180,102 @@ void Entity3DHouseSpawner(Entity* self) {
 }
 
 // 3D house object in background ID 0x16
-INCLUDE_ASM("st/dre/nonmatchings/22848", Entity3DBackgroundHouse);
+void Entity3DBackgroundHouse(Entity* self) {
+    SVECTOR rot;
+    VECTOR trans;
+    MATRIX m;
+    s32 unused1;
+    s32 unused2;
+    Primitive* prim;
+    s32 primIndex;
+    s16* houseData;
+    s32 i;
+    SVECTOR** vertices;
+    s32* scratchpad;
+    u8* model;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitGeneric);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
+        // Usually this can be if primIndex == -1 DestroyEntity but nope
+        if (primIndex != -1) {
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.bghouse.prim = prim;
+            for (; prim != NULL; prim = prim->next) {
+                prim->tpage = 0xF;
+                prim->priority = 0x58 - self->params;
+                prim->drawMode = DRAW_HIDE;
+            }
+
+        } else {
+            DestroyEntity(self);
+            return;
+        }
+        // These seem to be unused?
+        self->ext.bghouse.unk80 = 0x80;
+        self->ext.bghouse.unk82 = 0x80;
+        self->ext.bghouse.unk84 = 0x80;
+        return;
+    case 1:
+        // surprised this isn't just if abs(posX) > 0x200
+        if (self->posX.i.hi > 0x200 || self->posX.i.hi < -0x200) {
+            for (prim = self->ext.bghouse.prim; prim != NULL;
+                 prim = prim->next) {
+                prim->drawMode = 8;
+            }
+            return;
+        }
+        prim = self->ext.bghouse.prim; // unused
+        SetGeomScreen(0x400);
+        SetGeomOffset(128, 192);
+        // this is a 7-by-X array, so params picks a set of 7 values
+        houseData = &D_801815CC;
+        houseData += 7 * self->params;
+        rot.vx = 0;
+        rot.vy = *houseData++;
+        rot.vz = 0;
+        RotMatrix(&rot, &m);
+        trans.vx = self->posX.i.hi - 0x80;
+        trans.vy = self->posY.i.hi - 0xC0;
+        trans.vz = *houseData++ + 0x400;
+        TransMatrix(&m, &trans);
+        SetRotMatrix(&m);
+        SetTransMatrix(&m);
+        vertices = &D_80181544[0][0];
+        scratchpad = SPAD(0);
+        for (i = 0; i < 6; i++) {
+            RotTransPers3(vertices[0], vertices[1], vertices[2], &scratchpad[0],
+                          &scratchpad[1], &scratchpad[2], &unused1, &unused2);
+            vertices += 3;
+            scratchpad += 3;
+        }
+        RotTransPers(vertices[0], scratchpad, &unused1, &unused2);
+        prim = self->ext.bghouse.prim;
+        // Would be nice if all of these could just be D_whatever[i] but model
+        // seems needed
+        model = D_80181590;
+        for (i = 0; i < 2; i++) {
+            prim = func_801A2848(prim, model, houseData);
+            model += 5;
+        }
+        model = D_8018159C;
+        for (i = 0; i < 2; i++) {
+            prim = func_801A2A58(prim, model, houseData);
+            model += 4;
+        }
+        houseData += 3;
+        model = D_801815A4;
+        for (i = 0; i < 2; i++) {
+            prim = func_801A2C9C(prim, model, houseData);
+            model += 20;
+        }
+        while (prim != NULL) {
+            prim->drawMode = 8;
+            prim = prim->next;
+        }
+        return;
+    }
+}
