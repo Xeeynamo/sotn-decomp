@@ -8,7 +8,7 @@ u32 D_psp_092464F8[] = {0x0004FFFA, 0xFFF80000};
 
 s8 c_HeartPrizes[] = {1, 5};
 
-s32 D_80180EC4[] = {
+s32 g_ExplosionYVelocities[] = {
     /* EC4 */ 0xFFFF0000,
     /* EC8 */ 0xFFFE8000,
     /* ECC */ 0xFFFE8000,

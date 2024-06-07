@@ -212,36 +212,7 @@ void EntityPrizeDrop(Entity* self) {
     }
 }
 
-void EntityExplosion(Entity* entity) {
-    u32 temp_v0;
-
-    if (entity->step == 0) {
-        InitializeEntity(g_InitializeEntityData0);
-        entity->animSet = ANIMSET_DRA(2);
-        entity->animFrameIdx = 0;
-        entity->animFrameDuration = 0;
-        entity->drawMode = 0x30;
-
-        if (entity->params & 0xF0) {
-            entity->palette = 0x8195;
-            entity->drawMode = DRAW_TPAGE;
-        }
-
-        temp_v0 = entity->params & 0xFF00;
-        if (temp_v0) {
-            entity->zPriority = temp_v0 >> 8;
-        }
-
-        entity->params = entity->params & 0xF;
-        entity->velocityY = D_80180E18[entity->params];
-        return;
-    }
-
-    entity->posY.val += entity->velocityY;
-    if (!AnimateEntity((const u8*)D_80180EC4[entity->params], entity)) {
-        DestroyEntity(entity);
-    }
-}
+#include "../entity_explosion.h"
 
 void func_80194314(Entity* entity) {
     if (entity->step != 0) {

@@ -991,7 +991,7 @@ u16 D_80180EB8[] = {
 
 s8 c_HeartPrizes[] = {1, 5};
 
-s32 D_80180EC4[] = {
+s32 g_ExplosionYVelocities[] = {
     /* EC4 */ 0xFFFF0000,
     /* EC8 */ 0xFFFE8000,
     /* ECC */ 0xFFFE8000,
@@ -1024,7 +1024,7 @@ u8 D_80180F38[] = {
 };
 u8 D_80180F6C[] = {0x01, 0x43, 0x00, 0x00};
 
-u8* D_80180F70[] = {
+u8* g_ExplosionAnimations[] = {
     D_80180ED8, g_bigRedFireballAnim, D_80180F08, D_80180F38, D_80180F6C,
 };
 
