@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>rwrp.EntityExplosion</title>
 <g id="a_node4"><a xlink:href="rwrp.EntityExplosion.svg" xlink:title="rwrp.EntityExplosion">
-<ellipse fill="red" stroke="black" cx="638.54" cy="-198" rx="110.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="638.54" cy="-198" rx="110.48" ry="18"/>
 <text text-anchor="middle" x="638.54" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.EntityExplosion</text>
 </a>
 </g>

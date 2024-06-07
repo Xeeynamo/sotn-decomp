@@ -12,7 +12,7 @@
 <!-- rwrp.EntityExplosion -->
 <g id="node1" class="node">
 <title>rwrp.EntityExplosion</title>
-<ellipse fill="red" stroke="black" cx="326.34" cy="-198" rx="110.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="326.34" cy="-198" rx="110.48" ry="18"/>
 <text text-anchor="middle" x="326.34" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.EntityExplosion</text>
 </g>
 <!-- rwrp.AnimateEntity -->

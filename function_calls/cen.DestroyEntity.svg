@@ -259,7 +259,7 @@
 <g id="node17" class="node">
 <title>cen.EntityExplosion</title>
 <g id="a_node17"><a xlink:href="cen.EntityExplosion.svg" xlink:title="cen.EntityExplosion">
-<ellipse fill="red" stroke="black" cx="3883.24" cy="-378" rx="103.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="3883.24" cy="-378" rx="103.98" ry="18"/>
 <text text-anchor="middle" x="3883.24" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityExplosion</text>
 </a>
 </g>
