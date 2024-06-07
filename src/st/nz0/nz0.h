@@ -273,7 +273,6 @@ extern u32 D_80182488[];
 extern u16 D_80180C58[];
 extern u16 D_80180C58[];
 extern s16 D_801820E4[];
-extern u16 D_80180C04[];
 extern s32 D_80182504[];
 extern u8 D_80182524[];
 

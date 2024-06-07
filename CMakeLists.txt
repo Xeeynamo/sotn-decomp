@@ -35,8 +35,10 @@ set(SOURCE_FILES_PC
     src/pc/pc.c
     src/pc/str.c
     src/pc/sim_pc.c
+    src/pc/pl_arc.c
     src/pc/pl_ric.c
-    src/pc/stage_dummy.c
+    src/pc/stages/stage_loader.c
+    src/pc/stages/stage_dummy.c
 )
 
 if(WIN32)
@@ -112,7 +114,7 @@ set(SOURCE_FILES_DRA
 )
 
 set(SOURCE_FILES_STAGE_SEL
-    src/pc/stage_sel.c
+    src/pc/stages/stage_sel.c
     src/st/sel/banks.c
     src/st/sel/CD54.c
     src/st/sel/2C048.c

@@ -2,7 +2,7 @@
 
 #include "../check_coll_offsets.h"
 
-INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_80191490);
+#include "../entity_unkId13.h"
 
 #include "../entity_unkId14_spawner.h"
 

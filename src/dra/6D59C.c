@@ -858,7 +858,7 @@ bool func_8010EDB8(void) {
 
     if (equipped_item->unk17 == equipped_item->specialMove &&
         equipped_item->unk17 != 0) { // Literally just the Combat Knife
-        if (g_Entities[16].ext.ent16.unkAE == equipped_id) {
+        if (g_Entities[16].ext.entSlot16.unkAE == equipped_id) {
             var_s2 = equipped_item->unk17;
             equipped_item = &g_EquipDefs[var_s2];
             equipped_id = var_s2;
@@ -866,7 +866,7 @@ bool func_8010EDB8(void) {
                 goto block_32;
             }
             goto block_45;
-        } else if (g_Entities[16].ext.ent16.unkAE == equipped_item->unk17 &&
+        } else if (g_Entities[16].ext.entSlot16.unkAE == equipped_item->unk17 &&
                    CheckChainLimit(equipped_id, hand) >= 0) {
             goto block_45;
         }
