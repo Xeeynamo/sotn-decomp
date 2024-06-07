@@ -1,4 +1,4 @@
-#include "wrp.h"
+#include <stage.h>
 
 #ifndef VERSION_PSP
 u16 g_ESoulStealOrbAngles[] = {
@@ -32,6 +32,11 @@ void func_psp_0923B2F0(Entity*);
 
 #endif
 
-#include "../entity_soul_steal_orb.h"
+extern u16 g_InitializeData0[];
+extern u16 g_ESoulStealOrbAngles[];
+extern s16 g_ESoulStealOrbSprt[];
+extern u8 g_ESoulStealOrbAnim[];
 
-#include "../entity_enemy_blood.h"
+#include "entity_soul_steal_orb.h"
+
+#include "entity_enemy_blood.h"

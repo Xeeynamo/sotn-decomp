@@ -1,16 +1,16 @@
-#include "wrp.h"
+#include <stage.h>
 
 extern s16 D_80180A94[];
 
-#include "../../destroy_entity.h"
+#include "../destroy_entity.h"
 
 #if !defined(VERSION_PSP)
-#include "../../destroy_entities_from_index.h"
+#include "../destroy_entities_from_index.h"
 #endif
 
-#include "../prevent_entity_from_respawning.h"
+#include "prevent_entity_from_respawning.h"
 
-#include "../animate_entity.h"
+#include "animate_entity.h"
 
 #if !defined(VERSION_PSP)
 u8 func_8018B7E8(u8 frames[], Entity* self, u8 arg2) {
@@ -69,7 +69,7 @@ s32 GetDistanceToPlayerY(void) {
 }
 #endif
 
-#include "../get_side_to_player.h"
+#include "get_side_to_player.h"
 
 void MoveEntity(void) {
     g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;
@@ -231,10 +231,10 @@ u8 func_8018C004(s32 x, s32 y) {
     return func_8018BF84(diffX, diffY);
 }
 
-#include "../adjust_value_within_threshold.h"
+#include "adjust_value_within_threshold.h"
 #endif
 
-#include "../unk_entity_func0.h"
+#include "unk_entity_func0.h"
 
 #if !defined(VERSION_PSP)
 u16 func_8018C130(s16 x, s16 y) { return ratan2(y, x); }
@@ -420,7 +420,7 @@ void func_8018C55C(s16* hitSensors, s16 sensorCount) {
 }
 
 #if !defined(VERSION_PSP)
-#include "../get_player_collision_with.h"
+#include "get_player_collision_with.h"
 #endif
 
-#include "../replace_breakable_with_item_drop.h"
+#include "replace_breakable_with_item_drop.h"

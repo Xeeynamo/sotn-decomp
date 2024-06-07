@@ -1,4 +1,4 @@
-#include "wrp.h"
+#include <stage.h>
 
 extern LayoutEntity* D_80180310[];
 extern u16 D_80180DC4[];
@@ -8,6 +8,7 @@ extern u8* D_80180E58[];
 extern u16 D_80180EB8[];
 extern u16 g_ItemIconSlots[];
 extern u16 UNK_Invincibility0[];
+extern u16 g_InitializeData0[];
 
 void func_8018CAB0(void) {
     s32 temp_v1;
@@ -70,9 +71,9 @@ void func_8018CB34(u16 arg0) {
     }
 }
 
-#include "../collect_heart.h"
+#include "collect_heart.h"
 
-#include "../collect_gold.h"
+#include "collect_gold.h"
 
 void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;
@@ -107,7 +108,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
     DestroyEntity(g_CurrentEntity);
 }
 
-#include "../collect_heart_vessel.h"
+#include "collect_heart_vessel.h"
 
 void CollectLifeVessel(void) {
     g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
@@ -336,9 +337,9 @@ void EntityPrizeDrop(Entity* self) {
 
 extern u16 g_InitializeEntityData0[];
 
-#include "../entity_explosion.h"
+#include "entity_explosion.h"
 
-#include "../blink_item.h"
+#include "blink_item.h"
 
 void EntityEquipItemDrop(Entity* self) {
     u16 itemId = self->params & 0x7FFF;

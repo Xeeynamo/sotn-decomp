@@ -408,10 +408,10 @@ extern u8 g_bigRedFireballAnim[];
 u16 D_8018105C[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8};
 #include "../entity_big_red_fireball.h"
 
-INCLUDE_ASM("st/wrp/nonmatchings/e_misc", func_801907EC);
+INCLUDE_ASM("st/wrp/psx/wrp/e_misc", func_801907EC);
 
 u16 D_8018107C[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8, 0, 0};
-INCLUDE_ASM("st/wrp/nonmatchings/e_misc", func_80190DCC);
+INCLUDE_ASM("st/wrp/psx/wrp/e_misc", func_80190DCC);
 
 #include "../clut_lerp.h"
 

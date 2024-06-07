@@ -1,4 +1,4 @@
-#include "wrp.h"
+#include <stage.h>
 
 extern ObjInit2 D_801804E0[];
 extern u16 g_eInitGeneric2[];

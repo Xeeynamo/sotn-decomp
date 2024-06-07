@@ -1,4 +1,4 @@
-#include "wrp.h"
+#include <stage.h>
 #include <sfx.h>
 
 extern u16 g_eBreakableInit[];

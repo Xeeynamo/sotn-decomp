@@ -267,7 +267,7 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
             path_matcher: "st/np3".to_string(),
         },
         SrcAsmPair {
-            asm_dir: String::from("../../asm/us/st/nz0/nonmatchings/"),
+            asm_dir: String::from("../../asm/us/st/nz0/psx/nz0/"),
             src_dir: String::from("../../src/st/nz0/"),
             overlay_name: String::from("NZ0"),
             include_asm: get_all_include_asm("../../src/st/nz0/"),
@@ -295,7 +295,7 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
             path_matcher: "st/st0".to_string(),
         },
         SrcAsmPair {
-            asm_dir: String::from("../../asm/us/st/wrp/nonmatchings/"),
+            asm_dir: String::from("../../asm/us/st/wrp/psx/wrp/"),
             src_dir: String::from("../../src/st/wrp/"),
             overlay_name: String::from("WRP"),
             include_asm: get_all_include_asm("../../src/st/wrp/"),

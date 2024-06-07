@@ -1,4 +1,4 @@
-#include "wrp.h"
+#include <stage.h>
 
 #if !defined(VERSION_PSP)
 void BottomCornerText(u8* str, u8 lower_left) {

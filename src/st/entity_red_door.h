@@ -4,6 +4,7 @@
 
 extern u8 g_eRedDoorUV[3][8];
 extern u16 g_eRedDoorTiles[2][8];
+extern u16 g_eInitGeneric2[];
 void EntityRedDoor(Entity* self) {
     Primitive* prim;
     s32 i;

@@ -6,7 +6,7 @@ options:
   target_path:  disks/us/ST/WRP/WRP.BIN
   asm_path:     asm/us/st/wrp
   asset_path:   assets/st/wrp
-  src_path:     src/st/wrp
+  src_path:     src/st
   ld_script_path: build/us/stwrp.ld
   compiler:     GCC
   symbol_addrs_path:
@@ -18,6 +18,7 @@ options:
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
   asm_jtbl_label_macro: jlabel
+  nonmatchings_path: psx
   extensions_path: tools/splat_ext
   section_order:
     - ".data"
@@ -31,10 +32,10 @@ segments:
     vram:  0x80180000
     subalign: 4
     subsegments:
-      - [0x0, .data, header]
+      - [0x0, .data, wrp/header]
       - [0xB8, layers, rooms]
-      - [0x1B8, .data, 6FD0]
-      - [0xF84, .data, e_misc]
+      - [0x1B8, .data, wrp/6FD0]
+      - [0xF84, .data, wrp/e_misc]
       - [0xFE8, .data, e_particles]
       - [0x1120, .data, e_room_fg]
       - [0x11AC, roomdef, g_Rooms]
@@ -72,19 +73,19 @@ segments:
       - [0x5D78, raw, D_80185D78]
       - [0x6D78, tiledef, D_80186D78]
       - [0x6D88, animset, D_80186D88]
-      - [0x6E30, .rodata, 6FD0]
-      - [0x6E70, .rodata, warp] # EntityWarpRoom
-      - [0x6E90, .rodata, warp] # EntityWarpSmallRocks
+      - [0x6E30, .rodata, wrp/6FD0]
+      - [0x6E70, .rodata, wrp/warp] # EntityWarpRoom
+      - [0x6E90, .rodata, wrp/warp] # EntityWarpSmallRocks
       - [0x6EA8, .rodata, e_red_door] # EntityRedDoor
       - [0x6EC0, rodata] # CollectGold
       - [0x6F10, .rodata, st_common]
       - [0x6F30, .rodata, e_collect] # EntityEquipItemDrop
-      - [0x6F48, .rodata, e_misc]
+      - [0x6F48, .rodata, wrp/e_misc]
       - [0x6F94, .rodata, e_stage_name] # EntityStageNamePopup
       - [0x6FC8, rodata]
       - [0x6FD0, c, st_debug]
       - [0x726C, c, e_breakable]
-      - [0x73A0, c, warp]
+      - [0x73A0, c, wrp/warp]
       - [0x81E8, c, st_update]
       - [0x861C, c, collision]
       - [0x9DD8, c, create_entity]
@@ -92,7 +93,7 @@ segments:
       - [0xB600, c, st_common]
       - [0xCAB0, c, e_collect]
       - [0xE01C, c, blit_char]
-      - [0xE2CC, c, e_misc]
+      - [0xE2CC, c, wrp/e_misc]
       - [0x117BC, c, e_stage_name]
       - [0x12610, c, e_particles]
       - [0x12E54, c, e_room_fg]

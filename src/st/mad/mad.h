@@ -10,27 +10,7 @@
 
 #include "stage.h"
 
-typedef enum {
-    E_NONE,
-    E_BREAKABLE,
-    E_EXPLOSION,
-    E_PRIZE_DROP,
-    E_NUMERIC_DAMAGE,
-    E_RED_DOOR,
-    E_INTENSE_EXPLOSION,
-    E_SOUL_STEAL_ORB,
-    E_ROOM_FOREGROUND,
-    E_STAGE_NAME_POPUP,
-    E_EQUIP_ITEM_DROP,
-    E_RELIC_ORB,
-    E_HEART_DROP,
-    E_ENEMY_BLOOD,
-    E_DUMMY_0E,
-    E_DUMMY_0F,
-    E_DUMMY_10,
-    E_ID_14 = 0x14,
-    E_ID_15
-} EntityIDs;
+typedef enum { E_SHARED_END = E_DUMMY_10, E_ID_14 = 0x14, E_ID_15 } EntityIDs;
 
 void CreateEntitiesToTheRight(s16);
 void CreateEntitiesToTheLeft(s16);

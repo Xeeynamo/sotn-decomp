@@ -1,4 +1,4 @@
-#include "wrp.h"
+#include <stage.h>
 
 #if !defined(VERSION_PSP)
 u8 D_80181120[] = {0x40, 0x01, 0xFF, 0x00};
@@ -20,6 +20,7 @@ extern ObjInit2 D_80181134[];
 
 #endif
 
+extern u16 g_eInitGeneric2[];
 void EntityRoomForeground(Entity* entity) {
     ObjInit2* objInit = &D_80181134[entity->params];
 

@@ -6,7 +6,7 @@ options:
   target_path:  disks/us/ST/NZ0/NZ0.BIN
   asm_path:     asm/us/st/nz0
   asset_path:   assets/st/nz0
-  src_path:     src/st/nz0
+  src_path:     src/st
   ld_script_path: build/us/stnz0.ld
   compiler:     GCC
   symbol_addrs_path:
@@ -18,6 +18,7 @@ options:
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
   asm_jtbl_label_macro: jlabel
+  nonmatchings_path: psx
   extensions_path: tools/splat_ext
   section_order:
     - ".data"
@@ -36,7 +37,7 @@ segments:
       - [0x47C, data]
       - [0x18C0, data]
       - [0x1DD0, data]
-      - [0x1E68, .data, entity_relic_orb]
+      - [0x1E68, .data, nz0/entity_relic_orb]
       - [0x1ECC, data]
       - [0x20A0, data]
       - [0x20B0, data]
@@ -80,51 +81,52 @@ segments:
       - [0x2065C, tilelayout, D_801A065C]
       - [0x2085C, tilelayout, D_801A085C]
       - [0x20A5C, data]
-      - [0x305A4, .rodata, 30958] # func_801B3C38
+      - [0x305A4, .rodata, nz0/30958] # func_801B3C38
       - [0x305B8, rodata]
-      - [0x305E8, .rodata, 33FCC] # EntityBossRoomBlock
-      - [0x305FC, .rodata, 33FCC] # EntitySlogra
+      - [0x305E8, .rodata, nz0/33FCC] # EntityBossRoomBlock
+      - [0x305FC, .rodata, nz0/33FCC] # EntitySlogra
       - [0x30618, rodata] # EntityGaibon .rodata, 33FCC
-      - [0x3063C, .rodata, 36DE4] # func_801B7034
+      - [0x3063C, .rodata, nz0/36DE4] # func_801B7034
       - [0x3064C, rodata]
-      - [0x30728, .rodata, 39908] # EntityRedDoor
+      - [0x30728, .rodata, nz0/39908] # EntityRedDoor
       - [0x30740, rodata]
-      - [0x30790, .rodata, 3E30C]
-      - [0x307B0, .rodata, 3E30C]
-      - [0x307C8, .rodata, entity_relic_orb]
-      - [0x30800, .rodata, entity_message_box]
-      - [0x30814, .rodata, 43708] # EntityBoneScimitar
-      - [0x30834, .rodata, 43F9C] # EntityAxeKnight
-      - [0x30858, .rodata, 44EAC] # EntityBloodyZombie
-      - [0x30880, .rodata, 45F2C] # EntitySkeleton
-      - [0x3089C, .rodata, 4672C] # EntitySpittleBone
-      - [0x308C8, .rodata, 47048] # EntitySubWeaponContainer
-      - [0x308D4, .rodata, 47958] # EntityBloodSkeleton
+      - [0x30790, .rodata, nz0/3E30C]
+      - [0x307B0, .rodata, nz0/3E30C]
+      - [0x307C8, .rodata, nz0/entity_relic_orb]
+      - [0x30800, .rodata, nz0/entity_message_box]
+      - [0x30814, .rodata, nz0/43708] # EntityBoneScimitar
+      - [0x30834, .rodata, nz0/43F9C] # EntityAxeKnight
+      - [0x30858, .rodata, nz0/44EAC] # EntityBloodyZombie
+      - [0x30880, .rodata, nz0/45F2C] # EntitySkeleton
+      - [0x3089C, .rodata, nz0/4672C] # EntitySpittleBone
+      - [0x308C8, .rodata, nz0/47048] # EntitySubWeaponContainer
+      - [0x308D4, .rodata, nz0/47958] # EntityBloodSkeleton
       - [0x308E8, rodata]
-      - [0x30900, .rodata, 48ADC] # EntityStageNamePopup
+      - [0x30900, .rodata, nz0/48ADC] # EntityStageNamePopup
       - [0x30934, rodata]
-      - [0x30958, c]
-      - [0x33FCC, c] # Slogra & Gaibon Boss
-      - [0x36DE4, c]
-      - [0x394D4, c, random]
-      - [0x39504, c, update]
-      - [0x39800, c, update_stage_entities]
-      - [0x39908, c]
-      - [0x3E30C, c]
-      - [0x3F5B8, c, entity_relic_orb]
-      - [0x40088, c, entity_heart_drop]
-      - [0x401B0, c, entity_message_box]
-      - [0x4070C, c]
-      - [0x43708, c] # EntityBoneScimitar
-      - [0x43F9C, c] # EntityAxeKnight
-      - [0x44EAC, c] # EntityBloodyZombie
-      - [0x45F2C, c] # EntitySkeleton
-      - [0x4672C, c] # EntitySpittleBone
-      - [0x47048, c] # EntitySubWeaponContainer
-      - [0x47958, c] # EntityBloodSkeleton
-      - [0x47CF0, c] # EntityMagicallySealedDoor
-      - [0x48ADC, c] # EntityStageNamePopup
+      - [0x30958, c, nz0/30958]
+      - [0x33FCC, c, nz0/33FCC] # Slogra & Gaibon Boss
+      - [0x36DE4, c, nz0/36DE4]
+      - [0x394D4, c, nz0/random]
+      - [0x39504, c, nz0/update]
+      - [0x39800, c, nz0/update_stage_entities]
+      - [0x39908, c, nz0/39908]
+      - [0x3E30C, c, nz0/3E30C]
+      - [0x3F5B8, c, nz0/entity_relic_orb]
+      - [0x40088, c, nz0/entity_heart_drop]
+      - [0x401B0, c, nz0/entity_message_box]
+      - [0x4070C, c, nz0/4070C]
+      - [0x433D8, c, popup]
+      - [0x43708, c, nz0/43708] # EntityBoneScimitar
+      - [0x43F9C, c, nz0/43F9C] # EntityAxeKnight
+      - [0x44EAC, c, nz0/44EAC] # EntityBloodyZombie
+      - [0x45F2C, c, nz0/45F2C] # EntitySkeleton
+      - [0x4672C, c, nz0/4672C] # EntitySpittleBone
+      - [0x47048, c, nz0/47048] # EntitySubWeaponContainer
+      - [0x47958, c, nz0/47958] # EntityBloodSkeleton
+      - [0x47CF0, c, nz0/47CF0] # EntityMagicallySealedDoor
+      - [0x48ADC, c, nz0/48ADC] # EntityStageNamePopup
       - [0x49930, c, prim_helpers]
-      - [0x4A160, c]
+      - [0x4A160, c,nz0/4A160]
       - [0x4AA10, sbss]
   - [0x4B780]
