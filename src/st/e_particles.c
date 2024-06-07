@@ -33,9 +33,6 @@ void func_psp_0923B2F0(Entity*);
 #endif
 
 extern u16 g_InitializeData0[];
-extern u16 g_ESoulStealOrbAngles[];
-extern s16 g_ESoulStealOrbSprt[];
-extern u8 g_ESoulStealOrbAnim[];
 
 #include "entity_soul_steal_orb.h"
 
