@@ -220,4 +220,4 @@ INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_80192D4C);
 
 INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_80193644);
 
-#include "../entity_stage_name_popup.h"
+#include "../e_stage_name.h"

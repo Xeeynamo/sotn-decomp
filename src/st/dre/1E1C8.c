@@ -324,7 +324,7 @@ void func_801A046C(s16 sfxId) {
     }
 }
 
-#include "../entity_stage_name_popup.h"
+#include "../e_stage_name.h"
 
 #include "../entity_soul_steal_orb.h"
 

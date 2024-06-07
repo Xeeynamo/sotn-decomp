@@ -38,7 +38,9 @@ segments:
       - [0x1DD0, data]
       - [0x1E68, .data, entity_relic_orb]
       - [0x1ECC, data]
-      - [0x20A0, data]
+      - [0x1F80, .data, e_particles]
+      - [0x2000, .data, e_room_fg]
+      - [0x208C, data]
       - [0x20B0, data]
       - [0x2220, data]
       - [0x2600, data]
@@ -101,7 +103,7 @@ segments:
       - [0x308C8, .rodata, 47048] # EntitySubWeaponContainer
       - [0x308D4, .rodata, 47958] # EntityBloodSkeleton
       - [0x308E8, rodata]
-      - [0x30900, .rodata, 48ADC] # EntityStageNamePopup
+      - [0x30900, .rodata, e_stage_name] # EntityStageNamePopup
       - [0x30934, rodata]
       - [0x30958, c]
       - [0x33FCC, c, bossfight] # Slogra & Gaibon Boss
@@ -117,6 +119,9 @@ segments:
       - [0x40088, c, entity_heart_drop]
       - [0x401B0, c, entity_message_box]
       - [0x4070C, c]
+      - [0x42AA8, c, e_particles]
+      - [0x432EC, c, e_room_fg]
+      - [0x433d8, c, popup]
       - [0x43708, c] # EntityBoneScimitar
       - [0x43F9C, c] # EntityAxeKnight
       - [0x44EAC, c] # EntityBloodyZombie
@@ -125,7 +130,7 @@ segments:
       - [0x47048, c] # EntitySubWeaponContainer
       - [0x47958, c] # EntityBloodSkeleton
       - [0x47CF0, c] # EntityMagicallySealedDoor
-      - [0x48ADC, c] # EntityStageNamePopup
+      - [0x48ADC, c, e_stage_name] # EntityStageNamePopup
       - [0x49930, c, prim_helpers]
       - [0x4A160, c]
       - [0x4AA10, sbss]
