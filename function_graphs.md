@@ -1069,7 +1069,7 @@
 - [❌ func_8019FB74](function_calls/dre.func_8019FB74.svg?raw=1)
 - [✅ func_801A046C](function_calls/dre.func_801A046C.svg?raw=1)
 - [✅ func_801A2848](function_calls/dre.func_801A2848.svg?raw=1)
-- [❌ func_801A2A58](function_calls/dre.func_801A2A58.svg?raw=1)
+- [✅ func_801A2A58](function_calls/dre.func_801A2A58.svg?raw=1)
 - [✅ func_801A2C9C](function_calls/dre.func_801A2C9C.svg?raw=1)
 # main
 - [✅ AddPrim](function_calls/main.AddPrim.svg?raw=1)
