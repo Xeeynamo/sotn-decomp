@@ -12,7 +12,7 @@
 <!-- cen.EntityUnkId12 -->
 <g id="node1" class="node">
 <title>cen.EntityUnkId12</title>
-<ellipse fill="red" stroke="black" cx="219.24" cy="-198" rx="98.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="219.24" cy="-198" rx="98.58" ry="18"/>
 <text text-anchor="middle" x="219.24" y="-194.3" font-family="Times,serif" font-size="14.00">cen.EntityUnkId12</text>
 </g>
 <!-- cen.GetSideToPlayer -->

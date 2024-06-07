@@ -12,7 +12,7 @@
 <!-- cen.func_801990F8 -->
 <g id="node1" class="node">
 <title>cen.func_801990F8</title>
-<ellipse fill="red" stroke="black" cx="101.39" cy="-198" rx="101.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="101.39" cy="-198" rx="101.28" ry="18"/>
 <text text-anchor="middle" x="101.39" y="-194.3" font-family="Times,serif" font-size="14.00">cen.func_801990F8</text>
 </g>
 <!-- cen.DestroyEntity -->
