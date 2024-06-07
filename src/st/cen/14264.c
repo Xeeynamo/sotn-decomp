@@ -471,22 +471,10 @@ void CollectSubweapon(u16 subWeaponIdx) {
 
 #include "../collect_heart_vessel.h"
 
-void func_80195C0C(void) {
+void CollectLifeVessel(void) {
     g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
     g_api.func_800FE044(5, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
 
-void func_80195C5C(void) { DestroyEntity(g_CurrentEntity); }
-
-INCLUDE_ASM("st/cen/nonmatchings/14264", EntityPrizeDrop);
-
-#define MISSING_ANIMATE_ENTITY_PROTOTYPE
-#include "../entity_explosion.h"
-#undef MISSING_ANIMATE_ENTITY_PROTOTYPE
-
-#include "../blink_item.h"
-
-INCLUDE_ASM("st/cen/nonmatchings/14264", EntityEquipItemDrop);
-
-#include "../blit_char.h"
+void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
