@@ -12,7 +12,7 @@
 <!-- rwrp.EntityDamageDisplay -->
 <g id="node1" class="node">
 <title>rwrp.EntityDamageDisplay</title>
-<ellipse fill="red" stroke="black" cx="318.44" cy="-198" rx="137.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="318.44" cy="-198" rx="137.58" ry="18"/>
 <text text-anchor="middle" x="318.44" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.EntityDamageDisplay</text>
 </g>
 <!-- dra.AllocPrimitives -->
