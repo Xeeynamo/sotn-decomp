@@ -1,8 +1,3 @@
-/*
- * Overlay: NZ0
- * Enemy: Slogra & Gaibon Boss
- */
-
 #include "nz0.h"
 
 #define GAIBON self[8]
@@ -49,61 +44,6 @@ typedef enum {
     SLOGRA_DYING_EXPLODING,
     SLOGRA_DYING_END,
 } SlograDyingSubSteps;
-
-// DECOMP_ME_WIP EntityCloseBossRoom https://decomp.me/scratch/bqgN9 95.04 %
-// figuring out D_80181014 struct might help
-// trigger to stop music and close slogra/gaibon room
-INCLUDE_ASM("st/nz0/nonmatchings/33FCC", EntityCloseBossRoom);
-
-// blocks that move to close slogra/gaibon room
-void EntityBossRoomBlock(Entity* self) {
-    switch (self->step) {
-    case 0:
-        InitializeEntity(D_80180D00);
-        self->animCurFrame = 8;
-
-    case 1:
-        if (g_BossFlag & 1) {
-            self->ext.GS_Props.timer = 16;
-            self->step++;
-        }
-        break;
-
-    case 2:
-        if (self->params == 0) {
-            self->velocityX = FIX(1);
-        } else {
-            self->velocityX = FIX(-1);
-        }
-        MoveEntity();
-        GetPlayerCollisionWith(self, 8, 8, 5);
-        if (!(g_Timer & 3)) {
-            g_api.PlaySfx(0x608);
-        }
-        if (--self->ext.GS_Props.timer) {
-            break;
-        }
-        self->step++;
-        break;
-
-    case 3:
-        GetPlayerCollisionWith(self, 8, 8, 5);
-        if (g_BossFlag & BOSS_FLAG_DOORS_OPEN) {
-            self->step++;
-        }
-        break;
-
-    case 4:
-        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-        if (self->params != 0) {
-            self->velocityX = FIX(1);
-        } else {
-            self->velocityX = FIX(-1);
-        }
-        MoveEntity();
-        break;
-    }
-}
 
 s32 EntitySlograSpecialCollision(u16* unused) {
     /**
