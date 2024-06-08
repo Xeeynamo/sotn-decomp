@@ -32,6 +32,8 @@ segments:
     subalign: 2
     subsegments:
       - [0x0, data]
+      - [0x7E4, .data, collision]
+      - [0xBA4, data]
       - [0x10AC, .data, entity_relic_orb]
       - [0x1110, data]
       - [0x12D4, roomdef, g_Rooms]

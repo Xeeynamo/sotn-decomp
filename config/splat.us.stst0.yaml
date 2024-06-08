@@ -36,6 +36,8 @@ segments:
       - [0x770, data]
       - [0x990, data]
       - [0xAB0, data]
+      - [0x1618, .data, collision]
+      - [0x1978, data]
       - [0x2060, roomdef, g_Rooms]
       - [0x2084, data]
       #- [0x3D1C, cmp]

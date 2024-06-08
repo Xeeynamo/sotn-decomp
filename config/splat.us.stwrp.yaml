@@ -34,6 +34,8 @@ segments:
       - [0x0, .data, header]
       - [0xB8, layers, rooms]
       - [0x1B8, .data, 6FD0]
+      - [0x6BC, .data, collision]
+      - [0xA7C, .data, d_A7C]
       - [0xC94, .data, e_collect]
       - [0xF84, .data, e_misc]
       - [0xFE8, .data, e_particles]

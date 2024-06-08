@@ -43,6 +43,8 @@ segments:
       - [0xEA0, data]
       - [0x11F0, data]
       - [0x1B40, data]
+      - [0x1CEC, .data, collision]
+      - [0x20AC, data]
       - [0x25B4, .data, entity_relic_orb]
       - [0x2618, data]
       - [0x3180, data]

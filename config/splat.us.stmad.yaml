@@ -34,6 +34,8 @@ segments:
     subalign: 2
     subsegments:
       - [0x0, data]
+      - [0x6DC, .data, collision]
+      - [0x9D4, data]
       - [0xE40, data]
       - [0xEF8, .data, entity_relic_orb]
       - [0xF5C, data]

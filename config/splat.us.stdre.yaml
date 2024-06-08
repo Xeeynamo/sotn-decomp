@@ -39,6 +39,8 @@ segments:
       - [0x650, data]
       - [0x660, data]
       - [0x770, data]
+      - [0x9A8, .data, collision]
+      - [0xD68, data]
       - [0x1270, .data, entity_relic_orb]
       - [0x12D4, data]
       - [0x1498, roomdef, g_Rooms]
