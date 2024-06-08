@@ -1,6 +1,6 @@
 #include "rwrp.h"
 
-#include "../libstage.h"
+#include "../create_entity.h"
 
 bool EntityIsNearPlayer(Entity* self) {
     s16 distanceX;
