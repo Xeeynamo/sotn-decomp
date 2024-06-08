@@ -37,7 +37,8 @@ segments:
       - [0x1300, data]
       - [0x1520, data]
       - [0x1678, .data, collision]
-      - [0x1A38, data]
+      - [0x1A38, .data, e_red_door]
+      - [0x1A50, data]
       - [0x1F40, .data, entity_relic_orb]
       - [0x1FA4, data]
       - [0x22B0, data]
@@ -62,7 +63,7 @@ segments:
       - [0x31EBC, .rodata, 365FC] # func_801B65FC
       - [0x31ED0, .rodata, 36990] # EntitySlogra .rodata, 36990
       - [0x31EDC, rodata] # EntityGaibon .rodata, 36990
-      - [0x31F00, .rodata, 3ACAC] # EntityRedDoor
+      - [0x31F00, .rodata, e_red_door] # EntityRedDoor
       - [0x31F18, rodata]
       - [0x31F68, .rodata, 3DEF4]
       - [0x31FA0, .rodata, entity_relic_orb]
@@ -88,7 +89,9 @@ segments:
       - [0x390EC, c, update]
       - [0x393E8, c, update_stage_entities]
       - [0x394F0, c, collision]
-      - [0x3ACAC, c]
+      - [0x3ACAC, c, create_entity]
+      - [0x3B824, c, e_red_door]
+      - [0x3C4D4, c]
       - [0x3DEF4, c]
       - [0x3F1A0, c, entity_relic_orb]
       - [0x3FC70, c, entity_heart_drop]

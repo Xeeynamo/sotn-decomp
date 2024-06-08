@@ -35,7 +35,8 @@ segments:
       - [0x164, layers, rooms]
       - [0x47C, data]
       - [0x15A0, .data, collision]
-      - [0x1960, data]
+      - [0x1960, .data, e_red_door]
+      - [0x1978, data]
       - [0x1B78, .data, e_collect]
       - [0x1E68, .data, entity_relic_orb]
       - [0x1ECC, data]
@@ -90,7 +91,7 @@ segments:
       - [0x30618, .rodata, gaibon] # EntityGaibon .rodata, 33FCC
       - [0x3063C, .rodata, 36DE4] # func_801B7034
       - [0x3064C, rodata]
-      - [0x30728, .rodata, 3B0C4] # EntityRedDoor
+      - [0x30728, .rodata, e_red_door] # EntityRedDoor
       - [0x30740, .rodata, e_collect] # CollectGold text
       - [0x30790, .rodata, e_collect] # EntityPrizeDrop
       - [0x307B0, .rodata, e_collect] # EntityEquipItemDrop
@@ -115,7 +116,9 @@ segments:
       - [0x39504, c, update]
       - [0x39800, c, update_stage_entities]
       - [0x39908, c, collision]
-      - [0x3B0C4, c, 3B0C4]
+      - [0x3B0C4, c, create_entity]
+      - [0x3BC3C, c, e_red_door]
+      - [0x3C8EC, c, 3C8EC]
       - [0x3D848, c, e_collect]
       - [0x3F308, c, blit_char]
       - [0x3F5B8, c, entity_relic_orb]

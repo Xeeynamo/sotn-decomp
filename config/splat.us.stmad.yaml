@@ -35,7 +35,8 @@ segments:
     subsegments:
       - [0x0, data]
       - [0x6DC, .data, collision]
-      - [0x9D4, data]
+      - [0x9D4, .data, e_red_door]
+      - [0x9EC, data]
       - [0xE40, data]
       - [0xEF8, .data, entity_relic_orb]
       - [0xF5C, data]
@@ -67,7 +68,7 @@ segments:
       - [0x19A4, data]
       - [0x1D14, data]
       - [0xD794, rodata]
-      - [0xD7CC, .rodata, 10544] # EntityRedDoor
+      - [0xD7CC, .rodata, e_red_door] # EntityRedDoor
       - [0xD7E4, rodata]
       - [0xD83C, .rodata, 139E0]
       - [0xD85C, .rodata, 139E0] # EntityEquipItemDrop
@@ -78,7 +79,9 @@ segments:
       - [0xE994, c, update]
       - [0xEC90, c, CollectGold]
       - [0xEDB8, c, collision]
-      - [0x10544, c]
+      - [0x10544, c, create_entity]
+      - [0x110A8, c, e_red_door]
+      - [0x11D3C, c]
       - [0x139E0, c]
       - [0x149C0, c, entity_relic_orb]
       - [0x15520, c]

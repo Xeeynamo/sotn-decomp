@@ -37,7 +37,8 @@ segments:
       - [0x990, data]
       - [0xAB0, data]
       - [0x1618, .data, collision]
-      - [0x1978, data]
+      - [0x1978, .data, e_red_door]
+      - [0x1990, data]
       - [0x2060, roomdef, g_Rooms]
       - [0x2084, data]
       #- [0x3D1C, cmp]
@@ -60,7 +61,7 @@ segments:
       - [0x27BDC, .rodata, 2DAC8] # "can't get effect works!\n"
       - [0x27BFC, .rodata, 2DAC8] # func_801AF774
       - [0x27C1C, rodata]
-      - [0x27C6C, .rodata, 330E0] # EntityRedDoor
+      - [0x27C6C, .rodata, e_red_door] # EntityRedDoor
       - [0x27C84, rodata]
       - [0x27C8C, .rodata, 36358]
       - [0x27CAC, .rodata, 36358] # EntityEquipItemDrop
@@ -76,7 +77,9 @@ segments:
       - [0x3189C, c, update]
       - [0x31B98, c, update_stage_entities]
       - [0x31CA0, c, collision]
-      - [0x330E0, c]
+      - [0x330E0, c, create_entity]
+      - [0x33C58, c, e_red_door]
+      - [0x34908, c]
       - [0x36358, c]
       - [0x3D0C0, c, prim_helpers]
       - [0x3D8F0, c]

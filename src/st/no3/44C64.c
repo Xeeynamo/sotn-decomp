@@ -1,9 +1,5 @@
 #include "no3.h"
 
-#include "../libstage.h"
-
-#include "../entity_red_door.h"
-
 #include "../entity.h"
 
 u8 func_801C4E4C(u8 frames[], Entity* self, u8 arg2) {
