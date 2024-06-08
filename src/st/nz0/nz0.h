@@ -29,12 +29,21 @@ typedef enum {
     /* 0x32 */ E_ROTATE_SPITTLEBONE,
     /* 0x33 */ E_SPITTLEBONE_SPIT,
     /* 0x38 */ E_FIRE = 0x38,
-    /* 0x41 */ E_SLOGRA_SPEAR = 0x41,
-    /* 0x42 */ E_SLOGRA_SPEAR_PROJECTILE = 0x42,
-    /* 0x43 */ E_GAIBON = 0x43,
+    /* 0x3F */ E_BOSS_ROOM_BLOCK = 0x3F,
+    /* 0x40 */ E_SLOGRA,
+    /* 0x41 */ E_SLOGRA_SPEAR,
+    /* 0x42 */ E_SLOGRA_SPEAR_PROJECTILE,
+    /* 0x43 */ E_GAIBON,
     /* 0x45 */ E_GAIBON_SMALL_FIREBALL = 0x45,
-    /* 0x46 */ E_GAIBON_BIG_FIREBALL = 0x46,
+    /* 0x46 */ E_GAIBON_BIG_FIREBALL,
+    /* 0x49 */ E_LIFE_UP_SPAWN = 0x49
 } EntityIDs;
+
+#define BOSS_FLAG_DOORS_CLOSED (1 << 0)
+#define BOSS_FLAG_DOORS_OPEN (1 << 1)
+#define BOSS_FLAG_FIGHT_BEGIN (1 << 2)
+#define BOSS_FLAG_GAIBON_DEAD (1 << 3)
+#define BOSS_FLAG_SLOGRA_DEAD (1 << 4)
 
 void DestroyEntity(Entity* item);
 void func_8019B858(void);
@@ -128,7 +137,7 @@ extern u16 D_80180D24[];
 
 extern u16 D_80180D30[];
 extern u16 D_80180D36;
-extern s32 D_80181240;
+extern u16 D_80181240[];
 extern u8 D_80181250[];
 extern u8 D_80181264[];
 extern u8 D_80181298[];
@@ -139,8 +148,9 @@ extern u8 D_801812DC[];
 extern u8 D_801812F0[];
 extern u8 D_801812FC[];
 extern u8 D_80181304[];
-extern s32 D_80181310[];
+extern s8 D_80181310[];
 extern u8 D_80181340[];
+extern u16 D_80180D30[];
 
 // *** EntityGaibon properties END ***
 
@@ -169,6 +179,7 @@ extern const u8 D_80180F74[];
 extern u8 D_80180F88[];
 extern u16 D_80180F9C[];
 extern Unkstruct_80180FE0 D_80180FE0[];
+extern s16 D_80181014[];
 extern u32 g_randomNext;
 extern s8 c_HeartPrizes[];
 extern Entity* g_CurrentEntity;

@@ -1022,6 +1022,13 @@ typedef struct {
     s16 spawnTimer;
 } ET_SummonSpirit;
 
+typedef struct {
+    struct Primitive* prim;
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+} ET_3DBackgroundhouse;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1118,4 +1125,5 @@ typedef union { // offset=0x7C
     ET_Drop drop;
     ET_BigRedFireball bigredfireball;
     ET_SummonSpirit summonspirit;
+    ET_3DBackgroundhouse bghouse;
 } Ext;

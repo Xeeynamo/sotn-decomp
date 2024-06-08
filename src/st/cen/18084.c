@@ -14,7 +14,29 @@
 
 #include "../entity_olrox_drool.h"
 
-INCLUDE_ASM("st/cen/nonmatchings/18084", func_801988B0);
+bool func_801988B0(Point16* unk) {
+    Collider collider;
+
+    FallEntity();
+    g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;
+    g_CurrentEntity->posY.val += g_CurrentEntity->velocityY;
+
+    if (g_CurrentEntity->velocityY >= 0) {
+        s16 posX = g_CurrentEntity->posX.i.hi;
+        s16 posY = g_CurrentEntity->posY.i.hi;
+        posX += unk->x;
+        posY += unk->y;
+        g_api.CheckCollision(posX, posY, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            g_CurrentEntity->posY.i.hi += collider.unk18;
+            g_CurrentEntity->velocityY = -g_CurrentEntity->velocityY / 2;
+            if (g_CurrentEntity->velocityY > FIX(-1.0)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 u8 func_801989AC(s32 arg0) {
     Collider collider;
@@ -191,9 +213,54 @@ u8 func_801989AC(s32 arg0) {
 // ID 06
 #include "../entity_intense_explosion.h"
 
-INCLUDE_ASM("st/cen/nonmatchings/18084", func_8019902C);
+extern u8 D_80181174[];
 
-INCLUDE_ASM("st/cen/nonmatchings/18084", func_801990F8);
+void func_8019902C(Entity* entity) {
+    if (!entity->step) {
+        InitializeEntity(g_InitializeEntityData0);
+        entity->unk6C = 0xF0;
+        entity->rotX = 0x1A0;
+        entity->rotY = 0x1A0;
+        entity->animSet = ANIMSET_DRA(8);
+        entity->animCurFrame = 1;
+        entity->zPriority += 0x10;
+
+        if (entity->params != 0) {
+            entity->palette = entity->params;
+        } else {
+            entity->palette = 0x8160;
+        }
+
+        entity->step++;
+        return;
+    }
+
+    MoveEntity();
+
+    if (!AnimateEntity(D_80181174, entity)) {
+        DestroyEntity(entity);
+    }
+}
+
+void func_801990F8(u16 entityId, Entity* src, Entity* dst) {
+    DestroyEntity(dst);
+    dst->entityId = entityId;
+    dst->pfnUpdate = PfnEntityUpdates[entityId - 1];
+    dst->posX.i.hi = src->posX.i.hi;
+    dst->posY.i.hi = src->posY.i.hi;
+    dst->unk5A = src->unk5A;
+    dst->zPriority = src->zPriority;
+    dst->animSet = src->animSet;
+    dst->flags = FLAG_UNK_2000 | FLAG_UNK_01000000 | FLAG_UNK_04000000 |
+                 FLAG_UNK_08000000 | FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
+                 FLAG_DESTROY_IF_OUT_OF_CAMERA;
+
+    if (src->palette & 0x8000) {
+        dst->palette = src->hitEffect;
+    } else {
+        dst->palette = src->palette;
+    }
+}
 
 void func_801991C0(void) {
     Entity* entity;

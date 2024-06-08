@@ -81,10 +81,10 @@ segments:
       - [0x2085C, tilelayout, D_801A085C]
       - [0x20A5C, data]
       - [0x305A4, .rodata, 30958] # func_801B3C38
-      - [0x305B8, rodata]
-      - [0x305E8, .rodata, 33FCC] # EntityBossRoomBlock
-      - [0x305FC, .rodata, 33FCC] # EntitySlogra
-      - [0x30618, rodata] # EntityGaibon .rodata, 33FCC
+      - [0x305B8, .rodata, bossfight] # EntityBossFightManager
+      - [0x305E8, .rodata, bossfight] # EntityBossRoomBlock
+      - [0x305FC, .rodata, slogra] # EntitySlogra
+      - [0x30618, .rodata, gaibon] # EntityGaibon .rodata, 33FCC
       - [0x3063C, .rodata, 36DE4] # func_801B7034
       - [0x3064C, rodata]
       - [0x30728, .rodata, 39908] # EntityRedDoor
@@ -104,7 +104,9 @@ segments:
       - [0x30900, .rodata, 48ADC] # EntityStageNamePopup
       - [0x30934, rodata]
       - [0x30958, c]
-      - [0x33FCC, c] # Slogra & Gaibon Boss
+      - [0x33FCC, c, bossfight] # Slogra & Gaibon Boss
+      - [0x34690, c, slogra]
+      - [0x35778, c, gaibon]
       - [0x36DE4, c]
       - [0x394D4, c, random]
       - [0x39504, c, update]
