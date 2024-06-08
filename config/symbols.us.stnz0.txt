@@ -75,7 +75,6 @@ EntityDamageDisplay = 0x801BAA20;
 InitRoomEntities = 0x801BB920;
 UpdateRoomPosition = 0x801BBA98;
 CreateEntityFromCurrentEntity = 0x801BBB4C;
-CreateEntityFromEntity = 0x801BBBC0;
 EntityRedDoor = 0x801BBCB4;
 DestroyEntity = 0x801BC8EC;
 AnimateEntity = 0x801BCA1C;

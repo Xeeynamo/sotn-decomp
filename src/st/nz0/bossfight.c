@@ -15,7 +15,8 @@ void EntityBossFightManager(Entity* self) {
     FntPrint("boss_step %x\n", self->step);
     switch (self->step) {
     case 0:
-        bosses_defeated = g_api.TimeAttackController(TIMEATTACK_EVENT_SLOGRA_GAIBON_DEFEAT, TIMEATTACK_GET_RECORD);
+        bosses_defeated = g_api.TimeAttackController(
+            TIMEATTACK_EVENT_SLOGRA_GAIBON_DEFEAT, TIMEATTACK_GET_RECORD);
         if (bosses_defeated) {
             DestroyEntity(self);
             return;
@@ -24,10 +25,10 @@ void EntityBossFightManager(Entity* self) {
         g_BossFlag = 0;
         newEnt = self + 1;
         temp_s1 = &D_80181014[0];
-        for(i = 0; i < 12; i++, newEnt++, temp_s1+=3) {
+        for (i = 0; i < 12; i++, newEnt++, temp_s1 += 3) {
             CreateEntityFromCurrentEntity(E_BOSS_ROOM_BLOCK, newEnt);
             newEnt->params = temp_s1[2];
-            newEnt->posX.i.hi= temp_s1[0] - g_Tilemap.scrollX.i.hi;
+            newEnt->posX.i.hi = temp_s1[0] - g_Tilemap.scrollX.i.hi;
             newEnt->posY.i.hi = temp_s1[1] - g_Tilemap.scrollY.i.hi;
         }
         // This spawns Slogra and Gaibon! Note that they always spawn at slot
@@ -42,9 +43,9 @@ void EntityBossFightManager(Entity* self) {
         newEnt->posX.i.hi = 0x2A0 - g_Tilemap.scrollX.i.hi;
         newEnt->posY.i.hi = 0x160 - g_Tilemap.scrollY.i.hi;
         // fall through
-    case 1: //Detect whether player is in the room. If so, close the door.
+    case 1: // Detect whether player is in the room. If so, close the door.
         xPos = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
-        if (24 < xPos && xPos < 968){
+        if (24 < xPos && xPos < 968) {
             g_BossFlag |= BOSS_FLAG_DOORS_CLOSED;
             // Unknown sound
             g_api.PlaySfx(0x90);
@@ -52,19 +53,21 @@ void EntityBossFightManager(Entity* self) {
             self->step++;
         }
         break;
-    case 2: // Door is now closed. Wait for player to get far enough to start the fight.
+    case 2: // Door is now closed. Wait for player to get far enough to start
+            // the fight.
         xPos = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (0x220 < xPos && xPos < 0x340) {
             g_BossFlag |= BOSS_FLAG_FIGHT_BEGIN;
         }
-        if ((g_BossFlag & BOSS_FLAG_FIGHT_BEGIN)) {
-            g_api.TimeAttackController(TIMEATTACK_EVENT_SLOGRA_GAIBON_DEFEAT, TIMEATTACK_SET_VISITED);
+        if (g_BossFlag & BOSS_FLAG_FIGHT_BEGIN) {
+            g_api.TimeAttackController(
+                TIMEATTACK_EVENT_SLOGRA_GAIBON_DEFEAT, TIMEATTACK_SET_VISITED);
             D_80097928 = 1;
             D_80097910 = 0x31D;
             self->step++;
         }
         break;
-    case 3: //Fight is now active.
+    case 3: // Fight is now active.
         if (g_api.func_80131F68() == false) {
             D_80097928 = 0;
             g_api.PlaySfx(D_80097910);
@@ -72,9 +75,11 @@ void EntityBossFightManager(Entity* self) {
         }
         /* fallthrough */
     case 4:
-        //Wait for the fight to be over.
-        if ((g_BossFlag & BOSS_FLAG_GAIBON_DEAD) && (g_BossFlag & BOSS_FLAG_SLOGRA_DEAD)) {
-            g_api.TimeAttackController(TIMEATTACK_EVENT_SLOGRA_GAIBON_DEFEAT, TIMEATTACK_SET_RECORD);
+        // Wait for the fight to be over.
+        if ((g_BossFlag & BOSS_FLAG_GAIBON_DEAD) &&
+            (g_BossFlag & BOSS_FLAG_SLOGRA_DEAD)) {
+            g_api.TimeAttackController(
+                TIMEATTACK_EVENT_SLOGRA_GAIBON_DEFEAT, TIMEATTACK_SET_RECORD);
             if (g_api.func_80131F68() != false) {
                 g_api.PlaySfx(0x90);
             }
@@ -82,7 +87,7 @@ void EntityBossFightManager(Entity* self) {
             self->step++;
         }
         return;
-    case 5: //Fight is now over.
+    case 5: // Fight is now over.
         xPos = 0x80;
         newEntY = 0x180 - g_Tilemap.scrollY.i.hi;
         newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
@@ -93,7 +98,7 @@ void EntityBossFightManager(Entity* self) {
         newEnt->posX.i.hi = xPos;
         newEnt->posY.i.hi = newEntY;
         newEnt->params = 5;
-        g_BossFlag |= BOSS_FLAG_DOORS_OPEN; //Reopen the door
+        g_BossFlag |= BOSS_FLAG_DOORS_OPEN; // Reopen the door
         g_CastleFlags[132] = 1;
         D_80097928 = 1;
         D_80097910 = 0x32E;
@@ -130,7 +135,6 @@ void EntityBossFightManager(Entity* self) {
         break;
     }
 }
-
 
 // blocks that move to close slogra/gaibon room
 void EntityBossRoomBlock(Entity* self) {
