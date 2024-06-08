@@ -9,7 +9,7 @@ extern u_long* D_8D2DF50;
 
 // entity table to allocate new entities
 extern PfnEntityUpdate D_psp_09246E30[];
-extern Overlay D_psp_0924B960;
+extern Overlay g_StageOverlay;
 extern s32 D_psp_0924BC90;
 extern s32 D_psp_0924BC98;
 extern s32 D_psp_0924BCA0;
@@ -34,5 +34,5 @@ void func_psp_092447C0(void) {
     g_pStObjLayoutHorizontal = &D_8D2DE7C;
     D_08C6BC34 = (u_long*)&D_8D2DF50;
     func_892A018();
-    memcpy((u8*)&g_api, (u8*)&D_psp_0924B960, sizeof(Overlay));
+    memcpy((u8*)&g_api, (u8*)&g_StageOverlay, sizeof(Overlay));
 }
