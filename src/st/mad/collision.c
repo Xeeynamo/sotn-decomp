@@ -1,3 +1,5 @@
+#include <stage.h>
+
 extern u16 g_testCollEnemyLookup[];
 extern u8 g_testCollLuckCutoff[];
 extern u8 g_testColluCoords[];
@@ -7,10 +9,9 @@ extern u8 g_testColliFrames[10];
 extern u16 g_testCollPrizeTable[];
 extern u16 g_testCollRandTable;
 
+// Slightly different to other overlays. May be possible to
+//  de-duplicate with several #ifdef, but for now it's broken out.
 void HitDetection(void) {
-#ifdef VERSION_PC
-    u8 sp[SP_LEN];
-#endif
     s32 temp_rand;
     Entity* otherEntity;
     Primitive* prim;
@@ -32,6 +33,8 @@ void HitDetection(void) {
     s8 uselessVar;
     Entity* iterEnt1;
     u8 miscVar2;
+
+    u32 flaggy_flags;
 
     scratchpad_1 = (s32*)SP(0);
     scratchpad_2 = (s32*)SP(0xC0);
@@ -172,8 +175,7 @@ void HitDetection(void) {
                     hitboxCheck2 += hitboxCheck1;
                     hitboxCheck1 *= 2;
                     if (hitboxCheck1 >= hitboxCheck2) {
-                        if ((iterEnt1->attack) &&
-                            (iterEnt2->hitPoints < iterEnt1->attack)) {
+                        if (iterEnt1->attack) {
                             iterEnt2->ext.player.unkB8 = iterEnt1;
                             if (miscVar1 & 8) {
                                 iterEnt2->hitFlags = 3;
@@ -213,7 +215,7 @@ void HitDetection(void) {
                 if (miscVar1) {
                     miscVar1--;
                     miscVar3 = 1 << (miscVar1 & 7);
-                    g_CastleFlags[(miscVar1 >> 3) + 0x190] |= miscVar3;
+                    g_CastleFlags[(miscVar1 >> 3) + 0x11C] |= miscVar3;
                 }
                 if ((g_Status.relics[RELIC_FAERIE_SCROLL] & 2) &&
                     !(entFrom5C->flags & FLAG_UNK_01000000)) {
@@ -319,15 +321,10 @@ void HitDetection(void) {
                         miscVar1 &= 0x3FFF;
                         if (entFrom5C->flags & FLAG_UNK_10) {
                             // Different on PSP vs PSX
-                            if (g_PlayableCharacter != PLAYER_ALUCARD) {
-                                // normally this is Alucard shouting "Dark
-                                // Metamorphosis" but obviously if not playing
-                                // as Alucard, this won't match
-                                g_api.PlaySfx(SFX_RICHTER_ATTACK_HIT);
-                            } else if (iterEnt2->hitEffect & 0x80) {
-                                g_api.PlaySfx(SE_WEAPON_STAB);
+                            if (iterEnt2->hitEffect & 0x80) {
+                                g_api.PlaySfx(SE_UNK_MAD_630);
                             } else {
-                                g_api.PlaySfx(SE_WEAPON_WHACK);
+                                g_api.PlaySfx(0x6DB);
                             }
                         }
                         if (entFrom5C->hitPoints != 0x7FFE) {
@@ -397,11 +394,9 @@ void HitDetection(void) {
                 miscVar3 = entFrom5C->flags & (FLAG_UNK_800 | FLAG_UNK_400);
                 if (miscVar3) {
                     if ((rand() & 0xFF) <
-                        g_api.func_800FF460(
-                            g_testCollLuckCutoff[miscVar3 >> 0xA])) {
+                        g_testCollLuckCutoff[miscVar3 >> 0xA]) {
                         otherEntity =
                             AllocEntity(&g_Entities[160], &g_Entities[192]);
-                        miscVar1 = 0;
                         if (otherEntity != NULL) {
                             if (hitboxCheck2 == 5) {
                                 // This little block is weird, especially since
@@ -418,24 +413,26 @@ void HitDetection(void) {
                                 }
 
                             } else {
-                                miscVar3 = g_api.func_800FF494(sp3C);
-                                if (miscVar3 & 0x40) {
+                                miscVar3 = rand() & 0xFF;
+                                if (miscVar3 < sp3C->rareItemDropRate) {
                                     miscVar3 = sp3C->rareItemId;
-                                    // Paranthropus check: Drops turquoise if
-                                    // game not beaten. Otherwise ring of Varda
-                                    if ((miscVar3 == 0x173) &&
-                                        (!g_IsTimeAttackUnlocked)) {
-                                        miscVar3 = 0x16A;
-                                    } else {
-                                        miscVar1 = g_testCollEnemyLookup
-                                            [entFrom5C->enemyId];
+                                    miscVar1 =
+                                        g_testCollEnemyLookup[entFrom5C
+                                                                  ->enemyId];
+                                    if (miscVar1) {
+                                        miscVar1--;
+                                        flaggy_flags = (1 << (miscVar1 & 7));
+                                        g_CastleFlags[(miscVar1 >> 3) +
+                                                      0x13C] |= flaggy_flags;
                                     }
-                                } else if (miscVar3 & 0x20) {
-                                    miscVar3 = sp3C->uncommonItemId;
                                 } else {
-                                    // select a prize from the table. This
-                                    // covers heart, money, etc drops.
-                                    miscVar3 = g_testCollPrizeTable[miscVar3];
+                                    miscVar3 -= sp3C->rareItemDropRate;
+                                    if (miscVar3 < sp3C->uncommonItemDropRate) {
+                                        miscVar3 = sp3C->uncommonItemId;
+                                    } else {
+                                        miscVar3 =
+                                            g_testCollPrizeTable[rand() & 0x1F];
+                                    }
                                 }
                             }
                             if (miscVar3 >= 0x80) {
@@ -448,7 +445,6 @@ void HitDetection(void) {
                                 CreateEntityFromEntity(
                                     3, iterEnt1, otherEntity);
                             }
-                            otherEntity->ext.drop.unk94 = miscVar1;
                             otherEntity->params = miscVar3;
                             // item pops up in the air a bit when spawned
                             otherEntity->velocityY = FIX(-3.5);
@@ -523,3 +519,4 @@ void HitDetection(void) {
         }
     }
 }
+#include "../entity_damage_display.h"

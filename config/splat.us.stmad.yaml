@@ -65,7 +65,7 @@ segments:
       - [0x19A4, data]
       - [0x1D14, data]
       - [0xD794, rodata]
-      - [0xD7CC, .rodata, EDB8] # EntityRedDoor
+      - [0xD7CC, .rodata, 10544] # EntityRedDoor
       - [0xD7E4, rodata]
       - [0xD83C, .rodata, 139E0]
       - [0xD85C, .rodata, 139E0] # EntityEquipItemDrop
@@ -75,7 +75,8 @@ segments:
       - [0xE964, c, random]
       - [0xE994, c, update]
       - [0xEC90, c, CollectGold]
-      - [0xEDB8, c]
+      - [0xEDB8, c, collision]
+      - [0x10544, c]
       - [0x139E0, c]
       - [0x149C0, c, entity_relic_orb]
       - [0x15520, c]

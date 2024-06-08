@@ -1,7 +1,4 @@
 #include "cen.h"
-#include "../hit_detection.h"
-
-#include "../entity_damage_display.h"
 
 #include "../libstage.h"
 
@@ -486,7 +483,7 @@ void func_80195C0C(void) {
 
 void func_80195C5C(void) { DestroyEntity(g_CurrentEntity); }
 
-INCLUDE_ASM("st/cen/nonmatchings/11280", EntityPrizeDrop);
+INCLUDE_ASM("st/cen/nonmatchings/12A3C", EntityPrizeDrop);
 
 #define MISSING_ANIMATE_ENTITY_PROTOTYPE
 #include "../entity_explosion.h"
@@ -494,6 +491,6 @@ INCLUDE_ASM("st/cen/nonmatchings/11280", EntityPrizeDrop);
 
 #include "../blink_item.h"
 
-INCLUDE_ASM("st/cen/nonmatchings/11280", EntityEquipItemDrop);
+INCLUDE_ASM("st/cen/nonmatchings/12A3C", EntityEquipItemDrop);
 
 #include "../blit_char.h"

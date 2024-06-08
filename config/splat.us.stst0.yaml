@@ -58,7 +58,7 @@ segments:
       - [0x27BDC, .rodata, 2DAC8] # "can't get effect works!\n"
       - [0x27BFC, .rodata, 2DAC8] # func_801AF774
       - [0x27C1C, rodata]
-      - [0x27C6C, .rodata, 31CA0] # EntityRedDoor
+      - [0x27C6C, .rodata, 330E0] # EntityRedDoor
       - [0x27C84, rodata]
       - [0x27C8C, .rodata, 36358]
       - [0x27CAC, .rodata, 36358] # EntityEquipItemDrop
@@ -73,7 +73,8 @@ segments:
       - [0x3186C, c, random]
       - [0x3189C, c, update]
       - [0x31B98, c, update_stage_entities]
-      - [0x31CA0, c]
+      - [0x31CA0, c, collision]
+      - [0x330E0, c]
       - [0x36358, c]
       - [0x3D0C0, c, prim_helpers]
       - [0x3D8F0, c]

@@ -60,7 +60,7 @@ segments:
       - [0x31EBC, .rodata, 365FC] # func_801B65FC
       - [0x31ED0, .rodata, 36990] # EntitySlogra .rodata, 36990
       - [0x31EDC, rodata] # EntityGaibon .rodata, 36990
-      - [0x31F00, .rodata, 394F0] # EntityRedDoor
+      - [0x31F00, .rodata, 3ACAC] # EntityRedDoor
       - [0x31F18, rodata]
       - [0x31F68, .rodata, 3DEF4]
       - [0x31FA0, .rodata, entity_relic_orb]
@@ -85,7 +85,8 @@ segments:
       - [0x390BC, c, random]
       - [0x390EC, c, update]
       - [0x393E8, c, update_stage_entities]
-      - [0x394F0, c]
+      - [0x394F0, c, collision]
+      - [0x3ACAC, c]
       - [0x3DEF4, c]
       - [0x3F1A0, c, entity_relic_orb]
       - [0x3FC70, c, entity_heart_drop]

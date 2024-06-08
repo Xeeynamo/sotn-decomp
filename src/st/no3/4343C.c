@@ -1,14 +1,12 @@
-#include "nz0.h"
-#include "../hit_detection.h"
+#include "no3.h"
 
-#include "../entity_damage_display.h"
 #include "../libstage.h"
 
 #include "../entity_red_door.h"
 
 #include "../entity.h"
 
-u8 func_801BCAD4(u8 frames[], Entity* self, u8 arg2) {
+u8 func_801C4E4C(u8 frames[], Entity* self, u8 arg2) {
     u16 animFrameStart = self->animFrameIdx * 2;
     u8* var_s1 = &frames[animFrameStart];
     s16 var_a1 = 0;
@@ -61,7 +59,7 @@ s32 GetDistanceToPlayerY(void) {
 
 #include "../get_side_to_player.h"
 
-void MoveEntity() {
+void MoveEntity(void) {
     g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;
     g_CurrentEntity->posY.val += g_CurrentEntity->velocityY;
 }
@@ -72,7 +70,7 @@ void FallEntity(void) {
     }
 }
 
-s32 func_801BCCFC(u16* sensors) {
+s32 func_801C5074(u16* sensors) {
     Collider col;
     Collider colBack;
     s16 x;
@@ -125,7 +123,7 @@ s32 func_801BCCFC(u16* sensors) {
     return 0;
 }
 
-s32 func_801BCF74(s16* posX) {
+s32 func_801C52EC(s16* posX) {
     Collider collider;
     s16 temp2;
     s16 temp4;
@@ -182,7 +180,6 @@ s32 func_801BCF74(s16* posX) {
 
 Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
-
     while (current < end) {
         if (current->entityId == E_NONE) {
             DestroyEntity(current);
@@ -194,40 +191,36 @@ Entity* AllocEntity(Entity* start, Entity* end) {
     return NULL;
 }
 
-s32 func_801BD1BC(u8 arg0, s16 arg1) { return D_80181978[arg0] * arg1; }
+s32 func_801C5534(u8 arg0, s16 arg1) { return D_801820C4[arg0] * arg1; }
 
-s16 func_801BD1E8(u8 arg0) { return D_80181978[arg0]; } // Unique
+s16 func_801C5560(u8 arg0) { return D_801820C4[arg0]; }
 
-void func_801BD204(s32 arg0, s16 arg1) {
-    g_CurrentEntity->velocityX = func_801BD1BC(arg0, arg1);
-    g_CurrentEntity->velocityY = func_801BD1BC(arg0 - 0x40, arg1);
+void func_801C557C(s32 arg0, s16 arg1) {
+    g_CurrentEntity->velocityX = func_801C5534(arg0, arg1);
+    g_CurrentEntity->velocityY = func_801C5534(arg0 - 0x40, arg1);
 }
 
-u8 func_801BD270(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 0x40; }
-
-u8 func_8019AD64(ObjInit2* arg0, ObjInit2* arg1) {
-    u16 x, y;
-
-    x = arg1->zPriority - arg0->zPriority;
-    y = arg1->palette - arg0->palette;
-
-    return func_801BD270(x, y);
+u8 func_801C55E8(s16 arg0, s16 arg1) {
+    return (ratan2(arg1, arg0) >> 4) + 0x40;
 }
 
-u8 func_801BD2F0(s16 arg0, s16 arg1) {
-    s16 x, y;
+u8 func_801C5620(Entity* arg0, Entity* arg1) {
+    s16 a = arg1->posX.i.hi - arg0->posX.i.hi;
+    s16 b = arg1->posY.i.hi - arg0->posY.i.hi;
+    return func_801C55E8(a, b);
+}
 
-    x = arg0 - g_CurrentEntity->posX.i.hi;
-    y = arg1 - g_CurrentEntity->posY.i.hi;
-
-    return func_801BD270(x, y);
+u8 func_801C5668(s32 arg0, s32 arg1) {
+    s16 a = (arg0 - (u16)g_CurrentEntity->posX.i.hi);
+    s16 b = (arg1 - (u16)g_CurrentEntity->posY.i.hi);
+    return func_801C55E8(a, b);
 }
 
 #include "../adjust_value_within_threshold.h"
 
 #include "../unk_entity_func0.h"
 
-u16 func_801BD41C(s16 x, s16 y) { return ratan2(y, x); }
+u16 func_801C5794(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
 u16 GetAngleBetweenEntities(Entity* a, Entity* b) {
     s32 diffX = b->posX.i.hi - a->posX.i.hi;
@@ -235,14 +228,13 @@ u16 GetAngleBetweenEntities(Entity* a, Entity* b) {
     return ratan2(diffY, diffX);
 }
 
-u16 func_801BD484(s32 x, s32 y) {
+u16 func_801C57FC(s32 x, s32 y) {
     s16 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
     s16 diffY = y - (u16)g_CurrentEntity->posY.i.hi;
     return ratan2(diffY, diffX);
 }
 
-// TODO(sestren): Reconcile this GetNormalizedAngle with the one in 3E30C.c
-u16 GetNormalizedAngle(u16 arg0, s16 arg1, s16 arg2) {
+u16 GetNormalizedAngle(u16 arg0, u16 arg1, u16 arg2) {
     u16 var_v0 = arg1;
     u16 temp_a2 = arg2 - arg1;
     u16 var_v0_2;
@@ -273,59 +265,34 @@ void SetStep(u8 step) {
     g_CurrentEntity->animFrameDuration = 0;
 }
 
-void SetSubStep(u8 step_s) {
+void func_801C58C4(u8 step_s) {
     g_CurrentEntity->step_s = step_s;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
 
-void EntityExplosionSpawn(u16 arg0, u16 sfxId) {
-    if (sfxId != 0) {
-        func_801C29B0(sfxId);
-    }
+void EntityExplosionSpawn(u16 arg0, u16 arg1) {
+    Entity* entity;
 
+    if (arg1 != 0) {
+        func_801CAD28(arg1);
+    }
     if (arg0 == 0xFF) {
         DestroyEntity(g_CurrentEntity);
         return;
     }
 
-    g_CurrentEntity->entityId = E_EXPLOSION;
-    g_CurrentEntity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
-    g_CurrentEntity->params = arg0;
-    g_CurrentEntity->animCurFrame = 0;
-    g_CurrentEntity->drawFlags = 0;
+    entity = g_CurrentEntity;
+    entity->drawFlags = 0;
+    entity->entityId = 2;
+    entity->pfnUpdate = EntityExplosion;
+    entity->params = arg0;
+    entity->animCurFrame = 0;
     g_CurrentEntity->step = 0;
     g_CurrentEntity->step_s = 0;
 }
 
-void InitializeEntity(u16 arg0[]) {
-    u16 enemyId;
-    EnemyDef* enemyDef;
-
-    g_CurrentEntity->animSet = *arg0++;
-    g_CurrentEntity->animCurFrame = *arg0++;
-    g_CurrentEntity->unk5A = *arg0++;
-    g_CurrentEntity->palette = *arg0++;
-
-    enemyId = *arg0++;
-    g_CurrentEntity->enemyId = enemyId;
-    enemyDef = &g_api.enemyDefs[enemyId];
-    g_CurrentEntity->hitPoints = enemyDef->hitPoints;
-    g_CurrentEntity->attack = enemyDef->attack;
-    g_CurrentEntity->attackElement = enemyDef->attackElement;
-    g_CurrentEntity->hitboxState = enemyDef->hitboxState;
-    g_CurrentEntity->hitboxWidth = enemyDef->hitboxWidth;
-    g_CurrentEntity->hitboxHeight = enemyDef->hitboxHeight;
-    g_CurrentEntity->flags = enemyDef->flags;
-    g_CurrentEntity->hitboxOffX = 0;
-    g_CurrentEntity->hitboxOffY = 0;
-    g_CurrentEntity->step_s = 0;
-    g_CurrentEntity->step++;
-    if (g_CurrentEntity->zPriority == 0) {
-        g_CurrentEntity->zPriority =
-            g_unkGraphicsStruct.g_zEntityCenter.unk - 0xC;
-    }
-}
+#include "../init_entity.h"
 
 void EntityDummy(Entity* arg0) {
     if (arg0->step == 0) {
@@ -333,7 +300,7 @@ void EntityDummy(Entity* arg0) {
     }
 }
 
-s32 func_801BD720(u16* hitSensors, s16 sensorCount) {
+s32 func_801C5A98(u16* hitSensors, s16 sensorCount) {
     Collider collider;
     s16 i;
     s32 velocityX;
@@ -365,31 +332,29 @@ s32 func_801BD720(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-void CheckFieldCollision(u16* hitSensors, s16 sensorCount) {
-    s32 velocityX = g_CurrentEntity->velocityX;
+void func_801C5BC0(u16* hitSensors, s16 sensorCount) {
     Collider collider;
-    s16 x, y;
     s16 i;
+    s32 velocityX;
+    s16 x;
+    s16 y;
 
-    if (velocityX == 0) {
+    velocityX = g_CurrentEntity->velocityX;
+    if (velocityX == 0)
         return;
-    }
-
     x = g_CurrentEntity->posX.i.hi;
     y = g_CurrentEntity->posY.i.hi;
-
     for (i = 0; i < sensorCount; i++) {
         if (velocityX < 0) {
-            x += *hitSensors++;
+            x = x + *hitSensors++;
         } else {
-            x -= *hitSensors++;
+            x = x - *hitSensors++;
         }
+
         y += *hitSensors++;
-
         g_api.CheckCollision(x, y, &collider, 0);
-
-        if ((collider.effects & EFFECT_UNK_0002) &&
-            (!(collider.effects & EFFECT_UNK_8000) || (i != 0))) {
+        if (collider.effects & EFFECT_UNK_0002 &&
+            (!(collider.effects & EFFECT_UNK_8000) || i != 0)) {
             if (velocityX < 0) {
                 g_CurrentEntity->posX.i.hi += collider.unk1C;
             } else {
@@ -403,3 +368,111 @@ void CheckFieldCollision(u16* hitSensors, s16 sensorCount) {
 #include "../get_player_collision_with.h"
 
 #include "../replace_breakable_with_item_drop.h"
+
+void func_801C6114(void) {
+    s32 temp_v1;
+    Entity* entity;
+
+    entity = g_CurrentEntity;
+    if (entity->velocityY >= 0) {
+        temp_v1 =
+            entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
+        entity->ext.generic.unk84.unk = temp_v1;
+        entity->velocityX = temp_v1;
+        if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
+            entity->ext.generic.unk88.S16.unk0 =
+                -entity->ext.generic.unk88.S16.unk0;
+        }
+        entity = g_CurrentEntity;
+    }
+
+    if (entity->velocityY < FIX(0.25)) {
+        entity->velocityY += FIX(0.125);
+    }
+}
+
+void func_801C6198(u16 arg0) {
+    Collider collider;
+
+    if (g_CurrentEntity->velocityX < 0) {
+        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                             g_CurrentEntity->posY.i.hi - 7, &collider, 0);
+        if (collider.effects & EFFECT_NOTHROUGH) {
+            g_CurrentEntity->velocityY = 0;
+        }
+    }
+
+    g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                         g_CurrentEntity->posY.i.hi + 7, &collider, 0);
+
+    if (arg0) {
+        if (!(collider.effects & EFFECT_NOTHROUGH)) {
+            MoveEntity();
+            FallEntity();
+            return;
+        }
+
+        g_CurrentEntity->velocityX = 0;
+        g_CurrentEntity->velocityY = 0;
+
+        if (collider.effects & EFFECT_QUICKSAND) {
+            g_CurrentEntity->posY.val += FIX(0.125);
+            return;
+        }
+
+        g_CurrentEntity->posY.i.hi += collider.unk18;
+        return;
+    }
+
+    if (!(collider.effects & EFFECT_NOTHROUGH)) {
+        MoveEntity();
+        func_801C6114();
+    }
+}
+
+#include "../collect_heart.h"
+
+#include "../collect_gold.h"
+
+void CollectSubweapon(u16 subWeaponIdx) {
+    Entity* player = &PLAYER;
+    u16 subWeapon;
+
+    g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+    subWeapon = g_Status.subWeapon;
+    g_Status.subWeapon = D_801823F4[subWeaponIdx];
+
+    if (subWeapon == g_Status.subWeapon) {
+        subWeapon = 1;
+        g_CurrentEntity->unk6D[0] = 0x10;
+    } else {
+        subWeapon = D_80182424[subWeapon];
+        g_CurrentEntity->unk6D[0] = 0x60;
+    }
+
+    if (subWeapon != 0) {
+        g_CurrentEntity->params = subWeapon;
+        g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
+        SetStep(7);
+        g_CurrentEntity->velocityY = FIX(-2.5);
+        g_CurrentEntity->animCurFrame = 0;
+        g_CurrentEntity->ext.generic.unk88.S16.unk2 = 5;
+        if (player->facingLeft != 1) {
+            g_CurrentEntity->velocityX = FIX(-2);
+            return;
+        }
+        g_CurrentEntity->velocityX = FIX(2);
+        return;
+    }
+    DestroyEntity(g_CurrentEntity);
+}
+
+#include "../collect_heart_vessel.h"
+
+void CollectLifeVessel(void) {
+    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_api.func_800FE044(5, 0x8000);
+    DestroyEntity(g_CurrentEntity);
+}
+
+void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }

@@ -1,7 +1,4 @@
-#include "no3.h"
-#include "../hit_detection.h"
-
-#include "../entity_damage_display.h"
+#include "dre.h"
 
 #include "../libstage.h"
 
@@ -9,7 +6,7 @@
 
 #include "../entity.h"
 
-u8 func_801C4E4C(u8 frames[], Entity* self, u8 arg2) {
+u8 func_8019A590(u8 frames[], Entity* self, u8 arg2) {
     u16 animFrameStart = self->animFrameIdx * 2;
     u8* var_s1 = &frames[animFrameStart];
     s16 var_a1 = 0;
@@ -60,7 +57,14 @@ s32 GetDistanceToPlayerY(void) {
     return yDistance;
 }
 
-#include "../get_side_to_player.h"
+s32 GetSideToPlayer(void) {
+    s16 var_a0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
+
+    if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
+        var_a0 |= 2;
+    }
+    return var_a0;
+}
 
 void MoveEntity(void) {
     g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;
@@ -73,7 +77,7 @@ void FallEntity(void) {
     }
 }
 
-s32 func_801C5074(u16* sensors) {
+s32 func_8019A7B8(u16* sensors) {
     Collider col;
     Collider colBack;
     s16 x;
@@ -126,7 +130,7 @@ s32 func_801C5074(u16* sensors) {
     return 0;
 }
 
-s32 func_801C52EC(s16* posX) {
+s32 func_8019AA30(s16* posX) {
     Collider collider;
     s16 temp2;
     s16 temp4;
@@ -183,6 +187,7 @@ s32 func_801C52EC(s16* posX) {
 
 Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
+
     while (current < end) {
         if (current->entityId == E_NONE) {
             DestroyEntity(current);
@@ -194,36 +199,41 @@ Entity* AllocEntity(Entity* start, Entity* end) {
     return NULL;
 }
 
-s32 func_801C5534(u8 arg0, s16 arg1) { return D_801820C4[arg0] * arg1; }
+s32 func_8019AC78(u8 arg0, s16 arg1) { return D_80180D80[arg0] * arg1; }
 
-s16 func_801C5560(u8 arg0) { return D_801820C4[arg0]; }
+extern s16 D_80180D80[];
+s16 func_8019ACA4(u8 arg0) { return D_80180D80[arg0]; }
 
-void func_801C557C(s32 arg0, s16 arg1) {
-    g_CurrentEntity->velocityX = func_801C5534(arg0, arg1);
-    g_CurrentEntity->velocityY = func_801C5534(arg0 - 0x40, arg1);
+void func_8019ACC0(s32 arg0, s16 arg1) {
+    g_CurrentEntity->velocityX = func_8019AC78(arg0, arg1);
+    g_CurrentEntity->velocityY = func_8019AC78(arg0 - 0x40, arg1);
 }
 
-u8 func_801C55E8(s16 arg0, s16 arg1) {
-    return (ratan2(arg1, arg0) >> 4) + 0x40;
+u8 func_8019AD2C(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 0x40; }
+
+u8 func_8019AD64(ObjInit2* arg0, ObjInit2* arg1) {
+    u16 x, y;
+
+    x = arg1->zPriority - arg0->zPriority;
+    y = arg1->palette - arg0->palette;
+
+    return func_8019AD2C(x, y);
 }
 
-u8 func_801C5620(Entity* arg0, Entity* arg1) {
-    s16 a = arg1->posX.i.hi - arg0->posX.i.hi;
-    s16 b = arg1->posY.i.hi - arg0->posY.i.hi;
-    return func_801C55E8(a, b);
-}
+u8 func_8019ADAC(s16 arg0, s16 arg1) {
+    s16 x, y;
 
-u8 func_801C5668(s32 arg0, s32 arg1) {
-    s16 a = (arg0 - (u16)g_CurrentEntity->posX.i.hi);
-    s16 b = (arg1 - (u16)g_CurrentEntity->posY.i.hi);
-    return func_801C55E8(a, b);
+    x = arg0 - g_CurrentEntity->posX.i.hi;
+    y = arg1 - g_CurrentEntity->posY.i.hi;
+
+    return func_8019AD2C(x, y);
 }
 
 #include "../adjust_value_within_threshold.h"
 
 #include "../unk_entity_func0.h"
 
-u16 func_801C5794(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
+u16 func_8019AED8(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
 u16 GetAngleBetweenEntities(Entity* a, Entity* b) {
     s32 diffX = b->posX.i.hi - a->posX.i.hi;
@@ -231,13 +241,13 @@ u16 GetAngleBetweenEntities(Entity* a, Entity* b) {
     return ratan2(diffY, diffX);
 }
 
-u16 func_801C57FC(s32 x, s32 y) {
+u16 func_8019AF40(s32 x, s32 y) {
     s16 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
     s16 diffY = y - (u16)g_CurrentEntity->posY.i.hi;
     return ratan2(diffY, diffX);
 }
 
-u16 GetNormalizedAngle(u16 arg0, u16 arg1, u16 arg2) {
+u16 GetNormalizedAngle(u16 arg0, s16 arg1, s16 arg2) {
     u16 var_v0 = arg1;
     u16 temp_a2 = arg2 - arg1;
     u16 var_v0_2;
@@ -262,24 +272,31 @@ u16 GetNormalizedAngle(u16 arg0, u16 arg1, u16 arg2) {
 }
 
 void SetStep(u8 step) {
-    g_CurrentEntity->step = step;
-    g_CurrentEntity->step_s = 0;
-    g_CurrentEntity->animFrameIdx = 0;
-    g_CurrentEntity->animFrameDuration = 0;
+    Entity* entity;
+
+    entity = g_CurrentEntity;
+    entity->step = step;
+    entity->step_s = 0;
+    entity->animFrameIdx = 0;
+    entity->animFrameDuration = 0;
 }
 
-void func_801C58C4(u8 step_s) {
-    g_CurrentEntity->step_s = step_s;
-    g_CurrentEntity->animFrameIdx = 0;
-    g_CurrentEntity->animFrameDuration = 0;
+void SetSubStep(u8 step_s) {
+    Entity* entity;
+
+    entity = g_CurrentEntity;
+    entity->step_s = step_s;
+    entity->animFrameIdx = 0;
+    entity->animFrameDuration = 0;
 }
 
 void EntityExplosionSpawn(u16 arg0, u16 arg1) {
     Entity* entity;
 
     if (arg1 != 0) {
-        func_801CAD28(arg1);
+        func_801A046C(arg1);
     }
+
     if (arg0 == 0xFF) {
         DestroyEntity(g_CurrentEntity);
         return;
@@ -287,8 +304,8 @@ void EntityExplosionSpawn(u16 arg0, u16 arg1) {
 
     entity = g_CurrentEntity;
     entity->drawFlags = 0;
-    entity->entityId = 2;
-    entity->pfnUpdate = EntityExplosion;
+    entity->entityId = E_EXPLOSION;
+    entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
     entity->params = arg0;
     entity->animCurFrame = 0;
     g_CurrentEntity->step = 0;
@@ -297,13 +314,13 @@ void EntityExplosionSpawn(u16 arg0, u16 arg1) {
 
 #include "../init_entity.h"
 
-void EntityDummy(Entity* arg0) {
+void func_8019B1B4(Entity* arg0) {
     if (arg0->step == 0) {
         arg0->step++;
     }
 }
 
-s32 func_801C5A98(u16* hitSensors, s16 sensorCount) {
+s32 func_8019B1DC(u16* hitSensors, s16 sensorCount) {
     Collider collider;
     s16 i;
     s32 velocityX;
@@ -335,7 +352,7 @@ s32 func_801C5A98(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-void func_801C5BC0(u16* hitSensors, s16 sensorCount) {
+void func_8019B304(u16* hitSensors, s16 sensorCount) {
     Collider collider;
     s16 i;
     s32 velocityX;
@@ -372,19 +389,19 @@ void func_801C5BC0(u16* hitSensors, s16 sensorCount) {
 
 #include "../replace_breakable_with_item_drop.h"
 
-void func_801C6114(void) {
+void func_8019B858(void) {
     s32 temp_v1;
-    Entity* entity;
+    Entity* entity = g_CurrentEntity;
 
-    entity = g_CurrentEntity;
     if (entity->velocityY >= 0) {
         temp_v1 =
-            entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
+            entity->ext.generic.unk84.unk + entity->ext.generic.unk88.S16.unk0;
         entity->ext.generic.unk84.unk = temp_v1;
         entity->velocityX = temp_v1;
-        if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
-            entity->ext.generic.unk88.S16.unk0 =
-                -entity->ext.generic.unk88.S16.unk0;
+
+        if ((temp_v1 == 0x10000) || (temp_v1 == -0x10000)) {
+            entity->ext.generic.unk88.U16.unk0 =
+                -entity->ext.generic.unk88.U16.unk0;
         }
         entity = g_CurrentEntity;
     }
@@ -394,7 +411,7 @@ void func_801C6114(void) {
     }
 }
 
-void func_801C6198(u16 arg0) {
+void func_8019B8DC(u16 arg0) {
     Collider collider;
 
     if (g_CurrentEntity->velocityX < 0) {
@@ -429,11 +446,23 @@ void func_801C6198(u16 arg0) {
 
     if (!(collider.effects & EFFECT_NOTHROUGH)) {
         MoveEntity();
-        func_801C6114();
+        func_8019B858();
     }
 }
 
-#include "../collect_heart.h"
+void func_8019BA38(u16 arg0) {
+    s32* hearts;
+
+    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+    hearts = &g_Status.hearts;
+    *hearts += c_HeartPrizes[arg0];
+
+    if (g_Status.heartsMax < *hearts) {
+        *hearts = g_Status.heartsMax;
+    }
+
+    DestroyEntity(g_CurrentEntity);
+}
 
 #include "../collect_gold.h"
 
@@ -443,13 +472,13 @@ void CollectSubweapon(u16 subWeaponIdx) {
 
     g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
     subWeapon = g_Status.subWeapon;
-    g_Status.subWeapon = D_801823F4[subWeaponIdx];
+    g_Status.subWeapon = D_801810B0[subWeaponIdx];
 
     if (subWeapon == g_Status.subWeapon) {
         subWeapon = 1;
         g_CurrentEntity->unk6D[0] = 0x10;
     } else {
-        subWeapon = D_80182424[subWeapon];
+        subWeapon = D_801810E0[subWeapon];
         g_CurrentEntity->unk6D[0] = 0x60;
     }
 
@@ -474,8 +503,10 @@ void CollectSubweapon(u16 subWeaponIdx) {
 
 void CollectLifeVessel(void) {
     g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
-    g_api.func_800FE044(5, 0x8000);
+    g_api.func_800FE044(LIFE_VESSEL_INCREASE, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
 
 void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
+
+INCLUDE_ASM("st/dre/nonmatchings/18B80", EntityPrizeDrop);

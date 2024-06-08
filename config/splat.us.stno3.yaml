@@ -64,7 +64,7 @@ segments:
       - [0x374F4, .rodata, 3FF00] # EntityDeathStolenItems
       - [0x37514, .rodata, 3FF00] # EntityDeath
       - [0x37564, .rodata, 3FF00] # EntityWargExplosionPuffOpaque
-      - [0x37578, .rodata, 41C80] # EntityRedDoor
+      - [0x37578, .rodata, 4343C] # EntityRedDoor
       - [0x37590, rodata]
       - [0x375E0, .rodata, 46684] # EntityPrizeDrop
       - [0x37600, .rodata, 46684] # EntityEquipItemDrop
@@ -83,7 +83,8 @@ segments:
       - [0x4184C, c, random]
       - [0x4187C, c, update]
       - [0x41B78, c, update_stage_entities]
-      - [0x41C80, c]
+      - [0x41C80, c, collision]
+      - [0x4343C, c, 4343C]
       - [0x46684, c]
       - [0x47930, c, entity_relic_orb]
       - [0x48400, c, entity_heart_drop]
