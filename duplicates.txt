@@ -2665,10 +2665,10 @@
 | 1.00 | true     | EntityLargeGaibonProjectile         | ../../asm/us/st/nz0/nonmatchings/gaibon/EntityLargeGaibonProjectile.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntitySlograSpear                   | ../../asm/us/st/np3/nonmatchings/36990/EntitySlograSpear.s 
-| 1.00 | true     | EntitySlograSpear                   | ../../asm/us/st/nz0/nonmatchings/33FCC/EntitySlograSpear.s 
+| 1.00 | true     | EntitySlograSpear                   | ../../asm/us/st/nz0/nonmatchings/slogra/EntitySlograSpear.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntitySlograSpearProjectile         | ../../asm/us/st/np3/nonmatchings/36990/EntitySlograSpearProjectile.s 
-| 1.00 | true     | EntitySlograSpearProjectile         | ../../asm/us/st/nz0/nonmatchings/33FCC/EntitySlograSpearProjectile.s 
+| 1.00 | true     | EntitySlograSpearProjectile         | ../../asm/us/st/nz0/nonmatchings/slogra/EntitySlograSpearProjectile.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntitySmallGaibonProjectile         | ../../asm/us/st/np3/nonmatchings/36990/EntitySmallGaibonProjectile.s 
 | 1.00 | true     | EntitySmallGaibonProjectile         | ../../asm/us/st/nz0/nonmatchings/gaibon/EntitySmallGaibonProjectile.s 
