@@ -65,13 +65,16 @@ void EntityLifeUpSpawn(Entity* self) {
                     prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0;
                     prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0;
                     prim->next->x2 = prim->next->y2 = 0x1000;
-                    ((LifeUpPrim*)prim->next)->tpage = k << 9;
-                    ((LifeUpPrim*)prim->next)->x3 = 0;
-                    ((LifeUpPrim*)prim->next)->y3 = j * 0x540;
-                    ((LifeUpPrim*)prim->next)->unkC = 0xFFFB0000;
-                    ((LifeUpPrim*)prim->next)->unk10 = 0;
-                    ((LifeUpPrim*)prim->next)->x1 = 0x80;
-                    ((LifeUpPrim*)prim->next)->y0 = 0;
+                    prim->next->tpage = k << 9;
+                    prim->next->x3 = 0;
+                    prim->next->y3 = j * 0x540;
+                    // Not clear what this prim is using u0 and r1 for.
+                    // Note that every-other prim has this. prim is a normal
+                    // primitive, while prim->next is being funny.
+                    LOW(prim->next->u0) = 0xFFFB0000;
+                    LOW(prim->next->r1) = 0;
+                    prim->next->x1 = 0x80;
+                    prim->next->y0 = 0;
                     prim->priority = 0xC0;
                     prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
                                      DRAW_UNK02 | DRAW_TRANSP;
@@ -100,13 +103,12 @@ void EntityLifeUpSpawn(Entity* self) {
         SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
         prim = self->ext.lifeUpSpawn.prim1;
         for (j = 0; j < (self->ext.lifeUpSpawn.unk88 + 1); j++) {
-            XY_var = ((LifeUpPrim*)prim->next)->y1 +
-                     (((LifeUpPrim*)prim->next)->x1 << 0x10);
-            XY_var += ((LifeUpPrim*)prim->next)->unkC;
-            ((LifeUpPrim*)prim->next)->y1 = (u16)XY_var;
+            XY_var = prim->next->y1 + (prim->next->x1 << 0x10);
+            XY_var += LOW(prim->next->u0);
+            prim->next->y1 = (u16)XY_var;
             XY_var = prim->next->x1 = XY_var >> 0x10;
-            if (((LifeUpPrim*)prim->next)->unkC < -0x4000) {
-                ((LifeUpPrim*)prim->next)->unkC += 0x3800;
+            if (LOW(prim->next->u0) < -0x4000) {
+                LOW(prim->next->u0) += 0x3800;
             }
             if (prim->next->x1 < 8) {
                 count_low_x1++;
@@ -146,10 +148,10 @@ void EntityLifeUpSpawn(Entity* self) {
                         &D_80182830, &D_80182838, &D_80182840, &D_80182848,
                         (Point16*)&prim->x0, (Point16*)&prim->x1,
                         (Point16*)&prim->x2, (Point16*)&prim->x3, &sp98, &sp9C);
-                    (prim->next)->x2 = (prim->next)->y2 -= 0x10;
-                    (prim->next)->tpage += 8;
-                    (prim->next)->x3 += 0x10;
-                    (prim->next)->y3 += 0x20;
+                    prim->next->x2 = prim->next->y2 -= 0x10;
+                    prim->next->tpage += 8;
+                    prim->next->x3 += 0x10;
+                    prim->next->y3 += 0x20;
                     // Note that we go to next here, but also in the for-loop,
                     // so it goes twice each loop
                     prim = prim->next;
