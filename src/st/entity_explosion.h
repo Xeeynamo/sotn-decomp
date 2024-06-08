@@ -1,5 +1,5 @@
 extern u16 g_InitializeEntityData0[];
-extern u32 g_ExplosionYVelocities[];
+extern s32 g_ExplosionYVelocities[];
 extern u8* g_ExplosionAnimations[];
 
 // when `AnimateEntity` is not declared, the default declaration

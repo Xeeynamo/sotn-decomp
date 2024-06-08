@@ -1,9 +1,98 @@
-#include "mad.h"
+#include <stage.h>
 
-// Slightly different to other overlays. May be possible to
-//  de-duplicate with several #ifdef, but for now it's broken out.
+static u16 g_testCollEnemyLookup[] = {
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x001E, 0x0000, 0x0000,
+    0x002B, 0x0000, 0x0010, 0x0000, 0x000D, 0x0068, 0x0068, 0x0016, 0x0000,
+    0x0000, 0x0000, 0x003E, 0x0000, 0x0023, 0x0050, 0x0000, 0x0000, 0x0000,
+    0x0006, 0x0000, 0x000A, 0x0000, 0x007D, 0x0000, 0x0000, 0x002D, 0x0000,
+    0x0000, 0x006D, 0x007B, 0x0000, 0x0017, 0x0041, 0x0000, 0x0073, 0x0000,
+    0x004C, 0x0000, 0x0000, 0x0038, 0x0014, 0x005C, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0046, 0x0000,
+    0x0000, 0x0003, 0x0058, 0x0044, 0x0024, 0x0037, 0x0000, 0x0002, 0x0059,
+    0x0000, 0x0000, 0x0000, 0x0007, 0x0000, 0x0056, 0x0000, 0x007C, 0x0000,
+    0x000B, 0x0000, 0x0026, 0x0000, 0x001D, 0x0000, 0x0000, 0x002A, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0027, 0x0000, 0x0000, 0x0000, 0x001C, 0x0000,
+    0x0031, 0x0000, 0x0000, 0x001A, 0x0000, 0x008D, 0x0009, 0x002C, 0x0030,
+    0x0020, 0x0000, 0x0005, 0x0047, 0x0000, 0x005E, 0x0035, 0x0034, 0x006A,
+    0x0000, 0x003A, 0x0000, 0x0066, 0x0000, 0x0045, 0x0000, 0x0019, 0x0000,
+    0x0071, 0x0000, 0x0029, 0x0039, 0x0000, 0x0051, 0x0000, 0x004D, 0x0000,
+    0x0000, 0x003F, 0x0000, 0x0077, 0x0000, 0x0000, 0x0072, 0x0000, 0x0000,
+    0x006F, 0x0000, 0x002F, 0x0000, 0x0074, 0x0000, 0x0000, 0x0079, 0x0000,
+    0x007A, 0x0000, 0x0000, 0x0013, 0x0011, 0x0036, 0x0036, 0x0000, 0x005F,
+    0x005F, 0x0000, 0x0000, 0x0067, 0x0000, 0x0075, 0x0000, 0x0001, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0008, 0x0000, 0x0000, 0x000E, 0x0000,
+    0x002E, 0x0000, 0x0069, 0x0021, 0x0000, 0x0000, 0x0055, 0x0000, 0x0054,
+    0x0000, 0x0053, 0x0000, 0x0000, 0x000F, 0x0000, 0x0076, 0x0000, 0x0000,
+    0x008E, 0x0000, 0x0000, 0x0000, 0x0000, 0x004A, 0x0000, 0x0000, 0x004B,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0043, 0x0000, 0x0000, 0x003D, 0x0000,
+    0x0078, 0x008A, 0x0000, 0x0000, 0x0000, 0x0052, 0x0000, 0x0000, 0x0089,
+    0x0048, 0x0000, 0x003C, 0x0040, 0x008B, 0x0000, 0x0000, 0x0000, 0x001F,
+    0x0000, 0x0000, 0x007E, 0x0000, 0x0000, 0x0049, 0x0000, 0x0000, 0x0000,
+    0x0015, 0x0000, 0x0000, 0x000C, 0x0028, 0x0000, 0x0000, 0x0000, 0x0032,
+    0x0000, 0x0022, 0x0012, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0033, 0x0060, 0x0000, 0x0064, 0x0000, 0x0000, 0x007F, 0x0000, 0x0000,
+    0x0000, 0x004E, 0x0000, 0x006E, 0x0000, 0x0000, 0x0000, 0x004F, 0x0000,
+    0x0000, 0x0057, 0x0000, 0x0000, 0x0000, 0x0086, 0x0065, 0x0000, 0x003B,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0025, 0x0062, 0x0062,
+    0x0000, 0x0000, 0x0000, 0x0042, 0x0000, 0x0000, 0x0018, 0x001B, 0x006B,
+    0x0000, 0x008C, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0061, 0x0063,
+    0x0088, 0x0000, 0x0000, 0x0000, 0x0085, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0084, 0x0000, 0x0000, 0x0087, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x005D, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x005B,
+    0x0091, 0x0000, 0x0000, 0x0000, 0x0000, 0x0090, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x005A, 0x0000, 0x0000, 0x0082, 0x0000, 0x0000,
+    0x0000, 0x0083, 0x0000, 0x0081, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0092, 0x0000, 0x0000, 0x0000, 0x0000, 0x0004, 0x0000, 0x0070,
+    0x0000, 0x0000, 0x006C, 0x0000, 0x0000, 0x0080, 0x0080, 0x0000, 0x0000,
+    0x008F, 0x0000, 0x0000, 0x0000,
+};
+
+static u8 g_testCollLuckCutoff[] = {
+    0x00,
+    0x40,
+    0x20,
+    0x10,
+};
+
+static u8 g_testColluCoords[] = {
+    0x80, 0x80, 0xA0, 0xA0, 0xC0, 0xC0, 0x00, 0x00,
+};
+
+static u8 g_testCollvCoords[] = {
+    0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x00, 0x00,
+};
+
+static u16 g_testCollElementLookup[] = {
+    ELEMENT_FIRE,  ELEMENT_THUNDER, ELEMENT_ICE,    ELEMENT_HOLY,  ELEMENT_DARK,
+    ELEMENT_STONE, ELEMENT_CURSE,   ELEMENT_POISON, ELEMENT_WATER, ELEMENT_CUT,
+};
+
+static u8 g_testColliFrames[] = {
+    0x02, 0x04, 0x03, 0x05, 0x06, 0x07, 0x08, 0x0A, 0x02, 0x01,
+};
+
+static u16 g_testCollPrizeTable[] = {
+    0x0003, 0x0000, 0x0002, 0x0003, 0x0003, 0x0003, 0x0003, 0x0003,
+    0x0003, 0x0004, 0x0004, 0x0004, 0x0004, 0x0005, 0x0005, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0001, 0x0001, 0x0002, 0x0006, 0x0007, 0x00C6,
+};
+
+static u16 g_testCollRandTable[] = {
+    0x0C00, 0x0168, 0x0F00, 0x0169, 0x0FD0, 0x016A, 0x0FF0,
+    0x016B, 0x0FF8, 0x016C, 0x0FFD, 0x016D, 0x0FFF, 0x016E,
+};
+
+static u16 g_eDamageDisplayClut[] = {
+    PAL_DRA(0x1B2), PAL_DRA(0x1B3), PAL_DRA(0x1B6), PAL_DRA(0x1B7),
+    PAL_DRA(0x1B4), PAL_DRA(0x1B5), PAL_DRA(0x1B0), PAL_DRA(0x1B1),
+};
 
 void HitDetection(void) {
+#ifdef VERSION_PC
+    u8 sp[SP_LEN];
+#endif
     s32 temp_rand;
     Entity* otherEntity;
     Primitive* prim;
@@ -25,8 +114,6 @@ void HitDetection(void) {
     s8 uselessVar;
     Entity* iterEnt1;
     u8 miscVar2;
-
-    u32 flaggy_flags;
 
     scratchpad_1 = (s32*)SP(0);
     scratchpad_2 = (s32*)SP(0xC0);
@@ -167,7 +254,8 @@ void HitDetection(void) {
                     hitboxCheck2 += hitboxCheck1;
                     hitboxCheck1 *= 2;
                     if (hitboxCheck1 >= hitboxCheck2) {
-                        if (iterEnt1->attack) {
+                        if ((iterEnt1->attack) &&
+                            (iterEnt2->hitPoints < iterEnt1->attack)) {
                             iterEnt2->ext.player.unkB8 = iterEnt1;
                             if (miscVar1 & 8) {
                                 iterEnt2->hitFlags = 3;
@@ -207,7 +295,7 @@ void HitDetection(void) {
                 if (miscVar1) {
                     miscVar1--;
                     miscVar3 = 1 << (miscVar1 & 7);
-                    g_CastleFlags[(miscVar1 >> 3) + 0x11C] |= miscVar3;
+                    g_CastleFlags[(miscVar1 >> 3) + 0x190] |= miscVar3;
                 }
                 if ((g_Status.relics[RELIC_FAERIE_SCROLL] & 2) &&
                     !(entFrom5C->flags & FLAG_UNK_01000000)) {
@@ -313,10 +401,15 @@ void HitDetection(void) {
                         miscVar1 &= 0x3FFF;
                         if (entFrom5C->flags & FLAG_UNK_10) {
                             // Different on PSP vs PSX
-                            if (iterEnt2->hitEffect & 0x80) {
-                                g_api.PlaySfx(SE_UNK_MAD_630);
+                            if (g_PlayableCharacter != PLAYER_ALUCARD) {
+                                // normally this is Alucard shouting "Dark
+                                // Metamorphosis" but obviously if not playing
+                                // as Alucard, this won't match
+                                g_api.PlaySfx(SFX_RICHTER_ATTACK_HIT);
+                            } else if (iterEnt2->hitEffect & 0x80) {
+                                g_api.PlaySfx(SE_WEAPON_STAB);
                             } else {
-                                g_api.PlaySfx(0x6DB);
+                                g_api.PlaySfx(SE_WEAPON_WHACK);
                             }
                         }
                         if (entFrom5C->hitPoints != 0x7FFE) {
@@ -386,15 +479,17 @@ void HitDetection(void) {
                 miscVar3 = entFrom5C->flags & (FLAG_UNK_800 | FLAG_UNK_400);
                 if (miscVar3) {
                     if ((rand() & 0xFF) <
-                        g_testCollLuckCutoff[miscVar3 >> 0xA]) {
+                        g_api.func_800FF460(
+                            g_testCollLuckCutoff[miscVar3 >> 0xA])) {
                         otherEntity =
                             AllocEntity(&g_Entities[160], &g_Entities[192]);
+                        miscVar1 = 0;
                         if (otherEntity != NULL) {
                             if (hitboxCheck2 == 5) {
                                 // This little block is weird, especially since
                                 // the g_testCollRandTable is not any obvious
                                 // number pattern.
-                                randCompare = &g_testCollRandTable;
+                                randCompare = g_testCollRandTable;
                                 miscVar3 = rand() & 0xFFF;
                                 while (1) {
                                     if (*randCompare++ >= miscVar3) {
@@ -405,26 +500,24 @@ void HitDetection(void) {
                                 }
 
                             } else {
-                                miscVar3 = rand() & 0xFF;
-                                if (miscVar3 < sp3C->rareItemDropRate) {
+                                miscVar3 = g_api.func_800FF494(sp3C);
+                                if (miscVar3 & 0x40) {
                                     miscVar3 = sp3C->rareItemId;
-                                    miscVar1 =
-                                        g_testCollEnemyLookup[entFrom5C
-                                                                  ->enemyId];
-                                    if (miscVar1) {
-                                        miscVar1--;
-                                        flaggy_flags = (1 << (miscVar1 & 7));
-                                        g_CastleFlags[(miscVar1 >> 3) +
-                                                      0x13C] |= flaggy_flags;
-                                    }
-                                } else {
-                                    miscVar3 -= sp3C->rareItemDropRate;
-                                    if (miscVar3 < sp3C->uncommonItemDropRate) {
-                                        miscVar3 = sp3C->uncommonItemId;
+                                    // Paranthropus check: Drops turquoise if
+                                    // game not beaten. Otherwise ring of Varda
+                                    if ((miscVar3 == 0x173) &&
+                                        (!g_IsTimeAttackUnlocked)) {
+                                        miscVar3 = 0x16A;
                                     } else {
-                                        miscVar3 =
-                                            g_testCollPrizeTable[rand() & 0x1F];
+                                        miscVar1 = g_testCollEnemyLookup
+                                            [entFrom5C->enemyId];
                                     }
+                                } else if (miscVar3 & 0x20) {
+                                    miscVar3 = sp3C->uncommonItemId;
+                                } else {
+                                    // select a prize from the table. This
+                                    // covers heart, money, etc drops.
+                                    miscVar3 = g_testCollPrizeTable[miscVar3];
                                 }
                             }
                             if (miscVar3 >= 0x80) {
@@ -437,6 +530,7 @@ void HitDetection(void) {
                                 CreateEntityFromEntity(
                                     3, iterEnt1, otherEntity);
                             }
+                            otherEntity->ext.drop.unk94 = miscVar1;
                             otherEntity->params = miscVar3;
                             // item pops up in the air a bit when spawned
                             otherEntity->velocityY = FIX(-3.5);
@@ -511,583 +605,5 @@ void HitDetection(void) {
         }
     }
 }
-#include "../entity_damage_display.h"
 
-#include "../st_private.h"
-
-#include "../create_entity_from_layout.h"
-#include "../create_entity_in_range.h"
-#include "../find_entity_horizontal.h"
-#include "../create_entities_right.h"
-
-/*
- * n.b.! This is different from every other stage's `CreateEntitiesToTheLeft`.
- * It will at most create 1 entity to the left and then exit with the horizontal
- * array pointer updated to the next element in the sequence.
- */
-void CreateEntitiesToTheLeft(s16 posX) {
-    u8 flag;
-    s32 expected = 0;
-
-    if (posX < 0) {
-        posX = 0;
-    }
-
-    if (g_LayoutObjPosHorizontal == LAYOUT_OBJ_POSITION_FORWARD) {
-        FindFirstEntityToTheLeft(posX - g_ScrollDeltaX);
-        g_LayoutObjPosHorizontal = LAYOUT_OBJ_POSITION_BACKWARD;
-    }
-
-    if (g_LayoutObjHorizontal[LAYOUT_OBJ_POS_X] == LAYOUT_OBJ_START ||
-        g_LayoutObjHorizontal[LAYOUT_OBJ_POS_X] < posX) {
-        return;
-    }
-
-    flag = (g_LayoutObjHorizontal[LAYOUT_OBJ_SLOT] >> 8) + 0xff;
-    expected = 0;
-    if (flag == 0xFF ||
-        ((g_entityDestroyed[flag >> 5] & (1 << (flag & 0x1f))) == expected)) {
-        CreateEntityWhenInVerticalRange(g_LayoutObjHorizontal);
-    }
-    g_LayoutObjHorizontal -= 5;
-}
-
-#include "../find_entity_vertical.h"
-#include "../create_entities_vertical.h"
-#include "../init_room_entities.h"
-#include "../update_room_position.h"
-#include "../create_entity_from_entity.h"
-
-#include "../entity_red_door.h"
-
-#include "../entity.h"
-
-u8 func_80191F24(u8 frames[], Entity* self, u8 arg2) {
-    u16 animFrameStart = self->animFrameIdx * 2;
-    u8* var_s1 = &frames[animFrameStart];
-    s16 var_a1 = 0;
-
-    if (self->animFrameDuration == 0) {
-        if (*var_s1 != 0) {
-            if (*var_s1 == 0xFF) {
-                return 0;
-            }
-            self->animFrameDuration = *var_s1++ + (u8)self->ext.stub[0x3F];
-            self->animCurFrame = *var_s1++;
-            self->animFrameIdx++;
-            var_a1 = 128;
-        } else {
-            var_s1 = frames;
-            self->animFrameIdx = 0;
-            self->animFrameDuration = 0;
-            self->ext.stub[0x3F] = (arg2 * Random()) >> 8;
-            self->animFrameDuration = *var_s1++ + (u8)self->ext.stub[0x3F];
-            self->animCurFrame = *var_s1;
-            self->animFrameIdx++;
-            return 0;
-        }
-    }
-    self->animFrameDuration--;
-    self->animCurFrame = var_s1[-1];
-    var_a1 |= 1;
-    return var_a1;
-}
-
-s32 GetDistanceToPlayerX(void) {
-    s16 value = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
-
-    if (value < 0) {
-        value = -value;
-    }
-    return value;
-}
-
-s32 GetDistanceToPlayerY(void) {
-    s32 value = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
-
-    if (value < 0) {
-        value = -value;
-    }
-    return value;
-}
-
-#include "../get_side_to_player.h"
-
-void MoveEntity(void) {
-    g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;
-    g_CurrentEntity->posY.val += g_CurrentEntity->velocityY;
-}
-
-void FallEntity(void) {
-    if (g_CurrentEntity->velocityY < FALL_TERMINAL_VELOCITY) {
-        g_CurrentEntity->velocityY += FALL_GRAVITY;
-    }
-}
-
-u8 func_8019214C(void) {
-    u8 unkState;
-    Entity* entity;
-
-    MoveEntity();
-    FallEntity();
-
-    entity = g_CurrentEntity;
-
-    if (unkState & 1) {
-        entity->velocityY = 0;
-    }
-
-    return unkState;
-}
-
-s32 func_80192190(u16* sensors) {
-    Collider col;
-    Collider colBack;
-    s16 x;
-    s16 y;
-    s16 i;
-
-    MoveEntity();
-    FallEntity();
-    if (g_CurrentEntity->velocityY >= 0) {
-        x = g_CurrentEntity->posX.i.hi;
-        y = g_CurrentEntity->posY.i.hi;
-        for (i = 0; i < 4; i++) {
-            x += *sensors++;
-            y += *sensors++;
-            g_api.CheckCollision(x, y, &col, 0);
-            if (col.effects & EFFECT_UNK_8000) {
-                if (i == 1) {
-                    if (col.effects & EFFECT_SOLID) {
-                        g_api.CheckCollision(x, y - 8, &colBack, 0);
-                        if (!(colBack.effects & EFFECT_SOLID)) {
-                            g_CurrentEntity->posY.i.hi =
-                                (u16)g_CurrentEntity->posY.i.hi + 4 + col.unk18;
-                            g_CurrentEntity->velocityX = 0;
-                            g_CurrentEntity->velocityY = 0;
-                            g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
-                            return 1;
-                        }
-                    }
-                    continue;
-                }
-            }
-            if (col.effects & EFFECT_NOTHROUGH && i != 1) {
-                if (col.effects & EFFECT_QUICKSAND) {
-                    g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
-                    return 4;
-                }
-                g_api.CheckCollision(x, y - 8, &colBack, 0);
-                if (!(colBack.effects & EFFECT_SOLID)) {
-                    g_CurrentEntity->posY.i.hi =
-                        g_CurrentEntity->posY.i.hi + col.unk18;
-                    g_CurrentEntity->velocityX = 0;
-                    g_CurrentEntity->velocityY = 0;
-                    g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
-                    return 1;
-                }
-            }
-        }
-    }
-    g_CurrentEntity->flags |= FLAG_UNK_10000000;
-    return 0;
-}
-
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/EDB8", func_80192408);
-
-s32 func_80192618(s16* posX) {
-    Collider collider;
-    s16 temp2;
-    s16 temp4;
-    s16 x, y;
-
-    g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;
-    temp2 = g_CurrentEntity->posY.i.hi + 3;
-    g_CurrentEntity->posY.i.hi = temp2;
-    x = g_CurrentEntity->posX.i.hi + *posX;
-    posX++;
-    y = temp2 + *posX;
-    g_api.CheckCollision(x, y, &collider, 0);
-    if (!(collider.effects & EFFECT_SOLID)) {
-        return 0;
-    }
-    posX++;
-
-    g_CurrentEntity->posY.i.hi = g_CurrentEntity->posY.i.hi + collider.unk18;
-    if (g_CurrentEntity->velocityX != 0) {
-        if (g_CurrentEntity->velocityX < 0) {
-            temp4 = x - *posX;
-            posX++;
-        } else {
-            temp4 = x + *posX;
-            posX++;
-        }
-        y = y + *posX - 7;
-        g_api.CheckCollision(temp4, y, &collider, 0);
-        if (collider.effects & EFFECT_SOLID) {
-            if ((collider.effects & (EFFECT_UNK_8000 | EFFECT_UNK_0002)) ==
-                EFFECT_UNK_0002) {
-                g_CurrentEntity->posX.val =
-                    g_CurrentEntity->posX.val - g_CurrentEntity->velocityX;
-                g_CurrentEntity->velocityX = 0;
-                return 0xFF;
-            }
-            return 0x61;
-        }
-        y += 15;
-        g_api.CheckCollision(temp4, y, &collider, 0);
-        if (collider.effects & EFFECT_SOLID) {
-            if (collider.effects & EFFECT_UNK_8000) {
-                return 0x61;
-            }
-            return 1;
-        }
-        g_CurrentEntity->posX.val -= g_CurrentEntity->velocityX;
-        g_CurrentEntity->velocityX = 0;
-
-        return 0x80;
-    }
-    return 1;
-}
-
-Entity* AllocEntity(Entity* start, Entity* end) {
-    Entity* current = start;
-
-    while (current < end) {
-        if (current->entityId == E_NONE) {
-            DestroyEntity(current);
-            return current;
-        }
-
-        current++;
-    }
-    return NULL;
-}
-
-s32 func_80192860(u8 arg0, s16 arg1) { return D_801809EC[arg0 & 0xFF] * arg1; }
-
-s16 func_8019288C(u8 arg0) { return D_801809EC[arg0]; }
-
-void func_801928A8(s32 arg0, s16 arg1) {
-    g_CurrentEntity->velocityX = func_80192860(arg0, arg1);
-    g_CurrentEntity->velocityY = func_80192860(arg0 - 0x40, arg1);
-}
-
-u8 func_80192914(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 0x40; }
-
-u8 func_8019294C(Entity* a, Entity* b) {
-    s32 diffX = (u16)b->posX.i.hi - (u16)a->posX.i.hi;
-    s32 diffY = (u16)b->posY.i.hi - (u16)a->posY.i.hi;
-    return func_80192914(diffX, diffY);
-}
-
-u8 func_80192994(s32 x, s32 y) {
-    s32 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
-    s32 diffY = y - (u16)g_CurrentEntity->posY.i.hi;
-    return func_80192914(diffX, diffY);
-}
-
-#include "../adjust_value_within_threshold.h"
-
-#include "../unk_entity_func0.h"
-
-u16 func_80192AC0(s16 x, s16 y) { return ratan2(y, x); }
-
-u16 GetAngleBetweenEntities(Entity* a, Entity* b) {
-    s32 diffX = b->posX.i.hi - a->posX.i.hi;
-    s32 diffY = b->posY.i.hi - a->posY.i.hi;
-    return ratan2(diffY, diffX);
-}
-
-u16 func_80192B28(s32 x, s32 y) {
-    s16 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
-    s16 diffY = y - (u16)g_CurrentEntity->posY.i.hi;
-    return ratan2(diffY, diffX);
-}
-
-u16 GetNormalizedAngle(u16 arg0, u16 arg1, u16 arg2) {
-    u16 var_v0 = arg1;
-    u16 temp_a2 = arg2 - arg1;
-    u16 var_v0_2;
-
-    if (temp_a2 & 0x800) {
-        var_v0_2 = (0x800 - temp_a2) & 0x7FF;
-    } else {
-        var_v0_2 = temp_a2;
-    }
-
-    if (var_v0_2 > arg0) {
-        if (temp_a2 & 0x800) {
-            var_v0 = arg1 - arg0;
-        } else {
-            var_v0 = arg1 + arg0;
-        }
-
-        return var_v0;
-    }
-
-    return arg2;
-}
-
-void func_80192BD0(s32 arg0) {
-    g_CurrentEntity->step = (s16)(arg0 & 0xFF);
-    g_CurrentEntity->step_s = 0;
-    g_CurrentEntity->animFrameIdx = 0;
-    g_CurrentEntity->animFrameDuration = 0;
-}
-
-void func_80192BF0(s32 arg0) {
-    g_CurrentEntity->step_s = (s16)(arg0 & 0xFF);
-    g_CurrentEntity->animFrameIdx = 0;
-    g_CurrentEntity->animFrameDuration = 0;
-}
-
-void EntityExplosionSpawn(u16 arg0, u16 arg1) {
-    Entity* entity;
-
-    if (arg1 != 0) {
-        g_api.PlaySfx(arg1);
-    }
-    if (arg0 == 0xFF) {
-        DestroyEntity(g_CurrentEntity);
-        return;
-    }
-
-    entity = g_CurrentEntity;
-    entity->drawFlags = 0;
-    entity->entityId = E_EXPLOSION;
-    entity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
-    entity->params = arg0;
-    entity->animCurFrame = 0;
-    g_CurrentEntity->step = 0;
-    g_CurrentEntity->step_s = 0;
-}
-
-void InitializeEntity(u16 arg0[]) {
-    u16 enemyId;
-    EnemyDef* enemyDef;
-
-    g_CurrentEntity->animSet = *arg0++;
-    g_CurrentEntity->animCurFrame = *arg0++;
-    g_CurrentEntity->unk5A = *arg0++;
-    g_CurrentEntity->palette = *arg0++;
-
-    enemyId = *arg0++;
-    g_CurrentEntity->enemyId = enemyId;
-    enemyDef = &g_api.enemyDefs[enemyId];
-    g_CurrentEntity->hitPoints = enemyDef->hitPoints;
-    g_CurrentEntity->attack = enemyDef->attack;
-    g_CurrentEntity->attackElement = enemyDef->attackElement;
-    g_CurrentEntity->hitboxState = enemyDef->hitboxState;
-    g_CurrentEntity->hitboxWidth = enemyDef->hitboxWidth;
-    g_CurrentEntity->hitboxHeight = enemyDef->hitboxHeight;
-    g_CurrentEntity->flags = enemyDef->flags;
-    g_CurrentEntity->hitboxOffX = 0;
-    g_CurrentEntity->hitboxOffY = 0;
-    g_CurrentEntity->step_s = 0;
-    g_CurrentEntity->step++;
-    if (g_CurrentEntity->zPriority == 0) {
-        g_CurrentEntity->zPriority =
-            g_unkGraphicsStruct.g_zEntityCenter.unk - 0xC;
-    }
-}
-
-void EntityDummy(Entity* arg0) {
-    if (arg0->step == 0) {
-        arg0->step++;
-    }
-}
-
-s32 func_80192DD0(u16* hitSensors, s16 sensorCount) {
-    Collider collider;
-    s16 i;
-    s32 velocityX;
-    u16 temp_a1;
-    s16 x;
-    s16 y;
-
-    velocityX = g_CurrentEntity->velocityX;
-    if (velocityX != 0) {
-        x = g_CurrentEntity->posX.i.hi;
-        y = g_CurrentEntity->posY.i.hi;
-        for (i = 0; i < sensorCount; i++) {
-            if (velocityX < 0) {
-                s16 newX = x + *hitSensors++;
-                x = newX;
-            } else {
-                s16 newX = x - *hitSensors++;
-                x = newX;
-            }
-
-            y += *hitSensors++;
-            g_api.CheckCollision(x, y, &collider, 0);
-            if (collider.effects & EFFECT_UNK_0002 &&
-                ((!(collider.effects & EFFECT_UNK_8000)) || (i != 0))) {
-                return 2;
-            }
-        }
-        return 0;
-    }
-}
-
-void func_80192EF8(u16* hitSensors, s16 sensorCount) {
-    Collider collider;
-    s16 i;
-    s32 velocityX;
-    s16 x;
-    s16 y;
-
-    velocityX = g_CurrentEntity->velocityX;
-    if (velocityX == 0)
-        return;
-    x = g_CurrentEntity->posX.i.hi;
-    y = g_CurrentEntity->posY.i.hi;
-    for (i = 0; i < sensorCount; i++) {
-        if (velocityX < 0) {
-            x = x + *hitSensors++;
-        } else {
-            x = x - *hitSensors++;
-        }
-
-        y += *hitSensors++;
-        g_api.CheckCollision(x, y, &collider, 0);
-        if (collider.effects & EFFECT_UNK_0002 &&
-            (!(collider.effects & EFFECT_UNK_8000) || i != 0)) {
-            if (velocityX < 0) {
-                g_CurrentEntity->posX.i.hi += collider.unk1C;
-            } else {
-                g_CurrentEntity->posX.i.hi += collider.unk14;
-            }
-            return;
-        }
-    }
-}
-
-#include "../get_player_collision_with.h"
-
-#include "../replace_breakable_with_item_drop.h"
-
-void func_8019344C(void) {
-    s32 temp_v1;
-    Entity* entity;
-
-    entity = g_CurrentEntity;
-    if (entity->velocityY >= 0) {
-        temp_v1 =
-            entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
-        entity->ext.generic.unk84.unk = temp_v1;
-        entity->velocityX = temp_v1;
-        if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
-            entity->ext.generic.unk88.S16.unk0 =
-                -entity->ext.generic.unk88.S16.unk0;
-        }
-        entity = g_CurrentEntity;
-    }
-
-    if (entity->velocityY < FIX(0.25)) {
-        entity->velocityY += FIX(0.125);
-    }
-}
-
-void func_801934D0(u16 arg0) {
-    Collider collider;
-
-    if (g_CurrentEntity->velocityX < 0) {
-        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
-                             g_CurrentEntity->posY.i.hi - 7, &collider, 0);
-        if (collider.effects & EFFECT_NOTHROUGH) {
-            g_CurrentEntity->velocityY = 0;
-        }
-    }
-
-    g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
-                         g_CurrentEntity->posY.i.hi + 7, &collider, 0);
-
-    if (arg0) {
-        if (!(collider.effects & EFFECT_NOTHROUGH)) {
-            MoveEntity();
-            FallEntity();
-            return;
-        }
-
-        g_CurrentEntity->velocityX = 0;
-        g_CurrentEntity->velocityY = 0;
-
-        if (collider.effects & EFFECT_QUICKSAND) {
-            g_CurrentEntity->posY.val += FIX(0.125);
-            return;
-        }
-
-        g_CurrentEntity->posY.i.hi =
-            (u16)g_CurrentEntity->posY.i.hi + collider.unk18;
-        return;
-    }
-
-    if (!(collider.effects & EFFECT_NOTHROUGH)) {
-        MoveEntity();
-        func_8019344C();
-    }
-}
-
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/EDB8", CollectHeart);
-
-#include "../collect_gold.h"
-
-void func_801937BC(void) {}
-
-void func_801937C4(void) { DestroyEntity(g_CurrentEntity); }
-
-void CollectSubweapon(u16 subWeaponIdx) {
-    Entity* player = &PLAYER;
-    u16 subWeapon;
-
-    g_api.PlaySfx(0x672);
-    subWeapon = g_Status.subWeapon;
-    g_Status.subWeapon = D_80180D1C[subWeaponIdx];
-
-    if (subWeapon == g_Status.subWeapon) {
-        subWeapon = 1;
-        g_CurrentEntity->unk6D[0] = 0x10;
-    } else {
-        subWeapon = D_80180D4C[subWeapon];
-        g_CurrentEntity->unk6D[0] = 0x60;
-    }
-
-    if (subWeapon != 0) {
-        g_CurrentEntity->params = subWeapon;
-        g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
-        g_CurrentEntity->step = 7;
-        g_CurrentEntity->step_s = 0;
-        g_CurrentEntity->velocityY = FIX(-2.5);
-        g_CurrentEntity->animCurFrame = 0;
-        g_CurrentEntity->ext.generic.unk88.S16.unk2 = 5;
-        if (player->facingLeft != 1) {
-            g_CurrentEntity->velocityX = FIX(-2);
-            return;
-        }
-        g_CurrentEntity->velocityX = FIX(2);
-        return;
-    }
-    DestroyEntity(g_CurrentEntity);
-}
-
-// Different from "collect_heart_vessel.h"
-void CollectHeartVessel(void) {
-    g_api.PlaySfx(0x670);
-    g_api.func_800FE044(HEART_VESSEL_INCREASE, 0x4000);
-    DestroyEntity(g_CurrentEntity);
-}
-
-void CollectLifeVessel(void) {
-    g_api.PlaySfx(0x670);
-    g_api.func_800FE044(LIFE_VESSEL_INCREASE, 0x8000);
-    DestroyEntity(g_CurrentEntity);
-}
-
-void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
-
-Entity* func_801939C4(void) {
-    g_CurrentEntity->step = 3;
-    g_CurrentEntity->params = 4;
-    return g_CurrentEntity;
-}
+#include "entity_damage_display.h"

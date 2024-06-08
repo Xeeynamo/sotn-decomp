@@ -11,7 +11,7 @@
 #define SE_RWRP_DEBRIS 0x644 // unused?
 
 extern PfnEntityUpdate D_801803E0[];
-extern u16 D_80180494[];
+extern u16 g_eInitGeneric2[];
 extern s16 D_80180A94[];
 extern ObjInit2 D_80181134[];
 

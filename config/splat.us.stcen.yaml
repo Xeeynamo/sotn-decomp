@@ -32,13 +32,16 @@ segments:
     subalign: 2
     subsegments:
       - [0x0, data]
+      - [0x7E4, .data, collision]
+      - [0xBA4, .data, e_red_door]
+      - [0xBBC, data]
       - [0x10AC, .data, entity_relic_orb]
       - [0x1110, data]
       - [0x12D4, roomdef, g_Rooms]
       - [0x1300, data]
       - [0xD42C, rodata]
       - [0xD4B0, .rodata, D600]
-      - [0xD4D8, .rodata, 11280] # EntityRedDoor
+      - [0xD4D8, .rodata, e_red_door] # EntityRedDoor
       - [0xD4F0, rodata]
       - [0xD578, .rodata, entity_relic_orb]
       - [0xD5B0, .rodata, entity_message_box]
@@ -48,7 +51,10 @@ segments:
       - [0x10E4C, c, random]
       - [0x10E7C, c, update]
       - [0x11178, c, update_stage_entities]
-      - [0x11280, c]
+      - [0x11280, c, collision]
+      - [0x12A3C, c, create_entity]
+      - [0x135B4, c, e_red_door]
+      - [0x14264, c]
       - [0x16F30, c, entity_relic_orb]
       - [0x17A00, c, entity_heart_drop]
       - [0x17B28, c, entity_message_box]

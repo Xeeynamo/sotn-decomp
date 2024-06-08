@@ -8,7 +8,7 @@ void func_80194DD4(Entity* entity) {
     ObjInit2* objInit = &D_80181134[entity->params];
 
     if (entity->step == 0) {
-        InitializeEntity(D_80180494);
+        InitializeEntity(g_eInitGeneric2);
         entity->animSet = objInit->animSet;
         entity->zPriority = objInit->zPriority;
         entity->unk5A = objInit->unk4.s;

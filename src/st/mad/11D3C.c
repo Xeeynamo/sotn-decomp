@@ -1,15 +1,8 @@
-#include "dre.h"
-#include "../hit_detection.h"
-
-#include "../entity_damage_display.h"
-
-#include "../libstage.h"
-
-#include "../entity_red_door.h"
+#include "mad.h"
 
 #include "../entity.h"
 
-u8 func_8019A590(u8 frames[], Entity* self, u8 arg2) {
+u8 func_80191F24(u8 frames[], Entity* self, u8 arg2) {
     u16 animFrameStart = self->animFrameIdx * 2;
     u8* var_s1 = &frames[animFrameStart];
     s16 var_a1 = 0;
@@ -40,34 +33,25 @@ u8 func_8019A590(u8 frames[], Entity* self, u8 arg2) {
     return var_a1;
 }
 
-// Absolute distance from g_CurrentEntity to the player in the X Axis
 s32 GetDistanceToPlayerX(void) {
-    s16 xDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
+    s16 value = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
 
-    if (xDistance < 0) {
-        xDistance = -xDistance;
+    if (value < 0) {
+        value = -value;
     }
-    return xDistance;
+    return value;
 }
 
-// Absolute distance from g_CurrentEntity to the player in the Y Axis
 s32 GetDistanceToPlayerY(void) {
-    s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
+    s32 value = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
 
-    if (yDistance < 0) {
-        yDistance = -yDistance;
+    if (value < 0) {
+        value = -value;
     }
-    return yDistance;
+    return value;
 }
 
-s32 GetSideToPlayer(void) {
-    s16 var_a0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
-
-    if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
-        var_a0 |= 2;
-    }
-    return var_a0;
-}
+#include "../get_side_to_player.h"
 
 void MoveEntity(void) {
     g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;
@@ -80,7 +64,23 @@ void FallEntity(void) {
     }
 }
 
-s32 func_8019A7B8(u16* sensors) {
+u8 func_8019214C(void) {
+    u8 unkState;
+    Entity* entity;
+
+    MoveEntity();
+    FallEntity();
+
+    entity = g_CurrentEntity;
+
+    if (unkState & 1) {
+        entity->velocityY = 0;
+    }
+
+    return unkState;
+}
+
+s32 func_80192190(u16* sensors) {
     Collider col;
     Collider colBack;
     s16 x;
@@ -133,7 +133,9 @@ s32 func_8019A7B8(u16* sensors) {
     return 0;
 }
 
-s32 func_8019AA30(s16* posX) {
+INCLUDE_ASM("asm/us/st/mad/nonmatchings/11D3C", func_80192408);
+
+s32 func_80192618(s16* posX) {
     Collider collider;
     s16 temp2;
     s16 temp4;
@@ -202,41 +204,34 @@ Entity* AllocEntity(Entity* start, Entity* end) {
     return NULL;
 }
 
-s32 func_8019AC78(u8 arg0, s16 arg1) { return D_80180D80[arg0] * arg1; }
+s32 func_80192860(u8 arg0, s16 arg1) { return D_801809EC[arg0 & 0xFF] * arg1; }
 
-extern s16 D_80180D80[];
-s16 func_8019ACA4(u8 arg0) { return D_80180D80[arg0]; }
+s16 func_8019288C(u8 arg0) { return D_801809EC[arg0]; }
 
-void func_8019ACC0(s32 arg0, s16 arg1) {
-    g_CurrentEntity->velocityX = func_8019AC78(arg0, arg1);
-    g_CurrentEntity->velocityY = func_8019AC78(arg0 - 0x40, arg1);
+void func_801928A8(s32 arg0, s16 arg1) {
+    g_CurrentEntity->velocityX = func_80192860(arg0, arg1);
+    g_CurrentEntity->velocityY = func_80192860(arg0 - 0x40, arg1);
 }
 
-u8 func_8019AD2C(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 0x40; }
+u8 func_80192914(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 0x40; }
 
-u8 func_8019AD64(ObjInit2* arg0, ObjInit2* arg1) {
-    u16 x, y;
-
-    x = arg1->zPriority - arg0->zPriority;
-    y = arg1->palette - arg0->palette;
-
-    return func_8019AD2C(x, y);
+u8 func_8019294C(Entity* a, Entity* b) {
+    s32 diffX = (u16)b->posX.i.hi - (u16)a->posX.i.hi;
+    s32 diffY = (u16)b->posY.i.hi - (u16)a->posY.i.hi;
+    return func_80192914(diffX, diffY);
 }
 
-u8 func_8019ADAC(s16 arg0, s16 arg1) {
-    s16 x, y;
-
-    x = arg0 - g_CurrentEntity->posX.i.hi;
-    y = arg1 - g_CurrentEntity->posY.i.hi;
-
-    return func_8019AD2C(x, y);
+u8 func_80192994(s32 x, s32 y) {
+    s32 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
+    s32 diffY = y - (u16)g_CurrentEntity->posY.i.hi;
+    return func_80192914(diffX, diffY);
 }
 
 #include "../adjust_value_within_threshold.h"
 
 #include "../unk_entity_func0.h"
 
-u16 func_8019AED8(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
+u16 func_80192AC0(s16 x, s16 y) { return ratan2(y, x); }
 
 u16 GetAngleBetweenEntities(Entity* a, Entity* b) {
     s32 diffX = b->posX.i.hi - a->posX.i.hi;
@@ -244,13 +239,13 @@ u16 GetAngleBetweenEntities(Entity* a, Entity* b) {
     return ratan2(diffY, diffX);
 }
 
-u16 func_8019AF40(s32 x, s32 y) {
+u16 func_80192B28(s32 x, s32 y) {
     s16 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
     s16 diffY = y - (u16)g_CurrentEntity->posY.i.hi;
     return ratan2(diffY, diffX);
 }
 
-u16 GetNormalizedAngle(u16 arg0, s16 arg1, s16 arg2) {
+u16 GetNormalizedAngle(u16 arg0, u16 arg1, u16 arg2) {
     u16 var_v0 = arg1;
     u16 temp_a2 = arg2 - arg1;
     u16 var_v0_2;
@@ -274,32 +269,25 @@ u16 GetNormalizedAngle(u16 arg0, s16 arg1, s16 arg2) {
     return arg2;
 }
 
-void SetStep(u8 step) {
-    Entity* entity;
-
-    entity = g_CurrentEntity;
-    entity->step = step;
-    entity->step_s = 0;
-    entity->animFrameIdx = 0;
-    entity->animFrameDuration = 0;
+void func_80192BD0(s32 arg0) {
+    g_CurrentEntity->step = (s16)(arg0 & 0xFF);
+    g_CurrentEntity->step_s = 0;
+    g_CurrentEntity->animFrameIdx = 0;
+    g_CurrentEntity->animFrameDuration = 0;
 }
 
-void SetSubStep(u8 step_s) {
-    Entity* entity;
-
-    entity = g_CurrentEntity;
-    entity->step_s = step_s;
-    entity->animFrameIdx = 0;
-    entity->animFrameDuration = 0;
+void func_80192BF0(s32 arg0) {
+    g_CurrentEntity->step_s = (s16)(arg0 & 0xFF);
+    g_CurrentEntity->animFrameIdx = 0;
+    g_CurrentEntity->animFrameDuration = 0;
 }
 
 void EntityExplosionSpawn(u16 arg0, u16 arg1) {
     Entity* entity;
 
     if (arg1 != 0) {
-        func_801A046C(arg1);
+        g_api.PlaySfx(arg1);
     }
-
     if (arg0 == 0xFF) {
         DestroyEntity(g_CurrentEntity);
         return;
@@ -315,15 +303,42 @@ void EntityExplosionSpawn(u16 arg0, u16 arg1) {
     g_CurrentEntity->step_s = 0;
 }
 
-#include "../init_entity.h"
+void InitializeEntity(u16 arg0[]) {
+    u16 enemyId;
+    EnemyDef* enemyDef;
 
-void func_8019B1B4(Entity* arg0) {
+    g_CurrentEntity->animSet = *arg0++;
+    g_CurrentEntity->animCurFrame = *arg0++;
+    g_CurrentEntity->unk5A = *arg0++;
+    g_CurrentEntity->palette = *arg0++;
+
+    enemyId = *arg0++;
+    g_CurrentEntity->enemyId = enemyId;
+    enemyDef = &g_api.enemyDefs[enemyId];
+    g_CurrentEntity->hitPoints = enemyDef->hitPoints;
+    g_CurrentEntity->attack = enemyDef->attack;
+    g_CurrentEntity->attackElement = enemyDef->attackElement;
+    g_CurrentEntity->hitboxState = enemyDef->hitboxState;
+    g_CurrentEntity->hitboxWidth = enemyDef->hitboxWidth;
+    g_CurrentEntity->hitboxHeight = enemyDef->hitboxHeight;
+    g_CurrentEntity->flags = enemyDef->flags;
+    g_CurrentEntity->hitboxOffX = 0;
+    g_CurrentEntity->hitboxOffY = 0;
+    g_CurrentEntity->step_s = 0;
+    g_CurrentEntity->step++;
+    if (g_CurrentEntity->zPriority == 0) {
+        g_CurrentEntity->zPriority =
+            g_unkGraphicsStruct.g_zEntityCenter.unk - 0xC;
+    }
+}
+
+void EntityDummy(Entity* arg0) {
     if (arg0->step == 0) {
         arg0->step++;
     }
 }
 
-s32 func_8019B1DC(u16* hitSensors, s16 sensorCount) {
+s32 func_80192DD0(u16* hitSensors, s16 sensorCount) {
     Collider collider;
     s16 i;
     s32 velocityX;
@@ -355,7 +370,7 @@ s32 func_8019B1DC(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-void func_8019B304(u16* hitSensors, s16 sensorCount) {
+void func_80192EF8(u16* hitSensors, s16 sensorCount) {
     Collider collider;
     s16 i;
     s32 velocityX;
@@ -392,19 +407,19 @@ void func_8019B304(u16* hitSensors, s16 sensorCount) {
 
 #include "../replace_breakable_with_item_drop.h"
 
-void func_8019B858(void) {
+void func_8019344C(void) {
     s32 temp_v1;
-    Entity* entity = g_CurrentEntity;
+    Entity* entity;
 
+    entity = g_CurrentEntity;
     if (entity->velocityY >= 0) {
         temp_v1 =
-            entity->ext.generic.unk84.unk + entity->ext.generic.unk88.S16.unk0;
+            entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
         entity->ext.generic.unk84.unk = temp_v1;
         entity->velocityX = temp_v1;
-
-        if ((temp_v1 == 0x10000) || (temp_v1 == -0x10000)) {
-            entity->ext.generic.unk88.U16.unk0 =
-                -entity->ext.generic.unk88.U16.unk0;
+        if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
+            entity->ext.generic.unk88.S16.unk0 =
+                -entity->ext.generic.unk88.S16.unk0;
         }
         entity = g_CurrentEntity;
     }
@@ -414,7 +429,7 @@ void func_8019B858(void) {
     }
 }
 
-void func_8019B8DC(u16 arg0) {
+void func_801934D0(u16 arg0) {
     Collider collider;
 
     if (g_CurrentEntity->velocityX < 0) {
@@ -443,52 +458,46 @@ void func_8019B8DC(u16 arg0) {
             return;
         }
 
-        g_CurrentEntity->posY.i.hi += collider.unk18;
+        g_CurrentEntity->posY.i.hi =
+            (u16)g_CurrentEntity->posY.i.hi + collider.unk18;
         return;
     }
 
     if (!(collider.effects & EFFECT_NOTHROUGH)) {
         MoveEntity();
-        func_8019B858();
+        func_8019344C();
     }
 }
 
-void func_8019BA38(u16 arg0) {
-    s32* hearts;
-
-    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
-    hearts = &g_Status.hearts;
-    *hearts += c_HeartPrizes[arg0];
-
-    if (g_Status.heartsMax < *hearts) {
-        *hearts = g_Status.heartsMax;
-    }
-
-    DestroyEntity(g_CurrentEntity);
-}
+INCLUDE_ASM("asm/us/st/mad/nonmatchings/11D3C", CollectHeart);
 
 #include "../collect_gold.h"
+
+void func_801937BC(void) {}
+
+void func_801937C4(void) { DestroyEntity(g_CurrentEntity); }
 
 void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;
     u16 subWeapon;
 
-    g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+    g_api.PlaySfx(0x672);
     subWeapon = g_Status.subWeapon;
-    g_Status.subWeapon = D_801810B0[subWeaponIdx];
+    g_Status.subWeapon = D_80180D1C[subWeaponIdx];
 
     if (subWeapon == g_Status.subWeapon) {
         subWeapon = 1;
         g_CurrentEntity->unk6D[0] = 0x10;
     } else {
-        subWeapon = D_801810E0[subWeapon];
+        subWeapon = D_80180D4C[subWeapon];
         g_CurrentEntity->unk6D[0] = 0x60;
     }
 
     if (subWeapon != 0) {
         g_CurrentEntity->params = subWeapon;
         g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
-        SetStep(7);
+        g_CurrentEntity->step = 7;
+        g_CurrentEntity->step_s = 0;
         g_CurrentEntity->velocityY = FIX(-2.5);
         g_CurrentEntity->animCurFrame = 0;
         g_CurrentEntity->ext.generic.unk88.S16.unk2 = 5;
@@ -502,14 +511,23 @@ void CollectSubweapon(u16 subWeaponIdx) {
     DestroyEntity(g_CurrentEntity);
 }
 
-#include "../collect_heart_vessel.h"
+// Different from "collect_heart_vessel.h"
+void CollectHeartVessel(void) {
+    g_api.PlaySfx(0x670);
+    g_api.func_800FE044(HEART_VESSEL_INCREASE, 0x4000);
+    DestroyEntity(g_CurrentEntity);
+}
 
 void CollectLifeVessel(void) {
-    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_api.PlaySfx(0x670);
     g_api.func_800FE044(LIFE_VESSEL_INCREASE, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
 
 void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
-INCLUDE_ASM("st/dre/nonmatchings/173C4", EntityPrizeDrop);
+Entity* func_801939C4(void) {
+    g_CurrentEntity->step = 3;
+    g_CurrentEntity->params = 4;
+    return g_CurrentEntity;
+}

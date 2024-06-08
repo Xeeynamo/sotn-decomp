@@ -5,7 +5,7 @@
 #endif
 
 s32 PrimDecreaseBrightness(Primitive* prim, u8 arg1);
-void StageNamePopupHelper(Primitive* prim) {
+static void StageNamePopupHelper(Primitive* prim) {
     u8 xPos;
     s32 i;
     s32 j;

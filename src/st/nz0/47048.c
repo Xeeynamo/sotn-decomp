@@ -263,7 +263,7 @@ void func_801C7884(Entity* entity) {
 
     case 1:
         MoveEntity();
-        AnimateEntity(D_80181D3C[params], entity);
+        AnimateEntity(g_SubweaponAnimPrizeDrop[params], entity);
 
         entity->velocityY = rsin(entity->rotZ) * 2;
         entity->rotZ += 0x20;

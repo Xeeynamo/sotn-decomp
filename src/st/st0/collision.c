@@ -1,4 +1,74 @@
-#include "st0.h"
+#include <stage.h>
+
+static u16 g_testCollEnemyLookup[] = {
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x001E, 0x0000, 0x0000,
+    0x002B, 0x0000, 0x0010, 0x0000, 0x000D, 0x0068, 0x0068, 0x0016, 0x0000,
+    0x0000, 0x0000, 0x003E, 0x0000, 0x0023, 0x0050, 0x0000, 0x0000, 0x0000,
+    0x0006, 0x0000, 0x000A, 0x0000, 0x007D, 0x0000, 0x0000, 0x002D, 0x0000,
+    0x0000, 0x006D, 0x007B, 0x0000, 0x0017, 0x0041, 0x0000, 0x0073, 0x0000,
+    0x004C, 0x0000, 0x0000, 0x0038, 0x0014, 0x005C, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0046, 0x0000,
+    0x0000, 0x0003, 0x0058, 0x0044, 0x0024, 0x0037, 0x0000, 0x0002, 0x0059,
+    0x0000, 0x0000, 0x0000, 0x0007, 0x0000, 0x0056, 0x0000, 0x007C, 0x0000,
+    0x000B, 0x0000, 0x0026, 0x0000, 0x001D, 0x0000, 0x0000, 0x002A, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0027, 0x0000, 0x0000, 0x0000, 0x001C, 0x0000,
+    0x0031, 0x0000, 0x0000, 0x001A, 0x0000, 0x008D, 0x0009, 0x002C, 0x0030,
+    0x0020, 0x0000, 0x0005, 0x0047, 0x0000, 0x005E, 0x0035, 0x0034, 0x006A,
+    0x0000, 0x003A, 0x0000, 0x0066, 0x0000, 0x0045, 0x0000, 0x0019, 0x0000,
+    0x0071, 0x0000, 0x0029, 0x0039, 0x0000, 0x0051, 0x0000, 0x004D, 0x0000,
+    0x0000, 0x003F, 0x0000, 0x0077, 0x0000, 0x0000, 0x0072, 0x0000, 0x0000,
+    0x006F, 0x0000, 0x002F, 0x0000, 0x0074, 0x0000, 0x0000, 0x0079, 0x0000,
+    0x007A, 0x0000, 0x0000, 0x0013, 0x0011, 0x0036, 0x0036, 0x0000, 0x005F,
+    0x005F, 0x0000, 0x0000, 0x0067, 0x0000, 0x0075, 0x0000, 0x0001, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0008, 0x0000, 0x0000, 0x000E, 0x0000,
+    0x002E, 0x0000, 0x0069, 0x0021, 0x0000, 0x0000, 0x0055, 0x0000, 0x0054,
+    0x0000, 0x0053, 0x0000, 0x0000, 0x000F, 0x0000, 0x0076, 0x0000, 0x0000,
+    0x008E, 0x0000, 0x0000, 0x0000, 0x0000, 0x004A, 0x0000, 0x0000, 0x004B,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0043, 0x0000, 0x0000, 0x003D, 0x0000,
+    0x0078, 0x008A, 0x0000, 0x0000, 0x0000, 0x0052, 0x0000, 0x0000, 0x0089,
+    0x0048, 0x0000, 0x003C, 0x0040, 0x008B, 0x0000, 0x0000, 0x0000, 0x001F,
+    0x0000, 0x0000, 0x007E, 0x0000, 0x0000, 0x0049, 0x0000, 0x0000, 0x0000,
+    0x0015, 0x0000, 0x0000, 0x000C, 0x0028, 0x0000, 0x0000, 0x0000, 0x0032,
+    0x0000, 0x0022, 0x0012, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0033, 0x0060, 0x0000, 0x0064, 0x0000, 0x0000, 0x007F, 0x0000, 0x0000,
+    0x0000, 0x004E, 0x0000, 0x006E, 0x0000, 0x0000, 0x0000, 0x004F, 0x0000,
+    0x0000, 0x0057, 0x0000, 0x0000, 0x0000, 0x0086, 0x0065, 0x0000, 0x003B,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0025, 0x0062, 0x0062,
+    0x0000, 0x0000, 0x0000, 0x0042, 0x0000, 0x0000, 0x0018, 0x001B, 0x006B,
+    0x0000, 0x008C, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0061, 0x0063,
+    0x0088, 0x0000, 0x0000, 0x0000, 0x0085, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0084, 0x0000, 0x0000, 0x0087, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x005D, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x005B,
+    0x0091, 0x0000, 0x0000, 0x0000, 0x0000, 0x0090, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x005A, 0x0000, 0x0000, 0x0082, 0x0000, 0x0000,
+    0x0000, 0x0083, 0x0000, 0x0081, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0092, 0x0000, 0x0000, 0x0000, 0x0000, 0x0004, 0x0000, 0x0070,
+    0x0000, 0x0000, 0x006C, 0x0000, 0x0000, 0x0080, 0x0080, 0x0000, 0x0000,
+    0x008F, 0x0000, 0x0000, 0x0000,
+};
+
+static u8 g_testColluCoords[] = {
+    0x80, 0x80, 0xA0, 0xA0, 0xC0, 0xC0, 0x00, 0x00,
+};
+
+static u8 g_testCollvCoords[] = {
+    0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x00, 0x00,
+};
+
+static u16 g_testCollElementLookup[] = {
+    ELEMENT_FIRE,  ELEMENT_THUNDER, ELEMENT_ICE,    ELEMENT_HOLY,  ELEMENT_DARK,
+    ELEMENT_STONE, ELEMENT_CURSE,   ELEMENT_POISON, ELEMENT_WATER, ELEMENT_CUT,
+};
+
+static u8 g_testColliFrames[] = {
+    0x02, 0x04, 0x03, 0x05, 0x06, 0x07, 0x08, 0x00, 0x02, 0x01,
+};
+
+static u16 g_eDamageDisplayClut[] = {
+    PAL_DRA(0x1B2), PAL_DRA(0x1B3), PAL_DRA(0x1B6), PAL_DRA(0x1B7),
+    PAL_DRA(0x1B4), PAL_DRA(0x1B5), PAL_DRA(0x1B0), PAL_DRA(0x1B1),
+};
 
 // Warning: This is different from HitDetection in other overlays.
 // Some of the logic is removed since it doesn't apply in prologue.
@@ -416,461 +486,3 @@ void HitDetection(void) {
 }
 
 #include "../entity_damage_display.h"
-
-#include "../libstage.h"
-
-#include "../entity_red_door.h"
-
-#include "../entity.h"
-
-u8 func_801B4AF0(u8 frames[], Entity* self, u8 arg2) {
-    u16 animFrameStart = self->animFrameIdx * 2;
-    u8* var_s1 = &frames[animFrameStart];
-    s16 var_a1 = 0;
-
-    if (self->animFrameDuration == 0) {
-        if (*var_s1 != 0) {
-            if (*var_s1 == 0xFF) {
-                return 0;
-            }
-            self->animFrameDuration = *var_s1++ + (u8)self->ext.stub[0x3F];
-            self->animCurFrame = *var_s1++;
-            self->animFrameIdx++;
-            var_a1 = 128;
-        } else {
-            var_s1 = frames;
-            self->animFrameIdx = 0;
-            self->animFrameDuration = 0;
-            self->ext.stub[0x3F] = (arg2 * Random()) >> 8;
-            self->animFrameDuration = *var_s1++ + (u8)self->ext.stub[0x3F];
-            self->animCurFrame = *var_s1;
-            self->animFrameIdx++;
-            return 0;
-        }
-    }
-    self->animFrameDuration--;
-    self->animCurFrame = var_s1[-1];
-    var_a1 |= 1;
-    return var_a1;
-}
-
-// Absolute distance from g_CurrentEntity to the player in the X Axis
-s16 GetDistanceToPlayerX(void) {
-    s16 xDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
-
-    if (xDistance < 0) {
-        xDistance = -xDistance;
-    }
-    return xDistance;
-}
-
-// Absolute distance from g_CurrentEntity to the player in the Y Axis
-s32 GetDistanceToPlayerY(void) {
-    s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
-
-    if (yDistance < 0) {
-        yDistance = -yDistance;
-    }
-    return yDistance;
-}
-
-s32 GetSideToPlayer(void) {
-    s16 side = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
-
-    if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
-        side |= 2;
-    }
-    return side;
-}
-
-void MoveEntity(void) {
-    g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;
-    g_CurrentEntity->posY.val += g_CurrentEntity->velocityY;
-}
-
-void FallEntity(void) {
-    if (g_CurrentEntity->velocityY < FALL_TERMINAL_VELOCITY) {
-        g_CurrentEntity->velocityY += FALL_GRAVITY;
-    }
-}
-
-u8 func_801B4D18(void) {
-    u8 unkState;
-    Entity* entity;
-
-    MoveEntity();
-    FallEntity();
-
-    entity = g_CurrentEntity;
-
-    if (unkState & 1) {
-        entity->velocityY = 0;
-    }
-
-    return unkState;
-}
-
-s32 func_801B4D5C(u16* sensors) {
-    Collider col;
-    Collider colBack;
-    s16 x;
-    s16 y;
-    s16 i;
-
-    MoveEntity();
-    FallEntity();
-    if (g_CurrentEntity->velocityY >= 0) {
-        x = g_CurrentEntity->posX.i.hi;
-        y = g_CurrentEntity->posY.i.hi;
-        for (i = 0; i < 4; i++) {
-            x += *sensors++;
-            y += *sensors++;
-            g_api.CheckCollision(x, y, &col, 0);
-            if (col.effects & EFFECT_UNK_8000) {
-                if (i == 1) {
-                    if (col.effects & EFFECT_SOLID) {
-                        g_api.CheckCollision(x, y - 8, &colBack, 0);
-                        if (!(colBack.effects & EFFECT_SOLID)) {
-                            g_CurrentEntity->posY.i.hi =
-                                (u16)g_CurrentEntity->posY.i.hi + 4 + col.unk18;
-                            g_CurrentEntity->velocityX = 0;
-                            g_CurrentEntity->velocityY = 0;
-                            g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
-                            return 1;
-                        }
-                    }
-                    continue;
-                }
-            }
-            if (col.effects & EFFECT_NOTHROUGH && i != 1) {
-                if (col.effects & EFFECT_QUICKSAND) {
-                    g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
-                    return 4;
-                }
-                g_api.CheckCollision(x, y - 8, &colBack, 0);
-                if (!(colBack.effects & EFFECT_SOLID)) {
-                    g_CurrentEntity->posY.i.hi =
-                        g_CurrentEntity->posY.i.hi + col.unk18;
-                    g_CurrentEntity->velocityX = 0;
-                    g_CurrentEntity->velocityY = 0;
-                    g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
-                    return 1;
-                }
-            }
-        }
-    }
-    g_CurrentEntity->flags |= FLAG_UNK_10000000;
-    return 0;
-}
-
-INCLUDE_ASM("st/st0/nonmatchings/31CA0", func_801B4FD4);
-
-INCLUDE_ASM("st/st0/nonmatchings/31CA0", func_801B51E4);
-
-Entity* AllocEntity(Entity* start, Entity* end) {
-    Entity* current = start;
-    while (current < end) {
-        if (current->entityId == E_NONE) {
-            DestroyEntity(current);
-            return current;
-        }
-
-        current++;
-    }
-    return NULL;
-}
-
-s32 func_801B542C(u8 arg0, s16 arg1) { return D_80181990[arg0] * arg1; }
-
-s16 func_801B5458(u8 arg0) { return D_80181990[arg0]; }
-
-void func_801B5474(s32 arg0, s16 arg1) {
-    g_CurrentEntity->velocityX = func_801B542C(arg0, arg1);
-    g_CurrentEntity->velocityY = func_801B542C(arg0 - 0x40, arg1);
-}
-
-u8 func_801B54E0(s16 arg0, s16 arg1) {
-    return (ratan2(arg1, arg0) >> 4) + 0x40;
-}
-
-u8 func_801B5518(Entity* arg0, Entity* arg1) {
-    s16 a = arg1->posX.i.hi - arg0->posX.i.hi;
-    s16 b = arg1->posY.i.hi - arg0->posY.i.hi;
-    return func_801B54E0(a, b);
-}
-
-u8 func_801B5560(s32 arg0, s32 arg1) {
-    s16 a = (arg0 - (u16)g_CurrentEntity->posX.i.hi);
-    s16 b = (arg1 - (u16)g_CurrentEntity->posY.i.hi);
-    return func_801B54E0(a, b);
-}
-
-#include "../adjust_value_within_threshold.h"
-
-#include "../unk_entity_func0.h"
-
-u16 func_801B568C(s16 x, s16 y) { return ratan2(y, x); }
-
-u16 GetAngleBetweenEntities(Entity* a, Entity* b) {
-    s32 diffX = b->posX.i.hi - a->posX.i.hi;
-    s32 diffY = b->posY.i.hi - a->posY.i.hi;
-    return ratan2(diffY, diffX);
-}
-
-u16 func_801B56F4(s32 x, s32 y) {
-    s16 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
-    s16 diffY = y - (u16)g_CurrentEntity->posY.i.hi;
-    return ratan2(diffY, diffX);
-}
-
-u16 GetNormalizedAngle(u16 arg0, s16 arg1, s16 arg2) {
-    u16 temp_a2 = arg2 - arg1;
-    u16 ret;
-
-    if (temp_a2 & 0x800) {
-        ret = temp_a2 & 0x7FF;
-    } else {
-        ret = temp_a2;
-    }
-
-    if (ret > arg0) {
-        if (temp_a2 & 0x800) {
-            ret = arg1 - arg0;
-        } else {
-            ret = arg1 + arg0;
-        }
-
-        return ret;
-    }
-
-    return arg2;
-}
-
-void SetStep(u8 step) {
-    g_CurrentEntity->step = step;
-    g_CurrentEntity->step_s = 0;
-    g_CurrentEntity->animFrameIdx = 0;
-    g_CurrentEntity->animFrameDuration = 0;
-}
-
-void SetSubStep(u8 step_s) {
-    g_CurrentEntity->step_s = step_s;
-    g_CurrentEntity->animFrameIdx = 0;
-    g_CurrentEntity->animFrameDuration = 0;
-}
-
-void func_801B57D0(u16 params) {
-    Entity* current;
-
-    if (params == 0xFF) {
-        DestroyEntity(g_CurrentEntity);
-        return;
-    }
-    current = g_CurrentEntity;
-    g_CurrentEntity->entityId = E_EXPLOSION;
-    g_CurrentEntity->pfnUpdate = EntityExplosion;
-    g_CurrentEntity->drawFlags = 0;
-    current->params = params;
-    current->animCurFrame = 0;
-    g_CurrentEntity->step = 0;
-    g_CurrentEntity->step_s = 0;
-}
-
-#include "../init_entity.h"
-
-void EntityDummy(Entity* arg0) {
-    if (arg0->step == 0) {
-        arg0->step++;
-    }
-}
-
-s32 func_801B5970(u16* hitSensors, s16 sensorCount) {
-    Collider collider;
-    s16 i;
-    s32 velocityX;
-    u16 temp_a1;
-    s16 x;
-    s16 y;
-
-    velocityX = g_CurrentEntity->velocityX;
-    if (velocityX != 0) {
-        x = g_CurrentEntity->posX.i.hi;
-        y = g_CurrentEntity->posY.i.hi;
-        for (i = 0; i < sensorCount; i++) {
-            if (velocityX < 0) {
-                s16 newX = x + *hitSensors++;
-                x = newX;
-            } else {
-                s16 newX = x - *hitSensors++;
-                x = newX;
-            }
-
-            y += *hitSensors++;
-            g_api.CheckCollision(x, y, &collider, 0);
-            if (collider.effects & 2 &&
-                ((!(collider.effects & 0x8000)) || (i != 0))) {
-                return 2;
-            }
-        }
-        return 0;
-    }
-}
-
-void func_801B5A98(u16* hitSensors, s16 sensorCount) {
-    Collider collider;
-    s16 i;
-    s32 velocityX;
-    s16 x;
-    s16 y;
-
-    velocityX = g_CurrentEntity->velocityX;
-    if (velocityX == 0)
-        return;
-    x = g_CurrentEntity->posX.i.hi;
-    y = g_CurrentEntity->posY.i.hi;
-    for (i = 0; i < sensorCount; i++) {
-        if (velocityX < 0) {
-            x = x + *hitSensors++;
-        } else {
-            x = x - *hitSensors++;
-        }
-
-        y += *hitSensors++;
-        g_api.CheckCollision(x, y, &collider, 0);
-        if (collider.effects & 2 && (!(collider.effects & 0x8000) || i != 0)) {
-            if (velocityX < 0) {
-                g_CurrentEntity->posX.i.hi += collider.unk1C;
-            } else {
-                g_CurrentEntity->posX.i.hi += collider.unk14;
-            }
-            return;
-        }
-    }
-}
-
-INCLUDE_ASM("st/st0/nonmatchings/31CA0", func_801B5BF0);
-
-#include "../replace_breakable_with_item_drop.h"
-
-void func_801B5EC8(void) {
-    s32 temp_v1;
-    Entity* entity;
-
-    entity = g_CurrentEntity;
-    if (entity->velocityY >= 0) {
-        temp_v1 =
-            entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
-        entity->ext.generic.unk84.unk = temp_v1;
-        entity->velocityX = temp_v1;
-        if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
-            entity->ext.generic.unk88.S16.unk0 =
-                -entity->ext.generic.unk88.S16.unk0;
-        }
-        entity = g_CurrentEntity;
-    }
-
-    if (entity->velocityY < FIX(0.25)) {
-        entity->velocityY += FIX(0.125);
-    }
-}
-
-void func_801B5F4C(u16 arg0) {
-    Collider res;
-
-    if (g_CurrentEntity->velocityX < 0) {
-        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
-                             g_CurrentEntity->posY.i.hi - 7, &res, 0);
-        if (res.effects & 5) {
-            g_CurrentEntity->velocityY = 0;
-        }
-    }
-
-    g_api.CheckCollision(
-        g_CurrentEntity->posX.i.hi, g_CurrentEntity->posY.i.hi + 7, &res, 0);
-
-    if (arg0) {
-        if (!(res.effects & 5)) {
-            MoveEntity();
-            FallEntity();
-            return;
-        }
-
-        g_CurrentEntity->velocityX = 0;
-        g_CurrentEntity->velocityY = 0;
-
-        if (res.effects & 4) {
-            g_CurrentEntity->posY.val += FIX(0.125);
-            return;
-        }
-
-        g_CurrentEntity->posY.i.hi += res.unk18;
-        return;
-    }
-
-    if (!(res.effects & 5)) {
-        MoveEntity();
-        func_801B5EC8();
-    }
-}
-
-// Can't be deduped with the other instances due to the extra memcpy
-void CollectHeart(u16 index) {
-    s8 hearts[10];
-
-    __builtin_memcpy(&hearts[0], &c_HeartPrizes[0], 2);
-    __builtin_memcpy(&hearts[8], &c_HeartPrizes[4], 2);
-    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
-    g_Status.hearts = hearts[index] + g_Status.hearts;
-    if (g_Status.heartsMax < g_Status.hearts) {
-        g_Status.hearts = g_Status.heartsMax;
-    }
-    DestroyEntity(g_CurrentEntity);
-}
-
-#include "../collect_gold.h"
-
-void func_801B61D4(void) {}
-
-void func_801B61DC(void) { DestroyEntity(g_CurrentEntity); }
-
-void CollectSubweapon(u16 subWeaponIdx) {
-    Entity* player = &PLAYER;
-    u16 subWeapon;
-
-    g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
-    subWeapon = g_Status.subWeapon;
-    g_Status.subWeapon = D_80181CAC[subWeaponIdx];
-
-    if (subWeapon == g_Status.subWeapon) {
-        subWeapon = 1;
-        g_CurrentEntity->unk6D[0] = 0x10;
-    } else {
-        subWeapon = D_80181CDC[subWeapon];
-        g_CurrentEntity->unk6D[0] = 0x60;
-    }
-
-    if (subWeapon != 0) {
-        g_CurrentEntity->params = subWeapon;
-        g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
-        g_CurrentEntity->step = 7;
-        g_CurrentEntity->step_s = 0;
-        g_CurrentEntity->velocityY = FIX(-2.5);
-        g_CurrentEntity->animCurFrame = 0;
-        g_CurrentEntity->ext.generic.unk88.S16.unk2 = 5;
-        if (player->facingLeft != 1) {
-            g_CurrentEntity->velocityX = FIX(-2);
-            return;
-        }
-        g_CurrentEntity->velocityX = FIX(2);
-        return;
-    }
-    DestroyEntity(g_CurrentEntity);
-}
-
-void CollectDummy(void) { DestroyEntity(g_CurrentEntity); }
-
-Entity* func_801B633C(void) {
-    g_CurrentEntity->step = 3;
-    g_CurrentEntity->params = 4;
-    return g_CurrentEntity;
-}

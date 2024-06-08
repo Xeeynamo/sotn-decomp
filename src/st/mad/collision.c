@@ -1,16 +1,86 @@
-extern u16 g_testCollEnemyLookup[];
-extern u8 g_testCollLuckCutoff[];
-extern u8 g_testColluCoords[];
-extern u8 g_testCollvCoords[];
-extern u16 g_testCollElementLookup[10];
-extern u8 g_testColliFrames[10];
-extern u16 g_testCollPrizeTable[];
-extern u16 g_testCollRandTable;
+#include <stage.h>
 
+static u16 g_testCollEnemyLookup[] = {
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x002B, 0x0000, 0x0000,
+    0x005B, 0x0000, 0x0050, 0x0000, 0x0029, 0x0033, 0x0033, 0x0049, 0x0000,
+    0x0000, 0x0000, 0x004E, 0x0000, 0x0048, 0x0036, 0x0000, 0x0000, 0x0000,
+    0x0039, 0x0000, 0x0040, 0x0000, 0x006A, 0x0000, 0x0000, 0x0057, 0x0000,
+    0x0000, 0x0060, 0x0017, 0x0000, 0x004B, 0x0069, 0x0000, 0x0061, 0x0000,
+    0x0059, 0x0000, 0x0000, 0x004A, 0x0024, 0x0070, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x006F, 0x0000,
+    0x0000, 0x000D, 0x001C, 0x0009, 0x002A, 0x0058, 0x0000, 0x0002, 0x0041,
+    0x0000, 0x0000, 0x0000, 0x0007, 0x0000, 0x0079, 0x0000, 0x0077, 0x0000,
+    0x0042, 0x0000, 0x001A, 0x0000, 0x0025, 0x0000, 0x0000, 0x0016, 0x0035,
+    0x0012, 0x0000, 0x0000, 0x003C, 0x0000, 0x0000, 0x0000, 0x0068, 0x0000,
+    0x0034, 0x0000, 0x0000, 0x002E, 0x0000, 0x005F, 0x001B, 0x000C, 0x0010,
+    0x0027, 0x0000, 0x000A, 0x0067, 0x0000, 0x0004, 0x0021, 0x0022, 0x006E,
+    0x0000, 0x0044, 0x0000, 0x0018, 0x0000, 0x0045, 0x0000, 0x0023, 0x0000,
+    0x007A, 0x0000, 0x000F, 0x0075, 0x0000, 0x0032, 0x0000, 0x0066, 0x0000,
+    0x0000, 0x0076, 0x0000, 0x0078, 0x0000, 0x0000, 0x006B, 0x0000, 0x0000,
+    0x006D, 0x0000, 0x002F, 0x0000, 0x006C, 0x0000, 0x0000, 0x000E, 0x0000,
+    0x0065, 0x0000, 0x0000, 0x0005, 0x0028, 0x0047, 0x0000, 0x0000, 0x004D,
+    0x0000, 0x0000, 0x0000, 0x0052, 0x0000, 0x0056, 0x0000, 0x0001, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0003, 0x0000, 0x0006, 0x0019, 0x0000,
+    0x001D, 0x0000, 0x0026, 0x0013, 0x0000, 0x0000, 0x0031, 0x0000, 0x002D,
+    0x0000, 0x0037, 0x0000, 0x0000, 0x000B, 0x0000, 0x004C, 0x0000, 0x0000,
+    0x007C, 0x0000, 0x0000, 0x0000, 0x0000, 0x0063, 0x0000, 0x0000, 0x005C,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0020, 0x0000, 0x0000, 0x0011, 0x0000,
+    0x0008, 0x0073, 0x0000, 0x0000, 0x0000, 0x002C, 0x0000, 0x0000, 0x0051,
+    0x0054, 0x0000, 0x0030, 0x0015, 0x004F, 0x0000, 0x0000, 0x0000, 0x0046,
+    0x0000, 0x0000, 0x0043, 0x0000, 0x0000, 0x001F, 0x0000, 0x0000, 0x0000,
+    0x003F, 0x0000, 0x0000, 0x0014, 0x0038, 0x0000, 0x003B, 0x0000, 0x003A,
+    0x0000, 0x007B, 0x003D, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x003E, 0x0055, 0x0000, 0x0071, 0x0000, 0x0000, 0x0074, 0x0000, 0x0000,
+    0x0000, 0x0053, 0x0000, 0x0072, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0062, 0x0000, 0x0000, 0x0000, 0x005A, 0x001E, 0x0000, 0x005D,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x005E, 0x0064, 0x0000,
+    0x0000, 0x0000, 0x0000,
+};
+
+static u8 g_testCollLuckCutoff[] = {
+    0x00,
+    0x40,
+    0x20,
+    0x10,
+};
+
+static u8 g_testColluCoords[] = {
+    0x80, 0x80, 0xA0, 0xA0, 0xC0, 0xC0, 0x00, 0x00,
+};
+
+static u8 g_testCollvCoords[] = {
+    0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x00, 0x00,
+};
+
+static u16 g_testCollElementLookup[] = {
+    ELEMENT_FIRE,  ELEMENT_THUNDER, ELEMENT_ICE,    ELEMENT_HOLY,  ELEMENT_DARK,
+    ELEMENT_STONE, ELEMENT_CURSE,   ELEMENT_POISON, ELEMENT_WATER, ELEMENT_CUT,
+};
+
+static u8 g_testColliFrames[] = {
+    0x02, 0x04, 0x03, 0x05, 0x06, 0x07, 0x08, 0x08, 0x02, 0x01,
+};
+
+static u16 g_testCollPrizeTable[] = {
+    0x0002, 0x0003, 0x0003, 0x0003, 0x0003, 0x0003, 0x0003, 0x0003,
+    0x0004, 0x0004, 0x0004, 0x0004, 0x0004, 0x0005, 0x0005, 0x0005,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0001, 0x0001, 0x0001,
+};
+
+static u16 g_testCollRandTable[] = {
+    0x0C00, 0x016C, 0x0F00, 0x016D, 0x0FD0, 0x016E, 0x0FF0,
+    0x016F, 0x0FF8, 0x0170, 0x0FFD, 0x0171, 0x0FFF, 0x0172,
+};
+
+static u16 g_eDamageDisplayClut[] = {
+    PAL_DRA(0x1B2), PAL_DRA(0x1B3), PAL_DRA(0x1B6), PAL_DRA(0x1B7),
+    PAL_DRA(0x1B4), PAL_DRA(0x1B5), PAL_DRA(0x1B0), PAL_DRA(0x1B1),
+};
+
+// Slightly different to other overlays. May be possible to
+//  de-duplicate with several #ifdef, but for now it's broken out.
 void HitDetection(void) {
-#ifdef VERSION_PC
-    u8 sp[SP_LEN];
-#endif
     s32 temp_rand;
     Entity* otherEntity;
     Primitive* prim;
@@ -32,6 +102,8 @@ void HitDetection(void) {
     s8 uselessVar;
     Entity* iterEnt1;
     u8 miscVar2;
+
+    u32 flaggy_flags;
 
     scratchpad_1 = (s32*)SP(0);
     scratchpad_2 = (s32*)SP(0xC0);
@@ -172,8 +244,7 @@ void HitDetection(void) {
                     hitboxCheck2 += hitboxCheck1;
                     hitboxCheck1 *= 2;
                     if (hitboxCheck1 >= hitboxCheck2) {
-                        if ((iterEnt1->attack) &&
-                            (iterEnt2->hitPoints < iterEnt1->attack)) {
+                        if (iterEnt1->attack) {
                             iterEnt2->ext.player.unkB8 = iterEnt1;
                             if (miscVar1 & 8) {
                                 iterEnt2->hitFlags = 3;
@@ -213,7 +284,7 @@ void HitDetection(void) {
                 if (miscVar1) {
                     miscVar1--;
                     miscVar3 = 1 << (miscVar1 & 7);
-                    g_CastleFlags[(miscVar1 >> 3) + 0x190] |= miscVar3;
+                    g_CastleFlags[(miscVar1 >> 3) + 0x11C] |= miscVar3;
                 }
                 if ((g_Status.relics[RELIC_FAERIE_SCROLL] & 2) &&
                     !(entFrom5C->flags & FLAG_UNK_01000000)) {
@@ -319,15 +390,10 @@ void HitDetection(void) {
                         miscVar1 &= 0x3FFF;
                         if (entFrom5C->flags & FLAG_UNK_10) {
                             // Different on PSP vs PSX
-                            if (g_PlayableCharacter != PLAYER_ALUCARD) {
-                                // normally this is Alucard shouting "Dark
-                                // Metamorphosis" but obviously if not playing
-                                // as Alucard, this won't match
-                                g_api.PlaySfx(SFX_RICHTER_ATTACK_HIT);
-                            } else if (iterEnt2->hitEffect & 0x80) {
-                                g_api.PlaySfx(SE_WEAPON_STAB);
+                            if (iterEnt2->hitEffect & 0x80) {
+                                g_api.PlaySfx(SE_UNK_MAD_630);
                             } else {
-                                g_api.PlaySfx(SE_WEAPON_WHACK);
+                                g_api.PlaySfx(0x6DB);
                             }
                         }
                         if (entFrom5C->hitPoints != 0x7FFE) {
@@ -397,17 +463,15 @@ void HitDetection(void) {
                 miscVar3 = entFrom5C->flags & (FLAG_UNK_800 | FLAG_UNK_400);
                 if (miscVar3) {
                     if ((rand() & 0xFF) <
-                        g_api.func_800FF460(
-                            g_testCollLuckCutoff[miscVar3 >> 0xA])) {
+                        g_testCollLuckCutoff[miscVar3 >> 0xA]) {
                         otherEntity =
                             AllocEntity(&g_Entities[160], &g_Entities[192]);
-                        miscVar1 = 0;
                         if (otherEntity != NULL) {
                             if (hitboxCheck2 == 5) {
                                 // This little block is weird, especially since
                                 // the g_testCollRandTable is not any obvious
                                 // number pattern.
-                                randCompare = &g_testCollRandTable;
+                                randCompare = g_testCollRandTable;
                                 miscVar3 = rand() & 0xFFF;
                                 while (1) {
                                     if (*randCompare++ >= miscVar3) {
@@ -418,24 +482,26 @@ void HitDetection(void) {
                                 }
 
                             } else {
-                                miscVar3 = g_api.func_800FF494(sp3C);
-                                if (miscVar3 & 0x40) {
+                                miscVar3 = rand() & 0xFF;
+                                if (miscVar3 < sp3C->rareItemDropRate) {
                                     miscVar3 = sp3C->rareItemId;
-                                    // Paranthropus check: Drops turquoise if
-                                    // game not beaten. Otherwise ring of Varda
-                                    if ((miscVar3 == 0x173) &&
-                                        (!g_IsTimeAttackUnlocked)) {
-                                        miscVar3 = 0x16A;
-                                    } else {
-                                        miscVar1 = g_testCollEnemyLookup
-                                            [entFrom5C->enemyId];
+                                    miscVar1 =
+                                        g_testCollEnemyLookup[entFrom5C
+                                                                  ->enemyId];
+                                    if (miscVar1) {
+                                        miscVar1--;
+                                        flaggy_flags = (1 << (miscVar1 & 7));
+                                        g_CastleFlags[(miscVar1 >> 3) +
+                                                      0x13C] |= flaggy_flags;
                                     }
-                                } else if (miscVar3 & 0x20) {
-                                    miscVar3 = sp3C->uncommonItemId;
                                 } else {
-                                    // select a prize from the table. This
-                                    // covers heart, money, etc drops.
-                                    miscVar3 = g_testCollPrizeTable[miscVar3];
+                                    miscVar3 -= sp3C->rareItemDropRate;
+                                    if (miscVar3 < sp3C->uncommonItemDropRate) {
+                                        miscVar3 = sp3C->uncommonItemId;
+                                    } else {
+                                        miscVar3 =
+                                            g_testCollPrizeTable[rand() & 0x1F];
+                                    }
                                 }
                             }
                             if (miscVar3 >= 0x80) {
@@ -448,7 +514,6 @@ void HitDetection(void) {
                                 CreateEntityFromEntity(
                                     3, iterEnt1, otherEntity);
                             }
-                            otherEntity->ext.drop.unk94 = miscVar1;
                             otherEntity->params = miscVar3;
                             // item pops up in the air a bit when spawned
                             otherEntity->velocityY = FIX(-3.5);
@@ -523,3 +588,4 @@ void HitDetection(void) {
         }
     }
 }
+#include "../entity_damage_display.h"

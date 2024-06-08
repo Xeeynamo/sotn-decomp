@@ -1,11 +1,4 @@
 #include "no3.h"
-#include "../hit_detection.h"
-
-#include "../entity_damage_display.h"
-
-#include "../libstage.h"
-
-#include "../entity_red_door.h"
 
 #include "../entity.h"
 

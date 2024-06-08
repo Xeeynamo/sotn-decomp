@@ -178,7 +178,7 @@ void EntityBoneScimitar(Entity* self) {
             if (func_801BCCFC(&D_8018215C) != 0) {
                 self->step_s++;
             }
-            func_801BD848(&D_80182174, 2);
+            CheckFieldCollision(&D_80182174, 2);
             break;
 
         case BONE_SCIMITAR_LAND:

@@ -1,13 +1,5 @@
 #include "np3.h"
 
-#include "../hit_detection.h"
-
-#include "../entity_damage_display.h"
-
-#include "../libstage.h"
-
-#include "../entity_red_door.h"
-
 #include "../entity.h"
 
 u8 func_801BC6BC(u8 frames[], Entity* self, u8 arg2) {
