@@ -90,4 +90,6 @@ extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
 
+extern s16 D_80199DE8;
+
 #endif

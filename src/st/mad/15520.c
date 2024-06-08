@@ -289,7 +289,46 @@ void func_801965E4(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_801966B0);
+void func_801966B0(u16* sensors) {
+    switch (g_CurrentEntity->step_s) {
+    case 0:
+        g_CurrentEntity->animCurFrame = 0;
+        g_CurrentEntity->hitboxState = 0;
+        g_CurrentEntity->zPriority -= 0x10;
+        g_CurrentEntity->drawFlags |= DRAW_HIDE;
+        g_CurrentEntity->unk6C = 0;
+        g_CurrentEntity->step_s++;
+        break;
+    case 1:
+        if (func_80192190(sensors) & 1) {
+            g_CurrentEntity->animCurFrame = 1;
+            g_CurrentEntity->step_s++;
+        }
+        break;
+    case 2:
+        g_CurrentEntity->unk6C += 2;
+        if (g_CurrentEntity->unk6C == 0xC0) {
+            g_CurrentEntity->drawFlags = 0;
+            g_CurrentEntity->drawMode = DRAW_DEFAULT;
+            g_CurrentEntity->hitEffect = g_CurrentEntity->palette;
+            g_CurrentEntity->step_s++;
+            D_80199DE8 = 64;
+        }
+        break;
+    case 3:
+        if (D_80199DE8 & 1) {
+            g_CurrentEntity->palette = g_CurrentEntity->hitEffect;
+        } else {
+            g_CurrentEntity->palette = PAL_OVL(0x19F);
+        }
+        if (!--D_80199DE8) {
+            g_CurrentEntity->hitboxState = 3;
+            g_CurrentEntity->palette = g_CurrentEntity->hitEffect;
+            func_80192BD0(1);
+        }
+        break;
+    }
+}
 
 void func_8019686C(u16 entityId, Entity* src, Entity* dst) {
     DestroyEntity(dst);
@@ -311,8 +350,6 @@ void func_8019686C(u16 entityId, Entity* src, Entity* dst) {
     }
 }
 
-// DECOMP_ME_WIP func_80196934 https://decomp.me/scratch/fA367 TODO: 0x80 entity
-// member unconfirmed
 void func_80196934(void) {
     Entity* entity;
     s16 temp_s3;
