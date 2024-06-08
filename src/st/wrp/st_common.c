@@ -384,7 +384,7 @@ s32 func_8018C434(u16* hitSensors, s16 sensorCount) {
 }
 #endif
 
-void func_8018C55C(s16* hitSensors, s16 sensorCount) {
+void CheckFieldCollision(s16* hitSensors, s16 sensorCount) {
     Collider collider;
     s32 velocityX;
     s16 i;

@@ -35,7 +35,7 @@ segments:
       - [0x164, layers, rooms]
       - [0x47C, data]
       - [0x18C0, data]
-      - [0x1DD0, data]
+      - [0x1B78, .data, e_collect]
       - [0x1E68, .data, entity_relic_orb]
       - [0x1ECC, data]
       - [0x1F80, .data, e_particles]
@@ -90,9 +90,9 @@ segments:
       - [0x3063C, .rodata, 36DE4] # func_801B7034
       - [0x3064C, rodata]
       - [0x30728, .rodata, 39908] # EntityRedDoor
-      - [0x30740, rodata]
-      - [0x30790, .rodata, 3E30C]
-      - [0x307B0, .rodata, 3E30C]
+      - [0x30740, .rodata, e_collect] # CollectGold text
+      - [0x30790, .rodata, e_collect] # EntityPrizeDrop
+      - [0x307B0, .rodata, e_collect] # EntityEquipItemDrop
       - [0x307C8, .rodata, entity_relic_orb]
       - [0x30800, .rodata, entity_message_box]
       - [0x30814, .rodata, 43708] # EntityBoneScimitar
@@ -114,7 +114,7 @@ segments:
       - [0x39504, c, update]
       - [0x39800, c, update_stage_entities]
       - [0x39908, c]
-      - [0x3E30C, c]
+      - [0x3D848, c, e_collect]
       - [0x3F308, c, blit_char]
       - [0x3F5B8, c, entity_relic_orb]
       - [0x40088, c, entity_heart_drop]

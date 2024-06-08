@@ -276,7 +276,7 @@ extern u16 g_InitializeData0[];
 extern u16 D_80180BC8[];
 extern u16 D_80181CA8[];
 extern u16 D_80181CD8[];
-extern u8* D_80181D3C[];
+extern u8* g_SubweaponAnimPrizeDrop[];
 extern u16 D_80180C94[];
 extern u16 D_80182424[];
 extern u16 D_80180CA0[];

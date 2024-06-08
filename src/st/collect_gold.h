@@ -1,5 +1,5 @@
 extern u32 c_GoldPrizes[];
-extern u8* g_goldCollectTexts[];
+extern const char* g_goldCollectTexts[];
 
 void CollectGold(u16 goldSize) {
 #ifdef VERSION_BETA
