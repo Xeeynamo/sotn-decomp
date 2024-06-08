@@ -146,11 +146,10 @@ void EntityLifeUpSpawn(Entity* self) {
                         &D_80182830, &D_80182838, &D_80182840, &D_80182848,
                         (Point16*)&prim->x0, (Point16*)&prim->x1,
                         (Point16*)&prim->x2, (Point16*)&prim->x3, &sp98, &sp9C);
-                    ((LifeUpPrim*)prim->next)->x2 =
-                        ((LifeUpPrim*)prim->next)->y2 -= 0x10;
-                    ((LifeUpPrim*)prim->next)->tpage += 8;
-                    ((LifeUpPrim*)prim->next)->x3 += 0x10;
-                    ((LifeUpPrim*)prim->next)->y3 += 0x20;
+                    (prim->next)->x2 = (prim->next)->y2 -= 0x10;
+                    (prim->next)->tpage += 8;
+                    (prim->next)->x3 += 0x10;
+                    (prim->next)->y3 += 0x20;
                     // Note that we go to next here, but also in the for-loop,
                     // so it goes twice each loop
                     prim = prim->next;
