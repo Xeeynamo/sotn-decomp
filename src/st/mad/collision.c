@@ -284,7 +284,7 @@ void HitDetection(void) {
                 if (miscVar1) {
                     miscVar1--;
                     miscVar3 = 1 << (miscVar1 & 7);
-                    g_CastleFlags[(miscVar1 >> 3) + 0x11C] |= miscVar3;
+                    g_CastleFlags[(miscVar1 >> 3) + 0x120] |= miscVar3;
                 }
                 if ((g_Status.relics[RELIC_FAERIE_SCROLL] & 2) &&
                     !(entFrom5C->flags & FLAG_UNK_01000000)) {
@@ -492,7 +492,7 @@ void HitDetection(void) {
                                         miscVar1--;
                                         flaggy_flags = (1 << (miscVar1 & 7));
                                         g_CastleFlags[(miscVar1 >> 3) +
-                                                      0x13C] |= flaggy_flags;
+                                                      0x140] |= flaggy_flags;
                                     }
                                 } else {
                                     miscVar3 -= sp3C->rareItemDropRate;
