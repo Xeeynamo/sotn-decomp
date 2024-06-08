@@ -2085,7 +2085,7 @@
 - [✅ EntityExplosion](function_calls/nz0.EntityExplosion.svg?raw=1)
 - [✅ EntityExplosionSpawn](function_calls/nz0.EntityExplosionSpawn.svg?raw=1)
 - [✅ EntityFloorSpikes](function_calls/nz0.EntityFloorSpikes.svg?raw=1)
-- [❌ EntityGaibon](function_calls/nz0.EntityGaibon.svg?raw=1)
+- [✅ EntityGaibon](function_calls/nz0.EntityGaibon.svg?raw=1)
 - [✅ EntityHeartDrop](function_calls/nz0.EntityHeartDrop.svg?raw=1)
 - [✅ EntityIntenseExplosion](function_calls/nz0.EntityIntenseExplosion.svg?raw=1)
 - [✅ EntityIsNearPlayer](function_calls/nz0.EntityIsNearPlayer.svg?raw=1)
