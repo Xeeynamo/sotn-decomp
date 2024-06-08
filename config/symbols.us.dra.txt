@@ -125,6 +125,7 @@ g_WingSmashButtonTimer = 0x80137FF8;
 g_WingSmashTimer = 0x80137FFC;
 g_BatScreechDone = 0x80138000;
 g_MistTimer = 0x80138004;
+D_801381F4 = 0x801381F4;
 g_CurrentXaConfigId = 0x80138458;
 g_SeqTable = 0x80138460;
 g_CurCdPos = 0x80138F20;
