@@ -1,30 +1,5 @@
 #include "rwrp.h"
 
-#include "../create_entity.h"
-
-bool EntityIsNearPlayer(Entity* self) {
-    s16 distanceX;
-    s16 diffX;
-    s16 distanceY;
-    s16 diffY;
-
-    diffX = PLAYER.posX.i.hi - self->posX.i.hi;
-    distanceX = abs(diffX);
-    if (distanceX > 16) {
-        return false;
-    }
-
-    diffY = PLAYER.posY.i.hi - self->posY.i.hi;
-    distanceY = abs(diffY);
-    if (distanceY > 32) {
-        return false;
-    }
-
-    return true;
-}
-
-INCLUDE_ASM("st/rwrp/nonmatchings/BD58", func_8018C948);
-
 #include "../entity.h"
 
 u8 func_8018D768(u8 frames[], Entity* self, u8 arg2) {
@@ -88,7 +63,7 @@ void FallEntity(void) {
         g_CurrentEntity->velocityY += FALL_GRAVITY;
     }
 }
-INCLUDE_ASM("st/rwrp/nonmatchings/BD58", func_8018D990);
+INCLUDE_ASM("st/rwrp/nonmatchings/D580", func_8018D990);
 
 s32 func_8018DC08(s16* posX) {
     Collider collider;
@@ -258,7 +233,7 @@ void EntityExplosionSpawn(u16 arg0, u16 sfxId) {
     g_CurrentEntity->step_s = 0;
 }
 
-INCLUDE_ASM("st/rwrp/nonmatchings/BD58", InitializeEntity);
+INCLUDE_ASM("st/rwrp/nonmatchings/D580", InitializeEntity);
 
 void EntityDummy(Entity* entity) {
     if (entity->step == 0) {
@@ -266,9 +241,9 @@ void EntityDummy(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("st/rwrp/nonmatchings/BD58", func_8018E3B4);
+INCLUDE_ASM("st/rwrp/nonmatchings/D580", func_8018E3B4);
 
-INCLUDE_ASM("st/rwrp/nonmatchings/BD58", func_8018E4DC);
+INCLUDE_ASM("st/rwrp/nonmatchings/D580", func_8018E4DC);
 
 #include "../get_player_collision_with.h"
 
@@ -296,7 +271,7 @@ void func_8018EA30(void) {
     }
 }
 
-INCLUDE_ASM("st/rwrp/nonmatchings/BD58", func_8018EAB4);
+INCLUDE_ASM("st/rwrp/nonmatchings/D580", func_8018EAB4);
 
 extern s8 c_HeartPrizes[];
 
@@ -347,7 +322,7 @@ void CollectLifeVessel(void) {
 
 void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
-INCLUDE_ASM("st/rwrp/nonmatchings/BD58", EntityPrizeDrop);
+INCLUDE_ASM("st/rwrp/nonmatchings/D580", EntityPrizeDrop);
 
 #define MISSING_ANIMATE_ENTITY_PROTOTYPE
 #include "../entity_explosion.h"
@@ -355,6 +330,6 @@ INCLUDE_ASM("st/rwrp/nonmatchings/BD58", EntityPrizeDrop);
 
 #include "../blink_item.h"
 
-INCLUDE_ASM("st/rwrp/nonmatchings/BD58", EntityEquipItemDrop);
+INCLUDE_ASM("st/rwrp/nonmatchings/D580", EntityEquipItemDrop);
 
 #include "../blit_char.h"
