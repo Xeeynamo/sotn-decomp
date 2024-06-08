@@ -319,6 +319,8 @@ INCLUDE_ASM("st/nz0/nonmatchings/4070C", func_801C20B8);
 
 #include "../clut_lerp.h"
 
+// Appears to handle playing SFX in a way that reduces volume with
+// distance from player. Especially noticable in Slogra/Gaibon fight.
 void func_801C29B0(s16 sfxId) {
     s32 var_a3;
     s32 temp_v0_2;
