@@ -79,12 +79,12 @@ typedef struct Prim {
 #include "primitive.h"
 
 #define DRAW_DEFAULT 0x00
-#define DRAW_TRANSP 0x01 // make it semi transparent
-#define DRAW_UNK02 0x02  // unknown
-#define DRAW_COLORS 0x04 // use color blending
-#define DRAW_HIDE 0x08   // do not render the primitive
-#define DRAW_TPAGE 0x10  // use custom tpage
-#define DRAW_TPAGE2 0x20 // use custom tpage
+#define DRAW_TRANSP 0x01     // make it semi transparent
+#define DRAW_UNK02 0x02      // unknown
+#define DRAW_COLORS 0x04     // use color blending
+#define DRAW_HIDE 0x08       // do not render the primitive
+#define DRAW_TPAGE 0x10      // use custom tpage
+#define DRAW_TPAGE2 0x20     // use custom tpage
 #define DRAW_UNK_40 0x40
 #define DRAW_MENU 0x80       // render only if D_800973EC is set
 #define DRAW_UNK_100 0x100   // unknown
