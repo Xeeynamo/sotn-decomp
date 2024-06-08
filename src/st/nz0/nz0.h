@@ -29,11 +29,14 @@ typedef enum {
     /* 0x32 */ E_ROTATE_SPITTLEBONE,
     /* 0x33 */ E_SPITTLEBONE_SPIT,
     /* 0x38 */ E_FIRE = 0x38,
-    /* 0x41 */ E_SLOGRA_SPEAR = 0x41,
-    /* 0x42 */ E_SLOGRA_SPEAR_PROJECTILE = 0x42,
-    /* 0x43 */ E_GAIBON = 0x43,
+    /* 0x3F */ E_BOSS_ROOM_BLOCK = 0x3F,
+    /* 0x40 */ E_SLOGRA,
+    /* 0x41 */ E_SLOGRA_SPEAR,
+    /* 0x42 */ E_SLOGRA_SPEAR_PROJECTILE,
+    /* 0x43 */ E_GAIBON,
     /* 0x45 */ E_GAIBON_SMALL_FIREBALL = 0x45,
-    /* 0x46 */ E_GAIBON_BIG_FIREBALL = 0x46,
+    /* 0x46 */ E_GAIBON_BIG_FIREBALL,
+    /* 0x49 */ E_LIFE_UP_SPAWN = 0x49
 } EntityIDs;
 
 #define BOSS_FLAG_DOORS_CLOSED (1 << 0)
@@ -176,6 +179,7 @@ extern const u8 D_80180F74[];
 extern u8 D_80180F88[];
 extern u16 D_80180F9C[];
 extern Unkstruct_80180FE0 D_80180FE0[];
+extern s16 D_80181014[];
 extern u32 g_randomNext;
 extern s8 c_HeartPrizes[];
 extern Entity* g_CurrentEntity;
