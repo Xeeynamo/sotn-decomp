@@ -12,7 +12,7 @@
 <!-- nz0.EntityLifeUpSpawn -->
 <g id="node1" class="node">
 <title>nz0.EntityLifeUpSpawn</title>
-<ellipse fill="red" stroke="black" cx="1325.84" cy="-198" rx="121.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1325.84" cy="-198" rx="121.58" ry="18"/>
 <text text-anchor="middle" x="1325.84" y="-194.3" font-family="Times,serif" font-size="14.00">nz0.EntityLifeUpSpawn</text>
 </g>
 <!-- RotMatrix -->

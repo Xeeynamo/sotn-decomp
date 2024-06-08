@@ -451,7 +451,7 @@
 <g id="node29" class="node">
 <title>nz0.EntityLifeUpSpawn</title>
 <g id="a_node29"><a xlink:href="nz0.EntityLifeUpSpawn.svg" xlink:title="nz0.EntityLifeUpSpawn">
-<ellipse fill="red" stroke="black" cx="7413.24" cy="-198" rx="121.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="7413.24" cy="-198" rx="121.58" ry="18"/>
 <text text-anchor="middle" x="7413.24" y="-194.3" font-family="Times,serif" font-size="14.00">nz0.EntityLifeUpSpawn</text>
 </a>
 </g>

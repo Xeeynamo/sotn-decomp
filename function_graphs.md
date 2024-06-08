@@ -2092,7 +2092,7 @@
 - [✅ EntityIsNearPlayer2](function_calls/nz0.EntityIsNearPlayer2.svg?raw=1)
 - [✅ EntityLargeGaibonProjectile](function_calls/nz0.EntityLargeGaibonProjectile.svg?raw=1)
 - [✅ EntityLeftSecretRoomWall](function_calls/nz0.EntityLeftSecretRoomWall.svg?raw=1)
-- [❌ EntityLifeUpSpawn](function_calls/nz0.EntityLifeUpSpawn.svg?raw=1)
+- [✅ EntityLifeUpSpawn](function_calls/nz0.EntityLifeUpSpawn.svg?raw=1)
 - [❌ EntityMagicallySealedDoor](function_calls/nz0.EntityMagicallySealedDoor.svg?raw=1)
 - [❌ EntityMariaCutscene](function_calls/nz0.EntityMariaCutscene.svg?raw=1)
 - [✅ EntityMessageBox](function_calls/nz0.EntityMessageBox.svg?raw=1)
