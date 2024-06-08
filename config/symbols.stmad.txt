@@ -57,7 +57,6 @@ MoveEntity = 0x801920F0;
 FallEntity = 0x80192120;
 InitializeEntity = 0x80192CAC;
 EntityDummy = 0x80192DA8;
-CollectHeart = 0x8019362C;
 EntityPrizeDrop = 0x801939E0;
 EntityExplosion = 0x80194218;
 EntityEquipItemDrop = 0x801943EC;
