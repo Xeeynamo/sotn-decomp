@@ -67,9 +67,9 @@ extern u16 D_80180DC4[];
 extern u16 D_80180DF4[];
 extern u32 D_091CF6DC;
 extern u32 D_091CF698;
-extern u16 D_psp_09246370[];
+extern u16 g_MariaWeaponData1[];
 extern u16 D_psp_092462E0[];
-extern u16 D_psp_09246388[];
+extern u16 g_MariaWeaponData0[];
 extern u16 D_psp_092462F8[];
 void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;
@@ -84,7 +84,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
     }
 
     if (g_PlayableCharacter == PLAYER_MARIA) {
-        D_091CF6DC = D_psp_09246370[subWeaponIdx - 0xe];
+        D_091CF6DC = g_MariaWeaponData0[subWeaponIdx - 0xe];
         func_90E4C90();
     } else {
         D_091CF698 = D_psp_092462E0[subWeaponIdx - 0xe];
@@ -96,7 +96,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
         g_CurrentEntity->unk6D[0] = 0x10;
     } else {
         if (g_PlayableCharacter == PLAYER_MARIA) {
-            subWeapon = D_psp_09246388[subWeapon];
+            subWeapon = g_MariaWeaponData1[subWeapon];
         } else {
             subWeapon = D_psp_092462F8[subWeapon];
         }

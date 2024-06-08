@@ -79,7 +79,7 @@ segments:
       - [0xEC40, data] # D_psp_092462C0
       - [0xEC60, data] # D_psp_092462E0
       - [0xEC90, data] # D_psp_09246310
-      - [0xECF0, data] # D_psp_09246370
+      - [0xECF0, .data, wrp_psp/wrp_data_ECF0] # g_MariaWeaponData0
       - [0xED30, data] # D_psp_092463B0
       - [0xED60, data] # D_psp_092463E0
       - [0xEDE0, data] # D_psp_09246460
