@@ -106,7 +106,8 @@ segments:
       - [0x308D4, .rodata, 47958] # EntityBloodSkeleton
       - [0x308E8, rodata]
       - [0x30900, .rodata, e_stage_name] # EntityStageNamePopup
-      - [0x30934, rodata]
+      - [0x30934, rodata] #weird single variable g_UnkPrimHelperRot?
+      - [0x3093C, .rodata, lifeupspawn]
       - [0x30958, c]
       - [0x33FCC, c, bossfight] # Slogra & Gaibon Boss
       - [0x34690, c, slogra]
@@ -138,6 +139,6 @@ segments:
       - [0x47CF0, c] # EntityMagicallySealedDoor
       - [0x48ADC, c, e_stage_name] # EntityStageNamePopup
       - [0x49930, c, prim_helpers]
-      - [0x4A160, c]
-      - [0x4AA10, sbss]
+      - [0x4A160, c, lifeupspawn]
+      - [0x4AA14, sbss]
   - [0x4B780]
