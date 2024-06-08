@@ -77,9 +77,9 @@ segments:
       - [0xEBE0, data] # D_psp_09246260
       - [0xEC10, data] # D_psp_09246290
       - [0xEC40, data] # D_psp_092462C0
-      - [0xEC60, data] # D_psp_092462E0
+      - [0xEC60, .data, wrp_psp/wrp_data_EC60] # D_psp_092462E0
       - [0xEC90, data] # D_psp_09246310
-      - [0xECF0, data] # D_psp_09246370
+      - [0xECF0, .data, wrp_psp/wrp_data_ECF0] # g_MariaWeaponData0
       - [0xED30, data] # D_psp_092463B0
       - [0xED60, data] # D_psp_092463E0
       - [0xEDE0, data] # D_psp_09246460
@@ -112,8 +112,8 @@ segments:
       - [0xF700, data] # D_psp_09246D80
       - [0xF720, data] # D_psp_09246DA0
       - [0xF740, data] # D_psp_09246DC0
-      - [0xF790, data] # g_eRedDoorTiles
-      - [0xF7B0, data] # D_psp_09246E30
+      - [0xF790, .data, wrp_psp/wrp_data_F7B0] # g_eRedDoorTiles
+      - [0xF7B0, .data, wrp_psp/wrp_data_F7B0] # D_psp_09246E30
       - [0xF810, .data, wrp_psp/wrp_data_F810] # g_eBreakableInit
       - [0xF820, .data, wrp_psp/wrp_data_F810] # g_InitializeData0
       - [0xF830, .data, wrp_psp/wrp_data_F810] # g_InitializeEntityData0
