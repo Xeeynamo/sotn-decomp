@@ -1,6 +1,6 @@
 #include <game.h>
-#include "../st/sel/sel.h"
-#include "pc.h"
+#include "../../st/sel/sel.h"
+#include "../pc.h"
 #include "sfx.h"
 
 // stubs

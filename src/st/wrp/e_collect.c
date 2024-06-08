@@ -142,7 +142,7 @@ void EntityPrizeDrop(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_InitializeData0);
-        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 0x14;
+        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk - 0x14;
         self->drawMode = DRAW_DEFAULT;
         if (itemId >= 0x18) {
             self->params = 0;
@@ -335,35 +335,8 @@ void EntityPrizeDrop(Entity* self) {
 }
 
 extern u16 g_InitializeEntityData0[];
-extern s32 D_80180EC4[];
-extern u8* D_80180F70[];
-void EntityExplosion(Entity* entity) {
-    u16 zPriority;
 
-    if (entity->step == 0) {
-        InitializeEntity(g_InitializeEntityData0);
-        entity->animSet = ANIMSET_DRA(2);
-        entity->animFrameIdx = 0;
-        entity->animFrameDuration = 0;
-        entity->drawMode = 0x30;
-        if (entity->params & 0xF0) {
-            entity->palette = 0x8195;
-            entity->drawMode = DRAW_TPAGE;
-        }
-
-        zPriority = entity->params & 0xFF00;
-        if (zPriority) {
-            entity->zPriority = zPriority >> 8;
-        }
-        entity->params &= 15;
-        entity->velocityY = D_80180EC4[entity->params];
-    } else {
-        entity->posY.val += entity->velocityY;
-        if (!AnimateEntity(D_80180F70[entity->params], entity)) {
-            DestroyEntity(entity);
-        }
-    }
-}
+#include "../entity_explosion.h"
 
 #include "../blink_item.h"
 

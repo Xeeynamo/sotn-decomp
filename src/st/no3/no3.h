@@ -95,7 +95,6 @@ extern s16 D_80182A38[];
 extern u8 D_80182A48[];
 extern u16 D_80180AD0[];
 extern u16 g_EInitGeneric[];
-extern u16 D_80180AE8[];
 extern u16 D_80180AF4[];
 extern u16 g_eInitGeneric2[];
 extern u16 D_80180B18[];

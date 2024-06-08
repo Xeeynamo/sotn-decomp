@@ -29,8 +29,8 @@ Entity* g_CurrentEntity;
 GpuUsage g_GpuUsage;
 PlayerStatus g_Status;
 u32 g_randomNext;
-s32 playerX;
-s32 playerY;
+s32 g_PlayerX;
+s32 g_PlayerY;
 PlayerState g_Player;
 u32 g_GameTimer;
 GpuBuffer g_GpuBuffers[2];
@@ -158,20 +158,23 @@ RECT D_800B0790 = {0x0301, 0x01FC, 0x0030, 0x0001};
 Point32 D_800B0688[8] = {0};
 u16 D_800B06C8[0x30] = {0};
 s16 D_800ACF84[8];
-u8 D_800ACF4C[0x200];                 // random size just to play safe
-u8 D_800ACF54[0x200];                 // random size just to play safe
-s32 D_800ACF74;                       // These two might...
-s32 D_800ACF78;                       // ...be an array
-unkstruct_800ACF7C D_800ACF7C[0x200]; // random size just to play safe
-s16 D_800ACF60[6];                    // guessed size
-s16 D_800ACF6C[4];                    // guessed size
-s16 D_800ACF8A[5];                    // guessed size
-s16 D_800ACF94[16];                   // guessed size
-u8 D_800ACFB4[20][4];                 // TODO AnimationFrames*[], random size
-s32 D_800B0830[99];                   // random size to play safe
-s32 D_800B083C[99];                   // random size to play safe
-AnimationFrame D_800B0798[40];        // random size to play safe
-u8 D_800B0F94[100][5];                // random size to play safe
+u8 D_800ACF4C[0x200] = { // crouching anim
+    0x00, 0x11, 0x04, 0x15, 0x01, 0x10, 0x03, 0x23};
+u8 D_800ACF54[] = { // idle anim
+    4, 5, 10, 11, 14, 15, 29, 30, 4, 3};
+s32 D_800ACF74;                  // These two might...
+s32 D_800ACF78;                  // ...be an array
+PlayerFallingAnim D_800ACF7C[2]; // random size just to play safe
+s16 D_800ACF60[6];               // guessed size
+s16 D_800ACF6C[4];               // guessed size
+s16 D_800ACF8A[5];               // guessed size
+s16 D_800ACF94[16];              // guessed size
+u8 D_800ACFB4[20][4];            // TODO AnimationFrames*[], random size
+s32 D_800B0830[99];              // random size to play safe
+s32 D_800B083C[99];              // random size to play safe
+s16 D_800B0860[99];              // random size to play safe
+AnimationFrame D_800B0798[40];   // random size to play safe
+u8 D_800B0F94[100][5];           // random size to play safe
 SVECTOR stubbbbbbbb = {0};
 SVECTOR* D_800B0CB4[][4] = {
     // a lot of random data to play safe
@@ -203,11 +206,8 @@ SVECTOR* D_800B0CB4[][4] = {
     &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
 };
 unk_800B08CC D_800B08CC[6] = {0};
-FactoryBlueprint g_FactoryBlueprints[400] = {0}; // TODO load from JSON file
 s32 D_800B07C8 = 0x12345678;
-u8 D_800AD094[0x30];
 Unkstruct_80138094 D_80138094[100]; // unknown size
-s32 D_800AE270[] = {0xFF, 0xFF, 0xFF, 0x7F, 0x7F, 0x3F, 0x7F, 0x3F, 0x7F};
 s32 D_8013808C;
 GpuUsage g_GpuMaxUsage;
 GpuBuffer* g_BackBuffer;
@@ -222,7 +222,6 @@ OT_TYPE* g_CurrentOT;
 s32 D_801362B8;
 s32 D_801362BC;
 s32 g_DebugPlayer;
-Vram g_Vram;
 s32 g_softResetTimer;
 DebugMode g_DebugMode;
 s32 g_DebugPalIdx;
@@ -337,10 +336,6 @@ s16 D_80136C60[0x400] = {0};
 u16 D_8006ED0C[0x10] = {0};
 u16 D_8006ED2C[0x10] = {0};
 u16 D_8006ED4C[0x10] = {0};
-u16 D_800DB0D4[0x10] = {0};
-u16 D_800DB0F4[0x10] = {0};
-u16 D_800DB114[0x70] = {0};
-u16 D_800DB1F4[0xE0] = {0};
 
 u8 g_Pix[4][128 * 128 / 2];
 ImgSrc g_imgUnk8013C200_impl = {
@@ -426,7 +421,6 @@ s32 D_800B091C;
 s32 D_800B0920;
 PlayerOvl g_PlOvl = {0};
 u8** g_PlOvlAluBatSpritesheet[1] = {0};
-u8* g_PlOvlSpritesheet[99] = {0};
 
 // sound bss
 s16 g_SoundCommandRingBufferReadPos;
@@ -547,6 +541,7 @@ s32 g_CdCommandStatus;
 const char* D_80138784[0x800];
 s32 D_8013B65C;
 s32 D_8013841C;
+RECT D_80138424;
 s32 D_8013842C;
 s32 D_80138430;
 s32 D_80138438;
@@ -566,8 +561,6 @@ void SpuGetAllKeysStatus(char* status) { NOT_IMPLEMENTED; }
 
 void func_801073C0(void) { NOT_IMPLEMENTED; }
 
-void func_800EA7CC(void) { NOT_IMPLEMENTED; }
-
 void UpdateCd(void) { NOT_IMPLEMENTED; }
 
 int CdInit(void) {
@@ -579,13 +572,8 @@ void func_801083BC(void) { NOT_IMPLEMENTED; }
 
 void func_801042C4(s32 arg0) { NOT_IMPLEMENTED; }
 
-s32 func_800F0CD8(s32 arg0) {
-    NOT_IMPLEMENTED;
-    return 0;
-}
-
 void EntityWeaponAttack(Entity* self) { NOT_IMPLEMENTED; }
-void func_ptr_80170004(Entity* self) { NOT_IMPLEMENTED; }
+s32 func_ptr_80170004(Entity* self) { NOT_IMPLEMENTED; }
 void func_ptr_80170008(Entity* self) { NOT_IMPLEMENTED; }
 void func_ptr_8017000C(Entity* self) { NOT_IMPLEMENTED; }
 void func_ptr_80170010(Entity* self) { NOT_IMPLEMENTED; }
@@ -631,4 +619,3 @@ void func_80123B40(Entity* self) { NOT_IMPLEMENTED; }
 void EntityBatEcho(Entity* self) { NOT_IMPLEMENTED; }
 void func_8012F894(Entity* self) { NOT_IMPLEMENTED; }
 void func_80129864(Entity* self) { NOT_IMPLEMENTED; }
-void EntitySummonSpirit(Entity* self) { NOT_IMPLEMENTED; }

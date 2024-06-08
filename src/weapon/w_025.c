@@ -14,7 +14,7 @@ void func_B3000_8017AF14(const char* fmt, u_long end) {
 
 INCLUDE_ASM("weapon/nonmatchings/w_025", EntityWeaponAttack);
 
-void func_ptr_80170004(Entity* self) {}
+s32 func_ptr_80170004(Entity* self) {}
 
 void func_ptr_80170008(Entity* self) {}
 

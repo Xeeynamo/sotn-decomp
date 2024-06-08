@@ -24,7 +24,7 @@ void func_80115F54(void) {
         PlaySfx(NA_SE_VO_AL_DYING);
         func_80113EE0();
         PLAYER.velocityY = -0x1A000;
-        PLAYER.ext.generic.unkAC = 0xC1;
+        PLAYER.ext.player.anim = 0xC1;
         PLAYER.drawMode = 0x30;
         PLAYER.rotZ = 0x200;
         func_80118C28(1);
@@ -74,7 +74,7 @@ void func_80116208(void) {
     case 0:
         func_80113EE0();
         if (g_Player.unk62 == 0) {
-            PLAYER.ext.generic.unkAC = 0x37;
+            PLAYER.ext.player.anim = 0x37;
             g_Player.D_80072F00[2] = 8;
             g_Player.unk40 = 0x8166;
             PlaySfx(0x6EB);
@@ -109,7 +109,7 @@ void func_80116208(void) {
             PLAYER.step = Player_Hit;
             PLAYER.step_s = 0xF;
             g_Player.unk60 = 0;
-            func_8010DA48(0x2E);
+            SetPlayerAnim(0x2E);
             g_Player.damageTaken = g_Player.unk64;
             PlaySfx(0x6ED);
             return;
@@ -133,7 +133,7 @@ void PlayerStepHellfire(void) {
             NULL) {
             func_8010E570(0);
         }
-        func_8010DA48(1);
+        SetPlayerAnim(1);
         PLAYER.step_s++;
         break;
     case 1:
@@ -160,14 +160,14 @@ void PlayerStepHellfire(void) {
         }
         if (g_Player.unk5C == 2) {
             PLAYER.velocityX = 0;
-            func_8010DA48(0x3D);
+            SetPlayerAnim(0x3D);
             PLAYER.step_s++;
         }
         break;
     case 3:
         func_8010E27C();
         if (g_Player.unk5C == 3) {
-            func_8010DA48(0x3C);
+            SetPlayerAnim(0x3C);
             PLAYER.step_s += 1;
             // In Hellfire, if you press down, it cancels the spell
             if (g_Player.padPressed & PAD_DOWN) {
@@ -190,7 +190,7 @@ void PlayerStepHellfire(void) {
     // Not sure why this cast to u16 is needed but it is
     if (((u16)runFinishingBlock) || (g_Player.unk5C == 0xFFFF)) {
         func_8010E570(0);
-        func_8010DA48(0x3D);
+        SetPlayerAnim(0x3D);
         func_80111CC0();
     }
 }
@@ -203,7 +203,7 @@ void func_801166A4(void) {
         g_Player.D_80072F00[2] = 6;
         PLAYER.velocityX = 0;
         PLAYER.velocityY = 0;
-        PLAYER.ext.generic.unkAC = 0x33;
+        PLAYER.ext.player.anim = 0x33;
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x5800, 44), 0);
         PLAYER.step_s++;
@@ -238,7 +238,7 @@ void func_801167D0(void) {
         PLAYER.step_s = 0;
         PLAYER.velocityY = 0;
         *velocityX = 0;
-        PLAYER.ext.generic.unkAC = 0xCF;
+        PLAYER.ext.player.anim = 0xCF;
         PLAYER.animFrameIdx = 0;
         PLAYER.animFrameDuration = 0;
     }
@@ -251,7 +251,7 @@ bool BatFormFinished(void) {
     if (D_80097448[1] || g_Player.padTapped & PAD_R1 ||
         HandleTransformationMP(FORM_BAT, REDUCE) < 0) {
         SetPlayerStep(Player_UnmorphBat);
-        func_8010DA48(0xCA);
+        SetPlayerAnim(0xCA);
         D_800AFDA4[1] = 6;
         g_Entities->palette = 0x810D;
         g_Player.unk66 = 0;
@@ -413,7 +413,7 @@ void ControlBatForm(void) {
         if (CheckWingSmashInput() && (!pressingCross) && (PLAYER.step_s != 0) &&
             (CastSpell(SPELL_WING_SMASH) != 0)) {
             LearnSpell(SPELL_WING_SMASH);
-            func_8010DA48(0xC6);
+            SetPlayerAnim(0xC6);
             SetSpeedX(FIX(6));
             PLAYER.step_s = 3;
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x5c00, 44), 0);
@@ -429,7 +429,7 @@ void ControlBatForm(void) {
         } else if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
                    ((u32)(PLAYER.step_s - 1) < 2U) &&
                    (IsRelicActive(RELIC_FIRE_OF_BAT)) && (CastSpell(9) != 0)) {
-            func_8010DA48(0xC9);
+            SetPlayerAnim(0xC9);
             PLAYER.step_s = 4;
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x500, 44), 0);
         }
@@ -446,7 +446,7 @@ void ControlBatForm(void) {
             PLAYER.animSet = 0xD;
             D_800AFDA4[1] = 6;
             PLAYER.unk5A = 0;
-            PLAYER.ext.player.unkAC = 0xCA;
+            PLAYER.ext.player.anim = 0xCA;
             if (func_8011203C() == 0) {
                 return;
             }
@@ -473,7 +473,7 @@ void ControlBatForm(void) {
                     PLAYER.velocityY = FIX(-1.25);
                 }
             }
-            func_8010DA48(0xCA);
+            SetPlayerAnim(0xCA);
             PLAYER.palette = 0x810D;
             D_800AFDA4[1] = (s16)PLAYER.animCurFrame;
             if (g_Player.unk66 == 1) {
@@ -486,7 +486,7 @@ void ControlBatForm(void) {
                 return;
             }
         }
-        func_8010DA48(0xC3);
+        SetPlayerAnim(0xC3);
         PLAYER.animFrameDuration = 1;
         PLAYER.animFrameIdx = 2;
         PLAYER.palette = 0x8100;
@@ -495,7 +495,7 @@ void ControlBatForm(void) {
         break;
     case 1:
         if ((directionsPressed != 0) && (pressingCross == 0)) {
-            if (PLAYER.ext.player.unkAC == 0xC3) {
+            if (PLAYER.ext.player.anim == 0xC3) {
                 PLAYER.animFrameIdx /= 3;
             }
             PLAYER.step_s += 1;
@@ -513,11 +513,11 @@ void ControlBatForm(void) {
         switch (directionsPressed) {
         case 0:
         default:
-            func_8010DA48(0xC3);
+            SetPlayerAnim(0xC3);
             PLAYER.step_s = 1;
             break;
         case PAD_UP:
-            PLAYER.ext.player.unkAC = 0xC2;
+            PLAYER.ext.player.anim = 0xC2;
             if (PLAYER.velocityY < FIX(-1.25)) {
                 DecelerateY(0x1200);
             } else {
@@ -528,9 +528,9 @@ void ControlBatForm(void) {
             break;
         case PAD_DOWN:
             if (!(g_Player.pl_vram_flag & 1)) {
-                PLAYER.ext.player.unkAC = 0xC5;
+                PLAYER.ext.player.anim = 0xC5;
             } else {
-                PLAYER.ext.player.unkAC = 0xC4;
+                PLAYER.ext.player.anim = 0xC4;
             }
             if (PLAYER.velocityY > FIX(1.25)) {
                 DecelerateY(0x1200);
@@ -541,7 +541,7 @@ void ControlBatForm(void) {
             DecelerateX(0x1200);
             break;
         case PAD_RIGHT:
-            PLAYER.ext.player.unkAC = 0xC2;
+            PLAYER.ext.player.anim = 0xC2;
             PLAYER.facingLeft = 0;
             func_8011690C(0x180);
             if (PLAYER.velocityX > FIX(1.25)) {
@@ -556,7 +556,7 @@ void ControlBatForm(void) {
             }
             break;
         case PAD_LEFT:
-            PLAYER.ext.player.unkAC = 0xC2;
+            PLAYER.ext.player.anim = 0xC2;
             PLAYER.facingLeft = 1;
             func_8011690C(0x180);
             if (PLAYER.velocityX < FIX(-1.25)) {
@@ -571,7 +571,7 @@ void ControlBatForm(void) {
             }
             break;
         case PAD_RIGHT | PAD_UP:
-            PLAYER.ext.player.unkAC = 0xC2;
+            PLAYER.ext.player.anim = 0xC2;
             PLAYER.facingLeft = 0;
             func_8011690C(0x80);
             if (PLAYER.velocityX > FIX(0.875)) {
@@ -586,7 +586,7 @@ void ControlBatForm(void) {
             }
             break;
         case PAD_LEFT | PAD_UP:
-            PLAYER.ext.player.unkAC = 0xC2;
+            PLAYER.ext.player.anim = 0xC2;
             PLAYER.facingLeft = 1;
             func_8011690C(0x80);
             if (PLAYER.velocityX < FIX(-0.875)) {
@@ -602,9 +602,9 @@ void ControlBatForm(void) {
             break;
         case PAD_RIGHT | PAD_DOWN:
             if (!(g_Player.pl_vram_flag & 1)) {
-                PLAYER.ext.player.unkAC = 0xC5;
+                PLAYER.ext.player.anim = 0xC5;
             } else {
-                PLAYER.ext.player.unkAC = 0xC4;
+                PLAYER.ext.player.anim = 0xC4;
             }
             PLAYER.facingLeft = 0;
             func_8011690C(0);
@@ -621,9 +621,9 @@ void ControlBatForm(void) {
             break;
         case PAD_LEFT | PAD_DOWN:
             if (!(g_Player.pl_vram_flag & 1)) {
-                PLAYER.ext.player.unkAC = 0xC5;
+                PLAYER.ext.player.anim = 0xC5;
             } else {
-                PLAYER.ext.player.unkAC = 0xC4;
+                PLAYER.ext.player.anim = 0xC4;
             }
             PLAYER.facingLeft = 1;
             func_8011690C(0);
@@ -724,7 +724,7 @@ void ControlBatForm(void) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 81), 0);
             SetSpeedX(FIX(-1.5));
             func_8011690C(0);
-            func_8010DA48(0xC3);
+            SetPlayerAnim(0xC3);
             PLAYER.step_s++;
         }
         break;
@@ -733,7 +733,7 @@ void ControlBatForm(void) {
         DecelerateX(FIX(12.0 / 128));
         DecelerateY(FIX(28.0 / 128));
         func_8011690C(0);
-        if (PLAYER.ext.player.unkAC == 0xC4 && PLAYER.animFrameIdx == 8) {
+        if (PLAYER.ext.player.anim == 0xC4 && PLAYER.animFrameIdx == 8) {
             PLAYER.step_s = 1;
         }
         break;
@@ -870,13 +870,13 @@ void func_80117AC0(void) {
     switch (PLAYER.step_s) {
     case 0:
         if (PLAYER.animFrameDuration < 0) {
-            func_8010DA48(0xF6);
+            SetPlayerAnim(0xF6);
             PLAYER.step_s += 1;
         }
         break;
     case 1:
         if (g_Player.padTapped & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT)) {
-            func_8010DA48(0xC8);
+            SetPlayerAnim(0xC8);
             PlaySfx(0x6EE);
             PLAYER.step_s = 0;
         } else if (g_Player.unk72 == 1) {
@@ -970,7 +970,7 @@ void ControlMistForm(void) {
         if (PLAYER.velocityY < 0) {
             PLAYER.velocityY = -ySpeedOrtho;
         }
-        func_8010DA48(0xCA);
+        SetPlayerAnim(0xCA);
         D_800AFDA4[1] = PLAYER.animCurFrame;
         func_800EA538(8);
         if (!IsRelicActive(RELIC_GAS_CLOUD)) {
@@ -1150,9 +1150,9 @@ void func_801182F8(void) {
         }
         PLAYER.animSet = 1;
         PLAYER.unk5A = 0;
-        func_8010DA48(0xCB);
+        SetPlayerAnim(0xCB);
         if (PLAYER.step_s != 0) {
-            func_8010DA48(0xCC);
+            SetPlayerAnim(0xCC);
         }
         if (g_Entities[16].step < 3) {
             g_Entities[16].step = 3;

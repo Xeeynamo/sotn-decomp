@@ -5,7 +5,7 @@
 
 INCLUDE_ASM("weapon/nonmatchings/w_015", EntityWeaponAttack);
 
-void func_ptr_80170004(Entity* self) {
+s32 func_ptr_80170004(Entity* self) {
     if (self->step == 0) {
         self->animSet = self->ext.weapon.parent->animSet;
         self->animCurFrame = self->ext.weapon.parent->animCurFrame;

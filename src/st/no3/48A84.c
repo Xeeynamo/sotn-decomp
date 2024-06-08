@@ -2,32 +2,7 @@
 
 #include "../check_coll_offsets.h"
 
-void EntityUnkId13(Entity* entity) {
-    switch (entity->step) {
-    case 0:
-        InitializeEntity(D_80180AE8);
-        entity->ext.generic.unk8C.modeU16.unk0 =
-            entity->ext.generic.unk80.entityPtr->entityId;
-    case 1:
-        if (entity->ext.generic.unk7C.U8.unk0++ >= 5) {
-            Entity* newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
-                newEntity->entityId = E_EXPLOSION;
-                newEntity->pfnUpdate = EntityExplosion;
-                newEntity->params = entity->params;
-            }
-            entity->ext.generic.unk7C.U8.unk0 = 0;
-        }
-        entity->posX.i.hi = entity->ext.generic.unk80.entityPtr->posX.i.hi;
-        entity->posY.i.hi = entity->ext.generic.unk80.entityPtr->posY.i.hi;
-        if (entity->ext.generic.unk80.entityPtr->entityId !=
-            entity->ext.generic.unk8C.modeU16.unk0) {
-            DestroyEntity(entity);
-        }
-        break;
-    }
-}
+#include "../entity_unkId13.h"
 
 #include "../entity_unkId14_spawner.h"
 
@@ -35,28 +10,7 @@ void EntityUnkId13(Entity* entity) {
 
 #include "../entity_unkId14.h"
 
-void EntityUnkId15(Entity* arg0) {
-    if (arg0->step == 0) {
-        arg0->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        arg0->palette = 0x8195;
-        arg0->animSet = ANIMSET_DRA(5);
-        arg0->animCurFrame = 1;
-        arg0->drawMode = DRAW_TPAGE;
-        arg0->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        arg0->rotY = arg0->rotX = D_80182628[arg0->params];
-        arg0->velocityY = D_80182638[arg0->params];
-        arg0->step++;
-    } else {
-        arg0->animFrameDuration++;
-        arg0->posY.val -= arg0->velocityY;
-        if (!(arg0->animFrameDuration & 1)) {
-            arg0->animCurFrame++;
-        }
-        if (arg0->animFrameDuration >= 37) {
-            DestroyEntity(arg0);
-        }
-    }
-}
+#include "../entity_unkId15.h"
 
 #include "../entity_olrox_drool.h"
 

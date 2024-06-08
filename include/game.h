@@ -20,7 +20,7 @@
 #include <psxsdk/libsnd.h>
 #include <psxsdk/romio.h>
 
-#define SPAD(x) ((long*)0x1F800000 + x)
+#define SPAD(x) ((s32*)SP(x * sizeof(s32)))
 
 typedef long Event;
 
@@ -86,6 +86,7 @@ typedef struct Prim {
 #define DRAW_TPAGE 0x10      // use custom tpage
 #define DRAW_TPAGE2 0x20     // use custom tpage
 #define DRAW_MENU 0x80       // render only if D_800973EC is set
+#define DRAW_UNK_100 0x100   // unknown
 #define DRAW_UNK_400 0x400   // unknown
 #define DRAW_UNK_800 0x800   // unknown
 #define DRAW_UNK_1000 0x1000 // unknown
@@ -303,13 +304,13 @@ extern u8 g_BmpCastleMap[0x20000];
 #define DEMO_KEY_LEN 3
 #define DEMO_MAX_LEN 0x2000
 
-#define FONT_W 8               // small font size used for dialogues and menu
-#define FONT_H 8               // small font size used for dialogues and menu
-#define FONT_GAP FONT_W        // gap between the beginning of two letters
-#define FONT_SPACE 4           // gap for the space character
-#define MENUCHAR(x) ((x)-0x20) // 8x8 characters are ASCII offset by 0x20
-#define DIAG_EOL 0xFF          // end of line
-#define DIAG_EOS 0x00          // end of string
+#define FONT_W 8                 // small font size used for dialogues and menu
+#define FONT_H 8                 // small font size used for dialogues and menu
+#define FONT_GAP FONT_W          // gap between the beginning of two letters
+#define FONT_SPACE 4             // gap for the space character
+#define MENUCHAR(x) ((x) - 0x20) // 8x8 characters are ASCII offset by 0x20
+#define DIAG_EOL 0xFF            // end of line
+#define DIAG_EOS 0x00            // end of string
 
 #define SAVE_FLAG_NORMAL (0)
 #define SAVE_FLAG_CLEAR (1)
@@ -1194,7 +1195,7 @@ typedef struct {
     /* 0x06 */ u8 unk6;
     /* 0x07 */ u8 nFramesInvincibility;
     /* 0x08 */ u16 stunFrames;
-    /* 0x0A */ u8 unkA;
+    /* 0x0A */ u8 anim;
     /* 0x0B */ u8 blueprintNum; // Blueprint for entity factory spawning subwpn
     /* 0x0C */ u16 hitboxState;
     /* 0x0E */ u16 hitEffect;
@@ -1351,7 +1352,7 @@ typedef struct {
     /* 8003C810 */ s16 (*func_80118B18)(
         Entity* ent1, Entity* ent2, s32 facingLeft);
     /* 8003C814 */ s32 (*UpdateUnarmedAnim)(s8* frameProps, u16** frames);
-    /* 8003C818 */ void (*func_8010DBFC)(s8*, AnimationFrame** frames);
+    /* 8003C818 */ void (*PlayAnimation)(s8*, AnimationFrame** frames);
     /* 8003C81C */ void (*func_80118C28)(s32 arg0);
     /* 8003C820 */ void (*func_8010E168)(s32 arg0, s16 arg1);
     /* 8003C824 */ void (*func_8010DFF0)(s32 arg0, s32 arg1);
@@ -1409,7 +1410,7 @@ typedef struct {
 } PlayerOvl;
 extern PlayerOvl g_PlOvl;
 extern u8** g_PlOvlAluBatSpritesheet[1];
-extern u8* g_PlOvlSpritesheet[99];
+extern u8* g_PlOvlSpritesheet[];
 
 /**** Helper signatures ****/
 extern void (*g_api_FreePrimitives)(s32);
@@ -1435,7 +1436,7 @@ extern u16* (*g_api_func_80106A28)(u16 arg0, u16 kind);
 extern void (*g_api_func_80118894)(Entity*);
 extern EnemyDef* g_api_enemyDefs;
 extern u32 (*g_api_UpdateUnarmedAnim)(s8* frameProps, u16** frames);
-extern void (*g_api_func_8010DBFC)(s8*, AnimationFrame** frames);
+extern void (*g_api_PlayAnimation)(s8*, AnimationFrame** frames);
 extern void (*g_api_func_8010E168)(s32 arg0, s16 arg1);
 extern void (*g_api_func_8010DFF0)(s32 arg0, s32 arg1);
 extern u16 (*g_api_DealDamage)(Entity* enemyEntity, Entity* attackerEntity);
@@ -1552,8 +1553,19 @@ typedef struct {
     // Known timers: 0 = poison, 1 = curse, 2 = visual from stoned/hit,
     //  13 = invincibility, 14 = invincibility from consumables
     /* 80072F00 */ s16 D_80072F00[16]; // poison timer
+
+    // 0x01: touching the ground
+    // 0x02: touching the ceiling
+    // 0x04: touching the right wall
+    // 0x08: touching the left wall
+    // 0x20: in-air or near the edge
+    // 0x0800: touching the ceiling slope
+    // 0x1000: standing on a slightly ascending or descending slope
+    // 0x4000: standing on a raising slope
+    // 0x8000: standing on any slope
     /* 80072F20 */ s32 pl_vram_flag;
-    /* 80072F24 */ s32 unk04; // unknown, check func_80109A44
+
+    /* 80072F24 */ s32 unk04; // copy of the previous field
     /* 80072F28 */ s32 unk08;
     /* 80072F2C */ u32 unk0C;
     /* 80072F30 */ s32 unk10;
@@ -1724,8 +1736,8 @@ extern Event g_EvHwCardTmo;
 extern Event g_EvHwCardNew;
 extern u8 g_Pix[4][128 * 128 / 2];
 extern Primitive g_PrimBuf[MAX_PRIM_COUNT];
-extern s32 playerX;
-extern s32 playerY;
+extern s32 g_PlayerX;
+extern s32 g_PlayerY;
 extern u32 g_randomNext;
 extern s32 D_80096ED8[];
 extern s8 D_80097B98;
@@ -1756,11 +1768,10 @@ extern s32 D_80097924;
 extern s32 D_80097928;
 extern GpuUsage g_GpuUsage;
 extern PlayerStatus g_Status;
-extern u8 D_80097B9C[];
+extern s32 D_80097C98;
 extern s32 subWeapon; // g_SubweaponId
 extern u8 g_SaveName[12] ALIGNED4;
 extern u32 D_80097C40[];
-extern s32 D_80097C98;
 extern PlayerDraw g_PlayerDraw[0x10];
 extern s32 D_800987B4;
 extern s32 D_800987C8;

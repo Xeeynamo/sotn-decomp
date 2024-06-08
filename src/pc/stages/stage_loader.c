@@ -1,70 +1,18 @@
 #include <game.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <cJSON/cJSON.h>
-#include "pc.h"
-#include "sfx.h"
+#include "stage_loader.h"
 
-static void Update(void);
-static void HitDetection(void);
-static void func_8018A7AC(void);
-static void InitRoomEntities(s32 objLayoutId);
-
-static RoomHeader g_Rooms[1];
-static s16** g_SpriteBanks[1];
-static u16* g_Cluts[1];
-static RoomDef g_TileLayers[0x100];
-void* g_EntityGfxs[17];
-static void UpdateStageEntities(void);
-
-static Overlay g_StageDummy = {
-    Update,
-    HitDetection,
-    func_8018A7AC,
-    InitRoomEntities,
-    g_Rooms,
-    g_SpriteBanks,
-    g_Cluts,
-    NULL,
-    g_TileLayers,
-    g_EntityGfxs,
-    UpdateStageEntities,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-};
-
-static RoomHeader g_Rooms[1] = {0};
-static s16** g_SpriteBanks[1] = {0};
-static RoomDef g_TileLayers[0x100] = {0};
-
-static u32* D_801801B8[] = {
-    (u32*)0x00000000, (u32*)0x00000000, (u32*)0x00000000,
-    (u32*)0x00000000, (u32*)0xFFFFFFFF,
-};
-void* g_EntityGfxs[] = {
-    D_801801B8, D_801801B8, D_801801B8, D_801801B8, D_801801B8, D_801801B8,
-    D_801801B8, D_801801B8, D_801801B8, D_801801B8, D_801801B8, D_801801B8,
-    D_801801B8, D_801801B8, D_801801B8, D_801801B8, NULL,
-};
-
-static u8 D_80181D08[0x2000];
-static u32* D_801800A0[] = {
-    (u32*)0x00000005, (u32*)0x00002000, (u32*)0x00000010,
-    (u32*)D_80181D08, (u32*)0xFFFFFFFF,
-};
-static u16* g_Cluts[] = {
-    D_801800A0,
-};
+typedef struct {
+    const char* assetPath;
+} RoomLoadDesc;
 
 #define JITEM(x) cJSON_GetObjectItemCaseSensitive(jitem, x)
 static TileDefinition* g_TileDefToLoad = NULL;
-bool LoadRoomTileDef(const char* content) {
+static bool LoadRoomTileDef(FileStringified* file) {
     INFOF("load");
-    cJSON* jitem = cJSON_Parse(content);
+    RoomLoadDesc* desc = (RoomLoadDesc*)file->param;
+    cJSON* jitem = cJSON_Parse(file->content);
     if (!jitem) {
         ERRORF("failed to parse: %s", cJSON_GetErrorPtr());
         return false;
@@ -72,41 +20,45 @@ bool LoadRoomTileDef(const char* content) {
 
     FILE* f;
     char buf[0x100];
-    snprintf(buf, sizeof(buf), "assets/st/wrp/%s.bin",
+    snprintf(buf, sizeof(buf), "%s/%s.bin", desc->assetPath,
              JITEM("gfxPage")->valuestring);
     f = fopen(buf, "rb");
     if (f) {
         fread(g_TileDefToLoad->gfxPage, 0x1000, 1, f);
         fclose(f);
     } else {
-        WARNF("unable to load '%s'", buf);
+        ERRORF("unable to load '%s'", buf);
+        return false;
     }
-    snprintf(buf, sizeof(buf), "assets/st/wrp/%s.bin",
+    snprintf(buf, sizeof(buf), "%s/%s.bin", desc->assetPath,
              JITEM("gfxIndex")->valuestring);
     f = fopen(buf, "rb");
     if (f) {
         fread(g_TileDefToLoad->gfxIndex, 0x1000, 1, f);
         fclose(f);
     } else {
-        WARNF("unable to load '%s'", buf);
+        ERRORF("unable to load '%s'", buf);
+        return false;
     }
-    snprintf(
-        buf, sizeof(buf), "assets/st/wrp/%s.bin", JITEM("clut")->valuestring);
+    snprintf(buf, sizeof(buf), "%s/%s.bin", desc->assetPath,
+             JITEM("clut")->valuestring);
     f = fopen(buf, "rb");
     if (f) {
         fread(g_TileDefToLoad->clut, 0x1000, 1, f);
         fclose(f);
     } else {
-        WARNF("unable to load '%s'", buf);
+        ERRORF("unable to load '%s'", buf);
+        return false;
     }
-    snprintf(buf, sizeof(buf), "assets/st/wrp/%s.bin",
+    snprintf(buf, sizeof(buf), "%s/%s.bin", desc->assetPath,
              JITEM("collision")->valuestring);
     f = fopen(buf, "rb");
     if (f) {
         fread(g_TileDefToLoad->collision, 0x1000, 1, f);
         fclose(f);
     } else {
-        WARNF("unable to load '%s'", buf);
+        ERRORF("unable to load '%s'", buf);
+        return false;
     }
 
     cJSON_Delete(jitem);
@@ -118,7 +70,7 @@ static TileDefinition g_TileDefPool[0x40];
 static TileDefinition g_TileDefDataPool[0x40][4][0x1000];
 static int g_LayoutIndex = 0;
 static u16 g_LayoutPool[0x10000];
-void LoadRoomLayerDef(LayerDef* l, cJSON* jitem) {
+static bool LoadRoomLayerDef(LayerDef* l, cJSON* jitem, RoomLoadDesc* desc) {
     l->rect.left = JITEM("left")->valueint;
     l->rect.top = JITEM("top")->valueint;
     l->rect.right = JITEM("right")->valueint;
@@ -128,7 +80,7 @@ void LoadRoomLayerDef(LayerDef* l, cJSON* jitem) {
 
     char buf[0x100];
     FILE* f;
-    snprintf(buf, sizeof(buf), "assets/st/wrp/%s.tilelayout.bin",
+    snprintf(buf, sizeof(buf), "%s/%s.tilelayout.bin", desc->assetPath,
              JITEM("data")->valuestring);
     f = fopen(buf, "rb");
     if (f) {
@@ -136,20 +88,21 @@ void LoadRoomLayerDef(LayerDef* l, cJSON* jitem) {
         size_t len = ftell(f);
         fseek(f, 0, SEEK_SET);
         if (g_LayoutIndex + len > LEN(g_LayoutPool)) {
-            ERRORF("out of memory");
-            exit(1);
+            ERRORF("%s out of memory", NAMEOF(g_LayoutPool));
+            return false;
         }
         l->layout = g_LayoutPool + g_LayoutIndex;
         g_LayoutIndex += len;
         fread(l->layout, len, 1, f);
         fclose(f);
     } else {
-        WARNF("unable to load '%s'", buf);
+        ERRORF("unable to load '%s'", buf);
+        return false;
     }
 
     if (g_TileDefIndex >= LEN(g_TileDefPool)) {
-        ERRORF("out of memory");
-        exit(1);
+        ERRORF("%s out of memory", NAMEOF(g_TileDefPool));
+        return false;
     }
     l->tileDef = g_TileDefPool + g_TileDefIndex;
     l->tileDef->gfxPage = g_TileDefDataPool[g_TileDefIndex][0];
@@ -157,17 +110,20 @@ void LoadRoomLayerDef(LayerDef* l, cJSON* jitem) {
     l->tileDef->clut = g_TileDefDataPool[g_TileDefIndex][2];
     l->tileDef->collision = g_TileDefDataPool[g_TileDefIndex][3];
     g_TileDefIndex++;
-    snprintf(buf, sizeof(buf), "assets/st/wrp/%s.tiledef.json",
+    snprintf(buf, sizeof(buf), "%s/%s.tiledef.json", desc->assetPath,
              JITEM("tiledef")->valuestring);
     g_TileDefToLoad = l->tileDef;
-    FileStringify(LoadRoomTileDef, buf);
+
+    return FileStringify(LoadRoomTileDef, buf, desc);
 }
 
 static int g_LayerDefIndex = 0;
 static LayerDef g_LayerDefPool[0x40];
-bool LoadTileLayers(const char* content) {
+static RoomDef g_TileLayers[0x100];
+static bool LoadTileLayers(FileStringified* file) {
     INFOF("load");
-    cJSON* json = cJSON_Parse(content);
+    RoomLoadDesc* desc = (RoomLoadDesc*)file->param;
+    cJSON* json = cJSON_Parse(file->content);
     if (!json) {
         ERRORF("failed to parse: %s", cJSON_GetErrorPtr());
         return false;
@@ -191,7 +147,9 @@ bool LoadTileLayers(const char* content) {
             exit(1);
         }
         if (jbg) {
-            LoadRoomLayerDef(item->bg, jbg);
+            if (!LoadRoomLayerDef(item->bg, jbg, desc)) {
+                return false;
+            }
         } else {
             memset(item->bg, 0, sizeof(LayerDef));
         }
@@ -199,56 +157,45 @@ bool LoadTileLayers(const char* content) {
         cJSON* jfg = JITEM("fg");
         item->fg = g_LayerDefPool + g_LayerDefIndex++;
         if (g_LayerDefIndex >= LEN(g_LayerDefPool)) {
-            ERRORF("out of memory");
-            exit(1);
+            ERRORF("%s out of memory", NAMEOF(g_LayerDefPool));
+            return false;
         }
         if (jfg) {
-            LoadRoomLayerDef(item->fg, jfg);
+            if (!LoadRoomLayerDef(item->fg, jfg, desc)) {
+                return false;
+            }
         } else {
             memset(item->fg, 0, sizeof(LayerDef));
         }
     }
     cJSON_Delete(json);
+
+    for (int i = len; i < LEN(g_TileLayers); i++) {
+        g_TileLayers[i].fg = NULL;
+        g_TileLayers[i].bg = NULL;
+    }
     return true;
 }
-void InitStageDummy(Overlay* o) {
-    FILE* f;
 
-    f = fopen("assets/st/wrp/D_80181D08.dec", "rb");
-    if (f) {
-        fseek(f, 0, SEEK_END);
-        size_t len = ftell(f);
-        fseek(f, 0, SEEK_SET);
-        fread(D_80181D08, len, 1, f);
-        fclose(f);
-    }
+RoomDef* LoadRooms(const char* filePath) {
+    char assetPath[0x100];
 
-    g_TileDefIndex = 0;
+    const char* strTerminator = strrchr(filePath, '/');
+    size_t len = (size_t)(strTerminator - filePath);
+    len = MIN(len, LEN(assetPath) - 1);
+    memcpy(assetPath, filePath, len);
+    assetPath[len] = '\0';
+
     g_LayerDefIndex = 0;
     g_LayoutIndex = 0;
-    FileStringify(LoadTileLayers, "assets/st/wrp/rooms.layers.json");
+    g_TileDefIndex = 0;
 
-    memcpy(o, &g_StageDummy, sizeof(Overlay));
-}
-
-static void Update(void) { NOT_IMPLEMENTED; }
-
-static void HitDetection(void) { NOT_IMPLEMENTED; }
-
-static void func_8018A7AC(void) { NOT_IMPLEMENTED; }
-
-void SetGameState(GameState gameState);
-void PlaySfx(s32 sfxId);
-static void InitRoomEntities(s32 objLayoutId) {
-    if (g_StageId == STAGE_SEL) {
-        SetGameState(Game_NowLoading);
-        g_GameStep = NowLoading_2;
-        g_StageId = STAGE_WRP;
-        return;
+    RoomLoadDesc desc;
+    desc.assetPath = assetPath;
+    if (!FileStringify(LoadTileLayers, filePath, &desc)) {
+        ERRORF("failed to load '%s'", filePath);
+        return NULL;
     }
 
-    INFOF("Stage ID: %02X", g_StageId);
-    PlaySfx(MU_REQUIEM_FOR_THE_GODS);
+    return g_TileLayers;
 }
-
-static void UpdateStageEntities(void) { NOT_IMPLEMENTED; }

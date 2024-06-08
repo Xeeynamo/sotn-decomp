@@ -22,9 +22,9 @@
 #define GREEN_MASK 0x3E0
 #define BLUE_MASK 0x7C00
 
-#define GET_RED(x) ((x)&RED_MASK)
-#define GET_GREEN(x) ((x)&GREEN_MASK)
-#define GET_BLUE(x) ((x)&BLUE_MASK)
+#define GET_RED(x) ((x) & RED_MASK)
+#define GET_GREEN(x) ((x) & GREEN_MASK)
+#define GET_BLUE(x) ((x) & BLUE_MASK)
 
 typedef enum {
     MENU_DG_MAIN,
@@ -378,12 +378,19 @@ extern Point16 D_800ACEE0[];
 extern s32 D_800ACEDC_hd;
 #endif
 extern u8 D_800ACF4C[];
-extern u8 D_800ACF54[];
+extern u8 D_800ACF54[10];
 extern s16 D_800ACF60[]; // collection of sounds?
 extern s16 D_800ACF6C[];
 extern s32 D_800ACF74; // These two might...
 extern s32 D_800ACF78; // ...be an array
-extern unkstruct_800ACF7C D_800ACF7C[];
+
+typedef struct {
+    s16 step_s;
+    u8 anim;
+    u8 unused;
+} PlayerFallingAnim;
+extern PlayerFallingAnim D_800ACF7C[2];
+
 extern s16 D_800ACF84[8]; // collection of sounds
 extern s16 D_800ACF94[];
 extern u8 D_800AD094[0x30];
@@ -410,8 +417,8 @@ extern AnimationFrame D_800AE294[];
 extern s16 D_800AFDA4[];
 extern RECT c_backbufferClear;
 extern s16 D_800AFFB8[];
-extern s32 D_800B0130[];
-extern u32* D_800B01B8[];
+extern u8 D_800B0130[];
+extern AnimationFrame* D_800B01B8[];
 extern AnimationFrame* D_800B0594[];
 extern u8 D_800B0608[];
 extern Point32 D_800B0688[];
@@ -423,6 +430,7 @@ extern AnimationFrame D_800B0798[];
 extern s32 D_800B07C8;
 extern s32 D_800B0830[];
 extern s32 D_800B083C[];
+extern s16 D_800B0860[];
 extern unk_800B08CC D_800B08CC[];
 extern s32 D_800B0914;
 extern s32 D_800B0918;
@@ -633,6 +641,7 @@ extern s32 D_8013808C;
 extern Unkstruct_80138094 D_80138094[];
 extern Point16 D_8013839C[];
 extern s32 D_8013841C;
+extern RECT D_80138424;
 extern s32 D_8013842C;
 extern s32 D_80138430;
 extern s32 D_80138438;
@@ -892,7 +901,7 @@ bool CheckQuarterCircleForwardInput();
 bool CheckBackForwardInput();
 bool CheckDarkMetamorphosisInput();
 bool CheckSummonSpiritInput();
-void func_8010DBFC(s8*, AnimationFrame** frames);
+void PlayAnimation(s8*, AnimationFrame** frames);
 bool CheckHellfireInput();
 bool CheckTetraSpiritInput();
 bool CheckSoulStealInput();

@@ -203,7 +203,7 @@ void func_801BD204(s32 arg0, s16 arg1) {
     g_CurrentEntity->velocityY = func_801BD1BC(arg0 - 0x40, arg1);
 }
 
-u8 func_801BD270(s16 x, s16 y) { return ((ratan2(y, x) >> 4) + 0x40); }
+u8 func_801BD270(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 0x40; }
 
 u8 func_8019AD64(ObjInit2* arg0, ObjInit2* arg1) {
     u16 x, y;
@@ -323,7 +323,7 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->step++;
     if (g_CurrentEntity->zPriority == 0) {
         g_CurrentEntity->zPriority =
-            g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 0xC;
+            g_unkGraphicsStruct.g_zEntityCenter.unk - 0xC;
     }
 }
 

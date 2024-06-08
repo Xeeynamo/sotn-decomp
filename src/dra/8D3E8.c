@@ -54,7 +54,7 @@ void func_8012D3E8(void) {
         if ((PLAYER.facingLeft && (directionsPressed & PAD_RIGHT)) ||
             (!PLAYER.facingLeft && (directionsPressed & PAD_LEFT))) {
             D_800B0914 = 0;
-            func_8010DA48(0xE1);
+            SetPlayerAnim(0xE1);
         }
 
         if (!(directionsPressed & (PAD_LEFT | PAD_RIGHT))) {
@@ -108,7 +108,7 @@ void func_8012D3E8(void) {
         if ((g_Player.pl_vram_flag & 4) && PLAYER.velocityX > 0 ||
             (g_Player.pl_vram_flag & 8) && PLAYER.velocityX < 0 ||
             (directionsPressed & (PAD_LEFT | PAD_RIGHT)) == 0) {
-            PLAYER.ext.player.unkAC = 0xE0;
+            PLAYER.ext.player.anim = 0xE0;
             // Set the state to 3, and the timer to 24. Note that in case 3,
             // this decrements.
             D_800B0914 = 3;
@@ -153,7 +153,7 @@ void func_8012D3E8(void) {
         if ((PLAYER.facingLeft && (directionsPressed & PAD_RIGHT)) ||
             (!PLAYER.facingLeft && (directionsPressed & PAD_LEFT))) {
             D_800B0914 = 0;
-            func_8010DA48(0xE1);
+            SetPlayerAnim(0xE1);
         }
 
         if (--D_800B091C == 0) {
@@ -171,7 +171,7 @@ void func_8012D3E8(void) {
         }
         if (((g_Player.padPressed & PAD_RIGHT) && !PLAYER.facingLeft) ||
             ((g_Player.padPressed & PAD_LEFT) && PLAYER.facingLeft)) {
-            func_8010DA48(0xE2);
+            SetPlayerAnim(0xE2);
             D_800B0914 = 2;
             if (abs(PLAYER.velocityX) < FIX(2)) {
                 SetSpeedX(FIX(2));
@@ -200,11 +200,11 @@ void func_8012DBBC(void) {
         if (D_800B0914 == 1) {
             PLAYER.step_s = 2;
             D_800B0914 = 2;
-            func_8010DA48(0xE2);
+            SetPlayerAnim(0xE2);
         } else if (PLAYER.velocityY > FIX(6.875)) {
             PLAYER.step_s = 3;
             D_800B0914 = 3;
-            func_8010DA48(0xE5);
+            SetPlayerAnim(0xE5);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
         } else {
             func_8012CA64();
@@ -275,7 +275,7 @@ void func_8012DF04(void) {
         if (PLAYER.velocityY > FIX(6.875)) {
             PLAYER.step_s = 3;
             D_800B0914 = 3;
-            func_8010DA48(0xE5);
+            SetPlayerAnim(0xE5);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
         } else {
             func_8012CA64();
@@ -299,11 +299,11 @@ void func_8012E040(void) {
         if (D_800B0914 == 2) {
             PLAYER.step_s = 2;
             D_800B0914 = 2;
-            func_8010DA48(0xE2);
+            SetPlayerAnim(0xE2);
         } else if ((PLAYER.velocityY > FIX(6.875)) || (D_800B0914 == 3)) {
             PLAYER.step_s = 3;
             D_800B0914 = 3;
-            func_8010DA48(0xE5);
+            SetPlayerAnim(0xE5);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
         } else {
             if (D_800B0914 == 0) {
@@ -414,9 +414,9 @@ void func_8012E550(void) {
 
     DecelerateX(FIX(0.125));
     if (g_Player.padTapped & PAD_CROSS) {
-        if ((g_Player.padPressed & PAD_DOWN)) {
+        if (g_Player.padPressed & PAD_DOWN) {
             for (i = 0; i < 4; i++) {
-                if ((g_Player.colliders[i].effects & EFFECT_SOLID_FROM_ABOVE)) {
+                if (g_Player.colliders[i].effects & EFFECT_SOLID_FROM_ABOVE) {
                     g_Player.D_80072F00[7] = 8;
                     func_8012CED4();
                     PLAYER.animFrameIdx = 4;
@@ -441,7 +441,7 @@ void func_8012E550(void) {
     switch (D_800B0914) {
     case 0:
         if (!pressingDown) {
-            func_8010DA48(0xE4);
+            SetPlayerAnim(0xE4);
             D_800B0914 = 2;
             if (playerFrame == 0) {
                 PLAYER.animFrameIdx = 1;
@@ -454,12 +454,12 @@ void func_8012E550(void) {
         if (pressingDown) {
             return;
         }
-        func_8010DA48(0xE4);
+        SetPlayerAnim(0xE4);
         D_800B0914 = 2;
         return;
     case 2:
         if (pressingDown) {
-            func_8010DA48(0xE3);
+            SetPlayerAnim(0xE3);
             D_800B0914 = 0;
             if (playerFrame != 0) {
                 return;
@@ -526,7 +526,7 @@ void func_8012E7A4(void) {
     PLAYER.velocityX = 0;
     PLAYER.velocityY = 0;
     PLAYER.palette = 0x810D;
-    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 2;
+    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk - 2;
 #if defined(VERSION_HD)
     if (g_Entities[16].entityId != 0x22) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2300, 44), 0);
@@ -591,7 +591,7 @@ void func_8012EAD0(void) {
             PLAYER.unk5A = 0;
             PLAYER.rotZ = 0;
             PLAYER.drawFlags = 0;
-            func_8010DA48(0xCA);
+            SetPlayerAnim(0xCA);
             g_Player.unk66 = 1;
             if (g_Player.unk68 != 0) {
                 PLAYER.step_s = 2;
@@ -615,14 +615,14 @@ void func_8012EAD0(void) {
             D_800ACEDC_hd = 0x18;
 #endif
             g_Player.unk44 |= 0x100;
-            PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0;
+            PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk;
             func_80111CC0();
         }
         return;
     case 2:
         if (g_Player.unk66 == 3) {
 #if defined(VERSION_US)
-            PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0;
+            PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk;
 #endif
 
             func_8010E4D0();
@@ -689,7 +689,7 @@ void func_8012EF2C(void) {
     PLAYER.drawMode = DRAW_DEFAULT;
 // HD version lacks this line!
 #if defined(VERSION_US)
-    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 2;
+    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk - 2;
 #endif
     if (WolfFormFinished()) {
         return;
@@ -758,7 +758,7 @@ void func_8012EF2C(void) {
     // HD version lacks this line!
 
 #if defined(VERSION_US)
-    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 2;
+    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk - 2;
 #endif
 }
 

@@ -58,8 +58,8 @@ void SetSpriteBank2(SpriteParts* animset) {
 }
 
 #if !defined(W_029) && !defined(W_030) && !defined(W_044) && !defined(W_051)
-void ResetAnimation(u8 arg0) {
-    g_CurrentEntity->ext.weapon.unkAC = arg0;
+void SetWeaponAnimation(u8 anim) {
+    g_CurrentEntity->ext.weapon.anim = anim;
     g_CurrentEntity->animFrameDuration = 0;
     g_CurrentEntity->animFrameIdx = 0;
 }

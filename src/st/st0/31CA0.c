@@ -590,7 +590,7 @@ void func_801B5474(s32 arg0, s16 arg1) {
 }
 
 u8 func_801B54E0(s16 arg0, s16 arg1) {
-    return ((ratan2(arg1, arg0) >> 4) + 0x40);
+    return (ratan2(arg1, arg0) >> 4) + 0x40;
 }
 
 u8 func_801B5518(Entity* arg0, Entity* arg1) {

@@ -30,6 +30,7 @@ typedef struct {
 #define PAL_COPY 1
 #define PAL_COPY_INFO() MAKE_PAL_OP(PAL_COPY, 0)
 #define PAL_COPY_DATA(dst, data) (dst), (u_long*)LEN(data), (u_long*)(data)
+#define PAL_COPY_DATA_(dst, data, len) (dst), (u_long*)(len), (u_long*)(data)
 
 #define PAL_UNK_OP2 2
 #define PAL_UNK_OP2_INFO(dst, n) (u_long*)(dst), (u_long*)(n)
@@ -44,6 +45,7 @@ typedef struct {
 #define PAL_GLOW_DATA(data) (u_long*)(data)
 
 #define PAL_BULK_COPY 5
+#define PAL_BULK_COPY_INFO(dst, n) (u_long*)(dst), (u_long*)(n)
 #define PAL_BULK(dst, data) (u_long*)(dst), (u_long*)LEN(data), (u_long*)(data)
 
 #define PAL_TERMINATE() ((u_long*)-1)
@@ -135,12 +137,6 @@ typedef struct {
 } Unkstruct_80102CD8;
 
 typedef struct {
-    s16 unk0;
-    u8 unk2;
-    u8 unk3;
-} unkstruct_800ACF7C;
-
-typedef struct {
     /* 0x0 */ s16 animSet;
     /* 0x2 */ s16 unk2; // Entity::unk5A
     /* 0x4 */ u16 palette;
@@ -172,7 +168,7 @@ typedef struct {
     /* 0x80097400 */ s32 unk0;
     /* 0x80097404 */ s32 unk4;
     /* 0x80097408 */ Multi g_zEntityCenter;
-    /* 0x8009740C */ Multi unkC; // multi for dre/func_801961DC
+    /* 0x8009740C */ s32 unkC;
     /* 0x80097410 */ s32 BottomCornerTextTimer;
     /* 0x80097414 */ s32 BottomCornerTextPrims;
     /* 0x80097418 */ s32 unk18;

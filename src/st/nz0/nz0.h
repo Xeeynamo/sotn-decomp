@@ -36,6 +36,12 @@ typedef enum {
     /* 0x46 */ E_GAIBON_BIG_FIREBALL = 0x46,
 } EntityIDs;
 
+#define BOSS_FLAG_DOORS_CLOSED (1 << 0)
+#define BOSS_FLAG_DOORS_OPEN (1 << 1)
+#define BOSS_FLAG_FIGHT_BEGIN (1 << 2)
+#define BOSS_FLAG_GAIBON_DEAD (1 << 3)
+#define BOSS_FLAG_SLOGRA_DEAD (1 << 4)
+
 void DestroyEntity(Entity* item);
 void func_8019B858(void);
 void func_801BDD9C(void);
@@ -49,7 +55,7 @@ void func_801C4CC0(void);
 
 extern u8 D_8003BE6F[];
 extern PfnEntityUpdate PfnEntityUpdates[];
-extern const u16 g_InitializeEntityData0[];
+extern u16 g_InitializeEntityData0[];
 extern u16 D_80180BEC[];
 extern u16 g_EInitGeneric[]; // Init Elevator2
 extern u16 g_eInitGeneric2[];
@@ -128,7 +134,7 @@ extern u16 D_80180D24[];
 
 extern u16 D_80180D30[];
 extern u16 D_80180D36;
-extern s32 D_80181240;
+extern u16 D_80181240[];
 extern u8 D_80181250[];
 extern u8 D_80181264[];
 extern u8 D_80181298[];
@@ -139,8 +145,9 @@ extern u8 D_801812DC[];
 extern u8 D_801812F0[];
 extern u8 D_801812FC[];
 extern u8 D_80181304[];
-extern s32 D_80181310[];
+extern s8 D_80181310[];
 extern u8 D_80181340[];
+extern u16 D_80180D30[];
 
 // *** EntityGaibon properties END ***
 
@@ -273,7 +280,6 @@ extern u32 D_80182488[];
 extern u16 D_80180C58[];
 extern u16 D_80180C58[];
 extern s16 D_801820E4[];
-extern u16 D_80180C04[];
 extern s32 D_80182504[];
 extern u8 D_80182524[];
 

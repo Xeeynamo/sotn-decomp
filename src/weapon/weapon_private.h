@@ -17,7 +17,7 @@
 // exported
 void EntityWeaponAttack(Entity* self);
 void LoadWeaponPalette(s32 clutIndex);
-void func_ptr_80170004(Entity* self);
+s32 func_ptr_80170004(Entity* self);
 void func_ptr_80170008(Entity* self);
 void func_ptr_8017000C(Entity* self);
 void func_ptr_80170010(Entity* self);

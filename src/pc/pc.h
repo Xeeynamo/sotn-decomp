@@ -12,7 +12,7 @@
 
 #define DISP_WIDTH 256
 #define DISP_HEIGHT 256
-#define SCREEN_SCALE 2
+#define SCREEN_SCALE 4
 
 #define VRAM_W 1024
 #define VRAM_H 512
@@ -24,8 +24,16 @@ typedef struct {
     size_t length;
 } FileLoad;
 
+typedef struct {
+    const char* path;
+    const char* content;
+    size_t length;
+    void* param;
+} FileStringified;
+
 bool FileRead(bool (*cb)(FILE* file), const char* path);
-bool FileStringify(bool (*cb)(const char* content), const char* path);
+bool FileStringify(
+    bool (*cb)(FileStringified* file), const char* path, void* param);
 bool FileUseContent(
     bool (*cb)(FileLoad* file, void* param), const char* path, void* param);
 

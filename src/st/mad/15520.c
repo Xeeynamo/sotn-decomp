@@ -52,32 +52,7 @@ void EntityHeartDrop(Entity* entity, u32 arg1) {
 
 #include "../check_coll_offsets.h"
 
-void func_8019572C(Entity* entity) {
-    switch (entity->step) {
-    case 0:
-        InitializeEntity(D_8018052C);
-        entity->ext.generic.unk8C.modeU16.unk0 =
-            entity->ext.generic.unk80.entityPtr->entityId;
-    case 1:
-        if (entity->ext.generic.unk7C.U8.unk0++ >= 5) {
-            Entity* newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
-                newEntity->entityId = E_EXPLOSION;
-                newEntity->pfnUpdate = EntityExplosion;
-                newEntity->params = entity->params;
-            }
-            entity->ext.generic.unk7C.U8.unk0 = 0;
-        }
-        entity->posX.i.hi = entity->ext.generic.unk80.entityPtr->posX.i.hi;
-        entity->posY.i.hi = entity->ext.generic.unk80.entityPtr->posY.i.hi;
-        if (entity->ext.generic.unk80.entityPtr->entityId !=
-            entity->ext.generic.unk8C.modeU16.unk0) {
-            DestroyEntity(entity);
-        }
-        break;
-    }
-}
+#include "../entity_unkId13.h"
 
 #include "../entity_unkId14_spawner.h"
 
@@ -85,35 +60,7 @@ void func_8019572C(Entity* entity) {
 
 #include "../entity_unkId14.h"
 
-void EntityUnkId15(Entity* entity) {
-    u16 temp_v0;
-
-    if (entity->step == 0) {
-        entity->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        entity->palette = 0x8195;
-        entity->animSet = ANIMSET_DRA(5);
-        entity->animCurFrame = 1;
-        entity->drawMode = DRAW_TPAGE;
-        entity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        temp_v0 = D_80180FBC[entity->params];
-        entity->rotX = temp_v0;
-        entity->rotY = temp_v0;
-        entity->velocityY = D_80180FCC[entity->params];
-        entity->step++;
-        return;
-    }
-
-    entity->animFrameDuration++;
-    entity->posY.val -= entity->velocityY;
-
-    if (!(entity->animFrameDuration & 1)) {
-        entity->animCurFrame++;
-    }
-
-    if (entity->animFrameDuration >= 37) {
-        DestroyEntity(entity);
-    }
-}
+#include "../entity_unkId15.h"
 
 #include "../entity_olrox_drool.h"
 

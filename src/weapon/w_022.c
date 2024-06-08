@@ -8,7 +8,7 @@ extern AnimationFrame D_9E000_8017A800[];
 
 INCLUDE_ASM("weapon/nonmatchings/w_022", EntityWeaponAttack);
 
-void func_ptr_80170004(Entity* self) {
+s32 func_ptr_80170004(Entity* self) {
     switch (self->step) {
     case 0:
         if (self->ext.weapon.parent->entityId == 0) {

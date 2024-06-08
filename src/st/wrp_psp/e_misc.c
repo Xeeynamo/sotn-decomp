@@ -41,62 +41,11 @@ u16 g_InitializeData0[];
 void BlitChar(char*, s32, s32, s32);
 #include "../entity_message_box.h"
 
-extern u16 D_8018047C[];
-void func_8018F510(Entity* entity) {
-    switch (entity->step) {
-    case 0:
-        InitializeEntity(D_8018047C);
-        entity->ext.generic.unk8C.modeU16.unk0 =
-            entity->ext.generic.unk80.entityPtr->entityId;
-    case 1:
-        if (entity->ext.generic.unk7C.U8.unk0++ > 4) {
-            Entity* newEntity =
-                (Entity*)AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
-                newEntity->entityId = E_EXPLOSION;
-                newEntity->pfnUpdate = EntityExplosion;
-                newEntity->params = entity->params;
-            }
-            entity->ext.generic.unk7C.U8.unk0 = 0;
-        }
-        entity->posX.i.hi = entity->ext.generic.unk80.entityPtr->posX.i.hi;
-        entity->posY.i.hi = entity->ext.generic.unk80.entityPtr->posY.i.hi;
-        if (entity->ext.generic.unk80.entityPtr->entityId !=
-            entity->ext.generic.unk8C.modeU16.unk0) {
-            DestroyEntity(entity);
-        }
-        break;
-    }
-}
+#include "../entity_unkId13.h"
 
 #include "../entity_unkId14.h"
 
-extern s16 D_80180FF8[];
-extern s32 D_80181008[];
-void EntityUnkId15(Entity* self) {
-    if (!self->step) {
-        self->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        self->palette = PAL_OVL(0x195);
-        self->animSet = ANIMSET_DRA(5);
-        self->animCurFrame = 1;
-        self->drawMode = DRAW_TPAGE;
-        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        self->rotX = D_80180FF8[self->params];
-        self->rotY = self->rotX;
-        self->velocityY = D_80181008[self->params];
-        self->step++;
-    } else {
-        self->posY.val -= self->velocityY;
-        self->animFrameDuration++;
-        if (!(self->animFrameDuration % 2)) {
-            self->animCurFrame++;
-        }
-        if (self->animFrameDuration > 36) {
-            DestroyEntity(self);
-        }
-    }
-}
+#include "../entity_unkId15.h"
 
 extern u16 g_InitializeEntityData0[];
 

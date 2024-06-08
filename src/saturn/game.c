@@ -334,7 +334,7 @@ void AddHearts(s32 value) {
     Entity* temp;
     if (g_Status.hearts < g_Status.heartsMax) {
         g_Status.hearts += value;
-        if ((g_Status.hearts > g_Status.heartsMax)) { // swapped
+        if (g_Status.hearts > g_Status.heartsMax) { // swapped
             g_Status.hearts = g_Status.heartsMax;
         }
         temp = g_Entities;

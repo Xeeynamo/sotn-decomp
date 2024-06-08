@@ -1994,7 +1994,124 @@ void EntityAguneaHitEnemy(Entity* self) {
 INCLUDE_ASM("dra/nonmatchings/843B0", func_80129864);
 
 // opens hole in backround and spirit comes out (ID 0x40)
-INCLUDE_ASM("dra/nonmatchings/843B0", EntitySummonSpirit);
+void EntitySummonSpirit(Entity* self) {
+    Primitive* prim;
+    s32 timer;
+    s32 selfX;
+    s32 selfY;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_20000 |
+                      FLAG_UNK_10000;
+        g_unkGraphicsStruct.unk20 = 3;
+        self->ext.summonspirit.spawnTimer = 10;
+        func_80118C28(13);
+        self->step++;
+        return;
+
+    case 1:
+        if (--self->ext.summonspirit.spawnTimer) {
+            return;
+        }
+        self->primIndex = AllocPrimitives(4, 9);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->posX.i.hi = 0x80;
+        self->posY.i.hi = 0x60;
+        if (PLAYER.posY.i.hi - 0x30 > 0x40) {
+            self->posY.i.hi = PLAYER.posY.i.hi - 0x30;
+        } else {
+            self->posY.i.hi = PLAYER.posY.i.hi + 0x40;
+        }
+        selfX = self->posX.i.hi;
+        selfY = self->posY.i.hi;
+        prim = &g_PrimBuf[self->primIndex];
+
+        prim->type = 3;
+        prim->drawMode = 0x102;
+        prim->x2 = prim->x0 = selfX - 0x20;
+        prim->x3 = prim->x1 = selfX + 0x1F;
+        prim->y1 = prim->y0 = selfY - 0x20;
+        prim->y2 = prim->y3 = selfY + 0x1F;
+        D_80138424.x = prim->x0;
+        if (g_CurrentBuffer->disp.disp.x == 0) {
+            D_80138424.x += 0x100;
+        }
+        D_80138424.y = prim->y0;
+        D_80138424.w = 0x3F;
+        D_80138424.h = 0x3F;
+        MoveImage(&D_80138424, 0x200, 0x1C0);
+        prim->priority = 0x1C0;
+        prim = prim->next;
+        for (i = 0; i < 8; i++) {
+            // These should have been Point16 :(
+            prim->x1 = selfX + D_800B0860[(i + 1) * 2];
+            prim->y1 = selfY + D_800B0860[(i + 1) * 2 + 1];
+            prim->x3 = selfX + D_800B0860[i * 2];
+            prim->y3 = selfY + D_800B0860[i * 2 + 1];
+            prim->u1 = D_800B0860[(i + 1) * 2] + 0x20;
+            prim->v1 = D_800B0860[(i + 1) * 2 + 1] + 0xE0;
+            prim->u3 = D_800B0860[i * 2] + 0x20;
+            prim->v3 = D_800B0860[i * 2 + 1] + 0xE0;
+            prim->u0 = prim->u2 = 0x20;
+            prim->v0 = prim->v2 = 0xE0;
+            prim->priority = 0x1C1;
+            if (i >= 4) {
+                prim->priority += 3;
+            }
+            prim->drawMode = DRAW_UNK_100 | DRAW_UNK02;
+            prim->tpage = 0x118;
+            prim = prim->next;
+        }
+        self->ext.summonspirit.timer = 0;
+        // This just adds FLAG_HAS_PRIMS. Not sure why it wasn't an |=.
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
+                      FLAG_UNK_20000 | FLAG_UNK_10000;
+        self->step++;
+        break;
+
+    case 2:
+        self->ext.summonspirit.timer++;
+        if (self->ext.summonspirit.timer > 10) {
+            // Both blueprints have child 61, but 118 has a couple 4s in the
+            // other args. 61 is func_80129864. Not yet decompiled.
+            if (self->params) {
+                CreateEntFactoryFromEntity(self, FACTORY(0, 118), 0);
+            } else {
+                CreateEntFactoryFromEntity(self, FACTORY(0, 116), 0);
+            }
+            // Blueprint 44 is child 11. EntityPlayerBlinkWhite
+            CreateEntFactoryFromEntity(self, FACTORY(0x6700, 44), 0);
+            PlaySfx(0x67D);
+            self->step++;
+        }
+        break;
+    case 3:
+        self->ext.summonspirit.timer--;
+        if (self->ext.summonspirit.timer < 0) {
+            g_unkGraphicsStruct.unk20 = 0;
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    timer = self->ext.summonspirit.timer;
+    selfX = self->posX.i.hi;
+    selfY = self->posY.i.hi;
+    prim = &g_PrimBuf[self->primIndex];
+    prim = prim->next;
+    for (i = 0; i < 8; i++) {
+        prim->x2 = selfX + (((rcos(i << 9) >> 4) * timer) >> 8);
+        prim->y2 = selfY - (((rsin(i << 9) >> 4) * timer) >> 8);
+        prim->x0 = selfX + (((rcos((i + 1) << 9) >> 4) * timer) >> 8);
+        prim->y0 = selfY - (((rsin((i + 1) << 9) >> 4) * timer) >> 8);
+        prim = prim->next;
+    }
+}
 
 // expanding circle effect when activating stopwatch
 void EntityStopWatchExpandingCircle(Entity* self) {
@@ -2275,7 +2392,7 @@ bool WolfFormFinished(void) {
         g_Player.padTapped & PAD_R2 ||
         HandleTransformationMP(FORM_WOLF, REDUCE) < 0) {
         SetPlayerStep(Player_UnmorphWolf);
-        func_8010DA48(0xCA);
+        SetPlayerAnim(0xCA);
         D_800AFDA4[1] = 1;
         PLAYER.palette = 0x810D;
         g_Player.unk66 = 0;
@@ -2317,22 +2434,21 @@ void func_8012C97C(void) {
 
     PLAYER.step_s = 9;
     D_800B0914 = 0;
-    func_8010DA48(0xEC);
+    SetPlayerAnim(0xEC);
     PLAYER.velocityY = 0;
 }
 
 void func_8012CA64(void) {
-    u32 var_a0;
+    u8 anim;
 
     PLAYER.step_s = 1;
     D_800B0914 = 0;
 
+    anim = 0xDE;
     if (g_Player.pl_vram_flag & 0x20) {
-        var_a0 = 0xDF;
-    } else {
-        var_a0 = 0xDE;
+        anim = 0xDF;
     }
-    func_8010DA48(var_a0);
+    SetPlayerAnim(anim);
 
     PLAYER.velocityY = 0;
     PLAYER.velocityX /= 2;
@@ -2340,12 +2456,12 @@ void func_8012CA64(void) {
     D_800B0918 = 0x200;
     if (g_Player.pl_vram_flag & 0x40) {
         D_800B0914 = 1;
-        func_8010DA48(0xE9U);
+        SetPlayerAnim(0xE9);
     }
 }
 
 void func_8012CB0C(void) {
-    PLAYER.ext.generic.unkAC = 0xDE;
+    PLAYER.ext.player.anim = 0xDE;
     PLAYER.velocityY = 0;
     D_800B0914 = 0;
     PLAYER.animFrameIdx = 0;
@@ -2357,17 +2473,17 @@ void func_8012CB4C(void) {
     PLAYER.step_s = 2;
     if ((PLAYER.facingLeft != 0 && g_Player.padPressed & PAD_RIGHT) ||
         (PLAYER.facingLeft == 0 && g_Player.padPressed & PAD_LEFT)) {
-        func_8010DA48(0xE1);
+        SetPlayerAnim(0xE1);
         D_800B0914 = 0;
         D_8013842C = 0;
         return;
     } else if (D_8013842C != 0) {
-        func_8010DA48(0xE2);
+        SetPlayerAnim(0xE2);
         D_800B0914 = 2;
         SetSpeedX(0x20000);
         return;
     } else {
-        func_8010DA48(0xE0);
+        SetPlayerAnim(0xE0);
         D_800B0914 = 1;
         D_8013842C = 0xC;
     }
@@ -2384,7 +2500,7 @@ void func_8012CC30(s32 arg0) {
             D_800B0914 = 4;
             SetSpeedX(0x50000);
             g_CurrentEntity->velocityY = 0;
-            func_8010DA48(0xEDU);
+            SetPlayerAnim(0xED);
             LearnSpell(4);
         }
     } else {
@@ -2395,7 +2511,7 @@ void func_8012CC30(s32 arg0) {
 void func_8012CCE4(void) {
     PLAYER.velocityY = FIX(-3.5);
     if ((PLAYER.step_s == 2) & (D_800B0914 == 2)) {
-        func_8010DA48(0xE7);
+        SetPlayerAnim(0xE7);
         // Might be possible to rewrite this block to reduce duplication with
         // some clever && and ||
         if (PLAYER.facingLeft) {
@@ -2417,13 +2533,13 @@ void func_8012CCE4(void) {
     } else if (
         (g_Player.padPressed & (PAD_RIGHT | PAD_LEFT)) &&
         ((PLAYER.step_s != 2) || (D_800B0914 != 0)) && (PLAYER.step_s != 9)) {
-        func_8010DA48(0xE7);
+        SetPlayerAnim(0xE7);
         D_800B0914 = 1;
         if (g_Player.padPressed & PAD_UP) {
             PLAYER.velocityY = FIX(-4.875);
         }
     } else {
-        func_8010DA48(0xE6);
+        SetPlayerAnim(0xE6);
         D_800B0914 = 0;
         if (g_Player.padPressed & PAD_UP) {
             PLAYER.velocityY = FIX(-4.875);
@@ -2435,10 +2551,10 @@ void func_8012CCE4(void) {
 
 void func_8012CED4(void) {
     if (PLAYER.step_s == 2 && D_800B0914 == PLAYER.step_s) {
-        func_8010DA48(0xE7);
+        SetPlayerAnim(0xE7);
         D_800B0914 = 1;
     } else {
-        func_8010DA48(0xE8);
+        SetPlayerAnim(0xE8);
         SetSpeedX(0x10000);
         D_800B0914 = 0;
         if (D_80138438 & 0x40) {
@@ -2454,7 +2570,7 @@ void func_8012CED4(void) {
 }
 
 void func_8012CFA8(void) {
-    func_8010DA48(0xEA);
+    SetPlayerAnim(0xEA);
     PLAYER.step_s = 6;
     D_800B0914 = 0;
     PLAYER.velocityX = 0;
@@ -2463,7 +2579,7 @@ void func_8012CFA8(void) {
 
 void func_8012CFF0(void) {
     PLAYER.step_s = 3;
-    func_8010DA48(0xE3);
+    SetPlayerAnim(0xE3);
     D_800B0914 = 0;
 }
 
@@ -2495,12 +2611,12 @@ void func_8012D024(void) {
     if (abs(PLAYER.posY.i.hi - g_Entities[17].posY.i.hi) < 4 &&
         --D_800B0918 == 0) {
         D_800B0914 = 1;
-        func_8010DA48(0xE9);
+        SetPlayerAnim(0xE9);
         return;
     }
     if (g_Player.pl_vram_flag & 0x40) {
         D_800B0914 = 1;
-        func_8010DA48(0xE9);
+        SetPlayerAnim(0xE9);
     }
 }
 
@@ -2549,7 +2665,7 @@ void func_8012D28C(bool exitEarly) {
     // Start a routine where we look through this array for a value.
     bitNotFound = 0;
     for (i = 3; i < 7; i++) {
-        if ((g_Player.colliders3[i].effects & EFFECT_UNK_0002)) {
+        if (g_Player.colliders3[i].effects & EFFECT_UNK_0002) {
             break;
         }
     }
@@ -2557,7 +2673,7 @@ void func_8012D28C(bool exitEarly) {
     // and keep searching.
     if (i == 7) {
         for (i = 10; i < 14; i++) {
-            if ((g_Player.colliders3[i].effects & EFFECT_UNK_0002)) {
+            if (g_Player.colliders3[i].effects & EFFECT_UNK_0002) {
                 break;
             }
         }

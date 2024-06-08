@@ -50,7 +50,7 @@
 int sprintf(char* dst, const char* fmt, ...);
 #endif
 
-#define FIX(x) ((s32)((x)*65536.0))
+#define FIX(x) ((s32)((x) * 65536.0))
 #define FIX_TO_I(x) ((s32)((x) >> 16))
 
 // The second argument to CreateEntFactoryFromEntity has weird bit packing,
@@ -63,16 +63,16 @@ int sprintf(char* dst, const char* fmt, ...);
 
 // PSX SDK libraries do not use float. Instead they use a fix-point number
 // where 4096 is equal to 1.0.
-#define FLT(x) ((s32)((x)*4096.0))
+#define FLT(x) ((s32)((x) * 4096.0))
 
 // Access to the Scratchpad memory. Different on different systems.
 #if defined(VERSION_PC)
 #define SP_LEN 0x400
 #define SP(x) (&sp[x])
 #elif defined(VERSION_PSP)
-#define SP(x) (0x00010000 | (x))
+#define SP(x) (0x00010000 + (x))
 #else
-#define SP(x) (0x1F800000 | (x))
+#define SP(x) (0x1F800000 + (x))
 #endif
 
 #endif

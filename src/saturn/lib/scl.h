@@ -311,7 +311,7 @@ typedef struct SclSblSgl {
 #define SCL_W0 0
 #define SCL_W1 1
 
-#define FIXED(x) ((Fixed32)((x)*65536.0))
+#define FIXED(x) ((Fixed32)((x) * 65536.0))
 #define MUL_FIXED(a, b) MTH_Mul(a, b)
 #define DIV_FIXED(a, b) MTH_Div(a, b)
 

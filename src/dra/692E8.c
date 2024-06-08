@@ -175,7 +175,7 @@ void func_80109594() {
     PLAYER.facingLeft = 0;
     PLAYER.rotX = 0x100;
     PLAYER.rotY = 0x100;
-    PLAYER.zPriority = (u16)g_unkGraphicsStruct.g_zEntityCenter.S16.unk0;
+    PLAYER.zPriority = (u16)g_unkGraphicsStruct.g_zEntityCenter.unk;
 
     memset_len = sizeof(PlayerState) / sizeof(s32);
     memset_ptr = &g_Player;
@@ -455,7 +455,7 @@ void func_8010A234(s32 arg0) {
             func_8010DFF0(1, 0xA);
             func_80109328();
             if (arg0 != 0) {
-                func_8010DBFC(D_800B0130, D_800B01B8);
+                PlayAnimation(D_800B0130, D_800B01B8);
             }
         }
     } else if (g_Player.unk0C & 0x01000000) {
@@ -475,7 +475,7 @@ void func_8010A234(s32 arg0) {
         g_Player.unk0C &= ~0x01000000;
         func_80111CC0();
         if (arg0 != 0) {
-            func_8010DBFC(D_800B0130, D_800B01B8);
+            PlayAnimation(D_800B0130, D_800B01B8);
         }
     }
 }
@@ -504,19 +504,19 @@ TeleportCheck GetTeleportToOtherCastle(void) {
 
     // Check for X/Y boundaries in TOP
     if (g_StageId == STAGE_TOP) {
-        if (abs(g_Tilemap.left * 256 + playerX - 8000) < 4 &&
-            abs(g_Tilemap.top * 256 + playerY - 2127) < 4) {
+        if (abs(g_Tilemap.left * 256 + g_PlayerX - 8000) < 4 &&
+            abs(g_Tilemap.top * 256 + g_PlayerY - 2127) < 4) {
             return TELEPORT_CHECK_TO_RTOP;
         }
     }
 
     // Check for X/Y boundaries in RTOP
     if (g_StageId == STAGE_RTOP) {
-        if (abs(g_Tilemap.left * 256 + playerX - 8384) < 4 &&
+        if (abs(g_Tilemap.left * 256 + g_PlayerX - 8384) < 4 &&
 #if defined(VERSION_US)
-            abs(g_Tilemap.top * 256 + playerY - 14407) < 4) {
+            abs(g_Tilemap.top * 256 + g_PlayerY - 14407) < 4) {
 #elif defined(VERSION_HD)
-            abs(g_Tilemap.top * 256 + playerY) - 14407 < 4) {
+            abs(g_Tilemap.top * 256 + g_PlayerY) - 14407 < 4) {
 #endif
             return TELEPORT_CHECK_TO_TOP;
         }
@@ -655,8 +655,8 @@ void EntityAlucard(void) {
                             continue;
                         case 6:
                             if ((PLAYER.step == 3) &&
-                                (PLAYER.ext.player.unkAC != 0x1C)) {
-                                func_8010DA48(0x1C);
+                                (PLAYER.ext.player.anim != 0x1C)) {
+                                SetPlayerAnim(0x1C);
                                 g_Player.unk44 &= 0xFFEF;
                             }
                             continue;
@@ -1191,7 +1191,7 @@ block_160:
             PLAYER.palette = 0x8100;
         }
     }
-    func_8010DBFC(D_800B0130, D_800B01B8);
+    PlayAnimation(D_800B0130, D_800B01B8);
     if (g_Player.unk0C & 0x40000) {
         if (PLAYER.animFrameDuration < 0) {
             PLAYER.animCurFrame |= 0x8000;
@@ -1391,7 +1391,7 @@ void func_8010C36C(void) {
     s16* xPosPtr = &PLAYER.posX.i.hi;
     s32* vram_ptr = &g_Player.pl_vram_flag;
 
-    if (g_unkGraphicsStruct.unk18 != 0) {
+    if (g_unkGraphicsStruct.unk18) {
         *vram_ptr = 1;
         return;
     }
@@ -1566,11 +1566,11 @@ void func_8010C9F4(void) {
     s16* xPosPtr = &PLAYER.posX.i.hi;
     s32* vram_ptr = &g_Player.pl_vram_flag;
 
-    if (g_unkGraphicsStruct.unk18 != 0) {
+    if (g_unkGraphicsStruct.unk18) {
         return;
     }
     for (; i < 4; i++) {
-        if ((g_Player.colliders2[i].effects & EFFECT_SOLID_FROM_ABOVE)) {
+        if (g_Player.colliders2[i].effects & EFFECT_SOLID_FROM_ABOVE) {
             continue;
         }
         if ((g_Player.unk0C & 2) && (collider.effects & 0x10)) {
@@ -1578,7 +1578,7 @@ void func_8010C9F4(void) {
         }
         temp_s0 = g_Player.colliders2[i].effects &
                   (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_SOLID);
-        if (((temp_s0 == EFFECT_SOLID) || (temp_s0 & EFFECT_UNK_8000))) {
+        if ((temp_s0 == EFFECT_SOLID) || (temp_s0 & EFFECT_UNK_8000)) {
             if ((g_Player.unk0C & 3) && !(temp_s0 & EFFECT_SOLID)) {
                 continue;
             }
@@ -1707,7 +1707,7 @@ void func_8010C9F4(void) {
                 argX = var_a1 + (*xPosPtr + D_800ACEC0[i].x);
                 argY = *yPosPtr + D_800ACEC0[i].y + g_Player.colliders2[i].unk8;
                 CheckCollision(argX, argY, &collider, 0);
-                if ((collider.effects & 1)) {
+                if (collider.effects & 1) {
                     if (!(*vram_ptr & 1)) {
                         *yPosPtr +=
                             collider.unk20 + g_Player.colliders2[i].unk8;
@@ -1740,7 +1740,7 @@ void func_8010D010(void) {
         return;
     }
 
-    if (g_unkGraphicsStruct.unk18 != 0) {
+    if (g_unkGraphicsStruct.unk18) {
         return;
     }
     temp_s0 =
@@ -1821,7 +1821,7 @@ void func_8010D2C8(void) {
         return;
     }
 
-    if (g_unkGraphicsStruct.unk18 != 0) {
+    if (g_unkGraphicsStruct.unk18) {
         return;
     }
     temp_s0 =

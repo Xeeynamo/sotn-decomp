@@ -198,8 +198,6 @@ extern u16 D_800D6A14[0x10];
 extern u16 D_800D6A34[0x10];
 extern u16 D_800D6A54[0x40]; // UNUSED
 extern u16 D_800D6AD4[0x100];
-extern u16 D_800D6B54[0x10]; // overlaps with D_800D6AD4?
-extern u16 D_800D6C14[0x60]; // overlaps with D_800D6AD4?
 extern u16 D_800D6CD4[0x100];
 extern u16 D_800D6ED4[0x100];
 extern u16 D_800D70D4[0x100];
@@ -367,15 +365,15 @@ u_long* D_800A3A74[] = {
 
 u_long* D_800A3A88[] = {
     PAL_COPY_INFO(),
-    PAL_COPY_DATA(0x1F20, D_800D6B54),
+    PAL_COPY_DATA_(0x1F20, D_800D6AD4 + 64, 16),
     PAL_TERMINATE(),
 };
 
 u_long* D_800A3A9C[] = {
     MAKE_PAL_OP(PAL_GLOW_ANIM, 1),
     PAL_GLOW_INFO(0x1F20, 16),
-    PAL_GLOW_DATA(D_800D6C14),
-    PAL_GLOW_DATA(D_800D6B54),
+    PAL_GLOW_DATA(D_800D6AD4 + 160),
+    PAL_GLOW_DATA(D_800D6AD4 + 64),
     PAL_TERMINATE(),
 };
 
@@ -750,9 +748,9 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
             continue;
         }
         if (temp_v0_5 >= 0) {
-            prim->priority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 + 4;
+            prim->priority = g_unkGraphicsStruct.g_zEntityCenter.unk + 4;
         } else {
-            prim->priority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 4;
+            prim->priority = g_unkGraphicsStruct.g_zEntityCenter.unk - 4;
         }
         prim->drawMode = DRAW_COLORS;
         if (((D_80137E4C == 6) || (D_80137EE0 != 0)) &&
@@ -858,11 +856,9 @@ void func_80105078(s32 arg0, s32 arg1) {
         prim->type = 2;
         if (sp7C < 0xF0) {
             if (temp_v0_4 >= 0) {
-                prim->priority =
-                    g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 + 3;
+                prim->priority = g_unkGraphicsStruct.g_zEntityCenter.unk + 3;
             } else {
-                prim->priority =
-                    g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 3;
+                prim->priority = g_unkGraphicsStruct.g_zEntityCenter.unk - 3;
             }
             if (arg1 != 0) {
                 if (arg1 & 0x80) {

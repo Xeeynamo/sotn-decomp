@@ -50,7 +50,6 @@ extern bool g_isDraculaFirstFormDefeated;
 extern u16 D_80180574[];
 extern u16 g_InitializeEntityData0[];
 extern u16 D_80180598[]; // Init EntityCutscene
-extern u16 D_801805A4[];
 extern u16 g_eInitGeneric2[];
 extern u16 D_801805D4[]; // Init EntityStageTitleCard
 extern u16 D_801805E0[]; // Init EntityDracula
@@ -158,8 +157,6 @@ extern s32 D_801C2578;
 extern s16 D_80181990[];
 extern u16 g_InitializeData0[];
 extern u16 D_80181D74[];
-extern u32 D_80181D7C[];
-extern u8* D_80181E28[];
 extern s16 D_80181E3C[];
 extern s16 D_80181E3E[];
 extern s16 D_80181EB0[];

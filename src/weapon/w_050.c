@@ -60,7 +60,7 @@ extern s16 D_162000_8017B030[];
 void func_162000_8017B87C(Entity* ent, Point16* outPoint, bool arg2) {
     s32 idx;
 
-    idx = PLAYER.ext.player.unkAC - 0x41;
+    idx = PLAYER.ext.player.anim - 0x41;
     if (PLAYER.facingLeft) {
         ent->posX.i.hi = PLAYER.posX.i.hi - D_162000_8017B030[idx * 4 + 0];
         if (arg2) {
@@ -87,7 +87,7 @@ void func_162000_8017B87C(Entity* ent, Point16* outPoint, bool arg2) {
 void func_162000_8017BA38(Entity* ent, Point16* outPoint, bool arg2) {
     s32 idx;
 
-    idx = PLAYER.ext.player.unkAC - 0x41;
+    idx = PLAYER.ext.player.anim - 0x41;
     if (PLAYER.facingLeft) {
         ent->posX.i.hi = PLAYER.posX.i.hi - D_162000_8017B030[idx * 4 + 0];
         if (arg2) {

@@ -718,7 +718,7 @@ void func_80167964(Entity* entity) {
             *(&PLAYER.palette +
               (*(&D_80155D30 + (entity->animFrameDuration)) * 0x5E)) = 0x8140;
         }
-        *(&PLAYER.ext.generic.unkA4 +
+        *(&PLAYER.ext.player.unkA4 +
           (*(&D_80155D30 + (entity->animFrameDuration)) * 0x5E)) = 4;
         entity->animFrameDuration++;
         if (entity->animFrameDuration == 0xF) {

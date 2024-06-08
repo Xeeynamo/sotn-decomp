@@ -263,19 +263,19 @@ void EntityShrinkingPowerUpRing(Entity* self) {
             ((prim2->v1 - constE0) * self->ext.ricPowerRing.unk82) / 0x100;
         prim1->x2 =
             selfX +
-            (((rcos((i + 1 << 8)) * 2) >> 8) * self->ext.ricPowerRing.unk84) /
+            (((rcos(i + 1 << 8) * 2) >> 8) * self->ext.ricPowerRing.unk84) /
                 0x100;
         prim1->y2 =
             selfY -
-            (((rsin((i + 1 << 8)) * 2) >> 8) * self->ext.ricPowerRing.unk86) /
+            (((rsin(i + 1 << 8) * 2) >> 8) * self->ext.ricPowerRing.unk86) /
                 0x100;
         prim1->x3 =
             selfX +
-            (((rcos((i + 2 << 8)) * 2) >> 8) * self->ext.ricPowerRing.unk84) /
+            (((rcos(i + 2 << 8) * 2) >> 8) * self->ext.ricPowerRing.unk84) /
                 0x100;
         prim1->y3 =
             selfY -
-            (((rsin((i + 2 << 8)) * 2) >> 8) * self->ext.ricPowerRing.unk86) /
+            (((rsin(i + 2 << 8) * 2) >> 8) * self->ext.ricPowerRing.unk86) /
                 0x100;
         prim2->x2 = prim1->x0 = (prim2->x0 + prim1->x2) / 2;
         prim2->y2 = prim1->y0 = (prim2->y0 + prim1->y2) / 2;

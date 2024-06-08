@@ -124,7 +124,7 @@ Fixed32 MTH_Sqrt(Fixed32 x);
 Fixed32 MTH_Hypot(Fixed32 x, Fixed32 y);
 
 #define MTH_FLOAT(x) ((Float32)((long)(x) / 65536.0))
-#define MTH_FIXED(x) ((Fixed32)((x)*65536.0))
+#define MTH_FIXED(x) ((Fixed32)((x) * 65536.0))
 Fixed32 MTH_IntToFixed(Sint32 x);
 Sint32 MTH_FixedToInt(Fixed32 x);
 Fixed32 MTH_Mul(Fixed32 a, Fixed32 b);

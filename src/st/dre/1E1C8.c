@@ -2,32 +2,7 @@
 
 #include "../check_coll_offsets.h"
 
-void EntityUnkId13(Entity* entity) {
-    switch (entity->step) {
-    case 0:
-        InitializeEntity(D_80180494);
-        entity->ext.generic.unk8C.modeU16.unk0 =
-            entity->ext.generic.unk80.entityPtr->entityId;
-    case 1:
-        if (entity->ext.generic.unk7C.U8.unk0++ >= 5) {
-            Entity* newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
-                newEntity->entityId = E_EXPLOSION;
-                newEntity->pfnUpdate = EntityExplosion;
-                newEntity->params = entity->params;
-            }
-            entity->ext.generic.unk7C.U8.unk0 = 0;
-        }
-        entity->posX.i.hi = entity->ext.generic.unk80.entityPtr->posX.i.hi;
-        entity->posY.i.hi = entity->ext.generic.unk80.entityPtr->posY.i.hi;
-        if (entity->ext.generic.unk80.entityPtr->entityId !=
-            entity->ext.generic.unk8C.modeU16.unk0) {
-            DestroyEntity(entity);
-        }
-        break;
-    }
-}
+#include "../entity_unkId13.h"
 
 #include "../entity_unkId14_spawner.h"
 
@@ -35,38 +10,7 @@ void EntityUnkId13(Entity* entity) {
 
 #include "../entity_unkId14.h"
 
-// looks like a particle of dust fading away
-void EntityUnkId15(Entity* entity) {
-    u16 temp_v0;
-    u32 temp2;
-
-    if (!entity->step) {
-        entity->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        entity->palette = 0x8195;
-        entity->animSet = ANIMSET_DRA(5);
-        entity->animCurFrame = 1;
-        entity->drawMode = DRAW_TPAGE;
-        entity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        temp_v0 = D_801812E4[entity->params];
-        entity->rotX = temp_v0;
-        entity->rotY = temp_v0;
-        temp2 = D_801812F4[entity->params];
-        entity->step += 1;
-        entity->velocityY = temp2;
-        return;
-    }
-
-    entity->animFrameDuration++;
-    entity->posY.val -= entity->velocityY;
-
-    if (!(entity->animFrameDuration & 1)) {
-        entity->animCurFrame++;
-    }
-
-    if (entity->animFrameDuration >= 0x25) {
-        DestroyEntity(entity);
-    }
-}
+#include "../entity_unkId15.h"
 
 #include "../entity_olrox_drool.h"
 

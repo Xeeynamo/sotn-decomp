@@ -656,7 +656,7 @@ s16 SsUtKeyOn(
     }
     _snd_ev_flag = 1;
 
-    if ((SpuVmVSetUp(vabId, prog) == 0)) {
+    if (SpuVmVSetUp(vabId, prog) == 0) {
         _svm_cur.field_16_vag_idx = 0x21;
         _svm_cur.field_2_note = note;
         _svm_cur.field_0x3 = fine;

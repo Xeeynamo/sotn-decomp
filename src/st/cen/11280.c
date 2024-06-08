@@ -203,7 +203,7 @@ void func_80194B7C(s32 arg0, s16 arg1) {
     g_CurrentEntity->velocityY = func_80194B34((arg0 - 0x40) & 0xFF, arg1);
 }
 
-u8 func_80194BE8(s16 x, s16 y) { return ((ratan2(y, x) >> 4) + 0x40); }
+u8 func_80194BE8(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 0x40; }
 
 u8 func_80194C20(Entity* arg0, Entity* arg1) {
     u16 x;
@@ -400,7 +400,44 @@ void func_80195714(void) {
     }
 }
 
-INCLUDE_ASM("st/cen/nonmatchings/11280", func_80195798);
+void func_80195798(u16 arg0) {
+    Collider collider;
+
+    if (g_CurrentEntity->velocityX < 0) {
+        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                             g_CurrentEntity->posY.i.hi - 7, &collider, 0);
+        if (collider.effects & EFFECT_NOTHROUGH) {
+            g_CurrentEntity->velocityY = 0;
+        }
+    }
+
+    g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                         g_CurrentEntity->posY.i.hi + 7, &collider, 0);
+
+    if (arg0) {
+        if (!(collider.effects & EFFECT_NOTHROUGH)) {
+            MoveEntity();
+            FallEntity();
+            return;
+        }
+
+        g_CurrentEntity->velocityX = 0;
+        g_CurrentEntity->velocityY = 0;
+
+        if (collider.effects & EFFECT_QUICKSAND) {
+            g_CurrentEntity->posY.val += FIX(0.125);
+            return;
+        }
+
+        g_CurrentEntity->posY.i.hi += collider.unk18;
+        return;
+    }
+
+    if (!(collider.effects & EFFECT_NOTHROUGH)) {
+        MoveEntity();
+        func_80195714();
+    }
+}
 
 #include "../collect_heart.h"
 
@@ -451,7 +488,9 @@ void func_80195C5C(void) { DestroyEntity(g_CurrentEntity); }
 
 INCLUDE_ASM("st/cen/nonmatchings/11280", EntityPrizeDrop);
 
-INCLUDE_ASM("st/cen/nonmatchings/11280", EntityExplosion);
+#define MISSING_ANIMATE_ENTITY_PROTOTYPE
+#include "../entity_explosion.h"
+#undef MISSING_ANIMATE_ENTITY_PROTOTYPE
 
 #include "../blink_item.h"
 

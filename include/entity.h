@@ -184,12 +184,13 @@ typedef struct {
     /* 0x86 */ u16 duration;
 } ET_MessageBox;
 
+// !!! IMPORTANT: the struct MUST align with ET_Player due to the 'anim' field
 typedef struct {
     /* 0x7C */ s16 lifetime;
     /* 0x7E */ s16 unk7E;
     /* 0x80 */ s16 unk80; // Y?
     /* 0x82 */ s16 unk82; // X?
-    /* 0x84 */ s32 unk84;
+    /* 0x84 */ struct Entity* some_ent;
     /* 0x88 */ s16 childPalette;
     /* 0x8A */ s16 unk8A;
     /* 0x8C */ struct Entity* parent;
@@ -200,7 +201,7 @@ typedef struct {
     /* 0xA0 */ s32 accelerationY;
     /* 0xA4 */ s32 unkA4;
     /* 0xA8 */ s32 unkA8;
-    /* 0xAC */ u8 unkAC;
+    /* 0xAC */ u8 anim;
     /* 0xAD */ u8 unkAD;
     /* 0xAE */ s16 equipId;
 } ET_Weapon;
@@ -250,6 +251,26 @@ typedef struct {
     /* 0xA6 */ byte pad[6];
     /* 0xAE */ s16 unkAE;
 } ET_MedusaShieldLaser;
+
+typedef struct {
+    /* 0x7C */ s16 unk7C;
+    /* 0x7E */ s16 unk7E;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ s16 childPalette;
+    /* 0x8A */ s16 unk8A;
+    /* 0x8C */ struct Entity* parent;
+    /* 0x90 */ s16 unk90;
+    /* 0x92 */ s16 unk92;
+    /* 0x94 */ s16 unk94;
+    /* 0x96 */ s16 unk96;
+    /* 0x98 */ s16 unk98;
+    /* 0x9A */ s16 unk9A;
+    /* 0x9C */ s16 unk9C;
+    /* 0x9E */ s16 unk9E;
+} ET_ShamanShieldStar;
 
 typedef struct {
     s16 timer;
@@ -579,8 +600,11 @@ typedef struct {
 
 typedef struct {
     Primitive* prim;
-    char pad[0x2C];
-    u8 unkAC;
+    char pad[0x24];
+    s16 unkA4;
+    s16 unkA6;
+    char padd[4];
+    u8 anim;
     char pad2[0x8];
     struct Entity* unkB8;
 } ET_Player;
@@ -595,7 +619,14 @@ typedef struct {
 typedef struct {
     char pad[0x32];
     s16 unkAE;
-} ET_Entity16;
+} ET_EntitySlot16;
+
+typedef struct {
+    u8 fiveFrameCounter;
+    struct Entity* parent;
+    char pad[8];
+    u16 parentId;
+} ET_Entity13;
 
 typedef struct {
     s16 t;
@@ -986,6 +1017,18 @@ typedef struct {
     /* 0x85 */ u8 speed;
 } ET_BigRedFireball;
 
+typedef struct {
+    s16 timer;
+    s16 spawnTimer;
+} ET_SummonSpirit;
+
+typedef struct {
+    struct Primitive* prim;
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+} ET_3DBackgroundhouse;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -993,7 +1036,8 @@ typedef union { // offset=0x7C
     ET_EntFactory factory;
     ET_Generic generic;
     ET_EntitySlot1 entSlot1; // g_Entities[1], not entityID 1
-    ET_Entity16 ent16;
+    ET_EntitySlot16 entSlot16;
+    ET_Entity13 ent13; // entityID 13
     ET_8011E4BC et_8011E4BC;
     ET_HellfireHandler hellfireHandler;
     ET_ReboundStone reboundStone;
@@ -1021,6 +1065,7 @@ typedef union { // offset=0x7C
     ET_Weapon weapon;
     ET_Shield shield;
     ET_MedusaShieldLaser medshieldlaser;
+    ET_ShamanShieldStar shamanshieldstar;
     ET_Food food;
     ET_HitByIce hitbyice;
     ET_HitByLightning hitbylightning;
@@ -1079,4 +1124,6 @@ typedef union { // offset=0x7C
     ET_801AF774 et_801AF774;
     ET_Drop drop;
     ET_BigRedFireball bigredfireball;
+    ET_SummonSpirit summonspirit;
+    ET_3DBackgroundhouse bghouse;
 } Ext;

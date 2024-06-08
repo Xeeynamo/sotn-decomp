@@ -30,7 +30,7 @@ void EntityPrizeDrop(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_InitializeData0);
-        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter.S16.unk0 - 0x14;
+        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk - 0x14;
         self->drawMode = DRAW_DEFAULT;
         if (itemId >= 0x17) {
             self->params = 0;
@@ -212,35 +212,7 @@ void EntityPrizeDrop(Entity* self) {
 }
 // #endif
 
-void EntityExplosion(Entity* entity) {
-    if (entity->step == 0) {
-        u32 zPriority;
-
-        InitializeEntity(g_InitializeEntityData0);
-        entity->animSet = ANIMSET_DRA(2);
-        entity->animFrameIdx = 0;
-        entity->animFrameDuration = 0;
-        entity->drawMode = 0x30;
-
-        if (entity->params & 0xF0) {
-            entity->palette = 0x8195;
-            entity->drawMode = DRAW_TPAGE;
-        }
-
-        zPriority = entity->params & 0xFF00;
-        if (zPriority != 0) {
-            entity->zPriority = zPriority >> 8;
-        }
-
-        entity->params = entity->params & 0xF;
-        entity->velocityY = D_80181D7C[entity->params];
-    } else {
-        entity->posY.val += entity->velocityY;
-        if (!AnimateEntity(D_80181E28[entity->params], entity)) {
-            DestroyEntity(entity);
-        }
-    }
-}
+#include "../entity_explosion.h"
 
 void func_801B6C5C(Entity* entity) {
     if (entity->step != 0) {
@@ -456,32 +428,7 @@ INCLUDE_ASM("st/st0/nonmatchings/36358", func_801B7308);
 
 #include "../check_coll_offsets.h"
 
-void func_801B7BFC(Entity* entity) {
-    switch (entity->step) {
-    case 0:
-        InitializeEntity(D_801805A4);
-        entity->ext.generic.unk8C.modeU16.unk0 =
-            entity->ext.generic.unk80.entityPtr->entityId;
-    case 1:
-        if (entity->ext.generic.unk7C.U8.unk0++ >= 5) {
-            Entity* newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
-                newEntity->entityId = E_EXPLOSION;
-                newEntity->pfnUpdate = EntityExplosion;
-                newEntity->params = entity->params;
-            }
-            entity->ext.generic.unk7C.U8.unk0 = 0;
-        }
-        entity->posX.i.hi = entity->ext.generic.unk80.entityPtr->posX.i.hi;
-        entity->posY.i.hi = entity->ext.generic.unk80.entityPtr->posY.i.hi;
-        if (entity->ext.generic.unk80.entityPtr->entityId !=
-            entity->ext.generic.unk8C.modeU16.unk0) {
-            DestroyEntity(entity);
-        }
-        break;
-    }
-}
+#include "../entity_unkId13.h"
 
 #include "../entity_unkId14_spawner.h"
 
@@ -489,36 +436,7 @@ void func_801B7BFC(Entity* entity) {
 
 #include "../entity_unkId14.h"
 
-void EntityUnkId15(Entity* entity) {
-    u16 temp_v0;
-    u32 temp2;
-
-    if (entity->step == 0) {
-        entity->flags = FLAG_UNK_2000 | FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        entity->palette = 0x8195;
-        entity->animSet = ANIMSET_DRA(5);
-        entity->animCurFrame = 1;
-        entity->drawMode = DRAW_TPAGE;
-        entity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        temp_v0 = D_80181EB0[entity->params];
-        entity->rotX = temp_v0;
-        entity->rotY = temp_v0;
-        temp2 = D_80181EC0[entity->params];
-        entity->step += 1;
-        entity->velocityY = temp2;
-    } else {
-        entity->animFrameDuration++;
-        entity->posY.val -= entity->velocityY;
-
-        if (!(entity->animFrameDuration & 1)) {
-            entity->animCurFrame++;
-        }
-
-        if (entity->animFrameDuration >= 0x25) {
-            DestroyEntity(entity);
-        }
-    }
-}
+#include "../entity_unkId15.h"
 
 #include "../entity_olrox_drool.h"
 
