@@ -145,4 +145,5 @@ typedef struct {
     /* 0x30 */ s16 unk30;
     /* 0x32 */ u16 drawMode;
 } draculaPrimitive;
+
 #endif
