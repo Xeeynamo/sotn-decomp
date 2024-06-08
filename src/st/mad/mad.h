@@ -45,9 +45,11 @@ void func_8019344C(void);
 void EntityUnkId14(Entity* entity);
 void EntityUnkId15(Entity* entity);
 
+// DRA - all the exclusive global variables
+extern s32 D_80096ED0_mad;
+
 // ST/MAD
 extern u16 g_InitializeData0[];
-extern u16 UNK_Invincibility0[];
 extern u16 g_eInitGeneric2[];
 extern ObjInit2 D_8018056C[];
 extern u16 D_80180D1C[];
