@@ -82,7 +82,7 @@ void EntityLifeUpSpawn(Entity* self) {
             }
         }
         g_api.PlaySfx(SE_BOSS_DEFEATED);
-        return;
+        break;
     case 1:
         if (!self->ext.lifeUpSpawn.unk86) {
             self->ext.lifeUpSpawn.unk86 = 2;
@@ -112,7 +112,7 @@ void EntityLifeUpSpawn(Entity* self) {
                 count_low_x1++;
                 self->ext.lifeUpSpawn.unk84 += 4;
                 for (i = 0; i < 48; i++, prim++) {
-                    prim->drawMode = 8;
+                    prim->drawMode = DRAW_HIDE;
                 }
             } else {
                 for (k = 0; k < 24; k++) {
@@ -173,7 +173,7 @@ void EntityLifeUpSpawn(Entity* self) {
         XY_var = self->posY.i.hi;
         prim->y0 = prim->y1 = XY_var - sp98;
         prim->y2 = prim->y3 = sp98 + XY_var;
-        return;
+        break;
     case 4:
         MoveEntity();
         self->velocityY += FIX(1.0 / 8);
@@ -185,7 +185,7 @@ void EntityLifeUpSpawn(Entity* self) {
             self->posY.i.hi += collider.unk18;
             if (!(--self->ext.lifeUpSpawn.unk84)) {
                 self->step = 5;
-                return;
+                break;
             }
         }
     case 3:
@@ -206,7 +206,7 @@ void EntityLifeUpSpawn(Entity* self) {
         XY_var = self->posY.i.hi;
         prim->y0 = prim->y1 = XY_var - sp98;
         prim->y2 = prim->y3 = sp98 + XY_var;
-        return;
+        break;
     case 5:
         g_api.FreePrimitives(self->primIndex);
         self->posY.i.hi -= 4;
@@ -231,32 +231,33 @@ void EntityLifeUpSpawn(Entity* self) {
                 self->unk6D[0] = 0x10;
                 self->params |= FLAG_UNK_8000;
                 self->step = 0;
-                return;
+            } else {
+                self->entityId = E_RELIC_ORB;
+                self->pfnUpdate = EntityRelicOrb;
+                self->animFrameDuration = 0;
+                self->animFrameIdx = 0;
+                self->unk6D[0] = 0x10;
+                self->params = D_80182850[self->params];
+                self->step = 0;
             }
-            self->entityId = E_RELIC_ORB;
-            self->pfnUpdate = EntityRelicOrb;
-            self->animFrameDuration = 0;
-            self->animFrameIdx = 0;
-            self->unk6D[0] = 0x10;
-            self->params = D_80182850[self->params];
-            self->step = 0;
-            return;
-        }
-        self->params = D_80182850[self->params];
-        params = self->params & 0xFFF;
-        if (params < 0x80) {
-            self->entityId = E_PRIZE_DROP;
-            self->pfnUpdate = EntityPrizeDrop;
-            self->animFrameDuration = 0;
-            self->animFrameIdx = 0;
         } else {
-            self->entityId = E_EQUIP_ITEM_DROP;
-            self->pfnUpdate = EntityEquipItemDrop;
-            params -= 0x80;
+            self->params = D_80182850[self->params];
+            params = self->params & 0xFFF;
+            if (params < 0x80) {
+                self->entityId = E_PRIZE_DROP;
+                self->pfnUpdate = EntityPrizeDrop;
+                self->animFrameDuration = 0;
+                self->animFrameIdx = 0;
+            } else {
+                self->entityId = E_EQUIP_ITEM_DROP;
+                self->pfnUpdate = EntityEquipItemDrop;
+                params -= 0x80;
+            }
+            self->params = params;
+            self->unk6D[0] = 0x10;
+            self->params |= FLAG_UNK_8000;
+            self->step = 0;
         }
-        self->params = params;
-        self->unk6D[0] = 0x10;
-        self->params |= FLAG_UNK_8000;
-        self->step = 0;
+        break;
     }
 }

@@ -148,6 +148,9 @@ typedef struct {
 
 typedef struct LifeUpPrim {
     /* 0x00 */ struct LifeUpPrim* next;
+#if defined(VERSION_PC) || defined(VERSION_PSP)
+    u_long dummy;
+#endif
     /* 0x04 */ u8 r0;
     /* 0x05 */ u8 g0;
     /* 0x06 */ u8 b0;
