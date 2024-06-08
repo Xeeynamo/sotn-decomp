@@ -1,7 +1,14 @@
-#include <stage.h>
+#include "../wrp/wrp.h"
 
 u16 g_ESoulStealOrbAngles[] = {
-    0x820, 0x840, 0x860, 0x880, 0x8C0, 0x900, 0x940, 0xA00,
+    /* 10A0 */ 0x0820,
+    /* 10A2 */ 0x0840,
+    /* 10A4 */ 0x0860,
+    /* 10A6 */ 0x0880,
+    /* 10A8 */ 0x08C0,
+    /* 10AA */ 0x0900,
+    /* 10AC */ 0x0940,
+    /* 10AE */ 0x0A00,
 };
 
 s16 g_ESoulStealOrbSprt[] = {
@@ -14,21 +21,4 @@ s16 g_ESoulStealOrbSprt[] = {
 };
 
 u8 g_ESoulStealOrbAnim[] = {
-    0x04, 0x02, 0x03, 0x03, 0x03, 0x04, 0x03,
-    0x05, 0x03, 0x06, 0x03, 0x03, 0x00,
-};
-
-#ifdef VERSION_PSP
-
-static u8 it_looks_like_being_unused[] = {0x01, 0x0E};
-
-void func_psp_0923AD68(Entity*);
-void func_psp_0923B2F0(Entity*);
-
-#endif
-
-extern u16 g_InitializeData0[];
-
-#include "entity_soul_steal_orb.h"
-
-#include "entity_enemy_blood.h"
+    0x04, 0x02, 0x03, 0x03, 0x03, 0x04, 0x03, 0x05, 0x03, 0x06, 0x03, 0x03};

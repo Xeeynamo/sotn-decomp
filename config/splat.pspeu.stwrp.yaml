@@ -64,6 +64,7 @@ segments:
       - [0xD338, c, wrp/st_debug]
       - [0xD6A8, c, wrp_psp/warp]
       - [0xEA00, .data, wrp_psp/wrp_data_EA00] # g_eRedDoorUV
+      - [0xEA48, .data, wrp/e_particles] # g_ESoulStealOrb*
       - [0xEAD0, data] # D_psp_09246150
       - [0xEB00, data] # D_psp_09246180
       - [0xEB10, data] # D_psp_09246190
