@@ -144,7 +144,7 @@ segments:
       - [0x122D0, data] # D_psp_09249950
       - [0x132D0, data] # D_psp_0924A950
       - [0x142D0, data] # D_psp_0924B950
-      - [0x142E0, data] # D_psp_0924B960
+      - [0x142E0, .data, wrp_psp/wrp_data_142E0] # D_psp_0924B960
       - [0x14320, data] # D_psp_0924B9A0
       - [0x14360, data] # D_80180528
       - [0x14430, data] # D_psp_0924BAB0
