@@ -115,6 +115,7 @@ segments:
       - [0x39800, c, update_stage_entities]
       - [0x39908, c]
       - [0x3E30C, c]
+      - [0x3F308, c, blit_char]
       - [0x3F5B8, c, entity_relic_orb]
       - [0x40088, c, entity_heart_drop]
       - [0x401B0, c, entity_message_box]

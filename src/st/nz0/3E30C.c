@@ -409,5 +409,3 @@ void EntityEquipItemDrop(Entity* self) {
         BlinkItem(self, self->ext.generic.unk7C.u);
     }
 }
-
-#include "../blit_char.h"
