@@ -141,5 +141,9 @@ segments:
       - [0x48ADC, c, e_stage_name] # EntityStageNamePopup
       - [0x49930, c, prim_helpers]
       - [0x4A160, c, lifeupspawn]
+<<<<<<< HEAD
       - [0x4AA10, sbss]
+=======
+      - [0x4AA14, sbss]
+>>>>>>> d8db4359 (Decompile NZ0 EntityLifeUpSpawn (#1288))
   - [0x4B780]
