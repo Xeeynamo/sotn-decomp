@@ -139,6 +139,6 @@ segments:
       - [0x47CF0, c] # EntityMagicallySealedDoor
       - [0x48ADC, c, e_stage_name] # EntityStageNamePopup
       - [0x49930, c, prim_helpers]
-      - [0x4A160, c, lifeupspawn]
-      - [0x4AA14, sbss]
+      - [0x4A160, c]
+      - [0x4AA10, sbss]
   - [0x4B780]
