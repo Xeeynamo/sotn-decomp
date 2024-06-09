@@ -1,5 +1,11 @@
 #include "../wrp/wrp.h"
 
+u8 g_eRedDoorUV[][8] = {
+    {0xB1, 0xB7, 0xB1, 0xB7, 0x21, 0x21, 0x5F, 0x5F},
+    {0x88, 0xA8, 0x88, 0xA8, 0x21, 0x21, 0x5F, 0x5F},
+    {0xA8, 0x88, 0xA8, 0x88, 0x21, 0x21, 0x5F, 0x5F},
+};
+
 bool EntityIsNearPlayer(Entity* self) {
     s16 distanceX;
     s16 diffX;
@@ -21,6 +27,5 @@ bool EntityIsNearPlayer(Entity* self) {
     return true;
 }
 
-extern u8 g_eRedDoorUV[3][8];
 extern u16 g_eRedDoorTiles[2][8];
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_red_door", EntityRedDoor);

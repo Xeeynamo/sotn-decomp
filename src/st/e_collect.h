@@ -101,7 +101,6 @@ static u8* g_ExplosionAnimations[] = {
 extern u16 g_ItemIconSlots[];
 
 // from another file
-extern u16 UNK_Invincibility0[];
 extern u16 g_InitializeData0[];
 
 static void func_8018CAB0(void) {

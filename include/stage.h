@@ -37,7 +37,6 @@ extern PfnEntityUpdate PfnEntityUpdates[];
 #endif
 
 extern u16 g_ItemIconSlots[0x20];
-extern u16 UNK_Invincibility0[];
 
 /*
  * Sets up layout arrays and initializes stage state to
