@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>cen.EntityEquipItemDrop</title>
 <g id="a_node6"><a xlink:href="cen.EntityEquipItemDrop.svg" xlink:title="cen.EntityEquipItemDrop">
-<ellipse fill="red" stroke="black" cx="227.39" cy="-378" rx="129.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="227.39" cy="-378" rx="129.98" ry="18"/>
 <text text-anchor="middle" x="227.39" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityEquipItemDrop</text>
 </a>
 </g>
@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>cen.EntityPrizeDrop</title>
 <g id="a_node7"><a xlink:href="cen.EntityPrizeDrop.svg" xlink:title="cen.EntityPrizeDrop">
-<ellipse fill="red" stroke="black" cx="480.39" cy="-378" rx="105.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="480.39" cy="-378" rx="105.08" ry="18"/>
 <text text-anchor="middle" x="480.39" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityPrizeDrop</text>
 </a>
 </g>
