@@ -55,7 +55,11 @@ extern s32 D_80096ED0_mad;
 // ST/MAD
 extern u16 g_InitializeData0[];
 extern u16 g_eInitGeneric2[];
+extern u16 D_80180538[];
 extern ObjInit2 D_8018056C[];
+extern u8 D_801805B4[];
+extern u8 D_801805BC[];
+extern u16 D_801805C4[];
 extern u16 D_80180D1C[];
 extern u16 D_80180D4C[];
 extern u16 D_80180E10[];
