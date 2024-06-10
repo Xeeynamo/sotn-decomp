@@ -1,6 +1,24 @@
 #include "wrp.h"
 #include "sfx.h"
 
+static u32 D_80180648 = 0;
+static u32 D_8018064C[] = {0x00040000, 0x00040000, 0xFFFC0004, 0x0000FFF8};
+static WarpCoord D_8018065C[] = {
+    {0x0F, 0x26}, // Entrance
+    {0x23, 0x2C}, // Abandoned pit to the Catacomb
+    {0x3B, 0x11}, // Outer Wall
+    {0x28, 0x0C}, // Castle Keep
+    {0x25, 0x15}, // Orlox's Quarters
+};
+static u16 unused_array[] = {
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000, 0x0001, 0x0000,
+    0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0101,
+};
+
+// this is supposed to be u16, not u32.
+// the game devs probably put the wrong type.
+extern u32 D_80180608[];
+
 // Handles everything about the warp room.
 // It is responsible to spawn the colourful background, the stones on the
 // ground and it always listen to the UP button. When the UP
@@ -157,8 +175,8 @@ void EntityWarpRoom(Entity* self) {
     case 4:
         // Perform the actual warp
         moveRoom = self->params + 1;
-        for (i = 0; i < 5; i++, moveRoom++) {
-            if (moveRoom >= 5) {
+        for (i = 0; i < LEN(D_8018065C); i++, moveRoom++) {
+            if (moveRoom >= LEN(D_8018065C)) {
                 moveRoom = 0;
             }
             if (g_CastleFlags[0xD0] & (1 << moveRoom)) {
@@ -235,7 +253,7 @@ void EntityWarpRoom(Entity* self) {
     D_80193AA4 = (rcos(D_80193AA8) >> 8) + 0xD0;
 
     prim = self->ext.warpRoom.primBg;
-    for (i = 0; i < 0x10; i++) {
+    for (i = 0; i < 16; i++) {
         angle = D_80180608[(i + 0) % 16];
         prim->r0 = ((rsin(angle) + 0x1000) >> 6) * D_80193AA4 / 256;
         angle = D_80180608[(i + 5) % 16];

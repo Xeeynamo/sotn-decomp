@@ -74,6 +74,7 @@ segments:
       - [0xD85C, .rodata, 139E0] # EntityEquipItemDrop
       - [0xD874, .rodata, entity_relic_orb]
       - [0xD8AC, rodata]
+      - [0xD8C0, .rodata, prim_helpers]
       - [0xD8C8, c]
       - [0xE964, c, st_update]
       - [0xEDB8, c, collision]

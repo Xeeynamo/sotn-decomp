@@ -34,6 +34,11 @@ segments:
       - [0x0, .data, header]
       - [0xB8, layers, rooms]
       - [0x1B8, .data, 6FD0]
+      - [0x528, .data, st_debug]
+      - [0x5A8, .data, e_breakable]
+      - [0x608, .data, d_608]
+      - [0x648, .data, warp]
+      - [0x690, .data, st_update]
       - [0x6BC, .data, collision]
       - [0xA7C, .data, e_red_door]
       - [0xA94, .data, st_common]
@@ -85,7 +90,7 @@ segments:
       - [0x6F30, .rodata, e_collect] # EntityEquipItemDrop
       - [0x6F48, .rodata, e_misc]
       - [0x6F94, .rodata, e_stage_name] # EntityStageNamePopup
-      - [0x6FC8, rodata]
+      - [0x6FC8, .rodata, prim_helpers]
       - [0x6FD0, c, st_debug]
       - [0x726C, c, e_breakable]
       - [0x73A0, c, warp]

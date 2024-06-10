@@ -1,5 +1,7 @@
 #include "wrp.h"
 
+extern u16 D_80180608[];
+
 #include "../entity_relic_orb.h"
 
 void EntityHeartDrop(Entity* self) {
@@ -16,7 +18,7 @@ void EntityHeartDrop(Entity* self) {
         }
 
         index -= 0x118;
-        index = ((u16*)D_80180608)[index];
+        index = D_80180608[index];
         if (index < 128) {
             self->ext.heartDrop.update = EntityPrizeDrop;
         } else {
