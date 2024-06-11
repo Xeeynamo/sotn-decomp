@@ -1,16 +1,19 @@
 #include "nz0.h"
 
+// This file consists of EntityMariaCutscene, and all the functions it calls.
+// No function in NZ0 calls anything in there, nor does anything in here call
+// any NZ0 functions, besides the ones in this file.
+
 void func_801B74CC(void) {
-    D_801CB694 = 2;
-    D_801CB692 = 2;
-    D_801CB696 = 0;
-    D_801CB69A = 0;
-    D_801CB69E = 0;
-    D_801CB69F = 8;
-    D_801CB68E = D_801CB690 + 0x14;
+    g_Dialogue.nextLineX = 2;
+    g_Dialogue.nextCharX = 2;
+    g_Dialogue.nextCharY = 0;
+    g_Dialogue.unk12 = 0;
+    g_Dialogue.nextCharTimer = 0;
+    g_Dialogue.unk17 = 8;
+    g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
 }
 
-// called from EntityMariaCutscene
 s32 func_801B7520(s32 textDialogue) {
     Primitive* prim;
     s16 firstPrimIndex;
@@ -248,49 +251,3 @@ void func_801B7C54(u8 ySteps) {
 
 // cutscene where alucard and maria discuss castle changing
 INCLUDE_ASM("st/nz0/nonmatchings/374CC", EntityMariaCutscene);
-
-void func_801B8E0C(Entity* self) {
-    switch (self->step) {
-    case 0:
-        InitializeEntity(D_80180BEC);
-        D_8003C8B8 = 0;
-        g_unkGraphicsStruct.unk0 = 1;
-        g_Player.padSim = PAD_LEFT;
-        if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
-            g_Player.padSim = PAD_R2;
-        }
-        g_Player.D_80072EFC = 1;
-        break;
-
-    case 1:
-        if (PLAYER.posX.i.hi < 176) {
-            g_Player.padSim = 0;
-            self->step++;
-        } else {
-            g_Player.padSim = 0;
-            if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
-                if (g_Timer & 1) {
-                    g_Player.padSim = PAD_R2;
-                }
-            } else {
-                g_Player.padSim = PAD_LEFT;
-            }
-        }
-        g_Player.D_80072EFC = 1;
-        break;
-
-    case 2:
-        if (D_801CB734 & 0x2000) {
-            D_8003C8B8 = 1;
-            if (g_unkGraphicsStruct.unk0 != 0) {
-                g_unkGraphicsStruct.unk0 = 0;
-            }
-            DestroyEntity(self);
-        }
-        g_Player.padSim = 0;
-        g_Player.D_80072EFC = 1;
-        break;
-    }
-}
-
-INCLUDE_ASM("st/nz0/nonmatchings/374CC", func_801B8F94);
