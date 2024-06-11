@@ -374,3 +374,16 @@ extern SVECTOR D_80182830;
 extern SVECTOR D_80182838;
 extern SVECTOR D_80182840;
 extern SVECTOR D_80182848;
+
+// For EntityMariaCutscene
+extern s32 D_801CB684;
+extern u32 D_801CB734;
+extern s32 D_801CB73C;
+extern s32 D_8003CB04;
+extern u8 D_801813C8[];
+extern u8 D_801813CC[];
+extern u16 D_801813D0[];
+extern u16 D_801813D4[];
+extern u16 D_801813D8[];
+extern s16 D_801813DC[];
+extern const char D_80183B0C[];

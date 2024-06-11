@@ -34,7 +34,6 @@ g_ESoulStealOrbAngles = 0x8018138C;
 g_ESoulStealOrbSprt = 0x8018139C;
 g_ESoulStealOrbAnim = 0x801813FC;
 g_Rooms = 0x80181498;
-g_UnkPrimHelperRot = 0x80191A5C;
 EntityUnkId11 = 0x80191A64;
 EntityBreakable = 0x80191D00;
 EntityBackgroundClouds = 0x80191E34;
