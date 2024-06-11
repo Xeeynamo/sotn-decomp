@@ -6,43 +6,44 @@
 
 #include "nz0.h"
 
-void func_801C3F9C(Unkstruct_801C3F9C** self) {
+// Weirdly, this function ONLY acts on prim->next, it does not act on prim.
+// However, it does call functions on prim.
+void func_801C3F9C(AxePrim* prim) {
     Collider collider;
-    Entity* newEntity;
-    s16 temp;
+    Entity* newEnt;
+    s16 yVar;
 
-    UnkPrimHelper();
-    switch ((*self)->unk24) {
+    UnkPrimHelper((Primitive*)prim);
+    switch (prim->next->step) {
     case 0:
-        (*self)->unk0C = 0;
-        (*self)->unk10 = -0x10000;
-        (*self)->unk24 = 1;
-        (*self)->unk2C = 0x100;
-        break;
-
+        prim->next->unk0C = 0;
+        prim->next->unk10 = -0x10000;
+        prim->next->step = 1;
+        prim->next->timer = 0x100;
+        return;
     case 1:
-        temp = (*self)->unk0A + ((*self)->unk1E / 3);
-        g_api.CheckCollision((*self)->unk14, temp, &collider, 0);
-        if (collider.effects % 2) {
-            (*self)->unk0A = (*self)->unk0A + collider.unk18;
-            if ((*self)->unk10 < 0x4000) {
-                (*self)->unk2C = 1;
+        yVar = prim->next->y0 + (prim->next->unk1E / 3);
+        g_api.CheckCollision(prim->next->x1, yVar, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            prim->next->y0 += collider.unk18;
+            if (prim->next->unk10 < 0x4000) {
+                prim->next->timer = 1;
             }
-            (*self)->unk10 = -(*self)->unk10;
-            (*self)->unk10 -= (*self)->unk10 / 2;
+            prim->next->unk10 = -prim->next->unk10;
+            prim->next->unk10 -= prim->next->unk10 / 2;
         }
-        (*self)->unk10 += 0x1800;
-        (*self)->unk2C--;
-        if ((*self)->unk2C == 0) {
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
-                newEntity->posX.i.hi = (*self)->unk14;
-                newEntity->posY.i.hi = (*self)->unk0A;
-                newEntity->params = 0;
+        prim->next->unk10 += 0x1800;
+        prim->next->timer--;
+        if (prim->next->timer == 0) {
+            newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (newEnt != NULL) {
+                CreateEntityFromCurrentEntity(E_EXPLOSION, newEnt);
+                newEnt->posX.i.hi = prim->next->x1;
+                newEnt->posY.i.hi = prim->next->y0;
+                newEnt->params = 0;
             }
             func_801C29B0(0x655);
-            UnkPolyFunc0(self);
+            UnkPolyFunc0((Primitive*)prim);
         }
         return;
     }
