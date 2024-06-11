@@ -922,7 +922,7 @@ Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, f32 arg3) {
     u8 var_t0;
     s8 var_t1;
     s8 var_t2;
-    
+
     if (arg0 == 0) {
         if (arg3.i.lo != 0) {
             prim = D_800AE230[arg1 >> 1] * 13 + D_801381F4;
@@ -937,10 +937,10 @@ Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, f32 arg3) {
             var_a3 = prim->v1;
             var_t1 = prim->v0;
         }
-        
+
         var_v1 = (prim->u0 + prim->u1) / 2;
         var_a0 = (prim->v0 + prim->v1) / 2;
-        
+
         if (arg1 & 1) {
             var_t0 = var_v1;
             var_v1 = var_t2 & 0xFF;
@@ -960,19 +960,25 @@ Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, f32 arg3) {
         }
         arg2->clut = 0x10F;
         arg2->priority = PLAYER.zPriority + 2;
-        arg2->drawMode = DRAW_UNK_400 | 0x100 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+        arg2->drawMode = DRAW_UNK_400 | 0x100 | DRAW_TPAGE2 | DRAW_TPAGE |
+                         DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         arg2 = arg2->next;
     } else {
         temp_s5 = D_8013809C[arg1].unk0;
         temp_s4 = D_8013809C[(arg1 + 1) % 16].unk0;
-        
+
         for (var_s3 = 0; var_s3 < 4; var_s3++) {
-            // nb: the cos/sin arguments seem to be invariant, could've been extracted outside the loop
-            arg2->u0 = 0x60 + (((rcos(temp_s5) >> 4) * ((var_s3 + 1) << 3)) >> 8);
-            arg2->v0 = -0x60 - (((rsin(temp_s5) >> 4) * ((var_s3 + 1) << 3)) >> 8);
-            arg2->u1 = 0x60 + (((rcos(temp_s4) >> 4) * ((var_s3 + 1) << 3)) >> 8);
-            arg2->v1 = -0x60 - (((rsin(temp_s4) >> 4) * ((var_s3 + 1) << 3)) >> 8);
-            
+            // nb: the cos/sin arguments seem to be invariant, could've been
+            // extracted outside the loop
+            arg2->u0 =
+                0x60 + (((rcos(temp_s5) >> 4) * ((var_s3 + 1) << 3)) >> 8);
+            arg2->v0 =
+                -0x60 - (((rsin(temp_s5) >> 4) * ((var_s3 + 1) << 3)) >> 8);
+            arg2->u1 =
+                0x60 + (((rcos(temp_s4) >> 4) * ((var_s3 + 1) << 3)) >> 8);
+            arg2->v1 =
+                -0x60 - (((rsin(temp_s4) >> 4) * ((var_s3 + 1) << 3)) >> 8);
+
             if (var_s3 == 3) {
                 if (arg2->u0 < 4) {
                     arg2->u0 = -1;
@@ -987,15 +993,16 @@ Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, f32 arg3) {
                     arg2->v1 = -1;
                 }
             }
-            
+
             arg2->u2 = 0x60 + (((rcos(temp_s5) >> 4) * (var_s3 << 3)) >> 8);
             arg2->v2 = -0x60 - (((rsin(temp_s5) >> 4) * (var_s3 << 3)) >> 8);
             arg2->u3 = 0x60 + (((rcos(temp_s4) >> 4) * (var_s3 << 3)) >> 8);
             arg2->v3 = -0x60 - (((rsin(temp_s4) >> 4) * (var_s3 << 3)) >> 8);
-            
+
             arg2->tpage = 0x18;
             arg2->clut = 0x10F;
-            arg2->drawMode = DRAW_UNK_400 | 0x100 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+            arg2->drawMode = DRAW_UNK_400 | 0x100 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
             arg2->priority = PLAYER.zPriority + 4;
             arg2 = arg2->next;
         }
