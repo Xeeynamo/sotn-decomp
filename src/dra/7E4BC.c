@@ -937,7 +937,7 @@ void EntityPlayerPinkEffect(Entity* self) {
             temp2 = data_idx->unk18;
             switch (temp2) {
             case 0x83:
-                if (PLAYER.step == 0xB) {
+                if (PLAYER.step == Player_StatusStone) {
                     g_Player.unk5E = 1;
                     D_800ACE44 = 0x40;
                 }
