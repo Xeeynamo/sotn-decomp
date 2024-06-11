@@ -1,5 +1,5 @@
-extern u16 g_eDamageDisplayInit[];
-extern u16 g_eDamageDisplayClut[];
+extern u16 g_eDamageDisplayInit[]; // D_801804A0
+extern u16 g_eDamageDisplayClut[]; // D_80180A6C
 
 typedef struct NumericPrim {
     /* 0x00 */ struct NumericPrim* next;
@@ -37,18 +37,41 @@ typedef struct NumericPrim {
     /* 0x32 */ u16 drawMode;
 } NumericPrim; /* size=0x34 */
 
+// -    NumericPrim* prim;
+// -    s16 x;
+// -    s16 y;
+// -    u8 singleDigit;
+// -    u16 iDigit;
+// -    u16 params;
+// -    u16 clut;
+// -    u16* nDigits;
+// -    s16 xOffset;
+// -    s32 primIndex;
+// -    u16 primInitStep;
+// +    Primitive* s0_prim;
+// +    s16 x;
+// +    u8 var_s3;
+// +    s16 y;
+// +    u16 s4_iDigit;
+// +    u16 s5_params;
+// +    u16 var_s6;
+// +    u16* s7_nDigits;
+// +    s32 sp38;
+// +    u16 sp3e;
+// +    s16 var_s8;
+
 void EntityDamageDisplay(Entity* self) {
-    NumericPrim* prim;
+    Primitive* s0_prim;
     s16 x;
+    u8 var_s3;
     s16 y;
-    u8 singleDigit;
-    u16 iDigit;
-    u16 params;
-    u16 clut;
-    u16* nDigits;
-    s16 xOffset;
-    s32 primIndex;
-    u16 primInitStep;
+    u16 s4_iDigit;
+    u16 s5_params;
+    u16 var_s6;
+    u16* s7_nDigits;
+    s32 sp38;
+    u16 sp3e;
+    s16 var_s8;
 
     if (self->ext.ndmg.unk88) {
         self->posX.val = g_Entities->posX.val;
@@ -61,116 +84,120 @@ void EntityDamageDisplay(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        params = self->params;
-        nDigits = &self->ext.ndmg.nDigits;
+        s5_params = self->params;
+        s7_nDigits = &self->ext.ndmg.nDigits;
         if (!self->step_s) {
             InitializeEntity(g_eDamageDisplayInit);
             self->step = 0;
-            if (params == 0xC000) {
+            if (s5_params == 0xC000) {
                 self->ext.ndmg.nPrims++;
             } else {
-                clut = params & 0x3FFF;
+                var_s6 = s5_params & 0x3FFF;
 
                 // thousands
-                iDigit = clut / 1000;
-                if (iDigit) {
+                s4_iDigit = var_s6 / 1000;
+                if (s4_iDigit) {
                     self->ext.ndmg.nPrims++;
-                    (*nDigits)++;
+                    (*s7_nDigits)++;
                 }
-                self->ext.ndmg.digits[0] = iDigit;
+                self->ext.ndmg.digits[0] = s4_iDigit;
 
                 // hundreds
-                clut -= iDigit * 1000;
-                iDigit = clut / 100;
-                if (iDigit || *nDigits) {
+                var_s6 -= s4_iDigit * 1000;
+                s4_iDigit = var_s6 / 100;
+                if (s4_iDigit || *s7_nDigits) {
                     self->ext.ndmg.nPrims++;
-                    (*nDigits)++;
+                    (*s7_nDigits)++;
                 }
-                self->ext.ndmg.digits[1] = iDigit;
+                self->ext.ndmg.digits[1] = s4_iDigit;
 
                 // tens
-                clut -= iDigit * 100;
-                iDigit = clut / 10;
-                if (iDigit || *nDigits) {
+                var_s6 -= s4_iDigit * 100;
+                s4_iDigit = var_s6 / 10;
+                if (s4_iDigit || *s7_nDigits) {
                     self->ext.ndmg.nPrims++;
-                    (*nDigits)++;
+                    (*s7_nDigits)++;
                 }
-                self->ext.ndmg.digits[2] = iDigit;
+                self->ext.ndmg.digits[2] = s4_iDigit;
 
                 // units
-                clut -= iDigit * 10;
+                var_s6 -= s4_iDigit * 10;
                 self->ext.ndmg.nPrims++;
-                (*nDigits)++;
-                self->ext.ndmg.digits[3] = clut;
+                (*s7_nDigits)++;
+                self->ext.ndmg.digits[3] = var_s6;
 
-                if (params & 0x4000) {
+                if (s5_params & 0x4000) {
                     self->ext.ndmg.nPrims++;
                 }
             }
         }
 
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, self->ext.ndmg.nPrims);
-        if (primIndex) {
-            self->primIndex = primIndex;
+        sp38 = g_api.AllocPrimitives(PRIM_GT4, self->ext.ndmg.nPrims);
+        if (sp38) {
+            self->primIndex = sp38;
             self->flags |= FLAG_HAS_PRIMS;
-            prim = &g_PrimBuf[primIndex];
+            s0_prim = &g_PrimBuf[sp38];
 
-            primInitStep = 0;
-            iDigit = 4 - *nDigits;
-            xOffset = *nDigits * -2;
-            while (prim != NULL) {
-                if (!primInitStep) {
-                    primInitStep++;
-                    if ((params & 0xC000) == 0xC000) {
-                        prim->u0 = prim->u2 = 0x43;
-                        prim->u1 = prim->u3 = 0x59;
-                        prim->v0 = prim->v1 = 0x4A;
-                        prim->v2 = prim->v3 = 0x52;
-                        prim->_width = 11;
-                        prim->_height = 5;
-                        prim->_xOffset = 0;
-                        prim->_yOffset = -16;
-                    } else if (params & 0x4000) {
-                        prim->u0 = prim->u2 = 0x20;
-                        prim->u1 = prim->u3 = 0x42;
-                        prim->v0 = prim->v1 = 0x4A;
-                        prim->v2 = prim->v3 = 0x52;
-                        prim->_width = 17;
-                        prim->_height = 5;
-                        prim->_xOffset = 0;
-                        prim->_yOffset = -24;
+            sp3e = 0;
+            s4_iDigit = 4 - *s7_nDigits;
+            #if defined(VERSION_PSP)
+            var_s8 = -(*s7_nDigits) * 2;
+            #else
+            var_s8 = *s7_nDigits * -2;
+            #endif
+            while (s0_prim != NULL) {
+                if (!sp3e) {
+                    sp3e++;
+                    if ((s5_params & 0xC000) == 0xC000) {
+                        s0_prim->u0 = s0_prim->u2 = 0x43;
+                        s0_prim->u1 = s0_prim->u3 = 0x59;
+                        s0_prim->v0 = s0_prim->v1 = 0x4A;
+                        s0_prim->v2 = s0_prim->v3 = 0x52;
+                        LOH(s0_prim->r2) = 0xB;
+                        LOH(s0_prim->b2) = 5;
+                        LOH(s0_prim->r1) = 0;
+                        LOH(s0_prim->b1) = -0x10;
+                    } else if (s5_params & 0x4000) {
+                        s0_prim->u0 = s0_prim->u2 = 0x20;
+                        s0_prim->u1 = s0_prim->u3 = 0x42;
+                        s0_prim->v0 = s0_prim->v1 = 0x4A;
+                        s0_prim->v2 = s0_prim->v3 = 0x52;
+                        LOH(s0_prim->r2) = 0x11;
+                        LOH(s0_prim->b2) = 5;
+                        LOH(s0_prim->r1) = 0;
+                        LOH(s0_prim->b1) = -0x18;
                     } else {
                         continue;
                     }
                 } else {
-                    prim->_xOffset = xOffset;
-                    prim->_yOffset = -16;
-                    if (params & 0x4000) {
-                        prim->_width = 3;
-                        prim->_height = 5;
+                    LOH(s0_prim->r1) = var_s8;
+                    LOH(s0_prim->b1) = -0x10;
+                    if (s5_params & 0x4000) {
+                        LOH(s0_prim->r2) = 3;
+                        LOH(s0_prim->b2) = 5;
                     } else {
-                        prim->_width = 23;
-                        prim->_height = 0;
+                        LOH(s0_prim->r2) = 0x17;
+                        LOH(s0_prim->b2) = 0;
                     }
 
-                    singleDigit = self->ext.ndmg.digits[iDigit];
-                    if (singleDigit) {
-                        singleDigit = singleDigit * 8 + 24;
-                        prim->u0 = prim->u2 = singleDigit;
-                        prim->u1 = prim->u3 = singleDigit + 6;
+                    var_s3 = self->ext.ndmg.digits[s4_iDigit];
+                    if (var_s3) {
+                        var_s3 = var_s3 * 8 + 0x18;
+                        s0_prim->u0 = s0_prim->u2 = var_s3;
+                        s0_prim->u1 = s0_prim->u3 = var_s3 + 6;
                     } else {
-                        prim->u0 = prim->u2 = 0x68;
-                        prim->u1 = prim->u3 = 0x6E;
+                        s0_prim->u0 = s0_prim->u2 = 0x68;
+                        s0_prim->u1 = s0_prim->u3 = 0x6E;
                     }
-                    prim->v0 = prim->v1 = 0x40;
-                    prim->v2 = prim->v3 = 0x49;
-                    xOffset += 4;
-                    iDigit++;
+                    s0_prim->v0 = s0_prim->v1 = 0x40;
+                    s0_prim->v2 = s0_prim->v3 = 0x49;
+                    var_s8 += 4;
+                    s4_iDigit++;
                 }
-                prim->tpage = 0x1A;
-                prim->priority = 0x1F8;
-                prim->drawMode = DRAW_HIDE;
-                prim = prim->next;
+                s0_prim->tpage = 0x1A;
+                s0_prim->priority = 0x1F8;
+                s0_prim->blendMode = 8;
+                s0_prim = s0_prim->next;
             }
             self->step++;
             self->step_s = 0;
@@ -179,69 +206,72 @@ void EntityDamageDisplay(Entity* self) {
         self->step_s++;
         break;
     case 1:
-        params = --self->ext.ndmg.timer;
-        if (!params) {
+        s5_params = --self->ext.ndmg.timer;
+        if (!s5_params) {
             DestroyEntity(self);
             return;
         }
 
-        params &= 1;
-        iDigit = (self->params >> 13) & 6;
-        params |= iDigit;
-        clut = g_eDamageDisplayClut[params];
-        prim = &g_PrimBuf[self->primIndex];
-        if (iDigit && iDigit != 4) {
-            while (prim != NULL) {
+        s5_params &= 1;
+        s4_iDigit = (self->params >> 13) & 6;
+        s5_params |= s4_iDigit;
+        var_s6 = g_eDamageDisplayClut[s5_params];
+        s0_prim = &g_PrimBuf[self->primIndex];
+        if (s4_iDigit && s4_iDigit != 4) {
+            while (s0_prim != NULL) {
                 if (self->ext.ndmg.timer >= 60) {
-                    prim->_width++;
-                    prim->_height++;
+                    LOHU(s0_prim->r2)++;
+                    LOHU(s0_prim->b2)++;
                 } else if (self->ext.ndmg.timer >= 56) {
-                    prim->_width--;
-                    prim->_height--;
+                    LOHU(s0_prim->r2)--;
+                    LOHU(s0_prim->b2)--;
                 }
-                x = self->posX.i.hi + prim->_xOffset;
-                y = self->posY.i.hi + prim->_yOffset;
-                prim->x0 = prim->x2 = x - prim->_width;
-                prim->x1 = prim->x3 = x + prim->_width;
-                prim->y0 = prim->y1 = y - prim->_height;
-                prim->y2 = prim->y3 = y + prim->_height;
-                prim->clut = clut;
+                x = self->posX.i.hi + LOH(s0_prim->r1);
+                y = self->posY.i.hi + LOH(s0_prim->b1);
+                s0_prim->x0 = s0_prim->x2 = x - LOHU(s0_prim->r2);
+                s0_prim->x1 = s0_prim->x3 = x + LOHU(s0_prim->r2);
+                s0_prim->y0 = s0_prim->y1 = y - LOHU(s0_prim->b2);
+                s0_prim->y2 = s0_prim->y3 = y + LOHU(s0_prim->b2);
+                s0_prim->clut = var_s6;
                 if (self->ext.ndmg.timer < 6) {
-                    prim->drawMode = DRAW_TRANSP | DRAW_UNK02 | DRAW_TPAGE;
+                    s0_prim->blendMode = 0x13;
                 } else {
-                    prim->drawMode = DRAW_UNK02;
+                    s0_prim->blendMode = 0x02;
                 }
-                prim = prim->next;
+                s0_prim = s0_prim->next;
             }
             if (self->ext.ndmg.unk88 != 0) {
                 return;
             }
-            self->posY.val -= 0x8000;
+            self->posY.val -= FIX(0.5);
         } else {
-            while (prim != NULL) {
-                if (prim->_width >= 4) {
-                    prim->_width--;
+            while (s0_prim != NULL) {
+                if (LOHU(s0_prim->r2) > 3) {
+                    LOHU(s0_prim->r2)--;
                 }
-                if (prim->_height < 10) {
-                    prim->_height++;
+                if (LOHU(s0_prim->b2) < 10) {
+                    LOHU(s0_prim->b2)++;
                 }
-                x = self->posX.i.hi + prim->_xOffset;
-                y = self->posY.i.hi + prim->_yOffset + 5 - (prim->_height);
-                prim->x0 = x - prim->_width;
-                prim->x1 = x + prim->_width;
-                prim->y0 = prim->y1 = y;
-                prim->y2 = prim->y3 = y + prim->_height;
-                prim->clut = clut;
-                prim->x2 = x - 3;
-                prim->x3 = x + 3;
+
+                x = self->posX.i.hi + LOH(s0_prim->r1);
+                y = self->posY.i.hi + LOH(s0_prim->b1) + 5 -
+                       (LOHU(s0_prim->b2));
+                s0_prim->x0 = x - LOHU(s0_prim->r2);
+                s0_prim->x1 = x + LOHU(s0_prim->r2);
+                s0_prim->x2 = x - 3;
+                s0_prim->x3 = x + 3;
+                s0_prim->y0 = s0_prim->y1 = y;
+                s0_prim->y2 = s0_prim->y3 = y + LOHU(s0_prim->b2);
+                s0_prim->clut = var_s6;
+
                 if (self->ext.ndmg.timer < 6) {
-                    prim->drawMode = DRAW_TRANSP | DRAW_UNK02 | DRAW_TPAGE;
+                    s0_prim->blendMode = 0x13;
                 } else {
-                    prim->drawMode = DRAW_UNK02;
+                    s0_prim->blendMode = 0x02;
                 }
-                prim = prim->next;
+                s0_prim = s0_prim->next;
             }
-            self->posY.val -= 0x8000;
+            self->posY.val -= FIX(0.5);
         }
         break;
     }
