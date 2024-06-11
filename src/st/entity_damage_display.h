@@ -140,11 +140,11 @@ void EntityDamageDisplay(Entity* self) {
 
             sp3e = 0;
             s4_iDigit = 4 - *s7_nDigits;
-            #if defined(VERSION_PSP)
+#if defined(VERSION_PSP)
             var_s8 = -(*s7_nDigits) * 2;
-            #else
+#else
             var_s8 = *s7_nDigits * -2;
-            #endif
+#endif
             while (s0_prim != NULL) {
                 if (!sp3e) {
                     sp3e++;
@@ -255,7 +255,7 @@ void EntityDamageDisplay(Entity* self) {
 
                 x = self->posX.i.hi + LOH(s0_prim->r1);
                 y = self->posY.i.hi + LOH(s0_prim->b1) + 5 -
-                       (LOHU(s0_prim->b2));
+                    (LOHU(s0_prim->b2));
                 s0_prim->x0 = x - LOHU(s0_prim->r2);
                 s0_prim->x1 = x + LOHU(s0_prim->r2);
                 s0_prim->x2 = x - 3;
