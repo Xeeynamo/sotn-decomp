@@ -163,6 +163,8 @@ static unkStr_8011E4BC* D_800ADB98[] = {
     &D_800ADB48, &D_800ADB58, &D_800ADB68, &D_800ADB78, &D_800ADB88,
 };
 
+extern Unkstruct_800ADEF0 D_800ADEF0[];
+
 void func_8011E4BC(Entity* self) {
     byte stackpad[0x28];
     FakePrim* tilePrim;
@@ -893,7 +895,94 @@ void EntityHitByIce(Entity* self) {
 INCLUDE_ASM("dra/nonmatchings/7E4BC", EntityTransparentWhiteCircle);
 
 // pink effect on player
-INCLUDE_ASM("dra/nonmatchings/7E4BC", EntityPlayerPinkEffect);
+void EntityPlayerPinkEffect(Entity* self) {
+    s16 paramsHi = (self->params & 0x7F00) >> 8;
+    Unkstruct_800ADEF0* data_idx = (Unkstruct_800ADEF0*)&D_800ADEF0[paramsHi];
+    u32 temp2;
+
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_UNK_04000000 | FLAG_UNK_40000 | FLAG_UNK_20000 |
+                      FLAG_UNK_10000;
+        self->ext.timer.t = data_idx->unk0[0];
+        if (data_idx->unk18 != 0x83) {
+            PlaySfx(0x668);
+        }
+        if (data_idx->unk18 >= 128) {
+            func_8010E168(true, 64);
+        } else {
+            func_800FF0F4(data_idx->unk18);
+        }
+        self->step += 1;
+        break;
+    case 1:
+        if (--self->ext.timer.t != 0) {
+            return;
+        }
+        if (data_idx->pad2[self->ext.factory.unk7E]) {
+            CreateEntFactoryFromEntity(
+                self,
+                // factory changed
+                (data_idx->pad2[self->ext.factory.unk7E] +
+                 (data_idx->unk16[self->ext.factory.unk7E] << 16)),
+                0);
+            if (data_idx->pad2[self->ext.factory.unk7E] == 0x28) {
+                PlaySfx(0x67D);
+            }
+        }
+
+        self->ext.factory.unk7E++;
+        self->ext.timer.t = data_idx->unk0[self->ext.factory.unk7E];
+        if (self->ext.timer.t == 0xFF) {
+            temp2 = data_idx->unk18;
+            switch (temp2) {
+            case 0x83:
+                if (PLAYER.step == Player_StatusStone) {
+                    g_Player.unk5E = 1;
+                    D_800ACE44 = 0x40;
+                }
+                break;
+            case 0x80:
+                g_Player.D_80072F00[0] = 2;
+                PlaySfx(0x669);
+                break;
+            case 0x81:
+                g_Player.D_80072F00[1] = 2;
+                PlaySfx(0x669);
+                break;
+            case 0x84:
+                g_Player.unk56 = 1;
+                g_Player.unk58 =
+                    GetStatusAilmentTimer(STATUS_AILMENT_UNK04, 0x32);
+                break;
+            case 0x85:
+                g_Player.unk56 = 1;
+                g_Player.unk58 =
+                    GetStatusAilmentTimer(STATUS_AILMENT_UNK05, 0x64);
+                break;
+            case 0x86:
+                g_Player.unk56 = 1;
+                g_Player.unk58 = g_Status.hpMax;
+                break;
+            case 0x87:
+                PlaySfx(0x669);
+                g_Status.mp = g_Status.mpMax;
+                break;
+            default:
+                CreateEntFactoryFromEntity(
+                    self, (D_800AE120[temp2] << 0x10) + 0x2F, 0);
+                PlaySfx(0x669);
+            case 0x82:
+                break;
+            }
+            self->step += 1;
+        }
+        break;
+    case 2:
+        DestroyEntity(self);
+        break;
+    }
+}
 
 // player dissolves into pixels
 INCLUDE_ASM("dra/nonmatchings/7E4BC", EntityPlayerDissolves);
