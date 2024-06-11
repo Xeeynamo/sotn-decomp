@@ -317,9 +317,9 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         break;
     case SimFileType_StagePrg:
         switch (g_StageId) {
-        // case STAGE_SEL:
-        //     InitStageSel(&g_api.o);
-        //     break;
+        case STAGE_SEL:
+            InitStageSel(&g_api.o);
+            break;
         case STAGE_WRP:
             InitStageWrp(&g_api.o);
             break;

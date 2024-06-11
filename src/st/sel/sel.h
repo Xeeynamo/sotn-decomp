@@ -2,6 +2,8 @@
 #include <psxsdk/romio.h>
 #include "memcard.h"
 
+#define OVL_EXPORT(x) SEL_##x
+
 #define DISP_W 512
 
 #define NUM_MENU_OPTIONS 5
@@ -115,7 +117,7 @@ extern StageName D_80180128[80];
 
 extern const s32 D_801A7B8C[2];
 extern void* g_Cluts[];
-extern void* g_EntityGfxs[];
+extern void* OVL_EXPORT(g_EntityGfxs)[];
 extern StreamInfo g_StreamInfo0;
 extern StreamInfo g_StreamInfo1;
 extern StreamInfo g_StreamInfo2;

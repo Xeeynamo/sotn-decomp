@@ -53,11 +53,13 @@ void InitStageDummy(Overlay* o) {
 void SetGameState(GameState gameState);
 void PlaySfx(s32 sfxId);
 static void MyInitRoomEntities(s32 objLayoutId) {
-    if (g_StageId == STAGE_SEL) {
+    switch (g_StageId) {
+    case STAGE_SEL: // skip Title screen
+    case STAGE_ST0: // hack to force NG to jump straight to a valid map
         SetGameState(Game_NowLoading);
         g_GameStep = NowLoading_2;
         g_StageId = STAGE_WRP;
-        return;
+        break;
     }
 
     INFOF("Stage ID: %02X", g_StageId);
