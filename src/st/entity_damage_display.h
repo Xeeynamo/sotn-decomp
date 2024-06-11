@@ -52,11 +52,11 @@ typedef struct NumericPrim {
 // +    s16 x;
 // +    u8 var_s3;
 // +    s16 y;
-// +    u16 s4_iDigit;
+// +    u16 iDigit;
 // +    u16 params;
-// +    u16 var_s6;
+// +    u16 clut;
 // +    u16* nDigits;
-// +    s32 sp38;
+// +    s32 primIndex;
 // +    u16 sp3e;
 // +    s16 var_s8;
 
@@ -65,11 +65,11 @@ void EntityDamageDisplay(Entity* self) {
     s16 x;
     u8 var_s3;
     s16 y;
-    u16 s4_iDigit;
+    u16 iDigit;
     u16 params;
-    u16 var_s6;
+    u16 clut;
     u16* nDigits;
-    s32 sp38;
+    s32 primIndex;
     u16 sp3e;
     s16 var_s8;
 
@@ -92,39 +92,39 @@ void EntityDamageDisplay(Entity* self) {
             if (params == 0xC000) {
                 self->ext.ndmg.nPrims++;
             } else {
-                var_s6 = params & 0x3FFF;
+                clut = params & 0x3FFF;
 
                 // thousands
-                s4_iDigit = var_s6 / 1000;
-                if (s4_iDigit) {
+                iDigit = clut / 1000;
+                if (iDigit) {
                     self->ext.ndmg.nPrims++;
                     (*nDigits)++;
                 }
-                self->ext.ndmg.digits[0] = s4_iDigit;
+                self->ext.ndmg.digits[0] = iDigit;
 
                 // hundreds
-                var_s6 -= s4_iDigit * 1000;
-                s4_iDigit = var_s6 / 100;
-                if (s4_iDigit || *nDigits) {
+                clut -= iDigit * 1000;
+                iDigit = clut / 100;
+                if (iDigit || *nDigits) {
                     self->ext.ndmg.nPrims++;
                     (*nDigits)++;
                 }
-                self->ext.ndmg.digits[1] = s4_iDigit;
+                self->ext.ndmg.digits[1] = iDigit;
 
                 // tens
-                var_s6 -= s4_iDigit * 100;
-                s4_iDigit = var_s6 / 10;
-                if (s4_iDigit || *nDigits) {
+                clut -= iDigit * 100;
+                iDigit = clut / 10;
+                if (iDigit || *nDigits) {
                     self->ext.ndmg.nPrims++;
                     (*nDigits)++;
                 }
-                self->ext.ndmg.digits[2] = s4_iDigit;
+                self->ext.ndmg.digits[2] = iDigit;
 
                 // units
-                var_s6 -= s4_iDigit * 10;
+                clut -= iDigit * 10;
                 self->ext.ndmg.nPrims++;
                 (*nDigits)++;
-                self->ext.ndmg.digits[3] = var_s6;
+                self->ext.ndmg.digits[3] = clut;
 
                 if (params & 0x4000) {
                     self->ext.ndmg.nPrims++;
@@ -132,14 +132,14 @@ void EntityDamageDisplay(Entity* self) {
             }
         }
 
-        sp38 = g_api.AllocPrimitives(PRIM_GT4, self->ext.ndmg.nPrims);
-        if (sp38) {
-            self->primIndex = sp38;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, self->ext.ndmg.nPrims);
+        if (primIndex) {
+            self->primIndex = primIndex;
             self->flags |= FLAG_HAS_PRIMS;
-            s0_prim = &g_PrimBuf[sp38];
+            s0_prim = &g_PrimBuf[primIndex];
 
             sp3e = 0;
-            s4_iDigit = 4 - *nDigits;
+            iDigit = 4 - *nDigits;
 #if defined(VERSION_PSP)
             var_s8 = -(*nDigits) * 2;
 #else
@@ -180,7 +180,7 @@ void EntityDamageDisplay(Entity* self) {
                         LOH(s0_prim->b2) = 0;
                     }
 
-                    var_s3 = self->ext.ndmg.digits[s4_iDigit];
+                    var_s3 = self->ext.ndmg.digits[iDigit];
                     if (var_s3) {
                         var_s3 = var_s3 * 8 + 0x18;
                         s0_prim->u0 = s0_prim->u2 = var_s3;
@@ -192,7 +192,7 @@ void EntityDamageDisplay(Entity* self) {
                     s0_prim->v0 = s0_prim->v1 = 0x40;
                     s0_prim->v2 = s0_prim->v3 = 0x49;
                     var_s8 += 4;
-                    s4_iDigit++;
+                    iDigit++;
                 }
                 s0_prim->tpage = 0x1A;
                 s0_prim->priority = 0x1F8;
@@ -213,11 +213,11 @@ void EntityDamageDisplay(Entity* self) {
         }
 
         params &= 1;
-        s4_iDigit = (self->params >> 13) & 6;
-        params |= s4_iDigit;
-        var_s6 = g_eDamageDisplayClut[params];
+        iDigit = (self->params >> 13) & 6;
+        params |= iDigit;
+        clut = g_eDamageDisplayClut[params];
         s0_prim = &g_PrimBuf[self->primIndex];
-        if (s4_iDigit && s4_iDigit != 4) {
+        if (iDigit && iDigit != 4) {
             while (s0_prim != NULL) {
                 if (self->ext.ndmg.timer >= 60) {
                     LOHU(s0_prim->r2)++;
@@ -232,7 +232,7 @@ void EntityDamageDisplay(Entity* self) {
                 s0_prim->x1 = s0_prim->x3 = x + LOHU(s0_prim->r2);
                 s0_prim->y0 = s0_prim->y1 = y - LOHU(s0_prim->b2);
                 s0_prim->y2 = s0_prim->y3 = y + LOHU(s0_prim->b2);
-                s0_prim->clut = var_s6;
+                s0_prim->clut = clut;
                 if (self->ext.ndmg.timer < 6) {
                     s0_prim->blendMode = 0x13;
                 } else {
@@ -262,7 +262,7 @@ void EntityDamageDisplay(Entity* self) {
                 s0_prim->x3 = x + 3;
                 s0_prim->y0 = s0_prim->y1 = y;
                 s0_prim->y2 = s0_prim->y3 = y + LOHU(s0_prim->b2);
-                s0_prim->clut = var_s6;
+                s0_prim->clut = clut;
 
                 if (self->ext.ndmg.timer < 6) {
                     s0_prim->blendMode = 0x13;
