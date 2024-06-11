@@ -47,18 +47,18 @@
 <polygon fill="black" stroke="black" points="294.65,-46.4 296.76,-36.02 288.63,-42.82 294.65,-46.4"/>
 <text text-anchor="middle" x="291.76" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- cen.EntityUnkId16 -->
+<!-- cen.EntityHolyGlassesCutscene -->
 <g id="node4" class="node">
-<title>cen.EntityUnkId16</title>
-<g id="a_node4"><a xlink:href="cen.EntityUnkId16.svg" xlink:title="cen.EntityUnkId16">
-<ellipse fill="red" stroke="black" cx="200.89" cy="-378" rx="98.58" ry="18"/>
-<text text-anchor="middle" x="200.89" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityUnkId16</text>
+<title>cen.EntityHolyGlassesCutscene</title>
+<g id="a_node4"><a xlink:href="cen.EntityHolyGlassesCutscene.svg" xlink:title="cen.EntityHolyGlassesCutscene">
+<ellipse fill="green" stroke="black" cx="200.89" cy="-378" rx="158.67" ry="18"/>
+<text text-anchor="middle" x="200.89" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityHolyGlassesCutscene</text>
 </a>
 </g>
 </g>
-<!-- cen.EntityUnkId16&#45;&gt;cen.func_8018E238 -->
+<!-- cen.EntityHolyGlassesCutscene&#45;&gt;cen.func_8018E238 -->
 <g id="edge3" class="edge">
-<title>cen.EntityUnkId16&#45;&gt;cen.func_8018E238</title>
+<title>cen.EntityHolyGlassesCutscene&#45;&gt;cen.func_8018E238</title>
 <path fill="none" stroke="black" d="M200.89,-359.93C200.89,-328.97 200.89,-263.3 200.89,-226.13"/>
 <polygon fill="black" stroke="black" points="204.39,-226.02 200.89,-216.02 197.39,-226.02 204.39,-226.02"/>
 <text text-anchor="middle" x="195.89" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
