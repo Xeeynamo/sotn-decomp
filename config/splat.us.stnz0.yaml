@@ -113,6 +113,7 @@ segments:
       - [0x34690, c, slogra]
       - [0x35778, c, gaibon]
       - [0x36DE4, c]
+      - [0x374CC, c]
       - [0x394D4, c, random]
       - [0x39504, c, update]
       - [0x39800, c, update_stage_entities]
@@ -139,6 +140,6 @@ segments:
       - [0x47CF0, c] # EntityMagicallySealedDoor
       - [0x48ADC, c, e_stage_name] # EntityStageNamePopup
       - [0x49930, c, prim_helpers]
-      - [0x4A160, c]
+      - [0x4A160, c, lifeupspawn]
       - [0x4AA10, sbss]
   - [0x4B780]
