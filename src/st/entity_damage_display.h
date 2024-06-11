@@ -57,7 +57,7 @@ typedef struct NumericPrim {
 // +    u16 clut;
 // +    u16* nDigits;
 // +    s32 primIndex;
-// +    u16 sp3e;
+// +    u16 primInitStep;
 // +    s16 var_s8;
 
 void EntityDamageDisplay(Entity* self) {
@@ -70,7 +70,7 @@ void EntityDamageDisplay(Entity* self) {
     u16 clut;
     u16* nDigits;
     s32 primIndex;
-    u16 sp3e;
+    u16 primInitStep;
     s16 var_s8;
 
     if (self->ext.ndmg.unk88) {
@@ -138,7 +138,7 @@ void EntityDamageDisplay(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             prim = &g_PrimBuf[primIndex];
 
-            sp3e = 0;
+            primInitStep = 0;
             iDigit = 4 - *nDigits;
 #if defined(VERSION_PSP)
             var_s8 = -(*nDigits) * 2;
@@ -146,8 +146,8 @@ void EntityDamageDisplay(Entity* self) {
             var_s8 = *nDigits * -2;
 #endif
             while (prim != NULL) {
-                if (!sp3e) {
-                    sp3e++;
+                if (!primInitStep) {
+                    primInitStep++;
                     if ((params & 0xC000) == 0xC000) {
                         prim->u0 = prim->u2 = 0x43;
                         prim->u1 = prim->u3 = 0x59;
