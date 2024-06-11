@@ -1307,7 +1307,7 @@ typedef struct {
     /* 0x17 */ u8 unk17;                     // unknown
     /* 0x18 */ Primitive* prim[6];           // for dialogue graphics rendering
     /* 0x30 */ s32 primIndex[3];             // primIndices: unk, actorName, unk
-    /* 0x3C */ s16 unk3C;                    // maybe it is a begin flag?
+    /* 0x3C */ u16 unk3C;                    // maybe it is a begin flag?
     /* 0x3E */ u16 timer;                    // global timer
     /* 0x40 */ const char* unk40;            // dialogue settings, maybe?
 } Dialogue;                                  // size = 0x44
