@@ -2,13 +2,13 @@
 #include "game.h"
 
 void func_8018DF0C(void) {
-    D_8019D384 = 2;
-    D_8019D382 = 2;
-    D_8019D386 = 0;
-    D_8019D38A = 0;
-    D_8019D38E = 0;
-    D_8019D38F = 8;
-    D_8019D37E = D_8019D380 + 0x14;
+    g_Dialogue.nextLineX = 2;
+    g_Dialogue.nextCharX = 2;
+    g_Dialogue.nextCharY = 0;
+    g_Dialogue.unk12 = 0;
+    g_Dialogue.nextCharTimer = 0;
+    g_Dialogue.unk17 = 8;
+    g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
 }
 
 s32 func_8018DF60(s32 textDialogue) {
