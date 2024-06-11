@@ -163,6 +163,8 @@ static unkStr_8011E4BC* D_800ADB98[] = {
     &D_800ADB48, &D_800ADB58, &D_800ADB68, &D_800ADB78, &D_800ADB88,
 };
 
+extern Unkstruct_800ADEF0 D_800ADEF0[];
+
 void func_8011E4BC(Entity* self) {
     byte stackpad[0x28];
     FakePrim* tilePrim;

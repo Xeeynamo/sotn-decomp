@@ -415,7 +415,6 @@ extern u8 D_800AE120[];
 extern RECT D_800AE130;
 extern s32 D_800AE270[9];
 extern AnimationFrame D_800AE294[];
-extern Unkstruct_800ADEF0 D_800ADEF0[];
 extern s16 D_800AFDA4[];
 extern RECT c_backbufferClear;
 extern s16 D_800AFFB8[];
