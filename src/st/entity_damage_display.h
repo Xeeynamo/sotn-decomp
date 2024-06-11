@@ -48,9 +48,9 @@ typedef struct NumericPrim {
 // -    s16 xOffset;
 // -    s32 primIndex;
 // -    u16 primInitStep;
-// +    Primitive* s0_prim;
+// +    Primitive* prim;
 // +    s16 x;
-// +    u8 var_s3;
+// +    u8 singleDigit;
 // +    s16 y;
 // +    u16 iDigit;
 // +    u16 params;
@@ -61,9 +61,9 @@ typedef struct NumericPrim {
 // +    s16 var_s8;
 
 void EntityDamageDisplay(Entity* self) {
-    Primitive* s0_prim;
+    Primitive* prim;
     s16 x;
-    u8 var_s3;
+    u8 singleDigit;
     s16 y;
     u16 iDigit;
     u16 params;
@@ -136,7 +136,7 @@ void EntityDamageDisplay(Entity* self) {
         if (primIndex) {
             self->primIndex = primIndex;
             self->flags |= FLAG_HAS_PRIMS;
-            s0_prim = &g_PrimBuf[primIndex];
+            prim = &g_PrimBuf[primIndex];
 
             sp3e = 0;
             iDigit = 4 - *nDigits;
@@ -145,59 +145,59 @@ void EntityDamageDisplay(Entity* self) {
 #else
             var_s8 = *nDigits * -2;
 #endif
-            while (s0_prim != NULL) {
+            while (prim != NULL) {
                 if (!sp3e) {
                     sp3e++;
                     if ((params & 0xC000) == 0xC000) {
-                        s0_prim->u0 = s0_prim->u2 = 0x43;
-                        s0_prim->u1 = s0_prim->u3 = 0x59;
-                        s0_prim->v0 = s0_prim->v1 = 0x4A;
-                        s0_prim->v2 = s0_prim->v3 = 0x52;
-                        LOH(s0_prim->r2) = 0xB;
-                        LOH(s0_prim->b2) = 5;
-                        LOH(s0_prim->r1) = 0;
-                        LOH(s0_prim->b1) = -0x10;
+                        prim->u0 = prim->u2 = 0x43;
+                        prim->u1 = prim->u3 = 0x59;
+                        prim->v0 = prim->v1 = 0x4A;
+                        prim->v2 = prim->v3 = 0x52;
+                        LOH(prim->r2) = 0xB;
+                        LOH(prim->b2) = 5;
+                        LOH(prim->r1) = 0;
+                        LOH(prim->b1) = -0x10;
                     } else if (params & 0x4000) {
-                        s0_prim->u0 = s0_prim->u2 = 0x20;
-                        s0_prim->u1 = s0_prim->u3 = 0x42;
-                        s0_prim->v0 = s0_prim->v1 = 0x4A;
-                        s0_prim->v2 = s0_prim->v3 = 0x52;
-                        LOH(s0_prim->r2) = 0x11;
-                        LOH(s0_prim->b2) = 5;
-                        LOH(s0_prim->r1) = 0;
-                        LOH(s0_prim->b1) = -0x18;
+                        prim->u0 = prim->u2 = 0x20;
+                        prim->u1 = prim->u3 = 0x42;
+                        prim->v0 = prim->v1 = 0x4A;
+                        prim->v2 = prim->v3 = 0x52;
+                        LOH(prim->r2) = 0x11;
+                        LOH(prim->b2) = 5;
+                        LOH(prim->r1) = 0;
+                        LOH(prim->b1) = -0x18;
                     } else {
                         continue;
                     }
                 } else {
-                    LOH(s0_prim->r1) = var_s8;
-                    LOH(s0_prim->b1) = -0x10;
+                    LOH(prim->r1) = var_s8;
+                    LOH(prim->b1) = -0x10;
                     if (params & 0x4000) {
-                        LOH(s0_prim->r2) = 3;
-                        LOH(s0_prim->b2) = 5;
+                        LOH(prim->r2) = 3;
+                        LOH(prim->b2) = 5;
                     } else {
-                        LOH(s0_prim->r2) = 0x17;
-                        LOH(s0_prim->b2) = 0;
+                        LOH(prim->r2) = 0x17;
+                        LOH(prim->b2) = 0;
                     }
 
-                    var_s3 = self->ext.ndmg.digits[iDigit];
-                    if (var_s3) {
-                        var_s3 = var_s3 * 8 + 0x18;
-                        s0_prim->u0 = s0_prim->u2 = var_s3;
-                        s0_prim->u1 = s0_prim->u3 = var_s3 + 6;
+                    singleDigit = self->ext.ndmg.digits[iDigit];
+                    if (singleDigit) {
+                        singleDigit = singleDigit * 8 + 0x18;
+                        prim->u0 = prim->u2 = singleDigit;
+                        prim->u1 = prim->u3 = singleDigit + 6;
                     } else {
-                        s0_prim->u0 = s0_prim->u2 = 0x68;
-                        s0_prim->u1 = s0_prim->u3 = 0x6E;
+                        prim->u0 = prim->u2 = 0x68;
+                        prim->u1 = prim->u3 = 0x6E;
                     }
-                    s0_prim->v0 = s0_prim->v1 = 0x40;
-                    s0_prim->v2 = s0_prim->v3 = 0x49;
+                    prim->v0 = prim->v1 = 0x40;
+                    prim->v2 = prim->v3 = 0x49;
                     var_s8 += 4;
                     iDigit++;
                 }
-                s0_prim->tpage = 0x1A;
-                s0_prim->priority = 0x1F8;
-                s0_prim->blendMode = 8;
-                s0_prim = s0_prim->next;
+                prim->tpage = 0x1A;
+                prim->priority = 0x1F8;
+                prim->blendMode = 8;
+                prim = prim->next;
             }
             self->step++;
             self->step_s = 0;
@@ -216,60 +216,60 @@ void EntityDamageDisplay(Entity* self) {
         iDigit = (self->params >> 13) & 6;
         params |= iDigit;
         clut = g_eDamageDisplayClut[params];
-        s0_prim = &g_PrimBuf[self->primIndex];
+        prim = &g_PrimBuf[self->primIndex];
         if (iDigit && iDigit != 4) {
-            while (s0_prim != NULL) {
+            while (prim != NULL) {
                 if (self->ext.ndmg.timer >= 60) {
-                    LOHU(s0_prim->r2)++;
-                    LOHU(s0_prim->b2)++;
+                    LOHU(prim->r2)++;
+                    LOHU(prim->b2)++;
                 } else if (self->ext.ndmg.timer >= 56) {
-                    LOHU(s0_prim->r2)--;
-                    LOHU(s0_prim->b2)--;
+                    LOHU(prim->r2)--;
+                    LOHU(prim->b2)--;
                 }
-                x = self->posX.i.hi + LOH(s0_prim->r1);
-                y = self->posY.i.hi + LOH(s0_prim->b1);
-                s0_prim->x0 = s0_prim->x2 = x - LOHU(s0_prim->r2);
-                s0_prim->x1 = s0_prim->x3 = x + LOHU(s0_prim->r2);
-                s0_prim->y0 = s0_prim->y1 = y - LOHU(s0_prim->b2);
-                s0_prim->y2 = s0_prim->y3 = y + LOHU(s0_prim->b2);
-                s0_prim->clut = clut;
+                x = self->posX.i.hi + LOH(prim->r1);
+                y = self->posY.i.hi + LOH(prim->b1);
+                prim->x0 = prim->x2 = x - LOHU(prim->r2);
+                prim->x1 = prim->x3 = x + LOHU(prim->r2);
+                prim->y0 = prim->y1 = y - LOHU(prim->b2);
+                prim->y2 = prim->y3 = y + LOHU(prim->b2);
+                prim->clut = clut;
                 if (self->ext.ndmg.timer < 6) {
-                    s0_prim->blendMode = 0x13;
+                    prim->blendMode = 0x13;
                 } else {
-                    s0_prim->blendMode = 0x02;
+                    prim->blendMode = 0x02;
                 }
-                s0_prim = s0_prim->next;
+                prim = prim->next;
             }
             if (self->ext.ndmg.unk88 != 0) {
                 return;
             }
             self->posY.val -= FIX(0.5);
         } else {
-            while (s0_prim != NULL) {
-                if (LOHU(s0_prim->r2) > 3) {
-                    LOHU(s0_prim->r2)--;
+            while (prim != NULL) {
+                if (LOHU(prim->r2) > 3) {
+                    LOHU(prim->r2)--;
                 }
-                if (LOHU(s0_prim->b2) < 10) {
-                    LOHU(s0_prim->b2)++;
+                if (LOHU(prim->b2) < 10) {
+                    LOHU(prim->b2)++;
                 }
 
-                x = self->posX.i.hi + LOH(s0_prim->r1);
-                y = self->posY.i.hi + LOH(s0_prim->b1) + 5 -
-                    (LOHU(s0_prim->b2));
-                s0_prim->x0 = x - LOHU(s0_prim->r2);
-                s0_prim->x1 = x + LOHU(s0_prim->r2);
-                s0_prim->x2 = x - 3;
-                s0_prim->x3 = x + 3;
-                s0_prim->y0 = s0_prim->y1 = y;
-                s0_prim->y2 = s0_prim->y3 = y + LOHU(s0_prim->b2);
-                s0_prim->clut = clut;
+                x = self->posX.i.hi + LOH(prim->r1);
+                y = self->posY.i.hi + LOH(prim->b1) + 5 -
+                    (LOHU(prim->b2));
+                prim->x0 = x - LOHU(prim->r2);
+                prim->x1 = x + LOHU(prim->r2);
+                prim->x2 = x - 3;
+                prim->x3 = x + 3;
+                prim->y0 = prim->y1 = y;
+                prim->y2 = prim->y3 = y + LOHU(prim->b2);
+                prim->clut = clut;
 
                 if (self->ext.ndmg.timer < 6) {
-                    s0_prim->blendMode = 0x13;
+                    prim->blendMode = 0x13;
                 } else {
-                    s0_prim->blendMode = 0x02;
+                    prim->blendMode = 0x02;
                 }
-                s0_prim = s0_prim->next;
+                prim = prim->next;
             }
             self->posY.val -= FIX(0.5);
         }
