@@ -339,9 +339,9 @@ void func_801B60D4(void) {
         if (!g_IsUsingCd) {
             D_8003C728 = 1;
             if (D_800978B4 == 0) {
-                D_8003C100 = 2;
+                g_CurrentStream = 2;
             } else {
-                D_8003C100 = 3;
+                g_CurrentStream = 3;
             }
             D_8003C9A4++;
         }
@@ -350,7 +350,7 @@ void func_801B60D4(void) {
     case 1:
         func_801B9C80();
         if (D_8003C728 == 0) {
-            D_8003C100 = 0;
+            g_CurrentStream = 0;
             func_801B18F4();
         }
         if (D_800978B4 != 0) {

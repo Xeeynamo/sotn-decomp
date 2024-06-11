@@ -366,6 +366,7 @@ extern EnemyDef g_EnemyDefs[400];
 extern s32 g_ExpNext[];
 extern u16 D_800AC958[];
 extern CdFile* D_800ACC74[];
+extern s32 g_CurrentStream;
 extern Vram g_Vram;
 extern s32 D_800ACE44;
 extern s16 D_800ACE88[];
