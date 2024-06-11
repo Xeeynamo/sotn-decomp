@@ -398,7 +398,7 @@
 - [❌ EntityNumberMovesToHpMeter](function_calls/dra.EntityNumberMovesToHpMeter.svg?raw=1)
 - [❌ EntityPlayerBlinkWhite](function_calls/dra.EntityPlayerBlinkWhite.svg?raw=1)
 - [❌ EntityPlayerDissolves](function_calls/dra.EntityPlayerDissolves.svg?raw=1)
-- [❌ EntityPlayerPinkEffect](function_calls/dra.EntityPlayerPinkEffect.svg?raw=1)
+- [✅ EntityPlayerPinkEffect](function_calls/dra.EntityPlayerPinkEffect.svg?raw=1)
 - [❌ EntityStopWatch](function_calls/dra.EntityStopWatch.svg?raw=1)
 - [✅ EntityStopWatchExpandingCircle](function_calls/dra.EntityStopWatchExpandingCircle.svg?raw=1)
 - [✅ EntitySubwpnAgunea](function_calls/dra.EntitySubwpnAgunea.svg?raw=1)

@@ -435,7 +435,7 @@
 <g id="node28" class="node">
 <title>dra.EntityPlayerPinkEffect</title>
 <g id="a_node28"><a xlink:href="dra.EntityPlayerPinkEffect.svg" xlink:title="dra.EntityPlayerPinkEffect">
-<ellipse fill="red" stroke="black" cx="6548.19" cy="-198" rx="135.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="6548.19" cy="-198" rx="135.68" ry="18"/>
 <text text-anchor="middle" x="6548.19" y="-194.3" font-family="Times,serif" font-size="14.00">dra.EntityPlayerPinkEffect</text>
 </a>
 </g>

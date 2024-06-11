@@ -12,7 +12,7 @@
 <!-- dra.EntityPlayerPinkEffect -->
 <g id="node1" class="node">
 <title>dra.EntityPlayerPinkEffect</title>
-<ellipse fill="red" stroke="black" cx="808.74" cy="-198" rx="135.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="808.74" cy="-198" rx="135.68" ry="18"/>
 <text text-anchor="middle" x="808.74" y="-194.3" font-family="Times,serif" font-size="14.00">dra.EntityPlayerPinkEffect</text>
 </g>
 <!-- dra.CreateEntFactoryFromEntity -->
