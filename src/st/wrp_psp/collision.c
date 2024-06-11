@@ -5,7 +5,7 @@ INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/collision", HitDetection);
 extern u16 D_80180A6C[];
 extern u16 D_801804A0[];
 
-void EntityNumericDamage(Entity* self) {
+void EntityDamageDisplay(Entity* self) {
     Primitive* s0_prim;
     s16 s1_x;
     u8 var_s3;
