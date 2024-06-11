@@ -264,7 +264,8 @@ void EntityMariaCutscene(Entity* self) {
 
     if (self->step != 0) {
         if ((D_801CB73C != 0) && (D_801CB684 == 0) &&
-            ((g_Settings.D_8003CB04 & 0x100) || (g_IsTimeAttackUnlocked != 0)) &&
+            ((g_Settings.D_8003CB04 & 0x100) ||
+             (g_IsTimeAttackUnlocked != 0)) &&
             (g_pads[0].tapped == PAD_START)) {
             D_801CB684 = 1;
             g_api.FreePrimitives(self->primIndex);

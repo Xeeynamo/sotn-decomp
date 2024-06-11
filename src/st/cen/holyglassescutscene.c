@@ -1,7 +1,7 @@
 #include "cen.h"
 #include "game.h"
 
-//Bizarre variable - u8 here, but u16 in EntityHeartDrop
+// Bizarre variable - u8 here, but u16 in EntityHeartDrop
 extern u8 D_801805D8[];
 
 void func_8018DF0C(void) {
@@ -269,7 +269,8 @@ void EntityHolyGlassesCutscene(Entity* self) {
 
     if (self->step != 0) {
         if ((D_8019D428 != 0) && (D_8019D374 == 0) &&
-            ((g_Settings.D_8003CB04 & 0x800) || (g_IsTimeAttackUnlocked != 0)) &&
+            ((g_Settings.D_8003CB04 & 0x800) ||
+             (g_IsTimeAttackUnlocked != 0)) &&
             (g_pads[0].tapped & PAD_START)) {
             D_8019D374 = 1;
             g_api.FreePrimitives(self->primIndex);
@@ -726,7 +727,8 @@ void EntityHolyGlassesCutscene(Entity* self) {
     case 7:
         DestroyEntity(self);
         g_CastleFlags[216] = 1;
-        g_api.TimeAttackController(TIMEATTACK_EVENT_GET_HOLYGLASSES, TIMEATTACK_SET_RECORD);
+        g_api.TimeAttackController(
+            TIMEATTACK_EVENT_GET_HOLYGLASSES, TIMEATTACK_SET_RECORD);
         D_8003C704 = 0;
         g_Settings.D_8003CB04 |= 0x800;
         break;

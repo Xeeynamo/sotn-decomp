@@ -96,5 +96,4 @@ extern u32 D_8019D424;
 extern s32 D_8019D428;
 extern s32 D_8019D374;
 
-
 #endif
