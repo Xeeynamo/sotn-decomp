@@ -16,21 +16,21 @@ extern const char D_80186E30[];
 extern const char D_80186E3C[];
 extern const char D_80186E4C[];
 extern const char D_80186E5C[];
-void func_80186FD0(Entity *arg0);
+void func_80186FD0(Entity* arg0);
 #define NEW_ENTITY pl
 extern s32 D_psp_0924BC90;
 extern s32 D_psp_0924BC90;
 
 void EntityWarpRoom(Entity* self) {
-    Primitive* prim; 
-    s32 angle; 
-    s32 i; 
-    Entity *pl; 
-    s32 move_room; 
+    Primitive* prim;
+    s32 angle;
+    s32 i;
+    Entity* pl;
+    s32 move_room;
     s32 moveX;
-    s32 moveY; 
-    WarpCoord* warpCoords; 
-    s32 primIndex; 
+    s32 moveY;
+    WarpCoord* warpCoords;
+    s32 primIndex;
 
     FntPrint(D_80186E30, self->step);
     switch (self->step) {
@@ -38,7 +38,7 @@ void EntityWarpRoom(Entity* self) {
         // Initialize all the objects in the warp room
         InitializeEntity(D_80180470);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 24);
-        if (primIndex == -1) { 
+        if (primIndex == -1) {
             self->step = 0;
             return;
         }
@@ -93,7 +93,8 @@ void EntityWarpRoom(Entity* self) {
         prim->drawMode = DRAW_HIDE;
         D_80193AA4 = 0x100;
         for (i = 0; i < 32; i++) {
-            NEW_ENTITY = (Entity*)AllocEntity(&g_Entities[0xA0], &g_Entities[0x100]);
+            NEW_ENTITY =
+                (Entity*)AllocEntity(&g_Entities[0xA0], &g_Entities[0x100]);
             if (NEW_ENTITY != NULL) {
                 CreateEntityFromCurrentEntity(D_psp_0924BC90, NEW_ENTITY);
                 NEW_ENTITY->posY.i.hi = 0xCC - g_Tilemap.scrollY.i.hi;
@@ -119,7 +120,8 @@ void EntityWarpRoom(Entity* self) {
         }
     case 1:
         // Wait for player to press the UP button
-        if (self->hitFlags && g_pads->pressed & 0x10 && !(g_Player.unk0C & 0xC5CF3EF7)) { //
+        if (self->hitFlags && g_pads->pressed & 0x10 &&
+            !(g_Player.unk0C & 0xC5CF3EF7)) { //
             g_Player.padSim = 0;
             g_Player.D_80072EFC = 0x80;
             D_8003C8B8 = 0;
@@ -172,7 +174,7 @@ void EntityWarpRoom(Entity* self) {
     case 4:
         // Perform the actual warp
         move_room = self->params + 1;
-        for (i = 0; i < 5; ) {
+        for (i = 0; i < 5;) {
             if (move_room > 4) {
                 move_room = 0;
             }
@@ -266,7 +268,8 @@ void EntityWarpRoom(Entity* self) {
         prim->g1 = ((rsin(angle) + 0x1000) >> 6) * D_80193AA4 / 256;
         angle = D_80180608_wrp[(i + 11) % 16];
         prim->b1 = ((rsin(angle) + 0x1000) >> 6) * D_80193AA4 / 256;
-        prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = D_80193AAC;
+        prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
+            D_80193AAC;
         D_80180608_wrp[i] += 0x20;
         prim = prim->next;
     }
