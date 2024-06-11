@@ -58,7 +58,7 @@ typedef struct NumericPrim {
 // +    u16* nDigits;
 // +    s32 primIndex;
 // +    u16 primInitStep;
-// +    s16 var_s8;
+// +    s16 xOffset;
 
 void EntityDamageDisplay(Entity* self) {
     Primitive* prim;
@@ -71,7 +71,7 @@ void EntityDamageDisplay(Entity* self) {
     u16* nDigits;
     s32 primIndex;
     u16 primInitStep;
-    s16 var_s8;
+    s16 xOffset;
 
     if (self->ext.ndmg.unk88) {
         self->posX.val = g_Entities->posX.val;
@@ -141,9 +141,9 @@ void EntityDamageDisplay(Entity* self) {
             primInitStep = 0;
             iDigit = 4 - *nDigits;
 #if defined(VERSION_PSP)
-            var_s8 = -(*nDigits) * 2;
+            xOffset = -(*nDigits) * 2;
 #else
-            var_s8 = *nDigits * -2;
+            xOffset = *nDigits * -2;
 #endif
             while (prim != NULL) {
                 if (!primInitStep) {
@@ -170,7 +170,7 @@ void EntityDamageDisplay(Entity* self) {
                         continue;
                     }
                 } else {
-                    LOH(prim->r1) = var_s8;
+                    LOH(prim->r1) = xOffset;
                     LOH(prim->b1) = -0x10;
                     if (params & 0x4000) {
                         LOH(prim->r2) = 3;
@@ -191,7 +191,7 @@ void EntityDamageDisplay(Entity* self) {
                     }
                     prim->v0 = prim->v1 = 0x40;
                     prim->v2 = prim->v3 = 0x49;
-                    var_s8 += 4;
+                    xOffset += 4;
                     iDigit++;
                 }
                 prim->tpage = 0x1A;
