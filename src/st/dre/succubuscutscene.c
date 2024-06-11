@@ -1,13 +1,13 @@
 #include "dre.h"
 
 void func_80194774(void) {
-    D_801A3EE4 = 2;
-    D_801A3EE2 = 2;
-    D_801A3EE6 = 0;
-    D_801A3EEA = 0;
-    D_801A3EEE = 0;
-    D_801A3EEF = 8;
-    D_801A3EDE = D_801A3EE0 + 20;
+    g_Dialogue.nextLineX = 2;
+    g_Dialogue.nextCharX = 2;
+    g_Dialogue.nextCharY = 0;
+    g_Dialogue.unk12 = 0;
+    g_Dialogue.nextCharTimer = 0;
+    g_Dialogue.unk17 = 8;
+    g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
 }
 
 s32 func_801947C8(s32 textDialogue) {
@@ -101,7 +101,7 @@ void func_801949E8(void) {
 // This array is in Data, but the strings within it are rodata. That rodata
 // lives between the jump tables in this file, so we have to import the rodata,
 // and also the data.
-const char* D_80180938[] = {"!LUCARD\xFF", ",ISA\xFF", "3UCCUBUS\xFF"};
+const char* D_80180938[] = {_S("Alucard"), _S("Lisa"), _S("Succubus")};
 
 // Creates primitives for the actor name at the head of the dialogue
 void func_80194AA0(u16 actorIndex, Entity* self) {
@@ -270,18 +270,9 @@ void func_80194FF4(u8 ySteps) {
     g_Dialogue.portraitAnimTimer++;
 }
 
-extern s32 D_801A3ED4;
-extern u32 D_801A3F84;
-extern s32 D_801A3F88;
-extern u8 D_8018088C[];
-extern u8 D_80180890[];
-extern u16 D_80180894[];
-extern u16 D_8018089C[];
-extern u16 D_801808A0[];
-extern s16 D_801808A8[];
-extern const char D_80181B65[];
-extern const char D_801816C8[];
 // dialogue with mother opens as alucard walks right ID 20
+// Same pattern as a lot of other cutscenes, main differences
+// are related to the self->params if-else statements.
 void EntitySuccubusCutscene(Entity* self) {
     RECT rect;
     Primitive* prim;
