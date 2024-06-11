@@ -1,4 +1,6 @@
 #include "cen.h"
+//Bizarre variable - u16 here, but u8 in EntityHolyGlassesCutscene
+extern u16 D_801805D8[];
 
 void EntityHeartDrop(Entity* self) {
     u16 temp_a0;

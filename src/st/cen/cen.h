@@ -66,7 +66,6 @@ extern u8 D_8018059C[];
 extern s16 D_801805A4[];
 extern s8 D_801805B4[];
 extern u16 D_801805BC;
-extern u16 D_801805D8[];
 extern const char* D_80180684[];
 extern s32 D_8018068C[];
 extern u8 D_80180768[]; // Animation
@@ -85,5 +84,17 @@ extern u32 D_8019D424;
 extern u16 g_InitializeEntityData0[];
 
 extern Dialogue g_Dialogue;
+
+// For EntityHolyGlassesCutscene
+extern u8 D_801805DC[];
+extern u16 D_801805E0[];
+extern u16 D_801805E8[];
+extern u16 D_801805EC[];
+extern s16 D_801805F4[];
+extern const char D_801813F0[];
+extern u32 D_8019D424;
+extern s32 D_8019D428;
+extern s32 D_8019D374;
+
 
 #endif
