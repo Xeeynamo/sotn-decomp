@@ -275,7 +275,7 @@ void EntityMariaCutscene(Entity* self) {
             if (g_Dialogue.primIndex[0] != -1) {
                 g_api.FreePrimitives(g_Dialogue.primIndex[0]);
             }
-            g_api.PlaySfx(0xA);
+            g_api.PlaySfx(SET_STOP_MUSIC);
             self->step = 1;
             self->step_s = 0;
         }
@@ -285,7 +285,8 @@ void EntityMariaCutscene(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        if ((g_CastleFlags[133] != 0) || (g_PlayableCharacter != 0)) {
+        if ((g_CastleFlags[133] != 0) ||
+            (g_PlayableCharacter != PLAYER_ALUCARD)) {
             DestroyEntity(self);
             return;
         }
