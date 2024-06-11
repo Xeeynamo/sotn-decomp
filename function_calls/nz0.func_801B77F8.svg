@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>nz0.EntityMariaCutscene</title>
 <g id="a_node4"><a xlink:href="nz0.EntityMariaCutscene.svg" xlink:title="nz0.EntityMariaCutscene">
-<ellipse fill="red" stroke="black" cx="205.44" cy="-378" rx="129.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="205.44" cy="-378" rx="129.18" ry="18"/>
 <text text-anchor="middle" x="205.44" y="-374.3" font-family="Times,serif" font-size="14.00">nz0.EntityMariaCutscene</text>
 </a>
 </g>
