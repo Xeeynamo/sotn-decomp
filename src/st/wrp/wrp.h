@@ -1,5 +1,7 @@
 #include <stage.h>
 
+#define OVL_EXPORT(x) WRP_##x
+
 #define CASTLE_FLAG_BANK 0x00
 
 // WRP Sound IDs
@@ -45,7 +47,6 @@ extern u16 g_EInitGeneric[];
 extern u16 g_eInitGeneric2[];
 extern u16 D_801804C4[];
 extern u16 g_eRedDoorTiles[2][8];
-extern u32 D_80180648;
 extern u8 g_eRedDoorUV[3][8];
 extern u16 g_eUnk14SpawnRots[];
 extern u16 g_ESoulStealOrbAngles[];
@@ -57,5 +58,8 @@ extern s32 D_80193AA4;
 extern s32 D_80193AA8;
 extern s32 D_80193AAC;
 
+extern u16 g_ItemIconSlots[32];
+
+void func_8018F838(Entity*);
 void EntityUnkId14(Entity* entity);
 void EntityUnkId15(Entity* entity);

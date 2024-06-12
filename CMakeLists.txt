@@ -124,6 +124,28 @@ set(SOURCE_FILES_STAGE_SEL
     src/st/sel/3642C.c
 )
 
+set(SOURCE_FILES_STAGE_WRP
+    src/pc/stages/stage_wrp.c
+    src/st/wrp/6FD0.c
+    src/st/wrp/st_debug.c
+    src/st/wrp/e_breakable.c
+    src/st/wrp/d_608.c
+    src/st/wrp/warp.c
+    src/st/wrp/st_update.c
+    src/st/wrp/collision.c
+    src/st/wrp/create_entity.c
+    src/st/wrp/e_red_door.c
+    src/st/wrp/st_common.c
+    src/st/wrp/e_collect.c
+    src/st/wrp/blit_char.c
+    src/st/wrp/e_misc.c
+    src/st/wrp/e_stage_name.c
+    src/st/wrp/e_particles.c
+    src/st/wrp/e_room_fg.c
+    src/st/wrp/popup.c
+    src/st/wrp/prim_helpers.c
+)
+
 # organization is:
 # two executables, sdl2 and null, plus a shared library "core"
 # any executable links core (which is pc shared code + sotn psx code)
@@ -140,6 +162,7 @@ set(SOURCE_FILES_CORE
     ${SOURCE_FILES_3RD}
     ${SOURCE_FILES_DRA}
     ${SOURCE_FILES_STAGE_SEL}
+    ${SOURCE_FILES_STAGE_WRP}
 )
 
 add_library(core ${SOURCE_FILES_CORE})

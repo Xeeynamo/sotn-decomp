@@ -147,7 +147,7 @@ bool InitGame(void) {
     api.func_800EDB08 = NULL;
     api.func_80106A28 = func_80106A28;
     api.func_80118894 = NULL;
-    api.enemyDefs = NULL;
+    api.enemyDefs = g_EnemyDefs;
     api.func_80118970 = NULL;
     api.func_80118B18 = NULL;
     api.UpdateUnarmedAnim = NULL;

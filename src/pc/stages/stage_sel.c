@@ -3,6 +3,8 @@
 #include "../pc.h"
 #include "sfx.h"
 
+extern void* SEL_g_EntityGfxs[] = {NULL, NULL};
+
 // stubs
 RECT D_80182584 = {0};
 RECT D_8018258C = {0};

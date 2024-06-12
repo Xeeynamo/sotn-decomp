@@ -1,3 +1,4 @@
+#ifndef HARD_LINK
 void DestroyEntity(Entity* entity) {
     s32 i;
     s32 length;
@@ -12,3 +13,4 @@ void DestroyEntity(Entity* entity) {
     for (i = 0; i < length; i++)
         *ptr++ = 0;
 }
+#endif
