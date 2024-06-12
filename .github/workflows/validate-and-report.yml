@@ -37,14 +37,14 @@ jobs:
       VERSION: ${{ matrix.version }}
     steps:
       - name: Install requirements
-        run: |
-          sudo apt-get install gcc-mipsel-linux-gnu
-          make update-dependencies
+        run: sudo apt-get install gcc-mipsel-linux-gnu
       - name: Clone main repo
         uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
           submodules: false
+      - name: Install tools requirements
+        run: make update-dependencies
       - name: Get dependencies
         uses: actions/cache@v4
         id: get-dependencies
