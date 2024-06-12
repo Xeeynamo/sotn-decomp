@@ -925,13 +925,13 @@ Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, f32 arg3) {
 
     if (arg0 == 0) {
         if (arg3.i.lo != 0) {
-            prim = D_800AE230[arg1 >> 1] * 13 + D_801381F4;
+            prim = &D_801381F4[D_800AE230[arg1 >> 1]];
             var_t0 = prim->u0;
             var_t2 = prim->u1;
             var_a3 = prim->v0;
             var_t1 = prim->v1;
         } else {
-            prim = D_800AE250[arg1 >> 1] * 13 + D_801381F4;
+            prim = &D_801381F4[D_800AE250[arg1 >> 1]];
             var_t0 = prim->u1;
             var_t2 = prim->u0;
             var_a3 = prim->v1;
@@ -960,12 +960,12 @@ Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, f32 arg3) {
         }
         arg2->clut = 0x10F;
         arg2->priority = PLAYER.zPriority + 2;
-        arg2->drawMode = DRAW_UNK_400 | 0x100 | DRAW_TPAGE2 | DRAW_TPAGE |
-                         DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+        arg2->drawMode = DRAW_UNK_400 | DRAW_UNK_100 | DRAW_TPAGE2 |
+                         DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         arg2 = arg2->next;
     } else {
-        temp_s5 = D_8013809C[arg1].unk0;
-        temp_s4 = D_8013809C[(arg1 + 1) % 16].unk0;
+        temp_s5 = D_80138094[arg1].unk8;
+        temp_s4 = D_80138094[(arg1 + 1) % 16].unk8;
 
         for (var_s3 = 0; var_s3 < 4; var_s3++) {
             // nb: the cos/sin arguments seem to be invariant, could've been
@@ -1001,9 +1001,10 @@ Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, f32 arg3) {
 
             arg2->tpage = 0x18;
             arg2->clut = 0x10F;
-            arg2->drawMode = DRAW_UNK_400 | 0x100 | DRAW_TPAGE2 | DRAW_TPAGE |
-                             DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
             arg2->priority = PLAYER.zPriority + 4;
+            arg2->drawMode =
+                DRAW_UNK_400 | DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
+                DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
             arg2 = arg2->next;
         }
     }
