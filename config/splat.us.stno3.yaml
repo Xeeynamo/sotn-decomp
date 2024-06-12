@@ -60,9 +60,9 @@ segments:
       - [0x373E8, .rodata, 377D4] # EntityCastleDoor
       - [0x37400, .rodata, 377D4] # EntityStairwayPiece
       - [0x37414, .rodata, 3C4EC]
-      - [0x3742C, .rodata, 3E134]
+      - [0x3742C, .rodata, 3E134] #EntityFlyingOwlAndLeaves
       - [0x37440, rodata]
-      - [0x37458, rodata]
+      - [0x37458, .rodata, deathcutscene] # EntityDeathCutscene
       - [0x374DC, .rodata, 3FF00] # EntityRoomTransition2
       - [0x374F4, .rodata, 3FF00] # EntityDeathStolenItems
       - [0x37514, .rodata, 3FF00] # EntityDeath
@@ -82,6 +82,7 @@ segments:
       - [0x377D4, c]
       - [0x3C4EC, c]
       - [0x3E134, c]
+      - [0x3E544, c, deathcutscene]
       - [0x3FF00, c]
       - [0x4184C, c, random]
       - [0x4187C, c, update]
