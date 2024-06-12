@@ -209,6 +209,7 @@ unk_800B08CC D_800B08CC[6] = {0};
 s32 D_800B07C8 = 0x12345678;
 Unkstruct_80138094 D_80138094[100]; // unknown size
 s32 D_8013808C;
+Primitive D_801381F4[8]; // unknown size
 GpuUsage g_GpuMaxUsage;
 GpuBuffer* g_BackBuffer;
 s32 g_DebugFreeze;
