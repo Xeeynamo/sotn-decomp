@@ -363,7 +363,11 @@ def print_map_symbols(map_file_name, no_default):
     map_file.readMapFile(Path(map_file_name))
 
     filter = (
-        (lambda name: not is_splat_symbol_name(name))
+        (
+            lambda name: not (
+                is_splat_symbol_name(name) or name == "g_PlOvl" or name == "g_MainGame"
+            )
+        )
         if no_default
         else (lambda _: True)
     )
