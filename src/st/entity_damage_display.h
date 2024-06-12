@@ -1,5 +1,5 @@
-extern u16 g_eDamageDisplayInit[]; // D_801804A0
-extern u16 g_eDamageDisplayClut[]; // D_80180A6C
+extern u16 g_eDamageDisplayInit[];
+extern u16 g_eDamageDisplayClut[];
 
 typedef struct NumericPrim {
     /* 0x00 */ struct NumericPrim* next;
