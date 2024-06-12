@@ -9,12 +9,7 @@ u8 g_eRedDoorUV[][8] = {
     {0xA8, 0x88, 0xA8, 0x88, 0x21, 0x21, 0x5F, 0x5F},
 };
 
-// mwccgap bug
-#if !defined(VERSION_PSP)
-static
-#endif
-    bool
-    EntityIsNearPlayer(Entity* self) {
+static bool EntityIsNearPlayer(Entity* self) {
     s16 distanceX;
     s16 diffX;
     s16 distanceY;
