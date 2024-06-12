@@ -2,9 +2,8 @@ import ctypes
 import os
 import sys
 
-sys.path.append(f"{os.getcwd()}/tools/n64splat")
 sys.path.append(f"{os.getcwd()}/tools/splat_ext")
-from util import log
+from splat.util import log
 
 subchar81_dict = {
     0x44: 0x2E,  # '.'

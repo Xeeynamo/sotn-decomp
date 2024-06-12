@@ -1,6 +1,6 @@
 import n64img.image
 
-from segtypes.n64.rgba16 import N64SegRgba16
+from splat.segtypes.n64.rgba16 import N64SegRgba16
 
 
 class PSXSegRgba16(N64SegRgba16):

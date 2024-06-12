@@ -35,6 +35,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x04000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x04040, animset, w_000_1]
@@ -53,6 +54,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x0B000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x0B040, animset, w_001_1]
@@ -71,6 +73,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x12000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x12040, animset, w_002_1]
@@ -88,6 +91,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x19000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x19040, animset, w_003_1]
@@ -105,6 +109,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x20000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x20040, animset, w_004_1]
@@ -122,6 +127,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x27000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x27040, animset, w_005_1]
@@ -139,6 +145,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x2E000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x2E040, animset, w_006_1]
@@ -157,6 +164,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x35000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x35040, animset, w_007_1]
@@ -174,6 +182,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x3C000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x3C040, animset, w_008_1]
@@ -192,6 +201,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x43000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x43040, animset, w_009_1]
@@ -210,6 +220,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x4A000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x4A040, animset, w_010_1]
@@ -228,6 +239,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x51000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x51040, animset, w_011_1]
@@ -246,6 +258,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x58000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x58040, animset, w_012_1]
@@ -263,6 +276,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x5F000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x5F040, animset, w_013_1]
@@ -281,6 +295,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x66000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x66040, animset, w_014_1]
@@ -298,6 +313,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x6D000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x6D040, animset, w_015_1]
@@ -315,6 +331,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x74000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x74040, animset, w_016_1]
@@ -333,6 +350,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x7B000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x7B040, animset, w_017_1]
@@ -350,6 +368,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x82000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x82040, animset, w_018_1]
@@ -367,6 +386,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x89000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x89040, animset, w_019_1]
@@ -384,6 +404,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x90000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x90040, animset, w_020_1]
@@ -402,6 +423,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x97000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x97040, animset, w_021_1]
@@ -420,6 +442,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x9E000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x9E040, animset, w_022_1]
@@ -437,6 +460,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0xA5000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0xA5040, animset, w_023_1]
@@ -455,6 +479,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0xAC000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0xAC040, animset, w_024_1]
@@ -473,6 +498,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0xB3000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0xB3040, animset, w_025_1]
@@ -491,6 +517,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0xBA000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0xBA040, animset, w_026_1]
@@ -509,6 +536,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0xC1000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0xC1040, animset, w_027_1]
@@ -527,6 +555,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0xC8000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0xC8040, animset, w_028_1]
@@ -545,6 +574,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0xCF000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0xCF040, animset, w_029_1]
@@ -563,6 +593,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0xD6000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0xD6040, animset, w_030_1]
@@ -581,6 +612,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0xDD000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0xDD040, animset, w_031_1]
@@ -598,6 +630,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0xE4000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0xE4040, animset, w_032_1]
@@ -615,6 +648,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0xEB000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0xEB040, animset, w_033_1]
@@ -632,6 +666,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0xF2000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0xF2040, animset, w_034_1]
@@ -649,6 +684,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0xF9000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0xF9040, animset, w_035_1]
@@ -666,6 +702,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x100000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x100040, animset, w_036_1]
@@ -683,6 +720,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x107000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x107040, animset, w_037_1]
@@ -700,6 +738,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x10E000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x10E040, animset, w_038_1]
@@ -717,6 +756,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x115000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x115040, animset, w_039_1]
@@ -734,6 +774,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x11C000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x11C040, animset, w_040_1]
@@ -751,6 +792,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x123000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x123040, animset, w_041_1]
@@ -769,6 +811,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x12A000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x12A040, animset, w_042_1]
@@ -786,6 +829,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x131000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x131040, animset, w_043_1]
@@ -803,6 +847,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x138000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x138040, animset, w_044_1]
@@ -821,6 +866,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x13F000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x13F040, animset, w_045_1]
@@ -838,6 +884,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x146000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x146040, animset, w_046_1]
@@ -855,6 +902,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x14D000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x14D040, animset, w_047_1]
@@ -873,6 +921,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x154000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x154040, animset, w_048_1]
@@ -890,6 +939,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x15B000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x15B040, animset, w_049_1]
@@ -907,6 +957,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x162000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x162040, animset, w_050_1]
@@ -924,6 +975,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x169000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x169040, animset, w_051_1]
@@ -941,6 +993,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x170000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x170040, animset, w_052_1]
@@ -959,6 +1012,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x177000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x177040, animset, w_053_1]
@@ -977,6 +1031,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x17E000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x17E040, animset, w_054_1]
@@ -994,6 +1049,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x185000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x185040, animset, w_055_1]
@@ -1011,6 +1067,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x18C000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x18C040, animset, w_056_1]
@@ -1028,6 +1085,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x193000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x193040, animset, w_057_1]
@@ -1045,6 +1103,7 @@ segments:
     exclusive_ram_id: weapon
     start: 0x19A000
     vram: 0x8017A000
+    align: 4
     subalign: 4
     subsegments:
       - [0x19A040, animset, w_058_1]

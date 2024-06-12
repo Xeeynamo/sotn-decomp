@@ -628,7 +628,6 @@ CD_TestParmNum = 0x80032D4C;
 CD_ReadCallbackFunc = 0x80032DB8;
 _snd_seq_tick_env = 0x80032EF0;
 _spu_trans_mode =  0x8003309C;
-_spu_trans_mode = 0x8003309C;
 _spu_rev_flag = 0x800330A0;
 _spu_rev_reserve_wa  =  0x800330A4;
 _spu_rev_offsetaddr = 0x800330A8;

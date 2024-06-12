@@ -1,6 +1,6 @@
 import os
 import sys
-from util import options
+from splat.util import options
 from typing import Optional
 from pathlib import Path
 

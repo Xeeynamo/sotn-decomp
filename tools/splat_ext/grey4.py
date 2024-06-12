@@ -1,7 +1,7 @@
 import n64img.image
 from typing import List, Tuple
 
-from segtypes.n64.img import N64SegImg
+from splat.segtypes.n64.img import N64SegImg
 
 
 def generate_grey_palette() -> List[Tuple[int, int, int, int]]:

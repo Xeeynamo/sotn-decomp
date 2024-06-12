@@ -8,10 +8,10 @@ import sys
 from typing import Optional
 from pathlib import Path
 
-sys.path.append(f"{os.getcwd()}/tools/n64splat")
+
 sys.path.append(f"{os.getcwd()}/tools/splat_ext")
-from util import options
-from segtypes.n64.segment import N64Segment
+from splat.util import options
+from splat.segtypes.n64.segment import N64Segment
 import utils
 
 
