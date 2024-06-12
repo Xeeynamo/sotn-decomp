@@ -17,7 +17,6 @@ options:
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no
-  ld_legacy_generation: no
   asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
   section_order:

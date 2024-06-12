@@ -118,8 +118,7 @@ jobs:
         with:
           submodules: false
       - name: Install requirements
-        run: |
-          make update-dependencies
+        run: make update-dependencies
       - name: Get dependencies
         uses: actions/cache@v4
         with:
@@ -161,8 +160,7 @@ jobs:
         with:
           submodules: false
       - name: Install requirements
-        run: |
-          make update-dependencies
+        run: make update-dependencies
       - name: Get dependencies
         uses: actions/cache@v4
         with:
