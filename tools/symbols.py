@@ -363,11 +363,7 @@ def print_map_symbols(map_file_name, no_default):
     map_file.readMapFile(Path(map_file_name))
 
     filter = (
-        (
-            lambda name: not (
-                is_splat_symbol_name(name) or name == "g_PlOvl" or name == "g_MainGame"
-            )
-        )
+        (lambda name: not is_splat_symbol_name(name))
         if no_default
         else (lambda _: True)
     )
@@ -379,7 +375,7 @@ def print_map_symbols(map_file_name, no_default):
                 if sym.vram not in syms and filter(sym.name):
                     syms[sym.vram] = sym.name
     for vram in syms:
-        print(f"{syms[vram]} = 0x{vram:08X};")
+        print(f"{syms[vram]} = 0x{vram:08X}; // allow_duplicated:True")
 
 
 if __name__ == "__main__":
