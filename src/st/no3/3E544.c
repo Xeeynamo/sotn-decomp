@@ -263,23 +263,7 @@ void func_801BEDAC(u8 ySteps) {
     g_Dialogue.portraitAnimTimer++;
 }
 
-extern s32 D_801D7D20;
-extern u32 D_801D7DD0;
-extern s32 D_801D7DD4;
-extern s32 D_8003CB04;
-extern u8 D_80181A28[];
-extern u8 D_80181A2C[];
-extern u16 D_80181A30[];
-extern u16 D_80181A34[];
-extern u16 D_80181A38[];
-extern s16 D_80181A3C[];
-extern const char D_801813F0[];
-
-extern u16 D_801D7D60;
-extern const char D_80184CE0[];
-extern s32 D_801D7D5C;
-
-void EntityRoomTransition1(Entity* self) {
+void EntityDeathCutscene(Entity* self) {
     RECT rect;
     Primitive* prim;
     s32 primIndex;
@@ -293,7 +277,7 @@ void EntityRoomTransition1(Entity* self) {
 
     if (self->step != 0) {
         if ((D_801D7DD4 != 0) && (D_801D7D20 == 0) &&
-            ((g_IsTimeAttackUnlocked != 0) || (D_8003CB04 & 4))) {
+            ((g_IsTimeAttackUnlocked) || (g_Settings.D_8003CB04 & 4))) {
             func_801BECCC(self);
         }
         if ((self->step != 0) && (D_801D7D60 != 0)) {
@@ -302,15 +286,15 @@ void EntityRoomTransition1(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        CreateEntityFromCurrentEntity(0x17, &g_Entities[192]);
-        if ((g_CastleFlags[53]) || (g_PlayableCharacter != 0)) {
+        CreateEntityFromCurrentEntity(E_BG_LIGHTNING, &g_Entities[192]);
+        if ((g_CastleFlags[53]) || (g_PlayableCharacter != PLAYER_ALUCARD)) {
             DestroyEntity(self);
             g_Entities[192].params = 0;
             return;
         }
         g_Entities[192].params = 0x100;
         if (func_801BE598(D_80184CE0) & 0xFF) {
-            self->flags |= 0x802000;
+            self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             D_801D7DD0 = 0;
             D_801D7DD4 = 0;
             D_801D7D20 = 0;
