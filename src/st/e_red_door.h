@@ -9,7 +9,12 @@ u8 g_eRedDoorUV[][8] = {
     {0xA8, 0x88, 0xA8, 0x88, 0x21, 0x21, 0x5F, 0x5F},
 };
 
-static bool EntityIsNearPlayer(Entity* self) {
+// mwccgap bug
+#if !defined(VERSION_PSP)
+static
+#endif
+    bool
+    EntityIsNearPlayer(Entity* self) {
     s16 distanceX;
     s16 diffX;
     s16 distanceY;
@@ -215,7 +220,7 @@ void EntityRedDoor(Entity* self) {
         g_Player.D_80072EFC = 4;
         if (!(self->params & 0x100)) {
             self->ext.door.angle -= 0x20;
-            if (self->ext.door.angle <= 0xC00) {
+            if (self->ext.door.angle < 0xC01) {
                 self->ext.door.angle = 0xC00;
             }
         } else {
