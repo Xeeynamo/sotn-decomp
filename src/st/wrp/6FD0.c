@@ -14,8 +14,8 @@ void func_8018CAB0(void);
 void func_801916C4(u16);
 void BottomCornerText(u8*, u8);
 
-u32 D_80181420[];
-u32 D_80181764[];
+u32 D_80181420[1];
+u32 D_80181764[1];
 static void* D_801801B8[] = {
     /* 0x1B8 */ (void*)0x00000000,
     /* 0x1BC */ (void*)0x00000000,
@@ -58,13 +58,13 @@ void* OVL_EXPORT(g_EntityGfxs)[] = {
 // *** Layout definition end ***
 
 // *** Layout entity definition start ***
-LayoutEntity D_80181228[];
-LayoutEntity D_80181250[];
-LayoutEntity D_801812A0[];
-LayoutEntity D_801812C8[];
-LayoutEntity D_80181278[];
-LayoutEntity D_801812F0[];
-LayoutEntity D_80181304[];
+LayoutEntity D_80181228[1];
+LayoutEntity D_80181250[1];
+LayoutEntity D_801812A0[1];
+LayoutEntity D_801812C8[1];
+LayoutEntity D_80181278[1];
+LayoutEntity D_801812F0[1];
+LayoutEntity D_80181304[1];
 LayoutEntity* g_pStObjLayoutHorizontal[] = {
     /* 0x23C */ D_801812F0,
     /* 0x240 */ D_80181228,
@@ -121,13 +121,13 @@ LayoutEntity* g_pStObjLayoutHorizontal[] = {
     /* 0x30C */ D_80181304,
 };
 
-LayoutEntity D_80181324[];
-LayoutEntity D_8018134C[];
-LayoutEntity D_80181374[];
-LayoutEntity D_8018139C[];
-LayoutEntity D_801813C4[];
-LayoutEntity D_801813EC[];
-LayoutEntity D_80181400[];
+LayoutEntity D_80181324[1];
+LayoutEntity D_8018134C[1];
+LayoutEntity D_80181374[1];
+LayoutEntity D_8018139C[1];
+LayoutEntity D_801813C4[1];
+LayoutEntity D_801813EC[1];
+LayoutEntity D_80181400[1];
 LayoutEntity* g_pStObjLayoutVertical[] = {
     /* 310 */ D_801813EC,
     /* 314 */ D_80181324,

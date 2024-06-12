@@ -1345,7 +1345,10 @@ void func_80136010(void) {
                     D_8013AEA0[i] = 0;
                 }
             }
+#ifndef VERSION_PC
+            // this can be uninitialized
             fakeptr++;
+#endif
             var_t4 += 1;
             var_t3 += 4;
             var_t2 += 4;
