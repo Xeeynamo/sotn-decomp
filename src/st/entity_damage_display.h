@@ -37,31 +37,8 @@ typedef struct NumericPrim {
     /* 0x32 */ u16 drawMode;
 } NumericPrim; /* size=0x34 */
 
-// -    NumericPrim* prim;
-// -    s16 x;
-// -    s16 y;
-// -    u8 singleDigit;
-// -    u16 iDigit;
-// -    u16 params;
-// -    u16 clut;
-// -    u16* nDigits;
-// -    s16 xOffset;
-// -    s32 primIndex;
-// -    u16 primInitStep;
-// +    Primitive* prim;
-// +    s16 x;
-// +    u8 singleDigit;
-// +    s16 y;
-// +    u16 iDigit;
-// +    u16 params;
-// +    u16 clut;
-// +    u16* nDigits;
-// +    s32 primIndex;
-// +    u16 primInitStep;
-// +    s16 xOffset;
-
 void EntityDamageDisplay(Entity* self) {
-    Primitive* prim;
+    NumericPrim* prim;
     s16 x;
     u8 singleDigit;
     s16 y;
@@ -136,7 +113,7 @@ void EntityDamageDisplay(Entity* self) {
         if (primIndex) {
             self->primIndex = primIndex;
             self->flags |= FLAG_HAS_PRIMS;
-            prim = &g_PrimBuf[primIndex];
+            prim = (NumericPrim*)&g_PrimBuf[primIndex];
 
             primInitStep = 0;
             iDigit = 4 - *nDigits;
@@ -153,31 +130,31 @@ void EntityDamageDisplay(Entity* self) {
                         prim->u1 = prim->u3 = 0x59;
                         prim->v0 = prim->v1 = 0x4A;
                         prim->v2 = prim->v3 = 0x52;
-                        LOH(prim->r2) = 0xB;
-                        LOH(prim->b2) = 5;
-                        LOH(prim->r1) = 0;
-                        LOH(prim->b1) = -0x10;
+                        prim->_width = 11;
+                        prim->_height = 5;
+                        prim->_xOffset = 0;
+                        prim->_yOffset = -16;
                     } else if (params & 0x4000) {
                         prim->u0 = prim->u2 = 0x20;
                         prim->u1 = prim->u3 = 0x42;
                         prim->v0 = prim->v1 = 0x4A;
                         prim->v2 = prim->v3 = 0x52;
-                        LOH(prim->r2) = 0x11;
-                        LOH(prim->b2) = 5;
-                        LOH(prim->r1) = 0;
-                        LOH(prim->b1) = -0x18;
+                        prim->_width = 17;
+                        prim->_height = 5;
+                        prim->_xOffset = 0;
+                        prim->_yOffset = -24;
                     } else {
                         continue;
                     }
                 } else {
-                    LOH(prim->r1) = xOffset;
-                    LOH(prim->b1) = -0x10;
+                    prim->_xOffset = xOffset;
+                    prim->_yOffset = -16;
                     if (params & 0x4000) {
-                        LOH(prim->r2) = 3;
-                        LOH(prim->b2) = 5;
+                        prim->_width = 3;
+                        prim->_height = 5;
                     } else {
-                        LOH(prim->r2) = 0x17;
-                        LOH(prim->b2) = 0;
+                        prim->_width = 23;
+                        prim->_height = 0;
                     }
 
                     singleDigit = self->ext.ndmg.digits[iDigit];
@@ -196,7 +173,7 @@ void EntityDamageDisplay(Entity* self) {
                 }
                 prim->tpage = 0x1A;
                 prim->priority = 0x1F8;
-                prim->blendMode = 8;
+                prim->drawMode = 8;
                 prim = prim->next;
             }
             self->step++;
@@ -216,27 +193,27 @@ void EntityDamageDisplay(Entity* self) {
         iDigit = (self->params >> 13) & 6;
         params |= iDigit;
         clut = g_eDamageDisplayClut[params];
-        prim = &g_PrimBuf[self->primIndex];
+        prim = (NumericPrim*)&g_PrimBuf[self->primIndex];
         if (iDigit && iDigit != 4) {
             while (prim != NULL) {
                 if (self->ext.ndmg.timer >= 60) {
-                    LOHU(prim->r2)++;
-                    LOHU(prim->b2)++;
+                    prim->_width++;
+                    prim->_height++;
                 } else if (self->ext.ndmg.timer >= 56) {
-                    LOHU(prim->r2)--;
-                    LOHU(prim->b2)--;
+                    prim->_width--;
+                    prim->_height--;
                 }
-                x = self->posX.i.hi + LOH(prim->r1);
-                y = self->posY.i.hi + LOH(prim->b1);
-                prim->x0 = prim->x2 = x - LOHU(prim->r2);
-                prim->x1 = prim->x3 = x + LOHU(prim->r2);
-                prim->y0 = prim->y1 = y - LOHU(prim->b2);
-                prim->y2 = prim->y3 = y + LOHU(prim->b2);
+                x = self->posX.i.hi + prim->_xOffset;
+                y = self->posY.i.hi + prim->_yOffset;
+                prim->x0 = prim->x2 = x - prim->_width;
+                prim->x1 = prim->x3 = x + prim->_width;
+                prim->y0 = prim->y1 = y - prim->_height;
+                prim->y2 = prim->y3 = y + prim->_height;
                 prim->clut = clut;
                 if (self->ext.ndmg.timer < 6) {
-                    prim->blendMode = 0x13;
+                    prim->drawMode = 0x13;
                 } else {
-                    prim->blendMode = 0x02;
+                    prim->drawMode = 0x02;
                 }
                 prim = prim->next;
             }
@@ -246,28 +223,27 @@ void EntityDamageDisplay(Entity* self) {
             self->posY.val -= FIX(0.5);
         } else {
             while (prim != NULL) {
-                if (LOHU(prim->r2) > 3) {
-                    LOHU(prim->r2)--;
+                if ((prim->_width) > 3) {
+                    (prim->_width)--;
                 }
-                if (LOHU(prim->b2) < 10) {
-                    LOHU(prim->b2)++;
+                if ((prim->_height) < 10) {
+                    (prim->_height)++;
                 }
 
-                x = self->posX.i.hi + LOH(prim->r1);
-                y = self->posY.i.hi + LOH(prim->b1) + 5 -
-                    (LOHU(prim->b2));
-                prim->x0 = x - LOHU(prim->r2);
-                prim->x1 = x + LOHU(prim->r2);
+                x = self->posX.i.hi + (prim->_xOffset);
+                y = self->posY.i.hi + (prim->_yOffset) + 5 - (prim->_height);
+                prim->x0 = x - (prim->_width);
+                prim->x1 = x + (prim->_width);
                 prim->x2 = x - 3;
                 prim->x3 = x + 3;
                 prim->y0 = prim->y1 = y;
-                prim->y2 = prim->y3 = y + LOHU(prim->b2);
+                prim->y2 = prim->y3 = y + (prim->_height);
                 prim->clut = clut;
 
                 if (self->ext.ndmg.timer < 6) {
-                    prim->blendMode = 0x13;
+                    prim->drawMode = 0x13;
                 } else {
-                    prim->blendMode = 0x02;
+                    prim->drawMode = 0x02;
                 }
                 prim = prim->next;
             }
