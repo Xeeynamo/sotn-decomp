@@ -117,11 +117,7 @@ void EntityDamageDisplay(Entity* self) {
 
             primInitStep = 0;
             iDigit = 4 - *nDigits;
-#if defined(VERSION_PSP)
-            xOffset = -(*nDigits) * 2;
-#else
             xOffset = *nDigits * -2;
-#endif
             while (prim != NULL) {
                 if (!primInitStep) {
                     primInitStep++;
