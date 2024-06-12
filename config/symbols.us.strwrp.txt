@@ -27,7 +27,6 @@ g_ESoulStealOrbAngles = 0x801810A0;
 g_ESoulStealOrbSprt = 0x801810B0;
 g_ESoulStealOrbAnim = 0x80181110;
 g_Rooms = 0x801811AC;
-g_UnkPrimHelperRot = 0x80188DE8;
 EntityBreakable = 0x8018908C;
 Random = 0x8018A168;
 Update = 0x8018A198;

@@ -1,8 +1,23 @@
 #include "wrp.h"
-#include "sfx.h"
+#include <sfx.h>
 
+#ifdef VERSION_PSP
+static u32 D_80180608[] = {
+    0x0000, 0x0200, 0x0400, 0x0600, 0x0800, 0x0A00, 0x0C00, 0x0E00,
+    0x1000, 0x1200, 0x1400, 0x1600, 0x1800, 0x1A00, 0x1C00, 0x1E00,
+};
+extern u32 D_80180648; // SBSS
+extern s32 D_psp_0924BC90;
+
+#else
+// this is supposed to be u16, not u32.
+// the game devs probably put the wrong type.
+extern u32 D_80180608[16];
 static u32 D_80180648 = 0;
 static u32 D_8018064C[] = {0x00040000, 0x00040000, 0xFFFC0004, 0x0000FFF8};
+
+#endif
+
 static WarpCoord D_8018065C[] = {
     {0x0F, 0x26}, // Entrance
     {0x23, 0x2C}, // Abandoned pit to the Catacomb
@@ -10,14 +25,13 @@ static WarpCoord D_8018065C[] = {
     {0x28, 0x0C}, // Castle Keep
     {0x25, 0x15}, // Orlox's Quarters
 };
+
+#ifndef VERSION_PSP
 static u16 unused_array[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000, 0x0001, 0x0000,
     0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0101,
 };
-
-// this is supposed to be u16, not u32.
-// the game devs probably put the wrong type.
-extern u32 D_80180608[];
+#endif
 
 // Handles everything about the warp room.
 // It is responsible to spawn the colourful background, the stones on the
@@ -28,7 +42,7 @@ void EntityWarpRoom(Entity* self) {
     s32 angle;
     s32 i;
     Entity* entity;
-    s32 moveRoom;
+    s32 move_room;
     s32 moveX;
     s32 moveY;
     WarpCoord* warpCoords;
@@ -50,7 +64,7 @@ void EntityWarpRoom(Entity* self) {
         self->ext.warpRoom.primBg = prim;
         moveY = self->posY.i.hi;
         moveX = self->posX.i.hi;
-        for (i = 0; i < 0x10; i++) {
+        for (i = 0; i < 16; i++) {
             angle = i * 256;
             prim->x0 = moveX + (((rcos(angle) >> 4) * 0x40) >> 8);
             prim->y0 = moveY - (((rsin(angle) >> 4) * 0x40) >> 8);
@@ -97,7 +111,11 @@ void EntityWarpRoom(Entity* self) {
         for (i = 0; i < 32; i++) {
             entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0x100]);
             if (entity != NULL) {
+#ifdef VERSION_PSP
+                CreateEntityFromCurrentEntity(D_psp_0924BC90, entity);
+#else
                 CreateEntityFromCurrentEntity(E_SMALL_ROCKS, entity);
+#endif
                 entity->posY.i.hi = 0xCC - g_Tilemap.scrollY.i.hi;
                 entity->posX.i.hi = (Random() & 0x7F) + 0x40;
             }
@@ -121,12 +139,12 @@ void EntityWarpRoom(Entity* self) {
         }
     case 1:
         // Wait for player to press the UP button
-        if (self->hitFlags && g_pads->pressed & 0x1000 &&
+        if (self->hitFlags && g_pads->pressed & PAD_UP &&
             !(g_Player.unk0C & 0xC5CF3EF7)) {
             g_Player.padSim = 0;
             g_Player.D_80072EFC = 0x80;
             D_8003C8B8 = 0;
-#if defined(VERSION_US)
+#ifdef VERSION_US
             PLAYER.velocityX = 0;
             PLAYER.velocityY = 0;
 #endif
@@ -174,17 +192,17 @@ void EntityWarpRoom(Entity* self) {
         break;
     case 4:
         // Perform the actual warp
-        moveRoom = self->params + 1;
-        for (i = 0; i < LEN(D_8018065C); i++, moveRoom++) {
-            if (moveRoom >= LEN(D_8018065C)) {
-                moveRoom = 0;
+        move_room = self->params + 1;
+        for (i = 0; i < LEN(D_8018065C); i++, move_room++) {
+            if (move_room > LEN(D_8018065C) - 1) {
+                move_room = 0;
             }
-            if (g_CastleFlags[0xD0] & (1 << moveRoom)) {
+            if (g_CastleFlags[0xD0] & (1 << move_room)) {
                 break;
             }
         }
-        D_80193AA0 = moveRoom;
-        warpCoords = &D_8018065C[moveRoom];
+        D_80193AA0 = move_room;
+        warpCoords = &D_8018065C[move_room];
         moveX = warpCoords->x - g_Tilemap.left;
         moveY = warpCoords->y - g_Tilemap.top;
         FntPrint("move_room%x\n", D_80193AA0);
@@ -217,18 +235,18 @@ void EntityWarpRoom(Entity* self) {
         D_8003C8B8 = 0;
         prim = self->ext.warpRoom.primFade;
         prim = prim->next;
-        moveRoom = prim->r0;
-        moveRoom -= 4;
-        if (moveRoom < 0) {
-            moveRoom = 0;
+        move_room = prim->r0;
+        move_room -= 4;
+        if (move_room < 0) {
+            move_room = 0;
             prim->drawMode = DRAW_HIDE;
             D_8003C8B8 = 1;
             self->step = 1;
         }
-        if (moveRoom < 0x28) {
+        if (move_room < 0x28) {
             D_80180648 = 0;
         }
-        prim->g0 = prim->b0 = prim->r0 = moveRoom;
+        prim->g0 = prim->b0 = prim->r0 = move_room;
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
@@ -288,8 +306,8 @@ void EntityWarpSmallRocks(Entity* entity) {
         if (D_80180648) {
             entity->posY.i.hi = (Random() & 0x1F) + 0x90;
             entity->step = 4;
+            break;
         }
-        break;
     case 1:
         if (D_80180648) {
             entity->ext.warpRoom.unk88 = Random() & 0x3F;

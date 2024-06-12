@@ -351,14 +351,6 @@ extern const char D_801B058C[]; // "charal %x\n"
 extern const char D_801B0598[]; // "charal %x\n"
 extern const char D_801B08C8[]; // "charal %x\n"
 
-extern s16 D_801CB68E;
-extern u16 D_801CB690;
-extern s16 D_801CB692;
-extern s16 D_801CB694;
-extern s16 D_801CB696;
-extern s16 D_801CB69A;
-extern s8 D_801CB69E;
-extern s8 D_801CB69F;
 extern Primitive* D_801CB6A0[];
 extern s32 D_801CB6B8;
 extern s32 D_801CB6BC;
@@ -382,3 +374,15 @@ extern SVECTOR D_80182830;
 extern SVECTOR D_80182838;
 extern SVECTOR D_80182840;
 extern SVECTOR D_80182848;
+
+// For EntityMariaCutscene
+extern s32 D_801CB684;
+extern u32 D_801CB734;
+extern s32 D_801CB73C;
+extern u8 D_801813C8[];
+extern u8 D_801813CC[];
+extern u16 D_801813D0[];
+extern u16 D_801813D4[];
+extern u16 D_801813D8[];
+extern s16 D_801813DC[];
+extern const char D_80183B0C[];

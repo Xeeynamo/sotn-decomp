@@ -74,6 +74,7 @@ s32 D_8006C384;
 s32 D_8006C388;
 s32 D_8006C38C;
 s32 D_8006C390;
+s32 g_CurrentStream;
 u16 g_ClutIds[0x400];
 s32 D_8003C738;
 u8 g_CastleFlags[0x300];
@@ -612,7 +613,6 @@ void EntityPlayerDissolves(Entity* self) { NOT_IMPLEMENTED; }
 void EntityMist(Entity* self) { NOT_IMPLEMENTED; }
 void EntityGuardText(Entity* self) { NOT_IMPLEMENTED; }
 void EntityTransparentWhiteCircle(Entity* self) { NOT_IMPLEMENTED; }
-void EntityPlayerPinkEffect(Entity* self) { NOT_IMPLEMENTED; }
 void EntityHolyWaterBreakGlass(Entity* self) { NOT_IMPLEMENTED; }
 void EntityStopWatch(Entity* self) { NOT_IMPLEMENTED; }
 void func_80123B40(Entity* self) { NOT_IMPLEMENTED; }
