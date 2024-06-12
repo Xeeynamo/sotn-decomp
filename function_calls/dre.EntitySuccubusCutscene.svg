@@ -12,7 +12,7 @@
 <!-- dre.EntitySuccubusCutscene -->
 <g id="node1" class="node">
 <title>dre.EntitySuccubusCutscene</title>
-<ellipse fill="red" stroke="black" cx="1396.74" cy="-198" rx="145.67" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1396.74" cy="-198" rx="145.67" ry="18"/>
 <text text-anchor="middle" x="1396.74" y="-194.3" font-family="Times,serif" font-size="14.00">dre.EntitySuccubusCutscene</text>
 </g>
 <!-- LoadTPage -->

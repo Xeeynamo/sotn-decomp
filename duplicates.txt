@@ -1919,42 +1919,42 @@
 | 1.00 | true     | NormalClip                          | ../../asm/us/main/nonmatchings/psxsdk/libgte/smp_05/NormalClip.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018DF0C                       | ../../asm/us/st/cen/nonmatchings/holyglassescutscene/func_8018DF0C.s 
-| 1.00 | true     | func_80194774                       | ../../asm/us/st/dre/nonmatchings/14774/func_80194774.s 
+| 1.00 | true     | func_80194774                       | ../../asm/us/st/dre/nonmatchings/succubuscutscene/func_80194774.s 
 | 1.00 | true     | func_801BE544                       | ../../asm/us/st/no3/nonmatchings/3E134/func_801BE544.s 
 | 1.00 | true     | func_801B74CC                       | ../../asm/us/st/nz0/nonmatchings/mariacutscene/func_801B74CC.s 
 | 1.00 | true     | func_801B642C                       | ../../asm/us/st/sel/nonmatchings/3642C/func_801B642C.s 
 | 1.00 | true     | func_801A8984                       | ../../asm/us/st/st0/nonmatchings/27D64/func_801A8984.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018DF60                       | ../../asm/us/st/cen/nonmatchings/holyglassescutscene/func_8018DF60.s 
-| 1.00 | true     | func_801947C8                       | ../../asm/us/st/dre/nonmatchings/14774/func_801947C8.s 
+| 1.00 | true     | func_801947C8                       | ../../asm/us/st/dre/nonmatchings/succubuscutscene/func_801947C8.s 
 | 1.00 | true     | func_801BE598                       | ../../asm/us/st/no3/nonmatchings/3E134/func_801BE598.s 
 | 1.00 | true     | func_801B7520                       | ../../asm/us/st/nz0/nonmatchings/mariacutscene/func_801B7520.s 
 | 0.93 | true     | func_801B6480                       | ../../asm/us/st/sel/nonmatchings/3642C/func_801B6480.s 
 | 1.00 | true     | func_801A89D8                       | ../../asm/us/st/st0/nonmatchings/27D64/func_801A89D8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018E180                       | ../../asm/us/st/cen/nonmatchings/holyglassescutscene/func_8018E180.s 
-| 1.00 | true     | func_801949E8                       | ../../asm/us/st/dre/nonmatchings/14774/func_801949E8.s 
+| 1.00 | true     | func_801949E8                       | ../../asm/us/st/dre/nonmatchings/succubuscutscene/func_801949E8.s 
 | 0.98 | true     | func_801BE7BC                       | ../../asm/us/st/no3/nonmatchings/3E134/func_801BE7BC.s 
 | 1.00 | true     | func_801B7740                       | ../../asm/us/st/nz0/nonmatchings/mariacutscene/func_801B7740.s 
 | 1.00 | true     | func_801B66A4                       | ../../asm/us/st/sel/nonmatchings/3642C/func_801B66A4.s 
 | 1.00 | true     | func_801A8BF8                       | ../../asm/us/st/st0/nonmatchings/28BF8/func_801A8BF8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018E238                       | ../../asm/us/st/cen/nonmatchings/holyglassescutscene/func_8018E238.s 
-| 1.00 | true     | func_80194AA0                       | ../../asm/us/st/dre/nonmatchings/14774/func_80194AA0.s 
+| 1.00 | true     | func_80194AA0                       | ../../asm/us/st/dre/nonmatchings/succubuscutscene/func_80194AA0.s 
 | 1.00 | true     | func_801BE870                       | ../../asm/us/st/no3/nonmatchings/3E134/func_801BE870.s 
 | 1.00 | true     | func_801B77F8                       | ../../asm/us/st/nz0/nonmatchings/mariacutscene/func_801B77F8.s 
 | 1.00 | true     | func_801B675C                       | ../../asm/us/st/sel/nonmatchings/3642C/func_801B675C.s 
 | 1.00 | true     | func_801A8CB0                       | ../../asm/us/st/st0/nonmatchings/28BF8/func_801A8CB0.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018E3BC                       | ../../asm/us/st/cen/nonmatchings/holyglassescutscene/func_8018E3BC.s 
-| 1.00 | true     | func_80194C24                       | ../../asm/us/st/dre/nonmatchings/14774/func_80194C24.s 
+| 1.00 | true     | func_80194C24                       | ../../asm/us/st/dre/nonmatchings/succubuscutscene/func_80194C24.s 
 | 1.00 | true     | func_801BE9F4                       | ../../asm/us/st/no3/nonmatchings/3E134/func_801BE9F4.s 
 | 1.00 | true     | func_801B797C                       | ../../asm/us/st/nz0/nonmatchings/mariacutscene/func_801B797C.s 
 | 1.00 | true     | func_801B68E0                       | ../../asm/us/st/sel/nonmatchings/3642C/func_801B68E0.s 
 | 1.00 | true     | func_801A8E34                       | ../../asm/us/st/st0/nonmatchings/28BF8/func_801A8E34.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018E6C4                       | ../../asm/us/st/cen/nonmatchings/holyglassescutscene/func_8018E6C4.s 
-| 1.00 | true     | func_80194FF4                       | ../../asm/us/st/dre/nonmatchings/14774/func_80194FF4.s 
+| 1.00 | true     | func_80194FF4                       | ../../asm/us/st/dre/nonmatchings/succubuscutscene/func_80194FF4.s 
 | 1.00 | false    | func_801BEDAC                       | ../../asm/us/st/no3/nonmatchings/3E134/func_801BEDAC.s 
 | 1.00 | true     | func_801B7C54                       | ../../asm/us/st/nz0/nonmatchings/mariacutscene/func_801B7C54.s 
 | 0.91 | true     | func_801B690C                       | ../../asm/us/st/sel/nonmatchings/3642C/func_801B690C.s 
@@ -1974,6 +1974,12 @@
 | 1.00 | true     | func_801B0958                       | ../../asm/us/st/nz0/nonmatchings/30958/func_801B0958.s 
 | 1.00 | true     | func_801A7D64                       | ../../asm/us/st/st0/nonmatchings/27D64/func_801A7D64.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_800F6A48                       | ../../asm/us/dra/nonmatchings/menu/func_800F6A48.s 
+| 0.90 | true     | def_cbread                          | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbread.s 
+| 0.90 | true     | def_cbready                         | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbready.s 
+| 0.90 | true     | def_cbsync                          | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbsync.s 
+| 0.90 | true     | SpuSetNoiseVoice                    | ../../asm/us/main/nonmatchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | D_800DBF3C                          | ../../asm/us/dra/nonmatchings/save_mgr/D_800DBF3C.s 
 | 1.00 | true     | D_800DBF74                          | ../../asm/us/dra/nonmatchings/save_mgr/D_800DBF74.s 
 | 1.00 | true     | D_800DBF7C                          | ../../asm/us/dra/nonmatchings/save_mgr/D_800DBF7C.s 
@@ -1986,14 +1992,8 @@
 | 1.00 | true     | CdSyncCallback                      | ../../asm/us/main/nonmatchings/psxsdk/libcd/sys/CdSyncCallback.s 
 | 1.00 | true     | SetVideoMode                        | ../../asm/us/main/nonmatchings/psxsdk/libetc/vmode/SetVideoMode.s 
 -------------------------------------------------------------------------------
-| 0.90 | true     | def_cbread                          | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbread.s 
-| 0.90 | true     | def_cbready                         | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbready.s 
-| 0.90 | true     | def_cbsync                          | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbsync.s 
-| 1.00 | true     | GsGetVcount                         | ../../asm/us/main/nonmatchings/psxsdk/libgs/gs_008/GsGetVcount.s 
-| 1.00 | true     | GsClearVcount                       | ../../asm/us/main/nonmatchings/psxsdk/libgs/gs_009/GsClearVcount.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | func_8018E124                       | ../../asm/us/st/cen/nonmatchings/holyglassescutscene/func_8018E124.s 
-| 1.00 | true     | func_8019498C                       | ../../asm/us/st/dre/nonmatchings/14774/func_8019498C.s 
+| 1.00 | true     | func_8019498C                       | ../../asm/us/st/dre/nonmatchings/succubuscutscene/func_8019498C.s 
 | 1.00 | true     | func_801B76E4                       | ../../asm/us/st/nz0/nonmatchings/mariacutscene/func_801B76E4.s 
 | 1.00 | true     | func_801B6648                       | ../../asm/us/st/sel/nonmatchings/3642C/func_801B6648.s 
 | 1.00 | true     | func_801A8B9C                       | ../../asm/us/st/st0/nonmatchings/27D64/func_801A8B9C.s 
@@ -2069,7 +2069,7 @@
 | 1.00 | true     | SetIR0                              | ../../asm/us/main/nonmatchings/psxsdk/libgte/reg03/SetIR0.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityHolyGlassesCutscene           | ../../asm/us/st/cen/nonmatchings/holyglassescutscene/EntityHolyGlassesCutscene.s 
-| 0.91 | false    | EntitySuccubusCutscene              | ../../asm/us/st/dre/nonmatchings/14774/EntitySuccubusCutscene.s 
+| 0.91 | true     | EntitySuccubusCutscene              | ../../asm/us/st/dre/nonmatchings/succubuscutscene/EntitySuccubusCutscene.s 
 | 0.94 | false    | EntityRoomTransition1               | ../../asm/us/st/no3/nonmatchings/3E134/EntityRoomTransition1.s 
 | 0.98 | true     | EntityMariaCutscene                 | ../../asm/us/st/nz0/nonmatchings/mariacutscene/EntityMariaCutscene.s 
 -------------------------------------------------------------------------------
@@ -2325,9 +2325,6 @@
 | 1.00 | true     | func_800F548C                       | ../../asm/us/dra/nonmatchings/menu/func_800F548C.s 
 | 0.94 | true     | func_801B1EF4                       | ../../asm/us/st/sel/nonmatchings/2C048/func_801B1EF4.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_800F6A48                       | ../../asm/us/dra/nonmatchings/menu/func_800F6A48.s 
-| 0.90 | true     | SpuSetNoiseVoice                    | ../../asm/us/main/nonmatchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | func_800F99B8                       | ../../asm/us/dra/nonmatchings/menu/func_800F99B8.s 
 | 0.95 | true     | func_801B2108                       | ../../asm/us/st/sel/nonmatchings/2C048/func_801B2108.s 
 -------------------------------------------------------------------------------
@@ -2427,6 +2424,9 @@
 | 1.00 | true     | get_ce                              | ../../asm/us/main/nonmatchings/psxsdk/libgpu/sys/get_ce.s 
 | 1.00 | true     | get_cs                              | ../../asm/us/main/nonmatchings/psxsdk/libgpu/sys/get_cs.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | GsGetVcount                         | ../../asm/us/main/nonmatchings/psxsdk/libgs/gs_008/GsGetVcount.s 
+| 1.00 | true     | GsClearVcount                       | ../../asm/us/main/nonmatchings/psxsdk/libgs/gs_009/GsClearVcount.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | RotMatrix                           | ../../asm/us/main/nonmatchings/psxsdk/libgte/fgo_01/RotMatrix.s 
 | 0.99 | true     | RotMatrixYXZ                        | ../../asm/us/main/nonmatchings/psxsdk/libgte/fgo_02/RotMatrixYXZ.s 
 -------------------------------------------------------------------------------
@@ -2500,9 +2500,9 @@
 | 1.00 | true     | func_80170548                       | ../../asm/us/ric/nonmatchings/319C4/func_80170548.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018F890                       | ../../asm/us/st/cen/nonmatchings/F890/func_8018F890.s 
-| 1.00 | true     | func_801961DC                       | ../../asm/us/st/dre/nonmatchings/14774/func_801961DC.s 
+| 1.00 | true     | func_801961DC                       | ../../asm/us/st/dre/nonmatchings/161DC/func_801961DC.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_80194F14                       | ../../asm/us/st/dre/nonmatchings/14774/func_80194F14.s 
+| 1.00 | true     | func_80194F14                       | ../../asm/us/st/dre/nonmatchings/succubuscutscene/func_80194F14.s 
 | 1.00 | true     | func_801BECCC                       | ../../asm/us/st/no3/nonmatchings/3E134/func_801BECCC.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8019214C                       | ../../asm/us/st/mad/nonmatchings/11D3C/func_8019214C.s 

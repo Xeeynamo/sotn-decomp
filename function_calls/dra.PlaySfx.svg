@@ -1475,7 +1475,7 @@
 <g id="node93" class="node">
 <title>dre.EntitySuccubusCutscene</title>
 <g id="a_node93"><a xlink:href="dre.EntitySuccubusCutscene.svg" xlink:title="dre.EntitySuccubusCutscene">
-<ellipse fill="red" stroke="black" cx="22098.19" cy="-198" rx="145.67" ry="18"/>
+<ellipse fill="green" stroke="black" cx="22098.19" cy="-198" rx="145.67" ry="18"/>
 <text text-anchor="middle" x="22098.19" y="-194.3" font-family="Times,serif" font-size="14.00">dre.EntitySuccubusCutscene</text>
 </a>
 </g>
