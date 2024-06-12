@@ -82,6 +82,7 @@ segments:
       - [0x377D4, c]
       - [0x3C4EC, c]
       - [0x3E134, c]
+      - [0x3E544, c]
       - [0x3FF00, c]
       - [0x4184C, c, random]
       - [0x4187C, c, update]
