@@ -375,7 +375,7 @@ def print_map_symbols(map_file_name, no_default):
                 if sym.vram not in syms and filter(sym.name):
                     syms[sym.vram] = sym.name
     for vram in syms:
-        print(f"{syms[vram]} = 0x{vram:08X};")
+        print(f"{syms[vram]} = 0x{vram:08X}; // allow_duplicated:True")
 
 
 if __name__ == "__main__":

@@ -102,7 +102,7 @@ void EntityRoomTransition2(Entity* self) {
             tilemap->y = 0;
             D_8003C8B8 = 1;
             DestroyEntity(gents);
-            CreateEntityFromCurrentEntity(E_ID_17, gents);
+            CreateEntityFromCurrentEntity(E_BG_LIGHTNING, gents);
         }
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 1;

@@ -147,4 +147,6 @@ extern s32 D_801A3ED4;
 extern u32 D_801A3F84;
 extern s32 D_801A3F88;
 
+extern u8 D_80180944[]; // Animation, EntityCSMoveAlucard
+
 extern Dialogue g_Dialogue;

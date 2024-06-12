@@ -413,9 +413,8 @@ int MyStoreImage(RECT* rect, u_long* p) {
     vram += rect->x + rect->y * VRAM_W;
 
     for (int i = 0; i < rect->h; i++) {
-        for (int j = 0; j < rect->w; j++) {
-            *mem++ = vram[j];
-        }
+        memcpy(mem, vram, rect->w * 2);
+        mem += rect->w;
         vram += VRAM_W;
     }
     return 0;

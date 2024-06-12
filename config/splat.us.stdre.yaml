@@ -24,11 +24,13 @@ options:
     - ".rodata"
     - ".text"
     - ".bss"
+    - ".sbss"
 segments:
   - name: stdre
     type: code
     start: 0x00000000
     vram:  0x80180000
+    align: 4
     subalign: 4
     subsegments:
       - [0x0, data]
@@ -54,8 +56,8 @@ segments:
       - [0x11808, .rodata, succubuscutscene]
       - [0x1181C, .rodata, succubuscutscene] #D_80180938, names
       - [0x1183C, .rodata, succubuscutscene] #EntitySuccubusCutscene
-      - [0x118C0, rodata]
-      - [0x118D0, rodata]
+      - [0x118C0, .rodata, 161DC] #EntityCSMoveAlucard, string and jumps
+      - [0x118F8, rodata]
       - [0x11910, .rodata, 1697C] # EntityFadeToWhite
       - [0x1193C, .rodata, e_red_door] # EntityRedDoor
       - [0x11954, rodata]

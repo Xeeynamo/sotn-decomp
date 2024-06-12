@@ -1,2 +1,3 @@
 D_80010960 = 0x80010960; // force_migration:True
 D_80010964 = 0x80010964; // force_migration:True
+g_MainGame = 0x800A0000;

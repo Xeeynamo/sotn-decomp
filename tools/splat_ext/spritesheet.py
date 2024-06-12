@@ -11,10 +11,10 @@ from typing import Optional
 from pathlib import Path
 import n64img.image
 
-sys.path.append(f"{os.getcwd()}/tools/n64splat")
+
 sys.path.append(f"{os.getcwd()}/tools/splat_ext")
-from util import options, log
-from segtypes.n64.segment import N64Segment
+from splat.util import options, log
+from splat.segtypes.n64.segment import N64Segment
 import utils
 
 max_width = 256

@@ -215,7 +215,7 @@ void EntityRedDoor(Entity* self) {
         g_Player.D_80072EFC = 4;
         if (!(self->params & 0x100)) {
             self->ext.door.angle -= 0x20;
-            if (self->ext.door.angle <= 0xC00) {
+            if (self->ext.door.angle < 0xC01) {
                 self->ext.door.angle = 0xC00;
             }
         } else {
