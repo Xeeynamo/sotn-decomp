@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <cJSON/cJSON.h>
 #include "stage_loader.h"
 #include "sfx.h"
 
@@ -54,20 +53,6 @@ static void* clut_anims[] = {
 
 extern void* WRP_g_EntityGfxs[];
 
-// DATA SECTION START
-u32 D_80186EC0[] = {0x10101504, 0x0000FF10};
-u32 D_80186EC8[] = {0x10101204, 0x0000FF10};
-u32 D_80186ED0[] = {0x10101104, 0x0000FF10};
-u32 D_80186ED8[] = {0x10101704, 0x000000FF};
-u32 D_80186EE0[] = {0x10101404, 0x000000FF};
-u32 D_80186EE8[] = {0x10151204, 0x000000FF};
-u32 D_80186EF0[] = {0x10101104, 0x000000FF};
-u32 D_80186EF8[] = {0xFF101504, 0x00000000};
-u32 D_80186F00[] = {0xFF151204, 0x00000000};
-u32 D_80186F08[] = {0x00FF1104, 0x00000000};
-
-// DATA SECTION END
-
 // BSS SECTION START
 s32 D_80193AA0 = 0;
 s32 D_80193AA4 = 0;
@@ -99,25 +84,22 @@ static Overlay g_StageDesc = {
     NULL,
 };
 
-LayoutEntity* g_Stub_80181228;
-LayoutEntity* g_Stub_80181250;
-LayoutEntity* g_Stub_801812A0;
-LayoutEntity* g_Stub_801812C8;
-LayoutEntity* g_Stub_80181278;
-LayoutEntity* g_Stub_801812F0;
-LayoutEntity* g_Stub_80181304;
+static LayoutEntity* g_Stub_80181228;
+static LayoutEntity* g_Stub_80181250;
+static LayoutEntity* g_Stub_801812A0;
+static LayoutEntity* g_Stub_801812C8;
+static LayoutEntity* g_Stub_80181278;
+static LayoutEntity* g_Stub_801812F0;
+static LayoutEntity* g_Stub_80181304;
 
-LayoutEntity* g_Stub_80181324;
-LayoutEntity* g_Stub_8018134C;
-LayoutEntity* g_Stub_80181374;
-LayoutEntity* g_Stub_8018139C;
-LayoutEntity* g_Stub_801813C4;
-LayoutEntity* g_Stub_801813EC;
-LayoutEntity* g_Stub_80181400;
+static LayoutEntity* g_Stub_80181324;
+static LayoutEntity* g_Stub_8018134C;
+static LayoutEntity* g_Stub_80181374;
+static LayoutEntity* g_Stub_8018139C;
+static LayoutEntity* g_Stub_801813C4;
+static LayoutEntity* g_Stub_801813EC;
+static LayoutEntity* g_Stub_80181400;
 
-extern Overlay g_WRP_Stage;
-extern LayoutEntity* g_pStObjLayout[];
-extern LayoutEntity* D_80180310[];
 void InitStageWrp(Overlay* o) {
     LoadReset();
 
