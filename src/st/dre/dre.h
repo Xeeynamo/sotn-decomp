@@ -128,19 +128,25 @@ extern u8 g_ESoulStealOrbAnim[];
 // *** EntitySoulStealOrb properties END ***
 
 extern s32 D_801A3ED4;
-extern s32 D_801A3ED8;
-extern s16 D_801A3EDE;
-extern u16 D_801A3EE0;
-extern s16 D_801A3EE2;
-extern s16 D_801A3EE4;
-extern s16 D_801A3EE6;
-extern s16 D_801A3EEA;
-extern s8 D_801A3EEE;
-extern s8 D_801A3EEF;
 extern Primitive* D_801A3EF0[];
 extern s32 D_801A3F08;
 extern s32 D_801A3F0C;
 extern s32 D_801A3F10[];
 extern u32 D_801A3F84;
+
+// For succubus cutscene
+extern u8 D_8018088C[];
+extern u8 D_80180890[];
+extern u16 D_80180894[];
+extern u16 D_8018089C[];
+extern u16 D_801808A0[];
+extern s16 D_801808A8[];
+extern const char D_80181B65[];
+extern const char D_801816C8[];
+extern s32 D_801A3ED4;
+extern u32 D_801A3F84;
+extern s32 D_801A3F88;
+
+extern u8 D_80180944[]; // Animation, EntityCSMoveAlucard
 
 extern Dialogue g_Dialogue;

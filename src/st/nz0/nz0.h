@@ -379,7 +379,6 @@ extern SVECTOR D_80182848;
 extern s32 D_801CB684;
 extern u32 D_801CB734;
 extern s32 D_801CB73C;
-extern s32 D_8003CB04;
 extern u8 D_801813C8[];
 extern u8 D_801813CC[];
 extern u16 D_801813D0[];

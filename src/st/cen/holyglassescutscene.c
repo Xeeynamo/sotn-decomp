@@ -1,10 +1,10 @@
-#include "nz0.h"
+#include "cen.h"
+#include "game.h"
 
-// This file consists of EntityMariaCutscene, and all the functions it calls.
-// No function in NZ0 calls anything in there, nor does anything in here call
-// any NZ0 functions, besides the ones in this file.
+// Bizarre variable - u8 here, but u16 in EntityHeartDrop
+extern u8 D_801805D8[];
 
-void func_801B74CC(void) {
+void func_8018DF0C(void) {
     g_Dialogue.nextLineX = 2;
     g_Dialogue.nextCharX = 2;
     g_Dialogue.nextCharY = 0;
@@ -14,7 +14,7 @@ void func_801B74CC(void) {
     g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
 }
 
-s32 func_801B7520(s32 textDialogue) {
+s32 func_8018DF60(s32 textDialogue) {
     Primitive* prim;
     s16 firstPrimIndex;
 
@@ -28,9 +28,10 @@ s32 func_801B7520(s32 textDialogue) {
     g_Dialogue.unk3C = 0;
     g_Dialogue.primIndex[1] = -1;
     g_Dialogue.primIndex[0] = -1;
-    func_801B74CC();
+    func_8018DF0C();
 
-    if (prim && prim) { // !FAKE
+    //! FAKE:
+    if (prim && prim) {
     }
 
     prim = g_Dialogue.prim[0] = &g_PrimBuf[g_Dialogue.primIndex[2]];
@@ -74,7 +75,7 @@ s32 func_801B7520(s32 textDialogue) {
     return 1;
 }
 
-void func_801B76E4(s16 arg0) {
+void func_8018E124(s16 arg0) {
     RECT rect;
 
     rect.y = (arg0 * 12) + 384;
@@ -84,10 +85,10 @@ void func_801B76E4(s16 arg0) {
     ClearImage(&rect, 0, 0, 0);
 }
 
-void func_801B7740(void) {
+void func_8018E180(void) {
     Primitive* prim;
 
-    func_801B76E4(g_Dialogue.nextCharY);
+    func_8018E124(g_Dialogue.nextCharY);
     prim = g_Dialogue.prim[g_Dialogue.nextCharY];
     prim->tpage = 0x10;
     prim->clut = g_Dialogue.clutIndex;
@@ -103,7 +104,7 @@ void func_801B7740(void) {
 }
 
 // Creates primitives for the actor name at the head of the dialogue
-void func_801B77F8(u16 actorIndex, Entity* self) {
+void func_8018E238(u16 actorIndex, Entity* self) {
     Primitive* prim;
     s16 primIndex;
     s32 x;
@@ -111,7 +112,7 @@ void func_801B77F8(u16 actorIndex, Entity* self) {
     const char* actorName;
     char ch;
 
-    actorName = D_8018146C[actorIndex];
+    actorName = D_80180684[actorIndex];
     chCount = 0;
     while (true) {
         ch = *actorName++;
@@ -137,7 +138,7 @@ void func_801B77F8(u16 actorIndex, Entity* self) {
     // Fill prims to render the actor name on screen
     prim = &g_PrimBuf[primIndex];
     g_Dialogue.primIndex[1] = primIndex;
-    actorName = D_8018146C[actorIndex];
+    actorName = D_80180684[actorIndex];
     x = 0x38;
     while (prim != NULL) {
         ch = *actorName++;
@@ -161,13 +162,13 @@ void func_801B77F8(u16 actorIndex, Entity* self) {
     }
 }
 
-void func_801B797C(s32 arg0) {
+void func_8018E3BC(s32 arg0) {
     g_Dialogue.unk40 = arg0 + 0x100000;
     g_Dialogue.timer = 0;
     g_Dialogue.unk3C = 1;
 }
 
-void func_801B79A8(void) {
+void func_8018E3E8(void) {
     Entity* entity;
     u16 startTimer;
     u8 entityIndex;
@@ -200,28 +201,33 @@ void func_801B79A8(void) {
             entity->posX.i.hi = *g_Dialogue.unk40++ | entity->posX.i.hi;
             entity->posY.i.hi = *g_Dialogue.unk40++ * 0x10;
             entity->posY.i.hi = *g_Dialogue.unk40++ | entity->posY.i.hi;
+            entity->posX.i.hi -= g_Tilemap.scrollX.i.hi;
+            entity->posY.i.hi -= g_Tilemap.scrollY.i.hi;
             break;
+
         case 1:
             entityIndex = *g_Dialogue.unk40++;
             entity = &g_Entities[STAGE_ENTITY_START + entityIndex];
             DestroyEntity(entity);
             break;
+
         case 2:
-            if (!((D_801CB734 >> *g_Dialogue.unk40) & 1)) {
+            if (!((D_8019D424 >> *g_Dialogue.unk40) & 1)) {
                 g_Dialogue.unk40--;
                 return;
             }
-            D_801CB734 &= ~(1 << *g_Dialogue.unk40++);
+            D_8019D424 &= ~(1 << *g_Dialogue.unk40++);
             break;
+
         case 3:
-            D_801CB734 |= 1 << *g_Dialogue.unk40++;
+            D_8019D424 |= 1 << *g_Dialogue.unk40++;
             break;
         }
     }
 }
 
 // Animates the portrait size of the actor by enlarging or shrinking it
-void func_801B7C54(u8 ySteps) {
+void func_8018E6C4(u8 ySteps) {
     Primitive* prim;
     s32 primIndex;
     s32 i;
@@ -249,8 +255,7 @@ void func_801B7C54(u8 ySteps) {
     g_Dialogue.portraitAnimTimer++;
 }
 
-// cutscene where alucard and maria discuss castle changing
-void EntityMariaCutscene(Entity* self) {
+void EntityHolyGlassesCutscene(Entity* self) {
     RECT rect;
     Primitive* prim;
     s32 primIndex;
@@ -263,11 +268,11 @@ void EntityMariaCutscene(Entity* self) {
     s32 bit_shifty;
 
     if (self->step != 0) {
-        if ((D_801CB73C != 0) && (D_801CB684 == 0) &&
-            ((g_Settings.D_8003CB04 & 0x100) ||
+        if ((D_8019D428 != 0) && (D_8019D374 == 0) &&
+            ((g_Settings.D_8003CB04 & 0x800) ||
              (g_IsTimeAttackUnlocked != 0)) &&
-            (g_pads[0].tapped == PAD_START)) {
-            D_801CB684 = 1;
+            (g_pads[0].tapped & PAD_START)) {
+            D_8019D374 = 1;
             g_api.FreePrimitives(self->primIndex);
             self->flags ^= FLAG_HAS_PRIMS;
             if (g_Dialogue.primIndex[1] != -1) {
@@ -281,22 +286,21 @@ void EntityMariaCutscene(Entity* self) {
             self->step_s = 0;
         }
         if ((self->step) && (g_Dialogue.unk3C != 0)) {
-            func_801B79A8();
+            func_8018E3E8();
         }
     }
     switch (self->step) {
     case 0:
-        if ((g_CastleFlags[133] != 0) ||
-            (g_PlayableCharacter != PLAYER_ALUCARD)) {
+        if (g_CastleFlags[216] != 0) {
             DestroyEntity(self);
             return;
         }
-        if (func_801B7520(D_80183B0C) & 0xFF) {
+        if (func_8018DF60(D_801813F0) & 0xFF) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
-            D_801CB734 = 0;
-            D_801CB73C = 0;
-            D_801CB684 = 0;
             D_8003C704 = 1;
+            D_8019D424 = 0;
+            D_8019D428 = 0;
+            D_8019D374 = 0;
             self->primIndex = g_Dialogue.primIndex[2];
             self->step++;
         }
@@ -304,7 +308,7 @@ void EntityMariaCutscene(Entity* self) {
     case 1:
         // this is a huge While-loop! Don't miss it!
         while (1) {
-            if ((g_Dialogue.nextCharTimer != 0) && (D_801CB684 == 0)) {
+            if ((g_Dialogue.nextCharTimer != 0) && (D_8019D374 == 0)) {
                 g_Dialogue.nextCharTimer--;
                 return;
             }
@@ -314,7 +318,7 @@ void EntityMariaCutscene(Entity* self) {
                 self->step = 7;
                 return;
             case 1:
-                if (D_801CB684 != 0) {
+                if (D_8019D374 != 0) {
                     continue;
                 }
                 g_Dialogue.nextCharX = g_Dialogue.nextLineX;
@@ -325,7 +329,7 @@ void EntityMariaCutscene(Entity* self) {
                 if (g_Dialogue.nextCharY >= 5) {
                     g_Dialogue.nextCharY = 0;
                 }
-                func_801B7740();
+                func_8018E180();
                 if (!(g_Dialogue.unk12 & 1)) {
                     if (g_Dialogue.nextCharY >= 4) {
                         g_Dialogue.unk12 |= 1;
@@ -345,12 +349,12 @@ void EntityMariaCutscene(Entity* self) {
                 continue;
             case 3:
                 g_Dialogue.nextCharTimer = *g_Dialogue.nextCharDialogue++;
-                if (D_801CB684 != 0) {
+                if (D_8019D374 != 0) {
                     continue;
                 }
                 return;
             case 4:
-                if (D_801CB684 != 0) {
+                if (D_8019D374 != 0) {
                     continue;
                 }
                 prim = g_Dialogue.prim[0];
@@ -360,7 +364,7 @@ void EntityMariaCutscene(Entity* self) {
                 }
                 return;
             case 5:
-                if (D_801CB684 != 0) {
+                if (D_8019D374 != 0) {
                     g_Dialogue.nextCharDialogue += 2;
                     continue;
                 }
@@ -368,9 +372,9 @@ void EntityMariaCutscene(Entity* self) {
                 i = *g_Dialogue.nextCharDialogue++;
                 nextChar2 = *g_Dialogue.nextCharDialogue++;
                 prim = g_Dialogue.prim[5];
-                uCoord = D_801813C8[nextChar2 & 1];
-                vCoord = D_801813CC[nextChar2 & 1];
-                prim->clut = D_801813D0[i];
+                uCoord = D_801805D8[nextChar2 & 1];
+                vCoord = D_801805DC[nextChar2 & 1];
+                prim->clut = D_801805E0[i];
                 prim->tpage = 0x90;
                 if (nextChar2 & 0x80) {
                     prim->u0 = prim->u2 = uCoord + 0x2F;
@@ -385,17 +389,17 @@ void EntityMariaCutscene(Entity* self) {
                     g_Dialogue.startX - 0x1E;
                 prim->y0 = prim->y1 = prim->y2 = prim->y3 =
                     g_Dialogue.startY + 0x24;
-                g_Dialogue.clutIndex = D_801813D8[i];
-                func_801B74CC();
-                func_801B7740();
+                g_Dialogue.clutIndex = D_801805EC[i];
+                func_8018DF0C();
+                func_8018E180();
                 prim->priority = 0x1FE;
                 prim->drawMode = 0;
-                func_801B77F8(i, self);
+                func_8018E238(i, self);
                 g_Dialogue.portraitAnimTimer = 6;
                 self->step = 3;
                 return;
             case 6:
-                if (D_801CB684 != 0) {
+                if (D_8019D374 != 0) {
                     continue;
                 }
                 for (prim = g_Dialogue.prim[0], i = 0; i < 5; i++) {
@@ -408,7 +412,7 @@ void EntityMariaCutscene(Entity* self) {
                 self->step = 4;
                 return;
             case 7:
-                if (D_801CB684 != 0) {
+                if (D_8019D374 != 0) {
                     g_Dialogue.nextCharDialogue++;
                     g_Dialogue.nextCharDialogue++;
                     continue;
@@ -428,14 +432,14 @@ void EntityMariaCutscene(Entity* self) {
                 return;
 
             case 8:
-                if (D_801CB684 != 0) {
+                if (D_8019D374 != 0) {
                     continue;
                 }
                 g_Dialogue.portraitAnimTimer = 0x18;
                 self->step = 6;
                 return;
             case 9:
-                if (D_801CB684 != 0) {
+                if (D_8019D374 != 0) {
                     g_Dialogue.nextCharDialogue++;
                     g_Dialogue.nextCharDialogue++;
                     continue;
@@ -446,7 +450,7 @@ void EntityMariaCutscene(Entity* self) {
                 g_api.PlaySfx(nextChar);
                 continue;
             case 10:
-                if (D_801CB684 != 0) {
+                if (D_8019D374 != 0) {
                     continue;
                 }
                 if (g_api.func_80131F68() != false) {
@@ -455,7 +459,7 @@ void EntityMariaCutscene(Entity* self) {
                 *g_Dialogue.nextCharDialogue--;
                 return;
             case 11:
-                if (D_801CB684 != 0) {
+                if (D_8019D374 != 0) {
                     continue;
                 }
                 if (g_api.func_80131F68() != true) {
@@ -471,7 +475,7 @@ void EntityMariaCutscene(Entity* self) {
                 bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
                 bit_shifty <<= 4;
                 bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
-                func_801B797C((u8*)bit_shifty);
+                func_8018E3BC((u8*)bit_shifty);
                 continue;
             case 13:
                 continue;
@@ -508,21 +512,21 @@ void EntityMariaCutscene(Entity* self) {
                 continue;
 
             case 16:
-                if (!((D_801CB734 >> *g_Dialogue.nextCharDialogue) & 1)) {
+                if (!((D_8019D424 >> *g_Dialogue.nextCharDialogue) & 1)) {
                     g_Dialogue.nextCharDialogue--;
                     return;
                 }
-                D_801CB734 &= ~(1 << *g_Dialogue.nextCharDialogue);
+                D_8019D424 &= ~(1 << *g_Dialogue.nextCharDialogue);
                 *g_Dialogue.nextCharDialogue++;
                 continue;
             case 17:
-                D_801CB734 |= 1 << *g_Dialogue.nextCharDialogue++;
+                D_8019D424 |= 1 << *g_Dialogue.nextCharDialogue++;
                 continue;
             case 18:
                 g_Dialogue.unk3C = 0;
                 continue;
             case 19:
-                if (D_801CB684 != 0) {
+                if (D_8019D374 != 0) {
                     g_Dialogue.nextCharDialogue += 5;
                 } else {
                     bit_shifty = (s32)*g_Dialogue.nextCharDialogue++;
@@ -534,7 +538,7 @@ void EntityMariaCutscene(Entity* self) {
                     bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
                     bit_shifty += 0x100000;
                     nextChar2 = g_Dialogue.nextCharDialogue++[0];
-                    LoadTPage((u32*)bit_shifty, 1, 0, D_801813D4[nextChar2],
+                    LoadTPage((u32*)bit_shifty, 1, 0, D_801805E8[nextChar2],
                               0x100, 0x30, 0x48);
                 }
                 continue;
@@ -545,24 +549,24 @@ void EntityMariaCutscene(Entity* self) {
                 g_api.PlaySfx(nextChar);
                 continue;
             case 21:
-                D_801CB734 = 0;
-                D_801CB684 = 0;
-                D_801CB73C = 0;
+                D_8019D424 = 0;
+                D_8019D374 = 0;
+                D_8019D428 = 0;
                 continue;
             case 22:
-                D_801CB734 &= ~(1 << *g_Dialogue.nextCharDialogue++);
+                D_8019D424 &= ~(1 << *g_Dialogue.nextCharDialogue++);
                 continue;
             case 23:
                 return;
             case 24:
-                if (!((D_801CB734 >> *g_Dialogue.nextCharDialogue) & 1)) {
+                if (!((D_8019D424 >> *g_Dialogue.nextCharDialogue) & 1)) {
                     *g_Dialogue.nextCharDialogue--;
                     return;
                 }
                 *g_Dialogue.nextCharDialogue++;
                 continue;
             default:
-                if (D_801CB684 != 0) {
+                if (D_8019D374 != 0) {
                     continue;
                 }
                 g_Dialogue.nextCharTimer = g_Dialogue.unk17;
@@ -582,7 +586,7 @@ void EntityMariaCutscene(Entity* self) {
         g_Dialogue.nextCharX += 2;
         break;
     case 2:
-        func_801B7C54(2U);
+        func_8018E6C4(2U);
         if (g_Dialogue.portraitAnimTimer >= 6) {
             self->step -= 1;
             return;
@@ -621,7 +625,7 @@ void EntityMariaCutscene(Entity* self) {
     case 5:
         switch (self->step_s) {
         case 0:
-            D_801CB73C = 1;
+            D_8019D428 = 1;
             primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 0x48);
             if (primIndex == -1) {
                 DestroyEntity(self);
@@ -636,7 +640,7 @@ void EntityMariaCutscene(Entity* self) {
                 prim->y0 = prim->y1 = g_Dialogue.startY + j;
                 prim->priority = 0x1FE;
                 prim->drawMode = 0;
-                prim->x2 = D_801813DC[j];
+                prim->x2 = D_801805F4[j];
                 prim->x3 = 0xF70;
 
                 j++;
@@ -722,9 +726,11 @@ void EntityMariaCutscene(Entity* self) {
 
     case 7:
         DestroyEntity(self);
-        g_CastleFlags[133] = 1;
+        g_CastleFlags[216] = 1;
+        g_api.TimeAttackController(
+            TIMEATTACK_EVENT_GET_HOLYGLASSES, TIMEATTACK_SET_RECORD);
         D_8003C704 = 0;
-        g_Settings.D_8003CB04 |= 0x100;
+        g_Settings.D_8003CB04 |= 0x800;
         break;
     }
 }

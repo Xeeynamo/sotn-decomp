@@ -40,15 +40,15 @@ typedef struct NumericPrim {
 void EntityDamageDisplay(Entity* self) {
     NumericPrim* prim;
     s16 x;
-    s16 y;
     u8 singleDigit;
+    s16 y;
     u16 iDigit;
     u16 params;
     u16 clut;
     u16* nDigits;
-    s16 xOffset;
     s32 primIndex;
     u16 primInitStep;
+    s16 xOffset;
 
     if (self->ext.ndmg.unk88) {
         self->posX.val = g_Entities->posX.val;
@@ -113,7 +113,7 @@ void EntityDamageDisplay(Entity* self) {
         if (primIndex) {
             self->primIndex = primIndex;
             self->flags |= FLAG_HAS_PRIMS;
-            prim = &g_PrimBuf[primIndex];
+            prim = (NumericPrim*)&g_PrimBuf[primIndex];
 
             primInitStep = 0;
             iDigit = 4 - *nDigits;
@@ -189,7 +189,7 @@ void EntityDamageDisplay(Entity* self) {
         iDigit = (self->params >> 13) & 6;
         params |= iDigit;
         clut = g_eDamageDisplayClut[params];
-        prim = &g_PrimBuf[self->primIndex];
+        prim = (NumericPrim*)&g_PrimBuf[self->primIndex];
         if (iDigit && iDigit != 4) {
             while (prim != NULL) {
                 if (self->ext.ndmg.timer >= 60) {
@@ -216,24 +216,26 @@ void EntityDamageDisplay(Entity* self) {
             if (self->ext.ndmg.unk88 != 0) {
                 return;
             }
-            self->posY.val -= 0x8000;
+            self->posY.val -= FIX(0.5);
         } else {
             while (prim != NULL) {
-                if (prim->_width >= 4) {
+                if (prim->_width > 3) {
                     prim->_width--;
                 }
                 if (prim->_height < 10) {
                     prim->_height++;
                 }
+
                 x = self->posX.i.hi + prim->_xOffset;
-                y = self->posY.i.hi + prim->_yOffset + 5 - (prim->_height);
+                y = self->posY.i.hi + prim->_yOffset + 5 - prim->_height;
                 prim->x0 = x - prim->_width;
                 prim->x1 = x + prim->_width;
+                prim->x2 = x - 3;
+                prim->x3 = x + 3;
                 prim->y0 = prim->y1 = y;
                 prim->y2 = prim->y3 = y + prim->_height;
                 prim->clut = clut;
-                prim->x2 = x - 3;
-                prim->x3 = x + 3;
+
                 if (self->ext.ndmg.timer < 6) {
                     prim->drawMode = DRAW_TRANSP | DRAW_UNK02 | DRAW_TPAGE;
                 } else {
@@ -241,7 +243,7 @@ void EntityDamageDisplay(Entity* self) {
                 }
                 prim = prim->next;
             }
-            self->posY.val -= 0x8000;
+            self->posY.val -= FIX(0.5);
         }
         break;
     }

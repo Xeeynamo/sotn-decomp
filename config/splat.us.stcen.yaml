@@ -39,8 +39,8 @@ segments:
       - [0x1110, data]
       - [0x12D4, roomdef, g_Rooms]
       - [0x1300, data]
-      - [0xD42C, rodata]
-      - [0xD4B0, .rodata, D600]
+      - [0xD42C, .rodata, holyglassescutscene]
+      - [0xD4B0, .rodata, F890]
       - [0xD4D8, .rodata, e_red_door] # EntityRedDoor
       - [0xD4F0, .rodata]
       - [0xD540, .rodata, 15C84] # EntityPrizeDrop
@@ -50,6 +50,8 @@ segments:
       - [0xD5C4, .rodata, 18084] # EntityStageNamePopup
       - [0xD5F8, .rodata, prim_helpers]
       - [0xD600, c]
+      - [0xDF0C, c, holyglassescutscene]
+      - [0xF890, c]
       - [0x10E4C, c, random]
       - [0x10E7C, c, update]
       - [0x11178, c, update_stage_entities]
