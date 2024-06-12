@@ -236,6 +236,7 @@ void func_801B690C(u8 ySteps, Entity* self) {
     g_Dialogue.portraitAnimTimer++;
 }
 
+// Strong resemblence to NZ0 EntityMariaCutscene and others
 void func_801B69F8(Entity* entity) {
     Primitive* prim;
     s32 i;

@@ -577,7 +577,7 @@ void HandleVideoPlayback(void) {
         case 5:
             if (!g_IsUsingCd) {
                 D_8003C728 = 1;
-                D_8003C100 = 1;
+                g_CurrentStream = 1;
                 g_GameStep++;
             }
             break;

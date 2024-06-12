@@ -1,5 +1,7 @@
 #include "../wrp/wrp.h"
 
+extern u16 D_80180608[];
+
 INCLUDE_ASM("st/wrp_psp/psp/wrp_psp/e_misc", EntityRelicOrb);
 
 void EntityHeartDrop(Entity* self) {
@@ -16,7 +18,7 @@ void EntityHeartDrop(Entity* self) {
         }
 
         index -= 0x118;
-        index = ((u16*)D_80180608)[index];
+        index = D_80180608[index];
         if (index < 128) {
             self->ext.heartDrop.update = EntityPrizeDrop;
         } else {

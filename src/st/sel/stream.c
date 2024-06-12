@@ -1,36 +1,28 @@
 #include "sel.h"
 
-extern s32 g_StreamWidth;
-extern int g_StreamHeight;
-extern u32 g_StreamEndFrame;
-extern s32 g_StreamRewindSwitch[];
-
-typedef struct {
-    u_long* vlcbuf[2];
-    int vlcid;
-    u_short* imgbuf[2];
-    int imgid;
-    RECT rect[2];
-    int rectid;
-    RECT slice;
-    int isdone;
-} DECENV;
-
-s32 func_801B9744(void) {
+// Check if CD data is ready as long as its not related to reading the position
+// of the laser. The status is cached in the `g_StreamDiskIsReady` global.
+//
+// returns:
+//     0 - disk isn't ready for a request
+//     1 - disk is ready
+s32 StreamDiskIsReady() {
     u8 res;
     int ret;
 
+    // if CD data isn't ready
     if (CdSync(1, &res) == CdlNoIntr) {
-        return D_801BC344 = 0;
+        return g_StreamDiskIsReady = 0;
     }
 
     ret = CdLastCom();
     if (ret >= CdlGetlocL && ret <= CdlGetlocP || !(res & CdlStatShellOpen)) {
+        // clear the command
         CdControlF(1, NULL);
-        return D_801BC344 = 0;
+        return g_StreamDiskIsReady = 0;
     }
 
-    return D_801BC344 = 1;
+    return g_StreamDiskIsReady = 1;
 }
 
 u_long* StreamNext(DECENV* dec) {

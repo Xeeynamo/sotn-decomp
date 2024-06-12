@@ -69,7 +69,7 @@ typedef enum EntityIDs {
     /* 0x11 */ E_ID_11 = 0x11,
     /* 0x14 */ E_ID_14 = 0x14,
     /* 0x15 */ E_ID_15 = 0x15,
-    /* 0x17 */ E_ID_17 = 0x17,
+    /* 0x17 */ E_BG_LIGHTNING = 0x17,
     /* 0x27 */ E_FALLING_ROCK_2 = 0x27,
     /* 0x35 */ E_SPLASH_WATER = 0x35,
     /* 0x36 */ E_SURFACING_WATER,
@@ -228,14 +228,6 @@ extern u8 D_80183C98[];
 extern s32 D_80183CAC;
 extern s32 D_80183CBC;
 extern s32 D_801D7D20;
-extern s16 D_801D7D2A;
-extern u16 D_801D7D2C;
-extern s16 D_801D7D2E;
-extern s16 D_801D7D30;
-extern s16 D_801D7D32;
-extern s16 D_801D7D36;
-extern s8 D_801D7D3A;
-extern s8 D_801D7D3B;
 extern s32 D_801D7D54;
 extern s32 D_801D7D58;
 extern u32 D_801D7DD0;
@@ -252,5 +244,20 @@ extern u8 g_ESoulStealOrbAnim[];
 // *** EntitySoulStealOrb properties END ***
 
 extern SVECTOR D_801B73E0;
+
+// For EntityDeathCutscene
+extern u8 D_80181A28[];
+extern u8 D_80181A2C[];
+extern u16 D_80181A30[];
+extern u16 D_80181A34[];
+extern u16 D_80181A38[];
+extern s16 D_80181A3C[];
+extern const char D_801813F0[];
+extern s32 D_801D7D20;
+extern u32 D_801D7DD0;
+extern s32 D_801D7DD4;
+extern u16 D_801D7D60;
+extern const char D_80184CE0[];
+extern s32 D_801D7D5C;
 
 extern Dialogue g_Dialogue;

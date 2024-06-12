@@ -136,7 +136,7 @@ void EntitySkeleton(Entity* self) {
             if (func_801BCCFC(&D_801824A8) != 0) {
                 self->step_s++;
             }
-            func_801BD848(&D_801824C0, 2);
+            CheckFieldCollision(&D_801824C0, 2);
             break;
 
         case 2:

@@ -1,7 +1,7 @@
 #include "game.h"
 
 #if !defined(VERSION_PSP)
-extern SVECTOR g_UnkPrimHelperRot;
+const SVECTOR g_UnkPrimHelperRot = {0, 0, 0};
 void UnkPrimHelper(Primitive* prim) {
     SVECTOR sp10; // FAKE, not really an svector
     SVECTOR stackpad;

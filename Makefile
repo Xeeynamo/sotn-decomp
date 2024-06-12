@@ -107,6 +107,8 @@ endef
 
 SOTNDISK_SOURCES := $(shell find tools/sotn-disk -name '*.go')
 
+CHECK_FILES := $(shell cut -d' ' -f3 config/check.$(VERSION).sha)
+
 .PHONY: build
 
 all: build check
@@ -147,8 +149,8 @@ format: bin/clang-format
 	./tools/symbols.py remove-orphans config/splat.us.stmad.yaml
 patch:
 	$(DIRT_PATCHER) config/dirt.$(VERSION).json
-check: patch
-	sha1sum --check config/check.$(VERSION).sha
+check: config/check.$(VERSION).sha patch $(CHECK_FILES)
+	sha1sum --check $<
 expected: check
 	mkdir -p expected/build
 	rm -rf expected/build/$(VERSION)
@@ -217,6 +219,8 @@ $(BUILD_DIR)/F_NZ0.BIN:
 sel: stsel_dirs $(BUILD_DIR)/SEL.BIN
 $(BUILD_DIR)/SEL.BIN: $(BUILD_DIR)/stsel.elf
 	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/src/st/sel/%.c.o: src/st/sel/%.c $(MASPSX_APP) $(CC1PSX) src/st/sel/sel.h
+	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 
 st0: stst0_dirs $(BUILD_DIR)/ST0.BIN $(BUILD_DIR)/F_ST0.BIN
 $(BUILD_DIR)/ST0.BIN: $(BUILD_DIR)/stst0.elf
@@ -241,7 +245,7 @@ $(BUILD_DIR)/tt_000_raw.bin: $(BUILD_DIR)/tt_000.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/TT_000.BIN: $(BUILD_DIR)/tt_000_raw.bin
 	cp $< $@
-	dd if=/dev/zero bs=1 count=$$((40960 - $$(stat -c %s $<))) >> $@
+	dd status=none if=/dev/zero bs=1 count=$$((40960 - $$(stat -c %s $<))) >> $@
 
 mad_fix: stmad_dirs $$(call list_o_files,st/mad) $$(call list_o_files,st)
 	$(LD) $(LD_FLAGS) -o $(BUILD_DIR)/stmad_fix.elf \
@@ -284,7 +288,7 @@ $(BUILD_DIR)/weapon/f%.bin: $(BUILD_DIR)/weapon/f%.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/weapon/w%.bin: $(BUILD_DIR)/weapon/w%.elf
 	$(OBJCOPY) -O binary $< $@
-	printf '\x00' | dd of=$@ bs=1 seek=12287 count=1 conv=notrunc
+	dd status=none if=/dev/zero of=$@ bs=1 seek=12287 count=1 conv=notrunc
 $(ASM_DIR)/weapon/data/w_%.data.s: # create a fake empty file if all the data has been imported
 	touch $@
 $(ASM_DIR)/weapon/data/w_%.sbss.s: # create a fake empty file if all the bss section has been imported
@@ -396,7 +400,7 @@ disk_debug: disk_prepare
 # put this here as both PSX HD and PSP use it
 extract_disk_psp%:
 	mkdir -p disks/psp$*
-	7z x disks/sotn.psp$*.iso -odisks/psp$*/
+	7z x -y disks/sotn.psp$*.iso -odisks/psp$*/
 
 update-dependencies: $(SPLAT_APP) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(SATURN_SPLITTER_APP) $(GO)
 	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release
@@ -477,7 +481,7 @@ SHELL = /bin/bash -e -o pipefail
 
 include tools/tools.mk
 
-.PHONY: all, clean, format, check, build, expected
+.PHONY: all, clean, format, patch, check, build, expected
 .PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, tt_000
 .PHONY: %_dirs
 .PHONY: extract, extract_%

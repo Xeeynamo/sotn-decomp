@@ -323,4 +323,4 @@ void func_8019A328(s16 sfxId) {
     }
 }
 
-#include "../entity_stage_name_popup.h"
+#include "../e_stage_name.h"

@@ -124,7 +124,58 @@ void func_8018E5AC(Entity* self) {
     AnimateEntity(objInit->unk10, self);
 }
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_8018E674);
+void func_8018E674(Entity* self) {
+    u16 var_s0;
+    u16 params;
+    u16* tilemapProps;
+
+    self->unk6D[0] = 0;
+    params = self->params;
+    if (self->step) {
+        switch (params) {
+        case 4:
+        case 5:
+            if (g_Tilemap.x) {
+                return;
+            }
+            break;
+        case 6:
+            if (g_pads->pressed & PAD_TRIANGLE) {
+                g_Tilemap.x = 0;
+                g_Tilemap.width = 1280;
+                self->step++;
+                return;
+            }
+            break;
+        }
+        if (self->unk44) {
+            var_s0 = GetSideToPlayer();
+            if (self->ext.generic.unk7C.u) {
+                var_s0 &= 2;
+                var_s0 *= 2;
+            } else {
+                var_s0 &= 1;
+                var_s0 *= 4;
+            }
+            params = (params << 3) + var_s0;
+            tilemapProps = &D_801805C4[params];
+            g_Tilemap.x = *tilemapProps++;
+            g_Tilemap.y = *tilemapProps++;
+            g_Tilemap.width = *tilemapProps++;
+            g_Tilemap.height = *tilemapProps;
+        }
+    } else {
+        InitializeEntity(D_80180538);
+        var_s0 = self->ext.timer.t = D_801805BC[params];
+        if (var_s0) {
+            self->hitboxWidth = D_801805B4[params];
+            self->hitboxHeight = 16;
+            return;
+        }
+        self->hitboxWidth = 16;
+        self->hitboxHeight = D_801805B4[params];
+    }
+}
 
 void EntityBreakable(Entity* entity) {
     u16 breakableType = entity->params >> 0xC;
