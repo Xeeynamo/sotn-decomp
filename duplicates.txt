@@ -1920,42 +1920,42 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018DF0C                       | ../../asm/us/st/cen/nonmatchings/holyglassescutscene/func_8018DF0C.s 
 | 1.00 | true     | func_80194774                       | ../../asm/us/st/dre/nonmatchings/succubuscutscene/func_80194774.s 
-| 1.00 | true     | func_801BE544                       | ../../asm/us/st/no3/nonmatchings/3E134/func_801BE544.s 
+| 1.00 | true     | func_801BE544                       | ../../asm/us/st/no3/nonmatchings/deathcutscene/func_801BE544.s 
 | 1.00 | true     | func_801B74CC                       | ../../asm/us/st/nz0/nonmatchings/mariacutscene/func_801B74CC.s 
 | 1.00 | true     | func_801B642C                       | ../../asm/us/st/sel/nonmatchings/3642C/func_801B642C.s 
 | 1.00 | true     | func_801A8984                       | ../../asm/us/st/st0/nonmatchings/27D64/func_801A8984.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018DF60                       | ../../asm/us/st/cen/nonmatchings/holyglassescutscene/func_8018DF60.s 
 | 1.00 | true     | func_801947C8                       | ../../asm/us/st/dre/nonmatchings/succubuscutscene/func_801947C8.s 
-| 1.00 | true     | func_801BE598                       | ../../asm/us/st/no3/nonmatchings/3E134/func_801BE598.s 
+| 1.00 | true     | func_801BE598                       | ../../asm/us/st/no3/nonmatchings/deathcutscene/func_801BE598.s 
 | 1.00 | true     | func_801B7520                       | ../../asm/us/st/nz0/nonmatchings/mariacutscene/func_801B7520.s 
 | 0.93 | true     | func_801B6480                       | ../../asm/us/st/sel/nonmatchings/3642C/func_801B6480.s 
 | 1.00 | true     | func_801A89D8                       | ../../asm/us/st/st0/nonmatchings/27D64/func_801A89D8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018E180                       | ../../asm/us/st/cen/nonmatchings/holyglassescutscene/func_8018E180.s 
 | 1.00 | true     | func_801949E8                       | ../../asm/us/st/dre/nonmatchings/succubuscutscene/func_801949E8.s 
-| 0.98 | true     | func_801BE7BC                       | ../../asm/us/st/no3/nonmatchings/3E134/func_801BE7BC.s 
+| 0.98 | true     | func_801BE7BC                       | ../../asm/us/st/no3/nonmatchings/deathcutscene/func_801BE7BC.s 
 | 1.00 | true     | func_801B7740                       | ../../asm/us/st/nz0/nonmatchings/mariacutscene/func_801B7740.s 
 | 1.00 | true     | func_801B66A4                       | ../../asm/us/st/sel/nonmatchings/3642C/func_801B66A4.s 
 | 1.00 | true     | func_801A8BF8                       | ../../asm/us/st/st0/nonmatchings/28BF8/func_801A8BF8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018E238                       | ../../asm/us/st/cen/nonmatchings/holyglassescutscene/func_8018E238.s 
 | 1.00 | true     | func_80194AA0                       | ../../asm/us/st/dre/nonmatchings/succubuscutscene/func_80194AA0.s 
-| 1.00 | true     | func_801BE870                       | ../../asm/us/st/no3/nonmatchings/3E134/func_801BE870.s 
+| 1.00 | true     | func_801BE870                       | ../../asm/us/st/no3/nonmatchings/deathcutscene/func_801BE870.s 
 | 1.00 | true     | func_801B77F8                       | ../../asm/us/st/nz0/nonmatchings/mariacutscene/func_801B77F8.s 
 | 1.00 | true     | func_801B675C                       | ../../asm/us/st/sel/nonmatchings/3642C/func_801B675C.s 
 | 1.00 | true     | func_801A8CB0                       | ../../asm/us/st/st0/nonmatchings/28BF8/func_801A8CB0.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018E3BC                       | ../../asm/us/st/cen/nonmatchings/holyglassescutscene/func_8018E3BC.s 
 | 1.00 | true     | func_80194C24                       | ../../asm/us/st/dre/nonmatchings/succubuscutscene/func_80194C24.s 
-| 1.00 | true     | func_801BE9F4                       | ../../asm/us/st/no3/nonmatchings/3E134/func_801BE9F4.s 
+| 1.00 | true     | func_801BE9F4                       | ../../asm/us/st/no3/nonmatchings/deathcutscene/func_801BE9F4.s 
 | 1.00 | true     | func_801B797C                       | ../../asm/us/st/nz0/nonmatchings/mariacutscene/func_801B797C.s 
 | 1.00 | true     | func_801B68E0                       | ../../asm/us/st/sel/nonmatchings/3642C/func_801B68E0.s 
 | 1.00 | true     | func_801A8E34                       | ../../asm/us/st/st0/nonmatchings/28BF8/func_801A8E34.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018E6C4                       | ../../asm/us/st/cen/nonmatchings/holyglassescutscene/func_8018E6C4.s 
 | 1.00 | true     | func_80194FF4                       | ../../asm/us/st/dre/nonmatchings/succubuscutscene/func_80194FF4.s 
-| 1.00 | true     | func_801BEDAC                       | ../../asm/us/st/no3/nonmatchings/3E134/func_801BEDAC.s 
+| 1.00 | true     | func_801BEDAC                       | ../../asm/us/st/no3/nonmatchings/deathcutscene/func_801BEDAC.s 
 | 1.00 | true     | func_801B7C54                       | ../../asm/us/st/nz0/nonmatchings/mariacutscene/func_801B7C54.s 
 | 0.91 | true     | func_801B690C                       | ../../asm/us/st/sel/nonmatchings/3642C/func_801B690C.s 
 | 1.00 | true     | func_801A910C                       | ../../asm/us/st/st0/nonmatchings/28BF8/func_801A910C.s 
@@ -2068,13 +2068,18 @@
 | 1.00 | true     | SetData32                           | ../../asm/us/main/nonmatchings/psxsdk/libgte/reg03/SetData32.s 
 | 1.00 | true     | SetIR0                              | ../../asm/us/main/nonmatchings/psxsdk/libgte/reg03/SetIR0.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | SsSeqGetVol                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | EntityHolyGlassesCutscene           | ../../asm/us/st/cen/nonmatchings/holyglassescutscene/EntityHolyGlassesCutscene.s 
 | 0.91 | true     | EntitySuccubusCutscene              | ../../asm/us/st/dre/nonmatchings/succubuscutscene/EntitySuccubusCutscene.s 
-| 0.94 | false    | EntityRoomTransition1               | ../../asm/us/st/no3/nonmatchings/3E134/EntityRoomTransition1.s 
+| 0.94 | true     | EntityDeathCutscene                 | ../../asm/us/st/no3/nonmatchings/deathcutscene/EntityDeathCutscene.s 
 | 0.98 | true     | EntityMariaCutscene                 | ../../asm/us/st/nz0/nonmatchings/mariacutscene/EntityMariaCutscene.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018E3E8                       | ../../asm/us/st/cen/nonmatchings/holyglassescutscene/func_8018E3E8.s 
-| 0.93 | true     | func_801BEA20                       | ../../asm/us/st/no3/nonmatchings/3E134/func_801BEA20.s 
+| 0.93 | true     | func_801BEA20                       | ../../asm/us/st/no3/nonmatchings/deathcutscene/func_801BEA20.s 
 | 0.93 | true     | func_801B79A8                       | ../../asm/us/st/nz0/nonmatchings/mariacutscene/func_801B79A8.s 
 | 0.93 | true     | func_801A8E60                       | ../../asm/us/st/st0/nonmatchings/28BF8/func_801A8E60.s 
 -------------------------------------------------------------------------------
@@ -2127,10 +2132,6 @@
 | 0.93 | true     | _SsContRpn1                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | ../../asm/us/main/nonmatchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | ../../asm/us/main/nonmatchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
@@ -2457,9 +2458,6 @@
 | 1.00 | true     | _SsContModulation                   | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSeqPlay                           | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
-| 0.93 | true     | SsSeqGetVol                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
 -------------------------------------------------------------------------------
@@ -2503,7 +2501,7 @@
 | 1.00 | true     | func_801961DC                       | ../../asm/us/st/dre/nonmatchings/161DC/func_801961DC.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80194F14                       | ../../asm/us/st/dre/nonmatchings/succubuscutscene/func_80194F14.s 
-| 1.00 | true     | func_801BECCC                       | ../../asm/us/st/no3/nonmatchings/3E134/func_801BECCC.s 
+| 1.00 | true     | func_801BECCC                       | ../../asm/us/st/no3/nonmatchings/deathcutscene/func_801BECCC.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8019214C                       | ../../asm/us/st/mad/nonmatchings/11D3C/func_8019214C.s 
 | 1.00 | true     | func_801B4D18                       | ../../asm/us/st/st0/nonmatchings/34908/func_801B4D18.s 
