@@ -1,13 +1,13 @@
 #include "no3.h"
 
 void func_801BE544(void) {
-    D_801D7D30 = 0x182;
-    D_801D7D2E = 0x182;
-    D_801D7D32 = 0;
-    D_801D7D36 = 0;
-    D_801D7D3A = 0;
-    D_801D7D3B = 8;
-    D_801D7D2A = D_801D7D2C + 0x14;
+    g_Dialogue.nextLineX = 0x182; // Note that these two lines are "= 2"
+    g_Dialogue.nextCharX = 0x182; // for all other cutscenes (so far)!
+    g_Dialogue.nextCharY = 0;
+    g_Dialogue.unk12 = 0;
+    g_Dialogue.nextCharTimer = 0;
+    g_Dialogue.unk17 = 8;
+    g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
 }
 
 s32 func_801BE598(s32 textDialogue) {
