@@ -5,7 +5,7 @@ u16 g_eRedDoorTiles[2][8] = {
     {0x1F, 0x27, 0x77, 0x7F, 0xCA, 0xCB, 0xCC, 0xCD},
 };
 
-void EntityNumericDamage(Entity*);
+void EntityDamageDisplay(Entity*);
 void func_80186FD0(Entity*);
 void func_801870B0(Entity*);
 void EntityUnkId13(Entity*);
@@ -17,7 +17,7 @@ PfnEntityUpdate D_psp_09246E30[] = {
     /* 3E4 */ (PfnEntityUpdate)EntityBreakable,
     /* 3E8 */ (PfnEntityUpdate)EntityExplosion,
     /* 3EC */ (PfnEntityUpdate)EntityPrizeDrop,
-    /* 3F0 */ (PfnEntityUpdate)EntityNumericDamage, // EntityDamageDisplay
+    /* 3F0 */ (PfnEntityUpdate)EntityDamageDisplay,
     /* 3F4 */ (PfnEntityUpdate)EntityRedDoor,
     /* 3F8 */ (PfnEntityUpdate)EntityIntenseExplosion,
     /* 3FC */ (PfnEntityUpdate)EntitySoulStealOrb,
