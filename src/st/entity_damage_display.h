@@ -159,7 +159,7 @@ void EntityDamageDisplay(Entity* self) {
 
                     singleDigit = self->ext.ndmg.digits[iDigit];
                     if (singleDigit) {
-                        singleDigit = singleDigit * 8 + 0x18;
+                        singleDigit = singleDigit * 8 + 24;
                         prim->u0 = prim->u2 = singleDigit;
                         prim->u1 = prim->u3 = singleDigit + 6;
                     } else {
@@ -173,7 +173,7 @@ void EntityDamageDisplay(Entity* self) {
                 }
                 prim->tpage = 0x1A;
                 prim->priority = 0x1F8;
-                prim->drawMode = 8;
+                prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
             self->step++;
@@ -211,9 +211,9 @@ void EntityDamageDisplay(Entity* self) {
                 prim->y2 = prim->y3 = y + prim->_height;
                 prim->clut = clut;
                 if (self->ext.ndmg.timer < 6) {
-                    prim->drawMode = 0x13;
+                    prim->drawMode = DRAW_TRANSP | DRAW_UNK02 | DRAW_TPAGE;
                 } else {
-                    prim->drawMode = 0x02;
+                    prim->drawMode = DRAW_UNK02;
                 }
                 prim = prim->next;
             }
@@ -223,27 +223,27 @@ void EntityDamageDisplay(Entity* self) {
             self->posY.val -= FIX(0.5);
         } else {
             while (prim != NULL) {
-                if ((prim->_width) > 3) {
-                    (prim->_width)--;
+                if (prim->_width > 3) {
+                    prim->_width--;
                 }
-                if ((prim->_height) < 10) {
-                    (prim->_height)++;
+                if (prim->_height < 10) {
+                    prim->_height++;
                 }
 
-                x = self->posX.i.hi + (prim->_xOffset);
-                y = self->posY.i.hi + (prim->_yOffset) + 5 - (prim->_height);
-                prim->x0 = x - (prim->_width);
-                prim->x1 = x + (prim->_width);
+                x = self->posX.i.hi + prim->_xOffset;
+                y = self->posY.i.hi + prim->_yOffset + 5 - prim->_height;
+                prim->x0 = x - prim->_width;
+                prim->x1 = x + prim->_width;
                 prim->x2 = x - 3;
                 prim->x3 = x + 3;
                 prim->y0 = prim->y1 = y;
-                prim->y2 = prim->y3 = y + (prim->_height);
+                prim->y2 = prim->y3 = y + prim->_height;
                 prim->clut = clut;
 
                 if (self->ext.ndmg.timer < 6) {
-                    prim->drawMode = 0x13;
+                    prim->drawMode = DRAW_TRANSP | DRAW_UNK02 | DRAW_TPAGE;
                 } else {
-                    prim->drawMode = 0x02;
+                    prim->drawMode = DRAW_UNK02;
                 }
                 prim = prim->next;
             }
