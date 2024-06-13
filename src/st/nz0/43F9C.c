@@ -95,7 +95,7 @@ s32 func_801C4198(Entity* axeKnight) {
                 }
                 UV_thing = axeKnight->unk5A;
                 UV_thing += *dataPtr++;
-                prim->tpage = 0x12; // Leftover line, shows up in PSP
+                prim->tpage = 0x12;         // Leftover line, shows up in PSP
                 prim->tpage = UV_thing / 4; // Masks off the lower two bits
                 uCoord = (UV_thing & 1);
                 uCoord = uCoord * 0x7F;
@@ -126,7 +126,7 @@ s32 func_801C4198(Entity* axeKnight) {
         break;
     case 1:
         flag = 0;
-        for(prim = axeKnight->ext.axeknight.prim; prim != NULL;){
+        for (prim = axeKnight->ext.axeknight.prim; prim != NULL;) {
             if (prim->p3 & 8) {
                 func_801C3F9C(prim);
                 flag = 1;

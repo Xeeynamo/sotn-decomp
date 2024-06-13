@@ -91,7 +91,6 @@ EntityBloodSkeleton = 0x801C7958;
 EntityIsNearPlayer2 = 0x801C7CF0;
 EntityMagicallySealedDoor = 0x801C7D68;
 EntityStageNamePopup = 0x801C8CAC;
-UnkPolyFunc2 = 0x801CA07C;
 EntityLifeUpSpawn = 0x801CA160;
 g_LayoutObjHorizontal = 0x801CAA74;
 g_LayoutObjVertical = 0x801CAA78;

@@ -632,10 +632,10 @@ typedef struct {
     s16 t;
 } ET_TimerOnly;
 
-typedef struct{
+typedef struct {
     char pad[8];
     struct Primitive* prim;
-}ET_AxeKnight;
+} ET_AxeKnight;
 
 typedef struct {
     /* 0x7C */ s16 unk7C;
