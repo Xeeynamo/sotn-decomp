@@ -1000,7 +1000,105 @@ void func_80121F14(s32 arg0, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/7E4BC", func_80121F58);
+Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, f32 arg3) {
+    Primitive* prim;
+    s16 temp_s4;
+    s16 temp_s5;
+    s32 var_a0;
+    s32 var_s3;
+    s32 var_v1;
+    u8 var_a3;
+    u8 var_t0;
+    s8 var_t1;
+    s8 var_t2;
+
+    if (arg0 == 0) {
+        if (arg3.i.lo != 0) {
+            prim = &D_801381F4[D_800AE230[arg1 >> 1]];
+            var_t0 = prim->u0;
+            var_t2 = prim->u1;
+            var_a3 = prim->v0;
+            var_t1 = prim->v1;
+        } else {
+            prim = &D_801381F4[D_800AE250[arg1 >> 1]];
+            var_t0 = prim->u1;
+            var_t2 = prim->u0;
+            var_a3 = prim->v1;
+            var_t1 = prim->v0;
+        }
+
+        var_v1 = (prim->u0 + prim->u1) / 2;
+        var_a0 = (prim->v0 + prim->v1) / 2;
+
+        if (arg1 & 1) {
+            var_t0 = var_v1;
+            var_v1 = var_t2 & 0xFF;
+            var_a3 = var_a0;
+            var_a0 = var_t1 & 0xFF;
+        }
+        arg2->u0 = var_t0;
+        arg2->v0 = var_a3;
+        arg2->u1 = var_v1;
+        arg2->v1 = var_a0;
+        arg2->u3 = arg2->u2 = prim->u2;
+        arg2->v3 = arg2->v2 = prim->v2;
+        if (PLAYER.animSet == 0xF) {
+            arg2->tpage = 0x118;
+        } else {
+            arg2->tpage = 0x18;
+        }
+        arg2->clut = 0x10F;
+        arg2->priority = PLAYER.zPriority + 2;
+        arg2->drawMode = DRAW_UNK_400 | DRAW_UNK_100 | DRAW_TPAGE2 |
+                         DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+        arg2 = arg2->next;
+    } else {
+        temp_s5 = D_80138094[arg1].unk8;
+        temp_s4 = D_80138094[(arg1 + 1) % 16].unk8;
+
+        for (var_s3 = 0; var_s3 < 4; var_s3++) {
+            // nb: the cos/sin arguments seem to be invariant, could've been
+            // extracted outside the loop
+            arg2->u0 =
+                0x60 + (((rcos(temp_s5) >> 4) * ((var_s3 + 1) << 3)) >> 8);
+            arg2->v0 =
+                -0x60 - (((rsin(temp_s5) >> 4) * ((var_s3 + 1) << 3)) >> 8);
+            arg2->u1 =
+                0x60 + (((rcos(temp_s4) >> 4) * ((var_s3 + 1) << 3)) >> 8);
+            arg2->v1 =
+                -0x60 - (((rsin(temp_s4) >> 4) * ((var_s3 + 1) << 3)) >> 8);
+
+            if (var_s3 == 3) {
+                if (arg2->u0 < 4) {
+                    arg2->u0 = -1;
+                }
+                if (arg2->u1 < 4) {
+                    arg2->u1 = -1;
+                }
+                if (arg2->v0 < 4) {
+                    arg2->v0 = -1;
+                }
+                if (arg2->v1 < 4) {
+                    arg2->v1 = -1;
+                }
+            }
+
+            arg2->u2 = 0x60 + (((rcos(temp_s5) >> 4) * (var_s3 << 3)) >> 8);
+            arg2->v2 = -0x60 - (((rsin(temp_s5) >> 4) * (var_s3 << 3)) >> 8);
+            arg2->u3 = 0x60 + (((rcos(temp_s4) >> 4) * (var_s3 << 3)) >> 8);
+            arg2->v3 = -0x60 - (((rsin(temp_s4) >> 4) * (var_s3 << 3)) >> 8);
+
+            arg2->tpage = 0x18;
+            arg2->clut = 0x10F;
+            arg2->priority = PLAYER.zPriority + 4;
+            arg2->drawMode =
+                DRAW_UNK_400 | DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
+                DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+            arg2 = arg2->next;
+        }
+    }
+    return arg2;
+}
 
 // spawns mist (player transform)
 INCLUDE_ASM("dra/nonmatchings/7E4BC", EntityMist);
