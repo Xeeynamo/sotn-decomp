@@ -437,6 +437,10 @@ s16 g_SoundCommandRingBuffer[MAX_SND_COUNT];
 s16 g_VolL;
 s16 g_VolR;
 s16 D_8013AE94;
+s32 D_8013AEBC;
+s32 D_8013AEC0[1];
+s32 D_8013AEC4;
+s32 D_8013AEC8[1];
 s32 D_8013AECC;
 u16 D_8013AEE0;
 Unkstruct_800BF554 g_SfxData[737];
@@ -602,8 +606,6 @@ u16* func_80106A28(u32 arg0, u16 kind) {
 }
 
 void func_80115394(s32* arg0, s16 arg1, s16 arg2) { NOT_IMPLEMENTED; }
-
-void func_8012C600(void) { NOT_IMPLEMENTED; }
 
 void EntitySubwpnThrownDagger(Entity* self) { NOT_IMPLEMENTED; }
 void EntitySubwpnThrownAxe(Entity* self) { NOT_IMPLEMENTED; }
