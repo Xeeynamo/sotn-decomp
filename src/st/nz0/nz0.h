@@ -355,7 +355,6 @@ extern Primitive* D_801CB6A0[];
 extern s32 D_801CB6B8;
 extern s32 D_801CB6BC;
 extern s32 D_801CB6C0[];
-extern u32 D_801CB734;
 extern u16 D_801CB736[];
 
 // *** EntitySoulStealOrb properties START ***
@@ -377,7 +376,6 @@ extern SVECTOR D_80182848;
 
 // For EntityMariaCutscene
 extern s32 D_801CB684;
-extern u32 D_801CB734;
 extern s32 D_801CB73C;
 extern u8 D_801813C8[];
 extern u8 D_801813CC[];
@@ -386,3 +384,18 @@ extern u16 D_801813D4[];
 extern u16 D_801813D8[];
 extern s16 D_801813DC[];
 extern const char D_80183B0C[];
+extern u32 g_mariaCutsceneFlags;
+
+// EntityMaria, mostly animations
+extern u16 D_80180BEC[];
+extern u8 D_80181474[];
+extern u8 D_80181490[];
+extern u8 D_801814A0[];
+extern u8 D_801814BC[];
+extern u8 D_801814C8[];
+extern u8 D_801814E8[];
+extern u8 D_801814F8[];
+extern u8 D_80181510[];
+extern u8 D_8018151C[];
+extern u8 D_80181530[];
+extern u8 D_80181538[];

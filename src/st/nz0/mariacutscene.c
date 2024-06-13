@@ -207,14 +207,14 @@ void func_801B79A8(void) {
             DestroyEntity(entity);
             break;
         case 2:
-            if (!((D_801CB734 >> *g_Dialogue.unk40) & 1)) {
+            if (!((g_mariaCutsceneFlags >> *g_Dialogue.unk40) & 1)) {
                 g_Dialogue.unk40--;
                 return;
             }
-            D_801CB734 &= ~(1 << *g_Dialogue.unk40++);
+            g_mariaCutsceneFlags &= ~(1 << *g_Dialogue.unk40++);
             break;
         case 3:
-            D_801CB734 |= 1 << *g_Dialogue.unk40++;
+            g_mariaCutsceneFlags |= 1 << *g_Dialogue.unk40++;
             break;
         }
     }
@@ -293,7 +293,7 @@ void EntityMariaCutscene(Entity* self) {
         }
         if (func_801B7520(D_80183B0C) & 0xFF) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
-            D_801CB734 = 0;
+            g_mariaCutsceneFlags = 0;
             D_801CB73C = 0;
             D_801CB684 = 0;
             D_8003C704 = 1;
@@ -508,15 +508,16 @@ void EntityMariaCutscene(Entity* self) {
                 continue;
 
             case 16:
-                if (!((D_801CB734 >> *g_Dialogue.nextCharDialogue) & 1)) {
+                if (!((g_mariaCutsceneFlags >> *g_Dialogue.nextCharDialogue) &
+                      1)) {
                     g_Dialogue.nextCharDialogue--;
                     return;
                 }
-                D_801CB734 &= ~(1 << *g_Dialogue.nextCharDialogue);
+                g_mariaCutsceneFlags &= ~(1 << *g_Dialogue.nextCharDialogue);
                 *g_Dialogue.nextCharDialogue++;
                 continue;
             case 17:
-                D_801CB734 |= 1 << *g_Dialogue.nextCharDialogue++;
+                g_mariaCutsceneFlags |= 1 << *g_Dialogue.nextCharDialogue++;
                 continue;
             case 18:
                 g_Dialogue.unk3C = 0;
@@ -545,17 +546,18 @@ void EntityMariaCutscene(Entity* self) {
                 g_api.PlaySfx(nextChar);
                 continue;
             case 21:
-                D_801CB734 = 0;
+                g_mariaCutsceneFlags = 0;
                 D_801CB684 = 0;
                 D_801CB73C = 0;
                 continue;
             case 22:
-                D_801CB734 &= ~(1 << *g_Dialogue.nextCharDialogue++);
+                g_mariaCutsceneFlags &= ~(1 << *g_Dialogue.nextCharDialogue++);
                 continue;
             case 23:
                 return;
             case 24:
-                if (!((D_801CB734 >> *g_Dialogue.nextCharDialogue) & 1)) {
+                if (!((g_mariaCutsceneFlags >> *g_Dialogue.nextCharDialogue) &
+                      1)) {
                     *g_Dialogue.nextCharDialogue--;
                     return;
                 }
