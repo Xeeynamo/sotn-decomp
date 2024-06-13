@@ -323,7 +323,7 @@
 <g id="node21" class="node">
 <title>nz0.EntityMagicallySealedDoor</title>
 <g id="a_node21"><a xlink:href="nz0.EntityMagicallySealedDoor.svg" xlink:title="nz0.EntityMagicallySealedDoor">
-<ellipse fill="red" stroke="black" cx="4751.79" cy="-198" rx="157.07" ry="18"/>
+<ellipse fill="green" stroke="black" cx="4751.79" cy="-198" rx="157.07" ry="18"/>
 <text text-anchor="middle" x="4751.79" y="-194.3" font-family="Times,serif" font-size="14.00">nz0.EntityMagicallySealedDoor</text>
 </a>
 </g>

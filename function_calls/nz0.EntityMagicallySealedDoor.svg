@@ -12,7 +12,7 @@
 <!-- nz0.EntityMagicallySealedDoor -->
 <g id="node1" class="node">
 <title>nz0.EntityMagicallySealedDoor</title>
-<ellipse fill="red" stroke="black" cx="1463.44" cy="-198" rx="157.07" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1463.44" cy="-198" rx="157.07" ry="18"/>
 <text text-anchor="middle" x="1463.44" y="-194.3" font-family="Times,serif" font-size="14.00">nz0.EntityMagicallySealedDoor</text>
 </g>
 <!-- dra.AllocPrimitives -->
