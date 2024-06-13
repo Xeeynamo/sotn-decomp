@@ -103,9 +103,7 @@ void func_801A8BF8(void) {
     prim->drawMode = DRAW_DEFAULT;
 }
 
-
 const char* D_80180828[] = {_S("Richter"), _S("Dracula")};
-
 
 // Creates primitives for the actor name at the head of the dialogue
 void func_801A8CB0(u16 actorIndex, Entity* self) {
@@ -266,9 +264,8 @@ void EntityDraculaCutscene(Entity* self) {
     s32 nextChar2;
     s32 bit_shifty;
 
-    if ((D_801C2580 != 0) && 
-        (D_801C24C8 == 0) && 
-        ((g_Settings.D_8003CB04 & 1) || (g_IsTimeAttackUnlocked != 0)) && 
+    if ((D_801C2580 != 0) && (D_801C24C8 == 0) &&
+        ((g_Settings.D_8003CB04 & 1) || (g_IsTimeAttackUnlocked != 0)) &&
         (g_pads[0].tapped == PAD_START)) {
         D_801C24C8 = 1;
         g_api.FreePrimitives(self->primIndex);
@@ -286,7 +283,7 @@ void EntityDraculaCutscene(Entity* self) {
     if ((self->step) && (g_Dialogue.unk3C != 0)) {
         func_801A8E60();
     }
-    
+
     switch (self->step) {
     case 0:
         if (func_801A89D8(D_801829D8) & 0xFF) {
@@ -307,17 +304,17 @@ void EntityDraculaCutscene(Entity* self) {
         break;
     case 1:
         // this is a huge While-loop! Don't miss it!
-        while(1){
+        while (1) {
             if ((g_Dialogue.nextCharTimer != 0) && (D_801C24C8 == 0)) {
                 g_Dialogue.nextCharTimer--;
                 return;
             }
             nextChar = *g_Dialogue.nextCharDialogue++;
             switch (nextChar) {
-            case 0:             
+            case 0:
                 self->step = 7;
                 return;
-            case 1:             
+            case 1:
                 if (D_801C24C8 != 0) {
                     continue;
                 }
@@ -344,36 +341,36 @@ void EntityDraculaCutscene(Entity* self) {
                 self->step_s = 0;
                 self->step++;
                 return;
-            case 2:             
+            case 2:
                 g_Dialogue.unk17 = *g_Dialogue.nextCharDialogue++;
                 continue;
-            case 3:             
+            case 3:
                 g_Dialogue.nextCharTimer = *g_Dialogue.nextCharDialogue++;
                 if (D_801C24C8 != 0) {
                     continue;
                 }
                 return;
-            case 4:             
+            case 4:
                 if (D_801C24C8 != 0) {
                     continue;
                 }
                 prim = g_Dialogue.prim[0];
-                for(i = 0; i < 5; i++) {
+                for (i = 0; i < 5; i++) {
                     prim->drawMode = DRAW_HIDE;
                     prim = prim->next;
                 }
                 return;
-            case 5:             
+            case 5:
                 if (D_801C24C8 != 0) {
-                    g_Dialogue.nextCharDialogue+=2;
+                    g_Dialogue.nextCharDialogue += 2;
                     continue;
                 }
-                //fake reuse of i?
+                // fake reuse of i?
                 i = *g_Dialogue.nextCharDialogue++;
                 nextChar2 = *g_Dialogue.nextCharDialogue++;
                 prim = g_Dialogue.prim[5];
-                uCoord = D_80180784[nextChar2 & 1]; //a1
-                vCoord = D_80180788[nextChar2 & 1]; //a2
+                uCoord = D_80180784[nextChar2 & 1]; // a1
+                vCoord = D_80180788[nextChar2 & 1]; // a2
                 prim->clut = D_8018078C[i];
                 prim->tpage = 0x90;
                 if (nextChar2 & 0x80) {
@@ -385,8 +382,10 @@ void EntityDraculaCutscene(Entity* self) {
                 }
                 prim->v0 = prim->v1 = vCoord;
                 prim->v2 = prim->v3 = vCoord + 0x48;
-                prim->x0 = prim->x1 = prim->x2 = prim->x3 = g_Dialogue.startX - 0x1E;
-                prim->y0 = prim->y1 = prim->y2 = prim->y3 = g_Dialogue.startY + 0x24;
+                prim->x0 = prim->x1 = prim->x2 = prim->x3 =
+                    g_Dialogue.startX - 0x1E;
+                prim->y0 = prim->y1 = prim->y2 = prim->y3 =
+                    g_Dialogue.startY + 0x24;
                 g_Dialogue.clutIndex = D_80180794[i];
                 func_801A8984();
                 func_801A8BF8();
@@ -395,12 +394,12 @@ void EntityDraculaCutscene(Entity* self) {
                 func_801A8CB0(i, self);
                 g_Dialogue.portraitAnimTimer = 6;
                 self->step = 3;
-                return;            
-            case 6:             
+                return;
+            case 6:
                 if (D_801C24C8 != 0) {
                     continue;
                 }
-                for(prim = g_Dialogue.prim[0], i = 0; i < 5; i++) {
+                for (prim = g_Dialogue.prim[0], i = 0; i < 5; i++) {
                     prim->drawMode = DRAW_HIDE;
                     prim = prim->next;
                 }
@@ -409,7 +408,7 @@ void EntityDraculaCutscene(Entity* self) {
                 g_Dialogue.portraitAnimTimer = 6;
                 self->step = 4;
                 return;
-            case 7:             
+            case 7:
                 if (D_801C24C8 != 0) {
                     g_Dialogue.nextCharDialogue++;
                     g_Dialogue.nextCharDialogue++;
@@ -428,15 +427,15 @@ void EntityDraculaCutscene(Entity* self) {
                 self->step = 5;
                 self->step_s = 0;
                 return;
-                
-            case 8:             
+
+            case 8:
                 if (D_801C24C8 != 0) {
                     continue;
                 }
                 g_Dialogue.portraitAnimTimer = 0x18;
                 self->step = 6;
                 return;
-            case 9:             
+            case 9:
                 if (D_801C24C8 != 0) {
                     g_Dialogue.nextCharDialogue++;
                     g_Dialogue.nextCharDialogue++;
@@ -447,7 +446,7 @@ void EntityDraculaCutscene(Entity* self) {
                 nextChar |= *g_Dialogue.nextCharDialogue++;
                 g_api.PlaySfx(nextChar);
                 continue;
-            case 10:            
+            case 10:
                 if (D_801C24C8 != 0) {
                     continue;
                 }
@@ -456,8 +455,8 @@ void EntityDraculaCutscene(Entity* self) {
                 }
                 *g_Dialogue.nextCharDialogue--;
                 return;
-            case 11:            
-               if (D_801C24C8 != 0) {
+            case 11:
+                if (D_801C24C8 != 0) {
                     continue;
                 }
                 if (g_api.func_80131F68() != true) {
@@ -476,7 +475,7 @@ void EntityDraculaCutscene(Entity* self) {
                 func_801A8E34((u8*)bit_shifty);
                 continue;
             case 13:
-                continue;    
+                continue;
             case 14:
                 bit_shifty = (s32)*g_Dialogue.nextCharDialogue++;
                 bit_shifty <<= 4;
@@ -488,7 +487,7 @@ void EntityDraculaCutscene(Entity* self) {
                 // This needs help. Casting the const to short is good.
                 bit_shifty += (u16)0x100000;
                 g_Dialogue.nextCharDialogue += *(u16*)bit_shifty << 2;
-    
+
                 bit_shifty = (s32)*g_Dialogue.nextCharDialogue++;
                 bit_shifty <<= 4;
                 bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
@@ -498,8 +497,8 @@ void EntityDraculaCutscene(Entity* self) {
                 bit_shifty |= (s32)*g_Dialogue.nextCharDialogue;
                 g_Dialogue.nextCharDialogue = (u8*)bit_shifty + 0x100000;
                 continue;
-                
-            case 15: //c64
+
+            case 15: // c64
                 bit_shifty = (s32)*g_Dialogue.nextCharDialogue++;
                 bit_shifty <<= 4;
                 bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++;
@@ -509,8 +508,8 @@ void EntityDraculaCutscene(Entity* self) {
                 bit_shifty |= (s32)*g_Dialogue.nextCharDialogue;
                 g_Dialogue.nextCharDialogue = (u8*)bit_shifty + 0x100000;
                 continue;
-                
-            case 16:            
+
+            case 16:
                 if (!((D_801C257C >> *g_Dialogue.nextCharDialogue) & 1)) {
                     g_Dialogue.nextCharDialogue--;
                     return;
@@ -518,26 +517,27 @@ void EntityDraculaCutscene(Entity* self) {
                 D_801C257C &= ~(1 << *g_Dialogue.nextCharDialogue);
                 *g_Dialogue.nextCharDialogue++;
                 continue;
-            case 17:            
+            case 17:
                 D_801C257C |= 1 << *g_Dialogue.nextCharDialogue++;
                 continue;
-            case 18:            
+            case 18:
                 g_Dialogue.unk3C = 0;
                 continue;
-            case 19:            
+            case 19:
                 if (D_801C24C8 != 0) {
                     g_Dialogue.nextCharDialogue += 5;
                 } else {
-                    bit_shifty = (s32)*g_Dialogue.nextCharDialogue++; //8e4
-                    bit_shifty <<= 4; //918
-                    bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++; //91c
-                    bit_shifty <<= 4; //920
-                    bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++; //924
-                    bit_shifty <<= 4; //928
-                    bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++; //92c
-                    bit_shifty += 0x100000; //
+                    bit_shifty = (s32)*g_Dialogue.nextCharDialogue++;  // 8e4
+                    bit_shifty <<= 4;                                  // 918
+                    bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++; // 91c
+                    bit_shifty <<= 4;                                  // 920
+                    bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++; // 924
+                    bit_shifty <<= 4;                                  // 928
+                    bit_shifty |= (s32)*g_Dialogue.nextCharDialogue++; // 92c
+                    bit_shifty += 0x100000;                            //
                     nextChar2 = g_Dialogue.nextCharDialogue++[0];
-                    LoadTPage((u32*)bit_shifty, 1, 0, D_80180790[nextChar2], 0x100, 0x30, 0x48);
+                    LoadTPage((u32*)bit_shifty, 1, 0, D_80180790[nextChar2],
+                              0x100, 0x30, 0x48);
                 }
                 continue;
             case 20:
@@ -546,8 +546,9 @@ void EntityDraculaCutscene(Entity* self) {
                 nextChar |= *g_Dialogue.nextCharDialogue++;
                 g_api.PlaySfx(nextChar);
                 continue;
-            // Note: Other cutscenes have Case 21-24 here, this one is missing it.
-            default: 
+            // Note: Other cutscenes have Case 21-24 here, this one is missing
+            // it.
+            default:
                 if (D_801C24C8 != 0) {
                     continue;
                 }
@@ -561,11 +562,11 @@ void EntityDraculaCutscene(Entity* self) {
             return;
         }
         rect.x = ((nextChar & 0xF) * 2) + 0x380;
-        rect.y = ((u32) (nextChar & 0xF0) >> 1) + 0xF0;
+        rect.y = ((u32)(nextChar & 0xF0) >> 1) + 0xF0;
         rect.w = 2;
         rect.h = 8;
         vCoord = (g_Dialogue.nextCharY * 0xC) + 0x180;
-        MoveImage(&rect,  g_Dialogue.nextCharX, vCoord);
+        MoveImage(&rect, g_Dialogue.nextCharX, vCoord);
         g_Dialogue.nextCharX += 2;
         break;
     case 2:
@@ -576,7 +577,7 @@ void EntityDraculaCutscene(Entity* self) {
         }
         break;
     case 3:
-        prim = g_Dialogue.prim[5];        
+        prim = g_Dialogue.prim[5];
         prim->x0 = prim->x2 -= 4;
         prim->x1 = prim->x3 += 4;
         prim->y0 = prim->y1 -= 6;
@@ -588,13 +589,14 @@ void EntityDraculaCutscene(Entity* self) {
         g_Dialogue.portraitAnimTimer--;
         if (!g_Dialogue.portraitAnimTimer) {
             self->step = 1;
-            for (prim = &g_PrimBuf[g_Dialogue.primIndex[1]];prim != NULL; prim = prim->next) {
+            for (prim = &g_PrimBuf[g_Dialogue.primIndex[1]]; prim != NULL;
+                 prim = prim->next) {
                 prim->drawMode = 0;
             }
         }
         break;
     case 4:
-        prim = g_Dialogue.prim[5];        
+        prim = g_Dialogue.prim[5];
         prim->x0 = prim->x2 += 4;
         prim->x1 = prim->x3 -= 4;
         prim->y0 = prim->y1 += 6;
@@ -615,8 +617,9 @@ void EntityDraculaCutscene(Entity* self) {
                 return;
             }
             g_Dialogue.primIndex[0] = primIndex;
-            for(prim = &g_PrimBuf[primIndex], j = 0; prim != NULL; prim = prim->next) {
-                prim->r0 =  prim->r1 = 0x7F;
+            for (prim = &g_PrimBuf[primIndex], j = 0; prim != NULL;
+                 prim = prim->next) {
+                prim->r0 = prim->r1 = 0x7F;
                 prim->b0 = prim->b1 = prim->g0 = prim->g1 = 0;
                 prim->x0 = prim->x1 = 0xF7;
                 prim->y0 = prim->y1 = g_Dialogue.startY + j;
@@ -624,13 +627,14 @@ void EntityDraculaCutscene(Entity* self) {
                 prim->drawMode = 0;
                 prim->x2 = D_80180798[j];
                 prim->x3 = 0xF70;
-                
+
                 j++;
             }
             self->step_s++;
             return;
-        case 1:                                     /* switch 3 */
-            for(j = 0, prim = &g_PrimBuf[g_Dialogue.primIndex[0]]; prim != NULL; prim = prim->next) {
+        case 1: /* switch 3 */
+            for (j = 0, prim = &g_PrimBuf[g_Dialogue.primIndex[0]];
+                 prim != NULL; prim = prim->next) {
                 prim->x3 -= prim->x2;
                 prim->x2 += 2;
                 prim->x0 = prim->x3 / 16;
@@ -704,7 +708,6 @@ void EntityDraculaCutscene(Entity* self) {
             return;
         }
         break;
-
 
     case 7:
         D_8003C704 = 0;
