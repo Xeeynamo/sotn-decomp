@@ -66,9 +66,10 @@ def generate_assembly_layers(writer: io.BufferedWriter, name: str, content: str)
                 | get_int(layer, "top", 0, 0x3F) << 6
                 | get_int(layer, "right", 0, 0x3F) << 12
                 | get_int(layer, "bottom", 0, 0x3F) << 18
-                | get_int(layer, "scrollMode", 0, 31) << 24
+                | get_int(layer, "scrollMode", 0, 0x1F) << 24
                 | (1 if get_bool(layer, "isSaveRoom") else 0) << 29
                 | (1 if get_bool(layer, "isLoadingRoom") else 0) << 30
+                | (1 if get_bool(layer, "unusedFlag") else 0) << 31
             )
             zPriority = get_int(layer, "zPriority", 0, 32768)  # s16 or u16?
             unkE = get_int(layer, "unkE", 0, 255)
@@ -187,6 +188,7 @@ class PSXSegLayers(N64Segment):
                     "scrollMode": (flags >> 24) & 0x1F,
                     "isSaveRoom": ((flags >> 24) & 0x20) != 0,
                     "isLoadingRoom": ((flags >> 24) & 0x40) != 0,
+                    "unusedFlag": ((flags >> 24) & 0x80) != 0,
                     "zPriority": utils.to_u16(layerDefData[12:]),
                     "unkE": utils.to_u8(layerDefData[14:]),
                     "unkF": utils.to_u8(layerDefData[15:]),

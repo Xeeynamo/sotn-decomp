@@ -100,6 +100,7 @@ segments:
       - [0x214F4, tilelayout, D_801A14F4]
       - [0x216F4, tilelayout, D_801A16F4]
       - [0x218F4, tilelayout, D_801A18F4]
+      - [0x21AF4, tilelayout, D_801A1AF4]
       - [0x21CF4, tiledef, t_801A20F4, D_801A20F4]
       - [0x22104, tiledef, t_801A6104, D_801A6104]
       - [0x26114, tiledef, t_801AA114, D_801AA114]
