@@ -52,7 +52,7 @@ segments:
       #- [0x1A40C, cmp]
       - [0x1A750, data]
       - [0x27984, .rodata, 27D64]
-      - [0x279E8, .rodata, 28984] # EntityDialogue
+      - [0x279E8, .rodata, 28984] # EntityDraculaCutscene
       - [0x27A74, .rodata, 2A218] # EntityCutscene
       - [0x27AB4, .rodata, 2A8DC] # EntitySecretButton
       - [0x27ACC, .rodata, 2A8DC] # EntitySecretStairs

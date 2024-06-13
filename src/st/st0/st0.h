@@ -185,4 +185,17 @@ extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
 
+// For EntityDraculaCutscene
+extern u8 D_80180784[];
+extern u8 D_80180788[];
+extern u16 D_8018078C[];
+extern u16 D_80180790[];
+extern u16 D_80180794[];
+extern s16 D_80180798[];
+extern const char D_801829D8[];
+extern s32 D_801C24C8;
+extern s32 D_801C2504;
+extern u32 D_801C257C;
+extern s32 D_801C2580;
+
 extern Dialogue g_Dialogue;
