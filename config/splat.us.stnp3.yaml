@@ -34,7 +34,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, data]
-      #- [0x1D0, layers, rooms]
+      - [0x1D0, layers, rooms]
       - [0x558, data]
       - [0xE50, data]
       - [0x10C0, data]
