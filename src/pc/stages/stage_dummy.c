@@ -6,10 +6,7 @@
 #include "stage_loader.h"
 #include "sfx.h"
 
-static void Update(void);
-static void HitDetection(void);
-static void func_8018A7AC(void);
-static void InitRoomEntities(s32 objLayoutId);
+static void MyInitRoomEntities(s32 objLayoutId);
 
 static u32* empty_entity_gfx[] = {
     (u32*)0xFFFFFFFF,
@@ -18,23 +15,27 @@ static u_long* empty_clut_load[] = {
     (u_long*)0x00000000,
 };
 
-static RoomHeader g_Rooms[1] = {{40, 12, 40, 12, {0, 0, 0, 0}}};
-static u_long* g_SpriteBanks[1] = {NULL};
-static u16* g_Cluts[] = {empty_clut_load, NULL};
-static void* g_EntityGfxs[] = {empty_entity_gfx, NULL};
+static RoomHeader rooms[] = {
+    {40, 12, 40, 12, {0, 0, 0, 1}},
+    {0x40},
+};
+
+static u_long* sprite_banks[1] = {NULL};
+static u16* clut_anims[] = {empty_clut_load, NULL};
+static void* entity_gfxs[] = {empty_entity_gfx, NULL};
 static void UpdateStageEntities(void);
 
 static Overlay g_StageDesc = {
     Update,
     HitDetection,
-    func_8018A7AC,
-    InitRoomEntities,
-    g_Rooms,
-    g_SpriteBanks,
-    g_Cluts,
+    UpdateRoomPosition,
+    MyInitRoomEntities,
+    rooms,
+    sprite_banks,
+    clut_anims,
     NULL,
     NULL,
-    g_EntityGfxs,
+    entity_gfxs,
     UpdateStageEntities,
     NULL,
     NULL,
@@ -44,24 +45,22 @@ static Overlay g_StageDesc = {
 };
 
 void InitStageDummy(Overlay* o) {
-    g_StageDesc.tileLayers = LoadRooms("assets/st/wrp/rooms.layers.json");
+    LoadReset();
+
+    g_StageDesc.tileLayers = LoadRoomsLayers("assets/st/wrp/rooms.layers.json");
     memcpy(o, &g_StageDesc, sizeof(Overlay));
 }
 
-static void Update(void) { NOT_IMPLEMENTED; }
-
-static void HitDetection(void) { NOT_IMPLEMENTED; }
-
-static void func_8018A7AC(void) { NOT_IMPLEMENTED; }
-
 void SetGameState(GameState gameState);
 void PlaySfx(s32 sfxId);
-static void InitRoomEntities(s32 objLayoutId) {
-    if (g_StageId == STAGE_SEL) {
+static void MyInitRoomEntities(s32 objLayoutId) {
+    switch (g_StageId) {
+    case STAGE_SEL: // skip Title screen
+    case STAGE_ST0: // hack to force NG to jump straight to a valid map
         SetGameState(Game_NowLoading);
         g_GameStep = NowLoading_2;
         g_StageId = STAGE_WRP;
-        return;
+        break;
     }
 
     INFOF("Stage ID: %02X", g_StageId);

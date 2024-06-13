@@ -17,7 +17,7 @@ Overlay g_StageSel = {
     /* 0x18 */ g_Cluts,
     /* 0x1C */ NULL,
     /* 0x20 */ NULL,
-    /* 0x24 */ g_EntityGfxs,
+    /* 0x24 */ OVL_EXPORT(g_EntityGfxs),
     /* 0x28 */ func_801B60D4,
     /* 0x2C */ NULL,
     /* 0x30 */ &D_8018C404,

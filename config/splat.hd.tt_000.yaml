@@ -29,6 +29,7 @@ segments:
     type: code
     start: 0x00000000
     vram:  0x80170000
+    align: 4
     subalign: 4
     subsegments:
       - [0x0, .data, 10E8]

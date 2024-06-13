@@ -24,31 +24,44 @@ options:
     - ".rodata"
     - ".text"
     - ".bss"
+    - ".sbss"
 segments:
   - name: stcen
     type: code
     start: 0x00000000
     vram:  0x80180000
-    subalign: 2
+    align: 4
+    subalign: 4
     subsegments:
       - [0x0, data]
+      - [0x7E4, .data, collision]
+      - [0xBA4, .data, e_red_door]
+      - [0xBBC, data]
       - [0x10AC, .data, entity_relic_orb]
       - [0x1110, data]
       - [0x12D4, roomdef, g_Rooms]
       - [0x1300, data]
-      - [0xD42C, rodata]
-      - [0xD4B0, .rodata, D600]
-      - [0xD4D8, .rodata, 11280] # EntityRedDoor
-      - [0xD4F0, rodata]
+      - [0xD42C, .rodata, holyglassescutscene]
+      - [0xD4B0, .rodata, F890]
+      - [0xD4D8, .rodata, e_red_door] # EntityRedDoor
+      - [0xD4F0, .rodata]
+      - [0xD540, .rodata, 15C84] # EntityPrizeDrop
+      - [0xD560, .rodata, 15C84] # EntityEquipItemDrop
       - [0xD578, .rodata, entity_relic_orb]
       - [0xD5B0, .rodata, entity_message_box]
       - [0xD5C4, .rodata, 18084] # EntityStageNamePopup
-      - [0xD5F8, rodata]
+      - [0xD5F8, .rodata, prim_helpers]
       - [0xD600, c]
+      - [0xDF0C, c, holyglassescutscene]
+      - [0xF890, c]
       - [0x10E4C, c, random]
       - [0x10E7C, c, update]
       - [0x11178, c, update_stage_entities]
-      - [0x11280, c]
+      - [0x11280, c, collision]
+      - [0x12A3C, c, create_entity]
+      - [0x135B4, c, e_red_door]
+      - [0x14264, c]
+      - [0x15C84, c]
       - [0x16F30, c, entity_relic_orb]
       - [0x17A00, c, entity_heart_drop]
       - [0x17B28, c, entity_message_box]

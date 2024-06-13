@@ -1,54 +1,36 @@
 #include "mad.h"
 
-// v1 -> a0 reg swap
-// branching
-// signature conflict
-// DECOMP_ME_WIP EntityHeartDrop https://decomp.me/scratch/h3CVU
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", EntityHeartDrop);
-#else
-void EntityHeartDrop(Entity* entity, u32 arg1) {
-    u16 temp_v0_2;
-    u16 temp_v1;
-    u16 var_v1;
-    u32 temp_a0;
+void EntityHeartDrop(Entity* self) {
+    u16 index;
+    PfnEntityUpdate update;
 
-    if (entity->step == 0) {
-        temp_v0_2 = entity->params;
-        temp_a0 = temp_v0_2 & 0xFFFF;
-        var_v1 = temp_v0_2;
-        entity->ext.generic.unkB4 = var_v1;
-
-        if ((D_8003BEE8[temp_a0 >> 3] >> (var_v1 & 7)) & 1) {
-            DestroyEntity(entity);
+    if (self->step == 0) {
+        index = self->ext.heartDrop.unkB4 = self->params;
+        if ((g_CastleFlags[(index >> 3) + 0x100] >> (index & 7)) & 1) {
+            DestroyEntity(self);
             return;
         }
 
-        var_v1 = D_80180F5C[temp_a0];
-
-        if (var_v1 < 0x80) {
-            entity->ext.generic.uunkB8.unkFuncB8 = EntityPrizeDrop;
+        index = D_80180F5C[index];
+        if (index < 128) {
+            self->ext.heartDrop.update = EntityPrizeDrop;
         } else {
-            entity->ext.generic.uunkB8.unkFuncB8 = EntityEquipItemDrop;
-            var_v1 -= 0x80;
+            self->ext.heartDrop.update = EntityEquipItemDrop;
+            index -= 128;
         }
-
-        entity->params = var_v1 + 0x8000;
-        return;
-    }
-
-    temp_v1 = entity->ext.generic.unkB4;
-
-    if (entity->step < 5) {
-        arg1 = temp_v1 / 8;
-        if (entity->unk48 != 0) {
-            D_8003BEE8[arg1] |= (1 << (temp_v1 & 7));
-            entity->step = 5;
+        self->params = index + 0x8000;
+    } else {
+        index = self->ext.generic.unkB4;
+        if (self->step < 5) {
+            if (self->hitFlags) {
+                g_CastleFlags[(index >> 3) + 0x100] |= 1 << (index & 7);
+                self->step = 5;
+            }
         }
     }
-    entity->ext.generic.uunkB8.unkFuncB8(entity, arg1, entity);
+    update = self->ext.heartDrop.update;
+    update(self);
 }
-#endif
 
 #include "../check_coll_offsets.h"
 
@@ -289,7 +271,46 @@ void func_801965E4(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_801966B0);
+void func_801966B0(u16* sensors) {
+    switch (g_CurrentEntity->step_s) {
+    case 0:
+        g_CurrentEntity->animCurFrame = 0;
+        g_CurrentEntity->hitboxState = 0;
+        g_CurrentEntity->zPriority -= 0x10;
+        g_CurrentEntity->drawFlags |= DRAW_HIDE;
+        g_CurrentEntity->unk6C = 0;
+        g_CurrentEntity->step_s++;
+        break;
+    case 1:
+        if (func_80192190(sensors) & 1) {
+            g_CurrentEntity->animCurFrame = 1;
+            g_CurrentEntity->step_s++;
+        }
+        break;
+    case 2:
+        g_CurrentEntity->unk6C += 2;
+        if (g_CurrentEntity->unk6C == 0xC0) {
+            g_CurrentEntity->drawFlags = 0;
+            g_CurrentEntity->drawMode = DRAW_DEFAULT;
+            g_CurrentEntity->hitEffect = g_CurrentEntity->palette;
+            g_CurrentEntity->step_s++;
+            D_80199DE8 = 64;
+        }
+        break;
+    case 3:
+        if (D_80199DE8 & 1) {
+            g_CurrentEntity->palette = g_CurrentEntity->hitEffect;
+        } else {
+            g_CurrentEntity->palette = PAL_OVL(0x19F);
+        }
+        if (!--D_80199DE8) {
+            g_CurrentEntity->hitboxState = 3;
+            g_CurrentEntity->palette = g_CurrentEntity->hitEffect;
+            func_80192BD0(1);
+        }
+        break;
+    }
+}
 
 void func_8019686C(u16 entityId, Entity* src, Entity* dst) {
     DestroyEntity(dst);
@@ -311,8 +332,6 @@ void func_8019686C(u16 entityId, Entity* src, Entity* dst) {
     }
 }
 
-// DECOMP_ME_WIP func_80196934 https://decomp.me/scratch/fA367 TODO: 0x80 entity
-// member unconfirmed
 void func_80196934(void) {
     Entity* entity;
     s16 temp_s3;

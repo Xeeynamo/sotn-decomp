@@ -24,11 +24,13 @@ options:
     - ".rodata"
     - ".text"
     - ".bss"
+    - ".sbss"
 segments:
   - name: stno3
     type: code
     start: 0x00000000
     vram:  0x80180000
+    align: 4
     subalign: 4
     subsegments:
       - [0x0, data]
@@ -43,6 +45,9 @@ segments:
       - [0xEA0, data]
       - [0x11F0, data]
       - [0x1B40, data]
+      - [0x1CEC, .data, collision]
+      - [0x20AC, .data, e_red_door]
+      - [0x20C4, data]
       - [0x25B4, .data, entity_relic_orb]
       - [0x2618, data]
       - [0x3180, data]
@@ -57,14 +62,14 @@ segments:
       - [0x373E8, .rodata, 377D4] # EntityCastleDoor
       - [0x37400, .rodata, 377D4] # EntityStairwayPiece
       - [0x37414, .rodata, 3C4EC]
-      - [0x3742C, .rodata, 3E134]
+      - [0x3742C, .rodata, 3E134] #EntityFlyingOwlAndLeaves
       - [0x37440, rodata]
-      - [0x37458, rodata]
+      - [0x37458, .rodata, deathcutscene] # EntityDeathCutscene
       - [0x374DC, .rodata, 3FF00] # EntityRoomTransition2
       - [0x374F4, .rodata, 3FF00] # EntityDeathStolenItems
       - [0x37514, .rodata, 3FF00] # EntityDeath
       - [0x37564, .rodata, 3FF00] # EntityWargExplosionPuffOpaque
-      - [0x37578, .rodata, 41C80] # EntityRedDoor
+      - [0x37578, .rodata, e_red_door] # EntityRedDoor
       - [0x37590, rodata]
       - [0x375E0, .rodata, 46684] # EntityPrizeDrop
       - [0x37600, .rodata, 46684] # EntityEquipItemDrop
@@ -75,15 +80,19 @@ segments:
       - [0x376E8, rodata]
       - [0x377A4, .rodata, 56264] # EntityBat
       - [0x377B8, .rodata, 564B0] # EntityZombie
-      - [0x377CC, rodata] #g_UnkPrimHelperRot
+      - [0x377CC, .rodata, prim_helpers]
       - [0x377D4, c]
       - [0x3C4EC, c]
       - [0x3E134, c]
+      - [0x3E544, c, deathcutscene]
       - [0x3FF00, c]
       - [0x4184C, c, random]
       - [0x4187C, c, update]
       - [0x41B78, c, update_stage_entities]
-      - [0x41C80, c]
+      - [0x41C80, c, collision]
+      - [0x4343C, c, create_entity]
+      - [0x43FB4, c, e_red_door]
+      - [0x44C64, c]
       - [0x46684, c]
       - [0x47930, c, entity_relic_orb]
       - [0x48400, c, entity_heart_drop]

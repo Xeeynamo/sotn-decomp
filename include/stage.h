@@ -37,7 +37,6 @@ extern PfnEntityUpdate PfnEntityUpdates[];
 #endif
 
 extern u16 g_ItemIconSlots[0x20];
-extern u16 UNK_Invincibility0[];
 
 /*
  * Sets up layout arrays and initializes stage state to
@@ -54,8 +53,11 @@ void InitRoomEntities(s32 objLayoutId);
  */
 void UpdateRoomPosition();
 
-s32 Random();
 void Update(void);
+
+void HitDetection(void);
+
+s32 Random();
 void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
 void CreateEntityFromLayout(Entity* entity, LayoutEntity* initDesc);
 void DestroyEntity(Entity*);

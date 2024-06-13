@@ -295,7 +295,9 @@ void func_801B4B9C(Entity* entity, s16 step) {
     entity->animFrameDuration = 0;
 }
 
+#ifndef HARD_LINK
 #include "../animate_entity.h"
+#endif
 
 void func_801B4C68(void) {
     Entity* player;

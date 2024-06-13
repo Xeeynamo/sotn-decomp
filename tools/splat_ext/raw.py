@@ -1,7 +1,7 @@
-from util import options, log
-from segtypes.n64.i4 import N64SegI4
-from segtypes.n64.rgba16 import N64SegRgba16
-from segtypes.n64.segment import N64Segment
+from splat.util import options, log
+from splat.segtypes.n64.i4 import N64SegI4
+from splat.segtypes.n64.rgba16 import N64SegRgba16
+from splat.segtypes.n64.segment import N64Segment
 from typing import Optional
 from pathlib import Path
 

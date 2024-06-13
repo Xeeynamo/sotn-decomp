@@ -66,7 +66,6 @@ extern u8 D_8018059C[];
 extern s16 D_801805A4[];
 extern s8 D_801805B4[];
 extern u16 D_801805BC;
-extern u16 D_801805D8[];
 extern const char* D_80180684[];
 extern s32 D_8018068C[];
 extern u8 D_80180768[]; // Animation
@@ -80,18 +79,21 @@ extern s16 g_ESoulStealOrbSprt[];
 extern u8 g_ESoulStealOrbAnim[];
 extern ObjInit2 D_8018125C[];
 
-extern s16 D_8019D37E;
-extern u16 D_8019D380;
-extern s16 D_8019D382;
-extern s16 D_8019D384;
-extern s16 D_8019D386;
-extern s16 D_8019D38A;
-extern s8 D_8019D38E;
-extern s8 D_8019D38F;
 extern u32 D_8019D424;
 
 extern u16 g_InitializeEntityData0[];
 
 extern Dialogue g_Dialogue;
+
+// For EntityHolyGlassesCutscene
+extern u8 D_801805DC[];
+extern u16 D_801805E0[];
+extern u16 D_801805E8[];
+extern u16 D_801805EC[];
+extern s16 D_801805F4[];
+extern const char D_801813F0[];
+extern u32 D_8019D424;
+extern s32 D_8019D428;
+extern s32 D_8019D374;
 
 #endif

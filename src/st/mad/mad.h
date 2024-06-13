@@ -32,6 +32,10 @@ typedef enum {
     E_ID_15
 } EntityIDs;
 
+typedef struct {
+    s8 count[2];
+} HeartCounts;
+
 void CreateEntitiesToTheRight(s16);
 void CreateEntitiesToTheLeft(s16);
 void CreateEntitiesAbove(s16);
@@ -45,11 +49,17 @@ void func_8019344C(void);
 void EntityUnkId14(Entity* entity);
 void EntityUnkId15(Entity* entity);
 
+// DRA - all the exclusive global variables
+extern s32 D_80096ED0_mad;
+
 // ST/MAD
 extern u16 g_InitializeData0[];
-extern u16 UNK_Invincibility0[];
 extern u16 g_eInitGeneric2[];
+extern u16 D_80180538[];
 extern ObjInit2 D_8018056C[];
+extern u8 D_801805B4[];
+extern u8 D_801805BC[];
+extern u16 D_801805C4[];
 extern u16 D_80180D1C[];
 extern u16 D_80180D4C[];
 extern u16 D_80180E10[];
@@ -89,5 +99,10 @@ extern s16 g_ESoulStealOrbSprt[];
 extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
+
+extern HeartCounts D_8018D830;
+extern HeartCounts D_8018D834;
+
+extern s16 D_80199DE8;
 
 #endif

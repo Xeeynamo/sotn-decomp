@@ -37,9 +37,29 @@ MATRIX* TransMatrix(MATRIX* m, VECTOR* v) {
 
 void SetRotMatrix(MATRIX* m) { NOT_IMPLEMENTED; }
 
+MATRIX* RotMatrixX(long r, MATRIX* m) {
+    NOT_IMPLEMENTED;
+    return m;
+}
+
+MATRIX* RotMatrixY(long r, MATRIX* m) {
+    NOT_IMPLEMENTED;
+    return m;
+}
+
+MATRIX* RotMatrixZ(long r, MATRIX* m) {
+    NOT_IMPLEMENTED;
+    return m;
+}
+
 void SetLightMatrix(MATRIX* m) { NOT_IMPLEMENTED; }
 
 void SetColorMatrix(MATRIX* m) { NOT_IMPLEMENTED; }
+
+MATRIX* ScaleMatrix(MATRIX* m, VECTOR* v) {
+    NOT_IMPLEMENTED;
+    return m;
+}
 
 void SetTransMatrix(MATRIX* m) { NOT_IMPLEMENTED; }
 

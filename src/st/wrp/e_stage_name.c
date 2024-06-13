@@ -1,3 +1,3 @@
 #include "wrp.h"
 
-#include "../entity_stage_name_popup.h"
+#include "../e_stage_name.h"

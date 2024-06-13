@@ -195,7 +195,6 @@ extern s32 g_ElevatorTarget;
 extern s16 g_ElevatorTargetPos[];
 extern u16 D_801813B0[];
 extern const char* D_8018146C[];
-extern u16 UNK_Invincibility0[];
 extern s16 D_80181978[];
 extern u16 D_80181D9C[];
 extern s32 D_80181DA8[];
@@ -276,7 +275,7 @@ extern u16 g_InitializeData0[];
 extern u16 D_80180BC8[];
 extern u16 D_80181CA8[];
 extern u16 D_80181CD8[];
-extern u8* D_80181D3C[];
+extern u8* g_SubweaponAnimPrizeDrop[];
 extern u16 D_80180C94[];
 extern u16 D_80182424[];
 extern u16 D_80180CA0[];
@@ -352,14 +351,6 @@ extern const char D_801B058C[]; // "charal %x\n"
 extern const char D_801B0598[]; // "charal %x\n"
 extern const char D_801B08C8[]; // "charal %x\n"
 
-extern s16 D_801CB68E;
-extern u16 D_801CB690;
-extern s16 D_801CB692;
-extern s16 D_801CB694;
-extern s16 D_801CB696;
-extern s16 D_801CB69A;
-extern s8 D_801CB69E;
-extern s8 D_801CB69F;
 extern Primitive* D_801CB6A0[];
 extern s32 D_801CB6B8;
 extern s32 D_801CB6BC;
@@ -376,3 +367,22 @@ extern u8 g_ESoulStealOrbAnim[];
 // *** EntitySoulStealOrb properties END ***
 
 extern Dialogue g_Dialogue;
+// For EntityLifeUpSpawn
+extern u16 D_80182850[];
+extern SVECTOR D_8018287C;
+extern SVECTOR D_80182830;
+extern SVECTOR D_80182838;
+extern SVECTOR D_80182840;
+extern SVECTOR D_80182848;
+
+// For EntityMariaCutscene
+extern s32 D_801CB684;
+extern u32 D_801CB734;
+extern s32 D_801CB73C;
+extern u8 D_801813C8[];
+extern u8 D_801813CC[];
+extern u16 D_801813D0[];
+extern u16 D_801813D4[];
+extern u16 D_801813D8[];
+extern s16 D_801813DC[];
+extern const char D_80183B0C[];

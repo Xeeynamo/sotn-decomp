@@ -146,4 +146,31 @@ typedef struct {
     /* 0x32 */ u16 drawMode;
 } draculaPrimitive;
 
+typedef struct AxePrim {
+    struct AxePrim* next;
+    /* 0x04 */ u8 r0;
+    /* 0x05 */ u8 g0;
+    /* 0x06 */ u8 b0;
+    /* 0x07 */ u8 type; // PrimitiveType
+    /* 0x08 */ s16 x0;
+    /* 0x0A */ s16 y0;
+    /* 0x0C */ s32 unk0C;
+    /* 0x10 */ s32 unk10;
+    /* 0x14 */ s16 x1;
+    /* 0x16 */ s16 y1;
+    /* 0x18 */ u8 u1;
+    /* 0x19 */ u8 v1;
+    /* 0x1A */ u16 tpage;
+    /* 0x1C */ s16 unk1C;
+    /* 0x1E*/ s16 unk1E;
+    /* 0x20 */ s16 x2;
+    /* 0x22 */ s16 y2;
+    /* 0x24 */ u8 step;
+    /* 0x26 */ u16 priority;
+    /* 0x2A */ s32 pad;
+    /* 0x2C */ s16 timer;
+    /* 0x2E */ s16 unk2E;
+    /* 0x30 */ s16 unk30;
+    /* 0x32 */ u16 drawMode;
+} AxePrim;
 #endif

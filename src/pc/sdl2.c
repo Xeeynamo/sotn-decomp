@@ -331,7 +331,7 @@ DISPENV* MyPutDispEnv(DISPENV* env) {
     return env;
 }
 
-SDL_Texture* GetVramTexture(int tpage, int clut) {
+static SDL_Texture* GetVramTexture(int tpage, int clut) {
     u16 pal[256];
     if (g_LastVramTexTpage != tpage || g_LastVramTexClut != clut) {
         g_LastVramTexTpage = tpage;
@@ -400,7 +400,7 @@ SDL_Texture* GetVramTexture(int tpage, int clut) {
 
 #define PSX_TEX_U(x) ((float)(x) / 256.0f)
 #define PSX_TEX_V(x) ((float)(x) / 256.0f)
-void SetSdlVertexSprite(SDL_Vertex* v, SPRT* sprt, bool isSemiTransp) {
+static void SetSdlVertexSprite(SDL_Vertex* v, SPRT* sprt, bool isSemiTransp) {
     u8 a = isSemiTransp ? 0x80 : 0xFF;
     sprt->r0 |= 255;
     sprt->g0 |= 255;
@@ -429,19 +429,17 @@ void SetSdlVertexSprite(SDL_Vertex* v, SPRT* sprt, bool isSemiTransp) {
     v[2].color.g = sprt->g0;
     v[2].color.b = sprt->b0;
     v[2].color.a = a;
-    v[4].position.x = sprt->x0 + sprt->w;
-    v[4].position.y = sprt->y0 + sprt->h;
-    v[4].tex_coord.x = PSX_TEX_U(sprt->u0 + sprt->w);
-    v[4].tex_coord.y = PSX_TEX_V(sprt->v0 + sprt->h);
-    v[4].color.r = sprt->r0;
-    v[4].color.g = sprt->g0;
-    v[4].color.b = sprt->b0;
-    v[4].color.a = a;
-    v[3] = v[1];
-    v[5] = v[2];
+    v[3].position.x = sprt->x0 + sprt->w;
+    v[3].position.y = sprt->y0 + sprt->h;
+    v[3].tex_coord.x = PSX_TEX_U(sprt->u0 + sprt->w);
+    v[3].tex_coord.y = PSX_TEX_V(sprt->v0 + sprt->h);
+    v[3].color.r = sprt->r0;
+    v[3].color.g = sprt->g0;
+    v[3].color.b = sprt->b0;
+    v[3].color.a = a;
 }
 
-void SetSdlVertexSprite16(SDL_Vertex* v, SPRT_16* sprt) {
+static void SetSdlVertexSprite16(SDL_Vertex* v, SPRT_16* sprt) {
     sprt->r0 |= 255;
     sprt->g0 |= 255;
     sprt->b0 |= 255;
@@ -469,19 +467,17 @@ void SetSdlVertexSprite16(SDL_Vertex* v, SPRT_16* sprt) {
     v[2].color.g = sprt->g0;
     v[2].color.b = sprt->b0;
     v[2].color.a = 0xFF;
-    v[4].position.x = sprt->x0 + 16;
-    v[4].position.y = sprt->y0 + 16;
-    v[4].tex_coord.x = PSX_TEX_U(sprt->u0 + 16);
-    v[4].tex_coord.y = PSX_TEX_V(sprt->v0 + 16);
-    v[4].color.r = sprt->r0;
-    v[4].color.g = sprt->g0;
-    v[4].color.b = sprt->b0;
-    v[4].color.a = 0xFF;
-    v[3] = v[1];
-    v[5] = v[2];
+    v[3].position.x = sprt->x0 + 16;
+    v[3].position.y = sprt->y0 + 16;
+    v[3].tex_coord.x = PSX_TEX_U(sprt->u0 + 16);
+    v[3].tex_coord.y = PSX_TEX_V(sprt->v0 + 16);
+    v[3].color.r = sprt->r0;
+    v[3].color.g = sprt->g0;
+    v[3].color.b = sprt->b0;
+    v[3].color.a = 0xFF;
 }
 
-void SetSdlVertexG4(SDL_Vertex* v, POLY_G4* poly, bool isSemiTransp) {
+static void SetSdlVertexG4(SDL_Vertex* v, POLY_G4* poly, bool isSemiTransp) {
     u8 a = isSemiTransp ? 0x80 : 0xFF;
     v[0].position.x = poly->x0;
     v[0].position.y = poly->y0;
@@ -501,17 +497,15 @@ void SetSdlVertexG4(SDL_Vertex* v, POLY_G4* poly, bool isSemiTransp) {
     v[2].color.g = poly->g2;
     v[2].color.b = poly->b2;
     v[2].color.a = a;
-    v[4].position.x = poly->x3;
-    v[4].position.y = poly->y3;
-    v[4].color.r = poly->r3;
-    v[4].color.g = poly->g3;
-    v[4].color.b = poly->b3;
-    v[4].color.a = a;
-    v[3] = v[1];
-    v[5] = v[2];
+    v[3].position.x = poly->x3;
+    v[3].position.y = poly->y3;
+    v[3].color.r = poly->r3;
+    v[3].color.g = poly->g3;
+    v[3].color.b = poly->b3;
+    v[3].color.a = a;
 }
 
-void SetSdlVertexGT4(SDL_Vertex* v, POLY_GT4* poly, bool isSemiTransp) {
+static void SetSdlVertexGT4(SDL_Vertex* v, POLY_GT4* poly, bool isSemiTransp) {
     u8 blend = poly->code & 1 ? 0xFF : 0x00;
     u8 a = isSemiTransp ? 0x80 : 0xFF;
     v[0].position.x = poly->x0;
@@ -538,16 +532,14 @@ void SetSdlVertexGT4(SDL_Vertex* v, POLY_GT4* poly, bool isSemiTransp) {
     v[2].color.g = poly->g2 | blend;
     v[2].color.b = poly->b2 | blend;
     v[2].color.a = a;
-    v[4].position.x = poly->x3;
-    v[4].position.y = poly->y3;
-    v[4].tex_coord.x = PSX_TEX_U(poly->u3);
-    v[4].tex_coord.y = PSX_TEX_V(poly->v3);
-    v[4].color.r = poly->r3 | blend;
-    v[4].color.g = poly->g3 | blend;
-    v[4].color.b = poly->b3 | blend;
-    v[4].color.a = a;
-    v[3] = v[1];
-    v[5] = v[2];
+    v[3].position.x = poly->x3;
+    v[3].position.y = poly->y3;
+    v[3].tex_coord.x = PSX_TEX_U(poly->u3);
+    v[3].tex_coord.y = PSX_TEX_V(poly->v3);
+    v[3].color.r = poly->r3 | blend;
+    v[3].color.g = poly->g3 | blend;
+    v[3].color.b = poly->b3 | blend;
+    v[3].color.a = a;
 }
 
 u_short g_DrawEnvTpage;
@@ -560,6 +552,62 @@ DRAWENV* MyPutDrawEnv(DRAWENV* env) {
     return env;
 }
 
+#define MAX_VERTEX_COUNT 600
+#define MAX_INDEX_COUNT 900
+
+static SDL_Vertex vertex_buf[MAX_VERTEX_COUNT];
+static int index_buf[MAX_INDEX_COUNT];
+static SDL_Vertex* vertex_cur;
+static int* index_cur;
+static int n_vertices;
+static int n_indices;
+
+static SDL_Texture* texture_cur = NULL;
+static int prev_tpage = -2;
+static int prev_clut = -2;
+
+static inline void Draw_ResetBuffer() {
+    n_vertices = 0;
+    n_indices = 0;
+    vertex_cur = vertex_buf;
+    index_cur = index_buf;
+}
+static void Draw_FlushBuffer() {
+    if (n_vertices == 0) {
+        // buffer is empty, do nothing
+        return;
+    }
+
+    SDL_RenderGeometry(
+        g_Renderer, texture_cur, vertex_buf, n_vertices, index_buf, n_indices);
+    Draw_ResetBuffer();
+}
+static inline void Draw_EnqueueBuffer(int vertices, int indices) {
+    if (n_vertices + vertices > MAX_VERTEX_COUNT ||
+        n_indices + indices > MAX_INDEX_COUNT) {
+        Draw_FlushBuffer();
+    }
+    vertex_cur += vertices;
+    index_cur += indices;
+    n_vertices += vertices;
+    n_indices += indices;
+}
+void Draw_SetTextureParams(int tpage, int clut) {
+    if (prev_tpage == tpage && prev_clut == clut) {
+        // we can still buffer draw calls
+        return;
+    }
+
+    Draw_FlushBuffer();
+    prev_tpage = tpage;
+    prev_clut = clut;
+    if (tpage >= 0) {
+        texture_cur = GetVramTexture(tpage, clut);
+    } else {
+        texture_cur = NULL;
+    }
+}
+
 void MyDrawOTag(OT_TYPE* p) {
     POLY_G4* g4;
     POLY_GT4* gt4;
@@ -569,14 +617,12 @@ void MyDrawOTag(OT_TYPE* p) {
     TILE* tile;
     DR_MODE* drMode;
 
-    SDL_Vertex v[6];
-    SDL_Texture* t = NULL;
     u_short tpage = g_DrawEnvTpage;
     bool dfe = false;
     bool dtd = false;
-    size_t n = 0;
     SDL_Rect rect;
 
+    Draw_ResetBuffer();
     for (size_t n = 0; (u_long)p != 0xffffff; n++, p = (OT_TYPE*)p->tag) {
         P_TAG* tag = (P_TAG*)p;
         if (tag->len == 0) {
@@ -587,27 +633,43 @@ void MyDrawOTag(OT_TYPE* p) {
         u8 isSemiTrans = tag->code & 2;
         u8 isShadeTex = tag->code & 1;
         u8 isUnk = tag->code & 0x80;
+
         switch (code) {
         case 0x00:
             break;
         case 0x38:
             g4 = (POLY_G4*)tag;
-            SetSdlVertexG4(v, g4, isSemiTrans);
-            SDL_RenderGeometry(g_Renderer, NULL, v, 6, NULL, 0);
+            Draw_SetTextureParams(-1, -1);
+            SetSdlVertexG4(vertex_cur, g4, isSemiTrans);
+            index_cur[0] = n_vertices + 0;
+            index_cur[1] = n_vertices + 1;
+            index_cur[2] = n_vertices + 2;
+            index_cur[3] = n_vertices + 1;
+            index_cur[4] = n_vertices + 3;
+            index_cur[5] = n_vertices + 2;
+            Draw_EnqueueBuffer(4, 6);
             break;
         case 0x3C:
             gt4 = (POLY_GT4*)tag;
-            SetSdlVertexGT4(v, gt4, isSemiTrans);
-            t = GetVramTexture(gt4->tpage, gt4->clut);
-            SDL_RenderGeometry(g_Renderer, t, v, 6, NULL, 0);
+            Draw_SetTextureParams(gt4->tpage, gt4->clut);
+            SetSdlVertexGT4(vertex_cur, gt4, isSemiTrans);
+            index_cur[0] = n_vertices + 0;
+            index_cur[1] = n_vertices + 1;
+            index_cur[2] = n_vertices + 2;
+            index_cur[3] = n_vertices + 1;
+            index_cur[4] = n_vertices + 3;
+            index_cur[5] = n_vertices + 2;
+            Draw_EnqueueBuffer(4, 6);
             break;
         case 0x50:
             lg2 = (LINE_G2*)tag;
+            Draw_FlushBuffer(); // cannot easily batch lines
             SDL_SetRenderDrawColor(g_Renderer, lg2->r0, lg2->g0, lg2->b0, 255);
             SDL_RenderDrawLine(g_Renderer, lg2->x0, lg2->y0, lg2->x1, lg2->y1);
             break;
         case 0x60:
             tile = (TILE*)tag;
+            Draw_FlushBuffer(); // hack as I do not know how to render TILEs
             SDL_SetRenderDrawColor(g_Renderer, tile->r0, tile->g0, tile->b0,
                                    isSemiTrans ? 128 : 255);
             rect.x = tile->x0;
@@ -618,15 +680,27 @@ void MyDrawOTag(OT_TYPE* p) {
             break;
         case 0x64:
             sp = (SPRT*)tag;
-            SetSdlVertexSprite(v, sp, isSemiTrans);
-            t = GetVramTexture(tpage, sp->clut);
-            SDL_RenderGeometry(g_Renderer, t, v, 6, NULL, 0);
+            Draw_SetTextureParams(tpage, sp->clut);
+            SetSdlVertexSprite(vertex_cur, sp, isSemiTrans);
+            index_cur[0] = n_vertices + 0;
+            index_cur[1] = n_vertices + 1;
+            index_cur[2] = n_vertices + 2;
+            index_cur[3] = n_vertices + 1;
+            index_cur[4] = n_vertices + 3;
+            index_cur[5] = n_vertices + 2;
+            Draw_EnqueueBuffer(4, 6);
             break;
         case 0x7C:
             sp16 = (SPRT_16*)tag;
-            SetSdlVertexSprite16(v, sp16);
-            t = GetVramTexture(tpage, sp16->clut);
-            SDL_RenderGeometry(g_Renderer, t, v, 6, NULL, 0);
+            Draw_SetTextureParams(tpage, sp16->clut);
+            SetSdlVertexSprite16(vertex_cur, sp16);
+            index_cur[0] = n_vertices + 0;
+            index_cur[1] = n_vertices + 1;
+            index_cur[2] = n_vertices + 2;
+            index_cur[3] = n_vertices + 1;
+            index_cur[4] = n_vertices + 3;
+            index_cur[5] = n_vertices + 2;
+            Draw_EnqueueBuffer(4, 6);
             break;
         case 0xE0:
             drMode = (DR_MODE*)tag;
@@ -639,6 +713,7 @@ void MyDrawOTag(OT_TYPE* p) {
             break;
         }
     }
+    Draw_FlushBuffer();
 }
 
 int main(int argc, char* argv[]) {
