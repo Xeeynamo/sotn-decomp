@@ -161,10 +161,14 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ u32 unused7C;
-    /* 0x80 */ u32 unused80;
+    /* 0x80 */ s16 unused80;
+    /* 0x82 */ s16 unk82;
     /* 0x84 */ s16 angle;
     /* 0x86 */ s16 unk86;
-} ET_RedDoor;
+    /* 0x88 */ u8 sideToPlayer;
+    /* 0x89 */ u8 showedMessage;
+} ET_Door; // Normal red doors between stages, but also magically sealed blue
+           // ones
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
@@ -1072,7 +1076,7 @@ typedef union { // offset=0x7C
     ET_BloodDroplets bloodDroplets;
     ET_NumericDamage ndmg;
     ET_RelicOrb relicOrb;
-    ET_RedDoor door;
+    ET_Door door;
     ET_StagePopup stpopup;
     ET_MessageBox messageBox;
     ET_Weapon weapon;
