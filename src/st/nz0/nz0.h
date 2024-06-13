@@ -385,3 +385,17 @@ extern u16 D_801813D8[];
 extern s16 D_801813DC[];
 extern const char D_80183B0C[];
 extern u32 g_mariaCutsceneFlags;
+
+// EntityMaria, mostly animations
+extern u16 D_80180BEC[];
+extern u8 D_80181474[];
+extern u8 D_80181490[];
+extern u8 D_801814A0[];
+extern u8 D_801814BC[];
+extern u8 D_801814C8[];
+extern u8 D_801814E8[];
+extern u8 D_801814F8[];
+extern u8 D_80181510[];
+extern u8 D_8018151C[];
+extern u8 D_80181530[];
+extern u8 D_80181538[];

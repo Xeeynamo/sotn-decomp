@@ -44,21 +44,6 @@ void func_801B8E0C(Entity* self) {
     }
 }
 
-u8 AnimateEntity(u8 frames[], Entity* entity);
-void SetStep(u8 step);
-extern u16 D_80180BEC[];
-extern u8 D_80181474[];
-extern u8 D_80181490[];
-extern u8 D_801814A0[];
-extern u8 D_801814BC[];
-extern u8 D_801814C8[];
-extern u8 D_801814E8[];
-extern u8 D_801814F8[];
-extern u8 D_80181510[];
-extern u8 D_8018151C[];
-extern u8 D_80181530[];
-extern u8 D_80181538[];
-
 void EntityMaria(Entity* self) {
     Entity* redDoor;
     Primitive* prim;
