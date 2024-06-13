@@ -26,6 +26,9 @@
 #define GET_GREEN(x) ((x) & GREEN_MASK)
 #define GET_BLUE(x) ((x) & BLUE_MASK)
 
+#define CLAMP_MIN(v, min) ((v) < (min) ? (min) : (v))
+#define CLAMP_MAX(v, max) ((v) > (max) ? (max) : (v))
+
 typedef enum {
     MENU_DG_MAIN,
     MENU_DG_BG,
@@ -742,6 +745,10 @@ extern s16 D_8013AEA6;
 extern s16 D_8013AE94;
 extern u8 g_ReverbDepth;
 extern s32 D_8013AE9C;
+extern s32 D_8013AEBC;
+extern s32 D_8013AEC0[];
+extern s32 D_8013AEC4;
+extern s32 D_8013AEC8[];
 extern s32 D_8013AECC;
 extern s32 D_8013AED0;
 extern s16 D_8013AED4[4];

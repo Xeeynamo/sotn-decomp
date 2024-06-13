@@ -2379,7 +2379,74 @@ void EntitySubwpnBible(Entity* self) {
 // echo of bat effect
 INCLUDE_ASM("dra/nonmatchings/843B0", EntityBatEcho);
 
-INCLUDE_ASM("dra/nonmatchings/843B0", func_8012C600);
+void func_8012C600(void) {
+    s32 x, y;
+    s32 min1;
+    s32 min2;
+    s32 i;
+    s32 t0 = PLAYER.posX.i.hi;
+    s32 t1 = PLAYER.posY.i.hi;
+
+    x = g_Entities[20].posX.i.hi + 8;
+    for (i = 0; i < 9; i++) {
+        if (x <= g_Entities[i + 21].posX.i.hi + 4) {
+            x = g_Entities[i + 21].posX.i.hi + 4;
+        }
+    }
+    D_8013AEBC = x - t0;
+
+    x = g_Entities[20].posX.i.hi - 8;
+    for (i = 0; i < 9; i++) {
+        if (x >= g_Entities[i + 21].posX.i.hi - 4) {
+            x = g_Entities[i + 21].posX.i.hi - 4;
+        }
+    }
+    D_8013AEC4 = x - t0;
+
+    y = g_Entities[21].posY.i.hi;
+    for (i = 0; i < 9; i++) {
+        if (y >= g_Entities[i + 21].posY.i.hi) {
+            y = g_Entities[i + 21].posY.i.hi;
+        }
+    }
+    y = y - 4;
+
+    min1 = g_Entities[30].posY.i.hi - 12;
+    if (y >= min1) {
+        y = min1;
+    }
+    min2 = g_Entities[20].posY.i.hi - 8;
+    if (y >= min2) {
+        y = min2;
+    }
+    D_8013AEC8[0] = CLAMP_MIN(y - t1, -24);
+
+    y = g_Entities[21].posY.i.hi;
+    for (i = 0; i < 9; i++) {
+        if (y <= g_Entities[i + 21].posY.i.hi) {
+            y = g_Entities[i + 21].posY.i.hi;
+        }
+    }
+    y = y + 4;
+
+    min1 = PLAYER.posY.i.hi + 28;
+    if (y <= min1) {
+        y = min1;
+    }
+    min2 = g_Entities[17].posY.i.hi + 28;
+    if (y <= min2) {
+        y = min2;
+    }
+    D_8013AEC0[0] = CLAMP_MAX(y - t1, 39);
+
+    if (!PLAYER.facingLeft) {
+        D_8013AEC4 = CLAMP_MIN(D_8013AEC4, -0x2C);
+        D_8013AEBC = CLAMP_MAX(D_8013AEBC, 0x14);
+    } else {
+        D_8013AEC4 = CLAMP_MIN(D_8013AEC4, -0x14);
+        D_8013AEBC = CLAMP_MAX(D_8013AEBC, 0x2C);
+    }
+}
 
 bool WolfFormFinished(void) {
     if (PLAYER.step_s == 0) {
