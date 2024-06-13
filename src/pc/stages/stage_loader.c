@@ -115,8 +115,11 @@ static bool LoadRoomLayerDef(LayerDef* l, cJSON* jitem, RoomLoadDesc* desc) {
     l->tileDef->clut = g_TileDefDataPool[g_TileDefIndex][2];
     l->tileDef->collision = g_TileDefDataPool[g_TileDefIndex][3];
     g_TileDefIndex++;
-    snprintf(buf, sizeof(buf), "%s/%s.tiledef.json", desc->assetPath,
-             JITEM("tiledef")->valuestring);
+
+    // hack to load t_8018xxxx.tiledef instead of D_8018xxxx.tiledef
+    snprintf(buf, sizeof(buf), "%s/t_%s.tiledef.json", desc->assetPath,
+             JITEM("tiledef")->valuestring + 2);
+
     g_TileDefToLoad = l->tileDef;
 
     return FileStringify(LoadRoomTileDef, buf, desc);
