@@ -50,7 +50,97 @@ void func_801C3F9C(AxePrim* prim) {
 }
 
 // Called by EntityAxeKnight
-INCLUDE_ASM("st/nz0/nonmatchings/43F9C", func_801C4198);
+s32 func_801C4198(Entity* axeKnight) {
+    Primitive* prim;
+    s32 primIndex;
+    s16 uCoord;
+    s16 vCoord;
+    u16 UV_thing;
+    u8 flag;
+    s16* dataPtr;
+    s16 clutBase;
+
+    switch (axeKnight->step_s) {
+    case 0:
+        clutBase = D_80180C6A;
+        dataPtr = D_801A79E4[axeKnight->animCurFrame];
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, *dataPtr * 2);
+        if (primIndex != -1) {
+            axeKnight->flags |= FLAG_HAS_PRIMS;
+            axeKnight->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            axeKnight->ext.axeknight.prim = prim;
+            dataPtr++;
+            while (prim != NULL) {
+                UnkPolyFunc2(prim);
+                dataPtr++;
+                prim->next->x1 = axeKnight->posX.i.hi;
+                if (axeKnight->facingLeft) {
+                    prim->next->x1 -= *dataPtr++;
+                } else {
+                    prim->next->x1 += *dataPtr++;
+                }
+                prim->next->y0 = axeKnight->posY.i.hi + *dataPtr++;
+                LOH(prim->next->r2) = *dataPtr++;
+                if (axeKnight->facingLeft) {
+                    prim->next->x1 -= LOH(prim->next->r2) / 2;
+                } else {
+                    prim->next->x1 += LOH(prim->next->r2) / 2;
+                }
+                LOH(prim->next->b2) = *dataPtr++;
+                prim->next->y0 += LOH(prim->next->b2) / 2;
+                prim->clut = clutBase + *dataPtr++;
+                if (axeKnight->params) {
+                    prim->clut += 2;
+                }
+                UV_thing = axeKnight->unk5A;
+                UV_thing += *dataPtr++;
+                prim->tpage = 0x12;         // Leftover line, shows up in PSP
+                prim->tpage = UV_thing / 4; // Masks off the lower two bits
+                uCoord = (UV_thing & 1);
+                uCoord = uCoord * 0x7F;
+                vCoord = ((UV_thing & 2) >> 1);
+                vCoord = vCoord * 0x7F;
+                // uCoord and vCoord are each either 0 or 7F.
+                if (axeKnight->facingLeft) {
+                    prim->u1 = prim->u3 = uCoord + *dataPtr++;
+                    prim->v0 = prim->v1 = vCoord + *dataPtr++;
+                    prim->u0 = prim->u2 = uCoord + *dataPtr++;
+                    prim->v2 = prim->v3 = vCoord + *dataPtr++;
+                } else {
+                    prim->u0 = prim->u2 = uCoord + *dataPtr++;
+                    prim->v0 = prim->v1 = vCoord + *dataPtr++;
+                    prim->u1 = prim->u3 = uCoord + *dataPtr++;
+                    prim->v2 = prim->v3 = vCoord + *dataPtr++;
+                }
+                prim->priority = axeKnight->zPriority + 2;
+                prim->drawMode = DRAW_UNK02;
+                prim = prim->next;
+                prim = prim->next;
+            }
+        } else {
+            return 1;
+        }
+        func_801C29B0(0x65B);
+        axeKnight->step_s++;
+        break;
+    case 1:
+        flag = 0;
+        for (prim = axeKnight->ext.axeknight.prim; prim != NULL;) {
+            if (prim->p3 & 8) {
+                func_801C3F9C(prim);
+                flag = 1;
+            }
+            prim = prim->next;
+            prim = prim->next;
+        }
+        if (!flag) {
+            return 1;
+        }
+        break;
+    }
+    return 0;
+}
 
 void func_801C4550(void) {
     if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 > 0) {
