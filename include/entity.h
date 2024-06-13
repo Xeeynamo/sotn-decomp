@@ -632,6 +632,11 @@ typedef struct {
     s16 t;
 } ET_TimerOnly;
 
+typedef struct{
+    char pad[8];
+    struct Primitive* prim;
+}ET_AxeKnight;
+
 typedef struct {
     /* 0x7C */ s16 unk7C;
     /* 0x7E */ s16 unk7E;
@@ -1135,4 +1140,5 @@ typedef union { // offset=0x7C
     ET_SummonSpirit summonspirit;
     ET_3DBackgroundhouse bghouse;
     ET_LifeUpSpawn lifeUpSpawn;
+    ET_AxeKnight axeknight;
 } Ext;

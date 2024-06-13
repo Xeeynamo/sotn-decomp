@@ -399,3 +399,7 @@ extern u8 D_80181510[];
 extern u8 D_8018151C[];
 extern u8 D_80181530[];
 extern u8 D_80181538[];
+
+// for func_801C4198
+extern u16 D_80180C6A;
+extern s16* D_801A79E4[];
