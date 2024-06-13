@@ -351,12 +351,12 @@ void EntityMagicallySealedDoor(Entity* self) {
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
     }
     prim->clut = self->palette;
-    self->ext.factory.unk82 += 0x20;
-    if (self->ext.factory.unk82 >= 0x381) {
-        self->ext.factory.unk82 = -self->ext.factory.unk82;
+    self->ext.door.unk82 += 0x20;
+    if (self->ext.door.unk82 >= 0x381) {
+        self->ext.door.unk82 = -self->ext.door.unk82;
     }
 
-    self->palette = (abs(self->ext.factory.unk82) >> 8) + 0x233;
+    self->palette = (abs(self->ext.door.unk82) >> 8) + 0x233;
 
     sp3F = self->params & 0xFF;
     if (self->animCurFrame) {
