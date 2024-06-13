@@ -77,8 +77,6 @@ extern u8 D_80180770[];  // params
 
 // *** EntityCutscene properties START ***
 
-extern const char* D_80180828[]; // array to the name of the dialogue's actors
-
 extern u8 D_80180830[]; // Animation
 extern u8 D_8018083C[]; // Animation
 extern u8 D_8018084C[]; // Animation
