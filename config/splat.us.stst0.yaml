@@ -36,6 +36,8 @@ segments:
       - [0x0, data]
       - [0x580, data]
       - [0x770, data]
+      - [0x828, .data, draculacutscene] # "Richter, Dracula"
+      - [0x830, data]
       - [0x990, data]
       - [0xAB0, data]
       - [0x1618, .data, collision]
@@ -50,8 +52,8 @@ segments:
       #- [0x1A40C, cmp]
       - [0x1A750, data]
       - [0x27984, .rodata, 27D64]
-      - [0x279E8, rodata]
-      - [0x27A74, .rodata, 28BF8] # EntityCutscene
+      - [0x279E8, .rodata, draculacutscene] # EntityDraculaCutscene
+      - [0x27A74, .rodata, 2A218] # EntityCutscene
       - [0x27AB4, .rodata, 2A8DC] # EntitySecretButton
       - [0x27ACC, .rodata, 2A8DC] # EntitySecretStairs
       - [0x27AE0, .rodata, 2B0C8] # EntityStageTitleFadeout
@@ -71,7 +73,8 @@ segments:
       - [0x27D3C, .rodata, prim_helpers]
       - [0x27D44, rodata]
       - [0x27D64, c]
-      - [0x28BF8, c] # Dracula Cutscene
+      - [0x28984, c, draculacutscene]
+      - [0x2A218, c]
       - [0x2A8DC, c]
       - [0x2B0C8, c]
       - [0x2C564, c] # EntityDracula
