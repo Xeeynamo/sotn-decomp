@@ -1046,6 +1046,17 @@ typedef struct {
     s16 unk88;
 } ET_LifeUpSpawn;
 
+typedef struct {
+    u16 unk7C;
+    u16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+    s16 unk86;
+    u16 unk88;
+    u16 unk8A;
+} ET_801B0AA4;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1145,4 +1156,5 @@ typedef union { // offset=0x7C
     ET_3DBackgroundhouse bghouse;
     ET_LifeUpSpawn lifeUpSpawn;
     ET_AxeKnight axeknight;
+    ET_801B0AA4 et_801B0AA4;
 } Ext;
