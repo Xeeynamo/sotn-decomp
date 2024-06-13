@@ -29,3 +29,5 @@ config/saturn/zero_syms.txt
 
 sotn_calltree.txt
 function_calls
+
+gmon.out
