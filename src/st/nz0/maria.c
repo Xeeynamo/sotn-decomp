@@ -68,10 +68,12 @@ void EntityMaria(Entity* self) {
         break;
     case 1:
         if (g_mariaCutsceneFlags & 4) {
-            // Maria comes through the door on the left, the door is in entity slot 192.
+            // Maria comes through the door on the left, the door is in entity
+            // slot 192.
             redDoor = &g_Entities[192];
             g_api.func_80134714(SE_DOOR_OPEN, 0x60, -6);
-            for(prim = &g_PrimBuf[redDoor->primIndex], i = 0;prim != NULL; prim = prim->next, i++) {
+            for (prim = &g_PrimBuf[redDoor->primIndex], i = 0; prim != NULL;
+                 prim = prim->next, i++) {
                 if ((i == 1) && !(self->params & FLAG_DEAD)) {
                     prim->drawMode &= ~DRAW_HIDE;
                 }
@@ -82,7 +84,8 @@ void EntityMaria(Entity* self) {
                     prim->drawMode &= ~DRAW_HIDE;
                 }
             }
-            // This line ends up hiding the rest-state door while the swinging door opens
+            // This line ends up hiding the rest-state door while the swinging
+            // door opens
             redDoor->animCurFrame = 0;
             redDoor->step++;
             self->step++;

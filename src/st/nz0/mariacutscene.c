@@ -508,7 +508,8 @@ void EntityMariaCutscene(Entity* self) {
                 continue;
 
             case 16:
-                if (!((g_mariaCutsceneFlags >> *g_Dialogue.nextCharDialogue) & 1)) {
+                if (!((g_mariaCutsceneFlags >> *g_Dialogue.nextCharDialogue) &
+                      1)) {
                     g_Dialogue.nextCharDialogue--;
                     return;
                 }
@@ -555,7 +556,8 @@ void EntityMariaCutscene(Entity* self) {
             case 23:
                 return;
             case 24:
-                if (!((g_mariaCutsceneFlags >> *g_Dialogue.nextCharDialogue) & 1)) {
+                if (!((g_mariaCutsceneFlags >> *g_Dialogue.nextCharDialogue) &
+                      1)) {
                     *g_Dialogue.nextCharDialogue--;
                     return;
                 }
