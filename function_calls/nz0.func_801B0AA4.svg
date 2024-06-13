@@ -12,7 +12,7 @@
 <!-- nz0.func_801B0AA4 -->
 <g id="node1" class="node">
 <title>nz0.func_801B0AA4</title>
-<ellipse fill="red" stroke="black" cx="332.89" cy="-198" rx="103.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="332.89" cy="-198" rx="103.18" ry="18"/>
 <text text-anchor="middle" x="332.89" y="-194.3" font-family="Times,serif" font-size="14.00">nz0.func_801B0AA4</text>
 </g>
 <!-- nz0.GetSideToPlayer -->
