@@ -1672,15 +1672,6 @@
 | 1.00 | false    | EntityWeaponAttack                  | ../../asm/us/weapon/nonmatchings/w_036/EntityWeaponAttack.s 
 | 1.00 | false    | EntityWeaponAttack                  | ../../asm/us/weapon/nonmatchings/w_057/EntityWeaponAttack.s 
 -------------------------------------------------------------------------------
-| 0.90 | true     | SetReverbDepth                      | ../../asm/us/dra/nonmatchings/91EBC/SetReverbDepth.s 
-| 1.00 | true     | func_801073C0                       | ../../asm/us/dra/nonmatchings/cd/func_801073C0.s 
-| 0.90 | true     | _addque                             | ../../asm/us/main/nonmatchings/psxsdk/libgpu/sys/_addque.s 
-| 0.90 | true     | SsSepClose                          | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssclose/SsSepClose.s 
-| 0.90 | true     | SsSeqClose                          | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
-| 0.90 | true     | SsSeqStop                           | ../../asm/us/main/nonmatchings/psxsdk/libsnd/stop/SsSeqStop.s 
-| 1.00 | true     | func_801B9924                       | ../../asm/us/st/sel/nonmatchings/stream/func_801B9924.s 
-| 0.90 | true     | func_801BA6A8                       | ../../asm/us/st/sel/nonmatchings/stream/func_801BA6A8.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | D_800DBF44                          | ../../asm/us/dra/nonmatchings/save_mgr/D_800DBF44.s 
 | 1.00 | true     | D_800DBF4C                          | ../../asm/us/dra/nonmatchings/save_mgr/D_800DBF4C.s 
 | 1.00 | true     | D_800DBF54                          | ../../asm/us/dra/nonmatchings/save_mgr/D_800DBF54.s 
@@ -1770,6 +1761,14 @@
 | 1.00 | true     | UpdateStageEntities                 | ../../asm/us/st/rwrp/nonmatchings/update_stage_entities/UpdateStageEntities.s 
 | 1.00 | true     | UpdateStageEntities                 | ../../asm/us/st/st0/nonmatchings/update_stage_entities/UpdateStageEntities.s 
 | 1.00 | true     | UpdateStageEntities                 | ../../asm/us/st/wrp/nonmatchings/st_update/UpdateStageEntities.s 
+-------------------------------------------------------------------------------
+| 0.90 | true     | SetReverbDepth                      | ../../asm/us/dra/nonmatchings/91EBC/SetReverbDepth.s 
+| 1.00 | true     | func_801073C0                       | ../../asm/us/dra/nonmatchings/cd/func_801073C0.s 
+| 0.90 | true     | _addque                             | ../../asm/us/main/nonmatchings/psxsdk/libgpu/sys/_addque.s 
+| 0.90 | true     | SsSepClose                          | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssclose/SsSepClose.s 
+| 0.90 | true     | SsSeqClose                          | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
+| 0.90 | true     | SsSeqStop                           | ../../asm/us/main/nonmatchings/psxsdk/libsnd/stop/SsSeqStop.s 
+| 1.00 | true     | func_801B9924                       | ../../asm/us/st/sel/nonmatchings/stream/func_801B9924.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801072DC                       | ../../asm/us/dra/nonmatchings/63ED4/func_801072DC.s 
 | 1.00 | true     | func_800FAC98                       | ../../asm/us/dra/nonmatchings/menu/func_800FAC98.s 
@@ -1923,42 +1922,42 @@
 | 1.00 | true     | func_801BE544                       | ../../asm/us/st/no3/nonmatchings/deathcutscene/func_801BE544.s 
 | 1.00 | true     | func_801B74CC                       | ../../asm/us/st/nz0/nonmatchings/mariacutscene/func_801B74CC.s 
 | 1.00 | true     | func_801B642C                       | ../../asm/us/st/sel/nonmatchings/3642C/func_801B642C.s 
-| 1.00 | true     | func_801A8984                       | ../../asm/us/st/st0/nonmatchings/27D64/func_801A8984.s 
+| 1.00 | true     | func_801A8984                       | ../../asm/us/st/st0/nonmatchings/draculacutscene/func_801A8984.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018DF60                       | ../../asm/us/st/cen/nonmatchings/holyglassescutscene/func_8018DF60.s 
 | 1.00 | true     | func_801947C8                       | ../../asm/us/st/dre/nonmatchings/succubuscutscene/func_801947C8.s 
 | 1.00 | true     | func_801BE598                       | ../../asm/us/st/no3/nonmatchings/deathcutscene/func_801BE598.s 
 | 1.00 | true     | func_801B7520                       | ../../asm/us/st/nz0/nonmatchings/mariacutscene/func_801B7520.s 
 | 0.93 | true     | func_801B6480                       | ../../asm/us/st/sel/nonmatchings/3642C/func_801B6480.s 
-| 1.00 | true     | func_801A89D8                       | ../../asm/us/st/st0/nonmatchings/27D64/func_801A89D8.s 
+| 1.00 | true     | func_801A89D8                       | ../../asm/us/st/st0/nonmatchings/draculacutscene/func_801A89D8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018E180                       | ../../asm/us/st/cen/nonmatchings/holyglassescutscene/func_8018E180.s 
 | 1.00 | true     | func_801949E8                       | ../../asm/us/st/dre/nonmatchings/succubuscutscene/func_801949E8.s 
 | 0.98 | true     | func_801BE7BC                       | ../../asm/us/st/no3/nonmatchings/deathcutscene/func_801BE7BC.s 
 | 1.00 | true     | func_801B7740                       | ../../asm/us/st/nz0/nonmatchings/mariacutscene/func_801B7740.s 
 | 1.00 | true     | func_801B66A4                       | ../../asm/us/st/sel/nonmatchings/3642C/func_801B66A4.s 
-| 1.00 | true     | func_801A8BF8                       | ../../asm/us/st/st0/nonmatchings/28BF8/func_801A8BF8.s 
+| 1.00 | true     | func_801A8BF8                       | ../../asm/us/st/st0/nonmatchings/draculacutscene/func_801A8BF8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018E238                       | ../../asm/us/st/cen/nonmatchings/holyglassescutscene/func_8018E238.s 
 | 1.00 | true     | func_80194AA0                       | ../../asm/us/st/dre/nonmatchings/succubuscutscene/func_80194AA0.s 
 | 1.00 | true     | func_801BE870                       | ../../asm/us/st/no3/nonmatchings/deathcutscene/func_801BE870.s 
 | 1.00 | true     | func_801B77F8                       | ../../asm/us/st/nz0/nonmatchings/mariacutscene/func_801B77F8.s 
 | 1.00 | true     | func_801B675C                       | ../../asm/us/st/sel/nonmatchings/3642C/func_801B675C.s 
-| 1.00 | true     | func_801A8CB0                       | ../../asm/us/st/st0/nonmatchings/28BF8/func_801A8CB0.s 
+| 1.00 | true     | func_801A8CB0                       | ../../asm/us/st/st0/nonmatchings/draculacutscene/func_801A8CB0.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018E3BC                       | ../../asm/us/st/cen/nonmatchings/holyglassescutscene/func_8018E3BC.s 
 | 1.00 | true     | func_80194C24                       | ../../asm/us/st/dre/nonmatchings/succubuscutscene/func_80194C24.s 
 | 1.00 | true     | func_801BE9F4                       | ../../asm/us/st/no3/nonmatchings/deathcutscene/func_801BE9F4.s 
 | 1.00 | true     | func_801B797C                       | ../../asm/us/st/nz0/nonmatchings/mariacutscene/func_801B797C.s 
 | 1.00 | true     | func_801B68E0                       | ../../asm/us/st/sel/nonmatchings/3642C/func_801B68E0.s 
-| 1.00 | true     | func_801A8E34                       | ../../asm/us/st/st0/nonmatchings/28BF8/func_801A8E34.s 
+| 1.00 | true     | func_801A8E34                       | ../../asm/us/st/st0/nonmatchings/draculacutscene/func_801A8E34.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8018E6C4                       | ../../asm/us/st/cen/nonmatchings/holyglassescutscene/func_8018E6C4.s 
 | 1.00 | true     | func_80194FF4                       | ../../asm/us/st/dre/nonmatchings/succubuscutscene/func_80194FF4.s 
 | 1.00 | true     | func_801BEDAC                       | ../../asm/us/st/no3/nonmatchings/deathcutscene/func_801BEDAC.s 
 | 1.00 | true     | func_801B7C54                       | ../../asm/us/st/nz0/nonmatchings/mariacutscene/func_801B7C54.s 
 | 0.91 | true     | func_801B690C                       | ../../asm/us/st/sel/nonmatchings/3642C/func_801B690C.s 
-| 1.00 | true     | func_801A910C                       | ../../asm/us/st/st0/nonmatchings/28BF8/func_801A910C.s 
+| 1.00 | true     | func_801A910C                       | ../../asm/us/st/st0/nonmatchings/draculacutscene/func_801A910C.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityBreakable                     | ../../asm/us/st/dre/nonmatchings/succubus/EntityBreakable.s 
 | 1.00 | true     | EntityBreakable                     | ../../asm/us/st/mad/nonmatchings/D8C8/EntityBreakable.s 
@@ -1974,12 +1973,6 @@
 | 1.00 | true     | func_801B0958                       | ../../asm/us/st/nz0/nonmatchings/30958/func_801B0958.s 
 | 1.00 | true     | func_801A7D64                       | ../../asm/us/st/st0/nonmatchings/27D64/func_801A7D64.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_800F6A48                       | ../../asm/us/dra/nonmatchings/menu/func_800F6A48.s 
-| 0.90 | true     | def_cbread                          | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbread.s 
-| 0.90 | true     | def_cbready                         | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbready.s 
-| 0.90 | true     | def_cbsync                          | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbsync.s 
-| 0.90 | true     | SpuSetNoiseVoice                    | ../../asm/us/main/nonmatchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | D_800DBF3C                          | ../../asm/us/dra/nonmatchings/save_mgr/D_800DBF3C.s 
 | 1.00 | true     | D_800DBF74                          | ../../asm/us/dra/nonmatchings/save_mgr/D_800DBF74.s 
 | 1.00 | true     | D_800DBF7C                          | ../../asm/us/dra/nonmatchings/save_mgr/D_800DBF7C.s 
@@ -1992,11 +1985,17 @@
 | 1.00 | true     | CdSyncCallback                      | ../../asm/us/main/nonmatchings/psxsdk/libcd/sys/CdSyncCallback.s 
 | 1.00 | true     | SetVideoMode                        | ../../asm/us/main/nonmatchings/psxsdk/libetc/vmode/SetVideoMode.s 
 -------------------------------------------------------------------------------
+| 0.90 | true     | def_cbread                          | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbread.s 
+| 0.90 | true     | def_cbready                         | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbready.s 
+| 0.90 | true     | def_cbsync                          | ../../asm/us/main/nonmatchings/psxsdk/libcd/event/def_cbsync.s 
+| 1.00 | true     | GsGetVcount                         | ../../asm/us/main/nonmatchings/psxsdk/libgs/gs_008/GsGetVcount.s 
+| 1.00 | true     | GsClearVcount                       | ../../asm/us/main/nonmatchings/psxsdk/libgs/gs_009/GsClearVcount.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_8018E124                       | ../../asm/us/st/cen/nonmatchings/holyglassescutscene/func_8018E124.s 
 | 1.00 | true     | func_8019498C                       | ../../asm/us/st/dre/nonmatchings/succubuscutscene/func_8019498C.s 
 | 1.00 | true     | func_801B76E4                       | ../../asm/us/st/nz0/nonmatchings/mariacutscene/func_801B76E4.s 
 | 1.00 | true     | func_801B6648                       | ../../asm/us/st/sel/nonmatchings/3642C/func_801B6648.s 
-| 1.00 | true     | func_801A8B9C                       | ../../asm/us/st/st0/nonmatchings/27D64/func_801A8B9C.s 
+| 1.00 | true     | func_801A8B9C                       | ../../asm/us/st/st0/nonmatchings/draculacutscene/func_801A8B9C.s 
 -------------------------------------------------------------------------------
 | 0.93 | true     | SetMenuDisplayBuffer                | ../../asm/us/dra/nonmatchings/42398/SetMenuDisplayBuffer.s 
 | 1.00 | true     | SetStageDisplayBuffer               | ../../asm/us/dra/nonmatchings/42398/SetStageDisplayBuffer.s 
@@ -2081,7 +2080,7 @@
 | 1.00 | true     | func_8018E3E8                       | ../../asm/us/st/cen/nonmatchings/holyglassescutscene/func_8018E3E8.s 
 | 0.93 | true     | func_801BEA20                       | ../../asm/us/st/no3/nonmatchings/deathcutscene/func_801BEA20.s 
 | 0.93 | true     | func_801B79A8                       | ../../asm/us/st/nz0/nonmatchings/mariacutscene/func_801B79A8.s 
-| 0.93 | true     | func_801A8E60                       | ../../asm/us/st/st0/nonmatchings/28BF8/func_801A8E60.s 
+| 0.93 | true     | func_801A8E60                       | ../../asm/us/st/st0/nonmatchings/draculacutscene/func_801A8E60.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityClickSwitch                   | ../../asm/us/st/no3/nonmatchings/377D4/EntityClickSwitch.s 
 | 0.91 | true     | EntitySwitch                        | ../../asm/us/st/no3/nonmatchings/377D4/EntitySwitch.s 
@@ -2326,6 +2325,9 @@
 | 1.00 | true     | func_800F548C                       | ../../asm/us/dra/nonmatchings/menu/func_800F548C.s 
 | 0.94 | true     | func_801B1EF4                       | ../../asm/us/st/sel/nonmatchings/2C048/func_801B1EF4.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_800F6A48                       | ../../asm/us/dra/nonmatchings/menu/func_800F6A48.s 
+| 0.90 | true     | SpuSetNoiseVoice                    | ../../asm/us/main/nonmatchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_800F99B8                       | ../../asm/us/dra/nonmatchings/menu/func_800F99B8.s 
 | 0.95 | true     | func_801B2108                       | ../../asm/us/st/sel/nonmatchings/2C048/func_801B2108.s 
 -------------------------------------------------------------------------------
@@ -2425,9 +2427,6 @@
 | 1.00 | true     | get_ce                              | ../../asm/us/main/nonmatchings/psxsdk/libgpu/sys/get_ce.s 
 | 1.00 | true     | get_cs                              | ../../asm/us/main/nonmatchings/psxsdk/libgpu/sys/get_cs.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | GsGetVcount                         | ../../asm/us/main/nonmatchings/psxsdk/libgs/gs_008/GsGetVcount.s 
-| 1.00 | true     | GsClearVcount                       | ../../asm/us/main/nonmatchings/psxsdk/libgs/gs_009/GsClearVcount.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | RotMatrix                           | ../../asm/us/main/nonmatchings/psxsdk/libgte/fgo_01/RotMatrix.s 
 | 0.99 | true     | RotMatrixYXZ                        | ../../asm/us/main/nonmatchings/psxsdk/libgte/fgo_02/RotMatrixYXZ.s 
 -------------------------------------------------------------------------------
@@ -2487,6 +2486,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | SpuRead                             | ../../asm/us/main/nonmatchings/psxsdk/libspu/s_r/SpuRead.s 
 | 1.00 | true     | SpuWrite                            | ../../asm/us/main/nonmatchings/psxsdk/libspu/s_w/SpuWrite.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SpuSetVoiceAttr                     | ../../asm/us/main/nonmatchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
+| 0.90 | true     | func_801BA6A8                       | ../../asm/us/st/sel/nonmatchings/stream/func_801BA6A8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8015B18C                       | ../../asm/us/ric/nonmatchings/1CB04/func_8015B18C.s 
 | 0.91 | true     | func_8015B1E8                       | ../../asm/us/ric/nonmatchings/1CB04/func_8015B1E8.s 
