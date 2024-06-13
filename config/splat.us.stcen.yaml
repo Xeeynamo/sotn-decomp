@@ -34,6 +34,8 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, data]
+      - [0xDC, layers, rooms]
+      - [0x134, data]
       - [0x7E4, .data, collision]
       - [0xBA4, .data, e_red_door]
       - [0xBBC, data]
@@ -41,6 +43,12 @@ segments:
       - [0x1110, data]
       - [0x12D4, roomdef, g_Rooms]
       - [0x1300, data]
+      - [0x69EC, tilelayout, D_801869EC]
+      - [0x6DEC, tilelayout, D_80186DEC]
+      - [0x7FEC, tilelayout, D_80187FEC]
+      - [0x81EC, tiledef, t_801884EC, D_801884EC]
+      - [0x85FC, tiledef, t_8018C5FC, D_8018C5FC]
+      - [0xC60C, data]
       - [0xD42C, .rodata, holyglassescutscene]
       - [0xD4B0, .rodata, F890]
       - [0xD4D8, .rodata, e_red_door] # EntityRedDoor

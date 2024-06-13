@@ -34,6 +34,8 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, data]
+      - [0xE8, layers, rooms]
+      - [0x128, data]
       - [0x590, data]
       - [0x610, data]
       - [0x630, data]
@@ -51,6 +53,11 @@ segments:
       - [0x1498, roomdef, g_Rooms]
       - [0x14AC, data]
       - [0x16C0, data]
+      - [0xB548, tilelayout, D_8018B548]
+      - [0xB948, tilelayout, D_8018B948]
+      - [0xBD48, tiledef, t_8018C148, D_8018C148]
+      - [0xC158, tiledef, t_80190158, D_80190158]
+      - [0x10168, data]
       - [0x1171C, .rodata, 11A64]
       - [0x11728, .rodata, succubus] # EntitySuccubus
       - [0x11808, .rodata, succubuscutscene]

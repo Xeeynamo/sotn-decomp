@@ -66,7 +66,7 @@ def generate_assembly_layers(writer: io.BufferedWriter, name: str, content: str)
                 | get_int(layer, "top", 0, 0x3F) << 6
                 | get_int(layer, "right", 0, 0x3F) << 12
                 | get_int(layer, "bottom", 0, 0x3F) << 18
-                | get_int(layer, "scrollMode", 0, 15) << 24
+                | get_int(layer, "scrollMode", 0, 31) << 24
                 | (1 if get_bool(layer, "isSaveRoom") else 0) << 29
                 | (1 if get_bool(layer, "isLoadingRoom") else 0) << 30
             )
@@ -150,7 +150,7 @@ class PSXSegLayers(N64Segment):
             if fgPtr < ram_start or bgPtr < ram_start:
                 min_start = min(fgPtr, bgPtr)
                 log.error(
-                    f"data for '{self.name}' needs to start at least from {min_start}"
+                    f"data for '{self.name}' needs to start at least from 0x{min_start:X}"
                 )
                 raise err
             layerDefOffsets.add(fgPtr)
@@ -164,7 +164,7 @@ class PSXSegLayers(N64Segment):
             roomOff -= 8
             if roomOff <= 0:
                 log.error(
-                    f"data for '{self.name}' needs to start at least from {min_start}"
+                    f"data for '{self.name}' needs to start at least from 0x{min_start:X}"
                 )
                 raise err
 

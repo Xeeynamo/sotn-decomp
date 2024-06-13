@@ -25,7 +25,7 @@ static bool LoadRoomTileDef(FileStringified* file) {
 
     FILE* f;
     char buf[0x100];
-    snprintf(buf, sizeof(buf), "%s/%s.bin", desc->assetPath,
+    snprintf(buf, sizeof(buf), "%s/%s", desc->assetPath,
              JITEM("gfxPage")->valuestring);
     f = fopen(buf, "rb");
     if (f) {
@@ -35,7 +35,7 @@ static bool LoadRoomTileDef(FileStringified* file) {
         ERRORF("unable to load '%s'", buf);
         return false;
     }
-    snprintf(buf, sizeof(buf), "%s/%s.bin", desc->assetPath,
+    snprintf(buf, sizeof(buf), "%s/%s", desc->assetPath,
              JITEM("gfxIndex")->valuestring);
     f = fopen(buf, "rb");
     if (f) {
@@ -45,8 +45,8 @@ static bool LoadRoomTileDef(FileStringified* file) {
         ERRORF("unable to load '%s'", buf);
         return false;
     }
-    snprintf(buf, sizeof(buf), "%s/%s.bin", desc->assetPath,
-             JITEM("clut")->valuestring);
+    snprintf(
+        buf, sizeof(buf), "%s/%s", desc->assetPath, JITEM("clut")->valuestring);
     f = fopen(buf, "rb");
     if (f) {
         fread(g_TileDefToLoad->clut, 0x1000, 1, f);
@@ -55,7 +55,7 @@ static bool LoadRoomTileDef(FileStringified* file) {
         ERRORF("unable to load '%s'", buf);
         return false;
     }
-    snprintf(buf, sizeof(buf), "%s/%s.bin", desc->assetPath,
+    snprintf(buf, sizeof(buf), "%s/%s", desc->assetPath,
              JITEM("collision")->valuestring);
     f = fopen(buf, "rb");
     if (f) {
