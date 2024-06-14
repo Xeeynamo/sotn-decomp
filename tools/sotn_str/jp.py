@@ -124,6 +124,16 @@ def get_chr(chr):
     return table[chr]
 
 
+alt_utf8_to_index = dict((value, index) for index, value in enumerate("ＡＴＤＥＦ"))
+
+alt_hd_utf8_to_index = dict((value, index) for index, value in enumerate("".join([
+    #0 1 2 3 4 5 6 7 8 9 A B C D E F
+    "装備技システム短剣必殺使攻撃力防",
+    "御魔導器拳こ一覧棒両手食物爆弾盾",
+    "投射薬ん右左武兜鎧マントその他い",
+])))
+
+
 def convert_j(f):
     pos = 0
     str = ""
@@ -259,9 +269,8 @@ def dakuten_to_bytes(input_chr):
 
 
 def utf8_to_byte_literals(input_str):
-    clean_str = input_str.replace("_SJ(", "").replace(")", "")
     bytes = []
-    for char in clean_str:
+    for char in input_str:
         if has_dakuten(char) or has_handakuten(char):
             bytes += dakuten_to_bytes(char)
         elif char == '月':
@@ -269,16 +278,21 @@ def utf8_to_byte_literals(input_str):
         else:
             bytes.append(utf8_to_index[char])
     bytes.append(0xFF)
-    hex_list = [hex(num) for num in bytes]
     return bytes
 
+def alt_utf8_to_byte_literals(input_str):
+    bytes = []
+    for char in input_str:
+        bytes.append(alt_utf8_to_index[char])
+    bytes.append(0xFF)
+    return bytes
 
-def utf8_to_byte_literals_wrapped(input):
-    out = utf8_to_byte_literals(input)
-    str = f"_SJ()"
-    escaped_string = "".join([f"\\x{val:02X}" for val in out])
-    out = f"_SJ({escaped_string})"
-    return out
+def alt_hd_utf8_to_byte_literals(input_str):
+    bytes = []
+    for char in input_str:
+        bytes.append(alt_hd_utf8_to_index[char])
+    bytes.append(0xFF)
+    return bytes
 
 def utf8_to_byte_literals_escaped(input):
     out = utf8_to_byte_literals(input)

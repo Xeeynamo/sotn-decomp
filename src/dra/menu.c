@@ -46,62 +46,66 @@ const char* D_800A2D48[] = {
 #endif
 };
 
+#ifndef SOTN_STR
+// Similar to `_S`, a second lookup table is used for some menus based on BIOS
+// fonts in a custom table. This is only relevant to the strings below.
+// e.g. "\x02\x03\x04\xFF" -> _S2("ＤＥＦ")
+#define _S2(x) (x)
+
+// Like `_S2`, but uses a lookup table unique to the HD version of the game
+#define _S2_HD(x) (x)
+#endif
+
 #if defined(VERSION_US)
-const char* D_800A2D64[] = {
+static const char* D_800A2D64[] = {
     "ＡＴＤＥＦ",
 };
+
+static const char* D_800A2D68[] = {
+    _S2("ＡＴＴ"),
+    _S2("ＤＥＦ"),
+};
 #elif defined(VERSION_HD)
-const char* D_800A2D10[] = {
+static const char* D_800A2D10[] = {
     "装備技システム短剣必殺使攻撃力防",
 };
 
-const char* D_800A2D14[] = {
+static const char* D_800A2D14[] = {
     "御魔導器拳こ一覧棒両手食物爆弾盾",
 };
 
-const char* D_800A2D18[] = {
+static const char* D_800A2D18[] = {
     "投射薬ん右左武兜鎧マントその他い",
 };
-#endif
 
-#if defined(VERSION_US)
-const char* D_800A2D68[] = {
-    "\x00\x01\x01\xFF",
-    "\x02\x03\x04\xFF",
-};
-#elif defined(VERSION_HD)
-extern const char* D_800A2D68[];
-#endif
-
-#if defined(VERSION_HD)
-const char* D_800A2D68[] = {
-    "\x0C\x0D\x0E\xFF",         //
-    "\x0F\x10\x0E\xFF",         // D_800A83AC
-    "\x09\x0A\x02\x16\x17\xFF", // D_800A2D24
-    "\x00\x01\xFF",             // g_MenuStr[93]
-    "\x09\x0A\x02\xFF",         // g_MenuStr[96]
-    "\x11\x12\x13\xFF",         // g_MenuStr[92]
-    "\x03\x04\x05\x06\xFF",     // g_MenuStr[94]
-    "\x07\x08\xFF",             // g_MenuStr[99]
-    "\x08\xFF",                 //
-    "\x20\x08\xFF",             //
-    "\x14\xFF",                 //
-    "\x15\x23\x18\xFF",         //
-    "\x19\x1A\x08\xFF",         //
-    "\x1B\x1C\xFF",             //
-    "\x1D\x1E\xFF",             //
-    "\x20\x21\xFF",             //
-    "\x1F\xFF",                 //
-    "\x22\xFF",                 //
-    "\x24\x1A\x26\x13\xFF",     //
-    "\x25\x1A\x26\x13\xFF",     //
-    "\x27\xFF",                 //
-    "\x28\xFF",                 //
-    "\x29\x2A\x2B\xFF",         //
-    "\x2C\x2D\x2E\xFF",         //
-    "\x2C\x2D\x2E\xFF",         //
-    "\x0B\x2F\x11\xFF",         // g_MenuStr[95]
-    "\x0B\x2F\x11\x16\x17\xFF", // D_800A2D84
+static const char* D_800A2D68[] = {
+    _S2_HD("攻撃力"),     //
+    _S2_HD("防御力"),     // D_800A83AC
+    _S2_HD("必殺技一覧"), // D_800A2D24
+    _S2_HD("装備"),       // g_MenuStr[93]
+    _S2_HD("必殺技"),     // g_MenuStr[96]
+    _S2_HD("魔導器"),     // g_MenuStr[92]
+    _S2_HD("システム"),   // g_MenuStr[94]
+    _S2_HD("短剣"),       // g_MenuStr[99]
+    _S2_HD("剣"),         //
+    _S2_HD("投剣"),       //
+    _S2_HD("拳"),         //
+    _S2_HD("こん棒"),     //
+    _S2_HD("両手剣"),     //
+    _S2_HD("食物"),       //
+    _S2_HD("爆弾"),       //
+    _S2_HD("投射"),       //
+    _S2_HD("盾"),         //
+    _S2_HD("薬"),         //
+    _S2_HD("右手武器"),   //
+    _S2_HD("左手武器"),   //
+    _S2_HD("兜"),         //
+    _S2_HD("鎧"),         //
+    _S2_HD("マント"),     //
+    _S2_HD("その他"),     //
+    _S2_HD("その他"),     //
+    _S2_HD("使い魔"),     // g_MenuStr[95]
+    _S2_HD("使い魔一覧"), // D_800A2D84
 };
 #endif
 
