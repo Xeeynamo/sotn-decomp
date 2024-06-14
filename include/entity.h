@@ -518,7 +518,7 @@ typedef struct {
     /* 0x7C */ char pad_0[0x20];
     /* 0x9C */ s16 unk9C;
     /* 0x9E */ s16 unk9E;
-    /* 0xA0 */ struct Entity* unkA0;
+    /* 0xA0 */ struct Entity* parent;
     /* 0xA4 */ s16 unkA4;
     /* 0xA6 */ s16 unkA6;
     /* 0xA8 */ u8 unkA8;
