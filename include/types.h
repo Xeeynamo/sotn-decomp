@@ -53,4 +53,9 @@ typedef struct {
     /* 0x2 */ s16 y;
 } Point16; // size = 0x4
 
+typedef struct {
+    u8 u;
+    u8 v;
+} uvPair;
+
 #endif

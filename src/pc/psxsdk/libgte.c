@@ -78,3 +78,15 @@ long RotAverage3(SVECTOR* v0, SVECTOR* v1, SVECTOR* v2, long* sxy0, long* sxy1,
     NOT_IMPLEMENTED;
     return 0;
 }
+
+long RotTransPers4(
+    SVECTOR* v0, SVECTOR* v1, SVECTOR* v2,
+    SVECTOR* v3, // Pointers to vectors (input)
+    long* v10, long* v11, long* v12,
+    long* v13, // Pointers to screen coordinates
+    long* p,   // Pointer to interpolated value for depth cueing
+    long* flag // Pointer to flag)
+) {
+    NOT_IMPLEMENTED;
+    return 0;
+}
