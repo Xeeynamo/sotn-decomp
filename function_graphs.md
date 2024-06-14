@@ -2012,7 +2012,7 @@
 - [✅ func_801CD91C](function_calls/np3.func_801CD91C.svg?raw=1)
 - [✅ func_801CDA14](function_calls/np3.func_801CDA14.svg?raw=1)
 - [✅ func_801CDA6C](function_calls/np3.func_801CDA6C.svg?raw=1)
-- [❌ func_801CDAC8](function_calls/np3.func_801CDAC8.svg?raw=1)
+- [✅ func_801CDAC8](function_calls/np3.func_801CDAC8.svg?raw=1)
 - [✅ func_801CDC80](function_calls/np3.func_801CDC80.svg?raw=1)
 - [✅ func_801CDD00](function_calls/np3.func_801CDD00.svg?raw=1)
 - [✅ func_801CDD80](function_calls/np3.func_801CDD80.svg?raw=1)
