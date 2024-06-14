@@ -413,9 +413,10 @@ u16 D_8018105C[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8};
 // arg7 holds, in order:
 // a Primitive, an array of 9 SVECTORs, an array of 10 uvPairs, and a pointer to
 // another of arg7.
+// arg7 is not actually u8* but windows doesn't like void* I guess?
 Primitive* func_801907EC(
     SVECTOR* arg0, SVECTOR* arg1, SVECTOR* arg2, SVECTOR* arg3, Primitive* arg4,
-    s32 arg5, Primitive* arg6, void* arg7) {
+    s32 arg5, Primitive* arg6, u8* arg7) {
     s32 unused1;
     s32 unused2;
     s32 i;
