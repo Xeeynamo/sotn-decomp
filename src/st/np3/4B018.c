@@ -62,16 +62,14 @@ void func_801CD734() {
         func_801CD658();
 }
 
-void func_801CD78C(Entity* src, s32 speed, s16 angle, Entity* dst) {
-    if (g_CurrentEntity->facingLeft != 0) {
+void func_801CD78C(Point32* src, s32 speed, s16 angle, Point32* dst) {
+    if (g_CurrentEntity->facingLeft) {
         angle = -angle;
     }
+    *dst = *src;
 
-    //! FAKE:
-    (*(Point32*)dst) = (*(Point32*)src);
-
-    (*(Point32*)dst).x -= speed * rsin(angle) * 16;
-    (*(Point32*)dst).y += speed * rcos(angle) * 16;
+    dst->x -= speed * rsin(angle) * 16;
+    dst->y += speed * rcos(angle) * 16;
 }
 
 void func_801CD83C(Entity* self) {
