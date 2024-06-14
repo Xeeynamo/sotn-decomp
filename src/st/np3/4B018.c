@@ -80,7 +80,7 @@ void func_801CD83C(Entity* self) {
         angle = -angle;
     }
 
-    src = self->ext.GH_Props.unkA0;
+    src = self->ext.GH_Props.parent;
     self->posX.val = src->posX.val;
     self->posY.val = src->posY.val;
     self->posX.val -= self->ext.GH_Props.unk9E * rsin(angle) * 16;
@@ -98,7 +98,7 @@ void func_801CD91C(Entity* self) {
     if (g_CurrentEntity->facingLeft != 0) {
         angle = -angle;
     }
-    src = self->ext.GH_Props.unkA0;
+    src = self->ext.GH_Props.parent;
     src->posX.val = self->posX.val;
     src->posY.val = self->posY.val;
     src->posX.val -= -self->ext.GH_Props.unk9E * rsin(angle) * 16;
@@ -113,7 +113,7 @@ void func_801CD91C(Entity* self) {
 void func_801CDA14(Entity* ent1, Entity* ent2) {
     Entity* temp_a0;
 
-    temp_a0 = ent1->ext.GH_Props.unkA0;
+    temp_a0 = ent1->ext.GH_Props.parent;
     func_801CD78C(temp_a0, temp_a0->ext.GH_Props.unk9E,
                   temp_a0->ext.GH_Props.unk9C, ent1);
     func_801CD78C(
@@ -123,14 +123,51 @@ void func_801CDA14(Entity* ent1, Entity* ent2) {
 void func_801CDA6C(Entity* self, s32 arg1) {
     Entity* temp_s0;
 
-    temp_s0 = self->ext.GH_Props.unkA0;
+    temp_s0 = self->ext.GH_Props.parent;
     func_801CD78C(
         self, -self->ext.GH_Props.unk9E, self->ext.GH_Props.unk9C, temp_s0);
     func_801CD78C(temp_s0, -temp_s0->ext.GH_Props.unk9E,
                   temp_s0->ext.GH_Props.unk9C, arg1);
 }
 
-INCLUDE_ASM("st/np3/nonmatchings/4B018", func_801CDAC8);
+void func_801CDAC8(Entity* ent1, Entity* ent2) {
+    Point32 sp10;
+    s32 ratanX;
+    s32 ratanY;
+    s32 temp_s2;
+    s32 temp_s3;
+    s32 temp_s4;
+    Point32* parentPos;
+    s16 temp_s6;
+
+    parentPos = (Point32*)ent1->ext.GH_Props.parent;
+    ratanX = ent2->posX.val - parentPos->x;
+    if (g_CurrentEntity->facingLeft) {
+        ratanX = -ratanX;
+    }
+    ratanY = ent2->posY.val - parentPos->y;
+    temp_s6 = ratan2(-ratanX, ratanY);
+    temp_s4 = ent1->ext.GH_Props.unk9E << 8;
+    temp_s3 = ent2->ext.GH_Props.unk9E << 8;
+    ratanX >>= 8;
+    ratanY >>= 8;
+    temp_s2 = SquareRoot0((ratanX * ratanX) + (ratanY * ratanY));
+    if (((temp_s4 + temp_s3) << 8) < temp_s2) {
+        temp_s2 = ((temp_s4 + temp_s3) << 8);
+    }
+    temp_s2 = (temp_s2 * temp_s4) / (temp_s4 + temp_s3);
+    temp_s3 = (temp_s4 * temp_s4) - (temp_s2 * temp_s2);
+    temp_s3 = SquareRoot0(temp_s3);
+    temp_s6 += ratan2(temp_s3, temp_s2);
+    ent1->ext.GH_Props.unkA4 = temp_s6;
+    func_801CD78C(parentPos, ent1->ext.GH_Props.unk9E, temp_s6, &sp10);
+    ratanX = ent2->posX.val - sp10.x;
+    if (g_CurrentEntity->facingLeft) {
+        ratanX = -ratanX;
+    }
+    ratanY = ent2->posY.val - sp10.y;
+    ent2->ext.GH_Props.unkA4 = ratan2(-ratanX, ratanY);
+}
 
 bool func_801CDC80(s16* arg0, s16 arg1, s16 arg2) {
     if (abs(*arg0 - arg1) < arg2) {
