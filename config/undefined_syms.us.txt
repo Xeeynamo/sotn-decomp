@@ -3,7 +3,8 @@ D_8003C908    = 0x8003C908;
 g_GpuBuffers  = 0x8003CB08;
 g_api         = 0x8003C774;
 g_Settings    = 0x8003C9F8;
-
+D_8006C384    = 0x8006C384;
+D_8006C38C    = 0x8006C38C;
 g_Clut        = 0x8006CBCC;
 D_8006ED0C    = 0x8006ED0C;
 D_8006ED2C    = 0x8006ED2C;

@@ -515,15 +515,25 @@ typedef struct {
 } ET_WaterEffects;
 
 typedef struct {
-    /* 0x7C */ char pad_0[0x20];
-    /* 0x9C */ s16 unk9C;
+    /* 0x7C */ char pad_0[4];
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ char pad_82[2];
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ char pad_85[3];
+    /* 0x88 */ u16 unk88;
+    /* 0x8A */ char pad_8A[2];
+    /* 0x8C */ u8 unk8C;
+    /* 0x8D */ u8 unk8D;
+    /* 0x8E */ u8 unk8E;
+    /* 0x8E */ char pad_8E[13];
+    /* 0x9C */ s16 rotZ;
     /* 0x9E */ s16 unk9E;
     /* 0xA0 */ struct Entity* parent;
     /* 0xA4 */ s16 unkA4;
     /* 0xA6 */ s16 unkA6;
     /* 0xA8 */ u8 unkA8;
     /* 0xA9 */ char pad_A9[0x7];
-    /* 0xB0 */ s16 unkB0[0x6];
+    /* 0xB0 */ u16 unkB0[0x6];
 } ET_GurkhaHammer;
 
 typedef struct {
