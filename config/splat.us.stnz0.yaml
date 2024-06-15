@@ -33,7 +33,8 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, .data, d_0]
+      - [0x40, data]
       - [0x164, layers, rooms]
       - [0x47C, data]
       - [0x15A0, .data, collision]
