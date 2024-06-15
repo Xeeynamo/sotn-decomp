@@ -356,7 +356,7 @@ void func_80196934(void) {
 
 #include "../unk_recursive_primfunc_1.h"
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_801971A4);
+#include "../unk_recursive_primfunc_2.h"
 
 #include "../clut_lerp.h"
 

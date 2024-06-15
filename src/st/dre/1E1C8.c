@@ -284,7 +284,7 @@ void func_8019F304(void) {
 
 #include "../unk_recursive_primfunc_1.h"
 
-INCLUDE_ASM("st/dre/nonmatchings/1E1C8", func_8019FB74);
+#include "../unk_recursive_primfunc_2.h"
 
 #include "../clut_lerp.h"
 

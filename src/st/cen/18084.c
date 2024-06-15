@@ -283,7 +283,7 @@ void func_801991C0(void) {
 
 #include "../unk_recursive_primfunc_1.h"
 
-INCLUDE_ASM("st/cen/nonmatchings/18084", func_80199A30);
+#include "../unk_recursive_primfunc_2.h"
 
 #include "../clut_lerp.h"
 
