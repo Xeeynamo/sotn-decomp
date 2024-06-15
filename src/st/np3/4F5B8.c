@@ -1,123 +1,5 @@
 #include "np3.h"
 
-// DECOMP_ME_WIP func_801CF254 https://decomp.me/scratch/EpZEL
-// minor regalloc
-// has jumptable
-#ifndef NON_MATCHING
-INCLUDE_ASM("st/np3/nonmatchings/4F254", EntityGurkhaBodyParts);
-#else
-extern u16 D_80180B8C[];
-extern u16 D_80180BA4[];
-extern u16 D_80180BBC[];
-
-void EntityGurkhaBodyParts(Entity* self) {
-    Collider collider;
-    s32 aaaa;
-    s32 sp28;
-    s16 temp_s0;
-    s16 temp_s0_2;
-    s16 temp_v0_3;
-    s32 temp_s1;
-    u16 temp_v0;
-    u16 temp_v0_2;
-    u16 temp_v1;
-    u16 temp_v1_3;
-    u16* var_a0;
-    u32 temp_v1_2;
-    u16 temp_a0;
-
-    switch (self->step) {
-    case 0:
-        switch (self->params >> 8) {
-        case 0:
-            InitializeEntity(D_80180B8C);
-            break;
-        case 1:
-            InitializeEntity(D_80180BA4);
-            break;
-        case 2:
-            InitializeEntity(D_80180BBC);
-            break;
-        }
-        self->hitboxWidth = 6;
-        self->hitboxHeight = 6;
-        self->params = (u8)self->params;
-        self->animCurFrame = self->params;
-        self->drawFlags |= 4;
-        break;
-
-    case 1:
-        self->unk1E = self->ext.et_801CF254.unk9C;
-        break;
-
-    case 24:
-        switch (self->step_s) {
-        case 0:
-            temp_s1 = (Random() & 0x1F) + 0x10;
-            temp_s0_2 = (Random() * 6) + 0x900;
-            self->velocityX = (s32)(temp_s1 * rcos((s32)temp_s0_2)) / 2;
-            self->velocityY = temp_s1 * rsin((s32)temp_s0_2);
-            self->ext.generic.unk80.modeS16.unk0 = (Random() & 0x1F) + 0x20;
-            self->unk3C = 0;
-            self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-            self->step_s++;
-            break;
-
-        case 1:
-            MoveEntity();
-            self->velocityY += FIX(0.125);
-            self->unk1E += self->ext.generic.unkA6;
-            if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
-                self->step = 0;
-                self->pfnUpdate = EntityExplosion;
-                self->params = 0;
-                self->drawFlags = 0;
-                return;
-            }
-        }
-        break;
-    }
-
-    switch (self->params) {
-    case 8:
-    case 14:
-        collider.unk18 = 9;
-        func_801CE04C(self, &collider);
-        break;
-
-    case 9:
-    case 15:
-        aaaa = self->ext.et_801CF254.next->ext.et_801CF254.unk88;
-        if (aaaa == 2) {
-            self->ext.et_801CF254.unk9C = 0x200;
-        } else if (aaaa == 4) {
-            self->ext.et_801CF254.unk9C = -0x200;
-        } else if (aaaa == 1) {
-            self->ext.et_801CF254.unk9C = 0;
-        }
-
-        if (self->ext.et_801CF254.unk8D != 0) {
-            temp_s0 = self->unk1E;
-            self->unk10 = -(rsin(temp_s0) * 8) >> 0xC;
-            self->unk12 = (u32)rcos(temp_s0) >> 9;
-            self->attack = g_api.enemyDefs[192].attack;
-            self->attackElement = g_api.enemyDefs[192].attackElement;
-            break;
-        }
-        self->unk10 = 0;
-        self->unk12 = 0;
-        self->attack = g_api.enemyDefs[190].attack;
-        self->attackElement = g_api.enemyDefs[190].attackElement;
-        break;
-
-    case 5:
-    case 11:
-        self->ext.et_801CF254.next->ext.et_801CF254.unk9C =
-            self->ext.et_801CF254.unk9C;
-    }
-}
-#endif
-
 void EntityHammerWeapon(Entity* self) {
     s16 temp_s0;
     s32 velY;
@@ -233,7 +115,7 @@ int func_801CF7A0(Entity* ent) {
 }
 
 // DECOMP_ME_WIP EntityGurkha https://decomp.me/scratch/51iIJ
-INCLUDE_ASM("st/np3/nonmatchings/4F254", EntityGurkha);
+INCLUDE_ASM("st/np3/nonmatchings/4F5B8", EntityGurkha);
 
 void EntityGurkhaSword(Entity* self) {
     s16 angle;
@@ -414,7 +296,7 @@ s32 func_801D0B78(void) {
     return ret;
 }
 
-INCLUDE_ASM("st/np3/nonmatchings/4F254", EntityBlade);
+INCLUDE_ASM("st/np3/nonmatchings/4F5B8", EntityBlade);
 
 void EntityBladeSword(Entity* self) {
     Primitive *prim, *prim2;

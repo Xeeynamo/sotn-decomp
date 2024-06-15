@@ -322,4 +322,97 @@ void EntityHammer(Entity* self) {
     return;
 }
 
-const s32 rodata_padding_322C8 = 0;
+void EntityGurkhaBodyParts(Entity* self) {
+    Entity* parent;
+    Collider collider;
+    s16 angle;
+    s32 speed;
+    u16 unk88;
+
+    switch (self->step) {
+    case 0:
+        switch (self->params >> 8) {
+        case 0:
+            InitializeEntity(D_80180B8C);
+            break;
+        case 1:
+            InitializeEntity(D_80180BA4);
+            break;
+        case 2:
+            InitializeEntity(D_80180BBC);
+            break;
+        }
+        self->hitboxWidth = 6;
+        self->hitboxHeight = 6;
+        self->params = (u8)self->params;
+        self->animCurFrame = self->params;
+        self->drawFlags |= DRAW_COLORS;
+        break;
+    case 1:
+        self->rotZ = self->ext.GH_Props.rotZ;
+        break;
+    case 24:
+        switch (self->step_s) {
+        case 0:
+            speed = (Random() & 0x1F) + 0x10;
+            angle = (Random() * 6) + 0x900;
+            self->velocityX = (speed * rcos(angle)) / 2;
+            self->velocityY = speed * rsin(angle);
+            self->ext.GH_Props.unk80 = (Random() & 0x1F) + 0x20;
+            self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
+            self->hitboxState = 0;
+            self->step_s++;
+            break;
+        case 1:
+            MoveEntity();
+            self->velocityY += FIX(0.125);
+            self->rotZ += self->ext.GH_Props.unkA6;
+            if (--self->ext.GH_Props.unk80 == 0) {
+                self->step = 0;
+                self->pfnUpdate = EntityExplosion;
+                self->params = 0;
+                self->drawFlags = 0;
+            }
+            return;
+        }
+        break;
+    }
+    // Careful following control flow here, this is completely after
+    // the previous switch.
+    switch (self->params) {
+    case 8:
+    case 14:
+        collider.unk18 = 9;
+        func_801CE04C(self, &collider);
+        break;
+    case 9:
+    case 15:
+        parent = self->ext.GH_Props.parent;
+        unk88 = parent->ext.GH_Props.unk88;
+        if (unk88 == 2) {
+            self->ext.GH_Props.rotZ = 0x200;
+        } else if (unk88 == 4) {
+            self->ext.GH_Props.rotZ = -0x200;
+        } else if (unk88 == 1) {
+            self->ext.GH_Props.rotZ = 0;
+        }
+        if (self->ext.GH_Props.unk8D != 0) {
+            angle = self->rotZ;
+            self->hitboxOffX = (-(rsin(angle) * 8) >> 0xC);
+            self->hitboxOffY = (u32)rcos(angle) / 512;
+            self->attack = g_api.enemyDefs[192].attack;
+            self->attackElement = g_api.enemyDefs[192].attackElement;
+        } else {
+            self->hitboxOffX = 0;
+            self->hitboxOffY = 0;
+            self->attack = g_api.enemyDefs[190].attack;
+            self->attackElement = g_api.enemyDefs[190].attackElement;
+        }
+        break;
+    case 5:
+    case 11:
+        parent = self->ext.GH_Props.parent;
+        parent->ext.GH_Props.rotZ = self->ext.GH_Props.rotZ;
+        break;
+    }
+}
