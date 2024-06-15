@@ -14,7 +14,6 @@ void UpdateStageEntities(void);
 extern u8** D_801A6E8C;
 extern s32* D_801A6FCC;
 extern s32* D_801A7304;
-extern void*(D_801A79E4)(void);
 
 Overlay g_StageOverlay = {
     /* 0x00 */ Update,
@@ -32,5 +31,5 @@ Overlay g_StageOverlay = {
     /* 0x30 */ &D_801A6E8C,
     /* 0x34 */ &D_801A6FCC,
     /* 0x38 */ &D_801A7304,
-    /* 0x3C */ D_801A79E4,
+    /* 0x3C */ 0x801A79E4,
 };
