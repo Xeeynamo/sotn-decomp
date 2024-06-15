@@ -1,4 +1,4 @@
-g_SpriteBanks = 0x80180040;
+g_SpriteBanks = 0x8018002C;
 g_Cluts = 0x80180160;
 g_TileLayers = 0x80180394;
 g_EntityGfxs = 0x80180888;

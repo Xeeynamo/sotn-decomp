@@ -22,7 +22,7 @@ Overlay g_StageOverlay = {
     /* 0x08 */ UpdateRoomPosition,
     /* 0x0C */ InitRoomEntities,
     /* 0x10 */ g_Rooms,
-    /* 0x14 */ g_SpriteBanks,
+    /* 0x14 */ 0x8018002C,
     /* 0x18 */ g_Cluts,
     /* 0x1C */ g_pStObjLayoutHorizontal,
     /* 0x20 */ g_TileLayers,
