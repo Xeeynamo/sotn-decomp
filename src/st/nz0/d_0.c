@@ -32,5 +32,5 @@ Overlay g_StageOverlay = {
     /* 0x30 */ &D_801A6E8C,
     /* 0x34 */ &D_801A6FCC,
     /* 0x38 */ &D_801A7304,
-    /* 0x3C */ &D_801A79E4,
+    /* 0x3C */ D_801A79E4,
 };
