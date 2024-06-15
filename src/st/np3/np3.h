@@ -315,6 +315,27 @@ extern u8 g_ESoulStealOrbAnim[];
 
 extern SVECTOR D_801B1EA0;
 
+// For EntityHammer
+extern u16 D_80180B8C[];
+extern u16 D_80182978[];
+extern s16 D_80182988[];
+extern s16 D_80182A20;
+extern s16 D_80182A40[];
+extern s16 D_80182A5C[];
+extern s16 D_80182AB8[];
+extern s16 D_80182AD0[];
+extern s16 D_80182AE8[];
+extern s16 D_80182B00[];
+extern s16 D_80182B54[];
+extern s16 D_80182BB4[];
+extern s16 D_80182BEC[];
+extern s16 D_80182C9C[];
+extern s16 D_80182CC4[];
+extern s16 D_80182CFC[];
+extern s16 D_80182E38[];
+extern s16 D_80182E48[];
+extern s16 D_80182EDC[];
+
 // For EntityGurkha
 extern u16 D_80180BA4[];
 extern u16 D_80182EF4[];

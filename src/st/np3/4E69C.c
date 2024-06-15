@@ -1,50 +1,5 @@
 #include "np3.h"
 
-s32 GetSideToPlayer();           /* extern */
-void SetStep(u8);                /* extern */
-s32 func_801BC8E4(u16* sensors); /* extern */
-void func_801C2598(s16 sfxId);   /* extern */
-void func_801CDAC8(Entity* ent1, Entity* ent2);
-void func_801CDE10(s16* self);
-void func_801CDF1C(s16 entIndices[], s16 arg1[][4], s32 arg2); /* extern */
-void func_801CE04C(Entity* entity, Collider* collider);        /* extern */
-s32 func_801CE120(Entity*, s32);                               /* extern */
-void func_801CE1E8(s16 step);                                  /* extern */
-void func_801CE228(void);                                      /* extern */
-void func_801CE258(s16* self);                                 /* extern */
-void func_801CE2CC(s16* self);                                 /* extern */
-void func_801CE3FC(s16* self);                                 /* extern */
-void func_801CF778(void);                                      /* extern */
-int func_801CE4CC(Entity* ent);                                /* extern */
-extern u16 D_80180B8C[];
-extern u16 D_80182978[];
-extern s16 D_80182988[];
-extern s16 D_80182A20;
-extern s16 D_80182A40[];
-extern s16 D_80182A5C[];
-extern s16 D_80182FF4[];
-extern s16 D_80183010[];
-extern s16 D_80182AB8[];
-extern s16 D_80182AD0[];
-extern s16 D_80182B54[];
-extern s16 D_80182BB4[];
-extern s16 D_80182BEC[];
-extern s16 D_80182C9C[];
-extern s16 D_80182CC4[];
-extern s16 D_80182CFC[];
-extern s16 D_80183284[];
-extern s16 D_80182E38[];
-extern s16 D_80182E38[];
-extern s16 D_801833A0[];
-extern s16 D_80182EDC[];
-
-extern s16 D_80182B00[];
-extern s16 D_80182AE8[];
-extern s16 D_80182E48[];
-
-extern Point32 D_8006C384;
-extern Point32 D_8006C38C;
-
 void EntityHammer(Entity* self) {
     Collider collider;
     Entity* otherEnt;
