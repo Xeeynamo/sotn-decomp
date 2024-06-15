@@ -1,4 +1,3 @@
-g_MainGame = 0x800A0000;
 D_800A2DEC = 0x800A2DFC;
 g_CapePaletteDefs = 0x800A2FCC;
 g_CheatCodes = 0x800A301C;
@@ -209,7 +208,6 @@ EntityHolyWaterBreakGlass = 0x80125AF4;
 func_80129864 = 0x801294F0;
 EntityStopWatch = 0x8012A528;
 EntityBatEcho = 0x8012BB84;
-func_8012C600 = 0x8012C28C;
 func_8012CB0C = 0x8012C798;
 func_8012F178 = 0x8012ED9C;
 func_8012F83C = 0x8012F42C;

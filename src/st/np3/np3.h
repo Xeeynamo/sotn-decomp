@@ -336,6 +336,9 @@ extern s16 D_80182E38[];
 extern s16 D_80182E48[];
 extern s16 D_80182EDC[];
 
+// For EntityGurkhaBodyParts
+extern u16 D_80180BBC[];
+
 // For EntityGurkha
 extern u16 D_80180BA4[];
 extern u16 D_80182EF4[];
