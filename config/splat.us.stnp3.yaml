@@ -126,7 +126,7 @@ segments:
       - [0x321EC, .rodata, 4B018]
       - [0x3224C, .rodata, 4E69C] #EntityHammer
       - [0x322CC, .rodata, 4E69C] # EntityGurkhaBodyParts
-      - [0x322F8, rodata] # EntityGurkha
+      - [0x322F8, .rodata, 4F5B8] # EntityGurkha
       - [0x32380, .rodata, 4F5B8] # EntityGurkhaSword
       - [0x323E4, rodata]
       - [0x32464, .rodata, prim_helpers]
