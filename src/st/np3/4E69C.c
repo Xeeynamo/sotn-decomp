@@ -322,4 +322,6 @@ void EntityHammer(Entity* self) {
     return;
 }
 
+INCLUDE_ASM("st/np3/nonmatchings/4E69C", EntityGurkhaBodyParts);
+
 const s32 rodata_padding_322C8 = 0;

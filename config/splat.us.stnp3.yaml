@@ -127,7 +127,7 @@ segments:
       - [0x3224C, .rodata, 4E69C] #EntityHammer
       - [0x322CC, rodata] # EntityGurkhaBodyParts
       - [0x322F8, rodata] # EntityGurkha
-      - [0x32380, .rodata, 4F254] # EntityGurkhaSword
+      - [0x32380, .rodata, 4F5B8] # EntityGurkhaSword
       - [0x323E4, rodata]
       - [0x32464, .rodata, prim_helpers]
       - [0x3246C, c]
@@ -153,7 +153,7 @@ segments:
       - [0x49F98, c] # EntityBloodyZombie
       - [0x4B018, c]
       - [0x4E69C, c]
-      - [0x4F254, c]
+      - [0x4F5B8, c]
       - [0x51F38, c, prim_helpers]
       - [0x52768, sbss]
   - [0x53434]
