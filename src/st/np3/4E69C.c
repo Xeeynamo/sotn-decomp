@@ -346,7 +346,7 @@ void EntityGurkhaBodyParts(Entity* self) {
         self->hitboxHeight = 6;
         self->params = (u8)self->params;
         self->animCurFrame = self->params;
-        self->drawFlags |= 4;
+        self->drawFlags |= DRAW_COLORS;
         break;
     case 1:
         self->rotZ = self->ext.GH_Props.rotZ;
