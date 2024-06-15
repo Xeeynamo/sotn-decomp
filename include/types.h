@@ -58,7 +58,7 @@ typedef struct {
     u8 v;
 } uvPair;
 
-typedef struct{
+typedef struct {
     u8 r;
     u8 g;
     u8 b;

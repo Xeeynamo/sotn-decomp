@@ -416,8 +416,9 @@ u16 g_UnkRecursPrimVecOrder[] = {
 u16 D_8018107C[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8, 0, 0};
 
 // arg3 holds, in order:
-// A Primitive, an array of 9 rgb_sets, an array of 10 Point16s, an array of 10 uvPairs, and
-// a pointer to another of arg3. Pointer type on arg3 is fake, but needed for Windows.
+// A Primitive, an array of 9 rgb_sets, an array of 10 Point16s, an array of 10
+// uvPairs, and a pointer to another of arg3. Pointer type on arg3 is fake, but
+// needed for Windows.
 Primitive* func_80190DCC(Primitive* arg0, s32 arg1, Primitive* arg2, u8* arg3) {
     s32 i;
     Primitive* prim1;
@@ -432,7 +433,6 @@ Primitive* func_80190DCC(Primitive* arg0, s32 arg1, Primitive* arg2, u8* arg3) {
     rgb_set* colors;
     uvPair* uv_values;
 
-    
     if (arg2 == NULL) {
         return NULL;
     }
@@ -440,7 +440,7 @@ Primitive* func_80190DCC(Primitive* arg0, s32 arg1, Primitive* arg2, u8* arg3) {
     arg3 += 0x34;
     colors = arg3;
     arg3 = arg3 + 0x24;
-    
+
     colors[0] = *(rgb_set*)&arg0->r0;
     colors[2] = *(rgb_set*)&arg0->r1;
     colors[6] = *(rgb_set*)&arg0->r2;
@@ -451,11 +451,11 @@ Primitive* func_80190DCC(Primitive* arg0, s32 arg1, Primitive* arg2, u8* arg3) {
     uv_values = arg3;
     arg3 += 0x14;
     prim1 = arg2;
-    
+
     colors[1].r = ((colors[0].r + colors[2].r + 1) >> 1);
     colors[1].g = ((colors[0].g + colors[2].g + 1) >> 1);
     colors[1].b = ((colors[0].b + colors[2].b + 1) >> 1);
-    
+
     colors[7].r = ((colors[6].r + colors[8].r + 1) >> 1);
     colors[7].g = ((colors[6].g + colors[8].g + 1) >> 1);
     colors[7].b = ((colors[6].b + colors[8].b + 1) >> 1);
@@ -472,7 +472,6 @@ Primitive* func_80190DCC(Primitive* arg0, s32 arg1, Primitive* arg2, u8* arg3) {
     colors[4].g = ((colors[3].g + colors[5].g + 1) >> 1);
     colors[4].b = ((colors[3].b + colors[5].b + 1) >> 1);
 
-    
     uv_values[0] = *(uvPair*)&arg0->u0;
     uv_values[2] = *(uvPair*)&arg0->u1;
     uv_values[6] = *(uvPair*)&arg0->u2;
@@ -505,7 +504,7 @@ Primitive* func_80190DCC(Primitive* arg0, s32 arg1, Primitive* arg2, u8* arg3) {
 
     *prim2 = *arg0;
     Indices = &D_8018107C;
-    for(i = 0; i < 4; i++){
+    for (i = 0; i < 4; i++) {
         Idx1 = *Indices++;
         Idx2 = *Indices++;
         Idx3 = *Indices++;
