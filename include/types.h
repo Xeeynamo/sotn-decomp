@@ -58,4 +58,11 @@ typedef struct {
     u8 v;
 } uvPair;
 
+typedef struct{
+    u8 r;
+    u8 g;
+    u8 b;
+    u8 pad; // could be an A for RGBA but unused so unknown
+} rgb_set;
+
 #endif
