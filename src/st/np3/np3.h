@@ -40,6 +40,11 @@ typedef enum {
     /* 0x51 */ E_GAIBON,
     /* 0x53 */ E_GAIBON_SMALL_FIREBALL = 0x53,
     /* 0x54 */ E_GAIBON_BIG_FIREBALL,
+    /* 0x55 */ E_HAMMER, // the enemy named "Hammer", Gurkha's friend
+    /* 0x56 */ E_GURKHA_BODY_PARTS,
+    /* 0x57 */ E_HAMMER_WEAPON,
+    /* 0x58 */ E_GURKHA,
+    /* 0x59 */ E_GURKHA_SWORD,
 } EntityIDs;
 
 extern void CreateEntityFromCurrentEntity(u16, Entity*);
@@ -309,3 +314,26 @@ extern u8 g_ESoulStealOrbAnim[];
 // *** EntitySoulStealOrb properties END ***
 
 extern SVECTOR D_801B1EA0;
+
+// For EntityGurkha
+extern u16 D_80180BA4[];
+extern u16 D_80182EF4[];
+extern s16 D_80182F04[];
+extern s16 D_80182F9C;
+extern s16 D_80182FBC[];
+extern s16 D_80182FD8[];
+extern s16 D_80182FF4[];
+extern s16 D_80183010[];
+extern s16 D_8018302C[];
+extern s16 D_80183044[];
+extern s16 D_80183098[];
+extern s16 D_801830F8[];
+extern s16 D_80183130[];
+extern s16 D_801831F8[];
+extern s16 D_80183218[];
+extern s16 D_80183258[];
+extern s16 D_80183284[];
+extern s16 D_80183360[];
+extern s16 D_80183378[];
+extern s16 D_801833A0[];
+extern s16 D_801833CC[];

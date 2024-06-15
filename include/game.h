@@ -1692,10 +1692,8 @@ extern u8 g_CastleMap[0x800];
 extern s32 D_8006C374;
 extern s32 D_8006C378;
 extern GpuBuffer* g_CurrentBuffer; // g_CurrentBuffer;
-extern s32 D_8006C384;
-extern s32 D_8006C388;
-extern s32 D_8006C38C;
-extern s32 D_8006C390;
+extern Point32 D_8006C384;
+extern Point32 D_8006C38C;
 extern u32 g_CdStep; // CdStep
 extern s32 D_8006C3AC;
 extern s32 g_backbufferX;

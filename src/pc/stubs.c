@@ -67,14 +67,10 @@ s16 D_80136308[0x80];
 u16 g_Clut[0x3000];
 u16 D_8006EBCC[0x1000]; // part of g_Clut?
 u16 D_8006EBE0;
-s32 D_8006C384;
-s32 D_8006C388;
+Point32 D_8006C384;
 MenuNavigation g_MenuNavigation;
 GameSettings g_Settings;
-s32 D_8006C384;
-s32 D_8006C388;
-s32 D_8006C38C;
-s32 D_8006C390;
+Point32 D_8006C38C;
 s32 g_CurrentStream;
 u16 g_ClutIds[0x400];
 s32 D_8003C738;

@@ -73,7 +73,7 @@ void func_801CD78C(Point32* src, s32 speed, s16 angle, Point32* dst) {
 }
 
 void func_801CD83C(Entity* self) {
-    s16 angle = self->ext.GH_Props.unk9C;
+    s16 angle = self->ext.GH_Props.rotZ;
     Entity* src;
 
     if (g_CurrentEntity->facingLeft != 0) {
@@ -92,7 +92,7 @@ void func_801CD83C(Entity* self) {
 }
 
 void func_801CD91C(Entity* self) {
-    s16 angle = self->ext.GH_Props.unk9C;
+    s16 angle = self->ext.GH_Props.rotZ;
     Entity* src;
 
     if (g_CurrentEntity->facingLeft != 0) {
@@ -114,10 +114,10 @@ void func_801CDA14(Entity* ent1, Entity* ent2) {
     Entity* temp_a0;
 
     temp_a0 = ent1->ext.GH_Props.parent;
-    func_801CD78C(temp_a0, temp_a0->ext.GH_Props.unk9E,
-                  temp_a0->ext.GH_Props.unk9C, ent1);
     func_801CD78C(
-        ent1, ent2->ext.GH_Props.unk9E, ent2->ext.GH_Props.unk9C, ent2);
+        temp_a0, temp_a0->ext.GH_Props.unk9E, temp_a0->ext.GH_Props.rotZ, ent1);
+    func_801CD78C(
+        ent1, ent2->ext.GH_Props.unk9E, ent2->ext.GH_Props.rotZ, ent2);
 }
 
 void func_801CDA6C(Entity* self, s32 arg1) {
@@ -125,9 +125,9 @@ void func_801CDA6C(Entity* self, s32 arg1) {
 
     temp_s0 = self->ext.GH_Props.parent;
     func_801CD78C(
-        self, -self->ext.GH_Props.unk9E, self->ext.GH_Props.unk9C, temp_s0);
+        self, -self->ext.GH_Props.unk9E, self->ext.GH_Props.rotZ, temp_s0);
     func_801CD78C(temp_s0, -temp_s0->ext.GH_Props.unk9E,
-                  temp_s0->ext.GH_Props.unk9C, arg1);
+                  temp_s0->ext.GH_Props.rotZ, arg1);
 }
 
 void func_801CDAC8(Entity* ent1, Entity* ent2) {
@@ -187,7 +187,7 @@ bool func_801CDC80(s16* arg0, s16 arg1, s16 arg2) {
 }
 
 void func_801CDD00(Entity* entity, s16 arg1, s16 arg2) {
-    s16 temp_t0 = arg1 - entity->ext.GH_Props.unk9C;
+    s16 temp_t0 = arg1 - entity->ext.GH_Props.rotZ;
 
     if (temp_t0 > 0x800) {
         temp_t0 -= 0x1000;
@@ -221,8 +221,8 @@ void func_801CDE10(s16* arg0) {
     while (*arg0 != 0) {
         if (*arg0 != 0xFF) {
             temp_a0 = &g_CurrentEntity[*arg0];
-            temp_a0->ext.GH_Props.unk9C =
-                temp_a0->ext.GH_Props.unk9C + temp_a0->ext.generic.unkA6;
+            temp_a0->ext.GH_Props.rotZ =
+                temp_a0->ext.GH_Props.rotZ + temp_a0->ext.generic.unkA6;
         }
         arg0++;
     }
@@ -234,8 +234,8 @@ void func_801CDE88(s16* arg0) {
     while (*arg0 != 0) {
         if (*arg0 != 0xFF) {
             temp_a0 = &g_CurrentEntity[*arg0];
-            temp_a0->ext.GH_Props.unk9C =
-                temp_a0->ext.GH_Props.unk9C + temp_a0->ext.generic.unkA6;
+            temp_a0->ext.GH_Props.rotZ =
+                temp_a0->ext.GH_Props.rotZ + temp_a0->ext.generic.unkA6;
             func_801CD83C(temp_a0);
         }
         arg0++;
@@ -246,14 +246,12 @@ void func_801CDF1C(s16 entIndices[], s16 arg1[][4], s32 arg2) {
 
     arg1 += (u16)g_CurrentEntity->ext.GH_Props.unkB0[arg2];
 
-    if (g_CurrentEntity->ext.GH_Props.unkB0[arg2 + 2] == 0u) {
+    if (g_CurrentEntity->ext.GH_Props.unkB0[arg2 + 2] == 0) {
         func_801CDD80(entIndices, arg1);
         *(arg2 + 2 + g_CurrentEntity->ext.GH_Props.unkB0) = arg1[0][0];
     }
-
-    --*(arg2 + 2 + g_CurrentEntity->ext.GH_Props.unkB0);
-
-    if (!(g_CurrentEntity->ext.GH_Props.unkB0[arg2 + 2] & 0xFFFF)) {
+    // I don't know why the reverse array indexing is needed, but it is. Darn.
+    if (!(--((arg2 + 2)[g_CurrentEntity->ext.GH_Props.unkB0]))) {
         if (arg1[1][0] == 0) {
             g_CurrentEntity->ext.GH_Props.unkB0[arg2] = 0;
         } else {

@@ -584,8 +584,8 @@ void PrintGpuInfo(void) {
         b = g_Clut[g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] >> 10 & 0x1F;
         FntPrint("rgb:%02X,%02X,%02X\n", r, g, b);
     } else {
-        FntPrint("01:%04x,%04x\n", D_8006C384, D_8006C388);
-        FntPrint("23:%04x,%04x\n", D_8006C38C, D_8006C390);
+        FntPrint("01:%04x,%04x\n", D_8006C384.x, D_8006C384.y);
+        FntPrint("23:%04x,%04x\n", D_8006C38C.x, D_8006C38C.y);
     }
 }
 
