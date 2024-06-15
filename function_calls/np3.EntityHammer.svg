@@ -12,7 +12,7 @@
 <!-- np3.EntityHammer -->
 <g id="node1" class="node">
 <title>np3.EntityHammer</title>
-<ellipse fill="red" stroke="black" cx="2310.69" cy="-198" rx="100.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2310.69" cy="-198" rx="100.98" ry="18"/>
 <text text-anchor="middle" x="2310.69" y="-194.3" font-family="Times,serif" font-size="14.00">np3.EntityHammer</text>
 </g>
 <!-- dra.func_80102CD8 -->
