@@ -706,7 +706,7 @@ void func_801B8C48(void) {
 
 #include "../unk_recursive_primfunc_1.h"
 
-INCLUDE_ASM("st/st0/nonmatchings/36358", func_801B94B8);
+#include "../unk_recursive_primfunc_2.h"
 
 #include "../clut_lerp.h"
 

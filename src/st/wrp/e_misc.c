@@ -413,8 +413,10 @@ u16 g_UnkRecursPrimVecOrder[] = {
 
 #include "../unk_recursive_primfunc_1.h"
 
-u16 D_8018107C[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8, 0, 0};
-INCLUDE_ASM("st/wrp/nonmatchings/e_misc", func_80190DCC);
+u16 g_UnkRecursPrim2Inds[] = {
+    0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8, 0, 0};
+
+#include "../unk_recursive_primfunc_2.h"
 
 #include "../clut_lerp.h"
 
