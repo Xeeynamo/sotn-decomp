@@ -279,7 +279,7 @@ void func_801C1848(void) {
 
 #include "../entity_big_red_fireball.h"
 
-INCLUDE_ASM("st/np3/nonmatchings/402F4", func_801C16C0);
+#include "../unk_recursive_primfunc_1.h"
 
 INCLUDE_ASM("st/np3/nonmatchings/402F4", func_801C1CA0);
 

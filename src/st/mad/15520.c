@@ -354,7 +354,7 @@ void func_80196934(void) {
 
 #include "../entity_big_red_fireball.h"
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_80196BC4);
+#include "../unk_recursive_primfunc_1.h"
 
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_801971A4);
 
