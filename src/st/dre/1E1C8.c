@@ -282,7 +282,7 @@ void func_8019F304(void) {
 
 #include "../entity_big_red_fireball.h"
 
-INCLUDE_ASM("st/dre/nonmatchings/1E1C8", func_8019F594);
+#include "../unk_recursive_primfunc_1.h"
 
 INCLUDE_ASM("st/dre/nonmatchings/1E1C8", func_8019FB74);
 

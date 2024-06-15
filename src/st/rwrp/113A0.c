@@ -212,7 +212,7 @@ void func_801924DC(void) {
 }
 #include "../entity_big_red_fireball.h"
 
-INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_8019276C);
+#include "../unk_recursive_primfunc_1.h"
 
 INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_80192D4C);
 
