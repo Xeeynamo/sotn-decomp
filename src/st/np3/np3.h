@@ -384,5 +384,9 @@ extern u8 D_80182720[];
 extern u8 D_80182734[];
 extern u8 D_80182740[];
 extern u8 D_8018274C[];
+
+// For EntityOwlKnight
+extern u16 D_80180B14[];
+
 // Remove this when the Owl Knight is done!
 extern const char* D_801B20DC;
