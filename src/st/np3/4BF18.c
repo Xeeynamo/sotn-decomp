@@ -1,6 +1,6 @@
 #include "np3.h"
 
-s32 func_801CBF18(void) {
+static s32 func_801CBF18(void) {
     Primitive* prim;
     s32 primIndex;
     switch (g_CurrentEntity->step_s) {
