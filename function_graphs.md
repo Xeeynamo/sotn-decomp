@@ -2002,7 +2002,7 @@
 - [✅ func_801C90E8](function_calls/np3.func_801C90E8.svg?raw=1)
 - [✅ func_801CA498](function_calls/np3.func_801CA498.svg?raw=1)
 - [✅ func_801CAE0C](function_calls/np3.func_801CAE0C.svg?raw=1)
-- [❌ func_801CBF18](function_calls/np3.func_801CBF18.svg?raw=1)
+- [✅ func_801CBF18](function_calls/np3.func_801CBF18.svg?raw=1)
 - [✅ func_801CD540](function_calls/np3.func_801CD540.svg?raw=1)
 - [✅ func_801CD620](function_calls/np3.func_801CD620.svg?raw=1)
 - [✅ func_801CD658](function_calls/np3.func_801CD658.svg?raw=1)
