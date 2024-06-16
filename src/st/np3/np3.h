@@ -33,7 +33,19 @@ typedef enum {
     /* 0x31 */ E_WATER_DROP,
     /* 0x35 */ E_MEDIUM_WATER_SPLASH = 0x35,
     /* 0x3F */ E_BONE_SCIMITAR_HEAD = 0x3F,
-    /* 0x4C */ E_FALLING_ROCK = 0x4C,
+    /* 0x40 */ E_BAT,
+    /* 0x41 */ E_ID_49, // This should be renamed, it's not ID 49!
+    /* 0x42 */ E_ZOMBIE,
+    /* 0x43 */ E_ZOMBIE_SPAWNER,
+    /* 0x44 */ E_OWL_KNIGHT,
+    /* 0x45 */ E_OWL,
+    /* 0x46 */ E_801CD540,
+    /* 0x47 */ E_801CD620,
+    /* 0x48 */ E_BLOODY_ZOMBIE,
+    /* 0x49 */ E_801CAE0C,
+    /* 0x4A */ E_BLOOD_SPLATTER,
+    /* 0x4B */ E_STAIRWAY_PIECE,
+    /* 0x4C */ E_FALLING_ROCK,
     /* 0x4D */ E_ID_4D,
     /* 0x4F */ E_SLOGRA_SPEAR = 0x4F,
     /* 0x50 */ E_SLOGRA_SPEAR_PROJECTILE,
@@ -361,3 +373,16 @@ extern s16 D_80183360[];
 extern s16 D_80183378[];
 extern s16 D_801833A0[];
 extern s16 D_801833CC[];
+
+// For EntityOwl
+extern u16 D_80180B2C;
+extern u16 D_801826CC[];
+extern u8 D_801826EC[];
+extern u8 D_801826F8[];
+extern u8 D_80182710[];
+extern u8 D_80182720[];
+extern u8 D_80182734[];
+extern u8 D_80182740[];
+extern u8 D_8018274C[];
+// Remove this when the Owl Knight is done!
+extern const char* D_801B20DC;
