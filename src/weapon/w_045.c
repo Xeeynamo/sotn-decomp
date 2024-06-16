@@ -3,7 +3,6 @@
 #include "weapon_private.h"
 #include "shared.h"
 
-// Weapon 45
 extern SpriteParts D_13F000_8017A040[];
 extern s32 D_13F000_8017B3B8;
 extern s32 D_13F000_8017B3BC;
