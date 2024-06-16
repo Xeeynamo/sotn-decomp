@@ -964,7 +964,7 @@
 <g id="node60" class="node">
 <title>np3.EntityOwl</title>
 <g id="a_node60"><a xlink:href="np3.EntityOwl.svg" xlink:title="np3.EntityOwl">
-<ellipse fill="red" stroke="black" cx="14075.39" cy="-214.23" rx="77.99" ry="18"/>
+<ellipse fill="green" stroke="black" cx="14075.39" cy="-214.23" rx="77.99" ry="18"/>
 <text text-anchor="middle" x="14075.39" y="-210.53" font-family="Times,serif" font-size="14.00">np3.EntityOwl</text>
 </a>
 </g>

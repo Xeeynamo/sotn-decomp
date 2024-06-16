@@ -1887,7 +1887,7 @@
 - [✅ EntityMermanWaterSplash](function_calls/np3.EntityMermanWaterSplash.svg?raw=1)
 - [✅ EntityMessageBox](function_calls/np3.EntityMessageBox.svg?raw=1)
 - [✅ EntityOlroxDrool](function_calls/np3.EntityOlroxDrool.svg?raw=1)
-- [❌ EntityOwl](function_calls/np3.EntityOwl.svg?raw=1)
+- [✅ EntityOwl](function_calls/np3.EntityOwl.svg?raw=1)
 - [❌ EntityOwlKnight](function_calls/np3.EntityOwlKnight.svg?raw=1)
 - [✅ EntityPathBlockSmallWeight](function_calls/np3.EntityPathBlockSmallWeight.svg?raw=1)
 - [✅ EntityPathBlockTallWeight](function_calls/np3.EntityPathBlockTallWeight.svg?raw=1)
