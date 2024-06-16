@@ -1,6 +1,111 @@
 #include "np3.h"
 
-INCLUDE_ASM("st/np3/nonmatchings/4BF18", func_801CBF18);
+s32 func_801CBF18(void) {
+    Primitive* prim;
+    s32 primIndex;
+    switch (g_CurrentEntity->step_s) {
+    case 0:
+        g_CurrentEntity->animCurFrame = 0;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        // yes this has to be written this way
+        if (primIndex != -1) {
+            g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
+            g_CurrentEntity->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            g_CurrentEntity->ext.prim = prim;
+            for (; prim != NULL; prim = prim->next) {
+                prim->tpage = 0x12;
+                prim->clut = D_80180B14[3] + 1;
+                prim->u0 = 72;
+                prim->u1 = 72 + 40;
+                prim->u2 = 72;
+                prim->u3 = 72 + 40;
+
+                if (g_CurrentEntity->facingLeft) {
+                    prim->x0 = g_CurrentEntity->posX.i.hi + 13;
+                    prim->x1 = prim->x0 - 40;
+                    prim->x2 = prim->x0;
+                    prim->x3 = prim->x1;
+                } else {
+                    prim->x0 = g_CurrentEntity->posX.i.hi - 13;
+                    prim->x1 = prim->x0 + 40;
+                    prim->x2 = prim->x0;
+                    prim->x3 = prim->x1;
+                }
+                prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x80;
+                prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;
+                prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
+                prim->priority = g_CurrentEntity->zPriority;
+                prim->drawMode = DRAW_UNK_400 | DRAW_COLORS | DRAW_UNK02;
+                prim->p2 = 0;
+            }
+            prim = g_CurrentEntity->ext.prim;
+            prim->v0 = 0x80;
+            prim->v1 = prim->v0;
+            prim->v2 = prim->v0 + 10;
+            prim->v3 = prim->v2;
+            prim->y0 = g_CurrentEntity->posY.i.hi - 0x10;
+            prim->y1 = prim->y0;
+            prim->y2 = prim->y0 + 10;
+            prim->y3 = prim->y2;
+            prim->p2 = 0;
+            prim->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+            prim = prim->next;
+
+            prim->v0 = 138;
+            prim->v1 = prim->v0;
+            prim->v2 = 138 + 38;
+            prim->v3 = prim->v2;
+            prim->y0 = g_CurrentEntity->posY.i.hi - 6;
+            prim->y1 = prim->y0;
+            prim->y2 = prim->y0 + 38;
+            prim->y3 = prim->y2;
+        } else {
+            return 1;
+        }
+        g_CurrentEntity->step_s++;
+        break;
+    case 1:
+        prim = g_CurrentEntity->ext.prim;
+        prim->r0 = prim->g0 = prim->b0 = 32;
+        LOW(prim->r1) = LOW(prim->r0);
+        prim->r2 = prim->g2 = prim->b2 = 160;
+        LOW(prim->r3) = LOW(prim->r2);
+        g_CurrentEntity->step_s++;
+        break;
+    case 2:
+        prim = g_CurrentEntity->ext.prim;
+        if (g_Timer % 6 == 0) {
+            prim->y0++;
+            prim->y1 = prim->y0;
+        }
+        if (g_Timer % 4 == 0) {
+            prim->v0++;
+            prim->v1 = prim->v0;
+            prim->v2++;
+            prim->v3 = prim->v2;
+            prim->y3++;
+            prim->y2 = prim->y3;
+            prim->p2++;
+            prim = prim->next;
+            prim->v0++;
+            prim->v1 = prim->v0;
+            prim->y0++;
+            prim->y1 = prim->y0;
+        }
+        if (prim->p2 <= 38) {
+            break;
+        }
+        g_CurrentEntity->step_s++;
+        break;
+    case 3:
+        prim = g_CurrentEntity->ext.prim;
+        if (PrimDecreaseBrightness(prim, 6) == 0) {
+            return 1;
+        }
+    }
+    return 0;
+}
 
 INCLUDE_ASM("st/np3/nonmatchings/4BF18", EntityOwlKnight);
 
