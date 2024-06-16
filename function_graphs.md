@@ -1868,7 +1868,7 @@
 - [✅ EntityFallingRock2](function_calls/np3.EntityFallingRock2.svg?raw=1)
 - [❌ EntityGaibon](function_calls/np3.EntityGaibon.svg?raw=1)
 - [❌ EntityGurkha](function_calls/np3.EntityGurkha.svg?raw=1)
-- [❌ EntityGurkhaBodyParts](function_calls/np3.EntityGurkhaBodyParts.svg?raw=1)
+- [✅ EntityGurkhaBodyParts](function_calls/np3.EntityGurkhaBodyParts.svg?raw=1)
 - [✅ EntityGurkhaSword](function_calls/np3.EntityGurkhaSword.svg?raw=1)
 - [✅ EntityHammer](function_calls/np3.EntityHammer.svg?raw=1)
 - [✅ EntityHammerWeapon](function_calls/np3.EntityHammerWeapon.svg?raw=1)
