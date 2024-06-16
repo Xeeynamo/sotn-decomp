@@ -12,7 +12,7 @@
 <!-- np3.EntityGurkha -->
 <g id="node1" class="node">
 <title>np3.EntityGurkha</title>
-<ellipse fill="red" stroke="black" cx="2358.33" cy="-198" rx="94.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2358.33" cy="-198" rx="94.48" ry="18"/>
 <text text-anchor="middle" x="2358.33" y="-194.3" font-family="Times,serif" font-size="14.00">np3.EntityGurkha</text>
 </g>
 <!-- np3.CreateEntityFromCurrentEntity -->
