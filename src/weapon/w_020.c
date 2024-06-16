@@ -11,7 +11,7 @@ INCLUDE_ASM("weapon/nonmatchings/w_020", func_ptr_80170008);
 
 void func_ptr_8017000C(Entity* self) {}
 
-void func_ptr_80170010(Entity* self) {}
+s32 func_ptr_80170010(Entity* self) {}
 
 s32 func_ptr_80170014(Entity* self) {}
 
