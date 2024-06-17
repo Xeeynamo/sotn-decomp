@@ -3029,6 +3029,19 @@ typedef enum ItemTypes {
     NUM_ITEM_TYPES
 } ItemTypes;
 
+#if defined(VERSION_US)
+#define PAD_MENU_SELECT_ALT (PAD_CROSS)
+#define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT)
+#define PAD_MENU_BACK (PAD_TRIANGLE)
+#define PAD_MENU_SORT (PAD_SQUARE)
+#elif defined(VERSION_HD)
+#define PAD_MENU_SELECT_ALT (PAD_CIRCLE)
+#define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT | PAD_SQUARE)
+#define PAD_MENU_BACK (PAD_CROSS)
+#define PAD_MENU_SORT (PAD_TRIANGLE)
+#endif
+#define PAD_MENU_BACK_ALT (PAD_MENU_SELECT | PAD_MENU_BACK)
+
 s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
     s32 prevCursor;
     s32 nItems;
@@ -3103,7 +3116,7 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
         g_Status.equipment[1 - D_801375D0] = yetAnotherId;
     }
     func_800F53A4();
-    if (g_pads[0].tapped & PAD_SQUARE) {
+    if (g_pads[0].tapped & PAD_MENU_SORT) {
         if (g_IsSelectingEquipment == 0) {
             if (func_800FB1EC(itemId) == false) {
                 g_EquipmentCursor = nav->cursorMain;
@@ -3117,7 +3130,7 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
         } else {
             goto block_36;
         }
-    } else if (g_pads[0].tapped & PAD_CROSS) {
+    } else if (g_pads[0].tapped & PAD_MENU_SELECT) {
         if (g_IsSelectingEquipment != 0) {
             do {
                 if (func_800FB1EC(itemId) == false) {
@@ -3201,7 +3214,7 @@ block_5b0:
         return 1;
     }
 
-    if (g_pads[0].tapped & PAD_TRIANGLE) {
+    if (g_pads[0].tapped & PAD_MENU_BACK) {
         if (g_IsSelectingEquipment == 0) {
             func_800FAE98();
             return 0;
@@ -3286,19 +3299,6 @@ void func_800FBAC4(void) {
         g_Status.equipHandOrder[i] = *var_a1++;
     }
 }
-
-#if defined(VERSION_US)
-#define PAD_MENU_SELECT_ALT (PAD_CROSS)
-#define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT)
-#define PAD_MENU_BACK (PAD_TRIANGLE)
-#define PAD_MENU_SORT (PAD_SQUARE)
-#elif defined(VERSION_HD)
-#define PAD_MENU_SELECT_ALT (PAD_CIRCLE)
-#define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT | PAD_SQUARE)
-#define PAD_MENU_BACK (PAD_CROSS)
-#define PAD_MENU_SORT (PAD_TRIANGLE)
-#endif
-#define PAD_MENU_BACK_ALT (PAD_MENU_SELECT | PAD_MENU_BACK)
 
 void MenuHandle(void) {
     s32 temp_s1;
