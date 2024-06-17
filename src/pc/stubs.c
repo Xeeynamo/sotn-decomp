@@ -593,11 +593,6 @@ void EntityWeaponShieldSpell(Entity* self) { NOT_IMPLEMENTED; }
 void func_ptr_80170024(Entity* self) { NOT_IMPLEMENTED; }
 void func_ptr_80170028(Entity* self) { NOT_IMPLEMENTED; }
 
-s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
-    NOT_IMPLEMENTED;
-    return 0;
-}
-
 u16 g_FontCharData[0x60] = {1, 1, 1, 0, 0, 0};
 u16* func_80106A28(u32 arg0, u16 kind) {
     NOT_IMPLEMENTED;
