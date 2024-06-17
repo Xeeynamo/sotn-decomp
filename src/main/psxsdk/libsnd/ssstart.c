@@ -1,8 +1,8 @@
 #include "common.h"
 #include "libsnd_i.h"
 
-void _SsSeqCalledTbyT_1per2();
-void _SsTrapIntrVSync();
+static void _SsSeqCalledTbyT_1per2();
+static void _SsTrapIntrVSync();
 
 static void _SsStart(s32 arg0) {
     u16 rcnt_target;
