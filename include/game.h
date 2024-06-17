@@ -185,6 +185,7 @@ typedef struct Prim {
 #define WEAPON_1_START 0xF0
 
 #ifndef VERSION_PC
+#define DRA_PRG_PTR 0x800A0000
 #define RIC_PRG_PTR 0x8013C000
 #define FAMILIAR_PTR 0x80170000
 #define WEAPON0_PTR 0x8017A000
@@ -199,6 +200,7 @@ typedef struct Prim {
 #define SIM_PTR 0x80280000
 
 #else
+#define DRA_PRG_PTR 0x800A0000
 #define RIC_PRG_PTR 0x8013C000
 #define FAMILIAR_PTR 0x80170000
 #define WEAPON0_PTR 0x8017A000
@@ -335,6 +337,7 @@ typedef enum {
     Game_PrologueEnd,
     Game_MainMenu,
     Game_Ending,
+    Game_Boot,
     Game_99 = 99,
 } GameState;
 
