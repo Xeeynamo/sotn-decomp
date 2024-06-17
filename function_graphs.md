@@ -1564,7 +1564,7 @@
 - [❌ getintr](function_calls/main.getintr.svg?raw=1)
 - [❌ init_ring_status](function_calls/main.init_ring_status.svg?raw=1)
 - [✅ lseek](function_calls/main.lseek.svg?raw=1)
-- [❌ main](function_calls/main.main.svg?raw=1)
+- [✅ main](function_calls/main.main.svg?raw=1)
 - [✅ malloc](function_calls/main.malloc.svg?raw=1)
 - [❌ mem2mem](function_calls/main.mem2mem.svg?raw=1)
 - [✅ memchr](function_calls/main.memchr.svg?raw=1)
