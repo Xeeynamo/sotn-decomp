@@ -1074,6 +1074,8 @@ typedef struct {
     s16 unk84;
     s16 unk86;
     s16 unk88;
+    s16 unk8A;
+    u8 unk8C;
 } ET_Owl;
 
 typedef union { // offset=0x7C
