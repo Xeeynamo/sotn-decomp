@@ -271,17 +271,8 @@ jobs:
             wait
       - name: Generate function report
         run: |
-            make force_symbols
-            make force_extract
-            git clean -fdx asm/
-            git checkout config/
-            rm -rf build/us/main.ld
-            rm -rf build/us/weapon.ld
             make -j extract
             python3 tools/function_finder/function_finder_psp.py > gh-duplicates/functions.md
-            rm -rf gh-duplicates/function_calls/ || true
-            mv function_calls gh-duplicates/
-            mv function_graphs.md gh-duplicates
       - name: Commit all reports
         run: |
             git config --global user.name 'GitHub Action'
