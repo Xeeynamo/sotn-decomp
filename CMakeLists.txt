@@ -235,6 +235,7 @@ set(SOURCE_FILES_STAGE_WRP
     src/st/wrp/e_room_fg.c
     src/st/wrp/popup.c
     src/st/wrp/prim_helpers.c
+    src/st/wrp/data.c
 )
 
 # organization is:

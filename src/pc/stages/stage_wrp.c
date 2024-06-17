@@ -56,18 +56,6 @@ static void* clut_anims[] = {
 
 extern void* WRP_g_EntityGfxs[];
 
-// BSS SECTION START
-s32 D_80193AA0 = 0;
-s32 D_80193AA4 = 0;
-s32 D_80193AA8 = 0;
-s32 D_80193AAC = 0;
-u16* g_LayoutObjHorizontal = NULL;
-u16* g_LayoutObjVertical = NULL;
-u8 g_LayoutObjPosHorizontal = 0;
-u8 g_LayoutObjPosVertical = 0;
-u16 g_ItemIconSlots[32] = {0};
-// BSS SECTION END
-
 static Overlay g_StageDesc = {
     Update,
     HitDetection,
