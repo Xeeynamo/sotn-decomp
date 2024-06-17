@@ -1095,6 +1095,12 @@ typedef struct {
     s16 timer;
 } ET_801B28E4;
 
+typedef struct {
+    u32 unk24[10];
+    u8 unk28;
+    u8 unk29;
+} ET_80123B40;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1197,5 +1203,6 @@ typedef union { // offset=0x7C
     ET_801B0AA4 et_801B0AA4;
     ET_Owl owl;
     ET_AlucardWaterEffect aluwater;
+    ET_80123B40 et_80123B40;
     ET_801B28E4 et_801B28E4;
 } Ext;
