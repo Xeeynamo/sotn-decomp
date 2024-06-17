@@ -74,8 +74,7 @@ s32 SsVabOpenHeadSticky(u_char* addr, u_long vabid, u_long sbaddr) {
     return 0;
 }
 
-short SsVabTransBodyPartly(
-    unsigned char* addr, unsigned long bufsize, short vabid) {
+s32 SsVabTransBodyPartly(u_char* addr, u_long bufsize, u_long vabid) {
     NOT_IMPLEMENTED;
     return 0;
 }
