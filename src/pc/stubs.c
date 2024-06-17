@@ -260,6 +260,8 @@ s32 g_EquipmentCursor;
 s32 D_80137614;
 s32 g_EquipOrderType;
 MenuData g_MenuData = {0};
+s16 D_8013767C;
+s16 D_80137688;
 u8 D_801376B0;
 s16 D_801376C4;
 s16 D_801376C8;
