@@ -387,6 +387,25 @@ extern u8 D_8018274C[];
 
 // For EntityOwlKnight
 extern u16 D_80180B14[];
-
-// Remove this when the Owl Knight is done!
-extern const char* D_801B20DC;
+extern u16 D_80182758[];
+extern s16 D_80182768[];
+extern u8 D_80182770[];
+extern u8 D_80182778[];
+extern u8 D_80182788[];
+extern u8 D_80182794[];
+extern u8 D_801827A8[];
+extern u8 D_801827BC[];
+extern u8 D_801827C8[];
+extern u8 D_801827D8[];
+extern u8 D_801827EC[];
+extern u8 D_80182800[];
+extern u8 D_80182820[];
+extern u8 D_80182834[];
+extern u8 D_8018284C[];
+extern u8 D_80182860[];
+extern u8 D_80182888[];
+extern u8 D_801828A0[];
+extern u8 D_801828AC[];
+extern s8 D_801828B8[];
+extern u8 D_801828C8[];
+extern s16 D_8018290C[];
