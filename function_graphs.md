@@ -1846,7 +1846,7 @@
 - [✅ DestroyEntity](function_calls/np3.DestroyEntity.svg?raw=1)
 - [✅ EntityBat](function_calls/np3.EntityBat.svg?raw=1)
 - [✅ EntityBigRedFireball](function_calls/np3.EntityBigRedFireball.svg?raw=1)
-- [❌ EntityBlade](function_calls/np3.EntityBlade.svg?raw=1)
+- [✅ EntityBlade](function_calls/np3.EntityBlade.svg?raw=1)
 - [✅ EntityBladeSword](function_calls/np3.EntityBladeSword.svg?raw=1)
 - [✅ EntityBloodSplatter](function_calls/np3.EntityBloodSplatter.svg?raw=1)
 - [✅ EntityBloodyZombie](function_calls/np3.EntityBloodyZombie.svg?raw=1)
