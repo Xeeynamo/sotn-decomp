@@ -130,7 +130,7 @@ segments:
       - [0x322CC, .rodata, 4E69C] # EntityGurkhaBodyParts
       - [0x322F8, .rodata, 4F5B8] # EntityGurkha
       - [0x32380, .rodata, 4F5B8] # EntityGurkhaSword
-      - [0x323E4, rodata]
+      - [0x323E4, .rodata, blade] # EntityBlade
       - [0x32464, .rodata, prim_helpers]
       - [0x3246C, c]
       - [0x365FC, c]
@@ -157,6 +157,7 @@ segments:
       - [0x4D540, c]
       - [0x4E69C, c]
       - [0x4F5B8, c]
+      - [0x50A00, c, blade]
       - [0x51F38, c, prim_helpers]
       - [0x52768, sbss]
   - [0x53434]

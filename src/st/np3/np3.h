@@ -57,6 +57,8 @@ typedef enum {
     /* 0x57 */ E_HAMMER_WEAPON,
     /* 0x58 */ E_GURKHA,
     /* 0x59 */ E_GURKHA_SWORD,
+    /* 0x5A */ E_BLADE,
+    /* 0x5B */ E_BLADE_SWORD
 } EntityIDs;
 
 extern void CreateEntityFromCurrentEntity(u16, Entity*);
@@ -409,3 +411,31 @@ extern u8 D_801828AC[];
 extern s8 D_801828B8[];
 extern u8 D_801828C8[];
 extern s16 D_8018290C[];
+
+// For EntityBlade
+
+extern u16 D_801833E4[];
+extern s16 D_801833F4;
+extern s16 D_80183494;
+extern s16 D_801834B8[];
+extern s16 D_801834D8[];
+extern s16 D_801834F8[];
+extern s16 D_80183514[];
+extern s16 D_80183530[];
+extern s16 D_80183548[];
+extern s16 D_80183560[];
+extern s16 D_80183570[];
+extern s16 D_80183580[];
+extern s16 D_801835A8[];
+extern s16 D_80183600[];
+extern s16 D_80183638[];
+extern s16 D_80183700[];
+extern s16 D_80183720[];
+extern s16 D_80183760[];
+extern s16 D_8018386C[];
+extern s16 D_8018389C[];
+extern s16 D_801838C4[];
+extern s16 D_80183934[];
+extern s16 D_80183990[];
+extern s16 D_80183A24[];
+extern s16 D_80183A4C[];
