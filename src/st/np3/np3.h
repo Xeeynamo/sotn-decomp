@@ -139,7 +139,7 @@ extern Unkstruct_80180FE0 D_8018129C[];
 
 // *** Merman properties START ***
 
-extern u16 D_80181230[];     // pos TBL
+extern s16 D_80181230[];     // pos TBL
 extern Point32 D_80182224[]; // accel_x TBL
 extern u8 D_80182244[];      // timers
 extern s32 D_80182248;       // Collision data
@@ -222,9 +222,6 @@ extern const u8 D_80181214[];
 extern s16 D_80181220[][2];
 extern u16 D_8018122C;
 extern u16 D_8018122E;
-extern u16 D_80181230[];
-extern u16 D_8018122E;
-extern u16 D_80181230[];
 extern u8 D_801813D4[];
 extern u8 D_801813E4[];
 extern s8 D_80181454[];
