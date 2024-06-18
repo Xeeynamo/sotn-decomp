@@ -45,23 +45,24 @@ void EntityAlucardWaterEffect(Entity* arg0) {
     u16 var_s6;
     u32 var_s7;
     u16 sp4A;
-    s32 gPlayerUnk0C;
+    s32 status;
     Tilemap* tilemap = &g_Tilemap;
     Entity* player = &PLAYER;
 
     sp18 = player->posX.i.hi + tilemap->scrollX.i.hi;
-    gPlayerUnk0C = g_Player.unk0C;
-    if (gPlayerUnk0C & 0x27) {
-        if (gPlayerUnk0C & 0x20) {
+    status = g_Player.unk0C;
+    if (status & (PLAYER_STATUS_UNK_20 | PLAYER_STATUS_TRANSFORM)) {
+        if (status & PLAYER_STATUS_UNK_20) {
             sp4A = 0x14;
             var_s6 = 0x19;
-            if (gPlayerUnk0C & 4) {
+            if (status & PLAYER_STATUS_WOLF_FORM) {
                 sp4A = 0xA;
             }
-        } else if (gPlayerUnk0C & 3) {
+        } else if (
+            status & (PLAYER_STATUS_MIST_FORM | PLAYER_STATUS_BAT_FORM)) {
             sp4A = 0xC;
             var_s6 = 5;
-        } else if (gPlayerUnk0C & 4) {
+        } else if (status & PLAYER_STATUS_WOLF_FORM) {
             sp4A = 0x14;
             var_s6 = 0x19;
         }
@@ -86,7 +87,8 @@ void EntityAlucardWaterEffect(Entity* arg0) {
         // FIX_TO_I. This is one of the only places in the code where this is
         // used, so we're keeping velocityY as an s32 (not f32) to avoid needing
         // to say velocityY.val everywhere.
-        if (FIX_TO_I(player->velocityY) != 0 && !(gPlayerUnk0C & 3)) {
+        if (FIX_TO_I(player->velocityY) != 0 &&
+            !(status & (PLAYER_STATUS_MIST_FORM | PLAYER_STATUS_BAT_FORM))) {
             if (FIX_TO_I(player->velocityY) < 0) {
                 if (sp28 == 0) {
                     var_s1 = arg0->ext.aluwater.unk7C;
@@ -201,7 +203,7 @@ void EntityAlucardWaterEffect(Entity* arg0) {
                 }
             }
         } else {
-            if (!(gPlayerUnk0C & 2) && (sp28)) {
+            if (!(status & PLAYER_STATUS_MIST_FORM) && (sp28)) {
                 if (!arg0->ext.aluwater.unk7E) {
                     var_s1 = D_80181230[sp30 + 7];
                     if (sp18 != arg0->ext.aluwater.unk80) {
@@ -249,7 +251,7 @@ void EntityAlucardWaterEffect(Entity* arg0) {
                     var_s1 = D_80181230[sp30 + 7];
                     if (var_s1 > 0x1000 || var_s1 < -0x1000) {
                         if (var_s3 >= sp4A) {
-                            if (gPlayerUnk0C & 1) {
+                            if (status & PLAYER_STATUS_BAT_FORM) {
                                 var_s1 = var_s1 * 3 / 4;
                             } else {
                                 var_s1 /= 2;
@@ -271,9 +273,9 @@ void EntityAlucardWaterEffect(Entity* arg0) {
             arg0->ext.aluwater.unk7E--;
         }
         *D_80097448 = var_s3;
-        if (gPlayerUnk0C & 0x27) {
-            if (gPlayerUnk0C & 0x20) {
-                if (gPlayerUnk0C & 4) {
+        if (status & (PLAYER_STATUS_UNK_20 | PLAYER_STATUS_TRANSFORM)) {
+            if (status & PLAYER_STATUS_UNK_20) {
+                if (status & PLAYER_STATUS_WOLF_FORM) {
                     if (var_s3 > 4) {
                         D_80097448[1] = var_s3 - 4;
                     } else {
@@ -296,7 +298,8 @@ void EntityAlucardWaterEffect(Entity* arg0) {
                         D_80097450 = 0;
                     }
                 }
-            } else if (gPlayerUnk0C & 3) {
+            } else if (
+                status & (PLAYER_STATUS_MIST_FORM | PLAYER_STATUS_BAT_FORM)) {
                 if (var_s3 > 6) {
                     D_80097448[1] = var_s3 - 6;
                 } else {
@@ -307,7 +310,7 @@ void EntityAlucardWaterEffect(Entity* arg0) {
                 } else {
                     D_80097450 = 0;
                 }
-            } else if (gPlayerUnk0C & 4) {
+            } else if (status & PLAYER_STATUS_WOLF_FORM) {
                 if (var_s3 > 8) {
                     D_80097448[1] = var_s3 - 8;
                 } else {
@@ -332,7 +335,7 @@ void EntityAlucardWaterEffect(Entity* arg0) {
             }
         }
     } else {
-        InitializeEntity(&D_80180A60);
+        InitializeEntity(D_80180A60);
     }
     arg0->ext.aluwater.unk7C = sp28;
     arg0->ext.aluwater.unk80 = sp18;
