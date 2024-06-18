@@ -550,6 +550,8 @@ extern s32 g_EquipmentCursor;
 extern s32 D_80137614;
 extern s32 g_EquipOrderType;
 extern MenuData g_MenuData;
+extern s16 D_8013767C;
+extern s16 D_80137688;
 extern u8 D_801376B0;
 extern s16 D_801376C4;
 extern s16 D_801376C8;

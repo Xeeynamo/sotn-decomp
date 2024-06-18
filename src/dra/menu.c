@@ -3020,8 +3020,205 @@ bool func_800FB1EC(s32 arg0) {
     return false;
 }
 
-s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected);
-INCLUDE_ASM("dra/nonmatchings/menu", func_800FB23C);
+#if defined(VERSION_US)
+#define PAD_MENU_SELECT_ALT (PAD_CROSS)
+#define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT)
+#define PAD_MENU_BACK (PAD_TRIANGLE)
+#define PAD_MENU_SORT (PAD_SQUARE)
+#elif defined(VERSION_HD)
+#define PAD_MENU_SELECT_ALT (PAD_CIRCLE)
+#define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT | PAD_SQUARE)
+#define PAD_MENU_BACK (PAD_CROSS)
+#define PAD_MENU_SORT (PAD_TRIANGLE)
+#endif
+#define PAD_MENU_BACK_ALT (PAD_MENU_SELECT | PAD_MENU_BACK)
+
+s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
+    s32 prevCursor;
+    s32 nItems;
+    s32 ret;
+    u16 itemId;
+    s32 var_s4;
+    s32 var_s6;
+    u16 otherItemId;
+    u16 yetAnotherId;
+
+    s32 temp_psp_a1;
+    s32 temp_psp_a2;
+
+    nItems = func_800FD6C4(D_801375CC);
+    prevCursor = nav->cursorMain;
+    MenuHandleCursorInput(nav, nItems, 2);
+    itemId = order[D_801375D8[nav->cursorMain]];
+    otherItemId = *selected;
+    ret = 0;
+    if (count[itemId] != 0) {
+        *selected = itemId;
+    } else {
+        *selected = 0;
+    }
+
+    if (D_801375CC == EQUIP_HAND) {
+        yetAnotherId = g_Status.equipment[1 - D_801375D0];
+        if (count[itemId] > 0) {
+            if (g_EquipDefs[otherItemId].itemCategory == 5) {
+                g_Status.equipment[1 - D_801375D0] = 0;
+            }
+            if (g_EquipDefs[itemId].itemCategory == 5) {
+                g_Status.equipment[1 - D_801375D0] = itemId;
+            }
+        } else if (g_EquipDefs[otherItemId].itemCategory == 5) {
+            g_Status.equipment[1 - D_801375D0] = 0;
+        }
+    }
+    var_s6 = 0;
+    func_800F53A4();
+
+    if ((g_Player.unk0C & 0x17) | (PLAYER.step == Player_UnmorphWolf) |
+        (PLAYER.step == Player_BossGrab) | (g_Player.unk60)) {
+        if (itemId == ITEM_AXE_LORD_ARMOR) {
+            if (D_801375CC == EQUIP_ARMOR) {
+                if (count[ITEM_AXE_LORD_ARMOR] != 0) {
+                    var_s6 = 1;
+                }
+            }
+        }
+    }
+
+    temp_psp_a2 = 0;
+    if (D_801375CC == EQUIP_HAND && count[itemId] > 0) {
+        if (itemId == ITEM_LIFE_APPLE || itemId == ITEM_HAMMER) {
+            temp_psp_a1 = 1;
+        } else {
+            temp_psp_a1 = 0;
+        }
+        if (temp_psp_a1) {
+            temp_psp_a2 = 1;
+        }
+    }
+    var_s6 |= temp_psp_a2;
+    D_80137948 = 0;
+    if (var_s6 == 0) {
+        D_80137948 = 1;
+        func_800F7244();
+    }
+    *selected = otherItemId;
+    if (D_801375CC == EQUIP_HAND) {
+        g_Status.equipment[1 - D_801375D0] = yetAnotherId;
+    }
+    func_800F53A4();
+    if (g_pads[0].tapped & PAD_MENU_SORT) {
+        if (g_IsSelectingEquipment == 0) {
+            if (func_800FB1EC(itemId) == false) {
+                g_EquipmentCursor = nav->cursorMain;
+                g_IsSelectingEquipment++;
+                PlaySfx(0x633);
+            } else {
+                PlaySfx(0x686);
+            }
+        } else if (func_800FB1EC(itemId) != false) {
+            PlaySfx(0x686);
+        } else {
+            goto block_36;
+        }
+    } else if (g_pads[0].tapped & PAD_MENU_SELECT) {
+        if (g_IsSelectingEquipment != 0) {
+            do {
+                if (func_800FB1EC(itemId) == false) {
+                block_36:
+                    func_800FB160(
+                        g_EquipmentCursor, nav->cursorMain, D_801375CC);
+                    ret = 2;
+                    g_IsSelectingEquipment = 0;
+                    PlaySfx(0x633);
+                } else {
+                    PlaySfx(0x686);
+                }
+            } while (0);
+        } else if (var_s6 != 0) {
+            PlaySfx(0x686);
+        } else {
+            PlaySfx(0x633);
+            if (count[itemId] > 0) {
+                var_s4 = 1;
+                *selected = itemId;
+                if (func_800FB1EC(itemId) == false) {
+                    count[itemId]--;
+                }
+                if (D_801375CC == EQUIP_HAND && itemId == ITEM_SWORD_FAMILIAR &&
+                    (LOW(g_Status.relics[RELIC_FAERIE_CARD]) & 0x30000) ==
+                        0x30000) {
+                    g_Status.relics[RELIC_SWORD_CARD] = 1;
+                    g_Servant = 0;
+                }
+            } else {
+                var_s4 = 0;
+                if (D_801375CC == EQUIP_HAND) {
+                    ret = 2;
+                    if (*selected != 0) {
+                        *selected = 0;
+                    } else {
+                        goto block_5b0;
+                    }
+                } else {
+                    *selected = D_800A2DEC[D_801375D4];
+                }
+            }
+            AddToInventory(otherItemId, D_801375CC);
+            if (D_801375CC == EQUIP_HAND) {
+                if (g_EquipDefs[otherItemId].itemCategory == 5) {
+                    g_Status.equipment[1 - D_801375D0] = 0;
+                }
+                if (g_EquipDefs[itemId].itemCategory == 5 && var_s4 != 0) {
+                    if (g_EquipDefs[yetAnotherId].itemCategory !=
+                        g_EquipDefs[itemId].itemCategory) {
+                        AddToInventory(yetAnotherId, D_801375CC);
+                    }
+                    g_Status.equipment[1 - D_801375D0] = itemId;
+                }
+            }
+            ret = 2;
+        }
+    }
+block_5b0:
+    func_800FA3C4(nav->cursorMain, var_s6, 1);
+    if ((-D_80137688) / 12) {
+        if (g_pads[0].repeat & PAD_L1) {
+            *D_80137844 = 5;
+        } else if (*D_80137844 == 0) {
+            *D_80137844 = 1;
+        }
+    } else {
+        *D_80137844 = 0;
+    }
+    if ((-D_80137688 + D_8013767C) / 12 < (nItems + 1) / 2) {
+        if (g_pads[0].repeat & PAD_R1) {
+            *D_80137848 = 5;
+        } else if (*D_80137848 == 0) {
+            *D_80137848 = 1;
+        }
+    } else {
+        *D_80137848 = 0;
+    }
+
+    if (func_800FACB8()) {
+        return 1;
+    }
+
+    if (g_pads[0].tapped & PAD_MENU_BACK) {
+        if (g_IsSelectingEquipment == 0) {
+            func_800FAE98();
+            return 0;
+        } else {
+            g_IsSelectingEquipment = 0;
+        }
+    }
+    if (prevCursor != nav->cursorMain) {
+        return 2;
+    }
+
+    return ret;
+}
 
 void func_800FB9BC(void) {
     const int ItemsPerRow = 2;
@@ -3093,19 +3290,6 @@ void func_800FBAC4(void) {
         g_Status.equipHandOrder[i] = *var_a1++;
     }
 }
-
-#if defined(VERSION_US)
-#define PAD_MENU_SELECT_ALT (PAD_CROSS)
-#define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT)
-#define PAD_MENU_BACK (PAD_TRIANGLE)
-#define PAD_MENU_SORT (PAD_SQUARE)
-#elif defined(VERSION_HD)
-#define PAD_MENU_SELECT_ALT (PAD_CIRCLE)
-#define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT | PAD_SQUARE)
-#define PAD_MENU_BACK (PAD_CROSS)
-#define PAD_MENU_SORT (PAD_TRIANGLE)
-#endif
-#define PAD_MENU_BACK_ALT (PAD_MENU_SELECT | PAD_MENU_BACK)
 
 void MenuHandle(void) {
     s32 temp_s1;

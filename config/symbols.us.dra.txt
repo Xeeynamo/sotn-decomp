@@ -24,7 +24,6 @@ CheckCollision = 0x800EF45C;
 MenuDraw = 0x800F8F28;
 MenuHandleCursorInput = 0x800FA034;
 MenuHandle = 0x800FBC24;
-AddToInventory = 0x800FD874;
 GetStatusAilmentTimer = 0x800FDB18;
 IsRelicActive = 0x800FE3A8;
 HandleSaveMenu = 0x80103238;
