@@ -31,7 +31,7 @@ void SpuInit();
 void _SsInit();
 void Snd_SetPlayMode(s16, s16, u8, s16);
 void SpuQuit();
-void _SsStart(s32);
+static void _SsStart(s32);
 extern void (*D_80032EF8)();
 extern void (*D_80032EFC)();
 extern s32 D_80032F04;
@@ -50,8 +50,7 @@ extern s32 _svm_vab_total[];
 extern s32 _svm_vab_start[];
 extern u8 _svm_vab_used[];
 
-s16 SsVabOpenHeadWithMode(u8* addr, s16 vabid, s32 arg2, u32 sbaddr);
-
+int SsVabOpenHeadWithMode(unsigned char* pAddr, int vabId, s32 pFn, long mode);
 void SpuFree(s32);
 extern u16 _svm_vab_count;
 

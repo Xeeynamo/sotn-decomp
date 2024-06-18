@@ -62,3 +62,18 @@ jobs:
       run: |
         cmake -B ${{github.workspace}}/pc -DCMAKE_BUILD_TYPE=Release -DSDL2_PATH=C:\temp-sdl2\SDL2-2.28.5
         cmake --build ${{github.workspace}}/pc --config Release
+
+  build-linux-lle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install requirements
+        run: sudo apt-get update && sudo apt-get install build-essential libsdl2-dev
+      - name: Clone repo
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          submodules: false
+      - name: Build
+        run: |
+          cmake -B ${{github.workspace}}/pc -DWANT_LIBSND_LLE=1
+          cmake --build ${{github.workspace}}/pc --config Release
