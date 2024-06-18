@@ -18,7 +18,7 @@ static u32 D_8018064C[] = {0x00040000, 0x00040000, 0xFFFC0004, 0x0000FFF8};
 
 #endif
 
-static WarpCoord D_8018065C[] = {
+static WarpCoord WarpRoomCoords[] = {
     {0x0F, 0x26}, // Entrance
     {0x23, 0x2C}, // Abandoned pit to the Catacomb
     {0x3B, 0x11}, // Outer Wall
@@ -26,11 +26,28 @@ static WarpCoord D_8018065C[] = {
     {0x25, 0x15}, // Orlox's Quarters
 };
 
-#ifndef VERSION_PSP
+#ifdef VERSION_PSP
+
+extern s32 DestinationWarpRoom;
+extern s32 WarpBackgroundAmplitiude;
+extern s32 WarpBackgroundPhase;
+extern s32 WarpBackgroundBrightness;
+
+#else
+
 static u16 unused_array[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000, 0x0001, 0x0000,
     0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0101,
 };
+
+// the room the player will be warping to
+static s32 DestinationWarpRoom;
+// the amplitude of the current background phase
+static s32 WarpBackgroundAmplitiude;
+// the phase used to calculate the background color
+static s32 WarpBackgroundPhase;
+// the brightness of the background layer
+static s32 WarpBackgroundBrightness;
 #endif
 
 // Handles everything about the warp room.
@@ -107,7 +124,7 @@ void EntityWarpRoom(Entity* self) {
         LOW(prim->r3) = LOW(prim->r0);
         prim->priority = 0x1F0;
         prim->drawMode = DRAW_HIDE;
-        D_80193AA4 = 0x100;
+        WarpBackgroundAmplitiude = 0x100;
         for (i = 0; i < 32; i++) {
             entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0x100]);
             if (entity != NULL) {
@@ -193,19 +210,19 @@ void EntityWarpRoom(Entity* self) {
     case 4:
         // Perform the actual warp
         move_room = self->params + 1;
-        for (i = 0; i < LEN(D_8018065C); i++, move_room++) {
-            if (move_room > LEN(D_8018065C) - 1) {
+        for (i = 0; i < LEN(WarpRoomCoords); i++, move_room++) {
+            if (move_room > LEN(WarpRoomCoords) - 1) {
                 move_room = 0;
             }
             if (g_CastleFlags[0xD0] & (1 << move_room)) {
                 break;
             }
         }
-        D_80193AA0 = move_room;
-        warpCoords = &D_8018065C[move_room];
+        DestinationWarpRoom = move_room;
+        warpCoords = &WarpRoomCoords[move_room];
         moveX = warpCoords->x - g_Tilemap.left;
         moveY = warpCoords->y - g_Tilemap.top;
-        FntPrint("move_room%x\n", D_80193AA0);
+        FntPrint("move_room%x\n", DestinationWarpRoom);
         FntPrint("for_x:%x y%x\n", warpCoords->x, warpCoords->y);
         FntPrint("move_x:%x y%x\n", moveX, moveY);
         PLAYER.posX.i.hi += moveX << 8;
@@ -252,40 +269,46 @@ void EntityWarpRoom(Entity* self) {
         LOW(prim->r3) = LOW(prim->r0);
         break;
     default:
-        warpCoords = &D_8018065C[D_80193AA0];
+        warpCoords = &WarpRoomCoords[DestinationWarpRoom];
         moveX = warpCoords->x - g_Tilemap.left;
         moveY = warpCoords->y - g_Tilemap.top;
-        FntPrint("move_room%x\n", D_80193AA0);
+        FntPrint("move_room%x\n", DestinationWarpRoom);
         FntPrint("for_x:%x y%x\n", warpCoords->x, warpCoords->y);
         FntPrint("move_x:%x y%x\n", moveX, moveY);
         break;
     }
-    D_80193AA8 += 0x10;
-    D_80193AAC = (rsin(D_80193AA8) >> 8) + 0xD0;
-    if (D_80193AAC < 0) {
-        D_80193AAC = 0;
+    WarpBackgroundPhase += 0x10;
+    WarpBackgroundBrightness = (rsin(WarpBackgroundPhase) >> 8) + 0xD0;
+    if (WarpBackgroundBrightness < 0) {
+        WarpBackgroundBrightness = 0;
     }
-    if (D_80193AAC > 0xFF) {
-        D_80193AAC = 0xFF;
+    if (WarpBackgroundBrightness > 0xFF) {
+        WarpBackgroundBrightness = 0xFF;
     }
-    D_80193AA4 = (rcos(D_80193AA8) >> 8) + 0xD0;
+    WarpBackgroundAmplitiude = (rcos(WarpBackgroundPhase) >> 8) + 0xD0;
 
     prim = self->ext.warpRoom.primBg;
     for (i = 0; i < 16; i++) {
         angle = D_80180608[(i + 0) % 16];
-        prim->r0 = ((rsin(angle) + 0x1000) >> 6) * D_80193AA4 / 256;
+        prim->r0 =
+            ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
         angle = D_80180608[(i + 5) % 16];
-        prim->g0 = ((rsin(angle) + 0x1000) >> 6) * D_80193AA4 / 256;
+        prim->g0 =
+            ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
         angle = D_80180608[(i + 10) % 16];
-        prim->b0 = ((rsin(angle) + 0x1000) >> 6) * D_80193AA4 / 256;
+        prim->b0 =
+            ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
         angle = D_80180608[(i + 1) % 16];
-        prim->r1 = ((rsin(angle) + 0x1000) >> 6) * D_80193AA4 / 256;
+        prim->r1 =
+            ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
         angle = D_80180608[(i + 6) % 16];
-        prim->g1 = ((rsin(angle) + 0x1000) >> 6) * D_80193AA4 / 256;
+        prim->g1 =
+            ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
         angle = D_80180608[(i + 11) % 16];
-        prim->b1 = ((rsin(angle) + 0x1000) >> 6) * D_80193AA4 / 256;
+        prim->b1 =
+            ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
         prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
-            D_80193AAC;
+            WarpBackgroundBrightness;
         D_80180608[i] += 0x20;
         prim = prim->next;
     }
