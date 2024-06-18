@@ -89,25 +89,6 @@ def get_asm_files(asm_path):
 
     return files
 
-
-# look in C files for DECOMP_ME_WIP comments and extract function name
-# and URL
-def get_c_files(c_path):
-    files = []
-    for path in Path(c_path).rglob("*.c"):
-        f = open(f"{path}", "r")
-        text = f.readlines()
-
-        for line in text:
-            # format is DECOMP_ME_WIP function_name URL
-            if "DECOMP_ME_WIP" in line:
-                split = line.split(" ")
-                func_name = split[2]
-                address = split[3]
-                files.append([path, func_name.strip(), address.strip()])
-    return files
-
-
 def find_wip(o):
     result = find_scratches(o[1], "ps1")
 
@@ -120,7 +101,6 @@ def find_wip(o):
 if __name__ == "__main__":
     args = parser.parse_args()
     asm_files = get_asm_files("asm/us")
-    c_files = get_c_files("src")
 
     # sort by name, then number of branches, then length
     asm_files = sorted(asm_files, key=lambda x: (x["name"]))
@@ -142,17 +122,6 @@ if __name__ == "__main__":
         length = len(f["text"].split("\n"))
         branches = f["branches"]
         jump_table = f["jump_table"]
-
-        # correlate asm folder to C file name
-        for c_file in c_files:
-            # get asm folder name from C filename
-            asm_folder_name = os.path.basename(c_file[0]).split(".")[0]
-
-            # check if the folder name is part of the asm path and the function name
-            # is also part of the path
-            if asm_folder_name in name and c_file[1] in name:
-                # found a decomp.me WIP, get the URL
-                wip = c_file[2]
 
         if "/psxsdk/" in name:
             ovl_name = name.split("/")[5]  # grab library name
