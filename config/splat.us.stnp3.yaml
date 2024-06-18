@@ -147,7 +147,7 @@ segments:
       - [0x3FC70, c, entity_heart_drop]
       - [0x3FD98, c, entity_message_box]
       - [0x402F4, c]
-      - [0x44144, c]
+      - [0x44144, c, player_water_effect]
       - [0x44DCC, c] # Merman Entities
       - [0x48238, c] # Merman Entities (2)
       - [0x490E8, c] # EntityBoneScimitar

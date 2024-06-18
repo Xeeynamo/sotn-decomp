@@ -1078,6 +1078,19 @@ typedef struct {
     u8 unk8C;
 } ET_Owl;
 
+typedef struct {
+    u16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+    s16 unk86;
+    u16 unk88;
+    s16 unk8A;
+    s16 unk8C;
+    s16 unk8E;
+} ET_AlucardWaterEffect;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1179,4 +1192,5 @@ typedef union { // offset=0x7C
     ET_AxeKnight axeknight;
     ET_801B0AA4 et_801B0AA4;
     ET_Owl owl;
+    ET_AlucardWaterEffect aluwater;
 } Ext;
