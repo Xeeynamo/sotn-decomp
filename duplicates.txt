@@ -2585,7 +2585,7 @@
 | 1.00 | true     | func_801B44B4                       | ../../asm/us/st/np3/nonmatchings/3246C/func_801B44B4.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | EntityAlucardWaterEffect            | ../../asm/us/st/no3/nonmatchings/48A84/EntityAlucardWaterEffect.s 
-| 1.00 | false    | func_801C424C                       | ../../asm/us/st/np3/nonmatchings/402F4/func_801C424C.s 
+| 1.00 | false    | func_801C424C                       | ../../asm/us/st/np3/nonmatchings/44144/func_801C424C.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityExplosion2                    | ../../asm/us/st/no3/nonmatchings/48A84/EntityExplosion2.s 
 | 1.00 | true     | EntityExplosion2                    | ../../asm/us/st/np3/nonmatchings/44DCC/EntityExplosion2.s 
@@ -2645,7 +2645,7 @@
 | 1.00 | true     | func_801CF6D8                       | ../../asm/us/st/no3/nonmatchings/48A84/func_801CF6D8.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | func_801D0A2C                       | ../../asm/us/st/no3/nonmatchings/48A84/func_801D0A2C.s 
-| 1.00 | false    | func_801C4144                       | ../../asm/us/st/np3/nonmatchings/402F4/func_801C4144.s 
+| 1.00 | true     | func_801C4144                       | ../../asm/us/st/np3/nonmatchings/44144/func_801C4144.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801D2D40                       | ../../asm/us/st/no3/nonmatchings/48A84/func_801D2D40.s 
 | 1.00 | true     | func_801C6458                       | ../../asm/us/st/np3/nonmatchings/44DCC/func_801C6458.s 

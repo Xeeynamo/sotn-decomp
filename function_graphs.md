@@ -1992,7 +1992,7 @@
 - [✅ func_801C1430](function_calls/np3.func_801C1430.svg?raw=1)
 - [✅ func_801C2598](function_calls/np3.func_801C2598.svg?raw=1)
 - [✅ func_801C2690](function_calls/np3.func_801C2690.svg?raw=1)
-- [❌ func_801C4144](function_calls/np3.func_801C4144.svg?raw=1)
+- [✅ func_801C4144](function_calls/np3.func_801C4144.svg?raw=1)
 - [❌ func_801C424C](function_calls/np3.func_801C424C.svg?raw=1)
 - [✅ func_801C6458](function_calls/np3.func_801C6458.svg?raw=1)
 - [✅ func_801C7D80](function_calls/np3.func_801C7D80.svg?raw=1)
