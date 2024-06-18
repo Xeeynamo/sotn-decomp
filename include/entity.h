@@ -1090,6 +1090,10 @@ typedef struct {
     s16 unk8C;
     s16 unk8E;
 } ET_AlucardWaterEffect;
+typedef struct {
+    s32 pad;
+    s16 timer;
+} ET_801B28E4;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -1193,4 +1197,5 @@ typedef union { // offset=0x7C
     ET_801B0AA4 et_801B0AA4;
     ET_Owl owl;
     ET_AlucardWaterEffect aluwater;
+    ET_801B28E4 et_801B28E4;
 } Ext;

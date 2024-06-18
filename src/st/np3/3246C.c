@@ -127,7 +127,88 @@ void func_801B2830(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/np3/nonmatchings/3246C", func_801B28E4);
+void func_801B28E4(Entity* self) {
+    Entity* newEntity;
+    s32 animFrame;
+    s32 random0to3;
+    u8* clutIndices;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitGeneric);
+        self->ext.et_801B28E4.timer = 0x80;
+        self->animCurFrame = 15;
+        g_CastleFlags[55] |= 1;
+        if (self->params & FLAG_DEAD) {
+            self->step = 4;
+            return;
+        }
+    case 1:
+        switch (self->step_s) {
+        case 0:
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (newEntity != NULL) {
+                CreateEntityFromCurrentEntity(E_801B5DE8, newEntity);
+                random0to3 = Random() & 3;
+                newEntity->posX.i.hi = D_80180EA4[random0to3][0];
+                newEntity->posY.i.hi = D_80180EA4[random0to3][1];
+            }
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (newEntity != NULL) {
+                CreateEntityFromCurrentEntity(E_801B5E98, newEntity);
+                if (random0to3 >= 3) {
+                    random0to3 = 0;
+                }
+                newEntity->params = random0to3;
+            }
+            self->step_s++;
+            /* fallthrough */
+        case 1:
+            if (AnimateEntity(D_80180E94, self) == 0) {
+                self->ext.et_801B28E4.timer = (Random() & 0x7F) + 0x40;
+                self->step_s++;
+            }
+            animFrame = self->animCurFrame;
+            for (clutIndices = &D_80180E78; *clutIndices != 0xFF;
+                 clutIndices += 4) {
+                g_ClutIds[*clutIndices] =
+                    g_ClutIds[0x200 + (clutIndices + animFrame)[1]];
+            }
+            if (animFrame == 1) {
+                g_GpuBuffers[0].draw.r0 = 0x30;
+                g_GpuBuffers[0].draw.g0 = 0x30;
+                g_GpuBuffers[0].draw.b0 = 0x48;
+                g_GpuBuffers[1].draw.r0 = 0x30;
+                g_GpuBuffers[1].draw.g0 = 0x30;
+                g_GpuBuffers[1].draw.b0 = 0x48;
+                return;
+            }
+            break; // Breaks to case 4 of outer switch
+        case 2:
+            g_GpuBuffers[0].draw.r0 = 0x10;
+            g_GpuBuffers[0].draw.g0 = 8;
+            g_GpuBuffers[0].draw.b0 = 0x38;
+            g_GpuBuffers[1].draw.r0 = 0x10;
+            g_GpuBuffers[1].draw.g0 = 8;
+            g_GpuBuffers[1].draw.b0 = 0x38;
+            if (--self->ext.et_801B28E4.timer == 0) {
+                SetSubStep(0);
+            }
+            return;
+        default:
+            return;
+        }
+
+    // careful, this is the outer switch!
+    case 4:
+        g_GpuBuffers[0].draw.r0 = 0x10;
+        g_GpuBuffers[0].draw.g0 = 8;
+        g_GpuBuffers[0].draw.b0 = 0x38;
+        g_GpuBuffers[1].draw.r0 = 0x10;
+        g_GpuBuffers[1].draw.g0 = 8;
+        g_GpuBuffers[1].draw.b0 = 0x38;
+    }
+}
 
 void EntityShuttingWindow(Entity* self) {
     Primitive* prim;
