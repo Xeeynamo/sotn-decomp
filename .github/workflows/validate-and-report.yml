@@ -271,7 +271,8 @@ jobs:
             wait
       - name: Generate function report
         run: |
-            make -j extract
+            make clean && make -j extract
+            find asm -print
             python3 tools/function_finder/function_finder_psp.py > gh-duplicates/functions.md
       - name: Commit all reports
         run: |
