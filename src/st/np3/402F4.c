@@ -488,8 +488,3 @@ void BottomCornerText(u8* str, u8 lower_left) {
 #undef xpos
     g_unkGraphicsStruct.BottomCornerTextTimer = 0x130;
 }
-
-INCLUDE_ASM("st/np3/nonmatchings/402F4", func_801C4144);
-
-// ID 0x2C
-INCLUDE_ASM("st/np3/nonmatchings/402F4", func_801C424C);
