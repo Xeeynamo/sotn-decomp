@@ -307,7 +307,7 @@
 <g id="node20" class="node">
 <title>main.GsClearVcount</title>
 <g id="a_node20"><a xlink:href="main.GsClearVcount.svg" xlink:title="main.GsClearVcount">
-<ellipse fill="red" stroke="black" cx="2814.84" cy="-18" rx="105.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2814.84" cy="-18" rx="105.88" ry="18"/>
 <text text-anchor="middle" x="2814.84" y="-14.3" font-family="Times,serif" font-size="14.00">main.GsClearVcount</text>
 </a>
 </g>

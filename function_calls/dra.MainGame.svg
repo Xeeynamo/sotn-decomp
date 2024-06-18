@@ -867,7 +867,7 @@
 <g id="node55" class="node">
 <title>main.GsClearVcount</title>
 <g id="a_node55"><a xlink:href="main.GsClearVcount.svg" xlink:title="main.GsClearVcount">
-<ellipse fill="red" stroke="black" cx="10180.65" cy="-18" rx="105.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="10180.65" cy="-18" rx="105.88" ry="18"/>
 <text text-anchor="middle" x="10180.65" y="-14.3" font-family="Times,serif" font-size="14.00">main.GsClearVcount</text>
 </a>
 </g>
@@ -883,7 +883,7 @@
 <g id="node56" class="node">
 <title>main.GsGetVcount</title>
 <g id="a_node56"><a xlink:href="main.GsGetVcount.svg" xlink:title="main.GsGetVcount">
-<ellipse fill="red" stroke="black" cx="10401.65" cy="-18" rx="97.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="10401.65" cy="-18" rx="97.48" ry="18"/>
 <text text-anchor="middle" x="10401.65" y="-14.3" font-family="Times,serif" font-size="14.00">main.GsGetVcount</text>
 </a>
 </g>
@@ -899,7 +899,7 @@
 <g id="node57" class="node">
 <title>main.GsInitVcount</title>
 <g id="a_node57"><a xlink:href="main.GsInitVcount.svg" xlink:title="main.GsInitVcount">
-<ellipse fill="red" stroke="black" cx="10613.65" cy="-18" rx="96.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="10613.65" cy="-18" rx="96.68" ry="18"/>
 <text text-anchor="middle" x="10613.65" y="-14.3" font-family="Times,serif" font-size="14.00">main.GsInitVcount</text>
 </a>
 </g>
