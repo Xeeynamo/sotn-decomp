@@ -1,3 +1,4 @@
 #include "common.h"
+#include "kernel.h"
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgs/gs_009", GsClearVcount);
+void GsClearVcount() { return ResetRCnt(RCntCNT1); }
