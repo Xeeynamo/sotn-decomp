@@ -16,6 +16,19 @@ typedef struct {
     /* 0x8 */ u16 params;
 } LayoutEntity; // size = 0xA
 
+typedef struct {
+    u16* layout;
+    TileDefinition* tileDef;
+    u32 params;
+    u16 zPriority;
+    u8 unkE;
+    u8 unkF;
+} MyLayer;
+typedef struct {
+    MyLayer* fg;
+    MyLayer* bg;
+} MyRoomDef;
+
 #if defined(VERSION_PSP)
 // A horizontally ordered array with head and tail sigils in the 1st field
 extern LayoutEntity** g_pStObjLayoutHorizontal;

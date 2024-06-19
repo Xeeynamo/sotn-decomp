@@ -18,6 +18,7 @@ expected/
 disks/
 
 .vscode/settings.json
+.idea/
 tools/go
 
 !tools/sotn-debugmodule/sotn-debugmodule.ld
