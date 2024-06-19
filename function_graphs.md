@@ -1959,7 +1959,7 @@
 - [✅ func_801B2540](function_calls/np3.func_801B2540.svg?raw=1)
 - [✅ func_801B2830](function_calls/np3.func_801B2830.svg?raw=1)
 - [✅ func_801B28E4](function_calls/np3.func_801B28E4.svg?raw=1)
-- [❌ func_801B32A8](function_calls/np3.func_801B32A8.svg?raw=1)
+- [✅ func_801B32A8](function_calls/np3.func_801B32A8.svg?raw=1)
 - [✅ func_801B3704](function_calls/np3.func_801B3704.svg?raw=1)
 - [❌ func_801B3D24](function_calls/np3.func_801B3D24.svg?raw=1)
 - [✅ func_801B40F8](function_calls/np3.func_801B40F8.svg?raw=1)
