@@ -77,3 +77,6 @@ jobs:
         run: |
           cmake -B ${{github.workspace}}/pc -DWANT_LIBSND_LLE=1
           cmake --build ${{github.workspace}}/pc --config Release
+      - name: Test
+        run: |
+          ${{github.workspace}}/pc/Sound test
