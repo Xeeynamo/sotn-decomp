@@ -1,3 +1,7 @@
 #include "common.h"
+#include "kernel.h"
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgs/gs_007", GsInitVcount);
+void GsInitVcount(void) {
+    SetRCnt(RCntCNT1, 0xFFFFU, RCntMdNOINTR);
+    StartRCnt(RCntCNT1);
+}

@@ -53,11 +53,6 @@ extern u16 g_ESoulStealOrbAngles[];
 extern s16 g_ESoulStealOrbSprt[];
 extern u8 g_ESoulStealOrbAnim[];
 
-extern s32 D_80193AA0; // rename into move_room?
-extern s32 D_80193AA4;
-extern s32 D_80193AA8;
-extern s32 D_80193AAC;
-
 extern u16 g_ItemIconSlots[32];
 
 void func_8018F838(Entity*);

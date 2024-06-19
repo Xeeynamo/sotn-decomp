@@ -1,10 +1,10 @@
 #include <stage.h>
 
 // warp.c
-s32 D_80193AA0;
-s32 D_80193AA4;
-s32 D_80193AA8;
-s32 D_80193AAC;
+s32 DestinationWarpRoom;
+s32 WarpBackgroundAmplitiude;
+s32 WarpBackgroundPhase;
+s32 WarpBackgroundBrightness;
 s32 D_80180648;
 
 // st_debug.c

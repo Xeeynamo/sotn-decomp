@@ -82,5 +82,8 @@ extern long EnableEvent(long);
 extern void _96_remove(void);
 extern long SetRCnt(unsigned long, unsigned short, long);
 extern long StartRCnt(unsigned long);
+extern long GetRCnt(unsigned long);
+extern long StopRCnt(unsigned long);
+extern long ResetRCnt(unsigned long);
 
 #endif
