@@ -106,7 +106,8 @@ segments:
       - [0x3AEC, layoutobj, D_80183AEC]
       - [0x3B0C, data]
       - [0x16A5C, .data, tile_data]
-      - [0x26E8C, data]
+      - [0x26E8C, .data, sprites]
+      - [0x3058C, rodata]
       - [0x305A4, .rodata, 30958] # func_801B3C38
       - [0x305B8, .rodata, bossfight] # EntityBossFightManager
       - [0x305E8, .rodata, bossfight] # EntityBossRoomBlock
