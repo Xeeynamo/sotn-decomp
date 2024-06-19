@@ -52,7 +52,8 @@ typedef enum {
     /* 0x4F */ E_SLOGRA_SPEAR = 0x4F,
     /* 0x50 */ E_SLOGRA_SPEAR_PROJECTILE,
     /* 0x51 */ E_GAIBON,
-    /* 0x53 */ E_GAIBON_SMALL_FIREBALL = 0x53,
+    /* 0x52 */ E_801B8CC0,
+    /* 0x53 */ E_GAIBON_SMALL_FIREBALL,
     /* 0x54 */ E_GAIBON_BIG_FIREBALL,
     /* 0x55 */ E_HAMMER, // the enemy named "Hammer", Gurkha's friend
     /* 0x56 */ E_GURKHA_BODY_PARTS,
@@ -203,17 +204,17 @@ extern u8 D_8018142C[];
 extern u16 D_80180B68[]; // Init
 extern u16 D_80180B6E;   // Gaibon's palette data
 extern s32 D_801812CC;   // killed in entrance local flag
-extern s32 D_801814B4;   // Some collision data
-extern u8 D_801814C4;    // Animation
-extern u8 D_801814D8;    // Animation
-extern u8 D_8018150C;    // Animation
-extern u8 D_80181520;    // Animation
-extern u8 D_80181534;    // Animation
-extern u8 D_80181540;    // Animation
-extern u8 D_80181550;    // Animation
-extern u8 D_80181564;    // Animation
-extern u8 D_80181570;    // Animation
-extern u8 D_80181578;    // Animation
+extern s32 D_801814B4[]; // Some collision data
+extern u8 D_801814C4[];  // Animation
+extern u8 D_801814D8[];  // Animation
+extern u8 D_8018150C[];  // Animation
+extern u8 D_80181520[];  // Animation
+extern u8 D_80181534[];  // Animation
+extern u8 D_80181540[];  // Animation
+extern u8 D_80181550[];  // Animation
+extern u8 D_80181564[];  // Animation
+extern u8 D_80181570[];  // Animation
+extern u8 D_80181578[];  // Animation
 extern s32 D_80181584[]; // Hitbox related
 extern u8 D_801815B4[];  // Hitbox related
 

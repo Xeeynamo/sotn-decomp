@@ -108,8 +108,8 @@ segments:
       - [0x31EA0, data]
       - [0x31EA8, .rodata, 3246C] # EntityStairwayPiece
       - [0x31EBC, .rodata, 365FC] # func_801B65FC
-      - [0x31ED0, .rodata, 36990] # EntitySlogra .rodata, 36990
-      - [0x31EDC, rodata] # EntityGaibon .rodata, 36990
+      - [0x31ED0, .rodata, slogra] # EntitySlogra .rodata, 36990
+      - [0x31EDC, .rodata, gaibon] # EntityGaibon .rodata, 36990
       - [0x31F00, .rodata, e_red_door] # EntityRedDoor
       - [0x31F18, rodata]
       - [0x31F68, .rodata, 3DEF4]
@@ -134,7 +134,8 @@ segments:
       - [0x32464, .rodata, prim_helpers]
       - [0x3246C, c]
       - [0x365FC, c]
-      - [0x36990, c] # Gaibon & Slogra boss
+      - [0x36990, c, slogra]
+      - [0x378BC, c, gaibon]
       - [0x390BC, c, random]
       - [0x390EC, c, update]
       - [0x393E8, c, update_stage_entities]
