@@ -110,7 +110,6 @@ extern "C" u16 read_16(u32 addr, char* file, int line)
 
     return SPU->Read(0, addr);
 }
-#endif
 
 extern "C" s32 _spu_init(s32 arg0);
 
