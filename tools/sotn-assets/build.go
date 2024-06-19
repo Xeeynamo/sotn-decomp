@@ -5,11 +5,14 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/sync/errgroup"
+	"hash/fnv"
 	"io"
 	"io/fs"
 	"math/rand"
 	"os"
 	"path"
+	"sort"
+	"strconv"
 	"strings"
 )
 
@@ -350,6 +353,81 @@ func buildSprites(fileName string, outputDir string) error {
 	return os.WriteFile(path.Join(outputDir, "sprite_banks.h"), []byte(sbHeader.String()), 0644)
 }
 
+func buildEntityLayouts(fileName string, outputDir string) error {
+	writeLayoutEntries := func(sb *strings.Builder, banks [][]layoutEntry) {
+		for _, entries := range banks {
+			sb.WriteString(fmt.Sprintf("    0xFFFE, 0xFFFE, 0, 0, 0,\n"))
+			for _, e := range entries {
+				sb.WriteString(fmt.Sprintf("    %d, %d, %d, %d, %d,\n",
+					e.X, e.Y, int(e.ID)|(int(e.Flags)<<8), int(e.Slot)|(int(e.SpawnID)<<8), e.Params))
+			}
+			sb.WriteString(fmt.Sprintf("    0xFFFF, 0xFFFF, 0, 0, 0,\n"))
+		}
+	}
+	makeSortedBanks := func(banks [][]layoutEntry, sortByX bool) [][]layoutEntry {
+		var toSort []layoutEntry
+		var less func(i, j int) bool
+		if sortByX {
+			less = func(i, j int) bool {
+				return toSort[i].X < toSort[j].X
+			}
+		} else {
+			less = func(i, j int) bool {
+				return toSort[i].Y < toSort[j].Y
+			}
+		}
+		sorting := make([][]layoutEntry, len(banks))
+		for i, entries := range banks {
+			sorting[i] = make([]layoutEntry, len(entries))
+			copy(sorting[i], entries)
+			toSort = sorting[i]
+			sort.Slice(toSort, less)
+		}
+		return sorting
+	}
+
+	data, err := os.ReadFile(fileName)
+	if err != nil {
+		return err
+	}
+
+	var el layouts
+	if err := json.Unmarshal(data, &el); err != nil {
+		return err
+	}
+
+	h := fnv.New32()
+	h.Write([]byte(outputDir))
+	symbol_variant := strconv.FormatUint(uint64(h.Sum32()), 16)
+	symbol_name := fmt.Sprintf("entity_layout_%s", symbol_variant)
+	offsets := make([]int, len(el.Entities))
+	offsetCur := 0
+	for i := 0; i < len(el.Entities); i++ {
+		offsets[i] = offsetCur
+		offsetCur += len(el.Entities[i])*5 + 10
+	}
+
+	sbHeader := strings.Builder{}
+	sbHeader.WriteString("// clang-format off\n")
+	sbHeader.WriteString(fmt.Sprintf("extern u16 %s_x[];\n", symbol_name))
+	sbHeader.WriteString("LayoutEntity* g_pStObjLayoutHorizontal[] = {\n")
+	for _, i := range el.Indices {
+		sbHeader.WriteString(fmt.Sprintf("    (LayoutEntity*)&%s_x[%d],\n", symbol_name, offsets[i]))
+	}
+	sbHeader.WriteString(fmt.Sprintf("};\n"))
+
+	sbData := strings.Builder{}
+	sbData.WriteString("// clang-format off\n")
+	sbData.WriteString(fmt.Sprintf("unsigned short %s_x[] = {\n", symbol_name))
+	writeLayoutEntries(&sbData, makeSortedBanks(el.Entities, true))
+	sbData.WriteString(fmt.Sprintf("};\n"))
+
+	if err := os.WriteFile(path.Join(outputDir, "e_layout.h"), []byte(sbData.String()), 0644); err != nil {
+		return err
+	}
+	return os.WriteFile(path.Join(outputDir, "e_laydef.h"), []byte(sbHeader.String()), 0644)
+}
+
 func buildAll(inputDir string, outputDir string) error {
 	if err := os.MkdirAll(outputDir, 0755); err != nil {
 		return err
@@ -374,6 +452,14 @@ func buildAll(inputDir string, outputDir string) error {
 	})
 	eg.Go(func() error {
 		if err := buildSprites(path.Join(inputDir, "sprites.json"), outputDir); err != nil {
+			if !errors.Is(err, fs.ErrNotExist) {
+				return err
+			}
+		}
+		return nil
+	})
+	eg.Go(func() error {
+		if err := buildEntityLayouts(path.Join(inputDir, "entity_layouts.json"), outputDir); err != nil {
 			if !errors.Is(err, fs.ErrNotExist) {
 				return err
 			}
