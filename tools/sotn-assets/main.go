@@ -228,7 +228,7 @@ func testStuff() {
 		}
 	}
 
-	if err := build("sample/NZ0", "build/nz0"); err != nil {
+	if err := buildAll("sample/NZ0", "buildAll/nz0"); err != nil {
 		panic(err)
 	}
 }
@@ -283,6 +283,8 @@ func main() {
 			err = buildRooms(file, outputDir)
 		case "layers":
 			err = buildLayers(file, outputDir)
+		case "sprites":
+			err = buildSprites(file, outputDir)
 		default:
 			fmt.Println("unknown kind, valid values are 'room', 'layer'")
 		}

@@ -1,6 +1,6 @@
 #include <stage.h>
 
-extern u_long* g_SpriteBanks[];
+extern signed short* spriteBanks[];
 extern void* g_Cluts[];
 extern void* g_EntityGfxs[];
 extern MyRoomDef rooms[];
@@ -18,7 +18,7 @@ u_long* NZ0_Header[] = {
     UpdateRoomPosition,
     InitRoomEntities,
     g_Rooms,
-    g_SpriteBanks,
+    spriteBanks,
     g_Cluts,
     g_pStObjLayoutHorizontal,
     rooms,
@@ -26,28 +26,7 @@ u_long* NZ0_Header[] = {
     UpdateStageEntities,
 };
 
-extern u_long* D_801A6E8C;
-extern u_long* D_801A6FCC;
-extern u_long* D_801A7304;
-extern u_long* D_801A79E4;
-extern u_long* D_801A9448;
-extern u_long* D_801AA340;
-extern u_long* D_801AA87C;
-extern u_long* D_801AB778;
-extern u_long* D_801ABC48;
-extern u_long* D_801AC474;
-extern u_long* D_801ACC30;
-extern u_long* D_801ACDF4;
-extern u_long* D_801ACF58;
-extern u_long* D_801AE910;
-extern u_long* D_801AFB90;
-static u_long* g_SpriteBanks[] = {
-    0x00000000,  &D_801A6E8C, &D_801A6FCC, &D_801A7304, &D_801A79E4,
-    &D_801A9448, &D_801AA340, &D_801AA87C, &D_801AB778, &D_801ABC48,
-    &D_801AC474, &D_801ACC30, &D_801ACDF4, &D_801ACF58, &D_801AE910,
-    &D_801AFB90, 0x00000000,  0x00000000,  0x00000000,  0x00000000,
-    0x00000000,  0x00000000,  0x00000000,  0x00000000,
-};
+#include "sprite_banks.h"
 
 extern u_long* D_80195C3C;
 extern u_long* D_80195CDC;

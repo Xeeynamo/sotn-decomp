@@ -7,6 +7,7 @@ import (
 	"golang.org/x/sync/errgroup"
 	"io"
 	"io/fs"
+	"math/rand"
 	"os"
 	"path"
 	"strings"
@@ -270,7 +271,90 @@ func buildLayers(fileName string, outputDir string) error {
 	return os.WriteFile(path.Join(outputDir, "layers.h"), []byte(sb.String()), 0644)
 }
 
-func build(inputDir string, outputDir string) error {
+func buildSpriteGroup(sb *strings.Builder, sprites [][]sprite, mainSymbol string, r *rand.Rand) {
+	symbols := []string{}
+	for _, spriteGroup := range sprites {
+		if len(spriteGroup) > 0 {
+			symbol := fmt.Sprintf("spriteGroup_%08X", r.Int31())
+			sb.WriteString(fmt.Sprintf("extern signed short %s[];\n", symbol))
+			symbols = append(symbols, symbol)
+		} else {
+			symbols = append(symbols, "")
+		}
+	}
+	sb.WriteString(fmt.Sprintf("signed short* %s[] = {\n", mainSymbol))
+	for _, symbol := range symbols {
+		if len(symbol) > 0 {
+			sb.WriteString(fmt.Sprintf("    %s,\n", symbol))
+		} else {
+			sb.WriteString("    0,\n")
+		}
+	}
+	sb.WriteString("};\n")
+	for i, spriteGroup := range sprites {
+		if len(spriteGroup) == 0 {
+			continue
+		}
+		sb.WriteString(fmt.Sprintf("static signed short %s[] = {\n", symbols[i]))
+		sb.WriteString(fmt.Sprintf("    %d,\n", len(spriteGroup)))
+		for _, sprite := range spriteGroup {
+			sb.WriteString(fmt.Sprintf("    %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d,\n",
+				sprite.Flags, sprite.X, sprite.Y, sprite.Width, sprite.Height,
+				sprite.Clut, sprite.Tileset, sprite.Left, sprite.Top, sprite.Right, sprite.Bottom))
+		}
+		if (len(spriteGroup) & 1) == 1 { // perform alignment at the end
+			sb.WriteString("    0, 0\n")
+		} else {
+			sb.WriteString("    0\n")
+		}
+		sb.WriteString("};\n")
+	}
+}
+
+func buildSprites(fileName string, outputDir string) error {
+	data, err := os.ReadFile(fileName)
+	if err != nil {
+		return err
+	}
+
+	var spritesBanks [][][]sprite
+	if err := json.Unmarshal(data, &spritesBanks); err != nil {
+		return err
+	}
+
+	r := rand.New(rand.NewSource(int64(len(data))))
+	sbHeader := strings.Builder{}
+	sbHeader.WriteString("// clang-format off\n")
+	sbData := strings.Builder{}
+	sbData.WriteString("// clang-format off\n")
+	symbols := []string{}
+	for _, sprites := range spritesBanks {
+		if len(sprites) == 0 {
+			symbols = append(symbols, "")
+			continue
+		}
+		symbol := fmt.Sprintf("sprites_%08X", r.Int31())
+		sbHeader.WriteString(fmt.Sprintf("extern signed short* %s;\n", symbol))
+		buildSpriteGroup(&sbData, sprites, symbol, rand.New(r))
+		symbols = append(symbols, symbol)
+	}
+
+	sbHeader.WriteString("static signed short* spriteBanks[] = {\n")
+	for _, symbol := range symbols {
+		if len(symbol) > 0 {
+			sbHeader.WriteString(fmt.Sprintf("    &%s,\n", symbol))
+		} else {
+			sbHeader.WriteString(fmt.Sprintf("    0,\n"))
+		}
+	}
+	sbHeader.WriteString("};\n")
+	if err := os.WriteFile(path.Join(outputDir, "sprites.h"), []byte(sbData.String()), 0644); err != nil {
+		return err
+	}
+	return os.WriteFile(path.Join(outputDir, "sprite_banks.h"), []byte(sbHeader.String()), 0644)
+}
+
+func buildAll(inputDir string, outputDir string) error {
 	if err := os.MkdirAll(outputDir, 0755); err != nil {
 		return err
 	}
@@ -281,6 +365,11 @@ func build(inputDir string, outputDir string) error {
 		}
 	}
 	if err := buildLayers(path.Join(inputDir, "layers.json"), outputDir); err != nil {
+		if !errors.Is(err, fs.ErrNotExist) {
+			return err
+		}
+	}
+	if err := buildSprites(path.Join(inputDir, "sprites.json"), outputDir); err != nil {
 		if !errors.Is(err, fs.ErrNotExist) {
 			return err
 		}

@@ -53,6 +53,7 @@ extract_assets: $(SOTNASSETS)
 build_assets: $(SOTNASSETS)
 	$(SOTNASSETS) build -file assets/st/nz0_test/rooms.json -kind rooms -o src/st/nz0/
 	$(SOTNASSETS) build -file assets/st/nz0_test/layers.json -kind layers -o src/st/nz0/
+	$(SOTNASSETS) build -file assets/st/nz0_test/sprites.json -kind sprites -o src/st/nz0/
 
 $(BUILD_DIR)/assets/dra/memcard_%.png.o: assets/dra/memcard_%.png
 	mkdir -p $(dir $@)
