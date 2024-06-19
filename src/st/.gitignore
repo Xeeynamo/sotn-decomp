@@ -4,3 +4,5 @@ sprite_banks.h
 sprites.h
 tilemap_*.h
 tiledef_*.h
+e_layout.h
+e_laydef.h

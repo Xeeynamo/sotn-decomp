@@ -7,11 +7,13 @@ import (
 )
 
 type layoutEntry struct {
-	X      uint16 `json:"x"`
-	Y      uint16 `json:"y"`
-	ID     uint16 `json:"id"`
-	Slot   uint16 `json:"slot"`
-	Params uint16 `json:"params"`
+	X       uint16 `json:"x"`
+	Y       uint16 `json:"y"`
+	ID      uint8  `json:"id"`
+	Flags   uint8  `json:"flags"` // TODO properly de-serialize this
+	Slot    uint8  `json:"slot"`
+	SpawnID uint8  `json:"spawnId"`
+	Params  uint16 `json:"params"`
 }
 
 type layouts struct {
@@ -20,7 +22,6 @@ type layouts struct {
 }
 
 func readEntityLayout(file *os.File, off PsxOffset, count int, isX bool) (layouts, []dataRange, error) {
-
 	if err := off.moveFile(file); err != nil {
 		return layouts{}, nil, err
 	}
