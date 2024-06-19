@@ -53,17 +53,15 @@ void func_801B01C0(void) {
 void func_801B01F8(s32 arg0) {
     g_GpuBuffers[0].draw.clip.y = 0x0014;
     g_GpuBuffers[0].draw.clip.h = 0x00CF;
-#ifndef NON_MATCHING
-    g_GpuBuffers_1_buf_draw_clip_y = arg0 == 0 ? 0x0014 : 0x0114;
-#else
-    g_GpuBuffers[1].draw.clip.y = 0x0014;
-#endif
+    if (!arg0) {
+        g_GpuBuffers[1].draw.clip.y = 0x0014;
+    } else {
+        g_GpuBuffers[1].draw.clip.y = 0x0114;
+    }
     g_GpuBuffers[1].draw.clip.h = 0x00CF;
-    g_GpuBuffers[1].draw.isbg = 1;
-    g_GpuBuffers[0].draw.isbg = 1;
+    g_GpuBuffers[0].draw.isbg = g_GpuBuffers[1].draw.isbg = 1;
     func_801B01C0();
-    g_GpuBuffers[1].disp.isrgb24 = 0;
-    g_GpuBuffers[0].disp.isrgb24 = 0;
+    g_GpuBuffers[0].disp.isrgb24 = g_GpuBuffers[1].disp.isrgb24 = 0;
 }
 
 // Set stage display buffer
