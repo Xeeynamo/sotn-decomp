@@ -406,8 +406,8 @@ update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(SA
 	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release
 	cd $(SATURN_SPLITTER_DIR)/adpcm-extract && cargo build --release
 	pip3 install -r $(TOOLS_DIR)/requirements-python.txt
-	rm $(SOTNDISK) && make $(SOTNDISK)
-	rm $(SOTNASSETS) && make $(SOTNASSETS)
+	rm $(SOTNDISK) && make $(SOTNDISK) || true
+	rm $(SOTNASSETS) && make $(SOTNASSETS) || true
 	git clean -fd bin/
 
 bin/%: bin/%.tar.gz
