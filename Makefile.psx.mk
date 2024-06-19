@@ -51,9 +51,7 @@ $(BUILD_DIR)/weapon.ld: $(CONFIG_DIR)/splat.$(VERSION).weapon.yaml $(PSX_BASE_SY
 extract_assets: $(SOTNASSETS)
 	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/NZ0/NZ0.BIN -o assets/st/nz0_test
 build_assets: $(SOTNASSETS)
-	$(SOTNASSETS) build -file assets/st/nz0_test/rooms.json -kind rooms -o src/st/nz0/
-	$(SOTNASSETS) build -file assets/st/nz0_test/layers.json -kind layers -o src/st/nz0/
-	$(SOTNASSETS) build -file assets/st/nz0_test/sprites.json -kind sprites -o src/st/nz0/
+	$(SOTNASSETS) build_all -i assets/st/nz0_test -o src/st/nz0/
 
 $(BUILD_DIR)/assets/dra/memcard_%.png.o: assets/dra/memcard_%.png
 	mkdir -p $(dir $@)
