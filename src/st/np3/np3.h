@@ -26,6 +26,8 @@ typedef enum {
     /* 0x19 */ E_CASTLE_DOOR = 0x19,
     /* 0x1E */ E_ID_1E = 0x1E,
     /* 0x27 */ E_FALLING_ROCK_2 = 0x27,
+    /* 0x28 */ E_801B5DE8,
+    /* 0x29 */ E_801B5E98,
     /* 0x2D */ E_SPLASH_WATER = 0x2D,
     /* 0x2E */ E_SURFACING_WATER,
     /* 0x2F */ E_SIDE_WATER_SPLASH,
@@ -436,3 +438,9 @@ extern s16 D_80183934[];
 extern s16 D_80183990[];
 extern s16 D_80183A24[];
 extern s16 D_80183A4C[];
+
+// For func_801B28E4
+
+extern u8 D_80180E78[];
+extern u8 D_80180E94[];
+extern u8 D_80180EA4[][2];
