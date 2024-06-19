@@ -11,7 +11,6 @@ import (
 	"os"
 	"path"
 	"strings"
-	"sync"
 )
 
 func makeSymbolFromFileName(fileName string) string {
@@ -176,26 +175,23 @@ func buildLayers(fileName string, outputDir string) error {
 	}
 
 	eg := errgroup.Group{}
-	wg := sync.WaitGroup{}
-	wg.Add(len(tilemaps))
 	for name := range tilemaps {
 		fullPath := path.Join(path.Dir(fileName), name)
 		symbol := makeSymbolFromFileName(name)
 		eg.Go(func() error {
-			defer wg.Done()
 			return buildGenericU16(fullPath, symbol, outputDir)
 		})
 	}
-	wg.Add(len(tiledefs))
 	for name := range tiledefs {
 		fullPath := path.Join(path.Dir(fileName), name)
 		symbol := makeSymbolFromFileName(name)
 		eg.Go(func() error {
-			defer wg.Done()
 			return buildTiledefs(fullPath, symbol, outputDir)
 		})
 	}
-	wg.Wait()
+	if err := eg.Wait(); err != nil {
+		return err
+	}
 
 	layers := []map[string]interface{}{} // first layer is always empty
 	layers = append(layers, map[string]interface{}{})
@@ -359,21 +355,31 @@ func buildAll(inputDir string, outputDir string) error {
 		return err
 	}
 
-	if err := buildRooms(path.Join(inputDir, "rooms.json"), outputDir); err != nil {
-		if !errors.Is(err, fs.ErrNotExist) {
-			return err
+	eg := errgroup.Group{}
+	eg.Go(func() error {
+		if err := buildRooms(path.Join(inputDir, "rooms.json"), outputDir); err != nil {
+			if !errors.Is(err, fs.ErrNotExist) {
+				return err
+			}
 		}
-	}
-	if err := buildLayers(path.Join(inputDir, "layers.json"), outputDir); err != nil {
-		if !errors.Is(err, fs.ErrNotExist) {
-			return err
+		return nil
+	})
+	eg.Go(func() error {
+		if err := buildLayers(path.Join(inputDir, "layers.json"), outputDir); err != nil {
+			if !errors.Is(err, fs.ErrNotExist) {
+				return err
+			}
 		}
-	}
-	if err := buildSprites(path.Join(inputDir, "sprites.json"), outputDir); err != nil {
-		if !errors.Is(err, fs.ErrNotExist) {
-			return err
+		return nil
+	})
+	eg.Go(func() error {
+		if err := buildSprites(path.Join(inputDir, "sprites.json"), outputDir); err != nil {
+			if !errors.Is(err, fs.ErrNotExist) {
+				return err
+			}
 		}
-	}
+		return nil
+	})
 
-	return nil
+	return eg.Wait()
 }

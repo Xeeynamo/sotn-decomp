@@ -235,7 +235,7 @@ func testStuff() {
 
 func main() {
 	if len(os.Args) < 2 {
-		fmt.Println("expected 'extract' or 'build' subcommands")
+		fmt.Println("expected 'extract', 'build' or 'build_all' subcommands")
 		os.Exit(1)
 	}
 
@@ -286,14 +286,33 @@ func main() {
 		case "sprites":
 			err = buildSprites(file, outputDir)
 		default:
-			fmt.Println("unknown kind, valid values are 'room', 'layer'")
+			fmt.Println("unknown kind, valid values are 'room', 'layer', 'sprites'")
 		}
 		if err != nil {
 			panic(err)
 		}
 
+	case "build_all":
+		buildCmd := flag.NewFlagSet("build_all", flag.ExitOnError)
+		var inputDir string
+		var outputDir string
+		buildCmd.StringVar(&inputDir, "i", "", "Folder where all the assets are located")
+		buildCmd.StringVar(&outputDir, "o", "", "Where to store the processed source files")
+
+		buildCmd.Parse(os.Args[2:])
+
+		if inputDir == "" || outputDir == "" {
+			fmt.Println("input_dir and output_dir are required for build")
+			buildCmd.PrintDefaults()
+			os.Exit(1)
+		}
+
+		if err := buildAll(inputDir, outputDir); err != nil {
+			panic(err)
+		}
+
 	default:
-		fmt.Println("expected 'extract' or 'build' subcommands")
+		fmt.Println("expected 'extract', 'build' or 'build_all' subcommands")
 		os.Exit(1)
 	}
 }
