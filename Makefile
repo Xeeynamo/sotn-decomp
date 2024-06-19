@@ -430,9 +430,9 @@ $(MASPSX_APP):
 	git submodule init $(MASPSX_DIR)
 	git submodule update $(MASPSX_DIR)
 $(GO):
-	curl -L -o go1.19.7.linux-amd64.tar.gz https://go.dev/dl/go1.19.7.linux-amd64.tar.gz
-	tar -C $(HOME) -xzf go1.19.7.linux-amd64.tar.gz
-	rm go1.19.7.linux-amd64.tar.gz
+	curl -L -o go1.22.4.linux-amd64.tar.gz https://go.dev/dl/go1.22.4.linux-amd64.tar.gz
+	tar -C $(HOME) -xzf go1.22.4.linux-amd64.tar.gz
+	rm go1.22.4.linux-amd64.tar.gz
 $(SOTNDISK): $(GO) $(SOTNDISK_SOURCES)
 	cd tools/sotn-disk; $(GO) install
 $(SOTNASSETS): $(GO) $(SOTNASSETS_SOURCES)
