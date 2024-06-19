@@ -35,7 +35,7 @@ extern void (* volatile _spu_IRQCallback)();
 s32 SpuSetAnyVoice(s32 on_off, u32 bits, s32 addr1, s32 addr2);
 
 s32 _spu_t(s32, ...);
-s32 _spu_writeByIO(s32, s32);
+s32 _spu_writeByIO(u8*, s32);
 extern s32 _spu_transMode;
 extern u16 _spu_tsa;
 

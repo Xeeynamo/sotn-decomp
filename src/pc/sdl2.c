@@ -721,6 +721,10 @@ int main(int argc, char* argv[]) {
 
     if (argc < 2) {
         filename = "disks/sotn.us.bin";
+    } else if (argc == 2 && !strcmp(argv[1], "test")) {
+#ifdef WANT_LIBSND_LLE
+        run_tests();
+#endif
     } else {
         filename = argv[1];
     }

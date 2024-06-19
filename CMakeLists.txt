@@ -139,6 +139,9 @@ set(SOURCE_FILES_LIBSND_LLE
     src/main/psxsdk/libspu/s_wp.c
     src/main/psxsdk/libspu/spu.c
     src/main/psxsdk/libspu/sr_gaks.c
+
+    src/pc/psxsdk/emu.cpp
+    src/pc/psxsdk/mednafen/spu.cpp
 )
 list(APPEND SOURCE_FILES_PSX_SDK ${SOURCE_FILES_LIBSND_LLE})
 endif()
@@ -309,6 +312,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
 
 if(WANT_LIBSND_LLE)
 target_compile_definitions(core PRIVATE WANT_LIBSND_LLE=1)
+target_compile_definitions(${PROJECT_NAME} PRIVATE WANT_LIBSND_LLE=1)
 endif()
 
 # null target

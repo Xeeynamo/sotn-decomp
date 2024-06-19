@@ -1,8 +1,12 @@
 #ifndef LIBSND_H
 #define LIBSND_H
 
+#ifdef VERSION_PC
+// crashes in SetTableSize otherwise
+#define SS_SEQ_TABSIZ 192
+#else
 #define SS_SEQ_TABSIZ 176
-
+#endif
 #define SS_NOTICK 0x1000
 #define SS_NOTICK0 0
 #define SS_TICK60 1
