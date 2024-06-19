@@ -312,6 +312,16 @@ void SpuVmInit(u8 arg0) {
         _svm_voice[var_a1].unk2e = 0;
         _svm_voice[var_a1].start_pan = 0;
         _svm_voice[var_a1].start_vol = 0;
+
+#ifdef VERSION_PC
+        write_16(0x1F801C00 + var_a1 * 0x10 + 6, 0x200, __FILE__, __LINE__);
+        write_16(0x1F801C00 + var_a1 * 0x10 + 4, 0x1000, __FILE__, __LINE__);
+        write_16(0x1F801C00 + var_a1 * 0x10 + 8, 0x80FF, __FILE__, __LINE__);
+        write_16(0x1F801C00 + var_a1 * 0x10 + 0, 0, __FILE__, __LINE__);
+        write_16(0x1F801C00 + var_a1 * 0x10 + 2, 0, __FILE__, __LINE__);
+        write_16(0x1F801C00 + var_a1 * 0x10 + 10, 0x4000, __FILE__, __LINE__);
+#else
+        // pointer to 0x1F801C00
         temp_a0 = &D_80032F10[temp];
         temp_a0[3] = 0x200;
         temp_a0[2] = 0x1000;
@@ -319,6 +329,7 @@ void SpuVmInit(u8 arg0) {
         temp_a0[0] = 0;
         temp_a0[1] = 0;
         temp_a0[5] = 0x4000;
+#endif
 
         _svm_cur.field_0x1a = var_a1;
         temp_v1 = get_field_0x1a();
