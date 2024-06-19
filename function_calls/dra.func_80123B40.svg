@@ -12,7 +12,7 @@
 <!-- dra.func_80123B40 -->
 <g id="node1" class="node">
 <title>dra.func_80123B40</title>
-<ellipse fill="red" stroke="black" cx="346.89" cy="-198" rx="101.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="346.89" cy="-198" rx="101.28" ry="18"/>
 <text text-anchor="middle" x="346.89" y="-194.3" font-family="Times,serif" font-size="14.00">dra.func_80123B40</text>
 </g>
 <!-- dra.DestroyEntity -->
