@@ -407,7 +407,128 @@ void EntityCastleDoor(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/np3/nonmatchings/3246C", func_801B32A8);
+extern u16 D_80180AA8[];
+extern u8 D_80181008[];
+extern u8 D_80181020[];
+extern s16 D_80181068;
+extern s16* D_80181088;
+extern SVECTOR D_801810B0;
+
+void func_801B32A8(Entity* self) {
+    byte stackpad[8];
+
+    // Lots of ugly pointers
+    u8* var_s1;
+    s16* var_s4;
+    s16* var_s5;
+    s16** var_s8;
+    Primitive* prim;
+    s32 primIndex;
+    s32 i;
+    s32 yOffset;
+    s16 xPos;
+    s16 yPos;
+    s32 rotTransXYResult;
+    s32 unused1; // return args for rottranspers
+    s32 unused2; // we don't use them.
+    VECTOR trans;
+    MATRIX m;
+
+    if (!self->step) {
+        InitializeEntity(D_80180AA8);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x48);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
+        while (prim != NULL) {
+            prim->tpage = 0xF;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+    }
+    SetGeomScreen(0x400);
+    SetGeomOffset(0x80, self->posY.i.hi);
+    RotMatrix(&D_801810B0, &m);
+    SetRotMatrix(&m);
+    if (self->params) {
+        trans.vx = self->posX.i.hi - 0x200;
+    } else {
+        trans.vx = self->posX.i.hi + 0x200;
+    }
+    trans.vy = 0;
+    var_s5 = &D_80181068;
+    var_s8 = &D_80181088;
+    prim = self->ext.prim;
+    for (i = 0; i < 4; i++, var_s8++, var_s5 += 4) {
+        trans.vz = *var_s5 + 0x400;
+        TransMatrix(&m, &trans);
+        SetTransMatrix(&m);
+        RotTransPers(&D_801810B0, &rotTransXYResult, &unused1, &unused2);
+        // Split out the upper and lower halfword of rotTransXYResult
+        xPos = rotTransXYResult & 0xFFFF;
+        yPos = rotTransXYResult >> 16;
+        xPos = xPos % var_s5[3];
+        xPos -= var_s5[3];
+        yPos = self->posY.i.hi;
+        var_s4 = *var_s8;
+        while (xPos < 0x140) {
+            var_s1 = &D_80181008[0];
+            var_s1 += ((*var_s4++) * 4);
+            prim->u0 = prim->u2 = var_s1[0];
+            prim->u1 = prim->u3 = prim->u0 + var_s1[2];
+            prim->v0 = prim->v1 = var_s1[1];
+            prim->v2 = prim->v3 = prim->v0 + var_s1[3];
+            prim->x0 = prim->x2 = xPos - var_s1[2] / 2;
+            prim->x1 = prim->x3 = xPos + var_s1[2] / 2;
+            prim->y0 = prim->y1 = yPos - var_s1[3];
+            prim->y2 = prim->y3 = yPos;
+            prim->clut = var_s5[2];
+            prim->priority = var_s5[1];
+            prim->drawMode = DRAW_UNK02;
+            prim = prim->next;
+
+            if (prim == NULL) {
+                return;
+            }
+            if (i > 1) {
+                yOffset = var_s1[3];
+                var_s1 = &D_80181020[0];
+                prim->u0 = prim->u2 = var_s1[0];
+                prim->u1 = prim->u3 = prim->u0 + var_s1[2];
+                prim->v0 = prim->v1 = var_s1[1];
+                prim->v2 = prim->v3 = prim->v0 + var_s1[3];
+                var_s1 += (i - 2) * 4;
+                prim->x0 = prim->x2 = xPos - var_s1[2] / 2;
+                prim->x1 = prim->x3 = xPos + var_s1[2] / 2;
+                prim->y0 = prim->y1 = (yPos - yOffset) - var_s1[3];
+                prim->y2 = prim->y3 = (yPos - yOffset);
+                prim->clut = 0x17;
+                if (i > 2) {
+                    prim->clut = 0x49;
+                }
+                prim->priority = var_s5[1];
+                prim->drawMode = DRAW_UNK02;
+                prim = prim->next;
+                if (prim == NULL) {
+                    return;
+                }
+            }
+            xPos += *var_s4++;
+            if (*var_s4 == -1) {
+                var_s4 = *var_s8;
+            }
+        }
+    }
+    while (prim != NULL) {
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+}
 
 void func_801B3704(Entity* self, s16 primIndex) {
     volatile char pad[8]; //! FAKE
