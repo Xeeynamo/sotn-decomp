@@ -107,8 +107,8 @@ void EntityGaibon(Entity* self) {
             }
         }
     }
-    switch (self->step) { /* switch 1; irregular */
-    case 0x0:             /* switch 1 */
+    switch (self->step) {
+    case 0x0:
         if ((g_CastleFlags[132] == 0) && (*(&g_CastleFlags[56] + 1) == 0)) {
             InitializeEntity(&D_80180B68);
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
@@ -119,7 +119,7 @@ void EntityGaibon(Entity* self) {
         }
         DestroyEntity(self);
         return;
-    case GAIBON_IDLE: /* switch 1 */
+    case GAIBON_IDLE:
         AnimateEntity(D_801814C4, self);
         if (self->animFrameDuration == 0 && self->animFrameIdx == 1) {
             func_801C2598(NA_SE_EN_GAIBON_FLAP_WINGS);
@@ -606,7 +606,7 @@ void EntityGaibon(Entity* self) {
             break;
         }
         break;
-    case 0xFF: /* switch 1 */
+    case 0xFF:
         FntPrint("charal %x\n", self->animCurFrame);
         if (g_pads[1].pressed & PAD_SQUARE) {
             if (self->params) {
