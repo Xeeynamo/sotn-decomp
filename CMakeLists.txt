@@ -139,6 +139,9 @@ set(SOURCE_FILES_LIBSND_LLE
     src/main/psxsdk/libspu/s_wp.c
     src/main/psxsdk/libspu/spu.c
     src/main/psxsdk/libspu/sr_gaks.c
+
+    src/pc/psxsdk/emu.cpp
+    src/pc/psxsdk/mednafen/spu.cpp
 )
 list(APPEND SOURCE_FILES_PSX_SDK ${SOURCE_FILES_LIBSND_LLE})
 endif()
