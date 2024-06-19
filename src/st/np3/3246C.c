@@ -407,13 +407,6 @@ void EntityCastleDoor(Entity* self) {
     }
 }
 
-extern u16 D_80180AA8[];
-extern u8 D_80181008[];
-extern u8 D_80181020[];
-extern s16 D_80181068;
-extern s16* D_80181088;
-extern SVECTOR D_801810B0;
-
 void func_801B32A8(Entity* self) {
     byte stackpad[8];
 
