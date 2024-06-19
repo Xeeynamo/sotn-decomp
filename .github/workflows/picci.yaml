@@ -79,4 +79,5 @@ jobs:
           cmake --build ${{github.workspace}}/pc --config Release
       - name: Test
         run: |
+          find .
           ./${{github.workspace}}/pc/Sound test
