@@ -444,3 +444,12 @@ extern s16 D_80183A4C[];
 extern u8 D_80180E78[];
 extern u8 D_80180E94[];
 extern u8 D_80180EA4[][2];
+
+// for func_801B32A8
+
+extern u16 D_80180AA8[];
+extern u8 D_80181008[];
+extern u8 D_80181020[];
+extern s16 D_80181068;
+extern s16* D_80181088;
+extern SVECTOR D_801810B0;
