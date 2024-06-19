@@ -67,6 +67,7 @@ MASPSX          := $(PYTHON) $(MASPSX_APP) --expand-div --aspsx-version=2.34
 GO              := $(HOME)/go/bin/go
 GOPATH          := $(HOME)/go
 SOTNDISK        := $(GOPATH)/bin/sotn-disk
+SOTNASSETS      := $(GOPATH)/bin/sotn-assets
 GFXSTAGE        := $(PYTHON) $(TOOLS_DIR)/gfxstage.py
 PNG2S           := $(PYTHON) $(TOOLS_DIR)/png2s.py
 ICONV           := iconv --from-code=UTF-8 --to-code=Shift-JIS
@@ -103,7 +104,8 @@ define link
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt
 endef
 
-SOTNDISK_SOURCES := $(shell find tools/sotn-disk -name '*.go')
+SOTNDISK_SOURCES   := $(shell find tools/sotn-disk -name '*.go')
+SOTNASSETS_SOURCES := $(shell find tools/sotn-assets -name '*.go')
 
 CHECK_FILES := $(shell cut -d' ' -f3 config/check.$(VERSION).sha)
 
@@ -425,8 +427,8 @@ update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(SA
 	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release
 	cd $(SATURN_SPLITTER_DIR)/adpcm-extract && cargo build --release
 	pip3 install -r $(TOOLS_DIR)/requirements-python.txt
-	$(GO) install github.com/xeeynamo/sotn-decomp/tools/gfxsotn@latest
-	$(GO) install github.com/xeeynamo/sotn-decomp/tools/sotn-disk@latest
+	rm $(SOTNDISK) && make $(SOTNDISK)
+	rm $(SOTNASSETS) && make $(SOTNASSETS)
 	git clean -fd bin/
 
 bin/%: bin/%.tar.gz
@@ -454,6 +456,8 @@ $(GO):
 	rm go1.19.7.linux-amd64.tar.gz
 $(SOTNDISK): $(GO) $(SOTNDISK_SOURCES)
 	cd tools/sotn-disk; $(GO) install
+$(SOTNASSETS): $(GO) $(SOTNASSETS_SOURCES)
+	cd tools/sotn-assets; $(GO) install
 
 $(BUILD_DIR)/%.s.o: %.s
 	mkdir -p $(dir $@)

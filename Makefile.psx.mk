@@ -12,6 +12,8 @@ PSX_BASE_SYMS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
 
 extract_us: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_US_TARGETS)))
 	$(PNG2S) bdecode config/gfx.game.json disks/us assets/game
+	make extract_assets
+	make build_assets
 extract_hd: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_HD_TARGETS)))
 
 extract_disk_us: extract_disk_psxus
@@ -45,6 +47,12 @@ $(BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.$(VERSION).tt_%.yaml $(PSX_BASE_SYMS) 
 $(BUILD_DIR)/weapon.ld: $(CONFIG_DIR)/splat.$(VERSION).weapon.yaml $(PSX_BASE_SYMS) $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt.in
 	$(SPLAT) $<
 	touch $@
+
+extract_assets: $(SOTNASSETS)
+	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/NZ0/NZ0.BIN -o assets/st/nz0_test
+build_assets: $(SOTNASSETS)
+	$(SOTNASSETS) build -file assets/st/nz0_test/rooms.json -kind rooms -o src/st/nz0/
+	$(SOTNASSETS) build -file assets/st/nz0_test/layers.json -kind layers -o src/st/nz0/
 
 $(BUILD_DIR)/assets/dra/memcard_%.png.o: assets/dra/memcard_%.png
 	mkdir -p $(dir $@)
