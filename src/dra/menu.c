@@ -298,7 +298,7 @@ void func_800F4994(void) {
     }
 }
 
-s32 CalcAttack(s32 equipId, s32 otherEquipId) {
+s32 CalcAttack(s32 equipId, u32 otherEquipId) {
     s32 i;
     u16 equipmentAttackBonus;
     s16 totalAttack;
