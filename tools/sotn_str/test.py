@@ -22,28 +22,28 @@ class TestingJp(unittest.TestCase):
         bytes = dakuten_to_bytes("で")
         assert bytes == [0xC3, 0xFF, 0x9E]
 
-    def test_utf8_to_byte_literals_wrapped_dakuten(self):
-        input = "_SJ(すで)"
-        out = utf8_to_byte_literals_wrapped(input)
-        assert out == "_SJ(\\xBD\\xC3\\xFF\\x9E\\xFF)"
+    def test_utf8_to_byte_literals_escaped_dakuten(self):
+        input = "すで"
+        out = utf8_to_byte_literals_escaped(input)
+        assert out == "\\xBD\\xC3\\xFF\\x9E\\xFF"
 
-    def test_utf8_to_byte_literals_wrapped_kanji(self):
-        input = "_SJ(あかつきの剣)"
-        out = utf8_to_byte_literals_wrapped(input)
-        assert out == "_SJ(\\xB1\\xB6\\xC2\\xB7\\xC9\\x3C\\xFF)"
+    def test_utf8_to_byte_literals_escaped_kanji(self):
+        input = "あかつきの剣"
+        out = utf8_to_byte_literals_escaped(input)
+        assert out == "\\xB1\\xB6\\xC2\\xB7\\xC9\\x3C\\xFF"
 
     def check_sei():
         assert(utf8_to_index['聖'] == 222)
 
     def test_glasses(self):
-        input = "_SJ(聖なるめがね)"
-        out = utf8_to_byte_literals_wrapped(input)
-        assert out == "_SJ(\\xEE\\xC5\\xD9\\xD2\\xB6\\xFF\\x9E\\xC8\\xFF)"
+        input = "聖なるめがね"
+        out = utf8_to_byte_literals_escaped(input)
+        assert out == "\\xEE\\xC5\\xD9\\xD2\\xB6\\xFF\\x9E\\xC8\\xFF"
 
     def test_moon(self):
-        input = "_SJ(バルザイのえん月刀)"
-        out = utf8_to_byte_literals_wrapped(input)
-        assert out == "_SJ(\\x8A\\xFF\\x9E\\x99\\x7B\\xFF\\x9E\\x72\\xC9\\xB4\\xDD\\xFF\\xFF\\xED\\xFF)"
+        input = "バルザイのえん月刀"
+        out = utf8_to_byte_literals_escaped(input)
+        assert out == "\\x8A\\xFF\\x9E\\x99\\x7B\\xFF\\x9E\\x72\\xC9\\xB4\\xDD\\xFF\\xFF\\xED\\xFF"
 
     def test_str_potion(self):
         input = "Str. potion"
@@ -52,16 +52,42 @@ class TestingJp(unittest.TestCase):
 
 class TestingSotnStr(unittest.TestCase):
     def test_do_sub_jp(self):
-        line = '{_SJ("すで"), "装備なし（素手）", 0, 0, 0, 3, 255, 0, 0, 36, 42, 0, 5, 128, 0, 0, false, 8, 0, 0, 0, 0, 4, 2, 1, 1, 1, 1, 0},'
+        line = '{_S("すで"), "装備なし（素手）", 0, 0, 0, 3, 255, 0, 0, 36, 42, 0, 5, 128, 0, 0, false, 8, 0, 0, 0, 0, 4, 2, 1, 1, 1, 1, 0},'
         out = do_sub(line)
         expected = '{"\\xBD\\xC3\\xFF\\x9E\\xFF", "装備なし（素手）", 0, 0, 0, 3, 255, 0, 0, 36, 42, 0, 5, 128, 0, 0, false, 8, 0, 0, 0, 0, 4, 2, 1, 1, 1, 1, 0},'
         assert out == expected
 
     def test_jp_empty(self):
-        line = "_SJ(\"\")"
+        line = "_S(\"\")"
         out = do_sub(line)
         expected = '\"\\xFF\"'
         assert out == expected
+
+    def test_jp_symbols_and_quotes(self):
+        line = "_S(\"\\\"(\\\")\")"
+        out = do_sub(line)
+        expected = '"\\x02\\x08\\x02\\x09\\xFF"'
+        assert out == expected, (out, expected)
+
+    def test_s2_us(self):
+        line = '_S2("ＡＴＴ")'
+        out = do_sub(line)
+        assert out == '"\\x00\\x01\\x01\\xFF"'
+
+    def test_s2_empty(self):
+        line = '_S2("")'
+        out = do_sub(line)
+        assert out == '"\\xFF"'
+
+    def test_s2_hd(self):
+        line = '_S2_HD("攻撃力")'
+        out = do_sub(line)
+        assert out == '"\\x0C\\x0D\\x0E\\xFF"'
+
+    def test_s2_empty(self):
+        line = '_S2_HD("")'
+        out = do_sub(line)
+        assert out == '"\\xFF"'
 
 
 if __name__ == "__main__":
