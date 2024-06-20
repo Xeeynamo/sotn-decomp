@@ -22,8 +22,28 @@ class TestingJp(unittest.TestCase):
         bytes = dakuten_to_bytes("で")
         assert bytes == [0xC3, 0xFF, 0x9E]
 
+    def test_utf8_to_byte_literals_escaped_dakuten(self):
+        input = "すで"
+        out = utf8_to_byte_literals_escaped(input)
+        assert out == "\\xBD\\xC3\\xFF\\x9E\\xFF"
+
+    def test_utf8_to_byte_literals_escaped_kanji(self):
+        input = "あかつきの剣"
+        out = utf8_to_byte_literals_escaped(input)
+        assert out == "\\xB1\\xB6\\xC2\\xB7\\xC9\\x3C\\xFF"
+
     def check_sei():
         assert(utf8_to_index['聖'] == 222)
+
+    def test_glasses(self):
+        input = "聖なるめがね"
+        out = utf8_to_byte_literals_escaped(input)
+        assert out == "\\xEE\\xC5\\xD9\\xD2\\xB6\\xFF\\x9E\\xC8\\xFF"
+
+    def test_moon(self):
+        input = "バルザイのえん月刀"
+        out = utf8_to_byte_literals_escaped(input)
+        assert out == "\\x8A\\xFF\\x9E\\x99\\x7B\\xFF\\x9E\\x72\\xC9\\xB4\\xDD\\xFF\\xFF\\xED\\xFF"
 
     def test_str_potion(self):
         input = "Str. potion"
@@ -42,6 +62,12 @@ class TestingSotnStr(unittest.TestCase):
         out = do_sub(line)
         expected = '\"\\xFF\"'
         assert out == expected
+
+    def test_jp_symbols_and_quotes(self):
+        line = "_S(\"\\\"(\\\")\")"
+        out = do_sub(line)
+        expected = '"\\x02\\x08\\x02\\x09\\xFF"'
+        assert out == expected, (out, expected)
 
     def test_s2_us(self):
         line = '_S2("ＡＴＴ")'
