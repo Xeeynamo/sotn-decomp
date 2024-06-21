@@ -39,7 +39,9 @@ static SpriteParts** SpriteBanks[] = {
 extern u16* D_80181D08[];
 
 static u16** Clut[] = {
-    0x5, 0x2E00, 0x100, D_80181D08, (u16**)-1,
+    MAKE_PAL_OP(PAL_BULK_COPY, 0),
+    0x2E00, 0x100, D_80181D08,
+    PAL_TERMINATE(),
 };
 
 static void* Cluts[] = {

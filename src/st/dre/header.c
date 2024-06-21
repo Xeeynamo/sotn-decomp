@@ -46,9 +46,13 @@ extern u16* D_8018B348[];
 extern u16* D_8018ABE8[];
 
 static u16** Clut[] = {
-    0x5,        0x2000, 0x50,  D_8018AEA8, 0x2080,    0x80,
-    D_8018AF48, 0x2100, 0x80,  D_8018B148, 0x2180,    0x80,
-    D_8018B348, 0x2E00, 0x100, D_8018ABE8, (u16**)-1,
+    MAKE_PAL_OP(PAL_BULK_COPY, 0),
+    0x2000, 0x50, D_8018AEA8,
+    0x2080, 0x80, D_8018AF48,
+    0x2100, 0x80, D_8018B148,
+    0x2180, 0x80, D_8018B348,
+    0x2E00, 0x100, D_8018ABE8,
+    PAL_TERMINATE(),
 };
 
 static void* Cluts[] = {
