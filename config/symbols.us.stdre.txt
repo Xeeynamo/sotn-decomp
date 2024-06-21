@@ -90,3 +90,5 @@ g_LayoutObjPosHorizontal = 0x801A32CC;
 g_LayoutObjPosVertical = 0x801A32D0;
 g_Dialogue = 0x801A3ED8;
 g_ItemIconSlots = 0x801A3F8C;
+g_GfxBanks = 0x801801D0;
+g_TileLayers = 0x80180118;

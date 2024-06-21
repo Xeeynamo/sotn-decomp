@@ -90,3 +90,4 @@ g_ESoulStealOrbSprt = 0x80181078;
 g_ExplosionYVelocities = 0x80180E18;
 g_ExplosionAnimations = 0x80180EC4;
 UpdateStageEntities = 0x8018EC90;
+g_TileLayers = 0x801801F8;
