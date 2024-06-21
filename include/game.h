@@ -1123,6 +1123,20 @@ typedef struct {
     /* 8003C7B0 */ void (*unk3C)(void);
 } Overlay;
 
+typedef struct {
+    /* 8003C774 */ void (*Update)(void);
+    /* 8003C778 */ void (*HitDetection)(void);
+    /* 8003C77C */ void (*UpdateRoomPosition)(void);
+    /* 8003C780 */ void (*InitRoomEntities)(s32 layoutId);
+    /* 8003C784 */ RoomHeader* rooms;
+    /* 8003C788 */ SpriteParts** spriteBanks;
+    /* 8003C78C */ u_long** cluts;
+    /* 8003C790 */ void* objLayoutHorizontal;
+    /* 8003C794 */ RoomDef* tileLayers;
+    /* 8003C798 */ GfxBank** gfxBanks;
+    /* 8003C79C */ void (*UpdateStageEntities)(void);
+} AbbreviatedOverlay;
+
 typedef enum {
     EFFECT_SOLID = 1 << 0,
     EFFECT_UNK_0002 = 1 << 1,
