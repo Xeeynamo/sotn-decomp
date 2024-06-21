@@ -1,7 +1,8 @@
 WIBO            := bin/wibo
 MWCCPSP         := bin/mwccpsp.exe
+AS_ALLEGREX     := bin/allegrex-as
 
-GNUASPSP        := mipsel-linux-gnu-as -I include/ -G0 -march=r6000 -mabi=eabi
+GNUASPSP        := $(AS_ALLEGREX) -I include/ -G0 -march=allegrex -mabi=eabi -EL
 MWASPSP         := $(WIBO) bin/asm_psp_elf.exe -gnu
 ASPSP           := $(GNUASPSP)
 
@@ -45,12 +46,12 @@ $(MWCCGAP_APP):
 	git submodule init $(MWCCGAP_DIR)
 	git submodule update $(MWCCGAP_DIR)
 
-$(PSP_BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
+$(PSP_BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP) bin/allegrex-as
 	mkdir -p $(dir $@)
-	$(MWCCGAP) $< $@ --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --asm-dir-prefix asm/pspeu $(MWCCPSP_FLAGS)
+	$(MWCCGAP) $< $@ --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path $(AS_ALLEGREX) --asm-dir-prefix asm/pspeu $(MWCCPSP_FLAGS)
 
 
-$(PSP_BUILD_DIR)/asm/psp%.s.o: asm/psp%.s
+$(PSP_BUILD_DIR)/asm/psp%.s.o: asm/psp%.s bin/allegrex-as
 	mkdir -p $(dir $@)
 	$(ASPSP) -o $@ $<
 
