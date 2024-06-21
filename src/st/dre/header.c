@@ -34,30 +34,9 @@ static Overlay StageOverlay = {
 extern SpriteParts* D_80190168[];
 
 static SpriteParts** SpriteBanks[] = {
-    0x00000000,
-    D_80190168,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
+    NULL, D_80190168, NULL, NULL, NULL, NULL, NULL, NULL,
+    NULL, NULL,       NULL, NULL, NULL, NULL, NULL, NULL,
+    NULL, NULL,       NULL, NULL, NULL, NULL, NULL, NULL,
 };
 
 extern u16* D_8018AEA8[];
@@ -67,23 +46,9 @@ extern u16* D_8018B348[];
 extern u16* D_8018ABE8[];
 
 static u16** Clut[] = {
-    0x00000005,
-    0x00002000,
-    0x00000050,
-    D_8018AEA8,
-    0x00002080,
-    0x00000080,
-    D_8018AF48,
-    0x00002100,
-    0x00000080,
-    D_8018B148,
-    0x00002180,
-    0x00000080,
-    D_8018B348,
-    0x00002E00,
-    0x00000100,
-    D_8018ABE8,
-    (u16**)-1,
+    0x5,        0x2000, 0x50,  D_8018AEA8, 0x2080,    0x80,
+    D_8018AF48, 0x2100, 0x80,  D_8018B148, 0x2180,    0x80,
+    D_8018B348, 0x2E00, 0x100, D_8018ABE8, (u16**)-1,
 };
 
 static void* Cluts[] = {

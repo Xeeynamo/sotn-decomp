@@ -30,41 +30,16 @@ extern SpriteParts* D_80186FE8[];
 extern SpriteParts* D_80187090[];
 
 static SpriteParts** SpriteBanks[] = {
-    0x00000000,
-    D_80186FE8,
-    D_80187090,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
-    0x00000000,
+    NULL, D_80186FE8, D_80187090, NULL, NULL, NULL, NULL, NULL,
+    NULL, NULL,       NULL,       NULL, NULL, NULL, NULL, NULL,
+    NULL, NULL,       NULL,       NULL, NULL, NULL, NULL, NULL,
 
 };
 
 extern u16* D_80181D08[];
 
 static u16** Clut[] = {
-    0x00000005,
-    0x00002E00,
-    0x00000100,
-    D_80181D08,
-    (u16**)-1,
+    0x5, 0x2E00, 0x100, D_80181D08, (u16**)-1,
 };
 
 static void* Cluts[] = {
