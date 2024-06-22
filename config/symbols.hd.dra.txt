@@ -192,7 +192,6 @@ EntityMist = 0x80121FC8;
 func_80123B40 = 0x801237CC;
 EntitySubwpnThrownDagger = 0x80124814;
 EntitySubwpnThrownAxe = 0x80124FBC;
-EntityHolyWaterBreakGlass = 0x80125AF4;
 func_80129864 = 0x801294F0;
 EntityStopWatch = 0x8012A528;
 EntityBatEcho = 0x8012BB84;

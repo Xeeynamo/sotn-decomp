@@ -736,7 +736,7 @@ void func_80167A60(Entity* self) {}
 void func_80167A68(Entity* self) {}
 
 // Entity ID #35. Created by blueprint 40. No known FACTORY calls with
-// blueprint 40. No known DRA match.
+// blueprint 40. Duplicate of DRA EntityHolyWaterBreakGlass.
 void func_80167A70(Entity* self) {
     Point16 sp10[8];
     Primitive* prim;

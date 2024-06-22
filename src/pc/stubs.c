@@ -611,7 +611,6 @@ void EntityPlayerDissolves(Entity* self) { NOT_IMPLEMENTED; }
 void EntityMist(Entity* self) { NOT_IMPLEMENTED; }
 void EntityGuardText(Entity* self) { NOT_IMPLEMENTED; }
 void EntityTransparentWhiteCircle(Entity* self) { NOT_IMPLEMENTED; }
-void EntityHolyWaterBreakGlass(Entity* self) { NOT_IMPLEMENTED; }
 void EntityStopWatch(Entity* self) { NOT_IMPLEMENTED; }
 void EntityBatEcho(Entity* self) { NOT_IMPLEMENTED; }
 void func_8012F894(Entity* self) { NOT_IMPLEMENTED; }
