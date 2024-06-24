@@ -13,7 +13,7 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     EntityGiantSpinningCross,
     EntitySubwpnCrashCross,
     EntitySubwpnCrashCrossParticles,
-    EntitySubwpnThrownAxe,
+    EntitySubwpnAxeCrash,
     EntityPlayerBlinkWhite,
     EntitySubwpnThrownVibhuti,
     func_8011E0E4,
