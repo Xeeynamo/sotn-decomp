@@ -108,7 +108,7 @@ segments:
       - [0xD4B8, .data, 7E4BC]
       - [0xDBD4, .data, d_DBD4]
       - [0xE294, .data, d_E294]
-      - [0x106C8, data]
+      - [0x10798, data]
       - [0x10A3C, .data, 90264] # D_800B0A3C to D_800B0AEC
       - [0x10B34, data]
       - [0x1107C, raw, vh_0] # aPbav
