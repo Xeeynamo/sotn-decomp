@@ -154,7 +154,6 @@ s16 D_800AC998[] = {
 u32 D_800B0728 = 0x910C90EB;
 RECT D_800B0788 = {0x0301, 0x01F8, 0x0030, 0x0001};
 RECT D_800B0790 = {0x0301, 0x01FC, 0x0030, 0x0001};
-Point32 D_800B0688[8] = {0};
 u16 D_800B06C8[0x30] = {0};
 s16 D_800ACF84[8];
 u8 D_800ACF4C[0x200] = { // crouching anim
@@ -611,7 +610,6 @@ void EntityPlayerDissolves(Entity* self) { NOT_IMPLEMENTED; }
 void EntityMist(Entity* self) { NOT_IMPLEMENTED; }
 void EntityGuardText(Entity* self) { NOT_IMPLEMENTED; }
 void EntityTransparentWhiteCircle(Entity* self) { NOT_IMPLEMENTED; }
-void EntityHolyWaterBreakGlass(Entity* self) { NOT_IMPLEMENTED; }
 void EntityStopWatch(Entity* self) { NOT_IMPLEMENTED; }
 void EntityBatEcho(Entity* self) { NOT_IMPLEMENTED; }
 void func_8012F894(Entity* self) { NOT_IMPLEMENTED; }
