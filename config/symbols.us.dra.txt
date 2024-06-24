@@ -48,7 +48,6 @@ EntityLevelUpAnimation = 0x80121980;
 EntityMist = 0x8012231C;
 EntityTeleport = 0x801243B0;
 EntitySubwpnThrownDagger = 0x80124B88;
-EntitySubwpnThrownAxe = 0x80125330;
 EntitySubwpnCrashCross = 0x801267B0;
 EntityHellfireHandler = 0x80126ECC;
 EntityStopWatch = 0x8012A89C;
