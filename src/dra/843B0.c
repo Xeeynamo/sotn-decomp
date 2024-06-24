@@ -266,7 +266,7 @@ INCLUDE_ASM("dra/nonmatchings/843B0", EntitySubwpnThrownDagger);
 
 // axe thrown when using subweapon
 // near-duplicate of EntitySubwpnCrashAgunea
-void EntitySubwpnAxeCrash(Entity* self) {
+void EntitySubwpnThrownAxe(Entity* self) {
     s32 sp10;
     s32 sp18;
     Primitive* prevPrim;

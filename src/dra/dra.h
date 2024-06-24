@@ -944,7 +944,7 @@ void func_8011B334(Entity* self);
 void EntityGiantSpinningCross(Entity* self);
 void EntitySubwpnCrashCross(Entity* self);
 void EntitySubwpnCrashCrossParticles(Entity* self);
-void EntitySubwpnAxeCrash(Entity* self);
+void EntitySubwpnThrownAxe(Entity* self);
 void EntityPlayerBlinkWhite(Entity* self);
 void EntitySubwpnThrownVibhuti(Entity* self);
 void func_8011E0E4(Entity* self);
