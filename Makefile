@@ -107,9 +107,6 @@ SOTNDISK_SOURCES := $(shell find tools/sotn-disk -name '*.go')
 
 CHECK_FILES := $(shell cut -d' ' -f3 config/check.$(VERSION).sha)
 
-print_target = \
-    @printf "\033[0;32m$@\033[0m\n";
-
 .PHONY: build
 
 all: build check
@@ -117,7 +114,6 @@ build: build_$(VERSION)
 build_us: main dra weapon ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
 build_hd: dra tt_000
 clean:
-	$(call print_target)
 	git clean -fdx assets/
 	git clean -fdx asm/$(VERSION)/
 	git clean -fdx build/$(VERSION)/
@@ -125,7 +121,6 @@ clean:
 	git clean -fdx function_calls/
 	git clean -fdx sotn_calltree.txt
 format: bin/clang-format
-	$(call print_target)
 	bin/clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c" | grep -v 'src/pc/3rd')
 	bin/clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.h" | grep -v 'src/pc/3rd')
 	bin/clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name "*.h")
@@ -151,13 +146,10 @@ format: bin/clang-format
 	./tools/symbols.py remove-orphans config/splat.us.tt_000.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stmad.yaml
 patch:
-	$(call print_target)
 	$(DIRT_PATCHER) config/dirt.$(VERSION).json
 check: config/check.$(VERSION).sha patch $(CHECK_FILES)
-	$(call print_target)
 	sha1sum --check $<
 expected: check
-	$(call print_target)
 	mkdir -p expected/build
 	rm -rf expected/build/$(VERSION)
 	cp -r build/$(VERSION) expected/build/
@@ -166,10 +158,8 @@ main: $(MAIN_TARGET).exe
 main_dirs:
 	$(foreach dir,$(MAIN_ASM_DIRS) $(MAIN_SRC_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 $(MAIN_TARGET).exe: $(MAIN_TARGET).elf
-	$(call print_target)
 	$(OBJCOPY) -O binary $< $@
 $(MAIN_TARGET).elf: $(MAIN_O_FILES) $(BUILD_DIR)/main.ld $(CONFIG_DIR)/undefined_syms.$(VERSION).txt $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(MAIN).txt
-	$(call print_target)
 	$(LD) $(LD_FLAGS) -o $@ \
 	-Map $(MAIN_TARGET).map \
 	-T $(BUILD_DIR)/main.ld \
@@ -178,98 +168,74 @@ $(MAIN_TARGET).elf: $(MAIN_O_FILES) $(BUILD_DIR)/main.ld $(CONFIG_DIR)/undefined
 
 dra: $(BUILD_DIR)/DRA.BIN
 $(BUILD_DIR)/DRA.BIN: $(BUILD_DIR)/$(DRA).elf
-	$(call print_target)
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/$(DRA).elf: $(call list_o_files,dra)
-	$(call print_target)
 	$(call link,dra,$@)
 
 ric: $(BUILD_DIR)/RIC.BIN
 $(BUILD_DIR)/RIC.BIN: $(BUILD_DIR)/ric.elf
-	$(call print_target)
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/ric.elf: $(call list_o_files,ric)
-	$(call print_target)
 	$(call link,ric,$@)
 
 cen: $(BUILD_DIR)/CEN.BIN $(BUILD_DIR)/F_CEN.BIN
 $(BUILD_DIR)/CEN.BIN: $(BUILD_DIR)/stcen.elf
-	$(call print_target)
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_CEN.BIN:
-	$(call print_target)
 	$(GFXSTAGE) e assets/st/cen $@
 
 dre: $(BUILD_DIR)/DRE.BIN $(BUILD_DIR)/F_DRE.BIN
 $(BUILD_DIR)/DRE.BIN: $(BUILD_DIR)/stdre.elf
-	$(call print_target)
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_DRE.BIN:
-	$(call print_target)
 	$(GFXSTAGE) e assets/st/dre $@
 
 mad: $(BUILD_DIR)/MAD.BIN $(BUILD_DIR)/F_MAD.BIN
 $(BUILD_DIR)/MAD.BIN: $(BUILD_DIR)/stmad.elf
-	$(call print_target)
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_MAD.BIN:
-	$(call print_target)
 	$(GFXSTAGE) e assets/st/mad $@
 
 no3: $(BUILD_DIR)/NO3.BIN $(BUILD_DIR)/F_NO3.BIN
 $(BUILD_DIR)/NO3.BIN: $(BUILD_DIR)/stno3.elf
-	$(call print_target)
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_NO3.BIN:
-	$(call print_target)
 	$(GFXSTAGE) e assets/st/no3 $@
 
 np3: $(BUILD_DIR)/NP3.BIN $(BUILD_DIR)/F_NP3.BIN
 $(BUILD_DIR)/NP3.BIN: $(BUILD_DIR)/stnp3.elf
-	$(call print_target)
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_NP3.BIN:
-	$(call print_target)
 	$(GFXSTAGE) e assets/st/np3 $@
 
 nz0: $(BUILD_DIR)/NZ0.BIN $(BUILD_DIR)/F_NZ0.BIN
 $(BUILD_DIR)/NZ0.BIN: $(BUILD_DIR)/stnz0.elf
-	$(call print_target)
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_NZ0.BIN:
-	$(call print_target)
 	$(GFXSTAGE) e assets/st/nz0 $@
 
 sel: $(BUILD_DIR)/SEL.BIN
 $(BUILD_DIR)/SEL.BIN: $(BUILD_DIR)/stsel.elf
-	$(call print_target)
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/src/st/sel/%.c.o: src/st/sel/%.c $(MASPSX_APP) $(CC1PSX) src/st/sel/sel.h | stsel_dirs
-	$(call print_target)
 	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 
 st0: $(BUILD_DIR)/ST0.BIN $(BUILD_DIR)/F_ST0.BIN
 $(BUILD_DIR)/ST0.BIN: $(BUILD_DIR)/stst0.elf
-	$(call print_target)
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_ST0.BIN:
-	$(call print_target)
 	$(GFXSTAGE) e assets/st/st0 $@
 
 wrp: $(BUILD_DIR)/WRP.BIN $(BUILD_DIR)/F_WRP.BIN
 $(BUILD_DIR)/WRP.BIN: $(BUILD_DIR)/stwrp.elf
-	$(call print_target)
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_WRP.BIN:
-	$(call print_target)
 	$(GFXSTAGE) e assets/st/wrp $@
 
 rwrp: $(BUILD_DIR)/RWRP.BIN $(BUILD_DIR)/F_RWRP.BIN
 $(BUILD_DIR)/RWRP.BIN: $(BUILD_DIR)/strwrp.elf
-	$(call print_target)
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_RWRP.BIN:
-	$(call print_target)
 	$(GFXSTAGE) e assets/st/rwrp $@
 
 tt_000: $(BUILD_DIR)/TT_000.BIN
@@ -280,7 +246,6 @@ $(BUILD_DIR)/TT_000.BIN: $(BUILD_DIR)/tt_000_raw.bin
 	dd status=none if=/dev/zero bs=1 count=$$((40960 - $$(stat -c %s $<))) >> $@
 
 mad_fix: stmad_dirs $$(call list_o_files,st/mad) $$(call list_o_files,st)
-	$(call print_target)
 	$(LD) $(LD_FLAGS) -o $(BUILD_DIR)/stmad_fix.elf \
 		-Map $(BUILD_DIR)/stmad_fix.map \
 		-T $(BUILD_DIR)/stmad.ld \
@@ -290,20 +255,15 @@ mad_fix: stmad_dirs $$(call list_o_files,st/mad) $$(call list_o_files,st)
 	$(OBJCOPY) -O binary $(BUILD_DIR)/stmad_fix.elf $(BUILD_DIR)/MAD.BIN
 
 tt_%_dirs:
-	$(call print_target)
 	$(foreach dir,$(ASM_DIR)/servant/tt_$* $(ASM_DIR)/servant/tt_$*/data $(SRC_DIR)/servant/tt_$* $(ASSETS_DIR)/servant/tt_$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 st%_dirs:
-	$(call print_target)
 	$(foreach dir,$(ASM_DIR)/st/$* $(ASM_DIR)/st/$*/data $(ASM_DIR)/st/$*/handwritten $(SRC_DIR)/st/$* $(ASSETS_DIR)/st/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 %_dirs:
-	$(call print_target)
 	$(foreach dir,$(ASM_DIR)/$* $(ASM_DIR)/$*/data $(SRC_DIR)/$* $(ASSETS_DIR)/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 
 $(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call list_o_files,servant/tt_$$*) | tt_%_dirs
-	$(call print_target)
 	$(call link,tt_$*,$@)
 $(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad) $$(call list_shared_o_files,st)
-	$(call print_target)
 	$(LD) $(LD_FLAGS) -o $@ \
 		-Map $(BUILD_DIR)/stmad.map \
 		-T $(BUILD_DIR)/stmad.ld \
@@ -319,16 +279,12 @@ WEAPON1_FILES := $(foreach num,$(shell seq -w 000 058),$(BUILD_DIR)/weapon/f1_$(
 WEAPON_DIRS   := $(BUILD_DIR)/$(ASSETS_DIR)/weapon $(BUILD_DIR)/$(ASM_DIR)/weapon/data $(BUILD_DIR)/$(SRC_DIR)/weapon $(BUILD_DIR)/weapon
 weapon: $(WEAPON_DIRS) $(BUILD_DIR)/WEAPON0.BIN
 $(WEAPON_DIRS):
-	$(call print_target)
 	@mkdir -p $@
 $(BUILD_DIR)/WEAPON0.BIN: $(WEAPON0_FILES)
-	$(call print_target)
 	cat $^ > $@
 $(BUILD_DIR)/weapon/f%.bin: $(BUILD_DIR)/weapon/f%.elf
-	$(call print_target)
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/weapon/w%.bin: $(BUILD_DIR)/weapon/w%.elf
-	$(call print_target)
 	$(OBJCOPY) -O binary $< $@
 	dd status=none if=/dev/zero of=$@ bs=1 seek=12287 count=1 conv=notrunc
 $(ASM_DIR)/weapon/data/w_%.data.s: # create a fake empty file if all the data has been imported
@@ -336,7 +292,6 @@ $(ASM_DIR)/weapon/data/w_%.data.s: # create a fake empty file if all the data ha
 $(ASM_DIR)/weapon/data/w_%.sbss.s: # create a fake empty file if all the bss section has been imported
 	touch $@
 $(BUILD_DIR)/weapon/w0_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/header.c.o $(BUILD_DIR)/$(ASSETS_DIR)/weapon/w_%_1.animset.o $(BUILD_DIR)/$(ASSETS_DIR)/weapon/w_%_2.animset.o $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
-	$(call print_target)
 	$(LD) $(LD_FLAGS) --no-check-sections -o $@ \
 		-Map $(BUILD_DIR)/weapon/w0_$*.map \
 		-T weapon0.ld \
@@ -345,7 +300,6 @@ $(BUILD_DIR)/weapon/w0_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/header.c.o $(BUILD_
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).weapon.txt \
 		$^
 $(BUILD_DIR)/weapon/w1_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/header.c.o $(BUILD_DIR)/$(ASSETS_DIR)/weapon/w_%_1.animset.o $(BUILD_DIR)/$(ASSETS_DIR)/weapon/w_%_2.animset.o $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
-	$(call print_target)
 	$(LD) $(LD_FLAGS) --no-check-sections -o $@ \
 		-Map $(BUILD_DIR)/weapon/w1_$*.map \
 		-T weapon1.ld \
@@ -354,22 +308,16 @@ $(BUILD_DIR)/weapon/w1_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/header.c.o $(BUILD_
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).weapon.txt \
 		$^
 $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o: $(SRC_DIR)/weapon/w_%.c $(MASPSX_APP) $(CC1PSX) | weapon_dirs
-	$(call print_target)
 	$(CPP) $(CPP_FLAGS) -lang-c -DW_$* $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 $(BUILD_DIR)/$(SRC_DIR)/weapon/w_029.c.o: $(SRC_DIR)/weapon/w_029.c $(MASPSX_APP) $(CC1PSX) | weapon_dirs
-	$(call print_target)
 	$(CPP) $(CPP_FLAGS) -lang-c -DW_029 $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) -O1 | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 $(BUILD_DIR)/weapon/f0_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o | weapon_dirs
-	$(call print_target)
 	$(LD) -r -b binary -o $@ $<
 $(BUILD_DIR)/weapon/f1_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o
-	$(call print_target)
 	$(LD) -r -b binary -o $@ $<
 $(BUILD_DIR)/$(ASSETS_DIR)/weapon/%.o: $(ASSETS_DIR)/weapon/%.png
-	$(call print_target)
 	./tools/png2bin.py $< $@
 $(BUILD_DIR)/$(ASSETS_DIR)/weapon/%_1.animset.o: $(ASSETS_DIR)/weapon/%_1.animset.json
-	$(call print_target)
 	./tools/splat_ext/animset.py gen-asm $< $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*_1.animset.s -s g_Animset
 	$(AS) $(AS_FLAGS) -o $@ $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*_1.animset.s
 $(BUILD_DIR)/$(ASSETS_DIR)/weapon/%_2.animset.o: $(ASSETS_DIR)/weapon/%_2.animset.json
@@ -387,7 +335,6 @@ include Makefile.saturn.mk
 
 # Force to extract all the assembly code regardless if a function is already decompiled
 force_extract:
-	$(call print_target)
 	mv src src_tmp
 	rm $(BUILD_DIR)/*.ld
 	make extract -j
@@ -396,7 +343,6 @@ force_extract:
 
 # Rewrites symbol list from a successful build
 force_symbols:
-	$(call print_target)
 	$(PYTHON) ./tools/symbols.py map build/us/dra.map --no-default > config/symbols.us.dra.txt
 	$(PYTHON) ./tools/symbols.py map build/us/ric.map --no-default > config/symbols.us.ric.txt
 	$(PYTHON) ./tools/symbols.py map build/us/stcen.map --no-default > config/symbols.us.stcen.txt
@@ -412,14 +358,11 @@ force_symbols:
 	$(PYTHON) ./tools/symbols.py map build/us/tt_000.map --no-default > config/symbols.us.tt_000.txt
 
 context:
-	$(call print_target)
 	$(M2CTX) $(SOURCE)
 	@echo ctx.c has been updated.
 
 extract_disk: extract_disk_$(VERSION)
-	$(call print_target)
 disk_prepare: build $(SOTNDISK)
-	$(call print_target)
 	mkdir -p $(DISK_DIR)
 	cp -r disks/${VERSION}/* $(DISK_DIR)
 	cp $(BUILD_DIR)/main.exe $(DISK_DIR)/SLUS_000.67
@@ -446,22 +389,18 @@ disk_prepare: build $(SOTNDISK)
 	cp $(BUILD_DIR)/F_WRP.BIN $(DISK_DIR)/ST/WRP/F_WRP.BIN
 	cp $(BUILD_DIR)/TT_000.BIN $(DISK_DIR)/SERVANT/TT_000.BIN
 disk: disk_prepare
-	$(call print_target)
 	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
 disk_debug: disk_prepare
-	$(call print_target)
 	cd tools/sotn-debugmodule && make
 	cp $(BUILD_DIR)/../sotn-debugmodule.bin $(DISK_DIR)/SERVANT/TT_000.BIN
 	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
 
 # put this here as both PSX HD and PSP use it
 extract_disk_psp%:
-	$(call print_target)
 	mkdir -p disks/psp$*
 	7z x -y disks/sotn.psp$*.iso -odisks/psp$*/
 
 update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(SATURN_SPLITTER_APP) $(GO)
-	$(call print_target)
 	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release
 	cd $(SATURN_SPLITTER_DIR)/adpcm-extract && cargo build --release
 	pip3 install -r $(TOOLS_DIR)/requirements-python.txt
@@ -470,51 +409,40 @@ update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(SA
 	git clean -fd bin/
 
 bin/%: bin/%.tar.gz
-	$(call print_target)
 	sha256sum --check $<.sha256
 	cd bin && tar -xzf ../$<
 	rm $<
 	touch $@
 bin/%.tar.gz: bin/%.tar.gz.sha256
-	$(call print_target)
 	wget -O $@ https://github.com/Xeeynamo/sotn-decomp/releases/download/cc1-psx-26/$*.tar.gz
 $(ASMDIFFER_APP):
-	$(call print_target)
 	git submodule init $(ASMDIFFER_DIR)
 	git submodule update $(ASMDIFFER_DIR)
 $(M2CTX_APP):
-	$(call print_target)
 	curl -o $@ https://raw.githubusercontent.com/ethteck/m2ctx/main/m2ctx.py
 $(M2C_APP):
-	$(call print_target)
 	git submodule init $(M2C_DIR)
 	git submodule update $(M2C_DIR)
 	python3 -m pip install --upgrade pycparser
 $(MASPSX_APP):
-	$(call print_target)
 	git submodule init $(MASPSX_DIR)
 	git submodule update $(MASPSX_DIR)
 $(GO):
-	$(call print_target)
 	curl -L -o go1.19.7.linux-amd64.tar.gz https://go.dev/dl/go1.19.7.linux-amd64.tar.gz
 	tar -C $(HOME) -xzf go1.19.7.linux-amd64.tar.gz
 	rm go1.19.7.linux-amd64.tar.gz
 $(SOTNDISK): $(GO) $(SOTNDISK_SOURCES)
-	$(call print_target)
 	cd tools/sotn-disk; $(GO) install
 
 $(BUILD_DIR)/%.s.o: %.s
-	$(call print_target)
 	mkdir -p $(dir $@)
 	$(AS) $(AS_FLAGS) -o $@ $<
 $(BUILD_DIR)/%.c.o: %.c $(MASPSX_APP) $(CC1PSX)
-	$(call print_target)
 	mkdir -p $(dir $@)
 	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 
 # Handles assets
 $(BUILD_DIR)/$(ASSETS_DIR)/%.layoutobj.json.o: $(ASSETS_DIR)/%.layoutobj.json
-	$(call print_target)
 	ls -alh $@ || true
 	ls -alh $< || true
 	./tools/splat_ext/layoutobj.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
@@ -525,47 +453,37 @@ $(BUILD_DIR)/$(ASSETS_DIR)/%.layoutobj.json.o: $(ASSETS_DIR)/%.layoutobj.json
 	ls -alh $@ || true
 	ls -alh $< || true
 $(BUILD_DIR)/$(ASSETS_DIR)/%.roomdef.json.o: $(ASSETS_DIR)/%.roomdef.json
-	$(call print_target)
 	./tools/splat_ext/roomdef.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
 	# $(LD) -r -b binary -o $@ $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
 	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
 $(BUILD_DIR)/$(ASSETS_DIR)/%.layers.json.o: $(ASSETS_DIR)/%.layers.json
-	$(call print_target)
 	./tools/splat_ext/layers.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 	# $(AS) $(AS_FLAGS) -o $@ $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/%.tiledef.json.o: $(ASSETS_DIR)/%.tiledef.json
-	$(call print_target)
 	./tools/splat_ext/tiledef.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 	# $(AS) $(AS_FLAGS) -o $@ $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/%.spritesheet.json.o: $(ASSETS_DIR)/%.spritesheet.json
-	$(call print_target)
 	./tools/splat_ext/spritesheet.py encode $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 	# $(AS) $(AS_FLAGS) -o $@ $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/%.animset.json.o: $(ASSETS_DIR)/%.animset.json
-	$(call print_target)
 	./tools/splat_ext/animset.py gen-asm $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 	# $(AS) $(AS_FLAGS) -o $@ $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/%.json.o: $(ASSETS_DIR)/%.json
-	$(call print_target)
 	./tools/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/%.tilelayout.bin.o: $(ASSETS_DIR)/%.tilelayout.bin
-	$(call print_target)
 	# $(LD) -r -b binary -o $@ $(ASSETS_DIR)/$*.tilelayout.bin
 	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(ASSETS_DIR)/$*.tilelayout.bin
 $(BUILD_DIR)/$(ASSETS_DIR)/%.bin.o: $(ASSETS_DIR)/%.bin
-	$(call print_target)
 	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
 $(BUILD_DIR)/$(ASSETS_DIR)/%.dec.o: $(ASSETS_DIR)/%.dec
-	$(call print_target)
 # for now '.dec' files are ignored
 	touch $@
 $(BUILD_DIR)/$(ASSETS_DIR)/%.png.o: $(ASSETS_DIR)/%.png
-	$(call print_target)
 	touch $@
 
 SHELL = /bin/bash -e -o pipefail
