@@ -2288,7 +2288,7 @@
 | 1.00 | true     | EntitySubwpnBible                   | ../../asm/us/dra/nonmatchings/843B0/EntitySubwpnBible.s 
 | 0.92 | true     | EntitySubwpnBible                   | ../../asm/us/ric/nonmatchings/319C4/EntitySubwpnBible.s 
 -------------------------------------------------------------------------------
-| 1.00 | false    | EntitySubwpnThrownAxe               | ../../asm/us/dra/nonmatchings/843B0/EntitySubwpnThrownAxe.s 
+| 1.00 | true     | EntitySubwpnThrownAxe               | ../../asm/us/dra/nonmatchings/843B0/EntitySubwpnThrownAxe.s 
 | 0.93 | true     | EntitySubwpnCrashAgunea             | ../../asm/us/ric/nonmatchings/2C4C4/EntitySubwpnCrashAgunea.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | ReboundStoneBounce1                 | ../../asm/us/dra/nonmatchings/843B0/ReboundStoneBounce1.s 

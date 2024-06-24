@@ -708,7 +708,7 @@
 <g id="node44" class="node">
 <title>dra.EntitySubwpnThrownAxe</title>
 <g id="a_node44"><a xlink:href="dra.EntitySubwpnThrownAxe.svg" xlink:title="dra.EntitySubwpnThrownAxe">
-<ellipse fill="red" stroke="black" cx="11387.34" cy="-378" rx="147.57" ry="18"/>
+<ellipse fill="green" stroke="black" cx="11387.34" cy="-378" rx="147.57" ry="18"/>
 <text text-anchor="middle" x="11387.34" y="-374.3" font-family="Times,serif" font-size="14.00">dra.EntitySubwpnThrownAxe</text>
 </a>
 </g>
