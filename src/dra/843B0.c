@@ -442,11 +442,11 @@ void EntityHolyWaterBreakGlass(Entity* self) {
                 sp10[i].y = posY;
                 // Random velocity from 0.25 to 0.5
                 velX = (rand() & 0x3FFF) + FIX(0.25);
-                fakeprim->velocityX = velX;
+                fakeprim->velocityX.val = velX;
                 if (i & 1) {
-                    fakeprim->velocityX = -velX;
+                    fakeprim->velocityX.val = -velX;
                 }
-                fakeprim->velocityY = -((rand() * 2) + FIX(2.5));
+                fakeprim->velocityY.val = -((rand() * 2) + FIX(2.5));
                 fakeprim->drawMode = 0xA;
                 fakeprim->type = 1;
             } else {
