@@ -259,7 +259,7 @@
 <g id="node17" class="node">
 <title>dra.EntityHolyWater</title>
 <g id="a_node17"><a xlink:href="dra.EntityHolyWater.svg" xlink:title="dra.EntityHolyWater">
-<ellipse fill="red" stroke="black" cx="4022.74" cy="-378" rx="107.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="4022.74" cy="-378" rx="107.48" ry="18"/>
 <text text-anchor="middle" x="4022.74" y="-374.3" font-family="Times,serif" font-size="14.00">dra.EntityHolyWater</text>
 </a>
 </g>
@@ -275,7 +275,7 @@
 <g id="node18" class="node">
 <title>dra.EntityHolyWaterBreakGlass</title>
 <g id="a_node18"><a xlink:href="dra.EntityHolyWaterBreakGlass.svg" xlink:title="dra.EntityHolyWaterBreakGlass">
-<ellipse fill="red" stroke="black" cx="4307.74" cy="-378" rx="159.77" ry="18"/>
+<ellipse fill="green" stroke="black" cx="4307.74" cy="-378" rx="159.77" ry="18"/>
 <text text-anchor="middle" x="4307.74" y="-374.3" font-family="Times,serif" font-size="14.00">dra.EntityHolyWaterBreakGlass</text>
 </a>
 </g>

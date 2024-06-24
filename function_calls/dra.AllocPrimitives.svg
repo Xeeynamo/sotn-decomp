@@ -468,7 +468,7 @@
 <g id="node29" class="node">
 <title>dra.EntityHolyWaterBreakGlass</title>
 <g id="a_node29"><a xlink:href="dra.EntityHolyWaterBreakGlass.svg" xlink:title="dra.EntityHolyWaterBreakGlass">
-<ellipse fill="red" stroke="black" cx="6841.34" cy="-378" rx="159.77" ry="18"/>
+<ellipse fill="green" stroke="black" cx="6841.34" cy="-378" rx="159.77" ry="18"/>
 <text text-anchor="middle" x="6841.34" y="-374.3" font-family="Times,serif" font-size="14.00">dra.EntityHolyWaterBreakGlass</text>
 </a>
 </g>

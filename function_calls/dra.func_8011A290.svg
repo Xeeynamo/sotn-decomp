@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>dra.EntityHolyWater</title>
 <g id="a_node5"><a xlink:href="dra.EntityHolyWater.svg" xlink:title="dra.EntityHolyWater">
-<ellipse fill="red" stroke="black" cx="428.44" cy="-378" rx="107.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="428.44" cy="-378" rx="107.48" ry="18"/>
 <text text-anchor="middle" x="428.44" y="-374.3" font-family="Times,serif" font-size="14.00">dra.EntityHolyWater</text>
 </a>
 </g>
