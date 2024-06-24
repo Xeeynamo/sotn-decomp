@@ -1,7 +1,7 @@
 | Ovl    | Function                 |   Length |   Branches | Jtbl   | WIP                             | %     |
 |--------|--------------------------|----------|------------|--------|---------------------------------|-------|
 | wrp    | DestroyCurrentEntity     |       16 |          2 |        | https://decomp.me/scratch/aKfDL | 0.99  |
-| wrp    | CreateEntitiesToTheRight |       90 |         11 |        | https://decomp.me/scratch/nKKQN | 0.989 |
+| wrp    | CreateEntitiesToTheRight |       90 |         11 |        | https://decomp.me/scratch/drszJ | 0.993 |
 | wrp    | CreateEntitiesAbove      |       92 |         11 |        | https://decomp.me/scratch/ezNeo | 0.99  |
 | wrp    | CreateEntitiesToTheLeft  |       97 |         12 |        |                                 |       |
 | wrp    | CreateEntitiesBelow      |       99 |         12 |        | https://decomp.me/scratch/yxzDb | 0.993 |
