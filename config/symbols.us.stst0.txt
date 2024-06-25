@@ -1,4 +1,4 @@
-ST0_g_EntityGfxs = 0x801802C4;
+g_EntityGfxs = 0x801802C4;
 g_pStObjLayoutHorizontal = 0x80180314;
 g_pStObjLayoutVertical = 0x801803E8;
 PfnEntityUpdates = 0x801804BC;

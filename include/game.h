@@ -1104,6 +1104,11 @@ typedef struct {
     /* 02 */ SpritePart parts[0];
 } SpriteParts; // size = 4 + count*sizeof(SpritePart)
 
+/*
+ * In the PSX version of the game, stage objects begin with this
+ * header (or `AbbreviatedOverlay`) at 0x0. This describes the
+ * primary interface for the game engine to interact with stages.
+ */
 typedef struct {
     /* 8003C774 */ void (*Update)(void);
     /* 8003C778 */ void (*HitDetection)(void);
@@ -1123,6 +1128,13 @@ typedef struct {
     /* 8003C7B0 */ void (*unk3C)(void);
 } Overlay;
 
+/*
+ * Several stages start their sprite bank array immeidately
+ * after `UpdateStageEntities` instead of including the
+ * trailing 5 pointers found in `Overlay`. `DRA` seems to
+ * know which stages have valid data in those fields and
+ * which don't.
+ */
 typedef struct {
     /* 8003C774 */ void (*Update)(void);
     /* 8003C778 */ void (*HitDetection)(void);

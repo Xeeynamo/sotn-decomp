@@ -3,8 +3,6 @@
 #undef STAGE
 #define STAGE STAGE_ST0
 
-#define OVL_EXPORT(x) ST0_##x
-
 typedef enum {
     E_NONE,
     E_BREAKABLE,

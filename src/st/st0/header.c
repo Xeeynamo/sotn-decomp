@@ -4,7 +4,7 @@ extern RoomHeader g_Rooms[];
 extern SpriteParts** SpriteBanks[];
 extern void* Cluts[];
 extern RoomDef g_TileLayers[];
-extern GfxBank* OVL_EXPORT(g_EntityGfxs)[];
+extern GfxBank* g_EntityGfxs[];
 void UpdateStageEntities();
 void func_801B0464();
 
@@ -18,7 +18,7 @@ static Overlay StageOverlay = {
     .cluts = Cluts,
     .objLayoutHorizontal = g_pStObjLayoutHorizontal,
     .tileLayers = g_TileLayers,
-    .gfxBanks = OVL_EXPORT(g_EntityGfxs),
+    .gfxBanks = g_EntityGfxs,
     .UpdateStageEntities = UpdateStageEntities,
     .unk2c = NULL,
     .unk30 = NULL,
