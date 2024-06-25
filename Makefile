@@ -423,7 +423,7 @@ $(M2CTX_APP):
 $(M2C_APP):
 	git submodule init $(M2C_DIR)
 	git submodule update $(M2C_DIR)
-	python3 -m pip install --upgrade pycparser
+	$(PYTHON) -m pip install --upgrade pycparser
 $(MASPSX_APP):
 	git submodule init $(MASPSX_DIR)
 	git submodule update $(MASPSX_DIR)
