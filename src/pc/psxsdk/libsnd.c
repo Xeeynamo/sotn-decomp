@@ -87,6 +87,7 @@ void SsVabClose(short vab_id) { NOT_IMPLEMENTED; }
 #include <log.h>
 #include <assert.h>
 #include "../../main/psxsdk/libsnd/libsnd_i.h"
+#include <stdarg.h>
 
 u16* D_80032F10;
 
@@ -140,7 +141,10 @@ long _spu_transMode;
 
 void* DMACallback(int dma, void (*func)()) { return NULL; }
 
-s32 _spu_rev_startaddr[4];
+s32 _spu_rev_startaddr[16] = {
+    0x0000FFFE, 0x0000FB28, 0x0000FC18, 0x0000F6F8, 0x0000F204, 0x0000EA44,
+    0x0000E128, 0x0000CFF8, 0x0000CFF8, 0x0000F880, 0x00000002, 0x000004D8,
+    0x000003D8, 0x00000908, 0x00000DFC, 0x000015BC};
 s32 D_80033098;
 
 // s_ini.c
@@ -288,7 +292,10 @@ struct rev_param_entry {
 
 struct rev_param_entry _spu_rev_param[1];
 
-long SpuSetReverbModeParam(SpuReverbAttr* attr) { return 0; }
+long SpuSetReverbModeParam(SpuReverbAttr* attr) {
+    // skipping this for now
+    return 0;
+}
 
 long ResetRCnt(long spec) { return 1; }
 
@@ -300,7 +307,7 @@ struct SndSeqTickEnv _snd_seq_tick_env;
 
 s32 D_8003355C;
 
-void SpuSetCommonAttr(SpuCommonAttr* attr) {}
+void SpuSetCommonAttr(SpuCommonAttr* attr) { assert(false); }
 
 s32 _spu_AllocBlockNum;
 s32 _spu_AllocLastNum;
@@ -308,9 +315,13 @@ s32 _spu_mem_mode_unitM;
 s32 _spu_rev_offsetaddr;
 s32 _spu_rev_reserve_wa;
 
-long SpuMalloc(long size) { return 0; }
+long SpuMalloc(long size) {
+    assert(false);
+    return 0;
+}
 
 int SsVabOpenHeadWithMode(unsigned char* pAddr, int vabId, s32 pFn, long mode) {
+    assert(false);
     return 0;
 }
 
@@ -339,18 +350,60 @@ void (* volatile _spu_IRQCallback)();
 
 void DeliverEvent(unsigned long, unsigned long) {}
 
-s32 D_800330F8[128];
+s32 D_800330F8[256] = {0};
 s32 D_80033558;
 volatile u32* D_80033554;
 
-int _spu_t(int count, ...) { return 0; }
+void write_dma(u32 data, char* file, int line);
 
-void _SsSndCrescendo(s16, s16) {}
-void _SsSndDecrescendo(s16, s16) {}
+// dma function, reimplement to avoid pulling in dma controller
+int _spu_t(int mode, ...) {
+    va_list args;
+    va_start(args, mode);
+    s32 spu_ram_dest_addr;
+    u32* source_address;
+    s32 count;
+    s32 i;
+
+    switch (mode) {
+    case 0:
+    case 1:
+        write_16(0x1F801DAA, (read_16(0x1F801DAA) & ~0x30) | 0x20, __FILE__,
+                 __LINE__);
+        return 0;
+
+    case 2:
+        // set destination address
+        spu_ram_dest_addr = va_arg(args, u32) >> _spu_mem_mode_plus;
+        _spu_tsa = spu_ram_dest_addr;
+
+        // dma destination address in spu ram
+        write_16(0x1f801da6, spu_ram_dest_addr, __FILE__, __LINE__);
+        return 0;
+
+    case 3:
+        // transfer
+        source_address = (u32*)va_arg(args, u32*);
+        count = (s32)va_arg(args, s32);
+        for (i = 0; i < count / 4; i++) {
+            write_dma(source_address[i], __FILE__, __LINE__);
+        }
+        return 0;
+        break;
+    }
+
+    assert(false);
+    return 0;
+}
+
+void _SsSndCrescendo(s16, s16) { assert(false); }
+void _SsSndDecrescendo(s16, s16) { assert(false); }
 
 void SpuVmSetVol(
-    short seq_sep_no, short vabId, short program, short voll, short volr) {}
+    short seq_sep_no, short vabId, short program, short voll, short volr) {
+    assert(false);
+}
 
-void _SsContDataEntry(s16, s16, u8) {}
+void _SsContDataEntry(s16, s16, u8) { assert(false); }
 
 #endif

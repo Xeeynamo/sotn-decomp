@@ -3,7 +3,7 @@
 
 void WaitEvent(s32);
 s32 _SpuIsInAllocateArea_(u32);
-extern s32 D_800330F8;
+extern s32 D_800330F8[];
 extern s32 _spu_rev_startaddr[];
 extern s32 _spu_EVdma;
 extern s32 _spu_mem_mode_plus;
@@ -48,9 +48,10 @@ s32 SpuClearReverbWorkArea(s32 rev_mode) {
         } else {
             var_s3 = 0;
         }
+
         _spu_t(2, var_s2);
         _spu_t(1);
-        _spu_t(3, &D_800330F8, var_s0);
+        _spu_t(3, &D_800330F8[0], var_s0);
         WaitEvent(_spu_EVdma);
         var_s1 -= 0x400;
         var_s2 += 0x400;
