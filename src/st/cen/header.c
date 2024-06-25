@@ -36,17 +36,17 @@ static SpriteParts** SpriteBanks[] = {
     NULL, NULL,       NULL,       NULL,       NULL, NULL, NULL, NULL,
 };
 
-extern u16* D_8018658C[];
-extern u16* D_8018678C[];
-extern u16* D_8018698C[];
-extern u16* D_801869AC[];
+extern u16* D_8018658C[0x80];
+extern u16* D_8018678C[0x80];
+extern u16* D_8018698C[0x10];
+extern u16* D_801869AC[0x20];
 
 static u16** D_801800A0[] = {
     MAKE_PAL_OP(PAL_BULK_COPY, 0),
-    0x2000, 0x80, D_8018658C,
-    0x2080, 0x80, D_8018678C,
-    0x2100, 0x10, D_8018698C,
-    0x2230, 0x20, D_801869AC,
+    PAL_BULK(0x2000, D_8018658C),
+    PAL_BULK(0x2080, D_8018678C),
+    PAL_BULK(0x2100, D_8018698C),
+    PAL_BULK(0x2230, D_801869AC),
     PAL_TERMINATE(),
 };
 

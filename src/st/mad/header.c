@@ -35,11 +35,11 @@ static SpriteParts** SpriteBanks[] = {
     NULL, NULL,       NULL, NULL, NULL, NULL, NULL, NULL,
 };
 
-extern u16* D_80182058[];
+extern u16* D_80182058[0x10];
 
 static u16** Clut[] = {
     MAKE_PAL_OP(PAL_BULK_COPY, 0),
-    0x2000, 0x10, D_80182058,
+    PAL_BULK(0x2000, D_80182058),
     PAL_TERMINATE(),
 };
 
