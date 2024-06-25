@@ -23,13 +23,8 @@ static Overlay StageOverlay = {
     .unk30 = NULL,
     .unk34 = NULL,
     .unk38 = NULL,
-    .unk3C = NULL,
+    .StageEndCutScene = NULL,
 };
-
-/*
- * Alternatively, AbbreviatedOverlay can be used
- * which leaves out the last 5 words of Overlay
- */
 
 extern SpriteParts* D_80190168[];
 

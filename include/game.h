@@ -1125,7 +1125,7 @@ typedef struct {
     /* 8003C7A4 */ u8** unk30; // sprite bank 2
     /* 8003C7A8 */ s32* unk34;
     /* 8003C7AC */ s32* unk38;
-    /* 8003C7B0 */ void (*unk3C)(void);
+    /* 8003C7B0 */ void (*StageEndCutScene)(void);
 } Overlay;
 
 /*

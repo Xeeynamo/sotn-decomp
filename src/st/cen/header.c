@@ -23,7 +23,7 @@ static Overlay StageOverlay = {
     .unk30 = NULL,
     .unk34 = NULL,
     .unk38 = NULL,
-    .unk3C = NULL,
+    .StageEndCutScene = NULL,
 };
 
 extern SpriteParts* D_8018C754[];

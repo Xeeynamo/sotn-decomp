@@ -610,7 +610,7 @@ void HandlePrologueEnd(void) {
             return;
         }
     }
-    g_api.o.unk3C();
+    g_api.o.StageEndCutScene();
 }
 
 void MainMenuHandler(void) {
@@ -769,7 +769,7 @@ void HandleEnding(void) {
         }
         break;
     case 7:
-        g_api.o.unk3C();
+        g_api.o.StageEndCutScene();
         break;
     case 8:
         if (g_UseDisk) {

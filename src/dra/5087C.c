@@ -1174,7 +1174,7 @@ void func_800F298C(void) {
             func_80109594();
         }
         if (g_StageId == STAGE_MAD) {
-            g_api.o.unk3C();
+            g_api.o.StageEndCutScene();
         }
         g_backbufferX = 0;
         g_backbufferY = 0;
