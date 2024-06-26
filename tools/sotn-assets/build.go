@@ -374,12 +374,18 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 		} else {
 			less = func(i, j int) bool {
 				if (toSort[i].Y < toSort[j].Y) {
-					return true;
+					return true
 				}
 				if (toSort[i].Y > toSort[j].Y) {
-					return false;
+					return false
 				}
-				return toSort[i].X < toSort[j].X;
+				if (toSort[i].SpawnID < toSort[j].SpawnID) {
+					return true
+				}
+				if (toSort[i].SpawnID > toSort[j].SpawnID) {
+					return false
+				}
+				return int8(toSort[i].Slot) < int8(toSort[j].Slot)
 			}
 		}
 		sorting := make([][]layoutEntry, len(banks))
