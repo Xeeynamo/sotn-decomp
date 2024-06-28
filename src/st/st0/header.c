@@ -6,7 +6,7 @@ extern void* Cluts[];
 extern RoomDef g_TileLayers[];
 extern GfxBank* g_EntityGfxs[];
 void UpdateStageEntities();
-void func_801B0464();
+void PrologueScroll();
 
 static Overlay StageOverlay = {
     .Update = Update,
@@ -24,7 +24,7 @@ static Overlay StageOverlay = {
     .unk30 = NULL,
     .unk34 = NULL,
     .unk38 = NULL,
-    .StageEndCutScene = func_801B0464,
+    .StageEndCutScene = PrologueScroll,
 };
 
 extern SpriteParts* D_801A26E0[];
