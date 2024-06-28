@@ -307,7 +307,249 @@ struct SndSeqTickEnv _snd_seq_tick_env;
 
 s32 D_8003355C;
 
-void SpuSetCommonAttr(SpuCommonAttr* attr) { assert(false); }
+typedef union {
+    struct {
+        s16 rest : 15;
+        s16 msb : 1;
+    } part;
+    s16 all;
+} Bits;
+
+void SpuSetCommonAttr(SpuCommonAttr* attr) {
+    s16 mvol_right;
+    s16 temp_a3;
+    s16 temp_v1;
+    s16 temp_v1_2;
+    s16 mvol_left_temp_2;
+    s16 main_vol_right_temp;
+    s32 attr_mask_zero;
+    s32 mvol_mode_left;
+    s32 mvol_mode_right;
+    Bits main_vol_left;
+    s16 main_vol_right;
+    u16 mvol_left_temp;
+    u16 mvol_right_temp;
+    u32 attr_mask;
+
+    mvol_left_temp = 0;
+    attr_mask = attr->mask;
+    attr_mask_zero = attr_mask == 0;
+    mvol_right_temp = 0;
+
+    if (attr_mask_zero != 0 || attr_mask & 1) {
+        if (attr_mask_zero != 0 || attr_mask & 4) {
+            temp_v1 = attr->mvolmode.left;
+            switch (temp_v1) { /* switch 1 */
+            case 1:            /* switch 1 */
+                mvol_mode_left = 0x8000;
+                break;
+            case 2: /* switch 1 */
+                mvol_mode_left = 0x9000;
+                break;
+            case 3: /* switch 1 */
+                mvol_mode_left = 0xA000;
+                break;
+            case 4: /* switch 1 */
+                mvol_mode_left = 0xB000;
+                break;
+            case 5: /* switch 1 */
+                mvol_mode_left = 0xC000;
+                break;
+            case 6: /* switch 1 */
+                mvol_mode_left = 0xD000;
+                break;
+            case 7: /* switch 1 */
+                mvol_mode_left = 0xE000;
+                break;
+            case 0:
+            default: /* switch 1 */
+                mvol_left_temp = attr->mvol.left;
+                mvol_mode_left = 0;
+                break;
+            }
+        } else {
+            mvol_left_temp = attr->mvol.left;
+            mvol_mode_left = 0;
+        }
+        main_vol_left.part.rest = mvol_left_temp;
+        if (mvol_mode_left != 0) {
+            temp_a3 = attr->mvol.left;
+            if (temp_a3 >= 0x80) {
+                mvol_left_temp_2 = 0x7F;
+            } else {
+                mvol_left_temp_2 = temp_a3;
+                if (temp_a3 < 0) {
+                    mvol_left_temp_2 = 0;
+                }
+            }
+            main_vol_left.part.rest = mvol_left_temp_2;
+        }
+#ifndef VERSION_PC
+        _spu_RXX->rxx.main_vol.left = main_vol_left.all | mvol_mode_left;
+#else
+        write_16(
+            0x1F801D80, main_vol_left.all | mvol_mode_left, __FILE__, __LINE__);
+#endif
+    }
+
+    if (attr_mask_zero != 0 || attr_mask & 2) {
+        if (attr_mask_zero != 0 || attr_mask & 8) {
+            temp_v1_2 = attr->mvolmode.right;
+            switch (temp_v1_2) { /* switch 2 */
+            case 1:              /* switch 2 */
+                mvol_mode_right = 0x8000;
+                break;
+            case 2: /* switch 2 */
+                mvol_mode_right = 0x9000;
+                break;
+            case 3: /* switch 2 */
+                mvol_mode_right = 0xA000;
+                break;
+            case 4: /* switch 2 */
+                mvol_mode_right = 0xB000;
+                break;
+            case 5: /* switch 2 */
+                mvol_mode_right = 0xC000;
+                break;
+            case 6: /* switch 2 */
+                mvol_mode_right = 0xD000;
+                break;
+            case 7: /* switch 2 */
+                mvol_mode_right = 0xE000;
+                break;
+            case 0:
+            default: /* switch 2 */
+                mvol_right_temp = attr->mvol.right;
+                mvol_mode_right = 0;
+                break;
+            }
+        } else {
+            mvol_right_temp = attr->mvol.right;
+            mvol_mode_right = 0;
+        }
+        main_vol_right = mvol_right_temp & 0x7FFF;
+        if (mvol_mode_right != 0) {
+            mvol_right = attr->mvol.right;
+            if (mvol_right >= 0x80) {
+                main_vol_right_temp = 0x7F;
+            } else {
+                main_vol_right_temp = mvol_right;
+                if (mvol_right < 0) {
+                    main_vol_right_temp = 0;
+                }
+            }
+            main_vol_right = main_vol_right_temp & 0x7FFF;
+        }
+#ifndef VERSION_PC
+        _spu_RXX->rxx.main_vol.right = main_vol_right | mvol_mode_right;
+#else
+        write_16(
+            0x1F801D82, main_vol_right | mvol_mode_right, __FILE__, __LINE__);
+#endif
+    }
+    if ((attr_mask_zero != 0) || (attr_mask & 0x40)) {
+#ifndef VERSION_PC
+        _spu_RXX->rxx.cd_vol.left = attr->cd.volume.left;
+#else
+        write_16(0x1F801DB0, attr->cd.volume.left, __FILE__, __LINE__);
+#endif
+    }
+    if ((attr_mask_zero != 0) || (attr_mask & 0x80)) {
+#ifndef VERSION_PC
+        _spu_RXX->rxx.cd_vol.right = attr->cd.volume.right;
+#else
+        write_16(0x1F801DB2, attr->cd.volume.right, __FILE__, __LINE__);
+#endif
+    }
+    if ((attr_mask_zero != 0) || (attr_mask & 0x100)) {
+        if (attr->cd.reverb == 0) {
+#ifndef VERSION_PC
+            _spu_RXX->rxx.spucnt &= 0xFFFB;
+#else
+            write_16(0x1F801DAA,
+                     read_16(0x1F801DAA, __FILE__, __LINE__) & 0xFFFB, __FILE__,
+                     __LINE__);
+#endif
+        } else {
+#ifndef VERSION_PC
+            _spu_RXX->rxx.spucnt = _spu_RXX->rxx.spucnt | 4;
+#else
+            write_16(0x1F801DAA, read_16(0x1F801DAA, __FILE__, __LINE__) | 4,
+                     __FILE__, __LINE__);
+#endif
+        }
+    }
+    if ((attr_mask_zero != 0) || (attr_mask & 0x200)) {
+        if (attr->cd.mix == 0) {
+#ifndef VERSION_PC
+            _spu_RXX->rxx.spucnt &= 0xFFFE;
+#else
+            write_16(0x1F801DAA,
+                     read_16(0x1F801DAA, __FILE__, __LINE__) & 0xFFFE, __FILE__,
+                     __LINE__);
+#endif
+        } else {
+#ifndef VERSION_PC
+            _spu_RXX->rxx.spucnt |= 1;
+#else
+            write_16(0x1F801DAA, read_16(0x1F801DAA, __FILE__, __LINE__) | 1,
+                     __FILE__, __LINE__);
+
+#endif
+        }
+    }
+    if ((attr_mask_zero != 0) || (attr_mask & 0x400)) {
+#ifndef VERSION_PC
+        _spu_RXX->rxx.ex_vol.left = attr->ext.volume.left;
+#else
+        write_16(0x1F801DB4, attr->ext.volume.left, __FILE__, __LINE__);
+#endif
+    }
+    if ((attr_mask_zero != 0) || (attr_mask & 0x800)) {
+#ifndef VERSION_PC
+        _spu_RXX->rxx.ex_vol.right = attr->ext.volume.right;
+#else
+        write_16(0x1F801DB6, attr->ext.volume.right, __FILE__, __LINE__);
+#endif
+    }
+    if ((attr_mask_zero != 0) || (attr_mask & 0x1000)) {
+        if (attr->ext.reverb == 0) {
+#ifndef VERSION_PC
+            _spu_RXX->rxx.spucnt &= 0xFFF7;
+#else
+            write_16(0x1F801DAA,
+                     read_16(0x1F801DAA, __FILE__, __LINE__) & 0xFFF7, __FILE__,
+                     __LINE__);
+#endif
+        } else {
+#ifndef VERSION_PC
+            _spu_RXX->rxx.spucnt |= 8;
+#else
+            write_16(0x1F801DAA, read_16(0x1F801DAA, __FILE__, __LINE__) | 8,
+                     __FILE__, __LINE__);
+#endif
+        }
+    }
+    if ((attr_mask_zero != 0) || (attr_mask & 0x2000)) {
+        if (attr->ext.mix == 0) {
+#ifndef VERSION_PC
+            _spu_RXX->rxx.spucnt &= 0xFFFD;
+#else
+            write_16(0x1F801DAA,
+                     read_16(0x1F801DAA, __FILE__, __LINE__) & 0xFFFD, __FILE__,
+                     __LINE__);
+#endif
+
+        } else {
+#ifndef VERSION_PC
+            _spu_RXX->rxx.spucnt |= 2;
+#else
+            write_16(0x1F801DAA, read_16(0x1F801DAA, __FILE__, __LINE__) | 2,
+                     __FILE__, __LINE__);
+#endif
+        }
+    }
+}
 
 s32 _spu_AllocBlockNum;
 s32 _spu_AllocLastNum;
