@@ -583,7 +583,7 @@ void HandleVideoPlayback(void) {
             break;
 
         case 6:
-            g_api.o.unk08();
+            g_api.o.UpdateRoomPosition();
             if (D_8003C728 == 0) {
                 func_800E4970();
             }
@@ -610,7 +610,7 @@ void HandlePrologueEnd(void) {
             return;
         }
     }
-    g_api.o.unk3C();
+    g_api.o.StageEndCutScene();
 }
 
 void MainMenuHandler(void) {
@@ -769,7 +769,7 @@ void HandleEnding(void) {
         }
         break;
     case 7:
-        g_api.o.unk3C();
+        g_api.o.StageEndCutScene();
         break;
     case 8:
         if (g_UseDisk) {
@@ -785,7 +785,7 @@ void HandleEnding(void) {
         break;
     case 4:
     case 9:
-        g_api.o.unk28();
+        g_api.o.UpdateStageEntities();
         break;
     case 10:
 #if defined(VERSION_US)
