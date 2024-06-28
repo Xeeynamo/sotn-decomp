@@ -130,7 +130,7 @@ func extractOvlAssets(o ovl, outputDir string) error {
 		return err
 	}
 	if err := os.WriteFile(path.Join(outputDir, "layers.json"), content, 0644); err != nil {
-		return fmt.Errorf("unable to create rooms file: %w", err)
+		return fmt.Errorf("unable to create layers file: %w", err)
 	}
 
 	content, err = json.MarshalIndent(o.layouts, "", "  ")
@@ -138,7 +138,7 @@ func extractOvlAssets(o ovl, outputDir string) error {
 		return err
 	}
 	if err := os.WriteFile(path.Join(outputDir, "entity_layouts.json"), content, 0644); err != nil {
-		return fmt.Errorf("unable to create rooms file: %w", err)
+		return fmt.Errorf("unable to create entity layouts file: %w", err)
 	}
 
 	for offset, bytes := range o.tileMaps {
