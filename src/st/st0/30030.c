@@ -122,7 +122,6 @@ typedef struct ProloguePrimitive {
 } ProloguePrimitive;
 
 extern s32 D_8003CB04[];
-extern Entity D_800762D8;
 extern ProloguePrimitive D_80181568[];
 extern u16 D_801BEDFC;
 extern u16 D_801BEE00;
@@ -140,7 +139,7 @@ void PrologueScroll(void) {
     s32 condition;
     s32 i;
 
-    entity = &D_800762D8;
+    entity = &g_Entities[STAGE_ENTITY_START];
 
     switch (g_GameStep) {
     case 0: // 0x801B04A4
