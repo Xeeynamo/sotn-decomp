@@ -109,7 +109,7 @@ class PS_SPU {
 
     int32_t UpdateFromCDC(int32_t clocks);
 
-  private:
+    // private:
     void CheckIRQAddr(uint32_t addr);
     void WriteSPURAM(uint32_t addr, uint16_t value);
     uint16_t ReadSPURAM(uint32_t addr);

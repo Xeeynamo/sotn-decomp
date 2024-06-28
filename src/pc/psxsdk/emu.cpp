@@ -14,6 +14,7 @@ struct WriteEntry {
    u16 V;
    std::string file;
    int line;
+   int type = 0;
 };
 
 std::vector<WriteEntry> writes;
@@ -90,7 +91,7 @@ extern "C" void mednafen_init()
 
 extern "C" void write_16(u32 addr, u16 data, char* file, int line)
 {
-    writes.push_back({addr, data, file, line});
+    writes.push_back({addr, data, file, line, 0});
     printf("write16 %08X %04X %s:%d\n", addr, data, file, line);
     if(!init)
     {
@@ -111,12 +112,101 @@ extern "C" u16 read_16(u32 addr, char* file, int line)
     return SPU->Read(0, addr);
 }
 
+extern "C" void write_dma(u32 data, char* file, int line)
+{
+    printf("write_dma %08X %04X %s:%d\n", SPU->RWAddr, data, file, line);
+    writes.push_back({SPU->RWAddr, data, file, line, 1});
+    SPU->WriteDMA(data);
+}
+
 extern "C" s32 _spu_init(s32 arg0);
+extern "C" s32 SpuSetReverb(s32);
+extern "C" s32 SpuInitMalloc(s32 num, s8* top);
+
+extern "C" s32 _spu_rev_reserve_wa;
+extern "C" s32 _spu_rev_offsetaddr;
+extern "C" s32 _spu_mem_mode_plus;
+typedef struct tagSpuMalloc {
+    u32 addr;
+    u32 size;
+} SPU_MALLOC;
+
+extern "C" SPU_MALLOC* _spu_memList;
+extern "C" s32 _SpuIsInAllocateArea_(u32);
+
+#define ASSERT_EQ(value1, value2)                                                           \
+    if ((value1) != (value2))                                                               \
+    {                                                                                       \
+        printf("%d != %d in %s %s:%d\n", value1, value2, __FUNCTION__, __FILE__, __LINE__); \
+        exit(1);                                                                            \
+    }
+
+void check_spu_set_reverb()
+{
+    SPU->Power();
+    SpuSetReverb(0);
+    CheckWrites("./src/pc/psxsdk/expected/SpuSetReverb0.txt");
+
+    SPU->Power();
+    // avoid crashing in spuallocatearea
+    s8 temp[0x1000] = {0};
+    SpuInitMalloc(32, temp);
+
+    ASSERT_EQ(_spu_mem_mode_plus, 3);
+    ASSERT_EQ(_spu_rev_reserve_wa, 0);
+    ASSERT_EQ(_spu_rev_offsetaddr, 0);
+    ASSERT_EQ(_spu_memList[0].addr, 0x40001010);
+    ASSERT_EQ(_spu_memList[0].size, 520176);
+    ASSERT_EQ(_SpuIsInAllocateArea_(_spu_rev_offsetaddr), 0);
+
+    SpuSetReverb(1);
+    CheckWrites("./src/pc/psxsdk/expected/SpuSetReverb1.txt");
+}
+
+extern "C"  long SpuMallocWithStartAddr(unsigned long addr, long size);
+
+void check_spu_malloc_with_start_addr()
+{
+    int i;
+
+    SPU->Power();
+    s8 temp[0x1000] = {0};
+    
+    SpuInitMalloc(32, temp);
+    SpuMallocWithStartAddr(0x00001010, 0x00010000);
+
+    ASSERT_EQ(_spu_memList[0].addr, 0x00001010);
+    ASSERT_EQ(_spu_memList[0].size, 65536);
+
+    ASSERT_EQ(_spu_memList[1].addr, 0x40011010);
+    ASSERT_EQ(_spu_memList[1].size, 454640);
+
+    ASSERT_EQ(_spu_memList[2].addr, 0);
+    ASSERT_EQ(_spu_memList[2].size, 0);
+}
+
+extern "C" s32 _spu_rev_startaddr[];
+extern "C" s32 SpuClearReverbWorkArea(s32 rev_mode);
+void check_spu_clear_reverb_work_area()
+{
+    SPU->Power();
+    s8 temp[0x1000] = {0};
+    SpuInitMalloc(32, temp);
+    ASSERT_EQ(_spu_rev_startaddr[0], 0x0000FFFE);
+    SpuClearReverbWorkArea(0);
+    CheckWrites("./src/pc/psxsdk/expected/SpuClearReverbWorkArea0.txt");
+}
 
 extern "C" void run_tests()
 {
     _spu_init(0);
     CheckWrites("./src/pc/psxsdk/expected/_spu_init.txt");
+
+    check_spu_set_reverb();
+
+    check_spu_malloc_with_start_addr();
+
+    check_spu_clear_reverb_work_area();
 
     exit(0);
 }
