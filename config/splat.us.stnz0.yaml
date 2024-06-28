@@ -35,7 +35,7 @@ segments:
     subsegments:
       - [0x0, .data, header]
       - [0x47C, data]
-      - [0x8EC, .data, header2]
+      - [0x8EC, .data, e_laydef]
       - [0xA94, data]
       - [0x15A0, .data, collision]
       - [0x1960, .data, e_red_door]
