@@ -9,15 +9,21 @@ import (
 	"path"
 )
 
+type dataContainer[T any] struct {
+	dataRange dataRange
+	content   T
+}
+
 type ovl struct {
-	ranges   []dataRange
-	rooms    []room
-	layers   []roomLayers
-	sprites  [][][]sprite
-	graphics gfx
-	layouts  layouts
-	tileMaps map[PsxOffset][]byte
-	tileDefs map[PsxOffset]tileDef
+	ranges            []dataRange
+	rooms             dataContainer[[]room]
+	layers            dataContainer[[]roomLayers]
+	sprites           dataContainer[[][][]sprite]
+	graphics          dataContainer[gfx]
+	layouts           dataContainer[layouts]
+	layoutsExtraRange dataRange
+	tileMaps          dataContainer[map[PsxOffset][]byte]
+	tileDefs          dataContainer[map[PsxOffset]tileDef]
 }
 
 func getOvlAssets(fileName string) (ovl, error) {
@@ -86,7 +92,7 @@ func getOvlAssets(fileName string) (ovl, error) {
 		return int(r.EntityLayoutID)
 	}) + 1
 	nLayouts = 53 // it seems there are always 53 elements?!
-	layouts, layoutsRange, err := readEntityLayout(file, layoutOff, nLayouts, true)
+	entityLayouts, layoutsRange, err := readEntityLayout(file, layoutOff, nLayouts, true)
 	if err != nil {
 		return ovl{}, fmt.Errorf("unable to gather all entity layouts: %w", err)
 	}
@@ -95,20 +101,21 @@ func getOvlAssets(fileName string) (ovl, error) {
 		ranges: consolidateDataRanges([]dataRange{
 			roomsRange,
 			layersRange,
-			tileMapsRange,
-			tileDefsRange,
 			spritesRange,
 			graphicsRange,
 			layoutsRange[0],
 			layoutsRange[1],
+			tileMapsRange,
+			tileDefsRange,
 		}),
-		rooms:    rooms,
-		layers:   layers,
-		sprites:  sprites,
-		graphics: graphics,
-		layouts:  layouts,
-		tileMaps: tileMaps,
-		tileDefs: tileDefs,
+		rooms:             dataContainer[[]room]{dataRange: roomsRange, content: rooms},
+		layers:            dataContainer[[]roomLayers]{dataRange: layersRange, content: layers},
+		sprites:           dataContainer[[][][]sprite]{dataRange: spritesRange, content: sprites},
+		graphics:          dataContainer[gfx]{dataRange: graphicsRange, content: graphics},
+		layouts:           dataContainer[layouts]{dataRange: layoutsRange[1], content: entityLayouts},
+		layoutsExtraRange: layoutsRange[0],
+		tileMaps:          dataContainer[map[PsxOffset][]byte]{dataRange: tileMapsRange, content: tileMaps},
+		tileDefs:          dataContainer[map[PsxOffset]tileDef]{dataRange: tileDefsRange, content: tileDefs},
 	}, nil
 }
 
@@ -117,7 +124,7 @@ func extractOvlAssets(o ovl, outputDir string) error {
 		return err
 	}
 
-	content, err := json.MarshalIndent(o.rooms, "", "  ")
+	content, err := json.MarshalIndent(o.rooms.content, "", "  ")
 	if err != nil {
 		return err
 	}
@@ -125,7 +132,7 @@ func extractOvlAssets(o ovl, outputDir string) error {
 		return fmt.Errorf("unable to create rooms file: %w", err)
 	}
 
-	content, err = json.MarshalIndent(o.layers, "", "  ")
+	content, err = json.MarshalIndent(o.layers.content, "", "  ")
 	if err != nil {
 		return err
 	}
@@ -133,7 +140,7 @@ func extractOvlAssets(o ovl, outputDir string) error {
 		return fmt.Errorf("unable to create layers file: %w", err)
 	}
 
-	content, err = json.MarshalIndent(o.layouts, "", "  ")
+	content, err = json.MarshalIndent(o.layouts.content, "", "  ")
 	if err != nil {
 		return err
 	}
@@ -141,14 +148,14 @@ func extractOvlAssets(o ovl, outputDir string) error {
 		return fmt.Errorf("unable to create entity layouts file: %w", err)
 	}
 
-	for offset, bytes := range o.tileMaps {
+	for offset, bytes := range o.tileMaps.content {
 		fileName := path.Join(outputDir, getTilemapFileName(offset))
 		if err := os.WriteFile(fileName, bytes, 0644); err != nil {
 			return fmt.Errorf("unable to create %q: %w", fileName, err)
 		}
 	}
 
-	for offset, tileDefsData := range o.tileDefs {
+	for offset, tileDefsData := range o.tileDefs.content {
 		defs := tileDefPaths{
 			Tiles:      getTiledefIndicesFileName(offset),
 			Pages:      getTiledefPagesFileName(offset),
@@ -178,7 +185,7 @@ func extractOvlAssets(o ovl, outputDir string) error {
 		}
 	}
 
-	content, err = json.MarshalIndent(o.sprites, "", "  ")
+	content, err = json.MarshalIndent(o.sprites.content, "", "  ")
 	if err != nil {
 		return err
 	}
@@ -190,18 +197,55 @@ func extractOvlAssets(o ovl, outputDir string) error {
 }
 
 func extract(fileName string, outputDir string) error {
-	ovl, err := getOvlAssets(fileName)
+	o, err := getOvlAssets(fileName)
 	if err != nil {
 		return fmt.Errorf("unable to retrieve OVL assets: %w", err)
 	}
 
-	fmt.Printf("data ranges: %+v\n", ovl.ranges)
-
-	err = extractOvlAssets(ovl, outputDir)
+	err = extractOvlAssets(o, outputDir)
 	if err != nil {
 		return fmt.Errorf("unable to extract OVL assets: %w", err)
 	}
 
+	return nil
+}
+
+func info(fileName string) error {
+	o, err := getOvlAssets(fileName)
+	if err != nil {
+		return fmt.Errorf("unable to retrieve OVL assets: %w", err)
+	}
+
+	entries := []struct {
+		dataRange dataRange
+		name      string
+		comment   string
+	}{
+		{o.layers.dataRange, "header", "layers"},
+		{o.layoutsExtraRange, "e_laydef", "layout entries header"},
+		{o.rooms.dataRange, "rooms", ""},
+		{o.layouts.dataRange, "e_layout", "layout entries data"},
+		{o.tileMaps.dataRange, "tile_data", "tile data"},
+		{o.tileDefs.dataRange, "tile_data", "tile definitions"},
+		{o.sprites.dataRange, "sprites", ""},
+	}
+
+	fmt.Printf("data coverage: %+v\n", o.ranges)
+	fmt.Println("subsegment hints:")
+	fmt.Println("  - [0x0, .data, header]")
+	for i := 0; i < len(entries); i++ {
+		e := entries[i]
+		s := fmt.Sprintf("  - [0x%X, .data, %s]", e.dataRange.begin.real(), e.name)
+		if e.comment != "" {
+			s = fmt.Sprintf("%s # %s", s, e.comment)
+		}
+		fmt.Println(s)
+
+		// if there is a gap between the current entry and the next one, mark it as unrecognized data
+		if i == len(entries)-1 || e.dataRange.end != entries[i+1].dataRange.begin {
+			fmt.Printf("  - [0x%X, data] # not recognized\n", e.dataRange.end.real())
+		}
+	}
 	return nil
 }
 
@@ -235,11 +279,20 @@ func testStuff() {
 
 func main() {
 	if len(os.Args) < 2 {
-		fmt.Println("expected 'extract', 'build' or 'build_all' subcommands")
+		fmt.Println("expected 'info', 'extract', 'build' or 'build_all' subcommands")
 		os.Exit(1)
 	}
 
 	switch os.Args[1] {
+	case "info":
+		extractCmd := flag.NewFlagSet("info", flag.ExitOnError)
+		var stageOvl string
+		extractCmd.StringVar(&stageOvl, "stage_ovl", "", "The overlay file to process")
+		extractCmd.Parse(os.Args[2:])
+		if err := info(stageOvl); err != nil {
+			panic(err)
+		}
+
 	case "extract":
 		extractCmd := flag.NewFlagSet("extract", flag.ExitOnError)
 		var stageOvl string
@@ -248,17 +301,14 @@ func main() {
 		extractCmd.StringVar(&assetDir, "o", "", "Where to extract the asset files")
 
 		extractCmd.Parse(os.Args[2:])
-
-		fmt.Printf("stageOvl: %s\n", stageOvl)
-		fmt.Printf("assetDir: %s\n", assetDir)
-
 		if stageOvl == "" || assetDir == "" {
 			fmt.Println("stage_ovl and asset_dir are required for extract")
 			extractCmd.PrintDefaults()
 			os.Exit(1)
 		}
-
-		extract(stageOvl, assetDir)
+		if err := extract(stageOvl, assetDir); err != nil {
+			panic(err)
+		}
 
 	case "build":
 		buildCmd := flag.NewFlagSet("build", flag.ExitOnError)
@@ -312,7 +362,7 @@ func main() {
 		}
 
 	default:
-		fmt.Println("expected 'extract', 'build' or 'build_all' subcommands")
+		fmt.Println("expected 'info', 'extract', 'build' or 'build_all' subcommands")
 		os.Exit(1)
 	}
 }
