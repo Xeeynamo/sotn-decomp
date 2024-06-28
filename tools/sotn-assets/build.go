@@ -355,13 +355,13 @@ func buildSprites(fileName string, outputDir string) error {
 
 func buildEntityLayouts(fileName string, outputDir string) error {
 	writeLayoutEntries := func(sb *strings.Builder, banks [][]layoutEntry) {
-		for _, entries := range banks {
-			sb.WriteString(fmt.Sprintf("    0xFFFE, 0xFFFE, 0, 0, 0,\n"))
+		for i, entries := range banks {
+			sb.WriteString(fmt.Sprintf("    0xFFFE, 0xFFFE, 0, 0, 0, // Bank %d start\n", i))
 			for _, e := range entries {
 				sb.WriteString(fmt.Sprintf("    0x%04X, 0x%04X, 0x%04X, 0x%04X, 0x%04X,\n",
 					e.X, e.Y, int(e.ID)|(int(e.Flags)<<8), int(e.Slot)|(int(e.SpawnID)<<8), e.Params))
 			}
-			sb.WriteString(fmt.Sprintf("    0xFFFF, 0xFFFF, 0, 0, 0,\n"))
+			sb.WriteString(fmt.Sprintf("    0xFFFF, 0xFFFF, 0, 0, 0, // Bank %d end\n\n", i))
 		}
 	}
 	makeSortedBanks := func(banks [][]layoutEntry, sortByX bool) [][]layoutEntry {
@@ -373,7 +373,19 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 			}
 		} else {
 			less = func(i, j int) bool {
-				return toSort[i].Y <= toSort[j].Y
+				if (toSort[i].Y < toSort[j].Y) {
+					return true
+				}
+				if (toSort[i].Y > toSort[j].Y) {
+					return false
+				}
+				if (toSort[i].SpawnID < toSort[j].SpawnID) {
+					return true
+				}
+				if (toSort[i].SpawnID > toSort[j].SpawnID) {
+					return false
+				}
+				return int8(toSort[i].Slot) < int8(toSort[j].Slot)
 			}
 		}
 		sorting := make([][]layoutEntry, len(banks))
