@@ -120,14 +120,28 @@ clean:
 	git clean -fdx config/
 	git clean -fdx function_calls/
 	git clean -fdx sotn_calltree.txt
-format: bin/clang-format
-	bin/clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.c" | grep -v 'src/pc/3rd')
-	bin/clang-format -i $$(find $(SRC_DIR)/ -type f -name "*.h" | grep -v 'src/pc/3rd')
-	bin/clang-format -i $$(find $(INCLUDE_DIR)/ -type f -name "*.h")
+
+format: format-src format-tools format-symbols
+format-src: bin/clang-format
+	@# find explainer:
+	@#    find $(SRC_DIR) $(INCLUDE_DIR)                      : look in src and include
+	@#    -type d \( -name 3rd -o -name CMakeFiles \) -prune  : if an entry is both a directory and 3rd or CMakeFiles
+	@#                                                          ignore it and don't traverse it
+	@#    -o \( -type f \( -name '*.h' -o -name '*.c' \) \)   : or if an entry is a file and named *.h or *.c, include it
+	@#    -print0                                             : print only the matching entries, delimit by NULL to
+	@#                                                          ensure files with characters xargs uses as delimiters are
+	@#                                                          properly handled
+	find $(SRC_DIR) $(INCLUDE_DIR) \
+        -type d \( -name 3rd -o -name CMakeFiles \) -prune \
+        -o \( -type f \( -name '*.c' -o -name '*.h' \) \) \
+        -print0 \
+        | xargs -0 -n10 -P$$(nproc) bin/clang-format -i
 	cargo run --release --manifest-path ./tools/lints/sotn-lint/Cargo.toml ./src
+format-tools:
 	black tools/*.py
 	black tools/splat_ext/*.py
 	black tools/split_jpt_yaml/*.py
+format-symbols:
 	VERSION=us $(PYTHON) ./tools/symbols.py sort
 	VERSION=hd $(PYTHON) ./tools/symbols.py sort
 	VERSION=pspeu $(PYTHON) ./tools/symbols.py sort
@@ -145,6 +159,7 @@ format: bin/clang-format
 	./tools/symbols.py remove-orphans config/splat.us.strwrp.yaml
 	./tools/symbols.py remove-orphans config/splat.us.tt_000.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stmad.yaml
+
 patch:
 	$(DIRT_PATCHER) config/dirt.$(VERSION).json
 check: config/check.$(VERSION).sha patch $(CHECK_FILES)
@@ -477,7 +492,8 @@ SHELL = /bin/bash -e -o pipefail
 
 include tools/tools.mk
 
-.PHONY: all, clean, format, patch, check, build, expected
+.PHONY: all, clean, patch, check, build, expected
+.PHONY: format, format-src, format-tools, format-symbols
 .PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, tt_000
 .PHONY: %_dirs
 .PHONY: extract, extract_%
