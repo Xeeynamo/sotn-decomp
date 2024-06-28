@@ -1174,7 +1174,7 @@ void func_800F298C(void) {
             func_80109594();
         }
         if (g_StageId == STAGE_MAD) {
-            g_api.o.unk3C();
+            g_api.o.StageEndCutScene();
         }
         g_backbufferX = 0;
         g_backbufferY = 0;
@@ -1311,7 +1311,7 @@ void func_800F298C(void) {
             EntityAlucard();
             func_8011A4D0();
         }
-        g_api.o.unk08();
+        g_api.o.UpdateRoomPosition();
         g_api.o.Update();
 
 #if defined(VERSION_US)
@@ -1567,7 +1567,7 @@ void func_800F298C(void) {
                 D_800974A4 = 0;
                 D_8003C9A4 = 1;
             }
-            g_api.o.unk28();
+            g_api.o.UpdateStageEntities();
             func_80102D70();
             func_801028AC(1);
             break;
@@ -1791,7 +1791,7 @@ void func_800F298C(void) {
                         if (g_unkGraphicsStruct.unk20 == 0xFFF) {
                             EntityAlucard();
                             func_8011A870();
-                            g_api.o.unk28();
+                            g_api.o.UpdateStageEntities();
                             if (g_pads[1].pressed & PAD_DOWN) {
                                 g_unkGraphicsStruct.unk20 = 0;
                             }
@@ -1800,11 +1800,11 @@ void func_800F298C(void) {
                                 func_8010DF70(g_unkGraphicsStruct.unk20);
                                 func_8011A4D0();
                             }
-                            g_api.o.unk28();
+                            g_api.o.UpdateStageEntities();
                             func_80102D70();
                         }
                     } else {
-                        g_api.o.unk28();
+                        g_api.o.UpdateStageEntities();
                         func_80102D70();
                     }
                 } else {

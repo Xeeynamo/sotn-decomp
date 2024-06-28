@@ -154,7 +154,7 @@ expected: check
 	rm -rf expected/build/$(VERSION)
 	cp -r build/$(VERSION) expected/build/
 
-main: main_dirs $(MAIN_TARGET).exe
+main: $(MAIN_TARGET).exe
 main_dirs:
 	$(foreach dir,$(MAIN_ASM_DIRS) $(MAIN_SRC_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 $(MAIN_TARGET).exe: $(MAIN_TARGET).elf
@@ -166,79 +166,79 @@ $(MAIN_TARGET).elf: $(MAIN_O_FILES) $(BUILD_DIR)/main.ld $(CONFIG_DIR)/undefined
 	-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
 	-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(MAIN).txt
 
-dra: dra_dirs $(BUILD_DIR)/DRA.BIN
+dra: $(BUILD_DIR)/DRA.BIN
 $(BUILD_DIR)/DRA.BIN: $(BUILD_DIR)/$(DRA).elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/$(DRA).elf: $(call list_o_files,dra)
 	$(call link,dra,$@)
 
-ric: ric_dirs $(BUILD_DIR)/RIC.BIN
+ric: $(BUILD_DIR)/RIC.BIN
 $(BUILD_DIR)/RIC.BIN: $(BUILD_DIR)/ric.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/ric.elf: $(call list_o_files,ric)
 	$(call link,ric,$@)
 
-cen: stcen_dirs $(BUILD_DIR)/CEN.BIN $(BUILD_DIR)/F_CEN.BIN
+cen: $(BUILD_DIR)/CEN.BIN $(BUILD_DIR)/F_CEN.BIN
 $(BUILD_DIR)/CEN.BIN: $(BUILD_DIR)/stcen.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_CEN.BIN:
 	$(GFXSTAGE) e assets/st/cen $@
 
-dre: stdre_dirs $(BUILD_DIR)/DRE.BIN $(BUILD_DIR)/F_DRE.BIN
+dre: $(BUILD_DIR)/DRE.BIN $(BUILD_DIR)/F_DRE.BIN
 $(BUILD_DIR)/DRE.BIN: $(BUILD_DIR)/stdre.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_DRE.BIN:
 	$(GFXSTAGE) e assets/st/dre $@
 
-mad: stmad_dirs $(BUILD_DIR)/MAD.BIN $(BUILD_DIR)/F_MAD.BIN
+mad: $(BUILD_DIR)/MAD.BIN $(BUILD_DIR)/F_MAD.BIN
 $(BUILD_DIR)/MAD.BIN: $(BUILD_DIR)/stmad.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_MAD.BIN:
 	$(GFXSTAGE) e assets/st/mad $@
 
-no3: stno3_dirs $(BUILD_DIR)/NO3.BIN $(BUILD_DIR)/F_NO3.BIN
+no3: $(BUILD_DIR)/NO3.BIN $(BUILD_DIR)/F_NO3.BIN
 $(BUILD_DIR)/NO3.BIN: $(BUILD_DIR)/stno3.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_NO3.BIN:
 	$(GFXSTAGE) e assets/st/no3 $@
 
-np3: stnp3_dirs $(BUILD_DIR)/NP3.BIN $(BUILD_DIR)/F_NP3.BIN
+np3: $(BUILD_DIR)/NP3.BIN $(BUILD_DIR)/F_NP3.BIN
 $(BUILD_DIR)/NP3.BIN: $(BUILD_DIR)/stnp3.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_NP3.BIN:
 	$(GFXSTAGE) e assets/st/np3 $@
 
-nz0: stnz0_dirs $(BUILD_DIR)/NZ0.BIN $(BUILD_DIR)/F_NZ0.BIN
+nz0: $(BUILD_DIR)/NZ0.BIN $(BUILD_DIR)/F_NZ0.BIN
 $(BUILD_DIR)/NZ0.BIN: $(BUILD_DIR)/stnz0.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_NZ0.BIN:
 	$(GFXSTAGE) e assets/st/nz0 $@
 
-sel: stsel_dirs $(BUILD_DIR)/SEL.BIN
+sel: $(BUILD_DIR)/SEL.BIN
 $(BUILD_DIR)/SEL.BIN: $(BUILD_DIR)/stsel.elf
 	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/src/st/sel/%.c.o: src/st/sel/%.c $(MASPSX_APP) $(CC1PSX) src/st/sel/sel.h
+$(BUILD_DIR)/src/st/sel/%.c.o: src/st/sel/%.c $(MASPSX_APP) $(CC1PSX) src/st/sel/sel.h | stsel_dirs
 	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 
-st0: stst0_dirs $(BUILD_DIR)/ST0.BIN $(BUILD_DIR)/F_ST0.BIN
+st0: $(BUILD_DIR)/ST0.BIN $(BUILD_DIR)/F_ST0.BIN
 $(BUILD_DIR)/ST0.BIN: $(BUILD_DIR)/stst0.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_ST0.BIN:
 	$(GFXSTAGE) e assets/st/st0 $@
 
-wrp: stwrp_dirs $(BUILD_DIR)/WRP.BIN $(BUILD_DIR)/F_WRP.BIN
+wrp: $(BUILD_DIR)/WRP.BIN $(BUILD_DIR)/F_WRP.BIN
 $(BUILD_DIR)/WRP.BIN: $(BUILD_DIR)/stwrp.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_WRP.BIN:
 	$(GFXSTAGE) e assets/st/wrp $@
 
-rwrp: strwrp_dirs $(BUILD_DIR)/RWRP.BIN $(BUILD_DIR)/F_RWRP.BIN
+rwrp: $(BUILD_DIR)/RWRP.BIN $(BUILD_DIR)/F_RWRP.BIN
 $(BUILD_DIR)/RWRP.BIN: $(BUILD_DIR)/strwrp.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_RWRP.BIN:
 	$(GFXSTAGE) e assets/st/rwrp $@
 
-tt_000: tt_000_dirs $(BUILD_DIR)/TT_000.BIN
+tt_000: $(BUILD_DIR)/TT_000.BIN
 $(BUILD_DIR)/tt_000_raw.bin: $(BUILD_DIR)/tt_000.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/TT_000.BIN: $(BUILD_DIR)/tt_000_raw.bin
@@ -261,7 +261,7 @@ st%_dirs:
 %_dirs:
 	$(foreach dir,$(ASM_DIR)/$* $(ASM_DIR)/$*/data $(SRC_DIR)/$* $(ASSETS_DIR)/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 
-$(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call list_o_files,servant/tt_$$*)
+$(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call list_o_files,servant/tt_$$*) | tt_%_dirs
 	$(call link,tt_$*,$@)
 $(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad) $$(call list_shared_o_files,st)
 	$(LD) $(LD_FLAGS) -o $@ \
@@ -307,11 +307,11 @@ $(BUILD_DIR)/weapon/w1_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/header.c.o $(BUILD_
 		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).weapon.txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).weapon.txt \
 		$^
-$(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o: $(SRC_DIR)/weapon/w_%.c $(MASPSX_APP) $(CC1PSX)
+$(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o: $(SRC_DIR)/weapon/w_%.c $(MASPSX_APP) $(CC1PSX) | weapon_dirs
 	$(CPP) $(CPP_FLAGS) -lang-c -DW_$* $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
-$(BUILD_DIR)/$(SRC_DIR)/weapon/w_029.c.o: $(SRC_DIR)/weapon/w_029.c $(MASPSX_APP) $(CC1PSX)
+$(BUILD_DIR)/$(SRC_DIR)/weapon/w_029.c.o: $(SRC_DIR)/weapon/w_029.c $(MASPSX_APP) $(CC1PSX) | weapon_dirs
 	$(CPP) $(CPP_FLAGS) -lang-c -DW_029 $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) -O1 | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
-$(BUILD_DIR)/weapon/f0_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o
+$(BUILD_DIR)/weapon/f0_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o | weapon_dirs
 	$(LD) -r -b binary -o $@ $<
 $(BUILD_DIR)/weapon/f1_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o
 	$(LD) -r -b binary -o $@ $<
@@ -423,7 +423,7 @@ $(M2CTX_APP):
 $(M2C_APP):
 	git submodule init $(M2C_DIR)
 	git submodule update $(M2C_DIR)
-	python3 -m pip install --upgrade pycparser
+	$(PYTHON) -m pip install --upgrade pycparser
 $(MASPSX_APP):
 	git submodule init $(MASPSX_DIR)
 	git submodule update $(MASPSX_DIR)
@@ -435,8 +435,10 @@ $(SOTNDISK): $(GO) $(SOTNDISK_SOURCES)
 	cd tools/sotn-disk; $(GO) install
 
 $(BUILD_DIR)/%.s.o: %.s
+	mkdir -p $(dir $@)
 	$(AS) $(AS_FLAGS) -o $@ $<
 $(BUILD_DIR)/%.c.o: %.c $(MASPSX_APP) $(CC1PSX)
+	mkdir -p $(dir $@)
 	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 
 # Handles assets

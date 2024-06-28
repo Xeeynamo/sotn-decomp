@@ -1,4 +1,5 @@
 #include "st0.h"
+#include "disk.h"
 
 void SetGameState(GameState gameState) {
     g_GameState = gameState;
@@ -105,7 +106,367 @@ u16 func_801B0414(void) {
     return ret;
 }
 
-INCLUDE_ASM("st/st0/nonmatchings/30030", func_801B0464);
+// func_801B0414 is undeclared to PrologueScroll. This emulates the
+// undefined signature to avoid splitting the file at this time.
+#define fake_func_801B0414 ((s32(*)())func_801B0414)
+void func_801B1298(Entity*);
+
+typedef struct ProloguePrimitive {
+    s8 u0;
+    s8 v0;
+    s8 u1;
+    s8 v1;
+    s16 x;
+    s16 y;
+    u16 tpage;
+} ProloguePrimitive;
+
+extern s32 D_8003CB04[];
+extern Entity D_800762D8;
+extern ProloguePrimitive D_80181568[];
+extern u16 D_801BEDFC;
+extern u16 D_801BEE00;
+extern u16 D_801BEE04;
+extern s16 D_801BEE08;
+extern s16 D_801BEE0C;
+
+// Post-Dracula fight prologue scroll. This is responsible for scrolling the
+// prologue text and displaying the Castlevania logo.
+void PrologueScroll(void) {
+    Entity* entity;
+    ProloguePrimitive* textPrim;
+    Primitive* prim;
+    s32 primIndex;
+    s32 condition;
+    s32 i;
+
+    entity = &D_800762D8;
+
+    switch (g_GameStep) {
+    case 0: // 0x801B04A4
+        if (g_UseDisk) {
+            if (!g_IsUsingCd) {
+                g_CdStep = CdStep_LoadInit;
+                g_LoadFile = CdFile_Prologue;
+            } else {
+                break;
+            }
+        }
+
+        D_801BEE08 = g_api.AllocPrimitives(PRIM_SPRT, 0x10);
+        prim = &g_PrimBuf[D_801BEE08];
+
+        for (i = 0; i < 2; i++) {
+            prim->x0 = (i * 0xb0) + 0x50;
+            prim->y0 = 0x15;
+            prim->u0 = i ? 0x50 : 0x20;
+
+            prim->v0 = 0;
+            prim->v1 = prim->u1 = 0xB0;
+            prim->tpage = i + 0x8D;
+            prim->clut = 0x210;
+            prim->priority = 0;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+
+        textPrim = D_80181568;
+        for (i = 0; i < 10; i++) {
+            prim->u0 = textPrim->u0;
+            prim->v0 = textPrim->v0;
+            prim->u1 = textPrim->u1;
+            prim->v1 = textPrim->v1;
+            prim->x0 = textPrim->x;
+            prim->y0 = textPrim->y;
+            prim->tpage = textPrim->tpage;
+            prim->clut = 0x200;
+            prim->priority = 1;
+            prim->drawMode = DRAW_HIDE;
+            textPrim++;
+            prim = prim->next;
+        }
+
+        for (i = 0; i < 4; i++) {
+            prim->type = 4;
+            prim->u0 = prim->u2 = 0;
+            prim->u1 = prim->u3 = 0x80;
+
+            if (i == 3) {
+                prim->u1 = prim->u3 = 0x40;
+            }
+
+            prim->v0 = prim->v1 = i << 5;
+            prim->v2 = prim->v3 = (i * 0x20) + 0x20;
+            prim->x0 = prim->x2 = (i * 0x80) + 0x20;
+            prim->x1 = prim->x3 = (i * 0x80) + 0xA0;
+
+            if (i == 3) {
+                prim->x1 = prim->x3 = prim->x0 + 0x40;
+            }
+
+            prim->tpage = 0xB;
+            prim->clut = 0x220;
+            prim->priority = 2;
+            prim->drawMode = DRAW_HIDE;
+            prim->y0 = prim->y1 = 0x68;
+            prim->y2 = prim->y3 = 0x88;
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
+            prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0;
+            prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0;
+
+            prim = prim->next;
+        }
+
+        D_801BEE0C = g_api.AllocPrimitives(PRIM_TILE, 3);
+        prim = &g_PrimBuf[D_801BEE0C];
+        i = 0;
+        if (prim) {
+            while (prim) {
+                prim->x0 = i * 0xC0;
+                prim->y0 = 0;
+                prim->u0 = 0xC0;
+                if (i == 2) {
+                    prim->u0 = 0x80;
+                }
+                prim->v0 = 0xFF;
+                prim->r0 = prim->b0 = prim->g0 = 0xFC;
+                prim->priority = 4;
+                prim->drawMode =
+                    DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+                i++;
+                prim = prim->next;
+            }
+        }
+
+        g_GameStep++;
+        break;
+
+    case 2: // 0x801B07DC
+        // transition to black
+        func_801B0324();
+
+        prim = &g_PrimBuf[D_801BEE08];
+        for (i = 0; i < 12; i++) {
+            if (((u16)(prim->y0 + 0x10)) < 0x100) {
+                prim->drawMode = DRAW_DEFAULT;
+            }
+            prim = prim->next;
+        }
+        DestroyEntity(entity);
+        D_801BEE04 = 0;
+        D_801BEE00 = 0;
+        D_801BEDFC = 0;
+        g_GpuBuffers[0].draw.r0 = 0;
+        g_GpuBuffers[0].draw.g0 = 0;
+        g_GpuBuffers[0].draw.b0 = 0x18;
+        g_GpuBuffers[1].draw.r0 = 0;
+        g_GpuBuffers[1].draw.g0 = 0;
+        g_GpuBuffers[1].draw.b0 = 0x18;
+        g_GameStep++;
+        break;
+
+    case 3: // 0x801B08A4
+        // moon appears
+        prim = &g_PrimBuf[D_801BEE0C];
+        i = 0;
+        while (prim) {
+            prim->r0 = prim->b0 = prim->g0 = prim->g0 - 4;
+
+            if (i == 0 && prim->r0 == 0) {
+                g_api.FreePrimitives(D_801BEE0C);
+                g_GameStep++;
+                break;
+            }
+
+            i++;
+            prim = prim->next;
+        }
+        break;
+    case 4: // 0x801B091C
+        if (!g_api.func_80131F68()) {
+            g_api.PlaySfx(0x340);
+            g_GameStep++;
+        }
+        break;
+    case 5: // 0x801B0940
+        if (g_api.func_80131F68()) {
+            g_GameStep++;
+        }
+        break;
+    case 6: // 0x801B096C
+        // prologue scroll
+        func_801B1298(entity);
+        D_801BEDFC++;
+        D_801BEE04++;
+        if (D_801BEDFC == 0xB && D_801BEE00 < 0x1C0) {
+
+            D_801BEDFC = 0;
+            D_801BEE00++;
+            prim = &g_PrimBuf[D_801BEE08];
+            for (i = 0; i < 12; i++) {
+                if (i >= 2) {
+                    prim->y0++;
+                }
+
+                if ((u32)(((u16)prim->y0 + 0x90) & 0xFFFF) >= 0x181U) {
+                    prim->drawMode = DRAW_HIDE;
+                } else {
+                    prim->drawMode = DRAW_DEFAULT;
+                }
+                prim = prim->next;
+            }
+        }
+        // 110 seconds?
+        if (D_801BEE04 >= 0x14B1) {
+            prim = &g_PrimBuf[D_801BEE08];
+            for (i = 0; i < 12; i++) {
+                prim = prim->next;
+            }
+
+            while (prim) {
+                prim->drawMode =
+                    DRAW_TPAGE | DRAW_TPAGE2 | DRAW_COLORS | DRAW_TRANSP;
+                prim = prim->next;
+            }
+            DestroyEntity(entity);
+            goto step_return;
+        }
+
+        if (fake_func_801B0414()) {
+            g_GameStep = Play_16;
+        }
+        break;
+    case 7: // 0x801B0AE8
+        // scroll finished, fade in castlevania
+        prim = &g_PrimBuf[D_801BEE08];
+        for (i = 0; i < 12; i++) {
+            prim = prim->next;
+        }
+        while (prim) {
+            prim->r0 = prim->r1 = prim->r2 = prim->r3++;
+            prim->g0 = prim->g1 = prim->g2 = prim->g3++;
+            prim->b0 = prim->b1 = prim->b2 = prim->b3++;
+            prim = prim->next;
+        }
+        D_801BEE00++;
+        condition = D_801BEE00 < 0xC1;
+        goto check_step_return;
+
+    case 8:
+        prim = &g_PrimBuf[D_801BEE08];
+        for (i = 0; i < 12; i++) {
+            prim = prim->next;
+        }
+        while (prim) {
+            prim->r0 = prim->r1 = prim->r2 = prim->r3--;
+            prim->g0 = prim->g1 = prim->g2 = prim->g3--;
+            prim->b0 = prim->b1 = prim->b2 = prim->b3--;
+            prim->drawMode = DRAW_COLORS;
+            prim = prim->next;
+        }
+        D_801BEE00++;
+        condition = !(D_801BEE00 >= 0x41);
+    check_step_return:
+        if (!condition) {
+        step_return:
+            D_801BEE00 = 0;
+            g_GameStep++;
+        }
+
+        if (fake_func_801B0414()) {
+            g_GameStep = Play_16;
+        }
+
+        break;
+    case 9:
+        D_801BEE00++;
+        if (D_801BEE00 < 0x231 && !fake_func_801B0414()) {
+            return;
+        }
+        g_GameStep = Play_16;
+        break;
+
+    case 16:
+        g_api.PlaySfx(0x82);
+        primIndex = g_api.AllocPrimitives(PRIM_TILE, 3);
+        prim = &g_PrimBuf[D_801BEE08];
+
+        while (prim) {
+            if (!prim->next) {
+                prim->next = &g_PrimBuf[primIndex];
+                break;
+            }
+            prim = prim->next;
+        }
+
+        prim = &g_PrimBuf[primIndex];
+        i = 0;
+        while (prim) {
+            prim->x0 = i * 0xC0;
+            prim->y0 = 0;
+            prim->u0 = 0xC0;
+            if (i == 2) {
+                prim->u0 = 0x80;
+            }
+            prim->v0 = 0xFF;
+            prim->r0 = prim->b0 = prim->g0 = 0;
+            prim->priority = 4;
+            prim->drawMode =
+                DRAW_UNK_40 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+            prim = prim->next;
+            i++;
+        };
+
+        D_801BEE00 = 0;
+        g_GameStep++;
+        break;
+
+    case 17:
+        prim = &g_PrimBuf[D_801BEE08];
+        for (i = 0; i < 16; i++) {
+            prim = prim->next;
+        }
+        while (prim) {
+            if (prim->r0 < 0xF8) {
+                prim->r0 = prim->b0 = prim->g0 = prim->g0 + 8;
+            }
+            prim = prim->next;
+        }
+        D_801BEE00++;
+        if (D_801BEE00 >= 0x21) {
+            g_GpuBuffers[0].draw.r0 = 0;
+            g_GpuBuffers[0].draw.g0 = 0;
+            g_GpuBuffers[0].draw.b0 = 0;
+            g_GpuBuffers[1].draw.r0 = 0;
+            g_GpuBuffers[1].draw.g0 = 0;
+            g_GpuBuffers[1].draw.b0 = 0;
+            g_GameStep++;
+        }
+        break;
+
+    case 18:
+        D_8003CB04[0] |= 2;
+        func_801B0058();
+        g_api.FreePrimitives(D_801BEE08);
+        DestroyEntitiesFromIndex(0);
+        g_GameStep++;
+        break;
+
+    case 19:
+        if (!g_api.func_80131F68()) {
+            func_801B0280();
+            func_801B0180();
+            if (g_StageId == STAGE_ST0) {
+                g_StageId = STAGE_NO3;
+                SetGameState(Game_NowLoading);
+                g_GameStep = 2;
+            } else {
+                SetGameState(Game_Title);
+            }
+        }
+        break;
+    }
+}
 
 u8 func_801B101C(const char* msg) {
     Primitive* prim;
