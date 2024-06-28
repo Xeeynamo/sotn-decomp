@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/sync/errgroup"
 	"hash/fnv"
 	"io"
 	"io/fs"
@@ -14,6 +13,8 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+
+	"golang.org/x/sync/errgroup"
 )
 
 func makeSymbolFromFileName(fileName string) string {
@@ -373,16 +374,16 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 			}
 		} else {
 			less = func(i, j int) bool {
-				if (toSort[i].Y < toSort[j].Y) {
+				if toSort[i].Y < toSort[j].Y {
 					return true
 				}
-				if (toSort[i].Y > toSort[j].Y) {
+				if toSort[i].Y > toSort[j].Y {
 					return false
 				}
-				if (toSort[i].SpawnID < toSort[j].SpawnID) {
+				if toSort[i].SpawnID < toSort[j].SpawnID {
 					return true
 				}
-				if (toSort[i].SpawnID > toSort[j].SpawnID) {
+				if toSort[i].SpawnID > toSort[j].SpawnID {
 					return false
 				}
 				return int8(toSort[i].Slot) < int8(toSort[j].Slot)
@@ -393,7 +394,7 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 			sorting[i] = make([]layoutEntry, len(entries))
 			copy(sorting[i], entries)
 			toSort = sorting[i]
-			sort.Slice(toSort, less)
+			sort.SliceStable(toSort, less)
 		}
 		return sorting
 	}
