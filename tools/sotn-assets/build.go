@@ -83,7 +83,7 @@ func buildRooms(fileName string, outputDir string) error {
 		content.WriteString(s)
 	}
 	content.WriteString("    0x40\n};\n")
-	return os.WriteFile(path.Join(outputDir, "rooms.h"), []byte(content.String()), 0644)
+	return os.WriteFile(path.Join(outputDir, "rooms.c"), []byte(content.String()), 0644)
 }
 
 func buildTiledefs(fileName string, symbol string, outputDir string) error {
@@ -348,7 +348,7 @@ func buildSprites(fileName string, outputDir string) error {
 		}
 	}
 	sbHeader.WriteString("};\n")
-	if err := os.WriteFile(path.Join(outputDir, "sprites.h"), []byte(sbData.String()), 0644); err != nil {
+	if err := os.WriteFile(path.Join(outputDir, "sprites.c"), []byte(sbData.String()), 0644); err != nil {
 		return err
 	}
 	return os.WriteFile(path.Join(outputDir, "sprite_banks.h"), []byte(sbHeader.String()), 0644)
@@ -421,6 +421,7 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 	}
 
 	sbHeader := strings.Builder{}
+	sbHeader.WriteString("#include <stage.h>\n\n")
 	sbHeader.WriteString("// clang-format off\n")
 	sbHeader.WriteString(fmt.Sprintf("extern u16 %s_x[];\n", symbol_name))
 	sbHeader.WriteString("LayoutEntity* g_pStObjLayoutHorizontal[] = {\n")
@@ -444,10 +445,10 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 	writeLayoutEntries(&sbData, makeSortedBanks(el.Entities, false))
 	sbData.WriteString(fmt.Sprintf("};\n"))
 
-	if err := os.WriteFile(path.Join(outputDir, "e_layout.h"), []byte(sbData.String()), 0644); err != nil {
+	if err := os.WriteFile(path.Join(outputDir, "e_layout.c"), []byte(sbData.String()), 0644); err != nil {
 		return err
 	}
-	return os.WriteFile(path.Join(outputDir, "e_laydef.h"), []byte(sbHeader.String()), 0644)
+	return os.WriteFile(path.Join(outputDir, "e_laydef.c"), []byte(sbHeader.String()), 0644)
 }
 
 func buildAll(inputDir string, outputDir string) error {
