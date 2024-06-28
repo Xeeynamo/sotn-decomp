@@ -1,7 +1,7 @@
 #include "types.h"
 
-s32 g_LayoutObjHorizontal;
-s32 g_LayoutObjVertical;
+u16* g_LayoutObjHorizontal;
+u16* g_LayoutObjVertical;
 s8 g_LayoutObjPosHorizontal;
 static u8 pad0[3];
 s8 g_LayoutObjPosVertical;
