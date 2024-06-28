@@ -34,8 +34,9 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
+      - [0x164, .data, header] # layers
       - [0x47C, data]
-      - [0x8EC, .data, e_laydef]
+      - [0x8EC, .data, e_laydef] # layout entries header
       - [0xA94, data]
       - [0x15A0, .data, collision]
       - [0x1960, .data, e_red_door]
@@ -52,9 +53,10 @@ segments:
       - [0x2710, data]
       - [0x272C, .data, rooms]
       - [0x2830, data, D_80182830]
-      - [0x2884, .data, e_layout]
+      - [0x2884, .data, e_layout] # layout entries data
       - [0x3B0C, data]
-      - [0x16A5C, .data, tile_data]
+      - [0x16A5C, .data, tile_data] # tile data
+      - [0x20A5C, .data, tile_data] # tile definitions
       - [0x26E8C, .data, sprites]
       - [0x3058C, rodata]
       - [0x305A4, .rodata, 30958] # func_801B3C38
