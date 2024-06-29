@@ -7,17 +7,48 @@ on:
     paths:
       - 'include/**'
       - 'src/**'
+      - 'tools/sotn-assets/**'
       - 'cmake/**'
       - 'CMakeLists*'
   pull_request:
     paths:
       - 'include/**'
       - 'src/**'
+      - 'tools/sotn-assets/**'
       - 'cmake/**'
       - 'CMakeLists*'
   workflow_dispatch:
 
 jobs:
+  extract-assets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install requirements
+        run: sudo apt-get install gcc-mipsel-linux-gnu
+      - name: Clone main repo
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          submodules: false
+      - name: Get dependencies
+        uses: actions/cache@v4
+        id: get-dependencies
+        with:
+          path: 'disks/dependencies'
+          key: sotn-us-deps
+      - name: Setting up dependencies
+        working-directory: disks
+        run: cat dependencies/* | tar -zxf -
+      - name: Extract dependencies
+        run: make extract_disk
+      - name: Extract game assets
+        run: make -j extract_assets
+      - name: Export assets
+        uses: actions/upload-artifact@v4
+        with:
+          name: assets
+          path: assets
+
   build-linux:
     runs-on: ubuntu-latest
     steps:
@@ -28,6 +59,13 @@ jobs:
         with:
           ref: ${{ github.ref }}
           submodules: false
+      - name: Get assets
+        uses: actions/download-artifact@v4
+        with:
+          name: assets
+          path: assets
+      - name: Build assets
+        run: make -j build_assets
       - name: Build
         run: |
           cmake -B ${{github.workspace}}/pc
@@ -43,6 +81,13 @@ jobs:
         with:
           ref: ${{ github.ref }}
           submodules: false
+      - name: Get assets
+        uses: actions/download-artifact@v4
+        with:
+          name: assets
+          path: assets
+      - name: Build assets
+        run: make -j build_assets
       - name: Build
         run: |
           cmake -B ${{github.workspace}}/pc
@@ -58,6 +103,16 @@ jobs:
         7z x C:\temp-sdl2\SDL2-devel-2.28.5-VC.zip -oC:\temp-sdl2
     - name: Clone repo
       uses: actions/checkout@v4
+      with:
+        ref: ${{ github.ref }}
+        submodules: false
+    - name: Get assets
+      uses: actions/download-artifact@v4
+      with:
+        name: assets
+        path: assets
+    - name: Build assets
+      run: make -j build_assets
     - name: Build
       run: |
         cmake -B ${{github.workspace}}/pc -DCMAKE_BUILD_TYPE=Release -DSDL2_PATH=C:\temp-sdl2\SDL2-2.28.5
@@ -73,6 +128,13 @@ jobs:
         with:
           ref: ${{ github.ref }}
           submodules: false
+      - name: Get assets
+        uses: actions/download-artifact@v4
+        with:
+          name: assets
+          path: assets
+      - name: Build assets
+        run: make -j build_assets
       - name: Build
         run: |
           cmake -B ${{github.workspace}}/pc -DWANT_LIBSND_LLE=1
