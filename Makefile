@@ -122,6 +122,7 @@ clean:
 	git clean -fdx sotn_calltree.txt
 
 format: format-src format-tools format-symbols
+
 format-src: bin/clang-format
 	@# find explainer:
 	@#    find $(SRC_DIR) $(INCLUDE_DIR)                      : look in src and include
@@ -159,6 +160,11 @@ format-symbols:
 	./tools/symbols.py remove-orphans config/splat.us.strwrp.yaml
 	./tools/symbols.py remove-orphans config/splat.us.tt_000.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stmad.yaml
+
+# fast-format
+ff: MAKEFLAGS += --jobs
+ff:
+	$(MAKE) format
 
 patch:
 	$(DIRT_PATCHER) config/dirt.$(VERSION).json
@@ -493,7 +499,7 @@ SHELL = /bin/bash -e -o pipefail
 include tools/tools.mk
 
 .PHONY: all, clean, patch, check, build, expected
-.PHONY: format, format-src, format-tools, format-symbols
+.PHONY: format, ff, format-src, format-tools, format-symbols
 .PHONY: main, dra, ric, cen, dre, mad, no3, np3, nz0, st0, wrp, rwrp, tt_000
 .PHONY: %_dirs
 .PHONY: extract, extract_%
