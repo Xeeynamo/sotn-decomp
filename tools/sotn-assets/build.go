@@ -276,7 +276,7 @@ func buildSpriteGroup(sb *strings.Builder, sprites [][]sprite, mainSymbol string
 	for _, spriteGroup := range sprites {
 		if len(spriteGroup) > 0 {
 			symbol := fmt.Sprintf("spriteGroup_%08X", r.Int31())
-			sb.WriteString(fmt.Sprintf("extern signed short %s[];\n", symbol))
+			sb.WriteString(fmt.Sprintf("static signed short %s[];\n", symbol))
 			symbols = append(symbols, symbol)
 		} else {
 			symbols = append(symbols, "")

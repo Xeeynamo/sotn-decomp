@@ -13,7 +13,7 @@ void BottomCornerText(u8*, u8);
 extern MyRoomDef rooms[];
 
 extern RoomHeader g_Rooms[];
-extern signed short* spriteBanks[];
+static signed short* spriteBanks[];
 extern void* g_Cluts[];
 extern RoomDef g_TileLayers[];
 extern void* OVL_EXPORT(g_EntityGfxs)[];
