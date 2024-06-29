@@ -1,6 +1,10 @@
 #ifndef LIBSND_INTERNAL_H
 #define LIBSND_INTERNAL_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <psxsdk/libspu.h>
 
 #include "common.h"
@@ -350,5 +354,9 @@ extern unsigned short _svm_okof1;
 extern unsigned short _svm_okof2;
 
 void SsUtSetReverbDepth(short, short);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
