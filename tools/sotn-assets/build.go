@@ -355,7 +355,8 @@ func buildSprites(fileName string, outputDir string) error {
 }
 
 func buildEntityLayouts(fileName string, outputDir string) error {
-	writeLayoutEntries := func(sb *strings.Builder, banks [][]layoutEntry) {
+	writeLayoutEntries := func(sb *strings.Builder, banks [][]layoutEntry, align4 bool) {
+		nWritten := 0
 		for i, entries := range banks {
 			sb.WriteString(fmt.Sprintf("    0xFFFE, 0xFFFE, 0, 0, 0, // Bank %d start\n", i))
 			for _, e := range entries {
@@ -363,6 +364,10 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 					e.X, e.Y, int(e.ID)|(int(e.Flags)<<8), int(e.Slot)|(int(e.SpawnID)<<8), e.Params))
 			}
 			sb.WriteString(fmt.Sprintf("    0xFFFF, 0xFFFF, 0, 0, 0, // Bank %d end\n\n", i))
+			nWritten += len(entries)
+		}
+		if align4 && nWritten%2 != 0 {
+			sb.WriteString("    0, // padding\n")
 		}
 	}
 	makeSortedBanks := func(banks [][]layoutEntry, sortByX bool) [][]layoutEntry {
@@ -439,10 +444,10 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 	sbData := strings.Builder{}
 	sbData.WriteString("// clang-format off\n")
 	sbData.WriteString(fmt.Sprintf("unsigned short %s_x[] = {\n", symbol_name))
-	writeLayoutEntries(&sbData, makeSortedBanks(el.Entities, true))
+	writeLayoutEntries(&sbData, makeSortedBanks(el.Entities, true), false)
 	sbData.WriteString(fmt.Sprintf("};\n"))
 	sbData.WriteString(fmt.Sprintf("unsigned short %s_y[] = {\n", symbol_name))
-	writeLayoutEntries(&sbData, makeSortedBanks(el.Entities, false))
+	writeLayoutEntries(&sbData, makeSortedBanks(el.Entities, false), true)
 	sbData.WriteString(fmt.Sprintf("};\n"))
 
 	if err := os.WriteFile(path.Join(outputDir, "e_layout.c"), []byte(sbData.String()), 0644); err != nil {
