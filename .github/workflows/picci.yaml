@@ -78,6 +78,11 @@ jobs:
     steps:
       - name: Install requirements
         run: brew install SDL2
+      - name: Install Go
+        run: |
+          curl -L -o go.tar.gz https://go.dev/dl/go1.22.4.darwin-amd64.tar.gz
+          tar -C ~ -xzf go.tar.gz
+          rm go.tar.gz
       - name: Clone repo
         uses: actions/checkout@v4
         with:
@@ -104,6 +109,11 @@ jobs:
         mkdir C:\temp-sdl2
         powershell Invoke-WebRequest 'https://github.com/libsdl-org/SDL/releases/download/release-2.28.5/SDL2-devel-2.28.5-VC.zip' -OutFile C:\temp-sdl2\SDL2-devel-2.28.5-VC.zip
         7z x C:\temp-sdl2\SDL2-devel-2.28.5-VC.zip -oC:\temp-sdl2
+    - name: Install Go
+      run: |
+        curl -L -o go.zip https://go.dev/dl/go1.22.4.windows-amd64.zip
+        tar -C ~ -xf go.zip
+        rm go.zip
     - name: Clone repo
       uses: actions/checkout@v4
       with:
