@@ -51,6 +51,7 @@ jobs:
 
   build-linux:
     runs-on: ubuntu-latest
+    needs: extract-assets
     steps:
       - name: Install requirements
         run: sudo apt-get update && sudo apt-get install build-essential libsdl2-dev
@@ -73,6 +74,7 @@ jobs:
 
   build-macos:
     runs-on: macos-latest
+    needs: extract-assets
     steps:
       - name: Install requirements
         run: brew install SDL2
@@ -95,6 +97,7 @@ jobs:
 
   build-windows:
     runs-on: windows-latest
+    needs: extract-assets
     steps:
     - name: Install requirements
       run: |
@@ -120,6 +123,7 @@ jobs:
 
   build-linux-lle:
     runs-on: ubuntu-latest
+    needs: extract-assets
     steps:
       - name: Install requirements
         run: sudo apt-get update && sudo apt-get install build-essential libsdl2-dev
