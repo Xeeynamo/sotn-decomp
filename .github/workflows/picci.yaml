@@ -112,7 +112,7 @@ jobs:
     - name: Install Go
       run: |
         curl -L -o go.zip https://go.dev/dl/go1.22.4.windows-amd64.zip
-        tar -C ~ -xf go.zip
+        powershell -command "Expand-Archive -Path go.zip -DestinationPath $env:USERPROFILE"
         rm go.zip
     - name: Clone repo
       uses: actions/checkout@v4
