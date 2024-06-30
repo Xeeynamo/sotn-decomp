@@ -234,6 +234,15 @@ void check_spu_set_common_attr()
     CheckWrites("./src/pc/psxsdk/expected/SpuSetCommonAttr1.txt");
 }
 
+
+void check_set_key()
+{
+    SpuSetKey(0, 0xFFFFFF);
+    CheckWrites("./src/pc/psxsdk/expected/SpuSetKey0.txt");
+    SpuSetKey(1, 0xFFFFFF);
+    CheckWrites("./src/pc/psxsdk/expected/SpuSetKey1.txt");
+}
+
 extern "C" void run_tests()
 {
     _spu_init(0);
@@ -246,6 +255,8 @@ extern "C" void run_tests()
     check_spu_clear_reverb_work_area();
 
     check_spu_set_common_attr();
+
+    check_set_key();
 
     exit(0);
 }
