@@ -113,8 +113,8 @@ jobs:
       run: |
         curl -L -o go.zip https://go.dev/dl/go1.22.4.windows-amd64.zip
         powershell -command "Expand-Archive -Path go.zip -DestinationPath $env:USERPROFILE"
+        powershell -command "New-Item -Path "$env:USERPROFILE\go\bin\go" -ItemType File"
         rm go.zip
-        touch ~/go/bin/go
     - name: Clone repo
       uses: actions/checkout@v4
       with:
