@@ -1101,6 +1101,14 @@ typedef struct {
     u8 unk29;
 } ET_80123B40;
 
+typedef struct {
+    struct Entity* ent;
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+    s16 unk86;
+} ET_80129864;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1204,5 +1212,6 @@ typedef union { // offset=0x7C
     ET_Owl owl;
     ET_AlucardWaterEffect aluwater;
     ET_80123B40 et_80123B40;
+    ET_80129864 et_80129864;
     ET_801B28E4 et_801B28E4;
 } Ext;

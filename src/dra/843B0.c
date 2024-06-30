@@ -2303,7 +2303,225 @@ void EntityAguneaHitEnemy(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/843B0", func_80129864);
+void func_80129864(Entity* s2) {
+    s32 a = 11;
+    s32 b = 25;
+    Primitive* s0;
+    s32 s1;
+    s32 s3;
+    s32 s4;
+    s32 s5;
+    s32 s6;
+    s32 s7;
+    s32 s8;
+
+    u8 temp_u;
+    u8 temp_v;
+    s32 angle_offset;
+    s32 a2, v1;
+
+    switch (s2->step) {
+    case 0:
+        s2->primIndex = AllocPrimitives(4, 0x10);
+        if (s2->primIndex == -1) {
+            DestroyEntity(s2);
+            return;
+        }
+        s0 = &g_PrimBuf[s2->primIndex];
+        for (s5 = 0; s5 < 8; s5++) {
+            s0->type = 1;
+            s0->u0 = 1;
+            s0->v0 = 1;
+            s0->drawMode = 2;
+            s0->priority = 0;
+            s0 = s0->next;
+            s0->priority = 0x1C2;
+            s0->drawMode = 0x17F;
+            s0->tpage = 0x1A;
+            s0->clut = 0x19F;
+            s0 = s0->next;
+        }
+        s2->facingLeft = (PLAYER.facingLeft + 1) & 1; // !PLAYER.facingLeft
+        s2->ext.et_80129864.unk80 = D_800B0858[(u8)s2->params];
+        s2->animSet = 9;
+        s2->unk4C = D_800B0798;
+        s2->palette = 0x819F;
+        s2->drawMode = 0x70;
+        s2->zPriority = 0x1C3;
+        s2->flags = 0x0C930000;
+        s2->drawFlags = 4;
+        if (s2->params & 0x7F00) {
+            func_8011A328(s2, 3);
+        } else {
+            func_8011A328(s2, 1);
+        }
+        s2->hitboxWidth = 6;
+        s2->hitboxHeight = 6;
+        s2->step++;
+        break;
+    case 1:
+        s1 = rcos(s2->ext.et_80129864.unk82) >> 8;
+        s2->ext.et_80129864.unk82 += 0x80;
+        s2->ext.et_80129864.unk80 += s1;
+
+        if (s2->posY.i.hi < -0x20) {
+            s2->ext.et_80129864.ent = func_80118970();
+            s2->ext.et_80129864.unk84 = 0;
+            s2->ext.et_80129864.unk80 = 0xC00;
+            if ((s2->params & 0xFF) > 1) {
+                s2->facingLeft = (s2->facingLeft + 1) & 1;
+            }
+            s2->step++;
+        }
+        break;
+    case 2:
+        if (s2->ext.et_80129864.unk84 < 0x18) {
+            angle_offset = 0x10;
+        } else if (s2->ext.et_80129864.unk84 < 0x28) {
+            angle_offset = 0x20;
+        } else if (s2->ext.et_80129864.unk84 < 0x38) {
+            angle_offset = 0x40;
+        } else {
+            angle_offset = 0x80;
+        }
+
+        if (s2->ext.et_80129864.ent != NULL) {
+            if (!s2->ext.et_80129864.ent->entityId) {
+                s2->step++;
+                break;
+            } else {
+                a2 = s2->ext.et_80129864.ent->posX.i.hi;
+                v1 = s2->ext.et_80129864.ent->posY.i.hi;
+            }
+        } else {
+            if (s2->facingLeft) {
+                a2 = 0x140;
+                v1 = 0xA0;
+            } else {
+                a2 = -0x40;
+                v1 = 0xA0;
+            }
+            if (s2->params & 1) {
+                v1 += 0x40;
+            }
+        }
+
+        s1 = ratan2(s2->posY.i.hi - v1, a2 - s2->posX.i.hi) & 0xFFF;
+        s3 = s2->ext.et_80129864.unk80 & 0xFFF;
+        v1 = abs(s3 - s1);
+        angle_offset = CLAMP_MAX(angle_offset, v1);
+        if (s3 < s1) {
+            if (v1 < 0x800) {
+                s3 += angle_offset;
+            } else {
+                s3 -= angle_offset;
+            }
+        } else {
+            if (v1 < 0x800) {
+                s3 -= angle_offset;
+            } else {
+                s3 += angle_offset;
+            }
+        }
+        s2->ext.et_80129864.unk80 = s3 & 0xFFF;
+        if (++s2->ext.et_80129864.unk84 > 0x60) {
+            s2->step++;
+        }
+        break;
+    case 3:
+        s2->flags = 0x08910000;
+        s1 = rcos(s2->ext.et_80129864.unk82) >> 8;
+        s2->ext.et_80129864.unk82 += 0x80;
+        s2->ext.et_80129864.unk80 += s1;
+        break;
+    }
+
+    s2->velocityX = rcos(s2->ext.et_80129864.unk80) << 6;
+    s2->velocityY = -(rsin(s2->ext.et_80129864.unk80) << 6);
+    s2->posX.val += s2->velocityX;
+    s2->posY.val += s2->velocityY;
+
+    if (s2->facingLeft) {
+        s2->rotZ = s2->ext.et_80129864.unk80;
+    } else {
+        s2->rotZ = 0x800 - s2->ext.et_80129864.unk80;
+    }
+
+    s0 = &g_PrimBuf[s2->primIndex];
+    for (s5 = 0; s5 < 8; s5++) {
+        if (s2->ext.et_80129864.unk86 == s5) {
+            s0->x1 = 1;
+        }
+
+        switch (s0->x1) {
+        case 0:
+            s8 = 0;
+            break;
+        case 1:
+            s8 = 1;
+            s0->x1 += 1;
+            s0->y1 = 0x100;
+            s0->x0 = s2->posX.i.hi;
+            s0->y0 = s2->posY.i.hi;
+            s0->x2 = s2->ext.et_80129864.unk80;
+            break;
+        case 2:
+            s0->y1 -= 16;
+            s8 = 2;
+            break;
+        }
+
+        s3 = s0->x2;
+        s6 = s0->x0;
+        s7 = s0->y0;
+        s4 = s0->y1;
+        s0 = s0->next;
+
+        switch (s8) {
+        case 0:
+            s0->drawMode |= 8;
+            break;
+        case 1:
+            temp_u = D_800B0846[s2->animCurFrame * 2];
+            temp_v = D_800B0846[s2->animCurFrame * 2 + 1];
+            s0->u0 = s0->u2 = temp_u;
+            s0->u1 = s0->u3 = temp_u + 31;
+            s0->v0 = s0->v1 = temp_v;
+            s0->v2 = s0->v3 = temp_v + 15;
+            s0->r0 = s0->b0 = s0->g0 = s0->r1 = s0->b1 = s0->g1 = s0->r2 =
+                s0->b2 = s0->g2 = s0->r3 = s0->b3 = s0->g3 = 0x80;
+            s0->drawMode &= 0xFFF7;
+            break;
+        case 2:
+            if (s0->g3 > 4) {
+                s0->g3 -= 12;
+            }
+            s0->r0 = s0->b0 = s0->g0 = s0->r1 = s0->b1 = s0->g1 = s0->r2 =
+                s0->b2 = s0->g2 = s0->r3 = s0->b3 = s0->g3;
+
+            break;
+        }
+
+        if (s8) {
+            s1 = s3 - 0x200;
+            s0->x0 = s6 + ((((rcos(s1) >> 4) * a >> 8) * s4) >> 8);
+            s0->y0 = s7 - ((((rsin(s1) >> 4) * a >> 8) * s4) >> 8);
+            s1 = s3 + 0x200;
+            s0->x2 = s6 + ((((rcos(s1) >> 4) * a >> 8) * s4) >> 8);
+            s0->y2 = s7 - ((((rsin(s1) >> 4) * a >> 8) * s4) >> 8);
+            s1 = s3 - 0x734;
+            s0->x1 = s6 + ((((rcos(s1) >> 4) * b >> 8) * s4) >> 8);
+            s0->y1 = s7 - ((((rsin(s1) >> 4) * b >> 8) * s4) >> 8);
+            s1 = s3 + 0x734;
+            s0->x3 = s6 + ((((rcos(s1) >> 4) * b >> 8) * s4) >> 8);
+            s0->y3 = s7 - ((((rsin(s1) >> 4) * b >> 8) * s4) >> 8);
+        }
+        s0 = s0->next;
+    }
+
+    s2->ext.et_80129864.unk86 += 1;
+    s2->ext.et_80129864.unk86 = s2->ext.et_80129864.unk86 % 8;
+}
 
 // opens hole in backround and spirit comes out (ID 0x40)
 void EntitySummonSpirit(Entity* self) {
