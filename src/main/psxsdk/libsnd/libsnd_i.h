@@ -84,6 +84,10 @@ extern s16 _svm_stereo_mono;
 
 void vmNoiseOn2(u8 arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4);
 
+struct thing {
+    s16 a, b;
+};
+
 struct struct_svm {
     char field_0_sep_sep_no_tonecount;
     char field_1_vabId;
@@ -105,11 +109,11 @@ struct struct_svm {
     unsigned char field_11_shift;
     char field_12_mode;
     char field_0x13;
-    u8 field_14_seq_sep_no;
-    u8 pad;
+    short field_14_seq_sep_no;
     short field_16_vag_idx;
     short field_18_voice_idx;
     short field_0x1a;
+    struct thing unk1c;
 };
 
 extern struct struct_svm _svm_cur;
@@ -174,7 +178,11 @@ struct SeqStruct {
     s16 padaa;
 };
 
+#ifdef VERSION_PC
+extern struct SeqStruct* _ss_score[34];
+#else
 extern struct SeqStruct* _ss_score[32];
+#endif
 
 typedef struct {
     SpuVolume volume; /* volume       */

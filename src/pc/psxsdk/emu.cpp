@@ -243,6 +243,127 @@ void check_set_key()
     CheckWrites("./src/pc/psxsdk/expected/SpuSetKey1.txt");
 }
 
+extern unsigned short _svm_okon1;
+extern unsigned short _svm_okon2;
+extern unsigned short _svm_okof1;
+extern unsigned short _svm_okof2;
+extern unsigned short _svm_orev1;
+extern unsigned short _svm_orev2;
+
+extern "C" s16 SsUtKeyOnV(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note, s16 fine,
+               s16 voll, s16 volr);
+extern "C" void SsSetTableSize(char* table, short s_max, short t_max);
+void test_spu_vm_do_allocate()
+{
+    struct thing *svm;
+    ProgAtr temp[32] = {0};
+    VagAtr vagAtr = {0};
+    VabHdr vh = {0};     /* number: 21 */
+    ProgAtr pg[16] = {0};    /* number: 22 */
+    VagAtr tn[16] = {0}; /* number: 23 */
+    s16 result;
+    int i;
+
+    char table[512 * 4 * 5] = {0};
+
+    SsSetTableSize(table, 4, 5);
+
+    for (i = 0; i < 16; i++)
+    {
+        tn[i].vag = 1;
+        _svm_vab_pg[i] = &pg[i];
+    }
+
+    _svm_cur.field_0x1a = 1;
+
+    _svm_cur.field_18_voice_idx = 1;
+
+    _svm_pg = &temp[0];
+
+    _svm_pg[0].reserved2 = 3;
+    _svm_pg[0].reserved3 = 4;
+
+    /*
+    We can't link against SpuVmDoAllocate or SpuVmKeyOnNow. Need to test them indirectly
+    */
+
+    /*
+    configuration for SpuVmVSetUp
+    */
+    kMaxPrograms = 3;
+    _svm_vab_used[0] = 1;
+    _svm_vab_used[1] = 1;
+    _svm_vab_vh[0] = &vh;
+
+    for (i = 0; i < 16; i++)
+    {
+        _svm_vab_tn[i] = &tn[i];
+    }
+
+    result = SpuVmVSetUp(1, 2);
+
+    /*
+    SpuVmSetUp checks
+    */
+    ASSERT_EQ(result, 0);
+    ASSERT_EQ(_svm_cur.field_1_vabId, 1);
+    ASSERT_EQ(_svm_cur.field_6_program, 2);
+
+    _svm_tn = &vagAtr;
+    _svm_cur.field_C_vag_idx = 1;
+    _svm_cur.field_7_fake_program = 1;
+
+    vagAtr.vag = 1;
+
+    result = SsUtKeyOnV(
+        2,   /*voice*/
+        0,   /*vabId*/
+        0,   /*prog*/
+        1,   /*tone*/
+        30,  /*note*/
+        40,  /*fine*/
+        64,  /*voll*/
+        64); /*volr*/
+
+    ASSERT_EQ(result, 2);
+
+    /*
+        SsUtKeyOnV checks
+    */
+    ASSERT_EQ(_svm_cur.field_2_note, 30);
+    ASSERT_EQ(_svm_cur.field_0x3, 40);
+
+    ASSERT_EQ(_svm_cur.field_0x5, 0x40);
+    ASSERT_EQ(_svm_cur.field_4_voll, 64);
+
+    /*
+    SpuVmDoAllocate checks
+    can't check most of the func since _svm_voice, _svm_envx_hist, _svm_sreg_buf and _svm_sreg_dirty are hidden
+    */
+
+    ASSERT_EQ(_svm_cur.unk1c.a, 16);
+    ASSERT_EQ(_svm_cur.unk1c.b, 1);
+
+    /*
+        SpuVmKeyOnNow checks
+    */
+
+    ASSERT_EQ(_svm_orev1, 0);
+    ASSERT_EQ(_svm_orev2, 0);
+    ASSERT_EQ(_svm_okon1, 4);
+    ASSERT_EQ(_svm_okon2, 0);
+    ASSERT_EQ(_svm_okof1, 0);
+    ASSERT_EQ(_svm_okof2, 0);
+
+    /*
+    Indirectly check _svm_sreg_buf by flushing
+    */
+
+    SpuVmFlush();
+
+    CheckWrites("./src/pc/psxsdk/expected/spu_vm_do_allocate.txt");
+}
+
 extern "C" void run_tests()
 {
     _spu_init(0);
@@ -257,6 +378,8 @@ extern "C" void run_tests()
     check_spu_set_common_attr();
 
     check_set_key();
+
+    test_spu_vm_do_allocate();
 
     exit(0);
 }
