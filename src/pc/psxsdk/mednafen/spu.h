@@ -123,7 +123,7 @@ class PS_SPU {
 
     void RunReverb(const int32* in, int32* out);
     void RunNoise(void);
-    bool GetCDAudio(int32_t& l, int32_t& r);
+    // bool GetCDAudio(int32_t& l, int32_t& r);
 
     SPU_Voice Voices[24];
 

@@ -330,43 +330,46 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         }
         return 0;
     case SimFileType_Vh:
-    case SimFileType_Vb:
-        sim.kind = type == SimFileType_Vh ? SIM_VH : SIM_VB;
-        switch (fileId) {
-        case 0:
+        if (fileId & 0x8000) {
+            g_SimFile = &D_800A036C[fileId & 0x7FFF];
+        } else {
+            g_SimFile = &D_80136450;
             sim.path = smolbuf;
-            snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.%s",
+            snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.VH",
                      g_StagesLba[g_StageId].ovlName,
+                     g_StagesLba[g_StageId].ovlName);
+            g_SimFile->addr = aPbav_2;
+            g_SimFile->path = smolbuf;
+            g_SimFile->size = g_StagesLba[g_StageId].vhLen;
+            g_SimFile->kind = SIM_VH;
+        }
+        if (g_SimFile->addr == aPbav) {
+            g_SimVabId = 0;
+        }
+        if (g_SimFile->addr == aPbav_0) {
+            g_SimVabId = 1;
+        }
+        if (g_SimFile->addr == aPbav_2) {
+            g_SimVabId = 3;
+        }
+        if (g_SimFile->addr == aPbav_1) {
+            g_SimVabId = 2;
+        }
+        SsVabClose(g_SimVabId);
+        break;
+    case SimFileType_Vb:
+        if (fileId & 0x8000) {
+            g_SimFile = &D_800A036C[fileId & 0x7FFF];
+        } else {
+            g_SimFile = &D_80136450;
+            sim.path = smolbuf;
+            snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.VB",
                      g_StagesLba[g_StageId].ovlName,
-                     type == SimFileType_Vh ? "VH" : "VB");
-            break;
-        case 0x8000:
-            sim.path = "VAB/SD_ALK.VH";
-            break;
-        case 0x8001:
-            sim.path = "VAB/SD_ALK.VB";
-            break;
-        case 0x8002:
-            sim.path = "VAB/SD_RIH.VH";
-            break;
-        case 0x8003:
-            sim.path = "VAB/SD_RIH.VB";
-            break;
-        case 0x8004:
-            sim.path = "VAB/SD_MAR.VH";
-            break;
-        case 0x8005:
-            sim.path = "VAB/SD_MAR.VB";
-            break;
-        default:
-            if (fileId & 0x8000) {
-                WARNF("not implemented for ID %d: %s", fileId,
-                      D_800A036C[fileId & 0x7FFF]);
-            } else {
-                WARNF("not implemented for ID %d: %s", fileId,
-                      g_StagesLba[g_StageId].name);
-            }
-            return -1;
+                     g_StagesLba[g_StageId].ovlName);
+            g_SimFile->addr = SIM_PTR;
+            g_SimFile->path = sim.path;
+            g_SimFile->size = g_StagesLba[g_StageId].vbLen;
+            g_SimFile->kind = SIM_VB;
         }
         break;
     case SimFileType_StageChr:
