@@ -82,7 +82,69 @@ s32 func_ptr_80170004(Entity* self) {
 
 INCLUDE_ASM("weapon/nonmatchings/w_013", func_ptr_80170008);
 
-INCLUDE_ASM("weapon/nonmatchings/w_013", func_ptr_8017000C);
+// Pay attention to unk80, unk8A, and childPalette. These all seem to be
+// special for Heaven Sword and we should probably have it as a special weapon.
+void func_ptr_8017000C(Entity* self) {
+    s16 angle;
+
+    if (self->ext.weapon.parent->entityId == 0) {
+        DestroyEntity(self);
+        return;
+    }
+    switch (self->step) {
+    case 0:
+        self->animCurFrame = self->ext.weapon.parent->animCurFrame;
+        self->animSet = self->ext.weapon.parent->animSet;
+        self->facingLeft = self->ext.weapon.parent->facingLeft;
+        self->unk5A = self->ext.weapon.parent->unk5A;
+        self->zPriority = self->ext.weapon.parent->zPriority;
+        self->flags = FLAG_UNK_04000000;
+        self->palette = self->ext.weapon.parent->palette + (self->params >> 8);
+        self->drawFlags = self->ext.weapon.parent->drawFlags | FLAG_DRAW_UNK80;
+        self->rotZ = self->ext.weapon.parent->rotZ;
+        self->ext.weapon.childPalette =
+            self->ext.weapon.parent->ext.weapon.childPalette;
+        self->ext.weapon.unk8A = self->ext.weapon.parent->ext.weapon.unk8A;
+        self->ext.weapon.unk80 = (rand() & 0x1F) + 1;
+        self->step++;
+        break;
+    case 1:
+        if (self->ext.weapon.parent->step == 3) {
+            self->step++;
+        }
+        break;
+    case 2:
+        if (--self->ext.weapon.unk80 == 0) {
+            self->rotZ = 0;
+            angle = ratan2(-(self->ext.weapon.unk8A - self->posY.i.hi),
+                           self->ext.weapon.childPalette - self->posX.i.hi);
+            self->velocityX = rcos(angle) * 0x100;
+            self->velocityY = -rsin(angle) * 0x100;
+            self->step++;
+            self->ext.weapon.equipId =
+                self->ext.weapon.parent->ext.weapon.equipId;
+            SetWeaponProperties(self, 0);
+            self->enemyId = self->ext.weapon.parent->enemyId;
+            self->hitboxWidth = 0x12;
+            self->hitboxHeight = 4;
+        }
+        break;
+    case 3:
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        if (self->facingLeft == 0) {
+            if (self->posX.i.hi > self->ext.weapon.childPalette) {
+                DestroyEntity(self);
+                return;
+            }
+        } else {
+            if (self->posX.i.hi < self->ext.weapon.childPalette) {
+                DestroyEntity(self);
+                return;
+            }
+        }
+    }
+}
 
 s32 func_ptr_80170010(Entity* self) {}
 
