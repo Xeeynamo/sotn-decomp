@@ -697,8 +697,8 @@ extern s16 D_8013B678[];
 extern s16 D_8013B698;
 extern u8 D_8013B6A0[269488]; // VAB file
 extern u8 D_8017D350[57744];  // VAB file
-extern u8 D_8018B4E0[64496];  // VAB file
-extern u8 D_801A9C80[108048]; // VAB file
+extern u8 D_8018B4E0[108048]; // VAB file
+extern u8 D_801A9C80[64496];  // VAB file
 extern u16 D_8013AEE0;
 extern s8 D_8013AEE8;
 extern u8 g_SoundInitialized;

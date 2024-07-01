@@ -87,10 +87,14 @@ void ResetPlatform(void) {
 }
 
 int MyResetGraph(int arg0) { return 0; }
-
+void SoundRevCallback(void* userdata, u8* stream, int len);
 void MyAudioCallback(void* data, Uint8* buffer, int length);
 void SDLAudioCallback(void* data, Uint8* buffer, int length) {
+#ifdef WANT_LIBSND_LLE
+    SoundRevCallback(data, buffer, length);
+#else
     MyAudioCallback(data, buffer, length);
+#endif
 }
 
 void MySsInitHot(void) {

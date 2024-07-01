@@ -271,10 +271,9 @@ segments:
     start: 0x9B6A0
     vram:  0x8013B6A0
     subsegments:
-      - [0x0,     raw, vb_0] # D_8013B6A0
-      - [0x41CB0, raw, vb_1] # D_8017D350
-      - [0x4FE40, raw, vb_2] # D_8018B4E0
-      - [0x5FA30]
-      - [0x6E5E0, raw, vb_3] # D_801A9C80
-      - [0x88BF0]
+      - [0x9B6A0, raw, vb_0] # D_8013B6A0
+      - [0xDD350, raw, vb_1] # D_8017D350
+      - [0xEB4E0, raw, vb_2] # D_8018B4E0 (len 108048)
+      - [0x105AF0]
+      - [0x109C80, raw, vb_3] # D_801A9C80 (len 64496)
   - [0x119870]

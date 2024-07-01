@@ -844,17 +844,426 @@ s32 _spu_mem_mode_unitM;
 s32 _spu_rev_offsetaddr;
 s32 _spu_rev_reserve_wa;
 
+void func_800286E0(void);
+
+#define _spu_AllocBlockNum D_8003355C
+#define _spu_AllocLastNum D_80033560
+
+void _spu_gcSPU() { func_800286E0(); }
+
 long SpuMalloc(long size) {
-    assert(false);
-    return 0;
+    long pAllocated;
+
+    printf("SpuMalloc size %d\n", size);
+    unsigned int rev_size_zero = 0;
+    if (_spu_rev_reserve_wa) {
+        rev_size_zero = (0x10000 - _spu_rev_offsetaddr) << _spu_mem_mode_plus;
+    } else {
+        rev_size_zero = 0;
+    }
+
+    int size_adjusted = size;
+    if ((size & ~_spu_mem_mode_unitM) != 0) {
+        size_adjusted = size + _spu_mem_mode_unitM;
+    }
+
+    const u32 calc_alloc_size =
+        size_adjusted >> _spu_mem_mode_plus << _spu_mem_mode_plus;
+
+    printf("memlist is:\n");
+    for (int i = 0; i < 32; i++) {
+        printf("_spu_memList[%d].addr %08X size %08X\n", i,
+               _spu_memList[i].addr, _spu_memList[i].size);
+    }
+
+    int found_block_idx = -1;
+    if ((_spu_memList->addr & 0x40000000) != 0) {
+        found_block_idx = 0;
+    } else {
+        printf("! _spu_memList->addr & 0x40000000 _spu_AllocBlockNum %d\n",
+               _spu_AllocBlockNum);
+        _spu_gcSPU();
+
+        if (_spu_AllocBlockNum > 0) {
+            s32 cur_idx = 0;
+            SPU_MALLOC* pListIter = _spu_memList;
+            while ((pListIter->addr & 0x40000000) == 0 &&
+                   ((pListIter->addr & 0x80000000) == 0 ||
+                    pListIter->size < calc_alloc_size)) {
+                printf("next block\n");
+                ++cur_idx;
+                ++pListIter;
+                if (cur_idx >= _spu_AllocBlockNum) {
+                    goto out_of_blocks;
+                }
+            }
+            found_block_idx = cur_idx;
+        }
+    }
+
+out_of_blocks:
+    pAllocated = -1;
+
+    printf("found_block_idx %d\n", found_block_idx);
+
+    if (found_block_idx != -1) {
+        printf("SpuMalloc:%d\n", __LINE__);
+
+        if ((_spu_memList[found_block_idx].addr & 0x40000000) != 0) {
+            printf("SpuMalloc:%d _spu_AllocBlockNum %d\n", __LINE__,
+                   _spu_AllocBlockNum);
+
+            if (found_block_idx < (int)_spu_AllocBlockNum) {
+                printf("SpuMalloc:%d\n", __LINE__);
+
+                if (_spu_memList[found_block_idx].size - rev_size_zero >=
+                    calc_alloc_size) {
+                    printf("SpuMalloc:%d\n", __LINE__);
+
+                    _spu_AllocLastNum = found_block_idx + 1;
+
+                    SPU_MALLOC* pLastBlock = &_spu_memList[_spu_AllocLastNum];
+                    pLastBlock->addr =
+                        ((_spu_memList[found_block_idx].addr & 0xFFFFFFF) +
+                         calc_alloc_size) |
+                        0x40000000;
+                    pLastBlock->size =
+                        _spu_memList[found_block_idx].size - calc_alloc_size;
+
+                    _spu_memList[found_block_idx].size = calc_alloc_size;
+                    _spu_memList[found_block_idx].addr &= 0xFFFFFFF;
+
+                    _spu_gcSPU();
+
+                    pAllocated = _spu_memList[found_block_idx].addr;
+
+                    printf(
+                        "SpuMalloc:%d pAllocated %d\n", __LINE__, pAllocated);
+                }
+            }
+        } else {
+            printf("SpuMalloc:%d\n", __LINE__);
+
+            if (calc_alloc_size < _spu_memList[found_block_idx].size) {
+                printf("SpuMalloc:%d\n", __LINE__);
+
+                const u32 pAllocEndAddr =
+                    _spu_memList[found_block_idx].addr + calc_alloc_size;
+                if (_spu_AllocLastNum < _spu_AllocBlockNum) {
+                    printf("SpuMalloc:%d\n", __LINE__);
+
+                    const u32 last_addr = _spu_memList[_spu_AllocLastNum].addr;
+                    const u32 last_alloc_size =
+                        _spu_memList[_spu_AllocLastNum].size;
+
+                    _spu_memList[_spu_AllocLastNum].addr =
+                        pAllocEndAddr | 0x80000000;
+                    _spu_memList[_spu_AllocLastNum].size =
+                        _spu_memList[found_block_idx].size - calc_alloc_size;
+
+                    _spu_AllocLastNum++;
+                    _spu_memList[_spu_AllocLastNum].addr = last_addr;
+                    _spu_memList[_spu_AllocLastNum].size = last_alloc_size;
+                }
+            }
+
+            _spu_memList[found_block_idx].size = calc_alloc_size;
+            _spu_memList[found_block_idx].addr &= 0xFFFFFFF;
+
+            _spu_gcSPU();
+
+            pAllocated = _spu_memList[found_block_idx].addr;
+
+            printf("SpuMalloc:%d pAllocated %d\n", __LINE__, pAllocated);
+        }
+    }
+    return pAllocated;
 }
 
-int SsVabOpenHeadWithMode(unsigned char* pAddr, int vabId, s32 pFn, long mode) {
-    assert(false);
-    return 0;
+s16 SsVabOpenHeadWithMode(u8* addr, s16 vabid, s16 arg2, u32 sbaddr) {
+    int vagLens[256];
+    s32 i;
+    s16 vabId_2;
+    s32 var_s0;
+    s32 totalVagSize;
+    u16 temp_v1;
+    u16* ptr_vag_off_table;
+    u32 magic;
+    u32 spuAllocMem;
+    u8 num_vags;
+    ProgAtr* pProgTable;
+#if 1
+    u8* var_a2;
+#else
+    register u8* var_a2 asm("$6");
+#endif
+    VabHdr* vab_hdr_2;
+    vabId_2 = 0x10;
+    if (_spu_getInTransfer() == 1) {
+        return -1;
+    }
+    _spu_setInTransfer(1);
+    if (!(vabid < 0x10)) {
+        _spu_setInTransfer(0);
+        return -1;
+    }
+    // new_var = addr;
+    if (vabid == (-1)) {
+        for (i = 0; i < 16; i++) {
+            if (_svm_vab_used[i] == 0) {
+                _svm_vab_used[i] = 1;
+                vabId_2 = i;
+                _svm_vab_count++;
+                break;
+            }
+        }
+
+    } else if (_svm_vab_used[vabid] == 0) {
+        _svm_vab_used[vabid] = 1;
+        vabId_2 = vabid;
+        _svm_vab_count++;
+    }
+    var_a2 = addr;
+    totalVagSize = vabId_2;
+    if (vabId_2 >= 0x10) {
+        _spu_setInTransfer(0);
+        return -1;
+    }
+    _svm_vab_vh[vabId_2] = var_a2;
+
+    var_a2 = var_a2 + 0x20;
+    vab_hdr_2 = addr;
+    magic = vab_hdr_2->form;
+    if ((magic >> 8) != 0x564142) {
+        _svm_vab_used[vabId_2] = 0;
+        _spu_setInTransfer(0);
+        _svm_vab_count -= 1;
+        return -1;
+    }
+    if ((magic & 0xFF) == 0x70) {
+        if (vab_hdr_2->ver >= 5) {
+            kMaxPrograms = 0x80;
+        } else {
+            kMaxPrograms = 0x40;
+        }
+    } else {
+        kMaxPrograms = 0x40;
+    }
+    if (vab_hdr_2->ps <= kMaxPrograms) {
+        _svm_vab_pg[vabId_2] = var_a2;
+        pProgTable = var_a2;
+        var_a2 = var_a2 + (kMaxPrograms * 0x10);
+        var_s0 = 0;
+        for (i = 0; i < kMaxPrograms; i++) {
+            pProgTable[i].reserved1 = var_s0;
+            if (pProgTable[i].tones != 0) {
+                var_s0++;
+            }
+        }
+        var_s0 = 0;
+        _svm_vab_tn[vabId_2] = var_a2;
+        ptr_vag_off_table = var_a2 + (vab_hdr_2->ps << 9);
+        num_vags = vab_hdr_2->vs;
+        for (i = 0; i < 256; i++) {
+            if (num_vags >= i) {
+                temp_v1 = *ptr_vag_off_table;
+                if (vab_hdr_2->ver >= 5) {
+                    vagLens[i] = temp_v1 * 8;
+                } else {
+                    vagLens[i] = temp_v1 * 4;
+                }
+                var_s0 += vagLens[i];
+            }
+            ptr_vag_off_table++;
+        }
+
+        _svm_brr_start_addr[vabId_2] = ptr_vag_off_table;
+        spuAllocMem = sbaddr;
+        if (arg2 == 0) {
+            spuAllocMem = SpuMalloc(var_s0);
+            if (spuAllocMem == -1) {
+                _svm_vab_used[vabId_2] = 0;
+                _spu_setInTransfer(0);
+                _svm_vab_count -= 1;
+                return -1;
+            }
+        }
+        if ((spuAllocMem + var_s0) > 0x80000U) {
+        end:
+            _svm_vab_used[vabId_2] = 0;
+
+            _spu_setInTransfer(0);
+            _svm_vab_count -= 1;
+            return -1;
+        }
+        _svm_vab_start[vabId_2] = spuAllocMem;
+        var_s0 = 0;
+        for (i = 0; i <= num_vags; i++) {
+            var_s0 += vagLens[i];
+            if (!(i & 1)) {
+                pProgTable[i / 2].reserved2 = (spuAllocMem + var_s0) >> 3;
+            } else {
+                (*(&pProgTable[i / 2])).reserved3 = (spuAllocMem + var_s0) >> 3;
+            }
+        }
+
+        _svm_vab_total[vabId_2] = var_s0;
+        _svm_vab_used[vabId_2] = 2;
+    } else {
+        goto end;
+    }
+    return vabId_2;
 }
 
-void func_800286E0(void) {}
+void func_800286E0(void) {
+    int last_alloc_idx;        // $v0
+    int counter;               // $t1
+    SPU_MALLOC* pMemList;      // $t0
+    int last_alloc_idx_;       // $t5
+    SPU_MALLOC* pMemList_Iter; // $a3
+    int list_idx;              // $a2
+    SPU_MALLOC* pCurBlock;     // $v1
+    bool bIsntMagicAddr;       // dc
+    SPU_MALLOC* pCurBlock_;    // $a1
+    int counter_;              // $t1
+    SPU_MALLOC* pMemList__;    // $v1
+    int last_alloc_idx__;      // $v1
+    int counter__;             // $t1
+    SPU_MALLOC* pMemList___;   // $t5
+    SPU_MALLOC* pMemListIter_; // $t2
+    int counter_next;          // $a2
+    int last_alloc_idx___;     // $t3
+    SPU_MALLOC* pNextBlock_;   // $a0
+    int mem_addr;              // $a3
+    int mem_size;              // $v1
+    int last_alloc_idx____;    // $a1
+    int idx;                   // $t1
+    SPU_MALLOC* pMemListIter;  // $a0
+    SPU_MALLOC* pCurBlock__;   // $v0
+    SPU_MALLOC* pPrevBlock;    // $a0
+
+    last_alloc_idx = _spu_AllocLastNum;
+    counter = 0;
+    if (_spu_AllocLastNum >= 0) {
+        pMemList = _spu_memList;
+        last_alloc_idx_ = _spu_AllocLastNum;
+        pMemList_Iter = _spu_memList;
+        do {
+            list_idx = counter + 1;
+            if ((pMemList_Iter->addr & 0x80000000) == 0) {
+                goto next_item;
+            }
+
+            pCurBlock = &pMemList[list_idx];
+            while (1) {
+                bIsntMagicAddr = pCurBlock->addr != 0x2FFFFFFF;
+                ++pCurBlock;
+                if (bIsntMagicAddr) {
+                    break;
+                }
+                ++list_idx;
+            }
+            pCurBlock_ = &pMemList[list_idx];
+            if ((pCurBlock_->addr & 0x80000000) != 0 &&
+                (pCurBlock_->addr & 0xFFFFFFF) ==
+                    (pMemList_Iter->addr & 0xFFFFFFF) + pMemList_Iter->size) {
+                pCurBlock_->addr = 0x2FFFFFFF;
+                pMemList_Iter->size += pCurBlock_->size;
+            } else {
+            next_item:
+                ++pMemList_Iter;
+                ++counter;
+            }
+        } while (last_alloc_idx_ >= counter);
+        last_alloc_idx = _spu_AllocLastNum;
+    }
+
+    counter_ = 0;
+    if (last_alloc_idx >= 0) {
+        pMemList__ = _spu_memList;
+        do {
+            if (!pMemList__->size) {
+                pMemList__->addr = 0x2FFFFFFF;
+            }
+            ++counter_;
+            ++pMemList__;
+        } while (last_alloc_idx >= counter_);
+    }
+
+    last_alloc_idx__ = _spu_AllocLastNum;
+    counter__ = 0;
+    if (_spu_AllocLastNum >= 0) {
+        pMemList___ = _spu_memList;
+        pMemListIter_ = _spu_memList;
+        do {
+            if ((pMemListIter_->addr & 0x40000000) != 0) {
+                break;
+            }
+            counter_next = counter__ + 1;
+            if (last_alloc_idx__ >= counter__ + 1) {
+                last_alloc_idx___ = _spu_AllocLastNum;
+                pNextBlock_ = &pMemList___[counter__ + 1];
+                do {
+                    if ((pNextBlock_->addr & 0x40000000) != 0) {
+                        break;
+                    }
+
+                    mem_addr = pMemListIter_->addr;
+                    if ((pNextBlock_->addr & 0xFFFFFFFu) <
+                        (pMemListIter_->addr & 0xFFFFFFFu)) {
+                        pMemListIter_->addr = pNextBlock_->addr;
+                        mem_size = pMemListIter_->size;
+                        pMemListIter_->size = pNextBlock_->size;
+                        pNextBlock_->addr = mem_addr;
+                        pNextBlock_->size = mem_size;
+                    }
+                    ++counter_next;
+                    ++pNextBlock_;
+                } while (last_alloc_idx___ >= counter_next);
+            }
+            last_alloc_idx__ = _spu_AllocLastNum;
+            ++counter__;
+            ++pMemListIter_;
+        } while (_spu_AllocLastNum >= counter__);
+    }
+
+    last_alloc_idx____ = _spu_AllocLastNum;
+    idx = 0;
+    if (_spu_AllocLastNum >= 0) {
+        pMemListIter = _spu_memList;
+        while ((pMemListIter->addr & 0x40000000) == 0) // not last entry
+        {
+            if (pMemListIter->addr == 0x2FFFFFFF) {
+                pCurBlock__ = &_spu_memList[last_alloc_idx____];
+                pMemListIter->addr = pCurBlock__->addr;
+                pMemListIter->size = pCurBlock__->size;
+                _spu_AllocLastNum = idx;
+                break;
+            }
+            last_alloc_idx____ = _spu_AllocLastNum;
+            ++idx;
+            ++pMemListIter;
+            if (_spu_AllocLastNum < idx) {
+                break;
+            }
+        }
+    }
+
+    // Merged tail unused blocks
+    if (_spu_AllocLastNum - 1 >= 0) {
+        pPrevBlock = &_spu_memList[_spu_AllocLastNum - 1];
+        do {
+            if ((pPrevBlock->addr & 0x80000000) == 0) {
+                break;
+            }
+            // Found unused block, merge it and set as last entry
+            pPrevBlock->addr = pPrevBlock->addr & 0xFFFFFFF | 0x40000000;
+            pPrevBlock->size += _spu_memList[_spu_AllocLastNum].size;
+            _spu_AllocLastNum--;
+            pPrevBlock--;
+        } while (_spu_AllocLastNum >= 0);
+    }
+}
 
 u16 _spu_tsa;
 void (* volatile _spu_transferCallback)();
@@ -917,6 +1326,7 @@ int _spu_t(int mode, ...) {
         for (i = 0; i < count / 4; i++) {
             write_dma(source_address[i], __FILE__, __LINE__);
         }
+
         return 0;
         break;
     }
