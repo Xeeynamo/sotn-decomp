@@ -153,6 +153,11 @@ typedef struct {
 } Unkstruct_800ADEF0;
 
 typedef struct {
+    u16 palette;
+    u8 unk2;
+} Unkstruct_800AE180;
+
+typedef struct {
     s32 unk0;
     s32 unk4;
     s32 unk8;

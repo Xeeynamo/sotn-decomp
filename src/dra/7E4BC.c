@@ -988,9 +988,8 @@ void EntityPlayerPinkEffect(Entity* self) {
 INCLUDE_ASM("dra/nonmatchings/7E4BC", EntityPlayerDissolves);
 
 void EntityLevelUpAnimation(Entity* self) {
-    s16 sp3E;
-    u16* sp38;
     Primitive* prim;
+    Unkstruct_800AE180* unkstruct;
     s16 posX_hi, posY_hi;
     s16 temp_v0;
     s16 temp_v1_2;
@@ -999,10 +998,8 @@ void EntityLevelUpAnimation(Entity* self) {
     s32 i;
     s32 var_v0;
     s32 var_v0_2;
-    u8 temp_v1;
 
-    sp3E = ((self->params) >> 8);
-    sp38 = D_800AE180 + (sp3E * 2);
+    unkstruct = &D_800AE180[(self->params >> 8) & 0xff];
     switch (self->step) {
     case 0:
         self->primIndex = AllocPrimitives(4U, 0xE);
@@ -1010,16 +1007,15 @@ void EntityLevelUpAnimation(Entity* self) {
             return;
         }
         PlaySfx(0x687);
-        self->flags = 0x04830000;
+        self->flags = FLAG_UNK_04000000 | FLAG_UNK_800000 | FLAG_UNK_20000 |
+                      FLAG_UNK_10000;
         CreateEntFactoryFromEntity(self, 0x4A002CU, 0);
         self->posX.i.hi = PLAYER.posX.i.hi;
         self->posY.i.hi = PLAYER.posY.i.hi - 48;
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 14; i++) {
-            prim->v0 = prim->v1 = sp38[1];
-            temp_v1 = ((prim->v0) + 0x18);
-            prim->v3 = temp_v1;
-            prim->v2 = temp_v1;
+            prim->v0 = prim->v1 = unkstruct->unk2;
+            prim->v2 = prim->v3 = prim->v0 + 0x18;
             prim->u0 = ((i * 8) + 0x80);
             prim->u1 = (((i + 1) * 8) + 0x80);
             prim->u2 = (((i - 1) * 8) + 0x80);
@@ -1031,9 +1027,10 @@ void EntityLevelUpAnimation(Entity* self) {
                 prim->u1 = prim->u0;
             }
             prim->tpage = 0x1C;
-            prim->clut = *sp38;
+            prim->clut = unkstruct->palette;
             prim->priority = 0x1FE;
-            prim->drawMode = 0x35;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             prim = prim->next;
         }
         self->ext.timer.t = 0;
@@ -1062,7 +1059,7 @@ void EntityLevelUpAnimation(Entity* self) {
             self->ext.timer.t = 0x20;
             prim = &g_PrimBuf[self->primIndex];
             for (i = 0; i < 14; i++) {
-                prim->drawMode = 0;
+                prim->drawMode = DRAW_DEFAULT;
                 prim = prim->next;
             }
             self->step++;
@@ -1075,7 +1072,8 @@ void EntityLevelUpAnimation(Entity* self) {
             CreateEntFactoryFromEntity(self, 0xA0028U, 0);
             prim = &g_PrimBuf[self->primIndex];
             for (i = 0; i < 14; i++) {
-                prim->drawMode = 0x35;
+                prim->drawMode =
+                    DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
                 prim = prim->next;
             }
             self->step++;
@@ -1107,10 +1105,10 @@ void EntityLevelUpAnimation(Entity* self) {
         var_a1 = -(rsin(temp_v1_2) >> 5) * self->ext.factory.unk80 / 256;
         var_a1_2 = (rcos(temp_v1_2) >> 5) * self->ext.factory.unk82 / 256;
 
-        prim->x0 = var_v0_2 + (posX_hi + (prim->u0));
-        prim->x1 = var_a1_2 + (posX_hi + (prim->u1));
-        prim->x2 = var_v0_2 + (posX_hi + (prim->u2));
-        prim->x3 = var_a1_2 + (posX_hi + (prim->u3));
+        prim->x0 = var_v0_2 + (posX_hi + prim->u0);
+        prim->x1 = var_a1_2 + (posX_hi + prim->u1);
+        prim->x2 = var_v0_2 + (posX_hi + prim->u2);
+        prim->x3 = var_a1_2 + (posX_hi + prim->u3);
 
         prim->y0 = posY_hi + var_v0;
         prim->y1 = posY_hi + var_a1;
