@@ -1,0 +1,2 @@
+[SPU] Write: 1f801d8c ffff
+[SPU] Write: 1f801d8e 00ff

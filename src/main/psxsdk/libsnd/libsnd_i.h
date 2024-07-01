@@ -54,7 +54,6 @@ extern s32 _svm_vab_total[];
 extern s32 _svm_vab_start[];
 extern u8 _svm_vab_used[];
 
-int SsVabOpenHeadWithMode(unsigned char* pAddr, int vabId, s32 pFn, long mode);
 void SpuFree(s32);
 extern u16 _svm_vab_count;
 
@@ -84,6 +83,39 @@ extern s16 _svm_stereo_mono;
 
 void vmNoiseOn2(u8 arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4);
 
+#ifdef VERSION_PC
+struct thing {
+    s16 a, b;
+};
+
+struct struct_svm {
+    char field_0_sep_sep_no_tonecount;
+    char field_1_vabId;
+    char field_2_note;
+    char field_0x3;
+    char field_4_voll;
+    char field_0x5;
+    char field_6_program;
+    char field_7_fake_program;
+    char field_8_unknown;
+    char field_0x9;
+    char field_A_mvol;
+    char field_B_mpan;
+    char field_C_vag_idx;
+    char field_D_vol;
+    char field_E_pan;
+    char field_F_prior;
+    char field_10_centre;
+    unsigned char field_11_shift;
+    char field_12_mode;
+    char field_0x13;
+    short field_14_seq_sep_no;
+    short field_16_vag_idx;
+    short field_18_voice_idx;
+    short field_0x1a;
+    struct thing unk1c;
+};
+#else
 struct struct_svm {
     char field_0_sep_sep_no_tonecount;
     char field_1_vabId;
@@ -111,6 +143,7 @@ struct struct_svm {
     short field_18_voice_idx;
     short field_0x1a;
 };
+#endif
 
 extern struct struct_svm _svm_cur;
 
@@ -174,7 +207,11 @@ struct SeqStruct {
     s16 padaa;
 };
 
+#ifdef VERSION_PC
+extern struct SeqStruct* _ss_score[34];
+#else
 extern struct SeqStruct* _ss_score[32];
+#endif
 
 typedef struct {
     SpuVolume volume; /* volume       */
@@ -208,7 +245,7 @@ typedef struct ProgAtr { /* Program Headdings */
     unsigned char mpan;       /* program pan */
     char reserved0;           /* system reserved */
     short attr;               /* program attribute */
-    unsigned long reserved1;  // "fake" program index (skips empties)
+    u32 reserved1;            // "fake" program index (skips empties)
     unsigned short reserved2; // even vag spu ptr
     unsigned short reserved3; // odd vag spu ptr
 } ProgAtr;                    /* 16 byte */

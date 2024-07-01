@@ -40,7 +40,7 @@ extern s32 _spu_transMode;
 extern u16 _spu_tsa;
 
 u32 _spu_FsetRXXa(s32 arg0, u32 arg1);
-s32 _spu_write(u32, u32);
+s32 _spu_write(u8*, u32);
 extern s32 _spu_inTransfer;
 
 void _SpuSetVoiceAttr(SpuVoiceAttr* arg, s32, s32, s32);
