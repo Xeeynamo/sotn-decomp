@@ -49,8 +49,14 @@ $(BUILD_DIR)/weapon.ld: $(CONFIG_DIR)/splat.$(VERSION).weapon.yaml $(PSX_BASE_SY
 	touch $@
 
 extract_assets: $(SOTNASSETS)
+	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/CEN/CEN.BIN -o assets/st/cen_test
+	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/DRE/DRE.BIN -o assets/st/dre_test
+	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/NO3/NO3.BIN -o assets/st/no3_test
+	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/NP3/NP3.BIN -o assets/st/np3_test
 	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/NZ0/NZ0.BIN -o assets/st/nz0_test
+	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/ST0/ST0.BIN -o assets/st/st0_test
 	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/WRP/WRP.BIN -o assets/st/wrp_test
+	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/RWRP/RWRP.BIN -o assets/st/rwrp_test
 build_assets: $(SOTNASSETS)
 	$(SOTNASSETS) build_all -i assets/st/nz0_test -o src/st/nz0/
 	$(SOTNASSETS) build_all -i assets/st/wrp_test -o src/st/wrp/

@@ -84,7 +84,6 @@ func readEntityLayout(file *os.File, off PsxOffset, count int, isX bool) (layout
 		}
 		xMerged := mergeDataRanges(xRanges)
 		yMerged := yRanges[1]
-		fmt.Printf("%+v\n", yMerged)
 		return l, []dataRange{
 			mergeDataRanges([]dataRange{
 				{
