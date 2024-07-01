@@ -211,7 +211,6 @@ void func_ptr_80170008(Entity* self) {
                 return;
             }
             self->step++;
-            return;
         }
         break;
     case 4:
