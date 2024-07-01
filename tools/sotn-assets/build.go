@@ -138,7 +138,7 @@ func buildTiledefs(fileName string, symbol string, outputDir string) error {
 	return nil
 }
 
-func buildLayers(fileName string, outputDir string) error {
+func buildLayers(inputDir string, fileName string, outputDir string) error {
 	getHash := func(l layerUnpacked) string {
 		return fmt.Sprintf("%s-%s-%d-%d-%d-%d", l.Data, l.Tiledef, l.Left, l.Top, l.Right, l.Bottom)
 	}
@@ -175,6 +175,17 @@ func buildLayers(fileName string, outputDir string) error {
 		if layer, found := room["bg"]; found {
 			tilemaps[layer.Data] = struct{}{}
 			tiledefs[layer.Tiledef] = struct{}{}
+		}
+	}
+
+	// use unused tiledefs
+	files, err := os.ReadDir(inputDir)
+	if err != nil {
+		return err
+	}
+	for _, file := range files {
+		if !file.IsDir() && strings.HasPrefix(file.Name(), "tiledef_") && strings.HasSuffix(file.Name(), ".json") {
+			tiledefs[file.Name()] = struct{}{}
 		}
 	}
 
@@ -471,7 +482,7 @@ func buildAll(inputDir string, outputDir string) error {
 		return nil
 	})
 	eg.Go(func() error {
-		if err := buildLayers(path.Join(inputDir, "layers.json"), outputDir); err != nil {
+		if err := buildLayers(inputDir, path.Join(inputDir, "layers.json"), outputDir); err != nil {
 			if !errors.Is(err, fs.ErrNotExist) {
 				return err
 			}
