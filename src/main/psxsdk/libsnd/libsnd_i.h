@@ -54,7 +54,6 @@ extern s32 _svm_vab_total[];
 extern s32 _svm_vab_start[];
 extern u8 _svm_vab_used[];
 
-int SsVabOpenHeadWithMode(unsigned char* pAddr, int vabId, s32 pFn, long mode);
 void SpuFree(s32);
 extern u16 _svm_vab_count;
 
@@ -246,7 +245,7 @@ typedef struct ProgAtr { /* Program Headdings */
     unsigned char mpan;       /* program pan */
     char reserved0;           /* system reserved */
     short attr;               /* program attribute */
-    unsigned long reserved1;  // "fake" program index (skips empties)
+    u32 reserved1;            // "fake" program index (skips empties)
     unsigned short reserved2; // even vag spu ptr
     unsigned short reserved3; // odd vag spu ptr
 } ProgAtr;                    /* 16 byte */
