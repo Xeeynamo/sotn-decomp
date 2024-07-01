@@ -347,7 +347,7 @@ void _spu_r_(s32 arg0, u16 arg1, s32 arg2) {
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libspu/spu", _spu_t);
 
-s32 _spu_write(u32 arg0, u32 arg1) {
+s32 _spu_write(u8* arg0, u32 arg1) {
 
     if (_spu_transMode != 0) {
         _spu_writeByIO(arg0, arg1);
