@@ -343,7 +343,7 @@ func main() {
 		case "rooms":
 			err = buildRooms(file, outputDir)
 		case "layers":
-			err = buildLayers(file, outputDir)
+			err = buildLayers(path.Base(file), file, outputDir)
 		case "sprites":
 			err = buildSprites(file, outputDir)
 		default:
