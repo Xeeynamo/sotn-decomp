@@ -211,6 +211,27 @@ typedef struct {
 } ET_Weapon;
 
 typedef struct {
+    s16 angle;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    s32 unk84;
+    s16 xPos;
+    s16 unk8A;
+    struct Entity* parent;
+    s32 unk90;
+    s32 unk94;
+    s32 unk98;
+    s32 accelerationX;
+    s32 accelerationY;
+    s32 unkA4;
+    s32 unkA8;
+    u8 anim;
+    u8 unkAD;
+    s16 equipId;
+} ET_HeavenSword;
+
+typedef struct {
     /* 0x7C */ u8 unk7C;
     /* 0x7D */ u8 unk7D;
     /* 0x7E */ s16 unk7E;
@@ -1136,6 +1157,7 @@ typedef union { // offset=0x7C
     ET_MessageBox messageBox;
     ET_Weapon weapon;
     ET_Shield shield;
+    ET_HeavenSword heavenSword;
     ET_MedusaShieldLaser medshieldlaser;
     ET_ShamanShieldStar shamanshieldstar;
     ET_Food food;
