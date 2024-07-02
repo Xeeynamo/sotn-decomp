@@ -1,29 +1,24 @@
 #include "rwrp.h"
 
-extern RoomHeader g_Rooms[];
+extern RoomHeader OVL_EXPORT(rooms)[];
 extern signed short* spriteBanks[];
 extern void* Cluts[];
-extern MyRoomDef rooms[];
+extern MyRoomDef rooms_layers[];
 extern GfxBank* g_GfxBanks[];
 void UpdateStageEntities();
 
-static Overlay StageOverlay = {
+static Overlay OVL_EXPORT(Overlay) = {
     .Update = Update,
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
-    .rooms = g_Rooms,
+    .rooms = OVL_EXPORT(rooms),
     .spriteBanks = spriteBanks,
     .cluts = Cluts,
     .objLayoutHorizontal = NULL,
-    .tileLayers = rooms,
+    .tileLayers = rooms_layers,
     .gfxBanks = g_GfxBanks,
     .UpdateStageEntities = UpdateStageEntities,
-    .unk2c = NULL,
-    .unk30 = NULL,
-    .unk34 = NULL,
-    .unk38 = NULL,
-    .StageEndCutScene = NULL,
 };
 
 #include "sprite_banks.h"

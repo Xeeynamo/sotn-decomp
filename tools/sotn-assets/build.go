@@ -63,6 +63,7 @@ func buildGenericU16(fileName string, symbol string, outputDir string) error {
 }
 
 func buildRooms(fileName string, outputDir string) error {
+	ovlName := path.Base(outputDir)
 	data, err := os.ReadFile(fileName)
 	if err != nil {
 		return err
@@ -75,7 +76,7 @@ func buildRooms(fileName string, outputDir string) error {
 
 	content := strings.Builder{}
 	content.WriteString("// clang-format off\n")
-	content.WriteString("unsigned char g_Rooms[] = {\n")
+	content.WriteString(fmt.Sprintf("unsigned char %s_rooms[] = {\n", strings.ToUpper(ovlName)))
 	for _, room := range rooms {
 		s := fmt.Sprintf("    %d, %d, %d, %d, %d, %d, %d, %d,\n",
 			room.Left, room.Top, room.Right, room.Bottom,
@@ -265,7 +266,7 @@ func buildLayers(inputDir string, fileName string, outputDir string) error {
 	}
 	sb.WriteString("};\n")
 
-	sb.WriteString("static MyRoomDef rooms[] = {\n")
+	sb.WriteString("static MyRoomDef rooms_layers[] = {\n")
 	for _, rl := range roomsLayers {
 		if l, found := rl["fg"]; found {
 			sb.WriteString(fmt.Sprintf("    { &layers[%d], ", pool[getHash(*l)]))

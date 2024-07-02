@@ -1,10 +1,10 @@
-#include <stage.h>
+#include "nz0.h"
 
 extern signed short* spriteBanks[];
 extern void* g_Cluts[];
 extern void* g_EntityGfxs[];
-extern MyRoomDef rooms[];
-extern unsigned char g_Rooms[];
+extern MyRoomDef rooms_layers[];
+extern RoomHeader OVL_EXPORT(rooms)[];
 
 void Update();
 void HitDetection();
@@ -12,18 +12,18 @@ void UpdateRoomPosition();
 void InitRoomEntities();
 void UpdateStageEntities();
 
-u_long* NZ0_Header[] = {
-    Update,
-    HitDetection,
-    UpdateRoomPosition,
-    InitRoomEntities,
-    g_Rooms,
-    spriteBanks,
-    g_Cluts,
-    g_pStObjLayoutHorizontal,
-    rooms,
-    g_EntityGfxs,
-    UpdateStageEntities,
+AbbreviatedOverlay OVL_EXPORT(Overlay) = {
+    .Update = Update,
+    .HitDetection = HitDetection,
+    .UpdateRoomPosition = UpdateRoomPosition,
+    .InitRoomEntities = InitRoomEntities,
+    .rooms = OVL_EXPORT(rooms),
+    .spriteBanks = spriteBanks,
+    .cluts = g_Cluts,
+    .objLayoutHorizontal = g_pStObjLayoutHorizontal,
+    .tileLayers = rooms_layers,
+    .gfxBanks = g_EntityGfxs,
+    .UpdateStageEntities = UpdateStageEntities,
 };
 
 #include "sprite_banks.h"

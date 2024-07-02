@@ -1,29 +1,25 @@
 #include "st0.h"
 
-extern RoomHeader g_Rooms[];
+extern RoomHeader OVL_EXPORT(rooms)[];
 extern signed short* spriteBanks[];
 extern void* Cluts[];
-extern MyRoomDef rooms[];
+extern MyRoomDef rooms_layers[];
 extern GfxBank* g_EntityGfxs[];
 void UpdateStageEntities();
 void PrologueScroll();
 
-static Overlay StageOverlay = {
+static Overlay OVL_EXPORT(Overlay) = {
     .Update = Update,
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
-    .rooms = g_Rooms,
+    .rooms = OVL_EXPORT(rooms),
     .spriteBanks = spriteBanks,
     .cluts = Cluts,
     .objLayoutHorizontal = g_pStObjLayoutHorizontal,
-    .tileLayers = rooms,
+    .tileLayers = rooms_layers,
     .gfxBanks = g_EntityGfxs,
     .UpdateStageEntities = UpdateStageEntities,
-    .unk2c = NULL,
-    .unk30 = NULL,
-    .unk34 = NULL,
-    .unk38 = NULL,
     .StageEndCutScene = PrologueScroll,
 };
 

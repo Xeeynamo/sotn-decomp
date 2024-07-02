@@ -1,5 +1,7 @@
 #include "stage.h"
 
+#define OVL_EXPORT(x) NZ0_##x
+
 #define CASTLE_FLAG_BANK 0x7E
 
 typedef enum {
