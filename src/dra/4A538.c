@@ -1806,7 +1806,7 @@ void RenderPrimitives(void) {
     #define RECT_LOC 0x128
     #endif
     RECT* rect = (RECT*)SP(RECT_LOC);
-    PrimitivesRenderer* r = (PrimitivesRenderer*)SP(0x000); //a0
+    PrimitivesRenderer* r = (PrimitivesRenderer*)SP(0x000);
     PrimBuf* primbuf = (PrimBuf*)SP(0x024);
     
     s32 var_s1;
