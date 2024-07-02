@@ -1797,6 +1797,9 @@ typedef struct {
 #endif
 
 void RenderPrimitives(void) {
+#ifdef VERSION_PC
+    u8 sp[SP_LEN];
+#endif
 #ifdef VERSION_PSP
 #define RECT_LOC 0x12C
 #endif
