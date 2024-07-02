@@ -121,9 +121,9 @@ void EntityWeaponAttack(Entity* self) {
         }
         return;
     case 2:
-        self->hitboxWidth = 0xC;
-        self->hitboxHeight = 0xC;
-        self->drawFlags |= 4;
+        self->hitboxWidth = 12;
+        self->hitboxHeight = 12;
+        self->drawFlags |= DRAW_COLORS;
         self->rotZ -= 0x80;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
