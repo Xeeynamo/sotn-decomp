@@ -11,35 +11,6 @@ void UpdateRoomPosition(void);
 void UpdateStageEntities(void);
 static void MyInitRoomEntities(s32 objLayoutId);
 
-// TODO populate from assets/st/wrp/D_80186D88.animset.json
-static SpriteParts* D_80186D88[] = {NULL, NULL, NULL, NULL};
-static u_long* sprite_banks[] = {
-    /* 0x040 */ 0x00000000,
-    /* 0x044 */ D_80186D88,
-    /* 0x048 */ 0x00000000,
-    /* 0x04C */ 0x00000000,
-    /* 0x050 */ 0x00000000,
-    /* 0x054 */ 0x00000000,
-    /* 0x058 */ 0x00000000,
-    /* 0x05C */ 0x00000000,
-    /* 0x060 */ 0x00000000,
-    /* 0x064 */ 0x00000000,
-    /* 0x068 */ 0x00000000,
-    /* 0x06C */ 0x00000000,
-    /* 0x070 */ 0x00000000,
-    /* 0x074 */ 0x00000000,
-    /* 0x078 */ 0x00000000,
-    /* 0x07C */ 0x00000000,
-    /* 0x080 */ 0x00000000,
-    /* 0x084 */ 0x00000000,
-    /* 0x088 */ 0x00000000,
-    /* 0x08C */ 0x00000000,
-    /* 0x090 */ 0x00000000,
-    /* 0x094 */ 0x00000000,
-    /* 0x098 */ 0x00000000,
-    /* 0x09C */ 0x00000000,
-};
-
 u32 D_80181420[2048];
 u32 D_80181764[2048];
 
@@ -55,17 +26,19 @@ static void* clut_anims[] = {
 };
 
 extern void* WRP_g_EntityGfxs[];
-
+extern RoomHeader g_Rooms[];           // TODO OVL_EXPORT
+#include "../../st/wrp/sprite_banks.h" // TODO OVL_EXPORT
+#include "../../st/wrp/layers.h"       // TODO OVL_EXPORT
 static Overlay g_StageDesc = {
     Update,
     HitDetection,
     UpdateRoomPosition,
     MyInitRoomEntities,
-    NULL, // set in InitStageWrp
-    sprite_banks,
+    g_Rooms,
+    spriteBanks,
     clut_anims,
     NULL,
-    NULL, // set in InitStageWrp
+    rooms,
     WRP_g_EntityGfxs,
     UpdateStageEntities,
     NULL,
@@ -74,22 +47,6 @@ static Overlay g_StageDesc = {
     NULL,
     NULL,
 };
-
-LayoutEntity* D_80181228;
-LayoutEntity* D_80181250;
-LayoutEntity* D_801812A0;
-LayoutEntity* D_801812C8;
-LayoutEntity* D_80181278;
-LayoutEntity* D_801812F0;
-LayoutEntity* D_80181304;
-
-LayoutEntity* D_80181324;
-LayoutEntity* D_8018134C;
-LayoutEntity* D_80181374;
-LayoutEntity* D_8018139C;
-LayoutEntity* D_801813C4;
-LayoutEntity* D_801813EC;
-LayoutEntity* D_80181400;
 
 void InitStageWrp(Overlay* o) {
     LoadReset();
@@ -121,136 +78,8 @@ void InitStageWrp(Overlay* o) {
         fclose(f);
     }
 
-    D_80181228 = LoadObjLayout("assets/st/wrp/D_80181228.layoutobj.json");
-    D_80181250 = LoadObjLayout("assets/st/wrp/D_80181250.layoutobj.json");
-    D_801812A0 = LoadObjLayout("assets/st/wrp/D_801812A0.layoutobj.json");
-    D_801812C8 = LoadObjLayout("assets/st/wrp/D_801812C8.layoutobj.json");
-    D_80181278 = LoadObjLayout("assets/st/wrp/D_80181278.layoutobj.json");
-    D_801812F0 = LoadObjLayout("assets/st/wrp/D_801812F0.layoutobj.json");
-    D_80181304 = LoadObjLayout("assets/st/wrp/D_80181304.layoutobj.json");
+    //
 
-    D_80181324 = LoadObjLayout("assets/st/wrp/D_80181324.layoutobj.json");
-    D_8018134C = LoadObjLayout("assets/st/wrp/D_8018134C.layoutobj.json");
-    D_80181374 = LoadObjLayout("assets/st/wrp/D_80181374.layoutobj.json");
-    D_8018139C = LoadObjLayout("assets/st/wrp/D_8018139C.layoutobj.json");
-    D_801813C4 = LoadObjLayout("assets/st/wrp/D_801813C4.layoutobj.json");
-    D_801813EC = LoadObjLayout("assets/st/wrp/D_801813EC.layoutobj.json");
-    D_80181400 = LoadObjLayout("assets/st/wrp/D_80181400.layoutobj.json");
-
-    int layoutId = 0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_80181228;
-    g_pStObjLayoutHorizontal[layoutId++] = D_80181250;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812A0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812C8;
-    g_pStObjLayoutHorizontal[layoutId++] = D_80181278;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_801812F0;
-    g_pStObjLayoutHorizontal[layoutId++] = D_80181304;
-    g_pStObjLayoutHorizontal[layoutId++] = D_80181304;
-    g_pStObjLayoutHorizontal[layoutId++] = D_80181304;
-    g_pStObjLayoutHorizontal[layoutId++] = D_80181304;
-    g_pStObjLayoutHorizontal[layoutId++] = D_80181304;
-
-    layoutId = 0;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_80181324;
-    g_pStObjLayoutVertical[layoutId++] = D_8018134C;
-    g_pStObjLayoutVertical[layoutId++] = D_8018139C;
-    g_pStObjLayoutVertical[layoutId++] = D_801813C4;
-    g_pStObjLayoutVertical[layoutId++] = D_80181374;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_801813EC;
-    g_pStObjLayoutVertical[layoutId++] = D_80181400;
-    g_pStObjLayoutVertical[layoutId++] = D_80181400;
-    g_pStObjLayoutVertical[layoutId++] = D_80181400;
-    g_pStObjLayoutVertical[layoutId++] = D_80181400;
-    g_pStObjLayoutVertical[layoutId++] = D_80181400;
-
-    sprite_banks[1] = LoadSpriteParts("assets/st/wrp/D_80186D88.animset.json");
-
-    g_StageDesc.tileLayers = LoadRoomsLayers("assets/st/wrp/rooms.layers.json");
-    g_StageDesc.rooms = LoadRoomDefs("assets/st/wrp/g_Rooms.roomdef.json");
     memcpy(o, &g_StageDesc, sizeof(Overlay));
 }
 

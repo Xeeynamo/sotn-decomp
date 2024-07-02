@@ -402,7 +402,6 @@ extern u8 D_80181538[];
 
 // for func_801C4198
 extern u16 D_80180C6A;
-extern s16* D_801A79E4[];
 
 // for EntityMagicallySealedDoor
 extern u8 g_eBlueDoorUV[3][8];

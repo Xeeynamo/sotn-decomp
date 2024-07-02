@@ -1,0 +1,8 @@
+rooms.c
+sprites.c
+e_laydef.c
+e_layout.c
+layers.h
+sprite_banks.h
+tilemap_*.h
+tiledef_*.h
