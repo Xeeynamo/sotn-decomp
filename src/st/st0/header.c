@@ -1,9 +1,9 @@
 #include "st0.h"
 
 extern RoomHeader g_Rooms[];
-extern SpriteParts** SpriteBanks[];
+extern signed short* spriteBanks[];
 extern void* Cluts[];
-extern RoomDef g_TileLayers[];
+extern MyRoomDef rooms[];
 extern GfxBank* g_EntityGfxs[];
 void UpdateStageEntities();
 void PrologueScroll();
@@ -14,10 +14,10 @@ static Overlay StageOverlay = {
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = g_Rooms,
-    .spriteBanks = SpriteBanks,
+    .spriteBanks = spriteBanks,
     .cluts = Cluts,
     .objLayoutHorizontal = g_pStObjLayoutHorizontal,
-    .tileLayers = g_TileLayers,
+    .tileLayers = rooms,
     .gfxBanks = g_EntityGfxs,
     .UpdateStageEntities = UpdateStageEntities,
     .unk2c = NULL,
@@ -27,20 +27,7 @@ static Overlay StageOverlay = {
     .StageEndCutScene = PrologueScroll,
 };
 
-extern SpriteParts* D_801A26E0[];
-extern SpriteParts* D_801A4298[];
-extern SpriteParts* D_801A6A68[];
-extern SpriteParts* D_801A6F90[];
-extern SpriteParts* D_801A7430[];
-extern SpriteParts* D_801A7728[];
-extern SpriteParts* D_801A77CC[];
-
-static SpriteParts** SpriteBanks[] = {
-    NULL,       D_801A26E0, D_801A4298, D_801A6A68, D_801A6F90, D_801A7430,
-    D_801A7728, D_801A77CC, NULL,       NULL,       NULL,       NULL,
-    NULL,       NULL,       NULL,       NULL,       NULL,       NULL,
-    NULL,       NULL,       NULL,       NULL,       NULL,       NULL,
-};
+#include "sprite_banks.h"
 
 extern u16* D_8019A750[0x70];
 extern u16* D_8019AD30[0x20];
@@ -64,3 +51,5 @@ static u16** Clut[] = {
 static void* Cluts[] = {
     Clut,
 };
+
+#include "layers.h"
