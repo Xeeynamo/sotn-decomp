@@ -192,7 +192,6 @@ EntityTransparentWhiteCircle = 0x8011FD58;
 EntityPlayerDissolves = 0x80120A7C;
 func_80121F58 = 0x80121C04;
 EntityMist = 0x80121FC8;
-EntitySubwpnThrownDagger = 0x80124814;
 EntityStopWatch = 0x8012A528;
 EntityBatEcho = 0x8012BB84;
 func_8012CB0C = 0x8012C798;
