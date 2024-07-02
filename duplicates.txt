@@ -1448,7 +1448,7 @@
 | 1.00 | true     | func_801C9AF8                       | ../../asm/us/st/no3/nonmatchings/48A84/func_801C9AF8.s 
 | 1.00 | true     | func_801C1368                       | ../../asm/us/st/np3/nonmatchings/402F4/func_801C1368.s 
 | 1.00 | true     | func_801C1780                       | ../../asm/us/st/nz0/nonmatchings/4070C/func_801C1780.s 
-| 1.00 | false    | func_80192414                       | ../../asm/us/st/rwrp/nonmatchings/113A0/func_80192414.s 
+| 1.00 | true     | func_80192414                       | ../../asm/us/st/rwrp/nonmatchings/113A0/func_80192414.s 
 | 1.00 | true     | func_801B8B80                       | ../../asm/us/st/st0/nonmatchings/36358/func_801B8B80.s 
 | 1.00 | true     | func_80190494                       | ../../asm/us/st/wrp/nonmatchings/e_misc/func_80190494.s 
 -------------------------------------------------------------------------------

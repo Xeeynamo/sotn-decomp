@@ -12,7 +12,7 @@
 <!-- rwrp.func_80192414 -->
 <g id="node1" class="node">
 <title>rwrp.func_80192414</title>
-<ellipse fill="red" stroke="black" cx="107.24" cy="-198" rx="107.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="107.24" cy="-198" rx="107.48" ry="18"/>
 <text text-anchor="middle" x="107.24" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.func_80192414</text>
 </g>
 <!-- rwrp.DestroyEntity -->
