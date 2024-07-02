@@ -1,5 +1,11 @@
 // Weapon ID #13. Used by weapons:
 // Heaven sword, Unknown#202
+// #202 seems to be the special attack with two heaven swords.
+// Not clear how that actually works inside this file.
+
+// Big TODO: Figure out what's going on with the extensions for
+// the entities. They interact weirdly and seem to not line up.
+
 #include "weapon_private.h"
 #include "shared.h"
 
@@ -55,7 +61,148 @@ s32 func_5F000_8017A9CC(Primitive* prim, s32 x, s32 y) {
     return 0;
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_013", EntityWeaponAttack);
+void EntityWeaponAttack(Entity* self) {
+    Entity* unused;
+    s16 var_s1;
+
+    s16 xVar;
+    s16 yVar;
+    s16 var_s2;
+    s16 angleDiff;
+    s16 angle;
+
+    switch (self->step) {
+    case 0:
+        SetSpriteBank1(D_5F000_8017A040);
+        self->animSet = ANIMSET_OVL(0x10);
+        self->unk5A = 0x64;
+        self->palette = 0x110;
+        if (g_HandId != 0) {
+            self->animSet += 2;
+            self->palette = 0x128;
+            self->unk5A = 0x66;
+        }
+        self->animCurFrame = 6;
+        self->facingLeft = PLAYER.facingLeft;
+        self->zPriority = PLAYER.zPriority - 2;
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_20000;
+        SetSpeedX(FIX(6));
+        self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY - 8;
+        if (PLAYER.step != Player_Crouch) {
+            self->posY.i.hi -= 8;
+        }
+        if (self->facingLeft) {
+            self->posX.i.hi = PLAYER.posX.i.hi - PLAYER.hitboxOffX;
+        } else {
+            self->posX.i.hi = PLAYER.posX.i.hi + PLAYER.hitboxOffX;
+        }
+        self->velocityX += PLAYER.velocityX;
+        self->ext.timer.t = 0x16;
+        SetWeaponProperties(self, 0);
+        DestroyEntityWeapon(1);
+        self->hitboxWidth = 0x12;
+        self->hitboxHeight = 4;
+        g_api.PlaySfx(0x60C);
+        self->ext.heavenSword.unk98 = 0x50;
+        g_Player.D_80072F00[10] = 4;
+        self->step++;
+        return;
+    case 1:
+        self->posX.val += self->velocityX;
+        self->ext.timer.t--;
+        if (self->ext.timer.t < 7) {
+            DecelerateX(FIX(1));
+        }
+        if (self->ext.timer.t == 0) {
+            self->velocityY = FIX(-1.5);
+            self->ext.timer.t = 0x18;
+            SetSpeedX(FIX(-3));
+            self->step++;
+        }
+        return;
+    case 2:
+        self->hitboxWidth = 12;
+        self->hitboxHeight = 12;
+        self->drawFlags |= DRAW_COLORS;
+        self->rotZ -= 0x80;
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->velocityY += FIX(1.0 / 16);
+        if (--self->ext.timer.t == 0) {
+            self->ext.heavenSword.unk84 = 0x80;
+            self->ext.heavenSword.unk82 =
+                ratan2(-self->velocityY, self->velocityX) & 0xFFF;
+            self->step++;
+        }
+        if (!(g_GameTimer & 1)) {
+            unused = g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xC) + 0x3A, 0);
+        }
+        var_s2 = D_5F000_8017A5E0[(self->ext.heavenSword.unk7E >> 1) % 14];
+        self->ext.weapon.childPalette = self->palette + var_s2;
+        if (!(g_GameTimer & 7)) {
+            g_api.func_80134714(0x60A, self->ext.heavenSword.unk98, 0);
+            self->ext.heavenSword.unk98 -= 4;
+            if (self->ext.heavenSword.unk98 < 0) {
+                self->ext.heavenSword.unk98 = 0;
+            }
+        }
+        self->ext.heavenSword.unk7E++;
+        return;
+    case 3:
+        self->rotZ -= 0x80;
+        var_s1 = self->ext.heavenSword.unk84;
+        self->ext.heavenSword.unk84 += 0x20;
+        xVar = abs((PLAYER.posX.i.hi + PLAYER.hitboxOffX) - self->posX.i.hi);
+        if (xVar < ((PLAYER.hitboxWidth + self->hitboxWidth) / 2)) {
+            yVar =
+                abs((PLAYER.posY.i.hi + PLAYER.hitboxOffY) - self->posY.i.hi);
+            if (yVar < ((PLAYER.hitboxHeight + self->hitboxHeight) / 2)) {
+                DestroyEntity(self);
+                return;
+            }
+        }
+        xVar = (PLAYER.posX.i.hi + PLAYER.hitboxOffX) - self->posX.i.hi;
+        yVar = (PLAYER.posY.i.hi + PLAYER.hitboxOffY) - self->posY.i.hi;
+        var_s2 = ratan2(-yVar, xVar) & 0xFFF;
+        angle = self->ext.heavenSword.unk82 & 0xFFF;
+        angleDiff = abs(angle - var_s2);
+        if (var_s1 > angleDiff) {
+            var_s1 = angleDiff;
+        }
+        if (angle < var_s2) {
+            if (angleDiff < 0x800) {
+                angle += var_s1;
+            } else {
+                angle -= var_s1;
+            }
+        } else {
+            if (angleDiff < 0x800) {
+                angle -= var_s1;
+            } else {
+                angle += var_s1;
+            }
+        }
+        self->ext.heavenSword.unk82 = angle & 0xFFF;
+        self->posX.val += rcos(self->ext.heavenSword.unk82) << 6;
+        self->posY.val -= rsin(self->ext.heavenSword.unk82) << 6;
+        if (!(g_GameTimer & 1)) {
+            unused = g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xC) + 0x3A, 0);
+        }
+        var_s2 = D_5F000_8017A5E0[(self->ext.heavenSword.unk7E >> 1) % 14];
+        self->ext.weapon.childPalette = self->palette + var_s2;
+        self->ext.heavenSword.unk7E++;
+        if (!(g_GameTimer & 7)) {
+            g_api.func_80134714(0x60A, self->ext.heavenSword.unk98, 0);
+            self->ext.heavenSword.unk98 -= 4;
+            if (self->ext.heavenSword.unk98 < 0) {
+                self->ext.heavenSword.unk98 = 0;
+            }
+        }
+        break;
+    }
+}
 
 s32 func_ptr_80170004(Entity* self) {
     if (self->step == 0) {
@@ -117,7 +264,7 @@ void func_ptr_80170008(Entity* self) {
         self->ext.heavenSword.unk90 = self->posX.i.hi << 0x10;
         self->ext.heavenSword.unk94 = self->posY.i.hi << 0x10;
         self->ext.heavenSword.angle = -0x200;
-        self->ext.heavenSword.unk84 = 0x100;
+        self->ext.heavenSword2.unk84 = 0x100;
 
         if (self->facingLeft) {
             self->ext.heavenSword.xPos = self->posX.i.hi - 0x78;
@@ -136,15 +283,15 @@ void func_ptr_80170008(Entity* self) {
         self->rotZ += 0x100;
         angle = self->ext.heavenSword.angle;
         self->ext.heavenSword.angle += -0x20;
-        self->ext.heavenSword.unk84 += 0x10;
+        self->ext.heavenSword2.unk84 += 0x10;
         if (self->facingLeft) {
-            self->posX.val = (rcos(angle) * -self->ext.heavenSword.unk84) +
+            self->posX.val = (rcos(angle) * -self->ext.heavenSword2.unk84) +
                              self->ext.heavenSword.unk90;
         } else {
-            self->posX.val = (rcos(angle) * self->ext.heavenSword.unk84) +
+            self->posX.val = (rcos(angle) * self->ext.heavenSword2.unk84) +
                              self->ext.heavenSword.unk90;
         }
-        self->posY.val = (-self->ext.heavenSword.unk84 * rsin(angle)) +
+        self->posY.val = (-self->ext.heavenSword2.unk84 * rsin(angle)) +
                          self->ext.heavenSword.unk94;
         if (!(g_GameTimer & 1) && (self->ext.heavenSword.angle < -0x400)) {
             // what the hell
