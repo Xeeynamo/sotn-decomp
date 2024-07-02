@@ -3,6 +3,9 @@
 // #202 seems to be the special attack with two heaven swords.
 // Not clear how that actually works inside this file.
 
+// Big TODO: Figure out what's going on with the extensions for
+// the entities. They interact weirdly and seem to not line up.
+
 #include "weapon_private.h"
 #include "shared.h"
 
