@@ -403,13 +403,10 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 				if toSort[i].Y > toSort[j].Y {
 					return false
 				}
-				if toSort[i].SpawnID < toSort[j].SpawnID {
-					return true
+				if toSort[i].YOrder != nil && toSort[j].YOrder != nil {
+					return *toSort[i].YOrder < *toSort[j].YOrder
 				}
-				if toSort[i].SpawnID > toSort[j].SpawnID {
-					return false
-				}
-				return int8(toSort[i].Slot) < int8(toSort[j].Slot)
+				return i < j
 			}
 		}
 		sorting := make([][]layoutEntry, len(banks))
