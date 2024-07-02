@@ -467,18 +467,6 @@ $(BUILD_DIR)/%.c.o: %.c $(MASPSX_APP) $(CC1PSX)
 	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 
 # Handles assets
-$(BUILD_DIR)/$(ASSETS_DIR)/%.layoutobj.json.o: $(ASSETS_DIR)/%.layoutobj.json
-	./tools/splat_ext/layoutobj.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
-	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
-$(BUILD_DIR)/$(ASSETS_DIR)/%.roomdef.json.o: $(ASSETS_DIR)/%.roomdef.json
-	./tools/splat_ext/roomdef.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
-	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
-$(BUILD_DIR)/$(ASSETS_DIR)/%.layers.json.o: $(ASSETS_DIR)/%.layers.json
-	./tools/splat_ext/layers.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
-	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
-$(BUILD_DIR)/$(ASSETS_DIR)/%.tiledef.json.o: $(ASSETS_DIR)/%.tiledef.json
-	./tools/splat_ext/tiledef.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
-	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/%.spritesheet.json.o: $(ASSETS_DIR)/%.spritesheet.json
 	./tools/splat_ext/spritesheet.py encode $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
@@ -488,8 +476,6 @@ $(BUILD_DIR)/$(ASSETS_DIR)/%.animset.json.o: $(ASSETS_DIR)/%.animset.json
 $(BUILD_DIR)/$(ASSETS_DIR)/%.json.o: $(ASSETS_DIR)/%.json
 	./tools/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
-$(BUILD_DIR)/$(ASSETS_DIR)/%.tilelayout.bin.o: $(ASSETS_DIR)/%.tilelayout.bin
-	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(ASSETS_DIR)/$*.tilelayout.bin
 $(BUILD_DIR)/$(ASSETS_DIR)/%.bin.o: $(ASSETS_DIR)/%.bin
 	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
 $(BUILD_DIR)/$(ASSETS_DIR)/%.dec.o: $(ASSETS_DIR)/%.dec
