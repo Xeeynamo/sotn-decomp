@@ -287,7 +287,13 @@ func buildSpriteGroup(sb *strings.Builder, sprites [][]sprite, mainSymbol string
 	for _, spriteGroup := range sprites {
 		if len(spriteGroup) > 0 {
 			symbol := fmt.Sprintf("spriteGroup_%08X", r.Int31())
-			sb.WriteString(fmt.Sprintf("static signed short %s[];\n", symbol))
+			size := len(spriteGroup)*11 + 1
+			if (len(spriteGroup) & 1) == 1 { // perform alignment at the end
+				size += 2
+			} else {
+				size += 1
+			}
+			sb.WriteString(fmt.Sprintf("static signed short %s[%d];\n", symbol, size))
 			symbols = append(symbols, symbol)
 		} else {
 			symbols = append(symbols, "")
