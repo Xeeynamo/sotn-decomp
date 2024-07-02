@@ -61,6 +61,7 @@ build_assets: $(SOTNASSETS)
 	$(SOTNASSETS) build_all -i assets/st/cen_test -o src/st/cen/
 	$(SOTNASSETS) build_all -i assets/st/dre_test -o src/st/dre/
 	$(SOTNASSETS) build_all -i assets/st/no3_test -o src/st/no3/
+	$(SOTNASSETS) build_all -i assets/st/np3_test -o src/st/np3/
 	$(SOTNASSETS) build_all -i assets/st/nz0_test -o src/st/nz0/
 	$(SOTNASSETS) build_all -i assets/st/wrp_test -o src/st/wrp/
 
