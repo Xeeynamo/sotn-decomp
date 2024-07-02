@@ -8,8 +8,8 @@ import (
 )
 
 type layoutEntry struct {
-	X       uint16 `json:"x"`
-	Y       uint16 `json:"y"`
+	X       int16  `json:"x"`
+	Y       int16  `json:"y"`
 	ID      uint8  `json:"id"`
 	Flags   uint8  `json:"flags"` // TODO properly de-serialize this
 	Slot    uint8  `json:"slot"`
@@ -29,8 +29,8 @@ func readEntityLayoutEntry(file *os.File) (layoutEntry, error) {
 		return layoutEntry{}, err
 	}
 	return layoutEntry{
-		X:       binary.LittleEndian.Uint16(bs[0:2]),
-		Y:       binary.LittleEndian.Uint16(bs[2:4]),
+		X:       int16(binary.LittleEndian.Uint16(bs[0:2])),
+		Y:       int16(binary.LittleEndian.Uint16(bs[2:4])),
 		ID:      bs[4],
 		Flags:   bs[5],
 		Slot:    bs[6],
@@ -99,24 +99,24 @@ func readEntityLayout(file *os.File, off PsxOffset, count int, isX bool) (layout
 			if err != nil {
 				return layouts{}, nil, err
 			}
-			if entry.X == 0xFFFF && entry.Y == 0xFFFF {
+			if entry.X == -1 && entry.Y == -1 {
+				entries = append(entries, entry)
 				break
 			}
 			entries = append(entries, entry)
 		}
 
 		// sanity check on the first entry
-		if entries[0].X != 0xFFFE || entries[0].Y != 0xFFFE {
+		if entries[0].X != -2 || entries[0].Y != -2 {
 			err := fmt.Errorf("first layout entry does not mark the beginning of the array: %v", entries[0])
 			return layouts{}, nil, err
 		}
-		entries = entries[1:] // both first and last items are terminators, ignore them
 
 		pool[blockOffset] = len(blocks)
 		blocks = append(blocks, entries)
 		xRanges = append(xRanges, dataRange{
 			begin: blockOffset,
-			end:   blockOffset.sum((len(entries) + 2) * 10),
+			end:   blockOffset.sum(len(entries) * 10),
 		})
 	}
 	// the very last entry needs to be aligned by 4
