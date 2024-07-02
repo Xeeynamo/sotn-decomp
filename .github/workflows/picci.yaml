@@ -124,7 +124,7 @@ jobs:
         go-version: '^1.22.4'
     - name: Build assets
       run: |
-        cd tools/sotn-assets; go install
+        cd tools/sotn-assets; go install; cd -
         make -j build_assets SOTNASSETS=$(where sotn-assets)
     - name: Build
       run: |
