@@ -64,6 +64,7 @@ build_assets: $(SOTNASSETS)
 	$(SOTNASSETS) build_all -i assets/st/np3_test -o src/st/np3/
 	$(SOTNASSETS) build_all -i assets/st/nz0_test -o src/st/nz0/
 	$(SOTNASSETS) build_all -i assets/st/wrp_test -o src/st/wrp/
+	$(SOTNASSETS) build_all -i assets/st/rwrp_test -o src/st/rwrp/
 
 $(BUILD_DIR)/assets/dra/memcard_%.png.o: assets/dra/memcard_%.png
 	mkdir -p $(dir $@)
