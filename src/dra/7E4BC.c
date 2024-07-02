@@ -987,8 +987,142 @@ void EntityPlayerPinkEffect(Entity* self) {
 // player dissolves into pixels
 INCLUDE_ASM("dra/nonmatchings/7E4BC", EntityPlayerDissolves);
 
-// level up animation
-INCLUDE_ASM("dra/nonmatchings/7E4BC", EntityLevelUpAnimation);
+void EntityLevelUpAnimation(Entity* self) {
+    Primitive* prim;
+    Unkstruct_800AE180* unkstruct;
+    s16 posX_hi, posY_hi;
+    s16 temp_v0;
+    s16 temp_v1_2;
+    s32 var_a1;
+    s32 var_a1_2;
+    s32 i;
+    s32 var_v0;
+    s32 var_v0_2;
+
+    unkstruct = &D_800AE180[(self->params >> 8) & 0xff];
+    switch (self->step) {
+    case 0:
+        self->primIndex = AllocPrimitives(4U, 0xE);
+        if (self->primIndex == -1) {
+            return;
+        }
+        PlaySfx(0x687);
+        self->flags = FLAG_UNK_04000000 | FLAG_UNK_800000 | FLAG_UNK_20000 |
+                      FLAG_UNK_10000;
+        CreateEntFactoryFromEntity(self, 0x4A002CU, 0);
+        self->posX.i.hi = PLAYER.posX.i.hi;
+        self->posY.i.hi = PLAYER.posY.i.hi - 48;
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 14; i++) {
+            prim->v0 = prim->v1 = unkstruct->unk2;
+            prim->v2 = prim->v3 = prim->v0 + 0x18;
+            prim->u0 = ((i * 8) + 0x80);
+            prim->u1 = (((i + 1) * 8) + 0x80);
+            prim->u2 = (((i - 1) * 8) + 0x80);
+            prim->u3 = ((i * 8) + 0x80);
+            if (i == 0) {
+                prim->u2 = 0x80;
+            }
+            if (i == 0xD) {
+                prim->u1 = prim->u0;
+            }
+            prim->tpage = 0x1C;
+            prim->clut = unkstruct->palette;
+            prim->priority = 0x1FE;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+            prim = prim->next;
+        }
+        self->ext.timer.t = 0;
+        self->ext.factory.unk80 = 0x100;
+        self->ext.factory.unk82 = 0x100;
+        self->ext.factory.unk7E = 0;
+        self->ext.factory.unk84 = 0x40;
+        self->step++;
+        D_80138090 = 0;
+        break;
+    case 1:
+        if (++D_80138090 == 2) {
+            D_80097420 = 3;
+        }
+        self->ext.factory.unk80 -= 8;
+        self->ext.factory.unk82 -= 8;
+        self->ext.factory.unk7E += 6;
+        if (self->ext.factory.unk7E > 0xFF) {
+            self->ext.factory.unk7E = 0xFF;
+        }
+        if (self->ext.factory.unk82 < 0) {
+            self->ext.factory.unk82 = 0;
+        }
+        if (self->ext.factory.unk80 < 0) {
+            self->ext.factory.unk80 = 0;
+            self->ext.timer.t = 0x20;
+            prim = &g_PrimBuf[self->primIndex];
+            for (i = 0; i < 14; i++) {
+                prim->drawMode = DRAW_DEFAULT;
+                prim = prim->next;
+            }
+            self->step++;
+        }
+        break;
+    case 2:
+        self->ext.factory.unk80 = 8;
+        self->ext.factory.unk82 = 4;
+        if (--self->ext.timer.t == 0) {
+            CreateEntFactoryFromEntity(self, 0xA0028U, 0);
+            prim = &g_PrimBuf[self->primIndex];
+            for (i = 0; i < 14; i++) {
+                prim->drawMode =
+                    DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+                prim = prim->next;
+            }
+            self->step++;
+        }
+        break;
+    case 3:
+        self->ext.factory.unk80 += 0x10;
+        self->ext.factory.unk82 += 2;
+        self->ext.factory.unk7E -= 6;
+        if (self->ext.factory.unk7E < 0) {
+            self->ext.factory.unk7E = 0;
+        }
+        if (self->ext.factory.unk80 > 0x200) {
+            D_80097420 = 0;
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    posX_hi = self->posX.i.hi - 176;
+    posY_hi = self->posY.i.hi;
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 14; i++) {
+        temp_v0 = D_800AE190[i];
+        var_v0 = -(rsin(temp_v0) >> 5) * self->ext.factory.unk80 / 256;
+        var_v0_2 = (rcos(temp_v0) >> 5) * self->ext.factory.unk82 / 256;
+        temp_v1_2 = D_800AE190[i + 1];
+        var_a1 = -(rsin(temp_v1_2) >> 5) * self->ext.factory.unk80 / 256;
+        var_a1_2 = (rcos(temp_v1_2) >> 5) * self->ext.factory.unk82 / 256;
+
+        prim->x0 = var_v0_2 + (posX_hi + prim->u0);
+        prim->x1 = var_a1_2 + (posX_hi + prim->u1);
+        prim->x2 = var_v0_2 + (posX_hi + prim->u2);
+        prim->x3 = var_a1_2 + (posX_hi + prim->u3);
+
+        prim->y0 = posY_hi + var_v0;
+        prim->y1 = posY_hi + var_a1;
+        prim->y2 = posY_hi + 0x18 + var_v0;
+        prim->y3 = posY_hi + 0x18 + var_a1;
+
+        prim->r0 = prim->b0 = prim->g0 = prim->r1 = prim->b1 = prim->g1 =
+            prim->r2 = prim->b2 = prim->g2 = prim->r3 = prim->b3 = prim->g3 =
+                self->ext.factory.unk7E;
+
+        D_800AE190[i] += self->ext.factory.unk84;
+        prim = prim->next;
+    }
+}
 
 void func_80121F14(s32 arg0, s32 arg1) {
     Unkstruct_80138094* ptr = D_80138094;

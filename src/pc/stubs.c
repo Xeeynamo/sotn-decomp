@@ -203,6 +203,7 @@ SVECTOR* D_800B0CB4[][4] = {
 };
 unk_800B08CC D_800B08CC[6] = {0};
 s32 D_800B07C8 = 0x12345678;
+s32 D_80138090;
 Unkstruct_80138094 D_80138094[100]; // unknown size
 s32 D_8013808C;
 Primitive D_801381F4[8]; // unknown size
@@ -214,6 +215,7 @@ u32 D_801362B4;
 u32 g_DebugCurPal;
 s32 D_801362D4;
 s32 D_8013640C;
+s32 D_80097420;
 s32 D_800974A4;
 OT_TYPE* g_CurrentOT;
 s32 D_801362B8;
@@ -601,7 +603,6 @@ void func_80115394(s32* arg0, s16 arg1, s16 arg2) { NOT_IMPLEMENTED; }
 void EntitySubwpnThrownDagger(Entity* self) { NOT_IMPLEMENTED; }
 void EntityPlayerBlinkWhite(Entity* self) { NOT_IMPLEMENTED; }
 void EntityNumberMovesToHpMeter(Entity* self) { NOT_IMPLEMENTED; }
-void EntityLevelUpAnimation(Entity* self) { NOT_IMPLEMENTED; }
 void EntityMpReplenished(Entity* self) { NOT_IMPLEMENTED; }
 void EntityPlayerDissolves(Entity* self) { NOT_IMPLEMENTED; }
 void EntityMist(Entity* self) { NOT_IMPLEMENTED; }

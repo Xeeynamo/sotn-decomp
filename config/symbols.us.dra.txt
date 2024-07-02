@@ -44,7 +44,6 @@ EntityMpReplenished = 0x8011D9F8;
 EntityTransparentWhiteCircle = 0x801200AC;
 EntityPlayerPinkEffect = 0x80120AF8;
 EntityPlayerDissolves = 0x80120DD0;
-EntityLevelUpAnimation = 0x80121980;
 EntityMist = 0x8012231C;
 EntityTeleport = 0x801243B0;
 EntitySubwpnThrownDagger = 0x80124B88;

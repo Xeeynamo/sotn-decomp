@@ -271,6 +271,7 @@ extern u8 aPbav_0[0x2000]; // TODO: extract file
 extern u8 aPbav_1[0x2000]; // TODO: extract file
 extern u8 aPbav_2[0x2000]; // TODO: extract file
 
+extern s32 D_80097420;
 extern u16 g_ButtonMask[];
 extern u8 g_StageSelectOrder[];
 extern u16 D_800A04CC[];
@@ -347,6 +348,8 @@ extern u16 D_800ADC7C[2];
 extern Point16* D_800ADCC8[];
 extern u8 D_800AE120[];
 extern RECT D_800AE130;
+extern Unkstruct_800AE180 D_800AE180[];
+extern u16 D_800AE190[];
 extern u32 D_800AE230[8];
 extern u32 D_800AE250[8];
 extern s32 D_800AE270[9];
@@ -581,6 +584,7 @@ extern u8 D_80138044;
 extern u8 D_80138048;
 extern Point16 D_8013804C[];
 extern s32 D_8013808C;
+extern s32 D_80138090;
 extern Unkstruct_80138094 D_80138094[];
 extern Primitive D_801381F4[];
 extern Point16 D_8013839C[];
