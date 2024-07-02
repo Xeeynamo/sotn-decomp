@@ -100,8 +100,15 @@ typedef struct Prim {
 #define COLOR_LEN ((COLOR_BPP) / 8)
 #define PALETTE_LEN ((COLORS_PER_PAL) * ((COLOR_BPP) / 8))
 #define COLOR16(r, g, b, a) (r) + ((g) << 5) + ((b) << 10) + ((a) << 15)
+// PS1 and PSP use different values for these two
+#ifndef VERSION_PSP
 #define OTSIZE 0x200
 #define MAXSPRT16 0x280
+#endif
+#ifdef VERSION_PSP
+#define OTSIZE 0x600
+#define MAXSPRT16 0x320
+#endif
 #define MAX_DRAW_MODES 0x400
 #define MAX_TILE_COUNT 0x100
 #define MAX_LINE_G2_COUNT 0x100
