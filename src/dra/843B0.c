@@ -262,7 +262,204 @@ void func_80124A8C(Entity* entity) {
 }
 
 // dagger thrown when using subweapon
-INCLUDE_ASM("dra/nonmatchings/843B0", EntitySubwpnThrownDagger);
+void EntitySubwpnThrownDagger(Entity* self) {
+    Collider sp34;
+    Primitive* prim;
+    s16 offsetX;
+    s16 offsetY;
+    s16 angle_a;
+    s16 angle_b;
+    s16 angle_c;
+    s16 angle_d;
+    s16 selfY;
+    s16 selfX;
+    s16 var_s5;
+    s32 temp_s7;
+    s32 temp_s6;
+    s32 var_i;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = AllocPrimitives(4U, 2);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_800000;
+        self->facingLeft = PLAYER.facingLeft;
+        func_8011A290(self);
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 2;
+        self->hitboxOffX = 4;
+        self->hitboxOffY = 0;
+        if (!(g_Player.unk0C & 0x20)) {
+            self->posY.i.hi -= 9;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        prim->tpage = 0x1C;
+        prim->clut = 0x1AB;
+        prim->u0 = prim->u1 = 0x18;
+        prim->v0 = prim->v2 = 0x18;
+        prim->u2 = prim->u3 = 0x20;
+        prim->v1 = prim->v3 = 0;
+        prim->priority = PLAYER.zPriority + 2;
+        prim->drawMode = DRAW_HIDE | DRAW_UNK02;
+        prim = prim->next;
+        prim->type = 2;
+        prim->priority = PLAYER.zPriority + 2;
+        prim->drawMode =
+            DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE | DRAW_UNK02 | DRAW_TRANSP;
+        prim->r0 = 0x7F;
+        prim->g0 = 0x3F;
+        prim->b0 = 0;
+        SetSpeedX(FIX(8));
+        PlaySfx(0x60C);
+        g_Player.D_80072F00[10] = 4;
+        self->step += 1;
+        return;
+    case 1:
+        self->ext.timer.t += 1;
+        if (self->velocityX > 0) {
+            var_s5 = 8;
+        }
+        if (self->velocityX < 0) {
+            var_s5 = -8;
+        }
+        if (self->hitFlags == 1) {
+            self->ext.timer.t = 4;
+            self->step = 3;
+            self->hitboxState = 0;
+            return;
+        }
+        for (var_i = 0; var_i < 8; var_i++) {
+            if (self->velocityX > 0) {
+                self->posX.i.hi += 1;
+            }
+            if (self->velocityX < 0) {
+                self->posX.i.hi -= 1;
+            }
+            CheckCollision(
+                (s16)self->posX.i.hi + var_s5, (s16)self->posY.i.hi, &sp34, 0);
+            if (self->hitFlags == 2 || sp34.effects & 3) {
+                self->ext.timer.t = 0x40;
+                self->velocityX = -(self->velocityX >> 3);
+                self->velocityY = FIX(-2.5);
+                self->hitboxState = 0;
+                self->posX.i.hi += var_s5;
+                CreateEntFactoryFromEntity(self, 0xAU, 0);
+                self->posX.i.hi -= var_s5;
+                PlaySfx(0x6A4);
+                self->step += 1;
+                return;
+            }
+        }
+        selfX = self->posX.i.hi;
+        selfY = self->posY.i.hi;
+        offsetX = 12;
+        offsetY = 8;
+        if (self->facingLeft) {
+            offsetX = -offsetX;
+            offsetY = -offsetY;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        prim->x0 = selfX - offsetX;
+        prim->y0 = selfY - 4;
+        prim->x1 = selfX + offsetX;
+        prim->y1 = selfY - 4;
+        prim->x2 = selfX - offsetX;
+        prim->y2 = selfY + 4;
+        prim->x3 = selfX + offsetX;
+        prim->y3 = selfY + 4;
+        prim->clut = 0x1AB;
+        (g_GameTimer >> 1) & 1; // no-op
+        prim->drawMode &= ~DRAW_HIDE;
+        prim = prim->next;
+        prim->x0 = selfX - offsetY;
+        prim->y0 = selfY - 1;
+        prim->x1 = selfX - (offsetX * (self->ext.timer.t / 2));
+        prim->y1 = selfY - 1;
+        prim->drawMode &= ~DRAW_HIDE;
+        if (self->step != 1) {
+            prim->drawMode |= DRAW_HIDE;
+            return;
+        }
+        break;
+    case 2:
+        prim = &g_PrimBuf[self->primIndex];
+        if (--self->ext.timer.t == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        if ((s16)self->ext.timer.t == 0x20) {
+            prim->drawMode |= 0x35;
+            prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
+                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
+                    prim->b3 = 0x60;
+        }
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->velocityY += FIX(0.125);
+        selfX = self->posX.i.hi;
+        selfY = self->posY.i.hi;
+        offsetX = 12;
+        if (self->facingLeft == 0) {
+            angle_a = 0x72E;
+            angle_b = 0xD2;
+            angle_c = 0x8D2;
+            angle_d = -0xD2;
+
+            self->rotZ -= 0x80;
+        } else {
+            angle_b = 0x72E;
+            angle_a = 0xD2;
+            // nb: order swapped
+            angle_d = 0x8D2;
+            angle_c = -0xD2;
+            self->rotZ += 0x80;
+        }
+        angle_a += self->rotZ;
+        angle_b += self->rotZ;
+        angle_c += self->rotZ;
+        angle_d += self->rotZ;
+        if (self->facingLeft) {
+            offsetX = -offsetX;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        temp_s7 = (rcos(angle_a) * 0xCA0) >> 0x14;
+        temp_s6 = -(rsin(angle_a) * 0xCA0) >> 0x14;
+        prim->x0 = selfX + (s16)temp_s7;
+        prim->y0 = selfY - (s16)temp_s6;
+        temp_s7 = (rcos(angle_b) * 0xCA0) >> 0x14;
+        temp_s6 = -(rsin(angle_b) * 0xCA0) >> 0x14;
+        prim->x1 = selfX + (s16)temp_s7;
+        prim->y1 = selfY - (s16)temp_s6;
+        temp_s7 = (rcos(angle_c) * 0xCA0) >> 0x14;
+        temp_s6 = -(rsin(angle_c) * 0xCA0) >> 0x14;
+        prim->x2 = selfX + (s16)temp_s7;
+        prim->y2 = selfY - (s16)temp_s6;
+        temp_s7 = (rcos(angle_d) * 0xCA0) >> 0x14;
+        temp_s6 = -(rsin(angle_d) * 0xCA0) >> 0x14;
+        prim->x3 = selfX + (s16)temp_s7;
+        prim->y3 = selfY - (s16)temp_s6;
+        prim->clut = 0x1AB;
+
+        (g_GameTimer >> 1) & 1; // no-op
+        if ((s16)self->ext.timer.t < 0x21) {
+            prim->r0 -= 2;
+            prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = prim->r2 =
+                prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = prim->r0;
+        }
+        prim->drawMode &= 0xFFF7;
+        prim = prim->next;
+        prim->drawMode |= 8;
+        return;
+    case 3:
+        if (--self->ext.timer.t == 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 // axe thrown when using subweapon
 // near-duplicate of EntitySubwpnCrashAgunea
@@ -2303,7 +2500,231 @@ void EntityAguneaHitEnemy(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/843B0", func_80129864);
+void func_80129864(Entity* self) {
+    s32 a = 11;
+    s32 b = 25;
+    Primitive* prim;
+    s32 s1;
+    s32 s3;
+    s32 s4;
+    s32 i;
+    s32 s6;
+    s32 s7;
+    s32 action;
+
+    u8 temp_u;
+    u8 temp_v;
+    s32 angle_diff;
+    s32 angle_offset;
+    s32 otherX, otherY;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = AllocPrimitives(4, 0x10);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 8; i++) {
+            prim->type = 1;
+            prim->u0 = 1;
+            prim->v0 = 1;
+            prim->drawMode = DRAW_UNK02;
+            prim->priority = 0;
+            prim = prim->next;
+            prim->priority = 0x1C2;
+            prim->drawMode =
+                DRAW_UNK_100 | DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                DRAW_HIDE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+            prim->tpage = 0x1A;
+            prim->clut = 0x19F;
+            prim = prim->next;
+        }
+        self->facingLeft = (PLAYER.facingLeft + 1) & 1; // !PLAYER.facingLeft
+        self->ext.et_80129864.unk80 = D_800B0858[(u8)self->params];
+        self->animSet = 9;
+        self->unk4C = D_800B0798;
+        self->palette = PAL_OVL(0x19F);
+        self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+        self->zPriority = 0x1C3;
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_800000 |
+                      FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_UNK_10000;
+        self->drawFlags = 4;
+        if (self->params & 0x7F00) {
+            func_8011A328(self, 3);
+        } else {
+            func_8011A328(self, 1);
+        }
+        self->hitboxWidth = 6;
+        self->hitboxHeight = 6;
+        self->step++;
+        break;
+    case 1:
+        s1 = rcos(self->ext.et_80129864.unk82) >> 8;
+        self->ext.et_80129864.unk82 += 0x80;
+        self->ext.et_80129864.unk80 += s1;
+
+        if (self->posY.i.hi < -0x20) {
+            self->ext.et_80129864.ent = func_80118970();
+            self->ext.et_80129864.unk84 = 0;
+            self->ext.et_80129864.unk80 = 0xC00;
+            if ((self->params & 0xFF) > 1) {
+                self->facingLeft = (self->facingLeft + 1) & 1;
+            }
+            self->step++;
+        }
+        break;
+    case 2:
+        if (self->ext.et_80129864.unk84 < 0x18) {
+            angle_offset = 0x10;
+        } else if (self->ext.et_80129864.unk84 < 0x28) {
+            angle_offset = 0x20;
+        } else if (self->ext.et_80129864.unk84 < 0x38) {
+            angle_offset = 0x40;
+        } else {
+            angle_offset = 0x80;
+        }
+
+        if (self->ext.et_80129864.ent != NULL) {
+            if (!self->ext.et_80129864.ent->entityId) {
+                self->step++;
+                break;
+            } else {
+                otherX = self->ext.et_80129864.ent->posX.i.hi;
+                otherY = self->ext.et_80129864.ent->posY.i.hi;
+            }
+        } else {
+            if (self->facingLeft) {
+                otherX = 0x140;
+                otherY = 0xA0;
+            } else {
+                otherX = -0x40;
+                otherY = 0xA0;
+            }
+            if (self->params & 1) {
+                otherY += 0x40;
+            }
+        }
+
+        s1 = ratan2(self->posY.i.hi - otherY, otherX - self->posX.i.hi) & 0xFFF;
+        s3 = self->ext.et_80129864.unk80 & 0xFFF;
+        angle_diff = abs(s3 - s1);
+        angle_offset = CLAMP_MAX(angle_offset, angle_diff);
+        if (s3 < s1) {
+            if (angle_diff < 0x800) {
+                s3 += angle_offset;
+            } else {
+                s3 -= angle_offset;
+            }
+        } else {
+            if (angle_diff < 0x800) {
+                s3 -= angle_offset;
+            } else {
+                s3 += angle_offset;
+            }
+        }
+        self->ext.et_80129864.unk80 = s3 & 0xFFF;
+        if (++self->ext.et_80129864.unk84 > 0x60) {
+            self->step++;
+        }
+        break;
+    case 3:
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_800000 | FLAG_UNK_100000 |
+                      FLAG_UNK_10000;
+        s1 = rcos(self->ext.et_80129864.unk82) >> 8;
+        self->ext.et_80129864.unk82 += 0x80;
+        self->ext.et_80129864.unk80 += s1;
+        break;
+    }
+
+    self->velocityX = rcos(self->ext.et_80129864.unk80) << 6;
+    self->velocityY = -(rsin(self->ext.et_80129864.unk80) << 6);
+    self->posX.val += self->velocityX;
+    self->posY.val += self->velocityY;
+
+    if (self->facingLeft) {
+        self->rotZ = self->ext.et_80129864.unk80;
+    } else {
+        self->rotZ = 0x800 - self->ext.et_80129864.unk80;
+    }
+
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 8; i++) {
+        if (self->ext.et_80129864.unk86 == i) {
+            prim->x1 = 1;
+        }
+
+        switch (prim->x1) {
+        case 0:
+            action = 0;
+            break;
+        case 1:
+            action = 1;
+            prim->x1 += 1;
+            prim->y1 = 0x100;
+            prim->x0 = self->posX.i.hi;
+            prim->y0 = self->posY.i.hi;
+            prim->x2 = self->ext.et_80129864.unk80;
+            break;
+        case 2:
+            prim->y1 -= 16;
+            action = 2;
+            break;
+        }
+
+        s3 = prim->x2;
+        s6 = prim->x0;
+        s7 = prim->y0;
+        s4 = prim->y1;
+        prim = prim->next;
+
+        switch (action) {
+        case 0:
+            prim->drawMode |= DRAW_HIDE;
+            break;
+        case 1:
+            temp_u = D_800B0846[self->animCurFrame * 2];
+            temp_v = D_800B0846[self->animCurFrame * 2 + 1];
+            prim->u0 = prim->u2 = temp_u;
+            prim->u1 = prim->u3 = temp_u + 31;
+            prim->v0 = prim->v1 = temp_v;
+            prim->v2 = prim->v3 = temp_v + 15;
+            prim->r0 = prim->b0 = prim->g0 = prim->r1 = prim->b1 = prim->g1 =
+                prim->r2 = prim->b2 = prim->g2 = prim->r3 = prim->b3 =
+                    prim->g3 = 0x80;
+            prim->drawMode &= ~DRAW_HIDE;
+            break;
+        case 2:
+            if (prim->g3 > 4) {
+                prim->g3 -= 12;
+            }
+            prim->r0 = prim->b0 = prim->g0 = prim->r1 = prim->b1 = prim->g1 =
+                prim->r2 = prim->b2 = prim->g2 = prim->r3 = prim->b3 = prim->g3;
+
+            break;
+        }
+
+        if (action) {
+            s1 = s3 - 0x200;
+            prim->x0 = s6 + ((((rcos(s1) >> 4) * a >> 8) * s4) >> 8);
+            prim->y0 = s7 - ((((rsin(s1) >> 4) * a >> 8) * s4) >> 8);
+            s1 = s3 + 0x200;
+            prim->x2 = s6 + ((((rcos(s1) >> 4) * a >> 8) * s4) >> 8);
+            prim->y2 = s7 - ((((rsin(s1) >> 4) * a >> 8) * s4) >> 8);
+            s1 = s3 - 0x734;
+            prim->x1 = s6 + ((((rcos(s1) >> 4) * b >> 8) * s4) >> 8);
+            prim->y1 = s7 - ((((rsin(s1) >> 4) * b >> 8) * s4) >> 8);
+            s1 = s3 + 0x734;
+            prim->x3 = s6 + ((((rcos(s1) >> 4) * b >> 8) * s4) >> 8);
+            prim->y3 = s7 - ((((rsin(s1) >> 4) * b >> 8) * s4) >> 8);
+        }
+        prim = prim->next;
+    }
+
+    self->ext.et_80129864.unk86 += 1;
+    self->ext.et_80129864.unk86 = self->ext.et_80129864.unk86 % 8;
+}
 
 // opens hole in backround and spirit comes out (ID 0x40)
 void EntitySummonSpirit(Entity* self) {

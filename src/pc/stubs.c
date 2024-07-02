@@ -166,6 +166,8 @@ s16 D_800ACF94[16];              // guessed size
 u8 D_800ACFB4[20][4];            // TODO AnimationFrames*[], random size
 s32 D_800B0830[99];              // random size to play safe
 s32 D_800B083C[99];              // random size to play safe
+u8 D_800B0846[18];               // guessed size
+u16 D_800B0858[2];               // might be part of the next array
 s16 D_800B0860[99];              // random size to play safe
 AnimationFrame D_800B0798[40];   // random size to play safe
 u8 D_800B0F94[100][5];           // random size to play safe
@@ -201,6 +203,7 @@ SVECTOR* D_800B0CB4[][4] = {
 };
 unk_800B08CC D_800B08CC[6] = {0};
 s32 D_800B07C8 = 0x12345678;
+s32 D_80138090;
 Unkstruct_80138094 D_80138094[100]; // unknown size
 s32 D_8013808C;
 Primitive D_801381F4[8]; // unknown size
@@ -212,6 +215,7 @@ u32 D_801362B4;
 u32 g_DebugCurPal;
 s32 D_801362D4;
 s32 D_8013640C;
+s32 D_80097420;
 s32 D_800974A4;
 OT_TYPE* g_CurrentOT;
 s32 D_801362B8;
@@ -596,10 +600,8 @@ u16* func_80106A28(u32 arg0, u16 kind) {
 
 void func_80115394(s32* arg0, s16 arg1, s16 arg2) { NOT_IMPLEMENTED; }
 
-void EntitySubwpnThrownDagger(Entity* self) { NOT_IMPLEMENTED; }
 void EntityPlayerBlinkWhite(Entity* self) { NOT_IMPLEMENTED; }
 void EntityNumberMovesToHpMeter(Entity* self) { NOT_IMPLEMENTED; }
-void EntityLevelUpAnimation(Entity* self) { NOT_IMPLEMENTED; }
 void EntityMpReplenished(Entity* self) { NOT_IMPLEMENTED; }
 void EntityPlayerDissolves(Entity* self) { NOT_IMPLEMENTED; }
 void EntityMist(Entity* self) { NOT_IMPLEMENTED; }
@@ -608,4 +610,3 @@ void EntityTransparentWhiteCircle(Entity* self) { NOT_IMPLEMENTED; }
 void EntityStopWatch(Entity* self) { NOT_IMPLEMENTED; }
 void EntityBatEcho(Entity* self) { NOT_IMPLEMENTED; }
 void func_8012F894(Entity* self) { NOT_IMPLEMENTED; }
-void func_80129864(Entity* self) { NOT_IMPLEMENTED; }
