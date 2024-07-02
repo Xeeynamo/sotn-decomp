@@ -4,6 +4,7 @@
 #include <string.h>
 #include "stage_loader.h"
 #include "sfx.h"
+#include "../../st/wrp/wrp.h"
 
 void Update(void);
 void HitDetection(void);
@@ -26,7 +27,7 @@ static void* clut_anims[] = {
 };
 
 extern void* WRP_g_EntityGfxs[];
-extern RoomHeader g_Rooms[];           // TODO OVL_EXPORT
+extern RoomHeader OVL_EXPORT(rooms)[];
 #include "../../st/wrp/sprite_banks.h" // TODO OVL_EXPORT
 #include "../../st/wrp/layers.h"       // TODO OVL_EXPORT
 static Overlay g_StageDesc = {
@@ -34,11 +35,11 @@ static Overlay g_StageDesc = {
     HitDetection,
     UpdateRoomPosition,
     MyInitRoomEntities,
-    g_Rooms,
+    OVL_EXPORT(rooms),
     spriteBanks,
     clut_anims,
     NULL,
-    rooms,
+    rooms_layers,
     WRP_g_EntityGfxs,
     UpdateStageEntities,
     NULL,
