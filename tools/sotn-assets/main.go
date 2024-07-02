@@ -254,7 +254,7 @@ func info(fileName string) error {
 
 		// if there is a gap between the current entry and the next one, mark it as unrecognized data
 		if i == len(entries)-1 || e.dataRange.end != entries[i+1].dataRange.begin {
-			fmt.Printf("  - [0x%X, data] # not recognized\n", e.dataRange.end.real())
+			fmt.Printf("  - [0x%X, data]\n", e.dataRange.end.real())
 		}
 	}
 	return nil

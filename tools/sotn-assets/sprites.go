@@ -22,8 +22,8 @@ type sprite struct {
 }
 
 type spriteDefs struct {
-	Banks   [][][]sprite `json:"banks"`
-	Indices []int        `json:"indices"`
+	Banks   [][]*[]sprite `json:"banks"`
+	Indices []int         `json:"indices"`
 }
 
 func readSprites(file *os.File, off PsxOffset) ([]sprite, dataRange, error) {
@@ -47,7 +47,7 @@ func readSprites(file *os.File, off PsxOffset) ([]sprite, dataRange, error) {
 	}, nil
 }
 
-func readSpriteBank(file *os.File, off PsxOffset) ([][]sprite, dataRange, error) {
+func readSpriteBank(file *os.File, off PsxOffset) ([]*[]sprite, dataRange, error) {
 	if err := off.moveFile(file); err != nil {
 		return nil, dataRange{}, fmt.Errorf("invalid sprite Indices: %w", err)
 	}
@@ -80,18 +80,18 @@ func readSpriteBank(file *os.File, off PsxOffset) ([][]sprite, dataRange, error)
 		end:   earliestSpriteOff,
 	}
 
-	spriteBank := make([][]sprite, len(spriteOffsets))
+	spriteBank := make([]*[]sprite, len(spriteOffsets))
 	spriteRanges := []dataRange{}
 	for i, offset := range spriteOffsets {
 		if offset == RamNull {
-			spriteBank[i] = []sprite{}
+			spriteBank[i] = nil
 			continue
 		}
 		sprites, ranges, err := readSprites(file, offset)
 		if err != nil {
 			return nil, dataRange{}, fmt.Errorf("unable to read sprites: %w", err)
 		}
-		spriteBank[i] = sprites
+		spriteBank[i] = &sprites
 		spriteRanges = append(spriteRanges, ranges)
 	}
 
@@ -109,7 +109,7 @@ func readSpritesBanks(file *os.File, off PsxOffset) (spriteDefs, dataRange, erro
 	}
 
 	// the order sprites are stored must be preserved
-	pool := map[PsxOffset][][]sprite{}
+	pool := map[PsxOffset][]*[]sprite{}
 	spriteRanges := []dataRange{}
 	for _, offset := range offBanks {
 		if offset == RamNull {
@@ -147,7 +147,7 @@ func readSpritesBanks(file *os.File, off PsxOffset) (spriteDefs, dataRange, erro
 		}
 	}
 
-	banks := make([][][]sprite, len(sortedOffsets))
+	banks := make([][]*[]sprite, len(sortedOffsets))
 	for i, offset := range sortedOffsets {
 		banks[i] = pool[offset]
 	}
