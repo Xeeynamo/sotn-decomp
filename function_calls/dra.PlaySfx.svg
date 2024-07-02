@@ -547,7 +547,7 @@
 <g id="node35" class="node">
 <title>dra.EntitySubwpnThrownDagger</title>
 <g id="a_node35"><a xlink:href="dra.EntitySubwpnThrownDagger.svg" xlink:title="dra.EntitySubwpnThrownDagger">
-<ellipse fill="red" stroke="black" cx="8732.19" cy="-198" rx="165.17" ry="18"/>
+<ellipse fill="green" stroke="black" cx="8732.19" cy="-198" rx="165.17" ry="18"/>
 <text text-anchor="middle" x="8732.19" y="-194.3" font-family="Times,serif" font-size="14.00">dra.EntitySubwpnThrownDagger</text>
 </a>
 </g>
