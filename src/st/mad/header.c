@@ -8,7 +8,7 @@ extern GfxBank* g_pStTileset[];
 void UpdateStageEntities();
 void func_8018E1D4();
 
-static Overlay StageOverlay = {
+static Overlay OVL_EXPORT(Overlay) = {
     .Update = Update,
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,

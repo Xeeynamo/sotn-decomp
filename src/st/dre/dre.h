@@ -1,6 +1,8 @@
 #include "stage.h"
 #define STAGE_DRE_H
 
+#define OVL_EXPORT(x) DRE_##x
+
 #define CASTLE_FLAG_BANK 0xD3
 
 typedef enum {

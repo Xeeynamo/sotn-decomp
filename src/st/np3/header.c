@@ -1,45 +1,27 @@
 #include "np3.h"
 
-extern RoomHeader g_Rooms[];
-extern SpriteParts** SpriteBanks[];
+extern RoomHeader OVL_EXPORT(rooms)[];
+extern signed short* spriteBanks[];
 extern void* Cluts[];
-extern RoomDef g_TileLayers[];
+extern MyRoomDef rooms_layers[];
 extern GfxBank* g_GfxBanks[];
 void UpdateStageEntities();
 
-static AbbreviatedOverlay StageOverlay = {
+static AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .Update = Update,
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
-    .rooms = g_Rooms,
-    .spriteBanks = SpriteBanks,
+    .rooms = OVL_EXPORT(rooms),
+    .spriteBanks = spriteBanks,
     .cluts = Cluts,
     .objLayoutHorizontal = g_pStObjLayoutHorizontal,
-    .tileLayers = g_TileLayers,
+    .tileLayers = rooms_layers,
     .gfxBanks = g_GfxBanks,
     .UpdateStageEntities = UpdateStageEntities,
 };
 
-extern SpriteParts* D_801AA124[];
-extern SpriteParts* D_801AB758[];
-extern SpriteParts* D_801AAE10[];
-extern SpriteParts* D_801AB1F8[];
-extern SpriteParts* D_801ABE38[];
-extern SpriteParts* D_801AED34[];
-extern SpriteParts* D_801AC23C[];
-extern SpriteParts* D_801AD278[];
-extern SpriteParts* D_801AC380[];
-extern SpriteParts* D_801AEEF8[];
-extern SpriteParts* D_801B08B0[];
-extern SpriteParts* D_801B1B30[];
-
-static SpriteParts** SpriteBanks[] = {
-    NULL,       D_801AA124, D_801AB758, D_801AAE10, D_801AB1F8, D_801ABE38,
-    D_801AED34, D_801AC23C, D_801AD278, D_801AC380, D_801AEEF8, D_801B08B0,
-    D_801B1B30, NULL,       NULL,       NULL,       NULL,       NULL,
-    NULL,       NULL,       NULL,       NULL,       NULL,       NULL,
-};
+#include "sprite_banks.h"
 
 extern u16* D_801963B4[0x100];
 extern u16* D_80194914[0x8C0];
@@ -88,3 +70,5 @@ static u16** Clut[] = {
 static void* Cluts[] = {
     Clut,
 };
+
+#include "layers.h"

@@ -220,10 +220,16 @@ set(SOURCE_FILES_STAGE_SEL
 
 set(SOURCE_FILES_STAGE_WRP
     src/pc/stages/stage_wrp.c
-    src/st/wrp/6FD0.c
+    src/st/wrp/d_1b8.c
+    src/st/wrp/e_laydef.c
+    src/st/wrp/d_3e4.c
     src/st/wrp/st_debug.c
     src/st/wrp/e_breakable.c
     src/st/wrp/d_608.c
+    src/st/wrp/rooms.c
+    src/st/wrp/e_layout.c
+    src/st/wrp/tile_data.c
+    src/st/wrp/sprites.c
     src/st/wrp/warp.c
     src/st/wrp/st_update.c
     src/st/wrp/collision.c

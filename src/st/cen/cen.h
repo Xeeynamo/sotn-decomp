@@ -4,6 +4,8 @@
 #include "common.h"
 #include "stage.h"
 
+#define OVL_EXPORT(x) CEN_##x
+
 #define CASTLE_FLAG_BANK 0x00
 
 // CEN Sound IDs

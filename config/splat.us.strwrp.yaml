@@ -34,7 +34,10 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
-      - [0xB8, data]
+      - [0xB8, .data, header] # layers
+      - [0x1B8, data]
+      - [0x23C, .data, e_laydef] # layout entries header
+      - [0x3E4, data]
       - [0x4E0, data]
       - [0x5E0, data]
       - [0x6BC, .data, collision]
@@ -43,8 +46,13 @@ segments:
       - [0xF84, .data, entity_relic_orb]
       - [0xFE8, data]
       - [0x10A0, data]
-      - [0x11AC, roomdef, g_Rooms]
-      - [0x1228, data]
+      - [0x11AC, .data, rooms]
+      - [0x1228, .data, e_layout] # layout entries data
+      - [0x1420, data]
+      - [0x1FC8, .data, tile_data] # tile data
+      - [0x2BC8, .data, tile_data] # tile definitions
+      - [0x6FE8, .data, sprites]
+      - [0x8C48, data]
       - [0x8C88, rodata]
       - [0x8CC8, .rodata, e_red_door]
       - [0x8CE0, rodata]

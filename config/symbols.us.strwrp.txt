@@ -1,7 +1,4 @@
-g_TileLayers = 0x80180168;
 g_GfxBanks = 0x801801EC;
-g_pStObjLayoutHorizontal = 0x8018023C;
-g_pStObjLayoutVertical = 0x80180310;
 PfnEntityUpdates = 0x801803E4;
 g_InitializeData0 = 0x8018044C;
 g_InitializeEntityData0 = 0x80180458;
@@ -29,7 +26,6 @@ g_UnkRecursPrim2Inds = 0x8018107C;
 g_ESoulStealOrbAngles = 0x801810A0;
 g_ESoulStealOrbSprt = 0x801810B0;
 g_ESoulStealOrbAnim = 0x80181110;
-g_Rooms = 0x801811AC;
 EntityBreakable = 0x8018908C;
 Random = 0x8018A168;
 EntityDamageDisplay = 0x8018B6B4;

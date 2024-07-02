@@ -67,6 +67,7 @@ MASPSX          := $(PYTHON) $(MASPSX_APP) --expand-div --aspsx-version=2.34
 GO              := $(HOME)/go/bin/go
 GOPATH          := $(HOME)/go
 SOTNDISK        := $(GOPATH)/bin/sotn-disk
+SOTNASSETS      := $(GOPATH)/bin/sotn-assets
 GFXSTAGE        := $(PYTHON) $(TOOLS_DIR)/gfxstage.py
 PNG2S           := $(PYTHON) $(TOOLS_DIR)/png2s.py
 ICONV           := iconv --from-code=UTF-8 --to-code=Shift-JIS
@@ -81,9 +82,19 @@ define list_src_files
 	$(foreach dir,$(SRC_DIR)/$(1)/psxsdk,$(wildcard $(dir)/**.c))
 	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/**))
 endef
+define list_st_src_files
+	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
+	$(foreach dir,$(ASM_DIR)/$(1)/data,$(wildcard $(dir)/**.s))
+	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/**.c))
+	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/D_8018*.bin))
+endef
 
 define list_o_files
 	$(foreach file,$(call list_src_files,$(1)),$(BUILD_DIR)/$(file).o)
+endef
+
+define list_st_o_files
+	$(foreach file,$(call list_st_src_files,$(1)),$(BUILD_DIR)/$(file).o)
 endef
 
 define list_shared_src_files
@@ -103,7 +114,8 @@ define link
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt
 endef
 
-SOTNDISK_SOURCES := $(shell find tools/sotn-disk -name '*.go')
+SOTNDISK_SOURCES   := $(shell find tools/sotn-disk -name '*.go')
+SOTNASSETS_SOURCES := $(shell find tools/sotn-assets -name '*.go')
 
 CHECK_FILES := $(shell cut -d' ' -f3 config/check.$(VERSION).sha)
 
@@ -191,6 +203,7 @@ dra: $(BUILD_DIR)/DRA.BIN
 $(BUILD_DIR)/DRA.BIN: $(BUILD_DIR)/$(DRA).elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/$(DRA).elf: $(call list_o_files,dra)
+	echo $(call list_o_files,dra)
 	$(call link,dra,$@)
 
 ric: $(BUILD_DIR)/RIC.BIN
@@ -291,7 +304,9 @@ $(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad) $$(call list_shared_o_files
 		-T $(CONFIG_DIR)/undefined_syms.beta.txt \
 		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt
-$(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*) $$(call list_shared_o_files,st)
+$(BUILD_DIR)/stsel.elf: $$(call list_o_files,st/sel) $$(call list_shared_o_files,st)
+	$(call link,stsel,$@)
+$(BUILD_DIR)/st%.elf: $$(call list_st_o_files,st/$$*) $$(call list_shared_o_files,st)
 	$(call link,st$*,$@)
 
 # Weapon overlays
@@ -425,8 +440,8 @@ update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(SA
 	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release
 	cd $(SATURN_SPLITTER_DIR)/adpcm-extract && cargo build --release
 	pip3 install -r $(TOOLS_DIR)/requirements-python.txt
-	$(GO) install github.com/xeeynamo/sotn-decomp/tools/gfxsotn@latest
-	$(GO) install github.com/xeeynamo/sotn-decomp/tools/sotn-disk@latest
+	rm $(SOTNDISK) && make $(SOTNDISK) || true
+	rm $(SOTNASSETS) && make $(SOTNASSETS) || true
 	git clean -fd bin/
 
 bin/%: bin/%.tar.gz
@@ -449,11 +464,13 @@ $(MASPSX_APP):
 	git submodule init $(MASPSX_DIR)
 	git submodule update $(MASPSX_DIR)
 $(GO):
-	curl -L -o go1.19.7.linux-amd64.tar.gz https://go.dev/dl/go1.19.7.linux-amd64.tar.gz
-	tar -C $(HOME) -xzf go1.19.7.linux-amd64.tar.gz
-	rm go1.19.7.linux-amd64.tar.gz
+	curl -L -o go1.22.4.linux-amd64.tar.gz https://go.dev/dl/go1.22.4.linux-amd64.tar.gz
+	tar -C $(HOME) -xzf go1.22.4.linux-amd64.tar.gz
+	rm go1.22.4.linux-amd64.tar.gz
 $(SOTNDISK): $(GO) $(SOTNDISK_SOURCES)
 	cd tools/sotn-disk; $(GO) install
+$(SOTNASSETS): $(GO) $(SOTNASSETS_SOURCES)
+	cd tools/sotn-assets; $(GO) install
 
 $(BUILD_DIR)/%.s.o: %.s
 	mkdir -p $(dir $@)
@@ -463,29 +480,18 @@ $(BUILD_DIR)/%.c.o: %.c $(MASPSX_APP) $(CC1PSX)
 	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 
 # Handles assets
-$(BUILD_DIR)/$(ASSETS_DIR)/%.layoutobj.json.o: $(ASSETS_DIR)/%.layoutobj.json
-	./tools/splat_ext/layoutobj.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
-	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
-$(BUILD_DIR)/$(ASSETS_DIR)/%.roomdef.json.o: $(ASSETS_DIR)/%.roomdef.json
-	./tools/splat_ext/roomdef.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
-	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.bin
-$(BUILD_DIR)/$(ASSETS_DIR)/%.layers.json.o: $(ASSETS_DIR)/%.layers.json
-	./tools/splat_ext/layers.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
-	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
-$(BUILD_DIR)/$(ASSETS_DIR)/%.tiledef.json.o: $(ASSETS_DIR)/%.tiledef.json
-	./tools/splat_ext/tiledef.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
-	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/%.spritesheet.json.o: $(ASSETS_DIR)/%.spritesheet.json
 	./tools/splat_ext/spritesheet.py encode $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/%.animset.json.o: $(ASSETS_DIR)/%.animset.json
 	./tools/splat_ext/animset.py gen-asm $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
-$(BUILD_DIR)/$(ASSETS_DIR)/%.json.o: $(ASSETS_DIR)/%.json
-	./tools/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
-	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
-$(BUILD_DIR)/$(ASSETS_DIR)/%.tilelayout.bin.o: $(ASSETS_DIR)/%.tilelayout.bin
-	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(ASSETS_DIR)/$*.tilelayout.bin
+$(BUILD_DIR)/$(ASSETS_DIR)/dra/%.json.o: $(ASSETS_DIR)/dra/%.json
+	./tools/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.s
+	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.s
+$(BUILD_DIR)/$(ASSETS_DIR)/ric/%.json.o: $(ASSETS_DIR)/ric/%.json
+	./tools/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
+	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/%.bin.o: $(ASSETS_DIR)/%.bin
 	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
 $(BUILD_DIR)/$(ASSETS_DIR)/%.dec.o: $(ASSETS_DIR)/%.dec
