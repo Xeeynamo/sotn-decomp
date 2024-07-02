@@ -82,9 +82,19 @@ define list_src_files
 	$(foreach dir,$(SRC_DIR)/$(1)/psxsdk,$(wildcard $(dir)/**.c))
 	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/**))
 endef
+define list_st_src_files
+	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
+	$(foreach dir,$(ASM_DIR)/$(1)/data,$(wildcard $(dir)/**.s))
+	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/**.c))
+	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/D_8018*.bin))
+endef
 
 define list_o_files
 	$(foreach file,$(call list_src_files,$(1)),$(BUILD_DIR)/$(file).o)
+endef
+
+define list_st_o_files
+	$(foreach file,$(call list_st_src_files,$(1)),$(BUILD_DIR)/$(file).o)
 endef
 
 define list_shared_src_files
@@ -193,6 +203,7 @@ dra: $(BUILD_DIR)/DRA.BIN
 $(BUILD_DIR)/DRA.BIN: $(BUILD_DIR)/$(DRA).elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/$(DRA).elf: $(call list_o_files,dra)
+	echo $(call list_o_files,dra)
 	$(call link,dra,$@)
 
 ric: $(BUILD_DIR)/RIC.BIN
@@ -293,7 +304,9 @@ $(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad) $$(call list_shared_o_files
 		-T $(CONFIG_DIR)/undefined_syms.beta.txt \
 		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt
-$(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*) $$(call list_shared_o_files,st)
+$(BUILD_DIR)/stsel.elf: $$(call list_o_files,st/sel) $$(call list_shared_o_files,st)
+	$(call link,stsel,$@)
+$(BUILD_DIR)/st%.elf: $$(call list_st_o_files,st/$$*) $$(call list_shared_o_files,st)
 	$(call link,st$*,$@)
 
 # Weapon overlays
@@ -473,9 +486,12 @@ $(BUILD_DIR)/$(ASSETS_DIR)/%.spritesheet.json.o: $(ASSETS_DIR)/%.spritesheet.jso
 $(BUILD_DIR)/$(ASSETS_DIR)/%.animset.json.o: $(ASSETS_DIR)/%.animset.json
 	./tools/splat_ext/animset.py gen-asm $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
-$(BUILD_DIR)/$(ASSETS_DIR)/%.json.o: $(ASSETS_DIR)/%.json
-	./tools/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
-	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
+$(BUILD_DIR)/$(ASSETS_DIR)/dra/%.json.o: $(ASSETS_DIR)/dra/%.json
+	./tools/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.s
+	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.s
+$(BUILD_DIR)/$(ASSETS_DIR)/ric/%.json.o: $(ASSETS_DIR)/ric/%.json
+	./tools/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
+	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/%.bin.o: $(ASSETS_DIR)/%.bin
 	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
 $(BUILD_DIR)/$(ASSETS_DIR)/%.dec.o: $(ASSETS_DIR)/%.dec
