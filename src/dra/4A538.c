@@ -1768,8 +1768,7 @@ void FreePrimitives(s32 primitiveIndex) {
     }
 }
 
-typedef union
-{
+typedef union {
     TILE tile;
     LINE_G2 g2;
     POLY_G4 g4;
@@ -1778,17 +1777,16 @@ typedef union
     SPRT sprt;
 } PrimBuf;
 
-typedef struct 
-{
-  u_long *ot;
-  POLY_GT4 *gt4;
-  POLY_G4 *g4;
-  POLY_GT3 *gt3;
-  LINE_G2 *g2;
-  TILE *tile;
-  DR_MODE *dr;
-  SPRT *sprt;
-  DR_ENV *env;
+typedef struct {
+    u_long* ot;
+    POLY_GT4* gt4;
+    POLY_G4* g4;
+    POLY_GT3* gt3;
+    LINE_G2* g2;
+    TILE* tile;
+    DR_MODE* dr;
+    SPRT* sprt;
+    DR_ENV* env;
 } PrimitivesRenderer;
 
 #ifndef VERSION_PSP
@@ -1799,16 +1797,16 @@ typedef struct
 #endif
 
 void RenderPrimitives(void) {
-    #ifdef VERSION_PSP
-    #define RECT_LOC 0x12C
-    #endif
-    #ifndef VERSION_PSP
-    #define RECT_LOC 0x128
-    #endif
+#ifdef VERSION_PSP
+#define RECT_LOC 0x12C
+#endif
+#ifndef VERSION_PSP
+#define RECT_LOC 0x128
+#endif
     RECT* rect = (RECT*)SP(RECT_LOC);
     PrimitivesRenderer* r = (PrimitivesRenderer*)SP(0x000);
     PrimBuf* primbuf = (PrimBuf*)SP(0x024);
-    
+
     s32 var_s1;
     Primitive* var_s0;
     u8 var_s2;
@@ -1850,7 +1848,8 @@ void RenderPrimitives(void) {
     } else {
         var_a2 = 0;
         var_s1 = 0;
-        for (var_s0 = &g_PrimBuf[0]; var_s1 < MAX_PRIM_COUNT; var_s0++, var_s1++) {
+        for (var_s0 = &g_PrimBuf[0]; var_s1 < MAX_PRIM_COUNT; var_s0++,
+            var_s1++) {
             var_s2 = var_s0->type;
             if (!var_s2) {
                 continue;
@@ -1876,12 +1875,12 @@ void RenderPrimitives(void) {
                 var_s3 = true;
                 if (!var_a2) {
                     SetDrawMode(r->dr, 0, 0, 0, rect);
-                    #ifdef VERSION_PSP
-                    if(var_s0->priority < 0 || var_s0->priority >= 0x200){
+#ifdef VERSION_PSP
+                    if (var_s0->priority < 0 || var_s0->priority >= 0x200) {
                         var_s0->priority = 0x1FF;
                     }
-                    #endif
-                    addPrim(&r->ot[var_s0->priority*OT_MULT], r->dr);
+#endif
+                    addPrim(&r->ot[var_s0->priority * OT_MULT], r->dr);
                     r->dr++;
                     g_GpuUsage.drawModes++;
                 }
@@ -1893,7 +1892,8 @@ void RenderPrimitives(void) {
             case PRIM_TILE_ALT:
                 setTile(&primbuf->tile);
                 if (g_GpuUsage.tile < MAX_TILE_COUNT) {
-                    setSemiTrans(&primbuf->tile, var_s0->drawMode & DRAW_TRANSP);
+                    setSemiTrans(
+                        &primbuf->tile, var_s0->drawMode & DRAW_TRANSP);
                     primbuf->tile.r0 = var_s0->r0;
                     primbuf->tile.g0 = var_s0->g0;
                     primbuf->tile.b0 = var_s0->b0;
@@ -1907,24 +1907,24 @@ void RenderPrimitives(void) {
                     primbuf->tile.w = var_s0->u0;
                     primbuf->tile.h = var_s0->v0;
                     *r->tile = primbuf->tile;
-                    #ifdef VERSION_PSP
-                    if(var_s0->priority < 0 || var_s0->priority >= 0x200){
+#ifdef VERSION_PSP
+                    if (var_s0->priority < 0 || var_s0->priority >= 0x200) {
                         var_s0->priority = 0x1FF;
                     }
-                    #endif
-                    addPrim(&r->ot[var_s0->priority*OT_MULT], r->tile);
+#endif
+                    addPrim(&r->ot[var_s0->priority * OT_MULT], r->tile);
                     r->tile++;
                     g_GpuUsage.tile++;
                     if (!(var_s2 & 0x10) &&
                         g_GpuUsage.drawModes < MAX_DRAW_MODES) {
                         SetDrawMode(
                             r->dr, 0, var_s3, var_s0->drawMode & 0x60, rect);
-                        #ifdef VERSION_PSP
-                        if(var_s0->priority < 0 || var_s0->priority >= 0x200){
+#ifdef VERSION_PSP
+                        if (var_s0->priority < 0 || var_s0->priority >= 0x200) {
                             var_s0->priority = 0x1FF;
                         }
-                        #endif
-                        addPrim(&r->ot[var_s0->priority*OT_MULT], r->dr);
+#endif
+                        addPrim(&r->ot[var_s0->priority * OT_MULT], r->dr);
                         r->dr++;
                         g_GpuUsage.drawModes++;
                     }
@@ -1954,24 +1954,24 @@ void RenderPrimitives(void) {
                         primbuf->g2.y1 = var_s0->y1 + g_backbufferY;
                     }
                     *r->g2 = primbuf->g2;
-                    #ifdef VERSION_PSP
-                    if(var_s0->priority < 0 || var_s0->priority >= 0x200){
+#ifdef VERSION_PSP
+                    if (var_s0->priority < 0 || var_s0->priority >= 0x200) {
                         var_s0->priority = 0x1FF;
                     }
-                    #endif
-                    addPrim(&r->ot[var_s0->priority*OT_MULT], r->g2);
+#endif
+                    addPrim(&r->ot[var_s0->priority * OT_MULT], r->g2);
                     r->g2++;
                     g_GpuUsage.line++;
                     if ((var_s2 & 0x10) == 0 &&
                         g_GpuUsage.drawModes < MAX_DRAW_MODES) {
                         SetDrawMode(
                             r->dr, 0, var_s3, var_s0->drawMode & 0x60, rect);
-                        #ifdef VERSION_PSP
-                        if(var_s0->priority < 0 || var_s0->priority >= 0x200){
+#ifdef VERSION_PSP
+                        if (var_s0->priority < 0 || var_s0->priority >= 0x200) {
                             var_s0->priority = 0x1FF;
                         }
-                        #endif
-                        addPrim(&r->ot[var_s0->priority*OT_MULT], r->dr);
+#endif
+                        addPrim(&r->ot[var_s0->priority * OT_MULT], r->dr);
                         r->dr++;
                         g_GpuUsage.drawModes++;
                     }
@@ -2015,24 +2015,24 @@ void RenderPrimitives(void) {
                         primbuf->g4.y3 = var_s0->y3 + g_backbufferY;
                     }
                     *r->g4 = primbuf->g4;
-                    #ifdef VERSION_PSP
-                    if(var_s0->priority < 0 || var_s0->priority >= 0x200){
+#ifdef VERSION_PSP
+                    if (var_s0->priority < 0 || var_s0->priority >= 0x200) {
                         var_s0->priority = 0x1FF;
                     }
-                    #endif
-                    addPrim(&r->ot[var_s0->priority*OT_MULT], r->g4);
+#endif
+                    addPrim(&r->ot[var_s0->priority * OT_MULT], r->g4);
                     r->g4++;
                     g_GpuUsage.g4++;
                     if ((var_s2 & 0x10) == 0 &&
                         g_GpuUsage.drawModes < MAX_DRAW_MODES) {
                         SetDrawMode(
                             r->dr, 0, var_s3, var_s0->drawMode & 0x60, rect);
-                        #ifdef VERSION_PSP
-                        if(var_s0->priority < 0 || var_s0->priority >= 0x200){
+#ifdef VERSION_PSP
+                        if (var_s0->priority < 0 || var_s0->priority >= 0x200) {
                             var_s0->priority = 0x1FF;
                         }
-                        #endif
-                        addPrim(&r->ot[var_s0->priority*OT_MULT], r->dr);
+#endif
+                        addPrim(&r->ot[var_s0->priority * OT_MULT], r->dr);
                         r->dr++;
                         g_GpuUsage.drawModes++;
                     }
@@ -2086,22 +2086,22 @@ void RenderPrimitives(void) {
                         var_s0->tpage + (var_s0->drawMode & 0x60);
                     primbuf->gt4.clut = g_ClutIds[var_s0->clut];
                     *r->gt4 = primbuf->gt4;
-                    #ifdef VERSION_PSP
-                    if(var_s0->priority < 0 || var_s0->priority >= 0x200){
+#ifdef VERSION_PSP
+                    if (var_s0->priority < 0 || var_s0->priority >= 0x200) {
                         var_s0->priority = 0x1FF;
                     }
-                    #endif
-                    addPrim(&r->ot[var_s0->priority*OT_MULT], r->gt4);
+#endif
+                    addPrim(&r->ot[var_s0->priority * OT_MULT], r->gt4);
                     r->gt4++;
                     g_GpuUsage.gt4++;
                     if (var_s3 && g_GpuUsage.drawModes < MAX_DRAW_MODES) {
                         SetDrawMode(r->dr, 0, var_s3, 0, rect);
-                        #ifdef VERSION_PSP
-                        if(var_s0->priority < 0 || var_s0->priority >= 0x200){
+#ifdef VERSION_PSP
+                        if (var_s0->priority < 0 || var_s0->priority >= 0x200) {
                             var_s0->priority = 0x1FF;
                         }
-                        #endif
-                        addPrim(&r->ot[var_s0->priority*OT_MULT], r->dr);
+#endif
+                        addPrim(&r->ot[var_s0->priority * OT_MULT], r->dr);
                         r->dr++;
                         g_GpuUsage.drawModes++;
                     }
@@ -2147,22 +2147,22 @@ void RenderPrimitives(void) {
                     primbuf->gt3.clut = g_ClutIds[var_s0->clut];
 
                     *r->gt3 = primbuf->gt3;
-                    #ifdef VERSION_PSP
-                    if(var_s0->priority < 0 || var_s0->priority >= 0x200){
+#ifdef VERSION_PSP
+                    if (var_s0->priority < 0 || var_s0->priority >= 0x200) {
                         var_s0->priority = 0x1FF;
                     }
-                    #endif
-                    addPrim(&r->ot[var_s0->priority*OT_MULT], r->gt3);
+#endif
+                    addPrim(&r->ot[var_s0->priority * OT_MULT], r->gt3);
                     r->gt3++;
                     g_GpuUsage.gt3++;
                     if (var_s3 && g_GpuUsage.drawModes < MAX_DRAW_MODES) {
                         SetDrawMode(r->dr, 0, var_s3, 0, rect);
-                        #ifdef VERSION_PSP
-                        if(var_s0->priority < 0 || var_s0->priority >= 0x200){
+#ifdef VERSION_PSP
+                        if (var_s0->priority < 0 || var_s0->priority >= 0x200) {
                             var_s0->priority = 0x1FF;
                         }
-                        #endif
-                        addPrim(&r->ot[var_s0->priority*OT_MULT], r->dr);
+#endif
+                        addPrim(&r->ot[var_s0->priority * OT_MULT], r->dr);
                         r->dr++;
                         g_GpuUsage.drawModes++;
                     }
@@ -2172,7 +2172,8 @@ void RenderPrimitives(void) {
             case 22:
                 setSprt(&primbuf->sprt);
                 if (g_GpuUsage.sp < MAX_SPRT_COUNT) {
-                    setSemiTrans(&primbuf->sprt, var_s0->drawMode & DRAW_TRANSP);
+                    setSemiTrans(
+                        &primbuf->sprt, var_s0->drawMode & DRAW_TRANSP);
                     setShadeTex(&primbuf->sprt, var_s4);
                     primbuf->sprt.r0 = var_s0->r0;
                     primbuf->sprt.g0 = var_s0->g0;
@@ -2190,12 +2191,12 @@ void RenderPrimitives(void) {
                     primbuf->sprt.h = var_s0->v1;
                     primbuf->sprt.clut = g_ClutIds[var_s0->clut];
                     *r->sprt = primbuf->sprt;
-                    #ifdef VERSION_PSP
-                    if(var_s0->priority < 0 || var_s0->priority >= 0x200){
+#ifdef VERSION_PSP
+                    if (var_s0->priority < 0 || var_s0->priority >= 0x200) {
                         var_s0->priority = 0x1FF;
                     }
-                    #endif
-                    addPrim(&r->ot[var_s0->priority*OT_MULT], r->sprt);
+#endif
+                    addPrim(&r->ot[var_s0->priority * OT_MULT], r->sprt);
                     r->sprt++;
                     g_GpuUsage.sp++;
                     if ((var_s2 & 0x10) == 0 &&
@@ -2203,12 +2204,12 @@ void RenderPrimitives(void) {
                         SetDrawMode(
                             r->dr, 0, var_s3,
                             var_s0->tpage + (var_s0->drawMode & 0x60), rect);
-                        #ifdef VERSION_PSP
-                        if(var_s0->priority < 0 || var_s0->priority >= 0x200){
+#ifdef VERSION_PSP
+                        if (var_s0->priority < 0 || var_s0->priority >= 0x200) {
                             var_s0->priority = 0x1FF;
                         }
-                        #endif
-                        addPrim(&r->ot[var_s0->priority*OT_MULT], r->dr);
+#endif
+                        addPrim(&r->ot[var_s0->priority * OT_MULT], r->dr);
                         r->dr++;
                         g_GpuUsage.drawModes++;
                     }
@@ -2219,14 +2220,14 @@ void RenderPrimitives(void) {
                     env = *(DR_ENV**)&var_s0->r1;
                     if (var_s0->drawMode & DRAW_UNK_1000) {
                         sp80 = g_CurrentBuffer->draw.ofs[0];
-                        #ifndef VERSION_PSP
+#ifndef VERSION_PSP
                         *(s16*)&env->code[2] = sp80;
                         *(s16*)&env->code[7] = sp80;
-                        #endif
-                        #ifdef VERSION_PSP
+#endif
+#ifdef VERSION_PSP
                         *(s16*)&env->code[3] = sp80;
                         *(s16*)&env->code[1] = sp80;
-                        #endif
+#endif
                     }
                     if (var_s0->drawMode & DRAW_UNK_800) {
                         sp18 = g_CurrentBuffer->draw;
@@ -2234,19 +2235,19 @@ void RenderPrimitives(void) {
                         SetDrawEnv(env, &sp18);
                     }
                     *r->env = *env;
-                    #ifndef VERSION_PSP
+#ifndef VERSION_PSP
                     if (var_s0->drawMode & DRAW_UNK_1000) {
                         env = r->env;
                         *(s16*)&env->code[0] += sp80;
                         *(s16*)&env->code[1] += sp80;
                     }
-                    #endif
-                    #ifdef VERSION_PSP
-                    if(var_s0->priority < 0 || var_s0->priority >= 0x200){
+#endif
+#ifdef VERSION_PSP
+                    if (var_s0->priority < 0 || var_s0->priority >= 0x200) {
                         var_s0->priority = 0x1FF;
                     }
-                    #endif
-                    addPrim(&r->ot[var_s0->priority*OT_MULT], r->env);
+#endif
+                    addPrim(&r->ot[var_s0->priority * OT_MULT], r->env);
                     r->env++;
                     g_GpuUsage.env++;
                 }
