@@ -26,15 +26,7 @@ static Overlay StageOverlay = {
     .StageEndCutScene = NULL,
 };
 
-// #include "sprite_banks.h"
-extern signed short* D_8018C754[];
-extern signed short* D_8018C60C[];
-extern signed short* D_8018CED8[];
-static signed short* spriteBanks[] = {
-    NULL, D_8018C754, D_8018C60C, NULL,       NULL, NULL, NULL, NULL,
-    NULL, NULL,       NULL,       D_8018CED8, NULL, NULL, NULL, NULL,
-    NULL, NULL,       NULL,       NULL,       NULL, NULL, NULL, NULL,
-};
+#include "sprite_banks.h"
 
 extern u16* D_8018658C[0x80];
 extern u16* D_8018678C[0x80];
