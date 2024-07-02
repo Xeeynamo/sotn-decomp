@@ -282,13 +282,13 @@ func buildLayers(inputDir string, fileName string, outputDir string) error {
 	return os.WriteFile(path.Join(outputDir, "layers.h"), []byte(sb.String()), 0644)
 }
 
-func buildSpriteGroup(sb *strings.Builder, sprites [][]sprite, mainSymbol string, r *rand.Rand) {
+func buildSpriteGroup(sb *strings.Builder, sprites []*[]sprite, mainSymbol string, r *rand.Rand) {
 	symbols := []string{}
 	for _, spriteGroup := range sprites {
-		if len(spriteGroup) > 0 {
+		if spriteGroup != nil {
 			symbol := fmt.Sprintf("spriteGroup_%08X", r.Int31())
-			size := len(spriteGroup)*11 + 1
-			if (len(spriteGroup) & 1) == 1 { // perform alignment at the end
+			size := len(*spriteGroup)*11 + 1
+			if (len(*spriteGroup) & 1) == 1 { // perform alignment at the end
 				size += 2
 			} else {
 				size += 1
@@ -309,17 +309,17 @@ func buildSpriteGroup(sb *strings.Builder, sprites [][]sprite, mainSymbol string
 	}
 	sb.WriteString("};\n")
 	for i, spriteGroup := range sprites {
-		if len(spriteGroup) == 0 {
+		if spriteGroup == nil {
 			continue
 		}
 		sb.WriteString(fmt.Sprintf("static signed short %s[] = {\n", symbols[i]))
-		sb.WriteString(fmt.Sprintf("    %d,\n", len(spriteGroup)))
-		for _, sprite := range spriteGroup {
+		sb.WriteString(fmt.Sprintf("    %d,\n", len(*spriteGroup)))
+		for _, sprite := range *spriteGroup {
 			sb.WriteString(fmt.Sprintf("    %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d,\n",
 				sprite.Flags, sprite.X, sprite.Y, sprite.Width, sprite.Height,
 				sprite.Clut, sprite.Tileset, sprite.Left, sprite.Top, sprite.Right, sprite.Bottom))
 		}
-		if (len(spriteGroup) & 1) == 1 { // perform alignment at the end
+		if (len(*spriteGroup) & 1) == 1 { // perform alignment at the end
 			sb.WriteString("    0, 0\n")
 		} else {
 			sb.WriteString("    0\n")
