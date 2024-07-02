@@ -10,6 +10,8 @@
 
 #include "stage.h"
 
+#define OVL_EXPORT(x) MAD_##x
+
 typedef enum {
     E_NONE,
     E_BREAKABLE,

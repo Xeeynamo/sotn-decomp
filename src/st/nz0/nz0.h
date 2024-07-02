@@ -1,5 +1,7 @@
 #include "stage.h"
 
+#define OVL_EXPORT(x) NZ0_##x
+
 #define CASTLE_FLAG_BANK 0x7E
 
 typedef enum {
@@ -402,7 +404,6 @@ extern u8 D_80181538[];
 
 // for func_801C4198
 extern u16 D_80180C6A;
-extern s16* D_801A79E4[];
 
 // for EntityMagicallySealedDoor
 extern u8 g_eBlueDoorUV[3][8];

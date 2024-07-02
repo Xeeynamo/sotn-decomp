@@ -12,6 +12,8 @@ PSX_BASE_SYMS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
 
 extract_us: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_US_TARGETS)))
 	$(PNG2S) bdecode config/gfx.game.json disks/us assets/game
+	make extract_assets
+	make build_assets
 extract_hd: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_HD_TARGETS)))
 
 extract_disk_us: extract_disk_psxus
@@ -45,6 +47,25 @@ $(BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.$(VERSION).tt_%.yaml $(PSX_BASE_SYMS) 
 $(BUILD_DIR)/weapon.ld: $(CONFIG_DIR)/splat.$(VERSION).weapon.yaml $(PSX_BASE_SYMS) $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt.in
 	$(SPLAT) $<
 	touch $@
+
+extract_assets: $(SOTNASSETS)
+	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/CEN/CEN.BIN -o assets/st/cen
+	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/DRE/DRE.BIN -o assets/st/dre
+	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/NO3/NO3.BIN -o assets/st/no3
+	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/NP3/NP3.BIN -o assets/st/np3
+	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/NZ0/NZ0.BIN -o assets/st/nz0
+	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/ST0/ST0.BIN -o assets/st/st0
+	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/WRP/WRP.BIN -o assets/st/wrp
+	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/RWRP/RWRP.BIN -o assets/st/rwrp
+build_assets: $(SOTNASSETS)
+	$(SOTNASSETS) build_all -i assets/st/cen -o src/st/cen/
+	$(SOTNASSETS) build_all -i assets/st/dre -o src/st/dre/
+	$(SOTNASSETS) build_all -i assets/st/no3 -o src/st/no3/
+	$(SOTNASSETS) build_all -i assets/st/np3 -o src/st/np3/
+	$(SOTNASSETS) build_all -i assets/st/nz0 -o src/st/nz0/
+	$(SOTNASSETS) build_all -i assets/st/st0 -o src/st/st0/
+	$(SOTNASSETS) build_all -i assets/st/wrp -o src/st/wrp/
+	$(SOTNASSETS) build_all -i assets/st/rwrp -o src/st/rwrp/
 
 $(BUILD_DIR)/assets/dra/memcard_%.png.o: assets/dra/memcard_%.png
 	mkdir -p $(dir $@)
