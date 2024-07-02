@@ -21,17 +21,9 @@ SimFile D_800A024C[] = {
     {"sim:c:\\bin\\c_edf.bin", 16},    {"sim:c:\\bin\\c_edb.bin", 17},
 };
 
-const char* D_800A036C[] = {
-    "sim:c:\\sound\\data\\sd_alk.vh",   "sim:c:\\sound\\data\\sd_alk.vb",
-    "sim:c:\\sound\\data\\sd_rih.vh",   "sim:c:\\sound\\data\\sd_rih.vb",
-    "sim:c:\\sound\\data\\sd_mar.vh",   "sim:c:\\sound\\data\\sd_mar.vb",
-    "sim:c:\\sound\\data\\sd_tuka2.vh", "sim:c:\\sound\\data\\sd_tuka2.vb",
-    "sim:c:\\sound\\data\\sd_tuka2.vh", "sim:c:\\sound\\data\\sd_tuka2.vb",
-    "sim:c:\\sound\\data\\sd_tuka1.vh", "sim:c:\\sound\\data\\sd_tuka1.vb",
-    "sim:c:\\sound\\data\\sd_koa1.vh",  "sim:c:\\sound\\data\\sd_koa1.vb",
-    "sim:c:\\sound\\data\\sd_mak.vh",   "sim:c:\\sound\\data\\sd_mak.vb",
-    "sim:c:\\sound\\data\\sd_tuka2.vh", "sim:c:\\sound\\data\\sd_tuka2.vb",
-    "sim:c:\\sound\\data\\sd_koa2.vh",  "sim:c:\\sound\\data\\sd_koa2.vb",
+static const char* D_800A036C[] = {
+    "VAB/SD_ALK.VH", "VAB/SD_ALK.VB", "VAB/SD_RIH.VH",
+    "VAB/SD_RIH.VB", "VAB/SD_MAR.VH", "VAB/SD_MAR.VB",
 };
 
 const char* D_800A04AC[] = {
@@ -330,46 +322,59 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         }
         return 0;
     case SimFileType_Vh:
+        g_SimFile = &sim;
         if (fileId & 0x8000) {
-            g_SimFile = &D_800A036C[fileId & 0x7FFF];
+            u16 actualFileId = fileId & 0x7FFF;
+            if (actualFileId >= LEN(D_800A036C)) {
+                WARNF("not implemented for VH ID %04X", fileId);
+                return -1;
+            }
+            sim.path = D_800A036C[actualFileId];
+            sim.size = -1;
+            sim.kind = SIM_VH;
         } else {
-            g_SimFile = &D_80136450;
             sim.path = smolbuf;
             snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.VH",
                      g_StagesLba[g_StageId].ovlName,
                      g_StagesLba[g_StageId].ovlName);
-            g_SimFile->addr = aPbav_2;
-            g_SimFile->path = smolbuf;
-            g_SimFile->size = g_StagesLba[g_StageId].vhLen;
-            g_SimFile->kind = SIM_VH;
+            sim.addr = aPbav_2;
+            sim.path = smolbuf;
+            sim.size = g_StagesLba[g_StageId].vhLen;
+            sim.kind = SIM_VH;
         }
-        if (g_SimFile->addr == aPbav) {
+        if (sim.addr == aPbav) {
             g_SimVabId = 0;
         }
-        if (g_SimFile->addr == aPbav_0) {
+        if (sim.addr == aPbav_0) {
             g_SimVabId = 1;
         }
-        if (g_SimFile->addr == aPbav_2) {
+        if (sim.addr == aPbav_2) {
             g_SimVabId = 3;
         }
-        if (g_SimFile->addr == aPbav_1) {
+        if (sim.addr == aPbav_1) {
             g_SimVabId = 2;
         }
         SsVabClose(g_SimVabId);
         break;
     case SimFileType_Vb:
+        g_SimFile = &sim;
         if (fileId & 0x8000) {
-            g_SimFile = &D_800A036C[fileId & 0x7FFF];
+            u16 actualFileId = fileId & 0x7FFF;
+            if (actualFileId >= LEN(D_800A036C)) {
+                WARNF("not implemented for VH ID %04X", fileId);
+                return -1;
+            }
+            sim.path = D_800A036C[actualFileId];
+            sim.size = -1;
+            sim.kind = SIM_VB;
         } else {
-            g_SimFile = &D_80136450;
             sim.path = smolbuf;
             snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.VB",
                      g_StagesLba[g_StageId].ovlName,
                      g_StagesLba[g_StageId].ovlName);
-            g_SimFile->addr = SIM_PTR;
-            g_SimFile->path = sim.path;
-            g_SimFile->size = g_StagesLba[g_StageId].vbLen;
-            g_SimFile->kind = SIM_VB;
+            sim.path = sim.path;
+            sim.size = g_StagesLba[g_StageId].vbLen;
+            sim.kind = SIM_VB;
         }
         break;
     case SimFileType_StageChr:
