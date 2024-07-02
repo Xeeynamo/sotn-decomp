@@ -307,7 +307,7 @@
 <g id="node20" class="node">
 <title>dra.EntityLevelUpAnimation</title>
 <g id="a_node20"><a xlink:href="dra.EntityLevelUpAnimation.svg" xlink:title="dra.EntityLevelUpAnimation">
-<ellipse fill="red" stroke="black" cx="4918.74" cy="-378" rx="143.77" ry="18"/>
+<ellipse fill="green" stroke="black" cx="4918.74" cy="-378" rx="143.77" ry="18"/>
 <text text-anchor="middle" x="4918.74" y="-374.3" font-family="Times,serif" font-size="14.00">dra.EntityLevelUpAnimation</text>
 </a>
 </g>

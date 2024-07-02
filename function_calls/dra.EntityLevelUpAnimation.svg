@@ -12,7 +12,7 @@
 <!-- dra.EntityLevelUpAnimation -->
 <g id="node1" class="node">
 <title>dra.EntityLevelUpAnimation</title>
-<ellipse fill="red" stroke="black" cx="749.44" cy="-198" rx="143.77" ry="18"/>
+<ellipse fill="green" stroke="black" cx="749.44" cy="-198" rx="143.77" ry="18"/>
 <text text-anchor="middle" x="749.44" y="-194.3" font-family="Times,serif" font-size="14.00">dra.EntityLevelUpAnimation</text>
 </g>
 <!-- dra.AllocPrimitives -->
