@@ -1,6 +1,4 @@
 g_GfxBanks = 0x801806DC;
-g_pStObjLayoutHorizontal = 0x80180728;
-g_pStObjLayoutVertical = 0x801807FC;
 PfnEntityUpdates = 0x801808D0;
 g_eBreakableInit = 0x80180A3C;
 g_InitializeData0 = 0x80180A48;
@@ -36,7 +34,6 @@ g_ESoulStealOrbAngles = 0x8018205C;
 g_ESoulStealOrbSprt = 0x8018206C;
 g_ESoulStealOrbAnim = 0x801820CC;
 D_801828C8 = 0x801828C8;
-g_Rooms = 0x80183A7C;
 EntityBreakable = 0x801B26FC;
 EntityShuttingWindow = 0x801B2C20;
 EntityCastleDoor = 0x801B2F30;
