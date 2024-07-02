@@ -323,12 +323,13 @@ func buildSpriteGroup(sb *strings.Builder, sprites [][]sprite, mainSymbol string
 }
 
 func buildSprites(fileName string, outputDir string) error {
+	ovlName := path.Base(outputDir)
 	data, err := os.ReadFile(fileName)
 	if err != nil {
 		return err
 	}
 
-	var spritesBanks [][][]sprite
+	var spritesBanks spriteDefs
 	if err := json.Unmarshal(data, &spritesBanks); err != nil {
 		return err
 	}
@@ -339,21 +340,21 @@ func buildSprites(fileName string, outputDir string) error {
 	sbData := strings.Builder{}
 	sbData.WriteString("// clang-format off\n")
 	symbols := []string{}
-	for _, sprites := range spritesBanks {
+	for i, sprites := range spritesBanks.Banks {
 		if len(sprites) == 0 {
 			symbols = append(symbols, "")
 			continue
 		}
-		symbol := fmt.Sprintf("sprites_%08X", r.Int31())
+		symbol := fmt.Sprintf("sprites_%s_%d", ovlName, i)
 		sbHeader.WriteString(fmt.Sprintf("extern signed short* %s;\n", symbol))
-		buildSpriteGroup(&sbData, sprites, symbol, rand.New(r))
+		buildSpriteGroup(&sbData, sprites, symbol, r)
 		symbols = append(symbols, symbol)
 	}
 
 	sbHeader.WriteString("static signed short* spriteBanks[] = {\n")
-	for _, symbol := range symbols {
-		if len(symbol) > 0 {
-			sbHeader.WriteString(fmt.Sprintf("    &%s,\n", symbol))
+	for _, index := range spritesBanks.Indices {
+		if index >= 0 {
+			sbHeader.WriteString(fmt.Sprintf("    &%s,\n", symbols[index]))
 		} else {
 			sbHeader.WriteString(fmt.Sprintf("    0,\n"))
 		}

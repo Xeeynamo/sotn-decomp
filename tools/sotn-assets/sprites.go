@@ -4,6 +4,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"os"
+	"sort"
 )
 
 type sprite struct {
@@ -18,6 +19,11 @@ type sprite struct {
 	Top     uint16 `json:"top"`
 	Right   uint16 `json:"right"`
 	Bottom  uint16 `json:"bottom"`
+}
+
+type spriteDefs struct {
+	Banks   [][][]sprite `json:"banks"`
+	Indices []int        `json:"indices"`
 }
 
 func readSprites(file *os.File, off PsxOffset) ([]sprite, dataRange, error) {
@@ -92,30 +98,62 @@ func readSpriteBank(file *os.File, off PsxOffset) ([][]sprite, dataRange, error)
 	return spriteBank, mergeDataRanges(append(spriteRanges, headerRange)), nil
 }
 
-func readSpritesBanks(file *os.File, off PsxOffset) ([][][]sprite, dataRange, error) {
+func readSpritesBanks(file *os.File, off PsxOffset) (spriteDefs, dataRange, error) {
 	if err := off.moveFile(file); err != nil {
-		return nil, dataRange{}, err
+		return spriteDefs{}, dataRange{}, err
 	}
 
 	offBanks := make([]PsxOffset, 24)
 	if err := binary.Read(file, binary.LittleEndian, offBanks); err != nil {
-		return nil, dataRange{}, err
+		return spriteDefs{}, dataRange{}, err
 	}
 
-	banks := [][][]sprite{}
+	// the order sprites are stored must be preserved
+	pool := map[PsxOffset][][]sprite{}
 	spriteRanges := []dataRange{}
-	for _, bank := range offBanks {
-		if bank == RamNull {
-			banks = append(banks, [][]sprite{})
+	for _, offset := range offBanks {
+		if offset == RamNull {
 			continue
 		}
-		bank, bankRange, err := readSpriteBank(file, bank)
-		if err != nil {
-			return nil, dataRange{}, fmt.Errorf("unable to read sprite Indices: %w", err)
+		if _, found := pool[offset]; found {
+			continue
 		}
-		banks = append(banks, bank)
+		bank, bankRange, err := readSpriteBank(file, offset)
+		if err != nil {
+			return spriteDefs{}, dataRange{}, fmt.Errorf("unable to read sprite Indices: %w", err)
+		}
+		pool[offset] = bank
 		spriteRanges = append(spriteRanges, bankRange)
 	}
 
-	return banks, mergeDataRanges(spriteRanges), nil
+	// the indices do not guarantee sprites to be stored in a linear order
+	// we must sort the offsets to preserve the order sprites are stored
+	sortedOffsets := make([]PsxOffset, 0, len(pool))
+	for offset := range pool {
+		sortedOffsets = append(sortedOffsets, offset)
+	}
+	sort.Slice(sortedOffsets, func(i, j int) bool { return sortedOffsets[i] < sortedOffsets[j] })
+
+	// create a list of indices to replace the original pointers
+	indices := make([]int, len(offBanks))
+	for i, offset := range offBanks {
+		if offset == RamNull {
+			indices[i] = -1
+		}
+		for j, sortedOffset := range sortedOffsets {
+			if offset == sortedOffset {
+				indices[i] = j
+			}
+		}
+	}
+
+	banks := make([][][]sprite, len(sortedOffsets))
+	for i, offset := range sortedOffsets {
+		banks[i] = pool[offset]
+	}
+
+	return spriteDefs{
+		Banks:   banks,
+		Indices: indices,
+	}, mergeDataRanges(spriteRanges), nil
 }

@@ -18,7 +18,7 @@ type ovl struct {
 	ranges            []dataRange
 	rooms             dataContainer[[]room]
 	layers            dataContainer[[]roomLayers]
-	sprites           dataContainer[[][][]sprite]
+	sprites           dataContainer[spriteDefs]
 	graphics          dataContainer[gfx]
 	layouts           dataContainer[layouts]
 	layoutsExtraRange dataRange
@@ -121,7 +121,7 @@ func getOvlAssets(fileName string) (ovl, error) {
 		}),
 		rooms:             dataContainer[[]room]{dataRange: roomsRange, content: rooms},
 		layers:            dataContainer[[]roomLayers]{dataRange: layersRange, content: layers},
-		sprites:           dataContainer[[][][]sprite]{dataRange: spritesRange, content: sprites},
+		sprites:           dataContainer[spriteDefs]{dataRange: spritesRange, content: sprites},
 		graphics:          dataContainer[gfx]{dataRange: graphicsRange, content: graphics},
 		layouts:           dataContainer[layouts]{dataRange: layoutsRange[1], content: entityLayouts},
 		layoutsExtraRange: layoutsRange[0],

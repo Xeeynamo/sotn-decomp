@@ -50,7 +50,7 @@ void func_801C3F9C(AxePrim* prim) {
 }
 
 // Called by EntityAxeKnight
-extern s16* sprites_0DE76184[];
+extern s16* sprites_nz0_3[];
 s32 func_801C4198(Entity* axeKnight) {
     Primitive* prim;
     s32 primIndex;
@@ -64,7 +64,7 @@ s32 func_801C4198(Entity* axeKnight) {
     switch (axeKnight->step_s) {
     case 0:
         clutBase = D_80180C6A;
-        dataPtr = sprites_0DE76184[axeKnight->animCurFrame];
+        dataPtr = sprites_nz0_3[axeKnight->animCurFrame];
         primIndex = g_api.AllocPrimitives(PRIM_GT4, *dataPtr * 2);
         if (primIndex != -1) {
             axeKnight->flags |= FLAG_HAS_PRIMS;
