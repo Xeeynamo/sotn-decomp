@@ -62,8 +62,13 @@ static const char* D_800A2D64[] = {
 };
 
 static const char* D_800A2D68[] = {
+#if !defined(VERSION_PC)
     _S2("ＡＴＴ"),
     _S2("ＤＥＦ"),
+#else // TODO cheap fix as func_800F66BC does not support unicode
+    "\x00\x01\x01\xFF",
+    "\x02\x03\x04\xFF",
+#endif
 };
 #elif defined(VERSION_HD)
 static const char* D_800A2D10[] = {

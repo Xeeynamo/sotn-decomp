@@ -1778,7 +1778,7 @@ typedef union {
 } PrimBuf;
 
 typedef struct {
-    u_long* ot;
+    OT_TYPE* ot;
     POLY_GT4* gt4;
     POLY_G4* g4;
     POLY_GT3* gt3;
@@ -1797,18 +1797,24 @@ typedef struct {
 #endif
 
 void RenderPrimitives(void) {
-#ifdef VERSION_PC
-    u8 sp[SP_LEN];
-#endif
 #ifdef VERSION_PSP
 #define RECT_LOC 0x12C
-#endif
-#ifndef VERSION_PSP
+#else
 #define RECT_LOC 0x128
 #endif
+
+#ifdef VERSION_PC
+    RECT _rect;
+    RECT* rect = &_rect;
+    PrimitivesRenderer _r;
+    PrimitivesRenderer* r = &_r;
+    PrimBuf _primbuf;
+    PrimBuf* primbuf = &_primbuf;
+#else
     RECT* rect = (RECT*)SP(RECT_LOC);
     PrimitivesRenderer* r = (PrimitivesRenderer*)SP(0x000);
-    PrimBuf* primbuf = (PrimBuf*)SP(0x024);
+    PrimBuf* primbuf = (PrimBuf*)SP(sizeof(PrimitivesRenderer));
+#endif
 
     s32 i;
     Primitive* prim;
