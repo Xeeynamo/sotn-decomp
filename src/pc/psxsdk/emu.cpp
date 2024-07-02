@@ -6,6 +6,7 @@
 #include "common.h"
 #include "mednafen/spu.h"
 #include "mednafen/dma.h"
+#include "cdc.h"
 #include "../../main/psxsdk/libsnd/libsnd_i.h"
 
 PS_SPU* SPU = nullptr;
@@ -551,6 +552,10 @@ extern "C" void run_tests()
 double accum = 0;
 extern "C" void SsSeqCalledTbyT(void);
 #include <string.h>
+
+extern "C" int CdReading();
+extern "C" void ExecCd();
+
 extern "C" void SoundRevCallback(void *userdata, u8 *stream, int len)
 {
     if(!init)
@@ -561,6 +566,16 @@ extern "C" void SoundRevCallback(void *userdata, u8 *stream, int len)
 
     for(int i = 0; i < len / 4; i++)
     {
+        if (AudioBuffer.ReadPos < AudioBuffer.Size) {
+            // ok
+        }
+        else {
+            // generate cd audio
+            if(CdReading())
+            {
+                ExecCd();
+            }
+        }
         // generate one sample
         SPU->UpdateFromCDC(768);
         if(accum >= 735.735)
