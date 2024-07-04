@@ -143,6 +143,10 @@ void PlayerStepJump(void) {
         if (g_Player.unk44 & 0x80) {
             func_8010E83C(1);
             // If cross is not pressed, we bounce up from the hit.
+            // But note that the above function call includes the line:
+            // PLAYER.velocityY = FIX(-4.875);
+            // So we will always bounce up, but this makes us bounce up less,
+            // if not pressing cross.
             if (!(g_Player.padPressed & PAD_CROSS)) {
                 PLAYER.velocityY = FIX(-4.25);
             }
