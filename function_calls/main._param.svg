@@ -12,7 +12,7 @@
 <!-- main._param -->
 <g id="node1" class="node">
 <title>main._param</title>
-<ellipse fill="red" stroke="black" cx="70.84" cy="-18" rx="70.69" ry="18"/>
+<ellipse fill="green" stroke="black" cx="70.84" cy="-18" rx="70.69" ry="18"/>
 <text text-anchor="middle" x="70.84" y="-14.3" font-family="Times,serif" font-size="14.00">main._param</text>
 </g>
 </g>
