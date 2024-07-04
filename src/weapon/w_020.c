@@ -42,7 +42,7 @@ void EntityWeaponAttack(Entity* self) {
     s16 var_s8;
     s16 var_s7;
 
-    sp60 = D_90000_8017AA10[g_GameTimer % 3] & 0x7FFF;
+    sp60 = D_90000_8017AA10[g_GameTimer % 3] % 0x8000;
     var_s4 = 0;
     if (g_HandId != 0) {
         sp60 += 0x18;
