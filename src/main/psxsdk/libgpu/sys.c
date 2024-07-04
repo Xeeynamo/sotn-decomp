@@ -2,23 +2,23 @@
 #include <psxsdk/libgpu.h>
 
 typedef struct {
-    /* 0x00 */ u32 unk00;                   // aIdSysCV1831995
-    /* 0x04 */ void (*addque)();            // _addque
-    /* 0x08 */ int (*addque2)();            // _addque2
-    /* 0x0C */ u32 clr;                     // _clr
-    /* 0x10 */ void (*ctl)(int);            // _ctl
-    /* 0x14 */ u32 unk14;                   // _cwb
-    /* 0x18 */ u32 cwc;                     // _cwc
-    /* 0x1C */ u32 drs;                     // _drs
-    /* 0x20 */ u32 dws;                     // _dws
-    /* 0x24 */ u32 unk24;                   // _exeque
-    /* 0x28 */ int (*getctl)(int);          // _getctl
-    /* 0x2C */ void (*otc)(u32* ot, s32 n); // _otc
-    /* 0x30 */ u32 unk30;                   // _param
-    /* 0x34 */ void (*reset)(int);          // _reset
-    /* 0x38 */ u_long (*status)(void);      // _status
-    /* 0x3C */ void (*sync)(int);           // _sync
-} gpu;                                      // size = 0x40
+    /* 0x00 */ u32 unk00;                       // aIdSysCV1831995
+    /* 0x04 */ void (*addque)();                // _addque
+    /* 0x08 */ int (*addque2)();                // _addque2
+    /* 0x0C */ u32 clr;                         // _clr
+    /* 0x10 */ void (*ctl)(int);                // _ctl
+    /* 0x14 */ s32 (*cwb)(s32* arg0, s32 arg1); // _cwb
+    /* 0x18 */ u32 cwc;                         // _cwc
+    /* 0x1C */ u32 drs;                         // _drs
+    /* 0x20 */ u32 dws;                         // _dws
+    /* 0x24 */ u32 unk24;                       // _exeque
+    /* 0x28 */ int (*getctl)(int);              // _getctl
+    /* 0x2C */ void (*otc)(u32* ot, s32 n);     // _otc
+    /* 0x30 */ u32 unk30;                       // _param
+    /* 0x34 */ void (*reset)(int);              // _reset
+    /* 0x38 */ u_long (*status)(void);          // _status
+    /* 0x3C */ void (*sync)(int);               // _sync
+} gpu;                                          // size = 0x40
 
 const char aIdSysCV1831995[] =
     "$Id: sys.c,v 1.83 1995/05/25 13:43:27 suzu Exp $";
@@ -191,7 +191,19 @@ OT_TYPE* ClearOTagR(OT_TYPE* ot, int n) {
     return ot;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", func_80012DBC);
+struct Temp {
+    s16 unk0;
+    u8 unk2;
+    u8 unk3;
+};
+
+void func_80012DBC(struct Temp* arg0) {
+    u8 temp_s1;
+
+    temp_s1 = arg0->unk3;
+    D_8002C260->sync(0);
+    D_8002C260->cwb((u8*)(arg0) + 4, temp_s1);
+}
 
 void DrawOTag(OT_TYPE* p) {
     if (D_8002C268 >= 2) {
@@ -208,21 +220,20 @@ DRAWENV* PutDrawEnv(DRAWENV* env) {
     SetDrawEnv(&env->dr_env, env);
     env->dr_env.tag |= 0xFFFFFF;
     D_8002C260->addque2(D_8002C260->cwc, &env->dr_env, sizeof(DR_ENV), 0);
-    __builtin_memcpy(&D_80037E60, env, sizeof(DRAWENV));
+    D_80037E60 = *env;
 
     return env;
 }
 
 DRAWENV* GetDrawEnv(DRAWENV* env) {
-    __builtin_memcpy(env, &D_80037E60, sizeof(DRAWENV));
+    *env = D_80037E60;
     return env;
 }
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", PutDispEnv);
 
 DISPENV* GetDispEnv(DISPENV* env) {
-    __builtin_memcpy(env, &D_80037EBC, sizeof(DISPENV));
-
+    *env = D_80037EBC;
     return env;
 }
 
@@ -246,7 +257,17 @@ void SetDrawOffset(DR_OFFSET* p, u_short* ofs) {
     p->code[1] = 0;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", SetPriority);
+void SetPriority(DR_PRIO* p, s32 pbc, s32 pbw) {
+    s32 var_v1;
+
+    *(((u8*)&p->tag) + 3) = 2;
+    var_v1 = 0xE6000000;
+    if (pbc != 0) {
+        var_v1 = 0xE6000002;
+    }
+    p->code[0] = var_v1 | (pbw != 0);
+    p->code[1] = 0;
+}
 
 extern void SetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw) {
     setlen(p, 2);
@@ -277,7 +298,9 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_tw);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_dx);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _status);
+extern s32* D_8002C280;
+
+s32 _status(void) { return *D_8002C280; }
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _otc);
 
@@ -295,9 +318,16 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _cwb);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _cwc);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _param);
+extern s32* D_8002C27C;
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _addque);
+s32 _param(s32 arg0) {
+    *D_8002C280 = arg0 | 0x10000000;
+    return *D_8002C27C & 0xFFFFFF;
+}
+
+void _addque2(s32, s32, s32, s32);
+
+void _addque(s32 arg0, s32 arg1, s32 arg2) { _addque2(arg0, arg1, 0, arg2); }
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _addque2);
 
