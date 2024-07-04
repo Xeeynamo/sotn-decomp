@@ -24,7 +24,7 @@ void PlayerStepJump(void) {
     }
     switch (PLAYER.step_s) {
     case 0x0:
-        walkResult = func_8010E27C();
+        walkResult = CheckMoveDirection();
         if (walkResult != 0) {
             if ((PLAYER.ext.player.anim == 0x16) ||
                 (PLAYER.ext.player.anim == 0x19)) {
@@ -46,7 +46,7 @@ void PlayerStepJump(void) {
         }
         break;
     case 0x1:
-        walkResult = func_8010E27C();
+        walkResult = CheckMoveDirection();
         if (walkResult != 0) {
             SetSpeedX(FIX(1.5));
         }
@@ -183,7 +183,7 @@ void func_80113148(void) {
         func_8010E83C(1);
     } else if (func_8010FDF8(0x9029) == 0) {
         DecelerateX(0x1000);
-        if (func_8010E27C() != 0) {
+        if (CheckMoveDirection() != 0) {
             SetSpeedX(0xC000);
         }
     }
@@ -329,7 +329,7 @@ void func_801131C4(void) {
         func_8010DFF0(1, 1);
         if (PLAYER.animFrameIdx < g_Player.unk54) {
             if (PLAYER.animFrameIdx < 2) {
-                func_8010E27C();
+                CheckMoveDirection();
                 if (!(g_Player.padPressed & PAD_DOWN)) {
                     if (g_Player.unk72 == 0) {
                         PLAYER.step = 0;
@@ -383,7 +383,7 @@ void func_801131C4(void) {
         func_8010DFF0(1, 1);
         if (PLAYER.animFrameIdx < g_Player.unk54) {
             if (PLAYER.animFrameIdx < 3) {
-                func_8010E27C();
+                CheckMoveDirection();
                 if (!(g_Player.padPressed & PAD_DOWN)) {
                     if (g_Player.unk72 == 0) {
                         PLAYER.ext.player.anim =
@@ -427,7 +427,7 @@ void func_801131C4(void) {
         }
     }
     if (local_flags & 1) {
-        if (func_8010E27C()) {
+        if (CheckMoveDirection()) {
             switch ((u8)g_Player.unk72) {
             case 0:
             case 3:

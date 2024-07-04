@@ -3295,7 +3295,7 @@ void func_8012CC30(s32 arg0) {
         if (g_ButtonCombo[COMBO_QCF].buttonsCorrect == COMBO_COMPLETE &&
             IsRelicActive(RELIC_SKILL_OF_WOLF) &&
             CastSpell(SPELL_WOLF_CHARGE)) {
-            func_8010E27C();
+            CheckMoveDirection();
             PLAYER.step_s = 2;
             D_800B0914 = 4;
             SetSpeedX(0x50000);

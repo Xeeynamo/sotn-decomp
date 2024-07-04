@@ -406,7 +406,13 @@ void DecelerateY(s32 amount) {
     }
 }
 
-s32 func_8010E27C(void) {
+// Checks hte player's left/right inputs and compares to the facing direction.
+// If the player is pressing the opposite of facing, we change the facing value
+// to turn the player around, and return -1.
+// If the player is pressing the same direction they are facing, return 1
+// If the player is not pressing left or right, return 0
+// Note that if the player is pressing both left and right, left is ignored.
+s32 CheckMoveDirection(void) {
     if (g_Player.unk44 & 2) {
         return 0;
     }
@@ -609,7 +615,7 @@ void func_8010E83C(s32 arg0) {
     if (g_Player.unk72 != 0) {
         func_8010E7AC();
         return;
-    } else if (func_8010E27C() != 0) {
+    } else if (CheckMoveDirection() != 0) {
         SetPlayerAnim(0x1A);
         SetSpeedX(0x18000);
         g_Player.unk44 = 0;
@@ -644,7 +650,7 @@ void func_8010E940(void) {
 }
 
 void DoGravityJump(void) {
-    if (func_8010E27C() != 0) {
+    if (CheckMoveDirection() != 0) {
         SetSpeedX(FIX(3));
     } else {
         PLAYER.velocityX = 0;
@@ -1056,14 +1062,14 @@ block_45:
         goto block_98;
     case 23: // Unknown, not a direct equippable item (but there are 4 of them)
         PLAYER.step = 0;
-        func_8010E27C();
+        CheckMoveDirection();
         SetSpeedX(FIX(5));
         g_CurrentEntity->velocityY = 0;
         PlaySfx(0x6EF);
         goto block_98;
     case 27: // Estoc
         animVariant = atLedge;
-        func_8010E27C();
+        CheckMoveDirection();
         SetSpeedX(FIX(4));
         PLAYER.velocityX >>= 1;
         PlaySfx(0x6EF);
@@ -1318,7 +1324,7 @@ bool func_8010FDF8(s32 branchFlags) {
     s32 YAccel;
 
     if (branchFlags & 8 && g_Player.unk46 == 0) {
-        func_8010E27C();
+        CheckMoveDirection();
     }
     YAccel = -((branchFlags & 0x8000) != 0) & 0x2C00;
     if (branchFlags & 0x10000) {

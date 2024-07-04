@@ -326,7 +326,7 @@ void func_801120B4(void) {
         if ((u16)PLAYER.animFrameIdx < (u16)g_Player.unk54) {
             local_flags = 0;
             if (PLAYER.animFrameIdx < 2U) {
-                func_8010E27C();
+                CheckMoveDirection();
                 if (g_Player.padPressed & PAD_DOWN) {
                     PLAYER.step = 2;
                     PLAYER.ext.player.anim = 0x26;
@@ -370,7 +370,7 @@ void func_801120B4(void) {
             if (PLAYER.animFrameIdx >= 3U) {
                 break;
             }
-            func_8010E27C();
+            CheckMoveDirection();
             if (g_Player.padPressed & PAD_DOWN) {
                 // Note that to reach this point, our minimum case is 0x41
                 PLAYER.ext.player.anim = D_800B0608[PLAYER.step_s - 0x41] + 2;
@@ -515,7 +515,7 @@ void func_801120B4(void) {
         }
     }
 
-    if ((local_flags & 1) && func_8010E27C()) {
+    if ((local_flags & 1) && CheckMoveDirection()) {
         func_8010E6AC(0);
         local_flags |= 0x8000;
     }
@@ -527,7 +527,7 @@ void func_801120B4(void) {
 void func_80112B64(void) {
     if (func_8010FDF8(0x4301C) == 0) {
         SetSpeedX(0x18000);
-        if (func_8010E27C() == 0) {
+        if (CheckMoveDirection() == 0) {
             func_8010E570(0);
         }
     }
