@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <lba.h>
 
 #define VSYNC_UNK_LEN 1024
 
@@ -21,9 +22,46 @@ SimFile D_800A024C[] = {
     {"sim:c:\\bin\\c_edf.bin", 16},    {"sim:c:\\bin\\c_edb.bin", 17},
 };
 
-static const char* D_800A036C[] = {
-    "VAB/SD_ALK.VH", "VAB/SD_ALK.VB", "VAB/SD_RIH.VH",
-    "VAB/SD_RIH.VB", "VAB/SD_MAR.VH", "VAB/SD_MAR.VB",
+// need a place for the data loaded to hardcoded offset
+u8 D_80280000[110000] = {0};
+
+SimFile D_800A036C[] = {
+    {
+        "VAB/SD_ALK.VH",
+        aPbav_0,
+        SD_ALK_VH_LEN,
+        SIM_VH,
+    },
+    {
+        "VAB/SD_ALK.VB",
+        D_80280000,
+        SD_ALK_VB_LEN,
+        SIM_VB,
+    },
+    {
+        "VAB/SD_RIH.VH",
+        aPbav_0,
+        SD_RIH_VH_LEN,
+        SIM_VH,
+    },
+    {
+        "VAB/SD_RIH.VB",
+        D_80280000,
+        SD_RIH_VB_LEN,
+        SIM_VB,
+    },
+    {
+        "VAB/SD_MAR.VH",
+        aPbav_1,
+        SD_MAR_VH_LEN,
+        SIM_VH,
+    },
+    {
+        "VAB/SD_MAR.VB",
+        D_80280000,
+        SD_MAR_VB_LEN,
+        SIM_VB,
+    },
 };
 
 const char* D_800A04AC[] = {
@@ -197,7 +235,8 @@ s32 LoadFileSimToMem(SimKind kind) {
         }
         break;
     case SIM_VB:
-        if (SsVabTransBodyPartly(SIM_PTR, g_SimFile->size, g_SimVabId) == -1) {
+        if (SsVabTransBodyPartly(
+                g_SimFile->addr, g_SimFile->size, g_SimVabId) == -1) {
             return -1;
         }
         while (SsVabTransCompleted(SS_IMEDIATE) != 1) {
@@ -266,6 +305,28 @@ bool LoadFilePc(FileLoad* file, SimFile* sim) {
     return true;
 }
 
+int readToBuf(char* filename, char* dest) {
+    FILE* file = fopen(filename, "rb");
+
+    if (file == NULL) {
+        printf("Failed to open file");
+        return 1;
+    }
+
+    fseek(file, 0, SEEK_END);
+    long filesize = ftell(file);
+    fseek(file, 0, SEEK_SET);
+
+    // Read the file into the buffer
+    size_t read_size = fread(dest, 1, filesize, file);
+    if (read_size != filesize) {
+        printf("Failed to read file");
+        fclose(file);
+        return 1;
+    }
+    return 0;
+}
+
 s32 LoadFileSim(s32 fileId, SimFileType type) {
     char smolbuf[48];
     char buf[128];
@@ -329,9 +390,11 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
                 WARNF("not implemented for VH ID %04X", fileId);
                 return -1;
             }
-            sim.path = D_800A036C[actualFileId];
-            sim.size = -1;
+            sim.path = D_800A036C[actualFileId].path;
+            sim.size = D_800A036C[actualFileId].size;
+            sim.addr = D_800A036C[actualFileId].addr;
             sim.kind = SIM_VH;
+            return readToBuf(sim.path, sim.addr);
         } else {
             sim.path = smolbuf;
             snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.VH",
@@ -361,12 +424,14 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         if (fileId & 0x8000) {
             u16 actualFileId = fileId & 0x7FFF;
             if (actualFileId >= LEN(D_800A036C)) {
-                WARNF("not implemented for VH ID %04X", fileId);
+                WARNF("not implemented for VB ID %04X", fileId);
                 return -1;
             }
-            sim.path = D_800A036C[actualFileId];
-            sim.size = -1;
+            sim.path = D_800A036C[actualFileId].path;
+            sim.size = D_800A036C[actualFileId].size;
+            sim.addr = D_800A036C[actualFileId].addr;
             sim.kind = SIM_VB;
+            return readToBuf(sim.path, sim.addr);
         } else {
             sim.path = smolbuf;
             snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.VB",
