@@ -156,7 +156,7 @@ void PlayerStepJump(void) {
             (g_Player.padTapped & PAD_CROSS)) {
             SetPlayerAnim(0x22);
             PLAYER.step_s = 0x70;
-            // Create blueprint 5, which has child ID 6, which is func_8011B334
+            // blueprint 5 has child ID 6, which is EntityDiveKickAttack
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 5), 0);
             g_Player.unk44 &= ~0x80;
             PLAYER.velocityY = FIX(6);

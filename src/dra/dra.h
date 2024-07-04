@@ -871,7 +871,7 @@ void func_8011B5A4(Entity* self);
 void EntityGravityBootBeam(Entity* self);
 void EntitySubwpnThrownDagger(Entity* self);
 void func_8011E4BC(Entity* self);
-void func_8011B334(Entity* self);
+void EntityDiveKickAttack(Entity* self);
 void EntityGiantSpinningCross(Entity* self);
 void EntitySubwpnCrashCross(Entity* self);
 void EntitySubwpnCrashCrossParticles(Entity* self);
