@@ -929,7 +929,7 @@ block_160:
         func_80113148();
         break;
     case Player_Jump:
-        func_80112BB0();
+        PlayerStepJump();
         break;
     case Player_MorphBat:
         ControlBatForm();

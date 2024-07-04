@@ -2,55 +2,56 @@
 #include "dra.h"
 #include "sfx.h"
 
-void func_80112BB0(void) {
-    char pad[12];
-    s32 temp_v0;
-    s32 temp_v1;
-    s32 var_s2;
+void PlayerStepJump(void) {
+    s32 walkResult;
+    s16 stepSlot;
 
     if (PLAYER.step_s != 0x58) {
-        DecelerateX(0x1000);
-        if (PLAYER.velocityY < -0x10000) {
+        DecelerateX(FIX(1.0 / 16));
+        if (PLAYER.velocityY < FIX(-1)) {
             if (!(g_Player.unk44 & 0x40) &&
                 !(g_Player.padPressed & PAD_CROSS)) {
-                PLAYER.velocityY = -0x10000;
+                PLAYER.velocityY = FIX(-1);
             }
             if (g_Player.pl_vram_flag & 2) {
-                PLAYER.velocityY = -0x4000;
+                PLAYER.velocityY = FIX(-0.25);
                 g_Player.unk44 |= 0x20;
             }
         }
-        if (func_8010FDF8(0x11029) != 0) {
+        if (func_8010FDF8(0x11029)) {
             return;
         }
     }
     switch (PLAYER.step_s) {
     case 0x0:
-        var_s2 = func_8010E27C();
-        if (var_s2 != 0) {
+        walkResult = func_8010E27C();
+        if (walkResult != 0) {
             if ((PLAYER.ext.player.anim == 0x16) ||
                 (PLAYER.ext.player.anim == 0x19)) {
-                SetPlayerAnim(0x18U);
+                SetPlayerAnim(0x18);
             }
-            SetSpeedX(0x18000);
+            SetSpeedX(FIX(1.5));
         } else if ((PLAYER.ext.player.anim == 0x1A) ||
                    (PLAYER.ext.player.anim == 0x18)) {
-            SetPlayerAnim(0x19U);
+            SetPlayerAnim(0x19);
         }
-        if (var_s2 <= 0) {
-            g_Player.unk44 &= 0xFFEF;
+        if (walkResult <= 0) {
+            g_Player.unk44 &= ~0x10;
         }
         if (PLAYER.velocityY > 0) {
             if (PLAYER.ext.player.anim != 0x1B) {
-                SetPlayerAnim(0x1BU);
+                SetPlayerAnim(0x1B);
             }
             PLAYER.step_s = 1;
         }
         break;
     case 0x1:
-        var_s2 = func_8010E27C();
-        if ((var_s2 == 0) || (SetSpeedX(0x18000), (var_s2 <= 0))) {
-            g_Player.unk44 &= 0xFFEF;
+        walkResult = func_8010E27C();
+        if (walkResult != 0) {
+            SetSpeedX(FIX(1.5));
+        }
+        if (walkResult <= 0) {
+            g_Player.unk44 &= ~0x10;
         }
         break;
     case 0x58:
@@ -70,12 +71,16 @@ void func_80112BB0(void) {
     case 0x57:
     case 0x5B:
         func_8010DFF0(1, 1);
-        DecelerateX(0x1000);
+        DecelerateX(FIX(1.0 / 16));
         if (PLAYER.ext.player.anim == 0x6C) {
             if (PLAYER.animFrameDuration < 0) {
-                temp_v0 = (PLAYER.velocityY > 0x10000) ^ 1;
-                PLAYER.step_s = D_800ACF7C[temp_v0].step_s;
-                SetPlayerAnim(D_800ACF7C[temp_v0].anim);
+                if (PLAYER.velocityY > FIX(1)) {
+                    stepSlot = 0;
+                } else {
+                    stepSlot = 2;
+                }
+                PLAYER.step_s = D_800ACF7C[stepSlot];
+                SetPlayerAnim((u8)D_800ACF7C[stepSlot + 1]);
                 func_8010FAF4();
                 g_Player.unk44 = 1;
                 D_80138FC8 = 0xFE;
@@ -95,11 +100,12 @@ void func_80112BB0(void) {
     case 0x46:
     case 0x47:
     case 0x48:
-    case 0x49:
     case 0x4A:
+    case 0x49:
     case 0x4B:
     case 0x4C:
     case 0x4D:
+    case 0x5D:
     case 0x4E:
     case 0x4F:
     case 0x50:
@@ -110,21 +116,24 @@ void func_80112BB0(void) {
     case 0x56:
     case 0x5A:
     case 0x5C:
-    case 0x5D:
         func_8010DFF0(1, 1);
-    case 0x40:
     case 0x59:
+    case 0x40:
         func_8010DFF0(1, 1);
         if (g_Player.padPressed & PAD_LEFT) {
-            PLAYER.velocityX = -0x18000;
+            PLAYER.velocityX = FIX(-1.5);
         }
         if (g_Player.padPressed & PAD_RIGHT) {
-            PLAYER.velocityX = 0x18000;
+            PLAYER.velocityX = FIX(1.5);
         }
         if (PLAYER.animFrameDuration < 0) {
-            temp_v1 = (PLAYER.velocityY > 0x10000) ^ 1;
-            PLAYER.step_s = D_800ACF7C[temp_v1].step_s;
-            SetPlayerAnim(D_800ACF7C[temp_v1].anim);
+            if (PLAYER.velocityY > FIX(1)) {
+                stepSlot = 0;
+            } else {
+                stepSlot = 2;
+            }
+            PLAYER.step_s = D_800ACF7C[stepSlot];
+            SetPlayerAnim((u8)D_800ACF7C[stepSlot + 1]);
             func_8010FAF4();
         }
         break;
@@ -132,35 +141,33 @@ void func_80112BB0(void) {
         if (g_Player.unk44 & 0x80) {
             func_8010E83C(1);
             if (!(g_Player.padPressed & PAD_CROSS)) {
-                PLAYER.velocityY = -0x44000;
+                PLAYER.velocityY = FIX(-4.25);
             }
             g_Player.unk44 |= 0x40;
         }
         break;
     }
-
-    if (PLAYER.step_s < 2) {
-        if (g_Player.unk44 & 1) {
-            if ((g_Player.padPressed & PAD_DOWN) &&
-                (g_Player.padTapped & PAD_CROSS)) {
-                SetPlayerAnim(0x22U);
-                PLAYER.step_s = 0x70;
-                CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 5), 0);
-                PLAYER.velocityY = 0x60000;
-                g_Player.unk44 &= 0xFF7F;
-                if (var_s2 != 0) {
-                    SetSpeedX(0x48000);
-                }
-                PlaySfx(0x6F0);
-            }
-            if (g_Player.unk44 & 0x100) {
-                PLAYER.velocityX = 0;
-            }
+    // This block appears to handle the Dive-Kick move.
+    if (PLAYER.step_s == 0 || PLAYER.step_s == 1) {
+        if (!(g_Player.unk44 & 1)) {
+            return;
         }
-    } else {
-        if (g_Player.unk44 & 0x100) {
-            PLAYER.velocityX = 0;
+        if ((g_Player.padPressed & PAD_DOWN) &&
+            (g_Player.padTapped & PAD_CROSS)) {
+            SetPlayerAnim(0x22);
+            PLAYER.step_s = 0x70;
+            // Create blueprint 5, which has child ID 6, which is func_8011B334
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 5), 0);
+            g_Player.unk44 &= ~0x80;
+            PLAYER.velocityY = FIX(6);
+            if (walkResult != 0) {
+                SetSpeedX(FIX(4.5));
+            }
+            PlaySfx(0x6F0);
         }
+    }
+    if (g_Player.unk44 & 0x100) {
+        PLAYER.velocityX = 0;
     }
 }
 
