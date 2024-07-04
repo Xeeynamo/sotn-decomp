@@ -3392,7 +3392,7 @@
 - [✅ DecelerateY](function_calls/w_020.DecelerateY.svg?raw=1)
 - [✅ DestroyEntity](function_calls/w_020.DestroyEntity.svg?raw=1)
 - [✅ DestroyEntityWeapon](function_calls/w_020.DestroyEntityWeapon.svg?raw=1)
-- [❌ EntityWeaponAttack](function_calls/w_020.EntityWeaponAttack.svg?raw=1)
+- [✅ EntityWeaponAttack](function_calls/w_020.EntityWeaponAttack.svg?raw=1)
 - [✅ EntityWeaponShieldSpell](function_calls/w_020.EntityWeaponShieldSpell.svg?raw=1)
 - [✅ GetWeaponId](function_calls/w_020.GetWeaponId.svg?raw=1)
 - [✅ LoadWeaponPalette](function_calls/w_020.LoadWeaponPalette.svg?raw=1)

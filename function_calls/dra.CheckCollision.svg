@@ -1908,7 +1908,7 @@
 <g id="node119" class="node">
 <title>w_020.EntityWeaponAttack</title>
 <g id="a_node119"><a xlink:href="w_020.EntityWeaponAttack.svg" xlink:title="w_020.EntityWeaponAttack">
-<ellipse fill="red" stroke="black" cx="28300.39" cy="-214.23" rx="138.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="28300.39" cy="-214.23" rx="138.38" ry="18"/>
 <text text-anchor="middle" x="28300.39" y="-210.53" font-family="Times,serif" font-size="14.00">w_020.EntityWeaponAttack</text>
 </a>
 </g>
