@@ -66,7 +66,7 @@ void PlayerStepSlideKick(void) {
             PLAYER.velocityY = FIX(-4.5);
         }
         PLAYER.step_s = 2;
-        g_Player.unk44 |= 0xA;
+        g_Player.unk44 |= (8 + 2);
         g_Player.unk44 &= ~4;
         return;
     }
