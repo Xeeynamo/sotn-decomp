@@ -406,7 +406,7 @@ void DecelerateY(s32 amount) {
     }
 }
 
-// Checks hte player's left/right inputs and compares to the facing direction.
+// Checks the player's left/right inputs and compares to the facing direction.
 // If the player is pressing the opposite of facing, we change the facing value
 // to turn the player around, and return -1.
 // If the player is pressing the same direction they are facing, return 1
