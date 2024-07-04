@@ -503,6 +503,11 @@ typedef struct {
     u_long code[2];
 } DR_OFFSET; // Drawing Offset
 
+typedef struct {
+    O_TAG;
+    u32 code[2];
+} DR_PRIO; /* Priority */
+
 typedef struct PixPattern {
     u8 w;
     u8 h;
