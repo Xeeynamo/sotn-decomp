@@ -619,7 +619,7 @@ void func_8010E83C(s32 arg0) {
         g_Player.unk44 = 4;
     }
 
-    PLAYER.velocityY = 0xFFFB0000 | 0x2000;
+    PLAYER.velocityY = FIX(-4.875);
     SetPlayerStep(Player_Jump);
 
     if (g_Player.unk50 == 1) {

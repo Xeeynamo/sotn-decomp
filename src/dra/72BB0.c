@@ -137,9 +137,12 @@ void PlayerStepJump(void) {
             func_8010FAF4();
         }
         break;
+    // This case is when we're dive-kicking
     case 0x70:
+        // This flag is set in EntityDiveKickAttack if it detects a hit
         if (g_Player.unk44 & 0x80) {
             func_8010E83C(1);
+            // If cross is not pressed, we bounce up from the hit.
             if (!(g_Player.padPressed & PAD_CROSS)) {
                 PLAYER.velocityY = FIX(-4.25);
             }
@@ -147,7 +150,7 @@ void PlayerStepJump(void) {
         }
         break;
     }
-    // This block appears to handle the Dive-Kick move.
+    // This block initiates a dive-kick
     if (PLAYER.step_s == 0 || PLAYER.step_s == 1) {
         if (!(g_Player.unk44 & 1)) {
             return;
