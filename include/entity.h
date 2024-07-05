@@ -211,6 +211,20 @@ typedef struct {
 } ET_Weapon;
 
 typedef struct {
+    s16 timer;
+    s16 unk7E;
+    s32 unk80;
+    s16 unk84;
+    s16 unk86;
+    s16 unk88;
+    s16 unk8A;
+    s32 unk8C;
+    s16 unk90;
+    s16 unk92;
+    s16 unk94;
+} ET_KarmaCoin;
+
+typedef struct {
     s16 angle;
     s16 unk7E;
     s16 unk80;
@@ -1187,6 +1201,7 @@ typedef union { // offset=0x7C
     ET_MessageBox messageBox;
     ET_Weapon weapon;
     ET_Shield shield;
+    ET_KarmaCoin karmacoin;
     ET_HeavenSword heavenSword;
     ET_HeavenSword2 heavenSword2;
     ET_MedusaShieldLaser medshieldlaser;
