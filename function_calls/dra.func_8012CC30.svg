@@ -19,97 +19,97 @@
 <g id="node2" class="node">
 <title>dra.CastSpell</title>
 <g id="a_node2"><a xlink:href="dra.CastSpell.svg" xlink:title="dra.CastSpell">
-<ellipse fill="green" stroke="black" cx="198.04" cy="-18" rx="73.39" ry="18"/>
-<text text-anchor="middle" x="198.04" y="-14.3" font-family="Times,serif" font-size="14.00">dra.CastSpell</text>
+<ellipse fill="green" stroke="black" cx="118.04" cy="-18" rx="73.39" ry="18"/>
+<text text-anchor="middle" x="118.04" y="-14.3" font-family="Times,serif" font-size="14.00">dra.CastSpell</text>
 </a>
 </g>
 </g>
 <!-- dra.func_8012CC30&#45;&gt;dra.CastSpell -->
 <g id="edge1" class="edge">
 <title>dra.func_8012CC30&#45;&gt;dra.CastSpell</title>
-<path fill="none" stroke="black" d="M621.27,-181.36C535.5,-148.46 336.79,-72.23 245.49,-37.2"/>
-<polygon fill="black" stroke="black" points="246.53,-33.85 235.94,-33.54 244.03,-40.39 246.53,-33.85"/>
-<text text-anchor="middle" x="230.94" y="-37.34" font-family="Times,serif" font-size="14.00">1</text>
+<path fill="none" stroke="black" d="M615.66,-181.82C514.73,-148.8 275.74,-70.6 169.96,-35.99"/>
+<polygon fill="black" stroke="black" points="170.74,-32.56 160.15,-32.78 168.57,-39.22 170.74,-32.56"/>
+<text text-anchor="middle" x="155.15" y="-36.58" font-family="Times,serif" font-size="14.00">1</text>
+</g>
+<!-- dra.CheckMoveDirection -->
+<g id="node3" class="node">
+<title>dra.CheckMoveDirection</title>
+<g id="a_node3"><a xlink:href="dra.CheckMoveDirection.svg" xlink:title="dra.CheckMoveDirection">
+<ellipse fill="green" stroke="black" cx="336.04" cy="-18" rx="126.18" ry="18"/>
+<text text-anchor="middle" x="336.04" y="-14.3" font-family="Times,serif" font-size="14.00">dra.CheckMoveDirection</text>
+</a>
+</g>
+</g>
+<!-- dra.func_8012CC30&#45;&gt;dra.CheckMoveDirection -->
+<g id="edge2" class="edge">
+<title>dra.func_8012CC30&#45;&gt;dra.CheckMoveDirection</title>
+<path fill="none" stroke="black" d="M632.25,-180.73C573.25,-148.52 441.56,-76.62 375.47,-40.53"/>
+<polygon fill="black" stroke="black" points="377.05,-37.4 366.6,-35.68 373.69,-43.55 377.05,-37.4"/>
+<text text-anchor="middle" x="361.6" y="-39.48" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 <!-- dra.IsRelicActive -->
-<g id="node3" class="node">
+<g id="node4" class="node">
 <title>dra.IsRelicActive</title>
-<g id="a_node3"><a xlink:href="dra.IsRelicActive.svg" xlink:title="dra.IsRelicActive">
-<ellipse fill="green" stroke="black" cx="378.04" cy="-18" rx="89.08" ry="18"/>
-<text text-anchor="middle" x="378.04" y="-14.3" font-family="Times,serif" font-size="14.00">dra.IsRelicActive</text>
+<g id="a_node4"><a xlink:href="dra.IsRelicActive.svg" xlink:title="dra.IsRelicActive">
+<ellipse fill="green" stroke="black" cx="569.04" cy="-18" rx="89.08" ry="18"/>
+<text text-anchor="middle" x="569.04" y="-14.3" font-family="Times,serif" font-size="14.00">dra.IsRelicActive</text>
 </a>
 </g>
 </g>
 <!-- dra.func_8012CC30&#45;&gt;dra.IsRelicActive -->
-<g id="edge2" class="edge">
+<g id="edge3" class="edge">
 <title>dra.func_8012CC30&#45;&gt;dra.IsRelicActive</title>
-<path fill="none" stroke="black" d="M635.83,-180.57C584.48,-148.39 470.6,-77.01 412.94,-40.87"/>
-<polygon fill="black" stroke="black" points="414.52,-37.73 404.19,-35.39 410.8,-43.66 414.52,-37.73"/>
-<text text-anchor="middle" x="399.19" y="-39.19" font-family="Times,serif" font-size="14.00">1</text>
+<path fill="none" stroke="black" d="M653.12,-179.93C636.81,-148.7 602.04,-82.17 582.72,-45.18"/>
+<polygon fill="black" stroke="black" points="585.66,-43.26 577.93,-36.02 579.46,-46.5 585.66,-43.26"/>
+<text text-anchor="middle" x="572.93" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 <!-- dra.LearnSpell -->
-<g id="node4" class="node">
+<g id="node5" class="node">
 <title>dra.LearnSpell</title>
-<g id="a_node4"><a xlink:href="dra.LearnSpell.svg" xlink:title="dra.LearnSpell">
-<ellipse fill="green" stroke="black" cx="564.04" cy="-18" rx="79.09" ry="18"/>
-<text text-anchor="middle" x="564.04" y="-14.3" font-family="Times,serif" font-size="14.00">dra.LearnSpell</text>
+<g id="a_node5"><a xlink:href="dra.LearnSpell.svg" xlink:title="dra.LearnSpell">
+<ellipse fill="green" stroke="black" cx="755.04" cy="-18" rx="79.09" ry="18"/>
+<text text-anchor="middle" x="755.04" y="-14.3" font-family="Times,serif" font-size="14.00">dra.LearnSpell</text>
 </a>
 </g>
 </g>
 <!-- dra.func_8012CC30&#45;&gt;dra.LearnSpell -->
-<g id="edge3" class="edge">
+<g id="edge4" class="edge">
 <title>dra.func_8012CC30&#45;&gt;dra.LearnSpell</title>
-<path fill="none" stroke="black" d="M652.64,-179.93C635.45,-148.7 598.82,-82.17 578.45,-45.18"/>
-<polygon fill="black" stroke="black" points="581.3,-43.09 573.41,-36.02 575.17,-46.46 581.3,-43.09"/>
-<text text-anchor="middle" x="568.41" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
+<path fill="none" stroke="black" d="M670.96,-179.93C687.28,-148.7 722.04,-82.17 741.36,-45.18"/>
+<polygon fill="black" stroke="black" points="744.62,-46.5 746.15,-36.02 738.42,-43.26 744.62,-46.5"/>
+<text text-anchor="middle" x="741.15" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 <!-- dra.SetPlayerAnim -->
-<g id="node5" class="node">
+<g id="node6" class="node">
 <title>dra.SetPlayerAnim</title>
-<g id="a_node5"><a xlink:href="dra.SetPlayerAnim.svg" xlink:title="dra.SetPlayerAnim">
-<ellipse fill="green" stroke="black" cx="760.04" cy="-18" rx="98.58" ry="18"/>
-<text text-anchor="middle" x="760.04" y="-14.3" font-family="Times,serif" font-size="14.00">dra.SetPlayerAnim</text>
+<g id="a_node6"><a xlink:href="dra.SetPlayerAnim.svg" xlink:title="dra.SetPlayerAnim">
+<ellipse fill="green" stroke="black" cx="951.04" cy="-18" rx="98.58" ry="18"/>
+<text text-anchor="middle" x="951.04" y="-14.3" font-family="Times,serif" font-size="14.00">dra.SetPlayerAnim</text>
 </a>
 </g>
 </g>
 <!-- dra.func_8012CC30&#45;&gt;dra.SetPlayerAnim -->
-<g id="edge4" class="edge">
+<g id="edge5" class="edge">
 <title>dra.func_8012CC30&#45;&gt;dra.SetPlayerAnim</title>
-<path fill="none" stroke="black" d="M671.44,-179.93C688.63,-148.7 725.26,-82.17 745.63,-45.18"/>
-<polygon fill="black" stroke="black" points="748.92,-46.46 750.67,-36.02 742.78,-43.09 748.92,-46.46"/>
-<text text-anchor="middle" x="745.67" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
+<path fill="none" stroke="black" d="M688.71,-180.57C741.08,-148.32 857.33,-76.72 915.89,-40.65"/>
+<polygon fill="black" stroke="black" points="917.76,-43.61 924.43,-35.39 914.08,-37.65 917.76,-43.61"/>
+<text text-anchor="middle" x="919.43" y="-39.19" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 <!-- dra.SetSpeedX -->
-<g id="node6" class="node">
+<g id="node7" class="node">
 <title>dra.SetSpeedX</title>
-<g id="a_node6"><a xlink:href="dra.SetSpeedX.svg" xlink:title="dra.SetSpeedX">
-<ellipse fill="green" stroke="black" cx="957.04" cy="-18" rx="79.89" ry="18"/>
-<text text-anchor="middle" x="957.04" y="-14.3" font-family="Times,serif" font-size="14.00">dra.SetSpeedX</text>
+<g id="a_node7"><a xlink:href="dra.SetSpeedX.svg" xlink:title="dra.SetSpeedX">
+<ellipse fill="green" stroke="black" cx="1148.04" cy="-18" rx="79.89" ry="18"/>
+<text text-anchor="middle" x="1148.04" y="-14.3" font-family="Times,serif" font-size="14.00">dra.SetSpeedX</text>
 </a>
 </g>
 </g>
 <!-- dra.func_8012CC30&#45;&gt;dra.SetSpeedX -->
-<g id="edge5" class="edge">
-<title>dra.func_8012CC30&#45;&gt;dra.SetSpeedX</title>
-<path fill="none" stroke="black" d="M689.27,-180.57C742.86,-148.24 861.99,-76.35 921.61,-40.38"/>
-<polygon fill="black" stroke="black" points="923.55,-43.29 930.31,-35.13 919.94,-37.3 923.55,-43.29"/>
-<text text-anchor="middle" x="925.31" y="-38.93" font-family="Times,serif" font-size="14.00">1</text>
-</g>
-<!-- dra.func_8010E27C -->
-<g id="node7" class="node">
-<title>dra.func_8010E27C</title>
-<g id="a_node7"><a xlink:href="dra.func_8010E27C.svg" xlink:title="dra.func_8010E27C">
-<ellipse fill="green" stroke="black" cx="1158.04" cy="-18" rx="102.88" ry="18"/>
-<text text-anchor="middle" x="1158.04" y="-14.3" font-family="Times,serif" font-size="14.00">dra.func_8010E27C</text>
-</a>
-</g>
-</g>
-<!-- dra.func_8012CC30&#45;&gt;dra.func_8010E27C -->
 <g id="edge6" class="edge">
-<title>dra.func_8012CC30&#45;&gt;dra.func_8010E27C</title>
-<path fill="none" stroke="black" d="M705.19,-181.52C796.09,-148.9 1006.98,-73.21 1105.53,-37.84"/>
-<polygon fill="black" stroke="black" points="1106.76,-41.12 1114.99,-34.45 1104.4,-34.53 1106.76,-41.12"/>
-<text text-anchor="middle" x="1109.99" y="-38.25" font-family="Times,serif" font-size="14.00">1</text>
+<title>dra.func_8012CC30&#45;&gt;dra.SetSpeedX</title>
+<path fill="none" stroke="black" d="M704.32,-181.52C793.96,-148.68 1002.72,-72.22 1098.46,-37.16"/>
+<polygon fill="black" stroke="black" points="1099.73,-40.42 1107.92,-33.7 1097.32,-33.85 1099.73,-40.42"/>
+<text text-anchor="middle" x="1102.92" y="-37.5" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 <!-- dra.func_8012D024 -->
 <g id="node8" class="node">
