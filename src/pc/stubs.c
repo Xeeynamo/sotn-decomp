@@ -156,21 +156,21 @@ u8 D_800ACF4C[0x200] = { // crouching anim
     0x00, 0x11, 0x04, 0x15, 0x01, 0x10, 0x03, 0x23};
 u8 D_800ACF54[] = { // idle anim
     4, 5, 10, 11, 14, 15, 29, 30, 4, 3};
-s32 D_800ACF74;                  // These two might...
-s32 D_800ACF78;                  // ...be an array
-PlayerFallingAnim D_800ACF7C[2]; // random size just to play safe
-s16 D_800ACF60[6];               // guessed size
-s16 D_800ACF6C[4];               // guessed size
-s16 D_800ACF8A[5];               // guessed size
-s16 D_800ACF94[16];              // guessed size
-u8 D_800ACFB4[20][4];            // TODO AnimationFrames*[], random size
-s32 D_800B0830[99];              // random size to play safe
-s32 D_800B083C[99];              // random size to play safe
-u8 D_800B0846[18];               // guessed size
-u16 D_800B0858[2];               // might be part of the next array
-s16 D_800B0860[99];              // random size to play safe
-AnimationFrame D_800B0798[40];   // random size to play safe
-u8 D_800B0F94[100][5];           // random size to play safe
+s32 D_800ACF74;                // These two might...
+s32 D_800ACF78;                // ...be an array
+s16 D_800ACF7C[2];             // random size just to play safe
+s16 D_800ACF60[6];             // guessed size
+s16 D_800ACF6C[4];             // guessed size
+s16 D_800ACF8A[5];             // guessed size
+s16 D_800ACF94[16];            // guessed size
+u8 D_800ACFB4[20][4];          // TODO AnimationFrames*[], random size
+s32 D_800B0830[99];            // random size to play safe
+s32 D_800B083C[99];            // random size to play safe
+u8 D_800B0846[18];             // guessed size
+u16 D_800B0858[2];             // might be part of the next array
+s16 D_800B0860[99];            // random size to play safe
+AnimationFrame D_800B0798[40]; // random size to play safe
+u8 D_800B0F94[100][5];         // random size to play safe
 SVECTOR stubbbbbbbb = {0};
 SVECTOR* D_800B0CB4[][4] = {
     // a lot of random data to play safe

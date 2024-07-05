@@ -548,8 +548,8 @@ block_48:
     case 25:
         func_80158FA4();
         break;
-    case 26:
-        func_8015BE84();
+    case Player_SlideKick:
+        PlayerStepSlideKick();
         break;
     case 24:
         func_8015C178();

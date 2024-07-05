@@ -218,7 +218,7 @@ void func_8012DBBC(void) {
     }
     switch (D_800B0914) {
     case 0:
-        func_8010E27C();
+        CheckMoveDirection();
         break;
     case 1:
         if (((g_Player.pl_vram_flag & 4) && PLAYER.velocityX > FIX(5.5)) ||
@@ -343,7 +343,7 @@ void func_8012E040(void) {
     }
     switch (D_800B0914) {
     case 0:
-        func_8010E27C();
+        CheckMoveDirection();
         if (var_s0 != 0) {
             if (abs(PLAYER.velocityX) < FIX(1)) {
                 SetSpeedX(FIX(1));
@@ -351,7 +351,7 @@ void func_8012E040(void) {
         }
         break;
     case 1:
-        func_8010E27C();
+        CheckMoveDirection();
         if (var_s0 != 0) {
             if (abs(PLAYER.velocityX) >= FIX(1)) {
                 DecelerateX(FIX(16.0 / 128));
@@ -379,7 +379,7 @@ void func_8012E040(void) {
         }
         if ((PLAYER.facingLeft != 0 && (g_Player.padPressed & PAD_RIGHT)) ||
             (PLAYER.facingLeft == 0 && (g_Player.padPressed & PAD_LEFT))) {
-            func_8010E27C();
+            CheckMoveDirection();
             D_800B0914 = 1;
             SetSpeedX(FIX(1));
             break;

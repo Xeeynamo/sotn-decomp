@@ -319,12 +319,7 @@ extern s16 D_800ACF6C[];
 extern s32 D_800ACF74; // These two might...
 extern s32 D_800ACF78; // ...be an array
 
-typedef struct {
-    s16 step_s;
-    u8 anim;
-    u8 unused;
-} PlayerFallingAnim;
-extern PlayerFallingAnim D_800ACF7C[2];
+extern s16 D_800ACF7C[2];
 
 extern s16 D_800ACF84[8]; // collection of sounds
 extern s16 D_800ACF94[];
@@ -876,7 +871,7 @@ void func_8011B5A4(Entity* self);
 void EntityGravityBootBeam(Entity* self);
 void EntitySubwpnThrownDagger(Entity* self);
 void func_8011E4BC(Entity* self);
-void func_8011B334(Entity* self);
+void EntityDiveKickAttack(Entity* self);
 void EntityGiantSpinningCross(Entity* self);
 void EntitySubwpnCrashCross(Entity* self);
 void EntitySubwpnCrashCrossParticles(Entity* self);

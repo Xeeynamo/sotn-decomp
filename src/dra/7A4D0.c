@@ -9,7 +9,7 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     EntityGravityBootBeam,
     EntitySubwpnThrownDagger,
     func_8011E4BC,
-    func_8011B334,
+    EntityDiveKickAttack,
     EntityGiantSpinningCross,
     EntitySubwpnCrashCross,
     EntitySubwpnCrashCrossParticles,
@@ -473,36 +473,37 @@ void EntityUnarmedAttack(Entity* entity) {
     }
 }
 
-void func_8011B334(Entity* entity) {
+void EntityDiveKickAttack(Entity* self) {
     Equipment equip;
+    s32 zero = 0; // needed for PSP
 
     if (PLAYER.step_s != 0x70) {
-        DestroyEntity(entity);
+        DestroyEntity(self);
         return;
     }
 
-    entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
-    entity->facingLeft = PLAYER.facingLeft;
-    entity->posY.i.hi = PLAYER.posY.i.hi;
-    entity->posX.i.hi = PLAYER.posX.i.hi;
+    self->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
+    self->facingLeft = PLAYER.facingLeft;
+    self->posY.i.hi = PLAYER.posY.i.hi;
+    self->posX.i.hi = PLAYER.posX.i.hi;
     g_Player.unk44 &= ~0x80;
 
-    if (entity->step == 0) {
-        GetEquipProperties(0, &equip, 0);
-        entity->attack = equip.attack;
-        entity->attackElement = equip.element;
-        entity->hitboxState = equip.hitType;
-        entity->nFramesInvincibility = equip.enemyInvincibilityFrames;
-        entity->stunFrames = equip.stunFrames;
-        entity->hitEffect = equip.hitEffect;
-        entity->entityRoomIndex = equip.criticalRate;
-        func_80118894(entity);
-        entity->hitboxOffX = 9;
-        entity->hitboxOffY = 21;
-        entity->hitboxWidth = 4;
-        entity->hitboxHeight = 5;
-        entity->step++;
-    } else if (entity->hitFlags == 1) {
+    if (self->step == 0) {
+        GetEquipProperties(zero, &equip, 0);
+        self->attack = equip.attack;
+        self->attackElement = equip.element;
+        self->hitboxState = equip.hitType;
+        self->nFramesInvincibility = equip.enemyInvincibilityFrames;
+        self->stunFrames = equip.stunFrames;
+        self->hitEffect = equip.hitEffect;
+        self->entityRoomIndex = equip.criticalRate;
+        func_80118894(self);
+        self->hitboxOffX = 9;
+        self->hitboxOffY = 21;
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 5;
+        self->step++;
+    } else if (self->hitFlags == 1) {
         g_Player.unk44 |= 0x80;
     }
 }

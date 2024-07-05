@@ -143,7 +143,7 @@ void PlayerStepHellfire(void) {
         break;
     case 2:
         PLAYER.velocityX = 0;
-        if (func_8010E27C() != 0) {
+        if (CheckMoveDirection() != 0) {
             if (g_Player.padPressed & PAD_RIGHT) {
                 if ((g_Player.colliders[2].effects &
                      (EFFECT_UNK_8000 + EFFECT_SOLID)) ||
@@ -165,7 +165,7 @@ void PlayerStepHellfire(void) {
         }
         break;
     case 3:
-        func_8010E27C();
+        CheckMoveDirection();
         if (g_Player.unk5C == 3) {
             SetPlayerAnim(0x3C);
             PLAYER.step_s += 1;
@@ -490,7 +490,7 @@ void ControlBatForm(void) {
         PLAYER.animFrameDuration = 1;
         PLAYER.animFrameIdx = 2;
         PLAYER.palette = 0x8100;
-        func_8010E27C();
+        CheckMoveDirection();
         PLAYER.step_s++;
         break;
     case 1:
@@ -861,7 +861,7 @@ void func_80117AC0(void) {
         collisionCount += 1;
     }
     PLAYER.rotZ = 0;
-    func_8010E27C();
+    CheckMoveDirection();
     if (collisionCount == 0) {
         func_8010E7AC();
         return;
@@ -914,7 +914,7 @@ bool MistFormFinished(void) {
         HandleTransformationMP(FORM_MIST, REDUCE) < 0 ||
         (!IsRelicActive(RELIC_POWER_OF_MIST) &&
          (g_MistTimer == 0 || --g_MistTimer == 0))) {
-        func_8010E27C();
+        CheckMoveDirection();
         SetPlayerStep(0xE);
         return 1;
     }
@@ -952,7 +952,7 @@ void ControlMistForm(void) {
     switch (PLAYER.step_s) {
     case 0:
         func_800EA5E4(0x1BU);
-        func_8010E27C();
+        CheckMoveDirection();
         g_Player.unk48 = 0;
         g_Player.unk46 = 0;
         g_Player.unk44 = 0;

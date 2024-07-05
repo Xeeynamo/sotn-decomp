@@ -54,17 +54,20 @@ void func_8015BCD0(void) {
     }
 }
 
-void func_8015BE84(void) {
+void PlayerStepSlideKick(void) {
+    // If we are pressing square while in contact with an enemy
+    // (as detected in g_Player.unk44), we will bounce back.
     if (g_Player.padPressed & PAD_SQUARE && g_Player.unk44 & 0x80) {
-        PLAYER.step = 4;
+        PLAYER.step = Player_Jump;
         func_8015C920(&D_8015555C);
-        SetSpeedX(-0x18000);
+        SetSpeedX(FIX(-1.5));
         PLAYER.velocityY = 0;
         if (g_Player.unk72 == 0) {
-            PLAYER.velocityY = -0x48000;
+            PLAYER.velocityY = FIX(-4.5);
         }
         PLAYER.step_s = 2;
-        g_Player.unk44 = (g_Player.unk44 | 0xA) & 0xFFFB;
+        g_Player.unk44 |= (8 + 2);
+        g_Player.unk44 &= ~4;
         return;
     }
     func_8015C93C(0x1000);
