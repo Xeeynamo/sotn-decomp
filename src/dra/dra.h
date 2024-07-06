@@ -341,6 +341,7 @@ extern AnimationFrame D_800ADC10[];
 extern AnimationFrame D_800ADC44[];
 extern u16 D_800ADC7C[2];
 extern Point16* D_800ADCC8[];
+extern s16 D_800ADDE8[][6];
 extern u8 D_800AE120[];
 extern RECT D_800AE130;
 extern Unkstruct_800AE180 D_800AE180[];
