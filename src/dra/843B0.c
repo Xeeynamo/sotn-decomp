@@ -36,13 +36,13 @@ void EntityTeleport(Entity* self) {
             prim->v0 = 0xF0;
             prim->type = 1;
             prim->priority = 0x1FD;
-            prim->drawMode = 0x39;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE | DRAW_TRANSP;
             prim = prim->next;
         }
         for (i = 0; i < 2; i++) {
             prim->type = 3;
             prim->priority = 0x1F8;
-            prim->drawMode = 0x31;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
             prim = prim->next;
         }
         for (i = 0; i < 32; i++) {
@@ -58,7 +58,7 @@ void EntityTeleport(Entity* self) {
             prim->g0 = 0;
             prim->g1 = (rand() & 0x1F) + 1;
             prim->priority = 0x1F0;
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             prim->g2 = 0;
             prim = prim->next;
         }
@@ -391,7 +391,8 @@ void EntitySubwpnThrownDagger(Entity* self) {
             return;
         }
         if ((s16)self->ext.timer.t == 0x20) {
-            prim->drawMode |= 0x35;
+            prim->drawMode |=
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
                 prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
                     prim->b3 = 0x60;
@@ -449,9 +450,9 @@ void EntitySubwpnThrownDagger(Entity* self) {
             prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = prim->r2 =
                 prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = prim->r0;
         }
-        prim->drawMode &= 0xFFF7;
+        prim->drawMode &= ~DRAW_HIDE;
         prim = prim->next;
-        prim->drawMode |= 8;
+        prim->drawMode |= DRAW_HIDE;
         return;
     case 3:
         if (--self->ext.timer.t == 0) {
@@ -521,12 +522,13 @@ void EntitySubwpnThrownAxe(Entity* self) {
             prim->v3 = 0x28;
             prim->priority = PLAYER.zPriority - 2;
             if (sp10 != 0) {
-                prim->drawMode = 0x13D;
+                prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
+                                 DRAW_HIDE | DRAW_COLORS | DRAW_TRANSP;
                 self->ext.axeCrash.unk8B[sp10] = 0;
                 self->ext.axeCrash.unk8B[sp10 + 4] = 0;
                 self->ext.axeCrash.unk8B[sp10 + 8] = 0;
             } else {
-                prim->drawMode = 0x100 | DRAW_HIDE;
+                prim->drawMode = DRAW_UNK_100 | DRAW_HIDE;
             }
             prim = prim->next;
             sp10++;
@@ -859,7 +861,7 @@ void EntityHolyWaterBreakGlass(Entity* self) {
                     fakeprim->velocityX.val = -velX;
                 }
                 fakeprim->velocityY.val = -((rand() * 2) + FIX(2.5));
-                fakeprim->drawMode = 0xA;
+                fakeprim->drawMode = DRAW_HIDE | DRAW_UNK02;
                 fakeprim->type = 1;
             } else {
                 prim->r0 = prim->r1 = prim->r2 = prim->r3 =
@@ -868,7 +870,10 @@ void EntityHolyWaterBreakGlass(Entity* self) {
                 prim->g0 = prim->g1 = prim->g2 = prim->g3 =
                     (rand() & 0x1F) + 0x30;
                 randbit = rand() & 1;
-                prim->drawMode = !(randbit) ? 6 : 0x37;
+                prim->drawMode =
+                    !(randbit) ? (DRAW_COLORS | DRAW_UNK02)
+                               : (DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                                  DRAW_UNK02 | DRAW_TRANSP);
                 posX = sp10[i - 8].x;
                 posY = sp10[i - 8].y;
                 arrIndex = i & 3;
@@ -961,7 +966,8 @@ void EntityHolyWaterFlame(Entity* self) {
             prim->clut = 0x1B2;
             prim->tpage = 0x1A;
             prim->priority = PLAYER.zPriority + 2;
-            prim->drawMode = 0x3F;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP |
+                             DRAW_UNK02 | DRAW_COLORS | DRAW_HIDE;
             prim = prim->next;
         }
         self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
@@ -1073,7 +1079,7 @@ void EntitySubwpnCrashCross(Entity* self) {
         prim->u1 = prim->u3 = 0x30;
         prim->b3 = 0x80;
         prim->tpage = 0x11C;
-        prim->drawMode = 0x31;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         PlaySfx(0x6DF);
         PlaySfx(0x636);
         self->step += 1;
@@ -1156,7 +1162,7 @@ void EntitySubwpnCrashCross(Entity* self) {
         prim->x1 = prim->x3 = right;
         prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
             prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3;
-        prim->drawMode = 0x35;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
     }
     prim->priority = self->zPriority;
     return;
@@ -1268,7 +1274,8 @@ void EntityHellfireHandler(Entity* self) {
         prim->u1 = prim->u3 = 0x30;
         prim->b3 = 0x80;
         prim->tpage = 0x11C;
-        prim->drawMode = 0x331;
+        prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
+                         DRAW_TPAGE | DRAW_TRANSP;
         prim->priority = self->zPriority = 0x1C0;
         PlaySfx(NA_SE_PL_WARP);
         self->step++;
@@ -1299,7 +1306,7 @@ void EntityHellfireHandler(Entity* self) {
             self->ext.hellfireHandler.unk80 = 0x2A;
             self->step++;
             prim = &g_PrimBuf[self->primIndex];
-            prim->drawMode |= 8;
+            prim->drawMode |= DRAW_HIDE;
             g_Player.unk5C = 1;
         }
         break;
@@ -1579,7 +1586,8 @@ void EntityExpandingCircle(Entity* entity) {
             prim->tpage = 0x1A;
             prim->clut = 0x15F;
             prim->priority = PLAYER.zPriority + 1;
-            prim->drawMode = 0x35;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             entity->flags = FLAG_UNK_40000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
             entity->step++;
             break;
@@ -1645,19 +1653,11 @@ void func_80127CC8(Entity* entity) {
         entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 | FLAG_UNK_04000000 |
                         FLAG_HAS_PRIMS;
         prim = &g_PrimBuf[entity->primIndex];
-        prim->r3 = 192;
-        prim->r2 = 192;
-        prim->r1 = 192;
-        prim->r0 = 192;
-        prim->g3 = 64;
-        prim->g2 = 64;
-        prim->g1 = 64;
-        prim->g0 = 64;
-        prim->b3 = 64;
-        prim->b2 = 64;
-        prim->b1 = 64;
-        prim->b0 = 64;
-        prim->drawMode = 0x315;
+        prim->r0 = prim->r1 = prim->r2 = prim->r3 = 192;
+        prim->g0 = prim->g1 = prim->g2 = prim->g3 = 64;
+        prim->b0 = prim->b1 = prim->b2 = prim->b3 = 64;
+        prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE |
+                         DRAW_COLORS | DRAW_TRANSP;
         entity->zPriority = 0x1C0;
         prim->priority = 0x1C0;
         entity->step++;
@@ -1668,17 +1668,12 @@ void func_80127CC8(Entity* entity) {
             DestroyEntity(entity);
             return;
         }
-
-    default:
-        break;
     }
     prim = &g_PrimBuf[entity->primIndex];
     prim->x0 = prim->x2 = entity->posX.i.hi - 3;
-    prim->y0 = 0;
-    prim->y1 = 0;
+    prim->y1 = prim->y0 = 0;
     prim->x1 = prim->x3 = entity->posX.i.hi + 3;
-    prim->y3 = 240;
-    prim->y2 = 240;
+    prim->y2 = prim->y3 = 240;
 
     if (g_GameTimer & 1) {
         prim->drawMode = prim->drawMode | DRAW_HIDE;
@@ -1742,7 +1737,8 @@ void EntitySubwpnReboundStone(Entity* self) {
             prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
                 0xFF;
             prim->priority = PLAYER.zPriority + 2;
-            prim->drawMode = 0x33;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
             if (i != 0) {
                 prim->drawMode |= DRAW_HIDE;
             }
@@ -2018,7 +2014,7 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
         fakeprim = (FakePrim*)&g_PrimBuf[self->primIndex];
         fakeprimY = selfY - 8;
         while (1) {
-            fakeprim->drawMode = 2;
+            fakeprim->drawMode = DRAW_UNK02;
             fakeprim->priority = PLAYER.zPriority + 2;
             if (fakeprim->next == NULL) {
                 fakeprim->y0 = fakeprim->x0 = fakeprim->w = 0;
@@ -2185,7 +2181,8 @@ void EntitySubwpnAgunea(Entity* self) {
             prim = &g_PrimBuf[self->primIndex];
             prim->type = 2;
             prim->priority = PLAYER.zPriority + 2;
-            prim->drawMode = 0x331;
+            prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
+                             DRAW_TPAGE | DRAW_TRANSP;
             prim->r1 = 0x60;
             prim->g1 = 0;
             prim->b1 = 0x80;
@@ -2450,7 +2447,7 @@ void EntityAguneaHitEnemy(Entity* self) {
             yOffset = (var_s2 * rsin(temp_s2)) >> 0xC;
             temp_s3->x3 = xOffset + temp_s3->x2;
             temp_s3->y3 = temp_s3->y2 - yOffset;
-            temp_s3->drawMode = 6;
+            temp_s3->drawMode = DRAW_COLORS | DRAW_UNK02;
             self->ext.et_801291C4.unk88--;
         }
         return;
@@ -2765,7 +2762,7 @@ void EntitySummonSpirit(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
 
         prim->type = 3;
-        prim->drawMode = 0x102;
+        prim->drawMode = DRAW_UNK_100 | DRAW_UNK02;
         prim->x2 = prim->x0 = selfX - 0x20;
         prim->x3 = prim->x1 = selfX + 0x1F;
         prim->y1 = prim->y0 = selfY - 0x20;
@@ -2871,7 +2868,8 @@ void EntityStopWatchExpandingCircle(Entity* self) {
             prim->clut = 0x15F;
             self->zPriority = 0xC2;
             prim->priority = 0xC2;
-            prim->drawMode = 0x435;
+            prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_COLORS | DRAW_TRANSP;
             prim->u0 = ((rsin((s16)(i << 8)) << 5) >> 0xC) + 0x20;
             prim->v0 = -((rcos((s16)(i << 8)) << 5) >> 0xC) - 0x21;
             prim->u1 = ((rsin((s16)(i + 1 << 8)) << 5) >> 0xC) + 0x20;
@@ -2934,20 +2932,17 @@ void func_8012B78C(Entity* entity) {
             prim = &g_PrimBuf[entity->primIndex];
             prim->tpage = 0x1C;
             prim->clut = 0x19D;
-            prim->u2 = 32;
-            prim->u0 = 32;
-            prim->u3 = 48;
-            prim->u1 = 48;
-            prim->v1 = 0;
-            prim->v0 = 0;
-            prim->v3 = 16;
-            prim->v2 = 16;
+            prim->u0 = prim->u2 = 32;
+            prim->u1 = prim->u3 = 48;
+            prim->v0 = prim->v1 = 0;
+            prim->v2 = prim->v3 = 16;
             prim->x0 = prim->x2 = entity->posX.i.hi - 8;
             prim->x1 = prim->x3 = entity->posX.i.hi + 8;
             prim->y0 = prim->y1 = entity->posY.i.hi - 8;
             prim->y2 = prim->y3 = entity->posY.i.hi + 8;
             prim->priority = entity->zPriority;
-            prim->drawMode = 0x115;
+            prim->drawMode =
+                DRAW_UNK_100 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             entity->ext.generic.unk7E.modeU16 = 96;
             entity->step++;
         } else {
@@ -3016,7 +3011,7 @@ void EntitySubwpnBible(Entity* self) {
         prim->u1 = prim->u3 = 0xA8;
         prim->v2 = prim->v3 = 0xF0;
         prim->priority = PLAYER.zPriority + 1;
-        prim->drawMode = 0x108;
+        prim->drawMode = DRAW_UNK_100 | DRAW_HIDE;
         self->ext.et_BibleSubwpn.unk84 = self->facingLeft ? 0x20 : -0x20;
         func_8011A290(self);
         self->hitboxWidth = 6;

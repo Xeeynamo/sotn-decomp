@@ -88,6 +88,7 @@ typedef struct Prim {
 #define DRAW_UNK_40 0x40
 #define DRAW_MENU 0x80       // render only if D_800973EC is set
 #define DRAW_UNK_100 0x100   // unknown
+#define DRAW_UNK_200 0x200   // unknown
 #define DRAW_UNK_400 0x400   // unknown
 #define DRAW_UNK_800 0x800   // unknown
 #define DRAW_UNK_1000 0x1000 // unknown

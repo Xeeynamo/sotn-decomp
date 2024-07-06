@@ -148,7 +148,7 @@ void func_801093C4(void) {
         prim->drawMode = DRAW_DEFAULT;
         prim = prim->next;
         prim->priority = 0x1B0;
-        prim->drawMode = 0x800;
+        prim->drawMode = DRAW_UNK_800;
     }
 }
 
@@ -205,7 +205,7 @@ void func_80109594() {
     g_Entities[1].primIndex = primIndex;
     g_Entities[1].flags |= 0x800000;
     for (i = 0; i < 6; i++) {
-        prim->drawMode = 0x10A;
+        prim->drawMode = DRAW_UNK_100 | DRAW_HIDE | DRAW_UNK02;
         prim = prim->next;
     }
     func_801093C4();

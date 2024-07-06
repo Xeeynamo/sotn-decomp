@@ -1424,7 +1424,7 @@ void func_800F298C(void) {
             D_801375A8 = D_801375AA;
             // Note: g_PrimBuf is MAX_PRIM_COUNT=1280 total in size.
             for (i = 0, prim = &g_PrimBuf[0]; i < 1024; i++, prim++) {
-                if (prim->drawMode & 2) {
+                if (prim->drawMode & DRAW_UNK02) {
                     switch (prim->type & 0xf) {
                     case PRIM_G4:
                     case PRIM_GT4:
@@ -1444,7 +1444,7 @@ void func_800F298C(void) {
                     case PRIM_ENV:
                         break;
                     }
-                } else if (prim->drawMode & 0x200) {
+                } else if (prim->drawMode & DRAW_UNK_200) {
                     switch (prim->type & 0xf) {
                     case PRIM_G4:
                     case PRIM_GT4:
@@ -1708,7 +1708,7 @@ void func_800F298C(void) {
                 D_801375A8 = D_801375AA;
                 // Note: g_PrimBuf is MAX_PRIM_COUNT=1280 total in size.
                 for (i = 0, prim = &g_PrimBuf[0]; i < 1024; i++, prim++) {
-                    if (prim->drawMode & 0x100) {
+                    if (prim->drawMode & DRAW_UNK_100) {
                         switch (prim->type & 0xf) {
                         case PRIM_G4:
                         case PRIM_GT4:

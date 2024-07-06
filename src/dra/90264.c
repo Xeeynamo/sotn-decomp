@@ -217,7 +217,7 @@ void func_80130618(Entity* self) {
         break;
     }
     self->palette = PLAYER.palette;
-    self->drawMode = 0;
+    self->drawMode = DRAW_DEFAULT;
     self->drawFlags &= ~DRAW_HIDE;
     if (abs(PLAYER.velocityX) > FIX(3)) {
         self->drawFlags |= DRAW_HIDE;
