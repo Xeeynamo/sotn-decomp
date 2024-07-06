@@ -528,32 +528,32 @@ void func_80130E94(Entity* self) {
         self->unk6C = ~MIN((abs(PLAYER.velocityX) - FIX(3)) >> 12, 128);
     }
 }
-static const u32 rodata_func_80130E94_padding = 0;
-
+// Entity #60. This is created manually at g_Entities[30].
+// Creation is in func_8012E7A4.
 void func_8013136C(Entity* self) {
     if (!(g_Player.unk0C & PLAYER_STATUS_WOLF_FORM)) {
         DestroyEntity(self);
         return;
     }
-    if (self->step == 0) {
+    if (!self->step) {
         self->animSet = 0xF;
         self->unk5A = 0x7E;
         self->palette = PLAYER.palette;
         self->flags = FLAG_UNK_04000000 | FLAG_UNK_20000 | FLAG_UNK_40000;
         self->drawFlags = DRAW_COLORS;
-        LOH(self->rotPivotX) = -8;
+        self->rotPivotX = -8;
         self->step++;
     }
     self->animCurFrame = 80;
     self->facingLeft = PLAYER.facingLeft;
     self->posX.val = g_Entities[UNK_ENTITY_13].posX.val;
     self->posY.val = g_Entities[UNK_ENTITY_13].posY.val;
-    if (PLAYER.facingLeft == 0) {
+    if (!PLAYER.facingLeft) {
         self->zPriority = PLAYER.zPriority - 5;
-        self->posX.i.hi = self->posX.i.hi + 8;
+        self->posX.i.hi += 8;
     } else {
         self->zPriority = PLAYER.zPriority + 5;
-        self->posX.i.hi = self->posX.i.hi - 8;
+        self->posX.i.hi -= 8;
     }
     self->posY.i.hi += 3;
     self->rotZ = g_Entities[UNK_ENTITY_12].rotZ;
@@ -561,7 +561,7 @@ void func_8013136C(Entity* self) {
     case 1:
         if (D_800B0914 == 1) {
             self->posY.i.hi -= 2;
-            if (PLAYER.facingLeft == 0) {
+            if (!PLAYER.facingLeft) {
                 self->posX.i.hi -= 8;
             } else {
                 self->posX.i.hi += 8;
@@ -573,14 +573,14 @@ void func_8013136C(Entity* self) {
         case 0:
             if (PLAYER.animCurFrame == 33) {
                 self->animCurFrame = 81;
-                if (PLAYER.facingLeft == 0) {
+                if (!PLAYER.facingLeft) {
                     self->posX.i.hi += 3;
                 } else {
                     self->posX.i.hi += 6;
                 }
             }
             if (PLAYER.animCurFrame == 34) {
-                if (PLAYER.facingLeft == 0) {
+                if (!PLAYER.facingLeft) {
                     self->posX.i.hi += 3;
                 } else {
                     self->posX.i.hi += 13;
@@ -588,15 +588,22 @@ void func_8013136C(Entity* self) {
                 self->animCurFrame = 82;
             }
             break;
+        // Might be possible to unify these fake empty cases.
         case 1:
-            break;
+#ifdef VERSION_PSP
+        case 3:
+        case 2:
+#else
         case 255:
+#endif
             break;
         }
         break;
     case 3:
         break;
     case 4:
+        D_800B0914 == 0;
+        break;
     case 5:
     case 6:
     case 7:
