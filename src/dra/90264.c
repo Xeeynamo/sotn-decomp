@@ -588,14 +588,11 @@ void func_8013136C(Entity* self) {
                 self->animCurFrame = 82;
             }
             break;
-        // Might be possible to unify these fake empty cases.
         case 1:
-#ifdef VERSION_PSP
+            break;
         case 3:
         case 2:
-#else
-        case 255:
-#endif
+        default:
             break;
         }
         break;
