@@ -3148,7 +3148,7 @@ void func_8012C600(void) {
         y = g_Entities[20].posY.i.hi - 8;
     }
     D_8013AEBC[3] = y - t1;
-    if(D_8013AEBC[3] < -24){
+    if (D_8013AEBC[3] < -24) {
         D_8013AEBC[3] = -24;
     }
 
@@ -3167,22 +3167,22 @@ void func_8012C600(void) {
         y = g_Entities[17].posY.i.hi + 28;
     }
     D_8013AEBC[1] = y - t1;
-    if(D_8013AEBC[1] > 0x27){
+    if (D_8013AEBC[1] > 0x27) {
         D_8013AEBC[1] = 0x27;
     }
 
     if (!PLAYER.facingLeft) {
-        if(D_8013AEBC[2] < -0x2C){
+        if (D_8013AEBC[2] < -0x2C) {
             D_8013AEBC[2] = -0x2C;
         }
-        if(D_8013AEBC[0] > 0x14){
+        if (D_8013AEBC[0] > 0x14) {
             D_8013AEBC[0] = 0x14;
         }
     } else {
-        if(D_8013AEBC[2] < -0x14){
+        if (D_8013AEBC[2] < -0x14) {
             D_8013AEBC[2] = -0x14;
         }
-        if(D_8013AEBC[0] > 0x2C){
+        if (D_8013AEBC[0] > 0x2C) {
             D_8013AEBC[0] = 0x2C;
         }
     }
