@@ -24,7 +24,7 @@ void func_80130264(Entity* self) {
         self->zPriority = PLAYER.zPriority;
 #endif
         self->flags = FLAG_UNK_04000000 | FLAG_UNK_20000 | FLAG_UNK_40000;
-        self->drawFlags = DRAW_COLORS;
+        self->drawFlags = FLAG_DRAW_ROTZ;
         self->rotPivotX = 0;
         self->rotPivotY = 9;
         LOH(self->hitboxOffX) = -4;
@@ -135,7 +135,7 @@ void func_80130618(Entity* self) {
         self->zPriority = PLAYER.zPriority - 2;
 #endif
         self->flags = FLAG_UNK_04000000 | FLAG_UNK_20000 | FLAG_UNK_40000;
-        self->drawFlags = DRAW_COLORS;
+        self->drawFlags = FLAG_DRAW_ROTZ;
         self->rotPivotX = 1;
         self->rotPivotY = 8;
         self->step++;
@@ -218,9 +218,9 @@ void func_80130618(Entity* self) {
     }
     self->palette = PLAYER.palette;
     self->drawMode = DRAW_DEFAULT;
-    self->drawFlags &= ~DRAW_HIDE;
+    self->drawFlags &= ~FLAG_DRAW_UNK8;
     if (abs(PLAYER.velocityX) > FIX(3)) {
-        self->drawFlags |= DRAW_HIDE;
+        self->drawFlags |= FLAG_DRAW_UNK8;
         self->drawMode = FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
         self->unk6C = ~MIN((abs(PLAYER.velocityX) - FIX(3)) >> 12, 160);
     }
@@ -521,9 +521,9 @@ void func_80130E94(Entity* self) {
     self->posY.val = var_s7 - rsin(var_s3) * var_s6 * 0x10;
     self->palette = PLAYER.palette;
     self->drawMode = 0;
-    self->drawFlags &= ~DRAW_HIDE;
+    self->drawFlags &= ~FLAG_DRAW_UNK8;
     if (abs(PLAYER.velocityX) > FIX(3)) {
-        self->drawFlags |= DRAW_HIDE;
+        self->drawFlags |= FLAG_DRAW_UNK8;
         self->drawMode = FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
         self->unk6C = ~MIN((abs(PLAYER.velocityX) - FIX(3)) >> 12, 128);
     }
@@ -540,7 +540,7 @@ void func_8013136C(Entity* self) {
         self->unk5A = 0x7E;
         self->palette = PLAYER.palette;
         self->flags = FLAG_UNK_04000000 | FLAG_UNK_20000 | FLAG_UNK_40000;
-        self->drawFlags = DRAW_COLORS;
+        self->drawFlags = FLAG_DRAW_ROTZ;
         LOH(self->rotPivotX) = -8;
         self->step++;
     }

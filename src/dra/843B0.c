@@ -1462,7 +1462,7 @@ void EntityBatFireball(Entity* self) {
         self->facingLeft = (PLAYER.facingLeft + 1) & 1;
 
         SetSpeedX(FIX(-3.5));
-        self->drawFlags = 3;
+        self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
         // Initial fireball size is 0x40 by 0x40
         self->rotX = self->rotY = 0x40;
         self->posX.val += self->velocityX * 2;
@@ -2547,7 +2547,7 @@ void func_80129864(Entity* self) {
         self->zPriority = 0x1C3;
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_800000 |
                       FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_UNK_10000;
-        self->drawFlags = 4;
+        self->drawFlags = FLAG_DRAW_ROTZ;
         if (self->params & 0x7F00) {
             func_8011A328(self, 3);
         } else {

@@ -240,6 +240,7 @@ extern u8 g_BmpCastleMap[0x20000];
 #define ELEMENT_FIRE 0x8000
 
 // Flags for entity->drawFlags
+#define FLAG_DRAW_DEFAULT 0x00
 #define FLAG_DRAW_ROTX 0x01
 #define FLAG_DRAW_ROTY 0x02
 #define FLAG_DRAW_ROTZ 0x04

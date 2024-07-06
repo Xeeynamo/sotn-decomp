@@ -804,7 +804,7 @@ void func_801177A0(void) {
         if (else_cycles == 8) {
             PLAYER.animSet = 1;
             PLAYER.rotZ = 0;
-            PLAYER.drawFlags = 0;
+            PLAYER.drawFlags = FLAG_DRAW_DEFAULT;
             g_Player.unk66 = 1;
             if (g_Player.unk68 != 0) {
                 PLAYER.step_s = 2;
