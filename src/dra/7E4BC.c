@@ -1134,7 +1134,7 @@ void func_80121F14(s32 arg0, s32 arg1) {
     }
 }
 
-Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, f32 arg3) {
+Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
     Primitive* prim;
     s16 temp_s4;
     s16 temp_s5;
@@ -1147,7 +1147,7 @@ Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, f32 arg3) {
     s8 var_t2;
 
     if (arg0 == 0) {
-        if (arg3.i.lo != 0) {
+        if (facingLeft) {
             prim = &D_801381F4[D_800AE230[arg1 >> 1]];
             var_t0 = prim->u0;
             var_t2 = prim->u1;
