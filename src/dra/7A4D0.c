@@ -96,7 +96,7 @@ void func_8011A4D0(void) {
             } else if (entity->entityId < 0xE0) {
                 // Objects D0-DF
                 entity->pfnUpdate =
-                    ((PfnEntityUpdate*)FAMILIAR_PTR)[entity->entityId - 0xD0];
+                    ((PfnEntityUpdate*)&D_80170000)[entity->entityId - 0xD0];
             } else if (entity->entityId == 0xEF || entity->entityId == 0xFF ||
                        entity->entityId == 0xED || entity->entityId == 0xFD) {
                 entity->pfnUpdate = g_DraEntityTbl[1];
@@ -105,11 +105,11 @@ void func_8011A4D0(void) {
             } else if (entity->entityId >= 0xF0) {
                 // Objects F0-FC
                 entity->pfnUpdate =
-                    ((PfnEntityUpdate*)WEAPON1_PTR)[entity->entityId - 0xF0];
+                    ((PfnEntityUpdate*)&D_8017D000)[entity->entityId - 0xF0];
             } else {
                 // Objects E0-EC
                 entity->pfnUpdate =
-                    ((PfnEntityUpdate*)WEAPON0_PTR)[entity->entityId - 0xE0];
+                    ((PfnEntityUpdate*)&D_8017A000)[entity->entityId - 0xE0];
             }
         }
         if ((temp_s2 == 0) || (entity->flags & FLAG_UNK_10000)) {
@@ -181,7 +181,7 @@ void func_8011A870(void) {
         if (entity->step == 0) {
             if (entity->entityId >= 0xD0 && entity->entityId < 0xE0) {
                 entity->pfnUpdate =
-                    ((PfnEntityUpdate*)FAMILIAR_PTR)[entity->entityId - 0xD0];
+                    ((PfnEntityUpdate*)&D_80170000)[entity->entityId - 0xD0];
             } else {
                 continue;
             }
