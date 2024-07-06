@@ -509,8 +509,10 @@ void func_8012E7A4(void) {
         entity->entityId = 0x3B;
         entity->params = i;
     }
+    // We create entity #60, which is func_8013136C
     DestroyEntity(&g_Entities[30]);
-    g_Entities[30].entityId = 0x3C;
+    g_Entities[30].entityId = 60;
+
     func_8012CED4();
     PLAYER.animFrameIdx = 4;
     PLAYER.animFrameDuration = 4;
