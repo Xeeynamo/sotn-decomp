@@ -413,7 +413,7 @@
 - [✅ EntitySubwpnThrownVibhuti](function_calls/dra.EntitySubwpnThrownVibhuti.svg?raw=1)
 - [✅ EntitySummonSpirit](function_calls/dra.EntitySummonSpirit.svg?raw=1)
 - [✅ EntityTeleport](function_calls/dra.EntityTeleport.svg?raw=1)
-- [❌ EntityTransparentWhiteCircle](function_calls/dra.EntityTransparentWhiteCircle.svg?raw=1)
+- [✅ EntityTransparentWhiteCircle](function_calls/dra.EntityTransparentWhiteCircle.svg?raw=1)
 - [✅ EntityUnarmedAttack](function_calls/dra.EntityUnarmedAttack.svg?raw=1)
 - [✅ EntityUnkId24](function_calls/dra.EntityUnkId24.svg?raw=1)
 - [✅ EntityWingSmashTrail](function_calls/dra.EntityWingSmashTrail.svg?raw=1)

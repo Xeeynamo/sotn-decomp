@@ -772,7 +772,7 @@
 <g id="node48" class="node">
 <title>dra.EntityTransparentWhiteCircle</title>
 <g id="a_node48"><a xlink:href="dra.EntityTransparentWhiteCircle.svg" xlink:title="dra.EntityTransparentWhiteCircle">
-<ellipse fill="red" stroke="black" cx="12551.34" cy="-378" rx="169.77" ry="18"/>
+<ellipse fill="green" stroke="black" cx="12551.34" cy="-378" rx="169.77" ry="18"/>
 <text text-anchor="middle" x="12551.34" y="-374.3" font-family="Times,serif" font-size="14.00">dra.EntityTransparentWhiteCircle</text>
 </a>
 </g>

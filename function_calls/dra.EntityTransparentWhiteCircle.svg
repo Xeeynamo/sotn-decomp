@@ -12,7 +12,7 @@
 <!-- dra.EntityTransparentWhiteCircle -->
 <g id="node1" class="node">
 <title>dra.EntityTransparentWhiteCircle</title>
-<ellipse fill="red" stroke="black" cx="527.44" cy="-198" rx="169.77" ry="18"/>
+<ellipse fill="green" stroke="black" cx="527.44" cy="-198" rx="169.77" ry="18"/>
 <text text-anchor="middle" x="527.44" y="-194.3" font-family="Times,serif" font-size="14.00">dra.EntityTransparentWhiteCircle</text>
 </g>
 <!-- dra.AllocPrimitives -->
