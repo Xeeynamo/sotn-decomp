@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>dra.EntityMist</title>
 <g id="a_node3"><a xlink:href="dra.EntityMist.svg" xlink:title="dra.EntityMist">
-<ellipse fill="red" stroke="black" cx="315.19" cy="-198" rx="79.09" ry="18"/>
+<ellipse fill="green" stroke="black" cx="315.19" cy="-198" rx="79.09" ry="18"/>
 <text text-anchor="middle" x="315.19" y="-194.3" font-family="Times,serif" font-size="14.00">dra.EntityMist</text>
 </a>
 </g>
