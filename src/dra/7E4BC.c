@@ -1235,21 +1235,6 @@ Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
 }
 
 // spawns mist (player transform)
-
-Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft);
-extern s16 D_800AE1B0[];
-extern s16 D_800AE1F0[];
-extern s16 D_801381D4;
-extern s16 D_801381D8;
-extern s16 D_801381DC;
-extern s16 D_801381E0;
-extern s16 D_801381E4;
-extern s16 D_801381E8;
-extern s16 D_801381EC;
-extern s16 D_801381F0;
-extern s32 D_80138394;
-extern s32 D_80138398;
-
 void EntityMist(Entity* self) {
     Primitive* prim;
     Primitive* mistPrim;
