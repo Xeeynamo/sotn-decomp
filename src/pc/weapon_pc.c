@@ -828,8 +828,7 @@ Weapon g_Weapons[] = {
         func_ptr_80170028Dummy,
     }};
 
-SpriteParts g_Animset_[32];
-SpriteParts* g_Animset;
+SpriteParts* g_Animset[1];
 
 int readSubsetToBuf(char* filename, char* dest, size_t start, size_t size) {
     FILE* file = fopen(filename, "rb");
