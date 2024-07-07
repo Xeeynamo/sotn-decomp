@@ -561,7 +561,7 @@ void func_8011B5A4(Entity* self) {
         paramsHi = self->params >> 8;
         paramsLo = self->params & 0xFF;
         self->drawMode = DRAW_TPAGE;
-        self->drawFlags = 3;
+        self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
 
         posX = D_800AD54C[paramsLo];
         if (paramsHi == 0) {
@@ -690,7 +690,7 @@ void EntityUnkId24(Entity* self) {
             self->palette = 0x8195;
         } else {
             self->posY.i.hi -= 12 - rand() % 24;
-            self->drawFlags = 3;
+            self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
             self->rotX = self->rotY = 0x80;
             self->palette = 0x8170;
         }
@@ -754,7 +754,9 @@ void EntityGravityBootBeam(Entity* self) {
             prim->b3 = prim->g3 = prim->r3 = prim->b2 = prim->g2 = prim->r2 =
                 0x40;
             prim->priority = PLAYER.zPriority - 2;
-            prim->drawMode = 0x537;
+            prim->drawMode =
+                DRAW_UNK_400 | DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
+                DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         }
         self->step++;
         break;
@@ -807,9 +809,10 @@ void EntityWingSmashTrail(Entity* entity) {
         entity->animSet = PLAYER.animSet;
         entity->animCurFrame = PLAYER.animCurFrame | 0x8000;
         entity->zPriority = PLAYER.zPriority - 2;
-        entity->drawFlags = PLAYER.drawFlags | 0xB;
+        entity->drawFlags = PLAYER.drawFlags |
+                            (FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
         entity->unk6C = 0x80; // a lifetime counter
-        entity->drawMode = 0x30;
+        entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         entity->rotZ = PLAYER.rotZ;
         entity->facingLeft = PLAYER.facingLeft;
         entity->palette = 0x8102;

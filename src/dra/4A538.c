@@ -923,7 +923,7 @@ void RenderEntities(void) {
             poly->clut = g_ClutIds[test];
             if (entity->drawMode) {
                 setSemiTrans(poly, true);
-                poly->tpage += entity->drawMode & 0x60;
+                poly->tpage += entity->drawMode & (DRAW_UNK_40 | DRAW_TPAGE2);
             } else {
                 setSemiTrans(poly, false);
             }
@@ -1106,7 +1106,8 @@ void RenderEntities(void) {
                 }
                 if (entity->drawMode != 0) {
                     setSemiTrans(poly, true);
-                    poly->tpage += entity->drawMode & 0x60;
+                    poly->tpage +=
+                        entity->drawMode & (DRAW_UNK_40 | DRAW_TPAGE2);
                 } else {
                     setSemiTrans(poly, false);
                 }
@@ -1923,7 +1924,9 @@ void RenderPrimitives(void) {
                     g_GpuUsage.tile++;
                     if (!(primType & 0x10) &&
                         g_GpuUsage.drawModes < MAX_DRAW_MODES) {
-                        SetDrawMode(r->dr, 0, dtd, prim->drawMode & 0x60, rect);
+                        SetDrawMode(
+                            r->dr, 0, dtd,
+                            prim->drawMode & (DRAW_UNK_40 | DRAW_TPAGE2), rect);
 #ifdef VERSION_PSP
                         if (prim->priority < 0 || prim->priority >= 0x200) {
                             prim->priority = 0x1FF;
@@ -1969,7 +1972,9 @@ void RenderPrimitives(void) {
                     g_GpuUsage.line++;
                     if ((primType & 0x10) == 0 &&
                         g_GpuUsage.drawModes < MAX_DRAW_MODES) {
-                        SetDrawMode(r->dr, 0, dtd, prim->drawMode & 0x60, rect);
+                        SetDrawMode(
+                            r->dr, 0, dtd,
+                            prim->drawMode & (DRAW_UNK_40 | DRAW_TPAGE2), rect);
 #ifdef VERSION_PSP
                         if (prim->priority < 0 || prim->priority >= 0x200) {
                             prim->priority = 0x1FF;
@@ -2029,7 +2034,9 @@ void RenderPrimitives(void) {
                     g_GpuUsage.g4++;
                     if ((primType & 0x10) == 0 &&
                         g_GpuUsage.drawModes < MAX_DRAW_MODES) {
-                        SetDrawMode(r->dr, 0, dtd, prim->drawMode & 0x60, rect);
+                        SetDrawMode(
+                            r->dr, 0, dtd,
+                            prim->drawMode & (DRAW_UNK_40 | DRAW_TPAGE2), rect);
 #ifdef VERSION_PSP
                         if (prim->priority < 0 || prim->priority >= 0x200) {
                             prim->priority = 0x1FF;
@@ -2085,7 +2092,9 @@ void RenderPrimitives(void) {
                     primbuf->gt4.v2 = prim->v2;
                     primbuf->gt4.u3 = prim->u3;
                     primbuf->gt4.v3 = prim->v3;
-                    primbuf->gt4.tpage = prim->tpage + (prim->drawMode & 0x60);
+                    primbuf->gt4.tpage =
+                        prim->tpage +
+                        (prim->drawMode & (DRAW_UNK_40 | DRAW_TPAGE2));
                     primbuf->gt4.clut = g_ClutIds[prim->clut];
                     *r->gt4 = primbuf->gt4;
 #ifdef VERSION_PSP
@@ -2144,7 +2153,9 @@ void RenderPrimitives(void) {
                     primbuf->gt3.v1 = prim->v1;
                     primbuf->gt3.u2 = prim->u2;
                     primbuf->gt3.v2 = prim->v2;
-                    primbuf->gt3.tpage = prim->tpage + (prim->drawMode & 0x60);
+                    primbuf->gt3.tpage =
+                        prim->tpage +
+                        (prim->drawMode & (DRAW_UNK_40 | DRAW_TPAGE2));
                     primbuf->gt3.clut = g_ClutIds[prim->clut];
 
                     *r->gt3 = primbuf->gt3;
@@ -2201,9 +2212,10 @@ void RenderPrimitives(void) {
                     g_GpuUsage.sp++;
                     if ((primType & 0x10) == 0 &&
                         g_GpuUsage.drawModes < MAX_DRAW_MODES) {
-                        SetDrawMode(
-                            r->dr, 0, dtd,
-                            prim->tpage + (prim->drawMode & 0x60), rect);
+                        SetDrawMode(r->dr, 0, dtd,
+                                    prim->tpage + (prim->drawMode &
+                                                   (DRAW_UNK_40 | DRAW_TPAGE2)),
+                                    rect);
 #ifdef VERSION_PSP
                         if (prim->priority < 0 || prim->priority >= 0x200) {
                             prim->priority = 0x1FF;

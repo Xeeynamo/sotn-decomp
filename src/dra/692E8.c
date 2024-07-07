@@ -148,7 +148,7 @@ void func_801093C4(void) {
         prim->drawMode = DRAW_DEFAULT;
         prim = prim->next;
         prim->priority = 0x1B0;
-        prim->drawMode = 0x800;
+        prim->drawMode = DRAW_UNK_800;
     }
 }
 
@@ -205,7 +205,7 @@ void func_80109594() {
     g_Entities[1].primIndex = primIndex;
     g_Entities[1].flags |= 0x800000;
     for (i = 0; i < 6; i++) {
-        prim->drawMode = 0x10A;
+        prim->drawMode = DRAW_UNK_100 | DRAW_HIDE | DRAW_UNK02;
         prim = prim->next;
     }
     func_801093C4();
@@ -463,7 +463,9 @@ void func_8010A234(s32 arg0) {
         PLAYER.animSet = 1;
         PLAYER.unk5A = 0;
         PLAYER.rotZ = 0;
-        PLAYER.drawFlags &= 0xF3;
+        PLAYER.drawFlags &=
+            (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 |
+             FLAG_DRAW_UNK80 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
         func_8010FAF4();
         PLAYER.rotPivotY = 0;
         PLAYER.rotPivotX = 0;
@@ -549,7 +551,8 @@ void EntityAlucard(void) {
     }
     var_fp = 0;
     var_s6 = 0;
-    g_Player.unk70 = g_Player.unk18 = PLAYER.drawFlags = g_Player.unk4C = 0;
+    g_Player.unk70 = g_Player.unk18 = PLAYER.drawFlags = g_Player.unk4C =
+        FLAG_DRAW_DEFAULT;
     D_80137FB8 = g_unkGraphicsStruct.D_800973FC;
     var_s7 = 0;
     g_Player.unk72 = func_80110394();
@@ -1208,8 +1211,9 @@ block_160:
     func_801093C4();
     if (!(g_Player.unk0C & 0x50)) {
         if ((CheckEquipmentItemCount(0x58U, 4U) != 0) &&
-            !(g_Player.unk0C & 0x01050017) && !(PLAYER.drawFlags & 6)) {
-            PLAYER.drawFlags |= 2;
+            !(g_Player.unk0C & 0x01050017) &&
+            !(PLAYER.drawFlags & (FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ))) {
+            PLAYER.drawFlags |= FLAG_DRAW_ROTY;
             PLAYER.rotY = 0x110;
             PLAYER.rotPivotY = 0x18;
         }

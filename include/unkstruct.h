@@ -17,13 +17,6 @@ typedef struct {
     /* 0x06 */ u8 unk6;
 } Unkstruct_800BF554; // size = 0x7
 
-typedef struct {
-    /* 0x00 */ f32 posX;
-    /* 0x04 */ f32 posY;
-    /* 0x08 */ s16 unk8;
-    /* 0x0A */ char pad[10];
-} Unkstruct_80138094; // size = 0x14
-
 #define MAKE_PAL_OP(kind, freq) ((kind) | ((freq) << 0x10))
 #define GET_PAL_OP_KIND(x) (LOH(x))
 #define GET_PAL_OP_FREQ(x) (HIH(x))

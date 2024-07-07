@@ -521,7 +521,10 @@ void func_80113AAC(void) {
             SetPlayerAnim(0x2D);
             PLAYER.rotZ = 0;
             PLAYER.step_s = 4;
-            PLAYER.drawFlags &= 0xFB;
+            PLAYER.drawFlags &=
+                (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 |
+                 FLAG_DRAW_UNK80 | FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY |
+                 FLAG_DRAW_ROTX);
             PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
         }
         break;
@@ -587,7 +590,8 @@ s32 func_80113E68(void) {
 
 void func_80113EE0(void) {
     PLAYER.animSet = ANIMSET_DRA(1);
-    PLAYER.drawFlags &= 0xF3;
+    PLAYER.drawFlags &= (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 |
+                         FLAG_DRAW_UNK80 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
     PLAYER.animFrameDuration = 0;
     PLAYER.animFrameIdx = 0;
     PLAYER.entityId = 0;
@@ -1163,10 +1167,13 @@ void func_80114DF4(s32 arg0) {
     case 3:
         if (PLAYER.animFrameDuration < 0) {
             PLAYER.step_s = 2;
-            PLAYER.drawFlags &= 0xFB;
+            PLAYER.drawFlags &=
+                (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 |
+                 FLAG_DRAW_UNK80 | FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY |
+                 FLAG_DRAW_ROTX);
         } else {
             PLAYER.rotPivotX = 0;
-            PLAYER.drawFlags |= 4;
+            PLAYER.drawFlags |= FLAG_DRAW_ROTZ;
             PLAYER.rotZ = D_800ACF94[PLAYER.animFrameDuration] >> 4;
             if (PLAYER.rotZ == 0) {
                 PLAYER.rotPivotY = 0x18;

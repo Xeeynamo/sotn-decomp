@@ -2062,7 +2062,7 @@ void MenuDraw(void) {
         prim->g3 = g1;
         prim->b3 = b1;
         prim->priority = menu->otIdx;
-        prim->drawMode = DRAW_MENU | 0x400;
+        prim->drawMode = DRAW_UNK_400 | DRAW_MENU;
 
         // draw the white window border
         MenuDrawLine(cx, cy, cx, cy + ch - 1, i + 1);

@@ -63,7 +63,8 @@ void func_801027C4(u32 arg0) {
         do {
             prim1->r0 = prim1->g0 = prim1->b0 = prim2->r0 = prim2->g0 =
                 prim2->b0 = prim1->x1;
-            prim1->drawMode = prim2->drawMode = 0xD1;
+            prim1->drawMode = prim2->drawMode =
+                DRAW_MENU | DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
         } while (0);
     default:
         break;
@@ -109,7 +110,8 @@ void func_801028AC(s32 arg0) {
                 }
             }
         }
-        prim1->drawMode = prim2->drawMode = 0xD1;
+        prim1->drawMode = prim2->drawMode =
+            DRAW_MENU | DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
         break;
     case 8:
         prim1->r0 = prim1->g0 = prim1->b0 = prim2->r0 = prim2->g0 = prim2->b0 =
@@ -125,7 +127,8 @@ void func_801028AC(s32 arg0) {
             func_801026BC(0);
             D_801379A4 = 0;
         }
-        prim1->drawMode = prim2->drawMode = 0xD1;
+        prim1->drawMode = prim2->drawMode =
+            DRAW_MENU | DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
         break;
     case 3:
         prim1->r0 = prim1->g0 = prim1->b0 = prim2->r0 = prim2->g0 = prim2->b0 =
@@ -139,7 +142,8 @@ void func_801028AC(s32 arg0) {
         } else {
             D_801379A4 = 0;
         }
-        prim1->drawMode = prim2->drawMode = 0xD1;
+        prim1->drawMode = prim2->drawMode =
+            DRAW_MENU | DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
         break;
     }
     if (arg0 != 0) {
@@ -164,7 +168,8 @@ void func_801028AC(s32 arg0) {
                 prim1->clut++;
                 prim1->x1 -= 8;
             }
-            prim1->drawMode = prim2->drawMode = 0x2031;
+            prim1->drawMode = prim2->drawMode =
+                DRAW_ABSPOS | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         } else if (prim1clut != 1) {
             prim1->x1 -= 4;
             if (prim1->x1 < 0) {
@@ -186,7 +191,8 @@ void func_801028AC(s32 arg0) {
                 prim1->clut++;
                 prim1->x1--;
             }
-            prim1->drawMode = prim2->drawMode = 0x2051;
+            prim1->drawMode = prim2->drawMode =
+                DRAW_ABSPOS | DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
         } else if (prim1clut == 1) {
             if (--prim1->y1 == -1) {
                 prim1->clut++;
@@ -381,7 +387,7 @@ s32 HandleSaveMenu(s32 arg0) {
     if (arg0 == 0) {
         if (temp_t0 == 0) {
             prim2->drawMode = DRAW_DEFAULT;
-            prim1->drawMode = 0x404;
+            prim1->drawMode = DRAW_UNK_400 | DRAW_COLORS;
             if (D_80137E4C == 6) {
                 PlaySfx(SE_UI_START);
             } else {
@@ -532,7 +538,7 @@ s32 HandleSaveMenu(s32 arg0) {
 #endif
             SetTexturedPrimRect(prim2, 56, 79, 144, 0, 0, 0);
             prim2->drawMode = DRAW_DEFAULT;
-            prim1->drawMode = 0x404;
+            prim1->drawMode = DRAW_UNK_400 | DRAW_COLORS;
             prim2 = prim2->next;
             prim1 = prim1->next;
             prim2->drawMode = DRAW_DEFAULT;
@@ -633,7 +639,7 @@ s32 HandleSaveMenu(s32 arg0) {
 
             SetTexturedPrimRect(prim2, 56, 79, 144, 0, 0, 0);
             prim2->drawMode = DRAW_DEFAULT;
-            prim1->drawMode = 0x404;
+            prim1->drawMode = DRAW_UNK_400 | DRAW_COLORS;
             prim2 = prim2->next;
             prim1 = prim1->next;
             prim2->drawMode = DRAW_DEFAULT;

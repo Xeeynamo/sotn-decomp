@@ -902,6 +902,17 @@ typedef struct {
     s16 unk7E;
     s16 unk80;
     s16 unk82;
+    s16 unk84;
+    s16 unk86;
+    s16 unk88;
+    s16 unk8A;
+} ET_TransparentWhiteCircle;
+
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
 } ET_HitByIce;
 
 typedef struct {
@@ -1166,6 +1177,15 @@ typedef struct {
     s16 unk86;
 } ET_80129864;
 
+typedef struct {
+    s16 timer;
+    s16 pad;
+    s16 xCurrent;
+    s16 yCurrent;
+    s16 xTarget;
+    s16 yTarget;
+} ET_Mist;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1209,6 +1229,7 @@ typedef union { // offset=0x7C
     ET_Food food;
     ET_HitByIce hitbyice;
     ET_HitByLightning hitbylightning;
+    ET_Mist mist;
     ET_Bat bat;
     ET_SoulStealOrb soulStealOrb;
     ET_GaibonSlogra GS_Props;
@@ -1227,6 +1248,7 @@ typedef union { // offset=0x7C
     ET_80162870 et_80162870;
     ET_80166784 et_80166784;
     ET_RichterPowerUpRing ricPowerRing;
+    ET_TransparentWhiteCircle whiteCircle;
     ET_8016E9E4 et_8016E9E4;
     ET_801719A4 et_801719A4;
     ET_BibleSubwpn et_BibleSubwpn;

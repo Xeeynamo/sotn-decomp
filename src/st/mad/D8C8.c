@@ -1,107 +1,94 @@
 #include "mad.h"
 
+void func_8018D8C8(u16* tilemap);
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_8018D8C8);
 
+void func_8018DC28(u16* tilemap);
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_8018DC28);
 
-#ifndef NON_EQUIVALENT
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_8018DF0C);
-#else
-void func_8018DF0C(s32 arg0, s32 arg1) {
-    s32 temp_a3;
-    s32 phi_v1;
-    s16 phi_a2;
-    s32 phi_a3;
-    s16* phi_t0;
-    s32 phi_a3_2;
-    s16* phi_a2_2;
-    s32 phi_v1_2;
-    s32 phi_a3_3;
-    s16* phi_a2_3;
-    s32 phi_v1_3;
-    s32 phi_a3_4;
-    s16* phi_a2_4;
-    s32 phi_v1_4;
-    s32 phi_a3_5;
-    s16* phi_a1;
-    s32 phi_v1_5;
+void func_8018DF0C(u16* tilemap, s32 arg1) {
+    const int RoomWidth = 32;
+    s32 y, x;
+    s16 tile;
 
-    for (phi_a3 = 0; phi_a3 < 0x10; phi_a3++) {
-        phi_t0 = arg0;
-        phi_v1_2 = 0;
-
-        for (phi_v1 = 0; phi_v1 < 0x20; phi_v1++) {
-            phi_a2 = -(((phi_a3 - 2) < 0xCU) ^ 1) & 3;
-            if (phi_v1 - 2 >= 0x1C) {
-                phi_a2 = 3;
+    for (y = 0; y < 16; y++) {
+        for (x = 0; x < 32; x++) {
+            if (y < 2 || y > 13) {
+                tile = 3;
+            } else {
+                tile = 0;
             }
-
-            *((phi_a3 << 5) + phi_t0) = phi_a2;
-            phi_t0++;
+            if (x < 2 || x > 29) {
+                tile = 3;
+            }
+            *(tilemap + x + y * RoomWidth) = tile;
         }
     }
-
     if (arg1 & 4) {
-        for (phi_a3_2 = 6; phi_a3_2 < 0xA; phi_a3_2++) {
-            phi_a2_2 = arg0;
-        loop_9:
-            *((phi_a3_2 << 5) + phi_a2_2) = 0;
-            phi_a2_2++;
-            phi_v1_2++;
-            if (phi_v1_2 < 2) {
-                goto loop_9;
+        for (y = 6; y < 10; y++) {
+            for (x = 0; x < 2; x++) {
+                *(tilemap + x + y * RoomWidth) = 0;
             }
         }
     }
-
     if (arg1 & 8) {
-        for (phi_a3_3 = 6; phi_a3_3 < 0xA; phi_a3_3++) {
-            phi_a2_3 = arg0 + 0x3C;
-            phi_v1_3 = 0x1E;
-        loop_14:
-            *((phi_a3_3 << 5) + phi_a2_3) = 0;
-            phi_a2_3++;
-            phi_v1_3++;
-            if (phi_v1_3 < 0x20) {
-                goto loop_14;
+        for (y = 6; y < 10; y++) {
+            for (x = 30; x < 32; x++) {
+                *(tilemap + x + y * RoomWidth) = 0;
             }
         }
     }
-
     if (arg1 & 1) {
-        for (phi_a3_4 = 0; phi_a3_4 < 2; phi_a3_4++) {
-            phi_a2_4 = arg0 + 0xC;
-            phi_v1_4 = 6;
-        loop_19:
-            *((phi_a3_4 << 6) + ((((arg1 & 8) == 0) << 5) + phi_a2_4)) = 0;
-            phi_a2_4++;
-            phi_v1_4++;
-            if (phi_v1_4 < 0xA) {
-                goto loop_19;
+        for (y = 0; y < 2; y++) {
+            for (x = 6; x < 10; x++) {
+                u8 variant = !(arg1 & 8) * RoomWidth;
+                *((u16*)((u8*)&tilemap[x] + variant) + y * RoomWidth) = 0;
             }
         }
     }
-
     if (arg1 & 2) {
-        for (phi_a3_5 = 0xE; phi_a3_5 < 0x10; phi_a3_5++) {
-            phi_a1 = arg0 + 0xC;
-            phi_v1_5 = 6;
-        loop_24:
-            *((phi_a3_5 << 6) + ((((arg1 & 8) == 0) << 5) + phi_a1)) = 0;
-            phi_a1++;
-            phi_v1_5++;
-            if (phi_v1_5 < 0xA) {
-                goto loop_24;
+        for (y = 14; y < 16; y++) {
+            for (x = 6; x < 10; x++) {
+                u8 variant = !(arg1 & 8) * RoomWidth;
+                *((u16*)((u8*)&tilemap[x] + variant) + y * RoomWidth) = 0;
             }
         }
     }
 }
-#endif
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_8018E090);
+void func_8018E090(u16* tilemap) {
+    const int RoomWidth = 32;
+    s32 x, y;
+    s32 varY;
+    s32 varX;
 
-INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_8018E13C);
+randomize_pos:
+    varX = (rand() & 0xF) + 8;
+    varY = (rand() & 7) + 4;
+    for (y = -2; y < 3; y++) {
+        for (x = -1; x < 2; x++) {
+            if (*(&tilemap[varX + x] + (varY + y) * RoomWidth)) {
+                goto randomize_pos;
+            }
+        }
+    }
+    *(tilemap + varX + varY * RoomWidth) = 3;
+}
 
+void func_8018E13C(u16* tilemap) {
+    const int RoomWidth = 16;
+    s32 x, y;
+
+    for (y = 10; y < 16; y++) {
+        for (x = 0; x < RoomWidth; x++) {
+            if (rand() & 1) {
+                *(tilemap + x + y * RoomWidth) = 3;
+            }
+        }
+    }
+}
+
+void func_8018E1D4(void);
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_8018E1D4);
 
 void func_8018E5AC(Entity* self) {
