@@ -29,15 +29,24 @@ extern const char D_80010378[]; // "GPU_exeque: null func.\n"
 extern const char
     D_80010390[]; // "GPU timeout:que=%d,stat=%08x,chcr=%08x,madr=%08x\n"
 
+s32 VSync(s32);
+
 extern gpu* D_8002C260;
-extern int D_8002C268; // log level
-extern int D_8002C26C; // graph type
-extern int D_8002C270; // reverse
-extern int D_8002C274; // graph queue mode
+extern void (*GPU_printf)(const char* fmt, ...); // 8002c264
+extern int D_8002C268;                           // log level
+extern int D_8002C26C;                           // graph type
+extern int D_8002C270;                           // reverse
+extern int D_8002C274;                           // graph queue mode
 extern void (*D_8002C278)();
-extern void (*GPU_printf)(const char* fmt, ...);
+extern volatile s32* D_8002C27C;
+extern volatile s32* D_8002C280;
+extern volatile s32* D_8002C284;
+extern volatile s32* D_8002C288;
+extern volatile s32* D_8002C28C;
 extern DRAWENV D_80037E60;
 extern DISPENV D_80037EBC;
+extern s32 D_80039254;
+extern s32 D_80039258;
 
 u_long get_ce(short, short);
 u_long get_cs(short, short);
@@ -298,8 +307,6 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_tw);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_dx);
 
-extern s32* D_8002C280;
-
 s32 _status(void) { return *D_8002C280; }
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _otc);
@@ -314,11 +321,24 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _ctl);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _getctl);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _cwb);
+s32 _cwb(s32* arg0, s32 arg1) {
+    s32* var_a0;
+    s32 i;
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _cwc);
+    *D_8002C280 = 0x04000000;
+    var_a0 = arg0;
+    for (i = arg1 - 1; i != -1; i--) {
+        *D_8002C27C = *var_a0++;
+    }
+    return 0;
+}
 
-extern s32* D_8002C27C;
+void _cwc(s32 arg0) {
+    *D_8002C280 = 0x04000002;
+    *D_8002C284 = arg0;
+    *D_8002C288 = 0;
+    *D_8002C28C = 0x01000401;
+}
 
 s32 _param(s32 arg0) {
     *D_8002C280 = arg0 | 0x10000000;
@@ -337,8 +357,17 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _reset);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _sync);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", set_alarm);
+void set_alarm(void) {
+    D_80039254 = VSync(-1) + 240;
+    D_80039258 = 0;
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_alarm);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", GPU_memset);
+void GPU_memset(s8* ptr, int value, s32 num) {
+    s32 i;
+
+    for (i = num - 1; i != -1; i--) {
+        *ptr++ = value;
+    }
+}
