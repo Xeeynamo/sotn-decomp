@@ -303,7 +303,19 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_ce);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_ofs);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_tw);
+u_long get_tw(RECT* arg0) {
+    u32 pad[4];
+
+    if (arg0 != 0) {
+        pad[0] = (u8)arg0->x >> 3;
+        pad[2] = (s32)(-arg0->w & 0xFF) >> 3;
+        pad[1] = (u8)arg0->y >> 3;
+        pad[3] = (s32)(-arg0->h & 0xFF) >> 3;
+        return (pad[1] << 0xF) | 0xE2000000 | (pad[0] << 0xA) | (pad[3] << 5) |
+               pad[2];
+    }
+    return 0;
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_dx);
 
@@ -317,9 +329,14 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _dws);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _drs);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _ctl);
+extern s32 ctlbuf[];
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _getctl);
+void _ctl(u32 arg0) {
+    *D_8002C280 = arg0;
+    ctlbuf[(arg0 >> 0x18)] = arg0 & 0xFFFFFF;
+}
+
+s32 _getctl(s32 arg0) { return (arg0 << 0x18) | ctlbuf[arg0]; }
 
 s32 _cwb(s32* arg0, s32 arg1) {
     s32* var_a0;
@@ -353,7 +370,53 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _addque2);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _exeque);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _reset);
+s32 DMACallback(s32, s32);
+s32 SetIntrMask(s32);
+extern volatile s32* D_8002C27C;
+extern volatile s32* D_8002C28C;
+extern volatile s32* D_8002C29C;
+
+struct QueueItem {
+    volatile s32 unk0;
+    s32 unk[0x4a / 4];
+};
+
+extern struct QueueItem D_80037F54[];
+extern s32 _qin;
+extern volatile s32 _qout;
+
+s32 _reset(s32 arg0) {
+    s32 temp_s1;
+    s32 var_a0;
+
+    temp_s1 = SetIntrMask(0);
+    DMACallback(2, 0);
+    _qout = 0;
+    _qin = _qout;
+
+    for (var_a0 = 0; var_a0 < 0x40; var_a0++) {
+        D_80037F54[var_a0].unk0 = 0;
+    }
+
+    switch (arg0) {
+    case 0:
+        *D_8002C28C = 0x401;
+        *D_8002C29C |= 0x800;
+        *D_8002C280 = 0;
+        break;
+    case 1:
+        *D_8002C28C = 0x401;
+        *D_8002C29C |= 0x800;
+        *D_8002C280 = 0x02000000;
+        *D_8002C280 = 0x01000000;
+        break;
+    default:
+        break;
+    }
+    *D_8002C27C = (*D_8002C280 & 0x3FFF) | 0xE1001000;
+    SetIntrMask(temp_s1);
+    return ((u32)*D_8002C280 >> 0xC) & 1;
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _sync);
 
