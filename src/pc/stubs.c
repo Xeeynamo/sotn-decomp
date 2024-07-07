@@ -204,8 +204,16 @@ SVECTOR* D_800B0CB4[][4] = {
 unk_800B08CC D_800B08CC[6] = {0};
 s32 D_800B07C8 = 0x12345678;
 s32 D_80138090;
-Unkstruct_80138094 D_80138094[100]; // unknown size
+mistStruct D_80138094[16];
 s32 D_8013808C;
+s16 D_801381D4;
+s16 D_801381D8;
+s16 D_801381DC;
+s16 D_801381E0;
+s16 D_801381E4;
+s16 D_801381E8;
+s16 D_801381EC;
+s16 D_801381F0;
 Primitive D_801381F4[8]; // unknown size
 GpuUsage g_GpuMaxUsage;
 GpuBuffer* g_BackBuffer;
@@ -553,6 +561,8 @@ s32 D_80138448;
 s32 D_8013844C;
 s32 D_80138450;
 s32 D_80138454;
+s32 D_80138394;
+s32 D_80138398;
 Point16 D_8013839C[12];
 Point16 D_8013804C[16];
 u_long* D_80139A7C;
@@ -601,7 +611,6 @@ void EntityPlayerBlinkWhite(Entity* self) { NOT_IMPLEMENTED; }
 void EntityNumberMovesToHpMeter(Entity* self) { NOT_IMPLEMENTED; }
 void EntityMpReplenished(Entity* self) { NOT_IMPLEMENTED; }
 void EntityPlayerDissolves(Entity* self) { NOT_IMPLEMENTED; }
-void EntityMist(Entity* self) { NOT_IMPLEMENTED; }
 void EntityGuardText(Entity* self) { NOT_IMPLEMENTED; }
 void EntityStopWatch(Entity* self) { NOT_IMPLEMENTED; }
 void EntityBatEcho(Entity* self) { NOT_IMPLEMENTED; }

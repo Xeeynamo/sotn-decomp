@@ -18,7 +18,6 @@ aStrY02x = 0x800E1A74;
 HandleGameOver = 0x800E5584;
 RenderEntities = 0x800EBBAC;
 AllocPrimitives = 0x800EDC80;
-FreePrimitives = 0x800EDE78;
 RenderPrimitives = 0x800EDEDC;
 CheckCollision = 0x800EF45C;
 MenuDraw = 0x800F8F28;

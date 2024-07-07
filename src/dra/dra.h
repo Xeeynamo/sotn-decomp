@@ -220,6 +220,17 @@ typedef struct {
     s32 unk28;
 } PlayerHud;
 
+typedef struct {
+    f32 posX;
+    f32 posY;
+    s16 angle1;
+    s16 angle2;
+    s16 size;
+    s16 xOffset;
+    s16 yOffset;
+    s16 pad;
+} mistStruct; // size = 0x14
+
 // g_ButtonCombo is an array of 16, here is what each index is for
 // Names should be updated as each one is decompiled.
 typedef enum {
@@ -346,6 +357,8 @@ extern u8 D_800AE120[];
 extern RECT D_800AE130;
 extern Unkstruct_800AE180 D_800AE180[];
 extern u16 D_800AE190[];
+extern s16 D_800AE1B0[];
+extern s16 D_800AE1F0[];
 extern u32 D_800AE230[8];
 extern u32 D_800AE250[8];
 extern s32 D_800AE270[9];
@@ -581,8 +594,18 @@ extern u8 D_80138048;
 extern Point16 D_8013804C[];
 extern s32 D_8013808C;
 extern s32 D_80138090;
-extern Unkstruct_80138094 D_80138094[];
+extern mistStruct D_80138094[16];
+extern s16 D_801381D4;
+extern s16 D_801381D8;
+extern s16 D_801381DC;
+extern s16 D_801381E0;
+extern s16 D_801381E4;
+extern s16 D_801381E8;
+extern s16 D_801381EC;
+extern s16 D_801381F0;
 extern Primitive D_801381F4[];
+extern s32 D_80138394;
+extern s32 D_80138398;
 extern Point16 D_8013839C[];
 extern s32 D_8013841C;
 extern RECT D_80138424;
