@@ -1128,7 +1128,7 @@ void func_80121F14(s32 arg0, s32 arg1) {
     mistStruct* ptr = D_80138094;
     s32 i;
 
-    for (i = 0; i < 16; i++, ptr++) {
+    for (i = 0; i < LEN(D_80138094); i++, ptr++) {
         ptr->posX.val = arg0 + ptr->posX.val;
         ptr->posY.val = arg1 + ptr->posY.val;
     }
@@ -1324,7 +1324,7 @@ void EntityMist(Entity* self) {
         D_801381EC = 0xEF;
         D_801381F0 = 0xEF;
         mistStruct = &D_80138094[0];
-        for (i = 0; i < 16; i++, mistStruct++) {
+        for (i = 0; i < LEN(D_80138094); i++, mistStruct++) {
             if (self->facingLeft) {
                 mistPrim = &D_801381F4[D_800AE230[i >> 1]];
                 xVar = mistPrim->x0;
@@ -1424,8 +1424,8 @@ void EntityMist(Entity* self) {
         yVar3 = (self->posY.i.hi + yVar4) / 2;
         xVar2 = abs(xVar) / 2;
         yVar2 = abs(yVar) / 2;
-        mistStruct = D_80138094;
-        for (i = 0; i < 16; i++, mistStruct++) {
+        mistStruct = &D_80138094[0];
+        for (i = 0; i < LEN(D_80138094); i++, mistStruct++) {
             if ((mistStruct->size < 0x28) && (g_GameTimer & 1)) {
                 mistStruct->size++;
             }
@@ -1490,7 +1490,7 @@ void EntityMist(Entity* self) {
             DestroyEntity(self);
         } else {
             mistStruct = &D_80138094[0];
-            for (i = 0; i < 16; i++, mistStruct++) {
+            for (i = 0; i < LEN(D_80138094); i++, mistStruct++) {
                 if (self->facingLeft) {
                     mistPrim = &D_801381F4[D_800AE230[i >> 1]];
                     xVar = mistPrim->x0;
@@ -1561,7 +1561,7 @@ void EntityMist(Entity* self) {
 
         mistStruct = D_80138094;
 
-        for (i = 0; i < 0x10; i++, mistStruct++) {
+        for (i = 0; i < LEN(D_80138094); i++, mistStruct++) {
             xVar = (mistStruct->xOffset + PLAYER.posX.i.hi) -
                    mistStruct->posX.i.hi;
             yVar = (mistStruct->yOffset + PLAYER.posY.i.hi) -
@@ -1592,7 +1592,7 @@ void EntityMist(Entity* self) {
     D_80138398 = 0xFF - D_80138394;
 
     prim = &g_PrimBuf[self->primIndex];
-    for (j = 0; j < 16; j++) {
+    for (j = 0; j < LEN(D_80138094); j++) {
         xVar5 = D_80138094[j].posX.i.hi;
         yVar5 = D_80138094[j].posY.i.hi;
         xVar2 = D_80138094[(j + 1) % 16].posX.i.hi;
@@ -1617,7 +1617,7 @@ void EntityMist(Entity* self) {
 #endif
         prim = prim->next;
     }
-    for (j = 0; j < 16; j++) {
+    for (j = 0; j < LEN(D_80138094); j++) {
         xVar5 = D_80138094[j].posX.i.hi;
         yVar5 = D_80138094[j].posY.i.hi;
         xVar2 = D_80138094[(j + 1) % 16].posX.i.hi;
