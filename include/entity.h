@@ -902,6 +902,17 @@ typedef struct {
     s16 unk7E;
     s16 unk80;
     s16 unk82;
+    s16 unk84;
+    s16 unk86;
+    s16 unk88;
+    s16 unk8A;
+} ET_TransparentWhiteCircle;
+
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
 } ET_HitByIce;
 
 typedef struct {
@@ -1227,6 +1238,7 @@ typedef union { // offset=0x7C
     ET_80162870 et_80162870;
     ET_80166784 et_80166784;
     ET_RichterPowerUpRing ricPowerRing;
+    ET_TransparentWhiteCircle whiteCircle;
     ET_8016E9E4 et_8016E9E4;
     ET_801719A4 et_801719A4;
     ET_BibleSubwpn et_BibleSubwpn;
