@@ -206,6 +206,14 @@ s32 D_800B07C8 = 0x12345678;
 s32 D_80138090;
 mistStruct D_80138094[100]; // unknown size
 s32 D_8013808C;
+s16 D_801381D4;
+s16 D_801381D8;
+s16 D_801381DC;
+s16 D_801381E0;
+s16 D_801381E4;
+s16 D_801381E8;
+s16 D_801381EC;
+s16 D_801381F0;
 Primitive D_801381F4[8]; // unknown size
 GpuUsage g_GpuMaxUsage;
 GpuBuffer* g_BackBuffer;
