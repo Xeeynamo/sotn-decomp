@@ -611,7 +611,6 @@ void EntityPlayerBlinkWhite(Entity* self) { NOT_IMPLEMENTED; }
 void EntityNumberMovesToHpMeter(Entity* self) { NOT_IMPLEMENTED; }
 void EntityMpReplenished(Entity* self) { NOT_IMPLEMENTED; }
 void EntityPlayerDissolves(Entity* self) { NOT_IMPLEMENTED; }
-void EntityMist(Entity* self) { NOT_IMPLEMENTED; }
 void EntityGuardText(Entity* self) { NOT_IMPLEMENTED; }
 void EntityTransparentWhiteCircle(Entity* self) { NOT_IMPLEMENTED; }
 void EntityStopWatch(Entity* self) { NOT_IMPLEMENTED; }
