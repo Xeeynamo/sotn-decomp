@@ -322,21 +322,13 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _ctl);
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _getctl);
 
 s32 _cwb(s32* arg0, s32 arg1) {
-    s32 temp_v1;
-    s32 var_a2;
     s32* var_a0;
-    u8 pad[8];
+    s32 i;
 
-    var_a0 = arg0;
-    var_a2 = arg1 - 1;
     *D_8002C280 = 0x04000000;
-    if (arg1 != 0) {
-        do {
-            temp_v1 = *var_a0;
-            var_a0 += 1;
-            var_a2 -= 1;
-            *D_8002C27C = temp_v1;
-        } while (var_a2 != -1);
+    var_a0 = arg0;
+    for (i = arg1 - 1; i != -1; i--) {
+        *D_8002C27C = *var_a0++;
     }
     return 0;
 }
@@ -372,18 +364,10 @@ void set_alarm(void) {
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_alarm);
 
-void GPU_memset(s8* arg0, s8 arg1, s32 arg2) {
-    s32 var_v0;
-    s8* var_a0;
-    u8 pad[8];
+void GPU_memset(s8* ptr, int value, s32 num) {
+    s32 i;
 
-    var_a0 = arg0;
-    var_v0 = arg2 - 1;
-    if (arg2 != 0) {
-        do {
-            *var_a0 = arg1;
-            var_v0 -= 1;
-            var_a0 += 1;
-        } while (var_v0 != -1);
+    for (i = num - 1; i != -1; i--) {
+        *ptr++ = value;
     }
 }
