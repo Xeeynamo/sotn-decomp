@@ -1125,7 +1125,7 @@ void EntityLevelUpAnimation(Entity* self) {
 }
 
 void func_80121F14(s32 arg0, s32 arg1) {
-    Unkstruct_80138094* ptr = D_80138094;
+    mistStruct* ptr = D_80138094;
     s32 i;
 
     for (i = 0; i < 16; i++, ptr++) {
@@ -1187,8 +1187,8 @@ Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
                          DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         arg2 = arg2->next;
     } else {
-        temp_s5 = D_80138094[arg1].unk8;
-        temp_s4 = D_80138094[(arg1 + 1) % 16].unk8;
+        temp_s5 = D_80138094[arg1].angle1;
+        temp_s4 = D_80138094[(arg1 + 1) % 16].angle1;
 
         for (var_s3 = 0; var_s3 < 4; var_s3++) {
             // nb: the cos/sin arguments seem to be invariant, could've been
@@ -1235,7 +1235,448 @@ Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
 }
 
 // spawns mist (player transform)
-INCLUDE_ASM("dra/nonmatchings/7E4BC", EntityMist);
+
+Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft);
+extern s16 D_800AE1B0[];
+extern s16 D_800AE1F0[];
+extern s16 D_801381D4;
+extern s16 D_801381D8;
+extern s16 D_801381DC;
+extern s16 D_801381E0;
+extern s16 D_801381E4;
+extern s16 D_801381E8;
+extern s16 D_801381EC;
+extern s16 D_801381F0;
+extern s32 D_80138394;
+extern s32 D_80138398;
+
+void EntityMist(Entity* self) {
+    Primitive* prim;
+    Primitive* mistPrim;
+    mistStruct* mistStruct;
+    s16 xVar;
+    s16 yVar;
+    s16 angle;
+    s16 magnitude;
+    s16 angle2;
+    s16 angle3;
+    s16 xSize;
+    s16 ySize;
+    s16 baseSize;
+    s16 index;
+    s16 xVar2;
+    s16 yVar2;
+    s16 xVar3;
+    s16 yVar3;
+    s32 primColor1;
+    s32 primColor2;
+    s32 primColor3;
+    s32 primColor4;
+    s16 xVar4;
+    s16 yVar4;
+    s32 velX;
+    s32 velY;
+    s32 cosine;
+    s32 sine;
+    s32 i;
+    s32 j;
+    s16 xVar5;
+    s16 yVar5;
+
+    velX = PLAYER.velocityX >> 1;
+    velY = PLAYER.velocityY >> 1;
+    primColor1 = D_801381E4 + (rsin(D_801381D4) >> 8);
+    primColor2 = D_801381E8 + (rsin(D_801381D8) >> 8);
+    primColor3 = D_801381EC + (rsin(D_801381DC) >> 8);
+    primColor4 = D_801381F0 + (rsin(D_801381E0) >> 8);
+    D_801381D4 += 0x20;
+    D_801381D8 -= 0x20;
+    D_801381DC += 0x20;
+    D_801381E0 -= 0x20;
+    self->ext.mist.timer++;
+
+    self->facingLeft = PLAYER.facingLeft;
+    if (PLAYER.animSet == 0xF) {
+        self->facingLeft = 0;
+    }
+    switch (self->step) {
+    case 0:
+        // Weird that we set FLAG_DEAD here.
+        self->params = FLAG_UNK_4000 | FLAG_UNK_1000 | FLAG_UNK_800 |
+                       FLAG_UNK_400 | FLAG_DEAD;
+        EntityPlayerBlinkWhite(self);
+        if (self->primIndex == -1) {
+            goto block_147;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        mistPrim = D_801381F4;
+        for (i = 0; i < 8; i++, mistPrim++) {
+            *mistPrim = *prim;
+            prim = prim->next;
+        }
+        FreePrimitives(self->primIndex);
+        self->step = 0;
+        self->primIndex = AllocPrimitives(PRIM_GT4, 80);
+        if (self->primIndex == -1) {
+            goto block_147;
+        }
+// Not sure why PSP masks to 7FFF. Might be worth digging into.
+// There might be some special magic in how the systems differ.
+// I don't think this is a real ifdef.
+#ifdef VER_PSP
+        D_801381D4 = rand() & 0x7FFF;
+        D_801381D8 = rand() & 0x7FFF;
+        D_801381DC = rand() & 0x7FFF;
+        D_801381E0 = rand() & 0x7FFF;
+#else
+        D_801381D4 = rand();
+        D_801381D8 = rand();
+        D_801381DC = rand();
+        D_801381E0 = rand();
+#endif
+        D_801381E4 = 0xEF;
+        D_801381E8 = 0xEF;
+        D_801381EC = 0xEF;
+        D_801381F0 = 0xEF;
+        mistStruct = &D_80138094[0];
+        for (i = 0; i < 16; i++, mistStruct++) {
+            if (self->facingLeft) {
+                mistPrim = &D_801381F4[D_800AE230[i >> 1]];
+                xVar = mistPrim->x0;
+                yVar = mistPrim->y0;
+            } else {
+                mistPrim = &D_801381F4[D_800AE250[i >> 1]];
+                xVar = mistPrim->x1;
+                yVar = mistPrim->y1;
+            }
+            xVar5 = (mistPrim->x0 + mistPrim->x1) / 2;
+            yVar5 = (mistPrim->y0 + mistPrim->y1) / 2;
+            if (!(i & 1)) {
+                mistStruct->posX.i.hi = xVar;
+                mistStruct->posY.i.hi = yVar;
+            } else {
+                mistStruct->posX.i.hi = xVar5;
+                mistStruct->posY.i.hi = yVar5;
+            }
+            xVar2 = mistPrim->x2;
+            yVar2 = mistPrim->y2;
+            angle = mistStruct->angle1 = (i * 4096) / 16;
+            mistStruct->angle2 = i << 9;
+            xVar3 = mistStruct->posX.i.hi - xVar2;
+            yVar3 = mistStruct->posY.i.hi - yVar2;
+            mistStruct->size =
+                (SquareRoot12(((xVar3 * xVar3) + (yVar3 * yVar3)) << 0xC) >>
+                 0xC);
+        }
+        xVar4 = xVar2;
+        yVar4 = yVar2;
+        self->ext.mist.xCurrent = xVar2 - PLAYER.posX.i.hi;
+        self->ext.mist.yCurrent = yVar2 - PLAYER.posY.i.hi;
+        self->posX.i.hi = xVar4;
+        self->posY.i.hi = yVar4;
+        prim = &g_PrimBuf[self->primIndex];
+        for (j = 0; j < 16; j++) {
+            prim = func_80121F58(0, j, prim, self->facingLeft);
+        }
+        for (j = 0; j < 16; j++) {
+            prim = func_80121F58(1, j, prim, self->facingLeft);
+        }
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
+                      FLAG_UNK_20000;
+        self->step++;
+        self->ext.mist.timer = 0;
+        D_80138394 = 0;
+        break;
+    case 1:
+        D_801381E4 -= 1;
+        D_801381E8 -= 2;
+        D_801381EC -= 3;
+        D_801381F0 -= 4;
+        if (D_801381E4 < 0xD0) {
+            D_801381E4 = 0xD0;
+        }
+        if (D_801381E8 < 0xA0) {
+            D_801381E8 = 0xA0;
+        }
+        if (D_801381EC < 0x70) {
+            D_801381EC = 0x70;
+        }
+        if (D_801381F0 < 0x30) {
+            D_801381F0 = 0x30;
+        }
+        if (self->ext.mist.timer == 0x4F) {
+            self->step++;
+            func_800EA538(8);
+        }
+        // Fallthrough!
+    case 2:
+        j = 0;
+        if (self->ext.mist.timer < 16) {
+            j = 1;
+        }
+        xVar4 = PLAYER.posX.i.hi + self->ext.mist.xCurrent;
+        yVar4 = PLAYER.posY.i.hi + self->ext.mist.yCurrent;
+        xVar = xVar4 - self->posX.i.hi;
+        yVar = yVar4 - self->posY.i.hi;
+        angle = ratan2(-yVar, xVar);
+        magnitude = SquareRoot12(((xVar * xVar) + (yVar * yVar)) << 0xC) >> 0xC;
+        if (magnitude >= 0xB) {
+            cosine = rcos(angle) * 8;
+            sine = -rsin(angle) * 8;
+            if (magnitude >= 0x24) {
+                cosine *= 2;
+                sine *= 2;
+            }
+            if (magnitude >= 0x3D) {
+                cosine *= 2;
+                sine *= 2;
+            }
+            self->posX.val = cosine + self->posX.val;
+            self->posY.val = sine + self->posY.val;
+        }
+        angle3 = angle;
+        xVar3 = (self->posX.i.hi + xVar4) / 2;
+        yVar3 = (self->posY.i.hi + yVar4) / 2;
+        xVar2 = abs(xVar) / 2;
+        yVar2 = abs(yVar) / 2;
+        mistStruct = D_80138094;
+        for (i = 0; i < 16; i++, mistStruct++) {
+            if ((mistStruct->size < 0x28) && (g_GameTimer & 1)) {
+                mistStruct->size++;
+            }
+            angle2 = mistStruct->angle1;
+            index = ((angle3 - angle2) & 0xFFF);
+            index = (index >> 7) & 0x1F;
+            baseSize = D_800AE1B0[index];
+            xSize = ((mistStruct->size + xVar2) * baseSize) / 80;
+            ySize = ((mistStruct->size + yVar2) * baseSize) / 80;
+            xVar = xVar3 + (((rcos(angle2) >> 4) * xSize) >> 8);
+            yVar = yVar3 - (((rsin(angle2) >> 4) * ySize) >> 8);
+            mistStruct->angle2 += 8;
+            angle = mistStruct->angle2;
+            if (j) {
+                xVar += (rcos(angle) >> 4) * 2 >> 8;
+                yVar -= (rsin(angle) >> 4) * 2 >> 8;
+            } else {
+                xVar += (((rcos(angle) >> 4) * 6) >> 8);
+                yVar -= (((rsin(angle) >> 4) * 6) >> 8);
+            }
+            xVar5 = xVar - mistStruct->posX.i.hi;
+            yVar5 = yVar - mistStruct->posY.i.hi;
+            angle = ratan2(-yVar5, xVar5) & 0xFFF;
+            mistStruct->posX.val += rcos(angle) << 5;
+            mistStruct->posY.val += -rsin(angle) << 5;
+            if (D_800AE1F0[index] == -1) {
+                mistStruct->posX.val = velX + mistStruct->posX.val;
+                mistStruct->posY.val = velY + mistStruct->posY.val;
+            }
+        }
+        D_80138394 += 8;
+        if (D_80138394 >= 0xFF) {
+            D_80138394 = 0xFF;
+        }
+        break;
+    case 3:
+        FreePrimitives(self->primIndex);
+        self->step = 0;
+        xVar = self->ext.mist.xCurrent;
+        yVar = self->ext.mist.yCurrent;
+        self->params = FLAG_UNK_4000 | FLAG_UNK_1000 | FLAG_UNK_800 |
+                       FLAG_UNK_400 | FLAG_DEAD;
+        EntityPlayerBlinkWhite(self);
+        if (self->primIndex == -1) {
+            self->flags = 0;
+            DestroyEntity(self);
+            goto block_147;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        mistPrim = D_801381F4;
+        for (i = 0; i < 8; i++, mistPrim++) {
+            *mistPrim = *prim;
+            prim = prim->next;
+        }
+        FreePrimitives(self->primIndex);
+        self->ext.mist.xCurrent = xVar;
+        self->ext.mist.yCurrent = yVar;
+        self->ext.mist.timer = 0;
+        self->step = 4;
+        self->primIndex = AllocPrimitives(PRIM_GT4, 80);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+        } else {
+            mistStruct = &D_80138094[0];
+            for (i = 0; i < 16; i++, mistStruct++) {
+                if (self->facingLeft) {
+                    mistPrim = &D_801381F4[D_800AE230[i >> 1]];
+                    xVar = mistPrim->x0;
+                    yVar = mistPrim->y0;
+                } else {
+                    mistPrim = &D_801381F4[D_800AE250[i >> 1]];
+                    xVar = mistPrim->x1;
+                    yVar = mistPrim->y1;
+                }
+                xVar5 = (mistPrim->x0 + mistPrim->x1) / 2;
+                yVar5 = (mistPrim->y0 + mistPrim->y1) / 2;
+                if (!(i & 1)) {
+                    mistStruct->xOffset = xVar;
+                    mistStruct->yOffset = yVar;
+                } else {
+                    mistStruct->xOffset = xVar5;
+                    mistStruct->yOffset = yVar5;
+                }
+                mistStruct->xOffset -= PLAYER.posX.i.hi;
+                mistStruct->yOffset -= PLAYER.posY.i.hi;
+                xVar2 = mistPrim->x2;
+                yVar2 = mistPrim->y2;
+            }
+            self->ext.mist.xTarget = xVar2 - PLAYER.posX.i.hi;
+            self->ext.mist.yTarget = yVar2 - PLAYER.posY.i.hi;
+            prim = &g_PrimBuf[self->primIndex];
+            for (j = 0; j < 16; j++) {
+                prim = func_80121F58(0, j, prim, self->facingLeft);
+            }
+            for (j = 0; j < 16; j++) {
+                prim = func_80121F58(1, j, prim, self->facingLeft);
+            }
+            self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 |
+                          FLAG_HAS_PRIMS | FLAG_UNK_20000;
+            xVar4 = PLAYER.posX.i.hi + self->ext.mist.xCurrent;
+            yVar4 = PLAYER.posY.i.hi + self->ext.mist.yCurrent;
+            self->posX.i.hi = PLAYER.posX.i.hi;
+            self->posY.i.hi = PLAYER.posY.i.hi;
+            D_80138394 = 0xFF;
+            break;
+        }
+        goto block_147;
+    case 4:
+        if (self->ext.mist.timer == 0xC) {
+            func_800EA538(8);
+            func_800EA5E4(0x11DU);
+        }
+        j = 0;
+        // These if-statements seem to allow for the mist to stretch and move
+        // The mist's current location moves toward the target in X and Y.
+        if (self->ext.mist.xCurrent > self->ext.mist.xTarget) {
+            self->ext.mist.xCurrent--;
+        }
+        if (self->ext.mist.xCurrent < self->ext.mist.xTarget) {
+            self->ext.mist.xCurrent++;
+        }
+        if (self->ext.mist.yCurrent > self->ext.mist.yTarget) {
+            self->ext.mist.yCurrent--;
+        }
+        if (self->ext.mist.yCurrent < self->ext.mist.yTarget) {
+            self->ext.mist.yCurrent++;
+        }
+        xVar4 = PLAYER.posX.i.hi + self->ext.mist.xCurrent;
+        yVar4 = PLAYER.posY.i.hi + self->ext.mist.yCurrent;
+
+        xVar = self->posX.i.hi - xVar4;
+        yVar = self->posY.i.hi - yVar4;
+
+        mistStruct = D_80138094;
+
+        for (i = 0; i < 0x10; i++, mistStruct++) {
+            xVar = (mistStruct->xOffset + PLAYER.posX.i.hi) -
+                   mistStruct->posX.i.hi;
+            yVar = (mistStruct->yOffset + PLAYER.posY.i.hi) -
+                   mistStruct->posY.i.hi;
+            if (xVar | yVar) {
+                angle = ratan2(-yVar, xVar);
+                mistStruct->posX.val += rcos(angle) << 5;
+                mistStruct->posY.val += -rsin(angle) << 5;
+            }
+            mistStruct->posX.val += PLAYER.velocityX;
+            mistStruct->posY.val += PLAYER.velocityY;
+        }
+        if (self->ext.mist.timer > 0x18) {
+            self->step++;
+            self->ext.mist.timer = 0x10;
+        }
+        D_80138394 -= 0x10;
+        if (D_80138394 <= 0) {
+            D_80138394 = 0;
+        }
+        break;
+    case 5:
+        if (self->ext.mist.timer <= 0) {
+            DestroyEntity(self);
+        }
+        return;
+    }
+    D_80138398 = 0xFF - D_80138394;
+
+    prim = &g_PrimBuf[self->primIndex];
+    for (j = 0; j < 16; j++) {
+        xVar5 = D_80138094[j].posX.i.hi;
+        yVar5 = D_80138094[j].posY.i.hi;
+        xVar2 = D_80138094[(j + 1) % 16].posX.i.hi;
+        yVar2 = D_80138094[(j + 1) % 16].posY.i.hi;
+        prim->x0 = xVar5;
+        prim->y0 = yVar5;
+        prim->x1 = xVar2;
+        prim->y1 = yVar2;
+        prim->x2 = xVar4;
+        prim->x3 = xVar4;
+        prim->y2 = yVar4;
+        prim->y3 = yVar4;
+        prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = 0;
+        prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
+            D_80138398;
+        if (D_80138398 < 0x10) {
+            prim->drawMode |= DRAW_HIDE;
+        } else {
+            prim->drawMode &= ~DRAW_HIDE;
+        }
+        prim = prim->next;
+    }
+    for (j = 0; j < 16; j++) {
+        xVar5 = D_80138094[j].posX.i.hi;
+        yVar5 = D_80138094[j].posY.i.hi;
+        xVar2 = D_80138094[(j + 1) % 16].posX.i.hi;
+        yVar2 = D_80138094[(j + 1) % 16].posY.i.hi;
+        for (i = 0; i < 4; i++) {
+            prim->x0 = xVar4 + (i + 1) * (xVar5 - xVar4) / 4;
+            prim->y0 = yVar4 + (i + 1) * (yVar5 - yVar4) / 4;
+            prim->x1 = xVar4 + (i + 1) * (xVar2 - xVar4) / 4;
+            prim->y1 = yVar4 + (i + 1) * (yVar2 - yVar4) / 4;
+            prim->x2 = xVar4 + i * (xVar5 - xVar4) / 4;
+            prim->y2 = yVar4 + i * (yVar5 - yVar4) / 4;
+            prim->x3 = xVar4 + i * (xVar2 - xVar4) / 4;
+            prim->y3 = yVar4 + i * (yVar2 - yVar4) / 4;
+            switch (i) {
+            case 0:
+                prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
+                    prim->b1 = (D_80138394 * primColor2 / 256) & 0xFF;
+                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
+                    prim->b3 = (D_80138394 * primColor1 / 256) & 0xFF;
+                break;
+            case 1:
+                prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
+                    prim->b1 = (D_80138394 * primColor3 / 256) & 0xFF;
+                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
+                    prim->b3 = (D_80138394 * primColor2 / 256) & 0xFF;
+                break;
+            case 2:
+                prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
+                    prim->b1 = (D_80138394 * primColor4 / 256) & 0xFF;
+                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
+                    prim->b3 = (D_80138394 * primColor3 / 256) & 0xFF;
+                break;
+            case 3:
+                prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
+                    prim->b1 = 0;
+                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
+                    prim->b3 = (D_80138394 * primColor4 / 256) & 0xFF;
+                break;
+            }
+            prim = prim->next;
+        }
+    }
+
+block_147:
+    self->facingLeft = PLAYER.facingLeft;
+}
 
 // Appears as D_800AD0C4[48].
 void UnknownEntId48(Entity* self) {
