@@ -978,42 +978,40 @@ void func_800F24F4(void) {
     s32 y;
     s32 var_a0;
 
-    x = (g_PlayerX >> 8) + g_Tilemap.left;
-    y = (g_PlayerY >> 8) + g_Tilemap.top;
+    x = g_Tilemap.left + (g_PlayerX >> 8);
+    y = g_Tilemap.top + (g_PlayerY >> 8);
     if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
-        if (g_StageId == STAGE_RNO0) {
-            if (x == 32 && y == 36) {
-                if (TimeAttackController(TIMEATTACK_EVENT_FINAL_SAVEPOINT,
-                                         TIMEATTACK_GET_RECORD) == 0) {
-                    TimeAttackController(TIMEATTACK_EVENT_FINAL_SAVEPOINT,
-                                         TIMEATTACK_SET_RECORD);
-                }
+        if (g_StageId == STAGE_RNO0 && x == 32 && y == 36) {
+            if (TimeAttackController(TIMEATTACK_EVENT_FINAL_SAVEPOINT,
+                                     TIMEATTACK_GET_RECORD) == 0) {
+                TimeAttackController(
+                    TIMEATTACK_EVENT_FINAL_SAVEPOINT, TIMEATTACK_SET_RECORD);
             }
         }
 
-        var_a0 = 0; // FAKE?
-        if (g_StageId != STAGE_RNO4 || x != 18 || y != 30) {
-            if (g_StageId == STAGE_NO4 && x == 45 && y == 33) {
-                if (g_Entities[var_a0].posX.i.hi == 128) {
-                    D_8003C730 = 1;
-                    func_801042C4(1);
-                } else {
-                    if (TimeAttackController(TIMEATTACK_EVENT_SUCCUBUS_DEFEAT,
-                                             TIMEATTACK_GET_RECORD)) {
-                        D_80137598 = 0;
-                        return;
-                    }
-                    func_801042C4(1);
-                }
-            } else {
-                func_801042C4(var_a0);
-            }
-            D_80137598 = 1;
-            func_80105428();
+        var_a0 = 0;
+        if (g_StageId == STAGE_RNO4 && x == 18 && y == 30) {
+            D_80137598 = 0;
             return;
         }
+        if (g_StageId == STAGE_NO4 && x == 45 && y == 33) {
+            if (PLAYER.posX.i.hi == 128) {
+                D_8003C730 = 1;
+            } else {
+                if (TimeAttackController(TIMEATTACK_EVENT_SUCCUBUS_DEFEAT,
+                                         TIMEATTACK_GET_RECORD)) {
+                    D_80137598 = 0;
+                    return;
+                }
+            }
+            var_a0 = 1;
+        }
+        func_801042C4(var_a0);
+        D_80137598 = 1;
+        func_80105428();
+    } else {
+        D_80137598 = 0;
     }
-    D_80137598 = 0;
 }
 
 void DrawMapCursor(void) {
