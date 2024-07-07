@@ -1608,11 +1608,13 @@ void EntityMist(Entity* self) {
         prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = 0;
         prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
             D_80138398;
+        #ifndef VERSION_HD
         if (D_80138398 < 0x10) {
             prim->drawMode |= DRAW_HIDE;
         } else {
             prim->drawMode &= ~DRAW_HIDE;
         }
+        #endif
         prim = prim->next;
     }
     for (j = 0; j < 16; j++) {
