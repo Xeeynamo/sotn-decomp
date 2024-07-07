@@ -984,8 +984,8 @@ void func_800F24F4(void) {
         if (g_StageId == STAGE_RNO0 && x == 32 && y == 36) {
             if (TimeAttackController(TIMEATTACK_EVENT_FINAL_SAVEPOINT,
                                      TIMEATTACK_GET_RECORD) == 0) {
-                TimeAttackController(TIMEATTACK_EVENT_FINAL_SAVEPOINT,
-                                     TIMEATTACK_SET_RECORD);
+                TimeAttackController(
+                    TIMEATTACK_EVENT_FINAL_SAVEPOINT, TIMEATTACK_SET_RECORD);
             }
         }
 
@@ -1005,7 +1005,7 @@ void func_800F24F4(void) {
                 }
             }
             var_a0 = 1;
-        } 
+        }
         func_801042C4(var_a0);
         D_80137598 = 1;
         func_80105428();
