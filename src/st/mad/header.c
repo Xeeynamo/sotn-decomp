@@ -1,9 +1,9 @@
 #include "mad.h"
 
-extern RoomHeader g_Rooms[];
-extern SpriteParts** SpriteBanks[];
+extern RoomHeader OVL_EXPORT(rooms)[];
+extern signed short* spriteBanks[];
 extern void* Cluts[];
-extern RoomDef g_TileLayers[];
+extern MyRoomDef rooms_layers[];
 extern GfxBank* g_pStTileset[];
 void UpdateStageEntities();
 void func_8018E1D4();
@@ -13,11 +13,11 @@ static Overlay OVL_EXPORT(Overlay) = {
     .HitDetection = HitDetection,
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
-    .rooms = g_Rooms,
-    .spriteBanks = SpriteBanks,
+    .rooms = OVL_EXPORT(rooms),
+    .spriteBanks = spriteBanks,
     .cluts = Cluts,
     .objLayoutHorizontal = g_pStObjLayoutHorizontal,
-    .tileLayers = g_TileLayers,
+    .tileLayers = rooms_layers,
     .gfxBanks = g_pStTileset,
     .UpdateStageEntities = UpdateStageEntities,
     .unk2c = NULL,
@@ -27,13 +27,7 @@ static Overlay OVL_EXPORT(Overlay) = {
     .StageEndCutScene = func_8018E1D4,
 };
 
-extern SpriteParts* D_8018CAA8[];
-
-static SpriteParts** SpriteBanks[] = {
-    NULL, D_8018CAA8, NULL, NULL, NULL, NULL, NULL, NULL,
-    NULL, NULL,       NULL, NULL, NULL, NULL, NULL, NULL,
-    NULL, NULL,       NULL, NULL, NULL, NULL, NULL, NULL,
-};
+#include "sprite_banks.h"
 
 extern u16* D_80182058[0x10];
 
@@ -46,3 +40,5 @@ static u16** Clut[] = {
 static void* Cluts[] = {
     Clut,
 };
+
+#include "layers.h"
