@@ -1721,7 +1721,7 @@ void DrawRichterHudSubweapon(void) {
             if (altPrim->p2 != 0) {
                 continue;
             }
-            altPrim->drawMode = 0x2004;
+            altPrim->drawMode = DRAW_ABSPOS | DRAW_COLORS;
             if (altPrim->p1 != 0) {
                 altPrim->p1--;
                 continue;
@@ -1730,7 +1730,7 @@ void DrawRichterHudSubweapon(void) {
             altPrim->y0 += temp_a0;
             altPrim->y1 += temp_a0;
             temp_a0 = (rand() & 3) + 1;
-            altPrim->drawMode = 0x2004;
+            altPrim->drawMode = DRAW_ABSPOS | DRAW_COLORS;
             altPrim->y2 += temp_a0;
             altPrim->y3 += temp_a0;
             if (altPrim->r2 >= 3) {
@@ -1739,7 +1739,8 @@ void DrawRichterHudSubweapon(void) {
                 func_801071CC(altPrim, temp_s2, 3);
             }
             if (altPrim->y2 >= 0x100) {
-                altPrim->drawMode = 0x2015;
+                altPrim->drawMode =
+                    DRAW_ABSPOS | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
                 if (altPrim->r0 != 0) {
                     temp_r0 = altPrim->r0;
                     temp_s2 = temp_r0 & 0xFF;
@@ -1748,7 +1749,9 @@ void DrawRichterHudSubweapon(void) {
                     func_801071CC(altPrim, temp_s2, 1);
                 }
                 if (altPrim->y2 >= 0x180) {
-                    altPrim->drawMode = 0x2075;
+                    altPrim->drawMode =
+                        DRAW_ABSPOS | DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                        DRAW_COLORS | DRAW_TRANSP;
                 }
             }
             if (altPrim->y2 >= 0x200) {
@@ -1832,10 +1835,10 @@ void DrawRichterHudSubweapon(void) {
                             temp_s0->h, temp_s0->u, temp_s0->v);
         prim->tpage = temp_s0->tpage;
         prim->clut = temp_s0->clut;
-        prim->drawMode = 0x2000;
+        prim->drawMode = DRAW_ABSPOS;
 
         if (prim->clut == 0x17F) {
-            prim->drawMode = 0x2011;
+            prim->drawMode = DRAW_ABSPOS | DRAW_TPAGE | DRAW_TRANSP;
         }
     }
     prim = prim->next;
@@ -1970,8 +1973,7 @@ void DrawHudSubweapon() {
     func_800EB4F8(D_800C52F8[g_Status.subWeapon], 0, 0x3C0, 0x120);
     prim = &g_PrimBuf[g_PlayerHud.primIndex1];
     if (g_Status.subWeapon != 0) {
-        // This is 0x2031. Since drawMode is probably bits, write it this way.
-        prim->drawMode = DRAW_ABSPOS | 0x0020 | DRAW_TPAGE | DRAW_TRANSP;
+        prim->drawMode = DRAW_ABSPOS | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         prim = prim->next;
         prim->p2--;
         if (prim->p2 == 0) {
@@ -2290,7 +2292,7 @@ void func_801026BC(s32 arg0) {
     if (arg0 == 0x40) {
         prim->drawMode = DRAW_DEFAULT;
     } else {
-        prim->drawMode = 0x35;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
     }
 }
 

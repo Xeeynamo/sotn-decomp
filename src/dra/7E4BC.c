@@ -425,7 +425,7 @@ void func_8011E4BC(Entity* self) {
                         tilePrim->velocityY.val >>= 1;
                     }
                     if (var_a2 == 0x18) {
-                        tilePrim->drawMode = 2;
+                        tilePrim->drawMode = DRAW_UNK02;
                     }
                 }
                 tilePrim->h = thickness;
@@ -546,7 +546,7 @@ void func_8011F074(Entity* entity) {
         entity->palette = 0x819F;
 
         if (D_8013808C & 1) {
-            entity->drawMode = 0x70;
+            entity->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
         } else {
             entity->drawMode = DRAW_TPAGE;
         }
@@ -624,7 +624,8 @@ void EntityHitByLightning(Entity* self) {
             prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
                 prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
                     prim->b3 = 0x80;
-            prim->drawMode = 0x133;
+            prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_UNK02 | DRAW_TRANSP;
             prim = prim->next;
         }
         if ((PLAYER.velocityY != 0) && (PLAYER.step != 0x10)) {
@@ -755,9 +756,11 @@ void EntityHitByIce(Entity* self) {
             prim->b0 = prim->b1 = prim->b2 = prim->b3 = rand() | 0x80;
             prim->g0 = prim->g1 = prim->g2 = prim->g3 = (rand() & 0x1F) + 0x30;
             if (rand() & 1) {
-                prim->drawMode = 0x335;
+                prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
+                                 DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             } else {
-                prim->drawMode = 0x315;
+                prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE |
+                                 DRAW_COLORS | DRAW_TRANSP;
             }
             prim->type = 3;
             prim->priority = PLAYER.zPriority + 2;
@@ -878,12 +881,12 @@ void EntityHitByIce(Entity* self) {
             prim->r0 = prim->r1 = prim->r2 = prim->r3;
             prim->b0 = prim->b1 = prim->b2 = prim->b3;
             prim->g0 = prim->g1 = prim->g2 = prim->g3;
-            prim->drawMode |= 2;
-            prim->drawMode &= ~0x300;
+            prim->drawMode |= DRAW_UNK02;
+            prim->drawMode &= ~(DRAW_UNK_200 | DRAW_UNK_100);
             self->flags |= FLAG_UNK_08000000;
             self->flags &= ~(FLAG_UNK_20000 | FLAG_UNK_40000);
             if (--prim->v0 == 0) {
-                prim->drawMode |= 8;
+                prim->drawMode |= DRAW_HIDE;
             }
         }
         prim = prim->next;
@@ -1450,7 +1453,7 @@ void func_80123F78(Entity* entity) {
         entity->animCurFrame = PLAYER.animCurFrame;
         entity->unk5A = 0xD;
         entity->drawFlags = PLAYER.drawFlags;
-        entity->drawMode = 0x30;
+        entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         entity->palette = 0x815F;
         entity->zPriority = PLAYER.zPriority - 2;
         entity->facingLeft = PLAYER.facingLeft;

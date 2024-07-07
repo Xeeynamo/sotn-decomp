@@ -592,7 +592,7 @@ void func_8012EAD0(void) {
             PLAYER.animSet = 1;
             PLAYER.unk5A = 0;
             PLAYER.rotZ = 0;
-            PLAYER.drawFlags = 0;
+            PLAYER.drawFlags = FLAG_DRAW_DEFAULT;
             SetPlayerAnim(0xCA);
             g_Player.unk66 = 1;
             if (g_Player.unk68 != 0) {

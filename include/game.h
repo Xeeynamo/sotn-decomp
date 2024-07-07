@@ -88,6 +88,7 @@ typedef struct Prim {
 #define DRAW_UNK_40 0x40
 #define DRAW_MENU 0x80       // render only if D_800973EC is set
 #define DRAW_UNK_100 0x100   // unknown
+#define DRAW_UNK_200 0x200   // unknown
 #define DRAW_UNK_400 0x400   // unknown
 #define DRAW_UNK_800 0x800   // unknown
 #define DRAW_UNK_1000 0x1000 // unknown
@@ -239,6 +240,7 @@ extern u8 g_BmpCastleMap[0x20000];
 #define ELEMENT_FIRE 0x8000
 
 // Flags for entity->drawFlags
+#define FLAG_DRAW_DEFAULT 0x00
 #define FLAG_DRAW_ROTX 0x01
 #define FLAG_DRAW_ROTY 0x02
 #define FLAG_DRAW_ROTZ 0x04
