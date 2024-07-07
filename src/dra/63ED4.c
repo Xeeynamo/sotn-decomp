@@ -448,7 +448,6 @@ extern s16* D_800D372C[];
 extern s16* D_800D3B88[];
 extern s16* D_800D5628[];
 extern s16* D_800D327C[];
-extern unkstr_800cfe48* D_800CFE48[18];
 extern s16* D_800D56AC[];
 extern s16* D_800D5868[];
 extern s16* D_800D684C[];

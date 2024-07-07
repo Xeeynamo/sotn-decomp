@@ -336,7 +336,8 @@ extern s16 D_800ACF84[8]; // collection of sounds
 extern s16 D_800ACF94[];
 extern u8 D_800AD094[0x30];
 extern u8 D_800ACFB4[][4]; // TODO AnimationFrames*[]
-extern unkstr_800cfe48* D_800CFE48[];
+extern s16* D_800CF324[];
+extern unkstr_800cfe48* D_800CFE48[18];
 extern PfnEntityUpdate D_800AD0C4[];
 extern FactoryBlueprint g_FactoryBlueprints[];
 extern u8 D_800AD4B8[];
@@ -347,6 +348,8 @@ extern AnimationFrame D_800AD57C[25];
 extern u8 D_800AD5E0[14];
 extern u8 D_800AD5F0[10];
 extern AnimationFrame D_800AD5FC[];
+extern s32 D_800AD630[];
+extern s16 D_800AD670[42][10];
 extern AnimationFrame D_800ADBD4[];
 extern AnimationFrame D_800ADC10[];
 extern AnimationFrame D_800ADC44[];
@@ -658,7 +661,7 @@ extern GpuBuffer* g_BackBuffer;
 extern u8 D_801390D8;
 extern SfxRingBufferItem g_SfxRingBuffer[MAX_SND_COUNT];
 extern s16 D_801396DC;
-extern u16 D_801396E0;
+extern s16 D_801396E0;
 extern u16 D_801396E4;
 extern Multi D_801396E6;
 extern u16 D_801396E8;
