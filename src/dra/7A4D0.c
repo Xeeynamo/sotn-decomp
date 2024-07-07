@@ -887,6 +887,9 @@ block_748:
         }
         self->primIndex = AllocPrimitives(PRIM_GT4, 8);
         if (self->primIndex == -1) {
+#ifdef VERSION_HD
+            DestroyEntity(self);
+#endif
             return;
         }
         self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000 |
