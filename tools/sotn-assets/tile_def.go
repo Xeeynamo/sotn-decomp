@@ -71,7 +71,7 @@ func readTiledef(file *os.File, off PsxOffset) (tileDef, dataRange, error) {
 	}, nil
 }
 
-func readAllTiledefs(file *os.File, roomLayers []roomLayers) (map[PsxOffset]tileDef, dataRange, error) {
+func readAllTiledefs(file *os.File, roomLayers []roomLayers, offBegin PsxOffset) (map[PsxOffset]tileDef, dataRange, error) {
 	ranges := []dataRange{}
 	processed := map[PsxOffset]tileDef{}
 	for _, rl := range roomLayers {
@@ -96,5 +96,34 @@ func readAllTiledefs(file *os.File, roomLayers []roomLayers) (map[PsxOffset]tile
 			}
 		}
 	}
+
+	// In CEN there is an unused tiledef at the beginning
+	for offBegin < getDataRangeBegin(ranges) {
+		offset := getDataRangeBegin(ranges).sum(-0x10)
+		td, r, err := readTiledef(file, offset)
+		if err != nil {
+			return nil, dataRange{}, err
+		}
+		processed[offset] = td
+		ranges = append(ranges, r)
+	}
+
+	// In MAD there is an unused tiledef between two used tiledefs
+	// search for gaps and fill them with the missing tiledef
+	sortDataRanges(ranges)
+	for i := 0; i < len(ranges)-1; i++ {
+		if ranges[i].end == ranges[i+1].begin {
+			continue
+		}
+		offset := ranges[i+1].begin.sum(-0x10)
+		td, r, err := readTiledef(file, offset)
+		if err != nil {
+			return nil, dataRange{}, err
+		}
+		processed[offset] = td
+		ranges = append(ranges, r)
+		sortDataRanges(ranges)
+	}
+
 	return processed, mergeDataRanges(ranges), nil
 }

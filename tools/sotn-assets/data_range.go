@@ -18,15 +18,32 @@ func (r dataRange) empty() bool {
 	return r.begin == RamNull && r.end == RamNull
 }
 
+func getDataRangeBegin(ranges []dataRange) PsxOffset {
+	if len(ranges) == 0 {
+		panic(fmt.Errorf("range array cannot be empty"))
+	}
+	earliest := ranges[0].begin
+	for _, rng := range ranges[1:] {
+		if earliest > rng.begin {
+			earliest = rng.begin
+		}
+	}
+	return earliest
+}
+
+func sortDataRanges(ranges []dataRange) {
+	sort.Slice(ranges, func(i, j int) bool {
+		return ranges[i].begin < ranges[j].begin
+	})
+}
+
 func mergeDataRanges(ranges []dataRange) dataRange {
 	if len(ranges) == 0 {
 		err := fmt.Errorf("no datarange, bug?!")
 		panic(err)
 	}
 
-	sort.Slice(ranges, func(i, j int) bool {
-		return ranges[i].begin < ranges[j].begin
-	})
+	sortDataRanges(ranges)
 
 	// performs a sanity check before merging everything
 	for i := 0; i < len(ranges)-1; i++ {

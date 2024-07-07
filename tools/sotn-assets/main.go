@@ -67,20 +67,16 @@ func getOvlAssets(fileName string) (ovl, error) {
 		return ovl{}, fmt.Errorf("unable to gather all the tile maps: %w", err)
 	}
 
-	tileDefs, tileDefsRange, err := readAllTiledefs(file, layers)
+	tileDefs, tileDefsRange, err := readAllTiledefs(file, layers, tileMapsRange.end)
 	if err != nil {
 		return ovl{}, fmt.Errorf("unable to gather all the tile defs: %w", err)
 	}
 
-	// check for unused tile defs (CEN has one)
+	// tile maps and tile defs must be stored consecutively
 	for tileMapsRange.end < tileDefsRange.begin {
-		offset := tileDefsRange.begin.sum(-0x10)
-		unusedTileDef, unusedTileDefRange, err := readTiledef(file, offset)
 		if err != nil {
-			return ovl{}, fmt.Errorf("there is a gap between tileMaps and tileDefs: %w", err)
+			return ovl{}, fmt.Errorf("there is a gap between tileMaps and tileDefs")
 		}
-		tileDefs[offset] = unusedTileDef
-		tileDefsRange = mergeDataRanges([]dataRange{tileDefsRange, unusedTileDefRange})
 	}
 
 	sprites, spritesRange, err := readSpritesBanks(file, header.Sprites)
