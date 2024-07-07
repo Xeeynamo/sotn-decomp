@@ -2,24 +2,29 @@
 
 #include "../destroy_entity.h"
 
-void LoadWeaponPalette(s32 clutIndex) {
+void OVL_EXPORT(LoadWeaponPalette)(s32 clutIndex) {
     RECT dstRect;
     u16* src;
     u16* dst;
     s32 i;
 
 #if !defined(W_029)
-    dst = src = g_Cluts[clutIndex];
+    dst = src = g_WeaponCluts[clutIndex];
     dst = D_8006EDCC[g_HandId];
 #else
     dst = D_8006EDCC[g_HandId];
-    src = g_Cluts[clutIndex];
+    src = g_WeaponCluts[clutIndex];
 #endif
     if (src == NULL) {
         return;
     }
 
+    // I think dst is longer than src so this reads out of bounds
+#ifndef VERSION_PC
     for (i = 0; i < LEN(*D_8006EDCC); i++) {
+#else
+    for (i = 0; i < 112; i++) {
+#endif
         *dst++ = *src++;
     }
 
@@ -66,7 +71,7 @@ void SetWeaponAnimation(u8 anim) {
 #endif
 
 #if !defined(W_044)
-void DecelerateX(s32 amount) {
+static void DecelerateX(s32 amount) {
     if (g_CurrentEntity->velocityX < 0) {
         g_CurrentEntity->velocityX += amount;
         if (g_CurrentEntity->velocityX > 0) {
@@ -80,7 +85,7 @@ void DecelerateX(s32 amount) {
     }
 }
 
-void DecelerateY(s32 amount) {
+static void DecelerateY(s32 amount) {
     if (g_CurrentEntity->velocityY < 0) {
         g_CurrentEntity->velocityY += amount;
         if (g_CurrentEntity->velocityY > 0) {
@@ -94,7 +99,7 @@ void DecelerateY(s32 amount) {
     }
 }
 
-void SetSpeedX(s32 speed) {
+static void SetSpeedX(s32 speed) {
     if (g_CurrentEntity->facingLeft == 1) {
         speed = -speed;
     }

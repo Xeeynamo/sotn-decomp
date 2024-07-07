@@ -278,7 +278,7 @@ s32 c_strTimeAttackGoals[1];
 s32 g_NewAttackRightHand;
 s32 g_NewAttackLeftHand;
 s32 g_NewDefenseEquip;
-s32 g_NewPlayerStatsTotal[1];
+s32 g_NewPlayerStatsTotal[4];
 s32 D_80137948;
 s8* D_8013794C; // Pointer to texture pattern
 s32 D_80137950;
@@ -573,21 +573,6 @@ int CdInit(void) {
 void func_801083BC(void) { NOT_IMPLEMENTED; }
 
 void func_801042C4(s32 arg0) { NOT_IMPLEMENTED; }
-
-void EntityWeaponAttack(Entity* self) { NOT_IMPLEMENTED; }
-s32 func_ptr_80170004(Entity* self) { NOT_IMPLEMENTED; }
-void func_ptr_80170008(Entity* self) { NOT_IMPLEMENTED; }
-void func_ptr_8017000C(Entity* self) { NOT_IMPLEMENTED; }
-s32 func_ptr_80170010(Entity* self) { NOT_IMPLEMENTED; }
-s32 func_ptr_80170014(Entity* self) { NOT_IMPLEMENTED; }
-int GetWeaponId(void) {
-    NOT_IMPLEMENTED;
-    return 0;
-}
-void LoadWeaponPalette(s32 clutIndex) { NOT_IMPLEMENTED; }
-void EntityWeaponShieldSpell(Entity* self) { NOT_IMPLEMENTED; }
-void func_ptr_80170024(Entity* self) { NOT_IMPLEMENTED; }
-void func_ptr_80170028(Entity* self) { NOT_IMPLEMENTED; }
 
 u16 g_FontCharData[0x60] = {1, 1, 1, 0, 0, 0};
 u16* func_80106A28(u32 arg0, u16 kind) {
