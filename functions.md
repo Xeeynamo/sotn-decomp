@@ -353,4 +353,3 @@
 | no3    | [EntityMerman3](https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-duplicates/function_calls/no3.EntityMerman3.svg)                           |     1175 |        189 | Yes    |                                 |       |
 | ric    | [func_80162EF8](https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-duplicates/function_calls/ric.func_80162EF8.svg)                           |     1291 |        137 | Yes    | https://decomp.me/scratch/Ul7qI | 0.705 |
 | no3    | [EntityStrongWarg](https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-duplicates/function_calls/no3.EntityStrongWarg.svg)                     |     1411 |        285 | Yes    |                                 |       |
-| dra    | [EntityPlayerBlinkWhite](https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-duplicates/function_calls/dra.EntityPlayerBlinkWhite.svg)         |     2033 |        219 | Yes    | https://decomp.me/scratch/Oc03n | 0.997 |

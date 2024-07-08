@@ -564,7 +564,7 @@
 <g id="node35" class="node">
 <title>dra.EntityPlayerBlinkWhite</title>
 <g id="a_node35"><a xlink:href="dra.EntityPlayerBlinkWhite.svg" xlink:title="dra.EntityPlayerBlinkWhite">
-<ellipse fill="red" stroke="black" cx="8583.34" cy="-378" rx="139.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="8583.34" cy="-378" rx="139.18" ry="18"/>
 <text text-anchor="middle" x="8583.34" y="-374.3" font-family="Times,serif" font-size="14.00">dra.EntityPlayerBlinkWhite</text>
 </a>
 </g>
