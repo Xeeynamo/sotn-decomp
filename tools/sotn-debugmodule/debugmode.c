@@ -20,7 +20,7 @@ void UpdateSfxPlayer(void);
 void UpdateFlagChecker(void);
 
 DebugMenu g_DebugMenus[] = {
-    DummyDummyDummy,      DummyDummyDummy,        true, false, "R2 = debug",
+    DummyDummyDummy,      DummyDummyDummy,        true, false, "L2 = debug",
     InitDebugFlagsPlayer, UpdateDebugFlagsPlayer, true, true,  "Debug mode",
     InitEntitySpawn,      UpdateEntitySpawn,      true, true,  "Entity spwn",
     InitSfxPlayer,        UpdateSfxPlayer,        true, true,  "Snd player",
@@ -60,7 +60,7 @@ void Init(void) {
 }
 
 bool UpdateLogic() {
-    if (g_pads->tapped & PAD_R2) {
+    if (g_pads->tapped & PAD_L2) {
         if (!g_DebugModePaused) {
             g_DebugMode++;
             if (g_DebugMode >= LEN(g_DebugMenus)) {
