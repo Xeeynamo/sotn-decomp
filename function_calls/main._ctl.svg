@@ -12,7 +12,7 @@
 <!-- main._ctl -->
 <g id="node1" class="node">
 <title>main._ctl</title>
-<ellipse fill="red" stroke="black" cx="52.65" cy="-18" rx="52.79" ry="18"/>
+<ellipse fill="green" stroke="black" cx="52.65" cy="-18" rx="52.79" ry="18"/>
 <text text-anchor="middle" x="52.65" y="-14.3" font-family="Times,serif" font-size="14.00">main._ctl</text>
 </g>
 </g>
