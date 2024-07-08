@@ -12,7 +12,7 @@
 <!-- rwrp.InitializeEntity -->
 <g id="node1" class="node">
 <title>rwrp.InitializeEntity</title>
-<ellipse fill="red" stroke="black" cx="2784.54" cy="-18" rx="105.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2784.54" cy="-18" rx="105.08" ry="18"/>
 <text text-anchor="middle" x="2784.54" y="-14.3" font-family="Times,serif" font-size="14.00">rwrp.InitializeEntity</text>
 </g>
 <!-- rwrp.EntityBigRedFireball -->

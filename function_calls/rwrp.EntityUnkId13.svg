@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>rwrp.InitializeEntity</title>
 <g id="a_node5"><a xlink:href="rwrp.InitializeEntity.svg" xlink:title="rwrp.InitializeEntity">
-<ellipse fill="red" stroke="black" cx="836.09" cy="-18" rx="105.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="836.09" cy="-18" rx="105.08" ry="18"/>
 <text text-anchor="middle" x="836.09" y="-14.3" font-family="Times,serif" font-size="14.00">rwrp.InitializeEntity</text>
 </a>
 </g>

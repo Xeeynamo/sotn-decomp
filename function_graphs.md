@@ -2444,7 +2444,7 @@
 - [✅ GetSideToPlayer](function_calls/rwrp.GetSideToPlayer.svg?raw=1)
 - [✅ HitDetection](function_calls/rwrp.HitDetection.svg?raw=1)
 - [✅ InitRoomEntities](function_calls/rwrp.InitRoomEntities.svg?raw=1)
-- [❌ InitializeEntity](function_calls/rwrp.InitializeEntity.svg?raw=1)
+- [✅ InitializeEntity](function_calls/rwrp.InitializeEntity.svg?raw=1)
 - [✅ MoveEntity](function_calls/rwrp.MoveEntity.svg?raw=1)
 - [✅ PreventEntityFromRespawning](function_calls/rwrp.PreventEntityFromRespawning.svg?raw=1)
 - [✅ PrimDecreaseBrightness](function_calls/rwrp.PrimDecreaseBrightness.svg?raw=1)
