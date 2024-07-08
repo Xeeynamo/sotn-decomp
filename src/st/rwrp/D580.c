@@ -233,7 +233,7 @@ void EntityExplosionSpawn(u16 arg0, u16 sfxId) {
     g_CurrentEntity->step_s = 0;
 }
 
-INCLUDE_ASM("st/rwrp/nonmatchings/D580", InitializeEntity);
+#include "../init_entity.h"
 
 void EntityDummy(Entity* entity) {
     if (entity->step == 0) {

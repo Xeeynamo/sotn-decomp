@@ -7,8 +7,9 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->unk5A = *arg0++;
     g_CurrentEntity->palette = *arg0++;
 
-    enemyId = *arg0++;
-    g_CurrentEntity->enemyId = enemyId;
+    // n.b.! the post increment of arg0 is optimized out
+    // on the PS1 version, but not on the PSP version.
+    enemyId = g_CurrentEntity->enemyId = *arg0++;
     enemyDef = &g_api.enemyDefs[enemyId];
     g_CurrentEntity->hitPoints = enemyDef->hitPoints;
     g_CurrentEntity->attack = enemyDef->attack;
@@ -19,9 +20,9 @@ void InitializeEntity(u16 arg0[]) {
     g_CurrentEntity->flags = enemyDef->flags;
     g_CurrentEntity->hitboxOffX = 0;
     g_CurrentEntity->hitboxOffY = 0;
-    g_CurrentEntity->step_s = 0;
     g_CurrentEntity->step++;
-    if (g_CurrentEntity->zPriority == 0) {
+    g_CurrentEntity->step_s = 0;
+    if (!g_CurrentEntity->zPriority) {
         g_CurrentEntity->zPriority =
             g_unkGraphicsStruct.g_zEntityCenter.unk - 0xC;
     }
