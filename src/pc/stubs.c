@@ -536,7 +536,7 @@ s16 D_80139A74;
 s16 g_SfxRingBufferReadPos;
 s32 D_80138454;
 s16 D_801396DC;
-u16 D_801396E0;
+s16 D_801396E0;
 u16 D_801396E4;
 Multi D_801396E6;
 u16 D_801396E8;
@@ -607,7 +607,6 @@ u16* func_80106A28(u32 arg0, u16 kind) {
 
 void func_80115394(s32* arg0, s16 arg1, s16 arg2) { NOT_IMPLEMENTED; }
 
-void EntityPlayerBlinkWhite(Entity* self) { NOT_IMPLEMENTED; }
 void EntityNumberMovesToHpMeter(Entity* self) { NOT_IMPLEMENTED; }
 void EntityMpReplenished(Entity* self) { NOT_IMPLEMENTED; }
 void EntityPlayerDissolves(Entity* self) { NOT_IMPLEMENTED; }

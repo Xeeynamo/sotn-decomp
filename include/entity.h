@@ -1186,6 +1186,22 @@ typedef struct {
     s16 yTarget;
 } ET_Mist;
 
+typedef struct {
+    s32 unk7C;
+    s16 unk80;
+    s16 unk82;
+    s32 un84;
+    s16 unk88;
+    s16 unk8A;
+    s32 unk8C;
+    s16 unk90;
+    s16 unk92;
+    s32 unk94;
+    s16 unk98;
+    s16 unk9A;
+    s16 unk9C;
+} ET_PlayerBlink;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1229,6 +1245,7 @@ typedef union { // offset=0x7C
     ET_Food food;
     ET_HitByIce hitbyice;
     ET_HitByLightning hitbylightning;
+    ET_PlayerBlink playerBlink;
     ET_Mist mist;
     ET_Bat bat;
     ET_SoulStealOrb soulStealOrb;
