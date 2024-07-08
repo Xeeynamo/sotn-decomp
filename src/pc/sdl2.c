@@ -27,12 +27,13 @@ DebugSdl g_DebugSdl = DEBUG_SDL_NONE;
 static SDL_Texture* g_VramTex = NULL;
 static int g_LastVramTexTpage = -1;
 static int g_LastVramTexClut = -1;
+static SDL_Joystick* joystick = NULL;
 
 void ResetPlatform(void);
 bool InitPlatform() {
     atexit(ResetPlatform);
 
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK) < 0) {
         ERRORF("SDL_Init: %s", SDL_GetError());
         return false;
     }
@@ -116,7 +117,11 @@ void MySsInitHot(void) {
     SDL_PauseAudioDevice(g_SdlAudioDevice, 0);
 }
 
-void MyPadInit(int mode) { INFOF("use keyboard"); }
+void MyPadInit(int mode) {
+    if (SDL_NumJoysticks() > 0) {
+        joystick = SDL_JoystickOpen(0);
+    }
+}
 
 u_long MyPadRead(int id) {
     const u8* keyb = SDL_GetKeyboardState(NULL);
@@ -162,6 +167,35 @@ u_long MyPadRead(int id) {
         }
         if (keyb[SDL_SCANCODE_R]) {
             pressed |= PAD_R1;
+        }
+
+        if (joystick) {
+            SDL_JoystickUpdate();
+            pressed |= SDL_JoystickGetButton(joystick, 0) ? PAD_CROSS : 0;
+            pressed |= SDL_JoystickGetButton(joystick, 1) ? PAD_CIRCLE : 0;
+            pressed |= SDL_JoystickGetButton(joystick, 2) ? PAD_TRIANGLE : 0;
+            pressed |= SDL_JoystickGetButton(joystick, 3) ? PAD_SQUARE : 0;
+            pressed |= SDL_JoystickGetButton(joystick, 4) ? PAD_L1 : 0;
+            pressed |= SDL_JoystickGetButton(joystick, 5) ? PAD_R1 : 0;
+            pressed |= SDL_JoystickGetButton(joystick, 6) ? PAD_L2 : 0;
+            pressed |= SDL_JoystickGetButton(joystick, 7) ? PAD_R2 : 0;
+            pressed |= SDL_JoystickGetButton(joystick, 8) ? PAD_SELECT : 0;
+            pressed |= SDL_JoystickGetButton(joystick, 9) ? PAD_START : 0;
+
+            short x_axis = SDL_JoystickGetAxis(joystick, 0);
+            short y_axis = SDL_JoystickGetAxis(joystick, 1);
+            if (y_axis < -SDL_JOYSTICK_AXIS_MAX / 2) {
+                pressed |= PAD_UP;
+            }
+            if (y_axis > SDL_JOYSTICK_AXIS_MAX / 2) {
+                pressed |= PAD_DOWN;
+            }
+            if (x_axis < -SDL_JOYSTICK_AXIS_MAX / 2) {
+                pressed |= PAD_LEFT;
+            }
+            if (x_axis > SDL_JOYSTICK_AXIS_MAX / 2) {
+                pressed |= PAD_RIGHT;
+            }
         }
 
         g_DebugSdl = DEBUG_SDL_NONE;
