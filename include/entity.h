@@ -1202,6 +1202,16 @@ typedef struct {
     s16 unk9C;
 } ET_PlayerBlink;
 
+typedef struct {
+    struct Primitive* prim;
+    s16 unk80;
+    s16 pad82;
+    s32 pad84;
+    s32 pad88;
+    struct Primitive* prim2;
+    struct Primitive* prim3;
+} ET_BloodSplatter;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1230,6 +1240,7 @@ typedef union { // offset=0x7C
     ET_EquipItemDrop equipItemDrop;
     ET_HeartDrop heartDrop;
     ET_BloodDroplets bloodDroplets;
+    ET_BloodSplatter bloodSplatter;
     ET_NumericDamage ndmg;
     ET_RelicOrb relicOrb;
     ET_Door door;
