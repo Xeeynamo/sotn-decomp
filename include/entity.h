@@ -693,6 +693,10 @@ typedef struct {
 } ET_EntitySlot16;
 
 typedef struct {
+    /* 0x7C */ s16 unk7C;
+} ET_Entity12;
+
+typedef struct {
     u8 fiveFrameCounter;
     struct Entity* parent;
     char pad[8];
@@ -1210,6 +1214,7 @@ typedef union { // offset=0x7C
     ET_Generic generic;
     ET_EntitySlot1 entSlot1; // g_Entities[1], not entityID 1
     ET_EntitySlot16 entSlot16;
+    ET_Entity12 ent12; // entityID 12
     ET_Entity13 ent13; // entityID 13
     ET_8011E4BC et_8011E4BC;
     ET_HellfireHandler hellfireHandler;

@@ -69,7 +69,7 @@ void EntityUnkId12(Entity* entity) {
 
         if (entity->unk44 != 0) {
             ret = GetSideToPlayer();
-            phi_v1 = entity->ext.generic.unk7C.s;
+            phi_v1 = entity->ext.ent12.unk7C;
             if (phi_v1 != 0) {
                 phi_v1 = (ret & 2) * 2;
             } else {
@@ -85,8 +85,8 @@ void EntityUnkId12(Entity* entity) {
         }
     } else {
         InitializeEntity(D_80180488);
-        entity->ext.generic.unk7C.s = D_80180530[temp_s1];
-        if (entity->ext.generic.unk7C.s != 0) {
+        entity->ext.ent12.unk7C = D_80180530[temp_s1];
+        if (entity->ext.ent12.unk7C != 0) {
             entity->hitboxWidth = D_80180528[temp_s1];
             entity->hitboxHeight = 16;
         } else {

@@ -64,7 +64,6 @@ void FallEntity(void) {
     }
 }
 
-#if !defined(VERSION_PSP)
 s32 func_8018D990(u16* sensors) {
     Collider col;
     Collider colBack;
@@ -117,7 +116,6 @@ s32 func_8018D990(u16* sensors) {
     g_CurrentEntity->flags |= FLAG_UNK_10000000;
     return 0;
 }
-#endif
 
 s32 func_8018DC08(s16* posX) {
     Collider collider;
@@ -295,7 +293,6 @@ void EntityDummy(Entity* entity) {
     }
 }
 
-#if !defined(VERSION_PSP)
 s32 func_8018E3B4(u16* hitSensors, s16 sensorCount) {
     Collider collider;
     s16 i;
@@ -327,7 +324,6 @@ s32 func_8018E3B4(u16* hitSensors, s16 sensorCount) {
         return 0;
     }
 }
-#endif
 
 void CheckFieldCollision(s16* hitSensors, s16 sensorCount) {
     Collider collider;
