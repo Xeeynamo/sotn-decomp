@@ -848,6 +848,17 @@ int readSubsetToBuf(char* filename, char* dest, size_t start, size_t size) {
         fclose(file);
         return 1;
     }
+
+    if (ferror(file)) {
+        printf("Error reading file");
+        return 1;
+    } else if (feof(file)) {
+        printf("End of file reached\n");
+        return 1;
+    }
+
+    fclose(file);
+
     return 0;
 }
 
