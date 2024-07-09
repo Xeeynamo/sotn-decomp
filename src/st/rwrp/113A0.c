@@ -14,7 +14,31 @@
 
 #include "../entity_olrox_drool.h"
 
-INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_80191BCC);
+// move the current entity, check for vertical collision
+// and send it down if it has collided
+bool func_80191BCC(Point16* unk) {
+    Collider collider;
+
+    FallEntity();
+    g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;
+    g_CurrentEntity->posY.val += g_CurrentEntity->velocityY;
+
+    if (g_CurrentEntity->velocityY >= 0) {
+        s16 posX = g_CurrentEntity->posX.i.hi;
+        s16 posY = g_CurrentEntity->posY.i.hi;
+        posX += unk->x;
+        posY += unk->y;
+        g_api.CheckCollision(posX, posY, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            g_CurrentEntity->posY.i.hi += collider.unk18;
+            g_CurrentEntity->velocityY = -g_CurrentEntity->velocityY / 2;
+            if (g_CurrentEntity->velocityY > FIX(-1.0)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 u8 func_80191CC8(s32 arg0) {
     Collider collider;
@@ -190,7 +214,32 @@ u8 func_80191CC8(s32 arg0) {
 
 #include "../entity_intense_explosion.h"
 
-INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_80192348);
+extern u8 D_8018104C[];
+
+void func_801C16B4(Entity* entity) {
+    if (entity->step == 0) {
+        InitializeEntity(g_InitializeEntityData0);
+        entity->unk6C = 0xF0;
+        entity->rotX = 0x1A0;
+        entity->rotY = 0x1A0;
+        entity->animSet = ANIMSET_DRA(8);
+        entity->animCurFrame = 1;
+        entity->zPriority += 0x10;
+
+        if (entity->params != 0) {
+            entity->palette = entity->params;
+        } else {
+            entity->palette = 0x8160;
+        }
+
+        entity->step++;
+    } else {
+        MoveEntity();
+        if (!AnimateEntity(D_8018104C, entity)) {
+            DestroyEntity(entity);
+        }
+    }
+}
 
 extern PfnEntityUpdate PfnEntityUpdates[];
 void func_80192414(u16 entityId, Entity* src, Entity* dst) {
@@ -237,6 +286,40 @@ void func_801924DC(void) {
 
 #include "../clut_lerp.h"
 
-INCLUDE_ASM("st/rwrp/nonmatchings/113A0", func_80193644);
+void func_80193644(s16 sfxId) {
+    s32 var_a3;
+    s32 temp_v0_2;
+    s16 var_a2;
+    s32 y;
+    s16 var_v0_4;
+    s16 var_v1;
+
+    var_a3 = g_CurrentEntity->posX.i.hi - 128;
+    var_a2 = (abs(var_a3) - 32) >> 5;
+    if (var_a2 > 8) {
+        var_a2 = 8;
+    } else if (var_a2 < 0) {
+        var_a2 = 0;
+    }
+    if (var_a3 < 0) {
+        var_a2 = -var_a2;
+    }
+    var_a3 = abs(var_a3) - 96;
+    y = g_CurrentEntity->posY.i.hi - 128;
+    temp_v0_2 = abs(y) - 112;
+    var_v1 = var_a3;
+    if (temp_v0_2 > 0) {
+        var_v1 += temp_v0_2;
+    }
+    if (var_v1 < 0) {
+        var_v0_4 = 0;
+    } else {
+        var_v0_4 = var_v1;
+    }
+    var_a3 = 127 - (var_v0_4 >> 1);
+    if (var_a3 > 0) {
+        g_api.func_80134714(sfxId, var_a3, var_a2);
+    }
+}
 
 #include "../e_stage_name.h"
