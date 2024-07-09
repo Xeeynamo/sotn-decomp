@@ -12,7 +12,7 @@
 <!-- rwrp.func_8018EAB4 -->
 <g id="node1" class="node">
 <title>rwrp.func_8018EAB4</title>
-<ellipse fill="red" stroke="black" cx="389.49" cy="-198" rx="109.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="389.49" cy="-198" rx="109.68" ry="18"/>
 <text text-anchor="middle" x="389.49" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.func_8018EAB4</text>
 </g>
 <!-- dra.CheckCollision -->
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>rwrp.EntityEquipItemDrop</title>
 <g id="a_node6"><a xlink:href="rwrp.EntityEquipItemDrop.svg" xlink:title="rwrp.EntityEquipItemDrop">
-<ellipse fill="red" stroke="black" cx="256.49" cy="-378" rx="136.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="256.49" cy="-378" rx="136.48" ry="18"/>
 <text text-anchor="middle" x="256.49" y="-374.3" font-family="Times,serif" font-size="14.00">rwrp.EntityEquipItemDrop</text>
 </a>
 </g>
@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>rwrp.EntityPrizeDrop</title>
 <g id="a_node7"><a xlink:href="rwrp.EntityPrizeDrop.svg" xlink:title="rwrp.EntityPrizeDrop">
-<ellipse fill="red" stroke="black" cx="522.49" cy="-378" rx="111.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="522.49" cy="-378" rx="111.58" ry="18"/>
 <text text-anchor="middle" x="522.49" y="-374.3" font-family="Times,serif" font-size="14.00">rwrp.EntityPrizeDrop</text>
 </a>
 </g>

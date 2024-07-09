@@ -19,7 +19,7 @@
 <g id="node2" class="node">
 <title>rwrp.EntityEquipItemDrop</title>
 <g id="a_node2"><a xlink:href="rwrp.EntityEquipItemDrop.svg" xlink:title="rwrp.EntityEquipItemDrop">
-<ellipse fill="red" stroke="black" cx="136.49" cy="-198" rx="136.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="136.49" cy="-198" rx="136.48" ry="18"/>
 <text text-anchor="middle" x="136.49" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.EntityEquipItemDrop</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>rwrp.EntityPrizeDrop</title>
 <g id="a_node3"><a xlink:href="rwrp.EntityPrizeDrop.svg" xlink:title="rwrp.EntityPrizeDrop">
-<ellipse fill="red" stroke="black" cx="402.49" cy="-198" rx="111.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="402.49" cy="-198" rx="111.58" ry="18"/>
 <text text-anchor="middle" x="402.49" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.EntityPrizeDrop</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>rwrp.func_8018D990</title>
 <g id="a_node4"><a xlink:href="rwrp.func_8018D990.svg" xlink:title="rwrp.func_8018D990">
-<ellipse fill="red" stroke="black" cx="640.49" cy="-198" rx="108.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="640.49" cy="-198" rx="108.58" ry="18"/>
 <text text-anchor="middle" x="640.49" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.func_8018D990</text>
 </a>
 </g>
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>rwrp.func_8018EAB4</title>
 <g id="a_node5"><a xlink:href="rwrp.func_8018EAB4.svg" xlink:title="rwrp.func_8018EAB4">
-<ellipse fill="red" stroke="black" cx="876.49" cy="-198" rx="109.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="876.49" cy="-198" rx="109.68" ry="18"/>
 <text text-anchor="middle" x="876.49" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.func_8018EAB4</text>
 </a>
 </g>
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>rwrp.func_80191BCC</title>
 <g id="a_node6"><a xlink:href="rwrp.func_80191BCC.svg" xlink:title="rwrp.func_80191BCC">
-<ellipse fill="red" stroke="black" cx="1114.49" cy="-198" rx="110.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1114.49" cy="-198" rx="110.48" ry="18"/>
 <text text-anchor="middle" x="1114.49" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.func_80191BCC</text>
 </a>
 </g>

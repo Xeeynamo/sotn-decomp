@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>rwrp.EntityPrizeDrop</title>
 <g id="a_node4"><a xlink:href="rwrp.EntityPrizeDrop.svg" xlink:title="rwrp.EntityPrizeDrop">
-<ellipse fill="red" stroke="black" cx="156.34" cy="-378" rx="111.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="156.34" cy="-378" rx="111.58" ry="18"/>
 <text text-anchor="middle" x="156.34" y="-374.3" font-family="Times,serif" font-size="14.00">rwrp.EntityPrizeDrop</text>
 </a>
 </g>

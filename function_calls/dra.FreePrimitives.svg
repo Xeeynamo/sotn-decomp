@@ -995,7 +995,7 @@
 <g id="node63" class="node">
 <title>rwrp.EntityEquipItemDrop</title>
 <g id="a_node63"><a xlink:href="rwrp.EntityEquipItemDrop.svg" xlink:title="rwrp.EntityEquipItemDrop">
-<ellipse fill="red" stroke="black" cx="13821.19" cy="-198" rx="136.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="13821.19" cy="-198" rx="136.48" ry="18"/>
 <text text-anchor="middle" x="13821.19" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.EntityEquipItemDrop</text>
 </a>
 </g>
@@ -1027,7 +1027,7 @@
 <g id="node65" class="node">
 <title>rwrp.EntityPrizeDrop</title>
 <g id="a_node65"><a xlink:href="rwrp.EntityPrizeDrop.svg" xlink:title="rwrp.EntityPrizeDrop">
-<ellipse fill="red" stroke="black" cx="14336.19" cy="-198" rx="111.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="14336.19" cy="-198" rx="111.58" ry="18"/>
 <text text-anchor="middle" x="14336.19" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.EntityPrizeDrop</text>
 </a>
 </g>

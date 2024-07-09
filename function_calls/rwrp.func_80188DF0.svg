@@ -12,7 +12,7 @@
 <!-- rwrp.func_80188DF0 -->
 <g id="node1" class="node">
 <title>rwrp.func_80188DF0</title>
-<ellipse fill="red" stroke="black" cx="216.34" cy="-198" rx="109.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="216.34" cy="-198" rx="109.38" ry="18"/>
 <text text-anchor="middle" x="216.34" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.func_80188DF0</text>
 </g>
 <!-- rwrp.AnimateEntity -->

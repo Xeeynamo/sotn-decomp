@@ -12,7 +12,7 @@
 <!-- rwrp.func_80191BCC -->
 <g id="node1" class="node">
 <title>rwrp.func_80191BCC</title>
-<ellipse fill="red" stroke="black" cx="195.49" cy="-198" rx="110.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="195.49" cy="-198" rx="110.48" ry="18"/>
 <text text-anchor="middle" x="195.49" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.func_80191BCC</text>
 </g>
 <!-- dra.CheckCollision -->

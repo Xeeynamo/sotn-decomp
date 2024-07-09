@@ -147,7 +147,7 @@
 <g id="node10" class="node">
 <title>rwrp.BottomCornerText</title>
 <g id="a_node10"><a xlink:href="rwrp.BottomCornerText.svg" xlink:title="rwrp.BottomCornerText">
-<ellipse fill="red" stroke="black" cx="1617.39" cy="-18" rx="122.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1617.39" cy="-18" rx="122.38" ry="18"/>
 <text text-anchor="middle" x="1617.39" y="-14.3" font-family="Times,serif" font-size="14.00">rwrp.BottomCornerText</text>
 </a>
 </g>

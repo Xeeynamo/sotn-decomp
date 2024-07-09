@@ -179,7 +179,7 @@
 <g id="node12" class="node">
 <title>rwrp.EntityEquipItemDrop</title>
 <g id="a_node12"><a xlink:href="rwrp.EntityEquipItemDrop.svg" xlink:title="rwrp.EntityEquipItemDrop">
-<ellipse fill="red" stroke="black" cx="2192.99" cy="-378" rx="136.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2192.99" cy="-378" rx="136.48" ry="18"/>
 <text text-anchor="middle" x="2192.99" y="-374.3" font-family="Times,serif" font-size="14.00">rwrp.EntityEquipItemDrop</text>
 </a>
 </g>
