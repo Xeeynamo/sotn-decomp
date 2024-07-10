@@ -14,6 +14,15 @@
 #define HAND_ID 0
 #endif
 
+// create function names like w_000_EntityWeaponAttack
+#ifdef VERSION_PC
+#define CONCATENATE_DETAIL(x, y, z) x##y##_##z
+#define CONCATENATE(x, y, z) CONCATENATE_DETAIL(x, y, z)
+#define OVL_EXPORT(x) CONCATENATE(WEAPON, WEAPON_ID, x)
+#else
+#define OVL_EXPORT(x) x
+#endif
+
 // exported
 void EntityWeaponAttack(Entity* self);
 void LoadWeaponPalette(s32 clutIndex);
@@ -35,14 +44,14 @@ void WeaponUnused3C(void);
 // internals
 extern SpriteParts* g_Animset[];
 extern SpriteParts* g_Animset2[];
-extern u16* g_Cluts[];
+extern u16* g_WeaponCluts[];
 extern s32 g_HandId;
 
 void DestroyEntity(Entity* entity);
 void SetSpriteBank1(SpriteParts* animset);
 void SetSpriteBank2(SpriteParts* animset);
-void DecelerateX(s32 amount);
-void DecelerateY(s32 amount);
-void SetSpeedX(s32 speed);
+static void DecelerateX(s32 amount);
+static void DecelerateY(s32 amount);
+static void SetSpeedX(s32 speed);
 
 #endif

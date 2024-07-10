@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <lba.h>
+#include "weapon_pc.h"
 
 #define VSYNC_UNK_LEN 1024
 
@@ -450,13 +451,13 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
                  g_StagesLba[g_StageId].ovlName);
         break;
     case SimFileType_Weapon0Prg:
-        INFOF("TODO: will load weapon 'w0_%03d'", fileId);
+        HandleWeapon0Prg(fileId);
         return 0;
     case SimFileType_Weapon1Prg:
         INFOF("TODO: will load weapon 'w1_%03d'", fileId);
         return 0;
     case SimFileType_Weapon0Chr:
-        INFOF("TODO: will load weapon 'f0_%03d'", fileId);
+        HandleWeapon0Chr(fileId);
         return 0;
     case SimFileType_Weapon1Chr:
         INFOF("TODO: will load weapon 'f1_%03d'", fileId);
