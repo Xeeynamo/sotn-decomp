@@ -363,20 +363,6 @@ int MyClearImage(RECT* rect, u_char r, u_char g, u_char b) {
     return 0;
 }
 
-int MyLoadImage(RECT* rect, u_long* p) {
-    DEBUGF("(%X, %X, %X, %X): %p", rect->x, rect->y, rect->w, rect->h, p);
-    u16* mem = (u16*)p;
-    u16* vram = g_RawVram;
-    vram += rect->x + rect->y * VRAM_W;
-
-    for (int i = 0; i < rect->h; i++) {
-        memcpy(vram, mem, rect->w * 2);
-        mem += rect->w;
-        vram += VRAM_W;
-    }
-    return 0;
-}
-
 int MyStoreImage(RECT* rect, u_long* p) {
     DEBUGF("(%X, %X, %X, %X): %p", rect->x, rect->y, rect->w, rect->h, p);
     u16* mem = (u16*)p;

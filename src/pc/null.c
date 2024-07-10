@@ -17,8 +17,9 @@ void MyPadInit(int mode) {}
 
 u_long MyPadRead(int id) { return 0; }
 
+int MyLoadImage(RECT* rect, u_long* p) { return 0; }
 int MyDrawSync(int mode) { return 0; }
-
+void MySetDrawEnv(DR_ENV* dr_env, DRAWENV* env) {}
 DISPENV* MyPutDispEnv(DISPENV* env) { return NULL; }
 
 void MySetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw) {}
