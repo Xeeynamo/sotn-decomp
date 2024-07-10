@@ -693,6 +693,10 @@ typedef struct {
 } ET_EntitySlot16;
 
 typedef struct {
+    /* 0x7C */ s16 unk7C;
+} ET_Entity12;
+
+typedef struct {
     u8 fiveFrameCounter;
     struct Entity* parent;
     char pad[8];
@@ -896,6 +900,17 @@ typedef struct {
     s16 unk88;
     s16 unk8A;
 } ET_RichterPowerUpRing;
+
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+    s16 unk86;
+    s16 unk88;
+    s16 unk8A;
+} ET_TransparentWhiteCircle;
 
 typedef struct {
     s16 unk7C;
@@ -1166,6 +1181,31 @@ typedef struct {
     s16 unk86;
 } ET_80129864;
 
+typedef struct {
+    s16 timer;
+    s16 pad;
+    s16 xCurrent;
+    s16 yCurrent;
+    s16 xTarget;
+    s16 yTarget;
+} ET_Mist;
+
+typedef struct {
+    s32 unk7C;
+    s16 unk80;
+    s16 unk82;
+    s32 un84;
+    s16 unk88;
+    s16 unk8A;
+    s32 unk8C;
+    s16 unk90;
+    s16 unk92;
+    s32 unk94;
+    s16 unk98;
+    s16 unk9A;
+    s16 unk9C;
+} ET_PlayerBlink;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1174,6 +1214,7 @@ typedef union { // offset=0x7C
     ET_Generic generic;
     ET_EntitySlot1 entSlot1; // g_Entities[1], not entityID 1
     ET_EntitySlot16 entSlot16;
+    ET_Entity12 ent12; // entityID 12
     ET_Entity13 ent13; // entityID 13
     ET_8011E4BC et_8011E4BC;
     ET_HellfireHandler hellfireHandler;
@@ -1209,6 +1250,8 @@ typedef union { // offset=0x7C
     ET_Food food;
     ET_HitByIce hitbyice;
     ET_HitByLightning hitbylightning;
+    ET_PlayerBlink playerBlink;
+    ET_Mist mist;
     ET_Bat bat;
     ET_SoulStealOrb soulStealOrb;
     ET_GaibonSlogra GS_Props;
@@ -1227,6 +1270,7 @@ typedef union { // offset=0x7C
     ET_80162870 et_80162870;
     ET_80166784 et_80166784;
     ET_RichterPowerUpRing ricPowerRing;
+    ET_TransparentWhiteCircle whiteCircle;
     ET_8016E9E4 et_8016E9E4;
     ET_801719A4 et_801719A4;
     ET_BibleSubwpn et_BibleSubwpn;

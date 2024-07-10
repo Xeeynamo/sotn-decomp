@@ -44,7 +44,7 @@ int UpdateFlagCheckerListenMode(void) {
     const int MenuWidth = 64;
     int i;
 
-    if (g_pads->tapped & PAD_R2) {
+    if (g_pads->tapped & PAD_L2) {
         // exit listen mode
         g_CastleFlagChangeCursor = -1;
         return;

@@ -25,7 +25,7 @@ void func_80115F54(void) {
         func_80113EE0();
         PLAYER.velocityY = -0x1A000;
         PLAYER.ext.player.anim = 0xC1;
-        PLAYER.drawMode = 0x30;
+        PLAYER.drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         PLAYER.rotZ = 0x200;
         func_80118C28(1);
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x5900, 44), 0);
@@ -804,7 +804,7 @@ void func_801177A0(void) {
         if (else_cycles == 8) {
             PLAYER.animSet = 1;
             PLAYER.rotZ = 0;
-            PLAYER.drawFlags = 0;
+            PLAYER.drawFlags = FLAG_DRAW_DEFAULT;
             g_Player.unk66 = 1;
             if (g_Player.unk68 != 0) {
                 PLAYER.step_s = 2;
@@ -1540,9 +1540,12 @@ void func_80119F70(Entity* entity) {
             prim->g1 = (rand() & 7) + 1;
             prim->g2 = 0;
             prim->priority = PLAYER.zPriority + 4;
-            prim->drawMode = 0x11B;
+            prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE | DRAW_HIDE |
+                             DRAW_UNK02 | DRAW_TRANSP;
             if (rand() & 1) {
-                prim->drawMode = 0x17B;
+                prim->drawMode =
+                    DRAW_UNK_100 | DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                    DRAW_HIDE | DRAW_UNK02 | DRAW_TRANSP;
             }
             prim = prim->next;
         }

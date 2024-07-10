@@ -63,7 +63,59 @@ void FallEntity(void) {
         g_CurrentEntity->velocityY += FALL_GRAVITY;
     }
 }
-INCLUDE_ASM("st/rwrp/nonmatchings/D580", func_8018D990);
+
+s32 func_8018D990(u16* sensors) {
+    Collider col;
+    Collider colBack;
+    s16 x;
+    s16 y;
+    s16 i;
+
+    MoveEntity();
+    FallEntity();
+    if (g_CurrentEntity->velocityY >= 0) {
+        x = g_CurrentEntity->posX.i.hi;
+        y = g_CurrentEntity->posY.i.hi;
+        for (i = 0; i < 4; i++) {
+            x += *sensors++;
+            y += *sensors++;
+            g_api.CheckCollision(x, y, &col, 0);
+            if (col.effects & EFFECT_UNK_8000) {
+                if (i == 1) {
+                    if (col.effects & EFFECT_SOLID) {
+                        g_api.CheckCollision(x, y - 8, &colBack, 0);
+                        if (!(colBack.effects & EFFECT_SOLID)) {
+                            g_CurrentEntity->posY.i.hi =
+                                (u16)g_CurrentEntity->posY.i.hi + 4 + col.unk18;
+                            g_CurrentEntity->velocityX = 0;
+                            g_CurrentEntity->velocityY = 0;
+                            g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
+                            return 1;
+                        }
+                    }
+                    continue;
+                }
+            }
+            if (col.effects & EFFECT_NOTHROUGH && i != 1) {
+                if (col.effects & EFFECT_QUICKSAND) {
+                    g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
+                    return 4;
+                }
+                g_api.CheckCollision(x, y - 8, &colBack, 0);
+                if (!(colBack.effects & EFFECT_SOLID)) {
+                    g_CurrentEntity->posY.i.hi =
+                        g_CurrentEntity->posY.i.hi + col.unk18;
+                    g_CurrentEntity->velocityX = 0;
+                    g_CurrentEntity->velocityY = 0;
+                    g_CurrentEntity->flags &= ~FLAG_UNK_10000000;
+                    return 1;
+                }
+            }
+        }
+    }
+    g_CurrentEntity->flags |= FLAG_UNK_10000000;
+    return 0;
+}
 
 s32 func_8018DC08(s16* posX) {
     Collider collider;
@@ -233,7 +285,7 @@ void EntityExplosionSpawn(u16 arg0, u16 sfxId) {
     g_CurrentEntity->step_s = 0;
 }
 
-INCLUDE_ASM("st/rwrp/nonmatchings/D580", InitializeEntity);
+#include "../init_entity.h"
 
 void EntityDummy(Entity* entity) {
     if (entity->step == 0) {
@@ -241,95 +293,73 @@ void EntityDummy(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("st/rwrp/nonmatchings/D580", func_8018E3B4);
+s32 func_8018E3B4(u16* hitSensors, s16 sensorCount) {
+    Collider collider;
+    s16 i;
+    s32 velocityX;
+    u16 temp_a1;
+    s16 x;
+    s16 y;
 
-INCLUDE_ASM("st/rwrp/nonmatchings/D580", func_8018E4DC);
+    velocityX = g_CurrentEntity->velocityX;
+    if (velocityX != 0) {
+        x = g_CurrentEntity->posX.i.hi;
+        y = g_CurrentEntity->posY.i.hi;
+        for (i = 0; i < sensorCount; i++) {
+            if (velocityX < 0) {
+                s16 newX = x + *hitSensors++;
+                x = newX;
+            } else {
+                s16 newX = x - *hitSensors++;
+                x = newX;
+            }
+
+            y += *hitSensors++;
+            g_api.CheckCollision(x, y, &collider, 0);
+            if (collider.effects & EFFECT_UNK_0002 &&
+                ((!(collider.effects & EFFECT_UNK_8000)) || (i != 0))) {
+                return 2;
+            }
+        }
+        return 0;
+    }
+}
+
+void CheckFieldCollision(s16* hitSensors, s16 sensorCount) {
+    Collider collider;
+    s32 velocityX;
+    s16 i;
+    s16 x;
+    s16 y;
+
+    velocityX = g_CurrentEntity->velocityX;
+    if (velocityX == 0) {
+        return;
+    }
+
+    x = g_CurrentEntity->posX.i.hi;
+    y = g_CurrentEntity->posY.i.hi;
+    for (i = 0; i < sensorCount; i++) {
+        if (velocityX < 0) {
+            x += *hitSensors++;
+        } else {
+            x -= *hitSensors++;
+        }
+
+        y += *hitSensors++;
+        g_api.CheckCollision(x, y, &collider, 0);
+        if (collider.effects & EFFECT_UNK_0002 &&
+            (!(collider.effects & EFFECT_UNK_8000) || i)) {
+            if (velocityX < 0) {
+                g_CurrentEntity->posX.i.hi += collider.unk1C;
+            } else {
+                g_CurrentEntity->posX.i.hi += collider.unk14;
+            }
+            break;
+        }
+    }
+}
 
 #include "../get_player_collision_with.h"
 
 #include "../replace_breakable_with_item_drop.h"
-
-void func_8018EA30(void) {
-    s32 temp_v1;
-    Entity* entity;
-
-    entity = g_CurrentEntity;
-    if (entity->velocityY >= 0) {
-        temp_v1 =
-            entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
-        entity->ext.generic.unk84.unk = temp_v1;
-        entity->velocityX = temp_v1;
-        if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
-            entity->ext.generic.unk88.S16.unk0 =
-                -entity->ext.generic.unk88.S16.unk0;
-        }
-        entity = g_CurrentEntity;
-    }
-
-    if (entity->velocityY < FIX(0.25)) {
-        entity->velocityY += FIX(0.125);
-    }
-}
-
-INCLUDE_ASM("st/rwrp/nonmatchings/D580", func_8018EAB4);
-
-extern s8 c_HeartPrizes[];
-
-#include "../collect_heart.h"
-
-#include "../collect_gold.h"
-
-void CollectSubweapon(u16 subWeaponIdx) {
-    Entity* player = &PLAYER;
-    u16 subWeapon;
-
-    g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
-    subWeapon = g_Status.subWeapon;
-    g_Status.subWeapon = D_80180DC4[subWeaponIdx];
-
-    if (subWeapon == g_Status.subWeapon) {
-        subWeapon = 1;
-        g_CurrentEntity->unk6D[0] = 0x10;
-    } else {
-        subWeapon = D_80180DF4[subWeapon];
-        g_CurrentEntity->unk6D[0] = 0x60;
-    }
-
-    if (subWeapon != 0) {
-        g_CurrentEntity->params = subWeapon;
-        g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
-        SetStep(7);
-        g_CurrentEntity->velocityY = FIX(-2.5);
-        g_CurrentEntity->animCurFrame = 0;
-        g_CurrentEntity->ext.generic.unk88.S16.unk2 = 5;
-        if (player->facingLeft != 1) {
-            g_CurrentEntity->velocityX = FIX(-2);
-            return;
-        }
-        g_CurrentEntity->velocityX = FIX(2);
-        return;
-    }
-    DestroyEntity(g_CurrentEntity);
-}
-
-#include "../collect_heart_vessel.h"
-
-void CollectLifeVessel(void) {
-    g_api_PlaySfx(NA_SE_PL_COLLECT_HEART);
-    g_api_func_800FE044(5, 0x8000);
-    DestroyEntity(g_CurrentEntity);
-}
-
-void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
-
-INCLUDE_ASM("st/rwrp/nonmatchings/D580", EntityPrizeDrop);
-
-#define MISSING_ANIMATE_ENTITY_PROTOTYPE
-#include "../entity_explosion.h"
-#undef MISSING_ANIMATE_ENTITY_PROTOTYPE
-
-#include "../blink_item.h"
-
-INCLUDE_ASM("st/rwrp/nonmatchings/D580", EntityEquipItemDrop);
-
-#include "../blit_char.h"

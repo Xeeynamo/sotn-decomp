@@ -448,7 +448,6 @@ extern s16* D_800D372C[];
 extern s16* D_800D3B88[];
 extern s16* D_800D5628[];
 extern s16* D_800D327C[];
-extern unkstr_800cfe48* D_800CFE48[18];
 extern s16* D_800D56AC[];
 extern s16* D_800D5868[];
 extern s16* D_800D684C[];
@@ -681,7 +680,7 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
     for (spA0 = 0; spA0 < LEN(D_800A3210); spA0++, prim = prim->next,
         spB0 += 3) {
         if (spA0 >= spA8) {
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             continue;
         }
         TransMatrix(&D_80137E00, &D_801379D0); // types copied
@@ -800,7 +799,8 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
             prim->r2 = ((prim->r2 * i) >> 6);
             prim->g2 = ((prim->g2 * i) >> 6);
             prim->b2 = ((prim->b2 * i) >> 6);
-            prim->drawMode = 0x35;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
         }
     }
 }
@@ -873,7 +873,8 @@ void func_80105078(s32 arg0, s32 arg1) {
                     continue;
                 }
             }
-            prim->drawMode = 0x35;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
         }
     }
 }

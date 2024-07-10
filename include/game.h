@@ -88,6 +88,7 @@ typedef struct Prim {
 #define DRAW_UNK_40 0x40
 #define DRAW_MENU 0x80       // render only if D_800973EC is set
 #define DRAW_UNK_100 0x100   // unknown
+#define DRAW_UNK_200 0x200   // unknown
 #define DRAW_UNK_400 0x400   // unknown
 #define DRAW_UNK_800 0x800   // unknown
 #define DRAW_UNK_1000 0x1000 // unknown
@@ -194,6 +195,7 @@ typedef struct Prim {
 #ifndef VERSION_PC
 #define DRA_PRG_PTR 0x800A0000
 #define RIC_PRG_PTR 0x8013C000
+#define SPRITESHEET_PTR 0x8013C020 // g_PlOvlSpritesheet
 #define FAMILIAR_PTR 0x80170000
 #define WEAPON0_PTR 0x8017A000
 #define WEAPON1_PTR 0x8017D000
@@ -209,6 +211,7 @@ typedef struct Prim {
 #else
 #define DRA_PRG_PTR 0x800A0000
 #define RIC_PRG_PTR 0x8013C000
+#define SPRITESHEET_PTR 0x8013C020 // g_PlOvlSpritesheet
 #define FAMILIAR_PTR 0x80170000
 #define WEAPON0_PTR 0x8017A000
 #define WEAPON1_PTR 0x8017D000
@@ -239,6 +242,7 @@ extern u8 g_BmpCastleMap[0x20000];
 #define ELEMENT_FIRE 0x8000
 
 // Flags for entity->drawFlags
+#define FLAG_DRAW_DEFAULT 0x00
 #define FLAG_DRAW_ROTX 0x01
 #define FLAG_DRAW_ROTY 0x02
 #define FLAG_DRAW_ROTZ 0x04
@@ -293,8 +297,10 @@ extern u8 g_BmpCastleMap[0x20000];
 #define PLAYER_STATUS_POISON 0x00004000
 #define PLAYER_STATUS_CURSE 0x00008000
 #define PLAYER_STATUS_UNK10000 0x10000 // possibly freezing?
+#define PLAYER_STATUS_UNK400000 0x400000
 #define PLAYER_STATUS_AXEARMOR 0x01000000
 #define PLAYER_STATUS_ABSORB_BLOOD 0x02000000
+#define PLAYER_STATUS_UNK40000000 0x40000000
 
 #define ANIMSET_OVL_FLAG 0x8000
 #define ANIMSET_DRA(x) (x)

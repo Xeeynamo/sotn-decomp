@@ -431,7 +431,8 @@ void HandleGameOver(void) {
             SetTexturedPrimRect(prim, 0, 96, 0xFF, 0x20, 0, 0);
             func_801072BC(prim);
             prim->tpage = 8;
-            prim->drawMode = 0x75;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_COLORS | DRAW_TRANSP;
             prim->p1 = 0x60;
             prim = prim->next;
 
@@ -583,7 +584,7 @@ void HandleGameOver(void) {
         }
 
         prim->p1 = 4;
-        prim->drawMode = 0x31;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         g_GameStep++;
         break;
     case Gameover_7:

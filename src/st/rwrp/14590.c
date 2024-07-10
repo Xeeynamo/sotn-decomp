@@ -26,4 +26,4 @@ void func_80194DD4(Entity* entity) {
     AnimateEntity(objInit->unk10, entity);
 }
 
-INCLUDE_ASM("st/rwrp/nonmatchings/14590", BottomCornerText);
+#include "../popup.h"

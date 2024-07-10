@@ -34,7 +34,7 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, s32 isDone) {
             prim->tpage = 0x1A;
             prim->clut = 0x19F;
             prim->priority = 0x1FE;
-            prim->drawMode = 0x31;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
             prim->u2 = prim->u0;
             prim->u3 = prim->u1;
             prim = prim->next;
