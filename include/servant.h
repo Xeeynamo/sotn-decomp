@@ -1,7 +1,10 @@
 #ifndef SERVANT_H
 #define SERVANT_H
-#include <common.h>
-#include <game.h>
+
+#include <types.h>
+#include <entity.h>
+#include <familiar.h>
+#include <sprite.h>
 
 typedef struct {
     void (*Init)(s32 arg0);
@@ -67,5 +70,8 @@ extern EntitySearch D_80171094[];
 #ifdef VERSION_PSP
 extern ServantDesc D_8D1DC40;
 #endif
+
+extern s32 g_Servant; // Currently selected familiar in the menu
+extern s32 g_ServantLoaded; // Currently loaded servant in-memory
 
 #endif

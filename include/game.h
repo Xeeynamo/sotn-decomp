@@ -11,11 +11,15 @@
 #include "drawmode.h"
 #include "entity.h"
 #include "gamepad.h"
+#include "familiar.h"
 #include "layer.h"
 #include "log.h"
 #include "macros.h"
 #include "palette.h"
 #include "primitive.h"
+#include "servant.h"
+#include "spell.h"
+#include "sprite.h"
 #include <psxsdk/kernel.h>
 
 // lseek etc. conflicts
@@ -640,13 +644,6 @@ typedef enum {
     SUBWPN_AGUNEA
 } SubWpnID;
 
-typedef enum { STAT_STR, STAT_CON, STAT_INT, STAT_LCK } Stats;
-typedef struct {
-    s32 level;
-    s32 exp;
-    s32 unk8;
-} FamiliarStats;
-
 #define RELIC_FLAG_DISABLE 0
 #define RELIC_FLAG_FOUND 1
 #define RELIC_FLAG_ACTIVE 2
@@ -688,47 +685,6 @@ typedef enum {
     RELIC_EYE_OF_VLAD,
     NUM_RELICS,
 } RelicIds;
-
-#define SPELL_FLAG_KNOWN 0x80
-typedef enum {
-    SPELL_DARK_METAMORPHOSIS,
-    SPELL_SUMMON_SPIRIT,
-    SPELL_HELLFIRE,
-    SPELL_TETRA_SPIRIT,
-    SPELL_WOLF_CHARGE,
-    SPELL_SOUL_STEAL,
-    SPELL_WING_SMASH,
-    SPELL_SWORD_BROTHERS,
-    NUM_SPELLS,
-} SpellIds;
-
-// Need two familiar enums. One has a zero entry, one does not.
-// This one is used in places that need to access the familiar
-// stats array...
-typedef enum {
-    FAM_STATS_BAT,
-    FAM_STATS_GHOST,
-    FAM_STATS_FAERIE,
-    FAM_STATS_DEMON,
-    FAM_STATS_SWORD,
-    FAM_STATS_YOUSEI,     // JP only
-    FAM_STATS_NOSE_DEMON, // JP only
-    NUM_FAMILIARS
-} FamiliarStatsIds;
-
-// ...and this one is used to designate the active familiar, where
-// 0 means no familiar is active, and the rest are off-by-one from
-// the previous enum set. Hacky, but works.
-typedef enum {
-    FAM_ACTIVE_NONE,
-    FAM_ACTIVE_BAT = FAM_STATS_BAT + 1,
-    FAM_ACTIVE_GHOST = FAM_STATS_GHOST + 1,
-    FAM_ACTIVE_FAERIE = FAM_STATS_FAERIE + 1,
-    FAM_ACTIVE_DEMON = FAM_STATS_DEMON + 1,
-    FAM_ACTIVE_SWORD = FAM_STATS_SWORD + 1,
-    FAM_ACTIVE_YOUSEI = FAM_STATS_YOUSEI + 1,
-    FAM_ACTIVE_NOSE_DEMON = FAM_STATS_NOSE_DEMON + 1,
-} FamiliarActiveIds;
 
 typedef struct {
     /* 80097964 */ u8 relics[30];
@@ -854,38 +810,6 @@ typedef struct {
     LayerDef* fg;
     LayerDef* bg;
 } RoomDef;
-
-typedef struct {
-    /* 0x00 */ s16 x;
-    /* 0x02 */ s16 y;
-    /* 0x04 */ s16 width;
-    /* 0x06 */ s16 height;
-    /* 0x08 */ s16 clut;
-    /* 0x0A */ s16 tpage;
-    /* 0x0C */ s16 texLeft;
-    /* 0x0E */ s16 texTop;
-    /* 0x10 */ s16 texRight;
-    /* 0x12 */ s16 texBottom;
-} Sprite; /* size=0x14 */
-
-typedef struct {
-    /* 00 */ s16 flags;
-    /* 02 */ s16 offsetx;
-    /* 04 */ s16 offsety;
-    /* 06 */ s16 width;
-    /* 08 */ s16 height;
-    /* 0A */ s16 clut;
-    /* 0C */ s16 tileset;
-    /* 0E */ s16 left;
-    /* 10 */ s16 top;
-    /* 12 */ s16 right;
-    /* 14 */ s16 bottom;
-} SpritePart; /* size=0x16 */
-
-typedef struct {
-    /* 00 */ u16 count;
-    /* 02 */ SpritePart parts[0];
-} SpriteParts; // size = 4 + count*sizeof(SpritePart)
 
 /*
  * In the PSX version of the game, stage objects begin with this
@@ -1034,21 +958,6 @@ typedef struct {
     /* 1C */ u16 equipType;
     /* 1E */ u16 unk1E;
 } Accessory; /* size=0x20 */
-
-typedef struct {
-    /* 0x00 */ const char* name;
-    /* 0x04 */ const char* combo;
-    /* 0x08 */ const char* description;
-    /* 0x0C */ u8 mpUsage;
-    /* 0x0D */ s8 nFramesInvincibility;
-    /* 0x0E */ s16 stunFrames;
-    /* 0x10 */ s16 hitboxState;
-    /* 0x12 */ s16 hitEffect;
-    /* 0x14 */ s16 entityRoomIndex;
-    /* 0x16 */ u16 attackElement;
-    /* 0x18 */ s16 attack;
-    /* 0x1A */ s16 unk1A;
-} SpellDef;
 
 typedef struct {
     /* 0x00 */ const char* name;
@@ -1401,7 +1310,6 @@ extern s32 D_8006C3AC;
 extern s32 g_backbufferX;
 extern s32 g_backbufferY;
 extern Unkstruct_8006C3C4 D_8006C3C4[32];
-extern s32 g_Servant; // Currently selected familiar in the menu
 
 extern PlayerState g_Player;
 // the following are most likely part of g_Player
@@ -1413,7 +1321,6 @@ extern u16 D_psp_091CF3DC;
 
 extern GfxLoad g_GfxLoad[0x10];
 extern u32 g_GameStep;
-extern s32 g_ServantLoaded; // Currently loaded servant in-memory
 extern Event g_EvSwCardEnd; // 80073068
 extern Event g_EvSwCardErr; // 8007306C
 extern Event g_EvSwCardTmo; // 80073070

@@ -1,4 +1,5 @@
 #include <servant.h>
+#include <game.h> // TODO: specific headers
 #include <sfx.h>
 #include <psxsdk/libc.h>
 
