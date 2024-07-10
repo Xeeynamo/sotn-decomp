@@ -12,7 +12,7 @@
 <!-- main._otc -->
 <g id="node1" class="node">
 <title>main._otc</title>
-<ellipse fill="red" stroke="black" cx="55.25" cy="-18" rx="55.49" ry="18"/>
+<ellipse fill="green" stroke="black" cx="55.25" cy="-18" rx="55.49" ry="18"/>
 <text text-anchor="middle" x="55.25" y="-14.3" font-family="Times,serif" font-size="14.00">main._otc</text>
 </g>
 </g>

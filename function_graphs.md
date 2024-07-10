@@ -1505,7 +1505,7 @@
 - [❌ _exeque](function_calls/main._exeque.svg?raw=1)
 - [✅ _getctl](function_calls/main._getctl.svg?raw=1)
 - [✅ _new_card](function_calls/main._new_card.svg?raw=1)
-- [❌ _otc](function_calls/main._otc.svg?raw=1)
+- [✅ _otc](function_calls/main._otc.svg?raw=1)
 - [✅ _param](function_calls/main._param.svg?raw=1)
 - [✅ _reset](function_calls/main._reset.svg?raw=1)
 - [✅ _spu_FgetRXXa](function_calls/main._spu_FgetRXXa.svg?raw=1)
