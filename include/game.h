@@ -4,7 +4,9 @@
 #include "common.h"
 #include "collider.h"
 #include "disk.h"
+#include "entity.h"
 #include "gamepad.h"
+#include "layer.h"
 #include "log.h"
 #include "macros.h"
 #include "palette.h"
@@ -54,8 +56,6 @@ typedef struct {
 #define DRAW_UNK_1000 0x1000 // unknown
 #define DRAW_ABSPOS 0x2000   // use absolute coordinates with DRAW_MENU
 
-#include "entity.h"
-
 // PS1 and PSP use different values for these two
 #ifndef VERSION_PSP
 #define OTSIZE 0x200
@@ -97,9 +97,7 @@ typedef struct {
 #define FALL_GRAVITY 0x4000
 #define FALL_TERMINAL_VELOCITY 0x60000
 
-#define TOTAL_ENTITY_COUNT 256
 #define STAGE_ENTITY_START 64
-#define MaxEntityCount 32
 
 #define WEAPON_0_START 0xE0
 #define WEAPON_0_END (WEAPON_1_START - 1)
@@ -154,51 +152,6 @@ extern u8 g_BmpCastleMap[0x20000];
 #define ELEMENT_THUNDER 0x4000
 #define ELEMENT_FIRE 0x8000
 
-// Flags for entity->drawFlags
-#define FLAG_DRAW_DEFAULT 0x00
-#define FLAG_DRAW_ROTX 0x01
-#define FLAG_DRAW_ROTY 0x02
-#define FLAG_DRAW_ROTZ 0x04
-#define FLAG_DRAW_UNK8 0x08
-#define FLAG_DRAW_UNK10 0x10
-#define FLAG_DRAW_UNK20 0x20
-#define FLAG_DRAW_UNK40 0x40
-#define FLAG_DRAW_UNK80 0x80
-#define FLAG_DRAW_UNK100 0x100
-
-// Flags for entity->flags
-#define FLAG_UNK_4 0x4
-#define FLAG_UNK_10 0x10
-// Signals that the entity should run its death routine
-#define FLAG_DEAD 0x100
-#define FLAG_UNK_200 0x200
-#define FLAG_UNK_400 0x400
-#define FLAG_UNK_800 0x800
-#define FLAG_UNK_1000 0x1000
-#define FLAG_UNK_2000 0x2000
-#define FLAG_UNK_4000 0x4000
-#define FLAG_UNK_8000 0x8000
-#define FLAG_UNK_10000 0x10000
-#define FLAG_UNK_20000 0x20000 // func_8011A9D8 will destroy if not set
-#define FLAG_UNK_40000 0x40000
-#define FLAG_UNK_80000 0x80000
-#define FLAG_UNK_100000 0x100000
-#define FLAG_UNK_400000 0x400000
-#define FLAG_UNK_800000 0x800000
-#define FLAG_UNK_00200000 0x00200000
-
-// When an entity used AllocPrimitives and their primIndex set.
-// At their destruction they need to free the prims with FreePrimitives.
-#define FLAG_HAS_PRIMS 0x00800000
-
-#define FLAG_UNK_01000000 0x01000000
-#define FLAG_UNK_02000000 0x02000000
-#define FLAG_UNK_04000000 0x04000000
-#define FLAG_UNK_08000000 0x08000000
-#define FLAG_UNK_10000000 0x10000000
-#define FLAG_UNK_20000000 0x20000000
-#define FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA 0x40000000
-#define FLAG_DESTROY_IF_OUT_OF_CAMERA 0x80000000
 
 #define PLAYER_STATUS_BAT_FORM 0x00000001
 #define PLAYER_STATUS_MIST_FORM 0x00000002
@@ -452,8 +405,6 @@ typedef enum {
     TIMEATTACK_EVENT_INVALID = 0xFF,
 } TimeAttackEvents;
 
-struct Entity;
-
 #include "unkstruct.h"
 
 typedef struct {
@@ -547,11 +498,6 @@ typedef struct {
 } RoomBossTeleport; /* size=0x14 */
 
 typedef struct {
-    u16 duration;
-    u16 unk2;
-} AnimationFrame;
-
-typedef struct {
     s8 unk0; // Entity::unk10
     s8 unk2; // Entity::unk12
     s8 hitboxWidth;
@@ -604,63 +550,6 @@ typedef enum {
     Player_Unk50
 } PlayerSteps;
 
-typedef struct Entity {
-    /* 0x00 */ f32 posX;
-    /* 0x04 */ f32 posY;
-    /* 0x08 */ s32 velocityX;
-    /* 0x0C */ s32 velocityY;
-#if defined(STAGE) || defined(WEAPON)
-    /* 0x10 */ s16 hitboxOffX;
-#else // hack to match in DRA and RIC
-    /* 0x10 */ u16 hitboxOffX;
-#endif
-    /* 0x12 */ s16 hitboxOffY;
-    /* 0x14 */ u16 facingLeft;
-    /* 0x16 */ u16 palette;
-    /* 0x18 */ u8 drawMode;
-    /* 0x19 */ u8 drawFlags;
-    /* 0x1A */ s16 rotX;
-    /* 0x1C */ s16 rotY;
-    /* 0x1E */ s16 rotZ;
-    /* 0x20 */ s16 rotPivotX;
-    /* 0x22 */ s16 rotPivotY;
-    /* 0x24 */ u16 zPriority;
-    /* 0x26 */ u16 entityId;
-    /* 0x28 */ PfnEntityUpdate pfnUpdate;
-    /* 0x2C */ u16 step;
-    /* 0x2E */ u16 step_s;
-    /* 0x30 */ u16 params;
-    /* 0x32 */ u16 entityRoomIndex;
-    /* 0x34 */ s32 flags;
-    /* 0x38 */ s16 unk38;
-    /* 0x3A */ u16 enemyId;
-    /* 0x3C */ u16 hitboxState; // hitbox state
-    /* 0x3E */ s16 hitPoints;
-    /* 0x40 */ s16 attack;
-    /* 0x42 */ s16 attackElement;
-    /* 0x44 */ u16 unk44;
-    /* 0x46 */ u8 hitboxWidth;
-    /* 0x47 */ u8 hitboxHeight;
-    /* 0x48 */ u8 hitFlags; // 1 = took hit
-    /* 0x49 */ u8 nFramesInvincibility;
-    /* 0x4A */ s16 unk4A;
-    /* 0x4C */ AnimationFrame* unk4C;
-    /* 0x50 */ u16 animFrameIdx;
-    /* 0x52 */ s16 animFrameDuration;
-    /* 0x54 */ s16 animSet;
-    /* 0x56 */ s16 animCurFrame;
-    /* 0x58 */ s16 stunFrames;
-    /* 0x5A */ u16 unk5A;
-    /* 0x5C */ struct Entity* unk5C;
-    /* 0x60 */ struct Entity* unk60;
-    /* 0x64 */ s32 primIndex;
-    /* 0x68 */ u16 unk68;
-    /* 0x6A */ u16 hitEffect;
-    /* 0x6C */ u8 unk6C;
-    /* 0x6D */ u8 unk6D[11];
-    /* 0x78 */ s32 unk78;
-    /* 0x7C */ Ext ext;
-} Entity; // size = 0xBC
 
 typedef struct {
     /* 0x00 */ u16 animSet;
@@ -960,13 +849,6 @@ typedef struct {
     /* 0x6C8 */ u8 castleMap[0x800];
     /* 0x11C8 */ s32 rng;
 } SaveData; /* size = 0x11CC */
-
-typedef struct {
-    /* 0x00 */ u8* gfxPage;
-    /* 0x04 */ u8* gfxIndex;
-    /* 0x08 */ u8* clut;
-    /* 0x0C */ u8* collision;
-} TileDefinition; // size = 0x10
 
 typedef struct {
     /* 0x00 */ u32 left : 6;
@@ -1392,65 +1274,7 @@ typedef struct {
     /* 0x0D */ u8 soundFrame;  // when the sound effect is triggered
     /* 0x0E */ s16 unused;     // reserved, always 0
 } WeaponAnimation;
-
-#define TILE_SIZE 16
-#define TILE_MASK 0x0F
-#define N_HORIZ_TILES 17
-#define N_VERTI_TILES 16
-
-#define LAYER_SHOW 1
-#define LAYER_TPAGE_ID (0x20 | 0x40)
-#define LAYER_SEMI_TRANS 0x80
-#define LAYER_TPAGE_ALT 0x100
-#define LAYER_CLUT_ALT 0x200
-#define LAYER_WRAP_BG 0x1000
-
-typedef struct {
-    /* 800730D8 0x00 */ u16* layout;
-    /* 800730DC 0x04 */ TileDefinition* tileDef;
-    /* 800730E0 0x08 */ f32 scrollX;
-    /* 800730E4 0x0C */ f32 scrollY;
-    /* 800730E8 0x10 */ u32 unused10;
-    /* 800730EC 0x14 */ u32 unused14;
-    /* 800730F0 0x18 */ u32 order;
-    /* 800730F4 0x1C */ u32 flags;
-    /* 800730F8 0x20 */ u32 w;
-    /* 800730FC 0x24 */ u32 h;
-    /* 80073100 0x28 */ u32 hideTimer;
-    /* 80073104 0x2C */ u32 scrollKind;
-} BgLayer; /* size=0x30 */
-
-typedef struct {
-    /* 80073084 */ u16* fg;
-    /* 80073088 */ TileDefinition* tileDef;
-    /* 8007308C */ f32 scrollX;
-    /* 80073090 */ f32 scrollY;
-    /* 80073094 */ s32 unused10;
-    /* 80073098 */ s32 unused14;
-    /* 8007309C */ s32 order;
-    /* 800730A0 */ u32 flags;
-    /* 800730A4 */ s32 hSize;
-    /* 800730A8 */ s32 vSize;
-    /* 800730AC */ u32 hideTimer;
-    /* 800730B0 */ s32 left;
-    /* 800730B4 */ s32 top;
-    /* 800730B8 */ s32 right;
-    /* 800730BC */ s32 bottom;
-    /* 800730C0 */ s32 x;
-    /* 800730C4 */ s32 y;
-    /* 800730C8 */ s32 width;
-    /* 800730CC */ s32 height;
-    /* 800730D0 */ s32 unk30;
-    /* 800730D4 */ s32 D_800730D4;
-    /* 800730D8 */ BgLayer bg[MAX_BG_LAYER_COUNT];
-} Tilemap;
-
-typedef struct {
-    /* D_8003C708 */ u16 flags;
-    /* D_8003C70A */ u16 unk2;
-    /* D_8003C70C */ u16 unk4;
-    /* D_8003C70E */ s16 zPriority;
-} FgLayer; /* size=0x8 */
+ /* size=0x8 */
 
 typedef struct {
     /* 80072BD0 */ Collider colliders[4];
@@ -1563,7 +1387,6 @@ extern s32 D_8003C0F8;
 extern s32 D_8003C100;
 extern u16 g_ClutIds[]; // array of palette VRAM offsets
 extern s32 D_8003C704;
-extern FgLayer D_8003C708;
 extern s16 D_8003C710;
 extern s16 D_8003C712;
 extern s32 D_8003C728;
@@ -1601,7 +1424,6 @@ extern Point32 D_8006C38C;
 extern s32 D_8006C3AC;
 extern s32 g_backbufferX;
 extern s32 g_backbufferY;
-extern Entity* g_CurrentEntity;
 extern Unkstruct_8006C3C4 D_8006C3C4[32];
 extern s32 g_Servant; // Currently selected familiar in the menu
 extern u16 g_Clut[0x3000];
@@ -1628,9 +1450,6 @@ extern s32 g_PrevScrollX;
 extern Event g_EvSwCardNew; // 80073078
 extern s32 g_PrevScrollY;
 extern s32 D_80073080;
-extern Tilemap g_Tilemap;
-extern Entity g_Entities[TOTAL_ENTITY_COUNT];
-extern s32 g_entityDestroyed[18];
 extern Event g_EvHwCardEnd;
 extern Event g_EvHwCardErr;
 extern Event g_EvHwCardTmo;

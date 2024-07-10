@@ -1,9 +1,13 @@
 /**
  * Custom Entity Subtypes
  */
+#ifndef ENTITY_H
+#define ENTITY_H
 
-#include "common.h"
+#include "types.h"
+#include "primitive.h"
 
+struct Entity;
 typedef void (*PfnEntityUpdate)(struct Entity*);
 
 typedef union {
@@ -34,7 +38,10 @@ typedef union {
     } U8;
 } Multi16;
 
-struct Entity;
+typedef struct {
+    u16 duration;
+    u16 unk2;
+} AnimationFrame;
 
 typedef struct ET_Generic {
     /* 0x7C */ Multi16 unk7C; // posX
@@ -1330,3 +1337,138 @@ typedef union { // offset=0x7C
     ET_80129864 et_80129864;
     ET_801B28E4 et_801B28E4;
 } Ext;
+
+typedef struct Entity {
+    /* 0x00 */ f32 posX;
+    /* 0x04 */ f32 posY;
+    /* 0x08 */ s32 velocityX;
+    /* 0x0C */ s32 velocityY;
+#if defined(STAGE) || defined(WEAPON)
+    /* 0x10 */ s16 hitboxOffX;
+#else // hack to match in DRA and RIC
+    /* 0x10 */ u16 hitboxOffX;
+#endif
+    /* 0x12 */ s16 hitboxOffY;
+    /* 0x14 */ u16 facingLeft;
+    /* 0x16 */ u16 palette;
+    /* 0x18 */ u8 drawMode;
+    /* 0x19 */ u8 drawFlags;
+    /* 0x1A */ s16 rotX;
+    /* 0x1C */ s16 rotY;
+    /* 0x1E */ s16 rotZ;
+    /* 0x20 */ s16 rotPivotX;
+    /* 0x22 */ s16 rotPivotY;
+    /* 0x24 */ u16 zPriority;
+    /* 0x26 */ u16 entityId;
+    /* 0x28 */ PfnEntityUpdate pfnUpdate;
+    /* 0x2C */ u16 step;
+    /* 0x2E */ u16 step_s;
+    /* 0x30 */ u16 params;
+    /* 0x32 */ u16 entityRoomIndex;
+    /* 0x34 */ s32 flags;
+    /* 0x38 */ s16 unk38;
+    /* 0x3A */ u16 enemyId;
+    /* 0x3C */ u16 hitboxState; // hitbox state
+    /* 0x3E */ s16 hitPoints;
+    /* 0x40 */ s16 attack;
+    /* 0x42 */ s16 attackElement;
+    /* 0x44 */ u16 unk44;
+    /* 0x46 */ u8 hitboxWidth;
+    /* 0x47 */ u8 hitboxHeight;
+    /* 0x48 */ u8 hitFlags; // 1 = took hit
+    /* 0x49 */ u8 nFramesInvincibility;
+    /* 0x4A */ s16 unk4A;
+    /* 0x4C */ AnimationFrame* unk4C;
+    /* 0x50 */ u16 animFrameIdx;
+    /* 0x52 */ s16 animFrameDuration;
+    /* 0x54 */ s16 animSet;
+    /* 0x56 */ s16 animCurFrame;
+    /* 0x58 */ s16 stunFrames;
+    /* 0x5A */ u16 unk5A;
+    /* 0x5C */ struct Entity* unk5C;
+    /* 0x60 */ struct Entity* unk60;
+    /* 0x64 */ s32 primIndex;
+    /* 0x68 */ u16 unk68;
+    /* 0x6A */ u16 hitEffect;
+    /* 0x6C */ u8 unk6C;
+    /* 0x6D */ u8 unk6D[11];
+    /* 0x78 */ s32 unk78;
+    /* 0x7C */ Ext ext;
+} Entity; // size = 0xBC
+
+#define TOTAL_ENTITY_COUNT 256
+extern Entity g_Entities[TOTAL_ENTITY_COUNT];
+extern Entity* g_CurrentEntity;
+extern s32 g_entityDestroyed[18];
+
+typedef enum {
+    PLAYER_CHARACTER,
+    UNK_ENTITY_1,
+    UNK_ENTITY_2,
+    UNK_ENTITY_3,
+    UNK_ENTITY_4,
+    UNK_ENTITY_5,
+    UNK_ENTITY_6,
+    UNK_ENTITY_7,
+    UNK_ENTITY_8,
+    E_WEAPON = 0x10,
+    UNK_ENTITY_11 = 0x11, // related to wolf
+    UNK_ENTITY_12 = 0x12, // related to wolf?
+    UNK_ENTITY_13 = 0x13,
+    UNK_ENTITY_20 = 0x20,
+    UNK_ENTITY_51 = 0x51, // SubWeapons container falling liquid
+    UNK_ENTITY_100 = 0x100
+} EntityTypes;
+
+// Flags for entity->drawFlags
+#define FLAG_DRAW_DEFAULT 0x00
+#define FLAG_DRAW_ROTX 0x01
+#define FLAG_DRAW_ROTY 0x02
+#define FLAG_DRAW_ROTZ 0x04
+#define FLAG_DRAW_UNK8 0x08
+#define FLAG_DRAW_UNK10 0x10
+#define FLAG_DRAW_UNK20 0x20
+#define FLAG_DRAW_UNK40 0x40
+#define FLAG_DRAW_UNK80 0x80
+#define FLAG_DRAW_UNK100 0x100
+
+// Flags for entity->flags
+#define FLAG_UNK_4 0x4
+#define FLAG_UNK_10 0x10
+// Signals that the entity should run its death routine
+#define FLAG_DEAD 0x100
+#define FLAG_UNK_200 0x200
+#define FLAG_UNK_400 0x400
+#define FLAG_UNK_800 0x800
+#define FLAG_UNK_1000 0x1000
+#define FLAG_UNK_2000 0x2000
+#define FLAG_UNK_4000 0x4000
+#define FLAG_UNK_8000 0x8000
+#define FLAG_UNK_10000 0x10000
+#define FLAG_UNK_20000 0x20000 // func_8011A9D8 will destroy if not set
+#define FLAG_UNK_40000 0x40000
+#define FLAG_UNK_80000 0x80000
+#define FLAG_UNK_100000 0x100000
+#define FLAG_UNK_400000 0x400000
+#define FLAG_UNK_800000 0x800000
+#define FLAG_UNK_00200000 0x00200000
+
+// When an entity used AllocPrimitives and their primIndex set.
+// At their destruction they need to free the prims with FreePrimitives.
+#define FLAG_HAS_PRIMS 0x00800000
+
+#define FLAG_UNK_01000000 0x01000000
+#define FLAG_UNK_02000000 0x02000000
+#define FLAG_UNK_04000000 0x04000000
+#define FLAG_UNK_08000000 0x08000000
+#define FLAG_UNK_10000000 0x10000000
+#define FLAG_UNK_20000000 0x20000000
+#define FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA 0x40000000
+#define FLAG_DESTROY_IF_OUT_OF_CAMERA 0x80000000
+
+
+#define STAGE_ENTITY_START 64
+#define MaxEntityCount 32
+
+
+#endif // ENTITY_H
