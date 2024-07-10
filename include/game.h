@@ -2,8 +2,13 @@
 #define GAME_H
 
 #include "common.h"
+
+#include "animset.h"
+#include "castle.h"
+#include "clut.h"
 #include "collider.h"
 #include "disk.h"
+#include "drawmode.h"
 #include "entity.h"
 #include "gamepad.h"
 #include "layer.h"
@@ -38,23 +43,6 @@ typedef struct {
     /* 0x08 */ SVECTOR* v2;
     /* 0x0C */ SVECTOR* v3;
 } SVEC4; // size = 0x10
-
-
-#define DRAW_DEFAULT 0x00
-#define DRAW_TRANSP 0x01 // make it semi transparent
-#define DRAW_UNK02 0x02  // unknown
-#define DRAW_COLORS 0x04 // use color blending
-#define DRAW_HIDE 0x08   // do not render the primitive
-#define DRAW_TPAGE 0x10  // use custom tpage
-#define DRAW_TPAGE2 0x20 // use custom tpage
-#define DRAW_UNK_40 0x40
-#define DRAW_MENU 0x80       // render only if D_800973EC is set
-#define DRAW_UNK_100 0x100   // unknown
-#define DRAW_UNK_200 0x200   // unknown
-#define DRAW_UNK_400 0x400   // unknown
-#define DRAW_UNK_800 0x800   // unknown
-#define DRAW_UNK_1000 0x1000 // unknown
-#define DRAW_ABSPOS 0x2000   // use absolute coordinates with DRAW_MENU
 
 // PS1 and PSP use different values for these two
 #ifndef VERSION_PSP
@@ -167,10 +155,6 @@ extern u8 g_BmpCastleMap[0x20000];
 #define PLAYER_STATUS_AXEARMOR 0x01000000
 #define PLAYER_STATUS_ABSORB_BLOOD 0x02000000
 #define PLAYER_STATUS_UNK40000000 0x40000000
-
-#define ANIMSET_OVL_FLAG 0x8000
-#define ANIMSET_DRA(x) (x)
-#define ANIMSET_OVL(x) ((x) | ANIMSET_OVL_FLAG)
 
 #ifndef SOTN_STR
 // Decorator to re-encode strings with tools/sotn_str/sotn_str.py when building
@@ -1375,17 +1359,9 @@ typedef struct {
 extern s32 D_8003925C;
 extern s32 g_IsTimeAttackUnlocked;
 
-// Holds flags that checks if certain switches are enabled to allow to have
-// shortcuts around the castle. One typical example is the wood column that
-// prevents the player to enter in the warp room. When g_CastleFlags[0x32] the
-// column will disappear.
-extern u8 g_CastleFlags[0x300]; // starts at 0x8003BDEC
-extern u8 D_8003BEEC[];         // g_CastleFlags[x + 0x100]
-extern u8 D_8003BF9C[];         // not sure if it is part of D_8003BEEC?
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
 extern s32 D_8003C100;
-extern u16 g_ClutIds[]; // array of palette VRAM offsets
 extern s32 D_8003C704;
 extern s16 D_8003C710;
 extern s16 D_8003C712;
@@ -1426,11 +1402,6 @@ extern s32 g_backbufferX;
 extern s32 g_backbufferY;
 extern Unkstruct_8006C3C4 D_8006C3C4[32];
 extern s32 g_Servant; // Currently selected familiar in the menu
-extern u16 g_Clut[0x3000];
-extern u16 D_8006EBCC[0x1000]; // part of g_Clut
-extern u16 D_8006EBE0;         // part of g_Clut
-extern s16 D_800705CC[];       // part of g_Clut
-extern u32 D_80070BCC;         // part of g_Clut
 
 extern PlayerState g_Player;
 // the following are most likely part of g_Player
