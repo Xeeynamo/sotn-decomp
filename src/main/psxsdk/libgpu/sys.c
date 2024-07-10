@@ -38,15 +38,22 @@ extern int D_8002C26C;                           // graph type
 extern int D_8002C270;                           // reverse
 extern int D_8002C274;                           // graph queue mode
 extern void (*D_8002C278)();
-extern volatile s32* D_8002C27C;
-extern volatile s32* D_8002C280;
-extern volatile s32* D_8002C284;
-extern volatile s32* D_8002C288;
-extern volatile s32* D_8002C28C;
+extern volatile s32* GPU_DATA;   // 0x1F801810
+extern volatile s32* GPU_STATUS; // 0x1F801814
+extern volatile s32* DMA2_MADR;  // 0x1F8010A0
+extern volatile s32* DMA2_BCR;   // 0x1F8010A4
+extern volatile s32* DMA2_CHCR;  // 0x1F8010A8
+extern s32* DMA6_MADR;           // 0x1F8010E0
+extern s32* DMA6_BCR;            // 0x1F8010E4
+extern volatile s32* DMA6_CHCR;  // 0x1F8010E8
+extern s32* DPCR;                // 0x1F8010F0
 extern DRAWENV D_80037E60;
 extern DISPENV D_80037EBC;
 extern s32 D_80039254;
 extern s32 D_80039258;
+
+s32 get_alarm();
+void set_alarm(void);
 
 u_long get_ce(short, short);
 u_long get_cs(short, short);
@@ -319,9 +326,31 @@ u_long get_tw(RECT* arg0) {
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_dx);
 
-s32 _status(void) { return *D_8002C280; }
+s32 _status(void) { return *GPU_STATUS; }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _otc);
+s32 _otc(s32 arg0, s32 arg1) {
+    s32 temp_a0;
+
+    *DPCR |= 0x08000000;
+    *DMA6_CHCR = 0;
+    temp_a0 = arg0 - 4 + arg1 * 4;
+    *DMA6_MADR = temp_a0;
+    *DMA6_BCR = arg1;
+    *DMA6_CHCR = 0x11000002;
+    set_alarm();
+    if (*DMA6_CHCR & 0x01000000) {
+        while (1) {
+            if (get_alarm()) {
+                return -1;
+            } else {
+                if (!(*DMA6_CHCR & (1 << 24))) {
+                    break;
+                }
+            }
+        }
+    }
+    return arg1;
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _clr);
 
@@ -342,24 +371,24 @@ s32 _cwb(s32* arg0, s32 arg1) {
     s32* var_a0;
     s32 i;
 
-    *D_8002C280 = 0x04000000;
+    *GPU_STATUS = 0x04000000;
     var_a0 = arg0;
     for (i = arg1 - 1; i != -1; i--) {
-        *D_8002C27C = *var_a0++;
+        *GPU_DATA = *var_a0++;
     }
     return 0;
 }
 
 void _cwc(s32 arg0) {
-    *D_8002C280 = 0x04000002;
-    *D_8002C284 = arg0;
-    *D_8002C288 = 0;
-    *D_8002C28C = 0x01000401;
+    *GPU_STATUS = 0x04000002;
+    *DMA2_MADR = arg0;
+    *DMA2_BCR = 0;
+    *DMA2_CHCR = 0x01000401;
 }
 
 s32 _param(s32 arg0) {
-    *D_8002C280 = arg0 | 0x10000000;
-    return *D_8002C27C & 0xFFFFFF;
+    *GPU_STATUS = arg0 | 0x10000000;
+    return *GPU_DATA & 0xFFFFFF;
 }
 
 void _addque2(s32, s32, s32, s32);
