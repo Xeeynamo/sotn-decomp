@@ -17,33 +17,6 @@ typedef struct {
     /* 0x06 */ u8 unk6;
 } Unkstruct_800BF554; // size = 0x7
 
-#define MAKE_PAL_OP(kind, freq) ((kind) | ((freq) << 0x10))
-#define GET_PAL_OP_KIND(x) (LOH(x))
-#define GET_PAL_OP_FREQ(x) (HIH(x))
-
-#define PAL_COPY 1
-#define PAL_COPY_INFO() MAKE_PAL_OP(PAL_COPY, 0)
-#define PAL_COPY_DATA(dst, data) (dst), (u_long*)LEN(data), (u_long*)(data)
-#define PAL_COPY_DATA_(dst, data, len) (dst), (u_long*)(len), (u_long*)(data)
-
-#define PAL_UNK_OP2 2
-#define PAL_UNK_OP2_INFO(dst, n) (u_long*)(dst), (u_long*)(n)
-#define PAL_UNK_OP2_DATA(data) (u_long*)(data)
-
-#define PAL_UNK_OP3 3
-#define PAL_UNK_OP3_INFO(dst, n) (u_long*)(dst), (u_long*)(n)
-#define PAL_UNK_OP3_DATA(data) (u_long*)(data)
-
-#define PAL_GLOW_ANIM 4
-#define PAL_GLOW_INFO(dst, n) (u_long*)(dst), (u_long*)(n)
-#define PAL_GLOW_DATA(data) (u_long*)(data)
-
-#define PAL_BULK_COPY 5
-#define PAL_BULK_COPY_INFO(dst, n) (u_long*)(dst), (u_long*)(n)
-#define PAL_BULK(dst, data) (u_long*)(dst), (u_long*)LEN(data), (u_long*)(data)
-
-#define PAL_TERMINATE() ((u_long*)-1)
-
 typedef struct {
     /* 0x00 */ u_long* desc;
     /* 0x04 */ u_long* data;

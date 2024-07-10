@@ -4,7 +4,22 @@
 
 #ifndef PRIMITIVE_H
 #define PRIMITIVE_H
-#include "common.h"
+
+#include "types.h"
+
+typedef enum {
+    PRIM_NONE,
+    PRIM_TILE,
+    PRIM_LINE_G2,
+    PRIM_G4,
+    PRIM_GT4,
+    PRIM_GT3,
+    PRIM_SPRT,
+    PRIM_ENV,
+    PRIM_TILE_ALT = PRIM_TILE | 0x10,
+    PRIM_LINE_G2_ALT = PRIM_LINE_G2 | 0x10,
+    PRIM_G4_ALT = PRIM_G4 | 0x10
+} PrimitiveType;
 
 #define blendMode drawMode // maintained to easily migrate existing scratches
 typedef struct Primitive {
@@ -49,6 +64,12 @@ typedef struct Primitive {
     /* 0x31 */ u8 v3; // TODO not verified
     /* 0x32 */ u16 drawMode;
 } Primitive; /* size=0x34 */
+
+
+#define MAX_PRIM_COUNT 0x500
+#define MAX_PRIM_ALLOC_COUNT 0x400
+
+extern Primitive g_PrimBuf[MAX_PRIM_COUNT];
 
 // FakePrim is really the wrong name for this.
 // But it's an alternate use of the Primitive structure.
@@ -173,4 +194,37 @@ typedef struct AxePrim {
     /* 0x30 */ s16 unk30;
     /* 0x32 */ u16 drawMode;
 } AxePrim;
+
+typedef struct Vertex {
+    /* 0x0 */ u8 r;
+    /* 0x1 */ u8 g;
+    /* 0x2 */ u8 b;
+    /* 0x3 */ u8 p;
+    /* 0x4 */ s16 x;
+    /* 0x6 */ s16 y;
+    /* 0x8 */ u8 u;
+    /* 0x9 */ u8 v;
+    /* 0xA */ u16 param;
+} Vertex; // size = 0xC
+
+// This structure is identical to Vertex but it is used for a FAKE! match.
+// The fields are shifted compared to Vertex but they are not supposed to.
+typedef struct {
+    s16 x;
+    s16 y;
+    u8 u;
+    u8 v;
+    u16 param;
+    u8 r;
+    u8 g;
+    u8 b;
+    u8 p;
+} VertexFake; // size = 0xC
+
+typedef struct Prim {
+    struct Prim* next;
+    struct Vertex v[4];
+} Prim;
+
 #endif
+

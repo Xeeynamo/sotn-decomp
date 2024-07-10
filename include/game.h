@@ -1,8 +1,14 @@
 #ifndef GAME_H
 #define GAME_H
+
 #include "common.h"
+#include "collider.h"
+#include "disk.h"
+#include "gamepad.h"
 #include "log.h"
 #include "macros.h"
+#include "palette.h"
+#include "primitive.h"
 #include <psxsdk/kernel.h>
 
 // lseek etc. conflicts
@@ -24,32 +30,6 @@
 
 typedef long Event;
 
-typedef enum {
-    PRIM_NONE,
-    PRIM_TILE,
-    PRIM_LINE_G2,
-    PRIM_G4,
-    PRIM_GT4,
-    PRIM_GT3,
-    PRIM_SPRT,
-    PRIM_ENV,
-    PRIM_TILE_ALT = PRIM_TILE | 0x10,
-    PRIM_LINE_G2_ALT = PRIM_LINE_G2 | 0x10,
-    PRIM_G4_ALT = PRIM_G4 | 0x10
-} PrimitiveType;
-
-typedef struct Vertex {
-    /* 0x0 */ u8 r;
-    /* 0x1 */ u8 g;
-    /* 0x2 */ u8 b;
-    /* 0x3 */ u8 p;
-    /* 0x4 */ s16 x;
-    /* 0x6 */ s16 y;
-    /* 0x8 */ u8 u;
-    /* 0x9 */ u8 v;
-    /* 0xA */ u16 param;
-} Vertex; // size = 0xC
-
 typedef struct {
     /* 0x00 */ SVECTOR* v0;
     /* 0x04 */ SVECTOR* v1;
@@ -57,26 +37,6 @@ typedef struct {
     /* 0x0C */ SVECTOR* v3;
 } SVEC4; // size = 0x10
 
-// This structure is identical to Vertex but it is used for a FAKE! match.
-// The fields are shifted compared to Vertex but they are not supposed to.
-typedef struct {
-    s16 x;
-    s16 y;
-    u8 u;
-    u8 v;
-    u16 param;
-    u8 r;
-    u8 g;
-    u8 b;
-    u8 p;
-} VertexFake; // size = 0xC
-
-typedef struct Prim {
-    struct Prim* next;
-    struct Vertex v[4];
-} Prim;
-
-#include "primitive.h"
 
 #define DRAW_DEFAULT 0x00
 #define DRAW_TRANSP 0x01 // make it semi transparent
@@ -96,11 +56,6 @@ typedef struct Prim {
 
 #include "entity.h"
 
-#define COLORS_PER_PAL (16)
-#define COLOR_BPP (16)
-#define COLOR_LEN ((COLOR_BPP) / 8)
-#define PALETTE_LEN ((COLORS_PER_PAL) * ((COLOR_BPP) / 8))
-#define COLOR16(r, g, b, a) (r) + ((g) << 5) + ((b) << 10) + ((a) << 15)
 // PS1 and PSP use different values for these two
 #ifndef VERSION_PSP
 #define OTSIZE 0x200
@@ -129,48 +84,6 @@ typedef struct Prim {
 // Width in pixel of how wide is the horizontal camera during normal game play
 #define STAGE_WIDTH 256
 
-#define BUTTON_COUNT 8
-#define PAD_COUNT 2
-
-#if !defined(VERSION_PSP)
-#define PAD_L2 0x0001
-#define PAD_R2 0x0002
-#define PAD_L1 0x0004
-#define PAD_R1 0x0008
-#define PAD_TRIANGLE 0x0010
-#define PAD_CIRCLE 0x0020
-#define PAD_CROSS 0x0040
-#define PAD_SQUARE 0x0080
-#define PAD_SELECT 0x0100
-#define PAD_L3 0x0200
-#define PAD_R3 0x0400
-#define PAD_START 0x0800
-#define PAD_UP 0x1000
-#define PAD_RIGHT 0x2000
-#define PAD_DOWN 0x4000
-#define PAD_LEFT 0x8000
-
-#else
-#define PAD_L1 0x0100
-#define PAD_R1 0x0200
-#define PAD_TRIANGLE 0x1000
-#define PAD_CIRCLE 0x2000
-#define PAD_CROSS 0x4000
-#define PAD_SQUARE 0x8000
-#define PAD_SELECT 0x0001
-#define PAD_START 0x0008
-#define PAD_UP 0x0010
-#define PAD_RIGHT 0x0020
-#define PAD_DOWN 0x0040
-#define PAD_LEFT 0x0080
-#endif
-
-// Game Buttons unofficially refers to buttons used in playing the game.
-// Direction, action and shoulder buttons. Any button except start or select.
-#define GAMEBUTTONS (~(PAD_START | PAD_SELECT))
-
-#define MAX_PRIM_COUNT 0x500
-#define MAX_PRIM_ALLOC_COUNT 0x400
 #define MAX_BG_LAYER_COUNT 16
 
 #define RENDERFLAGS_NOSHADOW 2
@@ -305,10 +218,6 @@ extern u8 g_BmpCastleMap[0x20000];
 #define ANIMSET_OVL_FLAG 0x8000
 #define ANIMSET_DRA(x) (x)
 #define ANIMSET_OVL(x) ((x) | ANIMSET_OVL_FLAG)
-
-#define PAL_OVL_FLAG 0x8000
-#define PAL_DRA(x) (x)
-#define PAL_OVL(x) ((x) | ANIMSET_OVL_FLAG)
 
 #ifndef SOTN_STR
 // Decorator to re-encode strings with tools/sotn_str/sotn_str.py when building
@@ -636,13 +545,6 @@ typedef struct {
     /* 0x0C */ TimeAttackEvents eventId;
     /* 0x10 */ s32 unk10;
 } RoomBossTeleport; /* size=0x14 */
-
-typedef struct {
-    /* 0x0 */ u16 pressed;
-    /* 0x2 */ s16 previous;
-    /* 0x4 */ u16 tapped;
-    /* 0x6 */ u16 repeat;
-} Pad; // size = 0x8
 
 typedef struct {
     u16 duration;
@@ -1163,43 +1065,7 @@ typedef struct {
     /* 8003C798 */ GfxBank** gfxBanks;
     /* 8003C79C */ void (*UpdateStageEntities)(void);
 } AbbreviatedOverlay;
-
-typedef enum {
-    EFFECT_SOLID = 1 << 0,
-    EFFECT_UNK_0002 = 1 << 1,
-    EFFECT_QUICKSAND = 1 << 2,
-    EFFECT_WATER = 1 << 3,
-    EFFECT_MIST_ONLY = 1 << 4,
-    EFFECT_UNK_0020 = 1 << 5,
-    // Used when you jump from below to a platform. You can drop below.
-    EFFECT_SOLID_FROM_ABOVE = 1 << 6,
-    // Doesn't collide when falling on it but you cannot go back up.
-    EFFECT_SOLID_FROM_BELOW = 1 << 7,
-    EFFECT_UNK_0100 = 1 << 8,
-    EFFECT_UNK_0200 = 1 << 9,
-    EFFECT_UNK_0400 = 1 << 10,
-    EFFECT_UNK_0800 = 1 << 11,
-    EFFECT_UNK_1000 = 1 << 12,
-    EFFECT_UNK_2000 = 1 << 13,
-    EFFECT_UNK_4000 = 1 << 14,
-    EFFECT_UNK_8000 = 1 << 15,
-
-    // Aggregate helpers below:
-    EFFECT_NOTHROUGH = EFFECT_SOLID | EFFECT_QUICKSAND,
-    EFFECT_NOTHROUGH_PLUS = EFFECT_SOLID | EFFECT_UNK_0002 | EFFECT_QUICKSAND
-} ColliderEffectFlags;
-
-typedef struct Collider {
-    /* 0x00 */ u32 effects;
-    /* 0x04 */ s32 unk4;
-    /* 0x08 */ s32 unk8;
-    /* 0x0C */ s32 unkC;
-    /* 0x10 */ s32 unk10;
-    /* 0x14 */ s32 unk14;
-    /* 0x18 */ s32 unk18;
-    /* 0x1C */ s32 unk1C;
-    /* 0x20 */ s32 unk20;
-} Collider; /* size=0x24 */
+ /* size=0x24 */
 
 typedef struct XaMusicConfig {
     u32 cd_addr;
@@ -1682,13 +1548,6 @@ typedef struct {
     /* 0x27 */ u8 unk27;
 } PlayerDraw; /* size = 0x28 */
 
-// Used to track the state of moves the player does with a sequence of buttons.
-// This includes spells, some of Richter's moves, etc.
-typedef struct {
-    s16 buttonsCorrect;
-    s16 timer;
-} ButtonComboState;
-
 extern s32 D_8003925C;
 extern s32 g_IsTimeAttackUnlocked;
 
@@ -1739,11 +1598,9 @@ extern s32 D_8006C378;
 extern GpuBuffer* g_CurrentBuffer; // g_CurrentBuffer;
 extern Point32 D_8006C384;
 extern Point32 D_8006C38C;
-extern u32 g_CdStep; // CdStep
 extern s32 D_8006C3AC;
 extern s32 g_backbufferX;
 extern s32 g_backbufferY;
-extern s32 g_IsUsingCd;
 extern Entity* g_CurrentEntity;
 extern Unkstruct_8006C3C4 D_8006C3C4[32];
 extern s32 g_Servant; // Currently selected familiar in the menu
@@ -1779,7 +1636,6 @@ extern Event g_EvHwCardErr;
 extern Event g_EvHwCardTmo;
 extern Event g_EvHwCardNew;
 extern u8 g_Pix[4][128 * 128 / 2];
-extern Primitive g_PrimBuf[MAX_PRIM_COUNT];
 extern s32 g_PlayerX;
 extern s32 g_PlayerY;
 extern u32 g_randomNext;
@@ -1791,11 +1647,9 @@ extern unkGraphicsStruct g_unkGraphicsStruct;
 extern s32 D_80097448[]; // underwater physics. 7448 and 744C. Could be struct.
 extern s32 D_80097450;
 extern Pos D_80097488;
-extern Pad g_pads[PAD_COUNT];
 extern Stages g_StageId;
 extern s32 D_800974A4; // map open
 extern DR_ENV D_800974AC[16];
-extern s32 g_UseDisk;
 extern s32 D_800978B4;
 extern s32 D_800978C4;
 extern u32 g_MenuStep;
