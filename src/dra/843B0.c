@@ -1512,7 +1512,7 @@ void EntityHellfireBigFireball(Entity* entity) {
 
         entity->animSet = ANIMSET_DRA(9);
         entity->rotZ = 0;
-        entity->unk4C = &D_800B07C8;
+        entity->unk4C = &D_800B0798[12];
         entity->drawFlags |= FLAG_DRAW_ROTZ;
         entity->zPriority = PLAYER.zPriority + 2;
         entity->facingLeft = (PLAYER.facingLeft + 1) & 1;
@@ -2681,8 +2681,8 @@ void func_80129864(Entity* self) {
             prim->drawMode |= DRAW_HIDE;
             break;
         case 1:
-            temp_u = D_800B0846[self->animCurFrame * 2];
-            temp_v = D_800B0846[self->animCurFrame * 2 + 1];
+            temp_u = D_800B0844[self->animCurFrame * 2 + 2];
+            temp_v = D_800B0844[self->animCurFrame * 2 + 3];
             prim->u0 = prim->u2 = temp_u;
             prim->u1 = prim->u3 = temp_u + 31;
             prim->v0 = prim->v1 = temp_v;

@@ -1,7 +1,4 @@
 g_CheatCodes = 0x800A300C;
-D_800B0860 = 0x800B0860;
-D_800B0884 = 0x800B0884;
-D_800B08A8 = 0x800B08A8;
 aPbav = 0x800B107C;
 aPbav_0 = 0x800B407C;
 aPbav_2 = 0x800B607C;
@@ -26,7 +23,6 @@ MenuDraw = 0x800F8F28;
 MenuHandleCursorInput = 0x800FA034;
 MenuHandle = 0x800FBC24;
 GetStatusAilmentTimer = 0x800FDB18;
-IsRelicActive = 0x800FE3A8;
 HandleSaveMenu = 0x80103238;
 DestroyEntity = 0x80106590;
 EntityAlucard = 0x8010A5BC;
