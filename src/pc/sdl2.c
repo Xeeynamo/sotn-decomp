@@ -182,18 +182,18 @@ u_long MyPadRead(int id) {
             pressed |= SDL_JoystickGetButton(joystick, 8) ? PAD_SELECT : 0;
             pressed |= SDL_JoystickGetButton(joystick, 9) ? PAD_START : 0;
 
-            short x_axis = SDL_JoystickGetAxis(joystick, 0);
-            short y_axis = SDL_JoystickGetAxis(joystick, 1);
-            if (y_axis < -SDL_JOYSTICK_AXIS_MAX / 2) {
+            short x = SDL_JoystickGetAxis(joystick, SDL_CONTROLLER_AXIS_LEFTX);
+            short y = SDL_JoystickGetAxis(joystick, SDL_CONTROLLER_AXIS_LEFTY);
+            if (y < -SDL_JOYSTICK_AXIS_MAX / 2) {
                 pressed |= PAD_UP;
             }
-            if (y_axis > SDL_JOYSTICK_AXIS_MAX / 2) {
+            if (y > SDL_JOYSTICK_AXIS_MAX / 2) {
                 pressed |= PAD_DOWN;
             }
-            if (x_axis < -SDL_JOYSTICK_AXIS_MAX / 2) {
+            if (x < -SDL_JOYSTICK_AXIS_MAX / 2) {
                 pressed |= PAD_LEFT;
             }
-            if (x_axis > SDL_JOYSTICK_AXIS_MAX / 2) {
+            if (x > SDL_JOYSTICK_AXIS_MAX / 2) {
                 pressed |= PAD_RIGHT;
             }
         }
