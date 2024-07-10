@@ -387,6 +387,8 @@ extern s32 D_800B083C[];
 extern u8 D_800B0846[];
 extern u16 D_800B0858[];
 extern s16 D_800B0860[];
+extern s16 D_800B0884[];
+extern s16 D_800B08A8[];
 extern unk_800B08CC D_800B08CC[];
 extern s32 D_800B0914;
 extern s32 D_800B0918;

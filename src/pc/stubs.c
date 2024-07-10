@@ -169,6 +169,8 @@ s32 D_800B083C[99];            // random size to play safe
 u8 D_800B0846[18];             // guessed size
 u16 D_800B0858[2];             // might be part of the next array
 s16 D_800B0860[99];            // random size to play safe
+s16 D_800B0884[18];
+s16 D_800B08A8[18];
 AnimationFrame D_800B0798[40]; // random size to play safe
 u8 D_800B0F94[100][5];         // random size to play safe
 SVECTOR stubbbbbbbb = {0};
@@ -612,5 +614,4 @@ void EntityMpReplenished(Entity* self) { NOT_IMPLEMENTED; }
 void EntityPlayerDissolves(Entity* self) { NOT_IMPLEMENTED; }
 void EntityGuardText(Entity* self) { NOT_IMPLEMENTED; }
 void EntityStopWatch(Entity* self) { NOT_IMPLEMENTED; }
-void EntityBatEcho(Entity* self) { NOT_IMPLEMENTED; }
 void func_8012F894(Entity* self) { NOT_IMPLEMENTED; }
