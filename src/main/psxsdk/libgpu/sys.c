@@ -342,10 +342,8 @@ s32 _otc(s32 arg0, s32 arg1) {
         while (1) {
             if (get_alarm()) {
                 return -1;
-            } else {
-                if (!(*DMA6_CHCR & (1 << 24))) {
-                    break;
-                }
+            } else if (!(*DMA6_CHCR & (1 << 24))) {
+                break;
             }
         }
     }
