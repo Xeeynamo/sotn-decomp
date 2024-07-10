@@ -39,6 +39,7 @@ set(SOURCE_FILES_PC
     src/pc/pl_ric.c
     src/pc/stages/stage_loader.c
     src/pc/stages/stage_dummy.c
+    src/pc/weapon_pc.c
 )
 
 if(WIN32)
@@ -247,6 +248,13 @@ set(SOURCE_FILES_STAGE_WRP
     src/st/wrp/bss.c
 )
 
+set(SOURCE_FILES_WEAPON
+    src/weapon/w_000.c
+)
+
+# WEAPON_ID needs to be a string and not just a number
+set_source_files_properties(src/weapon/w_000.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_000)
+
 # organization is:
 # two executables, sdl2 and null, plus a shared library "core"
 # any executable links core (which is pc shared code + sotn psx code)
@@ -264,6 +272,7 @@ set(SOURCE_FILES_CORE
     ${SOURCE_FILES_DRA}
     ${SOURCE_FILES_STAGE_SEL}
     ${SOURCE_FILES_STAGE_WRP}
+    ${SOURCE_FILES_WEAPON}
 )
 
 add_library(core ${SOURCE_FILES_CORE})

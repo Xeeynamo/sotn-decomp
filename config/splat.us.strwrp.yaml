@@ -43,6 +43,7 @@ segments:
       - [0x6BC, .data, collision]
       - [0xA7C, .data, e_red_door]
       - [0xA94, data]
+      - [0xC94, .data, e_collect]
       - [0xF84, .data, entity_relic_orb]
       - [0xFE8, data]
       - [0x10A0, data]
@@ -54,13 +55,18 @@ segments:
       - [0x6FE8, .data, sprites]
       - [0x8C48, data]
       - [0x8C88, rodata]
+      - [0x8CB0, .rodata, warp] # EntityWarpSmallRocks
       - [0x8CC8, .rodata, e_red_door]
       - [0x8CE0, rodata]
+      - [0x8CE0, .rodata, e_collect] # CollectGold strings
+      - [0x8D30, .rodata, e_collect] # EntityPrizeDrop
+      - [0x8D50, .rodata, e_collect] # EntityEquipItemDrop
       - [0x8D68, .rodata, entity_relic_orb]
       - [0x8DA0, .rodata, entity_message_box]
       - [0x8DB4, .rodata, 113A0] # EntityStageNamePopup
       - [0x8DE8, .rodata, prim_helpers]
       - [0x8DF0, c]
+      - [0x9E9C, c, warp]
       - [0xA168, c, random]
       - [0xA198, c, update]
       - [0xA494, c, update_stage_entities]
@@ -68,6 +74,8 @@ segments:
       - [0xBD58, c, create_entity]
       - [0xC8D0, c, e_red_door]
       - [0xD580, c]
+      - [0xEA30, c, e_collect]
+      - [0xff9c, c, blit_char]
       - [0x1024C, c, entity_relic_orb]
       - [0x10D1C, c, entity_heart_drop]
       - [0x10E44, c, entity_message_box]
