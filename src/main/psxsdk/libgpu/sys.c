@@ -361,7 +361,7 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _drs);
 extern s32 ctlbuf[];
 
 void _ctl(u32 arg0) {
-    *D_8002C280 = arg0;
+    *GPU_STATUS = arg0;
     ctlbuf[(arg0 >> 0x18)] = arg0 & 0xFFFFFF;
 }
 
@@ -401,9 +401,6 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _exeque);
 
 s32 DMACallback(s32, s32);
 s32 SetIntrMask(s32);
-extern volatile s32* D_8002C27C;
-extern volatile s32* D_8002C28C;
-extern volatile s32* D_8002C29C;
 
 struct QueueItem {
     volatile s32 unk0;
@@ -429,22 +426,22 @@ s32 _reset(s32 arg0) {
 
     switch (arg0) {
     case 0:
-        *D_8002C28C = 0x401;
-        *D_8002C29C |= 0x800;
-        *D_8002C280 = 0;
+        *DMA2_CHCR = 0x401;
+        *DPCR |= 0x800;
+        *GPU_STATUS = 0;
         break;
     case 1:
-        *D_8002C28C = 0x401;
-        *D_8002C29C |= 0x800;
-        *D_8002C280 = 0x02000000;
-        *D_8002C280 = 0x01000000;
+        *DMA2_CHCR = 0x401;
+        *DPCR |= 0x800;
+        *GPU_STATUS = 0x02000000;
+        *GPU_STATUS = 0x01000000;
         break;
     default:
         break;
     }
-    *D_8002C27C = (*D_8002C280 & 0x3FFF) | 0xE1001000;
+    *GPU_DATA = (*GPU_STATUS & 0x3FFF) | 0xE1001000;
     SetIntrMask(temp_s1);
-    return ((u32)*D_8002C280 >> 0xC) & 1;
+    return ((u32)*GPU_STATUS >> 0xC) & 1;
 }
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _sync);
