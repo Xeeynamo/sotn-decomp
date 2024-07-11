@@ -1,6 +1,6 @@
 # configuration
 PSX_OVLS		:= dra ric weapon
-PSX_KSTAGES		:= cen dre mad no3 np3 nz0 sel st0 wrp
+PSX_KSTAGES		:= cen chi dre mad no3 np3 nz0 sel st0 wrp
 PSX_RSTAGES		:= rwrp
 PSX_ALLSTAGES	:= $(addprefix st,$(PSX_KSTAGES)) $(addprefix st,$(PSX_RSTAGES))
 PSX_SERVANTS	:= tt_000
@@ -50,6 +50,7 @@ $(BUILD_DIR)/weapon.ld: $(CONFIG_DIR)/splat.$(VERSION).weapon.yaml $(PSX_BASE_SY
 
 extract_assets: $(SOTNASSETS)
 	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/CEN/CEN.BIN -o assets/st/cen
+	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/CHI/CHI.BIN -o assets/st/chi
 	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/DRE/DRE.BIN -o assets/st/dre
 	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/NO3/NO3.BIN -o assets/st/no3
 	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/NP3/NP3.BIN -o assets/st/np3
@@ -59,6 +60,7 @@ extract_assets: $(SOTNASSETS)
 	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/RWRP/RWRP.BIN -o assets/st/rwrp
 build_assets: $(SOTNASSETS)
 	$(SOTNASSETS) build_all -i assets/st/cen -o src/st/cen/
+	$(SOTNASSETS) build_all -i assets/st/chi -o src/st/chi/
 	$(SOTNASSETS) build_all -i assets/st/dre -o src/st/dre/
 	$(SOTNASSETS) build_all -i assets/st/no3 -o src/st/no3/
 	$(SOTNASSETS) build_all -i assets/st/np3 -o src/st/np3/
