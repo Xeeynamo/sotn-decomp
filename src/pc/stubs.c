@@ -166,9 +166,9 @@ s16 D_800ACF94[16];   // guessed size
 u8 D_800ACFB4[20][4]; // TODO AnimationFrames*[], random size
 s32 D_800B0830[99];   // random size to play safe
 s32 D_800B083C[99];   // random size to play safe
-u8 D_800B0844[18];    // guessed size
-u16 D_800B0858[2];    // might be part of the next array
-s16 D_800B0860[99];   // random size to play safe
+u8 D_800B0848[16];
+u16 D_800B0858[2]; // might be part of the previous array
+s16 D_800B0860[18];
 s16 D_800B0884[18];
 s16 D_800B08A8[18];
 AnimationFrame D_800B0798[40]; // random size to play safe
