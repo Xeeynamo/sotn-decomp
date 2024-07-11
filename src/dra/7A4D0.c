@@ -1435,8 +1435,8 @@ void EntityPlayerOutline(Entity* self) {
             prim->clut = primData[3]; // Always 259
             prim->priority = PLAYER.zPriority + 2;
             prim->drawMode =
-                primData[4] +
-                0x304; // Always 49, or DRAW_UNK_40 | DRAW_HIDE | DRAW_TRANSP
+                primData[4] + // Always 49, or DRAW_UNK_40 | DRAW_HIDE | DRAW_TRANSP
+                (DRAW_UNK_200 | DRAW_UNK_100 | DRAW_COLORS);
             prim = prim->next;
         }
         switch (upperparams) {
