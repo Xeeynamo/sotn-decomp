@@ -11,16 +11,23 @@
 #include "drawmode.h"
 #include "entity.h"
 #include "gamepad.h"
+#include "gamesettings.h"
 #include "graphics.h"
 #include "familiar.h"
+#include "item.h"
 #include "layer.h"
 #include "log.h"
+#include "memcard.h"
+#include "menunavigation.h"
 #include "palette.h"
 #include "player.h"
 #include "primitive.h"
+#include "relic.h"
 #include "servant.h"
 #include "spell.h"
 #include "sprite.h"
+#include "timeattack.h"
+#include "ui.h"
 #include <psxsdk/kernel.h>
 
 // lseek etc. conflicts
@@ -39,8 +46,6 @@
 #include <psxsdk/romio.h>
 
 #define SPAD(x) ((s32*)SP(x * sizeof(s32)))
-
-typedef long Event;
 
 typedef struct {
     /* 0x00 */ SVECTOR* v0;
@@ -313,50 +318,6 @@ typedef enum {
     Demo_Playback,
 } DemoMode;
 
-typedef enum {
-    TIMEATTACK_INVALID = -1,
-    TIMEATTACK_GET_RECORD,
-    TIMEATTACK_SET_RECORD,
-    TIMEATTACK_SET_VISITED,
-} TimeAttackActions;
-
-typedef enum {
-    TIMEATTACK_EVENT_DRACULA_DEFEAT,
-    TIMEATTACK_EVENT_ORLOX_DEFEAT,
-    TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT,
-    TIMEATTACK_EVENT_GRANFALOON_DEFEAT,
-    TIMEATTACK_EVENT_MINOTAUR_WEREWOLF_DEFEAT,
-    TIMEATTACK_EVENT_SCYLLA_DEFEAT,
-    TIMEATTACK_EVENT_SLOGRA_GAIBON_DEFEAT,
-    TIMEATTACK_EVENT_HYPPOGRYPH_DEFEAT,
-    TIMEATTACK_EVENT_BEELZEBUB_DEFEAT,
-    TIMEATTACK_EVENT_SUCCUBUS_DEFEAT,
-    TIMEATTACK_EVENT_KARASUMAN_DEFEAT,
-    TIMEATTACK_EVENT_RALPH_GRANT_SYPHA_DEFEAT,
-    TIMEATTACK_EVENT_DEATH_DEFEAT,
-    TIMEATTACK_EVENT_CERBERUS_DEFEAT,
-    TIMEATTACK_EVENT_SAVE_RICHTER,
-    TIMEATTACK_EVENT_MEDUSA_DEFEAT,
-    TIMEATTACK_EVENT_THE_CREATURE_DEFEAT,
-    TIMEATTACK_EVENT_LESSER_DEMON_DEFEAT,
-    TIMEATTACK_EVENT_DOPPLEGANGER_40_DEFEAT,
-    TIMEATTACK_EVENT_AKMODAN_II_DEFEAT,
-    TIMEATTACK_EVENT_DARKWING_BAT_DEFEAT,
-    TIMEATTACK_EVENT_GALAMOTH_DEFEAT,
-    TIMEATTACK_EVENT_FINAL_SAVEPOINT,
-    TIMEATTACK_EVENT_MEET_DEATH,
-    TIMEATTACK_EVENT_GET_HOLYGLASSES,
-    TIMEATTACK_EVENT_MEET_MASTER_LIBRARIAN,
-    TIMEATTACK_EVENT_FIRST_MARIA_MEET,
-    NUM_TIMEATTACK_EVENTS,
-    TIMEATTACK_EVENT_UNUSED_28,
-    TIMEATTACK_EVENT_UNUSED_29,
-    TIMEATTACK_EVENT_UNUSED_30,
-    TIMEATTACK_EVENT_UNUSED_31,
-    TIMEATTACK_EVENT_END,
-    TIMEATTACK_EVENT_INVALID = 0xFF,
-} TimeAttackEvents;
-
 #include "unkstruct.h"
 
 typedef struct {
@@ -395,23 +356,6 @@ typedef struct {
     /* 29 */ s8 seqIdx; // index of D_800ACCF8
     /* 2A */ u16 unk2A;
 } Lba; /* size=0x2C */
-
-typedef struct {
-    /* 0x00 */ s16 cursorX;
-    /* 0x02 */ s16 cursorY;
-    /* 0x04 */ s16 cursorW;
-    /* 0x06 */ s16 cursorH;
-    /* 0x08 */ RECT unk1;
-    /* 0x10 */ s16 w;
-    /* 0x12 */ s16 h;
-    /* 0x14 */ s16 unk14;
-    /* 0x16 */ s16 unk16;
-    /* 0x18 */ s16 otIdx;
-    /* 0x1A */ s16 unk1A;
-    /* 0x1C */ u8 unk1C;
-    /* 0x1D */ u8 unk1D;
-} MenuContext; // size = 0x1E
-#define SIZEOF_MENUCONTEXT (0x1E)
 
 typedef struct {
     /* 0x0 */ u8 tileLayoutId;
@@ -466,150 +410,6 @@ typedef struct {
     /* 0x0C */ u32 unkC;
     /* 0x10 */ u8* unk10;
 } ObjInit2; // size = 0x14
-
-typedef enum EquipKind {
-    EQUIP_HAND,
-    EQUIP_HEAD,
-    EQUIP_ARMOR,
-    EQUIP_CAPE,
-    EQUIP_ACCESSORY,
-    NUM_EQUIP_KINDS,
-} EquipKind;
-
-typedef enum {
-    ITEM_S_SWORD,
-    ITEM_SWORD,
-    ITEM_THROW_1,
-    ITEM_FIST,
-    ITEM_CLUB,
-    ITEM_TWOHAND,
-    ITEM_FOOD,
-    ITEM_BOMB,
-    ITEM_THROW_2,
-    ITEM_SHIELD,
-    ITEM_MEDICINE,
-    ITEM_END,
-} ItemCategory;
-
-typedef enum {
-    SUBWPN_NONE,
-    SUBWPN_DAGGER,
-    SUBWPN_AXE,
-    SUBWPN_HOLYWATER,
-    SUBWPN_CROSS,
-    SUBWPN_BIBLE,
-    SUBWPN_STOPWATCH,
-    SUBWPN_REBNDSTONE,
-    SUBWPN_VIBHUTI,
-    SUBWPN_AGUNEA
-} SubWpnID;
-
-#define RELIC_FLAG_DISABLE 0
-#define RELIC_FLAG_FOUND 1
-#define RELIC_FLAG_ACTIVE 2
-#if defined(VERSION_US)
-#define NUM_AVAIL_RELICS (NUM_RELICS - 2)
-#elif defined(VERSION_HD)
-#define NUM_AVAIL_RELICS (NUM_RELICS)
-#endif
-typedef enum {
-    RELIC_SOUL_OF_BAT,
-    RELIC_FIRE_OF_BAT,
-    RELIC_ECHO_OF_BAT,
-    RELIC_FORCE_OF_ECHO,
-    RELIC_SOUL_OF_WOLF,
-    RELIC_POWER_OF_WOLF,
-    RELIC_SKILL_OF_WOLF,
-    RELIC_FORM_OF_MIST,
-    RELIC_POWER_OF_MIST,
-    RELIC_GAS_CLOUD,
-    RELIC_CUBE_OF_ZOE,
-    RELIC_SPIRIT_ORB,
-    RELIC_GRAVITY_BOOTS,
-    RELIC_LEAP_STONE,
-    RELIC_HOLY_SYMBOL,
-    RELIC_FAERIE_SCROLL,
-    RELIC_JEWEL_OF_OPEN,
-    RELIC_MERMAN_STATUE,
-    RELIC_BAT_CARD,
-    RELIC_GHOST_CARD,
-    RELIC_FAERIE_CARD,
-    RELIC_DEMON_CARD,    // 0x097979
-    RELIC_SWORD_CARD,    // 0x09797A
-    RELIC_JP_0,          // 0x09797B (nose demon or half fairy)
-    RELIC_JP_1,          // 0x09797C
-    RELIC_HEART_OF_VLAD, // 0x09797D
-    RELIC_TOOTH_OF_VLAD,
-    RELIC_RIB_OF_VLAD,
-    RELIC_RING_OF_VLAD,
-    RELIC_EYE_OF_VLAD,
-    NUM_RELICS,
-} RelicIds;
-
-typedef struct {
-    /* 0x00, 8003C9A8 */ s32 cursorMain;
-    /* 0x04, 8003C9AC */ s32 cursorRelic;
-    /* 0x08, 8003C9B0 */ s32 cursorEquip;
-    /* 0x0C, 8003C9B4 */ s32 cursorEquipType[NUM_EQUIP_KINDS];
-    /* 0x20, 8003C9C8 */ s32 scrollEquipType[NUM_EQUIP_KINDS];
-    /* 0x34, 8003C9DC */ s32 cursorSpells;
-    /* 0x38, 8003C9E0 */ s32 cursorSettings;
-    /* 0x3C, 8003C9E4 */ s32 cursorCloak;
-    /* 0x40, 8003C9E8 */ s32 cursorButtons;
-    /* 0x44, 8003C9EC */ s32 cursorWindowColors;
-    /* 0x48, 8003C9F0 */ s32 cursorTimeAttack;
-} MenuNavigation; /* size=0x4C */
-
-typedef struct {
-    /* 0x000, 0x8003C9F8 */ u32 buttonConfig[BUTTON_COUNT];
-    /* 0x020, 0x8003CA18 */ u16 buttonMask[BUTTON_COUNT];
-    /* 0x030, 0x8003CA28 */ s32 timeAttackRecords[TIMEATTACK_EVENT_END];
-    /* 0x0B0, 0x8003CAA8 */ s32 cloakColors[6];
-    /* 0x0C8, 0x8003CAC0 */ s32 windowColors[3];
-    /* 0x0D4, 0x8003CACC */ s32 equipOrderTypes[ITEM_END];
-    /* 0x100, 0x8003CAF8 */ s32 isCloakLiningReversed;
-    /* 0x104, 0x8003CAFC */ s32 isSoundMono;
-    /* 0x108, 0x8003CB00 */ s32 D_8003CB00;
-    /* 0x10C, 0x8003CB04 */ s32 D_8003CB04;
-} GameSettings; /* size=0x110 */
-
-typedef struct {
-    /* 0x00 */ u8 Magic[2];
-    /* 0x02 */ u8 Type;
-    /* 0x03 */ u8 BlockEntry;
-    /* 0x04 */ u8 Title[64];
-    /* 0x44 */ u8 reserve[28];
-    /* 0x60 */ u8 Clut[32];
-    /* 0x80 */ u8 Icon[3][128];
-} MemcardHeader; /* size=0x200 */
-
-typedef struct {
-    /* 0x00 */ char name[12];
-    /* 0x0C */ s32 level;
-    /* 0x10 */ s32 gold;
-    /* 0x14 */ s32 playHours;
-    /* 0x18 */ s32 playMinutes;
-    /* 0x1C */ s32 playSeconds;
-    /* 0x20 */ s32 cardIcon;
-    /* 0x24 */ s32 endGameFlags;
-    /* 0x28 */ s16 stage;
-    /* 0x2A */ u16 nRoomsExplored;
-    /* 0x2C */ u16 roomX;
-    /* 0x2E */ u16 roomY;
-    /* 0x30 */ s32 character;
-    /* 0x34 */ s32 saveSize;
-} SaveInfo; /* 0x38 */
-
-typedef struct {
-    /* 0x000 */ MemcardHeader header;
-    /* 0x200 */ SaveInfo info;
-    /* 0x238 */ PlayerStatus status;
-    /* 0x56C */ MenuNavigation menuNavigation;
-    /* 0x5B8 */ GameSettings settings;
-    /* 0x6C8 */ u8 castleFlags[0x300];
-    /* 0x6C8 */ u8 castleMap[0x800];
-    /* 0x11C8 */ s32 rng;
-} SaveData; /* size = 0x11CC */
 
 typedef struct {
     /* 0x00 */ u32 left : 6;
@@ -781,45 +581,6 @@ typedef struct {
 } Accessory; /* size=0x20 */
 
 typedef struct {
-    /* 0x00 */ const char* name;
-    /* 0x04 */ const char* desc;
-    /* 0x08 */ u16 unk08;
-    /* 0x0A */ u16 unk0A;
-    /* 0x0C */ s32 unk0C;
-} RelicDesc; /* size=0x10 */
-
-typedef struct {
-    /* 0x00 */ const char* name;
-    /* 0x04 */ const char* desc;
-    /* 0x08 */ u16 icon;
-    /* 0x0A */ u16 iconPalette;
-#ifndef VERSION_BETA
-    /* 0x0C */ u16 unk0C;
-    /* 0x0E */ u16 unk0E;
-#endif
-} RelicOrb; /* size=0x10 */
-
-typedef struct {
-    /* 0x00 */ const char* nextCharDialogue; // ptr to dialogue next character
-    /* 0x04 */ s16 startX;                   // starting x coord
-    /* 0x06 */ s16 nextLineY;                // next line y coord
-    /* 0x08 */ s16 startY;                   // starting y coord
-    /* 0x0A */ s16 nextCharX;                // next char x coord
-    /* 0x0C */ s16 nextLineX;                // next line x coord
-    /* 0x0E */ s16 nextCharY;                // next char y coord
-    /* 0x10 */ s16 portraitAnimTimer;        // portrait animation timer
-    /* 0x12 */ u16 unk12;                    // unknown
-    /* 0x14 */ u16 clutIndex;                // CLUT index
-    /* 0x16 */ u8 nextCharTimer;             // timer to next character
-    /* 0x17 */ u8 unk17;                     // unknown
-    /* 0x18 */ Primitive* prim[6];           // for dialogue graphics rendering
-    /* 0x30 */ s32 primIndex[3];             // primIndices: unk, actorName, unk
-    /* 0x3C */ u16 unk3C;                    // maybe it is a begin flag?
-    /* 0x3E */ u16 timer;                    // global timer
-    /* 0x40 */ const char* unk40;            // dialogue settings, maybe?
-} Dialogue;                                  // size = 0x44
-
-typedef struct {
     u32 effects; // Curse, poison, etc; needs an enum.
     u32 damageKind;
     s32 damageTaken;
@@ -979,19 +740,7 @@ extern void (*g_api_LearnSpell)(s32 spellId);
 extern void (*g_api_func_800E2438)(const char* str);
 /***************************/
 
-typedef struct {
-    /* 0x00 */ u16** frames;   // all the animation frames
-    /* 0x04 */ s8* frameProps; // hitboxes
-    /* 0x08 */ u16 palette;    // palette modifier
-    /* 0x0A */ u16 soundId;    // which sound effect to trigger
-    /* 0x0C */ u8 frameStart;  // when the animation starts
-    /* 0x0D */ u8 soundFrame;  // when the sound effect is triggered
-    /* 0x0E */ s16 unused;     // reserved, always 0
-} WeaponAnimation;
- /* size=0x8 */
-
 extern s32 D_8003925C;
-extern s32 g_IsTimeAttackUnlocked;
 
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
@@ -1013,11 +762,7 @@ extern Unkstruct_8003C908 D_8003C908;
 extern s32 D_8003C90C[2];
 extern u32 g_Timer; // Increases continuously
 extern s32 g_MapCursorTimer;
-/* 0x8003C9A8 */ extern MenuNavigation g_MenuNavigation;
-/* 0x8003C9F8 */ extern GameSettings g_Settings;
-extern const char g_MemcardSavePath[];
 extern const char aBaslus00067dra[19];
-extern const char g_strMemcardRootPath[];
 extern s32 g_LoadFile;
 extern s32 D_8006BB00;
 extern u8 g_CastleMap[0x800];
@@ -1047,7 +792,6 @@ extern u32 g_randomNext;
 extern s32 D_80096ED8[];
 extern s8 D_80097B98;
 extern s8 D_80097B99;
-extern s32 D_800973EC; // flag to check if the menu is shown
 extern unkGraphicsStruct g_unkGraphicsStruct;
 extern s32 D_80097448[]; // underwater physics. 7448 and 744C. Could be struct.
 extern s32 D_80097450;
@@ -1057,7 +801,6 @@ extern s32 D_800974A4; // map open
 extern DR_ENV D_800974AC[16];
 extern s32 D_800978B4;
 extern s32 D_800978C4;
-extern u32 g_MenuStep;
 extern char D_80097902[];
 extern s32 D_80097904;
 extern s32 g_ScrollDeltaX;
@@ -1070,8 +813,6 @@ extern s32 D_80097920;
 extern s32 D_80097924;
 extern s32 D_80097928;
 extern s32 D_80097C98;
-extern s32 subWeapon; // g_SubweaponId
-extern u8 g_SaveName[12] ALIGNED4;
 extern u32 D_80097C40[];
 extern s32 D_800987B4;
 extern s32 D_800987C8;
