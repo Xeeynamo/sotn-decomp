@@ -40,5 +40,4 @@ typedef struct Collider {
     /* 0x20 */ s32 unk20;
 } Collider; /* size=0x24 */
 
-
 #endif // COLLIDER_H

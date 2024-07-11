@@ -52,7 +52,6 @@ typedef struct {
 
 extern Pad g_pads[PAD_COUNT];
 
-
 // Used to track the state of moves the player does with a sequence of buttons.
 // This includes spells, some of Richter's moves, etc.
 typedef struct {

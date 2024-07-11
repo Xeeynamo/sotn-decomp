@@ -35,5 +35,4 @@ typedef struct {
     /* 02 */ SpritePart parts[0];
 } SpriteParts; // size = 4 + count*sizeof(SpritePart)
 
-
 #endif // SPRITE_H

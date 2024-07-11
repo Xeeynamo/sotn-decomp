@@ -73,5 +73,4 @@ typedef struct {
     /* 8003C79C */ void (*UpdateStageEntities)(void);
 } AbbreviatedOverlay;
 
-
 #endif // STAGE_OVERLAY_H

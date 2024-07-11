@@ -51,6 +51,6 @@ typedef struct {
     /* 0x0D */ u8 soundFrame;  // when the sound effect is triggered
     /* 0x0E */ s16 unused;     // reserved, always 0
 } WeaponAnimation;
- /* size=0x8 */
+/* size=0x8 */
 
 #endif // ITEM_H

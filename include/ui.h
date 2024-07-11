@@ -24,5 +24,4 @@ typedef struct {
     /* 0x40 */ const char* unk40;            // dialogue settings, maybe?
 } Dialogue;                                  // size = 0x44
 
-
 #endif // UI_H

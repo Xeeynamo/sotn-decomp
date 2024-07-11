@@ -172,7 +172,7 @@ extern s32 g_PlayerY;
 
 /* 0x8003C9A0 */ extern s32 g_PlayableCharacter;
 /* 0x8003C9A4 */ extern u32 D_8003C9A4; // when player change stages?
-                                           // overlap, hard to remove
+                                        // overlap, hard to remove
 typedef enum {
     Player_Stand,
     Player_Walk,

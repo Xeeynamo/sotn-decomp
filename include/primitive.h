@@ -65,7 +65,6 @@ typedef struct Primitive {
     /* 0x32 */ u16 drawMode;
 } Primitive; /* size=0x34 */
 
-
 #define MAX_PRIM_COUNT 0x500
 #define MAX_PRIM_ALLOC_COUNT 0x400
 
@@ -227,4 +226,3 @@ typedef struct Prim {
 } Prim;
 
 #endif
-

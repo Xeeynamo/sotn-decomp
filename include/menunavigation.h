@@ -19,7 +19,6 @@ typedef struct {
     /* 0x48, 8003C9F0 */ s32 cursorTimeAttack;
 } MenuNavigation; /* size=0x4C */
 
-
 typedef struct {
     /* 0x00 */ s16 cursorX;
     /* 0x02 */ s16 cursorY;

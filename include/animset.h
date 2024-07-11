@@ -5,5 +5,4 @@
 #define ANIMSET_DRA(x) (x)
 #define ANIMSET_OVL(x) ((x) | ANIMSET_OVL_FLAG)
 
-
 #endif // ANIMSET_H

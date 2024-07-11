@@ -72,7 +72,6 @@ typedef struct {
     GfxEntry entries[0];
 } GfxBank;
 
-
 typedef struct {
     /* 0x0 */ GfxEntry* next;
     /* 0x4 */ u16 kind;
@@ -84,7 +83,7 @@ typedef struct {
 extern GpuBuffer g_GpuBuffers[2];
 extern s16 g_GpuBuffers_1_buf_draw_clip_y; // member of D_800542FC, TODO
                                            // overlap, hard to remove
-extern GpuBuffer* g_CurrentBuffer; // g_CurrentBuffer;
+extern GpuBuffer* g_CurrentBuffer;         // g_CurrentBuffer;
 extern GfxLoad g_GfxLoad[0x10];
 extern GpuUsage g_GpuUsage;
 
