@@ -294,6 +294,7 @@ s32 func_80134678(s16 arg0, u16 arg1) {
     return ret;
 }
 
+// alternate to PlaySfx with extra params
 u32 func_80134714(s16 sfxId, s32 arg1, u16 arg2) {
     u32 ret;
     u32 var_v0;

@@ -210,7 +210,7 @@ void func_8012DBBC(void) {
             func_8012CA64();
         }
         PLAYER.velocityY = 0;
-        PlaySfx(0x64C);
+        PlaySfx(SFX_UNK_64C);
         return;
     }
     if (g_Player.padTapped & PAD_SQUARE) {
@@ -271,7 +271,7 @@ void func_8012DF04(void) {
         func_8012CC30(1);
     }
     if (g_Player.pl_vram_flag & 1) {
-        PlaySfx(0x64C);
+        PlaySfx(SFX_UNK_64C);
         if (PLAYER.velocityY > FIX(6.875)) {
             PLAYER.step_s = 3;
             D_800B0914 = 3;
@@ -313,7 +313,7 @@ void func_8012E040(void) {
                 func_8012CB4C();
             }
         }
-        PlaySfx(0x64C);
+        PlaySfx(SFX_UNK_64C);
         PLAYER.velocityY = 0;
         return;
     }
@@ -330,7 +330,7 @@ void func_8012E040(void) {
             PLAYER.posY.i.hi = PLAYER.posY.i.hi;
             PLAYER.posX.i.hi -= xOffset;
             func_80102CD8(3);
-            PlaySfx(0x644);
+            PlaySfx(NA_SE_EN_ROCK_BREAK);
             PLAYER.velocityX = 0;
             PLAYER.velocityY = 0;
             func_8012CED4();

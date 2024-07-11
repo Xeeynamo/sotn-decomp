@@ -402,7 +402,7 @@ void HandleGameOver(void) {
         break;
     case Gameover_Init:
     case Gameover_Init_Alt:
-        PlaySfx(0x11);
+        PlaySfx(SET_UNK_11);
         if (g_StageId != STAGE_ST0) {
             g_GpuBuffers[1].draw.isbg = 0;
             g_GpuBuffers[0].draw.isbg = 0;
@@ -469,8 +469,8 @@ void HandleGameOver(void) {
         if (func_80131F68()) {
             break;
         }
-        PlaySfx(0x12);
-        PlaySfx(0xB);
+        PlaySfx(SET_UNK_12);
+        PlaySfx(SET_UNK_0B);
         g_GameStep++;
         break;
     case Gameover_3:

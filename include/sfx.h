@@ -182,17 +182,20 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 
 // This sound plays when MAX UP spawns and during Dracula transformation
 #define NA_SE_UNK_62F 0x62F
+#define SFX_UNK_608 0x608
 #define NA_SE_EV_HEAVY_BLOCK_DRAG 0x609
 #define NA_SE_EN_BLOOD_ZOMBIE_SWORD_SLASH 0x60B
 #define SFX_SUBWPN_THROW 0x60C // Throwing rebound stone, vibhuti, others?
 #define SFX_CLANK 0x611 // when attacking invulnerable enemy (like Stone Skull)
 #define NA_SE_AL_BACKSLIDE 0x617
+#define SFX_UNK_61A 0x61A
 #define NA_SE_EV_VASE_BREAK 0x61D
 #define NA_SE_PL_BT_ECHO 0x61F
 #define NA_SE_EN_SKELETON_DESTROY 0x62B
 #define SFX_WEAPON_62C 0x62C
 #define NA_SE_EV_GLASS_BREAK 0x632
 #define NA_SE_BREAK_CANDLE 0x634
+#define SFX_UNK_635 0x635
 #define NA_SE_PL_WARP 0x636
 
 #if defined(VERSION_BETA)
@@ -200,6 +203,8 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SFX_DOOR_UNKNOWN 0x64D
 #else
 #define SFX_OPEN_DOOR 0x642
+#define SFX_UNK_647 0x647
+#define SFX_UNK_64C 0x64C
 #define SFX_DOOR_UNKNOWN 0x64F
 #endif
 
@@ -213,6 +218,9 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define NA_SE_EN_ZOMBIE_EXPLODE 0x65E
 #define NA_SE_EN_GAIBON_FLAME_OUT 0x65E
 #define NA_SE_EN_DR_FIREBALL 0x660
+#define SFX_UNK_665 0x665
+#define SFX_UNK_668 0x668
+#define SFX_UNK_669 0x669
 #define NA_SE_EN_AXE_KNIGHT_BREAK_AXE 0x66B
 #define NA_SE_EN_BONE_SCIMITAR_SWORD_SLASH 0x66D
 #define NA_SE_EN_GAIBON_COLLAPSE 0x672
@@ -229,6 +237,10 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define NA_SE_EN_GAIBON_FLAME 0x691
 #define NA_SE_EN_EXPLOSIVE_DEATH 0x693
 #define NA_SE_EN_SLOGRA_DEATH_EXPLOSION 0x697
+#define SFX_UNK_69A 0x69A
+#define SFX_UNK_69D 0x69D
+#define SFX_UNK_6A0 0x6A0
+#define SFX_UNK_6A3 0x6A3
 #define NA_SE_EV_CLOCK_TICK 0x6A1
 #define REBOUND_STONE_BOUNCE 0x6A4
 #define NA_SE_PL_COLLECT_GOLD 0x6A9
@@ -237,7 +249,19 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define NA_SE_EN_SKELETON_THROW_BONE 0x6C8
 #define NA_SE_EN_BLOOD_SKELETON_DISASSEMBLES 0x6CB
 #define NA_SE_EN_BLOOD_SKELETON_REASSEMBLES 0x6CC
+#define SFX_UNK_6DF 0x6DF
+#define SFX_UNK_6E0 0x6E0
 #define NA_SE_PL_RIC_UNK_6E2 0x6E2
+#define SFX_UNK_6E7 0x6E7
+#define SFX_UNK_6E8 0x6E8
+#define SFX_UNK_6E9 0x6E9
+#define SFX_UNK_6EA 0x6EA
+#define SFX_UNK_6EB 0x6EB
+#define SFX_UNK_6EC 0x6EC
+#define SFX_UNK_6ED 0x6ED
+#define SFX_UNK_6EE 0x6EE
+#define SFX_UNK_6EF 0x6EF
+#define SFX_UNK_6F0 0x6F0
 #define NA_SE_VO_AL_PUNCH 0x6F1
 #define NA_SE_VO_AL_WHAT 0x6F2
 #define NA_SE_VO_AL_DARK_METAMORPHOSIS 0x6F3
@@ -268,6 +292,7 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define NA_SE_VO_DR_HURT_3 0x85C
 #define NA_SE_VO_DR_HURT_4 0x85D
 #define NA_SE_PL_TELEPORT 0x8BA
+#define SFX_UNK_8BB 0x8BB
 #define NA_SE_CS_BURNING_PHOTOGRAPH 0x8BE
 // plays every 10 frames while using bible subweapon
 #define BIBLE_SUBWPN_SWOOSH 0x8C3
@@ -327,7 +352,11 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 
 // DRA
 #define SE_SAVE_HEARTBEAT 0x64D
+#define SFX_UNK_661 0x661
+#define SFX_UNK_683 0x683
 #define SE_HEALTH_REGAINED 0x68E
+#define SFX_UNK_6B2 0x6B2
+#define SFX_UNK_6F7 0x6F7
 
 // WEAPON SOUNDS
 #define SE_WPN_POWER_OF_SIRE 0x66A

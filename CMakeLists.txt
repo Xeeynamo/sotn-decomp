@@ -107,7 +107,7 @@ set(SOURCE_FILES_LIBSND_LLE
     src/main/psxsdk/libsnd/vs_vtb.c
     src/main/psxsdk/libsnd/vs_vtbp.c
     src/main/psxsdk/libsnd/vs_vtc.c
-    
+
     # libspu
     src/main/psxsdk/libspu/s_cb.c
     src/main/psxsdk/libspu/s_crwa.c
@@ -202,7 +202,7 @@ set(SOURCE_FILES_DRA
     src/dra/953A0.c
     src/dra/d_C910.c
     src/dra/d_CD80.c
-    src/dra/d_D094.c
+    src/dra/d_CF74.c
     src/dra/d_24CEC.c
     src/dra/d_2F324.c
     src/dra/d_3B0D4.c

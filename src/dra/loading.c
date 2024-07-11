@@ -1,4 +1,5 @@
 #include "dra.h"
+#include "sfx.h"
 
 RECT D_800A0240 = {0x0340, 0x0180, 64, 64};
 void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, s32 isDone) {
@@ -174,19 +175,19 @@ void HandleNowLoading(void) {
         break;
     case 1:
         if (g_pads[0].repeat & PAD_RIGHT) {
-            PlaySfx(0x688);
+            PlaySfx(SE_UI_DEBUG_SELECT);
             D_800987B4 += 1;
         }
         if (g_pads[0].repeat & PAD_DOWN) {
-            PlaySfx(0x688);
+            PlaySfx(SE_UI_DEBUG_SELECT);
             D_800987B4 += 8;
         }
         if (g_pads[0].repeat & PAD_LEFT) {
-            PlaySfx(0x688);
+            PlaySfx(SE_UI_DEBUG_SELECT);
             D_800987B4 -= 1;
         }
         if (g_pads[0].repeat & PAD_UP) {
-            PlaySfx(0x688);
+            PlaySfx(SE_UI_DEBUG_SELECT);
             D_800987B4 -= 8;
         }
         if (D_800987B4 >= 0x3F) {
@@ -214,7 +215,7 @@ void HandleNowLoading(void) {
         if (!(g_pads[0].tapped & PAD_START)) {
             break;
         }
-        PlaySfx(0x63D);
+        PlaySfx(SE_UI_START);
         if (g_StageId == STAGE_MEMORYCARD) {
             SetGameState(Game_MainMenu);
         } else if (g_StageId == STAGE_ENDING) {
