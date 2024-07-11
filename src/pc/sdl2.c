@@ -27,13 +27,13 @@ DebugSdl g_DebugSdl = DEBUG_SDL_NONE;
 static SDL_Texture* g_VramTex = NULL;
 static int g_LastVramTexTpage = -1;
 static int g_LastVramTexClut = -1;
-static SDL_Joystick* joystick = NULL;
 
 void ResetPlatform(void);
 bool InitPlatform() {
     atexit(ResetPlatform);
 
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK) < 0) {
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_GAMECONTROLLER) <
+        0) {
         ERRORF("SDL_Init: %s", SDL_GetError());
         return false;
     }
@@ -117,86 +117,94 @@ void MySsInitHot(void) {
     SDL_PauseAudioDevice(g_SdlAudioDevice, 0);
 }
 
+typedef struct {
+    SDL_GameControllerButton sdlButton;
+    unsigned int psxButton;
+} ControllerButtonConfig;
+static ControllerButtonConfig controller_set[] = {
+    {SDL_CONTROLLER_BUTTON_A, PAD_CROSS},
+    {SDL_CONTROLLER_BUTTON_B, PAD_CIRCLE},
+    {SDL_CONTROLLER_BUTTON_X, PAD_SQUARE},
+    {SDL_CONTROLLER_BUTTON_Y, PAD_TRIANGLE},
+    {SDL_CONTROLLER_BUTTON_BACK, PAD_SELECT},
+    {SDL_CONTROLLER_BUTTON_START, PAD_START},
+    {SDL_CONTROLLER_BUTTON_LEFTSTICK, PAD_L3},
+    {SDL_CONTROLLER_BUTTON_RIGHTSTICK, PAD_R3},
+    {SDL_CONTROLLER_BUTTON_LEFTSHOULDER, PAD_L1},
+    {SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, PAD_L2},
+    {SDL_CONTROLLER_BUTTON_DPAD_UP, PAD_UP},
+    {SDL_CONTROLLER_BUTTON_DPAD_DOWN, PAD_DOWN},
+    {SDL_CONTROLLER_BUTTON_DPAD_LEFT, PAD_LEFT},
+    {SDL_CONTROLLER_BUTTON_DPAD_RIGHT, PAD_RIGHT},
+};
+const int AxisTreshold = SDL_JOYSTICK_AXIS_MAX / 2;
+static SDL_GameController* controllers[2] = {NULL, NULL};
 void MyPadInit(int mode) {
-    if (SDL_NumJoysticks() > 0) {
-        joystick = SDL_JoystickOpen(0);
+    int num = SDL_NumJoysticks();
+    if (num > 0) {
+        controllers[0] = SDL_GameControllerOpen(0);
+        if (num > 1) {
+            controllers[1] = SDL_GameControllerOpen(1);
+        }
     }
 }
 
 u_long MyPadRead(int id) {
-    const u8* keyb = SDL_GetKeyboardState(NULL);
     u_long pressed = 0;
+    if (controllers[id]) {
+        SDL_GameController* controller = &controllers[id];
+        SDL_GameControllerUpdate();
+        for (int i = 0; i < LEN(controller_set); i++) {
+            if (SDL_GameControllerGetButton(
+                    controller, controller_set[i].sdlButton)) {
+                pressed |= controller_set[i].psxButton;
+            }
+        }
 
-    switch (id) {
-    case 0:
+        if (SDL_GameControllerGetAxis(
+                controller, SDL_CONTROLLER_AXIS_TRIGGERLEFT) > AxisTreshold) {
+            pressed |= PAD_L2;
+        }
+        if (SDL_GameControllerGetAxis(
+                controller, SDL_CONTROLLER_AXIS_TRIGGERRIGHT) > AxisTreshold) {
+            pressed |= PAD_R2;
+        }
+
+        short x =
+            SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTX);
+        short y =
+            SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTY);
+        if (y < -AxisTreshold) {
+            pressed |= PAD_UP;
+        } else if (y > AxisTreshold) {
+            pressed |= PAD_DOWN;
+        }
+        if (x < -AxisTreshold) {
+            pressed |= PAD_LEFT;
+        } else if (x > AxisTreshold) {
+            pressed |= PAD_RIGHT;
+        }
+    }
+
+    if (id == 0) { // the keyboard is only bounded to the first controller
+        const u8* keyb = SDL_GetKeyboardState(NULL);
         if (keyb[SDL_SCANCODE_ESCAPE]) {
             g_IsQuitRequested = 1;
         }
-        if (keyb[SDL_SCANCODE_UP]) {
-            pressed |= PAD_UP;
-        }
-        if (keyb[SDL_SCANCODE_DOWN]) {
-            pressed |= PAD_DOWN;
-        }
-        if (keyb[SDL_SCANCODE_LEFT]) {
-            pressed |= PAD_LEFT;
-        }
-        if (keyb[SDL_SCANCODE_RIGHT]) {
-            pressed |= PAD_RIGHT;
-        }
-        if (keyb[SDL_SCANCODE_X]) {
-            pressed |= PAD_CROSS;
-        }
-        if (keyb[SDL_SCANCODE_S]) {
-            pressed |= PAD_TRIANGLE;
-        }
-        if (keyb[SDL_SCANCODE_Z]) {
-            pressed |= PAD_SQUARE;
-        }
-        if (keyb[SDL_SCANCODE_D]) {
-            pressed |= PAD_CIRCLE;
-        }
-        if (keyb[SDL_SCANCODE_BACKSPACE]) {
-            pressed |= PAD_SELECT;
-        }
-        if (keyb[SDL_SCANCODE_RETURN]) {
-            pressed |= PAD_START;
-        }
-        if (keyb[SDL_SCANCODE_Q]) {
-            pressed |= PAD_L1;
-        }
-        if (keyb[SDL_SCANCODE_R]) {
-            pressed |= PAD_R1;
-        }
-
-        if (joystick) {
-            SDL_JoystickUpdate();
-            pressed |= SDL_JoystickGetButton(joystick, 0) ? PAD_CROSS : 0;
-            pressed |= SDL_JoystickGetButton(joystick, 1) ? PAD_CIRCLE : 0;
-            pressed |= SDL_JoystickGetButton(joystick, 2) ? PAD_TRIANGLE : 0;
-            pressed |= SDL_JoystickGetButton(joystick, 3) ? PAD_SQUARE : 0;
-            pressed |= SDL_JoystickGetButton(joystick, 4) ? PAD_L1 : 0;
-            pressed |= SDL_JoystickGetButton(joystick, 5) ? PAD_R1 : 0;
-            pressed |= SDL_JoystickGetButton(joystick, 6) ? PAD_L2 : 0;
-            pressed |= SDL_JoystickGetButton(joystick, 7) ? PAD_R2 : 0;
-            pressed |= SDL_JoystickGetButton(joystick, 8) ? PAD_SELECT : 0;
-            pressed |= SDL_JoystickGetButton(joystick, 9) ? PAD_START : 0;
-
-            short x = SDL_JoystickGetAxis(joystick, SDL_CONTROLLER_AXIS_LEFTX);
-            short y = SDL_JoystickGetAxis(joystick, SDL_CONTROLLER_AXIS_LEFTY);
-            if (y < -SDL_JOYSTICK_AXIS_MAX / 2) {
-                pressed |= PAD_UP;
-            }
-            if (y > SDL_JOYSTICK_AXIS_MAX / 2) {
-                pressed |= PAD_DOWN;
-            }
-            if (x < -SDL_JOYSTICK_AXIS_MAX / 2) {
-                pressed |= PAD_LEFT;
-            }
-            if (x > SDL_JOYSTICK_AXIS_MAX / 2) {
-                pressed |= PAD_RIGHT;
-            }
-        }
+        pressed |= keyb[SDL_SCANCODE_UP] ? PAD_UP : 0;
+        pressed |= keyb[SDL_SCANCODE_DOWN] ? PAD_DOWN : 0;
+        pressed |= keyb[SDL_SCANCODE_LEFT] ? PAD_LEFT : 0;
+        pressed |= keyb[SDL_SCANCODE_RIGHT] ? PAD_RIGHT : 0;
+        pressed |= keyb[SDL_SCANCODE_X] ? PAD_CROSS : 0;
+        pressed |= keyb[SDL_SCANCODE_S] ? PAD_TRIANGLE : 0;
+        pressed |= keyb[SDL_SCANCODE_Z] ? PAD_SQUARE : 0;
+        pressed |= keyb[SDL_SCANCODE_D] ? PAD_CIRCLE : 0;
+        pressed |= keyb[SDL_SCANCODE_BACKSPACE] ? PAD_SELECT : 0;
+        pressed |= keyb[SDL_SCANCODE_RETURN] ? PAD_START : 0;
+        pressed |= keyb[SDL_SCANCODE_Q] ? PAD_L1 : 0;
+        pressed |= keyb[SDL_SCANCODE_R] ? PAD_R1 : 0;
+        pressed |= keyb[SDL_SCANCODE_W] ? PAD_L2 : 0;
+        pressed |= keyb[SDL_SCANCODE_E] ? PAD_R2 : 0;
 
         g_DebugSdl = DEBUG_SDL_NONE;
         if (keyb[SDL_SCANCODE_F5]) {
@@ -208,7 +216,6 @@ u_long MyPadRead(int id) {
         if (keyb[SDL_SCANCODE_F7]) {
             g_DebugSdl = DEBUG_SDL_SHOW_VRAM_4bpp;
         }
-        break;
     }
 
     return pressed;
