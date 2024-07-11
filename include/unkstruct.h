@@ -1,3 +1,6 @@
+#ifndef UNKSTRUCT_H
+#define UNKSTRUCT_H
+
 /** Unkstruct section:
  * These are to be merged later on
  */
@@ -186,3 +189,5 @@ typedef struct {
     s32 unk0;
     s16 unk4;
 } unkstr_800cfe48; // for EntityAlucard
+
+#endif // UNKSTRUCT_H
