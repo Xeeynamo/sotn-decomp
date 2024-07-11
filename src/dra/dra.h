@@ -381,6 +381,7 @@ extern u32 D_800B0728[24];
 extern RECT D_800B0788;
 extern RECT D_800B0790;
 extern AnimationFrame D_800B0798[];
+extern AnimationFrame D_800B07C8[];
 extern s32 D_800B0830[];
 extern s32 D_800B083C[];
 extern u8 D_800B0844[];

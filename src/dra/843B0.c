@@ -1512,7 +1512,7 @@ void EntityHellfireBigFireball(Entity* entity) {
 
         entity->animSet = ANIMSET_DRA(9);
         entity->rotZ = 0;
-        entity->unk4C = &D_800B0798[12];
+        entity->unk4C = &D_800B07C8;
         entity->drawFlags |= FLAG_DRAW_ROTZ;
         entity->zPriority = PLAYER.zPriority + 2;
         entity->facingLeft = (PLAYER.facingLeft + 1) & 1;
