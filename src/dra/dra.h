@@ -344,7 +344,7 @@ extern u8 D_800AD5F0[10];
 extern AnimationFrame D_800AD5FC[];
 extern s32 D_800AD630[];
 extern s16 D_800AD670[42][10];
-extern s16 D_800AD9B8[23][5];
+extern s16 D_800AD9B8[24][5];
 extern AnimationFrame D_800ADBD4[];
 extern AnimationFrame D_800ADC10[];
 extern AnimationFrame D_800ADC44[];
