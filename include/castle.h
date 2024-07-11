@@ -1,6 +1,8 @@
 #ifndef CASTLE_H
 #define CASTLE_H
 
+#define CASTLE_MAP_PTR 0x801E0000
+
 // Holds flags that checks if certain switches are enabled to allow to have
 // shortcuts around the castle. One typical example is the wood column that
 // prevents the player to enter in the warp room. When g_CastleFlags[0x32] the

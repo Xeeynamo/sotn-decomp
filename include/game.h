@@ -27,6 +27,7 @@
 #include "primitive.h"
 #include "relic.h"
 #include "servant.h"
+#include "sotnstr.h"
 #include "spell.h"
 #include "sprite.h"
 #include "stage.h"
@@ -78,7 +79,6 @@ typedef struct {
 #define WEAPON0_PTR 0x8017A000
 #define WEAPON1_PTR 0x8017D000
 #define STAGE_PRG_PTR 0x80180000
-#define CASTLE_MAP_PTR 0x801E0000
 #define SIM_CHR0 0x80280000
 #define SIM_CHR1 0x80284000
 #define SIM_PTR 0x80280000
@@ -109,14 +109,6 @@ typedef struct {
 #define ELEMENT_ICE 0x2000
 #define ELEMENT_THUNDER 0x4000
 #define ELEMENT_FIRE 0x8000
-
-#ifndef SOTN_STR
-// Decorator to re-encode strings with tools/sotn_str/sotn_str.py when building
-// the game. Certain strings in SOTN do not follow the ASCII encoding and each
-// character is offseted by 0x20. This is only for strings that use the 8x8
-// font. e.g. _S("I am a Symphony of the Night encoded string")
-#define _S(x) (x)
-#endif
 
 #define FONT_W 8                 // small font size used for dialogues and menu
 #define FONT_H 8                 // small font size used for dialogues and menu
