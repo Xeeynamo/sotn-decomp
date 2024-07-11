@@ -1,5 +1,11 @@
 #include "dre.h"
 
+#include <castle.h>
+#include <common.h>
+#include <drawmode.h>
+#include <gapi.h>
+#include <game.h> // dialogue, demo, D_8003C704
+
 void func_80194774(void) {
     g_Dialogue.nextLineX = 2;
     g_Dialogue.nextCharX = 2;

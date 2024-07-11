@@ -1,4 +1,5 @@
 #include "stage.h"
+#include <game.h> // TODO placeholder
 
 #define OVL_EXPORT(x) NO3_##x
 

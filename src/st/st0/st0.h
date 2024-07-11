@@ -1,4 +1,5 @@
 #include "stage.h"
+#include <game.h> // TODO: placeholder
 
 #undef STAGE
 #define STAGE STAGE_ST0

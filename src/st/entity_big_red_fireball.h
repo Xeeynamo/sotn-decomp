@@ -1,3 +1,8 @@
+#include <animset.h>
+#include <drawmode.h>
+#include <entity.h>
+#include <palette.h>
+
 // Not used in any current overlays. Seems to resemble Gaibon's big fireball,
 // but is not actually called in NZ0. Will need to check future overlays for
 // any actual uses.

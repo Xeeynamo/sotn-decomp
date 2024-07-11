@@ -1,5 +1,8 @@
 #include "dre.h"
 
+#include <castle.h>
+#include <entity.h>
+
 extern u16 D_80180660[];
 void EntityHeartDrop(Entity* self) {
     u16 temp_a0;

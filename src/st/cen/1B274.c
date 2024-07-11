@@ -1,4 +1,6 @@
 #include "cen.h"
+#include "animset.h"
+#include "palette.h"
 
 #include "../entity_soul_steal_orb.h"
 

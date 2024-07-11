@@ -1,3 +1,10 @@
+#include <animset.h>
+#include <drawmode.h>
+#include <entity.h>
+#include <gapi.h>
+#include <player.h>
+#include <relic.h>
+
 // The white flying orbs of energy that Alucard summons as part of the Soul
 // Steal spell
 void EntitySoulStealOrb(Entity* self) {

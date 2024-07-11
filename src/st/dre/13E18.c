@@ -1,5 +1,8 @@
 #include "dre.h"
 
+#include <entity.h>
+#include <gapi.h>
+
 extern s32 D_80180660;
 
 void EntityUnkId1C(Entity* self) {

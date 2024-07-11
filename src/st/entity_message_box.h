@@ -1,3 +1,7 @@
+#include <drawmode.h>
+#include <entity.h>
+#include <gapi.h>
+#include <graphics.h>
 
 // params: message box duration
 // ext.messageBox.label: box size and text to render

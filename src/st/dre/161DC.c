@@ -1,5 +1,11 @@
 #include "dre.h"
 
+#include <entity.h>
+#include <graphics.h>
+#include <player.h>
+#include <timer.h>
+#include <game.h> // demo mode
+
 void func_801961DC(s16 arg0) {
     s16 temp_v0 = arg0 - g_unkGraphicsStruct.unkC;
 

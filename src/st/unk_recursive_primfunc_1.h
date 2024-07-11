@@ -1,3 +1,5 @@
+#include <psxsdk/libgte.h>
+
 extern u16 g_UnkRecursPrimVecOrder[];
 
 // arg7 holds, in order:

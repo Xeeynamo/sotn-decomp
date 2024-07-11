@@ -1,4 +1,6 @@
 #ifndef HARD_LINK
+#include <entity.h>
+
 void DestroyEntitiesFromIndex(s16 index) {
     Entity* entity = &g_Entities[index];
 

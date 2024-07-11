@@ -1,4 +1,7 @@
 #include "cen.h"
+
+#include <castle.h>
+
 // Bizarre variable - u16 here, but u8 in EntityHolyGlassesCutscene
 extern u16 D_801805D8[];
 

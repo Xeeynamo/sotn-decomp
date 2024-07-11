@@ -1,5 +1,12 @@
 #include <stage.h>
 
+#include <castle.h>
+#include <collider.h>
+#include <drawmode.h>
+#include <player.h>
+#include <gapi.h>
+#include <timer.h>
+
 static u8 D_80180C94[] = {0x01, 0x0E, 0x00};
 static u8 D_80180C98[] = {
     0x02, 0x03, 0x06, 0x04, 0x05, 0x05, 0x05, 0x06, 0x04, 0x07, 0x03,

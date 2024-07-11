@@ -7,6 +7,15 @@
 
 #include "dre.h"
 
+#include <animset.h>
+#include <castle.h>
+#include <common.h>
+#include <demo.h>
+#include <gamepad.h>
+#include <gapi.h>
+#include <player.h>
+#include <timeattack.h>
+
 typedef enum {
     /* 0 */ SUCCUBUS_INIT,
     /* 1 */ SUCCUBUS_CS_1,

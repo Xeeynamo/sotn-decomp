@@ -1,4 +1,8 @@
 #include <stage.h>
+#include <animset.h>
+#include <palette.h>
+#include <entity.h>
+#include <game.h> // ELEMENT_*
 
 static u16 g_testCollEnemyLookup[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x002B, 0x0000, 0x0000,

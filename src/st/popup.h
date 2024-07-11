@@ -1,5 +1,10 @@
 #include <stage.h>
 
+#include <drawmode.h>
+#include <gapi.h>
+#include <graphics.h>
+#include <primitive.h>
+
 #if !defined(VERSION_PSP)
 void BottomCornerText(u8* str, u8 lower_left) {
     u8 toPrint[64];

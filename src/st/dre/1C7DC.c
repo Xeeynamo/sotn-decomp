@@ -1,5 +1,11 @@
 #include "dre.h"
 
+#include <castle.h>
+#include <collider.h>
+#include <drawmode.h>
+#include <entity.h>
+#include <gapi.h>
+
 void EntityEquipItemDrop(Entity* self) {
     u16 itemId = self->params & 0x7FFF;
     s32 primIndex;

@@ -1,3 +1,5 @@
+#include <entity.h>
+
 u8 AnimateEntity(u8 frames[], Entity* entity) {
     u16 flag;
     u16 currentFrameIndex;

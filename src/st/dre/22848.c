@@ -1,5 +1,11 @@
 #include "dre.h"
 
+#include <common.h>
+#include <drawmode.h>
+#include <gapi.h>
+#include <primitive.h>
+#include <psxsdk/libgte.h>
+
 extern SVECTOR* D_80181544[][3];
 extern u8 D_80181590[][5];
 extern u8 D_8018159C[][4];
