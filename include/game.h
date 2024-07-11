@@ -15,6 +15,7 @@
 #include "graphics.h"
 #include "familiar.h"
 #include "item.h"
+#include "items.h"
 #include "layer.h"
 #include "log.h"
 #include "memcard.h"
@@ -26,7 +27,10 @@
 #include "servant.h"
 #include "spell.h"
 #include "sprite.h"
+#include "stage.h"
+#include "stageoverlay.h"
 #include "timeattack.h"
+#include "timer.h"
 #include "ui.h"
 #include <psxsdk/kernel.h>
 
@@ -173,82 +177,6 @@ typedef enum {
     Game_99 = 99,
 } GameState;
 
-#define STAGE_INVERTEDCASTLE_MASK 0x1F
-#define STAGE_INVERTEDCASTLE_FLAG 0x20
-typedef enum {
-    STAGE_NO0 = 0x00,
-    STAGE_NO1 = 0x01,
-    STAGE_LIB = 0x02,
-    STAGE_CAT = 0x03,
-    STAGE_NO2 = 0x04,
-    STAGE_CHI = 0x05,
-    STAGE_DAI = 0x06,
-    STAGE_NP3 = 0x07,
-    STAGE_CEN = 0x08,
-    STAGE_NO4 = 0x09,
-    STAGE_ARE = 0x0A,
-    STAGE_TOP = 0x0B,
-    STAGE_NZ0 = 0x0C,
-    STAGE_NZ1 = 0x0D,
-    STAGE_WRP = 0x0E,
-    STAGE_NO1_ALT = 0x0F,
-    STAGE_NO0_ALT = 0x10,
-    STAGE_DRE = 0x12,
-    STAGE_NZ0_DEMO = 0x13,
-    STAGE_NZ1_DEMO = 0x14,
-    STAGE_LIB_DEMO = 0x15,
-    STAGE_BO7 = 0x16,
-    STAGE_MAR = 0x17,
-    STAGE_BO6 = 0x18,
-    STAGE_BO5 = 0x19,
-    STAGE_BO4 = 0x1A,
-    STAGE_BO3 = 0x1B,
-    STAGE_BO2 = 0x1C,
-    STAGE_BO1 = 0x1D,
-    STAGE_BO0 = 0x1E,
-    STAGE_ST0 = 0x1F,
-    STAGE_RNO0 = STAGE_NO0 | STAGE_INVERTEDCASTLE_FLAG,
-    STAGE_RNO1 = STAGE_NO1 | STAGE_INVERTEDCASTLE_FLAG,
-    STAGE_RLIB = STAGE_LIB | STAGE_INVERTEDCASTLE_FLAG,
-    STAGE_RCAT = STAGE_CAT | STAGE_INVERTEDCASTLE_FLAG,
-    STAGE_RNO2 = STAGE_NO2 | STAGE_INVERTEDCASTLE_FLAG,
-    STAGE_RCHI = STAGE_CHI | STAGE_INVERTEDCASTLE_FLAG,
-    STAGE_RDAI = STAGE_DAI | STAGE_INVERTEDCASTLE_FLAG,
-    STAGE_RNO3 = STAGE_NP3 | STAGE_INVERTEDCASTLE_FLAG,
-    STAGE_RCEN = STAGE_CEN | STAGE_INVERTEDCASTLE_FLAG,
-    STAGE_RNO4 = STAGE_NO4 | STAGE_INVERTEDCASTLE_FLAG,
-    STAGE_RARE = STAGE_ARE | STAGE_INVERTEDCASTLE_FLAG,
-    STAGE_RTOP = STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG,
-    STAGE_RNZ0 = STAGE_NZ0 | STAGE_INVERTEDCASTLE_FLAG,
-    STAGE_RNZ1 = STAGE_NZ1 | STAGE_INVERTEDCASTLE_FLAG,
-    STAGE_RWRP = STAGE_WRP | STAGE_INVERTEDCASTLE_FLAG,
-    STAGE_RNZ1_DEMO = 0x35,
-    STAGE_RBO8 = 0x36,
-    STAGE_RBO7 = 0x37,
-    STAGE_RBO6 = 0x38,
-    STAGE_RBO5 = 0x39,
-    STAGE_RBO4 = 0x3A,
-    STAGE_RBO3 = 0x3B,
-    STAGE_RBO2 = 0x3C,
-    STAGE_RBO1 = 0x3D,
-    STAGE_RBO0 = 0x3E,
-    STAGE_MAD = 0x40,
-    STAGE_NO3 = 0x41,
-    STAGE_IWA_LOAD = 0x42,
-    STAGE_IGA_LOAD = 0x43,
-    STAGE_HAGI_LOAD = 0x44,
-    STAGE_SEL = 0x45,
-    STAGE_TE1 = 0x46,
-    STAGE_TE2 = 0x47,
-    STAGE_TE3 = 0x48,
-    STAGE_TE4 = 0x49,
-    STAGE_TE5 = 0x4A,
-    STAGE_TOP_ALT = 0x4B,
-    STAGE_EU_WARNING = 0x70, // EU piracy legal message screen,
-    STAGE_ENDING = 0xFE,
-    STAGE_MEMORYCARD = 0xFF,
-} Stages;
-
 typedef enum {
     // Clean-up and reset all the gameplay related memory
     Play_Reset = 0,
@@ -358,26 +286,6 @@ typedef struct {
 } Lba; /* size=0x2C */
 
 typedef struct {
-    /* 0x0 */ u8 tileLayoutId;
-    /* 0x1 */ u8 tilesetId;
-    /* 0x2 */ u8 objGfxId;
-    /* 0x3 */ u8 objLayoutId;
-} RoomLoadDef; // size = 0x4
-
-// fake struct for D_801375BC
-typedef struct {
-    RoomLoadDef* def;
-} RoomLoadDefHolder;
-
-typedef struct {
-    /* 0x0 */ u8 left;
-    /* 0x1 */ u8 top;
-    /* 0x2 */ u8 right;
-    /* 0x3 */ u8 bottom;
-    /* 0x4 */ RoomLoadDef load;
-} RoomHeader; // size = 0x8
-
-typedef struct {
     /* 0x0 */ u16 x;
     /* 0x2 */ u16 y;
     /* 0x4 */ u16 roomId;
@@ -399,84 +307,6 @@ typedef struct {
     s8 hitboxWidth;
     s8 hitboxHeight;
 } FrameProperty;
-
-typedef struct {
-    /* 0x00 */ u16 animSet;
-    /* 0x02 */ u16 zPriority;
-    /* 0x04 */ Multi16 unk4;
-    /* 0x06 */ u16 palette;
-    /* 0x08 */ u16 drawFlags;
-    /* 0x0A */ u16 drawMode;
-    /* 0x0C */ u32 unkC;
-    /* 0x10 */ u8* unk10;
-} ObjInit2; // size = 0x14
-
-typedef struct {
-    /* 0x00 */ u32 left : 6;
-    /* 0x04 */ u32 top : 6;
-    /* 0x08 */ u32 right : 6;
-    /* 0x0C */ u32 bottom : 6;
-    /* 0x10 */ u8 params : 8;
-} LayoutRect; // size = 0x14
-
-typedef struct {
-    /* 0x00 */ u16* layout;
-    /* 0x04 */ TileDefinition* tileDef;
-    /* 0x08 */ LayoutRect rect;
-    /* 0x0C */ u16 zPriority;
-    /* 0x0E */ u16 flags;
-} LayerDef; // size = 0x10
-
-typedef struct {
-    LayerDef* fg;
-    LayerDef* bg;
-} RoomDef;
-
-/*
- * In the PSX version of the game, stage objects begin with this
- * header (or `AbbreviatedOverlay`) at 0x0. This describes the
- * primary interface for the game engine to interact with stages.
- */
-typedef struct {
-    /* 8003C774 */ void (*Update)(void);
-    /* 8003C778 */ void (*HitDetection)(void);
-    /* 8003C77C */ void (*UpdateRoomPosition)(void);
-    /* 8003C780 */ void (*InitRoomEntities)(s32 layoutId);
-    /* 8003C784 */ RoomHeader* rooms;
-    /* 8003C788 */ SpriteParts** spriteBanks;
-    /* 8003C78C */ u_long** cluts;
-    /* 8003C790 */ void* objLayoutHorizontal;
-    /* 8003C794 */ RoomDef* tileLayers;
-    /* 8003C798 */ GfxBank** gfxBanks;
-    /* 8003C79C */ void (*UpdateStageEntities)(void);
-    /* 8003C7A0 */ u8** unk2c; // sprite bank 1
-    /* 8003C7A4 */ u8** unk30; // sprite bank 2
-    /* 8003C7A8 */ s32* unk34;
-    /* 8003C7AC */ s32* unk38;
-    /* 8003C7B0 */ void (*StageEndCutScene)(void);
-} Overlay;
-
-/*
- * Several stages start their sprite bank array immeidately
- * after `UpdateStageEntities` instead of including the
- * trailing 5 pointers found in `Overlay`. `DRA` seems to
- * know which stages have valid data in those fields and
- * which don't.
- */
-typedef struct {
-    /* 8003C774 */ void (*Update)(void);
-    /* 8003C778 */ void (*HitDetection)(void);
-    /* 8003C77C */ void (*UpdateRoomPosition)(void);
-    /* 8003C780 */ void (*InitRoomEntities)(s32 layoutId);
-    /* 8003C784 */ RoomHeader* rooms;
-    /* 8003C788 */ SpriteParts** spriteBanks;
-    /* 8003C78C */ u_long** cluts;
-    /* 8003C790 */ void* objLayoutHorizontal;
-    /* 8003C794 */ RoomDef* tileLayers;
-    /* 8003C798 */ GfxBank** gfxBanks;
-    /* 8003C79C */ void (*UpdateStageEntities)(void);
-} AbbreviatedOverlay;
- /* size=0x24 */
 
 typedef struct XaMusicConfig {
     u32 cd_addr;
@@ -757,11 +587,8 @@ extern u32 D_8003C744;
 extern u32 g_RoomCount;
 extern GameApi g_api;
 extern s32 D_8003C8B8;
-extern u32 g_GameTimer; // Increases when unpaused
 extern Unkstruct_8003C908 D_8003C908;
 extern s32 D_8003C90C[2];
-extern u32 g_Timer; // Increases continuously
-extern s32 g_MapCursorTimer;
 extern const char aBaslus00067dra[19];
 extern s32 g_LoadFile;
 extern s32 D_8006BB00;
@@ -796,7 +623,6 @@ extern unkGraphicsStruct g_unkGraphicsStruct;
 extern s32 D_80097448[]; // underwater physics. 7448 and 744C. Could be struct.
 extern s32 D_80097450;
 extern Pos D_80097488;
-extern Stages g_StageId;
 extern s32 D_800974A4; // map open
 extern DR_ENV D_800974AC[16];
 extern s32 D_800978B4;

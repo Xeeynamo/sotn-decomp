@@ -1,3 +1,6 @@
+#ifndef ITEMS_H
+#define ITEMS_H
+
 typedef enum ItemSlots {
     LEFT_HAND_SLOT,
     RIGHT_HAND_SLOT,
@@ -275,3 +278,5 @@ typedef enum BodyItems {
     /* 0x59 */ ITEM_ALUCART_MAIL,
     /* 0x5A */ NUM_BODY_ITEMS,
 } BodyItems;
+
+#endif // ITEMS_H
