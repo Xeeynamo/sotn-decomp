@@ -47,6 +47,7 @@ extern s32* DMA6_MADR;           // 0x1F8010E0
 extern s32* DMA6_BCR;            // 0x1F8010E4
 extern volatile s32* DMA6_CHCR;  // 0x1F8010E8
 extern s32* DPCR;                // 0x1F8010F0
+extern s32 D_80037E20[12];
 extern DRAWENV D_80037E60;
 extern DISPENV D_80037EBC;
 extern s32 D_80039254;
@@ -59,6 +60,20 @@ u_long get_ce(short, short);
 u_long get_cs(short, short);
 u_long get_tw(RECT* tw);
 u_long get_ofs(short, short);
+
+#define CLAMP(value, low, high)                                                \
+    value < low ? low : (value > high ? high : value)
+
+// gpu commands
+#define CMD_CLEAR_CACHE 0x01000000
+#define CMD_FILL_RECTANGLE_IN_VRAM(color) ((color & 0xFFFFFF) | 0x02000000)
+#define CMD_MONOCHROME_RECTANGLE(color) ((color & 0xFFFFFF) | 0x60000000)
+#define CMD_COPY_VRAM_TO_CPU 0xC0000000
+#define CMD_COPY_CPU_TO_VRAM 0xA0000000
+
+// status reg bits
+#define STATUS_READY_TO_RECEIVE_CMD (1 << 26)
+#define STATUS_READY_TO_SEND_VRAM_TO_CPU (1 << 27)
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", ResetGraph);
 
@@ -350,11 +365,225 @@ s32 _otc(s32 arg0, s32 arg1) {
     return arg1;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _clr);
+// Clears Frame Buffer
+s32 _clr(RECT* arg0, s32 color) {
+    s16 var_v0;
+    s32 temp_a1;
+    u16 temp_v0;
+    u16 var_v1;
+    RECT temp;
+    u16 temp_h;
+    s32* ptr;
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _dws);
+    temp.x = arg0->x;
+    temp.y = arg0->y;
+    temp.w = arg0->w;
+    temp.h = arg0->h;
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _drs);
+    temp.w = CLAMP(temp.w, 0, 1023);
+
+    if (temp.h >= 0) {
+        if ((D_8002C26C != 0 && temp.h >= 1024) ||
+            (D_8002C26C == 0 && temp.h >= 512)) {
+            if (D_8002C26C != 0) {
+                temp_h = 1023;
+            } else {
+                temp_h = 511;
+            }
+        } else {
+            temp_h = temp.h;
+        }
+    } else {
+        temp_h = 0;
+    }
+
+    temp.h = temp_h;
+    if ((temp.x & 0x3F) || (temp.w & 0x3F)) {
+        ptr = &D_80037E20[8];
+        D_80037E20[0] = ((s32)ptr & 0xFFFFFF) | 0x07000000; // set up otag
+        D_80037E20[1] = 0xE3000000; // set drawing area top left
+        D_80037E20[2] = 0xE4FFFFFF; // set drawing area bottom right
+        D_80037E20[3] = 0xE5000000; // set drawing offset
+        D_80037E20[4] = 0xE6000000;
+
+        D_80037E20[5] = CMD_MONOCHROME_RECTANGLE(color);
+        D_80037E20[6] = (s32) * (u32*)&temp.x;
+        D_80037E20[7] = (s32) * (u32*)&temp.w;
+        *ptr = 0x03FFFFFF;
+        D_80037E20[9] = _param(3) | 0xE3000000; // set drawing area top left
+        D_80037E20[10] =
+            _param(4) | 0xE4000000; // set drawing area bottom right
+        D_80037E20[11] = _param(5) | 0xE5000000; // set drawing offset
+    } else {
+        D_80037E20[0] = 0x04FFFFFF;
+        D_80037E20[1] = 0xE6000000; // mask bit setting
+
+        D_80037E20[2] = CMD_FILL_RECTANGLE_IN_VRAM(color);
+        D_80037E20[3] = (s32) * (u32*)&temp.x;
+        D_80037E20[4] = (s32) * (u32*)&temp.w;
+    }
+    _cwc(&D_80037E20[0]);
+    return 0;
+}
+
+// LoadImage
+s32 _dws(RECT* arg0, s32* arg1) {
+    RECT temp;
+    s32 temp_a0;
+    s32 size;
+    s32 var_s0;
+    s32* img_ptr;
+    s16 temp_h;
+    s32 var_s4;
+
+    img_ptr = arg1;
+    set_alarm();
+    temp.x = arg0->x;
+    temp.y = arg0->y;
+    temp.w = arg0->w;
+    temp.h = arg0->h;
+    var_s4 = 0;
+
+    temp.w = CLAMP(temp.w, 0, 1023);
+
+    if (temp.h >= 0) {
+        if ((D_8002C26C != 0 && temp.h >= 1024) ||
+            (D_8002C26C == 0 && temp.h >= 512)) {
+            if (D_8002C26C != 0) {
+                temp_h = 1023;
+            } else {
+                temp_h = 511;
+            }
+        } else {
+            temp_h = temp.h;
+        }
+    } else {
+        temp_h = 0;
+    }
+    temp.h = temp_h;
+    temp_a0 = ((temp.w * temp.h) + 1) / 2;
+    if (temp_a0 <= 0) {
+        return -1;
+    }
+    var_s0 = temp_a0 % 16;
+    size = temp_a0 / 16;
+    if (!(*GPU_STATUS & STATUS_READY_TO_RECEIVE_CMD)) {
+        while (1) {
+            if (get_alarm()) {
+                return -1;
+            } else if (*GPU_STATUS & STATUS_READY_TO_RECEIVE_CMD) {
+                break;
+            }
+        }
+    }
+
+    *GPU_STATUS = STATUS_READY_TO_RECEIVE_CMD;
+
+    *GPU_DATA = CMD_CLEAR_CACHE;
+
+    *GPU_DATA = var_s4 ? 0xB0000000 : CMD_COPY_CPU_TO_VRAM;
+    *GPU_DATA = *(s32*)&temp.x;
+    *GPU_DATA = *(s32*)&temp.w;
+
+    for (var_s0 = var_s0 - 1; var_s0 != -1; var_s0--) {
+        *GPU_DATA = *img_ptr++;
+    }
+
+    if (size != 0) {
+        *GPU_STATUS = 0x04000002;
+        *DMA2_MADR = img_ptr;
+        *DMA2_BCR = (size << 0x10) | 0x10;
+        *DMA2_CHCR = 0x01000201;
+    }
+
+    return 0;
+}
+
+// StoreImage
+// Transfers image data from the frame buffer to main memory.
+s32 _drs(RECT* arg0, s32* arg1) {
+    RECT temp;
+    s32 temp_a0;
+    s32 size;
+    s32 var_s0;
+    s32* img_ptr;
+    s16 var_a0;
+    s32 var_s4;
+
+    img_ptr = arg1;
+    set_alarm();
+    temp.x = arg0->x;
+    temp.y = arg0->y;
+    temp.w = arg0->w;
+    temp.h = arg0->h;
+    var_s4 = 0;
+
+    temp.w = CLAMP(temp.w, 0, 1023);
+
+    if (temp.h >= 0) {
+        if ((D_8002C26C != 0 && temp.h >= 1024) ||
+            (D_8002C26C == 0 && temp.h >= 512)) {
+            if (D_8002C26C != 0) {
+                var_a0 = 1023;
+            } else {
+                var_a0 = 511;
+            }
+        } else {
+            var_a0 = temp.h;
+        }
+    } else {
+        var_a0 = 0;
+    }
+    temp.h = var_a0;
+    temp_a0 = ((temp.w * temp.h) + 1) / 2;
+    if (temp_a0 <= 0) {
+        return -1;
+    }
+    var_s0 = temp_a0 % 16;
+    size = temp_a0 / 16;
+    if (!(*GPU_STATUS & STATUS_READY_TO_RECEIVE_CMD)) {
+        while (1) {
+            if (get_alarm()) {
+                return -1;
+            } else {
+                if (*GPU_STATUS & STATUS_READY_TO_RECEIVE_CMD) {
+                    break;
+                }
+            }
+        }
+    }
+
+    *GPU_STATUS = STATUS_READY_TO_RECEIVE_CMD;
+
+    *GPU_DATA = CMD_CLEAR_CACHE;
+
+    *GPU_DATA = CMD_COPY_VRAM_TO_CPU;
+    *GPU_DATA = *(s32*)&temp.x;
+    *GPU_DATA = *(s32*)&temp.w;
+
+    if (!(*GPU_STATUS & STATUS_READY_TO_SEND_VRAM_TO_CPU)) {
+        while (1) {
+            if (get_alarm()) {
+                return -1;
+            } else if (*GPU_STATUS & STATUS_READY_TO_SEND_VRAM_TO_CPU) {
+                break;
+            }
+        }
+    }
+
+    for (var_s0 = var_s0 - 1; var_s0 != -1; var_s0--) {
+        *img_ptr++ = *GPU_DATA;
+    }
+
+    if (size != 0) {
+        *GPU_STATUS = 0x04000003;
+        *DMA2_MADR = img_ptr;
+        *DMA2_BCR = (size << 0x10) | 0x10;
+        *DMA2_CHCR = 0x01000200;
+    }
+
+    return 0;
+}
 
 extern s32 ctlbuf[];
 
