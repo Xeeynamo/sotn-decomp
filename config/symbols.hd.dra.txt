@@ -157,7 +157,6 @@ RenderEntities = 0x800EC264;
 AllocPrimitives = 0x800EE304;
 CheckCollision = 0x800EFAE0;
 func_80103EAC = 0x80103CF4;
-func_801042C4 = 0x8010410C;
 DestroyEntity = 0x801063CC;
 func_80106A28 = 0x80106864;
 SetPlayerStep = 0x8010D2C8;
