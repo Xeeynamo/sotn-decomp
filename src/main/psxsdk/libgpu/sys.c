@@ -431,7 +431,6 @@ s32 _dws(RECT* arg0, s32* arg1) {
     RECT temp;
     s32 temp_a0;
     s32 size;
-    s32 temp_v0;
     s32 var_s0;
     s32* img_ptr;
     s16 temp_h;
@@ -462,15 +461,12 @@ s32 _dws(RECT* arg0, s32* arg1) {
         temp_h = 0;
     }
     temp.h = temp_h;
-    temp_a0 = ((temp.w * temp_h) + 1) / 2;
-    var_s0 = temp_a0 >> 4;
+    temp_a0 = ((temp.w * temp.h) + 1) / 2;
     if (temp_a0 <= 0) {
         return -1;
     }
-
-    temp_v0 = var_s0;
-    var_s0 = temp_a0 - (var_s0 * 16);
-    size = temp_v0;
+    var_s0 = temp_a0 % 16;
+    size = temp_a0 / 16;
     if (!(*GPU_STATUS & STATUS_READY_TO_RECEIVE_CMD)) {
         while (1) {
             if (get_alarm()) {
@@ -509,7 +505,6 @@ s32 _drs(RECT* arg0, s32* arg1) {
     RECT temp;
     s32 temp_a0;
     s32 size;
-    s32 temp_v0;
     s32 var_s0;
     s32* img_ptr;
     s16 var_a0;
@@ -540,15 +535,12 @@ s32 _drs(RECT* arg0, s32* arg1) {
         var_a0 = 0;
     }
     temp.h = var_a0;
-    temp_a0 = ((temp.w * var_a0) + 1) / 2;
-    var_s0 = temp_a0 >> 4;
+    temp_a0 = ((temp.w * temp.h) + 1) / 2;
     if (temp_a0 <= 0) {
         return -1;
     }
-
-    temp_v0 = var_s0;
-    var_s0 = temp_a0 - (var_s0 * 16);
-    size = temp_v0;
+    var_s0 = temp_a0 % 16;
+    size = temp_a0 / 16;
     if (!(*GPU_STATUS & STATUS_READY_TO_RECEIVE_CMD)) {
         while (1) {
             if (get_alarm()) {
