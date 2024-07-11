@@ -630,12 +630,12 @@ s32 DMACallback(s32, s32);
 s32 SetIntrMask(s32);
 
 struct QueueItem {
-    volatile s32 unk0;
+    s32 unk0;
     s32 unk[0x4a / 4];
 };
 
-extern struct QueueItem D_80037F54[];
-extern s32 _qin;
+extern volatile struct QueueItem D_80037F54[];
+extern volatile s32 _qin;
 extern volatile s32 _qout;
 
 s32 _reset(s32 arg0) {
@@ -674,11 +674,36 @@ s32 _reset(s32 arg0) {
 INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _sync);
 
 void set_alarm(void) {
+    // schedule timeout for 240 vblanks from now
     D_80039254 = VSync(-1) + 240;
     D_80039258 = 0;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", get_alarm);
+s32 get_alarm(void) {
+    s32 temp_s0;
+    s32 var_v1;
+    if ((D_80039254 < VSync(-1)) || D_80039258++ > 0x780000) {
+        *GPU_STATUS;
+        printf("GPU timeout:que=%d,stat=%08x,chcr=%08x,madr=%08x\n",
+               (_qin - _qout) & 0x3F, *GPU_STATUS, *DMA2_CHCR, *DMA2_MADR);
+        temp_s0 = SetIntrMask(0);
+        DMACallback(2, 0);
+        _qout = 0;
+        _qin = _qout;
+        for (var_v1 = 0; var_v1 < 64; var_v1++) {
+            D_80037F54[var_v1].unk0 = 0;
+        }
+        *DMA2_CHCR = 0x401;
+        *DPCR |= 0x800;
+        *GPU_STATUS = 0x02000000;
+        *GPU_STATUS = 0x01000000;
+        *GPU_DATA = (*GPU_STATUS & 0x3FFF) | 0xE1001000;
+        SetIntrMask(temp_s0);
+        *GPU_STATUS;
+        return -1;
+    }
+    return 0;
+}
 
 void GPU_memset(s8* ptr, int value, s32 num) {
     s32 i;
