@@ -211,7 +211,7 @@ typedef struct Prim {
 #else
 #define DRA_PRG_PTR 0x800A0000
 #define RIC_PRG_PTR 0x8013C000
-#define SPRITESHEET_PTR 0x8013C020 // g_PlOvlSpritesheet
+#define SPRITESHEET_PTR g_PlOvlSpritesheet
 #define FAMILIAR_PTR 0x80170000
 #define WEAPON0_PTR 0x8017A000
 #define WEAPON1_PTR 0x8017D000
