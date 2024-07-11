@@ -87,6 +87,10 @@ extern Event g_EvHwCardErr;
 extern Event g_EvHwCardTmo;
 extern Event g_EvHwCardNew;
 
+#define SAVE_FLAG_NORMAL (0)
+#define SAVE_FLAG_CLEAR (1)
+#define SAVE_FLAG_REPLAY (2)
+
 #if defined(VERSION_US)
 #define MEMCARD_ID "BASLUS-00067DRAX00"
 #elif defined(VERSION_HD)

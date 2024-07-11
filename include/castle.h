@@ -9,5 +9,6 @@ extern u8 g_CastleFlags[0x300]; // starts at 0x8003BDEC
 extern u8 D_8003BEEC[];         // g_CastleFlags[x + 0x100]
 extern u8 D_8003BF9C[];         // not sure if it is part of D_8003BEEC?
 
+extern u8 g_CastleMap[0x800];
 
 #endif // CASTLE_H
