@@ -5,6 +5,7 @@
 #include <drawmode.h>
 #include <player.h>
 #include <gapi.h>
+#include <sotnstr.h>
 #include <timer.h>
 
 static u8 D_80180C94[] = {0x01, 0x0E, 0x00};
