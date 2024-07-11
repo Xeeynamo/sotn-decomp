@@ -259,7 +259,7 @@
 <g id="node17" class="node">
 <title>dra.EntityBatEcho</title>
 <g id="a_node17"><a xlink:href="dra.EntityBatEcho.svg" xlink:title="dra.EntityBatEcho">
-<ellipse fill="red" stroke="black" cx="3666.19" cy="-198" rx="96.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="3666.19" cy="-198" rx="96.68" ry="18"/>
 <text text-anchor="middle" x="3666.19" y="-194.3" font-family="Times,serif" font-size="14.00">dra.EntityBatEcho</text>
 </a>
 </g>

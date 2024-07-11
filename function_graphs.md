@@ -378,7 +378,7 @@
 - [✅ EnableCdReverb](function_calls/dra.EnableCdReverb.svg?raw=1)
 - [✅ EntityAguneaHitEnemy](function_calls/dra.EntityAguneaHitEnemy.svg?raw=1)
 - [✅ EntityAlucard](function_calls/dra.EntityAlucard.svg?raw=1)
-- [❌ EntityBatEcho](function_calls/dra.EntityBatEcho.svg?raw=1)
+- [✅ EntityBatEcho](function_calls/dra.EntityBatEcho.svg?raw=1)
 - [✅ EntityBatFireball](function_calls/dra.EntityBatFireball.svg?raw=1)
 - [✅ EntityDiveKickAttack](function_calls/dra.EntityDiveKickAttack.svg?raw=1)
 - [✅ EntityEntFactory](function_calls/dra.EntityEntFactory.svg?raw=1)
