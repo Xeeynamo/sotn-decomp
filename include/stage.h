@@ -2,6 +2,7 @@
 #define STAGE_H
 #define STAGE 0xCC
 
+#include "common.h"
 #include "types.h"
 #include "items.h"
 #include "layer.h"

@@ -1,6 +1,7 @@
 #ifndef SERVANT_H
 #define SERVANT_H
 
+#include <common.h>
 #include <types.h>
 #include <entity.h>
 #include <familiar.h>
