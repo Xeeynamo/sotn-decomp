@@ -16,7 +16,6 @@ g_SfxData = 0x800BF554;
 D_800DBFFC = 0x800DBFFC; // ignore:true
 aStrY02x = 0x800E1A74;
 HandleGameOver = 0x800E5584;
-RenderEntities = 0x800EBBAC;
 AllocPrimitives = 0x800EDC80;
 RenderPrimitives = 0x800EDEDC;
 CheckCollision = 0x800EF45C;
