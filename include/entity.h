@@ -1226,6 +1226,16 @@ typedef struct {
     struct Primitive* prim3;
 } ET_BloodSplatter;
 
+typedef struct {
+    s32 pad7c;
+    s16 timer;
+    s16 pad82;
+    s32 pad84;
+    s32 pad88;
+    s32 pad8C;
+    s16 brightness;
+} ET_PlayerOutline;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1340,4 +1350,5 @@ typedef union { // offset=0x7C
     ET_80123B40 et_80123B40;
     ET_80129864 et_80129864;
     ET_801B28E4 et_801B28E4;
+    ET_PlayerOutline playerOutline;
 } Ext;

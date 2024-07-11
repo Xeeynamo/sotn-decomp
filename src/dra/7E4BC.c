@@ -130,17 +130,31 @@ s16 D_800AD670[42][10] = {
     {0, 0, 0, 351, 256, 256, 256, 28684, 49, 0},
 };
 
-s32 D_800AD9B8[] = {
-    0x00FF0000, 0x010300FF, 0x00FF0031, 0x001F007F, 0x00310103, 0x001F003F,
-    0x010300FF, 0x00000031, 0x001F003F, 0x00310103, 0x003F003F, 0x0103003F,
-    0x00FF0031, 0x003F003F, 0x00310103, 0x003F001F, 0x0103007F, 0x007F0031,
-    0x000F003F, 0x00310103, 0x007F00FF, 0x0103001F, 0x007F0031, 0x000F007F,
-    0x00310103, 0x000F000F, 0x0103007F, 0x003F0031, 0x003F003F, 0x00310103,
-    0x000F007F, 0x0103007F, 0x000F0031, 0x002F00FF, 0x00310103, 0x00FF002F,
-    0x0103002F, 0x005F0031, 0x005F000F, 0x00310103, 0x003F007F, 0x0103000F,
-    0x00FF0031, 0x000F000F, 0x00310103, 0x003F007F, 0x0103003F, 0x00000031,
-    0x00FF00FF, 0x00310103, 0x003F00FF, 0x0103003F, 0x00FF0031, 0x003F003F,
-    0x00310103, 0x007F007F, 0x0103007F, 0x00000031, 0x007F00FF, 0x00310103,
+s16 D_800AD9B8[23][5] = {
+    {0, 255, 255, 259, 49},   // Cyan, MP Refill
+    {255, 127, 31, 259, 49},  // Orange, curse attacking effect
+    {63, 31, 255, 259, 49},   // Light blue, Agunea
+    {0, 63, 31, 259, 49},     // Forest green, no known use
+    {63, 63, 63, 259, 49},    // Dark grey, no known use
+    {255, 63, 63, 259, 49},   // Coral, no known use
+    {31, 63, 127, 259, 49},   // Navy blue, no known use
+    {127, 63, 15, 259, 49},   // Brown, no known use
+    {255, 127, 31, 259, 49},  // Orange, same as entry 1, no known use
+    {127, 127, 15, 259, 49},  // Olive green, no known use
+    {15, 15, 127, 259, 49},   // Dark blue, no known use
+    {63, 63, 63, 259, 49},    // Dark grey, same as entry 4, no known use
+    {127, 15, 127, 259, 49},  // Plum, no known use
+    {15, 255, 47, 259, 49},   // Chartreuse, no known use
+    {47, 255, 47, 259, 49},   // Lime green, no known use
+    {95, 15, 95, 259, 49},    // Eggplant, no known use
+    {127, 63, 15, 259, 49},   // Brown, same as entry 7, no known use
+    {255, 15, 15, 259, 49},   // Red, Dark Metamorphosis
+    {127, 63, 63, 259, 49},   // Mahogany, no known use
+    {0, 255, 255, 259, 49},   // Cyan, same as entry 0, no known use
+    {255, 63, 63, 259, 49},   // Red, sword warp spell
+    {255, 63, 63, 259, 49},   // Red, sword warp spell
+    {127, 127, 127, 259, 49}, // Grey, soul steal
+    {0, 255, 127, 259, 49},   // Light green, Sword Brothers
 };
 
 // clang-format off

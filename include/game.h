@@ -297,6 +297,7 @@ extern u8 g_BmpCastleMap[0x20000];
 #define PLAYER_STATUS_POISON 0x00004000
 #define PLAYER_STATUS_CURSE 0x00008000
 #define PLAYER_STATUS_UNK10000 0x10000 // possibly freezing?
+#define PLAYER_STATUS_UNK40000 0x40000
 #define PLAYER_STATUS_UNK400000 0x400000
 #define PLAYER_STATUS_AXEARMOR 0x01000000
 #define PLAYER_STATUS_ABSORB_BLOOD 0x02000000
@@ -721,7 +722,7 @@ typedef struct Entity {
     /* 0x1C */ s16 rotY;
     /* 0x1E */ s16 rotZ;
     /* 0x20 */ s16 rotPivotX;
-    /* 0x22 */ s16 rotPivotY;
+    /* 0x22 */ u16 rotPivotY;
     /* 0x24 */ u16 zPriority;
     /* 0x26 */ u16 entityId;
     /* 0x28 */ PfnEntityUpdate pfnUpdate;
