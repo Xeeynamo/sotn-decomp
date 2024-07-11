@@ -206,7 +206,7 @@ static u16 D_169000_8017AEA4[] = {
     0x00, 0x60, 0xA0, 0x00, 0x40, 0x48, 0x40, 0x00,
 };
 
-static u16* g_Cluts[] = {
+static u16* g_WeaponCluts[] = {
     D_169000_8017A950,
     D_169000_8017A990,
     D_169000_8017A9D0,

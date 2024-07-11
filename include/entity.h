@@ -420,6 +420,16 @@ typedef struct {
 } ET_Bat;
 
 typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    struct Primitive* unk84;
+    s16 unk88;
+    s16 unk8A;
+} ET_BatEcho;
+
+typedef struct {
     /* 0x7C */ char pad_0[0xC];
     /* 0x88 */ u16 unk88;
     /* 0x8A */ char pad_8A[0x3];
@@ -1206,6 +1216,16 @@ typedef struct {
     s16 unk9C;
 } ET_PlayerBlink;
 
+typedef struct {
+    struct Primitive* prim;
+    s16 unk80;
+    s16 pad82;
+    s32 pad84;
+    s32 pad88;
+    struct Primitive* prim2;
+    struct Primitive* prim3;
+} ET_BloodSplatter;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1235,6 +1255,7 @@ typedef union { // offset=0x7C
     ET_EquipItemDrop equipItemDrop;
     ET_HeartDrop heartDrop;
     ET_BloodDroplets bloodDroplets;
+    ET_BloodSplatter bloodSplatter;
     ET_NumericDamage ndmg;
     ET_RelicOrb relicOrb;
     ET_Door door;
@@ -1253,6 +1274,7 @@ typedef union { // offset=0x7C
     ET_PlayerBlink playerBlink;
     ET_Mist mist;
     ET_Bat bat;
+    ET_BatEcho batEcho;
     ET_SoulStealOrb soulStealOrb;
     ET_GaibonSlogra GS_Props;
     ET_WarpRoom warpRoom;
