@@ -2038,7 +2038,7 @@ void MenuDraw(void) {
         if (b1 >= 0x100) {
             b1 = 0xFF;
         }
-        if (g_StageId >= 0x20 && g_StageId < 0x40) {
+        if (g_StageId >= STAGE_RNO0 && g_StageId < STAGE_MAD) {
             swap = r0;
             r0 = r1;
             r1 = swap;
