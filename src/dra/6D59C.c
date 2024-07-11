@@ -4,6 +4,7 @@
 
 u8 g_D_800ACF18[] = {10, 8, 8, 6, 6, 4, 4,   4,   4, 4,
                      4,  4, 4, 4, 4, 4, 255, 255, 0, 0};
+
 // Same function in RIC is func_8015C4AC
 void func_8010D59C(void) {
     byte stackpad[40];
@@ -70,6 +71,7 @@ u8 g_shadowOpacityReductionTable[] = {
     4, 4, 4, 4, 6, 6, 6, 6, 8, 8, 16, 16, 16, 16, 16, 16};
 u8 g_D_800ACF3C[] = {8,  12, 16, 20, 24, 28, 32, 32,
                      32, 32, 32, 32, 32, 32, 32, 32};
+
 // Equivalent in RIC is func_8015C6D4
 void func_8010D800(void) {
     byte pad[0x28];
@@ -482,6 +484,8 @@ void func_8010E42C(u16 arg0) {
     }
 }
 
+u8 D_800ACF4C[] = {0x00, 0x11, 0x04, 0x15, 0x01, 0x10, 0x03, 0x23};
+
 void func_8010E470(s32 arg0, s32 arg1) {
     PLAYER.velocityX = arg1;
     PLAYER.velocityY = 0;
@@ -509,6 +513,10 @@ void func_8010E4D0(void) {
     func_80111CC0();
     func_8010E470(0, 0);
 }
+
+u8 D_800ACF54[] = {
+    0x04, 0x05, 0x0A, 0x0B, 0x0E, 0x0F, 0x1D, 0x1E, 0x04, 0x03, 0x00, 0x00,
+};
 
 // Corresponding RIC function is func_8015CD98 (much simpler)
 void func_8010E570(s32 arg0) {
@@ -669,6 +677,9 @@ void DoGravityJump(void) {
     SetPlayerAnim(0x21);
     g_Player.unk4A = 0;
 }
+
+s16 D_800ACF60[] = {SFX_UNK_6EE,       SFX_UNK_6EF, SFX_UNK_6F0,
+                    NA_SE_VO_AL_PUNCH, 0x0000,      0x0000};
 
 void func_8010EA54(s32 arg0) {
     s16 temp_hi;
@@ -1012,7 +1023,7 @@ block_45:
                 g_Player.unk46 = 0x8012;
                 g_Player.unk54 = 0xFF;
                 PLAYER.step_s = 0x51;
-                PlaySfx(0x6E7);
+                PlaySfx(SFX_UNK_6E7);
                 return 1;
             }
         }
@@ -1034,45 +1045,45 @@ block_45:
         D_80139824 = 0x28;
         PLAYER.step = 0;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(0x6EF);
+        PlaySfx(SFX_UNK_6EF);
         goto block_98;
     case 20: // Unknown, not a direct equippable item
         PLAYER.step = 0;
         D_80139824 = 0x28;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(0x6EF);
+        PlaySfx(SFX_UNK_6EF);
         goto block_98;
     case 21: // Unknown, not a direct equippable item
         PLAYER.step = 0;
         D_80139824 = 0x28;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(0x6EF);
+        PlaySfx(SFX_UNK_6EF);
         goto block_98;
     case 22: // Unknown, not a direct equippable item (but there are 4 of them)
         PLAYER.step = 0;
         D_80139824 = 0x28;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(0x6EF);
+        PlaySfx(SFX_UNK_6EF);
         goto block_98;
     case 28: // Unknown, not a direct equippable item
         PLAYER.step = 0;
         D_80139824 = 0xA;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(0x6EF);
+        PlaySfx(SFX_UNK_6EF);
         goto block_98;
     case 23: // Unknown, not a direct equippable item (but there are 4 of them)
         PLAYER.step = 0;
         CheckMoveDirection();
         SetSpeedX(FIX(5));
         g_CurrentEntity->velocityY = 0;
-        PlaySfx(0x6EF);
+        PlaySfx(SFX_UNK_6EF);
         goto block_98;
     case 27: // Estoc
         animVariant = atLedge;
         CheckMoveDirection();
         SetSpeedX(FIX(4));
         PLAYER.velocityX >>= 1;
-        PlaySfx(0x6EF);
+        PlaySfx(SFX_UNK_6EF);
         if (g_Player.pl_vram_flag & 1) {
             PLAYER.step = 0;
             g_CurrentEntity->velocityY = 0;
@@ -1094,14 +1105,14 @@ block_45:
         D_80139824 = 0x80;
         g_CurrentEntity->velocityY = 0;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(0x6EF);
+        PlaySfx(SFX_UNK_6EF);
         goto block_98;
     case 26: // Unknown, not a direct equippable item (but there are 2 of them)
         PLAYER.step = 0;
         D_80139824 = 0x28;
         g_CurrentEntity->velocityY = 0;
         g_CurrentEntity->velocityX = 0;
-        PlaySfx(0x6EF);
+        PlaySfx(SFX_UNK_6EF);
         goto block_98;
     case 0: // Most normal swords come in this range
     case 1:
@@ -1227,7 +1238,7 @@ block_45:
         }
         break;
     case 135: // Unknown
-        PlaySfx(0x6F0);
+        PlaySfx(SFX_UNK_6F0);
         g_Player.D_80072F00[9] = 4;
         func_8010ED54(equipped_item->playerAnim);
         break;
@@ -1370,13 +1381,13 @@ bool func_8010FDF8(s32 branchFlags) {
                     func_8010E570(0);
                     func_8010FAF4();
                 label:
-                    PlaySfx(0x64C, 0x30, 0);
+                    PlaySfx(SFX_UNK_64C, 0x30, 0);
                     return 1;
                 }
 
                 if (PLAYER.velocityY > 0x6E000) {
                     func_8010E470(1, 0);
-                    func_80134714(0x647);
+                    func_80134714(SFX_UNK_647);
                     CreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0, 0), 0);
                 } else {
@@ -1385,7 +1396,7 @@ bool func_8010FDF8(s32 branchFlags) {
                     } else {
                         func_8010E570(0);
                     }
-                    PlaySfx(0x64C, 0x30, 0);
+                    PlaySfx(SFX_UNK_64C, 0x30, 0);
                 }
 
                 func_8010FAF4();
@@ -1398,7 +1409,7 @@ bool func_8010FDF8(s32 branchFlags) {
                 } else {
                     func_8010E470(1, 0);
                 }
-                PlaySfx(0x647);
+                PlaySfx(SFX_UNK_647);
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
                 return 1;
             }
@@ -1409,18 +1420,18 @@ bool func_8010FDF8(s32 branchFlags) {
             }
 
             if (abs(PLAYER.velocityX) > 0x20000) {
-                PlaySfx(0x647);
+                PlaySfx(SFX_UNK_647);
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
                 func_8010E570(PLAYER.velocityX);
             } else {
-                PlaySfx(0x64C, 0x30, 0);
+                PlaySfx(SFX_UNK_64C, 0x30, 0);
                 func_8010E570(0);
             }
             return 1;
         }
         if (branchFlags & 0x20000 && g_Player.pl_vram_flag & 1) {
             func_8010E470(3, PLAYER.velocityX);
-            PlaySfx(0x647);
+            PlaySfx(SFX_UNK_647);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
             return 1;
         }
@@ -1469,6 +1480,8 @@ bool func_8010FDF8(s32 branchFlags) {
     }
     return 0;
 }
+
+s16 D_800ACF6C[] = {0, -8, -16, -22};
 
 s16 func_80110394(void) {
     // Variables that change during execution

@@ -323,17 +323,11 @@ extern Point16 D_800ACEE0[];
 #if defined(VERSION_HD)
 extern s32 D_800ACEDC_hd;
 #endif
-extern u8 D_800ACF4C[];
-extern u8 D_800ACF54[10];
-extern s16 D_800ACF60[]; // collection of sounds?
-extern s16 D_800ACF6C[];
 extern s32 D_800ACF74; // These two might...
 extern s32 D_800ACF78; // ...be an array
-
-extern s16 D_800ACF7C[2];
-
+extern s16 D_800ACF7C[4];
 extern s16 D_800ACF84[8]; // collection of sounds
-extern s16 D_800ACF94[];
+extern s16 D_800ACF94[16];
 extern u8 D_800AD094[0x30];
 extern u8 D_800ACFB4[][4]; // TODO AnimationFrames*[]
 extern s16* D_800CF324[];
@@ -381,12 +375,14 @@ extern u32 D_800B0728[24];
 extern RECT D_800B0788;
 extern RECT D_800B0790;
 extern AnimationFrame D_800B0798[];
-extern s32 D_800B07C8;
+extern AnimationFrame D_800B07C8[];
 extern s32 D_800B0830[];
 extern s32 D_800B083C[];
-extern u8 D_800B0846[];
+extern u8 D_800B0848[];
 extern u16 D_800B0858[];
 extern s16 D_800B0860[];
+extern s16 D_800B0884[];
+extern s16 D_800B08A8[];
 extern unk_800B08CC D_800B08CC[];
 extern s32 D_800B0914;
 extern s32 D_800B0918;
@@ -539,12 +535,13 @@ extern Unkstruct_80102CD8 D_801379AC;
 extern s32 D_801379B0;
 extern s32 D_801379B8;
 extern s32 D_801379BC;
+extern SVECTOR D_801379C0;
 extern SVECTOR D_801379C8;
 extern VECTOR D_801379D0;
-extern VECTOR D_801379E0;
-extern VECTOR D_80137B20;
-extern SVECTOR D_80137CA0;
-extern SVECTOR D_80137D40;
+extern VECTOR D_801379E0[20];
+extern VECTOR D_80137B20[24];
+extern SVECTOR D_80137CA0[20];
+extern SVECTOR D_80137D40[24];
 extern MATRIX D_80137E00;
 extern MATRIX D_80137E20;
 extern s32 D_80137E40;

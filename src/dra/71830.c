@@ -312,7 +312,7 @@ void func_801120B4(void) {
         break;
     case 0x4:
         if (PLAYER.ext.player.anim == 0xF2 && --D_800ACF78 == 0) {
-            if (g_StageId == 1) {
+            if (g_StageId == STAGE_NO1) {
                 PlaySfx(0x7AD);
             }
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 122), 0);

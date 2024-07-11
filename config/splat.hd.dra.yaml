@@ -97,7 +97,7 @@ segments:
       - [0xCE48, data]
       - [0xCEB8, .data, 692E8]
       - [0xCFDC, .data, 6D59C]
-      - [0xD010, data]
+      - [0xD038, data]
       - [0xD188, .data, 7A4D0] # D_800AD0C4
       - [0xD298, assets, factory_blueprint, g_FactoryBlueprints]
       - [0xD57C, .data, 7E4BC]

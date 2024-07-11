@@ -2038,7 +2038,7 @@ void MenuDraw(void) {
         if (b1 >= 0x100) {
             b1 = 0xFF;
         }
-        if (g_StageId >= 0x20 && g_StageId < 0x40) {
+        if (g_StageId >= STAGE_RNO0 && g_StageId < STAGE_MAD) {
             swap = r0;
             r0 = r1;
             r1 = swap;
@@ -3121,12 +3121,12 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
             if (func_800FB1EC(itemId) == false) {
                 g_EquipmentCursor = nav->cursorMain;
                 g_IsSelectingEquipment++;
-                PlaySfx(0x633);
+                PlaySfx(SE_UI_CONFIRM);
             } else {
-                PlaySfx(0x686);
+                PlaySfx(SE_UI_ERROR);
             }
         } else if (func_800FB1EC(itemId) != false) {
-            PlaySfx(0x686);
+            PlaySfx(SE_UI_ERROR);
         } else {
             goto block_36;
         }
@@ -3139,15 +3139,15 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
                         g_EquipmentCursor, nav->cursorMain, D_801375CC);
                     ret = 2;
                     g_IsSelectingEquipment = 0;
-                    PlaySfx(0x633);
+                    PlaySfx(SE_UI_CONFIRM);
                 } else {
-                    PlaySfx(0x686);
+                    PlaySfx(SE_UI_ERROR);
                 }
             } while (0);
         } else if (var_s6 != 0) {
-            PlaySfx(0x686);
+            PlaySfx(SE_UI_ERROR);
         } else {
-            PlaySfx(0x633);
+            PlaySfx(SE_UI_CONFIRM);
             if (count[itemId] > 0) {
                 var_s4 = 1;
                 *selected = itemId;

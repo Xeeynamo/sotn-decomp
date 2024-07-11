@@ -72,15 +72,15 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.unk88 = 0x80;
             self->ext.teleport.unk90 = 0xFF;
             self->step = 0x14;
-            PlaySfx(0x8BB);
+            PlaySfx(SFX_UNK_8BB);
         } else {
             self->ext.teleport.unk7C = 1;
             self->ext.teleport.unk90 = 0;
             self->ext.teleport.unk80 = 0x10;
             self->ext.teleport.unk88 = 0x80;
             self->step = 1;
-            PlaySfx(0x635);
-            PlaySfx(0x8BA);
+            PlaySfx(SFX_UNK_635);
+            PlaySfx(NA_SE_PL_TELEPORT);
         }
         break;
     case 1:
@@ -166,7 +166,7 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.unk84 = 4;
             self->step++;
             g_Player.unk1C = 1;
-            PlaySfx(0x636);
+            PlaySfx(NA_SE_PL_WARP);
             DestroyEntity(self);
             return;
         }
@@ -313,7 +313,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
         prim->g0 = 0x3F;
         prim->b0 = 0;
         SetSpeedX(FIX(8));
-        PlaySfx(0x60C);
+        PlaySfx(SFX_SUBWPN_THROW);
         g_Player.D_80072F00[10] = 4;
         self->step += 1;
         return;
@@ -348,7 +348,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
                 self->posX.i.hi += var_s5;
                 CreateEntFactoryFromEntity(self, 0xAU, 0);
                 self->posX.i.hi -= var_s5;
-                PlaySfx(0x6A4);
+                PlaySfx(REBOUND_STONE_BOUNCE);
                 self->step += 1;
                 return;
             }
@@ -536,7 +536,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
         func_8011A290(self);
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
-        PlaySfx(0x60C);
+        PlaySfx(SFX_SUBWPN_THROW);
         g_Player.D_80072F00[10] = 4;
         self->ext.axeCrash.unk98 = 0x7F;
         self->step++;
@@ -549,7 +549,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
         }
         self->ext.axeCrash.unk7C = var_a1 + self->ext.axeCrash.unk7C;
         if (!(self->ext.axeCrash.unk7C & 0x3FF)) {
-            func_80134714(0x60C, self->ext.axeCrash.unk98, 0);
+            func_80134714(SFX_SUBWPN_THROW, self->ext.axeCrash.unk98, 0);
             self->ext.axeCrash.unk98 -= 8;
             if (self->ext.axeCrash.unk98 < 0) {
                 self->ext.axeCrash.unk98 = 0;
@@ -793,7 +793,7 @@ void EntityHolyWater(Entity* entity) {
 
         temp2 = temp & 1;
         if (temp2 != 0) {
-            PlaySfx(0x69A);
+            PlaySfx(SFX_UNK_69A);
             CreateEntFactoryFromEntity(entity, FACTORY(0, 59), 0);
             entity->ext.generic.unk7C.s = 0x10;
             entity->animSet = ANIMSET_DRA(0);
@@ -1080,8 +1080,8 @@ void EntitySubwpnCrashCross(Entity* self) {
         prim->b3 = 0x80;
         prim->tpage = 0x11C;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
-        PlaySfx(0x6DF);
-        PlaySfx(0x636);
+        PlaySfx(SFX_UNK_6DF);
+        PlaySfx(NA_SE_PL_WARP);
         self->step += 1;
         g_Player.D_80072F00[12] = 4;
         break;
@@ -1117,7 +1117,7 @@ void EntitySubwpnCrashCross(Entity* self) {
                 right = 0xFF;
             }
             self->step += 1;
-            PlaySfx(0x62F);
+            PlaySfx(NA_SE_UNK_62F);
         }
         break;
     case 4:
@@ -1397,7 +1397,7 @@ void EntityHellfireNormalFireball(Entity* entity) {
     switch (entity->step) {
     case 0:
         if (entity->params == 0) {
-            PlaySfx(0x660);
+            PlaySfx(NA_SE_EN_DR_FIREBALL);
         }
         entity->flags = FLAG_UNK_100000 | FLAG_UNK_08000000;
         entity->animSet = ANIMSET_DRA(9);
@@ -1499,7 +1499,7 @@ void EntityHellfireBigFireball(Entity* entity) {
     switch (entity->step) {
     case 0:
         if (entity->params != 0) {
-            PlaySfx(0x683);
+            PlaySfx(SFX_UNK_683);
         }
 
         entity->flags = FLAG_UNK_100000 | FLAG_UNK_08000000;
@@ -2187,7 +2187,7 @@ void EntitySubwpnAgunea(Entity* self) {
             prim->g1 = 0;
             prim->b1 = 0x80;
             SetSpeedX(FIX(6));
-            PlaySfx(0x60C);
+            PlaySfx(SFX_SUBWPN_THROW);
             CreateEntFactoryFromEntity(self, FACTORY(0x5200, 44), 0);
             g_Player.D_80072F00[10] = 4;
             self->step++;
@@ -2241,7 +2241,7 @@ void EntitySubwpnAgunea(Entity* self) {
             self->posY.i.hi += ((rand() & 0xF) - 8);
             if (self->ext.et_80128C2C.unk84 == 0) {
                 CreateEntFactoryFromEntity(self, FACTORY(0, 23), 0);
-                PlaySfx(0x665);
+                PlaySfx(SFX_UNK_665);
                 CreateEntFactoryFromEntity(self, FACTORY(0x200, 61), 0);
                 self->ext.et_80128C2C.unk84++;
             } else {
@@ -2261,7 +2261,7 @@ void EntitySubwpnAgunea(Entity* self) {
                 if (g_Status.hearts >= heartCost) {
                     g_Status.hearts -= heartCost;
                     CreateEntFactoryFromEntity(self, FACTORY(0, 23), 0);
-                    PlaySfx(0x665);
+                    PlaySfx(SFX_UNK_665);
                     CreateEntFactoryFromEntity(self, FACTORY(0x200, 61), 0);
                 } else {
                     self->step = 4;
@@ -2681,8 +2681,8 @@ void func_80129864(Entity* self) {
             prim->drawMode |= DRAW_HIDE;
             break;
         case 1:
-            temp_u = D_800B0846[self->animCurFrame * 2];
-            temp_v = D_800B0846[self->animCurFrame * 2 + 1];
+            temp_u = D_800B0848[(self->animCurFrame - 1) * 2];
+            temp_v = D_800B0848[(self->animCurFrame - 1) * 2 + 1];
             prim->u0 = prim->u2 = temp_u;
             prim->u1 = prim->u3 = temp_u + 31;
             prim->v0 = prim->v1 = temp_v;
@@ -2816,7 +2816,7 @@ void EntitySummonSpirit(Entity* self) {
             }
             // Blueprint 44 is child 11. EntityPlayerBlinkWhite
             CreateEntFactoryFromEntity(self, FACTORY(0x6700, 44), 0);
-            PlaySfx(0x67D);
+            PlaySfx(NA_SE_PL_MP_GAUGE);
             self->step++;
         }
         break;
@@ -3035,7 +3035,7 @@ void EntitySubwpnBible(Entity* self) {
             self->flags &= ~FLAG_UNK_04000000;
             self->velocityX = self->facingLeft ? FIX(-12) : FIX(12);
             self->velocityY = FIX(-12);
-            PlaySfx(0x6B2);
+            PlaySfx(SFX_UNK_6B2);
             self->ext.et_BibleSubwpn.unk86++;
             self->step++;
         }
@@ -3105,7 +3105,177 @@ void EntitySubwpnBible(Entity* self) {
 }
 
 // echo of bat effect
-INCLUDE_ASM("dra/nonmatchings/843B0", EntityBatEcho);
+void EntityBatEcho(Entity* self) {
+#ifdef VERSION_PC
+    u8 sp[SP_LEN];
+#endif
+    Primitive* prim;
+    Primitive* temp;
+    Unkstruct_8012BEF8* unkstruct;
+    s32 i;
+    s16 temp_unk7E;
+    s32 var_s5;
+    s32 var_s6;
+    s32 temp_s7;
+    s32 posX, posY;
+
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    self->posY.i.hi = PLAYER.posY.i.hi;
+    if ((self->ext.batEcho.unk8A % 384) == 0) {
+        PlaySfx(NA_SE_PL_BT_ECHO);
+    }
+    self->ext.batEcho.unk8A += 1;
+    if (self->ext.batEcho.unk88) {
+        self->step = 3;
+    }
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_G4, 0x31);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_UNK_800000 | FLAG_UNK_40000;
+        prim = (Primitive*)&g_PrimBuf[self->primIndex];
+        self->ext.batEcho.unk84 = prim;
+        for (i = 0; i < 0x11; i++) {
+            prim->type = 1;
+            prim->drawMode = DRAW_HIDE;
+            prim->y2 = D_800B0884[i];
+            prim->x2 = (i * 3) + 1;
+            prim->y3 = D_800B08A8[i];
+            prim->x3 = (i << 0xA) & 0xFFF;
+            prim->x1 = (i << 7) & 0xFFF;
+            prim = prim->next;
+        }
+        for (i = 0; i < 0x20; i++) {
+            prim->drawMode = DRAW_UNK_200 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_COLORS | DRAW_TRANSP;
+            prim->priority = PLAYER.zPriority - 2;
+            prim = prim->next;
+        }
+        self->ext.batEcho.unk80 = 0xA0;
+        if (IsRelicActive(RELIC_FORCE_OF_ECHO)) {
+            self->ext.batEcho.unk80 = 0x100;
+            self->hitboxOffX = 0x40;
+            self->hitboxOffY = -4;
+            self->hitboxWidth = 0x28;
+            self->hitboxHeight = 0xC;
+            func_8011A328(self, 0xA);
+        }
+        self->step += 1;
+        break;
+    case 1:
+        self->ext.batEcho.unk7E += 0xA;
+        if (self->ext.batEcho.unk7E > self->ext.batEcho.unk80) {
+            self->ext.batEcho.unk7E = self->ext.batEcho.unk80;
+            self->hitboxState = 0;
+            self->step += 1;
+        }
+        break;
+    case 2:
+        self->ext.batEcho.unk7E -= 0xA;
+        if (self->ext.batEcho.unk7E < 0) {
+            self->ext.batEcho.unk7E = 0;
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    case 3:
+        prim = self->ext.batEcho.unk84;
+        while (prim != NULL) {
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+        if (!--self->ext.batEcho.unk88) {
+            DestroyEntity(self);
+        }
+        return;
+    }
+
+    prim = self->ext.batEcho.unk84;
+    posX = PLAYER.posX.i.hi;
+    posY = PLAYER.posY.i.hi;
+    unkstruct = (Unkstruct_8012BEF8*)SP(sizeof(Primitive));
+    for (i = 0; i < 0x11; i++, unkstruct++) {
+        prim->x3 += 0x100;
+        unkstruct->unk4 = prim->x3;
+        prim->x1 -= 0x40;
+        unkstruct->unk6 = prim->x1;
+        unkstruct->unk8 = prim->x2;
+        unkstruct->unkA = prim->y2;
+        unkstruct->unkC = prim->y3;
+        unkstruct->unk10 = rcos(unkstruct->unk6) >> 6;
+        unkstruct->unk14 = rcos(unkstruct->unk6 + 0x100) >> 6;
+        unkstruct->unk18 = rsin(unkstruct->unk4) >> 4;
+        prim = prim->next;
+    }
+
+    temp = (Primitive*)SP(0);
+    posX = PLAYER.posX.i.hi;
+    posY = PLAYER.posY.i.hi;
+    if (self->facingLeft) {
+        var_s5 = posX - 16;
+    } else {
+        var_s5 = posX + 16;
+    }
+
+    temp_s7 = (((rsin(PLAYER.rotZ) >> 4) * 0xA) >> 8) - 6;
+    temp_s7 = posY + temp_s7;
+    temp_unk7E = self->ext.batEcho.unk7E;
+    unkstruct = (Unkstruct_8012BEF8*)SP(sizeof(Primitive));
+
+    temp->x3 = temp->x1 = var_s5;
+    temp->y1 = temp_s7 + ((unkstruct->unk18 * unkstruct->unkA) >> 9);
+    temp->y3 = temp->y1 - unkstruct->unk8;
+
+    temp->r1 =
+        (unkstruct->unk10 + 0x41) * unkstruct->unkC * temp_unk7E / FIX(1);
+    temp->g1 =
+        (unkstruct->unk14 + 0x41) * unkstruct->unkC * temp_unk7E / FIX(1);
+    temp->b1 =
+        (-unkstruct->unk10 + 0x41) * unkstruct->unkC * temp_unk7E / FIX(1);
+
+    var_s6 = temp->y1 + unkstruct->unk8;
+    unkstruct++;
+    for (i = 0; i < 0x10; i++, unkstruct++) {
+        if (self->facingLeft) {
+            var_s5 -= 8;
+        } else {
+            var_s5 += 8;
+        }
+        *(s32*)&prim->x0 = *(s32*)&temp->x0 = *(s32*)&temp->x1;
+        *(s32*)&prim->x2 = *(s32*)&temp->x2 = *(s32*)&temp->x3;
+        prim->x3 = prim->x1 = temp->x3 = temp->x1 = var_s5;
+        prim->y1 = temp->y1 =
+            temp_s7 + ((unkstruct->unk18 * unkstruct->unkA) >> 9);
+        prim->y3 = temp->y3 = temp->y1 - unkstruct->unk8;
+
+        *(s32*)&prim->r0 = *(s32*)&temp->r0 = *(s32*)&temp->r1;
+
+        prim->r1 = temp->r1 =
+            (unkstruct->unk10 + 0x41) * unkstruct->unkC * temp_unk7E / FIX(1);
+        prim->g1 = temp->g1 =
+            (unkstruct->unk14 + 0x41) * unkstruct->unkC * temp_unk7E / FIX(1);
+        prim->b1 = temp->b1 =
+            (-unkstruct->unk10 + 0x41) * unkstruct->unkC * temp_unk7E / FIX(1);
+
+        prim->type = 3;
+        prim = prim->next;
+        *(s32*)&prim->x0 = *(s32*)&temp->x0;
+        *(s32*)&prim->x1 = *(s32*)&temp->x1;
+        *(s32*)&prim->x2 = *(s32*)&temp->x2;
+        *(s32*)&prim->x3 = *(s32*)&temp->x3;
+        *(s32*)&prim->r0 = *(s32*)&temp->r0;
+        *(s32*)&prim->r1 = *(s32*)&temp->r1;
+        prim->y2 = var_s6;
+        var_s6 = temp->y1 + unkstruct->unk8;
+        prim->y3 = var_s6;
+        prim->type = 3;
+        prim = prim->next;
+    }
+}
 
 void func_8012C600(void) {
     s32 x, y;
@@ -3454,7 +3624,7 @@ void func_8012D28C(bool exitEarly) {
     s32 i;
 
     func_80102CD8(2);
-    PlaySfx(0x644);
+    PlaySfx(NA_SE_EN_ROCK_BREAK);
     PLAYER.velocityX = 0;
     g_Player.D_80072EFC = 0x20;
     g_Player.padSim = 0;

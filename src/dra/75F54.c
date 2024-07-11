@@ -77,7 +77,7 @@ void func_80116208(void) {
             PLAYER.ext.player.anim = 0x37;
             g_Player.D_80072F00[2] = 8;
             g_Player.unk40 = 0x8166;
-            PlaySfx(0x6EB);
+            PlaySfx(SFX_UNK_6EB);
         }
         PLAYER.step_s = 1;
         PLAYER.velocityY = 0;
@@ -96,7 +96,7 @@ void func_80116208(void) {
             if (g_Player.unk62 == 0) {
                 g_Player.D_80072F00[2] = 4;
                 g_Player.unk40 = 0x8166;
-                PlaySfx(0x6E7);
+                PlaySfx(SFX_UNK_6E7);
             }
             if (g_Player.unk62 == 2) {
                 g_Player.D_80072F00[2] = 4;
@@ -111,7 +111,7 @@ void func_80116208(void) {
             g_Player.unk60 = 0;
             SetPlayerAnim(0x2E);
             g_Player.damageTaken = g_Player.unk64;
-            PlaySfx(0x6ED);
+            PlaySfx(SFX_UNK_6ED);
             return;
         }
         if (g_Player.unk60 == 0) {
@@ -646,7 +646,7 @@ void ControlBatForm(void) {
             g_Player.padTapped = PAD_R1;
             BatFormFinished();
             func_80102CD8(2);
-            PlaySfx(0x644);
+            PlaySfx(NA_SE_EN_ROCK_BREAK);
             PLAYER.velocityX = 0;
             g_Player.D_80072EFC = 0x20;
             g_Player.padSim = 0;
@@ -877,7 +877,7 @@ void func_80117AC0(void) {
     case 1:
         if (g_Player.padTapped & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT)) {
             SetPlayerAnim(0xC8);
-            PlaySfx(0x6EE);
+            PlaySfx(SFX_UNK_6EE);
             PLAYER.step_s = 0;
         } else if (g_Player.unk72 == 1) {
             PLAYER.animFrameIdx = 0;

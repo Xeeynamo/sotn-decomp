@@ -1187,7 +1187,7 @@ void func_800F298C(void) {
         D_80097910 = g_StagesLba[g_StageId].unk18;
         if (g_StageId == STAGE_NO3 && D_8003C730 == 0) {
 #if defined(VERSION_US)
-            D_80097910 = 0x32A;
+            D_80097910 = SE_INTRO_WIND;
 #elif defined(VERSION_HD)
             D_80097910 = 0x327;
 #endif

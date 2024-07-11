@@ -348,7 +348,7 @@ void func_801309B4(Entity* self) {
     self->posY.i.hi -= ((rsin(var_s0) >> 4) * var_s2) >> 8;
     if (PLAYER.step_s != 8 && PLAYER.step_s != 0 && D_80138444 != 0 &&
         self->animFrameDuration == -1) {
-        PlaySfx(0x6F7);
+        PlaySfx(SFX_UNK_6F7);
         self->animFrameDuration = 0;
         self->animFrameIdx = 0;
     }
@@ -655,7 +655,7 @@ void EntityGiantSpinningCross(Entity* self) {
         self->facingLeft = 0;
         self->ext.giantcross.unk7C = 0;
         self->ext.giantcross.unk7E = 0x400;
-        PlaySfx(0x661);
+        PlaySfx(SFX_UNK_661);
         self->step++;
         primUVCoords = &D_800B0F94[0][0];
         prim = &g_PrimBuf[self->primIndex];

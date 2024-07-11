@@ -101,14 +101,14 @@ segments:
       - [0xCD80, .data, d_CD80]
       - [0xCDF8, .data, 692E8]
       - [0xCF18, .data, 6D59C]
-      - [0xCF4C, data]
-      - [0xD014, .data, d_D094]
+      - [0xCF74, .data, d_CF74]
       - [0xD0C4, .data, 7A4D0]
       - [0xD1D4, assets, factory_blueprint, g_FactoryBlueprints]
       - [0xD4B8, .data, 7E4BC]
       - [0xDBD4, .data, d_DBD4]
       - [0xE294, .data, d_E294]
-      - [0x10798, data]
+      - [0x10798, .data, d_10798]
+      - [0x10924, data]
       - [0x10A3C, .data, 90264] # D_800B0A3C to D_800B0AEC
       - [0x10B34, data]
       - [0x1107C, raw, vh_0] # aPbav
