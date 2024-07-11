@@ -14,30 +14,6 @@ extern bool g_IsQuitRequested;
 
 ServantDesc D_80170000;
 
-void EntityWeaponAttack(Entity* self);
-s32 func_ptr_80170004(Entity* self);
-void func_ptr_80170008(Entity* self);
-void func_ptr_8017000C(Entity* self);
-s32 func_ptr_80170010(Entity* self);
-s32 func_ptr_80170014(Entity* self);
-int GetWeaponId(void);
-void LoadWeaponPalette(s32 clutIndex);
-void EntityWeaponShieldSpell(Entity* self);
-void func_ptr_80170024(Entity* self);
-void func_ptr_80170028(Entity* self);
-Weapon D_8017A000 = {
-    EntityWeaponAttack, func_ptr_80170004, func_ptr_80170008,
-    func_ptr_8017000C,  func_ptr_80170010, func_ptr_80170014,
-    GetWeaponId,        LoadWeaponPalette, EntityWeaponShieldSpell,
-    func_ptr_80170024,  func_ptr_80170028,
-};
-Weapon D_8017D000 = {
-    EntityWeaponAttack, func_ptr_80170004, func_ptr_80170008,
-    func_ptr_8017000C,  func_ptr_80170010, func_ptr_80170014,
-    GetWeaponId,        LoadWeaponPalette, EntityWeaponShieldSpell,
-    func_ptr_80170024,  func_ptr_80170028,
-};
-
 GfxBank* g_FakeGfxBank = NULL;
 GfxBank** g_GfxStageBank[0x40] = {
     &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank, &g_FakeGfxBank,
@@ -68,8 +44,6 @@ u8 D_800C27B0[MAX_SIZE_FOR_COMPRESSED_GFX];
 u8 D_800C3560[MAX_SIZE_FOR_COMPRESSED_GFX];
 u8 D_800C4864[MAX_SIZE_FOR_COMPRESSED_GFX];
 u8 D_800C4A90[MAX_SIZE_FOR_COMPRESSED_GFX];
-
-void WeaponLoadPaletteStub(s32 arg0) { NOT_IMPLEMENTED; }
 
 // list of exposed API
 void FreePrimitives(s32 index);
@@ -193,9 +167,6 @@ bool InitGame(void) {
     memset(&g_ApiInit.o, 0, sizeof(Overlay));
 
     memcpy(&g_ApiInit, &api, sizeof(g_ApiInit));
-
-    D_8017A000.LoadWeaponPalette = WeaponLoadPaletteStub;
-    D_8017D000.LoadWeaponPalette = WeaponLoadPaletteStub;
 
     InitStrings();
     InitAssets();

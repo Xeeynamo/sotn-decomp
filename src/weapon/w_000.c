@@ -3,6 +3,7 @@
 // Bekatowa, Damascus sword, Hunter sword, Bastard sword, Talwar, Sword of
 // Hador, Luminus, Harper, Gram, Mormegil, Terminus Est, Dark Blade,
 // Mourneblade, Badelaire, Unknown#169
+
 #include "weapon_private.h"
 #include "shared.h"
 
@@ -181,13 +182,13 @@ WeaponAnimation g_SoundEvents[] = {
     {g_Anim0, g_Hitboxes, 0, 0x60C, 0x41, 4},
 };
 
-u16* g_Cluts[] = {
+u16* g_WeaponCluts[] = {
     g_Clut1, g_Clut0, g_Clut2, g_Clut3, g_Clut4,
 };
 
 s32 g_HandId = HAND_ID;
 
-void EntityWeaponAttack(Entity* self) {
+void OVL_EXPORT(EntityWeaponAttack)(Entity* self) {
     WeaponAnimation* anim;
     s32 mask;
     s16 subType;
@@ -240,23 +241,23 @@ void EntityWeaponAttack(Entity* self) {
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
-s32 func_ptr_80170004(Entity* self) {}
+s32 OVL_EXPORT(func_ptr_80170004)(Entity* self) {}
 
-void func_ptr_80170008(Entity* self) {}
+void OVL_EXPORT(func_ptr_80170008)(Entity* self) {}
 
-void func_ptr_8017000C(Entity* self) {}
+void OVL_EXPORT(func_ptr_8017000C)(Entity* self) {}
 
-s32 func_ptr_80170010(Entity* self) {}
+s32 OVL_EXPORT(func_ptr_80170010)(Entity* self) {}
 
-s32 func_ptr_80170014(Entity* self) {}
+s32 OVL_EXPORT(func_ptr_80170014)(Entity* self) {}
 
-int GetWeaponId(void) { return 0; }
+int OVL_EXPORT(GetWeaponId)(void) { return 0; }
 
-void EntityWeaponShieldSpell(Entity* self) {}
+void OVL_EXPORT(EntityWeaponShieldSpell)(Entity* self) {}
 
-void func_ptr_80170024(Entity* self) {}
+void OVL_EXPORT(func_ptr_80170024)(Entity* self) {}
 
-void func_ptr_80170028(Entity* self) {}
+void OVL_EXPORT(func_ptr_80170028)(Entity* self) {}
 
 void WeaponUnused2C(void) {}
 
