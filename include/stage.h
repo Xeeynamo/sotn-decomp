@@ -78,27 +78,6 @@ void DestroyEntitiesFromIndex(s16 index);
 void MoveEntity();
 void FallEntity(void);
 Entity* AllocEntity(Entity* start, Entity* end);
-
-/*
- * `EntityInit` is used to define initialization options
- * for entities. This is treated as a `u16[]` by
- * `InitializeEntity` but is defined as a struct for
- * convenience and readability as well as providing the
- * correct layout and size for these entries.
- */
-typedef struct EntityInit {
-    u16 animSet;
-    u16 animCurFrame;
-    u16 unk5A;
-    u16 palette;
-    u16 enemyId;
-    u16 : 16;
-} EntityInit;
-
-/*
- * InitializeEntity takes a EntityInit but treats it as
- * a `u16[]`.
- */
 void InitializeEntity(u16 arg0[]);
 
 #endif

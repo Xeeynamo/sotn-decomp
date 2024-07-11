@@ -16,7 +16,7 @@ void func_8018F890(s16 arg0) {
 void func_8018F8EC(u16 index) {
     Tilemap* tilemap = &g_Tilemap;
     u16 tilePos = 0x5B6;
-    u16* tileLayoutPtr = &D_8018068C[index * 8];
+    u16* tileLayoutPtr = &D_8018068C[index * 4];
     s32 i;
     s32 j;
 
@@ -487,7 +487,7 @@ void EntityElevatorStationary(Entity* self) {
             break;
 
         case 2:
-            if (AnimateEntity(D_80180780, self) == 0) {
+            if (AnimateEntity(&D_80180780, self) == 0) {
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
                 g_Entities[1].ext.stub[0x00] = 0;
