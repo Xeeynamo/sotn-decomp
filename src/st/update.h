@@ -5,7 +5,6 @@
 #include <gapi.h>
 #include <timer.h>
 
-
 extern u16 UNK_Invincibility0[];
 
 void Update(void) {

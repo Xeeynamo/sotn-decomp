@@ -2,7 +2,6 @@
 #include <entity.h>
 #include <palette.h>
 
-
 extern s32 unk14_yVel[];
 extern u8 unk14_startFrame[];
 extern u16 unk14_lifetime[];
