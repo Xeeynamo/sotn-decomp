@@ -11,4 +11,8 @@ extern u8 D_8003BF9C[];         // not sure if it is part of D_8003BEEC?
 
 extern u8 g_CastleMap[0x800];
 
+#ifdef VERSION_PC
+extern u8 g_BmpCastleMap[0x20000];
+#endif
+
 #endif // CASTLE_H

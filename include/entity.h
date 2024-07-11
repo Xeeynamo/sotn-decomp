@@ -1466,9 +1466,7 @@ typedef enum {
 #define FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA 0x40000000
 #define FLAG_DESTROY_IF_OUT_OF_CAMERA 0x80000000
 
-
 #define STAGE_ENTITY_START 64
 #define MaxEntityCount 32
-
 
 #endif // ENTITY_H

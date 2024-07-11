@@ -7,6 +7,7 @@
 #include "castle.h"
 #include "clut.h"
 #include "collider.h"
+#include "demo.h"
 #include "disk.h"
 #include "drawmode.h"
 #include "entity.h"
@@ -50,8 +51,6 @@
 #include <psxsdk/libsnd.h>
 #include <psxsdk/romio.h>
 
-#define SPAD(x) ((s32*)SP(x * sizeof(s32)))
-
 typedef struct {
     /* 0x00 */ SVECTOR* v0;
     /* 0x04 */ SVECTOR* v1;
@@ -66,16 +65,6 @@ typedef struct {
 #define DISP_MENU_H DISP_ALL_H
 #define DISP_TITLE_W 512
 #define DISP_TITLE_H DISP_ALL_H
-// Width in pixel of how wide is the horizontal camera during normal game play
-#define STAGE_WIDTH 256
-
-#define RENDERFLAGS_NOSHADOW 2
-#define MAX_GOLD 999999
-#define HEART_VESSEL_INCREASE 5
-#define HEART_VESSEL_RICHTER 30
-#define LIFE_VESSEL_INCREASE 5
-#define FALL_GRAVITY 0x4000
-#define FALL_TERMINAL_VELOCITY 0x60000
 
 #define WEAPON_0_START 0xE0
 #define WEAPON_0_END (WEAPON_1_START - 1)
@@ -90,9 +79,6 @@ typedef struct {
 #define WEAPON1_PTR 0x8017D000
 #define STAGE_PRG_PTR 0x80180000
 #define CASTLE_MAP_PTR 0x801E0000
-#ifndef DEMO_KEY_PTR
-#define DEMO_KEY_PTR 0x801E8000
-#endif
 #define SIM_CHR0 0x80280000
 #define SIM_CHR1 0x80284000
 #define SIM_PTR 0x80280000
@@ -105,15 +91,9 @@ typedef struct {
 #define WEAPON0_PTR 0x8017A000
 #define WEAPON1_PTR 0x8017D000
 #define STAGE_PRG_PTR 0x80180000
-#define CASTLE_MAP_PTR g_BmpCastleMap
-#ifndef DEMO_KEY_PTR
-#define DEMO_KEY_PTR 0x801E8000
-#endif
 #define SIM_CHR0 0x80280000
 #define SIM_CHR1 0x80284000
 #define SIM_PTR 0x80280000
-
-extern u8 g_BmpCastleMap[0x20000];
 
 #endif
 
@@ -137,9 +117,6 @@ extern u8 g_BmpCastleMap[0x20000];
 // font. e.g. _S("I am a Symphony of the Night encoded string")
 #define _S(x) (x)
 #endif
-
-#define DEMO_KEY_LEN 3
-#define DEMO_MAX_LEN 0x2000
 
 #define FONT_W 8                 // small font size used for dialogues and menu
 #define FONT_H 8                 // small font size used for dialogues and menu
@@ -224,14 +201,6 @@ typedef enum {
 
     NowLoading_2 = 2,
 } GameSteps;
-
-typedef enum {
-    Demo_None,
-    Demo_PlaybackInit,
-    Demo_Recording,
-    Demo_End,
-    Demo_Playback,
-} DemoMode;
 
 #include "unkstruct.h"
 
@@ -359,7 +328,6 @@ extern s32 D_80097904;
 extern s32 g_ScrollDeltaX;
 extern s32 g_ScrollDeltaY;
 extern s32 D_80097910;
-extern DemoMode g_DemoMode;
 extern s32 g_LoadOvlIdx; // 0x80097918
 extern s32 D_8009791C;
 extern s32 D_80097920;

@@ -28,7 +28,6 @@ typedef struct {
     /* 0x4 */ RoomLoadDef load;
 } RoomHeader; // size = 0x8
 
-
 /*
  * In the PSX version of the game, stage objects begin with this
  * header (or `AbbreviatedOverlay`) at 0x0. This describes the

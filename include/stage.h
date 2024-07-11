@@ -213,7 +213,7 @@ typedef enum {
 
 extern Stages g_StageId;
 
-// TODO: remove
-#include "game.h"
+// Width in pixel of how wide is the horizontal camera during normal game play
+#define STAGE_WIDTH 256
 
 #endif
