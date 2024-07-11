@@ -529,7 +529,7 @@
 - [✅ ReboundStoneBounce1](function_calls/dra.ReboundStoneBounce1.svg?raw=1)
 - [✅ ReboundStoneBounce2](function_calls/dra.ReboundStoneBounce2.svg?raw=1)
 - [✅ RefreshCapePalette](function_calls/dra.RefreshCapePalette.svg?raw=1)
-- [❌ RenderEntities](function_calls/dra.RenderEntities.svg?raw=1)
+- [✅ RenderEntities](function_calls/dra.RenderEntities.svg?raw=1)
 - [✅ RenderPrimitives](function_calls/dra.RenderPrimitives.svg?raw=1)
 - [✅ RenderTilemap](function_calls/dra.RenderTilemap.svg?raw=1)
 - [✅ ResetEntityArray](function_calls/dra.ResetEntityArray.svg?raw=1)
