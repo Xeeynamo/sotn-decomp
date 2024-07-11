@@ -72,15 +72,15 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.unk88 = 0x80;
             self->ext.teleport.unk90 = 0xFF;
             self->step = 0x14;
-            PlaySfx(0x8BB);
+            PlaySfx(SFX_UNK_8BB);
         } else {
             self->ext.teleport.unk7C = 1;
             self->ext.teleport.unk90 = 0;
             self->ext.teleport.unk80 = 0x10;
             self->ext.teleport.unk88 = 0x80;
             self->step = 1;
-            PlaySfx(0x635);
-            PlaySfx(0x8BA);
+            PlaySfx(SFX_UNK_635);
+            PlaySfx(NA_SE_PL_TELEPORT);
         }
         break;
     case 1:
@@ -166,7 +166,7 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.unk84 = 4;
             self->step++;
             g_Player.unk1C = 1;
-            PlaySfx(0x636);
+            PlaySfx(NA_SE_PL_WARP);
             DestroyEntity(self);
             return;
         }
@@ -313,7 +313,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
         prim->g0 = 0x3F;
         prim->b0 = 0;
         SetSpeedX(FIX(8));
-        PlaySfx(0x60C);
+        PlaySfx(SFX_SUBWPN_THROW);
         g_Player.D_80072F00[10] = 4;
         self->step += 1;
         return;
@@ -348,7 +348,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
                 self->posX.i.hi += var_s5;
                 CreateEntFactoryFromEntity(self, 0xAU, 0);
                 self->posX.i.hi -= var_s5;
-                PlaySfx(0x6A4);
+                PlaySfx(REBOUND_STONE_BOUNCE);
                 self->step += 1;
                 return;
             }
@@ -536,7 +536,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
         func_8011A290(self);
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
-        PlaySfx(0x60C);
+        PlaySfx(SFX_SUBWPN_THROW);
         g_Player.D_80072F00[10] = 4;
         self->ext.axeCrash.unk98 = 0x7F;
         self->step++;
@@ -549,7 +549,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
         }
         self->ext.axeCrash.unk7C = var_a1 + self->ext.axeCrash.unk7C;
         if (!(self->ext.axeCrash.unk7C & 0x3FF)) {
-            func_80134714(0x60C, self->ext.axeCrash.unk98, 0);
+            func_80134714(SFX_SUBWPN_THROW, self->ext.axeCrash.unk98, 0);
             self->ext.axeCrash.unk98 -= 8;
             if (self->ext.axeCrash.unk98 < 0) {
                 self->ext.axeCrash.unk98 = 0;
@@ -793,7 +793,7 @@ void EntityHolyWater(Entity* entity) {
 
         temp2 = temp & 1;
         if (temp2 != 0) {
-            PlaySfx(0x69A);
+            PlaySfx(SFX_UNK_69A);
             CreateEntFactoryFromEntity(entity, FACTORY(0, 59), 0);
             entity->ext.generic.unk7C.s = 0x10;
             entity->animSet = ANIMSET_DRA(0);
@@ -1080,8 +1080,8 @@ void EntitySubwpnCrashCross(Entity* self) {
         prim->b3 = 0x80;
         prim->tpage = 0x11C;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
-        PlaySfx(0x6DF);
-        PlaySfx(0x636);
+        PlaySfx(SFX_UNK_6DF);
+        PlaySfx(NA_SE_PL_WARP);
         self->step += 1;
         g_Player.D_80072F00[12] = 4;
         break;
@@ -1117,7 +1117,7 @@ void EntitySubwpnCrashCross(Entity* self) {
                 right = 0xFF;
             }
             self->step += 1;
-            PlaySfx(0x62F);
+            PlaySfx(NA_SE_UNK_62F);
         }
         break;
     case 4:
@@ -1397,7 +1397,7 @@ void EntityHellfireNormalFireball(Entity* entity) {
     switch (entity->step) {
     case 0:
         if (entity->params == 0) {
-            PlaySfx(0x660);
+            PlaySfx(NA_SE_EN_DR_FIREBALL);
         }
         entity->flags = FLAG_UNK_100000 | FLAG_UNK_08000000;
         entity->animSet = ANIMSET_DRA(9);
@@ -1499,7 +1499,7 @@ void EntityHellfireBigFireball(Entity* entity) {
     switch (entity->step) {
     case 0:
         if (entity->params != 0) {
-            PlaySfx(0x683);
+            PlaySfx(SFX_UNK_683);
         }
 
         entity->flags = FLAG_UNK_100000 | FLAG_UNK_08000000;
@@ -2187,7 +2187,7 @@ void EntitySubwpnAgunea(Entity* self) {
             prim->g1 = 0;
             prim->b1 = 0x80;
             SetSpeedX(FIX(6));
-            PlaySfx(0x60C);
+            PlaySfx(SFX_SUBWPN_THROW);
             CreateEntFactoryFromEntity(self, FACTORY(0x5200, 44), 0);
             g_Player.D_80072F00[10] = 4;
             self->step++;
@@ -2241,7 +2241,7 @@ void EntitySubwpnAgunea(Entity* self) {
             self->posY.i.hi += ((rand() & 0xF) - 8);
             if (self->ext.et_80128C2C.unk84 == 0) {
                 CreateEntFactoryFromEntity(self, FACTORY(0, 23), 0);
-                PlaySfx(0x665);
+                PlaySfx(SFX_UNK_665);
                 CreateEntFactoryFromEntity(self, FACTORY(0x200, 61), 0);
                 self->ext.et_80128C2C.unk84++;
             } else {
@@ -2261,7 +2261,7 @@ void EntitySubwpnAgunea(Entity* self) {
                 if (g_Status.hearts >= heartCost) {
                     g_Status.hearts -= heartCost;
                     CreateEntFactoryFromEntity(self, FACTORY(0, 23), 0);
-                    PlaySfx(0x665);
+                    PlaySfx(SFX_UNK_665);
                     CreateEntFactoryFromEntity(self, FACTORY(0x200, 61), 0);
                 } else {
                     self->step = 4;
@@ -2816,7 +2816,7 @@ void EntitySummonSpirit(Entity* self) {
             }
             // Blueprint 44 is child 11. EntityPlayerBlinkWhite
             CreateEntFactoryFromEntity(self, FACTORY(0x6700, 44), 0);
-            PlaySfx(0x67D);
+            PlaySfx(NA_SE_PL_MP_GAUGE);
             self->step++;
         }
         break;
@@ -3035,7 +3035,7 @@ void EntitySubwpnBible(Entity* self) {
             self->flags &= ~FLAG_UNK_04000000;
             self->velocityX = self->facingLeft ? FIX(-12) : FIX(12);
             self->velocityY = FIX(-12);
-            PlaySfx(0x6B2);
+            PlaySfx(SFX_UNK_6B2);
             self->ext.et_BibleSubwpn.unk86++;
             self->step++;
         }
@@ -3122,7 +3122,7 @@ void EntityBatEcho(Entity* self) {
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = PLAYER.posY.i.hi;
     if ((self->ext.batEcho.unk8A % 384) == 0) {
-        PlaySfx(0x61F);
+        PlaySfx(NA_SE_PL_BT_ECHO);
     }
     self->ext.batEcho.unk8A += 1;
     if (self->ext.batEcho.unk88) {
@@ -3624,7 +3624,7 @@ void func_8012D28C(bool exitEarly) {
     s32 i;
 
     func_80102CD8(2);
-    PlaySfx(0x644);
+    PlaySfx(NA_SE_EN_ROCK_BREAK);
     PLAYER.velocityX = 0;
     g_Player.D_80072EFC = 0x20;
     g_Player.padSim = 0;

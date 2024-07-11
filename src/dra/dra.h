@@ -323,17 +323,11 @@ extern Point16 D_800ACEE0[];
 #if defined(VERSION_HD)
 extern s32 D_800ACEDC_hd;
 #endif
-extern u8 D_800ACF4C[];
-extern u8 D_800ACF54[10];
-extern s16 D_800ACF60[]; // collection of sounds?
-extern s16 D_800ACF6C[];
 extern s32 D_800ACF74; // These two might...
 extern s32 D_800ACF78; // ...be an array
-
-extern s16 D_800ACF7C[2];
-
+extern s16 D_800ACF7C[4];
 extern s16 D_800ACF84[8]; // collection of sounds
-extern s16 D_800ACF94[];
+extern s16 D_800ACF94[16];
 extern u8 D_800AD094[0x30];
 extern u8 D_800ACFB4[][4]; // TODO AnimationFrames*[]
 extern s16* D_800CF324[];

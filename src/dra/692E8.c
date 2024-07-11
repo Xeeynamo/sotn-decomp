@@ -570,7 +570,7 @@ void EntityAlucard(void) {
                 func_800FE8F0();
                 func_80118C84(g_Player.unk58, 1);
                 if (g_Player.unk56 == 1) {
-                    PlaySfx(0x68E);
+                    PlaySfx(SE_HEALTH_REGAINED);
                     if (!(g_Player.unk0C & 0x80)) {
                         CreateEntFactoryFromEntity(
                             g_CurrentEntity, 0x48002CU, 0);
@@ -786,7 +786,7 @@ void EntityAlucard(void) {
                                 g_Player.unk18 = damage.effects;
                                 func_8010E168(1, 0xC);
                                 g_Player.D_80072F00[3] = 6;
-                                PlaySfx(0x6E7);
+                                PlaySfx(SFX_UNK_6E7);
                                 func_80118C84(1, 0);
                                 break;
                             case 2:
@@ -833,11 +833,11 @@ void EntityAlucard(void) {
                                 CreateEntFactoryFromEntity(
                                     g_CurrentEntity, 0x4E002CU, 0);
                                 if (D_800ACDFC == 0) {
-                                    PlaySfx(0x6EB);
+                                    PlaySfx(SFX_UNK_6EB);
                                 }
                                 D_800ACDFC = 0x20;
                                 if (damage.damageTaken != 0) {
-                                    PlaySfx(0x6A3);
+                                    PlaySfx(SFX_UNK_6A3);
                                 }
                                 break;
                             }
@@ -865,7 +865,7 @@ void EntityAlucard(void) {
                                   (PLAYER.step_s != 8)))) {
                                 func_80109328();
                                 SetPlayerStep(Player_MorphMist);
-                                PlaySfx(0x6A0);
+                                PlaySfx(SFX_UNK_6A0);
                                 goto block_159;
                             }
                             if ((g_Player.padTapped & PAD_R1) &&
@@ -887,7 +887,7 @@ void EntityAlucard(void) {
                                     }
                                     func_80109328();
                                     SetPlayerStep(Player_MorphBat);
-                                    PlaySfx(0x6A0);
+                                    PlaySfx(SFX_UNK_6A0);
                                     goto block_160;
                                 }
                             }
@@ -906,7 +906,7 @@ void EntityAlucard(void) {
                               (PLAYER.step_s != 0)))) {
                             func_80109328();
                             SetPlayerStep(0x18);
-                            PlaySfx(0x668);
+                            PlaySfx(SFX_UNK_668);
                         }
                     }
                 }

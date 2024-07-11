@@ -38,7 +38,7 @@ u16* D_800AD520[] = {
 extern u8 D_800B0188[];
 // TODO: move to 7A4D0.c
 WeaponAnimation D_800AD53C[] = {
-    {D_800AD520, D_800B0188, 0x0000, 0x60C, 0x24, 1},
+    {D_800AD520, D_800B0188, 0x0000, SFX_SUBWPN_THROW, 0x24, 1},
 };
 
 u16 D_800AD54C[] = {
@@ -639,8 +639,8 @@ void EntityHitByLightning(Entity* self) {
             self->ext.hitbylightning.unk92 = 1;
         }
         self->ext.hitbylightning.unk94 = 0x10;
-        PlaySfx(0x69D);
-        PlaySfx(0x665);
+        PlaySfx(SFX_UNK_69D);
+        PlaySfx(SFX_UNK_665);
         self->step++;
         break;
     case 1:
@@ -794,7 +794,7 @@ void EntityHitByIce(Entity* self) {
                 self->rotZ = 0x80;
             }
         }
-        PlaySfx(0x69D);
+        PlaySfx(SFX_UNK_69D);
         self->step++;
         break;
     case 1:
@@ -813,7 +813,7 @@ void EntityHitByIce(Entity* self) {
         }
         if (sp18) {
             self->ext.hitbyice.unk7C = 0x40;
-            PlaySfx(0x61A);
+            PlaySfx(SFX_UNK_61A);
             self->step++;
         }
         break;
@@ -1124,7 +1124,7 @@ void EntityPlayerPinkEffect(Entity* self) {
                       FLAG_UNK_10000;
         self->ext.timer.t = data_idx->unk0[0];
         if (data_idx->unk18 != 0x83) {
-            PlaySfx(0x668);
+            PlaySfx(SFX_UNK_668);
         }
         if (data_idx->unk18 >= 128) {
             func_8010E168(true, 64);
@@ -1145,7 +1145,7 @@ void EntityPlayerPinkEffect(Entity* self) {
                  (data_idx->unk16[self->ext.factory.unk7E] << 16)),
                 0);
             if (data_idx->pad2[self->ext.factory.unk7E] == 0x28) {
-                PlaySfx(0x67D);
+                PlaySfx(NA_SE_PL_MP_GAUGE);
             }
         }
 
@@ -1162,11 +1162,11 @@ void EntityPlayerPinkEffect(Entity* self) {
                 break;
             case 0x80:
                 g_Player.D_80072F00[0] = 2;
-                PlaySfx(0x669);
+                PlaySfx(SFX_UNK_669);
                 break;
             case 0x81:
                 g_Player.D_80072F00[1] = 2;
-                PlaySfx(0x669);
+                PlaySfx(SFX_UNK_669);
                 break;
             case 0x84:
                 g_Player.unk56 = 1;
@@ -1183,13 +1183,13 @@ void EntityPlayerPinkEffect(Entity* self) {
                 g_Player.unk58 = g_Status.hpMax;
                 break;
             case 0x87:
-                PlaySfx(0x669);
+                PlaySfx(SFX_UNK_669);
                 g_Status.mp = g_Status.mpMax;
                 break;
             default:
                 CreateEntFactoryFromEntity(
                     self, (D_800AE120[temp2] << 0x10) + 0x2F, 0);
-                PlaySfx(0x669);
+                PlaySfx(SFX_UNK_669);
             case 0x82:
                 break;
             }
@@ -1224,7 +1224,7 @@ void EntityLevelUpAnimation(Entity* self) {
         if (self->primIndex == -1) {
             return;
         }
-        PlaySfx(0x687);
+        PlaySfx(NA_SE_PL_MAX_HP_MP_INCREASED);
         self->flags = FLAG_UNK_04000000 | FLAG_UNK_800000 | FLAG_UNK_20000 |
                       FLAG_UNK_10000;
         CreateEntFactoryFromEntity(self, 0x4A002CU, 0);

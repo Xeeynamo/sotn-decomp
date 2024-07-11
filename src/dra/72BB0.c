@@ -170,7 +170,7 @@ void PlayerStepJump(void) {
             if (walkResult != 0) {
                 SetSpeedX(FIX(4.5));
             }
-            PlaySfx(0x6F0);
+            PlaySfx(SFX_UNK_6F0);
         }
     }
     if (g_Player.unk44 & 0x100) {
@@ -676,7 +676,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
             PLAYER.step = Player_AxearmorHit;
             PLAYER.step_s = 0;
             PLAYER.ext.player.anim = 0xD1;
-            PlaySfx(0x6ED);
+            PlaySfx(SFX_UNK_6ED);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 85), 0);
             D_8017A000.func_ptr_80170010();
             if (g_Player.unk72 != 0) {
@@ -809,7 +809,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x100, 47), 0);
             PlaySfx(NA_SE_VO_AL_WHAT);
         } else if (damage->effects & 0x8000) {
-            PlaySfx(0x690);
+            PlaySfx(NA_SE_EN_SLOGRA_SPEAR_PROJECTILE);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4500, 44), 0);
             g_Player.unk40 = 0x8160;
             if (damage->effects & 0x10000) {
@@ -847,7 +847,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
                 g_Player.unk40 = 0x8164;
             }
             if (damage->effects & 0x40) {
-                PlaySfx(0x62E);
+                PlaySfx(SE_WEAPON_STAB);
                 g_Player.unk40 = 0x8166;
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(0x4200, 44), 0);
@@ -930,7 +930,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
                     g_CurrentEntity, FACTORY(0x900, 4), 0);
                 PLAYER.posY.i.hi -= 0x15;
                 PLAYER.posX.i.hi -= var_s0;
-                PlaySfx(0x644);
+                PlaySfx(NA_SE_EN_ROCK_BREAK);
                 func_80102CD8(2);
                 PLAYER.step_s = 1;
                 if (g_Player.unk52 == 0xF &&
@@ -944,7 +944,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
         if (PLAYER.step_s == 0xF) {
             g_Player.D_80072F00[8] = 8;
             SetPlayerAnim(0x3F);
-            PlaySfx(0x644);
+            PlaySfx(NA_SE_EN_ROCK_BREAK);
             PLAYER.velocityY = FIX(-2.5);
             func_80102CD8(2);
             PLAYER.step_s = 3;
@@ -957,7 +957,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
         PLAYER.velocityY = 0;
         g_Player.D_80072F00[8] = 48;
         PLAYER.velocityX /= 2;
-        PlaySfx(0x647);
+        PlaySfx(SFX_UNK_647);
         PLAYER.rotZ = 0x400;
         PLAYER.rotPivotX = 0x10;
         PLAYER.rotPivotY = 4;
@@ -1050,7 +1050,7 @@ void func_80114DF4(s32 arg0) {
         func_8010E3B8(FIX(-1.25));
         func_80113E68();
         PLAYER.palette = 0x8161;
-        PlaySfx(0x6EC);
+        PlaySfx(SFX_UNK_6EC);
         g_Player.D_80072F00[2] = 0;
         g_Player.D_80072F00[0] = 0;
         g_Player.D_80072F00[1] = 0;
@@ -1067,7 +1067,7 @@ void func_80114DF4(s32 arg0) {
             PLAYER.velocityY = 0;
             PLAYER.velocityX = 0;
             func_80102CD8(1);
-            PlaySfx(0x644);
+            PlaySfx(NA_SE_EN_ROCK_BREAK);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 39), 0);
 
             animVariant = rand() % 64;
@@ -1112,14 +1112,14 @@ void func_80114DF4(s32 arg0) {
 
         if (!(g_Player.unk04 & 1)) {
             func_80102CD8(1);
-            PlaySfx(0x644);
+            PlaySfx(NA_SE_EN_ROCK_BREAK);
         }
 
         PLAYER.velocityY = 0;
         if (g_Status.hp == 0) {
             if (--D_80137FE0 == 0) {
                 PLAYER.step = Player_Kill;
-                PlaySfx(0x6F6);
+                PlaySfx(NA_SE_VO_AL_DYING);
                 PLAYER.step_s = 16;
             }
             func_8010E168(1, 4);
@@ -1132,7 +1132,7 @@ void func_80114DF4(s32 arg0) {
             g_Player.padTapped |= (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
             // Counter for how many wiggles left until we're out
             g_Player.unk5E--;
-            PlaySfx(0x608);
+            PlaySfx(SFX_UNK_608);
             if (g_Player.unk5E == 0) {
                 SetPlayerAnim(0x3B);
                 if (PLAYER.ext.player.anim != 0x3A) {
@@ -1142,7 +1142,7 @@ void func_80114DF4(s32 arg0) {
                     CreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0, 32), 0);
                 }
-                PlaySfx(0x6E7);
+                PlaySfx(SFX_UNK_6E7);
                 PLAYER.step = Player_Hit;
                 PLAYER.step_s = 6;
                 PLAYER.palette = 0x8100;
