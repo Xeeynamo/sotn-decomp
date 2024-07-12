@@ -27,7 +27,7 @@ int CheckCallback(void);
 long SetVideoMode(long mode);
 
 void PadInit(int mode);
-u_long PadRead(int id);
+unsigned long PadRead(int id);
 void PadStop(void);
 
 #endif

@@ -1,5 +1,8 @@
 #include "ric.h"
 
+#include <drawmode.h>
+#include <timer.h>
+
 // RIC Entity # 49. Comes from blueprint 57. Factory call in func_8016E324.
 // func_8016E324 is RIC Entity #48. Comes from blueprint 56. Blueprint 56 is
 // subweapon 25. And subweapon 25 is the crash of subweapon 7.

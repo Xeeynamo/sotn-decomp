@@ -1,5 +1,9 @@
 #include "ric.h"
 
+#include <drawmode.h>
+#include <timer.h>
+#include <game.h> // D_80097C98
+
 // Entity ID 66. Made by blueprint 77 (the very last one).
 // Created in 3 spots in 2 functions (total of 6 calls).
 // DRA version is very similar.

@@ -1,5 +1,6 @@
-
 #include "ric.h"
+
+#include <timer.h>
 
 void func_8015C2A8(void) {
     bool loadAnim = 0;

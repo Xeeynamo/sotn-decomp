@@ -1,5 +1,9 @@
 #include "ric.h"
 
+#include <drawmode.h>
+#include <timer.h>
+#include <game.h> // D_80097448
+
 s32 func_8015D250(s32 unused_arg) {
     SubweaponDef subweapon;
     s16 subweaponId;

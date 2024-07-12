@@ -5,7 +5,12 @@
  */
 
 #include "ric.h"
-#include "player.h"
+
+#include <animset.h>
+#include <drawmode.h>
+#include <player.h>
+#include <timer.h>
+#include <game.h> // several constants
 
 #include "../destroy_entity.h"
 

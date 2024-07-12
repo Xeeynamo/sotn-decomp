@@ -1,5 +1,9 @@
 #include "ric.h"
 
+#include <animset.h>
+#include <drawmode.h>
+#include <timer.h>
+
 // Entity ID #7. Made by blueprint 6. Comes from subweapon 3. Holy water!
 // Not at all the same as DRA's.
 void EntityHolyWater(Entity* self) {

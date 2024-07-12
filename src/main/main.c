@@ -1,5 +1,10 @@
-#include "common.h"
-#include "game.h"
+#include <castle.h>
+#include <common.h>
+#include <disk.h>
+#include <gstate.h>
+#include <psxsdk/libcd.h>
+
+#define DRA_PRG_PTR 0x800A0000
 
 extern void (*g_MainGame)();
 extern CdlFILE main_cdlFile;

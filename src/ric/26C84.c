@@ -1,5 +1,8 @@
 #include "ric.h"
 
+#include <animset.h>
+#include <drawmode.h>
+
 void func_80162C84(Entity* entity) {
     switch (entity->step) {
     case 0:

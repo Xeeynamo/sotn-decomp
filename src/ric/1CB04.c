@@ -1,5 +1,8 @@
 #include "ric.h"
 #include "player.h"
+#include <timer.h>
+
+#include <game.h> // D_80097448
 
 void func_80158B04(s32 arg0) {
     s32 var_s0;

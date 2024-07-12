@@ -1,7 +1,15 @@
-#include "common.h"
-#include "game.h"
-#include "objects.h"
-#include "sfx.h"
+#include <common.h>
+#include <entity.h>
+#include <gamepad.h>
+#include <gapi.h>
+#include <objects.h>
+#include <player.h>
+#include <sfx.h>
+#include <sprite.h>
+#include <unkstruct.h>
+
+#include <psxsdk/libgte.h>
+#include <psxsdk/libgpu.h>
 
 typedef enum {
     E_NONE,

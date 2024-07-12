@@ -1,5 +1,9 @@
 #include "ric.h"
 
+#include <drawmode.h>
+#include <timer.h>
+#include <game.h> // D_80097448
+
 // Similar to same function in DRA
 void EntityEntFactory(Entity* self) {
     Entity* newEntity;
