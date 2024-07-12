@@ -192,6 +192,7 @@ set(SOURCE_FILES_DRA
     src/dra/d_DBD4.c
     src/dra/d_E294.c
     src/dra/843B0.c
+    src/dra/8A0A4.c
     src/dra/8D3E8.c
     src/dra/90264.c
     src/dra/91EBC.c

@@ -42,7 +42,6 @@ EntityMist = 0x8012231C;
 EntityTeleport = 0x801243B0;
 EntitySubwpnCrashCross = 0x801267B0;
 EntityHellfireHandler = 0x80126ECC;
-EntityStopWatch = 0x8012A89C;
 CdSoundCommand4 = 0x80132F60;
 CdSoundCommand6 = 0x80133290;
 CdSoundCommand12 = 0x80133960;
