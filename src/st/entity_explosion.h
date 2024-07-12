@@ -1,3 +1,8 @@
+#include <animset.h>
+#include <drawmode.h>
+#include <entity.h>
+#include <palette.h>
+
 extern u16 g_InitializeEntityData0[];
 extern s32 g_ExplosionYVelocities[];
 extern u8* g_ExplosionAnimations[];

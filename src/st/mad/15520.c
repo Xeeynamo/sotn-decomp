@@ -1,5 +1,8 @@
 #include "mad.h"
 
+#include <animset.h>
+#include <castle.h>
+
 void EntityHeartDrop(Entity* self) {
     u16 index;
     PfnEntityUpdate update;

@@ -6,6 +6,11 @@
 
 #include "dre.h"
 
+#include <drawmode.h>
+#include <entity.h>
+#include <gamepad.h>
+#include <gapi.h>
+
 // puts garbled hp max up text on screen
 void EntityUnkId11(Entity* entity) {
     ObjInit2* obj = (ObjInit2*)&D_80180528[entity->params * 10];

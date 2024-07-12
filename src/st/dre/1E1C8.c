@@ -1,5 +1,9 @@
 #include "dre.h"
 
+#include <animset.h>
+#include <collider.h>
+#include <palette.h>
+
 #include "../check_coll_offsets.h"
 
 #include "../entity_unkId13.h"

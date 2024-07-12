@@ -1,6 +1,8 @@
 #ifndef DISK_H
 #define DISK_H
 
+#include "types.h"
+
 typedef enum {
     CdStep_None,
     CdStep_LoadInit,
@@ -72,5 +74,9 @@ typedef enum {
     CdCallback_Seq,      // func_80107DB4
     CdCallback_Vh,       // func_80107EF0
 } CdCallbacks;
+
+extern s32 g_UseDisk;
+extern u32 g_CdStep; // CdStep
+extern s32 g_IsUsingCd;
 
 #endif // DISK_H

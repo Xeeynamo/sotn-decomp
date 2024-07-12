@@ -1,5 +1,7 @@
 #include <stage.h>
 
+#include <palette.h>
+
 static u16 UNK_Invincibility0[] = {
     PAL_OVL(0x163), PAL_OVL(0x164), PAL_OVL(0x166), PAL_OVL(0x164),
     PAL_OVL(0x160), PAL_OVL(0x166), PAL_OVL(0x162), PAL_OVL(0x164),

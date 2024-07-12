@@ -1,6 +1,7 @@
 #include "cen.h"
 
 #include "../entity.h"
+#include <game.h> // FALL_*
 
 u8 func_8019444C(u8 frames[], Entity* self, u8 arg2) {
     u16 animFrameStart = self->animFrameIdx * 2;

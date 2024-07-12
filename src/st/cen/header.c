@@ -1,4 +1,5 @@
 #include "cen.h"
+#include <stageoverlay.h>
 
 extern RoomHeader OVL_EXPORT(rooms)[];
 extern signed short* spriteBanks[];

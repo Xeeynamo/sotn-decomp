@@ -1,4 +1,12 @@
 #include "cen.h"
+#include <animset.h>
+#include <castle.h>
+#include <collider.h>
+#include <drawmode.h>
+#include <gapi.h>
+#include <entity.h>
+#include <palette.h>
+#include <timer.h>
 
 u8 AnimateEntity(u8 frames[], Entity* entity);
 

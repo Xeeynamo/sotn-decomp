@@ -1,5 +1,11 @@
 #include "stage.h"
 
+#include <drawmode.h>
+#include <entity.h>
+#include <gapi.h>
+#include <relic.h>
+#include <timer.h>
+
 const char* g_RelicOrbTexts[] = {
 #if defined(VERSION_US)
     "Obtained ",

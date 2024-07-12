@@ -1,3 +1,6 @@
+#include <layer.h>
+#include <game.h> // g_ScrollDelta*
+
 /*
  * Creates any new entities that may need to be created
  * based on a change in the scroll delta.

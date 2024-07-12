@@ -1,3 +1,5 @@
+#include <drawmode.h>
+#include <entity.h>
 #include <stage.h>
 
 #if !defined(VERSION_PSP)

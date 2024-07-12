@@ -1,3 +1,6 @@
+#include <entity.h>
+#include <graphics.h>
+
 void PreventEntityFromRespawning(Entity* entity) {
     if (entity->entityRoomIndex) {
         u16 index = entity->entityRoomIndex - 1 >> 5;

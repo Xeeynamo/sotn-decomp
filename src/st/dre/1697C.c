@@ -1,5 +1,10 @@
 #include "dre.h"
 
+#include <animset.h>
+#include <drawmode.h>
+#include <entity.h>
+#include <gapi.h>
+
 void EntityFadeToWhite1(Entity* self) {
     Primitive* prim;
     s16 primIndex;

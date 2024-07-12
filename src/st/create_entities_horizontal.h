@@ -1,5 +1,7 @@
 #include "create_entities_right.h"
 
+#include <game.h> // g_ScrollDelta*
+
 /*
  * Creates entities between the previous horizontal position and
  * the passed in x position.

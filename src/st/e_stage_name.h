@@ -1,5 +1,11 @@
 #include "stage.h"
 
+#include <castle.h>
+#include <drawmode.h>
+#include <entity.h>
+#include <gapi.h>
+#include <game.h> // demo mode
+
 #ifndef CASTLE_FLAG_BANK
 #define CASTLE_FLAG_BANK 0
 #endif

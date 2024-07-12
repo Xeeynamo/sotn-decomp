@@ -1,4 +1,8 @@
 #ifndef HARD_LINK
+
+#include <entity.h>
+#include <gapi.h>
+
 void DestroyEntity(Entity* entity) {
     s32 i;
     s32 length;

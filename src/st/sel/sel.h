@@ -1,4 +1,5 @@
 #include "stage.h"
+#include <game.h> // TODO placeholder
 #include <psxsdk/romio.h>
 #include "memcard.h"
 

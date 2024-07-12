@@ -1,5 +1,10 @@
 #include "mad.h"
 
+#include <drawmode.h>
+#include <collider.h>
+#include <gapi.h>
+#include <timer.h>
+
 extern u16 D_80180D4C[];
 extern u8* D_80180DB0[];
 extern u16 D_80180E10[];

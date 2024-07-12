@@ -1,3 +1,5 @@
+#include <clut.h>
+
 void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     u16 buf[COLORS_PER_PAL];
     RECT bufRect;

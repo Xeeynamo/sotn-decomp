@@ -1,6 +1,8 @@
 #include "mad.h"
 
 #include "../entity.h"
+#include <player.h>
+#include <game.h> // D_80097488
 
 u8 func_80191F24(u8 frames[], Entity* self, u8 arg2) {
     u16 animFrameStart = self->animFrameIdx * 2;

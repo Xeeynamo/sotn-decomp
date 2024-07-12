@@ -1,3 +1,5 @@
+#include <game.h> // g_ScrollDelta*
+
 /*
  * Creates entities between the previous vertical position and
  * the passed in y position going up.

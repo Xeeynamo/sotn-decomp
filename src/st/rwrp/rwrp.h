@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "stage.h"
+#include <game.h> // TODO: placeholder
 
 #define OVL_EXPORT(x) RWRP_##x
 

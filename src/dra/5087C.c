@@ -1,5 +1,7 @@
 #include "dra.h"
+#include "castle.h"
 #include "menu.h"
+#include "sotnstr.h"
 #include "sfx.h"
 
 RoomTeleport D_800A245C[] = {

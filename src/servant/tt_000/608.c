@@ -1,4 +1,5 @@
-#include "servant.h"
+#include <servant.h>
+#include <game.h> // TODO: specific headers
 
 Sprite D_80170608[] = {
     {-4, -4, 8, 8, 0x144, 0x78, 8, 0, 16, 8},

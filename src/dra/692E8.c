@@ -1,6 +1,7 @@
 #include "dra.h"
 #include "sfx.h"
 #include "player.h"
+#include "items.h"
 
 // data order is slightly different between US and HD
 // maybe this suggests a file split

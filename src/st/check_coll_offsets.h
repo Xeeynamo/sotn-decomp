@@ -1,3 +1,6 @@
+#include <collider.h>
+#include <gapi.h>
+
 // arg0 is a pointer to X and Y offsets from the current entity.
 // iterates through those locations, running CheckCollision on
 // each location, returning a set of bit flags indicating which

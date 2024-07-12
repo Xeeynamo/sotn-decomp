@@ -9,6 +9,7 @@
 #define INCLUDE_ASM_OLD
 
 #include "stage.h"
+#include "stageoverlay.h"
 
 #define OVL_EXPORT(x) MAD_##x
 

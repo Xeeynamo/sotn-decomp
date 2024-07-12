@@ -1,6 +1,8 @@
 #include "dre.h"
 
 #include "../entity.h"
+#include <gapi.h>
+#include <game.h>
 
 u8 func_8019A590(u8 frames[], Entity* self, u8 arg2) {
     u16 animFrameStart = self->animFrameIdx * 2;

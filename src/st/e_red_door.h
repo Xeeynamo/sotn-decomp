@@ -1,3 +1,7 @@
+#include <drawmode.h>
+#include <entity.h>
+#include <gapi.h>
+#include <player.h>
 #include <stage.h>
 
 extern u16 g_eInitGeneric2[];
