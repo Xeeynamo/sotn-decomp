@@ -1,6 +1,8 @@
 #ifndef RELIC_H
 #define RELIC_H
 
+#include <types.h>
+
 #define RELIC_FLAG_DISABLE 0
 #define RELIC_FLAG_FOUND 1
 #define RELIC_FLAG_ACTIVE 2

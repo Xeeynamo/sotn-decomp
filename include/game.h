@@ -7,6 +7,7 @@
 #include "castle.h"
 #include "clut.h"
 #include "collider.h"
+#include "cutscene.h"
 #include "demo.h"
 #include "disk.h"
 #include "drawmode.h"
@@ -198,7 +199,6 @@ extern s32 D_8003925C;
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
 extern s32 D_8003C100;
-extern s32 D_8003C704;
 extern s16 D_8003C710;
 extern s16 D_8003C712;
 extern s32 D_8003C728;
