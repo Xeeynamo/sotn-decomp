@@ -2069,6 +2069,11 @@
 | 1.00 | true     | SetData32                           | ../../asm/us/main/nonmatchings/psxsdk/libgte/reg03/SetData32.s 
 | 1.00 | true     | SetIR0                              | ../../asm/us/main/nonmatchings/psxsdk/libgte/reg03/SetIR0.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | SsSeqGetVol                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | EntityHolyGlassesCutscene           | ../../asm/us/st/cen/nonmatchings/holyglassescutscene/EntityHolyGlassesCutscene.s 
 | 0.91 | true     | EntitySuccubusCutscene              | ../../asm/us/st/dre/nonmatchings/succubuscutscene/EntitySuccubusCutscene.s 
 | 0.94 | true     | EntityDeathCutscene                 | ../../asm/us/st/no3/nonmatchings/deathcutscene/EntityDeathCutscene.s 
@@ -2128,10 +2133,6 @@
 | 0.93 | true     | _SsContRpn1                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | ../../asm/us/main/nonmatchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | ../../asm/us/main/nonmatchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
@@ -2281,12 +2282,6 @@
 | 1.00 | true     | EntityHolyWaterBreakGlass           | ../../asm/us/dra/nonmatchings/843B0/EntityHolyWaterBreakGlass.s 
 | 0.98 | true     | func_80167A70                       | ../../asm/us/ric/nonmatchings/2A060/func_80167A70.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | EntityStopWatchExpandingCircle      | ../../asm/us/dra/nonmatchings/843B0/EntityStopWatchExpandingCircle.s 
-| 0.97 | true     | func_8017161C                       | ../../asm/us/ric/nonmatchings/319C4/func_8017161C.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | EntitySubwpnBible                   | ../../asm/us/dra/nonmatchings/843B0/EntitySubwpnBible.s 
-| 0.92 | true     | EntitySubwpnBible                   | ../../asm/us/ric/nonmatchings/319C4/EntitySubwpnBible.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | EntitySubwpnThrownAxe               | ../../asm/us/dra/nonmatchings/843B0/EntitySubwpnThrownAxe.s 
 | 0.93 | true     | EntitySubwpnCrashAgunea             | ../../asm/us/ric/nonmatchings/2C4C4/EntitySubwpnCrashAgunea.s 
 -------------------------------------------------------------------------------
@@ -2296,7 +2291,13 @@
 | 1.00 | true     | ReboundStoneBounce2                 | ../../asm/us/dra/nonmatchings/843B0/ReboundStoneBounce2.s 
 | 1.00 | true     | ReboundStoneBounce2                 | ../../asm/us/ric/nonmatchings/2C4C4/ReboundStoneBounce2.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_8012B78C                       | ../../asm/us/dra/nonmatchings/843B0/func_8012B78C.s 
+| 1.00 | true     | EntityStopWatchExpandingCircle      | ../../asm/us/dra/nonmatchings/8A0A4/EntityStopWatchExpandingCircle.s 
+| 0.97 | true     | func_8017161C                       | ../../asm/us/ric/nonmatchings/319C4/func_8017161C.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | EntitySubwpnBible                   | ../../asm/us/dra/nonmatchings/8A0A4/EntitySubwpnBible.s 
+| 0.92 | true     | EntitySubwpnBible                   | ../../asm/us/ric/nonmatchings/319C4/EntitySubwpnBible.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_8012B78C                       | ../../asm/us/dra/nonmatchings/8A0A4/func_8012B78C.s 
 | 0.96 | true     | func_80172AE8                       | ../../asm/us/ric/nonmatchings/319C4/func_80172AE8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityGiantSpinningCross            | ../../asm/us/dra/nonmatchings/90264/EntityGiantSpinningCross.s 
@@ -2457,9 +2458,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | ../../asm/us/main/nonmatchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSeqPlay                           | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
-| 0.93 | true     | SsSeqGetVol                         | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 

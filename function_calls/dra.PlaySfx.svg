@@ -451,7 +451,7 @@
 <g id="node29" class="node">
 <title>dra.EntityStopWatch</title>
 <g id="a_node29"><a xlink:href="dra.EntityStopWatch.svg" xlink:title="dra.EntityStopWatch">
-<ellipse fill="red" stroke="black" cx="6929.19" cy="-198" rx="108.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="6929.19" cy="-198" rx="108.58" ry="18"/>
 <text text-anchor="middle" x="6929.19" y="-194.3" font-family="Times,serif" font-size="14.00">dra.EntityStopWatch</text>
 </a>
 </g>
