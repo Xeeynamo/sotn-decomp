@@ -364,14 +364,14 @@ void SoftDrawOTag(OT_TYPE* p) {
             break;
         case 0x38:
             g4 = (POLY_G4*)tag;
-            GPU_Write(0, 0, *(u32*)&gt4->r0); // 4
-            GPU_Write(0, 0, *(u32*)&gt4->x0); // 8
-            GPU_Write(0, 0, *(u32*)&gt4->r1); // C
-            GPU_Write(0, 0, *(u32*)&gt4->x1); // 10
-            GPU_Write(0, 0, *(u32*)&gt4->r2); // 14
-            GPU_Write(0, 0, *(u32*)&gt4->x2); // 18
-            GPU_Write(0, 0, *(u32*)&gt4->r3); // 1C
-            GPU_Write(0, 0, *(u32*)&gt4->x3); // 20
+            GPU_Write(0, 0, *(u32*)&g4->r0); // 4
+            GPU_Write(0, 0, *(u32*)&g4->x0); // 8
+            GPU_Write(0, 0, *(u32*)&g4->r1); // C
+            GPU_Write(0, 0, *(u32*)&g4->x1); // 10
+            GPU_Write(0, 0, *(u32*)&g4->r2); // 14
+            GPU_Write(0, 0, *(u32*)&g4->x2); // 18
+            GPU_Write(0, 0, *(u32*)&g4->r3); // 1C
+            GPU_Write(0, 0, *(u32*)&g4->x3); // 20
             num_updates = 8;
             break;
         case 0x3C:
