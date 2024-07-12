@@ -901,6 +901,17 @@ typedef struct {
 } ET_stopwatchSparkle;
 
 typedef struct {
+    s16 t;
+    s16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    f32 unk84;
+    f32 unk88;
+    s16 unk8C;
+    s16 unk8E;
+} ET_stopwatch;
+
+typedef struct {
     s16 unk7C;
     s16 unk7E;
     s16 unk80;
@@ -1298,6 +1309,7 @@ typedef union { // offset=0x7C
     ET_80170F64 et_80170F64;
     ET_stopwatchCircle et_stopwatchCircle;
     ET_stopwatchSparkle et_stopWatchSparkle;
+    ET_stopwatch stopwatch;
     ET_80161FF0 et_80161FF0;
     ET_80162870 et_80162870;
     ET_80166784 et_80166784;

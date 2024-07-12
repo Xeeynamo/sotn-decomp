@@ -166,7 +166,6 @@ EntityNumberMovesToHpMeter = 0x80118A04;
 EntityGuardText = 0x80119280;
 CreateEntFactoryFromEntity = 0x8011A7A8;
 EntityPlayerDissolves = 0x80120A7C;
-EntityStopWatch = 0x8012A528;
 func_8012CB0C = 0x8012C798;
 func_8012F178 = 0x8012ED9C;
 func_8012F83C = 0x8012F42C;
