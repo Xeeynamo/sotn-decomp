@@ -16,7 +16,7 @@ options:
   undefined_syms_auto_path:  config/undefined_syms_auto.us.stchi.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
-  migrate_rodata_to_functions: yes
+  migrate_rodata_to_functions: no
   asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
   section_order:
@@ -33,32 +33,50 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, .data, header]
-      - [0xE8, .data, header] # layers
-      - [0x298, data]
-      - [0x3B4, .data, e_laydef] # layout entries header
-      - [0x55C, data]
-      - [0x195C, .data, rooms]
-      - [0x19F8, .data, e_layout] # layout entries data
-      - [0x20D8, data]
-      - [0xA960, .data, tile_data] # tile data
-      - [0xF760, .data, tile_data] # tile definitions
-      - [0x1B100, data]
-      - [0x1B144, rodata, 1C5CC]
-      - [0x1B168, rodata, 1CBA8]
-      - [0x1B194, rodata, 1E2A8]
-      - [0x1B280, rodata, 2813C]
-      - [0x1B304, rodata, 2B7CC]
-      - [0x1B3C0, rodata, 2D2BC]
-      - [0x1B3FC, asm]
-      - [0x1C5CC, asm]
-      - [0x1CBA8, asm]
-      - [0x1DEA4, asm]
-      - [0x1E1A0, asm]
-      - [0x1E2A8, asm]
-      - [0x2813C, asm]
-      - [0x2B7CC, asm]
-      - [0x2D2BC, asm]
+# New attempt, following pattern seen in git
+      - [0x0, data]
+      - [0x1B100, rodata]
+      - [0x1B144, rodata]
+      - [0x1B168, rodata]
+      - [0x1B194, rodata]
+      - [0x1B1F4, rodata]
+      - [0x1B280, rodata]
+      - [0x1B304, rodata]
+      - [0x1B3C0, rodata]
+      - [0x1B3FC, c]
+
+# Initial attempt with file splits, semi-up-to-date structures (didn't work?)
+#      - [0x0, data, header]
+#      - [0xE8, .data, header] # layers
+#      - [0x298, data]
+#      - [0x3B4, .data, e_laydef] # layout entries header
+#      - [0x55C, data]
+#      - [0x195C, .data, rooms]
+#      - [0x19F8, .data, e_layout] # layout entries data
+#      - [0x20D8, .data]
+#      - [0xA960, .data, tile_data] # tile data
+#      - [0xF760, .data, tile_data] # tile definitions
+#      - [0x17B90, .data, sprites]
+#      - [0x1B100, rodata, 1B3FC]
+#      - [0x1B144, rodata, 1C5CC]
+#      - [0x1B168, rodata, 1CBA8]
+#      - [0x1B194, rodata, 1E2A8]
+#      - [0x1B1F4, rodata, 22CAC]
+#      - [0x1B280, rodata, 2813C]
+#      - [0x1B304, rodata, 2B7CC]
+#      - [0x1B3C0, rodata, 2D2BC]
+#      - [0x1B3FC, asm]
+#      - [0x1C5CC, asm]
+#      - [0x1CBA8, asm]
+#      - [0x1DEA4, asm]
+#      - [0x1E1A0, asm]
+#      - [0x1E2A8, asm]
+#      - [0x22CAC, asm]
+#      - [0x2813C, asm]
+#      - [0x2B7CC, asm]
+#      - [0x2D2BC, asm]
+
+# Reference: Offsets for modern c function names
 #      - [0x1B3FC, c]
 #      - [0x1DEA4, c, update]
 #      - [0x1E1A0, c, update_stage_entities]
