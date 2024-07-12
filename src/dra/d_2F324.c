@@ -1,4 +1,4 @@
-#include <game.h>
+#include <types.h>
 
 typedef struct {
     u16 frame;

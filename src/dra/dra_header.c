@@ -1,4 +1,4 @@
-#include <game.h>
+#include <gapi.h>
 
 typedef void (*Entrypoint)(void);
 

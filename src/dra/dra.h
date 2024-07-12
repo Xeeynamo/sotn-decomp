@@ -2,7 +2,7 @@
 #define DRA_H
 
 #include "disk.h"
-#include "game.h"
+#include "entity.h"
 #include "weapon.h"
 #include "servant.h"
 #include "items.h"

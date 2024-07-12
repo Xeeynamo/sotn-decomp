@@ -1,4 +1,4 @@
-#include "game.h"
+#include "stage.h"
 
 // clang-format off
 Lba g_StagesLba[] = {
