@@ -217,4 +217,20 @@ extern Stages g_StageId;
 // Width in pixel of how wide is the horizontal camera during normal game play
 #define STAGE_WIDTH 256
 
+typedef struct {
+    /* 00 */ u32 gfxOff;
+    /* 04 */ u32 ovlOff;
+    /* 08 */ u32 ovlLen;
+    /* 0C */ u32 vhOff;
+    /* 10 */ u32 vhLen;
+    /* 14 */ u32 vbLen;
+    /* 18 */ u32 unk18;
+    /* 1C */ const char* gfxName;
+    /* 20 */ const char* ovlName;
+    /* 24 */ const char* name;
+    /* 28 */ u8 unk28;
+    /* 29 */ s8 seqIdx; // index of D_800ACCF8
+    /* 2A */ u16 unk2A;
+} Lba; /* size=0x2C */
+
 #endif

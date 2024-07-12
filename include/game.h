@@ -142,22 +142,6 @@ typedef struct {
 } ImgSrc;
 
 typedef struct {
-    /* 00 */ u32 gfxOff;
-    /* 04 */ u32 ovlOff;
-    /* 08 */ u32 ovlLen;
-    /* 0C */ u32 vhOff;
-    /* 10 */ u32 vhLen;
-    /* 14 */ u32 vbLen;
-    /* 18 */ u32 unk18;
-    /* 1C */ const char* gfxName;
-    /* 20 */ const char* ovlName;
-    /* 24 */ const char* name;
-    /* 28 */ u8 unk28;
-    /* 29 */ s8 seqIdx; // index of D_800ACCF8
-    /* 2A */ u16 unk2A;
-} Lba; /* size=0x2C */
-
-typedef struct {
     /* 0x0 */ u16 x;
     /* 0x2 */ u16 y;
     /* 0x4 */ u16 roomId;
