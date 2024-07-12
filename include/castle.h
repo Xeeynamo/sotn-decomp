@@ -1,6 +1,9 @@
 #ifndef CASTLE_H
 #define CASTLE_H
 
+#include <common.h>
+#include <types.h>
+
 #define CASTLE_MAP_PTR 0x801E0000
 
 // Holds flags that checks if certain switches are enabled to allow to have
