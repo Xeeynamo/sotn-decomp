@@ -1,5 +1,10 @@
+#include <animset.h>
+#include <castle.h>
+#include <clut.h>
+#include <cutscene.h>
+#include <drawmode.h>
+#include <gapi.h>
 #include <servant.h>
-#include <game.h> // TODO: specific headers
 #include <sfx.h>
 #include <psxsdk/libc.h>
 

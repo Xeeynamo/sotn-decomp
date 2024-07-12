@@ -1,4 +1,4 @@
-#include <game.h>
+#include <entity.h>
 
 AnimationFrame D_801704A8[] = {
     /* 801704A8 */ {4, 0x0415},

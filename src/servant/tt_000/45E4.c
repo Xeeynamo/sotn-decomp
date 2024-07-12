@@ -1,5 +1,7 @@
+#include <layer.h>
+#include <player.h>
+#include <stage.h>
 #include <servant.h>
-#include <game.h> // TODO: specific headers
 #include <sfx.h>
 #include <psxsdk/libc.h>
 
