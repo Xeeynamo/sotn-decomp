@@ -793,8 +793,12 @@ void func_8012F178(Primitive* prim, s32 count, bool finishUp) {
 #define TPAGE 0x118
 #define V_OFFSET 0xC0
 #endif
-
+#ifdef VERSION_PC
+    scratchpad_8012F178 _s;
+    scratchpad = &_s;
+#else
     scratchpad = (scratchpad_8012F178*)SPAD(0);
+#endif
     scratchpad->prim = prim;
     scratchpad->i_limit = count;
     scratchpad->helper = &D_800B08CC[0];
