@@ -1,6 +1,14 @@
 #include "dra.h"
 #include "lba.h"
 
+#include <gamepad.h>
+#include <gapi.h>
+#include <gstate.h>
+#include <player.h>
+#include <stage.h>
+#include <timer.h>
+#include <game.h> // globals and other
+
 #if defined(VERSION_US)
 #define PAD_RESETCOMBO ((PAD_START) | (PAD_SELECT))
 #elif defined(VERSION_HD)

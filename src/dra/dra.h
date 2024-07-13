@@ -6,6 +6,11 @@
 #include "weapon.h"
 #include "servant.h"
 #include "items.h"
+#include "menunavigation.h"
+#include "gamepad.h"
+#include <game.h> // RoomTeleport, etc.
+#include <psxsdk/libcd.h>
+#include <psxsdk/libgpu.h>
 
 #define DAMAGE_FLAG_NORMAL 0x0000
 #define DAMAGE_FLAG_CRITICAL 0x4000
