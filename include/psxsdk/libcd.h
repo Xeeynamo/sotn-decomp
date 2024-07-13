@@ -111,9 +111,9 @@ typedef struct {
 #define CdlDiskError 0x05   /* Error Detected */
 
 typedef struct {
-    CdlLOC pos;    /* file location */
-    unsigned long size;   /* file size */
-    char name[16]; /* file name (body) */
+    CdlLOC pos;         /* file location */
+    unsigned long size; /* file size */
+    char name[16];      /* file name (body) */
 } CdlFILE;
 
 typedef void (*CdlCB)(u_char, u_char*);
@@ -159,8 +159,8 @@ CdlCB CdReadCallback(CdlCB func);
 int CdRead2(long mode);
 
 void StClearRing(void);
-void StSetStream(unsigned long mode, unsigned long start_frame, unsigned long end_frame,
-                 void (*func1)(), void (*func2)());
+void StSetStream(unsigned long mode, unsigned long start_frame,
+                 unsigned long end_frame, void (*func1)(), void (*func2)());
 
 void StSetMask(unsigned long mask, unsigned long start, unsigned long end);
 unsigned long StGetNext(unsigned long** addr, unsigned long** header);
