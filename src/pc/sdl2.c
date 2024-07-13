@@ -219,7 +219,6 @@ u_long MyPadRead(int id) {
         if (keyb[SDL_SCANCODE_F8]) {
             render_mode = RENDER_GL;
         }
-        break;
     }
 
     return pressed;
