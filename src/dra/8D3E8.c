@@ -489,7 +489,7 @@ void func_8012E7A4(void) {
 #endif
 
     for (i = 0; i < 6; i++) {
-        D_800B08CC[i].unk0 = 0;
+        D_800B08CC[i].state = 0;
     }
 
     D_801396EC = PLAYER.animCurFrame;
@@ -764,7 +764,190 @@ void func_8012EF2C(void) {
 #endif
 }
 
-INCLUDE_ASM("dra/nonmatchings/8D3E8", func_8012F178);
+void func_8012F178(Primitive* prim, s32 count, bool finishUp) {
+    // Someone got the brilliant idea to use the scratchpad for every
+    // single local variable in this function. So this isn't really a
+    // struct, but it describes the layout of that scratchpad. It's not
+    // used anywhere else, so we just define it inside the function.
+    typedef struct {
+        s32 unused;
+        s32 i;
+        s32 x;
+        s32 y;
+        s32 velX;
+        s32 velY;
+        s32 i_limit;
+        Primitive* prim;
+        helper_8012F178* helper;
+        byte pad[15];
+        u8 colors[2];
+    } scratchpad_8012F178;
+    scratchpad_8012F178* scratchpad;
+
+#ifdef VERSION_PSP
+#define LEFTVEL -0x13
+#define TPAGE 0x4118
+#define V_OFFSET 0
+#else
+#define LEFTVEL -0x14
+#define TPAGE 0x118
+#define V_OFFSET 0xC0
+#endif
+
+    scratchpad = (scratchpad_8012F178*)SPAD(0);
+    scratchpad->prim = prim;
+    scratchpad->i_limit = count;
+    scratchpad->helper = &D_800B08CC[0];
+    // D_800B08CC has length 6 but we go i < 5? Odd.
+    for (scratchpad->i = 0; scratchpad->i < 5; scratchpad->i++,
+        scratchpad->helper++) {
+        if (scratchpad->i == scratchpad->i_limit && scratchpad->helper->state) {
+            scratchpad->helper->state = 2;
+        }
+        switch (scratchpad->helper->state) {
+        case 0:
+            scratchpad->prim->u0 = scratchpad->prim->u2 = 0;
+            scratchpad->prim->u1 = scratchpad->prim->u3 = 0x3F;
+            scratchpad->prim->v0 = scratchpad->prim->v1 = V_OFFSET;
+            scratchpad->prim->v2 = scratchpad->prim->v3 = V_OFFSET + 0x3F;
+            scratchpad->prim->tpage = TPAGE;
+            scratchpad->prim->priority = PLAYER.zPriority - 6;
+            scratchpad->prim->drawMode = 0x13F;
+            scratchpad->helper->state++;
+        case 1:
+#if defined(VERSION_US)
+            scratchpad->prim->priority = PLAYER.zPriority - 6;
+#endif
+            scratchpad->prim->drawMode |= DRAW_HIDE;
+            break;
+        case 2:
+            scratchpad->helper->facingLeft = PLAYER.facingLeft;
+            scratchpad->x = PLAYER.posX.i.hi;
+            scratchpad->y = PLAYER.posY.i.hi;
+            if (!PLAYER.facingLeft) {
+                scratchpad->velX = -0x2C;
+            } else {
+                scratchpad->velX = LEFTVEL;
+            }
+            scratchpad->velY = -0x18;
+            scratchpad->x += scratchpad->velX;
+            scratchpad->y += scratchpad->velY;
+            scratchpad->prim->x0 = scratchpad->prim->x2 = scratchpad->x;
+            scratchpad->prim->x1 = scratchpad->prim->x3 = scratchpad->x + 0x3F;
+            scratchpad->prim->y0 = scratchpad->prim->y1 = scratchpad->y;
+            scratchpad->prim->y2 = scratchpad->prim->y3 = scratchpad->y + 0x3F;
+            scratchpad->prim->drawMode &= ~DRAW_HIDE;
+            scratchpad->prim->r0 = scratchpad->prim->b0 = scratchpad->prim->g0 =
+                scratchpad->prim->r1 = scratchpad->prim->b1 =
+                    scratchpad->prim->g1 = scratchpad->prim->r2 =
+                        scratchpad->prim->b2 = scratchpad->prim->g2 =
+                            scratchpad->prim->r3 = scratchpad->prim->b3 =
+                                scratchpad->prim->g3 = 0x80;
+#if defined(VERSION_US)
+            scratchpad->prim->priority = PLAYER.zPriority - 6;
+#endif
+            scratchpad->helper->timer = 0x20;
+            scratchpad->helper->state++;
+            break;
+        case 3:
+            if (scratchpad->helper->facingLeft) {
+                if (scratchpad->prim->g2 > 12) {
+                    scratchpad->prim->g2 -= 6;
+                } else {
+                    scratchpad->prim->g2 = 0;
+                }
+                if (scratchpad->prim->g3 > 12) {
+                    scratchpad->prim->g3 -= 12;
+                } else {
+                    scratchpad->prim->g3 = 0;
+                }
+            } else {
+                if (scratchpad->prim->g2 > 12) {
+                    scratchpad->prim->g2 -= 12;
+                } else {
+                    scratchpad->prim->g2 = 0;
+                }
+                if (scratchpad->prim->g3 > 12) {
+                    scratchpad->prim->g3 -= 6;
+                } else {
+                    scratchpad->prim->g3 = 0;
+                }
+            }
+            scratchpad->prim->r0 = scratchpad->prim->b0 = scratchpad->prim->g0 =
+                scratchpad->prim->r2 = scratchpad->prim->b2 =
+                    scratchpad->prim->g2;
+            scratchpad->prim->r1 = scratchpad->prim->b1 = scratchpad->prim->g1 =
+                scratchpad->prim->r3 = scratchpad->prim->b3 =
+                    scratchpad->prim->g3;
+#if defined(VERSION_US)
+            scratchpad->prim->priority = PLAYER.zPriority - 6;
+#endif
+            if (--scratchpad->helper->timer == 0) {
+                scratchpad->helper->state = 1;
+            }
+            scratchpad->prim->drawMode &= ~DRAW_HIDE;
+            break;
+        }
+        scratchpad->prim = scratchpad->prim->next;
+    }
+    // Not sure what the rest of this function is for. But to do it,
+    // we have to have finishUp set. If not, we hide and exit.
+    if (!finishUp) {
+        scratchpad->prim->drawMode |= DRAW_HIDE;
+        return;
+    }
+    // Rest of the function is what I'm calling the finishUp routine.
+    scratchpad->prim->u0 = scratchpad->prim->u2 = 0;
+    scratchpad->prim->u1 = scratchpad->prim->u3 = 0x3F;
+    scratchpad->prim->v0 = scratchpad->prim->v1 = V_OFFSET;
+    scratchpad->prim->v2 = scratchpad->prim->v3 = V_OFFSET + 0x3F;
+    scratchpad->prim->tpage = TPAGE;
+    scratchpad->prim->priority = PLAYER.zPriority;
+    scratchpad->prim->drawMode = 0x335;
+    scratchpad->helper->facingLeft = PLAYER.facingLeft;
+    scratchpad->x = PLAYER.posX.i.hi;
+    scratchpad->y = PLAYER.posY.i.hi;
+    if (!PLAYER.facingLeft) {
+        scratchpad->velX = -0x2C;
+    } else {
+        scratchpad->velX = LEFTVEL;
+    }
+    scratchpad->velY = -0x18;
+    scratchpad->x += scratchpad->velX;
+    scratchpad->y += scratchpad->velY;
+    scratchpad->prim->x0 = scratchpad->prim->x2 = scratchpad->x;
+    scratchpad->prim->x1 = scratchpad->prim->x3 = scratchpad->x + 0x3F;
+    scratchpad->prim->y0 = scratchpad->prim->y1 = scratchpad->y;
+    scratchpad->prim->y2 = scratchpad->prim->y3 = scratchpad->y + 0x3F;
+
+    scratchpad->i = abs(PLAYER.velocityX) + FIX(-3) >> 8;
+    if (scratchpad->i > 0x7F) {
+        scratchpad->i = 0x7F;
+    }
+    scratchpad->colors[1] = (u8)scratchpad->i + 0x80;
+
+    scratchpad->i = abs(PLAYER.velocityX) + FIX(-3) >> 8;
+    if (scratchpad->i > 0x7F) {
+        scratchpad->i = 0x7F;
+    }
+    scratchpad->colors[0] = 0x80 - (u8)scratchpad->i;
+
+    if (scratchpad->helper->facingLeft) {
+        scratchpad->prim->b0 = scratchpad->prim->g2 = scratchpad->colors[1];
+        scratchpad->prim->g3 = scratchpad->colors[0];
+        scratchpad->prim->b1 = scratchpad->prim->b2 = scratchpad->prim->b3 =
+            0xFF;
+    } else {
+        scratchpad->prim->b1 = scratchpad->prim->g2 = scratchpad->colors[0];
+        scratchpad->prim->g3 = scratchpad->colors[1];
+        scratchpad->prim->b0 = scratchpad->prim->b2 = scratchpad->prim->b3 =
+            0xFF;
+    }
+    scratchpad->prim->r0 = scratchpad->prim->g0 = scratchpad->prim->r2 =
+        scratchpad->prim->g2;
+    scratchpad->prim->r1 = scratchpad->prim->g1 = scratchpad->prim->r3 =
+        scratchpad->prim->g3;
+}
 
 s32 func_8012F83C(s32 x0, s32 y0, s32 x1, s32 y1, s32 distance) {
     s32 diffX = x0 - x1;

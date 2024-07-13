@@ -384,7 +384,14 @@ extern u16 D_800B0858[];
 extern s16 D_800B0860[];
 extern s16 D_800B0884[];
 extern s16 D_800B08A8[];
-extern unk_800B08CC D_800B08CC[];
+// This appears to be a super miniature Entity or something
+// All it has is a state, a timer, and a facing direction.
+typedef struct {
+    s32 state;
+    s32 timer;
+    s32 facingLeft;
+} helper_8012F178;
+extern helper_8012F178 D_800B08CC[6];
 extern s32 D_800B0914;
 extern s32 D_800B0918;
 extern s32 D_800B091C;
