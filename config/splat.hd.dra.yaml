@@ -102,7 +102,7 @@ segments:
       - [0xD298, assets, factory_blueprint, g_FactoryBlueprints]
       - [0xD57C, .data, 7E4BC]
       - [0xDC98, data]
-      - [0x10B00, .data, 90264] # D_800B0A3C to D_800B0AEC
+      - [0x10B00, .data, 8D3E8] # D_800B0A3C to D_800B0AEC
       - [0x10BF8, data]
       - [0x1D140, .data, 91EBC] # g_CdVolumeTable
       - [0x1D260, .data, 91EBC] # g_VolumeTable
@@ -150,7 +150,7 @@ segments:
       - [0x41CF0, .rodata, 843B0]
       - [0x41DAC, .rodata, 8A0A4]
       - [0x41DCC, .rodata, 8D3E8]
-      - [0x41E4C, .rodata, 90264]
+      - [0x41E4C, .rodata, 8D3E8]
       - [0x41F50, .rodata, 92F60]
       - [0x41F78, .rodata, 93290]
       - [0x41FA8, .rodata, 93BDC]
@@ -182,7 +182,6 @@ segments:
       - [0x8403C, c, 843B0]
       - [0x8A528, c, 8A0A4]
       - [0x8D050, c, 8D3E8]
-      - [0x8FE50, c, 90264]
       - [0x91A98, c, 91EBC]
       - [0x92B3C, c, 92F60]
       - [0x92E6C, c, 93290]

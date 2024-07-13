@@ -159,6 +159,8 @@ s16 D_800B0860[18];
 s16 D_800B0884[18];
 s16 D_800B08A8[18];
 AnimationFrame D_800B0798[40]; // random size to play safe
+s32 D_800B0924[99];            // big enough to avoid 09F8 after it
+u16* D_800B09F8[99];           // random size
 u8 D_800B0F94[100][5];         // random size to play safe
 SVECTOR stubbbbbbbb = {0};
 SVECTOR* D_800B0CB4[][4] = {
@@ -503,6 +505,7 @@ s16 g_SeqVolume1;
 s16 g_SeqVolume2;
 u8 g_ReverbDepth;
 s32 g_SeqPointers[0xA];
+s32 D_8013843C;
 s16 D_8013845C;
 u8 D_8013B640[3];
 s32 g_CurCdPos;
@@ -583,4 +586,3 @@ void func_80115394(s32* arg0, s16 arg1, s16 arg2) { NOT_IMPLEMENTED; }
 void EntityNumberMovesToHpMeter(Entity* self) { NOT_IMPLEMENTED; }
 void EntityPlayerDissolves(Entity* self) { NOT_IMPLEMENTED; }
 void EntityGuardText(Entity* self) { NOT_IMPLEMENTED; }
-void func_8012F894(Entity* self) { NOT_IMPLEMENTED; }

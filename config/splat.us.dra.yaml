@@ -109,7 +109,7 @@ segments:
       - [0xE294, .data, d_E294]
       - [0x10798, .data, d_10798]
       - [0x10924, data]
-      - [0x10A3C, .data, 90264] # D_800B0A3C to D_800B0AEC
+      - [0x10A3C, .data, 8D3E8] # D_800B0A3C to D_800B0AEC
       - [0x10B34, data]
       - [0x1107C, raw, vh_0] # aPbav
       - [0x1407C, raw, vh_1] # aPbav_0
@@ -221,7 +221,7 @@ segments:
       - [0x41EB0, .rodata, 8D3E8] # func_8012D3E8
       # - [0x41EC8, .rodata, 8D3E8] # func_8012EF2C
       # - [0x41EF0, .rodata, 8D3E8] # func_8012F894
-      - [0x41F30, .rodata, 90264] # func_80130264
+      - [0x41F30, .rodata, 8D3E8] # func_80130264
       # - [0x41F70, .rodata, 90264] # func_80130618
       # - [0x41FB0, .rodata, 90264] # func_801309B4
       # - [0x41FD8, .rodata, 90264] # func_80130E94
@@ -259,7 +259,6 @@ segments:
       - [0x843B0, c, 843B0]
       - [0x8A0A4, c, 8A0A4]
       - [0x8D3E8, c, 8D3E8]
-      - [0x90264, c, 90264]
       - [0x91EBC, c, 91EBC]
       - [0x92F60, c, 92F60]
       - [0x93290, c, 93290]
