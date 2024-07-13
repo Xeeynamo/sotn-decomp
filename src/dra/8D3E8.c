@@ -988,12 +988,17 @@ void func_8012F894(Entity* self) {
         self->animSet = 0xF;
         self->unk5A = 0x7E;
         self->palette = PLAYER.palette;
+#ifdef VERSION_HD
+        self->zPriority = PLAYER.zPriority - 2;
+#endif
         self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000 |
                       FLAG_UNK_20000;
         self->step++;
     }
     animControl = 0;
+#ifndef VERSION_HD
     self->zPriority = PLAYER.zPriority - 2;
+#endif
     self->facingLeft = PLAYER.facingLeft;
     if (abs(PLAYER.velocityX) > FIX(3)) {
         PLAYER.drawFlags = self->drawFlags |= DRAW_HIDE;
