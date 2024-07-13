@@ -1,4 +1,3 @@
-#include "game.h"
 #include "rwrp.h"
 
 extern u16 D_801804B8[];

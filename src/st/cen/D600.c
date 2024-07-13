@@ -5,7 +5,10 @@
  */
 
 #include "cen.h"
-#include "game.h"
+
+#include <collider.h>
+#include <entity.h>
+#include <gapi.h>
 
 // background block of rock
 void EntityBackgroundBlock(Entity* self) {

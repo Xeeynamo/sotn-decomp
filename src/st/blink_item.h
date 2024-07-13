@@ -1,6 +1,6 @@
 #include <entity.h>
 #include <primitive.h>
-#include <game.h> // RENDERFLAGS
+#include <timer.h>
 
 void BlinkItem(Entity* self, u16 renderFlags) {
     Primitive* prim;

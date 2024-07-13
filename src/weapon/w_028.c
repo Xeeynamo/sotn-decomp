@@ -3,6 +3,8 @@
 #include "weapon_private.h"
 #include "shared.h"
 
+#include <clut.h>
+
 extern SpriteParts D_C8000_8017A040[];
 extern s8 D_C8000_8017AA98[];
 extern s32 D_C8000_8017AAE0[];

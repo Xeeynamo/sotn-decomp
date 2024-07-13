@@ -3,6 +3,8 @@
 #include "weapon_private.h"
 #include "shared.h"
 
+#include <clut.h>
+
 INCLUDE_ASM("weapon/nonmatchings/w_026", EntityWeaponAttack);
 
 s32 func_ptr_80170004(Entity* self) {}

@@ -1,4 +1,3 @@
-#include "game.h"
 #include "st0.h"
 
 extern u16 g_InitializeData0[];

@@ -1,5 +1,12 @@
 #include "cen.h"
-#include "game.h"
+
+#include <castle.h>
+#include <cutscene.h>
+#include <drawmode.h>
+#include <gamepad.h>
+#include <gapi.h>
+#include <timer.h>
+#include <ui.h>
 
 // Bizarre variable - u8 here, but u16 in EntityHeartDrop
 extern u8 D_801805D8[];

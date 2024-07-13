@@ -1,4 +1,7 @@
-#include "game.h"
+#include <common.h>
+#include <drawmode.h>
+#include <primitive.h>
+#include <psxsdk/libgte.h>
 
 #if !defined(VERSION_PSP)
 const SVECTOR g_UnkPrimHelperRot = {0, 0, 0};

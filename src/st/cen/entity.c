@@ -1,5 +1,7 @@
-#include "game.h"
-#include "stage.h"
+#include <animset.h>
+#include <drawmode.h>
+#include <stage.h>
+#include <game.h> // globals
 
 void EntityUnkId01(Entity*);
 void EntityExplosion(Entity*);

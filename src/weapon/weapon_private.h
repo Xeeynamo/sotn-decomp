@@ -1,9 +1,17 @@
 #ifndef WEAPON_PRIVATE_H
 #define WEAPON_PRIVATE_H
 
+#define WEAPON0 // forces WEAPON0 for the time being
+
 #include <weapon.h>
 
-#define WEAPON0 // forces WEAPON0 for the time being
+#include <animset.h>
+#include <collider.h>
+#include <drawmode.h>
+#include <entity.h>
+#include <gapi.h>
+#include <timer.h>
+#include <psxsdk/libgte.h>
 
 #if defined(WEAPON0)
 #define HAND_ID 0

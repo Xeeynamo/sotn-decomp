@@ -4,7 +4,6 @@
  * Description: All reverse warp rooms.
  */
 
-#include "game.h"
 #include "rwrp.h"
 
 extern ObjInit2 D_801804E0[];
