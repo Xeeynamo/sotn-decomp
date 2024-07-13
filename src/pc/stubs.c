@@ -190,7 +190,7 @@ SVECTOR* D_800B0CB4[][4] = {
     &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
     &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
 };
-unk_800B08CC D_800B08CC[6] = {0};
+helper_8012F178 D_800B08CC[6] = {0};
 AnimationFrame D_800B07C8[26];
 s32 D_80138090;
 mistStruct D_80138094[16];
