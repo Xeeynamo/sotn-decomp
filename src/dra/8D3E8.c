@@ -1091,22 +1091,22 @@ void func_8012F894(Entity* self) {
             }
             hitboxY += 2;
             CheckCollision(hitboxX, hitboxY, &collider1, 0);
-            if (collider1.effects & 1) {
+            if (collider1.effects & EFFECT_SOLID) {
                 CheckCollision(
                     hitboxX, (hitboxY + collider1.unk18) - 1, &collider2, 0);
-                if (!(collider2.effects & 1)) {
+                if (!(collider2.effects & EFFECT_SOLID)) {
                     hitboxY += collider1.unk18;
                     if (func_8012F83C(playerX, playerY, hitboxX, hitboxY,
                                       D_800B0920) != 0) {
                         animControl = 1;
-                        if (collider1.effects & 0x8000) {
+                        if (collider1.effects & EFFECT_UNK_8000) {
                             animControl = 3;
                             if (PLAYER.facingLeft &&
-                                (collider1.effects & 0x4000)) {
+                                (collider1.effects & EFFECT_UNK_4000)) {
                                 animControl = 2;
                             }
                             if (!PLAYER.facingLeft &&
-                                !(collider1.effects & 0x4000)) {
+                                !(collider1.effects & EFFECT_UNK_4000)) {
                                 animControl = 2;
                             }
                         }
@@ -1116,17 +1116,21 @@ void func_8012F894(Entity* self) {
                     var_s1++;
                     continue;
                 }
-                if ((collider2.effects & 0x8003) != 0x8001) {
+                if ((collider2.effects &
+                     (EFFECT_UNK_8000 | EFFECT_UNK_0002 | EFFECT_SOLID)) !=
+                    (EFFECT_UNK_8000 | EFFECT_SOLID)) {
                     continue;
                 }
                 hitboxY += collider1.unk18 - 1 + collider2.unk18;
                 if (func_8012F83C(
                         playerX, playerY, hitboxX, hitboxY, D_800B0920)) {
                     animControl = 3;
-                    if (PLAYER.facingLeft && (collider1.effects & 0x4000)) {
+                    if (PLAYER.facingLeft &&
+                        (collider1.effects & EFFECT_UNK_4000)) {
                         animControl = 2;
                     }
-                    if (!PLAYER.facingLeft && !(collider1.effects & 0x4000)) {
+                    if (!PLAYER.facingLeft &&
+                        !(collider1.effects & EFFECT_UNK_4000)) {
                         animControl = 2;
                     }
 
@@ -1175,14 +1179,14 @@ void func_8012F894(Entity* self) {
                     if (!PLAYER.facingLeft) {
                         CheckCollision((PLAYER.posX.i.hi - D_800B0920) - 1,
                                        PLAYER.posY.i.hi + 23, &collider1, 0);
-                        if (!(collider1.effects & 1)) {
+                        if (!(collider1.effects & EFFECT_SOLID)) {
                             PLAYER.velocityX = FIX(-1);
                             func_8012CB0C();
                         }
                     } else {
                         CheckCollision(PLAYER.posX.i.hi + D_800B0920 + 1,
                                        PLAYER.posY.i.hi + 23, &collider1, 0);
-                        if (!(collider1.effects & 1)) {
+                        if (!(collider1.effects & EFFECT_SOLID)) {
                             PLAYER.velocityX = FIX(1);
                             func_8012CB0C();
                         }
@@ -1202,7 +1206,7 @@ void func_8012F894(Entity* self) {
         }
         D_80138430 = angle;
     } else {
-        if (playerX + D_800B0920 >= 0x101) {
+        if (playerX + D_800B0920 > 0x100) {
             hitboxX = playerX + D_800B0920;
             hitboxY = playerY;
             angle = 0;
