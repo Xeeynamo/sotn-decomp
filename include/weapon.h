@@ -4,7 +4,6 @@
 #define WEAPON
 
 #include <common.h>
-#include <game.h>
 #include <types.h>
 #include <entity.h>
 #include <palette.h>
@@ -30,5 +29,12 @@ typedef struct {
 
 #define N_WEAPON_PAL 12
 extern u16 D_8006EDCC[2][N_WEAPON_PAL * PALETTE_LEN];
+
+#define WEAPON_0_START 0xE0
+#define WEAPON_0_END (WEAPON_1_START - 1)
+#define WEAPON_1_START 0xF0
+
+#define WEAPON0_PTR 0x8017A000
+#define WEAPON1_PTR 0x8017D000
 
 #endif

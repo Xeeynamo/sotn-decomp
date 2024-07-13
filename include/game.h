@@ -37,6 +37,7 @@
 #include "timeattack.h"
 #include "timer.h"
 #include "ui.h"
+#include "unkstruct.h"
 #include <psxsdk/kernel.h>
 
 // lseek etc. conflicts
@@ -69,16 +70,10 @@ typedef struct {
 #define DISP_TITLE_W 512
 #define DISP_TITLE_H DISP_ALL_H
 
-#define WEAPON_0_START 0xE0
-#define WEAPON_0_END (WEAPON_1_START - 1)
-#define WEAPON_1_START 0xF0
-
 #ifndef VERSION_PC
 #define RIC_PRG_PTR 0x8013C000
 #define SPRITESHEET_PTR 0x8013C020 // g_PlOvlSpritesheet
 #define FAMILIAR_PTR 0x80170000
-#define WEAPON0_PTR 0x8017A000
-#define WEAPON1_PTR 0x8017D000
 #define STAGE_PRG_PTR 0x80180000
 #define SIM_CHR0 0x80280000
 #define SIM_CHR1 0x80284000
@@ -88,8 +83,6 @@ typedef struct {
 #define RIC_PRG_PTR 0x8013C000
 #define SPRITESHEET_PTR 0x8013C020 // g_PlOvlSpritesheet
 #define FAMILIAR_PTR 0x80170000
-#define WEAPON0_PTR 0x8017A000
-#define WEAPON1_PTR 0x8017D000
 #define STAGE_PRG_PTR 0x80180000
 #define SIM_CHR0 0x80280000
 #define SIM_CHR1 0x80284000
@@ -109,16 +102,6 @@ typedef struct {
 #define ELEMENT_ICE 0x2000
 #define ELEMENT_THUNDER 0x4000
 #define ELEMENT_FIRE 0x8000
-
-#define FONT_W 8                 // small font size used for dialogues and menu
-#define FONT_H 8                 // small font size used for dialogues and menu
-#define FONT_GAP FONT_W          // gap between the beginning of two letters
-#define FONT_SPACE 4             // gap for the space character
-#define MENUCHAR(x) ((x) - 0x20) // 8x8 characters are ASCII offset by 0x20
-#define DIAG_EOL 0xFF            // end of line
-#define DIAG_EOS 0x00            // end of string
-
-#include "unkstruct.h"
 
 typedef struct {
     f32 x;
