@@ -1,6 +1,8 @@
 #include "weapon.h"
 #include <cJSON/cJSON.h>
 #include "pc.h"
+#include <sprite.h>
+#include <graphics.h>
 
 // main variable
 u16 D_8006EDCC[2][N_WEAPON_PAL * PALETTE_LEN];
