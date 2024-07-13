@@ -396,7 +396,10 @@ extern s32 D_800B0914;
 extern s32 D_800B0918;
 extern s32 D_800B091C;
 extern s32 D_800B0920;
+extern s32 D_800B0924[];
+extern u16* D_800B09F8[];
 extern u8 D_800B0F94[][5];
+
 extern SVECTOR* D_800B0CB4[][4];
 extern s16 g_CdVolumeTable[];
 extern struct SeqData g_SeqInfo[];
@@ -620,6 +623,7 @@ extern RECT D_80138424;
 extern s32 D_8013842C;
 extern s32 D_80138430;
 extern s32 D_80138438;
+extern s32 D_8013843C;
 extern s32 D_80138440;
 extern s32 D_80138444;
 extern s32 D_80138454;
