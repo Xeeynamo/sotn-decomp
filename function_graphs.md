@@ -1554,7 +1554,7 @@
 - [❌ func_80017008](function_calls/main.func_80017008.svg?raw=1)
 - [❌ func_80017078](function_calls/main.func_80017078.svg?raw=1)
 - [❌ func_800286E0](function_calls/main.func_800286E0.svg?raw=1)
-- [❌ get_alarm](function_calls/main.get_alarm.svg?raw=1)
+- [✅ get_alarm](function_calls/main.get_alarm.svg?raw=1)
 - [❌ get_ce](function_calls/main.get_ce.svg?raw=1)
 - [❌ get_cs](function_calls/main.get_cs.svg?raw=1)
 - [❌ get_dx](function_calls/main.get_dx.svg?raw=1)
