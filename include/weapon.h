@@ -2,7 +2,12 @@
 #define WEAPON_H
 
 #define WEAPON
+
+#include <common.h>
 #include <game.h>
+#include <types.h>
+#include <entity.h>
+#include <palette.h>
 
 typedef struct {
     /* 0x00 */ void (*EntityWeaponAttack)(Entity* self);
@@ -25,4 +30,5 @@ typedef struct {
 
 #define N_WEAPON_PAL 12
 extern u16 D_8006EDCC[2][N_WEAPON_PAL * PALETTE_LEN];
+
 #endif

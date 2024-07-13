@@ -1,4 +1,5 @@
-#include <types.h>
+#ifndef LIBCD_H
+#define LIBCD_H
 
 /* Location */
 typedef struct {
@@ -21,13 +22,13 @@ typedef struct {
     u_short type;
     u_short secCount;
     u_short nSectors;
-    u_long frameCount;
-    u_long frameSize;
+    unsigned long frameCount;
+    unsigned long frameSize;
 
     u_short width;
     u_short height;
-    u_long dummy1;
-    u_long dummy2;
+    unsigned long dummy1;
+    unsigned long dummy2;
     CdlLOC loc;
 } StHEADER;
 
@@ -111,7 +112,7 @@ typedef struct {
 
 typedef struct {
     CdlLOC pos;    /* file location */
-    u_long size;   /* file size */
+    unsigned long size;   /* file size */
     char name[16]; /* file name (body) */
 } CdlFILE;
 
@@ -152,18 +153,20 @@ void(*CdDataCallback(void (*func)()));
 CdlLOC* CdIntToPos(int i, CdlLOC* p);
 int CdPosToInt(CdlLOC* p);
 CdlFILE* CdSearchFile(CdlFILE* fp, char* name);
-int CdRead(int sectors, u_long* buf, int mode);
+int CdRead(int sectors, unsigned long* buf, int mode);
 int CdReadSync(int mode, u_char* result);
 CdlCB CdReadCallback(CdlCB func);
 int CdRead2(long mode);
 
 void StClearRing(void);
-void StSetStream(u_long mode, u_long start_frame, u_long end_frame,
+void StSetStream(unsigned long mode, unsigned long start_frame, unsigned long end_frame,
                  void (*func1)(), void (*func2)());
 
-void StSetMask(u_long mask, u_long start, u_long end);
-u_long StGetNext(u_long** addr, u_long** header);
-u_long StFreeRing(u_long* base);
+void StSetMask(unsigned long mask, unsigned long start, unsigned long end);
+unsigned long StGetNext(unsigned long** addr, unsigned long** header);
+unsigned long StFreeRing(unsigned long* base);
 int StGetBackloc(CdlLOC* loc);
-void StSetRing(u_long* ring_addr, u_long ring_size1);
+void StSetRing(unsigned long* ring_addr, unsigned long ring_size1);
 void StUnSetRing(void);
+
+#endif // LIBCD_H

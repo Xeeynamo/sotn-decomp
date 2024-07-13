@@ -233,4 +233,7 @@ typedef struct {
     /* 2A */ u16 unk2A;
 } Lba; /* size=0x2C */
 
+// something related to current stage or room? used when teleporting
+extern s32 D_80097C98;
+
 #endif
