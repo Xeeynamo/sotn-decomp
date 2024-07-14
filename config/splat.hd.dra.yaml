@@ -102,8 +102,10 @@ segments:
       - [0xD298, assets, factory_blueprint, g_FactoryBlueprints]
       - [0xD57C, .data, 7E4BC]
       - [0xDC98, data]
+      - [0x109E8, .data, 8D3E8] # D_800B0924 to D_800B09F8
       - [0x10B00, .data, 8D3E8] # D_800B0A3C to D_800B0AEC
-      - [0x10BF8, data]
+      - [0x10BF8, .data, 8D3E8] # D_800B0CB4 and D_800B0F94
+      - [0x11140, data]
       - [0x1D140, .data, 91EBC] # g_CdVolumeTable
       - [0x1D260, .data, 91EBC] # g_VolumeTable
       - [0x1D284, .data, 91EBC] # g_DebugEnabled
