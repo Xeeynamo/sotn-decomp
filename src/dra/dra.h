@@ -174,7 +174,9 @@ typedef struct {
     RECT D_800ACDD8;
     RECT D_800ACDE0;
     RECT D_800ACDE8;
+#ifdef VERSION_US
     RECT D_800ACDF0;
+#endif
 } Vram;
 
 #define NOW_LOADING_PRIM_COUNT 16
