@@ -1878,6 +1878,133 @@ void func_8013136C(Entity* self) {
     func_8012C600();
 }
 
+static SVECTOR D_800B0B34 = {-8, -72, -4};
+static SVECTOR D_800B0B3C = {8, -72, -4};
+static SVECTOR D_800B0B44 = {-48, -32, -4};
+static SVECTOR D_800B0B4C = {-8, -32, -4};
+static SVECTOR D_800B0B54 = {8, -32, -4};
+static SVECTOR D_800B0B5C = {48, -32, -4};
+static SVECTOR D_800B0B64 = {-48, -16, -4};
+static SVECTOR D_800B0B6C = {-8, -16, -4};
+static SVECTOR D_800B0B74 = {8, -16, -4};
+static SVECTOR D_800B0B7C = {48, -16, -4};
+static SVECTOR D_800B0B84 = {-8, 72, -4};
+static SVECTOR D_800B0B8C = {8, 72, -4};
+static SVECTOR D_800B0B94 = {-24, -48, -4}; // unused
+static SVECTOR D_800B0B9C = {-8, -48, -4};
+static SVECTOR D_800B0BA4 = {8, -48, -4};
+static SVECTOR D_800B0BAC = {24, -48, -4}; // unused
+static SVECTOR D_800B0BB4 = {-24, -32, -4};
+static SVECTOR D_800B0BBC = {24, -32, -4};
+static SVECTOR D_800B0BC4 = {-24, -16, -4};
+static SVECTOR D_800B0BCC = {24, -16, -4};
+static SVECTOR D_800B0BD4 = {-24, 0, -4}; // unused
+static SVECTOR D_800B0BDC = {-8, 0, -4};
+static SVECTOR D_800B0BE4 = {8, 0, -4};
+static SVECTOR D_800B0BEC = {24, 0, -4}; // unused
+static SVECTOR D_800B0BF4 = {-8, -72, 4};
+static SVECTOR D_800B0BFC = {8, -72, 4};
+static SVECTOR D_800B0C04 = {-48, -32, 4};
+static SVECTOR D_800B0C0C = {-8, -32, 4};
+static SVECTOR D_800B0C14 = {8, -32, 4};
+static SVECTOR D_800B0C1C = {48, -32, 4};
+static SVECTOR D_800B0C24 = {-48, -16, 4};
+static SVECTOR D_800B0C2C = {-8, -16, 4};
+static SVECTOR D_800B0C34 = {8, -16, 4};
+static SVECTOR D_800B0C3C = {48, -16, 4};
+static SVECTOR D_800B0C44 = {-8, 72, 4};
+static SVECTOR D_800B0C4C = {8, 72, 4};
+static SVECTOR D_800B0C54 = {-24, -48, 4};
+static SVECTOR D_800B0C5C = {-8, -48, 4};
+static SVECTOR D_800B0C64 = {8, -48, 4};
+static SVECTOR D_800B0C6C = {24, -48, 4};
+static SVECTOR D_800B0C74 = {-24, -32, 4};
+static SVECTOR D_800B0C7C = {24, -32, 4};
+static SVECTOR D_800B0C84 = {-24, -16, 4};
+static SVECTOR D_800B0C8C = {24, -16, 4};
+static SVECTOR D_800B0C94 = {-24, 0, 4};
+static SVECTOR D_800B0C9C = {-8, 0, 4};
+static SVECTOR D_800B0CA4 = {8, 0, 4};
+static SVECTOR D_800B0CAC = {24, 0, 4};
+static SVECTOR* D_800B0CB4[][4] = {
+    {&D_800B0B4C, &D_800B0B54, &D_800B0B74, &D_800B0B6C},
+    {&D_800B0C54, &D_800B0C5C, &D_800B0C0C, &D_800B0C74},
+    {&D_800B0C64, &D_800B0C6C, &D_800B0C7C, &D_800B0C14},
+    {&D_800B0C84, &D_800B0C2C, &D_800B0C9C, &D_800B0C94},
+    {&D_800B0C34, &D_800B0C8C, &D_800B0CAC, &D_800B0CA4},
+    {&D_800B0C0C, &D_800B0C5C, &D_800B0C54, &D_800B0C74},
+    {&D_800B0C7C, &D_800B0C6C, &D_800B0C64, &D_800B0C14},
+    {&D_800B0C9C, &D_800B0C2C, &D_800B0C84, &D_800B0C94},
+    {&D_800B0CAC, &D_800B0C8C, &D_800B0C34, &D_800B0CA4},
+    {&D_800B0C14, &D_800B0C64, &D_800B0C5C, &D_800B0C0C},
+    {&D_800B0C2C, &D_800B0C0C, &D_800B0C74, &D_800B0C84},
+    {&D_800B0C8C, &D_800B0C7C, &D_800B0C14, &D_800B0C34},
+    {&D_800B0CA4, &D_800B0C34, &D_800B0C2C, &D_800B0C9C},
+    {&D_800B0C34, &D_800B0C14, &D_800B0C0C, &D_800B0C2C},
+    {&D_800B0B3C, &D_800B0BFC, &D_800B0C64, &D_800B0BA4},
+    {&D_800B0BA4, &D_800B0C64, &D_800B0C14, &D_800B0B54},
+    {&D_800B0B74, &D_800B0C34, &D_800B0CA4, &D_800B0BE4},
+    {&D_800B0BE4, &D_800B0CA4, &D_800B0C4C, &D_800B0B8C},
+    {&D_800B0C74, &D_800B0C0C, &D_800B0B4C, &D_800B0BB4},
+    {&D_800B0C14, &D_800B0C7C, &D_800B0BBC, &D_800B0B54},
+    {&D_800B0C64, &D_800B0BFC, &D_800B0BF4, &D_800B0C5C},
+    {&D_800B0C84, &D_800B0C74, &D_800B0C04, &D_800B0C24},
+    {&D_800B0C3C, &D_800B0C1C, &D_800B0C7C, &D_800B0C8C},
+    {&D_800B0C4C, &D_800B0CA4, &D_800B0C9C, &D_800B0C44},
+    {&D_800B0C5C, &D_800B0BF4, &D_800B0B34, &D_800B0B9C},
+    {&D_800B0C0C, &D_800B0C5C, &D_800B0B9C, &D_800B0B4C},
+    {&D_800B0C9C, &D_800B0C2C, &D_800B0B6C, &D_800B0BDC},
+    {&D_800B0C44, &D_800B0C9C, &D_800B0BDC, &D_800B0B84},
+    {&D_800B0B6C, &D_800B0C2C, &D_800B0C84, &D_800B0BC4},
+    {&D_800B0BCC, &D_800B0C8C, &D_800B0C34, &D_800B0B74},
+    {&D_800B0B6C, &D_800B0B74, &D_800B0BE4, &D_800B0BDC},
+    {&D_800B0BDC, &D_800B0BE4, &D_800B0B8C, &D_800B0B84},
+    {&D_800B0B34, &D_800B0B3C, &D_800B0BA4, &D_800B0B9C},
+    {&D_800B0B9C, &D_800B0BA4, &D_800B0B54, &D_800B0B4C},
+    {&D_800B0B5C, &D_800B0C1C, &D_800B0C3C, &D_800B0B7C},
+    {&D_800B0BF4, &D_800B0BFC, &D_800B0B3C, &D_800B0B34},
+    {&D_800B0C24, &D_800B0C04, &D_800B0B44, &D_800B0B64},
+    {&D_800B0B8C, &D_800B0C4C, &D_800B0C44, &D_800B0B84},
+    {&D_800B0C04, &D_800B0C74, &D_800B0BB4, &D_800B0B44},
+    {&D_800B0BC4, &D_800B0C84, &D_800B0C24, &D_800B0B64},
+    {&D_800B0C7C, &D_800B0C1C, &D_800B0B5C, &D_800B0BBC},
+    {&D_800B0B7C, &D_800B0C3C, &D_800B0C8C, &D_800B0BCC},
+    {&D_800B0BB4, &D_800B0B4C, &D_800B0B6C, &D_800B0BC4},
+    {&D_800B0B54, &D_800B0BBC, &D_800B0BCC, &D_800B0B74},
+    {&D_800B0B44, &D_800B0BB4, &D_800B0BC4, &D_800B0B64},
+    {&D_800B0BBC, &D_800B0B5C, &D_800B0B7C, &D_800B0BCC},
+};
+static u8 D_800B0F94[][5] = {
+    {0x38, 0x08, 0x10, 0x10, 0x0D}, {0x58, 0x08, 0x10, 0x10, 0x0E},
+    {0x58, 0x08, 0x10, 0x10, 0x1E}, {0x58, 0x08, 0x10, 0x10, 0x2E},
+    {0x58, 0x08, 0x10, 0x10, 0x3E}, {0x58, 0x08, 0x10, 0x10, 0x4E},
+    {0x58, 0x08, 0x10, 0x10, 0x5E}, {0x58, 0x08, 0x10, 0x10, 0x6E},
+    {0x58, 0x08, 0x10, 0x10, 0x7E}, {0x68, 0x08, 0x10, 0x10, 0x4E},
+    {0x68, 0x08, 0x10, 0x10, 0x2E}, {0x68, 0x08, 0x10, 0x10, 0x0E},
+    {0x68, 0x08, 0x10, 0x10, 0x6E}, {0x68, 0x18, 0x10, 0x10, 0x4E},
+    {0x68, 0x30, 0x10, 0x10, 0x0E}, {0x68, 0x30, 0x10, 0x10, 0x0E},
+    {0x68, 0x30, 0x10, 0x10, 0x0E}, {0x68, 0x30, 0x10, 0x10, 0x0E},
+    {0x68, 0x30, 0x10, 0x10, 0x0E}, {0x68, 0x30, 0x10, 0x10, 0x0E},
+    {0x68, 0x30, 0x10, 0x10, 0x4E}, {0x68, 0x30, 0x10, 0x10, 0x4E},
+    {0x68, 0x30, 0x10, 0x10, 0x4E}, {0x68, 0x30, 0x10, 0x10, 0x4E},
+    {0x68, 0x30, 0x10, 0x10, 0x4E}, {0x68, 0x30, 0x10, 0x10, 0x4E},
+    {0x68, 0x30, 0x10, 0x10, 0x4E}, {0x68, 0x30, 0x10, 0x10, 0x4E},
+    {0x68, 0x30, 0x10, 0x10, 0x4E}, {0x68, 0x30, 0x10, 0x10, 0x4E},
+    {0x38, 0x18, 0x10, 0x10, 0x0F}, {0x38, 0x28, 0x10, 0x48, 0x0F},
+    {0x50, 0x20, 0x10, 0x18, 0x0F}, {0x50, 0x38, 0x10, 0x10, 0x0F},
+    {0x70, 0x48, 0x08, 0x08, 0x0F}, {0x70, 0x48, 0x08, 0x08, 0x0F},
+    {0x70, 0x48, 0x08, 0x08, 0x4F}, {0x70, 0x48, 0x08, 0x08, 0x4F},
+    {0x50, 0x50, 0x18, 0x08, 0x0F}, {0x50, 0x50, 0x18, 0x08, 0x4F},
+    {0x50, 0x50, 0x18, 0x08, 0x1F}, {0x50, 0x50, 0x18, 0x08, 0x5F},
+    {0x68, 0x58, 0x10, 0x10, 0x0F}, {0x68, 0x58, 0x10, 0x10, 0x1F},
+    {0x50, 0x58, 0x18, 0x10, 0x0F}, {0x50, 0x58, 0x18, 0x10, 0x1F},
+};
+
+#ifdef VERSION_US
+static u8 dirty_data1 = 0x20;
+static u8 dirty_data2 = 0x0D;
+#endif
+
 // When Alucard uses the cross subweapon for 100 hearts.
 // Entity ID 7, blueprint #7 (this is a coincidence)
 void EntityGiantSpinningCross(Entity* self) {
@@ -1901,7 +2028,7 @@ void EntityGiantSpinningCross(Entity* self) {
     sp50 = D_800E202C;
 
     if (self->step == 0) {
-        self->primIndex = g_api.func_800EDB58(PRIM_GT4, 46);
+        self->primIndex = g_api.func_800EDB58(PRIM_GT4, LEN(D_800B0CB4));
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1925,7 +2052,8 @@ void EntityGiantSpinningCross(Entity* self) {
         self->step++;
         primUVCoords = &D_800B0F94[0][0];
         prim = &g_PrimBuf[self->primIndex];
-        for (i = 0; i < 46; i++, prim = prim->next, primUVCoords += 5) {
+        for (i = 0; i < LEN(D_800B0CB4); i++, prim = prim->next,
+            primUVCoords += 5) {
             prim->clut = (primUVCoords[4] & 0xF) | 0x1A0;
             switch (primUVCoords[4] & 0xF0) {
             case 0x10:
@@ -2043,7 +2171,7 @@ void EntityGiantSpinningCross(Entity* self) {
     gte_stszotz(&z);
     self->hitboxOffX = prim->x0 - self->posX.i.hi;
     self->hitboxOffY = prim->y0 - self->posY.i.hi;
-    for (i = 0; i < 46; i++, prim = prim->next, vectors_ptr += 4) {
+    for (i = 0; i < LEN(D_800B0CB4); i++, prim = prim->next, vectors_ptr += 4) {
         gte_ldv3(vectors_ptr[0], vectors_ptr[1], vectors_ptr[3]);
         gte_rtpt();
         temp_a3 = vectors_ptr[2];

@@ -159,37 +159,6 @@ s16 D_800B0860[18];
 s16 D_800B0884[18];
 s16 D_800B08A8[18];
 AnimationFrame D_800B0798[40]; // random size to play safe
-u8 D_800B0F94[100][5];         // random size to play safe
-SVECTOR stubbbbbbbb = {0};
-SVECTOR* D_800B0CB4[][4] = {
-    // a lot of random data to play safe
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-    &stubbbbbbbb, &stubbbbbbbb, &stubbbbbbbb,
-};
 helper_8012F178 D_800B08CC[6] = {0};
 AnimationFrame D_800B07C8[26];
 s32 D_80138090;
