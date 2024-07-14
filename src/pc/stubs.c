@@ -145,22 +145,6 @@ u16 D_800AC958[] = {
     0x0300, 0x0320, 0x0300, 0x0320, 0x0340, 0x0360, 0x0340, 0x0360,
     0x0380, 0x03A0, 0x0380, 0x03A0, 0x03C0, 0x03E0, 0x03C0, 0x03E0,
 };
-s16 D_800AC998[] = {
-    0x0200, 0x0220, 0x0200, 0x0220, 0x0240, 0x0260, 0x0240, 0x0260,
-    0x0280, 0x02A0, 0x0280, 0x02A0, 0x02C0, 0x02E0, 0x02C0, 0x02E0,
-    0x0300, 0x0320, 0x0300, 0x0320, 0x0340, 0x0360, 0x0340, 0x0360,
-    0x0380, 0x03A0, 0x0380, 0x03A0, 0x03C0, 0x03E0, 0x03C0, 0x03E0,
-};
-s32 D_800B0830[3];
-s32 D_800B083C[3];
-u8 D_800B0848[16];
-u16 D_800B0858[2]; // might be part of the previous array
-s16 D_800B0860[18];
-s16 D_800B0884[18];
-s16 D_800B08A8[18];
-AnimationFrame D_800B0798[40]; // random size to play safe
-helper_8012F178 D_800B08CC[6] = {0};
-AnimationFrame D_800B07C8[26];
 s32 D_80138090;
 mistStruct D_80138094[16];
 s32 D_8013808C;
@@ -383,10 +367,6 @@ RoomLoadDefHolder D_801375BC;
 s32 D_801375C0;
 s32 D_801375C4;
 s32 D_801375C8;
-s32 D_800B0914;
-s32 D_800B0918;
-s32 D_800B091C;
-s32 D_800B0920;
 PlayerOvl g_PlOvl = {0};
 u8** g_PlOvlAluBatSpritesheet[1] = {0};
 
