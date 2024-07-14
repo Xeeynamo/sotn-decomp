@@ -159,8 +159,6 @@ s16 D_800B0860[18];
 s16 D_800B0884[18];
 s16 D_800B08A8[18];
 AnimationFrame D_800B0798[40]; // random size to play safe
-s32 D_800B0924[99];            // big enough to avoid 09F8 after it
-u16* D_800B09F8[99];           // random size
 u8 D_800B0F94[100][5];         // random size to play safe
 SVECTOR stubbbbbbbb = {0};
 SVECTOR* D_800B0CB4[][4] = {

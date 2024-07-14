@@ -396,8 +396,6 @@ extern s32 D_800B0914;
 extern s32 D_800B0918;
 extern s32 D_800B091C;
 extern s32 D_800B0920;
-extern s32 D_800B0924[];
-extern u16* D_800B09F8[];
 extern u8 D_800B0F94[][5];
 
 extern SVECTOR* D_800B0CB4[][4];

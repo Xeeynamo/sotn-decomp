@@ -2,6 +2,29 @@
 #include "objects.h"
 #include "sfx.h"
 
+static s32 D_800B0924[] = {14, 6, 4, 4, 6, 14};
+
+static u16 D_800B093C[] = {69, 0};
+static u16 D_800B0940[] = {49, 0};
+static u16 D_800B0944[] = {48, 0};
+static u16 D_800B0948[] = {36, 37, 38, 39, 40, 41, 42, 43, 0};
+static u16 D_800B095C[] = {44, 45, 46, 47, 48, 49, 50, 51, 0};
+static u16 D_800B0970[] = {69, 67, 68, 68, 67, 69, -1};
+static u16 D_800B0980[] = {52, 53, -1};
+static u16 D_800B0988[] = {53, 52, -1};
+static u16 D_800B0990[] = {55, 56, 57, 58, 58, 58, 58, 61, 62, 63, 64, -1};
+static u16 D_800B09A8[] = {59, 60, 61, 62, 63, 64, 64, -1};
+static u16 D_800B09B8[] = {55, 56, 57, 61, 62, 63, 64, -1};
+static u16 D_800B09C8[] = {59, 60, 61, 62, 63, 64, -1};
+static u16 D_800B09D8[] = {52, 54, 52, -1};
+static u16 D_800B09E0[] = {53, -1};
+static u16 D_800B09E4[] = {60, 61, 62, 63, 60, 61, 62, 63, 0};
+static u16* D_800B09F8[] = {
+    D_800B093C, D_800B0940, D_800B095C, D_800B0970, D_800B0948, D_800B0980,
+    D_800B0988, D_800B09D8, D_800B09C8, D_800B0990, D_800B09B8, D_800B09E0,
+    D_800B09A8, D_800B0990, D_800B09E4, D_800B0990, D_800B0944,
+};
+
 void func_8012D3E8(void) {
     byte pad[0x28];
     s32 directionsPressed =
@@ -1359,7 +1382,6 @@ void func_80130264(Entity* self) {
     }
     self->hitFlags = 0;
 }
-static const u32 rodata_func_80130264_padding = 0;
 
 static s16 D_800B0A8C[] = {0, 1, 0, -1, 0, 1, 0, -1};
 static s16 D_800B0A9C[] = {0, 1, 1, 0, 0, 1, 1, 0};
@@ -1471,11 +1493,10 @@ void func_80130618(Entity* self) {
         self->unk6C = ~MIN((abs(PLAYER.velocityX) - FIX(3)) >> 12, 160);
     }
 }
-static const u32 rodata_func_80130618_padding = 0;
 
 static AnimationFrame D_800B0ABC[] = {
-    {0x0002, 0x0048}, {0x0004, 0x004B}, {0x0010, 0x004C},
-    {0x0004, 0x004B}, {0x0008, 0x0048}, {0xFFFF, 0x0000},
+    {0x02, 0x48}, {0x04, 0x4B}, {0x10, 0x4C},
+    {0x04, 0x4B}, {0x08, 0x48}, {-1, 0x00},
 };
 static s32 D_800B0AD4[] = {0, 1, 2, 1, 0, 0};
 static s32 D_800B0AEC[] = {0, 1, 1, 2, 2, 1, 1, 0};
@@ -1627,11 +1648,10 @@ void func_801309B4(Entity* self) {
         }
     }
 }
-static const u32 rodata_func_801309B4_padding = 0;
 
 static s16 D_800B0B0C[] = {87, 88, 89, 89, 90, 90, 89, 88, 87};
 static s16 D_800B0B20[] = {
-    0x000, 0x040, 0x080, 0x0C0, 0x100, 0x140, 0x180, 0x1C0, 0x200};
+    0x0, 0x040, 0x080, 0x0C0, 0x100, 0x140, 0x180, 0x1C0, 0x200};
 extern s32 D_8013844C;
 extern s32 D_80138450;
 
