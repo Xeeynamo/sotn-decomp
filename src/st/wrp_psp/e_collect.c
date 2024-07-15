@@ -5,7 +5,7 @@ extern u8* g_MariaSubweaponAnimPrizeDrop[];
 extern u8* g_SubweaponAnimPrizeDrop[];
 extern s16 D_80180EB8[];
 
-void func_8018CAB0(void) {
+static void func_8018CAB0(void) {
     if (g_CurrentEntity->velocityY >= 0) {
         g_CurrentEntity->ext.generic.unk84.unk +=
             g_CurrentEntity->ext.generic.unk88.S16.unk0;
@@ -22,7 +22,7 @@ void func_8018CAB0(void) {
     }
 }
 
-void func_8018CB34(u16 arg0) {
+static void func_8018CB34(u16 arg0) {
     Collider collider;
 
     if (g_CurrentEntity->velocityX < 0) {
@@ -75,7 +75,7 @@ extern u16 g_MariaWeaponData1[];
 extern u16 D_psp_092462E0[];
 extern u16 g_MariaWeaponData0[];
 extern u16 D_80180DF4[];
-void CollectSubweapon(u16 subWeaponIdx) {
+static void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;
     u16 subWeapon;
 
@@ -126,13 +126,13 @@ void CollectSubweapon(u16 subWeaponIdx) {
 
 #include "../collect_heart_vessel.h"
 
-void CollectLifeVessel(void) {
+static void CollectLifeVessel(void) {
     g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
     g_api.func_800FE044(5, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
 
-void DestroyCurrentEntity(u16 id) { DestroyEntity(g_CurrentEntity); }
+static void CollectDummy(u16 id) { DestroyEntity(g_CurrentEntity); }
 
 void EntityPrizeDrop(Entity* self) {
     Collider collider;
@@ -284,7 +284,7 @@ void EntityPrizeDrop(Entity* self) {
         } else if (itemId == 12) {
             CollectHeartVessel();
         } else if (itemId < 14) {
-            DestroyCurrentEntity(itemId);
+            CollectDummy(itemId);
         } else if (itemId < 23) {
             CollectSubweapon(itemId);
         } else if (itemId == 23) {
