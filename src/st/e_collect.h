@@ -207,7 +207,7 @@ void CollectLifeVessel(void) {
     DestroyEntity(g_CurrentEntity);
 }
 
-void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
+void DestroyCurrentEntity() { DestroyEntity(g_CurrentEntity); }
 
 // if self->params & 0x8000 then the item will not disappear
 // self->ext.generic.unk80.modeS8.unk0: frames left before the prize disappear
@@ -215,9 +215,9 @@ void EntityPrizeDrop(Entity* self) {
     Collider collider;
     Primitive* prim;
     s16 primIndex;
-    s16 var_a2;
+    s16 index;
     u16 itemId;
-    s16 temp_a0;
+    s16 flagId;
 
     // if self->params & 0x8000 then the item will not disappear
     // self->ext.generic.unk80.modeS8.unk0: frames left before the prize
@@ -258,10 +258,10 @@ void EntityPrizeDrop(Entity* self) {
         } else {
             self->step++;
             if (LOH(self->ext.generic.unk94) != 0) {
-                temp_a0 = LOH(self->ext.generic.unk94) - 1;
+                flagId = LOH(self->ext.generic.unk94) - 1;
                 g_unkGraphicsStruct.g_zEntityCenter.S16 =
                     g_unkGraphicsStruct.g_zEntityCenter.S16;
-                D_8003BF9C[temp_a0 >> 3] |= 1 << (temp_a0 & 7);
+                D_8003BF9C[flagId >> 3] |= 1 << (flagId & 7);
             }
         }
         if (itemId == 0) {
@@ -402,18 +402,18 @@ void EntityPrizeDrop(Entity* self) {
             prim = &g_PrimBuf[self->primIndex];
             self->ext.generic.unk88.S16.unk2++;
             if (self->ext.generic.unk88.S16.unk2 < 0x11) {
-                var_a2 = self->ext.generic.unk88.S16.unk2;
+                index = self->ext.generic.unk88.S16.unk2;
                 self->animCurFrame = 0;
             } else {
-                var_a2 = 0x20 - self->ext.generic.unk88.S16.unk2;
+                index = 0x20 - self->ext.generic.unk88.S16.unk2;
                 prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->r3 - 8;
                 prim->g0 = prim->g1 = prim->g2 = prim->g3 = prim->g3 - 8;
                 prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->b3 - 8;
             }
-            prim->x0 = prim->x2 = self->posX.i.hi - var_a2;
-            prim->x1 = prim->x3 = self->posX.i.hi + var_a2;
-            prim->y0 = prim->y1 = self->posY.i.hi - var_a2;
-            prim->y2 = prim->y3 = self->posY.i.hi + var_a2;
+            prim->x0 = prim->x2 = self->posX.i.hi - index;
+            prim->x1 = prim->x3 = self->posX.i.hi + index;
+            prim->y0 = prim->y1 = self->posY.i.hi - index;
+            prim->y2 = prim->y3 = self->posY.i.hi + index;
             if (self->ext.generic.unk88.S16.unk2 == 0x20) {
                 g_api.FreePrimitives(self->primIndex);
                 self->ext.generic.unk80.modeS8.unk0 = 0xD0;
