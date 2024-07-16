@@ -68,9 +68,6 @@ extern u8* GetFb();
 extern u16 g_RawVram[VRAM_W * VRAM_H];
 
 int MyLoadImage(RECT* rect, u_long* p) {
-    // extremely spammy
-    // DEBUGF("(%X, %X, %X, %X): %p", rect->x, rect->y, rect->w, rect->h, p);
-
     {
         u16* mem = (u16*)p;
         u16* vram = g_RawVram;
