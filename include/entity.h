@@ -111,9 +111,8 @@ typedef struct {
     /* 0x04 */ u8 aliveTimer;
     /* 0x05 */ s8 unk81;
     /* 0x06 */ s16 unk82;
-    /* 0x08 */ s16 unk84;
-    /* 0x0A */ s16 unk86;
-    /* 0x0C */ s16 unk88;
+    /* 0x08 */ s32 fallSpeed;
+    /* 0x0C */ s16 gravity;
     /* 0x0E */ s16 unk8A;
     /* 0x10 */ s16 iconSlot;
     /* 0x12 */ s16 unk8E;
