@@ -436,3 +436,19 @@ void SoftDrawOTag(OT_TYPE* p) {
         }
     }
 }
+
+int MyMoveImage(RECT* rect, int x, int y) {
+    u32 param[5];
+
+    param[0] = 0x04FFFFFF;
+    param[1] = 0x80000000;
+    param[2] = LOW(rect->x);
+    param[3] = (u16)y << 0x10 | (u16)x;
+    param[4] = LOW(rect->w);
+
+    for (int i = 0; i < 5; i++) {
+        GPU_Write(0, 0, param[i]);
+        GPU_Update(128);
+    }
+    return 0;
+}

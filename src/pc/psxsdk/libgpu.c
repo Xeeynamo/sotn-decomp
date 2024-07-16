@@ -38,7 +38,8 @@ int LoadImage(RECT* rect, u_long* p) { return MyLoadImage(rect, p); }
 int MyStoreImage(RECT* rect, u_long* p);
 int StoreImage(RECT* rect, u_long* p) { return MyStoreImage(rect, p); }
 
-int MoveImage(RECT* rect, int x, int y) { NOT_IMPLEMENTED; }
+int MyMoveImage(RECT* rect, int x, int y);
+int MoveImage(RECT* rect, int x, int y) { return MyMoveImage(rect, x, y); }
 
 int MyDrawSync(int mode);
 int DrawSync(int mode) { return MyDrawSync(mode); }

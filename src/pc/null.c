@@ -47,3 +47,5 @@ int main(int argc, char* argv[]) {
     }
     ResetGame();
 }
+
+int MyMoveImage(RECT* rect, int x, int y) {}

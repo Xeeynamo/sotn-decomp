@@ -10,6 +10,7 @@
 #endif
 #include "pc.h"
 #include "sdl_defs.h"
+#include "macros.h"
 
 extern bool g_IsQuitRequested;
 extern u16 g_RawVram[VRAM_W * VRAM_H];
@@ -219,6 +220,8 @@ u_long MyPadRead(int id) {
         if (keyb[SDL_SCANCODE_F8]) {
             render_mode = RENDER_GL;
         }
+
+        handle_macros(keyb, &pressed);
     }
 
     return pressed;
