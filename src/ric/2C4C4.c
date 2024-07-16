@@ -1256,7 +1256,219 @@ void EntitySubwpnCrashAxe(Entity* self) {
     }
 }
 
-INCLUDE_ASM("ric/nonmatchings/2C4C4", func_8016B0C0);
+// RIC Entity #38. Blueprint 43 AND 44.
+// Applies to subweapon 1, and its crash, subweapon 21. Very neat!
+// Not quite the same as the one in DRA, but close.
+
+void EntitySubwpnThrownDagger(Entity* self) {
+    Collider collider;
+    Primitive* prim;
+    s16 offsetX;
+    s16 offsetY;
+    s16 angle_a;
+    s16 angle_b;
+    s16 angle_c;
+    s16 angle_d;
+    s16 selfY;
+    s16 selfX;
+    s16 var_s1;
+    s32 cosine;
+    s32 sine;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_800000;
+        self->facingLeft = PLAYER.facingLeft;
+        // Not sure what this unkB0 does, but it seems to be
+        // a standard part of the Ext, and may not be entity specific.
+        // This line is not in the DRA version of dagger.
+        self->ext.factory.unkB0 = 1;
+
+        func_8015FAB8(self);
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 2;
+        self->hitboxOffX = 4;
+        self->hitboxOffY = 0;
+        // This conditional block is very different from DRA
+        if (self->params & 0xFF00) {
+            self->posY.i.hi += D_80155E98[D_8017588C & 7];
+            D_8017588C++;
+        } else {
+            self->posY.i.hi -= 9;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        prim->tpage = 0x1C;
+        prim->clut = 0x1AB;
+        prim->u0 = prim->u1 = 0x18;
+        prim->v0 = prim->v2 = 0x18;
+        prim->u2 = prim->u3 = 0x20;
+        prim->v1 = prim->v3 = 0;
+        prim->priority = PLAYER.zPriority + 2;
+        prim->drawMode = DRAW_HIDE | DRAW_UNK02;
+
+        prim = prim->next;
+        prim->type = PRIM_LINE_G2;
+        prim->priority = PLAYER.zPriority + 2;
+        prim->drawMode =
+            DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE | DRAW_UNK02 | DRAW_TRANSP;
+        prim->r0 = 0x7F;
+        prim->g0 = 0x3F;
+        prim->b0 = 0;
+        SetSpeedX(FIX(8));
+        g_api.PlaySfx(SFX_SUBWPN_THROW);
+        self->step++;
+        return;
+    case 1:
+        self->ext.timer.t++;
+        if (self->velocityX > 0) {
+            var_s1 = 8;
+        }
+        if (self->velocityX < 0) {
+            var_s1 = -8;
+        }
+        if (self->hitFlags == 1) {
+            self->ext.timer.t = 4;
+            self->step = 3;
+            self->hitboxState = 0;
+            return;
+        }
+        for (i = 0; i < 8; i++) {
+            if (self->velocityX > 0) {
+                self->posX.i.hi++;
+            }
+            if (self->velocityX < 0) {
+                self->posX.i.hi--;
+            }
+            g_api.CheckCollision(
+                self->posX.i.hi + var_s1, self->posY.i.hi, &collider, 0);
+            if ((self->hitFlags == 2) || (collider.effects & 3)) {
+                self->ext.timer.t = 64;
+                self->velocityY = FIX(-2.5);
+                self->hitboxState = 0;
+                self->velocityX = -(self->velocityX >> 3);
+                self->posX.i.hi += var_s1;
+                CreateEntFactoryFromEntity(self, FACTORY(0x200, 42), 0);
+                self->posX.i.hi -= var_s1;
+                g_api.PlaySfx(REBOUND_STONE_BOUNCE);
+                self->step++;
+                return;
+            }
+        }
+        selfX = self->posX.i.hi;
+        selfY = self->posY.i.hi;
+        offsetX = 12;
+        offsetY = 8;
+        if (self->facingLeft != 0) {
+            offsetX = -offsetX;
+            offsetY = -offsetY;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        prim->x0 = selfX - offsetX;
+        prim->y0 = selfY - 4;
+        prim->x1 = selfX + offsetX;
+        prim->y1 = selfY - 4;
+        prim->x2 = selfX - offsetX;
+        prim->y2 = selfY + 4;
+        prim->x3 = selfX + offsetX;
+        prim->y3 = selfY + 4;
+        // Difference here vs DRA in how g_GameTimer works with clut
+        prim->clut = ((g_GameTimer >> 1) & 1) + 0x1AB;
+        prim->drawMode &= ~DRAW_HIDE;
+        prim = prim->next;
+        prim->x0 = selfX - offsetY;
+        prim->y0 = selfY - 1;
+        prim->x1 = selfX - (offsetX * (self->ext.timer.t / 2));
+        prim->y1 = selfY - 1;
+        prim->drawMode &= ~DRAW_HIDE;
+        if (self->step != 1) {
+            prim->drawMode |= DRAW_HIDE;
+        }
+        break;
+    case 2:
+        prim = &g_PrimBuf[self->primIndex];
+        if (--self->ext.timer.t == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        if (self->ext.timer.t == 0x20) {
+            prim->drawMode |=
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+            prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
+                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
+                    prim->b3 = 0x60;
+        }
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->velocityY += FIX(0.125);
+        selfX = self->posX.i.hi;
+        selfY = self->posY.i.hi;
+        offsetX = 12;
+        if (self->facingLeft == 0) {
+            angle_a = 0x72E;
+            angle_b = 0xD2;
+            angle_c = 0x8D2;
+            angle_d = -0xD2;
+            self->rotZ -= 0x80;
+        } else {
+            angle_b = 0x72E;
+            angle_a = 0xD2;
+            angle_d = 0x8D2;
+            angle_c = -0xD2;
+            self->rotZ += 0x80;
+        }
+        angle_a += self->rotZ;
+        angle_b += self->rotZ;
+        angle_c += self->rotZ;
+        angle_d += self->rotZ;
+        // offsetX is not used at all down here, but this block is needed.
+        // It doesn't show up in the asm at all, but moves everything else into
+        // alignment. Yet another lesson from PSP.
+        if (self->facingLeft) {
+            offsetX = -offsetX;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        cosine = (rcos(angle_a) * 0xCA0) >> 0x14;
+        sine = -(rsin(angle_a) * 0xCA0) >> 0x14;
+        prim->x0 = selfX + cosine;
+        prim->y0 = selfY - sine;
+        cosine = (rcos(angle_b) * 0xCA0) >> 0x14;
+        sine = -(rsin(angle_b) * 0xCA0) >> 0x14;
+        prim->x1 = selfX + cosine;
+        prim->y1 = selfY - sine;
+        cosine = (rcos(angle_c) * 0xCA0) >> 0x14;
+        sine = -(rsin(angle_c) * 0xCA0) >> 0x14;
+        prim->x2 = selfX + cosine;
+        prim->y2 = selfY - sine;
+        cosine = (rcos(angle_d) * 0xCA0) >> 0x14;
+        sine = -(rsin(angle_d) * 0xCA0) >> 0x14;
+        prim->x3 = selfX + cosine;
+        prim->y3 = selfY - sine;
+        // same deal here with g_GameTimer
+        prim->clut = ((g_GameTimer >> 1) & 1) + 0x1AB;
+        if (self->ext.timer.t < 0x21) {
+            prim->r0 -= 2;
+            prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = prim->r2 =
+                prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = prim->r0;
+        }
+        prim->drawMode &= ~DRAW_HIDE;
+        prim = prim->next;
+        prim->drawMode |= DRAW_HIDE;
+        return;
+
+    case 3:
+        if (--self->ext.timer.t == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+}
 
 void ReboundStoneBounce1(s32 arg0) {
     g_CurrentEntity->ext.generic.unk7C.s =
