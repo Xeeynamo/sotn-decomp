@@ -108,18 +108,18 @@ typedef struct ET_Generic {
 typedef struct {
     /* 0x00 */ u16 timer;
     /* 0x02 */ s16 unk7E;
-    /* 0x04 */ u8 unk80;
+    /* 0x04 */ u8 aliveTimer;
     /* 0x05 */ s8 unk81;
     /* 0x06 */ s16 unk82;
     /* 0x08 */ s16 unk84;
     /* 0x0A */ s16 unk86;
     /* 0x0C */ s16 unk88;
     /* 0x0E */ s16 unk8A;
-    /* 0x10 */ s16 unk8C;
+    /* 0x10 */ s16 iconSlot;
     /* 0x12 */ s16 unk8E;
     /* 0x14 */ s16 unk90;
     /* 0x16 */ s16 unk92;
-    /* 0x18 */ s16 unk94;
+    /* 0x18 */ s32 castleFlag;
 } ET_EquipItemDrop;
 
 typedef struct {

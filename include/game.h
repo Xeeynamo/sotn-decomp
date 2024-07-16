@@ -1417,7 +1417,7 @@ typedef struct {
         TimeAttackEvents eventId, TimeAttackActions action);
     /* 8003C844 */ void* (*func_8010E0A8)(void);
     /* 8003C848 */ void (*func_800FE044)(s32, s32);
-    /* 8003C84C */ void (*AddToInventory)(u16 id, EquipKind kind);
+    /* 8003C84C */ void (*AddToInventory)(u32 id, EquipKind kind);
     /* 8003C850 */ RelicOrb* relicDefs;
     /* 8003C854 */ void (*InitStatsAndGear)(bool debugMode);
     /* 8003C858 */ s32 (*func_80134714)(s32 arg0, s32 arg1, s32 arg2);
@@ -1702,7 +1702,6 @@ extern s32 g_IsTimeAttackUnlocked;
 // column will disappear.
 extern u8 g_CastleFlags[0x300]; // starts at 0x8003BDEC
 extern u8 D_8003BEEC[];         // g_CastleFlags[x + 0x100]
-extern u8 D_8003BF9C[];         // not sure if it is part of D_8003BEEC?
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
 extern s32 D_8003C100;
