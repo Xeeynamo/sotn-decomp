@@ -96,7 +96,7 @@ segments:
       - [0x8410, .data, config_us] # spells
       - [0x8720, .data, config_us] # relics
       - [0x8900, .data, config_us] # enemies
-      - [0xC910, .data, d_C910] # exp table and other stuff
+      - [0xC910, .data, d_C910]
       - [0xC958, .data, cd]
       - [0xCD80, .data, d_CD80]
       - [0xCDF8, .data, 692E8]
@@ -108,9 +108,9 @@ segments:
       - [0xDBD4, .data, d_DBD4]
       - [0xE294, .data, d_E294]
       - [0x10798, .data, d_10798]
-      - [0x10924, data]
+      - [0x10924, .data, 8D3E8] # D_800B0924 to D_800B09F8
       - [0x10A3C, .data, 8D3E8] # D_800B0A3C to D_800B0AEC
-      - [0x10B34, data]
+      - [0x10B34, .data, 8D3E8] # D_800B0CB4 and D_800B0F94
       - [0x1107C, raw, vh_0] # aPbav
       - [0x1407C, raw, vh_1] # aPbav_0
       - [0x1607C, raw, vh_2] # aPbav_2

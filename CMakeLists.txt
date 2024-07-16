@@ -179,18 +179,22 @@ set(SOURCE_FILES_DRA
     src/dra/config_us.c
     src/dra/menu.c
     src/dra/5D5BC.c
+    src/dra/d_C910.c
     src/dra/627C4.c
     src/dra/63ED4.c
+    src/dra/d_CD80.c
     src/dra/692E8.c
     src/dra/6D59C.c
     src/dra/704D0.c
     src/dra/71830.c
     src/dra/72BB0.c
     src/dra/75F54.c
+    src/dra/d_CF74.c
     src/dra/7A4D0.c
     src/dra/7E4BC.c
     src/dra/d_DBD4.c
     src/dra/d_E294.c
+    src/dra/d_10798.c
     src/dra/843B0.c
     src/dra/8A0A4.c
     src/dra/8D3E8.c
@@ -200,9 +204,6 @@ set(SOURCE_FILES_DRA
     src/dra/93BDC.c
     src/dra/94F50.c
     src/dra/953A0.c
-    src/dra/d_C910.c
-    src/dra/d_CD80.c
-    src/dra/d_CF74.c
     src/dra/d_24CEC.c
     src/dra/d_2F324.c
     src/dra/d_3B0D4.c
@@ -297,6 +298,13 @@ target_compile_definitions(core PRIVATE
 
 add_executable(${PROJECT_NAME}
     src/pc/sdl2.c
+    src/pc/render_soft.c
+    src/pc/render_shared.c
+    src/pc/render_gl.c
+    src/pc/psxsdk/mednafen/gpu.cpp
+    src/pc/psxsdk/mednafen/gpu_line.cpp
+    src/pc/psxsdk/mednafen/gpu_polygon.cpp
+    src/pc/psxsdk/mednafen/gpu_sprite.cpp
     )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
