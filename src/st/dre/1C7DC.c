@@ -53,7 +53,7 @@ void EntityEquipItemDrop(Entity* self) {
             if (LOH(self->ext.generic.unk94) != 0) {
                 temp_a0 = LOH(self->ext.generic.unk94);
                 temp_a0--;
-                D_8003BF9C[temp_a0 >> 3] |= 1 << (temp_a0 & 7);
+                g_CastleFlags[(temp_a0 >> 3) + 0x1b0] |= 1 << (temp_a0 & 7);
             }
 
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);

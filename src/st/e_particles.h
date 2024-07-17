@@ -19,9 +19,6 @@ u8 g_ESoulStealOrbAnim[] = {
 };
 
 #ifdef VERSION_PSP
-
-static u8 it_looks_like_being_unused[] = {0x01, 0x0E};
-
 void func_psp_0923AD68(Entity*);
 void func_psp_0923B2F0(Entity*);
 

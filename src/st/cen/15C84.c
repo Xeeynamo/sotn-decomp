@@ -54,7 +54,7 @@ void EntityPrizeDrop(Entity* self) {
                 temp_a0 = LOH(self->ext.generic.unk94) - 1;
                 g_unkGraphicsStruct.g_zEntityCenter.S16 =
                     g_unkGraphicsStruct.g_zEntityCenter.S16;
-                D_8003BF9C[temp_a0 >> 3] |= 1 << (temp_a0 & 7);
+                g_CastleFlags[(temp_a0 >> 3) + 0x1b0] |= 1 << (temp_a0 & 7);
             }
         }
         if (itemId == 0) {
@@ -282,7 +282,7 @@ void EntityEquipItemDrop(Entity* self) {
             if (LOH(self->ext.generic.unk94) != 0) {
                 temp_a0 = LOH(self->ext.generic.unk94);
                 temp_a0--;
-                D_8003BF9C[temp_a0 >> 3] |= 1 << (temp_a0 & 7);
+                g_CastleFlags[(temp_a0 >> 3) + 0x1b0] |= 1 << (temp_a0 & 7);
             }
 
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);

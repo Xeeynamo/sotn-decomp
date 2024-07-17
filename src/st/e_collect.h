@@ -37,23 +37,18 @@ static u8 D_80180D94[] = {0x05, 0x5A, 0x05, 0x5B, 0x05, 0x5C, 0x05, 0x5D, 0x05,
                           0x5E, 0x05, 0x5F, 0x05, 0x60, 0x05, 0x61, 0x00, 0x00};
 static u8 D_80180DA8[] = {0x05, 0x62, 0x05, 0x63, 0x05, 0x64, 0x05, 0x65, 0x05,
                           0x66, 0x05, 0x67, 0x05, 0x68, 0x05, 0x69, 0x00, 0x00};
-static u8 D_80180DBC[] = {0x05, 0x6A, 0x05, 0x6B, 0x05, 0x6C, 0x05, 0x6D};
-static u16 D_80180DC4[] = {0x6E05, 0x6F05, 0x7005, 0x7105, 0};
-static u8 D_80180DD0[] = {
-    0x01, 0x8F, 0x00, 0x00, 0xFC, 0xFC, 0x04, 0xFC, 0xFC, 0x04, 0x04, 0x04,
-    0x80, 0x00, 0x00, 0x00, 0x01, 0x00, 0x02, 0x00, 0x04, 0x00, 0x03, 0x00,
-    0x06, 0x00, 0x05, 0x00, 0x07, 0x00, 0x08, 0x00, 0x09, 0x00, 0x00};
-
-static u16 D_80180DF4[] = {0x0000, 0x000E, 0x000F, 0x0011, 0x0010,
-                           0x0013, 0x0012, 0x0014, 0x0015, 0x0016};
+static u8 D_80180DBC[] = {0x05, 0x6A, 0x05, 0x6B, 0x05, 0x6C, 0x05, 0x6D, 0x05,
+                          0x6E, 0x05, 0x6F, 0x05, 0x70, 0x05, 0x71, 0x00};
+static u8 D_80180DD0[] = {0x01, 0x8F, 0x00, 0x00, 0xFC, 0xFC, 0x04,
+                          0xFC, 0xFC, 0x04, 0x04, 0x04, 0x80, 0x00};
+static u16 aluric_subweapons_idx[] = {1, 2, 4, 3, 6, 5, 7, 8, 9};
+static u16 aluric_subweapons_id[] = {0, 14, 15, 17, 16, 19, 18, 20, 21, 22};
 
 static const char* g_goldCollectTexts[] = {
     _S("$1"),   _S("$25"),  _S("$50"),   _S("$100"),  _S("$250"),
     _S("$400"), _S("$700"), _S("$1000"), _S("$2000"), _S("$5000"),
 };
-static u32 c_GoldPrizes[] = {
-    1, 25, 50, 100, 250, 400, 700, 1000, 2000, 5000,
-};
+static u32 c_GoldPrizes[] = {1, 25, 50, 100, 250, 400, 700, 1000, 2000, 5000};
 
 u8* g_SubweaponAnimPrizeDrop[] = {
     D_80180C94, D_80180C98, D_80180CC4, D_80180CD4, D_80180CD8, D_80180CDC,
@@ -62,12 +57,10 @@ u8* g_SubweaponAnimPrizeDrop[] = {
     D_80180D6C, D_80180D80, D_80180D94, D_80180DA8, D_80180DBC, D_80180DD0,
 };
 
-static s16 D_80180EB8[] = {0xFFFA, 0x0004, 0x0000, 0xFFF8};
-
+static s16 D_80180EB8[] = {-6, 4, 0, -8};
 static s8 c_HeartPrizes[] = {1, 5};
-
 static s32 g_ExplosionYVelocities[] = {
-    FIX(-1.0), FIX(-1.5), FIX(-1.5), FIX(-1.5), FIX(-3)};
+    FIX(-1.0), FIX(-1.5), FIX(-1.5), FIX(-1.5), FIX(-3.0)};
 
 static u8 D_80180ED8[] = {
     0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x02, 0x05,
@@ -104,24 +97,20 @@ extern u16 g_ItemIconSlots[];
 extern u16 g_InitializeData0[];
 
 static void func_8018CAB0(void) {
-    s32 temp_v1;
-    Entity* entity;
-
-    entity = g_CurrentEntity;
-    if (entity->velocityY >= 0) {
-        temp_v1 =
-            entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
-        entity->ext.generic.unk84.unk = temp_v1;
-        entity->velocityX = temp_v1;
-        if (temp_v1 == FIX(1) || temp_v1 == FIX(-1)) {
-            entity->ext.generic.unk88.S16.unk0 =
-                -entity->ext.generic.unk88.S16.unk0;
+    if (g_CurrentEntity->velocityY >= 0) {
+        g_CurrentEntity->ext.equipItemDrop.fallSpeed +=
+            g_CurrentEntity->ext.equipItemDrop.gravity;
+        g_CurrentEntity->velocityX =
+            g_CurrentEntity->ext.equipItemDrop.fallSpeed;
+        if (g_CurrentEntity->velocityX == FIX(1) ||
+            g_CurrentEntity->velocityX == FIX(-1)) {
+            g_CurrentEntity->ext.equipItemDrop.gravity =
+                -g_CurrentEntity->ext.equipItemDrop.gravity;
         }
-        entity = g_CurrentEntity;
     }
 
-    if (entity->velocityY < FIX(0.25)) {
-        entity->velocityY += FIX(0.125);
+    if (g_CurrentEntity->velocityY < FIX(0.25)) {
+        g_CurrentEntity->velocityY += FIX(0.125);
     }
 }
 
@@ -166,23 +155,23 @@ static void func_8018CB34(u16 arg0) {
 
 #include "collect_gold.h"
 
-void CollectSubweapon(u16 subWeaponIdx) {
+static void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;
     u16 subWeapon;
 
     g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
     subWeapon = g_Status.subWeapon;
-    g_Status.subWeapon = D_80180DC4[subWeaponIdx];
+    g_Status.subWeapon = aluric_subweapons_idx[subWeaponIdx - 14];
 
     if (subWeapon == g_Status.subWeapon) {
         subWeapon = 1;
         g_CurrentEntity->unk6D[0] = 0x10;
     } else {
-        subWeapon = D_80180DF4[subWeapon];
+        subWeapon = aluric_subweapons_id[subWeapon];
         g_CurrentEntity->unk6D[0] = 0x60;
     }
 
-    if (subWeapon != 0) {
+    if (subWeapon) {
         g_CurrentEntity->params = subWeapon;
         g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
         SetStep(7);
@@ -201,32 +190,42 @@ void CollectSubweapon(u16 subWeaponIdx) {
 
 #include "collect_heart_vessel.h"
 
-void CollectLifeVessel(void) {
+static void CollectLifeVessel(void) {
     g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
     g_api.func_800FE044(LIFE_VESSEL_INCREASE, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
 
-void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
+static void CollectDummy(u16 id) { DestroyEntity(g_CurrentEntity); }
 
 // if self->params & 0x8000 then the item will not disappear
-// self->ext.generic.unk80.modeS8.unk0: frames left before the prize disappear
 void EntityPrizeDrop(Entity* self) {
     Collider collider;
     Primitive* prim;
-    s16 primIndex;
-    s16 var_a2;
     u16 itemId;
-    s16 temp_a0;
+    s16 index;
+    s32 primIndex;
+    s32 subWeaponId;
+    s32 subWeaponId_;
 
     // if self->params & 0x8000 then the item will not disappear
-    // self->ext.generic.unk80.modeS8.unk0: frames left before the prize
-    // disappear
     itemId = self->params & 0x7FFF;
-    if (self->step != 0) {
+    if (self->step) {
+#if defined(VERSION_PSP)
+        if (g_PlayableCharacter == PLAYER_MARIA) {
+            AnimateEntity(g_MariaSubweaponAnimPrizeDrop[itemId], self);
+        } else {
+            AnimateEntity(g_SubweaponAnimPrizeDrop[itemId], self);
+        }
+#else
         AnimateEntity(g_SubweaponAnimPrizeDrop[itemId], self);
+#endif
     }
-    if (self->step - 2 < 3U && self->hitFlags != 0) {
+#if defined(VERSION_PSP)
+    if (self->step && self->step < 5 && self->hitFlags) {
+#else
+    if (self->step > 1 && self->step < 5 && self->hitFlags) {
+#endif
         self->step = 5;
     }
     self->palette = 0;
@@ -238,38 +237,68 @@ void EntityPrizeDrop(Entity* self) {
         InitializeEntity(g_InitializeData0);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk - 0x14;
         self->drawMode = DRAW_DEFAULT;
-        if (itemId >= 0x18) {
-            self->params = 0;
-            itemId = 0;
+        if (itemId > 23) {
+            itemId = self->params = 0;
         }
-        if (itemId > 13 && itemId < 23 &&
-            itemId == D_80180DF4[g_Status.subWeapon]) {
-            self->params = itemId = 1;
+
+#if defined(VERSION_PSP)
+        if (g_PlayableCharacter == PLAYER_MARIA && itemId >= 0xE &&
+            itemId < 23) {
+            switch (itemId) {
+            case 14:
+                itemId = self->params = 15;
+                break;
+            case 15:
+                itemId = self->params = 14;
+                break;
+            case 21:
+                itemId = self->params = 16;
+                break;
+            case 17:
+                itemId = self->params = 17;
+                break;
+            case 19:
+                itemId = 19; // causes a lot of regswaps
+                self->params = 19;
+                break;
+            default:
+                itemId = self->params = 0;
+                break;
+            }
         }
-        if (itemId == 0 || itemId == 2) {
+#endif
+        if (itemId >= 14 && itemId < 23
+#if defined(VERSION_PSP)
+            && g_PlayableCharacter != PLAYER_MARIA
+#endif
+        ) {
+            subWeaponId_ = aluric_subweapons_id[g_Status.subWeapon];
+            if (itemId == subWeaponId_) {
+                itemId = 1;
+                self->params = 1;
+            }
+        }
+        if (!itemId || itemId == 2) {
             self->hitboxWidth = 4;
         }
         break;
-
     case 1:
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
         if (collider.effects & EFFECT_NOTHROUGH_PLUS) {
             DestroyEntity(self);
         } else {
             self->step++;
-            if (LOH(self->ext.generic.unk94) != 0) {
-                temp_a0 = LOH(self->ext.generic.unk94) - 1;
-                g_unkGraphicsStruct.g_zEntityCenter.S16 =
-                    g_unkGraphicsStruct.g_zEntityCenter.S16;
-                D_8003BF9C[temp_a0 >> 3] |= 1 << (temp_a0 & 7);
+            index = self->ext.equipItemDrop.castleFlag;
+            if (index) {
+                index--;
+                g_CastleFlags[(index >> 3) + 0x1b0] |= 1 << (index & 7);
             }
         }
-        if (itemId == 0) {
-            self->ext.generic.unk84.unk = -0x10000;
-            self->ext.generic.unk88.S16.unk0 = 0x800;
+        if (!itemId) {
+            self->ext.equipItemDrop.fallSpeed = FIX(-1);
+            self->ext.equipItemDrop.gravity = 0x800;
         }
         break;
-
     case 2:
         if (self->velocityY < 0) {
             g_api.CheckCollision(
@@ -281,12 +310,12 @@ void EntityPrizeDrop(Entity* self) {
         MoveEntity();
         g_api.CheckCollision(
             self->posX.i.hi, self->posY.i.hi + 7, &collider, 0);
-        if (itemId != 0) {
+        if (itemId) {
             if (collider.effects & EFFECT_NOTHROUGH && self->velocityY > 0) {
                 self->velocityX = 0;
                 self->velocityY = 0;
                 self->posY.i.hi += collider.unk18;
-                self->ext.generic.unk80.modeS8.unk0 = 0xF0;
+                self->ext.equipItemDrop.aliveTimer = 0xF0;
                 self->step++;
             } else {
                 FallEntity();
@@ -294,26 +323,27 @@ void EntityPrizeDrop(Entity* self) {
             CheckFieldCollision(D_80180EB8, 2);
         } else if (collider.effects & EFFECT_NOTHROUGH) {
             self->posY.i.hi += collider.unk18;
-            self->ext.generic.unk80.modeS8.unk0 = 0x60;
+            self->ext.equipItemDrop.aliveTimer = 0x60;
             self->step++;
         } else {
             func_8018CAB0();
         }
         break;
-
     case 3:
         func_8018CB34(itemId);
-        if (!(self->params & 0x8000) &&
-            --self->ext.generic.unk80.modeS8.unk0 == 0) {
-            self->ext.generic.unk80.modeS8.unk0 = itemId == 0 ? 0x40 : 0x50;
+        if (!(self->params & 0x8000) && !--self->ext.equipItemDrop.aliveTimer) {
+            if (itemId) {
+                self->ext.equipItemDrop.aliveTimer = 80;
+            } else {
+                self->ext.equipItemDrop.aliveTimer = 64;
+            }
             self->step++;
         }
         break;
-
     case 4:
         func_8018CB34(itemId);
-        if (--self->ext.generic.unk80.modeS8.unk0) {
-            if (self->ext.generic.unk80.modeS8.unk0 & 2) {
+        if (--self->ext.equipItemDrop.aliveTimer) {
+            if (self->ext.equipItemDrop.aliveTimer & 2) {
                 self->animCurFrame = 0;
             }
         } else {
@@ -321,16 +351,15 @@ void EntityPrizeDrop(Entity* self) {
             return;
         }
         break;
-
     case 5:
-        if (itemId == 0 || itemId == 1) {
+        if (itemId < 2) {
             CollectHeart(itemId);
         } else if (itemId < 12) {
             CollectGold(itemId);
         } else if (itemId == 12) {
             CollectHeartVessel();
         } else if (itemId < 14) {
-            DestroyCurrentEntity();
+            CollectDummy(itemId);
         } else if (itemId < 23) {
             CollectSubweapon(itemId);
         } else if (itemId == 23) {
@@ -340,16 +369,33 @@ void EntityPrizeDrop(Entity* self) {
             return;
         }
         break;
-
     case 6:
     case 7:
         switch (self->step_s) {
         case 0:
             self->animCurFrame = 0;
-            if (itemId > 13 && itemId < 23) {
-                if (itemId == D_80180DF4[g_Status.subWeapon]) {
-                    self->params = itemId = 1;
+            if (itemId >= 14 && itemId < 23) {
+#if defined(VERSION_PSP)
+                if (g_PlayableCharacter == PLAYER_MARIA) {
+                    subWeaponId = maria_subweapons_id[g_Status.mariaSubWeapon];
+                    if (itemId == subWeaponId) {
+                        itemId = 1;
+                        self->params = 1;
+                    }
+                } else {
+                    subWeaponId = aluric_subweapons_id[g_Status.subWeapon];
+                    if (itemId == subWeaponId) {
+                        itemId = 1;
+                        self->params = 1;
+                    }
                 }
+#else
+                subWeaponId = aluric_subweapons_id[g_Status.subWeapon];
+                if (itemId == subWeaponId) {
+                    itemId = 1;
+                    self->params = 1;
+                }
+#endif
             }
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
             if (primIndex != -1) {
@@ -358,19 +404,16 @@ void EntityPrizeDrop(Entity* self) {
                 prim = &g_PrimBuf[primIndex];
                 prim->tpage = 0x1A;
                 prim->clut = 0x170;
-                prim->v2 = prim->v3 = 0x20;
-                prim->u1 = prim->u3 = 0x20;
-                prim->v0 = prim->v1 = 0;
-                prim->u0 = prim->u2 = 0;
-                prim->b0 = prim->b1 = prim->b2 = prim->b3 = 128;
-                prim->g0 = prim->g1 = prim->g2 = prim->g3 = 128;
-                prim->r0 = prim->r1 = prim->r2 = prim->r3 = 128;
+                prim->u0 = prim->u2 = prim->v0 = prim->v1 = 0;
+                prim->u1 = prim->u3 = prim->v2 = prim->v3 = 0x20;
+                prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 =
+                    prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
+                        prim->b2 = prim->b3 = 128;
                 prim->drawMode = DRAW_HIDE;
                 prim->priority = self->zPriority + 1;
                 self->step_s++;
             }
             break;
-
         case 1:
             MoveEntity();
             g_api.CheckCollision(
@@ -385,8 +428,8 @@ void EntityPrizeDrop(Entity* self) {
             }
             CheckFieldCollision(D_80180EB8, 2);
             self->animCurFrame = 0;
-            if (self->ext.generic.unk88.S16.unk2 != 0) {
-                self->ext.generic.unk88.S16.unk2--;
+            if (self->ext.equipItemDrop.unk8A) {
+                self->ext.equipItemDrop.unk8A--;
             } else {
                 prim = &g_PrimBuf[self->primIndex];
                 prim->x0 = prim->x2 = self->posX.i.hi - 1;
@@ -396,34 +439,32 @@ void EntityPrizeDrop(Entity* self) {
                 prim->drawMode = 0x37;
             }
             break;
-
         case 2:
             func_8018CB34(itemId);
             prim = &g_PrimBuf[self->primIndex];
-            self->ext.generic.unk88.S16.unk2++;
-            if (self->ext.generic.unk88.S16.unk2 < 0x11) {
-                var_a2 = self->ext.generic.unk88.S16.unk2;
+            self->ext.equipItemDrop.unk8A++;
+            if (self->ext.equipItemDrop.unk8A < 17) {
+                index = self->ext.equipItemDrop.unk8A;
                 self->animCurFrame = 0;
             } else {
-                var_a2 = 0x20 - self->ext.generic.unk88.S16.unk2;
-                prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->r3 - 8;
-                prim->g0 = prim->g1 = prim->g2 = prim->g3 = prim->g3 - 8;
-                prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->b3 - 8;
+                index = 32 - self->ext.equipItemDrop.unk8A;
+                prim->r0 = (prim->r1 = (prim->r2 = (prim->r3 -= 8)));
+                prim->g0 = (prim->g1 = (prim->g2 = (prim->g3 -= 8)));
+                prim->b0 = (prim->b1 = (prim->b2 = (prim->b3 -= 8)));
             }
-            prim->x0 = prim->x2 = self->posX.i.hi - var_a2;
-            prim->x1 = prim->x3 = self->posX.i.hi + var_a2;
-            prim->y0 = prim->y1 = self->posY.i.hi - var_a2;
-            prim->y2 = prim->y3 = self->posY.i.hi + var_a2;
-            if (self->ext.generic.unk88.S16.unk2 == 0x20) {
+            prim->x0 = prim->x2 = self->posX.i.hi - index;
+            prim->x1 = prim->x3 = self->posX.i.hi + index;
+            prim->y0 = prim->y1 = self->posY.i.hi - index;
+            prim->y2 = prim->y3 = self->posY.i.hi + index;
+            if (self->ext.equipItemDrop.unk8A == 32) {
                 g_api.FreePrimitives(self->primIndex);
-                self->ext.generic.unk80.modeS8.unk0 = 0xD0;
+                self->flags &= ~FLAG_HAS_PRIMS;
+                self->ext.equipItemDrop.aliveTimer = 208;
                 self->step = 3;
                 self->step_s = 0;
-                self->flags &= ~FLAG_HAS_PRIMS;
             }
             break;
         }
-
         break;
     }
 }
@@ -435,31 +476,24 @@ extern u16 g_InitializeEntityData0[];
 #include "blink_item.h"
 
 void EntityEquipItemDrop(Entity* self) {
-    u16 itemId = self->params & 0x7FFF;
-    s32 primIndex;
     Collider collider;
-    POLY_GT4* poly;
-    s32* itemName;
+    Primitive* prim;
+    s16 i;
+    u16 itemId;
     s16 index;
-    s32 vramX;
-    s32 vramY;
-    u8 left;
-    u8 right;
-    u16 top;
-    u8 bottom;
-    u8 temp_v0_6;
-    s16 temp_a0;
-    s32* unk;
+    s32 primIndex;
+    const char* name;
 
-    if (((self->step - 2) < 3U) && (self->hitFlags != 0)) {
+    itemId = self->params & 0x7FFF;
+    if (self->step >= 2 && self->step < 5 && self->hitFlags) {
         self->step = 5;
     }
 
     switch (self->step) {
     case 0:
         if (g_PlayableCharacter != PLAYER_ALUCARD) {
-            self->pfnUpdate = EntityPrizeDrop;
             self->params = 0;
+            self->pfnUpdate = EntityPrizeDrop;
             self->entityId = 3;
             SetStep(0);
             EntityPrizeDrop(self);
@@ -468,77 +502,60 @@ void EntityEquipItemDrop(Entity* self) {
         InitializeEntity(g_InitializeData0);
         self->ext.equipItemDrop.timer = 0;
         break;
-
     case 1:
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
-
-        if (!(collider.effects & EFFECT_NOTHROUGH_PLUS)) {
-            for (index = 0; index < 32; index++) {
-                if (g_ItemIconSlots[index] == 0) {
-                    break;
-                }
-            }
-
-            if (index >= 32) {
-                DestroyEntity(self);
-                return;
-            }
-
-            if (LOH(self->ext.equipItemDrop.unk94) != 0) {
-                temp_a0 = LOH(self->ext.equipItemDrop.unk94);
-                temp_a0--;
-                D_8003BF9C[temp_a0 >> 3] |= 1 << (temp_a0 & 7);
-            }
-
-            primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-            if (primIndex == -1) {
-                DestroyEntity(self);
-                return;
-            }
-
-            self->flags |= FLAG_HAS_PRIMS;
-            self->primIndex = primIndex;
-            g_ItemIconSlots[index] = 0x1E0;
-            self->ext.equipItemDrop.unk8C = index;
-
-            if (itemId < NUM_HAND_ITEMS) {
-                g_api.LoadEquipIcon(g_api.equipDefs[itemId].icon,
-                                    g_api.equipDefs[itemId].iconPalette, index);
-            } else {
-                itemId -= NUM_HAND_ITEMS;
-                g_api.LoadEquipIcon(
-                    g_api.accessoryDefs[itemId].icon,
-                    g_api.accessoryDefs[itemId].iconPalette, index);
-            }
-
-            poly = &g_PrimBuf[primIndex];
-            vramX = ((temp_v0_6 = index) & 7) * 0x10;
-            vramY = (temp_v0_6 & 0x18) * 2;
-
-            left = vramX | 1;
-            right = vramX | 0xF;
-            top = 0x81;
-            top = vramY | top;
-            bottom = vramY | 0x8F;
-
-            poly->tpage = 0x1A;
-            poly->v3 = bottom;
-            poly->clut = index + 464;
-            poly->u0 = poly->u2 = left;
-            poly->u1 = poly->u3 = right;
-            poly->v1 = top;
-            poly->v2 = bottom;
-            poly->v0 = top;
-            poly->pad2 = 0x80;
-            poly->pad3 = 6;
-
-            self->ext.equipItemDrop.timer = 128;
-            self->step++;
+        if (collider.effects & EFFECT_NOTHROUGH_PLUS) {
+            DestroyEntity(self);
             break;
         }
-        DestroyEntity(self);
-        break;
 
+        for (i = 0; i < LEN(g_ItemIconSlots); i++) {
+            if (!g_ItemIconSlots[i]) {
+                break;
+            }
+        }
+        if (i >= LEN(g_ItemIconSlots)) {
+            DestroyEntity(self);
+            return;
+        }
+
+        index = self->ext.equipItemDrop.castleFlag;
+        if (index) {
+            index--;
+            g_CastleFlags[(index >> 3) + 0x1b0] |= 1 << (index & 7);
+        }
+
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        g_ItemIconSlots[i] = 0x1E0;
+        self->ext.equipItemDrop.iconSlot = i;
+        if (itemId < NUM_HAND_ITEMS) {
+            g_api.LoadEquipIcon(g_api.equipDefs[itemId].icon,
+                                g_api.equipDefs[itemId].iconPalette, i);
+        } else {
+            itemId -= NUM_HAND_ITEMS;
+            g_api.LoadEquipIcon(g_api.accessoryDefs[itemId].icon,
+                                g_api.accessoryDefs[itemId].iconPalette, i);
+        }
+
+        prim = &g_PrimBuf[primIndex];
+        prim->tpage = 0x1A;
+        prim->clut = i + 464;
+        prim->u0 = prim->u2 = (u8)(i & 7) * 0x10 + 1;
+        prim->u1 = prim->u3 = prim->u0 + 0xE;
+        prim->v0 = prim->v1 = (u8)(i & 0x18) * 2 + 0x81;
+        prim->v2 = prim->v3 = prim->v0 + 0xE;
+        prim->priority = 0x80;
+        prim->drawMode = DRAW_UNK02 | DRAW_COLORS;
+
+        self->ext.equipItemDrop.timer = 128;
+        self->step++;
+        break;
     case 2:
         if (self->velocityY < 0) {
             g_api.CheckCollision(
@@ -547,76 +564,66 @@ void EntityEquipItemDrop(Entity* self) {
                 self->velocityY = 0;
             }
         }
-
         MoveEntity();
-
         g_api.CheckCollision(
             self->posX.i.hi, self->posY.i.hi + 7, &collider, 0);
-
-        if ((collider.effects & EFFECT_NOTHROUGH) && (self->velocityY > 0)) {
+        if ((collider.effects & EFFECT_NOTHROUGH) && self->velocityY > 0) {
             self->velocityX = 0;
             self->velocityY = 0;
             self->posY.i.hi += collider.unk18;
-            self->ext.equipItemDrop.unk80 = 240;
+            self->ext.equipItemDrop.aliveTimer = 240;
             self->step++;
         } else {
             FallEntity();
         }
-
         CheckFieldCollision(D_80180EB8, 2);
         break;
-
     case 3:
         func_8018CB34(1);
         if (!(self->params & 0x8000)) {
-            if (!(--self->ext.equipItemDrop.unk80 & 255)) {
-                self->ext.equipItemDrop.unk80 = 0x50;
+            if (!(--self->ext.equipItemDrop.aliveTimer)) {
+                self->ext.equipItemDrop.aliveTimer = 80;
                 self->step++;
             }
         } else {
-            g_ItemIconSlots[self->ext.equipItemDrop.unk8C] = 0x10;
+            i = self->ext.equipItemDrop.iconSlot;
+            g_ItemIconSlots[i] = 0x10;
         }
         break;
-
     case 4:
         func_8018CB34(1);
-        if (self->ext.equipItemDrop.unk80 += 255) {
-            poly = &g_PrimBuf[self->primIndex];
-            if (self->ext.equipItemDrop.unk80 & 2) {
-                poly->pad3 = 8;
+        if (--self->ext.equipItemDrop.aliveTimer) {
+            prim = &g_PrimBuf[self->primIndex];
+            if (self->ext.equipItemDrop.aliveTimer & 2) {
+                prim->drawMode = DRAW_HIDE;
             } else {
-                poly->pad3 = 2;
+                prim->drawMode = DRAW_UNK02;
             }
         } else {
             DestroyEntity(self);
         }
         break;
-
     case 5:
-        unk = &g_unkGraphicsStruct.BottomCornerTextTimer;
-        if (*unk != 0) {
+        if (g_unkGraphicsStruct.BottomCornerTextTimer) {
             g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
-            *unk = 0;
+            g_unkGraphicsStruct.BottomCornerTextTimer = 0;
         }
-
         g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
-
         if (itemId < NUM_HAND_ITEMS) {
-            itemName = g_api.equipDefs[itemId].name;
+            name = g_api.equipDefs[itemId].name;
             g_api.AddToInventory(itemId, EQUIP_HAND);
         } else {
             itemId -= NUM_HAND_ITEMS;
-            itemName = g_api.accessoryDefs[itemId].name;
+            name = g_api.accessoryDefs[itemId].name;
             g_api.AddToInventory(itemId, EQUIP_ARMOR);
         }
-
-        BottomCornerText(itemName, 1);
+        BottomCornerText(name, 1);
         DestroyEntity(self);
         break;
     }
 
-    if (self->step >= 2) {
-        if (self->ext.equipItemDrop.timer != 0) {
+    if (self->step > 1) {
+        if (self->ext.equipItemDrop.timer) {
             self->ext.equipItemDrop.timer--;
         }
         BlinkItem(self, self->ext.equipItemDrop.timer);
