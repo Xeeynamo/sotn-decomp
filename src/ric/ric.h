@@ -13,7 +13,7 @@ typedef enum {
 // Richter. This enum handles Richter's version of the ones that overlap.
 typedef enum { Player_RichterSprint = 25 } Richter_PlayerSteps;
 
-extern SpriteParts* D_801530AC[];
+extern s16* D_801530AC[];
 extern SpriteParts* D_80153AA0[];
 extern SpriteParts* D_80153D24[];
 extern SpriteParts* D_801541A8[];
