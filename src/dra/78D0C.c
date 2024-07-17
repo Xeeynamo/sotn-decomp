@@ -93,7 +93,7 @@ void EntityNumberMovesToHpMeter(Entity* self) {
             prim = prim->next;
         }
         for (i = 0; i < PrimCountB; i++) {
-            prim->type = 1;
+            prim->type = PRIM_TILE;
             prim->r0 = 0xFF;
             prim->g0 = 0x40;
             prim->b0 = 0x40;
@@ -322,7 +322,7 @@ void EntityGuardText(Entity* self) {
     FntPrint("str_y:%02x", self->ext.guardText.str_y);
     switch (self->step) {
     case 0:
-        self->flags = 0x04030000;
+        self->flags = FLAG_UNK_04000000 | FLAG_UNK_20000 | FLAG_UNK_10000;
         self->step++;
         return;
     case 1:
@@ -351,7 +351,9 @@ void EntityGuardText(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = 0x04830000;
+        // Would have been better to do |= FLAG_HAS_PRIMS
+        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_20000 |
+                      FLAG_UNK_10000;
         self->ext.guardText.timer = 0x38;
         self->ext.guardText.halfHeight = 0;
         self->ext.guardText.halfWidth = FIX_FRAC(self->ext.guardText.unk98) =
@@ -359,9 +361,9 @@ void EntityGuardText(Entity* self) {
         self->ext.guardText.angle = 0;
         for (i = 0, prim = &g_PrimBuf[self->primIndex]; prim != NULL; i++,
             prim = prim->next) {
-            prim->drawMode = 0xA;
+            prim->drawMode = DRAW_HIDE | DRAW_UNK02;
             if (i >= 2) {
-                prim->type = 1;
+                prim->type = PRIM_TILE;
                 prim->r0 = 0x80;
                 prim->g0 = 0x80;
                 prim->b0 = 0x80;
@@ -471,7 +473,7 @@ void EntityGuardText(Entity* self) {
     prim->tpage = 0x1A;
     prim->clut = params_gtc->clut;
     prim->priority = 0x1B8;
-    prim->drawMode = 0x100;
+    prim->drawMode = DRAW_UNK_100;
     prim = prim->next;
     if (params_gtc->mode == 2) {
 #ifdef VERSION_PSP
@@ -519,7 +521,7 @@ void EntityGuardText(Entity* self) {
     for (i = 0; i < 16; i++) {
         if (prim->r1) {
             if (--prim->g1 == 0) {
-                prim->drawMode = 8;
+                prim->drawMode = DRAW_HIDE;
                 prim->r1 = 0;
             }
             prim->y0++;
