@@ -673,12 +673,12 @@ void EntityHitByIce(Entity* self) {
     u16 selfX;
     u16 selfY;
     Point16* offset;
-    bool xSize = false;
+    bool sp18 = false;
 
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = PLAYER.posY.i.hi;
     // This is badly written but it checks if 0x10000 is unset.
-    xSize = ((g_Player.unk0C & 0x10000) == xSize);
+    sp18 = ((g_Player.unk0C & 0x10000) == sp18);
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_GT3, 24);
@@ -759,12 +759,12 @@ void EntityHitByIce(Entity* self) {
             }
         }
         if (self->ext.hitbyice.unk80 != 0 && --self->ext.hitbyice.unk82 == 0) {
-            xSize = true;
+            sp18 = true;
         }
         if ((self->ext.hitbyice.unk7E != 0) && (g_Player.pl_vram_flag & 0xC)) {
-            xSize = true;
+            sp18 = true;
         }
-        if (xSize) {
+        if (sp18) {
             self->ext.hitbyice.unk7C = 0x40;
             if (self->ext.hitbyice.unk80 != 0) {
                 self->ext.hitbyice.unk7C = 0x80;
@@ -812,7 +812,7 @@ void EntityHitByIce(Entity* self) {
             prim->x2 = prim->x3 = selfX + xShift3;
             prim->y2 = prim->y3 = selfY + yShift3;
         }
-        if ((prim->u0 == 0) && (xSize != 0)) {
+        if ((prim->u0 == 0) && (sp18 != 0)) {
             prim->u0++;
             prim->v0 = (rand() & 15) + 1;
             if (self->ext.hitbyice.unk80 != 0) {
@@ -867,7 +867,7 @@ void EntityHitByLightning(Entity* self) {
     Primitive* prevPrim;
     Primitive* prim;
     s16 temp_s0;
-    s32 angleDivide1;
+    s32 temp_s2;
     s16 xBase;
     s16 yBase;
 
@@ -922,13 +922,11 @@ void EntityHitByLightning(Entity* self) {
     case 1:
         self->ext.hitbylightning.unk7C =
             ((self->params & 0xF) << 9) + (rand() & 0x1FF);
-        angleDivide1 = rsin(self->ext.hitbylightning.unk80);
+        temp_s2 = rsin(self->ext.hitbylightning.unk80);
         self->ext.hitbylightning.unk80 += self->ext.hitbylightning.unk82;
-        xOffset =
-            ((rcos(self->ext.hitbylightning.unk7C) * angleDivide1) >> 7) * 12;
+        xOffset = ((rcos(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) * 12;
         yOffset =
-            ((rsin(self->ext.hitbylightning.unk7C) * angleDivide1) >> 7) * -7
-            << 1;
+            ((rsin(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) * -7 << 1;
         self->posX.val = xOffset + PLAYER.posX.val;
         self->posY.val = yOffset + PLAYER.posY.val;
         if ((self->ext.hitbylightning.unk92 != 0) &&
@@ -950,15 +948,13 @@ void EntityHitByLightning(Entity* self) {
         }
         self->ext.hitbylightning.unk7C =
             ((self->params & 0xF) << 9) + (rand() & 0xFF);
-        angleDivide1 = rsin(self->ext.hitbylightning.unk80);
+        temp_s2 = rsin(self->ext.hitbylightning.unk80);
         self->ext.hitbylightning.unk80 += self->ext.hitbylightning.unk82;
-        xOffset =
-            (((rcos(self->ext.hitbylightning.unk7C) * angleDivide1) >> 7) *
-             ((rand() % 8) + 8));
-        yOffset =
-            (-((rsin(self->ext.hitbylightning.unk7C) * angleDivide1) >> 7) *
-             ((rand() % 8) + 0xA)) +
-            self->ext.generic.unk98;
+        xOffset = (((rcos(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) *
+                   ((rand() % 8) + 8));
+        yOffset = (-((rsin(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) *
+                   ((rand() % 8) + 0xA)) +
+                  self->ext.generic.unk98;
         self->posX.val = xOffset + PLAYER.posX.val;
         self->posY.val = yOffset + PLAYER.posY.val;
         self->ext.generic.unk98 -= 0x8000;
