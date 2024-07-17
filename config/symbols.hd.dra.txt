@@ -38,7 +38,6 @@ func_80113EE0 = 0x80113BD0;
 func_80113F7C = 0x80113C6C;
 func_80115394 = 0x80115084;
 func_80118C28 = 0x80118920;
-EntityNumberMovesToHpMeter = 0x80118A04;
 EntityGuardText = 0x80119280;
 CreateEntFactoryFromEntity = 0x8011A7A8;
 EntityPlayerDissolves = 0x80120A7C;
