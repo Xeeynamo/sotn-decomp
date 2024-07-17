@@ -13,10 +13,12 @@ typedef enum {
 // Richter. This enum handles Richter's version of the ones that overlap.
 typedef enum { Player_RichterSprint = 25 } Richter_PlayerSteps;
 
-extern SpriteParts* D_801530AC[];
+extern s16* D_801530AC[];
 extern SpriteParts* D_80153AA0[];
 extern SpriteParts* D_80153D24[];
 extern SpriteParts* D_801541A8[];
+extern s32 D_80154F7C[];
+extern s16 D_80154FBC[][10];
 extern void func_80159C04(void);
 extern void DestroyEntity(Entity* entity);
 extern void func_8015BB80(void);
@@ -69,7 +71,7 @@ void func_80162C84(Entity* self);
 void func_80162870(Entity* self);
 void func_80160F0C(Entity* self);
 void func_80162C7C(Entity* self);
-void func_80162EF8(Entity* self);
+void EntityPlayerBlinkWhite(Entity* self);
 void EntitySubwpnCrashCrossParticles(Entity* self);
 void func_801641A0(Entity* self);
 void EntityShrinkingPowerUpRing(Entity* self);
