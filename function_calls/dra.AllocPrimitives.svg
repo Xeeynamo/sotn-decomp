@@ -404,7 +404,7 @@
 <g id="node25" class="node">
 <title>dra.EntityGuardText</title>
 <g id="a_node25"><a xlink:href="dra.EntityGuardText.svg" xlink:title="dra.EntityGuardText">
-<ellipse fill="red" stroke="black" cx="5784.34" cy="-378" rx="106.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="5784.34" cy="-378" rx="106.68" ry="18"/>
 <text text-anchor="middle" x="5784.34" y="-374.3" font-family="Times,serif" font-size="14.00">dra.EntityGuardText</text>
 </a>
 </g>

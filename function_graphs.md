@@ -383,7 +383,7 @@
 - [✅ EntityExpandingCircle](function_calls/dra.EntityExpandingCircle.svg?raw=1)
 - [✅ EntityGiantSpinningCross](function_calls/dra.EntityGiantSpinningCross.svg?raw=1)
 - [✅ EntityGravityBootBeam](function_calls/dra.EntityGravityBootBeam.svg?raw=1)
-- [❌ EntityGuardText](function_calls/dra.EntityGuardText.svg?raw=1)
+- [✅ EntityGuardText](function_calls/dra.EntityGuardText.svg?raw=1)
 - [✅ EntityHellfireBigFireball](function_calls/dra.EntityHellfireBigFireball.svg?raw=1)
 - [✅ EntityHellfireHandler](function_calls/dra.EntityHellfireHandler.svg?raw=1)
 - [✅ EntityHellfireNormalFireball](function_calls/dra.EntityHellfireNormalFireball.svg?raw=1)
