@@ -13,7 +13,6 @@ g_SeqInfo = 0x800BD1E0;
 g_XaMusicConfigs = 0x800BD224;
 g_SfxData = 0x800BF554;
 D_800DBFFC = 0x800DBFFC; // ignore:true
-aStrY02x = 0x800E1A74;
 HandleGameOver = 0x800E5584;
 AllocPrimitives = 0x800EDC80;
 RenderPrimitives = 0x800EDEDC;

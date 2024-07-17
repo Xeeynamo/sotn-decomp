@@ -102,7 +102,7 @@ void EntityPlayerBlinkWhite(Entity* self) {
     s16 angleDivide1;
     s16 angleDivide3;
     s16 angleDivide2;
-    SpriteParts* temp_v1;
+    s16* temp_v1;
     u8* plSprite;
     s16 rotz;
 
@@ -117,17 +117,17 @@ void EntityPlayerBlinkWhite(Entity* self) {
     selfY = self->posY.i.hi;
     selfX = self->posX.i.hi;
     temp_v1 = D_801530AC[PLAYER.animCurFrame & 0x7FFF];
-    plSprite = ((u8**)SPRITESHEET_PTR)[temp_v1->count & 0x7FFF];
-    temp_v1++;
+    // Don't miss the temp_v1++ here!
+    plSprite = ((u8**)SPRITESHEET_PTR)[*temp_v1++ & 0x7FFF];
     xMargin = 4;
     yMargin = 1;
     wSprite = xMargin + plSprite[0];
     hSprite = yMargin + plSprite[1];
     width = wSprite - xMargin;
     height = hSprite - yMargin;
-    // Hmm, this seems to me like temp_v1 isn't actually SpriteParts
-    xPivot = temp_v1->count + plSprite[2];
-    yPivot = temp_v1->parts[0].flags + plSprite[3];
+
+    xPivot = temp_v1[0] + plSprite[2];
+    yPivot = temp_v1[1] + plSprite[3];
 
     self->rotZ = rotz;
     self->drawFlags = PLAYER.drawFlags;
