@@ -79,7 +79,332 @@ bool func_80162E9C(Entity* entity) {
     return false;
 }
 
-INCLUDE_ASM("ric/nonmatchings/26C84", func_80162EF8);
+// EntityPlayerBlinkWhite (Richter's version).
+// Same general logic flow as in DRA but lots of missing cases.
+void EntityPlayerBlinkWhite(Entity* self) {
+    Primitive* prim;
+    u8 four;
+    u8 one;
+    u8 sp10;
+    u8 temp_a0;
+    s16 xOffset;
+    s16 yOffset;
+    s16 xSize;
+    s16 ySize;
+    s16 selfX;
+    s16 selfY;
+    s32 i;
+    u16 upperParams;
+    s16* dataPtr;
+    s16 angleIdx1;
+    s16 angleIdx2;
+    s16 angleIdx3;
+    s16 angleDivide1;
+    s16 angleDivide3;
+    s16 angleDivide2;
+    SpriteParts* temp_v1;
+    u8* temp_v0;
+    s16 rotz;
+
+    if (PLAYER.animSet == 0 || (PLAYER.animCurFrame & 0x7FFF) == 0) {
+        DestroyEntity(self);
+        return;
+    }
+    self->posY.i.hi = PLAYER.posY.i.hi;
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    self->facingLeft = PLAYER.facingLeft;
+    rotz = PLAYER.rotZ;
+    selfY = self->posY.i.hi;
+    selfX = self->posX.i.hi;
+    temp_v1 = D_801530AC[PLAYER.animCurFrame & 0x7FFF];
+    temp_v0 = ((u8**)SPRITESHEET_PTR)[temp_v1->count & 0x7FFF];
+    temp_v1++;
+    four = 4;
+    one = 1;
+    sp10 = four + temp_v0[0];
+    temp_a0 = one + temp_v0[1];
+    xSize = sp10 - four;
+    ySize = temp_a0 - one;
+    // Hmm, this seems to me like temp_v1 isn't actually SpriteParts
+    xOffset = temp_v1->count + temp_v0[2];
+    yOffset = temp_v1->parts[0].flags + temp_v0[3];
+
+    self->rotZ = rotz;
+    self->drawFlags = PLAYER.drawFlags;
+    self->rotX = PLAYER.rotX;
+    self->rotY = PLAYER.rotY;
+    self->rotPivotY = PLAYER.rotPivotY;
+    self->rotPivotX = PLAYER.rotPivotX;
+    upperParams = (self->params & 0x7F00) >> 8;
+    dataPtr = D_80154FBC[upperParams & 0x3F];
+    switch (self->step) {
+    case 0:
+        if (func_80162E9C(self) != 0) {
+            DestroyEntity(self);
+            return;
+        }
+        self->primIndex = g_api.AllocPrimitives(4U, 8);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000 |
+                      FLAG_UNK_20000 | FLAG_UNK_10000;
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 8; i++) {
+            D_80154F7C[i] = i << 9;
+            prim->tpage = 0x18;
+            prim->clut = dataPtr[3];
+            prim->r0 = prim->b0 = prim->g0 = prim->r1 = prim->b1 = prim->g1 =
+                prim->r2 = prim->b2 = prim->g2 = prim->r3 = prim->b3 =
+                    prim->g3 = 0x80;
+            prim->priority = PLAYER.zPriority + 2;
+            prim->drawMode =
+                dataPtr[8] + DRAW_UNK_200 + DRAW_UNK_100 + DRAW_COLORS;
+            prim = prim->next;
+        }
+        self->ext.playerBlink.unk8A = dataPtr[9];
+        self->ext.playerBlink.unk90 = 0;
+        self->step += 1;
+        break;
+    case 1:
+        self->ext.playerBlink.unk90 += 0xA;
+        if (self->ext.playerBlink.unk90 > 0x100) {
+            self->ext.playerBlink.unk90 = 0x100;
+            self->ext.playerBlink.unk80 = dataPtr[7];
+            self->step += 1;
+        }
+        break;
+    case 2:
+        if (dataPtr[7] >= 0x7000) {
+            switch ((u32)dataPtr[7]) {
+            case 0x7000:
+                if (g_Player.D_80072F00[0] == 0) {
+                    self->step++;
+                }
+                break;
+            case 0x7001:
+                if (g_Player.D_80072F00[13] == 0) {
+                    self->step++;
+                }
+                break;
+            case 0x7007:
+            case 0x7002:
+                if (PLAYER.step != Player_Hit) {
+                    self->step++;
+                }
+                break;
+            case 0x7005:
+            case 0x7006:
+                if (PLAYER.step_s == 3) {
+                    self->step++;
+                }
+                break;
+            case 0x7003:
+            case 0x7004:
+
+                break;
+            }
+            self->ext.playerBlink.unk80 = 8;
+        }
+        if (--self->ext.playerBlink.unk80 == 0) {
+            self->step += 1;
+        }
+        break;
+    case 3:
+        self->ext.playerBlink.unk90 -= 10;
+        if (self->ext.playerBlink.unk90 < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    self->ext.playerBlink.unk82 += self->ext.playerBlink.unk8A;
+    if (self->facingLeft) {
+        selfX -= xOffset;
+    } else {
+        selfX += xOffset;
+    }
+    selfY += yOffset;
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 8; i++) {
+        if (upperParams & 0x40) {
+            switch (i) {
+            case 0:
+                do {
+                    if (self->facingLeft) {
+                        prim->x0 = selfX;
+                        prim->x1 = selfX - xSize / 2;
+                        prim->u0 = four;
+                        prim->u1 = four + xSize / 2;
+                    } else {
+                        prim->x0 = selfX;
+                        prim->x1 = selfX + xSize / 2;
+                        prim->u0 = four;
+                        prim->u1 = four + xSize / 2;
+                    }
+                    prim->y0 = prim->y1 = selfY;
+                    prim->v0 = prim->v1 = one;
+                } while (0);
+                break;
+            case 1:
+                if (self->facingLeft) {
+                    prim->x0 = selfX - xSize / 2;
+                    prim->x1 = selfX - xSize;
+                    prim->u0 = four + xSize / 2;
+                    prim->u1 = four + xSize;
+                } else {
+                    prim->x0 = selfX + xSize / 2;
+                    prim->x1 = selfX + xSize;
+                    prim->u0 = four + xSize / 2;
+                    prim->u1 = four + xSize;
+                }
+                prim->y0 = prim->y1 = selfY;
+                prim->v0 = prim->v1 = one;
+                break;
+            case 2:
+                if (self->facingLeft) {
+                    prim->x0 = prim->x1 = selfX - xSize;
+                    prim->u0 = prim->u1 = four + xSize;
+                } else {
+                    prim->x0 = prim->x1 = selfX + xSize;
+                    prim->u0 = prim->u1 = four + xSize;
+                }
+                prim->y0 = selfY;
+                prim->y1 = selfY + ySize / 2;
+                prim->v0 = one;
+                prim->v1 = one + ySize / 2;
+                break;
+            case 3:
+                if (self->facingLeft) {
+                    prim->x0 = prim->x1 = selfX - xSize;
+                    prim->u0 = prim->u1 = four + xSize;
+                } else {
+                    prim->x0 = prim->x1 = selfX + xSize;
+                    prim->u0 = prim->u1 = four + xSize;
+                }
+
+                prim->y0 = selfY + ySize / 2;
+                prim->y1 = selfY + ySize;
+                prim->v0 = one + ySize / 2;
+                prim->v1 = one + ySize;
+                break;
+            case 4:
+                if (self->facingLeft) {
+                    prim->x0 = selfX - xSize;
+                    prim->x1 = selfX - xSize / 2;
+                    prim->u0 = four + xSize;
+                    prim->u1 = four + xSize / 2;
+                } else {
+                    prim->x0 = selfX + xSize;
+                    prim->x1 = selfX + xSize / 2;
+                    prim->u0 = four + xSize;
+                    prim->u1 = four + xSize / 2;
+                }
+                prim->y0 = prim->y1 = selfY + ySize;
+                prim->v0 = prim->v1 = one + ySize;
+                break;
+            case 5:
+                if (self->facingLeft) {
+                    prim->x0 = selfX - xSize / 2;
+                    prim->x1 = selfX;
+                    prim->u0 = four + xSize / 2;
+                    prim->u1 = four;
+                } else {
+                    prim->x0 = selfX + xSize / 2;
+                    prim->x1 = selfX;
+                    prim->u0 = four + xSize / 2;
+                    prim->u1 = four;
+                }
+                prim->y0 = prim->y1 = selfY + ySize;
+                prim->v0 = prim->v1 = one + ySize;
+                break;
+            case 6:
+
+                prim->x0 = prim->x1 = selfX;
+
+                prim->u0 = prim->u1 = four;
+                prim->y0 = selfY + ySize;
+                prim->y1 = selfY + ySize / 2;
+                prim->v0 = one + ySize;
+                prim->v1 = one + ySize / 2;
+                break;
+            case 7:
+                prim->x0 = prim->x1 = selfX;
+                prim->u0 = prim->u1 = four;
+                prim->y0 = selfY + ySize / 2;
+                prim->y1 = selfY;
+                prim->v0 = one + ySize / 2;
+                prim->v1 = one;
+                break;
+            }
+            if (self->facingLeft) {
+                prim->x2 = prim->x3 =
+                    selfX - xSize / 2 +
+                    ((rcos(self->ext.playerBlink.unk82) >> 4) * 3 >> 0xC);
+            } else {
+                prim->x2 = prim->x3 =
+                    selfX + xSize / 2 +
+                    ((rcos(self->ext.playerBlink.unk82) >> 4) * 3 >> 0xC);
+            }
+            prim->y2 = prim->y3 =
+                (selfY + ySize / 2) -
+                ((rsin(self->ext.playerBlink.unk82) >> 4) * 3 >> 7);
+            prim->u2 = prim->u3 = four + xSize / 2;
+            prim->v2 = prim->v3 = one + ySize / 2;
+        } else {
+            if (self->facingLeft) {
+                prim->x0 = prim->x2 = (selfX - xSize) + 1;
+                prim->x1 = prim->x3 = selfX + 1;
+            } else {
+                prim->x0 = prim->x2 = selfX;
+                prim->x1 = prim->x3 = selfX + xSize;
+            }
+            prim->y0 = prim->y1 = selfY + ySize * i / 8;
+            prim->y2 = prim->y3 = selfY + ySize * (i + 1) / 8;
+            if (self->facingLeft) {
+                prim->u0 = prim->u2 = sp10 - 1;
+                prim->u1 = prim->u3 = four - 1;
+            } else {
+                prim->u0 = prim->u2 = four;
+                prim->u1 = prim->u3 = sp10;
+            }
+            prim->v0 = prim->v1 = one + ySize * i / 8;
+            prim->v2 = prim->v3 = one + ySize * (i + 1) / 8;
+        }
+        angleIdx1 = dataPtr[0];
+        angleIdx2 = dataPtr[2];
+        angleIdx3 = dataPtr[1];
+        angleDivide1 = dataPtr[4];
+        angleDivide2 = dataPtr[6];
+        angleDivide3 = dataPtr[5];
+        // clang-format off
+        if (upperParams & 0x40) {
+            prim->r0 = (((rsin((s16)D_80154F7C[(i + angleIdx1) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / angleDivide1);
+            prim->g0 = (((rsin((s16)D_80154F7C[(i + angleIdx2) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / angleDivide2);
+            prim->b0 = (((rsin((s16)D_80154F7C[(i + angleIdx3) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / angleDivide3);
+            prim->r1 = (((rsin((s16)D_80154F7C[(i + angleIdx1 + 1) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / angleDivide1);
+            prim->g1 = (((rsin((s16)D_80154F7C[(i + angleIdx2 + 1) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / angleDivide2);
+            prim->b1 = (((rsin((s16)D_80154F7C[(i + angleIdx3 + 1) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / angleDivide3);
+            prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = 0;
+            D_80154F7C[i] += self->ext.playerBlink.unk8A;
+        } else {
+            prim->r0 = prim->r1 =(((rsin((s16)D_80154F7C[(i + angleIdx1) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / angleDivide1);
+            prim->g0 = prim->g1 =(((rsin((s16)D_80154F7C[(i + angleIdx2) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / angleDivide2);
+            prim->b0 = prim->b1 =(((rsin((s16)D_80154F7C[(i + angleIdx3) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / angleDivide3);
+            prim->r2 = prim->r3 =(((rsin((s16)D_80154F7C[(i + angleIdx1 + 1) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / angleDivide1);
+            prim->g2 = prim->g3 =(((rsin((s16)D_80154F7C[(i + angleIdx2 + 1) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / angleDivide2);
+            prim->b2 = prim->b3 =(((rsin((s16)D_80154F7C[(i + angleIdx3 + 1) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / angleDivide3);
+            D_80154F7C[i] += self->ext.playerBlink.unk8A;
+        }
+        // clang-format on
+        prim->priority = PLAYER.zPriority + 2;
+        prim = prim->next;
+    }
+    if (((upperParams & 0x3F) == 0) || ((upperParams & 0x3F) == 7)) {
+        func_8015CAD4(1, 0xA);
+    }
+}
 
 void func_801641A0(Entity* entity) {
     Primitive* prim;
@@ -348,12 +673,12 @@ void EntityHitByIce(Entity* self) {
     u16 selfX;
     u16 selfY;
     Point16* offset;
-    bool sp18 = false;
+    bool xSize = false;
 
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = PLAYER.posY.i.hi;
     // This is badly written but it checks if 0x10000 is unset.
-    sp18 = ((g_Player.unk0C & 0x10000) == sp18);
+    xSize = ((g_Player.unk0C & 0x10000) == xSize);
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_GT3, 24);
@@ -434,12 +759,12 @@ void EntityHitByIce(Entity* self) {
             }
         }
         if (self->ext.hitbyice.unk80 != 0 && --self->ext.hitbyice.unk82 == 0) {
-            sp18 = true;
+            xSize = true;
         }
         if ((self->ext.hitbyice.unk7E != 0) && (g_Player.pl_vram_flag & 0xC)) {
-            sp18 = true;
+            xSize = true;
         }
-        if (sp18) {
+        if (xSize) {
             self->ext.hitbyice.unk7C = 0x40;
             if (self->ext.hitbyice.unk80 != 0) {
                 self->ext.hitbyice.unk7C = 0x80;
@@ -487,7 +812,7 @@ void EntityHitByIce(Entity* self) {
             prim->x2 = prim->x3 = selfX + xShift3;
             prim->y2 = prim->y3 = selfY + yShift3;
         }
-        if ((prim->u0 == 0) && (sp18 != 0)) {
+        if ((prim->u0 == 0) && (xSize != 0)) {
             prim->u0++;
             prim->v0 = (rand() & 15) + 1;
             if (self->ext.hitbyice.unk80 != 0) {
@@ -542,7 +867,7 @@ void EntityHitByLightning(Entity* self) {
     Primitive* prevPrim;
     Primitive* prim;
     s16 temp_s0;
-    s32 temp_s2;
+    s32 angleDivide1;
     s16 xBase;
     s16 yBase;
 
@@ -597,11 +922,13 @@ void EntityHitByLightning(Entity* self) {
     case 1:
         self->ext.hitbylightning.unk7C =
             ((self->params & 0xF) << 9) + (rand() & 0x1FF);
-        temp_s2 = rsin(self->ext.hitbylightning.unk80);
+        angleDivide1 = rsin(self->ext.hitbylightning.unk80);
         self->ext.hitbylightning.unk80 += self->ext.hitbylightning.unk82;
-        xOffset = ((rcos(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) * 12;
+        xOffset =
+            ((rcos(self->ext.hitbylightning.unk7C) * angleDivide1) >> 7) * 12;
         yOffset =
-            ((rsin(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) * -7 << 1;
+            ((rsin(self->ext.hitbylightning.unk7C) * angleDivide1) >> 7) * -7
+            << 1;
         self->posX.val = xOffset + PLAYER.posX.val;
         self->posY.val = yOffset + PLAYER.posY.val;
         if ((self->ext.hitbylightning.unk92 != 0) &&
@@ -623,13 +950,15 @@ void EntityHitByLightning(Entity* self) {
         }
         self->ext.hitbylightning.unk7C =
             ((self->params & 0xF) << 9) + (rand() & 0xFF);
-        temp_s2 = rsin(self->ext.hitbylightning.unk80);
+        angleDivide1 = rsin(self->ext.hitbylightning.unk80);
         self->ext.hitbylightning.unk80 += self->ext.hitbylightning.unk82;
-        xOffset = (((rcos(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) *
-                   ((rand() % 8) + 8));
-        yOffset = (-((rsin(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) *
-                   ((rand() % 8) + 0xA)) +
-                  self->ext.generic.unk98;
+        xOffset =
+            (((rcos(self->ext.hitbylightning.unk7C) * angleDivide1) >> 7) *
+             ((rand() % 8) + 8));
+        yOffset =
+            (-((rsin(self->ext.hitbylightning.unk7C) * angleDivide1) >> 7) *
+             ((rand() % 8) + 0xA)) +
+            self->ext.generic.unk98;
         self->posX.val = xOffset + PLAYER.posX.val;
         self->posY.val = yOffset + PLAYER.posY.val;
         self->ext.generic.unk98 -= 0x8000;

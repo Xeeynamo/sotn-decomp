@@ -1351,7 +1351,7 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     func_80162870,
     func_80160F0C,
     func_80162C7C,
-    func_80162EF8,
+    EntityPlayerBlinkWhite,
     EntitySubwpnCrashCrossParticles,
     func_801641A0,
     EntityShrinkingPowerUpRing,
