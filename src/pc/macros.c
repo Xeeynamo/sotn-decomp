@@ -32,7 +32,41 @@ struct SpellInput dark_metamorphosis[] = {
     {PAD_RIGHT, 1}, {PAD_SQUARE, 1},
     {STOP, 0}};
 
-struct SpellInput* spells_right[] = {&tetra_spirit, &dark_metamorphosis};
+struct SpellInput summon_spirit[] = {
+    {PAD_LEFT, 1}, {PAD_RIGHT, 1},  {PAD_UP, 1},
+    {PAD_DOWN, 1}, {PAD_SQUARE, 1}, {STOP, 0}};
+
+struct SpellInput hellfire[] = {
+    {PAD_UP, 1},    {PAD_DOWN, 1},   {PAD_DOWN + PAD_RIGHT, 1},
+    {PAD_RIGHT, 1}, {PAD_SQUARE, 1}, {STOP, 0}};
+
+struct SpellInput soul_steal[] = {
+    {PAD_LEFT, 1},  {PAD_RIGHT, 1},           {PAD_DOWN + PAD_RIGHT, 1},
+    {PAD_DOWN, 1},  {PAD_DOWN + PAD_LEFT, 1}, {PAD_LEFT, 1},
+    {PAD_RIGHT, 1}, {PAD_SQUARE, 1},          {STOP, 0}};
+
+struct SpellInput sword_brothers[] = {
+    {PAD_DOWN, 1},   {PAD_DOWN + PAD_RIGHT, 1},
+    {PAD_RIGHT, 1},  {PAD_UP + PAD_RIGHT, 1},
+    {PAD_UP, 64},    {PAD_DOWN, 3},
+    {PAD_SQUARE, 1}, {STOP, 0}};
+
+struct SpellInput wing_smash[] = {
+    {PAD_UP + PAD_CROSS, 1},    {PAD_UP + PAD_LEFT + PAD_CROSS, 1},
+    {PAD_LEFT + PAD_CROSS, 1},  {PAD_DOWN + PAD_LEFT + PAD_CROSS, 1},
+    {PAD_DOWN + PAD_CROSS, 1},  {PAD_DOWN + PAD_RIGHT + PAD_CROSS, 1},
+    {PAD_RIGHT + PAD_CROSS, 1}, {STOP, 0}};
+
+struct SpellInput wolf_charge[] = {
+    {PAD_DOWN, 1},
+    {PAD_DOWN + PAD_RIGHT, 1},
+    {PAD_RIGHT, 1},
+    {PAD_SQUARE, 1},
+    {STOP, 0}};
+
+struct SpellInput* spells_right[] = {
+    &tetra_spirit, &dark_metamorphosis, &summon_spirit, &hellfire,
+    &soul_steal,   &sword_brothers,     &wing_smash,    &wolf_charge};
 
 struct SpellInput tetra_spirit_left[] = {
     {PAD_UP, 33},  {PAD_UP + PAD_LEFT, 1},
@@ -46,12 +80,61 @@ struct SpellInput dark_metamorphosis_left[] = {
     {PAD_LEFT, 1},  {PAD_SQUARE, 1},
     {STOP, 0}};
 
+struct SpellInput summon_spirit_left[] = {
+    {PAD_RIGHT, 1}, {PAD_LEFT, 1},   {PAD_UP, 1},
+    {PAD_DOWN, 1},  {PAD_SQUARE, 1}, {STOP, 0}};
+
+struct SpellInput hellfire_left[] = {
+    {PAD_UP, 1},   {PAD_DOWN, 1},   {PAD_DOWN + PAD_LEFT, 1},
+    {PAD_LEFT, 1}, {PAD_SQUARE, 1}, {STOP, 0}};
+
+struct SpellInput soul_steal_left[] = {
+    {PAD_RIGHT, 1},
+    {PAD_LEFT, 1},
+    {PAD_DOWN + PAD_LEFT, 1},
+    {PAD_DOWN, 1},
+    {PAD_DOWN + PAD_RIGHT, 1},
+    {PAD_RIGHT, 1},
+    {PAD_LEFT, 1},
+    {PAD_SQUARE, 1},
+    {STOP, 0}};
+
+struct SpellInput sword_brothers_left[] = {
+    {PAD_DOWN, 1},   {PAD_DOWN + PAD_LEFT, 1},
+    {PAD_LEFT, 1},   {PAD_UP + PAD_LEFT, 1},
+    {PAD_UP, 64},    {PAD_DOWN, 3},
+    {PAD_SQUARE, 1}, {STOP, 0}};
+
+struct SpellInput wing_smash_left[] = {
+    {PAD_UP + PAD_CROSS, 1},    {PAD_UP + PAD_RIGHT + PAD_CROSS, 1},
+    {PAD_RIGHT + PAD_CROSS, 1}, {PAD_DOWN + PAD_RIGHT + PAD_CROSS, 1},
+    {PAD_DOWN + PAD_CROSS, 1},  {PAD_DOWN + PAD_LEFT + PAD_CROSS, 1},
+    {PAD_LEFT + PAD_CROSS, 1},  {STOP, 0}};
+
+struct SpellInput wolf_charge_left[] = {
+    {PAD_DOWN, 1},
+    {PAD_DOWN + PAD_LEFT, 1},
+    {PAD_LEFT, 1},
+    {PAD_SQUARE, 1},
+    {STOP, 0}};
+
 struct SpellInput* spells_left[] = {
-    &tetra_spirit_left, &dark_metamorphosis_left};
+    &tetra_spirit_left, &dark_metamorphosis_left, &summon_spirit_left,
+    &hellfire_left,     &soul_steal_left,         &sword_brothers_left,
+    &wing_smash_left,   &wolf_charge_left};
 
 struct SpellInput** spell[] = {&spells_right, &spells_left};
 
-enum Spells { TETRA_SPIRIT, DARK_METAMORPHOSIS };
+enum Spells {
+    TETRA_SPIRIT,
+    DARK_METAMORPHOSIS,
+    SUMMON_SPIRIT,
+    HELLFIRE,
+    SOUL_STEAL,
+    SWORD_BROTHERS,
+    WING_SMASH,
+    WOLF_CHARGE
+};
 
 u8 previousKeyStates[SDL_NUM_SCANCODES] = {0};
 
@@ -68,6 +151,12 @@ void check_macro(int scanCode, enum Spells which, const u8* keyb) {
 void handle_macros(const u8* keyb, u_long* pressed) {
     check_macro(SDL_SCANCODE_Y, TETRA_SPIRIT, keyb);
     check_macro(SDL_SCANCODE_U, DARK_METAMORPHOSIS, keyb);
+    check_macro(SDL_SCANCODE_I, SUMMON_SPIRIT, keyb);
+    check_macro(SDL_SCANCODE_O, HELLFIRE, keyb);
+    check_macro(SDL_SCANCODE_P, SOUL_STEAL, keyb);
+    check_macro(SDL_SCANCODE_H, SWORD_BROTHERS, keyb);
+    check_macro(SDL_SCANCODE_J, WING_SMASH, keyb);
+    check_macro(SDL_SCANCODE_K, WOLF_CHARGE, keyb);
 
     memcpy(previousKeyStates, keyb, SDL_NUM_SCANCODES * sizeof(Uint8));
 
