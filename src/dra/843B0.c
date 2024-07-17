@@ -2682,8 +2682,15 @@ void func_80129864(Entity* self) {
             prim->drawMode |= DRAW_HIDE;
             break;
         case 1:
+#ifdef VERSION_PC
+            // self->animCurFrame starts at 0. Seems like an out of bounds
+            // bug in original?
+            temp_u = D_800B0848[(self->animCurFrame) * 2];
+            temp_v = D_800B0848[(self->animCurFrame) * 2 + 1];
+#else
             temp_u = D_800B0848[(self->animCurFrame - 1) * 2];
             temp_v = D_800B0848[(self->animCurFrame - 1) * 2 + 1];
+#endif
             prim->u0 = prim->u2 = temp_u;
             prim->u1 = prim->u3 = temp_u + 31;
             prim->v0 = prim->v1 = temp_v;
