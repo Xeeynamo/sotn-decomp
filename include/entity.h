@@ -1247,6 +1247,23 @@ typedef struct {
     s16 brightness;
 } ET_PlayerOutline;
 
+typedef struct {
+    u8 digits[4];
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+    u16 unk86;
+    u16 unk88;
+    u16 unk8A;
+    s16 unk8C;
+    s16 unk8E;
+    s16 unk90;
+    s16 unk92;
+    s16 angleToMeter;
+    s16 distToMeter;
+    s16 unk98;
+} ET_HPNumberMove;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1363,4 +1380,5 @@ typedef union { // offset=0x7C
     ET_80129864 et_80129864;
     ET_801B28E4 et_801B28E4;
     ET_PlayerOutline playerOutline;
+    ET_HPNumberMove hpNumMove;
 } Ext;
