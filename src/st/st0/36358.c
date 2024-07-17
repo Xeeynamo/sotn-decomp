@@ -237,97 +237,73 @@ void func_801B6C5C(Entity* entity) {
 
 // Different from other overlays, but extremely similar to MAD.
 void EntityEquipItemDrop(Entity* self) {
-    u16 itemId = self->params & 0x7FFF;
-    s32 primIndex;
     Collider collider;
-    POLY_GT4* poly;
-    s32* itemName;
+    Primitive* prim;
+    s16 i;
+    u16 itemId;
     s16 index;
-    s32 vramX;
-    s32 vramY;
-    u8 left;
-    u8 right;
-    u16 top;
-    u8 bottom;
-    u8 temp_v0_6;
-    s16 temp_a0;
-    s32* unk;
-
+    s32 primIndex;
+    const char* name;
     s32 xPos;
     s32 yPos;
 
-    if ((self->step != 0) && (self->step < 5) && (self->hitFlags != 0)) {
+    itemId = self->params & 0x7FFF;
+    if (self->step && self->step < 5 && self->hitFlags) {
         self->step = 5;
     }
+
     switch (self->step) {
     case 0:
         InitializeEntity(g_InitializeData0);
         self->ext.equipItemDrop.timer = 0;
         break;
-
     case 1:
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
-
-        if (!(collider.effects & EFFECT_NOTHROUGH_PLUS)) {
-            for (index = 0; index < 32; index++) {
-                if (g_ItemIconSlots[index] == 0) {
-                    break;
-                }
-            }
-
-            if (index >= 32) {
-                DestroyEntity(self);
-                return;
-            }
-
-            primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-            if (primIndex == -1) {
-                DestroyEntity(self);
-                return;
-            }
-
-            self->flags |= FLAG_HAS_PRIMS;
-            self->primIndex = primIndex;
-            g_ItemIconSlots[index] = 0x1E0;
-
-            if (itemId < NUM_HAND_ITEMS) {
-                g_api.LoadEquipIcon(g_api.equipDefs[itemId].icon,
-                                    g_api.equipDefs[itemId].iconPalette, index);
-            } else {
-                itemId -= NUM_HAND_ITEMS;
-                g_api.LoadEquipIcon(
-                    g_api.accessoryDefs[itemId].icon,
-                    g_api.accessoryDefs[itemId].iconPalette, index);
-            }
-
-            poly = &g_PrimBuf[primIndex];
-            vramX = ((temp_v0_6 = index) & 7) * 0x10;
-            vramY = (temp_v0_6 & 0x18) * 2;
-
-            left = vramX | 1;
-            right = vramX | 0xF;
-            top = 0x81;
-            top = vramY | top;
-            bottom = vramY | 0x8F;
-
-            poly->tpage = 0x1A;
-            poly->v3 = bottom;
-            poly->clut = index + 464;
-            poly->u0 = poly->u2 = left;
-            poly->u1 = poly->u3 = right;
-            poly->v1 = top;
-            poly->v2 = bottom;
-            poly->v0 = top;
-            poly->pad2 = 0x80;
-            poly->pad3 = 6;
-
-            self->ext.equipItemDrop.timer = 128;
-            self->step++;
+        if (collider.effects & EFFECT_NOTHROUGH_PLUS) {
+            DestroyEntity(self);
             break;
         }
-        DestroyEntity(self);
-        break;
 
+        for (i = 0; i < LEN(g_ItemIconSlots); i++) {
+            if (!g_ItemIconSlots[i]) {
+                break;
+            }
+        }
+        if (i >= LEN(g_ItemIconSlots)) {
+            DestroyEntity(self);
+            return;
+        }
+
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        g_ItemIconSlots[i] = 0x1E0;
+        if (itemId < NUM_HAND_ITEMS) {
+            g_api.LoadEquipIcon(g_api.equipDefs[itemId].icon,
+                                g_api.equipDefs[itemId].iconPalette, i);
+        } else {
+            itemId -= NUM_HAND_ITEMS;
+            g_api.LoadEquipIcon(g_api.accessoryDefs[itemId].icon,
+                                g_api.accessoryDefs[itemId].iconPalette, i);
+        }
+
+        prim = &g_PrimBuf[primIndex];
+        prim->tpage = 0x1A;
+        prim->clut = i + 464;
+        prim->u0 = prim->u2 = (u8)(i & 7) * 0x10 + 1;
+        prim->u1 = prim->u3 = prim->u0 + 0xE;
+        prim->v0 = prim->v1 = (u8)(i & 0x18) * 2 + 0x81;
+        prim->v2 = prim->v3 = prim->v0 + 0xE;
+        prim->priority = 0x80;
+        prim->drawMode = DRAW_UNK02 | DRAW_COLORS;
+
+        self->ext.equipItemDrop.timer = 128;
+        self->step++;
+        break;
     case 2:
         if (self->velocityX < 0) {
             g_api.CheckCollision(
@@ -336,89 +312,79 @@ void EntityEquipItemDrop(Entity* self) {
                 self->velocityY = 0;
             }
         }
-
         MoveEntity();
-
         g_api.CheckCollision(
             self->posX.i.hi, self->posY.i.hi + 7, &collider, 0);
-
-        if ((collider.effects & EFFECT_NOTHROUGH) && (self->velocityY > 0)) {
+        if ((collider.effects & EFFECT_NOTHROUGH) && self->velocityY > 0) {
             self->velocityX = 0;
             self->velocityY = 0;
             self->posY.i.hi += collider.unk18;
-            self->ext.equipItemDrop.unk80 = 240;
+            self->ext.equipItemDrop.aliveTimer = 240;
             self->step++;
         } else {
             FallEntity();
         }
-
         func_801B5A98(D_80181D74, 2);
         break;
-
     case 3:
         func_801B5F4C(1);
         if (!(self->params & 0x8000)) {
-            if (!(--self->ext.equipItemDrop.unk80 & 255)) {
-                self->ext.equipItemDrop.unk80 = 0x50;
+            if (!(--self->ext.equipItemDrop.aliveTimer)) {
+                self->ext.equipItemDrop.aliveTimer = 80;
                 self->step++;
             }
         }
         break;
-
     case 4:
         func_801B5F4C(1);
-        if (self->ext.equipItemDrop.unk80 += 255) {
-            poly = &g_PrimBuf[self->primIndex];
-            if (self->ext.equipItemDrop.unk80 & 2) {
-                poly->pad3 = 8;
+        if (--self->ext.equipItemDrop.aliveTimer) {
+            prim = &g_PrimBuf[self->primIndex];
+            if (self->ext.equipItemDrop.aliveTimer & 2) {
+                prim->drawMode = DRAW_HIDE;
             } else {
-                poly->pad3 = 2;
+                prim->drawMode = DRAW_UNK02;
             }
         } else {
             DestroyEntity(self);
         }
         break;
-
     case 5:
-        unk = &g_unkGraphicsStruct.BottomCornerTextTimer;
-        if (*unk != 0) {
+        if (g_unkGraphicsStruct.BottomCornerTextTimer) {
             g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
-            *unk = 0;
+            g_unkGraphicsStruct.BottomCornerTextTimer = 0;
         }
-
         g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
-
         if (itemId < NUM_HAND_ITEMS) {
-            itemName = g_api.equipDefs[itemId].name;
+            name = g_api.equipDefs[itemId].name;
             g_api.AddToInventory(itemId, EQUIP_HAND);
         } else {
             itemId -= NUM_HAND_ITEMS;
-            itemName = g_api.accessoryDefs[itemId].name;
+            name = g_api.accessoryDefs[itemId].name;
             g_api.AddToInventory(itemId, EQUIP_ARMOR);
         }
-
-        BottomCornerText(itemName, 1);
+        BottomCornerText(name, 1);
         DestroyEntity(self);
         break;
     }
-    if (self->step >= 2) {
-        poly = &g_PrimBuf[self->primIndex];
+
+    if (self->step > 1) {
+        prim = &g_PrimBuf[self->primIndex];
         xPos = (u16)self->posX.i.hi;
-        poly->x0 = poly->x2 = xPos - 7;
-        poly->x1 = poly->x3 = xPos + 7;
+        prim->x0 = prim->x2 = xPos - 7;
+        prim->x1 = prim->x3 = xPos + 7;
         yPos = (u16)self->posY.i.hi;
-        poly->y0 = poly->y1 = yPos - 7;
-        poly->y2 = poly->y3 = yPos + 7;
-        if (self->ext.equipItemDrop.timer != 0) {
+        prim->y0 = prim->y1 = yPos - 7;
+        prim->y2 = prim->y3 = yPos + 7;
+        if (self->ext.equipItemDrop.timer) {
             self->ext.equipItemDrop.timer--;
             if (!(self->ext.equipItemDrop.timer & 2)) {
-                poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 =
-                    poly->g1 = poly->g2 = poly->g3 = poly->b0 = poly->b1 =
-                        poly->b2 = poly->b3 = 0x80;
+                prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 =
+                    prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
+                        prim->b2 = prim->b3 = 0x80;
             } else {
-                poly->r0 = poly->r1 = poly->r2 = poly->r3 = poly->g0 =
-                    poly->g1 = poly->g2 = poly->g3 = poly->b0 = poly->b1 =
-                        poly->b2 = poly->b3 = 0xFF;
+                prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 =
+                    prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
+                        prim->b2 = prim->b3 = 0xFF;
             }
         }
     }

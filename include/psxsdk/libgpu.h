@@ -139,7 +139,7 @@ typedef struct {
 // for different platforms to safely store the pointer to the next primitive and
 // separately the packet length. On 64-bit builds the packet header is now
 // 128-bit long.
-#ifdef VERSION_PC
+#if defined(VERSION_PSP) || defined(VERSION_PC)
 #define O_TAG                                                                  \
     u_long tag;                                                                \
     u_long len

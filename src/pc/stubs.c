@@ -76,7 +76,6 @@ u16 g_ClutIds[0x400];
 s32 D_8003C738;
 u8 g_CastleFlags[0x300];
 u8 D_8003BEEC[0x200]; // part of g_CastleFlags or second array?
-u8 D_8003BF9C[0x100]; // not sure if it is part of D_8003BEEC?
 s32 D_8006C374;
 s32 D_8006C378;
 u32 D_80070BCC;
