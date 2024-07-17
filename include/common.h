@@ -50,8 +50,13 @@
 int sprintf(char* dst, const char* fmt, ...);
 #endif
 
+// Converts a given value to a fixed-point value, where
+// 16 bits represents the integer part and 16 bits for fractional part
 #define FIX(x) ((s32)((x) * 65536.0))
+// Get the integer part of such a fixed-point value
 #define FIX_TO_I(x) ((s32)((x) >> 16))
+// Get the fractional part of such a fixed-point value
+#define FIX_FRAC(x) (*(s16*)&(x))
 
 // The second argument to CreateEntFactoryFromEntity has weird bit packing,
 // this takes the 2 relevant inputs and packs them up.

@@ -1264,6 +1264,20 @@ typedef struct {
     s16 unk98;
 } ET_HPNumberMove;
 
+typedef struct {
+    s16 timer;
+    s16 pad1;
+    s16 halfWidth;
+    s16 halfHeight;
+    s32 pad2;
+    s16 angle;
+    s16 pad3;
+    s32 pad4;
+    s32 str_x;
+    s32 str_y;
+    s32 unk98;
+} ET_GuardText;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1381,4 +1395,5 @@ typedef union { // offset=0x7C
     ET_801B28E4 et_801B28E4;
     ET_PlayerOutline playerOutline;
     ET_HPNumberMove hpNumMove;
+    ET_GuardText guardText;
 } Ext;
