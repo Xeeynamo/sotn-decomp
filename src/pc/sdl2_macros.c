@@ -5,7 +5,7 @@
 #else
 #include <SDL2/SDL.h>
 #endif
-#include "macros.h"
+#include "sdl2_macros.h"
 
 int press_pos = 0;
 int press_spell = 0;

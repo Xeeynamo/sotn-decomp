@@ -10,7 +10,7 @@
 #endif
 #include "pc.h"
 #include "sdl_defs.h"
-#include "macros.h"
+#include "sdl2_macros.h"
 
 extern bool g_IsQuitRequested;
 extern u16 g_RawVram[VRAM_W * VRAM_H];

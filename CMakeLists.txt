@@ -305,7 +305,7 @@ add_executable(${PROJECT_NAME}
     src/pc/psxsdk/mednafen/gpu_line.cpp
     src/pc/psxsdk/mednafen/gpu_polygon.cpp
     src/pc/psxsdk/mednafen/gpu_sprite.cpp
-    src/pc/macros.c
+    src/pc/sdl2_macros.c
     )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
