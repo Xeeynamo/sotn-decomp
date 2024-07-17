@@ -108,18 +108,17 @@ typedef struct ET_Generic {
 typedef struct {
     /* 0x00 */ u16 timer;
     /* 0x02 */ s16 unk7E;
-    /* 0x04 */ u8 unk80;
+    /* 0x04 */ u8 aliveTimer;
     /* 0x05 */ s8 unk81;
     /* 0x06 */ s16 unk82;
-    /* 0x08 */ s16 unk84;
-    /* 0x0A */ s16 unk86;
-    /* 0x0C */ s16 unk88;
+    /* 0x08 */ s32 fallSpeed;
+    /* 0x0C */ s16 gravity;
     /* 0x0E */ s16 unk8A;
-    /* 0x10 */ s16 unk8C;
+    /* 0x10 */ s16 iconSlot;
     /* 0x12 */ s16 unk8E;
     /* 0x14 */ s16 unk90;
     /* 0x16 */ s16 unk92;
-    /* 0x18 */ s16 unk94;
+    /* 0x18 */ s32 castleFlag;
 } ET_EquipItemDrop;
 
 typedef struct {
@@ -1247,6 +1246,37 @@ typedef struct {
     s16 brightness;
 } ET_PlayerOutline;
 
+typedef struct {
+    u8 digits[4];
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+    u16 unk86;
+    u16 unk88;
+    u16 unk8A;
+    s16 unk8C;
+    s16 unk8E;
+    s16 unk90;
+    s16 unk92;
+    s16 angleToMeter;
+    s16 distToMeter;
+    s16 unk98;
+} ET_HPNumberMove;
+
+typedef struct {
+    s16 timer;
+    s16 pad1;
+    s16 halfWidth;
+    s16 halfHeight;
+    s32 pad2;
+    s16 angle;
+    s16 pad3;
+    s32 pad4;
+    s32 str_x;
+    s32 str_y;
+    s32 unk98;
+} ET_GuardText;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1363,4 +1393,6 @@ typedef union { // offset=0x7C
     ET_80129864 et_80129864;
     ET_801B28E4 et_801B28E4;
     ET_PlayerOutline playerOutline;
+    ET_HPNumberMove hpNumMove;
+    ET_GuardText guardText;
 } Ext;

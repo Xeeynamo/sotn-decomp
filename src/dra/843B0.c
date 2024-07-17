@@ -263,7 +263,7 @@ void func_80124A8C(Entity* entity) {
 
 // dagger thrown when using subweapon
 void EntitySubwpnThrownDagger(Entity* self) {
-    Collider sp34;
+    Collider collider;
     Primitive* prim;
     s16 offsetX;
     s16 offsetY;
@@ -274,9 +274,9 @@ void EntitySubwpnThrownDagger(Entity* self) {
     s16 selfY;
     s16 selfX;
     s16 var_s5;
-    s32 temp_s7;
-    s32 temp_s6;
-    s32 var_i;
+    s32 cosine;
+    s32 sine;
+    s32 i;
 
     switch (self->step) {
     case 0:
@@ -304,8 +304,9 @@ void EntitySubwpnThrownDagger(Entity* self) {
         prim->v1 = prim->v3 = 0;
         prim->priority = PLAYER.zPriority + 2;
         prim->drawMode = DRAW_HIDE | DRAW_UNK02;
+
         prim = prim->next;
-        prim->type = 2;
+        prim->type = PRIM_LINE_G2;
         prim->priority = PLAYER.zPriority + 2;
         prim->drawMode =
             DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE | DRAW_UNK02 | DRAW_TRANSP;
@@ -315,10 +316,10 @@ void EntitySubwpnThrownDagger(Entity* self) {
         SetSpeedX(FIX(8));
         PlaySfx(SFX_SUBWPN_THROW);
         g_Player.D_80072F00[10] = 4;
-        self->step += 1;
+        self->step++;
         return;
     case 1:
-        self->ext.timer.t += 1;
+        self->ext.timer.t++;
         if (self->velocityX > 0) {
             var_s5 = 8;
         }
@@ -331,25 +332,25 @@ void EntitySubwpnThrownDagger(Entity* self) {
             self->hitboxState = 0;
             return;
         }
-        for (var_i = 0; var_i < 8; var_i++) {
+        for (i = 0; i < 8; i++) {
             if (self->velocityX > 0) {
-                self->posX.i.hi += 1;
+                self->posX.i.hi++;
             }
             if (self->velocityX < 0) {
-                self->posX.i.hi -= 1;
+                self->posX.i.hi--;
             }
             CheckCollision(
-                (s16)self->posX.i.hi + var_s5, (s16)self->posY.i.hi, &sp34, 0);
-            if (self->hitFlags == 2 || sp34.effects & 3) {
-                self->ext.timer.t = 0x40;
+                self->posX.i.hi + var_s5, self->posY.i.hi, &collider, 0);
+            if (self->hitFlags == 2 || collider.effects & 3) {
+                self->ext.timer.t = 64;
                 self->velocityX = -(self->velocityX >> 3);
                 self->velocityY = FIX(-2.5);
                 self->hitboxState = 0;
                 self->posX.i.hi += var_s5;
-                CreateEntFactoryFromEntity(self, 0xAU, 0);
+                CreateEntFactoryFromEntity(self, FACTORY(0, 10), 0);
                 self->posX.i.hi -= var_s5;
                 PlaySfx(REBOUND_STONE_BOUNCE);
-                self->step += 1;
+                self->step++;
                 return;
             }
         }
@@ -390,7 +391,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        if ((s16)self->ext.timer.t == 0x20) {
+        if (self->ext.timer.t == 0x20) {
             prim->drawMode |=
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
@@ -426,26 +427,26 @@ void EntitySubwpnThrownDagger(Entity* self) {
             offsetX = -offsetX;
         }
         prim = &g_PrimBuf[self->primIndex];
-        temp_s7 = (rcos(angle_a) * 0xCA0) >> 0x14;
-        temp_s6 = -(rsin(angle_a) * 0xCA0) >> 0x14;
-        prim->x0 = selfX + (s16)temp_s7;
-        prim->y0 = selfY - (s16)temp_s6;
-        temp_s7 = (rcos(angle_b) * 0xCA0) >> 0x14;
-        temp_s6 = -(rsin(angle_b) * 0xCA0) >> 0x14;
-        prim->x1 = selfX + (s16)temp_s7;
-        prim->y1 = selfY - (s16)temp_s6;
-        temp_s7 = (rcos(angle_c) * 0xCA0) >> 0x14;
-        temp_s6 = -(rsin(angle_c) * 0xCA0) >> 0x14;
-        prim->x2 = selfX + (s16)temp_s7;
-        prim->y2 = selfY - (s16)temp_s6;
-        temp_s7 = (rcos(angle_d) * 0xCA0) >> 0x14;
-        temp_s6 = -(rsin(angle_d) * 0xCA0) >> 0x14;
-        prim->x3 = selfX + (s16)temp_s7;
-        prim->y3 = selfY - (s16)temp_s6;
+        cosine = (rcos(angle_a) * 0xCA0) >> 0x14;
+        sine = -(rsin(angle_a) * 0xCA0) >> 0x14;
+        prim->x0 = selfX + cosine;
+        prim->y0 = selfY - sine;
+        cosine = (rcos(angle_b) * 0xCA0) >> 0x14;
+        sine = -(rsin(angle_b) * 0xCA0) >> 0x14;
+        prim->x1 = selfX + cosine;
+        prim->y1 = selfY - sine;
+        cosine = (rcos(angle_c) * 0xCA0) >> 0x14;
+        sine = -(rsin(angle_c) * 0xCA0) >> 0x14;
+        prim->x2 = selfX + cosine;
+        prim->y2 = selfY - sine;
+        cosine = (rcos(angle_d) * 0xCA0) >> 0x14;
+        sine = -(rsin(angle_d) * 0xCA0) >> 0x14;
+        prim->x3 = selfX + cosine;
+        prim->y3 = selfY - sine;
         prim->clut = 0x1AB;
 
         (g_GameTimer >> 1) & 1; // no-op
-        if ((s16)self->ext.timer.t < 0x21) {
+        if (self->ext.timer.t < 0x21) {
             prim->r0 -= 2;
             prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = prim->r2 =
                 prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = prim->r0;
@@ -2295,7 +2296,7 @@ void EntitySubwpnAgunea(Entity* self) {
 }
 
 void EntityAguneaHitEnemy(Entity* self) {
-    Entity* temp_s6;
+    Entity* sine;
     Primitive* prim;
     Primitive* temp_s3;
     Primitive* var_a0;
@@ -2310,7 +2311,7 @@ void EntityAguneaHitEnemy(Entity* self) {
     s32 i;
     s32 randy;
 
-    temp_s6 = self->ext.et_801291C4.parent;
+    sine = self->ext.et_801291C4.parent;
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = (PLAYER.posY.i.hi + PLAYER.hitboxOffY) - 8;
 
@@ -2392,8 +2393,8 @@ void EntityAguneaHitEnemy(Entity* self) {
         for (i = 0; i < 2; i++) {
             prim = self->ext.et_801291C4.unk80;
             temp_s2 = self->ext.et_801291C4.unk84;
-            somethingX = temp_s6->posX.i.hi - prim->x2;
-            somethingY = temp_s6->posY.i.hi - prim->y2;
+            somethingX = sine->posX.i.hi - prim->x2;
+            somethingY = sine->posY.i.hi - prim->y2;
             var_s3 = 0;
             if ((abs(somethingX) < 8) && (abs(somethingY) < 8)) {
                 self->step++;
