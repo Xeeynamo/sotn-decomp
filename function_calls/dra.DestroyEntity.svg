@@ -355,7 +355,7 @@
 <g id="node23" class="node">
 <title>dra.EntityNumberMovesToHpMeter</title>
 <g id="a_node23"><a xlink:href="dra.EntityNumberMovesToHpMeter.svg" xlink:title="dra.EntityNumberMovesToHpMeter">
-<ellipse fill="red" stroke="black" cx="5711.74" cy="-378" rx="178.97" ry="18"/>
+<ellipse fill="green" stroke="black" cx="5711.74" cy="-378" rx="178.97" ry="18"/>
 <text text-anchor="middle" x="5711.74" y="-374.3" font-family="Times,serif" font-size="14.00">dra.EntityNumberMovesToHpMeter</text>
 </a>
 </g>
