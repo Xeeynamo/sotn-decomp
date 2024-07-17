@@ -83,14 +83,14 @@ bool func_80162E9C(Entity* entity) {
 // Same general logic flow as in DRA but lots of missing cases.
 void EntityPlayerBlinkWhite(Entity* self) {
     Primitive* prim;
-    u8 four;
-    u8 one;
-    u8 sp10;
-    u8 temp_a0;
-    s16 xOffset;
-    s16 yOffset;
-    s16 xSize;
-    s16 ySize;
+    u8 xMargin;
+    u8 yMargin;
+    u8 wSprite;
+    u8 hSprite;
+    s16 xPivot;
+    s16 yPivot;
+    s16 width;
+    s16 height;
     s16 selfX;
     s16 selfY;
     s32 i;
@@ -103,7 +103,7 @@ void EntityPlayerBlinkWhite(Entity* self) {
     s16 angleDivide3;
     s16 angleDivide2;
     SpriteParts* temp_v1;
-    u8* temp_v0;
+    u8* plSprite;
     s16 rotz;
 
     if (PLAYER.animSet == 0 || (PLAYER.animCurFrame & 0x7FFF) == 0) {
@@ -117,17 +117,17 @@ void EntityPlayerBlinkWhite(Entity* self) {
     selfY = self->posY.i.hi;
     selfX = self->posX.i.hi;
     temp_v1 = D_801530AC[PLAYER.animCurFrame & 0x7FFF];
-    temp_v0 = ((u8**)SPRITESHEET_PTR)[temp_v1->count & 0x7FFF];
+    plSprite = ((u8**)SPRITESHEET_PTR)[temp_v1->count & 0x7FFF];
     temp_v1++;
-    four = 4;
-    one = 1;
-    sp10 = four + temp_v0[0];
-    temp_a0 = one + temp_v0[1];
-    xSize = sp10 - four;
-    ySize = temp_a0 - one;
+    xMargin = 4;
+    yMargin = 1;
+    wSprite = xMargin + plSprite[0];
+    hSprite = yMargin + plSprite[1];
+    width = wSprite - xMargin;
+    height = hSprite - yMargin;
     // Hmm, this seems to me like temp_v1 isn't actually SpriteParts
-    xOffset = temp_v1->count + temp_v0[2];
-    yOffset = temp_v1->parts[0].flags + temp_v0[3];
+    xPivot = temp_v1->count + plSprite[2];
+    yPivot = temp_v1->parts[0].flags + plSprite[3];
 
     self->rotZ = rotz;
     self->drawFlags = PLAYER.drawFlags;
@@ -221,11 +221,11 @@ void EntityPlayerBlinkWhite(Entity* self) {
     }
     self->ext.playerBlink.unk82 += self->ext.playerBlink.unk8A;
     if (self->facingLeft) {
-        selfX -= xOffset;
+        selfX -= xPivot;
     } else {
-        selfX += xOffset;
+        selfX += xPivot;
     }
-    selfY += yOffset;
+    selfY += yPivot;
     prim = &g_PrimBuf[self->primIndex];
     for (i = 0; i < 8; i++) {
         if (upperParams & 0x40) {
@@ -234,143 +234,143 @@ void EntityPlayerBlinkWhite(Entity* self) {
                 do {
                     if (self->facingLeft) {
                         prim->x0 = selfX;
-                        prim->x1 = selfX - xSize / 2;
-                        prim->u0 = four;
-                        prim->u1 = four + xSize / 2;
+                        prim->x1 = selfX - width / 2;
+                        prim->u0 = xMargin;
+                        prim->u1 = xMargin + width / 2;
                     } else {
                         prim->x0 = selfX;
-                        prim->x1 = selfX + xSize / 2;
-                        prim->u0 = four;
-                        prim->u1 = four + xSize / 2;
+                        prim->x1 = selfX + width / 2;
+                        prim->u0 = xMargin;
+                        prim->u1 = xMargin + width / 2;
                     }
                     prim->y0 = prim->y1 = selfY;
-                    prim->v0 = prim->v1 = one;
+                    prim->v0 = prim->v1 = yMargin;
                 } while (0);
                 break;
             case 1:
                 if (self->facingLeft) {
-                    prim->x0 = selfX - xSize / 2;
-                    prim->x1 = selfX - xSize;
-                    prim->u0 = four + xSize / 2;
-                    prim->u1 = four + xSize;
+                    prim->x0 = selfX - width / 2;
+                    prim->x1 = selfX - width;
+                    prim->u0 = xMargin + width / 2;
+                    prim->u1 = xMargin + width;
                 } else {
-                    prim->x0 = selfX + xSize / 2;
-                    prim->x1 = selfX + xSize;
-                    prim->u0 = four + xSize / 2;
-                    prim->u1 = four + xSize;
+                    prim->x0 = selfX + width / 2;
+                    prim->x1 = selfX + width;
+                    prim->u0 = xMargin + width / 2;
+                    prim->u1 = xMargin + width;
                 }
                 prim->y0 = prim->y1 = selfY;
-                prim->v0 = prim->v1 = one;
+                prim->v0 = prim->v1 = yMargin;
                 break;
             case 2:
                 if (self->facingLeft) {
-                    prim->x0 = prim->x1 = selfX - xSize;
-                    prim->u0 = prim->u1 = four + xSize;
+                    prim->x0 = prim->x1 = selfX - width;
+                    prim->u0 = prim->u1 = xMargin + width;
                 } else {
-                    prim->x0 = prim->x1 = selfX + xSize;
-                    prim->u0 = prim->u1 = four + xSize;
+                    prim->x0 = prim->x1 = selfX + width;
+                    prim->u0 = prim->u1 = xMargin + width;
                 }
                 prim->y0 = selfY;
-                prim->y1 = selfY + ySize / 2;
-                prim->v0 = one;
-                prim->v1 = one + ySize / 2;
+                prim->y1 = selfY + height / 2;
+                prim->v0 = yMargin;
+                prim->v1 = yMargin + height / 2;
                 break;
             case 3:
                 if (self->facingLeft) {
-                    prim->x0 = prim->x1 = selfX - xSize;
-                    prim->u0 = prim->u1 = four + xSize;
+                    prim->x0 = prim->x1 = selfX - width;
+                    prim->u0 = prim->u1 = xMargin + width;
                 } else {
-                    prim->x0 = prim->x1 = selfX + xSize;
-                    prim->u0 = prim->u1 = four + xSize;
+                    prim->x0 = prim->x1 = selfX + width;
+                    prim->u0 = prim->u1 = xMargin + width;
                 }
 
-                prim->y0 = selfY + ySize / 2;
-                prim->y1 = selfY + ySize;
-                prim->v0 = one + ySize / 2;
-                prim->v1 = one + ySize;
+                prim->y0 = selfY + height / 2;
+                prim->y1 = selfY + height;
+                prim->v0 = yMargin + height / 2;
+                prim->v1 = yMargin + height;
                 break;
             case 4:
                 if (self->facingLeft) {
-                    prim->x0 = selfX - xSize;
-                    prim->x1 = selfX - xSize / 2;
-                    prim->u0 = four + xSize;
-                    prim->u1 = four + xSize / 2;
+                    prim->x0 = selfX - width;
+                    prim->x1 = selfX - width / 2;
+                    prim->u0 = xMargin + width;
+                    prim->u1 = xMargin + width / 2;
                 } else {
-                    prim->x0 = selfX + xSize;
-                    prim->x1 = selfX + xSize / 2;
-                    prim->u0 = four + xSize;
-                    prim->u1 = four + xSize / 2;
+                    prim->x0 = selfX + width;
+                    prim->x1 = selfX + width / 2;
+                    prim->u0 = xMargin + width;
+                    prim->u1 = xMargin + width / 2;
                 }
-                prim->y0 = prim->y1 = selfY + ySize;
-                prim->v0 = prim->v1 = one + ySize;
+                prim->y0 = prim->y1 = selfY + height;
+                prim->v0 = prim->v1 = yMargin + height;
                 break;
             case 5:
                 if (self->facingLeft) {
-                    prim->x0 = selfX - xSize / 2;
+                    prim->x0 = selfX - width / 2;
                     prim->x1 = selfX;
-                    prim->u0 = four + xSize / 2;
-                    prim->u1 = four;
+                    prim->u0 = xMargin + width / 2;
+                    prim->u1 = xMargin;
                 } else {
-                    prim->x0 = selfX + xSize / 2;
+                    prim->x0 = selfX + width / 2;
                     prim->x1 = selfX;
-                    prim->u0 = four + xSize / 2;
-                    prim->u1 = four;
+                    prim->u0 = xMargin + width / 2;
+                    prim->u1 = xMargin;
                 }
-                prim->y0 = prim->y1 = selfY + ySize;
-                prim->v0 = prim->v1 = one + ySize;
+                prim->y0 = prim->y1 = selfY + height;
+                prim->v0 = prim->v1 = yMargin + height;
                 break;
             case 6:
 
                 prim->x0 = prim->x1 = selfX;
 
-                prim->u0 = prim->u1 = four;
-                prim->y0 = selfY + ySize;
-                prim->y1 = selfY + ySize / 2;
-                prim->v0 = one + ySize;
-                prim->v1 = one + ySize / 2;
+                prim->u0 = prim->u1 = xMargin;
+                prim->y0 = selfY + height;
+                prim->y1 = selfY + height / 2;
+                prim->v0 = yMargin + height;
+                prim->v1 = yMargin + height / 2;
                 break;
             case 7:
                 prim->x0 = prim->x1 = selfX;
-                prim->u0 = prim->u1 = four;
-                prim->y0 = selfY + ySize / 2;
+                prim->u0 = prim->u1 = xMargin;
+                prim->y0 = selfY + height / 2;
                 prim->y1 = selfY;
-                prim->v0 = one + ySize / 2;
-                prim->v1 = one;
+                prim->v0 = yMargin + height / 2;
+                prim->v1 = yMargin;
                 break;
             }
             if (self->facingLeft) {
                 prim->x2 = prim->x3 =
-                    selfX - xSize / 2 +
+                    selfX - width / 2 +
                     ((rcos(self->ext.playerBlink.unk82) >> 4) * 3 >> 0xC);
             } else {
                 prim->x2 = prim->x3 =
-                    selfX + xSize / 2 +
+                    selfX + width / 2 +
                     ((rcos(self->ext.playerBlink.unk82) >> 4) * 3 >> 0xC);
             }
             prim->y2 = prim->y3 =
-                (selfY + ySize / 2) -
+                (selfY + height / 2) -
                 ((rsin(self->ext.playerBlink.unk82) >> 4) * 3 >> 7);
-            prim->u2 = prim->u3 = four + xSize / 2;
-            prim->v2 = prim->v3 = one + ySize / 2;
+            prim->u2 = prim->u3 = xMargin + width / 2;
+            prim->v2 = prim->v3 = yMargin + height / 2;
         } else {
             if (self->facingLeft) {
-                prim->x0 = prim->x2 = (selfX - xSize) + 1;
+                prim->x0 = prim->x2 = (selfX - width) + 1;
                 prim->x1 = prim->x3 = selfX + 1;
             } else {
                 prim->x0 = prim->x2 = selfX;
-                prim->x1 = prim->x3 = selfX + xSize;
+                prim->x1 = prim->x3 = selfX + width;
             }
-            prim->y0 = prim->y1 = selfY + ySize * i / 8;
-            prim->y2 = prim->y3 = selfY + ySize * (i + 1) / 8;
+            prim->y0 = prim->y1 = selfY + height * i / 8;
+            prim->y2 = prim->y3 = selfY + height * (i + 1) / 8;
             if (self->facingLeft) {
-                prim->u0 = prim->u2 = sp10 - 1;
-                prim->u1 = prim->u3 = four - 1;
+                prim->u0 = prim->u2 = wSprite - 1;
+                prim->u1 = prim->u3 = xMargin - 1;
             } else {
-                prim->u0 = prim->u2 = four;
-                prim->u1 = prim->u3 = sp10;
+                prim->u0 = prim->u2 = xMargin;
+                prim->u1 = prim->u3 = wSprite;
             }
-            prim->v0 = prim->v1 = one + ySize * i / 8;
-            prim->v2 = prim->v3 = one + ySize * (i + 1) / 8;
+            prim->v0 = prim->v1 = yMargin + height * i / 8;
+            prim->v2 = prim->v3 = yMargin + height * (i + 1) / 8;
         }
         angleIdx1 = dataPtr[0];
         angleIdx2 = dataPtr[2];
