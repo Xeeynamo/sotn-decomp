@@ -504,7 +504,7 @@ s32 D_80138394;
 s32 D_80138398;
 Point16 D_8013839C[12];
 Point16 D_8013804C[16];
-u_long* D_80139A7C;
+u32 D_80139A7C[0x400] = {0};
 
 // sound stubs
 
@@ -528,5 +528,3 @@ u16* func_80106A28(u32 arg0, u16 kind) {
 }
 
 void func_80115394(s32* arg0, s16 arg1, s16 arg2) { NOT_IMPLEMENTED; }
-
-void EntityPlayerDissolves(Entity* self) { NOT_IMPLEMENTED; }

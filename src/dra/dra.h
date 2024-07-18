@@ -355,6 +355,8 @@ extern Point16* D_800ADCC8[];
 extern s16 D_800ADDE8[][6];
 extern u8 D_800AE120[];
 extern RECT D_800AE130;
+extern RECT D_800AE138;
+extern u8 D_800AE140[];
 extern Unkstruct_800AE180 D_800AE180[];
 extern u16 D_800AE190[];
 extern s16 D_800AE1B0[];
@@ -703,7 +705,7 @@ extern s16 D_80139A6C;
 extern s16 g_SoundCommandRingBufferWritePos; // D_80139A70
 extern s16 D_80139A74;
 extern s16 D_80139A78;
-extern u_long* D_80139A7C;
+extern u32 D_80139A7C[];
 extern u16 D_8013AE7C;
 extern volatile unsigned char g_CdSoundCommandStep;
 extern s16 g_UnkChannelSetting2[];
