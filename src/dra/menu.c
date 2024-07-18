@@ -2767,7 +2767,7 @@ bool LoadWeaponPrg(s32 equipIndex) {
     }
 
     weaponId = g_EquipDefs[equipId].weaponId;
-    if (weaponId == D_8003C90C[equipIndex] || weaponId == 0xFF) {
+    if (weaponId == g_EquippedWeaponIds[equipIndex] || weaponId == 0xFF) {
         return 1;
     }
 
@@ -2783,7 +2783,7 @@ bool LoadWeaponPrg(s32 equipIndex) {
             return 0;
         }
     }
-    D_8003C90C[equipIndex] = weaponId;
+    g_EquippedWeaponIds[equipIndex] = weaponId;
     return 1;
 }
 

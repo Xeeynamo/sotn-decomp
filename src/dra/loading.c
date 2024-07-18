@@ -363,8 +363,8 @@ void HandleNowLoading(void) {
         if (g_DemoMode == Demo_None) {
             InitStatsAndGear(0);
         }
-        D_8003C90C[0] = -1;
-        D_8003C90C[1] = -1;
+        g_EquippedWeaponIds[0] = -1;
+        g_EquippedWeaponIds[1] = -1;
         g_Servant = 0;
         g_ServantLoaded = 0;
         if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
@@ -381,7 +381,7 @@ void HandleNowLoading(void) {
                 if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
                     var_s0 = g_EquipDefs[0xD8].weaponId;
                 }
-                D_8003C90C[0] = var_s0;
+                g_EquippedWeaponIds[0] = var_s0;
             }
             g_GameStep++;
         }
@@ -392,7 +392,7 @@ void HandleNowLoading(void) {
                 break;
             }
             pfnWeapon = D_8017A000.LoadWeaponPalette;
-            pfnWeapon(g_EquipDefs[D_8003C90C[0]].palette);
+            pfnWeapon(g_EquipDefs[g_EquippedWeaponIds[0]].palette);
             goto block_102;
         } else {
             var_s0 = g_EquipDefs[g_Status.equipment[LEFT_HAND_SLOT]].weaponId;
@@ -406,8 +406,8 @@ void HandleNowLoading(void) {
                 break;
             }
             pfnWeapon = D_8017A000.LoadWeaponPalette;
-            D_8003C90C[0] = var_s0;
-            pfnWeapon(g_EquipDefs[D_8003C90C[0]].palette);
+            g_EquippedWeaponIds[0] = var_s0;
+            pfnWeapon(g_EquipDefs[g_EquippedWeaponIds[0]].palette);
             var_s0 = g_EquipDefs[g_Status.equipment[RIGHT_HAND_SLOT]].weaponId;
             if (var_s0 == 0xFF) {
                 var_s0 = 1;
@@ -416,9 +416,9 @@ void HandleNowLoading(void) {
                 var_s0 = g_EquipDefs[0xD8].weaponId;
             }
             if (LoadFileSim(var_s0, 8) >= 0) {
-                D_8003C90C[1] = var_s0;
+                g_EquippedWeaponIds[1] = var_s0;
                 pfnWeapon = D_8017D000.LoadWeaponPalette;
-                pfnWeapon(g_EquipDefs[D_8003C90C[1]].palette);
+                pfnWeapon(g_EquipDefs[g_EquippedWeaponIds[1]].palette);
             block_102:
                 g_GameStep++;
             }
@@ -435,7 +435,7 @@ void HandleNowLoading(void) {
             if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
                 var_s0 = g_EquipDefs[0xD8].weaponId;
             }
-            D_8003C90C[1] = var_s0;
+            g_EquippedWeaponIds[1] = var_s0;
         }
         g_GameStep++;
         break;
@@ -445,9 +445,10 @@ void HandleNowLoading(void) {
                 break;
             }
             pfnWeapon = D_8017D000.LoadWeaponPalette;
-            pfnWeapon(g_EquipDefs[D_8003C90C[1]].palette);
-        } else if ((LoadFileSim(D_8003C90C[0], SimFileType_Weapon0Chr) < 0) ||
-                   (LoadFileSim(D_8003C90C[1], SimFileType_Weapon1Chr) < 0)) {
+            pfnWeapon(g_EquipDefs[g_EquippedWeaponIds[1]].palette);
+        } else if (
+            (LoadFileSim(g_EquippedWeaponIds[0], SimFileType_Weapon0Chr) < 0) ||
+            (LoadFileSim(g_EquippedWeaponIds[1], SimFileType_Weapon1Chr) < 0)) {
             break;
         }
         CheckWeaponCombo();
