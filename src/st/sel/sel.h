@@ -43,29 +43,6 @@ typedef enum {
 } MenuGfx;
 
 typedef struct {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8; // D_801D6A54
-    s32* unkC;
-    s32 unk10;
-    s32 unk14; // D_801D6A60
-    s16 unk18; // D_801D6A64
-    s16 unk1A; // D_801D6A66
-    s16 unk1C; // D_801D6A68
-    s16 unk1E; // D_801D6A6A
-    s16 unk20;
-    s16 unk22;
-    s16 unk24;
-    s16 unk26;
-    s32 unk28; // D_801D6A74
-    s16 unk2C; // D_801D6A78
-    s16 unk2E; // D_801D6A7A
-    s16 unk30; // D_801D6A7C
-    s16 unk32; // D_801D6A7E
-    s32 unk34; // D_801D6A80
-} Unkstruct_801B9B7C;
-
-typedef struct {
     s32 unk00[16];
     s32 unk10[16];
     s32 unk20[32];
@@ -104,6 +81,14 @@ typedef struct {
     RECT slice;
     int isdone;
 } DECENV;
+
+typedef struct {
+    DECENV dec;   // 4c
+    DISPENV disp; // 84
+    DRAWENV draw; // 98
+    RECT rect;
+    s32 unkFC;
+} StreamEnv;
 
 typedef struct {
     u32 cdOffset;
@@ -221,7 +206,7 @@ extern u32 D_801BD040;
 extern s32 g_StreamRewindSwitch[1];
 extern u8 g_StreamImageBuffer[0x14000];
 extern s32 D_801D104C[0x1680];
-extern DECENV* D_801D6A4C[2];
+extern StreamEnv g_StreamEnv;
 extern s32 D_801D6B04;
 extern s32 g_InputCursorPos;
 extern s32 D_801D6B0C;
