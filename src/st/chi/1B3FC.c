@@ -118,7 +118,87 @@ void func_8019B4DC(Entity* entity)
 }
 //#endif
 
-INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019B698);
+//#ifndef NON_MATCHING
+//INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019B698);
+//#else
+/*?*/ void func_801A04EC(s32, void*);                          // extern
+/*?*/ void func_801A0560(s32, void*, void*);                   // extern
+/*?*/ void func_801A128C(void*);                             // extern
+void* func_801A1AFC(s32*, void*);                     // extern
+/*?*/ void func_801A2684(void*);                             // extern
+extern s32 D_8007D858[];
+extern /*?*/s32 D_80180610;
+extern s32 D_80180838[];
+extern u8 D_80180858[];
+extern u8 D_80180860[];
+extern u16 D_80180868[];
+extern u8 D_80180878[];
+extern u16 D_80180880;
+
+// EntityUnkId01
+void func_8019B698(Entity* entity)
+{
+    u16* ptr;
+    s32 i;
+    u16 params = entity->params >> 0xC;
+    Entity* newEntity;
+
+    if (entity->step == 0) {
+        func_801A1F9C(&D_80180610);
+        entity->zPriority = 0x70;
+        entity->drawMode = D_80180878[params];
+        newEntity = &entity[1];
+        entity->hitboxHeight = D_80180858[params];
+        entity->animSet = D_80180868[params];
+        func_801A128C(newEntity);
+        func_801A0560(0x11, entity, newEntity);
+        if (params != 0) {
+            entity[1].posY.i.hi -= 32;
+        } else {
+            entity[1].posY.i.hi -= 16;
+        }
+        newEntity->params = 1;
+    }
+
+    func_801A13BC(D_80180838[params], entity);
+
+    if (entity->unk44 != 0) {
+        g_api_PlaySfx(SFX_WEAPON_62C);
+        newEntity = func_801A1AFC(&D_8007D858[0], &D_8007D858[0x5E0]);
+        if (newEntity != NULL) {
+            func_801A04EC(2, newEntity);
+            newEntity->params = D_80180860[params] | 0x10;
+        }
+
+        for (ptr = &D_80180880, i = 0; i < 4; i++) {
+            newEntity = func_801A1AFC(&D_8007D858[0], &D_8007D858[0x5E0]);
+            if (newEntity != NULL) {
+                func_801A0560(0x1A, entity, newEntity);
+                newEntity->posX.i.hi += *ptr++;
+                newEntity->posY.i.hi += *ptr++;
+                if (params != 0) {
+                    newEntity->posY.i.hi -= 20;
+                }
+                newEntity->params = i;
+            }
+        }
+
+        if (params != 0) {
+            for (i = 0; i < 3; i++) {
+                newEntity = func_801A1AFC(&D_8007D858[0], &D_8007D858[0x5E0]);
+                if (newEntity != NULL) {
+                    func_801A0560(0x1A, entity, newEntity);
+                    newEntity->posX.i.hi += *ptr++;
+                    newEntity->posY.i.hi += *ptr++;
+                    newEntity->params = i + 4;
+                }
+            }
+        }
+        func_801A128C(&entity[1]);
+        func_801A2684(entity);
+    }
+}
+//#endif
 
 INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019B914);
 
