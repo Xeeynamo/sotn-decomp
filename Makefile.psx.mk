@@ -5,7 +5,7 @@ PSX_RSTAGES		:= rwrp
 PSX_ALLSTAGES	:= $(addprefix st,$(PSX_KSTAGES)) $(addprefix st,$(PSX_RSTAGES))
 PSX_SERVANTS	:= tt_000
 PSX_US_TARGETS	:= main $(PSX_OVLS) $(PSX_ALLSTAGES) $(PSX_SERVANTS)
-PSX_HD_TARGETS	:= dra tt_000
+PSX_HD_TARGETS	:= dra tt_000 stwrp
 
 # immovable
 PSX_BASE_SYMS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
@@ -15,6 +15,8 @@ extract_us: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_US_TARGETS)))
 	make extract_assets
 	make build_assets
 extract_hd: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_HD_TARGETS)))
+	make extract_assets_hd
+	make build_assets
 
 extract_disk_us: extract_disk_psxus
 extract_disk_hd: extract_disk_pspeu
@@ -41,6 +43,9 @@ $(BUILD_DIR)/stmad.ld: $(CONFIG_DIR)/splat.$(VERSION).stmad.yaml $(CONFIG_DIR)/s
 $(BUILD_DIR)/st%.ld: $(CONFIG_DIR)/splat.$(VERSION).st%.yaml $(PSX_BASE_SYMS) $(CONFIG_DIR)/symbols.$(VERSION).st%.txt | st%_dirs
 	$(SPLAT) $<
 	$(GFXSTAGE) d disks/$(VERSION)/ST/$$(echo '$*' | tr '[:lower:]' '[:upper:]')/F_$$(echo '$*' | tr '[:lower:]' '[:upper:]').BIN $(ASSETS_DIR)/st/$*
+build/hd/st%.ld: $(CONFIG_DIR)/splat.$(VERSION).st%.yaml $(PSX_BASE_SYMS) $(CONFIG_DIR)/symbols.$(VERSION).st%.txt | st%_dirs
+	$(SPLAT) $<
+	$(GFXSTAGE) d disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/f_$*.bin $(ASSETS_DIR)/st/$*
 $(BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.$(VERSION).tt_%.yaml $(PSX_BASE_SYMS) $(CONFIG_DIR)/symbols.$(VERSION).tt_%.txt | tt_%_dirs
 	$(SPLAT) $<
 	touch $@
@@ -57,6 +62,8 @@ extract_assets: $(SOTNASSETS)
 	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/ST0/ST0.BIN -o assets/st/st0
 	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/WRP/WRP.BIN -o assets/st/wrp
 	$(SOTNASSETS) extract -stage_ovl disks/$(VERSION)/ST/RWRP/RWRP.BIN -o assets/st/rwrp
+extract_assets_hd: $(SOTNASSETS)
+	$(SOTNASSETS) extract -stage_ovl disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/wrp.bin -o assets/st/wrp
 build_assets: $(SOTNASSETS)
 	$(SOTNASSETS) build_all -i assets/st/cen -o src/st/cen/
 	$(SOTNASSETS) build_all -i assets/st/dre -o src/st/dre/

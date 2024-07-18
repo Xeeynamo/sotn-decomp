@@ -2,7 +2,21 @@
 
 extern u16 D_80180608[];
 
+#if defined(VERSION_US)
 #include "../entity_relic_orb.h"
+
+#elif defined(VERSION_HD)
+extern const char D_80186F4C[];
+const char* g_RelicOrbTexts[] = {D_80186F4C};
+u16 g_RelicOrbTextBg1EY[] = {16, 12, 8, 4, 0, -4, -8, -12};
+u16 g_RelicOrbTextBg1SY[] = {-32, -26, -20, -13, -7, -1, 5, 12};
+u16 g_RelicOrbTextBg2SY[] = {-16, -12, -8, -4, 0, 4, 8, 12};
+u16 g_RelicOrbTextBg2EY[] = {32, 26, 20, 13, 7, 1, -5, -12};
+u16 g_RelicOrbSparkleX[] = {-8, 4, -2, 8, 0, 4, -4, 2};
+u16 g_RelicOrbSparkleY[] = {-2, 2, 4, -3, 0, 2, -4, 3};
+INCLUDE_ASM("st/wrp/nonmatchings/e_misc", EntityRelicOrb);
+
+#endif
 
 void EntityHeartDrop(Entity* self) {
     u16 index;
@@ -39,7 +53,11 @@ void EntityHeartDrop(Entity* self) {
     update(self);
 }
 
+#if defined(VERSION_HD)
+INCLUDE_ASM("st/wrp/nonmatchings/e_misc", EntityMessageBox);
+#else
 #include "../entity_message_box.h"
+#endif
 
 #include "../check_coll_offsets.h"
 
@@ -420,6 +438,7 @@ u16 g_UnkRecursPrim2Inds[] = {
 
 #include "../clut_lerp.h"
 
+#if defined(VERSION_US)
 void func_801916C4(s16 sfxId) {
     s32 posX;
     s32 posY;
@@ -449,3 +468,4 @@ void func_801916C4(s16 sfxId) {
         g_api.func_80134714(sfxId, arg1, arg2);
     }
 }
+#endif

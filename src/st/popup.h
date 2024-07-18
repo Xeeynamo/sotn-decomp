@@ -1,6 +1,6 @@
 #include <stage.h>
 
-#if !defined(VERSION_PSP)
+#if defined(VERSION_US)
 void BottomCornerText(u8* str, u8 lower_left) {
     u8 toPrint[64];
     Primitive* prim;
@@ -218,7 +218,12 @@ void BottomCornerText(u8* str, u8 lower_left) {
         prim->g0 = prim->g1 = 0x5F;
     }
 
+#if defined(VERSION_HD)
+    ch = 8;
+    textWidth *= ch;
+#else
     textWidth *= 8;
+#endif
 
     if (lower_left) {
         textWidth += 4;
