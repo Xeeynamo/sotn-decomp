@@ -12,7 +12,7 @@
 <!-- sel.func_801B38B4 -->
 <g id="node1" class="node">
 <title>sel.func_801B38B4</title>
-<ellipse fill="red" stroke="black" cx="100.09" cy="-18" rx="100.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="100.09" cy="-18" rx="100.18" ry="18"/>
 <text text-anchor="middle" x="100.09" y="-14.3" font-family="Times,serif" font-size="14.00">sel.func_801B38B4</text>
 </g>
 <!-- sel.SEL_Update -->
