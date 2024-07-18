@@ -40,6 +40,10 @@ set(SOURCE_FILES_PC
     src/pc/stages/stage_loader.c
     src/pc/stages/stage_dummy.c
     src/pc/weapon_pc.c
+    src/pc/psxsdk/PsyCross/src/gte/PsyX_GTE.cpp
+    src/pc/psxsdk/PsyCross/src/gte/inline_c.c
+    src/pc/psxsdk/PsyCross/src/gte/libgte_.c
+
 )
 
 if(WIN32)
