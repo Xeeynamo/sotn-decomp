@@ -34,6 +34,7 @@ g_StreamEndFrame = 0x801BD034;
 g_StreamIsRGB24 = 0x801BD038;
 g_StreamRewindSwitch = 0x801BD044;
 g_StreamImageBuffer = 0x801BD048;
+g_StreamEnv = 0x801D6A4C;
 g_InputCursorPos = 0x801D6B08;
 g_MemcardBlockRead = 0x801D6B10;
 g_InputSaveName = 0x801D6B14;
