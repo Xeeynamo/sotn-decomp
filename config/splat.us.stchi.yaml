@@ -35,7 +35,7 @@ segments:
     subsegments:
 # New attempt, following pattern seen in git
       - [0x0, data]
-      - [0x1B100, rodata]
+      - [0x1B100, rodata, 1B3FC]
       - [0x1B144, rodata]
       - [0x1B168, rodata]
       - [0x1B194, rodata]
@@ -44,6 +44,7 @@ segments:
       - [0x1B304, rodata]
       - [0x1B3C0, rodata]
       - [0x1B3FC, c]
+      - [0x1C5CC, c]
 
 # Initial attempt with file splits, semi-up-to-date structures (didn't work?)
 #      - [0x0, data, header]
