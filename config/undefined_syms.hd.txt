@@ -1,5 +1,6 @@
 g_CastleFlags       = 0x8003BDEC;
 D_8003C908          = 0x8003C908;
+g_EquippedWeaponIds = 0x8003C90C;
 g_GpuBuffers        = 0x8003CB08;
 g_api               = 0x8003C774;
 D_8006C384          = 0x8006C384;
