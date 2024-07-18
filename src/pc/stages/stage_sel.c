@@ -128,7 +128,6 @@ void InitStageSel(Overlay* o) {
     }
 }
 
-void func_801B38B4(void) { NOT_IMPLEMENTED; }
 void func_801B9C80(void) {
     // handles the video playback
     // reset D_8003C728 to signal the end of video playback
