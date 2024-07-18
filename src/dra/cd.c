@@ -826,11 +826,11 @@ void UpdateCd(void) {
                 CdIntToPos(cdFile->loc, &g_CdLoc);
                 if (g_CdCallback == CdCallback_12) {
                     CdIntToPos(
-                        D_8003C908.D_8003C90C * 14 + cdFile->loc, &g_CdLoc);
+                        g_EquippedWeaponIds[0] * 14 + cdFile->loc, &g_CdLoc);
                 }
                 if (g_CdCallback == CdCallback_13) {
                     CdIntToPos(
-                        D_8003C908.D_8003C910 * 14 + cdFile->loc, &g_CdLoc);
+                        g_EquippedWeaponIds[1] * 14 + cdFile->loc, &g_CdLoc);
                 }
                 if (g_CdCallback == CdCallback_Monster) {
                     CdIntToPos(g_LoadOvlIdx * 11 + cdFile->loc, &g_CdLoc);

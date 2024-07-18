@@ -86,12 +86,6 @@ typedef struct {
     s32 unkC;
 } Unkstruct_800FDB18;
 
-typedef struct {
-    s32 D_8003C908;
-    s32 D_8003C90C;
-    s32 D_8003C910;
-} Unkstruct_8003C908;
-
 typedef struct Unkstruct_801C6C6C {
     union {
         struct {
