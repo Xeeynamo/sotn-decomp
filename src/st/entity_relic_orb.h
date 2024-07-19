@@ -19,7 +19,7 @@ void EntityRelicOrb(Entity* self) {
     // prim 0: green rectangle for Obtained text bg
     // prim 1: blue rectangle for Obtained text bg
 
-#if defined(VERSION_US)
+#if defined(VERSION_BETA)
     const int MaxItemSlots = LEN(g_ItemIconSlots);
 #else
     const int MaxItemSlots = LEN(g_ItemIconSlots) - 1;
