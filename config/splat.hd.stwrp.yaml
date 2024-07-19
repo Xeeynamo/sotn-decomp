@@ -52,9 +52,9 @@ segments:
       - [0x1124, .data, e_room_fg]
       - [0x11B0, .data, rooms]
       - [0x122C, .data, e_layout] # layout entries data
-      - [0x1424, data]
-      - [0x1768, data]
-      - [0x1D0C, data]
+      - [0x1424, cmp, D_80181420]
+      - [0x1768, cmp, D_80181764]
+      - [0x1D0C, raw, D_80181D08]
       - [0x1D6C, .data, tile_data] # tile data
       - [0x296C, .data, tile_data] # tile definitions
       - [0x6D8C, .data, sprites]
