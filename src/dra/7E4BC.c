@@ -1220,19 +1220,19 @@ void EntityPlayerPinkEffect(Entity* self) {
 void EntityPlayerDissolves(Entity* self) {
     const int PrimCount = 36;
     const int Iterations = 40;
-    u8 sp4F;
-    u8 sp4E;
-    u8 sp4D;
-    u8 sp4C;
-    s16 sp4A;
-    s16 sp48;
-    s16 sp46;
-    s16 sp44;
+    u8 xMargin;
+    u8 yMargin;
+    u8 wSprite;
+    u8 hSprite;
+    s16 xPivot;
+    s16 yPivot;
+    s16 width;
+    s16 height;
     s16 sp42;
     s32 sp3C;
     s16* sp38;
     Primitive* prim;
-    s32 temp_i;
+    s32 i;
     u8* s2;
     s16 s3;
     s16 s4;
@@ -1240,7 +1240,7 @@ void EntityPlayerDissolves(Entity* self) {
     s16 s6;
     s16 s7;
     u32* data;
-    u8* temp_v1;
+    u8* plSprite;
     u8* temp1;
     u8* temp2;
 
@@ -1252,7 +1252,7 @@ void EntityPlayerDissolves(Entity* self) {
         self->ext.dissolve.unk7E = rand() & 0xFF;
         self->ext.dissolve.unk7C = 0x30;
         prim = &g_PrimBuf[self->primIndex];
-        for (temp_i = 0; temp_i < PrimCount; temp_i++) {
+        for (i = 0; i < PrimCount; i++) {
             prim->drawMode &= ~DRAW_HIDE;
             prim = prim->next;
         }
@@ -1267,32 +1267,25 @@ void EntityPlayerDissolves(Entity* self) {
     }
 
     sp38 = D_800CF324[PLAYER.animCurFrame & 0x7FFF];
-#ifdef VER_PSP
-    sp42 = (sp38++)[0];
-#else
-    sp42 = sp38[0];
-#endif
+    sp42 = *sp38++;
     sp42 &= 0x7FFF;
-    temp_v1 = ((u8**)SPRITESHEET_PTR)[sp42];
-    sp4F = 4;
-    sp4E = 1;
-    sp4D = (sp4F + temp_v1[0]);
-    sp4C = (sp4E + temp_v1[1]);
-    sp46 = (sp4D - sp4F);
-    sp44 = (sp4C - sp4E);
-    s3 = (sp46 / 6);
-    s4 = (sp44 / 6);
-#ifndef VER_PSP
-    sp38++;
-#endif
-    sp4A = ((s16*)sp38)[0] + temp_v1[2];
-    sp48 = ((s16*)sp38)[1] + temp_v1[3];
+    plSprite = ((u8**)SPRITESHEET_PTR)[sp42];
+    xMargin = 4;
+    yMargin = 1;
+    wSprite = xMargin + plSprite[0];
+    hSprite = yMargin + plSprite[1];
+    width = wSprite - xMargin;
+    height = hSprite - yMargin;
+    s3 = width / 6;
+    s4 = height / 6;
+    xPivot = *sp38++ + plSprite[2];
+    yPivot = *sp38++ + plSprite[3];
     if (self->facingLeft) {
-        s5 = s5 - sp4A;
+        s5 = s5 - xPivot;
     } else {
-        s5 = s5 + sp4A;
+        s5 = s5 + xPivot;
     }
-    s7 = s7 + sp48;
+    s7 = s7 + yPivot;
 
     switch (self->step) {
     case 0:
@@ -1307,22 +1300,22 @@ void EntityPlayerDissolves(Entity* self) {
         self->ext.dissolve.unk7E = *(
             temp1 + (self->ext.dissolve.unk80 * 8) + self->ext.dissolve.unk7C);
         prim = &g_PrimBuf[self->primIndex];
-        for (temp_i = 0; temp_i < PrimCount; temp_i++) {
+        for (i = 0; i < PrimCount; i++) {
 
             if (self->facingLeft) {
-                prim->x0 = prim->x2 = (s5 - (s3 * (temp_i % 6))) + 1;
+                prim->x0 = prim->x2 = (s5 - (s3 * (i % 6))) + 1;
                 prim->x1 = prim->x3 = prim->x0 - s3;
             } else {
-                prim->x0 = prim->x2 = s5 + (s3 * (temp_i % 6));
+                prim->x0 = prim->x2 = s5 + (s3 * (i % 6));
                 prim->x1 = prim->x3 = prim->x0 + s3;
             }
-            prim->y0 = prim->y1 = s7 + (s4 * (temp_i / 6));
+            prim->y0 = prim->y1 = s7 + (s4 * (i / 6));
             prim->y2 = prim->y3 = prim->y0 + s4;
-            prim->u0 = prim->u2 = (sp4F) + (s3 * (temp_i % 6)) + 0x80;
+            prim->u0 = prim->u2 = (xMargin) + (s3 * (i % 6)) + 0x80;
             prim->u1 = prim->u3 = prim->u0 + s3;
-            prim->v0 = prim->v1 = (sp4E + (s4 * (temp_i / 6)));
+            prim->v0 = prim->v1 = (yMargin + (s4 * (i / 6)));
             prim->v2 = prim->v3 = prim->v0 + s4;
-            prim->g0 = (((temp_i / 6) * 2) + (rand() & 3));
+            prim->g0 = (((i / 6) * 2) + (rand() & 3));
             prim->tpage = 0x18;
             prim->clut = PLAYER.palette & 0x7FFF;
             prim->priority = PLAYER.zPriority + 2;
@@ -1334,16 +1327,16 @@ void EntityPlayerDissolves(Entity* self) {
     case 1:
         StoreImage(&D_800AE130, D_80139A7C);
         prim = &g_PrimBuf[self->primIndex];
-        for (temp_i = 0; temp_i < PrimCount; temp_i++) {
+        for (i = 0; i < PrimCount; i++) {
             if (self->facingLeft) {
-                prim->x0 = prim->x2 = s5 - (s3 * (temp_i % 6)) + 1;
+                prim->x0 = prim->x2 = s5 - (s3 * (i % 6)) + 1;
                 prim->x1 = prim->x3 = prim->x0 - s3;
                 ;
             } else {
-                prim->x0 = prim->x2 = s5 + (s3 * (temp_i % 6));
+                prim->x0 = prim->x2 = s5 + (s3 * (i % 6));
                 prim->x1 = prim->x3 = prim->x0 + s3;
             }
-            prim->y0 = prim->y1 = s7 + (s4 * (temp_i / 6));
+            prim->y0 = prim->y1 = s7 + (s4 * (i / 6));
             prim->y2 = prim->y3 = prim->y0 + s4;
             prim = prim->next;
         }
@@ -1351,19 +1344,19 @@ void EntityPlayerDissolves(Entity* self) {
         /* fallthrough */
     case 2:
         PLAYER.animCurFrame |= ~0x7FFF;
-        if (g_Player.padTapped & 0xF000) { // different between PSX and PSP
+        if (g_Player.padTapped & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT)) {
             self->step += 1;
         }
         prim = &g_PrimBuf[self->primIndex];
-        for (temp_i = 0; temp_i < PrimCount; temp_i++) {
+        for (i = 0; i < PrimCount; i++) {
             if (self->facingLeft) {
-                prim->x0 = prim->x2 = (s5 - (s3 * (temp_i % 6))) + 1;
+                prim->x0 = prim->x2 = (s5 - (s3 * (i % 6))) + 1;
                 prim->x1 = prim->x3 = prim->x0 - s3;
             } else {
-                prim->x0 = prim->x2 = s5 + (s3 * (temp_i % 6));
+                prim->x0 = prim->x2 = s5 + (s3 * (i % 6));
                 prim->x1 = prim->x3 = prim->x0 + s3;
             }
-            prim->y0 = prim->y1 = s7 + (s4 * (temp_i / 6));
+            prim->y0 = prim->y1 = s7 + (s4 * (i / 6));
             prim->y2 = prim->y3 = prim->y0 + s4;
             prim = prim->next;
         }
@@ -1377,18 +1370,16 @@ void EntityPlayerDissolves(Entity* self) {
         s2 = (u8*)data;
         s2 = s2 + ((self->ext.dissolve.unk7E >> 1) & 7);
         s2 = s2 + (((self->ext.dissolve.unk7E & 0xFF) >> 4) << 6);
-        for (temp_i = 0; temp_i < Iterations; temp_i++) {
+        for (i = 0; i < Iterations; i++) {
             if (rand() & 3) {
                 if (self->ext.dissolve.unk7E & 1) {
-                    if (*(s2 + (temp_i & 7) * 8 + (temp_i >> 3) * 0x400)) {
-                        // odd... zeros out the location entirely
-                        *(s2 + (temp_i & 7) * 8 + (temp_i >> 3) * 0x400) &=
-                            0xF0;
-                        *(s2 + (temp_i & 7) * 8 + (temp_i >> 3) * 0x400) |= 1;
+                    if (*(s2 + (i & 7) * 8 + (i >> 3) * 0x400)) {
+                        *(s2 + (i & 7) * 8 + (i >> 3) * 0x400) &= 0xF0;
+                        *(s2 + (i & 7) * 8 + (i >> 3) * 0x400) |= 1;
                     }
-                } else if (*(s2 + (temp_i & 7) * 8 + (temp_i >> 3) * 0x400)) {
-                    *(s2 + (temp_i & 7) * 8 + (temp_i >> 3) * 0x400) &= 0x0F;
-                    *(s2 + (temp_i & 7) * 8 + (temp_i >> 3) * 0x400) |= 0x10;
+                } else if (*(s2 + (i & 7) * 8 + (i >> 3) * 0x400)) {
+                    *(s2 + (i & 7) * 8 + (i >> 3) * 0x400) &= 0x0F;
+                    *(s2 + (i & 7) * 8 + (i >> 3) * 0x400) |= 0x10;
                 }
             }
         }
@@ -1400,15 +1391,15 @@ void EntityPlayerDissolves(Entity* self) {
             self->step = 2;
         }
         prim = &g_PrimBuf[self->primIndex];
-        for (temp_i = 0; temp_i < PrimCount; temp_i++) {
+        for (i = 0; i < PrimCount; i++) {
             if (self->facingLeft) {
-                prim->x0 = prim->x2 = (s5 - (s3 * (temp_i % 6))) + 1;
+                prim->x0 = prim->x2 = (s5 - (s3 * (i % 6))) + 1;
                 prim->x1 = prim->x3 = prim->x0 - s3;
             } else {
-                prim->x0 = prim->x2 = s5 + (s3 * (temp_i % 6));
+                prim->x0 = prim->x2 = s5 + (s3 * (i % 6));
                 prim->x1 = prim->x3 = prim->x0 + s3;
             }
-            prim->y0 = prim->y1 = s7 + (s4 * (temp_i / 6));
+            prim->y0 = prim->y1 = s7 + (s4 * (i / 6));
             prim->y2 = prim->y3 = prim->y0 + s4;
             prim = prim->next;
         }
@@ -1426,11 +1417,11 @@ void EntityPlayerDissolves(Entity* self) {
             s2 = (u8*)data;
             s2 = s2 + ((self->ext.dissolve.unk7E >> 1) & 7);
             s2 = s2 + (((self->ext.dissolve.unk7E & 0xFF) >> 4) << 6);
-            for (temp_i = 0; temp_i < Iterations; temp_i++) {
+            for (i = 0; i < Iterations; i++) {
                 if (self->ext.dissolve.unk7E & 1) {
-                    *(s2 + (temp_i & 7) * 8 + (temp_i >> 3) * 0x400) &= 0xF0;
+                    *(s2 + (i & 7) * 8 + (i >> 3) * 0x400) &= 0xF0;
                 } else {
-                    *(s2 + (temp_i & 7) * 8 + (temp_i >> 3) * 0x400) &= 0x0F;
+                    *(s2 + (i & 7) * 8 + (i >> 3) * 0x400) &= 0x0F;
                 }
             }
             // some sort of prng state
@@ -1443,14 +1434,14 @@ void EntityPlayerDissolves(Entity* self) {
             return;
         }
         prim = &g_PrimBuf[self->primIndex];
-        for (temp_i = 0; temp_i < PrimCount; temp_i++) {
+        for (i = 0; i < PrimCount; i++) {
             prim->drawMode &= DRAW_UNK_200;
             prim->drawMode |= DRAW_UNK02;
             if (prim->r0 == 0) {
                 if (--prim->g0 == 0) {
                     prim->r0++;
                     prim->b0 = ((rand() & 3) + 0xF8);
-                    prim->r1 = 0x20 - (temp_i / 6 * 2);
+                    prim->r1 = 0x20 - (i / 6 * 2);
                 }
             } else {
                 if (prim->r1) {

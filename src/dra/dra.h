@@ -705,7 +705,7 @@ extern s16 D_80139A6C;
 extern s16 g_SoundCommandRingBufferWritePos; // D_80139A70
 extern s16 D_80139A74;
 extern s16 D_80139A78;
-extern u32 D_80139A7C[];
+extern u32 D_80139A7C[0x1400];
 extern u16 D_8013AE7C;
 extern volatile unsigned char g_CdSoundCommandStep;
 extern s16 g_UnkChannelSetting2[];
