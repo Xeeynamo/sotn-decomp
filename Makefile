@@ -125,7 +125,7 @@ CHECK_FILES := $(shell cut -d' ' -f3 config/check.$(VERSION).sha)
 all: build check
 build: build_$(VERSION)
 build_us: main dra weapon ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
-build_hd: dra wrp tt_000
+build_hd: dra $(BUILD_DIR)/WRP.BIN tt_000
 clean:
 	git clean -fdx assets/
 	git clean -fdx asm/$(VERSION)/
@@ -264,7 +264,6 @@ $(BUILD_DIR)/F_ST0.BIN:
 	$(GFXSTAGE) e assets/st/st0 $@
 
 wrp: $(BUILD_DIR)/WRP.BIN $(BUILD_DIR)/F_WRP.BIN
-wrp: build/hd/WRP.BIN
 $(BUILD_DIR)/WRP.BIN: $(BUILD_DIR)/stwrp.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_WRP.BIN:
