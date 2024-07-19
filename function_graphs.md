@@ -396,7 +396,7 @@
 - [✅ EntityMist](function_calls/dra.EntityMist.svg?raw=1)
 - [✅ EntityNumberMovesToHpMeter](function_calls/dra.EntityNumberMovesToHpMeter.svg?raw=1)
 - [✅ EntityPlayerBlinkWhite](function_calls/dra.EntityPlayerBlinkWhite.svg?raw=1)
-- [❌ EntityPlayerDissolves](function_calls/dra.EntityPlayerDissolves.svg?raw=1)
+- [✅ EntityPlayerDissolves](function_calls/dra.EntityPlayerDissolves.svg?raw=1)
 - [✅ EntityPlayerOutline](function_calls/dra.EntityPlayerOutline.svg?raw=1)
 - [✅ EntityPlayerPinkEffect](function_calls/dra.EntityPlayerPinkEffect.svg?raw=1)
 - [✅ EntityStopWatch](function_calls/dra.EntityStopWatch.svg?raw=1)
