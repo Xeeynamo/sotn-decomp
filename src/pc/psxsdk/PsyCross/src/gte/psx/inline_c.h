@@ -6,6 +6,11 @@
 extern "C" {
 #endif
 
+#ifdef _MSC_VER
+typedef unsigned int uint;
+typedef unsigned short ushort;
+#endif
+
 /* Psy-X specific calls */
 
 /* sets cop2 data register value. LWC2 is the same kind*/
