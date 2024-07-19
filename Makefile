@@ -263,7 +263,8 @@ $(BUILD_DIR)/ST0.BIN: $(BUILD_DIR)/stst0.elf
 $(BUILD_DIR)/F_ST0.BIN:
 	$(GFXSTAGE) e assets/st/st0 $@
 
-wrp: $(BUILD_DIR)/WRP.BIN
+wrp: $(BUILD_DIR)/WRP.BIN $(BUILD_DIR)/F_WRP.BIN
+wrp: build/hd/WRP.BIN
 $(BUILD_DIR)/WRP.BIN: $(BUILD_DIR)/stwrp.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_WRP.BIN:
