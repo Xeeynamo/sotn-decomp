@@ -2242,7 +2242,7 @@ void EntitySubwpnAgunea(Entity* self) {
             self->posY.i.hi += ((rand() & 0xF) - 8);
             if (self->ext.et_80128C2C.unk84 == 0) {
                 CreateEntFactoryFromEntity(self, FACTORY(0, 23), 0);
-                PlaySfx(SFX_UNK_665);
+                PlaySfx(SFX_THUNDER);
                 CreateEntFactoryFromEntity(self, FACTORY(0x200, 61), 0);
                 self->ext.et_80128C2C.unk84++;
             } else {
@@ -2262,7 +2262,7 @@ void EntitySubwpnAgunea(Entity* self) {
                 if (g_Status.hearts >= heartCost) {
                     g_Status.hearts -= heartCost;
                     CreateEntFactoryFromEntity(self, FACTORY(0, 23), 0);
-                    PlaySfx(SFX_UNK_665);
+                    PlaySfx(SFX_THUNDER);
                     CreateEntFactoryFromEntity(self, FACTORY(0x200, 61), 0);
                 } else {
                     self->step = 4;
