@@ -654,7 +654,7 @@ void EntityHitByLightning(Entity* self) {
         }
         self->ext.hitbylightning.unk94 = 0x10;
         PlaySfx(SFX_UNK_69D);
-        PlaySfx(SFX_UNK_665);
+        PlaySfx(SFX_THUNDER);
         self->step++;
         break;
     case 1:
