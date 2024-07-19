@@ -1,5 +1,4 @@
 g_InitializeData0 = 0x8018044C;
-g_EInitGeneric = 0x80180470;
 g_RelicOrbTexts = 0x80180F84;
 g_RelicOrbTextBg1EY = 0x80180F88;
 g_RelicOrbTextBg1SY = 0x80180F98;
@@ -20,9 +19,5 @@ BlinkItem = 0x8018D964;
 EntityEquipItemDrop = 0x8018DA08;
 EntityRelicOrb = 0x8018DFF4;
 EntityMessageBox = 0x8018EC40;
-func_801916C4 = 0x80191464;
 EntityStageNamePopup = 0x8019155C;
-UnkPrimHelper = 0x8019298C;
-UnkPolyFunc2 = 0x801930D8;
-PrimDecreaseBrightness = 0x80193158;
 g_ItemIconSlots = 0x80193E44;
