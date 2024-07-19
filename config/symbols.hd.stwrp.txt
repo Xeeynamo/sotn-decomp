@@ -1,14 +1,3 @@
-g_InitializeData0 = 0x8018044C;
 D_80181420 = 0x80181424;
 D_80181764 = 0x80181768;
 D_80181D08 = 0x80181D0C;
-EntityWarpSmallRocks = 0x80187EF0;
-EntityRedDoor = 0x8018A99C;
-DestroyEntity = 0x8018B5D4;
-InitializeEntity = 0x8018C2E4;
-EntityPrizeDrop = 0x8018CFF4;
-EntityEquipItemDrop = 0x8018DA08;
-EntityRelicOrb = 0x8018DFF4;
-EntityMessageBox = 0x8018EC40;
-EntityStageNamePopup = 0x8019155C;
-D_801997E8 = 0x801931DC;

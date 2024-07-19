@@ -66,7 +66,7 @@ segments:
       - [0x6F14, .rodata, e_collect] # EntityPrizeDrop
       - [0x6F34, .rodata, e_collect] # EntityEquipItemDrop
       - [0x6F4C, .rodata, e_misc] # EntityRelicOrb
-      - [0x6F84, rodata]
+      - [0x6F84, .rodata, e_misc] # EntityMessageBox
       - [0x6F98, .rodata, e_stage_name] # EntityStageNamePopup
       - [0x6FAC, .rodata, prim_helpers]
       - [0x6FB4, c, st_debug]

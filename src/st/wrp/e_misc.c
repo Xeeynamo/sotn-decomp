@@ -40,11 +40,7 @@ void EntityHeartDrop(Entity* self) {
     update(self);
 }
 
-#if defined(VERSION_HD)
-INCLUDE_ASM("st/wrp/nonmatchings/e_misc", EntityMessageBox);
-#else
 #include "../entity_message_box.h"
-#endif
 
 #include "../check_coll_offsets.h"
 
