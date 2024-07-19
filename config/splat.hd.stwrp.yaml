@@ -79,7 +79,7 @@ segments:
       - [0xB5D4, c, st_common]
       - [0xCA84, c, e_collect]
       - [0xDFF4, c, e_misc]
-      - [0x11464, c, e_stage_name]
+      - [0x1155C, c, e_stage_name]
       - [0x11C84, c, e_particles]
       - [0x124C8, c, e_room_fg]
       - [0x125B4, c, popup]

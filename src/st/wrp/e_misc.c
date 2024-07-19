@@ -438,7 +438,6 @@ u16 g_UnkRecursPrim2Inds[] = {
 
 #include "../clut_lerp.h"
 
-#if defined(VERSION_US)
 void func_801916C4(s16 sfxId) {
     s32 posX;
     s32 posY;
@@ -468,4 +467,3 @@ void func_801916C4(s16 sfxId) {
         g_api.func_80134714(sfxId, arg1, arg2);
     }
 }
-#endif
