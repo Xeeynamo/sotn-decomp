@@ -1,22 +1,9 @@
 #include "wrp.h"
 
 extern u16 D_80180608[];
+extern u16 D_801997E8[0x600];
 
-#if defined(VERSION_US)
 #include "../entity_relic_orb.h"
-
-#elif defined(VERSION_HD)
-extern const char D_80186F4C[];
-const char* g_RelicOrbTexts[] = {D_80186F4C};
-u16 g_RelicOrbTextBg1EY[] = {16, 12, 8, 4, 0, -4, -8, -12};
-u16 g_RelicOrbTextBg1SY[] = {-32, -26, -20, -13, -7, -1, 5, 12};
-u16 g_RelicOrbTextBg2SY[] = {-16, -12, -8, -4, 0, 4, 8, 12};
-u16 g_RelicOrbTextBg2EY[] = {32, 26, 20, 13, 7, 1, -5, -12};
-u16 g_RelicOrbSparkleX[] = {-8, 4, -2, 8, 0, 4, -4, 2};
-u16 g_RelicOrbSparkleY[] = {-2, 2, 4, -3, 0, 2, -4, 3};
-INCLUDE_ASM("st/wrp/nonmatchings/e_misc", EntityRelicOrb);
-
-#endif
 
 void EntityHeartDrop(Entity* self) {
     u16 index;
