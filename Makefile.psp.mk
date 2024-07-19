@@ -4,7 +4,7 @@ AS_ALLEGREX     := bin/allegrex-as
 
 GNUASPSP        := $(AS_ALLEGREX) -I include/ -G0 -march=allegrex -mabi=eabi -EL
 MWASPSP         := $(WIBO) bin/asm_psp_elf.exe -gnu
-ASPSP           := $(GNUASPSP)
+AS              := $(GNUASPSP)
 
 GNULDPSP        := mipsel-linux-gnu-ld
 MWLDPSP         := $(WIBO) bin/mwldpsp.exe -partial -nostdlib -msgstyle gcc -sym full,elf -g
@@ -53,7 +53,7 @@ $(PSP_BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
 
 $(PSP_BUILD_DIR)/asm/psp%.s.o: asm/psp%.s bin/allegrex-as
 	mkdir -p $(dir $@)
-	$(ASPSP) -o $@ $<
+	$(AS) -o $@ $<
 
 
 $(PSP_BUILD_DIR)/assets/%/mwo_header.bin.o: assets/%/mwo_header.bin
