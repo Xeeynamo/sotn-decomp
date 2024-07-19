@@ -52,7 +52,7 @@ void func_80115F54(void) {
             PLAYER.velocityY = 0x1000;
         }
         if (PLAYER.animFrameDuration < 0) {
-            StoreImage(&D_800AE130, &D_80139A7C);
+            StoreImage(&D_800AE130, D_80139A7C);
             PLAYER.step = 0x10;
             D_80137FE4 = 0;
             D_80137FE8 = 0x40;
