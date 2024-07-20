@@ -6,5 +6,6 @@ s8 g_LayoutObjPosHorizontal;
 static u8 pad0[3];
 s8 g_LayoutObjPosVertical;
 static u8 pad1[3];
-static s32 pad2[0x31A];
-s32 g_ItemIconSlots[16];
+u16 D_801997E8[0x600];
+static s32 pad2[0x1A];
+u16 g_ItemIconSlots[32];

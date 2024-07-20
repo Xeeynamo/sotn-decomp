@@ -125,7 +125,7 @@ CHECK_FILES := $(shell cut -d' ' -f3 config/check.$(VERSION).sha)
 all: build check
 build: build_$(VERSION)
 build_us: main dra weapon ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
-build_hd: dra tt_000
+build_hd: dra $(BUILD_DIR)/WRP.BIN tt_000
 clean:
 	git clean -fdx assets/
 	git clean -fdx asm/$(VERSION)/
@@ -170,8 +170,10 @@ format-symbols:
 	./tools/symbols.py remove-orphans config/splat.us.stsel.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stst0.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stwrp.yaml
+	./tools/symbols.py remove-orphans config/splat.hd.stwrp.yaml
 	./tools/symbols.py remove-orphans config/splat.us.strwrp.yaml
 	./tools/symbols.py remove-orphans config/splat.us.tt_000.yaml
+	./tools/symbols.py remove-orphans config/splat.hd.tt_000.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stmad.yaml
 
 # fast-format
@@ -497,6 +499,7 @@ $(BUILD_DIR)/$(ASSETS_DIR)/ric/%.json.o: $(ASSETS_DIR)/ric/%.json
 	./tools/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/%.bin.o: $(ASSETS_DIR)/%.bin
+	mkdir -p $(dir $@)
 	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
 $(BUILD_DIR)/$(ASSETS_DIR)/%.dec.o: $(ASSETS_DIR)/%.dec
 # for now '.dec' files are ignored

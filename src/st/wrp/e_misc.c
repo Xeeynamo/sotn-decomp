@@ -1,6 +1,7 @@
 #include "wrp.h"
 
 extern u16 D_80180608[];
+extern u16 D_801997E8[0x600];
 
 #include "../entity_relic_orb.h"
 

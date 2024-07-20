@@ -3,7 +3,7 @@
 const char* g_RelicOrbTexts[] = {
 #if defined(VERSION_US)
     "Obtained ",
-#elif defined(VERSION_BETA)
+#else
     "を入手した"
 #endif
 };
@@ -19,10 +19,10 @@ void EntityRelicOrb(Entity* self) {
     // prim 0: green rectangle for Obtained text bg
     // prim 1: blue rectangle for Obtained text bg
 
-#if defined(VERSION_US)
-    const int MaxItemSlots = LEN(g_ItemIconSlots) - 1;
-#elif defined(VERSION_BETA)
+#if defined(VERSION_BETA)
     const int MaxItemSlots = LEN(g_ItemIconSlots);
+#else
+    const int MaxItemSlots = LEN(g_ItemIconSlots) - 1;
 #endif
 
     u16 relicId;
@@ -51,7 +51,7 @@ void EntityRelicOrb(Entity* self) {
     s16 new_var6;
     u16 var_s0_2_2;
 
-#if defined(VERSION_BETA)
+#if !defined(VERSION_US)
     u16 vramX;
     u16* chPixSrc;
     u16* chPixDst;
@@ -93,7 +93,7 @@ void EntityRelicOrb(Entity* self) {
         self->primIndex = primIndex;
         self->flags |= FLAG_HAS_PRIMS;
         self->ext.relicOrb.iconSlot = iconSlot;
-#if defined(VERSION_US)
+#if !defined(VERSION_BETA)
         g_ItemIconSlots[iconSlot] = 0x10;
 #endif
         relic = &g_api.relicDefs[relicId];
@@ -137,7 +137,7 @@ void EntityRelicOrb(Entity* self) {
 
     case 5:
         g_api.func_800FE044(relicId, 0x2000);
-#if defined(VERSION_US)
+#if !defined(VERSION_BETA)
         if (relicId > RELIC_DEMON_CARD && relicId < RELIC_FAERIE_CARD) {
             g_Status.relics[relicId] = g_Status.relics[relicId] ^ 2;
         }
@@ -217,7 +217,7 @@ void EntityRelicOrb(Entity* self) {
         LoadTPage(chPix, 0, 0, 0, 0x100, 0x180, 0x10);
         self->ext.relicOrb.unk7C = 0;
         self->ext.relicOrb.unk7E = msgLen;
-#elif defined(VERSION_BETA)
+#else
         msgLen = 0;
         isObtainedTextStored = false;
         vramX = 0;
@@ -309,7 +309,7 @@ void EntityRelicOrb(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
 #if defined(VERSION_US)
         prim->x0 = 0x80 - self->ext.relicOrb.unk7E;
-#elif defined(VERSION_BETA)
+#else
         prim->x0 = 0x80 - self->ext.relicOrb.unk7E * 6;
 #endif
         prim->drawMode = 0;
@@ -322,10 +322,7 @@ void EntityRelicOrb(Entity* self) {
     }
 
     if (self->step < 2) {
-#if defined(VERSION_US)
-        BlinkItem(self, g_Timer);
-        prim = &g_PrimBuf[self->primIndex];
-#elif defined(VERSION_BETA)
+#if defined(VERSION_BETA)
         // This is just the function BlinkItem inlined
         prim = &g_PrimBuf[self->primIndex];
 
@@ -352,6 +349,9 @@ void EntityRelicOrb(Entity* self) {
                 prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
                     prim->b3 = 128;
         }
+#else
+        BlinkItem(self, g_Timer);
+        prim = &g_PrimBuf[self->primIndex];
 #endif
 
         // Animates the four sparkles while the relic is floating

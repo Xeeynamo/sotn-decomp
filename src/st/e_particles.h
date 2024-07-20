@@ -1,5 +1,9 @@
 #include <stage.h>
 
+#if defined(VERSION_HD)
+static u32 padding = 0;
+#endif
+
 u16 g_ESoulStealOrbAngles[] = {
     0x820, 0x840, 0x860, 0x880, 0x8C0, 0x900, 0x940, 0xA00,
 };
