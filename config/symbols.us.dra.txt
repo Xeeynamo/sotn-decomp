@@ -36,7 +36,6 @@ EntityEntFactory = 0x8011AC3C;
 EntityPlayerBlinkWhite = 0x8011BDA4;
 EntityMpReplenished = 0x8011D9F8;
 EntityPlayerPinkEffect = 0x80120AF8;
-EntityPlayerDissolves = 0x80120DD0;
 EntityMist = 0x8012231C;
 EntityTeleport = 0x801243B0;
 EntitySubwpnCrashCross = 0x801267B0;

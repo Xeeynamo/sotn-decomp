@@ -1285,6 +1285,12 @@ typedef struct {
     s32 unk98;
 } ET_GuardText;
 
+typedef struct {
+    s16 unk7C;
+    s16 unk7E;
+    s16 unk80;
+} ET_Dissolve;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1404,4 +1410,5 @@ typedef union { // offset=0x7C
     ET_PlayerOutline playerOutline;
     ET_HPNumberMove hpNumMove;
     ET_GuardText guardText;
+    ET_Dissolve dissolve;
 } Ext;

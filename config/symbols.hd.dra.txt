@@ -36,7 +36,6 @@ func_80113F7C = 0x80113C6C;
 func_80115394 = 0x80115084;
 func_80118C28 = 0x80118920;
 CreateEntFactoryFromEntity = 0x8011A7A8;
-EntityPlayerDissolves = 0x80120A7C;
 PlaySfx = 0x801343D4;
 g_DebugFreeze = 0x80135E88;
 g_DebugHitboxViewMode = 0x80135E8C;
