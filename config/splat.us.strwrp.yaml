@@ -37,7 +37,7 @@ segments:
       - [0xB8, .data, rwrp/header] # layers
       - [0x1B8, .data, rwrp/d_1b8] # entity gfx
       - [0x23C, .data, rwrp/e_laydef] # layout entries header
-      - [0x3E4, .data, rwrp/e_init] # entity inits
+      - [0x3E4, .data, rwrp/e_init]
       - [0x528, .data, wrp/st_debug]
       - [0x5A8, .data, wrp/e_breakable]
       - [0x608, .data, wrp/d_608]
