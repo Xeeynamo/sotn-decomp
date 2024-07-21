@@ -6,6 +6,8 @@ extern u32 D_80180648;
 
 #define SE_WARP_DEBRIS 0x644
 
+INCLUDE_ASM("st/rwrp/nonmatchings/rwrp/warp", EntityRWarpRoom);
+
 void EntityWarpSmallRocks(Entity* entity) {
     s32 x;
     s32 y;
@@ -71,7 +73,7 @@ void EntityWarpSmallRocks(Entity* entity) {
         break;
     case 5:
         if (--entity->ext.warpRoom.unk88 == 0) {
-            func_80193644(SE_WARP_DEBRIS);
+            func_801916C4(SE_WARP_DEBRIS);
         }
         MoveEntity();
         entity->velocityY += FIX(0.1875);
