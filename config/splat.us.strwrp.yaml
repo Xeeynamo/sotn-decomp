@@ -35,9 +35,9 @@ segments:
     subsegments:
       - [0x0, .data, rwrp/header]
       - [0xB8, .data, rwrp/header] # layers
-      - [0x1B8, data]
+      - [0x1B8, .data, rwrp/d_1b8] # entity gfx
       - [0x23C, .data, rwrp/e_laydef] # layout entries header
-      - [0x3E4, data]
+      - [0x3E4, .data, rwrp/e_init] # entity inits
       - [0x528, .data, wrp/st_debug]
       - [0x5A8, .data, wrp/e_breakable]
       - [0x608, .data, wrp/d_608]
@@ -61,8 +61,7 @@ segments:
       - [0x8C48, data]
       - [0x8C88, rodata]
       - [0x8CB0, .rodata, rwrp/warp] # EntityWarpSmallRocks
-      - [0x8CC8, .rodata, wrp/e_red_door]
-      - [0x8CE0, rodata]
+      - [0x8CC8, .rodata, wrp/e_red_door] # EntityRedDoor
       - [0x8CE0, .rodata, wrp/e_collect] # CollectGold strings
       - [0x8D30, .rodata, wrp/e_collect] # EntityPrizeDrop
       - [0x8D50, .rodata, wrp/e_collect] # EntityEquipItemDrop

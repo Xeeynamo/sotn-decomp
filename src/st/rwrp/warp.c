@@ -1,7 +1,7 @@
 #include "game.h"
 #include "rwrp.h"
 
-extern u16 D_801804B8[];
+extern u16 g_EInitReverseSmallRocks[];
 extern u32 D_80180648;
 
 #define SE_WARP_DEBRIS 0x644
@@ -16,7 +16,7 @@ void EntityWarpSmallRocks(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(D_801804B8);
+        InitializeEntity(g_EInitReverseSmallRocks);
         entity->drawFlags = FLAG_DRAW_ROTZ;
         entity->rotZ = Random() * 0x10;
         entity->animCurFrame = (Random() % 5) + 1;

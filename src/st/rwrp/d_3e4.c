@@ -1,4 +1,4 @@
-#include "wrp.h"
+#include "rwrp.h"
 #include "../st_private.h"
 
 void func_80186FD0(Entity*);
@@ -6,7 +6,7 @@ void EntityUnkId12(Entity*);
 void EntityUnkId13(Entity*);
 void EntityUnkId14(Entity*);
 void EntityUnkId15(Entity*);
-void EntityWarpRoom(Entity*);
+void EntityRWarpRoom(Entity*);
 void EntityWarpSmallRocks(Entity*);
 void EntityPrizeDrop(Entity*);
 PfnEntityUpdate PfnEntityUpdates[] = {
@@ -31,7 +31,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     /* 42C */ (PfnEntityUpdate)EntityUnkId13,
     /* 430 */ (PfnEntityUpdate)EntityUnkId14,
     /* 434 */ (PfnEntityUpdate)EntityUnkId15,
-    /* 438 */ (PfnEntityUpdate)EntityWarpRoom,
+    /* 438 */ (PfnEntityUpdate)EntityRWarpRoom,
     /* 43C */ (PfnEntityUpdate)EntityWarpSmallRocks,
 };
 
@@ -59,12 +59,16 @@ u16 g_eInitGeneric2[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0003, 0x0000,
 };
 u16 g_eDamageDisplayInit[] = {
-    /**/ 0x0000, 0x0000, 0x0000, 0x0000, 0x0003, 0x0000,
-    /**/ 0x8001, 0x0000, 0x0000, 0x0000, 0x0003, 0x0000,
-    /**/ 0x800B, 0x0001, 0x0048, 0x021A, 0x0061, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0003, 0x0000,
 };
-u16 D_801804C4[] = {
+u16 D_801804AC[] = {
+    0x8001, 0x0000, 0x0000, 0x0000, 0x0003, 0x0000,
+};
+u16 g_EInitReverseSmallRocks[] = {
     0x8001, 0x0000, 0x0000, 0x0000, 0x0005, 0x0000,
+};
+u16 g_EInitSmallRocks[] = {
+    0x8002, 0x0000, 0x0000, 0x82E8, 0x0005, 0x0000,
 };
 // ******
 
@@ -79,6 +83,6 @@ ObjInit2 D_801804E0[] = {
 // There is a loop in EntityRedDoor that forces to write those tiles
 // at every frame based on the door state to create the animation.
 u16 g_eRedDoorTiles[2][8] = {
-    {0x1D, 0x25, 0x75, 0x7D, 0xC6, 0xC7, 0xC8, 0xC9},
-    {0x1F, 0x27, 0x77, 0x7F, 0xCA, 0xCB, 0xCC, 0xCD},
+    {0x7D, 0x75, 0x25, 0x1D, 0xC9, 0xC8, 0xC7, 0xC6},
+    {0x7F, 0x77, 0x27, 0x1F, 0xCD, 0xCC, 0xCB, 0xCA},
 };

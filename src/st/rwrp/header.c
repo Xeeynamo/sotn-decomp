@@ -4,7 +4,7 @@ extern RoomHeader OVL_EXPORT(rooms)[];
 extern signed short* spriteBanks[];
 extern void* Cluts[];
 extern MyRoomDef rooms_layers[];
-extern GfxBank* g_GfxBanks[];
+extern void* OVL_EXPORT(g_EntityGfxs)[];
 void UpdateStageEntities();
 
 static Overlay OVL_EXPORT(Overlay) = {
@@ -17,7 +17,7 @@ static Overlay OVL_EXPORT(Overlay) = {
     .cluts = Cluts,
     .objLayoutHorizontal = NULL,
     .tileLayers = rooms_layers,
-    .gfxBanks = g_GfxBanks,
+    .gfxBanks = OVL_EXPORT(g_EntityGfxs),
     .UpdateStageEntities = UpdateStageEntities,
 };
 

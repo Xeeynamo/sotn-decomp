@@ -49,7 +49,7 @@ extern u16 g_InitializeData0[];
 extern u16 g_InitializeEntityData0[];
 extern u16 g_EInitGeneric[];
 extern u16 g_eInitGeneric2[];
-extern u16 D_801804C4[];
+extern u16 g_EInitSmallRocks[];
 
 void EntityUnkId14(Entity* entity);
 void EntityUnkId15(Entity* entity);
