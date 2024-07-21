@@ -46,15 +46,6 @@ extern u16 g_InitializeEntityData0[];
 extern u16 g_EInitGeneric[];
 extern u16 g_eInitGeneric2[];
 extern u16 D_801804C4[];
-extern u16 g_eRedDoorTiles[2][8];
-extern u8 g_eRedDoorUV[3][8];
-extern u16 g_eUnk14SpawnRots[];
-extern u16 g_ESoulStealOrbAngles[];
-extern s16 g_ESoulStealOrbSprt[];
-extern u8 g_ESoulStealOrbAnim[];
 
-extern u16 g_ItemIconSlots[32];
-
-void func_8018F838(Entity*);
 void EntityUnkId14(Entity* entity);
 void EntityUnkId15(Entity* entity);
