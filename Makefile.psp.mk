@@ -8,8 +8,8 @@ MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -Op -c -lang
 MWLDPSP_FLAGS   := -partial -nostdlib -msgstyle gcc -sym full,elf -g
 
 # Tools
-ALLEGREX_AS     := $(BIN_DIR)/allegrex
-AS              := $(BIN_DIR)/allegrex-as
+ALLEGREX_AS     := $(BIN_DIR)/allegrex-as
+AS              := $(ALLEGREX_AS)
 WIBO            := $(BIN_DIR)/wibo
 MWCCPSP         := $(BIN_DIR)/mwccpsp.exe
 CCPSP           := MWCIncludes=$(BIN_DIR) $(WIBO) $(MWCCPSP)
