@@ -70,7 +70,12 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdControlF);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdControlB);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdMix);
+void CD_vol();
+
+s32 CdMix(void) {
+    CD_vol();
+    return 1;
+}
 
 s32 CD_getsector();
 
