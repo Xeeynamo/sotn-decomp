@@ -7,7 +7,7 @@ u16 g_eRedDoorTiles[2][8] = {
 
 void EntityDamageDisplay(Entity*);
 void func_80186FD0(Entity*);
-void func_801870B0(Entity*);
+void EntityUnkId12(Entity*);
 void EntityUnkId13(Entity*);
 void EntityWarpRoom(Entity*);
 void EntityWarpSmallRocks(Entity*);
@@ -31,7 +31,7 @@ PfnEntityUpdate D_psp_09246E30[] = {
     /* 41C */ (PfnEntityUpdate)EntityDummy,
     /* 420 */ (PfnEntityUpdate)EntityDummy,
     /* 424 */ (PfnEntityUpdate)func_80186FD0, // unused
-    /* 428 */ (PfnEntityUpdate)func_801870B0, // unused? looks debugging stuff
+    /* 428 */ (PfnEntityUpdate)EntityUnkId12, // unused? looks debugging stuff
     /* 42C */ (PfnEntityUpdate)EntityUnkId13,
     /* 430 */ (PfnEntityUpdate)EntityUnkId14,
     /* 434 */ (PfnEntityUpdate)EntityUnkId15,
