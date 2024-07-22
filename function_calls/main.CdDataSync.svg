@@ -12,7 +12,7 @@
 <!-- main.CdDataSync -->
 <g id="node1" class="node">
 <title>main.CdDataSync</title>
-<ellipse fill="red" stroke="black" cx="93.59" cy="-18" rx="93.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="93.59" cy="-18" rx="93.68" ry="18"/>
 <text text-anchor="middle" x="93.59" y="-14.3" font-family="Times,serif" font-size="14.00">main.CdDataSync</text>
 </g>
 </g>

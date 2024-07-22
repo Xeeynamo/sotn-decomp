@@ -12,7 +12,7 @@
 <!-- main.CdDataCallback -->
 <g id="node1" class="node">
 <title>main.CdDataCallback</title>
-<ellipse fill="red" stroke="black" cx="110.49" cy="-18" rx="110.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="110.49" cy="-18" rx="110.48" ry="18"/>
 <text text-anchor="middle" x="110.49" y="-14.3" font-family="Times,serif" font-size="14.00">main.CdDataCallback</text>
 </g>
 </g>

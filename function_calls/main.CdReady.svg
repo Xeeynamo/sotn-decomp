@@ -12,7 +12,7 @@
 <!-- main.CdReady -->
 <g id="node1" class="node">
 <title>main.CdReady</title>
-<ellipse fill="red" stroke="black" cx="77.99" cy="-18" rx="77.99" ry="18"/>
+<ellipse fill="green" stroke="black" cx="77.99" cy="-18" rx="77.99" ry="18"/>
 <text text-anchor="middle" x="77.99" y="-14.3" font-family="Times,serif" font-size="14.00">main.CdReady</text>
 </g>
 </g>
