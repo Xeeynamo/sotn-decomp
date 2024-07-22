@@ -15,11 +15,7 @@ const char aIdBiosCV177199[] =
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_vol);
 
-void CD_flush();
-
-void CdFlush(void) {
-    CD_flush();
-}
+INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_flush);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_initvol);
 
