@@ -2,7 +2,11 @@
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/iso9660", CdSearchFile);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/iso9660", _cmp);
+s32 strncmp(const char* str1, const char* str2, size_t num);
+
+s32 _cmp(const char* str1, const char* str2) {
+    return strncmp(str1, str2, 0xC) == 0;
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/iso9660", CD_newmedia);
 
