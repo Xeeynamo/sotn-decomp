@@ -239,7 +239,7 @@ void func_8019B914(Entity* entity)
         if (entity->params >= 4) {
             entity->ext.generic.unk80.modeS16.unk0 = -entity->ext.generic.unk80.modeS16.unk0;
         }
-        
+
         if (temp_s0 == 0) {
             entity->velocityX = FIX(-1);
         } else {
@@ -322,7 +322,82 @@ void func_8019B914(Entity* entity)
 }
 //#endif
 
-INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019BD0C);
+//#ifndef NON_MATCHING
+//INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019BD0C);
+//#else
+typedef struct UnkStruct1 {
+    s32 unk0;
+    s8 unk4;
+    u8 unk5;
+    u8 unk6;
+    u8 unk7;
+    u8 unk8;
+    u8 unk9;
+    u16 unkA;
+    s8 unkC;
+    s8 unkD;
+    u8 unkE;
+    u8 unkF;
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+    u8 unk1C;
+    u8 unk1D;
+    u8 unk1E;
+    s8 unk1F;
+    s32 unk20;
+    u8 unk24;
+    u8 unk25;
+    u16 unk26;
+    u8 unk28;
+    u8 unk29;
+    u8 unk2A;
+    u8 unk2B;
+    s32 unk2C;
+    s16 unk30;
+    u16 unk32;
+} UnkStruct1;
+
+extern s16 g_Tilemap_scrollY_i_hi;
+
+void func_8019BD0C(struct UnkStruct1* arg0)
+{
+    s8 temp_v0;
+    s16 tempA;
+    s8 temp1F;
+    s16 tempScroll;
+    bool tempCond1;
+    bool tempCond2;
+
+    switch (arg0->unk2B) {
+        case 1:
+            temp_v0 = (func_8019DE74() & 1) + 1;
+            arg0->unkC = temp_v0;
+            arg0->unkD = temp_v0;
+            arg0->unk4 = 0x60;
+            arg0->unk5 = 0x80;
+            arg0->unk6 = 0x30;
+            arg0->unk26 = 0xA0;
+            arg0->unk32 = 2;
+            arg0->unk1F = (u8) ((func_8019DE74() & 0x1F) + 0x10);
+            arg0->unk2B = 2U;
+            // fallthrough
+        case 2:
+            tempA = arg0->unkA + 2;
+            arg0->unkA = tempA;
+            temp1F = arg0->unk1F - 1;
+            arg0->unk1F = temp1F;
+            tempScroll = g_Tilemap_scrollY_i_hi;
+            tempCond1 = tempScroll + tempA >= 0xA1;
+            tempCond2 = (temp1F & 0xFF) == 0;
+            if (tempCond2 || tempScroll + tempA >= 0xA1) {
+                arg0->unk32 = 8;
+                arg0->unk2B = 0U;
+            }
+            return;
+    }
+}
+//#endif
 
 INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019BDF8);
 
