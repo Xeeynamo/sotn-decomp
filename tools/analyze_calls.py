@@ -232,7 +232,7 @@ def find_func_match(caller, candidates):
         # Resolve rwrp matches by pulling from wrp. This may need to have different logic in future.
         if "rwrp" in caller.asm_filename:
             for candidate in candidates:
-                if candidate.unique_name.startswith("wrp."):
+                if "wrp" in candidate.unique_name:
                     return candidate
         print("Unbreakable tie found, exiting!")
         exit(4)
