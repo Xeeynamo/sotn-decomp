@@ -50,7 +50,15 @@ s32 CdSyncCallback(s32 arg0) {
     return temp_v0;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdReadyCallback);
+extern void (*CD_cbready)(u8, u8*);
+
+void (*CdReadyCallback(void (*func)(u8, u8*)))(u8, u8*) {
+    void (*temp_v0)(u8, u8*);
+
+    temp_v0 = CD_cbready;
+    CD_cbready = func;
+    return temp_v0;
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdControl);
 
