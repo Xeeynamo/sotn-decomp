@@ -113,9 +113,6 @@ extern u16 D_80180B98[];
 extern u16 D_80180BB0[];
 extern u16 D_80180BC8[];
 extern ObjInit2 D_80180C10[];
-extern u8 D_80180D98[];
-extern u8 D_80180DA0[];
-extern u16 D_80180DA8[];
 extern SVEC4 D_80180EEC[];
 extern SVEC4 D_80180F6C;
 extern MATRIX D_80180F9C;
@@ -201,27 +198,6 @@ extern u8 D_8018142C[];
 
 // *** EntitySlogra properties END ***
 
-// *** EntityGaibon properties START ***
-
-extern u16 D_80180B68[]; // Init
-extern u16 D_80180B6E;   // Gaibon's palette data
-extern s32 D_801812CC;   // killed in entrance local flag
-extern s32 D_801814B4[]; // Some collision data
-extern u8 D_801814C4[];  // Animation
-extern u8 D_801814D8[];  // Animation
-extern u8 D_8018150C[];  // Animation
-extern u8 D_80181520[];  // Animation
-extern u8 D_80181534[];  // Animation
-extern u8 D_80181540[];  // Animation
-extern u8 D_80181550[];  // Animation
-extern u8 D_80181564[];  // Animation
-extern u8 D_80181570[];  // Animation
-extern u8 D_80181578[];  // Animation
-extern s32 D_80181584[]; // Hitbox related
-extern u8 D_801815B4[];  // Hitbox related
-
-// *** EntityGaibon properties END ***
-
 extern u8 D_8018120C[]; // this could be a struct
 extern const u8 D_80181214[];
 extern s16 D_80181220[][2];
@@ -231,9 +207,6 @@ extern u8 D_801813D4[];
 extern u8 D_801813E4[];
 extern s8 D_80181454[];
 extern u8 D_8018148C[];
-extern u8 D_801815E0[];
-extern u8 D_801815EC[];
-extern u8 D_801815FC[];
 extern u16 D_80181618[];
 extern s16 D_80181A50[];
 extern u16 D_80181D80[];
@@ -242,8 +215,6 @@ extern u16 D_80181E74[];
 extern s8 c_HeartPrizes[];
 extern s32 D_80181E80[];
 extern const u8* D_80181F2C[];
-extern s16 D_80181FB4[];
-extern u32 D_80181FC4[];
 extern u8 D_80182008[];
 extern s32 D_80182204[];
 extern s64 D_801821B4[];

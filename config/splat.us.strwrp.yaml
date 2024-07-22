@@ -65,8 +65,8 @@ segments:
       - [0x8CE0, .rodata, wrp/e_collect] # CollectGold strings
       - [0x8D30, .rodata, wrp/e_collect] # EntityPrizeDrop
       - [0x8D50, .rodata, wrp/e_collect] # EntityEquipItemDrop
-      - [0x8D68, .rodata, rwrp/e_misc]
-      - [0x8DA0, .rodata, rwrp/e_misc]
+      - [0x8D68, .rodata, rwrp/e_misc] # EntityRelicOrb
+      - [0x8DA0, .rodata, rwrp/e_misc] # EntityMessageBox
       - [0x8DB4, .rodata, wrp/e_stage_name] # EntityStageNamePopup
       - [0x8DE8, .rodata, wrp/prim_helpers]
       - [0x8DF0, c, wrp/st_debug]
