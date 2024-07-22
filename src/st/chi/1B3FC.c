@@ -399,7 +399,48 @@ void func_8019BD0C(struct UnkStruct1* arg0)
 }
 //#endif
 
-INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019BDF8);
+//#ifndef NON_MATCHING
+//INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019BDF8);
+//#else
+extern u8 D_8003BE3C;
+extern /*?*/s32 D_8018067C;
+
+void func_8019BDF8(Entity* entity)
+{
+    s16 temp_3;
+
+    switch (entity->step) {
+        case 0:
+            func_801A1F9C(&D_8018067C);
+
+            temp_3 = 3;
+
+            //sm volatile("" ::: "memory");
+
+            entity->hitPoints = 0x7FFF;
+            entity->animCurFrame = temp_3;
+            entity->hitboxState = 3;
+            entity->hitboxWidth = 6;
+            entity->hitboxHeight = 8;
+
+            //asm volatile("" ::: "memory");
+
+            if (D_8003BE3C != 0) {
+                entity->animCurFrame = 4;
+            }
+            // fallthrough
+        case 1:
+            if (entity->unk44 == 7) {
+                g_api_PlaySfx(0x640);
+                D_8003BE3C = 1;
+                g_api_func_800F1FC4(0x50);
+                entity->animCurFrame = 4;
+                entity->step++;
+            }
+            return;
+    }
+}
+//#endif
 
 INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019BEDC);
 
