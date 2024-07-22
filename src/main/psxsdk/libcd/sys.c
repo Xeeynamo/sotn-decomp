@@ -18,7 +18,15 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdReset);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdFlush);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdSetDebug);
+extern s32 D_80032AB0;
+
+s32 CdSetDebug(s32 arg0) {
+    s32 temp_v0;
+
+    temp_v0 = D_80032AB0;
+    D_80032AB0 = arg0;
+    return temp_v0;
+}
 
 const char aNone[] = "none";
 
