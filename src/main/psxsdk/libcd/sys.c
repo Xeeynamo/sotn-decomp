@@ -16,7 +16,7 @@ int* CdLastPos(void) { return &CD_pos; }
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdReset);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_flush);
+INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdFlush);
 
 extern s32 D_80032AB0;
 
