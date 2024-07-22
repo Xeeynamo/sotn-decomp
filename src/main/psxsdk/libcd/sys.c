@@ -36,7 +36,9 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdComstr);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdIntstr);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdSync);
+void CD_sync();
+
+void CdSync(void) { CD_sync(); }
 
 void CD_ready();
 
