@@ -82,6 +82,7 @@ jobs:
       - name: Analyze calls dry run
         if: matrix.version == 'us'
         run: |
+          make force_symbols
           make force_extract
           ./tools/analyze_calls.py --ultradry
       - name: Remove clutter from build folder

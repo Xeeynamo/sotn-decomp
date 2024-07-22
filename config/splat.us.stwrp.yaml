@@ -37,7 +37,7 @@ segments:
       - [0xB8, .data, header] # layers
       - [0x1B8, .data, d_1b8] # entity gfx
       - [0x23C, .data, e_laydef] # layout entries header
-      - [0x3E4, .data, d_3e4] # entity inits
+      - [0x3E4, .data, e_init]
       - [0x528, .data, st_debug]
       - [0x5A8, .data, e_breakable]
       - [0x608, .data, d_608]

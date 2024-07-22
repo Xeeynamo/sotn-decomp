@@ -322,7 +322,7 @@ void EntityWarpSmallRocks(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(D_801804C4);
+        InitializeEntity(g_EInitSmallRocks);
         entity->drawFlags = FLAG_DRAW_ROTZ;
         entity->rotZ = Random() * 0x10;
         entity->animCurFrame = (Random() % 5) + 1;

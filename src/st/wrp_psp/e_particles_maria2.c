@@ -1,5 +1,8 @@
 #include "../wrp/wrp.h"
 
+extern u16 g_ESoulStealOrbAngles[];
+extern s16 g_ESoulStealOrbSprt[];
+extern u8 g_ESoulStealOrbAnim[];
 void func_psp_0923B2F0(Entity* self) {
     Primitive* prim;
     s32 primIndex;
