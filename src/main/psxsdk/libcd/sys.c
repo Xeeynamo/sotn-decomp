@@ -72,7 +72,9 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdControlB);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdMix);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdGetSector);
+s32 CD_getsector();
+
+s32 CdGetSector(void) { return CD_getsector() == 0; }
 
 void* DMACallback(int dma, void (*func)());
 
