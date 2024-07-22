@@ -229,8 +229,8 @@ def find_func_match(caller, candidates):
         for candidate in candidates:
             if candidate.unique_name.startswith("dra."):
                 return candidate
-        # Resolve rwrp matches by pulling from wrp. This may need to have different logic in future.
-        if "rwrp" in caller.asm_filename:
+        # Resolve wrp/rwrp matches by pulling from wrp. This may need to have different logic in future.
+        if "wrp" in caller.asm_filename:
             for candidate in candidates:
                 if "wrp" in candidate.unique_name:
                     return candidate
