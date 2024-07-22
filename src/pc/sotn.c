@@ -93,6 +93,8 @@ static bool InitSfxData(FileStringified* file);
 static bool InitXaData(FileStringified* file);
 static bool InitBlueprintData(FileStringified* file);
 
+s32 func_800EDB58(u8 primType, s32 count);
+
 bool InitGame(void) {
     if (!InitPlatform()) {
         return false;
@@ -102,7 +104,7 @@ bool InitGame(void) {
     GameApi api;
     api.FreePrimitives = FreePrimitives;
     api.AllocPrimitives = AllocPrimitives;
-    api.CheckCollision = NULL;
+    api.CheckCollision = CheckCollision;
     api.func_80102CD8 = NULL;
     api.UpdateAnim = NULL;
     api.SetSpeedX = NULL;
@@ -111,7 +113,7 @@ bool InitGame(void) {
     api.func_800EA5E4 = func_800EA5E4;
     api.LoadGfxAsync = LoadGfxAsync;
     api.PlaySfx = PlaySfx;
-    api.func_800EDB58 = NULL;
+    api.func_800EDB58 = func_800EDB58;
     api.func_800EA538 = func_800EA538;
     api.g_pfn_800EA5AC = func_800EA5AC;
     api.func_801027C4 = NULL;
