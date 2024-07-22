@@ -38,7 +38,9 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdIntstr);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdSync);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdReady);
+void CD_ready();
+
+void CdReady(void) { CD_ready(); }
 
 extern s32 CD_cbsync;
 
