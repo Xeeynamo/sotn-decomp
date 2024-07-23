@@ -40,6 +40,10 @@ set(SOURCE_FILES_PC
     src/pc/stages/stage_loader.c
     src/pc/stages/stage_dummy.c
     src/pc/weapon_pc.c
+    src/pc/psxsdk/PsyCross/src/gte/PsyX_GTE.cpp
+    src/pc/psxsdk/PsyCross/src/gte/inline_c.c
+    src/pc/psxsdk/PsyCross/src/gte/libgte_.c
+
 )
 
 if(WIN32)
@@ -225,7 +229,7 @@ set(SOURCE_FILES_STAGE_WRP
     src/pc/stages/stage_wrp.c
     src/st/wrp/d_1b8.c
     src/st/wrp/e_laydef.c
-    src/st/wrp/d_3e4.c
+    src/st/wrp/e_init.c
     src/st/wrp/st_debug.c
     src/st/wrp/e_breakable.c
     src/st/wrp/d_608.c

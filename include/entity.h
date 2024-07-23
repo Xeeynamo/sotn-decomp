@@ -174,10 +174,18 @@ typedef struct {
     /* 0x80 */ s32 unk80;
     /* 0x84 */ struct Primitive* unk84;
     /* 0x88 */ struct Primitive* unk88;
-    /* 0x88 */ struct Primitive* unk8C;
+    /* 0x8C */ struct Primitive* unk8C;
     /* 0x90 */ s16 unk90;
     /* 0x92 */ s16 unk92;
 } ET_StagePopup;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 unk80;
+    /* 0x84 */ struct Primitive* unk84;
+    /* 0x88 */ struct Primitive* unk88;
+    /* 0x8C */ u8 unk8C;
+} ET_StagePopupJP;
 
 typedef struct {
     /* 0x7C */ char* label;
@@ -1317,6 +1325,7 @@ typedef union { // offset=0x7C
     ET_RelicOrb relicOrb;
     ET_Door door;
     ET_StagePopup stpopup;
+    ET_StagePopupJP stpopupj;
     ET_MessageBox messageBox;
     ET_Weapon weapon;
     ET_Shield shield;

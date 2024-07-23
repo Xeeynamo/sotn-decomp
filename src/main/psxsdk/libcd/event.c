@@ -2,8 +2,10 @@
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/event", CdInit);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/event", def_cbsync);
+extern void DeliverEvent(unsigned long, unsigned long);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/event", def_cbready);
+void def_cbsync(void) { DeliverEvent(0xF0000003, 0x20); }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/event", def_cbread);
+void def_cbready(void) { DeliverEvent(0xF0000003, 0x40); }
+
+void def_cbread(void) { DeliverEvent(0xF0000003, 0x40); }

@@ -45,7 +45,7 @@ void func_80186FD0(Entity* self) {
     AnimateEntity(objInit->unk10, self);
 }
 
-void func_801870B0(Entity* entity) {
+void EntityUnkId12(Entity* entity) {
     u16 var_s0;
     u16 params;
     u16* tilemapProps;

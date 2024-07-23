@@ -16,9 +16,19 @@ int* CdLastPos(void) { return &CD_pos; }
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdReset);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdFlush);
+void CD_flush();
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdSetDebug);
+void CdFlush(void) { CD_flush(); }
+
+extern s32 D_80032AB0;
+
+s32 CdSetDebug(s32 arg0) {
+    s32 temp_v0;
+
+    temp_v0 = D_80032AB0;
+    D_80032AB0 = arg0;
+    return temp_v0;
+}
 
 const char aNone[] = "none";
 
@@ -26,13 +36,33 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdComstr);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdIntstr);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdSync);
+void CD_sync();
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdReady);
+void CdSync(void) { CD_sync(); }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdSyncCallback);
+void CD_ready();
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdReadyCallback);
+void CdReady(void) { CD_ready(); }
+
+extern s32 CD_cbsync;
+
+s32 CdSyncCallback(s32 arg0) {
+    s32 temp_v0;
+
+    temp_v0 = CD_cbsync;
+    CD_cbsync = arg0;
+    return temp_v0;
+}
+
+extern void (*CD_cbready)(u8, u8*);
+
+void (*CdReadyCallback(void (*func)(u8, u8*)))(u8, u8*) {
+    void (*temp_v0)(u8, u8*);
+
+    temp_v0 = CD_cbready;
+    CD_cbready = func;
+    return temp_v0;
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdControl);
 
@@ -40,13 +70,24 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdControlF);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdControlB);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdMix);
+void CD_vol();
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdGetSector);
+s32 CdMix(void) {
+    CD_vol();
+    return 1;
+}
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdDataCallback);
+s32 CD_getsector();
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdDataSync);
+s32 CdGetSector(void) { return CD_getsector() == 0; }
+
+void* DMACallback(int dma, void (*func)());
+
+void CdDataCallback(void (*func)()) { DMACallback(3, func); }
+
+void CD_datasync();
+
+void CdDataSync(void) { CD_datasync(); }
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdIntToPos);
 

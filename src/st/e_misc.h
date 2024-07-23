@@ -1,22 +1,123 @@
-#include "rwrp.h"
+#include <stage.h>
 
-#include "../check_coll_offsets.h"
+#ifndef CASTLE_FLAG_BANK
+#define CASTLE_FLAG_BANK 0
+#endif
 
-#include "../entity_unkId13.h"
+extern u16 D_80180608[];
 
-#include "../entity_unkId14_spawner.h"
+#include "entity_relic_orb.h"
 
-#include "../entity_unkId15_spawner.h"
+void EntityHeartDrop(Entity* self) {
+    u16 index;
+    u8 value;
+    PfnEntityUpdate update;
 
-#include "../entity_unkId14.h"
+    if (!self->step) {
+        index = self->ext.heartDrop.unkB4 =
+            self->params + 0x118 + CASTLE_FLAG_BANK;
+        value = g_CastleFlags[(index >> 3) + 0x100] >> (index & 7);
+        if (value & 1) {
+            DestroyEntity(self);
+            return;
+        }
 
-#include "../entity_unkId15.h"
+        index -= 0x118 + CASTLE_FLAG_BANK;
+        index = D_80180608[index];
+        if (index < 128) {
+            self->ext.heartDrop.update = EntityPrizeDrop;
+        } else {
+            self->ext.heartDrop.update = EntityEquipItemDrop;
+            index -= 128;
+        }
+        self->params = index + 0x8000;
+    } else {
+        index = self->ext.heartDrop.unkB4;
+        if (self->step < 5) {
+            if (self->hitFlags) {
+                g_CastleFlags[(index >> 3) + 0x100] |= 1 << (index & 7);
+                self->step = 5;
+            }
+        }
+    }
+    update = self->ext.heartDrop.update;
+    update(self);
+}
 
-#include "../entity_olrox_drool.h"
+#include "entity_message_box.h"
 
-// move the current entity, check for vertical collision
-// and send it down if it has collided
-bool func_80191BCC(Point16* unk) {
+#include "check_coll_offsets.h"
+
+#include "entity_unkId13.h"
+
+u16 g_eUnk14SpawnRots[] = {
+    /* FE8 */ 0x0010,
+    /* FEA */ 0x0020,
+    /* FEC */ 0x0030,
+    /* FEE */ 0x0040,
+    /* FF0 */ 0x0050,
+    /* FF2 */ 0x0060,
+    /* FF4 */ 0x0070,
+    /* FF6 */ 0x0000,
+};
+#include "entity_unkId14_spawner.h"
+
+#include "entity_unkId15_spawner.h"
+
+static s16 unk15_rot[] = {
+    /* FF8 */ 0x0030,
+    /* FFA */ 0x0050,
+    /* FFC */ 0x0080,
+    /* FFE */ 0x00B0,
+    /* 1000 */ 0x00D0,
+    /* 1002 */ 0x0100,
+    /* 1004 */ 0x0100,
+    /* 1006 */ 0x0000,
+};
+
+static s32 unk15_yVel[] = {
+    /* 1008 */ 0x00000400,
+    /* 100C */ 0x00002400,
+    /* 1010 */ 0x00003C00,
+    /* 1014 */ 0x00006000,
+    /* 1018 */ 0x00007800,
+    /* 101C */ 0x0000C000,
+};
+
+s32 unk14_yVel[] = {
+    /* 1020 */ 0x00000800,
+    /* 1024 */ 0x00002800,
+    /* 1028 */ 0x00004800,
+    /* 102C */ 0x00007000,
+    /* 1030 */ 0x0000E000,
+    /* 1034 */ 0x00012000,
+};
+
+u8 unk14_startFrame[] = {
+    /* 1038 */ 0x01,
+    /* 1039 */ 0x09,
+    /* 103A */ 0x15,
+    /* 103B */ 0x2B,
+};
+
+u16 unk14_lifetime[] = {
+    /* 103C */ 0x0010,
+    /* 103E */ 0x0018,
+    /* 1040 */ 0x002A,
+    /* 1042 */ 0x002F,
+};
+
+#include "entity_unkId14.h"
+
+#include "entity_unkId15.h"
+
+u32 g_olroxDroolCollOffsets[] = {
+    /* 1044 */ 0x00000000,
+    /* 1048 */ 0x000000FF,
+};
+#include "entity_olrox_drool.h"
+
+bool func_8018FC4C(Point16* unk) {
     Collider collider;
 
     FallEntity();
@@ -40,7 +141,7 @@ bool func_80191BCC(Point16* unk) {
     return false;
 }
 
-u8 func_80191CC8(s32 arg0) {
+u8 func_8018FD48(s32 arg0) {
     Collider collider;
     u32 bits_67;
     u32 bits_45;
@@ -212,37 +313,65 @@ u8 func_80191CC8(s32 arg0) {
     return bits_01;
 }
 
-#include "../entity_intense_explosion.h"
-
-extern u8 D_8018104C[];
-
-void func_801C16B4(Entity* entity) {
-    if (entity->step == 0) {
+void EntityIntenseExplosion(Entity* self) {
+    if (!self->step) {
         InitializeEntity(g_InitializeEntityData0);
-        entity->unk6C = 0xF0;
-        entity->rotX = 0x1A0;
-        entity->rotY = 0x1A0;
-        entity->animSet = ANIMSET_DRA(8);
-        entity->animCurFrame = 1;
-        entity->zPriority += 0x10;
-
-        if (entity->params != 0) {
-            entity->palette = entity->params;
-        } else {
-            entity->palette = 0x8160;
+        self->palette = PAL_OVL(0x170);
+        self->animSet = ANIMSET_DRA(5);
+        self->animCurFrame = 1;
+        self->drawMode = 0x30;
+        if (self->params & 0xF0) {
+            self->palette = PAL_OVL(0x195);
+            self->drawMode = DRAW_TPAGE;
         }
 
-        entity->step++;
+        if (self->params & 0xFF00) {
+            self->zPriority = (self->params & 0xFF00) >> 8;
+        }
+        self->zPriority += 8;
+    } else {
+        self->animFrameDuration++;
+        self->posY.val -= FIX(0.25);
+        if ((self->animFrameDuration & 1) == 0) {
+            self->animCurFrame++;
+        }
+
+        if (self->animFrameDuration >= 37) {
+            DestroyEntity(self);
+        }
+    }
+}
+
+u8 D_8018104C[] = {
+    2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1,
+};
+void func_801903C8(Entity* self) {
+    if (!self->step) {
+        InitializeEntity(g_InitializeEntityData0);
+        self->unk6C = 0xF0;
+        self->rotX = 0x01A0;
+        self->rotY = 0x01A0;
+        self->animSet = ANIMSET_DRA(8);
+        self->animCurFrame = 1;
+        self->zPriority += 16;
+
+        if (self->params) {
+            self->palette = self->params;
+        } else {
+            self->palette = PAL_OVL(0x160);
+        }
+
+        self->step++;
     } else {
         MoveEntity();
-        if (!AnimateEntity(D_8018104C, entity)) {
-            DestroyEntity(entity);
+        if (!AnimateEntity(D_8018104C, self)) {
+            DestroyEntity(self);
         }
     }
 }
 
 extern PfnEntityUpdate PfnEntityUpdates[];
-void func_80192414(u16 entityId, Entity* src, Entity* dst) {
+void func_80190494(u16 entityId, Entity* src, Entity* dst) {
     DestroyEntity(dst);
     dst->entityId = entityId;
     dst->pfnUpdate = PfnEntityUpdates[entityId - 1];
@@ -262,64 +391,66 @@ void func_80192414(u16 entityId, Entity* src, Entity* dst) {
     }
 }
 
-void func_801924DC(void) {
+void func_8019055C(void) {
+    s32 temp_s3;
+    s8 temp_s4;
     Entity* entity;
-    s8 temp_s4 = Random() & 3;
-    s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
     s32 i;
+
+    temp_s4 = Random() & 3;
+    temp_s3 = ((Random() & 0xF) << 8) - 0x800;
 
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(2, g_CurrentEntity, entity);
+            CreateEntityFromEntity(E_EXPLOSION, g_CurrentEntity, entity);
             entity->ext.generic.unk84.U8.unk1 = 6 - i;
             entity->ext.generic.unk80.modeS16.unk0 = temp_s3;
             entity->ext.generic.unk84.U8.unk0 = temp_s4;
         }
     }
 }
-#include "../entity_big_red_fireball.h"
 
-#include "../unk_recursive_primfunc_1.h"
+extern u8 g_bigRedFireballAnim[];
+u16 g_UnkRecursPrimVecOrder[] = {
+    0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8};
+#include "entity_big_red_fireball.h"
 
-#include "../unk_recursive_primfunc_2.h"
+#include "unk_recursive_primfunc_1.h"
 
-#include "../clut_lerp.h"
+u16 g_UnkRecursPrim2Inds[] = {
+    0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8, 0, 0};
 
-void func_80193644(s16 sfxId) {
-    s32 var_a3;
-    s32 temp_v0_2;
-    s16 var_a2;
-    s32 y;
-    s16 var_v0_4;
-    s16 var_v1;
+#include "unk_recursive_primfunc_2.h"
 
-    var_a3 = g_CurrentEntity->posX.i.hi - 128;
-    var_a2 = (abs(var_a3) - 32) >> 5;
-    if (var_a2 > 8) {
-        var_a2 = 8;
-    } else if (var_a2 < 0) {
-        var_a2 = 0;
+#include "clut_lerp.h"
+
+void func_801916C4(s16 sfxId) {
+    s32 posX;
+    s32 posY;
+    s16 arg2;
+    s16 arg1;
+
+    posX = g_CurrentEntity->posX.i.hi - 128;
+    arg2 = (abs(posX) - 32) >> 5;
+    if (arg2 > 8) {
+        arg2 = 8;
+    } else if (arg2 < 0) {
+        arg2 = 0;
     }
-    if (var_a3 < 0) {
-        var_a2 = -var_a2;
+    if (posX < 0) {
+        arg2 = -arg2;
     }
-    var_a3 = abs(var_a3) - 96;
-    y = g_CurrentEntity->posY.i.hi - 128;
-    temp_v0_2 = abs(y) - 112;
-    var_v1 = var_a3;
-    if (temp_v0_2 > 0) {
-        var_v1 += temp_v0_2;
+    arg1 = abs(posX) - 96;
+    posY = abs(g_CurrentEntity->posY.i.hi - 128) - 112;
+    if (posY > 0) {
+        arg1 += posY;
     }
-    if (var_v1 < 0) {
-        var_v0_4 = 0;
-    } else {
-        var_v0_4 = var_v1;
+    if (arg1 < 0) {
+        arg1 = 0;
     }
-    var_a3 = 127 - (var_v0_4 >> 1);
-    if (var_a3 > 0) {
-        g_api.func_80134714(sfxId, var_a3, var_a2);
+    arg1 = 127 - (arg1 >> 1);
+    if (arg1 > 0) {
+        g_api.func_80134714(sfxId, arg1, arg2);
     }
 }
-
-#include "../e_stage_name.h"

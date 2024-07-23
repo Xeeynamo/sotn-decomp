@@ -1,10 +1,12 @@
 #include "game.h"
 #include "rwrp.h"
 
-extern u16 D_801804B8[];
+extern u16 g_EInitReverseSmallRocks[];
 extern u32 D_80180648;
 
 #define SE_WARP_DEBRIS 0x644
+
+INCLUDE_ASM("st/rwrp/nonmatchings/rwrp/warp", EntityRWarpRoom);
 
 void EntityWarpSmallRocks(Entity* entity) {
     s32 x;
@@ -14,7 +16,7 @@ void EntityWarpSmallRocks(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(D_801804B8);
+        InitializeEntity(g_EInitReverseSmallRocks);
         entity->drawFlags = FLAG_DRAW_ROTZ;
         entity->rotZ = Random() * 0x10;
         entity->animCurFrame = (Random() % 5) + 1;
@@ -71,7 +73,7 @@ void EntityWarpSmallRocks(Entity* entity) {
         break;
     case 5:
         if (--entity->ext.warpRoom.unk88 == 0) {
-            func_80193644(SE_WARP_DEBRIS);
+            func_801916C4(SE_WARP_DEBRIS);
         }
         MoveEntity();
         entity->velocityY += FIX(0.1875);
