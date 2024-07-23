@@ -41,7 +41,14 @@ char* CdComstr(u8 arg0) {
     return D_80032AC8[arg0];
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdIntstr);
+extern char* D_80032B48[];
+
+char* CdIntstr(u8 intr) {
+    if (intr > 6) {
+        return &aNone;
+    }
+    return D_80032B48[intr];
+}
 
 void CD_sync();
 
