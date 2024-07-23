@@ -441,7 +441,3 @@ void func_8019BDF8(Entity* entity)
     }
 }
 //#endif
-
-INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019BEDC);
-
-INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019C31C);
