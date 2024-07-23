@@ -90,7 +90,7 @@ def get_asm_files(asm_path):
     return files
 
 def find_wip(o):
-    result = find_scratches(o[1], "ps1", o[7])
+    result = find_scratches(o[1], "ps1", o[7], True)
 
     if result:
         return {"link": result[0], "percent": result[1]}
