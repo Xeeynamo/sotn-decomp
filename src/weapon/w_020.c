@@ -124,8 +124,8 @@ void EntityWeaponAttack(Entity* self) {
         return;
     case 2:
         if (((self->animFrameIdx % 8) == 5) && (self->animFrameDuration == 1)) {
-            g_api.func_80134714(
-                SFX_COLLECT_GOLD, D_90000_8017AB44[self->ext.karmacoin.unk84], 0);
+            g_api.func_80134714(SFX_COLLECT_GOLD,
+                                D_90000_8017AB44[self->ext.karmacoin.unk84], 0);
             self->ext.karmacoin.unk84++;
         }
         if (self->animFrameDuration < 0) {
