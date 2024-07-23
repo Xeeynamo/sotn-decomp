@@ -5,7 +5,7 @@ void CollectGold(u16 goldSize) {
 #ifdef VERSION_BETA
     g_api.PlaySfx(0x69D); // MAD seems to use its own sfx id set.
 #else
-    g_api.PlaySfx(NA_SE_PL_COLLECT_GOLD);
+    g_api.PlaySfx(SFX_COLLECT_GOLD);
 #endif
     goldSize -= 2;
     g_Status.gold += c_GoldPrizes[goldSize];
