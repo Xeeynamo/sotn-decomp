@@ -31,8 +31,15 @@ s32 CdSetDebug(s32 arg0) {
 }
 
 const char aNone[] = "none";
+extern char* D_80032AC8[];
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdComstr);
+char* CdComstr(u8 arg0) {
+    if (arg0 > 0x1b) {
+        return &aNone;
+    }
+
+    return D_80032AC8[arg0];
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdIntstr);
 
