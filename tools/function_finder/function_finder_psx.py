@@ -126,6 +126,10 @@ if __name__ == "__main__":
         if "/psxsdk/" in name:
             ovl_name = name.split("/")[5]  # grab library name
             func_name = os.path.splitext(os.path.basename(name))[0]
+        elif "/weapon/" in name:
+            # use the weapon name
+            ovl_name = name.split("/")[4]  # grab library name
+            func_name = os.path.splitext(os.path.basename(name))[0]
         else:
             matches = re.search(r"\/(\w+)\/nonmatchings\/\w+\/(\w+)\.s", name)
             if matches:
