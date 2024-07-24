@@ -103,16 +103,13 @@ void func_8019B4DC(Entity* entity) {
     }
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019B698);
-#else
-/*?*/ void func_801A04EC(s32, void*);                          // extern
-/*?*/ void func_801A0560(s32, void*, void*);                   // extern
-/*?*/ void func_801A128C(void*);                             // extern
-void* func_801A1AFC(s32*, void*);                     // extern
-/*?*/ void func_801A2684(void*);                             // extern
+void func_801A04EC(s32, void*); // CreateEntityFromCurrentEntity()
+void func_801A0560(s32, void*, void*);  // CreateEntityFromEntity()
+void func_801A128C(void*);  // DestroyEntity()
+void* func_801A1AFC(s32*, void*);   // AllocEntity()
+void func_801A2684(void*);  // ReplaceBreakableWithItemDrop()
 extern s32 D_8007D858[];
-extern /*?*/s32 D_80180610;
+extern s32 D_80180610;
 extern s32 D_80180838[];
 extern u8 D_80180858[];
 extern u8 D_80180860[];
@@ -183,7 +180,6 @@ void func_8019B698(Entity* entity)
         func_801A2684(entity);
     }
 }
-#endif
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019B914);
