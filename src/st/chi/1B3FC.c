@@ -6,25 +6,19 @@
  * Description: Abandoned Mine
  */
 
-//#ifndef NON_MATCHING
-//INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019B3FC);
-//#else
-/*?*/ void func_801A13BC(s32, void*);
-/*?*/ void func_801A1F9C(void*);
-extern /*?*/s32 D_80180664;
+void func_801A1F9C(void*);  // InitializeEntity()
+void func_801A13BC(s32, void*); // AnimateEntity()
+extern s32 D_80180664;
 //static u8 D_80180730[] = {0x40, 0x01, 0xFF, 0x00};
 //static u8 D_80180734[] = {0x02, 0x25, 0x02, 0x26};
 //static ObjInit2 D_80180740[] = {
 //    {0x0006, 0x01FA, 0x0000, 0x0000, 0x0000, 0x0010, 0x00000000, D_80180730},
 //    {0x8001, 0x00C0, 0x0000, 0x0000, 0x0003, 0x0003, 0x00000000, D_80180734},
 //};
-extern u8 D_80180730[];
-extern u8 D_80180734[];
 extern ObjInit2 D_80180740[];
 
 // EntityBackgroundBlock
-void func_8019B3FC(Entity* entity)
-{
+void func_8019B3FC(Entity* entity) {
     ObjInit2* objInit = &D_80180740[entity->params];
     if (entity->step == 0) {
         func_801A1F9C(&D_80180664);
@@ -44,7 +38,6 @@ void func_8019B3FC(Entity* entity)
     }
     func_801A13BC(objInit->unk10, entity);
 }
-//#endif
 
 s32 func_801A15FC();    // GetSideToPlayer()
 extern u16 D_80180658;
