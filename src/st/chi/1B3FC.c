@@ -46,27 +46,18 @@ void func_8019B3FC(Entity* entity)
 }
 //#endif
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019B4DC);
-#else
-s32 func_801A15FC();                                // extern
-extern /*?*/s32 D_80180658;
+s32 func_801A15FC();    // GetSideToPlayer()
+extern u16 D_80180658;
 extern u8 D_80180798[];
 extern u8 D_801807A0[];
 extern u16 D_801807A8[];
-extern s32 g_Tilemap_x;
-extern s32 g_Tilemap_y;
-extern s32 g_Tilemap_width;
-extern s32 g_Tilemap_height;
 
 // EntityUnkId12
-void func_8019B4DC(Entity* entity)
-{
+void func_8019B4DC(Entity* entity) {
     s32 temp_v0;
-    u16 var_v1;
-    u16 temp_s1 = entity->params;
     u16* temp_v0_2;
-    u16 step;
+    u16 temp_s1 = entity->params;
+    u16 var_v1;
     u16 unk;
 
     entity->unk6D[0] = 0;
@@ -75,17 +66,16 @@ void func_8019B4DC(Entity* entity)
         switch (temp_s1) {
         case 4:
         case 5:
-            if (g_Tilemap_x != 0) {
+            if (g_Tilemap.x != 0) {
                 return;
             }
             break;
+
         case 6:
             if (g_pads->pressed & PAD_TRIANGLE) {
-                g_Tilemap_x = 0;
-                g_Tilemap_width = 0x500;
-                step = entity->step;
-                step++;
-                entity->step = step;
+                g_Tilemap.x = 0;
+                g_Tilemap.width = 1280;
+                entity->step++;
                 return;
             }
             break;
@@ -93,7 +83,7 @@ void func_8019B4DC(Entity* entity)
 
         if (entity->unk44 != 0) {
             temp_v0 = func_801A15FC();
-            var_v1 = entity->ext.generic.unk7C.u;
+            var_v1 = entity->ext.generic.unk7C.s;
             if (var_v1 != 0) {
                 var_v1 = (temp_v0 & 2) * 2;
             } else {
@@ -102,10 +92,10 @@ void func_8019B4DC(Entity* entity)
             unk = 8;
             temp_s1 = (temp_s1 * unk) + var_v1;
             temp_v0_2 = &D_801807A8[temp_s1];
-            g_Tilemap_x = (s32) *temp_v0_2++;
-            g_Tilemap_y = (s32) *temp_v0_2++;
-            g_Tilemap_width = (s32) *temp_v0_2++;
-            g_Tilemap_height = (s32) *temp_v0_2++;
+            g_Tilemap.x = *(temp_v0_2++);
+            g_Tilemap.y = *(temp_v0_2++);
+            g_Tilemap.width = *(temp_v0_2++);
+            g_Tilemap.height = *(temp_v0_2++);
         }
     } else {
         func_801A1F9C(&D_80180658);
@@ -119,7 +109,6 @@ void func_8019B4DC(Entity* entity)
         }
     }
 }
-#endif
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019B698);
