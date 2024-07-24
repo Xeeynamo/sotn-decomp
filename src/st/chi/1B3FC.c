@@ -181,13 +181,10 @@ void func_8019B698(Entity* entity)
     }
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019B914);
-#else
-s32 func_8019DE74();                                // extern
-/*?*/ void func_801A1640();                                  // extern
-/*?*/ void func_801ADF40(Primitive*);                        // extern
-/*?*/ void func_801AE68C(Primitive*, s16);                   // extern
+s32 func_8019DE74();    // Random()
+void func_801A1640();   // MoveEntity()
+void func_801ADF40(Primitive*); // UnkPrimHelper()
+void func_801AE68C(Primitive*, s16);    // UnkPolyFunc2()?
 
 // CEN.func_8018DB18
 void func_8019B914(Entity* entity)
@@ -195,7 +192,7 @@ void func_8019B914(Entity* entity)
     Collider collider;
     Primitive* prim;
     s16 primIndex;
-    s32 temp_s0;
+    s32 facing;
     s32 temp_v0_2;
     u16 temp_v0;
     u16 temp_v0_5;
@@ -207,21 +204,21 @@ void func_8019B914(Entity* entity)
         func_801A1F9C(&D_80180610);
         entity->zPriority = 0x70;
         entity->hitboxState = 0;
-        entity->drawFlags = 4;
+        entity->drawFlags = FLAG_DRAW_ROTZ;
         entity->animCurFrame = entity->params + 28;
-        temp_s0 = func_801A15FC() & 1;
+        facing = func_801A15FC() & 1;
 
         temp_v0 = (func_8019DE74() & 0x1E) + 8;
         entity->ext.generic.unk80.modeS16.unk0 = temp_v0;
         if (entity->facingLeft != 0) {
-            entity->ext.generic.unk80.modeS16.unk0 = -(s16) temp_v0;
+            entity->ext.generic.unk80.modeS16.unk0 = -temp_v0;
         }
 
         if (entity->params >= 4) {
             entity->ext.generic.unk80.modeS16.unk0 = -entity->ext.generic.unk80.modeS16.unk0;
         }
 
-        if (temp_s0 == 0) {
+        if (facing == 0) {
             entity->velocityX = FIX(-1);
         } else {
             entity->velocityX = FIX(1);
@@ -237,9 +234,10 @@ void func_8019B914(Entity* entity)
             entity->velocityY = 0;
             entity->step = 2;
         }
+
         entity->primIndex = 0;
         if (entity->params == 0) {
-            primIndex = g_api_AllocPrimitives(PRIM_GT4, 2);
+            primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
             if (primIndex != -1) {
                 prim = &g_PrimBuf[primIndex];
                 entity->primIndex = primIndex;
@@ -247,14 +245,10 @@ void func_8019B914(Entity* entity)
                 func_801AE68C(prim, primIndex);
                 prim->tpage = 0x1A;
                 prim->clut = 0x159;
-                prim->u2 = 0x40;
-                prim->u0 = 0x40;
-                prim->u3 = 0x60;
-                prim->u1 = 0x60;
-                prim->v1 = 0;
-                prim->v0 = 0;
-                prim->v3 = 0x20;
-                prim->v2 = 0x20;
+                prim->u0 = prim->u2 = 0x40;
+                prim->u1 = prim->u3 = 0x60;
+                prim->v0 = prim->v1 = 0;
+                prim->v2 = prim->v3 = 0x20;
                 prim->next->x1 = entity->posX.i.hi + 4;
                 prim->next->y0 = entity->posY.i.hi - 8;
                 LOH(prim->next->r2) = 0x20;
@@ -269,14 +263,14 @@ void func_8019B914(Entity* entity)
         func_801A1640();
         entity->rotZ += entity->ext.generic.unk80.modeS16.unk0;
         entity->velocityY += FIX(0.25);
-        g_api_CheckCollision(entity->posX.i.hi, entity->posY.i.hi + 6, &collider, 0);
+        g_api.CheckCollision(entity->posX.i.hi, entity->posY.i.hi + 6, &collider, 0);
         if (collider.effects & 1) {
             entity->posY.i.hi += collider.unk18;
             entity->velocityY = -entity->velocityY / 2;
             entity->velocityX -= entity->velocityX / 3;
             if (entity->velocityY > FIX(-0.625)) {
                 newEntity = func_801A1AFC(&D_8007D858[0], &D_8007D858[0x5E0]);
-                if (newEntity != NULL) {
+                if (newEntity != 0) {
                     func_801A0560(6, entity, newEntity);
                     newEntity->params = 16;
                 }
@@ -292,7 +286,7 @@ void func_8019B914(Entity* entity)
             if (LOH(prim->next->r2) > 64) {
                 prim->next->b3 += 252;
                 if (prim->next->b3 == 0) {
-                    g_api_FreePrimitives(entity->primIndex);
+                    g_api.FreePrimitives(entity->primIndex);
                     entity->primIndex = 0;
                     entity->flags &= ~FLAG_HAS_PRIMS;
                 }
@@ -301,7 +295,6 @@ void func_8019B914(Entity* entity)
         break;
     }
 }
-#endif
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019BD0C);
