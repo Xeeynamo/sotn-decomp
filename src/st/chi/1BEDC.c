@@ -6,9 +6,9 @@
  * Description: Abandoned Mine
  */
 
-//#ifndef NON_MATCHING
-//INCLUDE_ASM("st/chi/nonmatchings/1BEDC", func_8019BEDC);
-//#else
+#ifndef NON_MATCHING
+INCLUDE_ASM("st/chi/nonmatchings/1BEDC", func_8019BEDC);
+#else
 extern u8 D_8003BE3C;
 extern s32 D_8007D858[];
 void* func_801AE478(Primitive*);                    // extern
@@ -250,6 +250,6 @@ block_46:
             break;
     }
 }
-//#endif
+#endif
 
 INCLUDE_ASM("st/chi/nonmatchings/1BEDC", func_8019C31C);

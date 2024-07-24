@@ -9,15 +9,18 @@
 //#ifndef NON_MATCHING
 //INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019B3FC);
 //#else
-/*?*/ void func_801A13BC(s32, void*);                        // extern
-/*?*/ void func_801A1F9C(void*);                             // extern
+/*?*/ void func_801A13BC(s32, void*);
+/*?*/ void func_801A1F9C(void*);
 extern /*?*/s32 D_80180664;
-static u8 D_80180730[] = {0x40, 0x01, 0xFF, 0x00};
-static u8 D_80180734[] = {0x02, 0x25, 0x02, 0x26};
-static ObjInit2 D_80180740[] = {
-    {0x0006, 0x01FA, 0x0000, 0x0000, 0x0000, 0x0010, 0x00000000, D_80180730},
-    {0x8001, 0x00C0, 0x0000, 0x0000, 0x0003, 0x0003, 0x00000000, D_80180734},
-};
+//static u8 D_80180730[] = {0x40, 0x01, 0xFF, 0x00};
+//static u8 D_80180734[] = {0x02, 0x25, 0x02, 0x26};
+//static ObjInit2 D_80180740[] = {
+//    {0x0006, 0x01FA, 0x0000, 0x0000, 0x0000, 0x0010, 0x00000000, D_80180730},
+//    {0x8001, 0x00C0, 0x0000, 0x0000, 0x0003, 0x0003, 0x00000000, D_80180734},
+//};
+extern u8 D_80180730[];
+extern u8 D_80180734[];
+extern ObjInit2 D_80180740[];
 
 // EntityBackgroundBlock
 void func_8019B3FC(Entity* entity)
@@ -43,9 +46,9 @@ void func_8019B3FC(Entity* entity)
 }
 //#endif
 
-//#ifndef NON_MATCHING
-//INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019B4DC);
-//#else
+#ifndef NON_MATCHING
+INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019B4DC);
+#else
 s32 func_801A15FC();                                // extern
 extern /*?*/s32 D_80180658;
 extern u8 D_80180798[];
@@ -116,11 +119,11 @@ void func_8019B4DC(Entity* entity)
         }
     }
 }
-//#endif
+#endif
 
-//#ifndef NON_MATCHING
-//INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019B698);
-//#else
+#ifndef NON_MATCHING
+INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019B698);
+#else
 /*?*/ void func_801A04EC(s32, void*);                          // extern
 /*?*/ void func_801A0560(s32, void*, void*);                   // extern
 /*?*/ void func_801A128C(void*);                             // extern
@@ -198,11 +201,11 @@ void func_8019B698(Entity* entity)
         func_801A2684(entity);
     }
 }
-//#endif
+#endif
 
-//#ifndef NON_MATCHING
-//INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019B914);
-//#else
+#ifndef NON_MATCHING
+INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019B914);
+#else
 s32 func_8019DE74();                                // extern
 /*?*/ void func_801A1640();                                  // extern
 /*?*/ void func_801ADF40(Primitive*);                        // extern
@@ -320,11 +323,11 @@ void func_8019B914(Entity* entity)
         break;
     }
 }
-//#endif
+#endif
 
-//#ifndef NON_MATCHING
-//INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019BD0C);
-//#else
+#ifndef NON_MATCHING
+INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019BD0C);
+#else
 typedef struct UnkStruct1 {
     s32 unk0;
     s8 unk4;
@@ -397,11 +400,11 @@ void func_8019BD0C(struct UnkStruct1* arg0)
             return;
     }
 }
-//#endif
+#endif
 
-//#ifndef NON_MATCHING
-//INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019BDF8);
-//#else
+#ifndef NON_MATCHING
+INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019BDF8);
+#else
 extern u8 D_8003BE3C;
 extern /*?*/s32 D_8018067C;
 
@@ -440,4 +443,4 @@ void func_8019BDF8(Entity* entity)
             return;
     }
 }
-//#endif
+#endif
