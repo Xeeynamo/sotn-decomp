@@ -296,9 +296,6 @@ void func_8019B914(Entity* entity)
     }
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019BD0C);
-#else
 typedef struct UnkStruct1 {
     s32 unk0;
     s8 unk4;
@@ -332,16 +329,13 @@ typedef struct UnkStruct1 {
     u16 unk32;
 } UnkStruct1;
 
-extern s16 g_Tilemap_scrollY_i_hi;
-
 void func_8019BD0C(struct UnkStruct1* arg0)
 {
     s8 temp_v0;
-    s16 tempA;
-    s8 temp1F;
-    s16 tempScroll;
-    bool tempCond1;
-    bool tempCond2;
+    s16 adjustedA;
+    u8 adjusted1F;
+    u32 scrollY;
+    s32 adjustedScrollY;
 
     switch (arg0->unk2B) {
         case 1:
@@ -353,25 +347,23 @@ void func_8019BD0C(struct UnkStruct1* arg0)
             arg0->unk6 = 0x30;
             arg0->unk26 = 0xA0;
             arg0->unk32 = 2;
-            arg0->unk1F = (u8) ((func_8019DE74() & 0x1F) + 0x10);
+            arg0->unk1F = (func_8019DE74() & 0x1F) + 0x10;
             arg0->unk2B = 2U;
             // fallthrough
         case 2:
-            tempA = arg0->unkA + 2;
-            arg0->unkA = tempA;
-            temp1F = arg0->unk1F - 1;
-            arg0->unk1F = temp1F;
-            tempScroll = g_Tilemap_scrollY_i_hi;
-            tempCond1 = tempScroll + tempA >= 0xA1;
-            tempCond2 = (temp1F & 0xFF) == 0;
-            if (tempCond2 || tempScroll + tempA >= 0xA1) {
+            adjustedA = arg0->unkA + 2;
+            adjusted1F = arg0->unk1F - 1;
+            arg0->unkA = adjustedA;
+            scrollY = g_Tilemap.scrollY.i.hi;
+            adjustedScrollY = scrollY + adjustedA;
+            arg0->unk1F = adjusted1F;
+            if (adjusted1F == 0 || adjustedScrollY > 160) {
                 arg0->unk32 = 8;
                 arg0->unk2B = 0U;
             }
             return;
     }
 }
-#endif
 
 #ifndef NON_MATCHING
 INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019BDF8);
