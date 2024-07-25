@@ -44,8 +44,7 @@ def find_scratches(name, platform, local_asm=None, use_local=False):
     for result in scratches["results"]:
         if not "name" in result:
             continue
-        # seems to give approximate matches, skip these
-        if result["name"] != name:
+        if not result["name"].startswith(name):
             continue
         if result["platform"] != platform:
             continue
