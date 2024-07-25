@@ -65,7 +65,7 @@ segments:
       - [0x1181C, .rodata, succubuscutscene] #D_80180938, names
       - [0x1183C, .rodata, succubuscutscene] #EntitySuccubusCutscene
       - [0x118C0, .rodata, 161DC] #EntityCSMoveAlucard, string and jumps
-      - [0x118F8, rodata]
+      - [0x118F8, .rodata, 161DC] # EntityUnkId23
       - [0x11910, .rodata, 1697C] # EntityFadeToWhite
       - [0x1193C, .rodata, e_red_door] # EntityRedDoor
       - [0x11954, rodata]

@@ -115,7 +115,8 @@ extern u32 D_8018125C[];
 extern s16 D_801812E4[];
 extern u32 D_801812F4[];
 extern s16 D_801815E8[]; // X, Y, params for Entity3DHouseSpawner
-extern s8 D_801816C4;    // Succubus facing assigned to it
+extern s8 D_801816C0;
+extern s8 D_801816C4; // Succubus facing assigned to it
 extern u8 D_80181338[];
 extern u16 D_801811A4[];
 extern u16 D_801810B0[];
