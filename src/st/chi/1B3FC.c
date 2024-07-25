@@ -365,11 +365,8 @@ void func_8019BD0C(struct UnkStruct1* arg0)
     }
 }
 
-#ifndef NON_MATCHING
-INCLUDE_ASM("st/chi/nonmatchings/1B3FC", func_8019BDF8);
-#else
 extern u8 D_8003BE3C;
-extern /*?*/s32 D_8018067C;
+extern s32 D_8018067C;
 
 void func_8019BDF8(Entity* entity)
 {
@@ -381,15 +378,13 @@ void func_8019BDF8(Entity* entity)
 
             temp_3 = 3;
 
-            //sm volatile("" ::: "memory");
-
-            entity->hitPoints = 0x7FFF;
-            entity->animCurFrame = temp_3;
-            entity->hitboxState = 3;
-            entity->hitboxWidth = 6;
-            entity->hitboxHeight = 8;
-
-            //asm volatile("" ::: "memory");
+            do {
+                entity->hitPoints = 0x7FFF;
+                entity->animCurFrame = temp_3;
+                entity->hitboxState = 3;
+                entity->hitboxWidth = 6;
+                entity->hitboxHeight = 8;
+            } while (0);
 
             if (D_8003BE3C != 0) {
                 entity->animCurFrame = 4;
@@ -397,13 +392,12 @@ void func_8019BDF8(Entity* entity)
             // fallthrough
         case 1:
             if (entity->unk44 == 7) {
-                g_api_PlaySfx(0x640);
+                g_api.PlaySfx(0x640);
                 D_8003BE3C = 1;
-                g_api_func_800F1FC4(0x50);
+                g_api.func_800F1FC4(0x50);
                 entity->animCurFrame = 4;
                 entity->step++;
             }
             return;
     }
 }
-#endif
