@@ -646,7 +646,7 @@ block_13:
     PLAYER.entityRoomIndex = 1;
 }
 
-void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
+void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
     s32 randbit;
     u8 unkAC_offset;
     s32 var_s0;
@@ -1191,7 +1191,8 @@ void func_80114DF4(s32 arg0) {
     }
 }
 
-void func_80115394(DamageParam* damage, s16 arg1, s16 arg2) {
+// Somewhat weird args, worth more study. arg2 is unused.
+void func_80115394(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
     s32 i;
     s32 j;
     Entity* ent;
@@ -1202,7 +1203,7 @@ void func_80115394(DamageParam* damage, s16 arg1, s16 arg2) {
     PlayerDraw* plDraw;
 
     nullifyVelY = false;
-    PLAYER.drawFlags = 4;
+    PLAYER.drawFlags = DRAW_COLORS;
     plDraw = &g_PlayerDraw[0];
     if ((D_80097420 == 0xFFF) && (PLAYER.step_s)) {
         SetPlayerStep(Player_Unk17);
@@ -1215,10 +1216,11 @@ void func_80115394(DamageParam* damage, s16 arg1, s16 arg2) {
         nullifyVelY = true;
         PLAYER.velocityY = 0;
         PLAYER.velocityX = 0;
-        if (arg1 == 0xB) {
+        if (arg_PlayerStep == Player_StatusStone) {
             ent = &g_Entities[16];
             for (j = 16; j < 64; j++, ent++) {
-                if (ent->entityId == 0x20) {
+                // Entity 32 appears to be EntityPlayerDissolves
+                if (ent->entityId == 32) {
                     PlaySfx(NA_SE_VO_AL_DYING);
                     PLAYER.step_s = 16;
                     return;
