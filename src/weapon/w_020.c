@@ -2,6 +2,7 @@
 // Karma Coin
 #include "weapon_private.h"
 #include "shared.h"
+#include "sfx.h"
 
 extern SpriteParts D_90000_8017A040[];
 extern AnimationFrame D_90000_8017A850[];
