@@ -337,6 +337,8 @@ s32 D_80137FDC;
 s32 D_80137FE0;
 s32 D_80137FE4;
 s32 D_80137FE8;
+s32 D_80137FEC;
+s32 D_80137FF0;
 u32 g_WingSmashButtonCounter;
 s32 g_WingSmashButtonTimer;
 s32 g_WingSmashTimer;
