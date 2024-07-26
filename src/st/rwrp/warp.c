@@ -2,8 +2,6 @@
 #include "rwrp.h"
 #include "common.h"
 
-#define SE_WARP_ENTER 0x636
-
 extern s32 D_80097408[];
 extern s32 D_80180608[];
 extern s16 PLAYER_posY_i_hi;
@@ -35,6 +33,26 @@ s32 WarpBackgroundAmplitiude;
 s32 WarpBackgroundPhase;
 // the brightness of the background layer
 s32 WarpBackgroundBrightness;
+
+// Mask for all of the statuses where the UP button will
+// be ignored when in warp position or on the warp platform
+//
+// Value: 0xC5CF3EF7
+//
+// TODO: this value is also used in src/st/wrp/warp.c
+// clang-format off
+#define PLAYER_UNK0C_READY_MASK                                                \
+    (                                                          \
+        /* 0xC0000000 */ PLAYER_STATUS_UNK80000000 | PLAYER_STATUS_UNK40000000 | \
+        /* 0x05000000 */ PLAYER_STATUS_UNK4000000 | PLAYER_STATUS_AXEARMOR |   \
+        /* 0x00C00000 */ PLAYER_STATUS_UNK800000 | PLAYER_STATUS_UNK400000 |   \
+        /* 0x000F0000 */ PLAYER_STATUS_UNK80000 | PLAYER_STATUS_UNK40000 | PLAYER_STATUS_UNK20000 | PLAYER_STATUS_UNK10000 | \
+        /* 0x00003000 */ PLAYER_STATUS_UNK2000 | PLAYER_STATUS_UNK1000 | \
+        /* 0x00000E00 */ PLAYER_STATUS_UNK800 | PLAYER_STATUS_UNK400 | PLAYER_STATUS_UNK200 | \
+        /* 0x000000F0 */ PLAYER_STATUS_STONE | PLAYER_STATUS_UNK40 | PLAYER_STATUS_UNK_20 |  PLAYER_STATUS_UNK10 | \
+        /* 0x00000007 */ PLAYER_STATUS_TRANSFORM \
+    )
+// clang-format on
 
 // Handles everything about the reverse warp room.
 // It is responsible to spawn the colourful background, the stones on the
@@ -145,9 +163,9 @@ void EntityRWarpRoom(Entity* self) {
         // fallthrough
     case 1:
         // Wait for player to press the UP button
-        if (collision & 0x4 && (g_pads[0].pressed & PAD_UP) &&
+        if (collision & 0x4 && g_pads[0].pressed & PAD_UP &&
             UNDEFINED(GetDistanceToPlayerX)() < 8 &&
-            !(g_Player.unk0C & 0xC5CF3EF7)) {
+            !(g_Player.unk0C & PLAYER_UNK0C_READY_MASK)) {
             g_Player.padSim = 0;
             g_Player.D_80072EFC = 0x80;
             PLAYER.velocityY = PLAYER.velocityX = D_8003C8B8 = 0;
@@ -281,7 +299,7 @@ void EntityRWarpRoom(Entity* self) {
 
             if (g_pads[0].pressed & PAD_UP &&
                 UNDEFINED(GetDistanceToPlayerX)() < 8 &&
-                !(g_Player.unk0C & 0xC5CF3EF7)) {
+                !(g_Player.unk0C & PLAYER_UNK0C_READY_MASK)) {
                 g_Player.padSim = 0;
                 g_Player.D_80072EFC = 0x80;
                 D_8003C8B8 = 0;
@@ -343,8 +361,6 @@ void EntityRWarpRoom(Entity* self) {
 }
 
 extern u16 g_EInitReverseSmallRocks[];
-
-#define SE_WARP_DEBRIS 0x644
 
 void EntityWarpSmallRocks(Entity* entity) {
     s32 x;
