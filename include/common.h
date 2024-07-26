@@ -80,4 +80,8 @@ int sprintf(char* dst, const char* fmt, ...);
 #define SP(x) (0x1F800000 + (x))
 #endif
 
+// Emulates an undefined function signature for cases where the function
+// is already defined, but may not have been in the original source.
+#define UNDEFINED(x) ((int (*)())(x))
+
 #endif
