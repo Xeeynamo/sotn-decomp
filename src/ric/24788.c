@@ -613,6 +613,7 @@ void func_8016147C(Entity* self) {
     }
 }
 
+// DRA function is func_8011EDA8
 void func_80161C2C(Entity* self) {
     u16 params = self->params;
     s16 paramsHi = self->params >> 8;
