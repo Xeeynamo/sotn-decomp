@@ -466,7 +466,60 @@ INCLUDE_ASM("st/no3/nonmatchings/48A84", EntityUnkId31);
 // some sort of explosion
 INCLUDE_ASM("st/no3/nonmatchings/48A84", EntityExplosion3);
 
-INCLUDE_ASM("st/no3/nonmatchings/48A84", func_801CE740);
+void func_801CE740(Entity* self) {
+    Primitive* prim = &g_PrimBuf[self->primIndex];
+
+    if (prim == NULL) {
+        return;
+    }
+
+    while (prim != NULL) {
+        if (prim->p1 != 0) {
+            prim->p1--;
+        } else {
+            if (prim->p2 < 8) {
+                prim->y0 = prim->y1 = prim->y1 - 12;
+                if (self->facingLeft) {
+                    prim->x1 = prim->x3 = prim->x3 + 8;
+                    prim->r0 = prim->r2 = prim->r2 - 8;
+                    prim->g0 = prim->g2 = prim->g2 - 8;
+                    prim->b0 = prim->b2 = prim->b2 - 8;
+                } else {
+                    prim->x0 = prim->x2 = prim->x2 - 8;
+                    prim->r1 = prim->r3 = prim->r3 - 8;
+                    prim->g1 = prim->g3 = prim->g3 - 8;
+                    prim->b1 = prim->b3 = prim->b3 - 8;
+                }
+            } else if (prim->p2 < 24) {
+                prim->y0 = prim->y1 = prim->y1 - 12;
+                if (self->facingLeft) {
+                    prim->x0 = prim->x2 = prim->x2 + 4;
+                    prim->x1 = prim->x3 = prim->x3 + 1;
+                } else {
+                    prim->x1 = prim->x3 = prim->x3 - 4;
+                    prim->x0 = prim->x2 = prim->x2 - 1;
+                }
+            } else if (prim->p2 < 32) {
+                prim->y0 = prim->y1 = prim->y1 + 36;
+                if (self->facingLeft != 0) {
+                    prim->x0 = prim->x2 = prim->x2 + 2;
+                    if (prim->p2 & 1) {
+                        prim->x1 = prim->x3 = prim->x3 + 1;
+                    }
+                } else {
+                    prim->x1 = prim->x3 = prim->x3 - 2;
+                    if (prim->p2 & 1) {
+                        prim->x0 = prim->x2 = prim->x2 - 1;
+                    }
+                }
+            } else {
+                prim->drawMode = DRAW_HIDE;
+            }
+            prim->p2 += 1;
+        }
+        prim = prim->next;
+    }
+}
 
 // flame-like attack on ground from strong warg
 INCLUDE_ASM("st/no3/nonmatchings/48A84", EntityStrongWargWaveAttack);

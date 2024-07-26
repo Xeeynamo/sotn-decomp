@@ -90,7 +90,7 @@ def get_asm_files(asm_path):
     return files
 
 def find_wip(o):
-    result = find_scratches(o[1], "ps1")
+    result = find_scratches(o[1], "ps1", o[7], True)
 
     if result:
         return {"link": result[0], "percent": result[1]}
@@ -126,6 +126,10 @@ if __name__ == "__main__":
         if "/psxsdk/" in name:
             ovl_name = name.split("/")[5]  # grab library name
             func_name = os.path.splitext(os.path.basename(name))[0]
+        elif "/weapon/" in name:
+            # use the weapon name
+            ovl_name = name.split("/")[4]  # grab library name
+            func_name = os.path.splitext(os.path.basename(name))[0]
         else:
             matches = re.search(r"\/(\w+)\/nonmatchings\/\w+\/(\w+)\.s", name)
             if matches:
@@ -146,6 +150,7 @@ if __name__ == "__main__":
                 jump_table,
                 wip,
                 wip_percentage,
+                f["text"] # local asm
             ]
         )
 
@@ -173,5 +178,10 @@ if __name__ == "__main__":
             if os.path.exists(svg_path):
                 o[1] = f"[{o[1]}]({base_url}/{svg_path})"
 
+    # delete asm text
+    for o in output:
+        del o[7:]
+
     headers = ["Ovl", "Function", "Length", "Branches", "Jtbl", "WIP", "%"]
     print(tabulate(output, headers=headers, tablefmt="github"))
+

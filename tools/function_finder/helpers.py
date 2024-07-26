@@ -2,9 +2,31 @@
 import json
 import requests
 import sys
+import zipfile
+from io import BytesIO
+import difflib
 
+def are_strings_similar(str1, str2, threshold=0.8):
+    similarity = difflib.SequenceMatcher(None, str1, str2).ratio()
+    return similarity >= threshold
 
-def find_scratches(name, platform):
+def get_asm(slug):
+    url = f'https://decomp.me/api/scratch/{slug}/export'
+    response = requests.get(url)
+    if response.status_code == 200:
+        with zipfile.ZipFile(BytesIO(response.content)) as the_zip:
+            zip_contents = the_zip.namelist()
+            if 'target.s' in zip_contents:
+                with the_zip.open('target.s') as file:
+                    target_content = file.read().decode('utf-8')
+                return target_content
+            else:
+                print("target.s not found in the zip file")
+    else:
+        print(f"Failed to download the zip file: Status code {response.status_code}")
+    return None
+
+def find_scratches(name, platform, local_asm=None, use_local=False):
     try:
         response = requests.get(f"https://decomp.me/api/scratch?search={name}")
         response.raise_for_status()
@@ -22,11 +44,16 @@ def find_scratches(name, platform):
     for result in scratches["results"]:
         if not "name" in result:
             continue
-        # seems to give approximate matches, skip these
-        if result["name"] != name:
+        if not result["name"].startswith(name):
             continue
         if result["platform"] != platform:
             continue
+
+        if use_local:
+            remote_asm = get_asm(result['slug'])
+
+            if not are_strings_similar(local_asm, remote_asm):
+                continue
 
         score = result["score"]
         max_score = result["max_score"]

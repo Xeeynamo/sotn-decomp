@@ -1,3 +1,4 @@
+#ifndef VERSION_PC
 #ifndef LIBGTE_H
 #define LIBGTE_H
 
@@ -177,4 +178,8 @@ extern long ratan2(long y, long x);
 
 #endif
 
+#endif
+#else
+#include "../../src/pc/psxsdk/PsyCross/src/gte/psx/libgte.h"
+#include "../../src/pc/psxsdk/PsyCross/src/gte/psx/inline_c.h"
 #endif
