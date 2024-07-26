@@ -284,7 +284,6 @@ extern u8 aPbav_0[0x2000]; // TODO: extract file
 extern u8 aPbav_1[0x2000]; // TODO: extract file
 extern u8 aPbav_2[0x2000]; // TODO: extract file
 
-extern s32 D_80097420;
 extern u16 g_ButtonMask[];
 extern u8 g_StageSelectOrder[];
 extern u16 D_800A04CC[];

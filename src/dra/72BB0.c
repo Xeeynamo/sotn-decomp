@@ -1205,7 +1205,7 @@ void func_80115394(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
     nullifyVelY = false;
     PLAYER.drawFlags = DRAW_COLORS;
     plDraw = &g_PlayerDraw[0];
-    if ((D_80097420 == 0xFFF) && (PLAYER.step_s)) {
+    if ((g_unkGraphicsStruct.unk20 == 0xFFF) && (PLAYER.step_s)) {
         SetPlayerStep(Player_Unk17);
         PLAYER.velocityY = 0;
         PLAYER.velocityX = 0;
