@@ -82,6 +82,6 @@ int sprintf(char* dst, const char* fmt, ...);
 
 // Emulates an undefined function signature for cases where the function
 // is already defined, but may not have been in the original source.
-#define UNDEFINED(x) ((int (*)())(x))
+#define UNDEFINED_FUNC(x) ((int (*)())(x))
 
 #endif

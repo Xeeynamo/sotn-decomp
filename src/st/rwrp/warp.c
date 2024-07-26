@@ -39,18 +39,18 @@ s32 WarpBackgroundBrightness;
 //
 // Value: 0xC5CF3EF7
 //
-// TODO: this value is also used in src/st/wrp/warp.c
+// n.b.! this value is also used in src/st/wrp/warp.c
 // clang-format off
-#define PLAYER_UNK0C_READY_MASK                                                \
-    (                                                          \
+#define PLAYER_UNK0C_READY_MASK                                                  \
+    (                                                                            \
         /* 0xC0000000 */ PLAYER_STATUS_UNK80000000 | PLAYER_STATUS_UNK40000000 | \
-        /* 0x05000000 */ PLAYER_STATUS_UNK4000000 | PLAYER_STATUS_AXEARMOR |   \
-        /* 0x00C00000 */ PLAYER_STATUS_UNK800000 | PLAYER_STATUS_UNK400000 |   \
+        /* 0x05000000 */ PLAYER_STATUS_UNK4000000 | PLAYER_STATUS_AXEARMOR |     \
+        /* 0x00C00000 */ PLAYER_STATUS_UNK800000 | PLAYER_STATUS_UNK400000 |     \
         /* 0x000F0000 */ PLAYER_STATUS_UNK80000 | PLAYER_STATUS_UNK40000 | PLAYER_STATUS_UNK20000 | PLAYER_STATUS_UNK10000 | \
-        /* 0x00003000 */ PLAYER_STATUS_UNK2000 | PLAYER_STATUS_UNK1000 | \
+        /* 0x00003000 */ PLAYER_STATUS_UNK2000 | PLAYER_STATUS_UNK1000 |         \
         /* 0x00000E00 */ PLAYER_STATUS_UNK800 | PLAYER_STATUS_UNK400 | PLAYER_STATUS_UNK200 | \
         /* 0x000000F0 */ PLAYER_STATUS_STONE | PLAYER_STATUS_UNK40 | PLAYER_STATUS_UNK_20 |  PLAYER_STATUS_UNK10 | \
-        /* 0x00000007 */ PLAYER_STATUS_TRANSFORM \
+        /* 0x00000007 */ PLAYER_STATUS_TRANSFORM                                 \
     )
 // clang-format on
 
@@ -164,7 +164,7 @@ void EntityRWarpRoom(Entity* self) {
     case 1:
         // Wait for player to press the UP button
         if (collision & 0x4 && g_pads[0].pressed & PAD_UP &&
-            UNDEFINED(GetDistanceToPlayerX)() < 8 &&
+            UNDEFINED_FUNC(GetDistanceToPlayerX)() < 8 &&
             !(g_Player.unk0C & PLAYER_UNK0C_READY_MASK)) {
             g_Player.padSim = 0;
             g_Player.D_80072EFC = 0x80;
@@ -298,7 +298,7 @@ void EntityRWarpRoom(Entity* self) {
             D_80097488.y.i.hi += 1;
 
             if (g_pads[0].pressed & PAD_UP &&
-                UNDEFINED(GetDistanceToPlayerX)() < 8 &&
+                UNDEFINED_FUNC(GetDistanceToPlayerX)() < 8 &&
                 !(g_Player.unk0C & PLAYER_UNK0C_READY_MASK)) {
                 g_Player.padSim = 0;
                 g_Player.D_80072EFC = 0x80;
