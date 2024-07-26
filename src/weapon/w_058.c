@@ -100,10 +100,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         DestroyEntityWeapon(1);
         g_api.PlaySfx(SFX_UNK_641);
         g_unkGraphicsStruct.unk20 = 1;
-        // Would be nice if this could be removed
-        do {
-            self->step++;
-        } while (0);
+        self->step++;
         break;
     case 1:
         DecelerateX(0x1000);
