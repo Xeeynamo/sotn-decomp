@@ -539,8 +539,8 @@ void EntityAlucard(void) {
     s32 temp_a0;
     s32 temp_v1;
     s32 var_s0;
-    u16 var_s6;
-    u16 var_s7;
+    s16 var_s6;
+    s16 var_s7;
 
     g_CurrentEntity = &PLAYER;
     if (D_800ACE44 != 0) {
@@ -959,7 +959,7 @@ block_160:
         func_801186EC();
         break;
     case Player_Hit:
-        AlucardHandleDamage(&damage, (s16)var_s6, (s16)var_s7);
+        AlucardHandleDamage(&damage, var_s6, var_s7);
         break;
     case Player_StatusStone:
         func_80114DF4(var_fp);
@@ -968,7 +968,7 @@ block_160:
         func_80116208();
         break;
     case Player_Kill:
-        func_80115394(&damage, (s16)var_s6, (s16)var_s7);
+        func_80115394(&damage, var_s6, var_s7);
         break;
     case Player_Unk17:
         func_80115BB0();

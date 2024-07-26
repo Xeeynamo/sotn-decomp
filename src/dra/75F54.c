@@ -90,7 +90,7 @@ void func_80116208(void) {
             func_80118C84(damage.damageTaken, 0);
             if (temp_s0 == 4) {
                 SetPlayerStep(Player_Kill);
-                func_80115394(&damage, 0xC, 1);
+                func_80115394(&damage, Player_BossGrab, 1);
                 return;
             }
             if (g_Player.unk62 == 0) {
