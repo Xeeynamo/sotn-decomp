@@ -1,7 +1,5 @@
 #include "dre.h"
 
-extern s32 D_80097400[];
-
 void func_801961DC(s16 arg0) {
     s16 temp_v0 = arg0 - g_unkGraphicsStruct.unkC;
 
@@ -151,45 +149,45 @@ void EntityUnkId23(Entity* self) {
     case 0:
         InitializeEntity(D_8018047C);
         D_8003C8B8 = 0;
-        *D_80097400 = 1;
+        g_unkGraphicsStruct.unk0 = 1;
         g_Player.padSim = 0;
-        if (g_Player.unk0C & 1) {
-            g_Player.padSim = 8;
-        } else if (g_Player.unk0C & 2) {
-            g_Player.padSim = 4;
-        } else if (g_Player.unk0C & 4) {
-            g_Player.padSim = 2;
+        if (g_Player.unk0C & PLAYER_STATUS_BAT_FORM) {
+            g_Player.padSim = PAD_R1;
+        } else if (g_Player.unk0C & PLAYER_STATUS_MIST_FORM) {
+            g_Player.padSim = PAD_L1;
+        } else if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
+            g_Player.padSim = PAD_R2;
         }
-        g_Player.D_80072EFC = 1;
+        g_Player.D_80072EFC = PAD_L2;
         break;
 
     case 1:
         g_Player.padSim = 0;
-        if (g_Player.unk0C & 7) {
+        if (g_Player.unk0C & PLAYER_STATUS_TRANSFORM) {
             if (g_Timer & 1) {
-                if (g_Player.unk0C & 1) {
-                    g_Player.padSim = 8;
-                } else if (g_Player.unk0C & 2) {
-                    g_Player.padSim = 4;
-                } else if (g_Player.unk0C & 4) {
-                    g_Player.padSim = 2;
+                if (g_Player.unk0C & PLAYER_STATUS_BAT_FORM) {
+                    g_Player.padSim = PAD_R1;
+                } else if (g_Player.unk0C & PLAYER_STATUS_MIST_FORM) {
+                    g_Player.padSim = PAD_L1;
+                } else if (g_Player.unk0C & PLAYER_STATUS_WOLF_FORM) {
+                    g_Player.padSim = PAD_R2;
                 }
             }
         } else if ((g_Player.pl_vram_flag & 1) && (D_801A3F84 & 2)) {
             diff = player->posX.i.hi - ent->posX.i.hi;
             if (diff < -0x50) {
-                g_Player.padSim = 0x2000;
+                g_Player.padSim = PAD_RIGHT;
                 D_801816C0 = 0;
                 self->step += 3;
             } else if (diff >= 0x51) {
-                g_Player.padSim = 0x8000;
+                g_Player.padSim = PAD_LEFT;
                 D_801816C0 = 1;
                 self->step += 3;
             } else if (ent->facingLeft) {
-                g_Player.padSim = 0x2000;
+                g_Player.padSim = PAD_RIGHT;
                 self->step++;
             } else {
-                g_Player.padSim = 0x8000;
+                g_Player.padSim = PAD_LEFT;
                 self->step += 2;
             }
         }
@@ -197,10 +195,10 @@ void EntityUnkId23(Entity* self) {
         break;
 
     case 2:
-        g_Player.padSim = 0x2000;
+        g_Player.padSim = PAD_RIGHT;
         diff = player->posX.i.hi - ent->posX.i.hi;
         if (diff > 64) {
-            g_Player.padSim = 0x8000;
+            g_Player.padSim = PAD_LEFT;
             D_801816C0 = 1;
             self->step += 2;
         }
@@ -208,10 +206,10 @@ void EntityUnkId23(Entity* self) {
         break;
 
     case 3:
-        g_Player.padSim = 0x8000;
+        g_Player.padSim = PAD_LEFT;
         diff = player->posX.i.hi - ent->posX.i.hi;
         if (diff < -64) {
-            g_Player.padSim = 0x2000;
+            g_Player.padSim = PAD_RIGHT;
             D_801816C0 = 0;
             self->step++;
         }
@@ -229,8 +227,8 @@ void EntityUnkId23(Entity* self) {
 
     case 5:
         D_8003C8B8 = 1;
-        if (*D_80097400 != 0) {
-            *D_80097400 = 0;
+        if (g_unkGraphicsStruct.unk0 != 0) {
+            g_unkGraphicsStruct.unk0 = 0;
         }
         player->posY.i.hi = player->posY.i.hi + 0x100;
         g_Player.padSim = 0;
