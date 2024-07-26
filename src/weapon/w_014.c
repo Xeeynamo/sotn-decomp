@@ -5,7 +5,55 @@
 
 INCLUDE_ASM("weapon/nonmatchings/w_014", EntityWeaponAttack);
 
-INCLUDE_ASM("weapon/nonmatchings/w_014", func_ptr_80170004);
+s32 func_ptr_80170004(Entity* self) {
+    s16 angle;
+    u32 baseX, baseY;
+    s16 paramsLo;
+
+    if (self->ext.weapon.parent->entityId == 0) {
+        DestroyEntity(self);
+        return;
+    }
+    paramsLo = self->params & 0xFF;
+    angle = 0;
+    if (self->step == 0) {
+        self->facingLeft = self->ext.weapon.parent->facingLeft;
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_20000;
+        self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;
+        SetWeaponProperties(self, 0);
+        self->enemyId = self->ext.weapon.parent->enemyId;
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 4;
+        self->step++;
+    }
+
+    if (self->ext.weapon.parent->drawFlags & FLAG_DRAW_ROTZ) {
+        angle = self->ext.weapon.parent->rotZ;
+    }
+    if (self->facingLeft) {
+        angle = 0x800 - angle;
+    }
+    switch (paramsLo) {
+    case 0:
+        baseX = (u32)((rcos(angle) >> 4) * 5) >> 7;
+        baseY = (u32)((rsin(angle) >> 4) * 5) >> 7;
+        break;
+    case 1:
+        baseX = (u32)((rcos(angle) >> 4) * 5) >> 6;
+        baseY = (u32)((rsin(angle) >> 4) * 5) >> 6;
+        break;
+    case 2:
+        baseX = (u32)((rcos(angle) >> 4) * 0xF) >> 7;
+        baseY = (u32)((rsin(angle) >> 4) * 0xF) >> 7;
+        break;
+    case 3:
+        baseX = (u32)((rcos(angle) >> 4) * 5) >> 5;
+        baseY = (u32)((rsin(angle) >> 4) * 5) >> 5;
+        break;
+    }
+    self->posX.i.hi = baseX + self->ext.weapon.parent->posX.i.hi;
+    self->posY.i.hi = baseY + self->ext.weapon.parent->posY.i.hi;
+}
 
 void func_ptr_80170008(Entity* self) {}
 
