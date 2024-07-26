@@ -15,18 +15,18 @@
 <ellipse fill="green" stroke="black" cx="128.04" cy="-18" rx="128.08" ry="18"/>
 <text text-anchor="middle" x="128.04" y="-14.3" font-family="Times,serif" font-size="14.00">wrp.GetNormalizedAngle</text>
 </g>
-<!-- wrp.EntitySoulStealOrb -->
+<!-- rwrp.EntitySoulStealOrb -->
 <g id="node2" class="node">
-<title>wrp.EntitySoulStealOrb</title>
-<g id="a_node2"><a xlink:href="wrp.EntitySoulStealOrb.svg" xlink:title="wrp.EntitySoulStealOrb">
-<ellipse fill="green" stroke="black" cx="128.04" cy="-198" rx="122.38" ry="18"/>
-<text text-anchor="middle" x="128.04" y="-194.3" font-family="Times,serif" font-size="14.00">wrp.EntitySoulStealOrb</text>
+<title>rwrp.EntitySoulStealOrb</title>
+<g id="a_node2"><a xlink:href="rwrp.EntitySoulStealOrb.svg" xlink:title="rwrp.EntitySoulStealOrb">
+<ellipse fill="green" stroke="black" cx="128.04" cy="-198" rx="126.98" ry="18"/>
+<text text-anchor="middle" x="128.04" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.EntitySoulStealOrb</text>
 </a>
 </g>
 </g>
-<!-- wrp.EntitySoulStealOrb&#45;&gt;wrp.GetNormalizedAngle -->
+<!-- rwrp.EntitySoulStealOrb&#45;&gt;wrp.GetNormalizedAngle -->
 <g id="edge1" class="edge">
-<title>wrp.EntitySoulStealOrb&#45;&gt;wrp.GetNormalizedAngle</title>
+<title>rwrp.EntitySoulStealOrb&#45;&gt;wrp.GetNormalizedAngle</title>
 <path fill="none" stroke="black" d="M128.04,-179.93C128.04,-148.97 128.04,-83.3 128.04,-46.13"/>
 <polygon fill="black" stroke="black" points="131.54,-46.02 128.04,-36.02 124.54,-46.02 131.54,-46.02"/>
 <text text-anchor="middle" x="123.04" y="-168.73" font-family="Times,serif" font-size="14.00">1</text>
