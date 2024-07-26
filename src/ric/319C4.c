@@ -1,4 +1,5 @@
 #include "ric.h"
+#include "sfx.h"
 
 // RIC Entity # 49. Comes from blueprint 57. Factory call in func_8016E324.
 // func_8016E324 is RIC Entity #48. Comes from blueprint 56. Blueprint 56 is
@@ -189,7 +190,7 @@ void func_8016DF74(Entity* self) {
         self->ext.et_8016DF74.unk7E = 0;
         self->ext.et_8016DF74.unk84 = 0;
         self->ext.et_8016DF74.unk82 = 8;
-        g_api.PlaySfx(0x636);
+        g_api.PlaySfx(SFX_TELEPORT_END_CRASH);
         self->step++;
         break;
     case 1:
@@ -342,8 +343,8 @@ void func_8016E46C(Entity* self) {
         if (++self->ext.et_8016E46C.unk80 >= 0x3C) {
             self->ext.et_8016E46C.unkB0 = 0x11;
             func_8015FAB8(self);
-            g_api.PlaySfx(0x62F);
-            g_api.PlaySfx(0x635);
+            g_api.PlaySfx(SFX_RIC_ITEM_CRASH);
+            g_api.PlaySfx(SFX_TELEPORT_START_CRASH);
             self->step++;
         }
         break;

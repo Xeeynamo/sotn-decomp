@@ -72,15 +72,15 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.unk88 = 0x80;
             self->ext.teleport.unk90 = 0xFF;
             self->step = 0x14;
-            PlaySfx(SFX_UNK_8BB);
+            PlaySfx(SFX_TELEPORT_SYNTH_DOWN);
         } else {
             self->ext.teleport.unk7C = 1;
             self->ext.teleport.unk90 = 0;
             self->ext.teleport.unk80 = 0x10;
             self->ext.teleport.unk88 = 0x80;
             self->step = 1;
-            PlaySfx(SFX_UNK_635);
-            PlaySfx(NA_SE_PL_TELEPORT);
+            PlaySfx(SFX_TELEPORT_START_CRASH);
+            PlaySfx(SFX_TELEPORT_SYNTH_UP);
         }
         break;
     case 1:
@@ -166,7 +166,7 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.unk84 = 4;
             self->step++;
             g_Player.unk1C = 1;
-            PlaySfx(NA_SE_PL_WARP);
+            PlaySfx(SFX_TELEPORT_END_CRASH);
             DestroyEntity(self);
             return;
         }
@@ -1081,8 +1081,8 @@ void EntitySubwpnCrashCross(Entity* self) {
         prim->b3 = 0x80;
         prim->tpage = 0x11C;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
-        PlaySfx(SFX_UNK_6DF);
-        PlaySfx(NA_SE_PL_WARP);
+        PlaySfx(SFX_CROSS_CRASH);
+        PlaySfx(SFX_TELEPORT_END_CRASH);
         self->step += 1;
         g_Player.D_80072F00[12] = 4;
         break;
@@ -1118,7 +1118,7 @@ void EntitySubwpnCrashCross(Entity* self) {
                 right = 0xFF;
             }
             self->step += 1;
-            PlaySfx(NA_SE_UNK_62F);
+            PlaySfx(SFX_RIC_ITEM_CRASH);
         }
         break;
     case 4:
@@ -1278,7 +1278,7 @@ void EntityHellfireHandler(Entity* self) {
         prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
                          DRAW_TPAGE | DRAW_TRANSP;
         prim->priority = self->zPriority = 0x1C0;
-        PlaySfx(NA_SE_PL_WARP);
+        PlaySfx(SFX_TELEPORT_END_CRASH);
         self->step++;
         break;
     case 1:

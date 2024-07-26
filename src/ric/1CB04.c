@@ -1,5 +1,6 @@
 #include "ric.h"
 #include "player.h"
+#include "sfx.h"
 
 void func_80158B04(s32 arg0) {
     s32 var_s0;
@@ -865,7 +866,7 @@ void func_8015AFE0(void) {
 void func_8015B098(void) {
     if ((PLAYER.animCurFrame == 0xB5) && (PLAYER.animFrameDuration == 1)) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 35), 0);
-        g_api.PlaySfx(NA_SE_UNK_62F);
+        g_api.PlaySfx(SFX_RIC_ITEM_CRASH);
     }
 
     if (PLAYER.animFrameDuration < 0) {
@@ -1035,7 +1036,7 @@ void func_8015B348(void) {
         D_801545A8--;
         if (D_801545A8 == 0) {
             func_8015C920(&D_801558D4);
-            g_api.PlaySfx(NA_SE_UNK_62F);
+            g_api.PlaySfx(SFX_RIC_ITEM_CRASH);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 27), 0);
             PLAYER.step_s++;
             break;

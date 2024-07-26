@@ -1,4 +1,5 @@
 #include "ric.h"
+#include "sfx.h"
 
 // Entity ID #7. Made by blueprint 6. Comes from subweapon 3. Holy water!
 // Not at all the same as DRA's.
@@ -331,8 +332,8 @@ void EntitySubwpnCrashCross(Entity* self) {
         self->ext.factory.unkB0 = 0xC;
         func_8015FAB8(self);
         LoadImage(&D_80155E3C, D_80155DDC);
-        g_api.PlaySfx(0x6DF);
-        g_api.PlaySfx(0x636);
+        g_api.PlaySfx(SFX_CROSS_CRASH);
+        g_api.PlaySfx(SFX_TELEPORT_END_CRASH);
         self->step += 1;
         break;
     case 1:
@@ -368,7 +369,7 @@ void EntitySubwpnCrashCross(Entity* self) {
             if (right >= 0x100) {
                 right = 0xFF;
             }
-            g_api.PlaySfx(0x62F);
+            g_api.PlaySfx(SFX_RIC_ITEM_CRASH);
             self->step += 1;
         }
         break;
@@ -1146,8 +1147,8 @@ void EntitySubwpnCrashAxe(Entity* self) {
     case 3:
         if (--self->ext.factory.unkA2 == 0) {
             if ((u8)self->params == 0) {
-                g_api.PlaySfx(0x635);
-                g_api.PlaySfx(0x62F);
+                g_api.PlaySfx(SFX_TELEPORT_START_CRASH);
+                g_api.PlaySfx(SFX_RIC_ITEM_CRASH);
             }
             g_Player.unk4E = 1;
             self->flags &= ~(FLAG_UNK_04000000 | FLAG_UNK_20000);

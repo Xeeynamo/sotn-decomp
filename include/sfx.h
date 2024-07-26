@@ -181,7 +181,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #endif
 
 // This sound plays when MAX UP spawns and during Dracula transformation
-#define NA_SE_UNK_62F 0x62F
 #define SFX_UNK_608 0x608
 #define NA_SE_EV_HEAVY_BLOCK_DRAG 0x609
 #define NA_SE_EN_BLOOD_ZOMBIE_SWORD_SLASH 0x60B
@@ -195,8 +194,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SFX_WEAPON_62C 0x62C
 #define NA_SE_EV_GLASS_BREAK 0x632
 #define NA_SE_BREAK_CANDLE 0x634
-#define SFX_UNK_635 0x635
-#define NA_SE_PL_WARP 0x636
 
 #if defined(VERSION_BETA)
 #define SFX_OPEN_DOOR 0x640
@@ -250,7 +247,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define NA_SE_EN_SKELETON_THROW_BONE 0x6C8
 #define NA_SE_EN_BLOOD_SKELETON_DISASSEMBLES 0x6CB
 #define NA_SE_EN_BLOOD_SKELETON_REASSEMBLES 0x6CC
-#define SFX_UNK_6DF 0x6DF
 #define SFX_UNK_6E0 0x6E0
 #define NA_SE_PL_RIC_UNK_6E2 0x6E2
 #define SFX_UNK_6E7 0x6E7
@@ -292,11 +288,12 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define NA_SE_VO_DR_HURT_2 0x85B
 #define NA_SE_VO_DR_HURT_3 0x85C
 #define NA_SE_VO_DR_HURT_4 0x85D
-#define NA_SE_PL_TELEPORT 0x8BA
-#define SFX_UNK_8BB 0x8BB
 #define NA_SE_CS_BURNING_PHOTOGRAPH 0x8BE
 // plays every 10 frames while using bible subweapon
 #define BIBLE_SUBWPN_SWOOSH 0x8C3
+
+// To make organization easier, the sound effects defines
+// are categorized by the overlays that reference them
 
 // STAGE DRE
 #define NA_SE_SU_SHOOT_PINKBALLS 0x62C
@@ -309,7 +306,7 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define NA_SE_SU_CREATE_CLONES 0x6D5
 #define NA_SE_SU_CHARGE_PINKBALLS 0x6E2
 #define NA_VO_SU_LAUGH 0x86E
-// Blank, may be a leftover from the Jap version.
+// Blank, may be a leftover from the Japanese version.
 #define NA_VO_SU_BLANK 0x86F
 #define NA_VO_SU_GRUNT_1 0x870
 #define NA_VO_SU_GRUNT_2 0x872
@@ -341,6 +338,11 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SE_WEAPON_WHACK 0x678
 #define SE_BOSS_DEFEATED 0x7D2
 
+#define SFX_TELEPORT_START_CRASH 0x635
+#define SFX_TELEPORT_END_CRASH 0x636
+#define SFX_TELEPORT_SYNTH_UP 0x8BA
+#define SFX_TELEPORT_SYNTH_DOWN 0x8BB
+
 // UI SOUNDS
 #define SE_UI_CONFIRM 0x633
 #define SE_UI_START 0x63D
@@ -358,6 +360,13 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SE_HEALTH_REGAINED 0x68E
 #define SFX_UNK_6B2 0x6B2
 #define SFX_UNK_6F7 0x6F7
+
+// RIC SOUNDS
+#define SFX_RIC_WHIP_DRAG 0x602
+// 0x603-606 are unused alternate whip chain drags
+// 0x602 is also used by BO6 and RBO1
+#define SFX_RIC_ITEM_CRASH 0x62F
+#define SFX_CROSS_CRASH 0x6DF
 
 // WEAPON SOUNDS
 #define SE_WPN_POWER_OF_SIRE 0x66A
