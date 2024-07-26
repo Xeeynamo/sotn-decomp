@@ -7,7 +7,7 @@ INCLUDE_ASM("weapon/nonmatchings/w_014", EntityWeaponAttack);
 
 s32 func_ptr_80170004(Entity* self) {
     s16 angle;
-    u32 baseX, baseY;
+    u16 baseX, baseY;
     s16 paramsLo;
 
     if (self->ext.weapon.parent->entityId == 0) {
@@ -35,20 +35,20 @@ s32 func_ptr_80170004(Entity* self) {
     }
     switch (paramsLo) {
     case 0:
-        baseX = (u32)((rcos(angle) >> 4) * 5) >> 7;
-        baseY = (u32)((rsin(angle) >> 4) * 5) >> 7;
+        baseX = ((rcos(angle) >> 4) * 5) >> 7;
+        baseY = ((rsin(angle) >> 4) * 5) >> 7;
         break;
     case 1:
-        baseX = (u32)((rcos(angle) >> 4) * 5) >> 6;
-        baseY = (u32)((rsin(angle) >> 4) * 5) >> 6;
+        baseX = ((rcos(angle) >> 4) * 5) >> 6;
+        baseY = ((rsin(angle) >> 4) * 5) >> 6;
         break;
     case 2:
-        baseX = (u32)((rcos(angle) >> 4) * 0xF) >> 7;
-        baseY = (u32)((rsin(angle) >> 4) * 0xF) >> 7;
+        baseX = ((rcos(angle) >> 4) * 0xF) >> 7;
+        baseY = ((rsin(angle) >> 4) * 0xF) >> 7;
         break;
     case 3:
-        baseX = (u32)((rcos(angle) >> 4) * 5) >> 5;
-        baseY = (u32)((rsin(angle) >> 4) * 5) >> 5;
+        baseX = ((rcos(angle) >> 4) * 5) >> 5;
+        baseY = ((rsin(angle) >> 4) * 5) >> 5;
         break;
     }
     self->posX.i.hi = baseX + self->ext.weapon.parent->posX.i.hi;

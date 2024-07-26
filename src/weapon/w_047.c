@@ -16,7 +16,7 @@ s32 func_ptr_80170004(Entity* self) {
             DestroyEntity(self);
         } else {
             SetSpriteBank2(D_14D000_8017A0D4);
-            self->animSet = 0x8011;
+            self->animSet = ANIMSET_OVL(0x11);
             self->unk5A = 0x64;
             self->palette = 0x111;
             if (g_HandId != 0) {
@@ -32,7 +32,7 @@ s32 func_ptr_80170004(Entity* self) {
             self->velocityY = -(rsin((s32)speed) << 7);
             self->posX.val += self->velocityX * 2;
             self->posY.val += self->velocityY * 2;
-            self->drawMode = 0x30;
+            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
             if (rand() & 1) {
                 self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
             }

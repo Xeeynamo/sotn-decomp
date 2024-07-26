@@ -73,7 +73,7 @@ void func_ptr_80170008(Entity* self) {
     }
     if (g_Player.padTapped & PAD_SQUARE) {
         PLAYER.ext.player.anim = 0xCE;
-        g_api_PlaySfx(0x6F0);
+        g_api.PlaySfx(SFX_UNK_6F0);
         PLAYER.step = 0x28;
         PLAYER.step_s = 1;
         PLAYER.animFrameIdx = 0;
@@ -93,7 +93,7 @@ void func_ptr_80170008(Entity* self) {
         return;
     }
     if (!(g_GameTimer & 7)) {
-        g_api_PlaySfx(0x64B);
+        g_api.PlaySfx(SFX_UNK_64B);
         g_api.CreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(0x100, 0x45), 0);
     }
