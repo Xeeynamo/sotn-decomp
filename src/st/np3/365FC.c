@@ -1,6 +1,6 @@
 #include "np3.h"
 
-void func_801B65FC(Entity* self) {
+void EntityWargExplosionPuffOpaque(Entity* self) {
     Unkstruct_80180FE0* obj;
     s32 velocityX;
     s32 velocityY;

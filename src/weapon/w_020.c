@@ -2,6 +2,7 @@
 // Karma Coin
 #include "weapon_private.h"
 #include "shared.h"
+#include "sfx.h"
 
 extern SpriteParts D_90000_8017A040[];
 extern AnimationFrame D_90000_8017A850[];
@@ -91,7 +92,7 @@ void EntityWeaponAttack(Entity* self) {
             self->posY.i.hi += sp10.unk18;
             self->animFrameDuration = self->animFrameIdx = 0;
             self->unk4C = D_90000_8017A864;
-            g_api.PlaySfx(0x6A9);
+            g_api.PlaySfx(SFX_COLLECT_GOLD);
             self->step += 1;
             return;
         }
@@ -124,8 +125,8 @@ void EntityWeaponAttack(Entity* self) {
         return;
     case 2:
         if (((self->animFrameIdx % 8) == 5) && (self->animFrameDuration == 1)) {
-            g_api.func_80134714(
-                0x6A9, D_90000_8017AB44[self->ext.karmacoin.unk84], 0);
+            g_api.func_80134714(SFX_COLLECT_GOLD,
+                                D_90000_8017AB44[self->ext.karmacoin.unk84], 0);
             self->ext.karmacoin.unk84++;
         }
         if (self->animFrameDuration < 0) {
@@ -146,9 +147,9 @@ void EntityWeaponAttack(Entity* self) {
         if ((self->animFrameIdx == 1) && (self->animFrameDuration == 0x38)) {
             // Useless if-statement
             if (self->unk4C == D_90000_8017A8C8) {
-                g_api.PlaySfx(0x682);
+                g_api.PlaySfx(SFX_KARMA_COIN);
             } else {
-                g_api.PlaySfx(0x682);
+                g_api.PlaySfx(SFX_KARMA_COIN);
             }
         }
         if (self->animFrameDuration < 0) {
@@ -160,7 +161,7 @@ void EntityWeaponAttack(Entity* self) {
                 self->zPriority = 0x1B6;
                 self->flags &= ~FLAG_UNK_100000;
                 g_api.func_80118C28(7);
-                g_api.PlaySfx(0x665);
+                g_api.PlaySfx(SFX_THUNDER);
                 SetWeaponProperties(self, 0);
                 self->step = 4;
             } else {
@@ -178,7 +179,7 @@ void EntityWeaponAttack(Entity* self) {
                 self->ext.karmacoin.timer = 0xE0;
                 self->unk6C = 0x80;
                 g_api.func_80118C28(8);
-                g_api.PlaySfx(0x6B1);
+                g_api.PlaySfx(SFX_KARMA_COIN_HEADS);
                 prim = &g_PrimBuf[self->primIndex];
                 prim->r0 = prim->g0 = prim->b0 = 0x5F;
                 prim->r1 = prim->g1 = prim->b1 = 0x5F;
@@ -336,7 +337,7 @@ void EntityWeaponAttack(Entity* self) {
             prim = &g_PrimBuf[self->primIndex];
             prim = prim->next;
             prim->drawMode |= DRAW_HIDE;
-            g_api.PlaySfx(0x636);
+            g_api.PlaySfx(SFX_KARMA_COIN_END);
             self->step += 1;
         }
         break;
