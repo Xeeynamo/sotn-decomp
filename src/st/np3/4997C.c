@@ -11,7 +11,7 @@ void EntityBat(Entity* entity) {
             CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
             newEntity->params = 1;
         }
-        func_801C2598(0x69C);
+        func_801916C4(0x69C);
         DestroyEntity(entity);
         return;
     }

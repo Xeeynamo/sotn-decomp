@@ -313,34 +313,7 @@ u8 func_8018FD48(s32 arg0) {
     return bits_01;
 }
 
-void EntityIntenseExplosion(Entity* self) {
-    if (!self->step) {
-        InitializeEntity(g_InitializeEntityData0);
-        self->palette = PAL_OVL(0x170);
-        self->animSet = ANIMSET_DRA(5);
-        self->animCurFrame = 1;
-        self->drawMode = 0x30;
-        if (self->params & 0xF0) {
-            self->palette = PAL_OVL(0x195);
-            self->drawMode = DRAW_TPAGE;
-        }
-
-        if (self->params & 0xFF00) {
-            self->zPriority = (self->params & 0xFF00) >> 8;
-        }
-        self->zPriority += 8;
-    } else {
-        self->animFrameDuration++;
-        self->posY.val -= FIX(0.25);
-        if ((self->animFrameDuration & 1) == 0) {
-            self->animCurFrame++;
-        }
-
-        if (self->animFrameDuration >= 37) {
-            DestroyEntity(self);
-        }
-    }
-}
+#include "entity_intense_explosion.h"
 
 u8 D_8018104C[] = {
     2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1,

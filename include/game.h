@@ -1701,7 +1701,6 @@ extern s32 g_IsTimeAttackUnlocked;
 // prevents the player to enter in the warp room. When g_CastleFlags[0x32] the
 // column will disappear.
 extern u8 g_CastleFlags[0x300]; // starts at 0x8003BDEC
-extern u8 D_8003BEEC[];         // g_CastleFlags[x + 0x100]
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
 extern s32 D_8003C100;
