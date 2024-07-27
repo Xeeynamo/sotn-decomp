@@ -25,7 +25,6 @@ s32 func_ptr_80170014(Entity* self) {}
 
 int GetWeaponId(void) { return 26; }
 
-
 void func_BA000_8017B37C(void) {
     RECT rect;
     s16 temp;
@@ -70,7 +69,6 @@ void EntityWeaponShieldSpell(Entity* self) {
 
     s16 angle;
 
-
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0xE);
@@ -100,21 +98,24 @@ void EntityWeaponShieldSpell(Entity* self) {
         self->facingLeft = PLAYER.facingLeft;
         self->animCurFrame = 0x3E;
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        
+
         self->rotX = self->rotY = 0;
         prim = &g_PrimBuf[self->primIndex];
         prim->clut = 0x19F;
         prim->tpage = 0x19;
-        
+
         prim->u0 = prim->u2 = 0x80;
         prim->u1 = prim->u3 = 0x80 + 0x4F;
         prim->v0 = prim->v1 = self->ext.shield.unk7C + 0;
         prim->v2 = prim->v3 = self->ext.shield.unk7C + 0x4F;
 
         self->ext.shield.unk82 = 0;
-        prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = 0x80;
+        prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
+            prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
+                0x80;
         prim->priority = self->zPriority - 10;
-        prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        prim->drawMode =
+            DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
         prim = prim->next;
         prim->clut = self->ext.shield.childPalette;
         prim->tpage = 0x19;
@@ -122,10 +123,12 @@ void EntityWeaponShieldSpell(Entity* self) {
         prim->u2 = prim->u3 = 0x5F;
         prim->v3 = prim->v1 = self->ext.shield.unk7D + 0x48;
         prim->v2 = prim->v0 = self->ext.shield.unk7D + 0x7F;
-        prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = 0x80;
+        prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
+            prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
+                0x80;
         prim->priority = 0x1B8;
         prim->drawMode = DRAW_HIDE;
-        for(i=0; i < 12; i++) {
+        for (i = 0; i < 12; i++) {
             prevPrim = prim;
             prim = prim->next;
             nextPrim = prim->next;
@@ -135,8 +138,8 @@ void EntityWeaponShieldSpell(Entity* self) {
             prim->u2 = prim->u3 = (i + 1) * 96 / 12 - 1;
             prim->clut = 0x15F;
             prim->priority = 0x1BA;
-            prim->drawMode |= (DRAW_TPAGE2 + DRAW_TPAGE + DRAW_COLORS +
-                               DRAW_TRANSP);
+            prim->drawMode |=
+                (DRAW_TPAGE2 + DRAW_TPAGE + DRAW_COLORS + DRAW_TRANSP);
         }
         self->ext.shield.unk8A = 0x80;
         self->ext.shield.unk90 = 0x100;
@@ -150,13 +153,13 @@ void EntityWeaponShieldSpell(Entity* self) {
         self->step++;
         break;
     case 1:
-        DecelerateX(FIX(1.0/16));
+        DecelerateX(FIX(1.0 / 16));
         self->velocityY -= FIX(20.0 / 128);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         self->rotX += 12;
         self->rotY = self->rotX;
-        
+
         self->ext.shield.unk82 = self->rotX * 0x28 / 256;
         if (self->rotX >= 0x100) {
             self->ext.shield.unk82 = 0x28;
@@ -188,12 +191,13 @@ void EntityWeaponShieldSpell(Entity* self) {
             prim = prim->next;
             prim->drawMode &= ~DRAW_HIDE;
             prim = prim->next;
-            for(i = 0; i < 12; i++) {
+            for (i = 0; i < 12; i++) {
                 prim->drawMode &= ~DRAW_HIDE;
                 prim = prim->next;
             }
             // Blueprint 92 spawns weapon function #9, the Shaman Shield Star
-            unusedEnt = g_api.CreateEntFactoryFromEntity(self, ((g_HandId + 1) << 0xE) + 92, 0);
+            unusedEnt = g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xE) + 92, 0);
             self->ext.shield.unk80 = 0;
             g_api.PlaySfx(SFX_UNK_6B0);
             D_BA000_8017CC3C = 0;
@@ -216,7 +220,8 @@ void EntityWeaponShieldSpell(Entity* self) {
         if (prim->b3 > 8) {
             prim->b3 -= 4;
         }
-        prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
+        prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
+            prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
         if (self->rotX == 0x100) {
             prim->b3 = 6;
             prim = &g_PrimBuf[self->primIndex];
@@ -303,7 +308,7 @@ void EntityWeaponShieldSpell(Entity* self) {
     front++;
     bottom++;
     prim = prim->next;
-    for(i = 0; i < 12; i++) {
+    for (i = 0; i < 12; i++) {
         angle = D_BA000_8017AA9C[i];
         baseCoord = (rsin(angle) >> 5) * self->ext.shield.unk92 / 256;
         prim->x0 = back + baseCoord;
@@ -315,23 +320,29 @@ void EntityWeaponShieldSpell(Entity* self) {
         angle = D_BA000_8017AA9C[(i + 6) % 12];
         baseCoord = (rsin(angle) >> 5) * self->ext.shield.unk94 / 256;
         prim->y0 = top + (((bottom - top) * i) / 12) - baseCoord;
-        prim->y2 = top + (((bottom - top) * (i+1)) / 12) - baseCoord;
+        prim->y2 = top + (((bottom - top) * (i + 1)) / 12) - baseCoord;
         angle = D_BA000_8017AA9C[(i + 1) % 12];
         baseCoord = (rsin(angle) >> 5) * self->ext.shield.unk94 / 256;
         prim->y1 = top + ((i * (bottom - top)) / 12) - baseCoord;
-        prim->y3 = top + (((bottom - top) * (i+1)) / 12) - baseCoord;
-        angle = D_BA000_8017AA9C[i];        
-        prim->r0 = prim->r1 = ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
+        prim->y3 = top + (((bottom - top) * (i + 1)) / 12) - baseCoord;
+        angle = D_BA000_8017AA9C[i];
+        prim->r0 = prim->r1 =
+            ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
         angle = D_BA000_8017AA9C[(i + 4) % 12];
-        prim->g0 = prim->g1 = ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
+        prim->g0 = prim->g1 =
+            ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
         angle = D_BA000_8017AA9C[(i + 8) % 12];
-        prim->b0 = prim->b1 = ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
+        prim->b0 = prim->b1 =
+            ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
         angle = D_BA000_8017AA9C[(i + 1) % 12];
-        prim->r2 = prim->r3 = ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
+        prim->r2 = prim->r3 =
+            ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
         angle = D_BA000_8017AA9C[(i + 5) % 12];
-        prim->g2 = prim->g3 = ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
-        angle = D_BA000_8017AA9C[(i + 9) % 12];        
-        prim->b2 = prim->b3 = ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
+        prim->g2 = prim->g3 =
+            ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
+        angle = D_BA000_8017AA9C[(i + 9) % 12];
+        prim->b2 = prim->b3 =
+            ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
         D_BA000_8017AA9C[i] += self->ext.shield.unk8A;
         prim = prim->next;
     }
