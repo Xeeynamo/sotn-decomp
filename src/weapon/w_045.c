@@ -41,7 +41,63 @@ INCLUDE_ASM("weapon/nonmatchings/w_045", EntityWeaponAttack);
 
 INCLUDE_ASM("weapon/nonmatchings/w_045", func_ptr_80170004);
 
-INCLUDE_ASM("weapon/nonmatchings/w_045", func_ptr_80170008);
+void func_ptr_80170008(Entity* self) {
+    SetSpriteBank1(D_13F000_8017A040);
+    if (g_HandId != 0) {
+        g_CurrentEntity->animSet = ANIMSET_OVL(0x12);
+        g_CurrentEntity->palette = 0x128;
+        g_CurrentEntity->unk5A = 0x66;
+    } else {
+        g_CurrentEntity->animSet = ANIMSET_OVL(0x10);
+        g_CurrentEntity->palette = 0x110;
+        g_CurrentEntity->unk5A = 0x64;
+    }
+    SetSpeedX(FIX(2.5));
+    if (!(g_Player.pl_vram_flag & 1)) {
+        PLAYER.step = 0x2A;
+        PLAYER.step_s = 0;
+        PLAYER.velocityY = 0;
+        PLAYER.ext.player.anim = 0xD0;
+        PLAYER.animFrameIdx = 0;
+        PLAYER.animFrameDuration = 0;
+        return;
+    }
+    if (func_13F000_8017A718() == 0) {
+        PLAYER.step = 0x28;
+        PLAYER.step_s = 0;
+        PLAYER.ext.player.anim = 0xCF;
+        PLAYER.animFrameIdx = 0;
+        PLAYER.animFrameDuration = 0;
+        PLAYER.velocityX >>= 1;
+        return;
+    }
+    if (g_Player.padTapped & PAD_SQUARE) {
+        PLAYER.ext.player.anim = 0xCE;
+        g_api.PlaySfx(SFX_UNK_6F0);
+        PLAYER.step = 0x28;
+        PLAYER.step_s = 1;
+        PLAYER.animFrameIdx = 0;
+        PLAYER.animFrameDuration = 0;
+        PLAYER.velocityX >>= 1;
+        g_api.CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0x57), 0);
+        return;
+    }
+    if ((g_Player.padTapped & PAD_CROSS) && (g_Player.unk72 == 0)) {
+        PLAYER.ext.player.anim = 0xD0;
+        PLAYER.step = 0x2A;
+        PLAYER.animFrameIdx = 0;
+        PLAYER.animFrameDuration = 0;
+        PLAYER.step_s = 0;
+        PLAYER.velocityY = FIX(-4);
+        func_13F000_8017A718();
+        return;
+    }
+    if (!(g_GameTimer & 7)) {
+        g_api.PlaySfx(SFX_UNK_64B);
+        g_api.CreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(0x100, 0x45), 0);
+    }
+}
 
 INCLUDE_ASM("weapon/nonmatchings/w_045", func_ptr_8017000C);
 
