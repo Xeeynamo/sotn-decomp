@@ -204,6 +204,7 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #else
 #define SFX_OPEN_DOOR 0x642
 #define SFX_UNK_647 0x647
+#define SFX_UNK_64B 0x64B
 #define SFX_UNK_64C 0x64C
 #define SFX_DOOR_UNKNOWN 0x64F
 #endif
