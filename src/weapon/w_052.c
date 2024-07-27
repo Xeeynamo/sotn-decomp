@@ -21,7 +21,7 @@ void EntityWeaponAttack(Entity* self) {
     s32 anim;
     s32 anim2;
     s32 attackButton;
-    
+
     anim = 0;
     anim2 = 0;
     if (g_HandId) {
@@ -56,10 +56,8 @@ void EntityWeaponAttack(Entity* self) {
     if ((PLAYER.step == 2) && (PLAYER.step_s != PLAYER.step)) {
         anim2++;
     }
-    if ((D_170000_8017ABBC != 0) && 
-        !(self->params & 0x7F00) && 
-        (self->step == 1 || self->step == 2) && 
-        (self->hitFlags != 0)) {
+    if ((D_170000_8017ABBC != 0) && !(self->params & 0x7F00) &&
+        (self->step == 1 || self->step == 2) && (self->hitFlags != 0)) {
         g_api.func_8010E168(0, 0x60);
         if (g_Player.unk56 != 1) {
             g_Player.unk56 = 1;
@@ -68,8 +66,8 @@ void EntityWeaponAttack(Entity* self) {
         g_api.AddHearts(1);
         self->hitFlags = 0;
     }
-    switch (self->step) {                  
-    case 0:                             
+    switch (self->step) {
+    case 0:
         SetSpriteBank1(D_170000_8017A040);
         if (g_HandId != 0) {
             self->animSet = ANIMSET_OVL(0x12);
@@ -88,44 +86,44 @@ void EntityWeaponAttack(Entity* self) {
         self->attack = 1;
         self->step++;
         /* fallthrough */
-    case 1:                             
+    case 1:
         self->ext.shield.anim = anim2 + 10;
         if (self->animFrameDuration < 0) {
             self->step++;
         }
         break;
-    case 2:                             
-        switch (PLAYER.ext.player.anim) {         
-        case 9:                                     
-        case 10:                                    
-        case 11:                                    
+    case 2:
+        switch (PLAYER.ext.player.anim) {
+        case 9:
+        case 10:
+        case 11:
             anim++;
             /* fallthrough */
-        case 7:                                     
+        case 7:
             anim++;
             /* fallthrough */
-        case 8:                                     
+        case 8:
             anim++;
             /* fallthrough */
-        case 12:                                    
+        case 12:
             anim++;
             /* fallthrough */
-        case 13:                                    
+        case 13:
             anim++;
             /* fallthrough */
-        case 24:                                    
-        case 25:                                    
+        case 24:
+        case 25:
             anim++;
             /* fallthrough */
-        case 14:                                    
-        case 15:                                    
+        case 14:
+        case 15:
             anim++;
             /* fallthrough */
-        case 26:                                    
+        case 26:
             anim += 2;
             self->animFrameIdx = PLAYER.animFrameIdx;
             break;
-        default:                                    
+        default:
             self->animFrameIdx = 0;
             anim += anim2;
             break;
@@ -133,7 +131,7 @@ void EntityWeaponAttack(Entity* self) {
         self->ext.shield.anim = anim;
         self->animFrameDuration = 2;
         break;
-    case 3:        
+    case 3:
         g_Player.unk48 = 0;
         self->ext.shield.anim = anim2 + 12;
         if (self->animFrameDuration < 0) {
@@ -141,13 +139,13 @@ void EntityWeaponAttack(Entity* self) {
             return;
         }
         break;
-    case 4:                             
+    case 4:
         self->hitboxState = 0;
         g_Player.unk48 = 0;
         self->drawFlags |= FLAG_DRAW_ROTZ;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
-        self->velocityY += FIX(20.0/128);
+        self->velocityY += FIX(20.0 / 128);
         self->rotZ += 0x80;
         if (--self->ext.timer.t < 0x10) {
             self->drawFlags |= FLAG_DRAW_UNK80;
@@ -170,7 +168,7 @@ void EntityWeaponAttack(Entity* self) {
             g_Status.mp--;
         }
         self->attack = D_170000_8017CB84;
-        if(self->step != 1 && self->step != 2){
+        if (self->step != 1 && self->step != 2) {
             return;
         }
         self->hitboxState |= 2;
@@ -179,7 +177,8 @@ void EntityWeaponAttack(Entity* self) {
             D_170000_8017ABBC = 0;
             SetWeaponProperties(self, 0);
             self->attack = 1;
-            g_api.CreateEntFactoryFromEntity(self, ((g_HandId + 1) << 0xE) | 0x3A, 0);
+            g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xE) | 0x3A, 0);
         }
     }
 }
