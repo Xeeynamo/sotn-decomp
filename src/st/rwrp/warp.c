@@ -164,7 +164,7 @@ void EntityRWarpRoom(Entity* self) {
     case 1:
         // Wait for player to press the UP button
         if (collision & 0x4 && g_pads[0].pressed & PAD_UP &&
-            UNDEFINED_FUNC(GetDistanceToPlayerX)() < 8 &&
+            IMPLICIT(GetDistanceToPlayerX)() < 8 &&
             !(g_Player.unk0C & PLAYER_UNK0C_READY_MASK)) {
             g_Player.padSim = 0;
             g_Player.D_80072EFC = 0x80;
@@ -298,7 +298,7 @@ void EntityRWarpRoom(Entity* self) {
             D_80097488.y.i.hi += 1;
 
             if (g_pads[0].pressed & PAD_UP &&
-                UNDEFINED_FUNC(GetDistanceToPlayerX)() < 8 &&
+                IMPLICIT(GetDistanceToPlayerX)() < 8 &&
                 !(g_Player.unk0C & PLAYER_UNK0C_READY_MASK)) {
                 g_Player.padSim = 0;
                 g_Player.D_80072EFC = 0x80;
