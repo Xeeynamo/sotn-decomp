@@ -43,7 +43,7 @@ void EntityWeaponAttack(Entity* self) {
         self->flags = FLAG_UNK_08000000;
         self->animCurFrame = 0x3E;
     }
-    if ((PLAYER.step == 2) && (PLAYER.step_s != PLAYER.step)) {
+    if ((PLAYER.step == Player_Crouch) && (PLAYER.step_s != 2)) {
         anim2++;
     }
     switch (self->step) {
