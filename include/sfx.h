@@ -247,6 +247,7 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define REBOUND_STONE_BOUNCE 0x6A4
 #define SFX_COLLECT_GOLD 0x6A9
 #define SFX_UNK_6AD 0x6AD
+#define SFX_UNK_6B0 0x6B0 // Used for Shaman Shield, could be same as petal
 #define NA_SE_EN_SLOGRA_SPEAR_SLASH 0x6C6
 #define NA_SE_EN_SLOGRA_BEAK_ATTACK 0x6C8
 #define NA_SE_EN_SKELETON_THROW_BONE 0x6C8
