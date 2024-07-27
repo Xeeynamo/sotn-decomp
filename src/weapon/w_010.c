@@ -27,7 +27,34 @@ void DebugInputWait(const char* msg) {
 
 INCLUDE_ASM("weapon/nonmatchings/w_010", EntityWeaponAttack);
 
-INCLUDE_ASM("weapon/nonmatchings/w_010", func_ptr_80170004);
+extern AnimationFrame D_4A000_8017ABA0[];
+
+s32 func_ptr_80170004(Entity* self) {
+    if (self->ext.weapon.parent->entityId == 0) {
+        DestroyEntity(self);
+        return;
+    }
+    if (self->ext.weapon.parent->ext.weapon.equipId != 7) {
+        DestroyEntity(self);
+        return;
+    }
+    FntPrint("charah:%02x\n", self->animSet);
+    FntPrint("oya_ptr:%02x\n", self->ext.weapon.parent);
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    self->posY.i.hi = PLAYER.posY.i.hi;
+    if (self->step == 0) {
+        self->animSet = self->ext.weapon.parent->animSet;
+        self->palette = 0x8194;
+        self->zPriority = self->ext.weapon.parent->zPriority + 4;
+        self->unk5A = self->ext.weapon.parent->unk5A;
+        self->flags = FLAG_UNK_100000 | FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->unk4C = D_4A000_8017ABA0;
+        g_api.PlaySfx(SFX_UNK_664);
+        self->step++;
+    } else if (self->animFrameDuration < 0) {
+        DestroyEntity(self);
+    }
+}
 
 void func_ptr_80170008(Entity* self) {}
 
