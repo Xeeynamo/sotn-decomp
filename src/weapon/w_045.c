@@ -37,7 +37,33 @@ int func_13F000_8017A718() {
     return 0;
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_045", EntityWeaponAttack);
+void EntityWeaponAttack(Entity* self) {
+    SetSpriteBank1(D_13F000_8017A040);
+    if (g_HandId != 0) {
+        g_CurrentEntity->animSet = ANIMSET_OVL(0x12);
+        g_CurrentEntity->palette = 0x128;
+        g_CurrentEntity->unk5A = 0x66;
+    } else {
+        g_CurrentEntity->animSet = ANIMSET_OVL(0x10);
+        g_CurrentEntity->palette = 0x110;
+        g_CurrentEntity->unk5A = 0x64;
+    }
+
+    if (g_Player.pl_vram_flag & 1) {
+        PLAYER.step = 0x28;
+        PLAYER.step_s = 0;
+        PLAYER.velocityX = PLAYER.velocityY = 0;
+        PLAYER.ext.player.anim = 0xCF;
+    } else {
+        PLAYER.step = 0x2A;
+        PLAYER.step_s = 0;
+        PLAYER.velocityX = PLAYER.velocityY = 0;
+        PLAYER.ext.player.anim = 0xCD;
+    }
+    PLAYER.animFrameIdx = 0;
+    PLAYER.animFrameDuration = 0;
+    LoadWeaponPalette(0);
+}
 
 INCLUDE_ASM("weapon/nonmatchings/w_045", func_ptr_80170004);
 
