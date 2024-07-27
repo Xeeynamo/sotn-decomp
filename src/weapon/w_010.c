@@ -2,6 +2,7 @@
 // Iron shield, Unknown#205
 #include "weapon_private.h"
 #include "shared.h"
+#include "items.h"
 
 extern s32 D_4A000_8017CC1C; // g_DebugWaitInfoTimer
 
@@ -34,7 +35,7 @@ s32 func_ptr_80170004(Entity* self) {
         DestroyEntity(self);
         return;
     }
-    if (self->ext.weapon.parent->ext.weapon.equipId != 7) {
+    if (self->ext.weapon.parent->ext.weapon.equipId != ITEM_IRON_SHIELD) {
         DestroyEntity(self);
         return;
     }
@@ -44,7 +45,7 @@ s32 func_ptr_80170004(Entity* self) {
     self->posY.i.hi = PLAYER.posY.i.hi;
     if (self->step == 0) {
         self->animSet = self->ext.weapon.parent->animSet;
-        self->palette = 0x8194;
+        self->palette = PAL_OVL(0x194);
         self->zPriority = self->ext.weapon.parent->zPriority + 4;
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->flags = FLAG_UNK_100000 | FLAG_UNK_40000 | FLAG_UNK_20000;

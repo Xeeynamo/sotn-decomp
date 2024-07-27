@@ -254,8 +254,8 @@ void func_ptr_80170008(Entity* self) {
         self->velocityY += FIX(0.15625);
         if (self->hitFlags != 0) {
             self->animSet = 2;
-            self->palette = 0x8170;
-            self->unk4C = &D_12A000_8017A704;
+            self->palette = PAL_OVL(0x170);
+            self->unk4C = D_12A000_8017A704;
             self->unk5A = 0;
             self->animFrameDuration = 0;
             self->animFrameIdx = 0;
