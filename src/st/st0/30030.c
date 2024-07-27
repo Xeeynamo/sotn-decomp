@@ -106,9 +106,6 @@ u16 func_801B0414(void) {
     return ret;
 }
 
-// func_801B0414 is undeclared to PrologueScroll. This emulates the
-// undefined signature to avoid splitting the file at this time.
-#define fake_func_801B0414 ((s32(*)())func_801B0414)
 void func_801B1298(Entity*);
 
 typedef struct ProloguePrimitive {
@@ -331,7 +328,7 @@ void PrologueScroll(void) {
             goto step_return;
         }
 
-        if (fake_func_801B0414()) {
+        if (IMPLICIT(func_801B0414)()) {
             g_GameStep = Play_16;
         }
         break;
@@ -372,14 +369,14 @@ void PrologueScroll(void) {
             g_GameStep++;
         }
 
-        if (fake_func_801B0414()) {
+        if (IMPLICIT(func_801B0414)()) {
             g_GameStep = Play_16;
         }
 
         break;
     case 9:
         D_801BEE00++;
-        if (D_801BEE00 < 0x231 && !fake_func_801B0414()) {
+        if (D_801BEE00 < 0x231 && !IMPLICIT(func_801B0414)()) {
             return;
         }
         g_GameStep = Play_16;
