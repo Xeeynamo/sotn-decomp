@@ -1485,6 +1485,7 @@ WeaponUnused30 = 0x8017CB64; // type:func rom:0x170000 allow_duplicated:True
 WeaponUnused34 = 0x8017CB6C; // type:func rom:0x170000 allow_duplicated:True
 WeaponUnused38 = 0x8017CB74; // type:func rom:0x170000 allow_duplicated:True
 WeaponUnused3C = 0x8017CB7C; // type:func rom:0x170000 allow_duplicated:True
+D_170000_8017CBD0 = 0x8017CBD0; // type:label rom:0x170000 allow_duplicated:True
 EntityWeaponAttack = 0x8017B620; // type:func rom:0x177000 allow_duplicated:True
 func_ptr_80170004 = 0x8017B914; // type:func rom:0x177000 allow_duplicated:True
 func_ptr_80170008 = 0x8017BFCC; // type:func rom:0x177000 allow_duplicated:True
