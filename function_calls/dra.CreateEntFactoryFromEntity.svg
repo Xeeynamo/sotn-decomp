@@ -1971,7 +1971,7 @@
 <g id="node124" class="node">
 <title>w_052.EntityWeaponAttack</title>
 <g id="a_node124"><a xlink:href="w_052.EntityWeaponAttack.svg" xlink:title="w_052.EntityWeaponAttack">
-<ellipse fill="red" stroke="black" cx="32199.29" cy="-378" rx="138.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="32199.29" cy="-378" rx="138.38" ry="18"/>
 <text text-anchor="middle" x="32199.29" y="-374.3" font-family="Times,serif" font-size="14.00">w_052.EntityWeaponAttack</text>
 </a>
 </g>
