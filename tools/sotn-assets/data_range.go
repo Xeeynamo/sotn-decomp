@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"sort"
 )
 
 type dataRange struct {
-	begin PsxOffset
-	end   PsxOffset
+	begin psx.Addr
+	end   psx.Addr
 }
 
 func (r dataRange) Format(f fmt.State, c rune) {
@@ -15,7 +16,7 @@ func (r dataRange) Format(f fmt.State, c rune) {
 }
 
 func (r dataRange) empty() bool {
-	return r.begin == RamNull && r.end == RamNull
+	return r.begin == psx.RamNull && r.end == psx.RamNull
 }
 
 func mergeDataRanges(ranges []dataRange) dataRange {

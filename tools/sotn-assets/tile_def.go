@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/binary"
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"os"
 )
 
@@ -20,12 +21,12 @@ type tileDefPaths struct {
 	Collisions string `json:"collisions"`
 }
 
-func readTiledef(file *os.File, off PsxOffset) (tileDef, dataRange, error) {
-	if err := off.moveFile(file); err != nil {
+func readTiledef(file *os.File, off psx.Addr) (tileDef, dataRange, error) {
+	if err := off.MoveFile(file, psx.RamStageBegin); err != nil {
 		return tileDef{}, dataRange{}, err
 	}
 
-	offsets := make([]PsxOffset, 4)
+	offsets := make([]psx.Addr, 4)
 	if err := binary.Read(file, binary.LittleEndian, offsets); err != nil {
 		return tileDef{}, dataRange{}, err
 	}
@@ -37,28 +38,28 @@ func readTiledef(file *os.File, off PsxOffset) (tileDef, dataRange, error) {
 		cols:  make([]byte, off-offsets[3]),
 	}
 
-	if err := offsets[0].moveFile(file); err != nil {
+	if err := offsets[0].MoveFile(file, psx.RamStageBegin); err != nil {
 		return tileDef{}, dataRange{}, err
 	}
 	if _, err := file.Read(td.tiles); err != nil {
 		return tileDef{}, dataRange{}, err
 	}
 
-	if err := offsets[1].moveFile(file); err != nil {
+	if err := offsets[1].MoveFile(file, psx.RamStageBegin); err != nil {
 		return tileDef{}, dataRange{}, err
 	}
 	if _, err := file.Read(td.pages); err != nil {
 		return tileDef{}, dataRange{}, err
 	}
 
-	if err := offsets[2].moveFile(file); err != nil {
+	if err := offsets[2].MoveFile(file, psx.RamStageBegin); err != nil {
 		return tileDef{}, dataRange{}, err
 	}
 	if _, err := file.Read(td.cluts); err != nil {
 		return tileDef{}, dataRange{}, err
 	}
 
-	if err := offsets[3].moveFile(file); err != nil {
+	if err := offsets[3].MoveFile(file, psx.RamStageBegin); err != nil {
 		return tileDef{}, dataRange{}, err
 	}
 	if _, err := file.Read(td.cols); err != nil {
@@ -67,13 +68,13 @@ func readTiledef(file *os.File, off PsxOffset) (tileDef, dataRange, error) {
 
 	return td, dataRange{
 		begin: offsets[0],
-		end:   off.sum(0x10),
+		end:   off.Sum(0x10),
 	}, nil
 }
 
-func readAllTiledefs(file *os.File, roomLayers []roomLayers) (map[PsxOffset]tileDef, dataRange, error) {
+func readAllTiledefs(file *os.File, roomLayers []roomLayers) (map[psx.Addr]tileDef, dataRange, error) {
 	ranges := []dataRange{}
-	processed := map[PsxOffset]tileDef{}
+	processed := map[psx.Addr]tileDef{}
 	for _, rl := range roomLayers {
 		if rl.fg != nil {
 			if _, found := processed[rl.fg.Tiledef]; !found {

@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"os"
 	"path"
 )
@@ -22,23 +23,23 @@ type ovl struct {
 	graphics          dataContainer[gfx]
 	layouts           dataContainer[layouts]
 	layoutsExtraRange dataRange
-	tileMaps          dataContainer[map[PsxOffset][]byte]
-	tileDefs          dataContainer[map[PsxOffset]tileDef]
+	tileMaps          dataContainer[map[psx.Addr][]byte]
+	tileDefs          dataContainer[map[psx.Addr]tileDef]
 }
 
 func getOvlAssets(fileName string) (ovl, error) {
 	type stageHeader struct {
-		FnUpdate              PsxOffset
-		FnHitDetection        PsxOffset
-		FnUpdateRoomPos       PsxOffset
-		FnInitRoomEntities    PsxOffset
-		Rooms                 PsxOffset // ✅
-		Sprites               PsxOffset // ✅
-		Cluts                 PsxOffset // 🫥
-		Layouts               PsxOffset // ✅
-		Layers                PsxOffset // ✅
-		Graphics              PsxOffset // 🫥 WIP
-		FnUpdateStageEntities PsxOffset
+		FnUpdate              psx.Addr
+		FnHitDetection        psx.Addr
+		FnUpdateRoomPos       psx.Addr
+		FnInitRoomEntities    psx.Addr
+		Rooms                 psx.Addr // ✅
+		Sprites               psx.Addr // ✅
+		Cluts                 psx.Addr // 🫥
+		Layouts               psx.Addr // ✅
+		Layers                psx.Addr // ✅
+		Graphics              psx.Addr // 🫥 WIP
+		FnUpdateStageEntities psx.Addr
 	}
 
 	file, err := os.Open(fileName)
@@ -74,7 +75,7 @@ func getOvlAssets(fileName string) (ovl, error) {
 
 	// check for unused tile defs (CEN has one)
 	for tileMapsRange.end < tileDefsRange.begin {
-		offset := tileDefsRange.begin.sum(-0x10)
+		offset := tileDefsRange.begin.Sum(-0x10)
 		unusedTileDef, unusedTileDefRange, err := readTiledef(file, offset)
 		if err != nil {
 			return ovl{}, fmt.Errorf("there is a gap between tileMaps and tileDefs: %w", err)
@@ -94,7 +95,7 @@ func getOvlAssets(fileName string) (ovl, error) {
 	}
 
 	layoutOff := header.Layouts
-	if layoutOff == RamNull {
+	if layoutOff == psx.RamNull {
 		// some overlays have this field nulled, we have to find the offset ourselves
 		// it should be usually be right after header.Graphics
 		layoutOff = graphicsRange.end // ⚠️ assumption
@@ -125,8 +126,8 @@ func getOvlAssets(fileName string) (ovl, error) {
 		graphics:          dataContainer[gfx]{dataRange: graphicsRange, content: graphics},
 		layouts:           dataContainer[layouts]{dataRange: layoutsRange[1], content: entityLayouts},
 		layoutsExtraRange: layoutsRange[0],
-		tileMaps:          dataContainer[map[PsxOffset][]byte]{dataRange: tileMapsRange, content: tileMaps},
-		tileDefs:          dataContainer[map[PsxOffset]tileDef]{dataRange: tileDefsRange, content: tileDefs},
+		tileMaps:          dataContainer[map[psx.Addr][]byte]{dataRange: tileMapsRange, content: tileMaps},
+		tileDefs:          dataContainer[map[psx.Addr]tileDef]{dataRange: tileDefsRange, content: tileDefs},
 	}, nil
 }
 
@@ -246,7 +247,7 @@ func info(fileName string) error {
 	fmt.Println("  - [0x0, .data, header]")
 	for i := 0; i < len(entries); i++ {
 		e := entries[i]
-		s := fmt.Sprintf("  - [0x%X, .data, %s]", e.dataRange.begin.real(), e.name)
+		s := fmt.Sprintf("  - [0x%X, .data, %s]", e.dataRange.begin.Real(psx.RamStageBegin), e.name)
 		if e.comment != "" {
 			s = fmt.Sprintf("%s # %s", s, e.comment)
 		}
@@ -254,7 +255,7 @@ func info(fileName string) error {
 
 		// if there is a gap between the current entry and the next one, mark it as unrecognized data
 		if i == len(entries)-1 || e.dataRange.end != entries[i+1].dataRange.begin {
-			fmt.Printf("  - [0x%X, data]\n", e.dataRange.end.real())
+			fmt.Printf("  - [0x%X, data]\n", e.dataRange.end.Real(psx.RamStageBegin))
 		}
 	}
 	return nil

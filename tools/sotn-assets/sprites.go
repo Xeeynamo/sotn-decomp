@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/binary"
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"os"
 	"sort"
 )
@@ -26,8 +27,8 @@ type spriteDefs struct {
 	Indices []int         `json:"indices"`
 }
 
-func readSprites(file *os.File, off PsxOffset) ([]sprite, dataRange, error) {
-	if err := off.moveFile(file); err != nil {
+func readSprites(file *os.File, off psx.Addr) ([]sprite, dataRange, error) {
+	if err := off.MoveFile(file, psx.RamStageBegin); err != nil {
 		return nil, dataRange{}, fmt.Errorf("invalid sprites: %w", err)
 	}
 
@@ -43,32 +44,32 @@ func readSprites(file *os.File, off PsxOffset) ([]sprite, dataRange, error) {
 
 	return sprites, dataRange{
 		begin: off,
-		end:   off.sum(4 + 0x16*int(count)).align4(),
+		end:   off.Sum(4 + 0x16*int(count)).Align4(),
 	}, nil
 }
 
-func readSpriteBank(file *os.File, off PsxOffset) ([]*[]sprite, dataRange, error) {
-	if err := off.moveFile(file); err != nil {
+func readSpriteBank(file *os.File, off psx.Addr) ([]*[]sprite, dataRange, error) {
+	if err := off.MoveFile(file, psx.RamStageBegin); err != nil {
 		return nil, dataRange{}, fmt.Errorf("invalid sprite Indices: %w", err)
 	}
 
 	// the end of the sprite array is the beginning of the earliest sprite offset
-	earliestSpriteOff := RamStageEnd
+	earliestSpriteOff := psx.RamStageEnd
 	currentOff := off
-	spriteOffsets := make([]PsxOffset, 0)
+	spriteOffsets := make([]psx.Addr, 0)
 	for {
 		if currentOff == earliestSpriteOff {
 			break
 		}
 		currentOff += 4
 
-		var spriteOffset PsxOffset
+		var spriteOffset psx.Addr
 		if err := binary.Read(file, binary.LittleEndian, &spriteOffset); err != nil {
 			return nil, dataRange{}, err
 		}
 		spriteOffsets = append(spriteOffsets, spriteOffset)
-		if spriteOffset != RamNull {
-			if !spriteOffset.valid() {
+		if spriteOffset != psx.RamNull {
+			if !spriteOffset.InRange(psx.RamStageBegin, psx.RamStageEnd) {
 				err := fmt.Errorf("sprite offset %s is not valid", spriteOffset)
 				return nil, dataRange{}, err
 			}
@@ -83,7 +84,7 @@ func readSpriteBank(file *os.File, off PsxOffset) ([]*[]sprite, dataRange, error
 	spriteBank := make([]*[]sprite, len(spriteOffsets))
 	spriteRanges := []dataRange{}
 	for i, offset := range spriteOffsets {
-		if offset == RamNull {
+		if offset == psx.RamNull {
 			spriteBank[i] = nil
 			continue
 		}
@@ -98,21 +99,21 @@ func readSpriteBank(file *os.File, off PsxOffset) ([]*[]sprite, dataRange, error
 	return spriteBank, mergeDataRanges(append(spriteRanges, headerRange)), nil
 }
 
-func readSpritesBanks(file *os.File, off PsxOffset) (spriteDefs, dataRange, error) {
-	if err := off.moveFile(file); err != nil {
+func readSpritesBanks(file *os.File, off psx.Addr) (spriteDefs, dataRange, error) {
+	if err := off.MoveFile(file, psx.RamStageBegin); err != nil {
 		return spriteDefs{}, dataRange{}, err
 	}
 
-	offBanks := make([]PsxOffset, 24)
+	offBanks := make([]psx.Addr, 24)
 	if err := binary.Read(file, binary.LittleEndian, offBanks); err != nil {
 		return spriteDefs{}, dataRange{}, err
 	}
 
 	// the order sprites are stored must be preserved
-	pool := map[PsxOffset][]*[]sprite{}
+	pool := map[psx.Addr][]*[]sprite{}
 	spriteRanges := []dataRange{}
 	for _, offset := range offBanks {
-		if offset == RamNull {
+		if offset == psx.RamNull {
 			continue
 		}
 		if _, found := pool[offset]; found {
@@ -128,7 +129,7 @@ func readSpritesBanks(file *os.File, off PsxOffset) (spriteDefs, dataRange, erro
 
 	// the indices do not guarantee sprites to be stored in a linear order
 	// we must sort the offsets to preserve the order sprites are stored
-	sortedOffsets := make([]PsxOffset, 0, len(pool))
+	sortedOffsets := make([]psx.Addr, 0, len(pool))
 	for offset := range pool {
 		sortedOffsets = append(sortedOffsets, offset)
 	}
@@ -137,7 +138,7 @@ func readSpritesBanks(file *os.File, off PsxOffset) (spriteDefs, dataRange, erro
 	// create a list of indices to replace the original pointers
 	indices := make([]int, len(offBanks))
 	for i, offset := range offBanks {
-		if offset == RamNull {
+		if offset == psx.RamNull {
 			indices[i] = -1
 		}
 		for j, sortedOffset := range sortedOffsets {
