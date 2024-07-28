@@ -368,9 +368,18 @@ func handlerStage(args []string) error {
 	return nil
 }
 
+func handlerConfig(args []string) error {
+	c, err := readConfig(args[0])
+	if err != nil {
+		return err
+	}
+	return extractFromConfig(c)
+}
+
 func main() {
 	commands := map[string]func(args []string) error{
-		"stage": handlerStage,
+		"stage":  handlerStage,
+		"config": handlerConfig,
 	}
 
 	args := os.Args[1:]
