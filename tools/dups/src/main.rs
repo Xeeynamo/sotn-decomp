@@ -1,3 +1,4 @@
+use regex::Regex;
 use std::env::*;
 use std::fs;
 use std::fs::File;
@@ -151,11 +152,13 @@ struct Args {
 pub struct IncludeAsmEntry {
     pub line: String,
     pub path: String,
+    pub asm_path: String,
 }
 
 fn process_directory_for_include_asm(dir: &str) -> Vec<IncludeAsmEntry> {
     let entries = std::fs::read_dir(dir).expect("Unable to read directory");
 
+    let re = Regex::new("INCLUDE_ASM\\(\"([^\"]*)\", ([^)]*)\\)").unwrap();
     let mut output = Vec::new();
 
     entries.for_each(|entry| {
@@ -170,9 +173,12 @@ fn process_directory_for_include_asm(dir: &str) -> Vec<IncludeAsmEntry> {
                     let line_str = line.unwrap();
 
                     if line_str.contains("INCLUDE_ASM") {
+                        let (full, [asm_dir, asm_file]) = re.captures(&line_str).unwrap().extract();
+
                         output.push(IncludeAsmEntry {
                             line: line_str.clone(),
                             path: item_path.to_string_lossy().to_string(),
+                            asm_path: format!("../../asm/us/{}/{}.s", asm_dir, asm_file),
                         });
                     }
                 }
@@ -304,7 +310,7 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
         SrcAsmPair {
             asm_dir: String::from("../../asm/us/weapon/nonmatchings/"),
             src_dir: String::from("../../src/weapon/"),
-            overlay_name: String::from("WEAPON"),
+            overlay_name: String::from("WEAPON0"),
             include_asm: get_all_include_asm("../../src/weapon/"),
             path_matcher: "/weapon/".to_string(),
         },
@@ -386,7 +392,7 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
                     for pair in &pairs.clone() {
                         if function.file.contains(&pair.path_matcher) {
                             for inc in &pair.include_asm {
-                                if inc.line.contains(&function.name) {
+                                if function.file == inc.asm_path && inc.line.contains(&function.name) {
                                     decompiled = false;
                                 }
                             }
