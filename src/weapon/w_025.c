@@ -224,7 +224,7 @@ void EntityWeaponShieldSpell(Entity* self) {
                 0x80;
         prim->priority = self->zPriority - 4;
         prim->drawMode =
-            0x40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+            DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
         prim = prim->next;
         prim->clut = self->ext.shield.childPalette;
         prim->tpage = 0x19;
