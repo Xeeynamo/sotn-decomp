@@ -1522,7 +1522,7 @@ void func_801B3B78() {
 }
 
 // Id 0x38
-void func_801B3C38(Entity* self) {
+void EntityWargExplosionPuffOpaque(Entity* self) {
     Unkstruct_80180FE0* obj;
     s32 velocityX;
     s32 velocityY;

@@ -137,7 +137,7 @@ StageName D_80180128[80] = {
 
 void func_801B18F4(void);
 void func_801B19F4(void);
-void func_801B1B88(void);
+void SetTitleDisplayBuffer256(void);
 void func_801B1D88(Primitive* prim);
 void func_801B1DA8(void);
 void func_801B1F34(void);
@@ -1192,7 +1192,7 @@ void SEL_Update(void) {
     switch (D_8003C9A4) {
     case 0:
         func_801B18F4();
-        func_801B1B88();
+        SetTitleDisplayBuffer256();
         D_8003C9A4--;
         break;
     case -1:
@@ -2147,7 +2147,7 @@ void SetGameState(GameState gameState) {
 
 void func_801B18F4(void) { ClearImage(&D_801825A4, 0, 0, 0); }
 
-void func_801B1924(void) {
+void SetDisplayBufferColorsToBlack(void) {
     g_GpuBuffers[0].draw.r0 = 0;
     g_GpuBuffers[0].draw.g0 = 0;
     g_GpuBuffers[0].draw.b0 = 0;
@@ -2167,7 +2167,7 @@ void func_801B195C(s32 arg0) {
     g_GpuBuffers[1].draw.clip.h = 207;
     g_GpuBuffers[1].draw.isbg = 1;
     g_GpuBuffers[0].draw.isbg = 1;
-    func_801B1924();
+    SetDisplayBufferColorsToBlack();
     g_GpuBuffers[1].draw.dtd = 0;
     g_GpuBuffers[0].draw.dtd = 0;
     g_GpuBuffers[1].disp.isrgb24 = 0;
@@ -2184,7 +2184,7 @@ void func_801B19F4(void) {
     func_801B195C(0);
 }
 
-void func_801B1A98(void) {
+void SetTitleDisplayBuffer(void) {
     SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_TITLE_W, DISP_TITLE_H);
     SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, DISP_TITLE_W, DISP_TITLE_H);
     SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, DISP_TITLE_W, DISP_TITLE_H);
@@ -2195,12 +2195,13 @@ void func_801B1A98(void) {
     g_GpuBuffers[0].draw.clip.y = 0;
     g_GpuBuffers[1].draw.isbg = 1;
     g_GpuBuffers[0].draw.isbg = 1;
-    func_801B1924();
+    SetDisplayBufferColorsToBlack();
     g_GpuBuffers[1].disp.isrgb24 = 0;
     g_GpuBuffers[0].disp.isrgb24 = 0;
 }
 
-void func_801B1B88(void) {
+// same as SetTitleDisplayBuffer, but clips at 256 vertical height
+void SetTitleDisplayBuffer256(void) {
     SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_MENU_W, DISP_TITLE_H);
     SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, DISP_MENU_W, DISP_TITLE_H);
     SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, DISP_MENU_W, DISP_TITLE_H);
@@ -2211,7 +2212,7 @@ void func_801B1B88(void) {
     g_GpuBuffers[0].draw.clip.y = 0;
     g_GpuBuffers[1].draw.isbg = 1;
     g_GpuBuffers[0].draw.isbg = 1;
-    func_801B1924();
+    SetDisplayBufferColorsToBlack();
     g_GpuBuffers[1].disp.isrgb24 = 0;
     g_GpuBuffers[0].disp.isrgb24 = 0;
 }

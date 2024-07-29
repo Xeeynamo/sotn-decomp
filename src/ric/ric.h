@@ -25,7 +25,7 @@ extern void func_8015BB80(void);
 extern void func_8015C178(void);
 extern void SetPlayerStep(PlayerSteps step);
 void func_8015C920(AnimationFrame* unk0);
-extern void func_8015C93C(s32 speed);
+extern void DecelerateX(s32 speed);
 extern s32 func_8015C9CC(void);
 extern void SetSpeedX(s32 speed);
 extern void func_8015CCC8(s32 arg0, s32 velocityX);

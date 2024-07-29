@@ -15,8 +15,7 @@ void EntityRelicOrb(Entity*);
 void EntityHeartDrop(Entity*);
 void EntityEnemyBlood(Entity*);
 void EntityMessageBox(Entity*);
-void func_80195070(Entity*);
-void func_80195070(Entity*);
+void EntityDummy(Entity*);
 void EntityBackgroundBlock(Entity*);
 void EntityUnkId12(Entity*);
 void EntityUnkId13(Entity*);
@@ -38,7 +37,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityStageNamePopup,  EntityEquipItemDrop,
     EntityRelicOrb,        EntityHeartDrop,
     EntityEnemyBlood,      EntityMessageBox,
-    func_80195070,         func_80195070,
+    EntityDummy,           EntityDummy,
     EntityBackgroundBlock, EntityUnkId12,
     EntityUnkId13,         EntityUnkId14,
     EntityUnkId15,         EntityHolyGlassesCutscene,

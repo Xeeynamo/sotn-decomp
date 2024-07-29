@@ -266,7 +266,7 @@ void SetStep(u8 step) {
     entity->animFrameDuration = 0;
 }
 
-void func_80194EC4(u8 arg0) {
+void SetSubStep(u8 arg0) {
     Entity* entity = g_CurrentEntity;
 
     entity->step_s = arg0;
@@ -296,7 +296,7 @@ void EntityExplosionSpawn(u16 arg0, u16 arg1) {
 
 #include "../init_entity.h"
 
-void func_80195070(Entity* entity) {
+void EntityDummy(Entity* entity) {
     if (entity->step == 0) {
         entity->step++;
     }
@@ -334,7 +334,7 @@ s32 func_80195098(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-void func_801951C0(u16* hitSensors, s16 sensorCount) {
+void CheckFieldCollision(u16* hitSensors, s16 sensorCount) {
     Collider collider;
     s16 i;
     s32 velocityX;

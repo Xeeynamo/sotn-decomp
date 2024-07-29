@@ -99,7 +99,7 @@ void HandleMainMenu(void) {
         D_8003C9A4++;
         return;
     case 1:
-        func_801B1A98();
+        SetTitleDisplayBuffer();
         D_801BB014 += 8;
         for (i = 0, prim = &g_PrimBuf[D_801BB010]; prim != NULL;
              prim = prim->next, i++) {

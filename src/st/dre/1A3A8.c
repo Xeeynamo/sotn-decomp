@@ -310,7 +310,7 @@ void EntityExplosionSpawn(u16 arg0, u16 arg1) {
 
 #include "../init_entity.h"
 
-void func_8019B1B4(Entity* arg0) {
+void EntityDummy(Entity* arg0) {
     if (arg0->step == 0) {
         arg0->step++;
     }
@@ -348,7 +348,7 @@ s32 func_8019B1DC(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-void func_8019B304(u16* hitSensors, s16 sensorCount) {
+void CheckFieldCollision(u16* hitSensors, s16 sensorCount) {
     Collider collider;
     s16 i;
     s32 velocityX;
@@ -446,7 +446,7 @@ void func_8019B8DC(u16 arg0) {
     }
 }
 
-void func_8019BA38(u16 arg0) {
+void CollectHeart(u16 arg0) {
     s32* hearts;
 
     g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);

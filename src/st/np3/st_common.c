@@ -323,7 +323,7 @@ s32 func_801BD308(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-void func_801BD430(u16* hitSensors, s16 sensorCount) {
+void CheckFieldCollision(u16* hitSensors, s16 sensorCount) {
     s32 velocityX = g_CurrentEntity->velocityX;
     Collider collider;
     s16 x;
