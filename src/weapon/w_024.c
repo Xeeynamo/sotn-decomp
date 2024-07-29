@@ -263,7 +263,7 @@ void func_ptr_80170024(Entity* self) {
         self->velocityY += self->ext.shield.unkA0;
         if (self->posY.i.hi < 0x80) {
             self->ext.shield.unk92 += 2;
-            self->ext.shield.unkA0 -= FIX(1.0/8);
+            self->ext.shield.unkA0 -= FIX(1.0 / 8);
         }
         // If we have risen off-screen, destroy us.
         if (self->posY.i.hi < -0x40) {
