@@ -80,18 +80,4 @@ int sprintf(char* dst, const char* fmt, ...);
 #define SP(x) (0x1F800000 + (x))
 #endif
 
-#ifndef VERSION_PC
-// Emulates an undeclared function signature for cases where the function
-// is already declared, but does not appear to have been in the original
-// source. For binary matches, these functions need to be be "undeclared"
-// to look like the implicit function signature which defaults to
-// returning an `int` and treating all parameters as `int`s.
-#define IMPLICIT(x) ((int (*)())(x))
-#else
-// When compiling for new architectures, we are not concerned with the
-// exact binary representation at the call site and can (and should) call
-// the function as declared.
-#define IMPLICIT(x) (x)
-#endif
-
 #endif

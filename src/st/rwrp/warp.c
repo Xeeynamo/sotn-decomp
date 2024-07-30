@@ -7,6 +7,8 @@ extern s32 D_80180608[];
 extern s16 PLAYER_posY_i_hi;
 s16 GetDistanceToPlayerX();
 
+#define ImplicitGetDistanceToPlayerX ((int (*)())GetDistanceToPlayerX)
+
 static u32 D_80180648 = 0;
 
 static u32 unused[] = {
@@ -164,7 +166,7 @@ void EntityRWarpRoom(Entity* self) {
     case 1:
         // Wait for player to press the UP button
         if (collision & 0x4 && g_pads[0].pressed & PAD_UP &&
-            IMPLICIT(GetDistanceToPlayerX)() < 8 &&
+            ImplicitGetDistanceToPlayerX() < 8 &&
             !(g_Player.unk0C & PLAYER_UNK0C_READY_MASK)) {
             g_Player.padSim = 0;
             g_Player.D_80072EFC = 0x80;
@@ -298,7 +300,7 @@ void EntityRWarpRoom(Entity* self) {
             D_80097488.y.i.hi += 1;
 
             if (g_pads[0].pressed & PAD_UP &&
-                IMPLICIT(GetDistanceToPlayerX)() < 8 &&
+                ImplicitGetDistanceToPlayerX() < 8 &&
                 !(g_Player.unk0C & PLAYER_UNK0C_READY_MASK)) {
                 g_Player.padSim = 0;
                 g_Player.D_80072EFC = 0x80;
