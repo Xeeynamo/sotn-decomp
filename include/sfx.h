@@ -373,6 +373,8 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SFX_KARMA_COIN_HEADS 0x6B1
 #define SFX_KARMA_COIN_END 0x636
 
+#define SFX_DARK_SHIELD 0x63C
+
 // UNUSED SOUNDS
 #define SE_UNK_ST0_618 0x618
 #define SE_UNK_MAD_630 0x630
