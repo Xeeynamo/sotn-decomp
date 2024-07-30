@@ -311,21 +311,17 @@ u16 GetNormalizedAngle(u16 arg0, u16 arg1, u16 arg2) {
 }
 
 void SetStep(u8 step) {
-    Entity* entity = g_CurrentEntity;
-
-    entity->step = step;
-    entity->step_s = 0;
-    entity->animFrameIdx = 0;
-    entity->animFrameDuration = 0;
+    g_CurrentEntity->step = step;
+    g_CurrentEntity->step_s = 0;
+    g_CurrentEntity->animFrameIdx = 0;
+    g_CurrentEntity->animFrameDuration = 0;
 }
 
 #if !defined(VERSION_PSP)
 void SetSubStep(u8 step_s) {
-    Entity* entity = g_CurrentEntity;
-
-    entity->step_s = step_s;
-    entity->animFrameIdx = 0;
-    entity->animFrameDuration = 0;
+    g_CurrentEntity->step_s = step_s;
+    g_CurrentEntity->animFrameIdx = 0;
+    g_CurrentEntity->animFrameDuration = 0;
 }
 #endif
 
