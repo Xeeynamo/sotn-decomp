@@ -12,7 +12,7 @@
 <!-- rwrp.EntityRWarpRoom -->
 <g id="node1" class="node">
 <title>rwrp.EntityRWarpRoom</title>
-<ellipse fill="red" stroke="black" cx="907.05" cy="-198" rx="122.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="907.05" cy="-198" rx="122.38" ry="18"/>
 <text text-anchor="middle" x="907.05" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.EntityRWarpRoom</text>
 </g>
 <!-- FntPrint -->
