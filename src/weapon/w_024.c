@@ -234,7 +234,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         prim->u0 = 0x90;
         prim->v0 = 0xE8;
         prim->r0 = prim->g0 = prim->b0 = 0;
-        prim->type = 1;
+        prim->type = PRIM_TILE;
         prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
         prim->priority = 0x1B4;
         prim = prim->next;
@@ -244,7 +244,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         prim->u0 = 0x90;
         prim->v0 = 0xE8;
         prim->r0 = prim->g0 = prim->b0 = 0;
-        prim->type = 1;
+        prim->type = PRIM_TILE;
         prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
         prim->priority = 0x1B4;
         prim = prim->next;
