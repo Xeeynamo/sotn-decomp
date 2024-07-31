@@ -16,6 +16,8 @@ func printHelp() {
 	fmt.Printf("    dump list of files and directories ordered by how they are stored on disc.\n")
 	fmt.Printf("  extract <sotn.cue> <output path>\n")
 	fmt.Printf("    extract all the files into the specified path\n")
+	fmt.Printf("  bootstrap-stage <stg.bin> <output path>\n")
+	fmt.Printf("    creates a bootstrap splat config for a stage object.\n")
 	//fmt.Printf("  make <sotn.cue> <input path> <file list>\n")
 	//fmt.Printf("    creates a PlayStation 1 image given an input path where the game files are located and their order")
 }
@@ -49,6 +51,10 @@ func main() {
 		inPath := os.Args[3]
 		fileListPath := os.Args[4]
 		err = makeDisc(cuePath, inPath, fileListPath)
+    case "bootstrap-stage":
+        path := cuePath
+        outPath := os.Args[3]
+        err = bootstrapStage(path, outPath)
 	default:
 		fmt.Printf("Invalid command: %s\n\n", cmd)
 		printHelp()
