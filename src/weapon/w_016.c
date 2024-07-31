@@ -4,7 +4,7 @@
 #include "shared.h"
 
 // Weapon 16
-extern SpriteParts D_74000_8017A040;
+extern SpriteParts D_74000_8017A040[];
 
 void EntityWeaponAttack(Entity* self) {
     FakePrim* fakePrim;
@@ -15,7 +15,7 @@ void EntityWeaponAttack(Entity* self) {
 
     switch (self->step) { /* irregular */
     case 0:
-        SetSpriteBank1(&D_74000_8017A040);
+        SetSpriteBank1(D_74000_8017A040);
         self->animSet = ANIMSET_OVL(0x10);
         self->unk5A = 100;
         self->palette = 0x11A;
@@ -128,11 +128,57 @@ s32 func_ptr_80170004(Entity* self) {
 
 INCLUDE_ASM("weapon/nonmatchings/w_016", func_ptr_80170008);
 
-INCLUDE_ASM("weapon/nonmatchings/w_016", func_ptr_8017000C);
+void func_ptr_8017000C(Entity* self) {
+    s16 temp_a0;
+
+    switch (self->step) {
+    case 0:
+        SetSpriteBank1(D_74000_8017A040);
+        self->animSet = ANIMSET_OVL(0x10);
+        self->unk5A = 0x64;
+        self->palette = 0x11B;
+        if (g_HandId != 0) {
+            self->palette = 0x133;
+            self->unk5A = 0x66;
+            self->animSet += 2;
+        }
+        self->animCurFrame = 0x10;
+        self->facingLeft = PLAYER.facingLeft;
+        self->zPriority = PLAYER.zPriority - 2;
+        self->flags = FLAG_UNK_08000000;
+        self->drawFlags = DRAW_COLORS;
+        temp_a0 = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
+        self->posY.i.hi = temp_a0 - 6;
+        if (PLAYER.step != 2) {
+            self->posY.i.hi = temp_a0 - 14;
+        }
+        if (self->facingLeft) {
+            self->posX.i.hi = PLAYER.posX.i.hi - PLAYER.hitboxOffX - 10;
+        } else {
+            self->posX.i.hi = PLAYER.posX.i.hi + PLAYER.hitboxOffX + 10;
+        }
+        SetSpeedX(FIX(6));
+        self->velocityY = FIX(-1.125);
+        SetWeaponProperties(self, 0);
+        DestroyEntityWeapon(true);
+        self->hitboxHeight = 12;
+        self->hitboxWidth = 12;
+        g_api.PlaySfx(0x60B);
+        g_Player.D_80072F00[10] = 4;
+        self->step++;
+        break;
+    case 1:
+        if (self->velocityY < FIX(7)) {
+            self->velocityY += FIX(3) / 64;
+        }
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        break;
+    }
+    self->rotZ = ratan2(self->velocityY, abs(self->velocityX));
+}
 
 INCLUDE_ASM("weapon/nonmatchings/w_016", func_ptr_80170010);
-
-extern SpriteParts D_74000_8017A040;
 
 // Tracing function calls in emulator indicates that this function manages
 // the physics for the Iron Ball item.
@@ -146,7 +192,7 @@ s32 func_ptr_80170014(Entity* self) {
 
     switch (self->step) {
     case 0:
-        SetSpriteBank1(&D_74000_8017A040);
+        SetSpriteBank1(D_74000_8017A040);
         self->animSet = ANIMSET_OVL(0x10);
         self->unk5A = 100;
         self->palette = 0x11D;

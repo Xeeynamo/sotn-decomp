@@ -2,6 +2,8 @@
 // Fire shield, Unknown#213
 #include "weapon_private.h"
 #include "shared.h"
+#include "items.h"
+
 extern s32 D_CF000_8017AC78;
 extern s32 D_CF000_8017ACC0;
 extern u16 D_CF000_8017ACF8[];
@@ -160,7 +162,7 @@ void EntityWeaponAttack(Entity* self) {
 }
 
 s32 func_ptr_80170004(Entity* self) {
-    if (self->ext.weapon.parent->ext.weapon.equipId != 15) {
+    if (self->ext.weapon.parent->ext.weapon.equipId != ITEM_FIRE_SHIELD) {
         DestroyEntity(self);
         return;
     }

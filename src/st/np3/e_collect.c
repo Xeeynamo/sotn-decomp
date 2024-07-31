@@ -189,7 +189,7 @@ void EntityPrizeDrop(Entity* self) {
             } else {
                 FallEntity();
             }
-            func_801BD430(D_80181E74, 2);
+            CheckFieldCollision(D_80181E74, 2);
         } else if (collider.effects & EFFECT_NOTHROUGH) {
             self->posY.i.hi += collider.unk18;
             self->ext.generic.unk80.modeS8.unk0 = 0x60;
@@ -281,7 +281,7 @@ void EntityPrizeDrop(Entity* self) {
             } else {
                 FallEntity();
             }
-            func_801BD430(D_80181E74, 2);
+            CheckFieldCollision(D_80181E74, 2);
             self->animCurFrame = 0;
             if (self->ext.generic.unk88.S16.unk2 != 0) {
                 self->ext.generic.unk88.S16.unk2--;
@@ -459,7 +459,7 @@ void EntityEquipItemDrop(Entity* self) {
             FallEntity();
         }
 
-        func_801BD430(D_80181E74, 2);
+        CheckFieldCollision(D_80181E74, 2);
         break;
 
     case 3:

@@ -306,7 +306,7 @@ void func_801966B0(u16* sensors) {
         if (!--D_80199DE8) {
             g_CurrentEntity->hitboxState = 3;
             g_CurrentEntity->palette = g_CurrentEntity->hitEffect;
-            func_80192BD0(1);
+            SetStep(1);
         }
         break;
     }

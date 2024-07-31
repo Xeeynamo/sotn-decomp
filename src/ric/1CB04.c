@@ -50,7 +50,7 @@ void func_80158BFC(void) {
     }
 
     if (func_8015DBB0(0x40000 | 0x305C) == false) {
-        func_8015C93C(0x2000);
+        DecelerateX(0x2000);
         switch (PLAYER.step_s) {
         case 0:
             if (func_8015C9CC() == 0) {
@@ -124,7 +124,7 @@ void func_80158BFC(void) {
 
 void func_80158F38(void) {
     if (func_8015DBB0(0x305C) == 0) {
-        func_8015C93C(0x2000);
+        DecelerateX(0x2000);
         if (func_8015C9CC() == 0) {
             func_8015CD98(0);
             return;
@@ -145,7 +145,7 @@ void func_80158FA4(void) {
     g_Player.D_80072F00[1] = 8;
 
     if (!func_8015DBB0(0x305C)) {
-        func_8015C93C(0x2000);
+        DecelerateX(0x2000);
         if (func_8015C9CC() == 0) {
             func_8015CD98(0);
             if (g_Player.D_80072F00[11] == 0) {
@@ -180,7 +180,7 @@ void func_801590A0(void) {
     case 1:
         return;
     case 0:
-        func_8015C93C(0x1000);
+        DecelerateX(0x1000);
         if (func_8015C9CC()) {
             if (g_Player.unk44 & 0x10) {
                 SetSpeedX(FIX(2.25));
@@ -292,7 +292,7 @@ void func_801595D8(void) {
     if (func_8015DBB0(0x9009)) {
         return;
     }
-    func_8015C93C(0x1000);
+    DecelerateX(0x1000);
     if (PLAYER.step_s != 0) {
         return;
     }
@@ -327,7 +327,7 @@ void func_80159670(void) {
                (g_Player.padTapped & PAD_TRIANGLE) && func_8015D678()) {
         return;
     }
-    func_8015C93C(0x2000);
+    DecelerateX(0x2000);
     switch (PLAYER.step_s) {
     case 0x0:
         if (D_8015459C != 0) {
@@ -742,7 +742,7 @@ void RichterHandleDamage(s32 arg0, u32 arg1, s16 arg2) {
         }
         break;
     case 5:
-        func_8015C93C(0x2000);
+        DecelerateX(0x2000);
         if (D_80173B64 != 0) {
             if ((g_Player.pl_vram_flag & 2) && !(g_GameTimer & 3)) {
                 func_80158B04(0);
@@ -766,7 +766,7 @@ void RichterHandleDamage(s32 arg0, u32 arg1, s16 arg2) {
         PLAYER.animFrameDuration = 0;
         break;
     case 6:
-        func_8015C93C(0x2000);
+        DecelerateX(0x2000);
         if (!(g_Player.pl_vram_flag & 1)) {
             func_8015CF08();
         }
@@ -780,7 +780,7 @@ void RichterHandleDamage(s32 arg0, u32 arg1, s16 arg2) {
         }
         break;
     case 7:
-        func_8015C93C(0x2000);
+        DecelerateX(0x2000);
         if (!(g_Player.pl_vram_flag & 1)) {
             func_8015CF08();
         }
@@ -843,7 +843,151 @@ void func_8015A7D0(void) {
     }
 }
 
-INCLUDE_ASM("ric/nonmatchings/1CB04", func_8015A9B0);
+// Compare to DRA func_80115394
+// Only damageEffects is used, but the callers give 4 args.
+void func_8015A9B0(s32 damageEffects, s32 arg1, s32 arg2, s32 arg3) {
+    s32 j;
+    s32 i;
+    u8* s2;
+    u8* imgPtr;
+    s32 alwaysZero = 0;
+    PlayerDraw* playerDraw = &g_PlayerDraw[0];
+
+    switch (PLAYER.step_s) {
+    case 0:
+        func_80159BC8();
+        func_80159C04();
+        func_8015CAAC(FIX(-0.75));
+        func_8015C920(D_80155544);
+        PLAYER.velocityY = FIX(-1.625);
+        g_api.PlaySfx(SFX_UNK_6FF);
+        if (damageEffects & ELEMENT_FIRE) {
+            func_8015FA5C(0);
+            // RIC blueprint 33 has child 31, EntityPlayerBlinkWhite
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4800, 33), 0);
+            // RIC blueprint 53 has child 9, func_80161C2C
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x200, 53), 0);
+            D_80174F70 = 1;
+        } else if (damageEffects & ELEMENT_THUNDER) {
+            func_8015FA5C(2);
+            // RIC blueprint 33 has child 31, EntityPlayerBlinkWhite
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4C00, 33), 0);
+            // RIC blueprint 48 has child 41, EntityHitByLightning
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x100, 48), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x200, 48), 0);
+            D_80174F70 = 2;
+        } else if (damageEffects & ELEMENT_ICE) {
+            func_8015FA5C(3);
+            // RIC blueprint 33 has child 31, EntityPlayerBlinkWhite
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4D00, 33), 0);
+            // RIC blueprint 47 has child 40, EntityHitByIce
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 47), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x100, 47), 0);
+            D_80174F70 = 3;
+            PLAYER.drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        } else {
+            func_8015FA5C(1);
+            // RIC blueprint 33 has child 31, EntityPlayerBlinkWhite
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4A00, 33), 0);
+            // RIC blueprint 11 has child 5, func_8016147C
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x500, 11), 0);
+            D_80174F70 = 0;
+        }
+        playerDraw->r0 = playerDraw->b0 = playerDraw->g0 = playerDraw->r1 =
+            playerDraw->b1 = playerDraw->g1 = playerDraw->r2 = playerDraw->b2 =
+                playerDraw->g2 = playerDraw->r3 = playerDraw->b3 =
+                    playerDraw->g3 = 0x80;
+        playerDraw->enableColorBlend = 1;
+        PLAYER.step_s++;
+        break;
+    case 1:
+        if (PLAYER.animFrameIdx != 4) {
+            break;
+        }
+        PLAYER.step_s++;
+        break;
+    case 2:
+        // Unusual, FIX usually has denominator of 128
+        PLAYER.velocityY += FIX(11.0 / 256);
+        if (PLAYER.velocityY > FIX(1.0 / 16)) {
+            PLAYER.velocityY >>= 2;
+            PLAYER.velocityX >>= 3;
+            StoreImage(&D_801545A0, D_80173B68);
+            D_80174F6C = 0;
+            D_80174F68 = 0x40;
+            PLAYER.step_s++;
+        }
+        break;
+    case 3:
+        if (g_Timer & 1) {
+            break;
+        }
+        if (D_80174F68 > 16) {
+            // Another really weird velocityY value.
+            // It's 0x233.
+            PLAYER.velocityY += FIX(0.0086);
+        } else {
+            PLAYER.velocityX = 0;
+            PLAYER.velocityY = 0;
+        }
+        for (i = 0; i < 4; i++) {
+            s2 = imgPtr = D_80173B68;
+            s2 += ((D_80174F6C >> 1) & 7);
+            s2 += ((D_80174F6C & 0xFF) >> 4) << 6;
+            for (j = 0; j < 0x28; j++) {
+                if (D_80174F6C & 1) {
+                    *(s2 + ((j & 7) * 8) + ((j >> 3) * 0x400)) &= 0xF0;
+                } else {
+                    *(s2 + ((j & 7) * 8) + ((j >> 3) * 0x400)) &= 0x0F;
+                }
+            }
+            D_80174F6C += 0x23;
+            D_80174F6C &= 0xFF;
+        }
+        LoadImage(&D_801545A0, imgPtr);
+        if (--D_80174F68 == 0) {
+            PLAYER.velocityY = 0;
+            playerDraw->enableColorBlend = 0;
+            PLAYER.step_s = 0x80;
+        }
+        break;
+    case 0x80:
+        break;
+    }
+    // Always happens, kind of weird
+    if (alwaysZero == 0) {
+        if (D_80174F70 == 0) {
+            if (playerDraw->r0 < 0xF8) {
+                playerDraw->r0 += 2;
+            }
+            if (playerDraw->g0 > 8) {
+                playerDraw->g0 -= 2;
+            }
+
+            playerDraw->r3 = playerDraw->r2 = playerDraw->r1 = playerDraw->r0;
+            playerDraw->b0 = playerDraw->b1 = playerDraw->g1 = playerDraw->b2 =
+                playerDraw->g2 = playerDraw->b3 = playerDraw->g3 =
+                    playerDraw->g0;
+        }
+        if (D_80174F70 == 1 || D_80174F70 == 2) {
+            if (playerDraw->g0 > 8) {
+                playerDraw->g0 -= 2;
+            }
+            playerDraw->r3 = playerDraw->r2 = playerDraw->r1 = playerDraw->r0 =
+                playerDraw->b0 = playerDraw->b1 = playerDraw->g1 =
+                    playerDraw->b2 = playerDraw->g2 = playerDraw->b3 =
+                        playerDraw->g3 = playerDraw->g0;
+        }
+        if (D_80174F70 == 3) {
+            if ((playerDraw->r0 > 8) && (g_Timer & 1)) {
+                playerDraw->r0 -= 1;
+            }
+            playerDraw->r3 = playerDraw->r2 = playerDraw->r1 = playerDraw->b3 =
+                playerDraw->b2 = playerDraw->b1 = playerDraw->b0 =
+                    playerDraw->r0;
+        }
+    }
+}
 
 void func_8015AFE0(void) {
     if (PLAYER.step_s == 0) {
@@ -941,7 +1085,7 @@ void func_8015B348(void) {
     case 0:
         g_CurrentEntity->flags |= FLAG_UNK_10000;
         g_unkGraphicsStruct.unk20 = 4;
-        func_8015C93C(0x2000);
+        DecelerateX(0x2000);
 
         if (PLAYER.velocityX == 0) {
             func_8015C920(&D_80155748);
@@ -1114,7 +1258,7 @@ void func_8015B898(void) {
         return;
     }
 
-    func_8015C93C(0x2000);
+    DecelerateX(0x2000);
     if (PLAYER.step_s == 0) {
         if (!(g_GameTimer & 3) && (2 < PLAYER.animFrameIdx) &&
             (PLAYER.animFrameIdx < 6)) {

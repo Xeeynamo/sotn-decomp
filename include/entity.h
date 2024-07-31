@@ -292,9 +292,36 @@ typedef struct {
     /* 0x98 */ s16 unk98;
     /* 0x9A */ s16 unk9A;
     /* 0x9C */ s16 unk9C;
-    /* 0x9E */ byte pad[16];
+    /* 0x9E */ s16 unk9E;
+    /* 0xA0 */ s32 unkA0;
+    /* 0xA4 */ byte pad[8];
+    /* 0xAC */ u8 anim;
+    /* 0xAD */ u8 padAD;
     /* 0xAE */ s16 unkAE;
 } ET_Shield;
+
+typedef struct {
+    /* 0x7C */ u8 unk7C;
+    /* 0x7D */ u8 unk7D;
+    /* 0x7E */ s16 unk7E;
+    /* 0x80 */ u16 unk80;
+    /* 0x82 */ s16 pal;
+    /* 0x84 */ s16* palettePtr;
+    /* 0x88 */ u16 childPalette;
+    /* 0x8A */ s16 unk8A;
+    /* 0x8C */ struct Entity* parent;
+    /* 0x90 */ s16 unk90;
+    /* 0x92 */ s16 unk92;
+    /* 0x94 */ s16 unk94;
+    /* 0x96 */ s16 unk96;
+    /* 0x98 */ s16 unk98;
+    /* 0x9A */ s16 unk9A;
+    /* 0x9C */ s16 unk9C;
+    /* 0x9E */ byte pad[14];
+    /* 0xAC */ u8 anim;
+    /* 0xAD */ u8 padAD;
+    /* 0xAE */ s16 unkAE;
+} ET_DarkShield;
 
 typedef struct {
     /* 0x7D */ u8 unk7C;
@@ -1329,6 +1356,7 @@ typedef union { // offset=0x7C
     ET_MessageBox messageBox;
     ET_Weapon weapon;
     ET_Shield shield;
+    ET_DarkShield darkShield;
     ET_KarmaCoin karmacoin;
     ET_HeavenSword heavenSword;
     ET_HeavenSword2 heavenSword2;

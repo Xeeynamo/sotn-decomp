@@ -480,6 +480,7 @@ void func_8011E4BC(Entity* self) {
 
 void func_8011EDA0(Entity* entity) {}
 
+// RIC function is func_80161C2C
 void func_8011EDA8(Entity* self) {
     u16 params = self->params;
     s16 paramsHi = self->params >> 8;
@@ -1520,7 +1521,7 @@ void EntityLevelUpAnimation(Entity* self) {
         break;
     case 1:
         if (++D_80138090 == 2) {
-            D_80097420 = 3;
+            g_unkGraphicsStruct.unk20 = 3;
         }
         self->ext.factory.unk80 -= 8;
         self->ext.factory.unk82 -= 8;
@@ -1564,7 +1565,7 @@ void EntityLevelUpAnimation(Entity* self) {
             self->ext.factory.unk7E = 0;
         }
         if (self->ext.factory.unk80 > 0x200) {
-            D_80097420 = 0;
+            g_unkGraphicsStruct.unk20 = 0;
             DestroyEntity(self);
             return;
         }

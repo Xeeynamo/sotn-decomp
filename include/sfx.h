@@ -201,10 +201,12 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #else
 #define SFX_OPEN_DOOR 0x642
 #define SFX_UNK_647 0x647
+#define SFX_UNK_64B 0x64B
 #define SFX_UNK_64C 0x64C
 #define SFX_DOOR_UNKNOWN 0x64F
 #endif
 
+#define SFX_UNK_641 0x641
 #define NA_SE_EN_COG_CLICK 0x642
 #define NA_SE_EN_ROCK_BREAK 0x644
 #define SOUND_BAT_SCREECH 0x64E
@@ -215,6 +217,7 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define NA_SE_EN_ZOMBIE_EXPLODE 0x65E
 #define NA_SE_EN_GAIBON_FLAME_OUT 0x65E
 #define NA_SE_EN_DR_FIREBALL 0x660
+#define SFX_UNK_664 0x664
 #define SFX_THUNDER 0x665
 #define SFX_UNK_668 0x668
 #define SFX_UNK_669 0x669
@@ -242,6 +245,7 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define REBOUND_STONE_BOUNCE 0x6A4
 #define SFX_COLLECT_GOLD 0x6A9
 #define SFX_UNK_6AD 0x6AD
+#define SFX_UNK_6B0 0x6B0 // Used for Shaman Shield, could be same as petal
 #define NA_SE_EN_SLOGRA_SPEAR_SLASH 0x6C6
 #define NA_SE_EN_SLOGRA_BEAK_ATTACK 0x6C8
 #define NA_SE_EN_SKELETON_THROW_BONE 0x6C8
@@ -264,6 +268,7 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define NA_SE_VO_AL_DARK_METAMORPHOSIS 0x6F3
 #define NA_SE_VO_AL_SOUL_STEAL 0x6F4
 #define NA_SE_VO_AL_DYING 0x6F6
+#define SFX_UNK_6FF 0x6FF
 #define SFX_RICHTER_ATTACK_HIT 0x705
 #define ALUCARD_DARK_METAMORPHOSIS 0x705
 #define NA_SE_VO_WO_BARK 0x706
@@ -376,6 +381,8 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SFX_KARMA_COIN 0x682
 #define SFX_KARMA_COIN_HEADS 0x6B1
 #define SFX_KARMA_COIN_END 0x636
+
+#define SFX_DARK_SHIELD 0x63C
 
 // UNUSED SOUNDS
 #define SE_UNK_ST0_618 0x618

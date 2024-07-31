@@ -269,15 +269,15 @@ u16 GetNormalizedAngle(u16 arg0, u16 arg1, u16 arg2) {
     return arg2;
 }
 
-void func_80192BD0(s32 arg0) {
-    g_CurrentEntity->step = (s16)(arg0 & 0xFF);
+void SetStep(u8 step) {
+    g_CurrentEntity->step = step;
     g_CurrentEntity->step_s = 0;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
 
-void func_80192BF0(s32 arg0) {
-    g_CurrentEntity->step_s = (s16)(arg0 & 0xFF);
+void SetSubStep(u8 step_s) {
+    g_CurrentEntity->step_s = step_s;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
@@ -342,7 +342,7 @@ s32 func_80192DD0(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-void func_80192EF8(u16* hitSensors, s16 sensorCount) {
+void CheckFieldCollision(u16* hitSensors, s16 sensorCount) {
     Collider collider;
     s16 i;
     s32 velocityX;
@@ -459,7 +459,7 @@ void CollectHeart(u16 arg0) {
 
 void func_801937BC(void) {}
 
-void func_801937C4(void) { DestroyEntity(g_CurrentEntity); }
+void UnusedDestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
 void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;
