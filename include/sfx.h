@@ -335,9 +335,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SE_TREE_BRANCH_SNAP 0x7A4
 #define SE_CASTLE_GATE_RISE 0x7A5
 
-// NZ1
-#define SE_HARPY_WING_FLAP 0x601
-
 // SHARED SOUNDS
 // These are sounds that are shared across multiple BIN files
 #define SE_WEAPON_STAB 0x62E
@@ -388,5 +385,14 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SE_UNK_TE2_6B6 0x6B6
 #define SE_UNK_TE3_6B8 0x6B8
 #define NA_VO_MAR_AIM_HEAD 0x87F
+
+enum Sfx {
+    SFX_HARPY_WING_FLAP = 0x601,   // vabid 0
+    SFX_RIC_WHIP_RATTLE_A = 0x602, // vabid 0 (also used in BO6 & RBO1)
+    SFX_RIC_WHIP_RATTLE_B = 0x603, // vabid 0 (603-606 are unused)
+    SFX_RIC_WHIP_RATTLE_C = 0x604, // vabid 0
+    SFX_RIC_WHIP_RATTLE_D = 0x605, // vabid 0
+    SFX_RIC_WHIP_RATTLE_E = 0x606, // vabid 0
+};
 
 #endif
