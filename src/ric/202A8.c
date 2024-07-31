@@ -19,10 +19,10 @@ void func_8015C2A8(void) {
                 temp = g_Player.padPressed & PAD_LEFT;
             }
             if (temp == 0) {
-                func_8015C93C(0x1000);
+                DecelerateX(0x1000);
             }
         } else {
-            func_8015C93C(0x1000);
+            DecelerateX(0x1000);
         }
 
         if (g_Player.pl_vram_flag & 2) {

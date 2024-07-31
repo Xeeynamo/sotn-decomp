@@ -49,7 +49,7 @@ void func_80158BFC(void) {
     }
 
     if (func_8015DBB0(0x40000 | 0x305C) == false) {
-        func_8015C93C(0x2000);
+        DecelerateX(0x2000);
         switch (PLAYER.step_s) {
         case 0:
             if (func_8015C9CC() == 0) {
@@ -123,7 +123,7 @@ void func_80158BFC(void) {
 
 void func_80158F38(void) {
     if (func_8015DBB0(0x305C) == 0) {
-        func_8015C93C(0x2000);
+        DecelerateX(0x2000);
         if (func_8015C9CC() == 0) {
             func_8015CD98(0);
             return;
@@ -144,7 +144,7 @@ void func_80158FA4(void) {
     g_Player.D_80072F00[1] = 8;
 
     if (!func_8015DBB0(0x305C)) {
-        func_8015C93C(0x2000);
+        DecelerateX(0x2000);
         if (func_8015C9CC() == 0) {
             func_8015CD98(0);
             if (g_Player.D_80072F00[11] == 0) {
@@ -179,7 +179,7 @@ void func_801590A0(void) {
     case 1:
         return;
     case 0:
-        func_8015C93C(0x1000);
+        DecelerateX(0x1000);
         if (func_8015C9CC()) {
             if (g_Player.unk44 & 0x10) {
                 SetSpeedX(FIX(2.25));
@@ -291,7 +291,7 @@ void func_801595D8(void) {
     if (func_8015DBB0(0x9009)) {
         return;
     }
-    func_8015C93C(0x1000);
+    DecelerateX(0x1000);
     if (PLAYER.step_s != 0) {
         return;
     }
@@ -326,7 +326,7 @@ void func_80159670(void) {
                (g_Player.padTapped & PAD_TRIANGLE) && func_8015D678()) {
         return;
     }
-    func_8015C93C(0x2000);
+    DecelerateX(0x2000);
     switch (PLAYER.step_s) {
     case 0x0:
         if (D_8015459C != 0) {
@@ -741,7 +741,7 @@ void RichterHandleDamage(s32 arg0, u32 arg1, s16 arg2) {
         }
         break;
     case 5:
-        func_8015C93C(0x2000);
+        DecelerateX(0x2000);
         if (D_80173B64 != 0) {
             if ((g_Player.pl_vram_flag & 2) && !(g_GameTimer & 3)) {
                 func_80158B04(0);
@@ -765,7 +765,7 @@ void RichterHandleDamage(s32 arg0, u32 arg1, s16 arg2) {
         PLAYER.animFrameDuration = 0;
         break;
     case 6:
-        func_8015C93C(0x2000);
+        DecelerateX(0x2000);
         if (!(g_Player.pl_vram_flag & 1)) {
             func_8015CF08();
         }
@@ -779,7 +779,7 @@ void RichterHandleDamage(s32 arg0, u32 arg1, s16 arg2) {
         }
         break;
     case 7:
-        func_8015C93C(0x2000);
+        DecelerateX(0x2000);
         if (!(g_Player.pl_vram_flag & 1)) {
             func_8015CF08();
         }
@@ -1084,7 +1084,7 @@ void func_8015B348(void) {
     case 0:
         g_CurrentEntity->flags |= FLAG_UNK_10000;
         g_unkGraphicsStruct.unk20 = 4;
-        func_8015C93C(0x2000);
+        DecelerateX(0x2000);
 
         if (PLAYER.velocityX == 0) {
             func_8015C920(&D_80155748);
@@ -1257,7 +1257,7 @@ void func_8015B898(void) {
         return;
     }
 
-    func_8015C93C(0x2000);
+    DecelerateX(0x2000);
     if (PLAYER.step_s == 0) {
         if (!(g_GameTimer & 3) && (2 < PLAYER.animFrameIdx) &&
             (PLAYER.animFrameIdx < 6)) {

@@ -79,7 +79,7 @@ void EntityPrizeDrop(Entity* self) {
             } else {
                 FallEntity();
             }
-            func_801B5A98(D_80181D74, 2);
+            CheckFieldCollision(D_80181D74, 2);
             return;
         }
         if (collider.effects & EFFECT_NOTHROUGH) {
@@ -118,7 +118,7 @@ void EntityPrizeDrop(Entity* self) {
         } else if (itemId < 12) {
             CollectGold(itemId);
         } else if (itemId < 14) {
-            CollectDummy();
+            DestroyCurrentEntity();
         } else if (itemId < 23) {
             CollectSubweapon(itemId);
         } else {
@@ -167,7 +167,7 @@ void EntityPrizeDrop(Entity* self) {
             } else {
                 FallEntity();
             }
-            func_801B5A98(D_80181D74, 2);
+            CheckFieldCollision(D_80181D74, 2);
             self->animCurFrame = 0;
             if (self->ext.generic.unk88.S16.unk2 != 0) {
                 self->ext.generic.unk88.S16.unk2--;
@@ -324,7 +324,7 @@ void EntityEquipItemDrop(Entity* self) {
         } else {
             FallEntity();
         }
-        func_801B5A98(D_80181D74, 2);
+        CheckFieldCollision(D_80181D74, 2);
         break;
     case 3:
         func_801B5F4C(1);
