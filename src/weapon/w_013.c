@@ -142,7 +142,8 @@ void EntityWeaponAttack(Entity* self) {
         var_s2 = D_5F000_8017A5E0[(self->ext.heavenSword.unk7E >> 1) % 14];
         self->ext.weapon.childPalette = self->palette + var_s2;
         if (!(g_GameTimer & 7)) {
-            g_api.func_80134714(SFX_SWORD_SWISH_A, self->ext.heavenSword.unk98, 0);
+            g_api.func_80134714(
+                SFX_SWORD_SWISH_A, self->ext.heavenSword.unk98, 0);
             self->ext.heavenSword.unk98 -= 4;
             if (self->ext.heavenSword.unk98 < 0) {
                 self->ext.heavenSword.unk98 = 0;
@@ -195,7 +196,8 @@ void EntityWeaponAttack(Entity* self) {
         self->ext.weapon.childPalette = self->palette + var_s2;
         self->ext.heavenSword.unk7E++;
         if (!(g_GameTimer & 7)) {
-            g_api.func_80134714(SFX_SWORD_SWISH_A, self->ext.heavenSword.unk98, 0);
+            g_api.func_80134714(
+                SFX_SWORD_SWISH_A, self->ext.heavenSword.unk98, 0);
             self->ext.heavenSword.unk98 -= 4;
             if (self->ext.heavenSword.unk98 < 0) {
                 self->ext.heavenSword.unk98 = 0;
@@ -305,7 +307,8 @@ void func_ptr_80170008(Entity* self) {
             self->ext.heavenSword.unk80++;
         }
         if (g_GameTimer % 6 == 0) {
-            g_api.func_80134714(SFX_SWORD_SWISH_A, self->ext.heavenSword.unk98, 0);
+            g_api.func_80134714(
+                SFX_SWORD_SWISH_A, self->ext.heavenSword.unk98, 0);
             self->ext.heavenSword.unk98 -= 4;
             if (self->ext.heavenSword.unk98 < 0) {
                 self->ext.heavenSword.unk98 = 0;
