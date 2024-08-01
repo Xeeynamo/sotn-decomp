@@ -386,13 +386,18 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SE_UNK_TE3_6B8 0x6B8
 #define NA_VO_MAR_AIM_HEAD 0x87F
 
+// The VAB IDs appear in large chunks so all sounds proceeding
+// a vabid label comment will belong in that VAB group unless noted.
+
 enum Sfx {
-    SFX_HARPY_WING_FLAP = 0x601,   // vabid 0
-    SFX_RIC_WHIP_RATTLE_A = 0x602, // vabid 0 (also used in BO6 & RBO1)
-    SFX_RIC_WHIP_RATTLE_B = 0x603, // vabid 0 (603-606 are unused)
-    SFX_RIC_WHIP_RATTLE_C = 0x604, // vabid 0
-    SFX_RIC_WHIP_RATTLE_D = 0x605, // vabid 0
-    SFX_RIC_WHIP_RATTLE_E = 0x606, // vabid 0
+    // vabid 0
+    SFX_HARPY_WING_FLAP = 0x601,
+    SFX_RIC_WHIP_RATTLE_A,
+    // (RATTLE_B through E appear to be unused)
+    SFX_RIC_WHIP_RATTLE_B,
+    SFX_RIC_WHIP_RATTLE_C,
+    SFX_RIC_WHIP_RATTLE_D,
+    SFX_RIC_WHIP_RATTLE_E,
 };
 
 #endif
