@@ -2,6 +2,7 @@
 // Bwaka knife, Boomerang, Javelin, Fire boomerang, Iron ball
 #include "weapon_private.h"
 #include "shared.h"
+#include "sfx.h"
 
 // Weapon 16
 extern SpriteParts D_74000_8017A040[];
@@ -163,7 +164,7 @@ void func_ptr_8017000C(Entity* self) {
         DestroyEntityWeapon(true);
         self->hitboxHeight = 12;
         self->hitboxWidth = 12;
-        g_api.PlaySfx(0x60B);
+        g_api.PlaySfx(SFX_SWORD_SWISH_B);
         g_Player.D_80072F00[10] = 4;
         self->step++;
         break;

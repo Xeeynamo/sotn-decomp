@@ -1,4 +1,5 @@
 #include "np3.h"
+#include "sfx.h"
 
 // Owl's Owl Knight shows up one slot above it, so define this for
 // ease of readability.
@@ -157,7 +158,7 @@ void EntityOwl(Entity* self) {
             self->velocityX = rcos(angle) * 0x30;
             self->velocityY = -rsin(angle) * 0x30;
             self->ext.owl.unk82 = 0x60;
-            func_801916C4(0x60C);
+            func_801916C4(SFX_SWORD_SWISH_C);
             self->step_s++;
             break;
         case 1:
@@ -191,7 +192,7 @@ void EntityOwl(Entity* self) {
                 self->velocityX = FIX(-16.0 / 128);
             }
             if (self->posY.i.hi < 0x30) {
-                func_801916C4(0x60C);
+                func_801916C4(SFX_SWORD_SWISH_C);
                 self->step_s++;
             }
             break;
@@ -205,7 +206,7 @@ void EntityOwl(Entity* self) {
             self->animCurFrame = 4;
             self->animFrameIdx = 0;
             self->animFrameDuration = 0;
-            func_801916C4(0x60C);
+            func_801916C4(SFX_SWORD_SWISH_C);
             self->step_s++;
             break;
         case 2:
@@ -318,7 +319,7 @@ void EntityOwl(Entity* self) {
             } else {
                 self->facingLeft = 0;
             }
-            func_801916C4(0x60C);
+            func_801916C4(SFX_SWORD_SWISH_C);
             self->step_s++;
             break;
         case 1:
@@ -608,7 +609,7 @@ void EntityOwlKnight(Entity* self) {
         break;
     case 4:
         if (self->step_s == 0) {
-            func_801916C4(0x60A);
+            func_801916C4(SFX_SWORD_SWISH_A);
             self->step_s++;
         }
         if (AnimateEntity(D_801827C8, self) == 0) {
@@ -623,7 +624,7 @@ void EntityOwlKnight(Entity* self) {
         break;
     case 5:
         if (self->step_s == 0) {
-            func_801916C4(0x60A);
+            func_801916C4(SFX_SWORD_SWISH_A);
             self->step_s++;
         }
         if (AnimateEntity(D_80182820, self) == 0) {
@@ -820,7 +821,7 @@ void EntityOwlKnight(Entity* self) {
             SetStep(10);
         }
         if (self->animFrameDuration == 0 && self->animFrameIdx == 5) {
-            func_801916C4(0x60A);
+            func_801916C4(SFX_SWORD_SWISH_A);
         }
         func_801BCB5C(D_80182768);
         self->velocityX -= self->velocityX / 16;

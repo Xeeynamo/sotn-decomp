@@ -8,6 +8,7 @@
 
 #include "weapon_private.h"
 #include "shared.h"
+#include "sfx.h"
 
 extern SpriteParts D_5F000_8017A040[];
 extern u8 D_5F000_8017A5B0[6][8];
@@ -102,7 +103,7 @@ void EntityWeaponAttack(Entity* self) {
         DestroyEntityWeapon(1);
         self->hitboxWidth = 0x12;
         self->hitboxHeight = 4;
-        g_api.PlaySfx(0x60C);
+        g_api.PlaySfx(SFX_SWORD_SWISH_C);
         self->ext.heavenSword.unk98 = 0x50;
         g_Player.D_80072F00[10] = 4;
         self->step++;
@@ -141,7 +142,7 @@ void EntityWeaponAttack(Entity* self) {
         var_s2 = D_5F000_8017A5E0[(self->ext.heavenSword.unk7E >> 1) % 14];
         self->ext.weapon.childPalette = self->palette + var_s2;
         if (!(g_GameTimer & 7)) {
-            g_api.func_80134714(0x60A, self->ext.heavenSword.unk98, 0);
+            g_api.func_80134714(SFX_SWORD_SWISH_A, self->ext.heavenSword.unk98, 0);
             self->ext.heavenSword.unk98 -= 4;
             if (self->ext.heavenSword.unk98 < 0) {
                 self->ext.heavenSword.unk98 = 0;
@@ -194,7 +195,7 @@ void EntityWeaponAttack(Entity* self) {
         self->ext.weapon.childPalette = self->palette + var_s2;
         self->ext.heavenSword.unk7E++;
         if (!(g_GameTimer & 7)) {
-            g_api.func_80134714(0x60A, self->ext.heavenSword.unk98, 0);
+            g_api.func_80134714(SFX_SWORD_SWISH_A, self->ext.heavenSword.unk98, 0);
             self->ext.heavenSword.unk98 -= 4;
             if (self->ext.heavenSword.unk98 < 0) {
                 self->ext.heavenSword.unk98 = 0;
@@ -304,7 +305,7 @@ void func_ptr_80170008(Entity* self) {
             self->ext.heavenSword.unk80++;
         }
         if (g_GameTimer % 6 == 0) {
-            g_api.func_80134714(0x60A, self->ext.heavenSword.unk98, 0);
+            g_api.func_80134714(SFX_SWORD_SWISH_A, self->ext.heavenSword.unk98, 0);
             self->ext.heavenSword.unk98 -= 4;
             if (self->ext.heavenSword.unk98 < 0) {
                 self->ext.heavenSword.unk98 = 0;
@@ -326,7 +327,7 @@ void func_ptr_80170008(Entity* self) {
         self->ext.heavenSword.unk82++;
         if ((self->ext.heavenSword.unk82 < 0x20) &&
             !(self->ext.heavenSword.unk82 & 3)) {
-            g_api.PlaySfx(0x60B);
+            g_api.PlaySfx(SFX_SWORD_SWISH_B);
         }
         if (self->ext.heavenSword.unk82 > 0x10) {
             self->posX.i.hi = self->ext.heavenSword.xPos;

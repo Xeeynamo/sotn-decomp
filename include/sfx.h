@@ -182,8 +182,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 
 // This sound plays when MAX UP spawns and during Dracula transformation
 #define NA_SE_UNK_62F 0x62F
-#define NA_SE_EN_BLOOD_ZOMBIE_SWORD_SLASH 0x60B
-#define SFX_SUBWPN_THROW 0x60C // Throwing rebound stone, vibhuti, others?
 #define SFX_CLANK 0x611 // when attacking invulnerable enemy (like Stone Skull)
 #define NA_SE_AL_BACKSLIDE 0x617
 #define SFX_UNK_61A 0x61A
@@ -399,6 +397,9 @@ enum Sfx {
     SFX_STONE_MOVE_A,
     SFX_STONE_MOVE_B,
     SFX_STONE_MOVE_C,
+    SFX_SWORD_SWISH_A, 
+    SFX_SWORD_SWISH_B,
+    SFX_SWORD_SWISH_C,
 };
 
 #endif
