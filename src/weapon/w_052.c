@@ -2,6 +2,7 @@
 // Alucard shield, Unknown#214
 #include "weapon_private.h"
 #include "shared.h"
+#include "sfx.h"
 
 extern SpriteParts D_170000_8017A040[];
 extern s8 D_170000_8017AB3C[];
@@ -620,7 +621,7 @@ s32 func_ptr_80170004(Entity* self) {
     case 2:
         if ((self->ext.shield.unk80 >= 0x48) &&
             (self->ext.shield.unk80 % 4 == 0)) {
-            g_api.PlaySfx(SFX_SUBWPN_THROW);
+            g_api.PlaySfx(SFX_SWORD_SWISH_C);
         }
         if (--self->ext.shield.unk80 == 0) {
             DestroyEntity(self);

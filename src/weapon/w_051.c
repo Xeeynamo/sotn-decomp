@@ -164,10 +164,10 @@ static WeaponAnimation D_169000_8017ACD8[] = {
 };
 
 static WeaponAnimation D_169000_8017AD18[] = {
-    {D_169000_8017ACBC, hitboxes, 0, SFX_SUBWPN_THROW, 0xD6, 4},
-    {D_169000_8017ACA0, hitboxes, 0, SFX_SUBWPN_THROW, 0xD6, 4},
-    {D_169000_8017ACA0, hitboxes, 0, SFX_SUBWPN_THROW, 0xD6, 4},
-    {D_169000_8017ACA0, hitboxes, 0, SFX_SUBWPN_THROW, 0xD6, 4},
+    {D_169000_8017ACBC, hitboxes, 0, SFX_SWORD_SWISH_C, 0xD6, 4},
+    {D_169000_8017ACA0, hitboxes, 0, SFX_SWORD_SWISH_C, 0xD6, 4},
+    {D_169000_8017ACA0, hitboxes, 0, SFX_SWORD_SWISH_C, 0xD6, 4},
+    {D_169000_8017ACA0, hitboxes, 0, SFX_SWORD_SWISH_C, 0xD6, 4},
 };
 
 static s16 D_169000_8017AD58[] = {
@@ -487,7 +487,7 @@ void func_ptr_80170008(Entity* self) {
             self->hitboxOffX = 8;
         }
         if (!(temp_s6 & 3)) {
-            g_api.PlaySfx(SFX_SUBWPN_THROW);
+            g_api.PlaySfx(SFX_SWORD_SWISH_C);
         }
         self->ext.weapon.unk82 = color == 0 ? 20 : 30;
         if (self->facingLeft) {

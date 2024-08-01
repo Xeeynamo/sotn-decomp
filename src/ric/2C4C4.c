@@ -1323,7 +1323,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
         prim->g0 = 0x3F;
         prim->b0 = 0;
         SetSpeedX(FIX(8));
-        g_api.PlaySfx(SFX_SUBWPN_THROW);
+        g_api.PlaySfx(SFX_SWORD_SWISH_C);
         self->step++;
         return;
     case 1:
@@ -1550,7 +1550,7 @@ void EntitySubwpnReboundStone(Entity* self) {
             self->ext.reboundStone.unk84 = 4;
         }
         self->step += 1;
-        g_api.PlaySfx(SFX_SUBWPN_THROW);
+        g_api.PlaySfx(SFX_SWORD_SWISH_C);
         break;
 
     case 1:
@@ -1836,7 +1836,7 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
             fakeprim->y0 = fakeprim->posY.i.hi;
             fakeprim = fakeprim->next;
         }
-        g_api.PlaySfx(SFX_SUBWPN_THROW);
+        g_api.PlaySfx(SFX_SWORD_SWISH_C);
         self->step++;
         break;
     case 1:
