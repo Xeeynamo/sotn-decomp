@@ -1066,7 +1066,7 @@ void ApplyQuadChannelSetting(
     D_8013B5EC[channel_group] = g_SfxData[arg0].unk4;
     progId = g_SfxData[arg0].prog + 1;
     g_CurrentSfxScript[channel_group] = g_SfxScripts[progId];
-    D_8013B66C[channel_group] = 0;
+    g_SfxScriptTimer[channel_group] = 0;
     D_8013B648[channel_group] = arg0;
     D_8013AEA0[channel_group] = g_SfxData[arg0].unk6;
 }
@@ -1253,7 +1253,7 @@ void func_80135D8C(void) {
     if (D_801390C4 == 0) {
         for (i = 0; i < 3; i++) {
             if (g_UnkChannelSetting2[i] != 0) {
-                if (D_8013B66C[i] == 0) {
+                if (g_SfxScriptTimer[i] == 0) {
                     // FAKE, should just be &g_CurrentSfxScript[i]
                     temp_v1_2 = &g_CurrentSfxScript;
                     temp_t3 = i + temp_v1_2;
@@ -1274,12 +1274,12 @@ void func_80135D8C(void) {
                     *temp_t3 = temp_t2 + 5;
                     volume = g_ChannelGroupVolume[i] * temp_t2[4];
                     *temp_t3 = temp_t2 + 6;
-                    D_8013B66C[i] = temp_t2[5];
+                    g_SfxScriptTimer[i] = temp_t2[5];
                     distance = D_8013B5F6[30 + i];
                     func_80132A04(
                         30 + i, vab, prog, tone, note, volume >> 7, distance);
                 } else {
-                    D_8013B66C[i]--;
+                    g_SfxScriptTimer[i]--;
                 }
             }
         }

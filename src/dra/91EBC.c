@@ -89,7 +89,7 @@ void InitSoundVars3(void) {
         g_ChannelGroupVolume[i] = 0;
         g_UnkChannelSetting1[i] = 0;
         g_UnkChannelSetting2[i] = 0;
-        D_8013B66C[i] = 0;
+        g_SfxScriptTimer[i] = 0;
         D_8013B5EC[i] = 0;
         g_CurrentSfxScript[i] = 0;
         D_8013B648[i] = 0;

@@ -757,7 +757,7 @@ extern s16 g_SeqAccessNum;
 extern s32 g_MemcardStep;
 extern s16 D_8013B664;
 extern s16 g_CdVolume;
-extern s16 D_8013B66C[];
+extern s16 g_SfxScriptTimer[];
 extern s16 D_8013B672[];
 extern u8 D_8013B680;
 extern u8 g_CdSoundCommand16;
