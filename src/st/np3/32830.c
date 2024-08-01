@@ -1,4 +1,5 @@
 #include "np3.h"
+#include "sfx.h"
 
 void func_801B2830(Entity* self) {
     switch (self->step) {
@@ -1675,7 +1676,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
 
     case 1:
         if (g_CastleFlags[50]) {
-            g_api.PlaySfx(0x607);
+            g_api.PlaySfx(SFX_STONE_MOVE_A);
             self->step++;
         }
         break;
@@ -1689,7 +1690,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
         }
 
         if ((self->ext.heartRoomGoldDoor.timer % 16) == 0) {
-            g_api.PlaySfx(0x607);
+            g_api.PlaySfx(SFX_STONE_MOVE_A);
         }
         temp = temp2 = self->posY.i.hi - 112;
         if (temp2 < 0) {

@@ -398,6 +398,9 @@ enum Sfx {
     SFX_RIC_WHIP_RATTLE_C,
     SFX_RIC_WHIP_RATTLE_D,
     SFX_RIC_WHIP_RATTLE_E,
+    SFX_STONE_MOVE_A,
+    SFX_STONE_MOVE_B,
+    SFX_STONE_MOVE_C,
 };
 
 #endif
