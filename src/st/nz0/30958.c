@@ -5,6 +5,7 @@
  */
 
 #include "nz0.h"
+#include "sfx.h"
 
 void func_801B0958(Entity* self) {
     ObjInit2* temp_s0 = &D_80180D64[self->params];
@@ -730,14 +731,14 @@ void EntityMoveableBox(Entity* self) {
             temp_s1 = GetSideToPlayer();
             if (temp_s1 & 1 && player->velocityX > 0) {
                 if (!(g_Timer & 7)) {
-                    g_api.PlaySfx(0x608);
+                    g_api.PlaySfx(SFX_STONE_MOVE_B);
                 }
                 self->velocityX = FIX(0.5);
             }
             temp_s1 = GetSideToPlayer();
             if (!(primIndex = (temp_s1 & 1)) && (player->velocityX < 0)) {
                 if (!(g_Timer & 7)) {
-                    g_api.PlaySfx(0x608);
+                    g_api.PlaySfx(SFX_STONE_MOVE_B);
                 }
                 self->velocityX = FIX(-0.5);
             }

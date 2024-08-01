@@ -788,7 +788,7 @@ void func_801B40F8(Entity* self) {
         }
 
         if (!(self->ext.generic.unk80.modeS32 & 15)) {
-            g_api.PlaySfx(NA_SE_EV_HEAVY_BLOCK_DRAG);
+            g_api.PlaySfx(SFX_STONE_MOVE_C);
         }
 
         for (tilePos = 0x76, tileLayoutPtr = &D_801810F8[3], i = 0; i < temp;
