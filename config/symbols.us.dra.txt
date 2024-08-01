@@ -152,3 +152,5 @@ g_PlOvlSpritesheet = 0x8013C020;
 g_imgUnk8013C200 = 0x8013C200;
 g_imgUnk8013C270 = 0x8013C270;
 g_StageOverlay = 0x80180000;
+g_SfxScriptTimer = 0x8013B66C;
+g_CdSoundCommand16 = 0x8013B684;

@@ -396,7 +396,7 @@ u16 D_8013B626;
 s8* g_CurrentSfxScript[4];
 u8 D_8013B5EC[4];
 u8 D_8013B5F6[32];
-s16 D_8013B66C[4];
+s16 g_SfxScriptTimer[4];
 s16 D_8013B672[1];
 s8 g_UnkChannelSetting1[4];
 u16 g_ChannelGroupVolume[4];
