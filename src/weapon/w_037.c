@@ -338,21 +338,21 @@ void func_ptr_80170008(Entity* self) {
         self->animSet = 3;
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
-        SetSpeedX(rand() + 0x4000);
-        self->velocityY = -(rand() + 0x10000);
+        SetSpeedX(rand() + FIX(0.25));
+        self->velocityY = -(rand() + FIX(1));
         self->step++;
         break;
 
     case 1:
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        self->velocityY += 0x2400;
+        self->velocityY += FIX(9.0 / 64.0);
 
         g_api.CheckCollision(
             self->posX.i.hi, self->posY.i.hi - 1, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             self->posY.i.hi += collider.unk20;
-            self->velocityY = FIX(1.0);
+            self->velocityY = FIX(1);
         }
 
         g_api.CheckCollision(
