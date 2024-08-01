@@ -400,7 +400,7 @@ s16 g_SfxScriptTimer[4];
 s16 D_8013B672[1];
 s8 g_UnkChannelSetting1[4];
 u16 g_ChannelGroupVolume[4];
-s16 g_UnkChannelSetting2[4];
+s16 g_CurrentSfxScriptSfxId[4];
 s32 D_801390B4[1];
 s8 D_80139018[1];
 s16 D_80139814[1];

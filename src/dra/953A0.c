@@ -1062,7 +1062,7 @@ void ApplyQuadChannelSetting(
         g_ChannelGroupVolume[channel_group] = (calcVolume * volumeMod) >> 7;
         g_UnkChannelSetting1[channel_group] = distance;
     }
-    g_UnkChannelSetting2[channel_group] = arg0;
+    g_CurrentSfxScriptSfxId[channel_group] = arg0;
     D_8013B5EC[channel_group] = g_SfxData[arg0].unk4;
     progId = g_SfxData[arg0].prog + 1;
     g_CurrentSfxScript[channel_group] = g_SfxScripts[progId];
@@ -1252,7 +1252,7 @@ void func_80135D8C(void) {
 
     if (D_801390C4 == 0) {
         for (i = 0; i < 3; i++) {
-            if (g_UnkChannelSetting2[i] != 0) {
+            if (g_CurrentSfxScriptSfxId[i] != 0) {
                 if (g_SfxScriptTimer[i] == 0) {
                     // FAKE, should just be &g_CurrentSfxScript[i]
                     temp_v1_2 = &g_CurrentSfxScript;
@@ -1262,7 +1262,7 @@ void func_80135D8C(void) {
                     *temp_t3 = temp_t2 + 1;
                     vab = temp_t2[0];
                     if (vab == -1) {
-                        g_UnkChannelSetting2[i] = 0;
+                        g_CurrentSfxScriptSfxId[i] = 0;
                         continue;
                     }
                     *temp_t3 = temp_t2 + 2;
@@ -1352,7 +1352,7 @@ void func_80136010(void) {
         var_t0 = new_var;
 
         for (i = 0; i < 3; i++) {
-            if (g_UnkChannelSetting2[i] == 0) {
+            if (g_CurrentSfxScriptSfxId[i] == 0) {
                 if ((s8)(*var_t0 + *var_t1 + *var_t2 + *var_t3) == 0) {
                     *var_t4 = 0;
                     fakeptr = D_8013AEA0;

@@ -372,7 +372,7 @@ void PlaySfx(s16 sfxId) {
 }
 
 void func_8013493C(s16 arg0, s16 arg1) {
-    g_UnkChannelSetting2[arg1] = D_8013B678[arg0];
+    g_CurrentSfxScriptSfxId[arg1] = D_8013B678[arg0];
     g_ChannelGroupVolume[arg1] = D_801390AC[arg0];
     g_UnkChannelSetting1[arg1] = D_80139058[arg0];
     g_SfxScriptTimer[arg1] = D_80139814[arg0];
@@ -384,19 +384,19 @@ void func_801349F4(void) {
     s16 i;
 
     for (i = 0; i < 4; i++) {
-        if (g_UnkChannelSetting2[i] == 0) {
+        if (g_CurrentSfxScriptSfxId[i] == 0) {
             continue;
         }
         if (D_8013B5EC[i] == 5) {
             continue;
         }
-        D_8013B678[i] = g_UnkChannelSetting2[i];
+        D_8013B678[i] = g_CurrentSfxScriptSfxId[i];
         D_801390AC[i] = g_ChannelGroupVolume[i];
         D_80139058[i] = g_UnkChannelSetting1[i];
         D_80139814[i] = g_SfxScriptTimer[i];
         D_80139018[i] = D_8013B5EC[i];
         D_801390B4[i] = g_CurrentSfxScript[i];
-        g_UnkChannelSetting2[i] = 0;
+        g_CurrentSfxScriptSfxId[i] = 0;
         g_ChannelGroupVolume[i] = 0;
         g_UnkChannelSetting1[i] = 0;
         g_SfxScriptTimer[i] = 0;

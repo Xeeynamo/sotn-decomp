@@ -710,7 +710,7 @@ extern s16 D_80139A78;
 extern u32 D_80139A7C[0x1400];
 extern u16 D_8013AE7C;
 extern volatile unsigned char g_CdSoundCommandStep;
-extern s16 g_UnkChannelSetting2[];
+extern s16 g_CurrentSfxScriptSfxId[];
 extern s16 D_8013AE8A[];
 extern s16 D_8013AE8C;
 extern s16 D_8013AEA0[];
