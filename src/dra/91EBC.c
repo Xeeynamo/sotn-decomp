@@ -91,7 +91,7 @@ void InitSoundVars3(void) {
         g_UnkChannelSetting2[i] = 0;
         D_8013B66C[i] = 0;
         D_8013B5EC[i] = 0;
-        D_8013B628[i] = 0;
+        g_CurrentSfxScript[i] = 0;
         D_8013B648[i] = 0;
         D_8013AEA0[i] = 0;
     }
