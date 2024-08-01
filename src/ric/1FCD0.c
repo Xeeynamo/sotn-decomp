@@ -70,7 +70,7 @@ void PlayerStepSlideKick(void) {
         g_Player.unk44 &= ~4;
         return;
     }
-    func_8015C93C(0x1000);
+    DecelerateX(0x1000);
     PLAYER.velocityY += 0x1000;
 
     if (g_Player.pl_vram_flag & 1) {
@@ -88,7 +88,7 @@ void PlayerStepSlideKick(void) {
 
     if (PLAYER.velocityX < 0) {
         if (g_Player.padPressed & PAD_RIGHT) {
-            func_8015C93C(0x2000);
+            DecelerateX(0x2000);
         }
         if ((PLAYER.velocityX > (s32)0xFFFD0000) ||
             (g_Player.pl_vram_flag & 8)) {
@@ -103,7 +103,7 @@ void PlayerStepSlideKick(void) {
 
     if (PLAYER.velocityX > 0) {
         if (g_Player.padPressed & PAD_LEFT) {
-            func_8015C93C(0x2000);
+            DecelerateX(0x2000);
         }
         if ((PLAYER.velocityX <= 0x2FFFF) || (g_Player.pl_vram_flag & 4)) {
             PLAYER.velocityX /= 2;
@@ -117,7 +117,7 @@ void PlayerStepSlideKick(void) {
 }
 
 void func_8015C178(void) {
-    func_8015C93C(0x1C00);
+    DecelerateX(0x1C00);
 
     if (PLAYER.animFrameDuration < 0) {
         g_Player.unk46 = 0;

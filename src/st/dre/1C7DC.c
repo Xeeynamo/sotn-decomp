@@ -129,7 +129,7 @@ void EntityEquipItemDrop(Entity* self) {
             FallEntity();
         }
 
-        func_8019B304(D_801811A4, 2);
+        CheckFieldCollision(D_801811A4, 2);
         break;
 
     case 3:

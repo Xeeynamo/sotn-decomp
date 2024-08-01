@@ -6,7 +6,7 @@ void func_8015C920(AnimationFrame* unk0) {
     g_CurrentEntity->animFrameIdx = 0;
 }
 
-void func_8015C93C(s32 speed) {
+void DecelerateX(s32 speed) {
     if (g_CurrentEntity->velocityX < 0) {
         g_CurrentEntity->velocityX += speed;
         if (g_CurrentEntity->velocityX > 0) {
@@ -19,7 +19,7 @@ void func_8015C93C(s32 speed) {
     }
 }
 
-void func_8015C984(s32 speed) {
+void DecelerateY(s32 speed) {
     if (g_CurrentEntity->velocityY < 0) {
         g_CurrentEntity->velocityY += speed;
         if (g_CurrentEntity->velocityY > 0) {

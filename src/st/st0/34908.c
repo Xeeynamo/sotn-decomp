@@ -348,7 +348,7 @@ s32 func_801B5970(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-void func_801B5A98(u16* hitSensors, s16 sensorCount) {
+void CheckFieldCollision(u16* hitSensors, s16 sensorCount) {
     Collider collider;
     s16 i;
     s32 velocityX;
@@ -463,7 +463,7 @@ void CollectHeart(u16 index) {
 
 void func_801B61D4(void) {}
 
-void func_801B61DC(void) { DestroyEntity(g_CurrentEntity); }
+void UnusedDestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
 void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;
@@ -499,7 +499,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
     DestroyEntity(g_CurrentEntity);
 }
 
-void CollectDummy(void) { DestroyEntity(g_CurrentEntity); }
+void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
 Entity* func_801B633C(void) {
     g_CurrentEntity->step = 3;

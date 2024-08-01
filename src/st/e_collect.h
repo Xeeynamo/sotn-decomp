@@ -196,7 +196,7 @@ static void CollectLifeVessel(void) {
     DestroyEntity(g_CurrentEntity);
 }
 
-static void CollectDummy(u16 id) { DestroyEntity(g_CurrentEntity); }
+static void DestroyCurrentEntity(u16 id) { DestroyEntity(g_CurrentEntity); }
 
 // if self->params & 0x8000 then the item will not disappear
 void EntityPrizeDrop(Entity* self) {
@@ -359,7 +359,7 @@ void EntityPrizeDrop(Entity* self) {
         } else if (itemId == 12) {
             CollectHeartVessel();
         } else if (itemId < 14) {
-            CollectDummy(itemId);
+            DestroyCurrentEntity(itemId);
         } else if (itemId < 23) {
             CollectSubweapon(itemId);
         } else if (itemId == 23) {
