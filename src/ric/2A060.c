@@ -447,7 +447,7 @@ void func_80166784(Entity* self) {
                     a0 = self;
                 }
                 if (self->ext.et_80166784.unkA6 == 0) {
-                    g_api.PlaySfx(0x602);
+                    g_api.PlaySfx(SFX_RIC_WHIP_RATTLE_A);
                     self->ext.et_80166784.unkA6 = 0x20;
                 }
                 if (upperParams == 0) {
