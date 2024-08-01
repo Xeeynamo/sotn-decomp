@@ -748,7 +748,7 @@ extern u8 D_8013B5F6[];
 extern s8 g_UnkChannelSetting1[];
 extern s8 D_8013B618;
 extern s32 D_8013B61C;
-extern u16 g_ChannelGroupVolume[];
+extern u16 g_SfxScriptVolume[];
 extern u16 D_8013B626;
 extern s8* g_CurrentSfxScript[4];
 extern s16 D_8013B650[];

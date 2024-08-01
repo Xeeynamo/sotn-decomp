@@ -153,17 +153,19 @@ void check_macro(int scanCode, enum Spells which, const u8* keyb) {
 #define AXE 15
 #define CROSS 16
 
+int temp = 0;
 void handle_macros(const u8* keyb, u_long* pressed) {
     // put a candle with a subweapon drop in the room
     if (keyb[SDL_SCANCODE_1] && !previousKeyStates[SDL_SCANCODE_1]) {
-        Entity* temp = g_Entities + STAGE_ENTITY_START + 10;
-        LayoutEntity l;
-        l.posX = 128;
-        l.posY = 128;
-        l.entityId = 1; // entityBreakable
-        l.entityRoomIndex = 0;
-        l.params = CROSS;
-        CreateEntityFromLayout(temp, &l);
+        PlaySfx(0x67B + temp++);
+        // Entity* temp = g_Entities + STAGE_ENTITY_START + 10;
+        // LayoutEntity l;
+        // l.posX = 128;
+        // l.posY = 128;
+        // l.entityId = 1; // entityBreakable
+        // l.entityRoomIndex = 0;
+        // l.params = CROSS;
+        // CreateEntityFromLayout(temp, &l);
     }
     check_macro(SDL_SCANCODE_Y, TETRA_SPIRIT, keyb);
     check_macro(SDL_SCANCODE_U, DARK_METAMORPHOSIS, keyb);
