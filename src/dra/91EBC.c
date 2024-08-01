@@ -86,12 +86,12 @@ void InitSoundVars3(void) {
     s32 i;
 
     for (i = 0; i < 4; i++) {
-        g_ChannelGroupVolume[i] = 0;
+        g_SfxScriptVolume[i] = 0;
         g_UnkChannelSetting1[i] = 0;
-        g_UnkChannelSetting2[i] = 0;
-        D_8013B66C[i] = 0;
+        g_CurrentSfxScriptSfxId[i] = 0;
+        g_SfxScriptTimer[i] = 0;
         D_8013B5EC[i] = 0;
-        D_8013B628[i] = 0;
+        g_CurrentSfxScript[i] = 0;
         D_8013B648[i] = 0;
         D_8013AEA0[i] = 0;
     }
