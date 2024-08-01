@@ -1325,7 +1325,7 @@ void func_8010FD88(void) {
     SetPlayerAnim(0xDB);
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
     g_Player.unk46 = 0;
-    PlaySfx(NA_SE_AL_BACKSLIDE);
+    PlaySfx(SFX_SCRAPE_C);
 }
 
 bool func_8010FDF8(s32 branchFlags) {

@@ -1,4 +1,5 @@
 #include "ric.h"
+#include "sfx.h"
 
 // RIC Entity # 49. Comes from blueprint 57. Factory call in func_8016E324.
 // func_8016E324 is RIC Entity #48. Comes from blueprint 56. Blueprint 56 is
@@ -823,7 +824,7 @@ void StopwatchCrashDoneSparkle(Entity* self) {
             prim->drawMode &= ~DRAW_HIDE;
             self->ext.et_stopWatchSparkle.unk80 = 0x10;
             self->ext.et_stopWatchSparkle.unk82 = 0;
-            g_api.PlaySfx(0x614);
+            g_api.PlaySfx(SFX_ELECTRICITY);
             self->step++;
         }
         break;

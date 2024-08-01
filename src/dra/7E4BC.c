@@ -828,7 +828,7 @@ void EntityHitByIce(Entity* self) {
         }
         if (sp18) {
             self->ext.hitbyice.unk7C = 0x40;
-            PlaySfx(SFX_UNK_61A);
+            PlaySfx(SFX_GLASS_BREAK_B);
             self->step++;
         }
         break;

@@ -1,6 +1,7 @@
 #include "stage_02.h"
 #include "inc_asm.h"
 #include "sattypes.h"
+#include "sfx.h"
 
 // Alchemy Laboratory
 
@@ -78,7 +79,7 @@ void EntityTableWithGlobe(Entity* self) {
     case 1:
         AnimateEntity(self, D_80180EF8, D_80180EF0);
         if (self->hitFlags != 0) {
-            func_801C29B0(0x61D);
+            func_801C29B0(SFX_GLASS_BREAK_E);
             self->hitboxState = 0;
             CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
             self[1].params = D_80180F10[self->params];

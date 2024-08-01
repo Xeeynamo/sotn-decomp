@@ -1338,7 +1338,7 @@ void EntityTableWithGlobe(Entity* self) {
     case 1:
         AnimateEntity(D_80180EF0, self);
         if (self->hitFlags != 0) {
-            func_801C29B0(0x61D);
+            func_801C29B0(SFX_GLASS_BREAK_E);
             self->hitboxState = 0;
             CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
             self[1].params = D_80180F10[self->params];
@@ -1368,7 +1368,7 @@ void func_801B3648(Entity* self) {
     case 1:
         AnimateEntity(D_80180F1C, self);
         if (self->hitFlags != 0) {
-            func_801C29B0(0x619);
+            func_801C29B0(SFX_GLASS_BREAK_A);
             self->hitboxState = 0;
             SetStep(2);
         }
@@ -1442,7 +1442,7 @@ void func_801B37C0(Entity* self) {
             newEntity->params = 2;
             newEntity->posY.i.hi -= 8;
         }
-        func_801C29B0(0x61D);
+        func_801C29B0(SFX_GLASS_BREAK_E);
         self->step++;
 
     case 3:

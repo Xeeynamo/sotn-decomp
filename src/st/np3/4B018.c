@@ -675,7 +675,7 @@ void EntityOwlKnight(Entity* self) {
         }
         if (self->animFrameDuration == 0 && self->animFrameIdx == 7) {
             func_801916C4(0x6C7);
-            func_801916C4(0x616);
+            func_801916C4(SFX_SCRAPE_B);
             self->velocityX = FIX(-3);
             if (self->ext.owl.unk80 & 0x10) {
                 self->velocityX -= FIX(2); // now it's -5
