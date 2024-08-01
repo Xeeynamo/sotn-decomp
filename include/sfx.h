@@ -335,9 +335,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SE_TREE_BRANCH_SNAP 0x7A4
 #define SE_CASTLE_GATE_RISE 0x7A5
 
-// NZ1
-#define SE_HARPY_WING_FLAP 0x601
-
 // SHARED SOUNDS
 // These are sounds that are shared across multiple BIN files
 #define SE_WEAPON_STAB 0x62E
@@ -388,5 +385,19 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SE_UNK_TE2_6B6 0x6B6
 #define SE_UNK_TE3_6B8 0x6B8
 #define NA_VO_MAR_AIM_HEAD 0x87F
+
+// The VAB IDs appear in large chunks so all sounds proceeding
+// a vabid label comment will belong in that VAB group unless noted.
+
+enum Sfx {
+    // vabid 0
+    SFX_HARPY_WING_FLAP = 0x601,
+    SFX_RIC_WHIP_RATTLE_A,
+    // (RATTLE_B through E appear to be unused)
+    SFX_RIC_WHIP_RATTLE_B,
+    SFX_RIC_WHIP_RATTLE_C,
+    SFX_RIC_WHIP_RATTLE_D,
+    SFX_RIC_WHIP_RATTLE_E,
+};
 
 #endif

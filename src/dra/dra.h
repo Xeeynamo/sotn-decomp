@@ -27,9 +27,6 @@
 #define GET_GREEN(x) ((x) & GREEN_MASK)
 #define GET_BLUE(x) ((x) & BLUE_MASK)
 
-#define CLAMP_MIN(v, min) ((v) < (min) ? (min) : (v))
-#define CLAMP_MAX(v, max) ((v) > (max) ? (max) : (v))
-
 typedef enum {
     MENU_DG_MAIN,
     MENU_DG_BG,
