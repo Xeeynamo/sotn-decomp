@@ -64,7 +64,7 @@ void func_8016D9C4(Entity* self) {
         self->ext.et_8016D9C4.unk90 = 4;
         self->ext.et_8016D9C4.unk8E = 0;
         self->ext.et_8016D9C4.unk8C = 0;
-        g_api.PlaySfx(0x623);
+        g_api.PlaySfx(SFX_RIC_RSTONE_TINK);
         self->step++;
         break;
     case 1:

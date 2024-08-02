@@ -629,7 +629,7 @@ void EntityBatEcho(Entity* self) {
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = PLAYER.posY.i.hi;
     if ((self->ext.batEcho.unk8A % 384) == 0) {
-        PlaySfx(NA_SE_PL_BT_ECHO);
+        PlaySfx(SFX_BAT_ECHO_B);
     }
     self->ext.batEcho.unk8A += 1;
     if (self->ext.batEcho.unk88) {

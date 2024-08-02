@@ -182,7 +182,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 
 // This sound plays when MAX UP spawns and during Dracula transformation
 #define NA_SE_UNK_62F 0x62F
-#define NA_SE_PL_BT_ECHO 0x61F
 #define NA_SE_EN_SKELETON_DESTROY 0x62B
 #define SFX_WEAPON_62C 0x62C
 #define NA_SE_EV_GLASS_BREAK 0x632
@@ -400,6 +399,7 @@ enum Sfx {
     SFX_METAL_CLANG_B,
     SFX_METAL_CLANG_C,
     SFX_METAL_CLANG_D,
+    // Stone Skull Hit
     SFX_METAL_CLANG_E,
     SFX_METAL_CLANG_F,
     SFX_UNK_CROW,
@@ -415,7 +415,15 @@ enum Sfx {
     SFX_GLASS_BREAK_B,
     SFX_GLASS_BREAK_C,
     SFX_GLASS_BREAK_D,
+    // Vase Break
     SFX_GLASS_BREAK_E,
+    SFX_BAT_ECHO_A,
+    // Alucard Echo of Bat
+    SFX_BAT_ECHO_B,
+    SFX_BAT_ECHO_C,
+    SFX_BAT_ECHO_D,
+    SFX_SKULL_BONK,
+    SFX_RIC_RSTONE_TINK,
 };
 
 #endif
