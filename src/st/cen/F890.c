@@ -137,7 +137,7 @@ void EntityPlatform(Entity* self) {
             g_Player.padSim = PAD_LEFT;
             player->posX.i.hi = 384 - tilemap->scrollX.i.hi;
             self->step++;
-            g_api.PlaySfx(SFX_SKULL_HIT_A);
+            g_api.PlaySfx(SFX_METAL_CLANG_A);
             D_8019D424 |= 1;
             tilemap->height = ((s16)tilemap->scrollY.i.hi + 0x100);
             func_8018F8EC(0);
@@ -181,7 +181,7 @@ void EntityPlatform(Entity* self) {
     case 6:
         if (D_8019D424 & 2) {
             self->step++;
-            g_api.PlaySfx(SFX_SKULL_HIT_A);
+            g_api.PlaySfx(SFX_METAL_CLANG_A);
         }
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 1;
@@ -443,7 +443,7 @@ void EntityElevatorStationary(Entity* self) {
             player->posY.i.hi++;
             posY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
             if ((g_Timer % 16) == 0) {
-                func_8019A328(SFX_SKULL_HIT_A);
+                func_8019A328(SFX_METAL_CLANG_A);
             }
             if (posY == 0x74) {
                 self->step_s++;
@@ -483,7 +483,7 @@ void EntityElevatorStationary(Entity* self) {
         case 1:
             self->posY.val -= FIX(0.5);
             if ((g_Timer % 16) == 0) {
-                func_8019A328(SFX_SKULL_HIT_A);
+                func_8019A328(SFX_METAL_CLANG_A);
             }
             break;
 
