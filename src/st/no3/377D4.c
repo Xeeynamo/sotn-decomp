@@ -5,6 +5,7 @@
  */
 
 #include "no3.h"
+#include "sfx.h"
 
 // vase in the room with the door to the caverns
 void EntityCavernDoorVase(Entity* self) {
@@ -1609,7 +1610,7 @@ void EntitySwitch(Entity* entity) {
             if ((g_Tilemap.scrollY.i.hi + entity->posY.i.hi) > 193) {
                 entity->posY.i.hi = 193 - g_Tilemap.scrollY.i.hi;
                 g_CastleFlags[0x32] = 1;
-                g_api.PlaySfx(SE_BARRIER_MOVE_2);
+                g_api.PlaySfx(SFX_STONE_MOVE_B);
                 entity->step++;
             }
         }
@@ -1672,7 +1673,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
 
     case 1:
         if (g_CastleFlags[50] != 0) {
-            g_api.PlaySfx(SE_BARRIER_MOVE);
+            g_api.PlaySfx(SFX_STONE_MOVE_A);
             self->step++;
         }
         break;

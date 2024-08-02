@@ -1,4 +1,5 @@
 #include "ric.h"
+#include "sfx.h"
 
 // Entity ID #7. Made by blueprint 6. Comes from subweapon 3. Holy water!
 // Not at all the same as DRA's.
@@ -897,7 +898,7 @@ void EntitySubwpnCrashAgunea(Entity* self) {
         func_8015FAB8(self);
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
-        g_api.PlaySfx(0x60C);
+        g_api.PlaySfx(SFX_SWORD_SWISH_C);
         self->ext.aguneaCrash.unk98 = 0x7F;
         self->step++;
         break;
@@ -909,7 +910,8 @@ void EntitySubwpnCrashAgunea(Entity* self) {
         }
         self->ext.aguneaCrash.unk7C = var_a1 + self->ext.aguneaCrash.unk7C;
         if (!(self->ext.aguneaCrash.unk7C & 0x3FF)) {
-            g_api.func_80134714(0x60C, self->ext.aguneaCrash.unk98, 0);
+            g_api.func_80134714(
+                SFX_SWORD_SWISH_C, self->ext.aguneaCrash.unk98, 0);
             self->ext.aguneaCrash.unk98 -= 8;
             if (self->ext.aguneaCrash.unk98 < 0) {
                 self->ext.aguneaCrash.unk98 = 0;
@@ -1321,7 +1323,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
         prim->g0 = 0x3F;
         prim->b0 = 0;
         SetSpeedX(FIX(8));
-        g_api.PlaySfx(SFX_SUBWPN_THROW);
+        g_api.PlaySfx(SFX_SWORD_SWISH_C);
         self->step++;
         return;
     case 1:
@@ -1548,7 +1550,7 @@ void EntitySubwpnReboundStone(Entity* self) {
             self->ext.reboundStone.unk84 = 4;
         }
         self->step += 1;
-        g_api.PlaySfx(SFX_SUBWPN_THROW);
+        g_api.PlaySfx(SFX_SWORD_SWISH_C);
         break;
 
     case 1:
@@ -1834,7 +1836,7 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
             fakeprim->y0 = fakeprim->posY.i.hi;
             fakeprim = fakeprim->next;
         }
-        g_api.PlaySfx(SFX_SUBWPN_THROW);
+        g_api.PlaySfx(SFX_SWORD_SWISH_C);
         self->step++;
         break;
     case 1:
@@ -1978,7 +1980,7 @@ void EntitySubwpnAgunea(Entity* self) {
             prim->g1 = 0;
             prim->b1 = 0x80;
             SetSpeedX(FIX(6));
-            g_api.PlaySfx(0x60C);
+            g_api.PlaySfx(SFX_SWORD_SWISH_C);
             self->step++;
         }
         break;

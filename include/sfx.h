@@ -182,14 +182,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 
 // This sound plays when MAX UP spawns and during Dracula transformation
 #define NA_SE_UNK_62F 0x62F
-#define SFX_UNK_608 0x608
-#define NA_SE_EV_HEAVY_BLOCK_DRAG 0x609
-#define NA_SE_EN_BLOOD_ZOMBIE_SWORD_SLASH 0x60B
-#define SFX_SUBWPN_THROW 0x60C // Throwing rebound stone, vibhuti, others?
-#define SFX_CLANK 0x611 // when attacking invulnerable enemy (like Stone Skull)
-#define NA_SE_AL_BACKSLIDE 0x617
-#define SFX_UNK_61A 0x61A
-#define NA_SE_EV_VASE_BREAK 0x61D
 #define NA_SE_PL_BT_ECHO 0x61F
 #define NA_SE_EN_SKELETON_DESTROY 0x62B
 #define SFX_WEAPON_62C 0x62C
@@ -373,7 +365,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SFX_DARK_SHIELD 0x63C
 
 // UNUSED SOUNDS
-#define SE_UNK_ST0_618 0x618
 #define SE_UNK_MAD_630 0x630
 #define SE_UNK_TE1_651 0x651
 #define SE_UNK_TE3_667 0x667
@@ -398,6 +389,32 @@ enum Sfx {
     SFX_RIC_WHIP_RATTLE_C,
     SFX_RIC_WHIP_RATTLE_D,
     SFX_RIC_WHIP_RATTLE_E,
+    SFX_STONE_MOVE_A,
+    SFX_STONE_MOVE_B,
+    SFX_STONE_MOVE_C,
+    SFX_SWORD_SWISH_A,
+    SFX_SWORD_SWISH_B,
+    SFX_SWORD_SWISH_C,
+    SFX_SKULL_HIT_A,
+    SFX_SKULL_HIT_B,
+    SFX_SKULL_HIT_C,
+    SFX_SKULL_HIT_D,
+    SFX_SKULL_HIT_E,
+    SFX_SKULL_HIT_F,
+    SFX_UNK_CROW,
+    SFX_ELECTRICITY,
+    SFX_SCRAPE_A,
+    SFX_SCRAPE_B,
+    // Alucard backslide
+    SFX_SCRAPE_C,
+    SFX_UNK_618,
+    // vabid 9
+    SFX_GLASS_BREAK_A,
+    // vabid 0
+    SFX_GLASS_BREAK_B,
+    SFX_GLASS_BREAK_C,
+    SFX_GLASS_BREAK_D,
+    SFX_GLASS_BREAK_E,
 };
 
 #endif
