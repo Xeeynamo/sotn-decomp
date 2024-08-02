@@ -384,8 +384,7 @@ enum Sfx {
     // vabid 0
     SFX_HARPY_WING_FLAP = 0x601,
     SFX_RIC_WHIP_RATTLE_A,
-    // (RATTLE_B through E appear to be unused)
-    SFX_RIC_WHIP_RATTLE_B,
+    SFX_RIC_WHIP_RATTLE_B, // (B through E appear to be unused)
     SFX_RIC_WHIP_RATTLE_C,
     SFX_RIC_WHIP_RATTLE_D,
     SFX_RIC_WHIP_RATTLE_E,
@@ -399,31 +398,27 @@ enum Sfx {
     SFX_METAL_CLANG_B,
     SFX_METAL_CLANG_C,
     SFX_METAL_CLANG_D,
-    // Stone Skull Hit
-    SFX_METAL_CLANG_E,
+    SFX_METAL_CLANG_E, // Stone Skull Hit
     SFX_METAL_CLANG_F,
     SFX_UNK_CROW,
     SFX_ELECTRICITY,
     SFX_SCRAPE_A,
     SFX_SCRAPE_B,
-    // Alucard backslide
-    SFX_SCRAPE_C,
-    SFX_UNK_618,
+    SFX_SCRAPE_C, // Alucard backslide
+    SFX_UNK_618,  // Referenced in ST0, TE1, TE2
     // vabid 9
     SFX_GLASS_BREAK_A,
     // vabid 0
     SFX_GLASS_BREAK_B,
     SFX_GLASS_BREAK_C,
     SFX_GLASS_BREAK_D,
-    // Vase Break
-    SFX_GLASS_BREAK_E,
+    SFX_GLASS_BREAK_E, // Vase Break
     SFX_BAT_ECHO_A,
-    // Alucard Echo of Bat
-    SFX_BAT_ECHO_B,
+    SFX_BAT_ECHO_B, // Alucard Echo of Bat
     SFX_BAT_ECHO_C,
     SFX_BAT_ECHO_D,
     SFX_SKULL_BONK,
-    SFX_RIC_RSTONE_TINK,
+    SFX_RIC_RSTONE_TINK, // Rebound Stone
 };
 
 #endif
