@@ -343,7 +343,7 @@ void func_8016E46C(Entity* self) {
         if (++self->ext.et_8016E46C.unk80 >= 0x3C) {
             self->ext.et_8016E46C.unkB0 = 0x11;
             func_8015FAB8(self);
-            g_api.PlaySfx(0x62F);
+            g_api.PlaySfx(SFX_WEAPON_APPEAR);
             g_api.PlaySfx(0x635);
             self->step++;
         }
