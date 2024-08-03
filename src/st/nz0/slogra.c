@@ -1,4 +1,5 @@
 #include "nz0.h"
+#include "sfx.h"
 
 #define GAIBON self[8]
 
@@ -506,7 +507,7 @@ void EntitySlograSpear(Entity* self) {
             self->velocityY += FIX(0.15625);
             self->rotZ += 0x80;
             if (!(self->rotZ & 0xFFF)) {
-                func_801C29B0(0x625);
+                func_801C29B0(SFX_ARROW_SHOT_A);
             }
         }
     }

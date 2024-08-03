@@ -460,7 +460,7 @@ void HitDetection(void) {
                                 // as Alucard, this won't match
                                 g_api.PlaySfx(SFX_RICHTER_ATTACK_HIT);
                             } else if (iterEnt2->hitEffect & 0x80) {
-                                g_api.PlaySfx(SE_WEAPON_STAB);
+                                g_api.PlaySfx(SFX_WEAPON_STAB_B);
                             } else {
                                 g_api.PlaySfx(SE_WEAPON_WHACK);
                             }
