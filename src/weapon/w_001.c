@@ -35,7 +35,7 @@ void func_ptr_80170008(Entity* self) {
         self->enemyId = self->ext.factory.parent->enemyId;
         self->hitboxWidth = 10;
         self->hitboxHeight = 8;
-        g_api.PlaySfx(SFX_FIRE_BURST);
+        g_api.PlaySfx(SFX_FIRE_SHOT);
         self->step++;
         break;
 

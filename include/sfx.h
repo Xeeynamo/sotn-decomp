@@ -417,7 +417,7 @@ enum Sfx {
     SFX_SKELETON_DEATH_A,
     SFX_SKELETON_DEATH_B,
     SFX_SKELETON_DEATH_C,
-    SFX_FIRE_BURST,
+    SFX_FIRE_SHOT,
     SFX_WEAPON_STAB_A,
     SFX_WEAPON_STAB_B,     // Common stab sfx
     SFX_WEAPON_APPEAR,     // Item Crash, Neutron Bomb
