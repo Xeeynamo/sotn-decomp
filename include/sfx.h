@@ -180,8 +180,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-// This sound plays when MAX UP spawns and during Dracula transformation
-#define NA_SE_EN_SKELETON_DESTROY 0x62B
 #define SFX_WEAPON_62C 0x62C
 #define NA_SE_EV_GLASS_BREAK 0x632
 #define NA_SE_BREAK_CANDLE 0x634
