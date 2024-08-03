@@ -424,7 +424,7 @@ enum Sfx {
     SFX_UNK_BETA_630,      // MAD, TE1, TE2, TE3, TE4, TE5
     SFX_DEATH_AMBIENCE,    // BGM ambience during first Death cutscene
     SFX_MAGIC_GLASS_BREAK, // Subweapon Container
-    SFX_UI_SELECT,
+    SFX_UI_CONFIRM,
 };
 
 #endif
