@@ -181,7 +181,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #endif
 
 // This sound plays when MAX UP spawns and during Dracula transformation
-#define NA_SE_UNK_62F 0x62F
 #define NA_SE_EN_SKELETON_DESTROY 0x62B
 #define SFX_WEAPON_62C 0x62C
 #define NA_SE_EV_GLASS_BREAK 0x632
@@ -430,8 +429,8 @@ enum Sfx {
     SFX_FIRE_BURST,
     SFX_WEAPON_STAB_A,
     SFX_WEAPON_STAB_B, // Common stab sfx
-    SFX_WEAPON_APPEAR,
-    SFX_UNK_BETA_630, // MAD, TE1, TE2, TE3, TE4, TE5
+    SFX_WEAPON_APPEAR, // Item Crash, Neutron Bomb
+    SFX_UNK_BETA_630,  // MAD, TE1, TE2, TE3, TE4, TE5
     SFX_DEATH_AMBIENCE,
 };
 

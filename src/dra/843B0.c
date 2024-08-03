@@ -1118,7 +1118,7 @@ void EntitySubwpnCrashCross(Entity* self) {
                 right = 0xFF;
             }
             self->step += 1;
-            PlaySfx(NA_SE_UNK_62F);
+            PlaySfx(SFX_WEAPON_APPEAR);
         }
         break;
     case 4:
