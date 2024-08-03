@@ -847,7 +847,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
                 g_Player.unk40 = 0x8164;
             }
             if (damage->effects & 0x40) {
-                PlaySfx(SE_WEAPON_STAB);
+                PlaySfx(SFX_WEAPON_STAB_B);
                 g_Player.unk40 = 0x8166;
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(0x4200, 44), 0);

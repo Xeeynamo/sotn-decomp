@@ -180,8 +180,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define SFX_WEAPON_62C 0x62C
-#define NA_SE_EV_GLASS_BREAK 0x632
 #define NA_SE_BREAK_CANDLE 0x634
 #define SFX_UNK_635 0x635
 #define NA_SE_PL_WARP 0x636
@@ -293,7 +291,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define BIBLE_SUBWPN_SWOOSH 0x8C3
 
 // STAGE DRE
-#define NA_SE_SU_SHOOT_PINKBALLS 0x62C
 #define SE_SUC_REVEAL 0x637
 #define NA_SE_SU_LANDING 0x646
 #define SE_DRE_FADE_TO_WHITE 0x65A
@@ -317,7 +314,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 
 // STAGE NO3 / NP3
 #define NA_SE_EV_WINDOW_LATCH 0x79D
-#define SE_DEATH_AMBIENCE 0x631
 #define SE_DEATH_TAKES_ITEMS 0x7A0
 #define NA_VO_DEATH_LAUGH 0x7A1
 #define SE_ITEM_YOINK 0x7A2
@@ -326,14 +322,12 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 
 // SHARED SOUNDS
 // These are sounds that are shared across multiple BIN files
-#define SE_WEAPON_STAB 0x62E
 #define SE_DOOR_OPEN 0x642
 #define SE_DOOR_CLOSE 0x64F
 #define SE_WEAPON_WHACK 0x678
 #define SE_BOSS_DEFEATED 0x7D2
 
 // UI SOUNDS
-#define SE_UI_CONFIRM 0x633
 #define SE_UI_START 0x63D
 #define SE_UI_SELECT 0x67B
 #define SE_UI_MAIN_MENU_SELECT 0x67D
@@ -362,7 +356,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SFX_DARK_SHIELD 0x63C
 
 // UNUSED SOUNDS
-#define SE_UNK_MAD_630 0x630
 #define SE_UNK_TE1_651 0x651
 #define SE_UNK_TE3_667 0x667
 #define SE_UNK_TE1_66F 0x66F
@@ -424,12 +417,14 @@ enum Sfx {
     SFX_SKELETON_DEATH_A,
     SFX_SKELETON_DEATH_B,
     SFX_SKELETON_DEATH_C,
-    SFX_FIRE_BURST,
+    SFX_FIRE_SHOT,
     SFX_WEAPON_STAB_A,
-    SFX_WEAPON_STAB_B, // Common stab sfx
-    SFX_WEAPON_APPEAR, // Item Crash, Neutron Bomb
-    SFX_UNK_BETA_630,  // MAD, TE1, TE2, TE3, TE4, TE5
-    SFX_DEATH_AMBIENCE,
+    SFX_WEAPON_STAB_B,     // Common stab sfx
+    SFX_WEAPON_APPEAR,     // Item Crash, Neutron Bomb
+    SFX_UNK_BETA_630,      // MAD, TE1, TE2, TE3, TE4, TE5
+    SFX_DEATH_AMBIENCE,    // BGM ambience during first Death cutscene
+    SFX_MAGIC_GLASS_BREAK, // Subweapon Container
+    SFX_UI_CONFIRM,
 };
 
 #endif

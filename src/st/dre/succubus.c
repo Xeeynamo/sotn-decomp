@@ -6,6 +6,7 @@
  */
 
 #include "dre.h"
+#include "sfx.h"
 
 typedef enum {
     /* 0 */ SUCCUBUS_INIT,
@@ -806,7 +807,7 @@ void EntitySuccubus(Entity* self) {
             if ((self->animFrameIdx == 5) && (self->animFrameDuration == 0)) {
                 func_801A046C(NA_VO_SU_GRUNT_2);
                 func_801A046C(NA_VO_SU_CRYSTAL_1);
-                func_801A046C(NA_SE_SU_SHOOT_PINKBALLS);
+                func_801A046C(SFX_FIRE_SHOT);
                 self->ext.succubus.unk85 = true;
             }
             break;
@@ -1138,7 +1139,7 @@ void EntitySuccubusClone(Entity* self) {
         if (self->animFrameIdx == 5 && self->animFrameDuration == 0) {
             func_801A046C(NA_VO_SU_GRUNT_2);
             func_801A046C(NA_VO_SU_CRYSTAL_1);
-            func_801A046C(NA_SE_SU_SHOOT_PINKBALLS);
+            func_801A046C(SFX_FIRE_SHOT);
             self->ext.succubus.unk85 = 1;
         }
         break;

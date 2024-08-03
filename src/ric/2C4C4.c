@@ -369,7 +369,7 @@ void EntitySubwpnCrashCross(Entity* self) {
             if (right >= 0x100) {
                 right = 0xFF;
             }
-            g_api.PlaySfx(0x62F);
+            g_api.PlaySfx(SFX_WEAPON_APPEAR);
             self->step += 1;
         }
         break;
@@ -1149,7 +1149,7 @@ void EntitySubwpnCrashAxe(Entity* self) {
         if (--self->ext.factory.unkA2 == 0) {
             if ((u8)self->params == 0) {
                 g_api.PlaySfx(0x635);
-                g_api.PlaySfx(0x62F);
+                g_api.PlaySfx(SFX_WEAPON_APPEAR);
             }
             g_Player.unk4E = 1;
             self->flags &= ~(FLAG_UNK_04000000 | FLAG_UNK_20000);

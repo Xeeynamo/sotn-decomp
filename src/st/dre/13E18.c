@@ -1,4 +1,5 @@
 #include "dre.h"
+#include "sfx.h"
 
 extern s32 D_80180660;
 
@@ -97,7 +98,7 @@ void EntityUnkId1C(Entity* self) {
         if (self->animFrameIdx == 5 && self->animFrameDuration == 0) {
             func_801A046C(0x872);
             func_801A046C(0x87C);
-            func_801A046C(0x62C);
+            func_801A046C(SFX_FIRE_SHOT);
             self->ext.generic.unk84.S8.unk1 = 1;
         }
         break;

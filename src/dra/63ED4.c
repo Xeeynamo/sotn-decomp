@@ -1270,7 +1270,7 @@ void func_80105428(void) {
         if (HandleSaveMenu(2) != 0) {
             if (D_80137E6C == 0) {
                 D_8006C378 = -1;
-                PlaySfx(SE_UI_CONFIRM);
+                PlaySfx(SFX_UI_CONFIRM);
                 MemCardSetPort(D_80097924);
                 D_801379BC++;
             } else {

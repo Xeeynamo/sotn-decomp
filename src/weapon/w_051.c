@@ -157,10 +157,10 @@ static u16* D_169000_8017ACBC[] = {
 };
 
 static WeaponAnimation D_169000_8017ACD8[] = {
-    {D_169000_8017AC68, hitboxes, 0, SFX_WEAPON_62C, 0x68, 4},
-    {D_169000_8017AC84, hitboxes, 2, SFX_WEAPON_62C, 0x68, 4},
-    {D_169000_8017AC84, hitboxes, 4, SFX_WEAPON_62C, 0x68, 4},
-    {D_169000_8017AC84, hitboxes, 6, SFX_WEAPON_62C, 0x68, 4},
+    {D_169000_8017AC68, hitboxes, 0, SFX_FIRE_SHOT, 0x68, 4},
+    {D_169000_8017AC84, hitboxes, 2, SFX_FIRE_SHOT, 0x68, 4},
+    {D_169000_8017AC84, hitboxes, 4, SFX_FIRE_SHOT, 0x68, 4},
+    {D_169000_8017AC84, hitboxes, 6, SFX_FIRE_SHOT, 0x68, 4},
 };
 
 static WeaponAnimation D_169000_8017AD18[] = {

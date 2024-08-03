@@ -1,4 +1,5 @@
 #include "np3.h"
+#include "sfx.h"
 
 void EntityHammerWeapon(Entity* self) {
     s16 temp_s0;
@@ -557,7 +558,7 @@ void EntityGurkhaSword(Entity* self) {
         }
 
         if ((g_Timer % 16) == 0) {
-            func_801916C4(0x625);
+            func_801916C4(SFX_ARROW_SHOT_A);
         }
 
         if (abs(self->velocityX) == 0x80000) {
