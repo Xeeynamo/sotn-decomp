@@ -245,7 +245,7 @@ void func_ptr_80170008(Entity* self) {
         self->unk4C = D_12A000_8017A6AC;
         self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;
         SetWeaponProperties(self, 0);
-        g_api.PlaySfx(0x628);
+        g_api.PlaySfx(SFX_ARROW_SHOT_D);
         self->step++;
         break;
     case 1:
