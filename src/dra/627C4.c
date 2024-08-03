@@ -592,7 +592,7 @@ s32 HandleSaveMenu(s32 arg0) {
                 return 2;
             }
             if (g_pads[0].tapped & CONFIRM) {
-                PlaySfx(SE_UI_CONFIRM);
+                PlaySfx(SFX_UI_SELECT);
                 FreePrimitives(D_80137E58);
                 FreePrimitives(D_80137E5C);
                 FreePrimitives(D_80137E60);
@@ -693,7 +693,7 @@ s32 HandleSaveMenu(s32 arg0) {
                 FreePrimitives(D_80137E60);
                 return 1;
             } else if (g_pads[0].tapped & CONFIRM) {
-                PlaySfx(SE_UI_CONFIRM);
+                PlaySfx(SFX_UI_SELECT);
                 FreePrimitives(D_80137E58);
                 FreePrimitives(D_80137E5C);
                 FreePrimitives(D_80137E60);

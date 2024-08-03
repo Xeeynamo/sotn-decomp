@@ -328,7 +328,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SE_BOSS_DEFEATED 0x7D2
 
 // UI SOUNDS
-#define SE_UI_CONFIRM 0x633
 #define SE_UI_START 0x63D
 #define SE_UI_SELECT 0x67B
 #define SE_UI_MAIN_MENU_SELECT 0x67D
@@ -420,10 +419,10 @@ enum Sfx {
     SFX_SKELETON_DEATH_C,
     SFX_FIRE_BURST,
     SFX_WEAPON_STAB_A,
-    SFX_WEAPON_STAB_B, // Common stab sfx
-    SFX_WEAPON_APPEAR, // Item Crash, Neutron Bomb
-    SFX_UNK_BETA_630,  // MAD, TE1, TE2, TE3, TE4, TE5
-    SFX_DEATH_AMBIENCE,
+    SFX_WEAPON_STAB_B,     // Common stab sfx
+    SFX_WEAPON_APPEAR,     // Item Crash, Neutron Bomb
+    SFX_UNK_BETA_630,      // MAD, TE1, TE2, TE3, TE4, TE5
+    SFX_DEATH_AMBIENCE,    // BGM ambience during first Death cutscene
     SFX_MAGIC_GLASS_BREAK, // Subweapon Container
     SFX_UI_SELECT,
 };
