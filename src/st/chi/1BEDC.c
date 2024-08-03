@@ -158,13 +158,13 @@ void func_8019BEDC(Entity* entity)
                 var_t1 = 3;
             }
             tempSrcTile = &D_801808B4;
-            
+
             for (i = 0; i < var_t1; i++, var_t0_2++) {
                 for (j = 0; j < 4; j++, tempSrcTile++) {
                     *((&g_Tilemap.fg[var_t0_2]) + j * 16) = *tempSrcTile;
                 }
             }
-            
+
             if (entity->posX.i.hi >= 0x129) {
                 func_801A128C(entity);
             }
@@ -189,4 +189,92 @@ void func_8019BEDC(Entity* entity)
 }
 #endif
 
-INCLUDE_ASM("st/chi/nonmatchings/1BEDC", func_8019C31C);
+s32 func_8019DE74();  // Random()
+void func_801A0560(u16 entityId, Entity* source, Entity* entity);  // CreateEntityFromEntity()
+void func_801A128C(Entity* entity);    // DestroyEntity()
+void func_801A1640(); // MoveEntity()
+Entity* func_801A1AFC(Entity* start, Entity* end); // AllocEntity()
+void func_801A1F9C(u16 args0[]);   // InitializeEntity()
+extern s32 D_8018067C;
+
+void func_8019C31C(Entity* entity)
+{
+    Collider collider;
+    s32 temp_a0_2;
+    s32 temp_a0_3;
+    s32 temp_v1_3;
+    s32 var_s2;
+    u16 temp_v1;
+    u16 temp_v1_2;
+    u8 temp_a0;
+    Entity* temp_v0;
+    Entity* temp_v0_2;
+
+    temp_v1 = entity->step;
+    switch (temp_v1) {
+        case 0:
+            func_801A1F9C(&D_8018067C);
+            temp_a0 = entity->params;
+            entity->drawFlags = 4;
+            entity->zPriority = 0x69;
+            entity->animCurFrame = (s16) temp_a0;
+            if (entity->rotZ & 1) {
+                entity->facingLeft = 1;
+                entity->rotZ = (u16) (entity->rotZ & 0xFFF0);
+            }
+            temp_a0_2 = (func_8019DE74() & 0xF) << 0xC;
+            entity->velocityX = temp_a0_2;
+            if (entity->animCurFrame == 0xD) {
+                entity->velocityX = temp_a0_2 + 0x4000;
+            }
+            temp_a0_3 = ((func_8019DE74() & 7) << 0xB) - 0x4000;
+            entity->velocityY = temp_a0_3;
+            if (entity->animCurFrame < 0xB) {
+                entity->velocityY = temp_a0_3 + 0xFFFF0000;
+            }
+            //temp_a0_3 
+            entity->ext.generic.unk9C.modeS16.unk0 = ((func_8019DE74() & 3) + 1) * 32;
+            return;
+        case 1:
+            temp_v1_2 = (u16) entity->params;
+            if (temp_v1_2 & 0x100) {
+                entity->params = (s16) (temp_v1_2 & 0xFF);
+                entity->step = (u16) (entity->step + 1);
+                return;
+            }
+            return;
+        case 2:
+            entity->rotZ += entity->ext.generic.unk9C.modeS16.unk0;
+            func_801A1640();
+            entity->velocityY = (s32) (entity->velocityY + 0x2000);
+            g_api_CheckCollision((s32) entity->posX.i.hi, (s32) (s16) (entity->posY.i.hi + 6), &collider, 0);
+            if (collider.effects & 1) {
+                entity->posY.i.hi = (u16) (entity->posY.i.hi + (u16) collider.unk18);
+                if (entity->animCurFrame >= 0xC) {
+                    var_s2 = 0;
+                    do {
+                        temp_v0 = func_801A1AFC(&g_Entities[224], &g_Entities[256]);
+                        var_s2 += 1;
+                        if (temp_v0 != NULL) {
+                            func_801A0560(0x19, entity, temp_v0);
+                            temp_v0->params = (s16) (((func_8019DE74() & 3) + 9) | 0x100);
+                        }
+                    } while (var_s2 < 2);
+                    func_801A128C(entity);
+                    return;
+                }
+                temp_v1_3 = entity->velocityY;
+                if (temp_v1_3 <= 0x7FFF) {
+                    temp_v0_2 = func_801A1AFC(&g_Entities[224], &g_Entities[256]);
+                    if (temp_v0_2 != NULL) {
+                        func_801A0560(6, entity, temp_v0_2);
+                        temp_v0_2->params = 0xC010;
+                    }
+                    func_801A128C(entity);
+                    return;
+                }
+                entity->velocityY = -temp_v1_3 * 2 / 3;
+            }
+            break;
+    }
+}

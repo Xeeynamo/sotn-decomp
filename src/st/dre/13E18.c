@@ -39,7 +39,7 @@ void EntityUnkId1C(Entity* self) {
 
     case 1:
         MoveEntity();
-        newEntity = self->ext.generic.unk9C;
+        newEntity = self->ext.generic.unk9C.entityPtr;
         self->animCurFrame = newEntity->animCurFrame;
         self->facingLeft = newEntity->facingLeft;
         if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
@@ -49,7 +49,7 @@ void EntityUnkId1C(Entity* self) {
         break;
 
     case 2:
-        newEntity = self->ext.generic.unk9C;
+        newEntity = self->ext.generic.unk9C.entityPtr;
         self->animCurFrame = newEntity->animCurFrame;
         self->facingLeft = newEntity->facingLeft;
         if (newEntity->ext.generic.unk84.U8.unk1 != 0) {
@@ -88,7 +88,7 @@ void EntityUnkId1C(Entity* self) {
                     } else {
                         newEntity->posX.i.hi += 2;
                     }
-                    newEntity->ext.generic.unk9C = self;
+                    newEntity->ext.generic.unk9C.entityPtr = self;
                     newEntity->posY.i.hi -= 10;
                     newEntity->zPriority = self->zPriority + 1;
                 }

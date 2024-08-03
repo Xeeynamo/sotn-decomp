@@ -78,7 +78,13 @@ typedef struct ET_Generic {
     /* 0x95 */ u8 unk95;
     /* 0x96 */ s16 unk96;
     /* 0x98 */ s32 unk98;
-    /* 0x9C */ struct Entity* unk9C;
+    union {
+        /* 0x9C */ struct Entity* entityPtr;
+        struct {
+            /* 0x9C */ s16 unk0;
+            /* 0x9E */ s16 unk2;
+        } modeS16;
+    } unk9C;
     /* 0xA0 */ s16 unkA0;
     /* 0xA2 */ s16 unkA2;
     /* 0xA4 */ s16 unkA4;
