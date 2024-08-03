@@ -180,10 +180,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-// This sound plays when MAX UP spawns and during Dracula transformation
-#define NA_SE_UNK_62F 0x62F
-#define NA_SE_PL_BT_ECHO 0x61F
-#define NA_SE_EN_SKELETON_DESTROY 0x62B
 #define SFX_WEAPON_62C 0x62C
 #define NA_SE_EV_GLASS_BREAK 0x632
 #define NA_SE_BREAK_CANDLE 0x634
@@ -385,37 +381,55 @@ enum Sfx {
     // vabid 0
     SFX_HARPY_WING_FLAP = 0x601,
     SFX_RIC_WHIP_RATTLE_A,
-    // (RATTLE_B through E appear to be unused)
-    SFX_RIC_WHIP_RATTLE_B,
+    SFX_RIC_WHIP_RATTLE_B, // (B through E appear to be unused)
     SFX_RIC_WHIP_RATTLE_C,
     SFX_RIC_WHIP_RATTLE_D,
     SFX_RIC_WHIP_RATTLE_E,
     SFX_STONE_MOVE_A,
     SFX_STONE_MOVE_B,
     SFX_STONE_MOVE_C,
-    SFX_SWORD_SWISH_A,
-    SFX_SWORD_SWISH_B,
-    SFX_SWORD_SWISH_C,
-    SFX_SKULL_HIT_A,
-    SFX_SKULL_HIT_B,
-    SFX_SKULL_HIT_C,
-    SFX_SKULL_HIT_D,
-    SFX_SKULL_HIT_E,
-    SFX_SKULL_HIT_F,
+    SFX_WEAPON_SWISH_A,
+    SFX_WEAPON_SWISH_B,
+    SFX_WEAPON_SWISH_C,
+    SFX_METAL_CLANG_A,
+    SFX_METAL_CLANG_B,
+    SFX_METAL_CLANG_C,
+    SFX_METAL_CLANG_D,
+    SFX_METAL_CLANG_E, // Stone Skull Hit
+    SFX_METAL_CLANG_F,
     SFX_UNK_CROW,
     SFX_ELECTRICITY,
     SFX_SCRAPE_A,
     SFX_SCRAPE_B,
-    // Alucard backslide
-    SFX_SCRAPE_C,
-    SFX_UNK_618,
+    SFX_SCRAPE_C, // Alucard backslide
+    SFX_UNK_618,  // Referenced in ST0, TE1, TE2
     // vabid 9
     SFX_GLASS_BREAK_A,
     // vabid 0
     SFX_GLASS_BREAK_B,
     SFX_GLASS_BREAK_C,
     SFX_GLASS_BREAK_D,
-    SFX_GLASS_BREAK_E,
+    SFX_GLASS_BREAK_E, // Vase Break
+    SFX_BAT_ECHO_A,
+    SFX_BAT_ECHO_B, // Alucard Echo of Bat
+    SFX_BAT_ECHO_C,
+    SFX_BAT_ECHO_D,
+    SFX_SKULL_BONK,
+    SFX_RIC_RSTONE_TINK, // Rebound Stone
+    SFX_SMALL_BURST,
+    SFX_ARROW_SHOT_A, // Magic Missile Shot
+    SFX_ARROW_SHOT_B,
+    SFX_ARROW_SHOT_C,
+    SFX_ARROW_SHOT_D,
+    SFX_SKELETON_DEATH_A,
+    SFX_SKELETON_DEATH_B,
+    SFX_SKELETON_DEATH_C,
+    SFX_FIRE_BURST,
+    SFX_WEAPON_STAB_A,
+    SFX_WEAPON_STAB_B, // Common stab sfx
+    SFX_WEAPON_APPEAR, // Item Crash, Neutron Bomb
+    SFX_UNK_BETA_630,  // MAD, TE1, TE2, TE3, TE4, TE5
+    SFX_DEATH_AMBIENCE,
 };
 
 #endif

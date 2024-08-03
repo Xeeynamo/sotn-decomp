@@ -314,7 +314,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
         prim->g0 = 0x3F;
         prim->b0 = 0;
         SetSpeedX(FIX(8));
-        PlaySfx(SFX_SWORD_SWISH_C);
+        PlaySfx(SFX_WEAPON_SWISH_C);
         g_Player.D_80072F00[10] = 4;
         self->step++;
         return;
@@ -537,7 +537,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
         func_8011A290(self);
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
-        PlaySfx(SFX_SWORD_SWISH_C);
+        PlaySfx(SFX_WEAPON_SWISH_C);
         g_Player.D_80072F00[10] = 4;
         self->ext.axeCrash.unk98 = 0x7F;
         self->step++;
@@ -550,7 +550,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
         }
         self->ext.axeCrash.unk7C = var_a1 + self->ext.axeCrash.unk7C;
         if (!(self->ext.axeCrash.unk7C & 0x3FF)) {
-            func_80134714(SFX_SWORD_SWISH_C, self->ext.axeCrash.unk98, 0);
+            func_80134714(SFX_WEAPON_SWISH_C, self->ext.axeCrash.unk98, 0);
             self->ext.axeCrash.unk98 -= 8;
             if (self->ext.axeCrash.unk98 < 0) {
                 self->ext.axeCrash.unk98 = 0;
@@ -1118,7 +1118,7 @@ void EntitySubwpnCrashCross(Entity* self) {
                 right = 0xFF;
             }
             self->step += 1;
-            PlaySfx(NA_SE_UNK_62F);
+            PlaySfx(SFX_WEAPON_APPEAR);
         }
         break;
     case 4:
@@ -1764,7 +1764,7 @@ void EntitySubwpnReboundStone(Entity* self) {
             self->ext.reboundStone.unk84 = 4;
         }
         self->step += 1;
-        PlaySfx(SFX_SWORD_SWISH_C);
+        PlaySfx(SFX_WEAPON_SWISH_C);
         break;
 
     case 1:
@@ -2043,7 +2043,7 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
             fakeprim->y0 = fakeprim->posY.i.hi;
             fakeprim = fakeprim->next;
         }
-        PlaySfx(SFX_SWORD_SWISH_C);
+        PlaySfx(SFX_WEAPON_SWISH_C);
         g_Player.D_80072F00[10] = 4;
         self->step++;
         break;
@@ -2188,7 +2188,7 @@ void EntitySubwpnAgunea(Entity* self) {
             prim->g1 = 0;
             prim->b1 = 0x80;
             SetSpeedX(FIX(6));
-            PlaySfx(SFX_SWORD_SWISH_C);
+            PlaySfx(SFX_WEAPON_SWISH_C);
             CreateEntFactoryFromEntity(self, FACTORY(0x5200, 44), 0);
             g_Player.D_80072F00[10] = 4;
             self->step++;

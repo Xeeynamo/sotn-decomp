@@ -164,7 +164,7 @@ void func_ptr_8017000C(Entity* self) {
         DestroyEntityWeapon(true);
         self->hitboxHeight = 12;
         self->hitboxWidth = 12;
-        g_api.PlaySfx(SFX_SWORD_SWISH_B);
+        g_api.PlaySfx(SFX_WEAPON_SWISH_B);
         g_Player.D_80072F00[10] = 4;
         self->step++;
         break;

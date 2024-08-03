@@ -2,6 +2,7 @@
 // Dark shield, Unknown#208
 #include "weapon_private.h"
 #include "shared.h"
+#include "sfx.h"
 
 extern SpriteParts D_AC000_8017A040[];
 extern s8 D_AC000_8017ABD8;
@@ -348,7 +349,7 @@ void EntityWeaponShieldSpell(Entity* self) {
                 prim = prim->next;
             }
             self->ext.shield.unk80 = 0;
-            g_api.PlaySfx(NA_SE_UNK_62F);
+            g_api.PlaySfx(SFX_WEAPON_APPEAR);
             self->step++;
         }
         prim = &g_PrimBuf[self->primIndex];

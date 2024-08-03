@@ -4,6 +4,7 @@
  */
 
 #include "nz0.h"
+#include "sfx.h"
 
 // moves around on walls and drips poison
 void EntitySpittleBone(Entity* self) {
@@ -93,7 +94,7 @@ void EntitySpittleBone(Entity* self) {
             newEntity->posX.i.hi += -(rsin(self->rotZ) * 0x10) >> 0xC;
             newEntity->posY.i.hi += -(rcos(self->rotZ) * 0x10) >> 0xC;
         }
-        func_801C29B0(0x62B);
+        func_801C29B0(SFX_SKELETON_DEATH_C);
         DestroyEntity(self);
         break;
 

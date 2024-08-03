@@ -308,7 +308,7 @@ void EntityBloodyZombie(Entity* self) {
     case BLOODY_ZOMBIE_ATTACK:
         animStatus = AnimateEntity(D_801825FC, self);
         if (animStatus & 0x80 && self->animFrameIdx == 10) {
-            func_801916C4(SFX_SWORD_SWISH_B);
+            func_801916C4(SFX_WEAPON_SWISH_B);
         }
         if (animStatus == 0) {
             SetStep(BLOODY_ZOMBIE_WALK);

@@ -176,11 +176,11 @@ u8* g_Anim1[] = {
 };
 
 WeaponAnimation g_SoundEvents[] = {
-    {g_Anim1, g_Hitboxes, 0, SFX_SWORD_SWISH_B, 0x41, 4},
-    {g_Anim0, g_Hitboxes, 0, SFX_SWORD_SWISH_B, 0x41, 4},
-    {g_Anim0, g_Hitboxes, 0, SFX_SWORD_SWISH_C, 0x41, 4},
+    {g_Anim1, g_Hitboxes, 0, SFX_WEAPON_SWISH_B, 0x41, 4},
+    {g_Anim0, g_Hitboxes, 0, SFX_WEAPON_SWISH_B, 0x41, 4},
+    {g_Anim0, g_Hitboxes, 0, SFX_WEAPON_SWISH_C, 0x41, 4},
     {g_Anim0, g_Hitboxes, 0, 0x6A8, 0x41, 4},
-    {g_Anim0, g_Hitboxes, 0, SFX_SWORD_SWISH_C, 0x41, 4},
+    {g_Anim0, g_Hitboxes, 0, SFX_WEAPON_SWISH_C, 0x41, 4},
 };
 
 u16* g_WeaponCluts[] = {
