@@ -198,9 +198,14 @@ segments:
       - [0x937B8, c, 93BDC]
       - [0x94B2C, c, 94F50]
       - [0x94F7C, c, 953A0]
-      - [0x95E88, sbss]
+      - [0x95E88, .bss, bss]
   - name: dra_data
     type: data
     start: 0x9B270
     vram:  0x8013B370
+    subsegments:
+      - [0x9B270, raw, vb_0] # D_8013B6A0, TODO verify data length
+      - [0xDCF1C, raw, vb_1] # D_8017D01C, TODO verify data length
+      - [0xEAFEC, raw, vb_2] # D_8018B4E0, TODO verify data length
+      - [0x10978C, raw, vb_3] # D_801A9C80, TODO verify data length
   - [0x115EDC]
