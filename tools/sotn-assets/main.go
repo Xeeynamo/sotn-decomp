@@ -84,7 +84,7 @@ func getOvlAssets(fileName string) (ovl, error) {
 		tileDefsRange = mergeDataRanges([]dataRange{tileDefsRange, unusedTileDefRange})
 	}
 
-	sprites, spritesRange, err := readSpritesBanks(file, header.Sprites)
+	sprites, spritesRange, err := readSpritesBanks(file, psx.RamStageBegin, header.Sprites)
 	if err != nil {
 		return ovl{}, fmt.Errorf("unable to gather all sprites: %w", err)
 	}
@@ -368,12 +368,43 @@ func handlerStage(args []string) error {
 	return nil
 }
 
-func handlerConfig(args []string) error {
+func handlerConfigExtract(args []string) error {
 	c, err := readConfig(args[0])
 	if err != nil {
 		return err
 	}
 	return extractFromConfig(c)
+}
+
+func handlerConfigBuild(args []string) error {
+	c, err := readConfig(args[0])
+	if err != nil {
+		return err
+	}
+	return buildFromConfig(c)
+}
+
+func handlerConfig(args []string) error {
+	commands := map[string]func(args []string) error{
+		"extract": handlerConfigExtract,
+		"build":   handlerConfigBuild,
+	}
+
+	if len(args) > 0 {
+		command := args[0]
+		if f, found := commands[command]; found {
+			if err := f(args[1:]); err != nil {
+				fmt.Fprintln(os.Stderr, err)
+				os.Exit(1)
+			}
+			return nil
+		}
+		fmt.Fprintf(os.Stderr, "unknown subcommand %q. Valid subcommand are %s\n", command, joinMapKeys(commands, ", "))
+	} else {
+		fmt.Fprintf(os.Stderr, "Need a subcommand. Valid subcommand are %s\n", joinMapKeys(commands, ", "))
+	}
+	os.Exit(1)
+	return nil
 }
 
 func main() {

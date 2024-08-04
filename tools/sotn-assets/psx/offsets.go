@@ -3,7 +3,7 @@ package psx
 import (
 	"encoding/binary"
 	"fmt"
-	"os"
+	"io"
 )
 
 type Addr uint32
@@ -43,13 +43,8 @@ func (off Addr) InRange(begin Addr, end Addr) bool {
 	return off >= begin && off < end
 }
 
-func (off Addr) MoveFile(file *os.File, begin Addr) error {
-	info, err := file.Stat()
-	if err != nil {
-		return fmt.Errorf("could not stat file: %w", err)
-	}
-
-	end := begin.Sum(int(info.Size()))
+func (off Addr) MoveFile(r io.ReadSeeker, begin Addr) error {
+	end := RamGameEnd
 	if !off.InRange(begin, end) {
 		err := fmt.Errorf("offset %s is outside the boundaries [%s, %s]", off, begin, end)
 		panic(err)
@@ -57,10 +52,16 @@ func (off Addr) MoveFile(file *os.File, begin Addr) error {
 	}
 
 	fileOffset := int64(off - begin)
-	file.Seek(fileOffset, 0)
+	r.Seek(fileOffset, 0)
 	return nil
 }
 
 func GetAddr(data []byte) Addr {
 	return Addr(binary.LittleEndian.Uint32(data))
+}
+
+func ReadAddr(r io.Reader) Addr {
+	b := make([]byte, 4)
+	_, _ = r.Read(b)
+	return GetAddr(b)
 }

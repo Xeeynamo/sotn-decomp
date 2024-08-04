@@ -329,6 +329,23 @@ func buildSpriteGroup(sb *strings.Builder, sprites []*[]sprite, mainSymbol strin
 	}
 }
 
+func buildFrameSet(inputFileName, outputFileName, prefix string) error {
+	data, err := os.ReadFile(inputFileName)
+	if err != nil {
+		return fmt.Errorf("unable to open %q: %v", inputFileName, err)
+	}
+
+	var sprites []*[]sprite
+	if err := json.Unmarshal(data, &sprites); err != nil {
+		return fmt.Errorf("unable to parse %q: %v", inputFileName, err)
+	}
+	sb := strings.Builder{}
+	sb.WriteString("// clang-format off\n")
+	r := rand.New(rand.NewSource(int64(len(data))))
+	buildSpriteGroup(&sb, sprites, prefix, r)
+	return os.WriteFile(outputFileName, []byte(sb.String()), 0644)
+}
+
 func buildSprites(fileName string, outputDir string) error {
 	ovlName := path.Base(outputDir)
 	data, err := os.ReadFile(fileName)

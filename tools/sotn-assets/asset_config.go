@@ -1,13 +1,15 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/animset"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"golang.org/x/sync/errgroup"
 	"gopkg.in/yaml.v2"
 	"os"
 	"path"
+	"path/filepath"
 	"strconv"
 )
 
@@ -18,9 +20,10 @@ type assetSegmentEntry struct {
 }
 
 type assetFileEntry struct {
-	Target   string              `yaml:"target"`
-	AssetDir string              `yaml:"asset_path"`
-	Segments []assetSegmentEntry `yaml:"segments"`
+	Target    string              `yaml:"target"`
+	AssetDir  string              `yaml:"asset_path"`
+	SourceDir string              `yaml:"src_path"`
+	Segments  []assetSegmentEntry `yaml:"segments"`
 }
 
 type assetConfig struct {
@@ -28,19 +31,54 @@ type assetConfig struct {
 }
 
 type assetEntry struct {
-	data    []byte
-	start   int
-	end     int
-	outDir  string
-	name    string
-	args    []string
-	ramBase psx.Addr
+	data     []byte
+	start    int
+	end      int
+	assetDir string
+	name     string
+	args     []string
+	ramBase  psx.Addr
 }
 
-var handlers = map[string]func(assetEntry) error{
-	"animset": func(e assetEntry) error {
-		outPath := path.Join(e.outDir, fmt.Sprintf("%s.animset_test.json", e.name))
-		return animset.Extract(outPath, e.ramBase, e.data, e.start, e.end)
+type assetBuildEntry struct {
+	assetDir string
+	srcDir   string
+	name     string
+}
+
+var extractHandlers = map[string]func(assetEntry) error{
+	"frameset": func(e assetEntry) error {
+		var set []*[]sprite
+		var err error
+		if e.start != e.end {
+			r := bytes.NewReader(e.data)
+			set, _, err = readFrameSet(r, e.ramBase, e.ramBase.Sum(e.start))
+			if err != nil {
+				return err
+			}
+		} else {
+			set = make([]*[]sprite, 0)
+		}
+		content, err := json.MarshalIndent(set, "", "  ")
+		if err != nil {
+			return err
+		}
+
+		outPath := path.Join(e.assetDir, fmt.Sprintf("%s.frameset.json", e.name))
+		dir := filepath.Dir(outPath)
+		if err := os.MkdirAll(dir, 0755); err != nil {
+			fmt.Printf("failed to create directory %s: %v\n", dir, err)
+			return err
+		}
+		return os.WriteFile(outPath, content, 0644)
+	},
+}
+
+var buildHandlers = map[string]func(assetBuildEntry) error{
+	"frameset": func(e assetBuildEntry) error {
+		inFileName := path.Join(e.assetDir, fmt.Sprintf("%s.frameset.json", e.name))
+		outFileName := path.Join(e.srcDir, fmt.Sprintf("%s.h", e.name))
+		return buildFrameSet(inFileName, outFileName, e.name)
 	},
 }
 
@@ -88,18 +126,19 @@ func enqueueExtractAssetEntry(
 	ramBase psx.Addr) {
 	eg.Go(func() error {
 		if err := handler(assetEntry{
-			data:    data,
-			start:   start,
-			end:     end,
-			outDir:  assetDir,
-			ramBase: ramBase,
-			name:    name,
-			args:    args,
+			data:     data,
+			start:    start,
+			end:      end,
+			assetDir: assetDir,
+			ramBase:  ramBase,
+			name:     name,
+			args:     args,
 		}); err != nil {
 			return fmt.Errorf("unable to extract asset %q: %v", name, err)
 		}
 		return nil
 	})
+	eg.Wait()
 }
 
 func extractAssetFile(file assetFileEntry) error {
@@ -128,7 +167,7 @@ func extractAssetFile(file assetFileEntry) error {
 			if kind == "skip" {
 				continue
 			}
-			if handler, found := handlers[kind]; found {
+			if handler, found := extractHandlers[kind]; found {
 				name := strconv.FormatUint(uint64(off), 16)
 				if len(args) > 0 {
 					name = args[0]
@@ -154,6 +193,52 @@ func extractFromConfig(c *assetConfig) error {
 		}
 		eg.Go(func() error {
 			return extractAssetFile(file)
+		})
+	}
+	return eg.Wait()
+}
+
+func buildAssetFile(file assetFileEntry) error {
+	for _, segment := range file.Segments {
+		if len(segment.Assets) == 0 {
+			continue
+		}
+		for _, asset := range segment.Assets {
+			off, kind, args, err := parseArgs(asset)
+			if err != nil {
+				return err
+			}
+			if kind == "skip" {
+				continue
+			}
+			if handler, found := buildHandlers[kind]; found {
+				name := strconv.FormatUint(uint64(off), 16)
+				if len(args) > 0 {
+					name = args[0]
+					args = args[1:]
+				}
+				err := handler(assetBuildEntry{
+					assetDir: file.AssetDir,
+					srcDir:   file.SourceDir,
+					name:     name,
+				})
+				if err != nil {
+					return err
+				}
+			}
+		}
+	}
+	return nil
+}
+
+func buildFromConfig(c *assetConfig) error {
+	var eg errgroup.Group
+	for _, file := range c.Files {
+		if len(file.Segments) == 0 {
+			continue
+		}
+		eg.Go(func() error {
+			return buildAssetFile(file)
 		})
 	}
 	return eg.Wait()
