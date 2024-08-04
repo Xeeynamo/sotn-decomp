@@ -2,6 +2,10 @@
 // AxeLord shield, Unknown#206
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_011_1.h"
+#include "w_011_2.h"
+#define g_Animset w_011_1
+#define g_Animset2 w_011_2
 
 extern SpriteParts D_51000_8017A040[];
 extern s8 D_51000_8017AB4C;

@@ -2,6 +2,10 @@
 // Medusa shield, Unknown#211
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_027_1.h"
+#include "w_027_2.h"
+#define g_Animset w_027_1
+#define g_Animset2 w_027_2
 
 extern SpriteParts D_C1000_8017A040[];
 extern s8 D_C1000_8017AC0C[];

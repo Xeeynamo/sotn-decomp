@@ -2,6 +2,10 @@
 // Karma Coin
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_020_1.h"
+#include "w_020_2.h"
+#define g_Animset w_020_1
+#define g_Animset2 w_020_2
 #include "sfx.h"
 
 extern SpriteParts D_90000_8017A040[];

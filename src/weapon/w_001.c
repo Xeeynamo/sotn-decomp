@@ -3,6 +3,10 @@
 // Unknown#187, Unknown#188
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_001_1.h"
+#include "w_001_2.h"
+#define g_Animset w_001_1
+#define g_Animset2 w_001_2
 
 INCLUDE_ASM("weapon/nonmatchings/w_001", EntityWeaponAttack);
 

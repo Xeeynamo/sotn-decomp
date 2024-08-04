@@ -2,6 +2,10 @@
 // Iron shield, Unknown#205
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_010_1.h"
+#include "w_010_2.h"
+#define g_Animset w_010_1
+#define g_Animset2 w_010_2
 #include "items.h"
 
 extern SpriteParts D_4A000_8017A040[];

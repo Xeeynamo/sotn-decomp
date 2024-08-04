@@ -2,6 +2,10 @@
 // Herald shield, Unknown#207
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_023_1.h"
+#include "w_023_2.h"
+#define g_Animset w_023_1
+#define g_Animset2 w_023_2
 
 extern SpriteParts D_A5000_8017A040[];
 extern s8 D_A5000_8017AAD8;

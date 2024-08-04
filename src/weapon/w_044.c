@@ -2,6 +2,10 @@
 // Heart Refresh
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_044_1.h"
+#include "w_044_2.h"
+#define g_Animset w_044_1
+#define g_Animset2 w_044_2
 
 INCLUDE_ASM("weapon/nonmatchings/w_044", EntityWeaponAttack);
 

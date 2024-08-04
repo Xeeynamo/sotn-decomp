@@ -2,6 +2,10 @@
 // Muramasa
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_056_1.h"
+#include "w_056_2.h"
+#define g_Animset w_056_1
+#define g_Animset2 w_056_2
 
 INCLUDE_ASM("weapon/nonmatchings/w_056", EntityWeaponAttack);
 

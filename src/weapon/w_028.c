@@ -2,6 +2,10 @@
 // Skull shield, Unknown#212
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_028_1.h"
+#include "w_028_2.h"
+#define g_Animset w_028_1
+#define g_Animset2 w_028_2
 
 extern SpriteParts D_C8000_8017A040[];
 extern s8 D_C8000_8017AA98[];

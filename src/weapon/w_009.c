@@ -2,6 +2,10 @@
 // Knight shield, Unknown#204
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_009_1.h"
+#include "w_009_2.h"
+#define g_Animset w_009_1
+#define g_Animset2 w_009_2
 
 extern SpriteParts D_43000_8017A040[];
 extern s8 D_43000_8017A9F8;

@@ -2,6 +2,10 @@
 // Leather shield, Unknown#203
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_008_1.h"
+#include "w_008_2.h"
+#define g_Animset w_008_1
+#define g_Animset2 w_008_2
 
 extern SpriteParts D_3C000_8017A040[];
 extern s8 D_3C000_8017A9F8;

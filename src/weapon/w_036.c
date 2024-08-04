@@ -2,6 +2,10 @@
 // Takemitsu
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_036_1.h"
+#include "w_036_2.h"
+#define g_Animset w_036_1
+#define g_Animset2 w_036_2
 
 extern WeaponAnimation D_100000_8017A540[];
 

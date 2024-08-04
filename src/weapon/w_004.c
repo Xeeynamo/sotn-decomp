@@ -2,6 +2,10 @@
 // Holy rod, Unknown#170
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_004_1.h"
+#include "w_004_2.h"
+#define g_Animset w_004_1
+#define g_Animset2 w_004_2
 
 extern WeaponAnimation D_20000_8017B2F4[]; // g_SoundEvents
 

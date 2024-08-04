@@ -2,6 +2,10 @@
 // Shaman shield, Unknown#210
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_026_1.h"
+#include "w_026_2.h"
+#define g_Animset w_026_1
+#define g_Animset2 w_026_2
 
 extern SpriteParts D_BA000_8017A040[];
 extern s8 D_BA000_8017AA18;

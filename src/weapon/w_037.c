@@ -2,6 +2,10 @@
 // Short sword, Jewel sword, Stone sword, Unknown#198
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_037_1.h"
+#include "w_037_2.h"
+#define g_Animset w_037_1
+#define g_Animset2 w_037_2
 
 extern WeaponAnimation D_107000_8017A6A4[];
 extern s32 D_107000_8017BBE4;

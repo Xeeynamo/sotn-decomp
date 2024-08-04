@@ -2,6 +2,10 @@
 // Magic Missile
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_022_1.h"
+#include "w_022_2.h"
+#define g_Animset w_022_1
+#define g_Animset2 w_022_2
 
 extern AnimationFrame D_9E000_8017A760[];
 extern AnimationFrame D_9E000_8017A800[];

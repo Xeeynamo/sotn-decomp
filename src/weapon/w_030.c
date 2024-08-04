@@ -2,6 +2,10 @@
 // Sword of Dawn, Unknown#177
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_030_1.h"
+#include "w_030_2.h"
+#define g_Animset w_030_1
+#define g_Animset2 w_030_2
 
 extern WeaponAnimation D_D6000_8017A5E4[];
 

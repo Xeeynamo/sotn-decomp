@@ -6,6 +6,10 @@
 
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_000_1.h"
+#include "w_000_2.h"
+#define g_Animset w_000_1
+#define g_Animset2 w_000_2
 
 u16 g_Clut0[] = {
     0x0000, 0x8000, 0xA821, 0x9DC0, 0xA821, 0xA821, 0xA821, 0xA821, // 0

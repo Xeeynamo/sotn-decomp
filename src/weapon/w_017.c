@@ -2,6 +2,10 @@
 // Pentagram, Bat Pentagram
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_017_1.h"
+#include "w_017_2.h"
+#define g_Animset w_017_1
+#define g_Animset2 w_017_2
 
 INCLUDE_ASM("weapon/nonmatchings/w_017", EntityWeaponAttack);
 

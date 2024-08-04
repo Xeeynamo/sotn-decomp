@@ -2,6 +2,10 @@
 // Goddess shield, Unknown#209
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_025_1.h"
+#include "w_025_2.h"
+#define g_Animset w_025_1
+#define g_Animset2 w_025_2
 
 extern SpriteParts D_B3000_8017A040[];
 extern s8 D_B3000_8017AA18;

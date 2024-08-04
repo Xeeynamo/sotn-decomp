@@ -2,6 +2,10 @@
 // Firebrand, Marsil, Unknown#179, Unknown#180
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_049_1.h"
+#include "w_049_2.h"
+#define g_Animset w_049_1
+#define g_Animset2 w_049_2
 
 INCLUDE_ASM("weapon/nonmatchings/w_049", EntityWeaponAttack);
 

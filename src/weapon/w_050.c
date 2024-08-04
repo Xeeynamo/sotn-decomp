@@ -2,6 +2,10 @@
 // Icebrand, Unknown#181, Unknown#199, Unknown#200, Unknown#201
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_050_1.h"
+#include "w_050_2.h"
+#define g_Animset w_050_1
+#define g_Animset2 w_050_2
 
 INCLUDE_ASM("weapon/nonmatchings/w_050", EntityWeaponAttack);
 

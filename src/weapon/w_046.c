@@ -2,6 +2,10 @@
 // Holbein dagger, Blue knuckles
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_046_1.h"
+#include "w_046_2.h"
+#define g_Animset w_046_1
+#define g_Animset2 w_046_2
 
 INCLUDE_ASM("weapon/nonmatchings/w_046", EntityWeaponAttack);
 

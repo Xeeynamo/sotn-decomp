@@ -2,6 +2,10 @@
 // Dark shield, Unknown#208
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_024_1.h"
+#include "w_024_2.h"
+#define g_Animset w_024_1
+#define g_Animset2 w_024_2
 
 extern SpriteParts D_AC000_8017A040[];
 extern s8 D_AC000_8017ABD8;

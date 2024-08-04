@@ -2,6 +2,10 @@
 // Alucard sword, Sword Familiar, Alucart sword, Unknown#197
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_043_1.h"
+#include "w_043_2.h"
+#define g_Animset w_043_1
+#define g_Animset2 w_043_2
 
 extern SpriteParts D_131000_8017A040[];
 extern AnimationFrame D_131000_8017AF40[];

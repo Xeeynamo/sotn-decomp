@@ -2,6 +2,10 @@
 // Runesword
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_014_1.h"
+#include "w_014_2.h"
+#define g_Animset w_014_1
+#define g_Animset2 w_014_2
 
 INCLUDE_ASM("weapon/nonmatchings/w_014", EntityWeaponAttack);
 

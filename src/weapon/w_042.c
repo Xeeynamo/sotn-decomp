@@ -2,6 +2,10 @@
 // Monster vial 3
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_042_1.h"
+#include "w_042_2.h"
+#define g_Animset w_042_1
+#define g_Animset2 w_042_2
 
 // data
 extern AnimationFrame D_12A000_8017A604[];

@@ -2,6 +2,10 @@
 // Mablung Sword
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_057_1.h"
+#include "w_057_2.h"
+#define g_Animset w_057_1
+#define g_Animset2 w_057_2
 
 extern WeaponAnimation D_193000_8017B06C[];
 

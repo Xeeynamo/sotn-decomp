@@ -2,6 +2,10 @@
 // Shield rod, Unknown#173
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_007_1.h"
+#include "w_007_2.h"
+#define g_Animset w_007_1
+#define g_Animset2 w_007_2
 
 INCLUDE_ASM("weapon/nonmatchings/w_007", EntityWeaponAttack);
 

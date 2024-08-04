@@ -2,6 +2,10 @@
 // Red Rust
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_035_1.h"
+#include "w_035_2.h"
+#define g_Animset w_035_1
+#define g_Animset2 w_035_2
 
 extern WeaponAnimation D_F9000_8017A530[];
 

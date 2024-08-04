@@ -2,6 +2,10 @@
 // Bwaka knife, Boomerang, Javelin, Fire boomerang, Iron ball
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_016_1.h"
+#include "w_016_2.h"
+#define g_Animset w_016_1
+#define g_Animset2 w_016_2
 
 // Weapon 16
 extern SpriteParts D_74000_8017A040[];

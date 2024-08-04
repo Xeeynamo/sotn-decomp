@@ -2,6 +2,10 @@
 // Mace
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_002_1.h"
+#include "w_002_2.h"
+#define g_Animset w_002_1
+#define g_Animset2 w_002_2
 
 extern WeaponAnimation D_12000_8017ABC4[];
 

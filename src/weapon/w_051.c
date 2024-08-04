@@ -3,6 +3,10 @@
 // Unknown#182, Unknown#183, Unknown#184, Unknown#185
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_051_1.h"
+#include "w_051_2.h"
+#define g_Animset w_051_1
+#define g_Animset2 w_051_2
 #include "sfx.h"
 
 u16 D_169000_8017A950[] = {

@@ -2,6 +2,10 @@
 // Shotel, Unknown#176
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_034_1.h"
+#include "w_034_2.h"
+#define g_Animset w_034_1
+#define g_Animset2 w_034_2
 
 extern WeaponAnimation D_F2000_8017A934[];
 

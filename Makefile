@@ -328,7 +328,7 @@ $(ASM_DIR)/weapon/data/w_%.data.s: # create a fake empty file if all the data ha
 	touch $@
 $(ASM_DIR)/weapon/data/w_%.sbss.s: # create a fake empty file if all the bss section has been imported
 	touch $@
-$(BUILD_DIR)/weapon/w0_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/header.c.o $(BUILD_DIR)/$(ASSETS_DIR)/weapon/w_%_1.animset.o $(BUILD_DIR)/$(ASSETS_DIR)/weapon/w_%_2.animset.o $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
+$(BUILD_DIR)/weapon/w0_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
 	$(LD) $(LD_FLAGS) --no-check-sections -o $@ \
 		-Map $(BUILD_DIR)/weapon/w0_$*.map \
 		-T weapon0.ld \
@@ -336,7 +336,7 @@ $(BUILD_DIR)/weapon/w0_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/header.c.o $(BUILD_
 		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).weapon.txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).weapon.txt \
 		$^
-$(BUILD_DIR)/weapon/w1_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/header.c.o $(BUILD_DIR)/$(ASSETS_DIR)/weapon/w_%_1.animset.o $(BUILD_DIR)/$(ASSETS_DIR)/weapon/w_%_2.animset.o $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
+$(BUILD_DIR)/weapon/w1_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
 	$(LD) $(LD_FLAGS) --no-check-sections -o $@ \
 		-Map $(BUILD_DIR)/weapon/w1_$*.map \
 		-T weapon1.ld \

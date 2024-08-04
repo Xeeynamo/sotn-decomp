@@ -2,6 +2,10 @@
 // Power of Sire
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_018_1.h"
+#include "w_018_2.h"
+#define g_Animset w_018_1
+#define g_Animset2 w_018_2
 
 extern const char D_82000_8017A73C[]; // "\no\n"
 extern s32 D_82000_8017B1B4;          // g_DebugWaitInfoTimer

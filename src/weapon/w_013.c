@@ -8,6 +8,10 @@
 
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_013_1.h"
+#include "w_013_2.h"
+#define g_Animset w_013_1
+#define g_Animset2 w_013_2
 
 extern SpriteParts D_5F000_8017A040[];
 extern u8 D_5F000_8017A5B0[6][8];

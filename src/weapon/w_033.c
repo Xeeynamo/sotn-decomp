@@ -2,6 +2,10 @@
 // Nunchaku
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_033_1.h"
+#include "w_033_2.h"
+#define g_Animset w_033_1
+#define g_Animset2 w_033_2
 
 INCLUDE_ASM("weapon/nonmatchings/w_033", EntityWeaponAttack);
 

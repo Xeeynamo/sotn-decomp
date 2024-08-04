@@ -2,6 +2,10 @@
 // Gurthang, Unknown#195
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_054_1.h"
+#include "w_054_2.h"
+#define g_Animset w_054_1
+#define g_Animset2 w_054_2
 
 INCLUDE_ASM("weapon/nonmatchings/w_054", EntityWeaponAttack);
 

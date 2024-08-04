@@ -2,6 +2,10 @@
 // Rapier, Unknown#191
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_038_1.h"
+#include "w_038_2.h"
+#define g_Animset w_038_1
+#define g_Animset2 w_038_2
 
 extern WeaponAnimation D_10E000_8017ADC0[2];
 

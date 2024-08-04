@@ -2,6 +2,10 @@
 // Fire shield, Unknown#213
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_029_1.h"
+#include "w_029_2.h"
+#define g_Animset w_029_1
+#define g_Animset2 w_029_2
 #include "items.h"
 
 extern s32 D_CF000_8017AC78;

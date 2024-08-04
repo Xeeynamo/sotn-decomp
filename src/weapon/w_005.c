@@ -2,6 +2,10 @@
 // Star flail, Unknown#171
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_005_1.h"
+#include "w_005_2.h"
+#define g_Animset w_005_1
+#define g_Animset2 w_005_2
 
 INCLUDE_ASM("weapon/nonmatchings/w_005", EntityWeaponAttack);
 

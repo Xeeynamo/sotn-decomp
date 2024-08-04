@@ -2,6 +2,10 @@
 // Moon rod, Unknown#172
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_006_1.h"
+#include "w_006_2.h"
+#define g_Animset w_006_1
+#define g_Animset2 w_006_2
 
 extern WeaponAnimation D_2E000_8017ABC4[];
 void EntityWeaponAttack(Entity* self) {

@@ -7,6 +7,10 @@
 // Chinese bun, Dim Sum set, Pot roast, Sirloin, Turkey, Meal ticket
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_021_1.h"
+#include "w_021_2.h"
+#define g_Animset w_021_1
+#define g_Animset2 w_021_2
 
 extern SpriteParts D_97000_8017A040[];
 

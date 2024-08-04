@@ -89,6 +89,7 @@ extract_assets: $(SOTNASSETS)
 	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/ST0/ST0.BIN -o assets/st/st0
 	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/WRP/WRP.BIN -o assets/st/wrp
 	$(SOTNASSETS) stage extract -stage_ovl disks/$(VERSION)/ST/RWRP/RWRP.BIN -o assets/st/rwrp
+	$(SOTNASSETS) config extract config/assets.us.weapon.yaml
 extract_assets_hd: $(SOTNASSETS)
 	cd tools/sotn-assets; $(GO) install
 	$(SOTNASSETS) stage extract -stage_ovl disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/wrp.bin -o assets/st/wrp
@@ -101,6 +102,7 @@ build_assets: $(SOTNASSETS)
 	$(SOTNASSETS) stage build_all -i assets/st/st0 -o src/st/st0/
 	$(SOTNASSETS) stage build_all -i assets/st/wrp -o src/st/wrp/
 	$(SOTNASSETS) stage build_all -i assets/st/rwrp -o src/st/rwrp/
+	$(SOTNASSETS) config build config/assets.us.weapon.yaml
 
 $(BUILD_DIR)/assets/dra/memcard_%.png.o: assets/dra/memcard_%.png
 	mkdir -p $(dir $@)

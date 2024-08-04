@@ -2,6 +2,10 @@
 // Alucard shield, Unknown#214
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_052_1.h"
+#include "w_052_2.h"
+#define g_Animset w_052_1
+#define g_Animset2 w_052_2
 
 extern SpriteParts D_170000_8017A040[];
 extern s8 D_170000_8017AB3C[];

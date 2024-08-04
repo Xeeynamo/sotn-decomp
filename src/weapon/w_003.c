@@ -2,6 +2,10 @@
 // Morningstar
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_003_1.h"
+#include "w_003_2.h"
+#define g_Animset w_003_1
+#define g_Animset2 w_003_2
 
 extern WeaponAnimation D_19000_8017AC28[];
 

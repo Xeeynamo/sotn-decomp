@@ -2,6 +2,10 @@
 // Were Bane, Unknown#190
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_039_1.h"
+#include "w_039_2.h"
+#define g_Animset w_039_1
+#define g_Animset2 w_039_2
 
 extern WeaponAnimation D_115000_8017ADC0[2];
 

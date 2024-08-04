@@ -2,6 +2,10 @@
 // Unknown#216
 #include "weapon_private.h"
 #include "shared.h"
+#include "w_045_1.h"
+#include "w_045_2.h"
+#define g_Animset w_045_1
+#define g_Animset2 w_045_2
 
 extern SpriteParts D_13F000_8017A040[];
 extern s32 D_13F000_8017B3B8;
