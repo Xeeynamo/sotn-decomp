@@ -301,11 +301,9 @@ void func_ptr_80170024(Entity* self) {
                 goto make_other_entity;
             }
         }
-        if ((((collider.effects & (EFFECT_UNK_8000 | EFFECT_UNK_4000)) ==
-              (EFFECT_UNK_8000 | EFFECT_UNK_4000)) &&
+        if ((((collider.effects & EFFECT_UNK_C000) == EFFECT_UNK_C000) &&
              (self->facingLeft)) ||
-            (((collider.effects & (EFFECT_UNK_8000 | EFFECT_UNK_4000)) ==
-              EFFECT_UNK_8000) &&
+            (((collider.effects & EFFECT_UNK_C000) == EFFECT_UNK_8000) &&
              (self->facingLeft == 0))) {
             if (!(collider.effects &
                   (EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID_FROM_BELOW))) {
@@ -346,11 +344,11 @@ void func_ptr_80170024(Entity* self) {
         }
         break;
     case 3:
-        if (self->animFrameDuration >= 0) {
-            break;
+        if (self->animFrameDuration < 0) {
+            DestroyEntity(self);
+            return;
         }
-        DestroyEntity(self);
-        return;
+        break;
     case 4:
         self->unk6C -= 2;
         if (--self->animFrameDuration < 0) {

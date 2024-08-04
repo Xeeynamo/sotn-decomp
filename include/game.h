@@ -1202,7 +1202,9 @@ typedef enum {
 
     // Aggregate helpers below:
     EFFECT_NOTHROUGH = EFFECT_SOLID | EFFECT_QUICKSAND,
-    EFFECT_NOTHROUGH_PLUS = EFFECT_SOLID | EFFECT_UNK_0002 | EFFECT_QUICKSAND
+    EFFECT_NOTHROUGH_PLUS = EFFECT_SOLID | EFFECT_UNK_0002 | EFFECT_QUICKSAND,
+    // Should be renamed once we know what 8000 and 4000 are
+    EFFECT_UNK_C000 = EFFECT_UNK_8000 | EFFECT_UNK_4000
 } ColliderEffectFlags;
 
 typedef struct Collider {
