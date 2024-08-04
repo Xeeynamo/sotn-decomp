@@ -79,5 +79,5 @@ segments:
       - [0x2A060, c, 2A060]
       - [0x2C4C4, c, 2C4C4]
       - [0x319C4, c, 319C4]
-      - [0x37B64, sbss]
+      - [0x37B64, .bss, bss]
   - [0x39A58]

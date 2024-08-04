@@ -88,5 +88,5 @@ segments:
       - [0x149C0, c, entity_relic_orb]
       - [0x15520, c]
       - [0x18FA0, c, prim_helpers]
-      - [0x197D8, sbss]
+      - [0x197D8, .bss, bss]
   - [0x19E94]
