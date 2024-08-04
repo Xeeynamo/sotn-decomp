@@ -1,5 +1,4 @@
 #include "weapon.h"
-#include <cJSON/cJSON.h>
 #include "pc.h"
 
 // main variable
@@ -116,7 +115,11 @@ void HandleWeapon0Prg(int fileId) {
 }
 
 void HandleWeapon0Chr(int fileId) {
-    readSubsetToBuf(
-        "disks/us/BIN/WEAPON0.BIN", &g_Pix[0], fileId * 0x07000, 0x4000);
-    LoadTPage(&g_Pix[0], 0, 0, 0x240, 0x100, 0x100, 0x80);
+    const int Width = 256;
+    const int Height = 128;
+    const int PixLen = Width * Height / 2;
+    const int EntryLen = 0x3000 + PixLen;
+    FileReadToBuf(
+        "disks/us/BIN/WEAPON0.BIN", &g_Pix[0], fileId * EntryLen, PixLen);
+    LoadTPage(&g_Pix[0], 0, 0, 0x240, 0x100, Width, Height);
 }

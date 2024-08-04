@@ -33,6 +33,7 @@ set(SOURCE_FILES_PC
     src/pc/stubs.c
     src/pc/sotn.c
     src/pc/pc.c
+    src/pc/io.c
     src/pc/str.c
     src/pc/sim_pc.c
     src/pc/pl_arc.c

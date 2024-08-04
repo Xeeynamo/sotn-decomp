@@ -86,12 +86,12 @@ bool InitAccessoryDefs(const char* jsonContent);
 void InitRelicDefs(void);
 void InitEnemyDefs(void);
 void InitSubwpnDefs(void);
-void InitGfxEquipIcons(FILE* f);
-void InitPalEquipIcons(FILE* f);
+bool InitGfxEquipIcons(const struct FileOpenRead* r);
+bool InitPalEquipIcons(const struct FileOpenRead* r);
 void InitVbVh(void);
-static bool InitSfxData(FileStringified* file);
-static bool InitXaData(FileStringified* file);
-static bool InitBlueprintData(FileStringified* file);
+static bool InitSfxData(struct FileAsString* file);
+static bool InitXaData(struct FileAsString* file);
+static bool InitBlueprintData(struct FileAsString* file);
 
 s32 func_800EDB58(u8 primType, s32 count);
 
@@ -189,22 +189,22 @@ bool InitGame(void) {
     g_Vram.D_800ACDA8.w = 0x0100;
     g_Vram.D_800ACDA8.h = 0x0010;
 
-    FileRead(InitGfxEquipIcons, "assets/dra/g_GfxEquipIcon.bin");
-    FileRead(InitPalEquipIcons, "assets/dra/g_PalEquipIcon.bin");
+    FileOpenRead(InitGfxEquipIcons, "assets/dra/g_GfxEquipIcon.bin", NULL);
+    FileOpenRead(InitPalEquipIcons, "assets/dra/g_PalEquipIcon.bin", NULL);
     InitVbVh();
 
-    if (!FileStringify(InitSfxData, "assets/dra/sfx.json", NULL)) {
+    if (!FileAsString(InitSfxData, "assets/dra/sfx.json", NULL)) {
         ERRORF("failed to init sfx");
         return false;
     }
 
-    if (!FileStringify(InitXaData, "assets/dra/music_xa.json", NULL)) {
+    if (!FileAsString(InitXaData, "assets/dra/music_xa.json", NULL)) {
         ERRORF("failed to init xa data");
         return false;
     }
 
     // TODO different between RIC and ARC
-    if (!FileStringify(
+    if (!FileAsString(
             InitBlueprintData, "assets/dra/factory_blueprint.json", NULL)) {
         ERRORF("failed to init blueprint data");
         return false;
@@ -215,97 +215,6 @@ bool InitGame(void) {
 
 void ResetPlatform(void);
 void ResetGame(void) { ResetPlatform(); }
-
-bool FileRead(bool (*cb)(FILE* file), const char* path) {
-    INFOF("open '%s'", path);
-    FILE* f = fopen(path, "rb");
-    if (f == NULL) {
-        ERRORF("unable to open '%s'", path);
-        return false;
-    }
-
-    bool r = cb(f);
-    fclose(f);
-    return r;
-}
-bool FileStringify(
-    bool (*cb)(FileStringified* file), const char* path, void* param) {
-    INFOF("open '%s'", path);
-    FILE* f = fopen(path, "rb");
-    if (f == NULL) {
-        ERRORF("unable to open '%s'", path);
-        return false;
-    }
-
-    fseek(f, 0, SEEK_END);
-    size_t len = ftell(f);
-    fseek(f, 0, SEEK_SET);
-
-    void* content = malloc(len + 1);
-    if (!content) {
-        ERRORF("unable to allocate %d bytes for '%s'", len, path);
-        fclose(f);
-        return false;
-    }
-
-    size_t bytesread = fread(content, 1, len, f);
-    if (bytesread != len) {
-        ERRORF("unable to read %d bytes for '%s'", len, path);
-        fclose(f);
-        free(content);
-        return false;
-    }
-
-    ((char*)content)[len] = '\0';
-
-    FileStringified file;
-    file.path = path;
-    file.content = content;
-    file.length = len;
-    file.param = param;
-    bool r = cb(&file);
-    free(content);
-    fclose(f);
-    return r;
-}
-bool FileUseContent(
-    bool (*cb)(FileLoad* file, void* param), const char* path, void* param) {
-    INFOF("open '%s'", path);
-    FILE* f = fopen(path, "rb");
-    if (f == NULL) {
-        ERRORF("unable to open '%s'", path);
-        return false;
-    }
-
-    fseek(f, 0, SEEK_END);
-    size_t len = ftell(f);
-    fseek(f, 0, SEEK_SET);
-
-    void* content = malloc(len);
-    if (!content) {
-        ERRORF("unable to allocate %d bytes for '%s'", len, path);
-        fclose(f);
-        return false;
-    }
-
-    size_t bytesread = fread(content, 1, len, f);
-    if (bytesread != len) {
-        ERRORF("unable to read %d bytes for '%s'", len, path);
-        fclose(f);
-        free(content);
-        return false;
-    }
-
-    FileLoad file;
-    file.path = path;
-    file.content = content;
-    file.length = bytesread;
-    bool r = cb(&file, param);
-
-    free(content);
-    fclose(f);
-    return r;
-}
 
 void InitSotnMenuTable(void);
 void InitStrings(void) {
@@ -324,22 +233,22 @@ void InitStrings(void) {
     }
 }
 
-static bool LoadCmpGfx(FileLoad* file, void* dst) {
-    if (file->length > MAX_SIZE_FOR_COMPRESSED_GFX) {
-        ERRORF("file '%s' too big, max size is %d ", file->path,
+static bool ReadCmpGfx(const struct FileOpenRead* f) {
+    if (f->length > MAX_SIZE_FOR_COMPRESSED_GFX) {
+        ERRORF("file '%s' too big, max size is %d ", f->filename,
                MAX_SIZE_FOR_COMPRESSED_GFX);
         return false;
     }
-    memcpy(dst, file->content, file->length);
+    fread(f->param, f->length, 1, f->file);
     return true;
 }
 
 static void InitAssets() {
-    FileUseContent(LoadCmpGfx, "assets/dra/D_800C217C.bin", D_800C217C);
-    FileUseContent(LoadCmpGfx, "assets/dra/D_800C27B0.bin", D_800C27B0);
-    FileUseContent(LoadCmpGfx, "assets/dra/D_800C3560.bin", D_800C3560);
-    FileUseContent(LoadCmpGfx, "assets/dra/D_800C4864.bin", D_800C4864);
-    FileUseContent(LoadCmpGfx, "assets/dra/D_800C4A90.bin", D_800C4A90);
+    FileOpenRead(ReadCmpGfx, "assets/dra/D_800C217C.bin", D_800C217C);
+    FileOpenRead(ReadCmpGfx, "assets/dra/D_800C27B0.bin", D_800C27B0);
+    FileOpenRead(ReadCmpGfx, "assets/dra/D_800C3560.bin", D_800C3560);
+    FileOpenRead(ReadCmpGfx, "assets/dra/D_800C4864.bin", D_800C4864);
+    FileOpenRead(ReadCmpGfx, "assets/dra/D_800C4A90.bin", D_800C4A90);
 }
 
 void (*g_VsyncCallback)() = NULL;
@@ -379,47 +288,28 @@ int MyStoreImage(RECT* rect, u_long* p) {
     return 0;
 }
 
-void ReadToArray(const char* path, char* content, size_t maxlen) {
-    INFOF("open '%s'", path);
-    FILE* f = fopen(path, "rb");
-    if (f == NULL) {
-        ERRORF("unable to open '%s'", path);
-        exit(0);
+void ReadToArray(const char* filename, char* content, size_t targetlen) {
+    int readlen = FileReadToBuf(filename, content, 0, targetlen);
+    if (readlen != targetlen) {
+        ERRORF(
+            "file read for '%s' failed (%d/%d)", filename, readlen, targetlen);
     }
-
-    fseek(f, 0, SEEK_END);
-    size_t len = ftell(f);
-
-    if (len > maxlen) {
-        ERRORF("file read for '%s' failed (%d/%d)", path, maxlen, len);
-        fclose(f);
-        exit(0);
-    }
-
-    fseek(f, 0, SEEK_SET);
-
-    size_t bytesread = fread(content, 1, len, f);
-    if (bytesread != len) {
-        ERRORF("unable to read %d bytes for '%s'", len, path);
-        fclose(f);
-        exit(0);
-    }
-
-    fclose(f);
 }
 
-void InitGfxEquipIcons(FILE* f) {
-    size_t n = fread(g_GfxEquipIcon, 1, sizeof(g_GfxEquipIcon), f);
+bool InitGfxEquipIcons(const struct FileOpenRead* r) {
+    size_t n = fread(g_GfxEquipIcon, 1, sizeof(g_GfxEquipIcon), r->file);
     if (n != sizeof(g_GfxEquipIcon)) {
         WARNF("unable to read all bytes: %d/%d", n, sizeof(g_GfxEquipIcon));
     }
+    return true;
 }
 
-void InitPalEquipIcons(FILE* f) {
-    size_t n = fread(g_PalEquipIcon, 1, sizeof(g_PalEquipIcon), f);
+bool InitPalEquipIcons(const struct FileOpenRead* r) {
+    size_t n = fread(g_PalEquipIcon, 1, sizeof(g_PalEquipIcon), r->file);
     if (n != sizeof(g_PalEquipIcon)) {
         WARNF("unable to read all bytes: %d/%d", n, sizeof(g_PalEquipIcon));
     }
+    return true;
 }
 
 void InitVbVh() {
@@ -456,7 +346,7 @@ void InitVbVh() {
         }                                                                      \
     }
 
-static bool InitSfxData(FileStringified* file) {
+static bool InitSfxData(struct FileAsString* file) {
     cJSON* json = cJSON_Parse(file->content);
     if (!json) {
         ERRORF("failed to parse '%s': %s", file->param, cJSON_GetErrorPtr());
@@ -485,7 +375,7 @@ static bool InitSfxData(FileStringified* file) {
     return true;
 }
 
-static bool InitXaData(FileStringified* file) {
+static bool InitXaData(struct FileAsString* file) {
     cJSON* json = cJSON_Parse(file->content);
     if (!json) {
         ERRORF("failed to parse '%s': %s", file->param, cJSON_GetErrorPtr());
@@ -516,7 +406,7 @@ static bool InitXaData(FileStringified* file) {
     return true;
 }
 
-static bool InitBlueprintData(FileStringified* file) {
+static bool InitBlueprintData(struct FileAsString* file) {
     cJSON* json = cJSON_Parse(file->content);
     if (!json) {
         ERRORF("failed to parse '%s': %s", file->param, cJSON_GetErrorPtr());

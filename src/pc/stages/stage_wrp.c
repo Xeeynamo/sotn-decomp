@@ -52,34 +52,12 @@ static Overlay g_StageDesc = {
 void InitStageWrp(Overlay* o) {
     LoadReset();
 
-    FILE* f = fopen("assets/st/wrp/D_80181D08.dec", "rb");
-    if (f) {
-        fseek(f, 0, SEEK_END);
-        size_t len = ftell(f);
-        fseek(f, 0, SEEK_SET);
-        fread(D_80181D08, MIN(len, sizeof(D_80181D08)), 1, f);
-        fclose(f);
-    }
-
-    f = fopen("assets/st/wrp/D_80181420.dec", "rb");
-    if (f) {
-        fseek(f, 0, SEEK_END);
-        size_t len = ftell(f);
-        fseek(f, 0, SEEK_SET);
-        fread(D_80181420, MIN(len, sizeof(D_80181420)), 1, f);
-        fclose(f);
-    }
-
-    f = fopen("assets/st/wrp/D_80181764.dec", "rb");
-    if (f) {
-        fseek(f, 0, SEEK_END);
-        size_t len = ftell(f);
-        fseek(f, 0, SEEK_SET);
-        fread(D_80181764, MIN(len, sizeof(D_80181764)), 1, f);
-        fclose(f);
-    }
-
-    //
+    FileReadToBuf(
+        "assets/st/wrp/D_80181D08.dec", D_80181D08, 0, sizeof(D_80181D08));
+    FileReadToBuf(
+        "assets/st/wrp/D_80181420.dec", D_80181420, 0, sizeof(D_80181420));
+    FileReadToBuf(
+        "assets/st/wrp/D_80181764.dec", D_80181764, 0, sizeof(D_80181764));
 
     memcpy(o, &g_StageDesc, sizeof(Overlay));
 }

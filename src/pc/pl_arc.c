@@ -5,7 +5,7 @@
 u8* g_PlOvlSpritesheet[256];
 static u8* sprite_data = NULL;
 
-void InitPlayerArc(FileLoad* file) {
+void InitPlayerArc(const struct FileUseContent* file) {
     int i;
 
     g_PlayableCharacter = PLAYER_ALUCARD;

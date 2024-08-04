@@ -173,7 +173,7 @@ void LoadStageTileset(u8* pTilesetData, size_t len, s32 y) {
 void InitStageDummy(Overlay* o);
 void InitStageWrp(Overlay* o);
 void InitStageSel(Overlay* o);
-void InitPlayerArc(FileLoad* file);
+void InitPlayerArc(const struct FileUseContent* file);
 void InitPlayerRic(void);
 void func_80131EBC(const char* str, s16 arg1);
 s32 LoadFileSimToMem(SimKind kind) {
@@ -275,7 +275,8 @@ s32 LoadFileSimToMem(SimKind kind) {
     return 0;
 }
 
-bool LoadFilePc(FileLoad* file, SimFile* sim) {
+bool LoadFilePc(const struct FileUseContent* file) {
+    SimFile* sim = (SimFile*)file->param;
     sim->addr = file->content;
     switch (sim->kind) { // slowly replacing the original func
     case SIM_1:
