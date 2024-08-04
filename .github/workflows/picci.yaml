@@ -102,7 +102,7 @@ jobs:
           cmake --build ${{github.workspace}}/pc --config Release
 
   build-windows:
-    runs-on: windows-2019
+    runs-on: windows-latest
     needs: extract-assets
     steps:
     - name: Install requirements
