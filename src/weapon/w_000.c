@@ -4,8 +4,6 @@
 // Hador, Luminus, Harper, Gram, Mormegil, Terminus Est, Dark Blade,
 // Mourneblade, Badelaire, Unknown#169
 
-#pragma optimize("", off) // TODO circumnavigate an optimization bug with MSVC
-
 #include "weapon_private.h"
 #include "w_000_1.h"
 #include "w_000_2.h"
