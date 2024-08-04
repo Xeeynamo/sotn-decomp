@@ -1,6 +1,8 @@
 // Weapon ID #6. Used by weapons:
 // Moon rod, Unknown#172
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_006_1.h"
 #include "w_006_2.h"

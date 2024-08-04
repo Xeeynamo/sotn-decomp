@@ -1,6 +1,8 @@
 // Weapon ID #47. Used by weapons:
 // Dynamite
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_047_1.h"
 #include "w_047_2.h"

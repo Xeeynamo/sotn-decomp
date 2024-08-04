@@ -2,6 +2,8 @@
 // Katana, Osafune katana, Masamune, Yasutsuna, Unknown#189, Unknown#192,
 // Unknown#193, Unknown#194
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_053_1.h"
 #include "w_053_2.h"

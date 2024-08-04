@@ -1,6 +1,8 @@
 // Weapon ID #49. Used by weapons:
 // Firebrand, Marsil, Unknown#179, Unknown#180
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_049_1.h"
 #include "w_049_2.h"

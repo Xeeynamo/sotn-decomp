@@ -1,6 +1,8 @@
 // Weapon ID #7. Used by weapons:
 // Shield rod, Unknown#173
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_007_1.h"
 #include "w_007_2.h"

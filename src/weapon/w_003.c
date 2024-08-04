@@ -1,6 +1,8 @@
 // Weapon ID #3. Used by weapons:
 // Morningstar
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_003_1.h"
 #include "w_003_2.h"

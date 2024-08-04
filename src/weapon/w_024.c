@@ -1,6 +1,8 @@
 // Weapon ID #24. Used by weapons:
 // Dark shield, Unknown#208
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_024_1.h"
 #include "w_024_2.h"

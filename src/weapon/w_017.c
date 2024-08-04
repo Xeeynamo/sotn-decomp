@@ -1,6 +1,8 @@
 // Weapon ID #17. Used by weapons:
 // Pentagram, Bat Pentagram
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_017_1.h"
 #include "w_017_2.h"

@@ -2,6 +2,8 @@
 // Knuckle duster, Jewel knuckles, Iron Fist, Fist of Tulkas, Unknown#186,
 // Unknown#187, Unknown#188
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_001_1.h"
 #include "w_001_2.h"

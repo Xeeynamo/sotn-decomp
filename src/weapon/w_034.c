@@ -1,6 +1,8 @@
 // Weapon ID #34. Used by weapons:
 // Shotel, Unknown#176
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_034_1.h"
 #include "w_034_2.h"

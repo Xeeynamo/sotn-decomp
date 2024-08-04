@@ -1,6 +1,8 @@
 // Weapon ID #48. Used by weapons:
 // Thunderbrand, Unknown#178
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_048_1.h"
 #include "w_048_2.h"

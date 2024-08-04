@@ -1,6 +1,8 @@
 // Weapon ID #9. Used by weapons:
 // Knight shield, Unknown#204
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_009_1.h"
 #include "w_009_2.h"

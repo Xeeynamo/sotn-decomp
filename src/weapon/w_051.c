@@ -2,6 +2,8 @@
 // Estoc, Claymore, Flamberge, Zwei hander, Obsidian sword, Great Sword,
 // Unknown#182, Unknown#183, Unknown#184, Unknown#185
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_051_1.h"
 #include "w_051_2.h"

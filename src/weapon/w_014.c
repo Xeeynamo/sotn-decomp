@@ -1,6 +1,8 @@
 // Weapon ID #14. Used by weapons:
 // Runesword
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_014_1.h"
 #include "w_014_2.h"

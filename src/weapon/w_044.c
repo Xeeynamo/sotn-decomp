@@ -1,6 +1,8 @@
 // Weapon ID #44. Used by weapons:
 // Heart Refresh
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_044_1.h"
 #include "w_044_2.h"

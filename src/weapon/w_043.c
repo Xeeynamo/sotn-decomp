@@ -1,6 +1,8 @@
 // Weapon ID #43. Used by weapons:
 // Alucard sword, Sword Familiar, Alucart sword, Unknown#197
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_043_1.h"
 #include "w_043_2.h"

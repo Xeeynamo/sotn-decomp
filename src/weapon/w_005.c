@@ -1,6 +1,8 @@
 // Weapon ID #5. Used by weapons:
 // Star flail, Unknown#171
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_005_1.h"
 #include "w_005_2.h"

@@ -1,6 +1,8 @@
 // Weapon ID #50. Used by weapons:
 // Icebrand, Unknown#181, Unknown#199, Unknown#200, Unknown#201
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_050_1.h"
 #include "w_050_2.h"

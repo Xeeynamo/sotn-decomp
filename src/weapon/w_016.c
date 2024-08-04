@@ -1,6 +1,8 @@
 // Weapon ID #16. Used by weapons:
 // Bwaka knife, Boomerang, Javelin, Fire boomerang, Iron ball
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_016_1.h"
 #include "w_016_2.h"

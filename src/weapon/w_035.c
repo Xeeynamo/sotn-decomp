@@ -1,6 +1,8 @@
 // Weapon ID #35. Used by weapons:
 // Red Rust
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_035_1.h"
 #include "w_035_2.h"

@@ -1,6 +1,8 @@
 // Weapon ID #25. Used by weapons:
 // Goddess shield, Unknown#209
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_025_1.h"
 #include "w_025_2.h"

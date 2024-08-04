@@ -1,6 +1,8 @@
 // Weapon ID #20. Used by weapons:
 // Karma Coin
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_020_1.h"
 #include "w_020_2.h"

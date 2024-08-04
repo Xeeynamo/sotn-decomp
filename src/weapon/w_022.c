@@ -1,6 +1,8 @@
 // Weapon ID #22. Used by weapons:
 // Magic Missile
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_022_1.h"
 #include "w_022_2.h"

@@ -1,6 +1,8 @@
 // Weapon ID #30. Used by weapons:
 // Sword of Dawn, Unknown#177
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_030_1.h"
 #include "w_030_2.h"

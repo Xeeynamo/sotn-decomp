@@ -1,6 +1,8 @@
 // Weapon ID #19. Used by weapons:
 // Neutron bomb
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_019_1.h"
 #include "w_019_2.h"

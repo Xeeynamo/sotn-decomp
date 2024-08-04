@@ -5,7 +5,6 @@
 // Mourneblade, Badelaire, Unknown#169
 
 #include "weapon_private.h"
-#include "shared.h"
 #include "w_000_1.h"
 #include "w_000_2.h"
 #define g_Animset w_000_1
@@ -192,6 +191,8 @@ static u16* g_WeaponCluts[] = {
 };
 
 static s32 g_HandId = HAND_ID;
+
+#include "shared.h"
 
 static void EntityWeaponAttack(Entity* self) {
     WeaponAnimation* anim;

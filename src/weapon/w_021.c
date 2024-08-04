@@ -6,6 +6,8 @@
 // tea, Green tea, Natou, Ramen, Miso soup, Sushi, Pork bun, Red bean bun,
 // Chinese bun, Dim Sum set, Pot roast, Sirloin, Turkey, Meal ticket
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_021_1.h"
 #include "w_021_2.h"

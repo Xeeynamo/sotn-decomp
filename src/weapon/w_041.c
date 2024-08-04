@@ -1,6 +1,8 @@
 // Weapon ID #41. Used by weapons:
 // Monster vial 2
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_041_1.h"
 #include "w_041_2.h"

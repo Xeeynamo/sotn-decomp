@@ -1,6 +1,8 @@
 // Weapon ID #12. Used by weapons:
 // Chakram, Vorpal blade, Crissaegrim
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_012_1.h"
 #include "w_012_2.h"

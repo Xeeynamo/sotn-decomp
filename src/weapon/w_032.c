@@ -1,6 +1,8 @@
 // Weapon ID #32. Used by weapons:
 // Combat knife, Unknown#175
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_032_1.h"
 #include "w_032_2.h"

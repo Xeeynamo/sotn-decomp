@@ -1,6 +1,8 @@
 // Weapon ID #56. Used by weapons:
 // Muramasa
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_056_1.h"
 #include "w_056_2.h"

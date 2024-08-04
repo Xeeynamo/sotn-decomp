@@ -41,17 +41,20 @@ static void WeaponUnused34(void);
 static void WeaponUnused38(void);
 static void WeaponUnused3C(void);
 
-// internals
-extern SpriteParts* g_Animset[];
-extern SpriteParts* g_Animset2[];
-extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
-
 void DestroyEntity(Entity* entity);
-void SetSpriteBank1(SpriteParts* animset);
-void SetSpriteBank2(SpriteParts* animset);
+static void SetSpriteBank1(SpriteParts* animset);
+static void SetSpriteBank2(SpriteParts* animset);
 static void DecelerateX(s32 amount);
 static void DecelerateY(s32 amount);
 static void SetSpeedX(s32 speed);
+
+Weapon OVL_EXPORT(header) = {
+    EntityWeaponAttack, func_ptr_80170004, func_ptr_80170008,
+    func_ptr_8017000C,  func_ptr_80170010, func_ptr_80170014,
+    GetWeaponId,        LoadWeaponPalette, EntityWeaponShieldSpell,
+    func_ptr_80170024,  func_ptr_80170028, WeaponUnused2C,
+    WeaponUnused30,     WeaponUnused34,    WeaponUnused38,
+    WeaponUnused3C,
+};
 
 #endif

@@ -1,6 +1,8 @@
 // Weapon ID #10. Used by weapons:
 // Iron shield, Unknown#205
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
 #include "w_010_1.h"
 #include "w_010_2.h"
