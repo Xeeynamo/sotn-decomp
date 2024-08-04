@@ -46,21 +46,34 @@ Weapon D_8017D000 = {
     func_ptr_80170024Dummy,
     func_ptr_80170028Dummy,
 };
+static Weapon dummy_header = {
+    EntityWeaponAttackDummy,
+    func_ptr_80170004Dummy,
+    func_ptr_80170008Dummy,
+    func_ptr_8017000CDummy,
+    func_ptr_80170010Dummy,
+    func_ptr_80170014Dummy,
+    GetWeaponIdDummy,
+    LoadWeaponPaletteDummy,
+    EntityWeaponShieldSpellDummy,
+    func_ptr_80170024Dummy,
+    func_ptr_80170028Dummy,
+};
 
 extern Weapon w_000_header;
 Weapon* g_Weapons[] = {
-    &w_000_header, &w_000_header, &w_000_header, &w_000_header, &w_000_header,
-    &w_000_header, &w_000_header, &w_000_header, &w_000_header, &w_000_header,
-    &w_000_header, &w_000_header, &w_000_header, &w_000_header, &w_000_header,
-    &w_000_header, &w_000_header, &w_000_header, &w_000_header, &w_000_header,
-    &w_000_header, &w_000_header, &w_000_header, &w_000_header, &w_000_header,
-    &w_000_header, &w_000_header, &w_000_header, &w_000_header, &w_000_header,
-    &w_000_header, &w_000_header, &w_000_header, &w_000_header, &w_000_header,
-    &w_000_header, &w_000_header, &w_000_header, &w_000_header, &w_000_header,
-    &w_000_header, &w_000_header, &w_000_header, &w_000_header, &w_000_header,
-    &w_000_header, &w_000_header, &w_000_header, &w_000_header, &w_000_header,
-    &w_000_header, &w_000_header, &w_000_header, &w_000_header, &w_000_header,
-    &w_000_header, &w_000_header, &w_000_header, &w_000_header,
+    &w_000_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
+    &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
+    &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
+    &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
+    &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
+    &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
+    &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
+    &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
+    &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
+    &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
+    &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
+    &dummy_header, &dummy_header, &dummy_header, &dummy_header,
 };
 
 SpriteParts* g_Animset[1];
