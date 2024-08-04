@@ -192,7 +192,7 @@ u16* g_WeaponCluts[] = {
 
 s32 g_HandId = HAND_ID;
 
-void OVL_EXPORT(EntityWeaponAttack)(Entity* self) {
+static void EntityWeaponAttack(Entity* self) {
     WeaponAnimation* anim;
     s32 mask;
     s16 subType;
@@ -245,30 +245,30 @@ void OVL_EXPORT(EntityWeaponAttack)(Entity* self) {
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
-s32 OVL_EXPORT(func_ptr_80170004)(Entity* self) {}
+static s32 func_ptr_80170004(Entity* self) {}
 
-void OVL_EXPORT(func_ptr_80170008)(Entity* self) {}
+static void func_ptr_80170008(Entity* self) {}
 
-void OVL_EXPORT(func_ptr_8017000C)(Entity* self) {}
+static void func_ptr_8017000C(Entity* self) {}
 
-s32 OVL_EXPORT(func_ptr_80170010)(Entity* self) {}
+static s32 func_ptr_80170010(Entity* self) {}
 
-s32 OVL_EXPORT(func_ptr_80170014)(Entity* self) {}
+static s32 func_ptr_80170014(Entity* self) {}
 
-int OVL_EXPORT(GetWeaponId)(void) { return 0; }
+static int GetWeaponId(void) { return 0; }
 
-void OVL_EXPORT(EntityWeaponShieldSpell)(Entity* self) {}
+static void EntityWeaponShieldSpell(Entity* self) {}
 
-void OVL_EXPORT(func_ptr_80170024)(Entity* self) {}
+static void func_ptr_80170024(Entity* self) {}
 
-void OVL_EXPORT(func_ptr_80170028)(Entity* self) {}
+static void func_ptr_80170028(Entity* self) {}
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}

@@ -2,7 +2,7 @@
 
 #include "../destroy_entity.h"
 
-void OVL_EXPORT(LoadWeaponPalette)(s32 clutIndex) {
+static void LoadWeaponPalette(s32 clutIndex) {
     RECT dstRect;
     u16* src;
     u16* dst;
@@ -144,7 +144,7 @@ void SetWeaponProperties(Entity* self, s32 kind) {
     }
 }
 
-Weapon g_Weapon = {
+Weapon OVL_EXPORT(header) = {
     EntityWeaponAttack, func_ptr_80170004, func_ptr_80170008,
     func_ptr_8017000C,  func_ptr_80170010, func_ptr_80170014,
     GetWeaponId,        LoadWeaponPalette, EntityWeaponShieldSpell,
