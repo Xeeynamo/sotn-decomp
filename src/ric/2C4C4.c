@@ -1148,7 +1148,7 @@ void EntitySubwpnCrashAxe(Entity* self) {
     case 3:
         if (--self->ext.factory.unkA2 == 0) {
             if ((u8)self->params == 0) {
-                g_api.PlaySfx(0x635);
+                g_api.PlaySfx(SFX_TELEPORT_BANG_A);
                 g_api.PlaySfx(SFX_WEAPON_APPEAR);
             }
             g_Player.unk4E = 1;

@@ -79,7 +79,7 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.unk80 = 0x10;
             self->ext.teleport.unk88 = 0x80;
             self->step = 1;
-            PlaySfx(SFX_UNK_635);
+            PlaySfx(SFX_TELEPORT_BANG_A);
             PlaySfx(NA_SE_PL_TELEPORT);
         }
         break;
