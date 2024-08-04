@@ -20,7 +20,7 @@ extract_us: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_US_TARGETS)))
 	make build_assets
 extract_hd: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_HD_TARGETS)))
 	make extract_assets_hd
-	make build_assets
+	make build_assets_hd
 
 extract_disk_us: extract_disk_psxus
 extract_disk_hd: extract_disk_pspeu
@@ -102,7 +102,9 @@ build_assets: $(SOTNASSETS)
 	$(SOTNASSETS) stage build_all -i assets/st/st0 -o src/st/st0/
 	$(SOTNASSETS) stage build_all -i assets/st/wrp -o src/st/wrp/
 	$(SOTNASSETS) stage build_all -i assets/st/rwrp -o src/st/rwrp/
-	$(SOTNASSETS) config build config/assets.us.weapon.yaml
+	$(SOTNASSETS) config build config/assets.$(VERSION).weapon.yaml
+build_assets_hd: $(SOTNASSETS)
+	$(SOTNASSETS) stage build_all -i assets/st/wrp -o src/st/wrp/
 
 $(BUILD_DIR)/assets/dra/memcard_%.png.o: assets/dra/memcard_%.png
 	mkdir -p $(dir $@)
