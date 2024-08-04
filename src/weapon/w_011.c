@@ -7,6 +7,9 @@ extern SpriteParts D_51000_8017A040[];
 extern s8 D_51000_8017AB4C;
 extern AnimationFrame* D_51000_8017AB94;
 
+extern AnimationFrame D_51000_8017ABCC[];
+extern AnimationFrame D_51000_8017ABE8[];
+
 void EntityWeaponAttack(Entity* self) {
     s32 anim1;
     s32 anim2;
@@ -155,8 +158,216 @@ int GetWeaponId(void) { return 11; }
 
 INCLUDE_ASM("weapon/nonmatchings/w_011", EntityWeaponShieldSpell);
 
-INCLUDE_ASM("weapon/nonmatchings/w_011", func_ptr_80170024);
+void func_ptr_80170024(Entity* self) {
+    Collider collider;
+    Entity* unusedEnt;
 
+    s16 xOffset;
+    s16 yOffset;
+    s16 xVar;
+    s16 yVar;
+
+    switch (self->step) {
+    case 0:
+        if (self->ext.shield.parent->entityId == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        self->animSet = self->ext.shield.parent->animSet;
+        self->unk5A = self->ext.shield.parent->unk5A;
+        self->zPriority = PLAYER.zPriority + 2;
+        self->palette = self->ext.shield.parent->palette;
+        self->facingLeft = self->ext.shield.parent->facingLeft;
+        if (self->params & 0x7F00) {
+            self->flags = FLAG_UNK_08000000;
+            self->animCurFrame = self->ext.shield.parent->animCurFrame;
+            self->drawFlags = FLAG_DRAW_UNK8;
+            self->drawMode = DRAW_TPAGE;
+            self->unk6C = 0x80;
+            self->animFrameDuration = 0x18;
+            self->zPriority -= 2;
+            self->step = 4;
+        } else {
+            self->unk4C = D_51000_8017ABCC;
+            self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+            self->ext.shield.unkAE = self->ext.shield.parent->ext.shield.unkAE;
+            SetWeaponProperties(self, 0);
+            self->hitboxWidth = 8;
+            self->hitboxHeight = 20;
+            SetSpeedX(FIX(1));
+            self->step++;
+        }
+        break;
+    case 1:
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->velocityY += FIX(1.0 / 8);
+        if (self->velocityY > FIX(6)) {
+            self->velocityY = FIX(6);
+        }
+        xOffset = 0;
+        yOffset = 25;
+        xVar = self->posX.i.hi + xOffset;
+        yVar = self->posY.i.hi + yOffset;
+        g_api.CheckCollision(xVar, yVar, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            self->posY.i.hi += collider.unk18;
+            g_api.PlaySfx(SFX_UNK_64B);
+            self->step = 2;
+            break;
+        }
+        if (!(collider.effects & EFFECT_UNK_8000)) {
+            xOffset = 8;
+            if (self->velocityX < 0) {
+                xOffset = -xOffset;
+            }
+            yOffset = 22;
+            xVar = self->posX.i.hi + xOffset;
+            yVar = self->posY.i.hi + yOffset;
+            g_api.CheckCollision(xVar, yVar, &collider, 0);
+            if ((collider.effects & EFFECT_SOLID) &&
+                !(collider.effects & EFFECT_UNK_8000)) {
+                goto make_other_entity;
+            }
+            xOffset = 8;
+            if (self->velocityX < 0) {
+                xOffset = -xOffset;
+            }
+            yOffset = 8;
+            xVar = self->posX.i.hi + xOffset;
+            yVar = self->posY.i.hi + yOffset;
+            g_api.CheckCollision(xVar, yVar, &collider, 0);
+            if ((collider.effects & EFFECT_SOLID) &&
+                !(collider.effects & EFFECT_UNK_8000)) {
+                goto make_other_entity;
+            }
+        }
+        xOffset = 8;
+        if (self->velocityX < 0) {
+            xOffset = -xOffset;
+        }
+        yOffset = -8;
+        xVar = self->posX.i.hi + xOffset;
+        yVar = self->posY.i.hi + yOffset;
+        g_api.CheckCollision(xVar, yVar, &collider, 0);
+        if ((collider.effects & EFFECT_SOLID) || (self->hitFlags)) {
+            goto make_other_entity;
+        }
+        if (g_Timer % 4 == 0) {
+            // Blueprint 90 is weapon entity 9, func_ptr_80170024, so ourself.
+            unusedEnt = g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xE) + FACTORY(0x100, 90), 0);
+        }
+        break;
+    case 2:
+        SetSpeedX(FIX(2.5));
+        if ((self->ext.timer.t % 10) == 0) {
+            g_api.PlaySfx(SFX_UNK_64B);
+        }
+        xOffset = 0;
+        yOffset = 25;
+        xVar = self->posX.i.hi + xOffset;
+        yVar = self->posY.i.hi + yOffset;
+        g_api.CheckCollision(xVar, yVar, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            self->posY.i.hi += collider.unk18;
+        } else {
+            self->step = 1;
+            self->velocityY = 0;
+        }
+        if (!(collider.effects & EFFECT_UNK_8000)) {
+            xOffset = 8;
+            if (self->velocityX < 0) {
+                xOffset = -xOffset;
+            }
+            yOffset = 22;
+            xVar = self->posX.i.hi + xOffset;
+            yVar = self->posY.i.hi + yOffset;
+            g_api.CheckCollision(xVar, yVar, &collider, 0);
+            if ((collider.effects & EFFECT_SOLID) &&
+                !(collider.effects & EFFECT_UNK_8000)) {
+                goto make_other_entity;
+            }
+            xOffset = 8;
+            if (self->velocityX < 0) {
+                xOffset = -xOffset;
+            }
+            yOffset = 8;
+            xVar = self->posX.i.hi + xOffset;
+            yVar = self->posY.i.hi + yOffset;
+            g_api.CheckCollision(xVar, yVar, &collider, 0);
+            if ((collider.effects & EFFECT_SOLID) &&
+                !(collider.effects & EFFECT_UNK_8000)) {
+                goto make_other_entity;
+            }
+        }
+        if ((((collider.effects & EFFECT_UNK_C000) == EFFECT_UNK_C000) &&
+             (self->facingLeft)) ||
+            (((collider.effects & EFFECT_UNK_C000) == EFFECT_UNK_8000) &&
+             (self->facingLeft == 0))) {
+            if (!(collider.effects &
+                  (EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID_FROM_BELOW))) {
+                SetSpeedX(FIX(1.25));
+            }
+            // @bug: These next two if-statements are never true because the bit
+            // flags don't match up. We're testing against 0x40 and 0x80 flags,
+            // and seeing if they match 0x100 or 0x200.
+            if ((collider.effects &
+                 (EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID_FROM_BELOW)) ==
+                EFFECT_UNK_0100) {
+                SetSpeedX(FIX(2));
+            }
+            if ((collider.effects &
+                 (EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID_FROM_BELOW)) ==
+                EFFECT_UNK_0200) {
+                SetSpeedX(FIX(2.25));
+            }
+        }
+        xOffset = 8;
+        if (self->velocityX < 0) {
+            xOffset = -xOffset;
+        }
+        yOffset = -8;
+        xVar = self->posX.i.hi + xOffset;
+        yVar = self->posY.i.hi + yOffset;
+        g_api.CheckCollision(xVar, yVar, &collider, 0);
+        if (!(collider.effects & EFFECT_SOLID) && (!self->hitFlags)) {
+            if (self->ext.timer.t % 4 == 0) {
+                // Blueprint 90 is weapon entity 9, func_ptr_80170024, so
+                // ourself.
+                unusedEnt = g_api.CreateEntFactoryFromEntity(
+                    self, ((g_HandId + 1) << 0xE) + FACTORY(0x100, 90), 0);
+            }
+            self->posX.val += self->velocityX;
+        } else {
+            goto make_other_entity;
+        }
+        break;
+    case 3:
+        if (self->animFrameDuration < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    case 4:
+        self->unk6C -= 2;
+        if (--self->animFrameDuration < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    // Not a switch case, but `break` skips this, so we put it in the switch.
+    make_other_entity:
+        g_api.PlaySfx(NA_SE_BREAK_CANDLE);
+        self->step = 3;
+        self->unk4C = D_51000_8017ABE8;
+        self->animFrameDuration = self->animFrameIdx = 0;
+        // Blueprint 90 is weapon entity 9, func_ptr_80170024, so ourself.
+        unusedEnt = g_api.CreateEntFactoryFromEntity(
+            self, ((g_HandId + 1) << 0xE) + FACTORY(0x100, 90), 0);
+    }
+    self->ext.timer.t++;
+}
 void func_ptr_80170028(Entity* self) {}
 
 void WeaponUnused2C(void) {}
