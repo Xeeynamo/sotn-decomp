@@ -180,8 +180,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define NA_SE_PL_WARP 0x636
-
 #if defined(VERSION_BETA)
 #define SFX_OPEN_DOOR 0x640
 #define SFX_DOOR_UNKNOWN 0x64D
@@ -349,7 +347,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 
 #define SFX_KARMA_COIN 0x682
 #define SFX_KARMA_COIN_HEADS 0x6B1
-#define SFX_KARMA_COIN_END 0x636
 
 #define SFX_DARK_SHIELD 0x63C
 

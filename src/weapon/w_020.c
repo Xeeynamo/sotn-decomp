@@ -337,7 +337,7 @@ void EntityWeaponAttack(Entity* self) {
             prim = &g_PrimBuf[self->primIndex];
             prim = prim->next;
             prim->drawMode |= DRAW_HIDE;
-            g_api.PlaySfx(SFX_KARMA_COIN_END);
+            g_api.PlaySfx(SFX_TELEPORT_BANG_B);
             self->step += 1;
         }
         break;

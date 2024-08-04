@@ -168,7 +168,7 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.unk84 = 4;
             self->step++;
             g_Player.unk1C = 1;
-            g_api.PlaySfx(0x636);
+            g_api.PlaySfx(SFX_TELEPORT_BANG_B);
             DestroyEntity(self);
             return;
         }
