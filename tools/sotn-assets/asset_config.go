@@ -115,7 +115,7 @@ func readConfig(path string) (*assetConfig, error) {
 }
 
 func enqueueExtractAssetEntry(
-	eg errgroup.Group,
+	eg *errgroup.Group,
 	handler func(assetEntry) error,
 	assetDir string,
 	name string,
@@ -174,7 +174,7 @@ func extractAssetFile(file assetFileEntry) error {
 				}
 				start := int(off) - segment.Start
 				end := start + size
-				enqueueExtractAssetEntry(eg, handler, file.AssetDir, name, data[segment.Start:], start, end, args, segment.Vram)
+				enqueueExtractAssetEntry(&eg, handler, file.AssetDir, name, data[segment.Start:], start, end, args, segment.Vram)
 			}
 			off = off2
 			kind = kind2
@@ -185,7 +185,7 @@ func extractAssetFile(file assetFileEntry) error {
 }
 
 func enqueueBuildAssetEntry(
-	eg errgroup.Group,
+	eg *errgroup.Group,
 	handler func(assetBuildEntry) error,
 	assetDir,
 	sourceDir,
@@ -236,7 +236,7 @@ func buildAssetFile(file assetFileEntry) error {
 					name = args[0]
 					args = args[1:]
 				}
-				enqueueBuildAssetEntry(eg, handler, file.AssetDir, file.SourceDir, name)
+				enqueueBuildAssetEntry(&eg, handler, file.AssetDir, file.SourceDir, name)
 			}
 		}
 	}
