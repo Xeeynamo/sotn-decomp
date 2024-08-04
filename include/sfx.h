@@ -425,6 +425,49 @@ enum Sfx {
     SFX_DEATH_AMBIENCE,    // BGM ambience during first Death cutscene
     SFX_MAGIC_GLASS_BREAK, // Subweapon Container
     SFX_UI_CONFIRM,
+    SFX_CANDLE_HIT,
+    SFX_TELEPORT_BANG_A, // Used when teleport starts
+    SFX_TELEPORT_BANG_B, // Used when teleport ends, but is also Warp Enter
+    SFX_SUC_APPEAR,      // Succubus reveal
+    SFX_UNK_SCRAPE_A,
+    SFX_UNK_SCRAPE_B,
+    SFX_UNK_SCRAPE_C,
+    SFX_UNK_UI_SELECT,
+    SFX_START_SLAM_A,
+    SFX_START_SLAM_B, // "Press Start", Door Open, Dracula Stomp, etc.
+    SFX_START_SLAM_C,
+    SFX_ANIME_SWORD_A,
+    SFX_ANIME_SWORD_B, // Holy Rod ("Anime shing" element)
+    SFX_ANIME_SWORD_C,
+    SFX_DOOR_OPEN,
+    SFX_WALL_DEBRIS_A,
+    SFX_WALL_DEBRIS_B, // Warp Exit & Wall Break
+    SFX_WALL_DEBRIS_C,
+    SFX_STOMP_HARD_A,
+    SFX_STOMP_HARD_B, // Alucard Landing (Hard)
+    SFX_STOMP_HARD_C,
+    SFX_STOMP_HARD_D,
+    SFX_STOMP_HARD_E,
+    SFX_STOMP_SOFT_A, // Richter Landing (Hard)
+    SFX_STOMP_SOFT_B, // Alucard Landing (Normal)
+    SFX_SAVE_HEARTBEAT,
+    SFX_BAT_SCREECH,
+    SFX_DOOR_CLOSE_A,
+    SFX_DOOR_CLOSE_B,
+    SFX_UNK_UI_ERROR,
+    SFX_EXPLODE_FAST_A, // Explosion "stutter" effect
+    SFX_EXPLODE_FAST_B,
+    SFX_EXPLODE_A,
+    SFX_EXPLODE_B,
+    SFX_EXPLODE_C,
+    SFX_EXPLODE_D,
+    SFX_EXPLODE_E,
+    SFX_EXPLODE_F,
+    SFX_FM_EXPLODE_A, // FM synth explosion
+    SFX_FM_EXPLODE_B,
+    SFX_FM_EXPLODE_C,
+    SFX_FM_EXPLODE_D,
+    SFX_EXPLODE_SMALL, // Zombie death explosion
 };
 
 #endif
