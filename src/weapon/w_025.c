@@ -21,7 +21,7 @@ void func_B3000_8017AF14(const char* fmt, u_long end) {
     }
 }
 
-void EntityWeaponAttack(Entity* self) {
+static void EntityWeaponAttack(Entity* self) {
     s32 anim1;
     s32 anim2;
     s32 attackButton;
@@ -157,17 +157,17 @@ void EntityWeaponAttack(Entity* self) {
 
 s32 func_ptr_80170004(Entity* self) {}
 
-void func_ptr_80170008(Entity* self) {}
+static void func_ptr_80170008(Entity* self) {}
 
-void func_ptr_8017000C(Entity* self) {}
+static void func_ptr_8017000C(Entity* self) {}
 
-s32 func_ptr_80170010(Entity* self) {}
+static s32 func_ptr_80170010(Entity* self) {}
 
-s32 func_ptr_80170014(Entity* self) {}
+static s32 func_ptr_80170014(Entity* self) {}
 
-int GetWeaponId(void) { return 25; }
+static int GetWeaponId(void) { return 25; }
 
-void EntityWeaponShieldSpell(Entity* self) {
+static void EntityWeaponShieldSpell(Entity* self) {
     Entity* unusedEnt;
     Primitive* prim;
     Primitive* prevPrim;
@@ -476,7 +476,7 @@ void EntityWeaponShieldSpell(Entity* self) {
 }
 
 // Probably the dancing clouds of fog that appear with the shield spell?
-void func_ptr_80170024(Entity* self) {
+static void func_ptr_80170024(Entity* self) {
     Primitive* prim;
     s16 angle;
     s16 xSize;
@@ -604,14 +604,14 @@ void func_ptr_80170024(Entity* self) {
     prim->y3 = yVar - (((rsin(angle) >> 4) * ySize) >> 8);
 }
 
-void func_ptr_80170028(Entity* self) {}
+static void func_ptr_80170028(Entity* self) {}
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}

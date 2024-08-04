@@ -41,7 +41,7 @@ int func_13F000_8017A718() {
     return 0;
 }
 
-void EntityWeaponAttack(Entity* self) {
+static void EntityWeaponAttack(Entity* self) {
     SetSpriteBank1(D_13F000_8017A040);
     if (g_HandId != 0) {
         g_CurrentEntity->animSet = ANIMSET_OVL(0x12);
@@ -71,7 +71,7 @@ void EntityWeaponAttack(Entity* self) {
 
 INCLUDE_ASM("weapon/nonmatchings/w_045", func_ptr_80170004);
 
-void func_ptr_80170008(Entity* self) {
+static void func_ptr_80170008(Entity* self) {
     SetSpriteBank1(D_13F000_8017A040);
     if (g_HandId != 0) {
         g_CurrentEntity->animSet = ANIMSET_OVL(0x12);
@@ -131,7 +131,7 @@ void func_ptr_80170008(Entity* self) {
 
 INCLUDE_ASM("weapon/nonmatchings/w_045", func_ptr_8017000C);
 
-s32 func_ptr_80170010(Entity* self) {
+static s32 func_ptr_80170010(Entity* self) {
     D_13F000_8017B3BC += 0x80;
     SetSpriteBank1(D_13F000_8017A040);
     if (g_HandId != 0) {
@@ -213,22 +213,22 @@ s32 func_ptr_80170010(Entity* self) {
     }
 }
 
-s32 func_ptr_80170014(Entity* self) {}
+static s32 func_ptr_80170014(Entity* self) {}
 
-int GetWeaponId(void) { return 45; }
+static int GetWeaponId(void) { return 45; }
 
-void EntityWeaponShieldSpell(Entity* self) {}
+static void EntityWeaponShieldSpell(Entity* self) {}
 
-void func_ptr_80170024(Entity* self) {}
+static void func_ptr_80170024(Entity* self) {}
 
-void func_ptr_80170028(Entity* self) {}
+static void func_ptr_80170028(Entity* self) {}
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}

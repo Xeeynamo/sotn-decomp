@@ -11,7 +11,7 @@
 // Weapon 16
 extern SpriteParts D_74000_8017A040[];
 
-void EntityWeaponAttack(Entity* self) {
+static void EntityWeaponAttack(Entity* self) {
     FakePrim* fakePrim;
     s16 angle;
     u16 temp_a0;
@@ -133,7 +133,7 @@ s32 func_ptr_80170004(Entity* self) {
 
 INCLUDE_ASM("weapon/nonmatchings/w_016", func_ptr_80170008);
 
-void func_ptr_8017000C(Entity* self) {
+static void func_ptr_8017000C(Entity* self) {
     s16 temp_a0;
 
     switch (self->step) {
@@ -187,7 +187,7 @@ INCLUDE_ASM("weapon/nonmatchings/w_016", func_ptr_80170010);
 
 // Tracing function calls in emulator indicates that this function manages
 // the physics for the Iron Ball item.
-s32 func_ptr_80170014(Entity* self) {
+static s32 func_ptr_80170014(Entity* self) {
     Collider collider;
     s16 collX;
     s16 collY;
@@ -379,20 +379,20 @@ s32 func_ptr_80170014(Entity* self) {
     }
 }
 
-int GetWeaponId(void) { return 16; }
+static int GetWeaponId(void) { return 16; }
 
-void EntityWeaponShieldSpell(Entity* self) {}
+static void EntityWeaponShieldSpell(Entity* self) {}
 
-void func_ptr_80170024(Entity* self) {}
+static void func_ptr_80170024(Entity* self) {}
 
-void func_ptr_80170028(Entity* self) {}
+static void func_ptr_80170028(Entity* self) {}
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}

@@ -49,7 +49,7 @@ INCLUDE_ASM("weapon/nonmatchings/w_049", func_ptr_80170010);
 extern SpriteParts D_15B000_8017AA44[];
 extern AnimationFrame D_15B000_8017B10C[];
 
-s32 func_ptr_80170014(Entity* self) {
+static s32 func_ptr_80170014(Entity* self) {
     switch (self->step) {
     case 0:
         SetSpriteBank2(D_15B000_8017AA44);
@@ -84,20 +84,20 @@ s32 func_ptr_80170014(Entity* self) {
     }
 }
 
-int GetWeaponId(void) { return 49; }
+static int GetWeaponId(void) { return 49; }
 
-void EntityWeaponShieldSpell(Entity* self) {}
+static void EntityWeaponShieldSpell(Entity* self) {}
 
-void func_ptr_80170024(Entity* self) {}
+static void func_ptr_80170024(Entity* self) {}
 
-void func_ptr_80170028(Entity* self) {}
+static void func_ptr_80170028(Entity* self) {}
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}

@@ -13,7 +13,7 @@ extern s8 D_C8000_8017AA98[];
 extern s32 D_C8000_8017AAE0[];
 extern s32 D_C8000_8017AB1C[];
 
-void EntityWeaponAttack(Entity* self) {
+static void EntityWeaponAttack(Entity* self) {
     s32 anim = 0;
     bool crouchCheck = false;
     s32 attackButton;
@@ -147,15 +147,15 @@ void EntityWeaponAttack(Entity* self) {
 
 s32 func_ptr_80170004(Entity* self) {}
 
-void func_ptr_80170008(Entity* self) {}
+static void func_ptr_80170008(Entity* self) {}
 
-void func_ptr_8017000C(Entity* self) {}
+static void func_ptr_8017000C(Entity* self) {}
 
-s32 func_ptr_80170010(Entity* self) {}
+static s32 func_ptr_80170010(Entity* self) {}
 
-s32 func_ptr_80170014(Entity* self) {}
+static s32 func_ptr_80170014(Entity* self) {}
 
-int GetWeaponId(void) { return 28; }
+static int GetWeaponId(void) { return 28; }
 
 extern s16 D_C8000_8017AB18;
 extern s16 D_C8000_8017AB1A;
@@ -188,7 +188,7 @@ void func_C8000_8017B3D4(void) {
     LoadImage(&rect, &g_Clut[0x1100]);
 }
 
-void EntityWeaponShieldSpell(Entity* self) {
+static void EntityWeaponShieldSpell(Entity* self) {
     s32 i;
     s16 left;
     s16 right;
@@ -512,7 +512,7 @@ void EntityWeaponShieldSpell(Entity* self) {
     func_C8000_8017B3D4();
 }
 
-void func_ptr_80170024(Entity* self) {
+static void func_ptr_80170024(Entity* self) {
     Primitive* prim;
     s32 xShift;
     s16 selfPosX;
@@ -656,14 +656,14 @@ void func_ptr_80170024(Entity* self) {
     return;
 }
 
-void func_ptr_80170028(Entity* self) {}
+static void func_ptr_80170028(Entity* self) {}
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}
