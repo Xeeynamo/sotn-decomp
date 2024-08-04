@@ -10,6 +10,7 @@
 #include "w_000_2.h"
 #define g_Animset w_000_1
 #define g_Animset2 w_000_2
+#include "sfx.h"
 
 u16 g_Clut0[] = {
     0x0000, 0x8000, 0xA821, 0x9DC0, 0xA821, 0xA821, 0xA821, 0xA821, // 0
@@ -179,11 +180,11 @@ u8* g_Anim1[] = {
 };
 
 WeaponAnimation g_SoundEvents[] = {
-    {g_Anim1, g_Hitboxes, 0, 0x60B, 0x41, 4},
-    {g_Anim0, g_Hitboxes, 0, 0x60B, 0x41, 4},
-    {g_Anim0, g_Hitboxes, 0, 0x60C, 0x41, 4},
+    {g_Anim1, g_Hitboxes, 0, SFX_WEAPON_SWISH_B, 0x41, 4},
+    {g_Anim0, g_Hitboxes, 0, SFX_WEAPON_SWISH_B, 0x41, 4},
+    {g_Anim0, g_Hitboxes, 0, SFX_WEAPON_SWISH_C, 0x41, 4},
     {g_Anim0, g_Hitboxes, 0, 0x6A8, 0x41, 4},
-    {g_Anim0, g_Hitboxes, 0, 0x60C, 0x41, 4},
+    {g_Anim0, g_Hitboxes, 0, SFX_WEAPON_SWISH_C, 0x41, 4},
 };
 
 u16* g_WeaponCluts[] = {

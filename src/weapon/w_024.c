@@ -6,6 +6,7 @@
 #include "w_024_2.h"
 #define g_Animset w_024_1
 #define g_Animset2 w_024_2
+#include "sfx.h"
 
 extern SpriteParts D_AC000_8017A040[];
 extern s8 D_AC000_8017ABD8;
@@ -352,7 +353,7 @@ void EntityWeaponShieldSpell(Entity* self) {
                 prim = prim->next;
             }
             self->ext.shield.unk80 = 0;
-            g_api.PlaySfx(NA_SE_UNK_62F);
+            g_api.PlaySfx(SFX_WEAPON_APPEAR);
             self->step++;
         }
         prim = &g_PrimBuf[self->primIndex];

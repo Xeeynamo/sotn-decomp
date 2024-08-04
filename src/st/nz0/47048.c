@@ -4,6 +4,7 @@
  */
 
 #include "nz0.h"
+#include "sfx.h"
 
 // SubWeapons floating in the breakable container
 void EntitySubWeaponContainer(Entity* self) {
@@ -81,7 +82,7 @@ void EntitySubWeaponContainer(Entity* self) {
         i = 0;
         g_api.FreePrimitives(self->primIndex);
         self->flags &= ~FLAG_HAS_PRIMS;
-        g_api.PlaySfx(NA_SE_EV_GLASS_BREAK);
+        g_api.PlaySfx(SFX_MAGIC_GLASS_BREAK);
         while (i < ENTITY_SUBWPNCONT_DEBRIS_COUNT) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
@@ -110,7 +111,7 @@ void EntitySubWeaponContainer(Entity* self) {
                 newEntity->zPriority = self->zPriority + 1;
             }
         }
-        func_801C29B0(NA_SE_EV_VASE_BREAK);
+        func_801C29B0(SFX_GLASS_BREAK_E);
         self->hitboxState = 0;
         self->animCurFrame = 2;
         self->step++;

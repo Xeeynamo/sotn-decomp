@@ -5,13 +5,6 @@
 #define CASTLE_FLAG_BANK 0x34
 
 // NO3 Sound IDs
-#define SE_BARRIER_MOVE 0x607
-// It's possible that SE_BARRIER_MOVE_2 does not
-// trigger in-game because NP3 uses 0x609 instead
-#define SE_BARRIER_MOVE_2 0x608
-#define SE_SKEL_DEATH 0x62B
-#define SE_DEATH_AMBIENCE 0x631
-// Also used for barrier in "Cube of Zoe" room
 #define SE_CASTLE_GATE_CLOSE 0x63D
 #define SE_WALL_BREAK 0x644
 // Normally used for Richter, but this sound is just

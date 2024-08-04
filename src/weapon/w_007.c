@@ -61,8 +61,47 @@ s32 func_35000_8017B604(Primitive* prim, s32 x, s32 y) {
     return 0;
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_007", func_ptr_80170008);
+void func_ptr_80170008(Entity* self) {
+    Primitive* prim;
+    s32 velocityX;
+    s32 range;
 
+    if (self->step == 0) {
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_800000;
+        self->velocityY = FIX(3.0 / 4.0);
+
+        range = 16;
+        velocityX = (rand() % range) - 8;
+
+        self->posX.i.hi += velocityX;
+        self->posY.i.hi += rand() % range;
+
+        prim = &g_PrimBuf[self->primIndex];
+        prim->clut = 0x1B0;
+        prim->tpage = 0x1A;
+        prim->b0 = 0;
+        prim->b1 = 0;
+        prim->priority = self->zPriority + 4;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+
+        func_35000_8017B604(prim, self->posX.i.hi, self->posY.i.hi);
+        self->step++;
+        return;
+    }
+
+    self->posY.val += self->velocityY;
+
+    prim = &g_PrimBuf[self->primIndex];
+    if (func_35000_8017B604(prim, self->posX.i.hi, self->posY.i.hi)) {
+        DestroyEntity(self);
+    }
+}
 void func_ptr_8017000C(Entity* self) {}
 
 s32 func_ptr_80170010(Entity* self) {}

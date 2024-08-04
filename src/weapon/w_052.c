@@ -6,6 +6,7 @@
 #include "w_052_2.h"
 #define g_Animset w_052_1
 #define g_Animset2 w_052_2
+#include "sfx.h"
 
 extern SpriteParts D_170000_8017A040[];
 extern s8 D_170000_8017AB3C[];
@@ -624,7 +625,7 @@ s32 func_ptr_80170004(Entity* self) {
     case 2:
         if ((self->ext.shield.unk80 >= 0x48) &&
             (self->ext.shield.unk80 % 4 == 0)) {
-            g_api.PlaySfx(SFX_SUBWPN_THROW);
+            g_api.PlaySfx(SFX_WEAPON_SWISH_C);
         }
         if (--self->ext.shield.unk80 == 0) {
             DestroyEntity(self);

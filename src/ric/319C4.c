@@ -1,4 +1,5 @@
 #include "ric.h"
+#include "sfx.h"
 
 // RIC Entity # 49. Comes from blueprint 57. Factory call in func_8016E324.
 // func_8016E324 is RIC Entity #48. Comes from blueprint 56. Blueprint 56 is
@@ -63,7 +64,7 @@ void func_8016D9C4(Entity* self) {
         self->ext.et_8016D9C4.unk90 = 4;
         self->ext.et_8016D9C4.unk8E = 0;
         self->ext.et_8016D9C4.unk8C = 0;
-        g_api.PlaySfx(0x623);
+        g_api.PlaySfx(SFX_RIC_RSTONE_TINK);
         self->step++;
         break;
     case 1:
@@ -342,7 +343,7 @@ void func_8016E46C(Entity* self) {
         if (++self->ext.et_8016E46C.unk80 >= 0x3C) {
             self->ext.et_8016E46C.unkB0 = 0x11;
             func_8015FAB8(self);
-            g_api.PlaySfx(0x62F);
+            g_api.PlaySfx(SFX_WEAPON_APPEAR);
             g_api.PlaySfx(0x635);
             self->step++;
         }
@@ -539,7 +540,7 @@ void func_8016E9E4(Entity* self) {
         (self->ext.et_8016E9E4.unk7C == 0x900) ||
         (self->ext.et_8016E9E4.unk7C == 0xD00)) {
         if (self->step < 9) {
-            g_api.func_80134714(0x625, D_801758AC, 0);
+            g_api.func_80134714(SFX_ARROW_SHOT_A, D_801758AC, 0);
             if (self->step >= 5) {
                 D_801758AC -= 4;
             }
@@ -823,7 +824,7 @@ void StopwatchCrashDoneSparkle(Entity* self) {
             prim->drawMode &= ~DRAW_HIDE;
             self->ext.et_stopWatchSparkle.unk80 = 0x10;
             self->ext.et_stopWatchSparkle.unk82 = 0;
-            g_api.PlaySfx(0x614);
+            g_api.PlaySfx(SFX_ELECTRICITY);
             self->step++;
         }
         break;

@@ -6,6 +6,7 @@
 #include "w_042_2.h"
 #define g_Animset w_042_1
 #define g_Animset2 w_042_2
+#include "sfx.h"
 
 // data
 extern AnimationFrame D_12A000_8017A604[];
@@ -101,7 +102,7 @@ void EntityWeaponAttack(Entity* self) {
             self->animFrameDuration = 0;
             self->animFrameIdx = 0;
             self->drawMode = 0x30;
-            g_api.func_80134714(0x619, 0x50, 0);
+            g_api.func_80134714(SFX_GLASS_BREAK_A, 0x50, 0);
             // TODO: FACTORY()
             g_api.CreateEntFactoryFromEntity(
                 self, ((g_HandId + 1) << 12) | 56, 0);
@@ -248,7 +249,7 @@ void func_ptr_80170008(Entity* self) {
         self->unk4C = D_12A000_8017A6AC;
         self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;
         SetWeaponProperties(self, 0);
-        g_api.PlaySfx(0x628);
+        g_api.PlaySfx(SFX_ARROW_SHOT_D);
         self->step++;
         break;
     case 1:

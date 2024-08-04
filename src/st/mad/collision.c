@@ -1,4 +1,5 @@
 #include <stage.h>
+#include "sfx.h"
 
 static u16 g_testCollEnemyLookup[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x002B, 0x0000, 0x0000,
@@ -198,12 +199,12 @@ void HitDetection(void) {
                                     }
                                     if ((i == 3) &&
                                         (iterEnt1->flags & FLAG_UNK_8000)) {
-                                        g_api.PlaySfx(SFX_CLANK);
+                                        g_api.PlaySfx(SFX_METAL_CLANG_E);
                                         iterEnt2->hitFlags = 2;
                                     }
                                     if ((i == 4) &&
                                         (iterEnt1->flags & FLAG_UNK_4000)) {
-                                        g_api.PlaySfx(SFX_CLANK);
+                                        g_api.PlaySfx(SFX_METAL_CLANG_E);
                                         iterEnt2->hitFlags = 2;
                                     }
                                 }
@@ -391,7 +392,7 @@ void HitDetection(void) {
                         if (entFrom5C->flags & FLAG_UNK_10) {
                             // Different on PSP vs PSX
                             if (iterEnt2->hitEffect & 0x80) {
-                                g_api.PlaySfx(SE_UNK_MAD_630);
+                                g_api.PlaySfx(SFX_UNK_BETA_630);
                             } else {
                                 g_api.PlaySfx(0x6DB);
                             }
@@ -543,9 +544,9 @@ void HitDetection(void) {
                 }
                 if ((entFrom5C->flags & 0x10) && (iterEnt2->attack)) {
                     if (iterEnt2->hitEffect & 0x80) {
-                        g_api.PlaySfx(SFX_CLANK);
+                        g_api.PlaySfx(SFX_METAL_CLANG_E);
                     } else {
-                        g_api.PlaySfx(SFX_CLANK);
+                        g_api.PlaySfx(SFX_METAL_CLANG_E);
                     }
                 }
                 otherEntity = entFrom5C;

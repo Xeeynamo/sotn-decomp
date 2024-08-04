@@ -180,20 +180,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-// This sound plays when MAX UP spawns and during Dracula transformation
-#define NA_SE_UNK_62F 0x62F
-#define SFX_UNK_608 0x608
-#define NA_SE_EV_HEAVY_BLOCK_DRAG 0x609
-#define NA_SE_EN_BLOOD_ZOMBIE_SWORD_SLASH 0x60B
-#define SFX_SUBWPN_THROW 0x60C // Throwing rebound stone, vibhuti, others?
-#define SFX_CLANK 0x611 // when attacking invulnerable enemy (like Stone Skull)
-#define NA_SE_AL_BACKSLIDE 0x617
-#define SFX_UNK_61A 0x61A
-#define NA_SE_EV_VASE_BREAK 0x61D
-#define NA_SE_PL_BT_ECHO 0x61F
-#define NA_SE_EN_SKELETON_DESTROY 0x62B
-#define SFX_WEAPON_62C 0x62C
-#define NA_SE_EV_GLASS_BREAK 0x632
 #define NA_SE_BREAK_CANDLE 0x634
 #define SFX_UNK_635 0x635
 #define NA_SE_PL_WARP 0x636
@@ -249,6 +235,7 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SFX_COLLECT_GOLD 0x6A9
 #define SFX_UNK_6AD 0x6AD
 #define SFX_UNK_6B0 0x6B0 // Used for Shaman Shield, could be same as petal
+#define SFX_UNK_6B1 0x6B1
 #define NA_SE_EN_SLOGRA_SPEAR_SLASH 0x6C6
 #define NA_SE_EN_SLOGRA_BEAK_ATTACK 0x6C8
 #define NA_SE_EN_SKELETON_THROW_BONE 0x6C8
@@ -304,7 +291,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define BIBLE_SUBWPN_SWOOSH 0x8C3
 
 // STAGE DRE
-#define NA_SE_SU_SHOOT_PINKBALLS 0x62C
 #define SE_SUC_REVEAL 0x637
 #define NA_SE_SU_LANDING 0x646
 #define SE_DRE_FADE_TO_WHITE 0x65A
@@ -328,7 +314,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 
 // STAGE NO3 / NP3
 #define NA_SE_EV_WINDOW_LATCH 0x79D
-#define SE_DEATH_AMBIENCE 0x631
 #define SE_DEATH_TAKES_ITEMS 0x7A0
 #define NA_VO_DEATH_LAUGH 0x7A1
 #define SE_ITEM_YOINK 0x7A2
@@ -337,14 +322,12 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 
 // SHARED SOUNDS
 // These are sounds that are shared across multiple BIN files
-#define SE_WEAPON_STAB 0x62E
 #define SE_DOOR_OPEN 0x642
 #define SE_DOOR_CLOSE 0x64F
 #define SE_WEAPON_WHACK 0x678
 #define SE_BOSS_DEFEATED 0x7D2
 
 // UI SOUNDS
-#define SE_UI_CONFIRM 0x633
 #define SE_UI_START 0x63D
 #define SE_UI_SELECT 0x67B
 #define SE_UI_MAIN_MENU_SELECT 0x67D
@@ -373,8 +356,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SFX_DARK_SHIELD 0x63C
 
 // UNUSED SOUNDS
-#define SE_UNK_ST0_618 0x618
-#define SE_UNK_MAD_630 0x630
 #define SE_UNK_TE1_651 0x651
 #define SE_UNK_TE3_667 0x667
 #define SE_UNK_TE1_66F 0x66F
@@ -393,11 +374,57 @@ enum Sfx {
     // vabid 0
     SFX_HARPY_WING_FLAP = 0x601,
     SFX_RIC_WHIP_RATTLE_A,
-    // (RATTLE_B through E appear to be unused)
-    SFX_RIC_WHIP_RATTLE_B,
+    SFX_RIC_WHIP_RATTLE_B, // (B through E appear to be unused)
     SFX_RIC_WHIP_RATTLE_C,
     SFX_RIC_WHIP_RATTLE_D,
     SFX_RIC_WHIP_RATTLE_E,
+    SFX_STONE_MOVE_A,
+    SFX_STONE_MOVE_B,
+    SFX_STONE_MOVE_C,
+    SFX_WEAPON_SWISH_A,
+    SFX_WEAPON_SWISH_B,
+    SFX_WEAPON_SWISH_C,
+    SFX_METAL_CLANG_A,
+    SFX_METAL_CLANG_B,
+    SFX_METAL_CLANG_C,
+    SFX_METAL_CLANG_D,
+    SFX_METAL_CLANG_E, // Stone Skull Hit
+    SFX_METAL_CLANG_F,
+    SFX_UNK_CROW,
+    SFX_ELECTRICITY,
+    SFX_SCRAPE_A,
+    SFX_SCRAPE_B,
+    SFX_SCRAPE_C, // Alucard backslide
+    SFX_UNK_618,  // Referenced in ST0, TE1, TE2
+    // vabid 9
+    SFX_GLASS_BREAK_A,
+    // vabid 0
+    SFX_GLASS_BREAK_B,
+    SFX_GLASS_BREAK_C,
+    SFX_GLASS_BREAK_D,
+    SFX_GLASS_BREAK_E, // Vase Break
+    SFX_BAT_ECHO_A,
+    SFX_BAT_ECHO_B, // Alucard Echo of Bat
+    SFX_BAT_ECHO_C,
+    SFX_BAT_ECHO_D,
+    SFX_SKULL_BONK,
+    SFX_RIC_RSTONE_TINK, // Rebound Stone
+    SFX_SMALL_BURST,
+    SFX_ARROW_SHOT_A, // Magic Missile Shot
+    SFX_ARROW_SHOT_B,
+    SFX_ARROW_SHOT_C,
+    SFX_ARROW_SHOT_D,
+    SFX_SKELETON_DEATH_A,
+    SFX_SKELETON_DEATH_B,
+    SFX_SKELETON_DEATH_C,
+    SFX_FIRE_SHOT,
+    SFX_WEAPON_STAB_A,
+    SFX_WEAPON_STAB_B,     // Common stab sfx
+    SFX_WEAPON_APPEAR,     // Item Crash, Neutron Bomb
+    SFX_UNK_BETA_630,      // MAD, TE1, TE2, TE3, TE4, TE5
+    SFX_DEATH_AMBIENCE,    // BGM ambience during first Death cutscene
+    SFX_MAGIC_GLASS_BREAK, // Subweapon Container
+    SFX_UI_CONFIRM,
 };
 
 #endif

@@ -4,6 +4,7 @@
  */
 
 #include "nz0.h"
+#include "sfx.h"
 
 typedef enum {
     BLOODY_ZOMBIE_INIT,
@@ -313,7 +314,7 @@ void EntityBloodyZombie(Entity* self) {
     case BLOODY_ZOMBIE_ATTACK:
         animStatus = AnimateEntity(D_801822FC, self);
         if (animStatus & 0x80 && self->animFrameIdx == 10) {
-            func_801C29B0(NA_SE_EN_BLOOD_ZOMBIE_SWORD_SLASH);
+            func_801C29B0(SFX_WEAPON_SWISH_B);
         }
         if (animStatus == 0) {
             SetStep(BLOODY_ZOMBIE_WALK);

@@ -1,4 +1,5 @@
 #include "st0.h"
+#include "sfx.h"
 
 void func_801A7D64(Entity* self) {
     s32 temp_v0;
@@ -149,7 +150,7 @@ void func_801A805C(Entity* self) {
                         newEntity->params = 0x100;
                     }
                 }
-                g_api.PlaySfx(0x61D);
+                g_api.PlaySfx(SFX_GLASS_BREAK_E);
             }
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {

@@ -847,7 +847,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
                 g_Player.unk40 = 0x8164;
             }
             if (damage->effects & 0x40) {
-                PlaySfx(SE_WEAPON_STAB);
+                PlaySfx(SFX_WEAPON_STAB_B);
                 g_Player.unk40 = 0x8166;
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(0x4200, 44), 0);
@@ -1132,7 +1132,7 @@ void func_80114DF4(s32 arg0) {
             g_Player.padTapped |= (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
             // Counter for how many wiggles left until we're out
             g_Player.unk5E--;
-            PlaySfx(SFX_UNK_608);
+            PlaySfx(SFX_STONE_MOVE_B);
             if (g_Player.unk5E == 0) {
                 SetPlayerAnim(0x3B);
                 if (PLAYER.ext.player.anim != 0x3A) {
@@ -1346,7 +1346,7 @@ void func_80115394(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
         g_Player.unk5E = 5;
         if (D_80137FF0 % 16 == 7) {
             g_Player.padTapped = PAD_UP;
-            PlaySfx(SFX_UNK_608);
+            PlaySfx(SFX_STONE_MOVE_B);
         }
         if (--D_80137FF0 == 0) {
             D_800AFC50[1] |= PLAYER.animCurFrame;
