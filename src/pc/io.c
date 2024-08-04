@@ -24,7 +24,7 @@ static bool _FileAsStringCb(const struct FileOpenRead* f) {
 
     struct FileAsStringCbParams* p = (struct FileAsStringCbParams*)f->param;
     struct FileAsString fc = {
-        .path = f->filename,
+        .filename = f->filename,
         .content = (const char*)content,
         .length = f->length + 1,
         .param = p->param,
@@ -54,7 +54,7 @@ static bool _FileUseContentCb(const struct FileOpenRead* f) {
 
     struct FileAsStringCbParams* p = (struct FileAsStringCbParams*)f->param;
     struct FileUseContent fc = {
-        .path = f->filename,
+        .filename = f->filename,
         .content = content,
         .length = f->length,
         .param = p->param,

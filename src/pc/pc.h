@@ -18,13 +18,6 @@
 #define VRAM_H 512
 #define VRAM_STRIDE 2048
 
-typedef struct FileUseContent {
-    const char* path;
-    const void* content;
-    size_t length;
-    void* param;
-} FileLoad;
-
 struct FileOpenRead {
     const char* filename;
     FILE* file;
@@ -33,19 +26,26 @@ struct FileOpenRead {
 };
 
 struct FileAsString {
-    const char* path;
+    const char* filename;
     const char* content;
     size_t length;
     void* param;
 };
 
+typedef struct FileUseContent {
+    const char* filename;
+    const void* content;
+    size_t length;
+    void* param;
+} FileLoad;
+
 bool FileOpenRead(
     bool (*cb)(const struct FileOpenRead*), const char* filename, void* param);
 int FileReadToBuf(const char* filename, void* dst, int offset, size_t maxlen);
-bool FileAsString(
-    bool (*cb)(const struct FileAsString* file), const char* path, void* param);
+bool FileAsString(bool (*cb)(const struct FileAsString* file),
+                  const char* filename, void* param);
 bool FileUseContent(bool (*cb)(const struct FileUseContent* file, void* param),
-                    const char* path, void* param);
+                    const char* filename, void* param);
 
 const char* AnsiToSotnMenuString(const char* str);
 
