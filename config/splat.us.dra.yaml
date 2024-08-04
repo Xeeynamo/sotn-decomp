@@ -266,7 +266,7 @@ segments:
       - [0x93BDC, c, 93BDC]
       - [0x94F50, c, 94F50]
       - [0x953A0, c, 953A0]
-      - [0x962AC, sbss]
+      - [0x962AC, .bss, bss]
   - name: dra_data
     type: data
     start: 0x9B6A0
