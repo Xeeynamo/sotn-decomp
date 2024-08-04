@@ -191,7 +191,7 @@ void EntityBreakable(Entity* self) {
                 g_api.FreePrimitives(self->primIndex);
                 self->flags &= ~FLAG_HAS_PRIMS;
             }
-            g_api.PlaySfx(NA_SE_BREAK_CANDLE);
+            g_api.PlaySfx(SFX_CANDLE_HIT);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
@@ -1487,7 +1487,7 @@ void func_801B3A50(Entity* self) {
     case 1:
         AnimateEntity(D_80180F88, self);
         if (self->hitFlags != 0) {
-            g_api.PlaySfx(NA_SE_BREAK_CANDLE);
+            g_api.PlaySfx(SFX_CANDLE_HIT);
             self->hitboxState = 0;
             SetStep(2);
         }

@@ -6,6 +6,7 @@
 
 #include "cen.h"
 #include "game.h"
+#include "sfx.h"
 
 // background block of rock
 void EntityBackgroundBlock(Entity* self) {
@@ -121,7 +122,7 @@ void EntityUnkId01(Entity* self) {
     AnimateEntity(D_80180574[params], self);
 
     if (self->unk44 != 0) {
-        g_api.PlaySfx(NA_SE_BREAK_CANDLE);
+        g_api.PlaySfx(SFX_CANDLE_HIT);
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != 0) {
             CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
