@@ -138,7 +138,6 @@ func enqueueExtractAssetEntry(
 		}
 		return nil
 	})
-	eg.Wait()
 }
 
 func extractAssetFile(file assetFileEntry) error {
@@ -185,6 +184,25 @@ func extractAssetFile(file assetFileEntry) error {
 	return eg.Wait()
 }
 
+func enqueueBuildAssetEntry(
+	eg errgroup.Group,
+	handler func(assetBuildEntry) error,
+	assetDir,
+	sourceDir,
+	name string) {
+	eg.Go(func() error {
+		err := handler(assetBuildEntry{
+			assetDir: assetDir,
+			srcDir:   sourceDir,
+			name:     name,
+		})
+		if err != nil {
+			return fmt.Errorf("unable to build asset %q: %v", name, err)
+		}
+		return nil
+	})
+}
+
 func extractFromConfig(c *assetConfig) error {
 	var eg errgroup.Group
 	for _, file := range c.Files {
@@ -199,6 +217,7 @@ func extractFromConfig(c *assetConfig) error {
 }
 
 func buildAssetFile(file assetFileEntry) error {
+	var eg errgroup.Group
 	for _, segment := range file.Segments {
 		if len(segment.Assets) == 0 {
 			continue
@@ -217,18 +236,11 @@ func buildAssetFile(file assetFileEntry) error {
 					name = args[0]
 					args = args[1:]
 				}
-				err := handler(assetBuildEntry{
-					assetDir: file.AssetDir,
-					srcDir:   file.SourceDir,
-					name:     name,
-				})
-				if err != nil {
-					return err
-				}
+				enqueueBuildAssetEntry(eg, handler, file.AssetDir, file.SourceDir, name)
 			}
 		}
 	}
-	return nil
+	return eg.Wait()
 }
 
 func buildFromConfig(c *assetConfig) error {
