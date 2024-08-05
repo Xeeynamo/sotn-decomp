@@ -182,7 +182,7 @@ void func_ptr_8017000C(Entity* self) {
 extern AnimationFrame D_74000_8017A5B0[];
 extern s32 D_74000_8017BD74;
 
-void func_ptr_80170010(Entity* self) {
+s32 func_ptr_80170010(Entity* self) {
     Entity* factory;
 
     if (self->step == 0) {
