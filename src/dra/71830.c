@@ -1,6 +1,11 @@
 #include "dra.h"
 #include "objects.h"
 
+// BSS
+#if defined(VERSION_US)
+extern s32 D_80137FDC;
+#endif
+
 void func_80111928(void) { D_801396EA = 0; }
 
 void func_80111938(void) {

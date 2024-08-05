@@ -494,7 +494,9 @@ extern s32 g_WasFacingLeft4; // for summon spirit "" ""
 extern s16 g_WasFacingLeft5; // for hellfire "" ""
 extern s32 g_WasFacingLeft6; // for tetra spirit "" ""
 extern s32 g_WasFacingLeft7; // for soul steal "" ""
+#if defined(VERSION_US)
 extern s32 D_80137FDC;
+#endif
 extern s32 D_80137FE0;
 extern s32 D_80137FE4;
 extern s32 D_80137FE8;

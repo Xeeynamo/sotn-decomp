@@ -185,8 +185,22 @@ s32 D_80137FBC;
 #endif
 
 // 6D59C.c
-// 704D0.c
+s16 g_WasFacingLeft;
+static s16 g_WasFacingLeft_; // alignment padding
+s16 g_WasFacingLeft2;
+static s16 g_WasFacingLeft2_; // alignment padding
+s32 g_WasFacingLeft3;
+s32 g_WasFacingLeft4;
+s16 g_WasFacingLeft5;
+static s16 g_WasFacingLeft5_; // alignment padding
+s32 g_WasFacingLeft6;
+s32 g_WasFacingLeft7;
+
 // 71830.c
+#if defined(VERSION_US)
+s32 D_80137FDC;
+#endif
+
 // 72BB0.c
 // 75F54.c
 // 78D0C.c
@@ -202,16 +216,6 @@ s32 D_80137FBC;
 // 94F50.c
 // 953A0.c
 
-u16 g_WasFacingLeft[2];  // TODO type
-u16 g_WasFacingLeft2[2]; // TODO type
-u32 g_WasFacingLeft3;    // TODO type
-u32 g_WasFacingLeft4;    // TODO type
-u16 g_WasFacingLeft5[2]; // TODO type
-u32 g_WasFacingLeft6;    // TODO type
-u32 g_WasFacingLeft7;    // TODO type
-#if defined(VERSION_US)
-u32 D_80137FDC; // TODO type
-#endif
 u32 D_80137FE0;                          // TODO type
 u32 D_80137FE4;                          // TODO type
 u32 D_80137FE8;                          // TODO type
