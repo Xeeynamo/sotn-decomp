@@ -463,7 +463,7 @@ void func_801139CC(s32 arg0) {
 
     if (arg0 & 1) {
         func_80102CD8(3);
-        PlaySfx(NA_SE_SECRET_STAIRS);
+        PlaySfx(SFX_WALL_DEBRIS_B);
     }
     if (arg0 & 2) {
         PLAYER.velocityX = 0;

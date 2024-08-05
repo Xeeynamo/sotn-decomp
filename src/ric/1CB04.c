@@ -19,7 +19,7 @@ void func_80158B04(s32 arg0) {
 
     if (arg0 & 1) {
         g_api.func_80102CD8(3);
-        g_api.PlaySfx(NA_SE_SECRET_STAIRS);
+        g_api.PlaySfx(SFX_WALL_DEBRIS_B);
     }
 
     if (arg0 & 2) {
