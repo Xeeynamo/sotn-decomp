@@ -1,6 +1,14 @@
-#include "common.h"
+#include "chi.h"
+
+/*
+ * File: 1C5CC.c
+ * Overlay: CHI
+ * Description: Abandoned Mine
+ */
 
 INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019C5CC);
+
+// POSSIBLE FILE BREAK
 
 INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019CBA8);
 
@@ -10,195 +18,191 @@ INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019D1A8);
 
 INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019D9C8);
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019DE74);
+#include "../random.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019DEA4);
+// POSSIBLE FILE BREAK
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019E1A0);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019DEA4);    // Update()
+//#include "../update.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019E2A8);
+// POSSIBLE FILE BREAK
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019F3C0);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019E1A0);    // UpdateStageEntities()
+//#include "../update_stage_entities.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019FA64);
+// POSSIBLE FILE BREAK
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019FB28);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019E2A8);    // HitDetection()
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019F3C0);    // EntityDamageDisplay()
+//#include "../collision.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019FC40);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019FA64);    // CreateEntityFromLayout()
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019FB28);    // CreateEntityWhenInVerticalRange()
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019FC40);    // CreateEntityWhenInHorizontalRange()
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019FD58);    // FindFirstEntityToTheRight()
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019FDA4);    // FindFirstEntityToTheLeft()
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019FDFC);    // CreateEntitiesToTheRight()
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019FEF8);    // CreateEntitiesToTheLeft()
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A000C);    // FindFirstEntityAbove()
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A0058);    // FindFirstEntityBelow()
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A00B0);    // CreateEntitiesAbove()
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A01AC);    // CreateEntitiesBelow()
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A02C0);    // InitRoomEntities()
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A0438);    // UpdateRoomPosition()
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A04EC);    // CreateEntityFromCurrentEntity()
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A0560);    // CreateEntityFromEntity()
+//#include "../create_entity.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019FD58);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A05DC);    // EntityIsNearPlayer2()
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A0654);    // EntityRedDoor()
+//#include "../e_red_door.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019FDA4);
+#include "../entity.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019FDFC);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1474);    // [Duplicate]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019FEF8);
+// "Current entity" functions?
+#include "../get_distance_to_player_x.h"
+#include "../get_distance_to_player_y.h"
+#include "../get_side_to_player.h"
+#include "../move_entity.h"
+#include "../fall_entity.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A000C);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A169C);    // [Duplicate]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A0058);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1914);    // [Duplicate]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A00B0);
+#include "../../alloc_entity.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A01AC);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1B5C);    // [Duplicate]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A02C0);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1B88);    // [Duplicate]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A0438);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1BA4);    // [Duplicate]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A04EC);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1C10);    // [Duplicate]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A0560);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1C48);    // [Duplicate]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A05DC);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1C90);    // [Duplicate]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A0654);
+#include "../adjust_value_within_threshold.h"
+#include "../unk_entity_func0.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A128C);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1DBC);    // [Duplicate]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A12F8);
+#include "../get_angle_between_entities.h"
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1E24);    // [Duplicate]
+#include "../get_normalized_angle.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1374);
+#include "../set_step.h"
+#include "../set_sub_step.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A13BC);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1F08);    // EntityExplosionSpawn()
+//#include "../entity_explosion_spawn.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1474);
+#include "../init_entity.h"
+#include "../entity_dummy.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A158C);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A20C0);    // [Duplicate]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A15C8);
+#include "../check_field_collision.h"
+#include "../get_player_collision_with.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A15FC);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A2684);    // ReplaceBreakableWithItemDrop()
+//#include "../replace_breakable_with_item_drop.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1640);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A273C);    // [Duplicate]
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A27C0);    // [Duplicate]
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A291C);    // CollectHeart()
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A299C);    // CollectGold()
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A2A78);    // CollectSubweapon()
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A2B90);    // CollectHeartVessel()
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A2C34);    // CollectLifeVessel()
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A2C84);    // DestroyCurrentEntity()
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1670);
+// POSSIBLE FILE BREAK
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A169C);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A2CAC);    // EntityPrizeDrop()
+//#include "../e_collect.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1914);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A3520);    // EntityExplosion()
+//#include "../entity_explosion.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1AFC);
+#include "../blink_item.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1B5C);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A36C0);    // EntityEquipItemDrop()
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1B88);
+#include "../blit_char.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1BA4);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A3F58);    // EntityRelicOrb()
+//#include "../entity_relic_orb.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1C10);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A4A28);    // EntityHeartDrop()
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1C48);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A4B50);    // EntityMessageBox()
+//#include "../entity_message_box.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1C90);
+#include "../check_coll_offsets.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1CD8);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A519C);    // EntityUnkId13()
+//#include "../entity_unkId13.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1D30);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A52AC);    // EntityUnkId14Spawner()
+//#include "../entity_unkId14_spawner.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1DBC);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A53DC);    // EntityUnkId15Spawner()
+//#include "../entity_unkId15_spawner.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1DEC);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A54C4);    // EntityUnkId14()
+//#include "../entity_unkId14.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1E24);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A55B4);    // EntityUnkId15()
+//#include "../entity_unkId15.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1E6C);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A56A8);    // EntityOlroxDrool()
+//#include "../entity_olrox_drool.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1ECC);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A58D8);    // [Duplicate]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1EEC);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A59D4);    // [Duplicate]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1F08);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A5F54);    // EntityIntenseExplosion()
+//#include "../entity_intense_explosion.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A1F9C);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A6054);    // [Duplicate]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A2098);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A6120);    // [Duplicate]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A20C0);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A61E8);    // [Duplicate]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A21E8);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A62A0);    // EntityBigRedFireball()
+//#include "../entity_big_red_fireball.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A2340);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A6478);    // UnkRecursivePrimFunc1()
+//#include "../unk_recursive_primfunc_1.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A2684);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A6A58);    // UnkRecursivePrimFunc2()
+//#include "../unk_recursive_primfunc_2.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A273C);
+#include "../clut_lerp.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A27C0);
+#include "../play_sfx_with_pos_args.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A291C);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A7448);    // EntitySoulStealOrb()
+//#include "../entity_soul_steal_orb.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A299C);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A77DC);    // EntityEnemyBlood()
+//#include "../entity_enemy_blood.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A2A78);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A7C8C);    // EntityRoomForeground()
+//#include "../e_room_fg.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A2B90);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A2C34);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A2C84);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A2CAC);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A3520);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A361C);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A36C0);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A3CA8);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A3F58);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A4A28);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A4B50);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A50AC);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A519C);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A52AC);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A53DC);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A54C4);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A55B4);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A56A8);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A58D8);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A59D4);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A5F54);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A6054);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A6120);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A61E8);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A62A0);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A6478);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A6A58);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A7158);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A7350);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A7448);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A77DC);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A7C8C);
-
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A7D78);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A7D78);    // BottomCornerText()
 
 INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A80A8);
+
+// POSSIBLE FILE BREAK
 
 INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A813C);
 
@@ -224,6 +228,8 @@ INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AB0C0);
 
 INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AB548);
 
+// POSSIBLE FILE BREAK
+
 INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AB7CC);
 
 INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AC074);
@@ -234,24 +240,167 @@ INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801ACB6C);
 
 INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801ACEF4);
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AD0EC);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AD0EC);    // [Duplicate]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AD2BC);
+// POSSIBLE FILE BREAK
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801ADF40);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AD2BC);    // EntityStageNamePopup()
+//#include "../e_stage_name.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AE328);
+//NOTE: The remaining functions are all contained in "../prim_helpers.h" but
+//      UnkPrimHelper and PrimDecreaseBrightness don't match.
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801ADF40);    // UnkPrimHelper()
+//INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AE328);    // UpdateAnimation()
+s32 UpdateAnimation(u8* texAnimations, Primitive* prim) {
+    s16 sp0;
+    s16 tempUv;
+    u8 new_var;
+    u8* nextAnimation = texAnimations + ((prim->p1 * 5) & 0xFF);
+    u8 new_var2;
+    s32 retVal = 0;
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AE478);
+    if (prim->p2 == 0) {
+        if (*nextAnimation) {
+            if (*nextAnimation == 0xFF) {
+                return 0;
+            }
+            retVal = 0x80;
+            prim->p2 = nextAnimation[0];
+            ++nextAnimation;
+            tempUv = nextAnimation[0] + (nextAnimation[1] << 8);
+            nextAnimation += 2;
+            sp0 = nextAnimation[0] + (nextAnimation[1] << 8);
+            LOH(prim->u0) = tempUv;
+            LOH(prim->u1) = tempUv + *((u8*)(&sp0));
+            new_var = *((u8*)&sp0 + 1);
+            LOH(prim->u3) = tempUv + sp0;
+            LOH(prim->u2) = tempUv + (new_var << 8);
+            ++prim->p1;
+        } else {
+            prim->p1 = 0;
+            prim->p2 = 0;
+            prim->p2 = texAnimations[0];
+            tempUv = texAnimations[1] + (texAnimations[2] << 8);
+            sp0 = texAnimations[3] + (texAnimations[4] << 8);
+            LOH(prim->u0) = tempUv;
+            LOH(prim->u1) = tempUv + (*(u8*)&sp0);
+            new_var2 = *((u8*)&sp0 + 1);
+            LOH(prim->u3) = tempUv + sp0;
+            LOH(prim->u2) = tempUv + (new_var2 << 8);
+            ++prim->p1;
+            return 0;
+        }
+    }
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AE4A8);
+    retVal |= 1;
+    --prim->p2;
+    return (retVal | 1) & 0xFF;
+}
+//INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AE478);    // FindFirstUnkPrim()
+Primitive* FindFirstUnkPrim(Primitive* poly) {
+    while (poly != NULL) {
+        if (poly->p3 != 0) {
+            poly = poly->next;
+        } else {
+            return poly;
+        }
+    }
+    return NULL;
+}
+//INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AE4A8);    // FindFirstUnkPrim2()
+Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index) {
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AE524);
+    Primitive* ret;
+    int i;
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AE5AC);
+    for (; prim; prim = prim->next) {
+        if (!prim->p3) {
+            ret = prim;
+            for (i = 1; i < index; ++i) {
+                prim = prim->next;
+                if (!prim) {
+                    return NULL;
+                }
+                if (prim->p3) {
+                    break;
+                }
+            }
+            if (i == index) {
+                return ret;
+            }
+        }
+    }
+    return NULL;
+}
+//INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AE524);    // PrimToggleVisibility()
+Primitive* PrimToggleVisibility(Primitive* firstPrim, s32 count) {
+    Primitive* prim;
+    s8 isVisible;
+    s32 i;
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AE68C);
+    if (firstPrim->p3) {
+        firstPrim->p3 = 0;
+    } else {
+        firstPrim->p3 = 1;
+    }
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AE6E0);
+    prim = firstPrim;
+    for (i = 0; i < count; i++) {
+        if (prim->p3) {
+            prim->drawMode &= ~DRAW_HIDE;
+            isVisible = false;
+        } else {
+            prim->drawMode |= DRAW_HIDE;
+            isVisible = true;
+        }
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AE70C);
+        prim = prim->next;
+        if (prim == NULL)
+            return 0;
+        prim->p3 = isVisible;
+    }
+
+    return prim;
+}
+//INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AE5AC);    // PrimResetNext()
+void PrimResetNext(Primitive* prim) {
+    prim->p1 = 0;
+    prim->p2 = 0;
+    prim->p3 = 0;
+    prim->next->x1 = 0;
+    prim->next->y1 = 0;
+    prim->next->y0 = 0;
+    prim->next->x0 = 0;
+    prim->next->clut = 0;
+    LOHU(prim->next->u0) = 0;
+    LOHU(prim->next->b1) = 0;
+    LOHU(prim->next->r1) = 0;
+    LOHU(prim->next->u1) = 0;
+    prim->next->tpage = 0;
+    LOHU(prim->next->r2) = 0;
+    LOHU(prim->next->b2) = 0;
+    prim->next->u2 = 0;
+    prim->next->v2 = 0;
+    prim->next->r3 = 0;
+    prim->next->b3 = 0;
+    prim->next->x2 = 0;
+    prim->next->y2 = 0;
+}
+//INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AE68C);    // UnkPolyFunc2()
+void UnkPolyFunc2(Primitive* prim) {
+    PrimResetNext(prim);
+    prim->p3 = 8;
+    prim->next->p3 = 1;
+    prim->next->type = PRIM_LINE_G2;
+    prim->next->drawMode = 0xA;
+}
+//INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AE6E0);    // UnkPolyFunc0()
+void UnkPolyFunc0(Primitive* prim) {
+    prim->p3 = 0;
+    prim->drawMode = DRAW_HIDE;
+    prim->next->p3 = 0;
+    prim->next->type = PRIM_GT4;
+    prim->next->drawMode = DRAW_HIDE;
+}
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AE70C);    // PrimDecreaseBrightness()
+//#include "../prim_helpers.h"

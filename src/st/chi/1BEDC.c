@@ -1,4 +1,4 @@
-#include "stage.h"
+#include "chi.h"
 
 /*
  * File: 1BEDC.c
@@ -58,7 +58,7 @@ void func_8019BEDC(Entity* entity)
     switch (entity->step) {
         case 0:
             entity->animCurFrame = 1;
-            func_801A1F9C(&D_8018067C);
+            InitializeEntity(&D_8018067C);
 
             temp2 = 0x6D;
             temp1 = D_8003BE3C;
@@ -98,7 +98,7 @@ void func_8019BEDC(Entity* entity)
                 entity->step++;
                 break;
             }
-            func_801A128C(entity);
+            DestroyEntity(entity);
             return;
 
         case 3:
@@ -114,7 +114,7 @@ void func_8019BEDC(Entity* entity)
             if (!temp4) {
                 g_api_PlaySfx(NA_SE_EN_ROCK_BREAK);
             }
-            func_801A1640();
+            MoveEntity();
 
             if (entity->velocityX < 0x4000) {
                 entity->velocityX += 0x200;
@@ -123,7 +123,7 @@ void func_8019BEDC(Entity* entity)
             temp_v0_3 = func_801AE478(entity->ext.prim);
             if (temp_v0_3 != NULL) {
                 temp_v0_3->unk2B = 1;
-                temp_v1_4 = entity->posX.i.hi + (func_8019DE74() & 0x3F);
+                temp_v1_4 = entity->posX.i.hi + (Random() & 0x3F);
 
                 if ((temp_v1_4 - 0x18) >= 0x101) {
                     var_s2 = temp_v1_4 - 0x28;
@@ -142,13 +142,13 @@ void func_8019BEDC(Entity* entity)
             }
             temp_posX = entity->posX.i.hi - 0x18;
             temp_posY = entity->posY.i.hi + 0x20;
-            temp_entity = func_801A1AFC(D_8007D858, &D_8007D858[0x5E0]);
+            temp_entity = AllocEntity(D_8007D858, &D_8007D858[0x5E0]);
             if (temp_entity != NULL) {
                 func_801A04EC(0x15, temp_entity);
-                temp_entity->posX.i.hi = (s16) (temp_posX + (func_8019DE74() & 0x1F));
+                temp_entity->posX.i.hi = (s16) (temp_posX + (Random() & 0x1F));
                 temp2 = temp_posY;
                 temp_entity->posY.i.hi = temp2;
-                temp_entity->params = (s16) (func_8019DE74() & 3);
+                temp_entity->params = (s16) (Random() & 3);
                 temp_entity->zPriority = 0xA0;
             }
             var_t0_2 = entity->posX.i.hi - 0xE8;
@@ -166,7 +166,7 @@ void func_8019BEDC(Entity* entity)
             }
 
             if (entity->posX.i.hi >= 0x129) {
-                func_801A128C(entity);
+                DestroyEntity(entity);
             }
             break;
         case 16:
@@ -189,12 +189,6 @@ void func_8019BEDC(Entity* entity)
 }
 #endif
 
-s32 func_8019DE74();  // Random()
-void func_801A0560(u16 entityId, Entity* source, Entity* entity);  // CreateEntityFromEntity()
-void func_801A128C(Entity* entity);    // DestroyEntity()
-void func_801A1640(); // MoveEntity()
-Entity* func_801A1AFC(Entity* start, Entity* end); // AllocEntity()
-void func_801A1F9C(u16 args0[]);   // InitializeEntity()
 extern s32 D_8018067C;
 
 void func_8019C31C(Entity* entity)
@@ -213,7 +207,7 @@ void func_8019C31C(Entity* entity)
     temp_v1 = entity->step;
     switch (temp_v1) {
         case 0:
-            func_801A1F9C(&D_8018067C);
+            InitializeEntity(&D_8018067C);
             temp_a0 = entity->params;
             entity->drawFlags = 4;
             entity->zPriority = 0x69;
@@ -222,18 +216,18 @@ void func_8019C31C(Entity* entity)
                 entity->facingLeft = 1;
                 entity->rotZ = (u16) (entity->rotZ & 0xFFF0);
             }
-            temp_a0_2 = (func_8019DE74() & 0xF) << 0xC;
+            temp_a0_2 = (Random() & 0xF) << 0xC;
             entity->velocityX = temp_a0_2;
             if (entity->animCurFrame == 0xD) {
                 entity->velocityX = temp_a0_2 + 0x4000;
             }
-            temp_a0_3 = ((func_8019DE74() & 7) << 0xB) - 0x4000;
+            temp_a0_3 = ((Random() & 7) << 0xB) - 0x4000;
             entity->velocityY = temp_a0_3;
             if (entity->animCurFrame < 0xB) {
                 entity->velocityY = temp_a0_3 + 0xFFFF0000;
             }
             //temp_a0_3 
-            entity->ext.generic.unk9C.modeS16.unk0 = ((func_8019DE74() & 3) + 1) * 32;
+            entity->ext.generic.unk9C.modeS16.unk0 = ((Random() & 3) + 1) * 32;
             return;
         case 1:
             temp_v1_2 = (u16) entity->params;
@@ -245,7 +239,7 @@ void func_8019C31C(Entity* entity)
             return;
         case 2:
             entity->rotZ += entity->ext.generic.unk9C.modeS16.unk0;
-            func_801A1640();
+            MoveEntity();
             entity->velocityY = (s32) (entity->velocityY + 0x2000);
             g_api_CheckCollision((s32) entity->posX.i.hi, (s32) (s16) (entity->posY.i.hi + 6), &collider, 0);
             if (collider.effects & 1) {
@@ -253,24 +247,24 @@ void func_8019C31C(Entity* entity)
                 if (entity->animCurFrame >= 0xC) {
                     var_s2 = 0;
                     do {
-                        temp_v0 = func_801A1AFC(&g_Entities[224], &g_Entities[256]);
+                        temp_v0 = AllocEntity(&g_Entities[224], &g_Entities[256]);
                         var_s2 += 1;
                         if (temp_v0 != NULL) {
                             func_801A0560(0x19, entity, temp_v0);
-                            temp_v0->params = (s16) (((func_8019DE74() & 3) + 9) | 0x100);
+                            temp_v0->params = (s16) (((Random() & 3) + 9) | 0x100);
                         }
                     } while (var_s2 < 2);
-                    func_801A128C(entity);
+                    DestroyEntity(entity);
                     return;
                 }
                 temp_v1_3 = entity->velocityY;
                 if (temp_v1_3 <= 0x7FFF) {
-                    temp_v0_2 = func_801A1AFC(&g_Entities[224], &g_Entities[256]);
+                    temp_v0_2 = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (temp_v0_2 != NULL) {
                         func_801A0560(6, entity, temp_v0_2);
                         temp_v0_2->params = 0xC010;
                     }
-                    func_801A128C(entity);
+                    DestroyEntity(entity);
                     return;
                 }
                 entity->velocityY = -temp_v1_3 * 2 / 3;

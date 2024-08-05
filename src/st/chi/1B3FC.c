@@ -1,4 +1,4 @@
-#include "stage.h"
+#include "chi.h"
 
 /*
  * File: 1B3FC.c
@@ -6,8 +6,8 @@
  * Description: Abandoned Mine
  */
 
-void func_801A1F9C(void*);  // InitializeEntity()
-void func_801A13BC(s32, void*); // AnimateEntity()
+void InitializeEntity(u16 arg0[]);
+void AnimateEntity(s32, void*);
 extern s32 D_80180664;
 //static u8 D_80180730[] = {0x40, 0x01, 0xFF, 0x00};
 //static u8 D_80180734[] = {0x02, 0x25, 0x02, 0x26};
@@ -21,7 +21,7 @@ extern ObjInit2 D_80180740[];
 void func_8019B3FC(Entity* entity) {
     ObjInit2* objInit = &D_80180740[entity->params];
     if (entity->step == 0) {
-        func_801A1F9C(&D_80180664);
+        InitializeEntity(&D_80180664);
         entity->animSet = objInit->animSet;
         entity->zPriority = objInit->zPriority;
         entity->unk5A = objInit->unk4.u;
@@ -36,10 +36,9 @@ void func_8019B3FC(Entity* entity) {
             entity->rotX = 0x200;
         }
     }
-    func_801A13BC(objInit->unk10, entity);
+    AnimateEntity(objInit->unk10, entity);
 }
 
-s32 func_801A15FC();    // GetSideToPlayer()
 extern u16 D_80180658;
 extern u8 D_80180798[];
 extern u8 D_801807A0[];
@@ -75,7 +74,7 @@ void func_8019B4DC(Entity* entity) {
         }
 
         if (entity->unk44 != 0) {
-            temp_v0 = func_801A15FC();
+            temp_v0 = GetSideToPlayer();
             var_v1 = entity->ext.generic.unk7C.s;
             if (var_v1 != 0) {
                 var_v1 = (temp_v0 & 2) * 2;
@@ -91,7 +90,7 @@ void func_8019B4DC(Entity* entity) {
             g_Tilemap.height = *(temp_v0_2++);
         }
     } else {
-        func_801A1F9C(&D_80180658);
+        InitializeEntity(&D_80180658);
         entity->ext.generic.unk7C.s = D_801807A0[temp_s1];
         if (entity->ext.generic.unk7C.s != 0) {
             entity->hitboxWidth = D_80180798[temp_s1];
@@ -103,10 +102,6 @@ void func_8019B4DC(Entity* entity) {
     }
 }
 
-void func_801A04EC(s32, void*); // CreateEntityFromCurrentEntity()
-void func_801A0560(s32, void*, void*);  // CreateEntityFromEntity()
-void func_801A128C(void*);  // DestroyEntity()
-void* func_801A1AFC(s32*, void*);   // AllocEntity()
 void func_801A2684(void*);  // ReplaceBreakableWithItemDrop()
 extern s32 D_8007D858[];
 extern s32 D_80180610;
@@ -126,13 +121,13 @@ void func_8019B698(Entity* entity)
     Entity* newEntity;
 
     if (entity->step == 0) {
-        func_801A1F9C(&D_80180610);
+        InitializeEntity(&D_80180610);
         entity->zPriority = 0x70;
         entity->drawMode = D_80180878[params];
         newEntity = &entity[1];
         entity->hitboxHeight = D_80180858[params];
         entity->animSet = D_80180868[params];
-        func_801A128C(newEntity);
+        DestroyEntity(newEntity);
         func_801A0560(0x11, entity, newEntity);
         if (params != 0) {
             entity[1].posY.i.hi -= 32;
@@ -142,18 +137,18 @@ void func_8019B698(Entity* entity)
         newEntity->params = 1;
     }
 
-    func_801A13BC(D_80180838[params], entity);
+    AnimateEntity(D_80180838[params], entity);
 
     if (entity->unk44 != 0) {
         g_api_PlaySfx(SFX_WEAPON_62C);
-        newEntity = func_801A1AFC(&D_8007D858[0], &D_8007D858[0x5E0]);
+        newEntity = AllocEntity(&D_8007D858[0], &D_8007D858[0x5E0]);
         if (newEntity != NULL) {
             func_801A04EC(2, newEntity);
             newEntity->params = D_80180860[params] | 0x10;
         }
 
         for (ptr = &D_80180880, i = 0; i < 4; i++) {
-            newEntity = func_801A1AFC(&D_8007D858[0], &D_8007D858[0x5E0]);
+            newEntity = AllocEntity(&D_8007D858[0], &D_8007D858[0x5E0]);
             if (newEntity != NULL) {
                 func_801A0560(0x1A, entity, newEntity);
                 newEntity->posX.i.hi += *ptr++;
@@ -167,7 +162,7 @@ void func_8019B698(Entity* entity)
 
         if (params != 0) {
             for (i = 0; i < 3; i++) {
-                newEntity = func_801A1AFC(&D_8007D858[0], &D_8007D858[0x5E0]);
+                newEntity = AllocEntity(&D_8007D858[0], &D_8007D858[0x5E0]);
                 if (newEntity != NULL) {
                     func_801A0560(0x1A, entity, newEntity);
                     newEntity->posX.i.hi += *ptr++;
@@ -176,15 +171,12 @@ void func_8019B698(Entity* entity)
                 }
             }
         }
-        func_801A128C(&entity[1]);
+        DestroyEntity(&entity[1]);
         func_801A2684(entity);
     }
 }
 
-s32 func_8019DE74();    // Random()
-void func_801A1640();   // MoveEntity()
 void func_801ADF40(Primitive*); // UnkPrimHelper()
-void func_801AE68C(Primitive*, s16);    // UnkPolyFunc2()?
 
 // CEN.func_8018DB18
 void func_8019B914(Entity* entity)
@@ -201,14 +193,14 @@ void func_8019B914(Entity* entity)
 
     switch (entity->step) {
     case 0:
-        func_801A1F9C(&D_80180610);
+        InitializeEntity(&D_80180610);
         entity->zPriority = 0x70;
         entity->hitboxState = 0;
         entity->drawFlags = FLAG_DRAW_ROTZ;
         entity->animCurFrame = entity->params + 28;
-        facing = func_801A15FC() & 1;
+        facing = GetSideToPlayer() & 1;
 
-        temp_v0 = (func_8019DE74() & 0x1E) + 8;
+        temp_v0 = (Random() & 0x1E) + 8;
         entity->ext.generic.unk80.modeS16.unk0 = temp_v0;
         if (entity->facingLeft != 0) {
             entity->ext.generic.unk80.modeS16.unk0 = -temp_v0;
@@ -225,7 +217,7 @@ void func_8019B914(Entity* entity)
         }
 
         temp = 0x8000;
-        temp_v0_2 = func_8019DE74() << 8;
+        temp_v0_2 = Random() << 8;
         entity->velocityX = entity->velocityX + temp - temp_v0_2;
         entity->velocityY = FIX(-3);
         entity->velocityY = (entity->params >> 1) * 0x6000 - 0x30000;
@@ -242,7 +234,7 @@ void func_8019B914(Entity* entity)
                 prim = &g_PrimBuf[primIndex];
                 entity->primIndex = primIndex;
                 entity->flags |= FLAG_HAS_PRIMS;
-                func_801AE68C(prim, primIndex);
+                UnkPolyFunc2(prim, primIndex);
                 prim->tpage = 0x1A;
                 prim->clut = 0x159;
                 prim->u0 = prim->u2 = 0x40;
@@ -260,7 +252,7 @@ void func_8019B914(Entity* entity)
         }
         break;
     case 1:
-        func_801A1640();
+        MoveEntity();
         entity->rotZ += entity->ext.generic.unk80.modeS16.unk0;
         entity->velocityY += FIX(0.25);
         g_api.CheckCollision(entity->posX.i.hi, entity->posY.i.hi + 6, &collider, 0);
@@ -269,12 +261,12 @@ void func_8019B914(Entity* entity)
             entity->velocityY = -entity->velocityY / 2;
             entity->velocityX -= entity->velocityX / 3;
             if (entity->velocityY > FIX(-0.625)) {
-                newEntity = func_801A1AFC(&D_8007D858[0], &D_8007D858[0x5E0]);
+                newEntity = AllocEntity(&D_8007D858[0], &D_8007D858[0x5E0]);
                 if (newEntity != 0) {
                     func_801A0560(6, entity, newEntity);
                     newEntity->params = 16;
                 }
-                func_801A128C(entity);
+                DestroyEntity(entity);
                 break;
             }
         }
@@ -339,7 +331,7 @@ void func_8019BD0C(struct UnkStruct1* arg0)
 
     switch (arg0->unk2B) {
         case 1:
-            temp_v0 = (func_8019DE74() & 1) + 1;
+            temp_v0 = (Random() & 1) + 1;
             arg0->unkC = temp_v0;
             arg0->unkD = temp_v0;
             arg0->unk4 = 0x60;
@@ -347,7 +339,7 @@ void func_8019BD0C(struct UnkStruct1* arg0)
             arg0->unk6 = 0x30;
             arg0->unk26 = 0xA0;
             arg0->unk32 = 2;
-            arg0->unk1F = (func_8019DE74() & 0x1F) + 0x10;
+            arg0->unk1F = (Random() & 0x1F) + 0x10;
             arg0->unk2B = 2U;
             // fallthrough
         case 2:
@@ -374,7 +366,7 @@ void func_8019BDF8(Entity* entity)
 
     switch (entity->step) {
         case 0:
-            func_801A1F9C(&D_8018067C);
+            InitializeEntity(&D_8018067C);
 
             temp_3 = 3;
 
