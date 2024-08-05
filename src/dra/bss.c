@@ -261,8 +261,18 @@ s32 D_8013841C;
 static s32 D_80138420; // unused
 RECT D_80138424;
 
-// 8A0A4.c
-// 8D3E8.c
+// 8A0A4.c, 8D3E8.c
+s32 D_8013842C;
+s32 D_80138430;
+static u32 D_80138434; // unused
+s32 D_80138438;
+s32 D_8013843C;
+s32 D_80138440;
+s32 D_80138444;
+s32 D_80138448;
+s32 D_8013844C;
+s32 D_80138450;
+
 // 91EBC.c
 // 92F60.c
 // 93290.c
@@ -270,16 +280,7 @@ RECT D_80138424;
 // 94F50.c
 // 953A0.c
 
-u32 D_8013842C;                          // TODO type
-u32 D_80138430[2];                       // TODO type
-u32 D_80138438;                          // TODO type
-u32 D_8013843C;                          // TODO type
-u32 D_80138440;                          // TODO type
-u32 D_80138444;                          // TODO type
-u32 D_80138448;                          // TODO type
-u32 D_8013844C;                          // TODO type
-u32 D_80138450;                          // TODO type
-u32 D_80138454;                          // TODO type
+s32 D_80138454;                          // TODO type
 u32 g_CurrentXaConfigId;                 // TODO type
 u32 D_8013845C;                          // TODO type
 u8 g_SeqTable[804];                      // TODO type

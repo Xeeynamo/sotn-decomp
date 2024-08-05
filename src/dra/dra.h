@@ -502,20 +502,22 @@ extern s32 D_80137FE8;
 extern s32 D_80137FEC;
 extern s32 D_80137FF0;
 
-// 75F54.c, 7A4D0.c
+// BSS 75F54.c, 7A4D0.c
 extern s32 D_8013800C[11];
 extern u8 D_8013803C;
 extern u8 D_80138040;
 extern u8 D_80138044;
 extern u8 D_80138048;
 
-// BSS work in progress
+// BSS 8A0A4.c, 8D3E8.c
 extern s32 D_8013842C;
 extern s32 D_80138430;
 extern s32 D_80138438;
 extern s32 D_8013843C;
 extern s32 D_80138440;
 extern s32 D_80138444;
+
+// BSS work in progress
 extern s32 D_80138454;
 extern char g_SeqTable[SS_SEQ_TABSIZ * SEQ_TABLE_S_MAX * SEQ_TABLE_T_MAX];
 extern const char* D_80138784[]; // 487?
