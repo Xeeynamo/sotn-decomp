@@ -9,7 +9,6 @@ extern s8 D_4A000_8017AB20;
 extern AnimationFrame* D_4A000_8017AB68;
 extern s16 D_4A000_8017ABDC[];
 
-
 extern s32 D_4A000_8017CC1C; // g_DebugWaitInfoTimer
 
 void DebugShowWaitInfo(const char* msg) {
@@ -246,7 +245,8 @@ void func_ptr_80170024(Entity* self) {
     switch (self->step) {
     case 0:
         self->facingLeft = self->ext.shield.parent->facingLeft;
-        self->ext.shield.childPalette = self->ext.shield.parent->ext.shield.childPalette + 1 + upperParams;
+        self->ext.shield.childPalette =
+            self->ext.shield.parent->ext.shield.childPalette + 1 + upperParams;
         self->ext.shield.unk7D = self->ext.shield.parent->ext.shield.unk7D;
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x12);
         if (self->primIndex == -1) {
@@ -272,17 +272,19 @@ void func_ptr_80170024(Entity* self) {
         prim->u1 = prim->u3 = 0x7F;
         prim->v0 = prim->v1 = self->ext.shield.unk7D + 0x30;
         prim->v2 = prim->v3 = self->ext.shield.unk7D + 0x4F;
-        prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = 0x80;
+        prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
+            prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
+                0x80;
         prim->priority = 0x1BC;
-        prim->drawMode = 0;        
-        for(i = 0; i < 16; i++) {
+        prim->drawMode = 0;
+        for (i = 0; i < 16; i++) {
             prevPrim = prim;
             prim = prim->next;
             nextPrim = prim->next;
             *prim = *prevPrim;
             prim->next = nextPrim;
             prim->u0 = prim->u2 = i * 128 / 16;
-            prim->u1 = prim->u3 = ((i + 1) * 128)/16 - 1;
+            prim->u1 = prim->u3 = ((i + 1) * 128) / 16 - 1;
             prim->clut = 0x15F;
             prim->priority = 0x1BE;
             prim->drawMode |= 0x35;
@@ -321,13 +323,15 @@ void func_ptr_80170024(Entity* self) {
                 self->ext.shield.unk9A += 0x18;
             }
             self->rotZ += self->ext.shield.unk9E * 7 / 4;
-            // Not really sure how this block works. xShift is probably a fake variable reuse.
+            // Not really sure how this block works. xShift is probably a fake
+            // variable reuse.
             xShift = self->ext.shield.unk9C;
             self->ext.shield.unk9C += self->ext.shield.unk9E;
-            if (((xShift ^ self->ext.shield.unk9C) & 0x1000) && (self->params & 0x100)) {
+            if (((xShift ^ self->ext.shield.unk9C) & 0x1000) &&
+                (self->params & 0x100)) {
                 g_api.PlaySfx(SFX_UNK_689);
             }
-            
+
             fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
             fakePrim->posX.i.hi = fakePrim->x0;
             fakePrim->posY.i.hi = fakePrim->y0;
@@ -360,19 +364,21 @@ void func_ptr_80170024(Entity* self) {
     prim->x3 = right2 = selfX + (((rcos(angle) >> 4) * 0x42) >> 8);
     prim->y3 = bottom2 = selfY - (((rsin(angle) >> 4) * 0x42) >> 8);
     prim = prim->next;
-    for(i = 0; i < 16; i++) {
+    for (i = 0; i < 16; i++) {
         prim->x0 = left + (right - left) * i / 16;
-        prim->x1 = left + (right - left) * (i+1) / 16;
+        prim->x1 = left + (right - left) * (i + 1) / 16;
         prim->x2 = left2 + (right2 - left2) * i / 16;
-        prim->x3 = left2 + (right2 - left2) * (i+1) / 16;
+        prim->x3 = left2 + (right2 - left2) * (i + 1) / 16;
         prim->y0 = top + (bottom - top) * i / 16;
-        prim->y1 = top + (bottom - top) * (i+1) / 16;
+        prim->y1 = top + (bottom - top) * (i + 1) / 16;
         prim->y2 = top2 + (bottom2 - top2) * i / 16;
-        prim->y3 = top2 + (bottom2 - top2) * (i+1) / 16;
+        prim->y3 = top2 + (bottom2 - top2) * (i + 1) / 16;
         angle = D_4A000_8017ABDC[i];
-        prim->r0 =  prim->g0 = prim->b0 = prim->r2 = prim->g2 = prim->b2 = ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
-        angle = D_4A000_8017ABDC[(i+1) % 16];
-        prim->r1 = prim->g1 = prim->b1 = prim->r3 = prim->g3 = prim->b3 = ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
+        prim->r0 = prim->g0 = prim->b0 = prim->r2 = prim->g2 = prim->b2 =
+            ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
+        angle = D_4A000_8017ABDC[(i + 1) % 16];
+        prim->r1 = prim->g1 = prim->b1 = prim->r3 = prim->g3 = prim->b3 =
+            ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
         D_4A000_8017ABDC[i] += self->ext.shield.unk8A;
         prim = prim->next;
     }

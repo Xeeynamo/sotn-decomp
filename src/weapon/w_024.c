@@ -575,7 +575,8 @@ void func_ptr_80170024(Entity* self) {
         prim->r1 = prim->g1 = prim->b1 = prim->r0 = prim->g0 = prim->b0 = 0x80;
         prim->drawMode = DRAW_COLORS;
         self->velocityY = -((self->ext.shield.unk9A * FIX(3.0 / 16)) + FIX(3));
-        self->ext.weapon.accelerationY = -((self->ext.shield.unk9A << 8) + 0x900);
+        self->ext.weapon.accelerationY =
+            -((self->ext.shield.unk9A << 8) + 0x900);
         self->ext.shield.unkAE = self->ext.shield.parent->ext.shield.unkAE;
         SetWeaponProperties(self, 0);
         self->hitboxHeight = 0x40;
