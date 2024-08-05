@@ -184,7 +184,7 @@ s32 D_80137FB8;
 s32 D_80137FBC;
 #endif
 
-// 6D59C.c
+// 6D59C.c, 704D0.c
 s16 g_WasFacingLeft;
 static s16 g_WasFacingLeft_; // alignment padding
 s16 g_WasFacingLeft2;
@@ -201,8 +201,23 @@ s32 g_WasFacingLeft7;
 s32 D_80137FDC;
 #endif
 
-// 72BB0.c
+// 72BB0.c, 75F54.c
+s32 D_80137FE0;
+s32 D_80137FE4;
+s32 D_80137FE8;
+s32 D_80137FEC;
+s32 D_80137FF0;
+
 // 75F54.c
+s32 g_WingSmashButtonCounter;
+s32 g_WingSmashButtonTimer;
+s32 g_WingSmashTimer;
+s32 g_BatScreechDone;
+s32 g_MistTimer; // remaining time in mist transformation
+s32 D_80138008;
+s32 D_8013800C[11];
+s32 D_80138038;
+
 // 78D0C.c
 // 7A4D0.c
 // 7E4BC.c
@@ -216,22 +231,6 @@ s32 D_80137FDC;
 // 94F50.c
 // 953A0.c
 
-u32 D_80137FE0;                          // TODO type
-u32 D_80137FE4;                          // TODO type
-u32 D_80137FE8;                          // TODO type
-u32 D_80137FEC;                          // TODO type
-u32 D_80137FF0;                          // TODO type
-u32 g_WingSmashButtonCounter;            // TODO type
-u32 g_WingSmashButtonTimer;              // TODO type
-u32 g_WingSmashTimer;                    // TODO type
-u32 g_BatScreechDone;                    // TODO type
-u32 g_MistTimer;                         // TODO type
-u32 D_80138008;                          // TODO type
-u32 D_8013800C;                          // TODO type
-u32 D_80138010;                          // TODO type
-u32 D_80138014;                          // TODO type
-u32 D_80138018[8];                       // TODO type
-u32 D_80138038;                          // TODO type
 u8 D_8013803C[4];                        // TODO type
 u8 D_80138040[4];                        // TODO type
 u8 D_80138044[4];                        // TODO type

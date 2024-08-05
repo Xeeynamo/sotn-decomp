@@ -486,7 +486,7 @@ extern s32 D_80137EEC;
 extern s32 D_80137EF0;
 extern s32 D_80137EF4;
 
-// BSS work in progress
+// BSS TODO merge? 6D59C.c, 704D0.c
 extern s16 g_WasFacingLeft;  // for QCF to tell what's "forward"
 extern s16 g_WasFacingLeft2; // for BF to tell what's "forward"
 extern s32 g_WasFacingLeft3; // for dark metamorphosis "" ""
@@ -494,22 +494,15 @@ extern s32 g_WasFacingLeft4; // for summon spirit "" ""
 extern s16 g_WasFacingLeft5; // for hellfire "" ""
 extern s32 g_WasFacingLeft6; // for tetra spirit "" ""
 extern s32 g_WasFacingLeft7; // for soul steal "" ""
-#if defined(VERSION_US)
-extern s32 D_80137FDC;
-#endif
+
+// BSS TODO merge? 72BB0.c, 75F54.c
 extern s32 D_80137FE0;
 extern s32 D_80137FE4;
 extern s32 D_80137FE8;
 extern s32 D_80137FEC;
 extern s32 D_80137FF0;
-extern u32 g_WingSmashButtonCounter;
-extern s32 g_WingSmashButtonTimer;
-extern s32 g_WingSmashTimer;
-extern s32 g_BatScreechDone;
-extern s32 g_MistTimer; // remaining time in mist transformation
-extern s32 D_80138008;
-extern s32 D_8013800C[];
-extern s32 D_80138038;
+
+// BSS work in progress
 extern u8 D_8013803C;
 extern u8 D_80138040;
 extern u8 D_80138044;

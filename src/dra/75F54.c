@@ -2,6 +2,15 @@
 #include "objects.h"
 #include "sfx.h"
 
+// BSS
+extern s32 g_WingSmashButtonCounter;
+extern s32 g_WingSmashButtonTimer;
+extern s32 g_WingSmashTimer;
+extern s32 g_BatScreechDone;
+extern s32 g_MistTimer; // remaining time in mist transformation
+extern s32 D_80138008;
+extern s32 D_8013800C[11];
+
 void func_80115F54(void) {
     PlayerDraw* plDraw;
     bool var_s2;
@@ -1294,6 +1303,7 @@ void func_80118894(Entity* self) {
     }
 }
 
+extern s32 D_80138038; // BSS
 Entity* func_80118970(void) {
     s32 big_arr[128];
     Entity* ent;
