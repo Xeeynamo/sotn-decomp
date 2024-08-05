@@ -433,44 +433,20 @@ extern Unkstruct_800BF554 g_SfxData[737];
 extern char* aLightTimer02x;
 extern SVECTOR D_800E2024;
 extern SVECTOR D_800E202C;
-extern s32 g_DebugFreeze;
-extern s32 g_DebugHitboxViewMode;
-extern u32 D_801362B4;
-extern s32 D_801362B8;
-extern s32 D_801362BC;
-extern s32 g_DebugPalIdx;
-extern DebugColorChannel g_DebugColorChannel;
-extern u32 D_801362C8;
-extern OT_TYPE* g_CurrentOT;
-extern s32 D_801362D0[];
-extern s32 D_801362D4;
-extern s32 g_DebugIsRecordingVideo;
-extern GpuUsage g_GpuMaxUsage;
-extern s32 g_softResetTimer;
-extern s32 g_DebugWaitInfoTimer;
-extern s32 g_DebugRecordVideoFid;
-extern s16 D_80136308[];
+
+// BSS shared
 extern s32 D_8013640C;
 extern s32 D_80136410;
-extern NowLoadingModel g_NowLoadingModel;
-extern SimFile* g_SimFile;
-extern SimFile D_80136450;
-extern s16 D_80136460[];
-extern s16 D_80136C60[];
-extern u8 g_PadsRepeatTimer[BUTTON_COUNT * PAD_COUNT];
-extern s32 D_80137428[];
 extern s32 g_MemcardRetryCount;
 extern s32 g_MemcardFd;
-extern u16 D_80137478[0x20];
-extern u16 D_801374B8[0x20];
-extern u16 D_801374F8[0x20];
-extern u16 D_80137538[0x20];
-extern u8* g_DecSrcPtr;
-extern u8* g_DecDstPtr;
-extern s32 g_DecReadNibbleFlag;
-extern s32 g_DecWriteNibbleFlag;
-extern u8* D_80137590;
-extern s32 D_80137594; // g_DemoKeyIdx
+
+// BSS PC shared
+extern SimFile* g_SimFile;
+extern s16 D_80136460[1024];
+extern s16 D_80136C60[1024];
+extern u8* g_DemoPtr;
+
+// BSS work in progress
 extern s32 D_80137598;
 extern s32 D_8013759C;
 extern s32 D_801375A0;

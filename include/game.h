@@ -352,6 +352,8 @@ extern u8 g_BmpCastleMap[0x20000];
 #define MEMCARD_ID "BISLPM-86023DRAX00"
 #endif
 
+#define ICON_SLOT_NUM 32
+
 typedef enum {
     Game_Init,
     Game_Title,

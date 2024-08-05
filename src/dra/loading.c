@@ -154,6 +154,9 @@ s32 func_800E6300(void) {
     return 0;
 }
 
+// BSS
+extern NowLoadingModel g_NowLoadingModel;
+
 void HandleNowLoading(void) {
     void (*pfnWeapon)(u8);
     s8 var_a0;

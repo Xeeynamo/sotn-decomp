@@ -9,6 +9,10 @@ extern u8 D_800A243C[32] = {
     STAGE_NO0,       STAGE_NO0,      STAGE_RCEN,     STAGE_RBO6,
 };
 
+// BSS
+extern u8* g_DemoPtr;
+extern s32 g_DemoKeyIdx;
+
 void DemoGameInit(s32 arg0) {
     s32 i;
 
@@ -26,8 +30,8 @@ void DemoGameInit(s32 arg0) {
             g_StageId = STAGE_RNZ1_DEMO;
         }
     } else {
-        D_80137594 = D_80097C98 & STAGE_INVERTEDCASTLE_MASK;
-        g_StageId = D_800A243C[D_80137594];
+        g_DemoKeyIdx = D_80097C98 & STAGE_INVERTEDCASTLE_MASK;
+        g_StageId = D_800A243C[g_DemoKeyIdx];
     }
 
     InitStatsAndGear(0);
@@ -208,7 +212,7 @@ void DemoOpenFile(s32 arg0) {
     if (g_UseDisk) {
         g_CdStep = CdStep_LoadInit;
         g_LoadFile = CdFile_DemoKey;
-        g_LoadOvlIdx = D_80137594;
+        g_LoadOvlIdx = g_DemoKeyIdx;
         return;
     }
     if (arg0 == 0) {
@@ -217,8 +221,8 @@ void DemoOpenFile(s32 arg0) {
     } else {
         __builtin_memcpy(fileName, "sim:c:\\bin\\dk_000.bin",
                          sizeof("sim:c:\\bin\\dk_000.bin"));
-        fileName[15] = '0' + (D_80137594 / 10 % 10);
-        fileName[16] = '0' + (D_80137594 % 10);
+        fileName[15] = '0' + (g_DemoKeyIdx / 10 % 10);
+        fileName[16] = '0' + (g_DemoKeyIdx % 10);
     }
     fd = open(fileName, O_RDONLY);
     if (fd < 0) {
@@ -252,9 +256,9 @@ void DemoSaveFile(void) {
 
 void DemoInit(s32 arg0) {
 #if !defined(VERSION_PC)
-    D_80137590 = DEMO_KEY_PTR;
+    g_DemoPtr = DEMO_KEY_PTR;
 #endif
-    *((s32*)D_80137590) = 0;
+    *((s32*)g_DemoPtr) = 0;
 
     DemoGameInit(arg0);
 
@@ -281,9 +285,9 @@ void DemoUpdate(void) {
     u8 btnLo;
     s32 demoOffset;
 
-    btnLo = D_80137590[0];
-    btnHi = D_80137590[1];
-    frameCount = D_80137590[2];
+    btnLo = g_DemoPtr[0];
+    btnHi = g_DemoPtr[1];
+    frameCount = g_DemoPtr[2];
     switch (g_DemoMode) {
     case Demo_None:
     case Demo_End:
@@ -292,9 +296,9 @@ void DemoUpdate(void) {
     case Demo_Playback:
         FntPrint("demonstration\n");
         if (frameCount == 0) {
-            D_80137590 += DEMO_KEY_LEN;
-            btnLo = D_80137590[0];
-            btnHi = D_80137590[1];
+            g_DemoPtr += DEMO_KEY_LEN;
+            btnLo = g_DemoPtr[0];
+            btnHi = g_DemoPtr[1];
         }
 
         // Check if end of playback
@@ -307,35 +311,35 @@ void DemoUpdate(void) {
         } else {
             g_pads->pressed = btnLo + (btnHi << 8);
             g_pads[0].tapped = 0;
-            D_80137590[2]--;
+            g_DemoPtr[2]--;
         }
         break;
     case Demo_Recording:
-        demoOffset = D_80137590 - DEMO_KEY_PTR;
+        demoOffset = g_DemoPtr - DEMO_KEY_PTR;
         FntPrint("demo key in:%04x/%04x\n", demoOffset, DEMO_MAX_LEN);
-        if ((s32)(D_80137590 - DEMO_KEY_PTR) >= DEMO_MAX_LEN - DEMO_KEY_LEN) {
+        if ((s32)(g_DemoPtr - DEMO_KEY_PTR) >= DEMO_MAX_LEN - DEMO_KEY_LEN) {
             FntPrint("demo overflow\n");
             return;
         }
 
         if (g_pads[1].tapped & PAD_CIRCLE) {
-            D_80137590 += DEMO_KEY_LEN;
-            D_80137590[0] = 0xFF;
-            D_80137590[1] = 0xFF;
+            g_DemoPtr += DEMO_KEY_LEN;
+            g_DemoPtr[0] = 0xFF;
+            g_DemoPtr[1] = 0xFF;
             DemoSaveFile();
             g_DemoMode = Demo_None;
         }
         curBtnLo = g_pads[0].pressed;
         curBtnHi = g_pads->pressed >> 8;
         if (frameCount != 0xFF && btnLo == curBtnLo && btnHi == curBtnHi) {
-            D_80137590[2]++;
+            g_DemoPtr[2]++;
         } else {
-            if (D_80137590[2] != 0) {
-                D_80137590 += DEMO_KEY_LEN;
+            if (g_DemoPtr[2] != 0) {
+                g_DemoPtr += DEMO_KEY_LEN;
             }
-            D_80137590[0] = curBtnLo;
-            D_80137590[1] = curBtnHi;
-            D_80137590[2] = 1;
+            g_DemoPtr[0] = curBtnLo;
+            g_DemoPtr[1] = curBtnHi;
+            g_DemoPtr[2] = 1;
         }
         break;
     }

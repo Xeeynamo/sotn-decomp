@@ -173,7 +173,7 @@ bool InitGame(void) {
     InitStrings();
     InitAssets();
 
-    D_80137590 = g_DemoRecordingBuffer;
+    g_DemoPtr = g_DemoRecordingBuffer;
 
     // forcing g_Vram values while waiting to import the data
     g_Vram.D_800ACD98.x = 0x0380;
