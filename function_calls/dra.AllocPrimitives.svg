@@ -4340,7 +4340,7 @@
 <g id="node271" class="node">
 <title>w_010.EntityWeaponShieldSpell</title>
 <g id="a_node271"><a xlink:href="w_010.EntityWeaponShieldSpell.svg" xlink:title="w_010.EntityWeaponShieldSpell">
-<ellipse fill="red" stroke="black" cx="70329.34" cy="-378" rx="161.37" ry="18"/>
+<ellipse fill="green" stroke="black" cx="70329.34" cy="-378" rx="161.37" ry="18"/>
 <text text-anchor="middle" x="70329.34" y="-374.3" font-family="Times,serif" font-size="14.00">w_010.EntityWeaponShieldSpell</text>
 </a>
 </g>
