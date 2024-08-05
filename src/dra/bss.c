@@ -1,5 +1,5 @@
-#include "common.h"
 #include <game.h>
+#include "disk.h"
 
 // 42398.c
 s32 g_DebugFreeze;
@@ -163,6 +163,19 @@ s32 D_80137EF4;
 static u8 D_80137EF8[0x60]; // unused
 
 // cd.c
+CdCallbacks g_CdCallback;
+CdlLOC g_CdLoc;
+u8 g_Cd[0x34]; // TODO CdThing
+s16 g_VabId;
+static u8 D_80137F96[6]; // unused
+s32 D_80137F9C;
+s32 D_80137FA0;
+static u32 D_80137FA4; // unused
+s16 D_80137FA8;
+static s16 D_80137FAA; // unused
+s32 D_80137FAC;
+s32 D_80137FB0;
+
 // 692E8.c
 // 6D59C.c
 // 704D0.c
@@ -182,32 +195,8 @@ static u8 D_80137EF8[0x60]; // unused
 // 94F50.c
 // 953A0.c
 
-u32 g_CdCallback;              // TODO type
-u32 g_CdLoc;                   // TODO type
-u16 g_Cd;                      // TODO type
-u16 D_80137F62;                // TODO unused?
-u16 D_80137F64;                // TODO unused?
-u16 D_80137F66;                // TODO unused?
-u32 g_Cd_D_80137F68;           // TODO unused?
-u32 D_80137F6C;                // TODO type
-u32 g_Cd_D_80137F70;           // TODO unused?
-u32 g_Cd_D_80137F74;           // TODO unused?
-u32 g_Cd_D_80137F78;           // TODO unused?
-u32 g_Cd_D_80137F7C;           // TODO unused?
-u32 g_Cd_overlayCopySrc;       // TODO unused?
-u32 g_Cd_overlayCopyDst;       // TODO unused?
-u32 g_Cd_addr;                 // TODO unused?
-u32 g_Cd_overlayBlockCount;    // TODO unused?
-u32 g_Cd_overlayLastBlockSize; // TODO unused?
-u8 g_VabId[2];                 // TODO unused?
-u8 D_80137F96[6];              // TODO unused?
-u32 D_80137F9C;                // TODO type
-u32 D_80137FA0[2];             // TODO type
-u16 D_80137FA8[2];             // TODO type
-u32 D_80137FAC;                // TODO type
-u32 D_80137FB0;                // TODO type
-u32 D_80137FB4;                // TODO type
-u32 D_80137FB8;                // TODO type
+u32 D_80137FB4; // TODO type
+u32 D_80137FB8; // TODO type
 #if defined(VERSION_US)
 u32 D_80137FBC; // TODO type
 #endif

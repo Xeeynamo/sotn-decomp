@@ -487,8 +487,6 @@ extern s32 D_80137EF0;
 extern s32 D_80137EF4;
 
 // BSS work in progress
-extern s32 D_80137F6C; // most likely part of the g_Cd struct
-extern s32 D_80137F9C;
 extern s32 D_80137FB4;
 extern s32 D_80137FB8;
 extern s32 D_80137FBC;

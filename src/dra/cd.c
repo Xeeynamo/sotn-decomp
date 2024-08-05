@@ -219,13 +219,13 @@ typedef struct {
     s8* addr;
     s32 overlayBlockCount;
     s32 overlayLastBlockSize;
-    short g_VabId;
 } CdThing;
 
 extern CdCallbacks g_CdCallback;
-extern CdThing g_Cd;
 extern CdlLOC g_CdLoc;
-extern short g_VabId;
+extern CdThing g_Cd;
+extern s16 g_VabId;
+extern s32 D_80137F9C;
 
 void func_801073C0(void) {
     CdReadyCallback(NULL);
@@ -249,7 +249,7 @@ s32 func_801073E8(void) {
 }
 
 void func_80107460(void) {
-    g_Cd.D_80137F7C = &D_801EC000[TO_CD_BLOCK(D_80137F6C)];
+    g_Cd.D_80137F7C = &D_801EC000[TO_CD_BLOCK(g_Cd.D_80137F6C)];
     CdGetSector(g_Cd.D_80137F7C, 0x200);
     g_Cd.D_80137F6C = (g_Cd.D_80137F6C + 1) & 7;
 }
@@ -807,7 +807,7 @@ void UpdateCd(void) {
         g_Cd.overlayLastBlockSize = temp_v1_2 - (var_v0_4 >> 11 << 11);
         D_80137F96 = cdFile->unkF;
         g_Cd.addr = D_800ACD10[cdFile->unkD];
-        D_80137F6C = 0;
+        g_Cd.D_80137F6C = 0;
         g_Cd.D_80137F70 = 0;
         g_Cd.D_80137F74 = 0;
         g_Cd.D_80137F78 = 0;
