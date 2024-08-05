@@ -79,6 +79,13 @@ Point16 D_800ACEE0[] = {
     {-7, 24}, {-7, 17}, {-7, 9}, {-7, 1}, {-7, -7}, {-7, -14}, {-7, -21},
 };
 
+// BSS
+extern s32 D_80137FB4;
+extern s32 D_80137FB8;
+#if defined(VERSION_US)
+extern s32 D_80137FBC;
+#endif
+
 void func_8010C36C(void);
 void func_8010C9F4(void);
 void func_8010D010(void);

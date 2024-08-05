@@ -200,11 +200,6 @@ extern u16 D_800A04CC[]; // palette?
 extern u32* D_801EE000;
 
 extern s32 g_VabAddrs[];
-extern u8 D_80137F96;
-extern s32 D_80137FA0;
-extern s16 D_80137FA8;
-extern s32 D_80137FAC;
-extern s32 D_80137FB0;
 
 typedef struct {
     RECT dstRect;
@@ -221,11 +216,17 @@ typedef struct {
     s32 overlayLastBlockSize;
 } CdThing;
 
+// BSS
 extern CdCallbacks g_CdCallback;
 extern CdlLOC g_CdLoc;
 extern CdThing g_Cd;
 extern s16 g_VabId;
+extern u8 D_80137F96;
 extern s32 D_80137F9C;
+extern s32 D_80137FA0;
+extern s16 D_80137FA8;
+extern s32 D_80137FAC;
+extern s32 D_80137FB0;
 
 void func_801073C0(void) {
     CdReadyCallback(NULL);

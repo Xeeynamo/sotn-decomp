@@ -487,9 +487,6 @@ extern s32 D_80137EF0;
 extern s32 D_80137EF4;
 
 // BSS work in progress
-extern s32 D_80137FB4;
-extern s32 D_80137FB8;
-extern s32 D_80137FBC;
 extern s16 g_WasFacingLeft;  // for QCF to tell what's "forward"
 extern s16 g_WasFacingLeft2; // for BF to tell what's "forward"
 extern s32 g_WasFacingLeft3; // for dark metamorphosis "" ""

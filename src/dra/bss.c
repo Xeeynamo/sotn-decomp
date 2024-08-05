@@ -167,7 +167,8 @@ CdCallbacks g_CdCallback;
 CdlLOC g_CdLoc;
 u8 g_Cd[0x34]; // TODO CdThing
 s16 g_VabId;
-static u8 D_80137F96[6]; // unused
+u8 D_80137F96;
+static u8 D_80137F97[5]; // unused
 s32 D_80137F9C;
 s32 D_80137FA0;
 static u32 D_80137FA4; // unused
@@ -177,6 +178,12 @@ s32 D_80137FAC;
 s32 D_80137FB0;
 
 // 692E8.c
+s32 D_80137FB4;
+s32 D_80137FB8;
+#if defined(VERSION_US)
+s32 D_80137FBC;
+#endif
+
 // 6D59C.c
 // 704D0.c
 // 71830.c
@@ -195,11 +202,6 @@ s32 D_80137FB0;
 // 94F50.c
 // 953A0.c
 
-u32 D_80137FB4; // TODO type
-u32 D_80137FB8; // TODO type
-#if defined(VERSION_US)
-u32 D_80137FBC; // TODO type
-#endif
 u16 g_WasFacingLeft[2];  // TODO type
 u16 g_WasFacingLeft2[2]; // TODO type
 u32 g_WasFacingLeft3;    // TODO type
