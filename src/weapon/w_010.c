@@ -287,7 +287,8 @@ void func_ptr_80170024(Entity* self) {
             prim->u1 = prim->u3 = ((i + 1) * 128) / 16 - 1;
             prim->clut = 0x15F;
             prim->priority = 0x1BE;
-            prim->drawMode |= 0x35;
+            prim->drawMode |=
+                (DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP);
         }
         self->ext.shield.unk8A = 0x80;
         self->ext.shield.unk90 = 0x100;
