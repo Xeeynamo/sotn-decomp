@@ -117,13 +117,51 @@ s32 g_ServantPrevious;
 s32 D_80137960;
 s32 D_80137964;
 s32 D_80137968;
-u8 g_PlayerHud[0x2C];
+u8 g_PlayerHud[0x2C];      // TODO PlayerHud
 s32 g_HealingMailTimer[1]; // maybe part of g_PlayerHud
+
+// both 5D5BC.c and 627C4.c, maybe need another C file in between
 u32 D_8013799C;
 s32 D_801379A0;
+s32 D_801379A4;
+s32 D_801379A8;
 
-// 627C4.c
+// 627C4.c, 63ED4.c
+Unkstruct_80102CD8 D_801379AC;
+
 // 63ED4.c
+s32 D_801379B8;
+s32 D_801379BC;
+SVECTOR D_801379C0;
+SVECTOR D_801379C8;
+VECTOR D_801379D0;
+VECTOR D_801379E0[20];
+VECTOR D_80137B20[24];
+SVECTOR D_80137CA0[20];
+SVECTOR D_80137D40[24];
+MATRIX D_80137E00;
+MATRIX D_80137E20;
+s32 D_80137E40;
+s32 D_80137E44;
+s32 D_80137E48;
+s32 D_80137E4C;
+s32 g_MemCardRetryCount;
+s32 D_80137E54;
+s32 D_80137E58;
+s32 D_80137E5C;
+s32 D_80137E60;
+s32 g_MemCardRStep;
+s32 g_MemCardRStepSub;
+s32 D_80137E6C;
+SVECTOR D_80137E70[14];
+s32 D_80137EE0;
+s32 D_80137EE4;
+s32 D_80137EE8;
+s32 D_80137EEC;
+s32 D_80137EF0;
+s32 D_80137EF4;
+static u8 D_80137EF8[0x60]; // unused
+
 // cd.c
 // 692E8.c
 // 6D59C.c
@@ -144,65 +182,6 @@ s32 D_801379A0;
 // 94F50.c
 // 953A0.c
 
-u32 D_801379A4;                // TODO type
-u32 D_801379A8;                // TODO type
-u16 D_801379AC;                // TODO type
-u16 D_801379AE;                // TODO unused?
-u32 D_801379B0;                // TODO type
-u16 D_801379B4[2];             // TODO unused?
-u32 D_801379B8;                // TODO type
-u32 D_801379BC;                // TODO type
-u16 D_801379C0;                // TODO type
-u16 D_801379C2;                // TODO unused?
-u16 D_801379C4[2];             // TODO type
-u16 D_801379C8;                // TODO type
-u16 D_801379CA;                // TODO unused?
-u16 D_801379CC[2];             // TODO unused?
-u32 D_801379D0;                // TODO type
-u32 D_801379D4;                // TODO unused?
-u32 D_801379D8[2];             // TODO unused?
-u32 D_801379E0[80];            // TODO type
-u32 D_80137B20[96];            // TODO type
-u32 D_80137CA0[40];            // TODO type
-u32 D_80137D40[48];            // TODO type
-u32 D_80137E00[8];             // TODO type
-u32 D_80137E20[8];             // TODO type
-u32 D_80137E40;                // TODO type
-u32 D_80137E44;                // TODO type
-u32 D_80137E48;                // TODO type
-u32 D_80137E4C;                // TODO type
-u32 g_MemCardRetryCount;       // TODO type
-u32 D_80137E54;                // TODO type
-u32 D_80137E58;                // TODO type
-u32 D_80137E5C;                // TODO type
-u32 D_80137E60;                // TODO type
-u32 g_MemCardRStep;            // TODO type
-u32 g_MemCardRStepSub;         // TODO type
-u32 D_80137E6C;                // TODO type
-u16 D_80137E70;                // TODO type
-u16 D_80137E72;                // TODO unused?
-u16 D_80137E74;                // TODO unused?
-u16 D_80137E76;                // TODO unused?
-u32 D_80137E78[2];             // TODO unused?
-u32 D_80137E80[2];             // TODO unused?
-u32 D_80137E88[2];             // TODO unused?
-u32 D_80137E90[2];             // TODO unused?
-u32 D_80137E98[2];             // TODO unused?
-u32 D_80137EA0[2];             // TODO unused?
-u32 D_80137EA8[2];             // TODO unused?
-u32 D_80137EB0[2];             // TODO unused?
-u32 D_80137EB8[2];             // TODO unused?
-u32 D_80137EC0[2];             // TODO unused?
-u32 D_80137EC8[2];             // TODO unused?
-u32 D_80137ED0[2];             // TODO unused?
-u32 D_80137ED8[2];             // TODO unused?
-u32 D_80137EE0;                // TODO type
-u32 D_80137EE4;                // TODO type
-u32 D_80137EE8;                // TODO type
-u32 D_80137EEC;                // TODO type
-u32 D_80137EF0;                // TODO type
-u32 D_80137EF4;                // TODO type
-u32 D_80137EF8[24];            // TODO type
 u32 g_CdCallback;              // TODO type
 u32 g_CdLoc;                   // TODO type
 u16 g_Cd;                      // TODO type

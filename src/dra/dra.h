@@ -447,11 +447,14 @@ extern s16 D_80136460[VSYNC_UNK_LEN];
 extern s16 D_80136C60[VSYNC_UNK_LEN];
 extern u8* g_DemoPtr;
 
-// BSS work in progress
+// BSS TODO 5D5BC.c, 627C4.c
+extern u32 D_8013799C;
+extern s32 D_801379A0;
 extern s32 D_801379A4;
 extern s32 D_801379A8;
+
+// BSS shared between 627C4.c and 63ED4.c
 extern Unkstruct_80102CD8 D_801379AC;
-extern s32 D_801379B0;
 extern s32 D_801379B8;
 extern s32 D_801379BC;
 extern SVECTOR D_801379C0;
@@ -471,18 +474,20 @@ extern s32 g_MemCardRetryCount;
 extern s32 D_80137E54;
 extern s32 D_80137E58;
 extern s32 D_80137E5C;
-extern s32 D_80137E60; // most likely part of the g_Cd struct
+extern s32 D_80137E60;
 extern s32 g_MemCardRStep;
 extern s32 g_MemCardRStepSub;
 extern s32 D_80137E6C;
+extern SVECTOR D_80137E70[14];
 extern s32 D_80137EE0;
 extern s32 D_80137EE4;
 extern s32 D_80137EE8;
 extern s32 D_80137EEC;
 extern s32 D_80137EF0;
 extern s32 D_80137EF4;
+
+// BSS work in progress
 extern s32 D_80137F6C; // most likely part of the g_Cd struct
-extern void* D_80137F7C;
 extern s32 D_80137F9C;
 extern s32 D_80137FB4;
 extern s32 D_80137FB8;

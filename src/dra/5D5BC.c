@@ -59,8 +59,6 @@ extern s32 D_80137964;
 extern s32 D_80137968;
 extern PlayerHud g_PlayerHud;
 extern s32 g_HealingMailTimer[1]; // maybe part of g_PlayerHud
-extern u32 D_8013799C;
-extern s32 D_801379A0;
 
 bool func_800FD5BC(DamageParam* arg0) {
     if (arg0->damageKind != 5) {
@@ -2220,6 +2218,13 @@ void DrawHudSubweapon() {
     prim->x1 = prim->x3 = statXPos + 0x14;
     prim->clut = clut;
 }
+
+// TODO this can probably be moved into 627C4.c
+// BSS
+extern u32 D_8013799C;
+extern s32 D_801379A0;
+extern s32 D_801379A4;
+extern s32 D_801379A8;
 
 void func_801024DC(void) {
     Primitive* prim;
