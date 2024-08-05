@@ -218,9 +218,41 @@ s32 D_80138008;
 s32 D_8013800C[11];
 s32 D_80138038;
 
+// 75F54.c, 7A4D0.c
+u8 D_8013803C;
+static u8 D_8013803C_[3]; // alignment padding
+u8 D_80138040;
+static u8 D_80138040_[3]; // alignment padding
+u8 D_80138044;
+static u8 D_80138044_[3]; // alignment padding
+u8 D_80138048;
+static u8 D_80138048_[3]; // alignment padding
+
 // 78D0C.c
-// 7A4D0.c
+Point16 D_8013804C[16];
+
 // 7E4BC.c
+s32 D_8013808C;
+s32 D_80138090;
+u8 D_80138094[16][0x14]; // TODO mistStruct
+s16 D_801381D4;
+static s16 D_801381D4_; // alignment padding
+s16 D_801381D8;
+static s16 D_801381D8_; // alignment padding
+s16 D_801381DC;
+static s16 D_801381DC_; // alignment padding
+s16 D_801381E0;
+static s16 D_801381E0_; // alignment padding
+s16 D_801381E4;
+static s16 D_801381E4_; // alignment padding
+s16 D_801381E8;
+static s16 D_801381E8_; // alignment padding
+s16 D_801381EC;
+static s16 D_801381EC_; // alignment padding
+s16 D_801381F0;
+static s16 D_801381F0_; // alignment padding
+Primitive D_801381F4[8];
+
 // 843B0.c
 // 8A0A4.c
 // 8D3E8.c
@@ -231,29 +263,6 @@ s32 D_80138038;
 // 94F50.c
 // 953A0.c
 
-u8 D_8013803C[4];                        // TODO type
-u8 D_80138040[4];                        // TODO type
-u8 D_80138044[4];                        // TODO type
-u8 D_80138048[4];                        // TODO type
-u16 D_8013804C;                          // TODO type
-u16 D_8013804E[31];                      // TODO unused?
-u32 D_8013808C;                          // TODO type
-u32 D_80138090;                          // TODO type
-u16 D_80138094;                          // TODO type
-u16 D_80138096[2];                       // TODO unused?
-u16 D_8013809A;                          // TODO unused?
-u32 D_8013809C;                          // TODO unused?
-u32 D_801380A0;                          // TODO unused?
-u32 D_801380A4[76];                      // TODO unused?
-u32 D_801381D4;                          // TODO type
-u32 D_801381D8;                          // TODO type
-u32 D_801381DC;                          // TODO type
-u32 D_801381E0;                          // TODO type
-u32 D_801381E4;                          // TODO type
-u32 D_801381E8;                          // TODO type
-u32 D_801381EC;                          // TODO type
-u32 D_801381F0;                          // TODO type
-u8 D_801381F4[416];                      // TODO type
 u32 D_80138394;                          // TODO type
 u32 D_80138398;                          // TODO type
 u16 D_8013839C;                          // TODO type

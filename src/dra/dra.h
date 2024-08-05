@@ -502,24 +502,14 @@ extern s32 D_80137FE8;
 extern s32 D_80137FEC;
 extern s32 D_80137FF0;
 
-// BSS work in progress
+// 75F54.c, 7A4D0.c
+extern s32 D_8013800C[11];
 extern u8 D_8013803C;
 extern u8 D_80138040;
 extern u8 D_80138044;
 extern u8 D_80138048;
-extern Point16 D_8013804C[];
-extern s32 D_8013808C;
-extern s32 D_80138090;
-extern mistStruct D_80138094[16];
-extern s16 D_801381D4;
-extern s16 D_801381D8;
-extern s16 D_801381DC;
-extern s16 D_801381E0;
-extern s16 D_801381E4;
-extern s16 D_801381E8;
-extern s16 D_801381EC;
-extern s16 D_801381F0;
-extern Primitive D_801381F4[];
+
+// BSS work in progress
 extern s32 D_80138394;
 extern s32 D_80138398;
 extern Point16 D_8013839C[];

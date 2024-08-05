@@ -9,7 +9,6 @@ extern s32 g_WingSmashTimer;
 extern s32 g_BatScreechDone;
 extern s32 g_MistTimer; // remaining time in mist transformation
 extern s32 D_80138008;
-extern s32 D_8013800C[11];
 
 void func_80115F54(void) {
     PlayerDraw* plDraw;

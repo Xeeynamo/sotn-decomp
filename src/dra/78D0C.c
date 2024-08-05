@@ -622,6 +622,7 @@ s32 func_80119E78(Primitive* prim, s32 xCenter, s32 yCenter) {
 // Entity ID 47. Created by blueprint 119.
 // No calls to FACTORY with 119 exist yet.
 // Corresponding RIC function is func_8015FEA8
+extern Point16 D_8013804C[16]; // BSS
 void func_80119F70(Entity* entity) {
     Primitive* prim;
     s16 temp_xRand;
@@ -633,7 +634,7 @@ void func_80119F70(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->primIndex = AllocPrimitives(PRIM_GT4, 16);
+        entity->primIndex = AllocPrimitives(PRIM_GT4, LEN(D_8013804C));
         if (entity->primIndex == -1) {
             DestroyEntity(entity);
             return;
@@ -642,7 +643,7 @@ void func_80119F70(Entity* entity) {
         hitboxX = PLAYER.posX.i.hi + PLAYER.hitboxOffX;
         hitboxY = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
         prim = &g_PrimBuf[entity->primIndex];
-        for (i = 0; i < 16; i++) {
+        for (i = 0; i < LEN(D_8013804C); i++) {
             temp_xRand = hitboxX + rand() % 24 - 12;
             temp_yRand = rand();
             D_8013804C[i].x = temp_xRand;
@@ -675,7 +676,7 @@ void func_80119F70(Entity* entity) {
     }
 
     prim = &g_PrimBuf[entity->primIndex];
-    for (i = 0; i < 16; i++) {
+    for (i = 0; i < LEN(D_8013804C); i++) {
         switch (prim->g0) {
         case 0:
             if (!(--prim->g1 & 0xFF)) {
