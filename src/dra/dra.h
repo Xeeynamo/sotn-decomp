@@ -448,14 +448,6 @@ extern s16 D_80136C60[VSYNC_UNK_LEN];
 extern u8* g_DemoPtr;
 
 // BSS work in progress
-extern s32 D_80137960;
-extern s32 D_80137964;
-extern s32 D_80137968;
-extern PlayerHud g_PlayerHud;
-// not actually an array, likely a struct member
-extern s32 g_HealingMailTimer[];
-extern u32 D_8013799C;
-extern s32 D_801379A0;
 extern s32 D_801379A4;
 extern s32 D_801379A8;
 extern Unkstruct_80102CD8 D_801379AC;

@@ -114,6 +114,14 @@ s32 D_80137958;
 s32 g_ServantPrevious;
 
 // 5D5BC.c
+s32 D_80137960;
+s32 D_80137964;
+s32 D_80137968;
+u8 g_PlayerHud[0x2C];
+s32 g_HealingMailTimer[1]; // maybe part of g_PlayerHud
+u32 D_8013799C;
+s32 D_801379A0;
+
 // 627C4.c
 // 63ED4.c
 // cd.c
@@ -136,23 +144,6 @@ s32 g_ServantPrevious;
 // 94F50.c
 // 953A0.c
 
-u32 D_80137960;                // TODO type
-u32 D_80137964;                // TODO type
-u32 D_80137968;                // TODO type
-u32 g_PlayerHud;               // TODO type
-u32 D_80137970;                // TODO type
-u32 D_80137974;                // TODO type
-u32 D_80137978;                // TODO type
-u32 D_8013797C;                // TODO type
-u32 D_80137980;                // TODO type
-u32 D_80137984;                // TODO type
-u32 D_80137988;                // TODO type
-u32 D_8013798C;                // TODO type
-u32 D_80137990;                // TODO type
-u32 D_80137994;                // TODO type
-u32 g_HealingMailTimer;        // TODO type
-u32 D_8013799C;                // TODO type
-u32 D_801379A0;                // TODO type
 u32 D_801379A4;                // TODO type
 u32 D_801379A8;                // TODO type
 u16 D_801379AC;                // TODO type

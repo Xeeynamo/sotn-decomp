@@ -53,6 +53,15 @@ s32 g_CapePaletteDefs[] = {
     ITEM_TWILIGHT_CLOAK, 0x40A, CAPE_PAL_TERMINATOR, 0x409,
 };
 
+// BSS
+extern s32 D_80137960;
+extern s32 D_80137964;
+extern s32 D_80137968;
+extern PlayerHud g_PlayerHud;
+extern s32 g_HealingMailTimer[1]; // maybe part of g_PlayerHud
+extern u32 D_8013799C;
+extern s32 D_801379A0;
+
 bool func_800FD5BC(DamageParam* arg0) {
     if (arg0->damageKind != 5) {
         if (arg0->damageKind >= 16) {
