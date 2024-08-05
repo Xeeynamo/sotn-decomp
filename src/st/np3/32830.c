@@ -945,7 +945,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
     case 2:
         self->posY.val += FIX(0.5);
         if ((self->posY.i.hi + g_Tilemap.scrollY.i.hi) >= 175) {
-            func_801916C4(0x63D);
+            func_801916C4(SFX_START_SLAM_B);
             self->posY.i.hi = 175 - g_Tilemap.scrollY.i.hi;
             self->step++;
         }

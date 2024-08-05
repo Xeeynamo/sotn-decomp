@@ -323,7 +323,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SE_BOSS_DEFEATED 0x7D2
 
 // UI SOUNDS
-#define SE_UI_START 0x63D
 #define SE_UI_SELECT 0x67B
 #define SE_UI_MAIN_MENU_SELECT 0x67D
 #define SE_UI_ERROR 0x686

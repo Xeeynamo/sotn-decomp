@@ -321,7 +321,7 @@ void EntityCastleDoor(Entity* self) {
         if (self->ext.castleDoor.rotZ > 0) {
             self->ext.castleDoor.rotZ = 0;
             self->step += 2;
-            g_api.PlaySfx(SE_CASTLE_GATE_CLOSE);
+            g_api.PlaySfx(SFX_START_SLAM_B);
             tilePos = 0x445;
             for (i = 0, tilePtr = D_80181130; i < 8; tilePtr++, i++) {
                 g_Tilemap.fg[tilePos] = *tilePtr;

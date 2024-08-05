@@ -1,4 +1,5 @@
 #include "st0.h"
+#include "sfx.h"
 
 bool func_801ADAC8(s32 arg0) {
     s32 unk = 0xD0;
@@ -205,7 +206,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 AnimateEntity(D_80180AC8, self);
             }
             if (func_801ADAC8(0x4C) != 0) {
-                g_api.PlaySfx(0x63D);
+                g_api.PlaySfx(SFX_START_SLAM_B);
                 g_api.func_80102CD8(1);
                 self->step_s++;
             }
@@ -342,7 +343,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 AnimateEntity(D_80180AC8, self);
             }
             if (func_801ADAC8(0x4C) != 0) {
-                g_api.PlaySfx(0x63D);
+                g_api.PlaySfx(SFX_START_SLAM_B);
                 g_api.func_80102CD8(1);
                 self->step_s++;
             }
