@@ -347,8 +347,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SFX_KARMA_COIN 0x682
 #define SFX_KARMA_COIN_HEADS 0x6B1
 
-#define SFX_DARK_SHIELD 0x63C
-
 // UNUSED SOUNDS
 #define SE_UNK_TE1_651 0x651
 #define SE_UNK_TE3_667 0x667
@@ -427,7 +425,7 @@ enum Sfx {
     SFX_UNK_SCRAPE_B,
     SFX_UNK_SCRAPE_C,
     SFX_UNK_UI_SELECT,
-    SFX_START_SLAM_A,
+    SFX_START_SLAM_A, // Dark Shield
     SFX_START_SLAM_B, // "Press Start", Door Open, Dracula Stomp, etc.
     SFX_START_SLAM_C,
     SFX_ANIME_SWORD_A,
