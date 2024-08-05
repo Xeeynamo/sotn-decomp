@@ -1008,7 +1008,9 @@ void MenuDrawStr(const u8* str, s32 x, s32 y, MenuContext* context) {
     s32 xcopy;
     s32 ycopy;
 
-    s32 s4 = D_8013784C; // FAKE can be removed in HD but not in US
+#if defined(VERSION_US)
+    s32 s4 = D_8013784C; // FAKE? not used in HD
+#endif
 
     D_80137614 = 0;
     while (1) {
