@@ -30,10 +30,10 @@ s32 D_80136410;
 u32 g_NowLoadingModel[14]; // TODO NowLoadingModel
 
 // 47BB8.c
-void* g_SimFile;   // TODO SimFile*
-u32 D_80136450[4]; // TODO SimFile
-s16 D_80136460[1024];
-s16 D_80136C60[1024];
+void* g_SimFile;      // TODO SimFile*
+u32 D_80136450[4];    // TODO SimFile
+s16 D_80136460[1024]; // TODO VSYNC_UNK_LEN
+s16 D_80136C60[1024]; // TODO VSYNC_UNK_LEN
 
 // pads.c
 u8 g_PadsRepeatTimer[BUTTON_COUNT * PAD_COUNT];

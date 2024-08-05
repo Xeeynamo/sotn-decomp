@@ -7,8 +7,6 @@
 #include <lba.h>
 #include "weapon_pc.h"
 
-#define VSYNC_UNK_LEN 1024
-
 s32 g_SimVabId = 0;
 
 SimFile D_800A024C[] = {

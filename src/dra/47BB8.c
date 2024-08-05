@@ -1,8 +1,6 @@
 #include "dra.h"
 #include "lba.h"
 
-#define VSYNC_UNK_LEN 1024
-
 s32 g_SimVabId = 0;
 
 SimFile D_800A024C[] = {
@@ -270,8 +268,8 @@ RECT D_800A0508 = {368, 32, 128, 1};
 // BSS
 extern SimFile* g_SimFile;
 extern SimFile D_80136450;
-extern u16 D_80136460[VSYNC_UNK_LEN];
-extern u16 D_80136C60[VSYNC_UNK_LEN];
+extern s16 D_80136460[VSYNC_UNK_LEN];
+extern s16 D_80136C60[VSYNC_UNK_LEN];
 
 void VSyncHandler(void) {
     RECT* rect;

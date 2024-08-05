@@ -442,8 +442,9 @@ extern s32 g_MemcardFd;
 
 // BSS PC shared
 extern SimFile* g_SimFile;
-extern s16 D_80136460[1024];
-extern s16 D_80136C60[1024];
+#define VSYNC_UNK_LEN 1024
+extern s16 D_80136460[VSYNC_UNK_LEN];
+extern s16 D_80136C60[VSYNC_UNK_LEN];
 extern u8* g_DemoPtr;
 
 // BSS work in progress
