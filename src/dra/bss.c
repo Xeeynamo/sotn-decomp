@@ -59,6 +59,22 @@ u8* g_DemoPtr;
 s32 g_DemoKeyIdx;
 
 // 5087C.c
+s32 D_80137598;
+s32 D_8013759C;
+s32 D_801375A0;
+u16 D_801375A4;               // TODO overlaps with D_801375A6
+u16 D_801375A6;               // TODO this might be f32
+u16 D_801375A8;               // TODO overlaps with D_801375AA
+u16 D_801375AA;               // TODO this might be f32
+s32 D_801375AC;               // TODO might be f32
+s32 D_801375B0;               // TODO might be f32
+s32 D_801375B4;               // TODO might be f32
+s32 D_801375B8;               // TODO might be f32
+RoomLoadDefHolder D_801375BC; // fake struct?
+s32 D_801375C0;
+s32 D_801375C4;
+s32 D_801375C8;
+
 // menu.c
 // 5D5BC.c
 // 627C4.c
@@ -83,21 +99,6 @@ s32 g_DemoKeyIdx;
 // 94F50.c
 // 953A0.c
 
-s32 D_80137598;                 // TODO type
-s32 D_8013759C;                 // TODO type
-s32 D_801375A0;                 // TODO type
-u16 D_801375A4;                 // TODO type
-u16 D_801375A6;                 // TODO type
-u16 D_801375A8;                 // TODO type
-u16 D_801375AA;                 // TODO type
-u32 D_801375AC;                 // TODO type
-u32 D_801375B0;                 // TODO type
-u32 D_801375B4;                 // TODO type
-u32 D_801375B8;                 // TODO type
-u32 D_801375BC;                 // TODO type
-u32 D_801375C0;                 // TODO type
-u32 D_801375C4;                 // TODO type
-u32 D_801375C8;                 // TODO type
 u32 D_801375CC;                 // TODO type
 u32 D_801375D0;                 // TODO type
 u32 D_801375D4;                 // TODO type

@@ -224,6 +224,23 @@ u8 D_800A2C0C[] = {
 
 u8* D_800A2D44[] = {D_800A2C0C};
 
+// BSS
+extern s32 D_80137598;
+extern s32 D_8013759C;
+extern s32 D_801375A0;
+extern s32 D_801375A4;               // TODO overlaps with D_801375A6
+extern s16 D_801375A6;               // TODO this might be f32
+extern s32 D_801375A8;               // TODO overlaps with D_801375AA
+extern s16 D_801375AA;               // TODO this might be f32
+extern s32 D_801375AC;               // TODO might be f32
+extern s32 D_801375B0;               // TODO might be f32
+extern s32 D_801375B4;               // TODO might be f32
+extern s32 D_801375B8;               // TODO might be f32
+extern RoomLoadDefHolder D_801375BC; // TODO fake struct?
+extern s32 D_801375C0;
+extern s32 D_801375C4;
+extern s32 D_801375C8;
+
 s32 func_800F087C(u32 chunkX, u32 chunkY) {
     RoomBossTeleport* phi_s1;
     s32 res;
@@ -328,9 +345,6 @@ s32 SetNextRoomToLoad(u32 x, u32 y) {
 }
 
 extern s16 D_80072F98;
-extern s32 D_801375A4;
-extern s32 D_801375C0;
-extern s32 D_801375C4;
 
 s32 func_800F0CD8(s32 arg0) {
     s32 var_s0;

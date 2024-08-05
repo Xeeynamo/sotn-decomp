@@ -448,24 +448,6 @@ extern s16 D_80136C60[VSYNC_UNK_LEN];
 extern u8* g_DemoPtr;
 
 // BSS work in progress
-extern s32 D_80137598;
-extern s32 D_8013759C;
-extern s32 D_801375A0;
-// Note that these overlap; these should be f32's for X and Y.
-extern s32 D_801375A4;
-extern s16 D_801375A6;
-extern s32 D_801375A8;
-extern s16 D_801375AA;
-
-extern s32 D_801375AC;
-extern s32 D_801375B0;
-extern s32 D_801375B4;
-extern s32 D_801375B8;
-// clues indicate being in a struct, unclear what else is with it though.
-extern RoomLoadDefHolder D_801375BC;
-extern s32 D_801375C0;
-extern s32 D_801375C4;
-extern s32 D_801375C8;
 extern EquipKind D_801375CC;
 extern s32 D_801375D0;
 extern s32 D_801375D4;
