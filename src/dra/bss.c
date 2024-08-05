@@ -76,6 +76,43 @@ s32 D_801375C4;
 s32 D_801375C8;
 
 // menu.c
+EquipKind D_801375CC;
+s32 D_801375D0;
+s32 D_801375D4;
+s32* D_801375D8;
+s32 D_801375DC;
+s32 D_801375E0[NUM_FAMILIARS + 1];
+s32 g_IsCloakLiningUnlocked;
+s32 g_IsCloakColorUnlocked;
+s32 D_80137608;
+s32 g_IsSelectingEquipment;
+s32 g_EquipmentCursor;
+s32 D_80137614;
+s32 g_EquipOrderType;
+MenuContext g_MenuData[16]; // TODO MenuData, TODO NUM_MENU
+s32 D_801377FC[16];         // TODO NUM_MENU
+s32 D_8013783C;
+s32 D_80137840;
+s32 D_80137844[1];
+s32 D_80137848[1];
+#if defined(VERSION_US)
+s32 D_8013784C;
+#endif
+s16 g_RelicMenuFadeTimer;
+static s16 g_RelicMenuFadeTimer_;
+s32 g_TimeAttackEntryTimes[NUM_TIMEATTACK_EVENTS];
+s32 c_strTimeAttackEntry[NUM_TIMEATTACK_EVENTS];
+s32 g_NewAttackRightHand;
+s32 g_NewAttackLeftHand;
+s32 g_NewDefenseEquip;
+s32 g_NewPlayerStatsTotal[4];
+s32 D_80137948;
+s8* D_8013794C;
+s32 D_80137950;
+s32 D_80137954;
+s32 D_80137958;
+s32 g_ServantPrevious;
+
 // 5D5BC.c
 // 627C4.c
 // 63ED4.c
@@ -99,157 +136,108 @@ s32 D_801375C8;
 // 94F50.c
 // 953A0.c
 
-u32 D_801375CC;                 // TODO type
-u32 D_801375D0;                 // TODO type
-u32 D_801375D4;                 // TODO type
-u32 D_801375D8;                 // TODO type
-u32 D_801375DC;                 // TODO type
-u32 D_801375E0[7];              // TODO type
-u32 D_801375FC;                 // TODO type
-u32 g_IsCloakLiningUnlocked;    // TODO type
-u32 g_IsCloakColorUnlocked;     // TODO type
-u32 D_80137608;                 // TODO type
-u32 g_IsSelectingEquipment;     // TODO type
-u32 g_EquipmentCursor;          // TODO type
-u32 D_80137614;                 // TODO type
-u32 g_EquipOrderType;           // TODO type
-u16 g_MenuData[12];             // TODO type
-u16 D_80137634[2];              // TODO unused?
-u8 D_80137638;                  // TODO type
-u8 D_80137639;                  // TODO unused?
-u8 D_8013763A[60];              // TODO unused?
-u16 D_80137676;                 // TODO unused?
-u16 D_80137678[2];              // TODO unused?
-u16 D_8013767C[6];              // TODO type
-u16 D_80137688[2];              // TODO type
-u16 D_80137692[18];             // TODO unused?
-u8 D_801376B0[20];              // TODO type
-u16 D_801376C4[2];              // TODO type
-u16 D_801376C8[19];             // TODO type
-u16 g_JosephsCloakContext[135]; // TODO type
-u32 D_801377FC[16];             // TODO type
-u32 D_8013783C;                 // TODO type
-u32 D_80137840;                 // TODO type
-u32 D_80137844;                 // TODO type
-u32 D_80137848;                 // TODO type
-#if defined(VERSION_US)
-u32 D_8013784C; // TODO type
-#endif
-u32 g_RelicMenuFadeTimer;       // TODO type
-u32 g_TimeAttackEntryTimes[27]; // TODO type
-u32 c_strTimeAttackEntry[27];   // TODO type
-u32 g_NewAttackRightHand;       // TODO type
-u32 g_NewAttackLeftHand;        // TODO type
-u32 g_NewDefenseEquip;          // TODO type
-u32 g_NewPlayerStatsTotal[4];   // TODO type
-u32 D_80137948;                 // TODO type
-u32 D_8013794C;                 // TODO type
-u32 D_80137950;                 // TODO type
-u32 D_80137954;                 // TODO type
-u32 D_80137958;                 // TODO type
-u32 g_ServantPrevious;          // TODO type
-u32 D_80137960;                 // TODO type
-u32 D_80137964;                 // TODO type
-u32 D_80137968;                 // TODO type
-u32 g_PlayerHud;                // TODO type
-u32 D_80137970;                 // TODO type
-u32 D_80137974;                 // TODO type
-u32 D_80137978;                 // TODO type
-u32 D_8013797C;                 // TODO type
-u32 D_80137980;                 // TODO type
-u32 D_80137984;                 // TODO type
-u32 D_80137988;                 // TODO type
-u32 D_8013798C;                 // TODO type
-u32 D_80137990;                 // TODO type
-u32 D_80137994;                 // TODO type
-u32 g_HealingMailTimer;         // TODO type
-u32 D_8013799C;                 // TODO type
-u32 D_801379A0;                 // TODO type
-u32 D_801379A4;                 // TODO type
-u32 D_801379A8;                 // TODO type
-u16 D_801379AC;                 // TODO type
-u16 D_801379AE;                 // TODO unused?
-u32 D_801379B0;                 // TODO type
-u16 D_801379B4[2];              // TODO unused?
-u32 D_801379B8;                 // TODO type
-u32 D_801379BC;                 // TODO type
-u16 D_801379C0;                 // TODO type
-u16 D_801379C2;                 // TODO unused?
-u16 D_801379C4[2];              // TODO type
-u16 D_801379C8;                 // TODO type
-u16 D_801379CA;                 // TODO unused?
-u16 D_801379CC[2];              // TODO unused?
-u32 D_801379D0;                 // TODO type
-u32 D_801379D4;                 // TODO unused?
-u32 D_801379D8[2];              // TODO unused?
-u32 D_801379E0[80];             // TODO type
-u32 D_80137B20[96];             // TODO type
-u32 D_80137CA0[40];             // TODO type
-u32 D_80137D40[48];             // TODO type
-u32 D_80137E00[8];              // TODO type
-u32 D_80137E20[8];              // TODO type
-u32 D_80137E40;                 // TODO type
-u32 D_80137E44;                 // TODO type
-u32 D_80137E48;                 // TODO type
-u32 D_80137E4C;                 // TODO type
-u32 g_MemCardRetryCount;        // TODO type
-u32 D_80137E54;                 // TODO type
-u32 D_80137E58;                 // TODO type
-u32 D_80137E5C;                 // TODO type
-u32 D_80137E60;                 // TODO type
-u32 g_MemCardRStep;             // TODO type
-u32 g_MemCardRStepSub;          // TODO type
-u32 D_80137E6C;                 // TODO type
-u16 D_80137E70;                 // TODO type
-u16 D_80137E72;                 // TODO unused?
-u16 D_80137E74;                 // TODO unused?
-u16 D_80137E76;                 // TODO unused?
-u32 D_80137E78[2];              // TODO unused?
-u32 D_80137E80[2];              // TODO unused?
-u32 D_80137E88[2];              // TODO unused?
-u32 D_80137E90[2];              // TODO unused?
-u32 D_80137E98[2];              // TODO unused?
-u32 D_80137EA0[2];              // TODO unused?
-u32 D_80137EA8[2];              // TODO unused?
-u32 D_80137EB0[2];              // TODO unused?
-u32 D_80137EB8[2];              // TODO unused?
-u32 D_80137EC0[2];              // TODO unused?
-u32 D_80137EC8[2];              // TODO unused?
-u32 D_80137ED0[2];              // TODO unused?
-u32 D_80137ED8[2];              // TODO unused?
-u32 D_80137EE0;                 // TODO type
-u32 D_80137EE4;                 // TODO type
-u32 D_80137EE8;                 // TODO type
-u32 D_80137EEC;                 // TODO type
-u32 D_80137EF0;                 // TODO type
-u32 D_80137EF4;                 // TODO type
-u32 D_80137EF8[24];             // TODO type
-u32 g_CdCallback;               // TODO type
-u32 g_CdLoc;                    // TODO type
-u16 g_Cd;                       // TODO type
-u16 D_80137F62;                 // TODO unused?
-u16 D_80137F64;                 // TODO unused?
-u16 D_80137F66;                 // TODO unused?
-u32 g_Cd_D_80137F68;            // TODO unused?
-u32 D_80137F6C;                 // TODO type
-u32 g_Cd_D_80137F70;            // TODO unused?
-u32 g_Cd_D_80137F74;            // TODO unused?
-u32 g_Cd_D_80137F78;            // TODO unused?
-u32 g_Cd_D_80137F7C;            // TODO unused?
-u32 g_Cd_overlayCopySrc;        // TODO unused?
-u32 g_Cd_overlayCopyDst;        // TODO unused?
-u32 g_Cd_addr;                  // TODO unused?
-u32 g_Cd_overlayBlockCount;     // TODO unused?
-u32 g_Cd_overlayLastBlockSize;  // TODO unused?
-u8 g_VabId[2];                  // TODO unused?
-u8 D_80137F96[6];               // TODO unused?
-u32 D_80137F9C;                 // TODO type
-u32 D_80137FA0[2];              // TODO type
-u16 D_80137FA8[2];              // TODO type
-u32 D_80137FAC;                 // TODO type
-u32 D_80137FB0;                 // TODO type
-u32 D_80137FB4;                 // TODO type
-u32 D_80137FB8;                 // TODO type
+u32 D_80137960;                // TODO type
+u32 D_80137964;                // TODO type
+u32 D_80137968;                // TODO type
+u32 g_PlayerHud;               // TODO type
+u32 D_80137970;                // TODO type
+u32 D_80137974;                // TODO type
+u32 D_80137978;                // TODO type
+u32 D_8013797C;                // TODO type
+u32 D_80137980;                // TODO type
+u32 D_80137984;                // TODO type
+u32 D_80137988;                // TODO type
+u32 D_8013798C;                // TODO type
+u32 D_80137990;                // TODO type
+u32 D_80137994;                // TODO type
+u32 g_HealingMailTimer;        // TODO type
+u32 D_8013799C;                // TODO type
+u32 D_801379A0;                // TODO type
+u32 D_801379A4;                // TODO type
+u32 D_801379A8;                // TODO type
+u16 D_801379AC;                // TODO type
+u16 D_801379AE;                // TODO unused?
+u32 D_801379B0;                // TODO type
+u16 D_801379B4[2];             // TODO unused?
+u32 D_801379B8;                // TODO type
+u32 D_801379BC;                // TODO type
+u16 D_801379C0;                // TODO type
+u16 D_801379C2;                // TODO unused?
+u16 D_801379C4[2];             // TODO type
+u16 D_801379C8;                // TODO type
+u16 D_801379CA;                // TODO unused?
+u16 D_801379CC[2];             // TODO unused?
+u32 D_801379D0;                // TODO type
+u32 D_801379D4;                // TODO unused?
+u32 D_801379D8[2];             // TODO unused?
+u32 D_801379E0[80];            // TODO type
+u32 D_80137B20[96];            // TODO type
+u32 D_80137CA0[40];            // TODO type
+u32 D_80137D40[48];            // TODO type
+u32 D_80137E00[8];             // TODO type
+u32 D_80137E20[8];             // TODO type
+u32 D_80137E40;                // TODO type
+u32 D_80137E44;                // TODO type
+u32 D_80137E48;                // TODO type
+u32 D_80137E4C;                // TODO type
+u32 g_MemCardRetryCount;       // TODO type
+u32 D_80137E54;                // TODO type
+u32 D_80137E58;                // TODO type
+u32 D_80137E5C;                // TODO type
+u32 D_80137E60;                // TODO type
+u32 g_MemCardRStep;            // TODO type
+u32 g_MemCardRStepSub;         // TODO type
+u32 D_80137E6C;                // TODO type
+u16 D_80137E70;                // TODO type
+u16 D_80137E72;                // TODO unused?
+u16 D_80137E74;                // TODO unused?
+u16 D_80137E76;                // TODO unused?
+u32 D_80137E78[2];             // TODO unused?
+u32 D_80137E80[2];             // TODO unused?
+u32 D_80137E88[2];             // TODO unused?
+u32 D_80137E90[2];             // TODO unused?
+u32 D_80137E98[2];             // TODO unused?
+u32 D_80137EA0[2];             // TODO unused?
+u32 D_80137EA8[2];             // TODO unused?
+u32 D_80137EB0[2];             // TODO unused?
+u32 D_80137EB8[2];             // TODO unused?
+u32 D_80137EC0[2];             // TODO unused?
+u32 D_80137EC8[2];             // TODO unused?
+u32 D_80137ED0[2];             // TODO unused?
+u32 D_80137ED8[2];             // TODO unused?
+u32 D_80137EE0;                // TODO type
+u32 D_80137EE4;                // TODO type
+u32 D_80137EE8;                // TODO type
+u32 D_80137EEC;                // TODO type
+u32 D_80137EF0;                // TODO type
+u32 D_80137EF4;                // TODO type
+u32 D_80137EF8[24];            // TODO type
+u32 g_CdCallback;              // TODO type
+u32 g_CdLoc;                   // TODO type
+u16 g_Cd;                      // TODO type
+u16 D_80137F62;                // TODO unused?
+u16 D_80137F64;                // TODO unused?
+u16 D_80137F66;                // TODO unused?
+u32 g_Cd_D_80137F68;           // TODO unused?
+u32 D_80137F6C;                // TODO type
+u32 g_Cd_D_80137F70;           // TODO unused?
+u32 g_Cd_D_80137F74;           // TODO unused?
+u32 g_Cd_D_80137F78;           // TODO unused?
+u32 g_Cd_D_80137F7C;           // TODO unused?
+u32 g_Cd_overlayCopySrc;       // TODO unused?
+u32 g_Cd_overlayCopyDst;       // TODO unused?
+u32 g_Cd_addr;                 // TODO unused?
+u32 g_Cd_overlayBlockCount;    // TODO unused?
+u32 g_Cd_overlayLastBlockSize; // TODO unused?
+u8 g_VabId[2];                 // TODO unused?
+u8 D_80137F96[6];              // TODO unused?
+u32 D_80137F9C;                // TODO type
+u32 D_80137FA0[2];             // TODO type
+u16 D_80137FA8[2];             // TODO type
+u32 D_80137FAC;                // TODO type
+u32 D_80137FB0;                // TODO type
+u32 D_80137FB4;                // TODO type
+u32 D_80137FB8;                // TODO type
 #if defined(VERSION_US)
 u32 D_80137FBC; // TODO type
 #endif

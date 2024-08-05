@@ -176,6 +176,43 @@ MenuContextInit g_MenuInit[NUM_MENU] = {
 #endif
 };
 
+// BSS
+extern EquipKind D_801375CC;
+extern s32 D_801375D0;
+extern s32 D_801375D4;
+extern s32* D_801375D8;
+extern s32 D_801375DC;
+extern s32 D_801375E0[NUM_FAMILIARS + 1];
+extern s32 g_IsCloakLiningUnlocked;
+extern s32 g_IsCloakColorUnlocked;
+extern s32 D_80137608;
+extern s32 g_IsSelectingEquipment;
+extern s32 g_EquipmentCursor;
+extern s32 D_80137614;
+extern s32 g_EquipOrderType;
+extern MenuData g_MenuData;
+extern s32 D_801377FC[NUM_MENU];
+extern s32 D_8013783C;
+extern s32 D_80137840;
+extern s32 D_80137844[1];
+extern s32 D_80137848[1];
+#if defined(VERSION_US)
+extern s32 D_8013784C;
+#endif
+extern s16 g_RelicMenuFadeTimer;
+extern s32 g_TimeAttackEntryTimes[NUM_TIMEATTACK_EVENTS];
+extern s32 c_strTimeAttackEntry[NUM_TIMEATTACK_EVENTS];
+extern s32 g_NewAttackRightHand;
+extern s32 g_NewAttackLeftHand;
+extern s32 g_NewDefenseEquip;
+extern s32 g_NewPlayerStatsTotal[];
+extern s32 D_80137948;
+extern s8* D_8013794C; // Pointer to texture pattern
+extern s32 D_80137950;
+extern s32 D_80137954;
+extern s32 D_80137958;
+extern s32 g_ServantPrevious;
+
 u16* func_80106A28(u32 arg0, u16 kind);
 
 bool CheckIfAllButtonsAreAssigned(void) {
@@ -1036,7 +1073,7 @@ void MenuJosephsCloakDraw(MenuContext* context) {
     s32 x_RGB;
     const char** exteriorInterior;
 
-    MenuContext* ctx = &g_JosephsCloakContext;
+    MenuContext* ctx = &g_MenuData.menus[7];
 #if defined(VERSION_US)
     s32 x_Start = 0xB0;
     s32 number_spacing = 0x28;
@@ -2163,7 +2200,7 @@ void func_800F9690(void) {
     } else {
         prim->drawMode = DRAW_HIDE;
     }
-    if (D_801376B0 != 0) {
+    if (g_MenuData.menus[4].unk1C != 0) {
         prim->drawMode = DRAW_HIDE;
     }
 }
@@ -3191,7 +3228,7 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
     }
 block_5b0:
     func_800FA3C4(nav->cursorMain, var_s6, 1);
-    if ((-D_80137688) / 12) {
+    if ((-g_MenuData.menus[3].h) / 12) {
         if (g_pads[0].repeat & PAD_L1) {
             *D_80137844 = 5;
         } else if (*D_80137844 == 0) {
@@ -3200,7 +3237,8 @@ block_5b0:
     } else {
         *D_80137844 = 0;
     }
-    if ((-D_80137688 + D_8013767C) / 12 < (nItems + 1) / 2) {
+    if ((-g_MenuData.menus[3].h + g_MenuData.menus[3].cursorH) / 12 <
+        (nItems + 1) / 2) {
         if (g_pads[0].repeat & PAD_R1) {
             *D_80137848 = 5;
         } else if (*D_80137848 == 0) {
@@ -3255,7 +3293,7 @@ void func_800FB9BC(void) {
         context->otIdx = g_MenuInit[i].otIdx;
         context->unk1C = 2;
     }
-    D_801376C4 = D_801376C8 =
+    g_MenuData.menus[5].h = g_MenuData.menus[5].unk16 =
         -((g_MenuNavigation.cursorRelic / ItemsPerRow) * VertScrollWindow) /
         YScrollPerElement;
 }
@@ -3751,9 +3789,11 @@ block_4:
         break;
     case MENU_STEP_RELIC:
 #if defined(VERSION_US)
-        D_801376C8 = (-((g_MenuNavigation.cursorRelic / 2) * 0x78)) / 14;
+        g_MenuData.menus[5].unk16 =
+            (-((g_MenuNavigation.cursorRelic / 2) * 0x78)) / 14;
 #elif defined(VERSION_HD)
-        D_801376C8 = (-((g_MenuNavigation.cursorRelic / 2) * 0x8C)) / 15;
+        g_MenuData.menus[5].unk16 =
+            (-((g_MenuNavigation.cursorRelic / 2) * 0x8C)) / 15;
 #endif
         var_s1 = g_MenuNavigation.cursorRelic;
 #if defined(VERSION_US)
