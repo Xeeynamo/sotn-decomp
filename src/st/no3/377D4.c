@@ -1070,7 +1070,7 @@ void EntityMermanRockLeftSide(Entity* self) {
                 tilePos += 0x30;
             }
 
-            g_api.PlaySfx(SE_WALL_BREAK);
+            g_api.PlaySfx(SFX_WALL_DEBRIS_B);
 
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
@@ -1169,7 +1169,7 @@ void EntityMermanRockRightSide(Entity* self) {
                 tilePos += 0x30;
             }
 
-            g_api.PlaySfx(SE_WALL_BREAK);
+            g_api.PlaySfx(SFX_WALL_DEBRIS_B);
 
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
@@ -1228,7 +1228,7 @@ void EntityUnkId26(Entity* self) {
 
     case 1:
         if ((g_CastleFlags[51] & 12) == 12) {
-            func_801CAD28(SE_WALL_BREAK);
+            func_801CAD28(SFX_WALL_DEBRIS_B);
             self->step++;
         }
         break;
@@ -1353,7 +1353,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
         break;
 
     case 2:
-        g_api.PlaySfx(SE_WALL_BREAK);
+        g_api.PlaySfx(SFX_WALL_DEBRIS_B);
         g_Tilemap.fg[0x4D9] = 0x3EE;
         g_Tilemap.fg[0x539] = 0x3D2;
         g_CastleFlags[stairwayPieceBroken] = true;
@@ -1425,7 +1425,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
         break;
 
     case 4:
-        g_api.PlaySfx(SE_WALL_BREAK);
+        g_api.PlaySfx(SFX_WALL_DEBRIS_B);
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);

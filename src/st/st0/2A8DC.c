@@ -38,7 +38,7 @@ void EntitySecretButton(Entity* self) {
         if (self->hitFlags != 0) {
             g_Tilemap.fg[0x1C4] = 0;
             self->animCurFrame = 4;
-            g_api.PlaySfx(0x644);
+            g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_SECRET_BUTTON, self, newEntity);
