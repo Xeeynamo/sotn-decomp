@@ -510,11 +510,6 @@ extern u8 D_80138044;
 extern u8 D_80138048;
 
 // BSS work in progress
-extern s32 D_80138394;
-extern s32 D_80138398;
-extern Point16 D_8013839C[];
-extern s32 D_8013841C;
-extern RECT D_80138424;
 extern s32 D_8013842C;
 extern s32 D_80138430;
 extern s32 D_80138438;

@@ -199,6 +199,8 @@ extern s16 D_801381E8;
 extern s16 D_801381EC;
 extern s16 D_801381F0;
 extern Primitive D_801381F4[8];
+extern s32 D_80138394;
+extern s32 D_80138398;
 
 void func_8011E4BC(Entity* self) {
     byte stackpad[0x28];

@@ -252,8 +252,15 @@ static s16 D_801381EC_; // alignment padding
 s16 D_801381F0;
 static s16 D_801381F0_; // alignment padding
 Primitive D_801381F4[8];
+s32 D_80138394;
+s32 D_80138398;
 
 // 843B0.c
+Point16 D_8013839C[32];
+s32 D_8013841C;
+static s32 D_80138420; // unused
+RECT D_80138424;
+
 // 8A0A4.c
 // 8D3E8.c
 // 91EBC.c
@@ -263,16 +270,6 @@ Primitive D_801381F4[8];
 // 94F50.c
 // 953A0.c
 
-u32 D_80138394;                          // TODO type
-u32 D_80138398;                          // TODO type
-u16 D_8013839C;                          // TODO type
-u16 D_8013839E[63];                      // TODO unused?
-u32 D_8013841C;                          // TODO type
-u32 D_80138420;                          // TODO unused?
-u16 D_80138424;                          // TODO type
-u16 D_80138426;                          // TODO unused?
-u16 D_80138428;                          // TODO unused?
-u16 D_8013842A;                          // TODO unused?
 u32 D_8013842C;                          // TODO type
 u32 D_80138430[2];                       // TODO type
 u32 D_80138438;                          // TODO type
