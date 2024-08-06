@@ -2,6 +2,7 @@
 // AxeLord shield, Unknown#206
 #include "weapon_private.h"
 #include "shared.h"
+#include "sfx.h"
 
 extern SpriteParts D_51000_8017A040[];
 extern s8 D_51000_8017AB4C;
@@ -619,7 +620,7 @@ void func_ptr_80170024(Entity* self) {
         break;
     // Not a switch case, but `break` skips this, so we put it in the switch.
     make_other_entity:
-        g_api.PlaySfx(NA_SE_BREAK_CANDLE);
+        g_api.PlaySfx(SFX_CANDLE_HIT);
         self->step = 3;
         self->unk4C = D_51000_8017ABE8;
         self->animFrameDuration = self->animFrameIdx = 0;

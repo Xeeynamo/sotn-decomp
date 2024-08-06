@@ -8,10 +8,6 @@
 
 #define CASTLE_FLAG_BANK 0x1E0
 
-// RWRP Sound IDs
-#define SE_WARP_ENTER 0x636
-#define SE_WARP_DEBRIS 0x644
-
 typedef enum {
     E_NONE,
     E_BREAKABLE,

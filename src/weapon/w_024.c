@@ -595,7 +595,7 @@ void func_ptr_80170024(Entity* self) {
         self->posY.val += self->velocityY / 32;
         if (--self->ext.shield.unk80 == 0) {
             self->velocityY /= 32;
-            g_api.PlaySfx(SFX_DARK_SHIELD);
+            g_api.PlaySfx(SFX_START_SLAM_A);
             self->step += 1;
         }
         break;

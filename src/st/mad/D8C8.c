@@ -1,4 +1,5 @@
 #include "mad.h"
+#include "sfx.h"
 
 void func_8018D8C8(u16* tilemap);
 INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_8018D8C8);

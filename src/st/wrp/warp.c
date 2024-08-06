@@ -200,7 +200,7 @@ void EntityWarpRoom(Entity* self) {
         prim->g0 = prim->b0 = prim->r0 += 2;
         if (prim->r0 > 96) {
             D_80180648 = 1;
-            g_api.PlaySfx(SE_WARP_ENTER);
+            g_api.PlaySfx(SFX_TELEPORT_BANG_B);
             self->step++;
         }
         break;
@@ -399,7 +399,7 @@ void EntityWarpSmallRocks(Entity* entity) {
         break;
     case 5:
         if (--entity->ext.warpRoom.unk88 == 0) {
-            func_801916C4(SE_WARP_DEBRIS);
+            func_801916C4(SFX_WALL_DEBRIS_B);
         }
         MoveEntity();
         entity->velocityY += FIX(0.1875);

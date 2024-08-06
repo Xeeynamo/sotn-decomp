@@ -2,6 +2,7 @@
 // Holy rod, Unknown#170
 #include "weapon_private.h"
 #include "shared.h"
+#include "sfx.h"
 
 extern WeaponAnimation D_20000_8017B2F4[]; // g_SoundEvents
 
@@ -45,7 +46,7 @@ void EntityWeaponAttack(Entity* self) {
     if (PLAYER.animFrameDuration == 1 &&
         PLAYER.animFrameIdx == anim->soundFrame) {
         g_api.PlaySfx(anim->soundId);
-        g_api.PlaySfx(0x640);
+        g_api.PlaySfx(SFX_ANIME_SWORD_B);
     }
 
     if (g_api.UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
