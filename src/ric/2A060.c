@@ -329,7 +329,7 @@ void func_80166784(Entity* self) {
             } else {
                 if (PLAYER.step == 0) {
                     if (PLAYER.facingLeft == 0) {
-                        var_s3 = (&D_80155A08)[var_s4];
+                        var_s3 = D_80155A08[var_s4];
                     } else {
                         var_s3 = D_801559E4[var_s4].x;
                     }
@@ -463,7 +463,7 @@ void func_80166784(Entity* self) {
             self->ext.et_80166784.unk84 = 6;
             if (var_s4 == 0) {
                 if (PLAYER.facingLeft == 0) {
-                    xDiff = D_80155A08;
+                    xDiff = D_80155A08[0];
                 } else {
                     xDiff = D_801559E4[0].x;
                 }
