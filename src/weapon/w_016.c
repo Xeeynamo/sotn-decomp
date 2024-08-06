@@ -189,7 +189,7 @@ s32 func_ptr_80170010(Entity* self) {
         self->animSet = 2;
         self->unk4C = D_74000_8017A5B0;
         self->zPriority = PLAYER.zPriority - 4;
-        self->flags = 0x08100000;
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
         self->velocityY = FIX(-1.0);
 
         if (!(D_74000_8017BD74 & 1)) {
@@ -206,7 +206,7 @@ s32 func_ptr_80170010(Entity* self) {
         self->posX.i.hi += -3 + (rand() & 7);
         D_74000_8017BD74 += 1;
         if (!(rand() & 1)) {
-            self->drawMode |= 0x70;
+            self->drawMode |= DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
         }
         self->step += 1;
     }

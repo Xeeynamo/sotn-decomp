@@ -49,7 +49,7 @@ void EntityWeaponAttack(Entity* self) {
         if (self->animFrameIdx == 20 && self->animFrameDuration == 2 &&
             g_api.CreateEntFactoryFromEntity(
                 self, ((g_HandId + 1) << 0xC) | 0x38, 0)) {
-            g_api.PlaySfx(0x625);
+            g_api.PlaySfx(SFX_ARROW_SHOT_A);
         }
         break;
 
