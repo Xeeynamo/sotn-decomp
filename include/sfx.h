@@ -180,16 +180,9 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#if defined(VERSION_BETA)
-#define SFX_OPEN_DOOR 0x640
-#define SFX_DOOR_UNKNOWN 0x64D
-#else
-#define SFX_OPEN_DOOR 0x642
 #define SFX_UNK_647 0x647
 #define SFX_UNK_64B 0x64B
 #define SFX_UNK_64C 0x64C
-#define SFX_DOOR_UNKNOWN 0x64F
-#endif
 
 #define SFX_UNK_641 0x641
 #define NA_SE_EN_COG_CLICK 0x642
@@ -464,7 +457,7 @@ enum MAD_Sfx {
     SFX_MAD_WEAPON_STAB_B = 0x630,
     SFX_MAD_CANDLE_HIT = 0x635,
     SFX_MAD_DOOR_OPEN = 0x640,
-    SFX_MAD_DOOR_CLOSE = 0x64D,
+    SFX_MAD_DOOR_CLOSE_A = 0x64D,
     SFX_MAD_HEART_PICKUP = 0x670,
     SFX_MAD_ITEM_PICKUP = 0x672,
     SFX_MAD_GOLD_PICKUP = 0x69D,
