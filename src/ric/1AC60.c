@@ -148,7 +148,7 @@ void func_80156F40(s16 arg0) {
         func_8015CC70(5);
     }
 }
-extern u16 TEST[];
+
 void func_801572A8(bool arg0) {
     Collider collider;
     s16 argX;
@@ -172,8 +172,7 @@ void func_801572A8(bool arg0) {
                 D_801545E4[i].y = D_8015465C[i];
             } else {
                 D_801545F4[i].y = D_80154644[i];
-                D_801545E4[i].y =
-                    D_8015464C[i - 8]; //! FAKE TODO: Find right symbol
+                D_801545E4[i].y = D_8015463C[i];
             }
         }
         for (i = 0; i < 7; i++) {

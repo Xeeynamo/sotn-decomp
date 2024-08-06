@@ -125,7 +125,7 @@ extern u8 D_801545D4[16];
 // These appear to be a set of collision boxes
 extern Point16 D_801545E4[4];
 extern Point16 D_801545F4[4];
-extern Point16 D_80154604[15];
+extern Point16 D_80154604[14];
 extern u16 D_8015463C[4];
 extern u16 D_80154644[4];
 extern u16 D_8015464C[8];
@@ -134,7 +134,7 @@ extern u16 D_80154664[8];
 extern u8 D_80154674[][4]; // TODO AnimationFrames*[]
 extern SubweaponDef D_80154688[];
 extern u8 D_801548F4[6][8];
-extern AnimationFrame* D_80154924;
+extern AnimationFrame D_80154924[];
 extern PfnEntityUpdate D_8015495C[];
 extern s32 D_80154ED4;
 extern s32 D_80154EF8;
