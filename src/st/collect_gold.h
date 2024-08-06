@@ -4,7 +4,7 @@ extern const char* g_goldCollectTexts[];
 #include "sfx.h"
 
 void CollectGold(u16 goldSize) {
-    g_api.PlaySfx(SFX_COLLECT_GOLD);
+    g_api.PlaySfx(SFX_GOLD_PICKUP);
     goldSize -= 2;
     g_Status.gold += c_GoldPrizes[goldSize];
     if (g_Status.gold > MAX_GOLD) {
