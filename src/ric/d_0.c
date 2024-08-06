@@ -12,5 +12,9 @@ PlayerOvl RichterBelmont = {
     /* 0x0C */ func_8015E7B4,
 };
 
-s32* D_8013C010[4] = {g_PlOvlSpritesheet, g_PlOvlSpritesheet,
-                      g_PlOvlSpritesheet, g_PlOvlSpritesheet};
+s32* D_8013C010[4] = {
+    g_PlOvlSpritesheet,
+    g_PlOvlSpritesheet,
+    g_PlOvlSpritesheet,
+    g_PlOvlSpritesheet
+};
