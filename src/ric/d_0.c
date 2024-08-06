@@ -5,7 +5,7 @@ void func_80156F40(s16 arg0);
 void func_801603C4(void);
 void func_8015E7B4(Unkstruct_8010BF64* arg0);
 
-PlayerOvl Richter = {
+PlayerOvl RichterBelmont = {
     /* 0x00 */ UpdateEntityRichter,
     /* 0x04 */ func_80156F40,
     /* 0x08 */ func_801603C4,
