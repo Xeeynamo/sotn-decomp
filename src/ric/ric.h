@@ -227,7 +227,7 @@ extern s16 D_80155CE0[];
 extern s16 D_80155CF4[];
 extern s16 D_80155D08[];
 extern s16 D_80155D1C[];
-extern s16 D_80155D30;
+extern s16 D_80155D30[];
 extern s16 D_80155D64[4][6];
 extern Point32 D_80155D9C[];
 extern u16 D_80155DDC[0x30];
