@@ -2,6 +2,8 @@
 #include <psxsdk/libsnd.h>
 #include "disk.h"
 
+#define padding static
+
 // TODO dra.h
 #define SEQ_TABLE_S_MAX 0x10
 #define SEQ_TABLE_T_MAX 1
@@ -57,8 +59,8 @@ u8* g_DecSrcPtr;
 u8* g_DecDstPtr;
 s32 g_DecReadNibbleFlag;
 s32 g_DecWriteNibbleFlag;
-static s32 D_80137588; // unused
-static s32 D_8013758C; // unused
+padding s32 D_80137588;
+padding s32 D_8013758C;
 
 // demo.c
 u8* g_DemoPtr;
@@ -105,7 +107,7 @@ s32 D_80137848[1];
 s32 D_8013784C;
 #endif
 s16 g_RelicMenuFadeTimer;
-static s16 g_RelicMenuFadeTimer_;
+padding s16 g_RelicMenuFadeTimer_;
 s32 g_TimeAttackEntryTimes[NUM_TIMEATTACK_EVENTS];
 s32 c_strTimeAttackEntry[NUM_TIMEATTACK_EVENTS];
 s32 g_NewAttackRightHand;
@@ -166,7 +168,7 @@ s32 D_80137EE8;
 s32 D_80137EEC;
 s32 D_80137EF0;
 s32 D_80137EF4;
-static u8 D_80137EF8[0x60]; // unused
+padding u8 D_80137EF8[0x60];
 
 // cd.c
 CdCallbacks g_CdCallback;
@@ -174,12 +176,12 @@ CdlLOC g_CdLoc;
 u8 g_Cd[0x34]; // TODO CdThing
 s16 g_VabId;
 u8 D_80137F96;
-static u8 D_80137F97[5]; // unused
+padding u8 D_80137F97[5];
 s32 D_80137F9C;
 s32 D_80137FA0;
-static u32 D_80137FA4; // unused
+padding u32 D_80137FA4;
 s16 D_80137FA8;
-static s16 D_80137FAA; // unused
+padding s16 D_80137FAA;
 s32 D_80137FAC;
 s32 D_80137FB0;
 
@@ -192,13 +194,13 @@ s32 D_80137FBC;
 
 // 6D59C.c, 704D0.c
 s16 g_WasFacingLeft;
-static s16 g_WasFacingLeft_; // alignment padding
+padding s16 g_WasFacingLeft_;
 s16 g_WasFacingLeft2;
-static s16 g_WasFacingLeft2_; // alignment padding
+padding s16 g_WasFacingLeft2_;
 s32 g_WasFacingLeft3;
 s32 g_WasFacingLeft4;
 s16 g_WasFacingLeft5;
-static s16 g_WasFacingLeft5_; // alignment padding
+padding s16 g_WasFacingLeft5_;
 s32 g_WasFacingLeft6;
 s32 g_WasFacingLeft7;
 
@@ -226,13 +228,13 @@ s32 D_80138038;
 
 // 75F54.c, 7A4D0.c
 u8 D_8013803C;
-static u8 D_8013803C_[3]; // alignment padding
+padding u8 D_8013803C_[3];
 u8 D_80138040;
-static u8 D_80138040_[3]; // alignment padding
+padding u8 D_80138040_[3];
 u8 D_80138044;
-static u8 D_80138044_[3]; // alignment padding
+padding u8 D_80138044_[3];
 u8 D_80138048;
-static u8 D_80138048_[3]; // alignment padding
+padding u8 D_80138048_[3];
 
 // 78D0C.c
 Point16 D_8013804C[16];
@@ -242,21 +244,21 @@ s32 D_8013808C;
 s32 D_80138090;
 u8 D_80138094[16][0x14]; // TODO mistStruct
 s16 D_801381D4;
-static s16 D_801381D4_; // alignment padding
+padding s16 D_801381D4_;
 s16 D_801381D8;
-static s16 D_801381D8_; // alignment padding
+padding s16 D_801381D8_;
 s16 D_801381DC;
-static s16 D_801381DC_; // alignment padding
+padding s16 D_801381DC_;
 s16 D_801381E0;
-static s16 D_801381E0_; // alignment padding
+padding s16 D_801381E0_;
 s16 D_801381E4;
-static s16 D_801381E4_; // alignment padding
+padding s16 D_801381E4_;
 s16 D_801381E8;
-static s16 D_801381E8_; // alignment padding
+padding s16 D_801381E8_;
 s16 D_801381EC;
-static s16 D_801381EC_; // alignment padding
+padding s16 D_801381EC_;
 s16 D_801381F0;
-static s16 D_801381F0_; // alignment padding
+padding s16 D_801381F0_;
 Primitive D_801381F4[8];
 s32 D_80138394;
 s32 D_80138398;
@@ -264,13 +266,13 @@ s32 D_80138398;
 // 843B0.c
 Point16 D_8013839C[32];
 s32 D_8013841C;
-static s32 D_80138420; // unused
+padding s32 D_80138420;
 RECT D_80138424;
 
 // 8A0A4.c, 8D3E8.c
 s32 D_8013842C;
 s32 D_80138430;
-static u32 D_80138434; // unused
+padding u32 D_80138434;
 s32 D_80138438;
 s32 D_8013843C;
 s32 D_80138440;
@@ -282,9 +284,9 @@ s32 D_80138450;
 // 91EBC.c, 92F60.c, 93290.c, 93BDC.c, 94F50.c, 953A0.c
 s32 D_80138454;
 s16 g_CurrentXaConfigId;
-static s16 g_CurrentXaConfigId_;
+padding s16 g_CurrentXaConfigId_;
 s16 D_8013845C;
-static s16 D_8013845E; // alignment padding
+padding s16 D_8013845E;
 #if defined(VERSION_PC)
 u8 g_SeqTable[SS_SEQ_TABSIZ * SEQ_TABLE_S_MAX * SEQ_TABLE_T_MAX];
 u_long* D_80138784[0x700];
@@ -294,17 +296,17 @@ u_long* D_80138784[488];
 #endif
 s32 g_CurCdPos;
 u8 g_CdMode[2];
-static u8 D_80138F26[2]; // alignment padding
+padding u8 D_80138F26[2];
 s32 g_KeyOffChannels;
 u8 g_CdCommandResult[56];
 s8 D_80138F64[SPU_VOICE_NUM];
 s32 D_80138F7C;
 s16 D_80138F80;
-static s16 D_80138F82; // align padding
+padding s16 D_80138F82;
 s32 g_SeqPointers[10];
 s16 g_SfxRingBufferReadPos;
-static s16 D_80138FAE; // align padding
-u32 g_DebugMode;       // TODO DebugMode
+padding s16 D_80138FAE;
+u32 g_DebugMode; // TODO DebugMode
 #ifdef VERSION_PC
 SpuVoiceAttr D_80138FB4_;
 SpuVoiceAttr* D_80138FB4 = &D_80138FB4_;
@@ -312,71 +314,82 @@ SpuVoiceAttr* D_80138FB4 = &D_80138FB4_;
 SpuVoiceAttr* D_80138FB4; // on PSX it points to 0x80000000
 #endif
 s16 g_VolL;
-static u16 D_80138FBA; // padding
+padding u16 D_80138FBA;
 s16 D_80138FBC;
-static s16 D_80138FBE;              // padding
+padding s16 D_80138FBE;
 ButtonComboState g_ButtonCombo[16]; // TODO COMBO_NUM
 s16 g_sfxRingBufferWritePos;
-static s16 D_80139002; // padding
+padding s16 D_80139002;
 s16 g_VolR;
-static u16 D_80139006; // padding
+padding u16 D_80139006;
 s32 D_80139008;
 u32 g_DebugCurPal;
 s16 D_80139010;
-static s16 D_80139012_; // padding
+padding s16 D_80139012_;
 u8 D_80139014;
-static u8 D_80139015[3]; // padding
+padding u8 D_80139015[3];
 u8 D_80139018[4];
 s16 D_8013901C;
-static s16 D_8013901C_; // padding
+padding s16 D_8013901C_;
 u8 g_MuteCd;
-static u8 D_80139021[55]; // padding
+padding u8 D_80139021[55];
 s8 D_80139058[4];
 s32 g_PrevEquippedWeapons[2];
 s16 g_CurrentXaSoundId;
-static u16 g_CurrentXaSoundId_[27]; // padding
+padding u16 g_CurrentXaSoundId_[27];
 s16 g_SeqVolume1;
-static u16 g_SeqVolume1_; // padding
+padding u16 g_SeqVolume1_;
 u8 D_801390A0;
-static u8 D_801390A1[3]; // padding
+padding u8 D_801390A1[3];
 u16 D_801390A4;
-static u16 D_801390A4_; // padding
+padding u16 D_801390A4_;
 u8 D_801390A8;
-static u8 D_801390A9[3]; // padding
+padding u8 D_801390A9[3];
 s16 D_801390AC[4];
 s32 D_801390B4[4];
 u8 D_801390C4;
-static u8 D_801390C5[3]; // padding
+padding u8 D_801390C5[3];
 SpuVoiceAttr* D_801390C8;
 SpuVoiceAttr* D_801390CC;
-static u32 D_801390D0; // unused
+padding u32 D_801390D0;
 GpuBuffer* g_BackBuffer;
 u8 D_801390D8;
-static u8 D_801390D9[3]; // padding
+padding u8 D_801390D9[3];
 SfxRingBufferItem g_SfxRingBuffer[MAX_SND_COUNT];
-
-u16 D_801396DC[2];               // TODO type
-u16 D_801396E0[2];               // TODO type
-u16 D_801396E4;                  // TODO type
-u16 D_801396E6;                  // TODO type
-u16 D_801396E8;                  // TODO type
-u16 D_801396EA;                  // TODO type
-u16 D_801396EC[2];               // TODO type
-u32 g_CdCommandStatus;           // TODO type
-u16 g_CdSoundCommandQueuePos[2]; // TODO type
-u32 D_801396F8[32];              // TODO type
-u32 D_80139778[32];              // TODO type
-u32 D_801397F8;                  // TODO type
-u32 D_801397FC;                  // TODO type
-u16 D_80139800[2];               // TODO type
-u16 D_80139804[4];               // TODO type
-u32 D_8013980C;                  // TODO type
-u8 g_SeqPlayingId[4];            // TODO type
-u16 D_80139814[6];               // TODO type
-u16 g_XaMusicVolume[2];          // TODO type
-u32 D_80139824;                  // TODO type
+s16 D_801396DC;
+padding s16 D_801396DE;
+s16 D_801396E0;
+padding s16 D_801396E2;
+u16 D_801396E4;
+u16 D_801396E6;
+u16 D_801396E8;
+s16 D_801396EA;
+u16 D_801396EC;
+padding u16 D_801396EE;
+s32 g_CdCommandStatus;
+u16 g_CdSoundCommandQueuePos;
+padding u16 g_CdSoundCommandQueuePos_;
+s32 D_801396F8[32];
+s32 D_80139778[32];
+s16 D_801397F8;
+padding s16 D_801397FA;
+s32 D_801397FC;
+s16 D_80139800;
+padding s16 D_80139800_;
+s16 D_80139804;
+padding s16 D_80139806;
+padding s32 D_80139808;
+s32 D_8013980C;
+u8 g_SeqPlayingId;
+padding u8 g_SeqPlayingId_[3];
+s16 D_80139814[4];
+padding s32 D_80139814_;
+u16 g_XaMusicVolume;
+padding u16 g_XaMusicVolume_;
+s32 D_80139824;
 s32 D_80139828[16];
-u16 g_CdSoundCommandQueue[256];          // TODO type
+u16 g_CdSoundCommandQueue[256]; // TODO MAX_SND_COUNT
+
 u16 g_SoundCommandRingBufferReadPos[2];  // TODO type
 u16 D_80139A6C[2];                       // TODO type
 u16 g_SoundCommandRingBufferWritePos[2]; // TODO type
@@ -386,13 +399,13 @@ u32 D_80139A7C[1280];                    // TODO unused?
 u16 D_8013AE7C[2];                       // TODO type
 u8 g_CdSoundCommandStep[4];              // TODO type
 s16 g_CurrentSfxScriptSfxId[4];
-u16 g_volumeL[2];                  // TODO type
-u32 D_8013AE90;                    // TODO type
-u16 D_8013AE94[2];                 // TODO type
-u8 g_ReverbDepth[4];               // TODO type
-u32 D_8013AE9C;                    // TODO type
-u16 D_8013AEA0[4];                 // TODO type
-static u16 D_8013AEA8[10];         // unused
+u16 g_volumeL[2];    // TODO type
+u32 D_8013AE90;      // TODO type
+u16 D_8013AE94[2];   // TODO type
+u8 g_ReverbDepth[4]; // TODO type
+u32 D_8013AE9C;      // TODO type
+u16 D_8013AEA0[4];   // TODO type
+padding u16 D_8013AEA8[10];
 u32 D_8013AEBC;                    // TODO type
 u16 D_8013AEC0[2];                 // TODO type
 u32 D_8013AEC4;                    // TODO type
@@ -425,8 +438,8 @@ u8 D_8013B618[4]; // TODO type
 u32 D_8013B61C;   // TODO type
 u16 g_SfxScriptVolume[4];
 s8* g_CurrentSfxScript[4];
-static u32 D_8013B638[2]; // unused
-u32 D_8013B640[2];        // TODO type
+padding u32 D_8013B638[2];
+u32 D_8013B640[2]; // TODO type
 s16 D_8013B648[4];
 s16 D_8013B650[4];
 u16 g_SeqAccessNum[2]; // TODO type

@@ -1002,7 +1002,7 @@ u8* g_SfxScripts[] = {
 };
 
 void ExecCdSoundCommands(void) {
-    if (*(u16*)&g_CdSoundCommandQueuePos == 0)
+    if (g_CdSoundCommandQueuePos == 0)
         return;
 
     switch (g_CdSoundCommandQueue[0]) {
