@@ -41,7 +41,7 @@ segments:
       - [0x188F4, .data, d_188F4]
       - [0x1895C, .data, 21250]
       - [0x18A6C, assets, factory_blueprint, g_RicFactoryBlueprints]
-      - [0x18C40, data] #18C40.data.s 0x18C40 - 0x194AC
+      - [0x18C40, .data, d_18C40] #18C40.data.s 0x18C40 - 0x194AC
       - [0x194B0, data]
       - [0x19B50, data] #19B50.data.s
       - [0x19BE0, data]

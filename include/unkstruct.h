@@ -164,17 +164,17 @@ typedef struct {
 } unkGraphicsStruct;
 
 typedef struct {
-    u8 count;
-    u8 r;
-    u8 g;
-    u8 b;
-    u8 w;
-    u8 h;
-    u16 priority;
-    u16 drawMode;
-    s16 unkA;
-    u32 flags;
-} unkStr_8011E4BC;
+    /* 0x00 */ u8 count;
+    /* 0x01 */ u8 r;
+    /* 0x02 */ u8 g;
+    /* 0x03 */ u8 b;
+    /* 0x04 */ u8 w;
+    /* 0x05 */ u8 h;
+    /* 0x06 */ u16 priority;
+    /* 0x08 */ u16 drawMode;
+    /* 0x0A */ s16 unkA;
+    /* 0x0C */ u32 flags;
+} unkStr_8011E4BC; // size = 0x10
 
 typedef struct {
     s32 : 32;

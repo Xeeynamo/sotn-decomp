@@ -10,7 +10,7 @@ void func_80162C84(Entity* entity) {
         entity->zPriority = PLAYER.zPriority - 8;
         entity->palette = 0x8149;
         entity->animSet = ANIMSET_OVL(19);
-        func_8015C920(&D_80154ED4);
+        func_8015C920(D_80154ED4);
         entity->velocityX = FIX(-1.75);
         entity->posY.i.hi = 0xBB;
         entity->posX.i.hi = 0x148;
@@ -33,7 +33,7 @@ void func_80162C84(Entity* entity) {
             entity->ext.generic.unk7E.modeU16++;
         }
         if (entity->posX.i.hi < 0xE0) {
-            func_8015C920(&D_80154EF8);
+            func_8015C920(D_80154EF8);
             entity->velocityX = 0;
             entity->step++;
             CreateEntFactoryFromEntity(entity, FACTORY(0x400, 0), 0);
@@ -491,8 +491,7 @@ void EntityShrinkingPowerUpRing(Entity* self) {
     s32 constE0 = 0xE0;
 
     u32 upperparams = self->params & 0x7F00;
-
-    loadedParams = &D_8015519C[upperparams >> 8];
+    loadedParams = &D_8015519C[(upperparams >> 8) * 3];
     rScale = loadedParams[2];
     gScale = loadedParams[3];
     bScale = loadedParams[4];
