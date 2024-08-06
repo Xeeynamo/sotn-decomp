@@ -353,6 +353,7 @@ extern u8 g_BmpCastleMap[0x20000];
 #endif
 
 #define ICON_SLOT_NUM 32
+#define SPU_VOICE_NUM 24
 
 typedef enum {
     Game_Init,

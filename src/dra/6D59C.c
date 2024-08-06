@@ -919,7 +919,7 @@ block_32:
         HasEnoughMp(g_EquipDefs[equipped_id].mpUsage, 0)) {
     block_38c:
         equipped_item = &g_EquipDefs[g_Status.equipment[hand]];
-        if (D_80138FC8 == 0xFF) {
+        if (g_ButtonCombo[COMBO_BF].buttonsCorrect == 0xFF) {
             var_s2 = equipped_item->unk17;
             if (var_s2 != 0) {
                 equipped_item = &g_EquipDefs[var_s2];

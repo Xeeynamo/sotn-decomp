@@ -1120,7 +1120,7 @@ void func_8013572C(s16 arg0, u16 volume, s16 distance) {
             }
             return;
         }
-        if (g_SfxData[arg0].unk6 >= D_8013AEA6) {
+        if (g_SfxData[arg0].unk6 >= D_8013AEA0[3]) {
             ApplyQuadChannelSetting(arg0, 3, true, volume, distance);
         }
     } else {
@@ -1283,14 +1283,14 @@ void func_80135D8C(void) {
                 }
             }
         }
-    } else if (D_8013AE8A[0] != 0) {
-        if (D_8013B672[0] == 0) {
+    } else if (g_CurrentSfxScriptSfxId[3] != 0) {
+        if (g_SfxScriptTimer[3] == 0) {
             temp_t2_2 = &g_CurrentSfxScript[3];
             temp_v1 = *temp_t2_2;
             *temp_t2_2 = temp_v1 + 1;
             vab = temp_v1[0];
             if (vab == -1) {
-                D_8013AE8A[0] = 0;
+                g_CurrentSfxScriptSfxId[3] = 0;
                 return;
             }
             *temp_t2_2 = temp_v1 + 2;
@@ -1301,14 +1301,14 @@ void func_80135D8C(void) {
             tone = temp_v1[3];
             distance2 = g_UnkChannelSetting1[3];
             *temp_t2_2 = temp_v1 + 5;
-            volume = D_8013B626 * temp_v1[4];
+            volume = g_SfxScriptVolume[3] * temp_v1[4];
             *temp_t2_2 = temp_v1 + 6;
-            D_8013B672[0] = temp_v1[5];
+            g_SfxScriptTimer[3] = temp_v1[5];
             distance = distance2;
             func_80132A04(33, vab, prog, tone, note, volume >> 7, distance);
 
         } else {
-            D_8013B672[0]--;
+            g_SfxScriptTimer[3]--;
         }
     }
 }
@@ -1328,7 +1328,7 @@ void func_80136010(void) {
     s8* new_var;
     s16* fakeptr;
 
-    SpuGetAllKeysStatus(&D_80138F64);
+    SpuGetAllKeysStatus(D_80138F64);
     if (D_801390C4 == 0) {
         var_a0 = &D_80138F64[12];
         var_a2 = &D_80138F64[13];
@@ -1368,10 +1368,11 @@ void func_80136010(void) {
         }
         return;
     }
-    if ((D_8013AE8A[0] == 0) && ((s8)(D_80138F64[14] + D_80138F64[15] +
-                                      D_80138F64[16] + D_80138F64[17]) == 0)) {
-        D_8013B64E = 0;
-        D_8013AEA6 = 0;
+    if ((g_CurrentSfxScriptSfxId[3] == 0) &&
+        ((s8)(D_80138F64[14] + D_80138F64[15] + D_80138F64[16] +
+              D_80138F64[17]) == 0)) {
+        D_8013B648[3] = 0;
+        D_8013AEA0[3] = 0;
     }
 }
 

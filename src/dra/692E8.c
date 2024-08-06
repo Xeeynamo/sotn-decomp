@@ -190,7 +190,7 @@ void func_80109594() {
         *memset_ptr++ = 0;
     }
 
-    for (i = 0; i < 0x10; i++) {
+    for (i = 0; i < LEN(g_ButtonCombo); i++) {
         g_ButtonCombo[i].buttonsCorrect = 0;
         g_ButtonCombo[i].timer = 0;
     }

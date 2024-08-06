@@ -750,8 +750,8 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
         // Fury Plate "DEF goes up when damage taken", that logic is not here
         // though.
         if (CheckEquipmentItemCount(ITEM_FURY_PLATE, EQUIP_ARMOR) != 0) {
-            if (*D_80139828 < 0x200) {
-                *D_80139828 = 0x200;
+            if (D_80139828[0] < 0x200) {
+                D_80139828[0] = 0x200;
             }
         }
     }
@@ -761,14 +761,13 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
 // !FAKE: explicitly casting two pointers to s32
 // before comparing them, that's weird
 void func_800FEE6C(void) {
-    s32* var_v1 = D_80139828;
-
+    s32* p = D_80139828;
     do {
-        if (*var_v1 != 0) {
-            (*var_v1)--;
+        if (*p) {
+            (*p)--;
         }
-        var_v1++;
-    } while ((s32)var_v1 < (s32)&D_80139828[0x10]);
+        p++;
+    } while ((long long)p < (long long)&D_80139828[LEN(D_80139828)]);
 }
 
 s32 HandleTransformationMP(TransformationForm form, CallMode mode) {
@@ -843,7 +842,7 @@ void func_800FF0A0(s32 context) { D_80139828[context] = 0; }
 void func_800FF0B8(void) {
     s32 i;
 
-    for (i = 0; i < 16; i++) {
+    for (i = 0; i < LEN(D_80139828); i++) {
         func_800FF0A0(i);
     }
 }

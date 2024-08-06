@@ -2,7 +2,10 @@
 #include "objects.h"
 #include "sfx.h"
 
-void func_80131EBC(const char* str, s16 id) { D_80138784[id] = str; }
+// BSS
+extern s32 D_80138454;
+
+void func_80131EBC(const char* str, s16 id) { D_80138784[id + 1] = str; }
 
 // gets used later with MakeCdLoc
 void SetCdPos(s32 value) { g_CurCdPos = value; }
@@ -114,11 +117,9 @@ void InitSoundVars2(void) {
 void InitSoundVars1(void) {
     InitSoundVars2();
     g_CdSoundCommand16 = 0;
-    D_80138454 = 0;
-    do {
+    for (D_80138454 = 0; D_80138454 < LEN(g_SeqPointers); D_80138454++) {
         g_SeqPointers[D_80138454] = 0;
-    } while (++D_80138454 < 0xA);
-
+    }
     for (D_80138454 = 0; D_80138454 < LEN(g_CdSoundCommandQueue);
          D_80138454++) {
         g_CdSoundCommandQueue[D_80138454] = 0;
@@ -235,11 +236,13 @@ void SoundInit(void) {
 }
 
 s32 func_801326D8(void) {
-    if (D_8013901C != 0)
+    if (D_8013901C)
         return 1;
-    if (g_SeqPlayingId != 0)
+    if (g_SeqPlayingId)
         return 3;
-    return (D_801390D8 != 0) * 2;
+    if (D_801390D8)
+        return 2;
+    return 0;
 }
 
 void SoundWait(void) {

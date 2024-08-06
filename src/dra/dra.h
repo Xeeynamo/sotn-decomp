@@ -249,6 +249,7 @@ typedef enum {
     COMBO_UNK13,
     COMBO_SUMMON_SPIRIT,
     COMBO_DARK_METAMORPH,
+    COMBO_NUM,
 } ButtonComboIdx;
 
 struct SeqData {
@@ -517,39 +518,35 @@ extern s32 D_8013843C;
 extern s32 D_80138440;
 extern s32 D_80138444;
 
-// BSS work in progress
-extern s32 D_80138454;
+// BSS 91EBC.c, 92F60.c, 93290.c, 93BDC.c, 94F50.c, 953A0.c
 extern char g_SeqTable[SS_SEQ_TABSIZ * SEQ_TABLE_S_MAX * SEQ_TABLE_T_MAX];
-extern const char* D_80138784[]; // 487?
+extern u_long* D_80138784[]; // 487?
 extern s32 g_CurCdPos;
 extern u8 g_CdMode[];
-extern u8 g_CdCommandResult[];
 extern s32 g_KeyOffChannels;
-extern s8 D_80138F64[20];
+extern u8 g_CdCommandResult[];
+extern s8 D_80138F64[SPU_VOICE_NUM];
 extern s32 D_80138F7C;
 extern s16 D_80138F80;
-extern s32 g_SeqPointers[];
+extern s32 g_SeqPointers[10];
 extern s16 g_SfxRingBufferReadPos;
 extern DebugMode g_DebugMode;
 extern s16 g_VolL; // vol_l
 extern SpuVoiceAttr* D_80138FB4;
 extern s16 D_80138FBC;
-extern s32 D_80139060;
 extern SpuVoiceAttr* D_801390C8;
 extern SpuVoiceAttr* D_801390CC;
-extern ButtonComboState g_ButtonCombo[16];
-extern s16 D_80138FC8;
-extern s16 D_80138FCA;
+extern ButtonComboState g_ButtonCombo[COMBO_NUM];
 extern s16 g_sfxRingBufferWritePos; // D_80139000
 extern s16 g_VolR;                  // vol_r
 extern s32 D_80139008;
 extern s16 D_80139010;
 extern u8 D_80139014;
-extern s8 D_80139018[];
+extern s8 D_80139018[4];
 extern u32 g_DebugCurPal;
 extern s16 D_8013901C;
 extern u8 g_MuteCd;
-extern s8 D_80139058[];
+extern s8 D_80139058[4];
 extern s32 g_PrevEquippedWeapons[2];
 extern s16 g_SeqVolume1;
 extern u8 D_801390A0;
@@ -581,9 +578,7 @@ extern u8 g_SeqPlayingId;
 extern s16 D_80139814[];
 extern s16 g_XaMusicVolume;
 extern s32 D_80139824;
-extern s32 D_80139828[];
-extern s32 D_8013982C;
-extern s32 D_80139830[];
+extern s32 D_80139828[16];
 extern s32 D_8013983C;
 extern s32 D_80139840;
 extern s32 D_80139844;
@@ -600,10 +595,9 @@ extern s16 D_80139A78;
 extern u32 D_80139A7C[0x1400];
 extern u16 D_8013AE7C;
 extern volatile unsigned char g_CdSoundCommandStep;
-extern s16 g_CurrentSfxScriptSfxId[];
-extern s16 D_8013AE8A[];
+extern s16 g_CurrentSfxScriptSfxId[4];
 extern s16 D_8013AE8C;
-extern s16 D_8013AEA0[];
+extern s16 D_8013AEA0[4];
 extern s16 D_8013AEA6;
 extern s16 D_8013AE94;
 extern u8 g_ReverbDepth;
@@ -617,7 +611,6 @@ extern s32 D_8013AEE4;
 extern s16 g_volumeL;
 extern s16 g_volumeR;
 extern s16 D_8013B648[4];
-extern s16 D_8013B64E;
 extern s16 D_8013B650[4];
 extern s16 D_8013B678[];
 extern s16 D_8013B698;
@@ -633,22 +626,21 @@ extern s32 D_8013B158;
 extern s32 D_8013B3D0;
 extern s16 g_SoundCommandRingBuffer[MAX_SND_COUNT]; // D_8013B3E8
 extern s32 D_8013B5E8;
-extern u8 D_8013B5EC[];
+extern u8 D_8013B5EC[4];
 extern u8 D_8013B5F6[];
-extern s8 g_UnkChannelSetting1[];
+extern s8 g_UnkChannelSetting1[4];
 extern s8 D_8013B618;
 extern s32 D_8013B61C;
-extern u16 g_SfxScriptVolume[];
+extern u16 g_SfxScriptVolume[4];
 extern u16 D_8013B626;
 extern s8* g_CurrentSfxScript[4];
-extern s16 D_8013B650[];
+extern s16 D_8013B650[4];
 extern s32 D_8013B65C;
 extern s16 g_SeqAccessNum;
 extern s32 g_MemcardStep;
 extern s16 D_8013B664;
 extern s16 g_CdVolume;
-extern s16 g_SfxScriptTimer[];
-extern s16 D_8013B672[];
+extern s16 g_SfxScriptTimer[4];
 extern u8 D_8013B680;
 extern u8 g_CdSoundCommand16;
 extern s8 D_8013B690;

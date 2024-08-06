@@ -301,13 +301,13 @@ void func_800F4994(void) {
         }
     }
 
-    if (D_80139830[2] != 0) {
+    if (D_80139828[4]) {
         g_Status.statsEquip[STAT_STR] += 20;
     }
-    if (D_80139830[1] != 0) {
+    if (D_80139828[3]) {
         g_Status.statsEquip[STAT_INT] += 20;
     }
-    if (D_80139830[0] != 0) {
+    if (D_80139828[2]) {
         g_Status.statsEquip[STAT_LCK] += 20;
     }
     if (g_Status.relics[RELIC_RIB_OF_VLAD] & 2) {
@@ -391,7 +391,7 @@ s32 CalcAttack(s32 equipId, s32 otherEquipId) {
     if (equipId == ITEM_SWORD_FAMILIAR) {
         totalAttack += g_Status.statsFamiliars[FAM_STATS_SWORD].level;
     }
-    if (D_8013982C != 0) {
+    if (D_80139828[1]) {
         totalAttack += 20;
     }
     if (totalAttack < 0) {
@@ -454,29 +454,29 @@ void CalcDefense(void) {
     if (g_Status.relics[RELIC_HEART_OF_VLAD] & 2) {
         g_Status.D_80097C2C |= 0x100;
     }
-    if (D_8013983C != 0) {
+    if (D_80139828[5]) {
         g_Status.D_80097C2A |= 0x8000;
     }
-    if (D_80139840 != 0) {
+    if (D_80139828[6]) {
         g_Status.D_80097C2A |= 0x2000;
     }
-    if (D_80139844 != 0) {
+    if (D_80139828[7]) {
         g_Status.D_80097C2A |= 0x4000;
     }
-    if (D_80139848 != 0) {
+    if (D_80139828[8]) {
         g_Status.D_80097C2A |= 0x100;
     }
-    if (D_8013984C != 0) {
+    if (D_80139828[9]) {
         g_Status.D_80097C2A |= 0x1000;
     }
-    if (D_80139850 != 0) {
+    if (D_80139828[10]) {
 #if defined(VERSION_US)
         g_Status.D_80097C2C |= 0x200;
 #elif defined(VERSION_HD)
         g_Status.D_80097C2A |= 0x200;
 #endif
     }
-    if (D_80139854 != 0) {
+    if (D_80139828[11]) {
         g_Status.D_80097C2A |= 0x800;
     }
 
@@ -486,7 +486,7 @@ void CalcDefense(void) {
         totalDefense += g_RoomCount / 60;
     }
 
-    if (*D_80139828 != 0) {
+    if (D_80139828[0]) {
         totalDefense += 20;
     }
     if (totalDefense < 0) {
@@ -3371,11 +3371,11 @@ block_4:
         func_800EA5E4(0);
         func_800FAC30();
         func_800FB9BC();
-        *g_PrevEquippedWeapons = g_Status.equipment[0];
-        D_80139060 = g_Status.equipment[1];
+        g_PrevEquippedWeapons[0] = g_Status.equipment[0];
+        g_PrevEquippedWeapons[1] = g_Status.equipment[1];
         if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
             *g_PrevEquippedWeapons = 0xD8;
-            D_80139060 = 0xD8;
+            g_PrevEquippedWeapons[1] = 0xD8;
         }
         g_ServantPrevious = g_Servant;
         for (i = 0; i < NUM_SPELLS; i++) {
