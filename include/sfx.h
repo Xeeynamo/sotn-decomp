@@ -352,6 +352,19 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 // The VAB IDs appear in large chunks so all sounds proceeding
 // a vabid label comment will belong in that VAB group unless noted.
 
+#ifdef VERSION_BETA
+// MAD uses an earlier build and has different sfx IDs
+enum Sfx {
+    SFX_WEAPON_STAB_B = 0x630,
+    SFX_CANDLE_HIT = 0x635,
+    SFX_DOOR_OPEN = 0x640,
+    SFX_DOOR_CLOSE_A = 0x64D,
+    SFX_HEART_PICKUP = 0x670,
+    SFX_ITEM_PICKUP = 0x672,
+    SFX_GOLD_PICKUP = 0x69D,
+    SFX_WEAPON_HIT = 0x6DB
+};
+#else
 enum Sfx {
     // vabid 0
     SFX_HARPY_WING_FLAP = 0x601,
@@ -452,16 +465,6 @@ enum Sfx {
     SFX_EXPLODE_SMALL, // Zombie death explosion
 };
 
-// MAD uses an earlier build and has different sfx IDs
-enum MAD_Sfx {
-    SFX_MAD_WEAPON_STAB_B = 0x630,
-    SFX_MAD_CANDLE_HIT = 0x635,
-    SFX_MAD_DOOR_OPEN = 0x640,
-    SFX_MAD_DOOR_CLOSE_A = 0x64D,
-    SFX_MAD_HEART_PICKUP = 0x670,
-    SFX_MAD_ITEM_PICKUP = 0x672,
-    SFX_MAD_GOLD_PICKUP = 0x69D,
-    SFX_MAD_WEAPON_HIT = 0x6DB
-};
+#endif
 
 #endif

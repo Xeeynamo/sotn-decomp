@@ -4,11 +4,7 @@ extern const char* g_goldCollectTexts[];
 #include "sfx.h"
 
 void CollectGold(u16 goldSize) {
-#ifdef VERSION_BETA
-    g_api.PlaySfx(SFX_MAD_GOLD_PICKUP); // MAD seems to use its own sfx id set.
-#else
     g_api.PlaySfx(SFX_COLLECT_GOLD);
-#endif
     goldSize -= 2;
     g_Status.gold += c_GoldPrizes[goldSize];
     if (g_Status.gold > MAX_GOLD) {
