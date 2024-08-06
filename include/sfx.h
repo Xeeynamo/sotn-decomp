@@ -376,7 +376,7 @@ enum Sfx {
     SFX_METAL_CLANG_A,
     SFX_METAL_CLANG_B,
     SFX_METAL_CLANG_C,
-    SFX_METAL_CLANG_D,
+    SFX_METAL_CLANG_D, // 0x610
     SFX_METAL_CLANG_E, // Stone Skull Hit
     SFX_METAL_CLANG_F,
     SFX_UNK_CROW,
@@ -394,7 +394,7 @@ enum Sfx {
     SFX_GLASS_BREAK_E, // Vase Break
     SFX_BAT_ECHO_A,
     SFX_BAT_ECHO_B, // Alucard Echo of Bat
-    SFX_BAT_ECHO_C,
+    SFX_BAT_ECHO_C, // 0x620
     SFX_BAT_ECHO_D,
     SFX_SKULL_BONK,
     SFX_RIC_RSTONE_TINK, // Rebound Stone
@@ -410,7 +410,7 @@ enum Sfx {
     SFX_WEAPON_STAB_A,
     SFX_WEAPON_STAB_B,     // Common stab sfx
     SFX_WEAPON_APPEAR,     // Item Crash, Neutron Bomb
-    SFX_UNK_BETA_630,      // MAD, TE1, TE2, TE3, TE4, TE5
+    SFX_UNK_BETA_630,      // 0x630 (MAD, TE1, TE2, TE3, TE4, TE5)
     SFX_DEATH_AMBIENCE,    // BGM ambience during first Death cutscene
     SFX_MAGIC_GLASS_BREAK, // Subweapon Container
     SFX_UI_CONFIRM,
@@ -426,7 +426,7 @@ enum Sfx {
     SFX_START_SLAM_B, // "Press Start", Door Open, Dracula Stomp, etc.
     SFX_START_SLAM_C,
     SFX_ANIME_SWORD_A,
-    SFX_ANIME_SWORD_B, // Holy Rod ("Anime shing" element)
+    SFX_ANIME_SWORD_B, // 0x640, Holy Rod ("Anime shing" element)
     SFX_ANIME_SWORD_C,
     SFX_DOOR_OPEN,
     SFX_WALL_DEBRIS_A,
@@ -442,7 +442,7 @@ enum Sfx {
     SFX_SAVE_HEARTBEAT,
     SFX_BAT_SCREECH,
     SFX_DOOR_CLOSE_A,
-    SFX_DOOR_CLOSE_B,
+    SFX_DOOR_CLOSE_B, // 0x650
     SFX_UNK_UI_ERROR,
     SFX_EXPLODE_FAST_A, // Explosion "stutter" effect
     SFX_EXPLODE_FAST_B,
