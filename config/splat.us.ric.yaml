@@ -36,7 +36,7 @@ segments:
       - [0x0, .data, d_0] #0.data.s 0x0 - 0x1C
       - [0x20, spritesheet, richter, disks/us/BIN/F_GAME2.BIN, 32]
       - [0x170AC, .data, spriteparts]
-      - [0x18568, data]
+      - [0x18568, .data, d_18568]
       - [0x18688, assets, subweapondefs, D_80154688]
       - [0x188F4, data]
       - [0x1895C, .data, 21250]

@@ -125,7 +125,7 @@ extern u8 D_801545D4[16];
 // These appear to be a set of collision boxes
 extern Point16 D_801545E4[4];
 extern Point16 D_801545F4[4];
-extern Point16 D_80154604[14];
+extern Point16 D_80154604[15];
 extern u16 D_8015463C[4];
 extern u16 D_80154644[4];
 extern u16 D_8015464C[8];

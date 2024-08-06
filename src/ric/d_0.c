@@ -13,8 +13,8 @@ PlayerOvl Richter = {
 };
 
 s32* D_8013C010[4] = { 
-    0x8013C020,
-    0x8013C020,
-    0x8013C020,
-    0x8013C020
+    g_PlOvlSpritesheet,
+    g_PlOvlSpritesheet,
+    g_PlOvlSpritesheet,
+    g_PlOvlSpritesheet
 };
