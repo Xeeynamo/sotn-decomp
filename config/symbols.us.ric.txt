@@ -7,3 +7,4 @@ D_80155368 = 0x80155368;
 D_80155964 = 0x80155964;
 UpdateEntityRichter = 0x80157BFC;
 D_80155DDC = 0x80155DDC; // type:u16 size:0x60
+D_80155D9C = 0x80155D9C; // type:s32 size:0x40

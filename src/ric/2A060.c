@@ -700,26 +700,16 @@ void func_8016779C(Entity* entity) {
     entity->posY.val = PLAYER.posY.val;
 }
 
-/**
- * TODO: !FAKE
- * Needs to be refactored
- */
 void func_80167964(Entity* entity) {
-    /**
-     * 0x5E was originally 0xBC in mips2c output
-     * suggesting the size of the Entity struct
-     */
     if (g_Player.unk46 != 0) {
         if (entity->step == 0) {
             entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 |
                             FLAG_UNK_04000000 | FLAG_UNK_10000;
         }
         if (!(entity->params & 0xFF00)) {
-            *(&PLAYER.palette +
-              (*(&D_80155D30 + (entity->animFrameDuration)) * 0x5E)) = 0x8140;
+            g_Entities[D_80155D30[entity->animFrameDuration]].palette = 0x8140;
         }
-        *(&PLAYER.ext.player.unkA4 +
-          (*(&D_80155D30 + (entity->animFrameDuration)) * 0x5E)) = 4;
+        g_Entities[D_80155D30[entity->animFrameDuration]].ext.player.unkA4 = 4;
         entity->animFrameDuration++;
         if (entity->animFrameDuration == 0xF) {
             DestroyEntity(entity);
@@ -753,11 +743,13 @@ void func_80167A70(Entity* self) {
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
         if (self->primIndex == -1) {
             DestroyEntity(self);
-            return;
+            break;
         }
+
         prim = &g_PrimBuf[self->primIndex];
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
+        
         for (i = 0; prim != NULL; i++, prim = prim->next) {
             if (i < 8) {
                 fakeprim = (FakePrim*)prim;
@@ -801,13 +793,14 @@ void func_80167A70(Entity* self) {
         self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
         self->ext.timer.t = 20;
         self->step++;
-        return;
+        break;
 
     case 1:
         if (--self->ext.timer.t == 0) {
             DestroyEntity(self);
-            return;
+            break;
         }
+
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; prim != NULL; i++, prim = prim->next) {
             if (i < 8) {
@@ -833,6 +826,7 @@ void func_80167A70(Entity* self) {
                 prim->y3 = prim->y2 = posY + D_80155D64[arrIndex][5];
             }
         }
+        break;
     }
 }
 
