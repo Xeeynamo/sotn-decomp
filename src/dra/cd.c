@@ -202,21 +202,6 @@ extern u32* D_801EE000;
 
 extern s32 g_VabAddrs[];
 
-typedef struct {
-    RECT dstRect;
-    s32 D_80137F68;
-    s32 D_80137F6C;
-    s32 D_80137F70;
-    s32 D_80137F74;
-    s32 D_80137F78;
-    s32 D_80137F7C;
-    u8* overlayCopySrc;
-    u8* overlayCopyDst;
-    s8* addr;
-    s32 overlayBlockCount;
-    s32 overlayLastBlockSize;
-} CdThing;
-
 // BSS
 extern CdCallbacks g_CdCallback;
 extern CdlLOC g_CdLoc;

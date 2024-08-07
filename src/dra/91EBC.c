@@ -107,7 +107,7 @@ void InitSoundVars2(void) {
     InitSoundVars3();
     D_8013B690 = 0;
 
-    for (i = 0; i < 4; i++) {
+    for (i = 0; i < NUM_CH_2; i++) {
         D_8013B650[i] = 0;
         D_8013AED4[i] = 0;
     }

@@ -381,7 +381,7 @@ void func_8013493C(s16 arg0, s16 arg1) {
 void func_801349F4(void) {
     s16 i;
 
-    for (i = 0; i < 4; i++) {
+    for (i = 0; i < NUM_CH; i++) {
         if (g_CurrentSfxScriptSfxId[i] == 0) {
             continue;
         }

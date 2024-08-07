@@ -29,6 +29,9 @@
 
 #define VSYNC_UNK_LEN 1024
 
+#define NUM_CH 4
+#define NUM_CH_2 4 // not sure if this is related to NUM_CH
+
 typedef enum {
     MENU_DG_MAIN,
     MENU_DG_BG,
@@ -157,6 +160,21 @@ typedef struct {
     CdCallbacks cb;
     CdlLOC loc;
 } CdMgr;
+
+typedef struct {
+    RECT dstRect;
+    s32 D_80137F68;
+    s32 D_80137F6C;
+    s32 D_80137F70;
+    s32 D_80137F74;
+    s32 D_80137F78;
+    s32 D_80137F7C;
+    u8* overlayCopySrc;
+    u8* overlayCopyDst;
+    s8* addr;
+    s32 overlayBlockCount;
+    s32 overlayLastBlockSize;
+} CdThing;
 
 typedef struct {
     RECT D_800ACD80;

@@ -5,11 +5,6 @@
 
 #define padding static
 
-// TODO dra.h
-#define SEQ_TABLE_S_MAX 0x10
-#define SEQ_TABLE_T_MAX 1
-#define MAX_SND_COUNT 0x100
-
 // 42398.c
 s32 g_DebugFreeze;
 s32 g_DebugHitboxViewMode;
@@ -17,7 +12,7 @@ u32 D_801362B4;
 s32 D_801362B8;
 s32 D_801362BC;
 s32 g_DebugPalIdx;
-u32 g_DebugColorChannel; // TODO DebugColorChannel
+DebugColorChannel g_DebugColorChannel;
 u32 D_801362C8;
 OT_TYPE* g_CurrentOT;
 s32 D_801362D0;
@@ -36,13 +31,13 @@ s32 D_8013640C;
 s32 D_80136410;
 
 // loading.c
-u32 g_NowLoadingModel[14]; // TODO NowLoadingModel
+NowLoadingModel g_NowLoadingModel;
 
 // 47BB8.c
 SimFile* g_SimFile;
 SimFile D_80136450;
-s16 D_80136460[1024]; // TODO VSYNC_UNK_LEN
-s16 D_80136C60[1024]; // TODO VSYNC_UNK_LEN
+s16 D_80136460[VSYNC_UNK_LEN];
+s16 D_80136C60[VSYNC_UNK_LEN];
 
 // pads.c
 u8 g_PadsRepeatTimer[BUTTON_COUNT * PAD_COUNT];
@@ -109,8 +104,8 @@ s32 g_IsSelectingEquipment;
 s32 g_EquipmentCursor;
 s32 D_80137614;
 s32 g_EquipOrderType;
-MenuContext g_MenuData[16]; // TODO MenuData, TODO NUM_MENU
-s32 D_801377FC[16];         // TODO NUM_MENU
+MenuData g_MenuData;
+s32 D_801377FC[NUM_MENU];
 s32 D_8013783C;
 s32 D_80137840;
 s32 D_80137844[1];
@@ -137,8 +132,8 @@ s32 g_ServantPrevious;
 s32 D_80137960;
 s32 D_80137964;
 s32 D_80137968;
-u8 g_PlayerHud[0x2C];      // TODO PlayerHud
-s32 g_HealingMailTimer[1]; // maybe part of g_PlayerHud
+PlayerHud g_PlayerHud;
+s32 g_HealingMailTimer[1];
 
 // both 5D5BC.c and 627C4.c, maybe need another C file in between
 u32 D_8013799C;
@@ -185,7 +180,7 @@ padding u8 D_80137EF8[0x60];
 // cd.c
 CdCallbacks g_CdCallback;
 CdlLOC g_CdLoc;
-u8 g_Cd[0x34]; // TODO CdThing
+CdThing g_Cd;
 s16 g_VabId;
 u8 D_80137F96;
 padding u8 D_80137F97[5];
@@ -318,7 +313,7 @@ padding s16 D_80138F82;
 s32 g_SeqPointers[10];
 s16 g_SfxRingBufferReadPos;
 padding s16 D_80138FAE;
-u32 g_DebugMode; // TODO DebugMode
+DebugMode g_DebugMode;
 #ifdef VERSION_PC
 SpuVoiceAttr D_80138FB4_;
 SpuVoiceAttr* D_80138FB4 = &D_80138FB4_;
@@ -340,12 +335,12 @@ s16 D_80139010;
 padding s16 D_80139012_;
 u8 D_80139014;
 padding u8 D_80139015[3];
-s8 D_80139018[4];
+s8 D_80139018[NUM_CH];
 s16 D_8013901C;
 padding s16 D_8013901C_;
 u8 g_MuteCd;
 padding u8 D_80139021[55];
-s8 D_80139058[4];
+s8 D_80139058[NUM_CH];
 s32 g_PrevEquippedWeapons[2];
 s16 g_CurrentXaSoundId;
 padding u16 g_CurrentXaSoundId_[27];
@@ -357,8 +352,8 @@ s16 D_801390A4;
 padding u16 D_801390A4_;
 u8 D_801390A8;
 padding u8 D_801390A9[3];
-s16 D_801390AC[4];
-s32 D_801390B4[4];
+s16 D_801390AC[NUM_CH];
+s32 D_801390B4[NUM_CH];
 u8 D_801390C4;
 padding u8 D_801390C5[3];
 SpuVoiceAttr* D_801390C8;
@@ -394,7 +389,7 @@ padding s32 D_80139808;
 s32 D_8013980C;
 u8 g_SeqPlayingId;
 padding u8 g_SeqPlayingId_[3];
-s16 D_80139814[4];
+s16 D_80139814[NUM_CH];
 padding s32 D_80139814_;
 s16 g_XaMusicVolume;
 padding u16 g_XaMusicVolume_;
@@ -417,7 +412,7 @@ padding u16 D_8013AE7E;
 
 volatile u8 g_CdSoundCommandStep;
 padding u8 g_CdSoundCommandStep_[3];
-s16 g_CurrentSfxScriptSfxId[4]; // TODO use NUM at func_801349F4
+s16 g_CurrentSfxScriptSfxId[NUM_CH];
 s16 g_volumeL;
 padding s16 g_volumeL_;
 s32 D_8013AE90;
@@ -426,12 +421,12 @@ padding u16 D_8013AE96;
 u8 g_ReverbDepth;
 padding u8 g_ReverbDepth_[3];
 s32 D_8013AE9C;
-s16 D_8013AEA0[4];
+s16 D_8013AEA0[NUM_CH];
 padding u16 D_8013AEA8[10];
 s32 D_8013AEBC[4];
 s32 D_8013AECC;
 s32 D_8013AED0;
-s16 D_8013AED4[4];
+s16 D_8013AED4[NUM_CH_2];
 u8 D_8013AEDC;
 u8 D_8013AEDD[3];
 u16 D_8013AEE0;
@@ -447,20 +442,20 @@ s32 D_8013AEF4;
 MemcardInfo g_MemcardInfo[2];
 s16 g_SoundCommandRingBuffer[MAX_SND_COUNT];
 s32 D_8013B5E8;
-u8 D_8013B5EC[4];
+u8 D_8013B5EC[NUM_CH];
 s32 g_MemcardBlockRead;
 Cmd14 D_8013B5F4[2];
-s8 g_UnkChannelSetting1[4];
+s8 g_UnkChannelSetting1[NUM_CH];
 s8 D_8013B618;
 padding u8 D_8013B619[3];
 s32 D_8013B61C;
-u16 g_SfxScriptVolume[4];
-s8* g_CurrentSfxScript[4];
+u16 g_SfxScriptVolume[NUM_CH];
+s8* g_CurrentSfxScript[NUM_CH];
 padding u32 D_8013B638[2];
 CdlLOC D_8013B640;
 padding u32 D_8013B644;
-s16 D_8013B648[4];
-s16 D_8013B650[4];
+s16 D_8013B648[NUM_CH];
+s16 D_8013B650[NUM_CH_2];
 s16 g_SeqAccessNum;
 padding u16 D_8013B65A;
 s32 D_8013B65C;
@@ -469,9 +464,9 @@ s16 D_8013B664;
 padding u16 D_8013B666;
 s16 g_CdVolume;
 padding u16 D_8013B66A;
-s16 g_SfxScriptTimer[4];
+s16 g_SfxScriptTimer[NUM_CH];
 padding u32 D_8013B674;
-s16 D_8013B678[4];
+s16 D_8013B678[NUM_CH];
 u8 D_8013B680;
 padding u8 D_8013B681[3];
 u8 g_CdSoundCommand16;
