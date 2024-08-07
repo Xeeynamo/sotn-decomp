@@ -36,40 +36,22 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
-      - [0xB8, data]
+      - [0xB8, .data, header] # layers
+      - [0x290, data]
+      - [0x2F4, .data, e_laydef] # layout entries header
+      - [0x49C, data]
       - [0x6DC, .data, collision]
       - [0x9D4, .data, e_red_door]
       - [0x9EC, data]
       - [0xE40, data]
       - [0xEF8, .data, entity_relic_orb]
       - [0xF5C, data]
-      - [0x1130, data, g_Rooms]
-      - [0x11D4, data] # assets/st/mad/0.objlayout
-      # - [0x11E8, data] # assets/st/mad/1.objlayout
-      # - [0x1206, data] # assets/st/mad/2.objlayout
-      # - [0x12B0, data] # assets/st/mad/3.objlayout
-      # - [0x135A, data] # assets/st/mad/4.objlayout
-      # - [0x1404, data] # assets/st/mad/5.objlayout
-      # - [0x14AE, data] # assets/st/mad/6.objlayout
-      # - [0x1558, data] # assets/st/mad/7.objlayout
-      # - [0x1602, data] # assets/st/mad/8.objlayout
-      # - [0x16AC, data] # assets/st/mad/9.objlayout
-      # - [0x1756, data] # assets/st/mad/10.objlayout
-      # - [0x1774, data] # assets/st/mad/11.objlayout
-      # - [0x1788, data] # assets/st/mad/12.objlayout
-      # - [0x17A6, data] # assets/st/mad/13.objlayout
-      # - [0x1850, data] # assets/st/mad/14.objlayout
-      # - [0x18FA, data] # assets/st/mad/15.objlayout
-      # - [0x19A4, data] # assets/st/mad/16.objlayout
-      # - [0x1A4E, data] # assets/st/mad/17.objlayout
-      # - [0x1AF8, data] # assets/st/mad/18.objlayout
-      # - [0x1BA2, data] # assets/st/mad/19.objlayout
-      # - [0x1C4C, data] # assets/st/mad/20.objlayout
-      # - [0x1CF6, data] # assets/st/mad/21.objlayout
-      - [0x1404, data]
-      - [0x1774, data]
-      - [0x19A4, data]
+      - [0x1130, .data, rooms]
+      - [0x11D4, .data, e_layout] # layout entries data
       - [0x1D14, data]
+      - [0x2078, .data, tile_data] # tile data
+      - [0x4678, .data, tile_data] # tile definitions
+      - [0xCAA8, data]
       - [0xD794, rodata]
       - [0xD7CC, .rodata, e_red_door] # EntityRedDoor
       - [0xD7E4, rodata]
