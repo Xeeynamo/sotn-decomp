@@ -1,4 +1,5 @@
 #include "dra.h"
+#include "dra_bss.h"
 #include "lba.h"
 #include "sfx.h"
 

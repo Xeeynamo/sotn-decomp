@@ -1,5 +1,5 @@
-#include "common.h"
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
 #include "sfx.h"
 

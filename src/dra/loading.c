@@ -1,4 +1,5 @@
 #include "dra.h"
+#include "dra_bss.h"
 #include "sfx.h"
 
 RECT D_800A0240 = {0x0340, 0x0180, 64, 64};

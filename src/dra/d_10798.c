@@ -1,4 +1,3 @@
-#include <game.h>
 #include "dra.h"
 
 AnimationFrame D_800B0798[] = {

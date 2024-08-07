@@ -1,4 +1,5 @@
 #include "dra.h"
+#include "dra_bss.h"
 
 // BSS
 extern u16 D_80137478[ICON_SLOT_NUM];

@@ -1,45 +1,7 @@
 #include <game.h>
 #include <psxsdk/libsnd.h>
 #include "disk.h"
-
-// ***********************
-typedef enum {
-    SIM_STAGE_PRG,
-    SIM_1,
-    SIM_STAGE_CHR,
-    SIM_3,
-    SIM_VH,
-    SIM_VB,
-    SIM_6,
-    SIM_SEQ,
-    SIM_WEAPON_PRG,
-    SIM_WEAPON0_CHR,
-    SIM_WEAPON1_CHR,
-    SIM_11,
-    SIM_12,
-    SIM_13,
-    SIM_14,
-    SIM_15,
-    SIM_16,
-    SIM_17,
-    SIM_FAMILIAR_PRG,
-    SIM_FAMILIAR_CHR,
-    SIM_MONSTER,
-    SIM_21,
-} SimKind;
-typedef struct {
-    const char* path; // file name
-    u8* addr;         // where to load the file to
-    s32 size;         // file size
-    SimKind kind;
-} SimFile;
-typedef struct {
-    u8 unk0[8];
-    s32 unk8;
-    s16 unkc;
-    s8 unke;
-} Cmd14;
-// ***********************
+#include "dra.h"
 
 #define padding static
 
@@ -292,7 +254,7 @@ Point16 D_8013804C[16];
 // 7E4BC.c
 s32 D_8013808C;
 s32 D_80138090;
-u8 D_80138094[16][0x14]; // TODO mistStruct
+mistStruct D_80138094[16];
 s16 D_801381D4;
 padding s16 D_801381D4_;
 s16 D_801381D8;
@@ -367,7 +329,7 @@ s16 g_VolL;
 padding u16 D_80138FBA;
 s16 D_80138FBC;
 padding s16 D_80138FBE;
-ButtonComboState g_ButtonCombo[16]; // TODO COMBO_NUM
+ButtonComboState g_ButtonCombo[COMBO_NUM];
 s16 g_sfxRingBufferWritePos;
 padding s16 D_80139002;
 s16 g_VolR;
@@ -482,12 +444,12 @@ padding u8 D_8013AEED[3];
 s16 g_SeqVolume2;
 padding s16 D_8013AEF2;
 s32 D_8013AEF4;
-u8 g_MemcardInfo[2][0x278]; // TODO MemcardInfo
+MemcardInfo g_MemcardInfo[2];
 s16 g_SoundCommandRingBuffer[MAX_SND_COUNT];
 s32 D_8013B5E8;
 u8 D_8013B5EC[4];
 s32 g_MemcardBlockRead;
-Cmd14 D_8013B5F4[2]; // TODO Cmd14
+Cmd14 D_8013B5F4[2];
 s8 g_UnkChannelSetting1[4];
 s8 D_8013B618;
 padding u8 D_8013B619[3];
