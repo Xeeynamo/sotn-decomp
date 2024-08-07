@@ -1,4 +1,5 @@
 #include <stage.h>
+#include "mad.h"
 #include "sfx.h"
 
 static u16 g_testCollEnemyLookup[] = {
