@@ -138,7 +138,7 @@ extern u8 D_801548F4[6][8];
 extern AnimationFrame D_80154924[];
 extern PfnEntityUpdate D_8015495C[];
 extern s32 D_80154ED4[];
-extern s32 D_80154EF8[];
+extern AnimationFrame D_80154EF8[];
 extern Point16* D_80155244[72];
 extern s32 D_80155368[];
 extern FactoryBlueprint g_RicFactoryBlueprints[];
