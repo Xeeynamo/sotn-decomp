@@ -1,7 +1,7 @@
-#include <stage.h>
+#include "mad.h"
 #include "sfx.h"
 
-#define VERSION_BETA
+// #define VERSION_BETA
 
 static u16 g_testCollEnemyLookup[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x002B, 0x0000, 0x0000,
