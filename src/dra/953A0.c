@@ -1275,7 +1275,7 @@ void func_80135D8C(void) {
                     volume = g_SfxScriptVolume[i] * temp_t2[4];
                     *temp_t3 = temp_t2 + 6;
                     g_SfxScriptTimer[i] = temp_t2[5];
-                    distance = D_8013B5F6[30 + i];
+                    distance = g_UnkChannelSetting1[i];
                     func_80132A04(
                         30 + i, vab, prog, tone, note, volume >> 7, distance);
                 } else {

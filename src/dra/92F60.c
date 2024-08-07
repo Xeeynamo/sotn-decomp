@@ -4,12 +4,6 @@
 
 void SetCdVolume(s8 s_num, s16 arg1, s16 arg2);
 
-extern s16 g_CurrentXaSoundId;
-extern s16 g_CurrentXaConfigId;
-extern s32 D_8013AE90;
-extern u8 D_8013B640;
-extern s32 D_8013AEF4;
-
 u32 CdSoundCommand4(void) {
     u32 address;
     u8 var_v0;

@@ -2,9 +2,6 @@
 #include "objects.h"
 #include "sfx.h"
 
-extern s32 D_8013AE90;
-extern s32 D_8013AEF4;
-
 void CdSoundCommand14(void) {
     s32 i;
 

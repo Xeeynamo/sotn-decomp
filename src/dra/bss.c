@@ -70,14 +70,25 @@ s32 g_DemoKeyIdx;
 s32 D_80137598;
 s32 D_8013759C;
 s32 D_801375A0;
-u16 D_801375A4;               // TODO overlaps with D_801375A6
-u16 D_801375A6;               // TODO this might be f32
-u16 D_801375A8;               // TODO overlaps with D_801375AA
-u16 D_801375AA;               // TODO this might be f32
-s32 D_801375AC;               // TODO might be f32
-s32 D_801375B0;               // TODO might be f32
-s32 D_801375B4;               // TODO might be f32
-s32 D_801375B8;               // TODO might be f32
+#ifdef VERSION_PC
+f32 D_801375A4; // TODO overlaps with D_801375A6
+u16 D_801375A6; // TODO this might be f32
+f32 D_801375A8; // TODO overlaps with D_801375AA
+u16 D_801375AA; // TODO this might be f32
+f32 D_801375AC; // TODO might be f32
+f32 D_801375B0; // TODO might be f32
+f32 D_801375B4; // TODO might be f32
+f32 D_801375B8; // TODO might be f32
+#else
+u16 D_801375A4; // TODO overlaps with D_801375A6
+u16 D_801375A6; // TODO this might be f32
+u16 D_801375A8; // TODO overlaps with D_801375AA
+u16 D_801375AA; // TODO this might be f32
+s32 D_801375AC; // TODO might be f32
+s32 D_801375B0; // TODO might be f32
+s32 D_801375B4; // TODO might be f32
+s32 D_801375B8; // TODO might be f32
+#endif
 RoomLoadDefHolder D_801375BC; // fake struct?
 s32 D_801375C0;
 s32 D_801375C4;
@@ -389,75 +400,88 @@ padding u16 g_XaMusicVolume_;
 s32 D_80139824;
 s32 D_80139828[16];
 u16 g_CdSoundCommandQueue[256]; // TODO MAX_SND_COUNT
+s16 g_SoundCommandRingBufferReadPos;
+padding s16 g_SoundCommandRingBufferReadPos_;
+s16 D_80139A6C;
+padding s16 D_80139A6E;
+s16 g_SoundCommandRingBufferWritePos;
+padding s16 g_SoundCommandRingBufferWritePos_;
+s16 D_80139A74;
+padding s16 D_80139A76;
+s16 D_80139A78;
+padding s16 D_80139A7A;
+u16 D_80139A7C[32 * 80];
+u16 D_8013AE7C;
+padding u16 D_8013AE7E;
 
-u16 g_SoundCommandRingBufferReadPos[2];  // TODO type
-u16 D_80139A6C[2];                       // TODO type
-u16 g_SoundCommandRingBufferWritePos[2]; // TODO type
-u16 D_80139A74[2];                       // TODO type
-u32 D_80139A78;                          // TODO type
-u32 D_80139A7C[1280];                    // TODO unused?
-u16 D_8013AE7C[2];                       // TODO type
-u8 g_CdSoundCommandStep[4];              // TODO type
-s16 g_CurrentSfxScriptSfxId[4];
-u16 g_volumeL[2];    // TODO type
-u32 D_8013AE90;      // TODO type
-u16 D_8013AE94[2];   // TODO type
-u8 g_ReverbDepth[4]; // TODO type
-u32 D_8013AE9C;      // TODO type
-u16 D_8013AEA0[4];   // TODO type
+volatile u8 g_CdSoundCommandStep;
+padding u8 g_CdSoundCommandStep_[3];
+s16 g_CurrentSfxScriptSfxId[4]; // TODO use NUM at func_801349F4
+s16 g_volumeL;
+padding s16 g_volumeL_;
+s32 D_8013AE90;
+u16 D_8013AE94;
+padding u16 D_8013AE96;
+u8 g_ReverbDepth;
+padding u8 g_ReverbDepth_[3];
+s32 D_8013AE9C;
+s16 D_8013AEA0[4];
 padding u16 D_8013AEA8[10];
-u32 D_8013AEBC;                    // TODO type
-u16 D_8013AEC0[2];                 // TODO type
-u32 D_8013AEC4;                    // TODO type
-u32 D_8013AEC8;                    // TODO type
-u32 D_8013AECC;                    // TODO type
-u32 D_8013AED0;                    // TODO type
-u16 D_8013AED4[4];                 // TODO type
-u32 D_8013AEDC;                    // TODO type
-u16 D_8013AEE0[2];                 // TODO type
-u32 D_8013AEE4;                    // TODO type
-u8 D_8013AEE8[4];                  // TODO type
-u8 g_SoundInitialized[4];          // TODO type
-u16 g_SeqVolume2[2];               // TODO type
-u32 D_8013AEF4;                    // TODO type
-u32 g_MemcardInfo[152];            // TODO type
-u32 D_8013B158;                    // TODO type
-u32 D_8013B15C;                    // TODO type
-u8 D_8013B160[624];                // TODO type
-u32 D_8013B3D0[6];                 // TODO type
-u16 g_SoundCommandRingBuffer[256]; // TODO type
-u32 D_8013B5E8;                    // TODO type
-u8 D_8013B5EC[4];                  // TODO type
-u32 g_MemcardBlockRead;            // TODO type
-u8 D_8013B5F4[2];                  // TODO type
-u8 D_8013B5F6[6];                  // TODO type
-u32 D_8013B5FC;                    // TODO unused?
-u16 D_8013B600[10];                // TODO unused?
+s32 D_8013AEBC[4];
+s32 D_8013AECC;
+s32 D_8013AED0;
+s16 D_8013AED4[4];
+u8 D_8013AEDC;
+u8 D_8013AEDD[3];
+u16 D_8013AEE0;
+padding u16 D_8013AEE2;
+s32 D_8013AEE4;
+s8 D_8013AEE8;
+padding u8 D_8013AEE9[3];
+u8 g_SoundInitialized;
+padding u8 D_8013AEED[3];
+u16 g_SeqVolume2;
+padding s16 D_8013AEF2;
+s32 D_8013AEF4;
+u8 g_MemcardInfo[2][0x278];        // TODO MemcardInfo
+s16 g_SoundCommandRingBuffer[256]; // TODO MAX_SND_COUNT
+s32 D_8013B5E8;
+u8 D_8013B5EC[4];
+s32 g_MemcardBlockRead;
+u8 D_8013B5F4[4][8]; // TODO Cmd14
 s8 g_UnkChannelSetting1[4];
-u8 D_8013B618[4]; // TODO type
-u32 D_8013B61C;   // TODO type
+u8 D_8013B618;
+padding u8 D_8013B619[3];
+s32 D_8013B61C;
 u16 g_SfxScriptVolume[4];
 s8* g_CurrentSfxScript[4];
 padding u32 D_8013B638[2];
-u32 D_8013B640[2]; // TODO type
+CdlLOC D_8013B640;
+padding u32 D_8013B644;
 s16 D_8013B648[4];
 s16 D_8013B650[4];
-u16 g_SeqAccessNum[2]; // TODO type
-u32 D_8013B65C;        // TODO type
-u32 g_MemcardStep;     // TODO type
-u16 D_8013B664[2];     // TODO type
-u16 g_CdVolume[2];     // TODO type
+u16 g_SeqAccessNum;
+padding u16 D_8013B65A;
+s32 D_8013B65C;
+s32 g_MemcardStep;
+s16 D_8013B664;
+padding u16 D_8013B666;
+s16 g_CdVolume;
+padding u16 D_8013B66A;
 s16 g_SfxScriptTimer[4];
-u16 D_8013B674[2];        // TODO type
-u16 D_8013B678[3];        // TODO type
-u16 D_8013B67E;           // TODO type
-u8 D_8013B680[4];         // TODO type
-u8 g_CdSoundCommand16[4]; // TODO type
-u8 D_8013B688[8];         // TODO type
-u8 D_8013B690[4];         // TODO type
-u32 D_8013B694;           // TODO type
-u16 g_volumeR[2];         // TODO type
-u32 D_8013B69C;           // TODO type
+padding u32 D_8013B674;
+s16 D_8013B678[4];
+u8 D_8013B680;
+padding u8 D_8013B681[3];
+u8 g_CdSoundCommand16;
+padding u8 D_8013B685[3];
+u8 D_8013B688[8];
+u8 D_8013B690;
+static u8 D_8013B693[3];
+s32 D_8013B694;
+s16 g_volumeR;
+static s16 D_8013B69A;
+s32 D_8013B69C;
 #if defined(VERSION_HD)
-u32 D_8013B6A0; // TODO type
+u32 D_8013B6A0; // TODO VAB from BSS, fake symbol
 #endif

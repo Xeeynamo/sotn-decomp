@@ -519,6 +519,8 @@ extern s32 D_80138440;
 extern s32 D_80138444;
 
 // BSS 91EBC.c, 92F60.c, 93290.c, 93BDC.c, 94F50.c, 953A0.c
+extern s16 g_CurrentXaConfigId;
+extern s16 D_8013845C;
 extern char g_SeqTable[SS_SEQ_TABSIZ * SEQ_TABLE_S_MAX * SEQ_TABLE_T_MAX];
 extern u_long* D_80138784[]; // 487?
 extern s32 g_CurCdPos;
@@ -592,9 +594,9 @@ extern s16 D_80139A6C;
 extern s16 g_SoundCommandRingBufferWritePos; // D_80139A70
 extern s16 D_80139A74;
 extern s16 D_80139A78;
-extern u32 D_80139A7C[0x1400];
+extern u16 D_80139A7C[32 * 80]; // size from D_800AE130, D_800AE138
 extern u16 D_8013AE7C;
-extern volatile unsigned char g_CdSoundCommandStep;
+extern volatile u8 g_CdSoundCommandStep;
 extern s16 g_CurrentSfxScriptSfxId[4];
 extern s16 D_8013AE8C;
 extern s16 D_8013AEA0[4];
@@ -609,10 +611,11 @@ extern s16 D_8013AED4[4];
 extern u8 D_8013AEDC;
 extern s32 D_8013AEE4;
 extern s16 g_volumeL;
+extern s32 D_8013AE90;
 extern s16 g_volumeR;
 extern s16 D_8013B648[4];
 extern s16 D_8013B650[4];
-extern s16 D_8013B678[];
+extern s16 D_8013B678[4];
 extern s16 D_8013B698;
 extern u8 D_8013B6A0[269488]; // VAB file
 extern u8 D_8017D350[57744];  // VAB file
@@ -622,6 +625,7 @@ extern u16 D_8013AEE0;
 extern s8 D_8013AEE8;
 extern u8 g_SoundInitialized;
 extern s16 g_SeqVolume2;
+extern s32 D_8013AEF4;
 extern s32 D_8013B158;
 extern s32 D_8013B3D0;
 extern s16 g_SoundCommandRingBuffer[MAX_SND_COUNT]; // D_8013B3E8
@@ -634,6 +638,7 @@ extern s32 D_8013B61C;
 extern u16 g_SfxScriptVolume[4];
 extern u16 D_8013B626;
 extern s8* g_CurrentSfxScript[4];
+extern CdlLOC D_8013B640;
 extern s16 D_8013B650[4];
 extern s32 D_8013B65C;
 extern s16 g_SeqAccessNum;
@@ -651,9 +656,9 @@ extern Weapon D_8017A000;
 extern Weapon D_8017D000;
 extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
-extern u8 D_801EC000[];
 extern u8 D_8013B688[8];
 extern struct Cmd14 D_8013B5F4[];
+extern u8 D_801EC000[];
 
 void func_801072DC(POLY_GT4* poly);
 void InitializePads(void);
