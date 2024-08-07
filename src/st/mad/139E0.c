@@ -354,7 +354,7 @@ void EntityEquipItemDrop(Entity* self) {
             g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
             g_unkGraphicsStruct.BottomCornerTextTimer = 0;
         }
-        g_api.PlaySfx(SFX_MAD_ITEM_PICKUP);
+        g_api.PlaySfx(SFX_ITEM_PICKUP);
         if (itemId < NUM_HAND_ITEMS + 4) {
             name = g_api.equipDefs[itemId].name;
             g_api.AddToInventory(itemId, EQUIP_HAND);
