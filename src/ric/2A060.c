@@ -749,7 +749,7 @@ void func_80167A70(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
-        
+
         for (i = 0; prim != NULL; i++, prim = prim->next) {
             if (i < 8) {
                 fakeprim = (FakePrim*)prim;
