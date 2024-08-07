@@ -2106,8 +2106,8 @@ void EntitySubwpnBible(Entity* self) {
     }
 }
 
-const SVECTOR D_80156C50 = {0x0000, 0x0000, 0x0000, 0x0000};
-const SVECTOR D_80156C58 = {0xFFA0, 0x0000, 0x0000, 0x0000};
+static const SVECTOR D_80156C50 = {0x0000, 0x0000, 0x0000, 0x0000};
+static const SVECTOR D_80156C58 = {0xFFA0, 0x0000, 0x0000, 0x0000};
 
 void EntityGiantSpinningCross(Entity* self) {
     MATRIX m;

@@ -243,8 +243,6 @@ extern SVECTOR* D_8015607C[][4];
 extern s8 D_80156A28;
 extern u8 D_8015635C[];
 extern s8 D_80156904;
-extern SVECTOR D_80156C50;
-extern SVECTOR D_80156C58;
 extern s32 D_80173B64;
 extern u8 D_80173B68[];
 extern s16 D_80174F68;

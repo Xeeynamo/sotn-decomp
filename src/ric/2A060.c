@@ -707,7 +707,7 @@ void func_80167964(Entity* entity) {
                             FLAG_UNK_04000000 | FLAG_UNK_10000;
         }
         if (!(entity->params & 0xFF00)) {
-            g_Entities[D_80155D30[entity->animFrameDuration]].palette = 0x8140;
+            g_Entities[D_80155D30[entity->animFrameDuration]].palette = PAL_OVL(0x140);
         }
         g_Entities[D_80155D30[entity->animFrameDuration]].ext.player.unkA4 = 4;
         entity->animFrameDuration++;
