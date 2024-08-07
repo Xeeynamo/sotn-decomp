@@ -157,7 +157,7 @@ extern s16 D_80154EAC[];
 extern s32 D_80154EB4[];
 extern s32 D_80154EC4[];
 extern unkStr80154E5C D_80154E5C[];
-extern Point16 D_8015519C[];
+extern s16 D_8015519C[][6];
 extern s16 D_80155364[];
 extern AnimationFrame* D_8015538C[];
 extern AnimationFrame D_80155394[];
