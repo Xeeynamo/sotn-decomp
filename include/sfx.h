@@ -349,6 +349,7 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #ifdef VERSION_BETA
 // MAD uses an earlier build and has different sfx IDs
 enum Sfx {
+    SFX_METAL_CLANG_E = 0x611, // Same ID as final
     SFX_WEAPON_STAB_B = 0x630,
     SFX_CANDLE_HIT = 0x635,
     SFX_DOOR_OPEN = 0x640,
