@@ -201,9 +201,7 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define NA_SE_EN_BONE_SCIMITAR_SWORD_SLASH 0x66D
 #define NA_SE_EN_GAIBON_COLLAPSE 0x672
 #define NA_SE_EV_SWITCH_CLICK 0x676
-#define SFX_HEART_PICKUP 0x67A
 #define NA_SE_SY_MOVE_MENU_CURSOR 0x67B
-#define SFX_ITEM_PICKUP 0x67C
 #define NA_SE_PL_MP_GAUGE 0x67D
 #define NA_SE_PL_BT_FIREBALL 0x680
 #define NA_SE_PL_MAX_HP_MP_INCREASED 0x687
@@ -220,7 +218,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SFX_UNK_6A3 0x6A3
 #define NA_SE_EV_CLOCK_TICK 0x6A1
 #define REBOUND_STONE_BOUNCE 0x6A4
-#define SFX_GOLD_PICKUP 0x6A9
 #define SFX_UNK_6AD 0x6AD
 #define SFX_UNK_6B0 0x6B0 // Used for Shaman Shield, could be same as petal
 #define SFX_UNK_6B1 0x6B1
@@ -308,9 +305,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 
 // SHARED SOUNDS
 // These are sounds that are shared across multiple BIN files
-#define SE_DOOR_OPEN 0x642
-#define SE_DOOR_CLOSE 0x64F
-#define SE_WEAPON_WHACK 0x678
 #define SE_BOSS_DEFEATED 0x7D2
 
 // UI SOUNDS
@@ -463,6 +457,10 @@ enum Sfx {
     SFX_FM_EXPLODE_C,
     SFX_FM_EXPLODE_D,
     SFX_EXPLODE_SMALL, // Zombie death explosion
+    SFX_WEAPON_HIT = 0x678,
+    SFX_HEART_PICKUP = 0x67A,
+    SFX_ITEM_PICKUP = 0x67C,
+    SFX_GOLD_PICKUP = 0x6A9,
 };
 
 #endif
