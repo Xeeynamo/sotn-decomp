@@ -448,7 +448,7 @@ void CollectHeart(u16 arg0) {
 
     counts = D_8018D830;
     unknown = D_8018D834;
-    g_api.PlaySfx(0x670);
+    g_api.PlaySfx(SFX_HEART_PICKUP);
     g_Status.hearts += counts.count[arg0];
     if (g_Status.hearts > g_Status.heartsMax) {
         g_Status.hearts = g_Status.heartsMax;
@@ -466,7 +466,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;
     u16 subWeapon;
 
-    g_api.PlaySfx(0x672);
+    g_api.PlaySfx(SFX_ITEM_PICKUP);
     subWeapon = g_Status.subWeapon;
     g_Status.subWeapon = D_80180D1C[subWeaponIdx];
 
@@ -498,13 +498,13 @@ void CollectSubweapon(u16 subWeaponIdx) {
 
 // Different from "collect_heart_vessel.h"
 void CollectHeartVessel(void) {
-    g_api.PlaySfx(0x670);
+    g_api.PlaySfx(SFX_HEART_PICKUP);
     g_api.func_800FE044(HEART_VESSEL_INCREASE, 0x4000);
     DestroyEntity(g_CurrentEntity);
 }
 
 void CollectLifeVessel(void) {
-    g_api.PlaySfx(0x670);
+    g_api.PlaySfx(SFX_HEART_PICKUP);
     g_api.func_800FE044(LIFE_VESSEL_INCREASE, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
