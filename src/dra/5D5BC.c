@@ -591,7 +591,7 @@ void AddHearts(s32 value) {
             g_Status.hearts = g_Status.heartsMax;
         }
         CreateEntFactoryFromEntity(&PLAYER, FACTORY(0, 99), 0);
-        PlaySfx(SFX_ITEM_PICKUP);
+        PlaySfx(SFX_HEART_PICKUP);
     }
 }
 

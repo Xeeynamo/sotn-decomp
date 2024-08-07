@@ -452,7 +452,7 @@ void CollectHeart(u16 index) {
 
     __builtin_memcpy(&hearts[0], &c_HeartPrizes[0], 2);
     __builtin_memcpy(&hearts[8], &c_HeartPrizes[4], 2);
-    g_api.PlaySfx(SFX_ITEM_PICKUP);
+    g_api.PlaySfx(SFX_HEART_PICKUP);
     g_Status.hearts = hearts[index] + g_Status.hearts;
     if (g_Status.heartsMax < g_Status.hearts) {
         g_Status.hearts = g_Status.heartsMax;

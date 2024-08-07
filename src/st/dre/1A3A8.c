@@ -450,7 +450,7 @@ void func_8019B8DC(u16 arg0) {
 void CollectHeart(u16 arg0) {
     s32* hearts;
 
-    g_api.PlaySfx(SFX_ITEM_PICKUP);
+    g_api.PlaySfx(SFX_HEART_PICKUP);
     hearts = &g_Status.hearts;
     *hearts += c_HeartPrizes[arg0];
 
@@ -499,7 +499,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
 #include "../collect_heart_vessel.h"
 
 void CollectLifeVessel(void) {
-    g_api.PlaySfx(SFX_ITEM_PICKUP);
+    g_api.PlaySfx(SFX_HEART_PICKUP);
     g_api.func_800FE044(LIFE_VESSEL_INCREASE, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
