@@ -744,7 +744,7 @@ void func_80167A70(Entity* self) {
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
         if (self->primIndex == -1) {
             DestroyEntity(self);
-            break;
+            return;
         }
 
         prim = &g_PrimBuf[self->primIndex];
@@ -799,7 +799,7 @@ void func_80167A70(Entity* self) {
     case 1:
         if (--self->ext.timer.t == 0) {
             DestroyEntity(self);
-            break;
+            return;
         }
 
         prim = &g_PrimBuf[self->primIndex];
@@ -845,6 +845,7 @@ void EntityHydroStorm(Entity* self) {
     } else {
         primcount = 33 - ((self->params - 32) * 2);
     }
+
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, primcount);
@@ -897,8 +898,9 @@ void EntityHydroStorm(Entity* self) {
         if ((self->params < 32) && !(self->params & 3)) {
             g_api.PlaySfx(0x708);
         }
-        self->step += 1;
+        self->step++;
         break;
+
     case 1:
         line = (PrimLineG2*)&g_PrimBuf[self->primIndex];
         while (line != NULL) {
@@ -931,6 +933,7 @@ void EntityHydroStorm(Entity* self) {
         }
         self->ext.timer.t++;
         break;
+
     case 2:
         DestroyEntity(self);
         break;
