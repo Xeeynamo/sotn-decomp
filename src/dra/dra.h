@@ -263,12 +263,12 @@ struct SeqData {
     } unk2;
 };
 
-struct Cmd14 {
+typedef struct Cmd14 {
     u8 unk0[8];
     s32 unk8;
     s16 unkc;
     s8 unke;
-};
+} Cmd14;
 
 // Used for the button combos to signal successfully completing the sequence
 #define COMBO_COMPLETE 0xFF
@@ -404,7 +404,6 @@ extern struct SeqData g_SeqInfo[];
 extern struct XaMusicConfig g_XaMusicConfigs[563];
 extern s32 g_DebugEnabled;
 extern s32 D_800BD1C4;
-extern s16 g_CurrentXaSoundId;
 extern s32 g_VabAddrs[6];
 extern u8* g_SfxScripts[172];
 extern u8* D_800C52F8[];
@@ -521,7 +520,7 @@ extern s32 D_80138444;
 // BSS 91EBC.c, 92F60.c, 93290.c, 93BDC.c, 94F50.c, 953A0.c
 extern s16 g_CurrentXaConfigId;
 extern s16 D_8013845C;
-extern char g_SeqTable[SS_SEQ_TABSIZ * SEQ_TABLE_S_MAX * SEQ_TABLE_T_MAX];
+extern u8 g_SeqTable[];
 extern u_long* D_80138784[]; // 487?
 extern s32 g_CurCdPos;
 extern u8 g_CdMode[];
@@ -550,6 +549,7 @@ extern s16 D_8013901C;
 extern u8 g_MuteCd;
 extern s8 D_80139058[4];
 extern s32 g_PrevEquippedWeapons[2];
+extern s16 g_CurrentXaSoundId;
 extern s16 g_SeqVolume1;
 extern u8 D_801390A0;
 extern s16 D_801390A4;
@@ -657,7 +657,7 @@ extern Weapon D_8017D000;
 extern ImgSrc* g_imgUnk8013C200;
 extern ImgSrc* g_imgUnk8013C270;
 extern u8 D_8013B688[8];
-extern struct Cmd14 D_8013B5F4[];
+extern struct Cmd14 D_8013B5F4[2];
 extern u8 D_801EC000[];
 
 void func_801072DC(POLY_GT4* poly);

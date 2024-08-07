@@ -2,6 +2,45 @@
 #include <psxsdk/libsnd.h>
 #include "disk.h"
 
+// ***********************
+typedef enum {
+    SIM_STAGE_PRG,
+    SIM_1,
+    SIM_STAGE_CHR,
+    SIM_3,
+    SIM_VH,
+    SIM_VB,
+    SIM_6,
+    SIM_SEQ,
+    SIM_WEAPON_PRG,
+    SIM_WEAPON0_CHR,
+    SIM_WEAPON1_CHR,
+    SIM_11,
+    SIM_12,
+    SIM_13,
+    SIM_14,
+    SIM_15,
+    SIM_16,
+    SIM_17,
+    SIM_FAMILIAR_PRG,
+    SIM_FAMILIAR_CHR,
+    SIM_MONSTER,
+    SIM_21,
+} SimKind;
+typedef struct {
+    const char* path; // file name
+    u8* addr;         // where to load the file to
+    s32 size;         // file size
+    SimKind kind;
+} SimFile;
+typedef struct {
+    u8 unk0[8];
+    s32 unk8;
+    s16 unkc;
+    s8 unke;
+} Cmd14;
+// ***********************
+
 #define padding static
 
 // TODO dra.h
@@ -38,8 +77,8 @@ s32 D_80136410;
 u32 g_NowLoadingModel[14]; // TODO NowLoadingModel
 
 // 47BB8.c
-void* g_SimFile;      // TODO SimFile*
-u32 D_80136450[4];    // TODO SimFile
+SimFile* g_SimFile;
+SimFile D_80136450;
 s16 D_80136460[1024]; // TODO VSYNC_UNK_LEN
 s16 D_80136C60[1024]; // TODO VSYNC_UNK_LEN
 
@@ -339,7 +378,7 @@ s16 D_80139010;
 padding s16 D_80139012_;
 u8 D_80139014;
 padding u8 D_80139015[3];
-u8 D_80139018[4];
+s8 D_80139018[4];
 s16 D_8013901C;
 padding s16 D_8013901C_;
 u8 g_MuteCd;
@@ -352,7 +391,7 @@ s16 g_SeqVolume1;
 padding u16 g_SeqVolume1_;
 u8 D_801390A0;
 padding u8 D_801390A1[3];
-u16 D_801390A4;
+s16 D_801390A4;
 padding u16 D_801390A4_;
 u8 D_801390A8;
 padding u8 D_801390A9[3];
@@ -378,11 +417,11 @@ s16 D_801396EA;
 u16 D_801396EC;
 padding u16 D_801396EE;
 s32 g_CdCommandStatus;
-u16 g_CdSoundCommandQueuePos;
+s16 g_CdSoundCommandQueuePos;
 padding u16 g_CdSoundCommandQueuePos_;
 s32 D_801396F8[32];
 s32 D_80139778[32];
-s16 D_801397F8;
+u16 D_801397F8;
 padding s16 D_801397FA;
 s32 D_801397FC;
 s16 D_80139800;
@@ -395,11 +434,11 @@ u8 g_SeqPlayingId;
 padding u8 g_SeqPlayingId_[3];
 s16 D_80139814[4];
 padding s32 D_80139814_;
-u16 g_XaMusicVolume;
+s16 g_XaMusicVolume;
 padding u16 g_XaMusicVolume_;
 s32 D_80139824;
 s32 D_80139828[16];
-u16 g_CdSoundCommandQueue[256]; // TODO MAX_SND_COUNT
+s16 g_CdSoundCommandQueue[MAX_SND_COUNT];
 s16 g_SoundCommandRingBufferReadPos;
 padding s16 g_SoundCommandRingBufferReadPos_;
 s16 D_80139A6C;
@@ -420,7 +459,7 @@ s16 g_CurrentSfxScriptSfxId[4]; // TODO use NUM at func_801349F4
 s16 g_volumeL;
 padding s16 g_volumeL_;
 s32 D_8013AE90;
-u16 D_8013AE94;
+s16 D_8013AE94;
 padding u16 D_8013AE96;
 u8 g_ReverbDepth;
 padding u8 g_ReverbDepth_[3];
@@ -440,17 +479,17 @@ s8 D_8013AEE8;
 padding u8 D_8013AEE9[3];
 u8 g_SoundInitialized;
 padding u8 D_8013AEED[3];
-u16 g_SeqVolume2;
+s16 g_SeqVolume2;
 padding s16 D_8013AEF2;
 s32 D_8013AEF4;
-u8 g_MemcardInfo[2][0x278];        // TODO MemcardInfo
-s16 g_SoundCommandRingBuffer[256]; // TODO MAX_SND_COUNT
+u8 g_MemcardInfo[2][0x278]; // TODO MemcardInfo
+s16 g_SoundCommandRingBuffer[MAX_SND_COUNT];
 s32 D_8013B5E8;
 u8 D_8013B5EC[4];
 s32 g_MemcardBlockRead;
-u8 D_8013B5F4[4][8]; // TODO Cmd14
+Cmd14 D_8013B5F4[2]; // TODO Cmd14
 s8 g_UnkChannelSetting1[4];
-u8 D_8013B618;
+s8 D_8013B618;
 padding u8 D_8013B619[3];
 s32 D_8013B61C;
 u16 g_SfxScriptVolume[4];
@@ -460,7 +499,7 @@ CdlLOC D_8013B640;
 padding u32 D_8013B644;
 s16 D_8013B648[4];
 s16 D_8013B650[4];
-u16 g_SeqAccessNum;
+s16 g_SeqAccessNum;
 padding u16 D_8013B65A;
 s32 D_8013B65C;
 s32 g_MemcardStep;
@@ -476,7 +515,7 @@ padding u8 D_8013B681[3];
 u8 g_CdSoundCommand16;
 padding u8 D_8013B685[3];
 u8 D_8013B688[8];
-u8 D_8013B690;
+s8 D_8013B690;
 static u8 D_8013B693[3];
 s32 D_8013B694;
 s16 g_volumeR;
