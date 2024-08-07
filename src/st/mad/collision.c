@@ -1,4 +1,3 @@
-#include <stage.h>
 #include "mad.h"
 #include "sfx.h"
 
