@@ -19,7 +19,7 @@ void EntityWeaponAttack(Entity* self) {
         PLAYER.ext.player.anim < (anim->frameStart + 7) && g_Player.unk46) {
 
         if (self->step == 0) {
-            SetSpriteBank1(&g_Animset);
+            SetSpriteBank1(g_Animset);
             self->animSet = ANIMSET_OVL(0x10);
             self->palette = PAL_DRA(0x110);
             self->unk5A = 0x64;
@@ -29,7 +29,7 @@ void EntityWeaponAttack(Entity* self) {
                 self->unk5A += 2;
             }
             self->palette += anim->palette;
-            self->flags = FALL_TERMINAL_VELOCITY;
+            self->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
             self->zPriority = PLAYER.zPriority - 2;
             SetWeaponProperties(self, 0);
             self->step++;
