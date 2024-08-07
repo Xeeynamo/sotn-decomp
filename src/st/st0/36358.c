@@ -1,5 +1,6 @@
 #include "game.h"
 #include "st0.h"
+#include "sfx.h"
 
 extern u16 g_InitializeData0[];
 extern u8* D_80181D18[];
@@ -353,7 +354,7 @@ void EntityEquipItemDrop(Entity* self) {
             g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
             g_unkGraphicsStruct.BottomCornerTextTimer = 0;
         }
-        g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+        g_api.PlaySfx(SFX_ITEM_PICKUP);
         if (itemId < NUM_HAND_ITEMS) {
             name = g_api.equipDefs[itemId].name;
             g_api.AddToInventory(itemId, EQUIP_HAND);

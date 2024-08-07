@@ -2,6 +2,7 @@
 // Short sword, Jewel sword, Stone sword, Unknown#198
 #include "weapon_private.h"
 #include "shared.h"
+#include "sfx.h"
 
 extern WeaponAnimation D_107000_8017A6A4[];
 extern s32 D_107000_8017BBE4;
@@ -374,7 +375,7 @@ void func_ptr_80170008(Entity* self) {
         if (collider.effects & EFFECT_SOLID) {
             self->posY.i.hi += collider.unk18;
             self->ext.timer.t = 0x50;
-            g_api.PlaySfx(SFX_COLLECT_GOLD);
+            g_api.PlaySfx(SFX_GOLD_PICKUP);
             self->step++;
         }
         break;
@@ -397,7 +398,7 @@ void func_ptr_80170008(Entity* self) {
     if (abs(distX) < 0xB) {
         if (abs(distY) < 0x1B) {
             g_Status.gold = CLAMP_MAX(g_Status.gold + 1, MAX_GOLD);
-            g_api.PlaySfx(SFX_COLLECT_GOLD);
+            g_api.PlaySfx(SFX_GOLD_PICKUP);
             DestroyEntity(self);
         }
     }

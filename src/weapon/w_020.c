@@ -92,7 +92,7 @@ void EntityWeaponAttack(Entity* self) {
             self->posY.i.hi += sp10.unk18;
             self->animFrameDuration = self->animFrameIdx = 0;
             self->unk4C = D_90000_8017A864;
-            g_api.PlaySfx(SFX_COLLECT_GOLD);
+            g_api.PlaySfx(SFX_GOLD_PICKUP);
             self->step += 1;
             return;
         }
@@ -125,7 +125,7 @@ void EntityWeaponAttack(Entity* self) {
         return;
     case 2:
         if (((self->animFrameIdx % 8) == 5) && (self->animFrameDuration == 1)) {
-            g_api.func_80134714(SFX_COLLECT_GOLD,
+            g_api.func_80134714(SFX_GOLD_PICKUP,
                                 D_90000_8017AB44[self->ext.karmacoin.unk84], 0);
             self->ext.karmacoin.unk84++;
         }
