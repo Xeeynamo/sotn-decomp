@@ -9,7 +9,7 @@
 
 #include "../destroy_entity.h"
 
-TeleportCheck GetTeleportToOtherCastle(void) {
+static TeleportCheck GetTeleportToOtherCastle(void) {
     // Is player in the pose when pressing UP?
     if (PLAYER.step != 0 || PLAYER.step_s != 1) {
         return TELEPORT_CHECK_NONE;
@@ -67,6 +67,9 @@ s16 func_80156DE4(void) {
     }
     return 0;
 }
+
+void func_801587C0();
+
 // Duplicate of DRA func_80109594
 void func_80156F40(s16 arg0) {
     Entity* e;
@@ -136,15 +139,15 @@ void func_80156F40(s16 arg0) {
         prim->drawMode = 0x102 | DRAW_HIDE;
     }
     if (D_80097C98 == 6) {
-        CreateEntFactoryFromEntity(playerPtr, FACTORY(0x100, 77), 0);
+        RicCreateEntFactoryFromEntity(playerPtr, FACTORY(0x100, 77), 0);
         func_8015CC70(1);
     }
     if (D_80097C98 == 4) {
-        CreateEntFactoryFromEntity(playerPtr, FACTORY(0x300, 77), 0);
+        RicCreateEntFactoryFromEntity(playerPtr, FACTORY(0x300, 77), 0);
         func_8015CC70(3);
     }
     if (D_80097C98 == 5) {
-        CreateEntFactoryFromEntity(playerPtr, FACTORY(0x500, 77), 0);
+        RicCreateEntFactoryFromEntity(playerPtr, FACTORY(0x500, 77), 0);
         func_8015CC70(5);
     }
 }
@@ -349,6 +352,9 @@ void CheckHighJumpInput(void) {
     }
 }
 
+bool func_8015885C(void);
+void func_8015A9B0(s32 damageEffects, s32 arg1, s32 arg2, s32 arg3);
+
 void UpdateEntityRichter(void) {
     DamageParam damage;
     s32 temp_s0;
@@ -464,7 +470,7 @@ void UpdateEntityRichter(void) {
     if (g_Player.unk60 == 1) {
         playerStep = PLAYER.step;
         playerStepS = PLAYER.step_s;
-        SetPlayerStep(Player_BossGrab);
+        RicSetPlayerStep(Player_BossGrab);
         goto block_48;
     }
     if (((g_Player.D_80072F00[13] | g_Player.D_80072F00[14]) != 0) ||
@@ -481,13 +487,13 @@ void UpdateEntityRichter(void) {
     damageEffects = damage.effects;
     if (condition) {
         if (g_Player.unk5C == 0) {
-            SetPlayerStep(Player_Kill);
+            RicSetPlayerStep(Player_Kill);
         } else {
             g_Status.hp = 1;
-            SetPlayerStep(Player_Hit);
+            RicSetPlayerStep(Player_Hit);
         }
     } else {
-        SetPlayerStep(Player_Hit);
+        RicSetPlayerStep(Player_Hit);
     }
     goto block_48;
 block_47:

@@ -1,4 +1,11 @@
 #include "dra.h"
+#include "dra_bss.h"
+
+// BSS
+extern u16 D_80137478[ICON_SLOT_NUM];
+extern u16 D_801374B8[ICON_SLOT_NUM];
+extern u16 D_801374F8[ICON_SLOT_NUM];
+extern u16 D_80137538[ICON_SLOT_NUM];
 
 void func_800EA538(s32 arg0) {
     Unkstruct_8006C3C4* var_v0;
@@ -383,6 +390,12 @@ void LoadGfxAsync(s32 gfxId) {
         }
     }
 }
+
+// BSS
+extern u8* g_DecSrcPtr;
+extern u8* g_DecDstPtr;
+extern s32 g_DecReadNibbleFlag;
+extern s32 g_DecWriteNibbleFlag;
 
 void DecompressWriteNibble(s32 ch) {
     u8 temp = ch;

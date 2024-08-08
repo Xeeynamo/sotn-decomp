@@ -1,4 +1,5 @@
 #include "dra.h"
+#include "dra_bss.h"
 #include "sfx.h"
 
 // expanding circle effect when activating stopwatch
@@ -1131,7 +1132,7 @@ void func_8012D28C(bool exitEarly) {
     s32 i;
 
     func_80102CD8(2);
-    PlaySfx(NA_SE_EN_ROCK_BREAK);
+    PlaySfx(SFX_WALL_DEBRIS_B);
     PLAYER.velocityX = 0;
     g_Player.D_80072EFC = 0x20;
     g_Player.padSim = 0;

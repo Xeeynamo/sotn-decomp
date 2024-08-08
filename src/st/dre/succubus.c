@@ -283,7 +283,7 @@ void EntitySuccubus(Entity* self) {
             self->velocityY += FIX(0.125);
             posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
             if (posY >= 176) {
-                func_801A046C(NA_SE_SU_LANDING);
+                func_801A046C(SFX_STOMP_HARD_A);
                 self->posY.i.hi = 175 - g_Tilemap.scrollY.i.hi;
                 SetSubStep(SUCCUBUS_DYING_ANIM_1);
                 posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;

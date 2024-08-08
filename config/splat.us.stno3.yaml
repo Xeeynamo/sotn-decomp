@@ -106,5 +106,5 @@ segments:
       - [0x56264, c]
       - [0x564B0, c]
       - [0x56880, c, prim_helpers]
-      - [0x570B0, sbss]
+      - [0x570B0, .bss, bss]
   - [0x57E18]

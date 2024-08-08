@@ -1,4 +1,5 @@
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
 #include "sfx.h"
 
@@ -6,12 +7,6 @@
 s32 AdvanceCdSoundCommandQueue(void);
 
 #define CD_PREGAP_BLOCKS 150
-
-extern s16 D_8013845C;
-extern s16 g_CurrentXaSoundId;
-extern s32 D_8013AE90;
-extern s32 D_8013AEF4;
-extern CdlLOC D_8013B640;
 
 s32 CdSoundCommand6(void) {
     u8 var_v0;

@@ -185,7 +185,42 @@ static void func_ptr_8017000C(Entity* self) {
     self->rotZ = ratan2(self->velocityY, abs(self->velocityX));
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_016", func_ptr_80170010);
+extern AnimationFrame D_74000_8017A5B0[];
+extern s32 D_74000_8017BD74;
+
+s32 func_ptr_80170010(Entity* self) {
+    Entity* factory;
+
+    if (self->step == 0) {
+        self->animSet = 2;
+        self->unk4C = D_74000_8017A5B0;
+        self->zPriority = PLAYER.zPriority - 4;
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->velocityY = FIX(-1.0);
+
+        if (!(D_74000_8017BD74 & 1)) {
+            factory = g_api.CreateEntFactoryFromEntity(self, 0xB0004U, 0);
+            if (factory) {
+                if (g_HandId == 0) {
+                    factory->entityId = 0xEF;
+                } else {
+                    factory->entityId = 0xFF;
+                }
+            }
+        }
+        self->posY.i.hi += -6 + (rand() % 12);
+        self->posX.i.hi += -3 + (rand() & 7);
+        D_74000_8017BD74 += 1;
+        if (!(rand() & 1)) {
+            self->drawMode |= DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+        }
+        self->step += 1;
+    }
+    self->posY.val += self->velocityY;
+    if (self->animFrameDuration < 0) {
+        DestroyEntity(self);
+    }
+}
 
 // Tracing function calls in emulator indicates that this function manages
 // the physics for the Iron Ball item.

@@ -1,8 +1,7 @@
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
 #include "sfx.h"
-
-extern s16 g_CurrentXaSoundId;
 
 void ExecSoundCommands(void) {
     s16 id;

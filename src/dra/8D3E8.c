@@ -1,4 +1,5 @@
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
 #include "sfx.h"
 
@@ -353,7 +354,7 @@ void func_8012E040(void) {
             PLAYER.posY.i.hi = PLAYER.posY.i.hi;
             PLAYER.posX.i.hi -= xOffset;
             func_80102CD8(3);
-            PlaySfx(NA_SE_EN_ROCK_BREAK);
+            PlaySfx(SFX_WALL_DEBRIS_B);
             PLAYER.velocityX = 0;
             PLAYER.velocityY = 0;
             func_8012CED4();

@@ -130,5 +130,5 @@ segments:
       - [0x4F5B8, c]
       - [0x50A00, c, blade]
       - [0x51F38, c, prim_helpers]
-      - [0x52768, sbss]
+      - [0x52768, .bss, bss]
   - [0x53434]

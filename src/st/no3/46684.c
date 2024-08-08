@@ -1,4 +1,5 @@
 #include "no3.h"
+#include "sfx.h"
 
 void EntityPrizeDrop(Entity* self) {
     Collider collider;
@@ -383,7 +384,7 @@ void EntityEquipItemDrop(Entity* self) {
             *unk = 0;
         }
 
-        g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+        g_api.PlaySfx(SFX_ITEM_PICKUP);
 
         if (itemId < NUM_HAND_ITEMS) {
             itemName = g_api.equipDefs[itemId].name;

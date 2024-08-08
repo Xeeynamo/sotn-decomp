@@ -581,7 +581,8 @@ static void func_ptr_80170024(Entity* self) {
         prim->r1 = prim->g1 = prim->b1 = prim->r0 = prim->g0 = prim->b0 = 0x80;
         prim->drawMode = DRAW_COLORS;
         self->velocityY = -((self->ext.shield.unk9A * FIX(3.0 / 16)) + FIX(3));
-        self->ext.shield.unkA0 = -((self->ext.shield.unk9A << 8) + 0x900);
+        self->ext.weapon.accelerationY =
+            -((self->ext.shield.unk9A << 8) + 0x900);
         self->ext.shield.unkAE = self->ext.shield.parent->ext.shield.unkAE;
         SetWeaponProperties(self, 0);
         self->hitboxHeight = 0x40;
@@ -600,17 +601,17 @@ static void func_ptr_80170024(Entity* self) {
         self->posY.val += self->velocityY / 32;
         if (--self->ext.shield.unk80 == 0) {
             self->velocityY /= 32;
-            g_api.PlaySfx(SFX_DARK_SHIELD);
+            g_api.PlaySfx(SFX_START_SLAM_A);
             self->step += 1;
         }
         break;
     case 3:
         self->posX.i.hi = self->ext.shield.unk94 + (self->ext.shield.unk80 & 1);
         self->posY.val += self->velocityY;
-        self->velocityY += self->ext.shield.unkA0;
+        self->velocityY += self->ext.weapon.accelerationY;
         if (self->posY.i.hi < 0x80) {
             self->ext.shield.unk92 += 2;
-            self->ext.shield.unkA0 -= FIX(1.0 / 8);
+            self->ext.weapon.accelerationY -= FIX(1.0 / 8);
         }
         // If we have risen off-screen, destroy us.
         if (self->posY.i.hi < -0x40) {

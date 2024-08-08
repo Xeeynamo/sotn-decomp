@@ -3,7 +3,9 @@
 
 #define LEN(x) ((s32)(sizeof(x) / sizeof(*(x))))
 
+#ifndef VERSION_PC
 #define VERSION_PC
+#endif
 #define VERSION_US
 #define VERSION "us"
 

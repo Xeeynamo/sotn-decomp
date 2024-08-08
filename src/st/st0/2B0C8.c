@@ -1,4 +1,5 @@
 #include "st0.h"
+#include "sfx.h"
 
 void EntityStageTitleFadeout(Entity* self) {
     s16 primIndex;
@@ -516,7 +517,7 @@ u32 func_801ABBBC(s32 step, Entity* dracula) {
         }
         step++;
         dracula->ext.dracula.unk8C = 0;
-        g_api.PlaySfx(0x636);
+        g_api.PlaySfx(SFX_TELEPORT_BANG_B);
         break;
     case 3:
         prim = dracula->ext.dracula.unk84;

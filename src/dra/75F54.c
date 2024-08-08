@@ -1,6 +1,15 @@
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
 #include "sfx.h"
+
+// BSS
+extern s32 g_WingSmashButtonCounter;
+extern s32 g_WingSmashButtonTimer;
+extern s32 g_WingSmashTimer;
+extern s32 g_BatScreechDone;
+extern s32 g_MistTimer; // remaining time in mist transformation
+extern s32 D_80138008;
 
 void func_80115F54(void) {
     PlayerDraw* plDraw;
@@ -646,7 +655,7 @@ void ControlBatForm(void) {
             g_Player.padTapped = PAD_R1;
             BatFormFinished();
             func_80102CD8(2);
-            PlaySfx(NA_SE_EN_ROCK_BREAK);
+            PlaySfx(SFX_WALL_DEBRIS_B);
             PLAYER.velocityX = 0;
             g_Player.D_80072EFC = 0x20;
             g_Player.padSim = 0;
@@ -1294,6 +1303,7 @@ void func_80118894(Entity* self) {
     }
 }
 
+extern s32 D_80138038; // BSS
 Entity* func_80118970(void) {
     s32 big_arr[128];
     Entity* ent;

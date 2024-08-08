@@ -1,4 +1,5 @@
 #include "mad.h"
+#include "sfx.h"
 
 extern u16 D_80180D4C[];
 extern u8* D_80180DB0[];
@@ -353,7 +354,7 @@ void EntityEquipItemDrop(Entity* self) {
             g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
             g_unkGraphicsStruct.BottomCornerTextTimer = 0;
         }
-        g_api.PlaySfx(0x672);
+        g_api.PlaySfx(SFX_ITEM_PICKUP);
         if (itemId < NUM_HAND_ITEMS + 4) {
             name = g_api.equipDefs[itemId].name;
             g_api.AddToInventory(itemId, EQUIP_HAND);

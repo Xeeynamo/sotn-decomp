@@ -3,11 +3,11 @@
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
 extern s32 g_HandId;
-#include "shared.h"
 #include "w_004_1.h"
 #include "w_004_2.h"
 #define g_Animset w_004_1
 #define g_Animset2 w_004_2
+#include "sfx.h"
 
 extern WeaponAnimation D_20000_8017B2F4[]; // g_SoundEvents
 
@@ -51,7 +51,7 @@ static void EntityWeaponAttack(Entity* self) {
     if (PLAYER.animFrameDuration == 1 &&
         PLAYER.animFrameIdx == anim->soundFrame) {
         g_api.PlaySfx(anim->soundId);
-        g_api.PlaySfx(0x640);
+        g_api.PlaySfx(SFX_ANIME_SWORD_B);
     }
 
     if (g_api.UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {

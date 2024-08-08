@@ -1,12 +1,18 @@
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
+
+// BSS
+#if defined(VERSION_US)
+extern s32 D_80137FDC;
+#endif
 
 void func_80111928(void) { D_801396EA = 0; }
 
 void func_80111938(void) {
     D_801396EA = 1;
     D_801396E4 = PLAYER.animCurFrame;
-    D_801396E6.S16.unk0 = PLAYER.drawFlags;
+    D_801396E6 = PLAYER.drawFlags;
     D_801396E8 = PLAYER.palette;
 }
 
@@ -14,7 +20,7 @@ void func_8011197C(void) {
     D_801396EA = 0;
     PLAYER.unk44 = 0;
     PLAYER.animCurFrame = D_801396E4;
-    PLAYER.drawFlags = D_801396E6.S8.unk0;
+    PLAYER.drawFlags = D_801396E6;
     PLAYER.palette = D_801396E8;
 }
 
@@ -434,10 +440,10 @@ void func_801120B4(void) {
     case 0x58:
         func_8010DFF0(1, 1);
         if (D_80139824 > 0) {
-            D_80139824 -= 1;
+            D_80139824--;
         }
         if (PLAYER.animFrameIdx == 4 && PLAYER.animFrameDuration == 1 &&
-            (D_80139824 != 0)) {
+            D_80139824) {
             PLAYER.animFrameIdx = 2;
         }
         if (PLAYER.animFrameIdx == 6) {
@@ -455,10 +461,10 @@ void func_801120B4(void) {
     case 0x5A:
         func_8010DFF0(1, 1);
         if (D_80139824 > 0) {
-            D_80139824 -= 1;
+            D_80139824--;
         }
         if (PLAYER.animFrameIdx == 6 && PLAYER.animFrameDuration == 1 &&
-            (D_80139824 != 0)) {
+            D_80139824) {
             PLAYER.animFrameDuration = 2;
         }
         if (PLAYER.animFrameIdx == 0xA) {

@@ -3,7 +3,7 @@
 
 // Entity ID #7. Made by blueprint 6. Comes from subweapon 3. Holy water!
 // Not at all the same as DRA's.
-void EntityHolyWater(Entity* self) {
+void RicEntityHolyWater(Entity* self) {
     s16 argY;
     s32 collision_result;
     s32 tempXVel;
@@ -45,7 +45,7 @@ void EntityHolyWater(Entity* self) {
         break;
     case 1:
         self->posY.val += self->velocityY;
-        collision_result = CheckHolyWaterCollision(0, 0);
+        collision_result = RicCheckHolyWaterCollision(0, 0);
         self->posX.val += self->velocityX;
 
         if (self->velocityX < 0) {
@@ -77,13 +77,13 @@ void EntityHolyWater(Entity* self) {
         break;
     case 3:
         if (!(self->ext.holywater.timer & 3)) {
-            CreateEntFactoryFromEntity(
+            RicCreateEntFactoryFromEntity(
                 self, (self->ext.holywater.unk82 << 0x10) | 7, 0);
             // weirdly nonmatching with ++;
             self->ext.holywater.unk82 = self->ext.holywater.unk82 + 1;
             self->velocityX -= (self->velocityX / 32);
         }
-        collision_result = CheckHolyWaterCollision(6, 0);
+        collision_result = RicCheckHolyWaterCollision(6, 0);
         tempXVel = self->velocityX;
         if (self->velocityX < 0) {
             if ((collision_result & 0xF000) == 0xC000) {
@@ -115,7 +115,7 @@ void EntityHolyWater(Entity* self) {
         break;
     case 4:
         if (!(self->ext.holywater.timer & 3)) {
-            CreateEntFactoryFromEntity(
+            RicCreateEntFactoryFromEntity(
                 self, FACTORY(self->ext.holywater.unk82 * 0x100, 7), 0);
             self->ext.holywater.unk82 = self->ext.holywater.unk82 + 1;
         }
@@ -124,7 +124,7 @@ void EntityHolyWater(Entity* self) {
             self->velocityY = FIX(4);
         }
         self->posY.val += self->velocityY;
-        collision_result = CheckHolyWaterCollision(0, 0);
+        collision_result = RicCheckHolyWaterCollision(0, 0);
         self->posX.val += self->velocityX;
         if (self->velocityX < 0) {
             argY = -4;
@@ -156,7 +156,7 @@ void EntityHolyWater(Entity* self) {
 }
 
 // Entity ID #8. Blueprint 7.
-void EntityHolyWaterFlame(Entity* self) {
+void RicEntityHolyWaterFlame(Entity* self) {
     s16 sp10[5];
     s16 sp20[5];
     s16 pad[2];
@@ -218,7 +218,7 @@ void EntityHolyWaterFlame(Entity* self) {
             self->hitboxWidth = 4;
             self->ext.factory.unk84 = (s16)self->hitboxState;
             self->posY.i.hi = self->posY.i.hi - 0xA;
-            CreateEntFactoryFromEntity(self, 0x30004U, 0);
+            RicCreateEntFactoryFromEntity(self, 0x30004U, 0);
             self->ext.timer.t = 0x50;
             self->posY.i.hi = self->posY.i.hi + 0xA;
             self->ext.holywaterflame.unk80 = (rand() & 0xF) + 0x12;
@@ -308,7 +308,7 @@ void EntityHolyWaterFlame(Entity* self) {
 
 // Entity 13. Made by blueprint 13. That's from subweapon 12.
 // That's the crash for subweapon 4. That's the cross.
-void EntitySubwpnCrashCross(Entity* self) {
+void RicEntitySubwpnCrashCross(Entity* self) {
     Primitive* prim;
     s16 right;
     s16 left;
@@ -333,7 +333,7 @@ void EntitySubwpnCrashCross(Entity* self) {
         func_8015FAB8(self);
         LoadImage(&D_80155E3C, D_80155DDC);
         g_api.PlaySfx(0x6DF);
-        g_api.PlaySfx(0x636);
+        g_api.PlaySfx(SFX_TELEPORT_BANG_B);
         self->step += 1;
         break;
     case 1:
@@ -342,8 +342,8 @@ void EntitySubwpnCrashCross(Entity* self) {
         self->ext.crashcross.unk7E = three + self->ext.crashcross.unk7E;
         self->ext.crashcross.unk82 += one;
         if ((u8)self->ext.crashcross.unk7E >= 0x70U) {
-            CreateEntFactoryFromEntity(self, FACTORY(0, 14), 0);
-            CreateEntFactoryFromEntity(self, FACTORY(0, 34), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(0, 14), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(0, 34), 0);
             self->step += 1;
         }
         break;
@@ -510,13 +510,13 @@ void EntityCrossBoomerang(Entity* self) {
         self->ext.crossBoomerang.unk84 = &D_80175088[D_80175888];
         D_80175888++;
         D_80175888 &= 3;
-        CreateEntFactoryFromEntity(self, FACTORY(0, 5), 0);
+        RicCreateEntFactoryFromEntity(self, FACTORY(0, 5), 0);
         self->animSet = ANIMSET_OVL(0x11);
         self->unk5A = 0x66;
         self->unk4C = D_80155E44;
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority;
-        SetSpeedX(FIX(3.5625));
+        RicSetSpeedX(FIX(3.5625));
         self->drawFlags = 4;
         self->rotZ = 0xC00;
         self->ext.factory.unkB0 = 4;
@@ -607,22 +607,22 @@ void EntityCrossBoomerang(Entity* self) {
     self->ext.crossBoomerang.unk7E++;
     if (1 < self->step && self->step < 6) {
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 1) {
-            CreateEntFactoryFromEntity(self, FACTORY(0, 3), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(0, 3), 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 4) {
-            CreateEntFactoryFromEntity(self, FACTORY(0x600, 4), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(0x600, 4), 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 6) {
-            CreateEntFactoryFromEntity(self, FACTORY(0, 3), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(0, 3), 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 8) {
-            CreateEntFactoryFromEntity(self, FACTORY(0x600, 4), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(0x600, 4), 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 12) {
-            CreateEntFactoryFromEntity(self, FACTORY(0x600, 4), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(0x600, 4), 0);
         }
         if ((self->ext.crossBoomerang.unk7E & 0xF) == 11) {
-            CreateEntFactoryFromEntity(self, FACTORY(0, 3), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(0, 3), 0);
         }
     }
     // Applies a flickering effect
@@ -732,7 +732,7 @@ void func_80169D74(Entity* entity) {
 
 // Entity ID #32. Comes from blueprint 34.
 // Surprisingly pretty different from DRA version.
-void EntitySubwpnCrashCrossParticles(Entity* self) {
+void RicEntitySubwpnCrashCrossParticles(Entity* self) {
     Primitive* prim;
     s32 var_a2;
     s32 temp_s0;
@@ -865,7 +865,7 @@ void EntitySubwpnCrashAgunea(Entity* self) {
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
                       FLAG_UNK_20000;
         self->facingLeft = (PLAYER.facingLeft + 1) & 1;
-        SetSpeedX(FIX(-2));
+        RicSetSpeedX(FIX(-2));
         self->velocityY = FIX(-6);
         tempLeft = self->facingLeft;
         self->ext.aguneaCrash.unk7C = tempLeft ? 0x400 : 0xC00;
@@ -1148,7 +1148,7 @@ void EntitySubwpnCrashAxe(Entity* self) {
     case 3:
         if (--self->ext.factory.unkA2 == 0) {
             if ((u8)self->params == 0) {
-                g_api.PlaySfx(0x635);
+                g_api.PlaySfx(SFX_TELEPORT_BANG_A);
                 g_api.PlaySfx(SFX_WEAPON_APPEAR);
             }
             g_Player.unk4E = 1;
@@ -1262,7 +1262,7 @@ void EntitySubwpnCrashAxe(Entity* self) {
 // Applies to subweapon 1, and its crash, subweapon 21. Very neat!
 // Not quite the same as the one in DRA, but close.
 
-void EntitySubwpnThrownDagger(Entity* self) {
+void RicEntitySubwpnThrownDagger(Entity* self) {
     Collider collider;
     Primitive* prim;
     s16 offsetX;
@@ -1322,7 +1322,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
         prim->r0 = 0x7F;
         prim->g0 = 0x3F;
         prim->b0 = 0;
-        SetSpeedX(FIX(8));
+        RicSetSpeedX(FIX(8));
         g_api.PlaySfx(SFX_WEAPON_SWISH_C);
         self->step++;
         return;
@@ -1355,7 +1355,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
                 self->hitboxState = 0;
                 self->velocityX = -(self->velocityX >> 3);
                 self->posX.i.hi += var_s1;
-                CreateEntFactoryFromEntity(self, FACTORY(0x200, 42), 0);
+                RicCreateEntFactoryFromEntity(self, FACTORY(0x200, 42), 0);
                 self->posX.i.hi -= var_s1;
                 g_api.PlaySfx(REBOUND_STONE_BOUNCE);
                 self->step++;
@@ -1472,7 +1472,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
     }
 }
 
-void ReboundStoneBounce1(s32 arg0) {
+static void ReboundStoneBounce1(s32 arg0) {
     g_CurrentEntity->ext.generic.unk7C.s =
         (arg0 << 0x10 >> 0xF) - g_CurrentEntity->ext.generic.unk7C.s;
     if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 == 0) {
@@ -1481,7 +1481,7 @@ void ReboundStoneBounce1(s32 arg0) {
     }
 }
 
-void ReboundStoneBounce2(s16 arg0) {
+static void ReboundStoneBounce2(s16 arg0) {
     if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 == 0) {
         g_CurrentEntity->ext.generic.unk7C.s =
             (arg0 * 2) - g_CurrentEntity->ext.generic.unk7C.s;
@@ -1492,7 +1492,7 @@ void ReboundStoneBounce2(s16 arg0) {
 
 // RIC entity #42. Blueprint 50. Comes from subweapon 7.
 // Rebound stone!
-void EntitySubwpnReboundStone(Entity* self) {
+void RicEntitySubwpnReboundStone(Entity* self) {
     Collider collider;
     u16 playerX;
     u16 playerY;
@@ -1774,7 +1774,7 @@ void EntitySubwpnReboundStone(Entity* self) {
 }
 
 // RIC entity #43. Blueprint 49. Subweapon 8. Vibhuti!
-void EntitySubwpnThrownVibhuti(Entity* self) {
+void RicEntitySubwpnThrownVibhuti(Entity* self) {
     Collider collider;
     FakePrim* fakeprim;
     s16 collisionOffsetX;
@@ -1941,7 +1941,7 @@ s32 RicPrimDecreaseBrightness(Primitive* prim, u8 amount) {
 
 // RIC Entity #44. Blueprint 51. Subweapon 9. Agunea (non-crash). DRA
 // blueprint 25. DRA entity 21.
-void EntitySubwpnAgunea(Entity* self) {
+void RicEntitySubwpnAgunea(Entity* self) {
     Entity* ent;
     Primitive* prim;
     s32 heartCost;
@@ -1979,7 +1979,7 @@ void EntitySubwpnAgunea(Entity* self) {
             prim->r1 = 0x60;
             prim->g1 = 0;
             prim->b1 = 0x80;
-            SetSpeedX(FIX(6));
+            RicSetSpeedX(FIX(6));
             g_api.PlaySfx(SFX_WEAPON_SWISH_C);
             self->step++;
         }
@@ -2033,10 +2033,10 @@ void EntitySubwpnAgunea(Entity* self) {
 
             if (g_Status.hearts >= 5) {
                 g_Status.hearts -= 5;
-                CreateEntFactoryFromEntity(self, FACTORY(0, 52), 0);
+                RicCreateEntFactoryFromEntity(self, FACTORY(0, 52), 0);
                 g_api.PlaySfx(0x665);
             } else if (self->ext.et_80128C2C.unk84 == 0) {
-                CreateEntFactoryFromEntity(self, FACTORY(0, 52), 0);
+                RicCreateEntFactoryFromEntity(self, FACTORY(0, 52), 0);
                 g_api.PlaySfx(0x665);
                 self->ext.et_80128C2C.unk84++;
             } else {
@@ -2071,7 +2071,7 @@ void EntitySubwpnAgunea(Entity* self) {
 
 // RIC entity 45. Blueprint 52. That blueprint comes from RIC
 // EntitySubwpnAgunea.
-void EntityAguneaHitEnemy(Entity* self) {
+void RicEntityAguneaHitEnemy(Entity* self) {
     Entity* temp_s6;
     Primitive* prim;
     Primitive* temp_s3;
@@ -2391,7 +2391,7 @@ void EntitySubwpnCrashVibhuti(Entity* self) {
                     self->ext.vibhutiCrash.unk84 = prim->posX.val;
                     self->ext.vibhutiCrash.unk88 = prim->posY.val;
                     self->ext.vibhutiCrash.unk8C = prim->velocityX.val < 1;
-                    CreateEntFactoryFromEntity(self, FACTORY(0, 55), 0);
+                    RicCreateEntFactoryFromEntity(self, FACTORY(0, 55), 0);
                 } else {
                     prim->posX.val += prim->velocityX.val;
                     prim->posY.val += prim->velocityY.val;

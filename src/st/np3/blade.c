@@ -464,7 +464,7 @@ void EntityBlade(Entity* self) {
             func_801CE258(&D_80183494);
             if ((self->ext.GH_Props.unkB0[0] == 3) &&
                 (self->ext.GH_Props.unkB0[2] == 0)) {
-                func_801916C4(0x646);
+                func_801916C4(SFX_STOMP_HARD_A);
             }
             if (self->ext.GH_Props.unkB0[0] == 0 &&
                 self->ext.GH_Props.unkB0[2] == 0) {

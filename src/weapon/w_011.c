@@ -3,17 +3,19 @@
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
 extern s32 g_HandId;
-#include "shared.h"
 #include "w_011_1.h"
 #include "w_011_2.h"
 #define g_Animset w_011_1
 #define g_Animset2 w_011_2
+#include "sfx.h"
 
 extern SpriteParts D_51000_8017A040[];
 extern s8 D_51000_8017AB4C;
 extern AnimationFrame* D_51000_8017AB94;
 extern AnimationFrame D_51000_8017ABCC[];
 extern AnimationFrame D_51000_8017ABE8[];
+
+extern s32 D_51000_8017ABF4[];
 
 static void EntityWeaponAttack(Entity* self) {
     s32 anim1;
@@ -161,7 +163,266 @@ static s32 func_ptr_80170014(Entity* self) {}
 
 static int GetWeaponId(void) { return 11; }
 
-INCLUDE_ASM("weapon/nonmatchings/w_011", EntityWeaponShieldSpell);
+void EntityWeaponShieldSpell(Entity* self) {
+    Primitive* prim;
+    Primitive* prevPrim;
+    Primitive* nextPrim;
+    Entity* unusedEnt;
+    s32 i;
+    s16 baseCoord;
+    s16 selfY;
+    s16 angle;
+    s16 back;
+    s16 front;
+    s16 top;
+    s16 bottom;
+
+    switch (self->step) {
+    case 0:
+        for (i = 0; i < 16; i++) {
+            D_51000_8017ABF4[i] = (i << 9) * 2;
+        }
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 10);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        SetSpriteBank1(D_51000_8017A040);
+        if (g_HandId != 0) {
+            self->animSet = ANIMSET_OVL(0x12);
+            self->palette = 0x128;
+            self->ext.shield.childPalette = 0x129;
+            self->unk5A = 0x66;
+            self->ext.shield.unk7C = 0;
+            self->ext.shield.unk7D = 0x80;
+        } else {
+            self->animSet = ANIMSET_OVL(0x10);
+            self->palette = 0x110;
+            self->ext.shield.childPalette = 0x111;
+            self->unk5A = 0x64;
+            self->ext.shield.unk7C = 0x80;
+            self->ext.shield.unk7D = 0;
+        }
+        self->posY.i.hi -= 8;
+        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_10000;
+        self->zPriority = PLAYER.zPriority - 2;
+        self->facingLeft = PLAYER.facingLeft;
+        self->animCurFrame = 0x3E;
+        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        self->rotX = self->rotY = 0;
+
+        prim = &g_PrimBuf[self->primIndex];
+        prim->clut = 0x19F;
+        prim->tpage = 0x19;
+        prim->u0 = prim->u2 = 0x80;
+        prim->u1 = prim->u3 = 0x80 + 0x4F;
+        prim->v0 = prim->v1 = self->ext.shield.unk7C + 0;
+        prim->v2 = prim->v3 = self->ext.shield.unk7C + 0x4F;
+        self->ext.shield.unk82 = 0;
+        prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
+            prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
+                0x80;
+        prim->priority = self->zPriority - 4;
+        prim->drawMode =
+            DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        prim = prim->next;
+
+        prim->clut = self->ext.shield.childPalette;
+        prim->tpage = 0x19;
+        prim->u0 = prim->u2 = 0;
+        prim->u1 = prim->u3 = 0x1F;
+        prim->v0 = prim->v1 = self->ext.shield.unk7D + 0x30;
+        prim->v2 = prim->v3 = self->ext.shield.unk7D + 0x6F;
+        prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
+            prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
+                0x80;
+        prim->priority = 0x1BC;
+        prim->drawMode = DRAW_HIDE;
+        for (i = 0; i < 8; i++) {
+            prevPrim = prim;
+            prim = prim->next;
+            nextPrim = prim->next;
+            *prim = *prevPrim;
+            prim->next = nextPrim;
+            prim->v0 = prim->v1 = self->ext.shield.unk7D + 0x30 + i * 64 / 8;
+            prim->v2 = prim->v3 =
+                self->ext.shield.unk7D + 0x30 + (i + 1) * 64 / 8 - 1;
+            prim->clut = 0x15F;
+            prim->priority = 0x1BE;
+            prim->drawMode |=
+                (DRAW_TPAGE2 + DRAW_TPAGE + DRAW_COLORS + DRAW_TRANSP);
+        }
+        self->ext.shield.unk92 = 0x120;
+        self->ext.shield.unk94 = 0;
+        self->ext.shield.unk84 = 0x10;
+        self->ext.shield.unk86 = 0;
+        self->ext.shield.unk8A = 0x40;
+        self->ext.shield.unk90 = 0x100;
+        SetSpeedX(FIX(-2));
+        self->velocityY = 0;
+        DestroyEntityWeapon(1);
+        g_api.PlaySfx(SFX_UNK_641);
+        g_unkGraphicsStruct.unk20 = 1;
+        self->step++;
+        break;
+    case 1:
+        DecelerateX(FIX(1.0 / 16));
+        self->velocityY -= FIX(0.15625);
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->rotX += 12;
+        self->rotY = self->rotX;
+
+        self->ext.shield.unk82 = self->rotX * 0x28 / 256;
+        if (self->rotX >= 0x100) {
+            self->ext.shield.unk82 = 0x28;
+            self->rotY = self->rotX = 0x100;
+            self->ext.shield.unk80 = 8;
+            self->step++;
+        }
+        break;
+    case 2:
+        if (--self->ext.shield.unk80 == 0) {
+            self->ext.shield.unk80 = 0x10;
+            self->step++;
+        }
+        break;
+    case 3:
+        prim = &g_PrimBuf[self->primIndex];
+        if (!(self->ext.shield.unk80 & 1)) {
+            prim->priority = 0x1BC;
+        } else {
+            prim->priority = self->zPriority - 2;
+        }
+        self->rotX -= 0x10;
+        if (self->rotX <= 0) {
+            self->rotX = 0;
+        }
+        self->rotY = self->rotX;
+        if (--self->ext.shield.unk80 == 0) {
+            self->animCurFrame = 0;
+            prim = prim->next;
+            prim = prim->next;
+            for (i = 0; i < 8; i++) {
+                prim->drawMode &= ~DRAW_HIDE;
+                prim = prim->next;
+            }
+            self->ext.shield.unk80 = 0x20;
+            g_api.PlaySfx(SFX_UNK_669);
+            self->step++;
+        }
+        break;
+    case 4:
+        self->ext.shield.unk82 += 8;
+        prim = &g_PrimBuf[self->primIndex];
+        if (prim->b3 > 8) {
+            prim->b3 -= 4;
+        }
+        prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
+            prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
+        self->rotX += 0x10;
+        if (self->rotX >= 0x100) {
+            self->rotX = 0x100;
+        }
+        self->ext.shield.unk86 = self->rotX * 32 / 256;
+        self->ext.shield.unk92 -= 12;
+        if (self->ext.shield.unk92 <= 0) {
+            self->ext.shield.unk92 = 0;
+            prim = &g_PrimBuf[self->primIndex];
+            prim = prim->next;
+            prim->drawMode &= ~DRAW_HIDE;
+            self->step++;
+        }
+        break;
+    case 5:
+        self->ext.shield.unk90 -= 0x10;
+        if (self->ext.shield.unk90 < 0) {
+            prim = &g_PrimBuf[self->primIndex];
+            prim->drawMode |= DRAW_HIDE;
+            self->ext.shield.unk90 = 0;
+            prim = &g_PrimBuf[self->primIndex];
+            prim = prim->next;
+            prim->drawMode |= DRAW_HIDE;
+            // Blueprint 88 is weapon function 9, func_ptr_80170024
+            unusedEnt = g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xE) + FACTORY(0, 88), 0);
+            g_unkGraphicsStruct.unk20 = 0;
+            self->step++;
+        }
+        break;
+    case 6:
+        self->ext.shield.unk90 += 8;
+        if (self->ext.shield.unk90 >= 0x80) {
+            self->ext.shield.unk80 = 4;
+            self->step++;
+        }
+        break;
+    case 7:
+        if (--self->ext.shield.unk80 == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    baseCoord = self->posX.i.hi;
+    selfY = self->posY.i.hi;
+    prim = &g_PrimBuf[self->primIndex];
+    if (prim->b3 > 8) {
+        if (g_Timer & 1) {
+            prim->drawMode |= DRAW_HIDE;
+        } else {
+            prim->drawMode &= ~DRAW_HIDE;
+        }
+    }
+    prim->x0 = prim->x2 = baseCoord - self->ext.shield.unk82;
+    prim->x1 = prim->x3 = (baseCoord + self->ext.shield.unk82) - 1;
+    prim->y0 = prim->y1 = selfY - self->ext.shield.unk82;
+    prim->y2 = prim->y3 = (selfY + self->ext.shield.unk82) - 1;
+    prim = prim->next;
+    top = prim->y0 = prim->y1 = selfY - self->ext.shield.unk86;
+    bottom = prim->y2 = prim->y3 = (selfY + self->ext.shield.unk86) - 1;
+    if (!self->facingLeft) {
+        back = prim->x0 = prim->x2 = baseCoord - self->ext.shield.unk84;
+        front = prim->x1 = prim->x3 = (baseCoord + self->ext.shield.unk84) - 1;
+    } else {
+        front = prim->x1 = prim->x3 = baseCoord - self->ext.shield.unk84;
+        back = prim->x0 = prim->x2 = (baseCoord + self->ext.shield.unk84) - 1;
+    }
+    front++;
+    bottom++;
+    prim = prim->next;
+    for (i = 0; i < 8; i++) {
+        angle = D_51000_8017ABF4[i];
+        baseCoord = (rsin(angle) >> 5) * self->ext.shield.unk92 / 256;
+        prim->x0 = back + baseCoord;
+        prim->x1 = (front + baseCoord) - 1;
+        angle = D_51000_8017ABF4[(i + 1) % 8];
+        baseCoord = (rsin(angle) >> 5) * self->ext.shield.unk92 / 256;
+        prim->x2 = back + baseCoord;
+        prim->x3 = (front + baseCoord) - 1;
+        prim->y0 = prim->y1 = top + (((bottom - top) * i) / 8);
+        prim->y2 = prim->y3 = top + (((bottom - top) * (i + 1)) / 8);
+        angle = D_51000_8017ABF4[(i + 6) % 8];
+        baseCoord = (rsin(angle) >> 5) * self->ext.shield.unk94 / 256;
+        prim->y0 += baseCoord;
+        prim->y2 += baseCoord;
+        angle = D_51000_8017ABF4[(i + 7) % 8];
+        baseCoord = (rsin(angle) >> 5) * self->ext.shield.unk94 / 256;
+        prim->y1 += baseCoord;
+        prim->y3 += baseCoord;
+        angle = D_51000_8017ABF4[i];
+        prim->g0 = prim->b0 = prim->g1 = prim->b1 = prim->b3 =
+            ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
+        prim->r0 = prim->r1 = 0;
+        angle = D_51000_8017ABF4[(i + 1) % 8];
+        // @bug: Writing to prim->b3 twice
+        prim->g2 = prim->b2 = prim->g3 = prim->b3 = prim->b3 =
+            ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
+        prim->r2 = prim->r3 = 0;
+        D_51000_8017ABF4[i] += self->ext.shield.unk8A;
+        prim = prim->next;
+    }
+}
 
 static void func_ptr_80170024(Entity* self) {
     Collider collider;
@@ -363,7 +624,7 @@ static void func_ptr_80170024(Entity* self) {
         break;
     // Not a switch case, but `break` skips this, so we put it in the switch.
     make_other_entity:
-        g_api.PlaySfx(NA_SE_BREAK_CANDLE);
+        g_api.PlaySfx(SFX_CANDLE_HIT);
         self->step = 3;
         self->unk4C = D_51000_8017ABE8;
         self->animFrameDuration = self->animFrameIdx = 0;

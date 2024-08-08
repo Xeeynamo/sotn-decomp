@@ -1,5 +1,5 @@
-
 #include "dra.h"
+#include "dra_bss.h"
 #include "sfx.h"
 
 void PlayerStepJump(void) {
@@ -83,8 +83,8 @@ void PlayerStepJump(void) {
                 SetPlayerAnim((u8)D_800ACF7C[stepSlot + 1]);
                 func_8010FAF4();
                 g_Player.unk44 = 1;
-                D_80138FC8 = 0xFE;
-                D_80138FCA = 0x10;
+                g_ButtonCombo[COMBO_BF].buttonsCorrect = 0xFE;
+                g_ButtonCombo[COMBO_BF].timer = 0x10;
             }
         } else if (
             (PLAYER.animFrameIdx == 4) && (PLAYER.animFrameDuration == 1)) {
@@ -463,7 +463,7 @@ void func_801139CC(s32 arg0) {
 
     if (arg0 & 1) {
         func_80102CD8(3);
-        PlaySfx(NA_SE_SECRET_STAIRS);
+        PlaySfx(SFX_WALL_DEBRIS_B);
     }
     if (arg0 & 2) {
         PLAYER.velocityX = 0;
@@ -930,7 +930,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
                     g_CurrentEntity, FACTORY(0x900, 4), 0);
                 PLAYER.posY.i.hi -= 0x15;
                 PLAYER.posX.i.hi -= var_s0;
-                PlaySfx(NA_SE_EN_ROCK_BREAK);
+                PlaySfx(SFX_WALL_DEBRIS_B);
                 func_80102CD8(2);
                 PLAYER.step_s = 1;
                 if (g_Player.unk52 == 0xF &&
@@ -944,7 +944,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         if (PLAYER.step_s == 0xF) {
             g_Player.D_80072F00[8] = 8;
             SetPlayerAnim(0x3F);
-            PlaySfx(NA_SE_EN_ROCK_BREAK);
+            PlaySfx(SFX_WALL_DEBRIS_B);
             PLAYER.velocityY = FIX(-2.5);
             func_80102CD8(2);
             PLAYER.step_s = 3;
@@ -1067,7 +1067,7 @@ void func_80114DF4(s32 arg0) {
             PLAYER.velocityY = 0;
             PLAYER.velocityX = 0;
             func_80102CD8(1);
-            PlaySfx(NA_SE_EN_ROCK_BREAK);
+            PlaySfx(SFX_WALL_DEBRIS_B);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 39), 0);
 
             animVariant = rand() % 64;
@@ -1112,7 +1112,7 @@ void func_80114DF4(s32 arg0) {
 
         if (!(g_Player.unk04 & 1)) {
             func_80102CD8(1);
-            PlaySfx(NA_SE_EN_ROCK_BREAK);
+            PlaySfx(SFX_WALL_DEBRIS_B);
         }
 
         PLAYER.velocityY = 0;
