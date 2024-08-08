@@ -391,8 +391,13 @@ void func_80166784(Entity* self) {
         self->flags = 0x04070000;
         self->ext.et_80166784.unk8C = 0x500;
 #ifdef VERSION_PC
+#ifdef _MSC_VER
+        self->ext.et_80166784.unk7C = *(f32*)&self->posX.val;
+        self->ext.et_80166784.unk80 = *(f32*)&self->posY.val;
+#else
         self->ext.et_80166784.unk7C = (f32)self->posX.val;
         self->ext.et_80166784.unk80 = (f32)self->posY.val;
+#endif()
 #else
         self->ext.et_80166784.unk7C = self->posX.val;
         self->ext.et_80166784.unk80 = self->posY.val;
@@ -629,8 +634,13 @@ void func_80166784(Entity* self) {
         }
     }
 #ifdef VERSION_PC
+#ifdef _MSC_VER
+    self->ext.et_80166784.unk7C = *(f32*)&temp_s6;
+    self->ext.et_80166784.unk80 = *(f32*)&sp38;
+#else
     self->ext.et_80166784.unk7C = (f32)temp_s6;
     self->ext.et_80166784.unk80 = (f32)sp38;
+#endif
 #else
     self->ext.et_80166784.unk7C = temp_s6;
     self->ext.et_80166784.unk80 = sp38;
