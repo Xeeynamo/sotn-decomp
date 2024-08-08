@@ -526,3 +526,8 @@ u16* func_80106A28(u32 arg0, u16 kind) {
     NOT_IMPLEMENTED;
     return g_FontCharData;
 }
+
+// ric stubs
+
+SubweaponDef D_80154688[1];
+FactoryBlueprint g_RicFactoryBlueprints[1];

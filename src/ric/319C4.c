@@ -136,13 +136,18 @@ void func_8016D9C4(Entity* self) {
                 angleChange = -0x80;
             }
             primLine->angle = (primLine->angle - angleChange) & 0xFFF;
+#ifdef VERSION_PC
+            primLine->velocityX = (f32)(rcos(primLine->angle) << 8);
+            primLine->velocityY = (f32) - (rsin(primLine->angle) << 8);
+#else
             primLine->velocityX = (rcos(primLine->angle) << 8);
             primLine->velocityY = -(rsin(primLine->angle) << 8);
+#endif
             primLine->preciseX.val += primLine->velocityX.val;
             primLine->preciseY.val += primLine->velocityY.val;
             self->posX.i.hi = primLine->preciseX.i.hi;
             self->posY.i.hi = primLine->preciseY.i.hi;
-            CreateEntFactoryFromEntity(self, FACTORY(0, 69), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(0, 69), 0);
             if (primLine->preciseY.val < 0) {
                 primLine->delay = 0;
                 primLine->drawMode |= 8;
@@ -269,7 +274,7 @@ void func_8016E324(Entity* entity) {
         if ((entity->ext.generic.unk7C.s) == 0) {
         case 3:
         case 5:
-            CreateEntFactoryFromEntity(entity, FACTORY(0, 57), 0);
+            RicCreateEntFactoryFromEntity(entity, FACTORY(0, 57), 0);
             entity->step++;
         case 2:
         case 4:
@@ -279,7 +284,7 @@ void func_8016E324(Entity* entity) {
                 entity->ext.generic.unk7C.s = 0;
                 entity->posX.val = FIX(128.0);
                 entity->posY.val = 0;
-                CreateEntFactoryFromEntity(entity, FACTORY(0x100, 4), 0);
+                RicCreateEntFactoryFromEntity(entity, FACTORY(0x100, 4), 0);
                 entity->step++;
             }
         }
@@ -290,7 +295,7 @@ void func_8016E324(Entity* entity) {
         if (entity->ext.generic.unk7C.s >= 16) {
             DestroyEntity(entity);
             g_Player.unk4E = 1;
-            CreateEntFactoryFromEntity(entity, FACTORY(0, 58), 0);
+            RicCreateEntFactoryFromEntity(entity, FACTORY(0, 58), 0);
         }
         break;
     }
@@ -510,7 +515,7 @@ void func_8016E9E4(Entity* self) {
         self->ext.et_8016E9E4.unk7C =
             (self->ext.et_8016E9E4.unk7C + 0x80) & 0xFFF;
         if (++self->ext.et_8016E9E4.unk82 >= 0x1E) {
-            CreateEntFactoryFromEntity(self, FACTORY(0, 60), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(0, 60), 0);
             self->ext.et_8016E9E4.unk82 = 0;
             self->step++;
         }
@@ -1023,7 +1028,7 @@ void StopwatchCrashDoneSparkle(Entity* self) {
                     selfY = self->posY.i.hi;
                     self->posX.i.hi = self->ext.et_stopWatchSparkle.unk90;
                     self->posY.i.hi = self->ext.et_stopWatchSparkle.unk92;
-                    CreateEntFactoryFromEntity(self, FACTORY(0, 73), 0);
+                    RicCreateEntFactoryFromEntity(self, FACTORY(0, 73), 0);
                     self->posX.i.hi = selfX;
                     self->posY.i.hi = selfY;
                 } else {
@@ -1081,7 +1086,7 @@ void func_801705EC(Entity* entity) {
     case 7:
         temp = entity->ext.generic.unk7E.modeU16 + 1;
         entity->ext.generic.unk7E.modeU16 = temp;
-        CreateEntFactoryFromEntity(entity, FACTORY(temp * 0x100, 63), 0);
+        RicCreateEntFactoryFromEntity(entity, FACTORY(temp * 0x100, 63), 0);
         entity->ext.generic.unk7C.s = 0;
         entity->step++;
         break;
@@ -1275,7 +1280,7 @@ void func_8017091C(Entity* self) {
     }
 }
 
-void EntityStopWatchExpandingCircle(Entity* self) {
+void RicEntityStopWatchExpandingCircle(Entity* self) {
     Primitive* prim;
     s16 rand_angle;
     s16 xCoord;
@@ -1380,7 +1385,7 @@ void EntityStopWatchExpandingCircle(Entity* self) {
         }
         break;
     case 3:
-        CreateEntFactoryFromEntity(
+        RicCreateEntFactoryFromEntity(
             self, FACTORY(D_801758B0[self->ext.et_80170F64.unk7C] * 0x100, 68),
             0);
         if (++self->ext.et_80170F64.unk7C >= 8) {
@@ -1558,7 +1563,7 @@ void func_801719A4(Entity* self) {
         prim->priority = PLAYER.zPriority + 3;
         prim->drawMode = 0x10A;
         if (self->params & 0xFF00) {
-            CreateEntFactoryFromEntity(self, FACTORY(0, 66), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(0, 66), 0);
             D_801758D0 = self->ext.et_801719A4.unk94 = self->params >> 8;
             if (self->ext.et_801719A4.unk94 < 4) {
                 (&D_801758D0)[self->ext.et_801719A4.unk94] = (u32)self;
@@ -1568,7 +1573,7 @@ void func_801719A4(Entity* self) {
                     D_801758CC[self->ext.et_801719A4.unk94];
             }
         } else {
-            CreateEntFactoryFromEntity(self, FACTORY(0, 64), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(0, 64), 0);
             self->ext.et_801719A4.unk94 = 0;
         }
         self->ext.et_801719A4.unkB0 = 6;
@@ -1647,7 +1652,7 @@ void func_801719A4(Entity* self) {
         self->ext.et_801719A4.unk7C = 0;
         if (self->ext.et_801719A4.unk94 != 0) {
             self->step = 7;
-            CreateEntFactoryFromEntity(self, FACTORY(0, 72), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(0, 72), 0);
         } else {
             self->step++;
         }
@@ -1666,7 +1671,7 @@ void func_801719A4(Entity* self) {
         break;
     case 6:
         if (++self->ext.et_801719A4.unk7C >= 0xF) {
-            CreateEntFactoryFromEntity(self, FACTORY(0x700, 4), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(0x700, 4), 0);
             self->step++;
         }
         break;
@@ -1973,7 +1978,7 @@ void func_80172AE8(Entity* entity) {
             entity->ext.generic.unk7E.modeU8.unk0;
 }
 
-void EntitySubwpnBible(Entity* self) {
+void RicEntitySubwpnBible(Entity* self) {
     Primitive* prim;
     s16 left;
     s16 top;
@@ -2099,7 +2104,7 @@ void EntitySubwpnBible(Entity* self) {
         prim->y0 = prim->y1 = top;
         prim->y2 = prim->y3 = bottom;
         prim->priority = self->zPriority;
-        CreateEntFactoryFromEntity(self, FACTORY(0, 62), 0);
+        RicCreateEntFactoryFromEntity(self, FACTORY(0, 62), 0);
         if (g_GameTimer % 10 == 0) {
             g_api.PlaySfx(BIBLE_SUBWPN_SWOOSH);
         }
@@ -2109,7 +2114,7 @@ void EntitySubwpnBible(Entity* self) {
 static const SVECTOR D_80156C50 = {0x0000, 0x0000, 0x0000, 0x0000};
 static const SVECTOR D_80156C58 = {0xFFA0, 0x0000, 0x0000, 0x0000};
 
-void EntityGiantSpinningCross(Entity* self) {
+void RicEntityGiantSpinningCross(Entity* self) {
     MATRIX m;
     SVECTOR rot;
     VECTOR trans1;
