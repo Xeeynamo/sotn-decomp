@@ -346,11 +346,27 @@ extern u8 g_BmpCastleMap[0x20000];
 #define SAVE_FLAG_CLEAR (1)
 #define SAVE_FLAG_REPLAY (2)
 
+#define PORT_COUNT (2)
+#define BLOCK_PER_CARD (15)
+#define CARD_BLOCK_SIZE (8192)
+
+typedef struct {
+    /* 0x000 */ struct DIRENTRY entries[BLOCK_PER_CARD];
+    /* 0x258 */ u32 unk258;
+    /* 0x25C */ u32 unk25C;
+    /* 0x260 */ u32 nBlockUsed;
+    /* 0x264 */ s32 nFreeBlock;
+    /* 0x268 */ u8 blocks[BLOCK_PER_CARD];
+} MemcardInfo; /* size=0x278 */
+
 #if defined(VERSION_US)
 #define MEMCARD_ID "BASLUS-00067DRAX00"
 #elif defined(VERSION_HD)
 #define MEMCARD_ID "BISLPM-86023DRAX00"
 #endif
+
+#define ICON_SLOT_NUM 32
+#define SPU_VOICE_NUM 24
 
 typedef enum {
     Game_Init,

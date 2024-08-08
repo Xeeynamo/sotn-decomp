@@ -9,6 +9,9 @@
 #include "cdc.h"
 #include "../../main/psxsdk/libsnd/libsnd_i.h"
 
+// adjust SS_SEQ_TABSIZ in include/psxsdk/libsnd.h accordingly
+static_assert(sizeof(SeqStruct) == 192, "SS_SEQ_TABSIZ check");
+
 PS_SPU* SPU = nullptr;
 
 struct WriteEntry {

@@ -1,4 +1,5 @@
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
 #include "sfx.h"
 
@@ -185,6 +186,22 @@ static unkStr_8011E4BC* D_800ADB98[] = {
 };
 
 extern Unkstruct_800ADEF0 D_800ADEF0[];
+
+// BSS
+extern s32 D_8013808C;
+extern s32 D_80138090;
+extern mistStruct D_80138094[16];
+extern s16 D_801381D4;
+extern s16 D_801381D8;
+extern s16 D_801381DC;
+extern s16 D_801381E0;
+extern s16 D_801381E4;
+extern s16 D_801381E8;
+extern s16 D_801381EC;
+extern s16 D_801381F0;
+extern Primitive D_801381F4[8];
+extern s32 D_80138394;
+extern s32 D_80138398;
 
 void func_8011E4BC(Entity* self) {
     byte stackpad[0x28];
@@ -1773,7 +1790,7 @@ void EntityMist(Entity* self) {
         }
         prim = &g_PrimBuf[self->primIndex];
         mistPrim = D_801381F4;
-        for (i = 0; i < 8; i++, mistPrim++) {
+        for (i = 0; i < LEN(D_801381F4); i++, mistPrim++) {
             *mistPrim = *prim;
             prim = prim->next;
         }

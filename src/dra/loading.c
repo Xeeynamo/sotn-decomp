@@ -1,4 +1,5 @@
 #include "dra.h"
+#include "dra_bss.h"
 #include "sfx.h"
 
 RECT D_800A0240 = {0x0340, 0x0180, 64, 64};
@@ -153,6 +154,9 @@ s32 func_800E6300(void) {
     }
     return 0;
 }
+
+// BSS
+extern NowLoadingModel g_NowLoadingModel;
 
 void HandleNowLoading(void) {
     void (*pfnWeapon)(u8);

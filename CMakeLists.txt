@@ -213,6 +213,7 @@ set(SOURCE_FILES_DRA
     src/dra/d_24CEC.c
     src/dra/d_2F324.c
     src/dra/d_3B0D4.c
+    src/dra/bss.c
 )
 
 set(SOURCE_FILES_RIC

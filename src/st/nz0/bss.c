@@ -1,4 +1,4 @@
-#include "common.h"
+#include <game.h>
 
 u32 D_801CAA14[24];
 u32 g_LayoutObjHorizontal;
@@ -33,4 +33,4 @@ u32 D_801CB6C8[27];
 u16 g_mariaCutsceneFlags;
 u16 D_801CB736[3];
 u32 D_801CB73C;
-u32 g_ItemIconSlots[16];
+u16 g_ItemIconSlots[ICON_SLOT_NUM];

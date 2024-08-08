@@ -4,6 +4,7 @@
 
 #include "common.h"
 
+struct Entity;
 typedef void (*PfnEntityUpdate)(struct Entity*);
 
 typedef union {
@@ -1341,6 +1342,10 @@ typedef struct {
     s16 unk80;
 } ET_Dissolve;
 
+typedef struct {
+    u16 unk7C;
+} ET_LockCamera;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1463,4 +1468,5 @@ typedef union { // offset=0x7C
     ET_HPNumberMove hpNumMove;
     ET_GuardText guardText;
     ET_Dissolve dissolve;
+    ET_LockCamera lockCamera;
 } Ext;

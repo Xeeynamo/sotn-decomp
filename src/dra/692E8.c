@@ -1,4 +1,5 @@
 #include "dra.h"
+#include "dra_bss.h"
 #include "sfx.h"
 #include "player.h"
 
@@ -78,6 +79,13 @@ Point16 D_800ACEE0[] = {
     {7, 24},  {7, 17},  {7, 9},  {7, 1},  {7, -7},  {7, -14},  {7, -21},
     {-7, 24}, {-7, 17}, {-7, 9}, {-7, 1}, {-7, -7}, {-7, -14}, {-7, -21},
 };
+
+// BSS
+extern s32 D_80137FB4;
+extern s32 D_80137FB8;
+#if defined(VERSION_US)
+extern s32 D_80137FBC;
+#endif
 
 void func_8010C36C(void);
 void func_8010C9F4(void);
@@ -183,7 +191,7 @@ void func_80109594() {
         *memset_ptr++ = 0;
     }
 
-    for (i = 0; i < 0x10; i++) {
+    for (i = 0; i < LEN(g_ButtonCombo); i++) {
         g_ButtonCombo[i].buttonsCorrect = 0;
         g_ButtonCombo[i].timer = 0;
     }
@@ -228,7 +236,7 @@ void func_80109594() {
     g_PlayerDraw->enableColorBlend = 0;
     func_800EA5E4(0x16);
     func_801092E8(0);
-    for (i = 0; i < 0x20; i++) {
+    for (i = 0; i < LEN(D_801396F8); i++) {
         radius = (rand() & 0x3FF) + 0x100;
         intensity = (rand() & 0xFF) + 0x100;
         val = rcos(radius) * 0x10;
