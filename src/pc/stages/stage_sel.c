@@ -2,8 +2,9 @@
 #include "../../st/sel/sel.h"
 #include "../pc.h"
 #include "sfx.h"
+#include <string.h>
 
-extern void* SEL_g_EntityGfxs[] = {NULL, NULL};
+void* SEL_g_EntityGfxs[] = {NULL, NULL};
 
 // stubs
 RECT D_80182584 = {0};
