@@ -1,4 +1,5 @@
 #include "dra.h"
+#include "dra_bss.h"
 #include "menu.h"
 #include "sfx.h"
 
@@ -224,6 +225,21 @@ u8 D_800A2C0C[] = {
 
 u8* D_800A2D44[] = {D_800A2C0C};
 
+// BSS
+extern s32 D_80137598;
+extern s32 D_8013759C;
+extern s32 D_801375A0;
+extern s32 D_801375A4;
+extern s32 D_801375A8;
+extern s32 D_801375AC;
+extern s32 D_801375B0;
+extern s32 D_801375B4;
+extern s32 D_801375B8;
+extern RoomLoadDefHolder D_801375BC;
+extern s32 D_801375C0;
+extern s32 D_801375C4;
+extern s32 D_801375C8;
+
 s32 func_800F087C(u32 chunkX, u32 chunkY) {
     RoomBossTeleport* phi_s1;
     s32 res;
@@ -328,9 +344,6 @@ s32 SetNextRoomToLoad(u32 x, u32 y) {
 }
 
 extern s16 D_80072F98;
-extern s32 D_801375A4;
-extern s32 D_801375C0;
-extern s32 D_801375C4;
 
 s32 func_800F0CD8(s32 arg0) {
     s32 var_s0;
@@ -1418,8 +1431,8 @@ void func_800F298C(void) {
                 }
             }
             func_80121F14(D_801375B4 << 0x10, D_801375B8 << 0x10);
-            D_801375A4 = D_801375A6;
-            D_801375A8 = D_801375AA;
+            D_801375A4 = D_801375A4 >> 16;
+            D_801375A8 = D_801375A8 >> 16;
             // Note: g_PrimBuf is MAX_PRIM_COUNT=1280 total in size.
             for (i = 0, prim = &g_PrimBuf[0]; i < 1024; i++, prim++) {
                 if (prim->drawMode & DRAW_UNK02) {
@@ -1702,8 +1715,8 @@ void func_800F298C(void) {
                 }
                 i = 0;
                 func_80121F14(-D_801375A4, -D_801375A8);
-                D_801375A4 = D_801375A6;
-                D_801375A8 = D_801375AA;
+                D_801375A4 = D_801375A4 >> 16;
+                D_801375A8 = D_801375A8 >> 16;
                 // Note: g_PrimBuf is MAX_PRIM_COUNT=1280 total in size.
                 for (i = 0, prim = &g_PrimBuf[0]; i < 1024; i++, prim++) {
                     if (prim->drawMode & DRAW_UNK_100) {

@@ -1,4 +1,5 @@
 #include <dra.h>
+#include "dra_bss.h"
 #include <log.h>
 #include "pc.h"
 #include <stdio.h>
@@ -6,8 +7,6 @@
 #include <string.h>
 #include <lba.h>
 #include "weapon_pc.h"
-
-#define VSYNC_UNK_LEN 1024
 
 s32 g_SimVabId = 0;
 
@@ -307,7 +306,7 @@ bool LoadFilePc(const struct FileUseContent* file) {
     return true;
 }
 
-int readToBuf(char* filename, char* dest) {
+int readToBuf(const char* filename, char* dest) {
     FILE* file = fopen(filename, "rb");
 
     if (file == NULL) {

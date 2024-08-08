@@ -1,7 +1,7 @@
 #include "ric.h"
 
 // Similar to same function in DRA
-void EntityEntFactory(Entity* self) {
+void RicEntityEntFactory(Entity* self) {
     Entity* newEntity;
     s16 unk96Copy;
     s16 i;
@@ -107,13 +107,13 @@ void EntityEntFactory(Entity* self) {
         endIndex = *(data_idx + 1);
 
         if (self->ext.factory.unk9C == 0) {
-            newEntity = GetFreeEntityReverse(startIndex, endIndex + 1);
+            newEntity = RicGetFreeEntityReverse(startIndex, endIndex + 1);
         } else if (self->ext.factory.unk9C == 4) {
             newEntity = &g_Entities[31];
         } else if (self->ext.factory.unk9C == 5) {
             newEntity = &g_Entities[48];
         } else {
-            newEntity = GetFreeEntity(startIndex, endIndex + 1);
+            newEntity = RicGetFreeEntity(startIndex, endIndex + 1);
         }
 
         if (newEntity == NULL) {
@@ -344,7 +344,7 @@ void func_80160FC4(Entity* self) {
         self->velocityY = D_80154C5C[paramsLo];
         if (paramsHi == 1) {
             self->velocityY = FIX(-0.25);
-            SetSpeedX(-0x3000);
+            RicSetSpeedX(-0x3000);
             self->rotX = D_80154C74[1] + 0x40;
         }
         if (paramsHi == 5) {
@@ -352,7 +352,7 @@ void func_80160FC4(Entity* self) {
         }
         if (paramsHi == 2) {
             self->velocityY = FIX(-0.5);
-            SetSpeedX(-0x3000);
+            RicSetSpeedX(-0x3000);
             self->rotX = D_80154C74[1] + 0x40;
         }
         self->rotY = self->rotX;
@@ -672,7 +672,7 @@ void func_80161C2C(Entity* self) {
         if ((self->animFrameIdx == 8) && (self->unk4C != D_80154C80)) {
             self->drawMode = DRAW_TPAGE;
             if (!(params & 1) && (self->animFrameDuration == step)) {
-                CreateEntFactoryFromEntity(self, FACTORY(0x400, 4), 0);
+                RicCreateEntFactoryFromEntity(self, FACTORY(0x400, 4), 0);
             }
         }
 
@@ -702,7 +702,7 @@ void func_80161EF8(Entity* self) {
     case 1:
         if ((self->animFrameIdx == 6) &&
             (self->animFrameDuration == self->step) && (rand() & 1)) {
-            CreateEntFactoryFromEntity(self, FACTORY(0, 4), 0);
+            RicCreateEntFactoryFromEntity(self, FACTORY(0, 4), 0);
         }
         self->posY.val += self->velocityY;
         if (self->animFrameDuration < 0) {

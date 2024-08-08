@@ -1,4 +1,5 @@
 #include <game.h>
+#include <stdlib.h>
 #include <string.h>
 #include <cJSON/cJSON.h>
 #include "stage_loader.h"

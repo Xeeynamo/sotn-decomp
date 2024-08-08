@@ -1,4 +1,5 @@
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
 #include "sfx.h"
 
@@ -117,7 +118,6 @@ SVECTOR* D_800A35D0[] = {
     &D_800A3380, &D_800A3388, &D_800A3390, &D_800A3398,
 };
 
-extern SVECTOR D_80137E70[14];
 SVECTOR* D_800A3608[] = {
     &D_80137E70[10], &D_80137E70[7],  &D_80137E70[6],  &D_80137E70[10],
     &D_80137E70[6],  &D_80137E70[0],  &D_80137E70[0],  &D_80137E70[6],
