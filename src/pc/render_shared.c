@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include "pc.h"
 #include <assert.h>
+#include <string.h>
 #include "sdl_defs.h"
 
 enum Renderers render_mode = RENDER_SOFT;

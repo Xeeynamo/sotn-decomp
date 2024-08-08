@@ -4,6 +4,7 @@
 
 #include "common.h"
 
+struct Entity;
 typedef void (*PfnEntityUpdate)(struct Entity*);
 
 typedef union {

@@ -307,7 +307,7 @@ bool LoadFilePc(const struct FileUseContent* file) {
     return true;
 }
 
-int readToBuf(char* filename, char* dest) {
+int readToBuf(const char* filename, char* dest) {
     FILE* file = fopen(filename, "rb");
 
     if (file == NULL) {
