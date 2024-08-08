@@ -342,7 +342,9 @@ func buildFrameSet(inputFileName, outputFileName, prefix string) error {
 	sb := strings.Builder{}
 	sb.WriteString("// clang-format off\n")
 	r := rand.New(rand.NewSource(int64(len(data))))
-	buildSpriteGroup(&sb, sprites, prefix, r)
+	if len(sprites) > 0 {
+		buildSpriteGroup(&sb, sprites, prefix, r)
+	}
 	return os.WriteFile(outputFileName, []byte(sb.String()), 0644)
 }
 
