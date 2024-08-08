@@ -26,14 +26,14 @@ s32 func_8015D250(s32 unused_arg) {
         return 5;
     }
 
-    CreateEntFactoryFromEntity(
+    RicCreateEntFactoryFromEntity(
         g_CurrentEntity, FACTORY(0, subweapon.blueprintNum), 0);
     g_Player.D_80072F00[10] = 4;
 
     switch (PLAYER.step) {
     case 25:
         PLAYER.step = 0;
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
         func_8015C920(D_801555E8);
         break;
 
@@ -78,7 +78,7 @@ bool func_8015D3CC(void) {
     for (i = 16; i < 31; i++) {
         DestroyEntity(&g_Entities[i]);
     }
-    if (CreateEntFactoryFromEntity(
+    if (RicCreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(poisoned * 0x100, 10), 0) != NULL) {
         if (poisoned) {
             g_api.PlaySfx(0x6B5);
@@ -106,7 +106,7 @@ bool func_8015D3CC(void) {
         case Player_RichterSprint:
             PLAYER.step = 0;
             func_8015C920(D_80155588);
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
+            RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
             break;
         case Player_Crouch:
             func_8015C920(D_801555A8);
@@ -143,10 +143,10 @@ bool func_8015D678(void) {
     }
     if (subWpn.blueprintNum != 0) {
         if (subWpnID == 1) {
-            subWpnEnt = CreateEntFactoryFromEntity(
+            subWpnEnt = RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(0x100, subWpn.blueprintNum), 0);
         } else {
-            subWpnEnt = CreateEntFactoryFromEntity(
+            subWpnEnt = RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(0, subWpn.blueprintNum), 0);
         }
     }
@@ -160,19 +160,19 @@ bool func_8015D678(void) {
     PLAYER.velocityX = 0;
     switch (subWpnID) {
     case SUBWPN_NONE:
-        SetPlayerStep(Player_FlameWhip);
+        RicSetPlayerStep(Player_FlameWhip);
         func_8015C920(D_80155840);
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x100, 36), 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x100, 36), 0);
         g_api.PlaySfx(0x6FC);
         break;
     case SUBWPN_DAGGER:
-        SetPlayerStep(Player_ThousandBlades);
+        RicSetPlayerStep(Player_ThousandBlades);
         func_8015C920(D_80155608);
         g_api.PlaySfx(0x6FC);
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x200, 33), 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x200, 33), 0);
         break;
     case SUBWPN_AXE:
-        SetPlayerStep(Player_Teleport);
+        RicSetPlayerStep(Player_Teleport);
         func_8015C920(D_80155658);
         PLAYER.velocityY = FIX(-4.6875);
         if (g_Player.unk72 != 0) {
@@ -180,34 +180,34 @@ bool func_8015D678(void) {
         }
         func_8015CC28();
         g_api.PlaySfx(0x6FC);
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x200, 33), 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x200, 33), 0);
         break;
     case SUBWPN_HOLYWATER:
-        SetPlayerStep(Player_Hydrostorm);
+        RicSetPlayerStep(Player_Hydrostorm);
         func_8015C920(D_801557AC);
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4000, 33), 0);
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4700, 33), 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4000, 33), 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4700, 33), 0);
         g_api.PlaySfx(0x700);
         break;
     case SUBWPN_REBNDSTONE:
     case SUBWPN_VIBHUTI:
     case SUBWPN_AGUNEA:
-        SetPlayerStep(Player_Unk27);
+        RicSetPlayerStep(Player_Unk27);
         func_8015C920(D_801557AC);
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4000, 33), 0);
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4700, 33), 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4000, 33), 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4700, 33), 0);
         g_api.PlaySfx(0x6FC);
         break;
     case SUBWPN_BIBLE:
     case SUBWPN_STOPWATCH:
-        SetPlayerStep(Player_Unk27);
+        RicSetPlayerStep(Player_Unk27);
         func_8015C920(D_801558E4);
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4000, 33), 0);
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4700, 33), 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4000, 33), 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4700, 33), 0);
         g_api.PlaySfx(0x6FC);
         break;
     case SUBWPN_CROSS:
-        SetPlayerStep(Player_Teleport);
+        RicSetPlayerStep(Player_Teleport);
         func_8015C920(D_80155658);
         PLAYER.velocityY = FIX(-4.6875);
         if (g_Player.unk72 != 0) {
@@ -215,48 +215,48 @@ bool func_8015D678(void) {
         }
         func_8015CC28();
         g_api.PlaySfx(0x701);
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x200, 33), 0);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x200, 33), 0);
         break;
     }
     g_Player.D_80072F00[12] = 4;
     return 1;
 }
 
-void func_8015D9B4() { SetPlayerStep(22); }
+void func_8015D9B4() { RicSetPlayerStep(22); }
 
 void func_8015D9D4(void) {
     func_8015C9CC();
-    SetPlayerStep(0x17);
+    RicSetPlayerStep(0x17);
     func_8015C920(&D_80155750);
     g_CurrentEntity->velocityY = 0;
-    SetSpeedX(0x58000);
+    RicSetSpeedX(0x58000);
     func_8015CC28();
-    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 25), 0);
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 25), 0);
     g_api.PlaySfx(0x707);
     g_Player.D_80072F00[12] = 4;
 }
 
 void func_8015DA60(void) {
     g_Player.unk44 = 0;
-    SetPlayerStep(0x1A);
+    RicSetPlayerStep(0x1A);
     func_8015C920(&D_8015577C);
     g_CurrentEntity->velocityY = FIX(-2);
-    SetSpeedX(0x58000);
+    RicSetSpeedX(0x58000);
     func_8015CC28();
-    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 25), 0);
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 25), 0);
     g_api.PlaySfx(0x6FA);
     g_Player.D_80072F00[12] = 4;
-    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 31), 0);
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 31), 0);
 }
 
 void DoBladeDash(void) {
-    SetPlayerStep(0x18);
+    RicSetPlayerStep(0x18);
     func_8015C920(&D_801557D8);
     g_CurrentEntity->velocityY = 0;
-    SetSpeedX(FIX(5.5));
+    RicSetSpeedX(FIX(5.5));
     g_Player.unk46 = 5;
     g_Player.D_80072F00[12] = 4;
-    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 26), 0);
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 26), 0);
     func_8015CC28();
     g_api.PlaySfx(0x6FB);
     g_api.PlaySfx(0x707);
@@ -339,7 +339,7 @@ bool func_8015DBB0(s32 arg_flags) {
                     PLAYER.step = 0;
                     PLAYER.unk4C = D_80155588;
                     if (g_Player.unk44 & 8) {
-                        CreateEntFactoryFromEntity(
+                        RicCreateEntFactoryFromEntity(
                             g_CurrentEntity, FACTORY(0, 0), 0);
                         g_api.PlaySfx(SFX_STOMP_HARD_B);
                     } else {
@@ -362,7 +362,7 @@ bool func_8015DBB0(s32 arg_flags) {
                     if (!(g_Player.unk44 & 8)) {
                         PLAYER.velocityX = 0;
                     } else {
-                        CreateEntFactoryFromEntity(
+                        RicCreateEntFactoryFromEntity(
                             g_CurrentEntity, FACTORY(0, 0), 0);
                         g_api.PlaySfx(SFX_STOMP_SOFT_A);
                     }
@@ -392,7 +392,8 @@ bool func_8015DBB0(s32 arg_flags) {
                 func_8015D9B4();
                 return true;
             } else {
-                CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
+                RicCreateEntFactoryFromEntity(
+                    g_CurrentEntity, FACTORY(0, 0), 0);
             }
             return true;
         }
@@ -460,7 +461,7 @@ bool func_8015DBB0(s32 arg_flags) {
     return false;
 }
 
-void DebugShowWaitInfo(const char* msg) {
+static void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint(msg);
     if (g_DebugWaitInfoTimer++ & 4) {
@@ -473,7 +474,7 @@ void DebugShowWaitInfo(const char* msg) {
     FntFlush(-1);
 }
 
-void DebugInputWait(const char* msg) {
+static void DebugInputWait(const char* msg) {
     while (PadRead(0))
         DebugShowWaitInfo(msg);
     while (PadRead(0) == 0)
@@ -492,7 +493,7 @@ void func_8015E484(void) {
         PLAYER.posY.i.hi -= 0x10;
         while (true) {
             for (i = 0; i < 4; ++i) {
-                g_api_CheckCollision((s16)(PLAYER.posX.i.hi + D_801545F4[i].x),
+                g_api.CheckCollision((s16)(PLAYER.posX.i.hi + D_801545F4[i].x),
                                      (s16)(PLAYER.posY.i.hi + D_801545F4[i].y),
                                      &g_Player.colliders[i], 0);
             }
@@ -518,7 +519,7 @@ void func_8015E484(void) {
         PLAYER.posY.i.hi += 0x20;
         while (true) {
             for (i = 0; i < 4; ++i) {
-                g_api_CheckCollision((s16)(PLAYER.posX.i.hi + D_801545E4[i].x),
+                g_api.CheckCollision((s16)(PLAYER.posX.i.hi + D_801545E4[i].x),
                                      (s16)(PLAYER.posY.i.hi + D_801545E4[i].y),
                                      &g_Player.colliders2[i], 0);
             }
@@ -1045,7 +1046,7 @@ void func_8015F680(void) {
     }
 }
 
-Entity* GetFreeEntity(s16 start, s16 end) {
+Entity* RicGetFreeEntity(s16 start, s16 end) {
     Entity* entity = &g_Entities[start];
     s16 i;
 
@@ -1057,7 +1058,7 @@ Entity* GetFreeEntity(s16 start, s16 end) {
     return NULL;
 }
 
-Entity* GetFreeEntityReverse(s16 start, s16 end) {
+Entity* RicGetFreeEntityReverse(s16 start, s16 end) {
     Entity* entity = &g_Entities[end - 1];
     s16 i;
     for (i = end - 1; i >= start; i--, entity--) {
@@ -1322,19 +1323,19 @@ void func_801603BC(void) {}
 
 PfnEntityUpdate g_RicEntityTbl[] = {
     func_801603B4,
-    EntityEntFactory,
+    RicEntityEntFactory,
     func_80160FC4,
     EntityCrossBoomerang,
     func_80169C10,
     func_8016147C,
     func_80169D74,
-    EntityHolyWater,
-    EntityHolyWaterFlame,
+    RicEntityHolyWater,
+    RicEntityHolyWaterFlame,
     func_80161C2C,
     func_80166784,
     EntityHydroStorm,
-    EntityGiantSpinningCross,
-    EntitySubwpnCrashCross,
+    RicEntityGiantSpinningCross,
+    RicEntitySubwpnCrashCross,
     func_80167A58,
     func_80167A60,
     func_8016779C,
@@ -1352,21 +1353,21 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     func_80162870,
     func_80160F0C,
     func_80162C7C,
-    EntityPlayerBlinkWhite,
-    EntitySubwpnCrashCrossParticles,
+    RicEntityPlayerBlinkWhite,
+    RicEntitySubwpnCrashCrossParticles,
     func_801641A0,
     EntityShrinkingPowerUpRing,
     func_80167A70,
     EntitySubwpnCrashAgunea,
     EntitySubwpnCrashAxe,
-    EntitySubwpnThrownDagger,
+    RicEntitySubwpnThrownDagger,
     func_80160D2C,
-    EntityHitByIce,
-    EntityHitByLightning,
-    EntitySubwpnReboundStone,
-    EntitySubwpnThrownVibhuti,
-    EntitySubwpnAgunea,
-    EntityAguneaHitEnemy,
+    RicEntityHitByIce,
+    RicEntityHitByLightning,
+    RicEntitySubwpnReboundStone,
+    RicEntitySubwpnThrownVibhuti,
+    RicEntitySubwpnAgunea,
+    RicEntityAguneaHitEnemy,
     EntitySubwpnCrashVibhuti,
     func_8016D328,
     func_8016E324,
@@ -1374,20 +1375,20 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     func_8016DF74,
     func_8016E9E4,
     func_8016E46C,
-    EntitySubwpnBible,
+    RicEntitySubwpnBible,
     func_80172AE8,
     func_801719A4,
     func_8017161C,
     func_801705EC,
     func_8016F198,
-    EntityStopWatchExpandingCircle,
+    RicEntityStopWatchExpandingCircle,
     func_8017091C,
     func_8016D920,
     func_801601DC,
     func_8015FEA8,
     StopwatchCrashDoneSparkle,
     func_80170548,
-    EntityTeleport,
+    RicEntityTeleport,
     func_801603B4};
 
 // Corresponding DRA function is func_8011A4D0
@@ -1465,13 +1466,13 @@ void func_801603C4(void) {
 }
 
 // Similar to the version in DRA but with some logic removed
-Entity* CreateEntFactoryFromEntity(
+Entity* RicCreateEntFactoryFromEntity(
     Entity* source, u32 factoryParams, s32 arg2) {
     /**
      * arg2 is unused, but needed to match other functions that call
      * this function, probably part of the code for a debug build
      */
-    Entity* entity = GetFreeEntity(8, 0x10);
+    Entity* entity = RicGetFreeEntity(8, 0x10);
 
     if (entity != NULL) {
         DestroyEntity(entity);

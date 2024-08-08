@@ -7,7 +7,7 @@ u32 D_80174F6C;
 u32 D_80174F70;
 u32 D_80174F74;
 u32 D_80174F78;
-u32 g_DebugWaitInfoTimer;
+static u32 g_DebugWaitInfoTimer;
 u32 D_80174F80;
 u32 D_80174F84;
 u32 D_80174F88;

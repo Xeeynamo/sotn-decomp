@@ -4,7 +4,7 @@
 // Entity ID 66. Made by blueprint 77 (the very last one).
 // Created in 3 spots in 2 functions (total of 6 calls).
 // DRA version is very similar.
-void EntityTeleport(Entity* self) {
+void RicEntityTeleport(Entity* self) {
     Primitive* prim;
     s32 selfUnk7C;
     s32 selfUnk80;
@@ -390,8 +390,18 @@ void func_80166784(Entity* self) {
         self->posY.val = var_s5;
         self->flags = 0x04070000;
         self->ext.et_80166784.unk8C = 0x500;
+#ifdef VERSION_PC
+#ifdef _MSC_VER
+        self->ext.et_80166784.unk7C = *(f32*)&self->posX.val;
+        self->ext.et_80166784.unk80 = *(f32*)&self->posY.val;
+#else
+        self->ext.et_80166784.unk7C = (f32)self->posX.val;
+        self->ext.et_80166784.unk80 = (f32)self->posY.val;
+#endif()
+#else
         self->ext.et_80166784.unk7C = self->posX.val;
         self->ext.et_80166784.unk80 = self->posY.val;
+#endif
         self->ext.et_80166784.unk98 = self->ext.et_80166784.unk7C.val;
         self->ext.et_80166784.unk9C = self->ext.et_80166784.unk80.val;
         self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
@@ -417,7 +427,7 @@ void func_80166784(Entity* self) {
             }
         } else if (self->ext.et_80166784.unkA4 != 0) {
             if (!(lowerParams & 1)) {
-                CreateEntFactoryFromEntity(self, FACTORY(0, 20), 0);
+                RicCreateEntFactoryFromEntity(self, FACTORY(0, 20), 0);
                 self->ext.et_80166784.unkA4 = 0;
             }
         }
@@ -458,7 +468,7 @@ void func_80166784(Entity* self) {
                     a0 = self;
                     a1 = FACTORY(0x100, 18);
                 }
-                CreateEntFactoryFromEntity(a0, a1, 0);
+                RicCreateEntFactoryFromEntity(a0, a1, 0);
             }
 
             self->ext.et_80166784.unk84 = 6;
@@ -540,7 +550,7 @@ void func_80166784(Entity* self) {
             case 6:
                 if (upperParams != 0) {
                     if (PLAYER.animFrameDuration == D_80155C78[lowerParams]) {
-                        CreateEntFactoryFromEntity(self, FACTORY(0, 20), 0);
+                        RicCreateEntFactoryFromEntity(self, FACTORY(0, 20), 0);
                     }
                 }
                 if (lowerParams == (0x10 - PLAYER.animFrameDuration)) {
@@ -623,8 +633,18 @@ void func_80166784(Entity* self) {
             self->posY.val = var_s5 + yDiff;
         }
     }
+#ifdef VERSION_PC
+#ifdef _MSC_VER
+    self->ext.et_80166784.unk7C = *(f32*)&temp_s6;
+    self->ext.et_80166784.unk80 = *(f32*)&sp38;
+#else
+    self->ext.et_80166784.unk7C = (f32)temp_s6;
+    self->ext.et_80166784.unk80 = (f32)sp38;
+#endif
+#else
     self->ext.et_80166784.unk7C = temp_s6;
     self->ext.et_80166784.unk80 = sp38;
+#endif
     self->ext.et_80166784.unkA0 = var_s7;
     self->ext.et_80166784.unk98 = self->posX.val;
     self->ext.et_80166784.unk9C = self->posY.val;
@@ -943,7 +963,7 @@ void EntityHydroStorm(Entity* self) {
 }
 
 // Copy of DRA function
-s32 CheckHolyWaterCollision(s32 baseY, s32 baseX) {
+s32 RicCheckHolyWaterCollision(s32 baseY, s32 baseX) {
     s16 x;
     s16 y;
     Collider res1;

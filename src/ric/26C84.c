@@ -36,7 +36,7 @@ void func_80162C84(Entity* entity) {
             func_8015C920(D_80154EF8);
             entity->velocityX = 0;
             entity->step++;
-            CreateEntFactoryFromEntity(entity, FACTORY(0x400, 0), 0);
+            RicCreateEntFactoryFromEntity(entity, FACTORY(0x400, 0), 0);
         }
         break;
 
@@ -51,7 +51,7 @@ void func_80162C84(Entity* entity) {
     case 3:
         entity->ext.generic.unk7C.s--;
         if ((entity->ext.generic.unk7C.s) == 0) {
-            CreateEntFactoryFromEntity(entity, FACTORY(0, 30), 0);
+            RicCreateEntFactoryFromEntity(entity, FACTORY(0, 30), 0);
             entity->step++;
         }
         break;
@@ -81,7 +81,7 @@ bool func_80162E9C(Entity* entity) {
 
 // EntityPlayerBlinkWhite (Richter's version).
 // Same general logic flow as in DRA but lots of missing cases.
-void EntityPlayerBlinkWhite(Entity* self) {
+void RicEntityPlayerBlinkWhite(Entity* self) {
     Primitive* prim;
     u8 xMargin;
     u8 yMargin;
@@ -665,7 +665,7 @@ void EntityShrinkingPowerUpRing(Entity* self) {
 
 // Entity ID #40. Created by blueprint 47. That factory comes from
 // RichterHandleDamage.
-void EntityHitByIce(Entity* self) {
+void RicEntityHitByIce(Entity* self) {
     s32 i;
     Primitive* prim;
     s16 angle;
@@ -870,7 +870,7 @@ void EntityHitByIce(Entity* self) {
     }
 }
 
-void EntityHitByLightning(Entity* self) {
+void RicEntityHitByLightning(Entity* self) {
     Primitive* prevPrim;
     Primitive* prim;
     s16 temp_s0;

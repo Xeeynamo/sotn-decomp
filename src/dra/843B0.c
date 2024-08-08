@@ -2,6 +2,11 @@
 #include "objects.h"
 #include "sfx.h"
 
+// BSS
+extern Point16 D_8013839C[32];
+extern s32 D_8013841C;
+extern RECT D_80138424;
+
 // teleport effect like when using library card (ID 0x42)
 void EntityTeleport(Entity* self) {
     Primitive* prim;
@@ -19,7 +24,7 @@ void EntityTeleport(Entity* self) {
     upperParams = self->params & 0xFE00;
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimitives(PRIM_GT4, 36);
+        self->primIndex = AllocPrimitives(PRIM_GT4, LEN(D_8013839C) + 4);
         if (self->primIndex == -1) {
             return;
         }
@@ -45,7 +50,7 @@ void EntityTeleport(Entity* self) {
             prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
             prim = prim->next;
         }
-        for (i = 0; i < 32; i++) {
+        for (i = 0; i < LEN(D_8013839C); i++) {
             xVar = PLAYER.posX.i.hi + (rand() % 28) - 14;
             yVar = rand();
             yVar = 0xE0 - (yVar & 0x3F);
@@ -196,7 +201,7 @@ void EntityTeleport(Entity* self) {
     func_80124164(prim, self->ext.teleport.unk88, yVar, selfUnk80, upperParams);
     prim = prim->next;
     if (wasCase3) {
-        for (i = 0; i < 32; i++) {
+        for (i = 0; i < LEN(D_8013839C); i++) {
             switch (prim->g0) {
             case 0:
                 if (--prim->g1 == 0) {

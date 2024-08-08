@@ -1,9 +1,7 @@
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
 #include "sfx.h"
-
-extern s32 D_8013AE90;
-extern s32 D_8013AEF4;
 
 void CdSoundCommand14(void) {
     s32 i;
@@ -383,7 +381,7 @@ void func_8013493C(s16 arg0, s16 arg1) {
 void func_801349F4(void) {
     s16 i;
 
-    for (i = 0; i < 4; i++) {
+    for (i = 0; i < NUM_CH; i++) {
         if (g_CurrentSfxScriptSfxId[i] == 0) {
             continue;
         }

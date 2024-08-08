@@ -1,4 +1,5 @@
 #include "dra.h"
+#include "dra_bss.h"
 #include "sfx.h"
 
 u16 g_ButtonMask[] = {

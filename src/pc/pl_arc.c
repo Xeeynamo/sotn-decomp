@@ -1,6 +1,8 @@
 #include <game.h>
 #include <log.h>
 #include "pc.h"
+#include <stdlib.h>
+#include <string.h>
 
 u8* g_PlOvlSpritesheet[256];
 static u8* sprite_data = NULL;
