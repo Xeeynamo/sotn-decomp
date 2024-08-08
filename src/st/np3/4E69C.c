@@ -222,7 +222,7 @@ void EntityHammer(Entity* self) {
             }
             if ((self->ext.GH_Props.unkB0[0] == 6) &&
                 (self->ext.GH_Props.unkB0[2] == 0)) {
-                func_801916C4(0x65D);
+                func_801916C4(SFX_FM_EXPLODE_D);
                 g_api_func_80102CD8(1);
             }
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
