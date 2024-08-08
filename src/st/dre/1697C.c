@@ -27,7 +27,7 @@ void EntityFadeToWhite1(Entity* self) {
     case 1:
         if (D_801A3F84 & 0x10) {
             g_PrimBuf[self->primIndex].drawMode = 0x35;
-            g_api.PlaySfx(SE_DRE_FADE_TO_WHITE);
+            g_api.PlaySfx(SFX_FM_EXPLODE_A); // Fade to white
             self->step++;
         }
         break;
