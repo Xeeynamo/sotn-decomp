@@ -107,7 +107,7 @@ bool InitGame(void) {
     api.AllocPrimitives = AllocPrimitives;
     api.CheckCollision = CheckCollision;
     api.func_80102CD8 = NULL;
-    api.UpdateAnim = NULL;
+    api.UpdateAnim = UpdateAnim;
     api.SetSpeedX = NULL;
     api.GetFreeEntity = NULL;
     api.GetEquipProperties = NULL;
