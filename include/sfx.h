@@ -180,7 +180,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define NA_SE_EN_GAIBON_SMALL_FIREBALL 0x652
 #define NA_SE_EN_GAIBON_BIG_FIREBALL 0x655
 #define NA_SE_EN_ZOMBIE_EXPLODE 0x65E
 #define NA_SE_EN_GAIBON_FLAME_OUT 0x65E
@@ -323,7 +322,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SFX_KARMA_COIN_HEADS 0x6B1
 
 // UNUSED SOUNDS
-#define SE_UNK_TE1_651 0x651
 #define SE_UNK_TE3_667 0x667
 #define SE_UNK_TE1_66F 0x66F
 #define SE_UNK_TE3_679 0x679

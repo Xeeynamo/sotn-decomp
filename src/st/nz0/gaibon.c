@@ -1,4 +1,5 @@
 #include "nz0.h"
+#include "sfx.h"
 
 #define SLOGRA self[-8]
 
@@ -217,7 +218,7 @@ void EntityGaibon(Entity* self) {
                 if (other != NULL) {
                     CreateEntityFromEntity(
                         E_GAIBON_SMALL_FIREBALL, self, other);
-                    func_801C29B0(NA_SE_EN_GAIBON_SMALL_FIREBALL);
+                    func_801C29B0(SFX_EXPLODE_FAST_A);
                     other->posY.i.hi -= 2;
                     if (self->facingLeft) {
                         other->posX.i.hi += 12;
@@ -310,7 +311,7 @@ void EntityGaibon(Entity* self) {
                     if (!self->ext.GS_Props.nearDeath) {
                         CreateEntityFromEntity(
                             E_GAIBON_SMALL_FIREBALL, self, other);
-                        func_801C29B0(NA_SE_EN_GAIBON_SMALL_FIREBALL);
+                        func_801C29B0(SFX_EXPLODE_FAST_A);
                     } else {
                         CreateEntityFromEntity(
                             E_GAIBON_BIG_FIREBALL, self, other);
