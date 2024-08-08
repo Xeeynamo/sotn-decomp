@@ -26,21 +26,6 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-return-type")
 endif()
 
-# TODO circumnavigate an optimization bug with MSVC
-if (MSVC)
-  set(CMAKE_CXX_FLAGS "/Od")
-  set(CMAKE_C_FLAGS "/Od")
-  set(CMAKE_CXX_FLAGS_DEBUG "/Od")
-  set(CMAKE_C_FLAGS_DEBUG "/Od")
-  set(CMAKE_CXX_FLAGS_RELEASE "/Od")
-  set(CMAKE_C_FLAGS_RELEASE "/Od")
-  set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/Od")
-  set(CMAKE_C_FLAGS_RELWITHDEBINFO "/Od")
-  set(CMAKE_CXX_FLAGS_MINSIZEREL "/Od")
-  set(CMAKE_C_FLAGS_MINSIZEREL "/Od")
-endif()
-
-
 find_package(SDL2 REQUIRED)
 
 set(SOURCE_FILES_PC
