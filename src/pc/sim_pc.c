@@ -1,4 +1,5 @@
 #include <dra.h>
+#include "dra_bss.h"
 #include <log.h>
 #include "pc.h"
 #include <stdio.h>

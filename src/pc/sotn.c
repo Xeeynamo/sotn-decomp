@@ -1,5 +1,6 @@
 #include "pc.h"
 #include "dra.h"
+#include "dra_bss.h"
 #include "servant.h"
 
 #include <stdio.h>
