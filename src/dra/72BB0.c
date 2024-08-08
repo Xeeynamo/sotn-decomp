@@ -1,5 +1,5 @@
-
 #include "dra.h"
+#include "dra_bss.h"
 #include "sfx.h"
 
 void PlayerStepJump(void) {
@@ -83,8 +83,8 @@ void PlayerStepJump(void) {
                 SetPlayerAnim((u8)D_800ACF7C[stepSlot + 1]);
                 func_8010FAF4();
                 g_Player.unk44 = 1;
-                D_80138FC8 = 0xFE;
-                D_80138FCA = 0x10;
+                g_ButtonCombo[COMBO_BF].buttonsCorrect = 0xFE;
+                g_ButtonCombo[COMBO_BF].timer = 0x10;
             }
         } else if (
             (PLAYER.animFrameIdx == 4) && (PLAYER.animFrameDuration == 1)) {

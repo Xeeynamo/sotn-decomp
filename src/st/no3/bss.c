@@ -1,4 +1,4 @@
-#include "common.h"
+#include <game.h>
 
 u32 D_801D70B0[24];
 u32 g_LayoutObjHorizontal;
@@ -32,4 +32,4 @@ u16 D_801D7D62;
 u32 D_801D7D64[27];
 u32 D_801D7DD0;
 u32 D_801D7DD4;
-u32 g_ItemIconSlots[16];
+u16 g_ItemIconSlots[ICON_SLOT_NUM];
