@@ -10,7 +10,7 @@ void func_80162C84(Entity* entity) {
         entity->zPriority = PLAYER.zPriority - 8;
         entity->palette = 0x8149;
         entity->animSet = ANIMSET_OVL(19);
-        func_8015C920(&D_80154ED4);
+        func_8015C920(D_80154ED4);
         entity->velocityX = FIX(-1.75);
         entity->posY.i.hi = 0xBB;
         entity->posX.i.hi = 0x148;
@@ -33,7 +33,7 @@ void func_80162C84(Entity* entity) {
             entity->ext.generic.unk7E.modeU16++;
         }
         if (entity->posX.i.hi < 0xE0) {
-            func_8015C920(&D_80154EF8);
+            func_8015C920(D_80154EF8);
             entity->velocityX = 0;
             entity->step++;
             CreateEntFactoryFromEntity(entity, FACTORY(0x400, 0), 0);
@@ -487,19 +487,20 @@ void EntityShrinkingPowerUpRing(Entity* self) {
     Primitive* prim2;
     s32 baseAngle;
     s32 i;
-    s16* loadedParams;
     s32 constE0 = 0xE0;
-
     u32 upperparams = self->params & 0x7F00;
+    s16* loadedParams = &D_8015519C[upperparams >> 8];
 
-    loadedParams = &D_8015519C[upperparams >> 8];
     rScale = loadedParams[2];
     gScale = loadedParams[3];
     bScale = loadedParams[4];
+
     gOffset = loadedParams[0];
     bOffset = loadedParams[1];
+
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = PLAYER.posY.i.hi;
+
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
@@ -507,12 +508,14 @@ void EntityShrinkingPowerUpRing(Entity* self) {
             DestroyEntity(self);
             return;
         }
+
         self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_40000 |
                       FLAG_UNK_10000;
         prim2 = prim1 = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 16; i++) {
             prim1 = prim1->next;
         }
+
         for (i = 0; i < 16; i++) {
             prim2->u0 = ((rcos((s16)(i << 8)) * 2) >> 8) + 0x20;
             prim2->v0 = -((rsin((s16)(i << 8)) * 2) >> 8) - 0x21;
@@ -535,28 +538,31 @@ void EntityShrinkingPowerUpRing(Entity* self) {
         self->ext.ricPowerRing.unk84 = self->ext.ricPowerRing.unk86 = 0x240;
         self->ext.ricPowerRing.unk8A = loadedParams[5];
         self->ext.ricPowerRing.unk88 = 0xC0;
-        self->step += 1;
+        self->step++;
         break;
+
     case 1:
         self->ext.ricPowerRing.unk7E += 0x40;
         self->ext.ricPowerRing.unk86 -= 10;
         if (self->ext.ricPowerRing.unk86 < 0) {
             self->ext.ricPowerRing.unk86 = 0;
             self->ext.ricPowerRing.unk7C = 0x20;
-            self->step += 1;
+            self->step++;
         }
         self->ext.ricPowerRing.unk84 = self->ext.ricPowerRing.unk86;
         self->ext.ricPowerRing.unk82 -= 5;
         self->ext.ricPowerRing.unk80 -= 5;
         break;
+
     case 2:
         self->ext.ricPowerRing.unk7E += 0x40;
         self->ext.ricPowerRing.unk82 -= 3;
         self->ext.ricPowerRing.unk80 -= 6;
         if (--self->ext.ricPowerRing.unk7C == 0) {
-            self->step += 1;
+            self->step++;
         }
         break;
+
     case 3:
         self->ext.ricPowerRing.unk7E = self->ext.ricPowerRing.unk7E + 0x40;
         self->ext.ricPowerRing.unk82 = self->ext.ricPowerRing.unk82 - 3;
@@ -568,9 +574,11 @@ void EntityShrinkingPowerUpRing(Entity* self) {
         }
         break;
     }
+
     sp38 = self->ext.ricPowerRing.unk8A;
     selfX = self->posX.i.hi;
     selfY = self->posY.i.hi;
+
     prim2 = prim1 = &g_PrimBuf[self->primIndex];
     for (i = 0; i < 16; i++) {
         prim1 = prim1->next;
@@ -657,7 +665,6 @@ void EntityShrinkingPowerUpRing(Entity* self) {
 
 // Entity ID #40. Created by blueprint 47. That factory comes from
 // RichterHandleDamage.
-
 void EntityHitByIce(Entity* self) {
     s32 i;
     Primitive* prim;
