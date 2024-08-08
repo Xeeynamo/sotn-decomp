@@ -90,7 +90,7 @@ extern u_long* D_80138784[]; // 487?
 extern s32 g_CurCdPos;
 extern u8 g_CdMode[];
 extern s32 g_KeyOffChannels;
-extern u8 g_CdCommandResult[];
+extern u8 g_CdCommandResult[8];
 extern s8 D_80138F64[SPU_VOICE_NUM];
 extern s32 D_80138F7C;
 extern s16 D_80138F80;

@@ -768,7 +768,7 @@ void func_800FEE6C(void) {
             (*p)--;
         }
         p++;
-    } while ((long long)p < (long long)&D_80139828[LEN(D_80139828)]);
+    } while ((long long)p < (long long)(D_80139828 + LEN(D_80139828)));
 }
 
 s32 HandleTransformationMP(TransformationForm form, CallMode mode) {
