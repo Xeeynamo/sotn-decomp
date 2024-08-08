@@ -1381,7 +1381,7 @@ bool func_8010FDF8(s32 branchFlags) {
                     func_8010E570(0);
                     func_8010FAF4();
                 label:
-                    PlaySfx(SFX_UNK_64C, 0x30, 0);
+                    PlaySfx(SFX_STOMP_SOFT_B, 0x30, 0);
                     return 1;
                 }
 
@@ -1396,7 +1396,7 @@ bool func_8010FDF8(s32 branchFlags) {
                     } else {
                         func_8010E570(0);
                     }
-                    PlaySfx(SFX_UNK_64C, 0x30, 0);
+                    PlaySfx(SFX_STOMP_SOFT_B, 0x30, 0);
                 }
 
                 func_8010FAF4();
@@ -1424,7 +1424,7 @@ bool func_8010FDF8(s32 branchFlags) {
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
                 func_8010E570(PLAYER.velocityX);
             } else {
-                PlaySfx(SFX_UNK_64C, 0x30, 0);
+                PlaySfx(SFX_STOMP_SOFT_B, 0x30, 0);
                 func_8010E570(0);
             }
             return 1;
