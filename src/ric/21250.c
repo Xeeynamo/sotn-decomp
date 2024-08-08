@@ -1,4 +1,5 @@
 #include "ric.h"
+#include "sfx.h"
 
 s32 func_8015D250(s32 unused_arg) {
     SubweaponDef subweapon;
@@ -307,14 +308,14 @@ bool func_8015DBB0(s32 arg_flags) {
             default:
                 if (g_Player.unk44 & 8) {
                     func_8015CCC8(3, PLAYER.velocityX);
-                    g_api.PlaySfx(0x64B);
+                    g_api.PlaySfx(SFX_STOMP_SOFT_A);
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0, 0), 0);
                     return true;
                 }
                 if (PLAYER.velocityY > 0x6E000) {
                     func_8015CCC8(1, 0);
-                    g_api.PlaySfx(0x64B);
+                    g_api.PlaySfx(SFX_STOMP_SOFT_A);
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0, 0), 0);
                 } else if (g_Player.padPressed & (PAD_LEFT | PAD_RIGHT)) {
@@ -331,7 +332,7 @@ bool func_8015DBB0(s32 arg_flags) {
                 if (PLAYER.velocityY > 0x6E000) {
                     PLAYER.step = 2;
                     PLAYER.unk4C = D_801555A8;
-                    g_api.PlaySfx(0x647);
+                    g_api.PlaySfx(SFX_STOMP_HARD_B);
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0, 0), 0);
                 } else {
@@ -340,7 +341,7 @@ bool func_8015DBB0(s32 arg_flags) {
                     if (g_Player.unk44 & 8) {
                         RicCreateEntFactoryFromEntity(
                             g_CurrentEntity, FACTORY(0, 0), 0);
-                        g_api.PlaySfx(0x647);
+                        g_api.PlaySfx(SFX_STOMP_HARD_B);
                     } else {
                         PLAYER.velocityX = 0;
                     }
@@ -352,7 +353,7 @@ bool func_8015DBB0(s32 arg_flags) {
                 if (PLAYER.velocityY > 0x6E000) {
                     PLAYER.step = 2;
                     PLAYER.unk4C = D_80155738;
-                    g_api.PlaySfx(0x64B);
+                    g_api.PlaySfx(SFX_STOMP_SOFT_A);
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0, 0), 0);
                 } else {
@@ -363,7 +364,7 @@ bool func_8015DBB0(s32 arg_flags) {
                     } else {
                         RicCreateEntFactoryFromEntity(
                             g_CurrentEntity, FACTORY(0, 0), 0);
-                        g_api.PlaySfx(0x64B);
+                        g_api.PlaySfx(SFX_STOMP_SOFT_A);
                     }
                 }
                 PLAYER.velocityY = 0;
@@ -371,7 +372,7 @@ bool func_8015DBB0(s32 arg_flags) {
                 return true;
             case 3: /* switch 1 */
                 if ((PLAYER.velocityY > 0x6E000) || (g_Player.unk44 & 8)) {
-                    g_api.PlaySfx(0x64B);
+                    g_api.PlaySfx(SFX_STOMP_SOFT_A);
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0, 0), 0);
                 }
@@ -386,7 +387,7 @@ bool func_8015DBB0(s32 arg_flags) {
             }
         } else if ((arg_flags & 0x20000) && (g_Player.pl_vram_flag & 1)) {
             func_8015CCC8(1, PLAYER.velocityX);
-            g_api.PlaySfx(0x64B);
+            g_api.PlaySfx(SFX_STOMP_SOFT_A);
             if ((g_Player.unk5C != 0) && (g_Status.hp < 2)) {
                 func_8015D9B4();
                 return true;

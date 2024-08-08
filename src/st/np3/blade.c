@@ -286,7 +286,7 @@ void EntityBlade(Entity* self) {
             collider.unk18 = 9;
             func_801CE04C(otherEnt, &collider);
             if (otherEnt->ext.GH_Props.unk88 != 0) {
-                func_801916C4(0x648);
+                func_801916C4(SFX_STOMP_HARD_C);
                 otherEnt->posY.i.hi += collider.unk18;
                 self->ext.GH_Props.unk84 ^= 1;
                 func_801CE228();
@@ -503,9 +503,9 @@ void EntityBlade(Entity* self) {
         case 5:
             if (!(g_Timer & 7)) {
                 if (Random() & 1) {
-                    func_801916C4(0x65B);
+                    func_801916C4(SFX_FM_EXPLODE_B);
                 } else {
-                    func_801916C4(0x657);
+                    func_801916C4(SFX_EXPLODE_D);
                 }
             }
             if (--self->ext.GH_Props.unk80 == 0) {

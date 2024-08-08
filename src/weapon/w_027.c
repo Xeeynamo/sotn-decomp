@@ -2,6 +2,7 @@
 // Medusa shield, Unknown#211
 #include "weapon_private.h"
 #include "shared.h"
+#include "sfx.h"
 
 extern SpriteParts D_C1000_8017A040[];
 extern s8 D_C1000_8017AC0C[];
@@ -226,7 +227,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         SetSpeedX(FIX(-2));
         self->velocityY = 0;
         DestroyEntityWeapon(1);
-        g_api.PlaySfx(0x641);
+        g_api.PlaySfx(SFX_ANIME_SWORD_C);
         g_unkGraphicsStruct.unk20 = 1;
         self->step++;
         break;

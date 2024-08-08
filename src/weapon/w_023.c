@@ -2,6 +2,7 @@
 // Herald shield, Unknown#207
 #include "weapon_private.h"
 #include "shared.h"
+#include "sfx.h"
 
 extern SpriteParts D_A5000_8017A040[];
 extern s8 D_A5000_8017AAD8;
@@ -267,7 +268,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         SetSpeedX(FIX(-2));
         self->velocityY = 0;
         DestroyEntityWeapon(1);
-        g_api.PlaySfx(SFX_UNK_641);
+        g_api.PlaySfx(SFX_ANIME_SWORD_C);
         g_unkGraphicsStruct.unk20 = 1;
         self->step++;
         break;

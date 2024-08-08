@@ -1391,13 +1391,13 @@ bool func_8010FDF8(s32 branchFlags) {
                     func_8010E570(0);
                     func_8010FAF4();
                 label:
-                    PlaySfx(SFX_UNK_64C, 0x30, 0);
+                    PlaySfx(SFX_STOMP_SOFT_B, 0x30, 0);
                     return 1;
                 }
 
                 if (PLAYER.velocityY > 0x6E000) {
                     func_8010E470(1, 0);
-                    func_80134714(SFX_UNK_647);
+                    func_80134714(SFX_STOMP_HARD_B);
                     CreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0, 0), 0);
                 } else {
@@ -1406,7 +1406,7 @@ bool func_8010FDF8(s32 branchFlags) {
                     } else {
                         func_8010E570(0);
                     }
-                    PlaySfx(SFX_UNK_64C, 0x30, 0);
+                    PlaySfx(SFX_STOMP_SOFT_B, 0x30, 0);
                 }
 
                 func_8010FAF4();
@@ -1419,7 +1419,7 @@ bool func_8010FDF8(s32 branchFlags) {
                 } else {
                     func_8010E470(1, 0);
                 }
-                PlaySfx(SFX_UNK_647);
+                PlaySfx(SFX_STOMP_HARD_B);
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
                 return 1;
             }
@@ -1430,18 +1430,18 @@ bool func_8010FDF8(s32 branchFlags) {
             }
 
             if (abs(PLAYER.velocityX) > 0x20000) {
-                PlaySfx(SFX_UNK_647);
+                PlaySfx(SFX_STOMP_HARD_B);
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
                 func_8010E570(PLAYER.velocityX);
             } else {
-                PlaySfx(SFX_UNK_64C, 0x30, 0);
+                PlaySfx(SFX_STOMP_SOFT_B, 0x30, 0);
                 func_8010E570(0);
             }
             return 1;
         }
         if (branchFlags & 0x20000 && g_Player.pl_vram_flag & 1) {
             func_8010E470(3, PLAYER.velocityX);
-            PlaySfx(SFX_UNK_647);
+            PlaySfx(SFX_STOMP_HARD_B);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
             return 1;
         }

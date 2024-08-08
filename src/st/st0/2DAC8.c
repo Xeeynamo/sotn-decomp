@@ -510,7 +510,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 // Fake reuse of the i variable
                 i = g_Timer - D_8018114C;
                 if (i >= 0x301) {
-                    g_api.PlaySfx(0x654);
+                    g_api.PlaySfx(SFX_EXPLODE_A);
                     self->ext.dracFinalForm.unk82 = 0x80;
                     self->step_s++;
                     break;
@@ -524,7 +524,7 @@ void EntityDraculaFinalForm(Entity* self) {
                     break;
                 }
             } else {
-                g_api.PlaySfx(0x654);
+                g_api.PlaySfx(SFX_EXPLODE_A);
                 self->ext.dracFinalForm.unk82 = 0x80;
                 self->step_s++;
             }
@@ -572,7 +572,7 @@ void EntityDraculaFinalForm(Entity* self) {
             break;
         }
         if (--self->ext.dracFinalForm.timer == 0) {
-            g_api.PlaySfx(0x655);
+            g_api.PlaySfx(SFX_EXPLODE_B);
             self->ext.dracFinalForm.timer = 8;
             temp_s2 = AllocEntity(&g_Entities[224], &g_Entities[256]);
             temp_s1 = &D_80181108[self->ext.dracFinalForm.unk84].x;

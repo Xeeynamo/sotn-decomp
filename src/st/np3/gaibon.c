@@ -1,4 +1,5 @@
 #include "np3.h"
+#include "sfx.h"
 
 #define SLOGRA self[-8]
 
@@ -286,7 +287,7 @@ void EntityGaibon(Entity* self) {
                 if (other != NULL) {
                     CreateEntityFromEntity(
                         E_GAIBON_SMALL_FIREBALL, self, other);
-                    func_801916C4(NA_SE_EN_GAIBON_SMALL_FIREBALL);
+                    func_801916C4(SFX_EXPLODE_FAST_A);
                     other->posY.i.hi -= 2;
                     if (self->facingLeft) {
                         other->posX.i.hi += 12;
@@ -384,11 +385,11 @@ void EntityGaibon(Entity* self) {
                     if (!self->ext.GS_Props.nearDeath) {
                         CreateEntityFromEntity(
                             E_GAIBON_SMALL_FIREBALL, self, other);
-                        func_801916C4(NA_SE_EN_GAIBON_SMALL_FIREBALL);
+                        func_801916C4(SFX_EXPLODE_FAST_A);
                     } else {
                         CreateEntityFromEntity(
                             E_GAIBON_BIG_FIREBALL, self, other);
-                        func_801916C4(NA_SE_EN_GAIBON_BIG_FIREBALL);
+                        func_801916C4(SFX_EXPLODE_B);
                     }
                     other->posY.i.hi -= 6;
                     if (self->facingLeft) {
@@ -419,7 +420,7 @@ void EntityGaibon(Entity* self) {
             if (other != NULL) {
                 other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
-                    func_801916C4(NA_SE_EN_GAIBON_BIG_FIREBALL);
+                    func_801916C4(SFX_EXPLODE_B);
                     CreateEntityFromEntity(0x54, self, other);
                     other->posY.i.hi -= 2;
                     if (self->facingLeft) {

@@ -4,6 +4,7 @@
  */
 
 #include "np3.h"
+#include "sfx.h"
 
 typedef enum {
     MERMAN_INIT,
@@ -395,7 +396,7 @@ void EntityMerman(Entity* self) {
             if (!(g_Timer % 8)) {
                 self->ext.merman.palette++;
                 if (self->ext.merman.palette == 0x2C0) {
-                    func_801916C4(0x65B);
+                    func_801916C4(SFX_FM_EXPLODE_B);
                     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
                         CreateEntityFromEntity(0x3C, self, newEntity);

@@ -2,6 +2,7 @@
 // Firebrand, Marsil, Unknown#179, Unknown#180
 #include "weapon_private.h"
 #include "shared.h"
+#include "sfx.h"
 
 INCLUDE_ASM("weapon/nonmatchings/w_049", EntityWeaponAttack);
 
@@ -69,7 +70,7 @@ s32 func_ptr_80170014(Entity* self) {
         self->hitboxHeight = self->hitboxWidth = 12;
         self->hitboxOffY = self->hitboxOffX = 0;
         self->velocityY = FIX(-0.375);
-        g_api.PlaySfx(0x65B);
+        g_api.PlaySfx(SFX_FM_EXPLODE_B);
         self->step++;
         return;
     case 1:

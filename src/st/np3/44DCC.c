@@ -4,6 +4,7 @@
  */
 
 #include "np3.h"
+#include "sfx.h"
 
 typedef enum {
     MERMAN2_INIT,
@@ -1157,7 +1158,7 @@ void EntityMerman2(Entity* self) {
             break;
 
         case 2:
-            func_801916C4(0x65B);
+            func_801916C4(SFX_FM_EXPLODE_B);
             func_801B653C();
             DestroyEntity(self);
         }
