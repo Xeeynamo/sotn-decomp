@@ -345,7 +345,7 @@ extern s32 D_800ACEDC_hd;
 extern s32 D_800ACF74; // These two might...
 extern s32 D_800ACF78; // ...be an array
 extern s16 D_800ACF7C[4];
-extern s16 D_800ACF84[8]; // collection of sounds
+extern s16 g_SfxPainGrunts[8]; // collection of sounds
 extern s16 D_800ACF94[16];
 extern u8 D_800AD094[0x30];
 extern u8 D_800ACFB4[][4]; // TODO AnimationFrames*[]
