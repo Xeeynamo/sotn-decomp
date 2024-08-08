@@ -10,7 +10,6 @@
 
 // CEN Sound IDs
 
-#define SE_CEN_PLATFORM_STOP 0x64F
 #define SE_CEN_ELEVATOR_DOOR 0X675
 
 typedef enum {
