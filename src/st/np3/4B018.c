@@ -356,7 +356,7 @@ void EntityOwl(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (func_801BC8E4(D_801826CC) & 1) {
-                func_801916C4(0x647);
+                func_801916C4(SFX_STOMP_HARD_B);
                 self->animCurFrame = 0xD;
                 if (self->posX.i.hi > KNIGHT->posX.i.hi) {
                     self->facingLeft = 1;

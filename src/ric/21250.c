@@ -1,4 +1,5 @@
 #include "ric.h"
+#include "sfx.h"
 
 s32 func_8015D250(s32 unused_arg) {
     SubweaponDef subweapon;
@@ -331,7 +332,7 @@ bool func_8015DBB0(s32 arg_flags) {
                 if (PLAYER.velocityY > 0x6E000) {
                     PLAYER.step = 2;
                     PLAYER.unk4C = D_801555A8;
-                    g_api.PlaySfx(0x647);
+                    g_api.PlaySfx(SFX_STOMP_HARD_B);
                     CreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0, 0), 0);
                 } else {
@@ -340,7 +341,7 @@ bool func_8015DBB0(s32 arg_flags) {
                     if (g_Player.unk44 & 8) {
                         CreateEntFactoryFromEntity(
                             g_CurrentEntity, FACTORY(0, 0), 0);
-                        g_api.PlaySfx(0x647);
+                        g_api.PlaySfx(SFX_STOMP_HARD_B);
                     } else {
                         PLAYER.velocityX = 0;
                     }

@@ -957,7 +957,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         PLAYER.velocityY = 0;
         g_Player.D_80072F00[8] = 48;
         PLAYER.velocityX /= 2;
-        PlaySfx(SFX_UNK_647);
+        PlaySfx(SFX_STOMP_HARD_B);
         PLAYER.rotZ = 0x400;
         PLAYER.rotPivotX = 0x10;
         PLAYER.rotPivotY = 4;
