@@ -2,7 +2,7 @@
 #include <sfx.h>
 #include <psxsdk/libc.h>
 
-#define SFX_BAT_SCREECH SOUND_BAT_SCREECH
+
 #define SFX_BAT_NOTIFY SE_UI_OVERWRITE_MSG
 
 #ifndef VERSION_PSP
