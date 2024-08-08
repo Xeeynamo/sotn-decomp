@@ -2106,6 +2106,9 @@ void EntitySubwpnBible(Entity* self) {
     }
 }
 
+static const SVECTOR D_80156C50 = {0x0000, 0x0000, 0x0000, 0x0000};
+static const SVECTOR D_80156C58 = {0xFFA0, 0x0000, 0x0000, 0x0000};
+
 void EntityGiantSpinningCross(Entity* self) {
     MATRIX m;
     SVECTOR rot;
@@ -2148,7 +2151,7 @@ void EntityGiantSpinningCross(Entity* self) {
         self->ext.giantcross.unk7E = 0x400;
         g_api.PlaySfx(0x661);
         self->step++;
-        primUVCoords = &D_8015635C[0][0];
+        primUVCoords = &D_8015635C[0];
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 46; i++, prim = prim->next, primUVCoords += 5) {
             prim->clut = (primUVCoords[4] & 0xF) | 0x1A0;
