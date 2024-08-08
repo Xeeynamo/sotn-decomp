@@ -3,6 +3,7 @@
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
 extern s32 g_HandId;
+#include "shared.h"
 #include "w_011_1.h"
 #include "w_011_2.h"
 #define g_Animset w_011_1
