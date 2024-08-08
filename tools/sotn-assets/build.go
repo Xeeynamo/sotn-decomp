@@ -253,7 +253,7 @@ func buildLayers(inputDir string, fileName string, outputDir string) error {
 	}
 
 	sb.WriteString("static MyLayer layers[] = {\n")
-	sb.WriteString("    {},\n")
+	sb.WriteString("    { NULL, NULL, 0, 0, 0, 0 },\n")
 	for _, l := range layers[1:] {
 		sb.WriteString(fmt.Sprintf("    { %s, %s, 0x%08X, 0x%02X, %d, %d },\n",
 			makeSymbolFromFileName(l["data"].(string)),
