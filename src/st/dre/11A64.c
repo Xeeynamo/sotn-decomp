@@ -5,6 +5,7 @@
  */
 
 #include "dre.h"
+#include "sfx.h"
 
 // puts garbled hp max up text on screen
 void EntityUnkId11(Entity* entity) {
@@ -101,7 +102,7 @@ void EntityBreakable(Entity* entity) {
     if (entity->step != 0) {
         AnimateEntity(g_eBreakableAnimations[temp_s0], entity);
         if (entity->unk44 != 0) {
-            g_api.PlaySfx(NA_SE_BREAK_CANDLE);
+            g_api.PlaySfx(SFX_CANDLE_HIT);
             temp_v0 = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (temp_v0 != NULL) {
                 CreateEntityFromCurrentEntity(2, temp_v0);

@@ -646,7 +646,7 @@ void ControlBatForm(void) {
             g_Player.padTapped = PAD_R1;
             BatFormFinished();
             func_80102CD8(2);
-            PlaySfx(NA_SE_EN_ROCK_BREAK);
+            PlaySfx(SFX_WALL_DEBRIS_B);
             PLAYER.velocityX = 0;
             g_Player.D_80072EFC = 0x20;
             g_Player.padSim = 0;

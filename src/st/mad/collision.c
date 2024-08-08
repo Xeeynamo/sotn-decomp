@@ -1,4 +1,4 @@
-#include <stage.h>
+#include "mad.h"
 #include "sfx.h"
 
 static u16 g_testCollEnemyLookup[] = {
@@ -392,9 +392,9 @@ void HitDetection(void) {
                         if (entFrom5C->flags & FLAG_UNK_10) {
                             // Different on PSP vs PSX
                             if (iterEnt2->hitEffect & 0x80) {
-                                g_api.PlaySfx(SFX_UNK_BETA_630);
+                                g_api.PlaySfx(SFX_WEAPON_STAB_B);
                             } else {
-                                g_api.PlaySfx(0x6DB);
+                                g_api.PlaySfx(SFX_WEAPON_HIT);
                             }
                         }
                         if (entFrom5C->hitPoints != 0x7FFE) {

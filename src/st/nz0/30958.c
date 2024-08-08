@@ -191,7 +191,7 @@ void EntityBreakable(Entity* self) {
                 g_api.FreePrimitives(self->primIndex);
                 self->flags &= ~FLAG_HAS_PRIMS;
             }
-            g_api.PlaySfx(NA_SE_BREAK_CANDLE);
+            g_api.PlaySfx(SFX_CANDLE_HIT);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
@@ -363,7 +363,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
 
     case LEFT_SECRET_ROOM_WALL_IDLE:
         if (self->hitFlags != 0) {
-            func_801C29B0(NA_SE_EN_ROCK_BREAK);
+            func_801C29B0(SFX_WALL_DEBRIS_B);
             self->step++;
         }
         break;
@@ -442,7 +442,7 @@ void EntityBottomSecretRoomFloor(
 
     case BOTTOM_SECRET_ROOM_FLOOR_IDLE:
         if (self->hitFlags != 0) {
-            func_801C29B0(NA_SE_EN_ROCK_BREAK);
+            func_801C29B0(SFX_WALL_DEBRIS_B);
             self->step++;
         }
         return;
@@ -527,7 +527,7 @@ void func_801B19A0(Entity* self) {
         if (collider.effects & EFFECT_SOLID) {
             self->posY.i.hi += collider.unk18;
             if (self->params == 0) {
-                func_801C29B0(0x644);
+                func_801C29B0(SFX_WALL_DEBRIS_B);
                 for (i = 0; i < 2; i++) {
                     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
@@ -1005,7 +1005,7 @@ void EntityCannonWall(Entity* self) {
         break;
 
     case 2:
-        g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
+        g_api.PlaySfx(SFX_WALL_DEBRIS_B);
 
         tileLayoutPtr = &D_80180EE0;
         for (tilePos = 0x46, i = 0; i < 6; i++, tileLayoutPtr++) {
@@ -1487,7 +1487,7 @@ void func_801B3A50(Entity* self) {
     case 1:
         AnimateEntity(D_80180F88, self);
         if (self->hitFlags != 0) {
-            g_api.PlaySfx(NA_SE_BREAK_CANDLE);
+            g_api.PlaySfx(SFX_CANDLE_HIT);
             self->hitboxState = 0;
             SetStep(2);
         }

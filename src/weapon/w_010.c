@@ -3,6 +3,7 @@
 #include "weapon_private.h"
 #include "shared.h"
 #include "items.h"
+#include "sfx.h"
 
 extern SpriteParts D_4A000_8017A040[];
 extern s8 D_4A000_8017AB20;
@@ -419,7 +420,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         if (self->ext.shield.unk86 >= 0x36) {
             self->ext.shield.unk86 = 0x36;
             hide = true;
-            g_api.PlaySfx(NA_SE_PL_WARP);
+            g_api.PlaySfx(SFX_TELEPORT_BANG_B);
             self->step++;
         }
         break;

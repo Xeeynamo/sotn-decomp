@@ -1,4 +1,5 @@
 #include "cen.h"
+#include "sfx.h"
 
 u8 AnimateEntity(u8 frames[], Entity* entity);
 
@@ -395,7 +396,7 @@ void EntityEquipItemDrop(Entity* self) {
             *unk = 0;
         }
 
-        g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+        g_api.PlaySfx(SFX_ITEM_PICKUP);
 
         if (itemId < NUM_HAND_ITEMS) {
             itemName = g_api.equipDefs[itemId].name;

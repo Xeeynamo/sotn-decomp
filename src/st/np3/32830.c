@@ -945,7 +945,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
     case 2:
         self->posY.val += FIX(0.5);
         if ((self->posY.i.hi + g_Tilemap.scrollY.i.hi) >= 175) {
-            func_801916C4(0x63D);
+            func_801916C4(SFX_START_SLAM_B);
             self->posY.i.hi = 175 - g_Tilemap.scrollY.i.hi;
             self->step++;
         }
@@ -1142,7 +1142,7 @@ void EntityMermanRockLeftSide(Entity* self) {
                 tilePos += 0x30;
             }
 
-            g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
+            g_api.PlaySfx(SFX_WALL_DEBRIS_B);
 
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
@@ -1241,7 +1241,7 @@ void EntityMermanRockRightSide(Entity* self) {
                 tilePos += 0x30;
             }
 
-            g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
+            g_api.PlaySfx(SFX_WALL_DEBRIS_B);
 
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
@@ -1300,7 +1300,7 @@ void func_801B5488(Entity* self) {
 
     case 1:
         if ((g_CastleFlags[51] & 12) == 12) {
-            func_801916C4(0x644);
+            func_801916C4(SFX_WALL_DEBRIS_B);
             self->step++;
         }
         break;
@@ -1424,7 +1424,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
         break;
 
     case 2:
-        g_api.PlaySfx(0x644);
+        g_api.PlaySfx(SFX_WALL_DEBRIS_B);
         g_Tilemap.fg[0x4D9] = 0x3EE;
         g_Tilemap.fg[0x539] = 0x3D2;
         g_CastleFlags[stairwayPieceBroken] = true;
@@ -1496,7 +1496,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
         break;
 
     case 4:
-        g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
+        g_api.PlaySfx(SFX_WALL_DEBRIS_B);
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);

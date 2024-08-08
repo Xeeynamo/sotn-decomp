@@ -1,4 +1,5 @@
 #include "ric.h"
+#include "sfx.h"
 
 // Entity ID 66. Made by blueprint 77 (the very last one).
 // Created in 3 spots in 2 functions (total of 6 calls).
@@ -80,7 +81,7 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.unk80 = 0x10;
             self->ext.teleport.unk88 = 0x80;
             self->step = 1;
-            g_api.PlaySfx(0x635);
+            g_api.PlaySfx(SFX_TELEPORT_BANG_A);
             g_api.PlaySfx(0x8BA);
         }
         break;
@@ -167,7 +168,7 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.unk84 = 4;
             self->step++;
             g_Player.unk1C = 1;
-            g_api.PlaySfx(0x636);
+            g_api.PlaySfx(SFX_TELEPORT_BANG_B);
             DestroyEntity(self);
             return;
         }

@@ -190,7 +190,7 @@ void func_8016DF74(Entity* self) {
         self->ext.et_8016DF74.unk7E = 0;
         self->ext.et_8016DF74.unk84 = 0;
         self->ext.et_8016DF74.unk82 = 8;
-        g_api.PlaySfx(0x636);
+        g_api.PlaySfx(SFX_TELEPORT_BANG_B);
         self->step++;
         break;
     case 1:
@@ -344,7 +344,7 @@ void func_8016E46C(Entity* self) {
             self->ext.et_8016E46C.unkB0 = 0x11;
             func_8015FAB8(self);
             g_api.PlaySfx(SFX_WEAPON_APPEAR);
-            g_api.PlaySfx(0x635);
+            g_api.PlaySfx(SFX_TELEPORT_BANG_A);
             self->step++;
         }
         break;

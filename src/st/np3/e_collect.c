@@ -1,4 +1,5 @@
 #include "np3.h"
+#include "sfx.h"
 
 extern u16 g_InitializeData0[];
 extern u16 D_80181DB0[];
@@ -72,7 +73,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;
     u16 subWeapon;
 
-    g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+    g_api.PlaySfx(SFX_ITEM_PICKUP);
     subWeapon = g_Status.subWeapon;
     g_Status.subWeapon = D_80181D80[subWeaponIdx];
 
@@ -104,7 +105,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
 #include "../collect_heart_vessel.h"
 
 void CollectLifeVessel(void) {
-    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_api.PlaySfx(SFX_HEART_PICKUP);
     g_api.func_800FE044(5, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
@@ -495,7 +496,7 @@ void EntityEquipItemDrop(Entity* self) {
             *unk = 0;
         }
 
-        g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+        g_api.PlaySfx(SFX_ITEM_PICKUP);
 
         if (itemId < NUM_HAND_ITEMS) {
             itemName = g_api.equipDefs[itemId].name;
