@@ -1,4 +1,5 @@
 #include "np3.h"
+#include "sfx.h"
 
 void EntityHammer(Entity* self) {
     Collider collider;
@@ -160,7 +161,7 @@ void EntityHammer(Entity* self) {
             collider.unk18 = 10;
             func_801CE04C(otherEnt, &collider);
             if (otherEnt->ext.GH_Props.unk88 != 0) {
-                func_801916C4(0x648);
+                func_801916C4(SFX_STOMP_HARD_C);
                 otherEnt->posY.i.hi += collider.unk18 + 1;
                 self->ext.GH_Props.unk84 ^= 1;
                 func_801CE228();
