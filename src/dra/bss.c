@@ -66,25 +66,12 @@ s32 g_DemoKeyIdx;
 s32 D_80137598;
 s32 D_8013759C;
 s32 D_801375A0;
-#ifdef VERSION_PC
-f32 D_801375A4; // TODO overlaps with D_801375A6
-u16 D_801375A6; // TODO this might be f32
-f32 D_801375A8; // TODO overlaps with D_801375AA
-u16 D_801375AA; // TODO this might be f32
-f32 D_801375AC; // TODO might be f32
-f32 D_801375B0; // TODO might be f32
-f32 D_801375B4; // TODO might be f32
-f32 D_801375B8; // TODO might be f32
-#else
-u16 D_801375A4; // TODO overlaps with D_801375A6
-u16 D_801375A6; // TODO this might be f32
-u16 D_801375A8; // TODO overlaps with D_801375AA
-u16 D_801375AA; // TODO this might be f32
-s32 D_801375AC; // TODO might be f32
-s32 D_801375B0; // TODO might be f32
-s32 D_801375B4; // TODO might be f32
-s32 D_801375B8; // TODO might be f32
-#endif
+s32 D_801375A4;
+s32 D_801375A8;
+s32 D_801375AC;
+s32 D_801375B0;
+s32 D_801375B4;
+s32 D_801375B8;
 RoomLoadDefHolder D_801375BC; // fake struct?
 s32 D_801375C0;
 s32 D_801375C4;
