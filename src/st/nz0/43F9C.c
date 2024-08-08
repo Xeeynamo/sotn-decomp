@@ -123,7 +123,7 @@ s32 func_801C4198(Entity* axeKnight) {
         } else {
             return 1;
         }
-        func_801C29B0(0x65B);
+        func_801C29B0(SFX_FM_EXPLODE_B);
         axeKnight->step_s++;
         break;
     case 1:

@@ -304,7 +304,7 @@ void EntityHammer(Entity* self) {
             self->velocityY += FIX(0.1875);
             if (!(g_Timer & 7)) {
                 if (Random() & 1) {
-                    func_801916C4(0x65B);
+                    func_801916C4(SFX_FM_EXPLODE_B);
                 } else {
                     func_801916C4(SFX_EXPLODE_D);
                 }
