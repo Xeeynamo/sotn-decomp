@@ -474,7 +474,7 @@ void func_ptr_80170024(Entity* self) {
         g_api.CheckCollision(xVar, yVar, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             self->posY.i.hi += collider.unk18;
-            g_api.PlaySfx(SFX_UNK_64B);
+            g_api.PlaySfx(SFX_STOMP_SOFT_A);
             self->step = 2;
             break;
         }
@@ -524,7 +524,7 @@ void func_ptr_80170024(Entity* self) {
     case 2:
         SetSpeedX(FIX(2.5));
         if ((self->ext.timer.t % 10) == 0) {
-            g_api.PlaySfx(SFX_UNK_64B);
+            g_api.PlaySfx(SFX_STOMP_SOFT_A);
         }
         xOffset = 0;
         yOffset = 25;
