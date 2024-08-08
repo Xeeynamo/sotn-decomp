@@ -1,7 +1,13 @@
 // Weapon ID #15. Used by weapons:
 // Shuriken, Cross shuriken, Buffalo star, Flame star, TNT
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
+#include "w_015_1.h"
+#include "w_015_2.h"
+#define g_Animset w_015_1
+#define g_Animset2 w_015_2
 
 INCLUDE_ASM("weapon/nonmatchings/w_015", EntityWeaponAttack);
 
@@ -32,7 +38,7 @@ s32 func_ptr_80170004(Entity* self) {
 extern AnimationFrame D_6D000_8017A6C0[];
 extern s32 D_6D000_8017BFC8;
 
-void func_ptr_80170008(Entity* self) {
+static void func_ptr_80170008(Entity* self) {
     Entity* factory;
 
     if (self->step == 0) {
@@ -77,7 +83,7 @@ INCLUDE_ASM("weapon/nonmatchings/w_015", func_ptr_80170010);
 extern SpriteParts D_6D000_8017A2B0[];
 extern AnimationFrame D_6D000_8017A770[];
 
-s32 func_ptr_80170014(Entity* self) {
+static s32 func_ptr_80170014(Entity* self) {
     s16 angle;
 
     if (self->step == 0) {
@@ -122,20 +128,20 @@ s32 func_ptr_80170014(Entity* self) {
     self->velocityY += self->ext.weapon.accelerationY;
 }
 
-int GetWeaponId(void) { return 15; }
+static int GetWeaponId(void) { return 15; }
 
-void EntityWeaponShieldSpell(Entity* self) {}
+static void EntityWeaponShieldSpell(Entity* self) {}
 
-void func_ptr_80170024(Entity* self) {}
+static void func_ptr_80170024(Entity* self) {}
 
-void func_ptr_80170028(Entity* self) {}
+static void func_ptr_80170028(Entity* self) {}
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}

@@ -2,7 +2,7 @@
 
 #include "../destroy_entity.h"
 
-void OVL_EXPORT(LoadWeaponPalette)(s32 clutIndex) {
+static void LoadWeaponPalette(s32 clutIndex) {
     RECT dstRect;
     u16* src;
     u16* dst;
@@ -42,7 +42,7 @@ void OVL_EXPORT(LoadWeaponPalette)(s32 clutIndex) {
     LoadImage(&dstRect, &D_8006EDCC);
 }
 
-void SetSpriteBank1(SpriteParts* animset) {
+static void SetSpriteBank1(SpriteParts* animset) {
     SpritePart** spriteBankDst = g_api.o.spriteBanks;
 
     spriteBankDst += 0x10;
@@ -52,7 +52,7 @@ void SetSpriteBank1(SpriteParts* animset) {
     *spriteBankDst = animset;
 }
 
-void SetSpriteBank2(SpriteParts* animset) {
+static void SetSpriteBank2(SpriteParts* animset) {
     SpritePart** spriteBankDst = g_api.o.spriteBanks;
 
     spriteBankDst += 0x11;
@@ -63,7 +63,7 @@ void SetSpriteBank2(SpriteParts* animset) {
 }
 
 #if !defined(W_029) && !defined(W_030) && !defined(W_044) && !defined(W_051)
-void SetWeaponAnimation(u8 anim) {
+static void SetWeaponAnimation(u8 anim) {
     g_CurrentEntity->ext.weapon.anim = anim;
     g_CurrentEntity->animFrameDuration = 0;
     g_CurrentEntity->animFrameIdx = 0;
@@ -108,7 +108,7 @@ static void SetSpeedX(s32 speed) {
 #endif
 
 #if !defined(W_030) && !defined(W_051)
-void DestroyEntityWeapon(bool arg0) {
+static void DestroyEntityWeapon(bool arg0) {
     if (arg0 == false) {
         DestroyEntity(&g_Entities[E_WEAPON]);
     }
@@ -119,7 +119,7 @@ void DestroyEntityWeapon(bool arg0) {
 }
 #endif
 
-void SetWeaponProperties(Entity* self, s32 kind) {
+static void SetWeaponProperties(Entity* self, s32 kind) {
     Equipment equip;
 
     g_api.GetEquipProperties(g_HandId, &equip, self->ext.weapon.equipId);
