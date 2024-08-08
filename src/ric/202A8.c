@@ -19,10 +19,10 @@ void func_8015C2A8(void) {
                 temp = g_Player.padPressed & PAD_LEFT;
             }
             if (temp == 0) {
-                DecelerateX(0x1000);
+                RicDecelerateX(0x1000);
             }
         } else {
-            DecelerateX(0x1000);
+            RicDecelerateX(0x1000);
         }
 
         if (g_Player.pl_vram_flag & 2) {
@@ -57,7 +57,7 @@ void func_8015C2A8(void) {
 
     if (loadAnim) {
         func_8015C920(&D_80155534);
-        SetPlayerStep(4);
+        RicSetPlayerStep(4);
     }
 }
 
@@ -171,7 +171,7 @@ void func_8015C6D4(void) {
     }
 }
 
-void SetPlayerStep(PlayerSteps step) {
+void RicSetPlayerStep(PlayerSteps step) {
     PLAYER.step = step;
     PLAYER.step_s = 0;
 }

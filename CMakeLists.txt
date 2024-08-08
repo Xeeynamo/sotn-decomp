@@ -216,6 +216,31 @@ set(SOURCE_FILES_DRA
     src/dra/bss.c
 )
 
+set(SOURCE_FILES_RIC
+    src/ric/1AC60.c
+    src/ric/1FCD0.c
+    src/ric/20920.c
+    src/ric/24788.c
+    src/ric/2A060.c
+    src/ric/319C4.c
+    src/ric/d_00000.c
+    src/ric/d_188F4.c
+    src/ric/d_194B0.c
+    src/ric/d_19BE0.c
+    src/ric/d_19EE0.c
+    src/ric/spriteparts.c
+    src/ric/1CB04.c
+    src/ric/202A8.c
+    src/ric/21250.c
+    src/ric/26C84.c
+    src/ric/2C4C4.c
+    src/ric/bss.c
+    src/ric/d_18568.c
+    src/ric/d_18C40.c
+    src/ric/d_19B50.c
+    src/ric/d_19C70.c
+)
+
 set(SOURCE_FILES_STAGE_SEL
     src/pc/stages/stage_sel.c
     src/st/sel/banks.c
@@ -273,11 +298,11 @@ set_source_files_properties(src/weapon/w_000.c PROPERTIES COMPILE_DEFINITIONS WE
 
 set(SOURCE_FILES_CORE
     ${SOURCE_FILES_DRA}
+    ${SOURCE_FILES_RIC}
     ${SOURCE_FILES_PC}
     ${SOURCE_FILES_PSX_SDK}
     ${SOURCE_FILES_MOCK_SDK}
     ${SOURCE_FILES_3RD}
-    ${SOURCE_FILES_DRA}
     ${SOURCE_FILES_STAGE_SEL}
     ${SOURCE_FILES_STAGE_WRP}
     ${SOURCE_FILES_WEAPON}
