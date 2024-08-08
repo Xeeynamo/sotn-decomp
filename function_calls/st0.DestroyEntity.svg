@@ -467,7 +467,7 @@
 <g id="node30" class="node">
 <title>st0.EntityLockCamera</title>
 <g id="a_node30"><a xlink:href="st0.EntityLockCamera.svg" xlink:title="st0.EntityLockCamera">
-<ellipse fill="red" stroke="black" cx="7510.29" cy="-378" rx="114.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="7510.29" cy="-378" rx="114.28" ry="18"/>
 <text text-anchor="middle" x="7510.29" y="-374.3" font-family="Times,serif" font-size="14.00">st0.EntityLockCamera</text>
 </a>
 </g>

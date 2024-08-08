@@ -12,7 +12,7 @@
 <!-- st0.EntityLockCamera -->
 <g id="node1" class="node">
 <title>st0.EntityLockCamera</title>
-<ellipse fill="red" stroke="black" cx="421.59" cy="-198" rx="114.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="421.59" cy="-198" rx="114.28" ry="18"/>
 <text text-anchor="middle" x="421.59" y="-194.3" font-family="Times,serif" font-size="14.00">st0.EntityLockCamera</text>
 </g>
 <!-- st0.DestroyEntity -->
