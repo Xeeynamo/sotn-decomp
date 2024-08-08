@@ -1,5 +1,6 @@
 #include "weapon.h"
 #include "pc.h"
+#include <string.h>
 
 // main variable
 u16 D_8006EDCC[2][N_WEAPON_PAL * PALETTE_LEN];
