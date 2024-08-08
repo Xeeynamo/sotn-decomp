@@ -138,8 +138,12 @@ void func_8016D9C4(Entity* self) {
             primLine->angle = (primLine->angle - angleChange) & 0xFFF;
 #ifdef VERSION_PC
 #ifdef _MSC_VER
-            primLine->velocityX = *(f32*)&(rcos(primLine->angle) << 8);
-            primLine->velocityY = *(f32*)&(-(rsin(primLine->angle) << 8));
+            {
+                s32 temp_x = (rcos(primLine->angle) << 8);
+                s32 temp_y = (-(rsin(primLine->angle) << 8));
+                primLine->velocityX = *(f32*)&temp_x;
+                primLine->velocityY = *(f32*)&temp_y;
+            }
 #else
             primLine->velocityX = (f32)(rcos(primLine->angle) << 8);
             primLine->velocityY = (f32) - (rsin(primLine->angle) << 8);
