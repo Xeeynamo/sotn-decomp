@@ -1,4 +1,5 @@
 #include "np3.h"
+#include "sfx.h"
 
 void EntityHammer(Entity* self) {
     Collider collider;
@@ -160,7 +161,7 @@ void EntityHammer(Entity* self) {
             collider.unk18 = 10;
             func_801CE04C(otherEnt, &collider);
             if (otherEnt->ext.GH_Props.unk88 != 0) {
-                func_801916C4(0x648);
+                func_801916C4(SFX_STOMP_HARD_C);
                 otherEnt->posY.i.hi += collider.unk18 + 1;
                 self->ext.GH_Props.unk84 ^= 1;
                 func_801CE228();
@@ -221,7 +222,7 @@ void EntityHammer(Entity* self) {
             }
             if ((self->ext.GH_Props.unkB0[0] == 6) &&
                 (self->ext.GH_Props.unkB0[2] == 0)) {
-                func_801916C4(0x65D);
+                func_801916C4(SFX_FM_EXPLODE_D);
                 g_api_func_80102CD8(1);
             }
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
@@ -303,9 +304,9 @@ void EntityHammer(Entity* self) {
             self->velocityY += FIX(0.1875);
             if (!(g_Timer & 7)) {
                 if (Random() & 1) {
-                    func_801916C4(0x65B);
+                    func_801916C4(SFX_FM_EXPLODE_B);
                 } else {
-                    func_801916C4(0x657);
+                    func_801916C4(SFX_EXPLODE_D);
                 }
             }
             return;

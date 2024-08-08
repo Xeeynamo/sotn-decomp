@@ -3,11 +3,12 @@
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
 extern s32 g_HandId;
-#include "shared.h"
 #include "w_023_1.h"
 #include "w_023_2.h"
 #define g_Animset w_023_1
 #define g_Animset2 w_023_2
+#include "shared.h"
+#include "sfx.h"
 
 extern SpriteParts D_A5000_8017A040[];
 extern s8 D_A5000_8017AAD8;
@@ -273,7 +274,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         SetSpeedX(FIX(-2));
         self->velocityY = 0;
         DestroyEntityWeapon(1);
-        g_api.PlaySfx(SFX_UNK_641);
+        g_api.PlaySfx(SFX_ANIME_SWORD_C);
         g_unkGraphicsStruct.unk20 = 1;
         self->step++;
         break;

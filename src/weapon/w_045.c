@@ -3,11 +3,12 @@
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
 extern s32 g_HandId;
-#include "shared.h"
 #include "w_045_1.h"
 #include "w_045_2.h"
 #define g_Animset w_045_1
 #define g_Animset2 w_045_2
+#include "shared.h"
+#include "sfx.h"
 
 extern SpriteParts D_13F000_8017A040[];
 extern s32 D_13F000_8017B3B8;
@@ -125,7 +126,7 @@ static void func_ptr_80170008(Entity* self) {
         return;
     }
     if (!(g_GameTimer & 7)) {
-        g_api.PlaySfx(SFX_UNK_64B);
+        g_api.PlaySfx(SFX_STOMP_SOFT_A);
         g_api.CreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(0x100, 0x45), 0);
     }
@@ -173,7 +174,7 @@ static s32 func_ptr_80170010(Entity* self) {
             PLAYER.step_s = 2;
             PLAYER.velocityY = 0;
             D_13F000_8017B3B8 = 0x30;
-            g_api.PlaySfx(0x64B);
+            g_api.PlaySfx(SFX_STOMP_SOFT_A);
             // Blueprint 0 makes child 2, func_8011B5A4
             g_api.CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
             return;

@@ -4,6 +4,7 @@
  */
 
 #include "nz0.h"
+#include "sfx.h"
 
 // Another dupe of EntityIsNearPlayer but needs separate definition in nz0
 s32 EntityIsNearPlayer2(Entity* e) {
@@ -172,7 +173,7 @@ void EntityMagicallySealedDoor(Entity* self) {
             g_Player.padSim = 0;
             g_Player.D_80072EFC = 2;
             self->ext.door.sideToPlayer = (GetSideToPlayer() & 1) ^ 1;
-            g_api.PlaySfx(0x642);
+            g_api.PlaySfx(SFX_DOOR_OPEN);
             self->step++;
         }
         break;
@@ -217,7 +218,7 @@ void EntityMagicallySealedDoor(Entity* self) {
         }
         g_Player.D_80072EFC = 4;
         if (EntityIsNearPlayer2(self) == 0) {
-            g_api.PlaySfx(0x642);
+            g_api.PlaySfx(SFX_DOOR_OPEN);
             self->step++;
             g_Player.D_80072EFC = 0;
         }

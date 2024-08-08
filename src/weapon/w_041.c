@@ -3,11 +3,12 @@
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
 extern s32 g_HandId;
-#include "shared.h"
 #include "w_041_1.h"
 #include "w_041_2.h"
 #define g_Animset w_041_1
 #define g_Animset2 w_041_2
+#include "shared.h"
+#include "sfx.h"
 
 extern AnimationFrame D_123000_8017A4A4[];
 extern FrameProperty D_123000_8017A50C[];
@@ -155,7 +156,7 @@ s32 func_ptr_80170004(Entity* self) {
             self->ext.weapon.some_ent =
                 func_123000_8017A994(self, self->ext.weapon.unk80, 0x280);
             g_api.PlaySfx(0x69B);
-            g_api.PlaySfx(0x64E);
+            g_api.PlaySfx(SFX_BAT_SCREECH);
             self->ext.weapon.lifetime = 0x16;
             self->ext.weapon.unk82 = 0x80;
             self->step++;

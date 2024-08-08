@@ -561,7 +561,7 @@ void ControlBatForm(void) {
             DecelerateY(0x1200);
             screechDone = 1;
             if (!g_BatScreechDone) {
-                PlaySfx(SOUND_BAT_SCREECH);
+                PlaySfx(SFX_BAT_SCREECH);
             }
             break;
         case PAD_LEFT:
@@ -576,7 +576,7 @@ void ControlBatForm(void) {
             DecelerateY(0x1200);
             screechDone = 1;
             if (!g_BatScreechDone) {
-                PlaySfx(SOUND_BAT_SCREECH);
+                PlaySfx(SFX_BAT_SCREECH);
             }
             break;
         case PAD_RIGHT | PAD_UP:

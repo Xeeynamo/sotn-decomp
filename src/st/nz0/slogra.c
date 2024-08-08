@@ -373,7 +373,7 @@ void EntitySlogra(Entity* self) {
             self->velocityY += FIX(0.25);
             if (self->posY.i.hi + g_Tilemap.scrollY.i.hi > 416) {
                 self->posY.i.hi = 416 - g_Tilemap.scrollY.i.hi;
-                func_801C29B0(NA_SE_EN_SLOGRA_FLOOR_STOMP);
+                func_801C29B0(SFX_DOOR_CLOSE_A); // Slogra Floor Stomp
                 g_api.func_80102CD8(1);
                 self->ext.GS_Props.timer = 16;
                 self->step_s++;

@@ -1018,7 +1018,7 @@ void func_80105428(void) {
         timer_temp = gameTimer & 0x7F;
         D_801379C8.vy = temp_s3 + 6;
         if (timer_temp == 0) {
-            PlaySfx(SE_SAVE_HEARTBEAT);
+            PlaySfx(SFX_SAVE_HEARTBEAT);
         }
         if (gameTimer & 0x40) {
             timer_temp = 0x7F - timer_temp;

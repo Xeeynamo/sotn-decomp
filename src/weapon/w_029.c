@@ -9,6 +9,7 @@ extern s32 g_HandId;
 #define g_Animset w_029_1
 #define g_Animset2 w_029_2
 #include "items.h"
+#include "sfx.h"
 
 extern s32 D_CF000_8017AC78;
 extern s32 D_CF000_8017ACC0;
@@ -258,7 +259,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         SetSpeedX(FIX(-2));
         self->velocityY = 0;
         DestroyEntityWeapon(1);
-        g_api.PlaySfx(0x641);
+        g_api.PlaySfx(SFX_ANIME_SWORD_C);
         g_unkGraphicsStruct.unk20 = 1;
         self->step++;
         break;

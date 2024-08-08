@@ -81,7 +81,7 @@ void EntitySecretButton(Entity* self) {
             break;
 
         case 2:
-            g_api.PlaySfx(0x652);
+            g_api.PlaySfx(SFX_EXPLODE_FAST_A);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
