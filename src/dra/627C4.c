@@ -389,7 +389,7 @@ s32 HandleSaveMenu(s32 arg0) {
             prim2->drawMode = DRAW_DEFAULT;
             prim1->drawMode = DRAW_UNK_400 | DRAW_COLORS;
             if (D_80137E4C == 6) {
-                PlaySfx(SE_UI_START);
+                PlaySfx(SFX_START_SLAM_B);
             } else {
                 PlaySfx(SE_UI_OVERWRITE_MSG);
             }

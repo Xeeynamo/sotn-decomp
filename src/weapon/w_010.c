@@ -3,10 +3,12 @@
 #include "weapon_private.h"
 #include "shared.h"
 #include "items.h"
+#include "sfx.h"
 
 extern SpriteParts D_4A000_8017A040[];
 extern s8 D_4A000_8017AB20;
 extern AnimationFrame* D_4A000_8017AB68;
+extern s16 D_4A000_8017ABBC[];
 extern s16 D_4A000_8017ABDC[];
 
 extern s32 D_4A000_8017CC1C; // g_DebugWaitInfoTimer
@@ -213,7 +215,272 @@ s32 func_ptr_80170014(Entity* self) {}
 
 int GetWeaponId(void) { return 10; }
 
-INCLUDE_ASM("weapon/nonmatchings/w_010", EntityWeaponShieldSpell);
+void EntityWeaponShieldSpell(Entity* self) {
+    Entity* unusedEnt;
+    Primitive* prim;
+    Primitive* prevPrim;
+    Primitive* nextPrim;
+    bool hide;
+    s32 i;
+    s16 selfX;
+    s16 selfY;
+    s16 angle;
+    s32 uFlip;
+
+    hide = false;
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x21);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        SetSpriteBank1(D_4A000_8017A040);
+        if (g_HandId != 0) {
+            self->animSet = ANIMSET_OVL(0x12);
+            self->palette = 0x128;
+            self->ext.shield.childPalette = 0x129;
+            self->unk5A = 0x66;
+            self->ext.shield.unk7C = 0;
+            self->ext.shield.unk7D = 0x80;
+        } else {
+            self->animSet = ANIMSET_OVL(0x10);
+            self->palette = 0x110;
+            self->ext.shield.childPalette = 0x111;
+            self->unk5A = 0x64;
+            self->ext.shield.unk7C = 0x80;
+            self->ext.shield.unk7D = 0;
+        }
+        self->posY.i.hi -= 8;
+        self->flags = FLAG_UNK_04000000 | FLAG_HAS_PRIMS | FLAG_UNK_10000;
+        self->zPriority = PLAYER.zPriority - 2;
+        self->facingLeft = PLAYER.facingLeft;
+        self->animCurFrame = 0x3E;
+        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        self->rotX = self->rotY = 0;
+        prim = &g_PrimBuf[self->primIndex];
+        prim->clut = 0x19F;
+        prim->tpage = 0x19;
+
+        prim->u0 = prim->u2 = 0x80;
+        prim->u1 = prim->u3 = 0x80 + 0x4F;
+        prim->v0 = prim->v1 = self->ext.shield.unk7C + 0;
+        prim->v2 = prim->v3 = self->ext.shield.unk7C + 0x4F;
+
+        self->ext.shield.unk82 = 0;
+        prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
+            prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
+                0x80;
+        prim->priority = self->zPriority - 4;
+        prim->drawMode =
+            DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        prim = prim->next;
+
+        self->ext.shield.unk86 = 0;
+        self->ext.shield.unk84 = 2;
+        self->ext.shield.unk92 = 0;
+        for (i = 0; i < 16; i++) {
+            prim->clut = self->ext.shield.childPalette;
+            prim->tpage = 0x19;
+            // uFlip will flip our u1 and u3 coordinates if needed
+            uFlip = 1;
+            if (self->facingLeft) {
+                uFlip = -1;
+            }
+            prim->u0 = 0xC0;
+            prim->v0 = self->ext.shield.unk7D + 0x40;
+            prim->u1 =
+                ((((rcos((i + 1) * 0x100) >> 4) * 0x3E) >> 8) * uFlip) + 0xC0;
+            prim->v1 = self->ext.shield.unk7D +
+                       (0x40 - (((rsin((i + 1) * 0x100) >> 4) * 0x3E) >> 8));
+            prim->u2 = 0xC0;
+            prim->v2 = self->ext.shield.unk7D + 0x40;
+            prim->u3 = ((((rcos(i * 0x100) >> 4) * 0x3E) >> 8) * uFlip) + 0xC0;
+            prim->v3 = self->ext.shield.unk7D +
+                       (0x40 - (((rsin(i * 0x100) >> 4) * 0x3E) >> 8));
+            prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
+                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
+                    prim->b3 = 0x80;
+            prim->priority = 0x1B8;
+            prim->drawMode = DRAW_HIDE;
+            prevPrim = prim;
+            prim = prim->next;
+            nextPrim = prim->next;
+            *prim = *prevPrim;
+            prim->next = nextPrim;
+            prim->clut = 0x15F;
+            prim->priority = 0x1BA;
+            prim->drawMode |=
+                (DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP);
+            prim = prim->next;
+        }
+        self->ext.shield.unk8A = 0xC0;
+        self->ext.shield.unk90 = 0x100;
+        DestroyEntityWeapon(1);
+        SetSpeedX(FIX(-2));
+        self->velocityY = 0;
+        g_api.PlaySfx(SFX_UNK_641);
+        g_unkGraphicsStruct.unk20 = 1;
+        self->step++;
+        break;
+    case 1:
+        DecelerateX(FIX(1.0 / 16));
+        self->velocityY -= FIX(20.0 / 128);
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->rotX += 12;
+        self->rotY = self->rotX;
+
+        self->ext.shield.unk82 = self->rotX * 0x28 / 256;
+        if (self->rotX >= 0x100) {
+            self->ext.shield.unk82 = 0x28;
+            self->rotY = self->rotX = 0x100;
+            self->ext.shield.unk80 = 8;
+            self->step++;
+        }
+        break;
+    case 2:
+        if (--self->ext.shield.unk80 == 0) {
+            self->ext.shield.unk80 = 0x10;
+            self->step++;
+        }
+        break;
+    case 3:
+        prim = &g_PrimBuf[self->primIndex];
+        if (!(self->ext.shield.unk80 & 1)) {
+            prim->priority = 0x1BC;
+        } else {
+            prim->priority = self->zPriority - 2;
+        }
+        self->rotX -= 0x10;
+        if (self->rotX <= 0) {
+            self->rotX = 0;
+        }
+        self->rotY = self->rotX;
+        if (--self->ext.shield.unk80 == 0) {
+            self->animCurFrame = 0;
+            prim = prim->next;
+            for (i = 0; i < 32; i++) {
+                prim->drawMode &= ~DRAW_HIDE;
+                prim = prim->next;
+            }
+            g_api.PlaySfx(SE_WPN_POWER_OF_SIRE);
+            self->step++;
+        }
+        break;
+    case 4:
+        self->ext.shield.unk82 += 8;
+        prim = &g_PrimBuf[self->primIndex];
+        if (prim->b3 > 8) {
+            prim->b3 -= 4;
+        }
+        prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
+            prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
+        self->ext.shield.unk84 += 2;
+        self->ext.shield.unk86 += 2;
+        if (self->ext.shield.unk84 >= 0x3E) {
+            self->ext.shield.unk84 = 0x3E;
+            prim->drawMode |= DRAW_HIDE;
+            self->step++;
+        }
+        break;
+    case 5:
+        self->ext.shield.unk86 -= 2;
+        if (self->ext.shield.unk86 <= 0) {
+            self->ext.shield.unk86 = 0;
+            // This probably has to be the two swords that fly all around
+            unusedEnt = g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xE) + FACTORY(0, 88), 0);
+            unusedEnt = g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xE) + FACTORY(0x100, 88), 0);
+            g_unkGraphicsStruct.unk20 = 0;
+            self->step++;
+        }
+        break;
+    case 6:
+        self->ext.shield.unk90 -= 8;
+        if (self->ext.shield.unk90 <= 0) {
+            self->ext.shield.unk90 = 0;
+            self->step++;
+            self->ext.shield.unk80 = 0x40;
+        }
+        break;
+    case 7:
+        if (--self->ext.shield.unk80 == 0) {
+            self->step++;
+        }
+        break;
+    case 8:
+        self->ext.shield.unk90 += 12;
+        if (self->ext.shield.unk90 > 0x120) {
+            self->ext.shield.unk90 = 0x120;
+        }
+        self->ext.shield.unk86 += 3;
+        if (self->ext.shield.unk86 >= 0x36) {
+            self->ext.shield.unk86 = 0x36;
+            hide = true;
+            g_api.PlaySfx(SFX_TELEPORT_BANG_B);
+            self->step++;
+        }
+        break;
+    case 9:
+        self->ext.shield.unk90 -= 8;
+        if (self->ext.shield.unk90 < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    selfX = self->posX.i.hi;
+    selfY = self->posY.i.hi;
+    prim = &g_PrimBuf[self->primIndex];
+    if (prim->b3 > 8) {
+        if (g_Timer & 1) {
+            prim->drawMode |= DRAW_HIDE;
+        } else {
+            prim->drawMode &= ~DRAW_HIDE;
+        }
+    }
+    prim->x0 = prim->x2 = selfX - self->ext.shield.unk82;
+    prim->x1 = prim->x3 = (selfX + self->ext.shield.unk82) - 1;
+    prim->y0 = prim->y1 = selfY - self->ext.shield.unk82;
+    prim->y2 = prim->y3 = (selfY + self->ext.shield.unk82) - 1;
+    prim = prim->next;
+    for (i = 0; i < 16; i++) {
+        // clang-format off
+        prim->x0 = selfX + (((rcos((i+1)*0x100 + self->ext.shield.unk92) >> 4) * self->ext.shield.unk86) >> 8);
+        prim->y0 = selfY - (((rsin((i+1)*0x100 + self->ext.shield.unk92) >> 4) * self->ext.shield.unk86) >> 8);
+        prim->x1 = selfX + (((rcos((i+1)*0x100) >> 4) * self->ext.shield.unk84) >> 8);
+        prim->y1 = selfY - (((rsin((i+1)*0x100) >> 4) * self->ext.shield.unk84) >> 8);
+        prim->x2 = selfX + (((rcos(i*0x100 + self->ext.shield.unk92) >> 4) * self->ext.shield.unk86) >> 8);
+        prim->y2 = selfY - (((rsin(i*0x100 + self->ext.shield.unk92) >> 4) * self->ext.shield.unk86) >> 8);
+        prim->x3 = selfX + (((rcos(i*0x100) >> 4) * self->ext.shield.unk84) >> 8);
+        prim->y3 = selfY - (((rsin(i*0x100) >> 4) * self->ext.shield.unk84) >> 8);
+        // clang-format on
+        if (hide != 0) {
+            prim->drawMode |= DRAW_HIDE;
+        }
+        prevPrim = prim;
+        prim = prim->next;
+        nextPrim = prim->next;
+        *prim = *prevPrim;
+        prim->next = nextPrim;
+        angle = D_4A000_8017ABBC[i];
+        prim->r2 = prim->g2 = prim->b2 = prim->b3 = 0;
+        prim->g3 = prim->r3 =
+            ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
+        angle = D_4A000_8017ABBC[(i + 1) % 16];
+        prim->r0 = prim->g0 = prim->b0 = prim->b1 = 0;
+        prim->g1 = prim->r1 =
+            ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
+        D_4A000_8017ABBC[i] += self->ext.shield.unk8A;
+        prim->clut = 0x15F;
+        prim->priority = 0x1BA;
+        prim->drawMode = (DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP);
+        prim = prim->next;
+    }
+}
 
 // Probably the swords that fly all around
 void func_ptr_80170024(Entity* self) {

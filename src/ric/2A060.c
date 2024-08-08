@@ -1,4 +1,5 @@
 #include "ric.h"
+#include "sfx.h"
 
 // Entity ID 66. Made by blueprint 77 (the very last one).
 // Created in 3 spots in 2 functions (total of 6 calls).
@@ -80,7 +81,7 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.unk80 = 0x10;
             self->ext.teleport.unk88 = 0x80;
             self->step = 1;
-            g_api.PlaySfx(0x635);
+            g_api.PlaySfx(SFX_TELEPORT_BANG_A);
             g_api.PlaySfx(0x8BA);
         }
         break;
@@ -167,7 +168,7 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.unk84 = 4;
             self->step++;
             g_Player.unk1C = 1;
-            g_api.PlaySfx(0x636);
+            g_api.PlaySfx(SFX_TELEPORT_BANG_B);
             DestroyEntity(self);
             return;
         }
@@ -329,7 +330,7 @@ void func_80166784(Entity* self) {
             } else {
                 if (PLAYER.step == 0) {
                     if (PLAYER.facingLeft == 0) {
-                        var_s3 = (&D_80155A08)[var_s4];
+                        var_s3 = D_80155A08[var_s4];
                     } else {
                         var_s3 = D_801559E4[var_s4].x;
                     }
@@ -463,7 +464,7 @@ void func_80166784(Entity* self) {
             self->ext.et_80166784.unk84 = 6;
             if (var_s4 == 0) {
                 if (PLAYER.facingLeft == 0) {
-                    xDiff = D_80155A08;
+                    xDiff = D_80155A08[0];
                 } else {
                     xDiff = D_801559E4[0].x;
                 }
@@ -700,26 +701,17 @@ void func_8016779C(Entity* entity) {
     entity->posY.val = PLAYER.posY.val;
 }
 
-/**
- * TODO: !FAKE
- * Needs to be refactored
- */
 void func_80167964(Entity* entity) {
-    /**
-     * 0x5E was originally 0xBC in mips2c output
-     * suggesting the size of the Entity struct
-     */
     if (g_Player.unk46 != 0) {
         if (entity->step == 0) {
             entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 |
                             FLAG_UNK_04000000 | FLAG_UNK_10000;
         }
         if (!(entity->params & 0xFF00)) {
-            *(&PLAYER.palette +
-              (*(&D_80155D30 + (entity->animFrameDuration)) * 0x5E)) = 0x8140;
+            g_Entities[D_80155D30[entity->animFrameDuration]].palette =
+                PAL_OVL(0x140);
         }
-        *(&PLAYER.ext.player.unkA4 +
-          (*(&D_80155D30 + (entity->animFrameDuration)) * 0x5E)) = 4;
+        g_Entities[D_80155D30[entity->animFrameDuration]].ext.player.unkA4 = 4;
         entity->animFrameDuration++;
         if (entity->animFrameDuration == 0xF) {
             DestroyEntity(entity);
@@ -755,9 +747,11 @@ void func_80167A70(Entity* self) {
             DestroyEntity(self);
             return;
         }
+
         prim = &g_PrimBuf[self->primIndex];
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
+
         for (i = 0; prim != NULL; i++, prim = prim->next) {
             if (i < 8) {
                 fakeprim = (FakePrim*)prim;
@@ -801,13 +795,14 @@ void func_80167A70(Entity* self) {
         self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
         self->ext.timer.t = 20;
         self->step++;
-        return;
+        break;
 
     case 1:
         if (--self->ext.timer.t == 0) {
             DestroyEntity(self);
             return;
         }
+
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; prim != NULL; i++, prim = prim->next) {
             if (i < 8) {
@@ -833,6 +828,7 @@ void func_80167A70(Entity* self) {
                 prim->y3 = prim->y2 = posY + D_80155D64[arrIndex][5];
             }
         }
+        break;
     }
 }
 
@@ -850,6 +846,7 @@ void EntityHydroStorm(Entity* self) {
     } else {
         primcount = 33 - ((self->params - 32) * 2);
     }
+
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, primcount);
@@ -902,8 +899,9 @@ void EntityHydroStorm(Entity* self) {
         if ((self->params < 32) && !(self->params & 3)) {
             g_api.PlaySfx(0x708);
         }
-        self->step += 1;
+        self->step++;
         break;
+
     case 1:
         line = (PrimLineG2*)&g_PrimBuf[self->primIndex];
         while (line != NULL) {
@@ -936,6 +934,7 @@ void EntityHydroStorm(Entity* self) {
         }
         self->ext.timer.t++;
         break;
+
     case 2:
         DestroyEntity(self);
         break;

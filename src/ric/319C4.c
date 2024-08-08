@@ -190,7 +190,7 @@ void func_8016DF74(Entity* self) {
         self->ext.et_8016DF74.unk7E = 0;
         self->ext.et_8016DF74.unk84 = 0;
         self->ext.et_8016DF74.unk82 = 8;
-        g_api.PlaySfx(0x636);
+        g_api.PlaySfx(SFX_TELEPORT_BANG_B);
         self->step++;
         break;
     case 1:
@@ -344,7 +344,7 @@ void func_8016E46C(Entity* self) {
             self->ext.et_8016E46C.unkB0 = 0x11;
             func_8015FAB8(self);
             g_api.PlaySfx(SFX_WEAPON_APPEAR);
-            g_api.PlaySfx(0x635);
+            g_api.PlaySfx(SFX_TELEPORT_BANG_A);
             self->step++;
         }
         break;
@@ -2106,6 +2106,9 @@ void EntitySubwpnBible(Entity* self) {
     }
 }
 
+static const SVECTOR D_80156C50 = {0x0000, 0x0000, 0x0000, 0x0000};
+static const SVECTOR D_80156C58 = {0xFFA0, 0x0000, 0x0000, 0x0000};
+
 void EntityGiantSpinningCross(Entity* self) {
     MATRIX m;
     SVECTOR rot;
@@ -2148,7 +2151,7 @@ void EntityGiantSpinningCross(Entity* self) {
         self->ext.giantcross.unk7E = 0x400;
         g_api.PlaySfx(0x661);
         self->step++;
-        primUVCoords = &D_8015635C[0][0];
+        primUVCoords = &D_8015635C[0];
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 46; i++, prim = prim->next, primUVCoords += 5) {
             prim->clut = (primUVCoords[4] & 0xF) | 0x1A0;

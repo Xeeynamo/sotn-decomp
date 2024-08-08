@@ -219,7 +219,7 @@ void HandleNowLoading(void) {
         if (!(g_pads[0].tapped & PAD_START)) {
             break;
         }
-        PlaySfx(SE_UI_START);
+        PlaySfx(SFX_START_SLAM_B);
         if (g_StageId == STAGE_MEMORYCARD) {
             SetGameState(Game_MainMenu);
         } else if (g_StageId == STAGE_ENDING) {

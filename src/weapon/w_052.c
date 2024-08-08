@@ -392,7 +392,7 @@ void EntityWeaponShieldSpell(Entity* self) {
                 prim = prim->next;
             }
             // Alucard Shield plays the same sound as the warp!
-            g_api.PlaySfx(NA_SE_PL_WARP);
+            g_api.PlaySfx(SFX_TELEPORT_BANG_B);
             self->step++;
             self->step = 6;
         }

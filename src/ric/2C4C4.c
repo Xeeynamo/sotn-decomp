@@ -333,7 +333,7 @@ void EntitySubwpnCrashCross(Entity* self) {
         func_8015FAB8(self);
         LoadImage(&D_80155E3C, D_80155DDC);
         g_api.PlaySfx(0x6DF);
-        g_api.PlaySfx(0x636);
+        g_api.PlaySfx(SFX_TELEPORT_BANG_B);
         self->step += 1;
         break;
     case 1:
@@ -1148,7 +1148,7 @@ void EntitySubwpnCrashAxe(Entity* self) {
     case 3:
         if (--self->ext.factory.unkA2 == 0) {
             if ((u8)self->params == 0) {
-                g_api.PlaySfx(0x635);
+                g_api.PlaySfx(SFX_TELEPORT_BANG_A);
                 g_api.PlaySfx(SFX_WEAPON_APPEAR);
             }
             g_Player.unk4E = 1;

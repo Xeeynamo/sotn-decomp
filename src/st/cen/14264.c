@@ -1,6 +1,7 @@
 #include "cen.h"
 
 #include "../entity.h"
+#include "sfx.h"
 
 u8 func_8019444C(u8 frames[], Entity* self, u8 arg2) {
     u16 animFrameStart = self->animFrameIdx * 2;
@@ -440,7 +441,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;
     u16 subWeapon;
 
-    g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+    g_api.PlaySfx(SFX_ITEM_PICKUP);
     subWeapon = g_Status.subWeapon;
     g_Status.subWeapon = D_80180EEC[subWeaponIdx];
 
@@ -472,7 +473,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
 #include "../collect_heart_vessel.h"
 
 void CollectLifeVessel(void) {
-    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_api.PlaySfx(SFX_HEART_PICKUP);
     g_api.func_800FE044(5, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }

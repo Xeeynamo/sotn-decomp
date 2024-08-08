@@ -1,4 +1,5 @@
 #include "dre.h"
+#include "sfx.h"
 
 void EntityEquipItemDrop(Entity* self) {
     u16 itemId = self->params & 0x7FFF;
@@ -165,7 +166,7 @@ void EntityEquipItemDrop(Entity* self) {
             *unk = 0;
         }
 
-        g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+        g_api.PlaySfx(SFX_ITEM_PICKUP);
 
         if (itemId < NUM_HAND_ITEMS) {
             itemName = g_api.equipDefs[itemId].name;
