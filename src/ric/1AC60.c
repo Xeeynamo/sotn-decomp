@@ -67,6 +67,9 @@ s16 func_80156DE4(void) {
     }
     return 0;
 }
+
+void func_801587C0();
+
 // Duplicate of DRA func_80109594
 void func_80156F40(s16 arg0) {
     Entity* e;
@@ -350,6 +353,7 @@ void CheckHighJumpInput(void) {
 }
 
 bool func_8015885C(void);
+void func_8015A9B0(s32 damageEffects, s32 arg1, s32 arg2, s32 arg3);
 
 void UpdateEntityRichter(void) {
     DamageParam damage;
