@@ -1,11 +1,12 @@
 #include "np3.h"
+#include "sfx.h"
 
 void EntityZombie(Entity* self) {
     Entity* newEntity;
     s32 temp_a0;
 
     if ((self->flags & FLAG_DEAD) && (self->step < 4)) {
-        func_801916C4(NA_SE_EN_ZOMBIE_EXPLODE);
+        func_801916C4(SFX_EXPLODE_SMALL);
         self->hitboxState = 0;
         // Spawn Zombie explosion
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);

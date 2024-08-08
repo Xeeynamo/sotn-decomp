@@ -517,7 +517,7 @@ void EntityGaibon(Entity* self) {
                 // do-while needed on PSX but not PSP
                 do {
                     self->palette = D_80180D36;
-                    func_801C29B0(NA_SE_EN_GAIBON_FLAME_OUT);
+                    func_801C29B0(SFX_EXPLODE_SMALL);
                     self->step_s++;
                 } while (0);
             }

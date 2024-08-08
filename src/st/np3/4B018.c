@@ -970,7 +970,7 @@ void EntityOwlKnight(Entity* self) {
         break;
     case 17:
         if (!(g_Timer & 7)) {
-            func_801916C4(0x65E);
+            func_801916C4(SFX_EXPLODE_SMALL);
             explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (explosion != NULL) {
                 CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, explosion);
