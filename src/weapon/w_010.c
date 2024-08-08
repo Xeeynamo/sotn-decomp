@@ -320,7 +320,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         DestroyEntityWeapon(1);
         SetSpeedX(FIX(-2));
         self->velocityY = 0;
-        g_api.PlaySfx(SFX_UNK_641);
+        g_api.PlaySfx(SFX_ANIME_SWORD_C);
         g_unkGraphicsStruct.unk20 = 1;
         self->step++;
         break;

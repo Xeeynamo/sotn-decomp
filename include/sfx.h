@@ -183,7 +183,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SFX_UNK_64B 0x64B
 #define SFX_UNK_64C 0x64C
 
-#define SFX_UNK_641 0x641
 #define NA_SE_EN_COG_CLICK 0x642
 #define SOUND_BAT_SCREECH 0x64E
 #define NA_SE_EN_SLOGRA_FLOOR_STOMP 0x64F
