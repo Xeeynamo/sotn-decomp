@@ -15,37 +15,37 @@
 <ellipse fill="green" stroke="black" cx="513.24" cy="-198" rx="100.18" ry="18"/>
 <text text-anchor="middle" x="513.24" y="-194.3" font-family="Times,serif" font-size="14.00">ric.func_8015CCC8</text>
 </g>
-<!-- ric.SetPlayerStep -->
+<!-- ric.RicSetPlayerStep -->
 <g id="node2" class="node">
-<title>ric.SetPlayerStep</title>
-<g id="a_node2"><a xlink:href="ric.SetPlayerStep.svg" xlink:title="ric.SetPlayerStep">
-<ellipse fill="green" stroke="black" cx="409.24" cy="-18" rx="92.88" ry="18"/>
-<text text-anchor="middle" x="409.24" y="-14.3" font-family="Times,serif" font-size="14.00">ric.SetPlayerStep</text>
+<title>ric.RicSetPlayerStep</title>
+<g id="a_node2"><a xlink:href="ric.RicSetPlayerStep.svg" xlink:title="ric.RicSetPlayerStep">
+<ellipse fill="green" stroke="black" cx="402.24" cy="-18" rx="107.48" ry="18"/>
+<text text-anchor="middle" x="402.24" y="-14.3" font-family="Times,serif" font-size="14.00">ric.RicSetPlayerStep</text>
 </a>
 </g>
 </g>
-<!-- ric.func_8015CCC8&#45;&gt;ric.SetPlayerStep -->
+<!-- ric.func_8015CCC8&#45;&gt;ric.RicSetPlayerStep -->
 <g id="edge1" class="edge">
-<title>ric.func_8015CCC8&#45;&gt;ric.SetPlayerStep</title>
-<path fill="none" stroke="black" d="M503.27,-179.93C484.94,-148.57 445.82,-81.6 424.26,-44.71"/>
-<polygon fill="black" stroke="black" points="427.25,-42.88 419.18,-36.02 421.2,-46.42 427.25,-42.88"/>
-<text text-anchor="middle" x="414.18" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
+<title>ric.func_8015CCC8&#45;&gt;ric.RicSetPlayerStep</title>
+<path fill="none" stroke="black" d="M502.6,-179.93C483.04,-148.57 441.28,-81.6 418.27,-44.71"/>
+<polygon fill="black" stroke="black" points="421.11,-42.65 412.85,-36.02 415.17,-46.35 421.11,-42.65"/>
+<text text-anchor="middle" x="407.85" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 <!-- ric.func_8015C920 -->
 <g id="node3" class="node">
 <title>ric.func_8015C920</title>
 <g id="a_node3"><a xlink:href="ric.func_8015C920.svg" xlink:title="ric.func_8015C920">
-<ellipse fill="green" stroke="black" cx="618.24" cy="-18" rx="98.28" ry="18"/>
-<text text-anchor="middle" x="618.24" y="-14.3" font-family="Times,serif" font-size="14.00">ric.func_8015C920</text>
+<ellipse fill="green" stroke="black" cx="625.24" cy="-18" rx="98.28" ry="18"/>
+<text text-anchor="middle" x="625.24" y="-14.3" font-family="Times,serif" font-size="14.00">ric.func_8015C920</text>
 </a>
 </g>
 </g>
 <!-- ric.func_8015CCC8&#45;&gt;ric.func_8015C920 -->
 <g id="edge2" class="edge">
 <title>ric.func_8015CCC8&#45;&gt;ric.func_8015C920</title>
-<path fill="none" stroke="black" d="M523.31,-179.93C541.81,-148.57 581.31,-81.6 603.07,-44.71"/>
-<polygon fill="black" stroke="black" points="606.14,-46.41 608.2,-36.02 600.11,-42.85 606.14,-46.41"/>
-<text text-anchor="middle" x="603.2" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
+<path fill="none" stroke="black" d="M523.98,-179.93C543.71,-148.57 585.85,-81.6 609.06,-44.71"/>
+<polygon fill="black" stroke="black" points="612.17,-46.34 614.53,-36.02 606.24,-42.62 612.17,-46.34"/>
+<text text-anchor="middle" x="609.53" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 <!-- ric.PlayerStepSlideKick -->
 <g id="node4" class="node">

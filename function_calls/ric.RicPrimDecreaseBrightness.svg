@@ -15,18 +15,18 @@
 <ellipse fill="green" stroke="black" cx="156.64" cy="-18" rx="156.77" ry="18"/>
 <text text-anchor="middle" x="156.64" y="-14.3" font-family="Times,serif" font-size="14.00">ric.RicPrimDecreaseBrightness</text>
 </g>
-<!-- ric.EntityAguneaHitEnemy -->
+<!-- ric.RicEntityAguneaHitEnemy -->
 <g id="node2" class="node">
-<title>ric.EntityAguneaHitEnemy</title>
-<g id="a_node2"><a xlink:href="ric.EntityAguneaHitEnemy.svg" xlink:title="ric.EntityAguneaHitEnemy">
-<ellipse fill="green" stroke="black" cx="156.64" cy="-198" rx="135.68" ry="18"/>
-<text text-anchor="middle" x="156.64" y="-194.3" font-family="Times,serif" font-size="14.00">ric.EntityAguneaHitEnemy</text>
+<title>ric.RicEntityAguneaHitEnemy</title>
+<g id="a_node2"><a xlink:href="ric.RicEntityAguneaHitEnemy.svg" xlink:title="ric.RicEntityAguneaHitEnemy">
+<ellipse fill="green" stroke="black" cx="156.64" cy="-198" rx="150.57" ry="18"/>
+<text text-anchor="middle" x="156.64" y="-194.3" font-family="Times,serif" font-size="14.00">ric.RicEntityAguneaHitEnemy</text>
 </a>
 </g>
 </g>
-<!-- ric.EntityAguneaHitEnemy&#45;&gt;ric.RicPrimDecreaseBrightness -->
+<!-- ric.RicEntityAguneaHitEnemy&#45;&gt;ric.RicPrimDecreaseBrightness -->
 <g id="edge1" class="edge">
-<title>ric.EntityAguneaHitEnemy&#45;&gt;ric.RicPrimDecreaseBrightness</title>
+<title>ric.RicEntityAguneaHitEnemy&#45;&gt;ric.RicPrimDecreaseBrightness</title>
 <path fill="none" stroke="black" d="M156.64,-179.93C156.64,-148.97 156.64,-83.3 156.64,-46.13"/>
 <polygon fill="black" stroke="black" points="160.14,-46.02 156.64,-36.02 153.14,-46.02 160.14,-46.02"/>
 <text text-anchor="middle" x="151.64" y="-168.73" font-family="Times,serif" font-size="14.00">1</text>
