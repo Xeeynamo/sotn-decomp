@@ -572,7 +572,7 @@ void EntityDraculaFinalForm(Entity* self) {
             break;
         }
         if (--self->ext.dracFinalForm.timer == 0) {
-            g_api.PlaySfx(0x655);
+            g_api.PlaySfx(SFX_EXPLODE_B);
             self->ext.dracFinalForm.timer = 8;
             temp_s2 = AllocEntity(&g_Entities[224], &g_Entities[256]);
             temp_s1 = &D_80181108[self->ext.dracFinalForm.unk84].x;

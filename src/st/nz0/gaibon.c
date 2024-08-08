@@ -315,7 +315,7 @@ void EntityGaibon(Entity* self) {
                     } else {
                         CreateEntityFromEntity(
                             E_GAIBON_BIG_FIREBALL, self, other);
-                        func_801C29B0(NA_SE_EN_GAIBON_BIG_FIREBALL);
+                        func_801C29B0(SFX_EXPLODE_B);
                     }
                     other->posY.i.hi -= 6;
                     if (self->facingLeft) {
@@ -349,7 +349,7 @@ void EntityGaibon(Entity* self) {
                 other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
                     CreateEntityFromEntity(E_GAIBON_BIG_FIREBALL, self, other);
-                    func_801C29B0(NA_SE_EN_GAIBON_BIG_FIREBALL);
+                    func_801C29B0(SFX_EXPLODE_B);
                     other->posY.i.hi -= 2;
                     if (self->facingLeft) {
                         other->posX.i.hi += 12;

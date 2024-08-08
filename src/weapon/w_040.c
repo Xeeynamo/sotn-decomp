@@ -149,7 +149,7 @@ s32 func_ptr_80170004(Entity* self) {
                 // TODO: FACTORY()
                 g_api.CreateEntFactoryFromEntity(
                     self, ((g_HandId + 1) << 12) | 62, 0) != NULL) {
-                g_api.PlaySfx(0x655);
+                g_api.PlaySfx(SFX_EXPLODE_B);
             }
         }
         if (self->animFrameDuration < 0) {

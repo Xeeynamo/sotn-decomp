@@ -5,7 +5,6 @@
 #define CASTLE_FLAG_BANK 0x34
 
 // NO3 Sound IDs
-// #define 0x655
 #define SE_MERMAN_EXPLODE 0x65B
 #define SE_ZOMBIE_EXPLODE 0x65E
 // #define 0x660

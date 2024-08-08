@@ -267,7 +267,7 @@ s32 func_ptr_80170014(Entity* self) {
         collY = self->posY.i.hi;
         g_api.CheckCollision(collX, collY, &collider, 0);
         if (collider.effects & EFFECT_UNK_0002) {
-            g_api.PlaySfx(0x655);
+            g_api.PlaySfx(SFX_EXPLODE_B);
             g_api.func_80102CD8(4);
             if (xShift < 0) {
                 self->posX.i.hi += collider.unkC;
@@ -281,7 +281,7 @@ s32 func_ptr_80170014(Entity* self) {
         collY = self->posY.i.hi - 6;
         g_api.CheckCollision(collX, collY, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
-            g_api.PlaySfx(0x655);
+            g_api.PlaySfx(SFX_EXPLODE_B);
             g_api.func_80102CD8(4);
             self->posY.i.hi += collider.unk20 + 1;
             self->velocityX /= 2;
@@ -291,7 +291,7 @@ s32 func_ptr_80170014(Entity* self) {
         collY = self->posY.i.hi + 7;
         g_api.CheckCollision(collX, collY, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
-            g_api.PlaySfx(0x655);
+            g_api.PlaySfx(SFX_EXPLODE_B);
             g_api.func_80102CD8(4);
             self->posY.i.hi += collider.unk18;
             if (self->ext.weapon.lifetime != 0) {
@@ -377,7 +377,7 @@ s32 func_ptr_80170014(Entity* self) {
                 g_api.CheckCollision(collX, collY, &collider, 0);
                 if (collider.effects & EFFECT_UNK_0002) {
                     if (self->velocityX != 0) {
-                        g_api.PlaySfx(0x655);
+                        g_api.PlaySfx(SFX_EXPLODE_B);
                         g_api.func_80102CD8(1);
                     }
                     if (xShift < 0) {
