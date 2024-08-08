@@ -306,7 +306,7 @@ void EntityHammer(Entity* self) {
                 if (Random() & 1) {
                     func_801916C4(0x65B);
                 } else {
-                    func_801916C4(0x657);
+                    func_801916C4(SFX_EXPLODE_D);
                 }
             }
             return;
