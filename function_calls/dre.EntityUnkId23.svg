@@ -12,7 +12,7 @@
 <!-- dre.EntityUnkId23 -->
 <g id="node1" class="node">
 <title>dre.EntityUnkId23</title>
-<ellipse fill="red" stroke="black" cx="98.79" cy="-198" rx="98.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="98.79" cy="-198" rx="98.28" ry="18"/>
 <text text-anchor="middle" x="98.79" y="-194.3" font-family="Times,serif" font-size="14.00">dre.EntityUnkId23</text>
 </g>
 <!-- dre.InitializeEntity -->
