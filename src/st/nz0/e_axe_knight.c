@@ -64,7 +64,7 @@ s32 func_801C4198(Entity* axeKnight) {
 
     switch (axeKnight->step_s) {
     case 0:
-        clutBase = D_80180C6A;
+        clutBase = D_80180C64[3];
         dataPtr = sprites_nz0_3[axeKnight->animCurFrame];
         primIndex = g_api.AllocPrimitives(PRIM_GT4, *dataPtr * 2);
         if (primIndex != -1) {

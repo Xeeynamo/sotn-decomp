@@ -498,7 +498,7 @@ void EntityGaibon(Entity* self) {
         case GAIBON_NEAR_DEATH_TRANSFORM:
             if (AnimateEntity(D_801812FC, self) == 0) {
                 self->ext.GS_Props.flag++;
-                self->palette = D_80180D36 + self->ext.GS_Props.flag;
+                self->palette = D_80180D30[3] + self->ext.GS_Props.flag;
                 if (self->ext.GS_Props.flag == 6) {
                     self->flags &= ~0xF;
                     SetStep(4);
@@ -516,7 +516,7 @@ void EntityGaibon(Entity* self) {
                 self->flags &= ~0xF;
                 // do-while needed on PSX but not PSP
                 do {
-                    self->palette = D_80180D36;
+                    self->palette = D_80180D30[3];
                     func_801C29B0(SFX_EXPLODE_SMALL);
                     self->step_s++;
                 } while (0);

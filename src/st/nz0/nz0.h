@@ -61,7 +61,6 @@ void func_801C4CC0(void);
 extern u8 D_8003BE6F[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 extern u16 g_InitializeEntityData0[];
-extern u16 D_80180BEC[];
 extern u16 g_EInitGeneric[]; // Init Elevator2
 extern u16 g_eInitGeneric2[];
 extern u16 D_80180C34[];
@@ -389,7 +388,7 @@ extern const char D_80183B0C[];
 extern u32 g_mariaCutsceneFlags;
 
 // EntityMaria, mostly animations
-extern u16 D_80180BEC[];
+extern u16 g_MariaInit[];
 extern u8 D_80181474[];
 extern u8 D_80181490[];
 extern u8 D_801814A0[];
