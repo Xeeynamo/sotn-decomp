@@ -1,5 +1,8 @@
 #include "ric.h"
 
+Entity* RicGetFreeEntity(s16 start, s16 end);
+Entity* RicGetFreeEntityReverse(s16 start, s16 end);
+
 // Similar to same function in DRA
 void RicEntityEntFactory(Entity* self) {
     Entity* newEntity;
