@@ -161,7 +161,7 @@ void EntityWeaponAttack(Entity* self) {
                 self->zPriority = 0x1B6;
                 self->flags &= ~FLAG_UNK_100000;
                 g_api.func_80118C28(7);
-                g_api.PlaySfx(SFX_THUNDER);
+                g_api.PlaySfx(SFX_THUNDER_B);
                 SetWeaponProperties(self, 0);
                 self->step = 4;
             } else {
