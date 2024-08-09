@@ -79,7 +79,7 @@ static u8* anim0[] = {
     D_12000_8017AAA4, D_12000_8017AAA4, D_12000_8017AAC0, D_12000_8017AADC,
     D_12000_8017AAF8, D_12000_8017AB10, D_12000_8017AB28};
 static WeaponAnimation D_12000_8017ABC4[] = {
-    anim0, hitboxes, 0, 0x0689, 0x48, 0x03, 0};
+    anim0, hitboxes, 0, SFX_UNK_689, 0x48, 0x03, 0};
 static u16* g_WeaponCluts[] = {clut0};
 static s32 g_HandId = HAND_ID;
 
