@@ -38,6 +38,7 @@ segments:
       - [0x47C, data]
       - [0x8EC, .data, e_laydef] # layout entries header
       - [0xA94, data]
+      - [0x1574, .data, st_update]
       - [0x15A0, .data, collision]
       - [0x1960, .data, e_red_door]
       - [0x1978, data]
@@ -92,9 +93,7 @@ segments:
       - [0x36DE4, c]
       - [0x374CC, c, mariacutscene]
       - [0x38E0C, c, maria]
-      - [0x394D4, c, random]
-      - [0x39504, c, update]
-      - [0x39800, c, update_stage_entities]
+      - [0x394D4, c, st_update]
       - [0x39908, c, collision]
       - [0x3B0C4, c, create_entity]
       - [0x3BC3C, c, e_red_door]
