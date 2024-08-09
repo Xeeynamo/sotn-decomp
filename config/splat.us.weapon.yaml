@@ -78,7 +78,7 @@ segments:
     subsegments:
       - [0x12040, animset, w_002_1]
       - [0x12884, animset, w_002_2]
-      - [0x12884, data, w_002]
+      - [0x12884, .data, w_002]
       - [0x12BDC, c, w_002]
       - [0x13200, sbss, w_002]
   - name: f_003
