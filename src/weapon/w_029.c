@@ -298,7 +298,7 @@ void EntityWeaponShieldSpell(Entity* self) {
             self->ext.weapon.unk80 = 0x20;
             self->palette = self->ext.weapon.childPalette;
             self->zPriority = 0x1B6;
-            g_api.PlaySfx(0x668);
+            g_api.PlaySfx(SFX_TRANSFORM);
             self->step++;
         }
         break;

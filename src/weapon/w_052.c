@@ -326,7 +326,7 @@ void EntityWeaponShieldSpell(Entity* self) {
     case 2:
         if (--self->ext.shield.unk80 == 0) {
             self->ext.shield.unk80 = 0x10;
-            g_api.PlaySfx(SFX_UNK_668);
+            g_api.PlaySfx(SFX_TRANSFORM);
             self->step++;
         }
         if (self->ext.shield.unk86 > 0) {
