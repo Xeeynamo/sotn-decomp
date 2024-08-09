@@ -237,7 +237,13 @@ void func_80166784(Entity* self) {
     Primitive* prim;
     s16 angle;
     s32 var_s3;
+#ifdef VERSION_PC
+    // this can still be uninitialized when we get past the D_80155B2C section
+    // not every combo of directions is covered
+    s32 var_s4 = 0;
+#else
     s32 var_s4;
+#endif
     s32 var_s5;
     s32 temp_s6;
     s32 var_s7;
