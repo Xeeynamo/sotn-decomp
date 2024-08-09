@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/binary"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"os"
 )
 
@@ -20,11 +21,11 @@ func (r room) isTerminator() bool {
 	return r.Left == 0x40
 }
 
-func readRooms(file *os.File, off PsxOffset) ([]room, dataRange, error) {
+func readRooms(file *os.File, off psx.Addr) ([]room, dataRange, error) {
 	if off == 0 {
 		return nil, dataRange{}, nil
 	}
-	if err := off.moveFile(file); err != nil {
+	if err := off.MoveFile(file, psx.RamStageBegin); err != nil {
 		return nil, dataRange{}, err
 	}
 
@@ -41,6 +42,6 @@ func readRooms(file *os.File, off PsxOffset) ([]room, dataRange, error) {
 	}
 	return rooms, dataRange{
 		begin: off,
-		end:   off.sum(len(rooms)*8 + 4),
+		end:   off.Sum(len(rooms)*8 + 4),
 	}, nil
 }

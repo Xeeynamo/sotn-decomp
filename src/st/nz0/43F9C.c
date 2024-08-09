@@ -5,6 +5,7 @@
  */
 
 #include "nz0.h"
+#include "sfx.h"
 
 // Weirdly, this function ONLY acts on prim->next, it does not act on prim.
 // However, it does call functions on prim.
@@ -42,7 +43,7 @@ void func_801C3F9C(AxePrim* prim) {
                 newEnt->posY.i.hi = prim->next->y0;
                 newEnt->params = 0;
             }
-            func_801C29B0(0x655);
+            func_801C29B0(SFX_EXPLODE_B);
             UnkPolyFunc0((Primitive*)prim);
         }
         return;
@@ -122,7 +123,7 @@ s32 func_801C4198(Entity* axeKnight) {
         } else {
             return 1;
         }
-        func_801C29B0(0x65B);
+        func_801C29B0(SFX_FM_EXPLODE_B);
         axeKnight->step_s++;
         break;
     case 1:

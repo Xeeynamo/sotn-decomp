@@ -1,4 +1,5 @@
 #include "ric.h"
+#include "sfx.h"
 
 // Corresponding DRA function is func_80115DA0
 void func_8015BCD0(void) {
@@ -78,7 +79,7 @@ void PlayerStepSlideKick(void) {
         RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
         PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
         func_8015CCC8(3, PLAYER.velocityX);
-        g_api.PlaySfx(0x64B);
+        g_api.PlaySfx(SFX_STOMP_SOFT_A);
         return;
     }
 

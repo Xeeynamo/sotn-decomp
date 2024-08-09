@@ -356,7 +356,7 @@ void EntityOwl(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (func_801BC8E4(D_801826CC) & 1) {
-                func_801916C4(0x647);
+                func_801916C4(SFX_STOMP_HARD_B);
                 self->animCurFrame = 0xD;
                 if (self->posX.i.hi > KNIGHT->posX.i.hi) {
                     self->facingLeft = 1;
@@ -970,7 +970,7 @@ void EntityOwlKnight(Entity* self) {
         break;
     case 17:
         if (!(g_Timer & 7)) {
-            func_801916C4(0x65E);
+            func_801916C4(SFX_EXPLODE_SMALL);
             explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (explosion != NULL) {
                 CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, explosion);

@@ -1,7 +1,14 @@
 // Weapon ID #45. Used by weapons:
 // Unknown#216
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
+#include "w_045_1.h"
+#include "w_045_2.h"
+#define g_Animset w_045_1
+#define g_Animset2 w_045_2
 #include "shared.h"
+#include "sfx.h"
 
 extern SpriteParts D_13F000_8017A040[];
 extern s32 D_13F000_8017B3B8;
@@ -37,7 +44,7 @@ int func_13F000_8017A718() {
     return 0;
 }
 
-void EntityWeaponAttack(Entity* self) {
+static void EntityWeaponAttack(Entity* self) {
     SetSpriteBank1(D_13F000_8017A040);
     if (g_HandId != 0) {
         g_CurrentEntity->animSet = ANIMSET_OVL(0x12);
@@ -67,7 +74,7 @@ void EntityWeaponAttack(Entity* self) {
 
 INCLUDE_ASM("weapon/nonmatchings/w_045", func_ptr_80170004);
 
-void func_ptr_80170008(Entity* self) {
+static void func_ptr_80170008(Entity* self) {
     SetSpriteBank1(D_13F000_8017A040);
     if (g_HandId != 0) {
         g_CurrentEntity->animSet = ANIMSET_OVL(0x12);
@@ -119,7 +126,7 @@ void func_ptr_80170008(Entity* self) {
         return;
     }
     if (!(g_GameTimer & 7)) {
-        g_api.PlaySfx(SFX_UNK_64B);
+        g_api.PlaySfx(SFX_STOMP_SOFT_A);
         g_api.CreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(0x100, 0x45), 0);
     }
@@ -127,7 +134,7 @@ void func_ptr_80170008(Entity* self) {
 
 INCLUDE_ASM("weapon/nonmatchings/w_045", func_ptr_8017000C);
 
-s32 func_ptr_80170010(Entity* self) {
+static s32 func_ptr_80170010(Entity* self) {
     D_13F000_8017B3BC += 0x80;
     SetSpriteBank1(D_13F000_8017A040);
     if (g_HandId != 0) {
@@ -167,7 +174,7 @@ s32 func_ptr_80170010(Entity* self) {
             PLAYER.step_s = 2;
             PLAYER.velocityY = 0;
             D_13F000_8017B3B8 = 0x30;
-            g_api.PlaySfx(0x64B);
+            g_api.PlaySfx(SFX_STOMP_SOFT_A);
             // Blueprint 0 makes child 2, func_8011B5A4
             g_api.CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
             return;
@@ -209,22 +216,22 @@ s32 func_ptr_80170010(Entity* self) {
     }
 }
 
-s32 func_ptr_80170014(Entity* self) {}
+static s32 func_ptr_80170014(Entity* self) {}
 
-int GetWeaponId(void) { return 45; }
+static int GetWeaponId(void) { return 45; }
 
-void EntityWeaponShieldSpell(Entity* self) {}
+static void EntityWeaponShieldSpell(Entity* self) {}
 
-void func_ptr_80170024(Entity* self) {}
+static void func_ptr_80170024(Entity* self) {}
 
-void func_ptr_80170028(Entity* self) {}
+static void func_ptr_80170028(Entity* self) {}
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}

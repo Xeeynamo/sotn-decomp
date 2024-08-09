@@ -1,19 +1,24 @@
 // Weapon ID #11. Used by weapons:
 // AxeLord shield, Unknown#206
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
+#include "w_011_1.h"
+#include "w_011_2.h"
+#define g_Animset w_011_1
+#define g_Animset2 w_011_2
 #include "sfx.h"
 
 extern SpriteParts D_51000_8017A040[];
 extern s8 D_51000_8017AB4C;
 extern AnimationFrame* D_51000_8017AB94;
-
 extern AnimationFrame D_51000_8017ABCC[];
 extern AnimationFrame D_51000_8017ABE8[];
 
 extern s32 D_51000_8017ABF4[];
 
-void EntityWeaponAttack(Entity* self) {
+static void EntityWeaponAttack(Entity* self) {
     s32 anim1;
     s32 anim2;
     s32 attackButton;
@@ -149,15 +154,15 @@ void EntityWeaponAttack(Entity* self) {
 
 s32 func_ptr_80170004(Entity* self) {}
 
-void func_ptr_80170008(Entity* self) {}
+static void func_ptr_80170008(Entity* self) {}
 
-void func_ptr_8017000C(Entity* self) {}
+static void func_ptr_8017000C(Entity* self) {}
 
-s32 func_ptr_80170010(Entity* self) {}
+static s32 func_ptr_80170010(Entity* self) {}
 
-s32 func_ptr_80170014(Entity* self) {}
+static s32 func_ptr_80170014(Entity* self) {}
 
-int GetWeaponId(void) { return 11; }
+static int GetWeaponId(void) { return 11; }
 
 void EntityWeaponShieldSpell(Entity* self) {
     Primitive* prim;
@@ -257,7 +262,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         SetSpeedX(FIX(-2));
         self->velocityY = 0;
         DestroyEntityWeapon(1);
-        g_api.PlaySfx(SFX_UNK_641);
+        g_api.PlaySfx(SFX_ANIME_SWORD_C);
         g_unkGraphicsStruct.unk20 = 1;
         self->step++;
         break;
@@ -420,7 +425,7 @@ void EntityWeaponShieldSpell(Entity* self) {
     }
 }
 
-void func_ptr_80170024(Entity* self) {
+static void func_ptr_80170024(Entity* self) {
     Collider collider;
     Entity* unusedEnt;
 
@@ -474,7 +479,7 @@ void func_ptr_80170024(Entity* self) {
         g_api.CheckCollision(xVar, yVar, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             self->posY.i.hi += collider.unk18;
-            g_api.PlaySfx(SFX_UNK_64B);
+            g_api.PlaySfx(SFX_STOMP_SOFT_A);
             self->step = 2;
             break;
         }
@@ -524,7 +529,7 @@ void func_ptr_80170024(Entity* self) {
     case 2:
         SetSpeedX(FIX(2.5));
         if ((self->ext.timer.t % 10) == 0) {
-            g_api.PlaySfx(SFX_UNK_64B);
+            g_api.PlaySfx(SFX_STOMP_SOFT_A);
         }
         xOffset = 0;
         yOffset = 25;
@@ -630,14 +635,15 @@ void func_ptr_80170024(Entity* self) {
     }
     self->ext.timer.t++;
 }
-void func_ptr_80170028(Entity* self) {}
 
-void WeaponUnused2C(void) {}
+static void func_ptr_80170028(Entity* self) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused38(void) {}
+
+static void WeaponUnused3C(void) {}

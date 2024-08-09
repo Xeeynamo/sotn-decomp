@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/binary"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"os"
 )
 
@@ -20,7 +21,7 @@ type gfxEntry struct {
 	Y      uint16
 	Width  uint16
 	Height uint16
-	Data   PsxOffset
+	Data   psx.Addr
 }
 
 type gfxBlock struct {
@@ -34,15 +35,15 @@ type gfx struct {
 	indices []int
 }
 
-func readGraphics(file *os.File, off PsxOffset) (gfx, dataRange, error) {
-	if err := off.moveFile(file); err != nil {
+func readGraphics(file *os.File, off psx.Addr) (gfx, dataRange, error) {
+	if err := off.MoveFile(file, psx.RamStageBegin); err != nil {
 		return gfx{}, dataRange{}, err
 	}
 
 	// all the offsets are before the array, so it is easy to find where the offsets array ends
-	blockOffsets := []PsxOffset{}
+	blockOffsets := []psx.Addr{}
 	for {
-		var offBank PsxOffset
+		var offBank psx.Addr
 		if err := binary.Read(file, binary.LittleEndian, &offBank); err != nil {
 			return gfx{}, dataRange{}, err
 		}
@@ -53,15 +54,15 @@ func readGraphics(file *os.File, off PsxOffset) (gfx, dataRange, error) {
 	}
 
 	// the order of each gfxBlock must be preserved
-	pool := map[PsxOffset]int{}
-	pool[RamNull] = -1
+	pool := map[psx.Addr]int{}
+	pool[psx.RamNull] = -1
 	blocks := []gfxBlock{}
 	ranges := []dataRange{}
 	for _, blockOffset := range sortUniqueOffsets(blockOffsets) {
-		if blockOffset == RamNull { // exception for ST0
+		if blockOffset == psx.RamNull { // exception for ST0
 			continue
 		}
-		if err := blockOffset.moveFile(file); err != nil {
+		if err := blockOffset.MoveFile(file, psx.RamStageBegin); err != nil {
 			return gfx{}, dataRange{}, err
 		}
 		var block gfxBlock
@@ -77,7 +78,7 @@ func readGraphics(file *os.File, off PsxOffset) (gfx, dataRange, error) {
 			blocks = append(blocks, block)
 			ranges = append(ranges, dataRange{
 				begin: blockOffset,
-				end:   blockOffset.sum(4),
+				end:   blockOffset.Sum(4),
 			})
 			continue
 		}
@@ -96,7 +97,7 @@ func readGraphics(file *os.File, off PsxOffset) (gfx, dataRange, error) {
 		blocks = append(blocks, block)
 		ranges = append(ranges, dataRange{
 			begin: blockOffset,
-			end:   blockOffset.sum(4 + len(block.entries)*12 + 4),
+			end:   blockOffset.Sum(4 + len(block.entries)*12 + 4),
 		})
 	}
 
@@ -107,6 +108,6 @@ func readGraphics(file *os.File, off PsxOffset) (gfx, dataRange, error) {
 
 	return g, mergeDataRanges(append(ranges, dataRange{
 		begin: off,
-		end:   off.sum(len(blockOffsets) * 4),
+		end:   off.Sum(len(blockOffsets) * 4),
 	})), nil
 }

@@ -180,18 +180,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define SFX_UNK_647 0x647
-#define SFX_UNK_64B 0x64B
-#define SFX_UNK_64C 0x64C
-
-#define SFX_UNK_641 0x641
-#define NA_SE_EN_COG_CLICK 0x642
-#define SOUND_BAT_SCREECH 0x64E
-#define NA_SE_EN_SLOGRA_FLOOR_STOMP 0x64F
-#define NA_SE_EN_GAIBON_SMALL_FIREBALL 0x652
-#define NA_SE_EN_GAIBON_BIG_FIREBALL 0x655
-#define NA_SE_EN_ZOMBIE_EXPLODE 0x65E
-#define NA_SE_EN_GAIBON_FLAME_OUT 0x65E
 #define NA_SE_EN_DR_FIREBALL 0x660
 #define SFX_UNK_664 0x664
 #define SFX_THUNDER 0x665
@@ -276,7 +264,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define BIBLE_SUBWPN_SWOOSH 0x8C3
 
 // STAGE DRE
-#define SE_DRE_FADE_TO_WHITE 0x65A
 #define NA_VO_SU_CRYSTAL_2 0x6AF
 #define NA_SE_SU_FLAPPING_WINGS 0x6C6
 #define NA_SE_SU_PETAL_ATTACK 0x6B0
@@ -316,7 +303,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SE_UI_OVERWRITE_MSG 0x6AD
 
 // DRA
-#define SE_SAVE_HEARTBEAT 0x64D
 #define SFX_UNK_661 0x661
 #define SFX_UNK_683 0x683
 #define SE_HEALTH_REGAINED 0x68E
@@ -332,7 +318,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SFX_KARMA_COIN_HEADS 0x6B1
 
 // UNUSED SOUNDS
-#define SE_UNK_TE1_651 0x651
 #define SE_UNK_TE3_667 0x667
 #define SE_UNK_TE1_66F 0x66F
 #define SE_UNK_TE3_679 0x679

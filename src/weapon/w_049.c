@@ -1,7 +1,14 @@
 // Weapon ID #49. Used by weapons:
 // Firebrand, Marsil, Unknown#179, Unknown#180
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
+#include "w_049_1.h"
+#include "w_049_2.h"
+#define g_Animset w_049_1
+#define g_Animset2 w_049_2
 #include "shared.h"
+#include "sfx.h"
 
 INCLUDE_ASM("weapon/nonmatchings/w_049", EntityWeaponAttack);
 
@@ -45,7 +52,7 @@ INCLUDE_ASM("weapon/nonmatchings/w_049", func_ptr_80170010);
 extern SpriteParts D_15B000_8017AA44[];
 extern AnimationFrame D_15B000_8017B10C[];
 
-s32 func_ptr_80170014(Entity* self) {
+static s32 func_ptr_80170014(Entity* self) {
     switch (self->step) {
     case 0:
         SetSpriteBank2(D_15B000_8017AA44);
@@ -69,7 +76,7 @@ s32 func_ptr_80170014(Entity* self) {
         self->hitboxHeight = self->hitboxWidth = 12;
         self->hitboxOffY = self->hitboxOffX = 0;
         self->velocityY = FIX(-0.375);
-        g_api.PlaySfx(0x65B);
+        g_api.PlaySfx(SFX_FM_EXPLODE_B);
         self->step++;
         return;
     case 1:
@@ -80,20 +87,20 @@ s32 func_ptr_80170014(Entity* self) {
     }
 }
 
-int GetWeaponId(void) { return 49; }
+static int GetWeaponId(void) { return 49; }
 
-void EntityWeaponShieldSpell(Entity* self) {}
+static void EntityWeaponShieldSpell(Entity* self) {}
 
-void func_ptr_80170024(Entity* self) {}
+static void func_ptr_80170024(Entity* self) {}
 
-void func_ptr_80170028(Entity* self) {}
+static void func_ptr_80170028(Entity* self) {}
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}

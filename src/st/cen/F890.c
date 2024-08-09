@@ -154,7 +154,7 @@ void EntityPlatform(Entity* self) {
             player->posY.i.hi--;
             D_80097488.y.i.hi--;
         } else {
-            g_api.PlaySfx(SE_CEN_PLATFORM_STOP);
+            g_api.PlaySfx(SFX_DOOR_CLOSE_A);
             if (player->facingLeft == 0) {
                 g_Player.padSim = PAD_LEFT;
             }
@@ -199,7 +199,7 @@ void EntityPlatform(Entity* self) {
             }
             g_Entities[1].ext.generic.unk7C.S8.unk0 = 1;
             self->step++;
-            g_api.PlaySfx(SE_CEN_PLATFORM_STOP);
+            g_api.PlaySfx(SFX_DOOR_CLOSE_A);
         }
         func_8018F890(0x300);
         g_Player.padSim = 0;

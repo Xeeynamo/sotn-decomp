@@ -3,7 +3,8 @@ package main
 import (
 	"encoding/binary"
 	"fmt"
-	"os"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"io"
 	"sort"
 )
 
@@ -26,49 +27,49 @@ type spriteDefs struct {
 	Indices []int         `json:"indices"`
 }
 
-func readSprites(file *os.File, off PsxOffset) ([]sprite, dataRange, error) {
-	if err := off.moveFile(file); err != nil {
+func readSprites(r io.ReadSeeker, baseAddr, addr psx.Addr) ([]sprite, dataRange, error) {
+	if err := addr.MoveFile(r, baseAddr); err != nil {
 		return nil, dataRange{}, fmt.Errorf("invalid sprites: %w", err)
 	}
 
 	var count uint16
-	if err := binary.Read(file, binary.LittleEndian, &count); err != nil {
+	if err := binary.Read(r, binary.LittleEndian, &count); err != nil {
 		return nil, dataRange{}, err
 	}
 
 	sprites := make([]sprite, count)
-	if err := binary.Read(file, binary.LittleEndian, sprites); err != nil {
+	if err := binary.Read(r, binary.LittleEndian, sprites); err != nil {
 		return nil, dataRange{}, err
 	}
 
 	return sprites, dataRange{
-		begin: off,
-		end:   off.sum(4 + 0x16*int(count)).align4(),
+		begin: addr,
+		end:   addr.Sum(4 + 0x16*int(count)).Align4(),
 	}, nil
 }
 
-func readSpriteBank(file *os.File, off PsxOffset) ([]*[]sprite, dataRange, error) {
-	if err := off.moveFile(file); err != nil {
+func readFrameSet(r io.ReadSeeker, baseAddr, addr psx.Addr) ([]*[]sprite, dataRange, error) {
+	if err := addr.MoveFile(r, baseAddr); err != nil {
 		return nil, dataRange{}, fmt.Errorf("invalid sprite Indices: %w", err)
 	}
 
 	// the end of the sprite array is the beginning of the earliest sprite offset
-	earliestSpriteOff := RamStageEnd
-	currentOff := off
-	spriteOffsets := make([]PsxOffset, 0)
+	earliestSpriteOff := psx.RamStageEnd
+	currentOff := addr
+	spriteOffsets := make([]psx.Addr, 0)
 	for {
 		if currentOff == earliestSpriteOff {
 			break
 		}
 		currentOff += 4
 
-		var spriteOffset PsxOffset
-		if err := binary.Read(file, binary.LittleEndian, &spriteOffset); err != nil {
+		var spriteOffset psx.Addr
+		if err := binary.Read(r, binary.LittleEndian, &spriteOffset); err != nil {
 			return nil, dataRange{}, err
 		}
 		spriteOffsets = append(spriteOffsets, spriteOffset)
-		if spriteOffset != RamNull {
-			if !spriteOffset.valid() {
+		if spriteOffset != psx.RamNull {
+			if !spriteOffset.InRange(baseAddr, psx.RamGameEnd) {
 				err := fmt.Errorf("sprite offset %s is not valid", spriteOffset)
 				return nil, dataRange{}, err
 			}
@@ -76,18 +77,18 @@ func readSpriteBank(file *os.File, off PsxOffset) ([]*[]sprite, dataRange, error
 		}
 	}
 	headerRange := dataRange{
-		begin: off,
+		begin: addr,
 		end:   earliestSpriteOff,
 	}
 
 	spriteBank := make([]*[]sprite, len(spriteOffsets))
 	spriteRanges := []dataRange{}
 	for i, offset := range spriteOffsets {
-		if offset == RamNull {
+		if offset == psx.RamNull {
 			spriteBank[i] = nil
 			continue
 		}
-		sprites, ranges, err := readSprites(file, offset)
+		sprites, ranges, err := readSprites(r, baseAddr, offset)
 		if err != nil {
 			return nil, dataRange{}, fmt.Errorf("unable to read sprites: %w", err)
 		}
@@ -98,37 +99,43 @@ func readSpriteBank(file *os.File, off PsxOffset) ([]*[]sprite, dataRange, error
 	return spriteBank, mergeDataRanges(append(spriteRanges, headerRange)), nil
 }
 
-func readSpritesBanks(file *os.File, off PsxOffset) (spriteDefs, dataRange, error) {
-	if err := off.moveFile(file); err != nil {
+func readSpritesBanks(r io.ReadSeeker, baseAddr, addr psx.Addr) (spriteDefs, dataRange, error) {
+	if err := addr.MoveFile(r, baseAddr); err != nil {
 		return spriteDefs{}, dataRange{}, err
 	}
 
-	offBanks := make([]PsxOffset, 24)
-	if err := binary.Read(file, binary.LittleEndian, offBanks); err != nil {
-		return spriteDefs{}, dataRange{}, err
+	// start with a capacity of 24 as that's the length for all the stage overlays
+	offBanks := make([]psx.Addr, 0, 24)
+	for {
+		addr := psx.ReadAddr(r)
+		if addr != psx.RamNull && !addr.InRange(baseAddr, psx.RamGameEnd) {
+			break
+		}
+		offBanks = append(offBanks, addr)
 	}
+	r.Seek(-4, io.SeekCurrent)
 
 	// the order sprites are stored must be preserved
-	pool := map[PsxOffset][]*[]sprite{}
+	pool := map[psx.Addr][]*[]sprite{}
 	spriteRanges := []dataRange{}
-	for _, offset := range offBanks {
-		if offset == RamNull {
+	for _, spriteAddr := range offBanks {
+		if spriteAddr == psx.RamNull {
 			continue
 		}
-		if _, found := pool[offset]; found {
+		if _, found := pool[spriteAddr]; found {
 			continue
 		}
-		bank, bankRange, err := readSpriteBank(file, offset)
+		bank, bankRange, err := readFrameSet(r, baseAddr, spriteAddr)
 		if err != nil {
 			return spriteDefs{}, dataRange{}, fmt.Errorf("unable to read sprite Indices: %w", err)
 		}
-		pool[offset] = bank
+		pool[spriteAddr] = bank
 		spriteRanges = append(spriteRanges, bankRange)
 	}
 
 	// the indices do not guarantee sprites to be stored in a linear order
 	// we must sort the offsets to preserve the order sprites are stored
-	sortedOffsets := make([]PsxOffset, 0, len(pool))
+	sortedOffsets := make([]psx.Addr, 0, len(pool))
 	for offset := range pool {
 		sortedOffsets = append(sortedOffsets, offset)
 	}
@@ -137,7 +144,7 @@ func readSpritesBanks(file *os.File, off PsxOffset) (spriteDefs, dataRange, erro
 	// create a list of indices to replace the original pointers
 	indices := make([]int, len(offBanks))
 	for i, offset := range offBanks {
-		if offset == RamNull {
+		if offset == psx.RamNull {
 			indices[i] = -1
 		}
 		for j, sortedOffset := range sortedOffsets {
