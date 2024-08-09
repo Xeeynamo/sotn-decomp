@@ -78,7 +78,6 @@ extern s32 D_801826AC;
 
 // *** EntityBloodSkeleton properties END ***
 
-extern u16 D_80180C7C[];
 extern u16 D_80180C88[];
 extern u16 D_80180CAC[];
 extern u16 D_80180CC4[];
@@ -184,15 +183,6 @@ extern s32 D_80180ED0[];
 extern s16 D_80181EDC[];
 extern u32 D_80181EEC[];
 extern ObjInit2 D_80182014[];
-
-extern u16 D_801822D4[];
-extern const u8 D_801822E4[];
-extern const u8 D_801822EC[];
-extern const u8 D_801822FC[];
-extern const u8 D_80182320[];
-extern const u8 D_80182334[];
-extern const u8 D_8018237C[];
-extern s32 D_801823C4;
 
 // *** EntitySkeleton properties START ***
 
@@ -302,8 +292,6 @@ extern u8 D_801825F0[];
 extern u16 D_80180C70[];
 extern u16 D_80180CD0[];
 extern u16 D_80180CDC[];
-extern s32 D_8018238C;
-extern s32 D_801823A4;
 extern const char D_801B058C[]; // "charal %x\n"
 extern const char D_801B0598[]; // "charal %x\n"
 extern const char D_801B08C8[]; // "charal %x\n"
