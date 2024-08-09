@@ -92,11 +92,9 @@ bool InitPalEquipIcons(const struct FileOpenRead* r);
 void InitVbVh(void);
 static bool InitSfxData(struct FileAsString* file);
 static bool InitXaData(struct FileAsString* file);
-static bool InitBlueprintData(const char* filename, FactoryBlueprint* dest);
+static bool InitBlueprintData(struct FileAsString* file);
 
 s32 func_800EDB58(u8 primType, s32 count);
-
-extern FactoryBlueprint g_RicFactoryBlueprints[];
 
 bool InitGame(void) {
     if (!InitPlatform()) {
@@ -206,9 +204,12 @@ bool InitGame(void) {
         return false;
     }
 
-    InitBlueprintData("assets/dra/factory_blueprint.json", g_FactoryBlueprints);
-    InitBlueprintData(
-        "assets/ric/factory_blueprint.json", g_RicFactoryBlueprints);
+    // TODO different between RIC and ARC
+    if (!FileAsString(
+            InitBlueprintData, "assets/dra/factory_blueprint.json", NULL)) {
+        ERRORF("failed to init blueprint data");
+        return false;
+    }
 
     return true;
 }
@@ -406,47 +407,24 @@ static bool InitXaData(struct FileAsString* file) {
     return true;
 }
 
-static bool InitBlueprintData(const char* filename, FactoryBlueprint* dest) {
-    FILE* file = fopen(filename, "r");
-    if (!file) {
-        ERRORF("failed to open '%s'", filename);
-        return false;
-    }
-
-    fseek(file, 0, SEEK_END);
-    long file_size = ftell(file);
-    fseek(file, 0, SEEK_SET);
-
-    char* file_content = (char*)malloc(file_size + 1);
-    if (!file_content) {
-        fclose(file);
-        ERRORF("failed to allocate memory for file content");
-        return false;
-    }
-
-    fread(file_content, 1, file_size, file);
-    file_content[file_size] = '\0';
-    fclose(file);
-
-    cJSON* json = cJSON_Parse(file_content);
-    free(file_content);
-
+static bool InitBlueprintData(struct FileAsString* file) {
+    cJSON* json = cJSON_Parse(file->content);
     if (!json) {
-        ERRORF("failed to parse '%s': %s", filename, cJSON_GetErrorPtr());
+        ERRORF("failed to parse '%s': %s", file->param, cJSON_GetErrorPtr());
         return false;
     }
 
     cJSON* array = cJSON_GetObjectItemCaseSensitive(json, "asset_data");
     if (!cJSON_IsArray(array)) {
         cJSON_Delete(json);
-        ERRORF("data malformed in '%s'", filename);
+        ERRORF("data malformed in '%s'", file->param);
         return false;
     }
 
     int len = cJSON_GetArraySize(array);
     for (int i = 0; i < len; i++) {
         u32 bits = 0;
-        FactoryBlueprint* item = &dest[i];
+        FactoryBlueprint* item = &g_FactoryBlueprints[i];
         cJSON* jitem = cJSON_GetArrayItem(array, i);
         DO_ITEM("childId", jitem, item, item->childId);
         DO_ITEM("unk1", jitem, item, item->unk1);
