@@ -516,7 +516,16 @@ void func_80166784(Entity* self) {
                             PLAYER.animFrameDuration == 14)) {
                     self->palette = 0x813C;
                 } else {
+// animFrameDuration can be -1 apparently.
+// todo this should read the previous element out of bounds?
+#ifdef VERSION_PC
+                    if (PLAYER.animFrameDuration >= 0) {
+                        self->palette =
+                            D_80155C70[PLAYER.animFrameDuration % 3];
+                    }
+#else
                     self->palette = D_80155C70[PLAYER.animFrameDuration % 3];
+#endif
                 }
             }
         } else {
@@ -568,7 +577,16 @@ void func_80166784(Entity* self) {
                            PLAYER.animFrameDuration == 14) {
                     self->palette = 0x813C;
                 } else {
+// animFrameDuration can be -1 apparently.
+// todo this should read the previous element out of bounds?
+#ifdef VERSION_PC
+                    if (PLAYER.animFrameDuration >= 0) {
+                        self->palette =
+                            D_80155C70[PLAYER.animFrameDuration % 3];
+                    }
+#else
                     self->palette = D_80155C70[PLAYER.animFrameDuration % 3];
+#endif
                 }
                 break;
             }

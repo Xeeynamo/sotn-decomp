@@ -226,7 +226,6 @@ set(SOURCE_FILES_RIC
     src/ric/d_00000.c
     src/ric/d_188F4.c
     src/ric/d_194B0.c
-    src/ric/d_19BE0.c
     src/ric/d_19EE0.c
     src/ric/spriteparts.c
     src/ric/1CB04.c
@@ -237,7 +236,6 @@ set(SOURCE_FILES_RIC
     src/ric/bss.c
     src/ric/d_18568.c
     src/ric/d_18C40.c
-    src/ric/d_19B50.c
     src/ric/d_19C70.c
 )
 
