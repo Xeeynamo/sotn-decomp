@@ -270,7 +270,7 @@ void EntityMerman(Entity* self) {
                 SetStep(MERMAN_WALKING_TOWARDS_PLAYER);
             }
             if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
-                func_801916C4(0x662);
+                func_801916C4(SFX_FIREBALL_SHOT_B);
                 newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x3A, self, newEntity);
