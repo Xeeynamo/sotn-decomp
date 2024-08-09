@@ -10,5 +10,4 @@ u16 UNK_Invincibility0[] = {
     PAL_OVL(0x165), PAL_OVL(0x165),
 };
 
-
 #include "../update.h"
