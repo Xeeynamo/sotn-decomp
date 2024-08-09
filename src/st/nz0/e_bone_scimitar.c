@@ -28,9 +28,41 @@ typedef enum {
     BONE_SCIMITAR_WALK_LEFT
 } BoneScimitarSpecialSubSteps;
 
+extern u16 g_BoneScimitarInit[]; // Init
+static s32 D_8018208C = 0; // Flag for special bone scimitar to appear or not
+static u8 anim_walk[] = {0x06, 0x01, 0x04, 0x02, 0x04, 0x03, 0x06,
+                         0x04, 0x05, 0x05, 0x05, 0x06, 0x00};
+static u8 anim_walk_backwards[] = {0x06, 0x01, 0x05, 0x06, 0x05, 0x05, 0x06,
+                                   0x04, 0x04, 0x03, 0x04, 0x02, 0x00};
+static u8 anim_swing_sword[] = {
+    0x05, 0x01, 0x05, 0x02, 0x05, 0x07, 0x06, 0x08, 0x05,
+    0x09, 0x05, 0x0A, 0x05, 0x0B, 0x01, 0x0C, 0x1E, 0x0D,
+    0x04, 0x04, 0x04, 0x05, 0x04, 0x06, 0xFF, 0x00};
+static u8 anim_jump[] = {
+    0x01, 0x01, 0x04, 0x0E, 0x04, 0x0F, 0x01, 0x01, 0xFF, 0x00};
+static u8 anim_land[] = {
+    0x01, 0x01, 0x04, 0x0E, 0x06, 0x0F, 0x04, 0x0E, 0x01, 0x01, 0xFF, 0x00};
+static s16 anim_bone_rot[] = {
+    0x0100, 0x0080, 0x0048, 0x0020, 0x0040, 0x0010, 0x0018, 0x0000};
+static s8 dead_parts_selector[] = {
+    0x30, 0x20, 0x14, 0x0C, 0x18, 0x10, 0x14, 0x00};
+static s32 dead_parts_velocity_x[] = {
+    FIX(.75), FIX(1.75), FIX(1.5), FIX(1), FIX(2), FIX(1.75), FIX(0.75)};
+static s32 dead_parts_velocity_y[] = {
+    FIX(-5), FIX(-3), FIX(-2), FIX(-3), FIX(-4), FIX(-.875), FIX(-4)};
+static s16 dead_parts_pos_x[] = {-4, 0, 4, -4, -4, 4, 0};
+static s16 dead_parts_pos_y[] = {-16, -8, -4, -4, 9, 9, 0};
+static u8 attack_timer_cycles[2][4] = {
+    {0x80, 0x08, 0x08, 0x40}, // skeleton type 0, attacks in quick succession
+    {0xF0, 0xC0, 0xA0, 0x80}, // type 1, attacks slowly
+};
+static u16 sensors_ground[][2] = {{0, 20}, {0, 4}, {8, -4}, {-16, 0}};
+static s16 D_8018216C[] = {0, 20, 12, 0};
+static u16 sensor_move[][2] = {{-12, 16}, {0, -16}, {0, -16}};
+
 void func_801C3708(void) {
-    s32 temp = func_801BCF74(&D_8018216C);
-    s32 temp2 = func_801BD720(&D_80182174, 3);
+    s32 temp = func_801BCF74(D_8018216C);
+    s32 temp2 = func_801BD720(sensor_move, LEN(sensor_move));
 
     if ((temp == 128) || (temp2 & 2)) {
         SetStep(BONE_SCIMITAR_JUMP);
@@ -59,7 +91,7 @@ void EntityBoneScimitar(Entity* self) {
 
     switch (self->step) {
     case BONE_SCIMITAR_INIT:
-        InitializeEntity(D_80180C4C);
+        InitializeEntity(g_BoneScimitarInit);
         if (self->params != 0) {
             self->palette += self->params;
             self->flags &= ~(FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
@@ -76,7 +108,7 @@ void EntityBoneScimitar(Entity* self) {
         break;
 
     case BONE_SCIMITAR_IDLE:
-        if (func_801BCCFC(&D_8018215C) != 0) {
+        if (func_801BCCFC(sensors_ground) != 0) {
             self->step++;
             if (self->params != 0) {
                 SetStep(BONE_SCIMITAR_SPECIAL);
@@ -85,7 +117,7 @@ void EntityBoneScimitar(Entity* self) {
         break;
 
     case BONE_SCIMITAR_WALK_TOWARDS_PLAYER:
-        if (AnimateEntity(D_80182090, self) == 0) {
+        if (AnimateEntity(anim_walk, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         self->ext.generic.unk80.modeS8.unk0 = self->facingLeft;
@@ -103,7 +135,7 @@ void EntityBoneScimitar(Entity* self) {
         break;
 
     case BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER:
-        if (AnimateEntity(D_801820A0, self) == 0) {
+        if (AnimateEntity(anim_walk_backwards, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         self->ext.generic.unk80.modeS8.unk0 = self->facingLeft ^ 1;
@@ -121,7 +153,7 @@ void EntityBoneScimitar(Entity* self) {
         break;
 
     case BONE_SCIMITAR_ATTACK:
-        animStatus = AnimateEntity(D_801820B0, self);
+        animStatus = AnimateEntity(anim_swing_sword, self);
         if (self->animCurFrame == 12) {
             self->hitboxWidth = 20;
             self->hitboxHeight = 17;
@@ -141,8 +173,8 @@ void EntityBoneScimitar(Entity* self) {
         if (animStatus == 0) {
             SetStep(BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER);
             self->ext.generic.unk7C.S8.unk0 =
-                D_80182154[self->params % 2]
-                          [(++self->ext.generic.unk84.S8.unk0) & 3];
+                attack_timer_cycles[self->params % 2]
+                                   [(++self->ext.generic.unk84.S8.unk0) & 3];
             if (self->params != 0) {
                 SetStep(BONE_SCIMITAR_SPECIAL);
             }
@@ -152,7 +184,7 @@ void EntityBoneScimitar(Entity* self) {
     case BONE_SCIMITAR_JUMP:
         switch (self->step_s) {
         case BONE_SCIMITAR_JUMPING:
-            if (!(AnimateEntity(D_801820CC, self) & 1)) {
+            if (!(AnimateEntity(anim_jump, self) & 1)) {
                 u8 facing_ = self->ext.generic.unk80.modeS8.unk0;
                 s32 facing;
 
@@ -176,14 +208,14 @@ void EntityBoneScimitar(Entity* self) {
             break;
 
         case BONE_SCIMITAR_IN_AIR:
-            if (func_801BCCFC(&D_8018215C) != 0) {
+            if (func_801BCCFC(sensors_ground) != 0) {
                 self->step_s++;
             }
-            CheckFieldCollision(&D_80182174, 2);
+            CheckFieldCollision(sensor_move, 2);
             break;
 
         case BONE_SCIMITAR_LAND:
-            if (AnimateEntity(D_801820D8, self) == 0) {
+            if (AnimateEntity(anim_land, self) == 0) {
                 SetStep(BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER);
             }
         }
@@ -193,9 +225,9 @@ void EntityBoneScimitar(Entity* self) {
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         func_801BCF74(&D_8018216C);
         if (((((u32)self->velocityX) >> 0x1F) ^ self->facingLeft) != 0) {
-            AnimateEntity(D_80182090, self);
+            AnimateEntity(anim_walk, self);
         } else {
-            AnimateEntity(D_801820A0, self);
+            AnimateEntity(anim_walk_backwards, self);
         }
 
         switch (self->step_s) {
@@ -228,7 +260,7 @@ void EntityBoneScimitar(Entity* self) {
 
     case BONE_SCIMITAR_DESTROY:
         g_api.PlaySfx(SFX_SKELETON_DEATH_C);
-        for (i = 0; i < 7; i++) {
+        for (i = 0; i < LEN(dead_parts_pos_x); i++) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity == NULL) {
                 break;
@@ -236,16 +268,16 @@ void EntityBoneScimitar(Entity* self) {
             CreateEntityFromCurrentEntity(E_BONE_SCIMITAR_HEAD, newEntity);
             newEntity->facingLeft = self->facingLeft;
             newEntity->params = i;
-            newEntity->ext.generic.unk88.S8.unk0 = D_801820F4[i];
+            newEntity->ext.generic.unk88.S8.unk0 = dead_parts_selector[i];
 
             if (self->facingLeft != 0) {
-                newEntity->posX.i.hi -= D_80182134[i];
+                newEntity->posX.i.hi -= dead_parts_pos_x[i];
             } else {
-                newEntity->posX.i.hi += D_80182134[i];
+                newEntity->posX.i.hi += dead_parts_pos_x[i];
             }
-            newEntity->posY.i.hi += D_80182144[i];
-            newEntity->velocityX = D_801820FC[i];
-            newEntity->velocityY = D_80182118[i];
+            newEntity->posY.i.hi += dead_parts_pos_y[i];
+            newEntity->velocityX = dead_parts_velocity_x[i];
+            newEntity->velocityY = dead_parts_velocity_y[i];
             newEntity->params |= self->params << 8;
         }
 
@@ -271,7 +303,7 @@ void EntityBoneScimitarParts(Entity* entity) {
     if (entity->step) {
         entity->ext.generic.unk88.S8.unk0--;
         if (entity->ext.generic.unk88.S8.unk0 & 0xFF) {
-            entity->rotZ += D_801820E4[entity->params];
+            entity->rotZ += anim_bone_rot[entity->params];
             FallEntity();
             MoveEntity();
             return;

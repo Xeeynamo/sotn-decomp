@@ -78,27 +78,6 @@ extern s32 D_801826AC;
 
 // *** EntityBloodSkeleton properties END ***
 
-// *** EntityBoneScimitar properties START ***
-
-extern u16 D_80180C4C[];    // Init
-extern s32 D_8018208C;      // Flag for special bone scimitar to appear or not
-extern u8 D_80182090[];     // animation: Walking Forward
-extern u8 D_801820A0[];     // animation: Walking Backwards
-extern u8 D_801820B0[];     // animation: Swing Sword
-extern u8 D_801820CC[];     // animation: Jumping
-extern u8 D_801820D8[];     // animation: Landing
-extern s8 D_801820F4[];     // Skeleton parts array selector
-extern s32 D_801820FC[];    // Skeleton parts velocityX
-extern s32 D_80182118[];    // Skeleton parts velocityY
-extern u16 D_80182134[];    // Skeleton parts posX
-extern u16 D_80182144[];    // Skeleton parts posY
-extern s8 D_80182154[2][4]; // Skeleton attack timer cycle
-extern s32 D_8018215C;
-extern s32 D_8018216C;
-extern s32 D_80182174;
-
-// *** EntityBoneScimitar properties END ***
-
 extern u16 D_80180C7C[];
 extern u16 D_80180C88[];
 extern u16 D_80180CAC[];
@@ -270,8 +249,6 @@ extern u16 D_801824E4[];
 extern u8 D_80181F30[];
 extern u8 D_80180CF4[];
 extern s32 D_80182600[];
-extern s32 D_8018216C;
-extern s32 D_80182174;
 extern u16 g_InitializeData0[];
 extern u16 D_80180BC8[];
 extern u16 D_80181CA8[];
@@ -283,7 +260,6 @@ extern u16 D_80180CA0[];
 extern u32 D_80182488[];
 extern u16 D_80180C58[];
 extern u16 D_80180C58[];
-extern s16 D_801820E4[];
 extern s32 D_80182504[];
 extern u8 D_80182524[];
 
