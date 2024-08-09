@@ -672,7 +672,7 @@ void EntityHitByLightning(Entity* self) {
         }
         self->ext.hitbylightning.unk94 = 0x10;
         PlaySfx(SFX_UNK_69D);
-        PlaySfx(SFX_THUNDER);
+        PlaySfx(SFX_THUNDER_B);
         self->step++;
         break;
     case 1:
@@ -1156,7 +1156,7 @@ void EntityPlayerPinkEffect(Entity* self) {
                       FLAG_UNK_10000;
         self->ext.timer.t = data_idx->unk0[0];
         if (data_idx->unk18 != 0x83) {
-            PlaySfx(SFX_UNK_668);
+            PlaySfx(SFX_TRANSFORM);
         }
         if (data_idx->unk18 >= 128) {
             func_8010E168(true, 64);

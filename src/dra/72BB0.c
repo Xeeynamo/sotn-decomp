@@ -567,7 +567,7 @@ s32 func_80113D7C(s16 damageAmount) {
     if (temp_s0 != 4) {
         g_Player.D_80072F00[2] = 4;
         g_Player.unk40 = 0x8166;
-        sfx = D_800ACF84[(rand() & 1) + 3];
+        sfx = g_SfxPainGrunts[(rand() & 1) + 3];
         PlaySfx(sfx);
         if (step && step) // TODO: !FAKE
             ;
@@ -793,7 +793,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         }
         g_Player.unk40 = 0x8166;
         g_Player.D_80072F00[2] = 6;
-        PlaySfx(D_800ACF84[sfxIndex]);
+        PlaySfx(g_SfxPainGrunts[sfxIndex]);
         if (damage->effects & 0x100) {
             g_Player.D_80072F00[1] =
                 GetStatusAilmentTimer(STATUS_AILMENT_CURSE, 0x400);

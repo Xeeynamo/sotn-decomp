@@ -180,10 +180,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define NA_SE_EN_DR_FIREBALL 0x660
-#define SFX_UNK_664 0x664
-#define SFX_THUNDER 0x665
-#define SFX_UNK_668 0x668
 #define SFX_UNK_669 0x669
 #define NA_SE_EN_AXE_KNIGHT_BREAK_AXE 0x66B
 #define NA_SE_EN_BONE_SCIMITAR_SWORD_SLASH 0x66D
@@ -303,7 +299,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SE_UI_OVERWRITE_MSG 0x6AD
 
 // DRA
-#define SFX_UNK_661 0x661
 #define SFX_UNK_683 0x683
 #define SE_HEALTH_REGAINED 0x68E
 #define SFX_UNK_6B2 0x6B2
@@ -318,7 +313,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SFX_KARMA_COIN_HEADS 0x6B1
 
 // UNUSED SOUNDS
-#define SE_UNK_TE3_667 0x667
 #define SE_UNK_TE1_66F 0x66F
 #define SE_UNK_TE3_679 0x679
 #define SE_UNK_TE1_692 0x692
@@ -443,6 +437,16 @@ enum Sfx {
     SFX_FM_EXPLODE_C,
     SFX_FM_EXPLODE_D,
     SFX_EXPLODE_SMALL, // Zombie death explosion
+    SFX_UNK_FIRE_WHOOSH,
+    SFX_FIREBALL_SHOT_A, // 0x660
+    SFX_FIREBALL_SHOT_B,
+    SFX_FIREBALL_SHOT_C,
+    SFX_GUNSHOT,
+    SFX_THUNDER_A,
+    SFX_THUNDER_B,
+    SFX_THUNDER_C,
+    SFX_UNK_LOW_UI,
+    SFX_TRANSFORM,
     SFX_WEAPON_HIT = 0x678,
     SFX_HEART_PICKUP = 0x67A,
     SFX_ITEM_PICKUP = 0x67C,

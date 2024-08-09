@@ -1389,7 +1389,7 @@ void RicEntityStopWatchExpandingCircle(Entity* self) {
             }
             func_80170874(8, &D_801758B0[0]);
             self->ext.et_80170F64.unk7C = 0;
-            g_api.PlaySfx(0x665);
+            g_api.PlaySfx(SFX_THUNDER_B);
             self->step++;
         }
         break;
@@ -2163,7 +2163,7 @@ void RicEntityGiantSpinningCross(Entity* self) {
         self->facingLeft = 0;
         self->ext.giantcross.unk7C = 0;
         self->ext.giantcross.unk7E = 0x400;
-        g_api.PlaySfx(0x661);
+        g_api.PlaySfx(SFX_FIREBALL_SHOT_B);
         self->step++;
         primUVCoords = &D_8015635C[0];
         prim = &g_PrimBuf[self->primIndex];

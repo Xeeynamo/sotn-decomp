@@ -1564,7 +1564,7 @@ void EntityUnkId29(Entity* self) {
         self->zPriority = 0x2A;
         self->flags &= ~FLAG_UNK_08000000;
         self->facingLeft = Random() & 1;
-        g_api.func_80134714(SE_THUNDER, 0x40, (self->posX.i.hi >> 0x4) - 8);
+        g_api.func_80134714(SFX_THUNDER_B, 0x40, (self->posX.i.hi >> 0x4) - 8);
     }
     if (AnimateEntity(D_80181390, self) == 0) {
         DestroyEntity(self);

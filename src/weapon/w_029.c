@@ -304,7 +304,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
             self->ext.weapon.unk80 = 0x20;
             self->palette = self->ext.weapon.childPalette;
             self->zPriority = 0x1B6;
-            g_api.PlaySfx(0x668);
+            g_api.PlaySfx(SFX_TRANSFORM);
             self->step++;
         }
         break;
@@ -323,7 +323,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
             prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
         if (--self->ext.weapon.unk80 == 0) {
             prim->drawMode |= 8;
-            g_api.PlaySfx(0x660);
+            g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
             // TODO: FACTORY()
             g_api.CreateEntFactoryFromEntity(
                 self, ((g_HandId + 1) << 14) + 102, 0);
@@ -490,7 +490,7 @@ static void func_ptr_80170024(Entity* self) {
                 var_s7->unkC -= 4;
                 if (var_s7->unkC < 0x40) {
                     if (!(self->params & 0x7F)) {
-                        g_api.PlaySfx(0x660);
+                        g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
                     }
                     var_s7->state++;
                 }

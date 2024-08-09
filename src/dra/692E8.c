@@ -914,7 +914,7 @@ void EntityAlucard(void) {
                               (PLAYER.step_s != 0)))) {
                             func_80109328();
                             SetPlayerStep(0x18);
-                            PlaySfx(SFX_UNK_668);
+                            PlaySfx(SFX_TRANSFORM);
                         }
                     }
                 }
