@@ -96,6 +96,8 @@ static bool InitBlueprintData(struct FileAsString* file);
 
 s32 func_800EDB58(u8 primType, s32 count);
 
+extern FactoryBlueprint g_RicFactoryBlueprints[78];
+
 bool InitGame(void) {
     if (!InitPlatform()) {
         return false;
@@ -204,10 +206,15 @@ bool InitGame(void) {
         return false;
     }
 
-    // TODO different between RIC and ARC
-    if (!FileAsString(
-            InitBlueprintData, "assets/dra/factory_blueprint.json", NULL)) {
-        ERRORF("failed to init blueprint data");
+    if (!FileAsString(InitBlueprintData, "assets/dra/factory_blueprint.json",
+                      g_FactoryBlueprints)) {
+        ERRORF("failed to init dra blueprint data");
+        return false;
+    }
+
+    if (!FileAsString(InitBlueprintData, "assets/ric/factory_blueprint.json",
+                      g_RicFactoryBlueprints)) {
+        ERRORF("failed to init ric blueprint data");
         return false;
     }
 
@@ -422,9 +429,12 @@ static bool InitBlueprintData(struct FileAsString* file) {
     }
 
     int len = cJSON_GetArraySize(array);
+
+    FactoryBlueprint* blueprints = (FactoryBlueprint*)file->param;
+
     for (int i = 0; i < len; i++) {
         u32 bits = 0;
-        FactoryBlueprint* item = &g_FactoryBlueprints[i];
+        FactoryBlueprint* item = &blueprints[i];
         cJSON* jitem = cJSON_GetArrayItem(array, i);
         DO_ITEM("childId", jitem, item, item->childId);
         DO_ITEM("unk1", jitem, item, item->unk1);

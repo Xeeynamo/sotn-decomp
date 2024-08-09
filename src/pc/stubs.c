@@ -195,4 +195,4 @@ u16* func_80106A28(u32 arg0, u16 kind) {
 // ric stubs
 
 SubweaponDef D_80154688[1];
-FactoryBlueprint g_RicFactoryBlueprints[1];
+FactoryBlueprint g_RicFactoryBlueprints[78];
