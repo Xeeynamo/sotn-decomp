@@ -578,7 +578,7 @@ void func_ptr_80170024(Entity* self) {
             prim->drawMode &= ~DRAW_HIDE;
             prim = prim->next;
             prim->drawMode &= ~DRAW_HIDE;
-            g_api.PlaySfx(0x660);
+            g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
             self->step++;
         }
         self->ext.shield.unk86 = self->ext.shield.unk84;

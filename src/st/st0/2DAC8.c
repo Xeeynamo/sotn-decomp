@@ -285,7 +285,7 @@ void EntityDraculaFinalForm(Entity* self) {
             }
             temp_s2 = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (temp_s2 != NULL) {
-                g_api.PlaySfx(0x660);
+                g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
                 CreateEntityFromEntity(33, self, temp_s2);
                 temp_s2->posX.i.hi = (xShift + temp_s2->posX.i.hi);
                 temp_s2->posY.i.hi = (temp_s2->posY.i.hi - 4);

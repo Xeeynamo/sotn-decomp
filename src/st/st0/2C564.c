@@ -4,6 +4,7 @@
  */
 
 #include "st0.h"
+#include "sfx.h"
 
 void EntityDracula(Entity* self) {
     s16 primIndex;
@@ -230,7 +231,7 @@ void EntityDracula(Entity* self) {
             if (AnimateEntity(D_80180934, self) == 0) {
                 SetSubStep(1);
                 self->ext.dracula.unk8C = 2;
-                g_api.PlaySfx(NA_SE_EN_DR_FIREBALL);
+                g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
                 g_api.PlaySfx(NA_SE_VO_DR_HERE_IS_TRUE_POWER);
             }
             break;

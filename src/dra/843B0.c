@@ -1403,7 +1403,7 @@ void EntityHellfireNormalFireball(Entity* entity) {
     switch (entity->step) {
     case 0:
         if (entity->params == 0) {
-            PlaySfx(NA_SE_EN_DR_FIREBALL);
+            PlaySfx(SFX_FIREBALL_SHOT_A);
         }
         entity->flags = FLAG_UNK_100000 | FLAG_UNK_08000000;
         entity->animSet = ANIMSET_DRA(9);
