@@ -47,18 +47,18 @@
 <polygon fill="black" stroke="black" points="368.08,-45.98 371.68,-36.02 362.65,-41.56 368.08,-45.98"/>
 <text text-anchor="middle" x="366.68" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- nz0.EntityBreakable -->
+<!-- nz0.EntityBreakableNZ0 -->
 <g id="node4" class="node">
-<title>nz0.EntityBreakable</title>
-<g id="a_node4"><a xlink:href="nz0.EntityBreakable.svg" xlink:title="nz0.EntityBreakable">
-<ellipse fill="green" stroke="black" cx="240.54" cy="-378" rx="105.88" ry="18"/>
-<text text-anchor="middle" x="240.54" y="-374.3" font-family="Times,serif" font-size="14.00">nz0.EntityBreakable</text>
+<title>nz0.EntityBreakableNZ0</title>
+<g id="a_node4"><a xlink:href="nz0.EntityBreakableNZ0.svg" xlink:title="nz0.EntityBreakableNZ0">
+<ellipse fill="green" stroke="black" cx="240.54" cy="-378" rx="126.18" ry="18"/>
+<text text-anchor="middle" x="240.54" y="-374.3" font-family="Times,serif" font-size="14.00">nz0.EntityBreakableNZ0</text>
 </a>
 </g>
 </g>
-<!-- nz0.EntityBreakable&#45;&gt;nz0.ReplaceBreakableWithItemDrop -->
+<!-- nz0.EntityBreakableNZ0&#45;&gt;nz0.ReplaceBreakableWithItemDrop -->
 <g id="edge3" class="edge">
-<title>nz0.EntityBreakable&#45;&gt;nz0.ReplaceBreakableWithItemDrop</title>
+<title>nz0.EntityBreakableNZ0&#45;&gt;nz0.ReplaceBreakableWithItemDrop</title>
 <path fill="none" stroke="black" d="M240.54,-359.93C240.54,-328.97 240.54,-263.3 240.54,-226.13"/>
 <polygon fill="black" stroke="black" points="244.04,-226.02 240.54,-216.02 237.04,-226.02 244.04,-226.02"/>
 <text text-anchor="middle" x="235.54" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
