@@ -11,6 +11,7 @@ EntityEquipItemDrop = 0x8018F9B4;
 EntityStageNamePopup = 0x8019390C;
 DestinationWarpRoom = 0x80195A20;
 WarpBackgroundAmplitiude = 0x80195A24;
+WarpBackgroundPhase = 0x80195A28;
 WarpBackgroundBrightness = 0x80195A2C;
 g_LayoutObjHorizontal = 0x80195A30;
 g_LayoutObjVertical = 0x80195A34;

@@ -1,8 +1,12 @@
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
 #include "sfx.h"
 
-void func_80131EBC(const char* str, s16 id) { D_80138784[id] = str; }
+// BSS
+extern s32 D_80138454;
+
+void func_80131EBC(const char* str, s16 id) { D_80138784[id + 1] = str; }
 
 // gets used later with MakeCdLoc
 void SetCdPos(s32 value) { g_CurCdPos = value; }
@@ -86,12 +90,12 @@ void InitSoundVars3(void) {
     s32 i;
 
     for (i = 0; i < 4; i++) {
-        g_ChannelGroupVolume[i] = 0;
+        g_SfxScriptVolume[i] = 0;
         g_UnkChannelSetting1[i] = 0;
-        g_UnkChannelSetting2[i] = 0;
-        D_8013B66C[i] = 0;
+        g_CurrentSfxScriptSfxId[i] = 0;
+        g_SfxScriptTimer[i] = 0;
         D_8013B5EC[i] = 0;
-        D_8013B628[i] = 0;
+        g_CurrentSfxScript[i] = 0;
         D_8013B648[i] = 0;
         D_8013AEA0[i] = 0;
     }
@@ -103,7 +107,7 @@ void InitSoundVars2(void) {
     InitSoundVars3();
     D_8013B690 = 0;
 
-    for (i = 0; i < 4; i++) {
+    for (i = 0; i < NUM_CH_2; i++) {
         D_8013B650[i] = 0;
         D_8013AED4[i] = 0;
     }
@@ -114,13 +118,10 @@ void InitSoundVars2(void) {
 void InitSoundVars1(void) {
     InitSoundVars2();
     g_CdSoundCommand16 = 0;
-    D_80138454 = 0;
-    do {
+    for (D_80138454 = 0; D_80138454 < LEN(g_SeqPointers); D_80138454++) {
         g_SeqPointers[D_80138454] = 0;
-    } while (++D_80138454 < 0xA);
-
-    for (D_80138454 = 0; D_80138454 < LEN(g_CdSoundCommandQueue);
-         D_80138454++) {
+    }
+    for (D_80138454 = 0; D_80138454 < MAX_SND_COUNT; D_80138454++) {
         g_CdSoundCommandQueue[D_80138454] = 0;
     }
 
@@ -235,11 +236,13 @@ void SoundInit(void) {
 }
 
 s32 func_801326D8(void) {
-    if (D_8013901C != 0)
+    if (D_8013901C)
         return 1;
-    if (g_SeqPlayingId != 0)
+    if (g_SeqPlayingId)
         return 3;
-    return (D_801390D8 != 0) * 2;
+    if (D_801390D8)
+        return 2;
+    return 0;
 }
 
 void SoundWait(void) {
@@ -392,9 +395,9 @@ void AddCdSoundCommand(s16 arg0) {
             g_CdSoundCommandQueue[g_CdSoundCommandQueuePos] =
                 CD_SOUND_COMMAND_14;
             g_CdSoundCommandQueuePos++;
-            if (g_CdSoundCommandQueuePos == 0x100) {
+            if (g_CdSoundCommandQueuePos == MAX_SND_COUNT) {
                 D_8013AEE8++;
-                for (i = 1; i < 0x100; i++) {
+                for (i = 1; i < MAX_SND_COUNT; i++) {
                     g_CdSoundCommandQueue[i] = 0;
                 }
 
@@ -407,9 +410,9 @@ void AddCdSoundCommand(s16 arg0) {
     }
     g_CdSoundCommandQueue[g_CdSoundCommandQueuePos] = arg0;
     g_CdSoundCommandQueuePos++;
-    if (g_CdSoundCommandQueuePos == 0x100) {
+    if (g_CdSoundCommandQueuePos == MAX_SND_COUNT) {
         D_8013AEE8++;
-        for (i = 1; i < 0x100; i++) {
+        for (i = 1; i < MAX_SND_COUNT; i++) {
             g_CdSoundCommandQueue[i] = 0;
         }
 
@@ -420,7 +423,7 @@ void AddCdSoundCommand(s16 arg0) {
 u16 AdvanceCdSoundCommandQueue(void) {
     s32 i;
 
-    for (i = 0; i < 255; i++) {
+    for (i = 0; i < MAX_SND_COUNT - 1; i++) {
         g_CdSoundCommandQueue[i] = g_CdSoundCommandQueue[i + 1];
     }
     return --g_CdSoundCommandQueuePos;

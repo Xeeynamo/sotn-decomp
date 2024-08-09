@@ -50,6 +50,26 @@ static s32 WarpBackgroundPhase;
 static s32 WarpBackgroundBrightness;
 #endif
 
+// Mask for all of the statuses where the UP button will
+// be ignored when in warp position or on the warp platform
+//
+// Value: 0xC5CF3EF7
+//
+// n.b.! this value is also used in src/st/rwrp/warp.c
+// clang-format off
+#define PLAYER_UNK0C_READY_MASK                                                  \
+    (                                                                            \
+        /* 0xC0000000 */ PLAYER_STATUS_UNK80000000 | PLAYER_STATUS_UNK40000000 | \
+        /* 0x05000000 */ PLAYER_STATUS_UNK4000000 | PLAYER_STATUS_AXEARMOR |     \
+        /* 0x00C00000 */ PLAYER_STATUS_UNK800000 | PLAYER_STATUS_UNK400000 |     \
+        /* 0x000F0000 */ PLAYER_STATUS_UNK80000 | PLAYER_STATUS_UNK40000 | PLAYER_STATUS_UNK20000 | PLAYER_STATUS_UNK10000 | \
+        /* 0x00003000 */ PLAYER_STATUS_UNK2000 | PLAYER_STATUS_UNK1000 |         \
+        /* 0x00000E00 */ PLAYER_STATUS_UNK800 | PLAYER_STATUS_UNK400 | PLAYER_STATUS_UNK200 | \
+        /* 0x000000F0 */ PLAYER_STATUS_STONE | PLAYER_STATUS_UNK40 | PLAYER_STATUS_UNK_20 |  PLAYER_STATUS_UNK10 | \
+        /* 0x00000007 */ PLAYER_STATUS_TRANSFORM                                 \
+    )
+// clang-format on
+
 // Handles everything about the warp room.
 // It is responsible to spawn the colourful background, the stones on the
 // ground and it always listen to the UP button. When the UP
@@ -157,7 +177,7 @@ void EntityWarpRoom(Entity* self) {
     case 1:
         // Wait for player to press the UP button
         if (self->hitFlags && g_pads->pressed & PAD_UP &&
-            !(g_Player.unk0C & 0xC5CF3EF7)) {
+            !(g_Player.unk0C & PLAYER_UNK0C_READY_MASK)) {
             g_Player.padSim = 0;
             g_Player.D_80072EFC = 0x80;
             D_8003C8B8 = 0;
@@ -180,7 +200,7 @@ void EntityWarpRoom(Entity* self) {
         prim->g0 = prim->b0 = prim->r0 += 2;
         if (prim->r0 > 96) {
             D_80180648 = 1;
-            g_api.PlaySfx(SE_WARP_ENTER);
+            g_api.PlaySfx(SFX_TELEPORT_BANG_B);
             self->step++;
         }
         break;
@@ -379,7 +399,7 @@ void EntityWarpSmallRocks(Entity* entity) {
         break;
     case 5:
         if (--entity->ext.warpRoom.unk88 == 0) {
-            func_801916C4(SE_WARP_DEBRIS);
+            func_801916C4(SFX_WALL_DEBRIS_B);
         }
         MoveEntity();
         entity->velocityY += FIX(0.1875);

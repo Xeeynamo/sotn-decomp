@@ -1,4 +1,5 @@
 #include "dre.h"
+#include "sfx.h"
 
 void EntityFadeToWhite1(Entity* self) {
     Primitive* prim;
@@ -26,7 +27,7 @@ void EntityFadeToWhite1(Entity* self) {
     case 1:
         if (D_801A3F84 & 0x10) {
             g_PrimBuf[self->primIndex].drawMode = 0x35;
-            g_api.PlaySfx(SE_DRE_FADE_TO_WHITE);
+            g_api.PlaySfx(SFX_FM_EXPLODE_A); // Fade to white
             self->step++;
         }
         break;
@@ -41,7 +42,7 @@ void EntityFadeToWhite1(Entity* self) {
             self->ext.fadeToWhite.unk7E = 0x200;
             self->ext.fadeToWhite.unk80 = 0;
             D_801A3F84 |= 0x20;
-            g_api.PlaySfx(SE_SUC_REVEAL);
+            g_api.PlaySfx(SFX_SUC_APPEAR);
             self->step++;
         }
         break;
@@ -68,7 +69,7 @@ void EntityFadeToWhite1(Entity* self) {
 
     if (self->ext.fadeToWhite.unk7C != 0) {
         if (--self->ext.fadeToWhite.unk7E == 0) {
-            g_api.PlaySfx(SE_SUC_REVEAL);
+            g_api.PlaySfx(SFX_SUC_APPEAR);
         }
     }
 }

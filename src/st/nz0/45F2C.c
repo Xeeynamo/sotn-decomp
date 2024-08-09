@@ -4,6 +4,7 @@
  */
 
 #include "nz0.h"
+#include "sfx.h"
 
 void func_801C5F2C(Entity* self) {
     if ((func_801BCF74(&D_801824B8) & 0x60) == 0x60) {
@@ -148,7 +149,7 @@ void EntitySkeleton(Entity* self) {
         break;
 
     case SKELETON_DESTROY:
-        func_801C29B0(NA_SE_EN_SKELETON_DESTROY);
+        func_801C29B0(SFX_SKELETON_DEATH_C);
         for (i = 0; i < 6; i++) { // Spawn Skeleton pieces
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {

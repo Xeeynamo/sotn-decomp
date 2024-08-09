@@ -1,5 +1,3 @@
-D_80180134 = 0x80180134;
-gfxBanks = 0x8018019C;
 g_goldCollectTexts = 0x80180F30;
 c_GoldPrizes = 0x80180F58;
 D_80180FE0 = 0x80180FE0;
@@ -38,9 +36,3 @@ EntityRedDoor = 0x8019362C;
 EntityPrizeDrop = 0x80195C84;
 EntityEquipItemDrop = 0x80196698;
 EntityStageNamePopup = 0x8019A5F0;
-g_LayoutObjHorizontal = 0x8019C764;
-g_LayoutObjVertical = 0x8019C768;
-g_LayoutObjPosHorizontal = 0x8019C76C;
-g_LayoutObjPosVertical = 0x8019C770;
-g_Dialogue = 0x8019D378;
-g_ItemIconSlots = 0x8019D42C;

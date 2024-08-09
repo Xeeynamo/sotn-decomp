@@ -1,4 +1,5 @@
 #include "no3.h"
+#include "sfx.h"
 
 void EntityRoomTransition2(Entity* self) {
     Entity* newEntity;
@@ -9,7 +10,7 @@ void EntityRoomTransition2(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
 
     if (self->ext.roomTransition2.unk80 == 0 && self->step < 4) {
-        g_api.PlaySfx(SE_DEATH_AMBIENCE);
+        g_api.PlaySfx(SFX_DEATH_AMBIENCE);
         self->ext.roomTransition2.unk80 = 0x200;
     }
     self->ext.roomTransition2.unk80--;

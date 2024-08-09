@@ -257,7 +257,7 @@ void func_801C1780(u16 entityId, Entity* src, Entity* dst) {
     }
 }
 
-void func_801C1848(void) {
+void func_8019055C(void) {
     s32 temp_s3;
     s8 temp_s4;
     Entity* entity;

@@ -1,7 +1,14 @@
 // Weapon ID #27. Used by weapons:
 // Medusa shield, Unknown#211
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
+#include "w_027_1.h"
+#include "w_027_2.h"
+#define g_Animset w_027_1
+#define g_Animset2 w_027_2
 #include "shared.h"
+#include "sfx.h"
 
 extern SpriteParts D_C1000_8017A040[];
 extern s8 D_C1000_8017AC0C[];
@@ -10,7 +17,7 @@ extern AnimationFrame D_C1000_8017AC8C[];
 extern AnimationFrame D_C1000_8017ACB4[];
 extern s32 D_C1000_8017C6EC; // g_DebugWaitInfoTimer
 
-void DebugShowWaitInfo(const char* msg) {
+static void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint(msg);
     if (D_C1000_8017C6EC++ & 4) {
@@ -23,7 +30,7 @@ void DebugShowWaitInfo(const char* msg) {
     FntFlush(-1);
 }
 
-void DebugInputWait(const char* msg) {
+static void DebugInputWait(const char* msg) {
     while (PadRead(0))
         DebugShowWaitInfo(msg);
     while (!PadRead(0))
@@ -31,7 +38,7 @@ void DebugInputWait(const char* msg) {
 }
 
 // Duplicate of Weapon 28!
-void EntityWeaponAttack(Entity* self) {
+static void EntityWeaponAttack(Entity* self) {
     s32 anim = 0;
     bool crouchCheck = false;
     s32 attackButton;
@@ -165,17 +172,17 @@ void EntityWeaponAttack(Entity* self) {
 
 s32 func_ptr_80170004(Entity* self) {}
 
-void func_ptr_80170008(Entity* self) {}
+static void func_ptr_80170008(Entity* self) {}
 
-void func_ptr_8017000C(Entity* self) {}
+static void func_ptr_8017000C(Entity* self) {}
 
-s32 func_ptr_80170010(Entity* self) {}
+static s32 func_ptr_80170010(Entity* self) {}
 
-s32 func_ptr_80170014(Entity* self) {}
+static s32 func_ptr_80170014(Entity* self) {}
 
-int GetWeaponId(void) { return 27; }
+static int GetWeaponId(void) { return 27; }
 
-void EntityWeaponShieldSpell(Entity* self) {
+static void EntityWeaponShieldSpell(Entity* self) {
     Primitive* prim;
     s16 selfPosX;
     s16 selfPosY;
@@ -226,7 +233,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         SetSpeedX(FIX(-2));
         self->velocityY = 0;
         DestroyEntityWeapon(1);
-        g_api.PlaySfx(0x641);
+        g_api.PlaySfx(SFX_ANIME_SWORD_C);
         g_unkGraphicsStruct.unk20 = 1;
         self->step++;
         break;
@@ -314,7 +321,7 @@ void EntityWeaponShieldSpell(Entity* self) {
     return;
 }
 
-void func_ptr_80170024(Entity* self) {
+static void func_ptr_80170024(Entity* self) {
     Primitive* prim;
     Primitive* basePrim;
     s16 angle;
@@ -546,7 +553,7 @@ void func_ptr_80170024(Entity* self) {
     }
 }
 
-void func_ptr_80170028(Entity* self) {
+static void func_ptr_80170028(Entity* self) {
     Entity* parent = self->ext.generic.unk8C.entityPtr;
     if (parent->entityId == 0) {
         DestroyEntity(self);
@@ -572,12 +579,12 @@ void func_ptr_80170028(Entity* self) {
     }
 }
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}

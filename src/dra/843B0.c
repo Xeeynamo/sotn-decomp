@@ -2,6 +2,11 @@
 #include "objects.h"
 #include "sfx.h"
 
+// BSS
+extern Point16 D_8013839C[32];
+extern s32 D_8013841C;
+extern RECT D_80138424;
+
 // teleport effect like when using library card (ID 0x42)
 void EntityTeleport(Entity* self) {
     Primitive* prim;
@@ -19,7 +24,7 @@ void EntityTeleport(Entity* self) {
     upperParams = self->params & 0xFE00;
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimitives(PRIM_GT4, 36);
+        self->primIndex = AllocPrimitives(PRIM_GT4, LEN(D_8013839C) + 4);
         if (self->primIndex == -1) {
             return;
         }
@@ -45,7 +50,7 @@ void EntityTeleport(Entity* self) {
             prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
             prim = prim->next;
         }
-        for (i = 0; i < 32; i++) {
+        for (i = 0; i < LEN(D_8013839C); i++) {
             xVar = PLAYER.posX.i.hi + (rand() % 28) - 14;
             yVar = rand();
             yVar = 0xE0 - (yVar & 0x3F);
@@ -79,7 +84,7 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.unk80 = 0x10;
             self->ext.teleport.unk88 = 0x80;
             self->step = 1;
-            PlaySfx(SFX_UNK_635);
+            PlaySfx(SFX_TELEPORT_BANG_A);
             PlaySfx(NA_SE_PL_TELEPORT);
         }
         break;
@@ -166,7 +171,7 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.unk84 = 4;
             self->step++;
             g_Player.unk1C = 1;
-            PlaySfx(NA_SE_PL_WARP);
+            PlaySfx(SFX_TELEPORT_BANG_B);
             DestroyEntity(self);
             return;
         }
@@ -196,7 +201,7 @@ void EntityTeleport(Entity* self) {
     func_80124164(prim, self->ext.teleport.unk88, yVar, selfUnk80, upperParams);
     prim = prim->next;
     if (wasCase3) {
-        for (i = 0; i < 32; i++) {
+        for (i = 0; i < LEN(D_8013839C); i++) {
             switch (prim->g0) {
             case 0:
                 if (--prim->g1 == 0) {
@@ -314,7 +319,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
         prim->g0 = 0x3F;
         prim->b0 = 0;
         SetSpeedX(FIX(8));
-        PlaySfx(SFX_SUBWPN_THROW);
+        PlaySfx(SFX_WEAPON_SWISH_C);
         g_Player.D_80072F00[10] = 4;
         self->step++;
         return;
@@ -537,7 +542,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
         func_8011A290(self);
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
-        PlaySfx(SFX_SUBWPN_THROW);
+        PlaySfx(SFX_WEAPON_SWISH_C);
         g_Player.D_80072F00[10] = 4;
         self->ext.axeCrash.unk98 = 0x7F;
         self->step++;
@@ -550,7 +555,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
         }
         self->ext.axeCrash.unk7C = var_a1 + self->ext.axeCrash.unk7C;
         if (!(self->ext.axeCrash.unk7C & 0x3FF)) {
-            func_80134714(SFX_SUBWPN_THROW, self->ext.axeCrash.unk98, 0);
+            func_80134714(SFX_WEAPON_SWISH_C, self->ext.axeCrash.unk98, 0);
             self->ext.axeCrash.unk98 -= 8;
             if (self->ext.axeCrash.unk98 < 0) {
                 self->ext.axeCrash.unk98 = 0;
@@ -1082,7 +1087,7 @@ void EntitySubwpnCrashCross(Entity* self) {
         prim->tpage = 0x11C;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         PlaySfx(SFX_UNK_6DF);
-        PlaySfx(NA_SE_PL_WARP);
+        PlaySfx(SFX_TELEPORT_BANG_B);
         self->step += 1;
         g_Player.D_80072F00[12] = 4;
         break;
@@ -1118,7 +1123,7 @@ void EntitySubwpnCrashCross(Entity* self) {
                 right = 0xFF;
             }
             self->step += 1;
-            PlaySfx(NA_SE_UNK_62F);
+            PlaySfx(SFX_WEAPON_APPEAR);
         }
         break;
     case 4:
@@ -1278,7 +1283,7 @@ void EntityHellfireHandler(Entity* self) {
         prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
                          DRAW_TPAGE | DRAW_TRANSP;
         prim->priority = self->zPriority = 0x1C0;
-        PlaySfx(NA_SE_PL_WARP);
+        PlaySfx(SFX_TELEPORT_BANG_B);
         self->step++;
         break;
     case 1:
@@ -1398,7 +1403,7 @@ void EntityHellfireNormalFireball(Entity* entity) {
     switch (entity->step) {
     case 0:
         if (entity->params == 0) {
-            PlaySfx(NA_SE_EN_DR_FIREBALL);
+            PlaySfx(SFX_FIREBALL_SHOT_A);
         }
         entity->flags = FLAG_UNK_100000 | FLAG_UNK_08000000;
         entity->animSet = ANIMSET_DRA(9);
@@ -1764,7 +1769,7 @@ void EntitySubwpnReboundStone(Entity* self) {
             self->ext.reboundStone.unk84 = 4;
         }
         self->step += 1;
-        PlaySfx(SFX_SUBWPN_THROW);
+        PlaySfx(SFX_WEAPON_SWISH_C);
         break;
 
     case 1:
@@ -2043,7 +2048,7 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
             fakeprim->y0 = fakeprim->posY.i.hi;
             fakeprim = fakeprim->next;
         }
-        PlaySfx(SFX_SUBWPN_THROW);
+        PlaySfx(SFX_WEAPON_SWISH_C);
         g_Player.D_80072F00[10] = 4;
         self->step++;
         break;
@@ -2188,7 +2193,7 @@ void EntitySubwpnAgunea(Entity* self) {
             prim->g1 = 0;
             prim->b1 = 0x80;
             SetSpeedX(FIX(6));
-            PlaySfx(SFX_SUBWPN_THROW);
+            PlaySfx(SFX_WEAPON_SWISH_C);
             CreateEntFactoryFromEntity(self, FACTORY(0x5200, 44), 0);
             g_Player.D_80072F00[10] = 4;
             self->step++;
@@ -2242,7 +2247,7 @@ void EntitySubwpnAgunea(Entity* self) {
             self->posY.i.hi += ((rand() & 0xF) - 8);
             if (self->ext.et_80128C2C.unk84 == 0) {
                 CreateEntFactoryFromEntity(self, FACTORY(0, 23), 0);
-                PlaySfx(SFX_UNK_665);
+                PlaySfx(SFX_THUNDER_B);
                 CreateEntFactoryFromEntity(self, FACTORY(0x200, 61), 0);
                 self->ext.et_80128C2C.unk84++;
             } else {
@@ -2262,7 +2267,7 @@ void EntitySubwpnAgunea(Entity* self) {
                 if (g_Status.hearts >= heartCost) {
                     g_Status.hearts -= heartCost;
                     CreateEntFactoryFromEntity(self, FACTORY(0, 23), 0);
-                    PlaySfx(SFX_UNK_665);
+                    PlaySfx(SFX_THUNDER_B);
                     CreateEntFactoryFromEntity(self, FACTORY(0x200, 61), 0);
                 } else {
                     self->step = 4;

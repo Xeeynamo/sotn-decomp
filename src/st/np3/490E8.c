@@ -4,6 +4,7 @@
  */
 
 #include "np3.h"
+#include "sfx.h"
 
 typedef enum {
     BONE_SCIMITAR_INIT,
@@ -133,7 +134,7 @@ void EntityBoneScimitar(Entity* self) {
         }
 
         if (self->animFrameIdx == 7 && self->animFrameDuration == 0) {
-            func_801C2598(NA_SE_EN_BONE_SCIMITAR_SWORD_SLASH);
+            func_801916C4(NA_SE_EN_BONE_SCIMITAR_SWORD_SLASH);
         }
 
         if (animStatus == 0) {
@@ -177,7 +178,7 @@ void EntityBoneScimitar(Entity* self) {
             if (func_801BC8E4(&D_80182530) != 0) {
                 self->step_s++;
             }
-            func_801BD430(&D_80182548, 2);
+            CheckFieldCollision(&D_80182548, 2);
             break;
 
         case BONE_SCIMITAR_LAND:
@@ -225,7 +226,7 @@ void EntityBoneScimitar(Entity* self) {
         break;
 
     case BONE_SCIMITAR_DESTROY:
-        g_api.PlaySfx(NA_SE_EN_SKELETON_DESTROY);
+        g_api.PlaySfx(SFX_SKELETON_DEATH_C);
         for (i = 0; i < 7; i++) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity == NULL) {

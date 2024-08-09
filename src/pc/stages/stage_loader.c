@@ -1,4 +1,5 @@
 #include <game.h>
+#include <stdlib.h>
 #include <string.h>
 #include <cJSON/cJSON.h>
 #include "stage_loader.h"
@@ -14,7 +15,7 @@ typedef struct {
     const char* assetPath;
 } RoomLoadDesc;
 static TileDefinition* g_TileDefToLoad = NULL;
-static bool LoadRoomTileDef(FileStringified* file) {
+static bool LoadRoomTileDef(struct FileAsString* file) {
     INFOF("load");
     RoomLoadDesc* desc = (RoomLoadDesc*)file->param;
     cJSON* jitem = cJSON_Parse(file->content);
@@ -27,42 +28,29 @@ static bool LoadRoomTileDef(FileStringified* file) {
     char buf[0x100];
     snprintf(buf, sizeof(buf), "%s/%s", desc->assetPath,
              JITEM("gfxPage")->valuestring);
-    f = fopen(buf, "rb");
-    if (f) {
-        fread(g_TileDefToLoad->gfxPage, 0x1000, 1, f);
-        fclose(f);
-    } else {
-        ERRORF("unable to load '%s'", buf);
+    if (FileReadToBuf(buf, g_TileDefToLoad->gfxPage, 0, 0x1000) < 0) {
+        cJSON_Delete(jitem);
         return false;
     }
+
     snprintf(buf, sizeof(buf), "%s/%s", desc->assetPath,
              JITEM("gfxIndex")->valuestring);
-    f = fopen(buf, "rb");
-    if (f) {
-        fread(g_TileDefToLoad->gfxIndex, 0x1000, 1, f);
-        fclose(f);
-    } else {
-        ERRORF("unable to load '%s'", buf);
+    if (FileReadToBuf(buf, g_TileDefToLoad->gfxIndex, 0, 0x1000) < 0) {
+        cJSON_Delete(jitem);
         return false;
     }
+
     snprintf(
         buf, sizeof(buf), "%s/%s", desc->assetPath, JITEM("clut")->valuestring);
-    f = fopen(buf, "rb");
-    if (f) {
-        fread(g_TileDefToLoad->clut, 0x1000, 1, f);
-        fclose(f);
-    } else {
-        ERRORF("unable to load '%s'", buf);
+    if (FileReadToBuf(buf, g_TileDefToLoad->clut, 0, 0x1000) < 0) {
+        cJSON_Delete(jitem);
         return false;
     }
+
     snprintf(buf, sizeof(buf), "%s/%s", desc->assetPath,
              JITEM("collision")->valuestring);
-    f = fopen(buf, "rb");
-    if (f) {
-        fread(g_TileDefToLoad->collision, 0x1000, 1, f);
-        fclose(f);
-    } else {
-        ERRORF("unable to load '%s'", buf);
+    if (FileReadToBuf(buf, g_TileDefToLoad->collision, 0, 0x1000) < 0) {
+        cJSON_Delete(jitem);
         return false;
     }
 
@@ -122,13 +110,13 @@ static bool LoadRoomLayerDef(LayerDef* l, cJSON* jitem, RoomLoadDesc* desc) {
 
     g_TileDefToLoad = l->tileDef;
 
-    return FileStringify(LoadRoomTileDef, buf, desc);
+    return FileAsString(LoadRoomTileDef, buf, desc);
 }
 
 static int g_LayerDefIndex = 0;
 static LayerDef g_LayerDefPool[0x40];
 static RoomDef g_TileLayers[0x100];
-static bool LoadTileLayers(FileStringified* file) {
+static bool LoadTileLayers(struct FileAsString* file) {
     int i;
     RoomLoadDesc* desc = (RoomLoadDesc*)file->param;
     cJSON* json = cJSON_Parse(file->content);
@@ -200,7 +188,7 @@ RoomDef* LoadRoomsLayers(const char* filePath) {
 
     RoomLoadDesc desc;
     desc.assetPath = assetPath;
-    if (!FileStringify(LoadTileLayers, filePath, &desc)) {
+    if (!FileAsString(LoadTileLayers, filePath, &desc)) {
         ERRORF("failed to load '%s'", filePath);
         return NULL;
     }
@@ -210,7 +198,7 @@ RoomDef* LoadRoomsLayers(const char* filePath) {
 
 static int g_LayoutEntityIndex = 0;
 static LayoutEntity g_LayoutEntityPool[0x200];
-static bool _LoadObjLayout(const FileStringified* file) {
+static bool _LoadObjLayout(const struct FileAsString* file) {
     int i;
     cJSON* json = cJSON_Parse(file->content);
     if (!json) {
@@ -241,7 +229,7 @@ static bool _LoadObjLayout(const FileStringified* file) {
 }
 LayoutEntity* LoadObjLayout(const char* filePath) {
     int start = g_LayoutEntityIndex;
-    if (!FileStringify(_LoadObjLayout, filePath, NULL)) {
+    if (!FileAsString(_LoadObjLayout, filePath, NULL)) {
         // if the load fails, resets the pool as it was before
         g_LayoutEntityIndex = start;
         return NULL;
@@ -251,7 +239,7 @@ LayoutEntity* LoadObjLayout(const char* filePath) {
 }
 
 RoomHeader room_headers[0x100];
-static bool _LoadRoomDefArray(const FileStringified* file) {
+static bool _LoadRoomDefArray(const struct FileAsString* file) {
     int i;
     cJSON* json = cJSON_Parse(file->content);
     if (!json) {
@@ -282,7 +270,7 @@ static bool _LoadRoomDefArray(const FileStringified* file) {
     return true;
 }
 RoomHeader* LoadRoomDefs(const char* filePath) {
-    if (!FileStringify(_LoadRoomDefArray, filePath, NULL)) {
+    if (!FileAsString(_LoadRoomDefArray, filePath, NULL)) {
         return NULL;
     }
     return room_headers;
@@ -292,7 +280,7 @@ static int g_SpritePartPtrIndex = 0;
 static SpriteParts* g_SpritePartPtrPool[0x100];
 static int g_SpritePartIndex = 0;
 static u16 g_SpritePartPool[0x200 * sizeof(SpritePart)];
-static bool _LoadSpriteParts(FileStringified* file) {
+static bool _LoadSpriteParts(struct FileAsString* file) {
     int i, j;
     cJSON* json = cJSON_Parse(file->content);
     if (!json) {
@@ -345,7 +333,7 @@ static bool _LoadSpriteParts(FileStringified* file) {
 SpritePart* LoadSpriteParts(const char* filePath) {
     int start = g_SpritePartPtrIndex;
     int spriteStart = g_SpritePartIndex;
-    if (!FileStringify(_LoadSpriteParts, filePath, NULL)) {
+    if (!FileAsString(_LoadSpriteParts, filePath, NULL)) {
         // if the load fails, resets the pool as it was before
         g_SpritePartPtrIndex = start;
         g_SpritePartIndex = spriteStart;

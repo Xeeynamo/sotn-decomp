@@ -1,4 +1,5 @@
 #include "st0.h"
+#include "sfx.h"
 
 bool func_801ADAC8(s32 arg0) {
     s32 unk = 0xD0;
@@ -205,7 +206,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 AnimateEntity(D_80180AC8, self);
             }
             if (func_801ADAC8(0x4C) != 0) {
-                g_api.PlaySfx(0x63D);
+                g_api.PlaySfx(SFX_START_SLAM_B);
                 g_api.func_80102CD8(1);
                 self->step_s++;
             }
@@ -284,7 +285,7 @@ void EntityDraculaFinalForm(Entity* self) {
             }
             temp_s2 = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (temp_s2 != NULL) {
-                g_api.PlaySfx(0x660);
+                g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
                 CreateEntityFromEntity(33, self, temp_s2);
                 temp_s2->posX.i.hi = (xShift + temp_s2->posX.i.hi);
                 temp_s2->posY.i.hi = (temp_s2->posY.i.hi - 4);
@@ -327,7 +328,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 self->ext.dracFinalForm.timer = 6;
                 temp_s2 = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (temp_s2 != NULL) {
-                    g_api.PlaySfx(0x661);
+                    g_api.PlaySfx(SFX_FIREBALL_SHOT_B);
                     CreateEntityFromEntity(34, self, temp_s2);
                     temp_s2->posX.i.hi = (temp_s2->posX.i.hi + *temp_s1);
                     temp_s2->zPriority = (self->zPriority + 1);
@@ -342,7 +343,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 AnimateEntity(D_80180AC8, self);
             }
             if (func_801ADAC8(0x4C) != 0) {
-                g_api.PlaySfx(0x63D);
+                g_api.PlaySfx(SFX_START_SLAM_B);
                 g_api.func_80102CD8(1);
                 self->step_s++;
             }
@@ -509,7 +510,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 // Fake reuse of the i variable
                 i = g_Timer - D_8018114C;
                 if (i >= 0x301) {
-                    g_api.PlaySfx(0x654);
+                    g_api.PlaySfx(SFX_EXPLODE_A);
                     self->ext.dracFinalForm.unk82 = 0x80;
                     self->step_s++;
                     break;
@@ -523,7 +524,7 @@ void EntityDraculaFinalForm(Entity* self) {
                     break;
                 }
             } else {
-                g_api.PlaySfx(0x654);
+                g_api.PlaySfx(SFX_EXPLODE_A);
                 self->ext.dracFinalForm.unk82 = 0x80;
                 self->step_s++;
             }
@@ -571,7 +572,7 @@ void EntityDraculaFinalForm(Entity* self) {
             break;
         }
         if (--self->ext.dracFinalForm.timer == 0) {
-            g_api.PlaySfx(0x655);
+            g_api.PlaySfx(SFX_EXPLODE_B);
             self->ext.dracFinalForm.timer = 8;
             temp_s2 = AllocEntity(&g_Entities[224], &g_Entities[256]);
             temp_s1 = &D_80181108[self->ext.dracFinalForm.unk84].x;

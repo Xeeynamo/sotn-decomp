@@ -645,11 +645,11 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
     *dstNav = g_MenuNavigation;
     *dstSettings = g_Settings;
 
-    for (i = 0; i < 0x300; i++) {
+    for (i = 0; i < LEN(g_CastleFlags); i++) {
         dst->castleFlags[i] = g_CastleFlags[i];
     }
 
-    for (i = 0; i < 0x800; i++) {
+    for (i = 0; i < LEN(g_CastleMap); i++) {
         dst->castleMap[i] = g_CastleMap[i];
     }
 
@@ -687,11 +687,11 @@ s32 LoadSaveData(SaveData* save) {
     g_Settings.D_8003CB00 |= prevCompletionFlags1;
     g_Settings.D_8003CB04 |= prevCompletionFlags2;
 
-    for (i = 0; i < 0x300; i++) {
+    for (i = 0; i < LEN(g_CastleFlags); i++) {
         g_CastleFlags[i] = save->castleFlags[i];
     }
 
-    for (i = 0; i < 0x800; i++) {
+    for (i = 0; i < LEN(g_CastleMap); i++) {
         g_CastleMap[i] = save->castleMap[i];
     }
 

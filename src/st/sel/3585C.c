@@ -419,7 +419,7 @@ void func_801B60D4(void) {
         break;
 
     case 5:
-        func_801B1B88();
+        SetTitleDisplayBuffer256();
         D_8003C9A4++;
         break;
 

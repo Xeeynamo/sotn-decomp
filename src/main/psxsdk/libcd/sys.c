@@ -31,10 +31,24 @@ s32 CdSetDebug(s32 arg0) {
 }
 
 const char aNone[] = "none";
+extern char* D_80032AC8[];
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdComstr);
+char* CdComstr(u8 arg0) {
+    if (arg0 > 0x1b) {
+        return &aNone;
+    }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdIntstr);
+    return D_80032AC8[arg0];
+}
+
+extern char* D_80032B48[];
+
+char* CdIntstr(u8 intr) {
+    if (intr > 6) {
+        return &aNone;
+    }
+    return D_80032B48[intr];
+}
 
 void CD_sync();
 

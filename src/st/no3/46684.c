@@ -1,4 +1,5 @@
 #include "no3.h"
+#include "sfx.h"
 
 void EntityPrizeDrop(Entity* self) {
     Collider collider;
@@ -77,7 +78,7 @@ void EntityPrizeDrop(Entity* self) {
             } else {
                 FallEntity();
             }
-            func_801C5BC0(D_801824E8, 2);
+            CheckFieldCollision(D_801824E8, 2);
         } else if (collider.effects & EFFECT_NOTHROUGH) {
             self->posY.i.hi += collider.unk18;
             self->ext.generic.unk80.modeS8.unk0 = 0x60;
@@ -169,7 +170,7 @@ void EntityPrizeDrop(Entity* self) {
             } else {
                 FallEntity();
             }
-            func_801C5BC0(D_801824E8, 2);
+            CheckFieldCollision(D_801824E8, 2);
             self->animCurFrame = 0;
             if (self->ext.generic.unk88.S16.unk2 != 0) {
                 self->ext.generic.unk88.S16.unk2--;
@@ -347,7 +348,7 @@ void EntityEquipItemDrop(Entity* self) {
             FallEntity();
         }
 
-        func_801C5BC0(D_801824E8, 2);
+        CheckFieldCollision(D_801824E8, 2);
         break;
 
     case 3:
@@ -383,7 +384,7 @@ void EntityEquipItemDrop(Entity* self) {
             *unk = 0;
         }
 
-        g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+        g_api.PlaySfx(SFX_ITEM_PICKUP);
 
         if (itemId < NUM_HAND_ITEMS) {
             itemName = g_api.equipDefs[itemId].name;

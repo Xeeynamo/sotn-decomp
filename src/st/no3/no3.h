@@ -5,24 +5,6 @@
 #define CASTLE_FLAG_BANK 0x34
 
 // NO3 Sound IDs
-#define SE_BARRIER_MOVE 0x607
-// It's possible that SE_BARRIER_MOVE_2 does not
-// trigger in-game because NP3 uses 0x609 instead
-#define SE_BARRIER_MOVE_2 0x608
-#define SE_SKEL_DEATH 0x62B
-#define SE_DEATH_AMBIENCE 0x631
-// Also used for barrier in "Cube of Zoe" room
-#define SE_CASTLE_GATE_CLOSE 0x63D
-#define SE_WALL_BREAK 0x644
-// Normally used for Richter, but this sound is just
-// a louder version of Alucard Floor Hit (Normal)
-#define SE_NO3_ALUCARD_FLOOR_HIT 0x64B
-// #define 0x655
-#define SE_MERMAN_EXPLODE 0x65B
-#define SE_ZOMBIE_EXPLODE 0x65E
-// #define 0x660
-#define SE_MERMAN_FIRE 0x662
-#define SE_THUNDER 0x665
 #define SE_SKEL_SWORD_SWING 0x66D
 #define SE_LEVER_SWITCH_MOVE 0x675
 #define SE_FLOOR_SWITCH_CLICK 0x676

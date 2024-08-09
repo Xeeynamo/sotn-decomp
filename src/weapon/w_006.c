@@ -1,10 +1,16 @@
 // Weapon ID #6. Used by weapons:
 // Moon rod, Unknown#172
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
+#include "w_006_1.h"
+#include "w_006_2.h"
+#define g_Animset w_006_1
+#define g_Animset2 w_006_2
 
 extern WeaponAnimation D_2E000_8017ABC4[];
-void EntityWeaponAttack(Entity* self) {
+static void EntityWeaponAttack(Entity* self) {
     WeaponAnimation* anim;
     s8 animIndex;
 
@@ -108,28 +114,66 @@ s32 func_2E000_8017B6A0(Primitive* prim, s32 x, s32 y) {
     return 0;
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_006", func_ptr_80170008);
+void func_ptr_80170008(Entity* self) {
+    Primitive* prim;
+    s32 posX, posY;
+    s32 range;
 
-void func_ptr_8017000C(Entity* self) {}
+    if (self->step == 0) {
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
 
-s32 func_ptr_80170010(Entity* self) {}
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
 
-s32 func_ptr_80170014(Entity* self) {}
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_800000;
+        self->velocityY = FIX(1.0 / 2.0);
+        range = 24;
+        posX = (rand() % range) - 0xC;
+        self->posX.i.hi += posX;
+        posY = (rand() % range) - 0xC;
+        self->posY.i.hi += posY;
 
-int GetWeaponId(void) { return 6; }
+        prim = &g_PrimBuf[self->primIndex];
+        prim->clut = 0x1B0;
+        prim->tpage = 0x1A;
+        prim->b0 = 0;
+        prim->b1 = 0;
+        prim->priority = self->zPriority + 4;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
 
-void EntityWeaponShieldSpell(Entity* self) {}
+        func_2E000_8017B6A0(prim, self->posX.i.hi, self->posY.i.hi);
+        self->step++;
+    } else {
+        self->posY.val += self->velocityY;
+        prim = &g_PrimBuf[self->primIndex];
+        if (func_2E000_8017B6A0(prim, self->posX.i.hi, self->posY.i.hi) != 0) {
+            DestroyEntity(self);
+        }
+    }
+}
 
-void func_ptr_80170024(Entity* self) {}
+static void func_ptr_8017000C(Entity* self) {}
 
-void func_ptr_80170028(Entity* self) {}
+static s32 func_ptr_80170010(Entity* self) {}
 
-void WeaponUnused2C(void) {}
+static s32 func_ptr_80170014(Entity* self) {}
 
-void WeaponUnused30(void) {}
+static int GetWeaponId(void) { return 6; }
 
-void WeaponUnused34(void) {}
+static void EntityWeaponShieldSpell(Entity* self) {}
 
-void WeaponUnused38(void) {}
+static void func_ptr_80170024(Entity* self) {}
 
-void WeaponUnused3C(void) {}
+static void func_ptr_80170028(Entity* self) {}
+
+static void WeaponUnused2C(void) {}
+
+static void WeaponUnused30(void) {}
+
+static void WeaponUnused34(void) {}
+
+static void WeaponUnused38(void) {}
+
+static void WeaponUnused3C(void) {}

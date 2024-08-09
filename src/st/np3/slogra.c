@@ -4,6 +4,7 @@
  */
 
 #include "np3.h"
+#include "sfx.h"
 
 #define GAIBON self[8]
 
@@ -67,7 +68,7 @@ void EntitySlogra(Entity* self) {
             if ((self->hitPoints < (hitPoints >> 2)) &&
                 (self->step != SLOGRA_LOSE_SPEAR)) {
                 self->hitboxState = 0;
-                func_801C2598(NA_SE_EN_SLOGRA_HURT_2);
+                func_801916C4(NA_SE_EN_SLOGRA_HURT_2);
                 SetStep(SLOGRA_LOSE_SPEAR);
             }
         }
@@ -168,14 +169,14 @@ void EntitySlogra(Entity* self) {
 
     case SLOGRA_SPEAR_POKE:
         if (self->step_s == 0) {
-            func_801C2598(NA_SE_EN_SLOGRA_HISSING);
+            func_801916C4(NA_SE_EN_SLOGRA_HISSING);
             self->step_s++;
         }
         if (AnimateEntity(D_80181328, self) == 0) {
             SetStep(SLOGRA_WALKING_WITH_SPEAR);
         }
         if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
-            func_801C2598(NA_SE_EN_SLOGRA_SPEAR_SLASH);
+            func_801916C4(NA_SE_EN_SLOGRA_SPEAR_SLASH);
         }
         break;
 
@@ -187,7 +188,7 @@ void EntitySlogra(Entity* self) {
 
         case SLOGRA_FIRE_PROJECTILE:
             if (AnimateEntity(D_80181300, self) == 0) {
-                func_801C2598(NA_SE_EN_SLOGRA_SPEAR_PROJECTILE);
+                func_801916C4(NA_SE_EN_SLOGRA_SPEAR_PROJECTILE);
                 newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
@@ -221,7 +222,7 @@ void EntitySlogra(Entity* self) {
 
     case SLOGRA_KNOCKBACK:
         if (self->step_s == 0) {
-            func_801C2598(NA_SE_EN_SLOGRA_HURT);
+            func_801916C4(NA_SE_EN_SLOGRA_HURT);
             self->step_s++;
         }
         if (self->ext.GS_Props.nearDeath != 0) {
@@ -298,7 +299,7 @@ void EntitySlogra(Entity* self) {
             SetStep(SLOGRA_WALKING_WITHOUT_SPEAR);
         }
         if (self->animFrameIdx == 7 && self->animFrameDuration == 0) {
-            func_801C2598(NA_SE_EN_SLOGRA_BEAK_ATTACK);
+            func_801916C4(NA_SE_EN_SLOGRA_BEAK_ATTACK);
         }
         break;
 
@@ -354,7 +355,7 @@ void EntitySlogra(Entity* self) {
                 self->ext.GS_Props.nearDeath = 1;
             }
             self->ext.GS_Props.timer = 64;
-            func_801C2598(NA_SE_EN_SLOGRA_DEATH_EXPLOSION);
+            func_801916C4(NA_SE_EN_SLOGRA_DEATH_EXPLOSION);
             g_CastleFlags[RetreatedInEntrance] |= 1;
             self->step_s++;
 
@@ -462,7 +463,7 @@ void EntitySlograSpear(Entity* self) {
             self->velocityY += FIX(0.15625);
             self->rotZ += 0x80;
             if (!(self->rotZ & 0xFFF)) {
-                func_801C2598(0x625);
+                func_801916C4(SFX_ARROW_SHOT_A);
             }
         }
     }

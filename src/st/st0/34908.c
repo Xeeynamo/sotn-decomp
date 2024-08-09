@@ -1,6 +1,7 @@
 #include "st0.h"
 
 #include "../entity.h"
+#include "sfx.h"
 
 u8 func_801B4AF0(u8 frames[], Entity* self, u8 arg2) {
     u16 animFrameStart = self->animFrameIdx * 2;
@@ -348,7 +349,7 @@ s32 func_801B5970(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-void func_801B5A98(u16* hitSensors, s16 sensorCount) {
+void CheckFieldCollision(u16* hitSensors, s16 sensorCount) {
     Collider collider;
     s16 i;
     s32 velocityX;
@@ -451,7 +452,7 @@ void CollectHeart(u16 index) {
 
     __builtin_memcpy(&hearts[0], &c_HeartPrizes[0], 2);
     __builtin_memcpy(&hearts[8], &c_HeartPrizes[4], 2);
-    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_api.PlaySfx(SFX_HEART_PICKUP);
     g_Status.hearts = hearts[index] + g_Status.hearts;
     if (g_Status.heartsMax < g_Status.hearts) {
         g_Status.hearts = g_Status.heartsMax;
@@ -463,13 +464,13 @@ void CollectHeart(u16 index) {
 
 void func_801B61D4(void) {}
 
-void func_801B61DC(void) { DestroyEntity(g_CurrentEntity); }
+void UnusedDestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
 void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;
     u16 subWeapon;
 
-    g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+    g_api.PlaySfx(SFX_ITEM_PICKUP);
     subWeapon = g_Status.subWeapon;
     g_Status.subWeapon = D_80181CAC[subWeaponIdx];
 
@@ -499,7 +500,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
     DestroyEntity(g_CurrentEntity);
 }
 
-void CollectDummy(void) { DestroyEntity(g_CurrentEntity); }
+void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
 Entity* func_801B633C(void) {
     g_CurrentEntity->step = 3;

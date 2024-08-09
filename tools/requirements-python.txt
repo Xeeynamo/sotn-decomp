@@ -8,7 +8,7 @@ mapfile-parser==2.1.4
 tabulate
 requests
 graphviz
-splat64>=0.24.4,<0.25.0
+splat64==0.24.6
 crunch64
 spimdisasm>=1.26.0
 rabbitizer>=1.11.0

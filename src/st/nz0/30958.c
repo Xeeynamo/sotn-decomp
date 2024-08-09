@@ -5,6 +5,7 @@
  */
 
 #include "nz0.h"
+#include "sfx.h"
 
 void func_801B0958(Entity* self) {
     ObjInit2* temp_s0 = &D_80180D64[self->params];
@@ -190,7 +191,7 @@ void EntityBreakable(Entity* self) {
                 g_api.FreePrimitives(self->primIndex);
                 self->flags &= ~FLAG_HAS_PRIMS;
             }
-            g_api.PlaySfx(NA_SE_BREAK_CANDLE);
+            g_api.PlaySfx(SFX_CANDLE_HIT);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
@@ -362,7 +363,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
 
     case LEFT_SECRET_ROOM_WALL_IDLE:
         if (self->hitFlags != 0) {
-            func_801C29B0(NA_SE_EN_ROCK_BREAK);
+            func_801C29B0(SFX_WALL_DEBRIS_B);
             self->step++;
         }
         break;
@@ -441,7 +442,7 @@ void EntityBottomSecretRoomFloor(
 
     case BOTTOM_SECRET_ROOM_FLOOR_IDLE:
         if (self->hitFlags != 0) {
-            func_801C29B0(NA_SE_EN_ROCK_BREAK);
+            func_801C29B0(SFX_WALL_DEBRIS_B);
             self->step++;
         }
         return;
@@ -526,7 +527,7 @@ void func_801B19A0(Entity* self) {
         if (collider.effects & EFFECT_SOLID) {
             self->posY.i.hi += collider.unk18;
             if (self->params == 0) {
-                func_801C29B0(0x644);
+                func_801C29B0(SFX_WALL_DEBRIS_B);
                 for (i = 0; i < 2; i++) {
                     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
@@ -730,14 +731,14 @@ void EntityMoveableBox(Entity* self) {
             temp_s1 = GetSideToPlayer();
             if (temp_s1 & 1 && player->velocityX > 0) {
                 if (!(g_Timer & 7)) {
-                    g_api.PlaySfx(0x608);
+                    g_api.PlaySfx(SFX_STONE_MOVE_B);
                 }
                 self->velocityX = FIX(0.5);
             }
             temp_s1 = GetSideToPlayer();
             if (!(primIndex = (temp_s1 & 1)) && (player->velocityX < 0)) {
                 if (!(g_Timer & 7)) {
-                    g_api.PlaySfx(0x608);
+                    g_api.PlaySfx(SFX_STONE_MOVE_B);
                 }
                 self->velocityX = FIX(-0.5);
             }
@@ -1004,7 +1005,7 @@ void EntityCannonWall(Entity* self) {
         break;
 
     case 2:
-        g_api.PlaySfx(NA_SE_EN_ROCK_BREAK);
+        g_api.PlaySfx(SFX_WALL_DEBRIS_B);
 
         tileLayoutPtr = &D_80180EE0;
         for (tilePos = 0x46, i = 0; i < 6; i++, tileLayoutPtr++) {
@@ -1337,7 +1338,7 @@ void EntityTableWithGlobe(Entity* self) {
     case 1:
         AnimateEntity(D_80180EF0, self);
         if (self->hitFlags != 0) {
-            func_801C29B0(0x61D);
+            func_801C29B0(SFX_GLASS_BREAK_E);
             self->hitboxState = 0;
             CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
             self[1].params = D_80180F10[self->params];
@@ -1367,7 +1368,7 @@ void func_801B3648(Entity* self) {
     case 1:
         AnimateEntity(D_80180F1C, self);
         if (self->hitFlags != 0) {
-            func_801C29B0(0x619);
+            func_801C29B0(SFX_GLASS_BREAK_A);
             self->hitboxState = 0;
             SetStep(2);
         }
@@ -1441,7 +1442,7 @@ void func_801B37C0(Entity* self) {
             newEntity->params = 2;
             newEntity->posY.i.hi -= 8;
         }
-        func_801C29B0(0x61D);
+        func_801C29B0(SFX_GLASS_BREAK_E);
         self->step++;
 
     case 3:
@@ -1486,7 +1487,7 @@ void func_801B3A50(Entity* self) {
     case 1:
         AnimateEntity(D_80180F88, self);
         if (self->hitFlags != 0) {
-            g_api.PlaySfx(NA_SE_BREAK_CANDLE);
+            g_api.PlaySfx(SFX_CANDLE_HIT);
             self->hitboxState = 0;
             SetStep(2);
         }
@@ -1522,7 +1523,7 @@ void func_801B3B78() {
 }
 
 // Id 0x38
-void func_801B3C38(Entity* self) {
+void EntityWargExplosionPuffOpaque(Entity* self) {
     Unkstruct_80180FE0* obj;
     s32 velocityX;
     s32 velocityY;

@@ -1,9 +1,19 @@
 #include "dra.h"
+#include "dra_bss.h"
 #include "sfx.h"
 #include "player.h"
 
 u8 g_D_800ACF18[] = {10, 8, 8, 6, 6, 4, 4,   4,   4, 4,
                      4,  4, 4, 4, 4, 4, 255, 255, 0, 0};
+
+// BSS
+extern s16 g_WasFacingLeft;
+extern s16 g_WasFacingLeft2;
+extern s32 g_WasFacingLeft3;
+extern s32 g_WasFacingLeft4;
+extern s16 g_WasFacingLeft5;
+extern s32 g_WasFacingLeft6;
+extern s32 g_WasFacingLeft7;
 
 // Same function in RIC is func_8015C4AC
 void func_8010D59C(void) {
@@ -678,8 +688,8 @@ void DoGravityJump(void) {
     g_Player.unk4A = 0;
 }
 
-s16 D_800ACF60[] = {SFX_UNK_6EE,       SFX_UNK_6EF, SFX_UNK_6F0,
-                    NA_SE_VO_AL_PUNCH, 0x0000,      0x0000};
+s16 g_SfxAttackGrunts[] = {
+    SFX_UNK_6EE, SFX_UNK_6EF, SFX_UNK_6F0, NA_SE_VO_AL_PUNCH, 0x0000, 0x0000};
 
 void func_8010EA54(s32 arg0) {
     s16 temp_hi;
@@ -687,7 +697,7 @@ void func_8010EA54(s32 arg0) {
     if (arg0 != 0) {
         temp_hi = rand() % arg0;
         if (temp_hi < 4) {
-            PlaySfx(D_800ACF60[temp_hi]);
+            PlaySfx(g_SfxAttackGrunts[temp_hi]);
         }
     }
 }
@@ -910,7 +920,7 @@ block_32:
         HasEnoughMp(g_EquipDefs[equipped_id].mpUsage, 0)) {
     block_38c:
         equipped_item = &g_EquipDefs[g_Status.equipment[hand]];
-        if (D_80138FC8 == 0xFF) {
+        if (g_ButtonCombo[COMBO_BF].buttonsCorrect == 0xFF) {
             var_s2 = equipped_item->unk17;
             if (var_s2 != 0) {
                 equipped_item = &g_EquipDefs[var_s2];
@@ -1325,7 +1335,7 @@ void func_8010FD88(void) {
     SetPlayerAnim(0xDB);
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
     g_Player.unk46 = 0;
-    PlaySfx(NA_SE_AL_BACKSLIDE);
+    PlaySfx(SFX_SCRAPE_C);
 }
 
 bool func_8010FDF8(s32 branchFlags) {
@@ -1381,13 +1391,13 @@ bool func_8010FDF8(s32 branchFlags) {
                     func_8010E570(0);
                     func_8010FAF4();
                 label:
-                    PlaySfx(SFX_UNK_64C, 0x30, 0);
+                    PlaySfx(SFX_STOMP_SOFT_B, 0x30, 0);
                     return 1;
                 }
 
                 if (PLAYER.velocityY > 0x6E000) {
                     func_8010E470(1, 0);
-                    func_80134714(SFX_UNK_647);
+                    func_80134714(SFX_STOMP_HARD_B);
                     CreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0, 0), 0);
                 } else {
@@ -1396,7 +1406,7 @@ bool func_8010FDF8(s32 branchFlags) {
                     } else {
                         func_8010E570(0);
                     }
-                    PlaySfx(SFX_UNK_64C, 0x30, 0);
+                    PlaySfx(SFX_STOMP_SOFT_B, 0x30, 0);
                 }
 
                 func_8010FAF4();
@@ -1409,7 +1419,7 @@ bool func_8010FDF8(s32 branchFlags) {
                 } else {
                     func_8010E470(1, 0);
                 }
-                PlaySfx(SFX_UNK_647);
+                PlaySfx(SFX_STOMP_HARD_B);
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
                 return 1;
             }
@@ -1420,18 +1430,18 @@ bool func_8010FDF8(s32 branchFlags) {
             }
 
             if (abs(PLAYER.velocityX) > 0x20000) {
-                PlaySfx(SFX_UNK_647);
+                PlaySfx(SFX_STOMP_HARD_B);
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
                 func_8010E570(PLAYER.velocityX);
             } else {
-                PlaySfx(SFX_UNK_64C, 0x30, 0);
+                PlaySfx(SFX_STOMP_SOFT_B, 0x30, 0);
                 func_8010E570(0);
             }
             return 1;
         }
         if (branchFlags & 0x20000 && g_Player.pl_vram_flag & 1) {
             func_8010E470(3, PLAYER.velocityX);
-            PlaySfx(SFX_UNK_647);
+            PlaySfx(SFX_STOMP_HARD_B);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
             return 1;
         }

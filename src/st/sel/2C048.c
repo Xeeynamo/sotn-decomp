@@ -6,6 +6,7 @@
 
 #include "sel.h"
 #include "memcard.h"
+#include "sfx.h"
 
 Overlay g_StageSel = {
     /* 0x00 */ SEL_Update,
@@ -137,7 +138,7 @@ StageName D_80180128[80] = {
 
 void func_801B18F4(void);
 void func_801B19F4(void);
-void func_801B1B88(void);
+void SetTitleDisplayBuffer256(void);
 void func_801B1D88(Primitive* prim);
 void func_801B1DA8(void);
 void func_801B1F34(void);
@@ -1192,7 +1193,7 @@ void SEL_Update(void) {
     switch (D_8003C9A4) {
     case 0:
         func_801B18F4();
-        func_801B1B88();
+        SetTitleDisplayBuffer256();
         D_8003C9A4--;
         break;
     case -1:
@@ -1228,23 +1229,23 @@ void SEL_Update(void) {
         if (g_pads[0].tapped & PAD_CROSS) {
             switch (D_801D6B0C) {
             case 0:
-                g_api.PlaySfx(0x633);
+                g_api.PlaySfx(SFX_UI_CONFIRM);
                 D_8003C9A4 = 0x10;
                 break;
             case 1:
-                g_api.PlaySfx(0x633);
+                g_api.PlaySfx(SFX_UI_CONFIRM);
                 D_8003C9A4 = 0x30;
                 break;
             case 2:
-                g_api.PlaySfx(0x633);
+                g_api.PlaySfx(SFX_UI_CONFIRM);
                 D_8003C9A4 = 0x90;
                 break;
             case 3:
-                g_api.PlaySfx(0x633);
+                g_api.PlaySfx(SFX_UI_CONFIRM);
                 D_8003C9A4 = 0x50;
                 break;
             case 4:
-                g_api.PlaySfx(0x633);
+                g_api.PlaySfx(SFX_UI_CONFIRM);
                 D_8003C9A4 = 0x70;
                 break;
             default:
@@ -1277,7 +1278,7 @@ void SEL_Update(void) {
             UpdateNameEntry();
             func_801AD78C();
             if (g_pads[0].tapped & PAD_START) {
-                g_api.PlaySfx(0x633);
+                g_api.PlaySfx(SFX_UI_CONFIRM);
                 func_801AD66C();
                 if (g_PlayableCharacter == 0) {
                     g_StageId = STAGE_ST0;
@@ -1369,7 +1370,7 @@ void SEL_Update(void) {
             func_801AD490();
             D_8003C9A4 = 2;
         } else if (g_pads[0].tapped & PAD_CROSS) {
-            g_api.PlaySfx(0x633);
+            g_api.PlaySfx(SFX_UI_CONFIRM);
             D_8003C9A4 = 0x10;
         }
         break;
@@ -1383,7 +1384,7 @@ void SEL_Update(void) {
             func_801B2608("", 5);
             D_8003C9A4 = 0x33;
         } else if (g_pads[0].tapped & PAD_CROSS) {
-            g_api.PlaySfx(0x633);
+            g_api.PlaySfx(SFX_UI_CONFIRM);
             D_8003C9A4 = 0x10;
         }
         break;
@@ -1419,7 +1420,7 @@ void SEL_Update(void) {
             D_801BAF0C = 0;
         }
         if ((g_pads[0].tapped & PAD_START) && D_801BAF14 != 0) {
-            g_api.PlaySfx(0x633);
+            g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801B2608("You won’t be able to save", 4);
             func_801B2608("your game． Is that OK？", 5);
             func_801ADF94(0x81, 0);
@@ -1430,10 +1431,10 @@ void SEL_Update(void) {
             slot = D_801D6B04 % 15;
             icon = g_SaveSummary[port].icon[slot];
             if (icon >= 0) {
-                g_api.PlaySfx(0x633);
+                g_api.PlaySfx(SFX_UI_CONFIRM);
                 D_8003C9A4 = 0x100;
             } else if (icon == -3) {
-                g_api.PlaySfx(0x633);
+                g_api.PlaySfx(SFX_UI_CONFIRM);
                 D_8003C9A4 = 0x10;
             } else {
                 g_api.PlaySfx(0x686);
@@ -1490,7 +1491,7 @@ void SEL_Update(void) {
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 0);
         if (g_pads[0].tapped & PAD_CROSS) {
-            g_api.PlaySfx(0x633);
+            g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801AE9A8();
             func_801AD490();
             D_8003C9A4 = 2;
@@ -1508,7 +1509,7 @@ void SEL_Update(void) {
                 port = D_801D6B04 / 15;
                 slot = D_801D6B04 % 15;
                 if (g_SaveSummary[port].icon[slot] >= 0) {
-                    g_api.PlaySfx(0x633);
+                    g_api.PlaySfx(SFX_UI_CONFIRM);
                     D_8003C9A4++;
                 } else {
                     g_api.PlaySfx(0x686);
@@ -1549,7 +1550,7 @@ void SEL_Update(void) {
                     func_801ACBE4(GFX_UNK_15, 0);
                     func_801B2608("Changing Name．", 4);
                     func_801B2608("Do not remove Memory Card．", 5);
-                    g_api.PlaySfx(0x633);
+                    g_api.PlaySfx(SFX_UI_CONFIRM);
                     D_8003C9A4++;
                 }
             }
@@ -1591,7 +1592,7 @@ void SEL_Update(void) {
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 0);
         if (g_pads[0].tapped & PAD_CROSS) {
-            g_api.PlaySfx(0x633);
+            g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_15, 8);
             D_8003C9A4 = 0x90;
         }
@@ -1600,7 +1601,7 @@ void SEL_Update(void) {
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 0);
         if (g_pads[0].tapped & PAD_CROSS) {
-            g_api.PlaySfx(0x633);
+            g_api.PlaySfx(SFX_UI_CONFIRM);
             D_8003C9A4 = 146;
         }
         break;
@@ -1652,7 +1653,7 @@ void SEL_Update(void) {
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 0);
         if (g_pads[0].tapped & PAD_CROSS) {
-            g_api.PlaySfx(0x633);
+            g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801AE9A8();
             func_801AD490();
             D_8003C9A4 = 2;
@@ -1673,7 +1674,7 @@ void SEL_Update(void) {
                     func_801B2608("Where do you want", 4);
                     func_801B2608("to copy to？", 5);
                     D_801BC3EC = D_801D6B04;
-                    g_api.PlaySfx(0x633);
+                    g_api.PlaySfx(SFX_UI_CONFIRM);
                     D_8003C9A4++;
                 } else {
                     g_api.PlaySfx(0x686);
@@ -1701,12 +1702,12 @@ void SEL_Update(void) {
                     if (icon >= 0) {
                         func_801B1F4C(5);
                         func_801B2608("OK to overwrite data？", 4);
-                        g_api.PlaySfx(0x633);
+                        g_api.PlaySfx(SFX_UI_CONFIRM);
                         D_8003C9A4 = 0x59;
                     } else if (icon != -2) {
                         func_801B2608("Copying data．", 4);
                         func_801B2608("Do not remove Memory Card．", 5);
-                        g_api.PlaySfx(0x633);
+                        g_api.PlaySfx(SFX_UI_CONFIRM);
                         D_8003C9A4++;
                     }
                 } else {
@@ -1754,7 +1755,7 @@ void SEL_Update(void) {
         func_801ADF94(0x82, 1);
         func_801AE6D0();
         if (g_pads[0].tapped & PAD_CROSS) {
-            g_api.PlaySfx(0x633);
+            g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_15, 8);
             D_8003C9A4 = 0x50;
         }
@@ -1764,7 +1765,7 @@ void SEL_Update(void) {
         func_801ADF94(0x82, 1);
         func_801AE6D0();
         if (g_pads[0].tapped & PAD_CROSS) {
-            g_api.PlaySfx(0x633);
+            g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_18, 8);
             func_801ACBE4(GFX_UNK_19, 8);
             func_801ACBE4(GFX_UNK_20, 8);
@@ -1776,7 +1777,7 @@ void SEL_Update(void) {
         func_801ADF94(0x82, 1);
         func_801AE6D0();
         if (g_pads[0].tapped & PAD_CROSS) {
-            g_api.PlaySfx(0x633);
+            g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801B2608("Copying data．", 4);
             func_801B2608("Do not remove Memory Card．", 5);
             D_8003C9A4 = 0x55;
@@ -1838,7 +1839,7 @@ void SEL_Update(void) {
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 0);
         if (g_pads[0].tapped & PAD_CROSS) {
-            g_api.PlaySfx(0x633);
+            g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801AE9A8();
             func_801AD490();
             D_8003C9A4 = 2;
@@ -1859,7 +1860,7 @@ void SEL_Update(void) {
                 if (g_SaveSummary[port].icon[slot] >= 0) {
                     func_801B1F4C(5);
                     func_801B2608("Is it OK to erase file？", 4);
-                    g_api.PlaySfx(0x633);
+                    g_api.PlaySfx(SFX_UI_CONFIRM);
                     D_8003C9A4++;
                 } else {
                     g_api.PlaySfx(0x686);
@@ -1876,7 +1877,7 @@ void SEL_Update(void) {
             D_8003C9A4--;
         } else if (g_pads[0].tapped & PAD_CROSS) {
             func_801ACBE4(GFX_UNK_15, 8);
-            g_api.PlaySfx(0x633);
+            g_api.PlaySfx(SFX_UI_CONFIRM);
             D_8003C9A4++;
         }
         break;
@@ -1910,7 +1911,7 @@ void SEL_Update(void) {
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 0);
         if (g_pads[0].tapped & PAD_CROSS) {
-            g_api.PlaySfx(0x633);
+            g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_15, 8);
             D_8003C9A4 = 0x70;
         }
@@ -1919,7 +1920,7 @@ void SEL_Update(void) {
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x82, 0);
         if (g_pads[0].tapped & PAD_CROSS) {
-            g_api.PlaySfx(0x633);
+            g_api.PlaySfx(SFX_UI_CONFIRM);
             D_8003C9A4 = 0x72;
         }
         break;
@@ -1986,7 +1987,7 @@ void SEL_Update(void) {
     case 513:
         func_801ADF94(0x80, 0);
         if (g_pads[0].tapped & PAD_TRIANGLE) {
-            g_api.PlaySfx(0x633);
+            g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_6, 8);
             MemCardSetPort(0);
             D_8003C9A4++;
@@ -2021,7 +2022,7 @@ void SEL_Update(void) {
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x80, 0);
         if (g_pads[0].tapped & PAD_CROSS) {
-            g_api.PlaySfx(0x633);
+            g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_15, 8);
             D_8003C9A4 = D_801BAFC8;
         }
@@ -2030,7 +2031,7 @@ void SEL_Update(void) {
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x80, 0);
         if (g_pads[0].tapped & PAD_CROSS) {
-            g_api.PlaySfx(0x633);
+            g_api.PlaySfx(SFX_UI_CONFIRM);
             D_8003C9A4 = D_801BAFC8;
         }
         break;
@@ -2048,7 +2049,7 @@ void SEL_Update(void) {
     case 529:
         func_801ADF94(0x80, 0);
         if (g_pads[0].tapped & PAD_TRIANGLE) {
-            g_api.PlaySfx(0x633);
+            g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_6, 8);
             MemCardSetPort(1);
             D_8003C9A4++;
@@ -2083,7 +2084,7 @@ void SEL_Update(void) {
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x80, 0);
         if (g_pads[0].tapped & PAD_CROSS) {
-            g_api.PlaySfx(0x633);
+            g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_15, 8);
             D_8003C9A4 = D_801BAFC8;
         }
@@ -2092,7 +2093,7 @@ void SEL_Update(void) {
         DrawNavigationTips(Tips_Confirm);
         func_801ADF94(0x80, 0);
         if (g_pads[0].tapped & PAD_CROSS) {
-            g_api.PlaySfx(0x633);
+            g_api.PlaySfx(SFX_UI_CONFIRM);
             D_8003C9A4 = D_801BAFC8;
         }
         break;
@@ -2147,7 +2148,7 @@ void SetGameState(GameState gameState) {
 
 void func_801B18F4(void) { ClearImage(&D_801825A4, 0, 0, 0); }
 
-void func_801B1924(void) {
+void SetDisplayBufferColorsToBlack(void) {
     g_GpuBuffers[0].draw.r0 = 0;
     g_GpuBuffers[0].draw.g0 = 0;
     g_GpuBuffers[0].draw.b0 = 0;
@@ -2167,7 +2168,7 @@ void func_801B195C(s32 arg0) {
     g_GpuBuffers[1].draw.clip.h = 207;
     g_GpuBuffers[1].draw.isbg = 1;
     g_GpuBuffers[0].draw.isbg = 1;
-    func_801B1924();
+    SetDisplayBufferColorsToBlack();
     g_GpuBuffers[1].draw.dtd = 0;
     g_GpuBuffers[0].draw.dtd = 0;
     g_GpuBuffers[1].disp.isrgb24 = 0;
@@ -2184,7 +2185,7 @@ void func_801B19F4(void) {
     func_801B195C(0);
 }
 
-void func_801B1A98(void) {
+void SetTitleDisplayBuffer(void) {
     SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_TITLE_W, DISP_TITLE_H);
     SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, DISP_TITLE_W, DISP_TITLE_H);
     SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, DISP_TITLE_W, DISP_TITLE_H);
@@ -2195,12 +2196,13 @@ void func_801B1A98(void) {
     g_GpuBuffers[0].draw.clip.y = 0;
     g_GpuBuffers[1].draw.isbg = 1;
     g_GpuBuffers[0].draw.isbg = 1;
-    func_801B1924();
+    SetDisplayBufferColorsToBlack();
     g_GpuBuffers[1].disp.isrgb24 = 0;
     g_GpuBuffers[0].disp.isrgb24 = 0;
 }
 
-void func_801B1B88(void) {
+// same as SetTitleDisplayBuffer, but clips at 256 vertical height
+void SetTitleDisplayBuffer256(void) {
     SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_MENU_W, DISP_TITLE_H);
     SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, DISP_MENU_W, DISP_TITLE_H);
     SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, DISP_MENU_W, DISP_TITLE_H);
@@ -2211,7 +2213,7 @@ void func_801B1B88(void) {
     g_GpuBuffers[0].draw.clip.y = 0;
     g_GpuBuffers[1].draw.isbg = 1;
     g_GpuBuffers[0].draw.isbg = 1;
-    func_801B1924();
+    SetDisplayBufferColorsToBlack();
     g_GpuBuffers[1].disp.isrgb24 = 0;
     g_GpuBuffers[0].disp.isrgb24 = 0;
 }

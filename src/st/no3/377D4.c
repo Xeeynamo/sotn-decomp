@@ -5,6 +5,7 @@
  */
 
 #include "no3.h"
+#include "sfx.h"
 
 // vase in the room with the door to the caverns
 void EntityCavernDoorVase(Entity* self) {
@@ -96,7 +97,7 @@ void EntityBreakable(Entity* entity) {
         AnimateEntity(g_eBreakableAnimations[breakableType], entity);
         if (entity->unk44) { // If the candle is destroyed
             Entity* entityDropItem;
-            g_api.PlaySfx(NA_SE_BREAK_CANDLE);
+            g_api.PlaySfx(SFX_CANDLE_HIT);
             entityDropItem = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entityDropItem != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, entityDropItem);
@@ -320,7 +321,7 @@ void EntityCastleDoor(Entity* self) {
         if (self->ext.castleDoor.rotZ > 0) {
             self->ext.castleDoor.rotZ = 0;
             self->step += 2;
-            g_api.PlaySfx(SE_CASTLE_GATE_CLOSE);
+            g_api.PlaySfx(SFX_START_SLAM_B);
             tilePos = 0x445;
             for (i = 0, tilePtr = D_80181130; i < 8; tilePtr++, i++) {
                 g_Tilemap.fg[tilePos] = *tilePtr;
@@ -1069,7 +1070,7 @@ void EntityMermanRockLeftSide(Entity* self) {
                 tilePos += 0x30;
             }
 
-            g_api.PlaySfx(SE_WALL_BREAK);
+            g_api.PlaySfx(SFX_WALL_DEBRIS_B);
 
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
@@ -1168,7 +1169,7 @@ void EntityMermanRockRightSide(Entity* self) {
                 tilePos += 0x30;
             }
 
-            g_api.PlaySfx(SE_WALL_BREAK);
+            g_api.PlaySfx(SFX_WALL_DEBRIS_B);
 
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
@@ -1227,7 +1228,7 @@ void EntityUnkId26(Entity* self) {
 
     case 1:
         if ((g_CastleFlags[51] & 12) == 12) {
-            func_801CAD28(SE_WALL_BREAK);
+            func_801CAD28(SFX_WALL_DEBRIS_B);
             self->step++;
         }
         break;
@@ -1343,7 +1344,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
 
     case 1:
         if (self->hitFlags != 0) {
-            g_api.PlaySfx(SE_NO3_ALUCARD_FLOOR_HIT);
+            g_api.PlaySfx(SFX_STOMP_SOFT_A);
         }
 
         if (self->flags & FLAG_DEAD) {
@@ -1352,7 +1353,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
         break;
 
     case 2:
-        g_api.PlaySfx(SE_WALL_BREAK);
+        g_api.PlaySfx(SFX_WALL_DEBRIS_B);
         g_Tilemap.fg[0x4D9] = 0x3EE;
         g_Tilemap.fg[0x539] = 0x3D2;
         g_CastleFlags[stairwayPieceBroken] = true;
@@ -1424,7 +1425,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
         break;
 
     case 4:
-        g_api.PlaySfx(SE_WALL_BREAK);
+        g_api.PlaySfx(SFX_WALL_DEBRIS_B);
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
@@ -1563,7 +1564,7 @@ void EntityUnkId29(Entity* self) {
         self->zPriority = 0x2A;
         self->flags &= ~FLAG_UNK_08000000;
         self->facingLeft = Random() & 1;
-        g_api.func_80134714(SE_THUNDER, 0x40, (self->posX.i.hi >> 0x4) - 8);
+        g_api.func_80134714(SFX_THUNDER_B, 0x40, (self->posX.i.hi >> 0x4) - 8);
     }
     if (AnimateEntity(D_80181390, self) == 0) {
         DestroyEntity(self);
@@ -1609,7 +1610,7 @@ void EntitySwitch(Entity* entity) {
             if ((g_Tilemap.scrollY.i.hi + entity->posY.i.hi) > 193) {
                 entity->posY.i.hi = 193 - g_Tilemap.scrollY.i.hi;
                 g_CastleFlags[0x32] = 1;
-                g_api.PlaySfx(SE_BARRIER_MOVE_2);
+                g_api.PlaySfx(SFX_STONE_MOVE_B);
                 entity->step++;
             }
         }
@@ -1672,7 +1673,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
 
     case 1:
         if (g_CastleFlags[50] != 0) {
-            g_api.PlaySfx(SE_BARRIER_MOVE);
+            g_api.PlaySfx(SFX_STONE_MOVE_A);
             self->step++;
         }
         break;

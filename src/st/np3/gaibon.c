@@ -1,4 +1,5 @@
 #include "np3.h"
+#include "sfx.h"
 
 #define SLOGRA self[-8]
 
@@ -74,6 +75,61 @@ typedef enum {
     GAIBON_DYING_TURN_INTO_BONES,
 } GaibonDyingSubSteps;
 
+extern u16 D_80180B68[];
+
+static s32 D_801814B4[] = {
+    0x001C0000,
+    0x00040000,
+    0xFFFC0004,
+    0x0000FFF8,
+};
+static u8 D_801814C4[] = {0x06, 0x01, 0x03, 0x09, 0x02, 0x02, 0x02, 0x03, 0x03,
+                          0x04, 0x04, 0x0A, 0x05, 0x03, 0x05, 0x02, 0x00};
+static u8 D_801814D8[] = {
+    0x02, 0x01, 0x01, 0x09, 0x01, 0x02, 0x01, 0x03, 0x01, 0x04,
+    0x01, 0x0A, 0x02, 0x03, 0x02, 0x02, 0x04, 0x01, 0x02, 0x09,
+    0x01, 0x02, 0x01, 0x03, 0x02, 0x04, 0x02, 0x0A, 0x03, 0x03,
+    0x03, 0x02, 0x05, 0x01, 0x02, 0x09, 0x02, 0x02, 0x02, 0x03,
+    0x02, 0x04, 0x03, 0x0A, 0x04, 0x03, 0x04, 0x02, 0x00};
+static u8 D_8018150C[] = {0x06, 0x05, 0x03, 0x0B, 0x02, 0x06, 0x02, 0x07, 0x03,
+                          0x08, 0x04, 0x0C, 0x05, 0x07, 0x05, 0x06, 0x00};
+static u8 D_80181520[] = {0x06, 0x20, 0x03, 0x21, 0x02, 0x22, 0x02, 0x23, 0x03,
+                          0x24, 0x04, 0x25, 0x05, 0x23, 0x05, 0x22, 0x00};
+static u8 D_80181534[] = {
+    0x05, 0x0D, 0x05, 0x0E, 0x04, 0x0F, 0x08, 0x0E, 0xFF, 0x00};
+static u8 D_80181540[] = {0x03, 0x0E, 0x03, 0x10, 0x03, 0x11, 0x04,
+                          0x12, 0x04, 0x13, 0x22, 0x12, 0xFF, 0x00};
+static u8 D_80181550[] = {0x04, 0x03, 0x01, 0x16, 0x01, 0x15, 0x01, 0x16, 0x04,
+                          0x15, 0x04, 0x17, 0x04, 0x14, 0x01, 0x18, 0xFF, 0x00};
+static u8 D_80181564[] = {
+    0x05, 0x0D, 0x05, 0x12, 0x05, 0x19, 0x04, 0x1A, 0x29, 0x19, 0xFF, 0x00};
+static u8 D_80181570[] = {0x02, 0x19, 0x02, 0x1B, 0x00, 0x00, 0x00, 0x00};
+static u8 D_80181578[] = {
+    0x10, 0x19, 0x05, 0x1C, 0x06, 0x1D, 0x20, 0x1E, 0xFF, 0x00};
+static u8 D_80181584[][4] = {
+    {0x00, 0x00, 0x00, 0x00}, {0xFD, 0xFC, 0x0F, 0x1B},
+    {0xFD, 0xFD, 0x0F, 0x19}, {0xFD, 0xFF, 0x0F, 0x18},
+    {0xFD, 0xFF, 0x0F, 0x17}, {0xFC, 0x04, 0x0F, 0x17},
+    {0xFD, 0xFD, 0x10, 0x15}, {0xFD, 0xFD, 0x10, 0x14},
+    {0xFB, 0x04, 0x11, 0x17}, {0xC5, 0xB6, 0x00, 0x00},
+    {0xFB, 0xF9, 0x0F, 0x14}, {0xFB, 0xFB, 0x0F, 0x12},
+};
+static u8 D_801815B4[][4] = {
+    {0x00, 0x01, 0x02, 0x03}, {0x04, 0x01, 0x02, 0x03},
+    {0x04, 0x01, 0x04, 0x01}, {0x04, 0x04, 0x05, 0x05},
+    {0x05, 0x05, 0x05, 0x05}, {0x05, 0x06, 0x06, 0x07},
+    {0x08, 0x08, 0x08, 0x08}, {0x08, 0x08, 0x09, 0x09},
+    {0x0A, 0x0A, 0x0A, 0x0B}, {0x0B, 0x0B, 0x0A, 0x0B},
+    {0x0B, 0x00, 0x00, 0x00},
+};
+static u8 D_801815E0[] = {0x02, 0x03, 0x02, 0x04, 0x02, 0x05, 0x02, 0x04, 0x00};
+static u8 D_801815EC[] = {0x02, 0x0D, 0x02, 0x0E, 0x02, 0x0F, 0x02,
+                          0x10, 0x02, 0x0F, 0x02, 0x0E, 0x00};
+static u8 D_801815FC[] = {
+    0x01, 0x01, 0x01, 0x02, 0x01, 0x03, 0x01, 0x04, 0x01, 0x05,
+    0x01, 0x06, 0x01, 0x07, 0x01, 0x08, 0x01, 0x09, 0x01, 0x0A,
+    0x01, 0x0B, 0x01, 0x0C, 0x01, 0x0D, 0xFF, 0x00};
+
 void EntityGaibon(Entity* self) {
     Collider collider;
     Entity* other;
@@ -110,7 +166,7 @@ void EntityGaibon(Entity* self) {
     switch (self->step) {
     case 0x0:
         if ((g_CastleFlags[132] == 0) && (*(&g_CastleFlags[56] + 1) == 0)) {
-            InitializeEntity(&D_80180B68);
+            InitializeEntity(D_80180B68);
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             CreateEntityFromCurrentEntity(E_801B8CC0, self + 1);
             (self + 1)->zPriority = self->zPriority + 4;
@@ -122,7 +178,7 @@ void EntityGaibon(Entity* self) {
     case GAIBON_IDLE:
         AnimateEntity(D_801814C4, self);
         if (self->animFrameDuration == 0 && self->animFrameIdx == 1) {
-            func_801C2598(NA_SE_EN_GAIBON_FLAP_WINGS);
+            func_801916C4(NA_SE_EN_GAIBON_FLAP_WINGS);
         }
         if ((GetDistanceToPlayerX() < 0x60) &&
             (GetDistanceToPlayerY() < 0x60)) {
@@ -162,7 +218,7 @@ void EntityGaibon(Entity* self) {
             MoveEntity();
             AnimateEntity(D_801814C4, self);
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
-                func_801C2598(NA_SE_EN_GAIBON_FLAP_WINGS);
+                func_801916C4(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             if (!(--self->ext.GS_Props.timer)) {
@@ -177,7 +233,7 @@ void EntityGaibon(Entity* self) {
                 SetStep(GAIBON_FLY_SHOOT_FIREBALLS);
             }
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
-                func_801C2598(NA_SE_EN_GAIBON_FLAP_WINGS);
+                func_801916C4(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
             break;
         }
@@ -219,7 +275,7 @@ void EntityGaibon(Entity* self) {
             MoveEntity();
             AnimateEntity(D_8018150C, self);
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
-                func_801C2598(NA_SE_EN_GAIBON_FLAP_WINGS);
+                func_801916C4(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
             // Reuse of speedLimit variable, unrelated to speed
             speedLimit = 0xF;
@@ -231,7 +287,7 @@ void EntityGaibon(Entity* self) {
                 if (other != NULL) {
                     CreateEntityFromEntity(
                         E_GAIBON_SMALL_FIREBALL, self, other);
-                    func_801C2598(NA_SE_EN_GAIBON_SMALL_FIREBALL);
+                    func_801916C4(SFX_EXPLODE_FAST_A);
                     other->posY.i.hi -= 2;
                     if (self->facingLeft) {
                         other->posX.i.hi += 12;
@@ -263,7 +319,7 @@ void EntityGaibon(Entity* self) {
                 }
             }
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
-                func_801C2598(NA_SE_EN_GAIBON_FLAP_WINGS);
+                func_801916C4(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
             break;
         }
@@ -329,11 +385,11 @@ void EntityGaibon(Entity* self) {
                     if (!self->ext.GS_Props.nearDeath) {
                         CreateEntityFromEntity(
                             E_GAIBON_SMALL_FIREBALL, self, other);
-                        func_801C2598(NA_SE_EN_GAIBON_SMALL_FIREBALL);
+                        func_801916C4(SFX_EXPLODE_FAST_A);
                     } else {
                         CreateEntityFromEntity(
                             E_GAIBON_BIG_FIREBALL, self, other);
-                        func_801C2598(NA_SE_EN_GAIBON_BIG_FIREBALL);
+                        func_801916C4(SFX_EXPLODE_B);
                     }
                     other->posY.i.hi -= 6;
                     if (self->facingLeft) {
@@ -364,7 +420,7 @@ void EntityGaibon(Entity* self) {
             if (other != NULL) {
                 other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
-                    func_801C2598(NA_SE_EN_GAIBON_BIG_FIREBALL);
+                    func_801916C4(SFX_EXPLODE_B);
                     CreateEntityFromEntity(0x54, self, other);
                     other->posY.i.hi -= 2;
                     if (self->facingLeft) {
@@ -442,7 +498,7 @@ void EntityGaibon(Entity* self) {
         case GAIBON_PICKUP_SLOGRA_ASCENDING:
             AnimateEntity(D_80181520, self);
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
-                func_801C2598(NA_SE_EN_GAIBON_FLAP_WINGS);
+                func_801916C4(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
             MoveEntity();
             self->velocityY -= FIX(5.0 / 128);
@@ -463,7 +519,7 @@ void EntityGaibon(Entity* self) {
         case GAIBON_PICKUP_SLOGRA_AIMING:
             AnimateEntity(D_80181520, self);
             if (!self->animFrameDuration && self->animFrameIdx == 1) {
-                func_801C2598(NA_SE_EN_GAIBON_FLAP_WINGS);
+                func_801916C4(NA_SE_EN_GAIBON_FLAP_WINGS);
             }
             if (GetSideToPlayer() & 1) {
                 self->velocityX -= FIX(5.0 / 128);
@@ -514,7 +570,7 @@ void EntityGaibon(Entity* self) {
         case GAIBON_NEAR_DEATH_TRANSFORM:
             if (AnimateEntity(D_80181570, self) == 0) {
                 self->ext.GS_Props.flag++;
-                self->palette = D_80180B6E + self->ext.GS_Props.flag;
+                self->palette = D_80180B68[3] + self->ext.GS_Props.flag;
                 if (self->ext.GS_Props.flag == 6) {
                     D_801812CC = 1;
                     self->flags &= ~0xF;
@@ -579,12 +635,8 @@ void EntityGaibon(Entity* self) {
                 self->ext.GS_Props.timer = 96;
                 self->animCurFrame = 0x1F;
                 self->flags &= ~0xF;
-                // What a weird block, this exists in NZ0 Gaibon too,
-                // but with the two lines flipped???
-                do {
-                    self->step_s++;
-                    self->palette = D_80180B6E;
-                } while (0);
+                self->palette = D_80180B68[3];
+                self->step_s++;
             }
             break;
         case GAIBON_DYING_TURN_INTO_BONES:
@@ -628,7 +680,7 @@ void EntityGaibon(Entity* self) {
         break;
     }
     hitboxPtr = &D_80181584[0];
-    hitboxPtr += D_801815B4[self->animCurFrame] * 4;
+    hitboxPtr += D_801815B4[0][self->animCurFrame] * 4;
     self->hitboxOffX = *hitboxPtr++;
     self->hitboxOffY = *hitboxPtr++;
     self->hitboxWidth = *hitboxPtr++;

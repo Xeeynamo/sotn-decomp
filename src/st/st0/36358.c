@@ -1,5 +1,6 @@
 #include "game.h"
 #include "st0.h"
+#include "sfx.h"
 
 extern u16 g_InitializeData0[];
 extern u8* D_80181D18[];
@@ -79,7 +80,7 @@ void EntityPrizeDrop(Entity* self) {
             } else {
                 FallEntity();
             }
-            func_801B5A98(D_80181D74, 2);
+            CheckFieldCollision(D_80181D74, 2);
             return;
         }
         if (collider.effects & EFFECT_NOTHROUGH) {
@@ -118,7 +119,7 @@ void EntityPrizeDrop(Entity* self) {
         } else if (itemId < 12) {
             CollectGold(itemId);
         } else if (itemId < 14) {
-            CollectDummy();
+            DestroyCurrentEntity();
         } else if (itemId < 23) {
             CollectSubweapon(itemId);
         } else {
@@ -167,7 +168,7 @@ void EntityPrizeDrop(Entity* self) {
             } else {
                 FallEntity();
             }
-            func_801B5A98(D_80181D74, 2);
+            CheckFieldCollision(D_80181D74, 2);
             self->animCurFrame = 0;
             if (self->ext.generic.unk88.S16.unk2 != 0) {
                 self->ext.generic.unk88.S16.unk2--;
@@ -324,7 +325,7 @@ void EntityEquipItemDrop(Entity* self) {
         } else {
             FallEntity();
         }
-        func_801B5A98(D_80181D74, 2);
+        CheckFieldCollision(D_80181D74, 2);
         break;
     case 3:
         func_801B5F4C(1);
@@ -353,7 +354,7 @@ void EntityEquipItemDrop(Entity* self) {
             g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
             g_unkGraphicsStruct.BottomCornerTextTimer = 0;
         }
-        g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+        g_api.PlaySfx(SFX_ITEM_PICKUP);
         if (itemId < NUM_HAND_ITEMS) {
             name = g_api.equipDefs[itemId].name;
             g_api.AddToInventory(itemId, EQUIP_HAND);

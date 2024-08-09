@@ -1,6 +1,7 @@
 #include "dre.h"
 
 #include "../entity.h"
+#include "sfx.h"
 
 u8 func_8019A590(u8 frames[], Entity* self, u8 arg2) {
     u16 animFrameStart = self->animFrameIdx * 2;
@@ -310,7 +311,7 @@ void EntityExplosionSpawn(u16 arg0, u16 arg1) {
 
 #include "../init_entity.h"
 
-void func_8019B1B4(Entity* arg0) {
+void EntityDummy(Entity* arg0) {
     if (arg0->step == 0) {
         arg0->step++;
     }
@@ -348,7 +349,7 @@ s32 func_8019B1DC(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-void func_8019B304(u16* hitSensors, s16 sensorCount) {
+void CheckFieldCollision(u16* hitSensors, s16 sensorCount) {
     Collider collider;
     s16 i;
     s32 velocityX;
@@ -446,10 +447,10 @@ void func_8019B8DC(u16 arg0) {
     }
 }
 
-void func_8019BA38(u16 arg0) {
+void CollectHeart(u16 arg0) {
     s32* hearts;
 
-    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_api.PlaySfx(SFX_HEART_PICKUP);
     hearts = &g_Status.hearts;
     *hearts += c_HeartPrizes[arg0];
 
@@ -466,7 +467,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;
     u16 subWeapon;
 
-    g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+    g_api.PlaySfx(SFX_ITEM_PICKUP);
     subWeapon = g_Status.subWeapon;
     g_Status.subWeapon = D_801810B0[subWeaponIdx];
 
@@ -498,7 +499,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
 #include "../collect_heart_vessel.h"
 
 void CollectLifeVessel(void) {
-    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_api.PlaySfx(SFX_HEART_PICKUP);
     g_api.func_800FE044(LIFE_VESSEL_INCREASE, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }

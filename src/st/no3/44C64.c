@@ -1,6 +1,7 @@
 #include "no3.h"
 
 #include "../entity.h"
+#include "sfx.h"
 
 u8 func_801C4E4C(u8 frames[], Entity* self, u8 arg2) {
     u16 animFrameStart = self->animFrameIdx * 2;
@@ -255,16 +256,20 @@ u16 GetNormalizedAngle(u16 arg0, u16 arg1, u16 arg2) {
 }
 
 void SetStep(u8 step) {
-    g_CurrentEntity->step = step;
-    g_CurrentEntity->step_s = 0;
-    g_CurrentEntity->animFrameIdx = 0;
-    g_CurrentEntity->animFrameDuration = 0;
+    Entity* entity = g_CurrentEntity;
+
+    entity->step = step;
+    entity->step_s = 0;
+    entity->animFrameIdx = 0;
+    entity->animFrameDuration = 0;
 }
 
-void func_801C58C4(u8 step_s) {
-    g_CurrentEntity->step_s = step_s;
-    g_CurrentEntity->animFrameIdx = 0;
-    g_CurrentEntity->animFrameDuration = 0;
+void SetSubStep(u8 arg0) {
+    Entity* entity = g_CurrentEntity;
+
+    entity->step_s = arg0;
+    entity->animFrameIdx = 0;
+    entity->animFrameDuration = 0;
 }
 
 void EntityExplosionSpawn(u16 arg0, u16 arg1) {
@@ -328,7 +333,7 @@ s32 func_801C5A98(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-void func_801C5BC0(u16* hitSensors, s16 sensorCount) {
+void CheckFieldCollision(u16* hitSensors, s16 sensorCount) {
     Collider collider;
     s16 i;
     s32 velocityX;
@@ -434,7 +439,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;
     u16 subWeapon;
 
-    g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+    g_api.PlaySfx(SFX_ITEM_PICKUP);
     subWeapon = g_Status.subWeapon;
     g_Status.subWeapon = D_801823F4[subWeaponIdx];
 
@@ -466,7 +471,7 @@ void CollectSubweapon(u16 subWeaponIdx) {
 #include "../collect_heart_vessel.h"
 
 void CollectLifeVessel(void) {
-    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_api.PlaySfx(SFX_HEART_PICKUP);
     g_api.func_800FE044(5, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }

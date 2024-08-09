@@ -1,4 +1,5 @@
 #include "mad.h"
+#include "sfx.h"
 
 extern u16 D_80180D4C[];
 extern u8* D_80180DB0[];
@@ -76,7 +77,7 @@ void EntityPrizeDrop(Entity* self) {
             } else {
                 FallEntity();
             }
-            func_80192EF8(D_80180E10, 2);
+            CheckFieldCollision(D_80180E10, 2);
             return;
         }
         if (collider.effects & EFFECT_NOTHROUGH) {
@@ -168,7 +169,7 @@ void EntityPrizeDrop(Entity* self) {
             } else {
                 FallEntity();
             }
-            func_80192EF8(D_80180E10, 2);
+            CheckFieldCollision(D_80180E10, 2);
             self->animCurFrame = 0;
             if (self->ext.generic.unk88.S16.unk2 != 0) {
                 self->ext.generic.unk88.S16.unk2--;
@@ -324,7 +325,7 @@ void EntityEquipItemDrop(Entity* self) {
         } else {
             FallEntity();
         }
-        func_80192EF8(D_80180E10, 2);
+        CheckFieldCollision(D_80180E10, 2);
         break;
     case 3:
         func_801934D0(1);
@@ -353,7 +354,7 @@ void EntityEquipItemDrop(Entity* self) {
             g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
             g_unkGraphicsStruct.BottomCornerTextTimer = 0;
         }
-        g_api.PlaySfx(0x672);
+        g_api.PlaySfx(SFX_ITEM_PICKUP);
         if (itemId < NUM_HAND_ITEMS + 4) {
             name = g_api.equipDefs[itemId].name;
             g_api.AddToInventory(itemId, EQUIP_HAND);

@@ -1,4 +1,5 @@
 #include "dra.h"
+#include "dra_bss.h"
 #include "menu.h"
 #include "sfx.h"
 
@@ -176,6 +177,43 @@ MenuContextInit g_MenuInit[NUM_MENU] = {
 #endif
 };
 
+// BSS
+extern EquipKind D_801375CC;
+extern s32 D_801375D0;
+extern s32 D_801375D4;
+extern s32* D_801375D8;
+extern s32 D_801375DC;
+extern s32 D_801375E0[NUM_FAMILIARS + 1];
+extern s32 g_IsCloakLiningUnlocked;
+extern s32 g_IsCloakColorUnlocked;
+extern s32 D_80137608;
+extern s32 g_IsSelectingEquipment;
+extern s32 g_EquipmentCursor;
+extern s32 D_80137614;
+extern s32 g_EquipOrderType;
+extern MenuData g_MenuData;
+extern s32 D_801377FC[NUM_MENU];
+extern s32 D_8013783C;
+extern s32 D_80137840;
+extern s32 D_80137844[1];
+extern s32 D_80137848[1];
+#if defined(VERSION_US)
+extern s32 D_8013784C;
+#endif
+extern s16 g_RelicMenuFadeTimer;
+extern s32 g_TimeAttackEntryTimes[NUM_TIMEATTACK_EVENTS];
+extern s32 c_strTimeAttackEntry[NUM_TIMEATTACK_EVENTS];
+extern s32 g_NewAttackRightHand;
+extern s32 g_NewAttackLeftHand;
+extern s32 g_NewDefenseEquip;
+extern s32 g_NewPlayerStatsTotal[];
+extern s32 D_80137948;
+extern s8* D_8013794C; // Pointer to texture pattern
+extern s32 D_80137950;
+extern s32 D_80137954;
+extern s32 D_80137958;
+extern s32 g_ServantPrevious;
+
 u16* func_80106A28(u32 arg0, u16 kind);
 
 bool CheckIfAllButtonsAreAssigned(void) {
@@ -264,13 +302,13 @@ void func_800F4994(void) {
         }
     }
 
-    if (D_80139830[2] != 0) {
+    if (D_80139828[4]) {
         g_Status.statsEquip[STAT_STR] += 20;
     }
-    if (D_80139830[1] != 0) {
+    if (D_80139828[3]) {
         g_Status.statsEquip[STAT_INT] += 20;
     }
-    if (D_80139830[0] != 0) {
+    if (D_80139828[2]) {
         g_Status.statsEquip[STAT_LCK] += 20;
     }
     if (g_Status.relics[RELIC_RIB_OF_VLAD] & 2) {
@@ -354,7 +392,7 @@ s32 CalcAttack(s32 equipId, s32 otherEquipId) {
     if (equipId == ITEM_SWORD_FAMILIAR) {
         totalAttack += g_Status.statsFamiliars[FAM_STATS_SWORD].level;
     }
-    if (D_8013982C != 0) {
+    if (D_80139828[1]) {
         totalAttack += 20;
     }
     if (totalAttack < 0) {
@@ -417,29 +455,29 @@ void CalcDefense(void) {
     if (g_Status.relics[RELIC_HEART_OF_VLAD] & 2) {
         g_Status.D_80097C2C |= 0x100;
     }
-    if (D_8013983C != 0) {
+    if (D_80139828[5]) {
         g_Status.D_80097C2A |= 0x8000;
     }
-    if (D_80139840 != 0) {
+    if (D_80139828[6]) {
         g_Status.D_80097C2A |= 0x2000;
     }
-    if (D_80139844 != 0) {
+    if (D_80139828[7]) {
         g_Status.D_80097C2A |= 0x4000;
     }
-    if (D_80139848 != 0) {
+    if (D_80139828[8]) {
         g_Status.D_80097C2A |= 0x100;
     }
-    if (D_8013984C != 0) {
+    if (D_80139828[9]) {
         g_Status.D_80097C2A |= 0x1000;
     }
-    if (D_80139850 != 0) {
+    if (D_80139828[10]) {
 #if defined(VERSION_US)
         g_Status.D_80097C2C |= 0x200;
 #elif defined(VERSION_HD)
         g_Status.D_80097C2A |= 0x200;
 #endif
     }
-    if (D_80139854 != 0) {
+    if (D_80139828[11]) {
         g_Status.D_80097C2A |= 0x800;
     }
 
@@ -449,7 +487,7 @@ void CalcDefense(void) {
         totalDefense += g_RoomCount / 60;
     }
 
-    if (*D_80139828 != 0) {
+    if (D_80139828[0]) {
         totalDefense += 20;
     }
     if (totalDefense < 0) {
@@ -971,7 +1009,9 @@ void MenuDrawStr(const u8* str, s32 x, s32 y, MenuContext* context) {
     s32 xcopy;
     s32 ycopy;
 
-    s32 s4 = D_8013784C; // FAKE can be removed in HD but not in US
+#if defined(VERSION_US)
+    s32 s4 = D_8013784C; // FAKE? not used in HD
+#endif
 
     D_80137614 = 0;
     while (1) {
@@ -1036,7 +1076,7 @@ void MenuJosephsCloakDraw(MenuContext* context) {
     s32 x_RGB;
     const char** exteriorInterior;
 
-    MenuContext* ctx = &g_JosephsCloakContext;
+    MenuContext* ctx = &g_MenuData.menus[7];
 #if defined(VERSION_US)
     s32 x_Start = 0xB0;
     s32 number_spacing = 0x28;
@@ -2163,7 +2203,7 @@ void func_800F9690(void) {
     } else {
         prim->drawMode = DRAW_HIDE;
     }
-    if (D_801376B0 != 0) {
+    if (g_MenuData.menus[4].unk1C != 0) {
         prim->drawMode = DRAW_HIDE;
     }
 }
@@ -3121,7 +3161,7 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
             if (func_800FB1EC(itemId) == false) {
                 g_EquipmentCursor = nav->cursorMain;
                 g_IsSelectingEquipment++;
-                PlaySfx(SE_UI_CONFIRM);
+                PlaySfx(SFX_UI_CONFIRM);
             } else {
                 PlaySfx(SE_UI_ERROR);
             }
@@ -3139,7 +3179,7 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
                         g_EquipmentCursor, nav->cursorMain, D_801375CC);
                     ret = 2;
                     g_IsSelectingEquipment = 0;
-                    PlaySfx(SE_UI_CONFIRM);
+                    PlaySfx(SFX_UI_CONFIRM);
                 } else {
                     PlaySfx(SE_UI_ERROR);
                 }
@@ -3147,7 +3187,7 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
         } else if (var_s6 != 0) {
             PlaySfx(SE_UI_ERROR);
         } else {
-            PlaySfx(SE_UI_CONFIRM);
+            PlaySfx(SFX_UI_CONFIRM);
             if (count[itemId] > 0) {
                 var_s4 = 1;
                 *selected = itemId;
@@ -3191,7 +3231,7 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
     }
 block_5b0:
     func_800FA3C4(nav->cursorMain, var_s6, 1);
-    if ((-D_80137688) / 12) {
+    if ((-g_MenuData.menus[3].h) / 12) {
         if (g_pads[0].repeat & PAD_L1) {
             *D_80137844 = 5;
         } else if (*D_80137844 == 0) {
@@ -3200,7 +3240,8 @@ block_5b0:
     } else {
         *D_80137844 = 0;
     }
-    if ((-D_80137688 + D_8013767C) / 12 < (nItems + 1) / 2) {
+    if ((-g_MenuData.menus[3].h + g_MenuData.menus[3].cursorH) / 12 <
+        (nItems + 1) / 2) {
         if (g_pads[0].repeat & PAD_R1) {
             *D_80137848 = 5;
         } else if (*D_80137848 == 0) {
@@ -3255,7 +3296,7 @@ void func_800FB9BC(void) {
         context->otIdx = g_MenuInit[i].otIdx;
         context->unk1C = 2;
     }
-    D_801376C4 = D_801376C8 =
+    g_MenuData.menus[5].h = g_MenuData.menus[5].unk16 =
         -((g_MenuNavigation.cursorRelic / ItemsPerRow) * VertScrollWindow) /
         YScrollPerElement;
 }
@@ -3331,11 +3372,11 @@ block_4:
         func_800EA5E4(0);
         func_800FAC30();
         func_800FB9BC();
-        *g_PrevEquippedWeapons = g_Status.equipment[0];
-        D_80139060 = g_Status.equipment[1];
+        g_PrevEquippedWeapons[0] = g_Status.equipment[0];
+        g_PrevEquippedWeapons[1] = g_Status.equipment[1];
         if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
             *g_PrevEquippedWeapons = 0xD8;
-            D_80139060 = 0xD8;
+            g_PrevEquippedWeapons[1] = 0xD8;
         }
         g_ServantPrevious = g_Servant;
         for (i = 0; i < NUM_SPELLS; i++) {
@@ -3577,7 +3618,7 @@ block_4:
             }
             MenuHide(MENU_DG_MAIN);
             MenuHide(MENU_DG_BG);
-            PlaySfx(SE_UI_CONFIRM);
+            PlaySfx(SFX_UI_CONFIRM);
         }
         break;
     case MENU_STEP_FAMILIAR_INIT:
@@ -3657,7 +3698,7 @@ block_4:
             if (g_MenuStep == MENU_STEP_SYSTEM) {
                 PlaySfx(SE_UI_ERROR);
             } else {
-                PlaySfx(SE_UI_CONFIRM);
+                PlaySfx(SFX_UI_CONFIRM);
             }
         }
         break;
@@ -3667,7 +3708,7 @@ block_4:
             &g_Settings.buttonConfig[g_MenuNavigation.cursorButtons], 8, 5);
         if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
             if (CheckIfAllButtonsAreAssigned()) {
-                PlaySfx(SE_UI_CONFIRM);
+                PlaySfx(SFX_UI_CONFIRM);
                 MenuHide(MENU_DG_CFG_BUTTONS);
                 g_MenuStep = MENU_STEP_SYSTEM;
             } else {
@@ -3687,7 +3728,7 @@ block_4:
         if (!(g_pads[0].tapped & PAD_MENU_BACK_ALT)) {
             break;
         }
-        PlaySfx(SE_UI_CONFIRM);
+        PlaySfx(SFX_UI_CONFIRM);
         MenuHide(MENU_DG_CLOAK_LINING);
         g_MenuStep = MENU_STEP_SYSTEM;
         break;
@@ -3696,7 +3737,7 @@ block_4:
         MenuHandleCursorInput(
             &g_Settings.cloakColors[g_MenuNavigation.cursorCloak], 32, 5);
         if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
-            PlaySfx(SE_UI_CONFIRM);
+            PlaySfx(SFX_UI_CONFIRM);
             func_800FAC0C(MENU_DG_CLOAK_COLOR);
             g_MenuStep = MENU_STEP_SYSTEM;
         }
@@ -3707,7 +3748,7 @@ block_4:
             &g_Settings.windowColors[g_MenuNavigation.cursorWindowColors], 16,
             5);
         if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
-            PlaySfx(SE_UI_CONFIRM);
+            PlaySfx(SFX_UI_CONFIRM);
             MenuHide(MENU_DG_WINDOW_COLORS);
             g_MenuStep = MENU_STEP_SYSTEM;
         }
@@ -3716,7 +3757,7 @@ block_4:
         MenuHandleCursorInput(&g_Settings.isSoundMono, 2, 0);
         func_800E493C();
         if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
-            PlaySfx(SE_UI_CONFIRM);
+            PlaySfx(SFX_UI_CONFIRM);
             MenuHide(MENU_DG_CFG_SOUND);
             g_MenuStep = MENU_STEP_SYSTEM;
         }
@@ -3724,7 +3765,7 @@ block_4:
     case MENU_STEP_SYSTEM_TIME_ATTACK:
         MenuHandleCursorInput(&g_MenuNavigation.cursorTimeAttack, 0x10, 3);
         if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
-            PlaySfx(SE_UI_CONFIRM);
+            PlaySfx(SFX_UI_CONFIRM);
             MenuHide(MENU_DG_TIME_ATTACK);
             g_MenuStep = MENU_STEP_SYSTEM;
         }
@@ -3751,9 +3792,11 @@ block_4:
         break;
     case MENU_STEP_RELIC:
 #if defined(VERSION_US)
-        D_801376C8 = (-((g_MenuNavigation.cursorRelic / 2) * 0x78)) / 14;
+        g_MenuData.menus[5].unk16 =
+            (-((g_MenuNavigation.cursorRelic / 2) * 0x78)) / 14;
 #elif defined(VERSION_HD)
-        D_801376C8 = (-((g_MenuNavigation.cursorRelic / 2) * 0x8C)) / 15;
+        g_MenuData.menus[5].unk16 =
+            (-((g_MenuNavigation.cursorRelic / 2) * 0x8C)) / 15;
 #endif
         var_s1 = g_MenuNavigation.cursorRelic;
 #if defined(VERSION_US)
@@ -3771,7 +3814,7 @@ block_4:
 #endif
         if (g_pads[0].tapped & PAD_MENU_SELECT &&
             g_Status.relics[id] & RELIC_FLAG_FOUND) {
-            PlaySfx(SE_UI_CONFIRM);
+            PlaySfx(SFX_UI_CONFIRM);
             g_Status.relics[id] = g_Status.relics[id] ^ 2;
             if (g_RelicDefs[id].unk0C > 0) {
                 for (var_a0 = 0; var_a0 < NUM_RELICS; var_a0++) {
@@ -3918,7 +3961,7 @@ block_4:
             func_800FADC0();
         }
         if (g_pads[0].tapped & PAD_MENU_SORT && D_801375CC == 0) {
-            PlaySfx(SE_UI_CONFIRM);
+            PlaySfx(SFX_UI_CONFIRM);
             MenuShow(MENU_DG_EQUIP_SORT);
             g_MenuStep = MENU_STEP_EQUIP_SORT;
             g_EquipOrderType = 0;
@@ -3933,7 +3976,7 @@ block_4:
             D_80137608 = 0;
             g_MenuStep = MENU_STEP_OPENED;
         } else if (g_pads[0].tapped & PAD_MENU_SELECT) {
-            PlaySfx(SE_UI_CONFIRM);
+            PlaySfx(SFX_UI_CONFIRM);
         block_191:
             func_800FB0FC();
             if (g_MenuNavigation.cursorEquip < HEAD_SLOT) {
@@ -3948,7 +3991,7 @@ block_4:
         MenuHandleCursorInput(&g_EquipOrderType, 11, 0);
         MenuEquipHandlePageScroll(0);
         if (g_pads[0].tapped & PAD_MENU_SELECT_ALT) {
-            PlaySfx(SE_UI_CONFIRM);
+            PlaySfx(SFX_UI_CONFIRM);
             func_800FBAC4();
             g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 = 0;
             g_MenuNavigation.cursorEquipType[0] = 0;

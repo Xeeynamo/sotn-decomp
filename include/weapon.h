@@ -3,6 +3,7 @@
 
 #define WEAPON
 #include <game.h>
+#include <sfx.h>
 
 typedef struct {
     /* 0x00 */ void (*EntityWeaponAttack)(Entity* self);

@@ -19,7 +19,22 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_flush);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_initvol);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_initintr);
+void* InterruptCallback(int irq, void (*f)());
+int ResetCallback(void);
+extern s32 CD_cbready;
+extern s32 CD_cbsync;
+extern s32 CD_status;
+extern s32 CD_status1;
+extern s32 callback;
+
+void CD_initintr(void) {
+    CD_cbready = 0;
+    CD_cbsync = 0;
+    CD_status1 = 0;
+    CD_status = 0;
+    ResetCallback();
+    InterruptCallback(2, &callback);
+}
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_init);
 

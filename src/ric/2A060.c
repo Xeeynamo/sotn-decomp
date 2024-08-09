@@ -1,9 +1,10 @@
 #include "ric.h"
+#include "sfx.h"
 
 // Entity ID 66. Made by blueprint 77 (the very last one).
 // Created in 3 spots in 2 functions (total of 6 calls).
 // DRA version is very similar.
-void EntityTeleport(Entity* self) {
+void RicEntityTeleport(Entity* self) {
     Primitive* prim;
     s32 selfUnk7C;
     s32 selfUnk80;
@@ -80,7 +81,7 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.unk80 = 0x10;
             self->ext.teleport.unk88 = 0x80;
             self->step = 1;
-            g_api.PlaySfx(0x635);
+            g_api.PlaySfx(SFX_TELEPORT_BANG_A);
             g_api.PlaySfx(0x8BA);
         }
         break;
@@ -167,7 +168,7 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.unk84 = 4;
             self->step++;
             g_Player.unk1C = 1;
-            g_api.PlaySfx(0x636);
+            g_api.PlaySfx(SFX_TELEPORT_BANG_B);
             DestroyEntity(self);
             return;
         }
@@ -236,7 +237,13 @@ void func_80166784(Entity* self) {
     Primitive* prim;
     s16 angle;
     s32 var_s3;
+#ifdef VERSION_PC
+    // this can still be uninitialized when we get past the D_80155B2C section
+    // not every combo of directions is covered
+    s32 var_s4 = 0;
+#else
     s32 var_s4;
+#endif
     s32 var_s5;
     s32 temp_s6;
     s32 var_s7;
@@ -329,7 +336,7 @@ void func_80166784(Entity* self) {
             } else {
                 if (PLAYER.step == 0) {
                     if (PLAYER.facingLeft == 0) {
-                        var_s3 = (&D_80155A08)[var_s4];
+                        var_s3 = D_80155A08[var_s4];
                     } else {
                         var_s3 = D_801559E4[var_s4].x;
                     }
@@ -389,8 +396,18 @@ void func_80166784(Entity* self) {
         self->posY.val = var_s5;
         self->flags = 0x04070000;
         self->ext.et_80166784.unk8C = 0x500;
+#ifdef VERSION_PC
+#ifdef _MSC_VER
+        self->ext.et_80166784.unk7C = *(f32*)&self->posX.val;
+        self->ext.et_80166784.unk80 = *(f32*)&self->posY.val;
+#else
+        self->ext.et_80166784.unk7C = (f32)self->posX.val;
+        self->ext.et_80166784.unk80 = (f32)self->posY.val;
+#endif()
+#else
         self->ext.et_80166784.unk7C = self->posX.val;
         self->ext.et_80166784.unk80 = self->posY.val;
+#endif
         self->ext.et_80166784.unk98 = self->ext.et_80166784.unk7C.val;
         self->ext.et_80166784.unk9C = self->ext.et_80166784.unk80.val;
         self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
@@ -416,7 +433,7 @@ void func_80166784(Entity* self) {
             }
         } else if (self->ext.et_80166784.unkA4 != 0) {
             if (!(lowerParams & 1)) {
-                CreateEntFactoryFromEntity(self, FACTORY(0, 20), 0);
+                RicCreateEntFactoryFromEntity(self, FACTORY(0, 20), 0);
                 self->ext.et_80166784.unkA4 = 0;
             }
         }
@@ -447,7 +464,7 @@ void func_80166784(Entity* self) {
                     a0 = self;
                 }
                 if (self->ext.et_80166784.unkA6 == 0) {
-                    g_api.PlaySfx(0x602);
+                    g_api.PlaySfx(SFX_RIC_WHIP_RATTLE_A);
                     self->ext.et_80166784.unkA6 = 0x20;
                 }
                 if (upperParams == 0) {
@@ -457,13 +474,13 @@ void func_80166784(Entity* self) {
                     a0 = self;
                     a1 = FACTORY(0x100, 18);
                 }
-                CreateEntFactoryFromEntity(a0, a1, 0);
+                RicCreateEntFactoryFromEntity(a0, a1, 0);
             }
 
             self->ext.et_80166784.unk84 = 6;
             if (var_s4 == 0) {
                 if (PLAYER.facingLeft == 0) {
-                    xDiff = D_80155A08;
+                    xDiff = D_80155A08[0];
                 } else {
                     xDiff = D_801559E4[0].x;
                 }
@@ -505,7 +522,16 @@ void func_80166784(Entity* self) {
                             PLAYER.animFrameDuration == 14)) {
                     self->palette = 0x813C;
                 } else {
+// animFrameDuration can be -1 apparently.
+// todo this should read the previous element out of bounds?
+#ifdef VERSION_PC
+                    if (PLAYER.animFrameDuration >= 0) {
+                        self->palette =
+                            D_80155C70[PLAYER.animFrameDuration % 3];
+                    }
+#else
                     self->palette = D_80155C70[PLAYER.animFrameDuration % 3];
+#endif
                 }
             }
         } else {
@@ -539,7 +565,7 @@ void func_80166784(Entity* self) {
             case 6:
                 if (upperParams != 0) {
                     if (PLAYER.animFrameDuration == D_80155C78[lowerParams]) {
-                        CreateEntFactoryFromEntity(self, FACTORY(0, 20), 0);
+                        RicCreateEntFactoryFromEntity(self, FACTORY(0, 20), 0);
                     }
                 }
                 if (lowerParams == (0x10 - PLAYER.animFrameDuration)) {
@@ -557,7 +583,16 @@ void func_80166784(Entity* self) {
                            PLAYER.animFrameDuration == 14) {
                     self->palette = 0x813C;
                 } else {
+// animFrameDuration can be -1 apparently.
+// todo this should read the previous element out of bounds?
+#ifdef VERSION_PC
+                    if (PLAYER.animFrameDuration >= 0) {
+                        self->palette =
+                            D_80155C70[PLAYER.animFrameDuration % 3];
+                    }
+#else
                     self->palette = D_80155C70[PLAYER.animFrameDuration % 3];
+#endif
                 }
                 break;
             }
@@ -622,8 +657,18 @@ void func_80166784(Entity* self) {
             self->posY.val = var_s5 + yDiff;
         }
     }
+#ifdef VERSION_PC
+#ifdef _MSC_VER
+    self->ext.et_80166784.unk7C = *(f32*)&temp_s6;
+    self->ext.et_80166784.unk80 = *(f32*)&sp38;
+#else
+    self->ext.et_80166784.unk7C = (f32)temp_s6;
+    self->ext.et_80166784.unk80 = (f32)sp38;
+#endif
+#else
     self->ext.et_80166784.unk7C = temp_s6;
     self->ext.et_80166784.unk80 = sp38;
+#endif
     self->ext.et_80166784.unkA0 = var_s7;
     self->ext.et_80166784.unk98 = self->posX.val;
     self->ext.et_80166784.unk9C = self->posY.val;
@@ -700,26 +745,17 @@ void func_8016779C(Entity* entity) {
     entity->posY.val = PLAYER.posY.val;
 }
 
-/**
- * TODO: !FAKE
- * Needs to be refactored
- */
 void func_80167964(Entity* entity) {
-    /**
-     * 0x5E was originally 0xBC in mips2c output
-     * suggesting the size of the Entity struct
-     */
     if (g_Player.unk46 != 0) {
         if (entity->step == 0) {
             entity->flags = FLAG_UNK_20000 | FLAG_UNK_40000 |
                             FLAG_UNK_04000000 | FLAG_UNK_10000;
         }
         if (!(entity->params & 0xFF00)) {
-            *(&PLAYER.palette +
-              (*(&D_80155D30 + (entity->animFrameDuration)) * 0x5E)) = 0x8140;
+            g_Entities[D_80155D30[entity->animFrameDuration]].palette =
+                PAL_OVL(0x140);
         }
-        *(&PLAYER.ext.player.unkA4 +
-          (*(&D_80155D30 + (entity->animFrameDuration)) * 0x5E)) = 4;
+        g_Entities[D_80155D30[entity->animFrameDuration]].ext.player.unkA4 = 4;
         entity->animFrameDuration++;
         if (entity->animFrameDuration == 0xF) {
             DestroyEntity(entity);
@@ -755,9 +791,11 @@ void func_80167A70(Entity* self) {
             DestroyEntity(self);
             return;
         }
+
         prim = &g_PrimBuf[self->primIndex];
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
+
         for (i = 0; prim != NULL; i++, prim = prim->next) {
             if (i < 8) {
                 fakeprim = (FakePrim*)prim;
@@ -801,13 +839,14 @@ void func_80167A70(Entity* self) {
         self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
         self->ext.timer.t = 20;
         self->step++;
-        return;
+        break;
 
     case 1:
         if (--self->ext.timer.t == 0) {
             DestroyEntity(self);
             return;
         }
+
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; prim != NULL; i++, prim = prim->next) {
             if (i < 8) {
@@ -833,6 +872,7 @@ void func_80167A70(Entity* self) {
                 prim->y3 = prim->y2 = posY + D_80155D64[arrIndex][5];
             }
         }
+        break;
     }
 }
 
@@ -850,6 +890,7 @@ void EntityHydroStorm(Entity* self) {
     } else {
         primcount = 33 - ((self->params - 32) * 2);
     }
+
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, primcount);
@@ -902,8 +943,9 @@ void EntityHydroStorm(Entity* self) {
         if ((self->params < 32) && !(self->params & 3)) {
             g_api.PlaySfx(0x708);
         }
-        self->step += 1;
+        self->step++;
         break;
+
     case 1:
         line = (PrimLineG2*)&g_PrimBuf[self->primIndex];
         while (line != NULL) {
@@ -936,6 +978,7 @@ void EntityHydroStorm(Entity* self) {
         }
         self->ext.timer.t++;
         break;
+
     case 2:
         DestroyEntity(self);
         break;
@@ -944,7 +987,7 @@ void EntityHydroStorm(Entity* self) {
 }
 
 // Copy of DRA function
-s32 CheckHolyWaterCollision(s32 baseY, s32 baseX) {
+s32 RicCheckHolyWaterCollision(s32 baseY, s32 baseX) {
     s16 x;
     s16 y;
     Collider res1;

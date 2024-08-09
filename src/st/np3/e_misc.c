@@ -1,5 +1,44 @@
 #include "np3.h"
 
+#include "../entity_relic_orb.h"
+
+void EntityHeartDrop(Entity* self) {
+    u16 index;
+    u8 value;
+    PfnEntityUpdate update;
+
+    if (!self->step) {
+        index = self->ext.heartDrop.unkB4 = self->params + 0x30;
+        value = g_CastleFlags[(index >> 3) + 0x100] >> (index & 7);
+        if (value & 1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        index -= 0x30;
+        index = D_80181618[index];
+        if (index < 128) {
+            self->ext.heartDrop.update = EntityPrizeDrop;
+        } else {
+            self->ext.heartDrop.update = EntityEquipItemDrop;
+            index -= 128;
+        }
+        self->params = index + 0x8000;
+    } else {
+        index = self->ext.heartDrop.unkB4;
+        if (self->step < 5) {
+            if (self->hitFlags) {
+                g_CastleFlags[(index >> 3) + 0x100] |= 1 << (index & 7);
+                self->step = 5;
+            }
+        }
+    }
+    update = self->ext.heartDrop.update;
+    update(self);
+}
+
+#include "../entity_message_box.h"
+
 #include "../check_coll_offsets.h"
 
 #include "../entity_unkId13.h"
@@ -14,7 +53,7 @@
 
 #include "../entity_olrox_drool.h"
 
-bool func_801C0B20(Point16* unk) {
+bool func_8018FC4C(Point16* unk) {
     Collider collider;
 
     FallEntity();
@@ -38,7 +77,7 @@ bool func_801C0B20(Point16* unk) {
     return false;
 }
 
-u8 func_801C0C1C(s32 arg0) {
+u8 func_8018FD48(s32 arg0) {
     Collider collider;
     u32 bits_67;
     u32 bits_45;
@@ -212,7 +251,7 @@ u8 func_801C0C1C(s32 arg0) {
 
 #include "../entity_intense_explosion.h"
 
-void func_801C129C(Entity* entity) {
+void func_801903C8(Entity* entity) {
     if (entity->step == 0) {
         InitializeEntity(g_InitializeEntityData0);
         entity->unk6C = 0xF0;
@@ -237,7 +276,7 @@ void func_801C129C(Entity* entity) {
     }
 }
 
-void func_801C1368(u16 entityId, Entity* src, Entity* dst) {
+void func_80190494(u16 entityId, Entity* src, Entity* dst) {
     DestroyEntity(dst);
     dst->entityId = entityId;
     dst->pfnUpdate = PfnEntityUpdates[entityId - 1];
@@ -257,7 +296,7 @@ void func_801C1368(u16 entityId, Entity* src, Entity* dst) {
     }
 }
 
-void func_801C1848(void) {
+void func_8019055C(void) {
     s32 temp_s3;
     s8 temp_s4;
     Entity* entity;
@@ -285,7 +324,7 @@ void func_801C1848(void) {
 
 #include "../clut_lerp.h"
 
-void func_801C2598(s16 sfxId) {
+void func_801916C4(s16 sfxId) {
     s32 var_a3;
     s32 temp_v0_2;
     s16 var_a2;
@@ -319,172 +358,4 @@ void func_801C2598(s16 sfxId) {
     if (var_a3 > 0) {
         g_api.func_80134714(sfxId, var_a3, var_a2);
     }
-}
-
-#include "../e_stage_name.h"
-
-#include "../entity_soul_steal_orb.h"
-
-#include "../entity_enemy_blood.h"
-
-extern ObjInit2 D_801820F0[];
-void EntityRoomForeground(Entity* entity) {
-    ObjInit2* objInit = &D_801820F0[entity->params];
-
-    if (entity->step == 0) {
-        InitializeEntity(g_eInitGeneric2);
-        entity->animSet = objInit->animSet;
-        entity->zPriority = objInit->zPriority;
-        entity->unk5A = objInit->unk4.s;
-        entity->palette = objInit->palette;
-        entity->drawFlags = objInit->drawFlags;
-        entity->drawMode = objInit->drawMode;
-        if (objInit->unkC != 0) {
-            entity->flags = objInit->unkC;
-        }
-        if (entity->params >= 5) {
-            entity->rotZ = 0x800;
-            entity->drawFlags |= 4;
-        }
-    }
-    AnimateEntity(objInit->unk10, entity);
-}
-
-void BottomCornerText(u8* str, u8 lower_left) {
-    u8 toPrint[64];
-    Primitive* prim;
-    s32 i;
-    u32 ch;
-    u8* chIdx = &toPrint;
-
-    u16 textWidth = 0;
-    // serves two purposes, use #define for dual names
-    u16 dualVar = 0;
-#define charcount dualVar
-
-    // Clear out the toPrint array
-    for (i = 0; i < 64; i++) {
-        *chIdx++ = 0;
-    }
-    // Reset array pointer
-    chIdx = &toPrint;
-
-    while (1) {
-        i = 0;
-        // Copy values from the incoming arg0 array to the local array, until we
-        // get a 0xFF followed by a 0
-        ch = *str++;
-        if (ch == 0xFF) {
-            ch = *str++;
-            if (ch == 0) {
-                break;
-            }
-        }
-        *chIdx = ch;
-        chIdx++;
-        if (ch != 0) {
-            charcount += 1;
-            textWidth += 8;
-        } else {
-            textWidth += 4;
-        }
-    }
-
-    g_unkGraphicsStruct.BottomCornerTextPrims =
-        g_api.AllocPrimitives(PRIM_SPRT, charcount + 4);
-    if (g_unkGraphicsStruct.BottomCornerTextPrims == -1) {
-        return;
-    }
-#undef charcount
-
-    prim = &g_PrimBuf[g_unkGraphicsStruct.BottomCornerTextPrims];
-    prim->type = 3;
-    prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->g0 = prim->g1 = prim->g2 =
-        prim->g3 = prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
-
-    if (lower_left) {
-        prim->b0 = prim->b1 = 0xAF;
-    } else {
-        prim->g0 = prim->g1 = 0x5F;
-    }
-
-#define xpos dualVar
-    if (lower_left) {
-        xpos = 7;
-        textWidth += 4;
-    } else {
-        xpos = 0xD4 - textWidth;
-    }
-
-    prim->x0 = prim->x2 = xpos;
-    prim->x1 = prim->x3 = xpos + textWidth + 0x20;
-    prim->y0 = prim->y1 = 0xD0;
-    prim->y2 = prim->y3 = 0xDF;
-    prim->priority = 0x1EE;
-    prim->drawMode = 0x11;
-    prim = prim->next;
-
-    prim->tpage = 0x1F;
-    prim->clut = 0x197;
-    prim->x0 = xpos - 6;
-    prim->y0 = 0xCB;
-    prim->u0 = 0x80;
-    prim->v0 = 0;
-    prim->u1 = 0x10;
-    prim->v1 = 0x18;
-    prim->priority = 0x1EF;
-    prim->drawMode = DRAW_DEFAULT;
-    prim = prim->next;
-
-    prim->tpage = 0x1F;
-    prim->clut = 0x197;
-    prim->x0 = xpos + textWidth + 0x16;
-    prim->y0 = 0xCB;
-    prim->u0 = 0xA8;
-    prim->v0 = 0;
-    prim->u1 = 0x10;
-    prim->v1 = 0x18;
-    prim->priority = 0x1EF;
-    prim->drawMode = DRAW_DEFAULT;
-    prim = prim->next;
-
-    prim->type = 4;
-    prim->y0 = prim->y1 = 0xCD;
-    prim->tpage = 0x1F;
-    prim->clut = 0x197;
-    prim->y2 = prim->y3 = 0xE1;
-    prim->u0 = prim->u2 = 0x98;
-    prim->u1 = prim->u3 = 0x9C;
-    prim->v0 = prim->v1 = 2;
-    prim->x0 = prim->x2 = xpos + 0xA;
-    prim->x1 = prim->x3 = xpos + textWidth + 0x18;
-    prim->v2 = prim->v3 = 0x16;
-    prim->priority = 0x1EF;
-    prim->drawMode = DRAW_DEFAULT;
-
-    xpos += 0x10;
-
-    // Reset array pointer
-    chIdx = &toPrint;
-    for (prim = prim->next; prim != NULL;) {
-        ch = *chIdx++;
-        if (ch != 0) {
-            prim->x0 = xpos;
-            prim->u0 = (ch & 0xF) * 8;
-            prim->tpage = 0x1E;
-            prim->clut = 0x196;
-            prim->v0 = (ch & 0xF0) >> 1;
-            prim->v1 = 8;
-            prim->u1 = 8;
-            prim->priority = 0x1F0;
-            prim->drawMode = DRAW_DEFAULT;
-            prim->y0 = 0xD4;
-            prim = prim->next;
-            xpos += 8;
-        } else {
-            xpos += 4;
-        }
-    }
-#undef xpos
-    g_unkGraphicsStruct.BottomCornerTextTimer = 0x130;
 }

@@ -1,14 +1,21 @@
 // Weapon ID #28. Used by weapons:
 // Skull shield, Unknown#212
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
+#include "w_028_1.h"
+#include "w_028_2.h"
+#define g_Animset w_028_1
+#define g_Animset2 w_028_2
+#include "sfx.h"
 
 extern SpriteParts D_C8000_8017A040[];
 extern s8 D_C8000_8017AA98[];
 extern s32 D_C8000_8017AAE0[];
 extern s32 D_C8000_8017AB1C[];
 
-void EntityWeaponAttack(Entity* self) {
+static void EntityWeaponAttack(Entity* self) {
     s32 anim = 0;
     bool crouchCheck = false;
     s32 attackButton;
@@ -142,15 +149,15 @@ void EntityWeaponAttack(Entity* self) {
 
 s32 func_ptr_80170004(Entity* self) {}
 
-void func_ptr_80170008(Entity* self) {}
+static void func_ptr_80170008(Entity* self) {}
 
-void func_ptr_8017000C(Entity* self) {}
+static void func_ptr_8017000C(Entity* self) {}
 
-s32 func_ptr_80170010(Entity* self) {}
+static s32 func_ptr_80170010(Entity* self) {}
 
-s32 func_ptr_80170014(Entity* self) {}
+static s32 func_ptr_80170014(Entity* self) {}
 
-int GetWeaponId(void) { return 28; }
+static int GetWeaponId(void) { return 28; }
 
 extern s16 D_C8000_8017AB18;
 extern s16 D_C8000_8017AB1A;
@@ -183,7 +190,7 @@ void func_C8000_8017B3D4(void) {
     LoadImage(&rect, &g_Clut[0x1100]);
 }
 
-void EntityWeaponShieldSpell(Entity* self) {
+static void EntityWeaponShieldSpell(Entity* self) {
     s32 i;
     s16 left;
     s16 right;
@@ -244,7 +251,7 @@ void EntityWeaponShieldSpell(Entity* self) {
                 0x80;
         prim->priority = self->zPriority - 4;
         prim->drawMode =
-            0x40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+            DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
         prim = prim->next;
         prim->clut = self->ext.shield.childPalette;
         prim->tpage = 0x19;
@@ -292,7 +299,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         SetSpeedX(FIX(-2));
         self->velocityY = 0;
         DestroyEntityWeapon(1);
-        g_api.PlaySfx(0x641);
+        g_api.PlaySfx(SFX_ANIME_SWORD_C);
         g_unkGraphicsStruct.unk20 = 1;
         self->step++;
         break;
@@ -342,7 +349,7 @@ void EntityWeaponShieldSpell(Entity* self) {
                 prim = prim->next;
             }
             self->ext.shield.unk80 = 0;
-            g_api.PlaySfx(0x62F);
+            g_api.PlaySfx(SFX_WEAPON_APPEAR);
             self->step++;
         }
         break;
@@ -507,7 +514,7 @@ void EntityWeaponShieldSpell(Entity* self) {
     func_C8000_8017B3D4();
 }
 
-void func_ptr_80170024(Entity* self) {
+static void func_ptr_80170024(Entity* self) {
     Primitive* prim;
     s32 xShift;
     s16 selfPosX;
@@ -577,7 +584,7 @@ void func_ptr_80170024(Entity* self) {
             prim->drawMode &= ~DRAW_HIDE;
             prim = prim->next;
             prim->drawMode &= ~DRAW_HIDE;
-            g_api.PlaySfx(0x660);
+            g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
             self->step++;
         }
         self->ext.shield.unk86 = self->ext.shield.unk84;
@@ -651,14 +658,14 @@ void func_ptr_80170024(Entity* self) {
     return;
 }
 
-void func_ptr_80170028(Entity* self) {}
+static void func_ptr_80170028(Entity* self) {}
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}

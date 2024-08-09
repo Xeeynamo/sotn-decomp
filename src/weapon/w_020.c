@@ -1,7 +1,14 @@
 // Weapon ID #20. Used by weapons:
 // Karma Coin
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
+#include "w_020_1.h"
+#include "w_020_2.h"
+#define g_Animset w_020_1
+#define g_Animset2 w_020_2
+#include "sfx.h"
 
 extern SpriteParts D_90000_8017A040[];
 extern AnimationFrame D_90000_8017A850[];
@@ -18,7 +25,7 @@ extern s32 D_90000_8017AADC[];
 extern s32 D_90000_8017AB44[];
 extern s32 D_90000_8017C238;
 
-void EntityWeaponAttack(Entity* self) {
+static void EntityWeaponAttack(Entity* self) {
     Collider sp10;
     Entity* child;
     Primitive* prim;
@@ -91,7 +98,7 @@ void EntityWeaponAttack(Entity* self) {
             self->posY.i.hi += sp10.unk18;
             self->animFrameDuration = self->animFrameIdx = 0;
             self->unk4C = D_90000_8017A864;
-            g_api.PlaySfx(0x6A9);
+            g_api.PlaySfx(SFX_GOLD_PICKUP);
             self->step += 1;
             return;
         }
@@ -124,8 +131,8 @@ void EntityWeaponAttack(Entity* self) {
         return;
     case 2:
         if (((self->animFrameIdx % 8) == 5) && (self->animFrameDuration == 1)) {
-            g_api.func_80134714(
-                0x6A9, D_90000_8017AB44[self->ext.karmacoin.unk84], 0);
+            g_api.func_80134714(SFX_GOLD_PICKUP,
+                                D_90000_8017AB44[self->ext.karmacoin.unk84], 0);
             self->ext.karmacoin.unk84++;
         }
         if (self->animFrameDuration < 0) {
@@ -146,9 +153,9 @@ void EntityWeaponAttack(Entity* self) {
         if ((self->animFrameIdx == 1) && (self->animFrameDuration == 0x38)) {
             // Useless if-statement
             if (self->unk4C == D_90000_8017A8C8) {
-                g_api.PlaySfx(0x682);
+                g_api.PlaySfx(SFX_KARMA_COIN);
             } else {
-                g_api.PlaySfx(0x682);
+                g_api.PlaySfx(SFX_KARMA_COIN);
             }
         }
         if (self->animFrameDuration < 0) {
@@ -160,7 +167,7 @@ void EntityWeaponAttack(Entity* self) {
                 self->zPriority = 0x1B6;
                 self->flags &= ~FLAG_UNK_100000;
                 g_api.func_80118C28(7);
-                g_api.PlaySfx(0x665);
+                g_api.PlaySfx(SFX_THUNDER_B);
                 SetWeaponProperties(self, 0);
                 self->step = 4;
             } else {
@@ -178,7 +185,7 @@ void EntityWeaponAttack(Entity* self) {
                 self->ext.karmacoin.timer = 0xE0;
                 self->unk6C = 0x80;
                 g_api.func_80118C28(8);
-                g_api.PlaySfx(0x6B1);
+                g_api.PlaySfx(SFX_KARMA_COIN_HEADS);
                 prim = &g_PrimBuf[self->primIndex];
                 prim->r0 = prim->g0 = prim->b0 = 0x5F;
                 prim->r1 = prim->g1 = prim->b1 = 0x5F;
@@ -336,7 +343,7 @@ void EntityWeaponAttack(Entity* self) {
             prim = &g_PrimBuf[self->primIndex];
             prim = prim->next;
             prim->drawMode |= DRAW_HIDE;
-            g_api.PlaySfx(0x636);
+            g_api.PlaySfx(SFX_TELEPORT_BANG_B);
             self->step += 1;
         }
         break;
@@ -422,7 +429,7 @@ void EntityWeaponAttack(Entity* self) {
 
 s32 func_ptr_80170004(Entity* self) {}
 
-void func_ptr_80170008(Entity* self) {
+static void func_ptr_80170008(Entity* self) {
     if (self->ext.weapon.parent->entityId == 0) {
         DestroyEntity(self);
         return;
@@ -460,26 +467,26 @@ void func_ptr_80170008(Entity* self) {
     self->posY.val += self->velocityY;
 }
 
-void func_ptr_8017000C(Entity* self) {}
+static void func_ptr_8017000C(Entity* self) {}
 
-s32 func_ptr_80170010(Entity* self) {}
+static s32 func_ptr_80170010(Entity* self) {}
 
-s32 func_ptr_80170014(Entity* self) {}
+static s32 func_ptr_80170014(Entity* self) {}
 
-int GetWeaponId(void) { return 20; }
+static int GetWeaponId(void) { return 20; }
 
-void EntityWeaponShieldSpell(Entity* self) {}
+static void EntityWeaponShieldSpell(Entity* self) {}
 
-void func_ptr_80170024(Entity* self) {}
+static void func_ptr_80170024(Entity* self) {}
 
-void func_ptr_80170028(Entity* self) {}
+static void func_ptr_80170028(Entity* self) {}
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}

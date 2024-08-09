@@ -1,6 +1,7 @@
 #include "mad.h"
 
 #include "../entity.h"
+#include "sfx.h"
 
 u8 func_80191F24(u8 frames[], Entity* self, u8 arg2) {
     u16 animFrameStart = self->animFrameIdx * 2;
@@ -269,15 +270,15 @@ u16 GetNormalizedAngle(u16 arg0, u16 arg1, u16 arg2) {
     return arg2;
 }
 
-void func_80192BD0(s32 arg0) {
-    g_CurrentEntity->step = (s16)(arg0 & 0xFF);
+void SetStep(u8 step) {
+    g_CurrentEntity->step = step;
     g_CurrentEntity->step_s = 0;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
 
-void func_80192BF0(s32 arg0) {
-    g_CurrentEntity->step_s = (s16)(arg0 & 0xFF);
+void SetSubStep(u8 step_s) {
+    g_CurrentEntity->step_s = step_s;
     g_CurrentEntity->animFrameIdx = 0;
     g_CurrentEntity->animFrameDuration = 0;
 }
@@ -342,7 +343,7 @@ s32 func_80192DD0(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-void func_80192EF8(u16* hitSensors, s16 sensorCount) {
+void CheckFieldCollision(u16* hitSensors, s16 sensorCount) {
     Collider collider;
     s16 i;
     s32 velocityX;
@@ -447,7 +448,7 @@ void CollectHeart(u16 arg0) {
 
     counts = D_8018D830;
     unknown = D_8018D834;
-    g_api.PlaySfx(0x670);
+    g_api.PlaySfx(SFX_HEART_PICKUP);
     g_Status.hearts += counts.count[arg0];
     if (g_Status.hearts > g_Status.heartsMax) {
         g_Status.hearts = g_Status.heartsMax;
@@ -459,13 +460,13 @@ void CollectHeart(u16 arg0) {
 
 void func_801937BC(void) {}
 
-void func_801937C4(void) { DestroyEntity(g_CurrentEntity); }
+void UnusedDestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
 void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;
     u16 subWeapon;
 
-    g_api.PlaySfx(0x672);
+    g_api.PlaySfx(SFX_ITEM_PICKUP);
     subWeapon = g_Status.subWeapon;
     g_Status.subWeapon = D_80180D1C[subWeaponIdx];
 
@@ -497,13 +498,13 @@ void CollectSubweapon(u16 subWeaponIdx) {
 
 // Different from "collect_heart_vessel.h"
 void CollectHeartVessel(void) {
-    g_api.PlaySfx(0x670);
+    g_api.PlaySfx(SFX_HEART_PICKUP);
     g_api.func_800FE044(HEART_VESSEL_INCREASE, 0x4000);
     DestroyEntity(g_CurrentEntity);
 }
 
 void CollectLifeVessel(void) {
-    g_api.PlaySfx(0x670);
+    g_api.PlaySfx(SFX_HEART_PICKUP);
     g_api.func_800FE044(LIFE_VESSEL_INCREASE, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }

@@ -1,4 +1,5 @@
 #include "dra.h"
+#include "dra_bss.h"
 #include "sfx.h"
 
 // expanding circle effect when activating stopwatch
@@ -629,7 +630,7 @@ void EntityBatEcho(Entity* self) {
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = PLAYER.posY.i.hi;
     if ((self->ext.batEcho.unk8A % 384) == 0) {
-        PlaySfx(NA_SE_PL_BT_ECHO);
+        PlaySfx(SFX_BAT_ECHO_B);
     }
     self->ext.batEcho.unk8A += 1;
     if (self->ext.batEcho.unk88) {
@@ -1131,7 +1132,7 @@ void func_8012D28C(bool exitEarly) {
     s32 i;
 
     func_80102CD8(2);
-    PlaySfx(NA_SE_EN_ROCK_BREAK);
+    PlaySfx(SFX_WALL_DEBRIS_B);
     PLAYER.velocityX = 0;
     g_Player.D_80072EFC = 0x20;
     g_Player.padSim = 0;

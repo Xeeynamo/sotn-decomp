@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/binary"
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"io"
 	"os"
 )
@@ -73,24 +74,24 @@ func hydrateYOrderFields(x layouts, y layouts) error {
 	return nil
 }
 
-func readEntityLayout(file *os.File, off PsxOffset, count int, isX bool) (layouts, []dataRange, error) {
-	if err := off.moveFile(file); err != nil {
+func readEntityLayout(file *os.File, off psx.Addr, count int, isX bool) (layouts, []dataRange, error) {
+	if err := off.MoveFile(file, psx.RamStageBegin); err != nil {
 		return layouts{}, nil, err
 	}
 
 	// there are two copies of the layout, one ordered by X and the other one ordered by Y
 	// we will only read the first one, which is ordered by Y
-	blockOffsets := make([]PsxOffset, count)
+	blockOffsets := make([]psx.Addr, count)
 	if err := binary.Read(file, binary.LittleEndian, blockOffsets); err != nil {
 		return layouts{}, nil, err
 	}
 
 	// the order of each layout entry must be preserved
-	pool := map[PsxOffset]int{}
+	pool := map[psx.Addr]int{}
 	blocks := [][]layoutEntry{}
 	xRanges := []dataRange{}
 	for _, blockOffset := range sortUniqueOffsets(blockOffsets) {
-		if err := blockOffset.moveFile(file); err != nil {
+		if err := blockOffset.MoveFile(file, psx.RamStageBegin); err != nil {
 			return layouts{}, nil, err
 		}
 		entries := []layoutEntry{}
@@ -116,18 +117,18 @@ func readEntityLayout(file *os.File, off PsxOffset, count int, isX bool) (layout
 		blocks = append(blocks, entries)
 		xRanges = append(xRanges, dataRange{
 			begin: blockOffset,
-			end:   blockOffset.sum(len(entries) * 10),
+			end:   blockOffset.Sum(len(entries) * 10),
 		})
 	}
 	// the very last entry needs to be aligned by 4
-	xRanges[len(xRanges)-1].end = xRanges[len(xRanges)-1].end.align4()
+	xRanges[len(xRanges)-1].end = xRanges[len(xRanges)-1].end.Align4()
 
 	l := layouts{Entities: blocks}
 	for _, blockOffset := range blockOffsets {
 		l.Indices = append(l.Indices, pool[blockOffset])
 	}
 
-	endOfArray := off.sum(count * 4)
+	endOfArray := off.Sum(count * 4)
 	if isX { // we want to do the same thing with the vertically aligned layout
 		yLayouts, yRanges, err := readEntityLayout(file, endOfArray, count, false)
 		if err != nil {

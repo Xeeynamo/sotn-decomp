@@ -27,8 +27,10 @@
 #define GET_GREEN(x) ((x) & GREEN_MASK)
 #define GET_BLUE(x) ((x) & BLUE_MASK)
 
-#define CLAMP_MIN(v, min) ((v) < (min) ? (min) : (v))
-#define CLAMP_MAX(v, max) ((v) > (max) ? (max) : (v))
+#define VSYNC_UNK_LEN 1024
+
+#define NUM_CH 4
+#define NUM_CH_2 4 // not sure if this is related to NUM_CH
 
 typedef enum {
     MENU_DG_MAIN,
@@ -160,6 +162,21 @@ typedef struct {
 } CdMgr;
 
 typedef struct {
+    RECT dstRect;
+    s32 D_80137F68;
+    s32 D_80137F6C;
+    s32 D_80137F70;
+    s32 D_80137F74;
+    s32 D_80137F78;
+    s32 D_80137F7C;
+    u8* overlayCopySrc;
+    u8* overlayCopyDst;
+    s8* addr;
+    s32 overlayBlockCount;
+    s32 overlayLastBlockSize;
+} CdThing;
+
+typedef struct {
     RECT D_800ACD80;
     RECT D_800ACD88;
     RECT D_800ACD90;
@@ -252,6 +269,7 @@ typedef enum {
     COMBO_UNK13,
     COMBO_SUMMON_SPIRIT,
     COMBO_DARK_METAMORPH,
+    COMBO_NUM,
 } ButtonComboIdx;
 
 struct SeqData {
@@ -265,12 +283,12 @@ struct SeqData {
     } unk2;
 };
 
-struct Cmd14 {
+typedef struct Cmd14 {
     u8 unk0[8];
     s32 unk8;
     s16 unkc;
     s8 unke;
-};
+} Cmd14;
 
 // Used for the button combos to signal successfully completing the sequence
 #define COMBO_COMPLETE 0xFF
@@ -284,7 +302,6 @@ extern u8 aPbav_0[0x2000]; // TODO: extract file
 extern u8 aPbav_1[0x2000]; // TODO: extract file
 extern u8 aPbav_2[0x2000]; // TODO: extract file
 
-extern s32 D_80097420;
 extern u16 g_ButtonMask[];
 extern u8 g_StageSelectOrder[];
 extern u16 D_800A04CC[];
@@ -328,7 +345,7 @@ extern s32 D_800ACEDC_hd;
 extern s32 D_800ACF74; // These two might...
 extern s32 D_800ACF78; // ...be an array
 extern s16 D_800ACF7C[4];
-extern s16 D_800ACF84[8]; // collection of sounds
+extern s16 g_SfxPainGrunts[8]; // Alucard's random pain sfx table
 extern s16 D_800ACF94[16];
 extern u8 D_800AD094[0x30];
 extern u8 D_800ACFB4[][4]; // TODO AnimationFrames*[]
@@ -365,6 +382,7 @@ extern u32 D_800AE230[8];
 extern u32 D_800AE250[8];
 extern s32 D_800AE270[9];
 extern AnimationFrame D_800AE294[];
+extern u16 D_800AFC50[];
 extern s16 D_800AFDA4[];
 extern RECT c_backbufferClear;
 extern s16 D_800AFFB8[];
@@ -388,27 +406,14 @@ extern u16 D_800B0858[];
 extern s16 D_800B0860[];
 extern s16 D_800B0884[];
 extern s16 D_800B08A8[];
-// This appears to be a super miniature Entity or something
-// All it has is a state, a timer, and a facing direction.
-typedef struct {
-    s32 state;
-    s32 timer;
-    s32 facingLeft;
-} helper_8012F178;
-extern helper_8012F178 D_800B08CC[6];
-extern s32 D_800B0914;
-extern s32 D_800B0918;
-extern s32 D_800B091C;
-extern s32 D_800B0920;
 
 extern s16 g_CdVolumeTable[];
 extern struct SeqData g_SeqInfo[];
 extern struct XaMusicConfig g_XaMusicConfigs[563];
 extern s32 g_DebugEnabled;
 extern s32 D_800BD1C4;
-extern s16 g_CurrentXaSoundId;
 extern s32 g_VabAddrs[6];
-extern u8* D_800C1ECC[172];
+extern u8* g_SfxScripts[172];
 extern u8* D_800C52F8[];
 extern const char D_800DB524[];
 extern const char a0104x04x;
@@ -436,340 +441,18 @@ extern Unkstruct_800BF554 g_SfxData[737];
 extern char* aLightTimer02x;
 extern SVECTOR D_800E2024;
 extern SVECTOR D_800E202C;
-extern s32 g_DebugFreeze;
-extern s32 g_DebugHitboxViewMode;
-extern u32 D_801362B4;
-extern s32 D_801362B8;
-extern s32 D_801362BC;
-extern s32 g_DebugPalIdx;
-extern DebugColorChannel g_DebugColorChannel;
-extern u32 D_801362C8;
-extern OT_TYPE* g_CurrentOT;
-extern s32 D_801362D0[];
-extern s32 D_801362D4;
-extern s32 g_DebugIsRecordingVideo;
-extern GpuUsage g_GpuMaxUsage;
-extern s32 g_softResetTimer;
-extern s32 g_DebugWaitInfoTimer;
-extern s32 g_DebugRecordVideoFid;
-extern s16 D_80136308[];
-extern s32 D_8013640C;
-extern s32 D_80136410;
-extern NowLoadingModel g_NowLoadingModel;
-extern SimFile* g_SimFile;
-extern SimFile D_80136450;
-extern s16 D_80136460[];
-extern s16 D_80136C60[];
-extern u8 g_PadsRepeatTimer[BUTTON_COUNT * PAD_COUNT];
-extern s32 D_80137428[];
-extern s32 g_MemcardRetryCount;
-extern s32 g_MemcardFd;
-extern u16 D_80137478[0x20];
-extern u16 D_801374B8[0x20];
-extern u16 D_801374F8[0x20];
-extern u16 D_80137538[0x20];
-extern u8* g_DecSrcPtr;
-extern u8* g_DecDstPtr;
-extern s32 g_DecReadNibbleFlag;
-extern s32 g_DecWriteNibbleFlag;
-extern u8* D_80137590;
-extern s32 D_80137594; // g_DemoKeyIdx
-extern s32 D_80137598;
-extern s32 D_8013759C;
-extern s32 D_801375A0;
-// Note that these overlap; these should be f32's for X and Y.
-extern s32 D_801375A4;
-extern s16 D_801375A6;
-extern s32 D_801375A8;
-extern s16 D_801375AA;
-
-extern s32 D_801375AC;
-extern s32 D_801375B0;
-extern s32 D_801375B4;
-extern s32 D_801375B8;
-// clues indicate being in a struct, unclear what else is with it though.
-extern RoomLoadDefHolder D_801375BC;
-extern s32 D_801375C0;
-extern s32 D_801375C4;
-extern s32 D_801375C8;
-extern EquipKind D_801375CC;
-extern s32 D_801375D0;
-extern s32 D_801375D4;
-extern s32* D_801375D8;
-extern s32 D_801375DC;
-extern s32 D_801375E0[NUM_FAMILIARS + 1];
-extern s32 D_80137608;
-extern s32 g_IsCloakLiningUnlocked;
-extern s32 g_IsCloakColorUnlocked;
-extern s32 g_IsSelectingEquipment;
-extern s32 g_EquipmentCursor;
-extern s32 D_80137614;
-extern s32 g_EquipOrderType;
-extern MenuData g_MenuData;
-extern s16 D_8013767C;
-extern s16 D_80137688;
-extern u8 D_801376B0;
-extern s16 D_801376C4;
-extern s16 D_801376C8;
-extern MenuContext g_JosephsCloakContext;
-extern s32 D_8013783C;
-extern s32 D_801377FC[0x10];
-extern s32 D_80137840;
-extern s32 D_80137844[];
-extern s32 D_80137848[];
-extern s32 D_8013784C;
-extern s16 g_RelicMenuFadeTimer;
-extern s32 g_TimeAttackEntryTimes[];
-extern s32 c_strTimeAttackEntry[];
-extern s32 c_strTimeAttackGoals[];
-extern s32 g_NewAttackRightHand;
-extern s32 g_NewAttackLeftHand;
-extern s32 g_NewDefenseEquip;
-extern s32 g_NewPlayerStatsTotal[];
-extern s32 D_80137948;
-extern s8* D_8013794C; // Pointer to texture pattern
-extern s32 D_80137950;
-extern s32 D_80137954;
-extern s32 D_80137958;
-extern s32 g_ServantPrevious;
-extern s32 D_80137960;
-extern s32 D_80137964;
-extern s32 D_80137968;
-extern PlayerHud g_PlayerHud;
-// not actually an array, likely a struct member
-extern s32 g_HealingMailTimer[];
-extern u32 D_8013799C;
-extern s32 D_801379A0;
-extern s32 D_801379A4;
-extern s32 D_801379A8;
-extern Unkstruct_80102CD8 D_801379AC;
-extern s32 D_801379B0;
-extern s32 D_801379B8;
-extern s32 D_801379BC;
-extern SVECTOR D_801379C0;
-extern SVECTOR D_801379C8;
-extern VECTOR D_801379D0;
-extern VECTOR D_801379E0[20];
-extern VECTOR D_80137B20[24];
-extern SVECTOR D_80137CA0[20];
-extern SVECTOR D_80137D40[24];
-extern MATRIX D_80137E00;
-extern MATRIX D_80137E20;
-extern s32 D_80137E40;
-extern s32 D_80137E44;
-extern s32 D_80137E48;
-extern s32 D_80137E4C;
-extern s32 g_MemCardRetryCount;
-extern s32 D_80137E54;
-extern s32 D_80137E58;
-extern s32 D_80137E5C;
-extern s32 D_80137E60; // most likely part of the g_Cd struct
-extern s32 g_MemCardRStep;
-extern s32 g_MemCardRStepSub;
-extern s32 D_80137E6C;
-extern s32 D_80137EE0;
-extern s32 D_80137EE4;
-extern s32 D_80137EE8;
-extern s32 D_80137EEC;
-extern s32 D_80137EF0;
-extern s32 D_80137EF4;
-extern s32 D_80137F6C; // most likely part of the g_Cd struct
-extern void* D_80137F7C;
-extern s32 D_80137F9C;
-extern s32 D_80137FB4;
-extern s32 D_80137FB8;
-extern s32 D_80137FBC;
-extern s16 g_WasFacingLeft;  // for QCF to tell what's "forward"
-extern s16 g_WasFacingLeft2; // for BF to tell what's "forward"
-extern s32 g_WasFacingLeft3; // for dark metamorphosis "" ""
-extern s32 g_WasFacingLeft4; // for summon spirit "" ""
-extern s16 g_WasFacingLeft5; // for hellfire "" ""
-extern s32 g_WasFacingLeft6; // for tetra spirit "" ""
-extern s32 g_WasFacingLeft7; // for soul steal "" ""
-extern s32 D_80137FDC;
-extern s32 D_80137FE0;
-extern s32 D_80137FE4;
-extern s32 D_80137FE8;
-extern u32 g_WingSmashButtonCounter;
-extern s32 g_WingSmashButtonTimer;
-extern s32 g_WingSmashTimer;
-extern s32 g_BatScreechDone;
-extern s32 g_MistTimer; // remaining time in mist transformation
-extern s32 D_80138008;
-extern s32 D_8013800C[];
-extern s32 D_80138038;
-extern u8 D_8013803C;
-extern u8 D_80138040;
-extern u8 D_80138044;
-extern u8 D_80138048;
-extern Point16 D_8013804C[];
-extern s32 D_8013808C;
-extern s32 D_80138090;
-extern mistStruct D_80138094[16];
-extern s16 D_801381D4;
-extern s16 D_801381D8;
-extern s16 D_801381DC;
-extern s16 D_801381E0;
-extern s16 D_801381E4;
-extern s16 D_801381E8;
-extern s16 D_801381EC;
-extern s16 D_801381F0;
-extern Primitive D_801381F4[];
-extern s32 D_80138394;
-extern s32 D_80138398;
-extern Point16 D_8013839C[];
-extern s32 D_8013841C;
-extern RECT D_80138424;
-extern s32 D_8013842C;
-extern s32 D_80138430;
-extern s32 D_80138438;
-extern s32 D_8013843C;
-extern s32 D_80138440;
-extern s32 D_80138444;
-extern s32 D_80138454;
-extern char g_SeqTable[SS_SEQ_TABSIZ * SEQ_TABLE_S_MAX * SEQ_TABLE_T_MAX];
-extern const char* D_80138784[]; // 487?
-extern s32 g_CurCdPos;
-extern u8 g_CdMode[];
-extern u8 g_CdCommandResult[];
-extern s32 g_KeyOffChannels;
-extern s8 D_80138F64[20];
-extern s32 D_80138F7C;
-extern s16 D_80138F80;
-extern s32 g_SeqPointers[];
-extern s16 g_SfxRingBufferReadPos;
-extern DebugMode g_DebugMode;
-extern s16 g_VolL; // vol_l
-extern SpuVoiceAttr* D_80138FB4;
-extern s16 D_80138FBC;
-extern s32 D_80139060;
-extern SpuVoiceAttr* D_801390C8;
-extern SpuVoiceAttr* D_801390CC;
-extern ButtonComboState g_ButtonCombo[16];
-extern s16 D_80138FC8;
-extern s16 D_80138FCA;
-extern s16 g_sfxRingBufferWritePos; // D_80139000
-extern s16 g_VolR;                  // vol_r
-extern s32 D_80139008;
-extern s16 D_80139010;
-extern u8 D_80139014;
-extern s8 D_80139018[];
-extern u32 g_DebugCurPal;
-extern s16 D_8013901C;
-extern u8 g_MuteCd;
-extern s8 D_80139058[];
-extern s32 g_PrevEquippedWeapons[2];
-extern s16 g_SeqVolume1;
-extern u8 D_801390A0;
-extern s16 D_801390A4;
-extern u8 D_801390A8;
-extern s16 D_801390AC[];
-extern s32 D_801390B4[];
-extern u8 D_801390C4;
-extern GpuBuffer* g_BackBuffer;
-extern u8 D_801390D8;
-extern SfxRingBufferItem g_SfxRingBuffer[MAX_SND_COUNT];
-extern s16 D_801396DC;
-extern s16 D_801396E0;
-extern u16 D_801396E4;
-extern Multi D_801396E6;
-extern u16 D_801396E8;
-extern s16 D_801396EA;
-extern u16 D_801396EC;
-extern s32 g_CdCommandStatus;
-extern volatile s16 g_CdSoundCommandQueuePos;
-extern s32 D_801396F8[0x20];
-extern s32 D_80139778[0x20];
-extern u16 D_801397F8;
-extern s32 D_801397FC;
-extern s16 D_80139800;
-extern s16 D_80139804;
-extern s32 D_8013980C;
-extern u8 g_SeqPlayingId;
-extern s16 D_80139814[];
-extern s16 g_XaMusicVolume;
-extern s32 D_80139824;
-extern s32 D_80139828[];
-extern s32 D_8013982C;
-extern s32 D_80139830[];
-extern s32 D_8013983C;
-extern s32 D_80139840;
-extern s32 D_80139844;
-extern s32 D_80139848;
-extern s32 D_8013984C;
-extern s32 D_80139850;
-extern s32 D_80139854;
-extern s16 g_CdSoundCommandQueue[MAX_SND_COUNT];
-extern s16 g_SoundCommandRingBufferReadPos;
-extern s16 D_80139A6C;
-extern s16 g_SoundCommandRingBufferWritePos; // D_80139A70
-extern s16 D_80139A74;
-extern s16 D_80139A78;
-extern u32 D_80139A7C[0x1400];
-extern u16 D_8013AE7C;
-extern volatile unsigned char g_CdSoundCommandStep;
-extern s16 g_UnkChannelSetting2[];
-extern s16 D_8013AE8A[];
-extern s16 D_8013AE8C;
-extern s16 D_8013AEA0[];
-extern s16 D_8013AEA6;
-extern s16 D_8013AE94;
-extern u8 g_ReverbDepth;
-extern s32 D_8013AE9C;
-extern s32 D_8013AEBC[4];
-extern s32 D_8013AECC;
-extern s32 D_8013AED0;
-extern s16 D_8013AED4[4];
-extern u8 D_8013AEDC;
-extern s32 D_8013AEE4;
-extern s16 g_volumeL;
-extern s16 g_volumeR;
-extern s16 D_8013B648[4];
-extern s16 D_8013B64E;
-extern s16 D_8013B650[4];
-extern s16 D_8013B678[];
-extern s16 D_8013B698;
-extern u8 D_8013B6A0[269488]; // VAB file
-extern u8 D_8017D350[57744];  // VAB file
-extern u8 D_8018B4E0[108048]; // VAB file
-extern u8 D_801A9C80[64496];  // VAB file
-extern u16 D_8013AEE0;
-extern s8 D_8013AEE8;
-extern u8 g_SoundInitialized;
-extern s16 g_SeqVolume2;
-extern s32 D_8013B158;
-extern s32 D_8013B3D0;
-extern s16 g_SoundCommandRingBuffer[MAX_SND_COUNT]; // D_8013B3E8
-extern s32 D_8013B5E8;
-extern u8 D_8013B5EC[];
-extern u8 D_8013B5F6[];
-extern s8 g_UnkChannelSetting1[];
-extern s8 D_8013B618;
-extern s32 D_8013B61C;
-extern u16 g_ChannelGroupVolume[];
-extern u16 D_8013B626;
-extern s8* D_8013B628[4];
-extern s16 D_8013B650[];
-extern s32 D_8013B65C;
-extern s16 g_SeqAccessNum;
-extern s32 g_MemcardStep;
-extern s16 D_8013B664;
-extern s16 g_CdVolume;
-extern s16 D_8013B66C[];
-extern s16 D_8013B672[];
-extern u8 D_8013B680;
-extern u8 g_CdSoundCommand16;
-extern s8 D_8013B690;
-extern s32 D_8013B694;
-extern s32 D_8013B69C;
-extern ServantDesc D_80170000;
-extern Weapon D_8017A000;
-extern Weapon D_8017D000;
-extern ImgSrc* g_imgUnk8013C200;
-extern ImgSrc* g_imgUnk8013C270;
-extern u8 D_801EC000[];
-extern u8 D_8013B688[8];
-extern struct Cmd14 D_8013B5F4[];
+// This appears to be a super miniature Entity or something
+// All it has is a state, a timer, and a facing direction.
+typedef struct {
+    s32 state;
+    s32 timer;
+    s32 facingLeft;
+} helper_8012F178;
+extern helper_8012F178 D_800B08CC[6];
+extern s32 D_800B0914;
+extern s32 D_800B0918;
+extern s32 D_800B091C;
+extern s32 D_800B0920;
 
 void func_801072DC(POLY_GT4* poly);
 void InitializePads(void);
@@ -889,7 +572,7 @@ bool CheckSwordBrothersInput();
 void func_80111928(void);
 void func_80111CC0(void);
 bool func_80111D24(void);
-void func_80115394(s32*, s16, s16);
+void func_80115394(DamageParam* damage, s16 arg1, s16 arg2);
 void func_80115C50(void);
 void func_80118894(Entity*);
 

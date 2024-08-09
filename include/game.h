@@ -290,18 +290,30 @@ extern u8 g_BmpCastleMap[0x20000];
 #define PLAYER_STATUS_BAT_FORM 0x00000001
 #define PLAYER_STATUS_MIST_FORM 0x00000002
 #define PLAYER_STATUS_WOLF_FORM 0x00000004
-#define PLAYER_STATUS_UNK_20 0x00000020
 #define PLAYER_STATUS_TRANSFORM                                                \
     (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM | PLAYER_STATUS_WOLF_FORM)
+#define PLAYER_STATUS_UNK10 0x10
+#define PLAYER_STATUS_UNK_20 0x00000020
+#define PLAYER_STATUS_UNK40 0x40
 #define PLAYER_STATUS_STONE 0x00000080
+#define PLAYER_STATUS_UNK200 0x200
+#define PLAYER_STATUS_UNK400 0x400
+#define PLAYER_STATUS_UNK800 0x800
+#define PLAYER_STATUS_UNK1000 0x1000
+#define PLAYER_STATUS_UNK2000 0x2000
 #define PLAYER_STATUS_POISON 0x00004000
 #define PLAYER_STATUS_CURSE 0x00008000
 #define PLAYER_STATUS_UNK10000 0x10000 // possibly freezing?
+#define PLAYER_STATUS_UNK20000 0x20000
 #define PLAYER_STATUS_UNK40000 0x40000
+#define PLAYER_STATUS_UNK80000 0x80000
 #define PLAYER_STATUS_UNK400000 0x400000
+#define PLAYER_STATUS_UNK800000 0x800000
 #define PLAYER_STATUS_AXEARMOR 0x01000000
 #define PLAYER_STATUS_ABSORB_BLOOD 0x02000000
+#define PLAYER_STATUS_UNK4000000 0x04000000
 #define PLAYER_STATUS_UNK40000000 0x40000000
+#define PLAYER_STATUS_UNK80000000 0x80000000
 
 #define ANIMSET_OVL_FLAG 0x8000
 #define ANIMSET_DRA(x) (x)
@@ -334,11 +346,27 @@ extern u8 g_BmpCastleMap[0x20000];
 #define SAVE_FLAG_CLEAR (1)
 #define SAVE_FLAG_REPLAY (2)
 
+#define PORT_COUNT (2)
+#define BLOCK_PER_CARD (15)
+#define CARD_BLOCK_SIZE (8192)
+
+typedef struct {
+    /* 0x000 */ struct DIRENTRY entries[BLOCK_PER_CARD];
+    /* 0x258 */ u32 unk258;
+    /* 0x25C */ u32 unk25C;
+    /* 0x260 */ u32 nBlockUsed;
+    /* 0x264 */ s32 nFreeBlock;
+    /* 0x268 */ u8 blocks[BLOCK_PER_CARD];
+} MemcardInfo; /* size=0x278 */
+
 #if defined(VERSION_US)
 #define MEMCARD_ID "BASLUS-00067DRAX00"
 #elif defined(VERSION_HD)
 #define MEMCARD_ID "BISLPM-86023DRAX00"
 #endif
+
+#define ICON_SLOT_NUM 32
+#define SPU_VOICE_NUM 24
 
 typedef enum {
     Game_Init,
@@ -1190,7 +1218,9 @@ typedef enum {
 
     // Aggregate helpers below:
     EFFECT_NOTHROUGH = EFFECT_SOLID | EFFECT_QUICKSAND,
-    EFFECT_NOTHROUGH_PLUS = EFFECT_SOLID | EFFECT_UNK_0002 | EFFECT_QUICKSAND
+    EFFECT_NOTHROUGH_PLUS = EFFECT_SOLID | EFFECT_UNK_0002 | EFFECT_QUICKSAND,
+    // Should be renamed once we know what 8000 and 4000 are
+    EFFECT_UNK_C000 = EFFECT_UNK_8000 | EFFECT_UNK_4000
 } ColliderEffectFlags;
 
 typedef struct Collider {
@@ -1701,7 +1731,6 @@ extern s32 g_IsTimeAttackUnlocked;
 // prevents the player to enter in the warp room. When g_CastleFlags[0x32] the
 // column will disappear.
 extern u8 g_CastleFlags[0x300]; // starts at 0x8003BDEC
-extern u8 D_8003BEEC[];         // g_CastleFlags[x + 0x100]
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C0F8;
 extern s32 D_8003C100;

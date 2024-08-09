@@ -41,7 +41,7 @@ segments:
       - [0x528, .data, wrp/st_debug]
       - [0x5A8, .data, wrp/e_breakable]
       - [0x608, .data, wrp/d_608]
-      - [0x648, data]
+      - [0x648, .data, rwrp/warp]
       - [0x690, .data, wrp/st_update]
       - [0x6BC, .data, wrp/collision]
       - [0xA7C, .data, wrp/e_red_door]
@@ -58,15 +58,15 @@ segments:
       - [0x1FC8, .data, rwrp/tile_data] # tile data
       - [0x2BC8, .data, rwrp/tile_data] # tile definitions
       - [0x6FE8, .data, rwrp/sprites]
-      - [0x8C48, data]
-      - [0x8C88, rodata]
+      - [0x8C48, .rodata, rwrp/warp] # warp strings
+      - [0x8C88, .rodata, rwrp/warp] # EntityRWarpRoom
       - [0x8CB0, .rodata, rwrp/warp] # EntityWarpSmallRocks
       - [0x8CC8, .rodata, wrp/e_red_door] # EntityRedDoor
       - [0x8CE0, .rodata, wrp/e_collect] # CollectGold strings
       - [0x8D30, .rodata, wrp/e_collect] # EntityPrizeDrop
       - [0x8D50, .rodata, wrp/e_collect] # EntityEquipItemDrop
-      - [0x8D68, .rodata, rwrp/e_misc]
-      - [0x8DA0, .rodata, rwrp/e_misc]
+      - [0x8D68, .rodata, rwrp/e_misc] # EntityRelicOrb
+      - [0x8DA0, .rodata, rwrp/e_misc] # EntityMessageBox
       - [0x8DB4, .rodata, wrp/e_stage_name] # EntityStageNamePopup
       - [0x8DE8, .rodata, wrp/prim_helpers]
       - [0x8DF0, c, wrp/st_debug]
@@ -85,5 +85,5 @@ segments:
       - [0x14DD4, c, wrp/e_room_fg]
       - [0x14EC0, c, wrp/popup]
       - [0x151F0, c, wrp/prim_helpers]
-      - [0x15A20, sbss]
+      - [0x15A20, .bss, rwrp/bss]
   - [0x166E8]

@@ -4,6 +4,7 @@
  */
 
 #include "np3.h"
+#include "sfx.h"
 
 typedef enum {
     MERMAN_INIT,
@@ -64,7 +65,7 @@ void EntityMerman(Entity* self) {
     }
 
     if ((self->flags & FLAG_DEAD) && (self->step < MERMAN_DYING)) {
-        func_801C2598(0x71D);
+        func_801916C4(0x71D);
         self->hitboxState = 0;
         if (self->step == MERMAN_LUNGE) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -269,7 +270,7 @@ void EntityMerman(Entity* self) {
                 SetStep(MERMAN_WALKING_TOWARDS_PLAYER);
             }
             if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
-                func_801C2598(0x662);
+                func_801916C4(SFX_FIREBALL_SHOT_C);
                 newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(0x3A, self, newEntity);
@@ -320,7 +321,7 @@ void EntityMerman(Entity* self) {
             if (collider.effects & EFFECT_SOLID) {
                 self->velocityX = 0;
             }
-            func_801C0B20(&D_8018236C);
+            func_8018FC4C(&D_8018236C);
             if (self->facingLeft != 0) {
                 self->velocityX -= FIX(0.03125);
             } else {
@@ -395,7 +396,7 @@ void EntityMerman(Entity* self) {
             if (!(g_Timer % 8)) {
                 self->ext.merman.palette++;
                 if (self->ext.merman.palette == 0x2C0) {
-                    func_801C2598(0x65B);
+                    func_801916C4(SFX_FM_EXPLODE_B);
                     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
                         CreateEntityFromEntity(0x3C, self, newEntity);

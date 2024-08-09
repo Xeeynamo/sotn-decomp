@@ -1,7 +1,14 @@
 // Weapon ID #41. Used by weapons:
 // Monster vial 2
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
+#include "w_041_1.h"
+#include "w_041_2.h"
+#define g_Animset w_041_1
+#define g_Animset2 w_041_2
 #include "shared.h"
+#include "sfx.h"
 
 extern AnimationFrame D_123000_8017A4A4[];
 extern FrameProperty D_123000_8017A50C[];
@@ -149,7 +156,7 @@ s32 func_ptr_80170004(Entity* self) {
             self->ext.weapon.some_ent =
                 func_123000_8017A994(self, self->ext.weapon.unk80, 0x280);
             g_api.PlaySfx(0x69B);
-            g_api.PlaySfx(0x64E);
+            g_api.PlaySfx(SFX_BAT_SCREECH);
             self->ext.weapon.lifetime = 0x16;
             self->ext.weapon.unk82 = 0x80;
             self->step++;
@@ -198,28 +205,28 @@ s32 func_ptr_80170004(Entity* self) {
     func_123000_8017A914();
 }
 
-void func_ptr_80170008(Entity* self) {}
+static void func_ptr_80170008(Entity* self) {}
 
-void func_ptr_8017000C(Entity* self) {}
+static void func_ptr_8017000C(Entity* self) {}
 
-s32 func_ptr_80170010(Entity* self) {}
+static s32 func_ptr_80170010(Entity* self) {}
 
-s32 func_ptr_80170014(Entity* self) {}
+static s32 func_ptr_80170014(Entity* self) {}
 
-int GetWeaponId(void) { return 41; }
+static int GetWeaponId(void) { return 41; }
 
-void EntityWeaponShieldSpell(Entity* self) {}
+static void EntityWeaponShieldSpell(Entity* self) {}
 
-void func_ptr_80170024(Entity* self) {}
+static void func_ptr_80170024(Entity* self) {}
 
-void func_ptr_80170028(Entity* self) {}
+static void func_ptr_80170028(Entity* self) {}
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}

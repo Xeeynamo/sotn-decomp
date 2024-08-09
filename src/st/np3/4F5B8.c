@@ -1,4 +1,5 @@
 #include "np3.h"
+#include "sfx.h"
 
 void EntityHammerWeapon(Entity* self) {
     s16 temp_s0;
@@ -126,7 +127,7 @@ void EntityGurkha(Entity* self) {
         func_801CE1E8(0xC);
     }
     if ((self->flags & FLAG_DEAD) && (self->step < 24)) {
-        func_801C2598(0x742);
+        func_801916C4(0x742);
         func_801CE1E8(0x18);
     }
     switch (self->step) {
@@ -277,7 +278,7 @@ void EntityGurkha(Entity* self) {
             collider.unk18 = 9;
             func_801CE04C(otherEnt, &collider);
             if (otherEnt->ext.GH_Props.unk88 != 0) {
-                func_801C2598(0x648);
+                func_801916C4(SFX_STOMP_HARD_C);
                 otherEnt->posY.i.hi += collider.unk18;
                 self->ext.GH_Props.unk84 ^= 1;
                 func_801CE228();
@@ -338,7 +339,7 @@ void EntityGurkha(Entity* self) {
             func_801CE258(&D_80182F9C);
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
                 (self->ext.GH_Props.unkB0[2] == 0)) {
-                func_801C2598(0x740);
+                func_801916C4(0x740);
                 // we appear to write 0x10 twice here, weird
                 self->ext.GH_Props.unk80 = 0x10;
                 (self + 15)->ext.GH_Props.unkA6 = 0;
@@ -456,7 +457,7 @@ void EntityGurkha(Entity* self) {
         break;
     case 12:
         if (self->step_s == 0) {
-            func_801C2598(0x741);
+            func_801916C4(0x741);
             self->step_s++;
         }
         if (self->ext.GH_Props.unk84 == 1) {
@@ -492,9 +493,9 @@ void EntityGurkha(Entity* self) {
             self->velocityY += FIX(24.0 / 128);
             if (!(g_Timer & 7)) {
                 if (Random() & 1) {
-                    func_801C2598(0x65B);
+                    func_801916C4(SFX_FM_EXPLODE_B);
                 } else {
-                    func_801C2598(0x657);
+                    func_801916C4(SFX_EXPLODE_D);
                 }
             }
             return;
@@ -557,7 +558,7 @@ void EntityGurkhaSword(Entity* self) {
         }
 
         if ((g_Timer % 16) == 0) {
-            func_801C2598(0x625);
+            func_801916C4(SFX_ARROW_SHOT_A);
         }
 
         if (abs(self->velocityX) == 0x80000) {

@@ -1,4 +1,5 @@
 #include <stage.h>
+#include "sfx.h"
 
 static u8 D_80180C94[] = {0x01, 0x0E, 0x00};
 static u8 D_80180C98[] = {
@@ -159,7 +160,7 @@ static void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;
     u16 subWeapon;
 
-    g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+    g_api.PlaySfx(SFX_ITEM_PICKUP);
     subWeapon = g_Status.subWeapon;
     g_Status.subWeapon = aluric_subweapons_idx[subWeaponIdx - 14];
 
@@ -191,12 +192,12 @@ static void CollectSubweapon(u16 subWeaponIdx) {
 #include "collect_heart_vessel.h"
 
 static void CollectLifeVessel(void) {
-    g_api.PlaySfx(NA_SE_PL_COLLECT_HEART);
+    g_api.PlaySfx(SFX_HEART_PICKUP);
     g_api.func_800FE044(LIFE_VESSEL_INCREASE, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
 
-static void CollectDummy(u16 id) { DestroyEntity(g_CurrentEntity); }
+static void DestroyCurrentEntity(u16 id) { DestroyEntity(g_CurrentEntity); }
 
 // if self->params & 0x8000 then the item will not disappear
 void EntityPrizeDrop(Entity* self) {
@@ -359,7 +360,7 @@ void EntityPrizeDrop(Entity* self) {
         } else if (itemId == 12) {
             CollectHeartVessel();
         } else if (itemId < 14) {
-            CollectDummy(itemId);
+            DestroyCurrentEntity(itemId);
         } else if (itemId < 23) {
             CollectSubweapon(itemId);
         } else if (itemId == 23) {
@@ -614,7 +615,7 @@ void EntityEquipItemDrop(Entity* self) {
             g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
             g_unkGraphicsStruct.BottomCornerTextTimer = 0;
         }
-        g_api.PlaySfx(NA_SE_PL_IT_PICKUP);
+        g_api.PlaySfx(SFX_ITEM_PICKUP);
         if (itemId < NUM_HAND_ITEMS) {
             name = g_api.equipDefs[itemId].name;
             g_api.AddToInventory(itemId, EQUIP_HAND);

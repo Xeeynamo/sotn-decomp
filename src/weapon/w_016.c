@@ -1,12 +1,19 @@
 // Weapon ID #16. Used by weapons:
 // Bwaka knife, Boomerang, Javelin, Fire boomerang, Iron ball
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
+#include "w_016_1.h"
+#include "w_016_2.h"
+#define g_Animset w_016_1
+#define g_Animset2 w_016_2
+#include "sfx.h"
 
 // Weapon 16
-extern SpriteParts D_74000_8017A040;
+extern SpriteParts D_74000_8017A040[];
 
-void EntityWeaponAttack(Entity* self) {
+static void EntityWeaponAttack(Entity* self) {
     FakePrim* fakePrim;
     s16 angle;
     u16 temp_a0;
@@ -15,7 +22,7 @@ void EntityWeaponAttack(Entity* self) {
 
     switch (self->step) { /* irregular */
     case 0:
-        SetSpriteBank1(&D_74000_8017A040);
+        SetSpriteBank1(D_74000_8017A040);
         self->animSet = ANIMSET_OVL(0x10);
         self->unk5A = 100;
         self->palette = 0x11A;
@@ -128,15 +135,96 @@ s32 func_ptr_80170004(Entity* self) {
 
 INCLUDE_ASM("weapon/nonmatchings/w_016", func_ptr_80170008);
 
-INCLUDE_ASM("weapon/nonmatchings/w_016", func_ptr_8017000C);
+static void func_ptr_8017000C(Entity* self) {
+    s16 temp_a0;
 
-INCLUDE_ASM("weapon/nonmatchings/w_016", func_ptr_80170010);
+    switch (self->step) {
+    case 0:
+        SetSpriteBank1(D_74000_8017A040);
+        self->animSet = ANIMSET_OVL(0x10);
+        self->unk5A = 0x64;
+        self->palette = 0x11B;
+        if (g_HandId != 0) {
+            self->palette = 0x133;
+            self->unk5A = 0x66;
+            self->animSet += 2;
+        }
+        self->animCurFrame = 0x10;
+        self->facingLeft = PLAYER.facingLeft;
+        self->zPriority = PLAYER.zPriority - 2;
+        self->flags = FLAG_UNK_08000000;
+        self->drawFlags = DRAW_COLORS;
+        temp_a0 = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
+        self->posY.i.hi = temp_a0 - 6;
+        if (PLAYER.step != 2) {
+            self->posY.i.hi = temp_a0 - 14;
+        }
+        if (self->facingLeft) {
+            self->posX.i.hi = PLAYER.posX.i.hi - PLAYER.hitboxOffX - 10;
+        } else {
+            self->posX.i.hi = PLAYER.posX.i.hi + PLAYER.hitboxOffX + 10;
+        }
+        SetSpeedX(FIX(6));
+        self->velocityY = FIX(-1.125);
+        SetWeaponProperties(self, 0);
+        DestroyEntityWeapon(true);
+        self->hitboxHeight = 12;
+        self->hitboxWidth = 12;
+        g_api.PlaySfx(SFX_WEAPON_SWISH_B);
+        g_Player.D_80072F00[10] = 4;
+        self->step++;
+        break;
+    case 1:
+        if (self->velocityY < FIX(7)) {
+            self->velocityY += FIX(3) / 64;
+        }
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        break;
+    }
+    self->rotZ = ratan2(self->velocityY, abs(self->velocityX));
+}
 
-extern SpriteParts D_74000_8017A040;
+extern AnimationFrame D_74000_8017A5B0[];
+extern s32 D_74000_8017BD74;
+
+s32 func_ptr_80170010(Entity* self) {
+    Entity* factory;
+
+    if (self->step == 0) {
+        self->animSet = 2;
+        self->unk4C = D_74000_8017A5B0;
+        self->zPriority = PLAYER.zPriority - 4;
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->velocityY = FIX(-1.0);
+
+        if (!(D_74000_8017BD74 & 1)) {
+            factory = g_api.CreateEntFactoryFromEntity(self, 0xB0004U, 0);
+            if (factory) {
+                if (g_HandId == 0) {
+                    factory->entityId = 0xEF;
+                } else {
+                    factory->entityId = 0xFF;
+                }
+            }
+        }
+        self->posY.i.hi += -6 + (rand() % 12);
+        self->posX.i.hi += -3 + (rand() & 7);
+        D_74000_8017BD74 += 1;
+        if (!(rand() & 1)) {
+            self->drawMode |= DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+        }
+        self->step += 1;
+    }
+    self->posY.val += self->velocityY;
+    if (self->animFrameDuration < 0) {
+        DestroyEntity(self);
+    }
+}
 
 // Tracing function calls in emulator indicates that this function manages
 // the physics for the Iron Ball item.
-s32 func_ptr_80170014(Entity* self) {
+static s32 func_ptr_80170014(Entity* self) {
     Collider collider;
     s16 collX;
     s16 collY;
@@ -146,7 +234,7 @@ s32 func_ptr_80170014(Entity* self) {
 
     switch (self->step) {
     case 0:
-        SetSpriteBank1(&D_74000_8017A040);
+        SetSpriteBank1(D_74000_8017A040);
         self->animSet = ANIMSET_OVL(0x10);
         self->unk5A = 100;
         self->palette = 0x11D;
@@ -185,7 +273,7 @@ s32 func_ptr_80170014(Entity* self) {
         collY = self->posY.i.hi;
         g_api.CheckCollision(collX, collY, &collider, 0);
         if (collider.effects & EFFECT_UNK_0002) {
-            g_api.PlaySfx(0x655);
+            g_api.PlaySfx(SFX_EXPLODE_B);
             g_api.func_80102CD8(4);
             if (xShift < 0) {
                 self->posX.i.hi += collider.unkC;
@@ -199,7 +287,7 @@ s32 func_ptr_80170014(Entity* self) {
         collY = self->posY.i.hi - 6;
         g_api.CheckCollision(collX, collY, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
-            g_api.PlaySfx(0x655);
+            g_api.PlaySfx(SFX_EXPLODE_B);
             g_api.func_80102CD8(4);
             self->posY.i.hi += collider.unk20 + 1;
             self->velocityX /= 2;
@@ -209,7 +297,7 @@ s32 func_ptr_80170014(Entity* self) {
         collY = self->posY.i.hi + 7;
         g_api.CheckCollision(collX, collY, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
-            g_api.PlaySfx(0x655);
+            g_api.PlaySfx(SFX_EXPLODE_B);
             g_api.func_80102CD8(4);
             self->posY.i.hi += collider.unk18;
             if (self->ext.weapon.lifetime != 0) {
@@ -295,7 +383,7 @@ s32 func_ptr_80170014(Entity* self) {
                 g_api.CheckCollision(collX, collY, &collider, 0);
                 if (collider.effects & EFFECT_UNK_0002) {
                     if (self->velocityX != 0) {
-                        g_api.PlaySfx(0x655);
+                        g_api.PlaySfx(SFX_EXPLODE_B);
                         g_api.func_80102CD8(1);
                     }
                     if (xShift < 0) {
@@ -328,20 +416,20 @@ s32 func_ptr_80170014(Entity* self) {
     }
 }
 
-int GetWeaponId(void) { return 16; }
+static int GetWeaponId(void) { return 16; }
 
-void EntityWeaponShieldSpell(Entity* self) {}
+static void EntityWeaponShieldSpell(Entity* self) {}
 
-void func_ptr_80170024(Entity* self) {}
+static void func_ptr_80170024(Entity* self) {}
 
-void func_ptr_80170028(Entity* self) {}
+static void func_ptr_80170028(Entity* self) {}
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}

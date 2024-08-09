@@ -4,6 +4,7 @@
  */
 
 #include "nz0.h"
+#include "sfx.h"
 
 typedef enum {
     BONE_SCIMITAR_INIT,
@@ -226,7 +227,7 @@ void EntityBoneScimitar(Entity* self) {
         break;
 
     case BONE_SCIMITAR_DESTROY:
-        g_api.PlaySfx(NA_SE_EN_SKELETON_DESTROY);
+        g_api.PlaySfx(SFX_SKELETON_DEATH_C);
         for (i = 0; i < 7; i++) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity == NULL) {

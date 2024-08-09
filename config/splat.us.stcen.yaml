@@ -35,12 +35,16 @@ segments:
     subsegments:
       - [0x0, .data, header]
       - [0xDC, .data, header] # layers
-      - [0x134, data] # gfxbanks
+      - [0x134, .data, header] # gfxbanks
       - [0x1EC, .data, e_laydef] # layout entries header
       - [0x394, .data, entity]
+      - [0x5D8, .data, holyglassescutscene]
+      - [0x68C, .data, F890]
+      - [0x7B8, .data, update]
       - [0x7E4, .data, collision]
       - [0xBA4, .data, e_red_door]
-      - [0xBBC, data]
+      - [0xBBC, .data, 14264]
+      - [0xDBC, data]
       - [0x10AC, .data, entity_relic_orb]
       - [0x1110, data]
       - [0x12D4, .data, rooms]
@@ -49,7 +53,7 @@ segments:
       - [0x69EC, .data, tile_data] # tile data
       - [0x81EC, .data, tile_data] # tile definitions
       - [0xC60C, .data, sprites]
-      - [0xD414, rodata]
+      - [0xD414, .rodata, entity]
       - [0xD42C, .rodata, holyglassescutscene]
       - [0xD4B0, .rodata, F890]
       - [0xD4D8, .rodata, e_red_door] # EntityRedDoor
@@ -77,5 +81,8 @@ segments:
       - [0x18084, c]
       - [0x1B274, c]
       - [0x1BED4, c, prim_helpers]
-      - [0x1C704, sbss]
+      - [0x1C704, .bss, header]
+      - [0x1C718, .bss, create_entity]
+      - [0x1C71C, .bss, holyglassescutscene]
+      - [0x1C7C0, .bss, 15C84]
   - [0x1D46C]

@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"os"
 )
 
 func readTilemap(file *os.File, layer *layer) ([]byte, dataRange, error) {
-	if err := layer.Data.moveFile(file); err != nil {
+	if err := layer.Data.MoveFile(file, psx.RamStageBegin); err != nil {
 		return nil, dataRange{}, err
 	}
 	data := make([]byte, layer.tilemapFileSize())
@@ -15,13 +16,13 @@ func readTilemap(file *os.File, layer *layer) ([]byte, dataRange, error) {
 	}
 	return data, dataRange{
 		begin: layer.Data,
-		end:   layer.Data.sum(len(data)),
+		end:   layer.Data.Sum(len(data)),
 	}, nil
 }
 
-func readAllTileMaps(file *os.File, roomLayers []roomLayers) (map[PsxOffset][]byte, dataRange, error) {
+func readAllTileMaps(file *os.File, roomLayers []roomLayers) (map[psx.Addr][]byte, dataRange, error) {
 	ranges := []dataRange{}
-	processed := map[PsxOffset][]byte{}
+	processed := map[psx.Addr][]byte{}
 	for _, rl := range roomLayers {
 		if rl.fg != nil {
 			if _, found := processed[rl.fg.Data]; !found {

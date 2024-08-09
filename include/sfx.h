@@ -180,57 +180,16 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-// This sound plays when MAX UP spawns and during Dracula transformation
-#define NA_SE_UNK_62F 0x62F
-#define SFX_UNK_608 0x608
-#define NA_SE_EV_HEAVY_BLOCK_DRAG 0x609
-#define NA_SE_EN_BLOOD_ZOMBIE_SWORD_SLASH 0x60B
-#define SFX_SUBWPN_THROW 0x60C // Throwing rebound stone, vibhuti, others?
-#define SFX_CLANK 0x611 // when attacking invulnerable enemy (like Stone Skull)
-#define NA_SE_AL_BACKSLIDE 0x617
-#define SFX_UNK_61A 0x61A
-#define NA_SE_EV_VASE_BREAK 0x61D
-#define NA_SE_PL_BT_ECHO 0x61F
-#define NA_SE_EN_SKELETON_DESTROY 0x62B
-#define SFX_WEAPON_62C 0x62C
-#define NA_SE_EV_GLASS_BREAK 0x632
-#define NA_SE_BREAK_CANDLE 0x634
-#define SFX_UNK_635 0x635
-#define NA_SE_PL_WARP 0x636
-
-#if defined(VERSION_BETA)
-#define SFX_OPEN_DOOR 0x640
-#define SFX_DOOR_UNKNOWN 0x64D
-#else
-#define SFX_OPEN_DOOR 0x642
-#define SFX_UNK_647 0x647
-#define SFX_UNK_64C 0x64C
-#define SFX_DOOR_UNKNOWN 0x64F
-#endif
-
-#define NA_SE_EN_COG_CLICK 0x642
-#define NA_SE_EN_ROCK_BREAK 0x644
-#define SOUND_BAT_SCREECH 0x64E
-#define NA_SE_EN_SLOGRA_FLOOR_STOMP 0x64F
-#define NA_SE_EN_GAIBON_SMALL_FIREBALL 0x652
-#define NA_SE_EN_GAIBON_BIG_FIREBALL 0x655
-#define NA_SE_SECRET_STAIRS NA_SE_EN_ROCK_BREAK
-#define NA_SE_EN_ZOMBIE_EXPLODE 0x65E
-#define NA_SE_EN_GAIBON_FLAME_OUT 0x65E
-#define NA_SE_EN_DR_FIREBALL 0x660
-#define SFX_UNK_665 0x665
-#define SFX_UNK_668 0x668
 #define SFX_UNK_669 0x669
 #define NA_SE_EN_AXE_KNIGHT_BREAK_AXE 0x66B
 #define NA_SE_EN_BONE_SCIMITAR_SWORD_SLASH 0x66D
 #define NA_SE_EN_GAIBON_COLLAPSE 0x672
 #define NA_SE_EV_SWITCH_CLICK 0x676
-#define NA_SE_PL_COLLECT_HEART 0x67A
 #define NA_SE_SY_MOVE_MENU_CURSOR 0x67B
-#define NA_SE_PL_IT_PICKUP 0x67C
 #define NA_SE_PL_MP_GAUGE 0x67D
 #define NA_SE_PL_BT_FIREBALL 0x680
 #define NA_SE_PL_MAX_HP_MP_INCREASED 0x687
+#define SFX_UNK_689 0x689
 #define NA_SE_BREAK_GLASS 0x68B
 #define NA_SE_EN_GAIBON_FLAP_WINGS 0x68D
 #define NA_SE_EN_SLOGRA_SPEAR_PROJECTILE 0x690
@@ -243,8 +202,9 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SFX_UNK_6A3 0x6A3
 #define NA_SE_EV_CLOCK_TICK 0x6A1
 #define REBOUND_STONE_BOUNCE 0x6A4
-#define NA_SE_PL_COLLECT_GOLD 0x6A9
 #define SFX_UNK_6AD 0x6AD
+#define SFX_UNK_6B0 0x6B0 // Used for Shaman Shield, could be same as petal
+#define SFX_UNK_6B1 0x6B1
 #define NA_SE_EN_SLOGRA_SPEAR_SLASH 0x6C6
 #define NA_SE_EN_SLOGRA_BEAK_ATTACK 0x6C8
 #define NA_SE_EN_SKELETON_THROW_BONE 0x6C8
@@ -268,6 +228,7 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define NA_SE_VO_AL_DARK_METAMORPHOSIS 0x6F3
 #define NA_SE_VO_AL_SOUL_STEAL 0x6F4
 #define NA_SE_VO_AL_DYING 0x6F6
+#define SFX_UNK_6FF 0x6FF
 #define SFX_RICHTER_ATTACK_HIT 0x705
 #define ALUCARD_DARK_METAMORPHOSIS 0x705
 #define NA_SE_VO_WO_BARK 0x706
@@ -299,10 +260,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define BIBLE_SUBWPN_SWOOSH 0x8C3
 
 // STAGE DRE
-#define NA_SE_SU_SHOOT_PINKBALLS 0x62C
-#define SE_SUC_REVEAL 0x637
-#define NA_SE_SU_LANDING 0x646
-#define SE_DRE_FADE_TO_WHITE 0x65A
 #define NA_VO_SU_CRYSTAL_2 0x6AF
 #define NA_SE_SU_FLAPPING_WINGS 0x6C6
 #define NA_SE_SU_PETAL_ATTACK 0x6B0
@@ -323,27 +280,17 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 
 // STAGE NO3 / NP3
 #define NA_SE_EV_WINDOW_LATCH 0x79D
-#define SE_DEATH_AMBIENCE 0x631
 #define SE_DEATH_TAKES_ITEMS 0x7A0
 #define NA_VO_DEATH_LAUGH 0x7A1
 #define SE_ITEM_YOINK 0x7A2
 #define SE_TREE_BRANCH_SNAP 0x7A4
 #define SE_CASTLE_GATE_RISE 0x7A5
 
-// NZ1
-#define SE_HARPY_WING_FLAP 0x601
-
 // SHARED SOUNDS
 // These are sounds that are shared across multiple BIN files
-#define SE_WEAPON_STAB 0x62E
-#define SE_DOOR_OPEN 0x642
-#define SE_DOOR_CLOSE 0x64F
-#define SE_WEAPON_WHACK 0x678
 #define SE_BOSS_DEFEATED 0x7D2
 
 // UI SOUNDS
-#define SE_UI_CONFIRM 0x633
-#define SE_UI_START 0x63D
 #define SE_UI_SELECT 0x67B
 #define SE_UI_MAIN_MENU_SELECT 0x67D
 #define SE_UI_ERROR 0x686
@@ -352,8 +299,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SE_UI_OVERWRITE_MSG 0x6AD
 
 // DRA
-#define SE_SAVE_HEARTBEAT 0x64D
-#define SFX_UNK_661 0x661
 #define SFX_UNK_683 0x683
 #define SE_HEALTH_REGAINED 0x68E
 #define SFX_UNK_6B2 0x6B2
@@ -364,11 +309,10 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SE_WPN_ALUCARD_SWORD_SWING 0x6A8
 #define SE_WPN_PENTAGRAM 0x6E4
 
+#define SFX_KARMA_COIN 0x682
+#define SFX_KARMA_COIN_HEADS 0x6B1
+
 // UNUSED SOUNDS
-#define SE_UNK_ST0_618 0x618
-#define SE_UNK_MAD_630 0x630
-#define SE_UNK_TE1_651 0x651
-#define SE_UNK_TE3_667 0x667
 #define SE_UNK_TE1_66F 0x66F
 #define SE_UNK_TE3_679 0x679
 #define SE_UNK_TE1_692 0x692
@@ -377,5 +321,138 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SE_UNK_TE2_6B6 0x6B6
 #define SE_UNK_TE3_6B8 0x6B8
 #define NA_VO_MAR_AIM_HEAD 0x87F
+
+// The VAB IDs appear in large chunks so all sounds proceeding
+// a vabid label comment will belong in that VAB group unless noted.
+
+#ifdef VERSION_BETA
+// MAD uses an earlier build and has different sfx IDs
+enum Sfx {
+    SFX_METAL_CLANG_E = 0x611, // Same ID as final
+    SFX_WEAPON_STAB_B = 0x630,
+    SFX_CANDLE_HIT = 0x635,
+    SFX_DOOR_OPEN = 0x640,
+    SFX_DOOR_CLOSE_A = 0x64D,
+    SFX_HEART_PICKUP = 0x670,
+    SFX_ITEM_PICKUP = 0x672,
+    SFX_GOLD_PICKUP = 0x69D,
+    SFX_WEAPON_HIT = 0x6DB
+};
+#else
+enum Sfx {
+    // vabid 0
+    SFX_HARPY_WING_FLAP = 0x601,
+    SFX_RIC_WHIP_RATTLE_A,
+    SFX_RIC_WHIP_RATTLE_B, // (B through E appear to be unused)
+    SFX_RIC_WHIP_RATTLE_C,
+    SFX_RIC_WHIP_RATTLE_D,
+    SFX_RIC_WHIP_RATTLE_E,
+    SFX_STONE_MOVE_A,
+    SFX_STONE_MOVE_B,
+    SFX_STONE_MOVE_C,
+    SFX_WEAPON_SWISH_A,
+    SFX_WEAPON_SWISH_B,
+    SFX_WEAPON_SWISH_C,
+    SFX_METAL_CLANG_A,
+    SFX_METAL_CLANG_B,
+    SFX_METAL_CLANG_C,
+    SFX_METAL_CLANG_D, // 0x610
+    SFX_METAL_CLANG_E, // Stone Skull Hit
+    SFX_METAL_CLANG_F,
+    SFX_UNK_CROW,
+    SFX_ELECTRICITY,
+    SFX_SCRAPE_A,
+    SFX_SCRAPE_B,
+    SFX_SCRAPE_C, // Alucard backslide
+    SFX_UNK_618,  // Referenced in ST0, TE1, TE2
+    // vabid 9
+    SFX_GLASS_BREAK_A,
+    // vabid 0
+    SFX_GLASS_BREAK_B,
+    SFX_GLASS_BREAK_C,
+    SFX_GLASS_BREAK_D,
+    SFX_GLASS_BREAK_E, // Vase Break
+    SFX_BAT_ECHO_A,
+    SFX_BAT_ECHO_B, // Alucard Echo of Bat
+    SFX_BAT_ECHO_C, // 0x620
+    SFX_BAT_ECHO_D,
+    SFX_SKULL_BONK,
+    SFX_RIC_RSTONE_TINK, // Rebound Stone
+    SFX_SMALL_BURST,
+    SFX_ARROW_SHOT_A, // Magic Missile Shot
+    SFX_ARROW_SHOT_B,
+    SFX_ARROW_SHOT_C,
+    SFX_ARROW_SHOT_D,
+    SFX_SKELETON_DEATH_A,
+    SFX_SKELETON_DEATH_B,
+    SFX_SKELETON_DEATH_C,
+    SFX_FIRE_SHOT,
+    SFX_WEAPON_STAB_A,
+    SFX_WEAPON_STAB_B,     // Common stab sfx
+    SFX_WEAPON_APPEAR,     // Item Crash, Neutron Bomb
+    SFX_UNK_BETA_630,      // 0x630 (MAD, TE1, TE2, TE3, TE4, TE5)
+    SFX_DEATH_AMBIENCE,    // BGM ambience during first Death cutscene
+    SFX_MAGIC_GLASS_BREAK, // Subweapon Container
+    SFX_UI_CONFIRM,
+    SFX_CANDLE_HIT,
+    SFX_TELEPORT_BANG_A, // Used when teleport starts
+    SFX_TELEPORT_BANG_B, // Used when teleport ends, but is also Warp Enter
+    SFX_SUC_APPEAR,      // Succubus reveal
+    SFX_UNK_SCRAPE_A,
+    SFX_UNK_SCRAPE_B,
+    SFX_UNK_SCRAPE_C,
+    SFX_UNK_UI_SELECT,
+    SFX_START_SLAM_A, // Dark Shield
+    SFX_START_SLAM_B, // "Press Start", Door Open, Dracula Stomp, etc.
+    SFX_START_SLAM_C,
+    SFX_ANIME_SWORD_A,
+    SFX_ANIME_SWORD_B, // 0x640, Holy Rod ("Anime shing" element)
+    SFX_ANIME_SWORD_C,
+    SFX_DOOR_OPEN,
+    SFX_WALL_DEBRIS_A,
+    SFX_WALL_DEBRIS_B, // Warp Exit & Wall Break
+    SFX_WALL_DEBRIS_C,
+    SFX_STOMP_HARD_A,
+    SFX_STOMP_HARD_B, // Alucard Landing (Hard)
+    SFX_STOMP_HARD_C,
+    SFX_STOMP_HARD_D,
+    SFX_STOMP_HARD_E,
+    SFX_STOMP_SOFT_A, // Richter Landing (Hard)
+    SFX_STOMP_SOFT_B, // Alucard Landing (Normal)
+    SFX_SAVE_HEARTBEAT,
+    SFX_BAT_SCREECH,
+    SFX_DOOR_CLOSE_A,
+    SFX_DOOR_CLOSE_B, // 0x650
+    SFX_UNK_UI_ERROR,
+    SFX_EXPLODE_FAST_A, // Explosion "stutter" effect
+    SFX_EXPLODE_FAST_B,
+    SFX_EXPLODE_A,
+    SFX_EXPLODE_B,
+    SFX_EXPLODE_C,
+    SFX_EXPLODE_D,
+    SFX_EXPLODE_E,
+    SFX_EXPLODE_F,
+    SFX_FM_EXPLODE_A, // FM synth explosion
+    SFX_FM_EXPLODE_B,
+    SFX_FM_EXPLODE_C,
+    SFX_FM_EXPLODE_D,
+    SFX_EXPLODE_SMALL, // Zombie death explosion
+    SFX_UNK_FIRE_WHOOSH,
+    SFX_FIREBALL_SHOT_A, // 0x660
+    SFX_FIREBALL_SHOT_B,
+    SFX_FIREBALL_SHOT_C,
+    SFX_GUNSHOT,
+    SFX_THUNDER_A,
+    SFX_THUNDER_B,
+    SFX_THUNDER_C,
+    SFX_UNK_LOW_UI,
+    SFX_TRANSFORM,
+    SFX_WEAPON_HIT = 0x678,
+    SFX_HEART_PICKUP = 0x67A,
+    SFX_ITEM_PICKUP = 0x67C,
+    SFX_GOLD_PICKUP = 0x6A9,
+};
+
+#endif
 
 #endif

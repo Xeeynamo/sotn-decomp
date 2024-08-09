@@ -1,4 +1,5 @@
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
 #include "sfx.h"
 
@@ -117,7 +118,6 @@ SVECTOR* D_800A35D0[] = {
     &D_800A3380, &D_800A3388, &D_800A3390, &D_800A3398,
 };
 
-extern SVECTOR D_80137E70[14];
 SVECTOR* D_800A3608[] = {
     &D_80137E70[10], &D_80137E70[7],  &D_80137E70[6],  &D_80137E70[10],
     &D_80137E70[6],  &D_80137E70[0],  &D_80137E70[0],  &D_80137E70[6],
@@ -1018,7 +1018,7 @@ void func_80105428(void) {
         timer_temp = gameTimer & 0x7F;
         D_801379C8.vy = temp_s3 + 6;
         if (timer_temp == 0) {
-            PlaySfx(SE_SAVE_HEARTBEAT);
+            PlaySfx(SFX_SAVE_HEARTBEAT);
         }
         if (gameTimer & 0x40) {
             timer_temp = 0x7F - timer_temp;
@@ -1270,7 +1270,7 @@ void func_80105428(void) {
         if (HandleSaveMenu(2) != 0) {
             if (D_80137E6C == 0) {
                 D_8006C378 = -1;
-                PlaySfx(SE_UI_CONFIRM);
+                PlaySfx(SFX_UI_CONFIRM);
                 MemCardSetPort(D_80097924);
                 D_801379BC++;
             } else {

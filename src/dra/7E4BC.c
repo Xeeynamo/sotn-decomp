@@ -1,4 +1,5 @@
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
 #include "sfx.h"
 
@@ -38,7 +39,7 @@ u16* D_800AD520[] = {
 extern u8 D_800B0188[];
 // TODO: move to 7A4D0.c
 WeaponAnimation D_800AD53C[] = {
-    {D_800AD520, D_800B0188, 0x0000, SFX_SUBWPN_THROW, 0x24, 1},
+    {D_800AD520, D_800B0188, 0x0000, SFX_WEAPON_SWISH_C, 0x24, 1},
 };
 
 u16 D_800AD54C[] = {
@@ -185,6 +186,22 @@ static unkStr_8011E4BC* D_800ADB98[] = {
 };
 
 extern Unkstruct_800ADEF0 D_800ADEF0[];
+
+// BSS
+extern s32 D_8013808C;
+extern s32 D_80138090;
+extern mistStruct D_80138094[16];
+extern s16 D_801381D4;
+extern s16 D_801381D8;
+extern s16 D_801381DC;
+extern s16 D_801381E0;
+extern s16 D_801381E4;
+extern s16 D_801381E8;
+extern s16 D_801381EC;
+extern s16 D_801381F0;
+extern Primitive D_801381F4[8];
+extern s32 D_80138394;
+extern s32 D_80138398;
 
 void func_8011E4BC(Entity* self) {
     byte stackpad[0x28];
@@ -480,6 +497,7 @@ void func_8011E4BC(Entity* self) {
 
 void func_8011EDA0(Entity* entity) {}
 
+// RIC function is func_80161C2C
 void func_8011EDA8(Entity* self) {
     u16 params = self->params;
     s16 paramsHi = self->params >> 8;
@@ -654,7 +672,7 @@ void EntityHitByLightning(Entity* self) {
         }
         self->ext.hitbylightning.unk94 = 0x10;
         PlaySfx(SFX_UNK_69D);
-        PlaySfx(SFX_UNK_665);
+        PlaySfx(SFX_THUNDER_B);
         self->step++;
         break;
     case 1:
@@ -827,7 +845,7 @@ void EntityHitByIce(Entity* self) {
         }
         if (sp18) {
             self->ext.hitbyice.unk7C = 0x40;
-            PlaySfx(SFX_UNK_61A);
+            PlaySfx(SFX_GLASS_BREAK_B);
             self->step++;
         }
         break;
@@ -1138,7 +1156,7 @@ void EntityPlayerPinkEffect(Entity* self) {
                       FLAG_UNK_10000;
         self->ext.timer.t = data_idx->unk0[0];
         if (data_idx->unk18 != 0x83) {
-            PlaySfx(SFX_UNK_668);
+            PlaySfx(SFX_TRANSFORM);
         }
         if (data_idx->unk18 >= 128) {
             func_8010E168(true, 64);
@@ -1520,7 +1538,7 @@ void EntityLevelUpAnimation(Entity* self) {
         break;
     case 1:
         if (++D_80138090 == 2) {
-            D_80097420 = 3;
+            g_unkGraphicsStruct.unk20 = 3;
         }
         self->ext.factory.unk80 -= 8;
         self->ext.factory.unk82 -= 8;
@@ -1564,7 +1582,7 @@ void EntityLevelUpAnimation(Entity* self) {
             self->ext.factory.unk7E = 0;
         }
         if (self->ext.factory.unk80 > 0x200) {
-            D_80097420 = 0;
+            g_unkGraphicsStruct.unk20 = 0;
             DestroyEntity(self);
             return;
         }
@@ -1772,7 +1790,7 @@ void EntityMist(Entity* self) {
         }
         prim = &g_PrimBuf[self->primIndex];
         mistPrim = D_801381F4;
-        for (i = 0; i < 8; i++, mistPrim++) {
+        for (i = 0; i < LEN(D_801381F4); i++, mistPrim++) {
             *mistPrim = *prim;
             prim = prim->next;
         }

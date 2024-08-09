@@ -1,4 +1,5 @@
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
 #include "sfx.h"
 
@@ -233,7 +234,7 @@ void func_8012DBBC(void) {
             func_8012CA64();
         }
         PLAYER.velocityY = 0;
-        PlaySfx(SFX_UNK_64C);
+        PlaySfx(SFX_STOMP_SOFT_B);
         return;
     }
     if (g_Player.padTapped & PAD_SQUARE) {
@@ -294,7 +295,7 @@ void func_8012DF04(void) {
         func_8012CC30(1);
     }
     if (g_Player.pl_vram_flag & 1) {
-        PlaySfx(SFX_UNK_64C);
+        PlaySfx(SFX_STOMP_SOFT_B);
         if (PLAYER.velocityY > FIX(6.875)) {
             PLAYER.step_s = 3;
             D_800B0914 = 3;
@@ -336,7 +337,7 @@ void func_8012E040(void) {
                 func_8012CB4C();
             }
         }
-        PlaySfx(SFX_UNK_64C);
+        PlaySfx(SFX_STOMP_SOFT_B);
         PLAYER.velocityY = 0;
         return;
     }
@@ -353,7 +354,7 @@ void func_8012E040(void) {
             PLAYER.posY.i.hi = PLAYER.posY.i.hi;
             PLAYER.posX.i.hi -= xOffset;
             func_80102CD8(3);
-            PlaySfx(NA_SE_EN_ROCK_BREAK);
+            PlaySfx(SFX_WALL_DEBRIS_B);
             PLAYER.velocityX = 0;
             PLAYER.velocityY = 0;
             func_8012CED4();
@@ -2048,7 +2049,7 @@ void EntityGiantSpinningCross(Entity* self) {
         self->facingLeft = 0;
         self->ext.giantcross.unk7C = 0;
         self->ext.giantcross.unk7E = 0x400;
-        PlaySfx(SFX_UNK_661);
+        PlaySfx(SFX_FIREBALL_SHOT_B);
         self->step++;
         primUVCoords = &D_800B0F94[0][0];
         prim = &g_PrimBuf[self->primIndex];

@@ -4,6 +4,7 @@
  */
 
 #include "np3.h"
+#include "sfx.h"
 
 typedef enum {
     MERMAN2_INIT,
@@ -677,7 +678,7 @@ void EntityMerman2(Entity* self) {
     }
 
     if ((self->flags & FLAG_DEAD) && (self->step < MERMAN2_DYING)) {
-        func_801C2598(0x71D);
+        func_801916C4(0x71D);
         self->drawFlags = 0;
         if (self->flags & FLAG_HAS_PRIMS) {
             g_api.FreePrimitives(self->primIndex);
@@ -951,7 +952,7 @@ void EntityMerman2(Entity* self) {
 
         case MERMAN2_SPIT_FIRE_ATTACK:
             if (AnimateEntity(D_8018227C, self) == 0) {
-                func_801C2598(0x662);
+                func_801916C4(SFX_FIREBALL_SHOT_C);
                 newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 i = 0;
                 if (newEntity != NULL) {
@@ -1157,7 +1158,7 @@ void EntityMerman2(Entity* self) {
             break;
 
         case 2:
-            func_801C2598(0x65B);
+            func_801916C4(SFX_FM_EXPLODE_B);
             func_801B653C();
             DestroyEntity(self);
         }

@@ -1,4 +1,5 @@
 #include <stage.h>
+#include "sfx.h"
 
 #if defined(VERSION_US)
 static u16 g_testCollEnemyLookup[] = {
@@ -260,12 +261,12 @@ void HitDetection(void) {
                                     }
                                     if ((i == 3) &&
                                         (iterEnt1->flags & FLAG_UNK_8000)) {
-                                        g_api.PlaySfx(SFX_CLANK);
+                                        g_api.PlaySfx(SFX_METAL_CLANG_E);
                                         iterEnt2->hitFlags = 2;
                                     }
                                     if ((i == 4) &&
                                         (iterEnt1->flags & FLAG_UNK_4000)) {
-                                        g_api.PlaySfx(SFX_CLANK);
+                                        g_api.PlaySfx(SFX_METAL_CLANG_E);
                                         iterEnt2->hitFlags = 2;
                                     }
                                 }
@@ -459,9 +460,9 @@ void HitDetection(void) {
                                 // as Alucard, this won't match
                                 g_api.PlaySfx(SFX_RICHTER_ATTACK_HIT);
                             } else if (iterEnt2->hitEffect & 0x80) {
-                                g_api.PlaySfx(SE_WEAPON_STAB);
+                                g_api.PlaySfx(SFX_WEAPON_STAB_B);
                             } else {
-                                g_api.PlaySfx(SE_WEAPON_WHACK);
+                                g_api.PlaySfx(SFX_WEAPON_HIT);
                             }
                         }
                         if (entFrom5C->hitPoints != 0x7FFE) {
@@ -612,9 +613,9 @@ void HitDetection(void) {
                 }
                 if ((entFrom5C->flags & 0x10) && (iterEnt2->attack)) {
                     if (iterEnt2->hitEffect & 0x80) {
-                        g_api.PlaySfx(SFX_CLANK);
+                        g_api.PlaySfx(SFX_METAL_CLANG_E);
                     } else {
-                        g_api.PlaySfx(SFX_CLANK);
+                        g_api.PlaySfx(SFX_METAL_CLANG_E);
                     }
                 }
                 otherEntity = entFrom5C;

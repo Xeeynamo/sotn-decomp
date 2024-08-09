@@ -4,6 +4,7 @@
  */
 
 #include "st0.h"
+#include "sfx.h"
 
 void EntitySecretButton(Entity* self) {
     Entity* newEntity;
@@ -37,7 +38,7 @@ void EntitySecretButton(Entity* self) {
         if (self->hitFlags != 0) {
             g_Tilemap.fg[0x1C4] = 0;
             self->animCurFrame = 4;
-            g_api.PlaySfx(0x644);
+            g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_SECRET_BUTTON, self, newEntity);
@@ -49,7 +50,7 @@ void EntitySecretButton(Entity* self) {
 
     case 2:
         if (self->hitFlags != 0) {
-            g_api.PlaySfx(0x640);
+            g_api.PlaySfx(SFX_ANIME_SWORD_B);
             g_isSecretStairsButtonPressed = true;
             self->hitboxState = 0;
             self->palette += 1;
@@ -80,7 +81,7 @@ void EntitySecretButton(Entity* self) {
             break;
 
         case 2:
-            g_api.PlaySfx(0x652);
+            g_api.PlaySfx(SFX_EXPLODE_FAST_A);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
@@ -106,7 +107,7 @@ void EntitySecretStairsCeiling(Entity* entity) {
 
     case 1:
         if (g_isSecretStairsButtonPressed) {
-            g_api.PlaySfx(NA_SE_SECRET_STAIRS);
+            g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             entity->step++;
         }
         break;
@@ -179,7 +180,7 @@ void EntitySecretStairs(Entity* self) {
 
     case 1:
         if (g_isSecretStairsButtonPressed) {
-            g_api.PlaySfx(0x642);
+            g_api.PlaySfx(SFX_DOOR_OPEN);
             self->step++;
         }
         break;
@@ -201,7 +202,7 @@ void EntitySecretStairs(Entity* self) {
                 self->posY.i.hi += 16;
             }
         } else {
-            g_api.PlaySfx(0x642);
+            g_api.PlaySfx(SFX_DOOR_OPEN);
             self->step++;
         }
         break;
@@ -224,7 +225,7 @@ void EntitySecretStairs(Entity* self) {
             MoveEntity();
             posX = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
             if (temp_s0 == posX) {
-                g_api.PlaySfx(0x64F);
+                g_api.PlaySfx(SFX_DOOR_CLOSE_A);
                 self->posX.i.hi = temp_s0 - g_Tilemap.scrollX.i.hi;
                 self->posY.i.hi = temp_s1 - g_Tilemap.scrollY.i.hi;
                 if (self->params != 3) {

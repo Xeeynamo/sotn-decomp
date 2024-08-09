@@ -1,4 +1,5 @@
 #include "dra.h"
+#include "dra_bss.h"
 #include "lba.h"
 
 #if defined(VERSION_US)
@@ -9,6 +10,27 @@
 #endif
 
 extern void* g_ApiInit[sizeof(GameApi) / sizeof(void*)];
+
+// BSS
+extern s32 g_DebugFreeze;
+extern s32 g_DebugHitboxViewMode;
+extern u32 D_801362B4;
+extern s32 D_801362B8;
+extern s32 D_801362BC;
+extern s32 g_DebugPalIdx;
+extern DebugColorChannel g_DebugColorChannel;
+extern u32 D_801362C8;
+extern OT_TYPE* g_CurrentOT;
+extern s32 D_801362D0;
+extern s32 D_801362D4;
+extern s32 g_DebugIsRecordingVideo;
+extern GpuUsage g_GpuMaxUsage;
+extern s32 g_DebugWaitInfoTimer;
+extern s32 g_DebugRecordVideoFid;
+extern s16 D_80136308[128];
+#if defined(VERSION_US)
+extern s32 g_softResetTimer;
+#endif
 
 s32 LoadVabData(void);
 void func_800E385C(OT_TYPE* ot);
@@ -592,13 +614,13 @@ void PrintGpuInfo(void) {
 void PrintHBlankInfo(void) {
     if (g_DebugEnabled && g_DebugMode != DEBUG_PALETTE_VIEWER) {
         if (g_Timer & 1) {
-            FntPrint("l=%03x/100\n", D_801362D0[1]);
-            FntPrint("l=%03x/100\n", D_801362D0[0]);
+            FntPrint("l=%03x/100\n", D_801362D4);
+            FntPrint("l=%03x/100\n", D_801362D0);
         } else {
-            FntPrint("l=%03x/100\n", D_801362D0[0]);
-            FntPrint("l=%03x/100\n", D_801362D0[1]);
+            FntPrint("l=%03x/100\n", D_801362D0);
+            FntPrint("l=%03x/100\n", D_801362D4);
         }
-        D_801362D0[0] = D_801362D0[1];
+        D_801362D0 = D_801362D4;
     }
 }
 
@@ -687,7 +709,7 @@ void SetMenuDisplayBuffer(void) {
     func_800E34DC(1);
 }
 
-void SetTitleDisplayBuffer(void) {
+static void SetTitleDisplayBuffer(void) {
     SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, DISP_TITLE_W, DISP_TITLE_H);
     SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, DISP_TITLE_W, DISP_TITLE_H);
     SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, DISP_TITLE_W, DISP_TITLE_H);
@@ -999,6 +1021,12 @@ void SetGameState(GameState gameState) {
     g_backbufferX = 0;
     g_backbufferY = 0;
 }
+
+// TODO split file here
+
+// BSS
+extern s32 D_8013640C;
+extern s32 D_80136410;
 
 void func_800E414C(void) {
     RoomTeleport* temp_a1;

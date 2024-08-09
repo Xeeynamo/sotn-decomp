@@ -1,4 +1,5 @@
 #include "sel.h"
+#include "sfx.h"
 
 s32 D_801804D0 = 0;
 u8 D_801804D4[] = {STAGE_MEMORYCARD, STAGE_CAT};
@@ -99,7 +100,7 @@ void HandleMainMenu(void) {
         D_8003C9A4++;
         return;
     case 1:
-        func_801B1A98();
+        SetTitleDisplayBuffer();
         D_801BB014 += 8;
         for (i = 0, prim = &g_PrimBuf[D_801BB010]; prim != NULL;
              prim = prim->next, i++) {
@@ -217,7 +218,7 @@ void HandleMainMenu(void) {
             }
         }
         if (g_pads[0].tapped & PAD_START) {
-            g_api.PlaySfx(0x63D);
+            g_api.PlaySfx(SFX_START_SLAM_B);
             D_8003C9A4++;
         }
         return;
@@ -247,7 +248,7 @@ void HandleMainMenu(void) {
         func_801B1F4C(1);
         func_801B259C(D_801804D8[D_800987B4], 1);
         if (g_pads[0].tapped & (PAD_START | PAD_CIRCLE)) {
-            g_api.PlaySfx(0x63D);
+            g_api.PlaySfx(SFX_START_SLAM_B);
             D_8003C9A4++;
         }
         return;

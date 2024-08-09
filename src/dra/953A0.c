@@ -1,4 +1,5 @@
 #include "dra.h"
+#include "dra_bss.h"
 #include "objects.h"
 #include "sfx.h"
 
@@ -91,10 +92,14 @@ u8 D_800C0ADC[] = {
     0x00, 0x0C, 0x42, 0x02, 0x28, 0x01, 0xFF,
 };
 
-u8 D_800C0B04[] = {
-    0x00, 0x0C, 0x35, 0x06, 0x74, 0x04, 0x00, 0x0C, 0x37,
-    0x06, 0x48, 0x04, 0x00, 0x0C, 0x39, 0x06, 0x25, 0x04,
-    0x00, 0x0C, 0x39, 0x06, 0x11, 0x01, 0xFF,
+u8 g_SfxSubweaponPickup[] = {
+    // clang-format off
+    0x00, 0x0C, 0x35, 0x06, 0x74, 0x04,
+    0x00, 0x0C, 0x37, 0x06, 0x48, 0x04,
+    0x00, 0x0C, 0x39, 0x06, 0x25, 0x04,
+    0x00, 0x0C, 0x39, 0x06, 0x11, 0x01,
+    0xFF,
+    // clang-format on
 };
 
 u8 D_800C0B20[] = {
@@ -191,9 +196,13 @@ u8 D_800C0CD8[] = {
     0x0D, 0x3C, 0x0A, 0x7F, 0x01, 0xFF,
 };
 
-u8 D_800C0CE8[] = {
-    0x00, 0x05, 0x56, 0x0A, 0x20, 0x01, 0x00, 0x05, 0x4A, 0x0A,
-    0x68, 0x04, 0x00, 0x05, 0x4A, 0x0A, 0x0E, 0x03, 0xFF,
+u8 g_SfxCursor[] = {
+    // clang-format off
+    0x00, 0x05, 0x56, 0x0A, 0x20, 0x01,
+    0x00, 0x05, 0x4A, 0x0A, 0x68, 0x04,
+    0x00, 0x05, 0x4A, 0x0A, 0x0E, 0x03,
+    0xFF,
+    // clang-format on
 };
 
 u8 D_800C0CFC[] = {
@@ -955,40 +964,46 @@ u8 D_800C1EAC[] = {
     0x3A, 0x0E, 0x00, 0x0E, 0x3C, 0x06, 0x28, 0x0E, 0xFF,
 };
 
-u8* D_800C1ECC[] = {
-    D_800C0ADC, D_800C0ADC, D_800C0CE8, D_800C0B04, D_800C0C14, D_800C0A10,
-    D_800C0A3C, D_800C0D2C, D_800C09E8, D_800C09A4, D_800C09B8, D_800C0C40,
-    D_800C09CC, D_800C0C74, D_800C0A58, D_800C0CFC, D_800C0CD8, D_800C0C48,
-    D_800C097C, D_800C0990, D_800C0B20, D_800C0D84, D_800C0D94, D_800C0F20,
-    D_800C0D40, D_800C0DB4, D_800C0DDC, D_800C0E10, D_800C0E2C, D_800C0E7C,
-    D_800C0EF4, D_800C0F30, D_800C0ED8, D_800C0FBC, D_800C106C, D_800C105C,
-    D_800C1080, D_800C10A8, D_800C1000, D_800C10E0, D_800C0AA8, D_800C0D10,
-    D_800C0B94, D_800C0BB0, D_800C0C00, D_800C0A20, D_800C0BE0, D_800C10F0,
-    D_800C1104, D_800C1118, D_800C0C58, D_800C1138, D_800C1158, D_800C11E0,
-    D_800C1200, D_800C121C, D_800C122C, D_800C1254, D_800C0ABC, D_800C0A98,
-    D_800C0B74, D_800C0B84, D_800C127C, D_800C12B8, D_800C12E0, D_800C12F4,
-    D_800C1308, D_800C131C, D_800C132C, D_800C133C, D_800C1394, D_800C13E0,
-    D_800C13F0, D_800C1428, D_800C1400, D_800C1414, D_800C143C, D_800C144C,
-    D_800C1460, D_800C148C, D_800C14A8, D_800C14B8, D_800C14D8, D_800C1500,
-    D_800C0F10, D_800C152C, D_800C153C, D_800C15AC, D_800C1644, D_800C16C4,
-    D_800C16D8, D_800C16E8, D_800C1268, D_800C16F8, D_800C1738, D_800C1764,
-    D_800C1754, D_800C1774, D_800C17E0, D_800C1890, D_800C18E8, D_800C1A48,
-    D_800C1AB8, D_800C1A5C, D_800C1AD4, D_800C0CB8, D_800C1E10, D_800C1E44,
-    D_800C0ADC, D_800C0ADC, D_800C0ADC, D_800C1E84, D_800C1784, D_800C0D74,
-    D_800C0ADC, D_800C0ADC, D_800C0ADC, D_800C0ADC, D_800C0ADC, D_800C0ADC,
-    D_800C0ADC, D_800C0BC4, D_800C1010, D_800C0ADC, D_800C0ADC, D_800C0ADC,
-    D_800C0B64, D_800C0ADC, D_800C0ADC, D_800C0ADC, D_800C0ADC, D_800C0A60,
-    D_800C0A70, D_800C0D60, D_800C0ADC, D_800C0ADC, D_800C0FF0, D_800C0ADC,
-    D_800C0ADC, D_800C0ADC, D_800C0ADC, D_800C1690, D_800C1A2C, D_800C0ADC,
-    D_800C0ADC, D_800C0ADC, D_800C1EAC, D_800C1998, D_800C0ADC, D_800C0ADC,
-    D_800C0ADC, D_800C1B20, D_800C1B3C, D_800C1BEC, D_800C1C9C, D_800C1CEC,
-    D_800C1D30, D_800C1D50, D_800C1D6C, D_800C1D88, D_800C1DA4, D_800C1DB4,
-    D_800C1DC8, D_800C1DD0, D_800C1DD8, D_800C1DE0, D_800C1DE8, D_800C1DF0,
-    D_800C1DF8, D_800C1E00, D_800C1E08, D_800C12A4,
+u8* g_SfxScripts[] = {
+    D_800C0ADC, D_800C0ADC, g_SfxCursor, g_SfxSubweaponPickup, D_800C0C14,
+    D_800C0A10, D_800C0A3C, D_800C0D2C,  D_800C09E8,           D_800C09A4,
+    D_800C09B8, D_800C0C40, D_800C09CC,  D_800C0C74,           D_800C0A58,
+    D_800C0CFC, D_800C0CD8, D_800C0C48,  D_800C097C,           D_800C0990,
+    D_800C0B20, D_800C0D84, D_800C0D94,  D_800C0F20,           D_800C0D40,
+    D_800C0DB4, D_800C0DDC, D_800C0E10,  D_800C0E2C,           D_800C0E7C,
+    D_800C0EF4, D_800C0F30, D_800C0ED8,  D_800C0FBC,           D_800C106C,
+    D_800C105C, D_800C1080, D_800C10A8,  D_800C1000,           D_800C10E0,
+    D_800C0AA8, D_800C0D10, D_800C0B94,  D_800C0BB0,           D_800C0C00,
+    D_800C0A20, D_800C0BE0, D_800C10F0,  D_800C1104,           D_800C1118,
+    D_800C0C58, D_800C1138, D_800C1158,  D_800C11E0,           D_800C1200,
+    D_800C121C, D_800C122C, D_800C1254,  D_800C0ABC,           D_800C0A98,
+    D_800C0B74, D_800C0B84, D_800C127C,  D_800C12B8,           D_800C12E0,
+    D_800C12F4, D_800C1308, D_800C131C,  D_800C132C,           D_800C133C,
+    D_800C1394, D_800C13E0, D_800C13F0,  D_800C1428,           D_800C1400,
+    D_800C1414, D_800C143C, D_800C144C,  D_800C1460,           D_800C148C,
+    D_800C14A8, D_800C14B8, D_800C14D8,  D_800C1500,           D_800C0F10,
+    D_800C152C, D_800C153C, D_800C15AC,  D_800C1644,           D_800C16C4,
+    D_800C16D8, D_800C16E8, D_800C1268,  D_800C16F8,           D_800C1738,
+    D_800C1764, D_800C1754, D_800C1774,  D_800C17E0,           D_800C1890,
+    D_800C18E8, D_800C1A48, D_800C1AB8,  D_800C1A5C,           D_800C1AD4,
+    D_800C0CB8, D_800C1E10, D_800C1E44,  D_800C0ADC,           D_800C0ADC,
+    D_800C0ADC, D_800C1E84, D_800C1784,  D_800C0D74,           D_800C0ADC,
+    D_800C0ADC, D_800C0ADC, D_800C0ADC,  D_800C0ADC,           D_800C0ADC,
+    D_800C0ADC, D_800C0BC4, D_800C1010,  D_800C0ADC,           D_800C0ADC,
+    D_800C0ADC, D_800C0B64, D_800C0ADC,  D_800C0ADC,           D_800C0ADC,
+    D_800C0ADC, D_800C0A60, D_800C0A70,  D_800C0D60,           D_800C0ADC,
+    D_800C0ADC, D_800C0FF0, D_800C0ADC,  D_800C0ADC,           D_800C0ADC,
+    D_800C0ADC, D_800C1690, D_800C1A2C,  D_800C0ADC,           D_800C0ADC,
+    D_800C0ADC, D_800C1EAC, D_800C1998,  D_800C0ADC,           D_800C0ADC,
+    D_800C0ADC, D_800C1B20, D_800C1B3C,  D_800C1BEC,           D_800C1C9C,
+    D_800C1CEC, D_800C1D30, D_800C1D50,  D_800C1D6C,           D_800C1D88,
+    D_800C1DA4, D_800C1DB4, D_800C1DC8,  D_800C1DD0,           D_800C1DD8,
+    D_800C1DE0, D_800C1DE8, D_800C1DF0,  D_800C1DF8,           D_800C1E00,
+    D_800C1E08, D_800C12A4,
 };
 
 void ExecCdSoundCommands(void) {
-    if (*(u16*)&g_CdSoundCommandQueuePos == 0)
+    if (g_CdSoundCommandQueuePos == 0)
         return;
 
     switch (g_CdSoundCommandQueue[0]) {
@@ -1040,19 +1055,19 @@ void ApplyQuadChannelSetting(
 
     volumeMod = volume;
     if (volumeMod == 0xFFFF) {
-        g_ChannelGroupVolume[channel_group] =
+        g_SfxScriptVolume[channel_group] =
             (D_8013AE7C * g_SfxData[arg0].volume) >> 7;
         g_UnkChannelSetting1[channel_group] = 0;
     } else {
         calcVolume = (D_8013AE7C * g_SfxData[arg0].volume) >> 7;
-        g_ChannelGroupVolume[channel_group] = (calcVolume * volumeMod) >> 7;
+        g_SfxScriptVolume[channel_group] = (calcVolume * volumeMod) >> 7;
         g_UnkChannelSetting1[channel_group] = distance;
     }
-    g_UnkChannelSetting2[channel_group] = arg0;
+    g_CurrentSfxScriptSfxId[channel_group] = arg0;
     D_8013B5EC[channel_group] = g_SfxData[arg0].unk4;
     progId = g_SfxData[arg0].prog + 1;
-    D_8013B628[channel_group] = D_800C1ECC[progId];
-    D_8013B66C[channel_group] = 0;
+    g_CurrentSfxScript[channel_group] = g_SfxScripts[progId];
+    g_SfxScriptTimer[channel_group] = 0;
     D_8013B648[channel_group] = arg0;
     D_8013AEA0[channel_group] = g_SfxData[arg0].unk6;
 }
@@ -1106,7 +1121,7 @@ void func_8013572C(s16 arg0, u16 volume, s16 distance) {
             }
             return;
         }
-        if (g_SfxData[arg0].unk6 >= D_8013AEA6) {
+        if (g_SfxData[arg0].unk6 >= D_8013AEA0[3]) {
             ApplyQuadChannelSetting(arg0, 3, true, volume, distance);
         }
     } else {
@@ -1238,17 +1253,17 @@ void func_80135D8C(void) {
 
     if (D_801390C4 == 0) {
         for (i = 0; i < 3; i++) {
-            if (g_UnkChannelSetting2[i] != 0) {
-                if (D_8013B66C[i] == 0) {
-                    // FAKE, should just be &D_8013B628[i]
-                    temp_v1_2 = &D_8013B628;
+            if (g_CurrentSfxScriptSfxId[i] != 0) {
+                if (g_SfxScriptTimer[i] == 0) {
+                    // FAKE, should just be &g_CurrentSfxScript[i]
+                    temp_v1_2 = &g_CurrentSfxScript;
                     temp_t3 = i + temp_v1_2;
 
                     temp_t2 = *temp_t3;
                     *temp_t3 = temp_t2 + 1;
                     vab = temp_t2[0];
                     if (vab == -1) {
-                        g_UnkChannelSetting2[i] = 0;
+                        g_CurrentSfxScriptSfxId[i] = 0;
                         continue;
                     }
                     *temp_t3 = temp_t2 + 2;
@@ -1258,25 +1273,25 @@ void func_80135D8C(void) {
                     *temp_t3 = temp_t2 + 4;
                     tone = temp_t2[3];
                     *temp_t3 = temp_t2 + 5;
-                    volume = g_ChannelGroupVolume[i] * temp_t2[4];
+                    volume = g_SfxScriptVolume[i] * temp_t2[4];
                     *temp_t3 = temp_t2 + 6;
-                    D_8013B66C[i] = temp_t2[5];
-                    distance = D_8013B5F6[30 + i];
+                    g_SfxScriptTimer[i] = temp_t2[5];
+                    distance = g_UnkChannelSetting1[i];
                     func_80132A04(
                         30 + i, vab, prog, tone, note, volume >> 7, distance);
                 } else {
-                    D_8013B66C[i]--;
+                    g_SfxScriptTimer[i]--;
                 }
             }
         }
-    } else if (D_8013AE8A[0] != 0) {
-        if (D_8013B672[0] == 0) {
-            temp_t2_2 = &D_8013B628[3];
+    } else if (g_CurrentSfxScriptSfxId[3] != 0) {
+        if (g_SfxScriptTimer[3] == 0) {
+            temp_t2_2 = &g_CurrentSfxScript[3];
             temp_v1 = *temp_t2_2;
             *temp_t2_2 = temp_v1 + 1;
             vab = temp_v1[0];
             if (vab == -1) {
-                D_8013AE8A[0] = 0;
+                g_CurrentSfxScriptSfxId[3] = 0;
                 return;
             }
             *temp_t2_2 = temp_v1 + 2;
@@ -1287,14 +1302,14 @@ void func_80135D8C(void) {
             tone = temp_v1[3];
             distance2 = g_UnkChannelSetting1[3];
             *temp_t2_2 = temp_v1 + 5;
-            volume = D_8013B626 * temp_v1[4];
+            volume = g_SfxScriptVolume[3] * temp_v1[4];
             *temp_t2_2 = temp_v1 + 6;
-            D_8013B672[0] = temp_v1[5];
+            g_SfxScriptTimer[3] = temp_v1[5];
             distance = distance2;
             func_80132A04(33, vab, prog, tone, note, volume >> 7, distance);
 
         } else {
-            D_8013B672[0]--;
+            g_SfxScriptTimer[3]--;
         }
     }
 }
@@ -1314,7 +1329,7 @@ void func_80136010(void) {
     s8* new_var;
     s16* fakeptr;
 
-    SpuGetAllKeysStatus(&D_80138F64);
+    SpuGetAllKeysStatus(D_80138F64);
     if (D_801390C4 == 0) {
         var_a0 = &D_80138F64[12];
         var_a2 = &D_80138F64[13];
@@ -1338,7 +1353,7 @@ void func_80136010(void) {
         var_t0 = new_var;
 
         for (i = 0; i < 3; i++) {
-            if (g_UnkChannelSetting2[i] == 0) {
+            if (g_CurrentSfxScriptSfxId[i] == 0) {
                 if ((s8)(*var_t0 + *var_t1 + *var_t2 + *var_t3) == 0) {
                     *var_t4 = 0;
                     fakeptr = D_8013AEA0;
@@ -1354,10 +1369,11 @@ void func_80136010(void) {
         }
         return;
     }
-    if ((D_8013AE8A[0] == 0) && ((s8)(D_80138F64[14] + D_80138F64[15] +
-                                      D_80138F64[16] + D_80138F64[17]) == 0)) {
-        D_8013B64E = 0;
-        D_8013AEA6 = 0;
+    if ((g_CurrentSfxScriptSfxId[3] == 0) &&
+        ((s8)(D_80138F64[14] + D_80138F64[15] + D_80138F64[16] +
+              D_80138F64[17]) == 0)) {
+        D_8013B648[3] = 0;
+        D_8013AEA0[3] = 0;
     }
 }
 

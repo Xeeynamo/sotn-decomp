@@ -1,9 +1,76 @@
 // Weapon ID #37. Used by weapons:
 // Short sword, Jewel sword, Stone sword, Unknown#198
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
+#include "w_037_1.h"
+#include "w_037_2.h"
+#define g_Animset w_037_1
+#define g_Animset2 w_037_2
+#include "sfx.h"
 
-INCLUDE_ASM("weapon/nonmatchings/w_037", EntityWeaponAttack);
+extern WeaponAnimation D_107000_8017A6A4[];
+extern s32 D_107000_8017BBE4;
+
+static void EntityWeaponAttack(Entity* self) {
+    WeaponAnimation* anim;
+    s8 animIndex;
+
+    self->posX.val = PLAYER.posX.val;
+    self->posY.val = PLAYER.posY.val;
+    self->facingLeft = PLAYER.facingLeft;
+    animIndex = (self->params & 0x7fff) >> 0x8;
+
+    anim = &D_107000_8017A6A4[animIndex];
+
+    if (PLAYER.ext.weapon.anim < anim->frameStart ||
+        PLAYER.ext.weapon.anim >= (anim->frameStart + 7) || !g_Player.unk46) {
+        DestroyEntity(self);
+        return;
+    }
+
+    if (self->step == 0) {
+        SetSpriteBank1(g_Animset);
+        self->animSet = ANIMSET_OVL(0x10);
+        self->palette = 0x110;
+        self->unk5A = 0x64;
+        if (g_HandId) {
+            self->animSet += 2;
+            self->palette += 0x18;
+            self->unk5A += 2;
+        }
+
+        self->palette += anim->palette;
+        self->flags = FLAG_UNK_20000 | FLAG_UNK_40000;
+        self->zPriority = PLAYER.zPriority - 2;
+        SetWeaponProperties(self, 0);
+        self->step++;
+    }
+
+    self->ext.weapon.anim = PLAYER.ext.weapon.anim - anim->frameStart;
+
+    if (PLAYER.animFrameDuration == 1 &&
+        PLAYER.animFrameIdx == anim->soundFrame) {
+        g_api.PlaySfx(anim->soundId);
+    }
+
+    if (g_api.UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
+        DestroyEntity(self);
+        return;
+    }
+
+    if (!D_107000_8017BBE4 && PLAYER.animFrameIdx == 1 &&
+        (animIndex - 1) < 2U) {
+        g_api.CreateEntFactoryFromEntity(
+            self, 0x3a + ((g_HandId + 1) << 0xC) + ((--animIndex) << 0x10), 0);
+    }
+
+    D_107000_8017BBE4 = PLAYER.animFrameIdx;
+    self->drawFlags = PLAYER.drawFlags;
+    self->rotY = PLAYER.rotY;
+    self->rotPivotY = PLAYER.rotPivotY;
+}
 
 extern u8 D_107000_8017A6E4[6][8];
 
@@ -259,28 +326,110 @@ s32 func_ptr_80170004(Entity* self) {
     }
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_037", func_ptr_80170008);
+extern AnimationFrame D_107000_8017A798[];
 
-void func_ptr_8017000C(Entity* self) {}
+static void func_ptr_80170008(Entity* self) {
+    Collider collider;
+    s16 distX;
+    s16 distY;
 
-s32 func_ptr_80170010(Entity* self) {}
+    switch (self->step) {
+    case 0:
+        g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            DestroyEntity(self);
+            return;
+        }
 
-s32 func_ptr_80170014(Entity* self) {}
+        self->unk4C = &D_107000_8017A798[0];
+        self->animSet = 3;
+        self->zPriority = PLAYER.zPriority + 2;
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        SetSpeedX(rand() + FIX(0.25));
+        self->velocityY = -(rand() + FIX(1));
+        self->step++;
+        break;
 
-int GetWeaponId(void) { return 37; }
+    case 1:
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->velocityY += FIX(9.0 / 64.0);
 
-void EntityWeaponShieldSpell(Entity* self) {}
+        g_api.CheckCollision(
+            self->posX.i.hi, self->posY.i.hi - 1, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            self->posY.i.hi += collider.unk20;
+            self->velocityY = FIX(1);
+        }
 
-void func_ptr_80170024(Entity* self) {}
+        g_api.CheckCollision(
+            self->posX.i.hi + 4, self->posY.i.hi, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            self->posX.i.hi += collider.unk14;
+            self->velocityX = -self->velocityX;
+        }
 
-void func_ptr_80170028(Entity* self) {}
+        g_api.CheckCollision(
+            self->posX.i.hi - 4, self->posY.i.hi, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            self->posX.i.hi += collider.unk1C;
+            self->velocityX = -self->velocityX;
+        }
 
-void WeaponUnused2C(void) {}
+        g_api.CheckCollision(
+            self->posX.i.hi, self->posY.i.hi + 7, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            self->posY.i.hi += collider.unk18;
+            self->ext.timer.t = 0x50;
+            g_api.PlaySfx(SFX_GOLD_PICKUP);
+            self->step++;
+        }
+        break;
 
-void WeaponUnused30(void) {}
+    case 2:
+        if (self->ext.timer.t == 0x10) {
+            self->drawFlags = FLAG_DRAW_UNK80;
+        }
 
-void WeaponUnused34(void) {}
+        if (--self->ext.timer.t == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
 
-void WeaponUnused38(void) {}
+    distX = PLAYER.posX.i.hi - self->posX.i.hi;
+    distY = PLAYER.posY.i.hi - self->posY.i.hi;
 
-void WeaponUnused3C(void) {}
+    if (abs(distX) < 0xB) {
+        if (abs(distY) < 0x1B) {
+            g_Status.gold = CLAMP_MAX(g_Status.gold + 1, MAX_GOLD);
+            g_api.PlaySfx(SFX_GOLD_PICKUP);
+            DestroyEntity(self);
+        }
+    }
+}
+
+static void func_ptr_8017000C(Entity* self) {}
+
+static s32 func_ptr_80170010(Entity* self) {}
+
+static s32 func_ptr_80170014(Entity* self) {}
+
+static int GetWeaponId(void) { return 37; }
+
+static void EntityWeaponShieldSpell(Entity* self) {}
+
+static void func_ptr_80170024(Entity* self) {}
+
+static void func_ptr_80170028(Entity* self) {}
+
+static void WeaponUnused2C(void) {}
+
+static void WeaponUnused30(void) {}
+
+static void WeaponUnused34(void) {}
+
+static void WeaponUnused38(void) {}
+
+static void WeaponUnused3C(void) {}

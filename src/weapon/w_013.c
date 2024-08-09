@@ -7,7 +7,14 @@
 // the entities. They interact weirdly and seem to not line up.
 
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
+#include "w_013_1.h"
+#include "w_013_2.h"
+#define g_Animset w_013_1
+#define g_Animset2 w_013_2
+#include "sfx.h"
 
 extern SpriteParts D_5F000_8017A040[];
 extern u8 D_5F000_8017A5B0[6][8];
@@ -61,7 +68,7 @@ s32 func_5F000_8017A9CC(Primitive* prim, s32 x, s32 y) {
     return 0;
 }
 
-void EntityWeaponAttack(Entity* self) {
+static void EntityWeaponAttack(Entity* self) {
     Entity* unused;
     s16 var_s1;
 
@@ -102,7 +109,7 @@ void EntityWeaponAttack(Entity* self) {
         DestroyEntityWeapon(1);
         self->hitboxWidth = 0x12;
         self->hitboxHeight = 4;
-        g_api.PlaySfx(0x60C);
+        g_api.PlaySfx(SFX_WEAPON_SWISH_C);
         self->ext.heavenSword.unk98 = 0x50;
         g_Player.D_80072F00[10] = 4;
         self->step++;
@@ -141,7 +148,8 @@ void EntityWeaponAttack(Entity* self) {
         var_s2 = D_5F000_8017A5E0[(self->ext.heavenSword.unk7E >> 1) % 14];
         self->ext.weapon.childPalette = self->palette + var_s2;
         if (!(g_GameTimer & 7)) {
-            g_api.func_80134714(0x60A, self->ext.heavenSword.unk98, 0);
+            g_api.func_80134714(
+                SFX_WEAPON_SWISH_A, self->ext.heavenSword.unk98, 0);
             self->ext.heavenSword.unk98 -= 4;
             if (self->ext.heavenSword.unk98 < 0) {
                 self->ext.heavenSword.unk98 = 0;
@@ -194,7 +202,8 @@ void EntityWeaponAttack(Entity* self) {
         self->ext.weapon.childPalette = self->palette + var_s2;
         self->ext.heavenSword.unk7E++;
         if (!(g_GameTimer & 7)) {
-            g_api.func_80134714(0x60A, self->ext.heavenSword.unk98, 0);
+            g_api.func_80134714(
+                SFX_WEAPON_SWISH_A, self->ext.heavenSword.unk98, 0);
             self->ext.heavenSword.unk98 -= 4;
             if (self->ext.heavenSword.unk98 < 0) {
                 self->ext.heavenSword.unk98 = 0;
@@ -229,7 +238,7 @@ s32 func_ptr_80170004(Entity* self) {
     DestroyEntity(self);
 }
 
-void func_ptr_80170008(Entity* self) {
+static void func_ptr_80170008(Entity* self) {
     Entity* ents2;
     Primitive* prim;
     s16 angle;
@@ -304,7 +313,8 @@ void func_ptr_80170008(Entity* self) {
             self->ext.heavenSword.unk80++;
         }
         if (g_GameTimer % 6 == 0) {
-            g_api.func_80134714(0x60A, self->ext.heavenSword.unk98, 0);
+            g_api.func_80134714(
+                SFX_WEAPON_SWISH_A, self->ext.heavenSword.unk98, 0);
             self->ext.heavenSword.unk98 -= 4;
             if (self->ext.heavenSword.unk98 < 0) {
                 self->ext.heavenSword.unk98 = 0;
@@ -326,7 +336,7 @@ void func_ptr_80170008(Entity* self) {
         self->ext.heavenSword.unk82++;
         if ((self->ext.heavenSword.unk82 < 0x20) &&
             !(self->ext.heavenSword.unk82 & 3)) {
-            g_api.PlaySfx(0x60B);
+            g_api.PlaySfx(SFX_WEAPON_SWISH_B);
         }
         if (self->ext.heavenSword.unk82 > 0x10) {
             self->posX.i.hi = self->ext.heavenSword.xPos;
@@ -341,7 +351,7 @@ void func_ptr_80170008(Entity* self) {
             g_api.PlaySfx(0x66A);
             self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
             self->rotX = self->rotY = 0x100;
-            self->palette = 0x815F;
+            self->palette = PAL_OVL(0x15F);
             self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
             if (self->primIndex != -1) {
                 self->flags |= FLAG_HAS_PRIMS;
@@ -407,7 +417,7 @@ void func_ptr_80170008(Entity* self) {
 
 // Pay attention to unk80, unk8A, and childPalette. These all seem to be
 // special for Heaven Sword and we should probably have it as a special weapon.
-void func_ptr_8017000C(Entity* self) {
+static void func_ptr_8017000C(Entity* self) {
     s16 angle;
 
     if (self->ext.weapon.parent->entityId == 0) {
@@ -469,24 +479,24 @@ void func_ptr_8017000C(Entity* self) {
     }
 }
 
-s32 func_ptr_80170010(Entity* self) {}
+static s32 func_ptr_80170010(Entity* self) {}
 
-s32 func_ptr_80170014(Entity* self) {}
+static s32 func_ptr_80170014(Entity* self) {}
 
-int GetWeaponId(void) { return 13; }
+static int GetWeaponId(void) { return 13; }
 
-void EntityWeaponShieldSpell(Entity* self) {}
+static void EntityWeaponShieldSpell(Entity* self) {}
 
-void func_ptr_80170024(Entity* self) {}
+static void func_ptr_80170024(Entity* self) {}
 
-void func_ptr_80170028(Entity* self) {}
+static void func_ptr_80170028(Entity* self) {}
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}

@@ -82,7 +82,8 @@ class DecompProgressStats:
         if not os.path.exists(nonmatchings):
             nonmatchings_psp = f"{asm_path}/psp"
             if not os.path.exists(nonmatchings_psp):
-                exiterr(f"path '{nonmatchings}' or '{nonmatchings_psp} not found")
+                # nonmatchings path does not exist, the overlay is 100% decompiled
+                return ""
             nonmatchings = nonmatchings_psp
 
         nonmatchings_subdir = os.path.join(nonmatchings, os.path.basename(asm_path))
@@ -140,8 +141,11 @@ class DecompProgressStats:
             while extensionlessFilePath.suffix:
                 extensionlessFilePath = extensionlessFilePath.with_suffix("")
 
-            fullAsmFile = asmPath / extensionlessFilePath.with_suffix(".s")
-            wholeFileIsUndecomped = fullAsmFile.exists()
+            if asmPath != "":
+                fullAsmFile = asmPath / extensionlessFilePath.with_suffix(".s")
+                wholeFileIsUndecomped = fullAsmFile.exists()
+            else:  # nonmatchings path does not exist, the overlay is 100% decompiled
+                wholeFileIsUndecomped = False
 
             for func in file:
                 self.functions_total += 1

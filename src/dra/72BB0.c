@@ -1,5 +1,5 @@
-
 #include "dra.h"
+#include "dra_bss.h"
 #include "sfx.h"
 
 void PlayerStepJump(void) {
@@ -83,8 +83,8 @@ void PlayerStepJump(void) {
                 SetPlayerAnim((u8)D_800ACF7C[stepSlot + 1]);
                 func_8010FAF4();
                 g_Player.unk44 = 1;
-                D_80138FC8 = 0xFE;
-                D_80138FCA = 0x10;
+                g_ButtonCombo[COMBO_BF].buttonsCorrect = 0xFE;
+                g_ButtonCombo[COMBO_BF].timer = 0x10;
             }
         } else if (
             (PLAYER.animFrameIdx == 4) && (PLAYER.animFrameDuration == 1)) {
@@ -463,7 +463,7 @@ void func_801139CC(s32 arg0) {
 
     if (arg0 & 1) {
         func_80102CD8(3);
-        PlaySfx(NA_SE_SECRET_STAIRS);
+        PlaySfx(SFX_WALL_DEBRIS_B);
     }
     if (arg0 & 2) {
         PLAYER.velocityX = 0;
@@ -567,7 +567,7 @@ s32 func_80113D7C(s16 damageAmount) {
     if (temp_s0 != 4) {
         g_Player.D_80072F00[2] = 4;
         g_Player.unk40 = 0x8166;
-        sfx = D_800ACF84[(rand() & 1) + 3];
+        sfx = g_SfxPainGrunts[(rand() & 1) + 3];
         PlaySfx(sfx);
         if (step && step) // TODO: !FAKE
             ;
@@ -646,7 +646,7 @@ block_13:
     PLAYER.entityRoomIndex = 1;
 }
 
-void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
+void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
     s32 randbit;
     u8 unkAC_offset;
     s32 var_s0;
@@ -793,7 +793,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
         }
         g_Player.unk40 = 0x8166;
         g_Player.D_80072F00[2] = 6;
-        PlaySfx(D_800ACF84[sfxIndex]);
+        PlaySfx(g_SfxPainGrunts[sfxIndex]);
         if (damage->effects & 0x100) {
             g_Player.D_80072F00[1] =
                 GetStatusAilmentTimer(STATUS_AILMENT_CURSE, 0x400);
@@ -847,7 +847,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
                 g_Player.unk40 = 0x8164;
             }
             if (damage->effects & 0x40) {
-                PlaySfx(SE_WEAPON_STAB);
+                PlaySfx(SFX_WEAPON_STAB_B);
                 g_Player.unk40 = 0x8166;
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(0x4200, 44), 0);
@@ -930,7 +930,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
                     g_CurrentEntity, FACTORY(0x900, 4), 0);
                 PLAYER.posY.i.hi -= 0x15;
                 PLAYER.posX.i.hi -= var_s0;
-                PlaySfx(NA_SE_EN_ROCK_BREAK);
+                PlaySfx(SFX_WALL_DEBRIS_B);
                 func_80102CD8(2);
                 PLAYER.step_s = 1;
                 if (g_Player.unk52 == 0xF &&
@@ -944,7 +944,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
         if (PLAYER.step_s == 0xF) {
             g_Player.D_80072F00[8] = 8;
             SetPlayerAnim(0x3F);
-            PlaySfx(NA_SE_EN_ROCK_BREAK);
+            PlaySfx(SFX_WALL_DEBRIS_B);
             PLAYER.velocityY = FIX(-2.5);
             func_80102CD8(2);
             PLAYER.step_s = 3;
@@ -957,7 +957,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1) {
         PLAYER.velocityY = 0;
         g_Player.D_80072F00[8] = 48;
         PLAYER.velocityX /= 2;
-        PlaySfx(SFX_UNK_647);
+        PlaySfx(SFX_STOMP_HARD_B);
         PLAYER.rotZ = 0x400;
         PLAYER.rotPivotX = 0x10;
         PLAYER.rotPivotY = 4;
@@ -1067,7 +1067,7 @@ void func_80114DF4(s32 arg0) {
             PLAYER.velocityY = 0;
             PLAYER.velocityX = 0;
             func_80102CD8(1);
-            PlaySfx(NA_SE_EN_ROCK_BREAK);
+            PlaySfx(SFX_WALL_DEBRIS_B);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 39), 0);
 
             animVariant = rand() % 64;
@@ -1112,7 +1112,7 @@ void func_80114DF4(s32 arg0) {
 
         if (!(g_Player.unk04 & 1)) {
             func_80102CD8(1);
-            PlaySfx(NA_SE_EN_ROCK_BREAK);
+            PlaySfx(SFX_WALL_DEBRIS_B);
         }
 
         PLAYER.velocityY = 0;
@@ -1132,7 +1132,7 @@ void func_80114DF4(s32 arg0) {
             g_Player.padTapped |= (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
             // Counter for how many wiggles left until we're out
             g_Player.unk5E--;
-            PlaySfx(SFX_UNK_608);
+            PlaySfx(SFX_STONE_MOVE_B);
             if (g_Player.unk5E == 0) {
                 SetPlayerAnim(0x3B);
                 if (PLAYER.ext.player.anim != 0x3A) {
@@ -1191,7 +1191,195 @@ void func_80114DF4(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("dra/nonmatchings/72BB0", func_80115394);
+// Somewhat weird args, worth more study. arg2 is unused.
+void func_80115394(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
+    s32 i;
+    s32 j;
+    Entity* ent;
+
+    u8* s2;
+    u8* data;
+    bool nullifyVelY;
+    PlayerDraw* plDraw;
+
+    nullifyVelY = false;
+    PLAYER.drawFlags = DRAW_COLORS;
+    plDraw = &g_PlayerDraw[0];
+    if ((g_unkGraphicsStruct.unk20 == 0xFFF) && (PLAYER.step_s)) {
+        SetPlayerStep(Player_Unk17);
+        PLAYER.velocityY = 0;
+        PLAYER.velocityX = 0;
+        return;
+    }
+    switch (PLAYER.step_s) {
+    case 0:
+        nullifyVelY = true;
+        PLAYER.velocityY = 0;
+        PLAYER.velocityX = 0;
+        if (arg_PlayerStep == Player_StatusStone) {
+            ent = &g_Entities[16];
+            for (j = 16; j < 64; j++, ent++) {
+                // Entity 32 appears to be EntityPlayerDissolves
+                if (ent->entityId == 32) {
+                    PlaySfx(NA_SE_VO_AL_DYING);
+                    PLAYER.step_s = 16;
+                    return;
+                }
+            }
+        }
+        PlaySfx(NA_SE_VO_AL_DYING);
+        func_80113EE0();
+        func_80113F7C();
+        PLAYER.velocityY = FIX(-3.25);
+        func_8010E3B8(FIX(-1.25));
+        PLAYER.ext.player.anim = 0xC0;
+        PLAYER.rotZ = 0;
+
+        PLAYER.rotPivotX = PLAYER.rotPivotY = 0;
+        if (damage->effects & ELEMENT_FIRE) {
+            func_80118C28(3);
+            // Blueprint 44 has child 11, EntityPlayerBlinkWhite
+            CreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(0x4F00, 44),
+                0); // Blueprint 51 has child 16, func_8011EDA8
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x200, 51), 0);
+            D_80137FEC = 1;
+        } else if (damage->effects & ELEMENT_THUNDER) {
+            func_80118C28(9);
+            // Blueprint 44 has child 11, EntityPlayerBlinkWhite
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x5900, 44), 0);
+            // Blueprint 45 has child 30, EntityHitByLightning
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x100, 45), 0);
+            D_80137FEC = 2;
+        } else if (damage->effects & ELEMENT_ICE) {
+            func_80118C28(10);
+            // Blueprint 44 has child 11, EntityPlayerBlinkWhite
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x5A00, 44), 0);
+            // Blueprint 46 has child 33, EntityHitByIce
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 46), 0);
+            D_80137FEC = 3;
+            PLAYER.drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        } else {
+            func_80118C28(1);
+            // Blueprint 44 has child 11, EntityPlayerBlinkWhite
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x5300, 44), 0);
+            // Blueprint 49 has child 5, func_8011E4BC
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x500, 49), 0);
+            D_80137FEC = 0;
+        }
+        plDraw->r0 = plDraw->b0 = plDraw->g0 = plDraw->r1 = plDraw->b1 =
+            plDraw->g1 = plDraw->r2 = plDraw->b2 = plDraw->g2 = plDraw->r3 =
+                plDraw->b3 = plDraw->g3 = 0x80;
+        plDraw->enableColorBlend = 1;
+        PLAYER.step_s++;
+        break;
+    case 1:
+        if (D_80137FEC == 0) {
+            if (plDraw->r0 < 0xF8) {
+                plDraw->r0++;
+            }
+            if (plDraw->g0 > 8) {
+                plDraw->g0--;
+            }
+
+            plDraw->r3 = plDraw->r2 = plDraw->r1 = plDraw->r0;
+            plDraw->b0 = plDraw->b1 = plDraw->g1 = plDraw->b2 = plDraw->g2 =
+                plDraw->b3 = plDraw->g3 = plDraw->g0;
+        }
+        if (D_80137FEC == 1 || D_80137FEC == 2) {
+            if (plDraw->g0 > 8) {
+                plDraw->g0--;
+            }
+            plDraw->r3 = plDraw->r2 = plDraw->r1 = plDraw->r0 = plDraw->b0 =
+                plDraw->b1 = plDraw->g1 = plDraw->b2 = plDraw->g2 = plDraw->b3 =
+                    plDraw->g3 = plDraw->g0;
+        }
+        if (D_80137FEC == 3) {
+            if (plDraw->r0 < 0xF8) {
+                plDraw->r0--;
+            }
+            plDraw->r3 = plDraw->r2 = plDraw->r1 = plDraw->b3 = plDraw->b2 =
+                plDraw->b1 = plDraw->b0 = plDraw->r0;
+            if (plDraw->g0 < 0xF8) {
+                plDraw->g0++;
+            }
+            plDraw->g3 = plDraw->g2 = plDraw->g1 = plDraw->g0;
+        }
+        PLAYER.velocityY += FIX(11.0 / 128);
+        if (PLAYER.velocityY > FIX(1.0 / 4)) {
+            PLAYER.velocityY = FIX(1.0 / 16);
+        }
+        if (PLAYER.animFrameDuration < 0) {
+            StoreImage(&D_800AE130, (u32*)&D_80139A7C);
+            D_80137FE4 = 0;
+            D_80137FE8 = 0x40;
+            PLAYER.step_s++;
+        }
+        break;
+    case 2:
+        for (i = 0; i < 4; i++) {
+            s2 = data = &D_80139A7C[0];
+            s2 += ((D_80137FE4 >> 1) & 7);
+            s2 += ((D_80137FE4 & 0xFF) >> 4) << 6;
+            for (j = 0; j < 0x28; j++) {
+                if (D_80137FE4 & 1) {
+                    *(s2 + ((j & 7) * 8) + ((j >> 3) * 0x400)) &= 0xF0;
+                } else {
+                    *(s2 + ((j & 7) * 8) + ((j >> 3) * 0x400)) &= 0x0F;
+                }
+            }
+            D_80137FE4 += 0x23;
+            D_80137FE4 &= 0xFF;
+        }
+        LoadImage(&D_800AE130, data);
+        if (--D_80137FE8 == 0) {
+            PLAYER.velocityY = 0;
+            plDraw->enableColorBlend = 0;
+            PLAYER.step_s = 0x80;
+        }
+        break;
+    case 16:
+        D_80137FF0 = 0x50;
+        PLAYER.step_s++;
+        break;
+    case 17:
+        g_Player.unk5E = 5;
+        if (D_80137FF0 % 16 == 7) {
+            g_Player.padTapped = PAD_UP;
+            PlaySfx(SFX_STONE_MOVE_B);
+        }
+        if (--D_80137FF0 == 0) {
+            D_800AFC50[1] |= PLAYER.animCurFrame;
+            PLAYER.palette = 0x810D;
+            SetPlayerAnim(0x3E);
+            // Blueprint 16 has child 2, func_8011B5A4
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x300, 16), 0);
+            PLAYER.step_s++;
+        }
+        break;
+    case 18:
+        if (PLAYER.animFrameDuration < 0) {
+            plDraw->enableColorBlend = 0;
+            g_CurrentEntity->step_s = 0x80;
+        }
+        break;
+    case 0x80:
+        break;
+    }
+    DecelerateX(FIX(1.0 / 64));
+    if (PLAYER.animFrameIdx >= 15) {
+        if ((PLAYER.animFrameIdx == 22) && (PLAYER.animFrameDuration == 1)) {
+            PLAYER.rotZ -= 0x100;
+        }
+        PLAYER.rotZ -= 6;
+        if (PLAYER.rotZ < -0x280) {
+            PLAYER.rotZ = -0x280;
+        }
+    }
+    if (nullifyVelY && (g_Player.unk72)) {
+        PLAYER.velocityY = 0;
+    }
+}
 
 void func_80115BB0(void) {
     PLAYER.drawFlags = FLAG_DRAW_ROTZ;

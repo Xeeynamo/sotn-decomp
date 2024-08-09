@@ -1,12 +1,18 @@
 // Weapon ID #18. Used by weapons:
 // Power of Sire
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
+#include "w_018_1.h"
+#include "w_018_2.h"
+#define g_Animset w_018_1
+#define g_Animset2 w_018_2
 
 extern const char D_82000_8017A73C[]; // "\no\n"
 extern s32 D_82000_8017B1B4;          // g_DebugWaitInfoTimer
 
-void DebugShowWaitInfo(const char* msg) {
+static void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint(msg);
     if (D_82000_8017B1B4++ & 4) {
@@ -19,7 +25,7 @@ void DebugShowWaitInfo(const char* msg) {
     FntFlush(-1);
 }
 
-void DebugInputWait(const char* msg) {
+static void DebugInputWait(const char* msg) {
     while (PadRead(0))
         DebugShowWaitInfo(msg);
     while (!PadRead(0))
@@ -28,30 +34,93 @@ void DebugInputWait(const char* msg) {
 
 INCLUDE_ASM("weapon/nonmatchings/w_018", EntityWeaponAttack);
 
-INCLUDE_ASM("weapon/nonmatchings/w_018", func_ptr_80170004);
+extern AnimationFrame D_82000_8017A724[];
 
-void func_ptr_80170008(Entity* self) {}
+s32 func_ptr_80170004(Entity* self) {
+    s16 angle;
+    s32 scale;
 
-void func_ptr_8017000C(Entity* self) {}
+    if (self->ext.weapon.parent->ext.weapon.equipId != 0x48) {
+        DestroyEntity(self);
+        return;
+    }
 
-s32 func_ptr_80170010(Entity* self) {}
+    switch (self->step) {
+    case 0:
+        SetSpriteBank1(g_Animset);
+        self->animSet = ANIMSET_OVL(0x10);
+        if (g_HandId != 0) {
+            self->animSet = ANIMSET_OVL(0x12);
+        }
 
-s32 func_ptr_80170014(Entity* self) {}
+        if (self->ext.weapon.parent->palette >= 0x128U) {
+            self->palette = PAL_DRA(0x128);
+        } else {
+            self->palette = PAL_DRA(0x110);
+        }
 
-int GetWeaponId(void) { return 18; }
+        self->unk5A = self->ext.weapon.parent->unk5A;
+        self->facingLeft = 0;
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->zPriority = PLAYER.zPriority - 2;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        self->unk4C = D_82000_8017A724;
+        self->rotX = self->rotY = 256;
 
-void EntityWeaponShieldSpell(Entity* self) {}
+        angle = rand();
+        self->velocityX = rcos(angle) << 7;
+        self->velocityY = -(rsin(angle) << 7);
 
-void func_ptr_80170024(Entity* self) {}
+        scale = rand() & 7;
+        self->posX.val += scale * self->velocityX;
+        self->posY.val += (scale + 2) * self->velocityY;
 
-void func_ptr_80170028(Entity* self) {}
+        g_api.PlaySfx(SFX_UNK_69D);
+        self->ext.timer.t = 6;
+        self->step++;
+        break;
 
-void WeaponUnused2C(void) {}
+    case 1:
+        self->ext.timer.t--;
+        if (self->ext.timer.t == 0) {
+            self->step++;
+        }
+        break;
 
-void WeaponUnused30(void) {}
+    case 2:
+        if (self->rotX < 512) {
+            self->rotX += 16;
+        }
+        self->rotY = self->rotX;
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        break;
+    }
+}
 
-void WeaponUnused34(void) {}
+static void func_ptr_80170008(Entity* self) {}
 
-void WeaponUnused38(void) {}
+static void func_ptr_8017000C(Entity* self) {}
 
-void WeaponUnused3C(void) {}
+static s32 func_ptr_80170010(Entity* self) {}
+
+static s32 func_ptr_80170014(Entity* self) {}
+
+static int GetWeaponId(void) { return 18; }
+
+static void EntityWeaponShieldSpell(Entity* self) {}
+
+static void func_ptr_80170024(Entity* self) {}
+
+static void func_ptr_80170028(Entity* self) {}
+
+static void WeaponUnused2C(void) {}
+
+static void WeaponUnused30(void) {}
+
+static void WeaponUnused34(void) {}
+
+static void WeaponUnused38(void) {}
+
+static void WeaponUnused3C(void) {}
