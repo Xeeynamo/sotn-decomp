@@ -160,7 +160,7 @@ bool InitGame(void) {
     api.func_80133950 = NULL;
     api.func_800F27F4 = NULL;
     api.func_800FF110 = NULL;
-    api.func_800FD664 = NULL;
+    api.func_800FD664 = func_800FD664;
     api.func_800FD5BC = NULL;
     api.LearnSpell = NULL;
     api.DebugInputWait = DebugInputWait;
