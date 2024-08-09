@@ -17,6 +17,38 @@ typedef enum {
     BLOODY_ZOMBIE_DESTROY
 } EntityBloodyZombieSteps;
 
+extern u16 g_EBloodyZombieInit[];
+static s16 sensors_ground[4][2] = {{0, 28}, {0, 4}, {8, -4}, {-16, 0}};
+static u16 sensors_move[][2] = {{0, 28}, {8, 0}};
+static u8 anim_walk[] = {0x04, 0x02, 0x0D, 0x03, 0x0A, 0x02, 0x0A, 0x01,
+                         0x0D, 0x04, 0x0A, 0x01, 0x06, 0x02, 0x00, 0x00};
+static u8 anim_attack[] = {
+    0x04, 0x05, 0x04, 0x06, 0x03, 0x07, 0x02, 0x08, 0x02, 0x09, 0x04, 0x08,
+    0x02, 0x0A, 0x02, 0x0B, 0x02, 0x0C, 0x02, 0x0D, 0x02, 0x0E, 0x02, 0x0F,
+    0x0C, 0x10, 0x02, 0x11, 0x02, 0x12, 0x02, 0x13, 0xFF, 0x00};
+static u8 anim_hit[] = {
+    0x01, 0x16, 0x01, 0x14, 0x01, 0x15, 0x01, 0x14, 0x02, 0x15,
+    0x03, 0x14, 0x04, 0x15, 0x08, 0x14, 0x02, 0x16, 0xFF, 0x00};
+static u8 anim_die[] = {
+    0x01, 0x16, 0x01, 0x14, 0x01, 0x15, 0x01, 0x14, 0x02, 0x15, 0x03, 0x14,
+    0x04, 0x15, 0x28, 0x14, 0x06, 0x17, 0x05, 0x18, 0x05, 0x19, 0x05, 0x1A,
+    0x05, 0x1B, 0x02, 0x1C, 0x02, 0x1D, 0x02, 0x1E, 0x02, 0x1F, 0x02, 0x1E,
+    0x02, 0x1F, 0x02, 0x1E, 0x02, 0x1F, 0x02, 0x1E, 0x02, 0x1F, 0x02, 0x1E,
+    0x02, 0x1F, 0x02, 0x1E, 0x02, 0x1F, 0x02, 0x1E, 0x02, 0x1F, 0x02, 0x1E,
+    0x02, 0x1F, 0x02, 0x1E, 0x02, 0x1F, 0x02, 0x1E, 0xFF, 0x00};
+static u8 anim_chase[] = {0x02, 0x02, 0x06, 0x03, 0x04, 0x02, 0x04, 0x01,
+                          0x06, 0x04, 0x04, 0x01, 0x02, 0x02, 0x00, 0x00};
+static u8 D_8018238C[] = {
+    0x08, 0x40, 0x20, 0x0F, 0x0F, 0x08, 0x50, 0x20, 0x0F, 0x0F, 0x08,
+    0x60, 0x20, 0x0F, 0x0F, 0x08, 0x70, 0x20, 0x0F, 0x0F, 0xFF, 0x00};
+static u8 D_801823A4[] = {
+    0x04, 0x20, 0x00, 0x1F, 0x1F, 0x04, 0x40, 0x00, 0x1F, 0x1F, 0x04,
+    0x60, 0x00, 0x1F, 0x1F, 0x04, 0x00, 0x20, 0x1F, 0x1F, 0x04, 0x20,
+    0x20, 0x1F, 0x0F, 0x04, 0x20, 0x30, 0x1F, 0x0F, 0xFF, 0x00};
+static s16 D_801823C4[][2] = {{0x0000, 0x0000}, {0x00FF, 0x0000}};
+static u8 unused[] = {0x06, 0x01, 0x04, 0x01, 0x04, 0x02, 0x06, 0x03,
+                      0x05, 0x04, 0x05, 0x05, 0x00, 0x00, 0x00, 0x00};
+
 void EntityBloodSplatter(Entity* self) {
     Primitive *prim, *prim2, *prim3;
     s16 primIndex;
@@ -132,7 +164,7 @@ void EntityBloodSplatter(Entity* self) {
 
         prim3 = prim->next;
         prim3->b3 += 254;
-        if (UpdateAnimation(&D_8018238C, prim) == 0) {
+        if (UpdateAnimation(D_8018238C, prim) == 0) {
             UnkPolyFunc0(prim);
         }
 
@@ -152,7 +184,7 @@ void EntityBloodSplatter(Entity* self) {
             prim3->b3 = 0;
         }
 
-        if (UpdateAnimation(&D_801823A4, prim) == 0) {
+        if (UpdateAnimation(D_801823A4, prim) == 0) {
             UnkPolyFunc0(prim);
         }
 
@@ -163,7 +195,7 @@ void EntityBloodSplatter(Entity* self) {
     }
 }
 
-void func_801C53AC(Primitive* prim) {
+static void func_801C53AC(Primitive* prim) {
     switch (prim->next->u2) {
     case 0:
         prim->tpage = 0x12;
@@ -230,14 +262,14 @@ void EntityBloodyZombie(Entity* self) {
 
     switch (self->step) {
     case BLOODY_ZOMBIE_INIT:
-        InitializeEntity(D_80180C7C);
+        InitializeEntity(g_EBloodyZombieInit);
         self->hitboxOffX = 1;
         self->hitboxOffY = 4;
         SetStep(BLOODY_ZOMBIE_UNK_2);
         break;
 
     case BLOODY_ZOMBIE_UNK_2:
-        if (func_801BCCFC(D_801822D4) & 1) {
+        if (func_801BCCFC(sensors_ground) & 1) {
             SetStep(BLOODY_ZOMBIE_WALK);
         }
         break;
@@ -248,8 +280,8 @@ void EntityBloodyZombie(Entity* self) {
             self->step_s++;
         }
 
-        AnimateEntity(D_801822EC, self);
-        func_801BCF74(D_801822E4);
+        AnimateEntity(anim_walk, self);
+        func_801BCF74(sensors_move);
 
         if (self->facingLeft == 0) {
             self->velocityX = FIX(-0.375);
@@ -282,10 +314,10 @@ void EntityBloodyZombie(Entity* self) {
         break;
 
     case BLOODY_ZOMBIE_CHASE:
-        if (AnimateEntity(D_8018237C, self) == 0) {
+        if (AnimateEntity(anim_chase, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
-        func_801BCF74(D_801822E4);
+        func_801BCF74(sensors_move);
 
         if (self->facingLeft != 0) {
             self->velocityX = FIX(0.75);
@@ -312,7 +344,7 @@ void EntityBloodyZombie(Entity* self) {
         break;
 
     case BLOODY_ZOMBIE_ATTACK:
-        animStatus = AnimateEntity(D_801822FC, self);
+        animStatus = AnimateEntity(anim_attack, self);
         if (animStatus & 0x80 && self->animFrameIdx == 10) {
             func_801C29B0(SFX_WEAPON_SWISH_B);
         }
@@ -332,7 +364,7 @@ void EntityBloodyZombie(Entity* self) {
             self->step_s++;
         }
 
-        if (AnimateEntity(D_80182320, self) == 0) {
+        if (AnimateEntity(anim_hit, self) == 0) {
             SetStep(BLOODY_ZOMBIE_WALK);
             self->step_s++;
         }
@@ -395,7 +427,7 @@ void EntityBloodyZombie(Entity* self) {
             }
         }
 
-        if (AnimateEntity(D_80182334, self) == 0) {
+        if (AnimateEntity(anim_die, self) == 0) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);

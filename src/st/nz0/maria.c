@@ -4,7 +4,7 @@
 void func_801B8E0C(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BEC);
+        InitializeEntity(g_MariaInit);
         D_8003C8B8 = 0;
         g_unkGraphicsStruct.unk0 = 1;
         g_Player.padSim = PAD_LEFT;
@@ -60,7 +60,7 @@ void EntityMaria(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BEC);
+        InitializeEntity(g_MariaInit);
         self->animSet = ANIMSET_OVL(0xF);
         self->animCurFrame = 1;
         self->unk5A = 0x48;

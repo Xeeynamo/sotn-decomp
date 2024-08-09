@@ -7,6 +7,57 @@
 #include "nz0.h"
 #include "sfx.h"
 
+typedef enum {
+    AXE_KNIGHT_INIT,
+    AXE_KNIGHT_IDLE,
+    AXE_KNIGHT_WALK_TOWARDS_PLAYER,
+    AXE_KNIGHT_WALK_AWAY_FROM_PLAYER,
+    AXE_KNIGHT_STANDING_THROW,
+    AXE_KNIGHT_DUCKING_THROW,
+    AXE_KNIGHT_UNUSED, // Charge Attack missing step from the blue AxeKnight
+    AXE_KNIGHT_ARCING_THROW, // Unused, present in the blue AxeKnight
+    AXE_KNIGHT_DYING,
+} EntityAxeKnightSteps;
+
+extern u16 g_EAxeKnightInit[];
+static s16 sensors_move[] = {0, 32, 8, 0};
+static s16 sensors_ground[4][2] = {{0, 32}, {0, 4}, {8, -4}, {-16, 0}};
+static s16 dead_particle_pos[][2] = {
+    {-8, -4}, {8, -6}, {-2, 4}, {-1, -7}, {2, 8}, {11, -7}, {4, 6}, {-3, 0}};
+static u16 unused[] = {
+    0x0114, 0x020A, 0x030A, 0x0414, 0x030A, 0x020A, 0x0000, 0x0000, 0x0508,
+    0x0608, 0x0708, 0x0D08, 0x0E08, 0x0F02, 0x1402, 0x1502, 0x1620, 0x1708,
+    0x0000, 0x0000, 0x0508, 0x0608, 0x0708, 0x0808, 0x090A, 0x0A04, 0x0B04,
+    0x0C04, 0x0000, 0x0000, 0x0E04, 0x0F04, 0x1004, 0x1104, 0x0000, 0x0000,
+    0x0D08, 0x0E08, 0x0F01, 0x1001, 0x1101, 0x1220, 0x1308, 0x0000};
+static u8 anim_walk[] = {0x1A, 0x18, 0x0A, 0x19, 0x0A, 0x1A, 0x1A,
+                         0x1B, 0x0A, 0x1A, 0x0A, 0x19, 0x00};
+static u8 anim_throw_duck[] = {
+    0x08, 0x1C, 0x08, 0x1D, 0x08, 0x1E, 0x08, 0x1F, 0x0A, 0x20, 0x04, 0x21,
+    0x04, 0x22, 0x04, 0x23, 0x00, 0x00, 0x00, 0x00, 0x08, 0x24, 0x08, 0x25,
+    0x02, 0x26, 0x02, 0x27, 0x02, 0x28, 0x20, 0x29, 0x08, 0x2A, 0x00};
+static u8 anim_throw_stand[] = {
+    0x08, 0x1C, 0x08, 0x1D, 0x08, 0x1E, 0x08, 0x24, 0x08, 0x25, 0x02,
+    0x26, 0x02, 0x2B, 0x02, 0x2C, 0x20, 0x2D, 0x08, 0x2E, 0x00, 0x00,
+    0x00, 0x00, 0x04, 0x25, 0x04, 0x26, 0x04, 0x27, 0x04, 0x28, 0x00};
+static u8 anim_die[] = {
+    0x08, 0x20, 0x08, 0x21, 0x08, 0x22, 0x08, 0x23, 0xFF, 0x00};
+static u8 hitboxes[][4] = {
+    {0, 0, 0, 0},
+    {0, 6, 8, 26},
+    {0, 11, 8, 21},
+    {0, 12, 8, 20},
+};
+static u8 hitbox_lookup[] = {
+    0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 3, 1, 1, 1, 3, 1,
+    1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 3, 1, 1, 1, 3, 1, 0};
+static u8 steps[] = {AXE_KNIGHT_STANDING_THROW, AXE_KNIGHT_DUCKING_THROW,
+                     AXE_KNIGHT_STANDING_THROW, AXE_KNIGHT_DUCKING_THROW,
+                     AXE_KNIGHT_STANDING_THROW, AXE_KNIGHT_DUCKING_THROW,
+                     AXE_KNIGHT_STANDING_THROW, AXE_KNIGHT_DUCKING_THROW};
+static u32 init_velocity_x[] = {FIX(2), FIX(2), FIX(1)};
+static u32 init_velocity_y[] = {FIX(0), FIX(0), FIX(-4)};
+
 // Weirdly, this function ONLY acts on prim->next, it does not act on prim.
 // However, it does call functions on prim.
 void func_801C3F9C(AxePrim* prim) {
@@ -64,7 +115,7 @@ s32 func_801C4198(Entity* axeKnight) {
 
     switch (axeKnight->step_s) {
     case 0:
-        clutBase = D_80180C6A;
+        clutBase = g_EAxeKnightInit[3];
         dataPtr = sprites_nz0_3[axeKnight->animCurFrame];
         primIndex = g_api.AllocPrimitives(PRIM_GT4, *dataPtr * 2);
         if (primIndex != -1) {
@@ -148,22 +199,10 @@ void func_801C4550(void) {
     if (g_CurrentEntity->ext.generic.unk80.modeS16.unk2 > 0) {
         g_CurrentEntity->ext.generic.unk80.modeS16.unk2 -= 3;
     } else {
-        SetStep(D_801822B4[(Random() & 7)]);
+        SetStep(steps[(Random() & 7)]);
         g_CurrentEntity->ext.generic.unk80.modeS16.unk2 = 256;
     }
 }
-
-typedef enum {
-    AXE_KNIGHT_INIT,
-    AXE_KNIGHT_IDLE,
-    AXE_KNIGHT_WALK_TOWARDS_PLAYER,
-    AXE_KNIGHT_WALK_AWAY_FROM_PLAYER,
-    AXE_KNIGHT_STANDING_THROW,
-    AXE_KNIGHT_DUCKING_THROW,
-    AXE_KNIGHT_UNUSED, // Charge Attack missing step from the blue AxeKnight
-    AXE_KNIGHT_ARCING_THROW, // Unused, present in the blue AxeKnight
-    AXE_KNIGHT_DYING,
-} EntityAxeKnightSteps;
 
 // green knight that throws axes
 void EntityAxeKnight(Entity* self) {
@@ -185,14 +224,14 @@ void EntityAxeKnight(Entity* self) {
 
     switch (self->step) {
     case AXE_KNIGHT_INIT:
-        InitializeEntity(D_80180C64);
+        InitializeEntity(g_EAxeKnightInit);
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         self->hitboxOffY = 10;
         self->ext.generic.unk7C.S8.unk1 = 0;
         self->ext.generic.unk80.modeS16.unk2 = 512;
 
     case AXE_KNIGHT_IDLE:
-        if (func_801BCCFC(&D_80182188) & 1) {
+        if (func_801BCCFC(sensors_ground) & 1) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
         }
@@ -208,7 +247,7 @@ void EntityAxeKnight(Entity* self) {
             self->step_s++;
         }
 
-        animStatus = AnimateEntity(D_80182210, self);
+        animStatus = AnimateEntity(anim_walk, self);
         if (self->animFrameDuration == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
@@ -237,7 +276,7 @@ void EntityAxeKnight(Entity* self) {
             self->velocityX += 0x300;
         }
 
-        if (func_801BCF74(&D_80182180) & 0x60) {
+        if (func_801BCF74(sensors_move) & 0x60) {
             self->posX.val -= self->velocityX;
             self->velocityX = 0;
         }
@@ -254,7 +293,7 @@ void EntityAxeKnight(Entity* self) {
             self->step_s++;
         }
 
-        animStatus = AnimateEntity(D_80182210, self);
+        animStatus = AnimateEntity(anim_walk, self);
         if (self->animFrameDuration == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
@@ -283,7 +322,7 @@ void EntityAxeKnight(Entity* self) {
             self->velocityX -= 0x200;
         }
 
-        if (func_801BCF74(&D_80182180) & 0x60) {
+        if (func_801BCF74(sensors_move) & 0x60) {
             self->posX.val -= self->velocityX;
             self->velocityX = 0;
         }
@@ -291,7 +330,7 @@ void EntityAxeKnight(Entity* self) {
         break;
 
     case AXE_KNIGHT_STANDING_THROW:
-        animStatus = AnimateEntity(D_80182244, self);
+        animStatus = AnimateEntity(anim_throw_stand, self);
         if (animStatus == 0) {
         label:
             if (GetDistanceToPlayerX() < 89) {
@@ -318,7 +357,7 @@ void EntityAxeKnight(Entity* self) {
         break;
 
     case AXE_KNIGHT_DUCKING_THROW:
-        animStatus = AnimateEntity(D_80182220, self);
+        animStatus = AnimateEntity(anim_throw_duck, self);
         if (animStatus != 0) {
             if ((animStatus & 0x80) && (self->animFrameIdx == 6)) {
                 func_801C29B0(NA_SE_VO_AXE_KNIGHT_THROW);
@@ -341,7 +380,7 @@ void EntityAxeKnight(Entity* self) {
         break;
 
     case AXE_KNIGHT_ARCING_THROW: // unused
-        animStatus = AnimateEntity(D_80182244, self);
+        animStatus = AnimateEntity(anim_throw_stand, self);
         if (animStatus == 0) {
             if (GetDistanceToPlayerX() > 88) {
                 SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
@@ -379,13 +418,13 @@ void EntityAxeKnight(Entity* self) {
                     CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                     temp >>= 3;
                     newEntity->params = 2;
-                    newEntity->posX.i.hi += D_80182198[temp];
-                    newEntity->posY.i.hi += D_8018219A[temp];
+                    newEntity->posX.i.hi += dead_particle_pos[temp][0];
+                    newEntity->posY.i.hi += dead_particle_pos[temp][1];
                 }
             }
         }
 
-        if (AnimateEntity(D_80182268, self) == 0) {
+        if (AnimateEntity(anim_die, self) == 0) {
             if (func_801C4198(self) != 0) {
                 DestroyEntity(self);
                 return;
@@ -396,9 +435,8 @@ void EntityAxeKnight(Entity* self) {
         }
         break;
     }
-    hitbox = &D_80182284[self->animCurFrame][D_80182274];
-    hitbox++;
-    hitbox--;
+    hitbox = hitboxes;
+    hitbox += hitbox_lookup[self->animCurFrame] * 4;
     self->hitboxOffX = *hitbox++;
     self->hitboxOffY = *hitbox++;
     self->hitboxWidth = hitbox[0];
@@ -428,8 +466,8 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
     case 0:
         InitializeEntity(D_80180C70);
         entity->drawFlags = FLAG_DRAW_ROTZ;
-        entity->velocityY = D_801822C8[entity->params];
-        velocityX = D_801822BC[entity->params];
+        entity->velocityY = init_velocity_y[entity->params];
+        velocityX = init_velocity_x[entity->params];
 
         if (entity->facingLeft == 0) {
             entity->velocityX = -velocityX;

@@ -43,6 +43,8 @@ u16 g_InitializeData0[] = {
 };
 u16 g_InitializeEntityData0[] = {
     0x0003, 0x0000, 0x0000, 0x0000, 0x0002, 0x0000,
+};
+u16 g_MariaInit[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0004, 0x0000,
 };
 u16 g_EInitGeneric[] = {
@@ -80,7 +82,7 @@ ObjInit2 D_801804E0[] = {
 // Owned by EntityRedDoor to animate the tiles behind the door itself.
 // There is a loop in EntityRedDoor that forces to write those tiles
 // at every frame based on the door state to create the animation.
-u16 g_eRedDoorTiles[2][8] = {
+u16 g_eRedDoorTiles[][8] = {
     {0x1D, 0x25, 0x75, 0x7D, 0xC6, 0xC7, 0xC8, 0xC9},
     {0x1F, 0x27, 0x77, 0x7F, 0xCA, 0xCB, 0xCC, 0xCD},
 };

@@ -61,7 +61,6 @@ void func_801C4CC0(void);
 extern u8 D_8003BE6F[];
 extern PfnEntityUpdate PfnEntityUpdates[];
 extern u16 g_InitializeEntityData0[];
-extern u16 D_80180BEC[];
 extern u16 g_EInitGeneric[]; // Init Elevator2
 extern u16 g_eInitGeneric2[];
 extern u16 D_80180C34[];
@@ -79,28 +78,6 @@ extern s32 D_801826AC;
 
 // *** EntityBloodSkeleton properties END ***
 
-// *** EntityBoneScimitar properties START ***
-
-extern u16 D_80180C4C[];    // Init
-extern s32 D_8018208C;      // Flag for special bone scimitar to appear or not
-extern u8 D_80182090[];     // animation: Walking Forward
-extern u8 D_801820A0[];     // animation: Walking Backwards
-extern u8 D_801820B0[];     // animation: Swing Sword
-extern u8 D_801820CC[];     // animation: Jumping
-extern u8 D_801820D8[];     // animation: Landing
-extern s8 D_801820F4[];     // Skeleton parts array selector
-extern s32 D_801820FC[];    // Skeleton parts velocityX
-extern s32 D_80182118[];    // Skeleton parts velocityY
-extern u16 D_80182134[];    // Skeleton parts posX
-extern u16 D_80182144[];    // Skeleton parts posY
-extern s8 D_80182154[2][4]; // Skeleton attack timer cycle
-extern s32 D_8018215C;
-extern s32 D_8018216C;
-extern s32 D_80182174;
-
-// *** EntityBoneScimitar properties END ***
-
-extern u16 D_80180C7C[];
 extern u16 D_80180C88[];
 extern u16 D_80180CAC[];
 extern u16 D_80180CC4[];
@@ -207,63 +184,6 @@ extern s16 D_80181EDC[];
 extern u32 D_80181EEC[];
 extern ObjInit2 D_80182014[];
 
-// *** EntityAxeKnight properties START ***
-
-extern u16 D_80180C64[]; // Init
-extern s32 D_80182180[];
-extern s32 D_80182188[];
-extern u8 D_80182210[]; // Animation: Walking
-extern u8 D_80182220[]; // Animation: Ducking Throw
-extern u8 D_80182244[]; // Animation: Standing Throw
-extern u8 D_80182268[]; // Animation: Dying
-extern s32 D_80182274[];
-extern u8 D_80182284[];
-
-// *** EntityAxeKnight properties END ***
-
-extern s32 D_80182198[];
-extern s32 D_8018219A[];
-
-extern u8 D_801822B4[];
-extern u16 D_801822D4[];
-extern const u8 D_801822E4[];
-extern const u8 D_801822EC[];
-extern const u8 D_801822FC[];
-extern const u8 D_80182320[];
-extern const u8 D_80182334[];
-extern const u8 D_8018237C[];
-extern s32 D_801823C4;
-
-// *** EntitySkeleton properties START ***
-
-typedef enum {
-    SKELETON_INIT,
-    SKELETON_IDLE,
-    SKELETON_WALK_TOWARDS_PLAYER,
-    SKELETON_WALK_AWAY_FROM_PLAYER,
-    SKELETON_ATTACK,
-    SKELETON_JUMP,
-    SKELETON_DESTROY
-} SKELETON_STEPS;
-
-extern u8 D_801823DC[];  // animation: Walking Forward
-extern u8 D_801823EC[];  // animation: Walking Backwards
-extern u8 D_801823FC[];  // animation: Throwing bone
-extern u8 D_8018240C[];  // animation: Jumping?
-extern u8 D_80182418[];  // animation: Jumping?
-extern s8 D_80182430[];  // skeleton pieces array selector
-extern s32 D_80182438[]; // velocityX
-extern s32 D_80182450[]; // velocityY
-extern u16 D_80182468[]; // posX
-extern u16 D_80182474[]; // posY
-extern u8 D_80182480[2][4];
-extern s32 D_801824A8;
-extern s32 D_801824C0;
-
-// *** EntitySkeleton properties END ***
-
-extern s32 D_801824B8;
-extern s32 D_801824C0;
 extern s32 D_801824CC;
 extern s16 D_801824DC[];
 extern u8 D_801824E2[];
@@ -271,20 +191,15 @@ extern u16 D_801824E4[];
 extern u8 D_80181F30[];
 extern u8 D_80180CF4[];
 extern s32 D_80182600[];
-extern s32 D_8018216C;
-extern s32 D_80182174;
 extern u16 g_InitializeData0[];
 extern u16 D_80180BC8[];
 extern u16 D_80181CA8[];
 extern u16 D_80181CD8[];
 extern u8* g_SubweaponAnimPrizeDrop[];
 extern u16 D_80180C94[];
-extern u16 D_80182424[];
 extern u16 D_80180CA0[];
-extern u32 D_80182488[];
 extern u16 D_80180C58[];
 extern u16 D_80180C58[];
-extern s16 D_801820E4[];
 extern s32 D_80182504[];
 extern u8 D_80182524[];
 
@@ -345,10 +260,6 @@ extern u8 D_801825F0[];
 extern u16 D_80180C70[];
 extern u16 D_80180CD0[];
 extern u16 D_80180CDC[];
-extern u32 D_801822BC[];
-extern u32 D_801822C8[];
-extern s32 D_8018238C;
-extern s32 D_801823A4;
 extern const char D_801B058C[]; // "charal %x\n"
 extern const char D_801B0598[]; // "charal %x\n"
 extern const char D_801B08C8[]; // "charal %x\n"
@@ -389,7 +300,7 @@ extern const char D_80183B0C[];
 extern u32 g_mariaCutsceneFlags;
 
 // EntityMaria, mostly animations
-extern u16 D_80180BEC[];
+extern u16 g_MariaInit[];
 extern u8 D_80181474[];
 extern u8 D_80181490[];
 extern u8 D_801814A0[];

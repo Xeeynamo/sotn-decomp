@@ -1,7 +1,10 @@
 #include "dre.h"
-
-#include "../entity.h"
 #include "sfx.h"
+
+#include "../../destroy_entity.h"
+#include "../../destroy_entities_from_index.h"
+#include "../prevent_entity_from_respawning.h"
+#include "../animate_entity.h"
 
 u8 func_8019A590(u8 frames[], Entity* self, u8 arg2) {
     u16 animFrameStart = self->animFrameIdx * 2;
