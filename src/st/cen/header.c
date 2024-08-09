@@ -39,3 +39,6 @@ static void* Cluts[] = {
 };
 
 #include "layers.h"
+
+
+static u32 D_8019C704[24];

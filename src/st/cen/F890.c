@@ -2,6 +2,9 @@
 #include "game.h"
 #include "sfx.h"
 
+extern u32 D_8019D424;
+extern s32 D_8019D428;
+
 void func_8018F890(s16 arg0) {
     s16 temp_v0 = arg0 - g_Tilemap.height;
 

@@ -1,6 +1,13 @@
 #include "cen.h"
 #include "game.h"
 
+static u8 __unused[0xC00];
+static s32 D_8019D374;
+static Dialogue g_Dialogue;
+static u32 __unused0[26];
+u32 D_8019D424;
+u32 D_8019D428;
+
 // Bizarre variable - u8 here, but u16 in EntityHeartDrop
 extern u8 D_801805D8[];
 

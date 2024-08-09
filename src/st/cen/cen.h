@@ -80,11 +80,7 @@ extern s16 g_ESoulStealOrbSprt[];
 extern u8 g_ESoulStealOrbAnim[];
 extern ObjInit2 D_8018125C[];
 
-extern u32 D_8019D424;
-
 extern u16 g_InitializeEntityData0[];
-
-extern Dialogue g_Dialogue;
 
 // For EntityHolyGlassesCutscene
 extern u8 D_801805DC[];
@@ -93,8 +89,5 @@ extern u16 D_801805E8[];
 extern u16 D_801805EC[];
 extern s16 D_801805F4[];
 extern const char D_801813F0[];
-extern u32 D_8019D424;
-extern s32 D_8019D428;
-extern s32 D_8019D374;
 
 #endif
