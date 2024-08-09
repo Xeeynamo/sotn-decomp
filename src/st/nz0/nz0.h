@@ -185,24 +185,6 @@ extern s16 D_80181EDC[];
 extern u32 D_80181EEC[];
 extern ObjInit2 D_80182014[];
 
-// *** EntityAxeKnight properties START ***
-
-extern u16 D_80180C64[]; // Init
-extern s32 D_80182180[];
-extern s32 D_80182188[];
-extern u8 D_80182210[]; // Animation: Walking
-extern u8 D_80182220[]; // Animation: Ducking Throw
-extern u8 D_80182244[]; // Animation: Standing Throw
-extern u8 D_80182268[]; // Animation: Dying
-extern s32 D_80182274[];
-extern u8 D_80182284[];
-
-// *** EntityAxeKnight properties END ***
-
-extern s32 D_80182198[];
-extern s32 D_8018219A[];
-
-extern u8 D_801822B4[];
 extern u16 D_801822D4[];
 extern const u8 D_801822E4[];
 extern const u8 D_801822EC[];
@@ -320,8 +302,6 @@ extern u8 D_801825F0[];
 extern u16 D_80180C70[];
 extern u16 D_80180CD0[];
 extern u16 D_80180CDC[];
-extern u32 D_801822BC[];
-extern u32 D_801822C8[];
 extern s32 D_8018238C;
 extern s32 D_801823A4;
 extern const char D_801B058C[]; // "charal %x\n"

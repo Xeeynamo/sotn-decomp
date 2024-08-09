@@ -28,7 +28,7 @@ typedef enum {
     BONE_SCIMITAR_WALK_LEFT
 } BoneScimitarSpecialSubSteps;
 
-extern u16 g_BoneScimitarInit[]; // Init
+extern u16 g_BoneScimitarInit[];
 static s32 D_8018208C = 0; // Flag for special bone scimitar to appear or not
 static u8 anim_walk[] = {0x06, 0x01, 0x04, 0x02, 0x04, 0x03, 0x06,
                          0x04, 0x05, 0x05, 0x05, 0x06, 0x00};

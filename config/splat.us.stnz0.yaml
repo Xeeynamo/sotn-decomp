@@ -51,10 +51,13 @@ segments:
       - [0x1F80, .data, e_particles]
       - [0x2000, .data, e_room_fg]
       - [0x208C, .data, e_bone_scimitar]
-      - [0x2180, data]
-      - [0x2220, data]
-      - [0x2600, data]
-      - [0x2710, data]
+      - [0x2180, .data, e_axe_knight]
+      - [0x22D4, data] # bloody zombie
+      - [0x23DC, data] # skeleton
+      - [0x24CC, data] # spittle bone
+      - [0x2584, data] # subweapon container
+      - [0x2610, data] # bloody skeleton
+      - [0x26B8, data] # magically sealed door
       - [0x272C, .data, rooms]
       - [0x2830, data, D_80182830]
       - [0x2884, .data, e_layout] # layout entries data
