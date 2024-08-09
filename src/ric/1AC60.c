@@ -268,42 +268,42 @@ void CheckBladeDashInput(void) {
     up = PAD_UP;
     down = PAD_DOWN;
 
-    switch (D_801758E0.buttonsCorrect) {
+    switch (g_bladeDashButtons.buttonsCorrect) {
     case 0:
         if (g_Player.padTapped == up) {
-            D_801758E0.timer = 20;
-            D_801758E0.buttonsCorrect++;
+            g_bladeDashButtons.timer = 20;
+            g_bladeDashButtons.buttonsCorrect++;
         }
         break;
     case 1:
         if (directionsPressed == down) {
-            D_801758E0.timer = 20;
-            D_801758E0.buttonsCorrect++;
+            g_bladeDashButtons.timer = 20;
+            g_bladeDashButtons.buttonsCorrect++;
             break;
         }
-        if (--D_801758E0.timer == 0) {
-            D_801758E0.buttonsCorrect = 0;
+        if (--g_bladeDashButtons.timer == 0) {
+            g_bladeDashButtons.buttonsCorrect = 0;
         }
         break;
     case 2:
         if (directionsPressed == down_forward) {
-            D_801758E0.timer = 20;
-            D_801758E0.buttonsCorrect++;
+            g_bladeDashButtons.timer = 20;
+            g_bladeDashButtons.buttonsCorrect++;
             break;
         }
-        if (--D_801758E0.timer == 0) {
-            D_801758E0.buttonsCorrect = 0;
+        if (--g_bladeDashButtons.timer == 0) {
+            g_bladeDashButtons.buttonsCorrect = 0;
         }
         break;
     case 3:
-        if (--D_801758E0.timer == 0) {
-            D_801758E0.buttonsCorrect = 0;
+        if (--g_bladeDashButtons.timer == 0) {
+            g_bladeDashButtons.buttonsCorrect = 0;
         }
         if ((PLAYER.step == Player_Stand || PLAYER.step == Player_Walk) ||
             PLAYER.step == Player_Crouch ||
             (PLAYER.step == Player_Fall || PLAYER.step == Player_Jump)) {
             if (g_Player.unk72 != 0) {
-                D_801758E0.buttonsCorrect = 0;
+                g_bladeDashButtons.buttonsCorrect = 0;
             } else if (
                 (g_Player.unk46 == 0) && (g_Player.padTapped & PAD_SQUARE)) {
                 DoBladeDash();
@@ -557,8 +557,8 @@ block_48:
     case Player_SlideKick:
         PlayerStepSlideKick();
         break;
-    case 24:
-        func_8015C178();
+    case Player_RichterBladeDash:
+        HandleBladeDash();
         break;
     case 32:
         func_8015BCD0();

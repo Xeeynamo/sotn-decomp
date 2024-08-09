@@ -326,7 +326,7 @@ void func_80166784(Entity* self) {
     self->ext.et_80166784.unk86 = 0;
     if (lowerParams == 0) {
         if (self->step == 1) {
-            if (PLAYER.step == 2) {
+            if (PLAYER.step == Player_RichterCrouch) {
                 if (PLAYER.facingLeft == 0) {
                     var_s3 = D_80155A40[var_s4];
                 } else {
@@ -348,7 +348,7 @@ void func_80166784(Entity* self) {
                 var_s5 = D_801559E4[var_s4].y;
             }
         } else {
-            if (PLAYER.step == 2) {
+            if (PLAYER.step == Player_RichterCrouch) {
                 var_s3 = D_801559C8[PLAYER.animFrameIdx].x;
                 var_s5 = D_801559C8[PLAYER.animFrameIdx].y;
             } else {
@@ -723,7 +723,7 @@ void func_8016779C(Entity* entity) {
         entity->zPriority = PLAYER.zPriority + 2;
     }
 
-    if (PLAYER.step == 2) {
+    if (PLAYER.step == Player_RichterCrouch) {
         if (PLAYER.facingLeft != 0) {
             entity->animCurFrame = D_80155CCC[D_80175080];
         } else {

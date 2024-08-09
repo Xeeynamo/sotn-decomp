@@ -330,7 +330,7 @@ bool func_8015DBB0(s32 arg_flags) {
                 return true;
             case 1: /* switch 1 */
                 if (PLAYER.velocityY > 0x6E000) {
-                    PLAYER.step = 2;
+                    PLAYER.step = Player_RichterCrouch;
                     PLAYER.unk4C = D_801555A8;
                     g_api.PlaySfx(SFX_STOMP_HARD_B);
                     RicCreateEntFactoryFromEntity(
@@ -351,7 +351,7 @@ bool func_8015DBB0(s32 arg_flags) {
                 return true;
             case 2: /* switch 1 */
                 if (PLAYER.velocityY > 0x6E000) {
-                    PLAYER.step = 2;
+                    PLAYER.step = Player_RichterCrouch;
                     PLAYER.unk4C = D_80155738;
                     g_api.PlaySfx(SFX_STOMP_SOFT_A);
                     RicCreateEntFactoryFromEntity(
@@ -1346,7 +1346,7 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     EntityRichterRevivalColumn,
     func_80161FF0,
     func_80160C38,
-    func_80160E4C,
+    BladeDashHelper,
     func_801623E0,
     func_80162604,
     func_80162C84,

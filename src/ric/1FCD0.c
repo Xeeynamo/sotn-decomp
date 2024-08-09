@@ -117,7 +117,7 @@ void PlayerStepSlideKick(void) {
     }
 }
 
-void func_8015C178(void) {
+void HandleBladeDash(void) {
     RicDecelerateX(0x1C00);
 
     if (PLAYER.animFrameDuration < 0) {

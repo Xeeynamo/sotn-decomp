@@ -217,8 +217,9 @@ void func_80160D2C(Entity* self) {
     self->hitFlags = 0;
 }
 
-void func_80160E4C(Entity* self) {
-    if (PLAYER.step != 24) {
+// created from a blueprint, #24
+void BladeDashHelper(Entity* self) {
+    if (PLAYER.step != Player_RichterBladeDash) {
         DestroyEntity(self);
     } else {
         self->posX.i.hi = PLAYER.posX.i.hi;

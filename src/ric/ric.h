@@ -11,7 +11,13 @@ typedef enum {
 // Richter mostly uses the same steps as Alucard, or uses unused Alucard steps.
 // There are a couple steps that mean one thing for Alucard, and another for
 // Richter. This enum handles Richter's version of the ones that overlap.
-typedef enum { Player_RichterSprint = 25 } Richter_PlayerSteps;
+typedef enum {
+    Player_RichterWalk = 1,
+    Player_RichterCrouch = 2,
+    Player_RichterHighJump = 8,
+    Player_RichterBladeDash = 24,
+    Player_RichterSprint = 25
+} Richter_PlayerSteps;
 
 extern s16* D_801530AC[];
 extern SpriteParts* D_80153AA0[];
@@ -22,7 +28,7 @@ extern s16 D_80154FBC[][10];
 extern void func_80159C04(void);
 extern void DestroyEntity(Entity* entity);
 extern void func_8015BB80(void);
-extern void func_8015C178(void);
+extern void HandleBladeDash(void);
 extern void RicSetPlayerStep(PlayerSteps step);
 void func_8015C920(AnimationFrame* unk0);
 extern void RicDecelerateX(s32 speed);
@@ -65,7 +71,7 @@ void func_80167A68(Entity* self);
 void EntityRichterRevivalColumn(Entity* self);
 void func_80161FF0(Entity* self);
 void func_80160C38(Entity* self);
-void func_80160E4C(Entity* self);
+void BladeDashHelper(Entity* self);
 void func_801623E0(Entity* self);
 void func_80162604(Entity* self);
 void func_80162C84(Entity* self);
@@ -271,7 +277,7 @@ extern s32 D_801758AC;
 extern s32 D_801758B0[];
 extern Entity* D_801758CC[];
 extern u32 D_801758D0;
-extern ButtonComboState D_801758E0;
+extern ButtonComboState g_bladeDashButtons;
 extern ButtonComboState D_801758E4;
 extern u16 D_80175950;
 extern u16 D_80175952;
