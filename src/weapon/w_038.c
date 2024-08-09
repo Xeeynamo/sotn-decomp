@@ -1,11 +1,17 @@
 // Weapon ID #38. Used by weapons:
 // Rapier, Unknown#191
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
+#include "w_038_1.h"
+#include "w_038_2.h"
+#define g_Animset w_038_1
+#define g_Animset2 w_038_2
 
 extern WeaponAnimation D_10E000_8017ADC0[2];
 
-void EntityWeaponAttack(Entity* self) {
+static void EntityWeaponAttack(Entity* self) {
     WeaponAnimation* anim;
     s8 animIndex;
 
@@ -66,28 +72,28 @@ void EntityWeaponAttack(Entity* self) {
 
 INCLUDE_ASM("weapon/nonmatchings/w_038", func_ptr_80170004);
 
-void func_ptr_80170008(Entity* self) {}
+static void func_ptr_80170008(Entity* self) {}
 
-void func_ptr_8017000C(Entity* self) {}
+static void func_ptr_8017000C(Entity* self) {}
 
-s32 func_ptr_80170010(Entity* self) {}
+static s32 func_ptr_80170010(Entity* self) {}
 
-s32 func_ptr_80170014(Entity* self) {}
+static s32 func_ptr_80170014(Entity* self) {}
 
-int GetWeaponId(void) { return 38; }
+static int GetWeaponId(void) { return 38; }
 
-void EntityWeaponShieldSpell(Entity* self) {}
+static void EntityWeaponShieldSpell(Entity* self) {}
 
-void func_ptr_80170024(Entity* self) {}
+static void func_ptr_80170024(Entity* self) {}
 
-void func_ptr_80170028(Entity* self) {}
+static void func_ptr_80170028(Entity* self) {}
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}

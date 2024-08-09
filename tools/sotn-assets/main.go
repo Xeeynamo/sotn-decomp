@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"os"
 	"path"
 )
@@ -22,23 +23,23 @@ type ovl struct {
 	graphics          dataContainer[gfx]
 	layouts           dataContainer[layouts]
 	layoutsExtraRange dataRange
-	tileMaps          dataContainer[map[PsxOffset][]byte]
-	tileDefs          dataContainer[map[PsxOffset]tileDef]
+	tileMaps          dataContainer[map[psx.Addr][]byte]
+	tileDefs          dataContainer[map[psx.Addr]tileDef]
 }
 
 func getOvlAssets(fileName string) (ovl, error) {
 	type stageHeader struct {
-		FnUpdate              PsxOffset
-		FnHitDetection        PsxOffset
-		FnUpdateRoomPos       PsxOffset
-		FnInitRoomEntities    PsxOffset
-		Rooms                 PsxOffset // ✅
-		Sprites               PsxOffset // ✅
-		Cluts                 PsxOffset // 🫥
-		Layouts               PsxOffset // ✅
-		Layers                PsxOffset // ✅
-		Graphics              PsxOffset // 🫥 WIP
-		FnUpdateStageEntities PsxOffset
+		FnUpdate              psx.Addr
+		FnHitDetection        psx.Addr
+		FnUpdateRoomPos       psx.Addr
+		FnInitRoomEntities    psx.Addr
+		Rooms                 psx.Addr // ✅
+		Sprites               psx.Addr // ✅
+		Cluts                 psx.Addr // 🫥
+		Layouts               psx.Addr // ✅
+		Layers                psx.Addr // ✅
+		Graphics              psx.Addr // 🫥 WIP
+		FnUpdateStageEntities psx.Addr
 	}
 
 	file, err := os.Open(fileName)
@@ -74,7 +75,7 @@ func getOvlAssets(fileName string) (ovl, error) {
 
 	// check for unused tile defs (CEN has one)
 	for tileMapsRange.end < tileDefsRange.begin {
-		offset := tileDefsRange.begin.sum(-0x10)
+		offset := tileDefsRange.begin.Sum(-0x10)
 		unusedTileDef, unusedTileDefRange, err := readTiledef(file, offset)
 		if err != nil {
 			return ovl{}, fmt.Errorf("there is a gap between tileMaps and tileDefs: %w", err)
@@ -83,7 +84,7 @@ func getOvlAssets(fileName string) (ovl, error) {
 		tileDefsRange = mergeDataRanges([]dataRange{tileDefsRange, unusedTileDefRange})
 	}
 
-	sprites, spritesRange, err := readSpritesBanks(file, header.Sprites)
+	sprites, spritesRange, err := readSpritesBanks(file, psx.RamStageBegin, header.Sprites)
 	if err != nil {
 		return ovl{}, fmt.Errorf("unable to gather all sprites: %w", err)
 	}
@@ -94,7 +95,7 @@ func getOvlAssets(fileName string) (ovl, error) {
 	}
 
 	layoutOff := header.Layouts
-	if layoutOff == RamNull {
+	if layoutOff == psx.RamNull {
 		// some overlays have this field nulled, we have to find the offset ourselves
 		// it should be usually be right after header.Graphics
 		layoutOff = graphicsRange.end // ⚠️ assumption
@@ -125,8 +126,8 @@ func getOvlAssets(fileName string) (ovl, error) {
 		graphics:          dataContainer[gfx]{dataRange: graphicsRange, content: graphics},
 		layouts:           dataContainer[layouts]{dataRange: layoutsRange[1], content: entityLayouts},
 		layoutsExtraRange: layoutsRange[0],
-		tileMaps:          dataContainer[map[PsxOffset][]byte]{dataRange: tileMapsRange, content: tileMaps},
-		tileDefs:          dataContainer[map[PsxOffset]tileDef]{dataRange: tileDefsRange, content: tileDefs},
+		tileMaps:          dataContainer[map[psx.Addr][]byte]{dataRange: tileMapsRange, content: tileMaps},
+		tileDefs:          dataContainer[map[psx.Addr]tileDef]{dataRange: tileDefsRange, content: tileDefs},
 	}, nil
 }
 
@@ -246,7 +247,7 @@ func info(fileName string) error {
 	fmt.Println("  - [0x0, .data, header]")
 	for i := 0; i < len(entries); i++ {
 		e := entries[i]
-		s := fmt.Sprintf("  - [0x%X, .data, %s]", e.dataRange.begin.real(), e.name)
+		s := fmt.Sprintf("  - [0x%X, .data, %s]", e.dataRange.begin.Real(psx.RamStageBegin), e.name)
 		if e.comment != "" {
 			s = fmt.Sprintf("%s # %s", s, e.comment)
 		}
@@ -254,7 +255,7 @@ func info(fileName string) error {
 
 		// if there is a gap between the current entry and the next one, mark it as unrecognized data
 		if i == len(entries)-1 || e.dataRange.end != entries[i+1].dataRange.begin {
-			fmt.Printf("  - [0x%X, data]\n", e.dataRange.end.real())
+			fmt.Printf("  - [0x%X, data]\n", e.dataRange.end.Real(psx.RamStageBegin))
 		}
 	}
 	return nil
@@ -288,92 +289,143 @@ func testStuff() {
 	}
 }
 
-func main() {
-	if len(os.Args) < 2 {
-		fmt.Println("expected 'info', 'extract', 'build' or 'build_all' subcommands")
-		os.Exit(1)
-	}
-
-	switch os.Args[1] {
-	case "info":
-		extractCmd := flag.NewFlagSet("info", flag.ExitOnError)
+func handlerStage(args []string) error {
+	commands := map[string]func(args []string) error{}
+	commands["info"] = func(args []string) error {
 		var stageOvl string
+		extractCmd := flag.NewFlagSet("info", flag.ExitOnError)
 		extractCmd.StringVar(&stageOvl, "stage_ovl", "", "The overlay file to process")
-		extractCmd.Parse(os.Args[2:])
-		if err := info(stageOvl); err != nil {
-			panic(err)
-		}
-
-	case "extract":
-		extractCmd := flag.NewFlagSet("extract", flag.ExitOnError)
+		extractCmd.Parse(args)
+		return info(stageOvl)
+	}
+	commands["extract"] = func(args []string) error {
 		var stageOvl string
 		var assetDir string
+		extractCmd := flag.NewFlagSet("extract", flag.ExitOnError)
 		extractCmd.StringVar(&stageOvl, "stage_ovl", "", "The overlay file to process")
 		extractCmd.StringVar(&assetDir, "o", "", "Where to extract the asset files")
+		extractCmd.Parse(args)
 
-		extractCmd.Parse(os.Args[2:])
 		if stageOvl == "" || assetDir == "" {
-			fmt.Println("stage_ovl and asset_dir are required for extract")
+			fmt.Fprintln(os.Stderr, "stage_ovl and asset_dir are required for extract")
 			extractCmd.PrintDefaults()
 			os.Exit(1)
 		}
-		if err := extract(stageOvl, assetDir); err != nil {
-			panic(err)
-		}
-
-	case "build":
-		buildCmd := flag.NewFlagSet("build", flag.ExitOnError)
+		return extract(stageOvl, assetDir)
+	}
+	commands["build"] = func(args []string) error {
 		var file string
 		var kind string
 		var outputDir string
+		buildCmd := flag.NewFlagSet("build", flag.ExitOnError)
 		buildCmd.StringVar(&file, "file", "", "File to process")
 		buildCmd.StringVar(&kind, "kind", "", "Kind of the file to process")
 		buildCmd.StringVar(&outputDir, "o", "", "Where to store the processed source files")
-
-		buildCmd.Parse(os.Args[2:])
+		buildCmd.Parse(args)
 
 		if file == "" || kind == "" || outputDir == "" {
-			fmt.Println("file, kind, and output_dir are required for build")
+			fmt.Fprintln(os.Stderr, "file, kind, and output_dir are required for build")
 			buildCmd.PrintDefaults()
 			os.Exit(1)
 		}
 
-		var err error
 		switch kind {
 		case "rooms":
-			err = buildRooms(file, outputDir)
+			return buildRooms(file, outputDir)
 		case "layers":
-			err = buildLayers(path.Base(file), file, outputDir)
+			return buildLayers(path.Base(file), file, outputDir)
 		case "sprites":
-			err = buildSprites(file, outputDir)
-		default:
-			fmt.Println("unknown kind, valid values are 'room', 'layer', 'sprites'")
+			return buildSprites(file, outputDir)
 		}
-		if err != nil {
-			panic(err)
-		}
-
-	case "build_all":
+		return fmt.Errorf("unknown kind, valid values are 'room', 'layer', 'sprites'")
+	}
+	commands["build_all"] = func(args []string) error {
 		buildCmd := flag.NewFlagSet("build_all", flag.ExitOnError)
 		var inputDir string
 		var outputDir string
 		buildCmd.StringVar(&inputDir, "i", "", "Folder where all the assets are located")
 		buildCmd.StringVar(&outputDir, "o", "", "Where to store the processed source files")
-
-		buildCmd.Parse(os.Args[2:])
+		buildCmd.Parse(args)
 
 		if inputDir == "" || outputDir == "" {
-			fmt.Println("input_dir and output_dir are required for build")
+			fmt.Fprintln(os.Stderr, "input_dir and output_dir are required for build")
 			buildCmd.PrintDefaults()
 			os.Exit(1)
 		}
-
-		if err := buildAll(inputDir, outputDir); err != nil {
-			panic(err)
-		}
-
-	default:
-		fmt.Println("expected 'info', 'extract', 'build' or 'build_all' subcommands")
-		os.Exit(1)
+		return buildAll(inputDir, outputDir)
 	}
+
+	if len(args) > 0 {
+		command := args[0]
+		if f, found := commands[command]; found {
+			return f(args[1:])
+		}
+		fmt.Fprintf(os.Stderr, "unknown subcommand %q. Valid subcommands are %s\n", command, joinMapKeys(commands, ", "))
+	} else {
+		fmt.Fprintf(os.Stderr, "Need a subcommand. Valid subcommands are %s\n", joinMapKeys(commands, ", "))
+	}
+	os.Exit(1)
+	return nil
+}
+
+func handlerConfigExtract(args []string) error {
+	c, err := readConfig(args[0])
+	if err != nil {
+		return err
+	}
+	return extractFromConfig(c)
+}
+
+func handlerConfigBuild(args []string) error {
+	c, err := readConfig(args[0])
+	if err != nil {
+		return err
+	}
+	return buildFromConfig(c)
+}
+
+func handlerConfig(args []string) error {
+	commands := map[string]func(args []string) error{
+		"extract": handlerConfigExtract,
+		"build":   handlerConfigBuild,
+	}
+
+	if len(args) > 0 {
+		command := args[0]
+		if f, found := commands[command]; found {
+			if err := f(args[1:]); err != nil {
+				fmt.Fprintln(os.Stderr, err)
+				os.Exit(1)
+			}
+			return nil
+		}
+		fmt.Fprintf(os.Stderr, "unknown subcommand %q. Valid subcommand are %s\n", command, joinMapKeys(commands, ", "))
+	} else {
+		fmt.Fprintf(os.Stderr, "Need a subcommand. Valid subcommand are %s\n", joinMapKeys(commands, ", "))
+	}
+	os.Exit(1)
+	return nil
+}
+
+func main() {
+	commands := map[string]func(args []string) error{
+		"stage":  handlerStage,
+		"config": handlerConfig,
+	}
+
+	args := os.Args[1:]
+	if len(args) > 0 {
+		command := args[0]
+		if f, found := commands[command]; found {
+			if err := f(args[1:]); err != nil {
+				fmt.Fprintln(os.Stderr, err)
+				os.Exit(1)
+			}
+			return
+		}
+		fmt.Fprintf(os.Stderr, "unknown command %q. Valid commands are %s\n", command, joinMapKeys(commands, ", "))
+	} else {
+		fmt.Fprintf(os.Stderr, "Need a command. Valid commands are %s\n", joinMapKeys(commands, ", "))
+	}
+	os.Exit(1)
 }
