@@ -153,6 +153,10 @@ void func_8015CD98(s32 velocityX) {
     PLAYER.velocityY = 0;
     g_Player.unk44 = 0;
     RicSetPlayerStep(0);
+#ifdef VERSION_PC
+    // I think this is uninitialized and works by accident
+    g_CurrentEntity = &PLAYER;
+#endif
     func_8015C920(&D_801553BC);
 }
 

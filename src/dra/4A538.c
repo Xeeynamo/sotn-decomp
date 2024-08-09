@@ -847,7 +847,11 @@ void RenderEntities(void) {
                 spriteData = g_api.o.unk2c[r->spriteSheetIdx];
 #endif
             } else if ((r->animSet & 0x7FFF) == 16) {
+#ifdef VERSION_PC
+                spriteData = ((u8**)g_PlOvlSpritesheet)[r->spriteSheetIdx];
+#else
                 spriteData = ((u8**)SPRITESHEET_PTR)[r->spriteSheetIdx];
+#endif
             } else {
 // see above note
 #ifdef VERSION_PSP
