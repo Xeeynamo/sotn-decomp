@@ -38,6 +38,9 @@ segments:
       - [0x134, .data, header] # gfxbanks
       - [0x1EC, .data, e_laydef] # layout entries header
       - [0x394, .data, entity]
+      - [0x5D8, .data, holyglassescutscene]
+      - [0x68C, .data, F890]
+      - [0x7B8, .data, update]
       - [0x7E4, .data, collision]
       - [0xBA4, .data, e_red_door]
       - [0xBBC, .data, 14264]
