@@ -10,8 +10,6 @@ static u8* sprite_data = NULL;
 void InitPlayerArc(const struct FileUseContent* file) {
     int i;
 
-    g_PlayableCharacter = PLAYER_ALUCARD;
-
     if (sprite_data) {
         free(sprite_data);
     }

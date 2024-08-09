@@ -310,7 +310,8 @@ int readToBuf(const char* filename, char* dest) {
     FILE* file = fopen(filename, "rb");
 
     if (file == NULL) {
-        printf("Failed to open file");
+        printf("Failed to open file %s\n", filename);
+        exit(1);
         return 1;
     }
 
@@ -355,7 +356,9 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             break;
         case 5:
             InitPlayerRic();
-            return 0;
+            sim.path = "BIN/RIC.BIN";
+            sim.kind = 99;
+            break;
         case 12:
             sim.path = "ST/SEL/F_SEL.BIN";
             sim.kind = SIM_STAGE_CHR;
@@ -395,7 +398,8 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             sim.size = D_800A036C[actualFileId].size;
             sim.addr = D_800A036C[actualFileId].addr;
             sim.kind = SIM_VH;
-            return readToBuf(sim.path, sim.addr);
+            snprintf(buf, sizeof(buf), "disks/us/%s", sim.path);
+            return readToBuf(buf, sim.addr);
         } else {
             sim.path = smolbuf;
             snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.VH",
@@ -432,7 +436,8 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             sim.size = D_800A036C[actualFileId].size;
             sim.addr = D_800A036C[actualFileId].addr;
             sim.kind = SIM_VB;
-            return readToBuf(sim.path, sim.addr);
+            snprintf(buf, sizeof(buf), "disks/us/%s", sim.path);
+            return readToBuf(buf, sim.addr);
         } else {
             sim.path = smolbuf;
             snprintf(smolbuf, sizeof(smolbuf), "ST/%s/SD_ZK%s.VB",
