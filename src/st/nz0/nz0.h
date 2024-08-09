@@ -184,36 +184,6 @@ extern s16 D_80181EDC[];
 extern u32 D_80181EEC[];
 extern ObjInit2 D_80182014[];
 
-// *** EntitySkeleton properties START ***
-
-typedef enum {
-    SKELETON_INIT,
-    SKELETON_IDLE,
-    SKELETON_WALK_TOWARDS_PLAYER,
-    SKELETON_WALK_AWAY_FROM_PLAYER,
-    SKELETON_ATTACK,
-    SKELETON_JUMP,
-    SKELETON_DESTROY
-} SKELETON_STEPS;
-
-extern u8 D_801823DC[];  // animation: Walking Forward
-extern u8 D_801823EC[];  // animation: Walking Backwards
-extern u8 D_801823FC[];  // animation: Throwing bone
-extern u8 D_8018240C[];  // animation: Jumping?
-extern u8 D_80182418[];  // animation: Jumping?
-extern s8 D_80182430[];  // skeleton pieces array selector
-extern s32 D_80182438[]; // velocityX
-extern s32 D_80182450[]; // velocityY
-extern u16 D_80182468[]; // posX
-extern u16 D_80182474[]; // posY
-extern u8 D_80182480[2][4];
-extern s32 D_801824A8;
-extern s32 D_801824C0;
-
-// *** EntitySkeleton properties END ***
-
-extern s32 D_801824B8;
-extern s32 D_801824C0;
 extern s32 D_801824CC;
 extern s16 D_801824DC[];
 extern u8 D_801824E2[];
@@ -227,9 +197,7 @@ extern u16 D_80181CA8[];
 extern u16 D_80181CD8[];
 extern u8* g_SubweaponAnimPrizeDrop[];
 extern u16 D_80180C94[];
-extern u16 D_80182424[];
 extern u16 D_80180CA0[];
-extern u32 D_80182488[];
 extern u16 D_80180C58[];
 extern u16 D_80180C58[];
 extern s32 D_80182504[];
