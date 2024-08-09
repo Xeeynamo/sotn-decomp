@@ -1,5 +1,14 @@
 #include "mad.h"
 
+// BSS START size = 0x16
+static u16* g_LayoutObjHorizontal;
+static u16* g_LayoutObjVertical;
+static u8 g_LayoutObjPosHorizontal;
+STATIC_PAD_BSS(3);
+static u8 g_LayoutObjPosVertical;
+STATIC_PAD_BSS(3);
+// END BSS
+
 #include "../st_private.h"
 
 #include "../create_entity_from_layout.h"

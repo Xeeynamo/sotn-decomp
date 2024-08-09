@@ -1,10 +1,6 @@
 #include <game.h>
 
-u32 D_801CAA14[24];
-u32 g_LayoutObjHorizontal;
-u32 g_LayoutObjVertical;
-u8 g_LayoutObjPosHorizontal[4];
-u8 g_LayoutObjPosVertical[3076];
+STATIC_PAD_BSS(3072);
 u32 D_801CB684;
 u32 g_Dialogue;
 u16 D_801CB68C;

@@ -16,6 +16,7 @@
 #define LAYOUT_OBJ_SLOT 3
 #define LAYOUT_OBJ_PARAMS 4
 
+// TODO: are these necessary any longer?
 /*
  * A pointer to the current element in `g_pStObjLayoutHorizontal`
  */

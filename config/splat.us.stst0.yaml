@@ -99,5 +99,6 @@ segments:
       - [0x36358, c]
       - [0x3D0C0, c, prim_helpers]
       - [0x3D8F0, c]
-      - [0x3EB00, .bss, bss]
+      - [0x3EB00, .bss, create_entity]
+      - [0x400B6, .bss, bss]
   - [0x425C4]

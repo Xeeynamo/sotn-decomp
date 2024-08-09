@@ -15,7 +15,7 @@ typedef unsigned short u_short;
 typedef unsigned long u_long;
 typedef unsigned int size_t;
 #else
-#include <sys/types.h>
+#include <stdint.h>
 #endif
 
 #ifdef _MSC_VER

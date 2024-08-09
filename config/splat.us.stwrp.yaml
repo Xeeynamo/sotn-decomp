@@ -84,5 +84,6 @@ segments:
       - [0x12E54, c, e_room_fg]
       - [0x12F40, c, popup]
       - [0x13270, c, prim_helpers]
-      - [0x13AB0, .bss, bss]
+      - [0x13AB0, .bss, create_entity]
+      - [0x13AC6, .bss, bss]
   - [0x14768]
