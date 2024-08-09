@@ -2034,10 +2034,10 @@ void RicEntitySubwpnAgunea(Entity* self) {
             if (g_Status.hearts >= 5) {
                 g_Status.hearts -= 5;
                 RicCreateEntFactoryFromEntity(self, FACTORY(0, 52), 0);
-                g_api.PlaySfx(0x665);
+                g_api.PlaySfx(SFX_THUNDER_B);
             } else if (self->ext.et_80128C2C.unk84 == 0) {
                 RicCreateEntFactoryFromEntity(self, FACTORY(0, 52), 0);
-                g_api.PlaySfx(0x665);
+                g_api.PlaySfx(SFX_THUNDER_B);
                 self->ext.et_80128C2C.unk84++;
             } else {
                 self->step = 4;

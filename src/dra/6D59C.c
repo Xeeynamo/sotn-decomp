@@ -688,8 +688,8 @@ void DoGravityJump(void) {
     g_Player.unk4A = 0;
 }
 
-s16 D_800ACF60[] = {SFX_UNK_6EE,       SFX_UNK_6EF, SFX_UNK_6F0,
-                    NA_SE_VO_AL_PUNCH, 0x0000,      0x0000};
+s16 g_SfxAttackGrunts[] = {
+    SFX_UNK_6EE, SFX_UNK_6EF, SFX_UNK_6F0, NA_SE_VO_AL_PUNCH, 0x0000, 0x0000};
 
 void func_8010EA54(s32 arg0) {
     s16 temp_hi;
@@ -697,7 +697,7 @@ void func_8010EA54(s32 arg0) {
     if (arg0 != 0) {
         temp_hi = rand() % arg0;
         if (temp_hi < 4) {
-            PlaySfx(D_800ACF60[temp_hi]);
+            PlaySfx(g_SfxAttackGrunts[temp_hi]);
         }
     }
 }

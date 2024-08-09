@@ -2049,7 +2049,7 @@ void EntityGiantSpinningCross(Entity* self) {
         self->facingLeft = 0;
         self->ext.giantcross.unk7C = 0;
         self->ext.giantcross.unk7E = 0x400;
-        PlaySfx(SFX_UNK_661);
+        PlaySfx(SFX_FIREBALL_SHOT_B);
         self->step++;
         primUVCoords = &D_800B0F94[0][0];
         prim = &g_PrimBuf[self->primIndex];
