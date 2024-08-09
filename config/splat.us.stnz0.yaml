@@ -128,5 +128,6 @@ segments:
       - [0x49930, c, prim_helpers]
       - [0x4A160, c, lifeupspawn]
       - [0x4AA14, .bss, create_entity]
-      - [0x4AA84, .bss, bss]
+      - [0x4AA24, .bss, bss]
+      - [0x4B740, .bss, e_collect]
   - [0x4B780]

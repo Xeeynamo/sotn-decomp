@@ -1,6 +1,8 @@
 #include "no3.h"
 #include "sfx.h"
 
+static u16 g_ItemIconSlots[ICON_SLOT_NUM];
+
 void EntityPrizeDrop(Entity* self) {
     Collider collider;
     Primitive* prim;

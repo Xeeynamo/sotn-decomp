@@ -1,6 +1,7 @@
-#include <game.h>
+#include <common.h>
 
 STATIC_PAD_BSS(3072);
+
 u32 D_801D7D20;
 u32 g_Dialogue;
 u16 D_801D7D28;
@@ -28,4 +29,3 @@ u16 D_801D7D62;
 u32 D_801D7D64[27];
 u32 D_801D7DD0;
 u32 D_801D7DD4;
-u16 g_ItemIconSlots[ICON_SLOT_NUM];

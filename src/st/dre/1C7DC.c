@@ -1,6 +1,8 @@
 #include "dre.h"
 #include "sfx.h"
 
+static u16 g_ItemIconSlots[ICON_SLOT_NUM];
+
 void EntityEquipItemDrop(Entity* self) {
     u16 itemId = self->params & 0x7FFF;
     s32 primIndex;

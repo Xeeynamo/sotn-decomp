@@ -1,4 +1,4 @@
-#include <game.h>
+#include <common.h>
 
 STATIC_PAD_BSS(3072);
 u32 D_801CB684;
@@ -29,4 +29,3 @@ u32 D_801CB6C8[27];
 u16 g_mariaCutsceneFlags;
 u16 D_801CB736[3];
 u32 D_801CB73C;
-u16 g_ItemIconSlots[ICON_SLOT_NUM];

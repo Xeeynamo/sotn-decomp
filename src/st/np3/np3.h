@@ -268,11 +268,6 @@ extern s32 D_80182530;
 // *** EntityBloodyZombie properties START ***
 
 extern u16 D_80180B38[]; // InitProps
-extern s32 D_801D3378;
-extern s32 D_801D337C;
-extern s32 D_801D3380;
-extern s32 D_801D3384;
-extern s32 D_801D3388;
 extern s32 D_801825D4;
 extern u16 D_801825E4[];
 extern u8 D_801825EC[]; // Animation: Walking

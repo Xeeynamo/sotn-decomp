@@ -132,4 +132,6 @@ segments:
       - [0x51F38, c, prim_helpers]
       - [0x52768, .bss, create_entity]
       - [0x5277D, .bss, bss]
+      - [0x53378, .bss, 4D540]
+      - [0x533F4, .bss, e_collect]
   - [0x53434]

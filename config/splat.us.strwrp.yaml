@@ -87,4 +87,5 @@ segments:
       - [0x151F0, c, wrp/prim_helpers]
       - [0x15A20, .bss, wrp/create_entity]
       - [0x15A36, .bss, rwrp/bss]
+      - [0x166A8, .bss, wrp/e_collect]
   - [0x166E8]

@@ -101,4 +101,5 @@ segments:
       - [0x3D8F0, c]
       - [0x3EB00, .bss, create_entity]
       - [0x400B6, .bss, bss]
+      - [0x42584, .bss, 36358]
   - [0x425C4]

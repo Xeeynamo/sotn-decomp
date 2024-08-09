@@ -5,6 +5,8 @@ extern u16 D_80180D4C[];
 extern u8* D_80180DB0[];
 extern u16 D_80180E10[];
 
+static u16 g_ItemIconSlots[ICON_SLOT_NUM];
+
 void EntityPrizeDrop(Entity* self) {
     Collider collider;
     Primitive* prim;

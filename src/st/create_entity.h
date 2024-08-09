@@ -1,3 +1,11 @@
+//
+// Section Sizes:
+//
+//         | Data  | RO Data | Text   | BSS  |
+//         +-------+---------+--------+------+
+//  PSX US | TBD   | TBD     | 0xB788 | 0x10 |
+//
+
 #include <common.h>
 
 // TODO: should this be it's own header?
