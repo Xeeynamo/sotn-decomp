@@ -40,7 +40,8 @@ segments:
       - [0x394, .data, entity]
       - [0x7E4, .data, collision]
       - [0xBA4, .data, e_red_door]
-      - [0xBBC, data]
+      - [0xBBC, .data, 14264]
+      - [0xDBC, data]
       - [0x10AC, .data, entity_relic_orb]
       - [0x1110, data]
       - [0x12D4, .data, rooms]
@@ -49,7 +50,7 @@ segments:
       - [0x69EC, .data, tile_data] # tile data
       - [0x81EC, .data, tile_data] # tile definitions
       - [0xC60C, .data, sprites]
-      - [0xD414, rodata]
+      - [0xD414, .rodata, entity]
       - [0xD42C, .rodata, holyglassescutscene]
       - [0xD4B0, .rodata, F890]
       - [0xD4D8, .rodata, e_red_door] # EntityRedDoor

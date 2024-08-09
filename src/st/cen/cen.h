@@ -71,7 +71,6 @@ extern const char* D_80180684[];
 extern s16 D_8018068C[];
 extern u8 D_80180768[]; // Animation
 extern u8 D_80180780[]; // Animation
-extern s16 D_80180BBC[];
 extern u16 D_80180EEC[];
 extern u16 D_80180F1C[];
 extern s8 c_HeartPrizes[];
