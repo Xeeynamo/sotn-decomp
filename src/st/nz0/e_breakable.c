@@ -18,7 +18,11 @@ static u8 g_eBreakableDrawModes[] = {
     DRAW_DEFAULT,
     DRAW_DEFAULT,
     DRAW_DEFAULT};
+
+#ifndef VERSION_PSP
+// on PSP this might be either optimised out to BSS or completely removed
 static u8 unused[] = {0, 0, 0, 0, 0, 0, 0, 0};
+#endif
 
 extern u16 g_eBreakableInit[];
 
