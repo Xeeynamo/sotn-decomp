@@ -1,7 +1,13 @@
 // Weapon ID #7. Used by weapons:
 // Shield rod, Unknown#173
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
+#include "w_007_1.h"
+#include "w_007_2.h"
+#define g_Animset w_007_1
+#define g_Animset2 w_007_2
 
 INCLUDE_ASM("weapon/nonmatchings/w_007", EntityWeaponAttack);
 
@@ -57,7 +63,7 @@ s32 func_35000_8017B604(Primitive* prim, s32 x, s32 y) {
     return 0;
 }
 
-void func_ptr_80170008(Entity* self) {
+static void func_ptr_80170008(Entity* self) {
     Primitive* prim;
     s32 velocityX;
     s32 range;
@@ -98,26 +104,26 @@ void func_ptr_80170008(Entity* self) {
         DestroyEntity(self);
     }
 }
-void func_ptr_8017000C(Entity* self) {}
+static void func_ptr_8017000C(Entity* self) {}
 
-s32 func_ptr_80170010(Entity* self) {}
+static s32 func_ptr_80170010(Entity* self) {}
 
-s32 func_ptr_80170014(Entity* self) {}
+static s32 func_ptr_80170014(Entity* self) {}
 
-int GetWeaponId(void) { return 7; }
+static int GetWeaponId(void) { return 7; }
 
-void EntityWeaponShieldSpell(Entity* self) {}
+static void EntityWeaponShieldSpell(Entity* self) {}
 
-void func_ptr_80170024(Entity* self) {}
+static void func_ptr_80170024(Entity* self) {}
 
-void func_ptr_80170028(Entity* self) {}
+static void func_ptr_80170028(Entity* self) {}
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}

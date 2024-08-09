@@ -1,7 +1,13 @@
 // Weapon ID #42. Used by weapons:
 // Monster vial 3
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
+#include "w_042_1.h"
+#include "w_042_2.h"
+#define g_Animset w_042_1
+#define g_Animset2 w_042_2
 #include "sfx.h"
 
 // data
@@ -22,7 +28,7 @@ extern s32 D_12A000_8017B5F0;
 extern const char D_12A000_8017A760[]; // "\no\n"
 extern s32 D_12A000_8017B5EC;          // g_DebugWaitInfoTimer
 
-void DebugShowWaitInfo(const char* msg) {
+static void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint(msg);
     if (D_12A000_8017B5EC++ & 4) {
@@ -35,7 +41,7 @@ void DebugShowWaitInfo(const char* msg) {
     FntFlush(-1);
 }
 
-void DebugInputWait(const char* msg) {
+static void DebugInputWait(const char* msg) {
     while (PadRead(0))
         DebugShowWaitInfo(msg);
     while (!PadRead(0))
@@ -57,7 +63,7 @@ void func_12A000_8017AC08(void) {
     LoadImage(&rect, D_8006EDCC);
 }
 
-void EntityWeaponAttack(Entity* self) {
+static void EntityWeaponAttack(Entity* self) {
     Collider col;
     s32 var_a2;
     s16 xMod;
@@ -214,7 +220,7 @@ s32 func_ptr_80170004(Entity* self) {
     func_12A000_8017AC08();
 }
 
-void func_ptr_80170008(Entity* self) {
+static void func_ptr_80170008(Entity* self) {
     s16 unk;
     s32 modX;
 
@@ -276,7 +282,7 @@ void func_ptr_80170008(Entity* self) {
     g_api.UpdateAnim(D_12A000_8017A6DC, NULL);
 }
 
-void func_ptr_8017000C(Entity* self) {
+static void func_ptr_8017000C(Entity* self) {
     if (self->step == 0) {
         self->animSet = self->ext.weapon.parent->animSet;
         self->unk5A = self->ext.weapon.parent->unk5A;
@@ -292,24 +298,24 @@ void func_ptr_8017000C(Entity* self) {
     }
 }
 
-s32 func_ptr_80170010(Entity* self) {}
+static s32 func_ptr_80170010(Entity* self) {}
 
-s32 func_ptr_80170014(Entity* self) {}
+static s32 func_ptr_80170014(Entity* self) {}
 
-int GetWeaponId(void) { return 42; }
+static int GetWeaponId(void) { return 42; }
 
-void EntityWeaponShieldSpell(Entity* self) {}
+static void EntityWeaponShieldSpell(Entity* self) {}
 
-void func_ptr_80170024(Entity* self) {}
+static void func_ptr_80170024(Entity* self) {}
 
-void func_ptr_80170028(Entity* self) {}
+static void func_ptr_80170028(Entity* self) {}
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}

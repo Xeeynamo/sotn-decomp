@@ -1,7 +1,13 @@
 // Weapon ID #29. Used by weapons:
 // Fire shield, Unknown#213
 #include "weapon_private.h"
+extern u16* g_WeaponCluts[];
+extern s32 g_HandId;
 #include "shared.h"
+#include "w_029_1.h"
+#include "w_029_2.h"
+#define g_Animset w_029_1
+#define g_Animset2 w_029_2
 #include "items.h"
 #include "sfx.h"
 
@@ -27,7 +33,7 @@ typedef struct {
 } FireShieldDragon;
 extern FireShieldDragon D_CF000_8017C9A0[][20];
 
-void EntityWeaponAttack(Entity* self) {
+static void EntityWeaponAttack(Entity* self) {
     s32 anim;
     s32 handButton;
     s32 unkAC_offset;
@@ -192,17 +198,17 @@ s32 func_ptr_80170004(Entity* self) {
         self->ext.weapon.unk80 + D_CF000_8017AD04[g_GameTimer / 2 % 5];
 }
 
-void func_ptr_80170008(Entity* self) {}
+static void func_ptr_80170008(Entity* self) {}
 
-void func_ptr_8017000C(Entity* self) {}
+static void func_ptr_8017000C(Entity* self) {}
 
-s32 func_ptr_80170010(Entity* self) {}
+static s32 func_ptr_80170010(Entity* self) {}
 
-s32 func_ptr_80170014(Entity* self) {}
+static s32 func_ptr_80170014(Entity* self) {}
 
-int GetWeaponId(void) { return 29; }
+static int GetWeaponId(void) { return 29; }
 
-void EntityWeaponShieldSpell(Entity* self) {
+static void EntityWeaponShieldSpell(Entity* self) {
     Primitive* prim;
     s32 var_v0;
     u16 selfX;
@@ -350,7 +356,7 @@ void EntityWeaponShieldSpell(Entity* self) {
     return;
 }
 
-void func_ptr_80170024(Entity* self) {
+static void func_ptr_80170024(Entity* self) {
     // All these variables are kind of guessing names, behavior of this
     // function is a little unclear.
     Primitive* firstPrim;
@@ -560,7 +566,7 @@ void func_ptr_80170024(Entity* self) {
     g_api.CreateEntFactoryFromEntity(self, ((g_HandId + 1) << 14) + 100, 0);
 }
 
-void func_ptr_80170028(Entity* self) {
+static void func_ptr_80170028(Entity* self) {
     if (self->ext.weapon.parent->entityId == 0) {
         DestroyEntity(self);
         return;
@@ -579,12 +585,12 @@ void func_ptr_80170028(Entity* self) {
     }
 }
 
-void WeaponUnused2C(void) {}
+static void WeaponUnused2C(void) {}
 
-void WeaponUnused30(void) {}
+static void WeaponUnused30(void) {}
 
-void WeaponUnused34(void) {}
+static void WeaponUnused34(void) {}
 
-void WeaponUnused38(void) {}
+static void WeaponUnused38(void) {}
 
-void WeaponUnused3C(void) {}
+static void WeaponUnused3C(void) {}
