@@ -33,7 +33,7 @@ u32 D_801758AC;
 u32 D_801758B0[7];
 u32 D_801758CC;
 u32 D_801758D0[4];
-ButtonComboState D_801758E0;
+ButtonComboState g_bladeDashButtons;
 ButtonComboState D_801758E4;
 u16 D_801758E6[52];
 u16 D_80175950;

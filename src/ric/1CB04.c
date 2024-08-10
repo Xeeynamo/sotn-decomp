@@ -81,7 +81,7 @@ void func_80158BFC(void) {
             if (PLAYER.animFrameIdx < 3) {
                 func_8015C9CC();
                 if (g_Player.padPressed & PAD_DOWN) {
-                    PLAYER.step = 2;
+                    PLAYER.step = Player_RichterCrouch;
                     PLAYER.unk4C = D_801555A8;
                     break;
                 }
