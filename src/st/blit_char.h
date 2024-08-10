@@ -1,3 +1,10 @@
+//
+// Section Sizes:
+//
+//         | Data  | RO Data | Text   | BSS  |
+//         +-------+---------+--------+------+
+//  PSX US | -     | -       | 0x2B0  | -    |
+//
 #include <stage.h>
 
 char* BlitChar(char* str, u16* xOffset, u8* pix, u16 stride) {
