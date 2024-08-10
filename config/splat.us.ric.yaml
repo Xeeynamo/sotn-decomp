@@ -37,6 +37,7 @@ segments:
       - [0x20, spritesheet, richter, disks/us/BIN/F_GAME2.BIN, 32]
       - [0x170AC, .data, spriteparts]
       - [0x18568, .data, d_18568]
+      - [0x18688, assets, subweapondefs, D_80154688]
       - [0x188F4, .data, d_188F4]
       - [0x1895C, .data, 21250]
       - [0x18A6C, assets, factory_blueprint, g_RicFactoryBlueprints]
