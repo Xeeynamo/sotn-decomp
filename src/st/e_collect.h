@@ -480,7 +480,7 @@ extern u16 g_InitializeEntityData0[];
 
 #include "blink_item.h"
 
-static u16 g_ItemIconSlots[ICON_SLOT_NUM];
+u16 g_ItemIconSlots[ICON_SLOT_NUM];
 
 void EntityEquipItemDrop(Entity* self) {
     Collider collider;
