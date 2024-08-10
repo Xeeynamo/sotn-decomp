@@ -92,12 +92,16 @@ int sprintf(char* dst, const char* fmt, ...);
 // expand identically to the critical versions but indicate that it
 // is not known whether or not the padding is necessary outside of
 // reproducing an original binary.
-#define __INDIRECT_CRITICAL_PAD_TYPE_FIELD(type, size, line, counter) type __pad__ ## size ## __ ## line ## __ ## counter[size]
-#define __CRITICAL_PAD_TYPE_FIELD(type, size, line, counter) __INDIRECT_CRITICAL_PAD_TYPE_FIELD(type, size, line, counter)
-#define CRITICAL_PAD_TYPE_FIELD(type, size) __CRITICAL_PAD_TYPE_FIELD(type, size, __LINE__, __COUNTER__)
+#define __INDIRECT_CRITICAL_PAD_TYPE_FIELD(type, size, line, counter)          \
+    type __pad__##size##__##line##__##counter[size]
+#define __CRITICAL_PAD_TYPE_FIELD(type, size, line, counter)                   \
+    __INDIRECT_CRITICAL_PAD_TYPE_FIELD(type, size, line, counter)
+#define CRITICAL_PAD_TYPE_FIELD(type, size)                                    \
+    __CRITICAL_PAD_TYPE_FIELD(type, size, __LINE__, __COUNTER__)
 #define CRITICAL_PAD_FIELD(size) CRITICAL_PAD_TYPE_FIELD(uint8_t, size)
 
-#define UNKNOWN_CRITICAL_PAD_TYPE(type, size) CRITICAL_PAD_TYPE_FIELD(type, size)
+#define UNKNOWN_CRITICAL_PAD_TYPE(type, size)                                  \
+    CRITICAL_PAD_TYPE_FIELD(type, size)
 #define UNKNOWN_CRITICAL_PAD_FIELD(size) CRITICAL_PAD_FIELD(size)
 
 #ifndef VERSION_PC

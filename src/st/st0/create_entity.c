@@ -10,5 +10,4 @@ u16 D_801BEE08[2];
 u16 D_801BEE0C[66];
 u16 D_801BEE90[2312];
 
-
 #include "../create_entity.h"
