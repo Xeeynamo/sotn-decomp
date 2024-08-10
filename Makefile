@@ -120,12 +120,22 @@ SOTNASSETS_SOURCES := $(shell find tools/sotn-assets -name '*.go')
 
 CHECK_FILES := $(shell cut -d' ' -f3 config/check.$(VERSION).sha)
 
+N_THREADS ?= $(shell nproc)
+
 .PHONY: build
 
 all: build check
+
+init: 
+	$(MAKE) clean
+	$(MAKE) extract -j $(N_THREADS)
+	$(MAKE) build -j $(N_THREADS)
+	$(MAKE) check
+
 build: build_$(VERSION)
 build_us: main dra weapon ric cen dre mad no3 np3 nz0 sel st0 wrp rwrp tt_000
 build_hd: dra $(BUILD_DIR)/WRP.BIN tt_000
+
 clean:
 	git clean -fdx assets/
 	git clean -fdx asm/$(VERSION)/
