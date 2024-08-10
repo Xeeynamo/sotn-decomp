@@ -1,9 +1,10 @@
 //
 // Section Sizes:
 //
-//         | Data  | RO Data | Text   | BSS  |
-//         +-------+---------+--------+------+
-//  PSX US | TBD   | TBD     | 0xB788 | 0x10 |
+//         | Data  | RO Data | Text  | BSS  |
+// --------+-------+---------+-------+------+
+//  PSX US | TBD   | TBD     | 0xB78 | 0x10 |
+//  PSX HD | TBD   | TBD     | 0xB78 | 0x10 |
 //
 
 #include <common.h>

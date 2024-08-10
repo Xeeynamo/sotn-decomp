@@ -2,8 +2,9 @@
 // Section Sizes:
 //
 //         | Data  | RO Data | Text   | BSS  |
-//         +-------+---------+--------+------+
+// --------+-------+---------+--------+------+
 //  PSX US | 0x2F0 | 0x88    | 0x1AC0 | 0x40 |
+//  PSX HD | 0x200 | 0x88    | 0x1570 | 0x40 |
 //
 #include <stage.h>
 #include "sfx.h"
