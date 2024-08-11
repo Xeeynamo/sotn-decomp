@@ -507,6 +507,7 @@ void EntityCrossBoomerang(Entity* self) {
     switch (self->step) {
     case 0:
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_100000;
+        // gets used by shadow, must align with that entity
         self->ext.crossBoomerang.unk84 = &D_80175088[D_80175888];
         D_80175888++;
         D_80175888 &= 3;
@@ -684,15 +685,18 @@ void func_80169C10(Entity* entity) {
     }
 }
 
-void func_80169D74(Entity* entity) {
-    Multi temp;
+// made by blueprint #5, see step 0 of EntityCrossBoomerang
+void EntityCrossShadow(Entity* entity) {
+    Point16* temp;
     s16* ptr;
 
     switch (entity->step) {
     case 0:
         entity->flags = FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        entity->ext.generic.unk84.unk =
-            entity->ext.generic.unk8C.entityPtr->ext.generic.unk84.unk;
+        // the parent pointer is set in RicEntityEntFactory.
+        // the value of unk84 is set in EntityCrossBoomerang
+        entity->ext.crossBoomerang.unk84 =
+            entity->ext.factory.parent->ext.crossBoomerang.unk84;
         entity->animSet = ANIMSET_OVL(17);
         entity->animCurFrame = D_80155E68[entity->params];
         entity->unk5A = 0x66;
@@ -707,7 +711,7 @@ void func_80169D74(Entity* entity) {
 
     case 1:
         entity->rotZ -= 0x80;
-        if (entity->ext.generic.unk8C.entityPtr->step == 7) {
+        if (entity->ext.factory.parent->step == 7) {
             entity->step++;
             entity->ext.generic.unk7C.s = (entity->params + 1) * 4;
         }
@@ -722,10 +726,12 @@ void func_80169D74(Entity* entity) {
         }
         break;
     }
-    temp = entity->ext.generic.unk84;
-    ptr = temp.unk + ((u16)entity->ext.generic.unk80.modeS16.unk0 * 4);
-    entity->posX.i.hi = ptr[0] - g_Tilemap.scrollX.i.hi;
-    entity->posY.i.hi = ptr[1] - g_Tilemap.scrollY.i.hi;
+
+    // get the x and y position from the parent (must align)
+    temp = entity->ext.crossBoomerang.unk84;
+    ptr = temp + entity->ext.crossBoomerang.unk80 * 4;
+    entity->posX.i.hi = temp->x - g_Tilemap.scrollX.i.hi;
+    entity->posY.i.hi = temp->y - g_Tilemap.scrollY.i.hi;
     entity->ext.generic.unk80.modeS16.unk0 =
         (entity->ext.generic.unk80.modeS16.unk0 + 1) & 0x3F;
 }

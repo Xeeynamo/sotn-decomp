@@ -54,7 +54,7 @@ void func_80160FC4(Entity* self);
 void EntityCrossBoomerang(Entity* self);
 void func_80169C10(Entity* self);
 void func_8016147C(Entity* self);
-void func_80169D74(Entity* self);
+void EntityCrossShadow(Entity* self);
 void RicEntityHolyWater(Entity* self);
 void RicEntityHolyWaterFlame(Entity* self);
 void func_80161C2C(Entity* self);
