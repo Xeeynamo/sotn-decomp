@@ -712,13 +712,13 @@ void EntityCrossShadow(Entity* self) {
         self->rotZ -= 0x80;
         if (self->ext.factory.parent->step == 7) {
             self->step++;
-            self->ext.timer.t = (self->params + 1) * 4;
+            self->ext.crossBoomerang.timer = (self->params + 1) * 4;
         }
         break;
 
     case 2:
         self->rotZ -= 0x80;
-        if (--self->ext.timer.t == 0) {
+        if (--self->ext.crossBoomerang.timer == 0) {
             DestroyEntity(self);
             return;
         }
