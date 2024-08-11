@@ -134,5 +134,7 @@ segments:
       - [0x14498, .rodata, wrp_psp/e_collect]
       - [0x144D0, .rodata, wrp_psp/e_misc]
       - [0x144F8, .rodata, wrp/warp]
-      - [0x14580, .bss, wrp_psp/bss]
+      - [0x14500, .bss, wrp_psp/create_entity]
+      - [0x14520, .bss, wrp_psp/e_collect]
+      - [0x14560, .bss, wrp_psp/bss]
   - [0x14580]

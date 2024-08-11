@@ -1,18 +1,5 @@
-#include "common.h"
+#include <types.h>
 
-u32 D_801BEB00[25];
-u32 D_801BEB64;
-u32 D_801BEB68[165];
-u32 D_801BEDFC;
-u32 D_801BEE00;
-u32 D_801BEE04;
-u16 D_801BEE08[2];
-u16 D_801BEE0C[66];
-u16 D_801BEE90[2312];
-u32 g_LayoutObjHorizontal;
-u32 g_LayoutObjVertical;
-u8 g_LayoutObjPosHorizontal[4];
-u8 g_LayoutObjPosVertical[4];
 u16 D_801C00B0[768];
 u32 D_801C06B0[4];
 u32 D_801C06C0[1346];
@@ -49,4 +36,3 @@ u32 D_801C250C[27];
 u32 D_801C2578;
 u32 D_801C257C;
 u32 D_801C2580;
-u16 g_ItemIconSlots[32];

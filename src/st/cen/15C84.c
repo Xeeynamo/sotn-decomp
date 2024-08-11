@@ -228,7 +228,7 @@ void EntityPrizeDrop(Entity* self) {
 
 #include "../blink_item.h"
 
-u16 g_ItemIconSlots[32];
+static u16 g_ItemIconSlots[ICON_SLOT_NUM];
 
 extern s32 D_80097410;
 extern s32 D_80097414;

@@ -35,6 +35,13 @@ void func_801CD620(Entity* self) {
     }
 }
 
+static s32 D_801D3378;
+static s32 D_801D337C;
+static s32 D_801D3380;
+static s32 D_801D3384;
+static s32 D_801D3388;
+STATIC_PAD_BSS(104);
+
 void func_801CD658(void) {
     g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint("a:%x\n", D_801D3378);

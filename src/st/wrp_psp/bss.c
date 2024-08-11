@@ -40,10 +40,4 @@ s32 D_psp_0924BC68;
 s32 D_psp_0924BC60;
 
 // st_update.c
-u16 g_ItemIconSlots[0x20];
-
-// create_entity.c
-u16* g_LayoutObjHorizontal;
-u16* g_LayoutObjVertical;
-u8 g_LayoutObjPosHorizontal;
-u8 g_LayoutObjPosVertical;
+// u16 g_ItemIconSlots[0x20];

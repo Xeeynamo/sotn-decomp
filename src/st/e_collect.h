@@ -1,3 +1,11 @@
+//
+// Section Sizes:
+//
+//         | Data  | RO Data | Text   | BSS  |
+// --------+-------+---------+--------+------+
+//  PSX US | 0x2F0 | 0x88    | 0x1AC0 | 0x40 |
+//  PSX HD | 0x200 | 0x88    | 0x1570 | 0x40 |
+//
 #include <stage.h>
 #include "sfx.h"
 
@@ -90,9 +98,6 @@ static u8 D_80180F6C[] = {0x01, 0x43, 0x00, 0x00};
 static u8* g_ExplosionAnimations[] = {
     D_80180ED8, g_bigRedFireballAnim, D_80180F08, D_80180F38, D_80180F6C,
 };
-
-// TODO BSS
-extern u16 g_ItemIconSlots[];
 
 // from another file
 extern u16 g_InitializeData0[];
@@ -475,6 +480,8 @@ extern u16 g_InitializeEntityData0[];
 #include "entity_explosion.h"
 
 #include "blink_item.h"
+
+u16 g_ItemIconSlots[ICON_SLOT_NUM];
 
 void EntityEquipItemDrop(Entity* self) {
     Collider collider;

@@ -83,4 +83,37 @@ int sprintf(char* dst, const char* fmt, ...);
 #define CLAMP_MIN(v, min) ((v) < (min) ? (min) : (v))
 #define CLAMP_MAX(v, max) ((v) > (max) ? (max) : (v))
 
+// Creates padding between variables with a unique name and file
+// visibility. On versions where this padding is unnecessary, these
+// macros expand to nothing. "Critical" versions of these macros
+// ensure that the padding is provided, regardless of version, useful
+// for when locations are accessed using a variety of sizes so
+// field offset needs to be maintained. The unknown critical versions
+// expand identically to the critical versions but indicate that it
+// is not known whether or not the padding is necessary outside of
+// reproducing an original binary.
+#define __INDIRECT_CRITICAL_PAD_TYPE_FIELD(type, size, line, counter)          \
+    type __pad__##size##__##line##__##counter[size]
+#define __CRITICAL_PAD_TYPE_FIELD(type, size, line, counter)                   \
+    __INDIRECT_CRITICAL_PAD_TYPE_FIELD(type, size, line, counter)
+#define CRITICAL_PAD_TYPE_FIELD(type, size)                                    \
+    __CRITICAL_PAD_TYPE_FIELD(type, size, __LINE__, __COUNTER__)
+#define CRITICAL_PAD_FIELD(size) CRITICAL_PAD_TYPE_FIELD(uint8_t, size)
+
+#define UNKNOWN_CRITICAL_PAD_TYPE(type, size)                                  \
+    CRITICAL_PAD_TYPE_FIELD(type, size)
+#define UNKNOWN_CRITICAL_PAD_FIELD(size) CRITICAL_PAD_FIELD(size)
+
+#ifndef VERSION_PC
+#define PAD_FIELD(size) const CRITICAL_PAD_FIELD(size)
+#define STATIC_PAD_BSS(size) static CRITICAL_PAD_FIELD(size)
+#define STATIC_PAD_DATA(size) STATIC_PAD_BSS(size) = {0}
+#define STATIC_PAD_RODATA(size) static const STATIC_PAD_BSS(size) = {0}
+#else
+#define PAD_FIELD(size)
+#define STATIC_PAD_BSS(size)
+#define STATIC_PAD_DATA(size)
+#define STATIC_PAD_RODATA(size)
+#endif
+
 #endif

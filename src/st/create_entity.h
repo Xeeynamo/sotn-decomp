@@ -1,5 +1,22 @@
-#include "st_private.h"
+//
+// Section Sizes:
+//
+//         | Data  | RO Data | Text  | BSS  |
+// --------+-------+---------+-------+------+
+//  PSX US | TBD   | TBD     | 0xB78 | 0x10 |
+//  PSX HD | TBD   | TBD     | 0xB78 | 0x10 |
+//
 
+#include <common.h>
+
+static u16* g_LayoutObjHorizontal;
+static u16* g_LayoutObjVertical;
+static u8 g_LayoutObjPosHorizontal;
+STATIC_PAD_BSS(3);
+static u8 g_LayoutObjPosVertical;
+STATIC_PAD_BSS(3);
+
+#include "st_private.h"
 #include "create_entity_from_layout.h"
 #include "create_entity_in_range.h"
 #include "find_entity_horizontal.h"

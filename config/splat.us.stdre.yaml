@@ -94,5 +94,7 @@ segments:
       - [0x1E1C8, c]
       - [0x22018, c, prim_helpers]
       - [0x22848, c]
-      - [0x23264, .bss, bss]
+      - [0x23264, .bss, create_entity]
+      - [0x232CA, .bss, bss]
+      - [0x23FB6, .bss, 1C7DC]
   - [0x23FCC]

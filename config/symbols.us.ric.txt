@@ -1,2 +1,0 @@
-g_RicFactoryBlueprints = 0x80154A6C;
-UpdateEntityRichter = 0x80157BFC;
