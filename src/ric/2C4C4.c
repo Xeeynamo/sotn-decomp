@@ -280,8 +280,8 @@ void RicEntityHolyWaterFlame(Entity* self) {
             }
             prim->x0 = sp10[i] - 8;
             prim->x1 = sp10[i] + 8;
-            prim->y0 = sp10[i + 8];
-            prim->y1 = sp10[i + 8];
+            prim->y0 = sp20[i];
+            prim->y1 = sp20[i];
             prim->x2 = sp10[i + 1] - 8;
             prim->x3 = sp10[i + 1] + 8;
             prim->y2 = sp20[i + 1];
