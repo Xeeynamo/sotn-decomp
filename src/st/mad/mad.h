@@ -61,7 +61,6 @@ extern u16 D_801805C4[];
 extern u16 aluric_subweapons_idx[];
 extern u16 aluric_subweapons_id[];
 extern u16 D_80180E10[];
-extern s16 D_80180ED8[];
 extern s32 D_80180E18[];
 extern s32 D_80180EC4[];
 extern s16 D_80180EDA[];
@@ -97,8 +96,6 @@ extern s16 g_ESoulStealOrbSprt[];
 extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
-
-extern s8 c_HeartPrizes[2][2];
 
 extern s16 D_80199DE8;
 

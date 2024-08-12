@@ -67,7 +67,11 @@ u8* g_SubweaponAnimPrizeDrop[] = {
 };
 
 static s16 D_80180EB8[] = {-6, 4, 0, -8};
+#ifndef VERSION_BETA
 static s8 c_HeartPrizes[] = {1, 5};
+#else
+static const s8 c_HeartPrizes[2][2] = {{1, 5}, {0,0}, {1,2}, {0,0}, {0,0}, {0,0}};
+#endif
 static s32 g_ExplosionYVelocities[] = {
     FIX(-1.0), FIX(-1.5), FIX(-1.5), FIX(-1.5), FIX(-3.0)};
 
@@ -156,7 +160,6 @@ static void func_8018CB34(u16 arg0) {
         }
     }
 }
-
 #include "collect_heart.h"
 
 #include "collect_gold.h"
@@ -315,11 +318,13 @@ void EntityPrizeDrop(Entity* self) {
             DestroyEntity(self);
         } else {
             self->step++;
+            #ifndef VERSION_BETA
             index = self->ext.equipItemDrop.castleFlag;
             if (index) {
                 index--;
                 g_CastleFlags[(index >> 3) + 0x1b0] |= 1 << (index & 7);
             }
+            #endif
         }
         if (!itemId) {
             self->ext.equipItemDrop.fallSpeed = FIX(-1);
