@@ -382,4 +382,3 @@ void CheckFieldCollision(u16* hitSensors, s16 sensorCount) {
 #include "../get_player_collision_with.h"
 
 #include "../replace_breakable_with_item_drop.h"
-
