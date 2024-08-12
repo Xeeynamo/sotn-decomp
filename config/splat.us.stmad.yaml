@@ -73,8 +73,8 @@ segments:
       - [0xD794, rodata]
       - [0xD7CC, .rodata, e_red_door] # EntityRedDoor
       - [0xD7E4, rodata]
-      - [0xD83C, .rodata, 1344C]
-      - [0xD85C, .rodata, 1344C] # EntityEquipItemDrop
+      - [0xD83C, .rodata, e_collect]
+      - [0xD85C, .rodata, e_collect] # EntityEquipItemDrop
       - [0xD874, .rodata, entity_relic_orb]
       - [0xD8AC, rodata]
       - [0xD8C0, .rodata, prim_helpers]
@@ -84,11 +84,11 @@ segments:
       - [0x10544, c, create_entity]
       - [0x110A8, c, e_red_door]
       - [0x11D3C, c]
-      - [0x1344C, c]
+      - [0x1344C, c, e_collect]
       - [0x149C0, c, entity_relic_orb]
       - [0x15520, c]
       - [0x18FA0, c, prim_helpers]
       - [0x197D8, .bss, create_entity]
       - [0x197ED, .bss, bss]
-      - [0x19E7E, .bss, 1344C]
+      - [0x19E7E, .bss, e_collect]
   - [0x19E94]
