@@ -136,24 +136,23 @@ UnkPolyFunc2 = 0x801AE68C;
 UnkPolyFunc0 = 0x801AE6E0;
 //PrimDecreaseBrightness = 0x801AE70C;
 
-//sbss
+// *** Data ***
+gfxBanks = 0x80180364;
+
+// *** sbss ***
 g_LayoutObjHorizontal = 0x801AE770;
 g_LayoutObjVertical = 0x801AE774;
 g_LayoutObjPosHorizontal = 0x801AE778;
 g_LayoutObjPosVertical = 0x801AE77C;
 
+// *** TEMP ***
+
 // ASM-only data is referencing these values, so these
 // are temporarily here until it's decompiled into .c files
-gfxBanks = 0x80180364;
-g_pStObjLayoutHorizontal = 0x801803B4;
-g_pStObjLayoutVertical = 0x80180488;
-EntityInit_80180610 = 0x80180610;
 EntityInit_8018061C = 0x8018061C;
 EntityInit_80180628 = 0x80180628;
-//EntityInit_80180634 = 0x80180634;
 EntityInit_80180640 = 0x80180640;
 EntityInit_8018064C = 0x8018064C;
-EntityInit_80180658 = 0x80180658;
 EntityInit_80180664 = 0x80180664;
 EntityInit_80180670 = 0x80180670;
 EntityInit_8018067C = 0x8018067C;
@@ -161,17 +160,14 @@ EntityInit_80180688 = 0x80180688;
 EntityInit_80180694 = 0x80180694;
 EntityInit_801806A0 = 0x801806A0;
 EntityInit_801806AC = 0x801806AC;
-//EntityInit_801806B8 = 0x801806B8;
 EntityInit_801806C4 = 0x801806C4;
 EntityInit_801806D0 = 0x801806D0;
-//EntityInit_801806DC = 0x801806DC;
 EntityInit_801806E8 = 0x801806E8;
 EntityInit_801806F4 = 0x801806F4;
 EntityInit_80180700 = 0x80180700;
 EntityInit_8018070C = 0x8018070C;
 EntityInit_80180718 = 0x80180718;
 EntityInit_80180724 = 0x80180724;
-//ObjInit2_80180754 = 0x80180754;
 g_eRedDoorTiles = 0x80180768;
 
 // Referenced in func_801A8EAC
