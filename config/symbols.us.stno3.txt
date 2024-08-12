@@ -7,6 +7,7 @@ g_EInitGeneric = 0x80180ADC;
 g_InitDataEnt13 = 0x80180AE8;
 g_eInitGeneric2 = 0x80180B00;
 g_eDamageDisplayInit = 0x80180B0C;
+g_BoneScimitarInit = 0x80180B78;
 g_eRedDoorTiles = 0x80180DA0;
 g_eBreakableAnimations = 0x80180E50;
 g_eBreakableHitboxes = 0x80180E70;
