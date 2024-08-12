@@ -62,12 +62,13 @@ void func_801934D0(u16 arg0) {
     }
 }
 
+// Used as-is, obviously
 #include "../collect_heart.h"
-
+// Used as-is, obviously
 #include "../collect_gold.h"
-
+// Extra random function
 void func_801937BC(void) {}
-
+// Extra random function
 void UnusedDestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
 void CollectSubweapon(u16 subWeaponIdx) {
