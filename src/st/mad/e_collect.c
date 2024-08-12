@@ -104,13 +104,8 @@ void CollectSubweapon(u16 subWeaponIdx) {
     }
     DestroyEntity(g_CurrentEntity);
 }
-
-// Different from "collect_heart_vessel.h"
-void CollectHeartVessel(void) {
-    g_api.PlaySfx(SFX_HEART_PICKUP);
-    g_api.func_800FE044(HEART_VESSEL_INCREASE, 0x4000);
-    DestroyEntity(g_CurrentEntity);
-}
+// Modified with ifdef to match
+#include "../collect_heart_vessel.h"
 
 void CollectLifeVessel(void) {
     g_api.PlaySfx(SFX_HEART_PICKUP);
