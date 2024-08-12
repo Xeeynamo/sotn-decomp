@@ -34,10 +34,6 @@ typedef enum {
     E_ID_15
 } EntityIDs;
 
-typedef struct {
-    s8 count[2];
-} HeartCounts;
-
 void CreateEntitiesToTheRight(s16);
 void CreateEntitiesToTheLeft(s16);
 void CreateEntitiesAbove(s16);
@@ -102,8 +98,7 @@ extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
 
-extern HeartCounts D_8018D830;
-extern HeartCounts D_8018D834;
+extern s8 c_HeartPrizes[2][2];
 
 extern s16 D_80199DE8;
 

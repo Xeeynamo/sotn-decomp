@@ -62,19 +62,7 @@ void func_801934D0(u16 arg0) {
     }
 }
 
-void CollectHeart(u16 arg0) {
-    HeartCounts counts;
-    HeartCounts unknown;
-
-    counts = D_8018D830;
-    unknown = D_8018D834;
-    g_api.PlaySfx(SFX_HEART_PICKUP);
-    g_Status.hearts += counts.count[arg0];
-    if (g_Status.hearts > g_Status.heartsMax) {
-        g_Status.hearts = g_Status.heartsMax;
-    }
-    DestroyEntity(g_CurrentEntity);
-}
+#include "../collect_heart.h"
 
 #include "../collect_gold.h"
 
