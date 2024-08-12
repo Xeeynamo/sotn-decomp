@@ -1,5 +1,6 @@
 #include "sfx.h"
 
+// This function is messy, maybe there's a better way.
 void CollectHeart(u16 arg0) {
 #ifdef VERSION_BETA
     s8 heartPrizes[2];
