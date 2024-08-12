@@ -30,7 +30,13 @@ u16 D_80175894;
 u16 D_80175896;
 u16 D_80175898[10];
 u32 D_801758AC;
-u32 D_801758B0[7];
+#ifdef VERSION_PC
+// D_801758CC is used in other places so unclear if this is a bug
+// or data import error
+u32 g_AguneaParams[8];
+#else
+u32 g_AguneaParams[7];
+#endif
 u32 D_801758CC;
 u32 D_801758D0[4];
 ButtonComboState g_bladeDashButtons;

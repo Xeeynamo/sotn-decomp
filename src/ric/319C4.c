@@ -721,7 +721,7 @@ void func_8016F198(Entity* self) {
     }
 }
 
-// Entity ID #64, created by blueprint #72. This call is in func_801719A4.
+// Entity ID #64, created by blueprint #72. This call is in EntityStopwatch.
 // When Richter has the stopwatch weapon, and uses it as a crash, it makes
 // 4 floating stopwatches. When they are done they disappear in a spinning
 // sparkle. This entity represents that sparkle. 4 copies of this entity
@@ -1115,7 +1115,7 @@ void func_801705EC(Entity* entity) {
     }
 }
 
-s16 func_801706C0(u16* arg0, s16 arg1, s16 arg2, s16* arg3) {
+s16 GetAguneaLightningAngle(u16* arg0, s16 arg1, s16 arg2, s16* arg3) {
     s16 temp_s3;
     s16 s3_offset = 0x80;
     s8 arg2_copy = arg2;
@@ -1128,18 +1128,20 @@ s16 func_801706C0(u16* arg0, s16 arg1, s16 arg2, s16* arg3) {
         arg0[1] = arg0[1] + ((rcos(temp_s3) * *arg3) >> 0xC);
         arg0[3] = arg0[3] + ((rsin(temp_s3) * *arg3) >> 0xC);
         if (arg2_copy & 1) {
-            return func_801706C0(arg0, (temp_s3 - 0x140), arg2 / 2, arg3);
+            return GetAguneaLightningAngle(
+                arg0, (temp_s3 - 0x140), arg2 / 2, arg3);
         } else {
             rand();
             rand();
-            return func_801706C0(arg0, (temp_s3 + 0x140), (arg2 - 1) / 2, arg3);
+            return GetAguneaLightningAngle(
+                arg0, (temp_s3 + 0x140), (arg2 - 1) / 2, arg3);
         }
     } else {
         return temp_s3;
     }
 }
 
-void func_80170874(s32 bufSize, s32* buf) {
+void AguneaShuffleParams(s32 bufSize, s32* buf) {
     s32 i, idx, swapTemp;
 
     for (i = bufSize - 1; i > 0; i--) {
@@ -1153,7 +1155,8 @@ void func_80170874(s32 bufSize, s32* buf) {
     }
 }
 
-void func_8017091C(Entity* self) {
+// Agunea item crash lightning, created by EntityAguneaCircle, blueprint 68
+void EntityAguneaLightning(Entity* self) {
     u16 sp10[4];
     s16 sp18;
     u16 sp20;
@@ -1205,7 +1208,7 @@ void func_8017091C(Entity* self) {
             srand(randomSeed);
             sp10[1] = self->posX.i.hi;
             sp10[3] = self->posY.i.hi;
-            angle = func_801706C0(&sp10, sp20, i, &sp18);
+            angle = GetAguneaLightningAngle(&sp10, sp20, i, &sp18);
             xCoord = sp10[0];
             yCoord = sp10[2];
             var_s6 = (i == 0) ? 2 : 8;
@@ -1289,7 +1292,7 @@ void func_8017091C(Entity* self) {
     }
 }
 
-void RicEntityStopWatchExpandingCircle(Entity* self) {
+void EntityAguneaCircle(Entity* self) {
     Primitive* prim;
     s16 rand_angle;
     s16 xCoord;
@@ -1385,9 +1388,9 @@ void RicEntityStopWatchExpandingCircle(Entity* self) {
         if (++self->ext.et_80170F64.unk7C >= 4) {
             // think this loop has to count down since we assign to i
             for (i = 7; i >= 0; i--) {
-                D_801758B0[i] = i;
+                g_AguneaParams[i] = i;
             }
-            func_80170874(8, &D_801758B0[0]);
+            AguneaShuffleParams(8, &g_AguneaParams[0]);
             self->ext.et_80170F64.unk7C = 0;
             g_api.PlaySfx(SFX_THUNDER_B);
             self->step++;
@@ -1395,7 +1398,8 @@ void RicEntityStopWatchExpandingCircle(Entity* self) {
         break;
     case 3:
         RicCreateEntFactoryFromEntity(
-            self, FACTORY(D_801758B0[self->ext.et_80170F64.unk7C] * 0x100, 68),
+            self,
+            FACTORY(g_AguneaParams[self->ext.et_80170F64.unk7C] * 0x100, 68),
             0);
         if (++self->ext.et_80170F64.unk7C >= 8) {
             self->hitboxHeight = self->hitboxWidth = 0x80;
@@ -1435,7 +1439,7 @@ void RicEntityStopWatchExpandingCircle(Entity* self) {
     return;
 }
 
-void func_8017161C(Entity* self) {
+void EntityStopwatchCircle(Entity* self) {
     Primitive* prim;
     s16 temp_s0_4;
     s32 sine;
@@ -1504,7 +1508,7 @@ void func_8017161C(Entity* self) {
     return;
 }
 
-void func_801719A4(Entity* self) {
+void EntityStopwatch(Entity* self) {
     Primitive* prim;
     s16 firstmult;
     s16 secondmult;
