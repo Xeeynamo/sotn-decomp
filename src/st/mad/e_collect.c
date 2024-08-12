@@ -24,6 +24,7 @@ void func_8019344C(void) {
     }
 }
 
+// Identical to e_collect.h
 void func_801934D0(u16 arg0) {
     Collider collider;
 
@@ -50,17 +51,14 @@ void func_801934D0(u16 arg0) {
 
         if (collider.effects & EFFECT_QUICKSAND) {
             g_CurrentEntity->posY.val += FIX(0.125);
-            return;
+        } else {
+            g_CurrentEntity->posY.i.hi += collider.unk18;
         }
-
-        g_CurrentEntity->posY.i.hi =
-            (u16)g_CurrentEntity->posY.i.hi + collider.unk18;
-        return;
-    }
-
-    if (!(collider.effects & EFFECT_NOTHROUGH)) {
-        MoveEntity();
-        func_8019344C();
+    } else {
+        if (!(collider.effects & EFFECT_NOTHROUGH)) {
+            MoveEntity();
+            func_8019344C();
+        }
     }
 }
 
