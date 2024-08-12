@@ -1,3 +1,7 @@
+// This file is very similar to e_collect.h, but has some subtle differences
+// in some functions. This makes it non-viable to de-duplicate this unless
+// you do some fancy #ifdef stuff.
+
 #include "mad.h"
 #include "sfx.h"
 
