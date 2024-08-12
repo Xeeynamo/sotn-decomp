@@ -58,8 +58,8 @@ segments:
       - [0xD4B0, .rodata, F890]
       - [0xD4D8, .rodata, e_red_door] # EntityRedDoor
       - [0xD4F0, .rodata]
-      - [0xD540, .rodata, 15C84] # EntityPrizeDrop
-      - [0xD560, .rodata, 15C84] # EntityEquipItemDrop
+      - [0xD540, .rodata, 15714] # EntityPrizeDrop
+      - [0xD560, .rodata, 15714] # EntityEquipItemDrop
       - [0xD578, .rodata, entity_relic_orb]
       - [0xD5B0, .rodata, entity_message_box]
       - [0xD5C4, .rodata, 18084] # EntityStageNamePopup
@@ -75,7 +75,6 @@ segments:
       - [0x135B4, c, e_red_door]
       - [0x14264, c]
       - [0x15714, c]
-      - [0x15C84, c]
       - [0x16C90, c, blit_char]
       - [0x16F30, c, entity_relic_orb]
       - [0x17A00, c, entity_heart_drop]
@@ -86,5 +85,5 @@ segments:
       - [0x1C704, .bss, header]
       - [0x1C764, .bss, create_entity]
       - [0x1C774, .bss, holyglassescutscene]
-      - [0x1C7C0, .bss, 15C84]
+      - [0x1C7C0, .bss, 15714]
   - [0x1D46C]
