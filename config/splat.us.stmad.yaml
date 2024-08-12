@@ -84,6 +84,7 @@ segments:
       - [0x10544, c, create_entity]
       - [0x110A8, c, e_red_door]
       - [0x11D3C, c]
+      - [0x1344C, c]
       - [0x139E0, c]
       - [0x149C0, c, entity_relic_orb]
       - [0x15520, c]
