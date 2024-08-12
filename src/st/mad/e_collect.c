@@ -427,7 +427,6 @@ void func_80194314(Entity* entity) {
     }
 }
 
-// Different from other overlays, but extremely similar to ST0.
 void EntityEquipItemDrop(Entity* self) {
     Collider collider;
     Primitive* prim;
@@ -436,16 +435,31 @@ void EntityEquipItemDrop(Entity* self) {
     s16 index;
     s32 primIndex;
     const char* name;
-    s32 xPos;
-    s32 yPos;
+    s32 xPos, yPos; // only used in MAD
 
     itemId = self->params & 0x7FFF;
-    if (self->step && self->step < 5 && self->hitFlags) {
+    if (
+#if defined(VERSION_US)
+        self->step >= 2 &&
+#else
+        self->step &&
+#endif
+        self->step < 5 && self->hitFlags) {
         self->step = 5;
     }
 
     switch (self->step) {
     case 0:
+#ifndef VERSION_BETA
+        if (g_PlayableCharacter != PLAYER_ALUCARD) {
+            self->params = 0;
+            self->pfnUpdate = EntityPrizeDrop;
+            self->entityId = 3;
+            SetStep(0);
+            EntityPrizeDrop(self);
+            return;
+        }
+#endif
         InitializeEntity(g_InitializeData0);
         self->ext.equipItemDrop.timer = 0;
         break;
@@ -465,7 +479,13 @@ void EntityEquipItemDrop(Entity* self) {
             DestroyEntity(self);
             return;
         }
-
+#ifndef VERSION_BETA
+        index = self->ext.equipItemDrop.castleFlag;
+        if (index) {
+            index--;
+            g_CastleFlags[(index >> 3) + 0x1b0] |= 1 << (index & 7);
+        }
+#endif
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -474,11 +494,19 @@ void EntityEquipItemDrop(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         g_ItemIconSlots[i] = 0x1E0;
-        if (itemId < NUM_HAND_ITEMS + 4) {
+#ifndef VERSION_BETA
+        self->ext.equipItemDrop.iconSlot = i;
+#define ITEM_LIMIT NUM_HAND_ITEMS
+#else
+// Not sure if this is right, maybe NUM_HAND_ITEMS itself is
+// 4 larger in VERSION_BETA?
+#define ITEM_LIMIT NUM_HAND_ITEMS + 4
+#endif
+        if (itemId < ITEM_LIMIT) {
             g_api.LoadEquipIcon(g_api.equipDefs[itemId].icon,
                                 g_api.equipDefs[itemId].iconPalette, i);
         } else {
-            itemId -= NUM_HAND_ITEMS + 4;
+            itemId -= ITEM_LIMIT;
             g_api.LoadEquipIcon(g_api.accessoryDefs[itemId].icon,
                                 g_api.accessoryDefs[itemId].iconPalette, i);
         }
@@ -497,7 +525,11 @@ void EntityEquipItemDrop(Entity* self) {
         self->step++;
         break;
     case 2:
+#ifdef VERSION_BETA
         if (self->velocityX < 0) {
+#else
+        if (self->velocityY < 0) {
+#endif
             g_api.CheckCollision(
                 self->posX.i.hi, self->posY.i.hi - 7, &collider, 0);
             if (collider.effects & EFFECT_NOTHROUGH) {
@@ -525,6 +557,11 @@ void EntityEquipItemDrop(Entity* self) {
                 self->ext.equipItemDrop.aliveTimer = 80;
                 self->step++;
             }
+#ifndef VERSION_BETA
+        } else {
+            i = self->ext.equipItemDrop.iconSlot;
+            g_ItemIconSlots[i] = 0x10;
+#endif
         }
         break;
     case 4:
@@ -546,11 +583,11 @@ void EntityEquipItemDrop(Entity* self) {
             g_unkGraphicsStruct.BottomCornerTextTimer = 0;
         }
         g_api.PlaySfx(SFX_ITEM_PICKUP);
-        if (itemId < NUM_HAND_ITEMS + 4) {
+        if (itemId < ITEM_LIMIT) {
             name = g_api.equipDefs[itemId].name;
             g_api.AddToInventory(itemId, EQUIP_HAND);
         } else {
-            itemId -= NUM_HAND_ITEMS + 4;
+            itemId -= ITEM_LIMIT;
             name = g_api.accessoryDefs[itemId].name;
             g_api.AddToInventory(itemId, EQUIP_ARMOR);
         }
@@ -560,6 +597,12 @@ void EntityEquipItemDrop(Entity* self) {
     }
 
     if (self->step > 1) {
+#ifndef VERSION_BETA
+        if (self->ext.equipItemDrop.timer) {
+            self->ext.equipItemDrop.timer--;
+        }
+        BlinkItem(self, self->ext.equipItemDrop.timer);
+#else
         prim = &g_PrimBuf[self->primIndex];
         xPos = (u16)self->posX.i.hi;
         prim->x0 = prim->x2 = xPos - 7;
@@ -579,5 +622,6 @@ void EntityEquipItemDrop(Entity* self) {
                         prim->b2 = prim->b3 = 0xFF;
             }
         }
+#endif
     }
 }

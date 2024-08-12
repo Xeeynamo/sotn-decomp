@@ -516,7 +516,32 @@ extern u16 g_InitializeEntityData0[];
 
 #include "entity_explosion.h"
 
+// Weird difference here. These functions are not related.
+// But MAD has one and not the other.
+#ifndef VERSION_BETA
 #include "blink_item.h"
+#else
+void func_80194314(Entity* entity) {
+    if (entity->step != 0) {
+        if (entity->posY.i.hi >= 0xF1) {
+            DestroyEntity(entity);
+            return;
+        }
+        FallEntity();
+        MoveEntity();
+        return;
+    }
+
+    InitializeEntity(g_eBreakableInit);
+    entity->animCurFrame = entity->ext.generic.unk7C.U8.unk0;
+    entity->velocityX = D_80180ED8[entity->ext.generic.unk80.modeS8.unk0 * 2];
+    entity->velocityY = D_80180EDA[entity->ext.generic.unk80.modeS8.unk0 * 2];
+
+    if (entity->params != 0) {
+        entity->zPriority -= 1;
+    }
+}
+#endif
 
 u16 g_ItemIconSlots[ICON_SLOT_NUM];
 
@@ -528,6 +553,7 @@ void EntityEquipItemDrop(Entity* self) {
     s16 index;
     s32 primIndex;
     const char* name;
+    s32 xPos, yPos; // only used in MAD
 
     itemId = self->params & 0x7FFF;
     if (
@@ -542,6 +568,7 @@ void EntityEquipItemDrop(Entity* self) {
 
     switch (self->step) {
     case 0:
+#ifndef VERSION_BETA
         if (g_PlayableCharacter != PLAYER_ALUCARD) {
             self->params = 0;
             self->pfnUpdate = EntityPrizeDrop;
@@ -550,6 +577,7 @@ void EntityEquipItemDrop(Entity* self) {
             EntityPrizeDrop(self);
             return;
         }
+#endif
         InitializeEntity(g_InitializeData0);
         self->ext.equipItemDrop.timer = 0;
         break;
@@ -569,13 +597,13 @@ void EntityEquipItemDrop(Entity* self) {
             DestroyEntity(self);
             return;
         }
-
+#ifndef VERSION_BETA
         index = self->ext.equipItemDrop.castleFlag;
         if (index) {
             index--;
             g_CastleFlags[(index >> 3) + 0x1b0] |= 1 << (index & 7);
         }
-
+#endif
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -584,12 +612,19 @@ void EntityEquipItemDrop(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         g_ItemIconSlots[i] = 0x1E0;
+#ifndef VERSION_BETA
         self->ext.equipItemDrop.iconSlot = i;
-        if (itemId < NUM_HAND_ITEMS) {
+#define ITEM_LIMIT NUM_HAND_ITEMS
+#else
+// Not sure if this is right, maybe NUM_HAND_ITEMS itself is
+// 4 larger in VERSION_BETA?
+#define ITEM_LIMIT NUM_HAND_ITEMS + 4
+#endif
+        if (itemId < ITEM_LIMIT) {
             g_api.LoadEquipIcon(g_api.equipDefs[itemId].icon,
                                 g_api.equipDefs[itemId].iconPalette, i);
         } else {
-            itemId -= NUM_HAND_ITEMS;
+            itemId -= ITEM_LIMIT;
             g_api.LoadEquipIcon(g_api.accessoryDefs[itemId].icon,
                                 g_api.accessoryDefs[itemId].iconPalette, i);
         }
@@ -608,7 +643,11 @@ void EntityEquipItemDrop(Entity* self) {
         self->step++;
         break;
     case 2:
+#ifdef VERSION_BETA
+        if (self->velocityX < 0) {
+#else
         if (self->velocityY < 0) {
+#endif
             g_api.CheckCollision(
                 self->posX.i.hi, self->posY.i.hi - 7, &collider, 0);
             if (collider.effects & EFFECT_NOTHROUGH) {
@@ -636,9 +675,11 @@ void EntityEquipItemDrop(Entity* self) {
                 self->ext.equipItemDrop.aliveTimer = 80;
                 self->step++;
             }
+#ifndef VERSION_BETA
         } else {
             i = self->ext.equipItemDrop.iconSlot;
             g_ItemIconSlots[i] = 0x10;
+#endif
         }
         break;
     case 4:
@@ -674,9 +715,31 @@ void EntityEquipItemDrop(Entity* self) {
     }
 
     if (self->step > 1) {
+#ifndef VERSION_BETA
         if (self->ext.equipItemDrop.timer) {
             self->ext.equipItemDrop.timer--;
         }
         BlinkItem(self, self->ext.equipItemDrop.timer);
+#else
+        prim = &g_PrimBuf[self->primIndex];
+        xPos = (u16)self->posX.i.hi;
+        prim->x0 = prim->x2 = xPos - 7;
+        prim->x1 = prim->x3 = xPos + 7;
+        yPos = (u16)self->posY.i.hi;
+        prim->y0 = prim->y1 = yPos - 7;
+        prim->y2 = prim->y3 = yPos + 7;
+        if (self->ext.equipItemDrop.timer) {
+            self->ext.equipItemDrop.timer--;
+            if (!(self->ext.equipItemDrop.timer & 2)) {
+                prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 =
+                    prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
+                        prim->b2 = prim->b3 = 0x80;
+            } else {
+                prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 =
+                    prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
+                        prim->b2 = prim->b3 = 0xFF;
+            }
+        }
+#endif
     }
 }
