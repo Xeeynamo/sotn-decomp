@@ -5,25 +5,22 @@
 #include "mad.h"
 #include "sfx.h"
 
+// Identical to e_collect.h
 void func_8019344C(void) {
-    s32 temp_v1;
-    Entity* entity;
-
-    entity = g_CurrentEntity;
-    if (entity->velocityY >= 0) {
-        temp_v1 =
-            entity->ext.generic.unk88.S16.unk0 + entity->ext.generic.unk84.unk;
-        entity->ext.generic.unk84.unk = temp_v1;
-        entity->velocityX = temp_v1;
-        if (temp_v1 == 0x10000 || temp_v1 == -0x10000) {
-            entity->ext.generic.unk88.S16.unk0 =
-                -entity->ext.generic.unk88.S16.unk0;
+    if (g_CurrentEntity->velocityY >= 0) {
+        g_CurrentEntity->ext.equipItemDrop.fallSpeed +=
+            g_CurrentEntity->ext.equipItemDrop.gravity;
+        g_CurrentEntity->velocityX =
+            g_CurrentEntity->ext.equipItemDrop.fallSpeed;
+        if (g_CurrentEntity->velocityX == FIX(1) ||
+            g_CurrentEntity->velocityX == FIX(-1)) {
+            g_CurrentEntity->ext.equipItemDrop.gravity =
+                -g_CurrentEntity->ext.equipItemDrop.gravity;
         }
-        entity = g_CurrentEntity;
     }
 
-    if (entity->velocityY < FIX(0.25)) {
-        entity->velocityY += FIX(0.125);
+    if (g_CurrentEntity->velocityY < FIX(0.25)) {
+        g_CurrentEntity->velocityY += FIX(0.125);
     }
 }
 
