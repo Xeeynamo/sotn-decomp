@@ -63,6 +63,7 @@ extern u16 aluric_subweapons_id[];
 extern u16 D_80180E10[];
 extern s32 D_80180E18[];
 extern s32 D_80180EC4[];
+extern s16 D_80180ED8_MAD[];
 extern s16 D_80180EDA[];
 extern u16 D_80180F5C[];
 extern u16 D_80180FBC[];

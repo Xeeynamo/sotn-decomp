@@ -70,7 +70,9 @@ static s16 D_80180EB8[] = {-6, 4, 0, -8};
 #ifndef VERSION_BETA
 static s8 c_HeartPrizes[] = {1, 5};
 #else
-static const s8 c_HeartPrizes[2][2] = {{1, 5}, {0,0}, {1,2}, {0,0}, {0,0}, {0,0}};
+// This is weird, the values have to go in later.
+// Note that this array is in rodata. Other overlays have it in data.
+static const s8 c_HeartPrizes[2][2];
 #endif
 static s32 g_ExplosionYVelocities[] = {
     FIX(-1.0), FIX(-1.5), FIX(-1.5), FIX(-1.5), FIX(-3.0)};
@@ -161,6 +163,12 @@ static void func_8018CB34(u16 arg0) {
     }
 }
 #include "collect_heart.h"
+
+#ifdef VERSION_BETA
+// For some reason need to declare the values AFTER the function.
+static const s8 c_HeartPrizes[2][2] = {
+    {1, 5}, {0, 0}, {1, 2}, {0, 0}, {0, 0}, {0, 0}};
+#endif
 
 #include "collect_gold.h"
 
@@ -318,13 +326,13 @@ void EntityPrizeDrop(Entity* self) {
             DestroyEntity(self);
         } else {
             self->step++;
-            #ifndef VERSION_BETA
+#ifndef VERSION_BETA
             index = self->ext.equipItemDrop.castleFlag;
             if (index) {
                 index--;
                 g_CastleFlags[(index >> 3) + 0x1b0] |= 1 << (index & 7);
             }
-            #endif
+#endif
         }
         if (!itemId) {
             self->ext.equipItemDrop.fallSpeed = FIX(-1);
@@ -526,6 +534,7 @@ extern u16 g_InitializeEntityData0[];
 #ifndef VERSION_BETA
 #include "blink_item.h"
 #else
+// Also, this function is never called.
 void func_80194314(Entity* entity) {
     if (entity->step != 0) {
         if (entity->posY.i.hi >= 0xF1) {
@@ -539,7 +548,8 @@ void func_80194314(Entity* entity) {
 
     InitializeEntity(g_eBreakableInit);
     entity->animCurFrame = entity->ext.generic.unk7C.U8.unk0;
-    entity->velocityX = D_80180ED8[entity->ext.generic.unk80.modeS8.unk0 * 2];
+    entity->velocityX =
+        D_80180ED8_MAD[entity->ext.generic.unk80.modeS8.unk0 * 2];
     entity->velocityY = D_80180EDA[entity->ext.generic.unk80.modeS8.unk0 * 2];
 
     if (entity->params != 0) {
@@ -706,11 +716,11 @@ void EntityEquipItemDrop(Entity* self) {
             g_unkGraphicsStruct.BottomCornerTextTimer = 0;
         }
         g_api.PlaySfx(SFX_ITEM_PICKUP);
-        if (itemId < NUM_HAND_ITEMS) {
+        if (itemId < ITEM_LIMIT) {
             name = g_api.equipDefs[itemId].name;
             g_api.AddToInventory(itemId, EQUIP_HAND);
         } else {
-            itemId -= NUM_HAND_ITEMS;
+            itemId -= ITEM_LIMIT;
             name = g_api.accessoryDefs[itemId].name;
             g_api.AddToInventory(itemId, EQUIP_ARMOR);
         }
