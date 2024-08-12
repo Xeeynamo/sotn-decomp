@@ -1,7 +1,6 @@
 D_800AC910 = 0x800AC8BC;
 D_800AC914 = 0x800AC8D0;
 D_800AC934 = 0x800AC9FC;
-D_800ACE88 = 0x800ACE88; // ignore:True
 g_FactoryBlueprints = 0x800AD298;
 aPbav = 0x800B1140;
 aPbav_0 = 0x800B4140;
@@ -20,7 +19,6 @@ g_GfxEquipIcon = 0x800C53C8;
 g_PalEquipIcon = 0x800D8978;
 D_800DBFFC = 0x800DBFFC; // ignore:true
 func_80106A28 = 0x80106864;
-D_80137EF8 = 0x80137ACC;
 D_8013B6A0 = 0x8013B270;
 g_PlOvl = 0x8013C000;
 g_PlOvlAluBatSpritesheet = 0x8013C004;
