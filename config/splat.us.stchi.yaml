@@ -33,8 +33,18 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-# New attempt, following pattern seen in git
-      - [0x0, data]
+      #- [0x0, data]
+      - [0x0, .data, header]
+      - [0xE8, .data, header] # layers
+      - [0x298, data] # gfxbanks
+      - [0x3B4, .data, e_laydef] # layout entries header
+      - [0x55C, .data, entity]
+      - [0x195C, .data, rooms]
+      - [0x19F8, .data, e_layout] # layout entries data
+      - [0x20D8, data]
+      - [0xA960, .data, tile_data] # tile data
+      - [0xF760, .data, tile_data] # tile definitions
+      - [0x17B90, .data, sprites]
       - [0x1B100, rodata, 1BEDC] # jtbl_8019B100
       - [0x1B144, rodata] # jtbl_8018B144
       - [0x1B168, rodata] # jtbl_8019B168
@@ -67,17 +77,6 @@ segments:
       - [0x1C5CC, c]
 
 # Initial attempt with file splits, semi-up-to-date structures (didn't work?)
-#      - [0x0, data, header]
-#      - [0xE8, .data, header] # layers
-#      - [0x298, data]
-#      - [0x3B4, .data, e_laydef] # layout entries header
-#      - [0x55C, data]
-#      - [0x195C, .data, rooms]
-#      - [0x19F8, .data, e_layout] # layout entries data
-#      - [0x20D8, .data]
-#      - [0xA960, .data, tile_data] # tile data
-#      - [0xF760, .data, tile_data] # tile definitions
-#      - [0x17B90, .data, sprites]
 #      - [0x1B100, rodata, 1B3FC]
 #      - [0x1B144, rodata, 1C5CC]
 #      - [0x1B168, rodata, 1CBA8]
@@ -89,18 +88,13 @@ segments:
 #      - [0x1B3FC, asm]
 #      - [0x1C5CC, asm]
 #      - [0x1CBA8, asm]
-#      - [0x1DEA4, asm]
-#      - [0x1E1A0, asm]
-#      - [0x1E2A8, asm]
+#      - [0x1DEA4, asm] # update
+#      - [0x1E1A0, asm] # update_stage_entities
+#      - [0x1E2A8, asm] # collision
 #      - [0x22CAC, asm]
 #      - [0x2813C, asm]
 #      - [0x2B7CC, asm]
 #      - [0x2D2BC, asm]
 
-# Reference: Offsets for modern c function names
-#      - [0x1B3FC, c]
-#      - [0x1DEA4, c, update]
-#      - [0x1E1A0, c, update_stage_entities]
-#      - [0x1E2A8, c, collision]
-      - [0x2E774, sbss]
+      - [0x2E770, sbss]
   - [0x2F428]

@@ -10,13 +10,13 @@ INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019C5CC);
 
 // POSSIBLE FILE BREAK
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019CBA8);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019CBA8);    // [Entity]
 
 INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019D0D8);
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019D1A8);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019D1A8);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019D9C8);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019D9C8);    // [Entity]
 
 #include "../random.h"
 
@@ -36,22 +36,7 @@ INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019E2A8);    // HitDetection()
 INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019F3C0);    // EntityDamageDisplay()
 //#include "../collision.h"
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019FA64);    // CreateEntityFromLayout()
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019FB28);    // CreateEntityWhenInVerticalRange()
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019FC40);    // CreateEntityWhenInHorizontalRange()
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019FD58);    // FindFirstEntityToTheRight()
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019FDA4);    // FindFirstEntityToTheLeft()
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019FDFC);    // CreateEntitiesToTheRight()
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_8019FEF8);    // CreateEntitiesToTheLeft()
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A000C);    // FindFirstEntityAbove()
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A0058);    // FindFirstEntityBelow()
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A00B0);    // CreateEntitiesAbove()
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A01AC);    // CreateEntitiesBelow()
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A02C0);    // InitRoomEntities()
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A0438);    // UpdateRoomPosition()
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A04EC);    // CreateEntityFromCurrentEntity()
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A0560);    // CreateEntityFromEntity()
-//#include "../create_entity.h"
+#include "../create_entity.h"
 
 INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A05DC);    // EntityIsNearPlayer2()
 INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A0654);    // EntityRedDoor()
@@ -172,7 +157,27 @@ INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A5F54);    // EntityIntenseExpl
 
 INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A6054);    // [Duplicate]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A6120);    // [Duplicate]
+// [Duplicate]
+void func_801A6120(u16 entityId, Entity* src, Entity* dst)
+{
+    DestroyEntity(dst);
+    dst->entityId = entityId;
+    dst->pfnUpdate = PfnEntityUpdates[entityId - 1];
+    dst->posX.i.hi = src->posX.i.hi;
+    dst->posY.i.hi = src->posY.i.hi;
+    dst->unk5A = src->unk5A;
+    dst->zPriority = src->zPriority;
+    dst->animSet = src->animSet;
+    dst->flags = FLAG_UNK_2000 | FLAG_UNK_01000000 | FLAG_UNK_04000000 |
+                 FLAG_UNK_08000000 | FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
+                 FLAG_DESTROY_IF_OUT_OF_CAMERA;
+
+    if (src->palette & 0x8000) {
+        dst->palette = src->hitEffect;
+    } else {
+        dst->palette = src->palette;
+    }
+}
 
 INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A61E8);    // [Duplicate]
 
@@ -204,41 +209,41 @@ INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A80A8);
 
 // POSSIBLE FILE BREAK
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A813C);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A813C);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A8DE8);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A8DE8);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A8EAC);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A8EAC);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A93D4);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A93D4);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A9588);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A9588);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A97C8);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A97C8);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A9D40);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A9D40);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A9E94);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801A9E94);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AA020);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AA020);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AA390);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AA390);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AB0C0);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AB0C0);    // [Entity]
 
 INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AB548);
 
 // POSSIBLE FILE BREAK
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AB7CC);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AB7CC);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AC074);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AC074);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AC730);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AC730);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801ACB6C);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801ACB6C);    // [Entity]
 
-INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801ACEF4);
+INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801ACEF4);    // [Entity]
 
 INCLUDE_ASM("st/chi/nonmatchings/1C5CC", func_801AD0EC);    // [Duplicate]
 

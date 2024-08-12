@@ -8,20 +8,14 @@
 
 void InitializeEntity(u16 arg0[]);
 void AnimateEntity(s32, void*);
-extern s32 D_80180664;
-//static u8 D_80180730[] = {0x40, 0x01, 0xFF, 0x00};
-//static u8 D_80180734[] = {0x02, 0x25, 0x02, 0x26};
-//static ObjInit2 D_80180740[] = {
-//    {0x0006, 0x01FA, 0x0000, 0x0000, 0x0000, 0x0010, 0x00000000, D_80180730},
-//    {0x8001, 0x00C0, 0x0000, 0x0000, 0x0003, 0x0003, 0x00000000, D_80180734},
-//};
+extern s32 EntityInit_80180664;
 extern ObjInit2 D_80180740[];
 
 // EntityBackgroundBlock
 void func_8019B3FC(Entity* entity) {
     ObjInit2* objInit = &D_80180740[entity->params];
     if (entity->step == 0) {
-        InitializeEntity(&D_80180664);
+        InitializeEntity(&EntityInit_80180664);
         entity->animSet = objInit->animSet;
         entity->zPriority = objInit->zPriority;
         entity->unk5A = objInit->unk4.u;
@@ -39,7 +33,7 @@ void func_8019B3FC(Entity* entity) {
     AnimateEntity(objInit->unk10, entity);
 }
 
-extern u16 D_80180658;
+extern u16 EntityInit_80180658;
 extern u8 D_80180798[];
 extern u8 D_801807A0[];
 extern u16 D_801807A8[];
@@ -90,7 +84,7 @@ void func_8019B4DC(Entity* entity) {
             g_Tilemap.height = *(temp_v0_2++);
         }
     } else {
-        InitializeEntity(&D_80180658);
+        InitializeEntity(&EntityInit_80180658);
         entity->ext.generic.unk7C.s = D_801807A0[temp_s1];
         if (entity->ext.generic.unk7C.s != 0) {
             entity->hitboxWidth = D_80180798[temp_s1];
@@ -104,7 +98,7 @@ void func_8019B4DC(Entity* entity) {
 
 void func_801A2684(void*);  // ReplaceBreakableWithItemDrop()
 extern s32 D_8007D858[];
-extern s32 D_80180610;
+extern s32 EntityInit_80180610;
 extern s32 D_80180838[];
 extern u8 D_80180858[];
 extern u8 D_80180860[];
@@ -121,14 +115,14 @@ void func_8019B698(Entity* entity)
     Entity* newEntity;
 
     if (entity->step == 0) {
-        InitializeEntity(&D_80180610);
+        InitializeEntity(&EntityInit_80180610);
         entity->zPriority = 0x70;
         entity->drawMode = D_80180878[params];
         newEntity = &entity[1];
         entity->hitboxHeight = D_80180858[params];
         entity->animSet = D_80180868[params];
         DestroyEntity(newEntity);
-        func_801A0560(0x11, entity, newEntity);
+        CreateEntityFromEntity(0x11, entity, newEntity);
         if (params != 0) {
             entity[1].posY.i.hi -= 32;
         } else {
@@ -143,14 +137,14 @@ void func_8019B698(Entity* entity)
         g_api_PlaySfx(SFX_WEAPON_62C);
         newEntity = AllocEntity(&D_8007D858[0], &D_8007D858[0x5E0]);
         if (newEntity != NULL) {
-            func_801A04EC(2, newEntity);
+            CreateEntityFromCurrentEntity(2, newEntity);
             newEntity->params = D_80180860[params] | 0x10;
         }
 
         for (ptr = &D_80180880, i = 0; i < 4; i++) {
             newEntity = AllocEntity(&D_8007D858[0], &D_8007D858[0x5E0]);
             if (newEntity != NULL) {
-                func_801A0560(0x1A, entity, newEntity);
+                CreateEntityFromEntity(0x1A, entity, newEntity);
                 newEntity->posX.i.hi += *ptr++;
                 newEntity->posY.i.hi += *ptr++;
                 if (params != 0) {
@@ -164,7 +158,7 @@ void func_8019B698(Entity* entity)
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(&D_8007D858[0], &D_8007D858[0x5E0]);
                 if (newEntity != NULL) {
-                    func_801A0560(0x1A, entity, newEntity);
+                    CreateEntityFromEntity(0x1A, entity, newEntity);
                     newEntity->posX.i.hi += *ptr++;
                     newEntity->posY.i.hi += *ptr++;
                     newEntity->params = i + 4;
@@ -178,7 +172,7 @@ void func_8019B698(Entity* entity)
 
 void func_801ADF40(Primitive*); // UnkPrimHelper()
 
-// CEN.func_8018DB18
+// CEN.func_8018DB18 [Entity]
 void func_8019B914(Entity* entity)
 {
     Collider collider;
@@ -193,7 +187,7 @@ void func_8019B914(Entity* entity)
 
     switch (entity->step) {
     case 0:
-        InitializeEntity(&D_80180610);
+        InitializeEntity(&EntityInit_80180610);
         entity->zPriority = 0x70;
         entity->hitboxState = 0;
         entity->drawFlags = FLAG_DRAW_ROTZ;
@@ -263,7 +257,7 @@ void func_8019B914(Entity* entity)
             if (entity->velocityY > FIX(-0.625)) {
                 newEntity = AllocEntity(&D_8007D858[0], &D_8007D858[0x5E0]);
                 if (newEntity != 0) {
-                    func_801A0560(6, entity, newEntity);
+                    CreateEntityFromEntity(6, entity, newEntity);
                     newEntity->params = 16;
                 }
                 DestroyEntity(entity);
@@ -358,15 +352,16 @@ void func_8019BD0C(struct UnkStruct1* arg0)
 }
 
 extern u8 D_8003BE3C;
-extern s32 D_8018067C;
+extern EntityInit EntityInit_8018067C;
 
+// [Entity]
 void func_8019BDF8(Entity* entity)
 {
     s16 temp_3;
 
     switch (entity->step) {
         case 0:
-            InitializeEntity(&D_8018067C);
+            InitializeEntity(&EntityInit_8018067C);
 
             temp_3 = 3;
 

@@ -12,7 +12,6 @@ INCLUDE_ASM("st/chi/nonmatchings/1BEDC", func_8019BEDC);
 extern u8 D_8003BE3C;
 extern s32 D_8007D858[];
 void* func_801AE478(Primitive*);    // FindFirstUnkPrim()
-extern s32 D_8018067C;
 extern u16 D_8018089C;
 extern u16 D_801808B4;
 extern u16 g_pads_1_pressed;
@@ -34,6 +33,7 @@ typedef struct UnkStruct2 {
     u8 unk2B;
 } UnkStruct2;
 
+// [Entity]
 void func_8019BEDC(Entity* entity)
 {
     Primitive* prim;
@@ -58,7 +58,7 @@ void func_8019BEDC(Entity* entity)
     switch (entity->step) {
         case 0:
             entity->animCurFrame = 1;
-            InitializeEntity(&D_8018067C);
+            InitializeEntity(&EntityInit_8018067C);
 
             temp2 = 0x6D;
             temp1 = D_8003BE3C;
@@ -144,7 +144,7 @@ void func_8019BEDC(Entity* entity)
             temp_posY = entity->posY.i.hi + 0x20;
             temp_entity = AllocEntity(D_8007D858, &D_8007D858[0x5E0]);
             if (temp_entity != NULL) {
-                func_801A04EC(0x15, temp_entity);
+                CreateEntityFromCurrentEntity(0x15, temp_entity);
                 temp_entity->posX.i.hi = (s16) (temp_posX + (Random() & 0x1F));
                 temp2 = temp_posY;
                 temp_entity->posY.i.hi = temp2;
@@ -189,8 +189,9 @@ void func_8019BEDC(Entity* entity)
 }
 #endif
 
-extern s32 D_8018067C;
+extern EntityInit EntityInit_8018067C;
 
+// [Entity]
 void func_8019C31C(Entity* entity)
 {
     Collider collider;
@@ -207,7 +208,7 @@ void func_8019C31C(Entity* entity)
     temp_v1 = entity->step;
     switch (temp_v1) {
         case 0:
-            InitializeEntity(&D_8018067C);
+            InitializeEntity(&EntityInit_8018067C);
             temp_a0 = entity->params;
             entity->drawFlags = 4;
             entity->zPriority = 0x69;
@@ -250,7 +251,7 @@ void func_8019C31C(Entity* entity)
                         temp_v0 = AllocEntity(&g_Entities[224], &g_Entities[256]);
                         var_s2 += 1;
                         if (temp_v0 != NULL) {
-                            func_801A0560(0x19, entity, temp_v0);
+                            CreateEntityFromEntity(0x19, entity, temp_v0);
                             temp_v0->params = (s16) (((Random() & 3) + 9) | 0x100);
                         }
                     } while (var_s2 < 2);
@@ -261,7 +262,7 @@ void func_8019C31C(Entity* entity)
                 if (temp_v1_3 <= 0x7FFF) {
                     temp_v0_2 = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (temp_v0_2 != NULL) {
-                        func_801A0560(6, entity, temp_v0_2);
+                        CreateEntityFromEntity(6, entity, temp_v0_2);
                         temp_v0_2->params = 0xC010;
                     }
                     DestroyEntity(entity);
