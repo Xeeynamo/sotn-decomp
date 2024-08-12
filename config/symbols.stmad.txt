@@ -82,4 +82,5 @@ g_ExplosionAnimations = 0x80180EC4;
 g_TileLayers = 0x801801F8;
 aluric_subweapons_idx = 0x80180D38;
 aluric_subweapons_id = 0x80180D4C;
+g_SubweaponAnimPrizeDrop = 0x80180DB0;
 c_HeartPrizes = 0x8018D830;

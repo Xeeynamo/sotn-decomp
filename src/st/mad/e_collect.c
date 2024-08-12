@@ -106,22 +106,23 @@ void CollectSubweapon(u16 subWeaponIdx) {
 }
 // Modified with ifdef to match
 #include "../collect_heart_vessel.h"
-
+// Identical
 void CollectLifeVessel(void) {
     g_api.PlaySfx(SFX_HEART_PICKUP);
     g_api.func_800FE044(LIFE_VESSEL_INCREASE, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
 
+// Changed .h to ifdef to match
 void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
-
+// Handled with ifdef
 Entity* func_801939C4(void) {
     g_CurrentEntity->step = 3;
     g_CurrentEntity->params = 4;
     return g_CurrentEntity;
 }
 
-extern u8* D_80180DB0[];
+extern u8* g_SubweaponAnimPrizeDrop[];
 extern u16 D_80180E10[];
 
 static u16 g_ItemIconSlots[ICON_SLOT_NUM];
@@ -129,54 +130,105 @@ static u16 g_ItemIconSlots[ICON_SLOT_NUM];
 void EntityPrizeDrop(Entity* self) {
     Collider collider;
     Primitive* prim;
-    s16 primIndex;
-    s16 var_a2;
     u16 itemId;
-    s16 temp_a0;
+    s16 index;
+    s32 primIndex;
+    s32 subWeaponId;
+    s32 subWeaponId_;
 
+    // if self->params & 0x8000 then the item will not disappear
     itemId = self->params & 0x7FFF;
-    if (self->step != 0) {
-        AnimateEntity(D_80180DB0[itemId], self);
-        if (self->step && self->step < 5 && self->hitFlags != 0) {
-            self->step = 5;
+    if (self->step) {
+#if defined(VERSION_PSP)
+        if (g_PlayableCharacter == PLAYER_MARIA) {
+            AnimateEntity(g_MariaSubweaponAnimPrizeDrop[itemId], self);
+        } else {
+            AnimateEntity(g_SubweaponAnimPrizeDrop[itemId], self);
         }
+#else
+        AnimateEntity(g_SubweaponAnimPrizeDrop[itemId], self);
+#endif
+    }
+#if defined(VERSION_US)
+    if (self->step > 1 && self->step < 5 && self->hitFlags) {
+#else
+    if (self->step && self->step < 5 && self->hitFlags) {
+#endif
+        self->step = 5;
     }
     self->palette = 0;
     if ((u8)self->unk6D[0] >= 0x18 && !(g_GameTimer & 2) && self->params != 1) {
         self->palette = 0x815F;
     }
-
     switch (self->step) {
     case 0:
         InitializeEntity(g_InitializeData0);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk - 0x14;
         self->drawMode = DRAW_DEFAULT;
-        if (itemId >= 0x18) {
-            self->params = 0;
-            itemId = 0;
+        if (itemId > 23) {
+            itemId = self->params = 0;
         }
-        if (itemId > 13 && itemId < 23 &&
-            itemId == aluric_subweapons_id[g_Status.subWeapon]) {
-            self->params = itemId = 1;
+
+#if defined(VERSION_PSP)
+        if (g_PlayableCharacter == PLAYER_MARIA && itemId >= 0xE &&
+            itemId < 23) {
+            switch (itemId) {
+            case 14:
+                itemId = self->params = 15;
+                break;
+            case 15:
+                itemId = self->params = 14;
+                break;
+            case 21:
+                itemId = self->params = 16;
+                break;
+            case 17:
+                itemId = self->params = 17;
+                break;
+            case 19:
+                itemId = 19; // causes a lot of regswaps
+                self->params = 19;
+                break;
+            default:
+                itemId = self->params = 0;
+                break;
+            }
         }
-        if (itemId == 0 || itemId == 2) {
+#endif
+        if (itemId >= 14 && itemId < 23
+#if defined(VERSION_PSP)
+            && g_PlayableCharacter != PLAYER_MARIA
+#endif
+        ) {
+            subWeaponId_ = aluric_subweapons_id[g_Status.subWeapon];
+            if (itemId == subWeaponId_) {
+                itemId = 1;
+                self->params = 1;
+            }
+        }
+        if (!itemId || itemId == 2) {
             self->hitboxWidth = 4;
         }
         break;
-
     case 1:
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
         if (collider.effects & EFFECT_NOTHROUGH_PLUS) {
             DestroyEntity(self);
         } else {
             self->step++;
+#ifndef VERSION_BETA
+            index = self->ext.equipItemDrop.castleFlag;
+            if (index) {
+                index--;
+                g_CastleFlags[(index >> 3) + 0x1b0] |= 1 << (index & 7);
+            }
+#endif
         }
-        if (itemId == 0) {
-            self->ext.generic.unk84.unk = -0x10000;
-            self->ext.generic.unk88.S16.unk0 = 0x800;
+        if (!itemId) {
+            self->ext.equipItemDrop.fallSpeed = FIX(-1);
+            self->ext.equipItemDrop.gravity = 0x800;
         }
         break;
-
     case 2:
         if (self->velocityY < 0) {
             g_api.CheckCollision(
@@ -188,41 +240,40 @@ void EntityPrizeDrop(Entity* self) {
         MoveEntity();
         g_api.CheckCollision(
             self->posX.i.hi, self->posY.i.hi + 7, &collider, 0);
-        if (itemId != 0) {
+        if (itemId) {
             if (collider.effects & EFFECT_NOTHROUGH && self->velocityY > 0) {
                 self->velocityX = 0;
                 self->velocityY = 0;
                 self->posY.i.hi += collider.unk18;
-                self->ext.generic.unk80.modeS8.unk0 = 0xF0;
+                self->ext.equipItemDrop.aliveTimer = 0xF0;
                 self->step++;
             } else {
                 FallEntity();
             }
             CheckFieldCollision(D_80180E10, 2);
-            return;
-        }
-        if (collider.effects & EFFECT_NOTHROUGH) {
+        } else if (collider.effects & EFFECT_NOTHROUGH) {
             self->posY.i.hi += collider.unk18;
-            self->ext.generic.unk80.modeS8.unk0 = 0x60;
+            self->ext.equipItemDrop.aliveTimer = 0x60;
             self->step++;
         } else {
             func_8019344C();
         }
         break;
-
     case 3:
         func_801934D0(itemId);
-        if (!(self->params & 0x8000) &&
-            --self->ext.generic.unk80.modeS8.unk0 == 0) {
-            self->ext.generic.unk80.modeS8.unk0 = itemId == 0 ? 0x40 : 0x50;
+        if (!(self->params & 0x8000) && !--self->ext.equipItemDrop.aliveTimer) {
+            if (itemId) {
+                self->ext.equipItemDrop.aliveTimer = 80;
+            } else {
+                self->ext.equipItemDrop.aliveTimer = 64;
+            }
             self->step++;
         }
         break;
-
     case 4:
         func_801934D0(itemId);
-        if (--self->ext.generic.unk80.modeS8.unk0) {
-            if (self->ext.generic.unk80.modeS8.unk0 & 2) {
+        if (--self->ext.equipItemDrop.aliveTimer) {
+            if (self->ext.equipItemDrop.aliveTimer & 2) {
                 self->animCurFrame = 0;
             }
         } else {
@@ -230,16 +281,19 @@ void EntityPrizeDrop(Entity* self) {
             return;
         }
         break;
-
     case 5:
-        if (itemId == 0 || itemId == 1) {
+        if (itemId < 2) {
             CollectHeart(itemId);
         } else if (itemId < 12) {
             CollectGold(itemId);
         } else if (itemId == 12) {
             CollectHeartVessel();
         } else if (itemId < 14) {
+#ifdef VERSION_BETA
             DestroyCurrentEntity();
+#else
+            DestroyCurrentEntity(itemId);
+#endif
         } else if (itemId < 23) {
             CollectSubweapon(itemId);
         } else if (itemId == 23) {
@@ -249,15 +303,32 @@ void EntityPrizeDrop(Entity* self) {
             return;
         }
         break;
-
     case 7:
         switch (self->step_s) {
         case 0:
             self->animCurFrame = 0;
-            if (itemId > 13 && itemId < 23) {
-                if (itemId == aluric_subweapons_id[g_Status.subWeapon]) {
-                    self->params = itemId = 1;
+            if (itemId >= 14 && itemId < 23) {
+#if defined(VERSION_PSP)
+                if (g_PlayableCharacter == PLAYER_MARIA) {
+                    subWeaponId = maria_subweapons_id[g_Status.mariaSubWeapon];
+                    if (itemId == subWeaponId) {
+                        itemId = 1;
+                        self->params = 1;
+                    }
+                } else {
+                    subWeaponId = aluric_subweapons_id[g_Status.subWeapon];
+                    if (itemId == subWeaponId) {
+                        itemId = 1;
+                        self->params = 1;
+                    }
                 }
+#else
+                subWeaponId = aluric_subweapons_id[g_Status.subWeapon];
+                if (itemId == subWeaponId) {
+                    itemId = 1;
+                    self->params = 1;
+                }
+#endif
             }
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
             if (primIndex != -1) {
@@ -292,8 +363,8 @@ void EntityPrizeDrop(Entity* self) {
             }
             CheckFieldCollision(D_80180E10, 2);
             self->animCurFrame = 0;
-            if (self->ext.generic.unk88.S16.unk2 != 0) {
-                self->ext.generic.unk88.S16.unk2--;
+            if (self->ext.equipItemDrop.unk8A) {
+                self->ext.equipItemDrop.unk8A--;
             } else {
                 prim = &g_PrimBuf[self->primIndex];
                 prim->x0 = prim->x2 = self->posX.i.hi - 1;
@@ -303,30 +374,29 @@ void EntityPrizeDrop(Entity* self) {
                 prim->drawMode = 0x37;
             }
             break;
-
         case 2:
             func_801934D0(itemId);
             prim = &g_PrimBuf[self->primIndex];
-            self->ext.generic.unk88.S16.unk2++;
-            if (self->ext.generic.unk88.S16.unk2 < 0x11) {
-                var_a2 = self->ext.generic.unk88.S16.unk2;
+            self->ext.equipItemDrop.unk8A++;
+            if (self->ext.equipItemDrop.unk8A < 17) {
+                index = self->ext.equipItemDrop.unk8A;
                 self->animCurFrame = 0;
             } else {
-                var_a2 = 0x20 - self->ext.generic.unk88.S16.unk2;
-                prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->r3 - 8;
-                prim->g0 = prim->g1 = prim->g2 = prim->g3 = prim->g3 - 8;
-                prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->b3 - 8;
+                index = 32 - self->ext.equipItemDrop.unk8A;
+                prim->r0 = (prim->r1 = (prim->r2 = (prim->r3 -= 8)));
+                prim->g0 = (prim->g1 = (prim->g2 = (prim->g3 -= 8)));
+                prim->b0 = (prim->b1 = (prim->b2 = (prim->b3 -= 8)));
             }
-            prim->x0 = prim->x2 = self->posX.i.hi - var_a2;
-            prim->x1 = prim->x3 = self->posX.i.hi + var_a2;
-            prim->y0 = prim->y1 = self->posY.i.hi - var_a2;
-            prim->y2 = prim->y3 = self->posY.i.hi + var_a2;
-            if (self->ext.generic.unk88.S16.unk2 == 0x20) {
+            prim->x0 = prim->x2 = self->posX.i.hi - index;
+            prim->x1 = prim->x3 = self->posX.i.hi + index;
+            prim->y0 = prim->y1 = self->posY.i.hi - index;
+            prim->y2 = prim->y3 = self->posY.i.hi + index;
+            if (self->ext.equipItemDrop.unk8A == 32) {
                 g_api.FreePrimitives(self->primIndex);
-                self->ext.generic.unk80.modeS8.unk0 = 0xD0;
+                self->flags &= ~FLAG_HAS_PRIMS;
+                self->ext.equipItemDrop.aliveTimer = 208;
                 self->step = 3;
                 self->step_s = 0;
-                self->flags &= ~FLAG_HAS_PRIMS;
             }
             break;
         }

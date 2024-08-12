@@ -212,7 +212,18 @@ static void CollectLifeVessel(void) {
     DestroyEntity(g_CurrentEntity);
 }
 
+// MAD doesn't take an argument, others do
+#ifdef VERSION_BETA
+static void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
+// Extra unused function, putting it in this same if-block.
+Entity* func_801939C4(void) {
+    g_CurrentEntity->step = 3;
+    g_CurrentEntity->params = 4;
+    return g_CurrentEntity;
+}
+#else
 static void DestroyCurrentEntity(u16 id) { DestroyEntity(g_CurrentEntity); }
+#endif
 
 // if self->params & 0x8000 then the item will not disappear
 void EntityPrizeDrop(Entity* self) {
@@ -375,7 +386,11 @@ void EntityPrizeDrop(Entity* self) {
         } else if (itemId == 12) {
             CollectHeartVessel();
         } else if (itemId < 14) {
+#ifdef VERSION_BETA
+            DestroyCurrentEntity();
+#else
             DestroyCurrentEntity(itemId);
+#endif
         } else if (itemId < 23) {
             CollectSubweapon(itemId);
         } else if (itemId == 23) {
@@ -385,7 +400,9 @@ void EntityPrizeDrop(Entity* self) {
             return;
         }
         break;
+#ifndef VERSION_BETA
     case 6:
+#endif
     case 7:
         switch (self->step_s) {
         case 0:
@@ -420,11 +437,21 @@ void EntityPrizeDrop(Entity* self) {
                 prim = &g_PrimBuf[primIndex];
                 prim->tpage = 0x1A;
                 prim->clut = 0x170;
+#ifdef VERSION_BETA
+                prim->u0 = prim->u2 = 0;
+                prim->v0 = prim->v1 = 0;
+                prim->u1 = prim->u3 = 0x20;
+                prim->v2 = prim->v3 = 0x20;
+                prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x80;
+                prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;
+                prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
+#else
                 prim->u0 = prim->u2 = prim->v0 = prim->v1 = 0;
                 prim->u1 = prim->u3 = prim->v2 = prim->v3 = 0x20;
                 prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 =
                     prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
                         prim->b2 = prim->b3 = 128;
+#endif
                 prim->drawMode = DRAW_HIDE;
                 prim->priority = self->zPriority + 1;
                 self->step_s++;
