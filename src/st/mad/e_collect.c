@@ -70,24 +70,24 @@ void func_801934D0(u16 arg0) {
 void func_801937BC(void) {}
 // Extra random function
 void UnusedDestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
-
+// Matching, with an ifdef
 void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;
     u16 subWeapon;
 
     g_api.PlaySfx(SFX_ITEM_PICKUP);
     subWeapon = g_Status.subWeapon;
-    g_Status.subWeapon = D_80180D1C[subWeaponIdx];
+    g_Status.subWeapon = aluric_subweapons_idx[subWeaponIdx - 14];
 
     if (subWeapon == g_Status.subWeapon) {
         subWeapon = 1;
         g_CurrentEntity->unk6D[0] = 0x10;
     } else {
-        subWeapon = D_80180D4C[subWeapon];
+        subWeapon = aluric_subweapons_id[subWeapon];
         g_CurrentEntity->unk6D[0] = 0x60;
     }
 
-    if (subWeapon != 0) {
+    if (subWeapon) {
         g_CurrentEntity->params = subWeapon;
         g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
         g_CurrentEntity->step = 7;
@@ -126,7 +126,6 @@ Entity* func_801939C4(void) {
     return g_CurrentEntity;
 }
 
-extern u16 D_80180D4C[];
 extern u8* D_80180DB0[];
 extern u16 D_80180E10[];
 
@@ -162,7 +161,7 @@ void EntityPrizeDrop(Entity* self) {
             itemId = 0;
         }
         if (itemId > 13 && itemId < 23 &&
-            itemId == D_80180D4C[g_Status.subWeapon]) {
+            itemId == aluric_subweapons_id[g_Status.subWeapon]) {
             self->params = itemId = 1;
         }
         if (itemId == 0 || itemId == 2) {
@@ -261,7 +260,7 @@ void EntityPrizeDrop(Entity* self) {
         case 0:
             self->animCurFrame = 0;
             if (itemId > 13 && itemId < 23) {
-                if (itemId == D_80180D4C[g_Status.subWeapon]) {
+                if (itemId == aluric_subweapons_id[g_Status.subWeapon]) {
                     self->params = itemId = 1;
                 }
             }

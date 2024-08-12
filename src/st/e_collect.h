@@ -161,6 +161,11 @@ static void func_8018CB34(u16 arg0) {
 
 #include "collect_gold.h"
 
+#ifdef VERSION_BETA
+void func_801937BC(void) {}
+void UnusedDestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
+#endif
+
 static void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;
     u16 subWeapon;
@@ -180,7 +185,12 @@ static void CollectSubweapon(u16 subWeaponIdx) {
     if (subWeapon) {
         g_CurrentEntity->params = subWeapon;
         g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
+#ifdef VERSION_BETA
+        g_CurrentEntity->step = 7;
+        g_CurrentEntity->step_s = 0;
+#else
         SetStep(7);
+#endif
         g_CurrentEntity->velocityY = FIX(-2.5);
         g_CurrentEntity->animCurFrame = 0;
         g_CurrentEntity->ext.generic.unk88.S16.unk2 = 5;
