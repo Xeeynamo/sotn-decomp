@@ -79,7 +79,6 @@ segments:
       - [0x31ED0, .rodata, slogra] # EntitySlogra .rodata, 36990
       - [0x31EDC, .rodata, gaibon] # EntityGaibon .rodata, 36990
       - [0x31F00, .rodata, e_red_door] # EntityRedDoor
-      - [0x31F18, rodata]
       - [0x31F68, .rodata, e_collect]
       - [0x31FA0, .rodata, e_misc] # EntityRelicOrb
       - [0x31FD8, .rodata, e_misc] # EntityMessageBox
