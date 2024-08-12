@@ -74,6 +74,7 @@ segments:
       - [0x12A3C, c, create_entity]
       - [0x135B4, c, e_red_door]
       - [0x14264, c]
+      - [0x15714, c]
       - [0x15C84, c]
       - [0x16C90, c, blit_char]
       - [0x16F30, c, entity_relic_orb]
