@@ -422,4 +422,3 @@ void EntityEquipItemDrop(Entity* self) {
     }
 }
 
-#include "../blit_char.h"
