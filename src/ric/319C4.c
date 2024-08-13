@@ -310,7 +310,7 @@ void func_8016E324(Entity* entity) {
     }
 }
 
-void func_8016E46C(Entity* self) {
+void EntityBiblePageBeam(Entity* self) {
     Primitive* prim;
     s16 var_s7;
     s16 hitboxOffX;
@@ -342,10 +342,10 @@ void func_8016E46C(Entity* self) {
             if (var_s3 >= 6) {
                 var_s3 = i - 4;
             }
-            prim->x0 = prim->x1 = D_80175894[i].x;
-            prim->y0 = prim->y1 = D_80175894[i].y;
-            prim->x2 = prim->x3 = D_80175894[var_s3].x;
-            prim->y2 = prim->y3 = D_80175894[var_s3].y;
+            prim->x0 = prim->x1 = g_BiblePos[i].x;
+            prim->y0 = prim->y1 = g_BiblePos[i].y;
+            prim->x2 = prim->x3 = g_BiblePos[var_s3].x;
+            prim->y2 = prim->y3 = g_BiblePos[var_s3].y;
             prim->priority = 0xC2;
             prim->blendMode = 0x435;
             prim = prim->next;
@@ -365,7 +365,7 @@ void func_8016E46C(Entity* self) {
     case 2:
         self->ext.et_8016E46C.unk80++;
         self->ext.et_8016E46C.unk7E += self->ext.et_8016E46C.unk7C;
-        var_s3 = D_80175894[1].x + self->ext.et_8016E46C.unk7E;
+        var_s3 = g_BiblePos[1].x + self->ext.et_8016E46C.unk7E;
         if (var_s3 < -0x50 || var_s3 > 0x150) {
             self->step++;
         }
@@ -396,14 +396,14 @@ void func_8016E46C(Entity* self) {
         prim->g2 = prim->g3 = abs(temp_v1 >> 0xc);
         temp_v1 = rsin((self->ext.et_8016E46C.unk80 * 20) + (var_s3 << 8)) * 96;
         prim->b2 = prim->b3 = abs(temp_v1 >> 0xc);
-        prim->x1 = D_80175894[i].x;
-        prim->y0 = prim->y1 = D_80175894[i].y;
-        prim->x3 = D_80175894[var_s3].x;
-        prim->y2 = prim->y3 = D_80175894[var_s3].y;
-        prim->x0 = D_80175894[i].x + self->ext.et_8016E46C.unk7E;
-        prim->x2 = D_80175894[var_s3].x + self->ext.et_8016E46C.unk7E;
-        if (var_s7 < abs(D_80175894[i].y)) {
-            var_s7 = abs(D_80175894[i].y);
+        prim->x1 = g_BiblePos[i].x;
+        prim->y0 = prim->y1 = g_BiblePos[i].y;
+        prim->x3 = g_BiblePos[var_s3].x;
+        prim->y2 = prim->y3 = g_BiblePos[var_s3].y;
+        prim->x0 = g_BiblePos[i].x + self->ext.et_8016E46C.unk7E;
+        prim->x2 = g_BiblePos[var_s3].x + self->ext.et_8016E46C.unk7E;
+        if (var_s7 < abs(g_BiblePos[i].y)) {
+            var_s7 = abs(g_BiblePos[i].y);
         }
         prim = prim->next;
     }
@@ -414,7 +414,7 @@ void func_8016E46C(Entity* self) {
     self->hitboxHeight = var_s7 - self->posY.i.hi;
 }
 
-void func_8016E9E4(Entity* self) {
+void EntityBiblePage(Entity* self) {
     Primitive* prim;
     s16 temp_a1_3;
     s16 temp_v0_6;
@@ -524,6 +524,7 @@ void func_8016E9E4(Entity* self) {
         self->ext.et_8016E9E4.unk7C =
             (self->ext.et_8016E9E4.unk7C + 0x80) & 0xFFF;
         if (++self->ext.et_8016E9E4.unk82 >= 0x1E) {
+            // create bible page beam
             RicCreateEntFactoryFromEntity(self, FACTORY(0, 60), 0);
             self->ext.et_8016E9E4.unk82 = 0;
             self->step++;
@@ -592,8 +593,8 @@ void func_8016E9E4(Entity* self) {
             self->posY.i.hi +
             ((temp_s0_2 << 9) / (((temp_s5 * temp_v0_4) >> 0xC) + 0x200));
         temp_v0_5 = ((temp_s5 * temp_v0_4) >> 0xC) + 0x200;
-        D_80175894[i].x = temp_a1_3;
-        D_80175894[i].y = temp_v0_6;
+        g_BiblePos[i].x = temp_a1_3;
+        g_BiblePos[i].y = temp_v0_6;
         prim->x0 = prim->x2 = temp_a1_3 - 0x1000 / temp_v0_5;
         prim->x1 = prim->x3 = temp_a1_3 + 0x1000 / temp_v0_5;
         // FAKE, needed for reg match
