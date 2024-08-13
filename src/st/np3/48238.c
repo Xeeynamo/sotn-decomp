@@ -413,7 +413,7 @@ void EntityMerman(Entity* self) {
     }
 }
 
-void func_801C8DF0(Entity* self) {
+void EntityMermanFireball(Entity* self) {
     Entity* entity;
 
     if (self->step == 0) {

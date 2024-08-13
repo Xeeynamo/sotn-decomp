@@ -60,7 +60,10 @@ typedef enum EntityIDs {
     /* 0x37 */ E_SIDE_WATER_SPLASH,
     /* 0x38 */ E_SMALL_WATER_DROP,
     /* 0x39 */ E_WATER_DROP,
+    /* 0x3A */ E_ID_3A = 0x3A,
     /* 0x3D */ E_MEDIUM_WATER_SPLASH = 0x3D,
+    /* 0x3A */ E_ID_41 = 0x41,
+    /* 0x47 */ E_BONE_SCIMITAR_HEAD = 0x47,
     /* 0x59 */ E_ID_59 = 0x59,
     /* 0x5B */ E_ID_5B = 0x5B,
     /* 0x5D */ E_FALLING_ROCK = 0x5D,
@@ -127,9 +130,7 @@ extern u16 D_8018139C[];
 extern u16 D_8018139E[];
 extern u16 D_801813A8;
 extern u16 D_801813AA;
-extern u16 D_801813AC[];
-extern u16 D_801813AA;
-extern u16 D_801813AC[];
+extern s16 D_801813AC[];
 extern Point16 D_801813DC[];
 extern Point16 D_80181468[];
 extern u16 D_801814EC[];

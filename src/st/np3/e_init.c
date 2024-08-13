@@ -26,7 +26,7 @@ void func_801B28E4(Entity* self);
 void EntityTransparentWater(Entity* self);
 void EntityShuttingWindow(Entity* self);
 void EntityCastleDoor(Entity* self);
-void func_801B32A8(Entity* self);
+void EntityBackgroundBushes(Entity* self);
 void func_801B3704(Entity* self);
 void EntityCavernDoorLever(Entity* self);
 void EntityCavernDoorPlatform(Entity* self);
@@ -57,7 +57,7 @@ void EntityExplosion2(Entity* self);
 void EntityLargeFallingObject(Entity* self);
 void func_801C7D80(Entity* self);
 void EntityMerman(Entity* self);
-void func_801C8DF0(Entity* self);
+void EntityMermanFireball(Entity* self);
 void func_801C8F54(Entity* self);
 void EntityMermanExplosion(Entity* self);
 void EntityMermanSpawner(Entity* self);
@@ -119,7 +119,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityTransparentWater,
     EntityShuttingWindow,
     EntityCastleDoor,
-    func_801B32A8,
+    EntityBackgroundBushes,
     func_801B3704,
     EntityCavernDoorLever,
     EntityCavernDoorPlatform,
@@ -150,7 +150,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     EntityLargeFallingObject,
     func_801C7D80,
     EntityMerman,
-    func_801C8DF0,
+    EntityMermanFireball,
     func_801C8F54,
     EntityMermanExplosion,
     EntityMermanSpawner,
