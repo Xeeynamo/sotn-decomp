@@ -42,10 +42,14 @@ void EntityWeaponAttack(Entity* self) {
             self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
 
             switch (animIndex) {
+            case 0:
+                break;
             case 1:
                 self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
                 g_api.CreateEntFactoryFromEntity(
                     self, ((g_HandId + 1) << 0xC) + FACTORY(0, 56), 0);
+                break;
+            case 2:
                 break;
             case 3:
                 self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
@@ -55,10 +59,6 @@ void EntityWeaponAttack(Entity* self) {
             case 4:
                 g_api.CreateEntFactoryFromEntity(
                     self, ((g_HandId + 1) << 0xC) + FACTORY(0x1400, 56), 0);
-                // fallthrough
-            case 0:
-            case 2:
-            default:
                 break;
             }
             SetWeaponProperties(self, 0);
