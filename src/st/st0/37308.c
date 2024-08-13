@@ -328,15 +328,15 @@ void func_801B9DB0(s16 sfxId) {
 
 #include "../entity_enemy_blood.h"
 
-extern ObjInit2 D_80181FE8[];
+extern ObjInit D_80181FE8[];
 void EntityRoomForeground(Entity* entity) {
-    ObjInit2* objInit = &D_80181FE8[entity->params];
+    ObjInit* objInit = &D_80181FE8[entity->params];
 
     if (entity->step == 0) {
         InitializeEntity(g_eInitGeneric2);
         entity->animSet = objInit->animSet;
         entity->zPriority = objInit->zPriority;
-        entity->unk5A = objInit->unk4.s;
+        entity->unk5A = objInit->unk5A;
         entity->palette = objInit->palette;
         entity->drawFlags = objInit->drawFlags;
         entity->drawMode = objInit->drawMode;

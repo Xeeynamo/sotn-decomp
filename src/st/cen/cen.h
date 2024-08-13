@@ -60,7 +60,7 @@ extern u16 g_EInitGeneric[];
 extern u16 g_eInitGeneric2[];
 extern u16 D_8018047C[]; // EntityElevator
 
-extern ObjInit2 D_80180490[];
+extern ObjInit D_80180490[];
 extern s32 D_80180574[];
 extern s8 D_80180594[];
 extern u8 D_8018059C[];
@@ -73,7 +73,7 @@ extern s8 c_HeartPrizes[];
 extern u16 g_ESoulStealOrbAngles[];
 extern s16 g_ESoulStealOrbSprt[];
 extern u8 g_ESoulStealOrbAnim[];
-extern ObjInit2 D_8018125C[];
+extern ObjInit D_8018125C[];
 
 extern u16 g_InitializeEntityData0[];
 

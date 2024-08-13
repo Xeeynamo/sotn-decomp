@@ -59,7 +59,7 @@ extern u16 D_80180610[]; // Init EntityDraculaMegaFireball
 extern u16 D_8018061C[]; // Init EntityDraculaRainAttack
 extern u16 D_80180628[];
 
-extern ObjInit2 D_80180638[];
+extern ObjInit D_80180638[];
 
 // *** func_801A805C properties START ***
 

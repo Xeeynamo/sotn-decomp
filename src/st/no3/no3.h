@@ -176,7 +176,7 @@ extern u8* D_801825A0[];
 extern u16 D_80182628[];
 extern s32 D_80182638[];
 extern u8 D_8018267C[];
-extern ObjInit2 D_80182764[];
+extern ObjInit D_80182764[];
 extern u8 D_8018383C[];
 extern s32 D_801838F4[];
 extern s16 D_80183858[];

@@ -5,13 +5,13 @@
 #include "../entity_enemy_blood.h"
 
 void EntityUnkId08(Entity* entity) {
-    ObjInit2* objInit = &D_8018125C[entity->params];
+    ObjInit* objInit = &D_8018125C[entity->params];
 
     if (entity->step == 0) {
         InitializeEntity(g_eInitGeneric2);
         entity->animSet = objInit->animSet;
         entity->zPriority = objInit->zPriority;
-        entity->unk5A = objInit->unk4.s;
+        entity->unk5A = objInit->unk5A;
         entity->palette = objInit->palette;
         entity->drawFlags = objInit->drawFlags;
         entity->drawMode = objInit->drawMode;
