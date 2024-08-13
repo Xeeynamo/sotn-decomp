@@ -163,7 +163,7 @@
 <g id="node11" class="node">
 <title>no3.EntityBackgroundBushes</title>
 <g id="a_node11"><a xlink:href="no3.EntityBackgroundBushes.svg" xlink:title="no3.EntityBackgroundBushes">
-<ellipse fill="red" stroke="black" cx="2297.89" cy="-378" rx="148.67" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2297.89" cy="-378" rx="148.67" ry="18"/>
 <text text-anchor="middle" x="2297.89" y="-374.3" font-family="Times,serif" font-size="14.00">no3.EntityBackgroundBushes</text>
 </a>
 </g>
@@ -707,7 +707,7 @@
 <g id="node45" class="node">
 <title>no3.EntityMermanExplosion</title>
 <g id="a_node45"><a xlink:href="no3.EntityMermanExplosion.svg" xlink:title="no3.EntityMermanExplosion">
-<ellipse fill="red" stroke="black" cx="11558.89" cy="-378" rx="143.77" ry="18"/>
+<ellipse fill="green" stroke="black" cx="11558.89" cy="-378" rx="143.77" ry="18"/>
 <text text-anchor="middle" x="11558.89" y="-374.3" font-family="Times,serif" font-size="14.00">no3.EntityMermanExplosion</text>
 </a>
 </g>

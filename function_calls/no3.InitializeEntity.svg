@@ -19,7 +19,7 @@
 <g id="node2" class="node">
 <title>no3.EntityAlucardWaterEffect</title>
 <g id="a_node2"><a xlink:href="no3.EntityAlucardWaterEffect.svg" xlink:title="no3.EntityAlucardWaterEffect">
-<ellipse fill="red" stroke="black" cx="150.14" cy="-198" rx="150.27" ry="18"/>
+<ellipse fill="green" stroke="black" cx="150.14" cy="-198" rx="150.27" ry="18"/>
 <text text-anchor="middle" x="150.14" y="-194.3" font-family="Times,serif" font-size="14.00">no3.EntityAlucardWaterEffect</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>no3.EntityBackgroundBushes</title>
 <g id="a_node3"><a xlink:href="no3.EntityBackgroundBushes.svg" xlink:title="no3.EntityBackgroundBushes">
-<ellipse fill="red" stroke="black" cx="467.14" cy="-198" rx="148.67" ry="18"/>
+<ellipse fill="green" stroke="black" cx="467.14" cy="-198" rx="148.67" ry="18"/>
 <text text-anchor="middle" x="467.14" y="-194.3" font-family="Times,serif" font-size="14.00">no3.EntityBackgroundBushes</text>
 </a>
 </g>
@@ -659,7 +659,7 @@
 <g id="node42" class="node">
 <title>no3.EntityMermanExplosion</title>
 <g id="a_node42"><a xlink:href="no3.EntityMermanExplosion.svg" xlink:title="no3.EntityMermanExplosion">
-<ellipse fill="red" stroke="black" cx="11155.14" cy="-198" rx="143.77" ry="18"/>
+<ellipse fill="green" stroke="black" cx="11155.14" cy="-198" rx="143.77" ry="18"/>
 <text text-anchor="middle" x="11155.14" y="-194.3" font-family="Times,serif" font-size="14.00">no3.EntityMermanExplosion</text>
 </a>
 </g>
@@ -723,7 +723,7 @@
 <g id="node46" class="node">
 <title>no3.EntityMermanSpawner</title>
 <g id="a_node46"><a xlink:href="no3.EntityMermanSpawner.svg" xlink:title="no3.EntityMermanSpawner">
-<ellipse fill="red" stroke="black" cx="12433.14" cy="-198" rx="139.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="12433.14" cy="-198" rx="139.98" ry="18"/>
 <text text-anchor="middle" x="12433.14" y="-194.3" font-family="Times,serif" font-size="14.00">no3.EntityMermanSpawner</text>
 </a>
 </g>

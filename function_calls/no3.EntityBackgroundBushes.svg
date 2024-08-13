@@ -12,7 +12,7 @@
 <!-- no3.EntityBackgroundBushes -->
 <g id="node1" class="node">
 <title>no3.EntityBackgroundBushes</title>
-<ellipse fill="red" stroke="black" cx="820.84" cy="-198" rx="148.67" ry="18"/>
+<ellipse fill="green" stroke="black" cx="820.84" cy="-198" rx="148.67" ry="18"/>
 <text text-anchor="middle" x="820.84" y="-194.3" font-family="Times,serif" font-size="14.00">no3.EntityBackgroundBushes</text>
 </g>
 <!-- RotMatrix -->

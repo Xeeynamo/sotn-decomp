@@ -12,7 +12,7 @@
 <!-- no3.EntityMermanExplosion -->
 <g id="node1" class="node">
 <title>no3.EntityMermanExplosion</title>
-<ellipse fill="red" stroke="black" cx="203.19" cy="-198" rx="143.77" ry="18"/>
+<ellipse fill="green" stroke="black" cx="203.19" cy="-198" rx="143.77" ry="18"/>
 <text text-anchor="middle" x="203.19" y="-194.3" font-family="Times,serif" font-size="14.00">no3.EntityMermanExplosion</text>
 </g>
 <!-- no3.DestroyEntity -->

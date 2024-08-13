@@ -12,7 +12,7 @@
 <!-- no3.EntityAlucardWaterEffect -->
 <g id="node1" class="node">
 <title>no3.EntityAlucardWaterEffect</title>
-<ellipse fill="red" stroke="black" cx="456.89" cy="-198" rx="150.27" ry="18"/>
+<ellipse fill="green" stroke="black" cx="456.89" cy="-198" rx="150.27" ry="18"/>
 <text text-anchor="middle" x="456.89" y="-194.3" font-family="Times,serif" font-size="14.00">no3.EntityAlucardWaterEffect</text>
 </g>
 <!-- no3.AllocEntity -->
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>no3.func_801D0A2C</title>
 <g id="a_node5"><a xlink:href="no3.func_801D0A2C.svg" xlink:title="no3.func_801D0A2C">
-<ellipse fill="red" stroke="black" cx="810.89" cy="-18" rx="104.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="810.89" cy="-18" rx="104.78" ry="18"/>
 <text text-anchor="middle" x="810.89" y="-14.3" font-family="Times,serif" font-size="14.00">no3.func_801D0A2C</text>
 </a>
 </g>

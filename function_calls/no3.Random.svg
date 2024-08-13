@@ -227,7 +227,7 @@
 <g id="node15" class="node">
 <title>no3.EntityMermanSpawner</title>
 <g id="a_node15"><a xlink:href="no3.EntityMermanSpawner.svg" xlink:title="no3.EntityMermanSpawner">
-<ellipse fill="red" stroke="black" cx="3694.89" cy="-198" rx="139.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="3694.89" cy="-198" rx="139.98" ry="18"/>
 <text text-anchor="middle" x="3694.89" y="-194.3" font-family="Times,serif" font-size="14.00">no3.EntityMermanSpawner</text>
 </a>
 </g>
@@ -451,7 +451,7 @@
 <g id="node29" class="node">
 <title>no3.func_801B94F0</title>
 <g id="a_node29"><a xlink:href="no3.func_801B94F0.svg" xlink:title="no3.func_801B94F0">
-<ellipse fill="red" stroke="black" cx="7415.89" cy="-198" rx="103.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="7415.89" cy="-198" rx="103.18" ry="18"/>
 <text text-anchor="middle" x="7415.89" y="-194.3" font-family="Times,serif" font-size="14.00">no3.func_801B94F0</text>
 </a>
 </g>
