@@ -26,9 +26,7 @@ u32 D_80175088[512];
 u32 D_80175888;
 u32 D_8017588C;
 u32 D_80175890;
-u16 D_80175894;
-u16 D_80175896;
-u16 D_80175898[10];
+Point16 g_BiblePos[6];
 u32 D_801758AC;
 #ifdef VERSION_PC
 // D_801758CC is used in other places so unclear if this is a bug
