@@ -75,4 +75,5 @@ g_ESoulStealOrbAngles = 0x80181068;
 g_ESoulStealOrbAnim = 0x801810D8;
 g_ESoulStealOrbSprt = 0x80181078;
 g_TileLayers = 0x801801F8;
-D_80180ED8_MAD = 0x80180ED8;
+g_collectXVelTable = 0x80180ED8;
+g_collectYVelTable = 0x80180EDA;

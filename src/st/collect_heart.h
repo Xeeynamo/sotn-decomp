@@ -2,7 +2,7 @@
 
 // This function is messy, maybe there's a better way.
 void CollectHeart(u16 arg0) {
-#ifdef VERSION_BETA
+#if defined VERSION_BETA || STAGE == STAGE_STAGE_ST0
     s8 heartPrizes[2];
     s8 mad_unknown[2];
 

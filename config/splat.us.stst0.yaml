@@ -47,6 +47,8 @@ segments:
       - [0x1618, .data, collision]
       - [0x1978, .data, e_red_door]
       - [0x1990, data]
+      - [0x1B90, .data, e_collect]
+      - [0x1E3C, data]
       - [0x2060, .data, rooms]
       - [0x2084, data]
       - [0x26B8, .data, e_layout] # layout entries data
@@ -75,7 +77,7 @@ segments:
       - [0x27BFC, .rodata, 2DAC8] # func_801AF774
       - [0x27C1C, .rodata, 30030] # PrologueScroll
       - [0x27C6C, .rodata, e_red_door] # EntityRedDoor
-      - [0x27C84, rodata]
+      - [0x27C84, .rodata, e_collect] # c_HeartPrizes
       - [0x27C8C, .rodata, e_collect]
       - [0x27CAC, .rodata, e_collect] # EntityEquipItemDrop
       - [0x27CC4, rodata]
