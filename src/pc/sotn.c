@@ -121,7 +121,7 @@ bool InitGame(void) {
     api.g_pfn_800EA5AC = func_800EA5AC;
     api.func_801027C4 = NULL;
     api.func_800EB758 = NULL;
-    api.CreateEntFactoryFromEntity = NULL;
+    api.CreateEntFactoryFromEntity = CreateEntFactoryFromEntity;
     api.func_80131F68 = func_80131F68;
     api.func_800EDB08 = NULL;
     api.func_80106A28 = func_80106A28;
