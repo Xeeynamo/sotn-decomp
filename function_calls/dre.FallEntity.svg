@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>dre.EntityPrizeDrop</title>
 <g id="a_node3"><a xlink:href="dre.EntityPrizeDrop.svg" xlink:title="dre.EntityPrizeDrop">
-<ellipse fill="red" stroke="black" cx="382.99" cy="-198" rx="104.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="382.99" cy="-198" rx="104.78" ry="18"/>
 <text text-anchor="middle" x="382.99" y="-194.3" font-family="Times,serif" font-size="14.00">dre.EntityPrizeDrop</text>
 </a>
 </g>
