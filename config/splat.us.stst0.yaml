@@ -76,8 +76,8 @@ segments:
       - [0x27C1C, .rodata, 30030] # PrologueScroll
       - [0x27C6C, .rodata, e_red_door] # EntityRedDoor
       - [0x27C84, rodata]
-      - [0x27C8C, .rodata, 36358]
-      - [0x27CAC, .rodata, 36358] # EntityEquipItemDrop
+      - [0x27C8C, .rodata, e_collect]
+      - [0x27CAC, .rodata, e_collect] # EntityEquipItemDrop
       - [0x27CC4, rodata]
       - [0x27D3C, .rodata, prim_helpers]
       - [0x27D44, rodata]
@@ -96,10 +96,11 @@ segments:
       - [0x330E0, c, create_entity]
       - [0x33C58, c, e_red_door]
       - [0x34908, c]
-      - [0x36358, c]
+      - [0x35EC8, c, e_collect]
+      - [0x37308, c]
       - [0x3D0C0, c, prim_helpers]
       - [0x3D8F0, c]
       - [0x3EB00, .bss, create_entity]
       - [0x400B6, .bss, bss]
-      - [0x42584, .bss, 36358]
+      - [0x42584, .bss, e_collect]
   - [0x425C4]
