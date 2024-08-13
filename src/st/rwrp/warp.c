@@ -193,7 +193,7 @@ void EntityRWarpRoom(Entity* self) {
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 0x80;
         D_8003C8B8 = 0;
-        g_unkGraphicsStruct.g_zEntityCenter.unk = PLAYER.zPriority = 0x5C;
+        g_unkGraphicsStruct.g_zEntityCenter = PLAYER.zPriority = 0x5C;
         prim = self->ext.warpRoom.primFade;
         prim->drawMode = DRAW_TRANSP | DRAW_TPAGE | DRAW_TPAGE2;
         prim->g0 = prim->b0 = prim->r0 += 2;
@@ -209,7 +209,7 @@ void EntityRWarpRoom(Entity* self) {
         g_Player.D_80072EFC = 0x80;
         D_8003C8B8 = 0;
         entity = &PLAYER;
-        g_unkGraphicsStruct.g_zEntityCenter.unk = entity->zPriority = 0x5C;
+        g_unkGraphicsStruct.g_zEntityCenter = entity->zPriority = 0x5C;
         prim = self->ext.warpRoom.primFade;
         prim->drawMode = DRAW_TRANSP | DRAW_TPAGE | DRAW_TPAGE2;
         if (prim->r0 < 0xF0) {

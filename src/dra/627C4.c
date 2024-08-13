@@ -286,7 +286,7 @@ void func_80102EB8(void) {
         func_801072DC(poly1);
         poly1->tpage = 0x10;
         poly1->clut = 0x1A1;
-        poly1->priority = g_unkGraphicsStruct.g_zEntityCenter.unk + 32;
+        poly1->priority = g_unkGraphicsStruct.g_zEntityCenter + 32;
         poly1->drawMode = DRAW_HIDE;
         poly1->p1 = 0;
         SetPrimRect(poly2, 80, 79, 96, 0);
@@ -296,7 +296,7 @@ void func_80102EB8(void) {
         poly2->g0 = poly2->g1 = poly2->g2 = poly2->g3 = poly2->r0 = poly2->r1 =
             poly2->r2 = poly2->r3 = 0;
         poly2->tpage = 0x1F;
-        poly2->priority = g_unkGraphicsStruct.g_zEntityCenter.unk + 31;
+        poly2->priority = g_unkGraphicsStruct.g_zEntityCenter + 31;
         poly2->drawMode = DRAW_HIDE;
         poly1 = poly1->next;
         poly2 = poly2->next;
@@ -304,7 +304,7 @@ void func_80102EB8(void) {
 
     for (i = 0; i < 12; i++) {
         func_80107250(poly3, 255);
-        poly3->priority = g_unkGraphicsStruct.g_zEntityCenter.unk + 32;
+        poly3->priority = g_unkGraphicsStruct.g_zEntityCenter + 32;
         poly3->drawMode = DRAW_HIDE;
         poly3 = poly3->next;
     }

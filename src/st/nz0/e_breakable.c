@@ -59,7 +59,7 @@ void EntityBreakableNZ0(Entity* self) {
         }
     } else {
         InitializeEntity(g_eBreakableInit);
-        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk - 20;
+        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 20;
         self->drawMode = g_eBreakableDrawModes[breakableType];
         self->hitboxHeight = g_eBreakableHitboxes[breakableType];
         self->animSet = g_eBreakableanimSets[breakableType];
