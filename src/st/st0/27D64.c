@@ -160,7 +160,7 @@ void func_801A805C(Entity* self) {
         }
     } else {
         InitializeEntity(g_eBreakableInit);
-        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk - 0x14;
+        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
         self->drawMode = D_8018074C[params];
         self->hitboxHeight = D_801806F8[params];
         self->animSet = D_80180724[params];

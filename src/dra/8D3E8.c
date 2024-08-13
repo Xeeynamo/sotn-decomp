@@ -552,7 +552,7 @@ void func_8012E7A4(void) {
     PLAYER.velocityX = 0;
     PLAYER.velocityY = 0;
     PLAYER.palette = 0x810D;
-    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk - 2;
+    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter - 2;
 #if defined(VERSION_HD)
     if (g_Entities[16].entityId != 0x22) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2300, 44), 0);
@@ -641,14 +641,14 @@ void func_8012EAD0(void) {
             D_800ACEDC_hd = 0x18;
 #endif
             g_Player.unk44 |= 0x100;
-            PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk;
+            PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
             func_80111CC0();
         }
         return;
     case 2:
         if (g_Player.unk66 == 3) {
 #if defined(VERSION_US)
-            PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk;
+            PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
 #endif
 
             func_8010E4D0();
@@ -715,7 +715,7 @@ void func_8012EF2C(void) {
     PLAYER.drawMode = DRAW_DEFAULT;
 // HD version lacks this line!
 #if defined(VERSION_US)
-    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk - 2;
+    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter - 2;
 #endif
     if (WolfFormFinished()) {
         return;
@@ -784,7 +784,7 @@ void func_8012EF2C(void) {
     // HD version lacks this line!
 
 #if defined(VERSION_US)
-    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk - 2;
+    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter - 2;
 #endif
 }
 

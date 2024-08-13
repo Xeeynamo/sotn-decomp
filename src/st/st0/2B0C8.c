@@ -95,7 +95,7 @@ void EntityStageTitleFadeout(Entity* self) {
         if (prim->r0 > 248) {
             prim->r0 = 0;
             prim->drawMode = DRAW_HIDE;
-            PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk;
+            PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
             self->step = 1;
         }
         prim->g0 = prim->b0 = LOW(prim->r0);
@@ -146,7 +146,7 @@ void EntityStageTitleFadeout(Entity* self) {
             self->ext.stageTitleCard.unk88--;
             if (self->ext.stageTitleCard.unk88 == 0) {
                 g_Entities[PLAYER_CHARACTER].zPriority =
-                    g_unkGraphicsStruct.g_zEntityCenter.unk;
+                    g_unkGraphicsStruct.g_zEntityCenter;
             }
         }
         temp_a0 = self->ext.stageTitleCard.unk80;

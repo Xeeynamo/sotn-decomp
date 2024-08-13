@@ -183,7 +183,7 @@ void func_80109594() {
     PLAYER.facingLeft = 0;
     PLAYER.rotX = 0x100;
     PLAYER.rotY = 0x100;
-    PLAYER.zPriority = (u16)g_unkGraphicsStruct.g_zEntityCenter.unk;
+    PLAYER.zPriority = (u16)g_unkGraphicsStruct.g_zEntityCenter;
 
     memset_len = sizeof(PlayerState) / sizeof(s32);
     memset_ptr = &g_Player;
