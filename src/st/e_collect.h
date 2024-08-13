@@ -9,7 +9,7 @@
 #include <stage.h>
 #include "sfx.h"
 
-#if STAGE == STAGE_STAGE_ST0
+#if STAGE == STAGE_ST0
 static u8 D_80180C94[] = {
     0x02, 0x1A, 0x02, 0x1B, 0x02, 0x1C, 0x02, 0x1D, 0x02, 0x1E,
     0x02, 0x1F, 0x02, 0x20, 0x02, 0x21, 0x02, 0x20, 0x02, 0x1F,
@@ -42,7 +42,7 @@ static u8 D_80180CF4[] = {0x02, 0x22, 0x02, 0x23, 0x02, 0x24, 0x02, 0x25, 0x02,
 static u8 D_80180D08[] = {0x1A, 0x0F, 0x06, 0x10, 0x04, 0x11, 0x02,
                           0x12, 0x04, 0x11, 0x06, 0x10, 0x00, 0x00};
 static u8 D_80180D18[] = {0x01, 0x13, 0x00, 0x00};
-#if STAGE != STAGE_STAGE_ST0
+#if STAGE != STAGE_ST0
 static u8 D_80180D1C[] = {0x05, 0x2A, 0x05, 0x2B, 0x05, 0x2C, 0x05, 0x2D, 0x05,
                           0x2E, 0x05, 0x2F, 0x05, 0x30, 0x05, 0x31, 0x00, 0x00};
 static u8 D_80180D30[] = {0x05, 0x32, 0x05, 0x33, 0x05, 0x34, 0x05, 0x35, 0x05,
@@ -66,14 +66,14 @@ static u8 D_80180DA8[] = {0x05, 0x62, 0x05, 0x63, 0x05, 0x64, 0x05, 0x65, 0x05,
 static u8 D_80180DBC[] = {0x05, 0x6A, 0x05, 0x6B, 0x05, 0x6C, 0x05, 0x6D, 0x05,
                           0x6E, 0x05, 0x6F, 0x05, 0x70, 0x05, 0x71, 0x00};
 static u8 D_80180DD0[] = {
-#if STAGE != STAGE_STAGE_ST0
+#if STAGE != STAGE_ST0
     0x01, 0x8F, 0x00, 0x00,
 #endif
     0xFC, 0xFC, 0x04, 0xFC, 0xFC, 0x04, 0x04, 0x04, 0x80, 0x00};
 static u16 aluric_subweapons_idx[] = {1, 2, 4, 3, 6, 5, 7, 8, 9};
 static u16 aluric_subweapons_id[] = {0, 14, 15, 17, 16, 19, 18, 20, 21, 22};
 
-#if STAGE != STAGE_STAGE_ST0
+#if STAGE != STAGE_ST0
 static const char* g_goldCollectTexts[] = {
     _S("$1"),   _S("$25"),  _S("$50"),   _S("$100"),  _S("$250"),
     _S("$400"), _S("$700"), _S("$1000"), _S("$2000"), _S("$5000"),
@@ -89,7 +89,7 @@ u8* g_SubweaponAnimPrizeDrop[] = {
     D_80180C94, D_80180C98, D_80180CC4, D_80180CD4, D_80180CD8,
     D_80180CDC, D_80180CE0, D_80180CE4, D_80180CE8, D_80180CEC,
     D_80180CF0, D_80180CF4, D_80180D08, D_80180D18,
-#if STAGE != STAGE_STAGE_ST0
+#if STAGE != STAGE_ST0
     D_80180D58, D_80180D44, D_80180D1C, D_80180D30, D_80180D6C,
     D_80180D80, D_80180D94, D_80180DA8, D_80180DBC, D_80180DD0,
 #else
@@ -99,7 +99,7 @@ u8* g_SubweaponAnimPrizeDrop[] = {
 };
 
 static s16 D_80180EB8[] = {-6, 4, 0, -8};
-#if defined VERSION_BETA || STAGE == STAGE_STAGE_ST0
+#if defined VERSION_BETA || STAGE == STAGE_ST0
 // This is weird, the values have to go in later.
 // Note that this array is in rodata. Other overlays have it in data.
 static const s8 c_HeartPrizes[2][2];
@@ -197,14 +197,14 @@ static void func_8018CB34(u16 arg0) {
 }
 #include "collect_heart.h"
 
-#if defined VERSION_BETA || STAGE == STAGE_STAGE_ST0
+#if defined VERSION_BETA || STAGE == STAGE_ST0
 // For some reason need to declare the values AFTER the function.
 static const s8 c_HeartPrizes[2][2] = {{1, 5}, {0, 0}, {1, 2}, {0, 0}};
 #endif
 
 #include "collect_gold.h"
 
-#if defined VERSION_BETA || STAGE == STAGE_STAGE_ST0
+#if defined VERSION_BETA || STAGE == STAGE_ST0
 void func_801937BC(void) {}
 void UnusedDestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 #endif
@@ -228,7 +228,7 @@ static void CollectSubweapon(u16 subWeaponIdx) {
     if (subWeapon) {
         g_CurrentEntity->params = subWeapon;
         g_CurrentEntity->posY.i.hi = player->posY.i.hi + 12;
-#if defined VERSION_BETA || STAGE == STAGE_STAGE_ST0
+#if defined VERSION_BETA || STAGE == STAGE_ST0
         g_CurrentEntity->step = 7;
         g_CurrentEntity->step_s = 0;
 #else
@@ -247,7 +247,7 @@ static void CollectSubweapon(u16 subWeaponIdx) {
     DestroyEntity(g_CurrentEntity);
 }
 
-#if STAGE != STAGE_STAGE_ST0
+#if STAGE != STAGE_ST0
 #include "collect_heart_vessel.h"
 
 static void CollectLifeVessel(void) {
@@ -258,7 +258,7 @@ static void CollectLifeVessel(void) {
 #endif
 
 // MAD doesn't take an argument, others do
-#if defined VERSION_BETA || STAGE == STAGE_STAGE_ST0
+#if defined VERSION_BETA || STAGE == STAGE_ST0
 static void DestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 // Extra unused function, putting it in this same if-block.
 Entity* func_801939C4(void) {
@@ -293,14 +293,14 @@ void EntityPrizeDrop(Entity* self) {
         AnimateEntity(g_SubweaponAnimPrizeDrop[itemId], self);
 #endif
     }
-#if defined(VERSION_US) && STAGE != STAGE_STAGE_ST0
+#if defined(VERSION_US) && STAGE != STAGE_ST0
     if (self->step > 1 && self->step < 5 && self->hitFlags) {
 #else
     if (self->step && self->step < 5 && self->hitFlags) {
 #endif
         self->step = 5;
     }
-#if STAGE == STAGE_STAGE_ST0
+#if STAGE == STAGE_ST0
     self->palette = 0x100;
 #else
     self->palette = 0;
@@ -313,7 +313,7 @@ void EntityPrizeDrop(Entity* self) {
         InitializeEntity(g_InitializeData0);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk - 0x14;
         self->drawMode = DRAW_DEFAULT;
-#if STAGE == STAGE_STAGE_ST0
+#if STAGE == STAGE_ST0
         if (itemId >= 23) {
 #else
         if (itemId > 23) {
@@ -368,7 +368,7 @@ void EntityPrizeDrop(Entity* self) {
             DestroyEntity(self);
         } else {
             self->step++;
-#if !(defined VERSION_BETA || STAGE == STAGE_STAGE_ST0)
+#if !(defined VERSION_BETA || STAGE == STAGE_ST0)
             index = self->ext.equipItemDrop.castleFlag;
             if (index) {
                 index--;
@@ -382,7 +382,7 @@ void EntityPrizeDrop(Entity* self) {
         }
         break;
     case 2:
-#if STAGE == STAGE_STAGE_ST0
+#if STAGE == STAGE_ST0
         if (self->velocityX < 0) {
 #else
         if (self->velocityY < 0) {
@@ -442,19 +442,19 @@ void EntityPrizeDrop(Entity* self) {
             CollectHeart(itemId);
         } else if (itemId < 12) {
             CollectGold(itemId);
-#if STAGE != STAGE_STAGE_ST0
+#if STAGE != STAGE_ST0
         } else if (itemId == 12) {
             CollectHeartVessel();
 #endif
         } else if (itemId < 14) {
-#if defined VERSION_BETA || STAGE == STAGE_STAGE_ST0
+#if defined VERSION_BETA || STAGE == STAGE_ST0
             DestroyCurrentEntity();
 #else
             DestroyCurrentEntity(itemId);
 #endif
         } else if (itemId < 23) {
             CollectSubweapon(itemId);
-#if STAGE != STAGE_STAGE_ST0
+#if STAGE != STAGE_ST0
         } else if (itemId == 23) {
             CollectLifeVessel();
 #endif
@@ -463,7 +463,7 @@ void EntityPrizeDrop(Entity* self) {
             return;
         }
         break;
-#if !(defined VERSION_BETA || STAGE == STAGE_STAGE_ST0)
+#if !(defined VERSION_BETA || STAGE == STAGE_ST0)
     case 6:
 #endif
     case 7:
@@ -500,7 +500,7 @@ void EntityPrizeDrop(Entity* self) {
                 prim = &g_PrimBuf[primIndex];
                 prim->tpage = 0x1A;
                 prim->clut = 0x170;
-#if defined VERSION_BETA || STAGE == STAGE_STAGE_ST0
+#if defined VERSION_BETA || STAGE == STAGE_ST0
                 prim->u0 = prim->u2 = 0;
                 prim->v0 = prim->v1 = 0;
                 prim->u1 = prim->u3 = 0x20;
@@ -581,7 +581,7 @@ extern u16 g_InitializeEntityData0[];
 
 // Weird difference here. These functions are not related.
 // But MAD has one and not the other.
-#if !(defined VERSION_BETA || STAGE == STAGE_STAGE_ST0)
+#if !(defined VERSION_BETA || STAGE == STAGE_ST0)
 #include "blink_item.h"
 #else
 // Also, this function is never called.
@@ -623,7 +623,7 @@ void EntityEquipItemDrop(Entity* self) {
 
     itemId = self->params & 0x7FFF;
     if (
-#if defined(VERSION_US) && STAGE != STAGE_STAGE_ST0
+#if defined(VERSION_US) && STAGE != STAGE_ST0
         self->step >= 2 &&
 #else
         self->step &&
@@ -634,7 +634,7 @@ void EntityEquipItemDrop(Entity* self) {
 
     switch (self->step) {
     case 0:
-#if !(defined VERSION_BETA || STAGE == STAGE_STAGE_ST0)
+#if !(defined VERSION_BETA || STAGE == STAGE_ST0)
         if (g_PlayableCharacter != PLAYER_ALUCARD) {
             self->params = 0;
             self->pfnUpdate = EntityPrizeDrop;
@@ -663,7 +663,7 @@ void EntityEquipItemDrop(Entity* self) {
             DestroyEntity(self);
             return;
         }
-#if !(defined VERSION_BETA || STAGE == STAGE_STAGE_ST0)
+#if !(defined VERSION_BETA || STAGE == STAGE_ST0)
         index = self->ext.equipItemDrop.castleFlag;
         if (index) {
             index--;
@@ -678,7 +678,7 @@ void EntityEquipItemDrop(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         g_ItemIconSlots[i] = 0x1E0;
-#if !(defined VERSION_BETA || STAGE == STAGE_STAGE_ST0)
+#if !(defined VERSION_BETA || STAGE == STAGE_ST0)
         self->ext.equipItemDrop.iconSlot = i;
 #endif
         if (itemId < NUM_HAND_ITEMS) {
@@ -704,7 +704,7 @@ void EntityEquipItemDrop(Entity* self) {
         self->step++;
         break;
     case 2:
-#if defined VERSION_BETA || STAGE == STAGE_STAGE_ST0
+#if defined VERSION_BETA || STAGE == STAGE_ST0
         if (self->velocityX < 0) {
 #else
         if (self->velocityY < 0) {
@@ -736,7 +736,7 @@ void EntityEquipItemDrop(Entity* self) {
                 self->ext.equipItemDrop.aliveTimer = 80;
                 self->step++;
             }
-#if !(defined VERSION_BETA || STAGE == STAGE_STAGE_ST0)
+#if !(defined VERSION_BETA || STAGE == STAGE_ST0)
         } else {
             i = self->ext.equipItemDrop.iconSlot;
             g_ItemIconSlots[i] = 0x10;
@@ -776,7 +776,7 @@ void EntityEquipItemDrop(Entity* self) {
     }
 
     if (self->step > 1) {
-#if !(defined VERSION_BETA || STAGE == STAGE_STAGE_ST0)
+#if !(defined VERSION_BETA || STAGE == STAGE_ST0)
         if (self->ext.equipItemDrop.timer) {
             self->ext.equipItemDrop.timer--;
         }
