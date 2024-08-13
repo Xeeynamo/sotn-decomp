@@ -224,7 +224,7 @@
 | zero/f_nonmat/f6016C08.s     | func_06016C08   |       51 |          4 |                                 |       |
 | zero/f_nonmat/f600831C.s     | func_0600831C   |       51 |          6 |                                 |       |
 | t_bat/f_nonmat/f60CF294.s    | func_060CF294   |       51 |          7 |                                 |       |
-| t_bat/f_nonmat/f60D125C.s    | func_060D125C   |       51 |          7 | https://decomp.me/scratch/nVmi2 | 0.758 |
+| t_bat/f_nonmat/f60D125C.s    | func_060D125C   |       51 |          7 | https://decomp.me/scratch/Hs5mG | 0.887 |
 | zero/f_nonmat/f600AFA8.s     | func_0600AFA8   |       52 |          2 |                                 |       |
 | zero/f_nonmat/f6004E94.s     | func_06004E94   |       52 |          4 |                                 |       |
 | zero/f_nonmat/f6007B34.s     | func_06007B34   |       52 |          4 |                                 |       |
