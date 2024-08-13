@@ -10,7 +10,7 @@ void CollectGold(u16 goldSize) {
     if (g_Status.gold > MAX_GOLD) {
         g_Status.gold = MAX_GOLD;
     }
-#if STAGE != STAGE_STAGE_ST0
+#if STAGE != STAGE_ST0
     if (g_unkGraphicsStruct.BottomCornerTextTimer) {
         g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
         g_unkGraphicsStruct.BottomCornerTextTimer = 0;
