@@ -35,7 +35,7 @@ segments:
     subsegments:
       - [0x0, .data, header]
       - [0x1C4, .data, header] # layers
-      - [0x5A4, data]
+      - [0x5A4, .data, header] # GfxBanks
       - [0x77C, .data, e_laydef] # layout entries header
       - [0x924, data]
       - [0xAAC, data]
@@ -56,10 +56,13 @@ segments:
       - [0x25B4, .data, entity_relic_orb]
       - [0x2618, data]
       - [0x3180, data]
+      - [0x3870, data]
       - [0x39A0, data]
       - [0x3AC0, data]
       - [0x3AF0, data]
       - [0x3B30, data]
+      - [0x3B50, data, e_bone_scimitar]
+      - [0x3C44, data]
       - [0x3CC4, .data, rooms]
       - [0x3DC8, .data, e_layout] # layout entries data
       - [0x4CE0, data]
@@ -86,6 +89,7 @@ segments:
       - [0x37664, .rodata, 48A84] # EntityStageNamePopup
       - [0x37698, rodata]
       - [0x376E8, rodata]
+      - [0x37784, rodata, e_bone_scimitar]
       - [0x377A4, .rodata, 56264] # EntityBat
       - [0x377B8, .rodata, 564B0] # EntityZombie
       - [0x377CC, .rodata, prim_helpers]
@@ -105,6 +109,9 @@ segments:
       - [0x48400, c, entity_heart_drop]
       - [0x48528, c, entity_message_box]
       - [0x48A84, c]
+      - [0x50A2C, c, player_water_effect]
+      - [0x516B4, c]
+      - [0x559d0, c, e_bone_scimitar]
       - [0x56264, c]
       - [0x564B0, c]
       - [0x56880, c, prim_helpers]

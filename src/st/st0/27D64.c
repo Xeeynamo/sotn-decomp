@@ -3,13 +3,13 @@
 
 void func_801A7D64(Entity* self) {
     s32 temp_v0;
-    ObjInit2* obj = &D_80180638[self->params];
+    ObjInit* obj = &D_80180638[self->params];
 
     if (self->step == 0) {
         InitializeEntity(g_eInitGeneric2);
         self->animSet = obj->animSet;
         self->zPriority = obj->zPriority;
-        self->unk5A = obj->unk4.s;
+        self->unk5A = obj->unk5A;
         self->palette = obj->palette;
         self->drawFlags = obj->drawFlags;
         self->drawMode = obj->drawMode;
@@ -159,8 +159,8 @@ void func_801A805C(Entity* self) {
             ReplaceBreakableWithItemDrop(self);
         }
     } else {
-        InitializeEntity(D_80180574);
-        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk - 0x14;
+        InitializeEntity(g_eBreakableInit);
+        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
         self->drawMode = D_8018074C[params];
         self->hitboxHeight = D_801806F8[params];
         self->animSet = D_80180724[params];

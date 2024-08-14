@@ -1328,7 +1328,7 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     EntityCrossBoomerang,
     func_80169C10,
     func_8016147C,
-    func_80169D74,
+    EntityCrossShadow,
     RicEntityHolyWater,
     RicEntityHolyWaterFlame,
     func_80161C2C,
@@ -1373,8 +1373,8 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     func_8016E324,
     func_8016D9C4,
     func_8016DF74,
-    func_8016E9E4,
-    func_8016E46C,
+    EntityBiblePage,
+    EntityBiblePageBeam,
     RicEntitySubwpnBible,
     func_80172AE8,
     EntityStopwatch,
@@ -1477,14 +1477,14 @@ Entity* RicCreateEntFactoryFromEntity(
     if (entity != NULL) {
         DestroyEntity(entity);
         entity->entityId = E_ENTITYFACTORY;
-        entity->ext.generic.unk8C.entityPtr = source;
+        // the parent pointer must align for anything the factory creates
+        entity->ext.factory.parent = source;
         entity->posX.val = source->posX.val;
         entity->posY.val = source->posY.val;
         entity->facingLeft = source->facingLeft;
         entity->zPriority = source->zPriority;
         entity->params = factoryParams & 0xFFF;
         entity->ext.generic.unkA0 = (factoryParams >> 8) & 0xFF00;
-
         if (source->flags & FLAG_UNK_10000) {
             entity->flags |= FLAG_UNK_10000;
         }

@@ -507,6 +507,7 @@ void EntityCrossBoomerang(Entity* self) {
     switch (self->step) {
     case 0:
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_UNK_100000;
+        // gets used by shadow, must align with that entity
         self->ext.crossBoomerang.unk84 = &D_80175088[D_80175888];
         D_80175888++;
         D_80175888 &= 3;
@@ -684,50 +685,54 @@ void func_80169C10(Entity* entity) {
     }
 }
 
-void func_80169D74(Entity* entity) {
-    Multi temp;
-    s16* ptr;
+// made by blueprint #5, see step 0 of EntityCrossBoomerang
+void EntityCrossShadow(Entity* self) {
+    s16* temp;
 
-    switch (entity->step) {
+    switch (self->step) {
     case 0:
-        entity->flags = FLAG_UNK_04000000 | FLAG_UNK_08000000;
-        entity->ext.generic.unk84.unk =
-            entity->ext.generic.unk8C.entityPtr->ext.generic.unk84.unk;
-        entity->animSet = ANIMSET_OVL(17);
-        entity->animCurFrame = D_80155E68[entity->params];
-        entity->unk5A = 0x66;
-        entity->palette = 0x81B0;
-        entity->drawMode = DRAW_TPAGE;
-        entity->facingLeft = PLAYER.facingLeft;
-        entity->zPriority = PLAYER.zPriority;
-        entity->drawFlags = FLAG_DRAW_ROTZ;
-        entity->rotZ = 0xC00;
-        entity->step++;
+        self->flags = FLAG_UNK_04000000 | FLAG_UNK_08000000;
+        // the parent pointer is set in RicEntityEntFactory.
+        // the value of unk84 is set in EntityCrossBoomerang
+        self->ext.crossBoomerang.unk84 =
+            self->ext.factory.parent->ext.crossBoomerang.unk84;
+        self->animSet = ANIMSET_OVL(17);
+        self->animCurFrame = D_80155E68[self->params];
+        self->unk5A = 0x66;
+        self->palette = 0x81B0;
+        self->drawMode = DRAW_TPAGE;
+        self->facingLeft = PLAYER.facingLeft;
+        self->zPriority = PLAYER.zPriority;
+        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->rotZ = 0xC00;
+        self->step++;
         break;
 
     case 1:
-        entity->rotZ -= 0x80;
-        if (entity->ext.generic.unk8C.entityPtr->step == 7) {
-            entity->step++;
-            entity->ext.generic.unk7C.s = (entity->params + 1) * 4;
+        self->rotZ -= 0x80;
+        if (self->ext.factory.parent->step == 7) {
+            self->step++;
+            self->ext.crossBoomerang.timer = (self->params + 1) * 4;
         }
         break;
 
     case 2:
-        entity->rotZ -= 0x80;
-        entity->ext.generic.unk7C.s--;
-        if (entity->ext.generic.unk7C.s == 0) {
-            DestroyEntity(entity);
+        self->rotZ -= 0x80;
+        if (--self->ext.crossBoomerang.timer == 0) {
+            DestroyEntity(self);
             return;
         }
         break;
     }
-    temp = entity->ext.generic.unk84;
-    ptr = temp.unk + ((u16)entity->ext.generic.unk80.modeS16.unk0 * 4);
-    entity->posX.i.hi = ptr[0] - g_Tilemap.scrollX.i.hi;
-    entity->posY.i.hi = ptr[1] - g_Tilemap.scrollY.i.hi;
-    entity->ext.generic.unk80.modeS16.unk0 =
-        (entity->ext.generic.unk80.modeS16.unk0 + 1) & 0x3F;
+
+    // get the x and y position from the parent (must align)
+    temp = &self->ext.crossBoomerang.unk84[0];
+    temp += self->ext.crossBoomerang.unk80 * 2;
+    self->posX.i.hi = *temp - g_Tilemap.scrollX.i.hi;
+    temp++;
+    self->posY.i.hi = *temp - g_Tilemap.scrollY.i.hi;
+    self->ext.crossBoomerang.unk80++;
+    self->ext.crossBoomerang.unk80 &= 0x3F;
 }
 
 // Entity ID #32. Comes from blueprint 34.

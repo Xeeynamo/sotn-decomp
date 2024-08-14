@@ -509,7 +509,7 @@ void func_8010E4D0(void) {
     func_80111CC0();
 
     PLAYER.palette = 0x8100;
-    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk;
+    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
 
     if ((u32)(g_Player.unk72 - 1) < 2U) {
         SetPlayerAnim(0xC7);

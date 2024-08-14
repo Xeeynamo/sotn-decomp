@@ -94,7 +94,6 @@ extern u16 D_80180A60[];
 extern u16 g_EInitGeneric[];
 extern u16 D_80180A84[];
 extern u16 g_eInitGeneric2[];
-extern u16 D_80180AA8[];
 extern u16 D_80180AB4[];
 extern u16 D_80180AC0[];
 extern u16 D_80180ACC[];
@@ -414,11 +413,6 @@ extern u8 D_80180E78[];
 extern u8 D_80180E94[];
 extern u8 D_80180EA4[][2];
 
-// for func_801B32A8
+// for EntityBackgroundBushes
 
 extern u16 D_80180AA8[];
-extern u8 D_80181008[];
-extern u8 D_80181020[];
-extern s16 D_80181068;
-extern s16* D_80181088;
-extern SVECTOR D_801810B0;

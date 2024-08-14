@@ -15,8 +15,8 @@ void EntityCavernDoorVase(Entity* self) {
         InitializeEntity(g_eInitGeneric2);
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
-        self->facingLeft = objInit->unk4.U8.unk0;
-        self->unk5A = objInit->unk4.U8.unk1;
+        self->facingLeft = objInit->facingLeft;
+        self->unk5A = objInit->unk5A;
         self->palette = objInit->palette;
         self->drawFlags = objInit->drawFlags;
         self->drawMode = objInit->drawMode;
@@ -108,7 +108,7 @@ void EntityBreakable(Entity* entity) {
         }
     } else {
         InitializeEntity(g_eBreakableInit);
-        entity->zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk - 0x14;
+        entity->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
         entity->drawMode = g_eBreakableDrawModes[breakableType];
         entity->hitboxHeight = g_eBreakableHitboxes[breakableType];
         entity->animSet = g_eBreakableanimSets[breakableType];
@@ -388,8 +388,129 @@ void EntityCastleDoor(Entity* self) {
     }
 }
 
+extern u16 D_80180B18[];
+extern SVECTOR D_801811E8;
+extern s16 D_801811A0;
+extern s16* D_801811C0;
+extern u8 D_80181140[];
+extern u8 D_80181158[];
+
 // bushes in parallax background
-INCLUDE_ASM("st/no3/nonmatchings/377D4", EntityBackgroundBushes);
+void EntityBackgroundBushes(Entity* self) {
+    byte stackpad[8];
+
+    // Lots of ugly pointers
+    u8* var_s1;
+    s16* var_s4;
+    s16* var_s5;
+    s16** var_s8;
+    Primitive* prim;
+    s32 primIndex;
+    s32 i;
+    s32 yOffset;
+    s16 xPos;
+    s16 yPos;
+    s32 rotTransXYResult;
+    s32 unused1; // return args for rottranspers
+    s32 unused2; // we don't use them.
+    VECTOR trans;
+    MATRIX m;
+
+    if (!self->step) {
+        InitializeEntity(D_80180B18);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x48);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
+        while (prim != NULL) {
+            prim->tpage = 0xF;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+    }
+    SetGeomScreen(0x400);
+    SetGeomOffset(0x80, self->posY.i.hi);
+    RotMatrix(&D_801811E8, &m);
+    SetRotMatrix(&m);
+    if (self->params) {
+        trans.vx = self->posX.i.hi - 0x200;
+    } else {
+        trans.vx = self->posX.i.hi + 0x200;
+    }
+    trans.vy = 0;
+    var_s5 = &D_801811A0;
+    var_s8 = &D_801811C0;
+    prim = self->ext.prim;
+    for (i = 0; i < 4; i++, var_s8++, var_s5 += 4) {
+        trans.vz = *var_s5 + 0x400;
+        TransMatrix(&m, &trans);
+        SetTransMatrix(&m);
+        RotTransPers(&D_801811E8, &rotTransXYResult, &unused1, &unused2);
+        // Split out the upper and lower halfword of rotTransXYResult
+        xPos = rotTransXYResult & 0xFFFF;
+        yPos = rotTransXYResult >> 16;
+        xPos = xPos % var_s5[3];
+        xPos -= var_s5[3];
+        yPos = self->posY.i.hi;
+        var_s4 = *var_s8;
+        while (xPos < 0x140) {
+            var_s1 = &D_80181140[0];
+            var_s1 += ((*var_s4++) * 4);
+            prim->u0 = prim->u2 = var_s1[0];
+            prim->u1 = prim->u3 = prim->u0 + var_s1[2];
+            prim->v0 = prim->v1 = var_s1[1];
+            prim->v2 = prim->v3 = prim->v0 + var_s1[3];
+            prim->x0 = prim->x2 = xPos - var_s1[2] / 2;
+            prim->x1 = prim->x3 = xPos + var_s1[2] / 2;
+            prim->y0 = prim->y1 = yPos - var_s1[3];
+            prim->y2 = prim->y3 = yPos;
+            prim->clut = var_s5[2];
+            prim->priority = var_s5[1];
+            prim->drawMode = DRAW_UNK02;
+            prim = prim->next;
+
+            if (prim == NULL) {
+                return;
+            }
+            if (i > 1) {
+                yOffset = var_s1[3];
+                var_s1 = &D_80181158[0];
+                prim->u0 = prim->u2 = var_s1[0];
+                prim->u1 = prim->u3 = prim->u0 + var_s1[2];
+                prim->v0 = prim->v1 = var_s1[1];
+                prim->v2 = prim->v3 = prim->v0 + var_s1[3];
+                var_s1 += (i - 2) * 4;
+                prim->x0 = prim->x2 = xPos - var_s1[2] / 2;
+                prim->x1 = prim->x3 = xPos + var_s1[2] / 2;
+                prim->y0 = prim->y1 = (yPos - yOffset) - var_s1[3];
+                prim->y2 = prim->y3 = (yPos - yOffset);
+                prim->clut = 0x17;
+                if (i > 2) {
+                    prim->clut = 0x49;
+                }
+                prim->priority = var_s5[1];
+                prim->drawMode = DRAW_UNK02;
+                prim = prim->next;
+                if (prim == NULL) {
+                    return;
+                }
+            }
+            xPos += *var_s4++;
+            if (*var_s4 == -1) {
+                var_s4 = *var_s8;
+            }
+        }
+    }
+    while (prim != NULL) {
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+}
 
 void EntityUnkId1C(Entity* self, s16 primIndex) {
     volatile char pad[8]; //! FAKE
@@ -571,7 +692,48 @@ void EntityTransparentWater(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no3/nonmatchings/377D4", func_801B94F0);
+void func_801B94F0(Primitive* prim) {
+    s32 xVar;
+    s32 yVar;
+
+    switch (prim->p3) {
+    case 1:
+        xVar = (Random() & 0xF) - 8;
+        prim->x0 = g_CurrentEntity->posX.i.hi + xVar;
+        prim->y0 = 0x9C;
+        prim->x1 = 0;
+        prim->y1 = 0;
+        if (xVar > 0) {
+            LOW(prim->x3) = Random() << 6;
+        } else {
+            LOW(prim->x3) = -Random() * 0x40;
+        }
+        LOW(prim->x2) = (Random() << 8) + FIX(-4);
+        prim->blendMode = 2;
+        prim->p3++;
+        /* fallthrough */
+    case 2:
+        xVar = (prim->x0 << 0x10) + (u16)prim->x1;
+        yVar = (prim->y0 << 0x10) + (u16)prim->y1;
+        xVar += LOW(prim->x3);
+        yVar += LOW(prim->x2);
+        prim->x0 = (xVar >> 0x10);
+        prim->x1 = xVar & 0xFFFF;
+        prim->y0 = (yVar >> 0x10);
+        prim->y1 = yVar & 0xFFFF;
+
+        LOW(prim->x2) += FIX(1.0 / 4.0);
+        if (LOW(prim->x2) <= 0x60000) {
+            return;
+        }
+        prim->p3++;
+        break;
+    case 3:
+        prim->blendMode = 8;
+        prim->p3 = 0;
+        break;
+    }
+}
 
 // lever and platform to open caverns door
 void EntityCavernDoorLever(Entity* entity) {

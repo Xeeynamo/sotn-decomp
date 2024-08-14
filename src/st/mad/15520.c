@@ -403,13 +403,13 @@ INCLUDE_ASM("asm/us/st/mad/nonmatchings/15520", func_80197B94);
 #include "../entity_enemy_blood.h"
 
 void EntityRoomForeground(Entity* entity) {
-    ObjInit2* obj = &D_801810F4[entity->params];
+    ObjInit* obj = &D_801810F4[entity->params];
 
     if (entity->step == 0) {
         InitializeEntity(g_eInitGeneric2);
         entity->animSet = obj->animSet;
         entity->zPriority = obj->zPriority;
-        entity->unk5A = obj->unk4.s;
+        entity->unk5A = obj->unk5A;
         entity->palette = obj->palette;
         entity->drawFlags = obj->drawFlags;
         entity->drawMode = obj->drawMode;

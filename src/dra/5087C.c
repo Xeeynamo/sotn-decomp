@@ -973,7 +973,7 @@ void func_800F2404(s32 arg0) {
 
     g_unkGraphicsStruct.BottomCornerTextTimer = 0;
     g_unkGraphicsStruct.BottomCornerTextPrims = 0;
-    g_unkGraphicsStruct.g_zEntityCenter.unk = 148;
+    g_unkGraphicsStruct.g_zEntityCenter = 148;
     for (i = 0; i < LEN(g_unkGraphicsStruct.D_80097428); i++) {
         g_unkGraphicsStruct.D_80097428[i] = 0;
     }
@@ -1682,7 +1682,7 @@ void func_800F298C(void) {
                 g_PlayerX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
                 g_PlayerY = PLAYER.posY.i.hi + g_Tilemap.scrollY.i.hi;
                 func_8011A9D8();
-                PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter.unk;
+                PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
                 func_800F0CD8(0);
                 func_8010BFFC();
                 g_PlayerX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;

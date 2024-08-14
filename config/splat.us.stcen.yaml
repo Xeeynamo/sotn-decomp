@@ -44,7 +44,7 @@ segments:
       - [0x7E4, .data, collision]
       - [0xBA4, .data, e_red_door]
       - [0xBBC, .data, 14264]
-      - [0xDBC, data]
+      - [0xDBC, .data, e_collect]
       - [0x10AC, .data, entity_relic_orb]
       - [0x1110, data]
       - [0x12D4, .data, rooms]
@@ -57,9 +57,8 @@ segments:
       - [0xD42C, .rodata, holyglassescutscene]
       - [0xD4B0, .rodata, F890]
       - [0xD4D8, .rodata, e_red_door] # EntityRedDoor
-      - [0xD4F0, .rodata]
-      - [0xD540, .rodata, 15C84] # EntityPrizeDrop
-      - [0xD560, .rodata, 15C84] # EntityEquipItemDrop
+      - [0xD540, .rodata, e_collect] # EntityPrizeDrop
+      - [0xD560, .rodata, e_collect] # EntityEquipItemDrop
       - [0xD578, .rodata, entity_relic_orb]
       - [0xD5B0, .rodata, entity_message_box]
       - [0xD5C4, .rodata, 18084] # EntityStageNamePopup
@@ -74,7 +73,8 @@ segments:
       - [0x12A3C, c, create_entity]
       - [0x135B4, c, e_red_door]
       - [0x14264, c]
-      - [0x15C84, c]
+      - [0x15714, c, e_collect]
+      - [0x16C90, c, blit_char]
       - [0x16F30, c, entity_relic_orb]
       - [0x17A00, c, entity_heart_drop]
       - [0x17B28, c, entity_message_box]
@@ -84,5 +84,5 @@ segments:
       - [0x1C704, .bss, header]
       - [0x1C764, .bss, create_entity]
       - [0x1C774, .bss, holyglassescutscene]
-      - [0x1C7C0, .bss, 15C84]
+      - [0x1C7C0, .bss, e_collect]
   - [0x1D46C]
