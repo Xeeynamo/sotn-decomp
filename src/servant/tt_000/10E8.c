@@ -480,10 +480,16 @@ void func_80171ED4(s32 arg0) {
     dst = &g_Clut[0x1400];
     src = D_80170448;
 
+#ifdef VERSION_PC
+    // i exceeds the size of D_80170448
+    for (i = 0; i < 256 && i < 48; i++) {
+        *dst++ = *src++;
+    }
+#else
     for (i = 0; i < 256; i++) {
         *dst++ = *src++;
     }
-
+#endif
     dst = &g_Clut[0x1430];
     src = D_80170720;
 
@@ -535,6 +541,9 @@ void func_80171ED4(s32 arg0) {
     e->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
     D_80174D3C = 0;
 }
+
+s16 func_80173F74(s16 x1, s16 x2, s16 minDistance);
+s16 func_80173F30(Entity* entity, s16 x, s16 y);
 
 #ifdef VERSION_PSP
 INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80172120);
@@ -1065,7 +1074,7 @@ void func_80173C2C(Entity* entity) {
 }
 
 #ifndef VERSION_PSP
-u32 UpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
+u32 Tt000UpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
     AnimationFrame* animFrame;
     s32 ret;
 

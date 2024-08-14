@@ -239,6 +239,15 @@ set(SOURCE_FILES_RIC
     src/ric/d_19C70.c
 )
 
+set(SOURCE_FILES_TT_000
+    src/servant/tt_000/10E8.c
+    src/servant/tt_000/448.c
+    src/servant/tt_000/45E4.c
+    src/servant/tt_000/4A8.c
+    src/servant/tt_000/608.c
+    src/servant/tt_000/spriteparts.c
+)
+
 set(SOURCE_FILES_STAGE_SEL
     src/pc/stages/stage_sel.c
     src/st/sel/banks.c
@@ -306,6 +315,7 @@ set(SOURCE_FILES_CORE
     ${SOURCE_FILES_STAGE_SEL}
     ${SOURCE_FILES_STAGE_WRP}
     ${SOURCE_FILES_WEAPON}
+    ${SOURCE_FILES_TT_000}
 )
 
 add_library(core ${SOURCE_FILES_CORE})

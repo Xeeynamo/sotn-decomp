@@ -62,7 +62,18 @@ SimFile D_800A036C[] = {
         SD_MAR_VB_LEN,
         SIM_VB,
     },
-};
+    {
+        "SERVANT/SD_BAT.VH",
+        aPbav_1,
+        SD_TUKA2_VH_LEN,
+        SIM_VH,
+    },
+    {
+        "SERVANT/SD_BAT.VB",
+        D_80280000,
+        SD_TUKA2_VB_LEN,
+        SIM_VB,
+    }};
 
 const char* D_800A04AC[] = {
     "sim:c:\\sound\\data\\sd_eve1.seq",
@@ -468,10 +479,14 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         INFOF("TODO: will load weapon 'f1_%03d'", fileId);
         return 0;
     case SimFileType_FamiliarPrg:
-        INFOF("TODO: will load weapon 'tt_%03d'", fileId);
+        D_80170000 = g_ServantDesc;
         return 0;
     case SimFileType_FamiliarChr:
-        INFOF("TODO: will load weapon 'ft_%03d'", fileId);
+        snprintf(smolbuf, sizeof(smolbuf), "disks/us/SERVANT/FT_00%d.BIN", 0);
+        u8 temp[0x6000];
+        FileReadToBuf(smolbuf, &temp, 0, 0x6000);
+        LoadTPage(&temp, 0, 0, 0x2C0, 0x100, 0x100, 0x80);
+        LoadTPage(&temp[0x4000], 0, 0, 0x2C0, 0x180, 0x80, 0x80);
         return 0;
     }
     if (!sim.path) {

@@ -153,7 +153,7 @@ bool InitGame(void) {
     api.func_8010BF64 = NULL;
     api.func_800F1FC4 = NULL;
     api.func_800F2288 = func_800F2288;
-    api.func_8011A3AC = NULL;
+    api.func_8011A3AC = func_8011A3AC;
     api.func_800FF460 = NULL;
     api.func_800FF494 = NULL;
     api.CdSoundCommandQueueEmpty = NULL;
