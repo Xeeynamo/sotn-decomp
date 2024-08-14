@@ -1042,7 +1042,7 @@ void func_801AE6D0(void) {
 
 extern s32 g_MenuHeadGfxU[];
 extern s32 g_MenuHeadGfxV[];
-void func_801AE9A8(void) { 
+void func_801AE9A8(void) {
     s32 i;
 
     MenuHideAllGfx();
@@ -1256,7 +1256,6 @@ typedef enum {
     Upd_Eng_0x220 = 0x220,
 
 } SelGameEngineStep;
-
 
 void SEL_Update(void) {
     s32 temp_v0;
