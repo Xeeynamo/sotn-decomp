@@ -401,7 +401,7 @@ s32 MemCardInitAndFormat(void) {
 #endif
 
 void SEL_Init(s32 objLayoutId) {
-    switch (g_GameEngineState) {
+    switch (g_GameEngineStep) {
     case 0:
         if (g_IsUsingCd) {
             break;
@@ -409,7 +409,7 @@ void SEL_Init(s32 objLayoutId) {
         g_IsTimeAttackUnlocked = true;
         D_8003C728 = 1;
         g_CurrentStream = 0;
-        g_GameEngineState = 1;
+        g_GameEngineStep = Engine_Normal;
         break;
 
     case 1:
@@ -423,7 +423,7 @@ void SEL_Init(s32 objLayoutId) {
         g_CurrentStream = 0;
         func_801B18F4();
         g_GameState = Game_Title;
-        g_GameEngineState = 0;
+        g_GameEngineStep = Engine_Init;
         break;
     }
 }

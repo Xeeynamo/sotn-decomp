@@ -1159,7 +1159,7 @@ void RunMainEngine(void) {
     s32* ptr_791c;
     // This function is a state machine, this variable is some kind of
     // overall state of the game engine
-    switch (g_GameEngineState) {
+    switch (g_GameEngineStep) {
     case Engine_Init:
         if (g_IsUsingCd) {
             return;
@@ -1295,7 +1295,7 @@ void RunMainEngine(void) {
             }
         }
         RefreshCapePalette();
-        g_GameEngineState++; // Move to Engine_Normal
+        g_GameEngineStep++; // Move to Engine_Normal
         return;
     case Engine_Normal:
         g_GameTimer++;
@@ -1386,7 +1386,7 @@ void RunMainEngine(void) {
             if (g_unkGraphicsStruct.unk20 != 0) {
                 func_8010E0D0(g_unkGraphicsStruct.unk20);
                 PlaySfx(SET_UNK_0E);
-                g_GameEngineState = 5;
+                g_GameEngineStep = Engine_5;
                 return;
             }
             i = func_800F0CD8(1);
@@ -1402,7 +1402,7 @@ void RunMainEngine(void) {
                     g_GameStep = Play_PrepareNextStage;
                     return;
                 }
-                g_GameEngineState = 3;
+                g_GameEngineStep = Engine_3;
                 g_MenuStep = MENU_STEP_INIT;
                 return;
             }
@@ -1485,7 +1485,7 @@ void RunMainEngine(void) {
                 func_80105428();
             }
             if (g_Player.unk0C & 0x80000) {
-                g_GameEngineState = 10;
+                g_GameEngineStep = Engine_10;
                 g_MenuStep = MENU_STEP_INIT;
             }
             if (g_unkGraphicsStruct.D_800973FC != 0) {
@@ -1521,7 +1521,7 @@ void RunMainEngine(void) {
                             return;
                         }
                         D_800974A4 = 1;
-                        g_GameEngineState = 0x70;
+                        g_GameEngineStep = Engine_0x70;
                         PlaySfx(0xa7);
                         PlaySfx(0xa3);
                         PlaySfx(SET_UNK_0E);
@@ -1536,23 +1536,23 @@ void RunMainEngine(void) {
                     PlaySfx(0xa3);
                     PlaySfx(SET_UNK_0E);
                     func_801027C4(1);
-                    g_GameEngineState++; // Goes from 1 to 2, into Engine_Menu
+                    g_GameEngineStep++; // Goes from 1 to 2, into Engine_Menu
                     g_MenuStep = MENU_STEP_INIT;
                 } else if ((g_pads[0].tapped & PAD_SELECT) &&
                            (g_StageId != STAGE_ST0) && (D_8003C8B8 != 0)) {
                     func_801027C4(6);
                     D_800974A4 = 1;
-                    g_GameEngineState = 20;
+                    g_GameEngineStep = 20;
                 }
                 break;
             }
             break;
-        case 0x70:
+        case Engine_0x70:
             DrawHudSubweapon();
             if (g_pads[0].tapped & PAD_START) {
                 if (func_8010183C(1) != 0) {
                     D_800974A4 = 0;
-                    g_GameEngineState = 1;
+                    g_GameEngineStep = Engine_Normal;
                     PlaySfx(SET_UNK_0F);
                     PlaySfx(0xA4);
                     PlaySfx(0xA8);
@@ -1576,13 +1576,13 @@ void RunMainEngine(void) {
             if (g_pads[0].tapped & (PAD_START | PAD_SELECT)) {
                 func_801027C4(7);
                 D_800974A4 = 0;
-                g_GameEngineState = 1;
+                g_GameEngineStep = Engine_Normal;
             }
             g_api.o.UpdateStageEntities();
             func_80102D70();
             func_801028AC(1);
             break;
-        case 0x3:
+        case Engine_3:
             switch (g_MenuStep) {
             case 0:
                 if (D_80097C98 == 2) {
@@ -1772,7 +1772,7 @@ void RunMainEngine(void) {
                 func_800E414C();
                 func_800F24F4();
                 if (D_80097C98 == 3) {
-                    g_GameEngineState = 1;
+                    g_GameEngineStep = Engine_Normal;
                 }
 #if defined(VERSION_US)
                 func_8011A9D8();
@@ -1788,7 +1788,7 @@ void RunMainEngine(void) {
                 break;
             case 5:
                 if (func_801025F4() != 0) {
-                    g_GameEngineState = 1;
+                    g_GameEngineStep = Engine_Normal;
                 }
                 break;
             }
@@ -1832,7 +1832,7 @@ void RunMainEngine(void) {
                 }
             } else {
                 func_8010E168(1, 0x30);
-                g_GameEngineState = 1;
+                g_GameEngineStep = Engine_Normal;
                 PlaySfx(SET_UNK_0F);
             }
             DrawHudSubweapon();

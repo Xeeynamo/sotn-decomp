@@ -539,7 +539,7 @@ void EntityDraculaFinalForm(Entity* self) {
             self->step_s++;
             primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
             if (primIndex == -1) {
-                g_GameEngineState = 0xA;
+                g_GameEngineStep = 0xA;
                 g_MenuStep = 0;
                 return;
             }

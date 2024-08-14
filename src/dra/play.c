@@ -86,7 +86,7 @@ void HandlePlay(void) {
 
     switch (g_GameStep) {
     case Play_Reset:
-        g_GameEngineState = 0;
+        g_GameEngineStep = Engine_Init;
         D_8003C738 = 0;
         if (D_8003C730 == 0) {
             for (i = 0; i < LEN(g_CastleFlags); i++) {
@@ -335,7 +335,7 @@ void HandlePlay(void) {
             func_800EA5AC(0xFFFF, 0xFF, 0xFF, 0xFF);
         }
         g_GameStep = 1;
-        g_GameEngineState = 0;
+        g_GameEngineStep = Engine_Init;
         D_8003C738 = 0;
         func_800EAD7C();
         break;

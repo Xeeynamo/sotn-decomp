@@ -1237,7 +1237,7 @@ void HandleTitle(void) {
                 break;
             }
         }
-        g_GameEngineState = 0;
+        g_GameEngineStep = Engine_Init;
         g_GameStep++;
         break;
     case 6:

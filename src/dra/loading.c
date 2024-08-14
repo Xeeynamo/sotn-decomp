@@ -174,7 +174,7 @@ void HandleNowLoading(void) {
         D_80097924 = -1;
         ClearBackbuffer();
         SetStageDisplayBuffer();
-        g_GameEngineState = 0;
+        g_GameEngineStep = Engine_Init;
         g_GameStep++;
         break;
     case 1:
@@ -667,7 +667,7 @@ void MainMenuHandler(void) {
             break;
 
         if (g_UseDisk || LoadFileSim(0, SimFileType_StagePrg) >= 0) {
-            g_GameEngineState = 0;
+            g_GameEngineStep = Engine_Init;
             g_GameStep++;
         }
         break;
@@ -754,7 +754,7 @@ void HandleEnding(void) {
                 break;
             }
         }
-        g_GameEngineState = 0;
+        g_GameEngineStep = Engine_Init;
         g_GameStep++;
         break;
     case 5:

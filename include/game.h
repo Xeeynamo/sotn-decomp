@@ -387,8 +387,12 @@ typedef enum {
     Engine_Init,
     Engine_Normal,
     Engine_Menu,
-    Engine_Map = 20
-} GameEngineState;
+    Engine_3,
+    Engine_5 = 5,
+    Engine_10 = 10,
+    Engine_Map = 20,
+    Engine_0x70 = 0x70
+} GameEngineStep;
 
 #define STAGE_INVERTEDCASTLE_MASK 0x1F
 #define STAGE_INVERTEDCASTLE_FLAG 0x20
@@ -1773,7 +1777,7 @@ extern s32 g_EquippedWeaponIds[2];
 extern u32 g_Timer; // Increases continuously
 extern s32 g_MapCursorTimer;
 /* 0x8003C9A0 */ extern s32 g_PlayableCharacter;
-/* 0x8003C9A4 */ extern u32 g_GameEngineState;
+/* 0x8003C9A4 */ extern u32 g_GameEngineStep;
 /* 0x8003C9A8 */ extern MenuNavigation g_MenuNavigation;
 /* 0x8003C9F8 */ extern GameSettings g_Settings;
 extern GpuBuffer g_GpuBuffers[2];

@@ -38,7 +38,7 @@ GpuBuffer g_GpuBuffers[2];
 s16 g_GpuBuffers_1_buf_draw_clip_y; // member of D_800542FC, TODO
                                     // overlap, hard to remove
 GpuBuffer* g_CurrentBuffer;
-u32 g_GameEngineState;
+u32 g_GameEngineStep;
 s32 D_8003C0F8;
 s32 D_800973EC;
 s32 D_8003C704;
