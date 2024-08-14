@@ -37,7 +37,7 @@ void RicEntityHolyWater(Entity* self) {
         self->velocityY = -((trigresult * 32 + trigtemp) << 9) >> 8;
 
         self->ext.factory.unkB0 = 3;
-        func_8015FAB8(self);
+        RicSetSubweaponParams(self);
         self->hitboxWidth = 4;
         self->hitboxHeight = 4;
         self->ext.holywater.unk80 = 0x200;
@@ -214,7 +214,7 @@ void RicEntityHolyWaterFlame(Entity* self) {
     case 1:
         if (--self->ext.timer.t == 0) {
             self->ext.factory.unkB0 = 0xB;
-            func_8015FAB8(self);
+            RicSetSubweaponParams(self);
             self->hitboxWidth = 4;
             self->ext.factory.unk84 = (s16)self->hitboxState;
             self->posY.i.hi = self->posY.i.hi - 0xA;
@@ -330,7 +330,7 @@ void RicEntitySubwpnCrashCross(Entity* self) {
         self->ext.crashcross.unk80 = 1;
         self->zPriority = 0xC2;
         self->ext.factory.unkB0 = 0xC;
-        func_8015FAB8(self);
+        RicSetSubweaponParams(self);
         LoadImage(&D_80155E3C, D_80155DDC);
         g_api.PlaySfx(0x6DF);
         g_api.PlaySfx(SFX_TELEPORT_BANG_B);
@@ -521,7 +521,7 @@ void EntityCrossBoomerang(Entity* self) {
         self->drawFlags = 4;
         self->rotZ = 0xC00;
         self->ext.factory.unkB0 = 4;
-        func_8015FAB8(self);
+        RicSetSubweaponParams(self);
         self->hitboxHeight = self->hitboxWidth = 8;
         self->posY.i.hi -= 8;
         g_api.PlaySfx(0x69F);
@@ -900,7 +900,7 @@ void EntitySubwpnCrashAgunea(Entity* self) {
             sp10++;
         }
         self->ext.factory.unkB0 = 2;
-        func_8015FAB8(self);
+        RicSetSubweaponParams(self);
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
         g_api.PlaySfx(SFX_WEAPON_SWISH_C);
@@ -1115,7 +1115,7 @@ void EntitySubwpnCrashAxe(Entity* self) {
             } while (prim != NULL);
         }
         self->ext.factory.unkB0 = 2;
-        func_8015FAB8(self);
+        RicSetSubweaponParams(self);
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
         self->ext.axeCrash.unk9C = 16;
@@ -1297,7 +1297,7 @@ void RicEntitySubwpnThrownDagger(Entity* self) {
         // This line is not in the DRA version of dagger.
         self->ext.factory.unkB0 = 1;
 
-        func_8015FAB8(self);
+        RicSetSubweaponParams(self);
         self->hitboxWidth = 4;
         self->hitboxHeight = 2;
         self->hitboxOffX = 4;
@@ -1547,7 +1547,7 @@ void RicEntitySubwpnReboundStone(Entity* self) {
 
         self->ext.reboundStone.lifeTimer = 0x40;
         self->ext.factory.unkB0 = 7;
-        func_8015FAB8(self);
+        RicSetSubweaponParams(self);
         self->hitboxWidth = 4;
         self->hitboxHeight = 4;
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
@@ -1798,7 +1798,7 @@ void RicEntitySubwpnThrownVibhuti(Entity* self) {
         }
         self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
         self->ext.factory.unkB0 = 8;
-        func_8015FAB8(self);
+        RicSetSubweaponParams(self);
         self->hitboxWidth = self->hitboxHeight = 4;
         self->posY.i.hi -= 15;
         selfX = self->posX.i.hi;
@@ -1969,7 +1969,7 @@ void RicEntitySubwpnAgunea(Entity* self) {
                 FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS;
             self->facingLeft = PLAYER.facingLeft;
             self->ext.factory.unkB0 = 9;
-            func_8015FAB8(self);
+            RicSetSubweaponParams(self);
             self->hitboxHeight = 4;
             self->hitboxWidth = 4;
             self->hitboxOffX = 4;
@@ -2296,7 +2296,7 @@ void func_8016D328(Entity* entity) {
             entity->facingLeft = entity->ext.generic.unk8C.entityPtr->ext
                                      .generic.unk8C.modeU16.unk0;
             entity->ext.generic.unkB0 = 0x18;
-            func_8015FAB8(entity);
+            RicSetSubweaponParams(entity);
             entity->unk5A = 0x79;
             entity->animSet = ANIMSET_DRA(14);
             entity->palette = 0x819E;
@@ -2423,7 +2423,7 @@ void func_8016D920(Entity* entity) {
     case 0:
         entity->flags = FLAG_UNK_04000000;
         entity->ext.generic.unkB0 = 0x19;
-        func_8015FAB8(entity);
+        RicSetSubweaponParams(entity);
         entity->hitboxWidth = 4;
         entity->hitboxHeight = 4;
         entity->step++;

@@ -381,7 +381,7 @@ void func_80166784(Entity* self) {
             self->hitboxOffX = 0;
             self->hitboxOffY = 0;
             self->ext.et_80166784.unkB0 = 0xE;
-            func_8015FAB8(self);
+            RicSetSubweaponParams(self);
         }
         if (lowerParams == 0) {
             self->zPriority = PLAYER.zPriority - 2;
@@ -899,7 +899,7 @@ void EntityHydroStorm(Entity* self) {
             return;
         }
         self->ext.factory.unkB0 = 0x10;
-        func_8015FAB8(self);
+        RicSetSubweaponParams(self);
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
                       FLAG_UNK_20000;
         line = (PrimLineG2*)&g_PrimBuf[self->primIndex];

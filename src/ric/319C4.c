@@ -211,7 +211,7 @@ void func_8016DF74(Entity* self) {
         self->ext.et_8016DF74.unk84 += 0x20;
         if (self->ext.et_8016DF74.unk84 > 0x120) {
             self->ext.factory.unkB0 = 0x1D;
-            func_8015FAB8(self);
+            RicSetSubweaponParams(self);
             self->posX.val = FIX(128.0);
             self->posY.val = FIX(128.0);
             self->hitboxWidth = 0x80;
@@ -356,7 +356,7 @@ void EntityBiblePageBeam(Entity* self) {
     case 1:
         if (++self->ext.et_8016E46C.unk80 >= 0x3C) {
             self->ext.et_8016E46C.unkB0 = 0x11;
-            func_8015FAB8(self);
+            RicSetSubweaponParams(self);
             g_api.PlaySfx(SFX_WEAPON_APPEAR);
             g_api.PlaySfx(SFX_TELEPORT_BANG_A);
             self->step++;
@@ -1067,7 +1067,7 @@ void func_80170548(Entity* entity) {
     case 0:
         entity->flags = FLAG_UNK_04000000;
         entity->ext.generic.unkB0 = 0x1E;
-        func_8015FAB8(entity);
+        RicSetSubweaponParams(entity);
         entity->hitboxWidth = 8;
         entity->hitboxHeight = 8;
         entity->step++;
@@ -1349,7 +1349,7 @@ void EntityAguneaCircle(Entity* self) {
             prim = prim->next;
         }
         self->ext.et_80170F64.unkB0 = 0x1A;
-        func_8015FAB8(self);
+        RicSetSubweaponParams(self);
         self->step++;
         break;
     case 1:
@@ -1591,7 +1591,7 @@ void EntityStopwatch(Entity* self) {
             self->ext.et_801719A4.unk94 = 0;
         }
         self->ext.et_801719A4.unkB0 = 6;
-        func_8015FAB8(self);
+        RicSetSubweaponParams(self);
         g_api.PlaySfx(0x6AD);
         if (self->ext.et_801719A4.unk94 < 2) {
             g_unkGraphicsStruct.D_800973FC = 1;
@@ -2035,7 +2035,7 @@ void RicEntitySubwpnBible(Entity* self) {
         prim->drawMode = 0x108;
         self->ext.et_BibleSubwpn.unk84 = self->facingLeft ? 0x20 : -0x20;
         self->ext.et_BibleSubwpn.unkB0 = 5;
-        func_8015FAB8(self);
+        RicSetSubweaponParams(self);
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
         self->step++;
@@ -2159,7 +2159,7 @@ void RicEntityGiantSpinningCross(Entity* self) {
             prim = prim->next;
         }
         self->ext.giantcross.unkB0 = 0xD;
-        func_8015FAB8(self);
+        RicSetSubweaponParams(self);
         self->hitboxHeight = 0x50;
         self->hitboxWidth = 0xC;
         self->posY.i.hi = 0x160;

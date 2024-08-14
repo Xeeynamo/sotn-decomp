@@ -1096,7 +1096,7 @@ void func_8015FA5C(s32 arg0) {
     D_80174FB8 = D_80154674[arg0][3];
 }
 
-void func_8015FAB8(Entity* entity) {
+void RicSetSubweaponParams(Entity* entity) {
     u16 attack;
     SubweaponDef* subwpn = &D_80154688[entity->ext.generic.unkB0];
 
