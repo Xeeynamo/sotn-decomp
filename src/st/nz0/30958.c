@@ -8,21 +8,21 @@
 #include "sfx.h"
 
 void func_801B0958(Entity* self) {
-    ObjInit2* temp_s0 = &D_80180D64[self->params];
+    ObjInit* objInit = &D_80180D64[self->params];
 
     if (self->step == 0) {
         InitializeEntity(g_eInitGeneric2);
-        self->animSet = temp_s0->animSet;
-        self->zPriority = temp_s0->zPriority;
-        self->unk5A = temp_s0->unk4.u;
-        self->palette = temp_s0->palette;
-        self->drawFlags = temp_s0->drawFlags;
-        self->drawMode = temp_s0->drawMode;
-        if (temp_s0->unkC != 0) {
-            self->flags = temp_s0->unkC;
+        self->animSet = objInit->animSet;
+        self->zPriority = objInit->zPriority;
+        self->unk5A = objInit->unk5A;
+        self->palette = objInit->palette;
+        self->drawFlags = objInit->drawFlags;
+        self->drawMode = objInit->drawMode;
+        if (objInit->unkC != 0) {
+            self->flags = objInit->unkC;
         }
     }
-    AnimateEntity(temp_s0->unk10, self);
+    AnimateEntity(objInit->unk10, self);
 }
 
 bool func_801B0A20(Entity* self) {

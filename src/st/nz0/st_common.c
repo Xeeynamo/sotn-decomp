@@ -234,7 +234,7 @@ void func_801BD204(s32 arg0, s16 arg1) {
 
 u8 func_801BD270(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 0x40; }
 
-u8 func_8019AD64(ObjInit2* arg0, ObjInit2* arg1) {
+u8 func_8019AD64(ObjInit* arg0, ObjInit* arg1) {
     u16 x, y;
 
     x = arg1->zPriority - arg0->zPriority;

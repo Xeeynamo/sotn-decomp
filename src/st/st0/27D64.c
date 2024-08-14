@@ -3,13 +3,13 @@
 
 void func_801A7D64(Entity* self) {
     s32 temp_v0;
-    ObjInit2* obj = &D_80180638[self->params];
+    ObjInit* obj = &D_80180638[self->params];
 
     if (self->step == 0) {
         InitializeEntity(g_eInitGeneric2);
         self->animSet = obj->animSet;
         self->zPriority = obj->zPriority;
-        self->unk5A = obj->unk4.s;
+        self->unk5A = obj->unk5A;
         self->palette = obj->palette;
         self->drawFlags = obj->drawFlags;
         self->drawMode = obj->drawMode;
