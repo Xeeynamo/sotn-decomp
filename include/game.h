@@ -792,7 +792,19 @@ typedef struct Entity {
 typedef struct {
     /* 0x00 */ u16 animSet;
     /* 0x02 */ u16 zPriority;
-    /* 0x04 */ Multi16 unk4;
+    /* 0x04 */ u16 unk5A; // not 5A in this struct, but goes to 5A in entity
+    /* 0x06 */ u16 palette;
+    /* 0x08 */ u16 drawFlags;
+    /* 0x0A */ u16 drawMode;
+    /* 0x0C */ u32 unkC;
+    /* 0x10 */ u8* unk10;
+} ObjInit; // size = 0x14
+
+typedef struct { // only difference from above is this one uses a facingLeft
+    /* 0x00 */ u16 animSet;
+    /* 0x02 */ u16 zPriority;
+    /* 0x04 */ u8 facingLeft;
+    /* 0x05 */ u8 unk5A;
     /* 0x06 */ u16 palette;
     /* 0x08 */ u16 drawFlags;
     /* 0x0A */ u16 drawMode;

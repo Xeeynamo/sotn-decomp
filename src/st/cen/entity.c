@@ -137,10 +137,10 @@ EntityInit D_8018047C = {
 static u32 JUNK_80180488 = 0x00FF0140;
 static u32 D_8018048C = 0x00FF0740;
 
-ObjInit2 D_80180490 = {
+ObjInit D_80180490 = {
     .animSet = ANIMSET_OVL(2),
     .zPriority = 129,
-    .unk4 = {.s = 0},
+    .unk5A = 0,
     .palette = PAL_DRA(0),
     .drawFlags = DRAW_DEFAULT,
     .unkC = NULL,

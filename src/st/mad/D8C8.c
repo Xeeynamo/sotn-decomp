@@ -94,13 +94,13 @@ INCLUDE_ASM("asm/us/st/mad/nonmatchings/D8C8", func_8018E1D4);
 
 void func_8018E5AC(Entity* self) {
     s32 temp_v0;
-    ObjInit2* objInit = &D_8018056C[self->params];
+    ObjInit* objInit = &D_8018056C[self->params];
 
     if (self->step == 0) {
         InitializeEntity(g_eInitGeneric2);
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
-        self->unk5A = objInit->unk4.s;
+        self->unk5A = objInit->unk5A;
         self->palette = objInit->palette;
         self->drawFlags = objInit->drawFlags;
         self->drawMode = objInit->drawMode;

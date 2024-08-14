@@ -18,17 +18,17 @@ static u16 D_80180538[] = {
     0x00F0, 0x01FC, 0x0310, 0x02FC, 0x00F0, 0x01FC, 0x0310, 0x02FC,
 };
 
-extern ObjInit2 D_801804E0[];
+extern ObjInit D_801804E0[];
 extern u16 g_eInitGeneric2[];
 extern u16 D_80180488[];
 
 void func_80186FD0(Entity* self) {
-    ObjInit2* objInit = &D_801804E0[self->params];
+    ObjInit* objInit = &D_801804E0[self->params];
     if (!self->step) {
         InitializeEntity(g_eInitGeneric2);
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
-        self->unk5A = objInit->unk4.u;
+        self->unk5A = objInit->unk5A;
         self->palette = objInit->palette;
         self->drawFlags = objInit->drawFlags;
         self->drawMode = objInit->drawMode;

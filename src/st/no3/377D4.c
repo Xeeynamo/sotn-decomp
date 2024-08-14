@@ -15,8 +15,8 @@ void EntityCavernDoorVase(Entity* self) {
         InitializeEntity(g_eInitGeneric2);
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
-        self->facingLeft = objInit->unk4.U8.unk0;
-        self->unk5A = objInit->unk4.U8.unk1;
+        self->facingLeft = objInit->facingLeft;
+        self->unk5A = objInit->unk5A;
         self->palette = objInit->palette;
         self->drawFlags = objInit->drawFlags;
         self->drawMode = objInit->drawMode;
