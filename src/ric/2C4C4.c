@@ -152,7 +152,7 @@ void RicEntityHolyWater(Entity* self) {
         self->hitboxState = 0;
         self->posY.i.hi -= 5;
     }
-    g_Player.D_80072F00[3] = 2;
+    g_Player.D_80072F00[PL_T_3] = 2;
 }
 
 // Entity ID #8. Blueprint 7.
@@ -303,7 +303,7 @@ void RicEntityHolyWaterFlame(Entity* self) {
         self->hitboxHeight = temp_v0_2 >> 1;
         self->hitboxOffY = (-temp_v0_2 >> 1);
     }
-    g_Player.D_80072F00[3] = 2;
+    g_Player.D_80072F00[PL_T_3] = 2;
 }
 
 // Entity 13. Made by blueprint 13. That's from subweapon 12.
@@ -421,7 +421,7 @@ void RicEntitySubwpnCrashCross(Entity* self) {
     }
     prim->drawMode = 0x31;
     prim->priority = self->zPriority;
-    g_Player.D_80072F00[3] = 2;
+    g_Player.D_80072F00[PL_T_3] = 2;
     return;
 }
 
@@ -640,7 +640,7 @@ void EntityCrossBoomerang(Entity* self) {
     temp_a0->y = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
     self->ext.crossBoomerang.unk80++;
     self->ext.crossBoomerang.unk80 &= 0x3F;
-    g_Player.D_80072F00[3] = 2;
+    g_Player.D_80072F00[PL_T_3] = 2;
 }
 
 void func_80169C10(Entity* entity) {

@@ -10,7 +10,7 @@ void func_80162C84(Entity* entity) {
         entity->zPriority = PLAYER.zPriority - 8;
         entity->palette = 0x8149;
         entity->animSet = ANIMSET_OVL(19);
-        func_8015C920(D_80154ED4);
+        RicSetAnimation(D_80154ED4);
         entity->velocityX = FIX(-1.75);
         entity->posY.i.hi = 0xBB;
         entity->posX.i.hi = 0x148;
@@ -33,7 +33,7 @@ void func_80162C84(Entity* entity) {
             entity->ext.generic.unk7E.modeU16++;
         }
         if (entity->posX.i.hi < 0xE0) {
-            func_8015C920(D_80154EF8);
+            RicSetAnimation(D_80154EF8);
             entity->velocityX = 0;
             entity->step++;
             RicCreateEntFactoryFromEntity(entity, FACTORY(0x400, 0), 0);
@@ -179,18 +179,18 @@ void RicEntityPlayerBlinkWhite(Entity* self) {
         if (dataPtr[7] >= 0x7000) {
             switch ((u32)dataPtr[7]) {
             case 0x7000:
-                if (g_Player.D_80072F00[0] == 0) {
+                if (g_Player.D_80072F00[PL_T_POISON] == 0) {
                     self->step++;
                 }
                 break;
             case 0x7001:
-                if (g_Player.D_80072F00[13] == 0) {
+                if (g_Player.D_80072F00[PL_T_INVINCIBLE] == 0) {
                     self->step++;
                 }
                 break;
             case 0x7007:
             case 0x7002:
-                if (PLAYER.step != Player_Hit) {
+                if (PLAYER.step != PL_S_HIT) {
                     self->step++;
                 }
                 break;
@@ -664,7 +664,7 @@ void EntityShrinkingPowerUpRing(Entity* self) {
 }
 
 // Entity ID #40. Created by blueprint 47. That factory comes from
-// RichterHandleDamage.
+// RicHandleHit.
 void RicEntityHitByIce(Entity* self) {
     s32 i;
     Primitive* prim;

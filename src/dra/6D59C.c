@@ -528,7 +528,7 @@ u8 D_800ACF54[] = {
     0x04, 0x05, 0x0A, 0x0B, 0x0E, 0x0F, 0x1D, 0x1E, 0x04, 0x03, 0x00, 0x00,
 };
 
-// Corresponding RIC function is func_8015CD98 (much simpler)
+// Corresponding RIC function is RicLandToTheGround (much simpler)
 void func_8010E570(s32 arg0) {
     s32 anim;
     s32 atLedge;
@@ -1395,7 +1395,7 @@ bool func_8010FDF8(s32 branchFlags) {
                     return 1;
                 }
 
-                if (PLAYER.velocityY > 0x6E000) {
+                if (PLAYER.velocityY > FIX(6.875)) {
                     func_8010E470(1, 0);
                     func_80134714(SFX_STOMP_HARD_B);
                     CreateEntFactoryFromEntity(
@@ -1413,7 +1413,7 @@ bool func_8010FDF8(s32 branchFlags) {
                 return 1;
             }
 
-            if (PLAYER.velocityY > 0x6E000) {
+            if (PLAYER.velocityY > FIX(6.875)) {
                 if ((PLAYER.step_s == 112) || (PLAYER.step == 4)) {
                     func_8010E470(3, PLAYER.velocityX / 2);
                 } else {

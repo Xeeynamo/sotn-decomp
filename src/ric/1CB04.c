@@ -28,7 +28,7 @@ void func_80158B04(s32 arg0) {
     }
 }
 
-void func_80158BFC(void) {
+void RicHandleStand(void) {
     s32 var_s0;
 
     if (PLAYER.step < 64) {
@@ -54,34 +54,34 @@ void func_80158BFC(void) {
         RicDecelerateX(0x2000);
         switch (PLAYER.step_s) {
         case 0:
-            if (func_8015C9CC() == 0) {
+            if (RicCheckMovement() == 0) {
                 if (g_Player.padPressed & PAD_UP) {
-                    func_8015C920(&D_80155394);
+                    RicSetAnimation(D_80155394);
                     PLAYER.step_s = 1;
                     break;
                 }
             } else {
-                func_8015CDE0(0);
+                RicSetWalk(0);
             }
             break;
 
         case 1:
-            if (func_8015C9CC() != 0) {
-                func_8015CDE0(0);
+            if (RicCheckMovement() != 0) {
+                RicSetWalk(0);
                 break;
             } else if (g_Player.padPressed & PAD_UP) {
                 break;
             } else {
-                func_8015CD98(0);
+                RicSetStand(0);
                 break;
             }
 
         case 64:
             func_8015CB58(1, 1);
             if (PLAYER.animFrameIdx < 3) {
-                func_8015C9CC();
+                RicCheckMovement();
                 if (g_Player.padPressed & PAD_DOWN) {
-                    PLAYER.step = Player_RichterCrouch;
+                    PLAYER.step = PL_S_CROUCH;
                     PLAYER.unk4C = D_801555A8;
                     break;
                 }
@@ -91,13 +91,13 @@ void func_80158BFC(void) {
                 if (g_Player.padPressed & PAD_SQUARE) {
                     g_Player.unk46 = 2;
                     PLAYER.step_s++;
-                    func_8015C920(D_80155730);
+                    RicSetAnimation(D_80155730);
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0, 17), 0);
                     break;
                 }
                 g_Player.unk46 = 0;
-                func_8015CD98(0);
+                RicSetStand(0);
             }
             break;
 
@@ -107,27 +107,27 @@ void func_80158BFC(void) {
                 break;
             }
             g_Player.unk46 = 0;
-            func_8015CD98(0);
+            RicSetStand(0);
             break;
 
         case 66:
             func_8015CB58(1, 1);
             if (PLAYER.animFrameIdx < 3) {
-                func_8015C9CC();
+                RicCheckMovement();
             }
             if (PLAYER.animFrameDuration < 0) {
                 g_Player.unk46 = 0;
-                func_8015CD98(0);
+                RicSetStand(0);
             }
         }
     }
 }
 
-void func_80158F38(void) {
+void RicHandleWalk(void) {
     if (func_8015DBB0(0x305C) == 0) {
         RicDecelerateX(0x2000);
-        if (func_8015C9CC() == 0) {
-            func_8015CD98(0);
+        if (RicCheckMovement() == 0) {
+            RicSetStand(0);
             return;
         }
 
@@ -137,21 +137,21 @@ void func_80158F38(void) {
     }
 }
 
-void func_80158FA4(void) {
+void RicHandleRun(void) {
     if (g_Player.unk7A != 0) {
-        func_8015CDE0(0);
+        RicSetWalk(0);
         return;
     }
-    g_Player.D_80072F00[8] = 8;
-    g_Player.D_80072F00[1] = 8;
+    g_Player.D_80072F00[PL_T_8] = 8;
+    g_Player.D_80072F00[PL_T_CURSE] = 8;
 
     if (!func_8015DBB0(0x305C)) {
         RicDecelerateX(0x2000);
-        if (func_8015C9CC() == 0) {
-            func_8015CD98(0);
-            if (g_Player.D_80072F00[11] == 0) {
+        if (RicCheckMovement() == 0) {
+            RicSetStand(0);
+            if (g_Player.D_80072F00[PL_T_RUN] == 0) {
                 if (!(g_Player.pl_vram_flag & 0xC)) {
-                    func_8015C920(&D_8015539C);
+                    RicSetAnimation(D_8015539C);
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0, 0), 0);
                 }
@@ -164,8 +164,8 @@ void func_80158FA4(void) {
     }
 }
 
-void func_801590A0(void) {
-    if ((D_80154570 == 0) && (PLAYER.velocityY < FIX(-1)) &&
+void RicHandleJump(void) {
+    if (!g_IsPrologueStage && (PLAYER.velocityY < FIX(-1)) &&
         !(g_Player.unk44 & 0x40) && !(g_Player.padPressed & PAD_CROSS)) {
         PLAYER.velocityY = FIX(-1);
     }
@@ -182,7 +182,7 @@ void func_801590A0(void) {
         return;
     case 0:
         RicDecelerateX(0x1000);
-        if (func_8015C9CC()) {
+        if (RicCheckMovement()) {
             if (g_Player.unk44 & 0x10) {
                 RicSetSpeedX(FIX(2.25));
             } else {
@@ -194,10 +194,10 @@ void func_801590A0(void) {
             if ((PLAYER.animFrameIdx < 2) &&
                 ((LOW(g_Player.unk44) & 0xC) == 4) &&
                 (g_Player.padTapped & PAD_CROSS)) {
-                func_8015C920(D_8015555C);
+                RicSetAnimation(D_8015555C);
                 RicSetSpeedX(FIX(-1.5));
                 PLAYER.velocityY = FIX(-2.625);
-                if (g_Player.unk72 != 0) {
+                if (g_Player.unk72) {
                     PLAYER.velocityY = 0;
                 }
                 PLAYER.step_s = 2;
@@ -209,7 +209,7 @@ void func_801590A0(void) {
     case 0x40:
         func_8015CB58(1, 1);
         if (PLAYER.animFrameIdx < 3) {
-            if (func_8015C9CC() != 0) {
+            if (RicCheckMovement() != 0) {
                 if (g_Player.unk44 & 0x10) {
                     RicSetSpeedX(FIX(2.25));
                 } else {
@@ -237,13 +237,13 @@ void func_801590A0(void) {
             if (g_Player.padPressed & PAD_SQUARE) {
                 g_Player.unk46 = 2;
                 PLAYER.step_s += 1;
-                func_8015C920(D_80155740);
+                RicSetAnimation(D_80155740);
                 RicCreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(0, 17), 0);
             } else {
                 g_Player.unk46 = 0;
                 PLAYER.step_s = 0;
-                func_8015C920(D_80155528);
+                RicSetAnimation(D_80155528);
             }
         }
         return;
@@ -252,13 +252,13 @@ void func_801590A0(void) {
         if (!(g_Player.padPressed & PAD_SQUARE)) {
             g_Player.unk46 = 0;
             PLAYER.step_s = 0;
-            func_8015C920(D_80155528);
+            RicSetAnimation(D_80155528);
         }
         return;
     case 0x42:
         func_8015CB58(1, 1);
         if (PLAYER.animFrameIdx < 3) {
-            if (func_8015C9CC() != 0) {
+            if (RicCheckMovement() != 0) {
                 if (g_Player.unk44 & 0x10) {
                     RicSetSpeedX(FIX(2.25));
                 } else {
@@ -285,12 +285,12 @@ void func_801590A0(void) {
         if (PLAYER.animFrameDuration < 0) {
             g_Player.unk46 = 0;
             PLAYER.step_s = 0;
-            func_8015C920(D_80155528);
+            RicSetAnimation(D_80155528);
         }
     }
 }
 
-void func_801595D8(void) {
+void RicHandleFall(void) {
     if (func_8015DBB0(0x9009)) {
         return;
     }
@@ -298,14 +298,14 @@ void func_801595D8(void) {
     if (PLAYER.step_s != 0) {
         return;
     }
-    if (g_Player.D_80072F00[5] != 0 && g_Player.padTapped & PAD_CROSS) {
-        func_8015D020();
-    } else if (func_8015C9CC() != 0) {
+    if (g_Player.D_80072F00[PL_T_5] != 0 && g_Player.padTapped & PAD_CROSS) {
+        RicSetJump();
+    } else if (RicCheckMovement() != 0) {
         RicSetSpeedX(0xC000);
     }
 }
 
-void func_80159670(void) {
+void RicHandleCrouch(void) {
     s32 i;
     s16 xShift;
 
@@ -313,7 +313,7 @@ void func_80159670(void) {
         (g_Player.padPressed & PAD_DOWN)) {
         for (i = 0; i < 4; i++) {
             if (g_Player.colliders[i].effects & EFFECT_SOLID_FROM_ABOVE) {
-                g_Player.D_80072F00[7] = 8;
+                g_Player.D_80072F00[PL_T_7] = 8;
                 return;
             }
         }
@@ -322,10 +322,10 @@ void func_80159670(void) {
         return;
     }
     if ((g_Player.padTapped & PAD_CROSS) && (g_Player.unk46 == 0) &&
-        (g_Player.unk72 == 0)) {
-        func_8015D020(1);
+        (!g_Player.unk72)) {
+        RicSetJump(1);
         return;
-    } else if ((g_Player.unk72 == 0) && (g_Player.unk46 == 0) &&
+    } else if ((!g_Player.unk72) && (g_Player.unk46 == 0) &&
                (g_Player.padTapped & PAD_TRIANGLE) && func_8015D678()) {
         return;
     }
@@ -349,47 +349,47 @@ void func_80159670(void) {
             PLAYER.posX.i.hi -= xShift;
         }
         if (!(g_Player.padPressed & PAD_DOWN) &&
-            ((g_Player.unk72 == 0) || !(g_Player.pl_vram_flag & 0x40))) {
-            func_8015C920(D_801554E0);
+            ((!g_Player.unk72) || !(g_Player.pl_vram_flag & 0x40))) {
+            RicSetAnimation(D_801554E0);
             PLAYER.step_s = 2;
             return;
         }
         break;
     case 0x1:
         if (!(g_Player.padPressed & PAD_DOWN) &&
-            ((g_Player.unk72 == 0) || !(g_Player.pl_vram_flag & 0x40))) {
-            if (func_8015C9CC() == 0) {
+            ((!g_Player.unk72) || !(g_Player.pl_vram_flag & 0x40))) {
+            if (RicCheckMovement() == 0) {
                 PLAYER.unk4C = D_801554E0;
                 PLAYER.step_s = 2;
                 PLAYER.animFrameDuration = 1;
                 PLAYER.animFrameIdx = 2 - PLAYER.animFrameIdx;
                 return;
             }
-            func_8015CDE0(0);
+            RicSetWalk(0);
             return;
         }
     case 0x4:
         if (PLAYER.animFrameDuration != -1) {
             return;
         }
-        func_8015C920(D_801554C0);
+        RicSetAnimation(anim_crouch);
         PLAYER.step_s = 0;
         return;
     case 0x2:
-        if ((g_Player.unk72 == 0) || !(g_Player.pl_vram_flag & 0x40)) {
-            if (func_8015C9CC() != 0) {
-                func_8015CDE0(0);
+        if ((!g_Player.unk72) || !(g_Player.pl_vram_flag & 0x40)) {
+            if (RicCheckMovement() != 0) {
+                RicSetWalk(0);
                 return;
             }
             if (PLAYER.animFrameDuration == -1) {
-                func_8015CD98(0);
+                RicSetStand(0);
                 return;
             }
         }
         break;
     case 0x3:
         if (PLAYER.animFrameDuration < 0) {
-            func_8015C920(D_801554C0);
+            RicSetAnimation(anim_crouch);
             PLAYER.step_s = 0;
             return;
         }
@@ -397,8 +397,8 @@ void func_80159670(void) {
     case 0x40:
         func_8015CB58(1, 1);
         if (PLAYER.animFrameIdx < 3) {
-            func_8015C9CC();
-            if (!(g_Player.padPressed & PAD_DOWN) && (g_Player.unk72 == 0)) {
+            RicCheckMovement();
+            if (!(g_Player.padPressed & PAD_DOWN) && (!g_Player.unk72)) {
                 PLAYER.step = 0;
                 PLAYER.unk4C = D_80155588;
                 return;
@@ -408,14 +408,14 @@ void func_80159670(void) {
             if (g_Player.padPressed & PAD_SQUARE) {
                 g_Player.unk46 = 2;
                 PLAYER.step_s++;
-                func_8015C920(D_80155738);
+                RicSetAnimation(D_80155738);
                 RicCreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(0, 17), 0);
                 return;
             }
             g_Player.unk46 = 0;
             PLAYER.step_s = 0;
-            func_8015C920(D_801554C0);
+            RicSetAnimation(anim_crouch);
         }
         break;
     case 0x41:
@@ -423,7 +423,7 @@ void func_80159670(void) {
         if (!(g_Player.padPressed & PAD_SQUARE)) {
             g_Player.unk46 = 0;
             PLAYER.step_s = 0;
-            func_8015C920(D_801554C0);
+            RicSetAnimation(anim_crouch);
         }
         break;
     }
@@ -476,9 +476,9 @@ void func_80159C04(void) {
     }
 }
 
-void func_8015A9B0(s32 damageEffects, s32 arg1, s32 arg2, s32 arg3);
+void RicHandleDead(s32 damageEffects, s32 arg1, s32 arg2, s32 arg3);
 
-void RichterHandleDamage(s32 arg0, u32 arg1, s16 arg2) {
+void RicHandleHit(s32 arg0, u32 arg1, s16 arg2) {
     DamageParam damage;
     s32 xShift;
     s32 i;
@@ -506,7 +506,7 @@ void RichterHandleDamage(s32 arg0, u32 arg1, s16 arg2) {
             RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 48), 0);
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(0x4600, 33), 0);
-            g_Player.D_80072F00[2] = 6;
+            g_Player.D_80072F00[PL_T_2] = 6;
             g_api.PlaySfx(0x703);
             break;
         } else {
@@ -540,7 +540,7 @@ void RichterHandleDamage(s32 arg0, u32 arg1, s16 arg2) {
                     PLAYER.velocityY = FIX(-3);
                     func_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 1;
-                    PLAYER.unk4C = D_80155694;
+                    PLAYER.unk4C = ric_anim_stun;
                     g_api.PlaySfx(0x702);
                     break;
                 }
@@ -552,8 +552,8 @@ void RichterHandleDamage(s32 arg0, u32 arg1, s16 arg2) {
                 PLAYER.posY.val -= 1;
                 func_8015CAAC(FIX(-8));
                 PLAYER.step_s = 2;
-                PLAYER.unk4C = D_80155694;
-                g_Player.D_80072F00[2] = 0x200;
+                PLAYER.unk4C = ric_anim_stun;
+                g_Player.D_80072F00[PL_T_2] = 0x200;
                 PLAYER.facingLeft = PLAYER.entityRoomIndex;
                 break;
             default:
@@ -576,7 +576,7 @@ void RichterHandleDamage(s32 arg0, u32 arg1, s16 arg2) {
                     PLAYER.velocityY = FIX(-4);
                     func_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 1;
-                    PLAYER.unk4C = D_80155694;
+                    PLAYER.unk4C = ric_anim_stun;
                     g_api.PlaySfx(0x702);
                     break;
                 case 2:
@@ -593,14 +593,14 @@ void RichterHandleDamage(s32 arg0, u32 arg1, s16 arg2) {
                     PLAYER.velocityY = FIX(-3);
                     func_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 1;
-                    PLAYER.unk4C = D_80155694;
+                    PLAYER.unk4C = ric_anim_stun;
                     g_api.PlaySfx(0x702);
                     break;
                 }
                 break;
             }
             g_Player.unk40 = 0x8166;
-            g_Player.D_80072F00[2] = 6;
+            g_Player.D_80072F00[PL_T_2] = 6;
             if (arg0 & 0x8000) {
                 RicCreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(0x100, 8), 0);
@@ -609,7 +609,7 @@ void RichterHandleDamage(s32 arg0, u32 arg1, s16 arg2) {
                 RicCreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(0x4300, 33), 0);
                 g_Player.unk40 = 0x8160;
-                g_Player.D_80072F00[2] = 0x10;
+                g_Player.D_80072F00[PL_T_2] = 0x10;
                 break;
             } else if (arg0 & 0x40) {
                 RicCreateEntFactoryFromEntity(
@@ -617,13 +617,13 @@ void RichterHandleDamage(s32 arg0, u32 arg1, s16 arg2) {
                 RicCreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(0x4400, 33), 0);
                 g_Player.unk40 = 0x8166;
-                g_Player.D_80072F00[2] = 0x10;
+                g_Player.D_80072F00[PL_T_2] = 0x10;
                 break;
             } else if (arg0 & 0x2000) {
                 // Creates EntityHitByIce
                 RicCreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(0, 47), 0);
-                g_Player.D_80072F00[2] = 0xC;
+                g_Player.D_80072F00[PL_T_2] = 0xC;
                 g_Player.unk40 = 0x8169;
                 break;
             } else {
@@ -632,7 +632,7 @@ void RichterHandleDamage(s32 arg0, u32 arg1, s16 arg2) {
                         g_CurrentEntity, FACTORY(0, 70), 0);
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0x5600, 33), 0);
-                    g_Player.D_80072F00[2] = 0x10;
+                    g_Player.D_80072F00[PL_T_2] = 0x10;
                     g_Player.unk40 = 0x8164;
                 }
                 if (arg0 & 0x1000) {
@@ -640,7 +640,7 @@ void RichterHandleDamage(s32 arg0, u32 arg1, s16 arg2) {
                         g_CurrentEntity, FACTORY(0, 71), 0);
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0x5700, 33), 0);
-                    g_Player.D_80072F00[2] = 8;
+                    g_Player.D_80072F00[PL_T_2] = 8;
                     g_Player.unk40 = 0x8168;
                 }
                 if (!(arg0 & 0xF840)) {
@@ -679,8 +679,8 @@ void RichterHandleDamage(s32 arg0, u32 arg1, s16 arg2) {
             damage.damageKind = 1;
             damage.damageTaken = g_Player.damageTaken;
             if (g_api.func_800FD5BC(&damage) != 0) {
-                RicSetPlayerStep(Player_Kill);
-                func_8015A9B0(0, 2, 10, 2);
+                RicSetStep(PL_S_DEAD);
+                RicHandleDead(0, 2, 10, 2);
                 return;
             }
             break;
@@ -720,8 +720,8 @@ void RichterHandleDamage(s32 arg0, u32 arg1, s16 arg2) {
                     damage.damageKind = 1;
                     damage.damageTaken = g_Player.damageTaken;
                     if (g_api.func_800FD5BC(&damage) != 0) {
-                        RicSetPlayerStep(Player_Kill);
-                        func_8015A9B0(0, 2, 10, 2);
+                        RicSetStep(PL_S_DEAD);
+                        RicHandleDead(0, 2, 10, 2);
                         return;
                     }
                     break;
@@ -739,8 +739,8 @@ void RichterHandleDamage(s32 arg0, u32 arg1, s16 arg2) {
         damage.damageKind = 1;
         damage.damageTaken = g_Player.damageTaken;
         if (g_api.func_800FD5BC(&damage) != 0) {
-            RicSetPlayerStep(Player_Kill);
-            func_8015A9B0(0, 2, 10, 2);
+            RicSetStep(PL_S_DEAD);
+            RicHandleDead(0, 2, 10, 2);
             return;
         }
         break;
@@ -783,7 +783,7 @@ void RichterHandleDamage(s32 arg0, u32 arg1, s16 arg2) {
         }
         if (PLAYER.animFrameDuration < 0) {
             if ((g_Player.unk5C == 0) || (g_Status.hp > 0)) {
-                func_8015CD98(PLAYER.velocityX);
+                RicSetStand(PLAYER.velocityX);
                 break;
             }
             func_8015D9B4();
@@ -800,23 +800,23 @@ void RichterHandleDamage(s32 arg0, u32 arg1, s16 arg2) {
                 func_8015D9B4();
                 return;
             }
-            func_8015CCC8(0, PLAYER.velocityX);
+            RicSetCrouch(0, PLAYER.velocityX);
         }
         break;
     }
-    if (step_s_zero && (g_Player.unk72 != 0)) {
+    if (step_s_zero && (g_Player.unk72)) {
         PLAYER.velocityY = 0;
     }
 }
 
-void func_8015A7D0(void) {
+void RicHandleBossGrab(void) {
     DamageParam damage;
     switch (g_CurrentEntity->step_s) {
     case 0:
         func_80159BC8();
         if (g_Player.unk62 == 0) {
-            PLAYER.unk4C = D_80155694;
-            g_Player.D_80072F00[2] = 8;
+            PLAYER.unk4C = ric_anim_stun;
+            g_Player.D_80072F00[PL_T_2] = 8;
             g_Player.unk40 = 0x8166;
             g_api.PlaySfx(0x702);
         }
@@ -831,24 +831,24 @@ void func_8015A7D0(void) {
             damage.damageKind = 1;
             damage.damageTaken = g_Player.damageTaken;
             if (g_api.func_800FD5BC(&damage)) {
-                RicSetPlayerStep(Player_Kill);
-                func_8015A9B0(0, 2, 12, 1);
+                RicSetStep(PL_S_DEAD);
+                RicHandleDead(0, 2, 12, 1);
                 return;
             }
             if (g_Player.unk62 == 0) {
-                g_Player.D_80072F00[2] = 4;
+                g_Player.D_80072F00[PL_T_2] = 4;
                 g_Player.unk40 = 0x8166;
                 g_api.PlaySfx(0x703);
             }
             g_Player.unk60 = 2;
-        } else if (g_Player.unk60 == 4) { /* switch 1 */
-            PLAYER.step = Player_Hit;
+        } else if (g_Player.unk60 == 4) {
+            PLAYER.step = PL_S_HIT;
             PLAYER.step_s = 2;
             g_Player.unk60 = 0;
             g_Player.damageTaken = g_Player.unk64;
             g_api.PlaySfx(0x704);
-        } else if (g_Player.unk60 == 0) { /* switch 1 */
-            PLAYER.step = Player_Hit;
+        } else if (g_Player.unk60 == 0) {
+            PLAYER.step = PL_S_HIT;
             PLAYER.step_s = 1;
         }
     }
@@ -856,7 +856,7 @@ void func_8015A7D0(void) {
 
 // Compare to DRA func_80115394
 // Only damageEffects is used, but the callers give 4 args.
-void func_8015A9B0(s32 damageEffects, s32 arg1, s32 arg2, s32 arg3) {
+void RicHandleDead(s32 damageEffects, s32 arg1, s32 arg2, s32 arg3) {
     s32 j;
     s32 i;
     u8* s2;
@@ -869,7 +869,7 @@ void func_8015A9B0(s32 damageEffects, s32 arg1, s32 arg2, s32 arg3) {
         func_80159BC8();
         func_80159C04();
         func_8015CAAC(FIX(-0.75));
-        func_8015C920(D_80155544);
+        RicSetAnimation(D_80155544);
         PLAYER.velocityY = FIX(-1.625);
         g_api.PlaySfx(SFX_UNK_6FF);
         if (damageEffects & ELEMENT_FIRE) {
@@ -1009,7 +1009,7 @@ void func_8015A9B0(s32 damageEffects, s32 arg1, s32 arg2, s32 arg3) {
     }
 }
 
-void func_8015AFE0(void) {
+void RicHandleStandInAir(void) {
     if (PLAYER.step_s == 0) {
         PLAYER.velocityY += 0x3800;
         if (PLAYER.velocityY > 0) {
@@ -1018,39 +1018,39 @@ void func_8015AFE0(void) {
         }
     } else if (g_Player.unk4E != 0) {
         g_Player.unk46 = 0;
-        RicSetPlayerStep(4);
-        func_8015C920(&D_80155528);
+        RicSetStep(PL_S_JUMP);
+        RicSetAnimation(D_80155528);
         g_Player.unk44 = 0;
     }
-    if (g_Player.unk72 != 0) {
+    if (g_Player.unk72) {
         PLAYER.velocityY = 0;
     }
 }
 
-void func_8015B098(void) {
+void RicHandleEnableFlameWhip(void) {
     if ((PLAYER.animCurFrame == 0xB5) && (PLAYER.animFrameDuration == 1)) {
         RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 35), 0);
         g_api.PlaySfx(SFX_WEAPON_APPEAR);
     }
 
     if (PLAYER.animFrameDuration < 0) {
-        func_8015CD98(0);
+        RicSetStand(0);
         g_Player.unk46 = 0;
         RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4500, 33), 0);
-        g_Player.D_80072F00[0] = 0x800;
+        g_Player.D_80072F00[PL_T_POISON] = 0x800;
     }
 
     if (!(g_Player.pl_vram_flag & 1)) {
         func_8015CF08();
         g_Player.unk46 = 0;
         RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x4500, 33), 0);
-        g_Player.D_80072F00[0] = 0x800;
+        g_Player.D_80072F00[PL_T_POISON] = 0x800;
     }
 }
 
-void func_8015B18C(void) {
+void RicHandleHydrostorm(void) {
     if (PLAYER.animFrameDuration < 0) {
-        func_8015CD98(0);
+        RicSetStand(0);
         g_Player.unk46 = 0;
     }
 
@@ -1060,9 +1060,9 @@ void func_8015B18C(void) {
     }
 }
 
-void func_8015B1E8(void) {
+void RicHandleGenericSubwpnCrash(void) {
     if (g_Player.unk4E) {
-        func_8015CD98(0);
+        RicSetStand(0);
         g_Player.unk46 = 0;
     }
 
@@ -1072,21 +1072,21 @@ void func_8015B1E8(void) {
     }
 }
 
-void func_8015B244(void) {
+void RicHandleThrowDaggers(void) {
     if (PLAYER.step_s == 0) {
         D_80174F74 = 0x200;
         PLAYER.step_s++;
     } else {
-        func_8015C9CC();
+        RicCheckMovement();
         D_80174F74--;
         if (D_80174F74 == 0) {
             g_Player.unk46 = 0;
-            func_8015CD98(0);
+            RicSetStand(0);
             g_Player.unk4E = 1;
         }
     }
     if (g_Player.padTapped & PAD_CROSS) {
-        func_8015D020();
+        RicSetJump();
         g_Player.unk46 = 0;
         g_Player.unk4E = 1;
         D_80174F74 = 0;
@@ -1108,8 +1108,8 @@ void func_8015B348(void) {
         RicDecelerateX(0x2000);
 
         if (PLAYER.velocityX == 0) {
-            func_8015C920(&D_80155748);
-            g_Player.D_80072F00[13] = 4;
+            RicSetAnimation(D_80155748);
+            g_Player.D_80072F00[PL_T_INVINCIBLE] = 4;
             RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 29), 0);
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(0x900, 33), 0);
@@ -1141,7 +1141,7 @@ void func_8015B348(void) {
         // Cross subweapon crash.
         D_801545A8--;
         if ((D_801545A8) == 0) {
-            func_8015C920(&D_801558B4);
+            RicSetAnimation(D_801558B4);
             PLAYER.palette = 0x814E;
             g_CurrentEntity->velocityY = FIX(-1);
             RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 22), 0);
@@ -1165,7 +1165,7 @@ void func_8015B348(void) {
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(0x400, 39), 0);
             PLAYER.palette = 0x813D;
-            g_Player.D_80072F00[13] = 0;
+            g_Player.D_80072F00[PL_T_INVINCIBLE] = 0;
             PLAYER.step_s++;
         }
 
@@ -1204,7 +1204,7 @@ void func_8015B348(void) {
         }
         D_801545A8--;
         if (D_801545A8 == 0) {
-            func_8015C920(&D_801558D4);
+            RicSetAnimation(D_801558D4);
             g_api.PlaySfx(SFX_WEAPON_APPEAR);
             RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 27), 0);
             PLAYER.step_s++;
@@ -1218,7 +1218,7 @@ void func_8015B348(void) {
 
     case 6:
         if (PLAYER.animFrameDuration < 0) {
-            func_8015C920(&D_801558DC);
+            RicSetAnimation(D_801558DC);
             PLAYER.step_s++;
         }
         break;
@@ -1228,8 +1228,8 @@ void func_8015B348(void) {
             g_CurrentEntity->flags &= ~FLAG_UNK_10000;
             g_unkGraphicsStruct.unk20 = 0;
             func_8015CF08();
-            func_8015C920(&D_801558DC);
-            g_Player.D_80072F00[13] = 4;
+            RicSetAnimation(D_801558DC);
+            g_Player.D_80072F00[PL_T_INVINCIBLE] = 4;
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(0x900, 33), 0);
         }
@@ -1271,7 +1271,7 @@ void func_8015B898(void) {
         if (func_8015DBB0(0x44)) {
             return;
         }
-        if ((g_Player.unk72 == 0) && (g_Player.padTapped & PAD_CROSS)) {
+        if ((!g_Player.unk72) && (g_Player.padTapped & PAD_CROSS)) {
             PLAYER.posY.i.hi -= 4;
             func_8015DA60();
             return;
@@ -1295,7 +1295,7 @@ void func_8015B898(void) {
             RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
         }
         if (PLAYER.animFrameDuration < 0) {
-            func_8015CCC8(0, PLAYER.velocityX);
+            RicSetCrouch(0, PLAYER.velocityX);
         }
     }
 }

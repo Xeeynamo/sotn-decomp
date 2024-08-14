@@ -15,7 +15,7 @@ void func_8015BCD0(void) {
             PLAYER.animFrameDuration = 2;
         }
         if (PLAYER.animFrameDuration < 0) {
-            func_8015CD98(0);
+            RicSetStand(0);
         }
         break;
 
@@ -27,7 +27,7 @@ void func_8015BCD0(void) {
             PLAYER.animFrameDuration = 2;
         }
         if (PLAYER.animFrameDuration < 0) {
-            func_8015CD98(0);
+            RicSetStand(0);
         }
         break;
 
@@ -39,7 +39,7 @@ void func_8015BCD0(void) {
             PLAYER.animFrameDuration = 2;
         }
         if (PLAYER.animFrameDuration < 0) {
-            func_8015CD98(0);
+            RicSetStand(0);
         }
         break;
 
@@ -47,10 +47,10 @@ void func_8015BCD0(void) {
     case 3:
     case 5:
         if (PLAYER.animFrameDuration < 0) {
-            func_8015CD98(0);
+            RicSetStand(0);
         }
         if (g_Player.unk1C != 0) {
-            func_8015CD98(0);
+            RicSetStand(0);
         }
     }
 }
@@ -60,10 +60,10 @@ void PlayerStepSlideKick(void) {
     // (as detected in g_Player.unk44), we will bounce back.
     if (g_Player.padPressed & PAD_SQUARE && g_Player.unk44 & 0x80) {
         PLAYER.step = Player_Jump;
-        func_8015C920(&D_8015555C);
+        RicSetAnimation(D_8015555C);
         RicSetSpeedX(FIX(-1.5));
         PLAYER.velocityY = 0;
-        if (g_Player.unk72 == 0) {
+        if (!g_Player.unk72) {
             PLAYER.velocityY = FIX(-4.5);
         }
         PLAYER.step_s = 2;
@@ -78,7 +78,7 @@ void PlayerStepSlideKick(void) {
         g_CurrentEntity->velocityX /= 2;
         RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
         PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
-        func_8015CCC8(3, PLAYER.velocityX);
+        RicSetCrouch(3, PLAYER.velocityX);
         g_api.PlaySfx(SFX_STOMP_SOFT_A);
         return;
     }
@@ -95,7 +95,7 @@ void PlayerStepSlideKick(void) {
             (g_Player.pl_vram_flag & 8)) {
             PLAYER.velocityX /= 2;
             PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
-            func_8015C920(&D_80155788);
+            RicSetAnimation(D_80155788);
             g_Player.unk44 = 0xA;
             PLAYER.step_s = 2;
             PLAYER.step = 4;
@@ -109,7 +109,7 @@ void PlayerStepSlideKick(void) {
         if ((PLAYER.velocityX <= 0x2FFFF) || (g_Player.pl_vram_flag & 4)) {
             PLAYER.velocityX /= 2;
             PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
-            func_8015C920(&D_80155788);
+            RicSetAnimation(D_80155788);
             g_Player.unk44 = 0xA;
             PLAYER.step_s = 2;
             PLAYER.step = 4;
@@ -117,12 +117,12 @@ void PlayerStepSlideKick(void) {
     }
 }
 
-void HandleBladeDash(void) {
+void RicHandleBladeDash(void) {
     RicDecelerateX(0x1C00);
 
     if (PLAYER.animFrameDuration < 0) {
         g_Player.unk46 = 0;
-        func_8015CD98(0);
+        RicSetStand(0);
     } else if (PLAYER.animFrameIdx >= 0x12 && !(g_Player.pl_vram_flag & 1)) {
         g_Player.unk46 = 0;
         func_8015CF08();

@@ -217,13 +217,13 @@ set(SOURCE_FILES_DRA
 )
 
 set(SOURCE_FILES_RIC
+    src/ric/pl_header.c
     src/ric/1AC60.c
     src/ric/1FCD0.c
     src/ric/20920.c
     src/ric/24788.c
     src/ric/2A060.c
     src/ric/319C4.c
-    src/ric/d_00000.c
     src/ric/d_188F4.c
     src/ric/d_194B0.c
     src/ric/d_19EE0.c

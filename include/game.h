@@ -673,6 +673,10 @@ typedef struct {
     /* 0x6 */ u16 repeat;
 } Pad; // size = 0x8
 
+#define FRAME(x, y) ((x) | ((y) << 8))
+#define A_LOOP_AT(frame) {0, frame}
+#define A_END {-1, 0}
+#define A_JUMP_AT(anim) {-2, anim}
 typedef struct {
     u16 duration;
     u16 unk2;
@@ -1496,7 +1500,7 @@ typedef struct {
 
 typedef struct {
     void (*D_8013C000)(void);
-    void (*D_8013C004)(void);
+    void (*D_8013C004)(u16 params);
     void (*D_8013C008)(void);
     void (*D_8013C00C)(void);
 } PlayerOvl;
