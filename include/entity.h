@@ -219,6 +219,17 @@ typedef struct {
 } ET_Weapon;
 
 typedef struct {
+    s32 unk7C;
+    s32 unk80;
+    s32 unk84;
+    s32 : 32;
+    s32 : 32;
+    s32 unk90;
+    s32 unk94;
+    s32 unk98;
+} ET_WeaponUnk046;
+
+typedef struct {
     s16 timer;
     s16 unk7E;
     s32 unk80;
@@ -1383,6 +1394,7 @@ typedef union { // offset=0x7C
     ET_StagePopupJP stpopupj;
     ET_MessageBox messageBox;
     ET_Weapon weapon;
+    ET_WeaponUnk046 weapon_046;
     ET_Shield shield;
     ET_DarkShield darkShield;
     ET_KarmaCoin karmacoin;
