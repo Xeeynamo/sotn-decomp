@@ -158,7 +158,7 @@ typedef struct {
     /* 0x80097420 */ s32 unk20;
     /* 0x80097424 */ s32 unk24;
 
-    // size must be 8 for the loop in func_800F298C, while
+    // size must be 8 for the loop in RunMainEngine, while
     // PreventEntityFromRespawning suggests it has a size of 32
     /* 0x80097428 */ s32 D_80097428[8];
 } unkGraphicsStruct;

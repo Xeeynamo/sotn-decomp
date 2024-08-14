@@ -140,7 +140,7 @@ u32 D_801D6AFC;
 u32 D_801D6B00;
 u32 D_801D6B04;
 u32 g_InputCursorPos;
-u32 D_801D6B0C;
+u32 g_MainMenuCursor;
 u32 g_MemcardBlockRead;
 u8 g_InputSaveName[12];
 u32 g_MemcardStep;

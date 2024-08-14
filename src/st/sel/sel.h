@@ -209,7 +209,7 @@ extern s32 D_801D104C[0x1680];
 extern StreamEnv g_StreamEnv;
 extern s32 D_801D6B04;
 extern s32 g_InputCursorPos;
-extern s32 D_801D6B0C;
+extern s32 g_MainMenuCursor;
 extern s32 g_MemcardBlockRead;
 extern char g_InputSaveName[12];
 extern s32 g_MemcardStep;

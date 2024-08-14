@@ -155,7 +155,7 @@ void func_801B2D6C(void);
 void func_801B3120(void);
 
 void SetupFileChoose(void) {
-    D_801D6B0C = 1;
+    g_MainMenuCursor = 1;
     g_InputCursorPos = 0;
     D_801BC3E0 = 0;
     D_801D6B04 = 0;
@@ -686,7 +686,7 @@ void func_801AD490(void) {
 
     for (i = 0; i < NUM_MENU_OPTIONS; i++) {
         Primitive* prim = &g_PrimBuf[D_801BAF18[i + 1][0]];
-        if (i == D_801D6B0C) {
+        if (i == g_MainMenuCursor) {
             prim->clut = 0x203;
         } else {
             prim->clut = 0x200;
@@ -701,17 +701,17 @@ const char* D_80180454[] = {
 void func_801AD590(void) {
     if (g_pads[0].tapped & (PAD_RIGHT + PAD_DOWN)) {
         g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
-        if (++D_801D6B0C == 5) {
-            D_801D6B0C = 1;
+        if (++g_MainMenuCursor == 5) {
+            g_MainMenuCursor = 1;
         }
     }
     if (g_pads[0].tapped & (PAD_LEFT + PAD_UP)) {
         g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
-        if (--D_801D6B0C == 0) {
-            D_801D6B0C = 4;
+        if (--g_MainMenuCursor == 0) {
+            g_MainMenuCursor = 4;
         }
     }
-    func_801B2608(D_80180454[D_801D6B0C], 9);
+    func_801B2608(D_80180454[g_MainMenuCursor], 9);
 }
 
 const char* D_80180468[] = {
@@ -1199,11 +1199,11 @@ void SEL_Update(void) {
     s32 icon;
 
     func_801B1F34();
-    switch (D_8003C9A4) {
+    switch (g_GameEngineState) {
     case 0:
         func_801B18F4();
         SetTitleDisplayBuffer256();
-        D_8003C9A4--;
+        g_GameEngineState--;
         break;
     case -1:
         g_api.PlaySfx(MU_PRAYER);
@@ -1223,39 +1223,39 @@ void SEL_Update(void) {
         func_801AECA0();
         func_801B1F4C(9);
         func_801AD490();
-        D_8003C9A4 += 2;
+        g_GameEngineState += 2;
         break;
     case 1:
         func_801AD590();
         func_801AD490();
         if (MainMenuFadeIn() != 0) {
-            D_8003C9A4++;
+            g_GameEngineState++;
         }
         break;
     case 2:
         func_801AD590();
         func_801AD490();
         if (g_pads[0].tapped & PAD_CROSS) {
-            switch (D_801D6B0C) {
+            switch (g_MainMenuCursor) {
             case 0:
                 g_api.PlaySfx(SFX_UI_CONFIRM);
-                D_8003C9A4 = 0x10;
+                g_GameEngineState = 0x10;
                 break;
             case 1:
                 g_api.PlaySfx(SFX_UI_CONFIRM);
-                D_8003C9A4 = 0x30;
+                g_GameEngineState = 0x30;
                 break;
             case 2:
                 g_api.PlaySfx(SFX_UI_CONFIRM);
-                D_8003C9A4 = 0x90;
+                g_GameEngineState = 0x90;
                 break;
             case 3:
                 g_api.PlaySfx(SFX_UI_CONFIRM);
-                D_8003C9A4 = 0x50;
+                g_GameEngineState = 0x50;
                 break;
             case 4:
                 g_api.PlaySfx(SFX_UI_CONFIRM);
-                D_8003C9A4 = 0x70;
+                g_GameEngineState = 0x70;
                 break;
             default:
                 g_api.PlaySfx(0x686);
@@ -1273,7 +1273,7 @@ void SEL_Update(void) {
     case 16:
         STRCPY(g_InputSaveName, "        ");
         func_801AEA8C(0);
-        D_8003C9A4++;
+        g_GameEngineState++;
         // fallthrough
     case 17:
         for (i = 0; i < 8; i++) {
@@ -1302,10 +1302,10 @@ void SEL_Update(void) {
                     D_80097924 = D_801D6B04 / 15;
                 }
                 g_api.PlaySfx(0x80);
-                D_8003C9A4++;
+                g_GameEngineState++;
             }
         } else {
-            D_8003C9A4 = 0x30;
+            g_GameEngineState = 0x30;
         }
         break;
     case 18:
@@ -1328,20 +1328,20 @@ void SEL_Update(void) {
         func_801B2608("Checking Memory Card．", 4);
         func_801B2608("Do not remove Memory Card．", 5);
         func_801B3120();
-        D_8003C9A4++;
+        g_GameEngineState++;
         // fallthrough
     case 49:
         func_801ADF94(0x80, 0);
         D_800978C4 = 0;
         if (func_801B3164()) {
             D_800978C4 = 1;
-            D_8003C9A4++;
+            g_GameEngineState++;
             CheckIfMemcardsCanBeUsed();
             if (g_SaveSummary[0].padding == -2 ||
                 g_SaveSummary[1].padding == -2) {
                 D_801BAFC8 = 0x30;
                 D_801BAFCC = 0x32;
-                D_8003C9A4 = 0x200;
+                g_GameEngineState = 0x200;
             }
         }
         break;
@@ -1362,13 +1362,13 @@ void SEL_Update(void) {
             func_801B2608("your game． Is that OK？", 5);
             func_801ADF94(0x83, 0);
             DrawNavigationTips(Tips_YesNo);
-            D_8003C9A4 = 0x40;
+            g_GameEngineState = 0x40;
         } else {
             DrawNavigationTips(Tips_Generic);
             func_801ADF94(1, 0);
             func_801B25D4("　", 4);
             func_801B25D4("　", 5);
-            D_8003C9A4++;
+            g_GameEngineState++;
         }
         break;
     case 64:
@@ -1377,10 +1377,10 @@ void SEL_Update(void) {
         if (g_pads[0].tapped & PAD_TRIANGLE) {
             func_801AE9A8();
             func_801AD490();
-            D_8003C9A4 = 2;
+            g_GameEngineState = 2;
         } else if (g_pads[0].tapped & PAD_CROSS) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
-            D_8003C9A4 = 0x10;
+            g_GameEngineState = 0x10;
         }
         break;
     case 65:
@@ -1391,17 +1391,17 @@ void SEL_Update(void) {
             DrawNavigationTips(Tips_Generic);
             func_801B2608("Select file to be loaded．", 4);
             func_801B2608("", 5);
-            D_8003C9A4 = 0x33;
+            g_GameEngineState = 0x33;
         } else if (g_pads[0].tapped & PAD_CROSS) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
-            D_8003C9A4 = 0x10;
+            g_GameEngineState = 0x10;
         }
         break;
     case 51:
         if (g_pads[0].tapped & PAD_TRIANGLE) {
             func_801AE9A8();
             func_801AD490();
-            D_8003C9A4 = 2;
+            g_GameEngineState = 2;
             break;
         }
 
@@ -1434,17 +1434,17 @@ void SEL_Update(void) {
             func_801B2608("your game． Is that OK？", 5);
             func_801ADF94(0x81, 0);
             DrawNavigationTips(Tips_YesNo);
-            D_8003C9A4 = 0x41;
+            g_GameEngineState = 0x41;
         } else if (g_pads[0].tapped & PAD_CROSS) {
             port = D_801D6B04 / 15;
             slot = D_801D6B04 % 15;
             icon = g_SaveSummary[port].icon[slot];
             if (icon >= 0) {
                 g_api.PlaySfx(SFX_UI_CONFIRM);
-                D_8003C9A4 = 0x100;
+                g_GameEngineState = 0x100;
             } else if (icon == -3) {
                 g_api.PlaySfx(SFX_UI_CONFIRM);
-                D_8003C9A4 = 0x10;
+                g_GameEngineState = 0x10;
             } else {
                 g_api.PlaySfx(0x686);
             }
@@ -1456,20 +1456,20 @@ void SEL_Update(void) {
         func_801B2608("Checking Memory Card．", 4);
         func_801B2608("Do not remove Memory Card．", 5);
         func_801B3120();
-        D_8003C9A4++;
+        g_GameEngineState++;
         // fallthrough
     case 145:
         func_801ADF94(0x80, 0);
         D_800978C4 = 0;
         if (func_801B3164()) {
             D_800978C4 = 1;
-            D_8003C9A4++;
+            g_GameEngineState++;
             CheckIfMemcardsCanBeUsed();
             if (g_SaveSummary[0].padding == -2 ||
                 g_SaveSummary[1].padding == -2) {
                 D_801BAFC8 = 0x90;
                 D_801BAFCC = 146;
-                D_8003C9A4 = 0x200;
+                g_GameEngineState = 0x200;
             }
         }
         break;
@@ -1487,13 +1487,13 @@ void SEL_Update(void) {
             func_801B2608("on this Memory Card．", 5);
             func_801ADF94(0x82, 0);
             DrawNavigationTips(Tips_Confirm);
-            D_8003C9A4 = 0xA0;
+            g_GameEngineState = 0xA0;
         } else {
             DrawNavigationTips(Tips_Generic);
             func_801ADF94(2, 0);
             func_801B2608("Select the file", 4);
             func_801B2608("you wish to rename．", 5);
-            D_8003C9A4++;
+            g_GameEngineState++;
         }
         break;
     case 160:
@@ -1503,14 +1503,14 @@ void SEL_Update(void) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801AE9A8();
             func_801AD490();
-            D_8003C9A4 = 2;
+            g_GameEngineState = 2;
         }
         break;
     case 147:
         if (g_pads[0].tapped & PAD_TRIANGLE) {
             func_801AE9A8();
             func_801AD490();
-            D_8003C9A4 = 2;
+            g_GameEngineState = 2;
         } else {
             UpdateFileSelect();
             func_801ADF94(2, 0);
@@ -1519,7 +1519,7 @@ void SEL_Update(void) {
                 slot = D_801D6B04 % 15;
                 if (g_SaveSummary[port].icon[slot] >= 0) {
                     g_api.PlaySfx(SFX_UI_CONFIRM);
-                    D_8003C9A4++;
+                    g_GameEngineState++;
                 } else {
                     g_api.PlaySfx(0x686);
                 }
@@ -1529,7 +1529,7 @@ void SEL_Update(void) {
     case 148:
         STRCPY(g_InputSaveName, "        ");
         func_801AEA8C(1);
-        D_8003C9A4++;
+        g_GameEngineState++;
         // fallthrough
     case 149:
         for (i = 0; i < 8; i++) {
@@ -1541,7 +1541,7 @@ void SEL_Update(void) {
             (g_pads[0].tapped & PAD_TRIANGLE && i == 8 &&
              g_InputCursorPos == 0)) {
             SelectMainMenuOption(MAIN_MENU_CURSOR_FILE_DELETE);
-            D_8003C9A4 = 146;
+            g_GameEngineState = 146;
         } else {
             UpdateNameEntry();
             func_801AD78C();
@@ -1554,13 +1554,13 @@ void SEL_Update(void) {
                     }
                 }
                 if (var_a0_2 == 8) {
-                    D_8003C9A4 = 146;
+                    g_GameEngineState = 146;
                 } else {
                     func_801ACBE4(GFX_UNK_15, 0);
                     func_801B2608("Changing Name．", 4);
                     func_801B2608("Do not remove Memory Card．", 5);
                     g_api.PlaySfx(SFX_UI_CONFIRM);
-                    D_8003C9A4++;
+                    g_GameEngineState++;
                 }
             }
         }
@@ -1569,7 +1569,7 @@ void SEL_Update(void) {
         func_801ACBE4(GFX_UNK_6, 8);
         func_801ADF94(0x82, 0);
         func_801B38B4(D_801D6B04, D_801D6B04);
-        D_8003C9A4++;
+        g_GameEngineState++;
         break;
     case 151:
         func_801ADF94(0x82, 0);
@@ -1582,19 +1582,19 @@ void SEL_Update(void) {
             func_801B1F4C(5);
             func_801B2608("Name changed．", 4);
             func_801ACBE4(GFX_UNK_15, 0);
-            D_8003C9A4 += 2;
+            g_GameEngineState += 2;
         }
         if (temp_v0 == -1) {
             func_801B1F4C(5);
             func_801B2608("Loading error．", 4);
             func_801ACBE4(GFX_UNK_15, 0);
-            D_8003C9A4++;
+            g_GameEngineState++;
         }
         if (temp_v0 == -3) {
             func_801B1F4C(5);
             func_801B2608("Save error．", 4);
             func_801ACBE4(GFX_UNK_15, 0);
-            D_8003C9A4++;
+            g_GameEngineState++;
         }
         break;
     case 152:
@@ -1603,7 +1603,7 @@ void SEL_Update(void) {
         if (g_pads[0].tapped & PAD_CROSS) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_15, 8);
-            D_8003C9A4 = 0x90;
+            g_GameEngineState = 0x90;
         }
         break;
     case 153:
@@ -1611,7 +1611,7 @@ void SEL_Update(void) {
         func_801ADF94(0x82, 0);
         if (g_pads[0].tapped & PAD_CROSS) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
-            D_8003C9A4 = 146;
+            g_GameEngineState = 146;
         }
         break;
     case 80:
@@ -1619,20 +1619,20 @@ void SEL_Update(void) {
         func_801B2608("Checking Memory Card．", 4);
         func_801B2608("Do not remove Memory Card．", 5);
         func_801B3120();
-        D_8003C9A4++;
+        g_GameEngineState++;
         // fallthrough
     case 81:
         func_801ADF94(0x80, 0);
         D_800978C4 = 0;
         if (func_801B3164()) {
             D_800978C4 = 1;
-            D_8003C9A4++;
+            g_GameEngineState++;
             CheckIfMemcardsCanBeUsed();
             if (g_SaveSummary[0].padding == -2 ||
                 g_SaveSummary[1].padding == -2) {
                 D_801BAFC8 = 0x50;
                 D_801BAFCC = 0x52;
-                D_8003C9A4 = 0x200;
+                g_GameEngineState = 0x200;
             }
         }
         break;
@@ -1649,13 +1649,13 @@ void SEL_Update(void) {
             func_801B2608("on this Memory Card．", 5);
             func_801ADF94(0x82, 0);
             DrawNavigationTips(Tips_Confirm);
-            D_8003C9A4 = 0x60;
+            g_GameEngineState = 0x60;
         } else {
             DrawNavigationTips(Tips_Generic);
             func_801ADF94(2, 0);
             func_801B2608("Select file", 4);
             func_801B2608("to be copied．", 5);
-            D_8003C9A4++;
+            g_GameEngineState++;
         }
         break;
     case 96:
@@ -1665,14 +1665,14 @@ void SEL_Update(void) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801AE9A8();
             func_801AD490();
-            D_8003C9A4 = 2;
+            g_GameEngineState = 2;
         }
         break;
     case 83:
         if (g_pads[0].tapped & PAD_TRIANGLE) {
             func_801AE9A8();
             func_801AD490();
-            D_8003C9A4 = 2;
+            g_GameEngineState = 2;
         } else {
             UpdateFileSelect();
             func_801ADF94(2, 0);
@@ -1684,7 +1684,7 @@ void SEL_Update(void) {
                     func_801B2608("to copy to？", 5);
                     D_801BC3EC = D_801D6B04;
                     g_api.PlaySfx(SFX_UI_CONFIRM);
-                    D_8003C9A4++;
+                    g_GameEngineState++;
                 } else {
                     g_api.PlaySfx(0x686);
                 }
@@ -1701,7 +1701,7 @@ void SEL_Update(void) {
             func_801ACBE4(GFX_UNK_20, 8);
             func_801B2608("Select file", 4);
             func_801B2608("to be copied．", 5);
-            D_8003C9A4--;
+            g_GameEngineState--;
         } else {
             if (g_pads[0].tapped & PAD_CROSS) {
                 port = D_801D6B04 / 15;
@@ -1712,12 +1712,12 @@ void SEL_Update(void) {
                         func_801B1F4C(5);
                         func_801B2608("OK to overwrite data？", 4);
                         g_api.PlaySfx(SFX_UI_CONFIRM);
-                        D_8003C9A4 = 0x59;
+                        g_GameEngineState = 0x59;
                     } else if (icon != -2) {
                         func_801B2608("Copying data．", 4);
                         func_801B2608("Do not remove Memory Card．", 5);
                         g_api.PlaySfx(SFX_UI_CONFIRM);
-                        D_8003C9A4++;
+                        g_GameEngineState++;
                     }
                 } else {
                     g_api.PlaySfx(0x686);
@@ -1730,7 +1730,7 @@ void SEL_Update(void) {
         func_801ADF94(0x82, 1);
         func_801AE6D0();
         func_801B38B4(D_801BC3EC, D_801D6B04);
-        D_8003C9A4++;
+        g_GameEngineState++;
         break;
     case 86:
         func_801ADF94(0x82, 1);
@@ -1744,19 +1744,19 @@ void SEL_Update(void) {
             func_801B1F4C(5);
             func_801B2608("File copied．", 4);
             func_801ACBE4(GFX_UNK_15, 0);
-            D_8003C9A4 += 2;
+            g_GameEngineState += 2;
         }
         if (temp_v0 == -1) {
             func_801B1F4C(5);
             func_801B2608("Loading error．", 4);
             func_801ACBE4(GFX_UNK_15, 0);
-            D_8003C9A4++;
+            g_GameEngineState++;
         }
         if (temp_v0 == -3) {
             func_801B1F4C(5);
             func_801B2608("Save error．", 4);
             func_801ACBE4(GFX_UNK_15, 0);
-            D_8003C9A4++;
+            g_GameEngineState++;
         }
         break;
     case 87:
@@ -1766,7 +1766,7 @@ void SEL_Update(void) {
         if (g_pads[0].tapped & PAD_CROSS) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_15, 8);
-            D_8003C9A4 = 0x50;
+            g_GameEngineState = 0x50;
         }
         break;
     case 88:
@@ -1778,7 +1778,7 @@ void SEL_Update(void) {
             func_801ACBE4(GFX_UNK_18, 8);
             func_801ACBE4(GFX_UNK_19, 8);
             func_801ACBE4(GFX_UNK_20, 8);
-            D_8003C9A4 = 0x52;
+            g_GameEngineState = 0x52;
         }
         break;
     case 89:
@@ -1789,13 +1789,13 @@ void SEL_Update(void) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801B2608("Copying data．", 4);
             func_801B2608("Do not remove Memory Card．", 5);
-            D_8003C9A4 = 0x55;
+            g_GameEngineState = 0x55;
         } else {
             if (g_pads[0].tapped & PAD_TRIANGLE) {
                 func_801B1F4C(5);
                 func_801B25D4("どこにコピーしますか？", 4);
                 DrawNavigationTips(Tips_Generic);
-                D_8003C9A4 = 0x54;
+                g_GameEngineState = 0x54;
             }
             func_801AD1D0();
         }
@@ -1805,20 +1805,20 @@ void SEL_Update(void) {
         func_801B2608("Checking Memory Card．", 4);
         func_801B2608("Do not remove Memory Card．", 5);
         func_801B3120();
-        D_8003C9A4++;
+        g_GameEngineState++;
         // fallthrough
     case 113:
         func_801ADF94(0x80, 0);
         D_800978C4 = 0;
         if (func_801B3164()) {
             D_800978C4 = 1;
-            D_8003C9A4++;
+            g_GameEngineState++;
             CheckIfMemcardsCanBeUsed();
             if (g_SaveSummary[0].padding == -2 ||
                 g_SaveSummary[1].padding == -2) {
                 D_801BAFC8 = 0x70;
                 D_801BAFCC = 0x72;
-                D_8003C9A4 = 0x200;
+                g_GameEngineState = 0x200;
             }
         }
         break;
@@ -1835,13 +1835,13 @@ void SEL_Update(void) {
             func_801B2608("on this Memory Card．", 5);
             func_801ADF94(0x82, 0);
             DrawNavigationTips(Tips_Confirm);
-            D_8003C9A4 = 0x80;
+            g_GameEngineState = 0x80;
         } else {
             DrawNavigationTips(Tips_Generic);
             func_801ADF94(2, 0);
             func_801B2608("Select file", 4);
             func_801B2608("to be erased．", 5);
-            D_8003C9A4++;
+            g_GameEngineState++;
         }
         break;
     case 128:
@@ -1851,14 +1851,14 @@ void SEL_Update(void) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801AE9A8();
             func_801AD490();
-            D_8003C9A4 = 2;
+            g_GameEngineState = 2;
         }
         break;
     case 115:
         if (g_pads[0].tapped & PAD_TRIANGLE) {
             func_801AE9A8();
             func_801AD490();
-            D_8003C9A4 = 2;
+            g_GameEngineState = 2;
         } else {
             UpdateFileSelect();
             func_801ADF94(2, 0);
@@ -1870,7 +1870,7 @@ void SEL_Update(void) {
                     func_801B1F4C(5);
                     func_801B2608("Is it OK to erase file？", 4);
                     g_api.PlaySfx(SFX_UI_CONFIRM);
-                    D_8003C9A4++;
+                    g_GameEngineState++;
                 } else {
                     g_api.PlaySfx(0x686);
                 }
@@ -1883,18 +1883,18 @@ void SEL_Update(void) {
         if (g_pads[0].tapped & PAD_TRIANGLE) {
             func_801B2608("Select file", 4);
             func_801B2608("to be erased．", 5);
-            D_8003C9A4--;
+            g_GameEngineState--;
         } else if (g_pads[0].tapped & PAD_CROSS) {
             func_801ACBE4(GFX_UNK_15, 8);
             g_api.PlaySfx(SFX_UI_CONFIRM);
-            D_8003C9A4++;
+            g_GameEngineState++;
         }
         break;
     case 117:
         func_801ACBE4(GFX_UNK_6, 8);
         func_801ADF94(0x82, 0);
         func_801B3E14(D_801D6B04);
-        D_8003C9A4++;
+        g_GameEngineState++;
         break;
     case 118:
         func_801ADF94(0x82, 0);
@@ -1907,13 +1907,13 @@ void SEL_Update(void) {
             func_801B1F4C(5);
             func_801B2608("File erased．", 4);
             func_801ACBE4(GFX_UNK_15, 0);
-            D_8003C9A4 += 2;
+            g_GameEngineState += 2;
         }
         if (temp_v0 == -1) {
             func_801B1F4C(5);
             func_801B2608("Delete error．", 4);
             func_801ACBE4(GFX_UNK_15, 0);
-            D_8003C9A4++;
+            g_GameEngineState++;
         }
         break;
     case 119:
@@ -1922,7 +1922,7 @@ void SEL_Update(void) {
         if (g_pads[0].tapped & PAD_CROSS) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_15, 8);
-            D_8003C9A4 = 0x70;
+            g_GameEngineState = 0x70;
         }
         break;
     case 120:
@@ -1930,7 +1930,7 @@ void SEL_Update(void) {
         func_801ADF94(0x82, 0);
         if (g_pads[0].tapped & PAD_CROSS) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
-            D_8003C9A4 = 0x72;
+            g_GameEngineState = 0x72;
         }
         break;
     case 256:
@@ -1940,7 +1940,7 @@ void SEL_Update(void) {
         func_801B2608("Do not remove Memory Card．", 5);
         func_801ACBE4(GFX_UNK_15, 0);
         func_801B367C(D_801D6B04);
-        D_8003C9A4++;
+        g_GameEngineState++;
         break;
     case 257:
         func_801ADF94(0x81, 0);
@@ -1954,26 +1954,26 @@ void SEL_Update(void) {
             D_80097924 = D_801D6B04 / 15;
             D_8006C378 = g_SaveSummary[D_80097924].slot[D_801D6B04 % 15];
             g_api.PlaySfx(0x80);
-            D_8003C9A4 = 0x104;
+            g_GameEngineState = 0x104;
         }
         if (temp_v0 == -1) {
             func_801B1F4C(5);
             func_801B2608("Loading error．", 4);
             func_801ACBE4(GFX_UNK_15, 0);
-            D_8003C9A4++;
+            g_GameEngineState++;
         }
         if (temp_v0 == -2) {
             func_801B1F4C(5);
             func_801B2608("Version error．", 4);
             func_801ACBE4(GFX_UNK_15, 0);
-            D_8003C9A4++;
+            g_GameEngineState++;
         }
         break;
     case 258:
         func_801ADF94(0x81, 0);
         if (g_pads[0].tapped) {
             func_801ACBE4(GFX_UNK_15, 8);
-            D_8003C9A4 = 0x30;
+            g_GameEngineState = 0x30;
         }
         break;
     case 260:
@@ -1986,11 +1986,11 @@ void SEL_Update(void) {
         DrawNavigationTips(Tips_NoYes);
         func_801ADF94(0x80, 0);
         if (g_SaveSummary[0].padding != -2) {
-            D_8003C9A4 = 0x210;
+            g_GameEngineState = 0x210;
         } else {
             func_801B2608("Format Memory Card", 4);
             func_801B2608("in slot １？", 5);
-            D_8003C9A4++;
+            g_GameEngineState++;
         }
         break;
     case 513:
@@ -1999,10 +1999,10 @@ void SEL_Update(void) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_6, 8);
             MemCardSetPort(0);
-            D_8003C9A4++;
+            g_GameEngineState++;
         } else {
             if (g_pads[0].tapped & PAD_CROSS) {
-                D_8003C9A4 = 0x210;
+                g_GameEngineState = 0x210;
             }
             func_801AD218();
         }
@@ -2018,13 +2018,13 @@ void SEL_Update(void) {
             func_801B1F4C(5);
             func_801B2608("Formatting completed．", 4);
             func_801ACBE4(GFX_UNK_15, 0);
-            D_8003C9A4 += 2;
+            g_GameEngineState += 2;
         }
         if (temp_v0 == -1) {
             func_801B1F4C(5);
             func_801B2608("Formatting error．", 4);
             func_801ACBE4(GFX_UNK_15, 0);
-            D_8003C9A4++;
+            g_GameEngineState++;
         }
         break;
     case 515:
@@ -2033,7 +2033,7 @@ void SEL_Update(void) {
         if (g_pads[0].tapped & PAD_CROSS) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_15, 8);
-            D_8003C9A4 = D_801BAFC8;
+            g_GameEngineState = D_801BAFC8;
         }
         break;
     case 516:
@@ -2041,18 +2041,18 @@ void SEL_Update(void) {
         func_801ADF94(0x80, 0);
         if (g_pads[0].tapped & PAD_CROSS) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
-            D_8003C9A4 = D_801BAFC8;
+            g_GameEngineState = D_801BAFC8;
         }
         break;
     case 528:
         func_801ADF94(0x80, 0);
         func_801AD218();
         if (g_SaveSummary[1].padding != -2) {
-            D_8003C9A4 = 0x220;
+            g_GameEngineState = 0x220;
         } else {
             func_801B2608("Format Memory Card", 4);
             func_801B2608("in slot １？", 5);
-            D_8003C9A4++;
+            g_GameEngineState++;
         }
         break;
     case 529:
@@ -2061,10 +2061,10 @@ void SEL_Update(void) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_6, 8);
             MemCardSetPort(1);
-            D_8003C9A4++;
+            g_GameEngineState++;
         } else {
             if (g_pads[0].tapped & 0x40) {
-                D_8003C9A4 = 0x220;
+                g_GameEngineState = 0x220;
             }
             func_801AD218();
         }
@@ -2080,13 +2080,13 @@ void SEL_Update(void) {
             func_801B1F4C(5);
             func_801B2608("Formatting completed．", 4);
             func_801ACBE4(GFX_UNK_15, 0);
-            D_8003C9A4 += 2;
+            g_GameEngineState += 2;
         }
         if (temp_v0 == -1) {
             func_801B1F4C(5);
             func_801B2608("Formatting error．", 4);
             func_801ACBE4(GFX_UNK_15, 0);
-            D_8003C9A4++;
+            g_GameEngineState++;
         }
         break;
     case 531:
@@ -2095,7 +2095,7 @@ void SEL_Update(void) {
         if (g_pads[0].tapped & PAD_CROSS) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
             func_801ACBE4(GFX_UNK_15, 8);
-            D_8003C9A4 = D_801BAFC8;
+            g_GameEngineState = D_801BAFC8;
         }
         break;
     case 532:
@@ -2103,7 +2103,7 @@ void SEL_Update(void) {
         func_801ADF94(0x80, 0);
         if (g_pads[0].tapped & PAD_CROSS) {
             g_api.PlaySfx(SFX_UI_CONFIRM);
-            D_8003C9A4 = D_801BAFC8;
+            g_GameEngineState = D_801BAFC8;
         }
         break;
     case 544:
@@ -2111,7 +2111,7 @@ void SEL_Update(void) {
         if (D_801BAF10) {
             DrawNavigationTips(Tips_YesNo);
         }
-        D_8003C9A4 = D_801BAFCC;
+        g_GameEngineState = D_801BAFCC;
         break;
     }
     if (++g_GameTimer == 10) {

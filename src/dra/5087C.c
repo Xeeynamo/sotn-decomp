@@ -1146,7 +1146,7 @@ void func_800F2860(void) {
     }
 }
 
-void func_800F298C(void) {
+void RunMainEngine(void) {
     Entity* ent;
     Primitive* prim;
     LayerDef* layer;
@@ -1159,8 +1159,8 @@ void func_800F298C(void) {
     s32* ptr_791c;
     // This function is a state machine, this variable is some kind of
     // overall state of the game engine
-    switch (D_8003C9A4) {
-    case 0:
+    switch (g_GameEngineState) {
+    case Engine_Init:
         if (g_IsUsingCd) {
             return;
         }
@@ -1295,9 +1295,9 @@ void func_800F298C(void) {
             }
         }
         RefreshCapePalette();
-        D_8003C9A4++;
+        g_GameEngineState++; // Move to Engine_Normal
         return;
-    case 1:
+    case Engine_Normal:
         g_GameTimer++;
 #if defined(VERSION_HD)
         func_800F1424();
@@ -1386,7 +1386,7 @@ void func_800F298C(void) {
             if (g_unkGraphicsStruct.unk20 != 0) {
                 func_8010E0D0(g_unkGraphicsStruct.unk20);
                 PlaySfx(SET_UNK_0E);
-                D_8003C9A4 = 5;
+                g_GameEngineState = 5;
                 return;
             }
             i = func_800F0CD8(1);
@@ -1402,7 +1402,7 @@ void func_800F298C(void) {
                     g_GameStep = Play_PrepareNextStage;
                     return;
                 }
-                D_8003C9A4 = 3;
+                g_GameEngineState = 3;
                 g_MenuStep = MENU_STEP_INIT;
                 return;
             }
@@ -1485,7 +1485,7 @@ void func_800F298C(void) {
                 func_80105428();
             }
             if (g_Player.unk0C & 0x80000) {
-                D_8003C9A4 = 10;
+                g_GameEngineState = 10;
                 g_MenuStep = MENU_STEP_INIT;
             }
             if (g_unkGraphicsStruct.D_800973FC != 0) {
@@ -1521,7 +1521,7 @@ void func_800F298C(void) {
                             return;
                         }
                         D_800974A4 = 1;
-                        D_8003C9A4 = 0x70;
+                        g_GameEngineState = 0x70;
                         PlaySfx(0xa7);
                         PlaySfx(0xa3);
                         PlaySfx(SET_UNK_0E);
@@ -1536,13 +1536,13 @@ void func_800F298C(void) {
                     PlaySfx(0xa3);
                     PlaySfx(SET_UNK_0E);
                     func_801027C4(1);
-                    D_8003C9A4++;
+                    g_GameEngineState++; // Goes from 1 to 2, into Engine_Menu
                     g_MenuStep = MENU_STEP_INIT;
                 } else if ((g_pads[0].tapped & PAD_SELECT) &&
                            (g_StageId != STAGE_ST0) && (D_8003C8B8 != 0)) {
                     func_801027C4(6);
                     D_800974A4 = 1;
-                    D_8003C9A4 = 20;
+                    g_GameEngineState = 20;
                 }
                 break;
             }
@@ -1552,7 +1552,7 @@ void func_800F298C(void) {
             if (g_pads[0].tapped & PAD_START) {
                 if (func_8010183C(1) != 0) {
                     D_800974A4 = 0;
-                    D_8003C9A4 = 1;
+                    g_GameEngineState = 1;
                     PlaySfx(SET_UNK_0F);
                     PlaySfx(0xA4);
                     PlaySfx(0xA8);
@@ -1565,18 +1565,18 @@ void func_800F298C(void) {
             }
             func_801028AC(1);
             break;
-        case 0x2:
+        case Engine_Menu:
             MenuHandle();
             func_801028AC(1);
             break;
-        case 0x14:
+        case Engine_Map:
             if (D_8013AED0 != 0) {
                 DrawMapCursor();
             }
             if (g_pads[0].tapped & (PAD_START | PAD_SELECT)) {
                 func_801027C4(7);
                 D_800974A4 = 0;
-                D_8003C9A4 = 1;
+                g_GameEngineState = 1;
             }
             g_api.o.UpdateStageEntities();
             func_80102D70();
@@ -1772,7 +1772,7 @@ void func_800F298C(void) {
                 func_800E414C();
                 func_800F24F4();
                 if (D_80097C98 == 3) {
-                    D_8003C9A4 = 1;
+                    g_GameEngineState = 1;
                 }
 #if defined(VERSION_US)
                 func_8011A9D8();
@@ -1788,7 +1788,7 @@ void func_800F298C(void) {
                 break;
             case 5:
                 if (func_801025F4() != 0) {
-                    D_8003C9A4 = 1;
+                    g_GameEngineState = 1;
                 }
                 break;
             }
@@ -1832,7 +1832,7 @@ void func_800F298C(void) {
                 }
             } else {
                 func_8010E168(1, 0x30);
-                D_8003C9A4 = 1;
+                g_GameEngineState = 1;
                 PlaySfx(SET_UNK_0F);
             }
             DrawHudSubweapon();

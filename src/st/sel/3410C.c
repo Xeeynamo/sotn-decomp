@@ -16,7 +16,7 @@ void HandleMainMenu(void) {
     s32 i;
 
     func_801B1F34();
-    switch (D_8003C9A4) {
+    switch (g_GameEngineState) {
     case 0:
         if (g_UseDisk != 0) {
             g_CdStep = 1;
@@ -97,7 +97,7 @@ void HandleMainMenu(void) {
         prim->drawMode = DRAW_HIDE;
         func_801B18F4();
         D_801BB014 = 0;
-        D_8003C9A4++;
+        g_GameEngineState++;
         return;
     case 1:
         SetTitleDisplayBuffer();
@@ -117,7 +117,7 @@ void HandleMainMenu(void) {
         }
         if (D_801BB014 == 0x80) {
             D_801804D0 = 0x800;
-            D_8003C9A4++;
+            g_GameEngineState++;
         }
         return;
     case 2:
@@ -219,11 +219,11 @@ void HandleMainMenu(void) {
         }
         if (g_pads[0].tapped & PAD_START) {
             g_api.PlaySfx(SFX_START_SLAM_B);
-            D_8003C9A4++;
+            g_GameEngineState++;
         }
         return;
     case 3:
-        D_8003C9A4 = 6;
+        g_GameEngineState = 6;
         return;
     case 4:
         if (g_pads[0].tapped & (PAD_RIGHT | PAD_DOWN)) {
@@ -249,7 +249,7 @@ void HandleMainMenu(void) {
         func_801B259C(D_801804D8[D_800987B4], 1);
         if (g_pads[0].tapped & (PAD_START | PAD_CIRCLE)) {
             g_api.PlaySfx(SFX_START_SLAM_B);
-            D_8003C9A4++;
+            g_GameEngineState++;
         }
         return;
     case 5:
@@ -279,7 +279,7 @@ void HandleMainMenu(void) {
         }
         if (D_801BB014 == 0) {
             g_StageId = STAGE_MEMORYCARD;
-            D_8003C9A4 = 5;
+            g_GameEngineState = 5;
         }
         return;
     }

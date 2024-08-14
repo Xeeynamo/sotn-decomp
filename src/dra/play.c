@@ -86,7 +86,7 @@ void HandlePlay(void) {
 
     switch (g_GameStep) {
     case Play_Reset:
-        D_8003C9A4 = 0;
+        g_GameEngineState = 0;
         D_8003C738 = 0;
         if (D_8003C730 == 0) {
             for (i = 0; i < LEN(g_CastleFlags); i++) {
@@ -153,7 +153,7 @@ void HandlePlay(void) {
         break;
     case Play_Default:
         DemoUpdate();
-        func_800F298C();
+        RunMainEngine();
         break;
     case Play_PrepareNextStage:
         PlaySfx(SET_UNK_12);
@@ -335,7 +335,7 @@ void HandlePlay(void) {
             func_800EA5AC(0xFFFF, 0xFF, 0xFF, 0xFF);
         }
         g_GameStep = 1;
-        D_8003C9A4 = 0;
+        g_GameEngineState = 0;
         D_8003C738 = 0;
         func_800EAD7C();
         break;
