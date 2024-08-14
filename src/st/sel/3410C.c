@@ -272,7 +272,7 @@ void HandleMainMenu(void) {
         for (i = 0, prim = &g_PrimBuf[D_801BB010]; prim != NULL;
              prim = prim->next, i++) {
             prim->drawMode = DRAW_COLORS;
-            SetPrimGrey((POLY_GT4*)prim, D_801BB014);
+            SetPrimGrey(prim, D_801BB014);
             if (i == 15 || i == 16) {
                 prim->drawMode = 0x15;
             }
