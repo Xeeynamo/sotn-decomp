@@ -182,7 +182,8 @@ void func_801AC084(s32 arg0, s32 ypos) {
     }
 }
 
-void InitMainMenuGraphics(void) {
+// Creates the buttons, displays, etc on main menu
+static void InitMainMenuUI(void) {
     Primitive* prim;
     s32 i;
     s32 y;
@@ -431,15 +432,15 @@ void MenuHideAllGfx(void) {
     }
 }
 
-void func_801ACC7C(void) {
+static void InitMainMenuBackgroundAndFadeMask(void) {
     s16 primIndex;
     Primitive* prim;
     s32 i;
 
+    // Seems to be the background on the main menu (dark blue/grey door thing?)
     primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
     prim = &g_PrimBuf[primIndex];
     D_801BAFC0 = primIndex;
-
     for (i = 0; i < 3; i++) {
         SetTexturedPrimRect(prim, i << 7, 0, 128, 240, 0, 0);
         func_801B1D88(prim);
@@ -449,17 +450,19 @@ void func_801ACC7C(void) {
         prim = prim->next;
     }
 
+    // When the main menu is loaded in, it is covered by a black mask that fades
+    // away. This part creates the initial mask, then MainMenuFadeIn deals
+    // with fading it out.
     primIndex = g_api.AllocPrimitives(PRIM_TILE, 2);
     prim = &g_PrimBuf[primIndex];
-    D_801BAFC4 = primIndex;
-
+    MainMenuMaskPrimIndex = primIndex;
     for (i = 0; prim != NULL; i++) {
         prim->x0 = (i & 1) * 192;
         prim->u0 = 192;
         prim->v0 = 240;
         SetPrimGrey(prim, 255);
         prim->priority = 0x1FD;
-        prim->drawMode = 0x51;
+        prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
         prim = prim->next;
     }
 }
@@ -471,7 +474,7 @@ void func_801ACC7C(void) {
 // default-true behavior when a bool function exits without an explicit value?
 // PSP version returns true at the end. True means the fade is complete.
 static bool MainMenuFadeIn(void) {
-    Primitive* prim = &g_PrimBuf[D_801BAFC4];
+    Primitive* prim = &g_PrimBuf[MainMenuMaskPrimIndex];
     s32 greyLevel = prim->r0;
 
     greyLevel -= 16;
@@ -487,7 +490,7 @@ static bool MainMenuFadeIn(void) {
         return false;
     } else {
         // Once the greyLevel is exhaused, we hide them.
-        prim = &g_PrimBuf[D_801BAFC4];
+        prim = &g_PrimBuf[MainMenuMaskPrimIndex];
         prim->drawMode = DRAW_HIDE;
         prim = prim->next;
         prim->drawMode = DRAW_HIDE;
@@ -495,7 +498,7 @@ static bool MainMenuFadeIn(void) {
 }
 
 s32 func_801ACEC0(void) {
-    Primitive* prim = &g_PrimBuf[D_801BAFC4];
+    Primitive* prim = &g_PrimBuf[MainMenuMaskPrimIndex];
     s32 var_s0 = prim->r0;
 
     var_s0 += 0x10;
@@ -1214,8 +1217,8 @@ void SEL_Update(void) {
         g_api.func_800EA5E4(0x8003);
         g_api.func_800EA5E4(0x8006);
         SetupFileChoose();
-        func_801ACC7C();
-        InitMainMenuGraphics();
+        InitMainMenuBackgroundAndFadeMask();
+        InitMainMenuUI();
         func_801ACF7C();
         func_801AECA0();
         func_801B1F4C(9);

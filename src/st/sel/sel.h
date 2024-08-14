@@ -159,7 +159,7 @@ extern s32 D_801BAF10;
 extern s32 D_801BAF14;
 extern s32 D_801BAF18[NUM_GFX][2];
 extern s32 D_801BAFC0;
-extern s32 D_801BAFC4;
+extern s32 MainMenuMaskPrimIndex;
 extern s32 D_801BAFC8;
 extern s32 D_801BAFCC;
 extern u8* D_801BAFD0; // Pointer to texture pattern

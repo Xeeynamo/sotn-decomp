@@ -63,7 +63,7 @@ s32 D_801BAF10;
 s32 D_801BAF14;
 s32 D_801BAF18[NUM_GFX][2];
 s32 D_801BAFC0;
-s32 D_801BAFC4;
+s32 MainMenuMaskPrimIndex;
 s32 D_801BAFC8;
 s32 D_801BAFCC;
 u8* D_801BAFD0; // Pointer to texture pattern
