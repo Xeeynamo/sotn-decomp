@@ -30,7 +30,7 @@ static void func_ptr_80170008(Entity* self) {
         self->velocityY = FIX(-0.5);
         if (self->params & 0x7F00) {
             g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + 0x280038, 0);
+                self, ((g_HandId + 1) << 0xC) + FACTORY(0x2800, 0x38), 0);
         }
         self->step++;
         break;
@@ -41,7 +41,7 @@ static void func_ptr_80170008(Entity* self) {
         DecelerateX(FIX(15) / 32);
         if (PLAYER.animFrameIdx == 6) {
             g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + 0x1E0038, 0);
+                self, ((g_HandId + 1) << 0xC) + FACTORY(0x1E00, 0x38), 0);
             self->step++;
         }
         break;
@@ -50,7 +50,7 @@ static void func_ptr_80170008(Entity* self) {
         self->animCurFrame = PLAYER.animCurFrame - ANIMSET_OVL_FLAG;
         if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1) {
             g_api.CreateEntFactoryFromEntity(
-                self, ((g_HandId + 1) << 0xC) + 0x1E0038, 0);
+                self, ((g_HandId + 1) << 0xC) + FACTORY(0x1E00, 0x38), 0);
         }
         if (PLAYER.animFrameIdx == 10) {
             SetSpeedX(FIX(-8));
