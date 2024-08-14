@@ -12,8 +12,8 @@
 <!-- wrp.AnimateEntity -->
 <g id="node1" class="node">
 <title>wrp.AnimateEntity</title>
-<ellipse fill="green" stroke="black" cx="1328.54" cy="-18" rx="98.58" ry="18"/>
-<text text-anchor="middle" x="1328.54" y="-14.3" font-family="Times,serif" font-size="14.00">wrp.AnimateEntity</text>
+<ellipse fill="green" stroke="black" cx="1290.54" cy="-18" rx="98.58" ry="18"/>
+<text text-anchor="middle" x="1290.54" y="-14.3" font-family="Times,serif" font-size="14.00">wrp.AnimateEntity</text>
 </g>
 <!-- rwrp.EntityBigRedFireball -->
 <g id="node2" class="node">
@@ -27,121 +27,121 @@
 <!-- rwrp.EntityBigRedFireball&#45;&gt;wrp.AnimateEntity -->
 <g id="edge1" class="edge">
 <title>rwrp.EntityBigRedFireball&#45;&gt;wrp.AnimateEntity</title>
-<path fill="none" stroke="black" d="M220.89,-184.13C441.96,-151.17 1026.31,-64.06 1244.65,-31.51"/>
-<polygon fill="black" stroke="black" points="1245.4,-34.93 1254.77,-30 1244.36,-28.01 1245.4,-34.93"/>
-<text text-anchor="middle" x="215.89" y="-172.93" font-family="Times,serif" font-size="14.00">1</text>
+<path fill="none" stroke="black" d="M219.07,-183.98C433.26,-151 995.3,-64.46 1207.67,-31.76"/>
+<polygon fill="black" stroke="black" points="1208.47,-35.18 1217.82,-30.2 1207.4,-28.26 1208.47,-35.18"/>
+<text text-anchor="middle" x="214.07" y="-172.78" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- rwrp.EntityRoomForeground -->
+<!-- rwrp.EntitySoulStealOrb -->
 <g id="node3" class="node">
-<title>rwrp.EntityRoomForeground</title>
-<g id="a_node3"><a xlink:href="rwrp.EntityRoomForeground.svg" xlink:title="rwrp.EntityRoomForeground">
-<ellipse fill="green" stroke="black" cx="432.54" cy="-198" rx="145.67" ry="18"/>
-<text text-anchor="middle" x="432.54" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.EntityRoomForeground</text>
+<title>rwrp.EntitySoulStealOrb</title>
+<g id="a_node3"><a xlink:href="rwrp.EntitySoulStealOrb.svg" xlink:title="rwrp.EntitySoulStealOrb">
+<ellipse fill="green" stroke="black" cx="413.54" cy="-198" rx="126.98" ry="18"/>
+<text text-anchor="middle" x="413.54" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.EntitySoulStealOrb</text>
 </a>
 </g>
 </g>
-<!-- rwrp.EntityRoomForeground&#45;&gt;wrp.AnimateEntity -->
+<!-- rwrp.EntitySoulStealOrb&#45;&gt;wrp.AnimateEntity -->
 <g id="edge2" class="edge">
-<title>rwrp.EntityRoomForeground&#45;&gt;wrp.AnimateEntity</title>
-<path fill="none" stroke="black" d="M505.86,-182.43C673.89,-149.05 1085.29,-67.32 1254.25,-33.76"/>
-<polygon fill="black" stroke="black" points="1255.17,-37.14 1264.3,-31.76 1253.8,-30.28 1255.17,-37.14"/>
-<text text-anchor="middle" x="500.86" y="-171.23" font-family="Times,serif" font-size="14.00">1</text>
+<title>rwrp.EntitySoulStealOrb&#45;&gt;wrp.AnimateEntity</title>
+<path fill="none" stroke="black" d="M483.09,-182.88C645.89,-149.84 1050.51,-67.72 1217.09,-33.91"/>
+<polygon fill="black" stroke="black" points="1218.13,-37.27 1227.24,-31.85 1216.74,-30.41 1218.13,-37.27"/>
+<text text-anchor="middle" x="478.09" y="-171.68" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 <!-- rwrp.func_80192348 -->
 <g id="node4" class="node">
 <title>rwrp.func_80192348</title>
 <g id="a_node4"><a xlink:href="rwrp.func_80192348.svg" xlink:title="rwrp.func_80192348">
-<ellipse fill="green" stroke="black" cx="703.54" cy="-198" rx="107.48" ry="18"/>
-<text text-anchor="middle" x="703.54" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.func_80192348</text>
+<ellipse fill="green" stroke="black" cx="665.54" cy="-198" rx="107.48" ry="18"/>
+<text text-anchor="middle" x="665.54" y="-194.3" font-family="Times,serif" font-size="14.00">rwrp.func_80192348</text>
 </a>
 </g>
 </g>
 <!-- rwrp.func_80192348&#45;&gt;wrp.AnimateEntity -->
 <g id="edge3" class="edge">
 <title>rwrp.func_80192348&#45;&gt;wrp.AnimateEntity</title>
-<path fill="none" stroke="black" d="M755.48,-182.21C870.3,-149.51 1145.19,-71.22 1267.76,-36.31"/>
-<polygon fill="black" stroke="black" points="1269.07,-39.58 1277.73,-33.47 1267.15,-32.84 1269.07,-39.58"/>
-<text text-anchor="middle" x="750.48" y="-171.01" font-family="Times,serif" font-size="14.00">1</text>
+<path fill="none" stroke="black" d="M717.48,-182.21C832.3,-149.51 1107.19,-71.22 1229.76,-36.31"/>
+<polygon fill="black" stroke="black" points="1231.07,-39.58 1239.73,-33.47 1229.15,-32.84 1231.07,-39.58"/>
+<text text-anchor="middle" x="712.48" y="-171.01" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 <!-- wrp.EntityBigRedFireball -->
 <g id="node5" class="node">
 <title>wrp.EntityBigRedFireball</title>
 <g id="a_node5"><a xlink:href="wrp.EntityBigRedFireball.svg" xlink:title="wrp.EntityBigRedFireball">
-<ellipse fill="green" stroke="black" cx="958.54" cy="-198" rx="129.98" ry="18"/>
-<text text-anchor="middle" x="958.54" y="-194.3" font-family="Times,serif" font-size="14.00">wrp.EntityBigRedFireball</text>
+<ellipse fill="green" stroke="black" cx="920.54" cy="-198" rx="129.98" ry="18"/>
+<text text-anchor="middle" x="920.54" y="-194.3" font-family="Times,serif" font-size="14.00">wrp.EntityBigRedFireball</text>
 </a>
 </g>
 </g>
 <!-- wrp.EntityBigRedFireball&#45;&gt;wrp.AnimateEntity -->
 <g id="edge4" class="edge">
 <title>wrp.EntityBigRedFireball&#45;&gt;wrp.AnimateEntity</title>
-<path fill="none" stroke="black" d="M992.68,-180.57C1060.54,-147.93 1212.16,-74.99 1286.21,-39.36"/>
-<polygon fill="black" stroke="black" points="1287.78,-42.49 1295.28,-35 1284.75,-36.18 1287.78,-42.49"/>
-<text text-anchor="middle" x="987.68" y="-169.37" font-family="Times,serif" font-size="14.00">1</text>
+<path fill="none" stroke="black" d="M954.68,-180.57C1022.54,-147.93 1174.16,-74.99 1248.21,-39.36"/>
+<polygon fill="black" stroke="black" points="1249.78,-42.49 1257.28,-35 1246.75,-36.18 1249.78,-42.49"/>
+<text text-anchor="middle" x="949.68" y="-169.37" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 <!-- wrp.EntityBreakable -->
 <g id="node6" class="node">
 <title>wrp.EntityBreakable</title>
 <g id="a_node6"><a xlink:href="wrp.EntityBreakable.svg" xlink:title="wrp.EntityBreakable">
-<ellipse fill="green" stroke="black" cx="1213.54" cy="-198" rx="107.48" ry="18"/>
-<text text-anchor="middle" x="1213.54" y="-194.3" font-family="Times,serif" font-size="14.00">wrp.EntityBreakable</text>
+<ellipse fill="green" stroke="black" cx="1175.54" cy="-198" rx="107.48" ry="18"/>
+<text text-anchor="middle" x="1175.54" y="-194.3" font-family="Times,serif" font-size="14.00">wrp.EntityBreakable</text>
 </a>
 </g>
 </g>
 <!-- wrp.EntityBreakable&#45;&gt;wrp.AnimateEntity -->
 <g id="edge5" class="edge">
 <title>wrp.EntityBreakable&#45;&gt;wrp.AnimateEntity</title>
-<path fill="none" stroke="black" d="M1224.56,-179.93C1244.83,-148.57 1288.09,-81.6 1311.93,-44.71"/>
-<polygon fill="black" stroke="black" points="1315.06,-46.31 1317.54,-36.02 1309.18,-42.52 1315.06,-46.31"/>
-<text text-anchor="middle" x="1219.56" y="-168.73" font-family="Times,serif" font-size="14.00">1</text>
+<path fill="none" stroke="black" d="M1186.56,-179.93C1206.83,-148.57 1250.09,-81.6 1273.93,-44.71"/>
+<polygon fill="black" stroke="black" points="1277.06,-46.31 1279.54,-36.02 1271.18,-42.52 1277.06,-46.31"/>
+<text text-anchor="middle" x="1181.56" y="-168.73" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 <!-- wrp.EntityExplosion -->
 <g id="node7" class="node">
 <title>wrp.EntityExplosion</title>
 <g id="a_node7"><a xlink:href="wrp.EntityExplosion.svg" xlink:title="wrp.EntityExplosion">
-<ellipse fill="green" stroke="black" cx="1444.54" cy="-198" rx="105.88" ry="18"/>
-<text text-anchor="middle" x="1444.54" y="-194.3" font-family="Times,serif" font-size="14.00">wrp.EntityExplosion</text>
+<ellipse fill="green" stroke="black" cx="1406.54" cy="-198" rx="105.88" ry="18"/>
+<text text-anchor="middle" x="1406.54" y="-194.3" font-family="Times,serif" font-size="14.00">wrp.EntityExplosion</text>
 </a>
 </g>
 </g>
 <!-- wrp.EntityExplosion&#45;&gt;wrp.AnimateEntity -->
 <g id="edge6" class="edge">
 <title>wrp.EntityExplosion&#45;&gt;wrp.AnimateEntity</title>
-<path fill="none" stroke="black" d="M1433.42,-179.93C1412.98,-148.57 1369.33,-81.6 1345.29,-44.71"/>
-<polygon fill="black" stroke="black" points="1348.02,-42.48 1339.63,-36.02 1342.15,-46.3 1348.02,-42.48"/>
-<text text-anchor="middle" x="1428.42" y="-168.73" font-family="Times,serif" font-size="14.00">1</text>
+<path fill="none" stroke="black" d="M1395.42,-179.93C1374.98,-148.57 1331.33,-81.6 1307.29,-44.71"/>
+<polygon fill="black" stroke="black" points="1310.02,-42.48 1301.63,-36.02 1304.15,-46.3 1310.02,-42.48"/>
+<text text-anchor="middle" x="1390.42" y="-168.73" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 <!-- wrp.EntityPrizeDrop -->
 <g id="node8" class="node">
 <title>wrp.EntityPrizeDrop</title>
 <g id="a_node8"><a xlink:href="wrp.EntityPrizeDrop.svg" xlink:title="wrp.EntityPrizeDrop">
-<ellipse fill="green" stroke="black" cx="1675.54" cy="-198" rx="107.48" ry="18"/>
-<text text-anchor="middle" x="1675.54" y="-194.3" font-family="Times,serif" font-size="14.00">wrp.EntityPrizeDrop</text>
+<ellipse fill="green" stroke="black" cx="1637.54" cy="-198" rx="107.48" ry="18"/>
+<text text-anchor="middle" x="1637.54" y="-194.3" font-family="Times,serif" font-size="14.00">wrp.EntityPrizeDrop</text>
 </a>
 </g>
 </g>
 <!-- wrp.EntityPrizeDrop&#45;&gt;wrp.AnimateEntity -->
 <g id="edge7" class="edge">
 <title>wrp.EntityPrizeDrop&#45;&gt;wrp.AnimateEntity</title>
-<path fill="none" stroke="black" d="M1643.82,-180.73C1580.58,-148.29 1438.85,-75.59 1369.01,-39.76"/>
-<polygon fill="black" stroke="black" points="1370.55,-36.62 1360.05,-35.17 1367.35,-42.84 1370.55,-36.62"/>
-<text text-anchor="middle" x="1638.82" y="-169.53" font-family="Times,serif" font-size="14.00">1</text>
+<path fill="none" stroke="black" d="M1605.82,-180.73C1542.58,-148.29 1400.85,-75.59 1331.01,-39.76"/>
+<polygon fill="black" stroke="black" points="1332.55,-36.62 1322.05,-35.17 1329.35,-42.84 1332.55,-36.62"/>
+<text text-anchor="middle" x="1600.82" y="-169.53" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- wrp.EntitySoulStealOrb -->
+<!-- wrp.EntityRoomForeground -->
 <g id="node9" class="node">
-<title>wrp.EntitySoulStealOrb</title>
-<g id="a_node9"><a xlink:href="wrp.EntitySoulStealOrb.svg" xlink:title="wrp.EntitySoulStealOrb">
-<ellipse fill="green" stroke="black" cx="1922.54" cy="-198" rx="122.38" ry="18"/>
-<text text-anchor="middle" x="1922.54" y="-194.3" font-family="Times,serif" font-size="14.00">wrp.EntitySoulStealOrb</text>
+<title>wrp.EntityRoomForeground</title>
+<g id="a_node9"><a xlink:href="wrp.EntityRoomForeground.svg" xlink:title="wrp.EntityRoomForeground">
+<ellipse fill="green" stroke="black" cx="1903.54" cy="-198" rx="141.07" ry="18"/>
+<text text-anchor="middle" x="1903.54" y="-194.3" font-family="Times,serif" font-size="14.00">wrp.EntityRoomForeground</text>
 </a>
 </g>
 </g>
-<!-- wrp.EntitySoulStealOrb&#45;&gt;wrp.AnimateEntity -->
+<!-- wrp.EntityRoomForeground&#45;&gt;wrp.AnimateEntity -->
 <g id="edge8" class="edge">
-<title>wrp.EntitySoulStealOrb&#45;&gt;wrp.AnimateEntity</title>
-<path fill="none" stroke="black" d="M1871.12,-181.59C1761.17,-148.64 1503.75,-71.51 1387.44,-36.65"/>
-<polygon fill="black" stroke="black" points="1388.22,-33.23 1377.64,-33.71 1386.21,-39.94 1388.22,-33.23"/>
-<text text-anchor="middle" x="1866.12" y="-170.39" font-family="Times,serif" font-size="14.00">1</text>
+<title>wrp.EntityRoomForeground&#45;&gt;wrp.AnimateEntity</title>
+<path fill="none" stroke="black" d="M1849.68,-181.36C1735.44,-148.19 1469.59,-70.99 1350.32,-36.36"/>
+<polygon fill="black" stroke="black" points="1351.19,-32.97 1340.61,-33.54 1349.24,-39.69 1351.19,-32.97"/>
+<text text-anchor="middle" x="1844.68" y="-170.16" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 <!-- wrp.func_80186FD0 -->
 <g id="node10" class="node">
@@ -155,9 +155,9 @@
 <!-- wrp.func_80186FD0&#45;&gt;wrp.AnimateEntity -->
 <g id="edge9" class="edge">
 <title>wrp.func_80186FD0&#45;&gt;wrp.AnimateEntity</title>
-<path fill="none" stroke="black" d="M2104.48,-183.62C1951.53,-151.17 1561.58,-68.44 1400.17,-34.2"/>
-<polygon fill="black" stroke="black" points="1400.84,-30.76 1390.33,-32.11 1399.39,-37.61 1400.84,-30.76"/>
-<text text-anchor="middle" x="2099.48" y="-172.42" font-family="Times,serif" font-size="14.00">1</text>
+<path fill="none" stroke="black" d="M2102.69,-183.84C1943.09,-151.44 1532,-68.01 1363.86,-33.88"/>
+<polygon fill="black" stroke="black" points="1364.36,-30.41 1353.87,-31.85 1362.97,-37.27 1364.36,-30.41"/>
+<text text-anchor="middle" x="2097.69" y="-172.64" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 <!-- wrp.func_801903C8 -->
 <g id="node11" class="node">
@@ -171,9 +171,9 @@
 <!-- wrp.func_801903C8&#45;&gt;wrp.AnimateEntity -->
 <g id="edge10" class="edge">
 <title>wrp.func_801903C8&#45;&gt;wrp.AnimateEntity</title>
-<path fill="none" stroke="black" d="M2322.52,-184.97C2130.84,-152.97 1609.15,-65.86 1408.58,-32.37"/>
-<polygon fill="black" stroke="black" points="1409.14,-28.91 1398.7,-30.72 1407.99,-35.82 1409.14,-28.91"/>
-<text text-anchor="middle" x="2317.52" y="-173.77" font-family="Times,serif" font-size="14.00">1</text>
+<path fill="none" stroke="black" d="M2321.25,-185.18C2123.3,-153.27 1578.94,-65.5 1371.9,-32.12"/>
+<polygon fill="black" stroke="black" points="1372.44,-28.66 1362.01,-30.52 1371.32,-35.57 1372.44,-28.66"/>
+<text text-anchor="middle" x="2316.25" y="-173.98" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 </g>
 </svg>
