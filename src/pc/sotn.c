@@ -98,6 +98,8 @@ s32 func_800EDB58(u8 primType, s32 count);
 
 extern FactoryBlueprint g_RicFactoryBlueprints[78];
 
+void func_801027C4(u32 arg0);
+
 bool InitGame(void) {
     if (!InitPlatform()) {
         return false;
@@ -119,7 +121,7 @@ bool InitGame(void) {
     api.func_800EDB58 = func_800EDB58;
     api.func_800EA538 = func_800EA538;
     api.g_pfn_800EA5AC = func_800EA5AC;
-    api.func_801027C4 = NULL;
+    api.func_801027C4 = func_801027C4;
     api.func_800EB758 = NULL;
     api.CreateEntFactoryFromEntity = CreateEntFactoryFromEntity;
     api.func_80131F68 = func_80131F68;
