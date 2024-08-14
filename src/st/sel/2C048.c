@@ -457,34 +457,40 @@ void func_801ACC7C(void) {
         prim->x0 = (i & 1) * 192;
         prim->u0 = 192;
         prim->v0 = 240;
-        func_801B1CFC(prim, 255);
+        SetPrimGrey(prim, 255);
         prim->priority = 0x1FD;
         prim->drawMode = 0x51;
         prim = prim->next;
     }
 }
 
-s32 func_801ACDFC(void) {
+// On title screen, you press START. Then the screen goes black,
+// and fades in gradually. This function handles that fade. Returns false
+// as long as the fade-in is ongoing.
+// Odd that this function can return false but not true. Perhaps there is a
+// default-true behavior when a bool function exits without an explicit value?
+// PSP version returns true at the end. True means the fade is complete.
+static bool MainMenuFadeIn(void) {
     Primitive* prim = &g_PrimBuf[D_801BAFC4];
-    s32 var_s1 = prim->r0;
+    s32 greyLevel = prim->r0;
 
-    var_s1 -= 16;
-    if (var_s1 < 0) {
-        var_s1 = 0;
+    greyLevel -= 16;
+    if (greyLevel < 0) {
+        greyLevel = 0;
     }
 
-    func_801B1CFC(prim, var_s1);
-    func_801B1CFC(prim->next, var_s1);
+    SetPrimGrey(prim, greyLevel);
+    prim = prim->next;
+    SetPrimGrey(prim, greyLevel);
 
-    if (var_s1 == 0) {
-        do {
-            prim = &g_PrimBuf[D_801BAFC4];
-            prim->drawMode = 8;
-        } while (0);
-        prim = prim->next;
-        prim->drawMode = 8;
+    if (greyLevel != 0) {
+        return false;
     } else {
-        return 0;
+        // Once the greyLevel is exhaused, we hide them.
+        prim = &g_PrimBuf[D_801BAFC4];
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+        prim->drawMode = DRAW_HIDE;
     }
 }
 
@@ -499,10 +505,10 @@ s32 func_801ACEC0(void) {
         var_s0 = 255;
     }
 
-    func_801B1CFC(prim, var_s0);
+    SetPrimGrey(prim, var_s0);
     prim = prim->next;
     prim->drawMode = 0x51;
-    func_801B1CFC(prim, var_s0);
+    SetPrimGrey(prim, var_s0);
 
     if (g_api.func_80131F68()) {
         return 0;
@@ -1219,7 +1225,7 @@ void SEL_Update(void) {
     case 1:
         func_801AD590();
         func_801AD490();
-        if (func_801ACDFC() != 0) {
+        if (MainMenuFadeIn() != 0) {
             D_8003C9A4++;
         }
         break;
@@ -2218,7 +2224,9 @@ void SetTitleDisplayBuffer256(void) {
     g_GpuBuffers[0].disp.isrgb24 = 0;
 }
 
-void func_801B1C78(Primitive* prim, u8 colorIntensity, s32 vertexIndex) {
+// For the given prim, sets one of the vertices (0-3) to r,g,b values of
+// the given colorIntensity. All of r,g,b are set, so limited to grey shades.
+void SetPrimVertexGrey(Primitive* prim, u8 colorIntensity, s32 vertexIndex) {
     switch (vertexIndex) {
     case 0:
         prim->r0 = prim->g0 = prim->b0 = colorIntensity;
@@ -2235,16 +2243,18 @@ void func_801B1C78(Primitive* prim, u8 colorIntensity, s32 vertexIndex) {
     }
 }
 
-void func_801B1CFC(Primitive* prim, s32 colorIntensity) {
-    func_801B1C78(prim, colorIntensity, 0);
-    func_801B1C78(prim, colorIntensity, 1);
-    func_801B1C78(prim, colorIntensity, 2);
-    func_801B1C78(prim, colorIntensity, 3);
+// Sets each of the 4 vertices of a prim to the specified grey level, thus
+// making the whole primitive that level.
+void SetPrimGrey(Primitive* prim, s32 colorIntensity) {
+    SetPrimVertexGrey(prim, colorIntensity, 0);
+    SetPrimVertexGrey(prim, colorIntensity, 1);
+    SetPrimVertexGrey(prim, colorIntensity, 2);
+    SetPrimVertexGrey(prim, colorIntensity, 3);
 }
 
-void func_801B1D68(Primitive* prim) { func_801B1CFC(prim, 0); }
+void func_801B1D68(Primitive* prim) { SetPrimGrey(prim, 0); }
 
-void func_801B1D88(Primitive* prim) { func_801B1CFC(prim, 0x80); }
+void func_801B1D88(Primitive* prim) { SetPrimGrey(prim, 0x80); }
 
 void func_801B1DA8(void) {
     s32 index = 0;
