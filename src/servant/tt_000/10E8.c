@@ -461,6 +461,8 @@ void func_801719E0(Entity* self) {
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
 }
 
+void ProcessEvent(Entity* self, bool resetEvent);
+
 void func_80171ED4(s32 arg0) {
     u16* dst;
     u16* src;
