@@ -159,18 +159,18 @@
 <polygon fill="black" stroke="black" points="1857.81,-36.86 1865.91,-30.02 1855.32,-30.32 1857.81,-36.86"/>
 <text text-anchor="middle" x="1860.91" y="-33.82" font-family="Times,serif" font-size="14.00">2</text>
 </g>
-<!-- dra.func_800F298C -->
+<!-- dra.RunMainEngine -->
 <g id="node11" class="node">
-<title>dra.func_800F298C</title>
-<g id="a_node11"><a xlink:href="dra.func_800F298C.svg" xlink:title="dra.func_800F298C">
-<ellipse fill="green" stroke="black" cx="1065.34" cy="-378" rx="102.08" ry="18"/>
-<text text-anchor="middle" x="1065.34" y="-374.3" font-family="Times,serif" font-size="14.00">dra.func_800F298C</text>
+<title>dra.RunMainEngine</title>
+<g id="a_node11"><a xlink:href="dra.RunMainEngine.svg" xlink:title="dra.RunMainEngine">
+<ellipse fill="green" stroke="black" cx="1065.34" cy="-378" rx="103.98" ry="18"/>
+<text text-anchor="middle" x="1065.34" y="-374.3" font-family="Times,serif" font-size="14.00">dra.RunMainEngine</text>
 </a>
 </g>
 </g>
-<!-- dra.func_800F298C&#45;&gt;dra.DrawHudSubweapon -->
+<!-- dra.RunMainEngine&#45;&gt;dra.DrawHudSubweapon -->
 <g id="edge10" class="edge">
-<title>dra.func_800F298C&#45;&gt;dra.DrawHudSubweapon</title>
+<title>dra.RunMainEngine&#45;&gt;dra.DrawHudSubweapon</title>
 <path fill="none" stroke="black" d="M1065.34,-359.93C1065.34,-328.97 1065.34,-263.3 1065.34,-226.13"/>
 <polygon fill="black" stroke="black" points="1068.84,-226.02 1065.34,-216.02 1061.84,-226.02 1068.84,-226.02"/>
 <text text-anchor="middle" x="1060.34" y="-348.73" font-family="Times,serif" font-size="14.00">3</text>
