@@ -105,7 +105,7 @@ void HandleMainMenu(void) {
         for (i = 0, prim = &g_PrimBuf[D_801BB010]; prim != NULL;
              prim = prim->next, i++) {
             prim->drawMode = DRAW_COLORS;
-            func_801B1CFC(prim, D_801BB014);
+            SetPrimGrey(prim, D_801BB014);
             if (i == 7 || i == 8 || i == 9 || i == 10) {
                 prim->r0 = D_801BB014 * 3 / 4;
                 prim->g0 = D_801BB014 * 7 / 8;
@@ -272,7 +272,7 @@ void HandleMainMenu(void) {
         for (i = 0, prim = &g_PrimBuf[D_801BB010]; prim != NULL;
              prim = prim->next, i++) {
             prim->drawMode = DRAW_COLORS;
-            func_801B1CFC((POLY_GT4*)prim, D_801BB014);
+            SetPrimGrey(prim, D_801BB014);
             if (i == 15 || i == 16) {
                 prim->drawMode = 0x15;
             }

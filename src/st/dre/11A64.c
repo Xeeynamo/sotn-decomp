@@ -9,13 +9,13 @@
 
 // puts garbled hp max up text on screen
 void EntityUnkId11(Entity* entity) {
-    ObjInit2* obj = (ObjInit2*)&D_80180528[entity->params * 10];
+    ObjInit* obj = (ObjInit*)&D_80180528[entity->params * 10];
 
     if (entity->step == 0) {
         InitializeEntity(g_eInitGeneric2);
         entity->animSet = obj->animSet;
         entity->zPriority = obj->zPriority;
-        entity->unk5A = obj->unk4.s;
+        entity->unk5A = obj->unk5A;
         entity->palette = obj->palette;
         entity->drawFlags = obj->drawFlags;
         entity->drawMode = obj->drawMode;
