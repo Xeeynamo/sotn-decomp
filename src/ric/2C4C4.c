@@ -2279,7 +2279,8 @@ void RicEntityAguneaHitEnemy(Entity* self) {
     }
 }
 
-void func_8016D328(Entity* entity) {
+// White cloud that comes out of Richter's finger with the Vibhuti crash
+void RicEntityVibhutiCrashCloud(Entity* entity) {
     s16 primIndex;
     s32 newVelocity;
 
@@ -2290,12 +2291,12 @@ void func_8016D328(Entity* entity) {
         if (primIndex != -1) {
             entity->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS;
             entity->posX.val =
-                entity->ext.generic.unk8C.entityPtr->ext.generic.unk84.unk;
+                entity->ext.vibCrashCloud.parent->ext.vibhutiCrash.unk84;
             entity->posY.val =
-                entity->ext.generic.unk8C.entityPtr->ext.generic.unk88.unk;
-            entity->facingLeft = entity->ext.generic.unk8C.entityPtr->ext
-                                     .generic.unk8C.modeU16.unk0;
-            entity->ext.generic.unkB0 = 0x18;
+                entity->ext.vibCrashCloud.parent->ext.vibhutiCrash.unk88;
+            entity->facingLeft =
+                entity->ext.vibCrashCloud.parent->ext.vibhutiCrash.unk8C;
+            entity->ext.factory.unkB0 = 0x18;
             RicSetSubweaponParams(entity);
             entity->unk5A = 0x79;
             entity->animSet = ANIMSET_DRA(14);
@@ -2317,7 +2318,7 @@ void func_8016D328(Entity* entity) {
         break;
 
     case 1:
-        if (++entity->ext.generic.unk7C.s >= 39) {
+        if (++entity->ext.vibCrashCloud.unk7C >= 39) {
             DestroyEntity(entity);
         } else {
             entity->posX.val += entity->velocityX;
@@ -2396,6 +2397,7 @@ void EntitySubwpnCrashVibhuti(Entity* self) {
                     self->ext.vibhutiCrash.unk84 = prim->posX.val;
                     self->ext.vibhutiCrash.unk88 = prim->posY.val;
                     self->ext.vibhutiCrash.unk8C = prim->velocityX.val < 1;
+                    // Creates RicEntityVibhutiCrashCloud
                     RicCreateEntFactoryFromEntity(self, FACTORY(0, 55), 0);
                 } else {
                     prim->posX.val += prim->velocityX.val;

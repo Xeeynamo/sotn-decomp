@@ -147,7 +147,7 @@ void RicEntitySubwpnThrownVibhuti(Entity* self);
 void RicEntitySubwpnAgunea(Entity* self);
 void RicEntityAguneaHitEnemy(Entity* self);
 void EntitySubwpnCrashVibhuti(Entity* self);
-void func_8016D328(Entity* self);
+void RicEntityVibhutiCrashCloud(Entity* self);
 void func_8016E324(Entity* self);
 void func_8016D9C4(Entity* self);
 void func_8016DF74(Entity* self);
