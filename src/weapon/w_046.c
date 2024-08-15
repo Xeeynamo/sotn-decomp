@@ -1,13 +1,6 @@
 // Weapon ID #46. Used by weapons:
 // Holbein dagger, Blue knuckles
 #include "weapon_private.h"
-extern u16 D_146000_8017A2B0[];
-extern u16 D_146000_8017A530[];
-extern u16 D_146000_8017A670[];
-extern u16 D_146000_8017A3F0[];
-extern u16* g_WeaponCluts[];
-extern s32 g_HandId;
-#include "shared.h"
 #include "w_046_1.h"
 #include "w_046_2.h"
 #define g_Animset w_046_1
@@ -147,16 +140,20 @@ static u16 D_146000_8017AAC4[] = {
     0x011D, 0x011C, 0x011B, 0x011A, 0x0000,
 };
 
-static s32 D_146000_8017AAD8[] = {
-    0x00000001, 0x00180000, 0xC00008E0, 0x00010100, 0x00000000, 0x0960001D,
-    0x00C0C000, 0x00000001, 0x00240000, 0x00C00AE0, 0x000100C0, 0x00000000,
-    0x08E00025, 0x008000C0, 0x00010001, 0x00200001, 0xC0400480, 0x00000040,
-    0x00000000, 0x00E00030, 0x00C00080, 0x00000000, 0x00180001, 0x808002E0,
-    0x00000040, 0x00000000, 0x08E00025, 0x008000C0, 0x00010000, 0x00200001,
-    0xC0400C80, 0x000100C0, 0x00000000, 0x00F00030, 0x00C02080, 0x00000001,
-    0x00180000, 0x80400600, 0x00000040, 0x00000001, 0x00000028, 0x00008040,
-    0x00000001, 0x00300001, 0x20200AF0, 0x000000C0,
-};
+static Unkstruct_8017AAD8 D_146000_8017AAD8[] = {
+    {0x0001, 0x0000, 0x0000, 0x0018, 0x08E0, 0x00, 0xC0, 0x00, 0x01},
+    {0x0001, 0x0000, 0x0000, 0x001D, 0x0960, 0x00, 0xC0, 0xC0, 0x00},
+    {0x0001, 0x0000, 0x0000, 0x0024, 0x0AE0, 0xC0, 0x00, 0xC0, 0x00},
+    {0x0001, 0x0000, 0x0000, 0x0025, 0x08E0, 0xC0, 0x00, 0x80, 0x00},
+    {0x0001, 0x0001, 0x0001, 0x0020, 0x0480, 0x40, 0xC0, 0x40, 0x00},
+    {0x0000, 0x0000, 0x0000, 0x0030, 0x00E0, 0x80, 0x00, 0xC0, 0x00},
+    {0x0000, 0x0000, 0x0001, 0x0018, 0x02E0, 0x80, 0x80, 0x40, 0x00},
+    {0x0000, 0x0000, 0x0000, 0x0025, 0x08E0, 0xC0, 0x00, 0x80, 0x00},
+    {0x0000, 0x0001, 0x0001, 0x0020, 0x0C80, 0x40, 0xC0, 0xC0, 0x00},
+    {0x0001, 0x0000, 0x0000, 0x0030, 0x00F0, 0x80, 0x20, 0xC0, 0x00},
+    {0x0001, 0x0000, 0x0000, 0x0018, 0x0600, 0x40, 0x80, 0x40, 0x00},
+    {0x0000, 0x0001, 0x0000, 0x0028, 0x0000, 0x40, 0x80, 0x00, 0x00},
+    {0x0001, 0x0000, 0x0001, 0x0030, 0x0AF0, 0x20, 0x20, 0xC0, 0x00}};
 
 static s32 D_146000_8017AB90[] = {
     0x00000000, 0x00000004, 0x00000006, 0x00000007, 0x00000008, 0x00000009,
@@ -181,7 +178,154 @@ static u16* g_WeaponCluts[] = {
 
 static s32 g_HandId = HAND_ID;
 
-INCLUDE_ASM("weapon/nonmatchings/w_046", EntityWeaponAttack);
+#include "shared.h"
+
+static void EntityWeaponAttack(Entity* self) {
+    Primitive* prim;
+    s16 angle;
+    s16 baseX, baseY;
+    s32 maskedParams;
+    s32 temp;
+    s16 var_s5;
+    s16 temp_s5;
+    u8 var_s2;
+    Unkstruct_8017AAD8* temp_s3;
+
+    maskedParams = self->params >> 8 & 0x7F;
+    if (g_HandId) {
+        var_s2 = 0x80;
+        var_s5 = 0x18;
+    } else {
+        var_s5 = 0;
+        var_s2 = 0;
+    }
+    temp_s3 = &D_146000_8017AAD8[maskedParams];
+    if (self->step == 0) {
+        self->posX.val = PLAYER.posX.val;
+        self->posY.val = PLAYER.posY.val;
+        self->facingLeft = PLAYER.facingLeft;
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        if (temp_s3->flipX) {
+            prim->u0 = prim->u2 = 0x40;
+            prim->u1 = prim->u3 = 0;
+        } else {
+            prim->u0 = prim->u2 = 0;
+            prim->u1 = prim->u3 = 0x40;
+        }
+        if (temp_s3->flipY) {
+            prim->v0 = prim->v1 = var_s2 | 0x40;
+            prim->v2 = prim->v3 = var_s2;
+        } else {
+            prim->v0 = prim->v1 = var_s2;
+            prim->v2 = prim->v3 = var_s2 | 0x40;
+        }
+
+        prim->r0 = prim->r1 = prim->r2 = prim->r3 = temp_s3->r;
+        prim->g0 = prim->g1 = prim->g2 = prim->g3 = temp_s3->g;
+        prim->b0 = prim->b1 = prim->b2 = prim->b3 = temp_s3->b;
+
+        prim->tpage = 0x19;
+        prim->priority = PLAYER.zPriority + 2;
+        prim->drawMode = 0x335;
+
+        self->flags = 0x860000;
+        temp = maskedParams & 0xFFFF;
+        if (!temp) {
+            SetWeaponProperties(self, 0);
+            self->hitboxWidth = 15;
+            self->hitboxHeight = 20;
+            self->hitboxOffY = -5;
+        }
+        self->ext.weapon.unk82 = 20;
+        if (self->facingLeft) {
+            self->ext.weapon.unk82 = -20;
+        }
+        self->ext.weapon.unk80 = -5;
+        if (g_Player.unk0C & 0x20) {
+            self->ext.weapon.unk80 = 11;
+        }
+        self->posX.i.hi = self->posX.i.hi + self->ext.weapon.unk82;
+        self->posY.i.hi = self->posY.i.hi + self->ext.weapon.unk80;
+        DestroyEntityWeapon(true);
+        self->ext.factory.unk84 = 0;
+        if (!temp) {
+            g_api.PlaySfx(0x60A);
+        }
+        self->rotZ = temp_s3->unk4;
+        self->ext.timer.t = temp_s3->unk3;
+        self->ext.weapon.unk7E = 0;
+        g_Player.D_80072F00[9] = 4;
+        self->step++;
+    }
+
+    if (maskedParams == 0) {
+        if (self->ext.weapon.unk7E == 3) {
+            g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xC) + 0x10032, 0);
+        }
+        if (self->ext.weapon.unk7E == 6) {
+            g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xC) + 0x20032, 0);
+        }
+        if (++self->ext.factory.unk84 == 8) {
+            g_api.func_80134714(0x60A, 0x50, 0);
+        }
+    }
+
+    prim = &g_PrimBuf[self->primIndex];
+    if (temp_s3->clut) {
+        prim->clut = var_s5 + D_146000_8017AAC4[self->ext.weapon.unk7E];
+    } else {
+        prim->clut = var_s5 + D_146000_8017AAB0[self->ext.weapon.unk7E];
+    }
+
+    if (++self->ext.weapon.unk7E >= 9) {
+        DestroyEntity(self);
+        return;
+    }
+
+    temp_s5 = self->ext.timer.t;
+    baseX = PLAYER.posX.i.hi + self->ext.weapon.unk82;
+    baseY = PLAYER.posY.i.hi + self->ext.weapon.unk80;
+    angle = self->rotZ;
+
+    angle += 0x600;
+    if (self->facingLeft) {
+        prim->x0 = baseX - (((rcos(angle) >> 4) * temp_s5) >> 8);
+    } else {
+        prim->x0 = baseX + (((rcos(angle) >> 4) * temp_s5) >> 8);
+    }
+    prim->y0 = baseY - (((rsin(angle) >> 4) * temp_s5) >> 8);
+
+    angle -= 0x400;
+    if (self->facingLeft) {
+        prim->x1 = baseX - (((rcos(angle) >> 4) * temp_s5) >> 8);
+    } else {
+        prim->x1 = baseX + (((rcos(angle) >> 4) * temp_s5) >> 8);
+    }
+    prim->y1 = baseY - (((rsin(angle) >> 4) * temp_s5) >> 8);
+
+    angle -= 0x800;
+    if (self->facingLeft) {
+        prim->x2 = baseX - (((rcos(angle) >> 4) * temp_s5) >> 8);
+    } else {
+        prim->x2 = baseX + (((rcos(angle) >> 4) * temp_s5) >> 8);
+    }
+    prim->y2 = baseY - (((rsin(angle) >> 4) * temp_s5) >> 8);
+
+    angle += 0x400;
+    if (self->facingLeft) {
+        prim->x3 = baseX - (((rcos(angle) >> 4) * temp_s5) >> 8);
+    } else {
+        prim->x3 = baseX + (((rcos(angle) >> 4) * temp_s5) >> 8);
+    }
+    prim->y3 = baseY - (((rsin(angle) >> 4) * temp_s5) >> 8);
+}
 
 static s32 func_ptr_80170004(Entity* self) {
     const int PrimCount = 0x20;
@@ -195,14 +339,14 @@ static s32 func_ptr_80170004(Entity* self) {
     s32 a1;
     s32 half_i;
     s32 s0;
-    s32 s2;
+    s32 angle;
     s32 s7;
     s32 temp_v1_2;
     s32 v1;
     s32 temp_v1_6;
     s32 var_a0;
     s32 s4;
-    s32 var_i;
+    s32 i;
     s32 s6;
     s32 var_v1_2;
 
@@ -219,7 +363,7 @@ static s32 func_ptr_80170004(Entity* self) {
 
         self->flags = FLAG_UNK_800000 | FLAG_UNK_40000 | FLAG_UNK_20000;
         prim = &g_PrimBuf[self->primIndex];
-        for (var_i = 0; var_i < PrimCount; var_i++) {
+        for (i = 0; i < PrimCount; i++) {
             prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
                              DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             prim->priority = PLAYER.zPriority + 4;
@@ -262,7 +406,7 @@ static s32 func_ptr_80170004(Entity* self) {
                 self->hitboxHeight = 0x16;
             }
         }
-        g_api.PlaySfx(0x60C);
+        g_api.PlaySfx(SFX_WEAPON_SWISH_C);
         self->ext.weapon_046.unk98 = 0x100;
         g_Player.D_80072F00[9] = 4;
         self->step++;
@@ -298,12 +442,11 @@ static s32 func_ptr_80170004(Entity* self) {
     sp30 = self->ext.weapon_046.unk98;
     prim = &g_PrimBuf[self->primIndex];
 
-    for (var_i = 0; var_i < PrimCount; var_i++) {
-        half_i = var_i >> 1;
+    for (i = 0; i < PrimCount; i++) {
+        half_i = i >> 1;
         temp_v1_2 = half_i + 1;
 
-        v1 = D_146000_8017AC10[(temp_v1_2 - ((temp_v1_2 / 16) * 0x10))] * sp30 /
-             256;
+        v1 = D_146000_8017AC10[temp_v1_2 % 16] * sp30 / 256;
         a1 = D_146000_8017AC10[half_i] * sp30 / 256;
 
         if (maskedParams == 0) {
@@ -318,9 +461,9 @@ static s32 func_ptr_80170004(Entity* self) {
             prim->r1 = prim->g1 = prim->b1 = 0;
             prim->r3 = prim->g3 = prim->b3 = 0;
 
-            a1 = var_i >> 1;
+            a1 = i >> 1;
             temp_v1_6 = a1 + 1;
-            var_a0 = D_146000_8017AB90[(temp_v1_6 - ((temp_v1_6 / 16) * 0x10))];
+            var_a0 = D_146000_8017AB90[temp_v1_6 % 16];
             var_v1_2 = D_146000_8017AB90[a1];
         } else {
             prim->r0 = v1 * 0xC0 / 256;
@@ -334,31 +477,31 @@ static s32 func_ptr_80170004(Entity* self) {
             prim->r1 = prim->g1 = prim->b1 = 0;
             prim->r3 = prim->g3 = prim->b3 = 0;
 
-            a1 = var_i >> 1;
+            a1 = i >> 1;
             a0 = a1 + 1;
-            var_a0 = D_146000_8017ABD0[a0 - ((a0 / 16) * 0x10)];
+            var_a0 = D_146000_8017ABD0[a0 % 16];
             var_v1_2 = D_146000_8017ABD0[a1];
         }
 
-        if (var_i & 1) {
+        if (i & 1) {
             s4 = s7 + var_a0;
             s6 = s7 + var_v1_2;
         } else {
             s4 = s7 - var_a0;
             s6 = s7 - var_v1_2;
         }
-        s0 = var_i >> 1;
-        s2 = ((s0 + 1) * sp20) + sp28;
-        prim->x0 = posX + (((rcos(s2) >> 4) * s7) >> 8);
-        prim->y0 = posY - (((rsin(s2) >> 4) * s7) >> 8);
-        prim->x1 = posX + (((rcos(s2) >> 4) * s4) >> 8);
-        prim->y1 = posY - (((rsin(s2) >> 4) * s4) >> 8);
+        s0 = i >> 1; // weirdly can't re-use `half_i` here...
+        angle = ((s0 + 1) * sp20) + sp28;
+        prim->x0 = posX + (((rcos(angle) >> 4) * s7) >> 8);
+        prim->y0 = posY - (((rsin(angle) >> 4) * s7) >> 8);
+        prim->x1 = posX + (((rcos(angle) >> 4) * s4) >> 8);
+        prim->y1 = posY - (((rsin(angle) >> 4) * s4) >> 8);
 
-        s2 = (s0 * sp20) + sp28;
-        prim->x2 = posX + (((rcos(s2) >> 4) * s7) >> 8);
-        prim->y2 = posY - (((rsin(s2) >> 4) * s7) >> 8);
-        prim->x3 = posX + (((rcos(s2) >> 4) * s6) >> 8);
-        prim->y3 = posY - (((rsin(s2) >> 4) * s6) >> 8);
+        angle = (s0 * sp20) + sp28;
+        prim->x2 = posX + (((rcos(angle) >> 4) * s7) >> 8);
+        prim->y2 = posY - (((rsin(angle) >> 4) * s7) >> 8);
+        prim->x3 = posX + (((rcos(angle) >> 4) * s6) >> 8);
+        prim->y3 = posY - (((rsin(angle) >> 4) * s6) >> 8);
 
         prim = prim->next;
     }
@@ -366,11 +509,11 @@ static s32 func_ptr_80170004(Entity* self) {
     if (self->facingLeft) {
         prim = &g_PrimBuf[self->primIndex];
         a0 = self->posX.i.hi * 2;
-        for (var_i = 0; var_i < PrimCount; var_i++) {
-            prim->x0 = a0 - (u16)prim->x0;
-            prim->x1 = a0 - (u16)prim->x1;
-            prim->x2 = a0 - (u16)prim->x2;
-            prim->x3 = a0 - (u16)prim->x3;
+        for (i = 0; i < PrimCount; i++) {
+            prim->x0 = a0 - prim->x0;
+            prim->x1 = a0 - prim->x1;
+            prim->x2 = a0 - prim->x2;
+            prim->x3 = a0 - prim->x3;
             prim = prim->next;
         }
     }

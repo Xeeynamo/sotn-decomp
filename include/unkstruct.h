@@ -213,3 +213,15 @@ typedef struct {
     s32 unk0;
     s16 unk4;
 } unkstr_800cfe48; // for EntityAlucard
+
+typedef struct {
+    s16 flipX;
+    s16 flipY;
+    s16 clut;
+    s16 unk3;
+    s16 unk4;
+    u8 r;
+    u8 g;
+    u8 b;
+    u8 unused;
+} Unkstruct_8017AAD8; // for w_046
