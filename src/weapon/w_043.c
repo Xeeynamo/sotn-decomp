@@ -21,7 +21,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->facingLeft = PLAYER.facingLeft;
         // this toggles the high bit, but xor does not
         // produce the same set of instructions
-        self->animCurFrame = PLAYER.animCurFrame + 0x8000;
+        self->animCurFrame = PLAYER.animCurFrame + ANIMSET_OVL_FLAG;
         self->animSet = ANIMSET_DRA(1);
         self->drawMode = DRAW_TPAGE;
         self->flags = FLAG_UNK_04000000 | FLAG_UNK_20000;
@@ -32,7 +32,7 @@ s32 func_ptr_80170004(Entity* self) {
         break;
 
     case 1:
-        self->animCurFrame = PLAYER.animCurFrame + 0x8000;
+        self->animCurFrame = PLAYER.animCurFrame + ANIMSET_OVL_FLAG;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         DecelerateX(FIX(15.0 / 32.0));
@@ -46,8 +46,8 @@ s32 func_ptr_80170004(Entity* self) {
         break;
 
     case 2:
-        self->drawMode = 0;
-        self->animCurFrame = PLAYER.animCurFrame + 0x8000;
+        self->drawMode = DRAW_DEFAULT;
+        self->animCurFrame = PLAYER.animCurFrame + ANIMSET_OVL_FLAG;
         if (PLAYER.animFrameIdx == 0xE) {
             self->facingLeft++;
             self->facingLeft &= 1;
@@ -59,7 +59,7 @@ s32 func_ptr_80170004(Entity* self) {
 
     case 3:
         self->drawMode = DRAW_TPAGE;
-        self->animCurFrame = PLAYER.animCurFrame + 0x8000;
+        self->animCurFrame = PLAYER.animCurFrame + ANIMSET_OVL_FLAG;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         DecelerateX(FIX(15.0 / 32.0));

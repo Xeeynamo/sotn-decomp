@@ -88,8 +88,8 @@ void EntityWeaponAttack(Entity* self) {
         self->ext.weapon.lifetime--;
         if ((self->ext.weapon.lifetime) == 0) {
             self->drawFlags = 3;
-            self->rotY = FIX(1.0 / 256.0);
-            self->rotX = FIX(1.0 / 256.0);
+            self->rotY = 256;
+            self->rotX = 256;
             self->ext.weapon.lifetime = 14;
             self->step++;
         }
@@ -109,7 +109,7 @@ void EntityWeaponAttack(Entity* self) {
             self->palette = PAL_OVL(0x15F);
         }
         if (self->rotX <= 0) {
-            self->rotX = FIX(3.0 / 32768.0);
+            self->rotX = 6;
         }
 
         self->ext.weapon.lifetime--;
