@@ -32,7 +32,93 @@ static void DebugInputWait(const char* msg) {
         DebugShowWaitInfo(msg);
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_018", EntityWeaponAttack);
+extern AnimationFrame D_82000_8017A6A8[];
+extern AnimationFrame D_82000_8017A6E4[];
+
+void EntityWeaponAttack(Entity* self) {
+    self->hitboxState = 0;
+    switch (self->step) {
+    // bat appears
+    case 0:
+        self->posX.i.hi = PLAYER.posX.i.hi;
+        self->posY.i.hi = PLAYER.posY.i.hi - 0x38;
+        SetSpriteBank1(g_Animset);
+
+        self->animSet = ANIMSET_OVL(0x10);
+        self->palette = PAL_DRA(0x110);
+        self->unk5A = 0x64;
+        if (g_HandId != 0) {
+            self->animSet += 2;
+            self->palette += 0x18;
+            self->unk5A += 2;
+        }
+        self->facingLeft = 0;
+        self->flags = FLAG_UNK_04000000 | FLAG_UNK_100000;
+        self->zPriority = PLAYER.zPriority - 4;
+        self->unk4C = D_82000_8017A6A8;
+        SetWeaponProperties(self, 1);
+        g_api.PlaySfx(SE_WPN_POWER_OF_SIRE);
+        g_Player.D_80072F00[12] = 4;
+        self->step++;
+        break;
+    // image of dracula appears
+    case 1:
+        if (self->animFrameDuration < 0) {
+            self->drawMode = FLAG_DRAW_UNK20 | FLAG_DRAW_UNK10;
+            self->unk4C = D_82000_8017A6E4;
+            self->animFrameIdx = 0;
+            self->animFrameDuration = 0;
+            self->ext.weapon.lifetime = 71;
+            g_api.func_80118C28(5);
+            g_api.func_80102CD8(3);
+            g_api.PlaySfx(SFX_TELEPORT_BANG_A);
+            self->step++;
+        }
+        break;
+    // emit starbursts
+    case 2:
+        if (self->ext.weapon.lifetime % 8 == 0 &&
+            self->ext.weapon.lifetime >= 9 &&
+            g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xC) + FACTORY(0, 0x38), 0)) {
+            g_api.func_80118C28(6);
+            SetWeaponProperties(self, 0);
+        }
+
+        self->ext.weapon.lifetime--;
+        if ((self->ext.weapon.lifetime) == 0) {
+            self->drawFlags = 3;
+            self->rotY = FIX(1.0 / 256.0);
+            self->rotX = FIX(1.0 / 256.0);
+            self->ext.weapon.lifetime = 14;
+            self->step++;
+        }
+        break;
+    // squish and explode
+    case 3:
+        self->rotX -= FIX(1.0 / 2048.0);
+        if (self->rotY < FIX(1.0 / 64.0)) {
+            self->rotY += FIX(3.0 / 1024.0);
+        }
+        if (self->rotX == FIX(1.0 / 1024.0)) {
+            self->rotPivotX = 1;
+            g_api.PlaySfx(SFX_TELEPORT_BANG_B);
+            g_api.CreateEntFactoryFromEntity(self, FACTORY(0xC00, 4), 0);
+        }
+        if (self->rotX == FIX(1.0 / 2048.0)) {
+            self->palette = PAL_OVL(0x15F);
+        }
+        if (self->rotX <= 0) {
+            self->rotX = FIX(3.0 / 32768.0);
+        }
+
+        self->ext.weapon.lifetime--;
+        if (self->ext.weapon.lifetime == 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 extern AnimationFrame D_82000_8017A724[];
 
@@ -77,13 +163,13 @@ s32 func_ptr_80170004(Entity* self) {
         self->posY.val += (scale + 2) * self->velocityY;
 
         g_api.PlaySfx(SFX_UNK_69D);
-        self->ext.timer.t = 6;
+        self->ext.weapon.lifetime = 6;
         self->step++;
         break;
 
     case 1:
-        self->ext.timer.t--;
-        if (self->ext.timer.t == 0) {
+        self->ext.weapon.lifetime--;
+        if (self->ext.weapon.lifetime == 0) {
             self->step++;
         }
         break;
