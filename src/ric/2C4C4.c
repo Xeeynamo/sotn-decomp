@@ -2294,8 +2294,8 @@ void RicEntityVibhutiCrashCloud(Entity* entity) {
                 entity->ext.vibCrashCloud.parent->ext.vibhutiCrash.unk84;
             entity->posY.val =
                 entity->ext.vibCrashCloud.parent->ext.vibhutiCrash.unk88;
-            entity->facingLeft = entity->ext.vibCrashCloud.parent->ext
-                                     .vibhutiCrash.unk8C;
+            entity->facingLeft =
+                entity->ext.vibCrashCloud.parent->ext.vibhutiCrash.unk8C;
             entity->ext.factory.unkB0 = 0x18;
             RicSetSubweaponParams(entity);
             entity->unk5A = 0x79;
