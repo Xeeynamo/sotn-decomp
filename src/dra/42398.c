@@ -1237,7 +1237,7 @@ void HandleTitle(void) {
                 break;
             }
         }
-        D_8003C9A4 = 0;
+        g_GameEngineStep = Engine_Init;
         g_GameStep++;
         break;
     case 6:

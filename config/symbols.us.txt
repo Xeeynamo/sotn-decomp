@@ -816,6 +816,7 @@ _svm_vab_tn = 0x8003C958;
 g_Timer = 0x8003C998;
 g_MapCursorTimer = 0x8003C99C;
 g_PlayableCharacter = 0x8003C9A0;
+g_GameEngineStep = 0x8003C9A4;
 g_MenuNavigation = 0x8003C9A8;
 g_MenuNavigation_cursorRelic = 0x8003C9AC;
 g_MenuNavigation_cursorEquip = 0x8003C9B0;

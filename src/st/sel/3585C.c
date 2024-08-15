@@ -334,7 +334,7 @@ void func_801B60D4(void) {
     s32 i;
     s32 var_v1;
 
-    switch (D_8003C9A4) {
+    switch (g_GameEngineStep) {
     case 0:
         if (!g_IsUsingCd) {
             D_8003C728 = 1;
@@ -343,7 +343,7 @@ void func_801B60D4(void) {
             } else {
                 g_CurrentStream = 3;
             }
-            D_8003C9A4++;
+            g_GameEngineStep++;
         }
         break;
 
@@ -358,7 +358,7 @@ void func_801B60D4(void) {
         } else {
             g_GameStep = 0x100;
         }
-        D_8003C9A4++;
+        g_GameEngineStep++;
         break;
 
     case 2:
@@ -375,7 +375,7 @@ void func_801B60D4(void) {
         g_api.func_800EA5E4(ANIMSET_DRA(0));
         g_api.func_800EA5E4(ANIMSET_OVL(5));
         g_api.LoadGfxAsync(ANIMSET_OVL(0));
-        D_8003C9A4++;
+        g_GameEngineStep++;
         break;
 
     case 3:
@@ -409,23 +409,23 @@ void func_801B60D4(void) {
                 ent++;
             }
 
-            D_8003C9A4++;
+            g_GameEngineStep++;
         }
         break;
 
     case 4:
         ClearImage(&D_8018258C, 0, 0, 0);
-        D_8003C9A4++;
+        g_GameEngineStep++;
         break;
 
     case 5:
         SetTitleDisplayBuffer256();
-        D_8003C9A4++;
+        g_GameEngineStep++;
         break;
 
     case 6:
         g_api.func_800EA5E4(ANIMSET_DRA(0));
-        D_8003C9A4++;
+        g_GameEngineStep++;
         break;
 
     case 7:
@@ -433,7 +433,7 @@ void func_801B60D4(void) {
         if (func_801B79D4(ent4) != 0) {
             g_Entities[1].step = 0;
             D_801BC3E4 = 1;
-            D_8003C9A4++;
+            g_GameEngineStep++;
         }
         break;
 

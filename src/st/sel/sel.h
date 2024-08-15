@@ -160,8 +160,8 @@ extern s32 D_801BAF14;
 extern s32 D_801BAF18[NUM_GFX][2];
 extern s32 D_801BAFC0;
 extern s32 MainMenuMaskPrimIndex;
-extern s32 D_801BAFC8;
-extern s32 D_801BAFCC;
+extern s32 g_SelNextCrossPressEngStep;
+extern s32 g_SelEng220NextStep;
 extern u8* D_801BAFD0; // Pointer to texture pattern
 extern s32 D_801BAFD4;
 extern s32 D_801BAFD8;
@@ -209,7 +209,7 @@ extern s32 D_801D104C[0x1680];
 extern StreamEnv g_StreamEnv;
 extern s32 D_801D6B04;
 extern s32 g_InputCursorPos;
-extern s32 D_801D6B0C;
+extern s32 g_MainMenuCursor;
 extern s32 g_MemcardBlockRead;
 extern char g_InputSaveName[12];
 extern s32 g_MemcardStep;
@@ -217,7 +217,7 @@ extern s32 D_801D6B00;
 extern s32 D_801D6B24;
 
 void SEL_Update(void);
-void HandleMainMenu(void);
+void HandleTitleScreen(void);
 void func_801ACBE4(s32 arg0, u16 arg1);
 void func_801AD1D0(void);
 void func_801AD218(void);

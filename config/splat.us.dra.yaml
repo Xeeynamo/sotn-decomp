@@ -165,7 +165,7 @@ segments:
       # - [0x3C4C8, .rodata, demo] # func_800F0608
       - [0x3C514, .rodata, 5087C] # func_800F0940
       # - [0x3C534, .rodata, 5087C] # func_800F2860
-      # - [0x3C55C, .rodata, 5087C] # func_800F298C
+      # - [0x3C55C, .rodata, 5087C] # RunMainEngine
       - [0x3C5D4, .rodata, menu] # func_800F7F64
       # - [0x3C6AC, .rodata, menu] # MenuDraw
       # - [0x3C6EC, .rodata, menu] # func_800F9F40
