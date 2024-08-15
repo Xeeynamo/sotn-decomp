@@ -62,6 +62,7 @@ static Weapon dummy_header = {
 
 extern Weapon w_000_header;
 extern Weapon w_002_header;
+extern Weapon w_046_header;
 Weapon* g_Weapons[] = {
     &w_000_header, &dummy_header, &w_002_header, &dummy_header, &dummy_header,
     &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
@@ -72,7 +73,7 @@ Weapon* g_Weapons[] = {
     &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
     &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
     &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
-    &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
+    &dummy_header, &w_046_header, &dummy_header, &dummy_header, &dummy_header,
     &dummy_header, &dummy_header, &dummy_header, &dummy_header, &dummy_header,
     &dummy_header, &dummy_header, &dummy_header, &dummy_header,
 };
