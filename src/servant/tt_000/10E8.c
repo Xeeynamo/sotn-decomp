@@ -461,6 +461,9 @@ void func_801719E0(Entity* self) {
     g_api.func_8011A3AC(self, 0, 0, &D_80174C30);
 }
 
+void ProcessEvent(Entity* self, bool resetEvent);
+extern u16 D_80170448[48];
+
 void func_80171ED4(s32 arg0) {
     u16* dst;
     u16* src;
@@ -469,6 +472,13 @@ void func_80171ED4(s32 arg0) {
     s32 x;
     SpriteParts** spriteBanks;
     Entity* e;
+
+#ifdef VERSION_PC
+    // i exceeds the size of D_80170448
+    const int len = LEN(D_80170448);
+#else
+    const int len = 256;
+#endif
 
     if ((arg0 == 1) || (arg0 == 3)) {
         ProcessEvent(NULL, true);
@@ -480,7 +490,7 @@ void func_80171ED4(s32 arg0) {
     dst = &g_Clut[0x1400];
     src = D_80170448;
 
-    for (i = 0; i < 256; i++) {
+    for (i = 0; i < len; i++) {
         *dst++ = *src++;
     }
 
@@ -535,6 +545,9 @@ void func_80171ED4(s32 arg0) {
     e->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
     D_80174D3C = 0;
 }
+
+s16 func_80173F74(s16 x1, s16 x2, s16 minDistance);
+s16 func_80173F30(Entity* entity, s16 x, s16 y);
 
 #ifdef VERSION_PSP
 INCLUDE_ASM("servant/tt_000/nonmatchings/10E8", func_80172120);
@@ -1065,7 +1078,7 @@ void func_80173C2C(Entity* entity) {
 }
 
 #ifndef VERSION_PSP
-u32 UpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
+u32 Tt000UpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
     AnimationFrame* animFrame;
     s32 ret;
 
