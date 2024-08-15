@@ -63,18 +63,18 @@
 <polygon fill="black" stroke="black" points="405.36,-44.92 410.81,-35.83 400.88,-39.53 405.36,-44.92"/>
 <text text-anchor="middle" x="405.81" y="-39.63" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- ric.UpdateEntityRichter -->
+<!-- ric.RicMain -->
 <g id="node5" class="node">
-<title>ric.UpdateEntityRichter</title>
-<g id="a_node5"><a xlink:href="ric.UpdateEntityRichter.svg" xlink:title="ric.UpdateEntityRichter">
-<ellipse fill="green" stroke="black" cx="217.05" cy="-378" rx="122.68" ry="18"/>
-<text text-anchor="middle" x="217.05" y="-374.3" font-family="Times,serif" font-size="14.00">ric.UpdateEntityRichter</text>
+<title>ric.RicMain</title>
+<g id="a_node5"><a xlink:href="ric.RicMain.svg" xlink:title="ric.RicMain">
+<ellipse fill="green" stroke="black" cx="217.05" cy="-378" rx="63.89" ry="18"/>
+<text text-anchor="middle" x="217.05" y="-374.3" font-family="Times,serif" font-size="14.00">ric.RicMain</text>
 </a>
 </g>
 </g>
-<!-- ric.UpdateEntityRichter&#45;&gt;ric.func_8015885C -->
+<!-- ric.RicMain&#45;&gt;ric.func_8015885C -->
 <g id="edge4" class="edge">
-<title>ric.UpdateEntityRichter&#45;&gt;ric.func_8015885C</title>
+<title>ric.RicMain&#45;&gt;ric.func_8015885C</title>
 <path fill="none" stroke="black" d="M217.05,-359.93C217.05,-328.97 217.05,-263.3 217.05,-226.13"/>
 <polygon fill="black" stroke="black" points="220.55,-226.02 217.05,-216.02 213.55,-226.02 220.55,-226.02"/>
 <text text-anchor="middle" x="212.05" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>

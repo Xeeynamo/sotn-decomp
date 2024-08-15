@@ -1162,15 +1162,6 @@
 | 1.00 | true     | EntityWeaponAttack                  | ../../asm/us/weapon/nonmatchings/w_036/EntityWeaponAttack.s 
 | 1.00 | true     | EntityWeaponAttack                  | ../../asm/us/weapon/nonmatchings/w_057/EntityWeaponAttack.s 
 -------------------------------------------------------------------------------
-| 0.90 | true     | SetReverbDepth                      | ../../asm/us/dra/nonmatchings/91EBC/SetReverbDepth.s 
-| 1.00 | true     | func_801073C0                       | ../../asm/us/dra/nonmatchings/cd/func_801073C0.s 
-| 0.90 | true     | _addque                             | ../../asm/us/main/nonmatchings/psxsdk/libgpu/sys/_addque.s 
-| 0.90 | true     | SsSepClose                          | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssclose/SsSepClose.s 
-| 0.90 | true     | SsSeqClose                          | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
-| 0.90 | true     | SsSeqStop                           | ../../asm/us/main/nonmatchings/psxsdk/libsnd/stop/SsSeqStop.s 
-| 1.00 | true     | func_801B9924                       | ../../asm/us/st/sel/nonmatchings/stream/func_801B9924.s 
-| 0.90 | true     | func_801BA6A8                       | ../../asm/us/st/sel/nonmatchings/stream/func_801BA6A8.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | D_800DBF44                          | ../../asm/us/dra/nonmatchings/save_mgr/D_800DBF44.s 
 | 1.00 | true     | D_800DBF4C                          | ../../asm/us/dra/nonmatchings/save_mgr/D_800DBF4C.s 
 | 1.00 | true     | D_800DBF54                          | ../../asm/us/dra/nonmatchings/save_mgr/D_800DBF54.s 
@@ -1630,11 +1621,19 @@
 | 1.00 | true     | Update                              | ../../asm/us/st/st0/nonmatchings/update/Update.s 
 | 1.00 | true     | Update                              | ../../asm/us/st/wrp/nonmatchings/st_update/Update.s 
 -------------------------------------------------------------------------------
+| 0.90 | true     | SetReverbDepth                      | ../../asm/us/dra/nonmatchings/91EBC/SetReverbDepth.s 
+| 1.00 | true     | func_801073C0                       | ../../asm/us/dra/nonmatchings/cd/func_801073C0.s 
+| 0.90 | true     | _addque                             | ../../asm/us/main/nonmatchings/psxsdk/libgpu/sys/_addque.s 
+| 0.90 | true     | SsSepClose                          | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssclose/SsSepClose.s 
+| 0.90 | true     | SsSeqClose                          | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
+| 0.90 | true     | SsSeqStop                           | ../../asm/us/main/nonmatchings/psxsdk/libsnd/stop/SsSeqStop.s 
+| 1.00 | true     | func_801B9924                       | ../../asm/us/st/sel/nonmatchings/stream/func_801B9924.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_801072DC                       | ../../asm/us/dra/nonmatchings/63ED4/func_801072DC.s 
 | 1.00 | true     | func_800FAC98                       | ../../asm/us/dra/nonmatchings/menu/func_800FAC98.s 
 | 1.00 | true     | SsStart                             | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ssstart/SsStart.s 
 | 1.00 | true     | SsUtReverbOn                        | ../../asm/us/main/nonmatchings/psxsdk/libsnd/ut_ron/SsUtReverbOn.s 
-| 1.00 | true     | func_8015CC50                       | ../../asm/us/ric/nonmatchings/20920/func_8015CC50.s 
+| 1.00 | true     | RicSetDebug                         | ../../asm/us/ric/nonmatchings/20920/RicSetDebug.s 
 | 1.00 | true     | func_8015D9B4                       | ../../asm/us/ric/nonmatchings/21250/func_8015D9B4.s 
 | 1.00 | true     | func_801B1D88                       | ../../asm/us/st/sel/nonmatchings/2C048/func_801B1D88.s 
 -------------------------------------------------------------------------------
@@ -2015,7 +2014,7 @@
 | 1.00 | true     | func_801B0058                       | ../../asm/us/st/st0/nonmatchings/30030/func_801B0058.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CheckMoveDirection                  | ../../asm/us/dra/nonmatchings/6D59C/CheckMoveDirection.s 
-| 1.00 | true     | func_8015C9CC                       | ../../asm/us/ric/nonmatchings/20920/func_8015C9CC.s 
+| 1.00 | true     | RicCheckMovement                    | ../../asm/us/ric/nonmatchings/20920/RicCheckMovement.s 
 | 1.00 | true     | func_13F000_8017A718                | ../../asm/us/weapon/nonmatchings/w_045/func_13F000_8017A718.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | DraPrimDecreaseBrightness           | ../../asm/us/dra/nonmatchings/843B0/DraPrimDecreaseBrightness.s 
@@ -2120,13 +2119,13 @@
 | 0.97 | true     | func_80156CCC                       | ../../asm/us/ric/nonmatchings/1AC60/func_80156CCC.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SetPlayerStep                       | ../../asm/us/dra/nonmatchings/692E8/SetPlayerStep.s 
-| 1.00 | true     | RicSetPlayerStep                    | ../../asm/us/ric/nonmatchings/202A8/RicSetPlayerStep.s 
+| 1.00 | true     | RicSetStep                          | ../../asm/us/ric/nonmatchings/202A8/RicSetStep.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8010D010                       | ../../asm/us/dra/nonmatchings/692E8/func_8010D010.s 
 | 0.97 | true     | func_8010D2C8                       | ../../asm/us/dra/nonmatchings/692E8/func_8010D2C8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8010DA2C                       | ../../asm/us/dra/nonmatchings/6D59C/func_8010DA2C.s 
-| 1.00 | true     | func_8015C920                       | ../../asm/us/ric/nonmatchings/20920/func_8015C920.s 
+| 1.00 | true     | RicSetAnimation                     | ../../asm/us/ric/nonmatchings/20920/RicSetAnimation.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8010E168                       | ../../asm/us/dra/nonmatchings/6D59C/func_8010E168.s 
 | 1.00 | true     | func_8015CAD4                       | ../../asm/us/ric/nonmatchings/20920/func_8015CAD4.s 
@@ -2401,8 +2400,11 @@
 | 1.00 | true     | SpuRead                             | ../../asm/us/main/nonmatchings/psxsdk/libspu/s_r/SpuRead.s 
 | 1.00 | true     | SpuWrite                            | ../../asm/us/main/nonmatchings/psxsdk/libspu/s_w/SpuWrite.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_8015B18C                       | ../../asm/us/ric/nonmatchings/1CB04/func_8015B18C.s 
-| 0.91 | true     | func_8015B1E8                       | ../../asm/us/ric/nonmatchings/1CB04/func_8015B1E8.s 
+| 1.00 | true     | SpuSetVoiceAttr                     | ../../asm/us/main/nonmatchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
+| 0.90 | true     | func_801BA6A8                       | ../../asm/us/st/sel/nonmatchings/stream/func_801BA6A8.s 
+-------------------------------------------------------------------------------
+| 0.91 | true     | RicHandleGenericSubwpnCrash         | ../../asm/us/ric/nonmatchings/1CB04/RicHandleGenericSubwpnCrash.s 
+| 1.00 | true     | RicHandleHydrostorm                 | ../../asm/us/ric/nonmatchings/1CB04/RicHandleHydrostorm.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8015F414                       | ../../asm/us/ric/nonmatchings/21250/func_8015F414.s 
 | 0.96 | true     | func_8015F680                       | ../../asm/us/ric/nonmatchings/21250/func_8015F680.s 

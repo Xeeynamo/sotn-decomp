@@ -15,18 +15,18 @@
 <ellipse fill="green" stroke="black" cx="98.14" cy="-18" rx="98.28" ry="18"/>
 <text text-anchor="middle" x="98.14" y="-14.3" font-family="Times,serif" font-size="14.00">ric.func_801587C0</text>
 </g>
-<!-- ric.func_80156F40 -->
+<!-- ric.RicInit -->
 <g id="node2" class="node">
-<title>ric.func_80156F40</title>
-<g id="a_node2"><a xlink:href="ric.func_80156F40.svg" xlink:title="ric.func_80156F40">
-<ellipse fill="green" stroke="black" cx="98.14" cy="-198" rx="97.48" ry="18"/>
-<text text-anchor="middle" x="98.14" y="-194.3" font-family="Times,serif" font-size="14.00">ric.func_80156F40</text>
+<title>ric.RicInit</title>
+<g id="a_node2"><a xlink:href="ric.RicInit.svg" xlink:title="ric.RicInit">
+<ellipse fill="green" stroke="black" cx="98.14" cy="-198" rx="56.59" ry="18"/>
+<text text-anchor="middle" x="98.14" y="-194.3" font-family="Times,serif" font-size="14.00">ric.RicInit</text>
 </a>
 </g>
 </g>
-<!-- ric.func_80156F40&#45;&gt;ric.func_801587C0 -->
+<!-- ric.RicInit&#45;&gt;ric.func_801587C0 -->
 <g id="edge1" class="edge">
-<title>ric.func_80156F40&#45;&gt;ric.func_801587C0</title>
+<title>ric.RicInit&#45;&gt;ric.func_801587C0</title>
 <path fill="none" stroke="black" d="M98.14,-179.93C98.14,-148.97 98.14,-83.3 98.14,-46.13"/>
 <polygon fill="black" stroke="black" points="101.64,-46.02 98.14,-36.02 94.64,-46.02 101.64,-46.02"/>
 <text text-anchor="middle" x="93.14" y="-168.73" font-family="Times,serif" font-size="14.00">1</text>
