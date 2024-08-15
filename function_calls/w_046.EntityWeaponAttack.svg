@@ -12,7 +12,7 @@
 <!-- w_046.EntityWeaponAttack -->
 <g id="node1" class="node">
 <title>w_046.EntityWeaponAttack</title>
-<ellipse fill="red" stroke="black" cx="962.44" cy="-198" rx="138.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="962.44" cy="-198" rx="138.38" ry="18"/>
 <text text-anchor="middle" x="962.44" y="-194.3" font-family="Times,serif" font-size="14.00">w_046.EntityWeaponAttack</text>
 </g>
 <!-- dra.AllocPrimitives -->
