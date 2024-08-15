@@ -51,8 +51,8 @@ void EntityWeaponAttack(Entity* self) {
         self->step++;
     }
     if (self->step == 2) {
-        self->ext.timer.t--;
-        if (!self->ext.timer.t) {
+        self->ext.weapon.lifetime--;
+        if (!self->ext.weapon.lifetime) {
             DestroyEntity(self);
         }
     } else {
@@ -66,7 +66,7 @@ void EntityWeaponAttack(Entity* self) {
         }
         if (g_api.UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
             self->step = 2;
-            self->ext.timer.t = 4;
+            self->ext.weapon.lifetime = 4;
             self->animCurFrame = 0;
             self->hitboxState = 0;
         }
