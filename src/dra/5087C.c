@@ -1152,7 +1152,7 @@ void RunMainEngine(void) {
     LayerDef* layer;
     s32 i;
     s32 ent_unk68;
-    void (*RichterInitializer)(int isPrologue);
+    void (*playerInit)(int isPrologue);
     void (*RichterUpdater)(void);
     s32 tempX;
     s32 tempY;
@@ -1175,11 +1175,11 @@ void RunMainEngine(void) {
         DrawHud();
         func_800F2404(0);
         if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
-            RichterInitializer = g_PlOvl.D_8013C004;
+            playerInit = g_PlOvl.D_8013C004;
             if (g_StageId == STAGE_ST0) {
-                RichterInitializer(1);
+                playerInit(1);
             } else {
-                RichterInitializer(0);
+                playerInit(0);
             }
         } else {
             func_80109594();

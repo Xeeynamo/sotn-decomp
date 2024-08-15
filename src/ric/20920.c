@@ -1,7 +1,7 @@
 #include "ric.h"
 
-void func_8015C920(AnimationFrame* unk0) {
-    g_CurrentEntity->unk4C = unk0;
+void RicSetAnimation(AnimationFrame* anim) {
+    g_CurrentEntity->unk4C = anim;
     g_CurrentEntity->animFrameDuration = 0;
     g_CurrentEntity->animFrameIdx = 0;
 }
@@ -33,7 +33,7 @@ static void DecelerateY(s32 speed) {
     }
 }
 
-s32 func_8015C9CC(void) {
+s32 RicCheckMovement(void) {
     if (g_Player.unk44 & 2) {
         return 0;
     }
@@ -74,11 +74,11 @@ void func_8015CAAC(s32 speed) {
 void func_8015CAD4(s32 arg0, s16 arg1) {
     if (arg0 == 0) {
         RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x1500, 44), 0);
-        if (arg1 >= g_Player.D_80072F00[13]) {
-            g_Player.D_80072F00[13] = arg1;
+        if (arg1 >= g_Player.D_80072F00[PL_T_INVINCIBLE]) {
+            g_Player.D_80072F00[PL_T_INVINCIBLE] = arg1;
         }
-    } else if (g_Player.D_80072F00[14] <= arg1) {
-        g_Player.D_80072F00[14] = arg1;
+    } else if (g_Player.D_80072F00[PL_T_INVINCIBILITY_CONSUMABLE] <= arg1) {
+        g_Player.D_80072F00[PL_T_INVINCIBILITY_CONSUMABLE] = arg1;
     }
 }
 
@@ -101,7 +101,7 @@ void func_8015CB58(s32 arg0, s32 arg1) {
     g_Entities[UNK_ENTITY_1].ext.generic.unk7C.S8.unk0 = 1;
     g_Entities[UNK_ENTITY_1].ext.generic.unk7E.modeU8.unk0 = 0xA;
     if (arg1 != 0) {
-        g_Player.D_80072F00[15] = 4;
+        g_Player.D_80072F00[PL_T_15] = 4;
     }
 }
 
@@ -114,7 +114,7 @@ void func_8015CC28(void) {
     entity->ext.generic.unk7C.U8.unk0 = 0;
 }
 
-void func_8015CC50() { RicSetPlayerStep(0xF0); }
+void RicSetDebug() { RicSetStep(PL_S_DEBUG); }
 
 void func_8015CC70(s16 arg0) {
     PLAYER.step_s = arg0;
@@ -128,63 +128,58 @@ void func_8015CC70(s16 arg0) {
     }
 }
 
-void func_8015CCC8(s32 arg0, s32 velocityX) {
-    RicSetPlayerStep(2);
-    func_8015C920(D_801554C0);
+void RicSetCrouch(s32 kind, s32 velocityX) {
+    RicSetStep(PL_S_CROUCH);
+    RicSetAnimation(anim_crouch);
     PLAYER.velocityX = velocityX;
     PLAYER.velocityY = 0;
-    if (arg0 == 1) {
-        PLAYER.unk4C = &D_801554B0;
+    if (kind == 1) {
+        PLAYER.unk4C = anim_land_strong_impact;
         PLAYER.step_s = 4;
     }
-    if (arg0 == 2) {
-        PLAYER.unk4C = &D_801554D0;
+    if (kind == 2) {
+        PLAYER.unk4C = anim_crouch_from_stand;
         PLAYER.step_s = 1;
     }
-    if (arg0 == 3) {
-        PLAYER.unk4C = &D_801554C8;
+    if (kind == 3) {
+        PLAYER.unk4C = anim_land_from_run;
         PLAYER.step_s = 4;
     }
 }
 
 // Corresponding DRA function is func_8010E570 (much more complex)
-void func_8015CD98(s32 velocityX) {
+void RicSetStand(s32 velocityX) {
     PLAYER.velocityX = velocityX;
     PLAYER.velocityY = 0;
     g_Player.unk44 = 0;
-    RicSetPlayerStep(0);
-#ifdef VERSION_PC
-    // I think this is uninitialized and works by accident
-    g_CurrentEntity = &PLAYER;
-#endif
-    func_8015C920(&D_801553BC);
+    RicSetStep(PL_S_STAND);
+    RicSetAnimation(anim_stand);
 }
 
-void func_8015CDE0(s32 arg0) {
-    if ((g_Player.D_80072F00[8] != 0) && (g_Player.unk7A == 0)) {
-        func_8015CE7C();
+void RicSetWalk(s32 arg0) {
+    if ((g_Player.D_80072F00[PL_T_8] != 0) && (g_Player.unk7A == 0)) {
+        RicSetRun();
         return;
-    } else {
-        g_Player.D_80072F00[1] = 8;
     }
-    g_Player.D_80072F00[8] = 0xC;
-    g_Player.D_80072F00[1] = 0xC;
+    g_Player.D_80072F00[PL_T_CURSE] = 8;
+    g_Player.D_80072F00[PL_T_8] = 12;
+    g_Player.D_80072F00[PL_T_CURSE] = 12;
     g_Player.unk44 = 0;
-    RicSetPlayerStep(1);
-    func_8015C920(&D_80155488);
-    RicSetSpeedX(0x14000);
+    RicSetStep(PL_S_WALK);
+    RicSetAnimation(ric_anim_walk);
+    RicSetSpeedX(FIX(1.25));
     PLAYER.velocityY = 0;
 }
 
-void func_8015CE7C(void) {
+void RicSetRun(void) {
     if (g_Player.unk7A != 0) {
-        func_8015CDE0(0);
+        RicSetWalk(0);
     } else {
         g_Player.unk44 = 0;
-        RicSetPlayerStep(0x19);
-        func_8015C920(&D_80155670);
-        RicSetSpeedX(0x24000);
-        g_Player.D_80072F00[11] = 0x28;
+        RicSetStep(PL_S_RUN);
+        RicSetAnimation(ric_anim_run);
+        RicSetSpeedX(FIX(2.25));
+        g_Player.D_80072F00[PL_T_RUN] = 40;
         PLAYER.velocityY = 0;
         RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x500, 1), 0);
     }
@@ -199,7 +194,7 @@ void func_8015CF08(void) {
     }
     if (g_Player.unk50 != 1) {
         if (g_Player.unk50 != 0x19) {
-            func_8015C920(&D_80155534);
+            RicSetAnimation(D_80155534);
             goto block_6;
         }
         goto block_7;
@@ -209,29 +204,29 @@ block_6:
     block_7:
         g_Player.unk44 = 0x10;
     }
-    RicSetPlayerStep(3);
+    RicSetStep(PL_S_FALL);
     PLAYER.velocityY = 0x20000;
-    g_Player.D_80072F00[5] = 8;
-    g_Player.D_80072F00[6] = 8;
-    g_Player.D_80072F00[1] = 0;
-    g_Player.D_80072F00[8] = 0;
+    g_Player.D_80072F00[PL_T_5] = 8;
+    g_Player.D_80072F00[PL_T_6] = 8;
+    g_Player.D_80072F00[PL_T_CURSE] = 0;
+    g_Player.D_80072F00[PL_T_8] = 0;
     if (g_Player.unk50 == 0x17) {
-        g_Player.D_80072F00[6] = 0;
-        g_Player.D_80072F00[5] = 0;
+        g_Player.D_80072F00[PL_T_6] = 0;
+        g_Player.D_80072F00[PL_T_5] = 0;
         PLAYER.animFrameIdx = 2;
         PLAYER.animFrameDuration = 0x10;
         PLAYER.velocityX /= 2;
     }
 }
 
-void func_8015D020(void) {
-    if (g_Player.unk72 != 0) {
+void RicSetJump(void) {
+    if (g_Player.unk72) {
         func_8015CF08();
         return;
     }
-    if (func_8015C9CC() != 0 || PLAYER.step == Player_Slide) {
-        func_8015C920(&D_8015550C);
-        if (PLAYER.step == Player_RichterSprint) {
+    if (RicCheckMovement() != 0 || PLAYER.step == Player_Slide) {
+        RicSetAnimation(D_8015550C);
+        if (PLAYER.step == PL_S_RUN) {
             RicSetSpeedX(FIX(2.25));
             g_Player.unk44 = 0x10;
         } else {
@@ -239,54 +234,54 @@ void func_8015D020(void) {
             g_Player.unk44 = 0;
         }
     } else {
-        func_8015C920(&D_801554F0);
+        RicSetAnimation(D_801554F0);
         PLAYER.velocityX = 0;
         g_Player.unk44 = 4;
     }
-    RicSetPlayerStep(Player_Jump);
-    if (D_80154570 != 0) {
+    RicSetStep(PL_S_JUMP);
+    if (g_IsPrologueStage) {
         PLAYER.velocityY = -FIX(4.6875);
     } else {
         PLAYER.velocityY = -FIX(5.4375);
     }
 }
 
-void DoHighJump(void) {
-    RicSetPlayerStep(Player_HighJump);
+void RicSetHighJump(void) {
+    RicSetStep(PL_S_HIGHJUMP);
     PLAYER.velocityX = 0;
     RicSetSpeedX(FIX(1.25));
     PLAYER.velocityY = FIX(-7.5);
     g_Player.pl_high_jump_timer = 0;
-    func_8015C920(&D_8015579C);
+    RicSetAnimation(ric_anim_high_jump);
     func_8015CC28();
     RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 45), 0);
-    g_api.PlaySfx(0x6FB);
-    g_Player.D_80072F00[12] = 4;
-    if (g_Player.unk72 != 0) {
+    g_api.PlaySfx(SFX_GRUNT_C);
+    g_Player.D_80072F00[PL_T_12] = 4;
+    if (g_Player.unk72) {
         PLAYER.velocityY = 0;
     }
 }
 
-s32 func_8015D1D0(s16 subWpnId, s16 subWpnUnk6) {
+s32 func_8015D1D0(s16 subWpnId, s16 maxParticles) {
     Entity* entity;
-    s32 b0MatchCount;
-    s32 nullObjCount;
+    s32 nFound;
+    s32 nEmpty;
     s32 i;
 
     entity = &g_Entities[32];
-    for (i = 0, b0MatchCount = 0, nullObjCount = 0; i < 0x10; i++, entity++) {
+    for (i = 0, nFound = 0, nEmpty = 0; i < 16; i++, entity++) {
         if (entity->entityId == E_NONE) {
-            nullObjCount++;
+            nEmpty++;
         }
         if (entity->ext.generic.unkB0 != 0 &&
             entity->ext.generic.unkB0 == subWpnId) {
-            b0MatchCount++;
+            nFound++;
         }
-        if (b0MatchCount >= subWpnUnk6) {
+        if (nFound >= maxParticles) {
             return -1;
         }
     }
-    if (nullObjCount == 0) {
+    if (nEmpty == 0) {
         return -1;
     }
     return 0;

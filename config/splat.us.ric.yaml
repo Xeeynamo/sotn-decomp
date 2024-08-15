@@ -33,7 +33,7 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, .data, d_00000]
+      - [0x0, .data, pl_header]
       - [0x20, spritesheet, richter, disks/us/BIN/F_GAME2.BIN, 32]
       - [0x170AC, .data, spriteparts]
       - [0x18568, .data, d_18568]

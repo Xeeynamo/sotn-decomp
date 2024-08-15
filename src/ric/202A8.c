@@ -1,7 +1,7 @@
 
 #include "ric.h"
 
-void func_8015C2A8(void) {
+void RicHandleHighJump(void) {
     bool loadAnim = 0;
     s32 temp;
 
@@ -56,8 +56,8 @@ void func_8015C2A8(void) {
     }
 
     if (loadAnim) {
-        func_8015C920(&D_80155534);
-        RicSetPlayerStep(4);
+        RicSetAnimation(D_80155534);
+        RicSetStep(PL_S_JUMP);
     }
 }
 
@@ -171,7 +171,7 @@ void func_8015C6D4(void) {
     }
 }
 
-void RicSetPlayerStep(PlayerSteps step) {
+void RicSetStep(int step) {
     PLAYER.step = step;
     PLAYER.step_s = 0;
 }

@@ -228,7 +228,7 @@ void RicEntityTeleport(Entity* self) {
 }
 
 // Entity #10, uses blueprint #10. Appears related to poisoning, due to call in
-// func_8015D3CC
+// RicPrepareAttack
 void func_80166784(Entity* self) {
     byte stackpad[40];
     s32 sp38;
@@ -326,7 +326,7 @@ void func_80166784(Entity* self) {
     self->ext.et_80166784.unk86 = 0;
     if (lowerParams == 0) {
         if (self->step == 1) {
-            if (PLAYER.step == Player_RichterCrouch) {
+            if (PLAYER.step == PL_S_CROUCH) {
                 if (PLAYER.facingLeft == 0) {
                     var_s3 = D_80155A40[var_s4];
                 } else {
@@ -348,7 +348,7 @@ void func_80166784(Entity* self) {
                 var_s5 = D_801559E4[var_s4].y;
             }
         } else {
-            if (PLAYER.step == Player_RichterCrouch) {
+            if (PLAYER.step == PL_S_CROUCH) {
                 var_s3 = D_801559C8[PLAYER.animFrameIdx].x;
                 var_s5 = D_801559C8[PLAYER.animFrameIdx].y;
             } else {
@@ -381,7 +381,7 @@ void func_80166784(Entity* self) {
             self->hitboxOffX = 0;
             self->hitboxOffY = 0;
             self->ext.et_80166784.unkB0 = 0xE;
-            func_8015FAB8(self);
+            RicSetSubweaponParams(self);
         }
         if (lowerParams == 0) {
             self->zPriority = PLAYER.zPriority - 2;
@@ -723,7 +723,7 @@ void func_8016779C(Entity* entity) {
         entity->zPriority = PLAYER.zPriority + 2;
     }
 
-    if (PLAYER.step == Player_RichterCrouch) {
+    if (PLAYER.step == PL_S_CROUCH) {
         if (PLAYER.facingLeft != 0) {
             entity->animCurFrame = D_80155CCC[D_80175080];
         } else {
@@ -899,7 +899,7 @@ void EntityHydroStorm(Entity* self) {
             return;
         }
         self->ext.factory.unkB0 = 0x10;
-        func_8015FAB8(self);
+        RicSetSubweaponParams(self);
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_04000000 | FLAG_HAS_PRIMS |
                       FLAG_UNK_20000;
         line = (PrimLineG2*)&g_PrimBuf[self->primIndex];
@@ -983,7 +983,7 @@ void EntityHydroStorm(Entity* self) {
         DestroyEntity(self);
         break;
     }
-    g_Player.D_80072F00[3] = 16;
+    g_Player.D_80072F00[PL_T_3] = 16;
 }
 
 // Copy of DRA function

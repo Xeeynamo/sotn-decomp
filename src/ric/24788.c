@@ -168,7 +168,7 @@ void func_80160C38(Entity* entity) {
             entity->hitboxHeight = 9;
             entity->hitboxWidth = 9;
             entity->ext.generic.unkB0 = 0x12;
-            func_8015FAB8(entity);
+            RicSetSubweaponParams(entity);
             entity->ext.generic.unk7C.s = entity->hitboxState;
             entity->step++;
         }
@@ -197,7 +197,7 @@ void func_80160D2C(Entity* self) {
         self->hitboxHeight = 9;
         self->hitboxWidth = 9;
         self->ext.generic.unkB0 = 0x17;
-        func_8015FAB8(self);
+        RicSetSubweaponParams(self);
         self->step++;
     }
 
@@ -219,7 +219,7 @@ void func_80160D2C(Entity* self) {
 
 // created from a blueprint, #24
 void BladeDashHelper(Entity* self) {
-    if (PLAYER.step != Player_RichterBladeDash) {
+    if (PLAYER.step != PL_S_BLADEDASH) {
         DestroyEntity(self);
     } else {
         self->posX.i.hi = PLAYER.posX.i.hi;
@@ -232,7 +232,7 @@ void BladeDashHelper(Entity* self) {
             self->hitboxOffY = 0;
             self->hitboxOffX = 0;
             self->ext.generic.unkB0 = 0x11;
-            func_8015FAB8(self);
+            RicSetSubweaponParams(self);
             self->step++;
         }
         if (PLAYER.animFrameIdx >= 19) {
@@ -256,7 +256,7 @@ void func_80160F0C(Entity* self) {
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
         self->ext.generic.unkB0 = 0x16;
-        func_8015FAB8(self);
+        RicSetSubweaponParams(self);
         self->step++;
     }
 }
