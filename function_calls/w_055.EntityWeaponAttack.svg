@@ -12,7 +12,7 @@
 <!-- w_055.EntityWeaponAttack -->
 <g id="node1" class="node">
 <title>w_055.EntityWeaponAttack</title>
-<ellipse fill="red" stroke="black" cx="754.74" cy="-198" rx="138.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="754.74" cy="-198" rx="138.38" ry="18"/>
 <text text-anchor="middle" x="754.74" y="-194.3" font-family="Times,serif" font-size="14.00">w_055.EntityWeaponAttack</text>
 </g>
 <!-- dra.CreateEntFactoryFromEntity -->
