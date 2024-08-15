@@ -1369,7 +1369,7 @@ PfnEntityUpdate g_RicEntityTbl[] = {
     RicEntitySubwpnAgunea,
     RicEntityAguneaHitEnemy,
     EntitySubwpnCrashVibhuti,
-    func_8016D328,
+    RicEntityVibhutiCrashCloud,
     func_8016E324,
     func_8016D9C4,
     func_8016DF74,
