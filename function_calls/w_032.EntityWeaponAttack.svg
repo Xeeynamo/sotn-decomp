@@ -12,7 +12,7 @@
 <!-- w_032.EntityWeaponAttack -->
 <g id="node1" class="node">
 <title>w_032.EntityWeaponAttack</title>
-<ellipse fill="red" stroke="black" cx="554.64" cy="-198" rx="138.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="554.64" cy="-198" rx="138.38" ry="18"/>
 <text text-anchor="middle" x="554.64" y="-194.3" font-family="Times,serif" font-size="14.00">w_032.EntityWeaponAttack</text>
 </g>
 <!-- dra.UpdateUnarmedAnim -->
