@@ -135,7 +135,7 @@ extern u16 D_80180D30[];
 
 extern u16 D_80180D3C[];
 extern u16 D_80180D48[];
-extern ObjInit2 D_80180D64[];
+extern ObjInit D_80180D64[];
 extern s32 D_80180E04[];
 extern u8 D_80180E24[];
 extern u8 D_80180E2C[];
@@ -182,7 +182,7 @@ extern s32* D_80180EB8;
 extern s32 D_80180ED0[];
 extern s16 D_80181EDC[];
 extern u32 D_80181EEC[];
-extern ObjInit2 D_80182014[];
+extern ObjInit D_80182014[];
 
 extern s32 D_801824CC;
 extern s16 D_801824DC[];

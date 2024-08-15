@@ -63,9 +63,9 @@ s32 D_801BAF10;
 s32 D_801BAF14;
 s32 D_801BAF18[NUM_GFX][2];
 s32 D_801BAFC0;
-s32 D_801BAFC4;
-s32 D_801BAFC8;
-s32 D_801BAFCC;
+s32 MainMenuMaskPrimIndex;
+s32 g_SelNextCrossPressEngStep;
+s32 g_SelEng220NextStep;
 u8* D_801BAFD0; // Pointer to texture pattern
 s32 D_801BAFD4;
 s32 D_801BAFD8;
@@ -106,7 +106,7 @@ s32 g_StreamRewindSwitch[1];
 s32 D_801D104C[0x1680];
 s32 D_801D6B04;
 s32 g_InputCursorPos;
-s32 D_801D6B0C;
+s32 g_MainMenuCursor;
 char g_InputSaveName[12];
 s32 D_801D6B24;
 

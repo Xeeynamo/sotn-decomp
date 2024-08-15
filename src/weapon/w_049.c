@@ -10,7 +10,81 @@ extern s32 g_HandId;
 #include "shared.h"
 #include "sfx.h"
 
-INCLUDE_ASM("weapon/nonmatchings/w_049", EntityWeaponAttack);
+extern WeaponAnimation D_15B000_8017AFFC[];
+extern SpriteParts D_15B000_8017A040[];
+extern s32 D_15B000_8017C8CC;
+
+/* near-duplicate of EntityWeaponAttack_w_048 */
+void EntityWeaponAttack(Entity* self) {
+    s8 animIndex = (self->params & 0x7FFF) >> 8;
+    WeaponAnimation* anim = &D_15B000_8017AFFC[animIndex];
+
+    self->posX.val = PLAYER.posX.val;
+    self->posY.val = PLAYER.posY.val;
+    self->facingLeft = PLAYER.facingLeft;
+
+    if ((PLAYER.ext.player.anim < anim->frameStart) ||
+        (PLAYER.ext.player.anim >= anim->frameStart + 7) ||
+        g_Player.unk46 == 0) {
+        DestroyEntity(self);
+        return;
+    }
+
+    if (self->step == 0) {
+        SetSpriteBank1(D_15B000_8017A040);
+        self->animSet = ANIMSET_OVL(0x10);
+        self->palette = 0x110;
+        self->unk5A = 0x64;
+        if (g_HandId != 0) {
+            self->animSet += 2;
+            self->palette += 0x18;
+            self->unk5A += 2;
+        }
+        self->palette += anim->palette;
+        self->flags = FLAG_UNK_40000 | FLAG_UNK_20000;
+        self->zPriority = PLAYER.zPriority - 2;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+
+        if (animIndex == 1) {
+            g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xC) | 0x5B, 0);
+        }
+        if (animIndex == 3) {
+            g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xC) | 0x5F, 0);
+            g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xC) + 0x10040, 0);
+        }
+        SetWeaponProperties(self, 0);
+        D_15B000_8017C8CC = 0;
+        self->step += 1;
+    }
+    self->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
+    if ((PLAYER.animFrameDuration == 1) &&
+        (PLAYER.animFrameIdx == anim->soundFrame)) {
+        g_api.PlaySfx(anim->soundId);
+    }
+    if (g_api.UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
+        DestroyEntity(self);
+        return;
+    }
+    if ((D_15B000_8017C8CC == 0) && (PLAYER.animFrameIdx == 1)) {
+        if ((animIndex == PLAYER.animFrameIdx) || (animIndex == 3)) {
+            g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xC) | 0x5D, 0);
+            g_api.PlaySfx(SFX_FM_EXPLODE_B);
+        }
+        if (animIndex == 2) {
+            g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xC) + 0x1005D, 0);
+            g_api.PlaySfx(SFX_FM_EXPLODE_B);
+        }
+    }
+    D_15B000_8017C8CC = PLAYER.animFrameIdx;
+    self->drawFlags = PLAYER.drawFlags;
+    self->rotY = PLAYER.rotY;
+    self->rotPivotY = PLAYER.rotPivotY;
+}
 
 extern s16 D_15B000_8017B03C[];
 

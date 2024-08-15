@@ -1,23 +1,23 @@
 #include "np3.h"
 
 void func_801B246C(Entity* self) {
-    ObjInit2* temp_s0 = &D_80180C10[self->params];
+    ObjInit2* objInit = &D_80180C10[self->params];
 
     if (self->step == 0) {
         InitializeEntity(g_eInitGeneric2);
-        self->animSet = temp_s0->animSet;
-        self->zPriority = temp_s0->zPriority;
-        self->facingLeft = temp_s0->unk4.U8.unk0;
-        self->unk5A = temp_s0->unk4.U8.unk1;
-        self->palette = temp_s0->palette;
-        self->drawFlags = temp_s0->drawFlags;
-        self->drawMode = temp_s0->drawMode;
-        if (temp_s0->unkC != 0) {
-            self->flags = temp_s0->unkC;
+        self->animSet = objInit->animSet;
+        self->zPriority = objInit->zPriority;
+        self->facingLeft = objInit->facingLeft;
+        self->unk5A = objInit->unk5A;
+        self->palette = objInit->palette;
+        self->drawFlags = objInit->drawFlags;
+        self->drawMode = objInit->drawMode;
+        if (objInit->unkC != 0) {
+            self->flags = objInit->unkC;
         }
     }
 
-    AnimateEntity(temp_s0->unk10, self);
+    AnimateEntity(objInit->unk10, self);
 }
 
 static u8 D_80180D98[] = {0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x50, 0x20};

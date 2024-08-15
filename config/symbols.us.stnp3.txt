@@ -1,11 +1,5 @@
 g_GfxBanks = 0x801806DC;
 g_TrapDoorFlag = 0x80181104;
-g_goldCollectTexts = 0x80181DC4;
-c_GoldPrizes = 0x80181DEC;
-c_HeartPrizes = 0x80181E7C;
-g_ExplosionYVelocities = 0x80181E80;
-g_bigRedFireballAnim = 0x80181EA8;
-g_ExplosionAnimations = 0x80181F2C;
 g_eUnk14SpawnRots = 0x80181FA4;
 unk15_rot = 0x80181FB4;
 unk15_yVel = 0x80181FC4;

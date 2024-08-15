@@ -149,7 +149,7 @@ typedef struct {
     /* 0x800973FC */ s32 D_800973FC;
     /* 0x80097400 */ s32 unk0;
     /* 0x80097404 */ s32 unk4;
-    /* 0x80097408 */ Multi g_zEntityCenter;
+    /* 0x80097408 */ s32 g_zEntityCenter;
     /* 0x8009740C */ s32 unkC;
     /* 0x80097410 */ s32 BottomCornerTextTimer;
     /* 0x80097414 */ s32 BottomCornerTextPrims;
@@ -158,7 +158,7 @@ typedef struct {
     /* 0x80097420 */ s32 unk20;
     /* 0x80097424 */ s32 unk24;
 
-    // size must be 8 for the loop in func_800F298C, while
+    // size must be 8 for the loop in RunMainEngine, while
     // PreventEntityFromRespawning suggests it has a size of 32
     /* 0x80097428 */ s32 D_80097428[8];
 } unkGraphicsStruct;

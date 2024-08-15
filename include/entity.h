@@ -1144,6 +1144,15 @@ typedef struct {
 } ET_VibhutiCrash;
 
 typedef struct {
+    s16 unk7C;
+    s16 : 16;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    struct Entity* parent;
+} ET_VibhutiCrashCloud;
+
+typedef struct {
     PrimLineG2* lines[4];
     s16 unk8C;
     s16 unk8E;
@@ -1381,6 +1390,7 @@ typedef union { // offset=0x7C
     ET_AguneaCrash aguneaCrash;
     ET_AxeCrash axeCrash;
     ET_VibhutiCrash vibhutiCrash;
+    ET_VibhutiCrashCloud vibCrashCloud;
     ET_RicRevivalColumn ricColumn;
     ET_GiantSpinningCross giantcross;
     ET_EquipItemDrop equipItemDrop;

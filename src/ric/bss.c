@@ -26,9 +26,7 @@ u32 D_80175088[512];
 u32 D_80175888;
 u32 D_8017588C;
 u32 D_80175890;
-u16 D_80175894;
-u16 D_80175896;
-u16 D_80175898[10];
+Point16 g_BiblePos[6];
 u32 D_801758AC;
 #ifdef VERSION_PC
 // D_801758CC is used in other places so unclear if this is a bug
@@ -42,9 +40,9 @@ u32 D_801758D0[4];
 ButtonComboState g_bladeDashButtons;
 ButtonComboState D_801758E4;
 u16 D_801758E6[52];
-u16 D_80175950;
-u16 D_80175952;
-u16 D_80175954;
-u16 D_80175956;
+u16 g_RicDebugCurFrame;
+u16 g_RicDebugDrawFlags;
+u16 g_RicDebugPalette;
+u16 g_IsRicDebugEnter;
 u32 D_80175958[32];
 u32 D_801759D8[32];

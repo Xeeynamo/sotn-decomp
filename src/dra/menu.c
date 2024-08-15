@@ -3576,7 +3576,7 @@ block_4:
         PlaySfx(SET_UNK_0F);
         PlaySfx(0xA4);
         PlaySfx(0xA8);
-        D_8003C9A4 = 1;
+        g_GameEngineStep = Engine_Normal;
         break;
     case MENU_STEP_OPENED:
         if (g_pads[0].tapped & PAD_MENU_BACK) {

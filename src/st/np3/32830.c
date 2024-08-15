@@ -300,7 +300,13 @@ void EntityCastleDoor(Entity* self) {
     }
 }
 
-void func_801B32A8(Entity* self) {
+extern SVECTOR D_801810B0;
+extern s16 D_80181068;
+extern s16* D_80181088;
+extern u8 D_80181008[];
+extern u8 D_80181020[];
+
+void EntityBackgroundBushes(Entity* self) {
     byte stackpad[8];
 
     // Lots of ugly pointers
@@ -625,12 +631,12 @@ void func_801B3D24(Primitive* prim) {
         prim->y0 = (yVar >> 0x10);
         prim->y1 = yVar & 0xFFFF;
 
-        LOW(prim->x2) += 0x4000;
+        LOW(prim->x2) += FIX(1.0 / 4.0);
         if (LOW(prim->x2) <= 0x60000) {
             return;
         }
         prim->p3++;
-        return;
+        break;
     case 3:
         prim->blendMode = 8;
         prim->p3 = 0;

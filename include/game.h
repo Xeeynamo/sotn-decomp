@@ -383,6 +383,17 @@ typedef enum {
     Game_99 = 99,
 } GameState;
 
+typedef enum {
+    Engine_Init,
+    Engine_Normal,
+    Engine_Menu,
+    Engine_3,
+    Engine_5 = 5,
+    Engine_10 = 10,
+    Engine_Map = 20,
+    Engine_0x70 = 0x70
+} GameEngineStep;
+
 #define STAGE_INVERTEDCASTLE_MASK 0x1F
 #define STAGE_INVERTEDCASTLE_FLAG 0x20
 typedef enum {
@@ -673,6 +684,10 @@ typedef struct {
     /* 0x6 */ u16 repeat;
 } Pad; // size = 0x8
 
+#define FRAME(x, y) ((x) | ((y) << 8))
+#define A_LOOP_AT(frame) {0, frame}
+#define A_END {-1, 0}
+#define A_JUMP_AT(anim) {-2, anim}
 typedef struct {
     u16 duration;
     u16 unk2;
@@ -792,7 +807,19 @@ typedef struct Entity {
 typedef struct {
     /* 0x00 */ u16 animSet;
     /* 0x02 */ u16 zPriority;
-    /* 0x04 */ Multi16 unk4;
+    /* 0x04 */ u16 unk5A; // not 5A in this struct, but goes to 5A in entity
+    /* 0x06 */ u16 palette;
+    /* 0x08 */ u16 drawFlags;
+    /* 0x0A */ u16 drawMode;
+    /* 0x0C */ u32 unkC;
+    /* 0x10 */ u8* unk10;
+} ObjInit; // size = 0x14
+
+typedef struct { // only difference from above is this one uses a facingLeft
+    /* 0x00 */ u16 animSet;
+    /* 0x02 */ u16 zPriority;
+    /* 0x04 */ u8 facingLeft;
+    /* 0x05 */ u8 unk5A;
     /* 0x06 */ u16 palette;
     /* 0x08 */ u16 drawFlags;
     /* 0x0A */ u16 drawMode;
@@ -1484,7 +1511,7 @@ typedef struct {
 
 typedef struct {
     void (*D_8013C000)(void);
-    void (*D_8013C004)(void);
+    void (*D_8013C004)(u16 params);
     void (*D_8013C008)(void);
     void (*D_8013C00C)(void);
 } PlayerOvl;
@@ -1754,7 +1781,7 @@ extern s32 g_EquippedWeaponIds[2];
 extern u32 g_Timer; // Increases continuously
 extern s32 g_MapCursorTimer;
 /* 0x8003C9A0 */ extern s32 g_PlayableCharacter;
-/* 0x8003C9A4 */ extern u32 D_8003C9A4; // when player change stages?
+/* 0x8003C9A4 */ extern u32 g_GameEngineStep;
 /* 0x8003C9A8 */ extern MenuNavigation g_MenuNavigation;
 /* 0x8003C9F8 */ extern GameSettings g_Settings;
 extern GpuBuffer g_GpuBuffers[2];
