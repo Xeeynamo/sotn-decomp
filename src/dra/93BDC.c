@@ -293,7 +293,7 @@ s32 func_80134678(s16 arg0, u16 arg1) {
 }
 
 // alternate to PlaySfx with extra params
-u32 func_80134714(s16 sfxId, s32 sfxVol, u16 sfxPan) {
+u32 PlaySfxVolPan(s16 sfxId, s32 sfxVol, u16 sfxPan) {
     u32 ret;
     u32 var_v0;
     s16 temp_v0;

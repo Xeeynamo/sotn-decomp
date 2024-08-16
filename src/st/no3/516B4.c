@@ -140,7 +140,7 @@ void EntitySplashWater(Entity* self) {
                 temp_a2 = 8;
             }
 
-            g_api.func_80134714(D_801813A8, 0x7F, temp_a2);
+            g_api.PlaySfxVolPan(D_801813A8, 0x7F, temp_a2);
             self->velocityY = D_80183878[params].x;
             self->ext.waterEffects.unk7C = D_80183878[params].y;
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -233,7 +233,7 @@ void EntitySurfacingWater(Entity* self) {
         }
         params = self->params;
         if (!(params & 0x8000)) {
-            g_api.func_80134714(D_801813AA, 0x7F, var_s2);
+            g_api.PlaySfxVolPan(D_801813AA, 0x7F, var_s2);
         }
         params = (params >> 8) & 0x7F;
         prim = &g_PrimBuf[primIndex];

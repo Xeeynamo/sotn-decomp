@@ -76,7 +76,7 @@ static void EntityWeaponAttack(Entity* self) {
             self->animFrameDuration = 0;
             self->animFrameIdx = 0;
             self->drawMode = 0x30;
-            g_api.func_80134714(SFX_GLASS_BREAK_A, 0x50, 0);
+            g_api.PlaySfxVolPan(SFX_GLASS_BREAK_A, 0x50, 0);
             // TODO: FACTORY()
             g_api.CreateEntFactoryFromEntity(
                 self, ((g_HandId + 1) << 12) | 56, 0);

@@ -273,7 +273,7 @@ static void EntityWeaponAttack(Entity* self) {
                 self, ((g_HandId + 1) << 0xC) + 0x20032, 0);
         }
         if (++self->ext.factory.unk84 == 8) {
-            g_api.func_80134714(0x60A, 0x50, 0);
+            g_api.PlaySfxVolPan(0x60A, 0x50, 0);
         }
     }
 
