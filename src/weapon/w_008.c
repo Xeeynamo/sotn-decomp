@@ -1,5 +1,6 @@
 // Weapon ID #8. Used by weapons:
 // Leather shield, Unknown#203
+#define SHIELDSPELL_S32
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
 extern s32 g_HandId;
@@ -160,8 +161,7 @@ static s32 func_ptr_80170014(Entity* self) {}
 
 static int GetWeaponId(void) { return 8; }
 
-// This needs to become s32!
-void EntityWeaponShieldSpell(Entity* self) {
+static s32 EntityWeaponShieldSpell(Entity* self) {
     s16 back;
     s16 front;
     s16 top;

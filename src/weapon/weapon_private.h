@@ -32,7 +32,11 @@ static void func_ptr_8017000C(Entity* self);
 static s32 func_ptr_80170010(Entity* self);
 static s32 func_ptr_80170014(Entity* self);
 static int GetWeaponId(void);
+#ifdef SHIELDSPELL_S32
+static s32 EntityWeaponShieldSpell(Entity* self);
+#else
 static void EntityWeaponShieldSpell(Entity* self);
+#endif
 static void func_ptr_80170024(Entity* self);
 static void func_ptr_80170028(Entity* self);
 static void WeaponUnused2C(void);
