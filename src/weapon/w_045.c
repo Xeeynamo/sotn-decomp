@@ -1,5 +1,6 @@
 // Weapon ID #45. Used by weapons:
 // Unknown#216
+#define FUNC_0C_S32
 #include "weapon_private.h"
 #include "w_045_1.h"
 #include "w_045_2.h"
@@ -82,7 +83,7 @@ static void EntityWeaponAttack(Entity* self) {
     LoadWeaponPalette(0);
 }
 
-s32 func_ptr_80170004(Entity* self) {
+static s32 func_ptr_80170004(Entity* self) {
     SetSpriteBank1(D_13F000_8017A040);
     if (g_HandId != 0) {
         g_CurrentEntity->animSet = ANIMSET_OVL(0x12);
