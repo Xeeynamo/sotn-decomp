@@ -869,7 +869,7 @@ void RenderEntities(void) {
             uvTop = plDraw->rect0.y & 0xFF;
             uvLeft = uvRight + r->w;
             uvBottom = uvTop + r->h;
-            if (!(r->animCurFrame & 0x8000)) {
+            if (!(r->animCurFrame & ANIM_FRAME_LOAD)) {
                 plDraw->rect0.w = r->w / 4;
                 plDraw->rect0.h = r->h;
                 LoadImage(&plDraw->rect0, spriteData + 4);

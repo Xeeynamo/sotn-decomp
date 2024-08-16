@@ -661,7 +661,7 @@ block_48:
         PLAYER.palette = D_80154594[PLAYER.animFrameDuration & 3];
     }
     if ((PLAYER.step == 0x10) && (PLAYER.animFrameDuration < 0)) {
-        PLAYER.animCurFrame |= 0x8000;
+        PLAYER.animCurFrame |= ANIM_FRAME_LOAD;
     }
     if (g_Player.unk0C & 0x50) {
         return;
