@@ -297,7 +297,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         self->rotY = self->rotX;
         if (self->rotX <= 0) {
             self->rotX = 0;
-            self->unk4C = D_CF000_8017AD24;
+            self->anim = D_CF000_8017AD24;
             self->animFrameIdx = 0;
             self->animFrameDuration = 0;
             self->flags |= 0x100000;

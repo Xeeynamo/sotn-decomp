@@ -22,7 +22,7 @@ static void func_ptr_80170008(Entity* self) {
     case 0:
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
         self->animSet = 9;
-        self->unk4C = D_B000_8017AFC8;
+        self->anim = D_B000_8017AFC8;
         self->zPriority = PLAYER.zPriority - 2;
         self->facingLeft = (PLAYER.facingLeft + 1) & 1;
         SetSpeedX(FIX(-4.5));

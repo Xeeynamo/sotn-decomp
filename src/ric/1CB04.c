@@ -82,7 +82,7 @@ void RicHandleStand(void) {
                 RicCheckMovement();
                 if (g_Player.padPressed & PAD_DOWN) {
                     PLAYER.step = PL_S_CROUCH;
-                    PLAYER.unk4C = D_801555A8;
+                    PLAYER.anim = D_801555A8;
                     break;
                 }
             }
@@ -359,7 +359,7 @@ void RicHandleCrouch(void) {
         if (!(g_Player.padPressed & PAD_DOWN) &&
             ((!g_Player.unk72) || !(g_Player.pl_vram_flag & 0x40))) {
             if (RicCheckMovement() == 0) {
-                PLAYER.unk4C = D_801554E0;
+                PLAYER.anim = D_801554E0;
                 PLAYER.step_s = 2;
                 PLAYER.animFrameDuration = 1;
                 PLAYER.animFrameIdx = 2 - PLAYER.animFrameIdx;
@@ -400,7 +400,7 @@ void RicHandleCrouch(void) {
             RicCheckMovement();
             if (!(g_Player.padPressed & PAD_DOWN) && (!g_Player.unk72)) {
                 PLAYER.step = 0;
-                PLAYER.unk4C = D_80155588;
+                PLAYER.anim = D_80155588;
                 return;
             }
         }
@@ -501,7 +501,7 @@ void RicHandleHit(s32 arg0, u32 arg1, s16 arg2) {
             PLAYER.velocityY = FIX(-4);
             func_8015CAAC(FIX(-1.25));
             PLAYER.step_s = 1;
-            PLAYER.unk4C = D_801556C4;
+            PLAYER.anim = D_801556C4;
             g_Player.unk40 = 0x8120;
             RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 48), 0);
             RicCreateEntFactoryFromEntity(
@@ -521,7 +521,7 @@ void RicHandleHit(s32 arg0, u32 arg1, s16 arg2) {
                     PLAYER.velocityY = 0;
                     func_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 6;
-                    PLAYER.unk4C = D_8015569C;
+                    PLAYER.anim = D_8015569C;
                     g_api.PlaySfx(0x702);
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0, 0), 0);
@@ -530,7 +530,7 @@ void RicHandleHit(s32 arg0, u32 arg1, s16 arg2) {
                     PLAYER.velocityY = 0;
                     func_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 7;
-                    PLAYER.unk4C = D_80155704;
+                    PLAYER.anim = D_80155704;
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0, 0), 0);
                     g_api.PlaySfx(0x703);
@@ -540,7 +540,7 @@ void RicHandleHit(s32 arg0, u32 arg1, s16 arg2) {
                     PLAYER.velocityY = FIX(-3);
                     func_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 1;
-                    PLAYER.unk4C = ric_anim_stun;
+                    PLAYER.anim = ric_anim_stun;
                     g_api.PlaySfx(0x702);
                     break;
                 }
@@ -552,7 +552,7 @@ void RicHandleHit(s32 arg0, u32 arg1, s16 arg2) {
                 PLAYER.posY.val -= 1;
                 func_8015CAAC(FIX(-8));
                 PLAYER.step_s = 2;
-                PLAYER.unk4C = ric_anim_stun;
+                PLAYER.anim = ric_anim_stun;
                 g_Player.D_80072F00[PL_T_2] = 0x200;
                 PLAYER.facingLeft = PLAYER.entityRoomIndex;
                 break;
@@ -576,14 +576,14 @@ void RicHandleHit(s32 arg0, u32 arg1, s16 arg2) {
                     PLAYER.velocityY = FIX(-4);
                     func_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 1;
-                    PLAYER.unk4C = ric_anim_stun;
+                    PLAYER.anim = ric_anim_stun;
                     g_api.PlaySfx(0x702);
                     break;
                 case 2:
                     PLAYER.velocityY = 0;
                     func_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 7;
-                    PLAYER.unk4C = D_80155704;
+                    PLAYER.anim = D_80155704;
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0, 0), 0);
                     g_api.PlaySfx(0x703);
@@ -593,7 +593,7 @@ void RicHandleHit(s32 arg0, u32 arg1, s16 arg2) {
                     PLAYER.velocityY = FIX(-3);
                     func_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 1;
-                    PLAYER.unk4C = ric_anim_stun;
+                    PLAYER.anim = ric_anim_stun;
                     g_api.PlaySfx(0x702);
                     break;
                 }
@@ -815,7 +815,7 @@ void RicHandleBossGrab(void) {
     case 0:
         func_80159BC8();
         if (g_Player.unk62 == 0) {
-            PLAYER.unk4C = ric_anim_stun;
+            PLAYER.anim = ric_anim_stun;
             g_Player.D_80072F00[PL_T_2] = 8;
             g_Player.unk40 = 0x8166;
             g_api.PlaySfx(0x702);

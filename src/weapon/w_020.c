@@ -78,7 +78,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->zPriority = PLAYER.zPriority - 2;
         self->facingLeft = PLAYER.facingLeft;
         self->flags = FLAG_UNK_08000000 | FLAG_HAS_PRIMS | FLAG_UNK_100000;
-        self->unk4C = D_90000_8017A850;
+        self->anim = D_90000_8017A850;
         SetSpeedX((rand() & 0x3FFF) + 0xE000);
         self->velocityY = FIX(-4.0);
         self->facingLeft = 0;
@@ -97,7 +97,7 @@ static void EntityWeaponAttack(Entity* self) {
         if (sp10.effects & 1) {
             self->posY.i.hi += sp10.unk18;
             self->animFrameDuration = self->animFrameIdx = 0;
-            self->unk4C = D_90000_8017A864;
+            self->anim = D_90000_8017A864;
             g_api.PlaySfx(SFX_GOLD_PICKUP);
             self->step += 1;
             return;
@@ -141,10 +141,10 @@ static void EntityWeaponAttack(Entity* self) {
             // heads/tails
             if (rand() & 1) {
                 // Heads
-                self->unk4C = D_90000_8017A8C8;
+                self->anim = D_90000_8017A8C8;
             } else {
                 // Tails
-                self->unk4C = D_90000_8017A8D8;
+                self->anim = D_90000_8017A8D8;
             }
             self->step += 1;
         }
@@ -152,7 +152,7 @@ static void EntityWeaponAttack(Entity* self) {
     case 3:
         if ((self->animFrameIdx == 1) && (self->animFrameDuration == 0x38)) {
             // Useless if-statement
-            if (self->unk4C == D_90000_8017A8C8) {
+            if (self->anim == D_90000_8017A8C8) {
                 g_api.PlaySfx(SFX_KARMA_COIN);
             } else {
                 g_api.PlaySfx(SFX_KARMA_COIN);
@@ -160,9 +160,9 @@ static void EntityWeaponAttack(Entity* self) {
         }
         if (self->animFrameDuration < 0) {
             // Tails: A small head pops up, and lightning strikes the coin
-            if (self->unk4C == D_90000_8017A8D8) {
+            if (self->anim == D_90000_8017A8D8) {
                 g_Player.D_80072F00[10] = 4;
-                self->unk4C = D_90000_8017A8E8;
+                self->anim = D_90000_8017A8E8;
                 self->animFrameDuration = self->animFrameIdx = 0;
                 self->zPriority = 0x1B6;
                 self->flags &= ~FLAG_UNK_100000;
@@ -443,13 +443,13 @@ static void func_ptr_80170008(Entity* self) {
         if (D_90000_8017C238 % 4 == 1) {
             self->velocityX = FIX(8.0 / 128);
             self->velocityY = FIX(34.0 / 128);
-            self->unk4C = D_90000_8017A9D8;
+            self->anim = D_90000_8017A9D8;
             self->posX.i.hi = 140;
             self->posY.i.hi = 100;
             self->zPriority = PLAYER.zPriority - 4;
         } else {
             self->zPriority = PLAYER.zPriority;
-            self->unk4C = D_90000_8017A954;
+            self->anim = D_90000_8017A954;
             self->animFrameIdx = rand() & 0x1F;
             self->posX.i.hi = (D_90000_8017C238 % 3) * 10 + 148;
             self->posY.i.hi = (D_90000_8017C238 % 3) * 10 + 76;

@@ -207,7 +207,7 @@ s32 func_ptr_80170004(Entity* self) {
 
 static void func_ptr_80170008(Entity* self) {
     if (self->step == 0) {
-        self->unk4C = D_131000_8017AF40;
+        self->anim = D_131000_8017AF40;
         SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
         self->palette = 0x110;
