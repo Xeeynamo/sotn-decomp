@@ -871,7 +871,7 @@ segments:
     subsegments:
       - [0x13F040, animset, w_045_1]
       - [0x13F330, animset, w_045_2]
-      - [0x13F330, data, w_045]
+      - [0x13F330, .data, w_045]
       - [0x13F378, c, w_045]
       - [0x1403B8, sbss, w_045]
   - name: f_046
