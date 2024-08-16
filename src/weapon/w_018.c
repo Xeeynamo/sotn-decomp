@@ -55,7 +55,7 @@ void EntityWeaponAttack(Entity* self) {
         self->facingLeft = 0;
         self->flags = FLAG_UNK_04000000 | FLAG_UNK_100000;
         self->zPriority = PLAYER.zPriority - 4;
-        self->unk4C = D_82000_8017A6A8;
+        self->anim = D_82000_8017A6A8;
         SetWeaponProperties(self, 1);
         g_api.PlaySfx(SE_WPN_POWER_OF_SIRE);
         g_Player.D_80072F00[12] = 4;
@@ -65,7 +65,7 @@ void EntityWeaponAttack(Entity* self) {
     case 1:
         if (self->animFrameDuration < 0) {
             self->drawMode = FLAG_DRAW_UNK20 | FLAG_DRAW_UNK10;
-            self->unk4C = D_82000_8017A6E4;
+            self->anim = D_82000_8017A6E4;
             self->animFrameIdx = 0;
             self->animFrameDuration = 0;
             self->ext.weapon.lifetime = 71;
