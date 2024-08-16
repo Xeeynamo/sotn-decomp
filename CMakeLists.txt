@@ -291,11 +291,15 @@ set(SOURCE_FILES_STAGE_WRP
 set(SOURCE_FILES_WEAPON
     src/weapon/w_000.c
     src/weapon/w_002.c
+    src/weapon/w_046.c
+    src/weapon/w_051.c
 )
 
 # WEAPON_ID needs to be a string and not just a number
 set_source_files_properties(src/weapon/w_000.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_000)
 set_source_files_properties(src/weapon/w_002.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_002)
+set_source_files_properties(src/weapon/w_046.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_046)
+set_source_files_properties(src/weapon/w_051.c PROPERTIES COMPILE_DEFINITIONS WEAPON_ID=w_051)
 
 # organization is:
 # two executables, sdl2 and null, plus a shared library "core"
