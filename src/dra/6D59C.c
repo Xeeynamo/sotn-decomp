@@ -1397,7 +1397,7 @@ bool func_8010FDF8(s32 branchFlags) {
 
                 if (PLAYER.velocityY > FIX(6.875)) {
                     func_8010E470(1, 0);
-                    func_80134714(SFX_STOMP_HARD_B);
+                    PlaySfxVolPan(SFX_STOMP_HARD_B);
                     CreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0, 0), 0);
                 } else {

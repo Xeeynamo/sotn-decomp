@@ -254,7 +254,7 @@ static void EntityWeaponAttack(Entity* self) {
         DestroyEntityWeapon(true);
         self->ext.factory.unk84 = 0;
         if (!temp) {
-            g_api.PlaySfx(0x60A);
+            g_api.PlaySfx(SFX_WEAPON_SWISH_A);
         }
         self->rotZ = temp_s3->unk4;
         self->ext.timer.t = temp_s3->unk3;
@@ -273,7 +273,7 @@ static void EntityWeaponAttack(Entity* self) {
                 self, ((g_HandId + 1) << 0xC) + 0x20032, 0);
         }
         if (++self->ext.factory.unk84 == 8) {
-            g_api.func_80134714(0x60A, 0x50, 0);
+            g_api.PlaySfxVolPan(SFX_WEAPON_SWISH_A, 0x50, 0);
         }
     }
 

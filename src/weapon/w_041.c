@@ -162,7 +162,7 @@ void EntityWeaponAttack(Entity* self) {
             self->animFrameDuration = 0;
             self->animFrameIdx = 0;
             self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-            g_api.func_80134714(SFX_GLASS_BREAK_A, 0x50, 0);
+            g_api.PlaySfxVolPan(SFX_GLASS_BREAK_A, 0x50, 0);
             g_api.CreateEntFactoryFromEntity(
                 self, ((g_HandId + 1) << 0xC) + FACTORY(0, 56), 0);
             self->step++;

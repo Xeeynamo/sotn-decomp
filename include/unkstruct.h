@@ -68,8 +68,8 @@ typedef struct {
 // related to SFX
 typedef struct {
     /* 0x00 */ s16 sndId;
-    /* 0x02 */ u16 unk02;
-    /* 0x04 */ s16 unk04;
+    /* 0x02 */ u16 sndVol;
+    /* 0x04 */ s16 sndPan;
 } SfxRingBufferItem;
 
 typedef struct {

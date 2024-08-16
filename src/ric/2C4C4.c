@@ -915,7 +915,7 @@ void EntitySubwpnCrashAgunea(Entity* self) {
         }
         self->ext.aguneaCrash.unk7C = var_a1 + self->ext.aguneaCrash.unk7C;
         if (!(self->ext.aguneaCrash.unk7C & 0x3FF)) {
-            g_api.func_80134714(
+            g_api.PlaySfxVolPan(
                 SFX_WEAPON_SWISH_C, self->ext.aguneaCrash.unk98, 0);
             self->ext.aguneaCrash.unk98 -= 8;
             if (self->ext.aguneaCrash.unk98 < 0) {

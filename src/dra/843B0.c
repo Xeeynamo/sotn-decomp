@@ -555,7 +555,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
         }
         self->ext.axeCrash.unk7C = var_a1 + self->ext.axeCrash.unk7C;
         if (!(self->ext.axeCrash.unk7C & 0x3FF)) {
-            func_80134714(SFX_WEAPON_SWISH_C, self->ext.axeCrash.unk98, 0);
+            PlaySfxVolPan(SFX_WEAPON_SWISH_C, self->ext.axeCrash.unk98, 0);
             self->ext.axeCrash.unk98 -= 8;
             if (self->ext.axeCrash.unk98 < 0) {
                 self->ext.axeCrash.unk98 = 0;
