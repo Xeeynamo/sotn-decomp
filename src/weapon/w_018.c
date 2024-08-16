@@ -96,16 +96,16 @@ void EntityWeaponAttack(Entity* self) {
         break;
     // squish and explode
     case 3:
-        self->rotX -= FIX(1.0 / 2048.0);
-        if (self->rotY < FIX(1.0 / 64.0)) {
-            self->rotY += FIX(3.0 / 1024.0);
+        self->rotX -= 32;
+        if (self->rotY < 1024) {
+            self->rotY += 192;
         }
-        if (self->rotX == FIX(1.0 / 1024.0)) {
+        if (self->rotX == 64) {
             self->rotPivotX = 1;
             g_api.PlaySfx(SFX_TELEPORT_BANG_B);
             g_api.CreateEntFactoryFromEntity(self, FACTORY(0xC00, 4), 0);
         }
-        if (self->rotX == FIX(1.0 / 2048.0)) {
+        if (self->rotX == 32) {
             self->palette = PAL_OVL(0x15F);
         }
         if (self->rotX <= 0) {
