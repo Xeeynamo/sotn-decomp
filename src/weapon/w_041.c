@@ -105,7 +105,78 @@ Entity* func_123000_8017A994(Entity* self, s16 angleTarget, s16 tolerance) {
     return NULL;
 }
 
-INCLUDE_ASM("weapon/nonmatchings/w_041", EntityWeaponAttack);
+extern AnimationFrame D_123000_8017A4DC[];
+extern AnimationFrame D_123000_8017A504[];
+extern s32 D_123000_8017A53C[];
+extern s32 D_123000_8017A54C[];
+extern s32 D_123000_8017B204;
+extern s32 D_123000_8017B208;
+
+void EntityWeaponAttack(Entity* self) {
+    u8 pad[38];
+    s32 speedX;
+
+    switch (self->step) {
+    case 0:
+        SetSpriteBank1(g_Animset);
+        self->animSet = ANIMSET_OVL(0x10);
+        self->palette = PAL_DRA(0x110);
+        self->unk5A = 0x64;
+        if (g_HandId != 0) {
+            self->palette += 0x18;
+            self->unk5A += 2;
+            self->animSet += 2;
+        }
+
+        self->zPriority = PLAYER.zPriority + 2;
+        self->facingLeft = PLAYER.facingLeft;
+        self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
+        self->unk4C = D_123000_8017A504;
+        self->posY.i.hi -= 4;
+
+        speedX = D_123000_8017B204;
+        if (D_123000_8017B204 < 0) {
+            speedX += 3;
+        }
+
+        D_123000_8017B204 -= (speedX >> 2) * 4;
+
+        SetSpeedX(D_123000_8017A53C[D_123000_8017B204]);
+
+        D_123000_8017B204++;
+        D_123000_8017B208 = D_123000_8017B204 % 3;
+        self->velocityY = D_123000_8017A54C[D_123000_8017B208];
+        D_123000_8017B208++;
+        self->ext.weapon.lifetime = (rand() & 0xF) + 24;
+        g_Player.D_80072F00[10] = 4;
+        self->step++;
+        break;
+
+    case 1:
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->velocityY += FIX(5.0 / 32.0);
+        self->ext.weapon.lifetime--;
+        if (!self->ext.weapon.lifetime) {
+            self->unk4C = &D_123000_8017A4DC;
+            self->animFrameDuration = 0;
+            self->animFrameIdx = 0;
+            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            g_api.func_80134714(SFX_GLASS_BREAK_A, 0x50, 0);
+            g_api.CreateEntFactoryFromEntity(
+                self, ((g_HandId + 1) << 0xC) + FACTORY(0, 56), 0);
+            self->step++;
+        }
+        break;
+
+    case 2:
+        if (self->animFrameDuration < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+}
 
 s32 func_ptr_80170004(Entity* self) {
     s16 result;
