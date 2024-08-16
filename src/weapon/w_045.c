@@ -6,6 +6,7 @@
 #include "w_045_2.h"
 #define g_Animset w_045_1
 #define g_Animset2 w_045_2
+#include "sfx.h"
 
 static u16 D_13F000_8017A330[] = {
     0x0000, 0x8822, 0x83E0, 0xECE5, 0xF68A, 0x8048, 0x884C, 0x88B5,
@@ -14,14 +15,11 @@ static u16 D_13F000_8017A330[] = {
     0x802D, 0x80DD, 0xAA5F, 0x84D1, 0x98C6, 0xB5AD, 0xC631, 0x8421,
 };
 
-static u16* g_WeaponCluts[] = {&D_13F000_8017A330};
-
+static u16* g_WeaponCluts[] = {D_13F000_8017A330};
 static s32 g_HandId = HAND_ID;
 
 #include "shared.h"
-#include "sfx.h"
 
-extern SpriteParts D_13F000_8017A040[];
 extern s32 D_13F000_8017B3B8;
 extern s32 D_13F000_8017B3BC;
 
@@ -56,7 +54,7 @@ int func_13F000_8017A718() {
 }
 
 static void EntityWeaponAttack(Entity* self) {
-    SetSpriteBank1(D_13F000_8017A040);
+    SetSpriteBank1(w_045_1);
     if (g_HandId != 0) {
         g_CurrentEntity->animSet = ANIMSET_OVL(0x12);
         g_CurrentEntity->palette = 0x128;
@@ -84,7 +82,7 @@ static void EntityWeaponAttack(Entity* self) {
 }
 
 static s32 func_ptr_80170004(Entity* self) {
-    SetSpriteBank1(D_13F000_8017A040);
+    SetSpriteBank1(w_045_1);
     if (g_HandId != 0) {
         g_CurrentEntity->animSet = ANIMSET_OVL(0x12);
         g_CurrentEntity->palette = 0x128;
@@ -120,7 +118,8 @@ static s32 func_ptr_80170004(Entity* self) {
                 PLAYER.animFrameIdx = 0;
                 PLAYER.animFrameDuration = 0;
                 PLAYER.step_s = 1;
-                g_api.CreateEntFactoryFromEntity(g_CurrentEntity, 0x57, 0);
+                g_api.CreateEntFactoryFromEntity(
+                    g_CurrentEntity, FACTORY(0, 0x57), 0);
                 return;
             }
             if (g_Player.padTapped & PAD_CROSS) {
@@ -158,7 +157,7 @@ static s32 func_ptr_80170004(Entity* self) {
 }
 
 static void func_ptr_80170008(Entity* self) {
-    SetSpriteBank1(D_13F000_8017A040);
+    SetSpriteBank1(w_045_1);
     if (g_HandId != 0) {
         g_CurrentEntity->animSet = ANIMSET_OVL(0x12);
         g_CurrentEntity->palette = 0x128;
@@ -216,7 +215,7 @@ static void func_ptr_80170008(Entity* self) {
 }
 
 static s32 func_ptr_8017000C(Entity* self) {
-    SetSpriteBank1(D_13F000_8017A040);
+    SetSpriteBank1(w_045_1);
     if (g_HandId != 0) {
         g_CurrentEntity->animSet = ANIMSET_OVL(0x12);
         g_CurrentEntity->palette = 0x128;
@@ -269,7 +268,8 @@ static s32 func_ptr_8017000C(Entity* self) {
             PLAYER.step_s = 1;
             PLAYER.animFrameIdx = 0;
             PLAYER.animFrameDuration = 0;
-            g_api.CreateEntFactoryFromEntity(g_CurrentEntity, 0x57, 0);
+            g_api.CreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(0, 0x57), 0);
         }
     } else if (PLAYER.animFrameDuration < 0) {
         PLAYER.ext.player.anim = 0xD0;
@@ -281,7 +281,7 @@ static s32 func_ptr_8017000C(Entity* self) {
 
 static s32 func_ptr_80170010(Entity* self) {
     D_13F000_8017B3BC += 0x80;
-    SetSpriteBank1(D_13F000_8017A040);
+    SetSpriteBank1(w_045_1);
     if (g_HandId != 0) {
         g_CurrentEntity->animSet = ANIMSET_OVL(0x12);
         g_CurrentEntity->palette = 0x128;
