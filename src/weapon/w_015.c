@@ -43,7 +43,7 @@ static void func_ptr_80170008(Entity* self) {
 
     if (self->step == 0) {
         self->animSet = 2;
-        self->unk4C = D_6D000_8017A6C0;
+        self->anim = D_6D000_8017A6C0;
         self->zPriority = PLAYER.zPriority - 4;
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
         self->velocityY = FIX(-1);
@@ -100,7 +100,7 @@ static s32 func_ptr_80170014(Entity* self) {
             self->palette += 24;
             self->unk5A = 103;
         }
-        self->unk4C = D_6D000_8017A770;
+        self->anim = D_6D000_8017A770;
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
         self->zPriority = PLAYER.zPriority - 2;
         self->drawMode = DRAW_TPAGE | 0x20;

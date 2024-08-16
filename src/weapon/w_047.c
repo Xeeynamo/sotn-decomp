@@ -30,7 +30,7 @@ s32 func_ptr_80170004(Entity* self) {
                 self->unk5A += 2;
                 self->animSet += 2;
             }
-            self->unk4C = D_14D000_8017A528;
+            self->anim = D_14D000_8017A528;
             self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
             self->zPriority = PLAYER.zPriority + 2;
             speed = (rand() % 1535) + 0x100;

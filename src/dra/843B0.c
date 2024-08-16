@@ -248,7 +248,7 @@ void func_80124A8C(Entity* entity) {
         SetSpeedX(0x4000);
         entity->unk5A = 0x50;
         entity->palette = 0x819F;
-        entity->unk4C = D_800AE294;
+        entity->anim = D_800AE294;
         entity->flags = FLAG_UNK_100000;
         entity->facingLeft = 0;
         entity->posY.i.hi -= 16;
@@ -1407,7 +1407,7 @@ void EntityHellfireNormalFireball(Entity* entity) {
         }
         entity->flags = FLAG_UNK_100000 | FLAG_UNK_08000000;
         entity->animSet = ANIMSET_DRA(9);
-        entity->unk4C = &D_800B0798;
+        entity->anim = D_800B0798;
         entity->zPriority = PLAYER.zPriority + 2;
         entity->facingLeft = (PLAYER.facingLeft + 1) & 1;
         SetSpeedX(D_800B0830[entity->params]);
@@ -1458,7 +1458,7 @@ void EntityBatFireball(Entity* self) {
         PlaySfx(NA_SE_PL_BT_FIREBALL);
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
         self->animSet = 9;
-        self->unk4C = D_800B0798;
+        self->anim = D_800B0798;
         self->zPriority = PLAYER.zPriority - 2;
 
         // Wow, this is weird logic! But it's in the assembly.
@@ -1518,7 +1518,7 @@ void EntityHellfireBigFireball(Entity* entity) {
 
         entity->animSet = ANIMSET_DRA(9);
         entity->rotZ = 0;
-        entity->unk4C = &D_800B07C8;
+        entity->anim = D_800B07C8;
         entity->drawFlags |= FLAG_DRAW_ROTZ;
         entity->zPriority = PLAYER.zPriority + 2;
         entity->facingLeft = (PLAYER.facingLeft + 1) & 1;
@@ -2547,7 +2547,7 @@ void func_80129864(Entity* self) {
         self->facingLeft = (PLAYER.facingLeft + 1) & 1; // !PLAYER.facingLeft
         self->ext.et_80129864.unk80 = D_800B0858[(u8)self->params];
         self->animSet = 9;
-        self->unk4C = D_800B0798;
+        self->anim = D_800B0798;
         self->palette = PAL_OVL(0x19F);
         self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
         self->zPriority = 0x1C3;

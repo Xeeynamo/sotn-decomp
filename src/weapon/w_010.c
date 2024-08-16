@@ -203,7 +203,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->zPriority = self->ext.weapon.parent->zPriority + 4;
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->flags = FLAG_UNK_100000 | FLAG_UNK_40000 | FLAG_UNK_20000;
-        self->unk4C = D_4A000_8017ABA0;
+        self->anim = D_4A000_8017ABA0;
         g_api.PlaySfx(SFX_THUNDER_A);
         self->step++;
     } else if (self->animFrameDuration < 0) {

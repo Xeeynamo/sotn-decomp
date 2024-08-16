@@ -555,7 +555,7 @@ void func_8011B5A4(Entity* self) {
         }
 
         self->animSet = 5;
-        self->unk4C = D_800AD57C;
+        self->anim = D_800AD57C;
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000 | FLAG_UNK_10000;
         self->palette = 0x8195;
@@ -676,7 +676,7 @@ void EntityUnkId24(Entity* self) {
     u16 upperparams = self->params >> 8;
     if (self->step == 0) {
         self->animSet = 2;
-        self->unk4C = D_800AD5FC;
+        self->anim = D_800AD5FC;
 
         // Weird thing here where we have to set flags to the same value twice
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;

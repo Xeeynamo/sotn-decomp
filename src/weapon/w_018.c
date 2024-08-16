@@ -151,7 +151,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->zPriority = PLAYER.zPriority - 2;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        self->unk4C = D_82000_8017A724;
+        self->anim = D_82000_8017A724;
         self->rotX = self->rotY = 256;
 
         angle = rand();

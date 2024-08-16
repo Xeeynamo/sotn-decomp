@@ -1525,7 +1525,7 @@ void func_801309B4(Entity* self) {
                       FLAG_UNK_40000;
         self->animFrameDuration = 1;
         self->animFrameIdx = 4;
-        self->unk4C = D_800B0ABC;
+        self->anim = D_800B0ABC;
         self->hitboxWidth = 10;
         self->hitboxHeight = 8;
         self->animCurFrame = 72;

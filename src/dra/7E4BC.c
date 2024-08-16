@@ -511,19 +511,19 @@ void func_8011EDA8(Entity* self) {
             self->rotY = 0xC0;
             self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
             self->animSet = ANIMSET_DRA(2);
-            self->unk4C = D_800ADC10;
+            self->anim = D_800ADC10;
         }
 
         if ((paramsHi == 0) || (paramsHi == 2)) {
             if (params & 3) {
-                self->unk4C = D_800ADBD4;
+                self->anim = D_800ADBD4;
                 self->rotX = 0x120;
                 self->rotY = 0x120;
                 self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
                 self->animSet = ANIMSET_DRA(2);
             } else {
                 self->animSet = ANIMSET_DRA(5);
-                self->unk4C = D_800AD57C;
+                self->anim = D_800AD57C;
                 self->palette = 0x8170;
             }
         }
@@ -553,14 +553,14 @@ void func_8011EDA8(Entity* self) {
         self->rotY -= 4;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
-        if ((self->animFrameIdx == 8) && (self->unk4C != D_800AD57C)) {
+        if ((self->animFrameIdx == 8) && (self->anim != D_800AD57C)) {
             self->drawMode = DRAW_TPAGE;
             if (!(params & 1) && (self->animFrameDuration == step)) {
                 CreateEntFactoryFromEntity(self, FACTORY(0x400, 4), 0);
             }
         }
 
-        if ((self->animFrameIdx == 16) && (self->unk4C == D_800AD57C)) {
+        if ((self->animFrameIdx == 16) && (self->anim == D_800AD57C)) {
             self->drawMode = DRAW_TPAGE;
         }
 
@@ -591,7 +591,7 @@ void func_8011F074(Entity* entity) {
         }
         entity->rotY = 0x40;
         entity->rotX = 0x40;
-        entity->unk4C = &D_800ADC44;
+        entity->anim = D_800ADC44;
         D_8013808C++;
         entity->unk6C = 0xFF;
         entity->drawFlags =

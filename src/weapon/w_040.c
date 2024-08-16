@@ -55,7 +55,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->zPriority = PLAYER.zPriority + 2;
         self->facingLeft = PLAYER.facingLeft;
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
-        self->unk4C = D_11C000_8017A804;
+        self->anim = D_11C000_8017A804;
         self->posY.i.hi -= 4;
 
         D_11C000_8017B540 %= 4;
@@ -72,7 +72,7 @@ static void EntityWeaponAttack(Entity* self) {
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &col, 0);
         if (col.effects & EFFECT_SOLID) {
             self->posY.i.hi += col.unk18;
-            self->unk4C = D_11C000_8017A7DC;
+            self->anim = D_11C000_8017A7DC;
             self->animFrameDuration = 0;
             self->animFrameIdx = 0;
             self->drawMode = 0x30;
@@ -126,7 +126,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->facingLeft = (self->facingLeft + 1) & 1;
         self->flags = FLAG_UNK_08000000;
         self->zPriority = self->ext.weapon.parent->zPriority - 2;
-        self->unk4C = D_11C000_8017A724;
+        self->anim = D_11C000_8017A724;
         self->drawFlags |= 3;
         self->rotY = 0;
         self->rotX = 0;
@@ -138,7 +138,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->rotX += 4;
         if (self->rotX >= 0x100) {
             self->rotX = 0x100;
-            self->unk4C = D_11C000_8017A748;
+            self->anim = D_11C000_8017A748;
             self->animFrameIdx = 0;
             self->animFrameDuration = 0;
             self->ext.weapon.equipId =
@@ -159,7 +159,7 @@ s32 func_ptr_80170004(Entity* self) {
             }
         }
         if (self->animFrameDuration < 0) {
-            self->unk4C = D_11C000_8017A80C;
+            self->anim = D_11C000_8017A80C;
             self->animFrameIdx = 0;
             self->animFrameDuration = 0;
             g_api.PlaySfx(0x6E7);
@@ -199,7 +199,7 @@ static void func_ptr_80170008(Entity* self) {
         self->palette = self->ext.weapon.parent->palette;
         self->flags = FLAG_UNK_08000000;
         self->zPriority = self->ext.weapon.parent->zPriority - 2;
-        self->unk4C = D_11C000_8017A724;
+        self->anim = D_11C000_8017A724;
         self->posY.i.hi -= 0xA;
         var_a1 = 0x18;
         if (self->facingLeft == 0) {
@@ -207,7 +207,7 @@ static void func_ptr_80170008(Entity* self) {
         }
         self->posX.i.hi = var_a1 + self->posX.i.hi;
         SetSpeedX(-FIX(2.5));
-        self->unk4C = D_11C000_8017A7B8;
+        self->anim = D_11C000_8017A7B8;
         self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;
         self->attackElement |= 0x8000;
         SetWeaponProperties(self, 0);
@@ -230,7 +230,7 @@ static void func_ptr_8017000C(Entity* self) {
         self->palette = self->ext.weapon.parent->palette;
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
         self->zPriority = self->ext.weapon.parent->zPriority + 2;
-        self->unk4C = D_11C000_8017A7DC;
+        self->anim = D_11C000_8017A7DC;
         self->drawMode = 0x30;
         self->posY.i.hi += 0x10;
         self->step++;
