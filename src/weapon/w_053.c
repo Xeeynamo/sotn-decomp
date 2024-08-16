@@ -92,7 +92,7 @@ static void func_ptr_80170008(Entity* self) {
         self->palette = PAL_OVL(0x100);
         self->zPriority = PLAYER.zPriority;
         self->facingLeft = PLAYER.facingLeft;
-        self->animCurFrame = PLAYER.animCurFrame - ANIM_FRAME_LOAD;
+        self->animCurFrame = PLAYER.animCurFrame + ANIM_FRAME_LOAD;
         self->animSet = 1;
         self->drawMode = DRAW_TPAGE;
         self->unk5A = 0;
@@ -107,7 +107,7 @@ static void func_ptr_80170008(Entity* self) {
         self->step++;
         break;
     case 1:
-        self->animCurFrame = PLAYER.animCurFrame - ANIM_FRAME_LOAD;
+        self->animCurFrame = PLAYER.animCurFrame + ANIM_FRAME_LOAD;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         DecelerateX(FIX(15) / 32);
@@ -119,7 +119,7 @@ static void func_ptr_80170008(Entity* self) {
         break;
     case 2:
         self->drawMode = 0;
-        self->animCurFrame = PLAYER.animCurFrame - ANIM_FRAME_LOAD;
+        self->animCurFrame = PLAYER.animCurFrame + ANIM_FRAME_LOAD;
         if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1) {
             g_api.CreateEntFactoryFromEntity(
                 self, ((g_HandId + 1) << 0xC) + FACTORY(0x1E00, 0x38), 0);
@@ -132,7 +132,7 @@ static void func_ptr_80170008(Entity* self) {
         break;
     case 3:
         self->drawMode = DRAW_TPAGE;
-        self->animCurFrame = PLAYER.animCurFrame - ANIM_FRAME_LOAD;
+        self->animCurFrame = PLAYER.animCurFrame + ANIM_FRAME_LOAD;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         DecelerateX(FIX(15) / 32);
