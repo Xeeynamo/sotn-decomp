@@ -1227,8 +1227,8 @@ void ExecSfx(void) {
             }
         }
         if (isFound == 0) {
-            func_8013572C(sndId, g_SfxRingBuffer[g_SfxRingBufferReadPos].unk02,
-                          g_SfxRingBuffer[g_SfxRingBufferReadPos].unk04);
+            func_8013572C(sndId, g_SfxRingBuffer[g_SfxRingBufferReadPos].sndVol,
+                          g_SfxRingBuffer[g_SfxRingBufferReadPos].sndPan);
         }
 
         g_SfxRingBufferReadPos = IncrementRingBufferPos(g_SfxRingBufferReadPos);

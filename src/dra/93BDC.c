@@ -293,7 +293,7 @@ s32 func_80134678(s16 arg0, u16 arg1) {
 }
 
 // alternate to PlaySfx with extra params
-u32 func_80134714(s16 sfxId, s32 arg1, u16 arg2) {
+u32 func_80134714(s16 sfxId, s32 sfxVol, u16 sfxPan) {
     u32 ret;
     u32 var_v0;
     s16 temp_v0;
@@ -306,13 +306,13 @@ u32 func_80134714(s16 sfxId, s32 arg1, u16 arg2) {
     }
     if (sfxId > SFX_START && sfxId <= SFX_LAST) {
         g_SfxRingBuffer[g_sfxRingBufferWritePos].sndId = sfxId - SFX_START;
-        g_SfxRingBuffer[g_sfxRingBufferWritePos].unk02 = arg1 & 0x7F;
-        var = (arg2 + 8);
+        g_SfxRingBuffer[g_sfxRingBufferWritePos].sndVol = sfxVol & 0x7F;
+        var = (sfxPan + 8); // Left panning uses signed values, zero is center
         if (var > 16) {
-            g_SfxRingBuffer[g_sfxRingBufferWritePos].unk04 = 0;
+            g_SfxRingBuffer[g_sfxRingBufferWritePos].sndPan = 0;
             ret = -1;
         } else {
-            g_SfxRingBuffer[g_sfxRingBufferWritePos].unk04 = arg2;
+            g_SfxRingBuffer[g_sfxRingBufferWritePos].sndPan = sfxPan;
         }
 
         g_sfxRingBufferWritePos++;
@@ -329,8 +329,8 @@ void PlaySfx(s16 sfxId) {
     if (g_SoundInitialized != 0) {
         if (sfxId > SFX_START && sfxId <= SFX_LAST) {
             g_SfxRingBuffer[g_sfxRingBufferWritePos].sndId = sfxId - SFX_START;
-            g_SfxRingBuffer[g_sfxRingBufferWritePos].unk02 = 0xFFFF;
-            g_SfxRingBuffer[g_sfxRingBufferWritePos].unk04 = 0;
+            g_SfxRingBuffer[g_sfxRingBufferWritePos].sndVol = 0xFFFF;
+            g_SfxRingBuffer[g_sfxRingBufferWritePos].sndPan = 0;
 
             g_sfxRingBufferWritePos++;
             if (g_sfxRingBufferWritePos == LEN(g_SfxRingBuffer)) {

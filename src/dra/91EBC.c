@@ -136,8 +136,8 @@ void InitSoundVars1(void) {
     g_SoundCommandRingBufferWritePos = 0;
     for (D_80138454 = 0; D_80138454 < LEN(g_SfxRingBuffer); D_80138454++) {
         g_SfxRingBuffer[D_80138454].sndId = 0;
-        g_SfxRingBuffer[D_80138454].unk02 = 0;
-        g_SfxRingBuffer[D_80138454].unk04 = 0;
+        g_SfxRingBuffer[D_80138454].sndVol = 0;
+        g_SfxRingBuffer[D_80138454].sndPan = 0;
     }
 
     D_80139A6C = 0x20;
