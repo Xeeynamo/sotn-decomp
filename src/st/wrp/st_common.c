@@ -78,15 +78,7 @@ u8 func_8018B7E8(u8 frames[], Entity* self, u8 arg2) {
 #endif
 
 #if !defined(VERSION_PSP)
-// Absolute distance from g_CurrentEntity to the player in the X Axis
-s16 GetDistanceToPlayerX(void) {
-    s16 xDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
-
-    if (xDistance < 0) {
-        xDistance = -xDistance;
-    }
-    return xDistance;
-}
+#include "../get_distance_to_player_x.h"
 #endif
 
 #if !defined(VERSION_PSP)

@@ -36,15 +36,7 @@ u8 func_801BC6BC(u8 frames[], Entity* self, u8 arg2) {
     return var_a1;
 }
 
-// Absolute distance from g_CurrentEntity to the player in the X Axis
-s32 GetDistanceToPlayerX(void) {
-    s16 yDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
-
-    if (yDistance < 0) {
-        yDistance = -yDistance;
-    }
-    return yDistance;
-}
+#include "../get_distance_to_player_x.h"
 
 // Absolute distance from g_CurrentEntity to the player in the Y Axis
 s32 GetDistanceToPlayerY(void) {
