@@ -5,34 +5,7 @@
 
 #include "np3.h"
 #include "sfx.h"
-
-typedef enum {
-    MERMAN2_INIT,
-    MERMAN2_SWIMMING_UP,
-    MERMAN2_SWIMMING = 3,
-    MERMAN2_JUMPING,
-    MERMAN2_WALKING_TO_PLAYER,
-    MERMAN2_SPIT_FIRE,
-    MERMAN2_7,
-    MERMAN2_DYING,
-} Merman2Steps;
-
-typedef enum {
-    MERMAN2_JUMPING_SETUP,
-    MERMAN2_JUMPING_UNDERWATER,
-    MERMAN2_JUMPING_IN_AIR,
-} Merman2JumpingSubSteps;
-
-typedef enum {
-    MERMAN2_WALKING_TO_PLAYER_SETUP,
-    MERMAN2_WALKING_TO_PLAYER_FACE_PLAYER,
-    MERMAN2_WALKING_TO_PLAYER_WALKING,
-} Merman2WalkingToPlayerSubSteps;
-
-typedef enum {
-    MERMAN2_SPIT_FIRE_FACE_PLAYER,
-    MERMAN2_SPIT_FIRE_ATTACK,
-} Merman2SpitFireSubSteps;
+#include "../e_merman2.h"
 
 // EntitySplashWater ID 0x2D
 void EntitySplashWater(Entity* self) {
@@ -647,7 +620,8 @@ s32 func_801C6458(s16 yOffset) {
         if (!g_CurrentEntity->ext.merman.isUnderwater) {
             newEntity = AllocEntity(g_Entities + 232, g_Entities + 256);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(0x33, g_CurrentEntity, newEntity);
+                CreateEntityFromEntity(
+                    E_MERMAN_UNK0, g_CurrentEntity, newEntity);
                 newEntity->posY.i.hi += yOffset;
                 newEntity->zPriority = g_CurrentEntity->zPriority;
             }
@@ -708,7 +682,7 @@ void EntityMerman2(Entity* self) {
         if (!(collider.effects & EFFECT_WATER)) {
             SetStep(MERMAN2_SWIMMING);
         }
-        return;
+        break;
 
     case MERMAN2_SWIMMING:
         if (self->step_s == 0) {
@@ -796,10 +770,10 @@ void EntityMerman2(Entity* self) {
                 prim->y3 = prim->y2 = prim->y0 + 0x38;
                 prim->priority = self->zPriority;
                 prim->drawMode = 6;
-                return;
+            } else {
+                self->animCurFrame = 17;
+                DestroyEntity(self);
             }
-            self->animCurFrame = 17;
-            DestroyEntity(self);
             break;
 
         case MERMAN2_JUMPING_UNDERWATER:
@@ -813,7 +787,7 @@ void EntityMerman2(Entity* self) {
                 g_api.PlaySfx(NA_SE_EV_WATER_SPLASH);
                 newEntity = AllocEntity(g_Entities + 232, g_Entities + 256);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(0x33, self, newEntity);
+                    CreateEntityFromEntity(E_MERMAN_UNK0, self, newEntity);
                     newEntity->posY.i.hi -= 24;
                     newEntity->zPriority = self->zPriority;
                 }
@@ -862,7 +836,7 @@ void EntityMerman2(Entity* self) {
             if (self->velocityY < 0) {
                 newEntity = AllocEntity(g_Entities + 232, g_Entities + 256);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(0x38, self, newEntity);
+                    CreateEntityFromEntity(E_MERMAN2_UNK0, self, newEntity);
                     newEntity->posX.i.hi -= 6 - ((Random() & 3) * 4);
                     newEntity->zPriority = self->zPriority + 1;
                 }
@@ -877,7 +851,6 @@ void EntityMerman2(Entity* self) {
                     self->flags &= ~FLAG_HAS_PRIMS;
                     self->drawFlags &= 0xFB;
                     SetStep(MERMAN2_WALKING_TO_PLAYER);
-                    return;
                 }
             } else {
                 self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
@@ -948,7 +921,7 @@ void EntityMerman2(Entity* self) {
         case MERMAN2_SPIT_FIRE_FACE_PLAYER:
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step_s++;
-            return;
+            break;
 
         case MERMAN2_SPIT_FIRE_ATTACK:
             if (AnimateEntity(D_8018227C, self) == 0) {
@@ -956,7 +929,7 @@ void EntityMerman2(Entity* self) {
                 newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
                 i = 0;
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(0x34, self, newEntity);
+                    CreateEntityFromEntity(E_MERMAN2_UNK1, self, newEntity);
                     newEntity->posY.i.hi -= 12;
                     newEntity->facingLeft = self->facingLeft;
                 }
@@ -964,7 +937,7 @@ void EntityMerman2(Entity* self) {
                 for (offset = 0; i < 3; i++, offset += 8) {
                     newEntity = AllocEntity(newEntity2, newEntity2 + 32);
                     if (newEntity != NULL) {
-                        CreateEntityFromEntity(0x36, self, newEntity);
+                        CreateEntityFromEntity(E_MERMAN2_UNK2, self, newEntity);
                         if (self->facingLeft != 0) {
                             newEntity->posX.i.hi += 8 + offset;
                         } else {
@@ -1020,7 +993,7 @@ void EntityMerman2(Entity* self) {
                 if (self->facingLeft == 0) {
                     self->velocityX = FIX(2.5);
                 } else {
-                    self->velocityX = ~0x27FFF;
+                    self->velocityX = FIX(-5.0 / 2.0);
                 }
                 self->ext.merman2.rotation = 4;
                 self->posY.i.hi += 10;
@@ -1147,7 +1120,7 @@ void EntityMerman2(Entity* self) {
                 } else {
                     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
-                        CreateEntityFromEntity(0x37, self, newEntity);
+                        CreateEntityFromEntity(E_MERMAN2_UNK3, self, newEntity);
                         newEntity->facingLeft = self->facingLeft;
                         newEntity->params = prim->clut;
                         newEntity->zPriority = self->zPriority;
