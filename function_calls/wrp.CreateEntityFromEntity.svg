@@ -15,18 +15,18 @@
 <ellipse fill="green" stroke="black" cx="565.64" cy="-198" rx="145.67" ry="18"/>
 <text text-anchor="middle" x="565.64" y="-194.3" font-family="Times,serif" font-size="14.00">wrp.CreateEntityFromEntity</text>
 </g>
-<!-- wrp.DestroyEntity -->
+<!-- rwrp.DestroyEntity -->
 <g id="node2" class="node">
-<title>wrp.DestroyEntity</title>
-<g id="a_node2"><a xlink:href="wrp.DestroyEntity.svg" xlink:title="wrp.DestroyEntity">
-<ellipse fill="green" stroke="black" cx="565.64" cy="-18" rx="96.68" ry="18"/>
-<text text-anchor="middle" x="565.64" y="-14.3" font-family="Times,serif" font-size="14.00">wrp.DestroyEntity</text>
+<title>rwrp.DestroyEntity</title>
+<g id="a_node2"><a xlink:href="rwrp.DestroyEntity.svg" xlink:title="rwrp.DestroyEntity">
+<ellipse fill="green" stroke="black" cx="565.64" cy="-18" rx="101.28" ry="18"/>
+<text text-anchor="middle" x="565.64" y="-14.3" font-family="Times,serif" font-size="14.00">rwrp.DestroyEntity</text>
 </a>
 </g>
 </g>
-<!-- wrp.CreateEntityFromEntity&#45;&gt;wrp.DestroyEntity -->
+<!-- wrp.CreateEntityFromEntity&#45;&gt;rwrp.DestroyEntity -->
 <g id="edge1" class="edge">
-<title>wrp.CreateEntityFromEntity&#45;&gt;wrp.DestroyEntity</title>
+<title>wrp.CreateEntityFromEntity&#45;&gt;rwrp.DestroyEntity</title>
 <path fill="none" stroke="black" d="M565.64,-179.93C565.64,-148.97 565.64,-83.3 565.64,-46.13"/>
 <polygon fill="black" stroke="black" points="569.14,-46.02 565.64,-36.02 562.14,-46.02 569.14,-46.02"/>
 <text text-anchor="middle" x="560.64" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>

@@ -627,7 +627,7 @@
 <g id="node40" class="node">
 <title>no3.EntityMerman</title>
 <g id="a_node40"><a xlink:href="no3.EntityMerman.svg" xlink:title="no3.EntityMerman">
-<ellipse fill="red" stroke="black" cx="10668.14" cy="-198" rx="98.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="10668.14" cy="-198" rx="98.58" ry="18"/>
 <text text-anchor="middle" x="10668.14" y="-194.3" font-family="Times,serif" font-size="14.00">no3.EntityMerman</text>
 </a>
 </g>
@@ -639,18 +639,18 @@
 <polygon fill="black" stroke="black" points="13057.95,-26.27 13067.81,-22.4 13057.69,-19.27 13057.95,-26.27"/>
 <text text-anchor="middle" x="10732.37" y="-173.87" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- no3.EntityMerman3 -->
+<!-- no3.EntityMerman2 -->
 <g id="node41" class="node">
-<title>no3.EntityMerman3</title>
-<g id="a_node41"><a xlink:href="no3.EntityMerman3.svg" xlink:title="no3.EntityMerman3">
-<ellipse fill="red" stroke="black" cx="10889.14" cy="-198" rx="104.78" ry="18"/>
-<text text-anchor="middle" x="10889.14" y="-194.3" font-family="Times,serif" font-size="14.00">no3.EntityMerman3</text>
+<title>no3.EntityMerman2</title>
+<g id="a_node41"><a xlink:href="no3.EntityMerman2.svg" xlink:title="no3.EntityMerman2">
+<ellipse fill="green" stroke="black" cx="10889.14" cy="-198" rx="104.78" ry="18"/>
+<text text-anchor="middle" x="10889.14" y="-194.3" font-family="Times,serif" font-size="14.00">no3.EntityMerman2</text>
 </a>
 </g>
 </g>
-<!-- no3.EntityMerman3&#45;&gt;no3.InitializeEntity -->
+<!-- no3.EntityMerman2&#45;&gt;no3.InitializeEntity -->
 <g id="edge40" class="edge">
-<title>no3.EntityMerman3&#45;&gt;no3.InitializeEntity</title>
+<title>no3.EntityMerman2&#45;&gt;no3.InitializeEntity</title>
 <path fill="none" stroke="black" d="M10962.58,-185.13C10975.73,-183.24 10989.32,-181.44 11002.14,-180 11790.41,-91.49 12745.95,-39.63 13059.76,-24.03"/>
 <polygon fill="black" stroke="black" points="13059.94,-27.53 13069.76,-23.54 13059.6,-20.54 13059.94,-27.53"/>
 <text text-anchor="middle" x="10957.58" y="-173.93" font-family="Times,serif" font-size="14.00">1</text>

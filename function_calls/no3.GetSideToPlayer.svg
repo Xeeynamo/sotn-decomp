@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>no3.EntityMerman</title>
 <g id="a_node4"><a xlink:href="no3.EntityMerman.svg" xlink:title="no3.EntityMerman">
-<ellipse fill="red" stroke="black" cx="530.39" cy="-198" rx="98.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="530.39" cy="-198" rx="98.58" ry="18"/>
 <text text-anchor="middle" x="530.39" y="-194.3" font-family="Times,serif" font-size="14.00">no3.EntityMerman</text>
 </a>
 </g>
@@ -63,18 +63,18 @@
 <polygon fill="black" stroke="black" points="1253.66,-38.44 1262.66,-32.84 1252.13,-31.61 1253.66,-38.44"/>
 <text text-anchor="middle" x="585.07" y="-172.42" font-family="Times,serif" font-size="14.00">4</text>
 </g>
-<!-- no3.EntityMerman3 -->
+<!-- no3.EntityMerman2 -->
 <g id="node5" class="node">
-<title>no3.EntityMerman3</title>
-<g id="a_node5"><a xlink:href="no3.EntityMerman3.svg" xlink:title="no3.EntityMerman3">
-<ellipse fill="red" stroke="black" cx="751.39" cy="-198" rx="104.78" ry="18"/>
-<text text-anchor="middle" x="751.39" y="-194.3" font-family="Times,serif" font-size="14.00">no3.EntityMerman3</text>
+<title>no3.EntityMerman2</title>
+<g id="a_node5"><a xlink:href="no3.EntityMerman2.svg" xlink:title="no3.EntityMerman2">
+<ellipse fill="green" stroke="black" cx="751.39" cy="-198" rx="104.78" ry="18"/>
+<text text-anchor="middle" x="751.39" y="-194.3" font-family="Times,serif" font-size="14.00">no3.EntityMerman2</text>
 </a>
 </g>
 </g>
-<!-- no3.EntityMerman3&#45;&gt;no3.GetSideToPlayer -->
+<!-- no3.EntityMerman2&#45;&gt;no3.GetSideToPlayer -->
 <g id="edge4" class="edge">
-<title>no3.EntityMerman3&#45;&gt;no3.GetSideToPlayer</title>
+<title>no3.EntityMerman2&#45;&gt;no3.GetSideToPlayer</title>
 <path fill="none" stroke="black" d="M799.75,-181.98C904.62,-149.4 1152.61,-72.36 1265.99,-37.14"/>
 <polygon fill="black" stroke="black" points="1267.04,-40.48 1275.56,-34.17 1264.97,-33.8 1267.04,-40.48"/>
 <text text-anchor="middle" x="794.75" y="-170.78" font-family="Times,serif" font-size="14.00">4</text>

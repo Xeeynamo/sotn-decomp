@@ -195,7 +195,7 @@
 <g id="node13" class="node">
 <title>no3.EntityMerman</title>
 <g id="a_node13"><a xlink:href="no3.EntityMerman.svg" xlink:title="no3.EntityMerman">
-<ellipse fill="red" stroke="black" cx="2849.14" cy="-378" rx="98.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2849.14" cy="-378" rx="98.58" ry="18"/>
 <text text-anchor="middle" x="2849.14" y="-374.3" font-family="Times,serif" font-size="14.00">no3.EntityMerman</text>
 </a>
 </g>
@@ -207,18 +207,18 @@
 <polygon fill="black" stroke="black" points="3275.44,-221.99 3283.59,-215.22 3272.99,-215.43 3275.44,-221.99"/>
 <text text-anchor="middle" x="2885.72" y="-350.32" font-family="Times,serif" font-size="14.00">5</text>
 </g>
-<!-- no3.EntityMerman3 -->
+<!-- no3.EntityMerman2 -->
 <g id="node14" class="node">
-<title>no3.EntityMerman3</title>
-<g id="a_node14"><a xlink:href="no3.EntityMerman3.svg" xlink:title="no3.EntityMerman3">
-<ellipse fill="red" stroke="black" cx="3070.14" cy="-378" rx="104.78" ry="18"/>
-<text text-anchor="middle" x="3070.14" y="-374.3" font-family="Times,serif" font-size="14.00">no3.EntityMerman3</text>
+<title>no3.EntityMerman2</title>
+<g id="a_node14"><a xlink:href="no3.EntityMerman2.svg" xlink:title="no3.EntityMerman2">
+<ellipse fill="green" stroke="black" cx="3070.14" cy="-378" rx="104.78" ry="18"/>
+<text text-anchor="middle" x="3070.14" y="-374.3" font-family="Times,serif" font-size="14.00">no3.EntityMerman2</text>
 </a>
 </g>
 </g>
-<!-- no3.EntityMerman3&#45;&gt;no3.CreateEntityFromEntity -->
+<!-- no3.EntityMerman2&#45;&gt;no3.CreateEntityFromEntity -->
 <g id="edge13" class="edge">
-<title>no3.EntityMerman3&#45;&gt;no3.CreateEntityFromEntity</title>
+<title>no3.EntityMerman2&#45;&gt;no3.CreateEntityFromEntity</title>
 <path fill="none" stroke="black" d="M3094.31,-360.25C3140.71,-328.12 3242.27,-257.78 3294.58,-221.55"/>
 <polygon fill="black" stroke="black" points="3296.61,-224.4 3302.84,-215.83 3292.62,-218.65 3296.61,-224.4"/>
 <text text-anchor="middle" x="3089.31" y="-349.05" font-family="Times,serif" font-size="14.00">5</text>
