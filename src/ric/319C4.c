@@ -555,7 +555,7 @@ void EntityBiblePage(Entity* self) {
         (self->ext.et_8016E9E4.unk7C == 0x900) ||
         (self->ext.et_8016E9E4.unk7C == 0xD00)) {
         if (self->step < 9) {
-            g_api.func_80134714(SFX_ARROW_SHOT_A, D_801758AC, 0);
+            g_api.PlaySfxVolPan(SFX_ARROW_SHOT_A, D_801758AC, 0);
             if (self->step >= 5) {
                 D_801758AC -= 4;
             }

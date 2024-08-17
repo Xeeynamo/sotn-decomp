@@ -140,8 +140,8 @@ void func_8010D800(void) {
     }
 }
 
-void func_8010DA2C(s32* arg0) {
-    g_CurrentEntity->unk4C = arg0;
+void func_8010DA2C(AnimationFrame* frames) {
+    g_CurrentEntity->anim = frames;
     g_CurrentEntity->animFrameDuration = 0;
     g_CurrentEntity->animFrameIdx = 0;
 }
@@ -260,27 +260,27 @@ u32 UpdateAnim(s8* frameProps, AnimationFrame** anims) {
         ret = -1;
     } else if (g_CurrentEntity->animFrameDuration == 0) {
         g_CurrentEntity->animFrameDuration =
-            g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].duration;
+            g_CurrentEntity->anim[g_CurrentEntity->animFrameIdx].duration;
         ret = 0;
     } else if ((--g_CurrentEntity->animFrameDuration) == 0) {
         g_CurrentEntity->animFrameIdx++;
-        animFrame = &g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx];
+        animFrame = &g_CurrentEntity->anim[g_CurrentEntity->animFrameIdx];
         // Effectively a switch statement, but breaks if I actually use one.
         if (animFrame->duration == 0) {
             g_CurrentEntity->animFrameIdx = animFrame->unk2;
             g_CurrentEntity->animFrameDuration =
-                g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].duration;
+                g_CurrentEntity->anim[g_CurrentEntity->animFrameIdx].duration;
             ret = 0;
         } else if (animFrame->duration == 0xFFFF) {
             g_CurrentEntity->animFrameIdx--;
             g_CurrentEntity->animFrameDuration = -1;
             ret = -1;
         } else if (animFrame->duration == 0xFFFE) {
-            g_CurrentEntity->unk4C = anims[animFrame->unk2];
+            g_CurrentEntity->anim = anims[animFrame->unk2];
             g_CurrentEntity->animFrameIdx = 0;
             ret = -2;
             g_CurrentEntity->animFrameDuration =
-                g_CurrentEntity->unk4C->duration;
+                g_CurrentEntity->anim[0].duration;
         } else {
             g_CurrentEntity->animFrameDuration = animFrame->duration;
         }
@@ -290,7 +290,7 @@ u32 UpdateAnim(s8* frameProps, AnimationFrame** anims) {
         // FrameProperty* but anything besides this where we assign this big
         // expression fails.
         frameProps =
-            &frameProps[(g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx]
+            &frameProps[(g_CurrentEntity->anim[g_CurrentEntity->animFrameIdx]
                              .unk2 >>
                          9)
                         << 2];
@@ -300,7 +300,7 @@ u32 UpdateAnim(s8* frameProps, AnimationFrame** anims) {
         g_CurrentEntity->hitboxHeight = *frameProps++;
     }
     g_CurrentEntity->animCurFrame =
-        g_CurrentEntity->unk4C[g_CurrentEntity->animFrameIdx].unk2 & 0x1FF;
+        g_CurrentEntity->anim[g_CurrentEntity->animFrameIdx].unk2 & 0x1FF;
     return ret;
 }
 
@@ -1397,7 +1397,7 @@ bool func_8010FDF8(s32 branchFlags) {
 
                 if (PLAYER.velocityY > FIX(6.875)) {
                     func_8010E470(1, 0);
-                    func_80134714(SFX_STOMP_HARD_B);
+                    PlaySfxVolPan(SFX_STOMP_HARD_B);
                     CreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0, 0), 0);
                 } else {

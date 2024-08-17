@@ -101,7 +101,7 @@ void RicInit(s16 arg0) {
     g_Player.unk04 = 1;
     g_Player.pl_vram_flag = 1;
     RicSetStand(0);
-    PLAYER.unk4C = D_80155480;
+    PLAYER.anim = D_80155480;
     g_Player.unk5C = arg0;
     if (g_StageId == STAGE_ST0) {
         g_IsPrologueStage = true;
@@ -430,7 +430,7 @@ void RicMain(void) {
             func_8015CAD4(1, 16);
             break;
         case PL_T_6:
-            if ((PLAYER.step == Player_Fall) && (PLAYER.unk4C != D_80155534)) {
+            if ((PLAYER.step == Player_Fall) && (PLAYER.anim != D_80155534)) {
                 RicSetAnimation(D_80155534);
                 g_Player.unk44 &= ~0x10;
             }
@@ -654,10 +654,10 @@ block_48:
     PLAYER.unk44 = 0;
     PLAYER.hitPoints = 0;
     g_Player.unk7A = 0;
-    if (PLAYER.unk4C == D_801556C4) {
+    if (PLAYER.anim == D_801556C4) {
         PLAYER.palette = D_80154574[PLAYER.animFrameIdx];
     }
-    if ((PLAYER.unk4C == ric_anim_stand_in_air) && (PLAYER.animFrameIdx == 4)) {
+    if ((PLAYER.anim == ric_anim_stand_in_air) && (PLAYER.animFrameIdx == 4)) {
         PLAYER.palette = D_80154594[PLAYER.animFrameDuration & 3];
     }
     if ((PLAYER.step == 0x10) && (PLAYER.animFrameDuration < 0)) {

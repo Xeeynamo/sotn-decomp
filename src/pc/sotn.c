@@ -61,7 +61,7 @@ void func_8010E168(s32 arg0, s16 arg1);
 void func_8010DFF0(s32 arg0, s32 arg1);
 void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index);
 void AddToInventory(u16 itemId, s32 itemCategory);
-u32 func_80134714(s16 sfxId, s32 arg1, u16 arg2);
+u32 PlaySfxVolPan(s16 sfxId, s32 sfxVol, u16 sfxPan);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void func_800F2288(s32 arg0);
 void DebugInputWait(const char* msg);
@@ -148,7 +148,7 @@ bool InitGame(void) {
     api.AddToInventory = AddToInventory;
     api.relicDefs = g_RelicDefs;
     api.InitStatsAndGear = NULL;
-    api.func_80134714 = func_80134714;
+    api.PlaySfxVolPan = PlaySfxVolPan;
     api.func_80134678 = NULL;
     api.func_800F53A4 = NULL;
     api.CheckEquipmentItemCount = CheckEquipmentItemCount;

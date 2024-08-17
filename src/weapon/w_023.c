@@ -595,7 +595,7 @@ static void func_ptr_80170028(Entity* self) {
     case 0:
         self->palette = self->ext.weapon.parent->palette;
         self->unk5A = self->ext.weapon.parent->unk5A;
-        self->unk4C = D_A5000_8017AB58;
+        self->anim = D_A5000_8017AB58;
         self->flags |= (FLAG_UNK_04000000 | FLAG_UNK_100000);
         self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
 

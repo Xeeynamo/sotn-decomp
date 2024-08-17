@@ -998,7 +998,7 @@ segments:
     subsegments:
       - [0x170040, animset, w_052_1]
       - [0x170808, animset, w_052_2]
-      - [0x170808, data, w_052]
+      - [0x170808, .data, w_052]
       - [0x170C24, .rodata, w_052]
       - [0x170CB0, c, w_052]
       - [0x172B84, sbss, w_052]

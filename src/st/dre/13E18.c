@@ -20,7 +20,7 @@ void EntityUnkId1C(Entity* self) {
             }
             self->hitboxState = 0;
             self->flags |= FLAG_DEAD;
-            g_api.func_80134714(0x6D9, 0x54, 0);
+            g_api.PlaySfxVolPan(0x6D9, 0x54, 0);
             SetStep(5);
         }
     }

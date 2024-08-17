@@ -1,7 +1,7 @@
 #include "ric.h"
 
 void RicSetAnimation(AnimationFrame* anim) {
-    g_CurrentEntity->unk4C = anim;
+    g_CurrentEntity->anim = anim;
     g_CurrentEntity->animFrameDuration = 0;
     g_CurrentEntity->animFrameIdx = 0;
 }
@@ -122,9 +122,9 @@ void func_8015CC70(s16 arg0) {
     PLAYER.animFrameDuration = 0;
     PLAYER.animFrameIdx = 0;
     if (arg0 & 1) {
-        PLAYER.unk4C = &D_80155950;
+        PLAYER.anim = D_80155950;
     } else {
-        PLAYER.unk4C = &D_8015591C;
+        PLAYER.anim = D_8015591C;
     }
 }
 
@@ -134,15 +134,15 @@ void RicSetCrouch(s32 kind, s32 velocityX) {
     PLAYER.velocityX = velocityX;
     PLAYER.velocityY = 0;
     if (kind == 1) {
-        PLAYER.unk4C = anim_land_strong_impact;
+        PLAYER.anim = anim_land_strong_impact;
         PLAYER.step_s = 4;
     }
     if (kind == 2) {
-        PLAYER.unk4C = anim_crouch_from_stand;
+        PLAYER.anim = anim_crouch_from_stand;
         PLAYER.step_s = 1;
     }
     if (kind == 3) {
-        PLAYER.unk4C = anim_land_from_run;
+        PLAYER.anim = anim_land_from_run;
         PLAYER.step_s = 4;
     }
 }
