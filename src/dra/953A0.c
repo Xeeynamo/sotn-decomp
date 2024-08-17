@@ -176,7 +176,7 @@ u8 D_800C0C58[] = {
     0x00, 0x0C, 0x30, 0x00, 0x42, 0x01, 0xFF,
 };
 
-u8 D_800C0C74[] = {
+u8 g_SfxNoteLevelUp[] = {
     0x00, 0x0E, 0x4B, 0x02, 0x46, 0x04, 0x00, 0x0E, 0x49, 0x02, 0x5F, 0x04,
     0x00, 0x0E, 0x48, 0x02, 0x70, 0x04, 0x00, 0x0E, 0x49, 0x02, 0x7E, 0x04,
     0x00, 0x0E, 0x4A, 0x02, 0x7A, 0x04, 0x00, 0x0E, 0x4B, 0x02, 0x76, 0x04,
@@ -967,7 +967,7 @@ u8 D_800C1EAC[] = {
 u8* g_SfxScripts[] = {
     D_800C0ADC, D_800C0ADC, g_SfxCursor, g_SfxSubweaponPickup, D_800C0C14,
     D_800C0A10, D_800C0A3C, D_800C0D2C,  D_800C09E8,           D_800C09A4,
-    D_800C09B8, D_800C0C40, D_800C09CC,  D_800C0C74,           D_800C0A58,
+    D_800C09B8, D_800C0C40, D_800C09CC,  g_SfxNoteLevelUp,     D_800C0A58,
     D_800C0CFC, D_800C0CD8, D_800C0C48,  D_800C097C,           D_800C0990,
     D_800C0B20, D_800C0D84, D_800C0D94,  D_800C0F20,           D_800C0D40,
     D_800C0DB4, D_800C0DDC, D_800C0E10,  D_800C0E2C,           D_800C0E7C,

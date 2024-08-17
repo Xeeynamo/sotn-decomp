@@ -364,10 +364,10 @@ enum Sfx {
     SFX_SCRAPE_A,
     SFX_SCRAPE_B,
     SFX_SCRAPE_C, // Alucard backslide
-    SFX_UNK_618,  // Referenced in ST0, TE1, TE2
     // vabid 9
-    SFX_GLASS_BREAK_A,
+    SFX_UNK_618, // Referenced in ST0, TE1, TE2
     // vabid 0
+    SFX_GLASS_BREAK_A,
     SFX_GLASS_BREAK_B,
     SFX_GLASS_BREAK_C,
     SFX_GLASS_BREAK_D,
