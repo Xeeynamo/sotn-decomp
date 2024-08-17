@@ -346,38 +346,7 @@ s32 func_80192DD0(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-void CheckFieldCollision(u16* hitSensors, s16 sensorCount) {
-    Collider collider;
-    s16 i;
-    s32 velocityX;
-    s16 x;
-    s16 y;
-
-    velocityX = g_CurrentEntity->velocityX;
-    if (velocityX == 0)
-        return;
-    x = g_CurrentEntity->posX.i.hi;
-    y = g_CurrentEntity->posY.i.hi;
-    for (i = 0; i < sensorCount; i++) {
-        if (velocityX < 0) {
-            x = x + *hitSensors++;
-        } else {
-            x = x - *hitSensors++;
-        }
-
-        y += *hitSensors++;
-        g_api.CheckCollision(x, y, &collider, 0);
-        if (collider.effects & EFFECT_UNK_0002 &&
-            (!(collider.effects & EFFECT_UNK_8000) || i != 0)) {
-            if (velocityX < 0) {
-                g_CurrentEntity->posX.i.hi += collider.unk1C;
-            } else {
-                g_CurrentEntity->posX.i.hi += collider.unk14;
-            }
-            return;
-        }
-    }
-}
+#include "../check_field_collision.h"
 
 #include "../get_player_collision_with.h"
 
