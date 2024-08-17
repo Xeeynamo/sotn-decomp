@@ -104,11 +104,11 @@ void EntityRedDoor(Entity* self) {
         }
         if (EntityIsNearPlayer(self)) {
             if (!(self->params & 0x100)) {
-                g_api.func_80134714(SFX_DOOR_OPEN, 0x60, -6);
+                g_api.PlaySfxVolPan(SFX_DOOR_OPEN, 0x60, -6);
                 self->ext.door.angle = 0x1000;
             }
             if (self->params & 0x100) {
-                g_api.func_80134714(SFX_DOOR_OPEN, 0x60, 6);
+                g_api.PlaySfxVolPan(SFX_DOOR_OPEN, 0x60, 6);
                 self->ext.door.angle = 0x800;
             }
             self->animCurFrame = 0;
@@ -142,10 +142,10 @@ void EntityRedDoor(Entity* self) {
 #endif
         {
             if (!(self->params & 0x100)) {
-                g_api.func_80134714(SFX_DOOR_OPEN, 0x60, -6);
+                g_api.PlaySfxVolPan(SFX_DOOR_OPEN, 0x60, -6);
             }
             if (self->params & 0x100) {
-                g_api.func_80134714(SFX_DOOR_OPEN, 0x60, 6);
+                g_api.PlaySfxVolPan(SFX_DOOR_OPEN, 0x60, 6);
             }
             prim = &g_PrimBuf[self->primIndex];
             i = 0;
@@ -231,10 +231,10 @@ void EntityRedDoor(Entity* self) {
                 prim->drawMode |= 8;
             }
             if (!(self->params & 0x100)) {
-                g_api.func_80134714(SFX_DOOR_CLOSE_A, 0x60, -6);
+                g_api.PlaySfxVolPan(SFX_DOOR_CLOSE_A, 0x60, -6);
             }
             if (self->params & 0x100) {
-                g_api.func_80134714(SFX_DOOR_CLOSE_A, 0x60, 6);
+                g_api.PlaySfxVolPan(SFX_DOOR_CLOSE_A, 0x60, 6);
             }
             self->animCurFrame = 1;
             self->step = 1;
