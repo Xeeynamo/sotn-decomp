@@ -1205,7 +1205,7 @@ block_160:
     PlayAnimation(D_800B0130, D_800B01B8);
     if (g_Player.unk0C & 0x40000) {
         if (PLAYER.animFrameDuration < 0) {
-            PLAYER.animCurFrame |= 0x8000;
+            PLAYER.animCurFrame |= ANIM_FRAME_LOAD;
         }
         PLAYER.unk44 = 0;
         PLAYER.hitboxState = 0;

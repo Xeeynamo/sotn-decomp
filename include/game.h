@@ -746,6 +746,8 @@ typedef enum {
     Player_Unk50
 } PlayerSteps;
 
+#define ANIM_FRAME_LOAD 0x8000
+
 typedef struct Entity {
     /* 0x00 */ f32 posX;
     /* 0x04 */ f32 posY;

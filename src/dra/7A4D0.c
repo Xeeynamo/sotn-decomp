@@ -1711,7 +1711,7 @@ void EntityWingSmashTrail(Entity* entity) {
     if (entity->step == 0) {
         entity->flags = FLAG_UNK_08000000;
         entity->animSet = PLAYER.animSet;
-        entity->animCurFrame = PLAYER.animCurFrame | 0x8000;
+        entity->animCurFrame = PLAYER.animCurFrame | ANIM_FRAME_LOAD;
         entity->zPriority = PLAYER.zPriority - 2;
         entity->drawFlags = PLAYER.drawFlags |
                             (FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
@@ -1727,7 +1727,7 @@ void EntityWingSmashTrail(Entity* entity) {
     // This actually makes the wing smashes shrink over time, not rotate.
     entity->rotX -= 8;
     entity->rotY -= 8;
-    entity->animCurFrame = PLAYER.animCurFrame | 0x8000;
+    entity->animCurFrame = PLAYER.animCurFrame | ANIM_FRAME_LOAD;
     // Unclear why we count down by 5's instead of just making unk6C start
     // smaller
     if (entity->unk6C >= 5) {
