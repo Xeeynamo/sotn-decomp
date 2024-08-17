@@ -44,11 +44,7 @@ u8 func_801BC6BC(u8 frames[], Entity* self, u8 arg2) {
 
 #include "../move_entity.h"
 
-void FallEntity(void) {
-    if (g_CurrentEntity->velocityY < FALL_TERMINAL_VELOCITY) {
-        g_CurrentEntity->velocityY += FALL_GRAVITY;
-    }
-}
+#include "../fall_entity.h"
 
 s32 func_801BC8E4(u16* sensors) {
     Collider col;

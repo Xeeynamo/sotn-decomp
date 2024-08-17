@@ -45,11 +45,7 @@ u8 func_80191F24(u8 frames[], Entity* self, u8 arg2) {
 
 #include "../move_entity.h"
 
-void FallEntity(void) {
-    if (g_CurrentEntity->velocityY < FALL_TERMINAL_VELOCITY) {
-        g_CurrentEntity->velocityY += FALL_GRAVITY;
-    }
-}
+#include "../fall_entity.h"
 
 u8 func_8019214C(void) {
     u8 unkState;

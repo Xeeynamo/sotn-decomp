@@ -68,11 +68,7 @@ s32 GetSideToPlayer(void) {
 
 #include "../move_entity.h"
 
-void FallEntity(void) {
-    if (g_CurrentEntity->velocityY < FALL_TERMINAL_VELOCITY) {
-        g_CurrentEntity->velocityY += FALL_GRAVITY;
-    }
-}
+#include "../fall_entity.h"
 
 u8 func_801B4D18(void) {
     u8 unkState;
