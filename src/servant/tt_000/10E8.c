@@ -58,10 +58,10 @@ void func_80173C24(void);
 void func_80173C2C(Entity* self);
 
 ServantDesc g_ServantDesc = {
-    func_80171ED4, func_80172120, func_80172C30, func_8017339C,
-    func_801733A4, func_801733AC, func_801733B4, func_801733BC,
+    func_80171ED4, func_80172120, func_80172C30,        func_8017339C,
+    func_801733A4, func_801733AC, func_801733B4,        func_801733BC,
     func_801733C4, func_801733CC, BatFamiliarBlueTrail, func_80173C0C,
-    func_80173C14, func_80173C1C, func_80173C24, func_80173C2C,
+    func_80173C14, func_80173C1C, func_80173C24,        func_80173C2C,
 };
 #endif
 
@@ -255,7 +255,8 @@ void CreateBlueTrailEntity(Entity* parent) {
     if (!entity->entityId) {
         // Make sure it's empty
         DestroyEntity(entity);
-        // The entity we're making is the Servant function 0xA, BatFamiliarBlueTrail
+        // The entity we're making is the Servant function 0xA,
+        // BatFamiliarBlueTrail
         entity->entityId = 0xDA;
         entity->zPriority = parent->zPriority;
         entity->facingLeft = parent->facingLeft;
@@ -611,23 +612,29 @@ void func_80172120(Entity* self) {
                 } else {
                     if (self->facingLeft && D_80174AFC < self->posX.i.hi) {
                         self->facingLeft = PLAYER.facingLeft ? false : true;
-                    } else if (!self->facingLeft && D_80174AFC > self->posX.i.hi) {
+                    } else if (
+                        !self->facingLeft && D_80174AFC > self->posX.i.hi) {
                         self->facingLeft = PLAYER.facingLeft ? false : true;
                     }
                 }
-            } else if (self->facingLeft && (self->posX.i.hi - D_80174AFC) > 0x1F) {
+            } else if (
+                self->facingLeft && (self->posX.i.hi - D_80174AFC) > 0x1F) {
                 self->facingLeft = PLAYER.facingLeft;
-            } else if (!self->facingLeft && (D_80174AFC - self->posX.i.hi) > 0x1F) {
+            } else if (
+                !self->facingLeft && (D_80174AFC - self->posX.i.hi) > 0x1F) {
                 self->facingLeft = PLAYER.facingLeft;
             }
         }
         D_80174B0C = func_80173F30(self, D_80174AFC, D_80174B00);
-        D_80174B10 = func_80173F74(
-            D_80174B0C, self->ext.bat.unk86, self->ext.bat.unk8A);
+        D_80174B10 =
+            func_80173F74(D_80174B0C, self->ext.bat.unk86, self->ext.bat.unk8A);
         self->ext.bat.unk86 = D_80174B10;
         D_80174B04 = D_80174AFC - self->posX.i.hi;
         D_80174B08 = D_80174B00 - self->posY.i.hi;
-        D_80174B14 = SquareRoot12((D_80174B04 * D_80174B04 + D_80174B08 * D_80174B08) << 12) >>12;
+        D_80174B14 =
+            SquareRoot12(
+                (D_80174B04 * D_80174B04 + D_80174B08 * D_80174B08) << 12) >>
+            12;
         if (D_80174B14 < 30) {
             self->velocityY = -(rsin(D_80174B10) << 3);
             self->velocityX = rcos(D_80174B10) << 3;
@@ -665,7 +672,8 @@ void func_80172120(Entity* self) {
         D_80174B28 = D_80174B00 - self->posY.i.hi;
         D_80174B2C =
             SquareRoot12(
-                (D_80174B24 * D_80174B24 + D_80174B28 * D_80174B28) << 12) >> 12;
+                (D_80174B24 * D_80174B24 + D_80174B28 * D_80174B28) << 12) >>
+            12;
         if (D_80174B2C < 0x18) {
             if (self->ext.bat.unk8E) {
                 self->ext.bat.unk8E = 0;
@@ -723,7 +731,8 @@ void func_80172120(Entity* self) {
         D_80174B28 = D_80174B20 - self->posY.i.hi;
         D_80174B2C =
             SquareRoot12(
-                (D_80174B24 * D_80174B24 + D_80174B28 * D_80174B28) << 12) >>12;
+                (D_80174B24 * D_80174B24 + D_80174B28 * D_80174B28) << 12) >>
+            12;
         if (!func_801713C8(self->ext.bat.target) || D_80174B2C < 8) {
             self->ext.bat.unk8C = 0;
             self->step++;
