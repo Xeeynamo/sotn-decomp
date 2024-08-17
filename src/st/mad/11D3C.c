@@ -39,14 +39,7 @@ u8 func_80191F24(u8 frames[], Entity* self, u8 arg2) {
 
 #include "../get_distance_to_player_x.h"
 
-s32 GetDistanceToPlayerY(void) {
-    s32 value = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
-
-    if (value < 0) {
-        value = -value;
-    }
-    return value;
-}
+#include "../get_distance_to_player_y.h"
 
 #include "../get_side_to_player.h"
 

@@ -82,15 +82,7 @@ u8 func_8018B7E8(u8 frames[], Entity* self, u8 arg2) {
 #endif
 
 #if !defined(VERSION_PSP)
-// Absolute distance from g_CurrentEntity to the player in the Y Axis
-s32 GetDistanceToPlayerY(void) {
-    s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
-
-    if (yDistance < 0) {
-        yDistance = -yDistance;
-    }
-    return yDistance;
-}
+#include "../get_distance_to_player_y.h"
 #endif
 
 #include "../get_side_to_player.h"
