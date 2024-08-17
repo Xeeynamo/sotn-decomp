@@ -519,6 +519,7 @@ typedef struct {
     /* 0xA6 */ s16 unkA6;
 } ET_GurkhaSword;
 
+struct draculaPrimitive;
 typedef struct ET_Dracula {
     /* 0x7C */ char pad_7C[4];
     /* 0x80 */ struct draculaPrimitive* unk80;

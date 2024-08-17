@@ -89,6 +89,8 @@ segments:
       - [0x37664, .rodata, 48A84] # EntityStageNamePopup
       - [0x37698, rodata]
       - [0x376E8, rodata]
+      - [0x37738, .rodata, 516B4]
+      - [0x3775C, .rodata, 53F38]
       - [0x37784, rodata, e_bone_scimitar]
       - [0x377A4, .rodata, 56264] # EntityBat
       - [0x377B8, .rodata, 564B0] # EntityZombie
@@ -111,6 +113,7 @@ segments:
       - [0x48A84, c]
       - [0x50A2C, c, player_water_effect]
       - [0x516B4, c]
+      - [0x53F38, c]
       - [0x559d0, c, e_bone_scimitar]
       - [0x56264, c]
       - [0x564B0, c]
