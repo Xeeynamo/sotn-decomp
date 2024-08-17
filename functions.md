@@ -9,5 +9,5 @@
 | tt_000 | func_80172C30            |      731 |         65 |        | https://decomp.me/scratch/kmNuQ | 0.963 |
 | wrp    | EntityStageNamePopup     |      990 |         83 |        | https://decomp.me/scratch/U3Xj4 | 0.976 |
 | wrp    | EntityRelicOrb           |     1186 |         87 | Yes    | https://decomp.me/scratch/t2Tce | 0.638 |
-| tt_000 | func_80172120            |     1199 |        126 | Yes    |                                 |       |
+| tt_000 | func_80172120            |     1199 |        126 | Yes    | https://decomp.me/scratch/QBytP | 0.984 |
 | wrp    | HitDetection             |     1628 |        196 |        |                                 |       |
