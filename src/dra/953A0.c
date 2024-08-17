@@ -23,7 +23,7 @@ u8 D_800C09B8[] = {
     0x50, 0x04, 0x00, 0x0D, 0x3D, 0x06, 0x78, 0x01, 0xFF,
 };
 
-u8 D_800C09CC[] = {
+u8 g_SfxNoteUIError[] = {
     0x00, 0x06, 0x3C, 0x0E, 0x6F, 0x03, 0x00, 0x06, 0x3C,
     0x0E, 0x41, 0x03, 0x00, 0x06, 0x3C, 0x0E, 0x1E, 0x04,
     0x00, 0x06, 0x3C, 0x0E, 0x0D, 0x04, 0xFF,
@@ -36,24 +36,24 @@ u8 D_800C09E8[] = {
     0x00, 0x0C, 0x28, 0x00, 0x16, 0x01, 0xFF,
 };
 
-u8 D_800C0A10[] = {
+u8 g_SfxNoteCandleHitA[] = {
     0x00, 0x05, 0x44, 0x04, 0x7F, 0x08, 0x00,
     0x05, 0x41, 0x04, 0x28, 0x01, 0xFF,
 };
 
-u8 D_800C0A20[] = {
+u8 g_SfxNoteGoldPickup[] = {
     0x00, 0x04, 0x4C, 0x02, 0x7A, 0x02, 0x00, 0x04, 0x3C,
     0x02, 0x7C, 0x08, 0x00, 0x04, 0x3C, 0x02, 0x50, 0x06,
     0x00, 0x04, 0x3C, 0x02, 0x21, 0x01, 0xFF,
 };
 
-u8 D_800C0A3C[] = {
+u8 g_SfxNoteBatShoot[] = {
     0x00, 0x0D, 0x40, 0x00, 0x60, 0x02, 0x00, 0x0D, 0x40,
     0x00, 0x5D, 0x03, 0x00, 0x0D, 0x40, 0x00, 0x5A, 0x02,
     0x00, 0x0D, 0x3A, 0x04, 0x6E, 0x01, 0xFF,
 };
 
-u8 D_800C0A58[] = {
+u8 g_SfxNoteDebugSelect[] = {
     0x00, 0x06, 0x32, 0x08, 0x7D, 0x01, 0xFF,
 };
 
@@ -85,7 +85,7 @@ u8 D_800C0ABC[] = {
     0x33, 0x08, 0x00, 0x0D, 0x3A, 0x00, 0x1C, 0x01, 0xFF,
 };
 
-u8 D_800C0ADC[] = {
+u8 g_SfxNoteHeartPickup[] = {
     0x00, 0x0C, 0x36, 0x02, 0x7C, 0x03, 0x00, 0x0C, 0x3A, 0x02,
     0x70, 0x03, 0x00, 0x0C, 0x3E, 0x02, 0x6D, 0x03, 0x00, 0x0C,
     0x42, 0x02, 0x62, 0x02, 0x00, 0x0C, 0x42, 0x02, 0x46, 0x02,
@@ -102,7 +102,7 @@ u8 g_SfxSubweaponPickup[] = {
     // clang-format on
 };
 
-u8 D_800C0B20[] = {
+u8 g_SfxNoteHealthPickup[] = {
     0x00, 0x05, 0x2D, 0x02, 0x7D, 0x02, 0x00, 0x0C, 0x38, 0x04, 0x6B, 0x04,
     0x00, 0x0C, 0x39, 0x04, 0x60, 0x04, 0x00, 0x0C, 0x3A, 0x04, 0x50, 0x04,
     0x00, 0x0C, 0x3B, 0x04, 0x46, 0x04, 0x00, 0x0C, 0x3C, 0x04, 0x3C, 0x03,
@@ -149,12 +149,12 @@ u8 D_800C0BE0[] = {
     0x39, 0x0B, 0x00, 0x04, 0x4D, 0x00, 0x3B, 0x01, 0xFF,
 };
 
-u8 D_800C0C00[] = {
+u8 g_SfxNoteAluSword[] = {
     0x00, 0x04, 0x40, 0x0A, 0x72, 0x01, 0x00, 0x0E, 0x41, 0x08,
     0x77, 0x14, 0x00, 0x0E, 0x39, 0x08, 0x32, 0x01, 0xFF,
 };
 
-u8 D_800C0C14[] = {
+u8 g_SfxNoteMPFull[] = {
     0x00, 0x0E, 0x52, 0x02, 0x4A, 0x05, 0x00, 0x0E, 0x52, 0x02, 0x46,
     0x05, 0x00, 0x0E, 0x52, 0x02, 0x2D, 0x04, 0x00, 0x0E, 0x52, 0x02,
     0x1B, 0x04, 0x00, 0x0E, 0x52, 0x02, 0x13, 0x04, 0x00, 0x0E, 0x52,
@@ -165,7 +165,7 @@ u8 D_800C0C40[] = {
     0x00, 0x0D, 0x4B, 0x0C, 0x78, 0x01, 0xFF,
 };
 
-u8 D_800C0C48[] = {
+u8 g_SfxNoteDracGlassBreak[] = {
     0x00, 0x05, 0x4D, 0x00, 0x78, 0x0A, 0x00,
     0x05, 0x4D, 0x00, 0x46, 0x01, 0xFF,
 };
@@ -176,7 +176,7 @@ u8 D_800C0C58[] = {
     0x00, 0x0C, 0x30, 0x00, 0x42, 0x01, 0xFF,
 };
 
-u8 D_800C0C74[] = {
+u8 g_SfxNoteLevelUp[] = {
     0x00, 0x0E, 0x4B, 0x02, 0x46, 0x04, 0x00, 0x0E, 0x49, 0x02, 0x5F, 0x04,
     0x00, 0x0E, 0x48, 0x02, 0x70, 0x04, 0x00, 0x0E, 0x49, 0x02, 0x7E, 0x04,
     0x00, 0x0E, 0x4A, 0x02, 0x7A, 0x04, 0x00, 0x0E, 0x4B, 0x02, 0x76, 0x04,
@@ -185,7 +185,7 @@ u8 D_800C0C74[] = {
     0x00, 0x05, 0x40, 0x02, 0x12, 0x01, 0xFF,
 };
 
-u8 D_800C0CB8[] = {
+u8 g_SfxNotePentagram[] = {
     0x00, 0x05, 0x39, 0x00, 0x78, 0x01, 0x00, 0x0F, 0x3A, 0x08, 0x78,
     0x20, 0x00, 0x0F, 0x40, 0x08, 0x50, 0x0E, 0x00, 0x0F, 0x42, 0x08,
     0x3C, 0x0C, 0x00, 0x0F, 0x44, 0x08, 0x25, 0x01, 0xFF,
@@ -638,7 +638,7 @@ u8 D_800C1644[] = {
     0x00, 0x00, 0x4D, 0x08, 0x1E, 0x01, 0xFF,
 };
 
-u8 D_800C1690[] = {
+u8 g_SfxNoteBossDefeated[] = {
     0x03, 0x01, 0x45, 0x0E, 0x78, 0x10, 0x03, 0x01, 0x44, 0x0E,
     0x6E, 0x0F, 0x03, 0x01, 0x43, 0x0E, 0x64, 0x0F, 0x03, 0x01,
     0x42, 0x0E, 0x5C, 0x0E, 0x03, 0x01, 0x41, 0x0E, 0x55, 0x0D,
@@ -656,7 +656,7 @@ u8 D_800C16D8[] = {
     0x00, 0x3A, 0x0A, 0x2F, 0x01, 0xFF,
 };
 
-u8 D_800C16E8[] = {
+u8 g_SfxNoteCandleHitB[] = {
     0x00, 0x05, 0x41, 0x04, 0x7F, 0x08, 0x00,
     0x05, 0x3E, 0x04, 0x28, 0x01, 0xFF,
 };
@@ -771,7 +771,7 @@ u8 D_800C1A2C[] = {
     0x03, 0x00, 0x44, 0x0C, 0x7F, 0x01, 0xFF,
 };
 
-u8 D_800C1A48[] = {
+u8 g_SfxNoteSaveCoffin[] = {
     0x00, 0x0E, 0x32, 0x08, 0x19, 0x01, 0x00, 0x0E, 0x34, 0x08,
     0x2D, 0x0A, 0x00, 0x0E, 0x32, 0x08, 0x19, 0x01, 0xFF,
 };
@@ -965,41 +965,178 @@ u8 D_800C1EAC[] = {
 };
 
 u8* g_SfxScripts[] = {
-    D_800C0ADC, D_800C0ADC, g_SfxCursor, g_SfxSubweaponPickup, D_800C0C14,
-    D_800C0A10, D_800C0A3C, D_800C0D2C,  D_800C09E8,           D_800C09A4,
-    D_800C09B8, D_800C0C40, D_800C09CC,  D_800C0C74,           D_800C0A58,
-    D_800C0CFC, D_800C0CD8, D_800C0C48,  D_800C097C,           D_800C0990,
-    D_800C0B20, D_800C0D84, D_800C0D94,  D_800C0F20,           D_800C0D40,
-    D_800C0DB4, D_800C0DDC, D_800C0E10,  D_800C0E2C,           D_800C0E7C,
-    D_800C0EF4, D_800C0F30, D_800C0ED8,  D_800C0FBC,           D_800C106C,
-    D_800C105C, D_800C1080, D_800C10A8,  D_800C1000,           D_800C10E0,
-    D_800C0AA8, D_800C0D10, D_800C0B94,  D_800C0BB0,           D_800C0C00,
-    D_800C0A20, D_800C0BE0, D_800C10F0,  D_800C1104,           D_800C1118,
-    D_800C0C58, D_800C1138, D_800C1158,  D_800C11E0,           D_800C1200,
-    D_800C121C, D_800C122C, D_800C1254,  D_800C0ABC,           D_800C0A98,
-    D_800C0B74, D_800C0B84, D_800C127C,  D_800C12B8,           D_800C12E0,
-    D_800C12F4, D_800C1308, D_800C131C,  D_800C132C,           D_800C133C,
-    D_800C1394, D_800C13E0, D_800C13F0,  D_800C1428,           D_800C1400,
-    D_800C1414, D_800C143C, D_800C144C,  D_800C1460,           D_800C148C,
-    D_800C14A8, D_800C14B8, D_800C14D8,  D_800C1500,           D_800C0F10,
-    D_800C152C, D_800C153C, D_800C15AC,  D_800C1644,           D_800C16C4,
-    D_800C16D8, D_800C16E8, D_800C1268,  D_800C16F8,           D_800C1738,
-    D_800C1764, D_800C1754, D_800C1774,  D_800C17E0,           D_800C1890,
-    D_800C18E8, D_800C1A48, D_800C1AB8,  D_800C1A5C,           D_800C1AD4,
-    D_800C0CB8, D_800C1E10, D_800C1E44,  D_800C0ADC,           D_800C0ADC,
-    D_800C0ADC, D_800C1E84, D_800C1784,  D_800C0D74,           D_800C0ADC,
-    D_800C0ADC, D_800C0ADC, D_800C0ADC,  D_800C0ADC,           D_800C0ADC,
-    D_800C0ADC, D_800C0BC4, D_800C1010,  D_800C0ADC,           D_800C0ADC,
-    D_800C0ADC, D_800C0B64, D_800C0ADC,  D_800C0ADC,           D_800C0ADC,
-    D_800C0ADC, D_800C0A60, D_800C0A70,  D_800C0D60,           D_800C0ADC,
-    D_800C0ADC, D_800C0FF0, D_800C0ADC,  D_800C0ADC,           D_800C0ADC,
-    D_800C0ADC, D_800C1690, D_800C1A2C,  D_800C0ADC,           D_800C0ADC,
-    D_800C0ADC, D_800C1EAC, D_800C1998,  D_800C0ADC,           D_800C0ADC,
-    D_800C0ADC, D_800C1B20, D_800C1B3C,  D_800C1BEC,           D_800C1C9C,
-    D_800C1CEC, D_800C1D30, D_800C1D50,  D_800C1D6C,           D_800C1D88,
-    D_800C1DA4, D_800C1DB4, D_800C1DC8,  D_800C1DD0,           D_800C1DD8,
-    D_800C1DE0, D_800C1DE8, D_800C1DF0,  D_800C1DF8,           D_800C1E00,
-    D_800C1E08, D_800C12A4,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxCursor,
+    g_SfxSubweaponPickup,
+    g_SfxNoteMPFull,
+    g_SfxNoteCandleHitA,
+    g_SfxNoteBatShoot,
+    D_800C0D2C,
+    D_800C09E8,
+    D_800C09A4,
+    D_800C09B8,
+    D_800C0C40,
+    g_SfxNoteUIError,
+    g_SfxNoteLevelUp,
+    g_SfxNoteDebugSelect,
+    D_800C0CFC,
+    D_800C0CD8,
+    g_SfxNoteDracGlassBreak,
+    D_800C097C,
+    D_800C0990,
+    g_SfxNoteHealthPickup,
+    D_800C0D84,
+    D_800C0D94,
+    D_800C0F20,
+    D_800C0D40,
+    D_800C0DB4,
+    D_800C0DDC,
+    D_800C0E10,
+    D_800C0E2C,
+    D_800C0E7C,
+    D_800C0EF4,
+    D_800C0F30,
+    D_800C0ED8,
+    D_800C0FBC,
+    D_800C106C,
+    D_800C105C,
+    D_800C1080,
+    D_800C10A8,
+    D_800C1000,
+    D_800C10E0,
+    D_800C0AA8,
+    D_800C0D10,
+    D_800C0B94,
+    D_800C0BB0,
+    g_SfxNoteAluSword,
+    g_SfxNoteGoldPickup,
+    D_800C0BE0,
+    D_800C10F0,
+    D_800C1104,
+    D_800C1118,
+    D_800C0C58,
+    D_800C1138,
+    D_800C1158,
+    D_800C11E0,
+    D_800C1200,
+    D_800C121C,
+    D_800C122C,
+    D_800C1254,
+    D_800C0ABC,
+    D_800C0A98,
+    D_800C0B74,
+    D_800C0B84,
+    D_800C127C,
+    D_800C12B8,
+    D_800C12E0,
+    D_800C12F4,
+    D_800C1308,
+    D_800C131C,
+    D_800C132C,
+    D_800C133C,
+    D_800C1394,
+    D_800C13E0,
+    D_800C13F0,
+    D_800C1428,
+    D_800C1400,
+    D_800C1414,
+    D_800C143C,
+    D_800C144C,
+    D_800C1460,
+    D_800C148C,
+    D_800C14A8,
+    D_800C14B8,
+    D_800C14D8,
+    D_800C1500,
+    D_800C0F10,
+    D_800C152C,
+    D_800C153C,
+    D_800C15AC,
+    D_800C1644,
+    D_800C16C4,
+    D_800C16D8,
+    g_SfxNoteCandleHitB,
+    D_800C1268,
+    D_800C16F8,
+    D_800C1738,
+    D_800C1764,
+    D_800C1754,
+    D_800C1774,
+    D_800C17E0,
+    D_800C1890,
+    D_800C18E8,
+    g_SfxNoteSaveCoffin,
+    D_800C1AB8,
+    D_800C1A5C,
+    D_800C1AD4,
+    g_SfxNotePentagram,
+    D_800C1E10,
+    D_800C1E44,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    D_800C1E84,
+    D_800C1784,
+    D_800C0D74,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    D_800C0BC4,
+    D_800C1010,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    D_800C0B64,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    D_800C0A60,
+    D_800C0A70,
+    D_800C0D60,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    D_800C0FF0,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteBossDefeated,
+    D_800C1A2C,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    D_800C1EAC,
+    D_800C1998,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    g_SfxNoteHeartPickup,
+    D_800C1B20,
+    D_800C1B3C,
+    D_800C1BEC,
+    D_800C1C9C,
+    D_800C1CEC,
+    D_800C1D30,
+    D_800C1D50,
+    D_800C1D6C,
+    D_800C1D88,
+    D_800C1DA4,
+    D_800C1DB4,
+    D_800C1DC8,
+    D_800C1DD0,
+    D_800C1DD8,
+    D_800C1DE0,
+    D_800C1DE8,
+    D_800C1DF0,
+    D_800C1DF8,
+    D_800C1E00,
+    D_800C1E08,
+    D_800C12A4,
 };
 
 void ExecCdSoundCommands(void) {
