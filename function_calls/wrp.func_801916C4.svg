@@ -15,18 +15,18 @@
 <ellipse fill="green" stroke="black" cx="284.14" cy="-198" rx="103.98" ry="18"/>
 <text text-anchor="middle" x="284.14" y="-194.3" font-family="Times,serif" font-size="14.00">wrp.func_801916C4</text>
 </g>
-<!-- dra.func_80134714 -->
+<!-- dra.PlaySfxVolPan -->
 <g id="node2" class="node">
-<title>dra.func_80134714</title>
-<g id="a_node2"><a xlink:href="dra.func_80134714.svg" xlink:title="dra.func_80134714">
-<ellipse fill="green" stroke="black" cx="284.14" cy="-18" rx="100.98" ry="18"/>
-<text text-anchor="middle" x="284.14" y="-14.3" font-family="Times,serif" font-size="14.00">dra.func_80134714</text>
+<title>dra.PlaySfxVolPan</title>
+<g id="a_node2"><a xlink:href="dra.PlaySfxVolPan.svg" xlink:title="dra.PlaySfxVolPan">
+<ellipse fill="green" stroke="black" cx="284.14" cy="-18" rx="95.58" ry="18"/>
+<text text-anchor="middle" x="284.14" y="-14.3" font-family="Times,serif" font-size="14.00">dra.PlaySfxVolPan</text>
 </a>
 </g>
 </g>
-<!-- wrp.func_801916C4&#45;&gt;dra.func_80134714 -->
+<!-- wrp.func_801916C4&#45;&gt;dra.PlaySfxVolPan -->
 <g id="edge1" class="edge">
-<title>wrp.func_801916C4&#45;&gt;dra.func_80134714</title>
+<title>wrp.func_801916C4&#45;&gt;dra.PlaySfxVolPan</title>
 <path fill="none" stroke="black" d="M284.14,-179.93C284.14,-148.97 284.14,-83.3 284.14,-46.13"/>
 <polygon fill="black" stroke="black" points="287.64,-46.02 284.14,-36.02 280.64,-46.02 287.64,-46.02"/>
 <text text-anchor="middle" x="279.14" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
