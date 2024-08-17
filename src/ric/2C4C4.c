@@ -514,7 +514,7 @@ void EntityCrossBoomerang(Entity* self) {
         RicCreateEntFactoryFromEntity(self, FACTORY(0, 5), 0);
         self->animSet = ANIMSET_OVL(0x11);
         self->unk5A = 0x66;
-        self->unk4C = D_80155E44;
+        self->anim = D_80155E44;
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority;
         RicSetSpeedX(FIX(3.5625));
@@ -915,7 +915,7 @@ void EntitySubwpnCrashAgunea(Entity* self) {
         }
         self->ext.aguneaCrash.unk7C = var_a1 + self->ext.aguneaCrash.unk7C;
         if (!(self->ext.aguneaCrash.unk7C & 0x3FF)) {
-            g_api.func_80134714(
+            g_api.PlaySfxVolPan(
                 SFX_WEAPON_SWISH_C, self->ext.aguneaCrash.unk98, 0);
             self->ext.aguneaCrash.unk98 -= 8;
             if (self->ext.aguneaCrash.unk98 < 0) {
@@ -2301,7 +2301,7 @@ void RicEntityVibhutiCrashCloud(Entity* entity) {
             entity->unk5A = 0x79;
             entity->animSet = ANIMSET_DRA(14);
             entity->palette = 0x819E;
-            entity->unk4C = &D_80155EA8;
+            entity->anim = D_80155EA8;
             entity->drawMode = 0x30;
             entity->drawFlags = FLAG_DRAW_UNK8;
             entity->unk6C = 0x60;

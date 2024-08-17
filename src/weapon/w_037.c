@@ -341,7 +341,7 @@ static void func_ptr_80170008(Entity* self) {
             return;
         }
 
-        self->unk4C = &D_107000_8017A798[0];
+        self->anim = D_107000_8017A798;
         self->animSet = 3;
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;

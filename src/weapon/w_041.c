@@ -131,7 +131,7 @@ void EntityWeaponAttack(Entity* self) {
         self->zPriority = PLAYER.zPriority + 2;
         self->facingLeft = PLAYER.facingLeft;
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
-        self->unk4C = D_123000_8017A504;
+        self->anim = D_123000_8017A504;
         self->posY.i.hi -= 4;
 
         speedX = D_123000_8017B204;
@@ -158,11 +158,11 @@ void EntityWeaponAttack(Entity* self) {
         self->velocityY += FIX(5.0 / 32.0);
         self->ext.weapon.lifetime--;
         if (!self->ext.weapon.lifetime) {
-            self->unk4C = &D_123000_8017A4DC;
+            self->anim = D_123000_8017A4DC;
             self->animFrameDuration = 0;
             self->animFrameIdx = 0;
             self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-            g_api.func_80134714(SFX_GLASS_BREAK_A, 0x50, 0);
+            g_api.PlaySfxVolPan(SFX_GLASS_BREAK_A, 0x50, 0);
             g_api.CreateEntFactoryFromEntity(
                 self, ((g_HandId + 1) << 0xC) + FACTORY(0, 56), 0);
             self->step++;
@@ -198,7 +198,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->flags = FLAG_UNK_08000000;
 
         self->zPriority = self->ext.weapon.parent->zPriority - 2;
-        self->unk4C = D_123000_8017A4A4;
+        self->anim = D_123000_8017A4A4;
         self->drawFlags |= 3;
         self->rotX = self->rotY = 0;
         self->step++;

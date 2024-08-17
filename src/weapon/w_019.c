@@ -71,7 +71,7 @@ void EntityWeaponAttack(Entity* self) {
             self->ext.weapon.unk7E -= 16;
         } else {
             g_PrimBuf[self->primIndex].drawMode = DRAW_HIDE;
-            self->unk4C = D_89000_8017A52C;
+            self->anim = D_89000_8017A52C;
             self->ext.weapon.unk7E = 0;
             self->flags |= FLAG_UNK_100000;
             SetWeaponProperties(self, 0);

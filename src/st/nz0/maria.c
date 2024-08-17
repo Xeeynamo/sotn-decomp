@@ -72,7 +72,7 @@ void EntityMaria(Entity* self) {
             // Maria comes through the door on the left, the door is in entity
             // slot 192.
             redDoor = &g_Entities[192];
-            g_api.func_80134714(SFX_DOOR_OPEN, 0x60, -6);
+            g_api.PlaySfxVolPan(SFX_DOOR_OPEN, 0x60, -6);
             for (prim = &g_PrimBuf[redDoor->primIndex], i = 0; prim != NULL;
                  prim = prim->next, i++) {
                 if ((i == 1) && !(self->params & FLAG_DEAD)) {

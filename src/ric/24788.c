@@ -278,7 +278,7 @@ void func_80160FC4(Entity* self) {
     switch (self->step) {
     case 0:
         self->animSet = 5;
-        self->unk4C = D_80154C80;
+        self->anim = D_80154C80;
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000 | FLAG_UNK_10000;
         self->drawMode = 0x30;
@@ -631,19 +631,19 @@ void func_80161C2C(Entity* self) {
             self->rotY = 0xC0;
             self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
             self->animSet = ANIMSET_DRA(2);
-            self->unk4C = D_80154E04;
+            self->anim = D_80154E04;
         }
 
         if ((paramsHi == 0) || (paramsHi == 2)) {
             if (params & 3) {
-                self->unk4C = D_80154DC8;
+                self->anim = D_80154DC8;
                 self->rotX = 0x120;
                 self->rotY = 0x120;
                 self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
                 self->animSet = ANIMSET_DRA(2);
             } else {
                 self->animSet = ANIMSET_DRA(5);
-                self->unk4C = D_80154C80;
+                self->anim = D_80154C80;
                 self->palette = 0x8170;
             }
         }
@@ -673,14 +673,14 @@ void func_80161C2C(Entity* self) {
         self->rotY -= 4;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
-        if ((self->animFrameIdx == 8) && (self->unk4C != D_80154C80)) {
+        if ((self->animFrameIdx == 8) && (self->anim != D_80154C80)) {
             self->drawMode = DRAW_TPAGE;
             if (!(params & 1) && (self->animFrameDuration == step)) {
                 RicCreateEntFactoryFromEntity(self, FACTORY(0x400, 4), 0);
             }
         }
 
-        if ((self->animFrameIdx == 16) && (self->unk4C == D_80154C80)) {
+        if ((self->animFrameIdx == 16) && (self->anim == D_80154C80)) {
             self->drawMode = DRAW_TPAGE;
         }
 
@@ -695,7 +695,7 @@ void func_80161EF8(Entity* self) {
     switch (self->step) {
     case 0:
         self->animSet = ANIMSET_DRA(2);
-        self->unk4C = &D_80154E38;
+        self->anim = D_80154E38;
         self->flags =
             FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_UNK_10000 | FLAG_UNK_40000;
         self->zPriority = PLAYER.zPriority + 4;

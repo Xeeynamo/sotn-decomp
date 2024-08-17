@@ -193,7 +193,7 @@ s32 func_ptr_80170010(Entity* self) {
 
     if (self->step == 0) {
         self->animSet = 2;
-        self->unk4C = D_74000_8017A5B0;
+        self->anim = D_74000_8017A5B0;
         self->zPriority = PLAYER.zPriority - 4;
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
         self->velocityY = FIX(-1.0);

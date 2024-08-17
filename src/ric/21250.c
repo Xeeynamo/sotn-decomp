@@ -331,13 +331,13 @@ bool func_8015DBB0(s32 arg_flags) {
             case 1:
                 if (PLAYER.velocityY > FIX(6.875)) {
                     PLAYER.step = PL_S_CROUCH;
-                    PLAYER.unk4C = D_801555A8;
+                    PLAYER.anim = D_801555A8;
                     g_api.PlaySfx(SFX_STOMP_HARD_B);
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0, 0), 0);
                 } else {
                     PLAYER.step = 0;
-                    PLAYER.unk4C = D_80155588;
+                    PLAYER.anim = D_80155588;
                     if (g_Player.unk44 & 8) {
                         RicCreateEntFactoryFromEntity(
                             g_CurrentEntity, FACTORY(0, 0), 0);
@@ -352,13 +352,13 @@ bool func_8015DBB0(s32 arg_flags) {
             case 2:
                 if (PLAYER.velocityY > FIX(6.875)) {
                     PLAYER.step = PL_S_CROUCH;
-                    PLAYER.unk4C = D_80155738;
+                    PLAYER.anim = D_80155738;
                     g_api.PlaySfx(SFX_STOMP_SOFT_A);
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(0, 0), 0);
                 } else {
                     PLAYER.step = 0;
-                    PLAYER.unk4C = D_80155730;
+                    PLAYER.anim = D_80155730;
                     if (!(g_Player.unk44 & 8)) {
                         PLAYER.velocityX = 0;
                     } else {
@@ -381,7 +381,7 @@ bool func_8015DBB0(s32 arg_flags) {
                     PLAYER.velocityX = 0;
                 }
                 PLAYER.step = 0;
-                PLAYER.unk4C = D_801555E8;
+                PLAYER.anim = D_801555E8;
                 g_Player.unk44 = 0;
                 return true;
             }
@@ -403,19 +403,19 @@ bool func_8015DBB0(s32 arg_flags) {
             if (g_Player.unk46 == 1) {
                 PLAYER.step_s = 0x40;
                 PLAYER.step = 4;
-                PLAYER.unk4C = D_801555C8;
+                PLAYER.anim = D_801555C8;
                 return true;
             }
             if (g_Player.unk46 == 2) {
                 PLAYER.step_s = 0x41;
                 PLAYER.step = 4;
-                PLAYER.unk4C = D_801555C8;
+                PLAYER.anim = D_801555C8;
                 return true;
             }
             if (g_Player.unk46 == 3) {
                 PLAYER.step_s = 0x42;
                 PLAYER.step = 4;
-                PLAYER.unk4C = D_80155638;
+                PLAYER.anim = D_80155638;
                 return true;
             }
         } else {
@@ -1290,7 +1290,7 @@ void func_801601DC(Entity* entity) {
         }
         entity->rotY = 0x40;
         entity->rotX = 0x40;
-        entity->unk4C = &D_80154924;
+        entity->anim = D_80154924;
         D_80174FFC++;
         entity->unk6C = 0xFF;
         entity->drawFlags =

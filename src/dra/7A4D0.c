@@ -555,7 +555,7 @@ void func_8011B5A4(Entity* self) {
         }
 
         self->animSet = 5;
-        self->unk4C = D_800AD57C;
+        self->anim = D_800AD57C;
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000 | FLAG_UNK_10000;
         self->palette = 0x8195;
@@ -676,7 +676,7 @@ void EntityUnkId24(Entity* self) {
     u16 upperparams = self->params >> 8;
     if (self->step == 0) {
         self->animSet = 2;
-        self->unk4C = D_800AD5FC;
+        self->anim = D_800AD5FC;
 
         // Weird thing here where we have to set flags to the same value twice
         self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
@@ -1711,7 +1711,7 @@ void EntityWingSmashTrail(Entity* entity) {
     if (entity->step == 0) {
         entity->flags = FLAG_UNK_08000000;
         entity->animSet = PLAYER.animSet;
-        entity->animCurFrame = PLAYER.animCurFrame | 0x8000;
+        entity->animCurFrame = PLAYER.animCurFrame | ANIM_FRAME_LOAD;
         entity->zPriority = PLAYER.zPriority - 2;
         entity->drawFlags = PLAYER.drawFlags |
                             (FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
@@ -1727,7 +1727,7 @@ void EntityWingSmashTrail(Entity* entity) {
     // This actually makes the wing smashes shrink over time, not rotate.
     entity->rotX -= 8;
     entity->rotY -= 8;
-    entity->animCurFrame = PLAYER.animCurFrame | 0x8000;
+    entity->animCurFrame = PLAYER.animCurFrame | ANIM_FRAME_LOAD;
     // Unclear why we count down by 5's instead of just making unk6C start
     // smaller
     if (entity->unk6C >= 5) {

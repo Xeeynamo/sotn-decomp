@@ -746,6 +746,8 @@ typedef enum {
     Player_Unk50
 } PlayerSteps;
 
+#define ANIM_FRAME_LOAD 0x8000
+
 typedef struct Entity {
     /* 0x00 */ f32 posX;
     /* 0x04 */ f32 posY;
@@ -786,7 +788,7 @@ typedef struct Entity {
     /* 0x48 */ u8 hitFlags; // 1 = took hit
     /* 0x49 */ u8 nFramesInvincibility;
     /* 0x4A */ s16 unk4A;
-    /* 0x4C */ AnimationFrame* unk4C;
+    /* 0x4C */ AnimationFrame* anim;
     /* 0x50 */ u16 animFrameIdx;
     /* 0x52 */ s16 animFrameDuration;
     /* 0x54 */ s16 animSet;
@@ -1477,7 +1479,7 @@ typedef struct {
     /* 8003C84C */ void (*AddToInventory)(u32 id, EquipKind kind);
     /* 8003C850 */ RelicOrb* relicDefs;
     /* 8003C854 */ void (*InitStatsAndGear)(bool debugMode);
-    /* 8003C858 */ s32 (*func_80134714)(s32 arg0, s32 arg1, s32 arg2);
+    /* 8003C858 */ s32 (*PlaySfxVolPan)(s32 sfxId, s32 sfxVol, s32 sfxPan);
     /* 8003C85C */ s32 (*func_80134678)(s16 arg0, u16 arg1);
     /* 8003C860 */ void (*func_800F53A4)(void);
     /* 8003C864 */ u32 (*CheckEquipmentItemCount)(u32 itemId, u32 equipType);
@@ -1557,7 +1559,7 @@ extern void* (*g_api_func_8010E0A8)(void);
 extern void (*g_api_func_800FE044)(s32, s32);
 extern void (*g_api_AddToInventory)(u16 id, EquipKind kind);
 extern RelicOrb* g_api_relicDefs;
-extern s32 (*g_api_func_80134714)(s32 arg0, s32 arg1, s32 arg2);
+extern s32 (*g_api_PlaySfxVolPan)(s32 sfxId, s32 sfxVol, s32 sfxPan);
 extern s32 (*g_api_func_80134678)(s16 arg0, u16 arg1);
 extern void (*g_api_func_800F53A4)(void);
 extern u32 (*g_api_CheckEquipmentItemCount)(u32 itemId, u32 equipType);

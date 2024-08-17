@@ -455,7 +455,7 @@ static void func_ptr_80170024(Entity* self) {
             self->zPriority -= 2;
             self->step = 4;
         } else {
-            self->unk4C = D_51000_8017ABCC;
+            self->anim = D_51000_8017ABCC;
             self->flags = FLAG_UNK_08000000 | FLAG_UNK_100000;
             self->ext.shield.unkAE = self->ext.shield.parent->ext.shield.unkAE;
             SetWeaponProperties(self, 0);
@@ -627,7 +627,7 @@ static void func_ptr_80170024(Entity* self) {
     make_other_entity:
         g_api.PlaySfx(SFX_CANDLE_HIT);
         self->step = 3;
-        self->unk4C = D_51000_8017ABE8;
+        self->anim = D_51000_8017ABE8;
         self->animFrameDuration = self->animFrameIdx = 0;
         // Blueprint 90 is weapon entity 9, func_ptr_80170024, so ourself.
         unusedEnt = g_api.CreateEntFactoryFromEntity(

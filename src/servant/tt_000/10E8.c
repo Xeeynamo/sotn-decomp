@@ -108,8 +108,8 @@ void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params);
 #endif
 
 void func_801710E8(Entity* entity, AnimationFrame* anim) {
-    if (entity->unk4C != anim) {
-        entity->unk4C = anim;
+    if (entity->anim != anim) {
+        entity->anim = anim;
         entity->animFrameIdx = 0;
         entity->animFrameDuration = 0;
     }
@@ -1086,24 +1086,24 @@ u32 Tt000UpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
     if (self->animFrameDuration == -1) {
         ret = -1;
     } else if (self->animFrameDuration == 0) {
-        self->animFrameDuration = self->unk4C[self->animFrameIdx].duration;
+        self->animFrameDuration = self->anim[self->animFrameIdx].duration;
     } else if (--self->animFrameDuration == 0) {
         self->animFrameIdx++;
-        animFrame = &self->unk4C[self->animFrameIdx];
+        animFrame = &self->anim[self->animFrameIdx];
         // Effectively a switch statement, but breaks if I actually use one.
         if (animFrame->duration == 0) {
             self->animFrameIdx = animFrame->unk2;
-            self->animFrameDuration = self->unk4C[self->animFrameIdx].duration;
+            self->animFrameDuration = self->anim[self->animFrameIdx].duration;
             ret = 0;
         } else if (animFrame->duration == 0xFFFF) {
             self->animFrameIdx--;
             self->animFrameDuration = -1;
             ret = -1;
         } else if (animFrame->duration == 0xFFFE) {
-            self->unk4C = frames[animFrame->unk2];
+            self->anim = frames[animFrame->unk2];
             self->animFrameIdx = 0;
             ret = -2;
-            self->animFrameDuration = self->unk4C->duration;
+            self->animFrameDuration = self->anim->duration;
         } else {
             self->animFrameDuration = animFrame->duration;
         }
@@ -1113,13 +1113,13 @@ u32 Tt000UpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
         // FrameProperty* but anything besides this where we assign this big
         // expression fails.
         frameProps =
-            &frameProps[(self->unk4C[self->animFrameIdx].unk2 >> 9) << 2];
+            &frameProps[(self->anim[self->animFrameIdx].unk2 >> 9) << 2];
         self->hitboxOffX = *frameProps++;
         self->hitboxOffY = *frameProps++;
         self->hitboxWidth = *frameProps++;
         self->hitboxHeight = *frameProps++;
     }
-    self->animCurFrame = self->unk4C[self->animFrameIdx].unk2 & 0x1FF;
+    self->animCurFrame = self->anim[self->animFrameIdx].unk2 & 0x1FF;
     return ret;
 }
 #endif

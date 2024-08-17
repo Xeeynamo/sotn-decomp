@@ -249,7 +249,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
             self->ext.shield.unk82 = 0x28;
             self->rotY = self->rotX = 0x100;
             self->ext.shield.unk80 = 8;
-            self->unk4C = D_C1000_8017AC8C;
+            self->anim = D_C1000_8017AC8C;
             self->animFrameDuration = 0;
             self->animFrameIdx = 0;
             self->flags |= FLAG_UNK_100000;
@@ -258,7 +258,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         break;
     case 2:
         if (--self->ext.shield.unk80 == 0) {
-            self->unk4C = D_C1000_8017ACB4;
+            self->anim = D_C1000_8017ACB4;
             self->animFrameDuration = 0;
             self->animFrameIdx = 0;
             self->step++;
@@ -287,7 +287,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         break;
     case 4:
         if (self->ext.shield.unk80 == 64) {
-            self->unk4C = D_C1000_8017AC8C;
+            self->anim = D_C1000_8017AC8C;
             self->animFrameDuration = 0;
             self->animFrameIdx = 0;
         }

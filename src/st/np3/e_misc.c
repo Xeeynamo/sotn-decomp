@@ -325,27 +325,27 @@ void func_8019055C(void) {
 #include "../clut_lerp.h"
 
 void func_801916C4(s16 sfxId) {
-    s32 var_a3;
+    s32 sfxVol;
     s32 temp_v0_2;
-    s16 var_a2;
+    s16 sfxPan;
     s32 y;
     s16 var_v0_4;
     s16 var_v1;
 
-    var_a3 = g_CurrentEntity->posX.i.hi - 128;
-    var_a2 = (abs(var_a3) - 32) >> 5;
-    if (var_a2 > 8) {
-        var_a2 = 8;
-    } else if (var_a2 < 0) {
-        var_a2 = 0;
+    sfxVol = g_CurrentEntity->posX.i.hi - 128;
+    sfxPan = (abs(sfxVol) - 32) >> 5;
+    if (sfxPan > 8) {
+        sfxPan = 8;
+    } else if (sfxPan < 0) {
+        sfxPan = 0;
     }
-    if (var_a3 < 0) {
-        var_a2 = -var_a2;
+    if (sfxVol < 0) {
+        sfxPan = -sfxPan;
     }
-    var_a3 = abs(var_a3) - 96;
+    sfxVol = abs(sfxVol) - 96;
     y = g_CurrentEntity->posY.i.hi - 128;
     temp_v0_2 = abs(y) - 112;
-    var_v1 = var_a3;
+    var_v1 = sfxVol;
     if (temp_v0_2 > 0) {
         var_v1 += temp_v0_2;
     }
@@ -354,8 +354,8 @@ void func_801916C4(s16 sfxId) {
     } else {
         var_v0_4 = var_v1;
     }
-    var_a3 = 127 - (var_v0_4 >> 1);
-    if (var_a3 > 0) {
-        g_api.func_80134714(sfxId, var_a3, var_a2);
+    sfxVol = 127 - (var_v0_4 >> 1);
+    if (sfxVol > 0) {
+        g_api.PlaySfxVolPan(sfxId, sfxVol, sfxPan);
     }
 }
