@@ -43,10 +43,7 @@ u8 func_8019444C(u8 frames[], Entity* self, u8 arg2) {
 
 #include "../get_side_to_player.h"
 
-void MoveEntity() {
-    g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;
-    g_CurrentEntity->posY.val += g_CurrentEntity->velocityY;
-}
+#include "../move_entity.h"
 
 void FallEntity(void) {
     if (g_CurrentEntity->velocityY < FALL_TERMINAL_VELOCITY) {
