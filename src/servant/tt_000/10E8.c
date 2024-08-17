@@ -239,7 +239,7 @@ bool func_80171434(s16 x, s16 y, s16* outX, s16* outY) {
 void func_80171560(Entity* self) {}
 
 // Only ever called by func_80172120 so that is the parent
-void func_80171568(Entity* parent) {
+void CreateBlueTrailEntity(Entity* parent) {
     Entity* entity;
     s32 i;
 
@@ -698,7 +698,7 @@ void func_80172120(Entity* self) {
             g_api.func_8011A3AC(self, 15, 1, &D_80174C30);
             self->ext.bat.unk86 = 0xC00;
             func_801710E8(self, D_801705EC);
-            func_80171568(self);
+            CreateBlueTrailEntity(self);
             self->step++;
         }
         break;
