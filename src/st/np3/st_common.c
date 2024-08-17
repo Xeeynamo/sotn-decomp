@@ -154,18 +154,7 @@ s32 func_801BCB5C(s16* posX) {
     return 1;
 }
 
-Entity* AllocEntity(Entity* start, Entity* end) {
-    Entity* current = start;
-
-    while (current < end) {
-        if (current->entityId == E_NONE) {
-            DestroyEntity(current);
-            return current;
-        }
-        current++;
-    }
-    return NULL;
-}
+#include "../alloc_entity.h"
 
 s32 func_801BCDA4(u8 arg0, s16 arg1) { return D_80181A50[arg0] * arg1; }
 

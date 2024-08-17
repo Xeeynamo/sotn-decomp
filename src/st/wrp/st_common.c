@@ -203,18 +203,7 @@ s32 func_8018BC88(s16* posX) {
 }
 #endif
 
-Entity* AllocEntity(Entity* start, Entity* end) {
-    Entity* current = start;
-
-    while (current < end) {
-        if (!current->entityId) {
-            DestroyEntity(current);
-            return current;
-        }
-        current++;
-    }
-    return NULL;
-}
+#include "../alloc_entity.h"
 
 #if !defined(VERSION_PSP)
 s32 func_8018BED0(u8 arg0, s16 arg1) { return D_80180A94[arg0] * arg1; }

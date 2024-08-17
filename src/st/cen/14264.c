@@ -155,18 +155,7 @@ s32 func_801948EC(s16* posX) {
     return 1;
 }
 
-Entity* AllocEntity(Entity* start, Entity* end) {
-    Entity* current = start;
-
-    while (current < end) {
-        if (current->entityId == E_NONE) {
-            DestroyEntity(current);
-            return current;
-        }
-        current++;
-    }
-    return NULL;
-}
+#include "../alloc_entity.h"
 
 static s16 D_80180BBC[] = {
     0x0000, 0x0065, 0x00C9, 0x012D, 0x0191, 0x01F5, 0x0259, 0x02BC, 0x031F,
