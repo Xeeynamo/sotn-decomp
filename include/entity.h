@@ -489,6 +489,14 @@ typedef struct {
 } ET_Bat;
 
 typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ struct Entity* parent;
+} ET_BatFamBlueTrail;
+
+typedef struct {
     s16 unk7C;
     s16 unk7E;
     s16 unk80;
@@ -1420,6 +1428,7 @@ typedef union { // offset=0x7C
     ET_PlayerBlink playerBlink;
     ET_Mist mist;
     ET_Bat bat;
+    ET_BatFamBlueTrail batFamBlueTrail;
     ET_BatEcho batEcho;
     ET_SoulStealOrb soulStealOrb;
     ET_GaibonSlogra GS_Props;

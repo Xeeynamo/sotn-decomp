@@ -15,6 +15,7 @@ D_psp_091CF3AC      = 0x091CF3AC;
 D_psp_091CF3DC      = 0x091CF3DC;
 g_api               = 0x091CF738;
 g_PrimBuf           = 0x091CFAF8;
+D_8003C704          = 0x091CE598;
 D_8003C708          = 0x091E1308;
 g_Tilemap           = 0x091E1628;
 g_Entities          = 0x091E1680;
