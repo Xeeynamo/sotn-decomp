@@ -352,37 +352,7 @@ s32 func_801B5970(u16* hitSensors, s16 sensorCount) {
     }
 }
 
-void CheckFieldCollision(u16* hitSensors, s16 sensorCount) {
-    Collider collider;
-    s16 i;
-    s32 velocityX;
-    s16 x;
-    s16 y;
-
-    velocityX = g_CurrentEntity->velocityX;
-    if (velocityX == 0)
-        return;
-    x = g_CurrentEntity->posX.i.hi;
-    y = g_CurrentEntity->posY.i.hi;
-    for (i = 0; i < sensorCount; i++) {
-        if (velocityX < 0) {
-            x = x + *hitSensors++;
-        } else {
-            x = x - *hitSensors++;
-        }
-
-        y += *hitSensors++;
-        g_api.CheckCollision(x, y, &collider, 0);
-        if (collider.effects & 2 && (!(collider.effects & 0x8000) || i != 0)) {
-            if (velocityX < 0) {
-                g_CurrentEntity->posX.i.hi += collider.unk1C;
-            } else {
-                g_CurrentEntity->posX.i.hi += collider.unk14;
-            }
-            return;
-        }
-    }
-}
+#include "../check_field_collision.h"
 
 INCLUDE_ASM("st/st0/nonmatchings/34908", func_801B5BF0);
 
