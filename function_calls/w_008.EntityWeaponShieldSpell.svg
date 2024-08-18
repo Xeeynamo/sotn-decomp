@@ -12,7 +12,7 @@
 <!-- w_008.EntityWeaponShieldSpell -->
 <g id="node1" class="node">
 <title>w_008.EntityWeaponShieldSpell</title>
-<ellipse fill="red" stroke="black" cx="888.44" cy="-198" rx="161.37" ry="18"/>
+<ellipse fill="green" stroke="black" cx="888.44" cy="-198" rx="161.37" ry="18"/>
 <text text-anchor="middle" x="888.44" y="-194.3" font-family="Times,serif" font-size="14.00">w_008.EntityWeaponShieldSpell</text>
 </g>
 <!-- dra.AllocPrimitives -->
