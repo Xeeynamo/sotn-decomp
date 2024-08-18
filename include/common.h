@@ -37,6 +37,9 @@
 #ifdef VERSION_PC
 #define STATIC_ASSERT _Static_assert
 #define PACKED __attribute__((packed))
+#elif VERSION_PSP
+#define STATIC_ASSERT(x)
+#define PACKED
 #else
 #define STATIC_ASSERT(x, ...)
 #define PACKED
