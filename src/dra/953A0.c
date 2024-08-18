@@ -1194,11 +1194,11 @@ void ApplyQuadChannelSetting(
     if (volumeMod == 0xFFFF) {
         g_SfxScriptVolume[channel_group] =
             (g_SfxVolumeMultiplier * g_SfxData[arg0].volume) >> 7;
-        g_UnkChannelSetting1[channel_group] = 0;
+        g_SfxScriptDistance[channel_group] = 0;
     } else {
         calcVolume = (g_SfxVolumeMultiplier * g_SfxData[arg0].volume) >> 7;
         g_SfxScriptVolume[channel_group] = (calcVolume * volumeMod) >> 7;
-        g_UnkChannelSetting1[channel_group] = distance;
+        g_SfxScriptDistance[channel_group] = distance;
     }
     g_CurrentSfxScriptSfxId[channel_group] = arg0;
     D_8013B5EC[channel_group] = g_SfxData[arg0].unk4;
@@ -1418,7 +1418,7 @@ void func_80135D8C(void) {
                     volume = g_SfxScriptVolume[i] * temp_t2[4];
                     *temp_t3 = temp_t2 + 6;
                     g_SfxScriptTimer[i] = temp_t2[5];
-                    distance = g_UnkChannelSetting1[i];
+                    distance = g_SfxScriptDistance[i];
                     func_80132A04(
                         30 + i, vab, prog, tone, note, volume >> 7, distance);
                 } else {
@@ -1442,7 +1442,7 @@ void func_80135D8C(void) {
             note = temp_v1[2];
             *temp_t2_2 = temp_v1 + 4;
             tone = temp_v1[3];
-            distance2 = g_UnkChannelSetting1[3];
+            distance2 = g_SfxScriptDistance[3];
             *temp_t2_2 = temp_v1 + 5;
             volume = g_SfxScriptVolume[3] * temp_v1[4];
             *temp_t2_2 = temp_v1 + 6;

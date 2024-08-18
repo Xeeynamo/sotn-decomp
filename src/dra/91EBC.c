@@ -91,7 +91,7 @@ void InitSoundVars3(void) {
 
     for (i = 0; i < 4; i++) {
         g_SfxScriptVolume[i] = 0;
-        g_UnkChannelSetting1[i] = 0;
+        g_SfxScriptDistance[i] = 0;
         g_CurrentSfxScriptSfxId[i] = 0;
         g_SfxScriptTimer[i] = 0;
         D_8013B5EC[i] = 0;

@@ -373,10 +373,10 @@ void PlaySfx(s16 sfxId) {
 }
 
 void func_8013493C(s16 arg0, s16 arg1) {
-    g_CurrentSfxScriptSfxId[arg1] = D_8013B678[arg0];
-    g_SfxScriptVolume[arg1] = D_801390AC[arg0];
-    g_UnkChannelSetting1[arg1] = D_80139058[arg0];
-    g_SfxScriptTimer[arg1] = D_80139814[arg0];
+    g_CurrentSfxScriptSfxId[arg1] = g_CurrentSfxScriptSfxIdCopy[arg0];
+    g_SfxScriptVolume[arg1] = g_SfxScriptVolumeCopy[arg0];
+    g_SfxScriptDistance[arg1] = g_SfxScriptDistanceCopy[arg0];
+    g_SfxScriptTimer[arg1] = g_SfxScriptTimerCopy[arg0];
     D_8013B5EC[arg1] = D_80139018[arg0];
     g_CurrentSfxScript[arg1] = D_801390B4[arg0];
 }
@@ -391,15 +391,15 @@ void func_801349F4(void) {
         if (D_8013B5EC[i] == 5) {
             continue;
         }
-        D_8013B678[i] = g_CurrentSfxScriptSfxId[i];
-        D_801390AC[i] = g_SfxScriptVolume[i];
-        D_80139058[i] = g_UnkChannelSetting1[i];
-        D_80139814[i] = g_SfxScriptTimer[i];
+        g_CurrentSfxScriptSfxIdCopy[i] = g_CurrentSfxScriptSfxId[i];
+        g_SfxScriptVolumeCopy[i] = g_SfxScriptVolume[i];
+        g_SfxScriptDistanceCopy[i] = g_SfxScriptDistance[i];
+        g_SfxScriptTimerCopy[i] = g_SfxScriptTimer[i];
         D_80139018[i] = D_8013B5EC[i];
         D_801390B4[i] = g_CurrentSfxScript[i];
         g_CurrentSfxScriptSfxId[i] = 0;
         g_SfxScriptVolume[i] = 0;
-        g_UnkChannelSetting1[i] = 0;
+        g_SfxScriptDistance[i] = 0;
         g_SfxScriptTimer[i] = 0;
         D_8013B5EC[i] = 0;
         g_CurrentSfxScript[i] = 0;
@@ -414,20 +414,20 @@ void func_80134B48(void) {
     s16 j;
 
     for (i = 0; i < 3; i++) {
-        if (D_8013B678[i]) {
+        if (g_CurrentSfxScriptSfxIdCopy[i]) {
             for (j = 0; j < 3; j++) {
                 if (D_8013B648[j] == 0) {
                     func_8013493C(i, j);
                     break;
                 }
             }
-            D_8013B678[i] = 0;
+            g_CurrentSfxScriptSfxIdCopy[i] = 0;
         }
     }
 
-    if (D_8013B678[3] != 0 && D_8013B648[3] == 0) {
+    if (g_CurrentSfxScriptSfxIdCopy[3] != 0 && D_8013B648[3] == 0) {
         func_8013493C(3, 3);
-        D_8013B678[3] = 0;
+        g_CurrentSfxScriptSfxIdCopy[3] = 0;
     }
     D_8013B690 = 0;
 }
