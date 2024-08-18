@@ -8,6 +8,7 @@ extern s32 g_HandId;
 #include "w_018_2.h"
 #define g_Animset w_018_1
 #define g_Animset2 w_018_2
+#include "sfx.h"
 
 extern const char D_82000_8017A73C[]; // "\no\n"
 extern s32 D_82000_8017B1B4;          // g_DebugWaitInfoTimer
@@ -57,7 +58,7 @@ void EntityWeaponAttack(Entity* self) {
         self->zPriority = PLAYER.zPriority - 4;
         self->anim = D_82000_8017A6A8;
         SetWeaponProperties(self, 1);
-        g_api.PlaySfx(SE_WPN_POWER_OF_SIRE);
+        g_api.PlaySfx(SFX_MAGIC_WEAPON_APPEAR_B);
         g_Player.D_80072F00[12] = 4;
         self->step++;
         break;

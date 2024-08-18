@@ -348,7 +348,7 @@ static void func_ptr_80170008(Entity* self) {
             self->drawFlags = 0;
         }
         if (self->ext.heavenSword.unk82 == 0x34) {
-            g_api.PlaySfx(0x66A);
+            g_api.PlaySfx(SFX_MAGIC_WEAPON_APPEAR_B);
             self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
             self->rotX = self->rotY = 0x100;
             self->palette = PAL_OVL(0x15F);
