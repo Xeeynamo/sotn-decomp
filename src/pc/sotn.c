@@ -377,7 +377,7 @@ static bool InitSfxData(struct FileAsString* file) {
         DO_ITEM("prog", jitem, item, item->prog);
         DO_ITEM("note", jitem, item, item->note);
         DO_ITEM("volume", jitem, item, item->volume);
-        DO_ITEM("unk4", jitem, item, item->unk4);
+        DO_ITEM("mode", jitem, item, item->mode);
         DO_ITEM("tone", jitem, item, item->tone);
         DO_ITEM("unk6", jitem, item, item->unk6);
     }
