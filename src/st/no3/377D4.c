@@ -818,7 +818,7 @@ void EntityCavernDoor(Entity* self) {
         InitializeEntity(D_80180B18);
         self->animCurFrame = 10;
         self->zPriority = 0x9F;
-        
+
         tileLayoutPtr = &D_80181230[0];
         if (g_CastleFlags[48]) {
             self->step = 128;
@@ -870,7 +870,6 @@ void EntityCavernDoor(Entity* self) {
             self->posX.i.hi--;
         }
 
-
         tileSteps = (self->posY.i.hi - 136);
         tileSteps /= 16;
         if (tileSteps > 3) {
@@ -884,7 +883,7 @@ void EntityCavernDoor(Entity* self) {
             g_Tilemap.fg[tilePos] = *tileLayoutPtr++;
         }
 
-        if ((g_Timer & 1)) {
+        if (g_Timer & 1) {
             break;
         }
         prim = self->ext.cavernDoor.prim;

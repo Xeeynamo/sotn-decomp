@@ -30,7 +30,7 @@ void EntityBackgroundBushes(Entity* self);
 void func_801B3704(Entity* self);
 void EntityCavernDoorLever(Entity* self);
 void EntityCavernDoorPlatform(Entity* self);
-void func_801B40F8(Entity* self);
+void EntityCavernDoor(Entity* self);
 void EntityClickSwitch(Entity* self);
 void EntityPathBlockSmallWeight(Entity* self);
 void EntityPathBlockTallWeight(Entity* self);
@@ -123,7 +123,7 @@ PfnEntityUpdate PfnEntityUpdates[] = {
     func_801B3704,
     EntityCavernDoorLever,
     EntityCavernDoorPlatform,
-    func_801B40F8,
+    EntityCavernDoor,
     EntityClickSwitch,
     EntityPathBlockSmallWeight,
     EntityPathBlockTallWeight,
