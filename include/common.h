@@ -35,10 +35,11 @@
 #endif
 
 #if defined(VERSION_PC)
-#define STATIC_ASSERT _Static_assert
 #ifndef _MSC_VER
+#define STATIC_ASSERT _Static_assert
 #define PACKED __attribute__((packed))
 #else
+#define STATIC_ASSERT(x, ...)
 #define PACKED
 #endif
 
