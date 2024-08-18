@@ -105,8 +105,8 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
                 break;
             }
             self->ext.wargpuff.unk84 = self->ext.wargpuff.unk84 & 0xFFF;
-            self->rotZ = self->ext.generic.unk84.S16.unk0 & 0xFFF;
-            temp_s0 = self->ext.generic.unk88.U8.unk1 * 0x140;
+            self->rotZ = self->ext.wargpuff.unk84 & 0xFFF;
+            temp_s0 = self->ext.wargpuff.unk89 * 0x140;
             temp_s0 /= 28;
             self->velocityX = temp_s0 * rsin(self->ext.wargpuff.unk84);
             self->velocityY = -(temp_s0 * rcos(self->ext.wargpuff.unk84));
