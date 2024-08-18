@@ -285,7 +285,8 @@ s32 SetVolumeCommand22_23(s16 vol, u16 distance) {
 
         g_CurSfxDistance22_23 = distance;
         g_CurSfxVol22_23 = vol;
-        g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] = SET_VOLUME_22_23;
+        g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] =
+            SET_VOLUME_22_23;
         g_SoundCommandRingBufferWritePos++;
 
         if (g_SoundCommandRingBufferWritePos == 0x100) {
