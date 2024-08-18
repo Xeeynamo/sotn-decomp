@@ -34,10 +34,10 @@
 #define __builtin_memcpy memcpy
 #endif
 
-#ifdef VERSION_PC
+#if defined(VERSION_PC)
 #define STATIC_ASSERT _Static_assert
 #define PACKED __attribute__((packed))
-#elif VERSION_PSP
+#elif defined(VERSION_PSP)
 #define STATIC_ASSERT(x)
 #define PACKED
 #else
