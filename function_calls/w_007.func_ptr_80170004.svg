@@ -12,7 +12,7 @@
 <!-- w_007.func_ptr_80170004 -->
 <g id="node1" class="node">
 <title>w_007.func_ptr_80170004</title>
-<ellipse fill="red" stroke="black" cx="816.74" cy="-198" rx="133.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="816.74" cy="-198" rx="133.48" ry="18"/>
 <text text-anchor="middle" x="816.74" y="-194.3" font-family="Times,serif" font-size="14.00">w_007.func_ptr_80170004</text>
 </g>
 <!-- dra.CreateEntFactoryFromEntity -->
