@@ -21,7 +21,9 @@ void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params) {
         entity->flags = FLAG_UNK_04000000;
         entity->posX.val = entityParent->posX.val;
         entity->posY.val = entityParent->posY.val;
-        entity->ext.generic.unk8C.entityPtr = entityParent;
+        // Not necessarily making batFamBlueTrail here, but
+        // that's an Ext that works. Just needs parent at 0x8C.
+        entity->ext.batFamBlueTrail.parent = entityParent;
         entity->params = params;
     }
 }

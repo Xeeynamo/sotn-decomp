@@ -60,19 +60,7 @@ typedef struct ET_Generic {
     } unk80; // size = 0x4
     /* 0x84 */ Multi unk84;
     /* 0x88 */ Multi unk88; // this is a Multi: refer to EntityWarpSmallRocks
-    union {
-        /* 0x8C */ struct Entity* entityPtr;
-        /* 0x8C */ struct Primitive* primPtr;
-        /* 0x8C */ s32 modeS32;
-        struct {
-            /* 0x8C */ u16 unk0;
-            /* 0x8E */ u16 unk2;
-        } modeU16;
-        struct {
-            /* 0x8C */ s16 unk0;
-            /* 0x8E */ s16 unk2;
-        } modeS16;
-    } unk8C; // size = 0x4
+    /* 0x8C */ s32 : 32;
     /* 0x90 */ s16 unk90;
     /* 0x92 */ s16 : 16;
     /* 0x94 */ u8 unk94;
@@ -1419,6 +1407,15 @@ typedef struct {
     f32 yCoord;
 } ET_CavernDoor;
 
+// Unknown g_Entities[8] accessed in a SEL function
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 unk8C;
+} ET_SelEnt8;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1546,6 +1543,7 @@ typedef union { // offset=0x7C
     ET_Dissolve dissolve;
     ET_LockCamera lockCamera;
     ET_CavernDoor cavernDoor;
+    ET_SelEnt8 selEnt8;
 } Ext;
 
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_Weapon, anim));

@@ -540,13 +540,13 @@ void EntityDraculaFireball(Entity* self) {
         if (self->params == 2) {
             self->velocityY = FIX(0.5);
         }
-        self->ext.generic.unk8C.modeU16.unk0 = 0x28;
+        self->ext.dracula.unk8C = 0x28;
 
     case 1:
         AnimateEntity(D_8018097C, self);
         MoveEntity();
 
-        if (--self->ext.generic.unk8C.modeS16.unk0 == 0) {
+        if (--self->ext.dracula.unk8C == 0) {
             self->velocityY = 0;
         }
         return;
