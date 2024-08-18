@@ -1284,7 +1284,7 @@ void func_8013572C(s16 arg0, u16 volume, s16 distance) {
             KeyOnChannels20_21();
             return;
         case 2:
-            SetReleaseRate6();
+            SetReleaseRateLow_22_23();
             g_CurSfxId = 0;
             return;
         case 0:

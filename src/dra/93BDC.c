@@ -235,36 +235,39 @@ void CdSoundCommand8(void) {
     }
 }
 
-void SetReleaseRate3(void) {
-    D_801390C8->voice = 0x300000;
+#define MASK_22_23 ((1 << 22) | (1 << 23))
+#define MASK_20_21 ((1 << 20) | (1 << 21))
+
+void SetReleaseRateHigh20_21(void) {
+    D_801390C8->voice = MASK_20_21;
     D_801390C8->mask = SPU_VOICE_ADSR_RR;
     D_801390C8->rr = 14;
     SpuSetVoiceAttr(D_801390C8);
-    g_KeyOffChannels |= 0x300000;
+    g_KeyOffChannels |= MASK_20_21;
 }
 
-void SetReleaseRate4(void) {
-    D_801390CC->voice = 0xC00000;
+void SetReleaseRateHigh22_23(void) {
+    D_801390CC->voice = MASK_22_23;
     D_801390CC->mask = SPU_VOICE_ADSR_RR;
     D_801390CC->rr = 14;
     SpuSetVoiceAttr(D_801390CC);
-    g_KeyOffChannels |= 0xC00000;
+    g_KeyOffChannels |= MASK_22_23;
 }
 
-void SetReleaseRate5(void) {
-    D_801390C8->voice = 0x300000;
+void SetReleaseRateLow_20_21(void) {
+    D_801390C8->voice = MASK_20_21;
     D_801390C8->mask = SPU_VOICE_ADSR_RR;
     D_801390C8->rr = 8;
     SpuSetVoiceAttr(D_801390C8);
-    g_KeyOffChannels |= 0x300000;
+    g_KeyOffChannels |= MASK_20_21;
 }
 
-void SetReleaseRate6(void) {
-    D_801390CC->voice = 0xC00000;
+void SetReleaseRateLow_22_23(void) {
+    D_801390CC->voice = MASK_22_23;
     D_801390CC->mask = SPU_VOICE_ADSR_RR;
     D_801390CC->rr = 8;
     SpuSetVoiceAttr(D_801390CC);
-    g_KeyOffChannels |= 0xC00000;
+    g_KeyOffChannels |= MASK_22_23;
 }
 
 s32 func_80134678(s16 arg0, u16 arg1) {

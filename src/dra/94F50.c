@@ -106,20 +106,20 @@ void ExecSoundCommands(void) {
                 SetReleaseRate1();
                 break;
             case 0xA0:
-                SetReleaseRate3();
+                SetReleaseRateHigh20_21();
                 g_CurSfxId2 = 0;
                 break;
             case 0xA4:
-                SetReleaseRate4();
+                SetReleaseRateHigh22_23();
                 g_CurSfxId = 0;
                 break;
             case 0xA1:
-                SetReleaseRate5();
+                SetReleaseRateLow_20_21();
                 g_CurSfxId2 = 0;
                 break;
             case 0xA2:
                 if (g_CurSfxId2 != 0) {
-                    SetReleaseRate5();
+                    SetReleaseRateLow_20_21();
                 }
                 break;
             case 0xA3:
@@ -128,12 +128,12 @@ void ExecSoundCommands(void) {
                 }
                 break;
             case 0xA5:
-                SetReleaseRate6();
+                SetReleaseRateLow_22_23();
                 g_CurSfxId = 0;
                 break;
             case 0xA6:
                 if (g_CurSfxId != 0) {
-                    SetReleaseRate6();
+                    SetReleaseRateLow_22_23();
                 }
                 break;
             case 0xA7:
