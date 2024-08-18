@@ -179,7 +179,7 @@ extern s16 g_volumeL;
 extern s32 D_8013AE90;
 extern s16 g_volumeR;
 extern s16 g_CurrentSfxScriptSfxId2[4];
-extern s16 D_8013B650[4];
+extern s16 g_CurrentSfxId[4];
 extern s16 g_CurrentSfxScriptSfxIdCopy[4];
 extern s16 D_8013B698;
 extern u8 D_8013B6A0[269488]; // VAB file
@@ -204,7 +204,7 @@ extern u16 g_SfxScriptVolume[4];
 extern u16 D_8013B626;
 extern s8* g_CurrentSfxScript[4];
 extern CdlLOC D_8013B640;
-extern s16 D_8013B650[4];
+extern s16 g_CurrentSfxId[4];
 extern s32 D_8013B65C;
 extern s16 g_SeqAccessNum;
 extern s32 g_MemcardStep;

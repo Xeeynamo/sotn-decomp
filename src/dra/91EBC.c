@@ -108,7 +108,7 @@ void InitSoundVars2(void) {
     D_8013B690 = 0;
 
     for (i = 0; i < NUM_CH_2; i++) {
-        D_8013B650[i] = 0;
+        g_CurrentSfxId[i] = 0;
         D_8013AED4[i] = 0;
     }
     g_CurSfxId = 0;

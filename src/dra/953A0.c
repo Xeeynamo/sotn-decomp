@@ -1220,7 +1220,7 @@ void func_80135624(
     func_80132A04(
         (channel_group * 2) + 12, g_SfxData[arg0].vabid, g_SfxData[arg0].prog,
         g_SfxData[arg0].tone, g_SfxData[arg0].note, volume, distance);
-    D_8013B650[channel_group] = arg0;
+    g_CurrentSfxId[channel_group] = arg0;
     D_8013AED4[channel_group] = g_SfxData[arg0].unk6;
 }
 
@@ -1298,14 +1298,14 @@ void func_8013572C(s16 arg0, u16 volume, s16 distance) {
             }
             if (g_SeqIsPlaying == 0) {
                 for (i = 0; i < 4; i++) {
-                    if (arg0 == D_8013B650[i]) {
+                    if (arg0 == g_CurrentSfxId[i]) {
                         func_80135624(
                             arg0, i, true, g_CurSfxVol3, g_CurSfxDistance3);
                         return;
                     }
                 }
                 for (i = 0; i < 4; i++) {
-                    if (D_8013B650[i] == 0) {
+                    if (g_CurrentSfxId[i] == 0) {
                         func_80135624(
                             arg0, i, false, g_CurSfxVol3, g_CurSfxDistance3);
                         return;
@@ -1327,7 +1327,7 @@ void func_8013572C(s16 arg0, u16 volume, s16 distance) {
                 }
                 return;
             }
-            if (D_8013B650[3] == 0) {
+            if (g_CurrentSfxId[3] == 0) {
                 func_80135624(arg0, 3, false, g_CurSfxVol3, g_CurSfxDistance3);
                 return;
             }
@@ -1478,12 +1478,12 @@ void func_80136010(void) {
         for (i = 0; i < 4; i++) {
             sum = var_a0[i * 2] + var_a2[i * 2];
             if (sum == 0) {
-                D_8013B650[i] = 0;
+                g_CurrentSfxId[i] = 0;
                 D_8013AED4[i] = 0;
             }
         }
     } else if ((s8)(g_KeyStatus[18] + g_KeyStatus[19]) == 0) {
-        D_8013B650[3] = 0;
+        g_CurrentSfxId[3] = 0;
         D_8013AED4[3] = 0;
     }
     if (g_SeqIsPlaying == 0) {
