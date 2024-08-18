@@ -1205,7 +1205,7 @@ void ApplyQuadChannelSetting(
     progId = g_SfxData[arg0].prog + 1;
     g_CurrentSfxScript[channel_group] = g_SfxScripts[progId];
     g_SfxScriptTimer[channel_group] = 0;
-    D_8013B648[channel_group] = arg0;
+    g_CurrentSfxScriptSfxId2[channel_group] = arg0;
     g_SfxScriptUnk6[channel_group] = g_SfxData[arg0].unk6;
 }
 
@@ -1233,13 +1233,13 @@ void func_8013572C(s16 arg0, u16 volume, s16 distance) {
     if (g_SfxData[arg0].vabid == 9) {
         if (D_801390C4 == 0) {
             for (i = 0; i < 3; i++) {
-                if (arg0 == D_8013B648[i]) {
+                if (arg0 == g_CurrentSfxScriptSfxId2[i]) {
                     ApplyQuadChannelSetting(arg0, i, true, volume, distance);
                     return;
                 }
             }
             for (i = 0; i < 3; i++) {
-                if (D_8013B648[i] == 0) {
+                if (g_CurrentSfxScriptSfxId2[i] == 0) {
                     ApplyQuadChannelSetting(arg0, i, false, volume, distance);
                     return;
                 }
@@ -1487,7 +1487,7 @@ void func_80136010(void) {
         D_8013AED4[3] = 0;
     }
     if (D_801390C4 == 0) {
-        var_t4 = D_8013B648;
+        var_t4 = g_CurrentSfxScriptSfxId2;
         new_var = &g_KeyStatus;
         var_t3 = &g_KeyStatus[3];
         var_t2 = &g_KeyStatus[2];
@@ -1514,7 +1514,7 @@ void func_80136010(void) {
     if ((g_CurrentSfxScriptSfxId[3] == 0) &&
         ((s8)(g_KeyStatus[14] + g_KeyStatus[15] + g_KeyStatus[16] +
               g_KeyStatus[17]) == 0)) {
-        D_8013B648[3] = 0;
+        g_CurrentSfxScriptSfxId2[3] = 0;
         g_SfxScriptUnk6[3] = 0;
     }
 }

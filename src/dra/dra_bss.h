@@ -178,7 +178,7 @@ extern s32 D_8013AEE4;
 extern s16 g_volumeL;
 extern s32 D_8013AE90;
 extern s16 g_volumeR;
-extern s16 D_8013B648[4];
+extern s16 g_CurrentSfxScriptSfxId2[4];
 extern s16 D_8013B650[4];
 extern s16 g_CurrentSfxScriptSfxIdCopy[4];
 extern s16 D_8013B698;

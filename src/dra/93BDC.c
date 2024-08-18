@@ -403,7 +403,7 @@ void PauseSfxScripts(void) {
         g_SfxScriptTimer[i] = 0;
         g_SfxScriptUnk4[i] = 0;
         g_CurrentSfxScript[i] = 0;
-        D_8013B648[i] = 0;
+        g_CurrentSfxScriptSfxId2[i] = 0;
         g_SfxScriptUnk6[i] = 0;
     }
     D_8013B690 = 1;
@@ -416,7 +416,7 @@ void UnpauseSfxScripts(void) {
     for (i = 0; i < 3; i++) {
         if (g_CurrentSfxScriptSfxIdCopy[i]) {
             for (j = 0; j < 3; j++) {
-                if (D_8013B648[j] == 0) {
+                if (g_CurrentSfxScriptSfxId2[j] == 0) {
                     RestoreSfxScriptData(i, j);
                     break;
                 }
@@ -425,7 +425,8 @@ void UnpauseSfxScripts(void) {
         }
     }
 
-    if (g_CurrentSfxScriptSfxIdCopy[3] != 0 && D_8013B648[3] == 0) {
+    if (g_CurrentSfxScriptSfxIdCopy[3] != 0 &&
+        g_CurrentSfxScriptSfxId2[3] == 0) {
         RestoreSfxScriptData(3, 3);
         g_CurrentSfxScriptSfxIdCopy[3] = 0;
     }

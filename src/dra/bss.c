@@ -442,7 +442,7 @@ s8* g_CurrentSfxScript[NUM_CH];
 padding u32 D_8013B638[2];
 CdlLOC D_8013B640;
 padding u32 D_8013B644;
-s16 D_8013B648[NUM_CH];
+s16 g_CurrentSfxScriptSfxId2[NUM_CH];
 s16 D_8013B650[NUM_CH_2];
 s16 g_SeqAccessNum;
 padding u16 D_8013B65A;
