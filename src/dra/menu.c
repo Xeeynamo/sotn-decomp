@@ -3575,7 +3575,7 @@ block_4:
         }
         PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);
         PlaySfx(0xA4);
-        PlaySfx(0xA8);
+        PlaySfx(SET_KEY_ON_22_23);
         g_GameEngineStep = Engine_Normal;
         break;
     case MENU_STEP_OPENED:

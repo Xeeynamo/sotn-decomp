@@ -46,6 +46,10 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SET_UNK_10 0x10
 #define SET_UNK_11 0x11
 #define SET_UNK_12 0x12
+#define SET_RELEASE_RATE_LOW_20_21 0xa3
+#define SET_RELEASE_RATE_LOW_22_23 0xa7
+#define SET_KEY_ON_20_21 0xa4
+#define SET_KEY_ON_22_23 0xa8
 
 #define CD_SOUND_COMMAND_FADE_OUT_2 2
 #define CD_SOUND_COMMAND_FADE_OUT_1 3

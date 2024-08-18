@@ -1522,8 +1522,8 @@ void RunMainEngine(void) {
                         }
                         D_800974A4 = 1;
                         g_GameEngineStep = Engine_0x70;
-                        PlaySfx(0xa7);
-                        PlaySfx(0xa3);
+                        PlaySfx(SET_RELEASE_RATE_LOW_22_23);
+                        PlaySfx(SET_RELEASE_RATE_LOW_20_21);
                         PlaySfx(SET_PAUSE_SFX_SCRIPTS);
 #if defined(VERSION_US)
                         if (g_StageId == STAGE_ST0) {
@@ -1532,8 +1532,8 @@ void RunMainEngine(void) {
 #endif
                         return;
                     }
-                    PlaySfx(0xa7);
-                    PlaySfx(0xa3);
+                    PlaySfx(SET_RELEASE_RATE_LOW_22_23);
+                    PlaySfx(SET_RELEASE_RATE_LOW_20_21);
                     PlaySfx(SET_PAUSE_SFX_SCRIPTS);
                     func_801027C4(1);
                     g_GameEngineStep++; // Goes from 1 to 2, into Engine_Menu
@@ -1554,8 +1554,8 @@ void RunMainEngine(void) {
                     D_800974A4 = 0;
                     g_GameEngineStep = Engine_Normal;
                     PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);
-                    PlaySfx(0xA4);
-                    PlaySfx(0xA8);
+                    PlaySfx(SET_KEY_ON_20_21);
+                    PlaySfx(SET_KEY_ON_22_23);
 #if defined(VERSION_US)
                     if (g_StageId == STAGE_ST0) {
                         UnMuteCd();
