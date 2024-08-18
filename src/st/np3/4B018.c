@@ -108,7 +108,7 @@ void EntityOwl(Entity* self) {
             self->ext.owl.unk84 = AdjustValueWithinThreshold(
                 6, self->ext.owl.unk84,
                 (s16)GetAngleBetweenEntitiesShifted(self, self + 3));
-            func_801BCDEC(self->ext.owl.unk84, 0x20);
+            SetEntityVelocityFromAngle(self->ext.owl.unk84, 0x20);
             if (self->velocityX > 0) {
                 self->facingLeft = 1;
             } else {
@@ -124,7 +124,8 @@ void EntityOwl(Entity* self) {
         case 2:
             xVar = abs(xVar);
             yVar = abs(yVar);
-            func_801BCDEC(self->ext.owl.unk84, self->ext.owl.unk88);
+            SetEntityVelocityFromAngle(
+                self->ext.owl.unk84, self->ext.owl.unk88);
             self->ext.owl.unk88--;
             if (self->ext.owl.unk88 < 0) {
                 self->ext.owl.unk88 = 0;
@@ -281,7 +282,7 @@ void EntityOwl(Entity* self) {
                 4, self->ext.owl.unk84,
                 (s16)GetAngleBetweenEntitiesShifted(self, self + 3));
             self->ext.owl.unk84 = angle;
-            func_801BCDEC(angle, 0x10);
+            SetEntityVelocityFromAngle(angle, 0x10);
             xVar = HELPER->posX.i.hi - self->posX.i.hi;
             yVar = HELPER->posY.i.hi - self->posY.i.hi;
             if (xVar > 0) {

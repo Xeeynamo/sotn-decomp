@@ -223,7 +223,7 @@ s32 func_8018BED0(u8 arg0, s16 arg1) { return g_SineTable[arg0] * arg1; }
 
 s16 func_8018BEFC(u8 arg0) { return g_SineTable[arg0]; }
 
-void func_8018BF18(s32 arg0, s16 arg1) {
+void SetEntityVelocityFromAngle(s32 arg0, s16 arg1) {
     g_CurrentEntity->velocityX = func_8018BED0(arg0, arg1);
     g_CurrentEntity->velocityY = func_8018BED0(arg0 - 0x40, arg1);
 }

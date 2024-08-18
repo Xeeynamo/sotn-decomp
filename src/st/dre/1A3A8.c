@@ -162,7 +162,7 @@ s32 func_8019AC78(u8 arg0, s16 arg1) { return D_80180D80[arg0] * arg1; }
 extern s16 D_80180D80[];
 s16 func_8019ACA4(u8 arg0) { return D_80180D80[arg0]; }
 
-void func_8019ACC0(s32 arg0, s16 arg1) {
+void SetEntityVelocityFromAngle(s32 arg0, s16 arg1) {
     g_CurrentEntity->velocityX = func_8019AC78(arg0, arg1);
     g_CurrentEntity->velocityY = func_8019AC78(arg0 - 0x40, arg1);
 }
