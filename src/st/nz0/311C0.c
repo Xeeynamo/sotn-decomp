@@ -1279,11 +1279,12 @@ void func_801B3B78() {
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(0x38, g_CurrentEntity, entity);
+            // Make a EntityWargExplosionPuffOpaque
+            CreateEntityFromEntity(E_WARG_EXP_OPAQUE, g_CurrentEntity, entity);
             entity->params = 2;
-            entity->ext.generic.unk88.S8.unk1 = 6 - i;
-            entity->ext.generic.unk84.S16.unk0 = temp_s3;
-            entity->ext.generic.unk88.S8.unk0 = temp_s4;
+            entity->ext.wargpuff.unk89 = 6 - i;
+            entity->ext.wargpuff.unk84 = temp_s3;
+            entity->ext.wargpuff.unk88 = temp_s4;
         }
     }
 }
@@ -1309,7 +1310,7 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
         self->drawMode = obj->drawMode;
         self->animSet = obj->animSet;
         self->unk5A = obj->unk2;
-        self->ext.et38.unk80 = obj->unk8;
+        self->ext.wargpuff.unk80 = obj->unk8;
         self->step = params + 1;
 
         temp_v0 = self->params & 0xFF00;
@@ -1327,13 +1328,13 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
     case 1:
         MoveEntity();
         self->velocityY = FIX(-1);
-        if (AnimateEntity((u8*)self->ext.et38.unk80, self) == 0) {
+        if (AnimateEntity((u8*)self->ext.wargpuff.unk80, self) == 0) {
             DestroyEntity(self);
         }
         break;
 
     case 2:
-        if (AnimateEntity((u8*)self->ext.et38.unk80, self) != 0) {
+        if (AnimateEntity((u8*)self->ext.wargpuff.unk80, self) != 0) {
             switch (self->step_s) {
             case 0:
                 self->drawFlags = FLAG_DRAW_UNK8;
@@ -1359,25 +1360,26 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
     case 3:
         if (self->step_s == 0) {
             self->drawFlags |= 4;
-            switch (self->ext.et38.unk88) {
+            switch (self->ext.wargpuff.unk88) {
             case 1:
-                if (self->ext.et38.unk89 >= 0x4) {
-                    self->ext.et38.unk89 += 0xFD;
-                    self->ext.et38.unk84 -= 0x800;
+                if (self->ext.wargpuff.unk89 >= 0x4) {
+                    self->ext.wargpuff.unk89 += 0xFD;
+                    self->ext.wargpuff.unk84 -= 0x800;
                 }
                 break;
 
             case 2:
-                self->ext.et38.unk84 = (u16)self->ext.et38.unk84 +
-                                       ((u8)self->ext.et38.unk89 * 0xC0);
+                self->ext.wargpuff.unk84 =
+                    (u16)self->ext.wargpuff.unk84 +
+                    ((u8)self->ext.wargpuff.unk89 * 0xC0);
                 break;
             }
-            self->ext.et38.unk84 = self->ext.et38.unk84 & 0xFFF;
-            self->rotZ = self->ext.generic.unk84.S16.unk0 & 0xFFF;
-            temp_s0 = self->ext.generic.unk88.U8.unk1 * 0x140;
+            self->ext.wargpuff.unk84 = self->ext.wargpuff.unk84 & 0xFFF;
+            self->rotZ = self->ext.wargpuff.unk84 & 0xFFF;
+            temp_s0 = self->ext.wargpuff.unk89 * 0x140;
             temp_s0 /= 28;
-            self->velocityX = temp_s0 * rsin(self->ext.et38.unk84);
-            self->velocityY = -(temp_s0 * rcos(self->ext.et38.unk84));
+            self->velocityX = temp_s0 * rsin(self->ext.wargpuff.unk84);
+            self->velocityY = -(temp_s0 * rcos(self->ext.wargpuff.unk84));
             self->step_s++;
         }
 
@@ -1399,7 +1401,7 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
             self->velocityY = velocityY - (adjVelocityY >> 2);
         }
         MoveEntity();
-        if (AnimateEntity((u8*)self->ext.et38.unk80, self) == 0) {
+        if (AnimateEntity((u8*)self->ext.wargpuff.unk80, self) == 0) {
             DestroyEntity(self);
         }
         break;
@@ -1414,7 +1416,7 @@ void EntityWargExplosionPuffOpaque(Entity* self) {
             self->step_s++;
         }
         MoveEntity();
-        if (AnimateEntity((u8*)self->ext.et38.unk80, self) == 0) {
+        if (AnimateEntity((u8*)self->ext.wargpuff.unk80, self) == 0) {
             DestroyEntity(self);
         }
         break;
