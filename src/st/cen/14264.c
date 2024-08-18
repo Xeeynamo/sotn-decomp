@@ -200,7 +200,7 @@ void func_80194B7C(s32 arg0, s16 arg1) {
 
 u8 Ratan2Shifted(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 0x40; }
 
-u8 func_80194C20(Entity* arg0, Entity* arg1) {
+u8 GetAngleBetweenEntitiesShifted(Entity* arg0, Entity* arg1) {
     u16 x;
     u16 y;
 
@@ -210,7 +210,7 @@ u8 func_80194C20(Entity* arg0, Entity* arg1) {
     return Ratan2Shifted(x, y);
 }
 
-u16 func_80194C68(s16 x, s16 y) {
+u16 GetAnglePointToEntityShifted(s16 x, s16 y) {
     x -= g_CurrentEntity->posX.i.hi;
     y -= g_CurrentEntity->posY.i.hi;
 

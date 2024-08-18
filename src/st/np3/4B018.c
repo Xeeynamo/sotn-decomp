@@ -106,7 +106,8 @@ void EntityOwl(Entity* self) {
             // Might be able to change types on these two functions to
             // remove the s16 cast.
             self->ext.owl.unk84 = AdjustValueWithinThreshold(
-                6, self->ext.owl.unk84, (s16)func_801BCE90(self, self + 3));
+                6, self->ext.owl.unk84,
+                (s16)GetAngleBetweenEntitiesShifted(self, self + 3));
             func_801BCDEC(self->ext.owl.unk84, 0x20);
             if (self->velocityX > 0) {
                 self->facingLeft = 1;
@@ -277,7 +278,8 @@ void EntityOwl(Entity* self) {
             HELPER->posY.i.hi = (KNIGHT->posY.i.hi - 0x20);
             // probably not an angle here but reusing variable.
             angle = AdjustValueWithinThreshold(
-                4, self->ext.owl.unk84, (s16)func_801BCE90(self, self + 3));
+                4, self->ext.owl.unk84,
+                (s16)GetAngleBetweenEntitiesShifted(self, self + 3));
             self->ext.owl.unk84 = angle;
             func_801BCDEC(angle, 0x10);
             xVar = HELPER->posX.i.hi - self->posX.i.hi;
