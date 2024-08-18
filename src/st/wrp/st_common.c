@@ -215,18 +215,18 @@ void func_8018BF18(s32 arg0, s16 arg1) {
     g_CurrentEntity->velocityY = func_8018BED0(arg0 - 0x40, arg1);
 }
 
-u8 func_8018BF84(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 0x40; }
+u8 Ratan2Shifted(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 0x40; }
 
 u8 func_8018BFBC(Entity* a, Entity* b) {
     s32 diffX = (u16)b->posX.i.hi - (u16)a->posX.i.hi;
     s32 diffY = (u16)b->posY.i.hi - (u16)a->posY.i.hi;
-    return func_8018BF84(diffX, diffY);
+    return Ratan2Shifted(diffX, diffY);
 }
 
 u8 func_8018C004(s32 x, s32 y) {
     s32 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
     s32 diffY = y - (u16)g_CurrentEntity->posY.i.hi;
-    return func_8018BF84(diffX, diffY);
+    return Ratan2Shifted(diffX, diffY);
 }
 
 #include "../adjust_value_within_threshold.h"

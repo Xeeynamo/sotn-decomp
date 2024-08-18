@@ -97,7 +97,7 @@ void EntityOwl(Entity* self) {
         case 0:
             xVar = self->velocityX / 16;
             yVar = self->velocityY / 16;
-            self->ext.owl.unk84 = func_801BCE58(xVar, yVar);
+            self->ext.owl.unk84 = Ratan2Shifted(xVar, yVar);
             self->step_s++;
             break;
         case 1:

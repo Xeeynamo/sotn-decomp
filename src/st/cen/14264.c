@@ -198,7 +198,7 @@ void func_80194B7C(s32 arg0, s16 arg1) {
     g_CurrentEntity->velocityY = func_80194B34((arg0 - 0x40) & 0xFF, arg1);
 }
 
-u8 func_80194BE8(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 0x40; }
+u8 Ratan2Shifted(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 0x40; }
 
 u8 func_80194C20(Entity* arg0, Entity* arg1) {
     u16 x;
@@ -207,14 +207,14 @@ u8 func_80194C20(Entity* arg0, Entity* arg1) {
     x = arg1->posX.i.hi - arg0->posX.i.hi;
     y = arg1->posY.i.hi - arg0->posY.i.hi;
 
-    return func_80194BE8(x, y);
+    return Ratan2Shifted(x, y);
 }
 
 u16 func_80194C68(s16 x, s16 y) {
     x -= g_CurrentEntity->posX.i.hi;
     y -= g_CurrentEntity->posY.i.hi;
 
-    return func_80194BE8(x, y);
+    return Ratan2Shifted(x, y);
 }
 
 #include "../adjust_value_within_threshold.h"
