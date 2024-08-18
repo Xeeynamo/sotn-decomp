@@ -2829,7 +2829,7 @@ void EntitySummonSpirit(Entity* self) {
             }
             // Blueprint 44 is child 11. EntityPlayerBlinkWhite
             CreateEntFactoryFromEntity(self, FACTORY(0x6700, 44), 0);
-            PlaySfx(NA_SE_PL_MP_GAUGE);
+            PlaySfx(SFX_UI_MP_FULL);
             self->step++;
         }
         break;

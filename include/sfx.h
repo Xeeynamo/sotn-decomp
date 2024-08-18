@@ -185,7 +185,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define NA_SE_PL_MP_GAUGE 0x67D
 #define NA_SE_PL_BT_FIREBALL 0x680
 #define NA_SE_PL_MAX_HP_MP_INCREASED 0x687
 #define SFX_UNK_689 0x689
@@ -290,8 +289,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SE_BOSS_DEFEATED 0x7D2
 
 // UI SOUNDS
-#define SFX_UI_MOVE SFX_UI_MOVE
-#define SE_UI_MAIN_MENU_SELECT 0x67D
 #define SE_UI_ERROR 0x686
 #define SE_UI_DEBUG_SELECT 0x688
 #define SE_UI_OVERWRITE_SELECT 0x6A4
@@ -465,7 +462,7 @@ enum Sfx {
     SFX_HEART_PICKUP,
     SFX_UI_MOVE,
     SFX_ITEM_PICKUP,
-    SFX_MP_FULL,
+    SFX_UI_MP_FULL,
     SFX_CANDLE_HIT_WHOOSH_A,
     SFX_CANDLE_HIT_WHOOSH_B,
     SFX_QUICK_STUTTER_EXPLODE, // 0x680

@@ -700,13 +700,13 @@ const char* D_80180454[] = {
 };
 void func_801AD590(void) {
     if (g_pads[0].tapped & (PAD_RIGHT + PAD_DOWN)) {
-        g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
+        g_api.PlaySfx(SFX_UI_MP_FULL); // MP sfx also used for Main Menu Select
         if (++g_MainMenuCursor == 5) {
             g_MainMenuCursor = 1;
         }
     }
     if (g_pads[0].tapped & (PAD_LEFT + PAD_UP)) {
-        g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
+        g_api.PlaySfx(SFX_UI_MP_FULL);
         if (--g_MainMenuCursor == 0) {
             g_MainMenuCursor = 4;
         }
@@ -802,14 +802,14 @@ void UpdateNameEntry(void) {
     }
 
     if (g_pads[0].tapped & (PAD_R1 + PAD_R2)) {
-        g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
+        g_api.PlaySfx(SFX_UI_MP_FULL);
         if (++g_InputCursorPos == 8) {
             g_InputCursorPos = 0;
         }
     }
 
     if (g_pads[0].tapped & (PAD_L1 + PAD_L2)) {
-        g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
+        g_api.PlaySfx(SFX_UI_MP_FULL);
         if (--g_InputCursorPos == -1) {
             g_InputCursorPos = 7;
         }
@@ -859,7 +859,7 @@ void UpdateFileSelect(void) {
 
         if (g_SaveSummary[0].padding > 0 && g_SaveSummary[1].padding > 0 &&
             (g_pads[0].tapped & (PAD_L2 + PAD_R2 + PAD_L1 + PAD_R1))) {
-            g_api.PlaySfx(NA_SE_PL_MP_GAUGE);
+            g_api.PlaySfx(SFX_UI_MP_FULL);
             // clamp selector inside the 6 possible X coord positions
             g_MemCardSelectorX = (g_MemCardSelectorX + 3) % 6;
         }

@@ -279,7 +279,7 @@ void func_80109990(void) {
     if (D_80137FB4 == 0) {
         if (g_Status.mp == g_Status.mpMax && !(g_Player.unk0C & 0x100000)) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 40), 0);
-            PlaySfx(NA_SE_PL_MP_GAUGE);
+            PlaySfx(SFX_UI_MP_FULL);
             D_80137FB4++;
         }
     } else if (g_Status.mp != g_Status.mpMax) {

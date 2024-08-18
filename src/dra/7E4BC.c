@@ -1177,7 +1177,7 @@ void EntityPlayerPinkEffect(Entity* self) {
                  (data_idx->unk16[self->ext.factory.unk7E] << 16)),
                 0);
             if (data_idx->pad2[self->ext.factory.unk7E] == 0x28) {
-                PlaySfx(NA_SE_PL_MP_GAUGE);
+                PlaySfx(SFX_UI_MP_FULL);
             }
         }
 
