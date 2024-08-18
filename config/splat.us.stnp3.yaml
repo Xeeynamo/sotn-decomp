@@ -75,7 +75,7 @@ segments:
       - [0x2A124, .data, sprites]
       - [0x31EA0, data]
       - [0x31EA8, .rodata, 32830] # EntityStairwayPiece
-      - [0x31EBC, .rodata, 365FC] # func_801B65FC
+      - [0x31EBC, .rodata, 363FC] # func_801B63FC
       - [0x31ED0, .rodata, slogra] # EntitySlogra .rodata, 36990
       - [0x31EDC, .rodata, gaibon] # EntityGaibon .rodata, 36990
       - [0x31F00, .rodata, e_red_door] # EntityRedDoor
@@ -102,7 +102,7 @@ segments:
       - [0x3246C, c, st_debug]
       - [0x326FC, c, e_breakable]
       - [0x32830, c]
-      - [0x365FC, c]
+      - [0x363FC, c]
       - [0x36990, c, slogra]
       - [0x378BC, c, gaibon]
       - [0x390BC, c, st_update]
