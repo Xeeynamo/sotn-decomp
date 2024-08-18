@@ -238,11 +238,7 @@ u8 func_8018C004(s32 x, s32 y) {
 u16 func_8018C130(s16 x, s16 y) { return ratan2(y, x); }
 #endif
 
-u16 GetAngleBetweenEntities(Entity* a, Entity* b) {
-    s32 diffX = b->posX.i.hi - a->posX.i.hi;
-    s32 diffY = b->posY.i.hi - a->posY.i.hi;
-    return ratan2(diffY, diffX);
-}
+#include "../get_angle_between_entities.h"
 
 #if !defined(VERSION_PSP)
 u16 func_8018C198(s32 x, s32 y) {
@@ -252,43 +248,12 @@ u16 func_8018C198(s32 x, s32 y) {
 }
 #endif
 
-u16 GetNormalizedAngle(u16 arg0, u16 arg1, u16 arg2) {
-    u16 temp_a2;
-    u16 var_v0;
+#include "../get_normalized_angle.h"
 
-    temp_a2 = (s16)(arg2 - arg1);
-    if (temp_a2 & 0x800) {
-        var_v0 = (0x800 - temp_a2) & 0x7FF;
-    } else {
-        var_v0 = temp_a2;
-    }
-
-    if (var_v0 > arg0) {
-        if (temp_a2 & 0x800) {
-            var_v0 = arg1 - arg0;
-        } else {
-            var_v0 = arg1 + arg0;
-        }
-
-        return var_v0;
-    } else {
-        return arg2;
-    }
-}
-
-void SetStep(u8 step) {
-    g_CurrentEntity->step = step;
-    g_CurrentEntity->step_s = 0;
-    g_CurrentEntity->animFrameIdx = 0;
-    g_CurrentEntity->animFrameDuration = 0;
-}
+#include "../set_step.h"
 
 #if !defined(VERSION_PSP)
-void SetSubStep(u8 step_s) {
-    g_CurrentEntity->step_s = step_s;
-    g_CurrentEntity->animFrameIdx = 0;
-    g_CurrentEntity->animFrameDuration = 0;
-}
+#include "../set_sub_step.h"
 #endif
 
 #if !defined(VERSION_PSP)
@@ -316,11 +281,7 @@ void EntityExplosionSpawn(u16 arg0, u16 arg1) {
 
 #include "../init_entity.h"
 
-void EntityDummy(Entity* arg0) {
-    if (!arg0->step) {
-        arg0->step++;
-    }
-}
+#include "../entity_dummy.h"
 
 #if !defined(VERSION_PSP)
 s32 func_8018C434(u16* hitSensors, s16 sensorCount) {

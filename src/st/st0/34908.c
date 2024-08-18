@@ -229,11 +229,7 @@ u8 func_801B5560(s32 arg0, s32 arg1) {
 
 u16 func_801B568C(s16 x, s16 y) { return ratan2(y, x); }
 
-u16 GetAngleBetweenEntities(Entity* a, Entity* b) {
-    s32 diffX = b->posX.i.hi - a->posX.i.hi;
-    s32 diffY = b->posY.i.hi - a->posY.i.hi;
-    return ratan2(diffY, diffX);
-}
+#include "../get_angle_between_entities.h"
 
 u16 func_801B56F4(s32 x, s32 y) {
     s16 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
@@ -241,6 +237,7 @@ u16 func_801B56F4(s32 x, s32 y) {
     return ratan2(diffY, diffX);
 }
 
+// different from other versions
 u16 GetNormalizedAngle(u16 arg0, s16 arg1, s16 arg2) {
     u16 temp_a2 = arg2 - arg1;
     u16 ret;
@@ -264,18 +261,9 @@ u16 GetNormalizedAngle(u16 arg0, s16 arg1, s16 arg2) {
     return arg2;
 }
 
-void SetStep(u8 step) {
-    g_CurrentEntity->step = step;
-    g_CurrentEntity->step_s = 0;
-    g_CurrentEntity->animFrameIdx = 0;
-    g_CurrentEntity->animFrameDuration = 0;
-}
+#include "../set_step.h"
 
-void SetSubStep(u8 step_s) {
-    g_CurrentEntity->step_s = step_s;
-    g_CurrentEntity->animFrameIdx = 0;
-    g_CurrentEntity->animFrameDuration = 0;
-}
+#include "../set_sub_step.h"
 
 void func_801B57D0(u16 params) {
     Entity* current;
@@ -296,11 +284,7 @@ void func_801B57D0(u16 params) {
 
 #include "../init_entity.h"
 
-void EntityDummy(Entity* arg0) {
-    if (arg0->step == 0) {
-        arg0->step++;
-    }
-}
+#include "../entity_dummy.h"
 
 s32 func_801B5970(u16* hitSensors, s16 sensorCount) {
     Collider collider;
