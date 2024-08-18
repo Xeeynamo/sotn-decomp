@@ -980,7 +980,7 @@ void EntityOwlKnight(Entity* self) {
         }
         AnimateEntity(D_801828A0, self);
         if (!--self->ext.owl.unk82) {
-            func_801916C4(0x672);
+            func_801916C4(SFX_NOISE_SWEEP_DOWN_A);
             SetStep(18);
         }
         break;

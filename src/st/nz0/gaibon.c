@@ -488,7 +488,7 @@ void EntityGaibon(Entity* self) {
                 self->ext.GS_Props.flag = 0;
                 SetSubStep(GAIBON_NEAR_DEATH_TRANSFORM);
                 if (self->flags & FLAG_DEAD) {
-                    func_801C29B0(NA_SE_EN_GAIBON_COLLAPSE);
+                    func_801C29B0(SFX_NOISE_SWEEP_DOWN_A);
                     SetStep(GAIBON_DYING);
                 } else {
                     func_801C29B0(NA_SE_EN_GAIBON_SCREAM);
