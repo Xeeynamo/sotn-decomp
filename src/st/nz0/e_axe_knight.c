@@ -457,7 +457,7 @@ void EntityAxeKnightThrowingAxe(Entity* entity) {
     s32 velocityX;
 
     if (entity->flags & FLAG_DEAD) {
-        func_801C29B0(NA_SE_EN_AXE_KNIGHT_BREAK_AXE);
+        func_801C29B0(SFX_WEAPON_BREAK);
         EntityExplosionSpawn(0, 0);
         return;
     }
