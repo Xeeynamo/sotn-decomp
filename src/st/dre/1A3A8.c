@@ -191,7 +191,7 @@ u8 func_8019ADAC(s16 arg0, s16 arg1) {
 
 #include "../unk_entity_func0.h"
 
-u16 func_8019AED8(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
+u16 Ratan2(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
 #include "../get_angle_between_entities.h"
 

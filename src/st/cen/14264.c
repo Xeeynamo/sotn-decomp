@@ -221,7 +221,7 @@ u16 func_80194C68(s16 x, s16 y) {
 
 #include "../unk_entity_func0.h"
 
-u16 func_80194D94(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
+u16 Ratan2(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
 #include "../get_angle_between_entities.h"
 

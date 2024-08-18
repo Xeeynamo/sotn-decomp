@@ -227,7 +227,7 @@ u8 func_801B5560(s32 arg0, s32 arg1) {
 
 #include "../unk_entity_func0.h"
 
-u16 func_801B568C(s16 x, s16 y) { return ratan2(y, x); }
+u16 Ratan2(s16 x, s16 y) { return ratan2(y, x); }
 
 #include "../get_angle_between_entities.h"
 

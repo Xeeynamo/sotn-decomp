@@ -235,7 +235,7 @@ u8 func_8018C004(s32 x, s32 y) {
 #include "../unk_entity_func0.h"
 
 #if !defined(VERSION_PSP)
-u16 func_8018C130(s16 x, s16 y) { return ratan2(y, x); }
+u16 Ratan2(s16 x, s16 y) { return ratan2(y, x); }
 #endif
 
 #include "../get_angle_between_entities.h"
