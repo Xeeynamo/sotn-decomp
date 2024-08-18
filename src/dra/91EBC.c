@@ -94,7 +94,7 @@ void InitSoundVars3(void) {
         g_SfxScriptDistance[i] = 0;
         g_CurrentSfxScriptSfxId[i] = 0;
         g_SfxScriptTimer[i] = 0;
-        g_SfxScriptUnk4[i] = 0;
+        g_SfxScriptMode[i] = 0;
         g_CurrentSfxScript[i] = 0;
         g_CurrentSfxScriptSfxId2[i] = 0;
         g_SfxScriptUnk6[i] = 0;
@@ -108,11 +108,11 @@ void InitSoundVars2(void) {
     D_8013B690 = 0;
 
     for (i = 0; i < NUM_CH_2; i++) {
-        g_CurrentSfxId[i] = 0;
+        g_CurrentSfxId12_19[i] = 0;
         D_8013AED4[i] = 0;
     }
-    g_CurSfxId = 0;
-    g_CurSfxId2 = 0;
+    g_CurSfxId22_23 = 0;
+    g_CurSfxId20_21 = 0;
 }
 
 void InitSoundVars1(void) {
@@ -145,10 +145,10 @@ void InitSoundVars1(void) {
     g_SfxRingBufferReadPos = 0;
     g_sfxRingBufferWritePos = 0;
     g_SeqIsPlaying = 0;
-    g_CurSfxVol = 0;
-    g_CurSfxDistance = 0;
-    g_CurSfxVol2 = 0;
-    g_CurSfxDistance2 = 0;
+    g_CurSfxVol22_23 = 0;
+    g_CurSfxDistance22_23 = 0;
+    g_CurSfxVol20_21 = 0;
+    g_CurSfxDistance20_21 = 0;
     D_80139A74 = 0;
     D_8013B69C = 0;
     g_SeqAccessNum = 0;
