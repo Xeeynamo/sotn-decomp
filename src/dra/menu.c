@@ -3574,7 +3574,7 @@ block_4:
             break;
         }
         PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);
-        PlaySfx(0xA4);
+        PlaySfx(SET_KEY_ON_20_21);
         PlaySfx(SET_KEY_ON_22_23);
         g_GameEngineStep = Engine_Normal;
         break;
