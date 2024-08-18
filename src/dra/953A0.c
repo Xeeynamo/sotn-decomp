@@ -1193,20 +1193,20 @@ void ApplyQuadChannelSetting(
     volumeMod = volume;
     if (volumeMod == 0xFFFF) {
         g_SfxScriptVolume[channel_group] =
-            (D_8013AE7C * g_SfxData[arg0].volume) >> 7;
-        g_UnkChannelSetting1[channel_group] = 0;
+            (g_SfxVolumeMultiplier * g_SfxData[arg0].volume) >> 7;
+        g_SfxScriptDistance[channel_group] = 0;
     } else {
-        calcVolume = (D_8013AE7C * g_SfxData[arg0].volume) >> 7;
+        calcVolume = (g_SfxVolumeMultiplier * g_SfxData[arg0].volume) >> 7;
         g_SfxScriptVolume[channel_group] = (calcVolume * volumeMod) >> 7;
-        g_UnkChannelSetting1[channel_group] = distance;
+        g_SfxScriptDistance[channel_group] = distance;
     }
     g_CurrentSfxScriptSfxId[channel_group] = arg0;
-    D_8013B5EC[channel_group] = g_SfxData[arg0].unk4;
+    g_SfxScriptUnk4[channel_group] = g_SfxData[arg0].unk4;
     progId = g_SfxData[arg0].prog + 1;
     g_CurrentSfxScript[channel_group] = g_SfxScripts[progId];
     g_SfxScriptTimer[channel_group] = 0;
-    D_8013B648[channel_group] = arg0;
-    D_8013AEA0[channel_group] = g_SfxData[arg0].unk6;
+    g_CurrentSfxScriptSfxId2[channel_group] = arg0;
+    g_SfxScriptUnk6[channel_group] = g_SfxData[arg0].unk6;
 }
 
 void func_80135624(
@@ -1220,7 +1220,7 @@ void func_80135624(
     func_80132A04(
         (channel_group * 2) + 12, g_SfxData[arg0].vabid, g_SfxData[arg0].prog,
         g_SfxData[arg0].tone, g_SfxData[arg0].note, volume, distance);
-    D_8013B650[channel_group] = arg0;
+    g_CurrentSfxId[channel_group] = arg0;
     D_8013AED4[channel_group] = g_SfxData[arg0].unk6;
 }
 
@@ -1231,103 +1231,108 @@ void func_8013572C(s16 arg0, u16 volume, s16 distance) {
         return;
     }
     if (g_SfxData[arg0].vabid == 9) {
-        if (D_801390C4 == 0) {
+        if (g_SeqIsPlaying == 0) {
             for (i = 0; i < 3; i++) {
-                if (arg0 == D_8013B648[i]) {
+                if (arg0 == g_CurrentSfxScriptSfxId2[i]) {
                     ApplyQuadChannelSetting(arg0, i, true, volume, distance);
                     return;
                 }
             }
             for (i = 0; i < 3; i++) {
-                if (D_8013B648[i] == 0) {
+                if (g_CurrentSfxScriptSfxId2[i] == 0) {
                     ApplyQuadChannelSetting(arg0, i, false, volume, distance);
                     return;
                 }
             }
             for (i = 0; i < 3; i++) {
-                if (D_8013AEA0[i] < g_SfxData[arg0].unk6) {
+                if (g_SfxScriptUnk6[i] < g_SfxData[arg0].unk6) {
                     ApplyQuadChannelSetting(arg0, i, true, volume, distance);
                     return;
                 }
             }
             for (i = 0; i < 3; i++) {
-                if (g_SfxData[arg0].unk6 == D_8013AEA0[i]) {
+                if (g_SfxData[arg0].unk6 == g_SfxScriptUnk6[i]) {
                     ApplyQuadChannelSetting(arg0, i, true, volume, distance);
                     return;
                 }
             }
             return;
         }
-        if (g_SfxData[arg0].unk6 >= D_8013AEA0[3]) {
+        if (g_SfxData[arg0].unk6 >= g_SfxScriptUnk6[3]) {
             ApplyQuadChannelSetting(arg0, 3, true, volume, distance);
         }
     } else {
         switch (g_SfxData[arg0].unk4) {
         case 1:
-            D_80139804 = arg0;
+            g_CurSfxId = arg0;
             if (volume == 0xFFFF) {
-                D_8013AEE0 = 0x7F;
+                g_CurSfxVol = 0x7F;
             } else {
-                D_8013AEE0 = volume;
+                g_CurSfxVol = volume;
             }
-            D_8013AE94 = distance;
-            func_80134D14();
+            g_CurSfxDistance = distance;
+            KeyOnChannels22_23();
             return;
         case 3:
-            D_8013B664 = arg0;
+            g_CurSfxId2 = arg0;
             if (volume == 0xFFFF) {
-                D_801390A4 = 0x7F;
+                g_CurSfxVol2 = 0x7F;
             } else {
-                D_801390A4 = volume;
+                g_CurSfxVol2 = volume;
             }
-            D_80139010 = distance;
-            func_80134C60();
+            g_CurSfxDistance2 = distance;
+            KeyOnChannels20_21();
             return;
         case 2:
-            SetReleaseRate6();
-            D_80139804 = 0;
+            SetReleaseRateLow_22_23();
+            g_CurSfxId = 0;
             return;
         case 0:
-            D_801397F8 = (D_8013AE7C * g_SfxData[arg0].volume) >> 7;
+            g_CurSfxVol3 =
+                (g_SfxVolumeMultiplier * g_SfxData[arg0].volume) >> 7;
             if (volume == 0xFFFF) {
-                D_801396DC = 0;
+                g_CurSfxDistance3 = 0;
             } else {
-                D_801396DC = distance;
-                D_801397F8 = (D_801397F8 * volume) >> 7;
+                g_CurSfxDistance3 = distance;
+                g_CurSfxVol3 = (g_CurSfxVol3 * volume) >> 7;
             }
-            if (D_801390C4 == 0) {
+            if (g_SeqIsPlaying == 0) {
                 for (i = 0; i < 4; i++) {
-                    if (arg0 == D_8013B650[i]) {
-                        func_80135624(arg0, i, true, D_801397F8, D_801396DC);
+                    if (arg0 == g_CurrentSfxId[i]) {
+                        func_80135624(
+                            arg0, i, true, g_CurSfxVol3, g_CurSfxDistance3);
                         return;
                     }
                 }
                 for (i = 0; i < 4; i++) {
-                    if (D_8013B650[i] == 0) {
-                        func_80135624(arg0, i, false, D_801397F8, D_801396DC);
+                    if (g_CurrentSfxId[i] == 0) {
+                        func_80135624(
+                            arg0, i, false, g_CurSfxVol3, g_CurSfxDistance3);
                         return;
                     }
                 }
                 for (i = 0; i < 4; i++) {
                     if (D_8013AED4[i] < g_SfxData[arg0].unk6) {
-                        func_80135624(arg0, i, true, D_801397F8, D_801396DC);
+                        func_80135624(
+                            arg0, i, true, g_CurSfxVol3, g_CurSfxDistance3);
                         return;
                     }
                 }
                 for (i = 0; i < 3; i++) {
                     if (g_SfxData[arg0].unk6 == D_8013AED4[i]) {
-                        func_80135624(arg0, i, true, D_801397F8, D_801396DC);
+                        func_80135624(
+                            arg0, i, true, g_CurSfxVol3, g_CurSfxDistance3);
                         return;
                     }
                 }
                 return;
             }
-            if (D_8013B650[3] == 0) {
-                func_80135624(arg0, 3, false, D_801397F8, D_801396DC);
+            if (g_CurrentSfxId[3] == 0) {
+                func_80135624(arg0, 3, false, g_CurSfxVol3, g_CurSfxDistance3);
                 return;
             }
             if (g_SfxData[arg0].unk6 >= D_8013AED4[3]) {
-                func_80135624(arg0, 3, true, D_801397F8, D_801396DC);
+                func_80135624(arg0, 3, true, g_CurSfxVol3, g_CurSfxDistance3);
             }
             break;
         }
@@ -1388,7 +1393,7 @@ void func_80135D8C(void) {
     s8 distance;
     s8 distance2;
 
-    if (D_801390C4 == 0) {
+    if (g_SeqIsPlaying == 0) {
         for (i = 0; i < 3; i++) {
             if (g_CurrentSfxScriptSfxId[i] != 0) {
                 if (g_SfxScriptTimer[i] == 0) {
@@ -1413,7 +1418,7 @@ void func_80135D8C(void) {
                     volume = g_SfxScriptVolume[i] * temp_t2[4];
                     *temp_t3 = temp_t2 + 6;
                     g_SfxScriptTimer[i] = temp_t2[5];
-                    distance = g_UnkChannelSetting1[i];
+                    distance = g_SfxScriptDistance[i];
                     func_80132A04(
                         30 + i, vab, prog, tone, note, volume >> 7, distance);
                 } else {
@@ -1437,7 +1442,7 @@ void func_80135D8C(void) {
             note = temp_v1[2];
             *temp_t2_2 = temp_v1 + 4;
             tone = temp_v1[3];
-            distance2 = g_UnkChannelSetting1[3];
+            distance2 = g_SfxScriptDistance[3];
             *temp_t2_2 = temp_v1 + 5;
             volume = g_SfxScriptVolume[3] * temp_v1[4];
             *temp_t2_2 = temp_v1 + 6;
@@ -1466,35 +1471,35 @@ void func_80136010(void) {
     s8* new_var;
     s16* fakeptr;
 
-    SpuGetAllKeysStatus(D_80138F64);
-    if (D_801390C4 == 0) {
-        var_a0 = &D_80138F64[12];
-        var_a2 = &D_80138F64[13];
+    SpuGetAllKeysStatus(g_KeyStatus);
+    if (g_SeqIsPlaying == 0) {
+        var_a0 = &g_KeyStatus[12];
+        var_a2 = &g_KeyStatus[13];
         for (i = 0; i < 4; i++) {
             sum = var_a0[i * 2] + var_a2[i * 2];
             if (sum == 0) {
-                D_8013B650[i] = 0;
+                g_CurrentSfxId[i] = 0;
                 D_8013AED4[i] = 0;
             }
         }
-    } else if ((s8)(D_80138F64[18] + D_80138F64[19]) == 0) {
-        D_8013B650[3] = 0;
+    } else if ((s8)(g_KeyStatus[18] + g_KeyStatus[19]) == 0) {
+        g_CurrentSfxId[3] = 0;
         D_8013AED4[3] = 0;
     }
-    if (D_801390C4 == 0) {
-        var_t4 = D_8013B648;
-        new_var = &D_80138F64;
-        var_t3 = &D_80138F64[3];
-        var_t2 = &D_80138F64[2];
-        var_t1 = &D_80138F64[1];
+    if (g_SeqIsPlaying == 0) {
+        var_t4 = g_CurrentSfxScriptSfxId2;
+        new_var = &g_KeyStatus;
+        var_t3 = &g_KeyStatus[3];
+        var_t2 = &g_KeyStatus[2];
+        var_t1 = &g_KeyStatus[1];
         var_t0 = new_var;
 
         for (i = 0; i < 3; i++) {
             if (g_CurrentSfxScriptSfxId[i] == 0) {
                 if ((s8)(*var_t0 + *var_t1 + *var_t2 + *var_t3) == 0) {
                     *var_t4 = 0;
-                    fakeptr = D_8013AEA0;
-                    D_8013AEA0[i] = 0;
+                    fakeptr = g_SfxScriptUnk6;
+                    g_SfxScriptUnk6[i] = 0;
                 }
             }
             fakeptr++;
@@ -1507,10 +1512,10 @@ void func_80136010(void) {
         return;
     }
     if ((g_CurrentSfxScriptSfxId[3] == 0) &&
-        ((s8)(D_80138F64[14] + D_80138F64[15] + D_80138F64[16] +
-              D_80138F64[17]) == 0)) {
-        D_8013B648[3] = 0;
-        D_8013AEA0[3] = 0;
+        ((s8)(g_KeyStatus[14] + g_KeyStatus[15] + g_KeyStatus[16] +
+              g_KeyStatus[17]) == 0)) {
+        g_CurrentSfxScriptSfxId2[3] = 0;
+        g_SfxScriptUnk6[3] = 0;
     }
 }
 

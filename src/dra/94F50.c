@@ -56,93 +56,93 @@ void ExecSoundCommands(void) {
             case SET_STOP_MUSIC - 1:
                 AddCdSoundCommand(CD_SOUND_COMMAND_FADE_OUT_2);
                 break;
-            case 0xD:
-                func_801349F4();
+            case SET_PAUSE_SFX_SCRIPTS - 1:
+                PauseSfxScripts();
                 break;
-            case 0xE:
-                func_80134B48();
+            case SET_UNPAUSE_SFX_SCRIPTS - 1:
+                UnpauseSfxScripts();
                 break;
             case 0x7F:
-                D_80139A6C = 0x20;
+                g_XaVolumeMultiplier = 0x20;
                 AddCdSoundCommand(CD_SOUND_COMMAND_10);
                 break;
             case 0x80:
-                D_80139A6C = 8;
+                g_XaVolumeMultiplier = 8;
                 AddCdSoundCommand(CD_SOUND_COMMAND_10);
                 break;
             case 0x81:
-                D_80139A6C = 4;
+                g_XaVolumeMultiplier = 4;
                 AddCdSoundCommand(CD_SOUND_COMMAND_10);
                 break;
             case 0x82:
-                D_80139A6C = 2;
+                g_XaVolumeMultiplier = 2;
                 AddCdSoundCommand(CD_SOUND_COMMAND_10);
                 break;
             case 0x83:
-                D_80139A6C = 1;
+                g_XaVolumeMultiplier = 1;
                 AddCdSoundCommand(CD_SOUND_COMMAND_10);
                 break;
             case 0x8F:
-                D_80139A6C = 0x80;
+                g_XaVolumeMultiplier = 0x80;
                 AddCdSoundCommand(CD_SOUND_COMMAND_8);
                 break;
             case 0x90:
-                D_80139A6C = 8;
+                g_XaVolumeMultiplier = 8;
                 AddCdSoundCommand(CD_SOUND_COMMAND_8);
                 break;
             case 0x91:
-                D_80139A6C = 4;
+                g_XaVolumeMultiplier = 4;
                 AddCdSoundCommand(CD_SOUND_COMMAND_8);
                 break;
             case 0x92:
-                D_80139A6C = 2;
+                g_XaVolumeMultiplier = 2;
                 AddCdSoundCommand(CD_SOUND_COMMAND_8);
                 break;
             case 0x93:
-                D_80139A6C = 1;
+                g_XaVolumeMultiplier = 1;
                 AddCdSoundCommand(CD_SOUND_COMMAND_8);
                 break;
             case 0x9F:
                 SetReleaseRate1();
                 break;
             case 0xA0:
-                SetReleaseRate3();
-                D_8013B664 = 0;
+                SetReleaseRateHigh20_21();
+                g_CurSfxId2 = 0;
                 break;
             case 0xA4:
-                SetReleaseRate4();
-                D_80139804 = 0;
+                SetReleaseRateHigh22_23();
+                g_CurSfxId = 0;
                 break;
             case 0xA1:
-                SetReleaseRate5();
-                D_8013B664 = 0;
+                SetReleaseRateLow_20_21();
+                g_CurSfxId2 = 0;
                 break;
-            case 0xA2:
-                if (D_8013B664 != 0) {
-                    SetReleaseRate5();
+            case SET_RELEASE_RATE_LOW_20_21 - 1:
+                if (g_CurSfxId2 != 0) {
+                    SetReleaseRateLow_20_21();
                 }
                 break;
-            case 0xA3:
-                if (D_8013B664 != 0) {
-                    func_80134C60();
+            case SET_KEY_ON_20_21 - 1:
+                if (g_CurSfxId2 != 0) {
+                    KeyOnChannels20_21();
                 }
                 break;
             case 0xA5:
-                SetReleaseRate6();
-                D_80139804 = 0;
+                SetReleaseRateLow_22_23();
+                g_CurSfxId = 0;
                 break;
-            case 0xA6:
-                if (D_80139804 != 0) {
-                    SetReleaseRate6();
+            case SET_RELEASE_RATE_LOW_22_23 - 1:
+                if (g_CurSfxId != 0) {
+                    SetReleaseRateLow_22_23();
                 }
                 break;
-            case 0xA7:
-                if (D_80139804 != 0) {
-                    func_80134D14();
+            case SET_KEY_ON_22_23 - 1:
+                if (g_CurSfxId != 0) {
+                    KeyOnChannels22_23();
                 }
                 break;
-            case 0x0:
-                func_80134E64();
+            case SET_VOLUME_22_23 - 1:
+                SetVolume22_23();
                 break;
             case SET_UNK_10 - 1:
                 AddCdSoundCommand(CD_SOUND_COMMAND_12);

@@ -161,7 +161,7 @@ void StopSeq(void) {
         SsSeqClose(g_SeqAccessNum);
         SetReleaseRate2();
         g_SeqPlayingId = 0;
-        D_801390C4 = 0;
+        g_SeqIsPlaying = 0;
     }
 }
 
@@ -185,7 +185,7 @@ void PlaySeq(u8 arg0) {
         SsSeqPlay(g_SeqAccessNum, 1, 0);
     }
     g_SeqPlayingId = index;
-    D_801390C4 = 0xE;
+    g_SeqIsPlaying = 0xE;
 }
 
 bool CdSoundCommandQueueEmpty(void) { return g_CdSoundCommandQueuePos == 0; }
