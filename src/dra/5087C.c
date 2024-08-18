@@ -1385,7 +1385,7 @@ void RunMainEngine(void) {
 
             if (g_unkGraphicsStruct.unk20 != 0) {
                 func_8010E0D0(g_unkGraphicsStruct.unk20);
-                PlaySfx(SET_UNK_0E);
+                PlaySfx(SET_PAUSE_SFX_SCRIPTS);
                 g_GameEngineStep = Engine_5;
                 return;
             }
@@ -1524,7 +1524,7 @@ void RunMainEngine(void) {
                         g_GameEngineStep = Engine_0x70;
                         PlaySfx(0xa7);
                         PlaySfx(0xa3);
-                        PlaySfx(SET_UNK_0E);
+                        PlaySfx(SET_PAUSE_SFX_SCRIPTS);
 #if defined(VERSION_US)
                         if (g_StageId == STAGE_ST0) {
                             MuteCd();
@@ -1534,7 +1534,7 @@ void RunMainEngine(void) {
                     }
                     PlaySfx(0xa7);
                     PlaySfx(0xa3);
-                    PlaySfx(SET_UNK_0E);
+                    PlaySfx(SET_PAUSE_SFX_SCRIPTS);
                     func_801027C4(1);
                     g_GameEngineStep++; // Goes from 1 to 2, into Engine_Menu
                     g_MenuStep = MENU_STEP_INIT;
@@ -1553,7 +1553,7 @@ void RunMainEngine(void) {
                 if (func_8010183C(1) != 0) {
                     D_800974A4 = 0;
                     g_GameEngineStep = Engine_Normal;
-                    PlaySfx(SET_UNK_0F);
+                    PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);
                     PlaySfx(0xA4);
                     PlaySfx(0xA8);
 #if defined(VERSION_US)
@@ -1833,7 +1833,7 @@ void RunMainEngine(void) {
             } else {
                 func_8010E168(1, 0x30);
                 g_GameEngineStep = Engine_Normal;
-                PlaySfx(SET_UNK_0F);
+                PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);
             }
             DrawHudSubweapon();
             return;

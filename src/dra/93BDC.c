@@ -372,7 +372,7 @@ void PlaySfx(s16 sfxId) {
     }
 }
 
-void func_8013493C(s16 arg0, s16 arg1) {
+void RestoreSfxScriptData(s16 arg0, s16 arg1) {
     g_CurrentSfxScriptSfxId[arg1] = g_CurrentSfxScriptSfxIdCopy[arg0];
     g_SfxScriptVolume[arg1] = g_SfxScriptVolumeCopy[arg0];
     g_SfxScriptDistance[arg1] = g_SfxScriptDistanceCopy[arg0];
@@ -381,7 +381,7 @@ void func_8013493C(s16 arg0, s16 arg1) {
     g_CurrentSfxScript[arg1] = D_801390B4[arg0];
 }
 
-void func_801349F4(void) {
+void PauseSfxScripts(void) {
     s16 i;
 
     for (i = 0; i < NUM_CH; i++) {
@@ -409,7 +409,7 @@ void func_801349F4(void) {
     D_8013B690 = 1;
 }
 
-void func_80134B48(void) {
+void UnpauseSfxScripts(void) {
     s16 i;
     s16 j;
 
@@ -417,7 +417,7 @@ void func_80134B48(void) {
         if (g_CurrentSfxScriptSfxIdCopy[i]) {
             for (j = 0; j < 3; j++) {
                 if (D_8013B648[j] == 0) {
-                    func_8013493C(i, j);
+                    RestoreSfxScriptData(i, j);
                     break;
                 }
             }
@@ -426,7 +426,7 @@ void func_80134B48(void) {
     }
 
     if (g_CurrentSfxScriptSfxIdCopy[3] != 0 && D_8013B648[3] == 0) {
-        func_8013493C(3, 3);
+        RestoreSfxScriptData(3, 3);
         g_CurrentSfxScriptSfxIdCopy[3] = 0;
     }
     D_8013B690 = 0;

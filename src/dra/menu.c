@@ -3573,7 +3573,7 @@ block_4:
         if (func_801025F4() == 0) {
             break;
         }
-        PlaySfx(SET_UNK_0F);
+        PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);
         PlaySfx(0xA4);
         PlaySfx(0xA8);
         g_GameEngineStep = Engine_Normal;

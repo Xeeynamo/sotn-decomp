@@ -56,11 +56,11 @@ void ExecSoundCommands(void) {
             case SET_STOP_MUSIC - 1:
                 AddCdSoundCommand(CD_SOUND_COMMAND_FADE_OUT_2);
                 break;
-            case 0xD:
-                func_801349F4();
+            case SET_PAUSE_SFX_SCRIPTS - 1:
+                PauseSfxScripts();
                 break;
-            case 0xE:
-                func_80134B48();
+            case SET_UNPAUSE_SFX_SCRIPTS - 1:
+                UnpauseSfxScripts();
                 break;
             case 0x7F:
                 D_80139A6C = 0x20;

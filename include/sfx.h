@@ -40,8 +40,8 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define SET_STOP_SEQ 7
 #define SET_STOP_MUSIC 0xA
 #define SET_UNK_0B 0xB
-#define SET_UNK_0E 0xE
-#define SET_UNK_0F 0xF
+#define SET_PAUSE_SFX_SCRIPTS 0xE
+#define SET_UNPAUSE_SFX_SCRIPTS 0xF
 #define SET_UNK_10 0x10
 #define SET_UNK_11 0x11
 #define SET_UNK_12 0x12
