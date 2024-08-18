@@ -195,7 +195,7 @@ u16 func_8019AED8(s16 arg0, s16 arg1) { return ratan2(arg1, arg0); }
 
 #include "../get_angle_between_entities.h"
 
-u16 func_8019AF40(s32 x, s32 y) {
+u16 GetAnglePointToEntity(s32 x, s32 y) {
     s16 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
     s16 diffY = y - (u16)g_CurrentEntity->posY.i.hi;
     return ratan2(diffY, diffX);
