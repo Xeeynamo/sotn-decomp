@@ -164,7 +164,7 @@ extern u16 g_SfxVolumeMultiplier;
 extern volatile u8 g_CdSoundCommandStep;
 extern s16 g_CurrentSfxScriptSfxId[4];
 extern s16 D_8013AE8C;
-extern s16 D_8013AEA0[4];
+extern s16 g_SfxScriptUnk6[4];
 extern s16 D_8013AEA6;
 extern s16 g_CurSfxDistance;
 extern u8 g_ReverbDepth;
@@ -195,7 +195,7 @@ extern s32 D_8013B158;
 extern s32 D_8013B3D0;
 extern s16 g_SoundCommandRingBuffer[MAX_SND_COUNT]; // D_8013B3E8
 extern s32 D_8013B5E8;
-extern u8 D_8013B5EC[4];
+extern u8 g_SfxScriptUnk4[4];
 extern u8 D_8013B5F6[];
 extern s8 g_SfxScriptDistance[4];
 extern s8 D_8013B618;

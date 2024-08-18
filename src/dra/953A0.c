@@ -1201,12 +1201,12 @@ void ApplyQuadChannelSetting(
         g_SfxScriptDistance[channel_group] = distance;
     }
     g_CurrentSfxScriptSfxId[channel_group] = arg0;
-    D_8013B5EC[channel_group] = g_SfxData[arg0].unk4;
+    g_SfxScriptUnk4[channel_group] = g_SfxData[arg0].unk4;
     progId = g_SfxData[arg0].prog + 1;
     g_CurrentSfxScript[channel_group] = g_SfxScripts[progId];
     g_SfxScriptTimer[channel_group] = 0;
     D_8013B648[channel_group] = arg0;
-    D_8013AEA0[channel_group] = g_SfxData[arg0].unk6;
+    g_SfxScriptUnk6[channel_group] = g_SfxData[arg0].unk6;
 }
 
 void func_80135624(
@@ -1245,20 +1245,20 @@ void func_8013572C(s16 arg0, u16 volume, s16 distance) {
                 }
             }
             for (i = 0; i < 3; i++) {
-                if (D_8013AEA0[i] < g_SfxData[arg0].unk6) {
+                if (g_SfxScriptUnk6[i] < g_SfxData[arg0].unk6) {
                     ApplyQuadChannelSetting(arg0, i, true, volume, distance);
                     return;
                 }
             }
             for (i = 0; i < 3; i++) {
-                if (g_SfxData[arg0].unk6 == D_8013AEA0[i]) {
+                if (g_SfxData[arg0].unk6 == g_SfxScriptUnk6[i]) {
                     ApplyQuadChannelSetting(arg0, i, true, volume, distance);
                     return;
                 }
             }
             return;
         }
-        if (g_SfxData[arg0].unk6 >= D_8013AEA0[3]) {
+        if (g_SfxData[arg0].unk6 >= g_SfxScriptUnk6[3]) {
             ApplyQuadChannelSetting(arg0, 3, true, volume, distance);
         }
     } else {
@@ -1498,8 +1498,8 @@ void func_80136010(void) {
             if (g_CurrentSfxScriptSfxId[i] == 0) {
                 if ((s8)(*var_t0 + *var_t1 + *var_t2 + *var_t3) == 0) {
                     *var_t4 = 0;
-                    fakeptr = D_8013AEA0;
-                    D_8013AEA0[i] = 0;
+                    fakeptr = g_SfxScriptUnk6;
+                    g_SfxScriptUnk6[i] = 0;
                 }
             }
             fakeptr++;
@@ -1515,7 +1515,7 @@ void func_80136010(void) {
         ((s8)(g_KeyStatus[14] + g_KeyStatus[15] + g_KeyStatus[16] +
               g_KeyStatus[17]) == 0)) {
         D_8013B648[3] = 0;
-        D_8013AEA0[3] = 0;
+        g_SfxScriptUnk6[3] = 0;
     }
 }
 
