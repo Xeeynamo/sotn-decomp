@@ -50,88 +50,89 @@ static u8 unused[] = {0x06, 0x01, 0x04, 0x01, 0x04, 0x02, 0x06, 0x03,
                       0x05, 0x04, 0x05, 0x05, 0x00, 0x00, 0x00, 0x00};
 
 void EntityBloodSplatter(Entity* self) {
-    Primitive *prim, *prim2, *prim3;
-    s16 primIndex;
+    Primitive* prim;
+    s32 primIndex;
 
     switch (self->step) {
     case 0:
         InitializeEntity(g_InitializeEntityData0);
-        return;
+        break;
 
     case 1:
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
         if (primIndex != -1) {
+            self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            *(s32*)&self->ext.generic.unk7C = prim;
-            self->flags |= FLAG_HAS_PRIMS;
-            self->step++;
+            self->ext.bloodSplatter.prim = prim;
+        } else {
+            DestroyEntity(self);
             return;
         }
-        DestroyEntity(self);
+        self->step++;
         break;
-
     case 2:
-        prim = FindFirstUnkPrim2(*(s32*)&self->ext.generic.unk7C, 2);
+        prim = FindFirstUnkPrim2(self->ext.bloodSplatter.prim, 2);
         if (prim != NULL) {
-            self->ext.generic.unk8C.primPtr = prim;
+            self->ext.bloodSplatter.prim2 = prim;
             UnkPolyFunc2(prim);
-            prim->v0 = 0x30;
             prim->tpage = 0x1A;
-            prim->v2 = 0x30;
             prim->clut = 0x1B7;
             prim->u0 = 0x50;
             prim->u1 = 0x50;
             prim->u2 = 0x40;
             prim->u3 = 0x40;
+            prim->v0 = 0x30;
             prim->v1 = 0x40;
+            prim->v2 = 0x30;
             prim->v3 = 0x40;
             prim->next->b3 = 0x60;
             prim->next->x1 = self->posX.i.hi;
             prim->next->y0 = self->posY.i.hi;
-            *(u16*)&prim->next->r2 = 0x10;
-            *(u16*)&prim->next->b2 = 0x10;
-            *(s32*)&prim->next->r1 = -0x6000;
+            LOH(prim->next->r2) = 0x10;
+            LOH(prim->next->b2) = 0x10;
+            LOW(prim->next->r1) = -0x6000;
 
-            if (self->facingLeft != 0) {
-                *(s32*)&prim->next->u0 = 0xA000;
+            if (self->facingLeft) {
+                LOW(prim->next->u0) = 0xA000;
                 prim->next->tpage = 0x200;
-                prim->next->x1 = prim->next->x1 + 4;
+                prim->next->x1 += 4;
             } else {
-                *(s32*)&prim->next->u0 = 0xFFFF6000;
-                *(s16*)&prim->next->tpage = -0x200;
-                prim->next->x1 = prim->next->x1 - 4;
+                LOW(prim->next->u0) = 0xFFFF6000;
+                LOH(prim->next->tpage) = -0x200;
+                prim->next->x1 -= 4;
             }
             prim->priority = self->zPriority + 2;
             prim->drawMode = 6;
         }
 
-        prim = FindFirstUnkPrim2(*(s32*)&self->ext.generic.unk7C, 2);
+        prim = FindFirstUnkPrim2(self->ext.bloodSplatter.prim, 2);
         if (prim != NULL) {
-            *(s32*)&self->ext.generic.unk90 = prim;
+            self->ext.bloodSplatter.prim3 = prim;
             UnkPolyFunc2(prim);
-            prim->v1 = 0x40;
             prim->tpage = 0x1A;
-            prim->v3 = 0x40U;
             prim->clut = 0x1B7;
             prim->u0 = 0x20;
             prim->u1 = 0x20;
             prim->u2 = 0;
             prim->u3 = 0;
             prim->v0 = 0x20;
+            prim->v1 = 0x40;
             prim->v2 = 0x20;
+            prim->v3 = 0x40;
+
             prim->next->x1 = self->posX.i.hi;
             prim->next->y0 = self->posY.i.hi;
-            *(u16*)&prim->next->r2 = 8;
-            *(u16*)&prim->next->b2 = 0x10;
+            LOH(prim->next->r2) = 8;
+            LOH(prim->next->b2) = 0x10;
             prim->next->b3 = 0x80;
-            *(s32*)&prim->next->r1 = -0x8000;
-            if (self->facingLeft != 0) {
-                *(s32*)&prim->next->u0 = 0xC000;
-                *(s16*)&prim->next->tpage = 0x200;
+            LOW(prim->next->r1) = -0x8000;
+            if (self->facingLeft) {
+                LOW(prim->next->u0) = 0xC000;
+                LOH(prim->next->tpage) = 0x200;
             } else {
-                *(s32*)&prim->next->u0 = 0xFFFF4000;
-                *(s16*)&prim->next->tpage = -0x200;
+                LOW(prim->next->u0) = 0xFFFF4000;
+                LOH(prim->next->tpage) = -0x200;
             }
             prim->priority = self->zPriority + 2;
             prim->drawMode = 6;
@@ -140,55 +141,48 @@ void EntityBloodSplatter(Entity* self) {
         break;
 
     case 3:
-        prim = self->ext.generic.unk8C.entityPtr;
+        prim = self->ext.bloodSplatter.prim2;
         UnkPrimHelper(prim);
 
-        if (g_Timer & 1) {
-            prim3 = prim->next;
-            *(u16*)&prim3->r2 = *(u16*)&prim3->r2 + 1;
-            prim3 = prim->next;
-            *(u16*)&prim3->b2 = *(u16*)&prim3->b2 + 1;
+        if (g_Timer % 2) {
+            LOH(prim->next->r2)++;
+            LOH(prim->next->b2)++;
             prim->clut = 0x1B7;
         } else {
             prim->clut = 0x16D;
         }
 
-        prim2 = prim->next;
-        *(s32*)&prim2->r1 += 0xC00;
+        LOW(prim->next->r1) += 0xC00;
 
-        if (self->facingLeft != 0) {
+        if (self->facingLeft) {
             prim->next->tpage += 0x18;
         } else {
-            prim->next->tpage = prim->next->tpage - 0x18;
+            prim->next->tpage -= 0x18;
         }
 
-        prim3 = prim->next;
-        prim3->b3 += 254;
-        if (UpdateAnimation(D_8018238C, prim) == 0) {
+        prim->next->b3 -= 2;
+        if (UpdateAnimation(&D_8018238C, prim) == 0) {
             UnkPolyFunc0(prim);
         }
 
-        prim = *(s32*)&self->ext.generic.unk90;
+        prim = self->ext.bloodSplatter.prim3;
         UnkPrimHelper(prim);
-        prim3 = prim->next;
-        *(u16*)&prim3->r2 = *(u16*)&prim3->r2 + 2;
-        prim3 = prim->next;
-        *(u16*)&prim3->b2 = *(u16*)&prim3->b2 + 2;
-        if (prim->p1 >= 4) {
-            *(u16*)&prim->next->b2 = 16;
+        LOH(prim->next->r2) += 2;
+        LOH(prim->next->b2) += 2;
+        if (prim->p1 > 3) {
+            LOH(prim->next->b2) = 16;
         }
 
-        prim->next->b3 += 253;
-        prim3 = prim->next;
-        if (prim3->b3 > 240) {
-            prim3->b3 = 0;
+        prim->next->b3 -= 3;
+        if (prim->next->b3 > 240) {
+            prim->next->b3 = 0;
         }
 
-        if (UpdateAnimation(D_801823A4, prim) == 0) {
+        if (UpdateAnimation(&D_801823A4, prim) == 0) {
             UnkPolyFunc0(prim);
         }
 
-        if (self->ext.generic.unk80.modeS16.unk0++ > 128) {
+        if (self->ext.bloodSplatter.unk80++ > 128) {
             DestroyEntity(self);
         }
         break;
