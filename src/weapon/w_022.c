@@ -8,6 +8,7 @@ extern s32 g_HandId;
 #include "w_022_2.h"
 #define g_Animset w_022_1
 #define g_Animset2 w_022_2
+#include "sfx.h"
 
 extern AnimationFrame D_9E000_8017A760[];
 extern AnimationFrame D_9E000_8017A800[];
@@ -40,7 +41,7 @@ void EntityWeaponAttack(Entity* self) {
         self->posY.i.hi -= 6;
         self->posX.i.hi += deltaX;
 
-        g_api.PlaySfx(0x669);
+        g_api.PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
         DestroyEntityWeapon(1);
         g_Player.D_80072F00[10] = 4;
         self->step++;

@@ -185,7 +185,6 @@ typedef enum { MONO_SOUND, STEREO_SOUND } soundMode;
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define SFX_UNK_669 0x669
 #define NA_SE_EN_AXE_KNIGHT_BREAK_AXE 0x66B
 #define NA_SE_EN_BONE_SCIMITAR_SWORD_SLASH 0x66D
 #define NA_SE_EN_GAIBON_COLLAPSE 0x672

@@ -1194,11 +1194,11 @@ void EntityPlayerPinkEffect(Entity* self) {
                 break;
             case 0x80:
                 g_Player.D_80072F00[0] = 2;
-                PlaySfx(SFX_UNK_669);
+                PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
                 break;
             case 0x81:
                 g_Player.D_80072F00[1] = 2;
-                PlaySfx(SFX_UNK_669);
+                PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
                 break;
             case 0x84:
                 g_Player.unk56 = 1;
@@ -1215,13 +1215,13 @@ void EntityPlayerPinkEffect(Entity* self) {
                 g_Player.unk58 = g_Status.hpMax;
                 break;
             case 0x87:
-                PlaySfx(SFX_UNK_669);
+                PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
                 g_Status.mp = g_Status.mpMax;
                 break;
             default:
                 CreateEntFactoryFromEntity(
                     self, (D_800AE120[temp2] << 0x10) + 0x2F, 0);
-                PlaySfx(SFX_UNK_669);
+                PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
             case 0x82:
                 break;
             }
