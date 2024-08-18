@@ -66,16 +66,9 @@ s32 GetSideToPlayer(void) {
     return side;
 }
 
-void MoveEntity(void) {
-    g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;
-    g_CurrentEntity->posY.val += g_CurrentEntity->velocityY;
-}
+#include "../move_entity.h"
 
-void FallEntity(void) {
-    if (g_CurrentEntity->velocityY < FALL_TERMINAL_VELOCITY) {
-        g_CurrentEntity->velocityY += FALL_GRAVITY;
-    }
-}
+#include "../fall_entity.h"
 
 u8 func_801B4D18(void) {
     u8 unkState;
@@ -203,18 +196,7 @@ s32 func_801B51E4(s16* posX) {
     return 1;
 }
 
-Entity* AllocEntity(Entity* start, Entity* end) {
-    Entity* current = start;
-    while (current < end) {
-        if (current->entityId == E_NONE) {
-            DestroyEntity(current);
-            return current;
-        }
-
-        current++;
-    }
-    return NULL;
-}
+#include "../alloc_entity.h"
 
 s32 func_801B542C(u8 arg0, s16 arg1) { return D_80181990[arg0] * arg1; }
 
