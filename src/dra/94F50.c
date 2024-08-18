@@ -107,38 +107,38 @@ void ExecSoundCommands(void) {
                 break;
             case 0xA0:
                 SetReleaseRate3();
-                D_8013B664 = 0;
+                g_CurSfxId2 = 0;
                 break;
             case 0xA4:
                 SetReleaseRate4();
-                D_80139804 = 0;
+                g_CurSfxId = 0;
                 break;
             case 0xA1:
                 SetReleaseRate5();
-                D_8013B664 = 0;
+                g_CurSfxId2 = 0;
                 break;
             case 0xA2:
-                if (D_8013B664 != 0) {
+                if (g_CurSfxId2 != 0) {
                     SetReleaseRate5();
                 }
                 break;
             case 0xA3:
-                if (D_8013B664 != 0) {
-                    func_80134C60();
+                if (g_CurSfxId2 != 0) {
+                    KeyOnChannels20_21();
                 }
                 break;
             case 0xA5:
                 SetReleaseRate6();
-                D_80139804 = 0;
+                g_CurSfxId = 0;
                 break;
             case 0xA6:
-                if (D_80139804 != 0) {
+                if (g_CurSfxId != 0) {
                     SetReleaseRate6();
                 }
                 break;
             case 0xA7:
-                if (D_80139804 != 0) {
-                    func_80134D14();
+                if (g_CurSfxId != 0) {
+                    KeyOnChannels22_23();
                 }
                 break;
             case 0x0:

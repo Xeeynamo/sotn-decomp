@@ -271,7 +271,7 @@ s32 func_80134678(s16 arg0, u16 arg1) {
     s32 ret = -2;
     u16 temp;
 
-    if (D_80139804 != 0) {
+    if (g_CurSfxId != 0) {
         ret = 0;
         temp = arg1 + 8;
 
@@ -280,8 +280,8 @@ s32 func_80134678(s16 arg0, u16 arg1) {
             ret = -1;
         }
 
-        D_8013AE94 = arg1;
-        D_8013AEE0 = arg0;
+        g_CurSfxDistance = arg1;
+        g_CurSfxVol = arg0;
         g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] = 1;
         g_SoundCommandRingBufferWritePos++;
 
@@ -429,34 +429,34 @@ void func_80134B48(void) {
     D_8013B690 = 0;
 }
 
-void func_80134C60(void) {
-    u16 temp = (D_8013AE7C * g_SfxData[D_8013B664].volume) >> 7;
-    func_80132A04(0x14, g_SfxData[D_8013B664].vabid, g_SfxData[D_8013B664].prog,
-                  g_SfxData[D_8013B664].tone, g_SfxData[D_8013B664].note,
-                  (temp * (u16)D_801390A4) >> 7, D_80139010);
+void KeyOnChannels20_21(void) {
+    u16 temp = (D_8013AE7C * g_SfxData[g_CurSfxId2].volume) >> 7;
+    func_80132A04(20, g_SfxData[g_CurSfxId2].vabid, g_SfxData[g_CurSfxId2].prog,
+                  g_SfxData[g_CurSfxId2].tone, g_SfxData[g_CurSfxId2].note,
+                  (temp * (u16)g_CurSfxVol2) >> 7, g_CurSfxDistance2);
 }
 
-void func_80134D14(void) {
+void KeyOnChannels22_23(void) {
     u16 volume;
 
-    volume = D_8013AE7C * g_SfxData[D_80139804].volume >> 7;
-    volume = volume * D_8013AEE0 >> 7;
-    func_80132A04(0x16, g_SfxData[D_80139804].vabid, g_SfxData[D_80139804].prog,
-                  g_SfxData[D_80139804].tone, g_SfxData[D_80139804].note,
-                  volume, D_8013AE94);
-    g_VolR = (volume * g_CdVolumeTable[D_8013AE94 * 2 + 144]) >> 8;
-    g_VolL = (volume * g_CdVolumeTable[D_8013AE94 * 2 + 145]) >> 8;
-    SsUtSetVVol(0x16, g_VolL, g_VolR);
-    SsUtSetVVol(0x17, g_VolL, g_VolR);
+    volume = D_8013AE7C * g_SfxData[g_CurSfxId].volume >> 7;
+    volume = volume * g_CurSfxVol >> 7;
+    func_80132A04(22, g_SfxData[g_CurSfxId].vabid, g_SfxData[g_CurSfxId].prog,
+                  g_SfxData[g_CurSfxId].tone, g_SfxData[g_CurSfxId].note,
+                  volume, g_CurSfxDistance);
+    g_VolR = (volume * g_CdVolumeTable[g_CurSfxDistance * 2 + 144]) >> 8;
+    g_VolL = (volume * g_CdVolumeTable[g_CurSfxDistance * 2 + 145]) >> 8;
+    SsUtSetVVol(22, g_VolL, g_VolR);
+    SsUtSetVVol(23, g_VolL, g_VolR);
 }
 
 void func_80134E64(void) {
     u16 volume;
 
-    volume = D_8013AE7C * g_SfxData[D_80139804].volume >> 7;
-    volume = volume * D_8013AEE0 >> 7;
-    g_VolR = (volume * g_CdVolumeTable[D_8013AE94 * 2 + 144]) >> 8;
-    g_VolL = (volume * g_CdVolumeTable[D_8013AE94 * 2 + 145]) >> 8;
+    volume = D_8013AE7C * g_SfxData[g_CurSfxId].volume >> 7;
+    volume = volume * g_CurSfxVol >> 7;
+    g_VolR = (volume * g_CdVolumeTable[g_CurSfxDistance * 2 + 144]) >> 8;
+    g_VolL = (volume * g_CdVolumeTable[g_CurSfxDistance * 2 + 145]) >> 8;
     SsUtSetVVol(0x16, g_VolL, g_VolR);
     SsUtSetVVol(0x17, g_VolL, g_VolR);
 }

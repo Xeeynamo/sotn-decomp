@@ -111,8 +111,8 @@ void InitSoundVars2(void) {
         D_8013B650[i] = 0;
         D_8013AED4[i] = 0;
     }
-    D_80139804 = 0;
-    D_8013B664 = 0;
+    g_CurSfxId = 0;
+    g_CurSfxId2 = 0;
 }
 
 void InitSoundVars1(void) {
@@ -145,10 +145,10 @@ void InitSoundVars1(void) {
     g_SfxRingBufferReadPos = 0;
     g_sfxRingBufferWritePos = 0;
     D_801390C4 = 0;
-    D_8013AEE0 = 0;
-    D_8013AE94 = 0;
-    D_801390A4 = 0;
-    D_80139010 = 0;
+    g_CurSfxVol = 0;
+    g_CurSfxDistance = 0;
+    g_CurSfxVol2 = 0;
+    g_CurSfxDistance2 = 0;
     D_80139A74 = 0;
     D_8013B69C = 0;
     g_SeqAccessNum = 0;
@@ -260,13 +260,13 @@ void MuteSound(void) {
     InitSoundVars1();
 }
 
-void func_801327B4(s32 minVoice, s32 maxVoice, s16 vabId, s16 prog, s16 tone,
-                   s16 note, s16 voll, s16 volr) {
+void KeyOnRange(s32 minVoice, s32 maxVoice, s16 vabId, s16 prog, s16 tone,
+                s16 note, s16 voll, s16 volr) {
     s32 i = minVoice;
     s32 didStuff = 0;
 
     for (; i < maxVoice; i += 2) {
-        if (D_80138F64[i] != 0) {
+        if (g_KeyStatus[i] != 0) {
             continue;
         }
         SsUtKeyOnV(i, vabId, prog, tone, note, 0, voll, volr);
@@ -356,24 +356,26 @@ void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note,
         g_VolL = (volume * g_CdVolumeTable[distance * 2 + 145]) >> 7;
     }
 
-    if (voice >= 0 && voice < 0x18) {
+    // hardware voices 0-24
+    if (voice >= 0 && voice < 24) {
         SsUtKeyOnV(voice, vabId, prog, tone, note, 0, g_VolL, g_VolR);
         SsUtKeyOnV(voice + 1, vabId, prog, 1 - -tone, note, 0, g_VolL, g_VolR);
         return;
     }
 
+    // virtual voices 30-33 map to hardware channels 0-4,4-8,8-12,14-18
     switch (voice) {
-    case 0x1E:
-        func_801327B4(0, 4, vabId, prog, tone, note, g_VolL, g_VolR);
+    case 30:
+        KeyOnRange(0, 4, vabId, prog, tone, note, g_VolL, g_VolR);
         break;
-    case 0x1F:
-        func_801327B4(4, 8, vabId, prog, tone, note, g_VolL, g_VolR);
+    case 31:
+        KeyOnRange(4, 8, vabId, prog, tone, note, g_VolL, g_VolR);
         break;
-    case 0x20:
-        func_801327B4(8, 12, vabId, prog, tone, note, g_VolL, g_VolR);
+    case 32:
+        KeyOnRange(8, 12, vabId, prog, tone, note, g_VolL, g_VolR);
         break;
-    case 0x21:
-        func_801327B4(14, 18, vabId, prog, tone, note, g_VolL, g_VolR);
+    case 33:
+        KeyOnRange(14, 18, vabId, prog, tone, note, g_VolL, g_VolR);
         break;
     }
 }
