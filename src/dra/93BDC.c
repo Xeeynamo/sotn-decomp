@@ -270,22 +270,22 @@ void SetReleaseRateLow_22_23(void) {
     g_KeyOffChannels |= MASK_22_23;
 }
 
-s32 func_80134678(s16 arg0, u16 arg1) {
+s32 SetVolumeCommand22_23(s16 vol, u16 distance) {
     s32 ret = -2;
     u16 temp;
 
     if (g_CurSfxId22_23 != 0) {
         ret = 0;
-        temp = arg1 + 8;
+        temp = distance + 8;
 
         if (temp >= 0x11) {
-            arg1 = 0;
+            distance = 0;
             ret = -1;
         }
 
-        g_CurSfxDistance22_23 = arg1;
-        g_CurSfxVol22_23 = arg0;
-        g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] = 1;
+        g_CurSfxDistance22_23 = distance;
+        g_CurSfxVol22_23 = vol;
+        g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] = SET_VOLUME_22_23;
         g_SoundCommandRingBufferWritePos++;
 
         if (g_SoundCommandRingBufferWritePos == 0x100) {

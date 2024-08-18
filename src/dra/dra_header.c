@@ -47,7 +47,7 @@ s32 func_800FE044(s32 amount, s32 type);
 void AddToInventory(u16 itemId, s32 itemCategory);
 void InitStatsAndGear(bool isDeathTakingItems);
 u32 PlaySfxVolPan(s16 sfxId, s32 sfxVol, u16 sfxPan);
-s32 func_80134678(s16 arg0, u16 arg1);
+s32 SetVolumeCommand22_23(s16 vol, u16 distance);
 void func_800F53A4(void);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void func_8010BF64(Unkstruct_8010BF64* arg0);
@@ -110,7 +110,7 @@ GameApi g_ApiInit = {
     g_RelicDefs,
     InitStatsAndGear,
     PlaySfxVolPan,
-    func_80134678,
+    SetVolumeCommand22_23,
     func_800F53A4,
     CheckEquipmentItemCount,
     func_8010BF64,

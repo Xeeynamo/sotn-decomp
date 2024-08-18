@@ -149,7 +149,7 @@ bool InitGame(void) {
     api.relicDefs = g_RelicDefs;
     api.InitStatsAndGear = NULL;
     api.PlaySfxVolPan = PlaySfxVolPan;
-    api.func_80134678 = NULL;
+    api.SetVolumeCommand22_23 = NULL;
     api.func_800F53A4 = NULL;
     api.CheckEquipmentItemCount = CheckEquipmentItemCount;
     api.func_8010BF64 = NULL;
