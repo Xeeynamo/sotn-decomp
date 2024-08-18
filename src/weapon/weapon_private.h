@@ -26,7 +26,11 @@
 // exported
 static void EntityWeaponAttack(Entity* self);
 static void LoadWeaponPalette(s32 clutIndex);
+#ifndef FUNC_04_VOID
 static s32 func_ptr_80170004(Entity* self);
+#else
+static void func_ptr_80170004(Entity* self);
+#endif
 static void func_ptr_80170008(Entity* self);
 #ifdef FUNC_0C_S32
 static s32 func_ptr_8017000C(Entity* self);
