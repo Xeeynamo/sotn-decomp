@@ -189,13 +189,13 @@ static s16 D_80180BBC[] = {
     0xFE6F, 0xFED3, 0xFF37, 0xFF9B,
 };
 
-s32 func_80194B34(u8 arg0, s16 arg1) { return D_80180BBC[arg0] * arg1; }
+s32 GetSineScaled(u8 arg0, s16 arg1) { return D_80180BBC[arg0] * arg1; }
 
-s16 func_80194B60(u8 arg0) { return D_80180BBC[arg0]; }
+s16 GetSine(u8 arg0) { return D_80180BBC[arg0]; }
 
 void SetEntityVelocityFromAngle(s32 arg0, s16 arg1) {
-    g_CurrentEntity->velocityX = func_80194B34(arg0 & 0xFF, arg1);
-    g_CurrentEntity->velocityY = func_80194B34((arg0 - 0x40) & 0xFF, arg1);
+    g_CurrentEntity->velocityX = GetSineScaled(arg0 & 0xFF, arg1);
+    g_CurrentEntity->velocityY = GetSineScaled((arg0 - 0x40) & 0xFF, arg1);
 }
 
 u8 Ratan2Shifted(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 0x40; }

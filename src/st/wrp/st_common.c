@@ -219,13 +219,13 @@ s32 func_8018BC88(s16* posX) {
 #include "../alloc_entity.h"
 
 #if !defined(VERSION_PSP)
-s32 func_8018BED0(u8 arg0, s16 arg1) { return g_SineTable[arg0] * arg1; }
+s32 GetSineScaled(u8 arg0, s16 arg1) { return g_SineTable[arg0] * arg1; }
 
-s16 func_8018BEFC(u8 arg0) { return g_SineTable[arg0]; }
+s16 GetSine(u8 arg0) { return g_SineTable[arg0]; }
 
 void SetEntityVelocityFromAngle(s32 arg0, s16 arg1) {
-    g_CurrentEntity->velocityX = func_8018BED0(arg0, arg1);
-    g_CurrentEntity->velocityY = func_8018BED0(arg0 - 0x40, arg1);
+    g_CurrentEntity->velocityX = GetSineScaled(arg0, arg1);
+    g_CurrentEntity->velocityY = GetSineScaled(arg0 - 0x40, arg1);
 }
 
 u8 Ratan2Shifted(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 0x40; }

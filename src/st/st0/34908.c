@@ -198,13 +198,13 @@ s32 func_801B51E4(s16* posX) {
 
 #include "../alloc_entity.h"
 
-s32 func_801B542C(u8 arg0, s16 arg1) { return D_80181990[arg0] * arg1; }
+s32 GetSineScaled(u8 arg0, s16 arg1) { return D_80181990[arg0] * arg1; }
 
-s16 func_801B5458(u8 arg0) { return D_80181990[arg0]; }
+s16 GetSine(u8 arg0) { return D_80181990[arg0]; }
 
 void SetEntityVelocityFromAngle(s32 arg0, s16 arg1) {
-    g_CurrentEntity->velocityX = func_801B542C(arg0, arg1);
-    g_CurrentEntity->velocityY = func_801B542C(arg0 - 0x40, arg1);
+    g_CurrentEntity->velocityX = GetSineScaled(arg0, arg1);
+    g_CurrentEntity->velocityY = GetSineScaled(arg0 - 0x40, arg1);
 }
 
 u8 Ratan2Shifted(s16 arg0, s16 arg1) {
