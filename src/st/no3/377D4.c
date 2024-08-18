@@ -778,86 +778,82 @@ void EntityCavernDoorLever(Entity* entity) {
 // platform attached to lever at cavern door
 void EntityCavernDoorPlatform(Entity* self) {
     Entity* player;
-    s32 temp;
-    s32 temp2;
+    s32 xDiff;
+    s32 collision;
 
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180B18);
         self->animCurFrame = 17;
-        self->ext.generic.unk88.unk = self->posX.val;
-        self->ext.generic.unk88.unk = self->posX.val; // ? WTF
+        self->ext.cavernDoor.xCoord.val = self->posX.val;
+        self->ext.cavernDoor.xCoord.val = self->posX.val; // ? WTF
 
     case 1:
-        player = &PLAYER;
-        self->ext.generic.unk84.S8.unk0 = temp2 =
-            GetPlayerCollisionWith(self, 6, 5, 4);
+        collision = GetPlayerCollisionWith(self, 6, 5, 4);
+        self->ext.cavernDoor.collision = collision;
 
-        if (temp2 != 0) {
-            temp = self->posX.i.hi;
-            temp -= self->ext.generic.unk88.S16.unk2;
-            player->posX.i.hi += temp;
-            player->posY.i.hi++;
+        if (collision != 0) {
+            xDiff = self->posX.i.hi - FIX_TO_I(self->ext.cavernDoor.xCoord.val);
+            player = &PLAYER;
+            player->posX.i.hi += xDiff;
+            player->posY.i.hi += 1;
         }
-        self->ext.generic.unk88.unk = self->posX.val;
-        self->ext.generic.unk8C.modeS32 = self->posY.val;
+        self->ext.cavernDoor.xCoord.val = self->posX.val;
+        self->ext.cavernDoor.yCoord.val = self->posY.val;
     }
 }
 
 // door blocking way to the Underground Caverns
 void EntityCavernDoor(Entity* self) {
-    s16 primIndex;
-    u16* tileLayoutPtr;
+    s32 primIndex;
+    s16* tileLayoutPtr;
     Entity* entity;
-    POLY_GT4* poly;
-    s32 tilePos;
+    Primitive* prim;
     s32 i;
-    s32 temp;
-    s32 temp2;
+    s32 tilePos;
+    s32 tileSteps;
 
     switch (self->step) {
     case 0:
         InitializeEntity(D_80180B18);
         self->animCurFrame = 10;
         self->zPriority = 0x9F;
-
+        
         tileLayoutPtr = &D_80181230[0];
-        if (g_CastleFlags[48] != 0) {
-            tileLayoutPtr = &D_80181230[3];
+        if (g_CastleFlags[48]) {
             self->step = 128;
             self->animCurFrame = 0;
+            tileLayoutPtr += 3;
         } else {
             primIndex = g_api.AllocPrimitives(PRIM_TILE, 64);
             if (primIndex == -1) {
                 DestroyEntity(self);
                 return;
             }
-
-            poly = &g_PrimBuf[primIndex];
-            self->primIndex = primIndex;
-            *(s32*)&self->ext.generic.unk7C = poly;
             self->flags |= FLAG_HAS_PRIMS;
-            while (poly != NULL) {
-                poly->u0 = poly->v0 = 1;
-                poly->r0 = 64;
-                poly->b0 = 128;
-                poly->g0 = 96;
-                poly->pad2 = self->zPriority + 0x18;
-                poly->pad3 = 8;
-                poly->p3 = 0;
-                poly = (POLY_GT4*)poly->tag;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.cavernDoor.prim = prim;
+            while (prim != NULL) {
+                prim->u0 = prim->v0 = 1;
+                prim->r0 = 64;
+                prim->b0 = 128;
+                prim->g0 = 96;
+                prim->priority = self->zPriority + 0x18;
+                prim->drawMode = DRAW_HIDE;
+                prim->p3 = 0;
+                prim = prim->next;
             }
         }
 
         for (tilePos = 0x76, i = 0; i < 3; i++) {
-            g_Tilemap.fg[tilePos] = *tileLayoutPtr;
-            tileLayoutPtr++;
+            g_Tilemap.fg[tilePos] = *tileLayoutPtr++;
             tilePos += 0x10;
         }
         break;
 
     case 1:
-        if (g_CastleFlags[48] != 0) {
+        if (g_CastleFlags[48]) {
             g_api.PlaySfx(SE_FLOOR_SWITCH_CLICK);
             self->step++;
         }
@@ -865,58 +861,60 @@ void EntityCavernDoor(Entity* self) {
 
     case 2:
         self->posY.val += FIX(0.375);
-        if (++self->ext.generic.unk80.modeS32 & 1) {
+        self->ext.cavernDoor.jiggler++;
+        // While the door opens, it jiggles left and right by repeatedly
+        // incrementing and decrementing its x position.
+        if (self->ext.cavernDoor.jiggler & 1) {
             self->posX.i.hi++;
         } else {
             self->posX.i.hi--;
         }
 
-        temp = self->posY.i.hi - 136;
-        if (temp < 0) {
-            temp2 = self->posY.i.hi - 121;
-        } else {
-            temp2 = self->posY.i.hi - 136;
-        }
 
-        temp = temp2 >> 4;
-        if (temp >= 4) {
-            temp = 3;
+        tileSteps = (self->posY.i.hi - 136);
+        tileSteps /= 16;
+        if (tileSteps > 3) {
+            tileSteps = 3;
             self->step = 3;
         }
-
-        for (tilePos = 0x76, tileLayoutPtr = &D_80181230[3], i = 0; i < temp;
-             tileLayoutPtr++, tilePos += 0x10, i++) {
-            g_Tilemap.fg[tilePos] = *tileLayoutPtr;
+        tilePos = 0x76;
+        tileLayoutPtr = &D_80181230[0];
+        tileLayoutPtr += 3;
+        for (i = 0; i < tileSteps; tilePos += 0x10, i++) {
+            g_Tilemap.fg[tilePos] = *tileLayoutPtr++;
         }
 
-        if (!(g_Timer & 1)) {
-            poly =
-                FindFirstUnkPrim((Primitive*)(*(s32*)&self->ext.generic.unk7C));
-            if (poly != NULL) {
-                poly->p3 = 1;
-            }
-
-            if (!(g_Timer & 15)) {
-                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-                if (entity != NULL) {
-                    CreateEntityFromEntity(6, self, entity);
-                    entity->posY.i.hi = 156;
-                    entity->posX.i.hi += -8 + (Random() & 15);
-                    entity->zPriority = self->zPriority + 2;
-                    entity->params = 0x10;
-                    entity->drawFlags |= 3;
-                    entity->rotX = entity->rotY = 192;
-                }
-            }
+        if ((g_Timer & 1)) {
+            break;
         }
+        prim = self->ext.cavernDoor.prim;
+        prim = FindFirstUnkPrim(prim);
+        if (prim != NULL) {
+            prim->p3 = 1;
+        }
+
+        if (g_Timer & 15) {
+            break;
+        }
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (entity == NULL) {
+            break;
+        }
+        CreateEntityFromEntity(6, self, entity);
+        entity->posY.i.hi = 156;
+        entity->posX.i.hi += -8 + (Random() & 15);
+        entity->zPriority = self->zPriority + 2;
+        entity->params = 0x10;
+        entity->drawFlags |= (FLAG_DRAW_ROTX + FLAG_DRAW_ROTY);
+        entity->rotX = entity->rotY = 192;
         break;
     }
 
     if (self->flags & FLAG_HAS_PRIMS) {
-        for (poly = *(s32*)&self->ext.generic.unk7C; poly != NULL;
-             poly = (POLY_GT4*)poly->tag) {
-            if (poly->p3 != 0) {
-                func_801B94F0(poly);
+        for (prim = self->ext.cavernDoor.prim; prim != NULL;
+             prim = prim->next) {
+            if (prim->p3) {
+                func_801B94F0(prim);
             }
         }
     }
