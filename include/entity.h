@@ -74,26 +74,22 @@ typedef struct ET_Generic {
         } modeS16;
     } unk8C; // size = 0x4
     /* 0x90 */ s16 unk90;
-    /* 0x92 */ s16 unk92;
+    /* 0x92 */ s16 : 16;
     /* 0x94 */ u8 unk94;
-    /* 0x95 */ u8 unk95;
-    /* 0x96 */ s16 unk96;
+    /* 0x95 */ u8 : 8;
+    /* 0x96 */ s16 : 16;
     /* 0x98 */ s32 unk98;
     /* 0x9C */ struct Entity* unk9C;
     /* 0xA0 */ s16 unkA0;
-    /* 0xA2 */ s16 unkA2;
-    /* 0xA4 */ s16 unkA4;
-    /* 0xA6 */ s16 unkA6;
-    /* 0xA8 */ s16 unkA8;
-    /* 0xAA */ s16 unkAA;
-    /* 0xAC */ u8 unkAC;
-    /* 0xAD */ s8 unkAD;
+    /* 0xA2 */ s16 : 16;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s16 : 16;
     /* 0xAE */ s8 unkAE;
-    /* 0xAF */ s8 unkAF;
+    /* 0xAF */ s8 : 8;
     /* 0xB0 */ s16 unkB0;
     /* 0xB2 */ s16 unkB2;
-    /* 0xB4 */ s16 unkB4;
-    /* 0xB6 */ s16 unkB6;
+    /* 0xB4 */ s32 : 32;
     union {
         /* 0xB8 */ void (*unkFuncB8)(struct Entity*);
         /* 0xB8 */ struct Entity* entityPtr;
@@ -196,8 +192,7 @@ typedef struct {
     /* 0x86 */ u16 duration;
 } ET_MessageBox;
 
-// !!! IMPORTANT: the struct MUST align with ET_Player due to the 'anim' field
-typedef struct {
+typedef struct PACKED {
     /* 0x7C */ s16 lifetime;
     /* 0x7E */ s16 unk7E;
     /* 0x80 */ s16 unk80; // Y?
@@ -218,7 +213,7 @@ typedef struct {
     /* 0xAE */ s16 equipId;
 } ET_Weapon;
 
-typedef struct {
+typedef struct PACKED {
     s32 unk7C;
     s32 unk80;
     s32 unk84;
@@ -227,6 +222,14 @@ typedef struct {
     s32 unk90;
     s32 unk94;
     s32 unk98;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+#ifdef VERSION_PC
+    s32 _align_anim[2];
+#endif
+    u8 anim;
 } ET_WeaponUnk046;
 
 typedef struct {
@@ -241,9 +244,18 @@ typedef struct {
     s16 unk90;
     s16 unk92;
     s16 unk94;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+#ifdef VERSION_PC
+    s32 _align_anim[2];
+#endif
+    u8 anim;
 } ET_KarmaCoin;
 
-typedef struct {
+typedef struct PACKED {
     s16 angle;
     s16 unk7E;
     s16 unk80;
@@ -260,12 +272,15 @@ typedef struct {
     s32 accelerationY;
     s32 unkA4;
     s32 unkA8;
+#ifdef VERSION_PC
+    s32 _align_anim;
+#endif
     u8 anim;
     u8 unkAD;
     s16 equipId;
 } ET_HeavenSword;
 
-typedef struct {
+typedef struct PACKED {
     s16 angle;
     s16 unk7E;
     s16 unk80;
@@ -281,12 +296,15 @@ typedef struct {
     s32 accelerationY;
     s32 unkA4;
     s32 unkA8;
+#ifdef VERSION_PC
+    s32 _align_anim;
+#endif
     u8 anim;
     u8 unkAD;
     s16 equipId;
 } ET_HeavenSword2;
 
-typedef struct {
+typedef struct PACKED {
     /* 0x7C */ u8 unk7C;
     /* 0x7D */ u8 unk7D;
     /* 0x7E */ s16 unk7E;
@@ -307,12 +325,15 @@ typedef struct {
     /* 0x9E */ s16 unk9E;
     /* 0xA0 */ s16 unkA0;
     /* 0xA4 */ byte pad[10];
+#ifdef VERSION_PC
+    s32 _align_anim;
+#endif
     /* 0xAC */ u8 anim;
     /* 0xAD */ u8 padAD;
     /* 0xAE */ s16 unkAE;
 } ET_Shield;
 
-typedef struct {
+typedef struct PACKED {
     /* 0x7C */ u8 unk7C;
     /* 0x7D */ u8 unk7D;
     /* 0x7E */ s16 unk7E;
@@ -355,11 +376,16 @@ typedef struct {
     /* 0xA0 */ s16 unkA0;
     /* 0xA2 */ s16 unkA2;
     /* 0xA4 */ s16 unkA4;
-    /* 0xA6 */ byte pad[6];
+    /* 0xA6 */ u8 pad[4];
+#ifdef VERSION_PC
+    s16 _align_anim;
+#endif
+    /* 0xAC */ u8 anim;
+    /* 0xAD */ u8 unkAD;
     /* 0xAE */ s16 unkAE;
 } ET_MedusaShieldLaser;
 
-typedef struct {
+typedef struct PACKED {
     /* 0x7C */ s16 unk7C;
     /* 0x7E */ s16 unk7E;
     /* 0x80 */ s16 unk80;
@@ -377,9 +403,16 @@ typedef struct {
     /* 0x9A */ s16 unk9A;
     /* 0x9C */ s16 unk9C;
     /* 0x9E */ s16 unk9E;
+    /* 0xA0 */ u32 : 32;
+    /* 0xA4 */ u32 : 32;
+    /* 0xA8 */ u32 : 32;
+#ifdef VERSION_PC
+    s32 _align_anim;
+#endif
+    /* 0xAC */ u8 anim;
 } ET_ShamanShieldStar;
 
-typedef struct {
+typedef struct PACKED {
     /* 0x7C */ u8 unk7C;
     /* 0x7D */ u8 unk7D;
     /* 0x7E */ s16 unk7E;
@@ -397,7 +430,10 @@ typedef struct {
     /* 0x98 */ s16 unk98;
     /* 0x9A */ s16 unk9A;
     /* 0x9C */ u8 unk9C;
-    /* 0x9D */ byte pad[14];
+    /* 0x9D */ u8 pad[15];
+#ifdef VERSION_PC
+    s32 _align_anim;
+#endif
     /* 0xAC */ u8 anim;
     /* 0xAE */ s16 unkAE;
 } ET_HeraldShieldSwirlEffect;
@@ -757,12 +793,12 @@ typedef struct {
     /* 0x84 */ struct Entity* unk84;
 } ET_SpittleBone;
 
-typedef struct {
+typedef struct PACKED {
     Primitive* prim;
     char pad[0x24];
     s16 unkA4;
     s16 unkA6;
-    char padd[4];
+    void* unkA8;
     u8 anim;
     char pad2[0x8];
     struct Entity* unkB8;
@@ -1502,3 +1538,14 @@ typedef union { // offset=0x7C
     ET_Dissolve dissolve;
     ET_LockCamera lockCamera;
 } Ext;
+
+STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_Weapon, anim));
+STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_WeaponUnk046, anim));
+STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_KarmaCoin, anim));
+STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_HeavenSword, anim));
+STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_HeavenSword2, anim));
+STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_Shield, anim));
+STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_DarkShield, anim));
+STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_MedusaShieldLaser, anim));
+STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_ShamanShieldStar, anim));
+STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_HeraldShieldSwirlEffect, anim));

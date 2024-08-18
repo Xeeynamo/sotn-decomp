@@ -554,7 +554,7 @@ static void func_ptr_80170024(Entity* self) {
 }
 
 static void func_ptr_80170028(Entity* self) {
-    Entity* parent = self->ext.generic.unk8C.entityPtr;
+    Entity* parent = self->ext.medshieldlaser.parent;
     if (parent->entityId == 0) {
         DestroyEntity(self);
         return;
@@ -565,15 +565,15 @@ static void func_ptr_80170028(Entity* self) {
         SetWeaponProperties(self, 0);
         self->hitboxHeight = 6;
         self->hitboxWidth = 6;
-        self->ext.generic.unk80.modeS16.unk0 = 6;
+        self->ext.medshieldlaser.unk80 = 6;
         self->step++;
-    } else if (--self->ext.generic.unk80.modeS16.unk0 == 0) {
+    } else if (--self->ext.medshieldlaser.unk80 == 0) {
         DestroyEntity(self);
     }
 
     if (self->hitFlags != 0) {
-        if (++self->ext.generic.unkA2 >= 6) {
-            self->ext.generic.unk8C.entityPtr->ext.weapon.unk90 = 0;
+        if (++self->ext.medshieldlaser.unkA2 >= 6) {
+            self->ext.medshieldlaser.parent->ext.weapon.unk90 = 0;
         }
         self->hitFlags = 0;
     }

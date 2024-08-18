@@ -34,6 +34,25 @@
 #define __builtin_memcpy memcpy
 #endif
 
+#if defined(VERSION_PC)
+#ifndef _MSC_VER
+#define STATIC_ASSERT _Static_assert
+#define PACKED __attribute__((packed))
+#else
+#define STATIC_ASSERT(x, ...)
+#define PACKED
+#endif
+
+#elif defined(VERSION_PSP)
+#define STATIC_ASSERT(x)
+#define PACKED
+
+#else
+#define STATIC_ASSERT(x, ...)
+#define PACKED
+
+#endif
+
 #define LOH(x) (*(s16*)&(x))
 #define HIH(x) (((s16*)&(x))[1])
 #define LOHU(x) (*(u16*)&(x))

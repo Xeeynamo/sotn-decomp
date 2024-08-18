@@ -1262,8 +1262,8 @@ void EntityPlayerDissolves(Entity* self) {
     u8* temp1;
     u8* temp2;
 
-    if (PLAYER.ext.generic.unkAC != 0x38 && PLAYER.ext.generic.unkAC != 0x39 &&
-        PLAYER.ext.generic.unkAC != 0x3A &&
+    if (PLAYER.ext.player.anim != 0x38 && PLAYER.ext.player.anim != 0x39 &&
+        PLAYER.ext.player.anim != 0x3A &&
         (self->step == 2 || self->step == 3)) {
         self->step = 4;
         LoadImage(&D_800AE138, D_80139A7C);
