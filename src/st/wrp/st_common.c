@@ -1,7 +1,20 @@
 #include "wrp.h"
 
 #if !defined(VERSION_PSP)
-static s16 D_80180A94[] = {
+/*
+sine table. can be generated like:
+
+#define TABLE_SIZE 256
+#define PI 3.14159265358979323846
+
+static short D_80180A94[TABLE_SIZE];
+
+for (int i = 0; i < TABLE_SIZE; i++) {
+    double angle = (2 * PI * i) / (double)(TABLE_SIZE);
+    D_80180A94[i] = round((0x1000 * sin(angle)));
+}
+*/
+static s16 g_SineTable[] = {
     0x0000, 0x0065, 0x00C9, 0x012D, 0x0191, 0x01F5, 0x0259, 0x02BC, 0x031F,
     0x0381, 0x03E3, 0x0444, 0x04A5, 0x0505, 0x0564, 0x05C2, 0x061F, 0x067C,
     0x06D7, 0x0732, 0x078B, 0x07E3, 0x083A, 0x088F, 0x08E4, 0x0937, 0x0988,
@@ -206,9 +219,9 @@ s32 func_8018BC88(s16* posX) {
 #include "../alloc_entity.h"
 
 #if !defined(VERSION_PSP)
-s32 func_8018BED0(u8 arg0, s16 arg1) { return D_80180A94[arg0] * arg1; }
+s32 func_8018BED0(u8 arg0, s16 arg1) { return g_SineTable[arg0] * arg1; }
 
-s16 func_8018BEFC(u8 arg0) { return D_80180A94[arg0]; }
+s16 func_8018BEFC(u8 arg0) { return g_SineTable[arg0]; }
 
 void func_8018BF18(s32 arg0, s16 arg1) {
     g_CurrentEntity->velocityX = func_8018BED0(arg0, arg1);
