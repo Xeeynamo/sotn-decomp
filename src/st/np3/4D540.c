@@ -223,7 +223,7 @@ void func_801CDE10(s16* arg0) {
         if (*arg0 != 0xFF) {
             temp_a0 = &g_CurrentEntity[*arg0];
             temp_a0->ext.GH_Props.rotZ =
-                temp_a0->ext.GH_Props.rotZ + temp_a0->ext.generic.unkA6;
+                temp_a0->ext.GH_Props.rotZ + temp_a0->ext.GH_Props.unkA6;
         }
         arg0++;
     }
@@ -236,7 +236,7 @@ void func_801CDE88(s16* arg0) {
         if (*arg0 != 0xFF) {
             temp_a0 = &g_CurrentEntity[*arg0];
             temp_a0->ext.GH_Props.rotZ =
-                temp_a0->ext.GH_Props.rotZ + temp_a0->ext.generic.unkA6;
+                temp_a0->ext.GH_Props.rotZ + temp_a0->ext.GH_Props.unkA6;
             func_801CD83C(temp_a0);
         }
         arg0++;

@@ -20,7 +20,7 @@ void EntityHeartDrop(Entity* self) {
         }
         self->params = index + 0x8000;
     } else {
-        index = self->ext.generic.unkB4;
+        index = self->ext.heartDrop.unkB4;
         if (self->step < 5) {
             if (self->hitFlags) {
                 g_CastleFlags[(index >> 3) + 0x100] |= 1 << (index & 7);
