@@ -3,6 +3,10 @@
  * Enemy: Bloody Zombie
  */
 
+// NOTE: There is an nz0/e_bloody_zombie.c which is almost exactly the same as
+// this file. Would maybe be smart to try to de-duplicate. Could be marked as
+// an Issue for someone to deal with later?
+
 #include "np3.h"
 #include "sfx.h"
 
