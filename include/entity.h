@@ -190,8 +190,9 @@ typedef struct PACKED {
     /* 0x8A */ s16 unk8A;
     /* 0x8C */ struct Entity* parent;
     /* 0x90 */ s32 unk90;
-    /* 0x94 */ s32 unk94;
-    /* 0x98 */ s32 unk98;
+    /* 0x94 */ struct Entity* other;
+    /* 0x98 */ s16 unk98;
+    /* 0x9A */ s16 unk9A;
     /* 0x9C */ s32 accelerationX;
     /* 0xA0 */ s32 accelerationY;
     /* 0xA4 */ s32 unkA4;
