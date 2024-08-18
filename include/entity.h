@@ -1411,6 +1411,14 @@ typedef struct {
     u16 unk7C;
 } ET_LockCamera;
 
+typedef struct {
+    struct Primitive* prim;
+    s32 jiggler;
+    s8 collision;
+    f32 xCoord;
+    f32 yCoord;
+} ET_CavernDoor;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     char stub[0x40];
@@ -1537,6 +1545,7 @@ typedef union { // offset=0x7C
     ET_GuardText guardText;
     ET_Dissolve dissolve;
     ET_LockCamera lockCamera;
+    ET_CavernDoor cavernDoor;
 } Ext;
 
 STATIC_ASSERT(OFF(ET_Player, anim) == OFF(ET_Weapon, anim));
