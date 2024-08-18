@@ -78,41 +78,18 @@ u8 func_8018B7E8(u8 frames[], Entity* self, u8 arg2) {
 #endif
 
 #if !defined(VERSION_PSP)
-// Absolute distance from g_CurrentEntity to the player in the X Axis
-s16 GetDistanceToPlayerX(void) {
-    s16 xDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
-
-    if (xDistance < 0) {
-        xDistance = -xDistance;
-    }
-    return xDistance;
-}
+#include "../get_distance_to_player_x.h"
 #endif
 
 #if !defined(VERSION_PSP)
-// Absolute distance from g_CurrentEntity to the player in the Y Axis
-s32 GetDistanceToPlayerY(void) {
-    s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
-
-    if (yDistance < 0) {
-        yDistance = -yDistance;
-    }
-    return yDistance;
-}
+#include "../get_distance_to_player_y.h"
 #endif
 
 #include "../get_side_to_player.h"
 
-void MoveEntity(void) {
-    g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;
-    g_CurrentEntity->posY.val += g_CurrentEntity->velocityY;
-}
+#include "../move_entity.h"
 
-void FallEntity(void) {
-    if (g_CurrentEntity->velocityY < FALL_TERMINAL_VELOCITY) {
-        g_CurrentEntity->velocityY += FALL_GRAVITY;
-    }
-}
+#include "../fall_entity.h"
 
 #if !defined(VERSION_PSP)
 s32 func_8018BA10(u16* sensors) {
@@ -226,18 +203,7 @@ s32 func_8018BC88(s16* posX) {
 }
 #endif
 
-Entity* AllocEntity(Entity* start, Entity* end) {
-    Entity* current = start;
-
-    while (current < end) {
-        if (!current->entityId) {
-            DestroyEntity(current);
-            return current;
-        }
-        current++;
-    }
-    return NULL;
-}
+#include "../alloc_entity.h"
 
 #if !defined(VERSION_PSP)
 s32 func_8018BED0(u8 arg0, s16 arg1) { return D_80180A94[arg0] * arg1; }

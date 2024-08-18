@@ -37,36 +37,15 @@ u8 func_80191F24(u8 frames[], Entity* self, u8 arg2) {
     return var_a1;
 }
 
-s32 GetDistanceToPlayerX(void) {
-    s16 value = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
+#include "../get_distance_to_player_x.h"
 
-    if (value < 0) {
-        value = -value;
-    }
-    return value;
-}
-
-s32 GetDistanceToPlayerY(void) {
-    s32 value = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
-
-    if (value < 0) {
-        value = -value;
-    }
-    return value;
-}
+#include "../get_distance_to_player_y.h"
 
 #include "../get_side_to_player.h"
 
-void MoveEntity(void) {
-    g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;
-    g_CurrentEntity->posY.val += g_CurrentEntity->velocityY;
-}
+#include "../move_entity.h"
 
-void FallEntity(void) {
-    if (g_CurrentEntity->velocityY < FALL_TERMINAL_VELOCITY) {
-        g_CurrentEntity->velocityY += FALL_GRAVITY;
-    }
-}
+#include "../fall_entity.h"
 
 u8 func_8019214C(void) {
     u8 unkState;
@@ -194,19 +173,7 @@ s32 func_80192618(s16* posX) {
     return 1;
 }
 
-Entity* AllocEntity(Entity* start, Entity* end) {
-    Entity* current = start;
-
-    while (current < end) {
-        if (current->entityId == E_NONE) {
-            DestroyEntity(current);
-            return current;
-        }
-
-        current++;
-    }
-    return NULL;
-}
+#include "../alloc_entity.h"
 
 s32 func_80192860(u8 arg0, s16 arg1) { return D_801809EC[arg0 & 0xFF] * arg1; }
 

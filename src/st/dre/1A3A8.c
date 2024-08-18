@@ -37,45 +37,15 @@ u8 func_8019A590(u8 frames[], Entity* self, u8 arg2) {
     return var_a1;
 }
 
-// Absolute distance from g_CurrentEntity to the player in the X Axis
-s32 GetDistanceToPlayerX(void) {
-    s16 xDistance = g_CurrentEntity->posX.i.hi - PLAYER.posX.i.hi;
+#include "../get_distance_to_player_x.h"
 
-    if (xDistance < 0) {
-        xDistance = -xDistance;
-    }
-    return xDistance;
-}
+#include "../get_distance_to_player_y.h"
 
-// Absolute distance from g_CurrentEntity to the player in the Y Axis
-s32 GetDistanceToPlayerY(void) {
-    s32 yDistance = g_CurrentEntity->posY.i.hi - PLAYER.posY.i.hi;
+#include "../get_side_to_player.h"
 
-    if (yDistance < 0) {
-        yDistance = -yDistance;
-    }
-    return yDistance;
-}
+#include "../move_entity.h"
 
-s32 GetSideToPlayer(void) {
-    s16 var_a0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
-
-    if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
-        var_a0 |= 2;
-    }
-    return var_a0;
-}
-
-void MoveEntity(void) {
-    g_CurrentEntity->posX.val += g_CurrentEntity->velocityX;
-    g_CurrentEntity->posY.val += g_CurrentEntity->velocityY;
-}
-
-void FallEntity(void) {
-    if (g_CurrentEntity->velocityY < FALL_TERMINAL_VELOCITY) {
-        g_CurrentEntity->velocityY += FALL_GRAVITY;
-    }
-}
+#include "../fall_entity.h"
 
 s32 func_8019A7B8(u16* sensors) {
     Collider col;
@@ -185,19 +155,7 @@ s32 func_8019AA30(s16* posX) {
     return 1;
 }
 
-Entity* AllocEntity(Entity* start, Entity* end) {
-    Entity* current = start;
-
-    while (current < end) {
-        if (current->entityId == E_NONE) {
-            DestroyEntity(current);
-            return current;
-        }
-
-        current++;
-    }
-    return NULL;
-}
+#include "../alloc_entity.h"
 
 s32 func_8019AC78(u8 arg0, s16 arg1) { return D_80180D80[arg0] * arg1; }
 
