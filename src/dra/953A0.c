@@ -1231,7 +1231,7 @@ void func_8013572C(s16 arg0, u16 volume, s16 distance) {
         return;
     }
     if (g_SfxData[arg0].vabid == 9) {
-        if (D_801390C4 == 0) {
+        if (g_SeqIsPlaying == 0) {
             for (i = 0; i < 3; i++) {
                 if (arg0 == g_CurrentSfxScriptSfxId2[i]) {
                     ApplyQuadChannelSetting(arg0, i, true, volume, distance);
@@ -1296,7 +1296,7 @@ void func_8013572C(s16 arg0, u16 volume, s16 distance) {
                 g_CurSfxDistance3 = distance;
                 g_CurSfxVol3 = (g_CurSfxVol3 * volume) >> 7;
             }
-            if (D_801390C4 == 0) {
+            if (g_SeqIsPlaying == 0) {
                 for (i = 0; i < 4; i++) {
                     if (arg0 == D_8013B650[i]) {
                         func_80135624(
@@ -1393,7 +1393,7 @@ void func_80135D8C(void) {
     s8 distance;
     s8 distance2;
 
-    if (D_801390C4 == 0) {
+    if (g_SeqIsPlaying == 0) {
         for (i = 0; i < 3; i++) {
             if (g_CurrentSfxScriptSfxId[i] != 0) {
                 if (g_SfxScriptTimer[i] == 0) {
@@ -1472,7 +1472,7 @@ void func_80136010(void) {
     s16* fakeptr;
 
     SpuGetAllKeysStatus(g_KeyStatus);
-    if (D_801390C4 == 0) {
+    if (g_SeqIsPlaying == 0) {
         var_a0 = &g_KeyStatus[12];
         var_a2 = &g_KeyStatus[13];
         for (i = 0; i < 4; i++) {
@@ -1486,7 +1486,7 @@ void func_80136010(void) {
         D_8013B650[3] = 0;
         D_8013AED4[3] = 0;
     }
-    if (D_801390C4 == 0) {
+    if (g_SeqIsPlaying == 0) {
         var_t4 = g_CurrentSfxScriptSfxId2;
         new_var = &g_KeyStatus;
         var_t3 = &g_KeyStatus[3];

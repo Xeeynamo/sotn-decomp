@@ -144,7 +144,7 @@ void InitSoundVars1(void) {
     g_SfxVolumeMultiplier = 0x7F;
     g_SfxRingBufferReadPos = 0;
     g_sfxRingBufferWritePos = 0;
-    D_801390C4 = 0;
+    g_SeqIsPlaying = 0;
     g_CurSfxVol = 0;
     g_CurSfxDistance = 0;
     g_CurSfxVol2 = 0;
