@@ -141,8 +141,8 @@ void ExecSoundCommands(void) {
                     KeyOnChannels22_23();
                 }
                 break;
-            case 0x0:
-                func_80134E64();
+            case SET_VOLUME_22_23 - 1:
+                SetVolume22_23();
                 break;
             case SET_UNK_10 - 1:
                 AddCdSoundCommand(CD_SOUND_COMMAND_12);

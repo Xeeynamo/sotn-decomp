@@ -453,13 +453,13 @@ void KeyOnChannels22_23(void) {
     SsUtSetVVol(23, g_VolL, g_VolR);
 }
 
-void func_80134E64(void) {
+void SetVolume22_23(void) {
     u16 volume;
 
     volume = g_SfxVolumeMultiplier * g_SfxData[g_CurSfxId].volume >> 7;
     volume = volume * g_CurSfxVol >> 7;
     g_VolR = (volume * g_CdVolumeTable[g_CurSfxDistance * 2 + 144]) >> 8;
     g_VolL = (volume * g_CdVolumeTable[g_CurSfxDistance * 2 + 145]) >> 8;
-    SsUtSetVVol(0x16, g_VolL, g_VolR);
-    SsUtSetVVol(0x17, g_VolL, g_VolR);
+    SsUtSetVVol(22, g_VolL, g_VolR);
+    SsUtSetVVol(23, g_VolL, g_VolR);
 }
