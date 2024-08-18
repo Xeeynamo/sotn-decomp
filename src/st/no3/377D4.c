@@ -757,11 +757,11 @@ void EntityCavernDoorLever(Entity* entity) {
             if (entity->rotZ > 0) {
                 entity->rotZ = 0;
                 if (g_CastleFlags[0x30] == 0) {
-                    g_api.PlaySfx(SE_LEVER_SWITCH_MOVE);
+                    g_api.PlaySfx(SFX_LEVER_METAL_BANG);
                 }
                 g_CastleFlags[0x30] = 1;
             } else if (!(g_Timer & 0xF)) {
-                g_api.PlaySfx(SE_LEVER_SWITCH_MOVE);
+                g_api.PlaySfx(SFX_LEVER_METAL_BANG);
             }
         }
         break;
