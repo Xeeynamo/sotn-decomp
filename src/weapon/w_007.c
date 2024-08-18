@@ -241,24 +241,22 @@ void EntityWeaponAttack(Entity* self) {
 
 static void func_ptr_80170004(Entity* self) {
     Entity* parent;
-    s32 temp_v1_3;
-    s32 temp_v1_4;
-    u16 a0;
-    u16 v0;
+    s32 index;
+    u16 offsetX, offsetY;
 
     switch (self->step) {
     case 0:
         parent = self->ext.weapon.parent;
         if (parent->entityId != 0) {
-            temp_v1_3 = (self->params >> 7);
+            index = (self->params >> 7);
             self->facingLeft = parent->facingLeft;
-            a0 = D_35000_8017AC48[temp_v1_3];
-            v0 = D_35000_8017AC48[temp_v1_3 + 1];
+            offsetX = D_35000_8017AC48[index];
+            offsetY = D_35000_8017AC48[index + 1];
             if (self->facingLeft) {
-                a0 = -a0;
+                offsetX = -offsetX;
             }
-            self->posX.i.hi += a0;
-            self->posY.i.hi += v0;
+            self->posX.i.hi += offsetX;
+            self->posY.i.hi += offsetY;
 
             self->animSet = self->ext.weapon.parent->animSet;
             self->anim = D_35000_8017AB44;
@@ -267,8 +265,8 @@ static void func_ptr_80170004(Entity* self) {
             self->palette = self->ext.weapon.parent->palette;
 
             SetSpeedX(FIX(4.75));
-            temp_v1_4 = self->params & 0xFF00;
-            if ((temp_v1_4 == 0x300) || (temp_v1_4 == 0x600)) {
+            if ((self->params & 0xFF00) == 0x300 ||
+                (self->params & 0xFF00) == 0x600) {
                 self->velocityY = FIX(2.75);
                 SetSpeedX(FIX(3.75));
             }
@@ -294,8 +292,8 @@ static void func_ptr_80170004(Entity* self) {
         if (self->hitFlags) {
             self->step = 3;
         }
-        DecelerateX(FIX(7) / 32);
-        DecelerateY(FIX(7) / 32);
+        DecelerateX(FIX(7.0 / 32));
+        DecelerateY(FIX(7.0 / 32));
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         if (self->rotX < 0x100) {
@@ -316,11 +314,11 @@ static void func_ptr_80170004(Entity* self) {
         }
         // fallthrough
     case 2:
-        self->velocityY = rsin(self->ext.timer.t);
+        self->velocityY = rsin(self->ext.weapon.lifetime);
         self->posY.val += self->velocityY;
-        self->ext.timer.t += 0x20;
+        self->ext.weapon.lifetime += 0x20;
         self->posY.val += self->velocityY; // ???
-        if (!((u16)self->ext.weapon.unk7E & 7)) {
+        if (!(self->ext.weapon.unk7E & 7)) {
             g_api.CreateEntFactoryFromEntity(
                 self, ((g_HandId + 1) << 0xC) | 0x40, 0);
         }
