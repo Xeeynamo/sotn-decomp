@@ -155,10 +155,10 @@ extern s32 D_80139850;
 extern s32 D_80139854;
 extern s16 g_CdSoundCommandQueue[MAX_SND_COUNT];
 extern s16 g_SoundCommandRingBufferReadPos;
-extern s16 D_80139A6C;
+extern s16 g_XaVolumeMultiplier;
 extern s16 g_SoundCommandRingBufferWritePos; // D_80139A70
 extern s16 D_80139A74;
-extern s16 D_80139A78;
+extern s16 g_XaFadeCounter;
 extern u16 D_80139A7C[32 * 80]; // size from D_800AE130, D_800AE138
 extern u16 g_SfxVolumeMultiplier;
 extern volatile u8 g_CdSoundCommandStep;

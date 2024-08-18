@@ -63,43 +63,43 @@ void ExecSoundCommands(void) {
                 UnpauseSfxScripts();
                 break;
             case 0x7F:
-                D_80139A6C = 0x20;
+                g_XaVolumeMultiplier = 0x20;
                 AddCdSoundCommand(CD_SOUND_COMMAND_10);
                 break;
             case 0x80:
-                D_80139A6C = 8;
+                g_XaVolumeMultiplier = 8;
                 AddCdSoundCommand(CD_SOUND_COMMAND_10);
                 break;
             case 0x81:
-                D_80139A6C = 4;
+                g_XaVolumeMultiplier = 4;
                 AddCdSoundCommand(CD_SOUND_COMMAND_10);
                 break;
             case 0x82:
-                D_80139A6C = 2;
+                g_XaVolumeMultiplier = 2;
                 AddCdSoundCommand(CD_SOUND_COMMAND_10);
                 break;
             case 0x83:
-                D_80139A6C = 1;
+                g_XaVolumeMultiplier = 1;
                 AddCdSoundCommand(CD_SOUND_COMMAND_10);
                 break;
             case 0x8F:
-                D_80139A6C = 0x80;
+                g_XaVolumeMultiplier = 0x80;
                 AddCdSoundCommand(CD_SOUND_COMMAND_8);
                 break;
             case 0x90:
-                D_80139A6C = 8;
+                g_XaVolumeMultiplier = 8;
                 AddCdSoundCommand(CD_SOUND_COMMAND_8);
                 break;
             case 0x91:
-                D_80139A6C = 4;
+                g_XaVolumeMultiplier = 4;
                 AddCdSoundCommand(CD_SOUND_COMMAND_8);
                 break;
             case 0x92:
-                D_80139A6C = 2;
+                g_XaVolumeMultiplier = 2;
                 AddCdSoundCommand(CD_SOUND_COMMAND_8);
                 break;
             case 0x93:
-                D_80139A6C = 1;
+                g_XaVolumeMultiplier = 1;
                 AddCdSoundCommand(CD_SOUND_COMMAND_8);
                 break;
             case 0x9F:

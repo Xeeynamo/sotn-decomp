@@ -140,7 +140,7 @@ void InitSoundVars1(void) {
         g_SfxRingBuffer[D_80138454].sndPan = 0;
     }
 
-    D_80139A6C = 0x20;
+    g_XaVolumeMultiplier = 0x20;
     g_SfxVolumeMultiplier = 0x7F;
     g_SfxRingBufferReadPos = 0;
     g_sfxRingBufferWritePos = 0;

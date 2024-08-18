@@ -147,14 +147,14 @@ void CdSoundCommand10(void) {
     switch (g_CdSoundCommandStep) {
     case 0:
         D_801390A0 = 1;
-        D_80139A78 = 0;
+        g_XaFadeCounter = 0;
         g_CdSoundCommandStep++;
         break;
 
     case 1:
-        D_80139A78++;
+        g_XaFadeCounter++;
         if (g_volumeL > 0) {
-            temp = g_volumeR * D_80139A6C * D_80139A78;
+            temp = g_volumeR * g_XaVolumeMultiplier * g_XaFadeCounter;
             if (temp < 0) {
                 temp += 0x1FF;
             }
@@ -200,13 +200,13 @@ void CdSoundCommand8(void) {
     case 0:
         g_CdSoundCommandStep++;
         D_801390A0 = 1;
-        D_80139A78 = 0;
+        g_XaFadeCounter = 0;
         break;
 
     case 1:
-        D_80139A78++;
+        g_XaFadeCounter++;
         if (g_CdVolume > 0) {
-            temp = g_XaMusicVolume * D_80139A6C * D_80139A78;
+            temp = g_XaMusicVolume * g_XaVolumeMultiplier * g_XaFadeCounter;
             if (temp < 0) {
                 temp += 0x1FF;
             }
