@@ -36,13 +36,20 @@
 
 #if defined(VERSION_PC)
 #define STATIC_ASSERT _Static_assert
+#ifndef _MSC_VER
 #define PACKED __attribute__((packed))
+#else
+#define PACKED
+#endif
+
 #elif defined(VERSION_PSP)
 #define STATIC_ASSERT(x)
 #define PACKED
+
 #else
 #define STATIC_ASSERT(x, ...)
 #define PACKED
+
 #endif
 
 #define LOH(x) (*(s16*)&(x))
