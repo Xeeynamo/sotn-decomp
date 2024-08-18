@@ -141,7 +141,7 @@ void InitSoundVars1(void) {
     }
 
     D_80139A6C = 0x20;
-    D_8013AE7C = 0x7F;
+    g_SfxVolumeMultiplier = 0x7F;
     g_SfxRingBufferReadPos = 0;
     g_sfxRingBufferWritePos = 0;
     D_801390C4 = 0;
@@ -191,7 +191,7 @@ void SetMonoStereo(u8 soundMode) {
             audioVolume.val3 = 128; // CD Right sound transferred to left
             audioVolume.val1 = 128; // CD Left sound transferred to right
             CdMix(&audioVolume);
-            D_8013AE7C = 108;
+            g_SfxVolumeMultiplier = 108;
             D_801390A8 = 0;
         }
         break;
@@ -203,7 +203,7 @@ void SetMonoStereo(u8 soundMode) {
             audioVolume.val3 = 0;
             audioVolume.val1 = 0;
             CdMix(&audioVolume);
-            D_8013AE7C = 127;
+            g_SfxVolumeMultiplier = 127;
             D_801390A8 = 1;
         }
         break;

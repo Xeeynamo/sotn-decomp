@@ -395,7 +395,7 @@ padding s16 D_80139A76;
 s16 D_80139A78;
 padding s16 D_80139A7A;
 u16 D_80139A7C[32 * 80];
-u16 D_8013AE7C;
+u16 g_SfxVolumeMultiplier;
 padding u16 D_8013AE7E;
 
 volatile u8 g_CdSoundCommandStep;

@@ -1193,10 +1193,10 @@ void ApplyQuadChannelSetting(
     volumeMod = volume;
     if (volumeMod == 0xFFFF) {
         g_SfxScriptVolume[channel_group] =
-            (D_8013AE7C * g_SfxData[arg0].volume) >> 7;
+            (g_SfxVolumeMultiplier * g_SfxData[arg0].volume) >> 7;
         g_UnkChannelSetting1[channel_group] = 0;
     } else {
-        calcVolume = (D_8013AE7C * g_SfxData[arg0].volume) >> 7;
+        calcVolume = (g_SfxVolumeMultiplier * g_SfxData[arg0].volume) >> 7;
         g_SfxScriptVolume[channel_group] = (calcVolume * volumeMod) >> 7;
         g_UnkChannelSetting1[channel_group] = distance;
     }
@@ -1288,7 +1288,8 @@ void func_8013572C(s16 arg0, u16 volume, s16 distance) {
             g_CurSfxId = 0;
             return;
         case 0:
-            g_CurSfxVol3 = (D_8013AE7C * g_SfxData[arg0].volume) >> 7;
+            g_CurSfxVol3 =
+                (g_SfxVolumeMultiplier * g_SfxData[arg0].volume) >> 7;
             if (volume == 0xFFFF) {
                 g_CurSfxDistance3 = 0;
             } else {

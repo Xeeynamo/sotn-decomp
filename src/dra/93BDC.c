@@ -433,7 +433,7 @@ void func_80134B48(void) {
 }
 
 void KeyOnChannels20_21(void) {
-    u16 temp = (D_8013AE7C * g_SfxData[g_CurSfxId2].volume) >> 7;
+    u16 temp = (g_SfxVolumeMultiplier * g_SfxData[g_CurSfxId2].volume) >> 7;
     func_80132A04(20, g_SfxData[g_CurSfxId2].vabid, g_SfxData[g_CurSfxId2].prog,
                   g_SfxData[g_CurSfxId2].tone, g_SfxData[g_CurSfxId2].note,
                   (temp * (u16)g_CurSfxVol2) >> 7, g_CurSfxDistance2);
@@ -442,7 +442,7 @@ void KeyOnChannels20_21(void) {
 void KeyOnChannels22_23(void) {
     u16 volume;
 
-    volume = D_8013AE7C * g_SfxData[g_CurSfxId].volume >> 7;
+    volume = g_SfxVolumeMultiplier * g_SfxData[g_CurSfxId].volume >> 7;
     volume = volume * g_CurSfxVol >> 7;
     func_80132A04(22, g_SfxData[g_CurSfxId].vabid, g_SfxData[g_CurSfxId].prog,
                   g_SfxData[g_CurSfxId].tone, g_SfxData[g_CurSfxId].note,
@@ -456,7 +456,7 @@ void KeyOnChannels22_23(void) {
 void func_80134E64(void) {
     u16 volume;
 
-    volume = D_8013AE7C * g_SfxData[g_CurSfxId].volume >> 7;
+    volume = g_SfxVolumeMultiplier * g_SfxData[g_CurSfxId].volume >> 7;
     volume = volume * g_CurSfxVol >> 7;
     g_VolR = (volume * g_CdVolumeTable[g_CurSfxDistance * 2 + 144]) >> 8;
     g_VolL = (volume * g_CdVolumeTable[g_CurSfxDistance * 2 + 145]) >> 8;
