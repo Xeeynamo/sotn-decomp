@@ -41,14 +41,7 @@ u8 func_8019A590(u8 frames[], Entity* self, u8 arg2) {
 
 #include "../get_distance_to_player_y.h"
 
-s32 GetSideToPlayer(void) {
-    s16 var_a0 = g_CurrentEntity->posX.i.hi > PLAYER.posX.i.hi;
-
-    if (g_CurrentEntity->posY.i.hi > PLAYER.posY.i.hi) {
-        var_a0 |= 2;
-    }
-    return var_a0;
-}
+#include "../get_side_to_player.h"
 
 #include "../move_entity.h"
 
