@@ -28,7 +28,11 @@ static void EntityWeaponAttack(Entity* self);
 static void LoadWeaponPalette(s32 clutIndex);
 static s32 func_ptr_80170004(Entity* self);
 static void func_ptr_80170008(Entity* self);
+#ifdef FUNC_0C_S32
+static s32 func_ptr_8017000C(Entity* self);
+#else
 static void func_ptr_8017000C(Entity* self);
+#endif
 static s32 func_ptr_80170010(Entity* self);
 static s32 func_ptr_80170014(Entity* self);
 static int GetWeaponId(void);
