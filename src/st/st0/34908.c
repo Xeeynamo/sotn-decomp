@@ -198,49 +198,48 @@ s32 func_801B51E4(s16* posX) {
 
 #include "../alloc_entity.h"
 
-s32 func_801B542C(u8 arg0, s16 arg1) { return D_80181990[arg0] * arg1; }
+extern s16 g_SineTable[];
 
-s16 func_801B5458(u8 arg0) { return D_80181990[arg0]; }
+s32 GetSineScaled(u8 arg0, s16 arg1) { return g_SineTable[arg0] * arg1; }
 
-void func_801B5474(s32 arg0, s16 arg1) {
-    g_CurrentEntity->velocityX = func_801B542C(arg0, arg1);
-    g_CurrentEntity->velocityY = func_801B542C(arg0 - 0x40, arg1);
+s16 GetSine(u8 arg0) { return g_SineTable[arg0]; }
+
+void SetEntityVelocityFromAngle(s32 arg0, s16 arg1) {
+    g_CurrentEntity->velocityX = GetSineScaled(arg0, arg1);
+    g_CurrentEntity->velocityY = GetSineScaled(arg0 - 0x40, arg1);
 }
 
-u8 func_801B54E0(s16 arg0, s16 arg1) {
+u8 Ratan2Shifted(s16 arg0, s16 arg1) {
     return (ratan2(arg1, arg0) >> 4) + 0x40;
 }
 
-u8 func_801B5518(Entity* arg0, Entity* arg1) {
+u8 GetAngleBetweenEntitiesShifted(Entity* arg0, Entity* arg1) {
     s16 a = arg1->posX.i.hi - arg0->posX.i.hi;
     s16 b = arg1->posY.i.hi - arg0->posY.i.hi;
-    return func_801B54E0(a, b);
+    return Ratan2Shifted(a, b);
 }
 
-u8 func_801B5560(s32 arg0, s32 arg1) {
+u8 GetAnglePointToEntityShifted(s32 arg0, s32 arg1) {
     s16 a = (arg0 - (u16)g_CurrentEntity->posX.i.hi);
     s16 b = (arg1 - (u16)g_CurrentEntity->posY.i.hi);
-    return func_801B54E0(a, b);
+    return Ratan2Shifted(a, b);
 }
 
 #include "../adjust_value_within_threshold.h"
 
 #include "../unk_entity_func0.h"
 
-u16 func_801B568C(s16 x, s16 y) { return ratan2(y, x); }
+u16 Ratan2(s16 x, s16 y) { return ratan2(y, x); }
 
-u16 GetAngleBetweenEntities(Entity* a, Entity* b) {
-    s32 diffX = b->posX.i.hi - a->posX.i.hi;
-    s32 diffY = b->posY.i.hi - a->posY.i.hi;
-    return ratan2(diffY, diffX);
-}
+#include "../get_angle_between_entities.h"
 
-u16 func_801B56F4(s32 x, s32 y) {
+u16 GetAnglePointToEntity(s32 x, s32 y) {
     s16 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
     s16 diffY = y - (u16)g_CurrentEntity->posY.i.hi;
     return ratan2(diffY, diffX);
 }
 
+// different from other versions
 u16 GetNormalizedAngle(u16 arg0, s16 arg1, s16 arg2) {
     u16 temp_a2 = arg2 - arg1;
     u16 ret;
@@ -264,18 +263,9 @@ u16 GetNormalizedAngle(u16 arg0, s16 arg1, s16 arg2) {
     return arg2;
 }
 
-void SetStep(u8 step) {
-    g_CurrentEntity->step = step;
-    g_CurrentEntity->step_s = 0;
-    g_CurrentEntity->animFrameIdx = 0;
-    g_CurrentEntity->animFrameDuration = 0;
-}
+#include "../set_step.h"
 
-void SetSubStep(u8 step_s) {
-    g_CurrentEntity->step_s = step_s;
-    g_CurrentEntity->animFrameIdx = 0;
-    g_CurrentEntity->animFrameDuration = 0;
-}
+#include "../set_sub_step.h"
 
 void func_801B57D0(u16 params) {
     Entity* current;
@@ -296,11 +286,7 @@ void func_801B57D0(u16 params) {
 
 #include "../init_entity.h"
 
-void EntityDummy(Entity* arg0) {
-    if (arg0->step == 0) {
-        arg0->step++;
-    }
-}
+#include "../entity_dummy.h"
 
 s32 func_801B5970(u16* hitSensors, s16 sensorCount) {
     Collider collider;

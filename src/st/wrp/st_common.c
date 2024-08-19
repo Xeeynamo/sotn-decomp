@@ -1,7 +1,20 @@
 #include "wrp.h"
 
 #if !defined(VERSION_PSP)
-static s16 D_80180A94[] = {
+/*
+sine table. can be generated like:
+
+#define TABLE_SIZE 256
+#define PI 3.14159265358979323846
+
+static short D_80180A94[TABLE_SIZE];
+
+for (int i = 0; i < TABLE_SIZE; i++) {
+    double angle = (2 * PI * i) / (double)(TABLE_SIZE);
+    D_80180A94[i] = round((0x1000 * sin(angle)));
+}
+*/
+static s16 g_SineTable[] = {
     0x0000, 0x0065, 0x00C9, 0x012D, 0x0191, 0x01F5, 0x0259, 0x02BC, 0x031F,
     0x0381, 0x03E3, 0x0444, 0x04A5, 0x0505, 0x0564, 0x05C2, 0x061F, 0x067C,
     0x06D7, 0x0732, 0x078B, 0x07E3, 0x083A, 0x088F, 0x08E4, 0x0937, 0x0988,
@@ -206,27 +219,27 @@ s32 func_8018BC88(s16* posX) {
 #include "../alloc_entity.h"
 
 #if !defined(VERSION_PSP)
-s32 func_8018BED0(u8 arg0, s16 arg1) { return D_80180A94[arg0] * arg1; }
+s32 GetSineScaled(u8 arg0, s16 arg1) { return g_SineTable[arg0] * arg1; }
 
-s16 func_8018BEFC(u8 arg0) { return D_80180A94[arg0]; }
+s16 GetSine(u8 arg0) { return g_SineTable[arg0]; }
 
-void func_8018BF18(s32 arg0, s16 arg1) {
-    g_CurrentEntity->velocityX = func_8018BED0(arg0, arg1);
-    g_CurrentEntity->velocityY = func_8018BED0(arg0 - 0x40, arg1);
+void SetEntityVelocityFromAngle(s32 arg0, s16 arg1) {
+    g_CurrentEntity->velocityX = GetSineScaled(arg0, arg1);
+    g_CurrentEntity->velocityY = GetSineScaled(arg0 - 0x40, arg1);
 }
 
-u8 func_8018BF84(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 0x40; }
+u8 Ratan2Shifted(s16 x, s16 y) { return (ratan2(y, x) >> 4) + 0x40; }
 
-u8 func_8018BFBC(Entity* a, Entity* b) {
+u8 GetAngleBetweenEntitiesShifted(Entity* a, Entity* b) {
     s32 diffX = (u16)b->posX.i.hi - (u16)a->posX.i.hi;
     s32 diffY = (u16)b->posY.i.hi - (u16)a->posY.i.hi;
-    return func_8018BF84(diffX, diffY);
+    return Ratan2Shifted(diffX, diffY);
 }
 
-u8 func_8018C004(s32 x, s32 y) {
+u8 GetAnglePointToEntityShifted(s32 x, s32 y) {
     s32 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
     s32 diffY = y - (u16)g_CurrentEntity->posY.i.hi;
-    return func_8018BF84(diffX, diffY);
+    return Ratan2Shifted(diffX, diffY);
 }
 
 #include "../adjust_value_within_threshold.h"
@@ -235,60 +248,25 @@ u8 func_8018C004(s32 x, s32 y) {
 #include "../unk_entity_func0.h"
 
 #if !defined(VERSION_PSP)
-u16 func_8018C130(s16 x, s16 y) { return ratan2(y, x); }
+u16 Ratan2(s16 x, s16 y) { return ratan2(y, x); }
 #endif
 
-u16 GetAngleBetweenEntities(Entity* a, Entity* b) {
-    s32 diffX = b->posX.i.hi - a->posX.i.hi;
-    s32 diffY = b->posY.i.hi - a->posY.i.hi;
-    return ratan2(diffY, diffX);
-}
+#include "../get_angle_between_entities.h"
 
 #if !defined(VERSION_PSP)
-u16 func_8018C198(s32 x, s32 y) {
+u16 GetAnglePointToEntity(s32 x, s32 y) {
     s16 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
     s16 diffY = y - (u16)g_CurrentEntity->posY.i.hi;
     return ratan2(diffY, diffX);
 }
 #endif
 
-u16 GetNormalizedAngle(u16 arg0, u16 arg1, u16 arg2) {
-    u16 temp_a2;
-    u16 var_v0;
+#include "../get_normalized_angle.h"
 
-    temp_a2 = (s16)(arg2 - arg1);
-    if (temp_a2 & 0x800) {
-        var_v0 = (0x800 - temp_a2) & 0x7FF;
-    } else {
-        var_v0 = temp_a2;
-    }
-
-    if (var_v0 > arg0) {
-        if (temp_a2 & 0x800) {
-            var_v0 = arg1 - arg0;
-        } else {
-            var_v0 = arg1 + arg0;
-        }
-
-        return var_v0;
-    } else {
-        return arg2;
-    }
-}
-
-void SetStep(u8 step) {
-    g_CurrentEntity->step = step;
-    g_CurrentEntity->step_s = 0;
-    g_CurrentEntity->animFrameIdx = 0;
-    g_CurrentEntity->animFrameDuration = 0;
-}
+#include "../set_step.h"
 
 #if !defined(VERSION_PSP)
-void SetSubStep(u8 step_s) {
-    g_CurrentEntity->step_s = step_s;
-    g_CurrentEntity->animFrameIdx = 0;
-    g_CurrentEntity->animFrameDuration = 0;
-}
+#include "../set_sub_step.h"
 #endif
 
 #if !defined(VERSION_PSP)
@@ -316,11 +294,7 @@ void EntityExplosionSpawn(u16 arg0, u16 arg1) {
 
 #include "../init_entity.h"
 
-void EntityDummy(Entity* arg0) {
-    if (!arg0->step) {
-        arg0->step++;
-    }
-}
+#include "../entity_dummy.h"
 
 #if !defined(VERSION_PSP)
 s32 func_8018C434(u16* hitSensors, s16 sensorCount) {
