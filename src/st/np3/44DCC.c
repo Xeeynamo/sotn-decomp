@@ -403,7 +403,7 @@ void EntitySideWaterSplash(Entity* self) {
             temp_s1 += rsin(angle) * *ptr;
             temp_lo = rcos(angle) * *ptr;
             self->velocityX = temp_s1 + (((params & 0xFF00) << 0x10) >> 0xE);
-            self->ext.waterEffects.accelY = FIX(22.0/128);
+            self->ext.waterEffects.accelY = FIX(22.0 / 128);
             self->velocityY = temp_s3 + temp_lo;
         } else {
         DestroyEntity:
